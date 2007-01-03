@@ -13,14 +13,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-23 16:39+0200\n"
-"PO-Revision-Date: 2006-08-23 16:41+0200\n"
+"POT-Creation-Date: 2007-01-03 12:19+0100\n"
+"PO-Revision-Date: 2007-01-03 12:19+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../libgimp/gimpbrushselectbutton.c:170
+msgid "Brush Selection"
+msgstr "Pinselauswahl"
+
+#: ../libgimp/gimpbrushselectbutton.c:899
+#: ../libgimp/gimppatternselectbutton.c:712
+msgid "_Browse..."
+msgstr "_Durchsuchen..."
 
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
@@ -195,9 +204,21 @@ msgstr "Schriftenauswahl"
 msgid "Sans"
 msgstr "Sans"
 
+#: ../libgimp/gimpgradientselectbutton.c:148
+msgid "Gradient Selection"
+msgstr "Farbverlaufsauswahl"
+
 #: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
 msgid "(Empty)"
 msgstr "(Leer)"
+
+#: ../libgimp/gimppaletteselectbutton.c:130
+msgid "Palette Selection"
+msgstr "Palettenauswahl"
+
+#: ../libgimp/gimppatternselectbutton.c:156
+msgid "Pattern Selection"
+msgstr "Musterauswahl"
 
 #: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
@@ -598,7 +619,7 @@ msgstr "Konstant"
 msgid "Incremental"
 msgstr "Steigernd"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:256
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:267
 msgid "None"
 msgstr "Keine"
 
@@ -650,19 +671,35 @@ msgstr "Vorwärts"
 msgid "Backward"
 msgstr "Rückwärts"
 
-#: ../libgimpbase/gimpbaseenums.c:848
+#: ../libgimpbase/gimpbaseenums.c:775
+msgid "Adjust"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:776
+msgid "Clip"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:777
+msgid "Crop to result"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:778
+msgid "Crop with aspect"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:881
 msgid "Internal GIMP procedure"
 msgstr "Interne GIMP-Prozedur"
 
-#: ../libgimpbase/gimpbaseenums.c:849
+#: ../libgimpbase/gimpbaseenums.c:882
 msgid "GIMP Plug-In"
 msgstr "GIMP-Plugin"
 
-#: ../libgimpbase/gimpbaseenums.c:850
+#: ../libgimpbase/gimpbaseenums.c:883
 msgid "GIMP Extension"
 msgstr "GIMP-Erweiterung"
 
-#: ../libgimpbase/gimpbaseenums.c:851
+#: ../libgimpbase/gimpbaseenums.c:884
 msgid "Temporary Procedure"
 msgstr "Temporäre Prozedur"
 
@@ -719,7 +756,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:248
+#: ../modules/cdisplay_lcms.c:259
 msgid "(invalid UTF-8 string)"
 msgstr "(Ungültiger UTF-8 Text)"
 
@@ -733,8 +770,8 @@ msgstr "Das Farbprofil für Ihren (primären) Bildschirm."
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid ""
-"When enabled, the GIMP will try to use the display color profile from the "
-"windowing system. The configured monitor profile is then only used as a "
+"When enabled, GIMP will try to use the display color profile from the "
+"windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
 "Wenn diese Option ausgewählt ist, wird GIMP versuchen, dass "
@@ -742,7 +779,7 @@ msgstr ""
 "Monitorprofil wird dann nur als Ausweichlösung verwendet."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
-msgid "The default RGB workspace color profile."
+msgid "The default RGB working space color profile."
 msgstr "Das Standard RGB-Farbprofil."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
@@ -763,9 +800,10 @@ msgstr "Legt fest, wie Farben auf Ihren Bildschirm abgebildet werden"
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
 msgid ""
-"Sets how colors are converted from workspace to the print simulation device."
+"Sets how colors are converted from RGB working space to the print simulation "
+"device."
 msgstr ""
-"Legt fest, wie Farben vom Arbeitsbereich zum simulierten Drucker verändert "
+"Legt fest, wie Farben vom RGB Farbraum zum simulierten Drucker verändert "
 "werden."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
@@ -795,18 +833,6 @@ msgstr "Sättigung"
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
 msgstr "Kolorimetrisch (absolut)"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:88
-msgid "Ask"
-msgstr "Nachfragen"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:89
-msgid "Use embedded profile"
-msgstr "Eingebundenes Profil verwenden"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:90
-msgid "Convert to RGB workspace"
-msgstr "Für RGB-Arbeitsbereich umwandeln"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:95
 #, c-format
@@ -892,26 +918,26 @@ msgstr "ungültiger UTF-8 Text"
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Fehler beim Verarbeiten von »%s« in Zeile %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:152 ../libgimpmodule/gimpmodule.c:170
-#: ../libgimpmodule/gimpmodule.c:279 ../libgimpmodule/gimpmodule.c:306
-#: ../libgimpmodule/gimpmodule.c:417
+#: ../libgimpmodule/gimpmodule.c:153 ../libgimpmodule/gimpmodule.c:171
+#: ../libgimpmodule/gimpmodule.c:280 ../libgimpmodule/gimpmodule.c:307
+#: ../libgimpmodule/gimpmodule.c:418
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Fehler beim Laden von Modul '%s': %s"
 
-#: ../libgimpmodule/gimpmodule.c:374
+#: ../libgimpmodule/gimpmodule.c:375
 msgid "Module error"
 msgstr "Modul Fehler"
 
-#: ../libgimpmodule/gimpmodule.c:375
+#: ../libgimpmodule/gimpmodule.c:376
 msgid "Loaded"
 msgstr "Geladen"
 
-#: ../libgimpmodule/gimpmodule.c:376
+#: ../libgimpmodule/gimpmodule.c:377
 msgid "Load failed"
 msgstr "Laden fehlgeschlagen"
 
-#: ../libgimpmodule/gimpmodule.c:377
+#: ../libgimpmodule/gimpmodule.c:378
 msgid "Not loaded"
 msgstr "Nicht geladen"
 
@@ -959,15 +985,15 @@ msgstr "_Weiß"
 msgid "Scales"
 msgstr "Schieberegler"
 
-#: ../libgimpwidgets/gimpcolorselection.c:187
+#: ../libgimpwidgets/gimpcolorselection.c:210
 msgid "Current:"
 msgstr "Aktuell:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:209
+#: ../libgimpwidgets/gimpcolorselection.c:232
 msgid "Old:"
 msgstr "Vorher:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:263
+#: ../libgimpwidgets/gimpcolorselection.c:286
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -975,7 +1001,7 @@ msgstr ""
 "Hexadezimale Schreibweise wie in HTML und CSS. Dieses Eingabefeld akzeptiert "
 "auch Farbnamen."
 
-#: ../libgimpwidgets/gimpcolorselection.c:269
+#: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
 msgstr "HTML _Form:"
 
@@ -1140,27 +1166,27 @@ msgstr "Z_eilenabstand"
 msgid "_Resize"
 msgstr "_Größe ändern"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:302
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:319
 msgid "_Scale"
 msgstr "_Skalieren"
 
-#: ../libgimpwidgets/gimpstock.c:280
-msgid "Crop"
-msgstr "Zuschneiden"
+#: ../libgimpwidgets/gimpstock.c:295
+msgid "Cr_op"
+msgstr "_Zuschneiden"
 
-#: ../libgimpwidgets/gimpstock.c:298
+#: ../libgimpwidgets/gimpstock.c:314
 msgid "_Transform"
 msgstr "_Transformation"
 
-#: ../libgimpwidgets/gimpstock.c:301
+#: ../libgimpwidgets/gimpstock.c:318
 msgid "_Rotate"
 msgstr "_Rotieren"
 
-#: ../libgimpwidgets/gimpstock.c:303
+#: ../libgimpwidgets/gimpstock.c:320
 msgid "_Shear"
 msgstr "_Scheren"
 
-#: ../libgimpwidgets/gimpunitmenu.c:267
+#: ../libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
 msgstr "Mehr …"
 
@@ -1168,11 +1194,11 @@ msgstr "Mehr …"
 msgid "Unit Selection"
 msgstr "Einheit auswählen"
 
-#: ../libgimpwidgets/gimpunitmenu.c:625
+#: ../libgimpwidgets/gimpunitmenu.c:626
 msgid "Unit"
 msgstr "Einheit"
 
-#: ../libgimpwidgets/gimpunitmenu.c:629
+#: ../libgimpwidgets/gimpunitmenu.c:630
 msgid "Factor"
 msgstr "Faktor"
 
@@ -1273,7 +1299,7 @@ msgstr ""
 msgid "Color Deficient Vision"
 msgstr "Farbenblindheit"
 
-#: ../modules/cdisplay_colorblind.c:503
+#: ../modules/cdisplay_colorblind.c:505
 msgid "Color _deficiency type:"
 msgstr "Art der _Sehschwäche:"
 
@@ -1285,7 +1311,7 @@ msgstr "Gamma Anzeigenfarbfilter"
 msgid "Gamma"
 msgstr "Gamma"
 
-#: ../modules/cdisplay_gamma.c:251
+#: ../modules/cdisplay_gamma.c:253
 msgid "_Gamma:"
 msgstr "_Gamma:"
 
@@ -1297,19 +1323,19 @@ msgstr "Hochkontrast Anzeigenfarbfilter"
 msgid "Contrast"
 msgstr "Kontrast"
 
-#: ../modules/cdisplay_highcontrast.c:251
+#: ../modules/cdisplay_highcontrast.c:253
 msgid "Contrast c_ycles:"
 msgstr "Kontrast_verstärkung:"
 
-#: ../modules/cdisplay_lcms.c:107
+#: ../modules/cdisplay_lcms.c:116
 msgid "Color management display filter using ICC color profiles"
 msgstr "ICC-Farbprofilfilter für farbverwaltete Bildschirme"
 
-#: ../modules/cdisplay_lcms.c:175
+#: ../modules/cdisplay_lcms.c:184
 msgid "Color Management"
 msgstr "Farbverwaltung"
 
-#: ../modules/cdisplay_lcms.c:290
+#: ../modules/cdisplay_lcms.c:288
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1317,19 +1343,19 @@ msgstr ""
 "Dieser Filter entnimmt seine Konfiguration aus dem Abschnitt Farbverwaltung "
 "im Einstellungsdialog."
 
-#: ../modules/cdisplay_lcms.c:313
+#: ../modules/cdisplay_lcms.c:302
 msgid "Mode of operation:"
 msgstr "Arbeitsmodus:"
 
-#: ../modules/cdisplay_lcms.c:324
-msgid "RGB workspace profile:"
-msgstr "RGB-Farbprofil für den Arbeitsbereich:"
+#: ../modules/cdisplay_lcms.c:309
+msgid "RGB working space profile:"
+msgstr "RGB-Farbprofil:"
 
-#: ../modules/cdisplay_lcms.c:334
+#: ../modules/cdisplay_lcms.c:316
 msgid "Monitor profile:"
 msgstr "Monitor-Profil:"
 
-#: ../modules/cdisplay_lcms.c:344
+#: ../modules/cdisplay_lcms.c:323
 msgid "Print simulation profile:"
 msgstr "Drucksimulationsprofil:"
 
@@ -1341,19 +1367,19 @@ msgstr "Farb Andruck Filter mittels ICC Farbprofilen"
 msgid "Color Proof"
 msgstr "Farb Andruck"
 
-#: ../modules/cdisplay_proof.c:304
+#: ../modules/cdisplay_proof.c:306
 msgid "_Intent:"
 msgstr "_Absicht:"
 
-#: ../modules/cdisplay_proof.c:308
+#: ../modules/cdisplay_proof.c:310
 msgid "Choose an ICC Color Profile"
 msgstr "Farbprofil auswählen"
 
-#: ../modules/cdisplay_proof.c:311
+#: ../modules/cdisplay_proof.c:313
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/cdisplay_proof.c:316
+#: ../modules/cdisplay_proof.c:318
 msgid "_Black Point Compensation"
 msgstr "Schwarzpunkt-Abgleich"
 
@@ -1544,28 +1570,28 @@ msgstr ""
 msgid "Linux Input"
 msgstr "Linux-Eingabe"
 
-#: ../modules/controller_linux_input.c:351
+#: ../modules/controller_linux_input.c:352
 msgid "Linux Input Events"
 msgstr "Linux-Eingabeereignisse"
 
-#: ../modules/controller_linux_input.c:372 ../modules/controller_midi.c:482
-#: ../modules/controller_midi.c:508
+#: ../modules/controller_linux_input.c:373 ../modules/controller_midi.c:484
+#: ../modules/controller_midi.c:510
 #, c-format
 msgid "Reading from %s"
 msgstr "Von %s wird gelesen"
 
-#: ../modules/controller_linux_input.c:388
-#: ../modules/controller_linux_input.c:431 ../modules/controller_midi.c:464
-#: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
+#: ../modules/controller_linux_input.c:389
+#: ../modules/controller_linux_input.c:432 ../modules/controller_midi.c:466
+#: ../modules/controller_midi.c:527 ../modules/controller_midi.c:598
 #, c-format
 msgid "Device not available: %s"
 msgstr "Gerät nicht verfügbar: %s"
 
-#: ../modules/controller_linux_input.c:396 ../modules/controller_midi.c:533
+#: ../modules/controller_linux_input.c:397 ../modules/controller_midi.c:535
 msgid "No device configured"
 msgstr "Kein Gerät eingerichtet"
 
-#: ../modules/controller_linux_input.c:440 ../modules/controller_midi.c:605
+#: ../modules/controller_linux_input.c:441 ../modules/controller_midi.c:607
 msgid "End of file"
 msgstr "Dateiende"
 
@@ -1597,21 +1623,34 @@ msgstr ""
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:383
+#: ../modules/controller_midi.c:384
 #, c-format
 msgid "Note %02x on"
 msgstr "Note %02x an"
 
-#: ../modules/controller_midi.c:386
+#: ../modules/controller_midi.c:387
 #, c-format
 msgid "Note %02x off"
 msgstr "Note %02x aus"
 
-#: ../modules/controller_midi.c:389
+#: ../modules/controller_midi.c:390
 #, c-format
 msgid "Controller %03d"
 msgstr "Kontroller %03d"
 
-#: ../modules/controller_midi.c:436
+#: ../modules/controller_midi.c:437
 msgid "MIDI Events"
 msgstr "MIDI-Ereignis"
+
+#: ../modules/controller_midi.c:458
+msgid "GIMP MIDI controller"
+msgstr "GIMP MIDI-Steuerung"
+
+#~ msgid "Ask"
+#~ msgstr "Nachfragen"
+
+#~ msgid "Use embedded profile"
+#~ msgstr "Eingebundenes Profil verwenden"
+
+#~ msgid "Convert to RGB workspace"
+#~ msgstr "Für RGB-Arbeitsbereich umwandeln"

@@ -2,12 +2,16 @@
 # marked to allow runtime translation of messages
 
 libgimp/gimpbrushmenu.c
+libgimp/gimpbrushselectbutton.c
 libgimp/gimpexport.c
 libgimp/gimpfontselectbutton.c
 libgimp/gimpgradientmenu.c
+libgimp/gimpgradientselectbutton.c
 libgimp/gimpmenu.c
 libgimp/gimppalettemenu.c
+libgimp/gimppaletteselectbutton.c
 libgimp/gimppatternmenu.c
+libgimp/gimppatternselectbutton.c
 libgimp/gimpprocbrowserdialog.c
 libgimp/gimpprocview.c
 libgimp/gimpunitcache.c
