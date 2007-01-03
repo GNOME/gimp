@@ -320,6 +320,15 @@ gimp_brush_select_button_new (const gchar          *title,
 {
   GtkWidget *button;
 
+  if (opacity < 0.0)
+    opacity = gimp_context_get_opacity ();
+
+  if (spacing == -1)
+    gimp_brush_get_spacing (brush_name, &spacing);
+
+  if (paint_mode == -1)
+    paint_mode = gimp_context_get_paint_mode ();
+
   if (title)
     button = g_object_new (GIMP_TYPE_BRUSH_SELECT_BUTTON,
                            "title",            title,

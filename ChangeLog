@@ -1,5 +1,11 @@
 2007-01-03  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpbrushselectbutton.c (gimp_brush_select_button_new):
+	initialize opacity, spacing and paint mode as described by the API
+	docs. Fixes bug #356901.
+
+2007-01-03  Sven Neumann  <sven@gimp.org>
+
 	* libgimpconfig/gimpcolorconfig.c: fixed blurb.
 
 2007-01-03  Sven Neumann  <sven@gimp.org>
