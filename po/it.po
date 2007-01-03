@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-02 19:17+0100\n"
-"PO-Revision-Date: 2007-01-02 17:20+0100\n"
+"POT-Creation-Date: 2007-01-03 12:43+0100\n"
+"PO-Revision-Date: 2007-01-03 12:36+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1647,7 +1647,7 @@ msgstr "Apri com_e livelli..."
 
 #: ../app/actions/file-actions.c:84
 msgid "Open _Location..."
-msgstr "Apri _indirizzo... "
+msgstr "Apri _posizione... "
 
 #: ../app/actions/file-actions.c:89
 msgid "_Save"
