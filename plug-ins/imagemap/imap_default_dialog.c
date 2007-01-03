@@ -27,6 +27,7 @@
 #include <libgimp/gimpui.h>
 
 #include "imap_default_dialog.h"
+#include "imap_main.h"
 
 
 static void
@@ -93,7 +94,7 @@ make_default_dialog (const gchar *title)
    data->cancel_cb = NULL;
 
    data->dialog = gimp_dialog_new (title, "imagemap",
-                                   get_dialog(), GTK_DIALOG_DESTROY_WITH_PARENT,
+                                   get_dialog(), 0,
                                    /* gimp_standard_help_func,
                                       "plug-in-imagemap", */
                                    gimp_standard_help_func, NULL,
