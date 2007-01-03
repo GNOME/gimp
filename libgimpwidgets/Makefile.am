@@ -214,6 +214,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimppreviewarea.h	\
 	gimppropwidgets.h	\
 	gimpquerybox.h		\
+	gimpratioentry.h	\
 	gimpresolutionentry.h   \
 	gimpscrolledpreview.h	\
 	gimpsizeentry.h		\

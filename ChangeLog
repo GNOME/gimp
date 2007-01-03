@@ -1,3 +1,9 @@
+2007-01-03  Raphaël Quinet  <raphael@gimp.org>
+
+	* libgimpwidgets/Makefile.am (libgimpwidgetsinclude_HEADERS):
+	install gimpratioentry.h, otherwise it is not possible to build
+	any plug-ins including gimpwidgets.h.
+
 2007-01-03  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpbrushselect.c
