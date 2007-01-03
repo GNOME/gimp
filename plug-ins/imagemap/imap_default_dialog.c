@@ -93,7 +93,7 @@ make_default_dialog (const gchar *title)
    data->cancel_cb = NULL;
 
    data->dialog = gimp_dialog_new (title, "imagemap",
-                                   NULL, 0,
+                                   get_dialog(), GTK_DIALOG_DESTROY_WITH_PARENT,
                                    /* gimp_standard_help_func,
                                       "plug-in-imagemap", */
                                    gimp_standard_help_func, NULL,
@@ -113,8 +113,6 @@ make_default_dialog (const gchar *title)
                                             GTK_RESPONSE_APPLY,
                                             GTK_RESPONSE_CANCEL,
                                             -1);
-
-   gimp_window_set_transient (GTK_WINDOW (data->dialog));
 
    g_signal_connect (data->dialog, "response",
                      G_CALLBACK (dialog_response),

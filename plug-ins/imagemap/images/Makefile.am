@@ -5,7 +5,6 @@ STOCK_IMAGES = \
 	stock-coord.png		\
 	stock-dimension.png	\
 	stock-java.png		\
-	stock-map-info.png	\
 	stock-polygon.png	\
 	stock-rectangle.png	\
 	stock-to-back.png	\

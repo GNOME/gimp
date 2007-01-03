@@ -29,8 +29,6 @@
 
 #include "images/imap-stock-pixbufs.h"
 
-#include "libgimp/stdplugins-intl.h"
-
 static GtkIconFactory *imap_icon_factory = NULL;
 
 static GtkStockItem imap_stock_items[] =
@@ -39,8 +37,6 @@ static GtkStockItem imap_stock_items[] =
   { IMAP_STOCK_COORD,  	 	NULL, 0, 0, NULL },
   { IMAP_STOCK_DIMENSION,       NULL, 0, 0, NULL },
   { IMAP_STOCK_JAVA, 		NULL, 0, 0, NULL },
-  { IMAP_STOCK_MAP_INFO,
-    N_("Edit Map Info..."), 0, 0, GETTEXT_PACKAGE "-std-plug-ins" },
   { IMAP_STOCK_POLYGON,       	NULL, 0, 0, NULL },
   { IMAP_STOCK_RECTANGLE,	NULL, 0, 0, NULL },
   { IMAP_STOCK_TO_BACK,    	NULL, 0, 0, NULL },
@@ -83,7 +79,6 @@ init_stock_icons (void)
    add_stock_icon (IMAP_STOCK_COORD,     stock_coord);
    add_stock_icon (IMAP_STOCK_DIMENSION, stock_dimension);
    add_stock_icon (IMAP_STOCK_JAVA,      stock_java);
-   add_stock_icon (IMAP_STOCK_MAP_INFO,  stock_map_info);
    add_stock_icon (IMAP_STOCK_POLYGON,   stock_polygon);
    add_stock_icon (IMAP_STOCK_RECTANGLE, stock_rectangle);
    add_stock_icon (IMAP_STOCK_TO_BACK,   stock_to_back);

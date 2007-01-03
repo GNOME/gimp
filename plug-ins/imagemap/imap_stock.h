@@ -24,17 +24,16 @@
 #ifndef _IMAP_STOCK_H
 #define _IMAP_STOCK_H
 
-#define IMAP_STOCK_ARROW		"imap-arrow"
-#define IMAP_STOCK_CIRCLE		"imap-circle"
-#define IMAP_STOCK_COORD	       	"imap-coord"
-#define IMAP_STOCK_DIMENSION   		"imap-dimension"
-#define IMAP_STOCK_JAVA			"imap-java"
-#define IMAP_STOCK_LINK			"imap-link"
-#define IMAP_STOCK_MAP_INFO		"imap-map-info"
-#define IMAP_STOCK_POLYGON		"imap-polygon"
-#define IMAP_STOCK_RECTANGLE		"imap-rectangle"
-#define IMAP_STOCK_TO_BACK		"imap-to-back"
-#define IMAP_STOCK_TO_FRONT		"imap-to-front"
+#define IMAP_STOCK_ARROW        "imap-arrow"
+#define IMAP_STOCK_CIRCLE       "imap-circle"
+#define IMAP_STOCK_COORD        "imap-coord"
+#define IMAP_STOCK_DIMENSION    "imap-dimension"
+#define IMAP_STOCK_JAVA         "imap-java"
+#define IMAP_STOCK_LINK         "imap-link"
+#define IMAP_STOCK_POLYGON      "imap-polygon"
+#define IMAP_STOCK_RECTANGLE    "imap-rectangle"
+#define IMAP_STOCK_TO_BACK      "imap-to-back"
+#define IMAP_STOCK_TO_FRONT     "imap-to-front"
 
 void init_stock_icons(void);
 

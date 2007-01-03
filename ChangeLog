@@ -1,3 +1,15 @@
+2007-01-03  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/imagemap/images/Makefile.am
+	* plug-ins/imagemap/images/stock-map-info.png
+	* plug-ins/imagemap/imap_stock.[ch]: removed custom info icon.
+
+	* plug-ins/imagemap/imap_menu.c: use GTK_STOCK_INFO instead.
+
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_default_dialog.c: make dialogs transient
+	to the main window and the main window transient to the image window.
+
 2007-01-03  Tor Lillqvist  <tml@novell.com>
 
 	* plug-ins/common/lcms.c (run): Fix mixup in retrieving the

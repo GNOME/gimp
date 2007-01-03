@@ -1243,6 +1243,9 @@ dialog(GimpDrawable *drawable)
    gimp_help_connect (dlg, gimp_standard_help_func, "plug-in-imagemap", NULL);
 
    gtk_window_set_position(GTK_WINDOW(dlg), GTK_WIN_POS_MOUSE);
+
+   gimp_window_set_transient (GTK_WINDOW (dlg));
+
    g_signal_connect(dlg, "delete-event",
                     G_CALLBACK(close_callback), NULL);
    g_signal_connect(dlg, "key-press-event",

@@ -218,7 +218,7 @@ static const GtkActionEntry entries[] = {
   { "ZoomToMenu", NULL, "_Zoom To" },
 
   { "MappingMenu", NULL, "_Mapping" },
-  { "EditMapInfo", IMAP_STOCK_MAP_INFO, "Edit Map Info...", NULL, NULL,
+  { "EditMapInfo", GTK_STOCK_INFO, "Edit Map Info...", NULL, NULL,
     do_settings_dialog},
 
   { "ToolsMenu", NULL, "_Tools" },
@@ -425,11 +425,11 @@ make_menu(GtkWidget *main_vbox, GtkWidget *window)
   gtk_action_group_add_toggle_actions (action_group, toggle_entries,
 				       G_N_ELEMENTS (toggle_entries), window);
 
-  gtk_action_group_add_radio_actions (action_group, color_entries, 
-				      G_N_ELEMENTS (color_entries), 0, 
+  gtk_action_group_add_radio_actions (action_group, color_entries,
+				      G_N_ELEMENTS (color_entries), 0,
 				      G_CALLBACK (set_preview_color), NULL);
-  gtk_action_group_add_radio_actions (action_group, zoom_entries, 
-				      G_N_ELEMENTS (zoom_entries), 0, 
+  gtk_action_group_add_radio_actions (action_group, zoom_entries,
+				      G_N_ELEMENTS (zoom_entries), 0,
 				      G_CALLBACK (set_zoom_factor), NULL);
   gtk_action_group_add_radio_actions (action_group, mapping_entries,
 				      G_N_ELEMENTS (mapping_entries), 0,
