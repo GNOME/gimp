@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-03 12:43+0100\n"
-"PO-Revision-Date: 2007-01-03 12:36+0100\n"
+"POT-Creation-Date: 2007-01-04 15:42+0100\n"
+"PO-Revision-Date: 2007-01-04 11:02+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1018,7 +1018,7 @@ msgstr "_Tasti scorciatoia"
 
 #: ../app/actions/dialogs-actions.c:200
 msgid "_Module Manager"
-msgstr "_Manager dei moduli"
+msgstr "Gestione _moduli"
 
 #: ../app/actions/dialogs-actions.c:205
 msgid "_Tip of the Day"
@@ -6866,7 +6866,7 @@ msgstr "Autocaricamento"
 
 #: ../app/dialogs/module-dialog.c:176
 msgid "Module Path"
-msgstr "Percorso moduli"
+msgstr "Percorso modulo"
 
 #: ../app/dialogs/module-dialog.c:426
 msgid "<No modules>"
@@ -11253,15 +11253,15 @@ msgstr "Rilevato automaticamente"
 msgid "By Extension"
 msgstr "Per estensione"
 
-#: ../app/widgets/gimpfiledialog.c:476
+#: ../app/widgets/gimpfiledialog.c:516
 msgid "All files"
 msgstr "Tutti i file"
 
-#: ../app/widgets/gimpfiledialog.c:481
+#: ../app/widgets/gimpfiledialog.c:521
 msgid "All images"
 msgstr "Tutte le immagini"
 
-#: ../app/widgets/gimpfiledialog.c:617
+#: ../app/widgets/gimpfiledialog.c:657
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Seleziona _tipo di file (%s)"
