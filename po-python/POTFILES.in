@@ -1,6 +1,8 @@
 # Files from the Gimp distribution which have already been
 # marked to allow runtime translation of messages
 
+[encoding: UTF-8]
+
 plug-ins/pygimp/gimpfu.py
 plug-ins/pygimp/gimpui.py
 

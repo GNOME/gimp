@@ -1,3 +1,7 @@
+2007-01-04  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.in: specify encoding (bug #389201).
+
 2006-12-27  Adam Weinberger  <adamw@gnome.org>
 
 	* en_CA.po: Updated Canadian English translation.

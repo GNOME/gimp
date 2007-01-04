@@ -1,6 +1,8 @@
 # Files from the Gimp distribution which have already been
 # marked to allow runtime translation of messages
 
+[encoding: UTF-8]
+
 plug-ins/script-fu/script-fu-console.c
 plug-ins/script-fu/script-fu-interface.c
 plug-ins/script-fu/script-fu-scripts.c

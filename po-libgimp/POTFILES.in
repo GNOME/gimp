@@ -1,6 +1,8 @@
 # Files from the Gimp distribution which have already been
 # marked to allow runtime translation of messages
 
+[encoding: UTF-8]
+
 libgimp/gimpbrushmenu.c
 libgimp/gimpbrushselectbutton.c
 libgimp/gimpexport.c
