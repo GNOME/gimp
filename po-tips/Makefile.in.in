@@ -234,17 +234,13 @@ update-po: Makefile
 # and Intltool tags (enclosed in square brackets), and appending a full
 # relative path to them
 POTFILES: POTFILES.in
-	( if test 'x$(srcdir)' != 'x.'; then \
-	    posrcprefix='$(top_srcdir)/'; \
-	  else \
-	    posrcprefix="../"; \
-	  fi; \
+	( posrcprefix='$(top_srcdir)/'; \
 	  rm -f $@-t $@ \
-	    && (sed -e '/^#/d' 						\
-		    -e "s/^\[.*\] +//" 					\
-		    -e '/^[ 	]*$$/d' 				\
-		    -e "s@.*@	$$posrcprefix& \\\\@" < $(srcdir)/$@.in	\
-		| sed -e '$$s/\\$$//') > $@-t \
+	    && (sed -e '/^#/d' 					\
+		    -e 's/^[[].*] *//' 				\
+		    -e '/^[ 	]*$$/d' 			\
+		    -e "s@^@	$$posrcprefix@" $(srcdir)/$@.in	\
+		| sed -e '$$!s/$$/ \\/') > $@-t \
 	    && chmod a-w $@-t \
 	    && mv $@-t $@ )
 
