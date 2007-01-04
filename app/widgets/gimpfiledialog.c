@@ -412,7 +412,47 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
 
   gimp_file_dialog_set_file_proc (dialog, NULL);
 
+#ifndef G_OS_WIN32
   dirname  = g_path_get_dirname (uri);
+#else
+  /* g_path_get_dirname() is supposed to work on pathnames, not
+   * URIs.
+   *
+   * If uri points to a file on the root of a drive
+   * "file:///d:/foo.png", g_path_get_dirname() would return
+   * "file:///d:". (What we really would want is "file:///d:/".) When
+   * this then is passed inside gtk+ to g_filename_from_uri() we get
+   * "d:" which is not an absolute pathname. This currently causes an
+   * assertion failure in gtk+. This scenario occurs if we have opened
+   * an image from the root of a drive and then do Save As.
+   *
+   * Of course, gtk+ shouldn't assert even if we feed it slighly bogus
+   * data, and that problem should be fixed, too. But to get the
+   * correct default current folder in the filechooser combo box, we
+   * need to pass it the proper URI for an absolute path anyway. So
+   * don't use g_path_get_dirname() on file: URIs.
+   */
+  if (g_str_has_prefix (uri, "file:///"))
+    {
+      char *filepath, *dirpath = NULL;
+
+      filepath = g_filename_from_uri (uri, NULL, NULL);
+      if (filepath != NULL)
+	{
+	  dirpath = g_path_get_dirname (filepath);
+	  g_free (filepath);
+	}
+      if (dirpath != NULL)
+	{
+	  dirname = g_filename_to_uri (dirpath, NULL, NULL);
+	  g_free (dirpath);
+	}
+      else
+	dirname = NULL;
+    }
+  else
+    dirname = g_path_get_dirname (uri);
+#endif
   basename = file_utils_uri_display_basename (uri);
 
   if (dirname && strlen (dirname) && strcmp (dirname, "."))
