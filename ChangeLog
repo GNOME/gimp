@@ -120,8 +120,7 @@
 	Merged from HEAD branch, with some hackery:
 
 	* app/text/gimptextlayout-render.c (gimp_text_layout_render_glyphs): 
-	handle tabs correctly, as instructed by behdad.  Fixes
-	bug #353132.	
+	handle tabs correctly, as instructed by behdad.  Fixes bug #353132.	
 
 2006-08-29  Sven Neumann  <sven@gimp.org>
 

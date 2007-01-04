@@ -6,6 +6,26 @@ here. New features are being added in the HEAD branch that will be
 released as GIMP version 2.4.
 
 
+Bugs fixed in GIMP 2.2.14
+=========================
+
+- avoid crashing on newer versions of the winicon format (bug #352899)
+- fixed crash in Postscript plug-in (bug #353381)
+- fixed handling of tabs in the text tool (bug #353132)
+- fixed bug in Depth Merge plug-in (bug #355219)
+- fixed bug in GimpDrawablePreview widget (bug #353639)
+- fixed bug in Line Nove script (bug #357433)
+- fixed bug in Ripple plug-in (bug #357431)
+- save locale independent files from Fractal Explorer plug-in (bug #360095)
+- fixed bug in Super Nova plug-in (bug #340073)
+- be more robust against broken XCF files (bug #357809)
+- fixed drawing issues in Image Map plug-in (bug #311621)
+- fixed smoothing option in Fractal Explorer plug-in (bug #372671)
+- load channels in the proper order when opening an XCF file (bug #378003)
+- deal with floating selections in the Burn-In Animation script (bug #384096)
+- fixed clipping in the GimpPreviewArea widget (bug #392692)
+
+
 Bugs fixed in GIMP 2.2.13
 =========================
 
