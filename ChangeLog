@@ -1,3 +1,7 @@
+2007-01-04  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppreviewarea.c: fixed clipping (bug #392692).
+
 2007-01-04  Tor Lillqvist  <tml@novell.com>
 
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_image): Add
