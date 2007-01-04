@@ -1,3 +1,9 @@
+2007-01-04  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* libgimpwidgets/gimppreviewarea.c: fixed clipping (bug #392692).
+
 2006-12-12  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/burn-in-anim.scm: Don't allow one of the

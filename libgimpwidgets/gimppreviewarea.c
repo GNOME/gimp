@@ -389,10 +389,10 @@ gimp_preview_area_draw (GimpPreviewArea *area,
 
   if (x < 0)
     {
-      gint  bpp = gimp_preview_area_image_type_bytes (type);
+      gint bpp = gimp_preview_area_image_type_bytes (type);
 
-      buf   -= x * bpp;
-      width -= x;
+      buf -= x * bpp;
+      width += x;
 
       x = 0;
     }
@@ -402,8 +402,8 @@ gimp_preview_area_draw (GimpPreviewArea *area,
 
   if (y < 0)
     {
-      buf    -= y * rowstride;
-      height -= y;
+      buf -= y * rowstride;
+      height += y;
 
       y = 0;
     }
@@ -665,11 +665,11 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
   if (x < 0)
     {
-      gint  bpp = gimp_preview_area_image_type_bytes (type);
+      gint bpp = gimp_preview_area_image_type_bytes (type);
 
-      buf1  -= x * bpp;
-      buf2  -= x * bpp;
-      width -= x;
+      buf1 -= x * bpp;
+      buf2 -= x * bpp;
+      width += x;
 
       x = 0;
     }
@@ -679,9 +679,9 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
   if (y < 0)
     {
-      buf1   -= y * rowstride1;
-      buf2   -= y * rowstride2;
-      height -= y;
+      buf1 -= y * rowstride1;
+      buf2 -= y * rowstride2;
+      height += y;
 
       y = 0;
     }
@@ -1032,12 +1032,12 @@ gimp_preview_area_mask (GimpPreviewArea *area,
 
   if (x < 0)
     {
-      gint  bpp = gimp_preview_area_image_type_bytes (type);
+      gint bpp = gimp_preview_area_image_type_bytes (type);
 
-      buf1  -= x * bpp;
-      buf2  -= x * bpp;
-      mask  -= x;
-      width -= x;
+      buf1 -= x * bpp;
+      buf2 -= x * bpp;
+      mask -= x;
+      width += x;
 
       x = 0;
     }
@@ -1047,10 +1047,10 @@ gimp_preview_area_mask (GimpPreviewArea *area,
 
   if (y < 0)
     {
-      buf1   -= y * rowstride1;
-      buf2   -= y * rowstride2;
-      mask   -= y * rowstride_mask;
-      height -= y;
+      buf1 -= y * rowstride1;
+      buf2 -= y * rowstride2;
+      mask -= y * rowstride_mask;
+      height += y;
 
       y = 0;
     }
@@ -1566,7 +1566,7 @@ gimp_preview_area_fill (GimpPreviewArea *area,
 
   if (x < 0)
     {
-      width -= x;
+      width += x;
       x = 0;
     }
 
@@ -1575,7 +1575,7 @@ gimp_preview_area_fill (GimpPreviewArea *area,
 
   if (y < 0)
     {
-      height -= y;
+      height += y;
       y = 0;
     }
 
