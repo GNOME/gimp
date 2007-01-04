@@ -57,9 +57,11 @@
   (set! theWidth (car (gimp-image-width theImage)))
   (set! theHeight (car (gimp-image-height theImage)))
   (if (= inMottle TRUE)
-      (begin (set! mLayer (car (gimp-layer-new theImage theWidth theHeight
-                                               RGBA-IMAGE "Mottle"
-                                               100 DARKEN-ONLY-MODE)))
+      (let (
+	    (mLayer (car (gimp-layer-new theImage theWidth theHeight
+					 RGBA-IMAGE "Mottle"
+					 100 DARKEN-ONLY-MODE)))
+	    )
 
              (gimp-image-add-layer theImage mLayer 0)
              (gimp-selection-all theImage)
