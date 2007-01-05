@@ -288,6 +288,9 @@ gimp_brush_select_button_init (GimpBrushSelectButton *button)
                          &color_data_size,
                          &color_data);
 
+  if (color_data)
+    g_free (color_data);
+
   priv->inside = gimp_brush_select_button_create_inside (button);
   gtk_container_add (GTK_CONTAINER (button), priv->inside);
 
@@ -319,15 +322,6 @@ gimp_brush_select_button_new (const gchar          *title,
                               GimpLayerModeEffects  paint_mode)
 {
   GtkWidget *button;
-
-  if (opacity < 0.0)
-    opacity = gimp_context_get_opacity ();
-
-  if (spacing == -1)
-    gimp_brush_get_spacing (brush_name, &spacing);
-
-  if (paint_mode == -1)
-    paint_mode = gimp_context_get_paint_mode ();
 
   if (title)
     button = g_object_new (GIMP_TYPE_BRUSH_SELECT_BUTTON,
@@ -497,6 +491,9 @@ gimp_brush_select_button_set_property (GObject      *object,
 {
   GimpBrushSelectButton        *button = GIMP_BRUSH_SELECT_BUTTON (object);
   GimpBrushSelectButtonPrivate *priv;
+  gdouble opacity;
+  gint32 spacing;
+  gint32 paint_mode;
 
   priv = GIMP_BRUSH_SELECT_BUTTON_GET_PRIVATE (button);
 
@@ -511,13 +508,19 @@ gimp_brush_select_button_set_property (GObject      *object,
                                           -1.0, -1, -1);
       break;
     case PROP_BRUSH_OPACITY:
-      priv->opacity = g_value_get_double (value);
+      opacity = g_value_get_double (value);
+      if (opacity >= 0.0)
+        priv->opacity = opacity;
       break;
     case PROP_BRUSH_SPACING:
-      priv->spacing = g_value_get_int (value);
+      spacing = g_value_get_int (value);
+      if (spacing != -1)
+        priv->spacing = spacing;
       break;
     case PROP_BRUSH_PAINT_MODE:
-      priv->paint_mode = g_value_get_int (value);
+      paint_mode = g_value_get_int (value);
+      if (paint_mode != -1)
+        priv->paint_mode = paint_mode;
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
