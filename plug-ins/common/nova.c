@@ -174,7 +174,7 @@ query (void)
                           "Eiichi Takamori",
                           "Eiichi Takamori",
                           "May 2000",
-                          N_("Su_pernova..."),
+                          N_("Super_nova..."),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
@@ -469,7 +469,7 @@ nova_center_create (GimpDrawable *drawable,
                                          2 * drawable->height,
                                          0, drawable->height);
 
-  gtk_table_set_row_spacing (GTK_TABLE (center->coords), 1, 12);
+  gtk_table_set_row_spacing (GTK_TABLE (center->coords), 1, 6);
   gtk_box_pack_start (GTK_BOX (hbox), center->coords, FALSE, FALSE, 0);
   gtk_widget_show (center->coords);
 
@@ -630,10 +630,10 @@ nova_center_preview_expose (GtkWidget  *widget,
 /*
  *    Handle other events on the preview
  */
+
 static gboolean
-nova_center_preview_events (GtkWidget  *widget,
-                            GdkEvent   *event,
-                            NovaCenter *center)
+nova_center_update (GtkWidget  *widget,
+                    NovaCenter *center)
 {
   gint    width, height;
   gint    curx, cury;
@@ -641,39 +641,49 @@ nova_center_preview_events (GtkWidget  *widget,
 
   gimp_preview_get_size (center->preview, &width, &height);
 
+  gtk_widget_get_pointer (widget, &curx, &cury);
+
+  zoom = gimp_zoom_preview_get_factor (GIMP_ZOOM_PREVIEW (center->preview));
+  center->curx = (curx + center->preview->xoff) / zoom;
+  center->cury = (cury + center->preview->yoff) / zoom;
+
+  nova_center_cursor_draw (center);
+
+  g_signal_handlers_block_by_func (center->coords,
+                                   nova_center_coords_update,
+                                   center);
+
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (center->coords), 0,
+                              center->curx * center->drawable->width /
+                              width);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (center->coords), 1,
+                              center->cury * center->drawable->height /
+                              height);
+
+  g_signal_handlers_unblock_by_func (center->coords,
+                                     nova_center_coords_update,
+                                     center);
+
+  nova_center_coords_update (GIMP_SIZE_ENTRY (center->coords), center);
+
+  return TRUE;
+}
+
+static gboolean
+nova_center_preview_events (GtkWidget  *widget,
+                            GdkEvent   *event,
+                            NovaCenter *center)
+{
   switch (event->type)
     {
     case GDK_MOTION_NOTIFY:
-      if (! (((GdkEventMotion *) event)->state & GDK_BUTTON2_MASK))
-        break;
+      if (((GdkEventMotion *) event)->state & GDK_BUTTON2_MASK)
+        return nova_center_update (widget, center);
+      break;
 
     case GDK_BUTTON_PRESS:
-      if (((GdkEventButton *) event)->button != 2)
-        break;
-      gtk_widget_get_pointer (widget, &curx, &cury);
-
-      zoom = gimp_zoom_preview_get_factor (GIMP_ZOOM_PREVIEW (center->preview));
-      center->curx = (curx + center->preview->xoff) / zoom;
-      center->cury = (cury + center->preview->yoff) / zoom;
-
-      nova_center_cursor_draw (center);
-
-      g_signal_handlers_block_by_func (center->coords,
-                                       nova_center_coords_update,
-                                       center);
-
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (center->coords), 0,
-                                  center->curx * center->drawable->width /
-                                  width);
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (center->coords), 1,
-                                  center->cury * center->drawable->height /
-                                  height);
-
-      g_signal_handlers_unblock_by_func (center->coords,
-                                         nova_center_coords_update,
-                                         center);
-
-      nova_center_coords_update (GIMP_SIZE_ENTRY (center->coords), center);
+      if (((GdkEventButton *) event)->button == 2)
+        return nova_center_update (widget, center);
       break;
 
     default:
@@ -783,6 +793,7 @@ nova (GimpDrawable *drawable,
        gimp_pixel_rgn_init (&dest_rgn, drawable,
                             x1, y1, x2-x1, y2-y1, TRUE, TRUE);
      }
+
    alpha = (has_alpha) ? bpp - 1 : bpp;
 
    /* Initialize progress */
@@ -884,7 +895,9 @@ nova (GimpDrawable *drawable,
                dest += bpp;
              }
          }
+
        gimp_preview_draw_buffer (preview, dest_row, bpp * width);
+
        g_free (cache);
        g_free (save_src);
        g_free (dest_row);
