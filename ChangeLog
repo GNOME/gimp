@@ -1,5 +1,11 @@
 2007-01-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/bmp/bmpread.c (ReadImage): applied patch from Aurimas
+	Juška. Use the alpha channel if and only if a bitmap contains at
+	least one non-zero value. Fixes bug #352262.
+
+2007-01-05  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/nova.c: minor code cleanup. Changed mnemonic of
 	the menu entry.
 
