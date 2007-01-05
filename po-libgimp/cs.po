@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-03 14:14+0100\n"
-"PO-Revision-Date: 2007-01-03 14:15+0100\n"
+"POT-Creation-Date: 2007-01-05 10:59+0100\n"
+"PO-Revision-Date: 2007-01-05 11:13+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Výběr stopy"
 
-#: ../libgimp/gimpbrushselectbutton.c:899
+#: ../libgimp/gimpbrushselectbutton.c:908
 #: ../libgimp/gimppatternselectbutton.c:712
 msgid "_Browse..."
 msgstr "_Procházet..."
@@ -775,12 +775,12 @@ msgstr "Profil barev vašeho (primárního) monitoru."
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid ""
-"When enabled, the GIMP will try to use the display color profile from the "
+"When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Je-li povoleno, GIMP se pokusí použít profil barev displeje ze systému oken. "
-"Nastavený profil monitoru se pak používá jen jako záloha."
+"Je-li povoleno, GIMP se pokusí použít profil barev displeje z okenního "
+"systému. Nastavený profil monitoru se pak používá jen jako záloha."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
 msgid "The default RGB working space color profile."
