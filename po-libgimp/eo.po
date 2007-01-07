@@ -1,0 +1,1662 @@
+# This is the Esperanto catalog for The GIMP.
+# Copyright (C) 1999 Free Software Foundation, Inc.
+# Antonio C. Codazzi "la Filozofo" <f_sophia@libero.it> 2006
+# 
+# Check Esperanto special letters = ĉŝĝĥĵŭ
+#
+# Tradukaĵoj:
+# query = informpeto /serĉo
+# matches = krongruaĵoj
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp 2.3\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-01-07 22:23+0100\n"
+"PO-Revision-Date: 2006-12-11 00:22+0200\n"
+"Last-Translator: Antonio C. Codazzi <f_sophia@libero.it>\n"
+"Language-Team: eo-tradukado.tuxfamily.org\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Date: dom feb  6 16:47:39 CET 2000\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../libgimp/gimpbrushselectbutton.c:170
+#, fuzzy
+msgid "Brush Selection"
+msgstr "_Elekto"
+
+#: ../libgimp/gimpbrushselectbutton.c:911
+#: ../libgimp/gimppatternselectbutton.c:712
+msgid "_Browse..."
+msgstr ""
+
+#: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
+#, c-format
+msgid "%s can't handle layers"
+msgstr "%s ne povas mastri tavolojn"
+
+#: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
+#: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
+msgid "Merge Visible Layers"
+msgstr "Kunfandu Videblajn Tavolojn"
+
+#: ../libgimp/gimpexport.c:226
+#, c-format
+msgid "%s can't handle layer offsets, size or opacity"
+msgstr "%s ne povas mastri deŝovon, grandecon aŭ opakecon de tavoloj"
+
+#: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
+#, c-format
+msgid "%s can only handle layers as animation frames"
+msgstr "%s povas mastri tavolojn nur kiel filmeroj de animacio"
+
+#: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
+msgid "Save as Animation"
+msgstr "Konservu kiel Animacio"
+
+#: ../libgimp/gimpexport.c:245 ../libgimp/gimpexport.c:254
+#: ../libgimp/gimpexport.c:263
+msgid "Flatten Image"
+msgstr "Plata Bildo"
+
+#: ../libgimp/gimpexport.c:262
+#, c-format
+msgid "%s can't handle transparency"
+msgstr "%s ne povas mastri diafanecon"
+
+#: ../libgimp/gimpexport.c:271
+#, c-format
+msgid "%s can't handle layer masks"
+msgstr "%s ne povas mastri tavolmaskojn"
+
+#: ../libgimp/gimpexport.c:272
+msgid "Apply Layer Masks"
+msgstr "Apliku Tavolmaskojn"
+
+#: ../libgimp/gimpexport.c:280
+#, c-format
+msgid "%s can only handle RGB images"
+msgstr "%s povas mastri nur RGB bildojn"
+
+#: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
+#: ../libgimp/gimpexport.c:328
+msgid "Convert to RGB"
+msgstr "Transigo al RGB"
+
+#: ../libgimp/gimpexport.c:289
+#, c-format
+msgid "%s can only handle grayscale images"
+msgstr "%s povas mastri nur grizgamajn bildojn"
+
+#: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
+#: ../libgimp/gimpexport.c:340
+msgid "Convert to Grayscale"
+msgstr "Konvertu al Grizgamo"
+
+#: ../libgimp/gimpexport.c:298
+#, c-format
+msgid "%s can only handle indexed images"
+msgstr "%s povas mastri nur indicitajn bildojn"
+
+#: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
+#: ../libgimp/gimpexport.c:338
+msgid ""
+"Convert to Indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"Konvertu al Indicita bildo per \n"
+"defaŭltaj agordoj (faru tion mane por zorge agordi\n"
+"la rezulton)"
+
+#: ../libgimp/gimpexport.c:308
+#, c-format
+msgid "%s can only handle bitmap (two color) indexed images"
+msgstr "%s povas mastri nur bitmapan (du koloroj) aŭ indicitajn bildojn"
+
+#: ../libgimp/gimpexport.c:309
+msgid ""
+"Convert to Indexed using bitmap default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"Konvertu al Indicita bildo per defaŭltaj agordoj de bitmapo\n"
+"(aru tion mane por zorge agordi la rezulton)"
+
+#: ../libgimp/gimpexport.c:318
+#, c-format
+msgid "%s can only handle RGB or grayscale images"
+msgstr "%s povas mastri nur RGB aŭ grizgamajn bildojn"
+
+#: ../libgimp/gimpexport.c:327
+#, c-format
+msgid "%s can only handle RGB or indexed images"
+msgstr "%s povas mastri nur RGB aŭ indicitajn bildojn"
+
+#: ../libgimp/gimpexport.c:337
+#, c-format
+msgid "%s can only handle grayscale or indexed images"
+msgstr "%s  povas mastri nur grizgamajn aŭ indicitajn bildojn"
+
+#: ../libgimp/gimpexport.c:348
+#, c-format
+msgid "%s needs an alpha channel"
+msgstr "%s necesas alfan kanalon"
+
+#: ../libgimp/gimpexport.c:349
+msgid "Add Alpha Channel"
+msgstr "Aldonu Alfan Kanalon"
+
+#: ../libgimp/gimpexport.c:383
+msgid "Confirm Save"
+msgstr "Konfirmu Konservon"
+
+#: ../libgimp/gimpexport.c:389
+msgid "Confirm"
+msgstr "Konfirmu"
+
+#: ../libgimp/gimpexport.c:464
+msgid "Export File"
+msgstr "Eksportu Dosieron"
+
+#: ../libgimp/gimpexport.c:468
+msgid "_Ignore"
+msgstr "_Ignoru"
+
+#: ../libgimp/gimpexport.c:470
+msgid "_Export"
+msgstr "_Eksportu"
+
+#. the headline
+#: ../libgimp/gimpexport.c:499
+#, c-format
+msgid ""
+"Your image should be exported before it can be saved as %s for the following "
+"reasons:"
+msgstr ""
+"La bildo estas eksportenda antaŭ ol ĝi povas esti konservita kiel %s pro ĉi "
+"kaŭzoj:"
+
+#. the footline
+#: ../libgimp/gimpexport.c:573
+msgid "The export conversion won't modify your original image."
+msgstr "La eksportado ne modifos la originan bildon."
+
+#: ../libgimp/gimpexport.c:673
+#, c-format
+msgid ""
+"You are about to save a layer mask as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"Oni konservos tavolmaskon kiel %s.\n"
+"Ĉi tiu ne konservos videblajn tavolojn."
+
+#: ../libgimp/gimpexport.c:679
+#, c-format
+msgid ""
+"You are about to save a channel (saved selection) as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"Oni konservos kanalon (konservita elekto) kiel %s.\n"
+"Ĉi tiu ne konservos videblajn tavolojn."
+
+#: ../libgimp/gimpfontselectbutton.c:130
+msgid "Font Selection"
+msgstr "Elekto de Tiparoj"
+
+#: ../libgimp/gimpfontselectbutton.c:145
+msgid "Sans"
+msgstr "Sen"
+
+#: ../libgimp/gimpgradientselectbutton.c:148
+#, fuzzy
+msgid "Gradient Selection"
+msgstr "Elekto de Tiparoj"
+
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
+msgid "(Empty)"
+msgstr "(Malplena)"
+
+#: ../libgimp/gimppaletteselectbutton.c:130
+#, fuzzy
+msgid "Palette Selection"
+msgstr "Elekto de Tiparoj"
+
+#: ../libgimp/gimppatternselectbutton.c:156
+#, fuzzy
+msgid "Pattern Selection"
+msgstr "Elekto de Tiparoj"
+
+#: ../libgimp/gimpprocbrowserdialog.c:140
+msgid "by name"
+msgstr "laŭ nomo"
+
+#: ../libgimp/gimpprocbrowserdialog.c:141
+msgid "by description"
+msgstr "laŭ priskribo"
+
+#: ../libgimp/gimpprocbrowserdialog.c:142
+msgid "by help"
+msgstr "laŭ helpo"
+
+#: ../libgimp/gimpprocbrowserdialog.c:143
+msgid "by author"
+msgstr "laŭ aŭtoro"
+
+#: ../libgimp/gimpprocbrowserdialog.c:144
+msgid "by copyright"
+msgstr "laŭ kopirajto"
+
+#: ../libgimp/gimpprocbrowserdialog.c:145
+msgid "by date"
+msgstr "laŭ dato"
+
+#: ../libgimp/gimpprocbrowserdialog.c:146
+msgid "by type"
+msgstr "laŭ speco"
+
+#: ../libgimp/gimpprocbrowserdialog.c:377
+msgid "Searching"
+msgstr "Serĉo"
+
+#: ../libgimp/gimpprocbrowserdialog.c:388
+msgid "Searching by name"
+msgstr "Serĉo laŭ nomo"
+
+#: ../libgimp/gimpprocbrowserdialog.c:409
+msgid "Searching by description"
+msgstr "Serĉo laŭ priskribo"
+
+#: ../libgimp/gimpprocbrowserdialog.c:416
+msgid "Searching by help"
+msgstr "Serĉo laŭ helpo"
+
+#: ../libgimp/gimpprocbrowserdialog.c:423
+msgid "Searching by author"
+msgstr "Serĉo laŭ aŭtoro"
+
+#: ../libgimp/gimpprocbrowserdialog.c:430
+msgid "Searching by copyright"
+msgstr "Serĉo laŭ kopirajto"
+
+#: ../libgimp/gimpprocbrowserdialog.c:437
+msgid "Searching by date"
+msgstr "Serĉo laŭ dato"
+
+#: ../libgimp/gimpprocbrowserdialog.c:444
+msgid "Searching by type"
+msgstr "Serĉo laŭ speco"
+
+#: ../libgimp/gimpprocbrowserdialog.c:454
+#, c-format
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] "%d proceduro"
+msgstr[1] "%d proceduroj"
+
+#: ../libgimp/gimpprocbrowserdialog.c:463
+msgid "No matches for your query"
+msgstr "Neniu kongruaĵo laŭ informpeto"
+
+#: ../libgimp/gimpprocbrowserdialog.c:467
+#, c-format
+msgid "%d procedure matches your query"
+msgid_plural "%d procedures match your query"
+msgstr[0] "%d proceduro kongruas laŭ informpeto"
+msgstr[1] "%d proceduroj kongruas laŭ informpeto"
+
+#. count label
+#: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
+msgid "No matches"
+msgstr "Neniu kongruaĵo"
+
+#: ../libgimp/gimpprocview.c:143
+msgid "Parameters"
+msgstr "Parametroj"
+
+#: ../libgimp/gimpprocview.c:156
+msgid "Return Values"
+msgstr "Retrosenditaj Valoroj"
+
+#: ../libgimp/gimpprocview.c:169
+msgid "Additional Information"
+msgstr "Aldonaj Informoj"
+
+#: ../libgimp/gimpprocview.c:210
+msgid "Author:"
+msgstr "Aŭtoro:"
+
+#: ../libgimp/gimpprocview.c:222
+msgid "Date:"
+msgstr "Data:"
+
+#: ../libgimp/gimpprocview.c:234
+msgid "Copyright:"
+msgstr "Kopirajto:"
+
+#: ../libgimp/gimpunitcache.c:57
+msgid "percent"
+msgstr "procento"
+
+#: ../libgimpbase/gimpbaseenums.c:27
+msgid "_White (full opacity)"
+msgstr "_Blanko (tute opaka)"
+
+#: ../libgimpbase/gimpbaseenums.c:28
+msgid "_Black (full transparency)"
+msgstr "_Nigro (tute diafana)"
+
+#: ../libgimpbase/gimpbaseenums.c:29
+msgid "Layer's _alpha channel"
+msgstr "_Alfa kanalo de tavolo"
+
+#: ../libgimpbase/gimpbaseenums.c:30
+msgid "_Transfer layer's alpha channel"
+msgstr "_Transigul alfa kanalon de tavolo"
+
+#: ../libgimpbase/gimpbaseenums.c:31
+msgid "_Selection"
+msgstr "_Elekto"
+
+#: ../libgimpbase/gimpbaseenums.c:32
+msgid "_Grayscale copy of layer"
+msgstr "_Grizgama kopio de tavolo"
+
+#: ../libgimpbase/gimpbaseenums.c:33
+msgid "C_hannel"
+msgstr "Ka_nalo"
+
+#: ../libgimpbase/gimpbaseenums.c:63
+msgid "FG to BG (RGB)"
+msgstr "El MF al FN (RGB)"
+
+#: ../libgimpbase/gimpbaseenums.c:64
+msgid "FG to BG (HSV)"
+msgstr "El MF al FN (HSV)"
+
+#: ../libgimpbase/gimpbaseenums.c:65
+msgid "FG to transparent"
+msgstr "El MF al diafanaĵo"
+
+#: ../libgimpbase/gimpbaseenums.c:66
+msgid "Custom gradient"
+msgstr "Personigita gradiento"
+
+#: ../libgimpbase/gimpbaseenums.c:95
+msgid "FG color fill"
+msgstr "MF-kolora plenigo"
+
+#: ../libgimpbase/gimpbaseenums.c:96
+msgid "BG color fill"
+msgstr "FN-kolora plenigo"
+
+#: ../libgimpbase/gimpbaseenums.c:97
+msgid "Pattern fill"
+msgstr "Plenigo per motivo"
+
+#: ../libgimpbase/gimpbaseenums.c:127
+msgid "Add to the current selection"
+msgstr "Aldonu al nuna elekto"
+
+#: ../libgimpbase/gimpbaseenums.c:128
+msgid "Subtract from the current selection"
+msgstr "Deprenu el nuna elekto"
+
+#: ../libgimpbase/gimpbaseenums.c:129
+msgid "Replace the current selection"
+msgstr "Anstataŭigu nunan elekton"
+
+#: ../libgimpbase/gimpbaseenums.c:130
+msgid "Intersect with the current selection"
+msgstr "Sekcu kun nuna elekto"
+
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:95
+msgid "Red"
+msgstr "Ruĝo"
+
+#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:96
+msgid "Green"
+msgstr "Verdo"
+
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:97
+msgid "Blue"
+msgstr "Bluo"
+
+#: ../libgimpbase/gimpbaseenums.c:165
+msgid "Gray"
+msgstr "Grizo"
+
+#: ../libgimpbase/gimpbaseenums.c:166 ../libgimpbase/gimpbaseenums.c:531
+msgid "Indexed"
+msgstr "Indicita"
+
+#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:98
+msgid "Alpha"
+msgstr "Alfa"
+
+#: ../libgimpbase/gimpbaseenums.c:196
+msgid "Small"
+msgstr "Eta"
+
+#: ../libgimpbase/gimpbaseenums.c:197
+msgid "Medium"
+msgstr "Meza"
+
+#: ../libgimpbase/gimpbaseenums.c:198
+msgid "Large"
+msgstr "Granda"
+
+#: ../libgimpbase/gimpbaseenums.c:230
+msgid "Light checks"
+msgstr "Helaj kvadratitoj"
+
+#: ../libgimpbase/gimpbaseenums.c:231
+msgid "Mid-tone checks"
+msgstr "Meztonaj kvadratitoj"
+
+#: ../libgimpbase/gimpbaseenums.c:232
+msgid "Dark checks"
+msgstr "Malhelaj kvadratitoj"
+
+#: ../libgimpbase/gimpbaseenums.c:233
+msgid "White only"
+msgstr "Nur blanko"
+
+#: ../libgimpbase/gimpbaseenums.c:234
+msgid "Gray only"
+msgstr "Nur grizo"
+
+#: ../libgimpbase/gimpbaseenums.c:235
+msgid "Black only"
+msgstr "Nur nigro"
+
+#: ../libgimpbase/gimpbaseenums.c:263
+msgid "Image source"
+msgstr "Bildfonto"
+
+#: ../libgimpbase/gimpbaseenums.c:264
+msgid "Pattern source"
+msgstr "Motivfonto"
+
+#: ../libgimpbase/gimpbaseenums.c:293
+msgid "Lightness"
+msgstr "Lumeco"
+
+#: ../libgimpbase/gimpbaseenums.c:294
+msgid "Luminosity"
+msgstr "Heleco"
+
+#: ../libgimpbase/gimpbaseenums.c:295
+msgid "Average"
+msgstr "Media"
+
+#: ../libgimpbase/gimpbaseenums.c:323
+msgid "Dodge"
+msgstr "Ekranŝirmu"
+
+#: ../libgimpbase/gimpbaseenums.c:324
+msgid "Burn"
+msgstr "Bruligu"
+
+#: ../libgimpbase/gimpbaseenums.c:388
+msgid "gradient|Linear"
+msgstr "Lineara"
+
+#: ../libgimpbase/gimpbaseenums.c:389
+msgid "Bi-linear"
+msgstr "Bi-lineara"
+
+#: ../libgimpbase/gimpbaseenums.c:390
+msgid "Radial"
+msgstr "Radiala"
+
+#: ../libgimpbase/gimpbaseenums.c:391
+msgid "Square"
+msgstr "Kvadrata"
+
+#: ../libgimpbase/gimpbaseenums.c:392
+msgid "Conical (sym)"
+msgstr "Konusa (sim.)"
+
+#: ../libgimpbase/gimpbaseenums.c:393
+msgid "Conical (asym)"
+msgstr "Konusa (nesim.)"
+
+#: ../libgimpbase/gimpbaseenums.c:394
+msgid "Shaped (angular)"
+msgstr "Konturita (angula)"
+
+#: ../libgimpbase/gimpbaseenums.c:395
+msgid "Shaped (spherical)"
+msgstr "Konturita (sfera)"
+
+#: ../libgimpbase/gimpbaseenums.c:396
+msgid "Shaped (dimpled)"
+msgstr "Konturita (kurbita)"
+
+#: ../libgimpbase/gimpbaseenums.c:397
+msgid "Spiral (cw)"
+msgstr "Spirala (dekstroĝira)"
+
+#: ../libgimpbase/gimpbaseenums.c:398
+msgid "Spiral (ccw)"
+msgstr "Spirala (kontraŭmontrila)"
+
+#: ../libgimpbase/gimpbaseenums.c:429
+msgid "Intersections (dots)"
+msgstr "Intersekcoj (punktoj)"
+
+#: ../libgimpbase/gimpbaseenums.c:430
+msgid "Intersections (crosshairs)"
+msgstr "Intersekcoj (kruce)"
+
+#: ../libgimpbase/gimpbaseenums.c:431
+msgid "Dashed"
+msgstr "Haĉado"
+
+#: ../libgimpbase/gimpbaseenums.c:432
+msgid "Double dashed"
+msgstr "Duobla Haĉado"
+
+#: ../libgimpbase/gimpbaseenums.c:433
+msgid "Solid"
+msgstr "Solida"
+
+#: ../libgimpbase/gimpbaseenums.c:462
+msgid "Stock ID"
+msgstr "Bloku ID"
+
+#: ../libgimpbase/gimpbaseenums.c:463
+msgid "Inline pixbuf"
+msgstr "Surlinea Pixbuf"
+
+#: ../libgimpbase/gimpbaseenums.c:464
+msgid "Image file"
+msgstr "Bilddosiero"
+
+#: ../libgimpbase/gimpbaseenums.c:493
+msgid "RGB color"
+msgstr "RGB koloro"
+
+#: ../libgimpbase/gimpbaseenums.c:494 ../libgimpbase/gimpbaseenums.c:529
+msgid "Grayscale"
+msgstr "Grizgamo"
+
+#: ../libgimpbase/gimpbaseenums.c:495
+msgid "Indexed color"
+msgstr "Indicita koloro"
+
+#: ../libgimpbase/gimpbaseenums.c:527
+msgid "RGB"
+msgstr "RGB"
+
+#: ../libgimpbase/gimpbaseenums.c:528
+msgid "RGB-alpha"
+msgstr "RGB-alfa"
+
+#: ../libgimpbase/gimpbaseenums.c:530
+msgid "Grayscale-alpha"
+msgstr "Grizgamo-alfa"
+
+#: ../libgimpbase/gimpbaseenums.c:532
+msgid "Indexed-alpha"
+msgstr "Indicita-alfa"
+
+#: ../libgimpbase/gimpbaseenums.c:562
+msgid "interpolation|None"
+msgstr "Nenio"
+
+#: ../libgimpbase/gimpbaseenums.c:563
+msgid "interpolation|Linear"
+msgstr "Lineara"
+
+#: ../libgimpbase/gimpbaseenums.c:564
+msgid "Cubic"
+msgstr "Kuba"
+
+#: ../libgimpbase/gimpbaseenums.c:565
+msgid "Lanczos"
+msgstr "Lanczos"
+
+#: ../libgimpbase/gimpbaseenums.c:593
+msgid "Constant"
+msgstr "Kostanta"
+
+#: ../libgimpbase/gimpbaseenums.c:594
+msgid "Incremental"
+msgstr "Inkrementa"
+
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:267
+msgid "None"
+msgstr "Nenio"
+
+#: ../libgimpbase/gimpbaseenums.c:624
+msgid "Sawtooth wave"
+msgstr "Segildenta ondo"
+
+#: ../libgimpbase/gimpbaseenums.c:625
+msgid "Triangular wave"
+msgstr "Triangula ondo"
+
+#: ../libgimpbase/gimpbaseenums.c:654
+msgid "Run interactively"
+msgstr "Procezu interaktive"
+
+#: ../libgimpbase/gimpbaseenums.c:655
+msgid "Run non-interactively"
+msgstr "Procezu ne-interaktive"
+
+#: ../libgimpbase/gimpbaseenums.c:656
+msgid "Run with last used values"
+msgstr "Procezu per lastuzataj valoroj"
+
+#: ../libgimpbase/gimpbaseenums.c:684
+msgid "Pixels"
+msgstr "Bilderoj"
+
+#: ../libgimpbase/gimpbaseenums.c:685
+msgid "Points"
+msgstr "Punktoj"
+
+#: ../libgimpbase/gimpbaseenums.c:714
+msgid "Shadows"
+msgstr "Ombroj"
+
+#: ../libgimpbase/gimpbaseenums.c:715
+msgid "Midtones"
+msgstr "Meztonoj"
+
+#: ../libgimpbase/gimpbaseenums.c:716
+msgid "Highlights"
+msgstr "Lumakcentoj"
+
+#: ../libgimpbase/gimpbaseenums.c:744
+msgid "Forward"
+msgstr "Antaŭen"
+
+#: ../libgimpbase/gimpbaseenums.c:745
+msgid "Backward"
+msgstr "Malantaŭen"
+
+#: ../libgimpbase/gimpbaseenums.c:775
+msgid "Adjust"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:776
+msgid "Clip"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:777
+msgid "Crop to result"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:778
+msgid "Crop with aspect"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:881
+msgid "Internal GIMP procedure"
+msgstr "Interna proceduro de GIMP"
+
+#: ../libgimpbase/gimpbaseenums.c:882
+msgid "GIMP Plug-In"
+msgstr "Kromaĵo de GIMP"
+
+#: ../libgimpbase/gimpbaseenums.c:883
+msgid "GIMP Extension"
+msgstr "Plivastiĝaĵo de GIMP"
+
+#: ../libgimpbase/gimpbaseenums.c:884
+msgid "Temporary Procedure"
+msgstr "Dumtempa Proceduro"
+
+#: ../libgimpbase/gimpmemsize.c:180
+#, c-format
+msgid "%d Byte"
+msgid_plural "%d Bytes"
+msgstr[0] "%d Bajto"
+msgstr[1] "%d Bajtoj"
+
+#: ../libgimpbase/gimpmemsize.c:186
+#, c-format
+msgid "%.2f KB"
+msgstr "%.2f kB"
+
+#: ../libgimpbase/gimpmemsize.c:190
+#, c-format
+msgid "%.1f KB"
+msgstr "%.1f kB"
+
+#: ../libgimpbase/gimpmemsize.c:194
+#, c-format
+msgid "%d KB"
+msgstr "%d kB"
+
+#: ../libgimpbase/gimpmemsize.c:201
+#, c-format
+msgid "%.2f MB"
+msgstr "%.2f MB"
+
+#: ../libgimpbase/gimpmemsize.c:205
+#, c-format
+msgid "%.1f MB"
+msgstr "%.1f MB"
+
+#: ../libgimpbase/gimpmemsize.c:209
+#, c-format
+msgid "%d MB"
+msgstr "%d MB"
+
+#: ../libgimpbase/gimpmemsize.c:216
+#, c-format
+msgid "%.2f GB"
+msgstr "%.2f GB"
+
+#: ../libgimpbase/gimpmemsize.c:220
+#, c-format
+msgid "%.1f GB"
+msgstr "%.1f GB"
+
+#: ../libgimpbase/gimpmemsize.c:224
+#, c-format
+msgid "%d GB"
+msgstr "%d GB"
+
+#: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
+#: ../modules/cdisplay_lcms.c:259
+msgid "(invalid UTF-8 string)"
+msgstr "(nevalida UTF-8 ĉeno)"
+
+#: ../libgimpconfig/gimpcolorconfig.c:40
+msgid "Mode of operation for color management."
+msgstr "Operaciomoduzo por administri koloron."
+
+#: ../libgimpconfig/gimpcolorconfig.c:42
+msgid "The color profile of your (primary) monitor."
+msgstr "Profilo de koloro por (ĉefa) ekrano."
+
+#: ../libgimpconfig/gimpcolorconfig.c:44
+#, fuzzy
+msgid ""
+"When enabled, GIMP will try to use the display color profile from the "
+"windowing system.  The configured monitor profile is then only used as a "
+"fallback."
+msgstr ""
+"Se ĝi estas taŭgigita, GIMP provos uzi profilon de koloro por ekrano el "
+"grafika sistemo. Profilo de ekrano, kiu estis agordita, estos uzita nur se "
+"tiu el la grafika sistemo malsukcesis."
+
+#: ../libgimpconfig/gimpcolorconfig.c:48
+#, fuzzy
+msgid "The default RGB working space color profile."
+msgstr "Defaŭlta profilo de RGB koloro en laborspaco."
+
+#: ../libgimpconfig/gimpcolorconfig.c:50
+msgid "The CMYK color profile used to convert between RGB and CMYK."
+msgstr "Profilo de CMYK koloro uzita por interŝanĝi RGB kaj CMYK."
+
+#: ../libgimpconfig/gimpcolorconfig.c:52
+msgid "The color profile used for simulating a printed version (softproof)."
+msgstr "Profilo de koloro uzita por simulado de presita versio (presprovaĵo)."
+
+#: ../libgimpconfig/gimpcolorconfig.c:54
+msgid "Sets how colors are mapped for your display."
+msgstr "Agordu la manieron en kiu koloroj bildiĝos pro ekrano."
+
+#: ../libgimpconfig/gimpcolorconfig.c:56
+#, fuzzy
+msgid ""
+"Sets how colors are converted from RGB working space to the print simulation "
+"device."
+msgstr ""
+"Agordu la manieron per kiu koloroj konvertiĝos el laborspaco al aparato de "
+"presa simulado."
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:24
+msgid "No color management"
+msgstr "Neniu administrado de koloro"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:25
+msgid "Color managed display"
+msgstr "Koloradministrita ekrano"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:26
+msgid "Print simulation"
+msgstr "Presa simulado"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:56
+msgid "Perceptual"
+msgstr "Perceptiva"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:57
+msgid "Relative colorimetric"
+msgstr "Colorimetrico relativo"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:58
+msgid "intent|Saturation"
+msgstr "Saturado"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:59
+msgid "Absolute colorimetric"
+msgstr "Absoluta kolorometria"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#, c-format
+msgid "value for token %s is not a valid UTF-8 string"
+msgstr "la valoro de %s peco ne estas valida UTF-8 ĉeno"
+
+#. please don't translate 'yes' and 'no'
+#: ../libgimpconfig/gimpconfig-deserialize.c:426
+#, c-format
+msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
+msgstr "por boolea peco %s estas necese \"yes\" aŭ \"no\" dume \"%s\" alvenis"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:500
+#, c-format
+msgid "invalid value '%s' for token %s"
+msgstr "la valoro \"%s\" estas nevalida por %s peco"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:515
+#, c-format
+msgid "invalid value '%ld' for token %s"
+msgstr "la valoro \"%ld\" estas nevalida por %s peco"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:584
+#, c-format
+msgid "while parsing token '%s': %s"
+msgstr "dum analizo de peco \"%s\": %s"
+
+#: ../libgimpconfig/gimpconfig-iface.c:453
+#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpscanner.c:579
+msgid "fatal parse error"
+msgstr "fatala analizeraro"
+
+#: ../libgimpconfig/gimpconfig-path.c:376
+#, c-format
+msgid "Cannot expand ${%s}"
+msgstr "Estas neeble plivastigi $(%s)"
+
+#: ../libgimpconfig/gimpconfigwriter.c:135
+#, c-format
+msgid "Could not create temporary file for '%s': %s"
+msgstr "Estas neeble krei dumtempan dosieron por \"%s\": %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:148
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Estas neeble malfermi \"%s\" en skribo: %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:667
+#, fuzzy, c-format
+msgid ""
+"Error writing to temporary file for '%s': %s\n"
+"The original file has not been touched."
+msgstr ""
+"Eraro dum skribado en dumtempa dosiero por \"%s\": %s\n"
+"Origina dosiero estas netuŝita."
+
+#: ../libgimpconfig/gimpconfigwriter.c:675
+#, c-format
+msgid ""
+"Error writing to temporary file for '%s': %s\n"
+"No file has been created."
+msgstr ""
+"Eraro dum skribado de dumtempa dosiero por \"%s\": %s\n"
+"Neniu dosiero estis kreita."
+
+#: ../libgimpconfig/gimpconfigwriter.c:686
+#, c-format
+msgid "Error writing to '%s': %s"
+msgstr "Eraro dum skribo en \"%s\": %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:704
+#, c-format
+msgid "Could not create '%s': %s"
+msgstr "Esras neeble krei \"%s\": %s"
+
+#: ../libgimpconfig/gimpscanner.c:255
+msgid "invalid UTF-8 string"
+msgstr "nevalida UTF-8 ĉeno"
+
+#: ../libgimpconfig/gimpscanner.c:606
+#, c-format
+msgid "Error while parsing '%s' in line %d: %s"
+msgstr "Eraro dum procezo de \"%s\" en linio %d: %s"
+
+#: ../libgimpmodule/gimpmodule.c:153 ../libgimpmodule/gimpmodule.c:171
+#: ../libgimpmodule/gimpmodule.c:280 ../libgimpmodule/gimpmodule.c:307
+#: ../libgimpmodule/gimpmodule.c:418
+#, c-format
+msgid "Module '%s' load error: %s"
+msgstr "Eraro dum ŝargado de \"%s\": %s"
+
+#: ../libgimpmodule/gimpmodule.c:375
+msgid "Module error"
+msgstr "Eraro de Modjulo"
+
+#: ../libgimpmodule/gimpmodule.c:376
+msgid "Loaded"
+msgstr "Ŝargita"
+
+#: ../libgimpmodule/gimpmodule.c:377
+msgid "Load failed"
+msgstr "Ŝargado malsukcesis"
+
+#: ../libgimpmodule/gimpmodule.c:378
+msgid "Not loaded"
+msgstr "Ne ŝargita"
+
+#: ../libgimpthumb/gimpthumb-utils.c:125
+#, c-format
+msgid ""
+"Cannot determine a valid home directory.\n"
+"Thumbnails will be stored in the folder for temporary files (%s) instead."
+msgstr ""
+"Estas neeble determini validan hejmo-dosierujon.\n"
+"Do la miniaturoj estos enmemorigitaj en dosierujo (%s) por dumtempaj "
+"dosieroj."
+
+#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr "Kreado de dosierujo '%s' por miniaturoj malsukcesis."
+
+#: ../libgimpthumb/gimpthumbnail.c:889
+#, c-format
+msgid "Could not create thumbnail for %s: %s"
+msgstr "Estas neeble krei miniaturon de %s: %s"
+
+#: ../libgimpwidgets/gimpbrowser.c:98
+msgid "_Search:"
+msgstr "_Serĉu:"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:118
+msgid "_Foreground Color"
+msgstr "_Malfona Koloro"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:122
+msgid "_Background Color"
+msgstr "_Fona Koloro"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:126
+msgid "Blac_k"
+msgstr "_Nigro"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:130
+msgid "_White"
+msgstr "_Blanko"
+
+#: ../libgimpwidgets/gimpcolorscales.c:98
+msgid "Scales"
+msgstr "Skalo"
+
+#: ../libgimpwidgets/gimpcolorselection.c:210
+msgid "Current:"
+msgstr "Nuna:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:232
+msgid "Old:"
+msgstr "Malnova:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:286
+msgid ""
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
+"CSS color names."
+msgstr ""
+"Deksesuma kolornotaro kiel tiu kiu estas uzita por HTML kaj por CSS. Ĉi ero "
+"konsentas ankaŭ CSS kolornomojn."
+
+#: ../libgimpwidgets/gimpcolorselection.c:292
+msgid "HTML _notation:"
+msgstr "HTML _notaro:"
+
+#: ../libgimpwidgets/gimpfileentry.c:174
+msgid "Open a file selector to browse your folders"
+msgstr "Malfermu dosierelektilon por foliumi sian dosierujojn"
+
+#: ../libgimpwidgets/gimpfileentry.c:175
+msgid "Open a file selector to browse your files"
+msgstr "Malfermu dosierelektilon por foliumi sian dosierojn"
+
+#: ../libgimpwidgets/gimpfileentry.c:335
+msgid "Select Folder"
+msgstr "Elektu Dosierujon"
+
+#: ../libgimpwidgets/gimpfileentry.c:337
+msgid "Select File"
+msgstr "Elektu Dosieron"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:202
+msgid "Kilobytes"
+msgstr "Kilobajtoj"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:203
+msgid "Megabytes"
+msgstr "Megabajtoj"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
+msgid "Gigabytes"
+msgstr "Gigabajtoj"
+
+#. Count label
+#: ../libgimpwidgets/gimppageselector.c:269
+#: ../libgimpwidgets/gimppageselector.c:1171
+msgid "Nothing selected"
+msgstr "Neniu elektita"
+
+#: ../libgimpwidgets/gimppageselector.c:287
+msgid "Select _All"
+msgstr "Elektu _Ĉion"
+
+#: ../libgimpwidgets/gimppageselector.c:307
+msgid "Select _range:"
+msgstr "Elektu ample_kson:"
+
+#: ../libgimpwidgets/gimppageselector.c:319
+msgid "Open _pages as"
+msgstr "Malfermu _paĝojn kiel"
+
+#: ../libgimpwidgets/gimppageselector.c:420
+msgid "Page 000"
+msgstr "Paĝo 000"
+
+#: ../libgimpwidgets/gimppageselector.c:512
+#: ../libgimpwidgets/gimppageselector.c:749
+#, c-format
+msgid "Page %d"
+msgstr "Paĝo %d"
+
+#: ../libgimpwidgets/gimppageselector.c:1176
+msgid "One page selected"
+msgstr "Unu elektita paĝo"
+
+#: ../libgimpwidgets/gimppageselector.c:1183
+#: ../libgimpwidgets/gimppageselector.c:1187
+#, c-format
+msgid "%d page selected"
+msgid_plural "All %d pages selected"
+msgstr[0] "%d elektita paĝo"
+msgstr[1] "%d elektitaj paĝoj"
+
+#: ../libgimpwidgets/gimppatheditor.c:214
+msgid "Writable"
+msgstr "Skribebla"
+
+#: ../libgimpwidgets/gimppatheditor.c:223
+msgid "Folder"
+msgstr "Dosierujo"
+
+#: ../libgimpwidgets/gimppickbutton.c:107
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
+"Klaku sur eltirilo, poste kilku sur koloro en iu ajn parto de la ekrano por "
+"elekti ĉi tiun koloron."
+
+#: ../libgimpwidgets/gimppreviewarea.c:94
+msgid "Check Size"
+msgstr "Kvadrogrando"
+
+#: ../libgimpwidgets/gimppreviewarea.c:101
+msgid "Check Style"
+msgstr "Kvadrostilo"
+
+#. toggle button to (des)activate the instant preview
+#: ../libgimpwidgets/gimppreview.c:265
+msgid "_Preview"
+msgstr "_Antaŭmontro"
+
+#: ../libgimpwidgets/gimppropwidgets.c:1869
+#, c-format
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "Ĉi fako de teksta enigo povas enteni %d tipon."
+msgstr[1] "Ĉi fako de teksta enigo povas enteni %d tipojn."
+
+#: ../libgimpwidgets/gimpresolutionentry.c:382
+#, c-format
+msgid "pixels/%s"
+msgstr "bilderoj/%s"
+
+#: ../libgimpwidgets/gimpstock.c:113
+msgid "Anchor"
+msgstr "Ankru"
+
+#: ../libgimpwidgets/gimpstock.c:114
+msgid "C_enter"
+msgstr "C_entru"
+
+#: ../libgimpwidgets/gimpstock.c:115
+msgid "_Duplicate"
+msgstr "_Duplikatu"
+
+#: ../libgimpwidgets/gimpstock.c:116
+msgid "_Edit"
+msgstr "_Redaktu"
+
+#: ../libgimpwidgets/gimpstock.c:117
+msgid "Linked"
+msgstr "Kunligita"
+
+#: ../libgimpwidgets/gimpstock.c:118
+msgid "Paste as New"
+msgstr "Enmetu kiel Nova"
+
+#: ../libgimpwidgets/gimpstock.c:119
+msgid "Paste Into"
+msgstr "Enmetu en"
+
+#: ../libgimpwidgets/gimpstock.c:120
+msgid "_Reset"
+msgstr "_Resetu"
+
+#: ../libgimpwidgets/gimpstock.c:121
+msgid "Visible"
+msgstr "Videbla"
+
+#: ../libgimpwidgets/gimpstock.c:157 ../libgimpwidgets/gimpstock.c:161
+msgid "_Stroke"
+msgstr "_Konturu"
+
+#: ../libgimpwidgets/gimpstock.c:173
+msgid "L_etter Spacing"
+msgstr "Int_erspaco"
+
+#: ../libgimpwidgets/gimpstock.c:174
+msgid "L_ine Spacing"
+msgstr "_Interlinio"
+
+#: ../libgimpwidgets/gimpstock.c:190
+msgid "_Resize"
+msgstr "_Readaptu"
+
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:319
+msgid "_Scale"
+msgstr "Laŭ_skale aranĝu"
+
+#: ../libgimpwidgets/gimpstock.c:295
+msgid "Cr_op"
+msgstr "T_ranĉu"
+
+#: ../libgimpwidgets/gimpstock.c:314
+msgid "_Transform"
+msgstr "_Transformu"
+
+#: ../libgimpwidgets/gimpstock.c:318
+msgid "_Rotate"
+msgstr "_Turnu"
+
+#: ../libgimpwidgets/gimpstock.c:320
+msgid "_Shear"
+msgstr "_Klinu"
+
+#: ../libgimpwidgets/gimpunitmenu.c:266
+msgid "More..."
+msgstr "Pli..."
+
+#: ../libgimpwidgets/gimpunitmenu.c:577
+msgid "Unit Selection"
+msgstr "Elekto de Unito"
+
+#: ../libgimpwidgets/gimpunitmenu.c:626
+msgid "Unit"
+msgstr "Unito"
+
+#: ../libgimpwidgets/gimpunitmenu.c:630
+msgid "Factor"
+msgstr "Faktoro"
+
+#: ../libgimpwidgets/gimpwidgets.c:1005
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
+msgstr ""
+"Uzu ĉi valoron por la semo de generilo de hazarda nombro - ĉi tiu eblas \n"
+"ripeti estabilitan \"hazardan\" operacion"
+
+#: ../libgimpwidgets/gimpwidgets.c:1009
+msgid "_New Seed"
+msgstr "_Nova Semo"
+
+#: ../libgimpwidgets/gimpwidgets.c:1022
+msgid "Seed random number generator with a generated random number"
+msgstr "Generilo de hazarda semo per nombro kiu estas hazarde akirita"
+
+#: ../libgimpwidgets/gimpwidgets.c:1026
+msgid "_Randomize"
+msgstr "_Hazardigu"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:92
+msgid "_H"
+msgstr "_H"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:92
+msgid "Hue"
+msgstr "Nuanco"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:93
+msgid "_S"
+msgstr "_S"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:93
+msgid "Saturation"
+msgstr "Saturado"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:94
+msgid "_V"
+msgstr "_V"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:94
+msgid "Value"
+msgstr "Valoro"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:95
+msgid "_R"
+msgstr "_R"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:96
+msgid "_G"
+msgstr "_G"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:97
+msgid "_B"
+msgstr "_B"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:98
+msgid "_A"
+msgstr "_A"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
+msgid "Layers"
+msgstr "Tavoloj"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
+msgid "Images"
+msgstr "Bildoj"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:186
+msgid "Zoom in"
+msgstr "Zomu"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:187
+msgid "Zoom out"
+msgstr "Malzomu"
+
+#: ../modules/cdisplay_colorblind.c:67
+msgid "Protanopia (insensitivity to red)"
+msgstr "Protanopio (blindeco laŭ ruĝo)"
+
+#: ../modules/cdisplay_colorblind.c:69
+msgid "Deuteranopia (insensitivity to green)"
+msgstr "Deuteranopio (blindeco laŭ verdo)"
+
+#: ../modules/cdisplay_colorblind.c:71
+msgid "Tritanopia (insensitivity to blue)"
+msgstr "Tritanopio (blindeco laŭ bluo)"
+
+#: ../modules/cdisplay_colorblind.c:200
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr ""
+"Filtrilo por simulado de daltonismo (algoritmo de Brettel-Vienot-Mollon)"
+
+#: ../modules/cdisplay_colorblind.c:290
+msgid "Color Deficient Vision"
+msgstr "Daltonisma Vido"
+
+#: ../modules/cdisplay_colorblind.c:505
+msgid "Color _deficiency type:"
+msgstr "Daltonismospeco:"
+
+#: ../modules/cdisplay_gamma.c:91
+msgid "Gamma color display filter"
+msgstr "Filtrilo por vido de gama-koloro"
+
+#: ../modules/cdisplay_gamma.c:160
+msgid "Gamma"
+msgstr "Gama"
+
+#: ../modules/cdisplay_gamma.c:253
+msgid "_Gamma:"
+msgstr "_Gama:"
+
+#: ../modules/cdisplay_highcontrast.c:91
+msgid "High Contrast color display filter"
+msgstr "Filtrilo por vido de kontrastega koloro"
+
+#: ../modules/cdisplay_highcontrast.c:160
+msgid "Contrast"
+msgstr "Kontrasto"
+
+#: ../modules/cdisplay_highcontrast.c:253
+msgid "Contrast c_ycles:"
+msgstr "_Cikloj de kontrasto:"
+
+#: ../modules/cdisplay_lcms.c:116
+msgid "Color management display filter using ICC color profiles"
+msgstr "Vidofiltrilo por administrado de koloro uzas profilon de ICC koloro"
+
+#: ../modules/cdisplay_lcms.c:184
+msgid "Color Management"
+msgstr "Administrado de Koloro"
+
+#: ../modules/cdisplay_lcms.c:288
+msgid ""
+"This filter takes its configuration from the Color Management section in the "
+"Preferences dialog."
+msgstr ""
+"Ĉi filtrilo agordiĝis per fako de \"Administrado de Koloro\" en \"Agordoj\" "
+"dialogofenestro."
+
+#: ../modules/cdisplay_lcms.c:302
+msgid "Mode of operation:"
+msgstr "Operacimoduso:"
+
+#: ../modules/cdisplay_lcms.c:309
+#, fuzzy
+msgid "RGB working space profile:"
+msgstr "Profilo de RGB koloro:"
+
+#: ../modules/cdisplay_lcms.c:316
+msgid "Monitor profile:"
+msgstr "Profilo de ekrano:"
+
+#: ../modules/cdisplay_lcms.c:323
+msgid "Print simulation profile:"
+msgstr "Profilo de presa simulado:"
+
+#: ../modules/cdisplay_proof.c:102
+msgid "Color proof filter using ICC color profile"
+msgstr "Kolorimuna filtrilo per profilo de ICC koloro"
+
+#: ../modules/cdisplay_proof.c:179
+msgid "Color Proof"
+msgstr "Kolorimuna"
+
+#: ../modules/cdisplay_proof.c:306
+msgid "_Intent:"
+msgstr "_Okupo:"
+
+#: ../modules/cdisplay_proof.c:310
+msgid "Choose an ICC Color Profile"
+msgstr "Elektu profilon de ICC koloro"
+
+#: ../modules/cdisplay_proof.c:313
+msgid "_Profile:"
+msgstr "_Profilo:"
+
+#: ../modules/cdisplay_proof.c:318
+msgid "_Black Point Compensation"
+msgstr "Kompensado por _Nigra Punkto"
+
+#: ../modules/colorsel_cmyk.c:73
+msgid "CMYK color selector"
+msgstr "Elektilo de CMYK koloro"
+
+#: ../modules/colorsel_cmyk.c:130
+msgid "CMYK"
+msgstr "CMYK"
+
+#. Cyan
+#: ../modules/colorsel_cmyk.c:148
+msgid "_C"
+msgstr "_C"
+
+#. Magenta
+#: ../modules/colorsel_cmyk.c:150
+msgid "_M"
+msgstr "_M"
+
+#. Yellow
+#: ../modules/colorsel_cmyk.c:152
+msgid "_Y"
+msgstr "_Y"
+
+#. Key (Black)
+#: ../modules/colorsel_cmyk.c:154
+msgid "_K"
+msgstr "_K"
+
+#: ../modules/colorsel_cmyk.c:158
+msgid "Cyan"
+msgstr "Cejano"
+
+#: ../modules/colorsel_cmyk.c:159
+msgid "Magenta"
+msgstr "I. Karmezino (M)"
+
+#: ../modules/colorsel_cmyk.c:160
+msgid "Yellow"
+msgstr "Flavo (Y)"
+
+#: ../modules/colorsel_cmyk.c:161
+msgid "Black"
+msgstr "Nigro (K)"
+
+#: ../modules/colorsel_cmyk.c:195
+msgid "Black _pullout:"
+msgstr "El_tiro de nigro:"
+
+#: ../modules/colorsel_cmyk.c:212
+msgid "The percentage of black to pull out of the colored inks."
+msgstr "La procento da eltiro de nigro el koloritaj inkoj."
+
+#: ../modules/colorsel_triangle.c:104
+msgid "Painter-style triangle color selector"
+msgstr "Elektilo de koloroj kun pentra triangulo"
+
+#: ../modules/colorsel_triangle.c:170
+msgid "Triangle"
+msgstr "Triangulo"
+
+#: ../modules/colorsel_water.c:84
+msgid "Watercolor style color selector"
+msgstr "Kolorelektilo por akvareloj"
+
+#: ../modules/colorsel_water.c:150
+msgid "Watercolor"
+msgstr "Akvarelo"
+
+#: ../modules/colorsel_water.c:213
+msgid "Pressure"
+msgstr "Premo"
+
+#: ../modules/controller_linux_input.c:56
+msgid "Button 0"
+msgstr "Butono 0"
+
+#: ../modules/controller_linux_input.c:57
+msgid "Button 1"
+msgstr "Butono 1"
+
+#: ../modules/controller_linux_input.c:58
+msgid "Button 2"
+msgstr "Butono 2"
+
+#: ../modules/controller_linux_input.c:59
+msgid "Button 3"
+msgstr "Butono 3"
+
+#: ../modules/controller_linux_input.c:60
+msgid "Button 4"
+msgstr "Butono 4"
+
+#: ../modules/controller_linux_input.c:61
+msgid "Button 5"
+msgstr "Butono 5"
+
+#: ../modules/controller_linux_input.c:62
+msgid "Button 6"
+msgstr "Butono 6"
+
+#: ../modules/controller_linux_input.c:63
+msgid "Button 7"
+msgstr "Butono 7"
+
+#: ../modules/controller_linux_input.c:64
+msgid "Button 8"
+msgstr "Butono 8"
+
+#: ../modules/controller_linux_input.c:65
+msgid "Button 9"
+msgstr "Butono 9"
+
+#: ../modules/controller_linux_input.c:66
+msgid "Button Mouse"
+msgstr "Musbutono"
+
+#: ../modules/controller_linux_input.c:67
+msgid "Button Left"
+msgstr "Maldekstra Butono"
+
+#: ../modules/controller_linux_input.c:68
+msgid "Button Right"
+msgstr "Dekstra Butono"
+
+#: ../modules/controller_linux_input.c:69
+msgid "Button Middle"
+msgstr "Meza Butono"
+
+#: ../modules/controller_linux_input.c:70
+msgid "Button Side"
+msgstr "Flanka Butono"
+
+#: ../modules/controller_linux_input.c:71
+msgid "Button Extra"
+msgstr "Ekstra Butono"
+
+#: ../modules/controller_linux_input.c:72
+#: ../modules/controller_linux_input.c:73
+msgid "Button Forward"
+msgstr "Antaŭa Butono"
+
+#: ../modules/controller_linux_input.c:75
+msgid "Button Wheel"
+msgstr "Radetobutono"
+
+#: ../modules/controller_linux_input.c:78
+msgid "Button Gear Down"
+msgstr "Radetobutono Suben"
+
+#: ../modules/controller_linux_input.c:81
+msgid "Button Gear Up"
+msgstr "Radetobutono Supren"
+
+#: ../modules/controller_linux_input.c:87
+msgid "Wheel Turn Left"
+msgstr "Radeto Maldekstren"
+
+#: ../modules/controller_linux_input.c:88
+msgid "Wheel Turn Right"
+msgstr "Radeto Dekstren"
+
+#: ../modules/controller_linux_input.c:89
+msgid "Dial Turn Left"
+msgstr "Diskobutono Maldekstren"
+
+#: ../modules/controller_linux_input.c:90
+msgid "Dial Turn Right"
+msgstr "Diskobutono Dekstren"
+
+#: ../modules/controller_linux_input.c:154
+msgid "Linux input event controller"
+msgstr "Reĝilo por enigaj eventoj de Linukso"
+
+#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:246
+msgid "Device:"
+msgstr "Aparato:"
+
+#: ../modules/controller_linux_input.c:223
+msgid "The name of the device to read Linux Input events from."
+msgstr "Aparatnomo el kiu oni legas Enigajn Eventojn de Linukso."
+
+#: ../modules/controller_linux_input.c:227
+msgid "Linux Input"
+msgstr "Linuksa Enigo"
+
+#: ../modules/controller_linux_input.c:352
+msgid "Linux Input Events"
+msgstr "Enigaj Eventoj de Linukso"
+
+#: ../modules/controller_linux_input.c:373 ../modules/controller_midi.c:484
+#: ../modules/controller_midi.c:510
+#, c-format
+msgid "Reading from %s"
+msgstr "Legante el %s"
+
+#: ../modules/controller_linux_input.c:389
+#: ../modules/controller_linux_input.c:432 ../modules/controller_midi.c:466
+#: ../modules/controller_midi.c:527 ../modules/controller_midi.c:598
+#, c-format
+msgid "Device not available: %s"
+msgstr "Nedisponebla aparato: %s"
+
+#: ../modules/controller_linux_input.c:397 ../modules/controller_midi.c:535
+msgid "No device configured"
+msgstr "Neniu agordita aparato"
+
+#: ../modules/controller_linux_input.c:441 ../modules/controller_midi.c:607
+msgid "End of file"
+msgstr "Dosierfino"
+
+#: ../modules/controller_midi.c:168
+msgid "MIDI event controller"
+msgstr "Reĝilo de MIDI eventoj"
+
+#: ../modules/controller_midi.c:237
+msgid "The name of the device to read MIDI events from."
+msgstr "Aparatnomo el kiu oni legas MIDI eventojn."
+
+#: ../modules/controller_midi.c:240
+msgid "Enter 'alsa' to use the ALSA sequencer."
+msgstr "Enigu 'alsa' por uzi ALSA sekvencilon."
+
+#: ../modules/controller_midi.c:255
+msgid "Channel:"
+msgstr "Kanalo:"
+
+#: ../modules/controller_midi.c:256
+msgid ""
+"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
+"channels."
+msgstr ""
+"Kanalo MIDI el kiu oni legas eventojn. Agordu kun -1 por legi MIDI "
+"eventojnde ĉiuj kanaloj."
+
+#: ../modules/controller_midi.c:260
+msgid "MIDI"
+msgstr "MIDI"
+
+#: ../modules/controller_midi.c:384
+#, c-format
+msgid "Note %02x on"
+msgstr "Noto %02x en kondutka poz."
+
+#: ../modules/controller_midi.c:387
+#, c-format
+msgid "Note %02x off"
+msgstr "Noto %02x en elkluda poz."
+
+#: ../modules/controller_midi.c:390
+#, c-format
+msgid "Controller %03d"
+msgstr "Reĝilo %03d"
+
+#: ../modules/controller_midi.c:437
+msgid "MIDI Events"
+msgstr "MIDI Eventoj"
+
+#: ../modules/controller_midi.c:458
+#, fuzzy
+msgid "GIMP MIDI controller"
+msgstr "Reĝilo de MIDI eventoj"
+
+#~ msgid "Ask"
+#~ msgstr "Petu"
+
+#~ msgid "Use embedded profile"
+#~ msgstr "Uzu entenitan agrodaĵon"
+
+#~ msgid "Convert to RGB workspace"
+#~ msgstr "Konvertu al RGB laborspaco"

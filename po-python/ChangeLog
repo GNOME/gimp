@@ -1,3 +1,7 @@
+2007-01-07 Marco Ciampa <ciampix@libero.it>
+
+	* eo.po: added Esperanto partial translation.
+
 2007-01-04  Sven Neumann  <sven@gimp.org>
 
 	* Makefile.in.in: synced with po-plug-ins/Makefile.in.in.
