@@ -1,3 +1,8 @@
+2007-01-07  Michael Natterer  <mitch@gimp.org>
+
+	* modules/controller_linux_input.c (rel_events): add more relative
+	events.
+
 2007-01-05  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpbrushselectbutton.c: reverted the change for bug
