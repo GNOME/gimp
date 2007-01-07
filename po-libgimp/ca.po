@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-23 10:49+0100\n"
-"PO-Revision-Date: 2006-12-20 00:15+0100\n"
+"POT-Creation-Date: 2007-01-07 11:02+0100\n"
+"PO-Revision-Date: 2007-01-07 13:51+0100\n"
 "Last-Translator: Quim Perez i Noguer\n"
 "Language-Team: Català <gimp@softcatala.net>\n"
 "MIME-Version: 1.0\n"
@@ -100,8 +100,7 @@ msgstr ""
 #: ../libgimp/gimpexport.c:308
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr ""
-"%s només pot gestionar els mapes de bits (dos colors) o les imatges indexades"
+msgstr "%s només pot gestionar els mapes de bits (dos colors) o les imatges indexades"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -654,19 +653,35 @@ msgstr "Endavant"
 msgid "Backward"
 msgstr "Endarrere"
 
-#: ../libgimpbase/gimpbaseenums.c:848
+#: ../libgimpbase/gimpbaseenums.c:775
+msgid "Adjust"
+msgstr "Ajusta"
+
+#: ../libgimpbase/gimpbaseenums.c:776
+msgid "Clip"
+msgstr "Retalla"
+
+#: ../libgimpbase/gimpbaseenums.c:777
+msgid "Crop to result"
+msgstr "Escapça a la mida"
+
+#: ../libgimpbase/gimpbaseenums.c:778
+msgid "Crop with aspect"
+msgstr "Escapça segons l'aspecte"
+
+#: ../libgimpbase/gimpbaseenums.c:881
 msgid "Internal GIMP procedure"
 msgstr "Procediment intern del GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:849
+#: ../libgimpbase/gimpbaseenums.c:882
 msgid "GIMP Plug-In"
 msgstr "Connector del GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:850
+#: ../libgimpbase/gimpbaseenums.c:883
 msgid "GIMP Extension"
 msgstr "Extensió del GIMP"
 
-#: ../libgimpbase/gimpbaseenums.c:851
+#: ../libgimpbase/gimpbaseenums.c:884
 msgid "Temporary Procedure"
 msgstr "Procediment temporal"
 
@@ -1149,7 +1164,7 @@ msgstr "Gi_ra"
 msgid "_Shear"
 msgstr "Re_talla"
 
-#: ../libgimpwidgets/gimpunitmenu.c:267
+#: ../libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
 msgstr "Més..."
 
@@ -1157,11 +1172,11 @@ msgstr "Més..."
 msgid "Unit Selection"
 msgstr "Selecció de la unitat"
 
-#: ../libgimpwidgets/gimpunitmenu.c:625
+#: ../libgimpwidgets/gimpunitmenu.c:626
 msgid "Unit"
 msgstr "Unitat"
 
-#: ../libgimpwidgets/gimpunitmenu.c:629
+#: ../libgimpwidgets/gimpunitmenu.c:630
 msgid "Factor"
 msgstr "Factor"
 
@@ -1179,8 +1194,7 @@ msgstr "_Nova llavor"
 
 #: ../libgimpwidgets/gimpwidgets.c:1022
 msgid "Seed random number generator with a generated random number"
-msgstr ""
-"Configura el generador de nombres aleatoris amb el nombre aleatori generat"
+msgstr "Configura el generador de nombres aleatoris amb el nombre aleatori generat"
 
 #: ../libgimpwidgets/gimpwidgets.c:1026
 msgid "_Randomize"
@@ -1256,8 +1270,7 @@ msgstr "Tritanopia (insensible al blau)"
 
 #: ../modules/cdisplay_colorblind.c:200
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
-"Filtre de simulació de dèficit de color (algorisme de Brettel-Vienot-Mollon)"
+msgstr "Filtre de simulació de dèficit de color (algorisme de Brettel-Vienot-Mollon)"
 
 #: ../modules/cdisplay_colorblind.c:290
 msgid "Color Deficient Vision"
@@ -1293,8 +1306,7 @@ msgstr "C_icles de contrast:"
 
 #: ../modules/cdisplay_lcms.c:116
 msgid "Color management display filter using ICC color profiles"
-msgstr ""
-"Filtre de gestió de color de pantalles que fa servir perfils de color ICC"
+msgstr "Filtre de gestió de color de pantalles que fa servir perfils de color ICC"
 
 #: ../modules/cdisplay_lcms.c:184
 msgid "Color Management"
@@ -1466,11 +1478,11 @@ msgstr "Botó del ratolí"
 
 #: ../modules/controller_linux_input.c:67
 msgid "Button Left"
-msgstr "Botó esquerra"
+msgstr "Botó esquerre"
 
 #: ../modules/controller_linux_input.c:68
 msgid "Button Right"
-msgstr "Botó dreta"
+msgstr "Botó dret"
 
 #: ../modules/controller_linux_input.c:69
 msgid "Button Middle"
@@ -1478,7 +1490,7 @@ msgstr "Botó del mig"
 
 #: ../modules/controller_linux_input.c:70
 msgid "Button Side"
-msgstr "Botó desplaçament"
+msgstr "Botó del cantó"
 
 #: ../modules/controller_linux_input.c:71
 msgid "Button Extra"
@@ -1608,3 +1620,4 @@ msgstr "Senyals MIDI"
 #: ../modules/controller_midi.c:458
 msgid "GIMP MIDI controller"
 msgstr "Controlador MIDI del GIMP"
+

@@ -1,5 +1,5 @@
 # translation of ca.po to Català
-# Copyright © 2000,2005, 2006 Free Software Foundation, Inc.
+# Copyright © 2000,2005, 2006, 2007 Free Software Foundation, Inc.
 # Jordi Jover, jordijn@softcatala.org
 # Softcatala <tradgnome@softcatala.org>, 2000-2002.
 # Quim Perez i Noguer <noguer a osona.com>, 2005, 2006.
@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-23 10:51+0100\n"
-"PO-Revision-Date: 2006-12-21 22:15+0100\n"
+"POT-Creation-Date: 2007-01-07 11:02+0100\n"
+"PO-Revision-Date: 2007-01-07 14:02+0100\n"
 "Last-Translator: Quim Perez i Noguer\n"
 "Language-Team: Català <gimp@softcatala.net>\n"
 "MIME-Version: 1.0\n"
@@ -94,8 +94,7 @@ msgid "Iterations:"
 msgstr "Iteracions:"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:773
-msgid ""
-"The higher the number of iterations, the more details will be calculated"
+msgid "The higher the number of iterations, the more details will be calculated"
 msgstr "Com més alt sigui el nombre d'iteracions, més detalls es calcularan"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:781
@@ -779,8 +778,7 @@ msgstr "Eleva a partir d'u_n mapa de relleu"
 
 #: ../plug-ins/Lighting/lighting_ui.c:775
 msgid "Enable/disable bump-mapping (image depth)"
-msgstr ""
-"Habilita/inhabilita l'efecte d'elevar la imatge a partir d'un mapa de relleu"
+msgstr "Habilita/inhabilita l'efecte d'elevar la imatge a partir d'un mapa de relleu"
 
 #: ../plug-ins/Lighting/lighting_ui.c:793
 msgid "Bumpm_ap image:"
@@ -960,8 +958,7 @@ msgstr "Composa un mosaic"
 # era: msgstr "Imatge font del mosaic"
 #: ../plug-ins/MapObject/mapobject_ui.c:533
 msgid "Tile source image: useful for infinite planes"
-msgstr ""
-"Composa un mosaic de la imatge a projectar: útil per a objectes infinits"
+msgstr "Composa un mosaic de la imatge a projectar: útil per a objectes infinits"
 
 # era: msgstr "Mosaic de la imatge font: útil per a un nombre de plans infinit"
 #: ../plug-ins/MapObject/mapobject_ui.c:536
@@ -1207,8 +1204,7 @@ msgstr "'%s' no és un fitxer BMP vàlid"
 #: ../plug-ins/bmp/bmpread.c:388 ../plug-ins/bmp/bmpread.c:394
 #, c-format
 msgid "Error reading BMP file header from '%s'"
-msgstr ""
-"S'ha produït un error en llegir la capçalera del fitxer BMP des de '%s'"
+msgstr "S'ha produït un error en llegir la capçalera del fitxer BMP des de '%s'"
 
 #: ../plug-ins/bmp/bmpread.c:499
 msgid "Unrecognized or invalid BMP compression format."
@@ -1248,8 +1244,7 @@ msgstr "El mapa de bits està mal acabat."
 
 #: ../plug-ins/bmp/bmpwrite.c:187 ../plug-ins/bmp/bmpwrite.c:209
 msgid "Cannot save indexed image with transparency in BMP file format."
-msgstr ""
-"El format de fitxer BMP no permet desar imatges indexades amb transparències."
+msgstr "El format de fitxer BMP no permet desar imatges indexades amb transparències."
 
 #: ../plug-ins/bmp/bmpwrite.c:189 ../plug-ins/bmp/bmpwrite.c:211
 msgid "Alpha channel will be ignored."
@@ -2057,8 +2052,7 @@ msgstr "Atura la reproducció"
 
 #: ../plug-ins/common/animoptimize.c:133
 msgid "Modify image to reduce size when saved as GIF animation"
-msgstr ""
-"Modifica la imatge per reduir-ne la mida quan es desi com a animació GIF"
+msgstr "Modifica la imatge per reduir-ne la mida quan es desi com a animació GIF"
 
 #: ../plug-ins/common/animoptimize.c:145
 msgid "Optimize (for _GIF)"
@@ -2107,8 +2101,7 @@ msgstr "Optimització de l'animació"
 
 #: ../plug-ins/common/antialias.c:84
 msgid "Antialias using the Scale3X edge-extrapolation algorithm"
-msgstr ""
-"El suavitzat de vores utilitza un algorisme d'extrapolació de vores Scale3X"
+msgstr "El suavitzat de vores utilitza un algorisme d'extrapolació de vores Scale3X"
 
 #  The antialiasing toggle
 #: ../plug-ins/common/antialias.c:90
@@ -2189,8 +2182,7 @@ msgstr "S'està ampliant el HSV automàticament"
 
 #: ../plug-ins/common/autostretch_hsv.c:193
 msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
-msgstr ""
-"ampliació automàtica hsv: el mapa de color estava buit. S'està sortint...\n"
+msgstr "ampliació automàtica hsv: el mapa de color estava buit. S'està sortint...\n"
 
 #: ../plug-ins/common/blinds.c:116
 msgid "Simulate an image painted on window blinds"
@@ -2215,12 +2207,12 @@ msgid "Orientation"
 msgstr "Orientació"
 
 #: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:542
-#: ../plug-ins/common/tileit.c:426 ../plug-ins/pagecurl/pagecurl.c:534
+#: ../plug-ins/common/tileit.c:425 ../plug-ins/pagecurl/pagecurl.c:534
 msgid "_Horizontal"
 msgstr "_Horitzontal"
 
 #: ../plug-ins/common/blinds.c:264 ../plug-ins/common/ripple.c:543
-#: ../plug-ins/common/tileit.c:436 ../plug-ins/pagecurl/pagecurl.c:533
+#: ../plug-ins/common/tileit.c:435 ../plug-ins/pagecurl/pagecurl.c:533
 msgid "_Vertical"
 msgstr "_Vertical"
 
@@ -2251,8 +2243,7 @@ msgstr "S'està difuminant"
 
 #: ../plug-ins/common/borderaverage.c:99
 msgid "Set foreground to the average color of the image border"
-msgstr ""
-"Calcula un color de primer pla com a mitjana dels colors de la vora la imatge"
+msgstr "Calcula un color de primer pla com a mitjana dels colors de la vora la imatge"
 
 #: ../plug-ins/common/borderaverage.c:104
 msgid "_Border Average..."
@@ -2920,8 +2911,7 @@ msgstr "Matriu de _convolució..."
 
 #: ../plug-ins/common/convmatrix.c:278
 msgid "Convolution does not work on layers smaller than 3x3 pixels."
-msgstr ""
-"La matriu de convolució no funciona en capes més petites de 3x3 píxels."
+msgstr "La matriu de convolució no funciona en capes més petites de 3x3 píxels."
 
 #: ../plug-ins/common/convmatrix.c:351
 msgid "Applying convolution"
@@ -3525,6 +3515,7 @@ msgstr "Treu les bandes"
 #: ../plug-ins/common/raw.c:1035 ../plug-ins/common/smooth_palette.c:436
 #: ../plug-ins/common/tile.c:423 ../plug-ins/imagemap/imap_cmd_guides.c:167
 #: ../plug-ins/imagemap/imap_rectangle.c:403
+#: ../plug-ins/print/print-page-layout.c:239
 msgid "_Width:"
 msgstr "Am_plada:"
 
@@ -3811,6 +3802,7 @@ msgstr "Grava amb franges negres"
 #: ../plug-ins/common/smooth_palette.c:441 ../plug-ins/common/tile.c:427
 #: ../plug-ins/imagemap/imap_cmd_guides.c:177
 #: ../plug-ins/imagemap/imap_rectangle.c:410
+#: ../plug-ins/print/print-page-layout.c:241
 msgid "_Height:"
 msgstr "A_lçada:"
 
@@ -4364,8 +4356,7 @@ msgstr ""
 "desat cap comentari."
 
 #: ../plug-ins/common/gif.c:958
-msgid ""
-"Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "No es poden desar les imatges de color RGB. Convertiu-les primer a color "
 "indexat o a escala de grisos."
@@ -4670,7 +4661,7 @@ msgstr "Intersecció"
 
 #. Width and Height
 #: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:759
-#: ../plug-ins/common/wmf.c:549 ../plug-ins/print/print-page-layout.c:218
+#: ../plug-ins/common/wmf.c:549
 msgid "Width:"
 msgstr "Amplada:"
 
@@ -4800,13 +4791,11 @@ msgstr "El nombre de píxels a la vora de la taula."
 
 #: ../plug-ins/common/gtm.c:587
 msgid "The width for each table cell.  Can be a number or a percent."
-msgstr ""
-"L'amplada de cada cel·la de la taula. Pot ser un nombre o un percentatge."
+msgstr "L'amplada de cada cel·la de la taula. Pot ser un nombre o un percentatge."
 
 #: ../plug-ins/common/gtm.c:603
 msgid "The height for each table cell.  Can be a number or a percent."
-msgstr ""
-"L'alçada de cada cel·la de la taula. Pot ser un nombre o un percentatge."
+msgstr "L'alçada de cada cel·la de la taula. Pot ser un nombre o un percentatge."
 
 #: ../plug-ins/common/gtm.c:614
 msgid "Cell-_padding:"
@@ -5134,8 +5123,7 @@ msgid "Default RGB working space"
 msgstr "Espai de treball RGB per defecte"
 
 #: ../plug-ins/common/lcms.c:626
-msgid ""
-"Data attached as 'icc-profile' does not appear to be an ICC color profile"
+msgid "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr ""
 "Les dades adjuntes com a 'perfil-icc' no sembla que siguin un perfil de "
 "color ICC"
@@ -5375,8 +5363,7 @@ msgstr "Inicialitza els colors de primer pla i _fons"
 
 #: ../plug-ins/common/mapcolor.c:160
 msgid "Map color range specified by two colors to another range"
-msgstr ""
-"Substitueix un rang de colors determinat per dos colors per un altre rang"
+msgstr "Substitueix un rang de colors determinat per dos colors per un altre rang"
 
 #: ../plug-ins/common/mapcolor.c:168
 msgid "Color Range _Mapping..."
@@ -5502,8 +5489,7 @@ msgstr "_Angle:"
 #. * transparency & just use the full palette
 #: ../plug-ins/common/mng.c:499 ../plug-ins/common/png.c:1654
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr ""
-"No s'ha pogut desar la transparència sense pèrdues. Es desarà l'opacitat."
+msgstr "No s'ha pogut desar la transparència sense pèrdues. Es desarà l'opacitat."
 
 #: ../plug-ins/common/mng.c:1323
 msgid "Save as MNG"
@@ -5757,8 +5743,7 @@ msgstr "Lluminositat"
 
 #: ../plug-ins/common/newsprint.c:519
 msgid "Halftone the image to give newspaper-like effect"
-msgstr ""
-"Manipula el to de la imatge per donar-li una aparença de paper de diari"
+msgstr "Manipula el to de la imatge per donar-li una aparença de paper de diari"
 
 #: ../plug-ins/common/newsprint.c:528
 msgid "Newsprin_t..."
@@ -6052,8 +6037,7 @@ msgstr "Patró del GIMP"
 #: ../plug-ins/common/pat.c:358
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr ""
-"S'ha trobat una cadena de text UTF-8 invàlida al fitxer del patró '%s'."
+msgstr "S'ha trobat una cadena de text UTF-8 invàlida al fitxer del patró '%s'."
 
 #: ../plug-ins/common/pat.c:513
 msgid "Save as Pattern"
@@ -6481,8 +6465,7 @@ msgstr "No s'ha pogut interpretar '%s'"
 
 #: ../plug-ins/common/postscript.c:1165
 msgid "PostScript save cannot handle images with alpha channels"
-msgstr ""
-"La funció de desar del PostScript no pot gestionar imatges amb canals alfa"
+msgstr "La funció de desar del PostScript no pot gestionar imatges amb canals alfa"
 
 #: ../plug-ins/common/postscript.c:1692 ../plug-ins/common/postscript.c:1722
 #, c-format
@@ -6596,6 +6579,7 @@ msgstr "Desa com a PostScript"
 
 #. Image Size
 #: ../plug-ins/common/postscript.c:3301
+#: ../plug-ins/print/print-page-layout.c:202
 msgid "Image Size"
 msgstr "Mida de la imatge"
 
@@ -6740,8 +6724,7 @@ msgstr "Aleatòriament intercanvia alguns píxels amb els seus veïns"
 
 #: ../plug-ins/common/randomize.c:204
 msgid "Randomly slide some pixels downward (similar to melting)"
-msgstr ""
-"Aleatòriament desplaça alguns píxels cap avall (semblant a una barreja)"
+msgstr "Aleatòriament desplaça alguns píxels cap avall (semblant a una barreja)"
 
 #: ../plug-ins/common/randomize.c:231
 msgid "_Hurl..."
@@ -6784,7 +6767,7 @@ msgid "Load Image from Raw Data"
 msgstr "Carrega una imatge des de dades sense format"
 
 # era: msgstr "Carregador d'imatge Raw"
-#: ../plug-ins/common/raw.c:992
+#: ../plug-ins/common/raw.c:992 ../plug-ins/print/print.c:189
 msgid "Image"
 msgstr "Imatge"
 
@@ -6859,8 +6842,7 @@ msgstr "Tipus de paleta indexada"
 
 #: ../plug-ins/common/redeye.c:107
 msgid "Remove the red eye effect caused by camera flashes"
-msgstr ""
-"Elimina l'efecte dels ulls vermells que causen els flaixos de les càmeres"
+msgstr "Elimina l'efecte dels ulls vermells que causen els flaixos de les càmeres"
 
 #: ../plug-ins/common/redeye.c:118
 msgid "_Red Eye Removal..."
@@ -7949,7 +7931,6 @@ msgid "Render Scalable Vector Graphics"
 msgstr "Composa els gràfics de vectors escalables (SVG)"
 
 #: ../plug-ins/common/svg.c:765 ../plug-ins/common/wmf.c:555
-#: ../plug-ins/print/print-page-layout.c:224
 msgid "Height:"
 msgstr "Alçada:"
 
@@ -7966,7 +7947,7 @@ msgid "Constrain aspect ratio"
 msgstr "Restringeix la relació d'aspecte"
 
 #: ../plug-ins/common/svg.c:886 ../plug-ins/common/wmf.c:676
-#: ../plug-ins/print/print-page-layout.c:288
+#: ../plug-ins/print/print-page-layout.c:261
 #, c-format
 msgid "pixels/%a"
 msgstr "píxels/%a"
@@ -7978,8 +7959,7 @@ msgid "Import _paths"
 msgstr "Im_porta camins"
 
 #: ../plug-ins/common/svg.c:912
-msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importa els elements de camins SVG perquè es puguin fer servir amb l'eina de "
 "camí del GIMP"
@@ -8122,7 +8102,7 @@ msgstr "Composa un _mosaic..."
 
 #  Set the tile cache size
 #. Set the tile cache size
-#: ../plug-ins/common/tile.c:191 ../plug-ins/common/tileit.c:321
+#: ../plug-ins/common/tile.c:191 ../plug-ins/common/tileit.c:320
 msgid "Tiling"
 msgstr "S'està composant el mosaic"
 
@@ -8138,56 +8118,56 @@ msgstr "Fes el mosaic d'una nova mida"
 msgid "C_reate new image"
 msgstr "C_rea una imatge nova"
 
-#: ../plug-ins/common/tileit.c:216
+#: ../plug-ins/common/tileit.c:215
 msgid "Tile image into smaller versions of the orginal"
 msgstr "Composa un mosaic de còpies reduïdes de la imatge original"
 
-#: ../plug-ins/common/tileit.c:221
+#: ../plug-ins/common/tileit.c:220
 msgid "_Small Tiles..."
 msgstr "_Redueix i composa un mosaic..."
 
-#: ../plug-ins/common/tileit.c:263
+#: ../plug-ins/common/tileit.c:262
 msgid "Region selected for filter is empty."
 msgstr "La regió seleccionada pel filtre es buida."
 
 #. Get the preview image
-#: ../plug-ins/common/tileit.c:364
+#: ../plug-ins/common/tileit.c:363
 msgid "Small Tiles"
 msgstr "Redueix i composa un mosaic"
 
 #. Area for buttons etc
 #. Flip
-#: ../plug-ins/common/tileit.c:414 ../plug-ins/ifscompose/ifscompose.c:609
+#: ../plug-ins/common/tileit.c:413 ../plug-ins/ifscompose/ifscompose.c:609
 msgid "Flip"
 msgstr "Inverteix"
 
-#: ../plug-ins/common/tileit.c:462
+#: ../plug-ins/common/tileit.c:461
 msgid "A_ll tiles"
 msgstr "Tots e_ls mosaics"
 
-#: ../plug-ins/common/tileit.c:476
+#: ../plug-ins/common/tileit.c:475
 msgid "Al_ternate tiles"
 msgstr "Al_terna els mosaics"
 
-#: ../plug-ins/common/tileit.c:490
+#: ../plug-ins/common/tileit.c:489
 msgid "_Explicit tile"
 msgstr "Mosaic _explícit"
 
-#: ../plug-ins/common/tileit.c:496
+#: ../plug-ins/common/tileit.c:495
 msgid "Ro_w:"
 msgstr "_Fila:"
 
-#: ../plug-ins/common/tileit.c:520
+#: ../plug-ins/common/tileit.c:519
 msgid "Col_umn:"
 msgstr "Col_umna:"
 
-#: ../plug-ins/common/tileit.c:572
+#: ../plug-ins/common/tileit.c:571
 msgid "O_pacity:"
 msgstr "O_pacitat:"
 
 #  Lower frame saying howmany segments
 #. Lower frame saying howmany segments
-#: ../plug-ins/common/tileit.c:581
+#: ../plug-ins/common/tileit.c:580
 msgid "Number of Segments"
 msgstr "Nombre de segments"
 
@@ -8221,8 +8201,7 @@ msgid "ID"
 msgstr "Identificador"
 
 #: ../plug-ins/common/uniteditor.c:96
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Aquesta cadena es farà servir per identificar una unitat en els fitxers de "
 "configuració del GIMP."
@@ -9368,8 +9347,7 @@ msgstr "Crea un espiral"
 
 #: ../plug-ins/gfig/gfig-dialog.c:938
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr ""
-"Crea una corba de Bezier. Maj + botó per acabar la creació de l'objecte."
+msgstr "Crea una corba de Bezier. Maj + botó per acabar la creació de l'objecte."
 
 #: ../plug-ins/gfig/gfig-dialog.c:942 ../plug-ins/gfig/gfig-stock.c:48
 msgid "Move an object"
@@ -9555,8 +9533,7 @@ msgid "_Gfig..."
 msgstr "_Figures (Gfig)..."
 
 #: ../plug-ins/gfig/gfig.c:731
-msgid ""
-"Error trying to save figure as a parasite: can't attach parasite to drawable."
+msgid "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "S'ha produït un error quan es desava la figura com un paràsit: no es pot "
 "adjuntar un paràsit en una imatge."
@@ -9578,8 +9555,7 @@ msgstr "Superposa"
 
 #: ../plug-ins/gflare/gflare.c:809
 msgid "Produce a lense flare effect using gradients"
-msgstr ""
-"Produeix un efecte de punt de llum enlluernador utilitzant petits degradats"
+msgstr "Produeix un efecte de punt de llum enlluernador utilitzant petits degradats"
 
 #: ../plug-ins/gflare/gflare.c:814
 msgid "_Gradient Flare..."
@@ -9919,8 +9895,7 @@ msgstr "C_entre del pinzell"
 
 #: ../plug-ins/gimpressionist/color.c:61
 msgid "Color is computed from the average of all pixels under the brush"
-msgstr ""
-"El color es calcula amb la mitja de tots els píxels que hi ha sota el pinzell"
+msgstr "El color es calcula amb la mitja de tots els píxels que hi ha sota el pinzell"
 
 #: ../plug-ins/gimpressionist/color.c:65
 msgid "Samples the color from the pixel in the center of the brush"
@@ -10006,8 +9981,7 @@ msgid "Shadow depth:"
 msgstr "Profunditat de l'ombra:"
 
 #: ../plug-ins/gimpressionist/general.c:244
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr ""
 "La profunditat de l'ombrejat, p.ex. quina distància s'hauria d'allunyar de "
 "l'objecte"
@@ -10076,8 +10050,7 @@ msgstr "Obertura de l'angle del primer pinzell a crear"
 msgid ""
 "Let the value (brightness) of the region determine the direction of the "
 "stroke"
-msgstr ""
-"Permet que el valor (lluminositat) de la regió determini la direcció del traç"
+msgstr "Permet que el valor (lluminositat) de la regió determini la direcció del traç"
 
 #: ../plug-ins/gimpressionist/orientation.c:142
 #: ../plug-ins/gimpressionist/size.c:145
@@ -10088,8 +10061,7 @@ msgstr "Radi"
 msgid ""
 "The distance from the center of the image determines the direction of the "
 "stroke"
-msgstr ""
-"La distància des del centre de la imatge determina la direcció del traç"
+msgstr "La distància des del centre de la imatge determina la direcció del traç"
 
 #: ../plug-ins/gimpressionist/orientation.c:147
 msgid "Selects a random direction of each stroke"
@@ -10271,8 +10243,7 @@ msgstr "Aplica el paper com és (sense difuminar-lo)"
 
 #: ../plug-ins/gimpressionist/paper.c:180
 msgid "Specifies the scale of the texture (in percent of original file)"
-msgstr ""
-"Especifica l'escala de la textura (en tant per cent del fitxer original)"
+msgstr "Especifica l'escala de la textura (en tant per cent del fitxer original)"
 
 #: ../plug-ins/gimpressionist/placement.c:49
 msgid "Pl_acement"
@@ -10399,14 +10370,11 @@ msgid "Size:"
 msgstr "Mida:"
 
 #: ../plug-ins/gimpressionist/size.c:142
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
-msgstr ""
-"Permet que el valor (lluminositat) de la regió determini la mida del traç"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
+msgstr "Permet que el valor (lluminositat) de la regió determini la mida del traç"
 
 #: ../plug-ins/gimpressionist/size.c:146
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
+msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "La distància des del centre de la imatge determina la mida del traç"
 
 #: ../plug-ins/gimpressionist/size.c:150
@@ -11630,8 +11598,7 @@ msgstr "Error en la línia %d caràcter %d: %s"
 #: ../plug-ins/metadata/xmp-parse.c:272
 #, c-format
 msgid "Expected text or optional element <%s>, found <%s> instead"
-msgstr ""
-"S'esperava trobar un text o un element opcional <%s>, però s'ha trobat <%s>"
+msgstr "S'esperava trobar un text o un element opcional <%s>, però s'ha trobat <%s>"
 
 #: ../plug-ins/metadata/xmp-parse.c:276
 #, c-format
@@ -11744,63 +11711,43 @@ msgstr "Capa del rínxol"
 msgid "Page Curl"
 msgstr "Rínxol de pàgina"
 
-#: ../plug-ins/print/print-draw-page.c:84
-#, c-format
-msgid "Image width (%lg in) is larger than printable width (%lg in)."
-msgstr ""
-"L'amplada de la imatge (%lg polzades) és més gran que l'amplada d'impressió "
-"(%lg polzades)."
+#  Orientation toggle box
+#: ../plug-ins/print/print-page-layout.c:91
+msgid "_Adjust Page Size and Orientation"
+msgstr "_Ajusta la mida de la pàgina i l'orientació"
 
-#: ../plug-ins/print/print-draw-page.c:92
-#, c-format
-msgid "Image height (%lg in) is larger than printable height (%lg in)."
-msgstr ""
-"L'alçada de la imatge (%lg polzades) és més gran que l'alçada d'impressió (%"
-"lg polzades)."
-
-#: ../plug-ins/print/print-page-layout.c:80
-msgid "Page Setup"
-msgstr "Configuració de la pàgina"
-
-#  "show image" checkbutton at bottom of style frame
-#: ../plug-ins/print/print-page-layout.c:87
-msgid "Show image info header"
-msgstr "Info de capçalera de la imatge"
-
-#: ../plug-ins/print/print-page-layout.c:115
-msgid "Caption"
-msgstr "Títol"
-
-# era: msgstr "Previsualitza així que ho arrosseguis"
-#: ../plug-ins/print/print-page-layout.c:193
-msgid "Print Size"
-msgstr "Mida de la impressió"
+#: ../plug-ins/print/print-page-layout.c:119
+msgid "Printable area:"
+msgstr "Regió a imprimir:"
 
 # era: msgstr "S'està generant una visualització realista"
-#: ../plug-ins/print/print-page-layout.c:271
-msgid "X resolution:"
-msgstr "Resolució X:"
+#: ../plug-ins/print/print-page-layout.c:282
+msgid "_X resolution:"
+msgstr "Resolució _X:"
 
 # era: msgstr "S'està generant una visualització realista"
-#: ../plug-ins/print/print-page-layout.c:278
-msgid "Y resolution:"
-msgstr "Resolució Y:"
+#: ../plug-ins/print/print-page-layout.c:284
+msgid "_Y resolution:"
+msgstr "Resolució _Y:"
 
-#: ../plug-ins/print/print.c:97
+#: ../plug-ins/print/print.c:89
 msgid "Print the image"
 msgstr "Imprimeix la imatge"
 
-#: ../plug-ins/print/print.c:102
+#: ../plug-ins/print/print.c:94
 msgid "_Print..."
 msgstr "_Imprimeix..."
 
-#: ../plug-ins/print/print.c:192
-msgid "Layout"
-msgstr "Disposició"
+#: ../plug-ins/print/print.c:238
+msgid "Printing"
+msgstr "S'està imprimint"
 
-#: ../plug-ins/print/print.c:378
-msgid "Print Preview"
-msgstr "Previsualitza"
+# era: msgstr "Previsualitza així que ho arrosseguis"
+#. display status of the print operation in the status bar
+#: ../plug-ins/print/print.c:257
+#, c-format
+msgid "Print: %s"
+msgstr "Imprimeix: %s"
 
 #: ../plug-ins/rcm/rcm.c:99
 msgid "Replace a range of colors with another"
@@ -12024,8 +11971,7 @@ msgstr "No s'ha pogut obrir el fitxer per a escriure-hi"
 #: ../plug-ins/uri/uri-backend-libcurl.c:184
 #, c-format
 msgid "Opening '%s' for reading resulted in HTTP response code: %d"
-msgstr ""
-"Quan s'estava mirant de llegir '%s' s'ha rebut un codi de resposta HTTP: %d"
+msgstr "Quan s'estava mirant de llegir '%s' s'ha rebut un codi de resposta HTTP: %d"
 
 #: ../plug-ins/uri/uri-backend-wget.c:152
 #: ../plug-ins/uri/uri-backend-wget.c:172
@@ -12222,3 +12168,4 @@ msgstr "Error: no s'ha pogut llegir el fitxer de propietats XJT '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Error: el fitxer de propietats XJT '%s' està buit."
+
