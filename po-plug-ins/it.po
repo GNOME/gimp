@@ -1,13 +1,13 @@
 # This is the Italian catalog for the standard GIMP Plugins.
 # Copyright (C) 1999 Free Software Foundation, Inc.
-# Daniele Medri <madrid@linux.it>, 1999, 2000, 2001, 2002
-# Marco Ciampa <ciampix@libero.it>, 2003, 2004, 2005, 2006
+# Daniele Medri <madrid@linux.it>, 1999-2002
+# Marco Ciampa <ciampix@libero.it>, 2003-2007
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-19 23:27+0100\n"
-"PO-Revision-Date: 2007-01-04 19:27+0100\n"
+"POT-Creation-Date: 2007-01-07 12:34+0100\n"
+"PO-Revision-Date: 2007-01-07 12:34+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1199,8 +1199,8 @@ msgstr "Profondità di colore (in bit) non supportata o non valida."
 msgid "Background"
 msgstr "Sfondo"
 
-#: ../plug-ins/bmp/bmpread.c:681 ../plug-ins/bmp/bmpread.c:722
-#: ../plug-ins/bmp/bmpread.c:772
+#: ../plug-ins/bmp/bmpread.c:717 ../plug-ins/bmp/bmpread.c:758
+#: ../plug-ins/bmp/bmpread.c:808
 msgid "The bitmap ends unexpectedly."
 msgstr "La bitmap termina in maniera inaspettata."
 
@@ -2148,12 +2148,12 @@ msgid "Orientation"
 msgstr "Orientamento"
 
 #: ../plug-ins/common/blinds.c:263 ../plug-ins/common/ripple.c:542
-#: ../plug-ins/common/tileit.c:426 ../plug-ins/pagecurl/pagecurl.c:534
+#: ../plug-ins/common/tileit.c:425 ../plug-ins/pagecurl/pagecurl.c:534
 msgid "_Horizontal"
 msgstr "_Orizzontale"
 
 #: ../plug-ins/common/blinds.c:264 ../plug-ins/common/ripple.c:543
-#: ../plug-ins/common/tileit.c:436 ../plug-ins/pagecurl/pagecurl.c:533
+#: ../plug-ins/common/tileit.c:435 ../plug-ins/pagecurl/pagecurl.c:533
 msgid "_Vertical"
 msgstr "_Verticale"
 
@@ -2340,7 +2340,7 @@ msgstr "Analisi cubocolori"
 
 #. output results
 #: ../plug-ins/common/ccanalyze.c:384
-#: ../plug-ins/imagemap/imap_cmd_guides.c:233
+#: ../plug-ins/imagemap/imap_cmd_guides.c:231
 #, c-format
 msgid "Image dimensions: %d × %d"
 msgstr "Dimensioni immagine: %d × %d"
@@ -3396,8 +3396,9 @@ msgstr "Destriscia"
 #: ../plug-ins/common/destripe.c:472 ../plug-ins/common/gtm.c:583
 #: ../plug-ins/common/postscript.c:3109 ../plug-ins/common/postscript.c:3317
 #: ../plug-ins/common/raw.c:1035 ../plug-ins/common/smooth_palette.c:436
-#: ../plug-ins/common/tile.c:423 ../plug-ins/imagemap/imap_cmd_guides.c:167
+#: ../plug-ins/common/tile.c:423 ../plug-ins/imagemap/imap_cmd_guides.c:165
 #: ../plug-ins/imagemap/imap_rectangle.c:403
+#: ../plug-ins/print/print-page-layout.c:239
 msgid "_Width:"
 msgstr "_Larghezza:"
 
@@ -3670,8 +3671,9 @@ msgstr "Incisione"
 #: ../plug-ins/common/gtm.c:599 ../plug-ins/common/postscript.c:3118
 #: ../plug-ins/common/postscript.c:3326 ../plug-ins/common/raw.c:1048
 #: ../plug-ins/common/smooth_palette.c:441 ../plug-ins/common/tile.c:427
-#: ../plug-ins/imagemap/imap_cmd_guides.c:177
+#: ../plug-ins/imagemap/imap_cmd_guides.c:175
 #: ../plug-ins/imagemap/imap_rectangle.c:410
+#: ../plug-ins/print/print-page-layout.c:241
 msgid "_Height:"
 msgstr "_Altezza:"
 
@@ -4491,6 +4493,7 @@ msgid "Drawing grid"
 msgstr "Disegno griglia"
 
 #: ../plug-ins/common/grid.c:635 ../plug-ins/gfig/gfig-dialog.c:1353
+#: ../plug-ins/imagemap/imap_menu.c:244
 msgid "Grid"
 msgstr "Griglia"
 
@@ -4509,7 +4512,7 @@ msgstr "Intersezione"
 
 #. Width and Height
 #: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:759
-#: ../plug-ins/common/wmf.c:549 ../plug-ins/print/print-page-layout.c:218
+#: ../plug-ins/common/wmf.c:549
 msgid "Width:"
 msgstr "Larghezza:"
 
@@ -5000,7 +5003,7 @@ msgstr "_Mantieni"
 msgid "_Convert"
 msgstr "_Converti"
 
-#: ../plug-ins/common/lcms.c:981
+#: ../plug-ins/common/lcms.c:981 ../plug-ins/jpeg/jpeg-exif.c:389
 msgid "_Don't ask me again"
 msgstr "_Non chiedermelo più"
 
@@ -5289,7 +5292,7 @@ msgstr "_Lineare"
 msgid "_Radial"
 msgstr "_Radiale"
 
-#: ../plug-ins/common/mblur.c:949
+#: ../plug-ins/common/mblur.c:949 ../plug-ins/imagemap/imap_menu.c:238
 msgid "_Zoom"
 msgstr "_Zoom"
 
@@ -5717,8 +5720,8 @@ msgid "Add a starburst to the image"
 msgstr "Aggiunge un effetto supernova all'immagine"
 
 #: ../plug-ins/common/nova.c:177
-msgid "Su_pernova..."
-msgstr "Su_pernova..."
+msgid "Super_nova..."
+msgstr "Super_nova..."
 
 #: ../plug-ins/common/nova.c:261
 msgid "Rendering supernova"
@@ -6355,13 +6358,15 @@ msgstr "Colorazione"
 msgid "B/W"
 msgstr "Bianco/Nero"
 
-#: ../plug-ins/common/postscript.c:3168 ../plug-ins/rcm/rcm_dialog.c:419
+#: ../plug-ins/common/postscript.c:3168 ../plug-ins/imagemap/imap_menu.c:249
+#: ../plug-ins/rcm/rcm_dialog.c:419
 msgid "Gray"
 msgstr "Grigio"
 
 #: ../plug-ins/common/postscript.c:3169 ../plug-ins/common/xpm.c:468
 #: ../plug-ins/gimpressionist/color.c:48
 #: ../plug-ins/gimpressionist/general.c:152
+#: ../plug-ins/imagemap/imap_menu.c:248
 msgid "Color"
 msgstr "Colore"
 
@@ -6391,6 +6396,7 @@ msgstr "Salva come PostScript"
 
 #. Image Size
 #: ../plug-ins/common/postscript.c:3301
+#: ../plug-ins/print/print-page-layout.c:202
 msgid "Image Size"
 msgstr "Dimensione immagine"
 
@@ -6578,7 +6584,7 @@ msgstr "Dati immagine raw"
 msgid "Load Image from Raw Data"
 msgstr "Carica immagine da dati raw"
 
-#: ../plug-ins/common/raw.c:992
+#: ../plug-ins/common/raw.c:992 ../plug-ins/print/print.c:189
 msgid "Image"
 msgstr "Immagine"
 
@@ -7724,7 +7730,6 @@ msgid "Render Scalable Vector Graphics"
 msgstr "Renderizza Grafica Vettoriale Scalabile (SVG)"
 
 #: ../plug-ins/common/svg.c:765 ../plug-ins/common/wmf.c:555
-#: ../plug-ins/print/print-page-layout.c:224
 msgid "Height:"
 msgstr "Altezza:"
 
@@ -7741,7 +7746,7 @@ msgid "Constrain aspect ratio"
 msgstr "Mantieni rapporto dimensioni"
 
 #: ../plug-ins/common/svg.c:886 ../plug-ins/common/wmf.c:676
-#: ../plug-ins/print/print-page-layout.c:288
+#: ../plug-ins/print/print-page-layout.c:261
 #, c-format
 msgid "pixels/%a"
 msgstr "Punti/%a"
@@ -7893,7 +7898,7 @@ msgid "_Tile..."
 msgstr "Pias_trella..."
 
 #. Set the tile cache size
-#: ../plug-ins/common/tile.c:191 ../plug-ins/common/tileit.c:321
+#: ../plug-ins/common/tile.c:191 ../plug-ins/common/tileit.c:320
 msgid "Tiling"
 msgstr "Copertura..."
 
@@ -7909,55 +7914,55 @@ msgstr "Copertura nuova dimensione"
 msgid "C_reate new image"
 msgstr "C_rea nuova immagine"
 
-#: ../plug-ins/common/tileit.c:216
+#: ../plug-ins/common/tileit.c:215
 msgid "Tile image into smaller versions of the orginal"
 msgstr "Piastrella l'immagine con versioni più piccole dell'originale"
 
-#: ../plug-ins/common/tileit.c:221
+#: ../plug-ins/common/tileit.c:220
 msgid "_Small Tiles..."
 msgstr "Pia_strelle piccole..."
 
-#: ../plug-ins/common/tileit.c:263
+#: ../plug-ins/common/tileit.c:262
 msgid "Region selected for filter is empty."
 msgstr "La regione selezionata per il filtro è vuota."
 
 #. Get the preview image
-#: ../plug-ins/common/tileit.c:364
+#: ../plug-ins/common/tileit.c:363
 msgid "Small Tiles"
 msgstr "Piastrelle piccole"
 
 #. Area for buttons etc
 #. Flip
-#: ../plug-ins/common/tileit.c:414 ../plug-ins/ifscompose/ifscompose.c:609
+#: ../plug-ins/common/tileit.c:413 ../plug-ins/ifscompose/ifscompose.c:609
 msgid "Flip"
 msgstr "Ribalta"
 
-#: ../plug-ins/common/tileit.c:462
+#: ../plug-ins/common/tileit.c:461
 msgid "A_ll tiles"
 msgstr "Tutte piastre_lle"
 
-#: ../plug-ins/common/tileit.c:476
+#: ../plug-ins/common/tileit.c:475
 msgid "Al_ternate tiles"
 msgstr "Al_terna piastrelle"
 
-#: ../plug-ins/common/tileit.c:490
+#: ../plug-ins/common/tileit.c:489
 msgid "_Explicit tile"
 msgstr "Piastrella _esplicita"
 
-#: ../plug-ins/common/tileit.c:496
+#: ../plug-ins/common/tileit.c:495
 msgid "Ro_w:"
 msgstr "Ri_ga:"
 
-#: ../plug-ins/common/tileit.c:520
+#: ../plug-ins/common/tileit.c:519
 msgid "Col_umn:"
 msgstr "Col_onna:"
 
-#: ../plug-ins/common/tileit.c:572
+#: ../plug-ins/common/tileit.c:571
 msgid "O_pacity:"
 msgstr "O_pacità:"
 
 #. Lower frame saying howmany segments
-#: ../plug-ins/common/tileit.c:581
+#: ../plug-ins/common/tileit.c:580
 msgid "Number of Segments"
 msgstr "Numero di segmenti"
 
@@ -9050,7 +9055,7 @@ msgstr "Ripristi_na"
 msgid "_Clear"
 msgstr "Pulis_ci"
 
-#: ../plug-ins/gfig/gfig-dialog.c:876
+#: ../plug-ins/gfig/gfig-dialog.c:876 ../plug-ins/imagemap/imap_menu.c:244
 msgid "_Grid"
 msgstr "_Griglia"
 
@@ -9167,6 +9172,7 @@ msgstr "Primo piano"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1285 ../plug-ins/imagemap/imap_cmd_copy.c:54
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:55
+#: ../plug-ins/imagemap/imap_menu.c:195
 msgid "Copy"
 msgstr "Copia"
 
@@ -9202,7 +9208,7 @@ msgstr "Settori desiderati della griglia polare:"
 msgid "Polar grid radius interval:"
 msgstr "Intervallo raggio della griglia polare:"
 
-#: ../plug-ins/gfig/gfig-dialog.c:1439
+#: ../plug-ins/gfig/gfig-dialog.c:1439 ../plug-ins/imagemap/imap_menu.c:255
 msgid "Rectangle"
 msgstr "Rettangolo"
 
@@ -9568,11 +9574,11 @@ msgstr "Gradiente a probabilità:"
 msgid "Shape of Second Flares"
 msgstr "Forma dei riverberi secondari"
 
-#: ../plug-ins/gflare/gflare.c:3812
+#: ../plug-ins/gflare/gflare.c:3812 ../plug-ins/imagemap/imap_menu.c:257
 msgid "Circle"
 msgstr "Cerchio"
 
-#: ../plug-ins/gflare/gflare.c:3829
+#: ../plug-ins/gflare/gflare.c:3829 ../plug-ins/imagemap/imap_menu.c:259
 msgid "Polygon"
 msgstr "Poligono"
 
@@ -10367,6 +10373,7 @@ msgid "Relative probability:"
 msgstr "Probabilità relativa:"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1058
+#: ../plug-ins/imagemap/imap_menu.c:198
 msgid "Select _All"
 msgstr "Selezion_a tutto"
 
@@ -10451,11 +10458,15 @@ msgstr "Salva come file IFS frattale"
 msgid "Open IFS Fractal file"
 msgstr "Apri file IFS frattale"
 
-#: ../plug-ins/imagemap/imap_about.c:45
+#: ../plug-ins/imagemap/imap_about.c:43
+msgid "Image Map Plug-In"
+msgstr "Plug-in mappa immagine"
+
+#: ../plug-ins/imagemap/imap_about.c:47
 msgid "Copyright © 1999-2005 by Maurits Rijk"
 msgstr "Copyright © 1999-2005 by Maurits Rijk"
 
-#: ../plug-ins/imagemap/imap_about.c:48
+#: ../plug-ins/imagemap/imap_about.c:49
 msgid "Released under the GNU General Public License"
 msgstr "Rilasciato su licenza GNU General Public License"
 
@@ -10495,14 +10506,17 @@ msgstr "Crea"
 
 #: ../plug-ins/imagemap/imap_cmd_cut.c:55
 #: ../plug-ins/imagemap/imap_cmd_cut_object.c:51
+#: ../plug-ins/imagemap/imap_menu.c:194
 msgid "Cut"
 msgstr "Taglia"
 
 #: ../plug-ins/imagemap/imap_cmd_delete.c:57
+#: ../plug-ins/imagemap/imap_menu.c:197
 msgid "Delete"
 msgstr "Elimina"
 
 #: ../plug-ins/imagemap/imap_cmd_delete_point.c:61
+#: ../plug-ins/imagemap/imap_menu.c:214
 msgid "Delete Point"
 msgstr "Elimina punto"
 
@@ -10549,17 +10563,17 @@ msgstr "Bordo _inferiore"
 msgid "_Base URL:"
 msgstr "URL _base:"
 
-#: ../plug-ins/imagemap/imap_cmd_guides.c:72
-#: ../plug-ins/imagemap/imap_cmd_guides.c:138
+#: ../plug-ins/imagemap/imap_cmd_guides.c:74
+#: ../plug-ins/imagemap/imap_cmd_guides.c:140
 msgid "Create Guides"
 msgstr "Crea guide"
 
-#: ../plug-ins/imagemap/imap_cmd_guides.c:111
+#: ../plug-ins/imagemap/imap_cmd_guides.c:113
 #, c-format
 msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
 msgstr "Limiti guide risultanti: %d,%d a %d,%d (%d aree)"
 
-#: ../plug-ins/imagemap/imap_cmd_guides.c:142
+#: ../plug-ins/imagemap/imap_cmd_guides.c:144
 msgid ""
 "Guides are pre-defined rectangles covering the image. You define them by "
 "their width, height, and spacing from each other. This allows you to rapidly "
@@ -10571,48 +10585,50 @@ msgstr ""
 "l'altro. Permettono di creare rapidamente mappe di immagini, insiemi di "
 "\"miniature\", utili per le barre di navigazione."
 
-#: ../plug-ins/imagemap/imap_cmd_guides.c:172
+#: ../plug-ins/imagemap/imap_cmd_guides.c:170
 msgid "_Left start at:"
 msgstr "Inizio a _sinistra a:"
 
-#: ../plug-ins/imagemap/imap_cmd_guides.c:182
+#: ../plug-ins/imagemap/imap_cmd_guides.c:180
 msgid "_Top start at:"
 msgstr "Inizio in _cima a:"
 
-#: ../plug-ins/imagemap/imap_cmd_guides.c:187
+#: ../plug-ins/imagemap/imap_cmd_guides.c:185
 msgid "_Horz. spacing:"
 msgstr "Spaziatura _oriz.:"
 
-#: ../plug-ins/imagemap/imap_cmd_guides.c:193
+#: ../plug-ins/imagemap/imap_cmd_guides.c:191
 msgid "_No. across:"
 msgstr "_N. di incroci:"
 
-#: ../plug-ins/imagemap/imap_cmd_guides.c:199
+#: ../plug-ins/imagemap/imap_cmd_guides.c:197
 msgid "_Vert. spacing:"
 msgstr "Spaziatura _vert.:"
 
-#: ../plug-ins/imagemap/imap_cmd_guides.c:205
+#: ../plug-ins/imagemap/imap_cmd_guides.c:203
 msgid "No. _down:"
 msgstr "N. _giù:"
 
-#: ../plug-ins/imagemap/imap_cmd_guides.c:214
+#: ../plug-ins/imagemap/imap_cmd_guides.c:212
 msgid "Base _URL:"
 msgstr "_URL base:"
 
-#: ../plug-ins/imagemap/imap_cmd_guides.c:239
+#: ../plug-ins/imagemap/imap_cmd_guides.c:237
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
 msgstr "Limiti guide risultanti: 0,0 a 0,0 (0 aree)"
 
-#: ../plug-ins/imagemap/imap_cmd_guides.c:274
+#: ../plug-ins/imagemap/imap_cmd_guides.c:272
 msgid "Guides"
 msgstr "Guide"
 
 #: ../plug-ins/imagemap/imap_cmd_insert_point.c:62
+#: ../plug-ins/imagemap/imap_menu.c:213
 msgid "Insert Point"
 msgstr "Inserisci punti"
 
 #: ../plug-ins/imagemap/imap_cmd_move_down.c:53
 #: ../plug-ins/imagemap/imap_cmd_object_down.c:55
+#: ../plug-ins/imagemap/imap_menu.c:211
 msgid "Move Down"
 msgstr "Sposta in basso"
 
@@ -10630,10 +10646,12 @@ msgstr "Sposta davanti"
 
 #: ../plug-ins/imagemap/imap_cmd_move_up.c:53
 #: ../plug-ins/imagemap/imap_cmd_object_up.c:55
+#: ../plug-ins/imagemap/imap_menu.c:210
 msgid "Move Up"
 msgstr "Sposta in alto"
 
 #: ../plug-ins/imagemap/imap_cmd_paste.c:51
+#: ../plug-ins/imagemap/imap_menu.c:196
 msgid "Paste"
 msgstr "Incolla"
 
@@ -10752,7 +10770,7 @@ msgstr "Impostazioni area"
 msgid "Area #%d Settings"
 msgstr "Impostazioni area #%d"
 
-#: ../plug-ins/imagemap/imap_file.c:48 ../plug-ins/imagemap/imap_menu.c:96
+#: ../plug-ins/imagemap/imap_file.c:48 ../plug-ins/imagemap/imap_menu.c:97
 msgid "Error opening file"
 msgstr "Errore di apertura file"
 
@@ -10871,15 +10889,159 @@ msgstr "Impossibile leggere il file:"
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: ../plug-ins/imagemap/imap_menu.c:136
+#: ../plug-ins/imagemap/imap_menu.c:137
 #, c-format
 msgid "_Undo %s"
 msgstr "_Ripristina %s"
 
-#: ../plug-ins/imagemap/imap_menu.c:152
+#: ../plug-ins/imagemap/imap_menu.c:153
 #, c-format
 msgid "_Redo %s"
 msgstr "Ri_esegui %s"
+
+#: ../plug-ins/imagemap/imap_menu.c:181
+msgid "_File"
+msgstr "_File"
+
+#: ../plug-ins/imagemap/imap_menu.c:182
+msgid "_Open..."
+msgstr "_Apri..."
+
+#: ../plug-ins/imagemap/imap_menu.c:182
+msgid "Open"
+msgstr "Apri"
+
+#: ../plug-ins/imagemap/imap_menu.c:184
+msgid "_Save..."
+msgstr "_Salva..."
+
+#: ../plug-ins/imagemap/imap_menu.c:184
+msgid "Save"
+msgstr "Salva"
+
+#: ../plug-ins/imagemap/imap_menu.c:186
+msgid "Save _As..."
+msgstr "Salva _come..."
+
+#: ../plug-ins/imagemap/imap_menu.c:191
+msgid "_Edit"
+msgstr "_Modifica"
+
+#: ../plug-ins/imagemap/imap_menu.c:192
+msgid "Undo"
+msgstr "Ripristina"
+
+#: ../plug-ins/imagemap/imap_menu.c:193
+msgid "Redo"
+msgstr "Ripeti"
+
+#: ../plug-ins/imagemap/imap_menu.c:199
+msgid "D_eselect All"
+msgstr "D_eseleziona tutto"
+
+#: ../plug-ins/imagemap/imap_menu.c:201
+msgid "Edit Area _Info..."
+msgstr "Modifica area _informazioni..."
+
+#: ../plug-ins/imagemap/imap_menu.c:202
+msgid "Edit selected area info"
+msgstr "Modifica l'area informazioni selezionata"
+
+#: ../plug-ins/imagemap/imap_menu.c:203
+msgid "Preferences"
+msgstr "Preferenze"
+
+#: ../plug-ins/imagemap/imap_menu.c:205
+msgid "Move to Front"
+msgstr "Sposta davanti"
+
+#: ../plug-ins/imagemap/imap_menu.c:207
+msgid "Send to Back"
+msgstr "Sposta indietro"
+
+#: ../plug-ins/imagemap/imap_menu.c:209
+msgid "Delete Area"
+msgstr "Elimina area"
+
+#: ../plug-ins/imagemap/imap_menu.c:216
+msgid "_View"
+msgstr "_Visualizza"
+
+#: ../plug-ins/imagemap/imap_menu.c:217
+msgid "Source..."
+msgstr "Sorgente..."
+
+#: ../plug-ins/imagemap/imap_menu.c:218
+msgid "Zoom in"
+msgstr "Zoom avanti"
+
+#: ../plug-ins/imagemap/imap_menu.c:219
+msgid "Zoom out"
+msgstr "Zoom indietro"
+
+#: ../plug-ins/imagemap/imap_menu.c:220
+msgid "_Zoom To"
+msgstr "_Zoom a"
+
+#: ../plug-ins/imagemap/imap_menu.c:222
+msgid "_Mapping"
+msgstr "_Mappatura"
+
+#: ../plug-ins/imagemap/imap_menu.c:223
+msgid "Edit Map Info..."
+msgstr "Modifica informazioni mappa..."
+
+#: ../plug-ins/imagemap/imap_menu.c:224
+msgid "Edit Map Info"
+msgstr "Modifica informazioni mappa"
+
+#: ../plug-ins/imagemap/imap_menu.c:226
+msgid "_Tools"
+msgstr "S_trumenti"
+
+#: ../plug-ins/imagemap/imap_menu.c:227
+msgid "Grid Settings..."
+msgstr "Impostazioni griglia..."
+
+#: ../plug-ins/imagemap/imap_menu.c:229
+msgid "Use GIMP Guides..."
+msgstr "Usa le guide di Gimp..."
+
+#: ../plug-ins/imagemap/imap_menu.c:231
+msgid "Create Guides..."
+msgstr "Crea guide..."
+
+#: ../plug-ins/imagemap/imap_menu.c:234
+msgid "_Help"
+msgstr "_Aiuto"
+
+#: ../plug-ins/imagemap/imap_menu.c:235
+msgid "_Contents"
+msgstr "_Contenuti"
+
+#: ../plug-ins/imagemap/imap_menu.c:243
+msgid "Area List"
+msgstr "Elenco area"
+
+#: ../plug-ins/imagemap/imap_menu.c:253
+msgid "Arrow"
+msgstr "Freccia"
+
+#: ../plug-ins/imagemap/imap_menu.c:254
+msgid "Select existing area"
+msgstr "Seleziona area esistente"
+
+#: ../plug-ins/imagemap/imap_menu.c:256
+msgid "Define Rectangle area"
+msgstr "Difinisci area rettangolare"
+
+#: ../plug-ins/imagemap/imap_menu.c:258
+msgid "Define Circle/Oval area"
+msgstr "Definisci area circolare/ovale"
+
+#: ../plug-ins/imagemap/imap_menu.c:260
+msgid "Define Polygon area"
+msgstr "Definisci area poligonale"
 
 #: ../plug-ins/imagemap/imap_polygon.c:72
 msgid "_Polygon"
@@ -11046,23 +11208,19 @@ msgstr "Formato file mappa"
 msgid "View Source"
 msgstr "Visualizza sorgente"
 
-#: ../plug-ins/imagemap/imap_stock.c:43
-msgid "Edit Map Info..."
-msgstr "Modifica informazioni mappa..."
-
-#: ../plug-ins/jpeg/jpeg-exif.c:263
+#: ../plug-ins/jpeg/jpeg-exif.c:306
 msgid "Rotate Image?"
 msgstr "Rotazione immagine?"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:266
+#: ../plug-ins/jpeg/jpeg-exif.c:309
 msgid "_Keep Orientation"
 msgstr "_Mantieni l'orientamento"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:321
+#: ../plug-ins/jpeg/jpeg-exif.c:364
 msgid "According to the EXIF data, this image is rotated."
 msgstr "Secondo i dati EXIF, quest'immagine è ruotata."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:336
+#: ../plug-ins/jpeg/jpeg-exif.c:379
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Vuoi che Gimp la ruoti per riportarla all'orientamento standard?"
 
@@ -11473,58 +11631,43 @@ msgstr "Livello ricciolo"
 msgid "Page Curl"
 msgstr "Pagina arricciata"
 
-#: ../plug-ins/print/print-draw-page.c:84
-#, c-format
-msgid "Image width (%lg in) is larger than printable width (%lg in)."
-msgstr ""
-"La larghezza immagine (%lg in) è maggiore della larghezza stampabile (%lg "
-"in)."
+#: ../plug-ins/print/print-page-layout.c:91
+msgid "_Adjust Page Size and Orientation"
+msgstr "_Regola la dimensione e l'orientamento pagina"
 
-#: ../plug-ins/print/print-draw-page.c:92
-#, c-format
-msgid "Image height (%lg in) is larger than printable height (%lg in)."
-msgstr ""
-"L'altezza immagine (%lg in) è maggiore dell'altezza stampabile (%lg in)."
+#: ../plug-ins/print/print-page-layout.c:119
+msgid "Printable area:"
+msgstr "Area stampabile:"
 
-#: ../plug-ins/print/print-page-layout.c:80
-msgid "Page Setup"
-msgstr "Impostazione pagina"
+#: ../plug-ins/print/print-page-layout.c:282
+msgid "_X resolution:"
+msgstr "Risoluzione _X:"
 
-#: ../plug-ins/print/print-page-layout.c:87
-msgid "Show image info header"
-msgstr "Mostra le informazioni di intestazione immagine"
+#: ../plug-ins/print/print-page-layout.c:284
+msgid "_Y resolution:"
+msgstr "Risoluzione _Y:"
 
-#: ../plug-ins/print/print-page-layout.c:115
-msgid "Caption"
-msgstr "Intestazione"
-
-#: ../plug-ins/print/print-page-layout.c:193
-msgid "Print Size"
-msgstr "Dimensione di stampa"
-
-#: ../plug-ins/print/print-page-layout.c:271
-msgid "X resolution:"
-msgstr "Risoluzione X:"
-
-#: ../plug-ins/print/print-page-layout.c:278
-msgid "Y resolution:"
-msgstr "Risoluzione Y:"
-
-#: ../plug-ins/print/print.c:97
+#: ../plug-ins/print/print.c:89
 msgid "Print the image"
 msgstr "Stampa l'immagine"
 
-#: ../plug-ins/print/print.c:102
+#: ../plug-ins/print/print.c:94
 msgid "_Print..."
 msgstr "Stam_pa..."
 
-#: ../plug-ins/print/print.c:192
-msgid "Layout"
-msgstr "Disposizione"
+#: ../plug-ins/print/print.c:227
+msgid "An error occurred while trying to print:"
+msgstr "Errore durante la stampa:"
 
-#: ../plug-ins/print/print.c:378
-msgid "Print Preview"
-msgstr "Anteprima di stampa"
+#: ../plug-ins/print/print.c:251
+msgid "Printing"
+msgstr "Stampa in corso"
+
+#. display status of the print operation in the status bar
+#: ../plug-ins/print/print.c:270
+#, c-format
+msgid "Print: %s"
+msgstr "Stampa: %s"
 
 #: ../plug-ins/rcm/rcm.c:99
 msgid "Replace a range of colors with another"
