@@ -1,5 +1,10 @@
 2007-01-08  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpstatusbar.c: increased statusbar message timeout
+	to 5 seconds.
+
+2007-01-08  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/difference-clouds.scm: removed wrong
 	and useless call to gimp-drawable-update.
 

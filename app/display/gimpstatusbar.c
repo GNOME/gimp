@@ -44,6 +44,14 @@
 #include "gimp-intl.h"
 
 
+/* maximal width of the string holding the cursor-coordinates for
+ * the status line
+ */
+#define CURSOR_LEN       256
+
+#define MESSAGE_TIMEOUT  5000
+
+
 typedef struct _GimpStatusbarMsg GimpStatusbarMsg;
 
 struct _GimpStatusbarMsg
@@ -52,11 +60,6 @@ struct _GimpStatusbarMsg
   gchar *stock_id;
   gchar *text;
 };
-
-/* maximal width of the string holding the cursor-coordinates for
- * the status line
- */
-#define CURSOR_LEN 256
 
 
 static void     gimp_statusbar_progress_iface_init (GimpProgressInterface *iface);
@@ -749,7 +752,8 @@ gimp_statusbar_push_temp_valist (GimpStatusbar *statusbar,
     g_source_remove (statusbar->temp_timeout_id);
 
   statusbar->temp_timeout_id =
-    g_timeout_add (3000, (GSourceFunc) gimp_statusbar_temp_timeout, statusbar);
+    g_timeout_add (MESSAGE_TIMEOUT,
+                   (GSourceFunc) gimp_statusbar_temp_timeout, statusbar);
 
   if (statusbar->messages)
     {
