@@ -1,4 +1,4 @@
-# translation of cs.po to Czech
+# translation of cs.po to
 # Czech translation of gimp-tips
 # Copyright (C) 2003, 2004 gimp'S COPYRIGHT HOLDER
 # Copyright (C) 2004, 2005 Miloslav Trmac <mitr@volny.cz>
@@ -10,10 +10,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-08 11:21+0100\n"
-"PO-Revision-Date: 2007-01-08 11:21+0100\n"
+"POT-Creation-Date: 2007-01-08 15:05+0100\n"
+"PO-Revision-Date: 2007-01-08 15:04+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -25,7 +25,6 @@ msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
 msgstr "<big>Vítá vás GIMP: GNU program pro manipulaci s obrázky!</big>"
 
 #: ../data/tips/gimp-tips.xml.in.h:2
-#, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
@@ -33,7 +32,8 @@ msgid ""
 "color."
 msgstr ""
 "Při kliknutí s <tt>Ctrl</tt> bude nástroj Plechovka používat barvu pozadí "
-"místo barvy popředí."
+"místo barvy popředí. Stejně tak nástroj Pipeta při kliknutí s <tt>Ctrl</tt> "
+"nastaví barvu pozadí místo barvy popředí."
 
 #: ../data/tips/gimp-tips.xml.in.h:3
 msgid ""
@@ -74,7 +74,6 @@ msgstr ""
 "proveďte pomocí menu."
 
 #: ../data/tips/gimp-tips.xml.in.h:7
-#, fuzzy
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
@@ -84,10 +83,12 @@ msgid ""
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
 msgstr ""
-"Po povolení &quot;Dynamické klávesové zkratky&quot; v dialogu Předvolby "
-"můžete měnit klávesové zkratky. Provedete to otevřením menu, vybráním "
-"položky menu a stisknutím nové klávesové zkratky. Pokud je povoleno &quot;"
-"Uložit klávesové zkratky&quot;, jsou zkratky uloženy, když GIMP ukončíte."
+"Po povolení &quot;Dynamických klávesových zkratek&quot; v dialogu Předvolby "
+"můžete měnit klávesové zkratky. Provedete to otevřením nabídky, vybráním "
+"její položky a stisknutím požadované klávesové zkratky. Pokud je povoleno "
+"&quot;Uložit klávesové zkratky&quot;, budou nové zkratky uloženy při "
+"ukončení GIMPu. Chcete-li se vyvarovat náhodné změny zkratek, zakažte volbu "
+"&quot;Dynamické klávesové zkratky&quot;."
 
 #: ../data/tips/gimp-tips.xml.in.h:8
 msgid ""
@@ -138,28 +139,26 @@ msgstr ""
 "alfa kanál."
 
 #: ../data/tips/gimp-tips.xml.in.h:13
-#, fuzzy
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
 "tool (Colors→Levels). If there are any color casts, you can correct them "
 "with the Curves tool (Colors→Curves)."
 msgstr ""
-"Jestliže některé vaše naskenované fotky nevypadají dost barevně, můžete "
-"jejich rozsah tónů snadno vylepšit tlačítkem &quot;Automaticky&quot; v "
-"nástroji Úrovně (Vrstva-&gt;Barvy-&gt;Úrovně). Případné barevné stíny můžete "
-"opravit nástrojem Křivky (Vrstva-&gt;Barvy-&gt;Křivky)."
+"Jestliže některé vaše naskenované fotografie nejsou dost barevné, můžete "
+"jejich barevný rozsah snadno vylepšit tlačítkem &quot;Automaticky&quot; v "
+"nástroji Úrovně (Barvy-&gt;Úrovně). Případný barevný závoj můžete opravit "
+"nástrojem Křivky (Barvy-&gt;Křivky)."
 
 #: ../data/tips/gimp-tips.xml.in.h:14
-#, fuzzy
 msgid ""
 "If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
 "their current settings. You can use the Paintbrush in gradient mode or even "
 "the Eraser or the Smudge tool."
 msgstr ""
-"Při vykreslení cesty (Úpravy-&gt;Vykreslit cestu) mohou být použity kreslicí "
-"nástroje s jejich aktuálním nastavením. Můžete použít Štětec v režimu "
-"přechodu nebo dokonce nástroje Guma nebo Šmouha."
+"Pro vykreslování cesty (Úpravy-&gt;Vykreslit cestu) mohou být použity "
+"kreslicí nástroje s jejich aktuálním nastavením. Můžete použít Štětec v "
+"režimu přechodu nebo dokonce nástroje Guma nebo Šmouha."
 
 #: ../data/tips/gimp-tips.xml.in.h:15
 msgid ""
@@ -180,18 +179,17 @@ msgstr ""
 "sloučit obrázek do jedné vrstvy (Obrázek-&gt;Zploštit obrázek)."
 
 #: ../data/tips/gimp-tips.xml.in.h:17
-#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB "
 "(Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha "
 "Channel) or flatten it (Image→Flatten Image)."
 msgstr ""
-"Některé efekty nemohou být provedeny na všech druzích obrázků. To je "
-"indikováno zešedlou položkou menu. Možná budete muset změnit režim obrázku "
+"Některé efekty nemohou být aplikovány na všechny typy obrázků. To je "
+"indikováno zašedlou položkou menu. Možná budete muset změnit režim obrázku "
 "na RGB (Obrázek-&gt;Režim-&gt;RGB), přidat alfa kanál (Vrstva-&gt;"
-"Průhlednost-&gt;Přidat alfa kanál), nebo jej zploštit (Obrázek-&gt;Zploštit "
-"obrázek)."
+"Průhlednost-&gt;Přidat alfa kanál) nebo obrázek zploštit (Obrázek-&gt;"
+"Zploštit obrázek)."
 
 #: ../data/tips/gimp-tips.xml.in.h:18
 msgid ""
@@ -229,14 +227,12 @@ msgstr ""
 "jako JPEG, PNG, GIF, ..."
 
 #: ../data/tips/gimp-tips.xml.in.h:21
-#, fuzzy
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already."
 msgstr ""
-"Výběr můžete upravit a nahradit pomocí tažení s <tt>Alt</tt>. Pokud to hýbe "
-"oknem, klávesu <tt>Alt</tt> již používá váš manažer oken. Zkuste zároveň "
-"stisknout <tt>Shift</tt>."
+"Výběr můžete upravit či přesunout tažením s <tt>Alt</tt>. Pokud se místo "
+"toho pohybuje okno, klávesu <tt>Alt</tt> již používá váš správce oken."
 
 #: ../data/tips/gimp-tips.xml.in.h:22
 msgid ""
@@ -266,15 +262,15 @@ msgstr ""
 "barvou."
 
 #: ../data/tips/gimp-tips.xml.in.h:25
-#, fuzzy
 msgid ""
 "You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
 "using the Path tool or with Filters→Render→Gfig."
 msgstr ""
 "Použití Úpravy-&gt;Vykreslit výběr vám umožňuje kreslit jednoduché čtverce "
-"nebo kružnice. Složitější tvary můžete kreslit pomocí nástroje Cesty nebo "
-"pomocí Filtry-&gt;Vyobrazení-&gt;Gfig."
+"nebo kružnice. Příkaz vykresluje obrys aktuálního výběru. Složitější tvary "
+"můžete kreslit pomocí nástroje Cesty nebo pomocí Filtry-&gt;Vyobrazení-&gt;"
+"Gfig."
 
 #: ../data/tips/gimp-tips.xml.in.h:26
 msgid ""
@@ -293,7 +289,6 @@ msgstr ""
 "textovou jmenovku vrstvy v dialogu Vrstvy."
 
 #: ../data/tips/gimp-tips.xml.in.h:28
-#, fuzzy
 msgid ""
 "You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -301,8 +296,8 @@ msgid ""
 "selection."
 msgstr ""
 "Výběr můžete uložit do kanálu (Výběr-&gt;Uložit do kanálu) a pak tento kanál "
-"upravit libovolnými nástroji kreslení. Pomocí tlačítek v dialogu Kanály "
-"můžete přepnout viditelnost tohoto nového kanálu nebo jej převést na výběr."
+"upravit libovolnými kreslícími nástroji. Pomocí tlačítek v dialogu Kanály "
+"můžete přepínat viditelnost tohoto nového kanálu nebo jej převést na výběr."
 
 #: ../data/tips/gimp-tips.xml.in.h:29
 msgid ""
