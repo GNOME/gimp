@@ -10,10 +10,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-08 10:46+0100\n"
-"PO-Revision-Date: 2007-01-08 10:47+0100\n"
+"POT-Creation-Date: 2007-01-08 11:21+0100\n"
+"PO-Revision-Date: 2007-01-08 11:21+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team: Czech <cs@li.org>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -36,20 +36,21 @@ msgstr ""
 "místo barvy popředí."
 
 #: ../data/tips/gimp-tips.xml.in.h:3
-#, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
 "toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
 "mask's preview in the Layers dialog toggles viewing the mask directly."
 msgstr ""
 "Kliknutí s <tt>Ctrl</tt> na náhled masky vrstvy v dialogu Vrstvy přepíná "
-"efekt masky vrstvy."
+"efekt masky vrstvy. Kliknutí s <tt>Alt</tt> na náhled masky vrstvy v dialogu "
+"Vrstvy přepíná přímý pohled na vrstvu."
 
 #: ../data/tips/gimp-tips.xml.in.h:4
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
-msgstr "Tažení s <tt>Ctrl</tt> s nástrojem Rotovat omezí rotaci na násobky 15 stupňů."
+msgstr ""
+"Tažení s <tt>Ctrl</tt> s nástrojem Rotovat omezí rotaci na násobky 15 stupňů."
 
 #: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
@@ -127,15 +128,14 @@ msgstr ""
 "jejich obsahů."
 
 #: ../data/tips/gimp-tips.xml.in.h:12
-#, fuzzy
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
 "Layer→Transparency→Add Alpha Channel."
 msgstr ""
-"Je-li název vrstvy v dialogu Vrstvy zobrazen <b>tučně</b>, tato vrstva nemá "
-"alfa kanál. Alfa kanál můžete přidat pomocí Vrstva-&gt;Průhlednost-&gt;"
-"Přidat alfa kanál."
+"Je-li název vrstvy v dialogu Vrstvy zobrazen <b>tučně</b>, nemá vrstvaalfa "
+"kanál. Alfa kanál můžete přidat pomocí Vrstva-&gt;Průhlednost-&gt;Přidat "
+"alfa kanál."
 
 #: ../data/tips/gimp-tips.xml.in.h:13
 #, fuzzy
@@ -162,24 +162,22 @@ msgstr ""
 "přechodu nebo dokonce nástroje Guma nebo Šmouha."
 
 #: ../data/tips/gimp-tips.xml.in.h:15
-#, fuzzy
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
 msgstr ""
-"Je-li vaše obrazovka přeplněná, můžete v okně obrázku několikanásobným "
-"stisknutím <tt>Tab</tt> skrýt nebo zobrazit panel nástrojů a jiné dialogy."
+"Je-li vaše obrazovka přeplněná, můžete stisknutím klávesy <tt>Tab</tt> v "
+"okně obrázku přepnout viditelnost panelu nástrojů a dalších dialogů."
 
 #: ../data/tips/gimp-tips.xml.in.h:16
-#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image→Flatten Image) if you want the plug-"
 "in to work on the whole image."
 msgstr ""
 "Většina zásuvných modulů pracuje na aktuální vrstvě aktuálního obrázku. "
-"Chcete-li, aby zásuvný modul pracoval na celém obrázku, budete v některých "
-"případech muset sloučit všechny vrstvy (Obrázek-&gt;Zploštit obrázek)."
+"Chcete-li, aby zásuvný modul pracoval s celým obrázkem, je často nutné "
+"sloučit obrázek do jedné vrstvy (Obrázek-&gt;Zploštit obrázek)."
 
 #: ../data/tips/gimp-tips.xml.in.h:17
 #, fuzzy
@@ -258,15 +256,14 @@ msgstr ""
 "vytvoříte nový obrázek obsahující jen tuto vrstvu."
 
 #: ../data/tips/gimp-tips.xml.in.h:24
-#, fuzzy
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
 "fill the current selection with that color."
 msgstr ""
-"V GIMPu můžete mnoho věcí přetahovat myší. Například tažení barvy z panelu "
-"nástrojů nebo palety barev a její puštění na obrázek vyplní aktuální obrázek "
-"nebo výběr touto barvou."
+"V GIMPu můžete mnoho věcí přetahovat myší. Například přetažení barvy z "
+"panelu nástrojů či palety barev na obrázek vyplní aktuální výběr touto "
+"barvou."
 
 #: ../data/tips/gimp-tips.xml.in.h:25
 #, fuzzy
@@ -308,22 +305,20 @@ msgstr ""
 "můžete přepnout viditelnost tohoto nového kanálu nebo jej převést na výběr."
 
 #: ../data/tips/gimp-tips.xml.in.h:29
-#, fuzzy
 msgid ""
 "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
 msgstr ""
-"Pomocí <tt>Alt</tt>-<tt>Tab</tt> můžete procházet všemi vrstvami obrázku "
-"(pokud tyto klávesy neodchytí váš manažer oken...)."
+"Pomocí <tt>Ctrl</tt>-<tt>Tab</tt> můžete procházet všemi vrstvami obrázku "
+"(pokud tyto klávesy neodchytí váš správce oken...)."
 
 #: ../data/tips/gimp-tips.xml.in.h:30
-#, fuzzy
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse.)"
 msgstr ""
-"Je-li obrázek větší než okno, ve kterém se zobrazuje, můžete se v obrázku "
-"posunovat pomocí prostředního tlačítka myši."
+"Pomocí prostředního tlačítka myši můžete posunovat obrázek v okně (můžete "
+"též stisknout mezerník)."
 
 #: ../data/tips/gimp-tips.xml.in.h:31
 msgid ""
@@ -336,4 +331,3 @@ msgstr ""
 "Rychlá maska&quot; ve spodním levém rohu okna obrázku. Změňte svůj výběr "
 "kreslením v obrázku a dalším kliknutím na toto tlačítko jej převeďte zpět na "
 "normální výběr."
-
