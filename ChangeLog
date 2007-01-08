@@ -1,3 +1,7 @@
+2007-01-08  Marco Ciampa  <ciampix@libero.it>
+
+	* configure.in: Added 'eo' (Esperanto) to ALL_LINGUAS
+
 2007-01-07  Michael Natterer  <mitch@gimp.org>
 
 	* modules/controller_linux_input.c (rel_events): add more relative
