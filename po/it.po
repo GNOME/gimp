@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-04 15:42+0100\n"
-"PO-Revision-Date: 2007-01-04 11:02+0100\n"
+"POT-Creation-Date: 2007-01-08 13:31+0100\n"
+"PO-Revision-Date: 2007-01-08 13:31+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2294,7 +2294,7 @@ msgstr "Fonde tutti i livelli visibili in un livello"
 
 #: ../app/actions/image-actions.c:126 ../app/actions/layers-actions.c:140
 msgid "_Flatten Image"
-msgstr "Immagine a_ppiattita"
+msgstr "A_ppiattisci immagine"
 
 #: ../app/actions/image-actions.c:127 ../app/actions/layers-actions.c:141
 msgid "Merge all layers into one and remove transparency"
