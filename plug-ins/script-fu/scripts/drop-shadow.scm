@@ -124,7 +124,7 @@
                                             shadow-width
                                             shadow-height
                                             type
-                                            "Drop-Shadow"
+                                            "Drop Shadow"
                                             shadow-opacity
                                             NORMAL-MODE)))
    (gimp-image-add-layer image shadow-layer -1)
@@ -165,8 +165,8 @@
 )
 
 (script-fu-register "script-fu-drop-shadow"
-  _"_Drop-Shadow..."
-  _"Add a drop-shadow to the selected region (or alpha)"
+  _"_Drop Shadow..."
+  _"Add a drop shadow to the selected region (or alpha)"
   "Sven Neumann <sven@gimp.org>"
   "Sven Neumann"
   "1999/12/21"

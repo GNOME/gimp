@@ -44,15 +44,13 @@
     ; Clear the layer (so there are no noise in it)
     (gimp-drawable-fill diff-clouds TRANSPARENT-FILL)
 
-    ; Selections are relative to the drawable, so we must adjust the final offset
+    ; Selections are relative to the drawable; adjust the final offset
     (set! offset-x (+ draw-offset-x sel-offset-x))
     (set! offset-y (+ draw-offset-y sel-offset-y))
 
     ; Offset the clouds layer
     (if (gimp-drawable-is-layer drawable)
-      (gimp-layer-translate diff-clouds
-       offset-x offset-y))
-    (gimp-drawable-update diff-clouds)
+      (gimp-layer-translate diff-clouds offset-x offset-y))
 
     ; Show the solid noise dialog
     (plug-in-solid-noise 0 image diff-clouds 0 0 0 1 4.0 4.0)
