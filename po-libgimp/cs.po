@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-05 10:59+0100\n"
-"PO-Revision-Date: 2007-01-05 11:13+0100\n"
+"POT-Creation-Date: 2007-01-09 11:35+0100\n"
+"PO-Revision-Date: 2007-01-09 11:39+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -26,7 +26,7 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Výběr stopy"
 
-#: ../libgimp/gimpbrushselectbutton.c:908
+#: ../libgimp/gimpbrushselectbutton.c:911
 #: ../libgimp/gimppatternselectbutton.c:712
 msgid "_Browse..."
 msgstr "_Procházet..."
@@ -1537,59 +1537,115 @@ msgid "Button Gear Up"
 msgstr "Tlačítko kolečka uvolněno"
 
 #: ../modules/controller_linux_input.c:87
-msgid "Wheel Turn Left"
-msgstr "Kolečko vlevo"
+msgid "X Move Left"
+msgstr "X vlevo"
 
 #: ../modules/controller_linux_input.c:88
-msgid "Wheel Turn Right"
-msgstr "Kolečko vpravo"
+msgid "X Move Right"
+msgstr "X vpravo"
 
 #: ../modules/controller_linux_input.c:89
+msgid "Y Move Down"
+msgstr "Y dolů"
+
+#: ../modules/controller_linux_input.c:90
+msgid "Y Move Up"
+msgstr "Y nahoru"
+
+#: ../modules/controller_linux_input.c:91
+msgid "Z Move Down"
+msgstr "Z dolů"
+
+#: ../modules/controller_linux_input.c:92
+msgid "Z Move Up"
+msgstr "Z nahoru"
+
+#: ../modules/controller_linux_input.c:93
+msgid "X Axis Turn Left"
+msgstr "Vlevo podle osy X"
+
+#: ../modules/controller_linux_input.c:94
+msgid "X Axis Turn Right"
+msgstr "Vpravo podle osy X"
+
+#: ../modules/controller_linux_input.c:95
+msgid "Y Axis Turn Back"
+msgstr "Vzad podle osy Y"
+
+#: ../modules/controller_linux_input.c:96
+msgid "Y Axis Turn Forward"
+msgstr "Vpřed podle osy Y"
+
+#: ../modules/controller_linux_input.c:97
+msgid "Z Axis Turn Left"
+msgstr "Vlevo podle osy Z"
+
+#: ../modules/controller_linux_input.c:98
+msgid "Z Axis Turn Right"
+msgstr "Vpravo podle osy Z"
+
+#: ../modules/controller_linux_input.c:99
+msgid "Horiz. Wheel Turn Back"
+msgstr "Horizontální kolečko vzad"
+
+#: ../modules/controller_linux_input.c:100
+msgid "Horiz. Wheel Turn Forward"
+msgstr "Horizontální kolečko vpřed"
+
+#: ../modules/controller_linux_input.c:101
 msgid "Dial Turn Left"
 msgstr "Číselník vlevo"
 
-#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_linux_input.c:102
 msgid "Dial Turn Right"
 msgstr "Číselník vpravo"
 
-#: ../modules/controller_linux_input.c:154
+#: ../modules/controller_linux_input.c:103
+msgid "Wheel Turn Left"
+msgstr "Kolečko vlevo"
+
+#: ../modules/controller_linux_input.c:104
+msgid "Wheel Turn Right"
+msgstr "Kolečko vpravo"
+
+#: ../modules/controller_linux_input.c:168
 msgid "Linux input event controller"
 msgstr "Ovladač událostí linuxového vstupu"
 
-#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:246
+#: ../modules/controller_linux_input.c:236 ../modules/controller_midi.c:246
 msgid "Device:"
 msgstr "Zařízení:"
 
-#: ../modules/controller_linux_input.c:223
+#: ../modules/controller_linux_input.c:237
 msgid "The name of the device to read Linux Input events from."
 msgstr "Jméno zařízení pro načítání událostí linuxového vstupu."
 
-#: ../modules/controller_linux_input.c:227
+#: ../modules/controller_linux_input.c:241
 msgid "Linux Input"
 msgstr "Linuxový vstup"
 
-#: ../modules/controller_linux_input.c:352
+#: ../modules/controller_linux_input.c:366
 msgid "Linux Input Events"
 msgstr "Události linuxového vstupu"
 
-#: ../modules/controller_linux_input.c:373 ../modules/controller_midi.c:484
+#: ../modules/controller_linux_input.c:387 ../modules/controller_midi.c:484
 #: ../modules/controller_midi.c:510
 #, c-format
 msgid "Reading from %s"
 msgstr "Čtení z %s"
 
-#: ../modules/controller_linux_input.c:389
-#: ../modules/controller_linux_input.c:432 ../modules/controller_midi.c:466
+#: ../modules/controller_linux_input.c:403
+#: ../modules/controller_linux_input.c:446 ../modules/controller_midi.c:466
 #: ../modules/controller_midi.c:527 ../modules/controller_midi.c:598
 #, c-format
 msgid "Device not available: %s"
 msgstr "Zařízení není dostupné: %s"
 
-#: ../modules/controller_linux_input.c:397 ../modules/controller_midi.c:535
+#: ../modules/controller_linux_input.c:411 ../modules/controller_midi.c:535
 msgid "No device configured"
 msgstr "Není konfigurováno žádné zařízení"
 
-#: ../modules/controller_linux_input.c:441 ../modules/controller_midi.c:607
+#: ../modules/controller_linux_input.c:455 ../modules/controller_midi.c:607
 msgid "End of file"
 msgstr "Konec souboru"
 
