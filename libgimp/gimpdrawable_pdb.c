@@ -803,10 +803,10 @@ gimp_drawable_set_tattoo (gint32 drawable_ID,
  * specified drawable.
  *
  * This procedure returns whether there is a selection. If there is
- * one, the upper left and lower righthand corners of its bounding box
+ * one, the upper left and lower right-hand corners of its bounding box
  * are returned. These coordinates are specified relative to the
  * drawable's origin, and bounded by the drawable's extents. Please
- * note that the pixel specified by the lower righthand coordinate of
+ * note that the pixel specified by the lower right-hand coordinate of
  * the bounding box is not part of the selection. The selection ends at
  * the upper left corner of this pixel. This means the width of the
  * selection can be calculated as (x2 - x1), its height as (y2 - y1).
