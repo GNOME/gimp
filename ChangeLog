@@ -1,3 +1,10 @@
+2007-01-09  Sven Neumann  <sven@gimp.org>
+
+	Merged from HEAD branch:
+
+	* tools/gimp-remote.c (gimp_remote_find_window): check Atoms
+	before using them. Fixes bug #392111.
+
 2007-01-04  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:

@@ -84,15 +84,18 @@ gimp_remote_find_window (GdkDisplay *display,
 
   xdisplay = gdk_x11_display_get_xdisplay (display);
 
+  role_atom   = XInternAtom (xdisplay, "WM_WINDOW_ROLE", TRUE);
+  string_atom = XInternAtom (xdisplay, "STRING",         TRUE);
+
+  if (role_atom == None || string_atom == None)
+    return NULL;
+
   if (XQueryTree (xdisplay, GDK_WINDOW_XID (root_window),
                   &root, &parent, &children, &nchildren) == 0)
     return NULL;
 
   if (! (children && nchildren))
     return NULL;
-
-  role_atom   = XInternAtom (xdisplay, "WM_WINDOW_ROLE", TRUE);
-  string_atom = XInternAtom (xdisplay, "STRING",         TRUE);
 
   for (i = nchildren - 1; i >= 0; i--)
     {
