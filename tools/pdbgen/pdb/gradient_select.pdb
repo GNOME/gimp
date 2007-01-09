@@ -19,7 +19,7 @@
 
 sub gradients_popup {
     $blurb = 'Invokes the Gimp gradients selection.';
-    $help  = 'This procedure popups the gradients selection dialog.';
+    $help  = 'This procedure opens the gradient selection dialog.';
 
     &andy_pdb_misc('1998');
 
@@ -28,9 +28,9 @@ sub gradients_popup {
 	  desc => 'The callback PDB proc to call when gradient selection is
 		   made' },
 	{ name => 'popup_title', type => 'string',
-	  desc => 'Title to give the gradient popup window' },
+	  desc => 'Title of the gradient selection dialog' },
 	{ name => 'initial_gradient', type => 'string',
-	  desc => 'The name of the pattern to set as the first selected',
+	  desc => 'The name of the gradient to set as the first selected',
 	  null_ok => 1 },
 	{ name => 'sample_size', type => '1 <= int32 <= 10000',
 	  desc => 'Size of the sample to return when the gradient is changed',
@@ -57,14 +57,14 @@ CODE
 }
 
 sub gradients_close_popup {
-    $blurb = 'Popdown the Gimp gradient selection.';
+    $blurb = 'Close the gradient selection dialog.';
     $help  = 'This procedure closes an opened gradient selection dialog.';
 
     &andy_pdb_misc('1998');
 
     @inargs = (
 	{ name => 'gradient_callback', type => 'string',
-	  desc => 'The name of the callback registered for this popup' }
+	  desc => 'The name of the callback registered for this pop-up' }
     );
 
     %invoke = (
@@ -81,14 +81,14 @@ CODE
 }
 
 sub gradients_set_popup {
-    $blurb = 'Sets the current gradient selection in a popup.';
+    $blurb = 'Sets the current gradient in a gradient selection dialog.';
     $help  = $blurb;
 
     &andy_pdb_misc('1998');
 
     @inargs = (
 	{ name => 'gradient_callback', type => 'string',
-	  desc => 'The name of the callback registered for this popup' },
+	  desc => 'The name of the callback registered for this pop-up' },
 	{ name => 'gradient_name', type => 'string',
 	  desc => 'The name of the gradient to set as selected' }
     );

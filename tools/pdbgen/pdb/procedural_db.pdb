@@ -22,8 +22,7 @@ sub procedural_db_temp_name {
 
     $help = <<'HELP';
 This procedure generates a temporary PDB entry name that is guaranteed to be
-unique. It is mainly used by the interactive popup dialogs to generate a PDB
-entry name.
+unique.
 HELP
 
     &andy_pdb_misc('1998');

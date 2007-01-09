@@ -19,7 +19,7 @@
 
 sub patterns_popup {
     $blurb = 'Invokes the Gimp pattern selection.';
-    $help  = 'This procedure popups the pattern selection dialog.';
+    $help  = 'This procedure opens the pattern selection dialog.';
 
     &andy_pdb_misc('1998');
 
@@ -28,7 +28,7 @@ sub patterns_popup {
 	  desc => 'The callback PDB proc to call when pattern selection is
 		   made' },
 	{ name => 'popup_title', type => 'string',
-	  desc => 'Title to give the pattern popup window' },
+	  desc => 'Title of the pattern selection dialog' },
 	{ name => 'initial_pattern', type => 'string', null_ok => 1,
 	  desc => 'The name of the pattern to set as the first selected' }
     );
@@ -49,14 +49,14 @@ CODE
 }
 
 sub patterns_close_popup {
-    $blurb = 'Popdown the Gimp pattern selection.';
+    $blurb = 'Close the pattern selection dialog.';
     $help  = 'This procedure closes an opened pattern selection dialog.';
 
     &andy_pdb_misc('1998');
 
     @inargs = (
 	{ name => 'pattern_callback', type => 'string',
-	  desc => 'The name of the callback registered for this popup' }
+	  desc => 'The name of the callback registered for this pop-up' }
     );
 
     %invoke = (
@@ -73,14 +73,14 @@ CODE
 }
 
 sub patterns_set_popup {
-    $blurb = 'Sets the current pattern selection in a popup.';
+    $blurb = 'Sets the current pattern in a pattern selection dialog.';
     $help  = $blurb;
 
     &andy_pdb_misc('1998');
 
     @inargs = (
 	{ name => 'pattern_callback', type => 'string',
-	  desc => 'The name of the callback registered for this popup' },
+	  desc => 'The name of the callback registered for this pop-up' },
 	{ name => 'pattern_name', type => 'string',
 	  desc => 'The name of the pattern to set as selected' }
     );

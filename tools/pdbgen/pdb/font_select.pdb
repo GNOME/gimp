@@ -19,7 +19,7 @@
 
 sub fonts_popup {
     $blurb = 'Invokes the Gimp font selection.';
-    $help  = 'This procedure popups the font selection dialog.';
+    $help  = 'This procedure opens the font selection dialog.';
 
     &neo_pdb_misc('2003');
 
@@ -27,7 +27,7 @@ sub fonts_popup {
 	{ name => 'font_callback', type => 'string',
 	  desc => 'The callback PDB proc to call when font selection is made' },
 	{ name => 'popup_title', type => 'string',
-	  desc => 'Title to give the font popup window' },
+	  desc => 'Title of the font selection dialog' },
 	{ name => 'initial_font', type => 'string', null_ok => 1,
 	  desc => 'The name of the font to set as the first selected' }
     );
@@ -47,14 +47,14 @@ CODE
 }
 
 sub fonts_close_popup {
-    $blurb = 'Popdown the Gimp font selection.';
+    $blurb = 'Close the font selection dialog.';
     $help  = 'This procedure closes an opened font selection dialog.';
 
     &neo_pdb_misc('2003');
 
     @inargs = (
 	{ name => 'font_callback', type => 'string',
-	  desc => 'The name of the callback registered for this popup' }
+	  desc => 'The name of the callback registered for this pop-up' }
     );
 
     %invoke = (
@@ -70,14 +70,14 @@ CODE
 }
 
 sub fonts_set_popup {
-    $blurb = 'Sets the current font selection in a popup.';
+    $blurb = 'Sets the current font in a font selection dialog.';
     $help  = $blurb;
 
     &neo_pdb_misc('2003');
 
     @inargs = (
 	{ name => 'font_callback', type => 'string',
-	  desc => 'The name of the callback registered for this popup' },
+	  desc => 'The name of the callback registered for this pop-up' },
 	{ name => 'font_name', type => 'string',
 	  desc => 'The name of the font to set as selected' }
     );

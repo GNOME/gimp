@@ -19,7 +19,7 @@
 
 sub brushes_popup {
     $blurb = 'Invokes the Gimp brush selection.';
-    $help  = 'This procedure popups the brush selection dialog.';
+    $help  = 'This procedure opens the brush selection dialog.';
 
     &andy_pdb_misc('1998');
 
@@ -28,7 +28,7 @@ sub brushes_popup {
 	  desc => 'The callback PDB proc to call when brush selection is
 		   made' },
 	{ name => 'popup_title', type => 'string',
-	  desc => 'Title to give the brush popup window' },
+	  desc => 'Title of the brush selection dialog' },
 	{ name => 'initial_brush', type => 'string',
 	  desc => 'The name of the brush to set as the first selected',
 	  null_ok => 1 },
@@ -60,14 +60,14 @@ CODE
 }
 
 sub brushes_close_popup {
-    $blurb = 'Popdown the Gimp brush selection.';
+    $blurb = 'Close the brush selection dialog.';
     $help  = 'This procedure closes an opened brush selection dialog.';
 
     &andy_pdb_misc('1998');
 
     @inargs = (
 	{ name => 'brush_callback', type => 'string',
-	  desc => 'The name of the callback registered for this popup' }
+	  desc => 'The name of the callback registered for this pop-up' }
     );
 
     %invoke = (
@@ -84,14 +84,14 @@ CODE
 }
 
 sub brushes_set_popup {
-    $blurb = 'Sets the current brush selection in a popup.';
+    $blurb = 'Sets the current brush in a brush selection dialog.';
     $help  = $blurb;
 
     &andy_pdb_misc('1998');
 
     @inargs = (
 	{ name => 'brush_callback', type => 'string',
-	  desc => 'The name of the callback registered for this popup' },
+	  desc => 'The name of the callback registered for this pop-up' },
 	{ name => 'brush_name', type => 'string',
 	  desc => 'The name of the brush to set as selected' },
 	{ name => 'opacity', type => '0 <= float <= 100',

@@ -505,7 +505,7 @@ gimp_quit (void)
  * @menu_label defines the label that should be used for the
  * procedure's menu entry (use #NULL if the procedure shouldn't have a
  * menu entry).  The position where to register in the menu hierarchy
- * is choosen using gimp_plugin_menu_register().  This function also
+ * is chosen using gimp_plugin_menu_register().  This function also
  * still accepts the old (pre-2.2) way of registering a menu entry and
  * takes a string in the form "&lt;Domain&gt;/Path/To/My/Menu"
  * (e.g. "&lt;Image&gt;/Filters/Render/Useless").
@@ -523,7 +523,7 @@ gimp_quit (void)
  * ready to run.
  *
  * <emphasis>Not calling gimp_extension_ack() from a #GIMP_EXTENSION
- * procedure will cause th GIMP core to lock up.</emphasis>
+ * procedure will cause the GIMP core to lock up.</emphasis>
  *
  * Additionally, a #GIMP_EXTENSION procedure with no parameters
  * (@n_params == 0 and @params == #NULL) is an "automatic" extension
@@ -605,7 +605,7 @@ gimp_install_procedure (const gchar        *name,
  *
  * NOTE: Normally, Plug-In communication is triggered by the Plug-In
  * and the GIMP core only responds to the Plug-In's requests. You must
- * explicitely enable receiving of temporary procedure run requests
+ * explicitly enable receiving of temporary procedure run requests
  * using either gimp_extension_enable() or
  * gimp_extension_process(). See this functions' documentation for
  * details.
@@ -1007,7 +1007,7 @@ gimp_destroy_paramdefs (GimpParamDef *paramdefs,
  * gimp_tile_width:
  *
  * Returns the tile_width the GIMP is using. This is a constant value
- * given at Plug-In config time.
+ * given at Plug-In configuration time.
  *
  * Return value: the tile_width
  **/
@@ -1021,7 +1021,7 @@ gimp_tile_width (void)
  * gimp_tile_height:
  *
  * Returns the tile_height the GIMP is using. This is a constant value
- * given at Plug-In config time.
+ * given at Plug-In configuration time.
  *
  * Return value: the tile_height
  **/
@@ -1036,7 +1036,7 @@ gimp_tile_height (void)
  *
  * Returns the shared memory ID used for passing tile data between the GIMP
  * core and the Plug-In. This is a constant value
- * given at Plug-In config time.
+ * given at Plug-In configuration time.
  *
  * Return value: the shared memory ID
  **/
@@ -1051,7 +1051,7 @@ gimp_shm_ID (void)
  *
  * Returns the address of the shared memory segment used for passing
  * tile data between the GIMP core and the Plug-In. This is a constant
- * value given at Plug-In config time.
+ * value given at Plug-In configuration time.
  *
  * Return value: the shared memory address
  **/
@@ -1065,7 +1065,7 @@ gimp_shm_addr (void)
  * gimp_gamma:
  *
  * Returns the global gamma value the GIMP and all its Plug-Ins should
- * use. This is a constant value given at Plug-In config time.
+ * use. This is a constant value given at Plug-In configuration time.
  *
  * NOTE: this feature is unimplemented.
  *
@@ -1082,7 +1082,7 @@ gimp_gamma (void)
  *
  * Returns whether or not the Plug-In should allocate an own colormap
  * when running on an 8 bit display. This is a constant value given at
- * Plug-In config time.
+ * Plug-In configuration time.
  *
  * See also: gimp_min_colors()
  *
@@ -1099,7 +1099,7 @@ gimp_install_cmap (void)
  *
  * Returns the minimum number of colors to use when allocating an own
  * colormap on 8 bit displays. This is a constant value given at
- * Plug-In config time.
+ * Plug-In configuration time.
  *
  * See also: gimp_install_cmap()
  *
@@ -1114,8 +1114,8 @@ gimp_min_colors (void)
 /**
  * gimp_show_tool_tips:
  *
- * Returns whether or not the Plug-In should show tooltips. This is a
- * constant value given at Plug-In config time.
+ * Returns whether or not the Plug-In should show tool-tips. This is a
+ * constant value given at Plug-In configuration time.
  *
  * Return value: the show_tool_tips boolean
  **/
@@ -1145,7 +1145,7 @@ gimp_show_help_button (void)
  * gimp_check_size:
  *
  * Returns the size of the checkerboard to be used in previews.
- * This is a constant value given at Plug-In config time.
+ * This is a constant value given at Plug-In configuration time.
  *
  * Return value: the check_size value
  *
@@ -1161,7 +1161,7 @@ gimp_check_size (void)
  * gimp_check_type:
  *
  * Returns the type of the checkerboard to be used in previews.
- * This is a constant value given at Plug-In config time.
+ * This is a constant value given at Plug-In configuration time.
  *
  * Return value: the check_type value
  *
@@ -1178,7 +1178,7 @@ gimp_check_type (void)
  *
  * Returns the default display ID. This corresponds to the display the
  * running procedure's menu entry was invoked from. This is a
- * constant value given at Plug-In config time.
+ * constant value given at Plug-In configuration time.
  *
  * Return value: the default display ID
  **/
@@ -1192,7 +1192,7 @@ gimp_default_display (void)
  * gimp_wm_class:
  *
  * Returns the window manager class to be used for plug-in windows.
- * This is a constant value given at Plug-In config time.
+ * This is a constant value given at Plug-In configuration time.
  *
  * Return value: the window manager class
  **/
@@ -1206,7 +1206,7 @@ gimp_wm_class (void)
  * gimp_display_name:
  *
  * Returns the display to be used for plug-in windows.
- * This is a constant value given at Plug-In config time.
+ * This is a constant value given at Plug-In configuration time.
  *
  * Return value: the display name
  **/
@@ -1220,7 +1220,7 @@ gimp_display_name (void)
  * gimp_monitor_number:
  *
  * Returns the monitor number to be used for plug-in windows.
- * This is a constant value given at Plug-In config time.
+ * This is a constant value given at Plug-In configuration time.
  *
  * Return value: the monitor number
  **/
@@ -1268,7 +1268,7 @@ gimp_extension_ack (void)
 /**
  * gimp_extension_enable:
  *
- * Enables asnychronous processing of messages from the main GIMP
+ * Enables asynchronous processing of messages from the main GIMP
  * application.
  *
  * Normally, a plug-in is not called by the GIMP except for the call
