@@ -27,8 +27,8 @@
  * It is a really bad idea to use Drag'n'Drop for inter-client
  * communication. Dont even think about doing this in your own newly
  * created application. We do this *only*, because we are in a
- * feature freeze for Gimp 1.2 and adding a completely new communication
- * infrastructure for remote controlling Gimp is definitely a new
+ * feature freeze for GIMP 1.2 and adding a completely new communication
+ * infrastructure for remote controlling GIMP is definitely a new
  * feature...
  *                                                Simon
  */
@@ -124,15 +124,18 @@ gimp_remote_find_window (GdkDisplay *display,
 
   xdisplay = gdk_x11_display_get_xdisplay (display);
 
+  role_atom   = XInternAtom (xdisplay, "WM_WINDOW_ROLE", TRUE);
+  string_atom = XInternAtom (xdisplay, "STRING",         TRUE);
+
+  if (role_atom == None || string_atom == None)
+    return NULL;
+
   if (XQueryTree (xdisplay, GDK_WINDOW_XID (root_window),
                   &root, &parent, &children, &nchildren) == 0)
     return NULL;
 
   if (! (children && nchildren))
     return NULL;
-
-  role_atom   = XInternAtom (xdisplay, "WM_WINDOW_ROLE", TRUE);
-  string_atom = XInternAtom (xdisplay, "STRING",         TRUE);
 
   for (i = nchildren - 1; i >= 0; i--)
     {
@@ -151,10 +154,10 @@ gimp_remote_find_window (GdkDisplay *display,
 
       window = XmuClientWindow (xdisplay, children[i]);
 
-      /*  We are searching for the Gimp toolbox: Its WM_WINDOW_ROLE Property
+      /*  We are searching for the GIMP toolbox: Its WM_WINDOW_ROLE Property
        *  (as set by gtk_window_set_role ()) has the value "gimp-toolbox".
-       *  This is pretty reliable, since ask for a special property,
-       *  explicitly set by the gimp. See below... :-)
+       *  This is pretty reliable, since it ask for a special property,
+       *  explicitly set by GIMP. See below... :-)
        */
 
       if (XGetWindowProperty (xdisplay, window,
@@ -163,8 +166,7 @@ gimp_remote_find_window (GdkDisplay *display,
                               FALSE,
                               string_atom,
                               &ret_type, &ret_format, &nitems, &bytes_after,
-                              &data) == Success &&
-          ret_type)
+                              &data) == Success && ret_type)
         {
           if (nitems > 11 &&
               strcmp ((const gchar *) data, "gimp-toolbox") == 0)
@@ -479,7 +481,7 @@ main (gint    argc,
                                              &protocol);
           if (protocol != GDK_DRAG_PROTO_XDND)
             {
-              g_printerr ("Gimp Window doesnt use Xdnd-Protocol - huh?\n");
+              g_printerr ("GIMP Window doesnt use Xdnd-Protocol - huh?\n");
               return EXIT_FAILURE;
             }
 
@@ -502,7 +504,7 @@ main (gint    argc,
 
 
           /*  specify the id and the content-type of the selection used to
-           *  pass the URIs to Gimp.
+           *  pass the URIs to GIMP.
            */
           sel_id   = gdk_atom_intern ("XdndSelection", FALSE);
           sel_type = gdk_atom_intern ("text/uri-list", FALSE);

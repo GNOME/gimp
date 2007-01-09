@@ -1,5 +1,10 @@
 2007-01-09  Sven Neumann  <sven@gimp.org>
 
+	* tools/gimp-remote.c (gimp_remote_find_window): check Atoms
+	before using them. Fixes bug #392111.
+
+2007-01-09  Sven Neumann  <sven@gimp.org>
+
 	* HACKING
 	* tools/pdbgen/lib.pl
 	* tools/pdbgen/app.pl: fixed spelling of "auto-generated".
