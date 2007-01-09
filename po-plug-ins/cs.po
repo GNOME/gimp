@@ -1,25 +1,24 @@
-# translation of cs.po to Czech
 # translation of cs.po to
 # Czech translation of GIMP plugins
 # Copyright (C) 2001,2003, 2006, 2007 Free Software Foundation, Inc.
 # Copyright (C) 2003, 2004 Miloslav Trmac <mitr@volny.cz>
+#
 # Stanislav Brabec <utx@penguin.cz>, 1999-2001.
 # Michal Bukovjan <bukm@centrum.cz>, 2002,2003.
 # Miloslav Trmac <mitr@volny.cz>, 2003, 2004.
 # Jakub Friedl <jfriedl@suse.cz>, 2006, 2007.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-06 00:28+0100\n"
-"PO-Revision-Date: 2007-01-06 00:28+0100\n"
+"POT-Creation-Date: 2007-01-09 11:59+0100\n"
+"PO-Revision-Date: 2007-01-09 11:59+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team: Czech <en@li.org>\n"
+"Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.2\n"
+"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:547
@@ -10873,9 +10872,8 @@ msgid "Save _As..."
 msgstr "Uložit j_ako..."
 
 #: ../plug-ins/imagemap/imap_menu.c:191
-#, fuzzy
 msgid "_Edit"
-msgstr "_Čekat"
+msgstr "_Upravit"
 
 #: ../plug-ins/imagemap/imap_menu.c:192
 msgid "Undo"
@@ -10890,14 +10888,12 @@ msgid "D_eselect All"
 msgstr "_Odvybrat vše"
 
 #: ../plug-ins/imagemap/imap_menu.c:201
-#, fuzzy
 msgid "Edit Area _Info..."
-msgstr "Úpravy informace o mapování..."
+msgstr "Upravit _informace o oblasti..."
 
 #: ../plug-ins/imagemap/imap_menu.c:202
-#, fuzzy
 msgid "Edit selected area info"
-msgstr "Čte zvolenou předvolbu do paměti"
+msgstr "Upravit informace o vybrané oblasti"
 
 #: ../plug-ins/imagemap/imap_menu.c:203
 msgid "Preferences"
@@ -10921,19 +10917,16 @@ msgid "_View"
 msgstr "_Náhled"
 
 #: ../plug-ins/imagemap/imap_menu.c:217
-#, fuzzy
 msgid "Source..."
-msgstr "_Roztřepení..."
+msgstr "Zdroj..."
 
 #: ../plug-ins/imagemap/imap_menu.c:218
-#, fuzzy
 msgid "Zoom in"
-msgstr "Přiblížení"
+msgstr "Přiblížit"
 
 #: ../plug-ins/imagemap/imap_menu.c:219
-#, fuzzy
 msgid "Zoom out"
-msgstr "Přiblížení"
+msgstr "Oddálit"
 
 #: ../plug-ins/imagemap/imap_menu.c:220
 #, fuzzy
@@ -10941,52 +10934,44 @@ msgid "_Zoom To"
 msgstr "_Přiblížení"
 
 #: ../plug-ins/imagemap/imap_menu.c:222
-#, fuzzy
 msgid "_Mapping"
-msgstr "_Hlavní:"
+msgstr "_Mapování"
 
 #: ../plug-ins/imagemap/imap_menu.c:223
 msgid "Edit Map Info..."
 msgstr "Úpravy informace o mapování..."
 
 #: ../plug-ins/imagemap/imap_menu.c:224
-#, fuzzy
 msgid "Edit Map Info"
-msgstr "Úpravy informace o mapování..."
+msgstr "Upravit informace o mapě"
 
 #: ../plug-ins/imagemap/imap_menu.c:226
 msgid "_Tools"
 msgstr "_Nástroje"
 
 #: ../plug-ins/imagemap/imap_menu.c:227
-#, fuzzy
 msgid "Grid Settings..."
-msgstr "Nastavení mřížky"
+msgstr "Nastavení mřížky..."
 
 #: ../plug-ins/imagemap/imap_menu.c:229
-#, fuzzy
 msgid "Use GIMP Guides..."
-msgstr "Použít vodítka GIMP"
+msgstr "Použít vodítka GIMPu..."
 
 #: ../plug-ins/imagemap/imap_menu.c:231
-#, fuzzy
 msgid "Create Guides..."
-msgstr "Vytvořit vodítka"
+msgstr "Vytvořit vodítka..."
 
 #: ../plug-ins/imagemap/imap_menu.c:234
-#, fuzzy
 msgid "_Help"
-msgstr "Šestiú_helníky"
+msgstr "_Nápověda"
 
 #: ../plug-ins/imagemap/imap_menu.c:235
-#, fuzzy
 msgid "_Contents"
-msgstr "Kontext"
+msgstr "_Obsah"
 
 #: ../plug-ins/imagemap/imap_menu.c:243
-#, fuzzy
 msgid "Area List"
-msgstr "Nastavení oblasti"
+msgstr "Seznam oblastí"
 
 #: ../plug-ins/imagemap/imap_menu.c:253
 #, fuzzy
@@ -11005,11 +10990,11 @@ msgstr "Obdélník"
 
 #: ../plug-ins/imagemap/imap_menu.c:258
 msgid "Define Circle/Oval area"
-msgstr ""
+msgstr "Devinovat kruhovou/oválnou oblast"
 
 #: ../plug-ins/imagemap/imap_menu.c:260
 msgid "Define Polygon area"
-msgstr ""
+msgstr "Definovat polygonální oblast"
 
 #: ../plug-ins/imagemap/imap_polygon.c:72
 msgid "_Polygon"
