@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-07 15:15+0100\n"
-"PO-Revision-Date: 2007-01-07 15:15+0100\n"
+"POT-Creation-Date: 2007-01-09 15:07+0100\n"
+"PO-Revision-Date: 2007-01-09 15:14+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1545,59 +1545,115 @@ msgid "Button Gear Up"
 msgstr "Pulsante rotella su"
 
 #: ../modules/controller_linux_input.c:87
-msgid "Wheel Turn Left"
-msgstr "Rotella a sinistra"
+msgid "X Move Left"
+msgstr "A sinistra spostamento X"
 
 #: ../modules/controller_linux_input.c:88
-msgid "Wheel Turn Right"
-msgstr "Rotella a destra"
+msgid "X Move Right"
+msgstr "A destra Spostamento X"
 
 #: ../modules/controller_linux_input.c:89
+msgid "Y Move Down"
+msgstr "In basso spostamento Y"
+
+#: ../modules/controller_linux_input.c:90
+msgid "Y Move Up"
+msgstr "In alto spostamento Y"
+
+#: ../modules/controller_linux_input.c:91
+msgid "Z Move Down"
+msgstr "In basso spostamento Z"
+
+#: ../modules/controller_linux_input.c:92
+msgid "Z Move Up"
+msgstr "In alto spostamento Z"
+
+#: ../modules/controller_linux_input.c:93
+msgid "X Axis Turn Left"
+msgstr "Giro a sinistra asse X"
+
+#: ../modules/controller_linux_input.c:94
+msgid "X Axis Turn Right"
+msgstr "Giro a destra asse X"
+
+#: ../modules/controller_linux_input.c:95
+msgid "Y Axis Turn Back"
+msgstr "Marcia indietro asse Y"
+
+#: ../modules/controller_linux_input.c:96
+msgid "Y Axis Turn Forward"
+msgstr "Marcia avanti asse Y"
+
+#: ../modules/controller_linux_input.c:97
+msgid "Z Axis Turn Left"
+msgstr "Giro a sinistra asse Z"
+
+#: ../modules/controller_linux_input.c:98
+msgid "Z Axis Turn Right"
+msgstr "Giro a destra asse Z"
+
+#: ../modules/controller_linux_input.c:99
+msgid "Horiz. Wheel Turn Back"
+msgstr "Marcia indietro rotella orizzontale"
+
+#: ../modules/controller_linux_input.c:100
+msgid "Horiz. Wheel Turn Forward"
+msgstr "Marcia avanti rotella orizzontale"
+
+#: ../modules/controller_linux_input.c:101
 msgid "Dial Turn Left"
 msgstr "Tasto a sinistra"
 
-#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_linux_input.c:102
 msgid "Dial Turn Right"
 msgstr "Tasto a destra"
 
-#: ../modules/controller_linux_input.c:154
+#: ../modules/controller_linux_input.c:103
+msgid "Wheel Turn Left"
+msgstr "Rotella a sinistra"
+
+#: ../modules/controller_linux_input.c:104
+msgid "Wheel Turn Right"
+msgstr "Rotella a destra"
+
+#: ../modules/controller_linux_input.c:168
 msgid "Linux input event controller"
 msgstr "Controllore eventi in ingresso di Linux"
 
-#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:246
+#: ../modules/controller_linux_input.c:236 ../modules/controller_midi.c:246
 msgid "Device:"
 msgstr "Dispositivo:"
 
-#: ../modules/controller_linux_input.c:223
+#: ../modules/controller_linux_input.c:237
 msgid "The name of the device to read Linux Input events from."
 msgstr "Il nome del dispositivo da cui leggere gli eventi Linux in ingresso."
 
-#: ../modules/controller_linux_input.c:227
+#: ../modules/controller_linux_input.c:241
 msgid "Linux Input"
 msgstr "Ingresso Linux"
 
-#: ../modules/controller_linux_input.c:352
+#: ../modules/controller_linux_input.c:366
 msgid "Linux Input Events"
 msgstr "Eventi Linux in ingresso"
 
-#: ../modules/controller_linux_input.c:373 ../modules/controller_midi.c:484
+#: ../modules/controller_linux_input.c:387 ../modules/controller_midi.c:484
 #: ../modules/controller_midi.c:510
 #, c-format
 msgid "Reading from %s"
 msgstr "Lettura da %s"
 
-#: ../modules/controller_linux_input.c:389
-#: ../modules/controller_linux_input.c:432 ../modules/controller_midi.c:466
+#: ../modules/controller_linux_input.c:403
+#: ../modules/controller_linux_input.c:446 ../modules/controller_midi.c:466
 #: ../modules/controller_midi.c:527 ../modules/controller_midi.c:598
 #, c-format
 msgid "Device not available: %s"
 msgstr "Dispositivo non disponibile: %s"
 
-#: ../modules/controller_linux_input.c:397 ../modules/controller_midi.c:535
+#: ../modules/controller_linux_input.c:411 ../modules/controller_midi.c:535
 msgid "No device configured"
 msgstr "Nessun dispositivo configurato"
 
-#: ../modules/controller_linux_input.c:441 ../modules/controller_midi.c:607
+#: ../modules/controller_linux_input.c:455 ../modules/controller_midi.c:607
 msgid "End of file"
 msgstr "Fine del file"
 
