@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
-/* Normalize 1.00 --- image filter plug-in
+ * Normalize 1.00 --- image filter plug-in
  *
  * Copyright (C) 1997 Adam D. Moss (adam@foxbox.org)
  * Very largely based on Quartic's "Contrast Autostretch"
@@ -77,23 +77,23 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Stretch brightness values to cover the full range"),
-			  "This plugin performs almost the same operation as "
-			  "the 'contrast autostretch' plugin, except that it "
-			  "won't allow the color channels to normalize "
-			  "independently.  This is actually what most people "
-			  "probably want instead of contrast-autostretch; use "
-			  "c-a only if you wish to remove an undesirable "
-			  "color-tint from a source image which is supposed to "
-			  "contain pure-white and pure-black.",
-			  "Adam D. Moss, Federico Mena Quintero",
-			  "Adam D. Moss, Federico Mena Quintero",
-			  "1997",
-			  N_("_Normalize"),
-			  "RGB*, GRAY*, INDEXED*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          N_("Stretch brightness values to cover the full range"),
+                          "This plugin performs almost the same operation as "
+                          "the 'contrast autostretch' plugin, except that it "
+                          "won't allow the color channels to normalize "
+                          "independently.  This is actually what most people "
+                          "probably want instead of contrast-autostretch; use "
+                          "c-a only if you wish to remove an undesirable "
+                          "color-tint from a source image which is supposed to "
+                          "contain pure-white and pure-black.",
+                          "Adam D. Moss, Federico Mena Quintero",
+                          "Adam D. Moss, Federico Mena Quintero",
+                          "1997",
+                          N_("_Normalize"),
+                          "RGB*, GRAY*, INDEXED*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Colors/Auto");
 }
@@ -129,14 +129,14 @@ run (const gchar      *name,
       normalize (drawable);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
     }
   else if (gimp_drawable_is_indexed (drawable->drawable_id))
     {
       indexed_normalize (image_ID);
 
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-	gimp_displays_flush ();
+        gimp_displays_flush ();
     }
   else
     {
@@ -181,9 +181,9 @@ indexed_normalize (gint32 image_ID)  /* a.d.m. */
   if (hi!=lo)
     for (i=0;i<ncols;i++)
       {
-	cmap[i*3 +0] = (255 * (cmap[i*3 +0] - lo)) / (hi-lo);
-	cmap[i*3 +1] = (255 * (cmap[i*3 +1] - lo)) / (hi-lo);
-	cmap[i*3 +2] = (255 * (cmap[i*3 +2] - lo)) / (hi-lo);
+        cmap[i*3 +0] = (255 * (cmap[i*3 +0] - lo)) / (hi-lo);
+        cmap[i*3 +1] = (255 * (cmap[i*3 +1] - lo)) / (hi-lo);
+        cmap[i*3 +2] = (255 * (cmap[i*3 +2] - lo)) / (hi-lo);
       }
 
   gimp_image_set_colormap (image_ID, cmap, ncols);
@@ -200,8 +200,8 @@ typedef struct
 
 static void
 find_min_max (const guchar *src,
-	      gint          bpp,
-	      gpointer      data)
+              gint          bpp,
+              gpointer      data)
 {
   NormalizeParam_t *param = (NormalizeParam_t*) data;
   gint              b;
@@ -209,20 +209,20 @@ find_min_max (const guchar *src,
   for (b = 0; b < param->alpha; b++)
     {
       if (!param->has_alpha || src[param->alpha])
-	{
-	  if (src[b] < param->min)
-	    param->min = src[b];
-	  if (src[b] > param->max)
-	    param->max = src[b];
-	}
+        {
+          if (src[b] < param->min)
+            param->min = src[b];
+          if (src[b] > param->max)
+            param->max = src[b];
+        }
     }
 }
 
 static void
 normalize_func (const guchar *src,
-		guchar       *dest,
-		gint          bpp,
-		gpointer      data)
+                guchar       *dest,
+                gint          bpp,
+                gpointer      data)
 {
   NormalizeParam_t *param = (NormalizeParam_t*) data;
   gint              b;
