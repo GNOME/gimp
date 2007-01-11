@@ -1,5 +1,10 @@
 2007-01-11  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpzoompreview.c: code cleanup. Added missing sanity
+	checks.
+
+2007-01-11  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/fractaltrace.c: fixed spelling error pointed out
 	by Ulf-D. Ehlert (bug #395384).
 
