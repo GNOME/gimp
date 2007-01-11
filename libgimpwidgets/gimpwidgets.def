@@ -228,6 +228,8 @@ EXPORTS
 	gimp_preview_set_bounds
 	gimp_preview_set_default_cursor
 	gimp_preview_set_update
+	gimp_preview_transform
+	gimp_preview_untransform
 	gimp_prop_boolean_combo_box_new
 	gimp_prop_boolean_radio_frame_new
 	gimp_prop_check_button_new

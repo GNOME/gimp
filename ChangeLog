@@ -1,5 +1,17 @@
 2007-01-11  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppreview.[ch]: added transform and untransform
+	methods.
+
+	* libgimp/gimpzoompreview.c: more cleanups. Override the new
+	GimpPreview methods.
+
+	* plug-ins/common/nova.c: use the new transform functions.
+
+	* libgimpwidgets/gimpwidgets.def: updated.
+
+2007-01-11  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpzoompreview.c: code cleanup. Added missing sanity
 	checks.
 

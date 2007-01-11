@@ -91,6 +91,16 @@ static void      gimp_preview_notify_checks       (GimpPreview      *preview);
 
 static gboolean  gimp_preview_invalidate_now      (GimpPreview      *preview);
 static void      gimp_preview_real_set_cursor     (GimpPreview      *preview);
+static void      gimp_preview_real_transform      (GimpPreview      *preview,
+                                                   gint              src_x,
+                                                   gint              src_y,
+                                                   gint             *dest_x,
+                                                   gint             *dest_y);
+static void      gimp_preview_real_untransform    (GimpPreview      *preview,
+                                                   gint              src_x,
+                                                   gint              src_y,
+                                                   gint             *dest_x,
+                                                   gint             *dest_y);
 
 
 static guint preview_signals[LAST_SIGNAL] = { 0 };
@@ -155,6 +165,8 @@ gimp_preview_class_init (GimpPreviewClass *klass)
   klass->draw_thumb               = NULL;
   klass->draw_buffer              = NULL;
   klass->set_cursor               = gimp_preview_real_set_cursor;
+  klass->transform                = gimp_preview_real_transform;
+  klass->untransform              = gimp_preview_real_untransform;
 
   g_type_class_add_private (object_class, sizeof (GimpPreviewPrivate));
 
@@ -488,8 +500,29 @@ static void
 gimp_preview_real_set_cursor (GimpPreview *preview)
 {
   if (GTK_WIDGET_REALIZED (preview->area))
-    gdk_window_set_cursor (preview->area->window,
-                           preview->default_cursor);
+    gdk_window_set_cursor (preview->area->window, preview->default_cursor);
+}
+
+static void
+gimp_preview_real_transform (GimpPreview *preview,
+                             gint         src_x,
+                             gint         src_y,
+                             gint        *dest_x,
+                             gint        *dest_y)
+{
+  *dest_x = src_x - preview->xoff - preview->xmin;
+  *dest_y = src_y - preview->yoff - preview->ymin;
+}
+
+static void
+gimp_preview_real_untransform (GimpPreview *preview,
+                               gint         src_x,
+                               gint         src_y,
+                               gint        *dest_x,
+                               gint        *dest_y)
+{
+  *dest_x = src_x + preview->xoff + preview->xmin;
+  *dest_y = src_y + preview->yoff + preview->ymin;
 }
 
 /**
@@ -606,6 +639,58 @@ gimp_preview_get_position (GimpPreview *preview,
 
   if (y)
     *y = preview->yoff + preview->ymin;
+}
+
+/**
+ * gimp_preview_transform:
+ * @preview: a #GimpPreview widget
+ * @src_x:   horizontal position on the previewed image
+ * @src_y:   vertical position on the previewed image
+ * @dest_x:  returns the transformed horizontal position
+ * @dest_y:  returns the transformed vertical position
+ *
+ * Transforms from image to widget coordinates.
+ *
+ * Since: GIMP 2.4
+ **/
+void
+gimp_preview_transform (GimpPreview *preview,
+                        gint         src_x,
+                        gint         src_y,
+                        gint        *dest_x,
+                        gint        *dest_y)
+{
+  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (dest_x != NULL && dest_y != NULL);
+
+  GIMP_PREVIEW_GET_CLASS (preview)->transform (preview,
+                                               src_x, src_y, dest_x, dest_y);
+}
+
+/**
+ * gimp_preview_untransform:
+ * @preview: a #GimpPreview widget
+ * @src_x:   horizontal position relative to the preview area's origin
+ * @src_y:   vertical position relative to  preview area's origin
+ * @dest_x:  returns the untransformed horizontal position
+ * @dest_y:  returns the untransformed vertical position
+ *
+ * Transforms from widget to image coordinates.
+ *
+ * Since: GIMP 2.4
+ **/
+void
+gimp_preview_untransform (GimpPreview *preview,
+                          gint         src_x,
+                          gint         src_y,
+                          gint        *dest_x,
+                          gint        *dest_y)
+{
+  g_return_if_fail (GIMP_IS_PREVIEW (preview));
+  g_return_if_fail (dest_x != NULL && dest_y != NULL);
+
+  GIMP_PREVIEW_GET_CLASS (preview)->untransform (preview,
+                                                 src_x, src_y, dest_x, dest_y);
 }
 
 /**

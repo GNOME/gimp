@@ -66,7 +66,7 @@ struct _GimpPreviewClass
 {
   GtkVBoxClass  parent_class;
 
-  /* virtuals */
+  /* virtual methods */
   void   (* draw)        (GimpPreview     *preview);
   void   (* draw_thumb)  (GimpPreview     *preview,
                           GimpPreviewArea *area,
@@ -78,11 +78,21 @@ struct _GimpPreviewClass
   void   (* set_cursor)  (GimpPreview     *preview);
 
   /* signal */
-  void   (* invalidated) (GimpPreview   *preview);
+  void   (* invalidated) (GimpPreview     *preview);
+
+  /* virtual methods */
+  void   (* transform)   (GimpPreview     *preview,
+                          gint             src_x,
+                          gint             src_y,
+                          gint            *dest_x,
+                          gint            *dest_y);
+  void   (* untransform) (GimpPreview     *preview,
+                          gint             src_x,
+                          gint             src_y,
+                          gint            *dest_x,
+                          gint            *dest_y);
 
   /* Padding for future expansion */
-  void (* _gimp_reserved1) (void);
-  void (* _gimp_reserved2) (void);
   void (* _gimp_reserved3) (void);
   void (* _gimp_reserved4) (void);
 };
@@ -106,6 +116,17 @@ void        gimp_preview_get_position       (GimpPreview  *preview,
 void        gimp_preview_get_size           (GimpPreview  *preview,
                                              gint         *width,
                                              gint         *height);
+
+void        gimp_preview_transform          (GimpPreview *preview,
+                                             gint         src_x,
+                                             gint         src_y,
+                                             gint        *dest_x,
+                                             gint        *dest_y);
+void        gimp_preview_untransform        (GimpPreview *preview,
+                                             gint         src_x,
+                                             gint         src_y,
+                                             gint        *dest_x,
+                                             gint        *dest_y);
 
 GtkWidget * gimp_preview_get_area           (GimpPreview  *preview);
 

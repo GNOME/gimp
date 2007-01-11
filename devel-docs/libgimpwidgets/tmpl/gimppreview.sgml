@@ -90,6 +90,30 @@ A widget providing a #GimpPreviewArea plus framework to update the preview.
 @y: 
 
 
+<!-- ##### FUNCTION gimp_preview_transform ##### -->
+<para>
+
+</para>
+
+@preview: 
+@src_x: 
+@src_y: 
+@dest_x: 
+@dest_y: 
+
+
+<!-- ##### FUNCTION gimp_preview_untransform ##### -->
+<para>
+
+</para>
+
+@preview: 
+@src_x: 
+@src_y: 
+@dest_x: 
+@dest_y: 
+
+
 <!-- ##### FUNCTION gimp_preview_get_area ##### -->
 <para>
 

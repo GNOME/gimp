@@ -1033,6 +1033,8 @@ gimp_preview_set_update
 gimp_preview_set_bounds
 gimp_preview_get_size
 gimp_preview_get_position
+gimp_preview_transform
+gimp_preview_untransform
 gimp_preview_get_area
 gimp_preview_draw
 gimp_preview_draw_buffer
