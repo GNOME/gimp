@@ -1,3 +1,8 @@
+2007-01-11  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/fractaltrace.c: fixed spelling error pointed out
+	by Ulf-D. Ehlert (bug #395384).
+
 2007-01-10  Simon Budig  <simon@gimp.org>
 
 	* modules/controller_linux_input.c: fix the directions of the

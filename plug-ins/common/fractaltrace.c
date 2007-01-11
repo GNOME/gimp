@@ -729,7 +729,7 @@ dialog_show (void)
                                     &parameters.outside_type,
                                     parameters.outside_type,
 
-                                    _("_Warp"),
+                                    _("_Wrap"),
                                     OUTSIDE_TYPE_WRAP, NULL,
                                     _("_Transparent"),
                                     OUTSIDE_TYPE_TRANSPARENT, NULL,
