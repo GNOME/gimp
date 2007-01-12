@@ -106,9 +106,9 @@
 #pragma align 4 (mail_icon)
 #endif
 #ifdef __GNUC__
-static const guint8 mail_icon[] __attribute__ ((__aligned__ (4))) = 
+static const guint8 mail_icon[] __attribute__ ((__aligned__ (4))) =
 #else
-static const guint8 mail_icon[] = 
+static const guint8 mail_icon[] =
 #endif
 { ""
   /* Pixbuf magic (0x47646b50) */
@@ -207,21 +207,16 @@ static void      mail_entry_callback  (GtkWidget     *widget,
 static void      mesg_body_callback   (GtkTextBuffer *buffer,
                                        gpointer       data);
 
-static gboolean  valid_file     (const gchar *filename);
-static void      create_headers (FILE        *mailpipe);
-static gchar    *find_extension (const gchar *filename);
-static gint      to64           (FILE        *infile,
-                                 FILE        *outfile);
-static void      output64chunk  (gint         c1,
-                                 gint         c2,
-                                 gint         c3,
-                                 gint         pads,
-                                 FILE        *outfile);
-
-static gint    sane_dup2      (gint    fd1,
-                               gint    fd2);
-static FILE   *sendmail_pipe  (gchar **cmd,
-                               gint   *pid);
+static gboolean  valid_file     (const gchar  *filename);
+static void      create_headers (FILE         *mailpipe);
+static gchar    *find_extension (const gchar  *filename);
+static gboolean  to64           (const gchar  *filename,
+                                 FILE         *outfile,
+                                 GError      **error);
+static gint      sane_dup2      (gint          fd1,
+                                 gint          fd2);
+static FILE     *sendmail_pipe  (gchar       **cmd,
+                                 gint         *pid);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -335,11 +330,16 @@ run (const gchar      *name,
 	    }
 	  else
 	    {
-	      g_strlcpy (mail_info.filename, param[3].data.d_string, BUFFER_SIZE);
-	      g_strlcpy (mail_info.receipt, param[4].data.d_string, BUFFER_SIZE);
-	      g_strlcpy (mail_info.from, param[5].data.d_string, BUFFER_SIZE);
-	      g_strlcpy (mail_info.subject, param[6].data.d_string, BUFFER_SIZE);
-	      g_strlcpy (mail_info.comment, param[7].data.d_string, BUFFER_SIZE);
+	      g_strlcpy (mail_info.filename,
+                         param[3].data.d_string, BUFFER_SIZE);
+	      g_strlcpy (mail_info.receipt,
+                         param[4].data.d_string, BUFFER_SIZE);
+	      g_strlcpy (mail_info.from,
+                         param[5].data.d_string, BUFFER_SIZE);
+	      g_strlcpy (mail_info.subject,
+                         param[6].data.d_string, BUFFER_SIZE);
+	      g_strlcpy (mail_info.comment,
+                         param[7].data.d_string, BUFFER_SIZE);
 	      mail_info.encapsulation = param[8].data.d_int32;
 	    }
 	  break;
@@ -386,7 +386,6 @@ save_image (const gchar *filename,
   gint               wpid;
   gint               process_status;
   FILE              *mailpipe;
-  FILE              *infile;
 
   ext = find_extension (filename);
 
@@ -461,8 +460,14 @@ save_image (const gchar *filename,
   else
     {
       /* This must be MIME stuff. Base64 away... */
-      infile = g_fopen (tmpname, "r");
-      to64 (infile, mailpipe);
+      GError *error = NULL;
+
+      if (! to64 (tmpname, mailpipe, &error))
+        {
+          g_message (error->message);
+          g_error_free (error);
+          goto error;
+        }
 
       /* close off mime */
       if (mail_info.encapsulation == ENCAPSULATION_MIME)
@@ -788,7 +793,7 @@ create_headers (FILE *mailpipe)
   if (strlen (mail_info.from) > 0)
     fprintf (mailpipe, "From: %s \n", mail_info.from);
 
-  fprintf (mailpipe, "X-Mailer: GIMP Useless Mail Program %s\n", GIMP_VERSION);
+  fprintf (mailpipe, "X-Mailer: GIMP Useless Mail Plug-In %s\n", GIMP_VERSION);
 
   if (mail_info.encapsulation == ENCAPSULATION_MIME)
     {
@@ -831,108 +836,43 @@ create_headers (FILE *mailpipe)
     }
 }
 
-/*
- * The following code taken from codes.c in the mpack-1.5 distribution
- * by Carnegie Mellon University.
- *
- *
- * (C) Copyright 1993,1994 by Carnegie Mellon University
- * All Rights Reserved.
- *
- * CARNEGIE MELLON UNIVERSITY DISCLAIMS ALL WARRANTIES WITH REGARD TO
- * THIS SOFTWARE, INCLUDING ALL IMPLIED WARRANTIES OF MERCHANTABILITY
- * AND FITNESS, IN NO EVENT SHALL CARNEGIE MELLON UNIVERSITY BE LIABLE
- * FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
- * WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN
- * AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING
- * OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
- * SOFTWARE.
- */
-/*
-Copyright (c) 1991 Bell Communications Research, Inc. (Bellcore)
-
-Permission to use, copy, modify, and distribute this material
-for any purpose and without fee is hereby granted, provided
-that the above copyright notice and this permission notice
-appear in all copies, and that the name of Bellcore not be
-used in advertising or publicity pertaining to this
-material without the specific, prior written permission
-of an authorized representative of Bellcore.  BELLCORE
-MAKES NO REPRESENTATIONS ABOUT THE ACCURACY OR SUITABILITY
-OF THIS MATERIAL FOR ANY PURPOSE.  IT IS PROVIDED "AS IS",
-WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES.  */
-
-
-static gchar basis_64[] =
-"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
-
-static gint
-to64 (FILE *infile,
-      FILE *outfile)
+static gboolean
+to64 (const gchar  *filename,
+      FILE         *outfile,
+      GError      **error)
 {
-  gint c1, c2, c3, ct = 0, written = 0;
+  GMappedFile  *infile;
+  const guchar *in;
+  gchar         out[2048];
+  gint          state = 0;
+  gint          save  = 0;
+  gsize         len;
+  gsize         bytes;
+  gsize         c;
 
-  while ((c1 = getc (infile)) != EOF)
+  infile = g_mapped_file_new (filename, FALSE, error);
+  if (! infile)
+    return FALSE;
+
+  in = (const guchar *) g_mapped_file_get_contents (infile);
+  len = g_mapped_file_get_length (infile);
+
+  for (c = 0; c < len;)
     {
-      c2 = getc (infile);
-      if (c2 == EOF)
-	{
-	  output64chunk (c1, 0, 0, 2, outfile);
-        }
-      else
-	{
-	  c3 = getc (infile);
-	  if (c3 == EOF)
-	    {
-	      output64chunk (c1, c2, 0, 1, outfile);
-            }
-	  else
-	    {
-	      output64chunk (c1, c2, c3, 0, outfile);
-            }
-        }
-      ct += 4;
-      if (ct > 71)
-	{
-	  putc ('\n', outfile);
-	  written += 73;
-	  ct = 0;
-        }
-    }
-  if (ct)
-    {
-      putc ('\n', outfile);
-      ct++;
+      gsize step = MIN (1024, len - c);
+
+      bytes = g_base64_encode_step (in, step, TRUE, out, &state, &save);
+      fwrite (out, 1, bytes, outfile);
+
+      c += step;
     }
 
-  return written + ct;
-}
+  bytes = g_base64_encode_close (TRUE, out, &state, &save);
+  fwrite (out, 1, bytes, outfile);
 
-static void
-output64chunk (gint  c1,
-	       gint  c2,
-	       gint  c3,
-	       gint  pads,
-	       FILE *outfile)
-{
-  putc (basis_64[c1 >> 2], outfile);
-  putc (basis_64[((c1 & 0x3)<< 4) | ((c2 & 0xF0) >> 4)], outfile);
+  g_mapped_file_free (infile);
 
-  if (pads == 2)
-    {
-      putc ('=', outfile);
-      putc ('=', outfile);
-    }
-  else if (pads)
-    {
-      putc (basis_64[((c2 & 0xF) << 2) | ((c3 & 0xC0) >>6)], outfile);
-      putc ('=', outfile);
-    }
-  else
-    {
-      putc (basis_64[((c2 & 0xF) << 2) | ((c3 & 0xC0) >>6)], outfile);
-      putc (basis_64[c3 & 0x3F], outfile);
-    }
+  return TRUE;
 }
 
 static gint

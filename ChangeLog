@@ -1,5 +1,9 @@
 2007-01-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/mail.c: use the base64 encoder from glib.
+
+2007-01-12  Sven Neumann  <sven@gimp.org>
+
 	* configure.in
 	* app/sanity.c: depend on glib >= 2.12.3.
 
