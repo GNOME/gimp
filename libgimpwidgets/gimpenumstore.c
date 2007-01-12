@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpenumstore.c
- * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2004-2007  Sven Neumann <sven@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -31,13 +31,40 @@
 #include "gimpenumstore.h"
 
 
-static void   gimp_enum_store_finalize     (GObject      *object);
+enum
+{
+  PROP_0,
+  PROP_ENUM_TYPE
+};
 
-static void   gimp_enum_store_add_value    (GtkListStore *store,
-                                            GEnumValue   *value);
+typedef struct
+{
+  GType  enum_type;
+} GimpEnumStorePrivate;
+
+
+static GObject * gimp_enum_store_constructor (GType                  type,
+                                              guint                  n_params,
+                                              GObjectConstructParam *params);
+
+static void   gimp_enum_store_finalize       (GObject      *object);
+static void   gimp_enum_store_set_property   (GObject      *object,
+                                              guint         property_id,
+                                              const GValue *value,
+                                              GParamSpec   *pspec);
+static void   gimp_enum_store_get_property   (GObject      *object,
+                                              guint         property_id,
+                                              GValue       *value,
+                                              GParamSpec   *pspec);
+
+static void   gimp_enum_store_add_value      (GtkListStore *store,
+                                              GEnumValue   *value);
 
 
 G_DEFINE_TYPE (GimpEnumStore, gimp_enum_store, GIMP_TYPE_INT_STORE)
+
+#define GIMP_ENUM_STORE_GET_PRIVATE(obj) \
+  G_TYPE_INSTANCE_GET_PRIVATE (obj, GIMP_TYPE_ENUM_STORE, GimpEnumStorePrivate)
 
 #define parent_class gimp_enum_store_parent_class
 
@@ -47,12 +74,51 @@ gimp_enum_store_class_init (GimpEnumStoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gimp_enum_store_finalize;
+  object_class->constructor  = gimp_enum_store_constructor;
+  object_class->finalize     = gimp_enum_store_finalize;
+  object_class->set_property = gimp_enum_store_set_property;
+  object_class->get_property = gimp_enum_store_get_property;
+
+  /**
+   * GimpEnumStore:enum-type:
+   *
+   * Sets the #GType of the enum to be used in the store.
+   *
+   * Since: GIMP 2.4
+   */
+  g_object_class_install_property (object_class,
+                                   PROP_ENUM_TYPE,
+                                   g_param_spec_gtype ("enum-type",
+                                                       NULL, NULL,
+                                                       G_TYPE_ENUM,
+                                                       G_PARAM_CONSTRUCT_ONLY |
+                                                       GIMP_PARAM_READWRITE));
+
+  g_type_class_add_private (object_class, sizeof (GimpEnumStorePrivate));
 }
 
 static void
 gimp_enum_store_init (GimpEnumStore *store)
 {
+}
+
+static GObject *
+gimp_enum_store_constructor (GType                  type,
+                             guint                  n_params,
+                             GObjectConstructParam *params)
+{
+  GObject              *object;
+  GimpEnumStore        *store;
+  GimpEnumStorePrivate *priv;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  store = GIMP_ENUM_STORE (object);
+  priv = GIMP_ENUM_STORE_GET_PRIVATE (store);
+
+  store->enum_class = g_type_class_ref (priv->enum_type);
+
+  return object;
 }
 
 static void
@@ -64,6 +130,44 @@ gimp_enum_store_finalize (GObject *object)
     g_type_class_unref (enum_store->enum_class);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_enum_store_set_property (GObject      *object,
+                              guint         property_id,
+                              const GValue *value,
+                              GParamSpec   *pspec)
+{
+  GimpEnumStorePrivate *priv = GIMP_ENUM_STORE_GET_PRIVATE (object);
+
+  switch (property_id)
+    {
+    case PROP_ENUM_TYPE:
+      priv->enum_type = g_value_get_gtype (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_enum_store_get_property (GObject    *object,
+                              guint       property_id,
+                              GValue     *value,
+                              GParamSpec *pspec)
+{
+  GimpEnumStorePrivate *priv = GIMP_ENUM_STORE_GET_PRIVATE (object);
+
+  switch (property_id)
+    {
+    case PROP_ENUM_TYPE:
+      g_value_set_gtype (value, priv->enum_type);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -138,9 +242,9 @@ gimp_enum_store_new_with_range (GType  enum_type,
 
   g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
 
-  store = g_object_new (GIMP_TYPE_ENUM_STORE, NULL);
-
-  GIMP_ENUM_STORE (store)->enum_class = g_type_class_ref (enum_type);
+  store = g_object_new (GIMP_TYPE_ENUM_STORE,
+                        "enum-type", enum_type,
+                        NULL);
 
   for (value = GIMP_ENUM_STORE (store)->enum_class->values;
        value->value_name;
@@ -179,9 +283,7 @@ gimp_enum_store_new_with_values (GType enum_type,
 
   va_start (args, n_values);
 
-  store = gimp_enum_store_new_with_values_valist (enum_type,
-                                                  n_values,
-                                                  args);
+  store = gimp_enum_store_new_with_values_valist (enum_type, n_values, args);
 
   va_end (args);
 
@@ -212,9 +314,9 @@ gimp_enum_store_new_with_values_valist (GType     enum_type,
   g_return_val_if_fail (G_TYPE_IS_ENUM (enum_type), NULL);
   g_return_val_if_fail (n_values > 1, NULL);
 
-  store = g_object_new (GIMP_TYPE_ENUM_STORE, NULL);
-
-  GIMP_ENUM_STORE (store)->enum_class = g_type_class_ref (enum_type);
+  store = g_object_new (GIMP_TYPE_ENUM_STORE,
+                        "enum-type", enum_type,
+                        NULL);
 
   for (i = 0; i < n_values; i++)
     {

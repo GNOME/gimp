@@ -1,5 +1,10 @@
 2007-01-12  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpenumstore.c: added a construct-only property
+	to specify the enum-type.
+
+2007-01-12  Sven Neumann  <sven@gimp.org>
+
 	* app/about.h (GIMP_COPYRIGHT): updated copyright.
 
 	* app/main.c: use application name as summary in the help output.
