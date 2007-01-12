@@ -63,6 +63,7 @@ static void      gimp_stroke_editor_dash_preset  (GtkWidget         *widget,
 
 static void      gimp_stroke_editor_combo_fill   (GimpStrokeOptions *options,
                                                   GtkComboBox       *box);
+static void      gimp_stroke_editor_combo_void   (GtkComboBox       *box);
 
 
 G_DEFINE_TYPE (GimpStrokeEditor, gimp_stroke_editor, GTK_TYPE_VBOX)
@@ -284,6 +285,9 @@ gimp_stroke_editor_constructor (GType                   type,
 
   gimp_stroke_editor_combo_fill (editor->options, GTK_COMBO_BOX (box));
 
+  g_signal_connect (box, "destroy",
+                    G_CALLBACK (gimp_stroke_editor_combo_void),
+                    NULL);
   g_signal_connect (box, "changed",
                     G_CALLBACK (gimp_stroke_editor_dash_preset),
                     editor->options);
@@ -366,7 +370,7 @@ gimp_stroke_editor_combo_update (GtkTreeModel      *model,
 {
   GtkTreeIter  iter;
 
-  if (gimp_int_store_lookup_by_value  (model, GIMP_DASH_CUSTOM, &iter))
+  if (gimp_int_store_lookup_by_value (model, GIMP_DASH_CUSTOM, &iter))
     {
       GArray *pattern;
 
@@ -419,9 +423,27 @@ gimp_stroke_editor_combo_fill (GimpStrokeOptions *options,
           gtk_list_store_set (GTK_LIST_STORE (model), &iter,
                               GIMP_INT_STORE_USER_DATA, pattern,
                               -1);
-
-          g_object_weak_ref (G_OBJECT (box),
-                             (GWeakNotify) gimp_dash_pattern_free, pattern);
         }
+    }
+}
+
+static void
+gimp_stroke_editor_combo_void (GtkComboBox *box)
+{
+  GtkTreeModel *model = gtk_combo_box_get_model (box);
+  GtkTreeIter   iter;
+  gboolean      iter_valid;
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
+    {
+      GArray *pattern;
+
+      gtk_tree_model_get (model, &iter,
+                          GIMP_INT_STORE_USER_DATA, &pattern,
+                          -1);
+
+      gimp_dash_pattern_free (pattern);
     }
 }

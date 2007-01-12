@@ -1,3 +1,8 @@
+2007-01-12  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpstrokeeditor.c: fixed memory management of dash
+	patterns (bug #395043).
+
 2007-01-11  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppreview.[ch]: added transform and untransform
