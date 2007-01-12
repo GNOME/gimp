@@ -1,5 +1,18 @@
 2007-01-12  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/libgimp-sections.txt
+	* libgimpbase/libgimpbase-sections.txt: added new symbols.
+
+	* libgimp/tmpl/gimpdisplay.sgml
+	* libgimp/tmpl/gimpdrawable.sgml
+	* libgimp/tmpl/gimpimage.sgml
+	* libgimp/tmpl/gimpvectors.sgml
+	* libgimpbase/tmpl/gimpbaseenums.sgml
+	* libgimpwidgets/tmpl/gimpintstore.sgml
+	* libgimpwidgets/tmpl/gimpenumstore.sgml: regenerated.
+
+2007-01-12  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/libgimpwidgets-sections.txt: added new symbols.	
 
 	* libgimpwidgets/tmpl/gimppreview.sgm: regenerated.

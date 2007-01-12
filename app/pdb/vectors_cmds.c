@@ -44,6 +44,34 @@
 
 
 static GValueArray *
+vectors_is_valid_invoker (GimpProcedure     *procedure,
+                          Gimp              *gimp,
+                          GimpContext       *context,
+                          GimpProgress      *progress,
+                          const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GValueArray *return_vals;
+  GimpVectors *vectors;
+  gboolean valid = FALSE;
+
+  vectors = gimp_value_get_vectors (&args->values[0], gimp);
+
+  if (success)
+    {
+      valid = (GIMP_IS_VECTORS (vectors) &&
+               gimp_item_is_attached (GIMP_ITEM (vectors)));
+    }
+
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_boolean (&return_vals->values[1], valid);
+
+  return return_vals;
+}
+
+static GValueArray *
 vectors_new_invoker (GimpProcedure     *procedure,
                      Gimp              *gimp,
                      GimpContext       *context,
@@ -1227,6 +1255,34 @@ void
 register_vectors_procs (GimpPDB *pdb)
 {
   GimpProcedure *procedure;
+
+  /*
+   * gimp-vectors-is-valid
+   */
+  procedure = gimp_procedure_new (vectors_is_valid_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-vectors-is-valid");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-vectors-is-valid",
+                                     "Returns TRUE if the vectors object is valid.",
+                                     "This procedure checks if the given vectors ID is valid and refers to an existing vectors object.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2007",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_vectors_id ("vectors",
+                                                           "vectors",
+                                                           "The vectors object to check",
+                                                           pdb->gimp, FALSE,
+                                                           GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("valid",
+                                                         "valid",
+                                                         "Whether the vectors ID is valid",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
 
   /*
    * gimp-vectors-new

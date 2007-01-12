@@ -28,6 +28,39 @@
 #include "gimp.h"
 
 /**
+ * gimp_vectors_is_valid:
+ * @vectors_ID: The vectors object to check.
+ *
+ * Returns TRUE if the vectors object is valid.
+ *
+ * This procedure checks if the given vectors ID is valid and refers to
+ * an existing vectors object.
+ *
+ * Returns: Whether the vectors ID is valid.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_vectors_is_valid (gint32 vectors_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean valid = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-vectors-is-valid",
+                                    &nreturn_vals,
+                                    GIMP_PDB_VECTORS, vectors_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    valid = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return valid;
+}
+
+/**
  * gimp_vectors_new:
  * @image_ID: The image.
  * @name: the name of the new vector object.

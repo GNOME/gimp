@@ -36,6 +36,15 @@ Functions to create, delete and flush new displays (views) on an image.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_display_is_valid ##### -->
+<para>
+
+</para>
+
+@display_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_display_get_window_handle ##### -->
 <para>
 

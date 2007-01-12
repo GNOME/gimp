@@ -107,6 +107,7 @@ EXPORTS
 	gimp_destroy_params
 	gimp_display_delete
 	gimp_display_get_window_handle
+	gimp_display_is_valid
 	gimp_display_name
 	gimp_display_new
 	gimp_displays_flush
@@ -140,6 +141,7 @@ EXPORTS
 	gimp_drawable_is_layer
 	gimp_drawable_is_layer_mask
 	gimp_drawable_is_rgb
+	gimp_drawable_is_valid
 	gimp_drawable_mask_bounds
 	gimp_drawable_mask_intersect
 	gimp_drawable_merge_shadow
@@ -346,6 +348,7 @@ EXPORTS
 	gimp_image_grid_set_style
 	gimp_image_height
 	gimp_image_is_dirty
+	gimp_image_is_valid
 	gimp_image_list
 	gimp_image_lower_channel
 	gimp_image_lower_layer
@@ -625,6 +628,7 @@ EXPORTS
 	gimp_vectors_get_visible
 	gimp_vectors_import_from_file
 	gimp_vectors_import_from_string
+	gimp_vectors_is_valid
 	gimp_vectors_new
 	gimp_vectors_parasite_attach
 	gimp_vectors_parasite_detach

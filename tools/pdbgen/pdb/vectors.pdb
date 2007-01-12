@@ -15,6 +15,36 @@
 # along with this program; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
+sub vectors_is_valid {
+    $blurb = 'Returns TRUE if the vectors object is valid.';
+
+    $help = <<'HELP';
+This procedure checks if the given vectors ID is valid and refers to an
+existing vectors object.
+HELP
+
+    &neo_pdb_misc('2007', '2.4');
+
+    @inargs = (
+	{ name => 'vectors', type => 'vectors', no_validate => 1,
+	  desc => 'The vectors object to check' }
+    );
+
+    @outargs = (
+	{ name => 'valid', type => 'boolean',
+	  desc => 'Whether the vectors ID is valid' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  valid = (GIMP_IS_VECTORS (vectors) &&
+           gimp_item_is_attached (GIMP_ITEM (vectors)));
+}
+CODE
+    );
+}
+
 sub vectors_new {
     $blurb = 'Creates a new empty vectors object.';
 
@@ -1253,7 +1283,8 @@ CODE
               "vectors/gimpvectors.h"
               "gimp-intl.h");
 
-@procs = qw(vectors_new
+@procs = qw(vectors_is_valid
+            vectors_new
             vectors_get_image
             vectors_get_name vectors_set_name
             vectors_get_visible vectors_set_visible

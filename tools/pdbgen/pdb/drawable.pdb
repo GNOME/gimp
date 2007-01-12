@@ -17,6 +17,36 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
+sub drawable_is_valid {
+    $blurb = 'Returns TRUE if the drawable is valid.';
+
+    $help = <<'HELP';
+This procedure checks if the given drawable ID is valid and refers to an
+existing drawable.
+HELP
+
+    &neo_pdb_misc('2007', '2.4');
+
+    @inargs = (
+	{ name => 'drawable', type => 'drawable', no_validate => 1,
+	  desc => 'The drawable to check' }
+    );
+
+    @outargs = (
+	{ name => 'valid', type => 'boolean',
+	  desc => 'Whether the drawable ID is valid' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  valid = (GIMP_IS_DRAWABLE (drawable) &&
+           gimp_item_is_attached (GIMP_ITEM (drawable)));
+}
+CODE
+    );
+}
+
 sub drawable_merge_shadow {
     $blurb = 'Merge the shadow buffer with the specified drawable.';
 
@@ -1251,11 +1281,12 @@ CODE
               "core/gimplayermask.h"
               "gimp-intl.h");
 
-@procs = qw(drawable_delete
+@procs = qw(drawable_is_valid
             drawable_is_layer drawable_is_layer_mask drawable_is_channel
 	    drawable_type  drawable_type_with_alpha drawable_has_alpha
             drawable_is_rgb drawable_is_gray drawable_is_indexed
             drawable_bpp drawable_width drawable_height drawable_offsets
+            drawable_delete
             drawable_get_image drawable_set_image
             drawable_get_name drawable_set_name
             drawable_get_visible drawable_set_visible

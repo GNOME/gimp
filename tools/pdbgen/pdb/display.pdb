@@ -17,6 +17,35 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
+sub display_is_valid {
+    $blurb = 'Returns TRUE if the display is valid.';
+
+    $help = <<'HELP';
+This procedure checks if the given display ID is valid and refers to an
+existing display.
+HELP
+
+    &neo_pdb_misc('2007', '2.4');
+
+    @inargs = (
+	{ name => 'display', type => 'display', no_validate => 1,
+	  desc => 'The display to check' }
+    );
+
+    @outargs = (
+	{ name => 'valid', type => 'boolean',
+	  desc => 'Whether the display ID is valid' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  valid = (display != NULL);
+}
+CODE
+    );
+}
+
 sub display_new {
     $blurb = 'Create a new display for the specified image.';
 
@@ -177,8 +206,9 @@ CODE
 
 @headers = qw("core/gimp.h");
 
-@procs = qw(display_new display_delete display_get_window_handle
-            displays_flush displays_reconnect);
+@procs = qw(display_is_valid display_new display_delete
+            display_get_window_handle
+	    displays_flush displays_reconnect);
 
 %exports = (app => [@procs], lib => [@procs]);
 

@@ -17,6 +17,35 @@
 
 # "Perlized" from C source by Manish Singh <yosh@gimp.org>
 
+sub image_is_valid {
+    $blurb = 'Returns TRUE if the image is valid.';
+
+    $help = <<'HELP';
+This procedure checks if the given image ID is valid and refers to an
+existing image.
+HELP
+
+    &neo_pdb_misc('2007', '2.4');
+
+    @inargs = (
+	{ name => 'image', type => 'image', no_validate => 1,
+	  desc => 'The image to check' }
+    );
+
+    @outargs = (
+	{ name => 'valid', type => 'boolean',
+	  desc => 'Whether the image ID is valid' }
+    );
+
+    %invoke = (
+	code => <<'CODE'
+{
+  valid = GIMP_IS_IMAGE (image);
+}
+CODE
+    );
+}
+
 sub image_list {
     $blurb = 'Returns the list of images currently open.';
 
@@ -2527,7 +2556,9 @@ CODE
               "core/gimpunit.h"
               "gimp-intl.h");
 
-@procs = qw(image_list image_new image_duplicate image_delete
+@procs = qw(image_is_valid
+            image_list
+	    image_new image_duplicate image_delete
             image_base_type
             image_width image_height
             image_free_shadow
@@ -2570,7 +2601,7 @@ CODE
             image_get_channel_by_tattoo
             image_get_vectors_by_tattoo);
 
-%exports = (app => [@procs], lib => [@procs[0..44,47..73]]);
+%exports = (app => [@procs], lib => [@procs[0..45,48..74]]);
 
 $desc = 'Image';
 

@@ -56,6 +56,15 @@ gimpvectors
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_vectors_is_valid ##### -->
+<para>
+
+</para>
+
+@vectors_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_vectors_get_strokes ##### -->
 <para>
 

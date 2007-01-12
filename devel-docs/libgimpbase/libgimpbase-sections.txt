@@ -41,6 +41,7 @@ GimpSizeType
 GimpStackTraceMode
 GimpTransferMode
 GimpTransformDirection
+GimpTransformResize
 GimpVectorsStrokeType
 <SUBSECTION Standard>
 GIMP_TYPE_ADD_MASK_TYPE
@@ -72,6 +73,7 @@ GIMP_TYPE_SIZE_TYPE
 GIMP_TYPE_STACK_TRACE_MODE
 GIMP_TYPE_TRANSFER_MODE
 GIMP_TYPE_TRANSFORM_DIRECTION
+GIMP_TYPE_TRANSFORM_RESIZE
 GIMP_TYPE_VECTORS_STROKE_TYPE
 gimp_add_mask_type_get_type
 gimp_blend_mode_get_type
@@ -102,6 +104,7 @@ gimp_size_type_get_type
 gimp_stack_trace_mode_get_type
 gimp_transfer_mode_get_type
 gimp_transform_direction_get_type
+gimp_transform_resize_get_type
 gimp_vectors_stroke_type_get_type
 </SECTION>
 

@@ -66,6 +66,15 @@ Functions to manipulate drawables.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_drawable_is_valid ##### -->
+<para>
+
+</para>
+
+@drawable_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_drawable_get_name ##### -->
 <para>
 

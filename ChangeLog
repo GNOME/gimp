@@ -1,5 +1,25 @@
 2007-01-12  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/display.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/vectors.pdb: added PDB functions to validate
+	display, drawable, image and vectors IDs.
+
+	* app/pdb/image_cmds.c
+	* app/pdb/vectors_cmds.c
+	* app/pdb/display_cmds.c
+	* app/pdb/internal_procs.c
+	* app/pdb/drawable_cmds.c
+	* libgimp/gimpimage_pdb.[ch]
+	* libgimp/gimpdisplay_pdb.[ch]
+	* libgimp/gimpdrawable_pdb.[ch]
+	* libgimp/gimpvectors_pdb.[ch]: regenerated.
+
+	* libgimp/gimp.def: updated.
+
+2007-01-12  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpenumstore.c: added a construct-only property
 	to specify the enum-type.
 

@@ -23,6 +23,11 @@ GimpEnumStore
 </para>
 
 
+<!-- ##### ARG GimpEnumStore:enum-type ##### -->
+<para>
+
+</para>
+
 <!-- ##### FUNCTION gimp_enum_store_new ##### -->
 <para>
 

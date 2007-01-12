@@ -31,36 +31,36 @@
 #include "gimpdrawable_pdb.h"
 
 /**
- * gimp_drawable_delete:
- * @drawable_ID: The drawable to delete.
+ * gimp_drawable_is_valid:
+ * @drawable_ID: The drawable to check.
  *
- * Delete a drawable.
+ * Returns TRUE if the drawable is valid.
  *
- * This procedure deletes the specified drawable. This must not be done
- * if the image containing this drawable was already deleted or if the
- * drawable was already removed from the image. The only case in which
- * this procedure is useful is if you want to get rid of a drawable
- * which has not yet been added to an image.
+ * This procedure checks if the given drawable ID is valid and refers
+ * to an existing drawable.
  *
- * Returns: TRUE on success.
+ * Returns: Whether the drawable ID is valid.
+ *
+ * Since: GIMP 2.4
  */
 gboolean
-gimp_drawable_delete (gint32 drawable_ID)
+gimp_drawable_is_valid (gint32 drawable_ID)
 {
   GimpParam *return_vals;
   gint nreturn_vals;
-  gboolean success = TRUE;
+  gboolean valid = FALSE;
 
-  return_vals = gimp_run_procedure ("gimp-drawable-delete",
+  return_vals = gimp_run_procedure ("gimp-drawable-is-valid",
                                     &nreturn_vals,
                                     GIMP_PDB_DRAWABLE, drawable_ID,
                                     GIMP_PDB_END);
 
-  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    valid = return_vals[1].data.d_int32;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 
-  return success;
+  return valid;
 }
 
 /**
@@ -471,6 +471,39 @@ gimp_drawable_offsets (gint32  drawable_ID,
       *offset_x = return_vals[1].data.d_int32;
       *offset_y = return_vals[2].data.d_int32;
     }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_drawable_delete:
+ * @drawable_ID: The drawable to delete.
+ *
+ * Delete a drawable.
+ *
+ * This procedure deletes the specified drawable. This must not be done
+ * if the image containing this drawable was already deleted or if the
+ * drawable was already removed from the image. The only case in which
+ * this procedure is useful is if you want to get rid of a drawable
+ * which has not yet been added to an image.
+ *
+ * Returns: TRUE on success.
+ */
+gboolean
+gimp_drawable_delete (gint32 drawable_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-drawable-delete",
+                                    &nreturn_vals,
+                                    GIMP_PDB_DRAWABLE, drawable_ID,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
 
   gimp_destroy_params (return_vals, nreturn_vals);
 

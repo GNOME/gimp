@@ -324,6 +324,16 @@ Basic GIMP enumeration data types.
 @GIMP_TRANSFORM_FORWARD: 
 @GIMP_TRANSFORM_BACKWARD: 
 
+<!-- ##### ENUM GimpTransformResize ##### -->
+<para>
+
+</para>
+
+@GIMP_TRANSFORM_RESIZE_ADJUST: 
+@GIMP_TRANSFORM_RESIZE_CLIP: 
+@GIMP_TRANSFORM_RESIZE_CROP: 
+@GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT: 
+
 <!-- ##### ENUM GimpVectorsStrokeType ##### -->
 <para>
 

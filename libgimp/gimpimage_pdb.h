@@ -29,6 +29,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+gboolean                 gimp_image_is_valid                 (gint32                image_ID);
 gint*                    gimp_image_list                     (gint                 *num_images);
 gint32                   gimp_image_new                      (gint                  width,
                                                               gint                  height,

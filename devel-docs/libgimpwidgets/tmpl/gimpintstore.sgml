@@ -23,6 +23,11 @@ A model for integer based name-value pairs (e.g. enums)
 </para>
 
 
+<!-- ##### ARG GimpIntStore:user-data-type ##### -->
+<para>
+
+</para>
+
 <!-- ##### ENUM GimpIntStoreColumns ##### -->
 <para>
 

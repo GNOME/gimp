@@ -29,7 +29,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
-gboolean                 gimp_drawable_delete             (gint32                      drawable_ID);
+gboolean                 gimp_drawable_is_valid           (gint32                      drawable_ID);
 gboolean                 gimp_drawable_is_layer           (gint32                      drawable_ID);
 gboolean                 gimp_drawable_is_layer_mask      (gint32                      drawable_ID);
 gboolean                 gimp_drawable_is_channel         (gint32                      drawable_ID);
@@ -45,6 +45,7 @@ gint                     gimp_drawable_height             (gint32               
 gboolean                 gimp_drawable_offsets            (gint32                      drawable_ID,
                                                            gint                       *offset_x,
                                                            gint                       *offset_y);
+gboolean                 gimp_drawable_delete             (gint32                      drawable_ID);
 gint32                   gimp_drawable_get_image          (gint32                      drawable_ID);
 #ifndef GIMP_DISABLE_DEPRECATED
 gboolean                 gimp_drawable_set_image          (gint32                      drawable_ID,

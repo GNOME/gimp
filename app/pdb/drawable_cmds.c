@@ -48,29 +48,31 @@
 
 
 static GValueArray *
-drawable_delete_invoker (GimpProcedure     *procedure,
-                         Gimp              *gimp,
-                         GimpContext       *context,
-                         GimpProgress      *progress,
-                         const GValueArray *args)
+drawable_is_valid_invoker (GimpProcedure     *procedure,
+                           Gimp              *gimp,
+                           GimpContext       *context,
+                           GimpProgress      *progress,
+                           const GValueArray *args)
 {
   gboolean success = TRUE;
+  GValueArray *return_vals;
   GimpDrawable *drawable;
+  gboolean valid = FALSE;
 
   drawable = gimp_value_get_drawable (&args->values[0], gimp);
 
   if (success)
     {
-      if (g_object_is_floating (drawable))
-        {
-          g_object_ref_sink (drawable);
-          g_object_unref (drawable);
-        }
-      else
-        success = FALSE;
+      valid = (GIMP_IS_DRAWABLE (drawable) &&
+               gimp_item_is_attached (GIMP_ITEM (drawable)));
     }
 
-  return gimp_procedure_get_return_values (procedure, success);
+  return_vals = gimp_procedure_get_return_values (procedure, success);
+
+  if (success)
+    g_value_set_boolean (&return_vals->values[1], valid);
+
+  return return_vals;
 }
 
 static GValueArray *
@@ -426,6 +428,32 @@ drawable_offsets_invoker (GimpProcedure     *procedure,
     }
 
   return return_vals;
+}
+
+static GValueArray *
+drawable_delete_invoker (GimpProcedure     *procedure,
+                         Gimp              *gimp,
+                         GimpContext       *context,
+                         GimpProgress      *progress,
+                         const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpDrawable *drawable;
+
+  drawable = gimp_value_get_drawable (&args->values[0], gimp);
+
+  if (success)
+    {
+      if (g_object_is_floating (drawable))
+        {
+          g_object_ref_sink (drawable);
+          g_object_unref (drawable);
+        }
+      else
+        success = FALSE;
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
 }
 
 static GValueArray *
@@ -1167,24 +1195,30 @@ register_drawable_procs (GimpPDB *pdb)
   GimpProcedure *procedure;
 
   /*
-   * gimp-drawable-delete
+   * gimp-drawable-is-valid
    */
-  procedure = gimp_procedure_new (drawable_delete_invoker);
-  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-delete");
+  procedure = gimp_procedure_new (drawable_is_valid_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-is-valid");
   gimp_procedure_set_static_strings (procedure,
-                                     "gimp-drawable-delete",
-                                     "Delete a drawable.",
-                                     "This procedure deletes the specified drawable. This must not be done if the image containing this drawable was already deleted or if the drawable was already removed from the image. The only case in which this procedure is useful is if you want to get rid of a drawable which has not yet been added to an image.",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "Spencer Kimball & Peter Mattis",
-                                     "1995-1996",
+                                     "gimp-drawable-is-valid",
+                                     "Returns TRUE if the drawable is valid.",
+                                     "This procedure checks if the given drawable ID is valid and refers to an existing drawable.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2007",
                                      NULL);
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_drawable_id ("drawable",
                                                             "drawable",
-                                                            "The drawable to delete",
+                                                            "The drawable to check",
                                                             pdb->gimp, FALSE,
                                                             GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   g_param_spec_boolean ("valid",
+                                                         "valid",
+                                                         "Whether the drawable ID is valid",
+                                                         FALSE,
+                                                         GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 
@@ -1563,6 +1597,28 @@ register_drawable_procs (GimpPDB *pdb)
                                                           "y offset of drawable",
                                                           G_MININT32, G_MAXINT32, 0,
                                                           GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-drawable-delete
+   */
+  procedure = gimp_procedure_new (drawable_delete_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-drawable-delete");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-drawable-delete",
+                                     "Delete a drawable.",
+                                     "This procedure deletes the specified drawable. This must not be done if the image containing this drawable was already deleted or if the drawable was already removed from the image. The only case in which this procedure is useful is if you want to get rid of a drawable which has not yet been added to an image.",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "Spencer Kimball & Peter Mattis",
+                                     "1995-1996",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_drawable_id ("drawable",
+                                                            "drawable",
+                                                            "The drawable to delete",
+                                                            pdb->gimp, FALSE,
+                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

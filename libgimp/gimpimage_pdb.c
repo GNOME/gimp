@@ -28,6 +28,39 @@
 #include "gimp.h"
 
 /**
+ * gimp_image_is_valid:
+ * @image_ID: The image to check.
+ *
+ * Returns TRUE if the image is valid.
+ *
+ * This procedure checks if the given image ID is valid and refers to
+ * an existing image.
+ *
+ * Returns: Whether the image ID is valid.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_image_is_valid (gint32 image_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean valid = FALSE;
+
+  return_vals = gimp_run_procedure ("gimp-image-is-valid",
+                                    &nreturn_vals,
+                                    GIMP_PDB_IMAGE, image_ID,
+                                    GIMP_PDB_END);
+
+  if (return_vals[0].data.d_status == GIMP_PDB_SUCCESS)
+    valid = return_vals[1].data.d_int32;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return valid;
+}
+
+/**
  * gimp_image_list:
  * @num_images: The number of images currently open.
  *
