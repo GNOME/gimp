@@ -448,16 +448,16 @@ update_segments_from_options (GimpDashEditor *editor)
 
   gtk_widget_queue_draw (GTK_WIDGET (editor));
 
-  gimp_dash_pattern_segments_set (editor->stroke_options->dash_info,
-                                  editor->segments, editor->n_segments);
+  gimp_dash_pattern_fill_segments (editor->stroke_options->dash_info,
+                                   editor->segments, editor->n_segments);
 }
 
 static void
 update_options_from_segments (GimpDashEditor *editor)
 {
-  GArray *pattern = gimp_dash_pattern_from_segments (editor->segments,
-                                                     editor->n_segments,
-                                                     editor->dash_length);
+  GArray *pattern = gimp_dash_pattern_new_from_segments (editor->segments,
+                                                         editor->n_segments,
+                                                         editor->dash_length);
 
   gimp_stroke_options_set_dash_pattern (editor->stroke_options,
                                         GIMP_DASH_CUSTOM, pattern);

@@ -29,8 +29,21 @@
 #include "gimpdashpattern.h"
 
 
+GType
+gimp_dash_pattern_get_type (void)
+{
+  static GType type = 0;
+
+  if (! type)
+    type = g_boxed_type_register_static ("GimpDashPattern",
+                                         (GBoxedCopyFunc) gimp_dash_pattern_copy,
+                                         (GBoxedFreeFunc) gimp_dash_pattern_free);
+
+  return type;
+}
+
 GArray *
-gimp_dash_pattern_from_preset (GimpDashPreset  preset)
+gimp_dash_pattern_new_from_preset (GimpDashPreset preset)
 {
   GArray *pattern;
   gdouble dash;
@@ -110,7 +123,7 @@ gimp_dash_pattern_from_preset (GimpDashPreset  preset)
 
   if (pattern->len < 2)
     {
-      g_array_free (pattern, TRUE);
+      gimp_dash_pattern_free (pattern);
       return NULL;
     }
 
@@ -118,9 +131,9 @@ gimp_dash_pattern_from_preset (GimpDashPreset  preset)
 }
 
 GArray *
-gimp_dash_pattern_from_segments (const gboolean *segments,
-                                 gint            n_segments,
-                                 gdouble         dash_length)
+gimp_dash_pattern_new_from_segments (const gboolean *segments,
+                                     gint            n_segments,
+                                     gdouble         dash_length)
 {
   GArray   *pattern;
   gint      i;
@@ -150,7 +163,7 @@ gimp_dash_pattern_from_segments (const gboolean *segments,
 
   if (pattern->len < 2)
     {
-      g_array_free (pattern, TRUE);
+      gimp_dash_pattern_free (pattern);
       return NULL;
     }
 
@@ -158,9 +171,9 @@ gimp_dash_pattern_from_segments (const gboolean *segments,
 }
 
 void
-gimp_dash_pattern_segments_set (GArray   *pattern,
-                                gboolean *segments,
-                                gint      n_segments)
+gimp_dash_pattern_fill_segments (GArray   *pattern,
+                                 gboolean *segments,
+                                 gint      n_segments)
 {
   gdouble   factor;
   gdouble   sum;
@@ -201,16 +214,10 @@ gimp_dash_pattern_segments_set (GArray   *pattern,
     }
 }
 
-
 GArray *
-gimp_dash_pattern_from_value (const GValue *value)
+gimp_dash_pattern_from_value_array (GValueArray *value_array)
 {
-  GValueArray *val_array;
-
-  g_return_val_if_fail (G_VALUE_HOLDS_BOXED (value), NULL);
-
-  val_array = g_value_get_boxed (value);
-  if (val_array == NULL || val_array->n_values == 0)
+  if (value_array == NULL || value_array->n_values == 0)
     {
       return NULL;
     }
@@ -220,11 +227,11 @@ gimp_dash_pattern_from_value (const GValue *value)
       gint    i;
 
       pattern = g_array_sized_new (FALSE, FALSE,
-                                   sizeof (gdouble), val_array->n_values);
+                                   sizeof (gdouble), value_array->n_values);
 
-      for (i = 0; i < val_array->n_values; i++)
+      for (i = 0; i < value_array->n_values; i++)
         {
-          GValue *item = g_value_array_get_nth (val_array, i);
+          GValue *item = g_value_array_get_nth (value_array, i);
           gdouble val;
 
           g_return_val_if_fail (G_VALUE_HOLDS_DOUBLE (item), NULL);
@@ -238,20 +245,17 @@ gimp_dash_pattern_from_value (const GValue *value)
     }
 }
 
-void
-gimp_dash_pattern_value_set (GArray *pattern,
-                             GValue *value)
+GValueArray *
+gimp_dash_pattern_to_value_array (GArray *pattern)
 {
-  g_return_if_fail (G_VALUE_HOLDS_BOXED (value));
-
   if (pattern == NULL || pattern->len == 0)
     {
-      g_value_set_boxed (value, NULL);
+      return NULL;
     }
   else
     {
-      GValueArray *val_array = g_value_array_new (pattern->len);
-      GValue       item      = { 0, };
+      GValueArray *value_array = g_value_array_new (pattern->len);
+      GValue       item        = { 0, };
       gint         i;
 
       g_value_init (&item, G_TYPE_DOUBLE);
@@ -259,10 +263,12 @@ gimp_dash_pattern_value_set (GArray *pattern,
       for (i = 0; i < pattern->len; i++)
         {
           g_value_set_double (&item, g_array_index (pattern, gdouble, i));
-          g_value_array_append (val_array, &item);
+          g_value_array_append (value_array, &item);
         }
 
-      g_value_set_boxed (value, val_array);
+      g_value_unset (&item);
+
+      return value_array;
     }
 }
 

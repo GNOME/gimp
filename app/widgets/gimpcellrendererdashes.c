@@ -89,8 +89,9 @@ gimp_cell_renderer_dashes_class_init (GimpCellRendererDashesClass *klass)
   cell_class->render         = gimp_cell_renderer_dashes_render;
 
   g_object_class_install_property (object_class, PROP_PATTERN,
-                                   g_param_spec_pointer ("pattern", NULL, NULL,
-                                                         GIMP_PARAM_WRITABLE));
+                                   g_param_spec_boxed ("pattern", NULL, NULL,
+                                                       GIMP_TYPE_DASH_PATTERN,
+                                                       GIMP_PARAM_WRITABLE));
 }
 
 static void
@@ -129,8 +130,8 @@ gimp_cell_renderer_dashes_set_property (GObject      *object,
   switch (param_id)
     {
     case PROP_PATTERN:
-      gimp_dash_pattern_segments_set (g_value_get_pointer (value),
-                                      dashes->segments, N_SEGMENTS);
+      gimp_dash_pattern_fill_segments (g_value_get_boxed (value),
+                                       dashes->segments, N_SEGMENTS);
       break;
 
     default:

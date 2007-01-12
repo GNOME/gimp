@@ -1,3 +1,18 @@
+2007-01-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdashpattern.[ch]: register GIMP_TYPE_DASH_PATTERN
+	as boxed type. Added "new" to function names which create dash
+	patterns. Changed and renamed GValue functions to functions which
+	convert the dash pattern between GArray and GValueArray.
+
+	* app/core/gimpstrokeoptions.c
+	* app/widgets/gimpcellrendererdashes.c
+	* app/widgets/gimpstrokeeditor.c: changed accordingly.
+
+	* app/widgets/gimpdasheditor.c: ditto. Get rid of the recently
+	added manual memory management. The list store manages boxed types
+	all by itself.
+
 2007-01-12  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/display.pdb

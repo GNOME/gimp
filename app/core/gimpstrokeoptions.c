@@ -181,9 +181,14 @@ gimp_stroke_options_set_property (GObject      *object,
       options->dash_offset = g_value_get_double (value);
       break;
     case PROP_DASH_INFO:
-      gimp_stroke_options_set_dash_pattern (options,
-                                            GIMP_DASH_CUSTOM,
-                                            gimp_dash_pattern_from_value (value));
+      {
+        GValueArray *value_array = g_value_get_boxed (value);
+        GArray      *pattern;
+
+        pattern = gimp_dash_pattern_from_value_array (value_array);
+        gimp_stroke_options_set_dash_pattern (options, GIMP_DASH_CUSTOM,
+                                              pattern);
+      }
       break;
 
     default:
@@ -227,7 +232,12 @@ gimp_stroke_options_get_property (GObject    *object,
       g_value_set_double (value, options->dash_offset);
       break;
     case PROP_DASH_INFO:
-      gimp_dash_pattern_value_set (options->dash_info, value);
+      {
+        GValueArray *value_array;
+
+        value_array = gimp_dash_pattern_to_value_array (options->dash_info);
+        g_value_take_boxed (value, value_array);
+      }
       break;
 
     default:
@@ -256,16 +266,15 @@ gimp_stroke_options_set_dash_pattern (GimpStrokeOptions *options,
   g_return_if_fail (preset == GIMP_DASH_CUSTOM || pattern == NULL);
 
   if (preset != GIMP_DASH_CUSTOM)
-    pattern = gimp_dash_pattern_from_preset (preset);
+    pattern = gimp_dash_pattern_new_from_preset (preset);
 
   if (options->dash_info)
-    g_array_free (options->dash_info, TRUE);
+    gimp_dash_pattern_free (options->dash_info);
 
   options->dash_info = pattern;
 
   g_object_notify (G_OBJECT (options), "dash-info");
 
-  g_signal_emit (options,
-                 stroke_options_signals [DASH_INFO_CHANGED], 0,
+  g_signal_emit (options, stroke_options_signals [DASH_INFO_CHANGED], 0,
                  preset);
 }
