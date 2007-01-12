@@ -100,11 +100,19 @@ static void extract_alpha    (const guchar *src,
                               gint bpp, gint numpix, guchar **dst);
 static void extract_hsv      (const guchar *src,
                               gint bpp, gint numpix, guchar **dst);
+static void extract_hsl      (const guchar *src,
+                              gint bpp, gint numpix, guchar **dst);
 static void extract_hue      (const guchar *src,
                               gint bpp, gint numpix, guchar **dst);
 static void extract_sat      (const guchar *src,
                               gint bpp, gint numpix, guchar **dst);
 static void extract_val      (const guchar *src,
+                              gint bpp, gint numpix, guchar **dst);
+static void extract_huel     (const guchar *src,
+                              gint bpp, gint numpix, guchar **dst);
+static void extract_satl     (const guchar *src,
+                              gint bpp, gint numpix, guchar **dst);
+static void extract_lightness     (const guchar *src,
                               gint bpp, gint numpix, guchar **dst);
 static void extract_cmy      (const guchar *src,
                               gint bpp, gint numpix, guchar **dst);
@@ -180,6 +188,15 @@ static EXTRACT extract[] =
   { N_("Hue"),        FALSE, 1, { N_("hue")      }, extract_hue },
   { N_("Saturation"), FALSE, 1, { N_("saturation") }, extract_sat },
   { N_("Value"),      FALSE, 1, { N_("value")    }, extract_val },
+
+
+  { N_("HSL"),        TRUE,  3, { N_("hue_l"),
+                                  N_("saturation_l"),
+                                  N_("lightness")    }, extract_hsl },
+
+  { N_("Hue (HSL)"),  FALSE, 1, { N_("hue_l")   }, extract_huel },
+  { N_("Saturation (HSL)"), FALSE, 1, { N_("saturation_l") }, extract_satl },
+  { N_("Lightness"),  FALSE, 1, { N_("lightness")}, extract_lightness },
 
 
   { N_("CMY"),        TRUE,  3, { N_("cyan"),
@@ -951,6 +968,106 @@ extract_val (const guchar  *src,
     {
       gimp_rgb_to_hsv4 (rgb_src, &dummy, &dummy, &val);
       *val_dst++ = (guchar) (val * 255.999);
+      rgb_src += offset;
+    }
+}
+
+
+static void
+extract_hsl (const guchar  *src,
+	     gint           bpp,
+	     gint           numpix,
+	     guchar       **dst)
+{
+  register const guchar *rgb_src = src;
+  register guchar *hue_dst = dst[0];
+  register guchar *sat_dst = dst[1];
+  register guchar *lum_dst = dst[2];
+  register gint count = numpix, offset = bpp;
+
+  while (count-- > 0)
+    {
+      GimpRGB rgb;
+      GimpHSL hsl;
+
+      gimp_rgb_set_uchar (&rgb, rgb_src[0], rgb_src[1], rgb_src[2]);
+      gimp_rgb_to_hsl (&rgb, &hsl);
+
+      *hue_dst++ = (guchar) (hsl.h * 255.999);
+      *sat_dst++ = (guchar) (hsl.s * 255.999);
+      *lum_dst++ = (guchar) (hsl.l * 255.999);
+
+      rgb_src += offset;
+    }
+}
+
+
+static void
+extract_huel (const guchar  *src,
+	     gint           bpp,
+	     gint           numpix,
+	     guchar       **dst)
+{
+  register const guchar *rgb_src = src;
+  register guchar *hue_dst = dst[0];
+  register gint count = numpix, offset = bpp;
+
+  while (count-- > 0)
+    {
+      GimpRGB rgb;
+      GimpHSL hsl;
+
+      gimp_rgb_set_uchar (&rgb, rgb_src[0], rgb_src[1], rgb_src[2]);
+      gimp_rgb_to_hsl (&rgb, &hsl);
+
+      *hue_dst++ = (guchar) (hsl.h * 255.999);
+      rgb_src += offset;
+    }
+}
+
+
+static void
+extract_satl (const guchar  *src,
+	     gint           bpp,
+	     gint           numpix,
+	     guchar       **dst)
+{
+  register const guchar *rgb_src = src;
+  register guchar *sat_dst = dst[0];
+  register gint count = numpix, offset = bpp;
+
+  while (count-- > 0)
+    {
+      GimpRGB rgb;
+      GimpHSL hsl;
+
+      gimp_rgb_set_uchar (&rgb, rgb_src[0], rgb_src[1], rgb_src[2]);
+      gimp_rgb_to_hsl (&rgb, &hsl);
+
+      *sat_dst++ = (guchar) (hsl.s * 255.999);
+      rgb_src += offset;
+    }
+}
+
+
+static void
+extract_lightness (const guchar  *src,
+		   gint           bpp,
+		   gint           numpix,
+		   guchar       **dst)
+{
+  register const guchar *rgb_src = src;
+  register guchar *lum_dst = dst[0];
+  register gint count = numpix, offset = bpp;
+
+  while (count-- > 0)
+    {
+      GimpRGB rgb;
+      GimpHSL hsl;
+
+      gimp_rgb_set_uchar (&rgb, rgb_src[0], rgb_src[1], rgb_src[2]);
+      gimp_rgb_to_hsl (&rgb, &hsl);
+      *lum_dst++ = (guchar) (hsl.l * 255.999);
       rgb_src += offset;
     }
 }
