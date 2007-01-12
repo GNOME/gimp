@@ -1,5 +1,13 @@
 2007-01-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/vectors/gimpanchor.[ch]: renamed gimp_anchor_duplicate()
+	to gimp_anchor_copy().
+
+	* app/vectors/gimpstroke.c (gimp_stroke_real_duplicate): changed
+	accordingly.
+
+2007-01-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpdashpattern.[ch]: register GIMP_TYPE_DASH_PATTERN
 	as boxed type. Added "new" to function names which create dash
 	patterns. Changed and renamed GValue functions to functions which

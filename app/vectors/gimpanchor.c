@@ -35,12 +35,11 @@ gimp_anchor_get_type (void)
 
   if (!anchor_type)
     anchor_type = g_boxed_type_register_static ("GimpAnchor",
-                                         (GBoxedCopyFunc) gimp_anchor_duplicate,
+                                         (GBoxedCopyFunc) gimp_anchor_copy,
                                          (GBoxedFreeFunc) gimp_anchor_free);
 
   return anchor_type;
 }
-
 
 GimpAnchor *
 gimp_anchor_new (GimpAnchorType    type,
@@ -56,14 +55,14 @@ gimp_anchor_new (GimpAnchorType    type,
   return anchor;
 }
 
+GimpAnchor *
+gimp_anchor_copy (const GimpAnchor *anchor)
+{
+  return g_memdup (anchor, sizeof (GimpAnchor));
+}
+
 void
 gimp_anchor_free (GimpAnchor *anchor)
 {
   g_free (anchor);
-}
-
-GimpAnchor *
-gimp_anchor_duplicate (const GimpAnchor *anchor)
-{
-  return g_memdup (anchor, sizeof (GimpAnchor));
 }
