@@ -1,5 +1,11 @@
 2007-01-12  Sven Neumann  <sven@gimp.org>
 
+	* app/about.h (GIMP_COPYRIGHT): updated copyright.
+
+	* app/main.c: use application name as summary in the help output.
+
+2007-01-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/mail.c: use the base64 encoder from glib.
 
 2007-01-12  Sven Neumann  <sven@gimp.org>
