@@ -28,11 +28,11 @@ msgstr "Falta la informació de l'excepció"
 #: ../plug-ins/pygimp/gimpfu.py:344
 #, python-format
 msgid "An error occured running %s"
-msgstr "S'ha produït un error quan s'executava %s"
+msgstr "S'ha produït un error en executar %s"
 
 #: ../plug-ins/pygimp/gimpfu.py:355
 msgid "_More Information"
-msgstr "_Més Informació"
+msgstr "_Més informació"
 
 #: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
 #: ../plug-ins/pygimp/gimpfu.py:479
@@ -54,7 +54,7 @@ msgstr "Selecció de la carpeta Python-Fu"
 #: ../plug-ins/pygimp/gimpfu.py:618
 #, python-format
 msgid "Invalid input for '%s'"
-msgstr "El valor no és vàlid per a '%s'"
+msgstr "El valor d'entrada no és vàlid per a '%s'"
 
 #: ../plug-ins/pygimp/gimpui.py:175
 msgid "Python-Fu Color Selection"
@@ -110,7 +110,7 @@ msgstr "_Cerca..."
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
 msgid "Python Procedure Browser"
-msgstr "Navegador de funcions  Python-Fu"
+msgstr "Navegador de funcions Python-Fu"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
 #, python-format
@@ -244,8 +244,8 @@ msgstr "Divideix"
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
-"Talla una imatge per les seves guies, creant un conjunt d'imatges separades "
-"i un taula HTML composar les diverses imatges"
+"Retalla una imatge per les seves guies, creant un conjunt d'imatges separades "
+"i un taula HTML formada per les imatges resultants"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
@@ -289,7 +289,7 @@ msgstr "Deshabilita l'animació de la taula"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "Afegeix un ombra a una capa i, opcionalment, li afegeix un bisell"
+msgstr "Afegeix una ombra a una capa i opcionalment un bisell"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
 msgid "_Drop Shadow and Bevel..."
