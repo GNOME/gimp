@@ -87,8 +87,8 @@ sanity_check_glib (void)
   const gchar *mismatch;
 
 #define GLIB_REQUIRED_MAJOR 2
-#define GLIB_REQUIRED_MINOR 10
-#define GLIB_REQUIRED_MICRO 2
+#define GLIB_REQUIRED_MINOR 12
+#define GLIB_REQUIRED_MICRO 3
 
   mismatch = glib_check_version (GLIB_REQUIRED_MAJOR,
                                  GLIB_REQUIRED_MINOR,

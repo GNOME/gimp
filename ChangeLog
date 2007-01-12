@@ -1,5 +1,15 @@
 2007-01-12  Sven Neumann  <sven@gimp.org>
 
+	* configure.in
+	* app/sanity.c: depend on glib >= 2.12.3.
+
+	* HACKING: updated branches.
+
+	* libgimpwidgets/gimpintstore.c: added a construct-only property
+	that allows to specify the GType of the user-data column.
+
+2007-01-12  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpstrokeeditor.c: fixed memory management of dash
 	patterns (bug #395043).
 

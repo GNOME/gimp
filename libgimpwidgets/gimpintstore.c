@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimpintstore.c
- * Copyright (C) 2004  Sven Neumann <sven@gimp.org>
+ * Copyright (C) 2004-2007  Sven Neumann <sven@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -33,8 +33,34 @@
 #include "libgimp/libgimp-intl.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_USER_DATA_TYPE
+};
+
+typedef struct
+{
+  GType  user_data_type;
+} GimpIntStorePrivate;
+
+
+static GObject * gimp_int_store_constructor (GType                  type,
+                                             guint                  n_params,
+                                             GObjectConstructParam *params);
+
 static void  gimp_int_store_tree_model_init (GtkTreeModelIface *iface);
+
 static void  gimp_int_store_finalize        (GObject           *object);
+static void  gimp_int_store_set_property    (GObject           *object,
+                                             guint              property_id,
+                                             const GValue      *value,
+                                             GParamSpec        *pspec);
+static void  gimp_int_store_get_property    (GObject           *object,
+                                             guint              property_id,
+                                             GValue            *value,
+                                             GParamSpec        *pspec);
+
 static void  gimp_int_store_row_inserted    (GtkTreeModel      *model,
                                              GtkTreePath       *path,
                                              GtkTreeIter       *iter);
@@ -44,6 +70,9 @@ static void  gimp_int_store_add_empty       (GimpIntStore      *store);
 G_DEFINE_TYPE_WITH_CODE (GimpIntStore, gimp_int_store, GTK_TYPE_LIST_STORE,
                          G_IMPLEMENT_INTERFACE (GTK_TYPE_TREE_MODEL,
                                                 gimp_int_store_tree_model_init))
+
+#define GIMP_INT_STORE_GET_PRIVATE(obj) \
+  G_TYPE_INSTANCE_GET_PRIVATE (obj, GIMP_TYPE_INT_STORE, GimpIntStorePrivate)
 
 #define parent_class gimp_int_store_parent_class
 
@@ -55,26 +84,67 @@ gimp_int_store_class_init (GimpIntStoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
-  object_class->finalize = gimp_int_store_finalize;
+  object_class->constructor  = gimp_int_store_constructor;
+  object_class->finalize     = gimp_int_store_finalize;
+  object_class->set_property = gimp_int_store_set_property;
+  object_class->get_property = gimp_int_store_get_property;
+
+  /**
+   * GimpIntStore:user-data-type:
+   *
+   * Allows to set the #GType for the GIMP_INT_STORE_USER_DATA column.
+   *
+   * You need to set this property when constructing the store if you want
+   * to use the GIMP_INT_STORE_USER_DATA column and want to have the store
+   * handle ref-counting of your user data.
+   *
+   * Since: GIMP 2.4
+   */
+  g_object_class_install_property (object_class,
+                                   PROP_USER_DATA_TYPE,
+                                   g_param_spec_gtype ("user-data-type",
+                                                       NULL, NULL,
+                                                       G_TYPE_NONE,
+                                                       G_PARAM_CONSTRUCT_ONLY |
+                                                       GIMP_PARAM_READWRITE));
+
+  g_type_class_add_private (object_class, sizeof (GimpIntStorePrivate));
 }
 
 static void
 gimp_int_store_init (GimpIntStore *store)
 {
-  GType types[GIMP_INT_STORE_NUM_COLUMNS];
+  store->empty_iter = NULL;
+}
+
+static GObject *
+gimp_int_store_constructor (GType                  type,
+                            guint                  n_params,
+                            GObjectConstructParam *params)
+{
+  GObject             *object;
+  GimpIntStore        *store;
+  GimpIntStorePrivate *priv;
+  GType                types[GIMP_INT_STORE_NUM_COLUMNS];
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  store = GIMP_INT_STORE (object);
+  priv = GIMP_INT_STORE_GET_PRIVATE (store);
 
   types[GIMP_INT_STORE_VALUE]     = G_TYPE_INT;
   types[GIMP_INT_STORE_LABEL]     = G_TYPE_STRING;
   types[GIMP_INT_STORE_STOCK_ID]  = G_TYPE_STRING;
   types[GIMP_INT_STORE_PIXBUF]    = GDK_TYPE_PIXBUF;
-  types[GIMP_INT_STORE_USER_DATA] = G_TYPE_POINTER;
-
-  store->empty_iter = NULL;
+  types[GIMP_INT_STORE_USER_DATA] = (priv->user_data_type != G_TYPE_NONE ?
+                                     priv->user_data_type : G_TYPE_POINTER);
 
   gtk_list_store_set_column_types (GTK_LIST_STORE (store),
                                    GIMP_INT_STORE_NUM_COLUMNS, types);
 
   gimp_int_store_add_empty (store);
+
+  return object;
 }
 
 static void
@@ -97,6 +167,44 @@ gimp_int_store_finalize (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_int_store_set_property (GObject      *object,
+                             guint         property_id,
+                             const GValue *value,
+                             GParamSpec   *pspec)
+{
+  GimpIntStorePrivate *priv = GIMP_INT_STORE_GET_PRIVATE (object);
+
+  switch (property_id)
+    {
+    case PROP_USER_DATA_TYPE:
+      priv->user_data_type = g_value_get_gtype (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_int_store_get_property (GObject    *object,
+                             guint       property_id,
+                             GValue     *value,
+                             GParamSpec *pspec)
+{
+  GimpIntStorePrivate *priv = GIMP_INT_STORE_GET_PRIVATE (object);
+
+  switch (property_id)
+    {
+    case PROP_USER_DATA_TYPE:
+      g_value_set_gtype (value, priv->user_data_type);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
