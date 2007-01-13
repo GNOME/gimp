@@ -415,8 +415,7 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
 #ifndef G_OS_WIN32
   dirname  = g_path_get_dirname (uri);
 #else
-  /* g_path_get_dirname() is supposed to work on pathnames, not
-   * URIs.
+  /* g_path_get_dirname() is supposed to work on pathnames, not URIs.
    *
    * If uri points to a file on the root of a drive
    * "file:///d:/foo.png", g_path_get_dirname() would return
@@ -434,25 +433,31 @@ gimp_file_dialog_set_image (GimpFileDialog *dialog,
    */
   if (g_str_has_prefix (uri, "file:///"))
     {
-      char *filepath, *dirpath = NULL;
+      gchar *filepath = g_filename_from_uri (uri, NULL, NULL);
+      gchar *dirpath  = NULL;
 
-      filepath = g_filename_from_uri (uri, NULL, NULL);
       if (filepath != NULL)
 	{
 	  dirpath = g_path_get_dirname (filepath);
 	  g_free (filepath);
 	}
+
       if (dirpath != NULL)
 	{
 	  dirname = g_filename_to_uri (dirpath, NULL, NULL);
 	  g_free (dirpath);
 	}
       else
-	dirname = NULL;
+        {
+          dirname = NULL;
+        }
     }
   else
-    dirname = g_path_get_dirname (uri);
+    {
+      dirname = g_path_get_dirname (uri);
+    }
 #endif
+
   basename = file_utils_uri_display_basename (uri);
 
   if (dirname && strlen (dirname) && strcmp (dirname, "."))
@@ -636,11 +641,8 @@ static void
 gimp_file_dialog_update_preview (GtkFileChooser *chooser,
                                  GimpFileDialog *dialog)
 {
-  gchar *uri = gtk_file_chooser_get_preview_uri (chooser);
-
-  gimp_thumb_box_set_uri (GIMP_THUMB_BOX (dialog->thumb_box), uri);
-
-  g_free (uri);
+  gimp_thumb_box_take_uri (GIMP_THUMB_BOX (dialog->thumb_box),
+                           gtk_file_chooser_get_preview_uri (chooser));
 }
 
 static void

@@ -443,8 +443,8 @@ gimp_thumb_box_new (GimpContext *context)
 }
 
 void
-gimp_thumb_box_set_uri (GimpThumbBox *box,
-                        const gchar  *uri)
+gimp_thumb_box_take_uri (GimpThumbBox *box,
+                         gchar        *uri)
 {
   g_return_if_fail (GIMP_IS_THUMB_BOX (box));
 
@@ -454,7 +454,7 @@ gimp_thumb_box_set_uri (GimpThumbBox *box,
       box->idle_id = 0;
     }
 
-  gimp_object_set_name (GIMP_OBJECT (box->imagefile), uri);
+  gimp_object_take_name (GIMP_OBJECT (box->imagefile), uri);
 
   if (uri)
     {

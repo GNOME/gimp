@@ -59,8 +59,8 @@ GType       gimp_thumb_box_get_type  (void) G_GNUC_CONST;
 
 GtkWidget * gimp_thumb_box_new       (GimpContext  *context);
 
-void        gimp_thumb_box_set_uri   (GimpThumbBox *box,
-                                      const gchar  *uri);
+void        gimp_thumb_box_take_uri  (GimpThumbBox *box,
+                                      gchar        *uri);
 void        gimp_thumb_box_take_uris (GimpThumbBox *box,
                                       GSList       *uris);
 
