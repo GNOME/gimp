@@ -1,65 +1,310 @@
 # Lithuanian translation of GIMP.i
-# Copyright (C) 2004-2006 Free Software Foundation, Inc.
-# Žygimantas Beručka <zygis@gnome.org>, 2004-2006.
+# Copyright (C) 2004-2007 Free Software Foundation, Inc.
+# Žygimantas Beručka <zygis@gnome.org>, 2004-2007.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-20 19:32+0300\n"
-"PO-Revision-Date: 2006-09-20 19:34+0300\n"
+"POT-Creation-Date: 2007-01-13 22:57+0200\n"
+"PO-Revision-Date: 2007-01-13 23:08+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:407 ../plug-ins/pygimp/gimpfu.py:419
-#: ../plug-ins/pygimp/gimpfu.py:425
+#: ../plug-ins/pygimp/gimpfu.py:335
+msgid "Missing exception information"
+msgstr "Trūkstama išimties informacija"
+
+#: ../plug-ins/pygimp/gimpfu.py:344
+#, python-format
+msgid "An error occured running %s"
+msgstr "Vykdant %s iškilo klaida"
+
+#: ../plug-ins/pygimp/gimpfu.py:355
+msgid "_More Information"
+msgstr "_Daugiau informacijos"
+
+#: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
+#: ../plug-ins/pygimp/gimpfu.py:479
 msgid "No"
 msgstr "Ne"
 
-#: ../plug-ins/pygimp/gimpfu.py:417 ../plug-ins/pygimp/gimpfu.py:425
+#: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
 msgid "Yes"
 msgstr "Taip"
 
-#: ../plug-ins/pygimp/gimpfu.py:463 ../plug-ins/pygimp/gimpui.py:200
+#: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu rinkmenų parinkimas"
 
-#: ../plug-ins/pygimp/gimpfu.py:474
+#: ../plug-ins/pygimp/gimpfu.py:528
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu aplankų parinkimas"
 
-#: ../plug-ins/pygimp/gimpui.py:153
+#: ../plug-ins/pygimp/gimpfu.py:618
+#, python-format
+msgid "Invalid input for '%s'"
+msgstr "Netinkama „%s“ įvestis"
+
+#: ../plug-ins/pygimp/gimpui.py:175
 msgid "Python-Fu Color Selection"
 msgstr "Python-Fu spalvų parinkimas"
 
-#: ../plug-ins/pygimp/procbrowser.c:174
-msgid "Python Procedure Browser"
-msgstr "Python procedūrų naršyklė"
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+msgid "Saving as colored XHTML"
+msgstr "Saugoma kaip spalvintas XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:44
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
+msgid "Save as colored XHTML"
+msgstr "Išsaugoti kaip spalvintą XHTML"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
+msgid "Colored XHTML"
+msgstr "Spalvintas XHTML"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
+msgid "Character source"
+msgstr "Simbolio šaltinis"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
+msgid "Source code"
+msgstr "Pirminis kodas"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:194
+msgid "Text file"
+msgstr "Tekstinė rinkmena"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+msgid "Entry box"
+msgstr "Įvesties laukelis"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+msgid "File to read or characters to use"
+msgstr "Skaitytina rinkmena ar naudotini simboliai"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+msgid "Font size in pixels"
+msgstr "Šrifto dydis pikseliais"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+msgid "Write a separate CSS file"
+msgstr "Įrašyti atskirą CSS rinkmeną"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
 msgstr "Python konsolė"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:76
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
 msgid "_Browse..."
 msgstr "_Naršyti..."
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:100
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
+msgid "Python Procedure Browser"
+msgstr "Python procedūrų naršyklė"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Nepavyko rašymui atverti „%s“: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Nepavyko įrašyti į „%s“: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
+msgid "Save Python-Fu Console Output"
+msgstr "Išsaugoti Python-Fu konsolės išvestį"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
 msgid "Interactive Gimp-Python interpreter"
 msgstr "Interaktyvus Gimp-Python interpretatorius"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:105
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
 msgid "_Console"
 msgstr "_Konsolė"
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:221
-msgid "Gimp-Python Console"
-msgstr "Gimp-Python konsolė"
+#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+msgid "Add a layer of fog"
+msgstr "Pridėi rūko sluoksnį"
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:222
-msgid "Interactive Python Development"
-msgstr "Interaktyvus programavimas Python"
+#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+msgid "_Fog..."
+msgstr "_Rūkas..."
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+msgid "Layer name"
+msgstr "Sluoksnio pavadinimas"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+msgid "Clouds"
+msgstr "Debesys"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:60
+msgid "Fog color"
+msgstr "Rūko spalva"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+msgid "Turbulence"
+msgstr "Turbulencija"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+msgid "Opacity"
+msgstr "Nepermatomumas"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
+msgid "Offset the colors in a palette"
+msgstr "Paslinkti spalvas paletėje"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
+msgid "_Offset Palette..."
+msgstr "_Paslinkti paletę..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+msgid "Palette"
+msgstr "Paletė"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
+msgid "Offset"
+msgstr "Poslinkis"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
+msgid "Sort the colors in a palette"
+msgstr "Rikiuoti spalvas paletėje"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
+msgid "_Sort Palette..."
+msgstr "_Rikiuoti paletę..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+msgid "Color model"
+msgstr "Spalvų modelis"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "RGB"
+msgstr "RGB"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+msgid "HSV"
+msgstr "HSV"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+msgid "Channel to sort"
+msgstr "Rikiuotinas kanalas"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+msgid "Red or Hue"
+msgstr "Raudona arba atspalvis"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+msgid "Green or Saturation"
+msgstr "Žalia arba sodrumas"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+msgid "Blue or Value"
+msgstr "Mėlyna arba reikšmė"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+msgid "Ascending"
+msgstr "Didėjanti"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "Iš paletės spalvų sukurti besikartojantį gradientą"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
+msgid "Palette to _Repeating Gradient"
+msgstr "Paletė į _besikartojantį gradientą"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
+msgid "Create a gradient using colors from the palette"
+msgstr "Sukurti gradientą naudojant paletės spalvas"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
+msgid "Palette to _Gradient"
+msgstr "Paletė į _gradientą"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
+msgid "Slice"
+msgstr "Supjaustyti"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr ""
+"Supjaustyti paveikslėlį pagal gaires, sukuriamas paveikslėlis ir HTML "
+"lentelės kodas"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
+msgid "_Slice..."
+msgstr "_Supjaustyti..."
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:430
+msgid "Path for HTML export"
+msgstr "Kelias HTML eksportavimui"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+msgid "Filename for export"
+msgstr "Eksportuotinos rinkmenos pavadinimas"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+msgid "Image name prefix"
+msgstr "Paveikslėlio pavadinimo priešdėlis"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+msgid "Image format"
+msgstr "Paveikslėlio formatas"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+msgid "Separate image folder"
+msgstr "Atskiras paveikslėlio aplinkas"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+msgid "Folder for image export"
+msgstr "Aplankas paveikslėlio eksportavimui"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+msgid "Space between table elements"
+msgstr "Tarpas tarp lentelės elementų"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+msgid "Javascript for onmouseover and clicked"
+msgstr "Javascript scenarijus onmouseover ir clicked įvykiams"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+msgid "Skip animation for table caps"
+msgstr "Praleisti animaciją lentelės antraštėse"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+msgid "Add a drop shadow to a layer, and optionally bevel it"
+msgstr "Pridėti sluoksniui šešėlį ir (jei pageidaujama) iškelti"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
+msgid "_Drop Shadow and Bevel..."
+msgstr "_Mesti šešėlį ir iškelti..."
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
+msgid "Shadow blur"
+msgstr "Šešėlio išliejimas"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
+msgid "Bevel"
+msgstr "Iškilimas"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+msgid "Drop shadow"
+msgstr "Mesti šešėlį"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+msgid "Drop shadow X displacement"
+msgstr "Metamo šešėlio X poslinkis"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+msgid "Drop shadow Y displacement"
+msgstr "Metamo šešėlio Y poslinkis"
