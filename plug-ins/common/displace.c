@@ -169,7 +169,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Displace pixels as indicated by displacment maps"),
+                          N_("Displace pixels as indicated by displacement maps"),
                           "Displaces the contents of the specified drawable "
                           "by the amounts specified by 'amount-x' and "
                           "'amount-y' multiplied by the luminance of "

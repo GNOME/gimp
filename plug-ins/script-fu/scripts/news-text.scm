@@ -75,7 +75,7 @@
 
 (script-fu-register "script-fu-newsprint-text"
   _"Newsprint Te_xt..."
-  _"Create a logo in the style newpaper printing"
+  _"Create a logo in the style of newspaper printing"
   "Austin Donnelly"
   "Austin Donnelly"
   "1998"

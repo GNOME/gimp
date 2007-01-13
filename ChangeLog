@@ -1,5 +1,11 @@
 2007-01-13  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/displace.c
+	* plug-ins/common/tileit.c
+	* plug-ins/script-fu/scripts/news-text.scm: fixed typos (bug #396169).
+
+2007-01-13  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpaspectpreview.c: implement GimpPreview's transform()
 	and untransform() methods.
 

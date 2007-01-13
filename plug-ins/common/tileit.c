@@ -212,7 +212,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-                          N_("Tile image into smaller versions of the orginal"),
+                          N_("Tile image into smaller versions of the original"),
                           "More here later",
                           "Andy Thomas",
                           "Andy Thomas",
