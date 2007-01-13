@@ -1,5 +1,10 @@
 2007-01-13  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpaspectpreview.c: implement GimpPreview's transform()
+	and untransform() methods.
+
+2007-01-13  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpfiledialog.c
 	* app/widgets/gimpthumbbox.[ch]: save some string copies by
 	changing gimp_thumb_box_set_uri() to gimp_thumb_box_take_uri().
