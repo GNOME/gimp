@@ -47,8 +47,9 @@ INCLUDES = \
 all : \
 	$(PRJ_TOP)\config.h \
 	$(PACKAGE).lib \
+!IFDEF DLLGIMP
 	$(PACKAGE)-$(PKG_VER).dll
-
+!ENDIF
 
 $(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32
 	copy $(PRJ_TOP)\config.h.win32 $(PRJ_TOP)\config.h

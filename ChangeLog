@@ -1,3 +1,10 @@
+2007-01-13  Hans Breuer  <hans@breuer.org>
+
+	* **/makefile.msc app/gimpcore.def : updated
+	* app/display/gimpdisplay-handlers.c : #include "file/file-utils.h"
+	for file_utils_uri_display_name
+	* plug-ins/imagemap/imap_statusbar.c : g_snprintf instead of snprintf
+
 2007-01-13  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/displace.c

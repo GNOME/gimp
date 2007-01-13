@@ -165,8 +165,8 @@ STOCK_VARIABLES = \
 	stock_portrait_16		stock-portrait-16.png	\
 	stock_print_resolution_16	stock-print-resolution-16.png \
 	stock_print_resolution_24	stock-print-resolution-24.png \
-	stock_quick_mask_off_16		stock-quick-mask-off-16.png	\
-	stock_quick_mask_on_16		stock-quick-mask-on-16.png	\
+	stock_quick_mask_off_12		stock-quick-mask-off-12.png	\
+	stock_quick_mask_on_12		stock-quick-mask-on-12.png	\
 	stock_question_64		stock-question-64.png	\
 	stock_reset_16		stock-reset-16.png	\
 	stock_reshow_filter_16		stock-reshow-filter-16.png	\

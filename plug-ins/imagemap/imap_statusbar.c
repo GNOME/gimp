@@ -131,7 +131,7 @@ statusbar_set_dimension(StatusBar_t *statusbar, gint w, gint h)
 {
    gchar scratch[16];
 
-   snprintf (scratch, sizeof (scratch), "%d × %d", (gint) w, (gint) h);
+   g_snprintf (scratch, sizeof (scratch), "%d × %d", (gint) w, (gint) h);
    gtk_entry_set_text(GTK_ENTRY(statusbar->dimension), scratch);
 }
 

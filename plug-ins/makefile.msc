@@ -38,13 +38,13 @@ COMMON2 = decompose deinterlace depthmerge despeckle destripe dicom diffraction 
 COMMON3 = gauss gbr gee gee_zoom gif gifload gih glasstile glob gqbist gradmap grid gtm guillotine header hot illusion iwarp jigsaw laplace lcms lens lic
 COMMON4 = mapcolor max_rgb mblur mosaic neon newsprint nlfilt noisify normalize nova oilify papertile pat pcx photocopy pix pixelize plasma png pnm polar postscript psd psd_save psp randomize raw redeye retinex ripple rotate
 COMMON5 = sample_colorize scatter_hsv screenshot sel_gauss semiflatten sharpen shift sinus smooth_palette snoise sobel softglow sparkle spheredesigner spread struc sunras tga threshold_alpha tiff 
-COMMON6 = tile tileit tiler uniteditor unsharp video vinvert vpropagate warp waves webbrowser whirlpinch wind wiredebug xbm xwd zealouscrop
-COMMON7 = winprint winclipboard 
+COMMON6 = tile tileit tiler uniteditor unsharp video vinvert vpropagate warp waves webbrowser whirlpinch wind xbm xwd zealouscrop
+COMMON7 = winprint winclipboard wiredebug
 
 NOTNOW = wmf svg
 
 # These have own subdirectories each
-SEPARATE = FractalExplorer Lighting MapObject bmp faxg3 fits flame gfig gflare gfli gimpressionist help helpbrowser ifscompose imagemap jpeg maze metadata pagecurl rcm sel2path sgi twain winicon winsnap xjt
+SEPARATE = FractalExplorer Lighting MapObject bmp faxg3 fits flame gfig gflare gfli gimpressionist ifscompose imagemap jpeg maze metadata pagecurl rcm sel2path sgi twain winicon winsnap xjt print help helpbrowser
 
 # These are unofficial, ie not in the CVS. To build these, you should
 # get tml's source snapshot and copy this makefile to the
@@ -130,11 +130,11 @@ separate-plugins-clean :
 
 
 sub-separate-plugins :
-	for %d in ($(SEPARATE)) do nmake -nologo -f makefile.msc sub-one-separate DIR=%d TARGET=$(TARGET)
 # We must handle script-fu separately because of the dash, sigh
 	@cd script-fu
 	@nmake -nologo -f ..\makefile.msc GIMPTOP=..\.. PLUGIN=script-fu EXTRA_script_fu=1 $(TARGET)
 	@cd ..
+	for %d in ($(SEPARATE)) do nmake -nologo -f makefile.msc sub-one-separate DIR=%d TARGET=$(TARGET)
 
 
 sub-one-separate :
@@ -266,8 +266,7 @@ OBJECTS = \
 !IFDEF EXTRA_faxg3
 OBJECTS = \
 	faxg3.obj \
-	g3.obj	\
-	run_tbl.obj
+	g3.obj
 !ENDIF
 
 !IFDEF EXTRA_fits
@@ -306,8 +305,7 @@ STOCK_VARS = \
 	stock_spiral images/stock-spiral.png	\
 	stock_star images/stock-star.png		\
 	stock_select_object images/stock-select-object.png \
-	stock_show_all images/stock-show-all.png \
-	stock_logo images/stock-logo.png
+	stock_show_all images/stock-show-all.png
 
 STOCK_IMAGES = \
 	images/stock-bezier.png	\
@@ -357,26 +355,20 @@ OBJECTS = \
 
 !IFDEF EXTRA_imagemap
 STOCK_VARS = \
-        stock_arrow             images/stock-arrow.png \
         stock_circle            images/stock-circle.png        \
         stock_coord             images/stock-coord.png \
         stock_dimension         images/stock-dimension.png     \
         stock_java              images/stock-java.png  \
-        stock_link              images/stock-link.png  \
-        stock_map_info          images/stock-map-info.png      \
         stock_polygon           images/stock-polygon.png       \
         stock_rectangle         images/stock-rectangle.png     \
         stock_to_back           images/stock-to-back.png       \
         stock_to_front          images/stock-to-front.png      \
 
 STOCK_IMAGES = \
-        images/stock-arrow.png \
         images/stock-circle.png        \
         images/stock-coord.png \
         images/stock-dimension.png     \
         images/stock-java.png  \
-        images/stock-link.png  \
-        images/stock-map-info.png      \
         images/stock-polygon.png       \
         images/stock-rectangle.png     \
         images/stock-to-back.png       \
@@ -543,10 +535,10 @@ EXTRALIBS = $(PNG_LIBS)
 !IFDEF EXTRA_print
 OBJECTS = \
 	print.obj \
-	print-escp2.obj \
-	print-pcl.obj \
-	print-ps.obj \
-	print-util.obj
+	print-draw-page.obj \
+	print-page-layout.obj \
+	print-settings.obj
+EXTRALIBS = $(CAIRO_LIBS)
 !ENDIF
 
 !IFDEF EXTRA_gnomeprint
@@ -599,7 +591,7 @@ OBJECTS = \
 
 EXTRALIBS = tinyscheme\tinyscheme.lib re\re.lib ftx\ftx.lib kernel32.lib wsock32.lib
 EXTRACFLAGS = -DREGEX_MALLOC -DUSE_INTERFACE
-HAVE_RESOURCE = YES
+#HAVE_RESOURCE = YES
 !ENDIF
 
 !IFDEF EXTRA_sel2path
@@ -641,11 +633,6 @@ OBJECTS = \
 
 !IFDEF EXTRA_gimpressionist
 
-gimpressionist.c: logo-pixbuf.h
-
-logo-pixbuf.h: logo.png
-	gdk-pixbuf-csource --rle --name=logo_data logo.png > $(@F)
-
 EXTRALIBS = $(GTK2_LIBS)
 
 OBJECTS = \
@@ -671,8 +658,10 @@ OBJECTS = \
 
 !IFDEF EXTRA_help
 OBJECTS = \
-	locales.obj \
-	domain.obj \
+	gimphelp.obj \
+	gimphelpdomain.obj \
+	gimphelpitem.obj \
+	gimphelplocale.obj \
 	help.obj
 TEST_OBJECTS = \
 	gimp-help-lookup.obj

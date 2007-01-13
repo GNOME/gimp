@@ -31,10 +31,10 @@ OBJECTS = \
 	buffers-commands.obj \
 	channels-actions.obj \
 	channels-commands.obj \
-	colormap-editor-actions.obj \
-	colormap-editor-commands.obj \
 	context-actions.obj \
 	context-commands.obj \
+	colormap-actions.obj \
+	colormap-commands.obj \
 	cursor-info-actions.obj \
 	cursor-info-commands.obj \
 	data-commands.obj \
@@ -80,8 +80,8 @@ OBJECTS = \
 	plug-in-commands.obj \
 	quick-mask-actions.obj \
 	quick-mask-commands.obj \
-	sample-point-editor-actions.obj \
-	sample-point-editor-commands.obj \
+	sample-points-actions.obj \
+	sample-points-commands.obj \
 	select-actions.obj \
 	select-commands.obj \
 	templates-actions.obj \

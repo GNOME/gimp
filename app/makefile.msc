@@ -148,15 +148,15 @@ gimp-core-$(PKG_VER).dll : $(GIMP_CORE_OBJECTS) gimpcore.def
 $(PACKAGE)-$(PKG_VER).dll : $(PKG_LINK) $(OBJECTS) $(PACKAGE).def
 	$(CC) $(CFLAGS) -LD -Fe$(PACKAGE)-$(PKG_VER).dll $(OBJECTS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:$(PACKAGE).def
 
-gimp-console.exe : $(OBJECTS) app_procs_console.obj $(PACKAGE).def $(PACKAGE).res $(PKG_LINK)
+gimp-console.exe : $(OBJECTS) app_procs_console.obj $(PACKAGE).res $(PKG_LINK)
 	$(CC) $(CFLAGS) -Fegimp-console.exe $(PACKAGE).res app_procs_console.obj $(OBJECTS) $(PKG_LINK) \
 	gimp-core-$(PKG_VER).lib \
-	user32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS) /def:$(PACKAGE).def
+	user32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS)
 
-$(PACKAGE).exe : $(OBJECTS) app_procs.obj $(PACKAGE).def $(PACKAGE).res $(PKG_LINK)
+$(PACKAGE).exe : $(OBJECTS) app_procs.obj $(PACKAGE).res $(PKG_LINK)
 	$(CC) $(CFLAGS) -Fe$(PACKAGE).exe $(PACKAGE).res app_procs.obj $(OBJECTS) \
 	gimp-core-$(PKG_VER).lib \
-	$(PKG_LINK) user32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS) /def:$(PACKAGE).def
+	$(PKG_LINK) user32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS)
 
 .c.obj :
 	$(CC) $(CFLAGS) -GD -c $(PKG_CFLAGS) $<

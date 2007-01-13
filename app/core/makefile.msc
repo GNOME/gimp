@@ -148,6 +148,8 @@ OBJECTS = \
 	gimptemplate.obj \
 	gimptoolinfo.obj \
 	gimptooloptions.obj \
+	gimptoolpresets.obj \
+	gimp-transform-resize.obj \
 	gimpundo.obj \
 	gimpundostack.obj \
 	gimpunit.obj \

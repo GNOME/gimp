@@ -70,6 +70,7 @@ OBJECTS = \
 	gimppreviewarea.obj \
 	gimppreview.obj \
 	gimppropwidgets.obj \
+	gimpratioentry.obj \
 	gimpscrolledpreview.obj \
 	gimpquerybox.obj \
 	gimpresolutionentry.obj \

@@ -29,7 +29,6 @@ EXPORTS
 	curves_init
 	curves_lut_func
 	file_open_image
-	file_open_layer
 	file_open_with_display
 	file_open_with_proc_and_display
 	file_save
@@ -574,11 +573,11 @@ EXPORTS
 	gimp_tool_info_get_type
 	gimp_tool_info_new
 	gimp_tool_info_set_standard
-	gimp_tool_options_build_filename
 	gimp_tool_options_deserialize
 	gimp_tool_options_get_type
 	gimp_tool_options_reset
 	gimp_tool_options_serialize
+	gimp_tool_presets_new
 	gimp_transfer_mode_get_type
 	gimp_transform_direction_get_type
 	gimp_transform_matrix_perspective
@@ -725,10 +724,9 @@ gimp_viewable_get_size
 gimp_documents_save
 gimp_container_clear
 gimp_dash_pattern_free
-gimp_dash_pattern_from_preset
+gimp_dash_pattern_new_from_preset
 gimp_dash_pattern_copy
-gimp_dash_pattern_segments_set
-gimp_dash_pattern_from_segments
+gimp_dash_pattern_new_from_segments
 gimp_stroke_options_set_dash_pattern
 boundary_find
 boundary_sort
@@ -879,3 +877,20 @@ gimp_image_undo_get_fadeable
 gimp_message_severity_get_type
 gimp_progress_message
 plug_in_icc_profile_info
+
+file_open_layers
+gimp_brush_core_create_bound_segs
+gimp_image_add_layers
+gimp_palette_find_entry
+gimp_param_int32_get_type
+gimp_param_item_id_get_type
+gimp_param_string_get_type
+gimp_tool_options_create_folder
+gimp_tool_options_delete
+gimp_tool_presets_get_options
+gimp_tool_presets_load
+gimp_tool_presets_save
+plug_in_icc_profile_file_info
+
+gimp_dash_pattern_get_type
+gimp_dash_pattern_fill_segments

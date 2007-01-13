@@ -1,6 +1,7 @@
 CURSOR_LIST = \
 	cursor_bad		cursor-bad.png \
 	cursor_color_picker		cursor-color-picker.png \
+	cursor_move		cursor-move.png \
 	\
 	cursor_corner_top_left cursor-corner-top-left.png \
 	cursor_corner_top_right cursor-corner-top-right.png \

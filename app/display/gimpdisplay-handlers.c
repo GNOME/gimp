@@ -27,6 +27,8 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 
+#include "file/file-utils.h"
+
 #include "gimpdisplay.h"
 #include "gimpdisplay-handlers.h"
 

@@ -47,6 +47,7 @@ OBJECTS = \
 	gimpcolorframe.obj \
 	gimpcolormapeditor.obj \
 	gimpcolorpanel.obj \
+	gimpcolorselectorpalette.obj \
 	gimpcomponenteditor.obj \
 	gimpcontainerbox.obj \
 	gimpcontainercombobox.obj \
@@ -54,16 +55,16 @@ OBJECTS = \
 	gimpcontainerentry.obj \
 	gimpcontainergridview.obj \
 	gimpcontainerpopup.obj \
-	gimpcontainertreeview.obj \
 	gimpcontainertreeview-dnd.obj \
-	gimpcontainerview.obj \
+	gimpcontainertreeview.obj \
 	gimpcontainerview-utils.obj \
+	gimpcontainerview.obj \
 	gimpcontrollereditor.obj \
 	gimpcontrollerinfo.obj \
 	gimpcontrollerkeyboard.obj \
 	gimpcontrollerlist.obj \
-	gimpcontrollerwheel.obj \
 	gimpcontrollers.obj \
+	gimpcontrollerwheel.obj \
 	gimpcursor.obj \
 	gimpcursorview.obj \
 	gimpdasheditor.obj \
@@ -73,8 +74,8 @@ OBJECTS = \
 	gimpdevices.obj \
 	gimpdevicestatus.obj \
 	gimpdialogfactory.obj \
-	gimpdnd.obj \
 	gimpdnd-xds.obj \
+	gimpdnd.obj \
 	gimpdock.obj \
 	gimpdockable.obj \
 	gimpdockbook.obj \
@@ -90,8 +91,8 @@ OBJECTS = \
 	gimpfgbgview.obj \
 	gimpfiledialog.obj \
 	gimpfileprocview.obj \
-	gimpfontview.obj \
 	gimpfontselect.obj \
+	gimpfontview.obj \
 	gimpgradienteditor.obj \
 	gimpgradientselect.obj \
 	gimpgrideditor.obj \
@@ -101,6 +102,7 @@ OBJECTS = \
 	gimphistogramview.obj \
 	gimpimagedock.obj \
 	gimpimageeditor.obj \
+	gimpimageparasiteview.obj \
 	gimpimageprofileview.obj \
 	gimpimagepropview.obj \
 	gimpimageview.obj \
@@ -119,6 +121,7 @@ OBJECTS = \
 	gimppdbdialog.obj \
 	gimppixbuf.obj \
 	gimppluginaction.obj \
+	gimpprofilechooserdialog.obj \
 	gimpprogressbox.obj \
 	gimpprogressdialog.obj \
 	gimppropwidgets.obj \
@@ -134,38 +137,38 @@ OBJECTS = \
 	gimptemplateview.obj \
 	gimptexteditor.obj \
 	gimpthumbbox.obj \
-	gimptoolbox.obj \
-	gimptoolbox-dnd.obj \
 	gimptoolbox-color-area.obj \
+	gimptoolbox-dnd.obj \
 	gimptoolbox-image-area.obj \
 	gimptoolbox-indicator-area.obj \
+	gimptoolbox.obj \
 	gimptooldialog.obj \
 	gimptooloptionseditor.obj \
 	gimptoolview.obj \
 	gimpuimanager.obj \
-	gimpunitcombobox.obj \
 	gimpundoeditor.obj \
+	gimpunitcombobox.obj \
 	gimpunitstore.obj \
 	gimpvectorstreeview.obj \
- 	gimpview.obj \
- 	gimpview-popup.obj \
 	gimpviewablebox.obj \
 	gimpviewablebutton.obj \
 	gimpviewabledialog.obj \
-	gimpviewrenderer.obj \
 	gimpviewrenderer-frame.obj \
- 	gimpviewrenderer-utils.obj \
- 	gimpviewrendererbrush.obj \
+	gimpviewrenderer.obj \
 	gimpviewrendererbuffer.obj \
- 	gimpviewrendererdrawable.obj \
- 	gimpviewrenderergradient.obj \
-	gimpviewrendererpalette.obj \
 	gimpviewrendererimage.obj \
 	gimpviewrendererimagefile.obj \
 	gimpviewrendererlayer.obj \
+	gimpviewrendererpalette.obj \
 	gimpviewrenderervectors.obj \
 	gimpwidgets-constructors.obj \
 	gimpwidgets-utils.obj \
+ 	gimpview-popup.obj \
+ 	gimpview.obj \
+ 	gimpviewrenderer-utils.obj \
+ 	gimpviewrendererbrush.obj \
+ 	gimpviewrendererdrawable.obj \
+ 	gimpviewrenderergradient.obj \
 	gtkhwrapbox.obj \
 	gtkvwrapbox.obj \
 	gtkwrapbox.obj \
