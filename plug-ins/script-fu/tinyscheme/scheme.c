@@ -46,8 +46,6 @@
 
 #include "scheme-private.h"
 
-#define stricmp g_ascii_strcasecmp
-
 /* Used for documentation purposes, to signal functions in 'interface' */
 #define INTERFACE
 
@@ -76,6 +74,8 @@
 
 #include <string.h>
 #include <stdlib.h>
+#define stricmp g_ascii_strcasecmp
+
 
 #define min(a, b)  ((a <= b) ? a : b)
 
@@ -129,7 +129,7 @@ enum scheme_types {
 #define MARK         32768    /* 1000000000000000 */
 #define UNMARK       32767    /* 0111111111111111 */
 
-void (*ts_output_routine) (FILE *, char *, int);
+SCHEME_EXPORT void (*ts_output_routine) (FILE *, char *, int);
 
 static num num_add(num a, num b);
 static num num_mul(num a, num b);
@@ -2093,7 +2093,9 @@ static int eqv(pointer a, pointer b) {
 
 #if !defined(USE_ALIST_ENV) || !defined(USE_OBJECT_LIST)
 
+#ifdef __GNUC__
 #warning FIXME: Update hash_fn() to handle UTF-8 coded keys
+#endif
 static int hash_fn(const char *key, int table_size)
 {
   unsigned int hashed = 0;

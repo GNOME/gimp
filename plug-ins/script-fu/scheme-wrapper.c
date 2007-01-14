@@ -49,7 +49,7 @@
 
 static int   ts_console_mode;
 
-extern void *ts_output_routine;
+SCHEME_EXPORT void *ts_output_routine;
 
 #undef cons
 

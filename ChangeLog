@@ -1,3 +1,12 @@
+2007-01-14  Hans Breuer  <hans@breuer.org>
+
+        * plug-ins/script-fu/tinyscheme/scheme.[ch] : to make it compile with
+        msvc redefine stricmp after including <string.h> and protect gccism
+        #warning with #ifdef __GNUC__, also some more exports
+	* plug-ins/script-fu/scheme-wrapper.c : simple 'extern' does not work
+	to get variables across modules boundaries for msvc, use SCHEME_EXPORT
+	Together fixes bug #396268
+
 2007-01-13  Hans Breuer  <hans@breuer.org>
 
 	* **/makefile.msc app/gimpcore.def : updated

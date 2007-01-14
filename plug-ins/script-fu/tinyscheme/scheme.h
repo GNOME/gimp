@@ -144,7 +144,7 @@ pointer mk_foreign_func(scheme *sc, foreign_func f);
 void    putcharacter(scheme *sc, gunichar c);
 void    putstr(scheme *sc, const char *s);
 
-void set_safe_foreign (scheme *sc, pointer data);
+SCHEME_EXPORT void set_safe_foreign (scheme *sc, pointer data);
 
 #if USE_INTERFACE
 struct scheme_interface {
