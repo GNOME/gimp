@@ -38,9 +38,6 @@ struct _GimpPerspectiveClone
 {
   GimpClone    parent_instance;
 
-  gdouble      dest_x;       /* coords where the stroke starts */
-  gdouble      dest_y;
-
   gdouble      src_x_fv;     /* source coords in front_view perspective */
   gdouble      src_y_fv;
 
@@ -62,13 +59,15 @@ struct _GimpPerspectiveCloneClass
 void    gimp_perspective_clone_register   (Gimp                      *gimp,
                                            GimpPaintRegisterCallback  callback);
 
-GType   gimp_perspective_clone_get_type   (void) G_GNUC_CONST;
+GType   gimp_perspective_clone_get_type         (void) G_GNUC_CONST;
 
-void   gimp_perspective_clone_get_source_point  (GimpPerspectiveClone   *clone,
+void    gimp_perspective_clone_get_source_point (GimpPerspectiveClone   *clone,
                                                  gdouble                 x,
                                                  gdouble                 y,
                                                  gdouble                 *newx,
                                                  gdouble                 *newy);
+void    gimp_perspective_clone_get_matrix       (GimpPerspectiveClone    *clone,
+                                                 GimpMatrix3             *matrix);
 
 
 #endif  /*  __GIMP_PERSPECTIVE_CLONE_H__  */

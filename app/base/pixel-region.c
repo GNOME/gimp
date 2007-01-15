@@ -154,12 +154,15 @@ pixel_region_get_row (PixelRegion *PR,
 
   end = x + w;
 
-  bpp = tile_manager_bpp (PR->tiles);
+  bpp = PR->bytes;
   inc = subsample * bpp;
 
   if (subsample == 1)
     {
-      read_pixel_data (PR->tiles, x, y, end - 1, y, data, bpp);
+      if (PR->tiles)
+        read_pixel_data (PR->tiles, x, y, end - 1, y, data, PR->bytes);
+      else
+        memcpy (data, PR->data + x * bpp + y * PR->rowstride, w * bpp);
     }
   else
     {
@@ -192,10 +195,16 @@ pixel_region_set_row (PixelRegion  *PR,
                       gint          w,
                       const guchar *data)
 {
-  gint end = x + w;
-  gint bpp = tile_manager_bpp (PR->tiles);
+  if (PR->tiles)
+    {
+      gint end = x + w;
 
-  write_pixel_data (PR->tiles, x, y, end - 1, y, data, bpp);
+      write_pixel_data (PR->tiles, x, y, end - 1, y, data, PR->bytes);
+    }
+  else
+    {
+      memcpy (PR->data + x * PR->bytes + y * PR->rowstride, data, w * PR->bytes);
+    }
 }
 
 
@@ -216,7 +225,7 @@ pixel_region_get_col (PixelRegion *PR,
   gint    b;
 
   end = y + h;
-  bpp = tile_manager_bpp (PR->tiles);
+  bpp = PR->bytes;
 
   while (y < end)
     {
@@ -250,7 +259,7 @@ pixel_region_set_col (PixelRegion  *PR,
                       const guchar *data)
 {
   gint end = y + h;
-  gint bpp = tile_manager_bpp (PR->tiles);
+  gint bpp = PR->bytes;
 
   write_pixel_data (PR->tiles, x, y, x, end-1, data, bpp);
 }

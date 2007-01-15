@@ -1,3 +1,13 @@
+2007-01-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/pixel-region.c (pixel_region_set,get_row): add support
+	for non-tiled regions.
+
+	* app/paint/gimpperspectiveclone.[ch]: replace handmade
+	transformation code by a call to gimp_transform_region(). Fix
+	getting the original pixels for src_pickable != dest_drawable
+	(bug #394610). Various small fixes and cleanups.
+
 2007-01-15  Hans Breuer  <hans@breuer.org>
 
 	* plug-ins/makefile.msc : define YY_NO_UNISTD_H to compile

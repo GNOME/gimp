@@ -40,6 +40,7 @@
 #include "core/gimpimage.h"
 #include "core/gimppattern.h"
 #include "core/gimppickable.h"
+#include "core/gimp-transform-region.h"
 
 #include "gimpperspectiveclone.h"
 #include "gimpperspectivecloneoptions.h"
@@ -114,9 +115,6 @@ gimp_perspective_clone_class_init (GimpPerspectiveCloneClass *klass)
 static void
 gimp_perspective_clone_init (GimpPerspectiveClone *clone)
 {
-  clone->dest_x    = 0.0;    /* coords where the stroke starts */
-  clone->dest_y    = 0.0;
-
   clone->src_x_fv  = 0.0;    /* source coords in front_view perspective */
   clone->src_y_fv  = 0.0;
 
@@ -248,13 +246,10 @@ gimp_perspective_clone_paint (GimpPaintCore    *paint_core,
               source_core->offset_x = source_core->src_x - dest_x;
               source_core->offset_y = source_core->src_y - dest_y;
 
-              clone->dest_x = dest_x;       /* cooords where start the destination stroke */
-              clone->dest_y = dest_y;
-
               /* get destination coordinates in front view perspective */
               gimp_matrix3_transform_point (&clone->transform_inv,
-                                            clone->dest_x,
-                                            clone->dest_y,
+                                            dest_x,
+                                            dest_y,
                                             &clone->dest_x_fv,
                                             &clone->dest_y_fv);
 
@@ -295,18 +290,21 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   GimpSourceOptions    *options    = GIMP_SOURCE_OPTIONS (paint_options);
   GimpImage            *src_image;
   GimpImage            *image;
-  gint                  x1d, y1d, x2d, y2d;                      /* Coordinates of the destination area to paint */
-  gdouble               x1s, y1s, x2s, y2s, x3s, y3s, x4s, y4s;  /* Coordinates of the boundary box to copy pixels to the tempbuf and after apply perspective transform */
+  GimpImageType         src_type;
+  gint                  x1d, y1d, x2d, y2d;
+  gdouble               x1s, y1s, x2s, y2s, x3s, y3s, x4s, y4s;
   gint                  xmin, ymin, xmax, ymax;
   TileManager          *src_tiles;
-  guchar               *src_data;
-  guchar               *dest_data;
-  gint                  i, j;
-  TempBuf              *orig;
+  TileManager          *orig_tiles;
+  PixelRegion           origPR;
+  PixelRegion           destPR;
+  GimpMatrix3           matrix;
+  gint                  bytes;
 
   src_image = gimp_pickable_get_image (src_pickable);
   image     = gimp_item_get_image (GIMP_ITEM (drawable));
 
+  src_type  = gimp_pickable_get_image_type (src_pickable);
   src_tiles = gimp_pickable_get_tiles (src_pickable);
 
   /* Destination coordinates that will be painted */
@@ -338,117 +336,74 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
   if (!(xmax - xmin) || !(ymax - ymin))
     return FALSE;
 
-  /*  get the original image  */
-  if (options->sample_merged)
-    orig = gimp_paint_core_get_orig_proj (paint_core,
-                                          src_pickable,
-                                          xmin, ymin, xmax, ymax);
+  /*  If the source image is different from the destination,
+   *  then we should copy straight from the source image
+   *  to the canvas.
+   *  Otherwise, we need a call to get_orig_image to make sure
+   *  we get a copy of the unblemished (offset) image
+   */
+  if ((  options->sample_merged && (src_image                 != image)) ||
+      (! options->sample_merged && (source_core->src_drawable != drawable)))
+    {
+      pixel_region_init (&origPR, src_tiles,
+                         xmin, ymin, xmax - xmin, ymax - ymin, FALSE);
+    }
   else
-    orig = gimp_paint_core_get_orig_image (paint_core,
-                                           GIMP_DRAWABLE (src_pickable),
-                                           xmin, ymin, xmax, ymax);
+    {
+      TempBuf *orig;
 
-  /* note: orig is a TempBuf where are all the pixels that I need to copy */
-  /* copy from orig to temp_buf, this buffer has the size of the destination area */
+      /*  get the original image  */
+      if (options->sample_merged)
+        orig = gimp_paint_core_get_orig_proj (paint_core,
+                                              src_pickable,
+                                              xmin, ymin, xmax, ymax);
+      else
+        orig = gimp_paint_core_get_orig_image (paint_core,
+                                               GIMP_DRAWABLE (src_pickable),
+                                               xmin, ymin, xmax, ymax);
 
-  /* Also allocate memory for alpha channel */
+      pixel_region_init_temp_buf (&origPR, orig,
+                                  0, 0, xmax - xmin, ymax - ymin);
+    }
+
+  /*  copy the original image to a tile manager, adding alpha if needed  */
+
+  bytes = GIMP_IMAGE_TYPE_BYTES (GIMP_IMAGE_TYPE_WITH_ALPHA (src_type));
+
+  orig_tiles = tile_manager_new (xmax - xmin, ymax - ymin, bytes);
+
+  tile_manager_set_offsets (orig_tiles, xmin, ymin);
+
+  pixel_region_init (&destPR, orig_tiles,
+                     0, 0, xmax - xmin, ymax - ymin,
+                     TRUE);
+
+  if (bytes > origPR.bytes)
+    add_alpha_region (&origPR, &destPR);
+  else
+    copy_region (&origPR, &destPR);
+
   clone->src_area = temp_buf_resize (clone->src_area,
-                                     orig->bytes + 1, /* FIXME */
+                                     tile_manager_bpp (orig_tiles),
                                      0, 0,
                                      x2d - x1d, y2d - y1d);
 
-  src_data  = temp_buf_data (orig);
-  dest_data = temp_buf_data (clone->src_area);
+  pixel_region_init_temp_buf (&destPR, clone->src_area,
+                              0, 0,
+                              x2d - x1d, y2d - y1d);
 
-  for (i = x1d; i < x2d; i++)
-    {
-      for (j = y1d; j < y2d; j++)
-        {
-          guchar  *dest_pixel;
-          gdouble  temp_x, temp_y;
-          gint     itemp_x, itemp_y;
+  gimp_perspective_clone_get_matrix (clone, &matrix);
 
-          gimp_perspective_clone_get_source_point (clone,
-                                                   i, j,
-                                                   &temp_x, &temp_y);
+  gimp_transform_region (src_pickable,
+                         GIMP_CONTEXT (paint_options),
+                         orig_tiles,
+                         &destPR,
+                         x1d, y1d, x2d, y2d,
+                         &matrix,
+                         GIMP_INTERPOLATION_LINEAR,
+                         FALSE, 0, NULL);
 
-          itemp_x = (gint) temp_x;
-          itemp_y = (gint) temp_y;
-
-          /* Points to the dest pixel in clone->src_area */
-          dest_pixel = (dest_data +
-                        clone->src_area->bytes *
-                        ((j - y1d) * clone->src_area->width +
-                         (i - x1d)));
-
-          /* Check if the source pixel is inside the image */
-          if (itemp_x > 0 && itemp_x < tile_manager_width  (src_tiles) - 1 &&
-              itemp_y > 0 && itemp_y < tile_manager_height (src_tiles) - 1)
-            {
-              guchar  *src_pixel;
-              guchar  *color1 = g_alloca (clone->src_area->bytes - 1);
-              guchar  *color2 = g_alloca (clone->src_area->bytes - 1);
-              guchar  *color3 = g_alloca (clone->src_area->bytes - 1);
-              guchar  *color4 = g_alloca (clone->src_area->bytes - 1);
-              gdouble  dx, dy;
-              gint     k;
-
-              dx = temp_x - itemp_x;
-              dy = temp_y - itemp_y;
-
-              /* linear interpolation
-               *   (i,j)     * (1-dx)*(1-dy) +
-               *   (i+1,j)   * (dx*(1-dy))   +
-               *   (i,j+1)   * ((1-dx)*dy)   +
-               *   (i+1,j+1) * (dx*dy)
-               */
-              src_pixel = (src_data +
-                           orig->bytes *
-                           ((itemp_y - ymin) * orig->width +
-                            (itemp_x - xmin)));
-              for (k = 0 ; k < clone->src_area->bytes - 1; k++)
-                color1[k] = *src_pixel++;
-
-              src_pixel = (src_data +
-                           orig->bytes *
-                           ((itemp_y     - ymin) * orig->width +
-                            (itemp_x + 1 - xmin)));
-              for (k = 0 ; k < clone->src_area->bytes - 1; k++)
-                color2[k] = *src_pixel++;
-
-              src_pixel = (src_data +
-                           orig->bytes *
-                           ((itemp_y + 1 - ymin) * orig->width +
-                            (itemp_x     - xmin)));
-              for (k = 0 ; k < clone->src_area->bytes - 1; k++)
-                color3[k] = *src_pixel++;
-
-              src_pixel = (src_data +
-                           orig->bytes *
-                           ((itemp_y + 1 - ymin) * orig->width +
-                            (itemp_x + 1 - xmin)));
-              for (k = 0 ; k < clone->src_area->bytes - 1; k++)
-                color4[k] = *src_pixel++;
-
-              /* copy the pixel interpolated to clone->src_area */
-              for (k = 0 ; k < clone->src_area->bytes - 1; k++)
-                *dest_pixel++ = (color1[k] * ((1-dx) * (1-dy)) +
-                                 color2[k] * (dx     * (1-dy)) +
-                                 color3[k] * ((1-dx) * dy)     +
-                                 color4[k] * (dx     * dy));
-
-              /* FIXME: If the pixel is inside the image set the alpha
-               * channel visible
-               */
-              *dest_pixel = 255;
-            }
-          else
-            {
-              /* Pixels with source out-of-image are transparent */
-              dest_pixel[clone->src_area->bytes - 1] = 0;
-            }
-        }
-    }
+  tile_manager_unref (orig_tiles);
 
   pixel_region_init_temp_buf (srcPR, clone->src_area,
                               0, 0, x2d - x1d, y2d - y1d);
@@ -457,29 +412,49 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
 }
 
 void
-gimp_perspective_clone_get_source_point (GimpPerspectiveClone *perspective_clone,
+gimp_perspective_clone_get_source_point (GimpPerspectiveClone *clone,
                                          gdouble               x,
                                          gdouble               y,
                                          gdouble              *newx,
                                          gdouble              *newy)
 {
   gdouble temp_x, temp_y;
-  gdouble offset_x_fv, offset_y_fv;
 
-  gimp_matrix3_transform_point (&perspective_clone->transform_inv,
+  gimp_matrix3_transform_point (&clone->transform_inv,
                                 x, y, &temp_x, &temp_y);
 
+#if 0
   /* Get the offset of each pixel in destination area from the
    * destination pixel in front view perspective
    */
-  offset_x_fv = temp_x - perspective_clone->dest_x_fv;
-  offset_y_fv = temp_y - perspective_clone->dest_y_fv;
+  offset_x_fv = temp_x - clone->dest_x_fv;
+  offset_y_fv = temp_y - clone->dest_y_fv;
 
   /* Get the source pixel in front view perspective */
-  temp_x = offset_x_fv + perspective_clone->src_x_fv;
-  temp_y = offset_y_fv + perspective_clone->src_y_fv;
+  temp_x = offset_x_fv + clone->src_x_fv;
+  temp_y = offset_y_fv + clone->src_y_fv;
+#endif
+
+  temp_x += clone->src_x_fv - clone->dest_x_fv;
+  temp_y += clone->src_y_fv - clone->dest_y_fv;
 
   /* Convert the source pixel to perspective view */
-  gimp_matrix3_transform_point (&perspective_clone->transform,
+  gimp_matrix3_transform_point (&clone->transform,
                                 temp_x, temp_y, newx, newy);
+}
+
+void
+gimp_perspective_clone_get_matrix (GimpPerspectiveClone *clone,
+                                   GimpMatrix3          *matrix)
+{
+  GimpMatrix3 temp;
+
+  gimp_matrix3_identity (&temp);
+  gimp_matrix3_translate (&temp,
+                          clone->dest_x_fv - clone->src_x_fv,
+                          clone->dest_y_fv - clone->src_y_fv);
+
+  *matrix = clone->transform_inv;
+  gimp_matrix3_mult (&temp, matrix);
+  gimp_matrix3_mult (&clone->transform, matrix);
 }
