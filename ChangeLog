@@ -1,5 +1,15 @@
 2007-01-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/imagemap/imap_csim_lex.c
+	* plug-ins/imagemap/imap_ncsa_parse.[ch]
+	* plug-ins/imagemap/imap_ncsa_lex.c
+	* plug-ins/imagemap/imap_cern_lex.c
+	* plug-ins/imagemap/imap_csim_parse.[ch]
+	* plug-ins/imagemap/imap_cern_parse.[ch]: regenerated using GNU
+	Bison 2.3.  Should fix bug #396261.
+
+2007-01-15  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-close.c: use ngettext() for the
 	close dialog. Fixes bug #396513.
 
