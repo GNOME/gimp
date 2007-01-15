@@ -445,7 +445,7 @@ OBJECTS = \
 	imap_table.obj \
 	imap_taglist.obj
 # not changing the source which is lexed
-EXTRACFLAGS = -FIstring.h -FIstdlib.h
+EXTRACFLAGS = -FIstring.h -FIstdlib.h -DYY_NO_UNISTD_H
 !ENDIF
 
 !IFDEF EXTRA_iwarp
