@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-11 12:46+0100\n"
-"PO-Revision-Date: 2007-01-11 12:49+0100\n"
+"POT-Creation-Date: 2007-01-15 11:56+0100\n"
+"PO-Revision-Date: 2007-01-15 12:03+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -230,7 +230,7 @@ msgstr "Barevná funkce"
 
 #. Redmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:991
-#: ../plug-ins/common/channel_mixer.c:539 ../plug-ins/common/decompose.c:166
+#: ../plug-ins/common/channel_mixer.c:539 ../plug-ins/common/decompose.c:174
 msgid "Red"
 msgstr "Červená"
 
@@ -295,13 +295,13 @@ msgstr "Povolením této volby budou vyšší barevné hodnoty prohozeny za niž
 
 #. Greenmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1032
-#: ../plug-ins/common/channel_mixer.c:544 ../plug-ins/common/decompose.c:167
+#: ../plug-ins/common/channel_mixer.c:544 ../plug-ins/common/decompose.c:175
 msgid "Green"
 msgstr "Zelená"
 
 #. Bluemode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1073
-#: ../plug-ins/common/channel_mixer.c:549 ../plug-ins/common/decompose.c:168
+#: ../plug-ins/common/channel_mixer.c:549 ../plug-ins/common/decompose.c:176
 msgid "Blue"
 msgstr "Modrá"
 
@@ -1181,7 +1181,7 @@ msgstr "Nepodporovaná nebo neplatná bitová hloubka"
 #.
 #: ../plug-ins/bmp/bmpread.c:546 ../plug-ins/common/CEL.c:349
 #: ../plug-ins/common/CEL.c:352 ../plug-ins/common/blinds.c:277
-#: ../plug-ins/common/compose.c:911 ../plug-ins/common/decompose.c:686
+#: ../plug-ins/common/compose.c:924 ../plug-ins/common/decompose.c:703
 #: ../plug-ins/common/dicom.c:486 ../plug-ins/common/film.c:746
 #: ../plug-ins/common/gifload.c:879 ../plug-ins/common/pcx.c:339
 #: ../plug-ins/common/pcx.c:345 ../plug-ins/common/pix.c:368
@@ -1572,19 +1572,19 @@ msgid "Randoms from seed (shared)"
 msgstr "Náhodná čísla z hnízda (sdílená)"
 
 #: ../plug-ins/common/CML_explorer.c:300 ../plug-ins/common/CML_explorer.c:308
-#: ../plug-ins/common/decompose.c:180
+#: ../plug-ins/common/decompose.c:188
 #: ../plug-ins/gimpressionist/orientation.c:162
 #: ../plug-ins/gimpressionist/size.c:165
 msgid "Hue"
 msgstr "Odstín"
 
 #: ../plug-ins/common/CML_explorer.c:301 ../plug-ins/common/CML_explorer.c:309
-#: ../plug-ins/common/decompose.c:181
+#: ../plug-ins/common/decompose.c:189
 msgid "Saturation"
 msgstr "Sytost"
 
 #: ../plug-ins/common/CML_explorer.c:302 ../plug-ins/common/CML_explorer.c:310
-#: ../plug-ins/common/decompose.c:182
+#: ../plug-ins/common/decompose.c:190
 #: ../plug-ins/gimpressionist/orientation.c:138
 #: ../plug-ins/gimpressionist/size.c:141 ../plug-ins/metadata/interface.c:142
 msgid "Value"
@@ -2367,24 +2367,24 @@ msgstr "Mixér kanálů"
 msgid "O_utput channel:"
 msgstr "_Výstupní kanál:"
 
-#: ../plug-ins/common/channel_mixer.c:584 ../plug-ins/common/compose.c:185
-#: ../plug-ins/common/compose.c:196 ../plug-ins/common/diffraction.c:501
+#: ../plug-ins/common/channel_mixer.c:584 ../plug-ins/common/compose.c:190
+#: ../plug-ins/common/compose.c:201 ../plug-ins/common/diffraction.c:501
 #: ../plug-ins/common/diffraction.c:539 ../plug-ins/common/diffraction.c:577
 #: ../plug-ins/common/exchange.c:400 ../plug-ins/common/noisify.c:530
 #: ../plug-ins/common/noisify.c:537
 msgid "_Red:"
 msgstr "Če_rvená:"
 
-#: ../plug-ins/common/channel_mixer.c:602 ../plug-ins/common/compose.c:186
-#: ../plug-ins/common/compose.c:197 ../plug-ins/common/diffraction.c:510
+#: ../plug-ins/common/channel_mixer.c:602 ../plug-ins/common/compose.c:191
+#: ../plug-ins/common/compose.c:202 ../plug-ins/common/diffraction.c:510
 #: ../plug-ins/common/diffraction.c:548 ../plug-ins/common/diffraction.c:586
 #: ../plug-ins/common/exchange.c:460 ../plug-ins/common/noisify.c:531
 #: ../plug-ins/common/noisify.c:538
 msgid "_Green:"
 msgstr "_Zelená:"
 
-#: ../plug-ins/common/channel_mixer.c:621 ../plug-ins/common/compose.c:187
-#: ../plug-ins/common/compose.c:198 ../plug-ins/common/diffraction.c:519
+#: ../plug-ins/common/channel_mixer.c:621 ../plug-ins/common/compose.c:192
+#: ../plug-ins/common/compose.c:203 ../plug-ins/common/diffraction.c:519
 #: ../plug-ins/common/diffraction.c:557 ../plug-ins/common/diffraction.c:595
 #: ../plug-ins/common/exchange.c:521 ../plug-ins/common/noisify.c:532
 #: ../plug-ins/common/noisify.c:539
@@ -2562,131 +2562,140 @@ msgstr "Barevná pipeta barvy do alfy"
 msgid "to alpha"
 msgstr "do alfy"
 
-#: ../plug-ins/common/compose.c:184 ../plug-ins/common/decompose.c:162
+#: ../plug-ins/common/compose.c:189 ../plug-ins/common/decompose.c:170
 #: ../plug-ins/common/raw.c:1002
 msgid "RGB"
 msgstr "RGB"
 
-#: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:170
+#: ../plug-ins/common/compose.c:200 ../plug-ins/common/decompose.c:178
 msgid "RGBA"
 msgstr "RGBA"
 
-#: ../plug-ins/common/compose.c:199 ../plug-ins/common/noisify.c:525
+#: ../plug-ins/common/compose.c:204 ../plug-ins/common/noisify.c:525
 #: ../plug-ins/common/noisify.c:540
 msgid "_Alpha:"
 msgstr "_Alfa:"
 
-#: ../plug-ins/common/compose.c:206 ../plug-ins/common/decompose.c:176
+#: ../plug-ins/common/compose.c:211 ../plug-ins/common/decompose.c:184
 msgid "HSV"
 msgstr "HSV"
 
-#: ../plug-ins/common/compose.c:207
+#: ../plug-ins/common/compose.c:212 ../plug-ins/common/compose.c:220
 msgid "_Hue:"
 msgstr "_Odstín:"
 
-#: ../plug-ins/common/compose.c:208 ../plug-ins/common/scatter_hsv.c:413
+#: ../plug-ins/common/compose.c:213 ../plug-ins/common/compose.c:221
+#: ../plug-ins/common/scatter_hsv.c:413
 msgid "_Saturation:"
 msgstr "_Sytost:"
 
-#: ../plug-ins/common/compose.c:209 ../plug-ins/common/scatter_hsv.c:425
+#: ../plug-ins/common/compose.c:214 ../plug-ins/common/scatter_hsv.c:425
 msgid "_Value:"
 msgstr "_Jas:"
 
-#: ../plug-ins/common/compose.c:214 ../plug-ins/common/decompose.c:185
+#: ../plug-ins/common/compose.c:219 ../plug-ins/common/decompose.c:193
+msgid "HSL"
+msgstr "HSL"
+
+#: ../plug-ins/common/compose.c:222
+msgid "_Lightness:"
+msgstr "Svět_lost:"
+
+#: ../plug-ins/common/compose.c:227 ../plug-ins/common/decompose.c:202
 msgid "CMY"
 msgstr "CMY"
 
-#: ../plug-ins/common/compose.c:215 ../plug-ins/common/compose.c:223
+#: ../plug-ins/common/compose.c:228 ../plug-ins/common/compose.c:236
 msgid "_Cyan:"
 msgstr "_Azurová:"
 
-#: ../plug-ins/common/compose.c:216 ../plug-ins/common/compose.c:224
+#: ../plug-ins/common/compose.c:229 ../plug-ins/common/compose.c:237
 msgid "_Magenta:"
 msgstr "_Purpurová:"
 
-#: ../plug-ins/common/compose.c:217 ../plug-ins/common/compose.c:225
+#: ../plug-ins/common/compose.c:230 ../plug-ins/common/compose.c:238
 msgid "_Yellow:"
 msgstr "Ž_lutá:"
 
-#: ../plug-ins/common/compose.c:222 ../plug-ins/common/decompose.c:194
+#: ../plug-ins/common/compose.c:235 ../plug-ins/common/decompose.c:211
 msgid "CMYK"
 msgstr "CMYK"
 
-#: ../plug-ins/common/compose.c:226
+#: ../plug-ins/common/compose.c:239
 msgid "_Black:"
 msgstr "Če_rná:"
 
-#: ../plug-ins/common/compose.c:230 ../plug-ins/common/decompose.c:207
+#: ../plug-ins/common/compose.c:243 ../plug-ins/common/decompose.c:224
 msgid "LAB"
 msgstr "LAB"
 
-#: ../plug-ins/common/compose.c:239
+#: ../plug-ins/common/compose.c:252
 msgid "_Luma y470:"
 msgstr "Luma _y470:"
 
-#: ../plug-ins/common/compose.c:240
+#: ../plug-ins/common/compose.c:253
 msgid "_Blueness cb470:"
 msgstr "_Modrost cb470:"
 
-#: ../plug-ins/common/compose.c:241
+#: ../plug-ins/common/compose.c:254
 msgid "_Redness cr470:"
 msgstr "Červenost _cr470:"
 
-#: ../plug-ins/common/compose.c:247
+#: ../plug-ins/common/compose.c:260
 msgid "_Luma y709:"
 msgstr "Luma _y709:"
 
-#: ../plug-ins/common/compose.c:248
+#: ../plug-ins/common/compose.c:261
 msgid "_Blueness cb709:"
 msgstr "Modrost _cb709:"
 
-#: ../plug-ins/common/compose.c:249
+#: ../plug-ins/common/compose.c:262
 msgid "_Redness cr709:"
 msgstr "Červenost _cr709:"
 
-#: ../plug-ins/common/compose.c:255
+#: ../plug-ins/common/compose.c:268
 msgid "_Luma y470f:"
 msgstr "Luma _y470f:"
 
-#: ../plug-ins/common/compose.c:256
+#: ../plug-ins/common/compose.c:269
 msgid "_Blueness cb470f:"
 msgstr "Modrost _cb470f:"
 
-#: ../plug-ins/common/compose.c:257
+#: ../plug-ins/common/compose.c:270
 msgid "_Redness cr470f:"
 msgstr "Červenost _cr470f:"
 
-#: ../plug-ins/common/compose.c:263
+#: ../plug-ins/common/compose.c:276
 msgid "_Luma y709f:"
 msgstr "Luma _y709f:"
 
-#: ../plug-ins/common/compose.c:264
+#: ../plug-ins/common/compose.c:277
 msgid "_Blueness cb709f:"
 msgstr "Modrost _cb709f:"
 
-#: ../plug-ins/common/compose.c:265
+#: ../plug-ins/common/compose.c:278
 msgid "_Redness cr709f:"
 msgstr "Červenost _cr709f:"
 
-#: ../plug-ins/common/compose.c:380
+#: ../plug-ins/common/compose.c:393
 msgid "Create an image using multiple gray images as color channels"
 msgstr ""
 "Vytvořit obrázek použitím několika obrázků v odstínech šedi jako barevných "
 "kanálů"
 
-#: ../plug-ins/common/compose.c:386
+#: ../plug-ins/common/compose.c:399
 msgid "C_ompose..."
 msgstr "_Komponovat..."
 
-#: ../plug-ins/common/compose.c:410
+#: ../plug-ins/common/compose.c:423
 msgid "Recompose an image that was previously decomposed"
 msgstr "Rekomponovat dříve dekomponovaný obrázek"
 
-#: ../plug-ins/common/compose.c:418
+#: ../plug-ins/common/compose.c:431
 msgid "R_ecompose"
 msgstr "_Rekomponovat"
 
-#: ../plug-ins/common/compose.c:462
+#: ../plug-ins/common/compose.c:475
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
@@ -2694,68 +2703,68 @@ msgstr ""
 "'Rekomponovat' můžete spustit, jen pokud byl aktivní obrázek původně "
 "vytvořen pomocí 'Dekomponovat'."
 
-#: ../plug-ins/common/compose.c:486
+#: ../plug-ins/common/compose.c:499
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr "Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
 
-#: ../plug-ins/common/compose.c:519
+#: ../plug-ins/common/compose.c:532
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr "Nemohu získat vrstvy pro obrázek %d"
 
-#: ../plug-ins/common/compose.c:592
+#: ../plug-ins/common/compose.c:605
 msgid "Composing"
 msgstr "Komponuji"
 
-#: ../plug-ins/common/compose.c:677 ../plug-ins/common/compose.c:1673
+#: ../plug-ins/common/compose.c:690 ../plug-ins/common/compose.c:1724
 msgid "At least one image is needed to compose"
 msgstr "Ke komponování je třeba alespoň jeden obrázek"
 
-#: ../plug-ins/common/compose.c:688 ../plug-ins/common/compose.c:701
+#: ../plug-ins/common/compose.c:701 ../plug-ins/common/compose.c:714
 #, c-format
 msgid "Specified layer %d not found"
 msgstr "Zadaná vrstva %d nenalezena"
 
-#: ../plug-ins/common/compose.c:708
+#: ../plug-ins/common/compose.c:721
 msgid "Drawables have different size"
 msgstr "Obrazovky mají různé velikosti"
 
-#: ../plug-ins/common/compose.c:733
+#: ../plug-ins/common/compose.c:746
 msgid "Images have different size"
 msgstr "Obrázky mají různé velikosti"
 
-#: ../plug-ins/common/compose.c:750
+#: ../plug-ins/common/compose.c:763
 msgid "Error in getting layer IDs"
 msgstr "Chyba při získávání ID vrstev"
 
-#: ../plug-ins/common/compose.c:771
+#: ../plug-ins/common/compose.c:784
 #, c-format
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "Obrázek není v šedích (bpp=%d)"
 
-#: ../plug-ins/common/compose.c:798
+#: ../plug-ins/common/compose.c:811
 msgid "Unable to recompose, source layer not found"
 msgstr "Nemohu rekomponovat, zdrojová vrstva nenalezena"
 
-#: ../plug-ins/common/compose.c:1426
+#: ../plug-ins/common/compose.c:1477
 msgid "Compose"
 msgstr "Kompozice"
 
 #. Compose type combo
-#: ../plug-ins/common/compose.c:1453
+#: ../plug-ins/common/compose.c:1504
 msgid "Compose Channels"
 msgstr "Kompozice kanálů"
 
-#: ../plug-ins/common/compose.c:1463 ../plug-ins/common/decompose.c:1378
+#: ../plug-ins/common/compose.c:1514 ../plug-ins/common/decompose.c:1495
 msgid "Color _model:"
 msgstr "Barevný _model:"
 
 #. Channel representation table
-#: ../plug-ins/common/compose.c:1495
+#: ../plug-ins/common/compose.c:1546
 msgid "Channel Representations"
 msgstr "Reprezentace kanálů"
 
-#: ../plug-ins/common/compose.c:1558
+#: ../plug-ins/common/compose.c:1609
 msgid "Mask value"
 msgstr "Hodnota masky"
 
@@ -2800,7 +2809,8 @@ msgid "E_xtend"
 msgstr "Rozšíři_t"
 
 #: ../plug-ins/common/convmatrix.c:111 ../plug-ins/common/displace.c:475
-#: ../plug-ins/common/edge.c:700 ../plug-ins/common/ripple.c:563
+#: ../plug-ins/common/edge.c:700 ../plug-ins/common/fractaltrace.c:732
+#: ../plug-ins/common/ripple.c:563
 msgid "_Wrap"
 msgstr "_Přes"
 
@@ -3082,170 +3092,194 @@ msgstr "Načíst body křivky ze souboru"
 msgid "Save Curve Points to File"
 msgstr "Uložit body křivky do souboru"
 
-#: ../plug-ins/common/decompose.c:162 ../plug-ins/common/decompose.c:166
-#: ../plug-ins/common/decompose.c:170
+#: ../plug-ins/common/decompose.c:170 ../plug-ins/common/decompose.c:174
+#: ../plug-ins/common/decompose.c:178
 msgid "red"
 msgstr "červená"
 
-#: ../plug-ins/common/decompose.c:163 ../plug-ins/common/decompose.c:167
-#: ../plug-ins/common/decompose.c:171
+#: ../plug-ins/common/decompose.c:171 ../plug-ins/common/decompose.c:175
+#: ../plug-ins/common/decompose.c:179
 msgid "green"
 msgstr "zelená"
 
-#: ../plug-ins/common/decompose.c:164 ../plug-ins/common/decompose.c:168
-#: ../plug-ins/common/decompose.c:172
+#: ../plug-ins/common/decompose.c:172 ../plug-ins/common/decompose.c:176
+#: ../plug-ins/common/decompose.c:180
 msgid "blue"
 msgstr "modrá"
 
-#: ../plug-ins/common/decompose.c:173 ../plug-ins/common/decompose.c:204
+#: ../plug-ins/common/decompose.c:181 ../plug-ins/common/decompose.c:221
 msgid "alpha"
 msgstr "alfa"
 
-#: ../plug-ins/common/decompose.c:176 ../plug-ins/common/decompose.c:180
+#: ../plug-ins/common/decompose.c:184 ../plug-ins/common/decompose.c:188
 msgid "hue"
 msgstr "odstín"
 
-#: ../plug-ins/common/decompose.c:177 ../plug-ins/common/decompose.c:181
+#: ../plug-ins/common/decompose.c:185 ../plug-ins/common/decompose.c:189
 msgid "saturation"
 msgstr "sytost"
 
-#: ../plug-ins/common/decompose.c:178 ../plug-ins/common/decompose.c:182
+#: ../plug-ins/common/decompose.c:186 ../plug-ins/common/decompose.c:190
 msgid "value"
 msgstr "jas"
 
-#: ../plug-ins/common/decompose.c:185 ../plug-ins/common/decompose.c:189
+#: ../plug-ins/common/decompose.c:193 ../plug-ins/common/decompose.c:197
+msgid "hue_l"
+msgstr "odstín_l"
+
+#: ../plug-ins/common/decompose.c:194 ../plug-ins/common/decompose.c:198
+msgid "saturation_l"
+msgstr "sytost_l"
+
+#: ../plug-ins/common/decompose.c:195 ../plug-ins/common/decompose.c:199
+msgid "lightness"
+msgstr "světlost"
+
+#: ../plug-ins/common/decompose.c:197
+msgid "Hue (HSL)"
+msgstr "Odstín (HSL)"
+
+#: ../plug-ins/common/decompose.c:198
+msgid "Saturation (HSL)"
+msgstr "Sytost (HSL)"
+
+#: ../plug-ins/common/decompose.c:199
+msgid "Lightness"
+msgstr "Světlost"
+
+#: ../plug-ins/common/decompose.c:202 ../plug-ins/common/decompose.c:206
 msgid "cyan"
 msgstr "azurová"
 
-#: ../plug-ins/common/decompose.c:186 ../plug-ins/common/decompose.c:190
+#: ../plug-ins/common/decompose.c:203 ../plug-ins/common/decompose.c:207
 msgid "magenta"
 msgstr "purpurová"
 
-#: ../plug-ins/common/decompose.c:187 ../plug-ins/common/decompose.c:191
+#: ../plug-ins/common/decompose.c:204 ../plug-ins/common/decompose.c:208
 msgid "yellow"
 msgstr "žlutá"
 
-#: ../plug-ins/common/decompose.c:189
+#: ../plug-ins/common/decompose.c:206
 msgid "Cyan"
 msgstr "Azurová"
 
-#: ../plug-ins/common/decompose.c:190
+#: ../plug-ins/common/decompose.c:207
 msgid "Magenta"
 msgstr "Purpurová"
 
-#: ../plug-ins/common/decompose.c:191
+#: ../plug-ins/common/decompose.c:208
 msgid "Yellow"
 msgstr "Žlutá"
 
-#: ../plug-ins/common/decompose.c:194 ../plug-ins/common/decompose.c:199
+#: ../plug-ins/common/decompose.c:211 ../plug-ins/common/decompose.c:216
 msgid "cyan-k"
 msgstr "azurová-k"
 
-#: ../plug-ins/common/decompose.c:195 ../plug-ins/common/decompose.c:200
+#: ../plug-ins/common/decompose.c:212 ../plug-ins/common/decompose.c:217
 msgid "magenta-k"
 msgstr "purpurová-k"
 
-#: ../plug-ins/common/decompose.c:196 ../plug-ins/common/decompose.c:201
+#: ../plug-ins/common/decompose.c:213 ../plug-ins/common/decompose.c:218
 msgid "yellow-k"
 msgstr "žlutá-k"
 
-#: ../plug-ins/common/decompose.c:197
+#: ../plug-ins/common/decompose.c:214
 msgid "black"
 msgstr "černá"
 
-#: ../plug-ins/common/decompose.c:199
+#: ../plug-ins/common/decompose.c:216
 msgid "Cyan_K"
 msgstr "Azurová_K"
 
-#: ../plug-ins/common/decompose.c:200
+#: ../plug-ins/common/decompose.c:217
 msgid "Magenta_K"
 msgstr "Purpurová_K"
 
-#: ../plug-ins/common/decompose.c:201
+#: ../plug-ins/common/decompose.c:218
 msgid "Yellow_K"
 msgstr "Žlutá_K"
 
-#: ../plug-ins/common/decompose.c:204
+#: ../plug-ins/common/decompose.c:221
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../plug-ins/common/decompose.c:212
+#: ../plug-ins/common/decompose.c:229
 msgid "luma-y470"
 msgstr "luma-y470"
 
-#: ../plug-ins/common/decompose.c:213
+#: ../plug-ins/common/decompose.c:230
 msgid "blueness-cb470"
 msgstr "modrost-cb470"
 
-#: ../plug-ins/common/decompose.c:214
+#: ../plug-ins/common/decompose.c:231
 msgid "redness-cr470"
 msgstr "červenost-cr470"
 
-#: ../plug-ins/common/decompose.c:216
+#: ../plug-ins/common/decompose.c:233
 msgid "luma-y709"
 msgstr "luma-y709"
 
-#: ../plug-ins/common/decompose.c:217
+#: ../plug-ins/common/decompose.c:234
 msgid "blueness-cb709"
 msgstr "modrost-cb709"
 
-#: ../plug-ins/common/decompose.c:218
+#: ../plug-ins/common/decompose.c:235
 msgid "redness-cr709"
 msgstr "červenost-cr709"
 
-#: ../plug-ins/common/decompose.c:220
+#: ../plug-ins/common/decompose.c:237
 msgid "luma-y470f"
 msgstr "luma-y470f"
 
-#: ../plug-ins/common/decompose.c:221
+#: ../plug-ins/common/decompose.c:238
 msgid "blueness-cb470f"
 msgstr "modrost-cb470f"
 
-#: ../plug-ins/common/decompose.c:222
+#: ../plug-ins/common/decompose.c:239
 msgid "redness-cr470f"
 msgstr "červenost-cr470f"
 
-#: ../plug-ins/common/decompose.c:224
+#: ../plug-ins/common/decompose.c:241
 msgid "luma-y709f"
 msgstr "luma-y709f"
 
-#: ../plug-ins/common/decompose.c:225
+#: ../plug-ins/common/decompose.c:242
 msgid "blueness-cb709f"
 msgstr "modrost-cb709f"
 
-#: ../plug-ins/common/decompose.c:226
+#: ../plug-ins/common/decompose.c:243
 msgid "redness-cr709f"
 msgstr "červenost-cr709f"
 
-#: ../plug-ins/common/decompose.c:277 ../plug-ins/common/decompose.c:291
+#: ../plug-ins/common/decompose.c:294 ../plug-ins/common/decompose.c:308
 msgid "Decompose an image into separate colorspace components"
 msgstr "Rozložit obrázek do oddělených barevných komponent"
 
-#: ../plug-ins/common/decompose.c:283 ../plug-ins/common/decompose.c:301
+#: ../plug-ins/common/decompose.c:300 ../plug-ins/common/decompose.c:318
 msgid "_Decompose..."
 msgstr "_Dekomponovat..."
 
-#: ../plug-ins/common/decompose.c:392
+#: ../plug-ins/common/decompose.c:409
 msgid "Decomposing"
 msgstr "Dekomponuji"
 
-#: ../plug-ins/common/decompose.c:1343
+#: ../plug-ins/common/decompose.c:1460
 msgid "Decompose"
 msgstr "Dekompozice"
 
-#: ../plug-ins/common/decompose.c:1366
+#: ../plug-ins/common/decompose.c:1483
 msgid "Extract Channels"
 msgstr "Extrahovat kanály"
 
-#: ../plug-ins/common/decompose.c:1413
+#: ../plug-ins/common/decompose.c:1530
 msgid "_Decompose to layers"
 msgstr "Dekomponovat do _vrstev"
 
-#: ../plug-ins/common/decompose.c:1424
+#: ../plug-ins/common/decompose.c:1541
 msgid "_Foreground as registration color"
 msgstr "_Popředí jako registrační barva"
 
-#: ../plug-ins/common/decompose.c:1425
+#: ../plug-ins/common/decompose.c:1542
 msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
@@ -3476,7 +3510,7 @@ msgid "_Whirl"
 msgstr "_Vír"
 
 #: ../plug-ins/common/displace.c:172
-msgid "Displace pixels as indicated by displacment maps"
+msgid "Displace pixels as indicated by displacement maps"
 msgstr "Posunout pixely podle mapy posunutí"
 
 #: ../plug-ins/common/displace.c:182
@@ -4035,10 +4069,6 @@ msgstr "Fraktální trasování"
 #: ../plug-ins/common/fractaltrace.c:727
 msgid "Outside Type"
 msgstr "Typ okolí"
-
-#: ../plug-ins/common/fractaltrace.c:732
-msgid "_Warp"
-msgstr "_Ohnutí"
 
 #: ../plug-ins/common/fractaltrace.c:738
 msgid "_White"
@@ -5090,60 +5120,60 @@ msgstr "Zvláštní efekty, které nikdo nechápe"
 msgid "_Van Gogh (LIC)..."
 msgstr "_Van Gogh (LIC)..."
 
-#: ../plug-ins/common/mail.c:264
+#: ../plug-ins/common/mail.c:259
 msgid "Email the image"
 msgstr "Odeslat obrázek poštou"
 
-#: ../plug-ins/common/mail.c:270
+#: ../plug-ins/common/mail.c:265
 msgid "_Mail Image..."
 msgstr "_Poslat obrázek..."
 
-#: ../plug-ins/common/mail.c:519
+#: ../plug-ins/common/mail.c:524
 msgid "Send as Mail"
 msgstr "Poslat jako poštu"
 
-#: ../plug-ins/common/mail.c:524
+#: ../plug-ins/common/mail.c:529
 msgid "_Send"
 msgstr "_Odeslat"
 
-#: ../plug-ins/common/mail.c:556
+#: ../plug-ins/common/mail.c:561
 msgid "_Filename:"
 msgstr "_Název souboru:"
 
 #. Encapsulation label
-#: ../plug-ins/common/mail.c:563
+#: ../plug-ins/common/mail.c:568
 msgid "Encapsulation:"
 msgstr "Zapouzdření dat:"
 
-#: ../plug-ins/common/mail.c:575
+#: ../plug-ins/common/mail.c:580
 msgid "_MIME"
 msgstr "_MIME"
 
-#: ../plug-ins/common/mail.c:576
+#: ../plug-ins/common/mail.c:581
 msgid "_Uuencode"
 msgstr "_UU-kódování"
 
-#: ../plug-ins/common/mail.c:590
+#: ../plug-ins/common/mail.c:595
 msgid "_Recipient:"
 msgstr "Pří_jemce:"
 
-#: ../plug-ins/common/mail.c:604
+#: ../plug-ins/common/mail.c:609
 msgid "_Sender:"
 msgstr "_Odesílatel:"
 
-#: ../plug-ins/common/mail.c:616
+#: ../plug-ins/common/mail.c:621
 msgid "S_ubject:"
 msgstr "_Předmět:"
 
-#: ../plug-ins/common/mail.c:628
+#: ../plug-ins/common/mail.c:633
 msgid "Comm_ent:"
 msgstr "_Komentář:"
 
-#: ../plug-ins/common/mail.c:736
+#: ../plug-ins/common/mail.c:741
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "nějaký druh chyby přípony souboru nebo její nepřítomnost"
 
-#: ../plug-ins/common/mail.c:963
+#: ../plug-ins/common/mail.c:903
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Nemohu spustit sendmail (%s)"
@@ -7879,7 +7909,7 @@ msgid "C_reate new image"
 msgstr "Vytvořit _nový obrázek"
 
 #: ../plug-ins/common/tileit.c:215
-msgid "Tile image into smaller versions of the orginal"
+msgid "Tile image into smaller versions of the original"
 msgstr "Poskládat obrázek ze zmenšených kopií sama sebe"
 
 #: ../plug-ins/common/tileit.c:220
