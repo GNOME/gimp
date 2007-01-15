@@ -56,9 +56,9 @@ static void      gimp_display_shell_close_response     (GtkWidget        *widget
                                                         gboolean          close,
                                                         GimpDisplayShell *shell);
 
-static void      gimp_time_since                       (guint    then,
-                                                        gchar  **hours,
-                                                        gchar  **minutes);
+static void      gimp_time_since                       (guint  then,
+                                                        gint  *hours,
+                                                        gint  *minutes);
 
 
 /*  public functions  */
@@ -220,26 +220,44 @@ gimp_display_shell_close_time_changed (GimpMessageBox *box)
 
   if (image->dirty_time)
     {
-      gchar *hours   = NULL;
-      gchar *minutes = NULL;
+      gint hours   = 0;
+      gint minutes = 0;
 
       gimp_time_since (image->dirty_time, &hours, &minutes);
 
-      if (hours && minutes)
-        /* time period ("... from the last 3 hours and 20 minutes ...") */
-        gimp_message_box_set_text (box,
-                                   _("If you don't save the image, changes "
-                                     "from the last %s and %s will be lost."),
-                                   hours, minutes);
-      else
-        /* time period ("... from the last 20 minutes ...") */
-        gimp_message_box_set_text (box,
-                                   _("If you don't save the image, changes "
-                                     "from the last %s will be lost."),
-                                   hours ? hours : minutes);
+      if (hours > 0)
+        {
+          if (hours > 1 || minutes == 0)
+            gimp_message_box_set_text (box,
+                                       ngettext ("If you don't save the image, "
+                                                 "changes from the last hour "
+                                                 "will be lost.",
+                                                 "If you don't save the image, "
+                                                 "changes from the last %d "
+                                                 "hours will be lost.",
+                                                 hours), hours);
 
-      g_free (hours);
-      g_free (minutes);
+          else
+            gimp_message_box_set_text (box,
+                                       ngettext ("If you don't save the image, "
+                                                 "changes from the last hour "
+                                                 "and %d minute will be lost.",
+                                                 "If you don't save the image, "
+                                                 "changes from the last hour "
+                                                 "and %d minutes will be lost.",
+                                                 minutes), minutes);
+        }
+      else
+        {
+          gimp_message_box_set_text (box,
+                                     ngettext ("If you don't save the image, "
+                                               "changes from the last minute "
+                                               "will be lost.",
+                                               "If you don't save the image, "
+                                               "changes from the last %d "
+                                               "minutes will be lost.",
+                                               minutes), minutes);
+        }
     }
   else
     {
@@ -273,15 +291,12 @@ gimp_display_shell_close_response (GtkWidget        *widget,
 }
 
 static void
-gimp_time_since (guint   then,
-                 gchar **hours,
-                 gchar **minutes)
+gimp_time_since (guint  then,
+                 gint  *hours,
+                 gint  *minutes)
 {
   guint now  = time (NULL);
   guint diff = 1 + now - then;
-
-  *minutes = NULL;
-  *hours   = NULL;
 
   g_return_if_fail (now >= then);
 
@@ -296,11 +311,9 @@ gimp_time_since (guint   then,
 
   if (diff >= 120)
     {
-      *hours = g_strdup_printf (ngettext ("%d hour", "%d hours",
-                                          diff / 60), diff / 60);
+      *hours = diff / 60;
       diff = (diff % 60);
     }
 
-  if (diff > 0)
-    *minutes = g_strdup_printf (ngettext ("minute", "%d minutes", diff), diff);
+  *minutes = diff;
 }

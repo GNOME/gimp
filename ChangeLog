@@ -1,3 +1,8 @@
+2007-01-15  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-close.c: use ngettext() for the
+	close dialog. Fixes bug #396513.
+
 2007-01-14  Hans Breuer  <hans@breuer.org>
 
         * plug-ins/script-fu/tinyscheme/scheme.[ch] : to make it compile with
