@@ -347,11 +347,14 @@ jpeg_exif_rotate_query (gint32 image_ID)
       name = gimp_image_get_name (image_ID);
 
       label = gtk_label_new (name);
+      gtk_label_set_ellipsize (GTK_LABEL (label), PANGO_ELLIPSIZE_MIDDLE);
       gimp_label_set_attributes (GTK_LABEL (label),
                                  PANGO_ATTR_STYLE,  PANGO_STYLE_ITALIC,
                                  -1);
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
+
+      gimp_help_set_help_data (image, name, NULL);
 
       g_free (name);
     }

@@ -1,5 +1,10 @@
 2007-01-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/jpeg/jpeg-exif.c (jpeg_exif_rotate_query): ellipsize
+	the image name displayed below the thumbnail.
+
+2007-01-15  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/file-commands.[ch]
 	* app/actions/file-actions.c
 	* menus/image-menu.xml.in: removed "file-open-from-image" action
