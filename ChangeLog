@@ -1,3 +1,8 @@
+2007-01-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/gimpplugin-message.c (gimp_plug_in_handle_proc_run):
+	fixed comment.
+
 2007-01-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/pixel-region.c (pixel_region_set,get_row): add support

@@ -436,8 +436,8 @@ gimp_plug_in_handle_proc_run (GimpPlugIn *plug_in,
   g_value_array_free (args);
   g_free (canonical);
 
-  /*  Don't bother to send with the return value if executing the
-   *  procedure closed the plug-in (e.g. if the procedure is gimp-quit)
+  /*  Don't bother to send the return value if executing the procedure
+   *  closed the plug-in (e.g. if the procedure is gimp-quit)
    */
   if (plug_in->open)
     {
