@@ -9,7 +9,7 @@
         <menuitem action="image-new-from-image" />
       </placeholder>
       <placeholder name="Open">
-        <menuitem action="file-open-from-image" />
+        <menuitem action="file-open" />
         <menuitem action="file-open-as-layers" />
         <menuitem action="file-open-location" />
       </placeholder>

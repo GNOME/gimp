@@ -83,19 +83,10 @@ static void   file_revert_confirm_response (GtkWidget   *dialog,
 
 /*  public functions  */
 
+
 void
 file_open_cmd_callback (GtkAction *action,
                         gpointer   data)
-{
-  GtkWidget *widget;
-  return_if_no_widget (widget, data);
-
-  file_open_dialog_show (widget, NULL, NULL, FALSE);
-}
-
-void
-file_open_from_image_cmd_callback (GtkAction *action,
-                                   gpointer   data)
 {
   GimpImage   *image;
   GtkWidget   *widget;

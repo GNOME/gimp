@@ -1,5 +1,13 @@
 2007-01-15  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/file-commands.[ch]
+	* app/actions/file-actions.c
+	* menus/image-menu.xml.in: removed "file-open-from-image" action
+	and simply use "file-open-image" from both File menus. Makes the
+	behavior more predictable and removes unneeded complexity.
+
+2007-01-15  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-close.c (gimp_time_since): round up
 	to full hours for time periods over two hours.
 
