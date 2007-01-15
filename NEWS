@@ -15,6 +15,10 @@ Changes in GIMP 2.3.14
 - scale the brush's spacing when scaling the brush
 - save tool presets when they are changed
 - improved handling of vectors in the Python bindings
+- allow for auto-cropping the result of the transform tools
+- added GimpRatioEntry widget and use it in the rectangle tool options
+- added functions to transform between preview and image coordinates
+- added PDB functions to validate display, drawable, image and vectors IDs
 - bug fixes and code cleanup
 
 
