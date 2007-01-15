@@ -354,8 +354,6 @@ jpeg_exif_rotate_query (gint32 image_ID)
       gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
       gtk_widget_show (label);
 
-      gimp_help_set_help_data (image, name, NULL);
-
       g_free (name);
     }
 
