@@ -1,5 +1,10 @@
 2007-01-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/curve_bend.c: cleaned up sanity checks and
+	handling of undo groups. Fixes bug #395798.
+
+2007-01-15  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/imagemap/imap_csim_lex.c
 	* plug-ins/imagemap/imap_ncsa_parse.[ch]
 	* plug-ins/imagemap/imap_ncsa_lex.c

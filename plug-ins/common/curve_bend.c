@@ -671,8 +671,6 @@ run (const gchar      *name,
   l_image_id = param[1].data.d_int32;
   l_layer_id = param[2].data.d_drawable;
 
-  gimp_image_undo_group_start (l_image_id);
-
   if (! gimp_drawable_is_layer (l_layer_id))
     {
       g_message (_("Can operate on layers only (but was called on channel or mask)."));
@@ -683,19 +681,8 @@ run (const gchar      *name,
   l_layer_mask_id = gimp_layer_get_mask (l_layer_id);
   if (l_layer_mask_id >= 0)
     {
-      /* apply the layermask
-       *   some transitions (especially rotate) cant operate proper on
-       *   layers with masks !
-       */
-      if (run_mode == GIMP_RUN_NONINTERACTIVE)
-        {
-          gimp_layer_remove_mask (l_layer_id, 0 /* 0==APPLY */ );
-        }
-      else
-        {
-          g_message (_("Cannot operate on layers with masks."));
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
+      g_message (_("Cannot operate on layers with masks."));
+      status = GIMP_PDB_EXECUTION_ERROR;
     }
 
   /* if there is a selection, make it the floating selection layer */
@@ -705,11 +692,8 @@ run (const gchar      *name,
       /* could not float the selection because selection rectangle
        * is completely empty return GIMP_PDB_EXECUTION_ERROR
        */
+       g_message (_("Cannot operate on empty selections."));
        status = GIMP_PDB_EXECUTION_ERROR;
-       if (run_mode != GIMP_RUN_NONINTERACTIVE)
-         {
-           g_message (_("Cannot operate on empty selections."));
-         }
     }
   else
     {
@@ -796,7 +780,11 @@ run (const gchar      *name,
 
       if (cd->run)
         {
+          gimp_image_undo_group_start (l_image_id);
+
           l_bent_layer_id = p_main_bend (cd, cd->drawable, cd->work_on_copy);
+
+          gimp_image_undo_group_end (l_image_id);
 
           /* Store variable states for next run */
           if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -809,14 +797,8 @@ run (const gchar      *name,
           status = GIMP_PDB_CANCEL;
         }
 
-      gimp_image_undo_group_end (l_image_id);
-
       if (run_mode != GIMP_RUN_NONINTERACTIVE)
         gimp_displays_flush ();
-    }
-  else
-    {
-      gimp_image_undo_group_end (l_image_id);
     }
 
   values[0].data.d_status = status;
