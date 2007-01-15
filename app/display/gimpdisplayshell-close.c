@@ -309,10 +309,18 @@ gimp_time_since (guint  then,
   else if (diff > 20)
     diff = ((diff + 3) / 5) * 5;
 
-  if (diff >= 120)
+  /*  determine full hours  */
+  if (diff >= 60)
     {
       *hours = diff / 60;
       diff = (diff % 60);
+    }
+
+  /*  round up to full hours for 2 and more  */
+  if (*hours > 1 && diff > 0)
+    {
+      *hours += 1;
+      diff = 0;
     }
 
   *minutes = diff;
