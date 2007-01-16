@@ -133,14 +133,25 @@ gimp_profile_chooser_dialog_constructor (GType                  type,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+#ifndef G_OS_WIN32
+  {
+    const gchar folder[] = "/usr/share/color/icc";
+
+    if (g_file_test (folder, G_FILE_TEST_IS_DIR))
+      gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
+                                            folder, NULL);
+  }
+#endif
+
   filter = gtk_file_filter_new ();
   gtk_file_filter_set_name (filter, _("All files (*.*)"));
   gtk_file_filter_add_pattern (filter, "*");
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
 
   filter = gtk_file_filter_new ();
-  gtk_file_filter_set_name (filter, _("ICC color profile (*.icc)"));
+  gtk_file_filter_set_name (filter, _("ICC color profile (*.icc, *.icm)"));
   gtk_file_filter_add_pattern (filter, "*.[Ii][Cc][Cc]");
+  gtk_file_filter_add_pattern (filter, "*.[Ii][Cc][Mm]");
   gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
 
   gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
