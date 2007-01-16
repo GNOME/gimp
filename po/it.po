@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-08 13:31+0100\n"
-"PO-Revision-Date: 2007-01-08 13:31+0100\n"
+"POT-Creation-Date: 2007-01-16 15:52+0100\n"
+"PO-Revision-Date: 2007-01-16 15:58+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -47,10 +47,10 @@ msgstr "GNU Image Manipulation Program"
 
 #: ../app/about.h:30
 msgid ""
-"Copyright © 1995-2006\n"
+"Copyright © 1995-2007\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
-"Copyright © 1995-2006\n"
+"Copyright © 1995-2007\n"
 "Spencer Kimball, Peter Mattis e il team di sviluppo di GIMP"
 
 #: ../app/about.h:34
@@ -200,7 +200,7 @@ msgstr "Genera un file gimprc con valori predefiniti"
 msgid "[FILE|URI...]"
 msgstr "[FILE|URI...]"
 
-#: ../app/main.c:307
+#: ../app/main.c:309
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -208,7 +208,7 @@ msgstr ""
 "GIMP non può inizializzare l'interfaccia grafica.\n"
 "Controllare la corretta esistenza dell'impostazione dell'ambiente grafico."
 
-#: ../app/main.c:457 ../tools/gimp-remote.c:321
+#: ../app/main.c:459 ../tools/gimp-remote.c:323
 #, c-format
 msgid "%s version %s"
 msgstr "%s versione %s"
@@ -826,7 +826,7 @@ msgid "Sample Merged"
 msgstr "Campionamento diffuso"
 
 #: ../app/actions/data-commands.c:104 ../app/actions/documents-commands.c:320
-#: ../app/actions/file-commands.c:177 ../app/dialogs/file-open-dialog.c:205
+#: ../app/actions/file-commands.c:168 ../app/dialogs/file-open-dialog.c:205
 #: ../app/dialogs/file-open-dialog.c:251
 #: ../app/dialogs/file-open-location-dialog.c:216
 #: ../app/dialogs/file-open-location-dialog.c:228
@@ -847,7 +847,7 @@ msgstr ""
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1365
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:336 ../app/dialogs/palette-import-dialog.c:771
-#: ../app/pdb/image_cmds.c:1978 ../app/widgets/gimpdnd-xds.c:97
+#: ../app/pdb/image_cmds.c:2005 ../app/widgets/gimpdnd-xds.c:97
 msgid "Untitled"
 msgstr "Immagine"
 
@@ -1637,71 +1637,71 @@ msgstr "Apri _recenti"
 msgid "Acq_uire"
 msgstr "Acq_uisizione"
 
-#: ../app/actions/file-actions.c:69 ../app/actions/file-actions.c:74
+#: ../app/actions/file-actions.c:69
 msgid "_Open..."
 msgstr "_Apri..."
 
-#: ../app/actions/file-actions.c:79
+#: ../app/actions/file-actions.c:74
 msgid "Op_en as Layers..."
 msgstr "Apri com_e livelli..."
 
-#: ../app/actions/file-actions.c:84
+#: ../app/actions/file-actions.c:79
 msgid "Open _Location..."
 msgstr "Apri _posizione... "
 
-#: ../app/actions/file-actions.c:89
+#: ../app/actions/file-actions.c:84
 msgid "_Save"
 msgstr "_Salva"
 
-#: ../app/actions/file-actions.c:94
+#: ../app/actions/file-actions.c:89
 msgid "Save _As..."
 msgstr "Salv_a come..."
 
-#: ../app/actions/file-actions.c:99
+#: ../app/actions/file-actions.c:94
 msgid "Save a Cop_y..."
 msgstr "Salva _una copia..."
 
-#: ../app/actions/file-actions.c:104
+#: ../app/actions/file-actions.c:99
 msgid "Save and Close..."
 msgstr "Salva e chiudi..."
 
-#: ../app/actions/file-actions.c:109
+#: ../app/actions/file-actions.c:104
 msgid "Save as _Template..."
 msgstr "Salva come _modello..."
 
-#: ../app/actions/file-actions.c:110
+#: ../app/actions/file-actions.c:105
 msgid "Create a new template from this image"
 msgstr "Crea un nuovo modello da questa immagine"
 
-#: ../app/actions/file-actions.c:115
+#: ../app/actions/file-actions.c:110
 msgid "Re_vert"
 msgstr "_Ricarica"
 
-#: ../app/actions/file-actions.c:116
+#: ../app/actions/file-actions.c:111
 msgid "Reload the image file from disk"
 msgstr "Ricarica l'immagine dal file su disco"
 
-#: ../app/actions/file-actions.c:121
+#: ../app/actions/file-actions.c:116
 msgid "Close all"
 msgstr "Chiudi tutto"
 
-#: ../app/actions/file-actions.c:122
+#: ../app/actions/file-actions.c:117
 msgid "Close all opened images"
 msgstr "Chiudi tutte le immagini aperte"
 
-#: ../app/actions/file-actions.c:127
+#: ../app/actions/file-actions.c:122
 msgid "_Quit"
 msgstr "_Esci"
 
-#: ../app/actions/file-actions.c:128
+#: ../app/actions/file-actions.c:123
 msgid "Quit the GNU Image Manipulation Program"
 msgstr "Esci dal programma di elaborazione immagini GNU GIMP"
 
-#: ../app/actions/file-commands.c:244
+#: ../app/actions/file-commands.c:235
 msgid "Saving canceled"
 msgstr "Salvataggio annullato"
 
-#: ../app/actions/file-commands.c:253 ../app/dialogs/file-save-dialog.c:513
+#: ../app/actions/file-commands.c:244 ../app/dialogs/file-save-dialog.c:513
 #: ../app/widgets/gimpdnd-xds.c:174
 #, c-format
 msgid ""
@@ -1713,36 +1713,36 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/file-commands.c:286 ../app/dialogs/file-save-dialog.c:82
+#: ../app/actions/file-commands.c:277 ../app/dialogs/file-save-dialog.c:82
 msgid "Save Image"
 msgstr "Salva immagine"
 
-#: ../app/actions/file-commands.c:302
+#: ../app/actions/file-commands.c:293
 msgid "Save a Copy of the Image"
 msgstr "Salva una copia dell'immagine"
 
-#: ../app/actions/file-commands.c:326
+#: ../app/actions/file-commands.c:317
 msgid "Create New Template"
 msgstr "Crea un nuovo modello"
 
-#: ../app/actions/file-commands.c:330
+#: ../app/actions/file-commands.c:321
 msgid "Enter a name for this template"
 msgstr "Inserisci un nome per questo modello"
 
-#: ../app/actions/file-commands.c:356
+#: ../app/actions/file-commands.c:347
 msgid "Revert failed. No file name associated with this image."
 msgstr "Fallita la ricarica. Nessun nome file associato a quest'immagine."
 
-#: ../app/actions/file-commands.c:369
+#: ../app/actions/file-commands.c:360
 msgid "Revert Image"
 msgstr "Ricarica immagine"
 
-#: ../app/actions/file-commands.c:395
+#: ../app/actions/file-commands.c:386
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Ricaricare \"%s\" a \"%s\"?"
 
-#: ../app/actions/file-commands.c:401
+#: ../app/actions/file-commands.c:392
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -1750,19 +1750,19 @@ msgstr ""
 "Ricaricando l'immagine salvata su disco, perderai tutte le modifiche, "
 "incluse tutte le informazioni di annullamento."
 
-#: ../app/actions/file-commands.c:473
+#: ../app/actions/file-commands.c:464
 msgid "Open Image as Layers"
 msgstr "Apri immagine come livelli"
 
-#: ../app/actions/file-commands.c:478 ../app/dialogs/file-open-dialog.c:75
+#: ../app/actions/file-commands.c:469 ../app/dialogs/file-open-dialog.c:75
 msgid "Open Image"
 msgstr "Apri immagine"
 
-#: ../app/actions/file-commands.c:549
+#: ../app/actions/file-commands.c:543
 msgid "(Unnamed Template)"
 msgstr "(modello senza nome)"
 
-#: ../app/actions/file-commands.c:597
+#: ../app/actions/file-commands.c:591
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -3225,11 +3225,11 @@ msgstr "Rimuovi le irregolarità dalla selezione"
 
 #: ../app/actions/select-actions.c:86
 msgid "S_hrink..."
-msgstr "_Restringi..."
+msgstr "_Riduci..."
 
 #: ../app/actions/select-actions.c:87
 msgid "Contract the selection"
-msgstr "Contrai la selezione"
+msgstr "Riduce la selezione"
 
 #: ../app/actions/select-actions.c:92
 msgid "_Grow..."
@@ -3281,11 +3281,11 @@ msgstr "Selezione sfumata di"
 
 #: ../app/actions/select-commands.c:172 ../app/core/gimpselection.c:174
 msgid "Shrink Selection"
-msgstr "Riduci selezione"
+msgstr "Riduci la selezione"
 
 #: ../app/actions/select-commands.c:176
 msgid "Shrink selection by"
-msgstr "Riduci selezione di"
+msgstr "Riduci la selezione di"
 
 #: ../app/actions/select-commands.c:185
 msgid "_Shrink from image border"
@@ -3293,11 +3293,11 @@ msgstr "_Riduci dal bordo immagine"
 
 #: ../app/actions/select-commands.c:206 ../app/core/gimpselection.c:173
 msgid "Grow Selection"
-msgstr "Espandi selezione"
+msgstr "Allarga la selezione"
 
 #: ../app/actions/select-commands.c:210
 msgid "Grow selection by"
-msgstr "Espandi selezione di"
+msgstr "Allarga la selezione di"
 
 #: ../app/actions/select-commands.c:230 ../app/core/gimpselection.c:172
 msgid "Border Selection"
@@ -3770,7 +3770,7 @@ msgid "New Path Options"
 msgstr "Nuove opzioni tracciato"
 
 #: ../app/actions/vectors-commands.c:297 ../app/pdb/paths_cmds.c:610
-#: ../app/pdb/vectors_cmds.c:1093
+#: ../app/pdb/vectors_cmds.c:1121
 msgid "Path to Selection"
 msgstr "Tracciato a selezione"
 
@@ -5172,7 +5172,7 @@ msgstr "Rimuovi parasite"
 msgid "Import paths"
 msgstr "Importa tracciati"
 
-#: ../app/core/core-enums.c:886 ../app/pdb/drawable_cmds.c:775
+#: ../app/core/core-enums.c:886 ../app/pdb/drawable_cmds.c:803
 msgid "Plug-In"
 msgstr "Plug-in"
 
@@ -7994,7 +7994,7 @@ msgid "Import Paths from SVG"
 msgstr "Importa tracciato da SVG"
 
 #: ../app/dialogs/vectors-import-dialog.c:88
-#: ../app/widgets/gimpprofilechooserdialog.c:137
+#: ../app/widgets/gimpprofilechooserdialog.c:149
 msgid "All files (*.*)"
 msgstr "Tutti i file (*.*)"
 
@@ -8054,7 +8054,7 @@ msgstr "Anteprima"
 msgid "Switch to Move tool"
 msgstr "Passa allo strumento spostamento"
 
-#: ../app/display/gimpdisplay-handlers.c:151
+#: ../app/display/gimpdisplay-handlers.c:153
 #, c-format
 msgid "Image saved to '%s'"
 msgstr "Immagine salvata su \"%s\""
@@ -8086,34 +8086,44 @@ msgstr "_Non salvare"
 msgid "Save the changes to image '%s' before closing?"
 msgstr "Prima di chiudere, salvare le modifiche all'immagine '%s'?"
 
-#: ../app/display/gimpdisplayshell-close.c:231
+#: ../app/display/gimpdisplayshell-close.c:232
+#, c-format
+msgid "If you don't save the image, changes from the last hour will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d hours will be lost."
+msgstr[0] ""
+"Se non si salva l'immagine si perderanno le modifiche effettuate nell'ultima "
+"ora."
+msgstr[1] ""
+"Se non si salva l'immagine si perderanno le modifiche effettuate nelle "
+"ultime %d ore."
+
+#: ../app/display/gimpdisplayshell-close.c:242
 #, c-format
 msgid ""
-"If you don't save the image, changes from the last %s and %s will be lost."
-msgstr ""
-"Se non si salva l'immagine, le modifiche effettuate da %s fa a %s fa, "
-"saranno perse."
+"If you don't save the image, changes from the last hour and %d minute will "
+"be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last hour and %d minutes will "
+"be lost."
+msgstr[0] ""
+"Se non si salva l'immagine si perderanno le modifiche effettuate nell'ultima "
+"ora e %d minuto."
+msgstr[1] ""
+"Se non si salva l'immagine si perderanno le modifiche effettuate nell'ultima "
+"ora e %d minuti."
 
-#: ../app/display/gimpdisplayshell-close.c:237
+#: ../app/display/gimpdisplayshell-close.c:253
 #, c-format
-msgid "If you don't save the image, changes from the last %s will be lost."
-msgstr ""
-"Se non si salva l'immagine, le modifiche effettuate da %s fa ad ora, saranno "
-"perse."
-
-#: ../app/display/gimpdisplayshell-close.c:299
-#, c-format
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] "%d ora"
-msgstr[1] "%d ore"
-
-#: ../app/display/gimpdisplayshell-close.c:305
-#, c-format
-msgid "minute"
-msgid_plural "%d minutes"
-msgstr[0] "%d minuto"
-msgstr[1] "%d minuti"
+msgid "If you don't save the image, changes from the last minute will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d minutes will be lost."
+msgstr[0] ""
+"Se non si salva l'immagine si perderanno le modifiche effettuate in "
+"quest'ultimo minuto."
+msgstr[1] ""
+"Se non si salva l'immagine si perderanno le modifiche effettuate negli "
+"ultimi %d minuti."
 
 #: ../app/display/gimpdisplayshell-dnd.c:200
 #: ../app/display/gimpdisplayshell-dnd.c:500
@@ -8197,11 +8207,11 @@ msgstr "(pulito)"
 msgid "(none)"
 msgstr "(nessuno)"
 
-#: ../app/display/gimpstatusbar.c:215
+#: ../app/display/gimpstatusbar.c:218
 msgid "Cancel"
 msgstr "Cancella"
 
-#: ../app/display/gimpstatusbar.c:452
+#: ../app/display/gimpstatusbar.c:455
 msgid "Other..."
 msgstr "Altro..."
 
@@ -8296,12 +8306,12 @@ msgstr "Pennello"
 msgid "Pencil"
 msgstr "Matita"
 
-#: ../app/paint/gimpperspectiveclone.c:95 ../app/paint/paint-enums.c:52
+#: ../app/paint/gimpperspectiveclone.c:96 ../app/paint/paint-enums.c:52
 #: ../app/tools/gimpperspectiveclonetool.c:120
 msgid "Perspective Clone"
 msgstr "Clona prospettiva"
 
-#: ../app/paint/gimpperspectiveclone.c:163
+#: ../app/paint/gimpperspectiveclone.c:161
 msgid "Perspective Clone does not operate on indexed layers."
 msgstr "Clona in prospettiva non agisce su livelli indicizzati."
 
@@ -8492,7 +8502,7 @@ msgstr ""
 "La procedura \"%s\" è stata chiamata con il valore \"%s\" l'argomento \"%s"
 "\" (#%d, tipo %s). Questo valore è fuori limite."
 
-#: ../app/pdb/image_cmds.c:2044
+#: ../app/pdb/image_cmds.c:2071
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -10012,7 +10022,7 @@ msgstr "_Livelli di posterizzazione:"
 
 #: ../app/tools/gimprectangleoptions.c:119
 msgid "Use all visible layers when shrinking the selection"
-msgstr "Usa tutti i livelli visibili quando restringi la selezione"
+msgstr "Usa tutti i livelli visibili quando riduci la selezione"
 
 #: ../app/tools/gimprectangleoptions.c:509
 msgid "Auto shrink selection"
@@ -11253,15 +11263,15 @@ msgstr "Rilevato automaticamente"
 msgid "By Extension"
 msgstr "Per estensione"
 
-#: ../app/widgets/gimpfiledialog.c:516
+#: ../app/widgets/gimpfiledialog.c:521
 msgid "All files"
 msgstr "Tutti i file"
 
-#: ../app/widgets/gimpfiledialog.c:521
+#: ../app/widgets/gimpfiledialog.c:526
 msgid "All images"
 msgstr "Tutte le immagini"
 
-#: ../app/widgets/gimpfiledialog.c:657
+#: ../app/widgets/gimpfiledialog.c:659
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Seleziona _tipo di file (%s)"
@@ -11579,9 +11589,9 @@ msgstr "Non definito"
 msgid "Columns:"
 msgstr "Colonne:"
 
-#: ../app/widgets/gimpprofilechooserdialog.c:142
-msgid "ICC color profile (*.icc)"
-msgstr "Profilo colore ICC (*.icc)"
+#: ../app/widgets/gimpprofilechooserdialog.c:154
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr "Profilo colore ICC (*.icc, *.icm)"
 
 #: ../app/widgets/gimpprogressdialog.c:215
 msgid "Progress"
@@ -11620,35 +11630,35 @@ msgstr "%d × %d ppi"
 msgid "%d ppi"
 msgstr "%d ppi"
 
-#: ../app/widgets/gimpstrokeeditor.c:180
+#: ../app/widgets/gimpstrokeeditor.c:183
 msgid "Line width:"
 msgstr "Spessore linea:"
 
-#: ../app/widgets/gimpstrokeeditor.c:196
+#: ../app/widgets/gimpstrokeeditor.c:199
 msgid "_Line Style"
 msgstr "Stile _linea"
 
-#: ../app/widgets/gimpstrokeeditor.c:215
+#: ../app/widgets/gimpstrokeeditor.c:218
 msgid "_Cap style:"
 msgstr "Stile _capo:"
 
-#: ../app/widgets/gimpstrokeeditor.c:221
+#: ../app/widgets/gimpstrokeeditor.c:224
 msgid "_Join style:"
 msgstr "Stile _giunzione:"
 
-#: ../app/widgets/gimpstrokeeditor.c:226
+#: ../app/widgets/gimpstrokeeditor.c:229
 msgid "_Miter limit:"
 msgstr "Li_mite spigolo:"
 
-#: ../app/widgets/gimpstrokeeditor.c:233
+#: ../app/widgets/gimpstrokeeditor.c:236
 msgid "Dash pattern:"
 msgstr "Modello tratteggio:"
 
-#: ../app/widgets/gimpstrokeeditor.c:275
+#: ../app/widgets/gimpstrokeeditor.c:299
 msgid "Dash _preset:"
 msgstr "_Preimpostazione tratteggio:"
 
-#: ../app/widgets/gimpstrokeeditor.c:296
+#: ../app/widgets/gimpstrokeeditor.c:320
 msgid "_Antialiasing"
 msgstr "_Antialiasing"
 
@@ -12041,16 +12051,16 @@ msgstr "Stampa l'ID X window della finestra degli strumenti di GIMP e esce"
 msgid "Start GIMP without showing the startup window"
 msgstr "Esegui gimp senza mostrare la finestra iniziale"
 
-#: ../tools/gimp-remote.c:203
+#: ../tools/gimp-remote.c:205
 msgid "Could not connect to GIMP."
 msgstr "Impossibile connettersi a Gimp"
 
-#: ../tools/gimp-remote.c:204
+#: ../tools/gimp-remote.c:206
 msgid "Make sure that the Toolbox is visible!"
 msgstr "Controlla che gli strumenti siano visibili!"
 
 #. if execv and execvp return, there was an error
-#: ../tools/gimp-remote.c:305
+#: ../tools/gimp-remote.c:307
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Impossibile eseguire \"%s\": %s"
