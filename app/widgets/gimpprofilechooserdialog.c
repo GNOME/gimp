@@ -125,13 +125,15 @@ gimp_profile_chooser_dialog_constructor (GType                  type,
 
   gtk_dialog_add_buttons (GTK_DIALOG (dialog),
                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                          GTK_STOCK_OPEN,   GTK_RESPONSE_OK,
+                          GTK_STOCK_OPEN,   GTK_RESPONSE_ACCEPT,
                           NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
-                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_ACCEPT,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
 
 #ifndef G_OS_WIN32
   {
