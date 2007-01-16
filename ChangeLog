@@ -1,5 +1,10 @@
 2007-01-16  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/file-commands.c (file_open_dialog_show): use the
+	toplevel widget as transient parent.
+
+2007-01-16  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpprofilechooserdialog.c: use GTK_RESPONSE_ACCEPT
 	to make it work properly with GtkFileChooserButton.
 

@@ -470,7 +470,10 @@ file_open_dialog_show (GtkWidget   *parent,
           GIMP_FILE_DIALOG (dialog)->image = NULL;
         }
 
-      gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
+      parent = gtk_widget_get_toplevel (parent);
+
+      if (GTK_IS_WINDOW (parent))
+        gtk_window_set_transient_for (GTK_WINDOW (dialog), GTK_WINDOW (parent));
 
       gtk_window_present (GTK_WINDOW (dialog));
     }
