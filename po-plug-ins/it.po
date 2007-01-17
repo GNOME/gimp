@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-07 12:34+0100\n"
-"PO-Revision-Date: 2007-01-07 12:34+0100\n"
+"POT-Creation-Date: 2007-01-17 10:13+0100\n"
+"PO-Revision-Date: 2007-01-17 10:16+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -224,7 +224,7 @@ msgstr "Funzione colore"
 
 #. Redmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:991
-#: ../plug-ins/common/channel_mixer.c:539 ../plug-ins/common/decompose.c:166
+#: ../plug-ins/common/channel_mixer.c:539 ../plug-ins/common/decompose.c:174
 msgid "Red"
 msgstr "Rosso"
 
@@ -291,13 +291,13 @@ msgstr ""
 
 #. Greenmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1032
-#: ../plug-ins/common/channel_mixer.c:544 ../plug-ins/common/decompose.c:167
+#: ../plug-ins/common/channel_mixer.c:544 ../plug-ins/common/decompose.c:175
 msgid "Green"
 msgstr "Verde"
 
 #. Bluemode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1073
-#: ../plug-ins/common/channel_mixer.c:549 ../plug-ins/common/decompose.c:168
+#: ../plug-ins/common/channel_mixer.c:549 ../plug-ins/common/decompose.c:176
 msgid "Blue"
 msgstr "Blu"
 
@@ -338,7 +338,7 @@ msgstr "_Frattali"
 #: ../plug-ins/Lighting/lighting_ui.c:1168 ../plug-ins/bmp/bmpwrite.c:294
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2008
 #: ../plug-ins/common/channel_mixer.c:1062 ../plug-ins/common/compressor.c:410
-#: ../plug-ins/common/compressor.c:545 ../plug-ins/common/curve_bend.c:836
+#: ../plug-ins/common/compressor.c:545 ../plug-ins/common/curve_bend.c:818
 #: ../plug-ins/common/dicom.c:691 ../plug-ins/common/gbr.c:616
 #: ../plug-ins/common/gif.c:986 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:562
@@ -379,7 +379,7 @@ msgstr "Salva parametri frattali"
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:933
 #: ../plug-ins/Lighting/lighting_ui.c:1312 ../plug-ins/bmp/bmpread.c:149
 #: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2228
-#: ../plug-ins/common/channel_mixer.c:979 ../plug-ins/common/curve_bend.c:888
+#: ../plug-ins/common/channel_mixer.c:979 ../plug-ins/common/curve_bend.c:870
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gifload.c:309 ../plug-ins/common/gih.c:649
 #: ../plug-ins/common/lcms.c:655 ../plug-ins/common/mng.c:1125
@@ -1182,7 +1182,7 @@ msgstr "Profondità di colore (in bit) non supportata o non valida."
 #.
 #: ../plug-ins/bmp/bmpread.c:546 ../plug-ins/common/CEL.c:349
 #: ../plug-ins/common/CEL.c:352 ../plug-ins/common/blinds.c:277
-#: ../plug-ins/common/compose.c:911 ../plug-ins/common/decompose.c:686
+#: ../plug-ins/common/compose.c:924 ../plug-ins/common/decompose.c:703
 #: ../plug-ins/common/dicom.c:486 ../plug-ins/common/film.c:746
 #: ../plug-ins/common/gifload.c:879 ../plug-ins/common/pcx.c:339
 #: ../plug-ins/common/pcx.c:345 ../plug-ins/common/pix.c:368
@@ -1575,19 +1575,19 @@ msgid "Randoms from seed (shared)"
 msgstr "Casualità dal seme (condivisa)"
 
 #: ../plug-ins/common/CML_explorer.c:300 ../plug-ins/common/CML_explorer.c:308
-#: ../plug-ins/common/decompose.c:180
+#: ../plug-ins/common/decompose.c:188
 #: ../plug-ins/gimpressionist/orientation.c:162
 #: ../plug-ins/gimpressionist/size.c:165
 msgid "Hue"
 msgstr "Tonalità"
 
 #: ../plug-ins/common/CML_explorer.c:301 ../plug-ins/common/CML_explorer.c:309
-#: ../plug-ins/common/decompose.c:181
+#: ../plug-ins/common/decompose.c:189
 msgid "Saturation"
 msgstr "Saturazione"
 
 #: ../plug-ins/common/CML_explorer.c:302 ../plug-ins/common/CML_explorer.c:310
-#: ../plug-ins/common/decompose.c:182
+#: ../plug-ins/common/decompose.c:190
 #: ../plug-ins/gimpressionist/orientation.c:138
 #: ../plug-ins/gimpressionist/size.c:141 ../plug-ins/metadata/interface.c:142
 msgid "Value"
@@ -2378,24 +2378,24 @@ msgstr "Mixer canali"
 msgid "O_utput channel:"
 msgstr "Canale di _uscita:"
 
-#: ../plug-ins/common/channel_mixer.c:584 ../plug-ins/common/compose.c:185
-#: ../plug-ins/common/compose.c:196 ../plug-ins/common/diffraction.c:501
+#: ../plug-ins/common/channel_mixer.c:584 ../plug-ins/common/compose.c:190
+#: ../plug-ins/common/compose.c:201 ../plug-ins/common/diffraction.c:501
 #: ../plug-ins/common/diffraction.c:539 ../plug-ins/common/diffraction.c:577
 #: ../plug-ins/common/exchange.c:400 ../plug-ins/common/noisify.c:530
 #: ../plug-ins/common/noisify.c:537
 msgid "_Red:"
 msgstr "_Rosso:"
 
-#: ../plug-ins/common/channel_mixer.c:602 ../plug-ins/common/compose.c:186
-#: ../plug-ins/common/compose.c:197 ../plug-ins/common/diffraction.c:510
+#: ../plug-ins/common/channel_mixer.c:602 ../plug-ins/common/compose.c:191
+#: ../plug-ins/common/compose.c:202 ../plug-ins/common/diffraction.c:510
 #: ../plug-ins/common/diffraction.c:548 ../plug-ins/common/diffraction.c:586
 #: ../plug-ins/common/exchange.c:460 ../plug-ins/common/noisify.c:531
 #: ../plug-ins/common/noisify.c:538
 msgid "_Green:"
 msgstr "_Verde:"
 
-#: ../plug-ins/common/channel_mixer.c:621 ../plug-ins/common/compose.c:187
-#: ../plug-ins/common/compose.c:198 ../plug-ins/common/diffraction.c:519
+#: ../plug-ins/common/channel_mixer.c:621 ../plug-ins/common/compose.c:192
+#: ../plug-ins/common/compose.c:203 ../plug-ins/common/diffraction.c:519
 #: ../plug-ins/common/diffraction.c:557 ../plug-ins/common/diffraction.c:595
 #: ../plug-ins/common/exchange.c:521 ../plug-ins/common/noisify.c:532
 #: ../plug-ins/common/noisify.c:539
@@ -2573,129 +2573,138 @@ msgstr "Colore a contagocce colore alfa"
 msgid "to alpha"
 msgstr "ad alfa"
 
-#: ../plug-ins/common/compose.c:184 ../plug-ins/common/decompose.c:162
+#: ../plug-ins/common/compose.c:189 ../plug-ins/common/decompose.c:170
 #: ../plug-ins/common/raw.c:1002
 msgid "RGB"
 msgstr "RGB"
 
-#: ../plug-ins/common/compose.c:195 ../plug-ins/common/decompose.c:170
+#: ../plug-ins/common/compose.c:200 ../plug-ins/common/decompose.c:178
 msgid "RGBA"
 msgstr "RGBA"
 
-#: ../plug-ins/common/compose.c:199 ../plug-ins/common/noisify.c:525
+#: ../plug-ins/common/compose.c:204 ../plug-ins/common/noisify.c:525
 #: ../plug-ins/common/noisify.c:540
 msgid "_Alpha:"
 msgstr "_Alfa:"
 
-#: ../plug-ins/common/compose.c:206 ../plug-ins/common/decompose.c:176
+#: ../plug-ins/common/compose.c:211 ../plug-ins/common/decompose.c:184
 msgid "HSV"
 msgstr "HSV"
 
-#: ../plug-ins/common/compose.c:207
+#: ../plug-ins/common/compose.c:212 ../plug-ins/common/compose.c:220
 msgid "_Hue:"
 msgstr "_Tonalità:"
 
-#: ../plug-ins/common/compose.c:208 ../plug-ins/common/scatter_hsv.c:413
+#: ../plug-ins/common/compose.c:213 ../plug-ins/common/compose.c:221
+#: ../plug-ins/common/scatter_hsv.c:413
 msgid "_Saturation:"
 msgstr "_Saturazione:"
 
-#: ../plug-ins/common/compose.c:209 ../plug-ins/common/scatter_hsv.c:425
+#: ../plug-ins/common/compose.c:214 ../plug-ins/common/scatter_hsv.c:425
 msgid "_Value:"
 msgstr "_Valore:"
 
-#: ../plug-ins/common/compose.c:214 ../plug-ins/common/decompose.c:185
+#: ../plug-ins/common/compose.c:219 ../plug-ins/common/decompose.c:193
+msgid "HSL"
+msgstr "HSL"
+
+#: ../plug-ins/common/compose.c:222
+msgid "_Lightness:"
+msgstr "_Brillantezza:"
+
+#: ../plug-ins/common/compose.c:227 ../plug-ins/common/decompose.c:202
 msgid "CMY"
 msgstr "CMY"
 
-#: ../plug-ins/common/compose.c:215 ../plug-ins/common/compose.c:223
+#: ../plug-ins/common/compose.c:228 ../plug-ins/common/compose.c:236
 msgid "_Cyan:"
 msgstr "_Ciano:"
 
-#: ../plug-ins/common/compose.c:216 ../plug-ins/common/compose.c:224
+#: ../plug-ins/common/compose.c:229 ../plug-ins/common/compose.c:237
 msgid "_Magenta:"
 msgstr "_Magenta:"
 
-#: ../plug-ins/common/compose.c:217 ../plug-ins/common/compose.c:225
+#: ../plug-ins/common/compose.c:230 ../plug-ins/common/compose.c:238
 msgid "_Yellow:"
 msgstr "_Giallo:"
 
-#: ../plug-ins/common/compose.c:222 ../plug-ins/common/decompose.c:194
+#: ../plug-ins/common/compose.c:235 ../plug-ins/common/decompose.c:211
 msgid "CMYK"
 msgstr "CMYK"
 
-#: ../plug-ins/common/compose.c:226
+#: ../plug-ins/common/compose.c:239
 msgid "_Black:"
 msgstr "_Nero:"
 
-#: ../plug-ins/common/compose.c:230 ../plug-ins/common/decompose.c:207
+#: ../plug-ins/common/compose.c:243 ../plug-ins/common/decompose.c:224
 msgid "LAB"
 msgstr "LAB"
 
-#: ../plug-ins/common/compose.c:239
+#: ../plug-ins/common/compose.c:252
 msgid "_Luma y470:"
 msgstr "_Luminosità y470:"
 
-#: ../plug-ins/common/compose.c:240
+#: ../plug-ins/common/compose.c:253
 msgid "_Blueness cb470:"
 msgstr "Liv. _blu cb470:"
 
-#: ../plug-ins/common/compose.c:241
+#: ../plug-ins/common/compose.c:254
 msgid "_Redness cr470:"
 msgstr "Liv. _rosso cb709:"
 
-#: ../plug-ins/common/compose.c:247
+#: ../plug-ins/common/compose.c:260
 msgid "_Luma y709:"
 msgstr "_Luminosità y709:"
 
-#: ../plug-ins/common/compose.c:248
+#: ../plug-ins/common/compose.c:261
 msgid "_Blueness cb709:"
 msgstr "Liv. _blu cb709:"
 
-#: ../plug-ins/common/compose.c:249
+#: ../plug-ins/common/compose.c:262
 msgid "_Redness cr709:"
 msgstr "Liv. _rosso cr709:"
 
-#: ../plug-ins/common/compose.c:255
+#: ../plug-ins/common/compose.c:268
 msgid "_Luma y470f:"
 msgstr "_Luminosità y470f:"
 
-#: ../plug-ins/common/compose.c:256
+#: ../plug-ins/common/compose.c:269
 msgid "_Blueness cb470f:"
 msgstr "Liv. _blu cb470f:"
 
-#: ../plug-ins/common/compose.c:257
+#: ../plug-ins/common/compose.c:270
 msgid "_Redness cr470f:"
 msgstr "Liv. _rosso cr470f:"
 
-#: ../plug-ins/common/compose.c:263
+#: ../plug-ins/common/compose.c:276
 msgid "_Luma y709f:"
 msgstr "_Luminosità y709f:"
 
-#: ../plug-ins/common/compose.c:264
+#: ../plug-ins/common/compose.c:277
 msgid "_Blueness cb709f:"
 msgstr "Liv. _blu cb709f:"
 
-#: ../plug-ins/common/compose.c:265
+#: ../plug-ins/common/compose.c:278
 msgid "_Redness cr709f:"
 msgstr "Liv. _rosso cr709f:"
 
-#: ../plug-ins/common/compose.c:380
+#: ../plug-ins/common/compose.c:393
 msgid "Create an image using multiple gray images as color channels"
 msgstr "Crea un'immagine usando più immagini grige come canali di colore"
 
-#: ../plug-ins/common/compose.c:386
+#: ../plug-ins/common/compose.c:399
 msgid "C_ompose..."
 msgstr "C_omponi..."
 
-#: ../plug-ins/common/compose.c:410
+#: ../plug-ins/common/compose.c:423
 msgid "Recompose an image that was previously decomposed"
 msgstr "Ricompone un'immagine che era stata in precedenza decomposta"
 
-#: ../plug-ins/common/compose.c:418
+#: ../plug-ins/common/compose.c:431
 msgid "R_ecompose"
 msgstr "R_icomponi"
 
-#: ../plug-ins/common/compose.c:462
+#: ../plug-ins/common/compose.c:475
 msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
@@ -2703,70 +2712,70 @@ msgstr ""
 "È possibile eseguire solo il comando 'Ricomponi' se l'immagine attiva era "
 "stata originariamente prodotta da 'Scomponi'."
 
-#: ../plug-ins/common/compose.c:486
+#: ../plug-ins/common/compose.c:499
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr ""
 "Errore durante la scansione del parassita 'decompose-data': trovati troppo "
 "pochi livelli"
 
-#: ../plug-ins/common/compose.c:519
+#: ../plug-ins/common/compose.c:532
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr "Impossibile usare i livelli per l'immagine %d"
 
-#: ../plug-ins/common/compose.c:592
+#: ../plug-ins/common/compose.c:605
 msgid "Composing"
 msgstr "Composizione"
 
-#: ../plug-ins/common/compose.c:677 ../plug-ins/common/compose.c:1673
+#: ../plug-ins/common/compose.c:690 ../plug-ins/common/compose.c:1724
 msgid "At least one image is needed to compose"
 msgstr "È necessaria almeno un'immagine per la composizione"
 
-#: ../plug-ins/common/compose.c:688 ../plug-ins/common/compose.c:701
+#: ../plug-ins/common/compose.c:701 ../plug-ins/common/compose.c:714
 #, c-format
 msgid "Specified layer %d not found"
 msgstr "Livello specificato %d non trovato"
 
-#: ../plug-ins/common/compose.c:708
+#: ../plug-ins/common/compose.c:721
 msgid "Drawables have different size"
 msgstr "Figure con dimensioni differenti"
 
-#: ../plug-ins/common/compose.c:733
+#: ../plug-ins/common/compose.c:746
 msgid "Images have different size"
 msgstr "Le immagini hanno dimensioni differenti"
 
-#: ../plug-ins/common/compose.c:750
+#: ../plug-ins/common/compose.c:763
 msgid "Error in getting layer IDs"
 msgstr "Errore nell'ottenere gli ID dei livelli"
 
-#: ../plug-ins/common/compose.c:771
+#: ../plug-ins/common/compose.c:784
 #, c-format
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "L'immagine non è in scala di grigi (bpp=%d)"
 
-#: ../plug-ins/common/compose.c:798
+#: ../plug-ins/common/compose.c:811
 msgid "Unable to recompose, source layer not found"
 msgstr "Impossibile ricomporre, livello sorgente non trovato"
 
-#: ../plug-ins/common/compose.c:1426
+#: ../plug-ins/common/compose.c:1477
 msgid "Compose"
 msgstr "Composizione"
 
 #. Compose type combo
-#: ../plug-ins/common/compose.c:1453
+#: ../plug-ins/common/compose.c:1504
 msgid "Compose Channels"
 msgstr "Composizione canali"
 
-#: ../plug-ins/common/compose.c:1463 ../plug-ins/common/decompose.c:1378
+#: ../plug-ins/common/compose.c:1514 ../plug-ins/common/decompose.c:1495
 msgid "Color _model:"
 msgstr "_Modello di colore:"
 
 #. Channel representation table
-#: ../plug-ins/common/compose.c:1495
+#: ../plug-ins/common/compose.c:1546
 msgid "Channel Representations"
 msgstr "Rappresentazione canali"
 
-#: ../plug-ins/common/compose.c:1558
+#: ../plug-ins/common/compose.c:1609
 msgid "Mask value"
 msgstr "Maschera valore"
 
@@ -2813,7 +2822,8 @@ msgid "E_xtend"
 msgstr "_Estendi"
 
 #: ../plug-ins/common/convmatrix.c:111 ../plug-ins/common/displace.c:475
-#: ../plug-ins/common/edge.c:700 ../plug-ins/common/ripple.c:563
+#: ../plug-ins/common/edge.c:700 ../plug-ins/common/fractaltrace.c:732
+#: ../plug-ins/common/ripple.c:563
 msgid "_Wrap"
 msgstr "_Wrap"
 
@@ -2956,311 +2966,338 @@ msgstr "Piega l'immagine usando due curve di controllo"
 msgid "_Curve Bend..."
 msgstr "Piega _curva..."
 
-#: ../plug-ins/common/curve_bend.c:678
+#: ../plug-ins/common/curve_bend.c:676
 msgid "Can operate on layers only (but was called on channel or mask)."
 msgstr ""
 "Può operare solamente sui livelli (ma è stato chiamato su un canale o una "
 "maschera)."
 
-#: ../plug-ins/common/curve_bend.c:696
+#: ../plug-ins/common/curve_bend.c:684
 msgid "Cannot operate on layers with masks."
 msgstr "Impossibile operare su livelli con maschere."
 
-#: ../plug-ins/common/curve_bend.c:711
+#. could not float the selection because selection rectangle
+#. * is completely empty return GIMP_PDB_EXECUTION_ERROR
+#.
+#: ../plug-ins/common/curve_bend.c:695
 msgid "Cannot operate on empty selections."
 msgstr "Impossibile operare su selezioni vuote."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: ../plug-ins/common/curve_bend.c:1214 ../plug-ins/common/curve_bend.c:2931
+#: ../plug-ins/common/curve_bend.c:1196 ../plug-ins/common/curve_bend.c:2913
 msgid "Curve Bend"
 msgstr "Piega curva"
 
 #. Preview area, top of column
-#: ../plug-ins/common/curve_bend.c:1250
+#: ../plug-ins/common/curve_bend.c:1232
 #: ../plug-ins/gimpressionist/orientmap.c:574
 #: ../plug-ins/gimpressionist/sizemap.c:443
 msgid "Preview"
 msgstr "Anteprima"
 
 #. The preview button
-#: ../plug-ins/common/curve_bend.c:1279
+#: ../plug-ins/common/curve_bend.c:1261
 msgid "_Preview Once"
 msgstr "Ante_prima"
 
 #. The preview toggle
-#: ../plug-ins/common/curve_bend.c:1288
+#: ../plug-ins/common/curve_bend.c:1270
 msgid "Automatic pre_view"
 msgstr "Anteprima a_utomatica"
 
 #. Options area, bottom of column
 #. Options section
-#: ../plug-ins/common/curve_bend.c:1298 ../plug-ins/common/ripple.c:504
+#: ../plug-ins/common/curve_bend.c:1280 ../plug-ins/common/ripple.c:504
 #: ../plug-ins/gfig/gfig-dialog.c:1205
 msgid "Options"
 msgstr "Opzioni"
 
 #. Rotate spinbutton
-#: ../plug-ins/common/curve_bend.c:1312
+#: ../plug-ins/common/curve_bend.c:1294
 msgid "Rotat_e:"
 msgstr "Rotazion_e:"
 
 #. The smoothing toggle
-#: ../plug-ins/common/curve_bend.c:1330
+#: ../plug-ins/common/curve_bend.c:1312
 msgid "Smoo_thing"
 msgstr "Smussamen_to"
 
 #. The antialiasing toggle
-#: ../plug-ins/common/curve_bend.c:1340 ../plug-ins/common/gqbist.c:839
+#: ../plug-ins/common/curve_bend.c:1322 ../plug-ins/common/gqbist.c:839
 #: ../plug-ins/common/mosaic.c:730 ../plug-ins/common/ripple.c:513
 msgid "_Antialiasing"
 msgstr "_Antialiasing"
 
 #. The work_on_copy toggle
-#: ../plug-ins/common/curve_bend.c:1350
+#: ../plug-ins/common/curve_bend.c:1332
 msgid "Work on cop_y"
 msgstr "Lavora sulla cop_ia"
 
 #. The curves graph
-#: ../plug-ins/common/curve_bend.c:1360
+#: ../plug-ins/common/curve_bend.c:1342
 msgid "Modify Curves"
 msgstr "Modifica curve"
 
-#: ../plug-ins/common/curve_bend.c:1388
+#: ../plug-ins/common/curve_bend.c:1370
 msgid "Curve for Border"
 msgstr "Curva del bordo"
 
-#: ../plug-ins/common/curve_bend.c:1392
+#: ../plug-ins/common/curve_bend.c:1374
 msgid "_Upper"
 msgstr "_Alto"
 
-#: ../plug-ins/common/curve_bend.c:1393
+#: ../plug-ins/common/curve_bend.c:1375
 msgid "_Lower"
 msgstr "_Basso"
 
-#: ../plug-ins/common/curve_bend.c:1403
+#: ../plug-ins/common/curve_bend.c:1385
 msgid "Curve Type"
 msgstr "Tipo curva"
 
-#: ../plug-ins/common/curve_bend.c:1407
+#: ../plug-ins/common/curve_bend.c:1389
 msgid "Smoot_h"
 msgstr "Smussame_nto"
 
-#: ../plug-ins/common/curve_bend.c:1408
+#: ../plug-ins/common/curve_bend.c:1390
 msgid "_Free"
 msgstr "_Libero"
 
 #. The Copy button
-#: ../plug-ins/common/curve_bend.c:1423
+#: ../plug-ins/common/curve_bend.c:1405
 msgid "_Copy"
 msgstr "_Copia"
 
-#: ../plug-ins/common/curve_bend.c:1428
+#: ../plug-ins/common/curve_bend.c:1410
 msgid "Copy the active curve to the other border"
 msgstr "Copia la curva attiva sull'altro bordo"
 
 #. The CopyInv button
-#: ../plug-ins/common/curve_bend.c:1435
+#: ../plug-ins/common/curve_bend.c:1417
 msgid "_Mirror"
 msgstr "_Rifletti"
 
-#: ../plug-ins/common/curve_bend.c:1440
+#: ../plug-ins/common/curve_bend.c:1422
 msgid "Mirror the active curve to the other border"
 msgstr "Rifletti la curva attiva sull'altro bordo"
 
 #. The Swap button
-#: ../plug-ins/common/curve_bend.c:1448
+#: ../plug-ins/common/curve_bend.c:1430
 msgid "S_wap"
 msgstr "_Scambia"
 
-#: ../plug-ins/common/curve_bend.c:1453
+#: ../plug-ins/common/curve_bend.c:1435
 msgid "Swap the two curves"
 msgstr "Scambia le due curve"
 
-#: ../plug-ins/common/curve_bend.c:1465
+#: ../plug-ins/common/curve_bend.c:1447
 msgid "Reset the active curve"
 msgstr "Ripristina la curva attiva"
 
-#: ../plug-ins/common/curve_bend.c:1482
+#: ../plug-ins/common/curve_bend.c:1464
 msgid "Load the curves from a file"
 msgstr "Carica le curve da un file"
 
-#: ../plug-ins/common/curve_bend.c:1494
+#: ../plug-ins/common/curve_bend.c:1476
 msgid "Save the curves to a file"
 msgstr "Salva le curve in un file"
 
-#: ../plug-ins/common/curve_bend.c:2029
+#: ../plug-ins/common/curve_bend.c:2011
 msgid "Load Curve Points from File"
 msgstr "Carica i punti della curva da file"
 
-#: ../plug-ins/common/curve_bend.c:2064
+#: ../plug-ins/common/curve_bend.c:2046
 msgid "Save Curve Points to File"
 msgstr "Salva i punti della curva in un file"
 
-#: ../plug-ins/common/decompose.c:162 ../plug-ins/common/decompose.c:166
-#: ../plug-ins/common/decompose.c:170
+#: ../plug-ins/common/decompose.c:170 ../plug-ins/common/decompose.c:174
+#: ../plug-ins/common/decompose.c:178
 msgid "red"
 msgstr "rosso"
 
-#: ../plug-ins/common/decompose.c:163 ../plug-ins/common/decompose.c:167
-#: ../plug-ins/common/decompose.c:171
+#: ../plug-ins/common/decompose.c:171 ../plug-ins/common/decompose.c:175
+#: ../plug-ins/common/decompose.c:179
 msgid "green"
 msgstr "verde"
 
-#: ../plug-ins/common/decompose.c:164 ../plug-ins/common/decompose.c:168
-#: ../plug-ins/common/decompose.c:172
+#: ../plug-ins/common/decompose.c:172 ../plug-ins/common/decompose.c:176
+#: ../plug-ins/common/decompose.c:180
 msgid "blue"
 msgstr "blu"
 
-#: ../plug-ins/common/decompose.c:173 ../plug-ins/common/decompose.c:204
+#: ../plug-ins/common/decompose.c:181 ../plug-ins/common/decompose.c:221
 msgid "alpha"
 msgstr "alfa"
 
-#: ../plug-ins/common/decompose.c:176 ../plug-ins/common/decompose.c:180
+#: ../plug-ins/common/decompose.c:184 ../plug-ins/common/decompose.c:188
 msgid "hue"
 msgstr "tonalità"
 
-#: ../plug-ins/common/decompose.c:177 ../plug-ins/common/decompose.c:181
+#: ../plug-ins/common/decompose.c:185 ../plug-ins/common/decompose.c:189
 msgid "saturation"
 msgstr "saturazione"
 
-#: ../plug-ins/common/decompose.c:178 ../plug-ins/common/decompose.c:182
+#: ../plug-ins/common/decompose.c:186 ../plug-ins/common/decompose.c:190
 msgid "value"
 msgstr "valore"
 
-#: ../plug-ins/common/decompose.c:185 ../plug-ins/common/decompose.c:189
+#: ../plug-ins/common/decompose.c:193 ../plug-ins/common/decompose.c:197
+msgid "hue_l"
+msgstr "tonalità_1"
+
+#: ../plug-ins/common/decompose.c:194 ../plug-ins/common/decompose.c:198
+msgid "saturation_l"
+msgstr "saturazione_1"
+
+#: ../plug-ins/common/decompose.c:195 ../plug-ins/common/decompose.c:199
+msgid "lightness"
+msgstr "brillantezza"
+
+#: ../plug-ins/common/decompose.c:197
+msgid "Hue (HSL)"
+msgstr "Tonalità (HSL)"
+
+#: ../plug-ins/common/decompose.c:198
+msgid "Saturation (HSL)"
+msgstr "Saturazione (HSL)"
+
+#: ../plug-ins/common/decompose.c:199
+msgid "Lightness"
+msgstr "Brillantezza"
+
+#: ../plug-ins/common/decompose.c:202 ../plug-ins/common/decompose.c:206
 msgid "cyan"
 msgstr "ciano"
 
-#: ../plug-ins/common/decompose.c:186 ../plug-ins/common/decompose.c:190
+#: ../plug-ins/common/decompose.c:203 ../plug-ins/common/decompose.c:207
 msgid "magenta"
 msgstr "magenta"
 
-#: ../plug-ins/common/decompose.c:187 ../plug-ins/common/decompose.c:191
+#: ../plug-ins/common/decompose.c:204 ../plug-ins/common/decompose.c:208
 msgid "yellow"
 msgstr "Giallo"
 
-#: ../plug-ins/common/decompose.c:189
+#: ../plug-ins/common/decompose.c:206
 msgid "Cyan"
 msgstr "Ciano"
 
-#: ../plug-ins/common/decompose.c:190
+#: ../plug-ins/common/decompose.c:207
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../plug-ins/common/decompose.c:191
+#: ../plug-ins/common/decompose.c:208
 msgid "Yellow"
 msgstr "Giallo"
 
-#: ../plug-ins/common/decompose.c:194 ../plug-ins/common/decompose.c:199
+#: ../plug-ins/common/decompose.c:211 ../plug-ins/common/decompose.c:216
 msgid "cyan-k"
 msgstr "ciano-k"
 
-#: ../plug-ins/common/decompose.c:195 ../plug-ins/common/decompose.c:200
+#: ../plug-ins/common/decompose.c:212 ../plug-ins/common/decompose.c:217
 msgid "magenta-k"
 msgstr "magenta-k"
 
-#: ../plug-ins/common/decompose.c:196 ../plug-ins/common/decompose.c:201
+#: ../plug-ins/common/decompose.c:213 ../plug-ins/common/decompose.c:218
 msgid "yellow-k"
 msgstr "giallo-k"
 
-#: ../plug-ins/common/decompose.c:197
+#: ../plug-ins/common/decompose.c:214
 msgid "black"
 msgstr "nero"
 
-#: ../plug-ins/common/decompose.c:199
+#: ../plug-ins/common/decompose.c:216
 msgid "Cyan_K"
 msgstr "Ciano_K"
 
-#: ../plug-ins/common/decompose.c:200
+#: ../plug-ins/common/decompose.c:217
 msgid "Magenta_K"
 msgstr "Magenta_K"
 
-#: ../plug-ins/common/decompose.c:201
+#: ../plug-ins/common/decompose.c:218
 msgid "Yellow_K"
 msgstr "Giallo_K"
 
-#: ../plug-ins/common/decompose.c:204
+#: ../plug-ins/common/decompose.c:221
 msgid "Alpha"
 msgstr "Alfa"
 
-#: ../plug-ins/common/decompose.c:212
+#: ../plug-ins/common/decompose.c:229
 msgid "luma-y470"
 msgstr "luminosità-y470"
 
-#: ../plug-ins/common/decompose.c:213
+#: ../plug-ins/common/decompose.c:230
 msgid "blueness-cb470"
 msgstr "liv.blu-cb470"
 
-#: ../plug-ins/common/decompose.c:214
+#: ../plug-ins/common/decompose.c:231
 msgid "redness-cr470"
 msgstr "liv.rosso-cr470"
 
-#: ../plug-ins/common/decompose.c:216
+#: ../plug-ins/common/decompose.c:233
 msgid "luma-y709"
 msgstr "luminosità-y709"
 
-#: ../plug-ins/common/decompose.c:217
+#: ../plug-ins/common/decompose.c:234
 msgid "blueness-cb709"
 msgstr "liv.blu-cb709"
 
-#: ../plug-ins/common/decompose.c:218
+#: ../plug-ins/common/decompose.c:235
 msgid "redness-cr709"
 msgstr "liv.rosso-cr709"
 
-#: ../plug-ins/common/decompose.c:220
+#: ../plug-ins/common/decompose.c:237
 msgid "luma-y470f"
 msgstr "luminosità-y470f"
 
-#: ../plug-ins/common/decompose.c:221
+#: ../plug-ins/common/decompose.c:238
 msgid "blueness-cb470f"
 msgstr "liv.blu-cb470f"
 
-#: ../plug-ins/common/decompose.c:222
+#: ../plug-ins/common/decompose.c:239
 msgid "redness-cr470f"
 msgstr "liv.rosso-cr470f"
 
-#: ../plug-ins/common/decompose.c:224
+#: ../plug-ins/common/decompose.c:241
 msgid "luma-y709f"
 msgstr "luminosità-y709f"
 
-#: ../plug-ins/common/decompose.c:225
+#: ../plug-ins/common/decompose.c:242
 msgid "blueness-cb709f"
 msgstr "liv.blu-cb709f"
 
-#: ../plug-ins/common/decompose.c:226
+#: ../plug-ins/common/decompose.c:243
 msgid "redness-cr709f"
 msgstr "liv.rosso-cr709f"
 
-#: ../plug-ins/common/decompose.c:277 ../plug-ins/common/decompose.c:291
+#: ../plug-ins/common/decompose.c:294 ../plug-ins/common/decompose.c:308
 msgid "Decompose an image into separate colorspace components"
 msgstr "Decompone un'immagine in componenti di spazio colore separati"
 
-#: ../plug-ins/common/decompose.c:283 ../plug-ins/common/decompose.c:301
+#: ../plug-ins/common/decompose.c:300 ../plug-ins/common/decompose.c:318
 msgid "_Decompose..."
 msgstr "_Decomponi..."
 
-#: ../plug-ins/common/decompose.c:392
+#: ../plug-ins/common/decompose.c:409
 msgid "Decomposing"
 msgstr "Decomposizione"
 
-#: ../plug-ins/common/decompose.c:1343
+#: ../plug-ins/common/decompose.c:1460
 msgid "Decompose"
 msgstr "Decomponi"
 
-#: ../plug-ins/common/decompose.c:1366
+#: ../plug-ins/common/decompose.c:1483
 msgid "Extract Channels"
 msgstr "Estrazione canali"
 
-#: ../plug-ins/common/decompose.c:1413
+#: ../plug-ins/common/decompose.c:1530
 msgid "_Decompose to layers"
 msgstr "_Decomposizione in livelli"
 
-#: ../plug-ins/common/decompose.c:1424
+#: ../plug-ins/common/decompose.c:1541
 msgid "_Foreground as registration color"
 msgstr "Usa lo s_fondo come colore di registrazione"
 
-#: ../plug-ins/common/decompose.c:1425
+#: ../plug-ins/common/decompose.c:1542
 msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
@@ -3492,7 +3529,7 @@ msgid "_Whirl"
 msgstr "Rota_zione"
 
 #: ../plug-ins/common/displace.c:172
-msgid "Displace pixels as indicated by displacment maps"
+msgid "Displace pixels as indicated by displacement maps"
 msgstr "Dispone i pixel secondo le mappe di disposizione"
 
 #: ../plug-ins/common/displace.c:182
@@ -4052,10 +4089,6 @@ msgstr "Traccia frattale"
 #: ../plug-ins/common/fractaltrace.c:727
 msgid "Outside Type"
 msgstr "Tipo in uscita"
-
-#: ../plug-ins/common/fractaltrace.c:732
-msgid "_Warp"
-msgstr "_Warp"
 
 #: ../plug-ins/common/fractaltrace.c:738
 msgid "_White"
@@ -5003,7 +5036,7 @@ msgstr "_Mantieni"
 msgid "_Convert"
 msgstr "_Converti"
 
-#: ../plug-ins/common/lcms.c:981 ../plug-ins/jpeg/jpeg-exif.c:389
+#: ../plug-ins/common/lcms.c:981 ../plug-ins/jpeg/jpeg-exif.c:390
 msgid "_Don't ask me again"
 msgstr "_Non chiedermelo più"
 
@@ -5115,60 +5148,60 @@ msgstr "Effetti speciali che nessuno capisce"
 msgid "_Van Gogh (LIC)..."
 msgstr "_Van Gogh (LIC)..."
 
-#: ../plug-ins/common/mail.c:264
+#: ../plug-ins/common/mail.c:259
 msgid "Email the image"
 msgstr "Spedisci l'immagine"
 
-#: ../plug-ins/common/mail.c:270
+#: ../plug-ins/common/mail.c:265
 msgid "_Mail Image..."
 msgstr "Spedisci i_mmagine..."
 
-#: ../plug-ins/common/mail.c:519
+#: ../plug-ins/common/mail.c:524
 msgid "Send as Mail"
 msgstr "Invia come email"
 
-#: ../plug-ins/common/mail.c:524
+#: ../plug-ins/common/mail.c:529
 msgid "_Send"
 msgstr "_Spedisci"
 
-#: ../plug-ins/common/mail.c:556
+#: ../plug-ins/common/mail.c:561
 msgid "_Filename:"
 msgstr "_Nome file:"
 
 #. Encapsulation label
-#: ../plug-ins/common/mail.c:563
+#: ../plug-ins/common/mail.c:568
 msgid "Encapsulation:"
 msgstr "Incapsulamento:"
 
-#: ../plug-ins/common/mail.c:575
+#: ../plug-ins/common/mail.c:580
 msgid "_MIME"
 msgstr "_MIME"
 
-#: ../plug-ins/common/mail.c:576
+#: ../plug-ins/common/mail.c:581
 msgid "_Uuencode"
 msgstr "_Uuencode"
 
-#: ../plug-ins/common/mail.c:590
+#: ../plug-ins/common/mail.c:595
 msgid "_Recipient:"
 msgstr "_Destinatario:"
 
-#: ../plug-ins/common/mail.c:604
+#: ../plug-ins/common/mail.c:609
 msgid "_Sender:"
 msgstr "_Mittente:"
 
-#: ../plug-ins/common/mail.c:616
+#: ../plug-ins/common/mail.c:621
 msgid "S_ubject:"
 msgstr "_Oggetto:"
 
-#: ../plug-ins/common/mail.c:628
+#: ../plug-ins/common/mail.c:633
 msgid "Comm_ent:"
 msgstr "Comm_ento:"
 
-#: ../plug-ins/common/mail.c:736
+#: ../plug-ins/common/mail.c:741
 msgid "some sort of error with the file extension or lack thereof"
 msgstr "estensione del file errata o mancante"
 
-#: ../plug-ins/common/mail.c:963
+#: ../plug-ins/common/mail.c:903
 #, c-format
 msgid "Could not start sendmail (%s)"
 msgstr "Impossibile eseguire sendmail (%s)"
@@ -7915,7 +7948,7 @@ msgid "C_reate new image"
 msgstr "C_rea nuova immagine"
 
 #: ../plug-ins/common/tileit.c:215
-msgid "Tile image into smaller versions of the orginal"
+msgid "Tile image into smaller versions of the original"
 msgstr "Piastrella l'immagine con versioni più piccole dell'originale"
 
 #: ../plug-ins/common/tileit.c:220
@@ -11216,11 +11249,11 @@ msgstr "Rotazione immagine?"
 msgid "_Keep Orientation"
 msgstr "_Mantieni l'orientamento"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:364
+#: ../plug-ins/jpeg/jpeg-exif.c:365
 msgid "According to the EXIF data, this image is rotated."
 msgstr "Secondo i dati EXIF, quest'immagine è ruotata."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:379
+#: ../plug-ins/jpeg/jpeg-exif.c:380
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Vuoi che Gimp la ruoti per riportarla all'orientamento standard?"
 
