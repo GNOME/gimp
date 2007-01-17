@@ -1763,9 +1763,9 @@ bender_calculate_curve (BenderDialog *cd,
 
 static void
 bender_rotate_adj_callback (GtkAdjustment *adjustment,
-                            gpointer   client_data)
+                            gpointer       client_data)
 {
-  BenderDialog *cd = (BenderDialog*) client_data;
+  BenderDialog *cd = (BenderDialog *) client_data;
 
   if (adjustment->value != cd->rotation)
   {
@@ -1793,7 +1793,11 @@ bender_type_callback (GtkWidget *widget,
   BenderDialog *cd;
 
   gimp_radio_button_update (widget, data);
+
   cd = g_object_get_data (G_OBJECT (widget), "cd");
+  if (! cd)
+    return;
+
   if (cd->curve_type == SMOOTH)
     {
       gint i;
@@ -1822,10 +1826,8 @@ static void
 bender_reset_callback (GtkWidget *widget,
                        gpointer   client_data)
 {
-  BenderDialog *cd;
-  int i;
-
-  cd = (BenderDialog *) client_data;
+  BenderDialog *cd = (BenderDialog *) client_data;
+  gint          i;
 
   /*  Initialize the values  */
   for (i = 0; i < 256; i++)

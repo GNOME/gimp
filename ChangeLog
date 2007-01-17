@@ -1,3 +1,9 @@
+2007-01-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/curve_bend.c (bender_type_callback): check data
+	before accessing it to avoid crashing while the dialog is being
+	constructed. Fixes bug #395798.
+
 2007-01-16  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/file-commands.c (file_open_dialog_show): use the
