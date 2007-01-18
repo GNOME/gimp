@@ -1,3 +1,9 @@
+2007-01-18  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* tools/pdbgen/pdb/color.pdb: allow low value to be equal to the high
+	value for PDB call to gimp-threshold. From a patch by Dave Gowers.
+	Fixes bug #397903.
+
 2007-01-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/curve_bend.c (bender_type_callback): check data
