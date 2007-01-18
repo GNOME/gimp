@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins 1.1.26\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-10-27 13:17+0300\n"
-"PO-Revision-Date: 2006-10-30 08:50+0300\n"
+"PO-Revision-Date: 2007-01-18 18:21+0300\n"
 "Last-Translator: Mikko Paananen <mikko at ipi.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1233,7 +1233,7 @@ msgstr "RLE-pakattu"
 
 #: ../plug-ins/bmp/bmpwrite.c:826 ../plug-ins/jpeg/jpeg-save.c:792
 msgid "_Advanced Options"
-msgstr "Kehittyneet asetukset"
+msgstr "_Lisäasetukset"
 
 #: ../plug-ins/bmp/bmpwrite.c:841
 msgid "16 bits"
@@ -1630,7 +1630,7 @@ msgstr "_Arvo"
 
 #: ../plug-ins/common/CML_explorer.c:1302
 msgid "_Advanced"
-msgstr "Kehittyneet"
+msgstr "_Lisäasetukset"
 
 #: ../plug-ins/common/CML_explorer.c:1317
 msgid "Channel Independent Parameters"
@@ -8211,7 +8211,7 @@ msgstr "Edustaväri"
 #. ---------    The secondary table         --------------------------
 #: ../plug-ins/common/warp.c:537
 msgid "Advanced Options"
-msgstr "Kehittyneet asetukset"
+msgstr "Lisäasetukset"
 
 #: ../plug-ins/common/warp.c:553
 msgid "Dither size:"
@@ -8238,7 +8238,7 @@ msgstr "Käytä suuruuskarttaa"
 #. ---------    The "other" table         --------------------------
 #: ../plug-ins/common/warp.c:623
 msgid "More Advanced Options"
-msgstr "Lisää kehittyneitä asetuksia"
+msgstr "Lisää asetuksia"
 
 #: ../plug-ins/common/warp.c:640
 msgid "Gradient scale:"
