@@ -799,7 +799,7 @@ threshold_invoker (GimpProcedure     *procedure,
     {
       if (! gimp_item_is_attached (GIMP_ITEM (drawable)) ||
           gimp_drawable_is_indexed (drawable) ||
-          (low_threshold >= high_threshold))
+          (low_threshold > high_threshold))
         success = FALSE;
 
       if (success)
