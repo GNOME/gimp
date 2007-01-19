@@ -71,6 +71,7 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 
@@ -143,7 +144,12 @@ static void   gimp_iscissors_tool_cursor_update  (GimpTool          *tool,
                                                   GimpCoords        *coords,
                                                   GdkModifierType    state,
                                                   GimpDisplay       *display);
+static gboolean gimp_iscissors_tool_key_press    (GimpTool          *tool,
+                                                  GdkEventKey       *kevent,
+                                                  GimpDisplay       *display);
 
+static void   gimp_iscissors_tool_apply          (GimpIscissorsTool *iscissors,
+                                                  GimpDisplay       *display);
 static void   gimp_iscissors_tool_reset          (GimpIscissorsTool *iscissors);
 static void   gimp_iscissors_tool_draw           (GimpDrawTool      *draw_tool);
 
@@ -293,6 +299,7 @@ gimp_iscissors_tool_class_init (GimpIscissorsToolClass *klass)
   tool_class->motion         = gimp_iscissors_tool_motion;
   tool_class->oper_update    = gimp_iscissors_tool_oper_update;
   tool_class->cursor_update  = gimp_iscissors_tool_cursor_update;
+  tool_class->key_press      = gimp_iscissors_tool_key_press;
 
   draw_tool_class->draw      = gimp_iscissors_tool_draw;
 
@@ -457,24 +464,7 @@ gimp_iscissors_tool_button_press (GimpTool        *tool,
                                              iscissors->x,
                                              iscissors->y))
         {
-          /*  Undraw the curve  */
-          gimp_tool_control_halt (tool->control);
-
-          iscissors->draw = DRAW_CURVE;
-          gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
-
-          gimp_channel_select_channel (gimp_image_get_mask (display->image),
-                                       tool->tool_info->blurb,
-                                       iscissors->mask,
-                                       0, 0,
-                                       options->operation,
-                                       options->feather,
-                                       options->feather_radius,
-                                       options->feather_radius);
-
-          gimp_iscissors_tool_reset (iscissors);
-
-          gimp_image_flush (display->image);
+          gimp_iscissors_tool_apply (iscissors, display);
         }
       else if (! iscissors->connected)
         {
@@ -920,14 +910,43 @@ gimp_iscissors_tool_oper_update (GimpTool        *tool,
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);
+  /* parent sets a message in the status bar, but it will be replaced here */
 
   if (mouse_over_vertex (iscissors, coords->x, coords->y) > 1)
     {
+      gchar *status;
+
+      status = gimp_suggest_modifiers (_("Click-Drag to move this point"),
+                                       GDK_SHIFT_MASK & ~state,
+                                       _("%s: disable auto-snap"), NULL, NULL);
+      gimp_tool_replace_status (tool, display, status);
+      g_free (status);
       iscissors->op = ISCISSORS_OP_MOVE_POINT;
     }
   else if (mouse_over_curve (iscissors, coords->x, coords->y))
     {
-      iscissors->op = ISCISSORS_OP_ADD_POINT;
+      ICurve *curve;
+
+      curve = (ICurve *) iscissors->curves->data;
+
+      if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), display,
+                                    RINT (coords->x), RINT (coords->y),
+                                    GIMP_HANDLE_CIRCLE,
+                                    curve->x1, curve->y1,
+                                    POINT_WIDTH, POINT_WIDTH,
+                                    GTK_ANCHOR_CENTER,
+                                    FALSE))
+        {
+          gimp_tool_replace_status (tool, display, _("Click to close the"
+                                                     " curve"));
+          iscissors->op = ISCISSORS_OP_CONNECT;
+        }
+      else
+        {
+          gimp_tool_replace_status (tool, display, _("Click to add a point"
+                                                     " on this segment"));
+          iscissors->op = ISCISSORS_OP_ADD_POINT;
+        }
     }
   else if (iscissors->connected && iscissors->mask)
     {
@@ -935,10 +954,22 @@ gimp_iscissors_tool_oper_update (GimpTool        *tool,
                                         RINT (coords->x),
                                         RINT (coords->y)))
         {
+          if (proximity)
+            {
+              gimp_tool_replace_status (tool, display,
+                                        _("Click or press Enter to convert to"
+                                          " a selection"));
+            }
           iscissors->op = ISCISSORS_OP_SELECT;
         }
       else
         {
+          if (proximity)
+            {
+              gimp_tool_replace_status (tool, display,
+                                        _("Press Enter to convert to a"
+                                          " selection"));
+            }
           iscissors->op = ISCISSORS_OP_IMPOSSIBLE;
         }
     }
@@ -947,12 +978,23 @@ gimp_iscissors_tool_oper_update (GimpTool        *tool,
       switch (iscissors->state)
         {
         case WAITING:
+          if (proximity)
+            {
+              gchar *status;
+
+              status = gimp_suggest_modifiers (_("Click or Click-Drag to add a"
+                                                 " point"),
+                                               GDK_SHIFT_MASK & ~state,
+                                               _("%s: disable auto-snap"),
+                                               NULL, NULL);
+              gimp_tool_replace_status (tool, display, status);
+              g_free (status);
+            }
           iscissors->op = ISCISSORS_OP_ADD_POINT;
           break;
 
-        case SEED_PLACEMENT:
-        case SEED_ADJUSTMENT:
         default:
+          /* if NO_ACTION, keep parent's status bar message (selection tool) */
           iscissors->op = ISCISSORS_OP_NONE;
           break;
         }
@@ -983,6 +1025,10 @@ gimp_iscissors_tool_cursor_update (GimpTool        *tool,
       modifier = GIMP_CURSOR_MODIFIER_PLUS;
       break;
 
+    case ISCISSORS_OP_CONNECT:
+      modifier = GIMP_CURSOR_MODIFIER_JOIN;
+      break;
+
     case ISCISSORS_OP_IMPOSSIBLE:
       modifier = GIMP_CURSOR_MODIFIER_BAD;
       break;
@@ -997,6 +1043,62 @@ gimp_iscissors_tool_cursor_update (GimpTool        *tool,
                         modifier);
 }
 
+static gboolean
+gimp_iscissors_tool_key_press (GimpTool    *tool,
+                               GdkEventKey *kevent,
+                               GimpDisplay *display)
+{
+  GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (tool);
+
+  if (display != tool->display)
+    return FALSE;
+
+  switch (kevent->keyval)
+    {
+    case GDK_KP_Enter:
+    case GDK_Return:
+      if (iscissors->connected && iscissors->mask)
+        {
+          gimp_iscissors_tool_apply (iscissors, display);
+          return TRUE;
+        }
+      return FALSE;
+
+    case GDK_Escape:
+      gimp_tool_control (tool, GIMP_TOOL_ACTION_HALT, display);
+      return TRUE;
+
+    default:
+      return FALSE;
+    }
+}
+
+static void
+gimp_iscissors_tool_apply (GimpIscissorsTool *iscissors,
+                           GimpDisplay       *display)
+{
+  GimpTool             *tool    = GIMP_TOOL (iscissors);
+  GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+
+  /*  Undraw the curve  */
+  gimp_tool_control_halt (tool->control);
+
+  iscissors->draw = DRAW_CURVE;
+  gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+
+  gimp_channel_select_channel (gimp_image_get_mask (display->image),
+                               tool->tool_info->blurb,
+                               iscissors->mask,
+                               0, 0,
+                               options->operation,
+                               options->feather,
+                               options->feather_radius,
+                               options->feather_radius);
+
+  gimp_iscissors_tool_reset (iscissors);
+
+  gimp_image_flush (display->image);
+}
 
 static void
 gimp_iscissors_tool_reset (GimpIscissorsTool *iscissors)

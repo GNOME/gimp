@@ -1,3 +1,12 @@
+2007-01-19  Raphaël Quinet  <raphael@gimp.org>
+
+	* app/tools/gimpiscissorstool.h
+	* app/tools/gimpiscissorstool.c: Added some status bar messages.
+	Use ISCISSORS_OP_CONNECT to let the user know when the cursor is
+	above the first point and the user can connect and close the
+	curve.  Allow the user to press Enter or Escape to confirm the
+	selection or cancel the tool.  Fixes bug #398309.
+
 2007-01-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/pdb/color_cmds.c: regenerated.
