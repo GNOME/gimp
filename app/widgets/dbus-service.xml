@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<node name="/org/gimp/GIMP">
+
+  <interface name="org.gimp.GIMP">
+    <annotation name="org.freedesktop.DBus.GLib.CSymbol"
+		value="gimp_dbus_service" />
+    <method name="Open">
+      <arg type="as" name="uri" direction="in" />
+    </method>
+  </interface>
+
+</node>

@@ -29,7 +29,7 @@ header files installed.
      from http://www.freedesktop.org/software/pkgconfig/.  
 
   2. You need to have installed GTK+ version 2.8.17 or newer.  GIMP
-     needs an even more recent version of GLib (>= 2.10.2).  It also
+     needs an even more recent version of GLib (>= 2.12.3).  It also
      wants Pango (>= 1.12.2).  Sources for these can be grabbed from
      ftp://ftp.gtk.org/.
 
@@ -42,27 +42,30 @@ header files installed.
      Older versions are known to have bugs that seriously affect
      stability of GIMP.
 
-  4. We use libart2. Grab the module libart_lgpl out of GNOME CVS or
+  4. We use libart2. Grab the module libart_lgpl out of GNOME SVN or
      fetch the tarball from
      ftp://ftp.gnome.org/pub/gnome/sources/libart_lgpl/
 
-  5. You may want to install other third party libraries or programs
+  5. We use dbus-glib if available. Grab it from
+     http://dbus.freedesktop.org/releases/dbus-glib/
+
+  6. You may want to install other third party libraries or programs
      that are needed for some of the available plugins. We recommend
      to check that the following libraries are installed: libpng,
      libjpeg, libpoppler, libtiff, gtkhtml-2, libmng, librsvg, libwmf.
 
-  6. The Python extension requires Python development headers to be
+  7. The Python extension requires Python development headers to be
      present. You will also need PyGTK and the respective development
      headers.
 
-  7. Configure GIMP by running the `configure' script. You may want
+  8. Configure GIMP by running the `configure' script. You may want
      to pass some options to it, see below.
 
-  8. Build GIMP by running `make'. The use of GNU make is recommended.
+  9. Build GIMP by running `make'. The use of GNU make is recommended.
      If you need to tweak the build to make it work with other flavours
      of make, we'd appreciate if you'd send us a patch with the changes.
 
-  9. Install GIMP by running `make install'. In order to avoid clashes
+ 10. Install GIMP by running `make install'. In order to avoid clashes
      with other versions of GIMP, we install a binary called gimp-2.3.
      By default there's also a link created so that you can type 'gimp'
      to start gimp-2.3.
@@ -164,7 +167,7 @@ These are:
   --enable-gtk-doc.  This option controls whether the libgimp API
      references will be created using gtk-doc. The HTML pages are 
      included in a standard tarball, so you will only need this if you
-     are building from CVS.
+     are building from SVN.
 
   --with-html-dir=PATH.  This option allows to specify where the
      libgimp API reference should be installed. You might want to modify

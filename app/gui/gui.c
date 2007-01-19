@@ -22,6 +22,11 @@
 
 #include <gtk/gtk.h>
 
+#if HAVE_DBUS_GLIB
+#include <dbus/dbus-glib.h>
+#include <dbus/dbus-glib-lowlevel.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 #include "libgimpwidgets/gimpwidgets-private.h"
@@ -51,6 +56,7 @@
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimpcolorselectorpalette.h"
 #include "widgets/gimpcontrollers.h"
+#include "widgets/gimpdbusservice.h"
 #include "widgets/gimpdevices.h"
 #include "widgets/gimpdevicestatus.h"
 #include "widgets/gimpdialogfactory.h"
@@ -126,11 +132,18 @@ static void       gui_display_changed           (GimpContext        *context,
                                                  Gimp               *gimp);
 static void       gui_display_remove            (GimpContainer      *displays);
 
+static void       gui_dbus_service_init         (Gimp               *gimp);
+static void       gui_dbus_service_exit         (void);
+
 
 /*  private variables  */
 
-static Gimp          *the_gui_gimp     = NULL;
-static GimpUIManager *image_ui_manager = NULL;
+static Gimp            *the_gui_gimp     = NULL;
+static GimpUIManager   *image_ui_manager = NULL;
+
+#if HAVE_DBUS_GLIB
+static DBusGConnection *dbus_connection  = NULL;
+#endif
 
 
 /*  public functions  */
@@ -262,18 +275,19 @@ gui_sanity_check (void)
                                 GTK_REQUIRED_MICRO);
 
   if (mismatch)
-    return g_strdup_printf
-      ("%s\n\n"
-       "GIMP requires GTK+ version %d.%d.%d or later.\n"
-       "Installed GTK+ version is %d.%d.%d.\n\n"
-       "Somehow you or your software packager managed\n"
-       "to install GIMP with an older GTK+ version.\n\n"
-       "Please upgrade to GTK+ version %d.%d.%d or later.",
-       mismatch,
-       GTK_REQUIRED_MAJOR, GTK_REQUIRED_MINOR, GTK_REQUIRED_MICRO,
-       gtk_major_version, gtk_minor_version, gtk_micro_version,
-       GTK_REQUIRED_MAJOR, GTK_REQUIRED_MINOR, GTK_REQUIRED_MICRO);
-
+    {
+      return g_strdup_printf
+        ("%s\n\n"
+         "GIMP requires GTK+ version %d.%d.%d or later.\n"
+         "Installed GTK+ version is %d.%d.%d.\n\n"
+         "Somehow you or your software packager managed\n"
+         "to install GIMP with an older GTK+ version.\n\n"
+         "Please upgrade to GTK+ version %d.%d.%d or later.",
+         mismatch,
+         GTK_REQUIRED_MAJOR, GTK_REQUIRED_MINOR, GTK_REQUIRED_MICRO,
+         gtk_major_version, gtk_minor_version, gtk_micro_version,
+         GTK_REQUIRED_MAJOR, GTK_REQUIRED_MINOR, GTK_REQUIRED_MICRO);
+    }
 #undef GTK_REQUIRED_MAJOR
 #undef GTK_REQUIRED_MINOR
 #undef GTK_REQUIRED_MICRO
@@ -465,6 +479,8 @@ gui_restore_after_callback (Gimp               *gimp,
     session_restore (gimp);
 
   dialogs_show_toolbox ();
+
+  gui_dbus_service_init (gimp);
 }
 
 static gboolean
@@ -486,6 +502,10 @@ gui_exit_callback (Gimp     *gimp,
     }
 
   gimp->message_handler = GIMP_CONSOLE;
+
+#if HAVE_DBUS_GLIB
+  gui_dbus_service_exit ();
+#endif
 
   if (gui_config->save_session_info)
     session_save (gimp, FALSE);
@@ -681,4 +701,44 @@ gui_display_remove (GimpContainer *displays)
 
   if (gimp_container_is_empty (displays))
     dialogs_show_toolbox ();
+}
+
+static void
+gui_dbus_service_init (Gimp *gimp)
+{
+#if HAVE_DBUS_GLIB
+  GError  *error = NULL;
+
+  g_return_if_fail (dbus_connection == NULL);
+
+  dbus_connection = dbus_g_bus_get (DBUS_BUS_SESSION, &error);
+
+  if (dbus_connection)
+    {
+      GObject *service = gimp_dbus_service_new (gimp);
+
+      dbus_bus_request_name (dbus_g_connection_get_connection (dbus_connection),
+                             GIMP_DBUS_SERVICE_NAME, 0, NULL);
+
+      dbus_g_connection_register_g_object (dbus_connection,
+                                           GIMP_DBUS_SERVICE_PATH, service);
+    }
+  else
+    {
+      g_printerr ("%s\n", error->message);
+      g_error_free (error);
+    }
+#endif
+}
+
+static void
+gui_dbus_service_exit (void)
+{
+#if HAVE_DBUS_GLIB
+  if (dbus_connection)
+    {
+      dbus_g_connection_unref (dbus_connection);
+      dbus_connection = NULL;
+    }
+#endif
 }

@@ -10,6 +10,7 @@ INCLUDES = \
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
 	$(GTK_CFLAGS)		\
+	$(DBUS_GLIB_CFLAGS)	\
 	-I$(includedir)
 
 noinst_LIBRARIES = libappgui.a

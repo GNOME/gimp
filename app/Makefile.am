@@ -89,6 +89,7 @@ INCLUDES = \
 	-I$(top_srcdir)		\
 	$(GTK_CFLAGS)		\
 	$(PANGOFT2_CFLAGS)	\
+	$(DBUS_GLIB_CFLAGS)	\
 	-I$(includedir)
 
 gimp_2_3_LDFLAGS = $(mwindows) $(munix) -u $(SYMPREFIX)xcf_init -u $(SYMPREFIX)internal_procs_init
@@ -127,6 +128,7 @@ gimp_2_3_LDADD = \
 	$(PANGOFT2_LIBS)		\
 	$(FONTCONFIG_LIBS)		\
 	$(FREETYPE_LIBS)		\
+	$(DBUS_GLIB_LIBS)		\
 	$(GTHREAD_LIBS)			\
 	$(RT_LIBS)			\
 	$(INTLLIBS)			\

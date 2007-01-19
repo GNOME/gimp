@@ -37,6 +37,10 @@
 
 #include <glib-object.h>
 
+#if HAVE_DBUS_GLIB
+#include <dbus/dbus-glib.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 
 #include "core/core-types.h"
@@ -46,6 +50,8 @@
 #include "config/gimpconfig-dump.h"
 
 #include "core/gimp.h"
+
+#include "widgets/gimpdbusservice.h"
 
 #include "about.h"
 #include "app_procs.h"
@@ -100,6 +106,7 @@ static gboolean            no_data           = FALSE;
 static gboolean            no_fonts          = FALSE;
 static gboolean            no_splash         = FALSE;
 static gboolean            be_verbose        = FALSE;
+static gboolean            new_instance      = FALSE;
 #if defined (USE_SYSV_SHM) || defined (USE_POSIX_SHM) || defined (G_OS_WIN32)
 static gboolean            use_shm           = TRUE;
 #else
@@ -133,6 +140,11 @@ static const GOptionEntry main_entries[] =
     "verbose", 0, 0,
     G_OPTION_ARG_NONE, &be_verbose,
     N_("Be more verbose"), NULL
+  },
+  {
+    "new-instance", 'n', 0,
+    G_OPTION_ARG_NONE, &new_instance,
+    N_("Start a new GIMP instance"), NULL
   },
   {
     "no-interface", 'i', 0,
@@ -313,6 +325,70 @@ main (int    argc,
 
       app_exit (EXIT_FAILURE);
     }
+
+  if (no_interface)
+    new_instance = TRUE;
+
+#ifndef GIMP_CONSOLE_COMPILATION
+#if HAVE_DBUS_GLIB
+  if (! new_instance)
+    {
+      DBusGConnection *connection;
+
+      connection = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+
+      if (connection)
+        {
+          DBusGProxy   *proxy;
+          gboolean      success;
+          const gchar **arg = filenames;
+
+          /* Work around a bug in dbus-glib:
+           * It doesn't accept NULL as an empty string array.
+           */
+          if (! filenames)
+            arg = g_new0 (const gchar *, 1);
+
+          proxy = dbus_g_proxy_new_for_name (connection,
+                                             GIMP_DBUS_SERVICE_NAME,
+                                             GIMP_DBUS_SERVICE_PATH,
+                                             GIMP_DBUS_SERVICE_INTERFACE);
+
+          success = dbus_g_proxy_call (proxy, "Open", &error,
+                                       G_TYPE_STRV, arg,
+                                       G_TYPE_INVALID, G_TYPE_INVALID);
+          if (! filenames)
+            g_free (arg);
+
+          g_object_unref (proxy);
+          dbus_g_connection_unref (connection);
+
+          if (success)
+            {
+              if (be_verbose)
+                g_print ("Found another GIMP instance, using that.\n");
+
+              return EXIT_SUCCESS;
+            }
+
+          if (error->domain == DBUS_GERROR &&
+              error->code == DBUS_GERROR_REMOTE_EXCEPTION)
+            {
+              g_printerr ("Caught remote method exception %s: %s",
+                          dbus_g_error_get_name (error),
+                          error->message);
+            }
+          else if (! (error->domain == DBUS_GERROR &&
+                      error->code == DBUS_GERROR_SERVICE_UNKNOWN))
+            {
+              g_printerr ("Error: %s\n", error->message);
+            }
+
+          g_clear_error (&error);
+        }
+    }
+#endif
+#endif
 
   abort_message = sanity_check ();
   if (abort_message)

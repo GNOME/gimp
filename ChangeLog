@@ -1,5 +1,23 @@
 2007-01-19  Sven Neumann  <sven@gimp.org>
 
+	* INSTALL
+	* configure.in: check for D-Bus GLib bindings.
+
+	* app/Makefile.am
+	* app/main.c: check if an interactive GIMP instance proposes
+	itself on the D-Bus and delegate to it. Allow this behaviour to be
+	overridden by using the --new-instance command-line option.
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpdbusservice.[ch]
+	* app/widgets/dbus-service.xml: added an object that offers a
+	D-Bus service.
+
+	* app/gui/Makefile.am
+	* app/gui/gui.c: connect to the D-Bus and export the GimpDBusService.
+
+2007-01-19  Sven Neumann  <sven@gimp.org>
+
 	* app/file/file-utils.[ch]: let the filename -> uri functions take
 	a Gimp parameter instead of the list of load procedures.
 

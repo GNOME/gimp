@@ -56,6 +56,7 @@ m4_define([gnome_vfs_required_version], [2.10.0])
 m4_define([gnomeui_required_version], [2.10.0])
 m4_define([gnome_keyring_required_version], [0.4.5])
 m4_define([libcurl_required_version], [7.15.1])
+m4_define([dbus_glib_required_version], [0.71])
 
 
 AC_INIT([GIMP], [gimp_version],
@@ -903,9 +904,9 @@ if test "$gdk_target" = x11; then
    dnl doc-shooter is X11 specific
    DOC_SHOOTER=doc-shooter
 
-    dnl Test for Xmu
-    enable_gimp_remote=yes
-    if test -z "$LIBXMU"; then
+   dnl Test for Xmu
+   enable_gimp_remote=yes
+   if test -z "$LIBXMU"; then
       gimp_save_CFLAGS="$CFLAGS"
       gimp_save_LDFLAGS="$LDFLAGS"
       CFLAGS="$CFLAGS $GTK_CFLAGS"
@@ -921,7 +922,9 @@ if test "$gdk_target" = x11; then
       CFLAGS="$gimp_save_CFLAGS"
       LDFLAGS="$gimp_save_LDFLAGS"
       LIBSCREENSHOT="$LIBXMU"
-    fi
+   fi
+else
+   enable_gimp_remote="no (building for $gdk_target)"
 fi
 
 AC_SUBST(LIBXMU)
@@ -1248,9 +1251,9 @@ if test "x$have_poppler" = xyes; then
 fi
 
 
-###################################################################
-# Check for gnome-vfs (and optionally libgnomeui and gnome-keyring)
-###################################################################
+###############################################################################
+# Check for gnome-vfs and libcurl (and optionally libgnomeui and gnome-keyring)
+###############################################################################
 
 uri_plugin=no
 gnome_vfs_modules="gnome-vfs-2.0 >= gnome_vfs_required_version"
@@ -1297,6 +1300,29 @@ fi
 
 if test "x$have_gnome_keyring" = xyes; then
   AC_DEFINE(HAVE_GNOME_KEYRING, 1, [Define to 1 if gnome-keyring is available])
+fi
+
+
+###############################
+# Check for D-Bus glib bindings
+###############################
+
+have_dbus_glib=no
+PKG_CHECK_MODULES(DBUS_GLIB, dbus-glib-1 >= dbus_glib_required_version,
+  have_dbus_glib=yes)
+
+if test "x$have_dbus_glib" = xyes; then
+  AC_PATH_PROG(DBUS_BINDING_TOOL, dbus-binding-tool, no)
+  if test x$DBUS_BINDING_TOOL = xno; then
+    AC_MSG_WARN(Could not find dbus-binding-tool in your PATH)
+    have_dbus_glib="no (dbus-binding-tool not found)"
+  fi
+fi
+
+if test "x$have_dbus_glib" = xyes; then
+  AC_DEFINE(HAVE_DBUS_GLIB, 1,
+            [Define to 1 if D-Bus GLib bindings are available])
+  GIMP_COMMAND='gimp-gimp_app_version'
 fi
 
 
@@ -1897,6 +1923,9 @@ Desktop files install into $DESKTOP_DATADIR
 Extra Binaries:
   gimp-console:      $enable_gimp_console
   gimp-remote:       $enable_gimp_remote
+
+Optional Features:
+  D-Bus service:     $have_dbus_glib
 
 Optional Plug-Ins:
   Ascii Art:         $have_libaa
