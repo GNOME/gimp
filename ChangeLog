@@ -1,5 +1,10 @@
 2007-01-19  Sven Neumann  <sven@gimp.org>
 
+	* app/main.c: call gdk_notify_startup_complete() when we have
+	delegated the work to another GIMP instance and are about to quit.
+
+2007-01-19  Sven Neumann  <sven@gimp.org>
+
 	* INSTALL
 	* configure.in: check for D-Bus GLib bindings.
 

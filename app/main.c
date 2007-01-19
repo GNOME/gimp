@@ -41,6 +41,10 @@
 #include <dbus/dbus-glib.h>
 #endif
 
+#ifndef GIMP_CONSOLE_COMPILATION
+#include <gdk/gdk.h>
+#endif
+
 #include "libgimpbase/gimpbase.h"
 
 #include "core/core-types.h"
@@ -367,6 +371,8 @@ main (int    argc,
             {
               if (be_verbose)
                 g_print ("Found another GIMP instance, using that.\n");
+
+              gdk_notify_startup_complete ();
 
               return EXIT_SUCCESS;
             }
