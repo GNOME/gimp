@@ -110,6 +110,7 @@ file_utils_filename_to_uri (GSList       *procs,
 
   g_return_val_if_fail (procs != NULL, NULL);
   g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   /*  check for prefixes like http or ftp  */
   if (file_proc_find_by_prefix (procs, filename, FALSE))
@@ -169,6 +170,34 @@ file_utils_filename_to_uri (GSList       *procs,
 
   return uri;
 }
+
+gchar *
+file_utils_any_to_uri (GSList       *procs,
+                       const gchar  *filename_or_uri,
+                       GError      **error)
+{
+  gchar *uri;
+
+  g_return_val_if_fail (procs != NULL, NULL);
+  g_return_val_if_fail (filename_or_uri != NULL, NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  /*  first try if we got a file uri  */
+  uri = g_filename_from_uri (filename_or_uri, NULL, NULL);
+
+  if (uri)
+    {
+      g_free (uri);
+      uri = g_strdup (filename_or_uri);
+    }
+  else
+    {
+      uri = file_utils_filename_to_uri (procs, filename_or_uri, error);
+    }
+
+  return uri;
+}
+
 
 /**
  * file_utils_filename_from_uri:

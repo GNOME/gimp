@@ -28,6 +28,9 @@
 gchar               * file_utils_filename_to_uri        (GSList        *procs,
                                                          const gchar   *filename,
                                                          GError       **error);
+gchar               * file_utils_any_to_uri             (GSList        *procs,
+                                                         const gchar   *filename_or_uri,
+                                                         GError       **error);
 gchar               * file_utils_filename_from_uri      (const gchar   *uri);
 
 gchar               * file_utils_uri_to_utf8_filename   (const gchar   *uri);

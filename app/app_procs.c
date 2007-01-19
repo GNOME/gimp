@@ -262,28 +262,10 @@ app_run (const gchar         *full_prog_name,
           GError *error = NULL;
           gchar  *uri;
 
-          /*  first try if we got a file uri  */
-          uri = g_filename_from_uri (filenames[i], NULL, NULL);
+          uri = file_utils_any_to_uri (gimp->plug_in_manager->load_procs,
+                                       filenames[i], &error);
 
           if (uri)
-            {
-              g_free (uri);
-              uri = g_strdup (filenames[i]);
-            }
-          else
-            {
-              uri =
-                file_utils_filename_to_uri (gimp->plug_in_manager->load_procs,
-                                            filenames[i], &error);
-            }
-
-          if (! uri)
-            {
-              g_printerr ("conversion filename -> uri failed: %s\n",
-                          error->message);
-              g_clear_error (&error);
-            }
-          else
             {
               GimpImage         *image;
               GimpPDBStatusType  status;
@@ -306,6 +288,12 @@ app_run (const gchar         *full_prog_name,
                 }
 
               g_free (uri);
+            }
+          else
+            {
+              g_printerr ("conversion filename -> uri failed: %s\n",
+                          error->message);
+              g_clear_error (&error);
             }
         }
     }
