@@ -62,8 +62,6 @@
 #include "gimptemplate.h"
 #include "gimpundostack.h"
 
-#include "plug-in/gimppluginmanager.h"
-
 #include "file/file-utils.h"
 
 #include "vectors/gimpvectors.h"
@@ -1353,6 +1351,13 @@ gimp_image_set_uri (GimpImage   *image,
   gimp_object_set_name (GIMP_OBJECT (image), uri);
 }
 
+static void
+gimp_image_take_uri (GimpImage *image,
+                     gchar     *uri)
+{
+  gimp_object_take_name (GIMP_OBJECT (image), uri);
+}
+
 const gchar *
 gimp_image_get_uri (const GimpImage *image)
 {
@@ -1373,14 +1378,10 @@ gimp_image_set_filename (GimpImage   *image,
 
   if (filename && strlen (filename))
     {
-      gchar *uri;
-
-      uri = file_utils_filename_to_uri (image->gimp->plug_in_manager->load_procs,
-                                        filename, NULL);
-
-      gimp_image_set_uri (image, uri);
-
-      g_free (uri);
+      gimp_image_take_uri (image,
+                           file_utils_filename_to_uri (image->gimp,
+                                                       filename,
+                                                       NULL));
     }
   else
     {

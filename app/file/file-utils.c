@@ -50,6 +50,7 @@
 #include "core/gimpimage.h"
 #include "core/gimpimagefile.h"
 
+#include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginprocedure.h"
 
 #include "file-utils.h"
@@ -101,19 +102,20 @@ static FileMatchType         file_check_magic_list       (GSList       *magics_l
 /*  public functions  */
 
 gchar *
-file_utils_filename_to_uri (GSList       *procs,
+file_utils_filename_to_uri (Gimp         *gimp,
                             const gchar  *filename,
                             GError      **error)
 {
   gchar *absolute;
   gchar *uri;
 
-  g_return_val_if_fail (procs != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   /*  check for prefixes like http or ftp  */
-  if (file_proc_find_by_prefix (procs, filename, FALSE))
+  if (file_proc_find_by_prefix (gimp->plug_in_manager->load_procs,
+                                filename, FALSE))
     {
       if (g_utf8_validate (filename, -1, NULL))
         {
@@ -172,13 +174,13 @@ file_utils_filename_to_uri (GSList       *procs,
 }
 
 gchar *
-file_utils_any_to_uri (GSList       *procs,
+file_utils_any_to_uri (Gimp         *gimp,
                        const gchar  *filename_or_uri,
                        GError      **error)
 {
   gchar *uri;
 
-  g_return_val_if_fail (procs != NULL, NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (filename_or_uri != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
@@ -192,7 +194,7 @@ file_utils_any_to_uri (GSList       *procs,
     }
   else
     {
-      uri = file_utils_filename_to_uri (procs, filename_or_uri, error);
+      uri = file_utils_filename_to_uri (gimp, filename_or_uri, error);
     }
 
   return uri;

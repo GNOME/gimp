@@ -1,5 +1,17 @@
 2007-01-19  Sven Neumann  <sven@gimp.org>
 
+	* app/file/file-utils.[ch]: let the filename -> uri functions take
+	a Gimp parameter instead of the list of load procedures.
+
+	* app/core/gimpimage.c
+	* app/app_procs.c
+	* app/dialogs/file-open-location-dialog.c
+	* tools/pdbgen/pdb/fileops.pdb: changed accordingly.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
+2007-01-19  Sven Neumann  <sven@gimp.org>
+
 	* app/app_procs.c
 	* app/file/file-utils.[ch]: moved code from app_procs.c to file-utils.
 
