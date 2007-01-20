@@ -136,9 +136,7 @@ sources. All those files have a short notice about being generated
 somewhere at the top. Among them are the files ending in _pdb.[ch] in
 the libgimp directory and the files ending in _cmds.c in the app/pdb
 subdirectory. Those are generated from the respective .pdb files in
-tools/pdbgen/pdb. The list of contributors is used in several files
-which are for that reason generated from the file contributors in
-tools/authorsgen.
+tools/pdbgen/pdb.
 
 
 Hackordnung

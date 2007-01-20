@@ -1,3 +1,7 @@
+2007-01-20  Sven Neumann  <sven@gimp.org>
+
+	* HACKING: removed obsolete paragraph about authorsgen.
+
 2007-01-20  Mukund Sivaraman <muks@mukund.org>
 
 	* configure.in: Lowered required dbus-glib version from 0.71 to
