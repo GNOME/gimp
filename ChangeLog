@@ -1,5 +1,10 @@
 2007-01-20  Mukund Sivaraman <muks@mukund.org>
 
+	* configure.in: Lowered required dbus-glib version from 0.71 to
+	  0.70 to make it build with stock FC6 (tested to work properly).
+
+2007-01-20  Mukund Sivaraman <muks@mukund.org>
+
 	* autogen.sh
 	* README.i18n: Updated with Subversion instructions.
 
