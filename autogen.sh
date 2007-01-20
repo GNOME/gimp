@@ -1,7 +1,7 @@
 #!/bin/sh 
 
-# This script does all the magic calls to automake/autoconf and
-# friends that are needed to configure a cvs checkout.  As described in
+# This script does all the magic calls to automake/autoconf and friends
+# that are needed to configure a Subversion checkout.  As described in
 # the file HACKING you need a couple of extra tools to run this script
 # successfully.
 #
@@ -75,7 +75,7 @@ check_version ()
 
 echo
 echo "I am testing that you have the tools required to build the"
-echo "$PROJECT from CVS. This test is not foolproof,"
+echo "$PROJECT from Subversion. This test is not foolproof,"
 echo "so if anything goes wrong, see the file HACKING for more information..."
 echo
 

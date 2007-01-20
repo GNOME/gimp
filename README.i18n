@@ -169,15 +169,17 @@ this one may not necessarily fit.
    po-tips/gimp20-tips.pot            --  the startup tips
 
  If you are looking for the translations of gimp-perl, please note that
- gimp-perl has been moved into it's own CVS module called gimp-perl.
+ gimp-perl has been moved into it's own Subversion module called
+ gimp-perl.
 
- The version of GIMP you are holding in your hand uses GTK+-2.0.
- GTK+-2.0 requires that all strings are UTF-8 encoded. Therefore to make
- internationalisation work, po files need to be UTF-8 encoded. If your
- editor doesn't support UTF-8, you need to convert it to an encoding your
- editor can handle and convert it back to UTF-8 before commiting your
- changes back. The gnome-i18n module in CVS has some scripts that help
- with this task, but it can also easily done using iconv.
+ The version of GIMP you are holding in your hand uses GTK+-2.0. 
+ GTK+-2.0 requires that all strings are UTF-8 encoded. Therefore to
+ make internationalisation work, po files need to be UTF-8 encoded. If
+ your editor doesn't support UTF-8, you need to convert it to an
+ encoding your editor can handle and convert it back to UTF-8 before
+ commiting your changes back. The gnome-i18n module in Subversion has
+ some scripts that help with this task, but it can also easily done
+ using iconv.
 
 7. Adding additional textdomains
 
@@ -214,8 +216,8 @@ this one may not necessarily fit.
 
  Any help with translations is appreciated. If you want to help,
  please get in contact with the people from the GNOME Translation
- Project who coordinate all translation efforts in the GNOME CVS
- tree. They have a nice web-page at
+ Project who coordinate all translation efforts in the GNOME
+ Subversion tree. They have a nice web-page at
 	http://developer.gnome.org/projects/gtp/.
 
 10. And more?
