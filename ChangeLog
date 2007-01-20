@@ -1,3 +1,10 @@
+2007-01-20  Raphaël Quinet  <raphael@gimp.org>
+
+	* app/tools/gimppainttool.c (gimp_paint_tool_control): pop the
+	status bar message when the tool is halted.  This fixes a bug that
+	was leaving messages in the status bar if the mouse pointer was in
+	the image and the user switched to another tool with the keyboard.
+
 2007-01-20  Michael Natterer  <mitch@gimp.org>
 
 	Close the display after "Save as" when invoked via the "Close
