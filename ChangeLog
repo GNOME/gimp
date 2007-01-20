@@ -1,3 +1,26 @@
+2007-01-20  Michael Natterer  <mitch@gimp.org>
+
+	Close the display after "Save as" when invoked via the "Close
+	Without Saving" dialog. Fixes bug #383700.
+
+	* app/actions/actions-types.h: added enum GimpSaveMode { SAVE,
+	SAVE_AS, SAVE_A_COPY, SAVE_AND_CLOSE }.
+
+	* app/actions/file-actions.c: changed the 4 save actions into
+	GimpEnumActions with above enum as values.
+
+	* app/actions/file-commands.[ch]: merged the save callbacks into
+	one and pass a "close_after_saving" boolean to
+	file_save_dialog_show().
+
+	* app/widgets/gimpfiledialog.[ch]: added "gboolean
+	close_after_saving" parameter to gimp_file_dialog_set_image() and
+	to the GimpFileDialog struct.
+
+	* app/dialogs/file-save-dialog.c: if the file was saved
+	successfully and close_after_saving is TRUE, close the display if
+	the image has not become dirty again in the meantime.
+
 2007-01-20  Sven Neumann  <sven@gimp.org>
 
 	* HACKING: removed obsolete paragraph about authorsgen.

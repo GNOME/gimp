@@ -39,5 +39,13 @@ typedef enum
   GIMP_ACTION_SELECT_PERCENT_NEXT     = -10
 } GimpActionSelectType;
 
+typedef enum
+{
+  GIMP_SAVE_MODE_SAVE,
+  GIMP_SAVE_MODE_SAVE_AS,
+  GIMP_SAVE_MODE_SAVE_A_COPY,
+  GIMP_SAVE_MODE_SAVE_AND_CLOSE
+} GimpSaveMode;
+
 
 #endif /* __ACTIONS_TYPES_H__ */

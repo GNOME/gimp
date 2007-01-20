@@ -31,12 +31,7 @@ void   file_last_opened_cmd_callback     (GtkAction   *action,
                                           gpointer     data);
 
 void   file_save_cmd_callback            (GtkAction   *action,
-                                          gpointer     data);
-void   file_save_as_cmd_callback         (GtkAction   *action,
-                                          gpointer     data);
-void   file_save_a_copy_cmd_callback     (GtkAction   *action,
-                                          gpointer     data);
-void   file_save_and_close_cmd_callback  (GtkAction   *action,
+                                          gint         value,
                                           gpointer     data);
 void   file_save_template_cmd_callback   (GtkAction   *action,
                                           gpointer     data);
