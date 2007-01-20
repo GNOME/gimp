@@ -26,24 +26,25 @@ Beta software can be found at alpha.gnu.org.
         - ftp://ftp.gnome.org/pub/GNOME/sources/libxslt/1.1/
 
 These are only the additional requirements if you want to compile from
-CVS. The file INSTALL lists the various libraries we depend on.
+the Subversion repository. The file INSTALL lists the various libraries
+we depend on.
 
 
 Compilation
 -----------
-If you are accessing gimp via CVS, then you will need to take several
-steps to get it to compile.  You can do all these steps at once
+If you are accessing gimp via Subversion, then you will need to take
+several steps to get it to compile.  You can do all these steps at once
 by running:
 
-    cvsroot/gimp$ ./autogen.sh
+    gimp/trunk$ ./autogen.sh
 
 Basically this does the following for you:
 
-    cvsroot/gimp$ aclocal-1.9; libtoolize; automake-1.9 -a;
-    cvsroot/gimp$ autoconf; glib-gettextize; intltoolize
+    gimp/trunk$ aclocal-1.9; libtoolize; automake-1.9 -a;
+    gimp/trunk$ autoconf; glib-gettextize; intltoolize
 
 The above commands create the "configure" script.  Now you can run the
-configure script in cvsroot/gimp to create all the Makefiles.
+configure script in gimp/trunk to create all the Makefiles.
 
 Before running autogen.sh or configure, make sure you have libtool in
 your path. Also make sure glib-2.0.m4 glib-gettext.m4, gtk-2.0.m4,
@@ -69,17 +70,21 @@ disable the support for gtk-doc so you will not be able to generate
 the API documentation.
 
 
-CVS
----
-GIMP is available from GNOME CVS. You can also grab glib, pango, atk,
-gtk+, libart, gtkhtml2 as well as intltool and gtk-doc from the same
-CVS server. You can use the following commands to get them from the
-anonymous CVS server:
+Subversion
+----------
+GIMP is available from GNOME Subversion. You can also grab glib, pango,
+atk, gtk+, libart, gtkhtml2 as well as intltool and gtk-doc from the
+same Subversion server. You can use the following commands to get them
+from the anonymous Subversion server:
 
-    $ export CVSROOT=':pserver:anonymous@anoncvs.gimp.org:/cvs/gnome'
-    $ cvs login
-         (there is no password, just hit return)
-    $ cvs -z3 checkout [-r <branch>] <module>
+For getting the trunk, use:
+
+    $ svn co http://svn.gnome.org/svn/<module>/trunk <module>
+
+For getting a branch, use:
+
+    $ svn co http://svn.gnome.org/svn/<module>/branches/<branch> <module>
+
 
 The interesting modules and the suggested stable branches to use are:
 
@@ -93,6 +98,11 @@ The interesting modules and the suggested stable branches to use are:
     * intltool
     * gtk-doc
 
+You can read more on using GNOME's Subversion service at these URLs:
+
+    http://developer.gnome.org/tools/svn.html
+    http://svnbook.red-bean.com/
+
 
 Patches
 -------
@@ -105,8 +115,18 @@ patch needs to be discussed, you should also consider using the
 mailing list instead of Bugzilla because bug reports tend to be hard
 to read if they contain too many comments. For the code, please try to
 follow the guidelines given in Hackordnung, below.  You can create the
-patch file with "cvs diff", preferably with a ~/.cvsrc containing
-"diff -up".  All kinds of contributions are appreciated.
+patch file with "svn diff", preferably in an annotated patch format.
+This can be achieved with ~/.subversion/config containing a custom
+diff command in the [helpers] section:
+
+[helpers]
+diff-cmd = /usr/local/bin/_svndiff
+
+And create an executable script in /usr/local/bin/_svndiff with the
+following contents:
+
+#!/bin/sh
+/usr/bin/diff -up --label "${3}" ${6} --label "${5}" ${7}
 
 
 Auto-generated Files

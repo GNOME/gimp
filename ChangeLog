@@ -1,3 +1,7 @@
+2007-01-20  Mukund Sivaraman <muks@mukund.org>
+
+	* HACKING: Updated with Subversion instructions.
+
 2007-01-19  Sven Neumann  <sven@gimp.org>
 
 	* app/main.c: call gdk_notify_startup_complete() when we have
