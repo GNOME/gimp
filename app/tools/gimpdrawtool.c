@@ -98,6 +98,7 @@ gimp_draw_tool_init (GimpDrawTool *draw_tool)
   draw_tool->display      = NULL;
 
   draw_tool->paused_count = 0;
+  draw_tool->is_drawn     = FALSE;
 
   draw_tool->vectors      = NULL;
   draw_tool->transform    = NULL;
@@ -187,6 +188,8 @@ gimp_draw_tool_draw (GimpDrawTool *draw_tool)
   if (draw_tool->paused_count == 0 && draw_tool->display)
     {
       GIMP_DRAW_TOOL_GET_CLASS (draw_tool)->draw (draw_tool);
+
+      draw_tool->is_drawn = ! draw_tool->is_drawn;
     }
 }
 
@@ -299,6 +302,14 @@ gimp_draw_tool_resume (GimpDrawTool *draw_tool)
     {
       g_warning ("%s: called with draw_tool->paused_count == 0", G_STRFUNC);
     }
+}
+
+gboolean
+gimp_draw_tool_is_drawn (GimpDrawTool *draw_tool)
+{
+  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), FALSE);
+
+  return draw_tool->is_drawn;
 }
 
 void

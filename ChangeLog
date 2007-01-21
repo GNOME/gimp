@@ -1,3 +1,18 @@
+2007-01-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpdrawtool.[ch]: maintain an is_drawn boolean which
+	indicates whether the drawn stuff is currently visible. Added
+	gimp_draw_tool_is_drawn() to obtain it.
+
+	* app/tools/gimpbrushtool.c (gimp_brush_tool_draw): don't create
+	the brush outline segments for the purpose of undrawing (if we
+	don't have the segments, we can hardly have drawn them before).
+	Fixes artifacts when the brush is being scaled or changed.
+
+	* app/core/gimpbrush.c: don't call brush_scale_mask() and
+	brush_scale_pixmap() with zero width or height. Fixes warnings
+	from these functions.
+
 2007-01-21  Tor Lillqvist  <tml@novell.com>
 
 	* configure.in: Add AC_MSG_RESULT([no]) to the fail branch of
