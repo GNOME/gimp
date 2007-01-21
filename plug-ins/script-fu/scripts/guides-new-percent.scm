@@ -1,7 +1,6 @@
 ;; -*-scheme-*-
 
-;; Alan Horkan 2004.  Copyright.
-;; I'll fix it and license it differntly later if anyone cares to ask
+;; Alan Horkan 2004.  No copyright.  Public Domain.
 
 (define (script-fu-guide-new-percent image drawable direction position)
   (let* (
