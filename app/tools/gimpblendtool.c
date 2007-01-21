@@ -35,6 +35,7 @@
 #include "core/gimpprogress.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 
@@ -54,6 +55,9 @@
 static gboolean gimp_blend_tool_initialize        (GimpTool        *tool,
                                                    GimpDisplay     *display,
                                                    GError         **error);
+static void   gimp_blend_tool_control             (GimpTool        *tool,
+                                                   GimpToolAction   action,
+                                                   GimpDisplay     *display);
 static void   gimp_blend_tool_button_press        (GimpTool        *tool,
                                                    GimpCoords      *coords,
                                                    guint32          time,
@@ -82,6 +86,7 @@ static void   gimp_blend_tool_cursor_update       (GimpTool        *tool,
 static void   gimp_blend_tool_draw                (GimpDrawTool    *draw_tool);
 
 static void   gimp_blend_tool_push_status         (GimpBlendTool   *blend_tool,
+                                                   GdkModifierType  state,
                                                    GimpDisplay     *display);
 
 
@@ -117,6 +122,7 @@ gimp_blend_tool_class_init (GimpBlendToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
+  tool_class->control             = gimp_blend_tool_control;
   tool_class->initialize          = gimp_blend_tool_initialize;
   tool_class->button_press        = gimp_blend_tool_button_press;
   tool_class->button_release      = gimp_blend_tool_button_release;
@@ -166,6 +172,25 @@ gimp_blend_tool_initialize (GimpTool     *tool,
 }
 
 static void
+gimp_blend_tool_control (GimpTool       *tool,
+                         GimpToolAction  action,
+                         GimpDisplay    *display)
+{
+  switch (action)
+    {
+    case GIMP_TOOL_ACTION_PAUSE:
+    case GIMP_TOOL_ACTION_RESUME:
+      break;
+
+    case GIMP_TOOL_ACTION_HALT:
+      gimp_tool_pop_status (tool, display);
+      break;
+    }
+
+  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+}
+
+static void
 gimp_blend_tool_button_press (GimpTool        *tool,
                               GimpCoords      *coords,
                               guint32          time,
@@ -190,7 +215,7 @@ gimp_blend_tool_button_press (GimpTool        *tool,
 
   gimp_tool_control_activate (tool->control);
 
-  gimp_blend_tool_push_status (blend_tool, display);
+  gimp_blend_tool_push_status (blend_tool, state, display);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), display);
 }
@@ -280,7 +305,7 @@ gimp_blend_tool_motion (GimpTool        *tool,
     }
 
   gimp_tool_pop_status (tool, display);
-  gimp_blend_tool_push_status (blend_tool, display);
+  gimp_blend_tool_push_status (blend_tool, state, display);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
@@ -308,7 +333,7 @@ gimp_blend_tool_active_modifier_key (GimpTool        *tool,
         }
 
       gimp_tool_pop_status (tool, display);
-      gimp_blend_tool_push_status (blend_tool, display);
+      gimp_blend_tool_push_status (blend_tool, state, display);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
     }
@@ -371,12 +396,22 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
 }
 
 static void
-gimp_blend_tool_push_status (GimpBlendTool *blend_tool,
-                             GimpDisplay   *display)
+gimp_blend_tool_push_status (GimpBlendTool   *blend_tool,
+                             GdkModifierType  state,
+                             GimpDisplay     *display)
 {
+  gchar *status_help;
+
+  status_help = gimp_suggest_modifiers ("",
+                                        GDK_CONTROL_MASK & ~state,
+                                        NULL,
+                                        _("%s for constrained angles"),
+                                        NULL);
   gimp_tool_push_status_coords (GIMP_TOOL (blend_tool), display,
                                 _("Blend: "),
                                 blend_tool->endx - blend_tool->startx,
                                 ", ",
-                                blend_tool->endy - blend_tool->starty);
+                                blend_tool->endy - blend_tool->starty,
+                                status_help);
+  g_free (status_help);
 }

@@ -740,7 +740,8 @@ gimp_tool_push_status_coords (GimpTool    *tool,
                               const gchar *title,
                               gdouble      x,
                               const gchar *separator,
-                              gdouble      y)
+                              gdouble      y,
+                              const gchar *help)
 {
   GimpDisplayShell *shell;
 
@@ -751,7 +752,7 @@ gimp_tool_push_status_coords (GimpTool    *tool,
 
   gimp_statusbar_push_coords (GIMP_STATUSBAR (shell->statusbar),
                               G_OBJECT_TYPE_NAME (tool),
-                              title, x, separator, y);
+                              title, x, separator, y, help);
 }
 
 void
@@ -759,7 +760,8 @@ gimp_tool_push_status_length (GimpTool            *tool,
                               GimpDisplay         *display,
                               const gchar         *title,
                               GimpOrientationType  axis,
-                              gdouble              value)
+                              gdouble              value,
+                              const gchar         *help)
 {
   GimpDisplayShell *shell;
 
@@ -770,7 +772,7 @@ gimp_tool_push_status_length (GimpTool            *tool,
 
   gimp_statusbar_push_length (GIMP_STATUSBAR (shell->statusbar),
                               G_OBJECT_TYPE_NAME (tool),
-                              title, axis, value);
+                              title, axis, value, help);
 }
 
 void

@@ -34,6 +34,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimptooldialog.h"
 #include "widgets/gimpviewabledialog.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 
@@ -176,6 +177,7 @@ gimp_color_picker_tool_control (GimpTool       *tool,
       if (picker_tool->dialog)
         gimp_color_picker_tool_info_response (NULL, GTK_RESPONSE_CLOSE,
                                               picker_tool);
+      gimp_tool_pop_status (tool, display);
       break;
     }
 
@@ -224,9 +226,59 @@ gimp_color_picker_tool_oper_update (GimpTool        *tool,
                                     gboolean         proximity,
                                     GimpDisplay     *display)
 {
+  GimpColorPickerTool    *picker_tool = GIMP_COLOR_PICKER_TOOL (tool);
   GimpColorPickerOptions *options = GIMP_COLOR_PICKER_TOOL_GET_OPTIONS (tool);
 
   GIMP_COLOR_TOOL (tool)->pick_mode = options->pick_mode;
+
+  gimp_tool_pop_status (tool, display);
+  if (proximity)
+    {
+      gchar           *status_help = NULL;
+      GdkModifierType  shift_mod = 0;
+
+      if (! picker_tool->dialog)
+        {
+          shift_mod = GDK_SHIFT_MASK;
+        }
+      switch (options->pick_mode)
+        {
+        case GIMP_COLOR_PICK_MODE_NONE:
+          status_help = gimp_suggest_modifiers (_("Click in any image to view"
+                                                  " its color"),
+                                                shift_mod & ~state,
+                                                NULL, NULL, NULL);
+          break;
+
+        case GIMP_COLOR_PICK_MODE_FOREGROUND:
+          status_help = gimp_suggest_modifiers (_("Click in any image to pick"
+                                                  " the foreground color"),
+                                                (shift_mod
+                                                 | GDK_CONTROL_MASK) & ~state,
+                                                NULL, NULL, NULL);
+          break;
+
+        case GIMP_COLOR_PICK_MODE_BACKGROUND:
+          status_help = gimp_suggest_modifiers (_("Click in any image to pick"
+                                                  " the background color"),
+                                                (shift_mod
+                                                 | GDK_CONTROL_MASK) & ~state,
+                                                NULL, NULL, NULL);
+          break;
+
+        case GIMP_COLOR_PICK_MODE_PALETTE:
+          status_help = gimp_suggest_modifiers (_("Click in any image to add"
+                                                  " the color to the palette"),
+                                                shift_mod & ~state,
+                                                NULL, NULL, NULL);
+          break;
+        }
+      if (status_help != NULL)
+        {
+          gimp_tool_push_status (tool, display, status_help);
+          g_free (status_help);
+        }
+    }
 
   GIMP_TOOL_CLASS (parent_class)->oper_update (tool, coords, state, proximity,
                                                display);

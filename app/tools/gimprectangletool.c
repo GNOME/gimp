@@ -1049,7 +1049,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
 
       if (w > 0 && h > 0)
         gimp_tool_push_status_coords (tool, display,
-                                      _("Rectangle: "), w, " × ", h);
+                                      _("Rectangle: "), w, " × ", h, NULL);
     }
 
   if (private->function == RECT_CREATING)
@@ -1693,7 +1693,7 @@ gimp_rectangle_tool_start (GimpRectangleTool *rectangle)
 
   /* initialize the statusbar display */
   gimp_tool_push_status_coords (tool, tool->display,
-                                _("Rectangle: "), 0, " x ", 0);
+                                _("Rectangle: "), 0, " x ", 0, NULL);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), tool->display);
 }

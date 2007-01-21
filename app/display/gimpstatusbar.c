@@ -541,13 +541,18 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
                             const gchar   *title,
                             gdouble        x,
                             const gchar   *separator,
-                            gdouble        y)
+                            gdouble        y,
+                            const gchar   *help)
 {
   GimpDisplayShell *shell;
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
   g_return_if_fail (title != NULL);
   g_return_if_fail (separator != NULL);
+  if (help == NULL)
+    {
+      help = "";
+    }
 
   shell = statusbar->shell;
 
@@ -558,7 +563,8 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
                            title,
                            (gint) RINT (x),
                            separator,
-                           (gint) RINT (y));
+                           (gint) RINT (y),
+                           help);
     }
   else /* show real world units */
     {
@@ -571,7 +577,8 @@ gimp_statusbar_push_coords (GimpStatusbar *statusbar,
                            title,
                            x * unit_factor / image->xresolution,
                            separator,
-                           y * unit_factor / image->yresolution);
+                           y * unit_factor / image->yresolution,
+                           help);
     }
 }
 
@@ -580,12 +587,17 @@ gimp_statusbar_push_length (GimpStatusbar       *statusbar,
                             const gchar         *context,
                             const gchar         *title,
                             GimpOrientationType  axis,
-                            gdouble              value)
+                            gdouble              value,
+                            const gchar         *help)
 {
   GimpDisplayShell *shell;
 
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
   g_return_if_fail (title != NULL);
+  if (help == NULL)
+    {
+      help = "";
+    }
 
   shell = statusbar->shell;
 
@@ -594,7 +606,8 @@ gimp_statusbar_push_length (GimpStatusbar       *statusbar,
       gimp_statusbar_push (statusbar, context,
                            statusbar->length_format_str,
                            title,
-                           (gint) RINT (value));
+                           (gint) RINT (value),
+                           help);
     }
   else /* show real world units */
     {
@@ -621,7 +634,8 @@ gimp_statusbar_push_length (GimpStatusbar       *statusbar,
       gimp_statusbar_push (statusbar, context,
                            statusbar->length_format_str,
                            title,
-                           value * unit_factor / resolution);
+                           value * unit_factor / resolution,
+                           help);
     }
 }
 
@@ -849,7 +863,7 @@ gimp_statusbar_set_cursor (GimpStatusbar *statusbar,
     {
       g_snprintf (buffer, sizeof (buffer),
                   statusbar->cursor_format_str,
-                  "", (gint) RINT (x), ", ", (gint) RINT (y));
+                  "", (gint) RINT (x), ", ", (gint) RINT (y), "");
     }
   else /* show real world units */
     {
@@ -857,7 +871,7 @@ gimp_statusbar_set_cursor (GimpStatusbar *statusbar,
 
       g_snprintf (buffer, sizeof (buffer),
                   statusbar->cursor_format_str,
-                  "", x, ", ", y);
+                  "", x, ", ", y, "");
     }
 
   gtk_label_set_text (GTK_LABEL (statusbar->cursor_label), buffer);
@@ -988,21 +1002,21 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
     {
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
-                  "%%s%%d%%s%%d");
+                  "%%s%%d%%s%%d%%s");
       g_snprintf (statusbar->length_format_str,
                   sizeof (statusbar->length_format_str),
-                  "%%s%%d");
+                  "%%s%%d%%s");
     }
   else /* show real world units */
     {
       g_snprintf (statusbar->cursor_format_str,
                   sizeof (statusbar->cursor_format_str),
-                  "%%s%%.%df%%s%%.%df",
+                  "%%s%%.%df%%s%%.%df%%s",
                   _gimp_unit_get_digits (image->gimp, shell->unit),
                   _gimp_unit_get_digits (image->gimp, shell->unit));
       g_snprintf (statusbar->length_format_str,
                   sizeof (statusbar->length_format_str),
-                  "%%s%%.%df",
+                  "%%s%%.%df%%s",
                   _gimp_unit_get_digits (image->gimp, shell->unit));
     }
 

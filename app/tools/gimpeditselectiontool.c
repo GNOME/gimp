@@ -398,7 +398,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
 
   /* initialize the statusbar display */
   gimp_tool_push_status_coords (GIMP_TOOL (edit_select), display,
-                                _("Move: "), 0, ", ", 0);
+                                _("Move: "), 0, ", ", 0, NULL);
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (edit_select), display);
 }
@@ -670,7 +670,8 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
                                 _("Move: "),
                                 edit_select->cumlx,
                                 ", ",
-                                edit_select->cumly);
+                                edit_select->cumly,
+                                NULL);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }

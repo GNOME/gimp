@@ -252,7 +252,8 @@ gimp_color_tool_button_press (GimpTool        *tool,
                                     _("Move Sample Point: "),
                                     color_tool->sample_point_x,
                                     ", ",
-                                    color_tool->sample_point_y);
+                                    color_tool->sample_point_y,
+                                    NULL);
     }
   else
     {
@@ -428,7 +429,8 @@ gimp_color_tool_motion (GimpTool        *tool,
                                         _("Add Sample Point: "),
                                         color_tool->sample_point_x,
                                         ", ",
-                                        color_tool->sample_point_y);
+                                        color_tool->sample_point_y,
+                                        NULL);
         }
     }
   else

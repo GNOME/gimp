@@ -85,12 +85,14 @@ void        gimp_statusbar_push_coords      (GimpStatusbar       *statusbar,
                                              const gchar         *title,
                                              gdouble              x,
                                              const gchar         *separator,
-                                             gdouble              y);
+                                             gdouble              y,
+                                             const gchar         *help);
 void        gimp_statusbar_push_length      (GimpStatusbar       *statusbar,
                                              const gchar         *context,
                                              const gchar         *title,
                                              GimpOrientationType  axis,
-                                             gdouble              value);
+                                             gdouble              value,
+                                             const gchar         *help);
 void        gimp_statusbar_replace          (GimpStatusbar       *statusbar,
                                              const gchar         *context,
                                              const gchar         *format,
