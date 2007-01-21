@@ -1,3 +1,11 @@
+2007-01-21  Tor Lillqvist  <tml@novell.com>
+
+	* configure.in: Add AC_MSG_RESULT([no]) to the fail branch of
+	PKG_CHECK_MODULES tests to make the output from configure
+	cleaner. Add proper quotes around $have_gnomevfs in a test to
+	avoid "test: too many arguments" warning. Add fail branch to the
+	test for dbus-glib so that it isn't a hard requirement.
+
 2007-01-21  Michael Natterer  <mitch@gimp.org>
 
 	* modules/controller_midi.c (midi_set_device): set the name

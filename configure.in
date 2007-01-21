@@ -1171,6 +1171,7 @@ have_gtkhtml2=no
 if test "x$with_gtkhtml2" != xno; then
   PKG_CHECK_MODULES(GTKHTML2, libgtkhtml-2.0 >= gtkhtml2_required_version,
     have_gtkhtml2=yes,
+    AC_MSG_RESULT([no])
     have_gtkhtml2="no (GtkHtml2 not found)")
 else
   have_gtkhtml2="no (GtkHtml2 support disabled)"
@@ -1191,6 +1192,7 @@ if test "x$with_librsvg" != xno; then
   PKG_CHECK_MODULES(SVG, librsvg-2.0 >= rsvg_required_version,
     SVG='svg$(EXEEXT)'
     LIBSVG=$SVG_LIBS,
+    AC_MSG_RESULT([no])
     have_librsvg="no (librsvg not found)")
 else
    have_librsvg="no (librsvg support disabled)"
@@ -1209,7 +1211,9 @@ AC_ARG_WITH(print,[  --without-print         build without print support])
 
 if test "x$with_print" != xno; then
   PKG_CHECK_MODULES(PRINT, gtk+-2.0 >= 2.9.3,
-    enable_print="yes", enable_print="no (gtk+ >= 2.9.3 not available)")
+    enable_print="yes",
+    AC_MSG_RESULT([no])
+    enable_print="no (gtk+ >= 2.9.3 not available)")
 else
     enable_print="no (print support disabled)"
 fi
@@ -1230,6 +1234,7 @@ if test "x$with_poppler" != xno; then
     LIBPOPPLER=$POPPLER_LIBS
     AC_DEFINE(HAVE_POPPLER, 1, [Define to 1 if libpoppler is available])
     have_poppler=yes,
+    AC_MSG_RESULT([no])
     have_poppler="Using PostScript plug-in (libpoppler not found)")
 else
   have_poppler="Using PostScript plug-in (libpoppler support disabled)"
@@ -1274,14 +1279,16 @@ fi
 
 PKG_CHECK_MODULES(URI_GNOME_VFS, $gnome_vfs_modules,
   have_gnomevfs=yes,
+  AC_MSG_RESULT([no])
   have_gnomevfs="no (gnome-vfs-2.0 not found)")
 
-AM_CONDITIONAL(HAVE_GNOMEVFS, test x$have_gnomevfs = xyes)
+AM_CONDITIONAL(HAVE_GNOMEVFS, test x"$have_gnomevfs" = xyes)
 
 libcurl_modules="libcurl >= libcurl_required_version"
 
 PKG_CHECK_MODULES(URI_LIBCURL, $libcurl_modules,
   have_libcurl=yes,
+  AC_MSG_RESULT([no])
   have_libcurl="no (libcurl not found)")
 
 AM_CONDITIONAL(HAVE_LIBCURL, test "x$have_libcurl" = xyes)
@@ -1307,9 +1314,10 @@ fi
 # Check for D-Bus glib bindings
 ###############################
 
-have_dbus_glib=no
 PKG_CHECK_MODULES(DBUS_GLIB, dbus-glib-1 >= dbus_glib_required_version,
-  have_dbus_glib=yes)
+  have_dbus_glib=yes,
+  AC_MSG_RESULT([no])
+  have_dbus_glib=no)
 
 if test "x$have_dbus_glib" = xyes; then
   AC_PATH_PROG(DBUS_BINDING_TOOL, dbus-binding-tool, no)
