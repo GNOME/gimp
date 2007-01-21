@@ -1,3 +1,8 @@
+2007-01-21  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/preferences-dialog.c: reworded Monitor Resolution
+	section as suggested in bug #398851.
+
 2007-01-21  Raphaël Quinet  <raphael@gimp.org>
 
 	* app/display/gimpstatusbar.[ch]

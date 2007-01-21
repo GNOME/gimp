@@ -2191,7 +2191,7 @@ prefs_dialog_new (Gimp       *gimp,
                             _("Check _size:"),
                             GTK_TABLE (table), 1, size_group);
 
-  vbox2 = prefs_frame_new (_("Get Monitor Resolution"),
+  vbox2 = prefs_frame_new (_("Monitor Resolution"),
                            GTK_CONTAINER (vbox), FALSE);
 
   {
@@ -2233,8 +2233,7 @@ prefs_dialog_new (Gimp       *gimp,
 
     gimp_get_screen_resolution (NULL, &xres, &yres);
 
-    str = g_strdup_printf (_("From _windowing system "
-                             "(currently %d × %d ppi)"),
+    str = g_strdup_printf (_("_Detect automatically (currently %d × %d ppi)"),
                            ROUND (xres), ROUND (yres));
 
     button = gtk_radio_button_new_with_mnemonic (group, str);
@@ -2254,7 +2253,7 @@ prefs_dialog_new (Gimp       *gimp,
                     G_CALLBACK (prefs_resolution_source_callback),
                     config);
 
-  button = gtk_radio_button_new_with_mnemonic (group, _("_Manually"));
+  button = gtk_radio_button_new_with_mnemonic (group, _("_Enter manually"));
   group = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
   gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
