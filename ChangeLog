@@ -1,3 +1,8 @@
+2007-01-22  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* plug-ins/script-fu/scripts/guides-new-percent.scm: replaced
+	license statement according to bug #119667.
+
 2007-01-09  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
