@@ -1,3 +1,11 @@
+2007-01-21  Michael Natterer  <mitch@gimp.org>
+
+	* modules/controller_midi.c (midi_set_device): set the name
+	of the alsa client to "GIMP" and the name of the port to 
+	"GIMP MIDI Input Controller". Provides reasonable strings in
+	apps which display "client::port" as well as in apps which
+	display only "port".
+
 2007-01-21  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/preferences-dialog.c: reworded Monitor Resolution
