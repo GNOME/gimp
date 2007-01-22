@@ -32,6 +32,7 @@
 #include "core/gimpviewable.h"
 
 #include "gimpcontainerview.h"
+#include "gimpeditor.h"
 #include "gimppatternfactoryview.h"
 #include "gimpviewrenderer.h"
 
@@ -59,6 +60,7 @@ gimp_pattern_factory_view_new (GimpViewType      view_type,
                                GimpMenuFactory  *menu_factory)
 {
   GimpPatternFactoryView *factory_view;
+  GimpContainerEditor    *editor;
 
   g_return_val_if_fail (GIMP_IS_DATA_FACTORY (factory), NULL);
   g_return_val_if_fail (view_size > 0 &&
@@ -81,6 +83,12 @@ gimp_pattern_factory_view_new (GimpViewType      view_type,
       g_object_unref (factory_view);
       return NULL;
     }
+
+  editor = GIMP_CONTAINER_EDITOR (factory_view);
+
+  gimp_editor_add_action_button (GIMP_EDITOR (editor->view),
+                                 "patterns", "patterns-open-as-image",
+                                 NULL);
 
   gtk_widget_hide (GIMP_DATA_FACTORY_VIEW (factory_view)->edit_button);
   gtk_widget_hide (GIMP_DATA_FACTORY_VIEW (factory_view)->duplicate_button);

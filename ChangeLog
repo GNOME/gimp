@@ -1,3 +1,11 @@
+2007-01-22  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdatafactoryview.c: don't add the open-as-image
+	button to all data factory views.
+
+	* app/widgets/gimppatternfactoryview.c: but do it here for the
+	Pattern dialog.
+
 2007-01-22  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/guides-new-percent.scm: replaced
