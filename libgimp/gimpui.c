@@ -67,43 +67,38 @@ void
 gimp_ui_init (const gchar *prog_name,
               gboolean     preview)
 {
-  const gchar  *display_name;
-  gint          argc;
-  gchar       **argv;
-  gchar        *themerc;
-  GdkScreen    *screen;
+  const gchar *display_name;
+  gchar       *themerc;
+  GdkScreen   *screen;
 
   g_return_if_fail (prog_name != NULL);
 
   if (gimp_ui_initialized)
     return;
 
+  g_set_prgname (prog_name);
+
   display_name = gimp_display_name ();
 
   if (display_name)
     {
-      const gchar *var_name = NULL;
-
 #if defined (GDK_WINDOWING_X11)
-      var_name = "DISPLAY";
-#elif defined (GDK_WINDOWING_DIRECTFB) || defined (GDK_WINDOWING_FB)
-      var_name = "GDK_DISPLAY";
+      const gchar var_name[] = "DISPLAY";
+#else
+      const gchar var_name[] = "GDK_DISPLAY";
 #endif
 
       if (var_name)
         putenv (g_strdup_printf ("%s=%s", var_name, display_name));
     }
 
-  argc    = 2;
-  argv    = g_new (gchar *, 2);
-  argv[0] = g_strdup (prog_name);
-  argv[1] = g_strdup_printf ("--class=%s", gimp_wm_class ());
-
-  gtk_init (&argc, &argv);
+  gtk_init (NULL, NULL);
 
   themerc = gimp_personal_rc_file ("themerc");
   gtk_rc_add_default_file (themerc);
   g_free (themerc);
+
+  gdk_set_program_class (gimp_wm_class ());
 
   gdk_rgb_set_min_colors (gimp_min_colors ());
   gdk_rgb_set_install (gimp_install_cmap ());
