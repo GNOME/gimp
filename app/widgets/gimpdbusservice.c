@@ -30,7 +30,6 @@
 #include "core/gimp.h"
 
 #include "file/file-open.h"
-#include "file/file-utils.h"
 
 #include "gimpdbusservice.h"
 #include "gimpdbusservice-glue.h"
@@ -72,37 +71,17 @@ gimp_dbus_service_new (Gimp *gimp)
 gboolean
 gimp_dbus_service_open (GimpDBusService  *service,
                         const gchar     **uris,
-                        GError          **error)
+                        GError          **dbus_error)
 {
-  gint i;
-
   g_return_val_if_fail (GIMP_IS_DBUS_SERVICE (service), FALSE);
 
-  for (i = 0; uris[i]; i++)
+  if (uris && *uris)
     {
-      GimpImage         *image;
-      gchar             *uri;
-      GimpPDBStatusType  status;
-
-      /* the method is documented to take URIs but we also accept filenames */
-      uri = file_utils_any_to_uri (service->gimp, uris[i], error);
-      if (! uri)
-        return FALSE;
-
-      image = file_open_with_display (service->gimp,
-                                      gimp_get_user_context (service->gimp),
-                                      NULL,
-                                      uris[i],
-                                      &status, error);
-      g_free (uri);
-
-      if (! image && status != GIMP_PDB_CANCEL)
-        return FALSE;
+      file_open_from_command_line (service->gimp, uris);
     }
-
-  /* if no URI is passed, raise the toolbox */
-  if (i == 0)
+  else
     {
+      /* if no URI is passed, raise the toolbox */
       const GList *managers = gimp_ui_managers_from_name ("<Image>");
 
       if (managers)

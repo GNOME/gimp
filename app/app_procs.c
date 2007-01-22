@@ -45,7 +45,6 @@
 #include "core/gimp-user-install.h"
 
 #include "file/file-open.h"
-#include "file/file-utils.h"
 
 #ifndef GIMP_CONSOLE_COMPILATION
 #include "dialogs/user-install-dialog.h"
@@ -254,46 +253,7 @@ app_run (const gchar         *full_prog_name,
   /*  Load the images given on the command-line.
    */
   if (filenames)
-    {
-      for (i = 0; filenames[i]; i++)
-        {
-          GError *error = NULL;
-          gchar  *uri;
-
-          uri = file_utils_any_to_uri (gimp, filenames[i], &error);
-
-          if (uri)
-            {
-              GimpImage         *image;
-              GimpPDBStatusType  status;
-
-              image = file_open_with_display (gimp,
-                                              gimp_get_user_context (gimp),
-                                              NULL,
-                                              uri,
-                                              &status, &error);
-
-              if (! image && status != GIMP_PDB_CANCEL)
-                {
-                  gchar *filename = file_utils_uri_to_utf8_filename (uri);
-
-                  g_message (_("Opening '%s' failed: %s"),
-                             filename, error->message);
-                  g_clear_error (&error);
-
-                  g_free (filename);
-                }
-
-              g_free (uri);
-            }
-          else
-            {
-              g_printerr ("conversion filename -> uri failed: %s\n",
-                          error->message);
-              g_clear_error (&error);
-            }
-        }
-    }
+    file_open_from_command_line (gimp, filenames);
 
 #ifndef GIMP_CONSOLE_COMPILATION
   if (! no_interface)

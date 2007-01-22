@@ -1,5 +1,14 @@
 2007-01-22  Sven Neumann  <sven@gimp.org>
 
+	* app/file/file-open.[ch]: added utility function that handles
+	opening files passed on the command-line.
+
+	* app/app_procs.c
+	* app/widgets/gimpdbusservice.c: use the new function instead of
+	duplicating the code.
+
+2007-01-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimppixbuf.c (gimp_pixbuf_from_data): free the thumbnail
 	data that used to be leaked for grayscale thumbnails.
 
