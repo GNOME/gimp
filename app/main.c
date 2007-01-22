@@ -345,24 +345,19 @@ main (int    argc,
         {
           DBusGProxy   *proxy;
           gboolean      success;
-          const gchar **arg = filenames;
-
-          /* Work around a bug in dbus-glib:
-           * It doesn't accept NULL as an empty string array.
-           */
-          if (! filenames)
-            arg = g_new0 (const gchar *, 1);
 
           proxy = dbus_g_proxy_new_for_name (connection,
                                              GIMP_DBUS_SERVICE_NAME,
                                              GIMP_DBUS_SERVICE_PATH,
                                              GIMP_DBUS_SERVICE_INTERFACE);
 
-          success = dbus_g_proxy_call (proxy, "Open", &error,
-                                       G_TYPE_STRV, arg,
-                                       G_TYPE_INVALID, G_TYPE_INVALID);
-          if (! filenames)
-            g_free (arg);
+          if (filenames)
+            success = dbus_g_proxy_call (proxy, "Open", &error,
+                                         G_TYPE_STRV, filenames,
+                                         G_TYPE_INVALID, G_TYPE_INVALID);
+          else
+            success = dbus_g_proxy_call (proxy, "Activate", &error,
+                                         G_TYPE_INVALID, G_TYPE_INVALID);
 
           g_object_unref (proxy);
           dbus_g_connection_unref (connection);

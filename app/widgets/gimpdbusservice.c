@@ -75,22 +75,28 @@ gimp_dbus_service_open (GimpDBusService  *service,
 {
   g_return_val_if_fail (GIMP_IS_DBUS_SERVICE (service), FALSE);
 
-  if (uris && *uris)
-    {
-      file_open_from_command_line (service->gimp, uris);
-    }
-  else
-    {
-      /* if no URI is passed, raise the toolbox */
-      const GList *managers = gimp_ui_managers_from_name ("<Image>");
-
-      if (managers)
-        gimp_ui_manager_activate_action (managers->data,
-                                         "dialogs", "dialogs-toolbox");
-    }
+  if (uris)
+    file_open_from_command_line (service->gimp, uris);
 
   return TRUE;
 }
 
+gboolean
+gimp_dbus_service_activate (GimpDBusService  *service,
+                            GError          **dbus_error)
+{
+  const GList *managers;
+
+  g_return_val_if_fail (GIMP_IS_DBUS_SERVICE (service), FALSE);
+
+  /* raise the toolbox */
+  managers = gimp_ui_managers_from_name ("<Image>");
+
+  if (managers)
+    gimp_ui_manager_activate_action (managers->data,
+                                     "dialogs", "dialogs-toolbox");
+
+  return TRUE;
+}
 
 #endif /* HAVE_DBUS_GLIB */

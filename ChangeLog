@@ -1,3 +1,13 @@
+2007-01-23  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/dbus-service.xml: added Activate method.
+
+	* app/widgets/gimpdbusservice.[ch]: raise the toolbox from the
+	Activate method. Do nothing when no URIs are passed 
+
+	* app/main.c: try the Activate method on the org.gimp.GIMP service
+	when being called without any filenames on the command-lines.
+
 2007-01-22  Sven Neumann  <sven@gimp.org>
 
 	* app/main.c: simplified handling of d-bus errors.

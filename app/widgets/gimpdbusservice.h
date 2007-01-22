@@ -24,6 +24,7 @@
 
 G_BEGIN_DECLS
 
+
 #define GIMP_DBUS_SERVICE_NAME      "org.gimp.GIMP"
 #define GIMP_DBUS_SERVICE_PATH      "/org/gimp/GIMP"
 #define GIMP_DBUS_SERVICE_INTERFACE "org.gimp.GIMP"
@@ -60,6 +61,9 @@ GObject * gimp_dbus_service_new      (Gimp             *gimp);
 gboolean  gimp_dbus_service_open     (GimpDBusService  *service,
                                       const gchar     **uris,
                                       GError          **error);
+gboolean  gimp_dbus_service_activate (GimpDBusService  *service,
+                                      GError          **dbus_error);
+
 
 G_END_DECLS
 

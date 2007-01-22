@@ -8,6 +8,7 @@
     <method name="Open">
       <arg type="as" name="uri" direction="in" />
     </method>
+    <method name="Activate" />
   </interface>
 
 </node>
