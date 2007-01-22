@@ -1,5 +1,10 @@
 2007-01-22  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimppixbuf.c (gimp_pixbuf_from_data): free the thumbnail
+	data that used to be leaked for grayscale thumbnails.
+
+2007-01-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpui.c (gimp_ui_init): no need to construct (and leak)
 	command-line arguments when initializing GTK+.
 
