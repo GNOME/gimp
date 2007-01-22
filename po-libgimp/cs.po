@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-11 12:43+0100\n"
-"PO-Revision-Date: 2007-01-11 12:44+0100\n"
+"POT-Creation-Date: 2007-01-22 15:25+0100\n"
+"PO-Revision-Date: 2007-01-22 15:25+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -210,7 +210,7 @@ msgstr "Sans"
 msgid "Gradient Selection"
 msgstr "Výběr přechodu"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
 msgid "(Empty)"
 msgstr "(Prázdné)"
 
@@ -1100,7 +1100,7 @@ msgid "Check Style"
 msgstr "Zkotrolovat styl"
 
 #. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:265
+#: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "Ná_hled"
 
@@ -1341,7 +1341,8 @@ msgstr "Správa barev"
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
-msgstr "Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
+msgstr ""
+"Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
 
 #: ../modules/cdisplay_lcms.c:302
 msgid "Mode of operation:"
@@ -1628,24 +1629,24 @@ msgstr "Linuxový vstup"
 msgid "Linux Input Events"
 msgstr "Události linuxového vstupu"
 
-#: ../modules/controller_linux_input.c:389 ../modules/controller_midi.c:484
-#: ../modules/controller_midi.c:510
+#: ../modules/controller_linux_input.c:389 ../modules/controller_midi.c:483
+#: ../modules/controller_midi.c:509
 #, c-format
 msgid "Reading from %s"
 msgstr "Čtení z %s"
 
 #: ../modules/controller_linux_input.c:405
-#: ../modules/controller_linux_input.c:448 ../modules/controller_midi.c:466
-#: ../modules/controller_midi.c:527 ../modules/controller_midi.c:598
+#: ../modules/controller_linux_input.c:448 ../modules/controller_midi.c:465
+#: ../modules/controller_midi.c:526 ../modules/controller_midi.c:597
 #, c-format
 msgid "Device not available: %s"
 msgstr "Zařízení není dostupné: %s"
 
-#: ../modules/controller_linux_input.c:413 ../modules/controller_midi.c:535
+#: ../modules/controller_linux_input.c:413 ../modules/controller_midi.c:534
 msgid "No device configured"
 msgstr "Není konfigurováno žádné zařízení"
 
-#: ../modules/controller_linux_input.c:457 ../modules/controller_midi.c:607
+#: ../modules/controller_linux_input.c:457 ../modules/controller_midi.c:606
 msgid "End of file"
 msgstr "Konec souboru"
 
@@ -1696,7 +1697,10 @@ msgstr "Řadič %03d"
 msgid "MIDI Events"
 msgstr "Události MIDI"
 
-#: ../modules/controller_midi.c:458
-msgid "GIMP MIDI controller"
-msgstr "Gimpí MIDI ovladač"
+#: ../modules/controller_midi.c:455
+msgid "GIMP"
+msgstr "GIMP"
 
+#: ../modules/controller_midi.c:457
+msgid "GIMP MIDI Input Controller"
+msgstr "Gimpí ovladač vstupu MIDI"
