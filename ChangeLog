@@ -1,5 +1,9 @@
 2007-01-22  Sven Neumann  <sven@gimp.org>
 
+	* app/main.c: simplified handling of d-bus errors.
+
+2007-01-22  Sven Neumann  <sven@gimp.org>
+
 	* app/file/file-open.[ch]: added utility function that handles
 	opening files passed on the command-line.
 

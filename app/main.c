@@ -376,14 +376,6 @@ main (int    argc,
 
               return EXIT_SUCCESS;
             }
-
-          if (error->domain == DBUS_GERROR &&
-              error->code == DBUS_GERROR_REMOTE_EXCEPTION)
-            {
-              g_printerr ("Caught remote method exception %s: %s",
-                          dbus_g_error_get_name (error),
-                          error->message);
-            }
           else if (! (error->domain == DBUS_GERROR &&
                       error->code == DBUS_GERROR_SERVICE_UNKNOWN))
             {
