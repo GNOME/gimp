@@ -127,6 +127,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   if (! area)
     return;
 
+  /* optionally take the color from the current gradient */
   if (gimp_paint_options_get_gradient_color (paint_options, image,
                                              paint_core->cur_coords.pressure,
                                              paint_core->pixel_dist,
@@ -146,9 +147,9 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 
       paint_appl_mode = GIMP_PAINT_INCREMENTAL;
     }
+  /* otherwise check if the brush has a pixmap and use that to color the area */
   else if (brush_core->brush && brush_core->brush->pixmap)
     {
-      /* if it's a pixmap, do pixmap stuff */
       gimp_brush_core_color_area_with_pixmap (brush_core, image, drawable,
                                               area,
                                               brush_core->scale,
@@ -156,6 +157,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
 
       paint_appl_mode = GIMP_PAINT_INCREMENTAL;
     }
+  /* otherwise fill the area with the foreground color */
   else
     {
       gimp_image_get_foreground (image, context, gimp_drawable_type (drawable),
@@ -171,6 +173,7 @@ _gimp_paintbrush_motion (GimpPaintCore    *paint_core,
   if (pressure_options->opacity)
     opacity *= PRESSURE_SCALE * paint_core->cur_coords.pressure;
 
+  /* finally, let the brush core paste the colored area on the canvas */
   gimp_brush_core_paste_canvas (brush_core, drawable,
                                 MIN (opacity, GIMP_OPACITY_OPAQUE),
                                 gimp_context_get_opacity (context),

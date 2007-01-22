@@ -1,5 +1,11 @@
 2007-01-22  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimppaintbrush.c: added some comments.
+
+	* app/paint/gimppaintcore.c: sprinkled with const qualifiers.
+
+2007-01-22  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdatafactoryview.c: don't add the open-as-image
 	button to all data factory views.
 
