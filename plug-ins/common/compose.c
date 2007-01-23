@@ -1776,29 +1776,34 @@ type_combo_callback (GimpIntComboBox *combo,
 {
   if (gimp_int_combo_box_get_active (combo, &composeint.compose_idx))
     {
-      const gchar *text;
-      gboolean     combo4;
-      gboolean     scale4;
-      gint         compose_idx, j;
+      gboolean combo4;
+      gboolean scale4;
+      gint     compose_idx;
+      gint     j;
 
       compose_idx = composeint.compose_idx;
 
       for (j = 0; j < MAX_COMPOSE_IMAGES; j++)
         {
-          text = (compose_dsc[compose_idx].channel_name[j] ?
-                  gettext (compose_dsc[compose_idx].channel_name[j]) : "");
+          GtkWidget   *label = composeint.channel_label[j];
+          GtkWidget   *image = composeint.channel_icon[j];
+          const gchar *text  = compose_dsc[compose_idx].channel_name[j];
+          const gchar *icon  = compose_dsc[compose_idx].channel_icon[j];
 
-          gtk_label_set_text_with_mnemonic
-            (GTK_LABEL (composeint.channel_label[j]), text);
+          gtk_label_set_text_with_mnemonic (GTK_LABEL (label),
+                                            text ? gettext (text) : "");
 
-          gtk_image_set_from_stock (GTK_IMAGE (composeint.channel_icon[j]),
-                                    compose_dsc[compose_idx].channel_icon[j],
-                                    GTK_ICON_SIZE_BUTTON);
-
-          if (compose_dsc[compose_idx].channel_icon[j])
-            gtk_widget_show (composeint.channel_icon[j]);
+          if (icon)
+            {
+              gtk_image_set_from_stock (GTK_IMAGE (image),
+                                        icon, GTK_ICON_SIZE_BUTTON);
+              gtk_widget_show (image);
+            }
           else
-            gtk_widget_hide (composeint.channel_icon[j]);
+            {
+              gtk_image_clear (GTK_IMAGE (image));
+              gtk_widget_hide (image);
+            }
         }
 
       /* Set sensitivity of last menu */

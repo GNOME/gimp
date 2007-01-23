@@ -1,5 +1,9 @@
 2007-01-23  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/compose.c (type_combo_callback): code cleanup.
+
+2007-01-23  Sven Neumann  <sven@gimp.org>
+
 	* app/main.c: improved output.
 
 	* docs/gimp.1.in
