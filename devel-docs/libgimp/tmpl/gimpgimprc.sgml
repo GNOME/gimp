@@ -53,6 +53,14 @@ Interactions with settings from .gimprc.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_get_default_unit ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_get_module_load_inhibit ##### -->
 <para>
 

@@ -1,5 +1,11 @@
 2007-01-12  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/libgimp-sections.txt: added gimp_get_default_unit().
+
+	* libgimp/tmpl/gimpgimprc.sgml: regenerated.
+
+2007-01-12  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/libgimp-sections.txt
 	* libgimpbase/libgimpbase-sections.txt: added new symbols.
 
