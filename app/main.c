@@ -365,7 +365,8 @@ main (int    argc,
           if (success)
             {
               if (be_verbose)
-                g_print ("Found another GIMP instance, using that.\n");
+                g_print ("%s\n",
+                         _("Another GIMP instance is already running."));
 
               gdk_notify_startup_complete ();
 
@@ -374,7 +375,7 @@ main (int    argc,
           else if (! (error->domain == DBUS_GERROR &&
                       error->code == DBUS_GERROR_SERVICE_UNKNOWN))
             {
-              g_printerr ("Error: %s\n", error->message);
+              g_print ("%s\n", error->message);
             }
 
           g_clear_error (&error);

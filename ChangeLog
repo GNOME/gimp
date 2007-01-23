@@ -1,5 +1,7 @@
 2007-01-23  Sven Neumann  <sven@gimp.org>
 
+	* app/main.c: improved output.
+
 	* docs/gimp.1.in
 	* docs/gimp-remote.1.in: document the new behaviour and
 	command-line parameter.
@@ -9,7 +11,7 @@
 	* app/widgets/dbus-service.xml: added Activate method.
 
 	* app/widgets/gimpdbusservice.[ch]: raise the toolbox from the
-	Activate method. Do nothing when no URIs are passed 
+	Activate method. Do nothing when no URIs are passed.
 
 	* app/main.c: try the Activate method on the org.gimp.GIMP service
 	when being called without any filenames on the command-lines.
