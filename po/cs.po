@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-22 10:48+0100\n"
-"PO-Revision-Date: 2007-01-22 11:19+0100\n"
+"POT-Creation-Date: 2007-01-23 11:28+0100\n"
+"PO-Revision-Date: 2007-01-23 11:29+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -65,11 +65,11 @@ msgstr ""
 "pokud se tak nestalo, napište o ni Free Software Foundation,Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 
-#: ../app/app_procs.c:131
+#: ../app/app_procs.c:130
 msgid "(This console window will close in ten seconds)\n"
 msgstr "(Toto konzolové okno se zavře během deseti sekund)\n"
 
-#: ../app/app_procs.c:241
+#: ../app/app_procs.c:240
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -81,11 +81,6 @@ msgstr ""
 "\n"
 "Abyste předešli ztrátě dat, zkontrolujte prosím umístění a oprávnění "
 "odkládacího adresáře definovaného ve vašich Předvolbách (momentálně \"%s\")."
-
-#: ../app/app_procs.c:280
-#, c-format
-msgid "Opening '%s' failed: %s"
-msgstr "Otevírání '%s' selhalo: %s"
 
 #: ../app/batch.c:75
 #, c-format
@@ -195,7 +190,11 @@ msgstr ""
 "GIMP nemohl inicializovat grafické uživatelské rozhraní.\n"
 "Přesvědčte se, že máte správně nastaveno zobrazovací prostředí."
 
-#: ../app/main.c:541 ../tools/gimp-remote.c:323
+#: ../app/main.c:369
+msgid "Another GIMP instance is already running."
+msgstr "Již běží jiná instance GIMPu."
+
+#: ../app/main.c:529 ../tools/gimp-remote.c:323
 #, c-format
 msgid "%s version %s"
 msgstr "%s verze %s"
@@ -8127,6 +8126,11 @@ msgstr "Zásuvný modul nemohl otevřít obrázek"
 #: ../app/file/file-open.c:449
 msgid "Image doesn't contain any layers"
 msgstr "Obrázek neobsahuje žádné vrstvy"
+
+#: ../app/file/file-open.c:495
+#, c-format
+msgid "Opening '%s' failed: %s"
+msgstr "Otevírání '%s' selhalo: %s"
 
 #: ../app/file/file-save.c:193
 msgid "Plug-In could not save image"
