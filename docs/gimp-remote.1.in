@@ -1,4 +1,4 @@
-.TH GIMP-REMOTE 1 "March 23 2004" "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMP-REMOTE 1 "Januar 23 2007" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 
 .SH NAME
 gimp\-remote - tells a running GIMP to open a (local or remote) image file.
@@ -24,6 +24,12 @@ If no GIMP window is found, \fIgimp-remote\fP will start a new GIMP
 instance and ask it to load the specified images. If no filename or
 URL is given, \fIgimp-remote\fP will start a new GIMP. This behaviour
 can be altered using the command-line options described below.
+
+.PP
+If you are using GIMP on Linux or another platform with the D-Bus
+message bus system, chances are good that this functionality is
+already built into the main GIMP executable and that you will not need
+to use \fIgimp-remote\fP.
 
 
 .SH OPTIONS

@@ -1,5 +1,11 @@
 2007-01-23  Sven Neumann  <sven@gimp.org>
 
+	* docs/gimp.1.in
+	* docs/gimp-remote.1.in: document the new behaviour and
+	command-line parameter.
+
+2007-01-23  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/dbus-service.xml: added Activate method.
 
 	* app/widgets/gimpdbusservice.[ch]: raise the toolbox from the

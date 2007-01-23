@@ -1,4 +1,4 @@
-.TH GIMP 1 "Version @GIMP_VERSION@" "GIMP Manual Pages"
+.TH GIMP 1 "Januar 23 2007" "Version @GIMP_VERSION@" "GIMP Manual Pages"
 
 .SH NAME
 gimp - an image manipulation and paint program.
@@ -7,9 +7,10 @@ gimp - an image manipulation and paint program.
 .SH SYNOPSIS
 .B gimp
 [\-h] [\-\-help] [\-\-help-all] [\-\-help-gtk] [-v] [\-\-version]
-[\-\-license] [\-\-verbose] [\-\-no\-shm] [\-\-no\-cpu\-accel]
-[\-\-display \fIdisplay\fP] [\-d] [\-\-no\-data] [\-f] [\-\-no\-fonts]
-[\-i] [\-\-no\-interface] [\-s] [\-\-no\-splash] [\-\-session \fI<name>\fP]
+[\-\-license] [\-\-verbose] [\-n] [\-\-new\-instance]
+[\-i] [\-\-no\-interface] [\-d] [\-\-no\-data] [\-f] [\-\-no\-fonts]
+[\-s] [\-\-no\-splash]  [\-\-no\-shm] [\-\-no\-cpu\-accel]
+[\-\-display \fIdisplay\fP] [\-\-session \fI<name>\fP]
 [\-g] [\-\-gimprc \fI<gimprc>\fP] [\-\-system\-gimprc \fI<gimprc>\fP]
 [\-\-dump\-gimprc\fP] [\-\-console\-messages] [\-\-debug\-handlers]
 [\-\-stack\-trace\-mode \fI<mode>\fP] [\-\-pdb\-compat\-mode \fI<mode>\fP]
@@ -39,11 +40,16 @@ images.
 GIMP ships with a second binary called \fIgimp-console\fP. This binary
 is a console-only version and behaves as if \fIgimp\fP was called with
 the \-\-no\-interface command\-line option.
+.PP
+On platforms with the D-Bus message bus system, GIMP will by default check
+if an instance is already running in this user session. If it detects that,
+it will pass all filenames given on the command-line to the already running
+GIMP instance and quit. 
 
 
 .SH OPTIONS
 .l
-The \fIgimp\fP accepts the following options:
+GIMP accepts the following options:
 .TP 8
 .B  \-h, \-\-help
 Show GIMP command\-line options.
@@ -63,14 +69,12 @@ Output license information and exit.
 .B \-\-verbose
 Be verbose and create information on standard output.
 .TP 8
-.B \-\-no\-shm
-Do not use shared memory between GIMP and its plug-ins.
-Instead of using shared memory, GIMP will send the data via pipe. This
-will result in slower performance than using shared memory.
+.B \-i, \-\-no\-interface
+Run without a user interface.
 .TP 8
-.B \-\-no\-cpu\-accel
-Do not use CPU accelerations such as MMX or SSE even if GIMP detects
-that your CPU provides this functionality.
+.B \-n, \-\-new\-instance
+Do not attempt to reuse an already running GIMP instance. Always start a
+new one.
 .TP 8
 .B \-d, \-\-no\-data
 Do not load patterns, gradients, palettes, or brushes. Often useful
@@ -80,14 +84,20 @@ in non-interactive situations where startup time is to be minimized.
 Do not load any fonts. No text functionality will be available if this
 option is used.
 .TP 8
-.B \-i, \-\-no\-interface
-Run without a user interface.
-.TP 8
 .B \-\-display \fIdisplay\fP
 Use the designated X display.
 .TP 8
 .B \-s, \-\-no\-splash
 Do not show the splash screen.
+.TP 8
+.B \-\-no\-shm
+Do not use shared memory between GIMP and its plug-ins.
+Instead of using shared memory, GIMP will send the data via pipe. This
+will result in slower performance than using shared memory.
+.TP 8
+.B \-\-no\-cpu\-accel
+Do not use CPU accelerations such as MMX or SSE even if GIMP detects
+that your CPU provides this functionality.
 .TP 8
 .B \-\-session \fI<name>\fP
 Use a different sessionrc for this GIMP session. The given session
@@ -323,7 +333,7 @@ ftp://ftp.gimp.org/.
 
 
 .SH AUTHORS
-Spencer Kimball and Peter Mattis.
+Spencer Kimball, Peter Mattis and the GIMP Development Team.
 
 With patches, fixes, plug-ins, extensions, scripts, translations,
 documentation and more from lots and lots of people all over the
