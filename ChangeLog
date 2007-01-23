@@ -1,5 +1,9 @@
 2007-01-23  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: bumped version to 2.3.15.
+
+2007-01-23  Sven Neumann  <sven@gimp.org>
+
 	* Made 2.3.14 development release.
 
 2007-01-23  Sven Neumann  <sven@gimp.org>
