@@ -19,6 +19,9 @@ Changes in GIMP 2.3.14
 - added GimpRatioEntry widget and use it in the rectangle tool options
 - added functions to transform between preview and image coordinates
 - added PDB functions to validate display, drawable, image and vectors IDs
+- added HSL color model to Decompose and Compose plug-ins
+- further improved status bar messages for tools
+- on systems with D-Bus build gimp-remote functionality into gimp executable
 - bug fixes and code cleanup
 
 
