@@ -1,3 +1,11 @@
+2007-01-24  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* app/tools/gimprectangletool.c: Applied patch from Joao S. O. Bueno
+	Calligaris that allows size of rectangle selection to be changed via
+	the keyboard arrow keys. Ctrl + arrow increases size of selection in
+	the direction of the arrow. Ctrl + Shift + arrow decreases size of
+	selection.
+
 2007-01-23  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* app/actions/context-actions.c
