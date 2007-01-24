@@ -95,6 +95,8 @@ struct _GimpRectangleToolPrivate
   gdouble                 saved_center_x;
   gdouble                 saved_center_y;
 
+  gint                    suppress_updates;
+
   GimpRectangleGuide      guide; /* synced with options->guide, only exists for drawing */
 };
 
@@ -1271,30 +1273,34 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
 {
   GimpRectangleTool        *rectangle;
   GimpRectangleToolPrivate *private;
-  gint                      inc_x = 0;
-  gint                      inc_y = 0;
+  gint                      dx = 0;
+  gint                      dy = 0;
+  gint                      inc_x1 = 0;
+  gint                      inc_y1 = 0;
+  gint                      inc_x2 = 0;
+  gint                      inc_y2 = 0;
 
   g_return_val_if_fail (GIMP_IS_RECTANGLE_TOOL (tool), FALSE);
-
-  rectangle = GIMP_RECTANGLE_TOOL (tool);
-  private   = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
 
   if (display != tool->display)
     return FALSE;
 
+  rectangle = GIMP_RECTANGLE_TOOL (tool);
+  private   = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
+
   switch (kevent->keyval)
     {
     case GDK_Up:
-      inc_y = -1;
+      dy = -1;
       break;
     case GDK_Left:
-      inc_x = -1;
+      dx = -1;
       break;
     case GDK_Right:
-      inc_x = 1;
+      dx = 1;
       break;
     case GDK_Down:
-      inc_y = 1;
+      dy = 1;
       break;
 
     case GDK_KP_Enter:
@@ -1309,24 +1315,61 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
       return TRUE;
 
     default:
-      g_print ("Key %d pressed\n", kevent->keyval);
       return FALSE;
     }
 
   /*  If the shift key is down, move by an accelerated increment  */
   if (kevent->state & GDK_SHIFT_MASK)
     {
-      inc_y *= ARROW_VELOCITY;
-      inc_x *= ARROW_VELOCITY;
+      dx *= ARROW_VELOCITY;
+      dy *= ARROW_VELOCITY;
+    }
+
+  /*  Resize the rectangle if the mouse is over a handle, otherwise move it  */
+  switch (private->function)
+    {
+    case RECT_RESIZING_UPPER_LEFT:
+      inc_x1 = dx;
+      inc_y1 = dy;
+      break;
+    case RECT_RESIZING_UPPER_RIGHT:
+      inc_x2 = dx;
+      inc_y1 = dy;
+      break;
+    case RECT_RESIZING_LOWER_LEFT:
+      inc_x1 = dx;
+      inc_y2 = dy;
+      break;
+    case RECT_RESIZING_LOWER_RIGHT:
+      inc_x2 = dx;
+      inc_y2 = dy;
+      break;
+    case RECT_RESIZING_LEFT:
+      inc_x1 = dx;
+      break;
+    case RECT_RESIZING_RIGHT:
+      inc_x2 = dx;
+      break;
+    case RECT_RESIZING_TOP:
+      inc_y1 = dy;
+      break;
+    case RECT_RESIZING_BOTTOM:
+      inc_y2 = dy;
+      break;
+
+    default:
+      inc_x1 = inc_x2 = dx;
+      inc_y1 = inc_y2 = dy;
+      break;
     }
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   g_object_set (rectangle,
-                "x1", private->x1 + inc_x,
-                "y1", private->y1 + inc_y,
-                "x2", private->x2 + inc_x,
-                "y2", private->y2 + inc_y,
+                "x1", private->x1 + inc_x1,
+                "y1", private->y1 + inc_y1,
+                "x2", private->x2 + inc_x2,
+                "y2", private->y2 + inc_y2,
                 NULL);
 
   gimp_rectangle_tool_configure (rectangle);
@@ -1335,6 +1378,12 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
 
   g_signal_emit (rectangle,
                  gimp_rectangle_tool_signals[RECTANGLE_CHANGED], 0);
+
+  /*  Evil hack to suppress oper updates. We do this because we don't
+   *  want the rectangle tool to change function while the rectangle
+   *  is being resized or moved using the keyboard.
+   */
+  private->suppress_updates = 2;
 
   return TRUE;
 }
@@ -1357,6 +1406,12 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
 
   if (tool->display != display)
     return;
+
+  if (private->suppress_updates)
+    {
+      private->suppress_updates--;
+      return;
+    }
 
   if (coords->x > private->x1 && coords->x < private->x2 &&
       coords->y > private->y1 && coords->y < private->y2)

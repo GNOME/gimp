@@ -1,5 +1,11 @@
 2007-01-24  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimprectangletool.c: implement keyboard navigation as
+	in the spec but without pointer warping. Basically works but needs
+	further tuning.
+
+2007-01-24  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangletool.c: don't emit signals by name if we
 	know the signal ID.
 
