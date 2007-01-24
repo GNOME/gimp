@@ -1,5 +1,10 @@
 2007-01-24  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimprectangletool.c: don't emit signals by name if we
+	know the signal ID.
+
+2007-01-24  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangletool.c: reverted previous change.
 	Keyboard navigation for the rectangle tools has been speced out
 	differently and changes to the spec should be discussed beforehand.

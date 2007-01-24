@@ -640,7 +640,8 @@ gimp_rectangle_tool_button_release (GimpTool        *tool,
         }
       else
         {
-          g_signal_emit_by_name (rectangle, "rectangle-changed", NULL);
+          g_signal_emit (rectangle,
+                         gimp_rectangle_tool_signals[RECTANGLE_CHANGED], 0);
         }
     }
   else
@@ -1332,7 +1333,8 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
-  g_signal_emit_by_name (rectangle, "rectangle-changed", NULL);
+  g_signal_emit (rectangle,
+                 gimp_rectangle_tool_signals[RECTANGLE_CHANGED], 0);
 
   return TRUE;
 }
@@ -1843,7 +1845,7 @@ gimp_rectangle_tool_synthesize_motion (GimpTool   *tool,
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
-  g_signal_emit_by_name (tool, "rectangle-changed", NULL);
+  g_signal_emit (tool, gimp_rectangle_tool_signals[RECTANGLE_CHANGED], 0);
 }
 
 static void
