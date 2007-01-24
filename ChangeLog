@@ -1,5 +1,10 @@
 2007-01-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/plug-ins/palette-offset.py: applied patch from
+	Tim Mooney (bug #400389).
+
+2007-01-24  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangletool.c: implement keyboard navigation as
 	in the spec but without pointer warping. Basically works but needs
 	further tuning.
