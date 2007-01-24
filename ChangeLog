@@ -1,3 +1,9 @@
+2007-01-24  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangletool.c: reverted previous change.
+	Keyboard navigation for the rectangle tools has been speced out
+	differently and changes to the spec should be discussed beforehand.
+
 2007-01-24  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* app/tools/gimprectangletool.c: Applied patch from Joao S. O. Bueno
