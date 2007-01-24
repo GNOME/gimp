@@ -1,3 +1,9 @@
+2007-01-23  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* app/actions/context-actions.c
+	* app/actions/tools-actions.c: s/minumum/minimum/ typo
+	spotted by Joao S. O. Bueno Calligaris.
+
 2007-01-23  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.3.15.
