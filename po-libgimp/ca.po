@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-07 11:02+0100\n"
-"PO-Revision-Date: 2007-01-07 13:51+0100\n"
+"POT-Creation-Date: 2007-01-25 22:35+0100\n"
+"PO-Revision-Date: 2007-01-24 21:43+0100\n"
 "Last-Translator: Quim Perez i Noguer\n"
 "Language-Team: Català <gimp@softcatala.net>\n"
 "MIME-Version: 1.0\n"
@@ -19,6 +19,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: KBabel 1.11.2\n"
+
+#: ../libgimp/gimpbrushselectbutton.c:170
+msgid "Brush Selection"
+msgstr "Selecció del pinzell"
+
+#: ../libgimp/gimpbrushselectbutton.c:911
+#: ../libgimp/gimppatternselectbutton.c:712
+msgid "_Browse..."
+msgstr "_Navega..."
 
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
@@ -100,7 +109,8 @@ msgstr ""
 #: ../libgimp/gimpexport.c:308
 #, c-format
 msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s només pot gestionar els mapes de bits (dos colors) o les imatges indexades"
+msgstr ""
+"%s només pot gestionar els mapes de bits (dos colors) o les imatges indexades"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -195,9 +205,21 @@ msgstr "Selecció de tipus de lletra"
 msgid "Sans"
 msgstr "Sans"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
+#: ../libgimp/gimpgradientselectbutton.c:148
+msgid "Gradient Selection"
+msgstr "Selecció del degradat"
+
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
 msgid "(Empty)"
 msgstr "(Buit)"
+
+#: ../libgimp/gimppaletteselectbutton.c:130
+msgid "Palette Selection"
+msgstr "Selecció de la paleta"
+
+#: ../libgimp/gimppatternselectbutton.c:156
+msgid "Pattern Selection"
+msgstr "Selecció del patró"
 
 #: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
@@ -752,13 +774,13 @@ msgstr "El perfil de color del vostre monitor (primari)."
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid ""
-"When enabled, the GIMP will try to use the display color profile from the "
+"When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
 "Si es marca l'opció, el GIMP intentarà fer servir el perfil de color del "
-"sistema de finestres. El perfil configurat del monitor només es faria servir "
-"com a última opció."
+"sistema. El perfil configurat del monitor només es faria servir com a última "
+"opció."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
 msgid "The default RGB working space color profile."
@@ -1076,7 +1098,7 @@ msgstr "Comprova l'estil"
 
 #  toggle button to (des)activate the instant preview
 #. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:265
+#: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "_Previsualitza"
 
@@ -1194,7 +1216,8 @@ msgstr "_Nova llavor"
 
 #: ../libgimpwidgets/gimpwidgets.c:1022
 msgid "Seed random number generator with a generated random number"
-msgstr "Configura el generador de nombres aleatoris amb el nombre aleatori generat"
+msgstr ""
+"Configura el generador de nombres aleatoris amb el nombre aleatori generat"
 
 #: ../libgimpwidgets/gimpwidgets.c:1026
 msgid "_Randomize"
@@ -1270,7 +1293,8 @@ msgstr "Tritanopia (insensible al blau)"
 
 #: ../modules/cdisplay_colorblind.c:200
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "Filtre de simulació de dèficit de color (algorisme de Brettel-Vienot-Mollon)"
+msgstr ""
+"Filtre de simulació de dèficit de color (algorisme de Brettel-Vienot-Mollon)"
 
 #: ../modules/cdisplay_colorblind.c:290
 msgid "Color Deficient Vision"
@@ -1306,7 +1330,8 @@ msgstr "C_icles de contrast:"
 
 #: ../modules/cdisplay_lcms.c:116
 msgid "Color management display filter using ICC color profiles"
-msgstr "Filtre de gestió de color de pantalles que fa servir perfils de color ICC"
+msgstr ""
+"Filtre de gestió de color de pantalles que fa servir perfils de color ICC"
 
 #: ../modules/cdisplay_lcms.c:184
 msgid "Color Management"
@@ -1514,59 +1539,115 @@ msgid "Button Gear Up"
 msgstr "Botó augmentar marxa"
 
 #: ../modules/controller_linux_input.c:87
-msgid "Wheel Turn Left"
-msgstr "Volant cap a l'esquerra"
+msgid "X Move Left"
+msgstr "Moviment X esquerra"
 
 #: ../modules/controller_linux_input.c:88
-msgid "Wheel Turn Right"
-msgstr "Volant cap a la dreta"
+msgid "X Move Right"
+msgstr "Moviment X dreta"
 
 #: ../modules/controller_linux_input.c:89
+msgid "Y Move Away"
+msgstr "Moviment Y allunya"
+
+#: ../modules/controller_linux_input.c:90
+msgid "Y Move Near"
+msgstr "Moviment Y apropa"
+
+#: ../modules/controller_linux_input.c:91
+msgid "Z Move Up"
+msgstr "Moviment Z amunt"
+
+#: ../modules/controller_linux_input.c:92
+msgid "Z Move Down"
+msgstr "Moviment Z avall"
+
+#: ../modules/controller_linux_input.c:94
+msgid "X Axis Tilt Away"
+msgstr "Eix X cap enfora"
+
+#: ../modules/controller_linux_input.c:95
+msgid "X Axis Tilt Near"
+msgstr "Eix Y cap endavant"
+
+#: ../modules/controller_linux_input.c:96
+msgid "Y Axis Tilt Right"
+msgstr "Eix Y cap a la dreta"
+
+#: ../modules/controller_linux_input.c:97
+msgid "Y Axis Tilt Left"
+msgstr "Eix Y cap a l'esquerra"
+
+#: ../modules/controller_linux_input.c:98
+msgid "Z Axis Turn Left"
+msgstr "Eix Z cap a l'esquerra"
+
+#: ../modules/controller_linux_input.c:99
+msgid "Z Axis Turn Right"
+msgstr "Eix Z cap a la dreta"
+
+#: ../modules/controller_linux_input.c:101
+msgid "Horiz. Wheel Turn Back"
+msgstr "Roda horitz. cap enrere"
+
+#: ../modules/controller_linux_input.c:102
+msgid "Horiz. Wheel Turn Forward"
+msgstr "Roda horitz. cap endavant"
+
+#: ../modules/controller_linux_input.c:103
 msgid "Dial Turn Left"
 msgstr "Dial cap a l'esquerra"
 
-#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_linux_input.c:104
 msgid "Dial Turn Right"
 msgstr "Dial cap a la dreta"
 
-#: ../modules/controller_linux_input.c:154
+#: ../modules/controller_linux_input.c:105
+msgid "Wheel Turn Left"
+msgstr "Volant cap a l'esquerra"
+
+#: ../modules/controller_linux_input.c:106
+msgid "Wheel Turn Right"
+msgstr "Volant cap a la dreta"
+
+#: ../modules/controller_linux_input.c:170
 msgid "Linux input event controller"
 msgstr "Controlador de senyals d'entrada del Linux"
 
-#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:246
+#: ../modules/controller_linux_input.c:238 ../modules/controller_midi.c:246
 msgid "Device:"
 msgstr "Dispositiu:"
 
-#: ../modules/controller_linux_input.c:223
+#: ../modules/controller_linux_input.c:239
 msgid "The name of the device to read Linux Input events from."
 msgstr "Nom del dispositiu del qual s'han de rebre esdeveniments."
 
-#: ../modules/controller_linux_input.c:227
+#: ../modules/controller_linux_input.c:243
 msgid "Linux Input"
 msgstr "Senyal del Linux"
 
-#: ../modules/controller_linux_input.c:352
+#: ../modules/controller_linux_input.c:368
 msgid "Linux Input Events"
 msgstr "Senyals del Linux"
 
-#: ../modules/controller_linux_input.c:373 ../modules/controller_midi.c:484
-#: ../modules/controller_midi.c:510
+#: ../modules/controller_linux_input.c:389 ../modules/controller_midi.c:483
+#: ../modules/controller_midi.c:509
 #, c-format
 msgid "Reading from %s"
 msgstr "S'està llegint de %s"
 
-#: ../modules/controller_linux_input.c:389
-#: ../modules/controller_linux_input.c:432 ../modules/controller_midi.c:466
-#: ../modules/controller_midi.c:527 ../modules/controller_midi.c:598
+#: ../modules/controller_linux_input.c:405
+#: ../modules/controller_linux_input.c:448 ../modules/controller_midi.c:465
+#: ../modules/controller_midi.c:526 ../modules/controller_midi.c:597
 #, c-format
 msgid "Device not available: %s"
 msgstr "Dispositiu desconnectat: %s"
 
-#: ../modules/controller_linux_input.c:397 ../modules/controller_midi.c:535
+#: ../modules/controller_linux_input.c:413 ../modules/controller_midi.c:534
 msgid "No device configured"
 msgstr "No s'ha configurat cap dispositiu"
 
-#: ../modules/controller_linux_input.c:441 ../modules/controller_midi.c:607
+#: ../modules/controller_linux_input.c:457 ../modules/controller_midi.c:606
 msgid "End of file"
 msgstr "Fi del fitxer"
 
@@ -1617,7 +1698,10 @@ msgstr "Controlador %03d"
 msgid "MIDI Events"
 msgstr "Senyals MIDI"
 
-#: ../modules/controller_midi.c:458
-msgid "GIMP MIDI controller"
-msgstr "Controlador MIDI del GIMP"
+#: ../modules/controller_midi.c:455
+msgid "GIMP"
+msgstr "GIMP"
 
+#: ../modules/controller_midi.c:457
+msgid "GIMP MIDI Input Controller"
+msgstr "Controlador d'entrada MIDI del GIMP"

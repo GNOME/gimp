@@ -1,6 +1,6 @@
 # translation of ca.po to Català
 # gimp-script-fu translation to Catalan.
-# Copyright © 2000, 2001, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+# Copyright © 2000, 2001, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 # Softcatala <linux@softcatala.org>, 2000-2001.
 # Xavier Beà <xbea a pie.xtec.es>, 2003, 2004.
 # Xavier Conde Rueda <xaviconde a eresmas.com>, 2004.
@@ -11,14 +11,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-23 10:57+0100\n"
-"PO-Revision-Date: 2006-12-21 22:09+0100\n"
+"POT-Creation-Date: 2007-01-25 22:37+0100\n"
+"PO-Revision-Date: 2007-01-17 22:49+0100\n"
 "Last-Translator: Quim Perez i Noguer\n"
 "Language-Team: Català <gimp@softcatala.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: KBabel 1.11.2\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:143
 #: ../plug-ins/script-fu/script-fu-console.c:210
@@ -1415,7 +1416,7 @@ msgid "_Distort..."
 msgstr "_Distorciona..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-msgid "Add a drop-shadow to the selected region (or alpha)"
+msgid "Add a drop shadow to the selected region (or alpha)"
 msgstr "Afegeix una ombra a la regió seleccionada (o canal alfa)"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
@@ -1454,7 +1455,7 @@ msgid "Opacity"
 msgstr "Opacitat"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
-msgid "_Drop-Shadow..."
+msgid "_Drop Shadow..."
 msgstr "_Ombra..."
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:1
@@ -2149,7 +2150,7 @@ msgid "Cell size (pixels)"
 msgstr "Mida de la cel·la (píxels)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:4
-msgid "Create a logo in the style newpaper printing"
+msgid "Create a logo in the style of newspaper printing"
 msgstr "Crea un logotip a l'estil de com s'imprimeix en un paper de diari"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6
