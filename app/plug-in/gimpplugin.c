@@ -245,6 +245,12 @@ gimp_plug_in_open (GimpPlugIn         *plug_in,
   setmode (my_write[1], _O_BINARY);
 #endif
 
+#ifdef G_OS_WIN32
+  /* Prevent the plug-in from inheriting our ends of the pipes */
+  SetHandleInformation ((HANDLE) _get_osfhandle (my_read[0]), HANDLE_FLAG_INHERIT, 0);
+  SetHandleInformation ((HANDLE) _get_osfhandle (my_write[1]), HANDLE_FLAG_INHERIT, 0);
+#endif
+
   plug_in->my_read   = g_io_channel_unix_new (my_read[0]);
   plug_in->my_write  = g_io_channel_unix_new (my_write[1]);
   plug_in->his_read  = g_io_channel_unix_new (my_write[0]);
