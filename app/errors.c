@@ -108,10 +108,6 @@ errors_init (Gimp               *gimp,
 #ifdef GIMP_UNSTABLE
   g_printerr ("This is a development version of GIMP.  "
               "Debug messages may appear here.\n\n");
-
-#ifdef G_OS_WIN32
-  g_printerr ("You can minimize this window, but don't close it.\n\n");
-#endif
 #endif /* GIMP_UNSTABLE */
 
   the_errors_gimp   = gimp;

@@ -1,3 +1,36 @@
+2007-01-26  Tor Lillqvist  <tml@novell.com>
+
+	Make the handling of console output make more sense Win32. Should
+	mostly fix #400927.
+	    
+	* app/app_procs.c (app_exit): Drop the Win32 "This console window
+	will close in ten seconds" message from here.
+	(app_run): Drop the call to FreeConsole() from here. GIMP is built
+	as a GUI executable on Windows, and in case we do open a fresh
+	console window in main() (see below), we shouldn't then
+	immediately close it here.
+
+	* app/errors.c (errors_init): Drop printing the "You can mimize
+	this window, but don't close it" message on Win32 from here.
+
+	* app/main.c (gimp_open_console_window): New Win32-only
+	function. If either stdout or stderr are unconnected, open a new
+	console window and connect stdout and/or stderr to it as
+	needed. Set the console title to "GIMP output. You can minimize
+	this window, but don't close it." Register an atexit function that
+	waits for the user to close the console window.
+	(wait_console_window): New Win32-only function. Registered as an
+	atexit function when GIMP has opened a new console window. Prompts
+	the user to type any character to close the window.
+	(main, gimp_show_version): Always call gimp_open_console_window()
+	in the unstable version. As the "This is a development version of
+	GIMP. Debug messages may appear here" message says, one point of
+	the unstable version is that debug messages should be visible, so
+	I think it makes sense to always see them in an unstable
+	version. In stable versions, call gimp_open_console_window() only
+	if options that cause output that the user wants to see were
+	given, like --help and --version.
+
 2007-01-25  Tor Lillqvist  <tml@novell.com>
 
 	* app/plug-in/gimpplugin.c (gimp_plug_in_open): On Win32 prevent

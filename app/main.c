@@ -65,6 +65,7 @@
 
 #ifdef G_OS_WIN32
 #include <windows.h>
+#include <conio.h>
 #endif
 
 #include "gimp-intl.h"
@@ -98,6 +99,11 @@ static void      gimp_init_signal_handlers    (void);
 static void      gimp_sigfatal_handler        (gint sig_num) G_GNUC_NORETURN;
 #endif
 
+#if defined (G_OS_WIN32) && !defined (GIMP_CONSOLE_COMPILATION)
+static void      gimp_open_console_window     (void);
+#else
+#define gimp_open_console_window() /* as nothing */
+#endif
 
 static const gchar        *system_gimprc     = NULL;
 static const gchar        *user_gimprc       = NULL;
@@ -271,6 +277,10 @@ main (int    argc,
     g_thread_init (NULL);
 #endif
 
+#ifdef GIMP_UNSTABLE
+  gimp_open_console_window ();
+#endif
+
   gimp_init_malloc ();
 
   gimp_env_init (FALSE);
@@ -297,8 +307,17 @@ main (int    argc,
         }
       else if ((strcmp (arg, "--version") == 0) || (strcmp (arg, "-v") == 0))
         {
+          gimp_open_console_window ();
           gimp_show_version_and_exit ();
         }
+#if defined (G_OS_WIN32) && !defined (GIMP_CONSOLE_COMPILATION)
+      else if ((strcmp (arg, "--help") == 0) ||
+               (strcmp (arg, "-?") == 0) ||
+               (strncmp (arg, "--help-", 7) == 0))
+        {
+          gimp_open_console_window ();
+        }
+#endif
     }
 
 #ifdef GIMP_CONSOLE_COMPILATION
@@ -316,6 +335,7 @@ main (int    argc,
     {
       if (error)
         {
+	  gimp_open_console_window ();
           g_print ("%s\n", error->message);
           g_error_free (error);
         }
@@ -329,6 +349,9 @@ main (int    argc,
 
       app_exit (EXIT_FAILURE);
     }
+
+  if (no_interface || be_verbose || console_messages || batch_commands != NULL)
+    gimp_open_console_window ();
 
   if (no_interface)
     new_instance = TRUE;
@@ -417,7 +440,7 @@ main (int    argc,
 
 #ifdef G_OS_WIN32
 
-/* In case we build this as a windowed application */
+/* In case we build this as a windowed application. Well, we do. */
 
 #ifdef __GNUC__
 #  ifndef _stdcall
@@ -433,6 +456,38 @@ WinMain (struct HINSTANCE__ *hInstance,
 {
   return main (__argc, __argv);
 }
+
+#ifndef GIMP_CONSOLE_COMPILATION
+
+static void
+wait_console_window (void)
+{
+  FILE *console = fopen ("CONOUT$", "w");
+
+  SetConsoleTitle (_("GIMP output. Type any character to close this window."));
+  fprintf (console, _("(Type any character to close this window)\n"));
+  fflush (console);
+  _getch ();
+}
+
+static void
+gimp_open_console_window (void)
+{
+  if (((HANDLE) _get_osfhandle (fileno (stdout)) == INVALID_HANDLE_VALUE ||
+       (HANDLE) _get_osfhandle (fileno (stderr)) == INVALID_HANDLE_VALUE) && AllocConsole ())
+    {
+      if ((HANDLE) _get_osfhandle (fileno (stdout)) == INVALID_HANDLE_VALUE)
+        freopen ("CONOUT$", "w", stdout);
+
+      if ((HANDLE) _get_osfhandle (fileno (stderr)) == INVALID_HANDLE_VALUE)
+        freopen ("CONOUT$", "w", stderr);
+
+      SetConsoleTitle (_("GIMP output. You can minimize this window, but don't close it."));
+
+      atexit (wait_console_window);
+    }
+}
+#endif
 
 #endif /* G_OS_WIN32 */
 
@@ -497,6 +552,8 @@ gimp_option_dump_gimprc (const gchar  *option_name,
 {
   GimpConfigDumpFormat format = GIMP_CONFIG_DUMP_NONE;
 
+  gimp_open_console_window ();
+
   if (strcmp (option_name, "--dump-gimprc") == 0)
     format = GIMP_CONFIG_DUMP_GIMPRC;
   if (strcmp (option_name, "--dump-gimprc-system") == 0)
@@ -526,6 +583,7 @@ gimp_option_dump_gimprc (const gchar  *option_name,
 static void
 gimp_show_version (void)
 {
+  gimp_open_console_window ();
   g_print (_("%s version %s"), GIMP_NAME, GIMP_VERSION);
   g_print ("\n");
 }
