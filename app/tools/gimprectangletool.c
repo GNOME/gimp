@@ -123,8 +123,10 @@ static void     gimp_rectangle_tool_options_notify  (GimpRectangleOptions *optio
                                                      GimpRectangleTool  *rectangle);
 
 static void     gimp_rectangle_tool_check_function  (GimpRectangleTool *rectangle,
-                                                     gint               curx,
-                                                     gint               cury);
+                                                     gint               *x1,
+                                                     gint               *y1,
+                                                     gint               *x2,
+                                                     gint               *y2);
 static gboolean
             gimp_rectangle_tool_constraint_violated (GimpRectangleTool *rectangle,
                                                      gint               x1,
@@ -140,6 +142,8 @@ static GtkAnchorType gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *p
                                                      gint                     *w,
                                                      gint                     *h);
 
+static guint
+           gimp_rectangle_tool_fix_resize_direction (GimpRectangleToolPrivate *private);
 
 static guint gimp_rectangle_tool_signals[LAST_SIGNAL] = { 0 };
 
@@ -688,6 +692,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   gdouble                   center_x, center_y;
   gdouble                   alpha;
   gdouble                   beta;
+  gboolean                  created_now = FALSE;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
@@ -715,8 +720,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  /* fix function, startx, starty if user has "flipped" the rectangle */
-  gimp_rectangle_tool_check_function (rectangle, curx, cury);
+
 
   inc_x = curx - private->startx;
   inc_y = cury - private->starty;
@@ -754,8 +758,6 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
         x2 = x1 + width;
       else if (fixed_center)
         x2 = x1 + 2 * (center_x - x1);
-      else
-        x2 = MAX (x1, private->x2);
       break;
 
     case RECT_RESIZING_UPPER_RIGHT:
@@ -766,8 +768,6 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
         x1 = x2 - width;
       else if (fixed_center)
         x1 = x2 - 2 * (x2 - center_x);
-      else
-        x1 = MIN (private->x1, x2);
       break;
 
     case RECT_RESIZING_BOTTOM:
@@ -795,8 +795,6 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
         y2 = y1 + height;
       else if (fixed_center)
         y2 = y1 + 2 * (center_y - y1);
-      else
-        y2 = MAX (y1, private->y2);
       break;
 
     case RECT_RESIZING_LOWER_LEFT:
@@ -807,8 +805,6 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
         y1 = y2 - height;
       else if (fixed_center)
         y1 = y2 - 2 * (y2 - center_y);
-      else
-        y1 = MIN (private->y1, y2);
       break;
 
     case RECT_RESIZING_RIGHT:
@@ -1011,6 +1007,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
     case RECT_RESIZING_BOTTOM:
       private->startx = curx;
       private->starty = y2;
+
       break;
 
     case RECT_RESIZING_RIGHT:
@@ -1026,7 +1023,11 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
     default:
       break;
     }
-
+  /* fix function if user has "flipped" the rectangle */
+  if (! created_now)
+    gimp_rectangle_tool_check_function (rectangle,
+                                      &x1, &y1,
+                                      &x2, &y2);
   /*  make sure that the coords are in bounds  */
   g_object_set (rectangle,
                 "x1", MIN (x1, x2),
@@ -1068,6 +1069,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       else if (inc_x > 0 && inc_y > 0)
         function = RECT_RESIZING_LOWER_RIGHT;
 
+      created_now = TRUE;
+      
       gimp_rectangle_tool_set_function (rectangle, function);
     }
 
@@ -1132,6 +1135,16 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
     }
 }
 
+static void swap_ints (gint *i,
+                       gint *j)
+{
+  gint tmp;
+
+  tmp = *i;
+  *i = *j;
+  *j = tmp;
+}
+
 /*
  * gimp_rectangle_tool_check_function() is needed to deal with
  * situations where the user drags a corner or edge across one of the
@@ -1139,8 +1152,8 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
  */
 static void
 gimp_rectangle_tool_check_function (GimpRectangleTool *rectangle,
-                                    gint               curx,
-                                    gint               cury)
+                                    gint *x1, gint *y1,
+                                    gint *x2, gint *y2)
 {
   GimpRectangleToolPrivate *private;
   GimpRectangleFunction     function;
@@ -1149,121 +1162,66 @@ gimp_rectangle_tool_check_function (GimpRectangleTool *rectangle,
 
   function = private->function;
 
-  switch (function)
+  if (*x2 < *x1)
     {
-    case RECT_RESIZING_LEFT:
-      if (curx > private->x2)
+      swap_ints (x1, x2);
+      switch (function)
         {
-          function = RECT_RESIZING_RIGHT;
-          private->startx = private->x2;
+          case RECT_RESIZING_UPPER_LEFT:
+            function = RECT_RESIZING_UPPER_RIGHT;
+            break;
+          case RECT_RESIZING_UPPER_RIGHT:
+            function = RECT_RESIZING_UPPER_LEFT;
+            break;
+          case RECT_RESIZING_LOWER_LEFT:
+            function = RECT_RESIZING_LOWER_RIGHT;
+            break;
+          case RECT_RESIZING_LOWER_RIGHT:
+            function = RECT_RESIZING_LOWER_LEFT;
+            break;
+          case RECT_RESIZING_LEFT:
+            function = RECT_RESIZING_RIGHT;
+            break;
+          case RECT_RESIZING_RIGHT:
+            function = RECT_RESIZING_LEFT;
+            break;
+          /* avoid annoying warnings about unhandled enums */
+          default:
+            break;
         }
-      break;
+    }
 
-    case RECT_RESIZING_RIGHT:
-      if (curx < private->x1)
+  if (*y2 < *y1)
+    {
+      swap_ints (y1, y2);
+      switch (function)
         {
-          function = RECT_RESIZING_LEFT;
-          private->startx = private->x1;
+          case RECT_RESIZING_UPPER_LEFT:
+           function = RECT_RESIZING_LOWER_LEFT;
+            break;
+          case RECT_RESIZING_UPPER_RIGHT:
+            function = RECT_RESIZING_LOWER_RIGHT;
+            break;
+          case RECT_RESIZING_LOWER_LEFT:
+            function = RECT_RESIZING_UPPER_LEFT;
+            break;
+          case RECT_RESIZING_LOWER_RIGHT:
+            function = RECT_RESIZING_UPPER_RIGHT;
+            break;
+          case RECT_RESIZING_TOP:
+            function = RECT_RESIZING_BOTTOM;
+            break;
+          case RECT_RESIZING_BOTTOM:
+            function = RECT_RESIZING_TOP;
+            break;
+          default:
+            break;
         }
-      break;
-
-    case RECT_RESIZING_TOP:
-      if (cury > private->y2)
-        {
-          function = RECT_RESIZING_BOTTOM;
-          private->starty = private->y2;
-        }
-      break;
-
-    case RECT_RESIZING_BOTTOM:
-      if (cury < private->y1)
-        {
-          function = RECT_RESIZING_TOP;
-          private->starty = private->y1;
-        }
-      break;
-
-    case RECT_RESIZING_UPPER_LEFT:
-      if (curx > private->x2 && cury > private->y2)
-        {
-          function = RECT_RESIZING_LOWER_RIGHT;
-          private->startx = private->x2;
-          private->starty = private->y2;
-        }
-      else if (curx > private->x2)
-        {
-          function = RECT_RESIZING_UPPER_RIGHT;
-          private->startx = private->x2;
-        }
-      else if (cury > private->y2)
-        {
-          function = RECT_RESIZING_LOWER_LEFT;
-          private->starty = private->y2;
-        }
-      break;
-
-    case RECT_RESIZING_UPPER_RIGHT:
-      if (curx < private->x1 && cury > private->y2)
-        {
-          function = RECT_RESIZING_LOWER_LEFT;
-          private->startx = private->x1;
-          private->starty = private->y2;
-        }
-      else if (curx < private->x1)
-        {
-          function = RECT_RESIZING_UPPER_LEFT;
-          private->startx = private->x1;
-        }
-      else if (cury > private->y2)
-        {
-          function = RECT_RESIZING_LOWER_RIGHT;
-          private->starty = private->y2;
-        }
-      break;
-
-    case RECT_RESIZING_LOWER_LEFT:
-      if (curx > private->x2 && cury < private->y1)
-        {
-          function = RECT_RESIZING_UPPER_RIGHT;
-          private->startx = private->x2;
-          private->starty = private->y1;
-        }
-      else if (curx > private->x2)
-        {
-          function = RECT_RESIZING_LOWER_RIGHT;
-          private->startx = private->x2;
-        }
-      else if (cury < private->y1)
-        {
-          function = RECT_RESIZING_UPPER_LEFT;
-          private->starty = private->y1;
-        }
-      break;
-
-    case RECT_RESIZING_LOWER_RIGHT:
-      if (curx < private->x1 && cury < private->y1)
-        {
-          function = RECT_RESIZING_UPPER_LEFT;
-          private->startx = private->x1;
-          private->starty = private->y1;
-        }
-      else if (curx < private->x1)
-        {
-          function = RECT_RESIZING_LOWER_LEFT;
-          private->startx = private->x1;
-        }
-      else if (cury < private->y1)
-        {
-          function = RECT_RESIZING_UPPER_RIGHT;
-          private->starty = private->y1;
-        }
-      break;
-
-    default:
-      break;
     }
 
   gimp_rectangle_tool_set_function (rectangle, function);
+
+#undef SWAP
 }
 
 gboolean
@@ -1279,6 +1237,8 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
   gint                      inc_y1 = 0;
   gint                      inc_x2 = 0;
   gint                      inc_y2 = 0;
+  gint                      x1, y1;
+  gint                      x2, y2;
 
   g_return_val_if_fail (GIMP_IS_RECTANGLE_TOOL (tool), FALSE);
 
@@ -1363,13 +1323,21 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
       break;
     }
 
+
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
+  x1 = private->x1 + inc_x1;
+  y1 = private->y1 + inc_y1;
+  x2 = private->x2 + inc_x2;
+  y2 = private->y2 + inc_y2;
+
+  gimp_rectangle_tool_check_function (rectangle, &x1, &y1, &x2, &y2);
+
   g_object_set (rectangle,
-                "x1", private->x1 + inc_x1,
-                "y1", private->y1 + inc_y1,
-                "x2", private->x2 + inc_x2,
-                "y2", private->y2 + inc_y2,
+                "x1", x1,
+                "y1", y1,
+                "x2", x2,
+                "y2", y2,
                 NULL);
 
   gimp_rectangle_tool_configure (rectangle);

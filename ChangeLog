@@ -1,3 +1,8 @@
+2007-01-26  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangletool.c: applied patch from Joao
+	S. O. Bueno Calligaris that fixes rectangle resizing (bug #400283).
+
 2007-01-26  Tor Lillqvist  <tml@novell.com>
 
 	Make the handling of console output make more sense Win32. Should
