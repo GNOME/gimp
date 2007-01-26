@@ -1,3 +1,7 @@
+2007-01-26  Sven Neumann  <sven@gimp.org>
+
+	* docs/gimp.1.in: fixed markup (bug #401145)
+
 2007-01-22  Tor Lillqvist  <tml@novell.com>
 
 	Merge from trunk, fixes bug #398726:

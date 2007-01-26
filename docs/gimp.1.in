@@ -113,7 +113,6 @@ of \fI<commands>\fP is typically in the form of a script that
 can be executed by one of the GIMP scripting extensions. When
 \fI<commands>\fP is \fB-\fP the commands are read from standard
 input.
-.TP 8
 
 
 .SH ENVIRONMENT
