@@ -464,7 +464,7 @@ wait_console_window (void)
 {
   FILE *console = fopen ("CONOUT$", "w");
 
-  SetConsoleTitle (_("GIMP output. Type any character to close this window."));
+  SetConsoleTitleW (g_utf8_to_utf16 (_("GIMP output. Type any character to close this window."), -1, NULL, NULL, NULL));
   fprintf (console, _("(Type any character to close this window)\n"));
   fflush (console);
   _getch ();
@@ -482,7 +482,7 @@ gimp_open_console_window (void)
       if ((HANDLE) _get_osfhandle (fileno (stderr)) == INVALID_HANDLE_VALUE)
         freopen ("CONOUT$", "w", stderr);
 
-      SetConsoleTitle (_("GIMP output. You can minimize this window, but don't close it."));
+      SetConsoleTitleW (g_utf8_to_utf16 (_("GIMP output. You can minimize this window, but don't close it."), -1, NULL, NULL, NULL));
 
       atexit (wait_console_window);
     }
