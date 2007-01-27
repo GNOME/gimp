@@ -33,6 +33,7 @@
 #include "libgimpconfig/gimpconfig.h"
 
 #ifdef G_OS_WIN32
+#include <windows.h>
 #include "libgimpbase/gimpwin32-io.h"
 #include <process.h>
 #define getpid _getpid
@@ -72,14 +73,14 @@ struct _SwapFile
 struct _DefSwapFile
 {
   GList *gaps;
-  off_t  swap_file_end;
-  off_t  cur_position;
+  gint64 swap_file_end;
+  gint64 cur_position;
 };
 
 struct _Gap
 {
-  off_t start;
-  off_t end;
+  gint64 start;
+  gint64 end;
 };
 
 struct _AsyncSwapArgs
@@ -110,14 +111,15 @@ static void    tile_swap_default_out      (DefSwapFile *def_swap_file,
 static void    tile_swap_default_delete   (DefSwapFile *def_swap_file,
                                            gint         fd,
                                            Tile        *tile);
-static off_t   tile_swap_find_offset      (DefSwapFile *def_swap_file,
+
+static gint64  tile_swap_find_offset      (DefSwapFile *def_swap_file,
                                            gint         fd,
-                                           off_t        bytes);
+                                           gint64       bytes);
 static void    tile_swap_resize           (DefSwapFile *def_swap_file,
                                            gint         fd,
-                                           off_t        new_size);
-static Gap   * tile_swap_gap_new          (off_t        start,
-                                           off_t        end);
+                                           gint64       new_size);
+static Gap   * tile_swap_gap_new          (gint64       start,
+                                           gint64       end);
 static void    tile_swap_gap_destroy      (Gap         *gap);
 
 
@@ -126,12 +128,27 @@ static GHashTable  * swap_files       = NULL;
 static GList       * open_swap_files  = NULL;
 static gint          nopen_swap_files = 0;
 static gint          next_swap_num    = 1;
-static const off_t   swap_file_grow   = 1024 * TILE_WIDTH * TILE_HEIGHT * 4;
+
+static const gint64  swap_file_grow   = 1024 * TILE_WIDTH * TILE_HEIGHT * 4;
 
 static gboolean      seek_err_msg     = TRUE;
 static gboolean      read_err_msg     = TRUE;
 static gboolean      write_err_msg    = TRUE;
 
+#ifdef G_OS_WIN32
+
+int
+gimp_win32_large_truncate (int    fd,
+                           gint64 size)
+{
+  if (LARGE_SEEK (fd, size, SEEK_SET) == size &&
+      SetEndOfFile ((HANDLE) _get_osfhandle (fd)))
+    return 0;
+  else
+    return -1;
+}
+
+#endif
 
 #ifdef GIMP_UNSTABLE
 static void
@@ -467,8 +484,8 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
                       gint         fd,
                       Tile        *tile)
 {
-  gint  nleft;
-  off_t offset;
+  gint   nleft;
+  gint64 offset;
 
   if (tile->data)
     return;
@@ -477,7 +494,7 @@ tile_swap_default_in (DefSwapFile *def_swap_file,
     {
       def_swap_file->cur_position = tile->swap_offset;
 
-      offset = lseek (fd, tile->swap_offset, SEEK_SET);
+      offset = LARGE_SEEK (fd, tile->swap_offset, SEEK_SET);
       if (offset == -1)
         {
           if (seek_err_msg)
@@ -527,10 +544,10 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
                        int          fd,
                        Tile        *tile)
 {
-  gint  bytes;
-  gint  nleft;
-  off_t offset;
-  off_t newpos;
+  gint   bytes;
+  gint   nleft;
+  gint64 offset;
+  gint64 newpos;
 
   bytes = TILE_WIDTH * TILE_HEIGHT * tile->bpp;
 
@@ -542,7 +559,7 @@ tile_swap_default_out (DefSwapFile *def_swap_file,
 
   if (def_swap_file->cur_position != newpos)
     {
-      offset = lseek (fd, newpos, SEEK_SET);
+      offset = LARGE_SEEK (fd, newpos, SEEK_SET);
       if (offset == -1)
         {
           if (seek_err_msg)
@@ -592,8 +609,8 @@ tile_swap_default_delete (DefSwapFile *def_swap_file,
   GList *tmp2;
   Gap   *gap;
   Gap   *gap2;
-  off_t  start;
-  off_t  end;
+  gint64 start;
+  gint64 end;
 
   if (tile->swap_offset == -1)
     return;
@@ -692,11 +709,11 @@ tile_swap_default_delete (DefSwapFile *def_swap_file,
 static void
 tile_swap_resize (DefSwapFile *def_swap_file,
                   gint         fd,
-                  off_t        new_size)
+                  gint64       new_size)
 {
   if (def_swap_file->swap_file_end > new_size)
     {
-      if (ftruncate (fd, new_size) != 0)
+      if (LARGE_TRUNCATE (fd, new_size) != 0)
         {
           g_message ("Failed to resize swap file: %s", g_strerror (errno));
           return;
@@ -706,14 +723,14 @@ tile_swap_resize (DefSwapFile *def_swap_file,
   def_swap_file->swap_file_end = new_size;
 }
 
-static off_t
+static gint64
 tile_swap_find_offset (DefSwapFile *def_swap_file,
                        gint         fd,
-                       off_t        bytes)
+                       gint64       bytes)
 {
   GList *tmp;
   Gap   *gap;
-  off_t  offset;
+  gint64 offset;
 
   tmp = def_swap_file->gaps;
   while (tmp)
@@ -754,8 +771,8 @@ tile_swap_find_offset (DefSwapFile *def_swap_file,
 }
 
 static Gap *
-tile_swap_gap_new (off_t start,
-                   off_t end)
+tile_swap_gap_new (gint64 start,
+                   gint64 end)
 {
   Gap *gap = g_new (Gap, 1);
 

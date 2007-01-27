@@ -21,6 +21,20 @@
 
 #include <sys/types.h>
 
+#ifdef G_OS_WIN32
+
+int gimp_win32_large_truncate (int    fd,
+                               gint64 size);
+
+#define LARGE_SEEK(f, o, w) _lseeki64 (f, o, w)
+#define LARGE_TRUNCATE(f, s) gimp_win32_large_truncate (f, s)
+
+#else
+
+#define LARGE_SEEK(f, o, t) lseek (f, o, t)
+#define LARGE_TRUNCATE(f, s) ftruncate (f, s)
+
+#endif
 
 typedef struct _TileLink TileLink;
 
@@ -69,7 +83,7 @@ struct _Tile
                          * for swapping. swap_num 1 is always the global
                          * swap file.
                          */
-  off_t   swap_offset;  /* the offset within the swap file of the tile data.
+  gint64  swap_offset;  /* the offset within the swap file of the tile data.
                          * if the tile data is in memory this will be set
                          * to -1.
                          */

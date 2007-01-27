@@ -1,3 +1,27 @@
+2007-01-26  Tor Lillqvist  <tml@novell.com>
+
+	Fix #398311 in GIMP until corresponding abstraction has been added
+	to GLib:
+
+	* app/base/tile-private.h: Use gint64 instead of off_t. (I assume
+	the configury makes sure GIMP is always compiled as
+	large-file-aware on Unix with an off_t of at least 64 bits?)
+
+	Introduce wrapper macros LARGE_SEEK() and LARGE_TRUNCATE(). On
+	Win32 LARGE_SEEK() calls _lseeki64() in the Microsoft C library,
+	and LARGE_TRUNCATE calls a new internal function
+	gimp_win32_large_truncate(). On Unix they call lseek() and
+	ftruncate().
+
+	* app/base/tile-swap.c: Use gint64 instead of off_t. Use
+	LARGE_SEEK() and LARGE_TRUNCATE() instead of lseek() and
+	ftruncate().
+	(gimp_win32_large_truncate): New function. Calls LARGE_SEEK() and
+	SetEndOfFile().
+
+	* app/xcf/xcf-load.c (xcf_swap_func): Use LARGE_SEEK() instead of
+	lseek().
+
 2007-01-26  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimprectangletool.c: applied patch from Joao

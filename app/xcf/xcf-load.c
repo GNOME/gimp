@@ -1819,7 +1819,7 @@ xcf_swap_func (gint      fd,
   switch (cmd)
     {
     case SWAP_IN:
-      lseek (fd, tile->swap_offset, SEEK_SET);
+      LARGE_SEEK (fd, tile->swap_offset, SEEK_SET);
 
       bytes = tile_size (tile);
       tile_alloc (tile);
