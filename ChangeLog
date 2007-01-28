@@ -2,6 +2,16 @@
 
 	* app/core/Makefile.am
 	* app/core/core-types.h
+	* app/core/gimpitempropundo.[ch]: new undo class which handles
+	ITEM_RENAME, ITEM_DISPLACE, ITEM_VISIBILITY and ITEM_LINKED undos.
+
+	* app/core/gimpimage-undo-push.c: use the new undo class and
+	remove the resp. code here.
+
+2007-01-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
 	* app/core/gimpimageundo.[ch]: new undo class which handles
 	GIMP_UNDO_IMAGE_TYPE, GIMP_UNDO_IMAGE_SIZE and
 	GIMP_UNDO_IMAGE_RESOLUTION.

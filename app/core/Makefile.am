@@ -198,6 +198,8 @@ libappcore_a_sources = \
 	gimpitem-linked.h		\
 	gimpitem-preview.c		\
 	gimpitem-preview.h		\
+	gimpitempropundo.c		\
+	gimpitempropundo.h		\
 	gimpitemundo.c			\
 	gimpitemundo.h			\
 	gimplayer.c			\

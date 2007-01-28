@@ -18,8 +18,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -43,6 +41,7 @@
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpimageundo.h"
+#include "gimpitempropundo.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
@@ -74,8 +73,7 @@ gimp_image_undo_push_image_type (GimpImage   *image,
                                    0, 0,
                                    GIMP_UNDO_IMAGE_TYPE, undo_desc,
                                    GIMP_DIRTY_IMAGE,
-                                   NULL,
-                                   NULL,
+                                   NULL, NULL,
                                    NULL)))
     {
       return TRUE;
@@ -101,8 +99,7 @@ gimp_image_undo_push_image_size (GimpImage   *image,
                                    0, 0,
                                    GIMP_UNDO_IMAGE_SIZE, undo_desc,
                                    GIMP_DIRTY_IMAGE | GIMP_DIRTY_IMAGE_SIZE,
-                                   NULL,
-                                   NULL,
+                                   NULL, NULL,
                                    NULL)))
     {
       return TRUE;
@@ -128,8 +125,7 @@ gimp_image_undo_push_image_resolution (GimpImage   *image,
                                    0, 0,
                                    GIMP_UNDO_IMAGE_RESOLUTION, undo_desc,
                                    GIMP_DIRTY_IMAGE,
-                                   NULL,
-                                   NULL,
+                                   NULL, NULL,
                                    NULL)))
     {
       return TRUE;
@@ -554,8 +550,7 @@ gimp_image_undo_push_drawable (GimpImage    *image,
                                    0, 0,
                                    GIMP_UNDO_DRAWABLE, undo_desc,
                                    GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
-                                   NULL,
-                                   NULL,
+                                   NULL, NULL,
                                    "item",   item,
                                    "tiles",  tiles,
                                    "sparse", sparse,
@@ -693,8 +688,7 @@ gimp_image_undo_push_mask (GimpImage   *image,
                                    GIMP_IS_SELECTION (mask) ?
                                    GIMP_DIRTY_SELECTION :
                                    GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
-                                   NULL,
-                                   NULL,
+                                   NULL, NULL,
                                    "item", mask,
                                    NULL)))
     {
@@ -709,103 +703,35 @@ gimp_image_undo_push_mask (GimpImage   *image,
 /*  Item Rename Undo  */
 /**********************/
 
-typedef struct _ItemRenameUndo ItemRenameUndo;
-
-struct _ItemRenameUndo
-{
-  gchar *name;
-};
-
-static gboolean undo_pop_item_rename  (GimpUndo            *undo,
-                                       GimpUndoMode         undo_mode,
-                                       GimpUndoAccumulator *accum);
-static void     undo_free_item_rename (GimpUndo            *undo,
-                                       GimpUndoMode         undo_mode);
-
 gboolean
 gimp_image_undo_push_item_rename (GimpImage   *image,
                                   const gchar *undo_desc,
                                   GimpItem    *item)
 {
-  GimpUndo    *new;
-  gint64       size;
-  const gchar *name;
+  GimpUndo *new;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
 
-  name = gimp_object_get_name (GIMP_OBJECT (item));
-
-  size = sizeof (ItemRenameUndo) + strlen (name) + 1;
-
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_UNDO,
-                                   size, sizeof (ItemRenameUndo),
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_PROP_UNDO,
+                                   0, 0,
                                    GIMP_UNDO_ITEM_RENAME, undo_desc,
                                    GIMP_DIRTY_ITEM_META,
-                                   undo_pop_item_rename,
-                                   undo_free_item_rename,
+                                   NULL, NULL,
                                    "item", item,
                                    NULL)))
     {
-      ItemRenameUndo *iru = new->data;
-
-      iru->name = g_strdup (name);
-
       return TRUE;
     }
 
   return FALSE;
 }
 
-static gboolean
-undo_pop_item_rename (GimpUndo            *undo,
-                      GimpUndoMode         undo_mode,
-                      GimpUndoAccumulator *accum)
-{
-  ItemRenameUndo *iru  = undo->data;
-  GimpItem       *item = GIMP_ITEM_UNDO (undo)->item;
-  gchar          *tmp;
-
-  undo->size -= strlen (iru->name);
-
-  tmp = g_strdup (gimp_object_get_name (GIMP_OBJECT (item)));
-  gimp_object_take_name (GIMP_OBJECT (item), iru->name);
-  iru->name = tmp;
-
-  undo->size += strlen (iru->name);
-
-  return TRUE;
-}
-
-static void
-undo_free_item_rename (GimpUndo     *undo,
-                       GimpUndoMode  undo_mode)
-{
-  ItemRenameUndo *iru = undo->data;
-
-  g_free (iru->name);
-  g_free (iru);
-}
-
 
 /****************************/
 /*  Item displacement Undo  */
 /****************************/
-
-typedef struct _ItemDisplaceUndo ItemDisplaceUndo;
-
-struct _ItemDisplaceUndo
-{
-  gint old_offset_x;
-  gint old_offset_y;
-};
-
-static gboolean undo_pop_item_displace  (GimpUndo            *undo,
-                                         GimpUndoMode         undo_mode,
-                                         GimpUndoAccumulator *accum);
-static void     undo_free_item_displace (GimpUndo            *undo,
-                                         GimpUndoMode         undo_mode);
 
 gboolean
 gimp_image_undo_push_item_displace (GimpImage   *image,
@@ -818,75 +744,26 @@ gimp_image_undo_push_item_displace (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_UNDO,
-                                   sizeof (ItemDisplaceUndo),
-                                   sizeof (ItemDisplaceUndo),
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_PROP_UNDO,
+                                   0, 0,
                                    GIMP_UNDO_ITEM_DISPLACE, undo_desc,
                                    GIMP_IS_DRAWABLE (item) ?
                                    GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE :
                                    GIMP_DIRTY_ITEM | GIMP_DIRTY_VECTORS,
-                                   undo_pop_item_displace,
-                                   undo_free_item_displace,
+                                   NULL, NULL,
                                    "item", item,
                                    NULL)))
     {
-      ItemDisplaceUndo *idu = new->data;
-
-      gimp_item_offsets (item, &idu->old_offset_x, &idu->old_offset_y);
-
       return TRUE;
     }
 
   return FALSE;
 }
 
-static gboolean
-undo_pop_item_displace (GimpUndo            *undo,
-                        GimpUndoMode         undo_mode,
-                        GimpUndoAccumulator *accum)
-{
-  ItemDisplaceUndo *idu  = undo->data;
-  GimpItem         *item = GIMP_ITEM_UNDO (undo)->item;
-  gint              offset_x;
-  gint              offset_y;
-
-  gimp_item_offsets (item, &offset_x, &offset_y);
-
-  gimp_item_translate (item,
-                       idu->old_offset_x - offset_x,
-                       idu->old_offset_y - offset_y,
-                       FALSE);
-
-  idu->old_offset_x = offset_x;
-  idu->old_offset_y = offset_y;
-
-  return TRUE;
-}
-
-static void
-undo_free_item_displace (GimpUndo     *undo,
-                         GimpUndoMode  undo_mode)
-{
-  g_free (undo->data);
-}
-
 
 /******************************/
 /*  Item Visibility Undo  */
 /******************************/
-
-typedef struct _ItemVisibilityUndo ItemVisibilityUndo;
-
-struct _ItemVisibilityUndo
-{
-  gboolean old_visible;
-};
-
-static gboolean undo_pop_item_visibility  (GimpUndo            *undo,
-                                           GimpUndoMode         undo_mode,
-                                           GimpUndoAccumulator *accum);
-static void     undo_free_item_visibility (GimpUndo            *undo,
-                                           GimpUndoMode         undo_mode);
 
 gboolean
 gimp_image_undo_push_item_visibility (GimpImage   *image,
@@ -899,66 +776,24 @@ gimp_image_undo_push_item_visibility (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_UNDO,
-                                   sizeof (ItemVisibilityUndo),
-                                   sizeof (ItemVisibilityUndo),
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_PROP_UNDO,
+                                   0, 0,
                                    GIMP_UNDO_ITEM_VISIBILITY, undo_desc,
                                    GIMP_DIRTY_ITEM_META,
-                                   undo_pop_item_visibility,
-                                   undo_free_item_visibility,
+                                   NULL, NULL,
                                    "item", item,
                                    NULL)))
     {
-      ItemVisibilityUndo *ivu = new->data;
-
-      ivu->old_visible = gimp_item_get_visible (item);
-
       return TRUE;
     }
 
   return FALSE;
 }
 
-static gboolean
-undo_pop_item_visibility (GimpUndo            *undo,
-                          GimpUndoMode         undo_mode,
-                          GimpUndoAccumulator *accum)
-{
-  ItemVisibilityUndo *ivu  = undo->data;
-  GimpItem           *item = GIMP_ITEM_UNDO (undo)->item;
-  gboolean            visible;
-
-  visible = gimp_item_get_visible (item);
-  gimp_item_set_visible (item, ivu->old_visible, FALSE);
-  ivu->old_visible = visible;
-
-  return TRUE;
-}
-
-static void
-undo_free_item_visibility (GimpUndo     *undo,
-                           GimpUndoMode  undo_mode)
-{
-  g_free (undo->data);
-}
-
 
 /**********************/
 /*  Item linked Undo  */
 /**********************/
-
-typedef struct _ItemLinkedUndo ItemLinkedUndo;
-
-struct _ItemLinkedUndo
-{
-  gboolean old_linked;
-};
-
-static gboolean undo_pop_item_linked  (GimpUndo            *undo,
-                                       GimpUndoMode         undo_mode,
-                                       GimpUndoAccumulator *accum);
-static void     undo_free_item_linked (GimpUndo            *undo,
-                                       GimpUndoMode         undo_mode);
 
 gboolean
 gimp_image_undo_push_item_linked (GimpImage   *image,
@@ -971,47 +806,18 @@ gimp_image_undo_push_item_linked (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_ITEM (item), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (item), FALSE);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_UNDO,
-                                   sizeof (ItemLinkedUndo),
-                                   sizeof (ItemLinkedUndo),
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_PROP_UNDO,
+                                   0, 0,
                                    GIMP_UNDO_ITEM_LINKED, undo_desc,
                                    GIMP_DIRTY_ITEM_META,
-                                   undo_pop_item_linked,
-                                   undo_free_item_linked,
+                                   NULL, NULL,
                                    "item", item,
                                    NULL)))
     {
-      ItemLinkedUndo *ilu = new->data;
-
-      ilu->old_linked = gimp_item_get_linked (item);
-
       return TRUE;
     }
 
   return FALSE;
-}
-
-static gboolean
-undo_pop_item_linked (GimpUndo            *undo,
-                      GimpUndoMode         undo_mode,
-                      GimpUndoAccumulator *accum)
-{
-  ItemLinkedUndo *ilu  = undo->data;
-  GimpItem       *item = GIMP_ITEM_UNDO (undo)->item;
-  gboolean        linked;
-
-  linked = gimp_item_get_linked (item);
-  gimp_item_set_linked (item, ilu->old_linked, FALSE);
-  ilu->old_linked = linked;
-
-  return TRUE;
-}
-
-static void
-undo_free_item_linked (GimpUndo     *undo,
-                       GimpUndoMode  undo_mode)
-{
-  g_free (undo->data);
 }
 
 
@@ -1445,8 +1251,7 @@ gimp_image_undo_push_text_layer (GimpImage        *image,
                                    0, 0,
                                    GIMP_UNDO_TEXT_LAYER, undo_desc,
                                    GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
-                                   NULL,
-                                   NULL,
+                                   NULL, NULL,
                                    "item",  layer,
                                    "param", pspec,
                                    NULL)))
