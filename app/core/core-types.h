@@ -111,6 +111,7 @@ typedef struct _GimpLayerMask       GimpLayerMask;
 
 typedef struct _GimpUndo            GimpUndo;
 typedef struct _GimpItemUndo        GimpItemUndo;
+typedef struct _GimpChannelUndo     GimpChannelUndo;
 typedef struct _GimpDrawableUndo    GimpDrawableUndo;
 typedef struct _GimpUndoStack       GimpUndoStack;
 typedef struct _GimpUndoAccumulator GimpUndoAccumulator;

@@ -76,6 +76,8 @@ libappcore_a_sources = \
 	gimpchannel-combine.h		\
 	gimpchannel-select.c		\
 	gimpchannel-select.h		\
+	gimpchannelundo.c		\
+	gimpchannelundo.h		\
 	gimpcontainer.c			\
 	gimpcontainer.h			\
 	gimpcontainer-filter.c		\

@@ -34,6 +34,7 @@
 
 #include "gimp.h"
 #include "gimp-parasites.h"
+#include "gimpchannelundo.h"
 #include "gimpdrawableundo.h"
 #include "gimpgrid.h"
 #include "gimpguide.h"
@@ -849,182 +850,32 @@ undo_free_drawable_mod (GimpUndo     *undo,
 /*  Mask Undo  */
 /***************/
 
-typedef struct _MaskUndo MaskUndo;
-
-struct _MaskUndo
-{
-  TileManager *tiles;  /*  the actual mask  */
-  gint         x, y;   /*  offsets          */
-};
-
-static gboolean undo_pop_mask  (GimpUndo            *undo,
-                                GimpUndoMode         undo_mode,
-                                GimpUndoAccumulator *accum);
-static void     undo_free_mask (GimpUndo            *undo,
-                                GimpUndoMode         undo_mode);
-
 gboolean
 gimp_image_undo_push_mask (GimpImage   *image,
                            const gchar *undo_desc,
                            GimpChannel *mask)
 {
-  TileManager *undo_tiles = NULL;
-  gint         x1, y1, x2, y2;
-  GimpUndo    *new;
-  gint64       size;
+  GimpUndo *new;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_CHANNEL (mask), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (mask)), FALSE);
 
-  size = sizeof (MaskUndo);
-
-  if (gimp_channel_bounds (mask, &x1, &y1, &x2, &y2))
-    {
-      GimpDrawable *drawable = GIMP_DRAWABLE (mask);
-      PixelRegion   srcPR, destPR;
-
-      undo_tiles = tile_manager_new (x2 - x1, y2 - y1,
-                                     gimp_drawable_bytes (drawable));
-
-      pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                         x1, y1, x2 - x1, y2 - y1, FALSE);
-      pixel_region_init (&destPR, undo_tiles,
-                         0, 0, x2 - x1, y2 - y1, TRUE);
-
-      copy_region (&srcPR, &destPR);
-
-      size += tile_manager_get_memsize (undo_tiles, FALSE);
-    }
-
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_UNDO,
-                                   size, sizeof (MaskUndo),
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_CHANNEL_UNDO,
+                                   0, 0,
                                    GIMP_UNDO_MASK, undo_desc,
                                    GIMP_IS_SELECTION (mask) ?
                                    GIMP_DIRTY_SELECTION :
                                    GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
-                                   undo_pop_mask,
-                                   undo_free_mask,
+                                   NULL,
+                                   NULL,
                                    "item", mask,
                                    NULL)))
     {
-      MaskUndo *mask_undo = new->data;
-
-      mask_undo->tiles = undo_tiles;
-      mask_undo->x     = x1;
-      mask_undo->y     = y1;
-
       return TRUE;
     }
 
-  if (undo_tiles)
-    tile_manager_unref (undo_tiles);
-
   return FALSE;
-}
-
-static gboolean
-undo_pop_mask (GimpUndo            *undo,
-               GimpUndoMode         undo_mode,
-               GimpUndoAccumulator *accum)
-{
-  MaskUndo    *mu      = undo->data;
-  GimpChannel *channel = GIMP_CHANNEL (GIMP_ITEM_UNDO (undo)->item);
-  TileManager *new_tiles;
-  PixelRegion  srcPR, destPR;
-  gint         x1, y1, x2, y2;
-  gint         width  = 0;
-  gint         height = 0;
-  guchar       empty  = 0;
-
-  if (mu->tiles)
-    undo->size -= tile_manager_get_memsize (mu->tiles, FALSE);
-
-  if (gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
-    {
-      new_tiles = tile_manager_new ((x2 - x1), (y2 - y1), 1);
-
-      pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
-                         x1, y1, (x2 - x1), (y2 - y1), FALSE);
-      pixel_region_init (&destPR, new_tiles,
-                         0, 0, (x2 - x1), (y2 - y1), TRUE);
-
-      copy_region (&srcPR, &destPR);
-
-      pixel_region_init (&srcPR, GIMP_DRAWABLE (channel)->tiles,
-                         x1, y1, (x2 - x1), (y2 - y1), TRUE);
-
-      color_region (&srcPR, &empty);
-    }
-  else
-    {
-      new_tiles = NULL;
-    }
-
-  if (mu->tiles)
-    {
-      width  = tile_manager_width (mu->tiles);
-      height = tile_manager_height (mu->tiles);
-
-      pixel_region_init (&srcPR, mu->tiles,
-                         0, 0, width, height, FALSE);
-      pixel_region_init (&destPR, GIMP_DRAWABLE (channel)->tiles,
-                         mu->x, mu->y, width, height, TRUE);
-
-      copy_region (&srcPR, &destPR);
-
-      tile_manager_unref (mu->tiles);
-    }
-
-  /* invalidate the current bounds and boundary of the mask */
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (channel));
-
-  if (mu->tiles)
-    {
-      channel->empty = FALSE;
-      channel->x1    = mu->x;
-      channel->y1    = mu->y;
-      channel->x2    = mu->x + width;
-      channel->y2    = mu->y + height;
-    }
-  else
-    {
-      channel->empty = TRUE;
-      channel->x1    = 0;
-      channel->y1    = 0;
-      channel->x2    = GIMP_ITEM (channel)->width;
-      channel->y2    = GIMP_ITEM (channel)->height;
-    }
-
-  /* we know the bounds */
-  channel->bounds_known = TRUE;
-
-  /*  set the new mask undo parameters  */
-  mu->tiles = new_tiles;
-  mu->x     = x1;
-  mu->y     = y1;
-
-  gimp_drawable_update (GIMP_DRAWABLE (channel),
-                        0, 0,
-                        GIMP_ITEM (channel)->width,
-                        GIMP_ITEM (channel)->height);
-
-  if (mu->tiles)
-    undo->size += tile_manager_get_memsize (mu->tiles, FALSE);
-
-  return TRUE;
-}
-
-static void
-undo_free_mask (GimpUndo     *undo,
-                GimpUndoMode  undo_mode)
-{
-  MaskUndo *mu = undo->data;
-
-  if (mu->tiles)
-    tile_manager_unref (mu->tiles);
-
-  g_free (mu);
 }
 
 

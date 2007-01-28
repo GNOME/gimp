@@ -1,3 +1,13 @@
+2007-01-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpchannelundo.[ch]: new GimpItemUndo subclass which
+	handles all the channel undo stuff itself.
+
+	* app/core/gimpimage-undo-push.c: removed all channel undo code
+	here and simply create a GimpChannelUndo instance.
+
 2007-01-26  Tor Lillqvist  <tml@novell.com>
 
 	Fix #398311 in GIMP until corresponding abstraction has been added
