@@ -1,13 +1,13 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000, 2001, 2002
-# Marco Ciampa <ciampix@libero.it>, 2003, 2004, 2005, 2006
+# Marco Ciampa <ciampix@libero.it>, 2003, 2004, 2005, 2006, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-11 11:13+0100\n"
-"PO-Revision-Date: 2006-11-06 17:44+0100\n"
+"POT-Creation-Date: 2007-01-28 15:07+0100\n"
+"PO-Revision-Date: 2007-01-28 22:19+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1403,7 +1403,7 @@ msgid "_Distort..."
 msgstr "_Distorsione..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-msgid "Add a drop-shadow to the selected region (or alpha)"
+msgid "Add a drop shadow to the selected region (or alpha)"
 msgstr "Aggiunge un'ombra alla regione o al livello alfa selezionati"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
@@ -1442,7 +1442,7 @@ msgid "Opacity"
 msgstr "Opacità"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
-msgid "_Drop-Shadow..."
+msgid "_Drop Shadow..."
 msgstr "_Crea ombra..."
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:1
@@ -2137,7 +2137,7 @@ msgid "Cell size (pixels)"
 msgstr "Dimensione celle (pixel)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:4
-msgid "Create a logo in the style newpaper printing"
+msgid "Create a logo in the style of newspaper printing"
 msgstr "Crea un logotipo con lo stile di stampa di un quotidiano"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6
