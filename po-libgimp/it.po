@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-10 08:50+0100\n"
-"PO-Revision-Date: 2007-01-11 10:39+0100\n"
+"POT-Creation-Date: 2007-01-28 15:05+0100\n"
+"PO-Revision-Date: 2007-01-28 15:06+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -208,7 +208,7 @@ msgstr "Senza grazie"
 msgid "Gradient Selection"
 msgstr "Selezione gradiente"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
 msgid "(Empty)"
 msgstr "(Vuoto)"
 
@@ -1105,7 +1105,7 @@ msgid "Check Style"
 msgstr "Stile scacchi"
 
 #. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:265
+#: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "Ante_prima"
 
@@ -1636,24 +1636,24 @@ msgstr "Ingresso Linux"
 msgid "Linux Input Events"
 msgstr "Eventi Linux in ingresso"
 
-#: ../modules/controller_linux_input.c:389 ../modules/controller_midi.c:484
-#: ../modules/controller_midi.c:510
+#: ../modules/controller_linux_input.c:389 ../modules/controller_midi.c:483
+#: ../modules/controller_midi.c:509
 #, c-format
 msgid "Reading from %s"
 msgstr "Lettura da %s"
 
 #: ../modules/controller_linux_input.c:405
-#: ../modules/controller_linux_input.c:448 ../modules/controller_midi.c:466
-#: ../modules/controller_midi.c:527 ../modules/controller_midi.c:598
+#: ../modules/controller_linux_input.c:448 ../modules/controller_midi.c:465
+#: ../modules/controller_midi.c:526 ../modules/controller_midi.c:597
 #, c-format
 msgid "Device not available: %s"
 msgstr "Dispositivo non disponibile: %s"
 
-#: ../modules/controller_linux_input.c:413 ../modules/controller_midi.c:535
+#: ../modules/controller_linux_input.c:413 ../modules/controller_midi.c:534
 msgid "No device configured"
 msgstr "Nessun dispositivo configurato"
 
-#: ../modules/controller_linux_input.c:457 ../modules/controller_midi.c:607
+#: ../modules/controller_linux_input.c:457 ../modules/controller_midi.c:606
 msgid "End of file"
 msgstr "Fine del file"
 
@@ -1704,6 +1704,10 @@ msgstr "Controllore %03d"
 msgid "MIDI Events"
 msgstr "Eventi MIDI"
 
-#: ../modules/controller_midi.c:458
-msgid "GIMP MIDI controller"
-msgstr "Controllore MIDI GIMP"
+#: ../modules/controller_midi.c:455
+msgid "GIMP"
+msgstr "GIMP"
+
+#: ../modules/controller_midi.c:457
+msgid "GIMP MIDI Input Controller"
+msgstr "Controllore di ingresso MIDI di GIMP"
