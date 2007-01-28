@@ -1,5 +1,13 @@
 2007-01-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawableundo.c (gimp_drawable_undo_constructor):
+	add the passed TileManager's size to undo->size.
+
+	* app/core/gimpimage-undo-push.c (gimp_image_undo_push_drawable):
+	no need to get and pass the TileManager's size here.
+
+2007-01-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/core-types.h
 	* app/core/gimpchannelundo.[ch]: new GimpItemUndo subclass which

@@ -134,6 +134,10 @@ gimp_drawable_undo_constructor (GType                  type,
   drawable_undo = GIMP_DRAWABLE_UNDO (object);
 
   g_assert (GIMP_IS_DRAWABLE (GIMP_ITEM_UNDO (object)->item));
+  g_assert (drawable_undo->tiles != NULL);
+
+  GIMP_UNDO (object)->size += tile_manager_get_memsize (drawable_undo->tiles,
+                                                        drawable_undo->sparse);
 
   return object;
 }

@@ -702,7 +702,6 @@ gimp_image_undo_push_drawable (GimpImage    *image,
 {
   GimpItem *item;
   GimpUndo *new;
-  gint64    size;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), FALSE);
@@ -722,10 +721,8 @@ gimp_image_undo_push_drawable (GimpImage    *image,
                         tile_manager_height (tiles) == gimp_item_height (item),
                         FALSE);
 
-  size = tile_manager_get_memsize (tiles, sparse);
-
   if ((new = gimp_image_undo_push (image, GIMP_TYPE_DRAWABLE_UNDO,
-                                   size, 0,
+                                   0, 0,
                                    GIMP_UNDO_DRAWABLE, undo_desc,
                                    GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
                                    NULL,
