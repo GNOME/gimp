@@ -86,8 +86,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-14 18:22+0100\n"
-"PO-Revision-Date: 2007-01-14 18:21+0100\n"
+"POT-Creation-Date: 2007-01-28 23:48+0100\n"
+"PO-Revision-Date: 2007-01-28 23:47+0100\n"
 "Last-Translator: Ole Laursen <olau@hardworking.dk>\n"
 "Language-Team: Danish <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
@@ -140,11 +140,7 @@ msgstr ""
 "Gimp'en. Hvis du ikke har det, kan du skrive til Free Software Foundation, "
 "Inc. 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA"
 
-#: ../app/app_procs.c:133
-msgid "(This console window will close in ten seconds)\n"
-msgstr "(Dette konsolvindue vil lukke om ti sekunder)\n"
-
-#: ../app/app_procs.c:243
+#: ../app/app_procs.c:208
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -154,13 +150,8 @@ msgid ""
 msgstr ""
 "Kunne ikke åbne en testswapfil.\n"
 "\n"
-"Kontrollér placeringen og rettighederne af swapmappen defineret i "
+"Kontrollér placeringen og rettighederne af mappen til swap defineret i "
 "indstillingerne (aktuelt \"%s\")."
-
-#: ../app/app_procs.c:301
-#, c-format
-msgid "Opening '%s' failed: %s"
-msgstr "Åbning af \"%s\" mislykkedes: %s"
 
 #: ../app/batch.c:75
 #, c-format
@@ -173,93 +164,97 @@ msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
 "Batchfortolkeren \"%s\" er ikke tilgængelig. Batchtilstand deaktiveret."
 
-#: ../app/main.c:125 ../tools/gimp-remote.c:79
+#: ../app/main.c:142 ../tools/gimp-remote.c:79
 msgid "Show version information and exit"
 msgstr "Vis versionsoplysninger og afslut"
 
-#: ../app/main.c:130
+#: ../app/main.c:147
 msgid "Show license information and exit"
 msgstr "Vis licensoplysninger og afslut"
 
-#: ../app/main.c:135
+#: ../app/main.c:152
 msgid "Be more verbose"
 msgstr "Fortæl mere"
 
-#: ../app/main.c:140
+#: ../app/main.c:157
+msgid "Start a new GIMP instance"
+msgstr "Start en ny instans af Gimp'en"
+
+#: ../app/main.c:162
 msgid "Run without a user interface"
 msgstr "Start uden brugergrænseflade"
 
-#: ../app/main.c:145
+#: ../app/main.c:167
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Indlæs ikke pensler, overgange, mønstre, ..."
 
-#: ../app/main.c:150
+#: ../app/main.c:172
 msgid "Do not load any fonts"
 msgstr "Indlæs ikke nogen skrifttyper"
 
-#: ../app/main.c:155
+#: ../app/main.c:177
 msgid "Do not show a startup window"
 msgstr "Vis ikke et startvindue"
 
-#: ../app/main.c:160
+#: ../app/main.c:182
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "Benyt ikke delt hukommelse mellem Gimp'en og udvidelsesmoduler"
 
-#: ../app/main.c:165
+#: ../app/main.c:187
 msgid "Do not use special CPU acceleration functions"
 msgstr "Benyt ikke specielle CPU-accelereringsfunktioner"
 
-#: ../app/main.c:170
+#: ../app/main.c:192
 msgid "Use an alternate sessionrc file"
 msgstr "Benyt en alternativ sessionrc-fil"
 
-#: ../app/main.c:175
+#: ../app/main.c:197
 msgid "Use an alternate user gimprc file"
 msgstr "Benyt en alternativ brugerkonfigurationsfil (.gimprc)"
 
-#: ../app/main.c:180
+#: ../app/main.c:202
 msgid "Use an alternate system gimprc file"
 msgstr "Benyt en alternativ systemkonfigurationsfil (gimprc)"
 
-#: ../app/main.c:185
+#: ../app/main.c:207
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Batchkommando som skal udføres (kan bruges flere gange)"
 
-#: ../app/main.c:190
+#: ../app/main.c:212
 msgid "The procedure to process batch commands with"
 msgstr "Den procedure som batchkommandoer skal udføres med"
 
-#: ../app/main.c:195
+#: ../app/main.c:217
 msgid "Send messages to console instead of using a dialog"
 msgstr "Vis advarsler i konsollen i stedet for i et vindue"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:201
+#: ../app/main.c:223
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Kompabilitetstilstand for proceduredatabase (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:207
+#: ../app/main.c:229
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Fejlsøgning ved nedbrud (never|query|always)"
 
-#: ../app/main.c:212
+#: ../app/main.c:234
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Benyt ikke-fatale signalhåndteringer til fejlsøgning"
 
-#: ../app/main.c:217
+#: ../app/main.c:239
 msgid "Make all warnings fatal"
 msgstr "Gør alle advarsler fatale"
 
-#: ../app/main.c:222
+#: ../app/main.c:244
 msgid "Output a gimprc file with default settings"
 msgstr "Udskriv en gimprc-fil med standardindstillinger"
 
-#: ../app/main.c:292
+#: ../app/main.c:327
 msgid "[FILE|URI...]"
 msgstr "[FIL|URI...]"
 
-#: ../app/main.c:309
+#: ../app/main.c:345
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -267,7 +262,24 @@ msgstr ""
 "Gimp'en kunne ikke klargøre den grafiske brugergrænseflade.\n"
 "Sikr dig at en korrekt opsætning af grafiske miljø eksisterer."
 
-#: ../app/main.c:459 ../tools/gimp-remote.c:323
+#: ../app/main.c:392
+msgid "Another GIMP instance is already running."
+msgstr "En anden instans af Gimp'en kører allerede."
+
+#: ../app/main.c:467
+msgid "GIMP output. Type any character to close this window."
+msgstr "Uddata fra Gimp'en. Tryk på en tast for at lukke dette vindue."
+
+#: ../app/main.c:468
+#, c-format
+msgid "(Type any character to close this window)\n"
+msgstr "(Tryk på en tast for at lukke dette vindue)\n"
+
+#: ../app/main.c:485
+msgid "GIMP output. You can minimize this window, but don't close it."
+msgstr "Uddata fra Gimp'en. Du kan minimere dette vindue, men luk det ikke."
+
+#: ../app/main.c:587 ../tools/gimp-remote.c:323
 #, c-format
 msgid "%s version %s"
 msgstr "%s version %s"
@@ -308,7 +320,7 @@ msgstr "Penselredigering"
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:102 ../app/actions/dialogs-actions.c:130
 #: ../app/core/gimp.c:817 ../app/dialogs/dialogs.c:148
-#: ../app/dialogs/preferences-dialog.c:2588
+#: ../app/dialogs/preferences-dialog.c:2587
 msgid "Brushes"
 msgstr "Pensler"
 
@@ -378,7 +390,7 @@ msgstr "Fil"
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:147 ../app/actions/dialogs-actions.c:150
 #: ../app/core/gimp.c:833 ../app/dialogs/dialogs.c:156
-#: ../app/dialogs/preferences-dialog.c:2604
+#: ../app/dialogs/preferences-dialog.c:2603
 msgid "Fonts"
 msgstr "Skrifttyper"
 
@@ -390,7 +402,7 @@ msgstr "Farveovergangsredigering"
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:153 ../app/actions/dialogs-actions.c:140
 #: ../app/core/gimp.c:829 ../app/dialogs/dialogs.c:152
-#: ../app/dialogs/preferences-dialog.c:2600
+#: ../app/dialogs/preferences-dialog.c:2599
 msgid "Gradients"
 msgstr "Farveovergange"
 
@@ -422,18 +434,18 @@ msgstr "Paletredigering"
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:171 ../app/actions/dialogs-actions.c:145
 #: ../app/core/gimp.c:825 ../app/dialogs/dialogs.c:154
-#: ../app/dialogs/preferences-dialog.c:2596
+#: ../app/dialogs/preferences-dialog.c:2595
 msgid "Palettes"
 msgstr "Paletter"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:174 ../app/actions/dialogs-actions.c:135
 #: ../app/core/gimp.c:821 ../app/dialogs/dialogs.c:150
-#: ../app/dialogs/preferences-dialog.c:2592
+#: ../app/dialogs/preferences-dialog.c:2591
 msgid "Patterns"
 msgstr "Mønstre"
 
-#: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2608
+#: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2607
 msgid "Plug-Ins"
 msgstr "Udvidelsesmoduler"
 
@@ -463,7 +475,7 @@ msgstr "Tekstredigering"
 
 #: ../app/actions/actions.c:195 ../app/actions/dialogs-actions.c:65
 #: ../app/dialogs/dialogs.c:129 ../app/dialogs/preferences-dialog.c:1753
-#: ../app/gui/gui.c:423
+#: ../app/gui/gui.c:437
 msgid "Tool Options"
 msgstr "Værktøjsindstillinger"
 
@@ -761,30 +773,28 @@ msgstr "Redigér farve"
 
 #: ../app/actions/colormap-actions.c:56
 msgid "_Add Color from FG"
-msgstr "_Tilføj farve fra forgr."
+msgstr "_Tilføj farve fra fg."
 
 #: ../app/actions/colormap-actions.c:57
-#, fuzzy
 msgid "Add current foreground color"
-msgstr "Skift forgrundsfarve"
+msgstr "Tilføj nuværende forgrundsfarve"
 
 #: ../app/actions/colormap-actions.c:62
 msgid "_Add Color from BG"
-msgstr "_Tilføj farve fra baggr."
+msgstr "_Tilføj farve fra bg."
 
 #: ../app/actions/colormap-actions.c:63
-#, fuzzy
 msgid "Add current background color"
-msgstr "Skift baggrundsfarve"
+msgstr "Tilføj nuværende baggrundsfarve"
 
 #: ../app/actions/colormap-commands.c:70
 #, c-format
 msgid "Edit colormap entry #%d"
-msgstr "Redigér farvepaletselement nr. %d"
+msgstr "Redigér farvepalet-element nr. %d"
 
 #: ../app/actions/colormap-commands.c:77
 msgid "Edit Colormap Entry"
-msgstr "Redigér farvepaletselement"
+msgstr "Redigér farvepalet-element"
 
 #: ../app/actions/context-actions.c:46
 msgid "_Context"
@@ -800,7 +810,7 @@ msgstr "_Ugennemsigtighed"
 
 #: ../app/actions/context-actions.c:49
 msgid "Paint _Mode"
-msgstr "Tegne_måde"
+msgstr "Male_tilstand"
 
 #: ../app/actions/context-actions.c:50
 msgid "_Tool"
@@ -860,45 +870,39 @@ msgid "_Default Colors"
 msgstr "_Standardfarver"
 
 #: ../app/actions/context-actions.c:66
-#, fuzzy
 msgid "Set foreground color to black, background color to white"
-msgstr "Vis _forgrunds- og baggrundsfarve"
+msgstr "Sæt forgrundsfarve til sort og baggrundsfarve til hvid"
 
 #: ../app/actions/context-actions.c:71
 msgid "S_wap Colors"
 msgstr "_Ombyt farver"
 
 #: ../app/actions/context-actions.c:72
-#, fuzzy
 msgid "Exchange foreground and background colors"
-msgstr "Vis _forgrunds- og baggrundsfarve"
+msgstr "Ombyt forgrunds- og baggrundsfarver"
 
-# en komplet tekst bliver for lang og er overflødig
 #: ../app/actions/cursor-info-actions.c:40
-#, fuzzy
 msgid "Pointer Information Menu"
-msgstr "Rotation"
+msgstr "Markøroplysninger"
 
 # mærkelig tekst, men vist nok rigtig
 #: ../app/actions/cursor-info-actions.c:47
 #: ../app/actions/sample-points-actions.c:47
 #: ../app/widgets/gimpcursorview.c:191
-#, fuzzy
 msgid "_Sample Merged"
-msgstr "Benyt alle lag"
+msgstr "Benyt _alle lag"
 
 # mærkelig tekst, men vist nok rigtig
 #: ../app/actions/cursor-info-actions.c:48
 #: ../app/actions/sample-points-actions.c:48
-#, fuzzy
 msgid "Sample Merged"
 msgstr "Benyt alle lag"
 
 #: ../app/actions/data-commands.c:104 ../app/actions/documents-commands.c:320
-#: ../app/actions/file-commands.c:177 ../app/dialogs/file-open-dialog.c:205
+#: ../app/actions/file-commands.c:169 ../app/dialogs/file-open-dialog.c:205
 #: ../app/dialogs/file-open-dialog.c:251
-#: ../app/dialogs/file-open-location-dialog.c:216
-#: ../app/dialogs/file-open-location-dialog.c:228
+#: ../app/dialogs/file-open-location-dialog.c:213
+#: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:449
 #: ../app/widgets/gimplayertreeview.c:763 ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:912
@@ -908,12 +912,12 @@ msgid ""
 "\n"
 "%s"
 msgstr ""
-"Åbning af '%s' mislykkedes:\n"
+"Åbning af \"%s\" mislykkedes:\n"
 "\n"
 "%s"
 
 #: ../app/actions/data-commands.c:130
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1365
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1370
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:336 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/pdb/image_cmds.c:2005 ../app/widgets/gimpdnd-xds.c:97
@@ -999,11 +1003,11 @@ msgstr "Markeringsredigering"
 
 #: ../app/actions/dialogs-actions.c:105
 msgid "Na_vigation"
-msgstr "_Navigering"
+msgstr "Na_vigering"
 
 #: ../app/actions/dialogs-actions.c:105 ../app/dialogs/dialogs.c:203
 msgid "Display Navigation"
-msgstr "Visningsnavigering"
+msgstr "Vis navigering"
 
 #: ../app/actions/dialogs-actions.c:110
 msgid "Undo _History"
@@ -1014,14 +1018,13 @@ msgid "Undo History"
 msgstr "Fortrydelseshistorik"
 
 #: ../app/actions/dialogs-actions.c:115 ../app/dialogs/dialogs.c:141
-#, fuzzy
 msgid "Pointer"
-msgstr "Mellem"
+msgstr "Markør"
 
 #: ../app/actions/dialogs-actions.c:120
 #, fuzzy
 msgid "_Sample Points"
-msgstr "Prøvningspunkt"
+msgstr "_Prøvningspunkter"
 
 #: ../app/actions/dialogs-actions.c:125
 msgid "Colo_rs"
@@ -1084,9 +1087,8 @@ msgid "_Preferences"
 msgstr "_Indstillinger"
 
 #: ../app/actions/dialogs-actions.c:195
-#, fuzzy
 msgid "_Keyboard Shortcuts"
-msgstr "Tastaturgenveje"
+msgstr "_Tastegenveje"
 
 #: ../app/actions/dialogs-actions.c:200
 msgid "_Module Manager"
@@ -1715,74 +1717,74 @@ msgstr "Åbn _seneste"
 msgid "Acq_uire"
 msgstr "Ind_hent"
 
-#: ../app/actions/file-actions.c:69 ../app/actions/file-actions.c:74
+#: ../app/actions/file-actions.c:69
 msgid "_Open..."
 msgstr "_Åbn..."
 
-#: ../app/actions/file-actions.c:79
+#: ../app/actions/file-actions.c:74
 msgid "Op_en as Layers..."
 msgstr "Åbn som _lag..."
 
-#: ../app/actions/file-actions.c:84
+#: ../app/actions/file-actions.c:79
 msgid "Open _Location..."
 msgstr "Åbn _placering..."
 
-#: ../app/actions/file-actions.c:89
-msgid "_Save"
-msgstr "_Gem"
-
-#: ../app/actions/file-actions.c:94
-msgid "Save _As..."
-msgstr "Gem _som..."
-
-#: ../app/actions/file-actions.c:99
-msgid "Save a Cop_y..."
-msgstr "Gem en _kopi..."
-
-#: ../app/actions/file-actions.c:104
-msgid "Save and Close..."
-msgstr "Gem og luk..."
-
-#: ../app/actions/file-actions.c:109
+#: ../app/actions/file-actions.c:84
 msgid "Save as _Template..."
 msgstr "Gem som sk_abelon..."
 
-#: ../app/actions/file-actions.c:110
+#: ../app/actions/file-actions.c:85
 msgid "Create a new template from this image"
 msgstr "Opret en ny skabelon fra dette billede"
 
-#: ../app/actions/file-actions.c:115
+#: ../app/actions/file-actions.c:90
 msgid "Re_vert"
 msgstr "For_kast"
 
-#: ../app/actions/file-actions.c:116
+#: ../app/actions/file-actions.c:91
 msgid "Reload the image file from disk"
 msgstr "Forkast ændringer og genindlæs billedfilen fra disken"
 
-#: ../app/actions/file-actions.c:121
+#: ../app/actions/file-actions.c:96
 msgid "Close all"
 msgstr "Luk alle"
 
-#: ../app/actions/file-actions.c:122
+#: ../app/actions/file-actions.c:97
 #, fuzzy
 msgid "Close all opened images"
 msgstr "Luk alle faneblade"
 
-#: ../app/actions/file-actions.c:127
+#: ../app/actions/file-actions.c:102
 msgid "_Quit"
 msgstr "_Afslut"
 
-#: ../app/actions/file-actions.c:128
+#: ../app/actions/file-actions.c:103
 #, fuzzy
 msgid "Quit the GNU Image Manipulation Program"
 msgstr "GNU Image Manipulation Program"
 
-#: ../app/actions/file-commands.c:244
+#: ../app/actions/file-actions.c:111
+msgid "_Save"
+msgstr "_Gem"
+
+#: ../app/actions/file-actions.c:116
+msgid "Save _As..."
+msgstr "Gem _som..."
+
+#: ../app/actions/file-actions.c:121
+msgid "Save a Cop_y..."
+msgstr "Gem en _kopi..."
+
+#: ../app/actions/file-actions.c:126
+msgid "Save and Close..."
+msgstr "Gem og luk..."
+
+#: ../app/actions/file-commands.c:246
 #, fuzzy
 msgid "Saving canceled"
 msgstr "Gemning af billeder"
 
-#: ../app/actions/file-commands.c:253 ../app/dialogs/file-save-dialog.c:513
+#: ../app/actions/file-commands.c:255 ../app/dialogs/file-save-dialog.c:545
 #: ../app/widgets/gimpdnd-xds.c:174
 #, c-format
 msgid ""
@@ -1794,37 +1796,37 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/file-commands.c:286 ../app/dialogs/file-save-dialog.c:82
+#: ../app/actions/file-commands.c:285 ../app/dialogs/file-save-dialog.c:86
 msgid "Save Image"
 msgstr "Gem billede"
 
-#: ../app/actions/file-commands.c:302
+#: ../app/actions/file-commands.c:291
 msgid "Save a Copy of the Image"
 msgstr "Gem en kopi af billedet"
 
-#: ../app/actions/file-commands.c:326
+#: ../app/actions/file-commands.c:311
 msgid "Create New Template"
 msgstr "Opret en ny skabelon"
 
-#: ../app/actions/file-commands.c:330
+#: ../app/actions/file-commands.c:315
 msgid "Enter a name for this template"
 msgstr "Indtast et navn til denne skabelon"
 
-#: ../app/actions/file-commands.c:356
+#: ../app/actions/file-commands.c:341
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
 "Genskabning mislykkedes. Intet filnavn er associeret med dette billede."
 
-#: ../app/actions/file-commands.c:369
+#: ../app/actions/file-commands.c:354
 msgid "Revert Image"
 msgstr "Forkast billede"
 
-#: ../app/actions/file-commands.c:395
+#: ../app/actions/file-commands.c:380
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Bring \"%s\" tilbage til \"%s\"?"
 
-#: ../app/actions/file-commands.c:401
+#: ../app/actions/file-commands.c:386
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -1832,20 +1834,20 @@ msgstr ""
 "Ved at bringe billedet tilbage til den tilstand der er gemt på disken, vil "
 "du miste alle dine ændringer inklusive al fortrydelsesinformation."
 
-#: ../app/actions/file-commands.c:473
+#: ../app/actions/file-commands.c:458
 #, fuzzy
 msgid "Open Image as Layers"
 msgstr "Åbn billede som lag"
 
-#: ../app/actions/file-commands.c:478 ../app/dialogs/file-open-dialog.c:75
+#: ../app/actions/file-commands.c:463 ../app/dialogs/file-open-dialog.c:75
 msgid "Open Image"
 msgstr "Åbn billede"
 
-#: ../app/actions/file-commands.c:549
+#: ../app/actions/file-commands.c:538
 msgid "(Unnamed Template)"
 msgstr "(unavngiven skabelon)"
 
-#: ../app/actions/file-commands.c:597
+#: ../app/actions/file-commands.c:586
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -3175,7 +3177,7 @@ msgstr "_Internet"
 
 #: ../app/actions/plug-in-actions.c:100
 msgid "An_imation"
-msgstr "_Animation"
+msgstr "A_nimation"
 
 #: ../app/actions/plug-in-actions.c:103
 msgid "Reset all _Filters"
@@ -3699,11 +3701,11 @@ msgstr "_Vilkårlig rotering..."
 
 #: ../app/actions/tools-actions.c:313
 msgid "Toggle Fixed-Aspect Option for Rectangle"
-msgstr ""
+msgstr "Skift fast formatforhold-indstillingen for rektangel"
 
 #: ../app/actions/tools-actions.c:318
 msgid "Toggle Expand-From-Center Option for Rectangle"
-msgstr ""
+msgstr "Skift udvid fra centrum-indstillingen for rektangel"
 
 #: ../app/actions/vectors-actions.c:44
 msgid "Paths Menu"
@@ -3926,7 +3928,7 @@ msgstr "_Tilpas billede til vindue"
 
 #: ../app/actions/view-actions.c:86
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
-msgstr ""
+msgstr "Justér zoomforholdet så billedet bliver fuldt synligt"
 
 #: ../app/actions/view-actions.c:91
 msgid "Fit Image _to Window"
@@ -3934,16 +3936,15 @@ msgstr "Tilpas billede til _vindue"
 
 #: ../app/actions/view-actions.c:92
 msgid "Adjust the zoom ratio so that the window is used optimally"
-msgstr ""
+msgstr "Justér zoomforholdet så vinduet bliver udnyttet optimalt"
 
 #: ../app/actions/view-actions.c:97
 msgid "Na_vigation Window"
-msgstr "Na_vigationsvindue"
+msgstr "Na_vigeringsvindue"
 
 #: ../app/actions/view-actions.c:98
-#, fuzzy
 msgid "Show an overview window for this image"
-msgstr "Opret en ny visning til dette billede"
+msgstr "Vis et oversigtsvindue for dette billede"
 
 #: ../app/actions/view-actions.c:103
 msgid "Display _Filters..."
@@ -3951,7 +3952,7 @@ msgstr "Vis _filtre..."
 
 #: ../app/actions/view-actions.c:104
 msgid "Configure filters applied to this view"
-msgstr ""
+msgstr "Konfigurér filtre der anvendes på denne visning"
 
 #: ../app/actions/view-actions.c:109
 msgid "Shrink _Wrap"
@@ -3959,37 +3960,36 @@ msgstr "_Pak sammen"
 
 #: ../app/actions/view-actions.c:110
 msgid "Reduce the image window to the size of the image display"
-msgstr ""
+msgstr "Reducér billedvinduet til størrelsen af det viste"
 
 #: ../app/actions/view-actions.c:116
 msgid "Connect to another display"
-msgstr ""
+msgstr "Tilslut til en anden skærm"
 
 # skal synkroniseres
 #: ../app/actions/view-actions.c:124
 msgid "_Dot for Dot"
-msgstr "_Prik for prik"
+msgstr "_Punkt for punkt"
 
 #: ../app/actions/view-actions.c:125
 msgid "A pixel on the screen represents an image pixel"
-msgstr ""
+msgstr "Et punkt på skærmen repræsenterer et billedpunkt"
 
 #: ../app/actions/view-actions.c:131
 msgid "Show _Selection"
 msgstr "Vis m_arkering"
 
 #: ../app/actions/view-actions.c:132
-#, fuzzy
 msgid "Display the selection outline"
-msgstr "Flyt markeringsramme"
+msgstr "Vis markeringsomridset"
 
 #: ../app/actions/view-actions.c:138
 msgid "Show _Layer Boundary"
-msgstr "Vis _laggrænse"
+msgstr "Vis _lagkant"
 
 #: ../app/actions/view-actions.c:139
 msgid "Draw a border around the active layer"
-msgstr ""
+msgstr "Tegn en kant rundt om det aktive lag"
 
 #: ../app/actions/view-actions.c:145
 msgid "Show _Guides"
@@ -4041,7 +4041,7 @@ msgstr "Fuldsk_ærm"
 
 #: ../app/actions/view-actions.c:212
 msgid "Toggle fullscreen view"
-msgstr ""
+msgstr "Skift mellem fuldskærmsvisning"
 
 #: ../app/actions/view-actions.c:273
 msgid "1_6:1  (1600%)"
@@ -4271,17 +4271,17 @@ msgstr "_Erstat"
 msgid "Anti erase"
 msgstr "Antislet  %s"
 
-#: ../app/base/tile-swap.c:419
+#: ../app/base/tile-swap.c:436
 msgid ""
 "Unable to open swap file. The Gimp has run out of memory and cannot use the "
 "swap file. Some parts of your images may be corrupted. Try to save your work "
 "using different filenames, restart the Gimp and check the location of the "
 "swap directory in your Preferences."
 msgstr ""
-"Kunne ikke åbne reservehukommelsesfilen. Gimp'en er løbet tør for hukommelse "
-"og kan ikke bruge reservehukommelsesfilen på disken. Dele af dit billede kan "
-"være ødelagt. Prøv at gemme dit arbejde med andre filnavne, genstart Gimp'en "
-"og kontroller placeringen af reservehukommelsesmappen under indstillingerne."
+"Kunne ikke åbne swapfilen. Gimp'en er løbet tør for hukommelse og kan ikke "
+"bruge swapfilen på disken. Dele af dit billede kan være ødelagt. Prøv at "
+"gemme dit arbejde med andre filnavne, genstart Gimp'en og kontroller "
+"placeringen af mappen til swap under indstillingerne."
 
 #: ../app/config/gimpconfig-file.c:68 ../app/core/gimpbrushgenerated-save.c:63
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:145
@@ -4290,17 +4290,17 @@ msgstr ""
 #: ../app/xcf/xcf.c:397
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Kunne ikke åbne '%s' til skrivning: %s"
+msgstr "Kunne ikke åbne \"%s\" til at skrive: %s"
 
 #: ../app/config/gimpconfig-file.c:79 ../app/config/gimpconfig-file.c:102
 #, fuzzy, c-format
 msgid "Error writing '%s': %s"
-msgstr "Fejl ved skrivning i '%s': %s"
+msgstr "Fejl ved skrivning i \"%s\": %s"
 
 #: ../app/config/gimpconfig-file.c:90 ../app/tools/gimpimagemaptool.c:617
 #, fuzzy, c-format
 msgid "Error reading '%s': %s"
-msgstr "Fejl under læsning af '%s': %s"
+msgstr "Fejl ved læsning af \"%s\": %s"
 
 #: ../app/config/gimpconfig-file.c:132
 #, c-format
@@ -4308,9 +4308,9 @@ msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
 msgstr ""
-"Der opstod en fejl ved fortolkningen af din '%s'-fil. Standardværdier vil "
-"blive brugt. En sikkerhedskopi af din konfiguration er blevet oprettet ved '%"
-"s'."
+"Der opstod en fejl ved fortolkningen af filen \"%s\". Standardværdierne vil "
+"blive brugt. En sikkerhedskopi af din konfiguration er blevet oprettet i \"%s"
+"\"."
 
 #: ../app/config/gimprc.c:259 ../app/config/gimprc.c:272
 #: ../app/plug-in/gimppluginmanager.c:374
@@ -4351,37 +4351,35 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:33
 msgid "How to handle embedded color profiles when opening a file."
-msgstr ""
+msgstr "Hvordan indlejrede farveprofiler håndteres ved åbning af en fil."
 
 #: ../app/config/gimprc-blurbs.h:36
 msgid "Ask for confirmation before closing an image without saving."
 msgstr "Spørg efter bekræftelse før lukning af et vindue uden at gemme."
 
 #: ../app/config/gimprc-blurbs.h:39
-#, fuzzy
 msgid "Sets the pixel format to use for mouse pointers."
-msgstr "Angiver punktformatet for markører som Gimp'en bruger."
+msgstr "Angiver punktformatet som anvendes til musemarkører."
 
 #: ../app/config/gimprc-blurbs.h:42
-#, fuzzy
 msgid "Sets the type of mouse pointers to use."
-msgstr "Angiver tilstanden for den markør Gimp'en bruger."
+msgstr "Angiver den type musemarkør der anvendes."
 
 #: ../app/config/gimprc-blurbs.h:45
-#, fuzzy
 msgid ""
 "Context-dependent mouse pointers are helpful.  They are enabled by default.  "
 "However, they require overhead that you may want to do without."
 msgstr ""
-"Kontekstafhængige markører er lækre og aktiveret som standard. Men de kræver "
-"lidt mere, hvilket du muligvis ønsker at undgå."
+"Kontekstafhængige musemarkører er nyttige. De er aktiveret som standard. Men "
+"de kræver lidt mere, hvilket du muligvis ønsker at undgå."
 
 #: ../app/config/gimprc-blurbs.h:53
 msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
 msgstr ""
-"Sikrer at hvert punkt i et billede bliver afbildet til et punkt på skærmen."
+"Sikrer hvis aktiveret at hvert punkt i et billede bliver afbildet til et "
+"punkt på skærmen."
 
 #: ../app/config/gimprc-blurbs.h:75
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
@@ -4479,13 +4477,12 @@ msgid "When enabled, GIMP will show mnemonics in menus."
 msgstr "Hvis aktiveret vil Gimp'en vise genveje i menuer."
 
 #: ../app/config/gimprc-blurbs.h:188
-#, fuzzy
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for GIMP."
 msgstr ""
-"Dette angiver det minimale antal farve der bliver allokeret til Gimp'en (kun "
-"interessant for 8 bit-terminaler)."
+"Generelt kun interessant for 8 bit-skærme - dette angiver det minimale antal "
+"systemfarver der bliver allokeret til Gimp'en."
 
 #: ../app/config/gimprc-blurbs.h:198
 msgid ""
@@ -4527,7 +4524,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:216
 msgid "Sets how many processors GIMP should try to use simultaneously."
-msgstr ""
+msgstr "Angiver hvor mange processorer Gimp'en skal forsøge at bruge samtidig."
 
 #: ../app/config/gimprc-blurbs.h:229
 msgid ""
@@ -4538,9 +4535,9 @@ msgid ""
 "painting."
 msgstr ""
 "Spørg X-serveren efter musens aktuelle position ved hver bevægelseshændelse "
-"i stedet for at forlade sig på positionshintet. Dette betyder at malning med "
+"i stedet for at forlade sig på positionshintet. Dette betyder at maling med "
 "større pensler skulle være mere præcis, men det kan være langsommere. "
-"Mærkeligt nok giver det hurtigere malning på nogle X-servere."
+"Mærkeligt nok giver det hurtigere maling på nogle X-servere."
 
 #: ../app/config/gimprc-blurbs.h:245
 msgid ""
@@ -4591,18 +4588,16 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:269
 msgid "Add all opened and saved files to the document history on disk."
-msgstr ""
+msgstr "Tilføj alle åbnede og gemte filer til dokumenthistorikken på disken."
 
 #: ../app/config/gimprc-blurbs.h:272
-#, fuzzy
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
 msgstr ""
-"Gem placeringerne og størrelsen af hovedvinduerne når Gimp'en afslutter."
+"Gem placeringerne og størrelserne af hovedvinduerne når Gimp'en afslutter."
 
 #: ../app/config/gimprc-blurbs.h:275
-#, fuzzy
 msgid "Save the tool options when GIMP exits."
-msgstr "Gem ændrede tastaturgenveje når Gimp'en afslutter."
+msgstr "Gem værktøjsindstillingerne når Gimp'en afslutter."
 
 #: ../app/config/gimprc-blurbs.h:281
 msgid ""
@@ -4623,12 +4618,11 @@ msgstr ""
 "trykke på F1."
 
 #: ../app/config/gimprc-blurbs.h:290
-#, fuzzy
 msgid ""
 "When enabled, the mouse pointer will be shown over the image while using a "
 "paint tool."
 msgstr ""
-"Hvis aktiveret, vil markøren blive vist over billedet når et maleværktøj "
+"Hvis aktiveret, vil musemarkøren blive vist over billedet når et maleværktøj "
 "benyttes."
 
 #: ../app/config/gimprc-blurbs.h:294
@@ -4676,8 +4670,8 @@ msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
-"Hvis aktiveret, vises laggrænsen som standard. Dette kan også skiftes med "
-"kommandoen \"Vis->Vis laggrænse\"."
+"Hvis aktiveret, er lagkanten synlig som standard. Dette kan også skiftes med "
+"kommandoen \"Vis->Vis lagkant\"."
 
 #: ../app/config/gimprc-blurbs.h:318
 msgid ""
@@ -4704,20 +4698,18 @@ msgstr ""
 "med kommandoen \"Vis->Vis prøvningspunkter\"."
 
 #: ../app/config/gimprc-blurbs.h:330
-#, fuzzy
 msgid "Enable displaying a handy GIMP tip on startup."
-msgstr "Angiv om et praktisk tip til Gimp'en skal vises ved start."
+msgstr "Aktivér visning af et praktisk tip til Gimp'en ved start."
 
 #: ../app/config/gimprc-blurbs.h:333
 msgid "Show a tooltip when the pointer hovers over an item."
-msgstr ""
+msgstr "Vis et værktøjstip når markøren er over et punkt."
 
 #: ../app/config/gimprc-blurbs.h:336
 msgid "What to do when the space bar is pressed in the image window."
-msgstr ""
+msgstr "Hvad der sker ved tryk på mellemrumstasten i billedvinduet."
 
 #: ../app/config/gimprc-blurbs.h:339
-#, fuzzy
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -4727,10 +4719,10 @@ msgid ""
 "may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
 "Angiv swapfilens placering. Gimp'en bruger et flisebaseret "
-"hukommelsesallokeringssystem. Swapfilen bliver brug til hurtigt at og let at "
-"kopiere fliser ud til disken og tilbage igen. Bemærk at swapfilen hurtigt "
-"kan blive meget stor hvis Gimp'en bliver brug med store billeder. Desuden "
-"kan det være forfærdeligt langsomt hvis swapfilen bliver oprettet i en mappe "
+"hukommelsesallokeringssystem. Swapfilen bliver brug til hurtigt og let at "
+"kopiere fliser ned på disken og tilbage igen. Bemærk at swapfilen hurtigt "
+"kan blive meget stor hvis Gimp'en bliver brugt med store billeder. Desuden "
+"kan det gå forfærdeligt langsomt hvis swapfilen bliver oprettet i en mappe "
 "som er monteret over NFS. Derfor kan det være en god idé at anbringe din "
 "swapfil i \"/tmp\"."
 
@@ -4744,23 +4736,26 @@ msgid ""
 "transient to the active image window. Most window managers will keep the "
 "dock windows above the image window then, but it may also have other effects."
 msgstr ""
+"Hvis aktiveret, vil dokvinduer (værktøjskassen og paletter) blive sat til at "
+"være underordnede det aktive billedvindue. De fleste "
+"vindueshåndteringsprogrammer vil så sørge for at holde dokvinduer over "
+"billedvinduet, men det kan også have andre virkninger."
 
 #: ../app/config/gimprc-blurbs.h:357
 msgid ""
 "When enabled, you can change keyboard shortcuts for menu items by hitting a "
 "key combination while the menu item is highlighted."
 msgstr ""
-"Hvis aktiveret, kan du ændre tastaturgenveje for menupunkter ved at trykke "
-"på en tastekombination mens menupunktet er fremhævet."
+"Hvis aktiveret, kan du ændre tastegenveje for menupunkter ved at trykke på "
+"en tastekombination mens menupunktet er fremhævet."
 
 #: ../app/config/gimprc-blurbs.h:361
-#, fuzzy
 msgid "Save changed keyboard shortcuts when GIMP exits."
-msgstr "Gem ændrede tastaturgenveje når Gimp'en afslutter."
+msgstr "Gem ændrede tastegenveje når Gimp'en afslutter."
 
 #: ../app/config/gimprc-blurbs.h:364
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr "Gendan gemte tastaturgenveje ved hver start af Gimp'en."
+msgstr "Gendan gemte tastegenveje ved hver start af Gimp'en."
 
 #: ../app/config/gimprc-blurbs.h:367
 #, fuzzy
@@ -4798,6 +4793,10 @@ msgid ""
 "images that wouldn't fit into memory otherwise.  If you have a lot of RAM, "
 "you may want to set this to a higher value."
 msgstr ""
+"Hvis mængden af billeddata overstiger denne grænse, vil Gimp'en begynde at "
+"anbringe fliser på disken. Dette er meget langsommere, men gør det muligt at "
+"arbejde på billeder som ikke kan være i hukommelsen ellers. Hvis du har en "
+"masse ram, kan du prøve at sætte denne værdi højere."
 
 #: ../app/config/gimprc-blurbs.h:397
 msgid ""
@@ -4964,13 +4963,12 @@ msgid "Stroke with a paint tool"
 msgstr "Bestryg med et maleværktøj"
 
 #: ../app/core/core-enums.c:307
-#, fuzzy
 msgid "Solid color"
-msgstr "Redigér farve"
+msgstr "Ensfarvet"
 
 #: ../app/core/core-enums.c:336
 msgid "Miter"
-msgstr "Mellem"
+msgstr "Hjørne"
 
 #: ../app/core/core-enums.c:337 ../app/core/core-enums.c:367
 msgid "Round"
@@ -5155,7 +5153,6 @@ msgid "Convert image"
 msgstr "Konvertér billede"
 
 #: ../app/core/core-enums.c:855
-#, fuzzy
 msgid "Remove item"
 msgstr "Omdøb element"
 
@@ -5164,9 +5161,8 @@ msgid "Merge layers"
 msgstr "Forén lag"
 
 #: ../app/core/core-enums.c:857
-#, fuzzy
 msgid "Merge paths"
-msgstr "Forén paletter"
+msgstr "Forén baner"
 
 #: ../app/core/core-enums.c:859 ../app/core/core-enums.c:890
 msgid "Guide"
@@ -5176,21 +5172,19 @@ msgstr "Hjælpelinje"
 #: ../app/core/gimpimage-grid.c:58 ../app/dialogs/grid-dialog.c:149
 #: ../app/tools/tools-enums.c:211
 msgid "Grid"
-msgstr "Hjælpelinje"
+msgstr "Gitter"
 
 #: ../app/core/core-enums.c:861 ../app/core/core-enums.c:892
 msgid "Sample Point"
 msgstr "Prøvningspunkt"
 
 #: ../app/core/core-enums.c:862 ../app/core/core-enums.c:894
-#, fuzzy
 msgid "Layer/Channel"
-msgstr "Sænk kanal"
+msgstr "Lag/kanal"
 
 #: ../app/core/core-enums.c:863 ../app/core/core-enums.c:895
-#, fuzzy
 msgid "Layer/Channel modification"
-msgstr "Kanal til markering"
+msgstr "Lag/kanal-ændring"
 
 #: ../app/core/core-enums.c:864 ../app/core/core-enums.c:896
 msgid "Selection mask"
@@ -5201,9 +5195,8 @@ msgid "Item visibility"
 msgstr "Elementsynlighed"
 
 #: ../app/core/core-enums.c:866 ../app/core/core-enums.c:900
-#, fuzzy
 msgid "Link/Unlink item"
-msgstr "Kædet element"
+msgstr "Kæd/afkæd element"
 
 #: ../app/core/core-enums.c:867
 msgid "Item properties"
@@ -5222,7 +5215,6 @@ msgid "Resize item"
 msgstr "Ændr størrelse af element"
 
 #: ../app/core/core-enums.c:871
-#, fuzzy
 msgid "Add layer"
 msgstr "Tilføj lag"
 
@@ -5298,7 +5290,6 @@ msgid "Image size"
 msgstr "Billedstørrelse"
 
 #: ../app/core/core-enums.c:889
-#, fuzzy
 msgid "Image resolution change"
 msgstr "Opløsningsændring"
 
@@ -5331,19 +5322,16 @@ msgid "Set layer opacity"
 msgstr "Ændr laggennemsigtighed"
 
 #: ../app/core/core-enums.c:906
-#, fuzzy
 msgid "Lock/Unlock alpha channel"
-msgstr "Lagets _alfakanal"
+msgstr "Lås/oplås alfakanal"
 
 #: ../app/core/core-enums.c:907
-#, fuzzy
 msgid "Text layer"
 msgstr "Tekstlag"
 
 #: ../app/core/core-enums.c:908
-#, fuzzy
 msgid "Text layer modification"
-msgstr "Ændr lagtilstand"
+msgstr "Tekstlagsændring"
 
 #: ../app/core/core-enums.c:910
 msgid "Delete layer mask"
@@ -5370,19 +5358,16 @@ msgid "Channel color"
 msgstr "Kanalfarve"
 
 #: ../app/core/core-enums.c:917
-#, fuzzy
 msgid "New path"
 msgstr "Ny bane"
 
 #: ../app/core/core-enums.c:919
-#, fuzzy
 msgid "Path modification"
-msgstr "Bane til markering"
+msgstr "Ændring af bane"
 
 #: ../app/core/core-enums.c:920
-#, fuzzy
 msgid "Reposition path"
-msgstr "Flyt lag"
+msgstr "Flytning af bane"
 
 #: ../app/core/core-enums.c:922
 msgid "FS rigor"
@@ -5395,12 +5380,11 @@ msgstr "Løsnen af flydende"
 #: ../app/core/core-enums.c:926 ../app/paint/gimpink.c:103
 #: ../app/tools/gimpinktool.c:55
 msgid "Ink"
-msgstr "Blækpen"
+msgstr "Blæk"
 
 #: ../app/core/core-enums.c:927
-#, fuzzy
 msgid "Select foreground"
-msgstr "Skift forgrundsfarve"
+msgstr "Vælg forgrund"
 
 #: ../app/core/core-enums.c:930
 msgid "EEK: can't undo"
@@ -5408,35 +5392,31 @@ msgstr "Argh: kan ikke fortryde"
 
 #: ../app/core/core-enums.c:1194
 msgid "Composite"
-msgstr ""
+msgstr "Sammensat"
 
 #: ../app/core/core-enums.c:1228
-#, fuzzy
 msgid "Message"
-msgstr "%s-meddelelse"
+msgstr "Meddelelse"
 
 #: ../app/core/core-enums.c:1229
-#, fuzzy
 msgid "Warning"
-msgstr "[advarsel]"
+msgstr "Advarsel"
 
 #: ../app/core/core-enums.c:1230
-#, fuzzy
 msgid "Error"
 msgstr "Fejl"
 
 #: ../app/core/core-enums.c:1258
 msgid "Ask what to do"
-msgstr ""
+msgstr "Spørg hvad der skal ske"
 
 #: ../app/core/core-enums.c:1259
 msgid "Keep embedded profile"
-msgstr ""
+msgstr "Behold indlejret profil"
 
 #: ../app/core/core-enums.c:1260
-#, fuzzy
 msgid "Convert to RGB workspace"
-msgstr "Konvertér billede til gråtone"
+msgstr "Konvertér til RGB-arbejdsområde"
 
 #: ../app/core/gimp-contexts.c:141 ../app/core/gimptooloptions.c:239
 #: ../app/gui/session.c:257 ../app/menus/menus.c:422
@@ -5450,14 +5430,12 @@ msgid "Pasted Layer"
 msgstr "Indsat lag"
 
 #: ../app/core/gimp-edit.c:445
-#, fuzzy
 msgid "Fill with Foreground Color"
-msgstr "Skift forgrundsfarve"
+msgstr "Udfyld med forgrundsfarve"
 
 #: ../app/core/gimp-edit.c:449
-#, fuzzy
 msgid "Fill with Background Color"
-msgstr "Udfyld med _baggrundsfarve"
+msgstr "Udfyld med baggrundsfarve"
 
 #: ../app/core/gimp-edit.c:453
 msgid "Fill with White"
@@ -5476,9 +5454,8 @@ msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Kan ikke klippe eller kopiere fordi det markerede område er tomt."
 
 #: ../app/core/gimp-edit.c:597
-#, fuzzy
 msgid "Global Buffer"
-msgstr "_Indsæt mellemlager"
+msgstr "Globalt mellemlager"
 
 #: ../app/core/gimp-gradients.c:61
 msgid "FG to BG (RGB)"
@@ -5486,11 +5463,11 @@ msgstr "Fg. til bg. (RGB)"
 
 #: ../app/core/gimp-gradients.c:66
 msgid "FG to BG (HSV counter-clockwise)"
-msgstr "Forgr. til baggr. (HSV mod uret)"
+msgstr "Fg. til bg. (HSV mod uret)"
 
 #: ../app/core/gimp-gradients.c:71
 msgid "FG to BG (HSV clockwise hue)"
-msgstr "Forgr. til baggr. (HSV med uret)"
+msgstr "Fg. til bg. (HSV med uret)"
 
 #: ../app/core/gimp-gradients.c:76
 msgid "FG to Transparent"
@@ -5502,6 +5479,8 @@ msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
 "settings to '%s'."
 msgstr ""
+"Det ser ud til at du har brugt Gimp %s før. Gimp'en vil nu overflytte dine "
+"indstillinger til \"%s\"."
 
 #: ../app/core/gimp-user-install.c:202
 #, c-format
@@ -5509,27 +5488,28 @@ msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
 "a folder named '%s' and copy some files to it."
 msgstr ""
+"Det ser ud til at du bruger Gimp'en for første gang. Gimp'en vil nu oprette "
+"en mappe ved navn \"%s\" og kopiere nogle filer til den."
 
-# mindre omformulering nødvendig
 #: ../app/core/gimp-user-install.c:304
 #, c-format
 msgid "Copying file '%s' from '%s'..."
-msgstr "Kopierer filen '%s' fra '%s'..."
+msgstr "Kopierer filen \"%s\" fra \"%s\"..."
 
 #: ../app/core/gimp-user-install.c:319 ../app/core/gimp-user-install.c:345
 #, c-format
 msgid "Creating folder '%s'..."
-msgstr "Opretter mappen '%s'..."
+msgstr "Opretter mappen \"%s\"..."
 
 #: ../app/core/gimp-user-install.c:330 ../app/core/gimp-user-install.c:356
 #, c-format
 msgid "Cannot create folder '%s': %s"
-msgstr "Kan ikke oprette mappen '%s': %s"
+msgstr "Kan ikke oprette mappen \"%s\": %s"
 
+# dækker nogenlunde
 #: ../app/core/gimp.c:521
-#, fuzzy
 msgid "Initialization"
-msgstr "Startzoomforhold:"
+msgstr "Starter"
 
 #. register all internal procedures
 #: ../app/core/gimp.c:596
@@ -5552,7 +5532,7 @@ msgstr "Dokumenter"
 
 # for at skelne 'modules' fra 'plug-ins' kalder vi førstnævnte for programudvidelser
 #. initialize the module list
-#: ../app/core/gimp.c:846 ../app/dialogs/preferences-dialog.c:2616
+#: ../app/core/gimp.c:846 ../app/dialogs/preferences-dialog.c:2615
 msgid "Modules"
 msgstr "Programudvidelser"
 
@@ -5673,18 +5653,16 @@ msgid "Fatal parse error in brush file '%s': File is corrupt."
 msgstr "Fatal fortolkningsfejl i penselfilen \"%s\": filen er ødelagt."
 
 #: ../app/core/gimpchannel-select.c:57
-#, fuzzy
 msgid "command|Rectangle Select"
-msgstr "Rektangulær markering"
+msgstr "Markér rektangel"
 
 #: ../app/core/gimpchannel-select.c:108
-#, fuzzy
 msgid "command|Ellipse Select"
-msgstr "Ellipsemarkering"
+msgstr "Markér ellipse"
 
 #: ../app/core/gimpchannel-select.c:162
 msgid "command|Rounded Rectangle Select"
-msgstr ""
+msgstr "Markér afrundet rektangel"
 
 #: ../app/core/gimpchannel-select.c:431
 msgid "Alpha to Selection"
@@ -5696,13 +5674,11 @@ msgid "%s Channel to Selection"
 msgstr "%s-kanal til markering"
 
 #: ../app/core/gimpchannel-select.c:517 ../app/tools/gimpfuzzyselecttool.c:78
-#, fuzzy
 msgid "command|Fuzzy Select"
-msgstr "Udflydende markering"
+msgstr "Markér udflydende"
 
 #: ../app/core/gimpchannel-select.c:564
 #: ../app/tools/gimpbycolorselecttool.c:80
-#, fuzzy
 msgid "command|Select by Color"
 msgstr "Markér efter farve"
 
@@ -5820,21 +5796,21 @@ msgstr "%s-kopi"
 
 #: ../app/core/gimpdatafactory.c:566
 msgid "You don't have a writable data folder configured."
-msgstr ""
+msgstr "Der er ikke konfigureret en datamappe der kan skrives i."
 
 # %s er filnavnet
 #: ../app/core/gimpdatafactory.c:726
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Failed to load data:\n"
 "\n"
 "%s"
 msgstr ""
-"Advarsel: kunne ikke indlæse data:\n"
+"Kunne ikke indlæse data:\n"
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable-blend.c:247 ../app/tools/gimpblendtool.c:106
+#: ../app/core/gimpdrawable-blend.c:247 ../app/tools/gimpblendtool.c:111
 msgid "Blend"
 msgstr "Blanding"
 
@@ -5843,9 +5819,8 @@ msgid "No patterns available for this operation."
 msgstr "Ingen mønstre disponible for denne handling."
 
 #: ../app/core/gimpdrawable-bucket-fill.c:280
-#, fuzzy
 msgid "command|Bucket Fill"
-msgstr "Spandudfyldning"
+msgstr "Udfyld"
 
 #: ../app/core/gimpdrawable-desaturate.c:97
 #: ../app/dialogs/desaturate-dialog.c:62
@@ -5857,9 +5832,8 @@ msgid "Equalize"
 msgstr "Udlign"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:138
-#, fuzzy
 msgid "Foreground Extraction"
-msgstr "Forgrundsfarve"
+msgstr "Forgrundsudtrækning"
 
 #: ../app/core/gimpdrawable-invert.c:61
 msgid "Invert"
@@ -5881,11 +5855,10 @@ msgstr "Tegn bestrygning"
 #. Start a transform undo group
 #: ../app/core/gimpdrawable-transform.c:620 ../app/tools/gimpfliptool.c:111
 msgid "command|Flip"
-msgstr ""
+msgstr "Vend"
 
 #. Start a transform undo group
 #: ../app/core/gimpdrawable-transform.c:704 ../app/tools/gimprotatetool.c:114
-#, fuzzy
 msgid "command|Rotate"
 msgstr "Rotér"
 
@@ -5899,15 +5872,16 @@ msgstr "Transformering"
 
 #: ../app/core/gimpgradient-load.c:71 ../app/core/gimpgradient-load.c:96
 #: ../app/core/gimpgradient-load.c:117 ../app/core/gimpgradient-load.c:168
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in gradient file '%s': Read error in line %d."
-msgstr "Fatal fortolkningsfejl i paletfil '%s': læsefejl på linje %d."
+msgstr ""
+"Fatal fortolkningsfejl i farveovergangsfilen \"%s\": læsefejl på linje %d."
 
 #: ../app/core/gimpgradient-load.c:81
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
 msgstr ""
-"Fatal fortolkningsfejl i fareovergangsfil '%s': er ikke en Gimp-"
+"Fatal fortolkningsfejl i fareovergangsfilen \"%s\": er ikke en Gimp-"
 "farveovergangsfil."
 
 #: ../app/core/gimpgradient-load.c:109
@@ -5978,7 +5952,7 @@ msgstr ""
 
 #: ../app/core/gimpimage-arrange.c:139
 msgid "Arrange Objects"
-msgstr ""
+msgstr "Arrangér objekter"
 
 #: ../app/core/gimpimage-colormap.c:63
 msgid "Set Colormap"
@@ -5993,9 +5967,8 @@ msgid "Add Color to Colormap"
 msgstr "Tilføj farve til farveafbildning"
 
 #: ../app/core/gimpimage-convert.c:793
-#, fuzzy
 msgid "Cannot convert image: palette is empty."
-msgstr "Kan ikke konvertere billede, palet er tom."
+msgstr "Kan ikke konvertere billede: palet er tom."
 
 #: ../app/core/gimpimage-convert.c:807
 msgid "Convert Image to RGB"
@@ -6010,19 +5983,16 @@ msgid "Convert Image to Indexed"
 msgstr "Konvertér billede til indekseret"
 
 #: ../app/core/gimpimage-convert.c:897
-#, fuzzy
 msgid "Converting to indexed (stage 2)"
-msgstr "Konvertér billede til indekseret (skridt 2)..."
+msgstr "Konverterer til indekseret (2. skridt)"
 
 #: ../app/core/gimpimage-convert.c:942
-#, fuzzy
 msgid "Converting to indexed (stage 3)"
-msgstr "Konvertér billede til indekseret (skridt 3)..."
+msgstr "Konverterer til indekseret (3. skridt)"
 
 #: ../app/core/gimpimage-crop.c:125
-#, fuzzy
 msgid "command|Crop Image"
-msgstr "Beskæring af lag"
+msgstr "Beskær billede"
 
 #: ../app/core/gimpimage-crop.c:128 ../app/core/gimpimage-resize.c:88
 msgid "Resize Image"
@@ -6036,7 +6006,7 @@ msgstr "Tilføj vandret hjælpelinje"
 msgid "Add Vertical Guide"
 msgstr "Tilføj lodret hjælpelinje"
 
-#: ../app/core/gimpimage-guides.c:113 ../app/tools/gimpmovetool.c:538
+#: ../app/core/gimpimage-guides.c:113 ../app/tools/gimpmovetool.c:539
 msgid "Remove Guide"
 msgstr "Fjern hjælpelinje"
 
@@ -6097,7 +6067,7 @@ msgstr "Deaktivér ekspresmaske"
 msgid "Add Sample_Point"
 msgstr "Tilføj prøvningspunkt"
 
-#: ../app/core/gimpimage-sample-points.c:121 ../app/tools/gimpcolortool.c:420
+#: ../app/core/gimpimage-sample-points.c:121 ../app/tools/gimpcolortool.c:421
 msgid "Remove Sample Point"
 msgstr "Fjern prøvningspunkt"
 
@@ -6106,138 +6076,138 @@ msgid "Move Sample Point"
 msgstr "Flyt prøvningspunkt"
 
 # med %s forrest bliver der ikke problemer med stort begyndelsesbogstav
-#: ../app/core/gimpimage-undo-push.c:3248
+#: ../app/core/gimpimage-undo-push.c:2730
 #, c-format
 msgid "Can't undo %s"
 msgstr "%s kan ikke fortrydes"
 
-#: ../app/core/gimpimage.c:1439
+#: ../app/core/gimpimage.c:1440
 msgid "Change Image Resolution"
 msgstr "Skift billedopløsning"
 
-#: ../app/core/gimpimage.c:1479
+#: ../app/core/gimpimage.c:1480
 msgid "Change Image Unit"
 msgstr "Skift billedenhed"
 
-#: ../app/core/gimpimage.c:2321
+#: ../app/core/gimpimage.c:2322
 msgid "Attach Parasite to Image"
 msgstr "Vedhæft parasit til billede"
 
-#: ../app/core/gimpimage.c:2359
+#: ../app/core/gimpimage.c:2360
 msgid "Remove Parasite from Image"
 msgstr "Fjern parasit fra billede"
 
-#: ../app/core/gimpimage.c:2814
+#: ../app/core/gimpimage.c:2815
 msgid "Add Layer"
 msgstr "Tilføj lag"
 
-#: ../app/core/gimpimage.c:2879 ../app/core/gimpimage.c:2892
+#: ../app/core/gimpimage.c:2880 ../app/core/gimpimage.c:2893
 msgid "Remove Layer"
 msgstr "Fjern lag"
 
-#: ../app/core/gimpimage.c:3031
+#: ../app/core/gimpimage.c:3032
 msgid "Layer cannot be raised higher."
 msgstr "Laget kan ikke hæves mere."
 
-#: ../app/core/gimpimage.c:3036
+#: ../app/core/gimpimage.c:3037
 msgid "Raise Layer"
 msgstr "Hæv lag"
 
-#: ../app/core/gimpimage.c:3053
+#: ../app/core/gimpimage.c:3054
 msgid "Layer cannot be lowered more."
 msgstr "Laget kan ikke sænkes mere."
 
-#: ../app/core/gimpimage.c:3058
+#: ../app/core/gimpimage.c:3059
 msgid "Lower Layer"
 msgstr "Sænk lag"
 
-#: ../app/core/gimpimage.c:3069
+#: ../app/core/gimpimage.c:3070
 msgid "Raise Layer to Top"
 msgstr "Hæv lag til top"
 
-#: ../app/core/gimpimage.c:3084
+#: ../app/core/gimpimage.c:3085
 msgid "Lower Layer to Bottom"
 msgstr "Sænk lag til bund"
 
 # til undo-info
-#: ../app/core/gimpimage.c:3157
+#: ../app/core/gimpimage.c:3158
 msgid "Add Channel"
 msgstr "Tilføjelse af kanal"
 
 # til undo-info
-#: ../app/core/gimpimage.c:3202 ../app/core/gimpimage.c:3213
+#: ../app/core/gimpimage.c:3203 ../app/core/gimpimage.c:3214
 msgid "Remove Channel"
 msgstr "Fjernelse af kanal"
 
-#: ../app/core/gimpimage.c:3260
+#: ../app/core/gimpimage.c:3261
 msgid "Channel cannot be raised higher."
 msgstr "Kanalen kan ikke hæves mere."
 
-#: ../app/core/gimpimage.c:3265
+#: ../app/core/gimpimage.c:3266
 msgid "Raise Channel"
 msgstr "Hæv kanal"
 
-#: ../app/core/gimpimage.c:3282
+#: ../app/core/gimpimage.c:3283
 msgid "Channel is already on top."
 msgstr "Kanal er allerede øverst."
 
-#: ../app/core/gimpimage.c:3287
+#: ../app/core/gimpimage.c:3288
 msgid "Raise Channel to Top"
 msgstr "Hæv kanal til top"
 
-#: ../app/core/gimpimage.c:3304
+#: ../app/core/gimpimage.c:3305
 msgid "Channel cannot be lowered more."
 msgstr "Kanalen kan ikke sænkes mere."
 
-#: ../app/core/gimpimage.c:3309
+#: ../app/core/gimpimage.c:3310
 msgid "Lower Channel"
 msgstr "Sænk kanal"
 
-#: ../app/core/gimpimage.c:3329
+#: ../app/core/gimpimage.c:3330
 msgid "Channel is already on the bottom."
 msgstr "Kanal er allerede nederst."
 
-#: ../app/core/gimpimage.c:3334
+#: ../app/core/gimpimage.c:3335
 msgid "Lower Channel to Bottom"
 msgstr "Sænk kanal til bund"
 
-#: ../app/core/gimpimage.c:3409
+#: ../app/core/gimpimage.c:3410
 msgid "Add Path"
 msgstr "Tilføj bane"
 
-#: ../app/core/gimpimage.c:3455
+#: ../app/core/gimpimage.c:3456
 msgid "Remove Path"
 msgstr "Fjern bane"
 
-#: ../app/core/gimpimage.c:3499
+#: ../app/core/gimpimage.c:3500
 msgid "Path cannot be raised higher."
 msgstr "Banen kan ikke hæves mere."
 
-#: ../app/core/gimpimage.c:3504
+#: ../app/core/gimpimage.c:3505
 msgid "Raise Path"
 msgstr "Hæv bane"
 
-#: ../app/core/gimpimage.c:3521
+#: ../app/core/gimpimage.c:3522
 msgid "Path is already on top."
 msgstr "Bane er allerede øverst."
 
-#: ../app/core/gimpimage.c:3526
+#: ../app/core/gimpimage.c:3527
 msgid "Raise Path to Top"
 msgstr "Hæv bane til top"
 
-#: ../app/core/gimpimage.c:3543
+#: ../app/core/gimpimage.c:3544
 msgid "Path cannot be lowered more."
 msgstr "Banen kan ikke sænkes mere."
 
-#: ../app/core/gimpimage.c:3548
+#: ../app/core/gimpimage.c:3549
 msgid "Lower Path"
 msgstr "Sænk bane"
 
-#: ../app/core/gimpimage.c:3568
+#: ../app/core/gimpimage.c:3569
 msgid "Path is already on the bottom."
 msgstr "Bane er allerede nederst."
 
-#: ../app/core/gimpimage.c:3573
+#: ../app/core/gimpimage.c:3574
 msgid "Lower Path to Bottom"
 msgstr "Sænk bane til bund"
 
@@ -6544,9 +6514,8 @@ msgid "Invert Selection"
 msgstr "Invertér markering"
 
 #: ../app/core/gimpselection.c:274
-#, fuzzy
 msgid "There is no selection to stroke."
-msgstr "Ingen markering til strøg."
+msgstr "Der er ingen markering til bestrygning."
 
 #: ../app/core/gimpselection.c:786
 msgid "Cannot float selection because the selected region is empty."
@@ -6566,6 +6535,8 @@ msgid ""
 "Convert a mitered join to a bevelled join if the miter would extend to a "
 "distance of more than miter-limit * line-width from the actual join point."
 msgstr ""
+"Konverter en hjørnekobling til en afrundet kobling hvis hjørnet strækker sig "
+"mere end afstanden hjørnegrænse * linjebredde fra det faktiske koblingspunkt."
 
 #: ../app/core/gimptemplate.c:116
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
@@ -6591,7 +6562,7 @@ msgstr "billedpunkt"
 
 #: ../app/core/gimpunit.c:55 ../app/tools/gimpmeasuretool.c:804
 #: ../app/tools/gimpmeasuretool.c:945 ../app/tools/gimpmeasuretool.c:997
-#: ../app/tools/gimpmeasuretool.c:1023 ../app/tools/gimppainttool.c:600
+#: ../app/tools/gimpmeasuretool.c:1023 ../app/tools/gimppainttool.c:601
 msgid "pixels"
 msgstr "billedpunkter"
 
@@ -6634,13 +6605,12 @@ msgid "percent"
 msgstr "procent"
 
 #: ../app/core/gimpunit.c:70
-#, fuzzy
 msgid "plural|percent"
 msgstr "procent"
 
 #: ../app/dialogs/about-dialog.c:121
 msgid "Visit the GIMP website"
-msgstr ""
+msgstr "Besøg Gimp'ens hjemmeside"
 
 #. Translators: insert your names here,
 #. * separated by newline
@@ -6670,9 +6640,8 @@ msgid "Channel _name:"
 msgstr "Kanal_navn:"
 
 #: ../app/dialogs/channel-options-dialog.c:173
-#, fuzzy
 msgid "Initialize from _selection"
-msgstr "Invertér markering"
+msgstr "Start fra _markering"
 
 #: ../app/dialogs/convert-dialog.c:124
 msgid "Indexed Color Conversion"
@@ -6691,9 +6660,8 @@ msgid "_Maximum number of colors:"
 msgstr "_Maksimalt antal farver:"
 
 #: ../app/dialogs/convert-dialog.c:215
-#, fuzzy
 msgid "_Remove unused colors from colormap"
-msgstr "_Fjern ubrugte farver fra endelig palet"
+msgstr "_Fjern ubrugte farver fra farvekort"
 
 #. dithering
 #: ../app/dialogs/convert-dialog.c:231 ../app/tools/gimpblendoptions.c:236
@@ -6728,7 +6696,7 @@ msgstr "_Afmætning"
 msgid "Choose shade of gray based on:"
 msgstr "Vælg gråtone baseret på:"
 
-#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:154
+#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:167
 #: ../app/gui/gui-message.c:146
 msgid "GIMP Message"
 msgstr "Meddelelse fra Gimp'en"
@@ -6778,15 +6746,15 @@ msgstr "_Ugennemsigtighed:"
 msgid "Open layers"
 msgstr "Åbn lag"
 
-#: ../app/dialogs/file-open-location-dialog.c:74
+#: ../app/dialogs/file-open-location-dialog.c:72
 msgid "Open Location"
 msgstr "Åbn placering"
 
-#: ../app/dialogs/file-open-location-dialog.c:112
+#: ../app/dialogs/file-open-location-dialog.c:110
 msgid "Enter location (URI):"
 msgstr "Indtast placering (URI):"
 
-#: ../app/dialogs/file-save-dialog.c:286 ../app/dialogs/file-save-dialog.c:329
+#: ../app/dialogs/file-save-dialog.c:312 ../app/dialogs/file-save-dialog.c:355
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -6794,7 +6762,7 @@ msgstr ""
 "Det angivne filnavn slutter ikke med en kendt filendelse. Indtast venligst "
 "en kendt filendelse eller vælg et filformat fra listen over filformater."
 
-#: ../app/dialogs/file-save-dialog.c:371
+#: ../app/dialogs/file-save-dialog.c:397
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -6804,15 +6772,15 @@ msgstr ""
 "filendelsen. Indtast en filendelse der passer med det valgte filformat eller "
 "undlad helt filendelsen."
 
-#: ../app/dialogs/file-save-dialog.c:431
+#: ../app/dialogs/file-save-dialog.c:457
 msgid "Extension Mismatch"
 msgstr "Uoverensstemmelse i endelse"
 
-#: ../app/dialogs/file-save-dialog.c:447
+#: ../app/dialogs/file-save-dialog.c:473
 msgid "The given file extension does not match the chosen file type."
 msgstr "Den angivne filendelse passer ikke med den valgte tilfype."
 
-#: ../app/dialogs/file-save-dialog.c:451
+#: ../app/dialogs/file-save-dialog.c:477
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Ønsker du at gemme billedet med dette navn alligevel?"
 
@@ -6941,7 +6909,7 @@ msgstr "Er dette hvad du ønsker at gøre?"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:50
 msgid "Configure Keyboard Shortcuts"
-msgstr "Konfigurér tastaturgenveje"
+msgstr "Konfigurér tastegenveje"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:81
 msgid ""
@@ -6954,7 +6922,7 @@ msgstr ""
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:89
 #: ../app/dialogs/preferences-dialog.c:1566
 msgid "_Save keyboard shortcuts on exit"
-msgstr "_Gem tastaturgenveje ved afslutning"
+msgstr "_Gem tastegenveje ved afslutning"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:82
 msgid "Add a Mask to the Layer"
@@ -7065,12 +7033,10 @@ msgid "State:"
 msgstr "Tilstand:"
 
 #: ../app/dialogs/module-dialog.c:514
-#, fuzzy
 msgid "Last error:"
 msgstr "Sidste fejl:"
 
 #: ../app/dialogs/module-dialog.c:515
-#, fuzzy
 msgid "Available types:"
 msgstr "Tilgængelige typer:"
 
@@ -7283,7 +7249,7 @@ msgstr "Vis _markering"
 
 #: ../app/dialogs/preferences-dialog.c:1222
 msgid "Show _layer boundary"
-msgstr "Vis _laggrænse"
+msgstr "Vis _lagkant"
 
 #: ../app/dialogs/preferences-dialog.c:1225
 msgid "Show _guides"
@@ -7311,7 +7277,7 @@ msgid "Preferences"
 msgstr "Indstillinger"
 
 #: ../app/dialogs/preferences-dialog.c:1444
-#: ../app/dialogs/preferences-dialog.c:2624
+#: ../app/dialogs/preferences-dialog.c:2623
 msgid "Environment"
 msgstr "Miljø"
 
@@ -7395,7 +7361,7 @@ msgstr "Miniaturestørrelse for _navigeringsvinduer:"
 #. Keyboard Shortcuts
 #: ../app/dialogs/preferences-dialog.c:1548
 msgid "Keyboard Shortcuts"
-msgstr "Tastaturgenveje"
+msgstr "Tastegenveje"
 
 #: ../app/dialogs/preferences-dialog.c:1552
 msgid "Show menu _mnemonics (access keys)"
@@ -7404,24 +7370,24 @@ msgstr "Vis menu_genveje"
 #: ../app/dialogs/preferences-dialog.c:1555
 #, fuzzy
 msgid "_Use dynamic keyboard shortcuts"
-msgstr "Benyt _dynamiske tastaturgenveje"
+msgstr "Benyt _dynamiske tastegenveje"
 
 #: ../app/dialogs/preferences-dialog.c:1559
 msgid "Configure _Keyboard Shortcuts..."
-msgstr "Konfigurér tastaturgenveje..."
+msgstr "Konfigurér tastegenveje..."
 
 #: ../app/dialogs/preferences-dialog.c:1570
 msgid "Save Keyboard Shortcuts _Now"
-msgstr "Gem tastaturgenveje _nu"
+msgstr "Gem tastegenveje _nu"
 
 #: ../app/dialogs/preferences-dialog.c:1577
 msgid "_Reset Saved Keyboard Shortcuts to Default Values"
-msgstr "_Nulstil gemte tastaturgenveje til standardværdier"
+msgstr "_Nulstil gemte tastegenveje til standardværdier"
 
 #: ../app/dialogs/preferences-dialog.c:1587
 #, fuzzy
 msgid "Remove _All Keyboard Shortcuts"
-msgstr "Tastaturgenveje"
+msgstr "Tastegenveje"
 
 #: ../app/dialogs/preferences-dialog.c:1599
 #: ../app/dialogs/preferences-dialog.c:1638
@@ -7449,7 +7415,6 @@ msgid "General"
 msgstr "Generelt"
 
 #: ../app/dialogs/preferences-dialog.c:1717
-#, fuzzy
 msgid "Show _tooltips"
 msgstr "Vis værktøjs_tip"
 
@@ -7472,26 +7437,23 @@ msgstr "Hjælpe_fremviser der skal anvendes:"
 
 #: ../app/dialogs/preferences-dialog.c:1736
 msgid "Web Browser"
-msgstr "Internetsurfningsprogram"
+msgstr "Webbrowser"
 
 #: ../app/dialogs/preferences-dialog.c:1740
 msgid "_Web browser to use:"
-msgstr "_Internetsurfningsprogram der skal anvendes:"
+msgstr "_Webbrowser der skal anvendes:"
 
 #: ../app/dialogs/preferences-dialog.c:1768
-#, fuzzy
 msgid "_Save tool options on exit"
-msgstr "_Gem vinduesplaceringer ved afslutning"
+msgstr "_Gem værktøjsindstillinger ved afslutning"
 
 #: ../app/dialogs/preferences-dialog.c:1772
-#, fuzzy
 msgid "Save Tool Options _Now"
-msgstr "Indstillinger for gemningsværktøj"
+msgstr "Gem værktøjsindstillinger _nu"
 
 #: ../app/dialogs/preferences-dialog.c:1779
-#, fuzzy
 msgid "_Reset Saved Tool Options to Default Values"
-msgstr "_Nulstil gemte vinduesplaceringer til standardværdier"
+msgstr "_Nulstil gemte værktøjsindstillinger til standardværdier"
 
 #. Snapping Distance
 #: ../app/dialogs/preferences-dialog.c:1789
@@ -7567,7 +7529,7 @@ msgstr "Billedvinduer"
 # skal synkroniseres
 #: ../app/dialogs/preferences-dialog.c:1955
 msgid "Use \"_Dot for dot\" by default"
-msgstr "Benyt som standard \"_prik for prik\""
+msgstr "Benyt som standard \"_punkt for punkt\""
 
 #: ../app/dialogs/preferences-dialog.c:1961
 msgid "Marching _ants speed:"
@@ -7596,17 +7558,15 @@ msgstr "Startzoomforhold:"
 
 #. Space Bar
 #: ../app/dialogs/preferences-dialog.c:1984
-#, fuzzy
 msgid "Space Bar"
-msgstr "Skalering af lag"
+msgstr "Mellemrumstast"
 
 #: ../app/dialogs/preferences-dialog.c:1990
 msgid "_While space bar is pressed:"
-msgstr ""
+msgstr "_Mens mellemrumstasten er holdt inde:"
 
 #. Mouse Pointers
 #: ../app/dialogs/preferences-dialog.c:1994
-#, fuzzy
 msgid "Mouse Pointers"
 msgstr "Musemarkører"
 
@@ -7615,18 +7575,15 @@ msgid "Show _brush outline"
 msgstr "Vis _penselomrids"
 
 #: ../app/dialogs/preferences-dialog.c:2001
-#, fuzzy
 msgid "Show pointer for paint _tools"
-msgstr "Vis maleværktøjs_markør"
+msgstr "Vis markør for male_værktøjer"
 
 #: ../app/dialogs/preferences-dialog.c:2007
-#, fuzzy
 msgid "Pointer _mode:"
-msgstr "Tegne_måde"
+msgstr "Markør_tilstand:"
 
 # -udseende dækker
 #: ../app/dialogs/preferences-dialog.c:2010
-#, fuzzy
 msgid "Pointer re_ndering:"
 msgstr "Markør_udseende:"
 
@@ -7684,9 +7641,8 @@ msgid "Display"
 msgstr "Fremvisning"
 
 #: ../app/dialogs/preferences-dialog.c:2188
-#, fuzzy
 msgid "_Check style:"
-msgstr "_Endestil:"
+msgstr "Tern_stil:"
 
 # "check" betyder "tern" her
 #: ../app/dialogs/preferences-dialog.c:2191
@@ -7694,8 +7650,8 @@ msgid "Check _size:"
 msgstr "Tern_størrelse:"
 
 #: ../app/dialogs/preferences-dialog.c:2194
-msgid "Get Monitor Resolution"
-msgstr "Skaf skærmopløsning"
+msgid "Monitor Resolution"
+msgstr "Skærmopløsning"
 
 #: ../app/dialogs/preferences-dialog.c:2198
 #: ../app/widgets/gimpcursorview.c:123 ../app/widgets/gimpgrideditor.c:261
@@ -7705,287 +7661,275 @@ msgstr "Billedpunkter"
 
 #: ../app/dialogs/preferences-dialog.c:2220
 #: ../app/widgets/gimpimagepropview.c:460
-#, fuzzy
 msgid "ppi"
-msgstr "dpi"
+msgstr "ppi"
 
 #: ../app/dialogs/preferences-dialog.c:2236
 #, fuzzy, c-format
-msgid "From _windowing system (currently %d × %d ppi)"
-msgstr "Hent opløsning fra _vinduessystem (i øjeblikket %dx%d dpi)"
+msgid "_Detect automatically (currently %d × %d ppi)"
+msgstr "Fra _vinduessystem (i øjeblikket %dx%d ppi)"
 
-#: ../app/dialogs/preferences-dialog.c:2257
-msgid "_Manually"
+#: ../app/dialogs/preferences-dialog.c:2256
+#, fuzzy
+msgid "_Enter manually"
 msgstr "_Manuelt"
 
 # dette er bydemåde
-#: ../app/dialogs/preferences-dialog.c:2272
+#: ../app/dialogs/preferences-dialog.c:2271
 msgid "C_alibrate..."
 msgstr "_Kalibrér..."
 
-#: ../app/dialogs/preferences-dialog.c:2294
+#: ../app/dialogs/preferences-dialog.c:2293
 msgid "Color Management"
 msgstr "Farvestyring"
 
-#: ../app/dialogs/preferences-dialog.c:2314
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:2313
 msgid "_RGB profile:"
 msgstr "_RGB-profil:"
 
-#: ../app/dialogs/preferences-dialog.c:2315
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:2314
 msgid "Select RGB Color Profile"
 msgstr "Vælg RGB-farveprofil"
 
-#: ../app/dialogs/preferences-dialog.c:2316
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:2315
 msgid "_CMYK profile:"
 msgstr "_CMYK-profil:"
 
-#: ../app/dialogs/preferences-dialog.c:2317
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:2316
 msgid "Select CMYK Color Profile"
 msgstr "Vælg CMYK-farveprofil"
 
-#: ../app/dialogs/preferences-dialog.c:2318
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:2317
 msgid "_Monitor profile:"
 msgstr "_Skærmprofil:"
 
-#: ../app/dialogs/preferences-dialog.c:2319
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:2318
 msgid "Select Monitor Color Profile"
 msgstr "Vælg skærmfarveprofil"
 
-#: ../app/dialogs/preferences-dialog.c:2320
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:2319
 msgid "_Print simulation profile:"
-msgstr "_Printerprofil:"
+msgstr "Profil til _udskriftssimulering:"
 
-#: ../app/dialogs/preferences-dialog.c:2321
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:2320
 msgid "Select Printer Color Profile"
 msgstr "Vælg printerfarveprofil"
 
-#: ../app/dialogs/preferences-dialog.c:2330
+#: ../app/dialogs/preferences-dialog.c:2329
 msgid "_Mode of operation:"
-msgstr "_Tilstand:"
+msgstr "_Arbejdstilstand:"
 
-#: ../app/dialogs/preferences-dialog.c:2356
+#: ../app/dialogs/preferences-dialog.c:2355
 msgid "_Try to obtain the monitor profile from the X server"
-msgstr ""
+msgstr "_Forsøg at skaffe skærmprofil fra X-serveren"
 
-# FIXME: rigtigt?
-#: ../app/dialogs/preferences-dialog.c:2367
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:2366
 msgid "_Display rendering intent:"
-msgstr "Formål med _skærmfremvisning:"
+msgstr "Farvetilpasning for _skærm:"
 
-#: ../app/dialogs/preferences-dialog.c:2375
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:2374
 msgid "_Softproof rendering intent:"
-msgstr "Formål med _simuleringsfremvisning:"
+msgstr "Farvetilpasning for _udskriftssimulering:"
 
-#: ../app/dialogs/preferences-dialog.c:2385
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:2384
 msgid "File Open behaviour:"
-msgstr "Filåbnings_vindue"
+msgstr "Opførsel ved filåbning:"
 
-#: ../app/dialogs/preferences-dialog.c:2395
+#: ../app/dialogs/preferences-dialog.c:2394
 msgid "Input Devices"
 msgstr "Inputenheder"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2405
+#: ../app/dialogs/preferences-dialog.c:2404
 msgid "Extended Input Devices"
 msgstr "Udvidede inputenheder"
 
-#: ../app/dialogs/preferences-dialog.c:2409
+#: ../app/dialogs/preferences-dialog.c:2408
 msgid "Configure E_xtended Input Devices..."
 msgstr "Konfigurér _udvidede inputenheder..."
 
-#: ../app/dialogs/preferences-dialog.c:2416
+#: ../app/dialogs/preferences-dialog.c:2415
 msgid "_Save input device settings on exit"
 msgstr "_Gem enhedsindstilinger ved afslutning"
 
-#: ../app/dialogs/preferences-dialog.c:2420
+#: ../app/dialogs/preferences-dialog.c:2419
 msgid "Save Input Device Settings _Now"
 msgstr "Gem enhedsindstillinger _nu"
 
-#: ../app/dialogs/preferences-dialog.c:2427
+#: ../app/dialogs/preferences-dialog.c:2426
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_Nulstil gemte enhedsindstillinger til standardværdier"
 
-#: ../app/dialogs/preferences-dialog.c:2442
+#: ../app/dialogs/preferences-dialog.c:2441
 msgid "Additional Input Controllers"
 msgstr "Yderligere inputcontrollere"
 
-#: ../app/dialogs/preferences-dialog.c:2445
+#: ../app/dialogs/preferences-dialog.c:2444
 msgid "Input Controllers"
 msgstr "Inputcontrollere"
 
-#: ../app/dialogs/preferences-dialog.c:2461
+#: ../app/dialogs/preferences-dialog.c:2460
 msgid "Window Management"
 msgstr "Vindueshåndtering"
 
-#: ../app/dialogs/preferences-dialog.c:2470
+#: ../app/dialogs/preferences-dialog.c:2469
 msgid "Window Manager Hints"
 msgstr "Hint til vindueshåndtering"
 
-#: ../app/dialogs/preferences-dialog.c:2476
+#: ../app/dialogs/preferences-dialog.c:2475
 msgid "Hint for the _toolbox:"
 msgstr "Hint til _værktøjskassen:"
 
-#: ../app/dialogs/preferences-dialog.c:2480
+#: ../app/dialogs/preferences-dialog.c:2479
 msgid "Hint for other _docks:"
 msgstr "Hint til andre _dokke:"
 
-#: ../app/dialogs/preferences-dialog.c:2485
+#: ../app/dialogs/preferences-dialog.c:2484
 msgid "Toolbox and other docks are transient to the active image window"
 msgstr "Værktøjskasse og andre dokke er underordnede det aktive billedvindue"
 
-#: ../app/dialogs/preferences-dialog.c:2490
+#: ../app/dialogs/preferences-dialog.c:2489
 msgid "Focus"
 msgstr "Fokus"
 
-#: ../app/dialogs/preferences-dialog.c:2494
+#: ../app/dialogs/preferences-dialog.c:2493
 msgid "Activate the _focused image"
 msgstr "Aktivér det _fokuserede billede"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2498
+#: ../app/dialogs/preferences-dialog.c:2497
 msgid "Window Positions"
 msgstr "Vinduesplaceringer"
 
-#: ../app/dialogs/preferences-dialog.c:2501
+#: ../app/dialogs/preferences-dialog.c:2500
 msgid "_Save window positions on exit"
 msgstr "_Gem vinduesplaceringer ved afslutning"
 
-#: ../app/dialogs/preferences-dialog.c:2505
+#: ../app/dialogs/preferences-dialog.c:2504
 msgid "Save Window Positions _Now"
 msgstr "Gem vinduesplaceringer _nu"
 
-#: ../app/dialogs/preferences-dialog.c:2512
+#: ../app/dialogs/preferences-dialog.c:2511
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Nulstil gemte vinduesplaceringer til standardværdier"
 
-#: ../app/dialogs/preferences-dialog.c:2527
+#: ../app/dialogs/preferences-dialog.c:2526
 msgid "Folders"
 msgstr "Mapper"
 
-#: ../app/dialogs/preferences-dialog.c:2547
+#: ../app/dialogs/preferences-dialog.c:2546
 msgid "Temporary folder:"
 msgstr "Midlertidig mappe:"
 
-#: ../app/dialogs/preferences-dialog.c:2548
+#: ../app/dialogs/preferences-dialog.c:2547
 msgid "Select Folder for Temporary Files"
 msgstr "Vælg mappe til midlertidige filer"
 
-#: ../app/dialogs/preferences-dialog.c:2552
+#: ../app/dialogs/preferences-dialog.c:2551
 msgid "Swap folder:"
-msgstr "Reservehukommelsesmappe:"
+msgstr "Swap-mappe:"
 
-#: ../app/dialogs/preferences-dialog.c:2553
+#: ../app/dialogs/preferences-dialog.c:2552
 msgid "Select Swap Folder"
-msgstr "Vælg mappe til reservehukommelse"
+msgstr "Vælg mappe til swap"
 
-#: ../app/dialogs/preferences-dialog.c:2588
+#: ../app/dialogs/preferences-dialog.c:2587
 msgid "Brush Folders"
 msgstr "Penselmapper"
 
-#: ../app/dialogs/preferences-dialog.c:2590
+#: ../app/dialogs/preferences-dialog.c:2589
 msgid "Select Brush Folders"
 msgstr "Vælg mapper til pensler"
 
-#: ../app/dialogs/preferences-dialog.c:2592
+#: ../app/dialogs/preferences-dialog.c:2591
 msgid "Pattern Folders"
 msgstr "Mønstermapper"
 
-#: ../app/dialogs/preferences-dialog.c:2594
+#: ../app/dialogs/preferences-dialog.c:2593
 msgid "Select Pattern Folders"
 msgstr "Vælg mapper til mønstre"
 
-#: ../app/dialogs/preferences-dialog.c:2596
+#: ../app/dialogs/preferences-dialog.c:2595
 msgid "Palette Folders"
 msgstr "Paletmapper"
 
-#: ../app/dialogs/preferences-dialog.c:2598
+#: ../app/dialogs/preferences-dialog.c:2597
 msgid "Select Palette Folders"
 msgstr "Vælg mapper til paletter"
 
-#: ../app/dialogs/preferences-dialog.c:2600
+#: ../app/dialogs/preferences-dialog.c:2599
 msgid "Gradient Folders"
 msgstr "Farveovergangesmapper"
 
-#: ../app/dialogs/preferences-dialog.c:2602
+#: ../app/dialogs/preferences-dialog.c:2601
 msgid "Select Gradient Folders"
 msgstr "Vælg mapper til farveovergange"
 
-#: ../app/dialogs/preferences-dialog.c:2604
+#: ../app/dialogs/preferences-dialog.c:2603
 msgid "Font Folders"
 msgstr "Skrifttypemapper"
 
-#: ../app/dialogs/preferences-dialog.c:2606
+#: ../app/dialogs/preferences-dialog.c:2605
 msgid "Select Font Folders"
 msgstr "Vælg skrifttypemapper"
 
-#: ../app/dialogs/preferences-dialog.c:2608
+#: ../app/dialogs/preferences-dialog.c:2607
 msgid "Plug-In Folders"
 msgstr "Udvidelsesmodulmapper"
 
-#: ../app/dialogs/preferences-dialog.c:2610
+#: ../app/dialogs/preferences-dialog.c:2609
 msgid "Select Plug-In Folders"
 msgstr "Vælg mapper til udvidelsesmoduler"
 
-#: ../app/dialogs/preferences-dialog.c:2612
+#: ../app/dialogs/preferences-dialog.c:2611
 msgid "Scripts"
 msgstr "Programmer"
 
-#: ../app/dialogs/preferences-dialog.c:2612
+#: ../app/dialogs/preferences-dialog.c:2611
 msgid "Script-Fu Folders"
 msgstr "Script-Fu-mapper"
 
-#: ../app/dialogs/preferences-dialog.c:2614
+#: ../app/dialogs/preferences-dialog.c:2613
 msgid "Select Script-Fu Folders"
 msgstr "Vælg Script-Fu-mapper"
 
-#: ../app/dialogs/preferences-dialog.c:2616
+#: ../app/dialogs/preferences-dialog.c:2615
 msgid "Module Folders"
 msgstr "Programudvidelsesmapper"
 
-#: ../app/dialogs/preferences-dialog.c:2618
+#: ../app/dialogs/preferences-dialog.c:2617
 msgid "Select Module Folders"
 msgstr "Vælg mapper til programudvidelser"
 
-#: ../app/dialogs/preferences-dialog.c:2620
+#: ../app/dialogs/preferences-dialog.c:2619
 msgid "Interpreters"
 msgstr "Fortolkere"
 
-#: ../app/dialogs/preferences-dialog.c:2620
+#: ../app/dialogs/preferences-dialog.c:2619
 msgid "Interpreter Folders"
 msgstr "Fortolkermapper"
 
-#: ../app/dialogs/preferences-dialog.c:2622
+#: ../app/dialogs/preferences-dialog.c:2621
 msgid "Select Interpreter Folders"
 msgstr "Vælg mapper til fortolkere"
 
-#: ../app/dialogs/preferences-dialog.c:2624
+#: ../app/dialogs/preferences-dialog.c:2623
 msgid "Environment Folders"
 msgstr "Miljømapper"
 
-#: ../app/dialogs/preferences-dialog.c:2626
+#: ../app/dialogs/preferences-dialog.c:2625
 msgid "Select Environment Folders"
 msgstr "Vælg mapper til miljø"
 
-#: ../app/dialogs/preferences-dialog.c:2628
+#: ../app/dialogs/preferences-dialog.c:2627
 msgid "Themes"
 msgstr "Temaer"
 
-#: ../app/dialogs/preferences-dialog.c:2628
+#: ../app/dialogs/preferences-dialog.c:2627
 msgid "Theme Folders"
 msgstr "Temamapper"
 
-#: ../app/dialogs/preferences-dialog.c:2630
+#: ../app/dialogs/preferences-dialog.c:2629
 msgid "Select Theme Folders"
 msgstr "Vælg mapper til temaer"
 
@@ -8178,7 +8122,7 @@ msgid "Import Paths from SVG"
 msgstr "Importér bane fra SVG"
 
 #: ../app/dialogs/vectors-import-dialog.c:88
-#: ../app/widgets/gimpprofilechooserdialog.c:137
+#: ../app/widgets/gimpprofilechooserdialog.c:149
 msgid "All files (*.*)"
 msgstr "Alle filer (*.*)"
 
@@ -8271,31 +8215,38 @@ msgstr "Gem _ikke"
 msgid "Save the changes to image '%s' before closing?"
 msgstr "Gem ændringerne i billedet \"%s\" før lukning?"
 
-#: ../app/display/gimpdisplayshell-close.c:231
+#: ../app/display/gimpdisplayshell-close.c:232
+#, fuzzy, c-format
+msgid "If you don't save the image, changes from the last hour will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d hours will be lost."
+msgstr[0] ""
+"Hvis du ikke gemmer billedet, vil ændringer fra de sidste %s gå tabt."
+msgstr[1] ""
+"Hvis du ikke gemmer billedet, vil ændringer fra de sidste %s gå tabt."
+
+#: ../app/display/gimpdisplayshell-close.c:242
 #, fuzzy, c-format
 msgid ""
-"If you don't save the image, changes from the last %s and %s will be lost."
-msgstr ""
+"If you don't save the image, changes from the last hour and %d minute will "
+"be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last hour and %d minutes will "
+"be lost."
+msgstr[0] ""
+"Hvis du ikke gemmer billedet, vil ændringer fra de sidste %s og %s gå tabt."
+msgstr[1] ""
 "Hvis du ikke gemmer billedet, vil ændringer fra de sidste %s og %s gå tabt."
 
-#: ../app/display/gimpdisplayshell-close.c:237
+#: ../app/display/gimpdisplayshell-close.c:253
 #, fuzzy, c-format
-msgid "If you don't save the image, changes from the last %s will be lost."
-msgstr "Hvis du ikke gemmer billedet, vil ændringer fra de sidste %s gå tabt."
-
-#: ../app/display/gimpdisplayshell-close.c:299
-#, c-format
-msgid "%d hour"
-msgid_plural "%d hours"
+msgid "If you don't save the image, changes from the last minute will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] ""
+"Hvis du ikke gemmer billedet, vil ændringer fra de sidste %s gå tabt."
 msgstr[1] ""
-
-#: ../app/display/gimpdisplayshell-close.c:305
-#, fuzzy, c-format
-msgid "minute"
-msgid_plural "%d minutes"
-msgstr[0] "minut"
-msgstr[1] "minut"
+"Hvis du ikke gemmer billedet, vil ændringer fra de sidste %s gå tabt."
 
 #: ../app/display/gimpdisplayshell-dnd.c:200
 #: ../app/display/gimpdisplayshell-dnd.c:500
@@ -8403,20 +8354,25 @@ msgstr "Udvidelsesmodul kunne ikke åbne billede"
 msgid "Image doesn't contain any layers"
 msgstr "Billede indeholder ikke nogen synlige lag"
 
+#: ../app/file/file-open.c:495
+#, c-format
+msgid "Opening '%s' failed: %s"
+msgstr "Åbning af \"%s\" mislykkedes: %s"
+
 #: ../app/file/file-save.c:193
 msgid "Plug-In could not save image"
 msgstr "Udvidelsesmodul kunne ikke gemme billede"
 
-#: ../app/file/file-utils.c:124
+#: ../app/file/file-utils.c:127
 msgid "Invalid character sequence in URI"
 msgstr "Ugyldig tegnsekvens i URI"
 
-#: ../app/file/file-utils.c:141
+#: ../app/file/file-utils.c:144
 #, c-format
 msgid "URI scheme '%s:' is not supported"
 msgstr "URI-typen \"%s:\" er ikke understøttet"
 
-#: ../app/file/file-utils.c:327
+#: ../app/file/file-utils.c:358
 msgid "Unknown file type"
 msgstr "Ukendt filtype"
 
@@ -8456,7 +8412,7 @@ msgstr "Konturændring"
 
 #: ../app/paint/gimpdodgeburn.c:87
 msgid "Dodge/Burn"
-msgstr "Lysne/brænd"
+msgstr "Lysne/brænde"
 
 #: ../app/paint/gimperaser.c:62 ../app/tools/gimperasertool.c:66
 msgid "Eraser"
@@ -8464,11 +8420,11 @@ msgstr "Viskelæder"
 
 #: ../app/paint/gimpheal.c:86 ../app/tools/gimphealtool.c:57
 msgid "Heal"
-msgstr "Heal"
+msgstr "Hel"
 
 #: ../app/paint/gimpheal.c:125
 msgid "Healing does not operate on indexed layers."
-msgstr "Healing virker ikke med indekserede lag."
+msgstr "Heling virker ikke med indekserede lag."
 
 #: ../app/paint/gimppaintbrush.c:63 ../app/tools/gimppaintbrushtool.c:51
 msgid "Paintbrush"
@@ -8478,16 +8434,14 @@ msgstr "Malerpensel"
 msgid "Pencil"
 msgstr "Blyant"
 
-#: ../app/paint/gimpperspectiveclone.c:95 ../app/paint/paint-enums.c:52
+#: ../app/paint/gimpperspectiveclone.c:96 ../app/paint/paint-enums.c:52
 #: ../app/tools/gimpperspectiveclonetool.c:120
-#, fuzzy
 msgid "Perspective Clone"
-msgstr "Perspektiveringsværktøj"
+msgstr "Perspektivkloning"
 
-#: ../app/paint/gimpperspectiveclone.c:163
-#, fuzzy
+#: ../app/paint/gimpperspectiveclone.c:161
 msgid "Perspective Clone does not operate on indexed layers."
-msgstr "Posterisering virker ikke på indekserede lag."
+msgstr "Perspektivkloning virker ikke på indekserede lag."
 
 #: ../app/paint/gimpsmudge.c:78 ../app/tools/gimpsmudgetool.c:54
 msgid "Smudge"
@@ -8495,12 +8449,11 @@ msgstr "Udtvær"
 
 #: ../app/paint/gimpsourcecore.c:227
 msgid "Set a source image first."
-msgstr ""
+msgstr "Vælg et kildebillede først."
 
 #: ../app/paint/paint-enums.c:51
-#, fuzzy
 msgid "Modify Perspective Plane"
-msgstr "Perspektiveringsværktøj"
+msgstr "Ændr perspektivplan"
 
 #: ../app/paint/paint-enums.c:82
 msgid "Aligned"
@@ -8511,7 +8464,6 @@ msgid "Registered"
 msgstr "Registreret"
 
 #: ../app/paint/paint-enums.c:84
-#, fuzzy
 msgid "Fixed"
 msgstr "Fast"
 
@@ -8525,9 +8477,8 @@ msgid "Sharpen"
 msgstr "Skærp"
 
 #: ../app/pdb/channel_cmds.c:175
-#, fuzzy
 msgid "Combine Masks"
-msgstr "_Kombinering"
+msgstr "Kombinér masker"
 
 #: ../app/pdb/color_cmds.c:102 ../app/tools/gimpbrightnesscontrasttool.c:100
 msgid "Brightness-Contrast"
@@ -8585,7 +8536,7 @@ msgstr "Transformerer..."
 msgid "2D Transforming"
 msgstr "Transformerer..."
 
-#: ../app/pdb/edit_cmds.c:634 ../app/tools/gimpblendtool.c:225
+#: ../app/pdb/edit_cmds.c:634 ../app/tools/gimpblendtool.c:250
 #, fuzzy
 msgid "Blending"
 msgstr "Blander..."
@@ -8614,6 +8565,8 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
+"Proceduren \"%s\" returnerede en forkert værditype for returværdien \"%s"
+"\" (nr. %d). Forventede %s, modtog %s."
 
 #: ../app/pdb/gimpprocedure.c:523
 #, c-format
@@ -8621,6 +8574,8 @@ msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
 "d). Expected %s, got %s."
 msgstr ""
+"Proceduren \"%s\" blev kaldt med en forkert værditype for parameteren \"%s"
+"\" (nr. %d). Forventede %s, modtog %s."
 
 #: ../app/pdb/gimpprocedure.c:554
 #, c-format
@@ -8628,6 +8583,9 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
+"Proceduren \"%s\" returnerede et ugyldigt id for parameteren \"%s\". "
+"Formodentlig forsøger et udvidelsesmodul at arbejde på et lag som ikke "
+"eksisterer længere."
 
 #: ../app/pdb/gimpprocedure.c:565
 #, c-format
@@ -8635,6 +8593,9 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
+"Proceduren \"%s\" er blevet kaldt med et ugyldigt id for parameteren \"%s\". "
+"Formodentlig forsøger et udvidelsesmodul at arbejde på et lag som ikke "
+"eksisterer længere."
 
 #: ../app/pdb/gimpprocedure.c:580
 #, c-format
@@ -8642,6 +8603,9 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
+"Proceduren \"%s\" returnerede et ugyldigt id for parameteren \"%s\". "
+"Formodentlig forsøger et udvidelsesmodul at arbejde på et billede som ikke "
+"eksisterer længere."
 
 #: ../app/pdb/gimpprocedure.c:591
 #, c-format
@@ -8649,6 +8613,9 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
+"Proceduren \"%s\" er blevet kaldt med et ugyldigt id for parameteren \"%s\". "
+"Formodentlig forsøger et udvidelsesmodul at arbejde på et billede som ikke "
+"eksisterer længere."
 
 #: ../app/pdb/gimpprocedure.c:605
 #, c-format
@@ -8656,6 +8623,8 @@ msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
+"Proceduren \"%s\" returnerede \"%s\" som returværdien \"%s\" (nr. %d, typen %"
+"s). Denne værdi er uden for det gyldige interval."
 
 #: ../app/pdb/gimpprocedure.c:617
 #, c-format
@@ -8663,12 +8632,15 @@ msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
 "s). This value is out of range."
 msgstr ""
+"Proceduren \"%s\" er blevet kaldt med værdien \"%s\" for parameteren \"%s"
+"\" (nr. %d, typen %s). Denne værdi er uden for det gyldige interval."
 
 #: ../app/pdb/image_cmds.c:2071
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
-"Billedopløsningen er uden for grænserne, bruger standardopløsningen i stedet."
+"Billedopløsningen er uden for det gyldige interval, bruger "
+"standardopløsningen i stedet."
 
 #: ../app/pdb/selection_tools_cmds.c:210 ../app/tools/gimpfreeselecttool.c:95
 msgid "Free Select"
@@ -8694,12 +8666,12 @@ msgstr "Ugyldig fortolker anvendt i fortolkerfilen %s: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Ugyldig binær formatstreng i fortolkerfilen %s"
 
-#: ../app/plug-in/gimpplugin.c:431 ../app/plug-in/gimpplugin.c:470
+#: ../app/plug-in/gimpplugin.c:437 ../app/plug-in/gimpplugin.c:476
 #, c-format
 msgid "Terminating plug-in: '%s'\n"
 msgstr "Terminerer udvidelsesmodul: \"%s\"\n"
 
-#: ../app/plug-in/gimpplugin.c:614
+#: ../app/plug-in/gimpplugin.c:620
 #, fuzzy, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -8766,21 +8738,21 @@ msgstr "Starter programudvidelse: '%s'\n"
 #: ../app/plug-in/plug-in-icc-profile.c:103
 #: ../app/plug-in/plug-in-icc-profile.c:169
 #: ../app/plug-in/plug-in-icc-profile.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "Error running '%s'"
-msgstr "Fejl ved skrivning i '%s': %s"
+msgstr "Fejl ved kørsel af '%s'"
 
 #: ../app/plug-in/plug-in-icc-profile.c:126
 #: ../app/plug-in/plug-in-icc-profile.c:179
 #: ../app/plug-in/plug-in-icc-profile.c:234
 #, c-format
 msgid "Plug-In missing (%s)"
-msgstr ""
+msgstr "Modul mangler (%s)"
 
 #: ../app/plug-in/plug-in-rc.c:206
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr "Springer over \"%s\": forkert Gimp-protokolversion."
+msgstr "Springer over \"%s\": forkert version af Gimp-protokollen."
 
 #: ../app/plug-in/plug-in-rc.c:479
 #, c-format
@@ -8909,76 +8881,72 @@ msgid "Pressure:"
 msgstr "Tryk:"
 
 #: ../app/tools/gimpaligntool.c:118 ../app/tools/gimpaligntool.c:579
-#, fuzzy
 msgid "Align"
-msgstr "Justeret"
+msgstr "Justér"
 
 #: ../app/tools/gimpaligntool.c:119
 msgid "Alignment Tool: Align or arrange layers and other objects"
-msgstr ""
+msgstr "Justeringsværktøjet: Justér eller arrangér lag og andre objekter"
 
 #: ../app/tools/gimpaligntool.c:120
-#, fuzzy
 msgid "_Align"
-msgstr "Justeret"
+msgstr "_Justér"
 
 #: ../app/tools/gimpaligntool.c:591
-#, fuzzy
 msgid "Relative to:"
-msgstr "Hæv værktøj"
+msgstr "I forhold til:"
 
 #: ../app/tools/gimpaligntool.c:609
 msgid "Align left edge of target"
-msgstr ""
+msgstr "Justér venstre kant af mål"
 
 #: ../app/tools/gimpaligntool.c:615
 msgid "Align center of target"
-msgstr ""
+msgstr "Justér centrum af mål"
 
 #: ../app/tools/gimpaligntool.c:621
 msgid "Align right edge of target"
-msgstr ""
+msgstr "Justér højre kant af mål"
 
 #: ../app/tools/gimpaligntool.c:631
 msgid "Align top edge of target"
-msgstr ""
+msgstr "Justér øverste kant af mål"
 
 #: ../app/tools/gimpaligntool.c:637
 msgid "Align middle of target"
-msgstr ""
+msgstr "Justér midte af mål"
 
 #: ../app/tools/gimpaligntool.c:643
 msgid "Align bottom of target"
-msgstr ""
+msgstr "Justér nederste kant af mål"
 
 #: ../app/tools/gimpaligntool.c:647
-#, fuzzy
 msgid "Distribute"
-msgstr "_Forvrængning"
+msgstr "Fordél"
 
 #: ../app/tools/gimpaligntool.c:661
 msgid "Distribute left edges of targets"
-msgstr ""
+msgstr "Fordél venstre kanter af mål"
 
 #: ../app/tools/gimpaligntool.c:668
 msgid "Distribute horizontal centers of targets"
-msgstr ""
+msgstr "Fordél vandrette centre af mål"
 
 #: ../app/tools/gimpaligntool.c:675
 msgid "Distribute right edges of targets"
-msgstr ""
+msgstr "Fordél højre kanter af mål"
 
 #: ../app/tools/gimpaligntool.c:685
 msgid "Distribute top edges of targets"
-msgstr ""
+msgstr "Fordél øverste kanter af mål"
 
 #: ../app/tools/gimpaligntool.c:692
 msgid "Distribute vertical centers of targets"
-msgstr ""
+msgstr "Fordél lodrette centre af mål"
 
 #: ../app/tools/gimpaligntool.c:698
 msgid "Distribute bottoms of targets"
-msgstr ""
+msgstr "Fordél nederste kanter af mål"
 
 #: ../app/tools/gimpaligntool.c:706 ../app/tools/gimpblendoptions.c:213
 msgid "Offset:"
@@ -8997,7 +8965,6 @@ msgid "Adaptive supersampling"
 msgstr "Adaptiv supersampling"
 
 #: ../app/tools/gimpblendoptions.c:254
-#, fuzzy
 msgid "Max depth:"
 msgstr "Maks. dybde:"
 
@@ -9007,20 +8974,25 @@ msgstr "Maks. dybde:"
 msgid "Threshold:"
 msgstr "Tærskel:"
 
-#: ../app/tools/gimpblendtool.c:107
+#: ../app/tools/gimpblendtool.c:112
 #, fuzzy
 msgid "Blend Tool: Fill selected area with a color gradient"
 msgstr "Udfyld med en farveovergang"
 
-#: ../app/tools/gimpblendtool.c:108
+#: ../app/tools/gimpblendtool.c:113
 msgid "Blen_d"
 msgstr "_Blanding"
 
-#: ../app/tools/gimpblendtool.c:161
+#: ../app/tools/gimpblendtool.c:167
 msgid "Blend does not operate on indexed layers."
 msgstr "Blanding virker ikke på indekserede lag."
 
-#: ../app/tools/gimpblendtool.c:378
+#: ../app/tools/gimpblendtool.c:408 ../app/tools/gimppainttool.c:592
+#, fuzzy, c-format
+msgid "%s for constrained angles"
+msgstr "Mål afstande og vinkler"
+
+#: ../app/tools/gimpblendtool.c:411
 msgid "Blend: "
 msgstr "Blanding: "
 
@@ -9110,9 +9082,8 @@ msgid "Bucket Fill"
 msgstr "Spandudfyldning"
 
 #: ../app/tools/gimpbucketfilltool.c:89
-#, fuzzy
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
-msgstr "Udfyld med en farve eller et mønster"
+msgstr "Spandudfyldningsværktøj: Udfyld med en farve eller et mønster"
 
 #: ../app/tools/gimpbucketfilltool.c:90
 msgid "_Bucket Fill"
@@ -9124,7 +9095,7 @@ msgstr "Markér efter farve"
 
 #: ../app/tools/gimpbycolorselecttool.c:66
 msgid "Select by Color Tool: Select regions with similar colors"
-msgstr ""
+msgstr "Markér efter farve-værktøj: Vælg områder med ens farver"
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "_By Color Select"
@@ -9133,25 +9104,24 @@ msgstr "Markering efter _farve"
 #: ../app/tools/gimpclonetool.c:62
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
 msgstr ""
+"Kloningsværktøj: Kopiér selektivt fra et billede eller mønster vha. en pensel"
 
 #: ../app/tools/gimpclonetool.c:63
 msgid "_Clone"
 msgstr "_Klon"
 
 #: ../app/tools/gimpclonetool.c:86 ../app/tools/gimpclonetool.c:89
-#, fuzzy
 msgid "Click to clone"
-msgstr "Klik for at åbne banen."
+msgstr "Klik for at klone"
 
 #: ../app/tools/gimpclonetool.c:87 ../app/tools/gimpclonetool.c:91
 #, c-format
 msgid "%s to set a new clone source"
-msgstr ""
+msgstr "%s for at sætte en ny klonkilde"
 
 #: ../app/tools/gimpclonetool.c:90
-#, fuzzy
 msgid "Click to set a new clone source"
-msgstr "Klik for at oprette en ny komponent til banen."
+msgstr "Klik for at sætte en ny klonkilde"
 
 #: ../app/tools/gimpclonetool.c:109
 #: ../app/tools/gimpperspectiveclonetool.c:890
@@ -9160,13 +9130,12 @@ msgstr "Kilde"
 
 #: ../app/tools/gimpclonetool.c:128 ../app/tools/gimphealtool.c:115
 #: ../app/tools/gimpperspectiveclonetool.c:909
-#, fuzzy
 msgid "Alignment:"
-msgstr "Justering"
+msgstr "Justering:"
 
 #: ../app/tools/gimpcolorbalancetool.c:95
 msgid "Color Balance Tool: Adjust color distribution"
-msgstr ""
+msgstr "Farvebalanceværktøj: Justér farvefordeling"
 
 #: ../app/tools/gimpcolorbalancetool.c:96
 msgid "Color _Balance..."
@@ -9177,14 +9146,12 @@ msgid "Adjust Color Balance"
 msgstr "Justér farvebalance"
 
 #: ../app/tools/gimpcolorbalancetool.c:159
-#, fuzzy
 msgid "Color Balance operates only on RGB color layers."
 msgstr "Farvebalance virker kun på lag med RGB-farver."
 
 #: ../app/tools/gimpcolorbalancetool.c:242
-#, fuzzy
 msgid "Select Range to Adjust"
-msgstr "Vælg interval der skal ændres"
+msgstr "Vælg interval der skal justeres"
 
 #: ../app/tools/gimpcolorbalancetool.c:249 ../app/tools/gimplevelstool.c:176
 msgid "Adjust Color Levels"
@@ -9206,7 +9173,6 @@ msgid "Yellow"
 msgstr "Gul"
 
 #: ../app/tools/gimpcolorbalancetool.c:289
-#, fuzzy
 msgid "R_eset Range"
 msgstr "N_ulstil interval"
 
@@ -9215,9 +9181,8 @@ msgid "Preserve _luminosity"
 msgstr "Bevar _lysintensitet"
 
 #: ../app/tools/gimpcolorizetool.c:93
-#, fuzzy
 msgid "Colorize Tool: Colorize the image"
-msgstr "Kulørisér billedet"
+msgstr "Kulørisér-værktøj: Kulørisér billedet"
 
 #: ../app/tools/gimpcolorizetool.c:94
 msgid "Colori_ze..."
@@ -9273,85 +9238,100 @@ msgstr "Vælgetilstand  %s"
 msgid "Use info window  (%s)"
 msgstr "Benyt infovindue"
 
-#: ../app/tools/gimpcolorpickertool.c:99
+#: ../app/tools/gimpcolorpickertool.c:100
 msgid "Color Picker"
 msgstr "Farveopsnapper"
 
-#: ../app/tools/gimpcolorpickertool.c:100
+#: ../app/tools/gimpcolorpickertool.c:101
 #, fuzzy
 msgid "Color Picker Tool: Set colors from image pixels"
 msgstr "Vælg farver fra billedet"
 
-#: ../app/tools/gimpcolorpickertool.c:101
+#: ../app/tools/gimpcolorpickertool.c:102
 msgid "C_olor Picker"
 msgstr "_Farveopsnapper"
 
+#: ../app/tools/gimpcolorpickertool.c:247
+#, fuzzy
+msgid "Click in any image to view its color"
+msgstr "Skift gitterforgrundsfarve"
+
+#: ../app/tools/gimpcolorpickertool.c:254 ../app/tools/gimppainttool.c:495
+#, fuzzy
+msgid "Click in any image to pick the foreground color"
+msgstr "Skift gitterforgrundsfarve"
+
+#: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:501
+#, fuzzy
+msgid "Click in any image to pick the background color"
+msgstr "Skift gitterbaggrundsfarve"
+
+#: ../app/tools/gimpcolorpickertool.c:270
+#, fuzzy
+msgid "Click in any image to add the color to the palette"
+msgstr "Skift gitterforgrundsfarve"
+
 # 'information' er overflødigt
 #. tool->display->shell
-#: ../app/tools/gimpcolorpickertool.c:271
+#: ../app/tools/gimpcolorpickertool.c:323
 msgid "Color Picker Information"
 msgstr "Farveopsnapper"
 
-#: ../app/tools/gimpcolortool.c:252 ../app/tools/gimpcolortool.c:427
+#: ../app/tools/gimpcolortool.c:252 ../app/tools/gimpcolortool.c:428
 msgid "Move Sample Point: "
 msgstr "Flyt prøvningspunkt: "
 
-#: ../app/tools/gimpcolortool.c:421
+#: ../app/tools/gimpcolortool.c:422
 msgid "Cancel Sample Point"
 msgstr "Annullér prøvningspunkt"
 
-#: ../app/tools/gimpcolortool.c:428
+#: ../app/tools/gimpcolortool.c:429
 msgid "Add Sample Point: "
 msgstr "Tilføj prøvningspunkt: "
 
 #: ../app/tools/gimpconvolvetool.c:73
-#, fuzzy
 msgid "Blur / Sharpen"
-msgstr "Blødgør eller skærp"
+msgstr "Blødgør/skærp"
 
 #: ../app/tools/gimpconvolvetool.c:74
 msgid "Blur / Sharpen Tool: Selective blurring or unblurring using a brush"
-msgstr ""
+msgstr "Blødgør/skærp-værktøj: Blødgør eller skærp selektivt vha. en pensel"
 
 #: ../app/tools/gimpconvolvetool.c:75
-#, fuzzy
 msgid "Bl_ur / Sharpen"
-msgstr "Blødgør eller skærp"
+msgstr "Blø_dgør/skærp"
 
 #: ../app/tools/gimpconvolvetool.c:170
 msgid "Click to blur"
-msgstr ""
+msgstr "Klik for at blødgøre"
 
 #: ../app/tools/gimpconvolvetool.c:171
-#, fuzzy
 msgid "Click to blur the line"
-msgstr "Klik for at oprette miniature"
+msgstr "Klik for at blødgøre linjen"
 
 #: ../app/tools/gimpconvolvetool.c:172
-#, fuzzy, c-format
+#, c-format
 msgid "%s to sharpen"
-msgstr "Blødgør eller skærp"
+msgstr "%s for at skærpe"
 
 #: ../app/tools/gimpconvolvetool.c:176
-#, fuzzy
 msgid "Click to sharpen"
-msgstr "Blødgør eller skærp"
+msgstr "Klik for at skærpe"
 
 #: ../app/tools/gimpconvolvetool.c:177
-#, fuzzy
 msgid "Click to sharpen the line"
-msgstr "Klik for at oprette miniature"
+msgstr "Klik for at skærpe linjen"
 
 #: ../app/tools/gimpconvolvetool.c:178
 #, c-format
 msgid "%s to blur"
-msgstr ""
+msgstr "%s for at blødgøre"
 
 #. the type radio box
 #: ../app/tools/gimpconvolvetool.c:199
-#, fuzzy, c-format
+#, c-format
 msgid "Convolve Type  (%s)"
-msgstr "Konturændringstype  %s"
+msgstr "Konturændringstype (%s)"
 
 #: ../app/tools/gimpcropoptions.c:134
 msgid "Current layer only"
@@ -9363,22 +9343,19 @@ msgstr "Beskær"
 
 #: ../app/tools/gimpcroptool.c:100
 msgid "Crop Tool: Remove edge areas from image or layer"
-msgstr ""
+msgstr "Beskæringsværktøj: Fjern kantområder fra billede eller lag"
 
 #: ../app/tools/gimpcroptool.c:101
-#, fuzzy
 msgid "_Crop"
-msgstr "Beskær"
+msgstr "_Beskær"
 
 #: ../app/tools/gimpcroptool.c:213
-#, fuzzy
 msgid "Click or press enter to crop"
-msgstr "Klik for at slette dette anker."
+msgstr "Klik eller tryk på returtasten for at beskære"
 
 #: ../app/tools/gimpcurvestool.c:149
-#, fuzzy
 msgid "Curves Tool: Adjust color curves"
-msgstr "Justér farvekurver"
+msgstr "Kurveværktøj: Justér farvekurver"
 
 #: ../app/tools/gimpcurvestool.c:150
 msgid "_Curves..."
@@ -9405,25 +9382,22 @@ msgid "Save curves settings to file"
 msgstr "Gem kurveindstillinger i fil"
 
 #: ../app/tools/gimpcurvestool.c:258
-#, fuzzy
 msgid "Curves does not operate on indexed layers."
-msgstr "Invertering virker ikke på indekserede lag."
+msgstr "Kurver virker ikke på indekserede lag."
 
 #: ../app/tools/gimpcurvestool.c:362
-#, fuzzy
 msgid "Click to add a control point"
-msgstr "Klik for at vælge bane der skal redigeres."
+msgstr "Klik for at tilføje et kontrolpunkt"
 
 #: ../app/tools/gimpcurvestool.c:367
 msgid "Click to add control points to all channels"
-msgstr ""
+msgstr "Klik for at tilføje kontrolpunkter til alle kanaler"
 
 #: ../app/tools/gimpcurvestool.c:562 ../app/tools/gimplevelstool.c:371
 msgid "Cha_nnel:"
 msgstr "Ka_nal:"
 
 #: ../app/tools/gimpcurvestool.c:584 ../app/tools/gimplevelstool.c:393
-#, fuzzy
 msgid "R_eset Channel"
 msgstr "N_ulstil kanal"
 
@@ -9438,77 +9412,68 @@ msgid "Curve Type"
 msgstr "Kurvetype"
 
 #: ../app/tools/gimpcurvestool.c:760 ../app/tools/gimplevelstool.c:665
-#, fuzzy
 msgid "not a GIMP Levels file"
-msgstr "Ikke en almindelig fil"
+msgstr "ikke en kurvefil til Gimp'en"
 
 #: ../app/tools/gimpcurvestool.c:774 ../app/tools/gimplevelstool.c:704
-#, fuzzy
 msgid "parse error"
-msgstr "fatal fortolkningsfejl"
+msgstr "fortolkningsfejl"
 
 #: ../app/tools/gimpdodgeburntool.c:73
-#, fuzzy
 msgid "Dodge / Burn"
-msgstr "Blegning/sværtning"
+msgstr "Lysne/brænde"
 
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
-msgstr ""
+msgstr "Lysne-/brændeværktøj: Lysn eller svært selektivt vha. en pensel"
 
 #: ../app/tools/gimpdodgeburntool.c:75
-#, fuzzy
 msgid "Dod_ge / Burn"
-msgstr "Blegning/sværtning"
+msgstr "Lys_ne/brænde"
 
 #: ../app/tools/gimpdodgeburntool.c:173
-#, fuzzy
 msgid "Click to dodge"
-msgstr "Beskæres til billede"
+msgstr "Klik for at lysne"
 
 #: ../app/tools/gimpdodgeburntool.c:174
-#, fuzzy
 msgid "Click to dodge the line"
-msgstr "Klik for at åbne banen."
+msgstr "Klik for at lysne linjen"
 
-# det er pløkumuligt at oversætte dette korrekt - %s bliver til navnet på et værktøj, f.eks. "fri markering" eller "spandudfyldning"
 #: ../app/tools/gimpdodgeburntool.c:175
-#, fuzzy, c-format
+#, c-format
 msgid "%s to burn"
-msgstr "%s"
+msgstr "%s for at brænde"
 
 #: ../app/tools/gimpdodgeburntool.c:179
 msgid "Click to burn"
-msgstr ""
+msgstr "Klik for at brænde"
 
 #: ../app/tools/gimpdodgeburntool.c:180
-#, fuzzy
 msgid "Click to burn the line"
-msgstr "Klik for at oprette miniature"
+msgstr "Klik for at brænde linjen"
 
 #: ../app/tools/gimpdodgeburntool.c:181
 #, c-format
 msgid "%s to dodge"
-msgstr ""
+msgstr "%s for at lysne"
 
 #. the type (dodge or burn)
 #: ../app/tools/gimpdodgeburntool.c:202
-#, fuzzy, c-format
+#, c-format
 msgid "Type  (%s)"
-msgstr "Type  %s"
+msgstr "Type  (%s)"
 
-# her drejer det sig om hvilke farvetoner der er berørt
 #: ../app/tools/gimpdodgeburntool.c:214
 #: ../app/tools/gimpperspectiveclonetool.c:882
 msgid "Mode"
-msgstr "Påvirkede toner"
+msgstr "Tilstand"
 
 #: ../app/tools/gimpdodgeburntool.c:226
 msgid "Exposure:"
 msgstr "Virkningsgrad:"
 
 #: ../app/tools/gimpeditselectiontool.c:199
-#: ../app/tools/gimpeditselectiontool.c:1146
+#: ../app/tools/gimpeditselectiontool.c:1147
 msgid "Move Floating Selection"
 msgstr "Flyt flydende markering"
 
@@ -9522,44 +9487,39 @@ msgid "Ellipse Select"
 msgstr "Ellipsemarkering"
 
 #: ../app/tools/gimpellipseselecttool.c:73
-#, fuzzy
 msgid "Ellipse Select Tool: Select an elliptical region"
-msgstr "Markér elliptiske områder"
+msgstr "Ellipsemarkering: Markér et elliptisk område"
 
 #: ../app/tools/gimpellipseselecttool.c:74
 msgid "_Ellipse Select"
 msgstr "_Ellipsemarkering"
 
-# 'gennemsigtighed' er svært at putte ind, og sådan set også overflødigt
 #: ../app/tools/gimperasertool.c:67
-#, fuzzy
 msgid "Eraser Tool: Erase to background or transparency using a brush"
-msgstr "Slet så baggrunden dukker op"
+msgstr "Viskelæderværktøj: Slet så baggrunden dukker op vha. en pensel"
 
 #: ../app/tools/gimperasertool.c:68
 msgid "_Eraser"
 msgstr "_Viskelæder"
 
 #: ../app/tools/gimperasertool.c:97
-#, fuzzy
 msgid "Click to erase"
-msgstr "Farveslet"
+msgstr "Klik for at slette"
 
 #: ../app/tools/gimperasertool.c:98
-#, fuzzy
 msgid "Click to erase the line"
-msgstr "Klik for at oprette miniature"
+msgstr "Klik for at slette linjen"
 
 #: ../app/tools/gimperasertool.c:99
-#, fuzzy, c-format
+#, c-format
 msgid "%s to pick a background color"
-msgstr "Skift baggrundsfarve"
+msgstr "%s for at vælge en baggrundsfarve"
 
 #. the anti_erase toggle
 #: ../app/tools/gimperasertool.c:146
-#, fuzzy, c-format
+#, c-format
 msgid "Anti erase  (%s)"
-msgstr "Antislet  %s"
+msgstr "Antislet (%s)"
 
 #: ../app/tools/gimpflipoptions.c:129
 msgid "Affect:"
@@ -9567,9 +9527,9 @@ msgstr "Påvirk:"
 
 #. tool toggle
 #: ../app/tools/gimpflipoptions.c:135
-#, fuzzy, c-format
+#, c-format
 msgid "Flip Type  (%s)"
-msgstr "Vendingstype  %s"
+msgstr "Vendingstype (%s)"
 
 #: ../app/tools/gimpfliptool.c:77
 msgid "Flip"
@@ -9579,74 +9539,70 @@ msgstr "Vend"
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr ""
+"Vendingsværktøj: Vend laget, markeringen eller banen vandret eller lodret"
 
 #: ../app/tools/gimpfliptool.c:80
 msgid "_Flip"
 msgstr "V_end"
 
 #: ../app/tools/gimpforegroundselectoptions.c:77
-#, fuzzy
 msgid "Select a single contiguous area"
-msgstr "Markér sammenhængende områder"
+msgstr "Markér et enkelt sammenhængende område"
 
 #: ../app/tools/gimpforegroundselectoptions.c:86
 msgid "Size of the brush used for refinements"
-msgstr ""
+msgstr "Størrelse af den pensel der bruges forfinelse"
 
 #: ../app/tools/gimpforegroundselectoptions.c:91
 msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
 msgstr ""
+"Mindre værdier giver en mere præcis markeringskant men kan lede til huller i "
+"markeringen"
 
 #: ../app/tools/gimpforegroundselectoptions.c:107
 msgid "Sensitivity for brightness component"
-msgstr ""
+msgstr "Følsomhed for lysstyrkekomponenten"
 
 #: ../app/tools/gimpforegroundselectoptions.c:112
 msgid "Sensitivity for red/green component"
-msgstr ""
+msgstr "Følsomhed for den røde/grønne komponent"
 
 #: ../app/tools/gimpforegroundselectoptions.c:117
 msgid "Sensitivity for yellow/blue component"
-msgstr ""
+msgstr "Følsomhed for den gule/blå komponent"
 
 #. single / multiple objects
 #: ../app/tools/gimpforegroundselectoptions.c:231
-#, fuzzy
 msgid "Contiguous"
-msgstr "Fortsæt"
+msgstr "Sammenhængende"
 
 #. foreground / background
 #: ../app/tools/gimpforegroundselectoptions.c:236
 #, c-format
 msgid "Interactive refinement  (%s)"
-msgstr ""
+msgstr "Interaktiv forfinelse (%s)"
 
 #: ../app/tools/gimpforegroundselectoptions.c:240
-#, fuzzy
 msgid "Mark background"
-msgstr "Baggrund"
+msgstr "Markér baggrund"
 
 #: ../app/tools/gimpforegroundselectoptions.c:241
-#, fuzzy
 msgid "Mark foreground"
-msgstr "Forgrund"
+msgstr "Markér forgrund"
 
 #: ../app/tools/gimpforegroundselectoptions.c:257
-#, fuzzy
 msgid "Small brush"
-msgstr "Lille"
+msgstr "Lille pensel"
 
 #: ../app/tools/gimpforegroundselectoptions.c:265
-#, fuzzy
 msgid "Large brush"
-msgstr "Ny pensel"
+msgstr "Stor pensel"
 
 #: ../app/tools/gimpforegroundselectoptions.c:289
-#, fuzzy
 msgid "Smoothing:"
-msgstr "Udtvær"
+msgstr "Udtynding:"
 
 #: ../app/tools/gimpforegroundselectoptions.c:295
 #, fuzzy
@@ -9655,51 +9611,48 @@ msgstr "Eksempel:"
 
 #. granularity
 #: ../app/tools/gimpforegroundselectoptions.c:298
-#, fuzzy
 msgid "Color Sensitivity"
-msgstr "Følsomhed:"
+msgstr "Farvefølsomhed"
 
 #: ../app/tools/gimpforegroundselecttool.c:143
-#, fuzzy
 msgid "Foreground Select"
-msgstr "Forgrund"
+msgstr "Forgrundsmarkering"
 
 #: ../app/tools/gimpforegroundselecttool.c:144
 msgid "Foreground Select Tool: Select a region containing foreground objects"
 msgstr ""
+"Forgrundsmarkeringsværktøj: Markér et område der indeholder forgrundsobjekter"
 
 #: ../app/tools/gimpforegroundselecttool.c:145
-#, fuzzy
 msgid "F_oreground Select"
-msgstr "Forgrund"
+msgstr "F_orgrundsmarkering"
 
 #: ../app/tools/gimpforegroundselecttool.c:308
 msgid "Add more strokes or press Enter to accept the selection"
 msgstr ""
+"Tilføj flere strøg eller tryk på returtasten for at acceptere markeringen"
 
 #: ../app/tools/gimpforegroundselecttool.c:310
 msgid "Mark foreground by painting on the object to extract"
-msgstr ""
+msgstr "Markér forgrunden ved at male på et objekt der skal udtrækkes"
 
 #: ../app/tools/gimpforegroundselecttool.c:321
 msgid "Draw a rough circle around the object to extract"
-msgstr ""
+msgstr "Tegn en grov cirkel rundt om objektet der skal udtrækkes"
 
 #: ../app/tools/gimpforegroundselecttool.c:740
 msgid "command|Foreground Select"
-msgstr ""
+msgstr "Forgrundsmarkering"
 
 #: ../app/tools/gimpfreeselecttool.c:96
-#, fuzzy
 msgid "Free Select Tool: Select a hand-drawn region"
-msgstr "Markér håndtegnede områder"
+msgstr "Fri markerings-værktøj: Markér et håndtegnet område"
 
 #: ../app/tools/gimpfreeselecttool.c:97
 msgid "_Free Select"
 msgstr "_Fri markering"
 
 #: ../app/tools/gimpfreeselecttool.c:306
-#, fuzzy
 msgid "command|Free Select"
 msgstr "Fri markering"
 
@@ -9710,6 +9663,8 @@ msgstr "Udflydende markering"
 #: ../app/tools/gimpfuzzyselecttool.c:64
 msgid "Fuzzy Select Tool: Select a contiguous region on the basis of color"
 msgstr ""
+"Udflydende markerings-værktøj: Markér et sammenhængende område på baggrund "
+"af en farve"
 
 #: ../app/tools/gimpfuzzyselecttool.c:65
 msgid "Fu_zzy Select"
@@ -9717,27 +9672,24 @@ msgstr "_Udflydende markering"
 
 #: ../app/tools/gimphealtool.c:58
 msgid "Healing Tool: Heal image irregularities"
-msgstr ""
+msgstr "Helingsværktøj: Hel uregelmæssigheder i billedet"
 
 #: ../app/tools/gimphealtool.c:59
-#, fuzzy
 msgid "_Heal"
-msgstr "_Hjælp"
+msgstr "_Hel"
 
 #: ../app/tools/gimphealtool.c:81 ../app/tools/gimphealtool.c:84
-#, fuzzy
 msgid "Click to heal"
-msgstr "Klik for at åbne banen."
+msgstr "Klik for at hele"
 
 #: ../app/tools/gimphealtool.c:82 ../app/tools/gimphealtool.c:86
 #, c-format
 msgid "%s to set a new heal source"
-msgstr ""
+msgstr "%s for at sætte en ny helingskilde"
 
 #: ../app/tools/gimphealtool.c:85
-#, fuzzy
 msgid "Click to set a new heal source"
-msgstr "Klik for at oprette en ny bane."
+msgstr "Klik for at sætte en ny helingskilde"
 
 #: ../app/tools/gimphistogramoptions.c:124
 msgid "Histogram Scale"
@@ -9745,16 +9697,15 @@ msgstr "Histogramskala"
 
 #: ../app/tools/gimphuesaturationtool.c:114
 msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
-msgstr ""
+msgstr "Farvetone-/mætningsværktøj: Justér farvetone, mætning og lysstyrke"
 
 #: ../app/tools/gimphuesaturationtool.c:115
 msgid "Hue-_Saturation..."
 msgstr "Farvetone/_mætning..."
 
 #: ../app/tools/gimphuesaturationtool.c:132
-#, fuzzy
 msgid "Adjust Hue / Lightness / Saturation"
-msgstr "Justér farvetone/lys/mætning"
+msgstr "Justér farvetone/lysstyrke/mætning"
 
 #: ../app/tools/gimphuesaturationtool.c:178
 msgid "Hue-Saturation operates only on RGB color layers."
@@ -9765,9 +9716,8 @@ msgid "M_aster"
 msgstr "_Original"
 
 #: ../app/tools/gimphuesaturationtool.c:234
-#, fuzzy
 msgid "Adjust all colors"
-msgstr "Justér farvekurver"
+msgstr "Justér alle farver"
 
 #: ../app/tools/gimphuesaturationtool.c:235
 msgid "_R"
@@ -9794,21 +9744,18 @@ msgid "_M"
 msgstr "_M"
 
 #: ../app/tools/gimphuesaturationtool.c:243
-#, fuzzy
 msgid "Select Primary Color to Adjust"
-msgstr "Vælg primær farve at ændre"
+msgstr "Vælg primær farve at justere"
 
 #: ../app/tools/gimphuesaturationtool.c:331
 msgid "_Overlap:"
 msgstr "_Læg over:"
 
 #: ../app/tools/gimphuesaturationtool.c:349
-#, fuzzy
 msgid "Adjust Selected Color"
-msgstr "Ændr valgt farve"
+msgstr "Justeŕ valgt farve"
 
 #: ../app/tools/gimphuesaturationtool.c:423
-#, fuzzy
 msgid "R_eset Color"
 msgstr "N_ulstil farve"
 
@@ -9825,9 +9772,9 @@ msgid "Quick Save"
 msgstr "Gem hurtigt"
 
 #: ../app/tools/gimpimagemaptool.c:608
-#, fuzzy, c-format
+#, c-format
 msgid "Settings saved to '%s'"
-msgstr "Starter programudvidelse: '%s'\n"
+msgstr "Indstillinger gemt i \"%s\""
 
 #. adjust sliders
 #: ../app/tools/gimpinkoptions-gui.c:56
@@ -9868,23 +9815,56 @@ msgstr "Form"
 
 #: ../app/tools/gimpinktool.c:56
 msgid "Ink Tool: Calligraphy-style painting"
-msgstr ""
+msgstr "Blækpensværktøj: Kalligrafi-lignende maling"
 
 #: ../app/tools/gimpinktool.c:57
 msgid "In_k"
 msgstr "_Blækpen"
 
-#: ../app/tools/gimpiscissorstool.c:271
+#: ../app/tools/gimpiscissorstool.c:277
 msgid "Scissors"
 msgstr "Saks"
 
-#: ../app/tools/gimpiscissorstool.c:272
+#: ../app/tools/gimpiscissorstool.c:278
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
-msgstr ""
+msgstr "Saksemarkeringsværktøj: Markér former med intelligent kant-tilpasning"
 
-#: ../app/tools/gimpiscissorstool.c:273
+#: ../app/tools/gimpiscissorstool.c:279
 msgid "Intelligent _Scissors"
 msgstr "Intelligent _saks"
+
+#: ../app/tools/gimpiscissorstool.c:919
+msgid "Click-Drag to move this point"
+msgstr "Klik og træk for at flytte dette punkt"
+
+#: ../app/tools/gimpiscissorstool.c:921 ../app/tools/gimpiscissorstool.c:988
+#, c-format
+msgid "%s: disable auto-snap"
+msgstr "%s: deaktivér autolåsning"
+
+#: ../app/tools/gimpiscissorstool.c:940
+msgid "Click to close the curve"
+msgstr "Klik for at lukke kurven"
+
+#: ../app/tools/gimpiscissorstool.c:946
+msgid "Click to add a point on this segment"
+msgstr "Klik for at tilføje et punkt på dette segment"
+
+#: ../app/tools/gimpiscissorstool.c:960
+msgid "Click or press Enter to convert to a selection"
+msgstr "Klik eller tryk på returtasten for at omdanne til en markering"
+
+#: ../app/tools/gimpiscissorstool.c:970
+#, fuzzy
+msgid "Press Enter to convert to a selection"
+msgstr ""
+"Det aktive lag har ingen maske\n"
+"der kan laves om til en markering."
+
+#: ../app/tools/gimpiscissorstool.c:985
+#, fuzzy
+msgid "Click or Click-Drag to add a point"
+msgstr "Klik for at vælge bane der skal redigeres."
 
 #: ../app/tools/gimplevelstool.c:155
 #, fuzzy
@@ -9953,21 +9933,19 @@ msgstr "Tilpas vinduesstørrelse automatisk"
 # 'toggle' er ret mærkeligt, men refererer til hvilken tilstand værktøjet er i (fx zoom ind vs. zoom ud)
 #. tool toggle
 #: ../app/tools/gimpmagnifyoptions.c:180 ../app/tools/gimpmoveoptions.c:184
-#, fuzzy, c-format
+#, c-format
 msgid "Tool Toggle  (%s)"
-msgstr "Værktøjstilstand  %s"
+msgstr "Værktøjstilstand (%s)"
 
 #: ../app/tools/gimpmagnifytool.c:91
-#, fuzzy
 msgid "Zoom"
-msgstr "_Zoom"
+msgstr "Zoom"
 
 #: ../app/tools/gimpmagnifytool.c:92
 msgid "Zoom Tool: Adjust the zoom level"
-msgstr ""
+msgstr "Zoomværktøj: Justér zoomniveauet"
 
 #: ../app/tools/gimpmagnifytool.c:93
-#, fuzzy
 msgid "tool|_Zoom"
 msgstr "_Zoom"
 
@@ -9980,9 +9958,8 @@ msgid "Measure"
 msgstr "Opmål"
 
 #: ../app/tools/gimpmeasuretool.c:121
-#, fuzzy
 msgid "Measure Tool: Measure distances and angles"
-msgstr "Mål afstande og vinkler"
+msgstr "Opmålingsværktøj: Mål afstande og vinkler"
 
 #: ../app/tools/gimpmeasuretool.c:122
 msgid "_Measure"
@@ -10029,27 +10006,26 @@ msgid "Move:"
 msgstr "Flyt: "
 
 #: ../app/tools/gimpmovetool.c:117
-#, fuzzy
 msgid "tool|Move"
 msgstr "Flyt"
 
 #: ../app/tools/gimpmovetool.c:118
 msgid "Move Tool: Move layers, selections, and other objects"
-msgstr ""
+msgstr "Flytteværktøj: Flyt lag, markeringer og andre objekter"
 
 #: ../app/tools/gimpmovetool.c:119
 msgid "_Move"
 msgstr "F_lyt"
 
-#: ../app/tools/gimpmovetool.c:267 ../app/tools/gimpmovetool.c:544
+#: ../app/tools/gimpmovetool.c:267 ../app/tools/gimpmovetool.c:545
 msgid "Move Guide: "
 msgstr "Flyt hjælpelinje: "
 
-#: ../app/tools/gimpmovetool.c:538
+#: ../app/tools/gimpmovetool.c:539
 msgid "Cancel Guide"
 msgstr "Annullér hjælpelinje"
 
-#: ../app/tools/gimpmovetool.c:544
+#: ../app/tools/gimpmovetool.c:545
 msgid "Add Guide: "
 msgstr "Tilføj hjælpelinje: "
 
@@ -10126,55 +10102,37 @@ msgstr "Længde:"
 
 #: ../app/tools/gimppaintoptions-gui.c:385
 msgid "Apply Jitter"
-msgstr ""
+msgstr "Anvend støj"
 
 #: ../app/tools/gimppaintoptions-gui.c:390
-#, fuzzy
 msgid "Amount:"
-msgstr "Antal:"
+msgstr "Mængde:"
 
 #: ../app/tools/gimppaintoptions-gui.c:420
 msgid "Use color from gradient"
 msgstr "Benyt farve fra farveovergang"
 
 #: ../app/tools/gimppainttool.c:130
-#, fuzzy
 msgid "Click to paint"
-msgstr "Vælg hvidt punkt"
+msgstr "Klik for at male"
 
 #: ../app/tools/gimppainttool.c:131
-#, fuzzy
 msgid "Click to draw the line"
-msgstr "Klik for at oprette miniature"
+msgstr "Klik for at tegne linjen"
 
 #: ../app/tools/gimppainttool.c:132
 #, c-format
 msgid "%s to pick a color"
-msgstr ""
+msgstr "%s for at vælge en farve"
 
-#: ../app/tools/gimppainttool.c:494
-#, fuzzy
-msgid "Click in any image to pick the foreground color"
-msgstr "Skift gitterforgrundsfarve"
-
-#: ../app/tools/gimppainttool.c:500
-#, fuzzy
-msgid "Click in any image to pick the background color"
-msgstr "Skift gitterbaggrundsfarve"
-
-#: ../app/tools/gimppainttool.c:591
-#, fuzzy, c-format
-msgid "%s for constrained angles"
-msgstr "Mål afstande og vinkler"
-
-#: ../app/tools/gimppainttool.c:643
-#, fuzzy, c-format
+#: ../app/tools/gimppainttool.c:644
+#, c-format
 msgid "%s for a straight line"
-msgstr "Tryk på skiftetasten for at tegne en ret linje."
+msgstr "%s for en ret linje"
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Pencil Tool: Hard edge painting using a brush"
-msgstr ""
+msgstr "Blyantsværktøj: Maling med hård kant vha. en pensel"
 
 #: ../app/tools/gimppenciltool.c:53
 msgid "Pe_ncil"
@@ -10185,20 +10143,20 @@ msgid ""
 "Perspective Clone Tool: Clone from an image source after applying a "
 "perspective transformation"
 msgstr ""
+"Perspektivkloningsværktøj: Klon fra en billedkilde efter anvendelse af en "
+"perspektivisk transformering"
 
 #: ../app/tools/gimpperspectiveclonetool.c:123
-#, fuzzy
 msgid "_Perspective Clone"
-msgstr "_Perspektiv"
+msgstr "_Perspektivklon"
 
 #: ../app/tools/gimpperspectiveclonetool.c:640
 msgid "Ctrl-Click to set a clone source"
-msgstr ""
+msgstr "Ctrl-klik for at sætte en klonkilde"
 
 #: ../app/tools/gimpperspectivetool.c:69
-#, fuzzy
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
-msgstr "Vend perspektivet på laget eller markeringen"
+msgstr "Perspektivværktøj: Ændr perspektivet på lage, markeringen eller banen"
 
 #: ../app/tools/gimpperspectivetool.c:71
 msgid "_Perspective"
@@ -10307,7 +10265,7 @@ msgstr "Markér rektangulære områder"
 msgid "_Rectangle Select"
 msgstr "_Rektangulær markering"
 
-#: ../app/tools/gimprectangletool.c:1052 ../app/tools/gimprectangletool.c:1696
+#: ../app/tools/gimprectangletool.c:1054 ../app/tools/gimprectangletool.c:1719
 msgid "Rectangle: "
 msgstr "Rektangel: "
 
@@ -10393,7 +10351,7 @@ msgstr "Udtynd kanter"
 
 #: ../app/tools/gimpselectionoptions.c:380
 msgid "Show interactive boundary"
-msgstr "Vis interaktiv grænse"
+msgstr "Vis interaktiv kant"
 
 #: ../app/tools/gimpselectionoptions.c:404
 msgid "Select transparent areas"
@@ -10606,14 +10564,12 @@ msgid "Automatically adjust to optimal binarization threshold"
 msgstr ""
 
 #: ../app/tools/gimptransformoptions.c:282
-#, fuzzy
 msgid "Transform:"
-msgstr "Transformér"
+msgstr "Transformér:"
 
 #: ../app/tools/gimptransformoptions.c:288
-#, fuzzy
 msgid "Direction"
-msgstr "Beskrivelse"
+msgstr "Retning"
 
 #: ../app/tools/gimptransformoptions.c:297
 msgid "Interpolation:"
@@ -10624,38 +10580,34 @@ msgid "Supersampling"
 msgstr "Supersampling"
 
 #: ../app/tools/gimptransformoptions.c:316
-#, fuzzy
 msgid "Clipping:"
-msgstr "Vender..."
+msgstr "Afskæring:"
 
 #: ../app/tools/gimptransformoptions.c:334
 msgid "Preview:"
 msgstr "Eksempel:"
 
 #: ../app/tools/gimptransformoptions.c:375
-#, fuzzy, c-format
+#, c-format
 msgid "15 degrees  (%s)"
-msgstr "15 grader  %s"
+msgstr "15 grader (%s)"
 
 #: ../app/tools/gimptransformoptions.c:379
-#, fuzzy, c-format
+#, c-format
 msgid "Keep aspect  (%s)"
-msgstr "Behold forhold  %s"
+msgstr "Behold forhold (%s)"
 
 #: ../app/tools/gimptransformtool.c:237
-#, fuzzy
 msgid "Transforming"
-msgstr "Transformerer..."
+msgstr "Transformerer"
 
 #: ../app/tools/gimptransformtool.c:1160
-#, fuzzy
 msgid "There is no layer to transform."
-msgstr "Der er ikke noget aktivt lag eller nogen aktiv kanal at klippe fra."
+msgstr "Der er ikke noget lag at transformere."
 
 #: ../app/tools/gimptransformtool.c:1171
-#, fuzzy
 msgid "There is no path to transform."
-msgstr "Der er ikke noget aktivt lag eller nogen aktiv kanal at klippe fra."
+msgstr "Der er ikke nogen bane at transformere."
 
 #: ../app/tools/gimpvectoroptions.c:77
 msgid "Restrict editing to polygons"
@@ -10667,7 +10619,7 @@ msgstr "Redigeringstilstand"
 
 #: ../app/tools/gimpvectoroptions.c:150
 msgid "Polygonal"
-msgstr "Polygonel"
+msgstr "Polygonal"
 
 #: ../app/tools/gimpvectoroptions.c:154
 #, c-format
@@ -10683,23 +10635,20 @@ msgstr ""
 "%s  Kryds med"
 
 #: ../app/tools/gimpvectoroptions.c:164
-#, fuzzy
 msgid "Create Selection from Path"
 msgstr "Opret markering fra bane"
 
 #: ../app/tools/gimpvectortool.c:159
-#, fuzzy
 msgid "Paths Tool: Create and edit paths"
-msgstr "Opret og redigér baner"
+msgstr "Baneværktøj: Opret og redigér baner"
 
 #: ../app/tools/gimpvectortool.c:160
-#, fuzzy
 msgid "Pat_hs"
-msgstr "Baner"
+msgstr "Ba_ner"
 
 #: ../app/tools/gimpvectortool.c:319
 msgid "Add Stroke"
-msgstr "Tilføj bestrygning"
+msgstr "Tilføj strøg"
 
 #: ../app/tools/gimpvectortool.c:337
 msgid "Add Anchor"
@@ -10727,7 +10676,7 @@ msgstr "Træk kurve"
 
 #: ../app/tools/gimpvectortool.c:483
 msgid "Connect Strokes"
-msgstr "Forbind bestrygninger"
+msgstr "Forbind strøg"
 
 #: ../app/tools/gimpvectortool.c:513
 msgid "Drag Path"
@@ -10735,7 +10684,7 @@ msgstr "Træk bane"
 
 #: ../app/tools/gimpvectortool.c:523
 msgid "Convert Edge"
-msgstr "Konvertér kant"
+msgstr "Omdan kant"
 
 #: ../app/tools/gimpvectortool.c:553
 msgid "Delete Anchor"
@@ -10750,49 +10699,41 @@ msgid "Move Anchors"
 msgstr "Flyt ankre"
 
 #: ../app/tools/gimpvectortool.c:1141
-#, fuzzy
 msgid "Click to pick path to edit"
-msgstr "Klik for at vælge bane der skal redigeres."
+msgstr "Klik for at vælge bane der skal redigeres"
 
 #: ../app/tools/gimpvectortool.c:1144
-#, fuzzy
 msgid "Click to create a new path"
 msgstr "Klik for at oprette en ny bane."
 
 #: ../app/tools/gimpvectortool.c:1147
-#, fuzzy
 msgid "Click to create a new component of the path"
-msgstr "Klik for at oprette en ny komponent til banen."
+msgstr "Klik for at oprette en ny komponent til banen"
 
 #: ../app/tools/gimpvectortool.c:1150
-#, fuzzy
 msgid "Click to create a new anchor"
-msgstr "Klik for at oprette en ny bane."
+msgstr "Klik for at oprette et nyt anker"
 
 #: ../app/tools/gimpvectortool.c:1156
-#, fuzzy
 msgid "Click-Drag to move the anchor around"
-msgstr "Klik og træk for at flytte ankeret."
+msgstr "Klik og træk for at flytte ankeret"
 
 #: ../app/tools/gimpvectortool.c:1159 ../app/tools/gimpvectortool.c:1170
-#, fuzzy
 msgid "Click-Drag to move the anchors around"
-msgstr "Klik og træk for at flytte ankrene."
+msgstr "Klik og træk for at flytte ankrene"
 
 #: ../app/tools/gimpvectortool.c:1162
-#, fuzzy
 msgid "Click-Drag to move the handle around"
-msgstr "Klik og træk for at flytte ankeret."
+msgstr "Klik og træk for at flytte håndtaget"
 
 #: ../app/tools/gimpvectortool.c:1175
-#, fuzzy
 msgid "Click-Drag to change the shape of the curve"
-msgstr "Klik og træk for at ændre formen af kurven (skift: symmetrisk)."
+msgstr "Klik og træk for at ændre formen af kurven"
 
 #: ../app/tools/gimpvectortool.c:1178
 #, c-format
 msgid "%s: symmetrical"
-msgstr ""
+msgstr "%s: symmetrisk"
 
 #: ../app/tools/gimpvectortool.c:1182
 msgid "Click-Drag to move the component around"
@@ -10807,24 +10748,20 @@ msgid "Click-Drag to insert an anchor on the path"
 msgstr "Klik og træk for at indsætte et anker på banen"
 
 #: ../app/tools/gimpvectortool.c:1199
-#, fuzzy
 msgid "Click to delete this anchor"
-msgstr "Klik for at slette dette anker."
+msgstr "Klik for at slette dette anker"
 
 #: ../app/tools/gimpvectortool.c:1202
-#, fuzzy
 msgid "Click to connect this anchor with the selected endpoint"
-msgstr "Klik for at forbinde dette anker med det valgte slutpunkt."
+msgstr "Klik for at forbinde dette anker med det valgte endepunkt"
 
 #: ../app/tools/gimpvectortool.c:1206
-#, fuzzy
 msgid "Click to open up the path"
-msgstr "Klik for at åbne banen."
+msgstr "Klik for at åbne banen op"
 
 #: ../app/tools/gimpvectortool.c:1209
-#, fuzzy
 msgid "Click to make this node angular"
-msgstr "Klik for at gøre denne knude vinklet."
+msgstr "Klik for at gøre denne knude vinklet"
 
 #: ../app/tools/gimpvectortool.c:1715
 msgid "Delete Anchors"
@@ -10847,28 +10784,24 @@ msgid "Set background color"
 msgstr "Skift baggrundsfarve"
 
 #: ../app/tools/tools-enums.c:29
-#, fuzzy
 msgid "Add to palette"
-msgstr "Tilføj til palet  %s"
+msgstr "Tilføj til palet"
 
 #: ../app/tools/tools-enums.c:58
-#, fuzzy
 msgid "No guides"
-msgstr "Vis _hjælpelinjer"
+msgstr "Ingen hjælpelinjer"
 
 #: ../app/tools/tools-enums.c:59
-#, fuzzy
 msgid "Center lines"
-msgstr "Centreret"
+msgstr "Centerlinjer"
 
 #: ../app/tools/tools-enums.c:60
 msgid "Rule of thirds"
-msgstr ""
+msgstr "Tredjedele"
 
 #: ../app/tools/tools-enums.c:61
-#, fuzzy
 msgid "Golden sections"
-msgstr "Flyt markering"
+msgstr "Gyldne snit"
 
 #: ../app/tools/tools-enums.c:119
 msgid "Free select"
@@ -11013,10 +10946,9 @@ msgstr "Fjernelse af genvej mislykkedes."
 msgid "Invalid shortcut."
 msgstr "Ugyldig genvej."
 
-# FIXME: hvad er det?
 #: ../app/widgets/gimpbrusheditor.c:169
 msgid "Spikes:"
-msgstr "Spigre:"
+msgstr "Pigge:"
 
 #: ../app/widgets/gimpbrusheditor.c:182
 msgid "Hardness:"
@@ -11084,14 +11016,14 @@ msgid "Reset the selected filter to default values"
 msgstr "Nulstil det valgte filter til standardværdierne"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:493
-#, fuzzy, c-format
+#, c-format
 msgid "Add '%s' to the list of active filters"
-msgstr "Tilføj det valgte filter til listen over aktive filtre"
+msgstr "Tilføj \"%s\" til listen af aktive filtre"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:530
-#, fuzzy, c-format
+#, c-format
 msgid "Remove '%s' from the list of active filters"
-msgstr "Fjern det valgte filter fra listen over aktive filtre"
+msgstr "Fjern \"%s\" fra listen af aktive filtre"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:561
 msgid "No filter selected"
@@ -11180,14 +11112,12 @@ msgid "Larger Previews"
 msgstr "Større eksempler"
 
 #: ../app/widgets/gimpcontrollereditor.c:196
-#, fuzzy
 msgid "_Dump events from this controller"
-msgstr "Dump hændelser fra denne kontrol"
+msgstr "_Vis hændelser fra denne controller"
 
 #: ../app/widgets/gimpcontrollereditor.c:201
-#, fuzzy
 msgid "_Enable this controller"
-msgstr "Aktivér denne kontrol"
+msgstr "_Aktivér denne controller"
 
 #: ../app/widgets/gimpcontrollereditor.c:222
 #: ../app/widgets/gimpimageprofileview.c:83
@@ -11199,33 +11129,31 @@ msgid "Event"
 msgstr "Hændelse"
 
 #: ../app/widgets/gimpcontrollereditor.c:398
-#, fuzzy
 msgid "_Grab event"
-msgstr "_Farveovergang"
+msgstr "_Fang hændelse"
 
 #: ../app/widgets/gimpcontrollereditor.c:408
-#, fuzzy
 msgid "Select the next event arriving from the controller"
-msgstr "Dump hændelser fra denne kontrol"
+msgstr "Vælg den næste hændelse fra denne controller"
 
 #: ../app/widgets/gimpcontrollereditor.c:565
 #, c-format
 msgid "Remove the action assigned to '%s'"
-msgstr ""
+msgstr "Fjern handlingen tildelt til \"%s\""
 
 #: ../app/widgets/gimpcontrollereditor.c:569
 #, c-format
 msgid "Assign an action to '%s'"
-msgstr ""
+msgstr "Tildel en handling til \"%s\""
 
 #: ../app/widgets/gimpcontrollereditor.c:691
-#, fuzzy, c-format
+#, c-format
 msgid "Select Action for Event '%s'"
-msgstr "Vælg kontrolhændelseshandling"
+msgstr "Vælg handling for hændelsen \"%s\""
 
 #: ../app/widgets/gimpcontrollereditor.c:696
 msgid "Select Controller Event Action"
-msgstr "Vælg kontrolhændelseshandling"
+msgstr "Vælg handling for controllerhændelse"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:70
 #: ../app/widgets/gimpcontrollerkeyboard.c:73
@@ -11285,39 +11213,34 @@ msgid "Ready"
 msgstr "Parat"
 
 #: ../app/widgets/gimpcontrollerlist.c:183
-#, fuzzy
 msgid "Available Controllers"
-msgstr "Tilgængelige filtre"
+msgstr "Tilgængelige controllere"
 
 #: ../app/widgets/gimpcontrollerlist.c:275
-#, fuzzy
 msgid "Active Controllers"
-msgstr "Pegekontroller"
+msgstr "Aktive controllere"
 
 #: ../app/widgets/gimpcontrollerlist.c:291
-#, fuzzy
 msgid "Configure the selected controller"
-msgstr "Konfigurér det valgte filter"
+msgstr "Konfigurér den valgte controller"
 
 #: ../app/widgets/gimpcontrollerlist.c:299
-#, fuzzy
 msgid "Move the selected controller up"
-msgstr "Flyt det valgte filter op"
+msgstr "Flyt den valgte controller op"
 
 #: ../app/widgets/gimpcontrollerlist.c:307
-#, fuzzy
 msgid "Move the selected controller down"
-msgstr "Flyt det valgte filter ned"
+msgstr "Flyt den valgte controller ned"
 
 #: ../app/widgets/gimpcontrollerlist.c:429
-#, fuzzy, c-format
+#, c-format
 msgid "Add '%s' to the list of active controllers"
-msgstr "Tilføj det valgte filter til listen over aktive filtre"
+msgstr "Tilføj \"%s\" til listen af aktive controllere"
 
 #: ../app/widgets/gimpcontrollerlist.c:480
-#, fuzzy, c-format
+#, c-format
 msgid "Remove '%s' from the list of active controllers"
-msgstr "Fjern det valgte filter fra listen over aktive filtre"
+msgstr "Fjern \"%s\" fra listen af aktive controllere"
 
 #: ../app/widgets/gimpcontrollerlist.c:513
 msgid ""
@@ -11334,24 +11257,21 @@ msgid ""
 msgstr ""
 
 #: ../app/widgets/gimpcontrollerlist.c:550
-#, fuzzy
 msgid "Remove Controller?"
-msgstr "Fjern _element"
+msgstr "Fjern controller?"
 
 #: ../app/widgets/gimpcontrollerlist.c:555
-#, fuzzy
 msgid "Disable Controller"
-msgstr "Aktivér denne kontrol"
+msgstr "Deaktivér controller"
 
 #: ../app/widgets/gimpcontrollerlist.c:557
-#, fuzzy
 msgid "Remove Controller"
-msgstr "Fjern _element"
+msgstr "Fjern controller"
 
 #: ../app/widgets/gimpcontrollerlist.c:568
-#, fuzzy, c-format
+#, c-format
 msgid "Remove Controller '%s'?"
-msgstr "Bring \"%s\" tilbage til \"%s\"?"
+msgstr "Fjern controlleren \"%s\"?"
 
 #: ../app/widgets/gimpcontrollerlist.c:572
 msgid ""
@@ -11363,14 +11283,12 @@ msgid ""
 msgstr ""
 
 #: ../app/widgets/gimpcontrollerlist.c:634
-#, fuzzy
 msgid "Configure Controller"
-msgstr "Pegekontroller"
+msgstr "Konfigurér controller"
 
 #: ../app/widgets/gimpcontrollerlist.c:637
-#, fuzzy
 msgid "Configure Input Controller"
-msgstr "Pegekontroller"
+msgstr "Konfigurér inputcontroller"
 
 #: ../app/widgets/gimpcontrollerwheel.c:69
 #: ../app/widgets/gimpcontrollerwheel.c:72
@@ -11439,7 +11357,7 @@ msgstr "Forkast"
 #: ../app/widgets/gimpdataeditor.c:410
 #, c-format
 msgid "%s (read only)"
-msgstr ""
+msgstr "%s (kun læse)"
 
 #: ../app/widgets/gimpdevicestatus.c:138
 msgid "Save device status"
@@ -11460,9 +11378,8 @@ msgid "The given filename does not have any known file extension."
 msgstr "Det angivne filnavn slutter ikke med en kendt filendelse."
 
 #: ../app/widgets/gimpdnd-xds.c:209
-#, fuzzy
 msgid "File Exists"
-msgstr "Filen eksisterer"
+msgstr "Fil eksisterer"
 
 #: ../app/widgets/gimpdnd-xds.c:214
 msgid "_Replace"
@@ -11478,9 +11395,8 @@ msgid "Do you want to replace it with the image you are saving?"
 msgstr "Ønsker du at erstatte den med det billede du gemmer?"
 
 #: ../app/widgets/gimpdock.c:287
-#, fuzzy
 msgid "Close all Tabs?"
-msgstr "Luk alle faneblade"
+msgstr "Luk alle faneblade?"
 
 #: ../app/widgets/gimpdock.c:293
 msgid "Close all Tabs"
@@ -11491,14 +11407,14 @@ msgid "Close all tabs?"
 msgstr "Luk alle faneblade?"
 
 #: ../app/widgets/gimpdock.c:306
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "This window has %d tab open. Closing the window will also close all its tabs."
 msgid_plural ""
 "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
 msgstr[0] ""
-"Dette vindue har %d faneblade åbne. Hvis du lukker vinduet, vil alle "
+"Dette vindue har %d faneblad åbent. Hvis du lukker vinduet, vil alle "
 "fanebladene også blive lukket."
 msgstr[1] ""
 "Dette vindue har %d faneblade åbne. Hvis du lukker vinduet, vil alle "
@@ -11533,17 +11449,15 @@ msgstr "Automatisk bestemt"
 msgid "By Extension"
 msgstr "Efter endelse"
 
-#: ../app/widgets/gimpfiledialog.c:521
-#, fuzzy
+#: ../app/widgets/gimpfiledialog.c:523
 msgid "All files"
 msgstr "Alle filer"
 
-#: ../app/widgets/gimpfiledialog.c:526
-#, fuzzy
+#: ../app/widgets/gimpfiledialog.c:528
 msgid "All images"
 msgstr "Alle billeder"
 
-#: ../app/widgets/gimpfiledialog.c:659
+#: ../app/widgets/gimpfiledialog.c:661
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Vælg fil_type (%s)"
@@ -11586,9 +11500,9 @@ msgid "HSV (%0.3f, %0.3f, %0.3f)"
 msgstr "HSV (%0.3f, %0.3f, %0.3f)"
 
 #: ../app/widgets/gimpgradienteditor.c:988
-#, fuzzy, c-format
+#, c-format
 msgid "Luminance: %0.3f    Opacity: %0.3f"
-msgstr "Intensitet: %0.3f   Ugennemsigtighed: %0.3f"
+msgstr "Lysstyrke: %0.3f   Ugennemsigtighed: %0.3f"
 
 #: ../app/widgets/gimpgradienteditor.c:1020
 #: ../app/widgets/gimpgradienteditor.c:1054
@@ -11697,7 +11611,7 @@ msgstr "Kunne ikke starte Gimp'ens hjælpefremvisermodul."
 
 #: ../app/widgets/gimphelp.c:256
 msgid "Use _web browser instead"
-msgstr "Benyt _internetsurfningsprogram i stedet"
+msgstr "Benyt _webbrowser i stedet"
 
 #: ../app/widgets/gimphistogrameditor.c:98
 msgid "Mean:"
@@ -11756,57 +11670,48 @@ msgid "Resolution:"
 msgstr "Opløsning:"
 
 #: ../app/widgets/gimpimagepropview.c:128
-#, fuzzy
 msgid "Color space:"
-msgstr "Farve_rum:"
+msgstr "Farverum:"
 
 #: ../app/widgets/gimpimagepropview.c:133
-#, fuzzy
 msgid "File Name:"
-msgstr "_Navn på palet:"
+msgstr "Filnavn:"
 
 #: ../app/widgets/gimpimagepropview.c:136
-#, fuzzy
 msgid "File Size:"
-msgstr "Fast størrelse"
+msgstr "Filstørrelse:"
 
 #: ../app/widgets/gimpimagepropview.c:139
-#, fuzzy
 msgid "File Type:"
-msgstr "Filtype"
+msgstr "Filtype:"
 
 #: ../app/widgets/gimpimagepropview.c:144
 msgid "Size in memory:"
 msgstr "Størrelse i hukommelse:"
 
 #: ../app/widgets/gimpimagepropview.c:147
-#, fuzzy
 msgid "Undo steps:"
-msgstr "_Fortryd '%s'"
+msgstr "Fortrydelsesskridt:"
 
 #: ../app/widgets/gimpimagepropview.c:150
-#, fuzzy
 msgid "Redo steps:"
-msgstr "_Omgør '%s'"
+msgstr "Omgørelsesskridt:"
 
 #: ../app/widgets/gimpimagepropview.c:155
-#, fuzzy
 msgid "Number of pixels:"
-msgstr "Antal lag:"
+msgstr "Antal billedpunkter:"
 
 #: ../app/widgets/gimpimagepropview.c:158
 msgid "Number of layers:"
 msgstr "Antal lag:"
 
 #: ../app/widgets/gimpimagepropview.c:161
-#, fuzzy
 msgid "Number of channels:"
-msgstr "Antal lag:"
+msgstr "Antal kanaler:"
 
 #: ../app/widgets/gimpimagepropview.c:164
-#, fuzzy
 msgid "Number of paths:"
-msgstr "Antal lag:"
+msgstr "Antal baner:"
 
 #: ../app/widgets/gimpimagepropview.c:455
 #, c-format
@@ -11814,9 +11719,9 @@ msgid "pixels/%s"
 msgstr "punkter/%s"
 
 #: ../app/widgets/gimpimagepropview.c:457
-#, fuzzy, c-format
+#, c-format
 msgid "%g × %g %s"
-msgstr "%g x %g %s"
+msgstr "%g × %g %s"
 
 #: ../app/widgets/gimpimagepropview.c:477
 msgid "colors"
@@ -11824,25 +11729,23 @@ msgstr "farver"
 
 #: ../app/widgets/gimpitemtreeview.c:972
 msgid "Set Item Exclusive Visible"
-msgstr "Sæt element eksklusivt synligt"
+msgstr "Gør element eksklusivt synligt"
 
 #: ../app/widgets/gimpitemtreeview.c:980
 msgid "Set Item Exclusive Linked"
-msgstr "Sæt element eksklusivt kædet"
+msgstr "Gør element eksklusivt kædet"
 
 #: ../app/widgets/gimplayertreeview.c:222
 msgid "Reorder Layer"
 msgstr "Omordn lag"
 
 #: ../app/widgets/gimplayertreeview.c:310
-#, fuzzy
 msgid "Lock alpha channel"
-msgstr "Lagets _alfakanal"
+msgstr "Lås alfakanal"
 
 #: ../app/widgets/gimplayertreeview.c:322
-#, fuzzy
 msgid "Lock:"
-msgstr "Dok"
+msgstr "Lås:"
 
 #: ../app/widgets/gimplayertreeview.c:874
 msgid "Empty Layer"
@@ -11870,16 +11773,15 @@ msgstr "Meddelelse gentaget én gang."
 #: ../app/widgets/gimppaletteeditor.c:253
 #: ../app/widgets/gimppaletteeditor.c:739
 msgid "Undefined"
-msgstr "Ikkedefineret"
+msgstr "Ikke defineret"
 
 #: ../app/widgets/gimppaletteeditor.c:261
 msgid "Columns:"
 msgstr "Kolonner:"
 
-#: ../app/widgets/gimpprofilechooserdialog.c:142
-#, fuzzy
-msgid "ICC color profile (*.icc)"
-msgstr "Vælg CMYK-farveprofil"
+#: ../app/widgets/gimpprofilechooserdialog.c:154
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr "ICC-farveprofil (*.icc, *.icm)"
 
 #: ../app/widgets/gimpprogressdialog.c:215
 msgid "Progress"
@@ -11887,13 +11789,11 @@ msgstr "Fremgang"
 
 #: ../app/widgets/gimppropwidgets.c:666
 msgid "1:1"
-msgstr ""
+msgstr "1:1"
 
-# et navneord ser bedst ud i stedet for 'Markér'
 #: ../app/widgets/gimppropwidgets.c:673
-#, fuzzy
 msgid "Set"
-msgstr "Markering"
+msgstr "Angiv"
 
 #: ../app/widgets/gimpselectiondata.c:258
 #, c-format
@@ -11911,17 +11811,16 @@ msgid "Invalid UTF-8"
 msgstr "Ugyldig UTF-8"
 
 #: ../app/widgets/gimpsizebox.c:463
-#, fuzzy, c-format
+#, c-format
 msgid "%d × %d ppi"
-msgstr "%d x %d dpi"
+msgstr "%d × %d ppi"
 
 #: ../app/widgets/gimpsizebox.c:465
-#, fuzzy, c-format
+#, c-format
 msgid "%d ppi"
-msgstr "%d dpi"
+msgstr "%d ppi"
 
 #: ../app/widgets/gimpstrokeeditor.c:183
-#, fuzzy
 msgid "Line width:"
 msgstr "Linjebredde:"
 
@@ -11939,16 +11838,16 @@ msgstr "_Koblingsstil:"
 
 #: ../app/widgets/gimpstrokeeditor.c:229
 msgid "_Miter limit:"
-msgstr "_Mellemgrænse:"
+msgstr "_Hjørnegrænse:"
 
 #: ../app/widgets/gimpstrokeeditor.c:236
 msgid "Dash pattern:"
 msgstr "Stiplingsmønster:"
 
+# FIXME: rigtig?
 #: ../app/widgets/gimpstrokeeditor.c:299
-#, fuzzy
 msgid "Dash _preset:"
-msgstr "Stiplingsforvalg:"
+msgstr "Stiplings_forvalg:"
 
 #: ../app/widgets/gimpstrokeeditor.c:320
 msgid "_Antialiasing"
@@ -11964,7 +11863,6 @@ msgid "_Advanced Options"
 msgstr "_Avancerede indstillinger"
 
 #: ../app/widgets/gimptemplateeditor.c:362
-#, fuzzy
 msgid "Color _space:"
 msgstr "Farve_rum:"
 
@@ -12112,7 +12010,7 @@ msgstr "Kontrollér at menu-XML-filerne er korrekt installeret."
 #: ../app/widgets/gimpuimanager.c:724
 #, c-format
 msgid "There was an error parsing the menu definition from %s: %s"
-msgstr ""
+msgstr "Der opstod en fejl under fortolkning af menudefinitionen fra %s: %s"
 
 #: ../app/widgets/gimpundoeditor.c:267
 msgid "[ Base Image ]"
@@ -12154,37 +12052,37 @@ msgstr "Åbn skrifttypevælgeren"
 #. do not translate the part before the |
 #: ../app/widgets/gimpwidgets-utils.c:553
 msgid "keyboard label|Space"
-msgstr ""
+msgstr "Mellemrum"
 
 #. do not translate the part before the |
 #: ../app/widgets/gimpwidgets-utils.c:557
 msgid "keyboard label|Backslash"
-msgstr ""
+msgstr "Omvendt skråstreg"
 
 #: ../app/widgets/gimpwidgets-utils.c:667
 #, c-format
 msgid "%s (try %s)"
-msgstr ""
+msgstr "%s (prøv %s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:667
 #, c-format
 msgid "%s (%s)"
-msgstr ""
+msgstr "%s (%s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:671
 #, c-format
 msgid "%s (try %s, %s)"
-msgstr ""
+msgstr "%s (prøv %s, %s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:675
 #, c-format
 msgid "%s (try %s, %s, %s)"
-msgstr ""
+msgstr "%s (prøv %s, %s, %s)"
 
 #: ../app/widgets/gimpwidgets-utils.c:941
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
-msgstr "Ugyldige UTF-8-data i filen '%s'."
+msgstr "Ugyldige UTF-8-data i filen \"%s\"."
 
 #: ../app/widgets/widgets-enums.c:23
 msgid "Foreground"
@@ -12199,9 +12097,8 @@ msgid "Landscape"
 msgstr "Landskab"
 
 #: ../app/widgets/widgets-enums.c:113
-#, fuzzy
 msgid "Pixel"
-msgstr "Billedpunkter"
+msgstr "Punkt"
 
 #: ../app/widgets/widgets-enums.c:115
 msgid "HSV"
@@ -12225,7 +12122,7 @@ msgstr "Hjælpefremviser"
 
 #: ../app/widgets/widgets-enums.c:200
 msgid "Web browser"
-msgstr "Internetsurfningsprogram"
+msgstr "Webbrowser"
 
 #: ../app/widgets/widgets-enums.c:227
 msgid "Linear"
@@ -12343,7 +12240,7 @@ msgstr "Tjek kun om Gimp'en kører, afslut så"
 
 #: ../tools/gimp-remote.c:94
 msgid "Print X window ID of GIMP toolbox window, then quit"
-msgstr ""
+msgstr "Udskriv X-window-id på Gimp'en værktøjskasse og afslut så"
 
 #: ../tools/gimp-remote.c:99
 msgid "Start GIMP without showing the startup window"
@@ -12398,12 +12295,6 @@ msgstr "Kunne ikke starte \"%s\": %s"
 
 #~ msgid "Lower channel"
 #~ msgstr "Sænk kanal"
-
-#~ msgid "Add color from FG"
-#~ msgstr "Tilføj farve fra forgr."
-
-#~ msgid "Add color from BG"
-#~ msgstr "Tilføj farve fra baggr."
 
 #~ msgid "Rotate 90 degrees CC_W"
 #~ msgstr "Rotér 90° m_od uret"
@@ -12643,9 +12534,6 @@ msgstr "Kunne ikke starte \"%s\": %s"
 #~ msgid "About The GIMP"
 #~ msgstr "Om Gimp'en"
 
-#~ msgid "Converting to indexed..."
-#~ msgstr "Konverterer til indekseret..."
-
 #~ msgid "Static Gray"
 #~ msgstr "Statisk grå"
 
@@ -12707,9 +12595,6 @@ msgstr "Kunne ikke starte \"%s\": %s"
 #~ msgid "Select custom canvas padding color"
 #~ msgstr "Angiv brugerdefineret lærredudfyldningsfarve"
 
-#~ msgid "Select web browser"
-#~ msgstr "Vælg internetsurfningsprogram"
-
 #~ msgid "Finding Contiguous Regions"
 #~ msgstr "Finding af sammenhængende områder"
 
@@ -12768,11 +12653,11 @@ msgstr "Kunne ikke starte \"%s\": %s"
 #~ "define the keys from within The GIMP.  Deleting this file will restore "
 #~ "the default shortcuts."
 #~ msgstr ""
-#~ "Tastaturgenveje kan omdefineres dynamisk i Gimp'en. Menurc gemmer "
+#~ "Tastegenveje kan omdefineres dynamisk i Gimp'en. Menurc gemmer "
 #~ "konfigurationen så den bliver husket ved næste session. Du kan redigere "
 #~ "denne fil hvis du ønsker, men det er meget lettere at definere tasterne "
 #~ "inde i Gimp'en. Sletning af denne fil vil genoprette "
-#~ "standardtastaturgenvejene."
+#~ "standardtastegenvejene."
 
 #~ msgid ""
 #~ "The sessionrc is used to store what dialog windows were open the last "
@@ -13243,12 +13128,6 @@ msgstr "Kunne ikke starte \"%s\": %s"
 
 #~ msgid "Curves for indexed layers cannot be adjusted."
 #~ msgstr "Kurver for indekserede lag kan ikke justeres."
-
-#~ msgid "Dodge or Burn strokes"
-#~ msgstr "Blegning-/sværtningsstrøg"
-
-#~ msgid "Dod_geBurn"
-#~ msgstr "Blegning/sværtning"
 
 #~ msgid "Modify all colors"
 #~ msgstr "Ændr alle farver"
@@ -14110,10 +13989,6 @@ msgstr "Kunne ikke starte \"%s\": %s"
 #~ msgid "Dialog Behavior"
 #~ msgstr "Vinduesopførsel"
 
-# dækker bedre end direkte oversættelse
-#~ msgid "_Info Window Per Display"
-#~ msgstr "_Navigationsvindue knyttes til billede"
-
 #~ msgid "Menus"
 #~ msgstr "Menuer"
 
@@ -14142,9 +14017,6 @@ msgstr "Kunne ikke starte \"%s\": %s"
 # forsøg på at oversætte med noget mere beskrivende, se hjælpen
 #~ msgid "Install Colormap"
 #~ msgstr "Benyt samme farvekortlægning i udvidelser"
-
-#~ msgid "Monitor Resolution"
-#~ msgstr "Skærmopløsning"
 
 #~ msgid "Monitor"
 #~ msgstr "Skærm"
@@ -14461,13 +14333,6 @@ msgstr "Kunne ikke starte \"%s\": %s"
 #~ msgid "Selection from Mask"
 #~ msgstr "Markering fra maske"
 
-#~ msgid ""
-#~ "The active layer has no mask\n"
-#~ "to convert to a selection."
-#~ msgstr ""
-#~ "Det aktive lag har ingen maske\n"
-#~ "der kan laves om til en markering."
-
 #~ msgid "Blend: 0, 0"
 #~ msgstr "Blanding: 0, 0"
 
@@ -14585,9 +14450,6 @@ msgstr "Kunne ikke starte \"%s\": %s"
 
 #~ msgid "Gimp Dock #%d"
 #~ msgstr "Gimp-dok nr. %d"
-
-#~ msgid "Input Device Settings"
-#~ msgstr "Pegeenhedsindstillinger"
 
 #~ msgid ""
 #~ "Sets the default menubar visibility. This can also be toggled with the "
@@ -15225,13 +15087,6 @@ msgstr "Kunne ikke starte \"%s\": %s"
 
 #~ msgid "Magnify Tool"
 #~ msgstr "Forstørrelsesværktøj"
-
-# pege- virker mere oplysende end inddata- her
-#~ msgid "/File/Dialogs/Input Devices..."
-#~ msgstr "/Fil/Vinduer/Pegeenheder..."
-
-#~ msgid "/Dialogs/Input Devices..."
-#~ msgstr "/Vinduer/Pegeenheder..."
 
 # bemærk at denne tekst skal synkroniseres
 #~ msgid "nowhere (click 'refresh')"
