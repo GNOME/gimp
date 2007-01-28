@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-23 20:12+0100\n"
-"PO-Revision-Date: 2007-01-23 20:13+0100\n"
+"POT-Creation-Date: 2007-01-28 14:58+0100\n"
+"PO-Revision-Date: 2007-01-28 15:04+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -81,11 +81,7 @@ msgstr ""
 "se così non fosse, scrivi alla Free Software Foundation, Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 
-#: ../app/app_procs.c:130
-msgid "(This console window will close in ten seconds)\n"
-msgstr "(Questa finestra di console si chiuderà in 10 secondi)\n"
-
-#: ../app/app_procs.c:240
+#: ../app/app_procs.c:208
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -109,97 +105,97 @@ msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr ""
 "L'interprete batch \"%s\" non è disponibile. Modalità batch disabilitata."
 
-#: ../app/main.c:136 ../tools/gimp-remote.c:79
+#: ../app/main.c:142 ../tools/gimp-remote.c:79
 msgid "Show version information and exit"
 msgstr "Mostra le informazioni sulla versione e esce"
 
-#: ../app/main.c:141
+#: ../app/main.c:147
 msgid "Show license information and exit"
 msgstr "Mostra le informazioni sulla licenza e esce"
 
-#: ../app/main.c:146
+#: ../app/main.c:152
 msgid "Be more verbose"
 msgstr "Sii più prolisso"
 
-#: ../app/main.c:151
+#: ../app/main.c:157
 msgid "Start a new GIMP instance"
 msgstr "Esegui una nuova istanza di GIMP"
 
-#: ../app/main.c:156
+#: ../app/main.c:162
 msgid "Run without a user interface"
 msgstr "Esegui senza interfaccia utente"
 
-#: ../app/main.c:161
+#: ../app/main.c:167
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Non caricare pennelli, gradienti, motivi, ..."
 
-#: ../app/main.c:166
+#: ../app/main.c:172
 msgid "Do not load any fonts"
 msgstr "Non caricare nessun carattere"
 
-#: ../app/main.c:171
+#: ../app/main.c:177
 msgid "Do not show a startup window"
 msgstr "Non mostrare la finestra iniziale"
 
-#: ../app/main.c:176
+#: ../app/main.c:182
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "Non utilizzare la memoria condivisa tra GIMP e i plugin"
 
-#: ../app/main.c:181
+#: ../app/main.c:187
 msgid "Do not use special CPU acceleration functions"
 msgstr "Non utilizzare le speciali accelerazioni CPU"
 
-#: ../app/main.c:186
+#: ../app/main.c:192
 msgid "Use an alternate sessionrc file"
 msgstr "Usa un file sessionrc alternativo"
 
-#: ../app/main.c:191
+#: ../app/main.c:197
 msgid "Use an alternate user gimprc file"
 msgstr "Usa un file gimprc utente alternativo"
 
-#: ../app/main.c:196
+#: ../app/main.c:202
 msgid "Use an alternate system gimprc file"
 msgstr "Usa un file gimprc di sistema alternativo"
 
-#: ../app/main.c:201
+#: ../app/main.c:207
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Comando batch da eseguire (può essere usato più di una volta)"
 
-#: ../app/main.c:206
+#: ../app/main.c:212
 msgid "The procedure to process batch commands with"
 msgstr "La procedura per elaborare i comandi batch"
 
-#: ../app/main.c:211
+#: ../app/main.c:217
 msgid "Send messages to console instead of using a dialog"
 msgstr "Mostra messaggi sulla console invece che in una finestra di dialogo"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:217
+#: ../app/main.c:223
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Modalità compatibile PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:223
+#: ../app/main.c:229
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Esegui il debug nel caso di un blocco (never|query|always)"
 
-#: ../app/main.c:228
+#: ../app/main.c:234
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Abilita debugging dei segnali non fatali"
 
-#: ../app/main.c:233
+#: ../app/main.c:239
 msgid "Make all warnings fatal"
 msgstr "Fai in modo che tutti gli avvertimenti (warning) siano fatali"
 
-#: ../app/main.c:238
+#: ../app/main.c:244
 msgid "Output a gimprc file with default settings"
 msgstr "Genera un file gimprc con valori predefiniti"
 
-#: ../app/main.c:308
+#: ../app/main.c:327
 msgid "[FILE|URI...]"
 msgstr "[FILE|URI...]"
 
-#: ../app/main.c:325
+#: ../app/main.c:345
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -207,11 +203,24 @@ msgstr ""
 "GIMP non può inizializzare l'interfaccia grafica.\n"
 "Controllare la corretta esistenza dell'impostazione dell'ambiente grafico."
 
-#: ../app/main.c:369
+#: ../app/main.c:392
 msgid "Another GIMP instance is already running."
 msgstr "Un'altra istanza di GIMP è già in esecuzione."
 
-#: ../app/main.c:529 ../tools/gimp-remote.c:323
+#: ../app/main.c:467
+msgid "GIMP output. Type any character to close this window."
+msgstr "Messaggi di GIMP. Premere un tasto qualsiasi per chiudere questa finestra."
+
+#: ../app/main.c:468
+#, c-format
+msgid "(Type any character to close this window)\n"
+msgstr "(premere un tasto qualsiasi per chiudere questa finestra)\n"
+
+#: ../app/main.c:485
+msgid "GIMP output. You can minimize this window, but don't close it."
+msgstr "Messaggi di GIMP. È possibile ridurre a icona questa finestra ma non chiuderla."
+
+#: ../app/main.c:587 ../tools/gimp-remote.c:323
 #, c-format
 msgid "%s version %s"
 msgstr "%s versione %s"
@@ -408,7 +417,7 @@ msgstr "Editor di testi"
 
 #: ../app/actions/actions.c:195 ../app/actions/dialogs-actions.c:65
 #: ../app/dialogs/dialogs.c:129 ../app/dialogs/preferences-dialog.c:1753
-#: ../app/gui/gui.c:437
+#: ../app/gui/gui.c:438
 msgid "Tool Options"
 msgstr "Opzioni strumenti"
 
@@ -4154,7 +4163,7 @@ msgstr "Rimpiazza"
 msgid "Anti erase"
 msgstr "Anti cancella"
 
-#: ../app/base/tile-swap.c:419
+#: ../app/base/tile-swap.c:436
 msgid ""
 "Unable to open swap file. The Gimp has run out of memory and cannot use the "
 "swap file. Some parts of your images may be corrupted. Try to save your work "
@@ -6602,7 +6611,7 @@ msgstr "_Desaturazione"
 msgid "Choose shade of gray based on:"
 msgstr "Scegliere le sfumature i grigio basate su:"
 
-#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:167
+#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:168
 #: ../app/gui/gui-message.c:146
 msgid "GIMP Message"
 msgstr "Messaggio GIMP"
@@ -8541,12 +8550,12 @@ msgstr "Riferimento a interprete errato in file interprete %s: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Stringa di formato binario errato in file interprete %s"
 
-#: ../app/plug-in/gimpplugin.c:431 ../app/plug-in/gimpplugin.c:470
+#: ../app/plug-in/gimpplugin.c:437 ../app/plug-in/gimpplugin.c:476
 #, c-format
 msgid "Terminating plug-in: '%s'\n"
 msgstr "Terminazione plug-in: '%s'\n"
 
-#: ../app/plug-in/gimpplugin.c:614
+#: ../app/plug-in/gimpplugin.c:620
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -10128,7 +10137,7 @@ msgstr ""
 msgid "_Rectangle Select"
 msgstr "_Rettangolare"
 
-#: ../app/tools/gimprectangletool.c:1052 ../app/tools/gimprectangletool.c:1696
+#: ../app/tools/gimprectangletool.c:1056 ../app/tools/gimprectangletool.c:1721
 msgid "Rectangle: "
 msgstr "Rettangolo: "
 
