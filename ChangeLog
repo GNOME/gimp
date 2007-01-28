@@ -1,3 +1,17 @@
+2007-01-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpimageundo.[ch]: new undo class which handles
+	GIMP_UNDO_IMAGE_TYPE, GIMP_UNDO_IMAGE_SIZE and
+	GIMP_UNDO_IMAGE_RESOLUTION.
+
+	* app/core/gimpimage-undo-push.c: use the new undo class and
+	remove the resp. code here.
+
+	* app/core/gimpimage-undo.h: changed include guards to not
+	conflict with gimpimageundo.h
+
 2007-01-28  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/authors.xsl: fixed spelling of "auto-generated".

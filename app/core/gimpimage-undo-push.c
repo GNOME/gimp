@@ -27,10 +27,7 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
 #include "base/tile-manager.h"
-
-#include "paint-funcs/paint-funcs.h"
 
 #include "gimp.h"
 #include "gimp-parasites.h"
@@ -45,6 +42,7 @@
 #include "gimpimage-sample-points.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
+#include "gimpimageundo.h"
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
@@ -64,19 +62,6 @@
 /*  Image Type Undo  */
 /*********************/
 
-typedef struct _ImageTypeUndo ImageTypeUndo;
-
-struct _ImageTypeUndo
-{
-  GimpImageBaseType base_type;
-};
-
-static gboolean undo_pop_image_type  (GimpUndo            *undo,
-                                      GimpUndoMode         undo_mode,
-                                      GimpUndoAccumulator *accum);
-static void     undo_free_image_type (GimpUndo            *undo,
-                                      GimpUndoMode         undo_mode);
-
 gboolean
 gimp_image_undo_push_image_type (GimpImage   *image,
                                  const gchar *undo_desc)
@@ -85,70 +70,24 @@ gimp_image_undo_push_image_type (GimpImage   *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
-                                   sizeof (ImageTypeUndo),
-                                   sizeof (ImageTypeUndo),
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_IMAGE_UNDO,
+                                   0, 0,
                                    GIMP_UNDO_IMAGE_TYPE, undo_desc,
                                    GIMP_DIRTY_IMAGE,
-                                   undo_pop_image_type,
-                                   undo_free_image_type,
+                                   NULL,
+                                   NULL,
                                    NULL)))
     {
-      ImageTypeUndo *itu = new->data;
-
-      itu->base_type = image->base_type;
-
       return TRUE;
     }
 
   return FALSE;
 }
 
-static gboolean
-undo_pop_image_type (GimpUndo            *undo,
-                     GimpUndoMode         undo_mode,
-                     GimpUndoAccumulator *accum)
-{
-  ImageTypeUndo     *itu = undo->data;
-  GimpImageBaseType  tmp;
-
-  tmp = itu->base_type;
-  itu->base_type = undo->image->base_type;
-  g_object_set (undo->image, "base-type", tmp, NULL);
-
-  gimp_image_colormap_changed (undo->image, -1);
-
-  if (itu->base_type != undo->image->base_type)
-    accum->mode_changed = TRUE;
-
-  return TRUE;
-}
-
-static void
-undo_free_image_type (GimpUndo     *undo,
-                      GimpUndoMode  undo_mode)
-{
-  g_free (undo->data);
-}
-
 
 /*********************/
 /*  Image Size Undo  */
 /*********************/
-
-typedef struct _ImageSizeUndo ImageSizeUndo;
-
-struct _ImageSizeUndo
-{
-  gint width;
-  gint height;
-};
-
-static gboolean undo_pop_image_size  (GimpUndo            *undo,
-                                      GimpUndoMode         undo_mode,
-                                      GimpUndoAccumulator *accum);
-static void     undo_free_image_size (GimpUndo            *undo,
-                                      GimpUndoMode         undo_mode);
 
 gboolean
 gimp_image_undo_push_image_size (GimpImage   *image,
@@ -158,81 +97,24 @@ gimp_image_undo_push_image_size (GimpImage   *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
-                                   sizeof (ImageSizeUndo),
-                                   sizeof (ImageSizeUndo),
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_IMAGE_UNDO,
+                                   0, 0,
                                    GIMP_UNDO_IMAGE_SIZE, undo_desc,
                                    GIMP_DIRTY_IMAGE | GIMP_DIRTY_IMAGE_SIZE,
-                                   undo_pop_image_size,
-                                   undo_free_image_size,
+                                   NULL,
+                                   NULL,
                                    NULL)))
     {
-      ImageSizeUndo *isu = new->data;
-
-      isu->width  = image->width;
-      isu->height = image->height;
-
       return TRUE;
     }
 
   return FALSE;
 }
 
-static gboolean
-undo_pop_image_size (GimpUndo            *undo,
-                     GimpUndoMode         undo_mode,
-                     GimpUndoAccumulator *accum)
-{
-  ImageSizeUndo *isu = undo->data;
-  gint           width;
-  gint           height;
-
-  width  = isu->width;
-  height = isu->height;
-
-  isu->width  = undo->image->width;
-  isu->height = undo->image->height;
-
-  g_object_set (undo->image,
-                "width",  width,
-                "height", height,
-                NULL);
-
-  gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimp_image_get_mask (undo->image)));
-
-  if (undo->image->width  != isu->width ||
-      undo->image->height != isu->height)
-    accum->size_changed = TRUE;
-
-  return TRUE;
-}
-
-static void
-undo_free_image_size (GimpUndo      *undo,
-                      GimpUndoMode   undo_mode)
-{
-  g_free (undo->data);
-}
-
 
 /***************************/
 /*  Image Resolution Undo  */
 /***************************/
-
-typedef struct _ResolutionUndo ResolutionUndo;
-
-struct _ResolutionUndo
-{
-  gdouble   xres;
-  gdouble   yres;
-  GimpUnit  unit;
-};
-
-static gboolean undo_pop_image_resolution  (GimpUndo            *undo,
-                                            GimpUndoMode         undo_mode,
-                                            GimpUndoAccumulator *accum);
-static void     undo_free_image_resolution (GimpUndo            *undo,
-                                            GimpUndoMode         undo_mode);
 
 gboolean
 gimp_image_undo_push_image_resolution (GimpImage   *image,
@@ -242,71 +124,18 @@ gimp_image_undo_push_image_resolution (GimpImage   *image,
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
-                                   sizeof (ResolutionUndo),
-                                   sizeof (ResolutionUndo),
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_IMAGE_UNDO,
+                                   0, 0,
                                    GIMP_UNDO_IMAGE_RESOLUTION, undo_desc,
                                    GIMP_DIRTY_IMAGE,
-                                   undo_pop_image_resolution,
-                                   undo_free_image_resolution,
+                                   NULL,
+                                   NULL,
                                    NULL)))
     {
-      ResolutionUndo *ru = new->data;
-
-      ru->xres = image->xresolution;
-      ru->yres = image->yresolution;
-      ru->unit = image->resolution_unit;
-
       return TRUE;
     }
 
   return FALSE;
-}
-
-static gboolean
-undo_pop_image_resolution (GimpUndo            *undo,
-                           GimpUndoMode         undo_mode,
-                           GimpUndoAccumulator *accum)
-{
-  ResolutionUndo *ru = undo->data;
-
-  if (ABS (ru->xres - undo->image->xresolution) >= 1e-5 ||
-      ABS (ru->yres - undo->image->yresolution) >= 1e-5)
-    {
-      gdouble xres;
-      gdouble yres;
-
-      xres = undo->image->xresolution;
-      yres = undo->image->yresolution;
-
-      undo->image->xresolution = ru->xres;
-      undo->image->yresolution = ru->yres;
-
-      ru->xres = xres;
-      ru->yres = yres;
-
-      accum->resolution_changed = TRUE;
-    }
-
-  if (ru->unit != undo->image->resolution_unit)
-    {
-      GimpUnit unit;
-
-      unit = undo->image->resolution_unit;
-      undo->image->resolution_unit = ru->unit;
-      ru->unit = unit;
-
-      accum->unit_changed = TRUE;
-    }
-
-  return TRUE;
-}
-
-static void
-undo_free_image_resolution (GimpUndo      *undo,
-                            GimpUndoMode   undo_mode)
-{
-  g_free (undo->data);
 }
 
 

@@ -110,6 +110,7 @@ typedef struct _GimpLayerMask       GimpLayerMask;
 /*  undo objects  */
 
 typedef struct _GimpUndo            GimpUndo;
+typedef struct _GimpImageUndo       GimpImageUndo;
 typedef struct _GimpItemUndo        GimpItemUndo;
 typedef struct _GimpChannelUndo     GimpChannelUndo;
 typedef struct _GimpDrawableUndo    GimpDrawableUndo;
