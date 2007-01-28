@@ -45,6 +45,7 @@
 #include "gimplayer.h"
 #include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
+#include "gimplayerpropundo.h"
 #include "gimplist.h"
 #include "gimpparasitelist.h"
 #include "gimpselection.h"
@@ -1021,19 +1022,6 @@ undo_free_layer (GimpUndo     *undo,
 /* Layer re-position Undo  */
 /***************************/
 
-typedef struct _LayerRepositionUndo LayerRepositionUndo;
-
-struct _LayerRepositionUndo
-{
-  gint old_position;
-};
-
-static gboolean undo_pop_layer_reposition  (GimpUndo            *undo,
-                                            GimpUndoMode         undo_mode,
-                                            GimpUndoAccumulator *accum);
-static void     undo_free_layer_reposition (GimpUndo            *undo,
-                                            GimpUndoMode         undo_mode);
-
 gboolean
 gimp_image_undo_push_layer_reposition (GimpImage   *image,
                                        const gchar *undo_desc,
@@ -1045,107 +1033,29 @@ gimp_image_undo_push_layer_reposition (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)), FALSE);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_UNDO,
-                                   sizeof (LayerRepositionUndo),
-                                   sizeof (LayerRepositionUndo),
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_LAYER_PROP_UNDO,
+                                   0, 0,
                                    GIMP_UNDO_LAYER_REPOSITION, undo_desc,
                                    GIMP_DIRTY_IMAGE_STRUCTURE,
-                                   undo_pop_layer_reposition,
-                                   undo_free_layer_reposition,
+                                   NULL, NULL,
                                    "item", layer,
                                    NULL)))
     {
-      LayerRepositionUndo *lru = new->data;
-
-      lru->old_position = gimp_image_get_layer_index (image, layer);
-
       return TRUE;
     }
 
   return FALSE;
 }
 
-static gboolean
-undo_pop_layer_reposition (GimpUndo            *undo,
-                           GimpUndoMode         undo_mode,
-                           GimpUndoAccumulator *accum)
-{
-  LayerRepositionUndo *lru   = undo->data;
-  GimpLayer           *layer = GIMP_LAYER (GIMP_ITEM_UNDO (undo)->item);
-  gint                 pos;
 
-  /* what's the layer's current index? */
-  pos = gimp_image_get_layer_index (undo->image, layer);
-  gimp_image_position_layer (undo->image, layer, lru->old_position,
-                             FALSE, NULL);
-  lru->old_position = pos;
-
-  return TRUE;
-}
-
-static void
-undo_free_layer_reposition (GimpUndo     *undo,
-                            GimpUndoMode  undo_mode)
-{
-  g_free (undo->data);
-}
-
-
-/***************************/
-/*  Layer properties Undo  */
-/***************************/
-
-typedef struct _LayerPropertiesUndo LayerPropertiesUndo;
-
-struct _LayerPropertiesUndo
-{
-  GimpLayerModeEffects old_mode;
-  gdouble              old_opacity;
-  gboolean             old_lock_alpha;
-};
-
-static gboolean undo_push_layer_properties (GimpImage           *image,
-                                            GimpUndoType         undo_type,
-                                            const gchar         *undo_desc,
-                                            GimpLayer           *layer);
-static gboolean undo_pop_layer_properties  (GimpUndo            *undo,
-                                            GimpUndoMode         undo_mode,
-                                            GimpUndoAccumulator *accum);
-static void     undo_free_layer_properties (GimpUndo            *undo,
-                                            GimpUndoMode         undo_mode);
+/*********************/
+/*  Layer Mode Undo  */
+/*********************/
 
 gboolean
 gimp_image_undo_push_layer_mode (GimpImage   *image,
                                  const gchar *undo_desc,
                                  GimpLayer   *layer)
-{
-  return undo_push_layer_properties (image, GIMP_UNDO_LAYER_MODE,
-                                     undo_desc, layer);
-}
-
-gboolean
-gimp_image_undo_push_layer_opacity (GimpImage   *image,
-                                    const gchar *undo_desc,
-                                    GimpLayer   *layer)
-{
-  return undo_push_layer_properties (image, GIMP_UNDO_LAYER_OPACITY,
-                                     undo_desc, layer);
-}
-
-gboolean
-gimp_image_undo_push_layer_lock_alpha (GimpImage   *image,
-                                       const gchar *undo_desc,
-                                       GimpLayer   *layer)
-{
-  return undo_push_layer_properties (image, GIMP_UNDO_LAYER_LOCK_ALPHA,
-                                     undo_desc, layer);
-}
-
-static gboolean
-undo_push_layer_properties (GimpImage    *image,
-                            GimpUndoType  undo_type,
-                            const gchar  *undo_desc,
-                            GimpLayer    *layer)
 {
   GimpUndo *new;
 
@@ -1153,81 +1063,78 @@ undo_push_layer_properties (GimpImage    *image,
   g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)), FALSE);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_UNDO,
-                                   sizeof (LayerPropertiesUndo),
-                                   sizeof (LayerPropertiesUndo),
-                                   undo_type, undo_desc,
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_LAYER_PROP_UNDO,
+                                   0, 0,
+                                   GIMP_UNDO_LAYER_MODE, undo_desc,
                                    GIMP_DIRTY_ITEM_META,
-                                   undo_pop_layer_properties,
-                                   undo_free_layer_properties,
+                                   NULL, NULL,
                                    "item", layer,
                                    NULL)))
     {
-      LayerPropertiesUndo *lpu = new->data;
-
-      lpu->old_mode       = gimp_layer_get_mode (layer);
-      lpu->old_opacity    = gimp_layer_get_opacity (layer);
-      lpu->old_lock_alpha = gimp_layer_get_lock_alpha (layer);
-
       return TRUE;
     }
 
   return FALSE;
 }
 
-static gboolean
-undo_pop_layer_properties (GimpUndo            *undo,
-                           GimpUndoMode         undo_mode,
-                           GimpUndoAccumulator *accum)
+
+/************************/
+/*  Layer Opacity Undo  */
+/************************/
+
+gboolean
+gimp_image_undo_push_layer_opacity (GimpImage   *image,
+                                    const gchar *undo_desc,
+                                    GimpLayer   *layer)
 {
-  LayerPropertiesUndo  *lpu   = undo->data;
-  GimpLayer            *layer = GIMP_LAYER (GIMP_ITEM_UNDO (undo)->item);
+  GimpUndo *new;
 
-  switch (undo->undo_type)
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)), FALSE);
+
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_LAYER_PROP_UNDO,
+                                   0, 0,
+                                   GIMP_UNDO_LAYER_OPACITY, undo_desc,
+                                   GIMP_DIRTY_ITEM_META,
+                                   NULL, NULL,
+                                   "item", layer,
+                                   NULL)))
     {
-    case GIMP_UNDO_LAYER_MODE:
-      {
-        GimpLayerModeEffects mode;
-
-        mode = gimp_layer_get_mode (layer);
-        gimp_layer_set_mode (layer, lpu->old_mode, FALSE);
-        lpu->old_mode = mode;
-      }
-      break;
-
-    case GIMP_UNDO_LAYER_OPACITY:
-      {
-        gdouble opacity;
-
-        opacity = gimp_layer_get_opacity (layer);
-        gimp_layer_set_opacity (layer, lpu->old_opacity, FALSE);
-        lpu->old_opacity = opacity;
-      }
-      break;
-
-    case GIMP_UNDO_LAYER_LOCK_ALPHA:
-      {
-        gboolean lock_alpha;
-
-        lock_alpha = gimp_layer_get_lock_alpha (layer);
-        gimp_layer_set_lock_alpha (layer, lpu->old_lock_alpha, FALSE);
-        lpu->old_lock_alpha = lock_alpha;
-      }
-      break;
-
-    default:
-      g_return_val_if_reached (FALSE);
-      break;
+      return TRUE;
     }
 
-  return TRUE;
+  return FALSE;
 }
 
-static void
-undo_free_layer_properties (GimpUndo     *undo,
-                            GimpUndoMode  undo_mode)
+
+/***************************/
+/*  Layer Lock Alpha Undo  */
+/***************************/
+
+gboolean
+gimp_image_undo_push_layer_lock_alpha (GimpImage   *image,
+                                       const gchar *undo_desc,
+                                       GimpLayer   *layer)
 {
-  g_free (undo->data);
+  GimpUndo *new;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (GIMP_IS_LAYER (layer), FALSE);
+  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)), FALSE);
+
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_LAYER_PROP_UNDO,
+                                   0, 0,
+                                   GIMP_UNDO_LAYER_LOCK_ALPHA, undo_desc,
+                                   GIMP_DIRTY_ITEM_META,
+                                   NULL, NULL,
+                                   "item", layer,
+                                   NULL)))
+    {
+      return TRUE;
+    }
+
+  return FALSE;
 }
 
 

@@ -208,6 +208,8 @@ libappcore_a_sources = \
 	gimplayer-floating-sel.h	\
 	gimplayermask.c			\
 	gimplayermask.h			\
+	gimplayerpropundo.c		\
+	gimplayerpropundo.h		\
 	gimplist.c			\
 	gimplist.h			\
 	gimpobject.c			\
