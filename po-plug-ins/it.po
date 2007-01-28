@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-17 10:13+0100\n"
-"PO-Revision-Date: 2007-01-17 10:16+0100\n"
+"POT-Creation-Date: 2007-01-29 00:04+0100\n"
+"PO-Revision-Date: 2007-01-29 00:39+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -873,7 +873,7 @@ msgstr "Mappa l'immagine su di un oggetto (piano, sfera, cubo o cilindro)"
 
 #: ../plug-ins/MapObject/mapobject_main.c:201
 msgid "Map _Object..."
-msgstr "_Oggetto mappa..."
+msgstr "Mappa su _oggetto..."
 
 #: ../plug-ins/MapObject/mapobject_ui.c:248
 #: ../plug-ins/MapObject/mapobject_ui.c:1317
@@ -887,7 +887,7 @@ msgstr "Cilin_dro"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:485
 msgid "Map to:"
-msgstr "Mappa:"
+msgstr "Mappa su:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:489
 msgid "Plane"
@@ -919,11 +919,11 @@ msgstr "Rendi l'immagine trasparente fuori dall'oggetto"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:522
 msgid "Tile source image"
-msgstr "Immagine sorgente per la piastrella"
+msgstr "Piastrella immagine sorgente"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:533
 msgid "Tile source image: useful for infinite planes"
-msgstr "Immagine sorgente per la piastrella: utile per piani infiniti"
+msgstr "Piastrella immagine sorgente: utile per piani infiniti"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:536
 msgid "Create new image"
@@ -1073,15 +1073,15 @@ msgstr "Scala Z (dimensione)"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1205
 msgid "_Top:"
-msgstr "_Alto:"
+msgstr "_Superiore:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1205
 msgid "_Bottom:"
-msgstr "_Basso:"
+msgstr "_Inferiore:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1210
 msgid "Images for the Cap Faces"
-msgstr "Immagini per le facciate Cap"
+msgstr "Immagini per le basi"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1239
 msgid "Size"
@@ -2248,7 +2248,7 @@ msgstr "I_nverti mappa a sbalzo"
 #. Tile bumpmap
 #: ../plug-ins/common/bumpmap.c:944
 msgid "_Tile bumpmap"
-msgstr "Pias_trella mappa a sbalzo"
+msgstr "Af_fianca mappa a sbalzo"
 
 #: ../plug-ins/common/bumpmap.c:959 ../plug-ins/common/emboss.c:501
 msgid "_Azimuth:"
@@ -2260,7 +2260,7 @@ msgstr "_Elevazione:"
 
 #: ../plug-ins/common/bumpmap.c:997 ../plug-ins/common/postscript.c:3335
 msgid "_X offset:"
-msgstr "Spostamento _X:"
+msgstr "Scostamento _X:"
 
 #: ../plug-ins/common/bumpmap.c:1000 ../plug-ins/common/bumpmap.c:1014
 msgid ""
@@ -2272,7 +2272,7 @@ msgstr ""
 
 #: ../plug-ins/common/bumpmap.c:1011 ../plug-ins/common/postscript.c:3344
 msgid "_Y offset:"
-msgstr "Spostamento _Y:"
+msgstr "Scostamento _Y:"
 
 #: ../plug-ins/common/bumpmap.c:1025
 msgid "_Waterlevel:"
@@ -2825,7 +2825,7 @@ msgstr "_Estendi"
 #: ../plug-ins/common/edge.c:700 ../plug-ins/common/fractaltrace.c:732
 #: ../plug-ins/common/ripple.c:563
 msgid "_Wrap"
-msgstr "_Wrap"
+msgstr "_Avvolgi"
 
 #: ../plug-ins/common/convmatrix.c:112
 msgid "Cro_p"
@@ -2948,7 +2948,7 @@ msgstr "Dimensione ma_ttonella:"
 
 #: ../plug-ins/common/cubism.c:317
 msgid "T_ile saturation:"
-msgstr "Saturaz_ione piastrella:"
+msgstr "Saturaz_ione mattonelle:"
 
 #: ../plug-ins/common/cubism.c:328
 msgid "_Use background color"
@@ -2985,7 +2985,7 @@ msgstr "Impossibile operare su selezioni vuote."
 
 #. Possibly retrieve data from a previous run
 #. The shell and main vbox
-#: ../plug-ins/common/curve_bend.c:1196 ../plug-ins/common/curve_bend.c:2913
+#: ../plug-ins/common/curve_bend.c:1196 ../plug-ins/common/curve_bend.c:2915
 msgid "Curve Bend"
 msgstr "Piega curva"
 
@@ -3102,11 +3102,11 @@ msgstr "Carica le curve da un file"
 msgid "Save the curves to a file"
 msgstr "Salva le curve in un file"
 
-#: ../plug-ins/common/curve_bend.c:2011
+#: ../plug-ins/common/curve_bend.c:2013
 msgid "Load Curve Points from File"
 msgstr "Carica i punti della curva da file"
 
-#: ../plug-ins/common/curve_bend.c:2046
+#: ../plug-ins/common/curve_bend.c:2048
 msgid "Save Curve Points to File"
 msgstr "Salva i punti della curva in un file"
 
@@ -3534,7 +3534,7 @@ msgstr "Dispone i pixel secondo le mappe di disposizione"
 
 #: ../plug-ins/common/displace.c:182
 msgid "_Displace..."
-msgstr "S_postamento..."
+msgstr "S_posta..."
 
 #: ../plug-ins/common/displace.c:293
 msgid "Displacing"
@@ -3556,7 +3556,7 @@ msgstr "Spostamento _Y:"
 
 #: ../plug-ins/common/displace.c:462
 msgid "Displacement Mode"
-msgstr "Modalità disposizione"
+msgstr "Modalità spostamento"
 
 #: ../plug-ins/common/displace.c:465
 msgid "_Cartesian"
@@ -3568,7 +3568,7 @@ msgstr "_Polare"
 
 #: ../plug-ins/common/displace.c:471
 msgid "Edge Behavior"
-msgstr "Comportamento spigoli"
+msgstr "Comportamento bordi"
 
 #: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:713
 #: ../plug-ins/common/ripple.c:564 ../plug-ins/common/waves.c:277
@@ -4088,7 +4088,7 @@ msgstr "Traccia frattale"
 #. Settings
 #: ../plug-ins/common/fractaltrace.c:727
 msgid "Outside Type"
-msgstr "Tipo in uscita"
+msgstr "Tipo di contorno"
 
 #: ../plug-ins/common/fractaltrace.c:738
 msgid "_White"
@@ -5086,7 +5086,7 @@ msgstr "Van Gogh (LIC)"
 
 #: ../plug-ins/common/lic.c:666
 msgid "Effect Channel"
-msgstr "Canale effetti"
+msgstr "Canale effetto"
 
 #: ../plug-ins/common/lic.c:673
 msgid "_Brightness"
@@ -5492,7 +5492,7 @@ msgstr "Triangoli"
 
 #: ../plug-ins/common/mosaic.c:643
 msgid "_Tiling primitives:"
-msgstr "Primitive di piastrellamen_to:"
+msgstr "Primitive di affiancamen_to:"
 
 #: ../plug-ins/common/mosaic.c:651
 msgid "Tile _size:"
@@ -5806,11 +5806,11 @@ msgstr "_Usa l'intensità"
 
 #: ../plug-ins/common/papertile.c:234 ../plug-ins/common/papertile.c:533
 msgid "Paper Tile"
-msgstr "Effetto carta"
+msgstr "Fogli di carta"
 
 #: ../plug-ins/common/papertile.c:260
 msgid "Division"
-msgstr "Divisione"
+msgstr "Suddivisioni"
 
 #: ../plug-ins/common/papertile.c:299
 msgid "Fractional Pixels"
@@ -5882,7 +5882,7 @@ msgstr "31 settembre 1999"
 
 #: ../plug-ins/common/papertile.c:820
 msgid "_Paper Tile..."
-msgstr "_Effetto carta..."
+msgstr "_Fogli di carta..."
 
 #: ../plug-ins/common/pat.c:121 ../plug-ins/common/pat.c:143
 msgid "GIMP pattern"
@@ -5930,7 +5930,7 @@ msgstr "Fotocopia"
 #: ../plug-ins/common/photocopy.c:890 ../plug-ins/common/sharpen.c:514
 #: ../plug-ins/common/softglow.c:695
 msgid "_Sharpness:"
-msgstr "_Filo:"
+msgstr "_Nitidezza:"
 
 #: ../plug-ins/common/photocopy.c:904
 msgid "Percent _black:"
@@ -7310,15 +7310,15 @@ msgstr "Simula l'incandescenza illuminando intensamente e casualmente"
 
 #: ../plug-ins/common/softglow.c:139
 msgid "_Softglow..."
-msgstr "_Incandescenza leggera..."
+msgstr "_Chiarore sfumato..."
 
 #: ../plug-ins/common/softglow.c:630
 msgid "Softglow"
-msgstr "Incandescenza leggera"
+msgstr "Chiarore sfumato"
 
 #: ../plug-ins/common/softglow.c:667
 msgid "_Glow radius:"
-msgstr "Raggio di incandescen_za:"
+msgstr "Raggio _chiarore:"
 
 #: ../plug-ins/common/sparkle.c:180
 msgid "Turn bright spots into starry sparkles"
@@ -7651,11 +7651,11 @@ msgstr "_Applica tela..."
 
 #: ../plug-ins/common/struc.c:1228
 msgid "Applying canvas"
-msgstr "Applicazione tele"
+msgstr "Applicazione tela"
 
 #: ../plug-ins/common/struc.c:1265
 msgid "Apply Canvas"
-msgstr "Applica tele"
+msgstr "Applica tela"
 
 #: ../plug-ins/common/struc.c:1298
 msgid "_Top-right"
@@ -7933,7 +7933,7 @@ msgstr "Pias_trella..."
 #. Set the tile cache size
 #: ../plug-ins/common/tile.c:191 ../plug-ins/common/tileit.c:320
 msgid "Tiling"
-msgstr "Copertura..."
+msgstr "Affiancatura"
 
 #: ../plug-ins/common/tile.c:393
 msgid "Tile"
@@ -7941,7 +7941,7 @@ msgstr "Piastrella"
 
 #: ../plug-ins/common/tile.c:414
 msgid "Tile to New Size"
-msgstr "Copertura nuova dimensione"
+msgstr "Affianca sino alla nuova dimensione"
 
 #: ../plug-ins/common/tile.c:436
 msgid "C_reate new image"
@@ -7949,7 +7949,7 @@ msgstr "C_rea nuova immagine"
 
 #: ../plug-ins/common/tileit.c:215
 msgid "Tile image into smaller versions of the original"
-msgstr "Piastrella l'immagine con versioni più piccole dell'originale"
+msgstr "Affianca l'immagine con versioni più piccole dell'originale"
 
 #: ../plug-ins/common/tileit.c:220
 msgid "_Small Tiles..."
@@ -7972,11 +7972,11 @@ msgstr "Ribalta"
 
 #: ../plug-ins/common/tileit.c:461
 msgid "A_ll tiles"
-msgstr "Tutte piastre_lle"
+msgstr "Tutte le piastre_lle"
 
 #: ../plug-ins/common/tileit.c:475
 msgid "Al_ternate tiles"
-msgstr "Al_terna piastrelle"
+msgstr "Piastrelle al_terne"
 
 #: ../plug-ins/common/tileit.c:489
 msgid "_Explicit tile"
@@ -8002,7 +8002,7 @@ msgstr "Numero di segmenti"
 #: ../plug-ins/common/tiler.c:67
 msgid "Alters edges to make the image seamlessly tileable"
 msgstr ""
-"Altera i bordi per rendere l'immagine piastrellabile senza soluzione di "
+"Altera i bordi per rendere l'immagine affiancabile senza soluzione di "
 "continuità"
 
 #: ../plug-ins/common/tiler.c:73
@@ -8368,7 +8368,7 @@ msgstr "Ampiezza passo:"
 #. Displacement map menu
 #: ../plug-ins/common/warp.c:443
 msgid "Displacement map:"
-msgstr "Mappatura disallineata:"
+msgstr "Mappa di spostamento:"
 
 #. =======================================================================
 #. Displacement Type
@@ -8378,7 +8378,7 @@ msgstr "Sui bordi:"
 
 #: ../plug-ins/common/warp.c:472
 msgid "Wrap"
-msgstr "Wrap"
+msgstr "Avvolgi"
 
 #: ../plug-ins/common/warp.c:487
 msgid "Smear"
@@ -8401,7 +8401,7 @@ msgstr "Opzioni avanzate"
 
 #: ../plug-ins/common/warp.c:553
 msgid "Dither size:"
-msgstr "Dimensione area:"
+msgstr "Ampiezza sfumatura:"
 
 #: ../plug-ins/common/warp.c:566
 msgid "Rotation angle:"
@@ -8600,7 +8600,7 @@ msgstr "_Destra"
 #. **************************************************
 #: ../plug-ins/common/wind.c:969
 msgid "Edge Affected"
-msgstr "Bordi compresi"
+msgstr "Bordi interessati"
 
 #: ../plug-ins/common/wind.c:973
 msgid "L_eading"
@@ -9292,11 +9292,11 @@ msgstr "Sinistra"
 #: ../plug-ins/gfig/gfig-dialog.c:1716
 #: ../plug-ins/gimpressionist/orientation.c:130
 msgid "Orientation:"
-msgstr "Orientazione:"
+msgstr "Orientamento:"
 
 #: ../plug-ins/gfig/gfig-dobject.c:585
 msgid "Hey where has the object gone ?"
-msgstr "Ao, ma dov'è andato l'oggetto?"
+msgstr "Aho, ma dov'è andato l'oggetto?"
 
 #: ../plug-ins/gfig/gfig-dobject.c:949
 msgid "Error reading file"
@@ -9758,8 +9758,8 @@ msgstr "Piastrellabile"
 #: ../plug-ins/gimpressionist/general.c:199
 msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr ""
-"Imposta se l'immagine risultante deve risultare piastrellabile senza "
-"soluzione di continuità"
+"Imposta se l'immagine risultante deve risultare affiancabile senza soluzione "
+"di continuità"
 
 #: ../plug-ins/gimpressionist/general.c:204
 msgid "Drop shadow"
@@ -9830,7 +9830,7 @@ msgstr "GIMPressionista"
 
 #: ../plug-ins/gimpressionist/orientation.c:74
 msgid "Or_ientation"
-msgstr "_Orientazione"
+msgstr "_Orientamento"
 
 #: ../plug-ins/gimpressionist/orientation.c:88
 msgid "Directions:"
@@ -9850,11 +9850,11 @@ msgstr "L'angolo di partenza del primo pennello da creare"
 
 #: ../plug-ins/gimpressionist/orientation.c:112
 msgid "Angle span:"
-msgstr "Ampiezza angolo:"
+msgstr "Intervallo angoli:"
 
 #: ../plug-ins/gimpressionist/orientation.c:116
 msgid "The angle span of the first brush to create"
-msgstr "L'ampiezza dell'angolo del primo pennello da creare"
+msgstr "L'intervallo di angolo del primo pennello da creare"
 
 #: ../plug-ins/gimpressionist/orientation.c:139
 msgid ""
@@ -9889,7 +9889,7 @@ msgstr "Sia la direzione dal centro a determinare la direzione del tratto"
 #: ../plug-ins/gimpressionist/orientation.c:158
 #: ../plug-ins/gimpressionist/size.c:161
 msgid "Flowing"
-msgstr "Flussante"
+msgstr "Fluttuante"
 
 #: ../plug-ins/gimpressionist/orientation.c:159
 #: ../plug-ins/gimpressionist/size.c:162
@@ -9917,15 +9917,15 @@ msgstr "Manuale"
 
 #: ../plug-ins/gimpressionist/orientation.c:175
 msgid "Manually specify the stroke orientation"
-msgstr "Specifica manualmente l'orientazione del tratto"
+msgstr "Specifica manualmente l'orientamento del tratto"
 
 #: ../plug-ins/gimpressionist/orientation.c:186
 msgid "Opens up the Orientation Map Editor"
-msgstr "Apri l'editor della mappa di orientamento"
+msgstr "Apre la finestra della modifica mappa di orientamento"
 
 #: ../plug-ins/gimpressionist/orientmap.c:508
 msgid "Orientation Map Editor"
-msgstr "Orientazione editor mappa"
+msgstr "Modifica mappa di orientamento"
 
 #: ../plug-ins/gimpressionist/orientmap.c:537
 msgid "Vectors"
