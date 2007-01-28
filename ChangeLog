@@ -1,3 +1,9 @@
+2007-01-28  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/authors.xsl: fixed spelling of "auto-generated".
+
+	* app/tools/gimprectangletool.c: removed unused declaration.
+
 2007-01-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawableundo.c (gimp_drawable_undo_constructor):

@@ -142,8 +142,6 @@ static GtkAnchorType gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *p
                                                      gint                     *w,
                                                      gint                     *h);
 
-static guint
-           gimp_rectangle_tool_fix_resize_direction (GimpRectangleToolPrivate *private);
 
 static guint gimp_rectangle_tool_signals[LAST_SIGNAL] = { 0 };
 
