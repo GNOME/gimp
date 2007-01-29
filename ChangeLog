@@ -1,5 +1,11 @@
 2007-01-29  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-undo-push.[ch]: return a GimpUndo* instead
+	of gboolean from all undo_push functions. Simplifies the new
+	properly done functions quite a bit.
+
+2007-01-29  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/core-types.h
 	* app/core/gimpchannelpropundo.[ch]: new undo class which handles
