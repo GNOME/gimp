@@ -28,17 +28,17 @@ GimpUndo * gimp_image_undo_push_image_size          (GimpImage     *image,
                                                      const gchar   *undo_desc);
 GimpUndo * gimp_image_undo_push_image_resolution    (GimpImage     *image,
                                                      const gchar   *undo_desc);
-GimpUndo * gimp_image_undo_push_image_guide         (GimpImage     *image,
-                                                     const gchar   *undo_desc,
-                                                     GimpGuide     *guide);
 GimpUndo * gimp_image_undo_push_image_grid          (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpGrid      *grid);
+GimpUndo * gimp_image_undo_push_image_colormap      (GimpImage     *image,
+                                                     const gchar   *undo_desc);
+GimpUndo * gimp_image_undo_push_image_guide         (GimpImage     *image,
+                                                     const gchar   *undo_desc,
+                                                     GimpGuide     *guide);
 GimpUndo * gimp_image_undo_push_image_sample_point  (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpSamplePoint *sample_point);
-GimpUndo * gimp_image_undo_push_image_colormap      (GimpImage     *image,
-                                                     const gchar   *undo_desc);
 
 
 /*  drawable undo  */

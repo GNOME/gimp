@@ -1,3 +1,9 @@
+2007-01-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-enums.[ch]
+	* app/core/gimpimage-undo-push.[ch]: reordered IMAGE_GRID and
+	IMAGE_COLORMAP to be before IMAGE_GUIDE and IMAGE_SAMPLE_POINT.
+
 2007-01-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimageundo.[ch]: add support for IMAGE_GRID and

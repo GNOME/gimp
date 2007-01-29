@@ -115,6 +115,47 @@ gimp_image_undo_push_image_resolution (GimpImage   *image,
 
 
 /****************/
+/*  Grid Undo   */
+/****************/
+
+GimpUndo *
+gimp_image_undo_push_image_grid (GimpImage   *image,
+                                 const gchar *undo_desc,
+                                 GimpGrid    *grid)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_GRID (grid), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_IMAGE_UNDO,
+                               0, 0,
+                               GIMP_UNDO_IMAGE_GRID, undo_desc,
+                               GIMP_DIRTY_IMAGE_META,
+                               NULL, NULL,
+                               "grid", grid,
+                               NULL);
+}
+
+
+/*******************/
+/*  Colormap Undo  */
+/*******************/
+
+GimpUndo *
+gimp_image_undo_push_image_colormap (GimpImage   *image,
+                                     const gchar *undo_desc)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_IMAGE_UNDO,
+                               0, 0,
+                               GIMP_UNDO_IMAGE_COLORMAP, undo_desc,
+                               GIMP_DIRTY_IMAGE,
+                               NULL, NULL,
+                               NULL);
+}
+
+
+/****************/
 /*  Guide Undo  */
 /****************/
 
@@ -216,28 +257,6 @@ undo_free_image_guide (GimpUndo     *undo,
 
   g_object_unref (gu->guide);
   g_free (gu);
-}
-
-
-/****************/
-/*  Grid Undo   */
-/****************/
-
-GimpUndo *
-gimp_image_undo_push_image_grid (GimpImage   *image,
-                                 const gchar *undo_desc,
-                                 GimpGrid    *grid)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_GRID (grid), NULL);
-
-  return gimp_image_undo_push (image, GIMP_TYPE_IMAGE_UNDO,
-                               0, 0,
-                               GIMP_UNDO_IMAGE_GRID, undo_desc,
-                               GIMP_DIRTY_IMAGE_META,
-                               NULL, NULL,
-                               "grid", grid,
-                               NULL);
 }
 
 
@@ -347,25 +366,6 @@ undo_free_image_sample_point (GimpUndo     *undo,
 
   gimp_image_sample_point_unref (gu->sample_point);
   g_free (gu);
-}
-
-
-/*******************/
-/*  Colormap Undo  */
-/*******************/
-
-GimpUndo *
-gimp_image_undo_push_image_colormap (GimpImage   *image,
-                                     const gchar *undo_desc)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  return gimp_image_undo_push (image, GIMP_TYPE_IMAGE_UNDO,
-                               0, 0,
-                               GIMP_UNDO_IMAGE_COLORMAP, undo_desc,
-                               GIMP_DIRTY_IMAGE,
-                               NULL, NULL,
-                               NULL);
 }
 
 
