@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-29 00:04+0100\n"
-"PO-Revision-Date: 2007-01-29 01:15+0100\n"
+"PO-Revision-Date: 2007-01-29 01:22+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -9751,7 +9751,7 @@ msgstr "Imposta se piazzare i tratti sino fuori ai bordi dell'immagine"
 #. Tileable checkbox
 #: ../plug-ins/gimpressionist/general.c:195 ../plug-ins/maze/maze_face.c:316
 msgid "Tileable"
-msgstr "Piastrellabile"
+msgstr "Affiancabile"
 
 #: ../plug-ins/gimpressionist/general.c:199
 msgid "Selects if the resulting image should be seamlessly tileable"
