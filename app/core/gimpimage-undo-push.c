@@ -57,9 +57,9 @@
 #include "gimp-intl.h"
 
 
-/*********************/
-/*  Image Type Undo  */
-/*********************/
+/*****************/
+/*  Image Undos  */
+/*****************/
 
 GimpUndo *
 gimp_image_undo_push_image_type (GimpImage   *image,
@@ -75,11 +75,6 @@ gimp_image_undo_push_image_type (GimpImage   *image,
                                NULL);
 }
 
-
-/*********************/
-/*  Image Size Undo  */
-/*********************/
-
 GimpUndo *
 gimp_image_undo_push_image_size (GimpImage   *image,
                                  const gchar *undo_desc)
@@ -94,11 +89,6 @@ gimp_image_undo_push_image_size (GimpImage   *image,
                                NULL);
 }
 
-
-/***************************/
-/*  Image Resolution Undo  */
-/***************************/
-
 GimpUndo *
 gimp_image_undo_push_image_resolution (GimpImage   *image,
                                        const gchar *undo_desc)
@@ -112,11 +102,6 @@ gimp_image_undo_push_image_resolution (GimpImage   *image,
                                NULL, NULL,
                                NULL);
 }
-
-
-/****************/
-/*  Grid Undo   */
-/****************/
 
 GimpUndo *
 gimp_image_undo_push_image_grid (GimpImage   *image,
@@ -134,11 +119,6 @@ gimp_image_undo_push_image_grid (GimpImage   *image,
                                "grid", grid,
                                NULL);
 }
-
-
-/*******************/
-/*  Colormap Undo  */
-/*******************/
 
 GimpUndo *
 gimp_image_undo_push_image_colormap (GimpImage   *image,
@@ -168,16 +148,16 @@ struct _GuideUndo
   gint                 position;
 };
 
-static gboolean undo_pop_image_guide  (GimpUndo            *undo,
-                                       GimpUndoMode         undo_mode,
-                                       GimpUndoAccumulator *accum);
-static void     undo_free_image_guide (GimpUndo            *undo,
-                                       GimpUndoMode         undo_mode);
+static gboolean undo_pop_guide  (GimpUndo            *undo,
+                                 GimpUndoMode         undo_mode,
+                                 GimpUndoAccumulator *accum);
+static void     undo_free_guide (GimpUndo            *undo,
+                                 GimpUndoMode         undo_mode);
 
 GimpUndo *
-gimp_image_undo_push_image_guide (GimpImage   *image,
-                                  const gchar *undo_desc,
-                                  GimpGuide   *guide)
+gimp_image_undo_push_guide (GimpImage   *image,
+                            const gchar *undo_desc,
+                            GimpGuide   *guide)
 {
   GimpUndo *new;
 
@@ -187,10 +167,10 @@ gimp_image_undo_push_image_guide (GimpImage   *image,
   if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
                                    sizeof (GuideUndo),
                                    sizeof (GuideUndo),
-                                   GIMP_UNDO_IMAGE_GUIDE, undo_desc,
+                                   GIMP_UNDO_GUIDE, undo_desc,
                                    GIMP_DIRTY_IMAGE_META,
-                                   undo_pop_image_guide,
-                                   undo_free_image_guide,
+                                   undo_pop_guide,
+                                   undo_free_guide,
                                    NULL)))
     {
       GuideUndo *gu = new->data;
@@ -206,9 +186,9 @@ gimp_image_undo_push_image_guide (GimpImage   *image,
 }
 
 static gboolean
-undo_pop_image_guide (GimpUndo            *undo,
-                      GimpUndoMode         undo_mode,
-                      GimpUndoAccumulator *accum)
+undo_pop_guide (GimpUndo            *undo,
+                GimpUndoMode         undo_mode,
+                GimpUndoAccumulator *accum)
 {
   GuideUndo           *gu = undo->data;
   GimpOrientationType  old_orientation;
@@ -250,8 +230,8 @@ undo_pop_image_guide (GimpUndo            *undo,
 }
 
 static void
-undo_free_image_guide (GimpUndo     *undo,
-                       GimpUndoMode  undo_mode)
+undo_free_guide (GimpUndo     *undo,
+                 GimpUndoMode  undo_mode)
 {
   GuideUndo *gu = undo->data;
 
@@ -273,16 +253,16 @@ struct _SamplePointUndo
   gint             y;
 };
 
-static gboolean undo_pop_image_sample_point  (GimpUndo            *undo,
-                                              GimpUndoMode         undo_mode,
-                                              GimpUndoAccumulator *accum);
-static void     undo_free_image_sample_point (GimpUndo            *undo,
-                                              GimpUndoMode         undo_mode);
+static gboolean undo_pop_sample_point  (GimpUndo            *undo,
+                                        GimpUndoMode         undo_mode,
+                                        GimpUndoAccumulator *accum);
+static void     undo_free_sample_point (GimpUndo            *undo,
+                                        GimpUndoMode         undo_mode);
 
 GimpUndo *
-gimp_image_undo_push_image_sample_point (GimpImage       *image,
-                                         const gchar     *undo_desc,
-                                         GimpSamplePoint *sample_point)
+gimp_image_undo_push_sample_point (GimpImage       *image,
+                                   const gchar     *undo_desc,
+                                   GimpSamplePoint *sample_point)
 {
   GimpUndo *new;
 
@@ -292,10 +272,10 @@ gimp_image_undo_push_image_sample_point (GimpImage       *image,
   if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
                                    sizeof (SamplePointUndo),
                                    sizeof (SamplePointUndo),
-                                   GIMP_UNDO_IMAGE_SAMPLE_POINT, undo_desc,
+                                   GIMP_UNDO_SAMPLE_POINT, undo_desc,
                                    GIMP_DIRTY_IMAGE_META,
-                                   undo_pop_image_sample_point,
-                                   undo_free_image_sample_point,
+                                   undo_pop_sample_point,
+                                   undo_free_sample_point,
                                    NULL)))
     {
       SamplePointUndo *spu = new->data;
@@ -311,9 +291,9 @@ gimp_image_undo_push_image_sample_point (GimpImage       *image,
 }
 
 static gboolean
-undo_pop_image_sample_point (GimpUndo            *undo,
-                             GimpUndoMode         undo_mode,
-                             GimpUndoAccumulator *accum)
+undo_pop_sample_point (GimpUndo            *undo,
+                       GimpUndoMode         undo_mode,
+                       GimpUndoAccumulator *accum)
 {
   SamplePointUndo *spu = undo->data;
   gint             old_x;
@@ -359,8 +339,8 @@ undo_pop_image_sample_point (GimpUndo            *undo,
 }
 
 static void
-undo_free_image_sample_point (GimpUndo     *undo,
-                              GimpUndoMode  undo_mode)
+undo_free_sample_point (GimpUndo     *undo,
+                        GimpUndoMode  undo_mode)
 {
   SamplePointUndo *gu = undo->data;
 

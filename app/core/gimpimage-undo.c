@@ -538,7 +538,7 @@ gimp_image_undo_dirty_from_type (GimpUndoType undo_type)
       return GIMP_DIRTY_IMAGE_STRUCTURE | GIMP_DIRTY_SELECTION;
 
     case GIMP_UNDO_GROUP_IMAGE_GRID:
-    case GIMP_UNDO_GROUP_IMAGE_GUIDE:
+    case GIMP_UNDO_GROUP_GUIDE:
       return GIMP_DIRTY_IMAGE_META;
 
     case GIMP_UNDO_GROUP_DRAWABLE:

@@ -233,7 +233,7 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 
                   if (create_hguide && create_vguide)
                     gimp_image_undo_group_start (display->image,
-                                                 GIMP_UNDO_GROUP_IMAGE_GUIDE,
+                                                 GIMP_UNDO_GROUP_GUIDE,
                                                  _("Add Guides"));
 
                   if (create_hguide)

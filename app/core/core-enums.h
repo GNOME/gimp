@@ -369,8 +369,8 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_GROUP_IMAGE_VECTORS_MERGE,/*< desc="Merge paths"                 >*/
   GIMP_UNDO_GROUP_IMAGE_QUICK_MASK,   /*< desc="Quick Mask"                  >*/
   GIMP_UNDO_GROUP_IMAGE_GRID,         /*< desc="Grid"                        >*/
-  GIMP_UNDO_GROUP_IMAGE_GUIDE,        /*< desc="Guide"                       >*/
-  GIMP_UNDO_GROUP_IMAGE_SAMPLE_POINT, /*< desc="Sample Point"                >*/
+  GIMP_UNDO_GROUP_GUIDE,              /*< desc="Guide"                       >*/
+  GIMP_UNDO_GROUP_SAMPLE_POINT,       /*< desc="Sample Point"                >*/
   GIMP_UNDO_GROUP_DRAWABLE,           /*< desc="Layer/Channel"               >*/
   GIMP_UNDO_GROUP_DRAWABLE_MOD,       /*< desc="Layer/Channel modification"  >*/
   GIMP_UNDO_GROUP_MASK,               /*< desc="Selection mask"              >*/
@@ -406,8 +406,8 @@ typedef enum /*< pdb-skip >*/
   GIMP_UNDO_IMAGE_RESOLUTION,         /*< desc="Image resolution change"     >*/
   GIMP_UNDO_IMAGE_GRID,               /*< desc="Grid"                        >*/
   GIMP_UNDO_IMAGE_COLORMAP,           /*< desc="Change indexed palette"      >*/
-  GIMP_UNDO_IMAGE_GUIDE,              /*< desc="Guide"                       >*/
-  GIMP_UNDO_IMAGE_SAMPLE_POINT,       /*< desc="Sample Point"                >*/
+  GIMP_UNDO_GUIDE,                    /*< desc="Guide"                       >*/
+  GIMP_UNDO_SAMPLE_POINT,             /*< desc="Sample Point"                >*/
   GIMP_UNDO_DRAWABLE,                 /*< desc="Layer/Channel"               >*/
   GIMP_UNDO_DRAWABLE_MOD,             /*< desc="Layer/Channel modification"  >*/
   GIMP_UNDO_MASK,                     /*< desc="Selection mask"              >*/

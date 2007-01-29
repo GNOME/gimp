@@ -170,12 +170,12 @@ gimp_image_scale (GimpImage             *image,
       switch (gimp_guide_get_orientation (guide))
         {
         case GIMP_ORIENTATION_HORIZONTAL:
-          gimp_image_undo_push_image_guide (image, NULL, guide);
+          gimp_image_undo_push_guide (image, NULL, guide);
           gimp_guide_set_position (guide, (position * new_height) / old_height);
           break;
 
         case GIMP_ORIENTATION_VERTICAL:
-          gimp_image_undo_push_image_guide (image, NULL, guide);
+          gimp_image_undo_push_guide (image, NULL, guide);
           gimp_guide_set_position (guide, (position * new_width) / old_width);
           break;
 
@@ -189,7 +189,7 @@ gimp_image_scale (GimpImage             *image,
     {
       GimpSamplePoint *sample_point = list->data;
 
-      gimp_image_undo_push_image_sample_point (image, NULL, sample_point);
+      gimp_image_undo_push_sample_point (image, NULL, sample_point);
       sample_point->x = sample_point->x * new_width / old_width;
       sample_point->y = sample_point->y * new_height / old_height;
     }

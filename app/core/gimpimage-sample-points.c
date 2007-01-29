@@ -52,8 +52,8 @@ gimp_image_add_sample_point_at_pos (GimpImage *image,
   sample_point->sample_point_ID = image->gimp->next_sample_point_ID++;
 
   if (push_undo)
-    gimp_image_undo_push_image_sample_point (image, _("Add Sample_Point"),
-                                             sample_point);
+    gimp_image_undo_push_sample_point (image, _("Add Sample_Point"),
+                                       sample_point);
 
   gimp_image_add_sample_point (image, sample_point, x, y);
   gimp_image_sample_point_unref (sample_point);
@@ -118,8 +118,8 @@ gimp_image_remove_sample_point (GimpImage       *image,
   gimp_image_update_sample_point (image, sample_point);
 
   if (push_undo)
-    gimp_image_undo_push_image_sample_point (image, _("Remove Sample Point"),
-                                             sample_point);
+    gimp_image_undo_push_sample_point (image, _("Remove Sample Point"),
+                                       sample_point);
 
   list = g_list_find (image->sample_points, sample_point);
   if (list)
@@ -155,8 +155,8 @@ gimp_image_move_sample_point (GimpImage       *image,
   g_return_if_fail (y < image->height);
 
   if (push_undo)
-    gimp_image_undo_push_image_sample_point (image, _("Move Sample Point"),
-                                             sample_point);
+    gimp_image_undo_push_sample_point (image, _("Move Sample Point"),
+                                       sample_point);
 
   gimp_image_update_sample_point (image, sample_point);
   sample_point->x = x;

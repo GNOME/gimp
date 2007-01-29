@@ -1,3 +1,18 @@
+2007-01-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-enums.[ch]
+	* app/core/gimpimage-undo-push.[ch]: drop the "image" from
+	GIMP_UNDO_IMAGE_GUIDE, GIMP_UNDO_IMAGE_SAMPLE_POINT,
+	gimp_imge_undo_push_image_guide() and
+	gimp_imge_undo_push_image_sample_point()
+
+	* app/core/gimpimage-undo.c
+	* app/core/gimpimage-guides.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage-sample-points.c
+	* app/core/gimpimage-rotate.c
+	* app/tools/gimpmeasuretool.c: changed accordingly.
+
 2007-01-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-enums.[ch]

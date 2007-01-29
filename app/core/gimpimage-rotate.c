@@ -263,13 +263,13 @@ gimp_image_rotate_guides (GimpImage        *image,
           switch (orientation)
             {
             case GIMP_ORIENTATION_HORIZONTAL:
-              gimp_image_undo_push_image_guide (image, NULL, guide);
+              gimp_image_undo_push_guide (image, NULL, guide);
               gimp_guide_set_orientation (guide, GIMP_ORIENTATION_VERTICAL);
               gimp_guide_set_position (guide, image->height - position);
               break;
 
             case GIMP_ORIENTATION_VERTICAL:
-              gimp_image_undo_push_image_guide (image, NULL, guide);
+              gimp_image_undo_push_guide (image, NULL, guide);
               gimp_guide_set_orientation (guide, GIMP_ORIENTATION_HORIZONTAL);
               break;
 
@@ -300,12 +300,12 @@ gimp_image_rotate_guides (GimpImage        *image,
           switch (orientation)
             {
             case GIMP_ORIENTATION_HORIZONTAL:
-              gimp_image_undo_push_image_guide (image, NULL, guide);
+              gimp_image_undo_push_guide (image, NULL, guide);
               gimp_guide_set_orientation (guide, GIMP_ORIENTATION_VERTICAL);
               break;
 
             case GIMP_ORIENTATION_VERTICAL:
-              gimp_image_undo_push_image_guide (image, NULL, guide);
+              gimp_image_undo_push_guide (image, NULL, guide);
               gimp_guide_set_orientation (guide, GIMP_ORIENTATION_HORIZONTAL);
               gimp_guide_set_position (guide, image->width - position);
               break;

@@ -33,10 +33,14 @@ GimpUndo * gimp_image_undo_push_image_grid          (GimpImage     *image,
                                                      GimpGrid      *grid);
 GimpUndo * gimp_image_undo_push_image_colormap      (GimpImage     *image,
                                                      const gchar   *undo_desc);
-GimpUndo * gimp_image_undo_push_image_guide         (GimpImage     *image,
+
+
+/*  guide & sample point undos  */
+
+GimpUndo * gimp_image_undo_push_guide               (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpGuide     *guide);
-GimpUndo * gimp_image_undo_push_image_sample_point  (GimpImage     *image,
+GimpUndo * gimp_image_undo_push_sample_point        (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpSamplePoint *sample_point);
 
