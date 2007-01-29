@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-01-29 00:04+0100\n"
-"PO-Revision-Date: 2007-01-29 00:39+0100\n"
+"PO-Revision-Date: 2007-01-29 01:15+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1994,9 +1994,7 @@ msgstr "Blocca l'esecuzione"
 
 #: ../plug-ins/common/animoptimize.c:133
 msgid "Modify image to reduce size when saved as GIF animation"
-msgstr ""
-"Modifica l'immagine per ridurne le dimensioni quando sarà salvata come "
-"animazione GIF"
+msgstr "Modifica l'immagine per ridurne le dimensioni quando sarà salvata come animazione GIF"
 
 #: ../plug-ins/common/animoptimize.c:145
 msgid "Optimize (for _GIF)"
@@ -7247,12 +7245,12 @@ msgstr "Crea una texture casuale a effetto nuvola"
 
 #: ../plug-ins/common/snoise.c:184
 msgid "_Solid Noise..."
-msgstr "Disturbo _solido..."
+msgstr "Disturbo _pieno..."
 
 #. Dialog initialization
 #: ../plug-ins/common/snoise.c:317 ../plug-ins/common/snoise.c:563
 msgid "Solid Noise"
-msgstr "Disturbo solido"
+msgstr "Disturbo pieno"
 
 #: ../plug-ins/common/snoise.c:614
 msgid "_Detail:"
@@ -7464,7 +7462,7 @@ msgstr "Usa colore di sfondo"
 #: ../plug-ins/common/spheredesigner.c:291
 #: ../plug-ins/gimpressionist/general.c:148
 msgid "Solid"
-msgstr "Solido"
+msgstr "Pieno"
 
 #: ../plug-ins/common/spheredesigner.c:292
 msgid "Checker"
@@ -9711,7 +9709,7 @@ msgstr "Campioni del colore dai punti nel centro del pennello"
 
 #: ../plug-ins/gimpressionist/color.c:76
 msgid "Color _noise:"
-msgstr "Colore del dist_urbo:"
+msgstr "Dist_urbo di colore:"
 
 #: ../plug-ins/gimpressionist/color.c:80
 msgid "Adds random noise to the color"
@@ -9735,7 +9733,7 @@ msgstr "Copia la trama della carta selezionata come sfondo"
 
 #: ../plug-ins/gimpressionist/general.c:149
 msgid "Solid colored background"
-msgstr "Sfondo con colore solido"
+msgstr "Sfondo con colore pieno"
 
 #: ../plug-ins/gimpressionist/general.c:168
 msgid "Use a transparent background; Only the strokes painted will be visible"
@@ -9779,7 +9777,7 @@ msgstr "Quanto \"scurire\" i bordi di ogni tratto di pennello"
 
 #: ../plug-ins/gimpressionist/general.c:231
 msgid "Shadow darken:"
-msgstr "Inscurisci ombra:"
+msgstr "Scurisci ombra:"
 
 #: ../plug-ins/gimpressionist/general.c:235
 msgid "How much to \"darken\" the drop shadow"
@@ -9798,11 +9796,11 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/general.c:249
 msgid "Shadow blur:"
-msgstr "Sfoca ombra:"
+msgstr "Sfocatura ombra:"
 
 #: ../plug-ins/gimpressionist/general.c:253
 msgid "How much to blur the drop shadow"
-msgstr "Quanto deve essere sfuocata l'ombra applicata"
+msgstr "Quanto deve essere sfocata l'ombra applicata"
 
 #: ../plug-ins/gimpressionist/general.c:258
 msgid "Deviation threshold:"
@@ -9894,7 +9892,7 @@ msgstr "Fluttuante"
 #: ../plug-ins/gimpressionist/orientation.c:159
 #: ../plug-ins/gimpressionist/size.c:162
 msgid "The strokes follow a \"flowing\" pattern"
-msgstr "Il tratto segue un motivo \"flussante\""
+msgstr "Il tratto segue un motivo \"fluttuante\""
 
 #: ../plug-ins/gimpressionist/orientation.c:163
 msgid "The hue of the region determines the direction of the stroke"
@@ -9965,7 +9963,7 @@ msgstr "Aggiungi nuovo vettore"
 #: ../plug-ins/gimpressionist/orientmap.c:608
 #: ../plug-ins/gimpressionist/sizemap.c:479
 msgid "_Kill"
-msgstr "_Uccidi"
+msgstr "_Rimuovi"
 
 #: ../plug-ins/gimpressionist/orientmap.c:612
 msgid "Delete selected vector"
