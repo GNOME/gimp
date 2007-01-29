@@ -29,6 +29,7 @@
 
 #include "gimp.h"
 #include "gimp-parasites.h"
+#include "gimpchannelpropundo.h"
 #include "gimpchannelundo.h"
 #include "gimpdrawableundo.h"
 #include "gimpgrid.h"
@@ -1660,19 +1661,6 @@ undo_free_channel (GimpUndo     *undo,
 /*  Channel re-position Undo  */
 /******************************/
 
-typedef struct _ChannelRepositionUndo ChannelRepositionUndo;
-
-struct _ChannelRepositionUndo
-{
-  gint old_position;
-};
-
-static gboolean undo_pop_channel_reposition  (GimpUndo            *undo,
-                                              GimpUndoMode         undo_mode,
-                                              GimpUndoAccumulator *accum);
-static void     undo_free_channel_reposition (GimpUndo            *undo,
-                                              GimpUndoMode         undo_mode);
-
 gboolean
 gimp_image_undo_push_channel_reposition (GimpImage   *image,
                                          const gchar *undo_desc,
@@ -1684,67 +1672,24 @@ gimp_image_undo_push_channel_reposition (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)), FALSE);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_UNDO,
-                                   sizeof (ChannelRepositionUndo),
-                                   sizeof (ChannelRepositionUndo),
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_CHANNEL_PROP_UNDO,
+                                   0, 0,
                                    GIMP_UNDO_CHANNEL_REPOSITION, undo_desc,
                                    GIMP_DIRTY_IMAGE_STRUCTURE,
-                                   undo_pop_channel_reposition,
-                                   undo_free_channel_reposition,
+                                   NULL, NULL,
                                    "item", channel,
                                    NULL)))
     {
-      ChannelRepositionUndo *cru = new->data;
-
-      cru->old_position = gimp_image_get_channel_index (image, channel);
-
       return TRUE;
     }
 
   return FALSE;
 }
 
-static gboolean
-undo_pop_channel_reposition (GimpUndo            *undo,
-                             GimpUndoMode         undo_mode,
-                             GimpUndoAccumulator *accum)
-{
-  ChannelRepositionUndo *cru     = undo->data;
-  GimpChannel           *channel = GIMP_CHANNEL (GIMP_ITEM_UNDO (undo)->item);
-  gint                   pos;
-
-  pos = gimp_image_get_channel_index (undo->image, channel);
-  gimp_image_position_channel (undo->image, channel, cru->old_position,
-                               FALSE, NULL);
-  cru->old_position = pos;
-
-  return TRUE;
-}
-
-static void
-undo_free_channel_reposition (GimpUndo     *undo,
-                              GimpUndoMode  undo_mode)
-{
-  g_free (undo->data);
-}
-
 
 /************************/
 /*  Channel color Undo  */
 /************************/
-
-typedef struct _ChannelColorUndo ChannelColorUndo;
-
-struct _ChannelColorUndo
-{
-  GimpRGB old_color;
-};
-
-static gboolean undo_pop_channel_color  (GimpUndo            *undo,
-                                         GimpUndoMode         undo_mode,
-                                         GimpUndoAccumulator *accum);
-static void     undo_free_channel_color (GimpUndo            *undo,
-                                         GimpUndoMode         undo_mode);
 
 gboolean
 gimp_image_undo_push_channel_color (GimpImage   *image,
@@ -1757,47 +1702,18 @@ gimp_image_undo_push_channel_color (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_CHANNEL (channel), FALSE);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (channel)), FALSE);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_UNDO,
-                                   sizeof (ChannelColorUndo),
-                                   sizeof (ChannelColorUndo),
+  if ((new = gimp_image_undo_push (image, GIMP_TYPE_CHANNEL_PROP_UNDO,
+                                   0, 0,
                                    GIMP_UNDO_CHANNEL_COLOR, undo_desc,
                                    GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
-                                   undo_pop_channel_color,
-                                   undo_free_channel_color,
+                                   NULL, NULL,
                                    "item", channel,
                                    NULL)))
     {
-      ChannelColorUndo *ccu = new->data;
-
-      gimp_channel_get_color (channel , &ccu->old_color);
-
       return TRUE;
     }
 
   return FALSE;
-}
-
-static gboolean
-undo_pop_channel_color (GimpUndo            *undo,
-                        GimpUndoMode         undo_mode,
-                        GimpUndoAccumulator *accum)
-{
-  ChannelColorUndo *ccu     = undo->data;
-  GimpChannel      *channel = GIMP_CHANNEL (GIMP_ITEM_UNDO (undo)->item);
-  GimpRGB           color;
-
-  gimp_channel_get_color (channel, &color);
-  gimp_channel_set_color (channel, &ccu->old_color, FALSE);
-  ccu->old_color = color;
-
-  return TRUE;
-}
-
-static void
-undo_free_channel_color (GimpUndo     *undo,
-                         GimpUndoMode  undo_mode)
-{
-  g_free (undo->data);
 }
 
 

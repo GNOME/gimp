@@ -1,3 +1,13 @@
+2007-01-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpchannelpropundo.[ch]: new undo class which handles
+	CHANNEL_REPOSITION and CHANNEL_COLOR.
+
+	* app/core/gimpimage-undo-push.c: use the new undo class and
+	remove the resp. code here.
+
 2007-01-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/Makefile.am
