@@ -21,21 +21,42 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
 #include "gimpdrawable.h"
+#include "gimpgrid.h"
 #include "gimpimage.h"
+#include "gimpimage-colormap.h"
+#include "gimpimage-grid.h"
 #include "gimpimageundo.h"
 
 
-static GObject * gimp_image_undo_constructor (GType                  type,
-                                              guint                  n_params,
-                                              GObjectConstructParam *params);
+enum
+{
+  PROP_0,
+  PROP_GRID
+};
 
-static void      gimp_image_undo_pop         (GimpUndo              *undo,
-                                              GimpUndoMode           undo_mode,
-                                              GimpUndoAccumulator   *accum);
+
+static GObject * gimp_image_undo_constructor  (GType                  type,
+                                               guint                  n_params,
+                                               GObjectConstructParam *params);
+static void      gimp_image_undo_set_property (GObject               *object,
+                                               guint                  property_id,
+                                               const GValue          *value,
+                                               GParamSpec            *pspec);
+static void      gimp_image_undo_get_property (GObject               *object,
+                                               guint                  property_id,
+                                               GValue                *value,
+                                               GParamSpec            *pspec);
+
+static void      gimp_image_undo_pop          (GimpUndo              *undo,
+                                               GimpUndoMode           undo_mode,
+                                               GimpUndoAccumulator   *accum);
+static void      gimp_image_undo_free         (GimpUndo              *undo,
+                                               GimpUndoMode           undo_mode);
 
 
 G_DEFINE_TYPE (GimpImageUndo, gimp_image_undo, GIMP_TYPE_UNDO)
@@ -49,9 +70,18 @@ gimp_image_undo_class_init (GimpImageUndoClass *klass)
   GObjectClass  *object_class = G_OBJECT_CLASS (klass);
   GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor = gimp_image_undo_constructor;
+  object_class->constructor  = gimp_image_undo_constructor;
+  object_class->set_property = gimp_image_undo_set_property;
+  object_class->get_property = gimp_image_undo_get_property;
 
-  undo_class->pop           = gimp_image_undo_pop;
+  undo_class->pop            = gimp_image_undo_pop;
+  undo_class->free           = gimp_image_undo_free;
+
+  g_object_class_install_property (object_class, PROP_GRID,
+                                   g_param_spec_object ("grid", NULL, NULL,
+                                                        GIMP_TYPE_GRID,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -81,7 +111,68 @@ gimp_image_undo_constructor (GType                  type,
   image_undo->yresolution     = image->yresolution;
   image_undo->resolution_unit = image->resolution_unit;
 
+  if (GIMP_UNDO (object)->undo_type == GIMP_UNDO_IMAGE_GRID)
+    {
+      g_assert (GIMP_IS_GRID (image_undo->grid));
+
+      GIMP_UNDO (object)->size +=
+        gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid), NULL);
+    }
+  else if (GIMP_UNDO (object)->undo_type == GIMP_UNDO_IMAGE_COLORMAP)
+    {
+      image_undo->num_colors = gimp_image_get_colormap_size (image);
+      image_undo->colormap   = g_memdup (gimp_image_get_colormap (image),
+                                         image_undo->num_colors * 3);
+
+      GIMP_UNDO (object)->size += image_undo->num_colors * 3;
+    }
+
   return object;
+}
+
+static void
+gimp_image_undo_set_property (GObject      *object,
+                              guint         property_id,
+                              const GValue *value,
+                              GParamSpec   *pspec)
+{
+  GimpImageUndo *image_undo = GIMP_IMAGE_UNDO (object);
+
+  switch (property_id)
+    {
+    case PROP_GRID:
+      {
+        GimpGrid *grid = g_value_get_object (value);
+
+        if (grid)
+          image_undo->grid = gimp_config_duplicate (GIMP_CONFIG (grid));
+      }
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_image_undo_get_property (GObject    *object,
+                              guint       property_id,
+                              GValue     *value,
+                              GParamSpec *pspec)
+{
+  GimpImageUndo *image_undo = GIMP_IMAGE_UNDO (object);
+
+  switch (property_id)
+    {
+    case PROP_GRID:
+      g_value_set_object (value, image_undo->grid);
+       break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -159,8 +250,67 @@ gimp_image_undo_pop (GimpUndo            *undo,
           accum->unit_changed = TRUE;
         }
     }
+  else if (undo->undo_type == GIMP_UNDO_IMAGE_GRID)
+    {
+      GimpGrid *grid;
+
+      undo->size -= gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid),
+                                             NULL);
+
+      grid = gimp_config_duplicate (GIMP_CONFIG (undo->image->grid));
+
+      gimp_image_set_grid (undo->image, image_undo->grid, FALSE);
+
+      g_object_unref (image_undo->grid);
+      image_undo->grid = grid;
+
+      undo->size += gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid),
+                                             NULL);
+    }
+  else if (undo->undo_type == GIMP_UNDO_IMAGE_COLORMAP)
+    {
+      guchar *colormap;
+      gint    num_colors;
+
+      undo->size -= image_undo->num_colors * 3;
+
+      num_colors = gimp_image_get_colormap_size (undo->image);
+      colormap   = g_memdup (gimp_image_get_colormap (undo->image),
+                             num_colors * 3);
+
+      gimp_image_set_colormap (undo->image,
+                               image_undo->colormap, image_undo->num_colors,
+                               FALSE);
+
+      if (image_undo->colormap)
+        g_free (image_undo->colormap);
+
+      image_undo->num_colors = num_colors;
+      image_undo->colormap   = colormap;
+
+      undo->size += image_undo->num_colors * 3;
+    }
   else
     {
       g_assert_not_reached ();
+    }
+}
+
+static void
+gimp_image_undo_free (GimpUndo     *undo,
+                      GimpUndoMode  undo_mode)
+{
+  GimpImageUndo *image_undo = GIMP_IMAGE_UNDO (undo);
+
+  if (image_undo->grid)
+    {
+      g_object_unref (image_undo->grid);
+      image_undo->grid = NULL;
+    }
+
+  if (image_undo->colormap)
+    {
+      g_free (image_undo->colormap);
+      image_undo->colormap = NULL;
     }
 }

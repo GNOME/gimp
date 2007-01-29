@@ -35,8 +35,6 @@
 #include "gimpgrid.h"
 #include "gimpguide.h"
 #include "gimpimage.h"
-#include "gimpimage-colormap.h"
-#include "gimpimage-grid.h"
 #include "gimpimage-guides.h"
 #include "gimpimage-sample-points.h"
 #include "gimpimage-undo.h"
@@ -225,76 +223,21 @@ undo_free_image_guide (GimpUndo     *undo,
 /*  Grid Undo   */
 /****************/
 
-typedef struct _GridUndo GridUndo;
-
-struct _GridUndo
-{
-  GimpGrid *grid;
-};
-
-static gboolean undo_pop_image_grid  (GimpUndo            *undo,
-                                      GimpUndoMode         undo_mode,
-                                      GimpUndoAccumulator *accum);
-static void     undo_free_image_grid (GimpUndo            *undo,
-                                      GimpUndoMode         undo_mode);
-
 GimpUndo *
 gimp_image_undo_push_image_grid (GimpImage   *image,
                                  const gchar *undo_desc,
                                  GimpGrid    *grid)
 {
-  GimpUndo *new;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_GRID (grid), NULL);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
-                                   sizeof (GridUndo),
-                                   sizeof (GridUndo),
-                                   GIMP_UNDO_IMAGE_GRID, undo_desc,
-                                   GIMP_DIRTY_IMAGE_META,
-                                   undo_pop_image_grid,
-                                   undo_free_image_grid,
-                                   NULL)))
-    {
-      GridUndo *gu = new->data;
-
-      gu->grid = gimp_config_duplicate (GIMP_CONFIG (grid));
-
-      return new;
-    }
-
-  return NULL;
-}
-
-static gboolean
-undo_pop_image_grid (GimpUndo            *undo,
-                     GimpUndoMode         undo_mode,
-                     GimpUndoAccumulator *accum)
-{
-  GridUndo *gu = undo->data;
-  GimpGrid *grid;
-
-  grid = gimp_config_duplicate (GIMP_CONFIG (undo->image->grid));
-
-  gimp_image_set_grid (undo->image, gu->grid, FALSE);
-
-  g_object_unref (gu->grid);
-  gu->grid = grid;
-
-  return TRUE;
-}
-
-static void
-undo_free_image_grid (GimpUndo     *undo,
-                      GimpUndoMode  undo_mode)
-{
-  GridUndo *gu = undo->data;
-
-  if (gu->grid)
-    g_object_unref (gu->grid);
-
-  g_free (gu);
+  return gimp_image_undo_push (image, GIMP_TYPE_IMAGE_UNDO,
+                               0, 0,
+                               GIMP_UNDO_IMAGE_GRID, undo_desc,
+                               GIMP_DIRTY_IMAGE_META,
+                               NULL, NULL,
+                               "grid", grid,
+                               NULL);
 }
 
 
@@ -411,83 +354,18 @@ undo_free_image_sample_point (GimpUndo     *undo,
 /*  Colormap Undo  */
 /*******************/
 
-typedef struct _ColormapUndo ColormapUndo;
-
-struct _ColormapUndo
-{
-  gint    num_colors;
-  guchar *cmap;
-};
-
-static gboolean undo_pop_image_colormap  (GimpUndo            *undo,
-                                          GimpUndoMode         undo_mode,
-                                          GimpUndoAccumulator *accum);
-static void     undo_free_image_colormap (GimpUndo            *undo,
-                                          GimpUndoMode         undo_mode);
-
 GimpUndo *
 gimp_image_undo_push_image_colormap (GimpImage   *image,
                                      const gchar *undo_desc)
 {
-  GimpUndo *new;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
-                                   sizeof (ColormapUndo),
-                                   sizeof (ColormapUndo),
-                                   GIMP_UNDO_IMAGE_COLORMAP, undo_desc,
-                                   GIMP_DIRTY_IMAGE,
-                                   undo_pop_image_colormap,
-                                   undo_free_image_colormap,
-                                   NULL)))
-    {
-      ColormapUndo *cu = new->data;
-
-      cu->num_colors = gimp_image_get_colormap_size (image);
-      cu->cmap       = g_memdup (gimp_image_get_colormap (image),
-                                 cu->num_colors * 3);
-
-      return new;
-    }
-
-  return NULL;
-}
-
-static gboolean
-undo_pop_image_colormap (GimpUndo            *undo,
-                         GimpUndoMode         undo_mode,
-                         GimpUndoAccumulator *accum)
-{
-  ColormapUndo *cu = undo->data;
-  guchar       *cmap;
-  gint          num_colors;
-
-  num_colors = gimp_image_get_colormap_size (undo->image);
-  cmap       = g_memdup (gimp_image_get_colormap (undo->image),
-                         num_colors * 3);
-
-  gimp_image_set_colormap (undo->image, cu->cmap, cu->num_colors, FALSE);
-
-  if (cu->cmap)
-    g_free (cu->cmap);
-
-  cu->num_colors = num_colors;
-  cu->cmap       = cmap;
-
-  return TRUE;
-}
-
-static void
-undo_free_image_colormap (GimpUndo     *undo,
-                          GimpUndoMode  undo_mode)
-{
-  ColormapUndo *cu = undo->data;
-
-  if (cu->cmap)
-    g_free (cu->cmap);
-
-  g_free (cu);
+  return gimp_image_undo_push (image, GIMP_TYPE_IMAGE_UNDO,
+                               0, 0,
+                               GIMP_UNDO_IMAGE_COLORMAP, undo_desc,
+                               GIMP_DIRTY_IMAGE,
+                               NULL, NULL,
+                               NULL);
 }
 
 

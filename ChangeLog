@@ -1,3 +1,11 @@
+2007-01-28  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimageundo.[ch]: add support for IMAGE_GRID and
+	IMAGE_COLORMAP undos.
+
+	* app/core/gimpimage-undo-push.c: use GimpImageUndo for grid and
+	colormap undos.
+
 2007-01-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-undo-push.[ch]: return a GimpUndo* instead

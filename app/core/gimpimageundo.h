@@ -35,14 +35,17 @@ typedef struct _GimpImageUndoClass GimpImageUndoClass;
 
 struct _GimpImageUndo
 {
-  GimpUndo          parent_instance;
+  GimpUndo           parent_instance;
 
-  GimpImageBaseType base_type;
-  gint              width;
-  gint              height;
-  gdouble           xresolution;
-  gdouble           yresolution;
-  GimpUnit          resolution_unit;
+  GimpImageBaseType  base_type;
+  gint               width;
+  gint               height;
+  gdouble            xresolution;
+  gdouble            yresolution;
+  GimpUnit           resolution_unit;
+  GimpGrid          *grid;
+  gint               num_colors;
+  guchar            *colormap;
 };
 
 struct _GimpImageUndoClass
