@@ -16,24 +16,24 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GIMP_CHANNEL_UNDO_H__
-#define __GIMP_CHANNEL_UNDO_H__
+#ifndef __GIMP_MASK_UNDO_H__
+#define __GIMP_MASK_UNDO_H__
 
 
 #include "gimpitemundo.h"
 
 
-#define GIMP_TYPE_CHANNEL_UNDO            (gimp_channel_undo_get_type ())
-#define GIMP_CHANNEL_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_CHANNEL_UNDO, GimpChannelUndo))
-#define GIMP_CHANNEL_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_CHANNEL_UNDO, GimpChannelUndoClass))
-#define GIMP_IS_CHANNEL_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_CHANNEL_UNDO))
-#define GIMP_IS_CHANNEL_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_CHANNEL_UNDO))
-#define GIMP_CHANNEL_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CHANNEL_UNDO, GimpChannelUndoClass))
+#define GIMP_TYPE_MASK_UNDO            (gimp_mask_undo_get_type ())
+#define GIMP_MASK_UNDO(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_MASK_UNDO, GimpMaskUndo))
+#define GIMP_MASK_UNDO_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_MASK_UNDO, GimpMaskUndoClass))
+#define GIMP_IS_MASK_UNDO(obj)         (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_MASK_UNDO))
+#define GIMP_IS_MASK_UNDO_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_MASK_UNDO))
+#define GIMP_MASK_UNDO_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_MASK_UNDO, GimpMaskUndoClass))
 
 
-typedef struct _GimpChannelUndoClass GimpChannelUndoClass;
+typedef struct _GimpMaskUndoClass GimpMaskUndoClass;
 
-struct _GimpChannelUndo
+struct _GimpMaskUndo
 {
   GimpItemUndo  parent_instance;
 
@@ -42,13 +42,13 @@ struct _GimpChannelUndo
   gint          y;
 };
 
-struct _GimpChannelUndoClass
+struct _GimpMaskUndoClass
 {
   GimpItemUndoClass  parent_class;
 };
 
 
-GType   gimp_channel_undo_get_type (void) G_GNUC_CONST;
+GType   gimp_mask_undo_get_type (void) G_GNUC_CONST;
 
 
-#endif /* __GIMP_CHANNEL_UNDO_H__ */
+#endif /* __GIMP_MASK_UNDO_H__ */

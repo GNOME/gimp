@@ -30,7 +30,6 @@
 #include "gimp.h"
 #include "gimp-parasites.h"
 #include "gimpchannelpropundo.h"
-#include "gimpchannelundo.h"
 #include "gimpdrawableundo.h"
 #include "gimpgrid.h"
 #include "gimpguide.h"
@@ -45,6 +44,7 @@
 #include "gimplayermask.h"
 #include "gimplayerpropundo.h"
 #include "gimplist.h"
+#include "gimpmaskundo.h"
 #include "gimpparasitelist.h"
 #include "gimpsamplepoint.h"
 #include "gimpsamplepointundo.h"
@@ -340,7 +340,7 @@ gimp_image_undo_push_mask (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_CHANNEL (mask), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (mask)), NULL);
 
-  return gimp_image_undo_push (image, GIMP_TYPE_CHANNEL_UNDO,
+  return gimp_image_undo_push (image, GIMP_TYPE_MASK_UNDO,
                                0, 0,
                                GIMP_UNDO_MASK, undo_desc,
                                GIMP_IS_SELECTION (mask) ?

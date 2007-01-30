@@ -1,5 +1,16 @@
 2007-01-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpchannelundo.[ch]: renamed these files...
+
+	* app/core/gimpmaskundo.[ch]: ...to these. We'll need the name
+	GimpChannelUndo for something else later.
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpimage-undo-push.c: changed accordingly.
+
+2007-01-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/vectors/Makefile.am
 	* app/vectors/vectors-types.h
 	* app/vectors/gimpvectorspropundo.[ch]: new undo class which

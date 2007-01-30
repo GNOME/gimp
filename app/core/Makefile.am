@@ -78,8 +78,6 @@ libappcore_a_sources = \
 	gimpchannel-select.h		\
 	gimpchannelpropundo.c		\
 	gimpchannelpropundo.h		\
-	gimpchannelundo.c		\
-	gimpchannelundo.h		\
 	gimpcontainer.c			\
 	gimpcontainer.h			\
 	gimpcontainer-filter.c		\
@@ -216,6 +214,8 @@ libappcore_a_sources = \
 	gimplayerpropundo.h		\
 	gimplist.c			\
 	gimplist.h			\
+	gimpmaskundo.c			\
+	gimpmaskundo.h			\
 	gimpobject.c			\
 	gimpobject.h			\
 	gimppaintinfo.c			\
