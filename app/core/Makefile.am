@@ -134,10 +134,12 @@ libappcore_a_sources = \
 	gimpgradient-load.h		\
 	gimpgradient-save.c		\
 	gimpgradient-save.h		\
-	gimpgrid.c                      \
-	gimpgrid.h                      \
-	gimpguide.c                     \
-	gimpguide.h                     \
+	gimpgrid.c			\
+	gimpgrid.h			\
+	gimpguide.c			\
+	gimpguide.h			\
+	gimpguideundo.c			\
+	gimpguideundo.h			\
 	gimpimage.c			\
 	gimpimage.h			\
 	gimpimage-arrange.c		\
@@ -253,6 +255,8 @@ libappcore_a_sources = \
 	gimpprojection-construct.h	\
 	gimpsamplepoint.c		\
 	gimpsamplepoint.h		\
+	gimpsamplepointundo.c		\
+	gimpsamplepointundo.h		\
 	gimpscanconvert.c		\
 	gimpscanconvert.h		\
 	gimpselection.c			\

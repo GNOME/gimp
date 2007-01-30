@@ -117,6 +117,8 @@ typedef struct _GimpChannelUndo     GimpChannelUndo;
 typedef struct _GimpChannelPropUndo GimpChannelPropUndo;
 typedef struct _GimpDrawableUndo    GimpDrawableUndo;
 typedef struct _GimpLayerPropUndo   GimpLayerPropUndo;
+typedef struct _GimpGuideUndo       GimpGuideUndo;
+typedef struct _GimpSamplePointUndo GimpSamplePointUndo;
 typedef struct _GimpUndoStack       GimpUndoStack;
 typedef struct _GimpUndoAccumulator GimpUndoAccumulator;
 

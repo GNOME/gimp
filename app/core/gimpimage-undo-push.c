@@ -34,9 +34,8 @@
 #include "gimpdrawableundo.h"
 #include "gimpgrid.h"
 #include "gimpguide.h"
+#include "gimpguideundo.h"
 #include "gimpimage.h"
-#include "gimpimage-guides.h"
-#include "gimpimage-sample-points.h"
 #include "gimpimage-undo.h"
 #include "gimpimage-undo-push.h"
 #include "gimpimageundo.h"
@@ -48,6 +47,7 @@
 #include "gimplist.h"
 #include "gimpparasitelist.h"
 #include "gimpsamplepoint.h"
+#include "gimpsamplepointundo.h"
 #include "gimpselection.h"
 
 #include "text/gimptextlayer.h"
@@ -58,9 +58,9 @@
 #include "gimp-intl.h"
 
 
-/*****************/
-/*  Image Undos  */
-/*****************/
+/**************************/
+/*  Image Property Undos  */
+/**************************/
 
 GimpUndo *
 gimp_image_undo_push_image_type (GimpImage   *image,
@@ -136,217 +136,42 @@ gimp_image_undo_push_image_colormap (GimpImage   *image,
 }
 
 
-/****************/
-/*  Guide Undo  */
-/****************/
-
-typedef struct _GuideUndo GuideUndo;
-
-struct _GuideUndo
-{
-  GimpGuide           *guide;
-  GimpOrientationType  orientation;
-  gint                 position;
-};
-
-static gboolean undo_pop_guide  (GimpUndo            *undo,
-                                 GimpUndoMode         undo_mode,
-                                 GimpUndoAccumulator *accum);
-static void     undo_free_guide (GimpUndo            *undo,
-                                 GimpUndoMode         undo_mode);
+/********************************/
+/*  Guide & Sample Point Undos  */
+/********************************/
 
 GimpUndo *
 gimp_image_undo_push_guide (GimpImage   *image,
                             const gchar *undo_desc,
                             GimpGuide   *guide)
 {
-  GimpUndo *new;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_GUIDE (guide), NULL);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
-                                   sizeof (GuideUndo),
-                                   sizeof (GuideUndo),
-                                   GIMP_UNDO_GUIDE, undo_desc,
-                                   GIMP_DIRTY_IMAGE_META,
-                                   undo_pop_guide,
-                                   undo_free_guide,
-                                   NULL)))
-    {
-      GuideUndo *gu = new->data;
-
-      gu->guide       = g_object_ref (guide);
-      gu->orientation = gimp_guide_get_orientation (guide);
-      gu->position    = gimp_guide_get_position (guide);
-
-      return new;
-    }
-
-  return NULL;
+  return gimp_image_undo_push (image, GIMP_TYPE_GUIDE_UNDO,
+                               0, 0,
+                               GIMP_UNDO_GUIDE, undo_desc,
+                               GIMP_DIRTY_IMAGE_META,
+                               NULL, NULL,
+                               "guide", guide,
+                               NULL);
 }
-
-static gboolean
-undo_pop_guide (GimpUndo            *undo,
-                GimpUndoMode         undo_mode,
-                GimpUndoAccumulator *accum)
-{
-  GuideUndo           *gu = undo->data;
-  GimpOrientationType  old_orientation;
-  gint                 old_position;
-
-  old_orientation = gimp_guide_get_orientation (gu->guide);
-  old_position    = gimp_guide_get_position (gu->guide);
-
-  /*  add and move guides manually (nor using the gimp_image_guide
-   *  API), because we might be in the middle of an image resizing
-   *  undo group and the guide's position might be temporarily out of
-   *  image.
-   */
-
-  if (old_position == -1)
-    {
-      undo->image->guides = g_list_prepend (undo->image->guides, gu->guide);
-      gimp_guide_set_position (gu->guide, gu->position);
-      g_object_ref (gu->guide);
-      gimp_image_update_guide (undo->image, gu->guide);
-    }
-  else if (gu->position == -1)
-    {
-      gimp_image_remove_guide (undo->image, gu->guide, FALSE);
-    }
-  else
-    {
-      gimp_image_update_guide (undo->image, gu->guide);
-      gimp_guide_set_position (gu->guide, gu->position);
-      gimp_image_update_guide (undo->image, gu->guide);
-    }
-
-  gimp_guide_set_orientation (gu->guide, gu->orientation);
-
-  gu->position    = old_position;
-  gu->orientation = old_orientation;
-
-  return TRUE;
-}
-
-static void
-undo_free_guide (GimpUndo     *undo,
-                 GimpUndoMode  undo_mode)
-{
-  GuideUndo *gu = undo->data;
-
-  g_object_unref (gu->guide);
-  g_free (gu);
-}
-
-
-/**********************/
-/*  Sampe Point Undo  */
-/**********************/
-
-typedef struct _SamplePointUndo SamplePointUndo;
-
-struct _SamplePointUndo
-{
-  GimpSamplePoint *sample_point;
-  gint             x;
-  gint             y;
-};
-
-static gboolean undo_pop_sample_point  (GimpUndo            *undo,
-                                        GimpUndoMode         undo_mode,
-                                        GimpUndoAccumulator *accum);
-static void     undo_free_sample_point (GimpUndo            *undo,
-                                        GimpUndoMode         undo_mode);
 
 GimpUndo *
 gimp_image_undo_push_sample_point (GimpImage       *image,
                                    const gchar     *undo_desc,
                                    GimpSamplePoint *sample_point)
 {
-  GimpUndo *new;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (sample_point != NULL, NULL);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
-                                   sizeof (SamplePointUndo),
-                                   sizeof (SamplePointUndo),
-                                   GIMP_UNDO_SAMPLE_POINT, undo_desc,
-                                   GIMP_DIRTY_IMAGE_META,
-                                   undo_pop_sample_point,
-                                   undo_free_sample_point,
-                                   NULL)))
-    {
-      SamplePointUndo *spu = new->data;
-
-      spu->sample_point = gimp_sample_point_ref (sample_point);
-      spu->x            = sample_point->x;
-      spu->y            = sample_point->y;
-
-      return new;
-    }
-
-  return NULL;
-}
-
-static gboolean
-undo_pop_sample_point (GimpUndo            *undo,
-                       GimpUndoMode         undo_mode,
-                       GimpUndoAccumulator *accum)
-{
-  SamplePointUndo *spu = undo->data;
-  gint             old_x;
-  gint             old_y;
-
-  old_x = spu->sample_point->x;
-  old_y = spu->sample_point->y;
-
-  /*  add and move sample points manually (nor using the
-   *  gimp_image_sample_point API), because we might be in the middle
-   *  of an image resizing undo group and the sample point's position
-   *  might be temporarily out of image.
-   */
-
-  if (spu->sample_point->x == -1)
-    {
-      undo->image->sample_points = g_list_append (undo->image->sample_points,
-                                                   spu->sample_point);
-
-      spu->sample_point->x = spu->x;
-      spu->sample_point->y = spu->y;
-      gimp_sample_point_ref (spu->sample_point);
-
-      gimp_image_sample_point_added (undo->image, spu->sample_point);
-      gimp_image_update_sample_point (undo->image, spu->sample_point);
-    }
-  else if (spu->x == -1)
-    {
-      gimp_image_remove_sample_point (undo->image, spu->sample_point, FALSE);
-    }
-  else
-    {
-      gimp_image_update_sample_point (undo->image, spu->sample_point);
-      spu->sample_point->x = spu->x;
-      spu->sample_point->y = spu->y;
-      gimp_image_update_sample_point (undo->image, spu->sample_point);
-    }
-
-  spu->x = old_x;
-  spu->y = old_y;
-
-  return TRUE;
-}
-
-static void
-undo_free_sample_point (GimpUndo     *undo,
-                        GimpUndoMode  undo_mode)
-{
-  SamplePointUndo *gu = undo->data;
-
-  gimp_sample_point_unref (gu->sample_point);
-  g_free (gu);
+  return gimp_image_undo_push (image, GIMP_TYPE_SAMPLE_POINT_UNDO,
+                               0, 0,
+                               GIMP_UNDO_SAMPLE_POINT, undo_desc,
+                               GIMP_DIRTY_IMAGE_META,
+                               NULL, NULL,
+                               "sample-point", sample_point,
+                               NULL);
 }
 
 
@@ -526,9 +351,9 @@ gimp_image_undo_push_mask (GimpImage   *image,
 }
 
 
-/**********************/
-/*  Item Rename Undo  */
-/**********************/
+/*************************/
+/*  Item Property Undos  */
+/*************************/
 
 GimpUndo *
 gimp_image_undo_push_item_rename (GimpImage   *image,
@@ -547,11 +372,6 @@ gimp_image_undo_push_item_rename (GimpImage   *image,
                                "item", item,
                                NULL);
 }
-
-
-/****************************/
-/*  Item displacement Undo  */
-/****************************/
 
 GimpUndo *
 gimp_image_undo_push_item_displace (GimpImage   *image,
@@ -573,11 +393,6 @@ gimp_image_undo_push_item_displace (GimpImage   *image,
                                NULL);
 }
 
-
-/******************************/
-/*  Item Visibility Undo  */
-/******************************/
-
 GimpUndo *
 gimp_image_undo_push_item_visibility (GimpImage   *image,
                                       const gchar *undo_desc,
@@ -595,11 +410,6 @@ gimp_image_undo_push_item_visibility (GimpImage   *image,
                                "item", item,
                                NULL);
 }
-
-
-/**********************/
-/*  Item linked Undo  */
-/**********************/
 
 GimpUndo *
 gimp_image_undo_push_item_linked (GimpImage   *image,
@@ -816,9 +626,9 @@ undo_free_layer (GimpUndo     *undo,
 }
 
 
-/***************************/
-/* Layer re-position Undo  */
-/***************************/
+/**************************/
+/*  Layer Property Undos  */
+/**************************/
 
 GimpUndo *
 gimp_image_undo_push_layer_reposition (GimpImage   *image,
@@ -838,11 +648,6 @@ gimp_image_undo_push_layer_reposition (GimpImage   *image,
                                NULL);
 }
 
-
-/*********************/
-/*  Layer Mode Undo  */
-/*********************/
-
 GimpUndo *
 gimp_image_undo_push_layer_mode (GimpImage   *image,
                                  const gchar *undo_desc,
@@ -861,11 +666,6 @@ gimp_image_undo_push_layer_mode (GimpImage   *image,
                                NULL);
 }
 
-
-/************************/
-/*  Layer Opacity Undo  */
-/************************/
-
 GimpUndo *
 gimp_image_undo_push_layer_opacity (GimpImage   *image,
                                     const gchar *undo_desc,
@@ -883,11 +683,6 @@ gimp_image_undo_push_layer_opacity (GimpImage   *image,
                                "item", layer,
                                NULL);
 }
-
-
-/***************************/
-/*  Layer Lock Alpha Undo  */
-/***************************/
 
 GimpUndo *
 gimp_image_undo_push_layer_lock_alpha (GimpImage   *image,
@@ -1419,9 +1214,9 @@ undo_free_channel (GimpUndo     *undo,
 }
 
 
-/******************************/
-/*  Channel re-position Undo  */
-/******************************/
+/****************************/
+/*  Channel Property Undos  */
+/****************************/
 
 GimpUndo *
 gimp_image_undo_push_channel_reposition (GimpImage   *image,
@@ -1440,11 +1235,6 @@ gimp_image_undo_push_channel_reposition (GimpImage   *image,
                                "item", channel,
                                NULL);
 }
-
-
-/************************/
-/*  Channel color Undo  */
-/************************/
 
 GimpUndo *
 gimp_image_undo_push_channel_color (GimpImage   *image,
