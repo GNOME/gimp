@@ -1,5 +1,17 @@
 2007-01-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/vectors/Makefile.am
+	* app/vectors/vectors-types.h
+	* app/vectors/gimpvectorspropundo.[ch]: new undo class which
+	implements GIMP_UNDO_VECTORS_REPOSITION.
+
+	* app/core/gimpimage-undo-push.c: use it here.
+
+	* app/Makefile.am: another lame linker hack to make it build with
+	the new file that is not used in app/vectors/ itself.
+
+2007-01-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpguideundo.c
 	* app/core/gimpimageundo.c
 	* app/core/gimplayerpropundo.c

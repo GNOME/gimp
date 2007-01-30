@@ -54,6 +54,7 @@
 #include "text/gimptextundo.h"
 
 #include "vectors/gimpvectors.h"
+#include "vectors/gimpvectorspropundo.h"
 
 #include "gimp-intl.h"
 
@@ -1446,76 +1447,25 @@ undo_free_vectors_mod (GimpUndo     *undo,
 
 
 /******************************/
-/*  Vectors re-position Undo  */
+/*  Vectors Properties Undos  */
 /******************************/
-
-typedef struct _VectorsRepositionUndo VectorsRepositionUndo;
-
-struct _VectorsRepositionUndo
-{
-  gint old_position;
-};
-
-static gboolean undo_pop_vectors_reposition  (GimpUndo            *undo,
-                                              GimpUndoMode         undo_mode,
-                                              GimpUndoAccumulator *accum);
-static void     undo_free_vectors_reposition (GimpUndo            *undo,
-                                              GimpUndoMode         undo_mode);
 
 GimpUndo *
 gimp_image_undo_push_vectors_reposition (GimpImage   *image,
                                          const gchar *undo_desc,
                                          GimpVectors *vectors)
 {
-  GimpUndo *new;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (vectors)), NULL);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_UNDO,
-                                   sizeof (VectorsRepositionUndo),
-                                   sizeof (VectorsRepositionUndo),
-                                   GIMP_UNDO_VECTORS_REPOSITION, undo_desc,
-                                   GIMP_DIRTY_IMAGE_STRUCTURE,
-                                   undo_pop_vectors_reposition,
-                                   undo_free_vectors_reposition,
-                                   "item", vectors,
-                                   NULL)))
-    {
-      VectorsRepositionUndo *vru = new->data;
-
-      vru->old_position = gimp_image_get_vectors_index (image, vectors);
-
-      return new;
-    }
-
-  return NULL;
-}
-
-static gboolean
-undo_pop_vectors_reposition (GimpUndo            *undo,
-                             GimpUndoMode         undo_mode,
-                             GimpUndoAccumulator *accum)
-{
-  VectorsRepositionUndo *vru     = undo->data;
-  GimpVectors           *vectors = GIMP_VECTORS (GIMP_ITEM_UNDO (undo)->item);
-  gint                   pos;
-
-  /* what's the vectors's current index? */
-  pos = gimp_image_get_vectors_index (undo->image, vectors);
-  gimp_image_position_vectors (undo->image, vectors, vru->old_position,
-                               FALSE, NULL);
-  vru->old_position = pos;
-
-  return TRUE;
-}
-
-static void
-undo_free_vectors_reposition (GimpUndo     *undo,
-                              GimpUndoMode  undo_mode)
-{
-  g_free (undo->data);
+  return gimp_image_undo_push (image, GIMP_TYPE_VECTORS_PROP_UNDO,
+                               0, 0,
+                               GIMP_UNDO_VECTORS_REPOSITION, undo_desc,
+                               GIMP_DIRTY_IMAGE_STRUCTURE,
+                               NULL, NULL,
+                               "item", vectors,
+                               NULL);
 }
 
 

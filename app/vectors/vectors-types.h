@@ -26,11 +26,12 @@
 
 #include "vectors/vectors-enums.h"
 
-typedef struct _GimpAnchor       GimpAnchor;
+typedef struct _GimpAnchor          GimpAnchor;
 
-typedef struct _GimpVectors      GimpVectors;
-typedef struct _GimpStroke       GimpStroke;
-typedef struct _GimpBezierStroke GimpBezierStroke;
+typedef struct _GimpVectors         GimpVectors;
+typedef struct _GimpVectorsPropUndo GimpVectorsPropUndo;
+typedef struct _GimpStroke          GimpStroke;
+typedef struct _GimpBezierStroke    GimpBezierStroke;
 
 
 #endif /* __VECTORS_TYPES_H__ */
