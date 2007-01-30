@@ -34,6 +34,7 @@
 #include "gimpitem.h"
 #include "gimplist.h"
 #include "gimpprogress.h"
+#include "gimpsamplepoint.h"
 
 
 static void  gimp_image_rotate_item_offset   (GimpImage        *image,
@@ -331,6 +332,8 @@ gimp_image_rotate_sample_points (GimpImage        *image,
       GimpSamplePoint *sample_point = list->data;
       gint             old_x;
       gint             old_y;
+
+      gimp_image_undo_push_sample_point (image, NULL, sample_point);
 
       old_x = sample_point->x;
       old_y = sample_point->y;

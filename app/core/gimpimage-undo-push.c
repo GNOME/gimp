@@ -47,6 +47,7 @@
 #include "gimplayerpropundo.h"
 #include "gimplist.h"
 #include "gimpparasitelist.h"
+#include "gimpsamplepoint.h"
 #include "gimpselection.h"
 
 #include "text/gimptextlayer.h"
@@ -280,7 +281,7 @@ gimp_image_undo_push_sample_point (GimpImage       *image,
     {
       SamplePointUndo *spu = new->data;
 
-      spu->sample_point = gimp_image_sample_point_ref (sample_point);
+      spu->sample_point = gimp_sample_point_ref (sample_point);
       spu->x            = sample_point->x;
       spu->y            = sample_point->y;
 
@@ -315,7 +316,7 @@ undo_pop_sample_point (GimpUndo            *undo,
 
       spu->sample_point->x = spu->x;
       spu->sample_point->y = spu->y;
-      gimp_image_sample_point_ref (spu->sample_point);
+      gimp_sample_point_ref (spu->sample_point);
 
       gimp_image_sample_point_added (undo->image, spu->sample_point);
       gimp_image_update_sample_point (undo->image, spu->sample_point);
@@ -344,7 +345,7 @@ undo_free_sample_point (GimpUndo     *undo,
 {
   SamplePointUndo *gu = undo->data;
 
-  gimp_image_sample_point_unref (gu->sample_point);
+  gimp_sample_point_unref (gu->sample_point);
   g_free (gu);
 }
 

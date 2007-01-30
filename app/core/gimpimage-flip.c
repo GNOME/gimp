@@ -34,6 +34,7 @@
 #include "gimpitem.h"
 #include "gimplist.h"
 #include "gimpprogress.h"
+#include "gimpsamplepoint.h"
 
 
 void

@@ -30,7 +30,7 @@
 #include "core/gimp.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-pick-color.h"
-#include "core/gimpimage-sample-points.h"
+#include "core/gimpsamplepoint.h"
 
 #include "gimpcolorframe.h"
 #include "gimpmenufactory.h"

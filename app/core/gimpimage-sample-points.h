@@ -19,24 +19,11 @@
 #ifndef __GIMP_IMAGE_SAMPLE_POINTS_H__
 #define __GIMP_IMAGE_SAMPLE_POINTS_H__
 
-#define GIMP_SAMPLE_POINT_DRAW_SIZE 10
-
-struct _GimpSamplePoint
-{
-  gint                 ref_count;
-  gint                 x;
-  gint                 y;
-  guint32              sample_point_ID;
-};
-
 
 GimpSamplePoint * gimp_image_add_sample_point_at_pos (GimpImage        *image,
                                                       gint              x,
                                                       gint              y,
                                                       gboolean          push_undo);
-GimpSamplePoint * gimp_image_sample_point_ref        (GimpSamplePoint *sample_point);
-void              gimp_image_sample_point_unref      (GimpSamplePoint *sample_point);
-
 void              gimp_image_add_sample_point        (GimpImage       *image,
                                                       GimpSamplePoint *sample_point,
                                                       gint             x,

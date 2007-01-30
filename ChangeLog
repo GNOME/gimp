@@ -1,5 +1,31 @@
 2007-01-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/gimpsamplepoint.[ch]: new files implementing new(),
+	ref() and unref() and the new GIMP_TYPE_SAMPLE_TYPE boxed type.
+
+	* app/core/gimpimage-sample-points.[ch]: removed ref() and unref()
+	functions here.
+
+	* app/core/gimpimage.c
+	* app/core/gimpimage-crop.c
+	* app/core/gimpimage-duplicate.c
+	* app/core/gimpimage-flip.c
+	* app/core/gimpimage-resize.c
+	* app/core/gimpimage-rotate.c
+	* app/core/gimpimage-scale.c
+	* app/core/gimpimage-undo-push.c
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplayshell-draw.c
+	* app/tools/gimpcolortool.c
+	* app/widgets/gimpsamplepointeditor.c
+	* app/xcf/xcf-save.c: changed accordingly.
+
+	* app/core/gimpimage-rotate.c (gimp_image_rotate_sample_points):
+	added missing call to gimp_image_undo_push_sample_point().
+
+2007-01-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-enums.[ch]
 	* app/core/gimpimage-undo-push.[ch]: drop the "image" from
 	GIMP_UNDO_IMAGE_GUIDE, GIMP_UNDO_IMAGE_SAMPLE_POINT,

@@ -35,6 +35,7 @@
 #include "gimplayer.h"
 #include "gimplist.h"
 #include "gimpprogress.h"
+#include "gimpsamplepoint.h"
 
 #include "gimp-intl.h"
 

@@ -58,6 +58,7 @@
 #include "gimpparasitelist.h"
 #include "gimppickable.h"
 #include "gimpprojection.h"
+#include "gimpsamplepoint.h"
 #include "gimpselection.h"
 #include "gimptemplate.h"
 #include "gimpundostack.h"
@@ -916,7 +917,7 @@ gimp_image_finalize (GObject *object)
   if (image->sample_points)
     {
       g_list_foreach (image->sample_points,
-                      (GFunc) gimp_image_sample_point_unref, NULL);
+                      (GFunc) gimp_sample_point_unref, NULL);
       g_list_free (image->sample_points);
       image->sample_points = NULL;
     }

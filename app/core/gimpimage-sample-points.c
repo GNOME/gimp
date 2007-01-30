@@ -26,6 +26,7 @@
 #include "gimpimage.h"
 #include "gimpimage-sample-points.h"
 #include "gimpimage-undo-push.h"
+#include "gimpsamplepoint.h"
 
 #include "gimp-intl.h"
 
@@ -44,42 +45,16 @@ gimp_image_add_sample_point_at_pos (GimpImage *image,
   g_return_val_if_fail (x >= 0 && x < image->width, NULL);
   g_return_val_if_fail (y >= 0 && y < image->height, NULL);
 
-  sample_point = g_new0 (GimpSamplePoint, 1);
-
-  sample_point->ref_count       = 1;
-  sample_point->x               = -1;
-  sample_point->y               = -1;
-  sample_point->sample_point_ID = image->gimp->next_sample_point_ID++;
+  sample_point = gimp_sample_point_new (image->gimp->next_sample_point_ID++);
 
   if (push_undo)
     gimp_image_undo_push_sample_point (image, _("Add Sample_Point"),
                                        sample_point);
 
   gimp_image_add_sample_point (image, sample_point, x, y);
-  gimp_image_sample_point_unref (sample_point);
+  gimp_sample_point_unref (sample_point);
 
   return sample_point;
-}
-
-GimpSamplePoint *
-gimp_image_sample_point_ref (GimpSamplePoint *sample_point)
-{
-  g_return_val_if_fail (sample_point != NULL, NULL);
-
-  sample_point->ref_count++;
-
-  return sample_point;
-}
-
-void
-gimp_image_sample_point_unref (GimpSamplePoint *sample_point)
-{
-  g_return_if_fail (sample_point != NULL);
-
-  sample_point->ref_count--;
-
-  if (sample_point->ref_count < 1)
-    g_free (sample_point);
 }
 
 void
@@ -99,7 +74,7 @@ gimp_image_add_sample_point (GimpImage       *image,
 
   sample_point->x = x;
   sample_point->y = y;
-  gimp_image_sample_point_ref (sample_point);
+  gimp_sample_point_ref (sample_point);
 
   gimp_image_sample_point_added (image, sample_point);
   gimp_image_update_sample_point (image, sample_point);
@@ -131,7 +106,7 @@ gimp_image_remove_sample_point (GimpImage       *image,
 
   sample_point->x = -1;
   sample_point->y = -1;
-  gimp_image_sample_point_unref (sample_point);
+  gimp_sample_point_unref (sample_point);
 
   while (list)
     {

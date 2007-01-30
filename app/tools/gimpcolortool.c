@@ -34,6 +34,7 @@
 #include "core/gimpimage-sample-points.h"
 #include "core/gimpitem.h"
 #include "core/gimpmarshal.h"
+#include "core/gimpsamplepoint.h"
 
 #include "widgets/gimpcolormapeditor.h"
 #include "widgets/gimpdialogfactory.h"

@@ -38,6 +38,7 @@
 #include "gimplayer.h"
 #include "gimplist.h"
 #include "gimppickable.h"
+#include "gimpsamplepoint.h"
 
 #include "gimp-intl.h"
 

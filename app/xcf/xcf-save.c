@@ -47,6 +47,7 @@
 #include "core/gimplist.h"
 #include "core/gimpparasitelist.h"
 #include "core/gimpprogress.h"
+#include "core/gimpsamplepoint.h"
 #include "core/gimpunit.h"
 
 #include "text/gimptextlayer.h"

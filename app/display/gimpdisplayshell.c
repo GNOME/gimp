@@ -38,10 +38,9 @@
 #include "core/gimpcontext.h"
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
-#include "core/gimpimage-guides.h"
-#include "core/gimpimage-sample-points.h"
 #include "core/gimpimage-snap.h"
 #include "core/gimpmarshal.h"
+#include "core/gimpsamplepoint.h"
 
 #include "widgets/gimprender.h"
 #include "widgets/gimphelp-ids.h"

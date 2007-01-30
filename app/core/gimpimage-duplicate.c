@@ -39,6 +39,7 @@
 #include "gimplayer-floating-sel.h"
 #include "gimplist.h"
 #include "gimpparasitelist.h"
+#include "gimpsamplepoint.h"
 
 #include "vectors/gimpvectors.h"
 

@@ -251,6 +251,8 @@ libappcore_a_sources = \
 	gimpprojection.h		\
 	gimpprojection-construct.c	\
 	gimpprojection-construct.h	\
+	gimpsamplepoint.c		\
+	gimpsamplepoint.h		\
 	gimpscanconvert.c		\
 	gimpscanconvert.h		\
 	gimpselection.c			\
