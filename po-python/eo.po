@@ -5,8 +5,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-07 22:39+0100\n"
-"PO-Revision-Date: 2006-10-22 16:25+0200\n"
+"POT-Creation-Date: 2007-01-30 10:22+0100\n"
+"PO-Revision-Date: 2007-01-09 16:25+0200\n"
 "Last-Translator: Antonio C. Codazzi <f_sophia@libero.it>\n"
 "Language-Team: eo-tradukado.tuxfamily.org\n"
 "MIME-Version: 1.0\n"
@@ -107,17 +107,16 @@ msgstr "Navigilo por Python Proceduroj"
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr ""
+msgstr "Estas neeble malfermi '%s' por skribi: %s"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
 #, python-format
 msgid "Could not write to '%s': %s"
-msgstr ""
+msgstr "Estas neeble skribi en '%s': %s"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
-#, fuzzy
 msgid "Save Python-Fu Console Output"
-msgstr "Python Konzolo"
+msgstr "Konservu Eligon de Python-Fu Konzolo"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
 msgid "Interactive Gimp-Python interpreter"
@@ -272,9 +271,8 @@ msgid "Space between table elements"
 msgstr "Spaco inter elementoj de tabelo"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:439
-#, fuzzy
 msgid "Javascript for onmouseover and clicked"
-msgstr "Javaskripto por onmouseover kaj clicked)"
+msgstr "Javaskripto por onmouseover kaj clicked"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Skip animation for table caps"
@@ -307,15 +305,3 @@ msgstr "X dislokado de estigita ombro"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow Y displacement"
 msgstr "Y dislokado de estigita ombro"
-
-#~ msgid "Gimp-Python Console"
-#~ msgstr "Gimp-Python Konsolo"
-
-#~ msgid "Interactive Python Development"
-#~ msgstr "Interaktiva Python Progresigo"
-
-#~ msgid "Browse the Procedural Database"
-#~ msgstr "Foliumu Proceduran Datumbazon"
-
-#~ msgid "_Procedure Browser"
-#~ msgstr "Navigilo de _Proceduroj"
