@@ -208,11 +208,11 @@ gimp_channel_undo_free (GimpUndo     *undo,
 {
   GimpChannelUndo *channel_undo = GIMP_CHANNEL_UNDO (undo);
 
-  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
-
   if (channel_undo->tiles)
     {
       tile_manager_unref (channel_undo->tiles);
       channel_undo->tiles = NULL;
     }
+
+  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

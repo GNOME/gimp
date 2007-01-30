@@ -104,27 +104,40 @@ gimp_image_undo_constructor (GType                  type,
 
   image = GIMP_UNDO (object)->image;
 
-  image_undo->base_type       = image->base_type;
-  image_undo->width           = image->width;
-  image_undo->height          = image->height;
-  image_undo->xresolution     = image->xresolution;
-  image_undo->yresolution     = image->yresolution;
-  image_undo->resolution_unit = image->resolution_unit;
-
-  if (GIMP_UNDO (object)->undo_type == GIMP_UNDO_IMAGE_GRID)
+  switch (GIMP_UNDO (object)->undo_type)
     {
+    case GIMP_UNDO_IMAGE_TYPE:
+      image_undo->base_type = image->base_type;
+      break;
+
+    case GIMP_UNDO_IMAGE_SIZE:
+      image_undo->width  = image->width;
+      image_undo->height = image->height;
+      break;
+
+    case GIMP_UNDO_IMAGE_RESOLUTION:
+      image_undo->xresolution     = image->xresolution;
+      image_undo->yresolution     = image->yresolution;
+      image_undo->resolution_unit = image->resolution_unit;
+      break;
+
+    case GIMP_UNDO_IMAGE_GRID:
       g_assert (GIMP_IS_GRID (image_undo->grid));
 
       GIMP_UNDO (object)->size +=
         gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid), NULL);
-    }
-  else if (GIMP_UNDO (object)->undo_type == GIMP_UNDO_IMAGE_COLORMAP)
-    {
+      break;
+
+    case GIMP_UNDO_IMAGE_COLORMAP:
       image_undo->num_colors = gimp_image_get_colormap_size (image);
       image_undo->colormap   = g_memdup (gimp_image_get_colormap (image),
                                          image_undo->num_colors * 3);
 
       GIMP_UNDO (object)->size += image_undo->num_colors * 3;
+      break;
+
+    default:
+      g_assert_not_reached ();
     }
 
   return object;
@@ -184,43 +197,48 @@ gimp_image_undo_pop (GimpUndo            *undo,
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  if (undo->undo_type == GIMP_UNDO_IMAGE_TYPE)
+  switch (undo->undo_type)
     {
-      GimpImageBaseType base_type;
+    case GIMP_UNDO_IMAGE_TYPE:
+      {
+        GimpImageBaseType base_type;
 
-      base_type = image_undo->base_type;
-      image_undo->base_type = undo->image->base_type;
-      g_object_set (undo->image, "base-type", base_type, NULL);
+        base_type = image_undo->base_type;
+        image_undo->base_type = undo->image->base_type;
+        g_object_set (undo->image, "base-type", base_type, NULL);
 
-      gimp_image_colormap_changed (undo->image, -1);
+        gimp_image_colormap_changed (undo->image, -1);
 
-      if (image_undo->base_type != undo->image->base_type)
-        accum->mode_changed = TRUE;
-    }
-  else if (undo->undo_type == GIMP_UNDO_IMAGE_SIZE)
-    {
-      gint width;
-      gint height;
+        if (image_undo->base_type != undo->image->base_type)
+          accum->mode_changed = TRUE;
+      }
+      break;
 
-      width  = image_undo->width;
-      height = image_undo->height;
+    case GIMP_UNDO_IMAGE_SIZE:
+      {
+        gint width;
+        gint height;
 
-      image_undo->width  = undo->image->width;
-      image_undo->height = undo->image->height;
+        width  = image_undo->width;
+        height = image_undo->height;
 
-      g_object_set (undo->image,
-                    "width",  width,
-                    "height", height,
-                    NULL);
+        image_undo->width  = undo->image->width;
+        image_undo->height = undo->image->height;
 
-      gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimp_image_get_mask (undo->image)));
+        g_object_set (undo->image,
+                      "width",  width,
+                      "height", height,
+                      NULL);
 
-      if (undo->image->width  != image_undo->width ||
-          undo->image->height != image_undo->height)
-        accum->size_changed = TRUE;
-    }
-  else if (undo->undo_type == GIMP_UNDO_IMAGE_RESOLUTION)
-    {
+        gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimp_image_get_mask (undo->image)));
+
+        if (undo->image->width  != image_undo->width ||
+            undo->image->height != image_undo->height)
+          accum->size_changed = TRUE;
+      }
+      break;
+
+    case GIMP_UNDO_IMAGE_RESOLUTION:
       if (ABS (image_undo->xresolution - undo->image->xresolution) >= 1e-5 ||
           ABS (image_undo->yresolution - undo->image->yresolution) >= 1e-5)
         {
@@ -249,49 +267,53 @@ gimp_image_undo_pop (GimpUndo            *undo,
 
           accum->unit_changed = TRUE;
         }
-    }
-  else if (undo->undo_type == GIMP_UNDO_IMAGE_GRID)
-    {
-      GimpGrid *grid;
+      break;
 
-      undo->size -= gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid),
-                                             NULL);
+    case GIMP_UNDO_IMAGE_GRID:
+      {
+        GimpGrid *grid;
 
-      grid = gimp_config_duplicate (GIMP_CONFIG (undo->image->grid));
+        undo->size -= gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid),
+                                               NULL);
 
-      gimp_image_set_grid (undo->image, image_undo->grid, FALSE);
+        grid = gimp_config_duplicate (GIMP_CONFIG (undo->image->grid));
 
-      g_object_unref (image_undo->grid);
-      image_undo->grid = grid;
+        gimp_image_set_grid (undo->image, image_undo->grid, FALSE);
 
-      undo->size += gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid),
-                                             NULL);
-    }
-  else if (undo->undo_type == GIMP_UNDO_IMAGE_COLORMAP)
-    {
-      guchar *colormap;
-      gint    num_colors;
+        g_object_unref (image_undo->grid);
+        image_undo->grid = grid;
 
-      undo->size -= image_undo->num_colors * 3;
+        undo->size += gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid),
+                                               NULL);
+      }
+      break;
 
-      num_colors = gimp_image_get_colormap_size (undo->image);
-      colormap   = g_memdup (gimp_image_get_colormap (undo->image),
-                             num_colors * 3);
+    case GIMP_UNDO_IMAGE_COLORMAP:
+      {
+        guchar *colormap;
+        gint    num_colors;
 
-      gimp_image_set_colormap (undo->image,
-                               image_undo->colormap, image_undo->num_colors,
-                               FALSE);
+        undo->size -= image_undo->num_colors * 3;
 
-      if (image_undo->colormap)
-        g_free (image_undo->colormap);
+        num_colors = gimp_image_get_colormap_size (undo->image);
+        colormap   = g_memdup (gimp_image_get_colormap (undo->image),
+                               num_colors * 3);
 
-      image_undo->num_colors = num_colors;
-      image_undo->colormap   = colormap;
+        gimp_image_set_colormap (undo->image,
+                                 image_undo->colormap, image_undo->num_colors,
+                                 FALSE);
 
-      undo->size += image_undo->num_colors * 3;
-    }
-  else
-    {
+        if (image_undo->colormap)
+          g_free (image_undo->colormap);
+
+        image_undo->num_colors = num_colors;
+        image_undo->colormap   = colormap;
+
+        undo->size += image_undo->num_colors * 3;
+      }
+      break;
+
+    default:
       g_assert_not_reached ();
     }
 }
@@ -313,4 +335,6 @@ gimp_image_undo_free (GimpUndo     *undo,
       g_free (image_undo->colormap);
       image_undo->colormap = NULL;
     }
+
+  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

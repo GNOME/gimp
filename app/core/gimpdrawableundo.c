@@ -242,8 +242,6 @@ gimp_drawable_undo_free (GimpUndo     *undo,
 {
   GimpDrawableUndo *drawable_undo = GIMP_DRAWABLE_UNDO (undo);
 
-  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
-
   if (drawable_undo->tiles)
     {
       tile_manager_unref (drawable_undo->tiles);
@@ -255,4 +253,6 @@ gimp_drawable_undo_free (GimpUndo     *undo,
       tile_manager_unref (drawable_undo->src2_tiles);
       drawable_undo->src2_tiles = NULL;
     }
+
+  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

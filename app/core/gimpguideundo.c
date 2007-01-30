@@ -195,11 +195,11 @@ gimp_guide_undo_free (GimpUndo     *undo,
 {
   GimpGuideUndo *guide_undo = GIMP_GUIDE_UNDO (undo);
 
-  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
-
   if (guide_undo->guide)
     {
       g_object_unref (guide_undo->guide);
       guide_undo->guide = NULL;
     }
+
+  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

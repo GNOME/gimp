@@ -78,18 +78,30 @@ gimp_item_prop_undo_constructor (GType                  type,
 
   item = GIMP_ITEM_UNDO (object)->item;
 
-  if (GIMP_UNDO (object)->undo_type == GIMP_UNDO_ITEM_RENAME)
+  switch (GIMP_UNDO (object)->undo_type)
     {
+    case GIMP_UNDO_ITEM_RENAME:
       item_prop_undo->name = g_strdup (gimp_object_get_name (GIMP_OBJECT (item)));
       GIMP_UNDO (object)->size += strlen (item_prop_undo->name) + 1;
+      break;
+
+    case GIMP_UNDO_ITEM_DISPLACE:
+      gimp_item_offsets (item,
+                         &item_prop_undo->offset_x,
+                         &item_prop_undo->offset_y);
+      break;
+
+    case GIMP_UNDO_ITEM_VISIBILITY:
+      item_prop_undo->visible = gimp_item_get_visible (item);
+      break;
+
+    case GIMP_UNDO_ITEM_LINKED:
+      item_prop_undo->linked  = gimp_item_get_linked (item);
+      break;
+
+    default:
+      g_assert_not_reached ();
     }
-
-  gimp_item_offsets (item,
-                     &item_prop_undo->offset_x,
-                     &item_prop_undo->offset_y);
-
-  item_prop_undo->visible = gimp_item_get_visible (item);
-  item_prop_undo->linked  = gimp_item_get_linked (item);
 
   return object;
 }
@@ -104,66 +116,75 @@ gimp_item_prop_undo_pop (GimpUndo            *undo,
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  if (undo->undo_type == GIMP_UNDO_ITEM_RENAME)
+  switch (undo->undo_type)
     {
-      gchar *name;
+    case GIMP_UNDO_ITEM_RENAME:
+      {
+        gchar *name;
 
-      undo->size -= strlen (item_prop_undo->name) + 1;
+        undo->size -= strlen (item_prop_undo->name) + 1;
 
-      name = g_strdup (gimp_object_get_name (GIMP_OBJECT (item)));
-      gimp_object_take_name (GIMP_OBJECT (item), item_prop_undo->name);
-      item_prop_undo->name = name;
+        name = g_strdup (gimp_object_get_name (GIMP_OBJECT (item)));
+        gimp_object_take_name (GIMP_OBJECT (item), item_prop_undo->name);
+        item_prop_undo->name = name;
 
-      undo->size += strlen (item_prop_undo->name) + 1;
-    }
-  else if (undo->undo_type == GIMP_UNDO_ITEM_DISPLACE)
-    {
-      gint offset_x;
-      gint offset_y;
+        undo->size += strlen (item_prop_undo->name) + 1;
+      }
+      break;
 
-      gimp_item_offsets (item, &offset_x, &offset_y);
+    case GIMP_UNDO_ITEM_DISPLACE:
+      {
+        gint offset_x;
+        gint offset_y;
 
-      gimp_item_translate (item,
-                           item_prop_undo->offset_x - offset_x,
-                           item_prop_undo->offset_y - offset_y,
-                           FALSE);
+        gimp_item_offsets (item, &offset_x, &offset_y);
 
-      item_prop_undo->offset_x = offset_x;
-      item_prop_undo->offset_y = offset_y;
-    }
-  else if (undo->undo_type == GIMP_UNDO_ITEM_VISIBILITY)
-    {
-      gboolean visible;
+        gimp_item_translate (item,
+                             item_prop_undo->offset_x - offset_x,
+                             item_prop_undo->offset_y - offset_y,
+                             FALSE);
 
-      visible = gimp_item_get_visible (item);
-      gimp_item_set_visible (item, item_prop_undo->visible, FALSE);
-      item_prop_undo->visible = visible;
-    }
-  else if (undo->undo_type == GIMP_UNDO_ITEM_LINKED)
-    {
-      gboolean linked;
+        item_prop_undo->offset_x = offset_x;
+        item_prop_undo->offset_y = offset_y;
+      }
+      break;
 
-      linked = gimp_item_get_linked (item);
-      gimp_item_set_linked (item, item_prop_undo->linked, FALSE);
-      item_prop_undo->linked = linked;
-    }
-  else
-    {
+    case GIMP_UNDO_ITEM_VISIBILITY:
+      {
+        gboolean visible;
+
+        visible = gimp_item_get_visible (item);
+        gimp_item_set_visible (item, item_prop_undo->visible, FALSE);
+        item_prop_undo->visible = visible;
+      }
+      break;
+
+    case GIMP_UNDO_ITEM_LINKED:
+      {
+        gboolean linked;
+
+        linked = gimp_item_get_linked (item);
+        gimp_item_set_linked (item, item_prop_undo->linked, FALSE);
+        item_prop_undo->linked = linked;
+      }
+      break;
+
+    default:
       g_assert_not_reached ();
     }
 }
 
 static void
 gimp_item_prop_undo_free (GimpUndo     *undo,
-                        GimpUndoMode  undo_mode)
+                          GimpUndoMode  undo_mode)
 {
   GimpItemPropUndo *item_prop_undo = GIMP_ITEM_PROP_UNDO (undo);
-
-  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 
   if (item_prop_undo->name)
     {
       g_free (item_prop_undo->name);
       item_prop_undo->name = NULL;
     }
+
+  GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);
 }

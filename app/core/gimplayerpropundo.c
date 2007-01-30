@@ -78,10 +78,27 @@ gimp_layer_prop_undo_constructor (GType                  type,
   image = GIMP_UNDO (object)->image;
   layer = GIMP_LAYER (GIMP_ITEM_UNDO (object)->item);
 
-  layer_prop_undo->position   = gimp_image_get_layer_index (image, layer);
-  layer_prop_undo->mode       = gimp_layer_get_mode (layer);
-  layer_prop_undo->opacity    = gimp_layer_get_opacity (layer);
-  layer_prop_undo->lock_alpha = gimp_layer_get_lock_alpha (layer);
+  switch (GIMP_UNDO (object)->undo_type)
+    {
+    case GIMP_UNDO_LAYER_REPOSITION:
+      layer_prop_undo->position = gimp_image_get_layer_index (image, layer);
+      break;
+
+    case GIMP_UNDO_LAYER_MODE:
+      layer_prop_undo->mode = gimp_layer_get_mode (layer);
+      break;
+
+    case GIMP_UNDO_LAYER_OPACITY:
+      layer_prop_undo->opacity = gimp_layer_get_opacity (layer);
+      break;
+
+    case GIMP_UNDO_LAYER_LOCK_ALPHA:
+      layer_prop_undo->lock_alpha = gimp_layer_get_lock_alpha (layer);
+      break;
+
+    default:
+      g_assert_not_reached ();
+    }
 
   return object;
 }
@@ -96,42 +113,51 @@ gimp_layer_prop_undo_pop (GimpUndo            *undo,
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  if (undo->undo_type == GIMP_UNDO_LAYER_REPOSITION)
+  switch (undo->undo_type)
     {
-      gint position;
+    case GIMP_UNDO_LAYER_REPOSITION:
+      {
+        gint position;
 
-      position = gimp_image_get_layer_index (undo->image, layer);
-      gimp_image_position_layer (undo->image, layer,
-                                 layer_prop_undo->position,
-                                 FALSE, NULL);
-      layer_prop_undo->position = position;
-    }
-  else if (undo->undo_type == GIMP_UNDO_LAYER_MODE)
-    {
-      GimpLayerModeEffects mode;
+        position = gimp_image_get_layer_index (undo->image, layer);
+        gimp_image_position_layer (undo->image, layer,
+                                   layer_prop_undo->position,
+                                   FALSE, NULL);
+        layer_prop_undo->position = position;
+      }
+      break;
 
-      mode = gimp_layer_get_mode (layer);
-      gimp_layer_set_mode (layer, layer_prop_undo->mode, FALSE);
-      layer_prop_undo->mode = mode;
-    }
-  else if (undo->undo_type == GIMP_UNDO_LAYER_OPACITY)
-    {
-      gdouble opacity;
+    case GIMP_UNDO_LAYER_MODE:
+      {
+        GimpLayerModeEffects mode;
 
-      opacity = gimp_layer_get_opacity (layer);
-      gimp_layer_set_opacity (layer, layer_prop_undo->opacity, FALSE);
-      layer_prop_undo->opacity = opacity;
-    }
-  else if (undo->undo_type == GIMP_UNDO_LAYER_LOCK_ALPHA)
-    {
-      gboolean lock_alpha;
+        mode = gimp_layer_get_mode (layer);
+        gimp_layer_set_mode (layer, layer_prop_undo->mode, FALSE);
+        layer_prop_undo->mode = mode;
+      }
+      break;
 
-      lock_alpha = gimp_layer_get_lock_alpha (layer);
-      gimp_layer_set_lock_alpha (layer, layer_prop_undo->lock_alpha, FALSE);
-      layer_prop_undo->lock_alpha = lock_alpha;
-    }
-  else
-    {
+    case GIMP_UNDO_LAYER_OPACITY:
+      {
+        gdouble opacity;
+
+        opacity = gimp_layer_get_opacity (layer);
+        gimp_layer_set_opacity (layer, layer_prop_undo->opacity, FALSE);
+        layer_prop_undo->opacity = opacity;
+      }
+      break;
+
+    case GIMP_UNDO_LAYER_LOCK_ALPHA:
+      {
+        gboolean lock_alpha;
+
+        lock_alpha = gimp_layer_get_lock_alpha (layer);
+        gimp_layer_set_lock_alpha (layer, layer_prop_undo->lock_alpha, FALSE);
+        layer_prop_undo->lock_alpha = lock_alpha;
+      }
+      break;
+
+    default:
       g_assert_not_reached ();
     }
 }

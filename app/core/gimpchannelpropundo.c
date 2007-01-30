@@ -78,9 +78,19 @@ gimp_channel_prop_undo_constructor (GType                  type,
   image   = GIMP_UNDO (object)->image;
   channel = GIMP_CHANNEL (GIMP_ITEM_UNDO (object)->item);
 
-  channel_prop_undo->position = gimp_image_get_channel_index (image, channel);
+  switch (GIMP_UNDO (object)->undo_type)
+    {
+    case GIMP_UNDO_CHANNEL_REPOSITION:
+      channel_prop_undo->position = gimp_image_get_channel_index (image, channel);
+      break;
 
-  gimp_channel_get_color (channel, &channel_prop_undo->color);
+    case GIMP_UNDO_CHANNEL_COLOR:
+      gimp_channel_get_color (channel, &channel_prop_undo->color);
+      break;
+
+    default:
+      g_assert_not_reached ();
+    }
 
   return object;
 }
@@ -95,26 +105,31 @@ gimp_channel_prop_undo_pop (GimpUndo            *undo,
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
-  if (undo->undo_type == GIMP_UNDO_CHANNEL_REPOSITION)
+  switch (undo->undo_type)
     {
-      gint position;
+    case GIMP_UNDO_CHANNEL_REPOSITION:
+      {
+        gint position;
 
-      position = gimp_image_get_channel_index (undo->image, channel);
-      gimp_image_position_channel (undo->image, channel,
-                                   channel_prop_undo->position,
-                                   FALSE, NULL);
-      channel_prop_undo->position = position;
-    }
-  else if (undo->undo_type == GIMP_UNDO_CHANNEL_COLOR)
-    {
-      GimpRGB color;
+        position = gimp_image_get_channel_index (undo->image, channel);
+        gimp_image_position_channel (undo->image, channel,
+                                     channel_prop_undo->position,
+                                     FALSE, NULL);
+        channel_prop_undo->position = position;
+      }
+      break;
 
-      gimp_channel_get_color (channel, &color);
-      gimp_channel_set_color (channel, &channel_prop_undo->color, FALSE);
-      channel_prop_undo->color = color;
-    }
-  else
-    {
+    case GIMP_UNDO_CHANNEL_COLOR:
+      {
+        GimpRGB color;
+
+        gimp_channel_get_color (channel, &color);
+        gimp_channel_set_color (channel, &channel_prop_undo->color, FALSE);
+        channel_prop_undo->color = color;
+      }
+      break;
+
+    default:
       g_assert_not_reached ();
     }
 }
