@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-07 22:40+0100\n"
-"PO-Revision-Date: 2006-12-11 12:16+0200\n"
+"POT-Creation-Date: 2007-01-30 10:17+0100\n"
+"PO-Revision-Date: 2007-01-09 12:16+0200\n"
 "Last-Translator: Antonio C. Codazzi <f_sophia@libero.it>\n"
 "Language-Team: eo-tradukado.tuxfamily.org\n"
 "MIME-Version: 1.0\n"
@@ -21,9 +21,8 @@ msgid "Script-Fu Console"
 msgstr "Konzolo Skripto-Fu"
 
 #: ../plug-ins/script-fu/script-fu-console.c:206
-#, fuzzy
 msgid "Welcome to TinyScheme"
-msgstr "Bonvenon al TinyScheme\n"
+msgstr "Bonvenon al TinyScheme"
 
 #: ../plug-ins/script-fu/script-fu-console.c:212
 msgid "Interactive Scheme Development"
@@ -40,7 +39,7 @@ msgstr "Konservu Eligon de Skripto-Fu Konzolo"
 #: ../plug-ins/script-fu/script-fu-console.c:354
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Estas neeble malfermi \"%s\" en skribo: %s"
+msgstr "Estas neeble malfermi '%s' en skribo: %s"
 
 #: ../plug-ins/script-fu/script-fu-console.c:383
 msgid "Script-Fu Procedure Browser"
@@ -173,7 +172,7 @@ msgstr "_Skripto-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Buttons"
-msgstr "B_utonoj"
+msgstr "_Butonoj"
 
 #: ../plug-ins/script-fu/script-fu.c:308
 msgid "_Logos"
@@ -277,7 +276,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
-msgstr "3D Konturo..."
+msgstr "3D K_onturo..."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
@@ -526,7 +525,6 @@ msgid "Add B_evel..."
 msgstr "Aldonu Reli_efon..."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
-#, fuzzy
 msgid "Add a beveled border to an image"
 msgstr "Aldonu reliefan randon al bildo"
 
@@ -549,9 +547,8 @@ msgid "Add _Border..."
 msgstr "Aldonu _Randon..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:2
-#, fuzzy
 msgid "Add a border around an image"
-msgstr "Aldonu reliefan randon al bildo"
+msgstr "Aldonu ĉirkaŭan randon al bildo"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:3
 msgid "Border X size"
@@ -983,7 +980,7 @@ msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
 msgstr ""
-"Kreu mezajn tavolojn por igi movigantan \"en-bruligan\" transiron tra du "
+"Kreu mezajn tavolojn por igi movigantan 'en-bruligan' transiron tra du "
 "tavoloj"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
@@ -1339,11 +1336,11 @@ msgstr "Kristalo..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:1
 msgid "Difference Clouds..."
-msgstr ""
+msgstr "Diferencaj Nuboj..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
 msgid "Solid noise applied with Difference layer mode"
-msgstr ""
+msgstr "Solida perturbo kiu estas aplikita kun tavol-moduso de Diferenco"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "Distress the selection"
@@ -1370,12 +1367,12 @@ msgid "Threshold (bigger 1<-->255 smaller)"
 msgstr "Sojlo (granda 1<-->255 eta)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
-#, fuzzy
 msgid "_Distort..."
 msgstr "_Taŭzu..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-msgid "Add a drop-shadow to the selected region (or alpha)"
+#, fuzzy
+msgid "Add a drop shadow to the selected region (or alpha)"
 msgstr "Aldonu ombron al elektita areo (aŭ alfa)"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
@@ -1414,7 +1411,8 @@ msgid "Opacity"
 msgstr "Opakeco"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
-msgid "_Drop-Shadow..."
+#, fuzzy
+msgid "_Drop Shadow..."
 msgstr "_Kreu Ombron..."
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:1
@@ -1426,9 +1424,8 @@ msgid "Erase"
 msgstr "Forigu"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
-#, fuzzy
 msgid "Erase every other row or column"
-msgstr "_Forigu ĉiujn aliajn Vicojn..."
+msgstr "Forigu ĉiujn aliajn vicojn aŭ kolumnojn"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/fill"
@@ -1459,7 +1456,6 @@ msgid "Rows/cols"
 msgstr "Vicoj/kolumnoj"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:11
-#, fuzzy
 msgid "_Erase Every Other Row..."
 msgstr "_Forigu ĉiujn aliajn Vicojn..."
 
@@ -1904,11 +1900,8 @@ msgid "BG opacity"
 msgstr "Fona Opakeco"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-#, fuzzy
 msgid "Create a graph of the Hue, Saturation, and Value distributions"
-msgstr ""
-"Kreu grafikaĵon pri distribuo de Nuanco, Saturado kaj Valoro laŭ nuna "
-"desegneblaĵo"
+msgstr "Kreu grafikaĵon pri distribuo de Nuanco, Saturado kaj Valoro"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
 msgid "Draw _HSV Graph..."
@@ -2091,7 +2084,8 @@ msgid "Cell size (pixels)"
 msgstr "Ĉela grando (bilderoj)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:4
-msgid "Create a logo in the style newpaper printing"
+#, fuzzy
+msgid "Create a logo in the style of newspaper printing"
 msgstr "Kreu logotipion per ŝajno de ĵurnala preso"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6
@@ -2850,11 +2844,11 @@ msgstr "_Ondo..."
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
 msgid "Bookmark to the GIMP web site"
-msgstr ""
+msgstr "Ligilo al retpaĝaro de GIMP"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "Bookmark to the user manual"
-msgstr ""
+msgstr "Ligilo al manlibro de la uzanto"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "Create and Use _Selections"
@@ -2943,24 +2937,3 @@ msgstr "Lumakcenta opakeco"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-Efekto..."
-
-#~ msgid ""
-#~ "Copyright (c) Dimitrios Souflis\n"
-#~ "\n"
-#~ msgstr "Kopirajto (c) Dimitrios Souflis\n"
-
-#~ msgid "Script-Fu Console - "
-#~ msgstr "Konzolo Skripto-Fu - "
-
-#~ msgid "Erase every other row/column of pixels of the active drawable"
-#~ msgstr ""
-#~ "Forigu ĉiujn aliajn vicojn/kolumnojn da bilderoj en aktiva desegnebla "
-#~ "plano"
-
-#~ msgid ""
-#~ "Make a new image from the current layer by applying the unsharp mask "
-#~ "method"
-#~ msgstr "Kreu nova bildon el nuna tavolo per misenfokuzanta masko"
-
-#~ msgid "Unsharp Mask..."
-#~ msgstr "Misenfokusanta Masko..."
