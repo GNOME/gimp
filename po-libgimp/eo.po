@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-07 22:23+0100\n"
-"PO-Revision-Date: 2006-12-11 00:22+0200\n"
+"POT-Creation-Date: 2007-01-30 10:23+0100\n"
+"PO-Revision-Date: 2007-01-09 00:22+0200\n"
 "Last-Translator: Antonio C. Codazzi <f_sophia@libero.it>\n"
 "Language-Team: eo-tradukado.tuxfamily.org\n"
 "MIME-Version: 1.0\n"
@@ -23,14 +23,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../libgimp/gimpbrushselectbutton.c:170
-#, fuzzy
 msgid "Brush Selection"
-msgstr "_Elekto"
+msgstr "Penika Elekto"
 
 #: ../libgimp/gimpbrushselectbutton.c:911
 #: ../libgimp/gimppatternselectbutton.c:712
 msgid "_Browse..."
-msgstr ""
+msgstr "_Foliumu..."
 
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
@@ -206,26 +205,23 @@ msgstr "Elekto de Tiparoj"
 
 #: ../libgimp/gimpfontselectbutton.c:145
 msgid "Sans"
-msgstr "Sen"
+msgstr "Sans"
 
 #: ../libgimp/gimpgradientselectbutton.c:148
-#, fuzzy
 msgid "Gradient Selection"
-msgstr "Elekto de Tiparoj"
+msgstr "Elekto de Gradiento"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
 msgid "(Empty)"
 msgstr "(Malplena)"
 
 #: ../libgimp/gimppaletteselectbutton.c:130
-#, fuzzy
 msgid "Palette Selection"
-msgstr "Elekto de Tiparoj"
+msgstr "Elekto de Paletro"
 
 #: ../libgimp/gimppatternselectbutton.c:156
-#, fuzzy
 msgid "Pattern Selection"
-msgstr "Elekto de Tiparoj"
+msgstr "Elekto de Motivo"
 
 #: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
@@ -680,19 +676,19 @@ msgstr "Malantaŭen"
 
 #: ../libgimpbase/gimpbaseenums.c:775
 msgid "Adjust"
-msgstr ""
+msgstr "Aranĝu"
 
 #: ../libgimpbase/gimpbaseenums.c:776
 msgid "Clip"
-msgstr ""
+msgstr "Agrafu"
 
 #: ../libgimpbase/gimpbaseenums.c:777
 msgid "Crop to result"
-msgstr ""
+msgstr "Tranĉu laŭ rezulto"
 
 #: ../libgimpbase/gimpbaseenums.c:778
 msgid "Crop with aspect"
-msgstr ""
+msgstr "Tranĉu laŭ aspekto"
 
 #: ../libgimpbase/gimpbaseenums.c:881
 msgid "Internal GIMP procedure"
@@ -776,7 +772,6 @@ msgid "The color profile of your (primary) monitor."
 msgstr "Profilo de koloro por (ĉefa) ekrano."
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
-#, fuzzy
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
@@ -787,7 +782,6 @@ msgstr ""
 "tiu el la grafika sistemo malsukcesis."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
-#, fuzzy
 msgid "The default RGB working space color profile."
 msgstr "Defaŭlta profilo de RGB koloro en laborspaco."
 
@@ -804,13 +798,12 @@ msgid "Sets how colors are mapped for your display."
 msgstr "Agordu la manieron en kiu koloroj bildiĝos pro ekrano."
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
-#, fuzzy
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
 msgstr ""
-"Agordu la manieron per kiu koloroj konvertiĝos el laborspaco al aparato de "
-"presa simulado."
+"Agordu la manieron per kiu koloroj konvertiĝos el laborspaco de RGB al "
+"aparato de presa simulado."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -888,12 +881,12 @@ msgid "Could not open '%s' for writing: %s"
 msgstr "Estas neeble malfermi \"%s\" en skribo: %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:667
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "The original file has not been touched."
 msgstr ""
-"Eraro dum skribado en dumtempa dosiero por \"%s\": %s\n"
+"Eraro dum skribado en dumtempa dosiero por '%s': %s\n"
 "Origina dosiero estas netuŝita."
 
 #: ../libgimpconfig/gimpconfigwriter.c:675
@@ -902,7 +895,7 @@ msgid ""
 "Error writing to temporary file for '%s': %s\n"
 "No file has been created."
 msgstr ""
-"Eraro dum skribado de dumtempa dosiero por \"%s\": %s\n"
+"Eraro dum skribado de dumtempa dosiero por '%s': %s\n"
 "Neniu dosiero estis kreita."
 
 #: ../libgimpconfig/gimpconfigwriter.c:686
@@ -1104,7 +1097,7 @@ msgid "Check Style"
 msgstr "Kvadrostilo"
 
 #. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:265
+#: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "_Antaŭmontro"
 
@@ -1354,9 +1347,8 @@ msgid "Mode of operation:"
 msgstr "Operacimoduso:"
 
 #: ../modules/cdisplay_lcms.c:309
-#, fuzzy
 msgid "RGB working space profile:"
-msgstr "Profilo de RGB koloro:"
+msgstr "Profilo de RGB laborspaco:"
 
 #: ../modules/cdisplay_lcms.c:316
 msgid "Monitor profile:"
@@ -1544,59 +1536,117 @@ msgid "Button Gear Up"
 msgstr "Radetobutono Supren"
 
 #: ../modules/controller_linux_input.c:87
-msgid "Wheel Turn Left"
-msgstr "Radeto Maldekstren"
+msgid "X Move Left"
+msgstr ""
 
 #: ../modules/controller_linux_input.c:88
-msgid "Wheel Turn Right"
-msgstr "Radeto Dekstren"
+msgid "X Move Right"
+msgstr ""
 
 #: ../modules/controller_linux_input.c:89
+msgid "Y Move Away"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:90
+msgid "Y Move Near"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:91
+msgid "Z Move Up"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:92
+msgid "Z Move Down"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:94
+msgid "X Axis Tilt Away"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:95
+msgid "X Axis Tilt Near"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:96
+msgid "Y Axis Tilt Right"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:97
+msgid "Y Axis Tilt Left"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:98
+#, fuzzy
+msgid "Z Axis Turn Left"
+msgstr "Diskobutono Maldekstren"
+
+#: ../modules/controller_linux_input.c:99
+#, fuzzy
+msgid "Z Axis Turn Right"
+msgstr "Diskobutono Dekstren"
+
+#: ../modules/controller_linux_input.c:101
+msgid "Horiz. Wheel Turn Back"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:102
+msgid "Horiz. Wheel Turn Forward"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:103
 msgid "Dial Turn Left"
 msgstr "Diskobutono Maldekstren"
 
-#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_linux_input.c:104
 msgid "Dial Turn Right"
 msgstr "Diskobutono Dekstren"
 
-#: ../modules/controller_linux_input.c:154
+#: ../modules/controller_linux_input.c:105
+msgid "Wheel Turn Left"
+msgstr "Radeto Maldekstren"
+
+#: ../modules/controller_linux_input.c:106
+msgid "Wheel Turn Right"
+msgstr "Radeto Dekstren"
+
+#: ../modules/controller_linux_input.c:170
 msgid "Linux input event controller"
 msgstr "Reĝilo por enigaj eventoj de Linukso"
 
-#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:246
+#: ../modules/controller_linux_input.c:238 ../modules/controller_midi.c:246
 msgid "Device:"
 msgstr "Aparato:"
 
-#: ../modules/controller_linux_input.c:223
+#: ../modules/controller_linux_input.c:239
 msgid "The name of the device to read Linux Input events from."
 msgstr "Aparatnomo el kiu oni legas Enigajn Eventojn de Linukso."
 
-#: ../modules/controller_linux_input.c:227
+#: ../modules/controller_linux_input.c:243
 msgid "Linux Input"
 msgstr "Linuksa Enigo"
 
-#: ../modules/controller_linux_input.c:352
+#: ../modules/controller_linux_input.c:368
 msgid "Linux Input Events"
 msgstr "Enigaj Eventoj de Linukso"
 
-#: ../modules/controller_linux_input.c:373 ../modules/controller_midi.c:484
-#: ../modules/controller_midi.c:510
+#: ../modules/controller_linux_input.c:389 ../modules/controller_midi.c:483
+#: ../modules/controller_midi.c:509
 #, c-format
 msgid "Reading from %s"
 msgstr "Legante el %s"
 
-#: ../modules/controller_linux_input.c:389
-#: ../modules/controller_linux_input.c:432 ../modules/controller_midi.c:466
-#: ../modules/controller_midi.c:527 ../modules/controller_midi.c:598
+#: ../modules/controller_linux_input.c:405
+#: ../modules/controller_linux_input.c:448 ../modules/controller_midi.c:465
+#: ../modules/controller_midi.c:526 ../modules/controller_midi.c:597
 #, c-format
 msgid "Device not available: %s"
 msgstr "Nedisponebla aparato: %s"
 
-#: ../modules/controller_linux_input.c:397 ../modules/controller_midi.c:535
+#: ../modules/controller_linux_input.c:413 ../modules/controller_midi.c:534
 msgid "No device configured"
 msgstr "Neniu agordita aparato"
 
-#: ../modules/controller_linux_input.c:441 ../modules/controller_midi.c:607
+#: ../modules/controller_linux_input.c:457 ../modules/controller_midi.c:606
 msgid "End of file"
 msgstr "Dosierfino"
 
@@ -1647,16 +1697,11 @@ msgstr "Reĝilo %03d"
 msgid "MIDI Events"
 msgstr "MIDI Eventoj"
 
-#: ../modules/controller_midi.c:458
+#: ../modules/controller_midi.c:455
+msgid "GIMP"
+msgstr ""
+
+#: ../modules/controller_midi.c:457
 #, fuzzy
-msgid "GIMP MIDI controller"
-msgstr "Reĝilo de MIDI eventoj"
-
-#~ msgid "Ask"
-#~ msgstr "Petu"
-
-#~ msgid "Use embedded profile"
-#~ msgstr "Uzu entenitan agrodaĵon"
-
-#~ msgid "Convert to RGB workspace"
-#~ msgstr "Konvertu al RGB laborspaco"
+msgid "GIMP MIDI Input Controller"
+msgstr "Reĝilo de GIMP MIDI"
