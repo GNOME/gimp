@@ -1,3 +1,9 @@
+2007-01-30  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_button_press): corrected the GTK+
+	version check. Closes bug #348347 again.
+
 2007-01-26  Sven Neumann  <sven@gimp.org>
 
 	* docs/gimp.1.in: fixed markup (bug #401145)
