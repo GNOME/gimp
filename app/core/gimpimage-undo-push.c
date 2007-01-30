@@ -703,9 +703,9 @@ gimp_image_undo_push_layer_lock_alpha (GimpImage   *image,
 }
 
 
-/*********************/
-/*  Text Layer Undo  */
-/*********************/
+/**********************/
+/*  Text Layer Undos  */
+/**********************/
 
 GimpUndo *
 gimp_image_undo_push_text_layer (GimpImage        *image,
@@ -727,86 +727,22 @@ gimp_image_undo_push_text_layer (GimpImage        *image,
                                NULL);
 }
 
-
-/******************************/
-/*  Text Layer Modified Undo  */
-/******************************/
-
-typedef struct _TextLayerModifiedUndo TextLayerModifiedUndo;
-
-struct _TextLayerModifiedUndo
-{
-  gboolean old_modified;
-};
-
-static gboolean undo_pop_text_layer_modified  (GimpUndo            *undo,
-                                               GimpUndoMode         undo_mode,
-                                               GimpUndoAccumulator *accum);
-static void     undo_free_text_layer_modified (GimpUndo            *undo,
-                                               GimpUndoMode         undo_mode);
-
 GimpUndo *
 gimp_image_undo_push_text_layer_modified (GimpImage     *image,
                                           const gchar   *undo_desc,
                                           GimpTextLayer *layer)
 {
-  GimpUndo *new;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_TEXT_LAYER (layer), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (layer)), NULL);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_UNDO,
-                                   sizeof (TextLayerModifiedUndo),
-                                   sizeof (TextLayerModifiedUndo),
-                                   GIMP_UNDO_TEXT_LAYER_MODIFIED, undo_desc,
-                                   GIMP_DIRTY_ITEM_META,
-                                   undo_pop_text_layer_modified,
-                                   undo_free_text_layer_modified,
-                                   "item", layer,
-                                   NULL)))
-    {
-      TextLayerModifiedUndo *modified_undo = new->data;
-
-      modified_undo->old_modified = layer->modified;
-
-      return new;
-    }
-
-  return NULL;
-}
-
-static gboolean
-undo_pop_text_layer_modified (GimpUndo            *undo,
-                              GimpUndoMode         undo_mode,
-                              GimpUndoAccumulator *accum)
-{
-  TextLayerModifiedUndo *modified_undo = undo->data;
-  GimpTextLayer         *layer;
-  gboolean               modified;
-
-  layer = GIMP_TEXT_LAYER (GIMP_ITEM_UNDO (undo)->item);
-
-#if 0
-  g_print ("setting layer->modified from %s to %s\n",
-           layer->modified ? "TRUE" : "FALSE",
-           modified_undo->old_modified ? "TRUE" : "FALSE");
-#endif
-
-  modified = layer->modified;
-  g_object_set (layer, "modified", modified_undo->old_modified, NULL);
-  modified_undo->old_modified = modified;
-
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
-
-  return TRUE;
-}
-
-static void
-undo_free_text_layer_modified (GimpUndo     *undo,
-                               GimpUndoMode  undo_mode)
-{
-  g_free (undo->data);
+  return gimp_image_undo_push (image, GIMP_TYPE_TEXT_UNDO,
+                               0, 0,
+                               GIMP_UNDO_TEXT_LAYER_MODIFIED, undo_desc,
+                               GIMP_DIRTY_ITEM_META,
+                               NULL, NULL,
+                               "item", layer,
+                               NULL);
 }
 
 

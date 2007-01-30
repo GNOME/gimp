@@ -1,5 +1,12 @@
 2007-01-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/text/gimptextundo.[ch]: add support for
+	GIMP_UNDO_TEXT_LAYER_MODIFIED.
+
+	* app/core/gimpimage-undo-push.c: use it here.
+
+2007-01-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/core-types.h
 	* app/core/gimpguideundo.[ch]

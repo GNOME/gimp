@@ -112,19 +112,31 @@ gimp_text_undo_constructor (GType                  type,
 
   layer = GIMP_TEXT_LAYER (GIMP_ITEM_UNDO (text_undo)->item);
 
-  if (text_undo->pspec)
+  switch (GIMP_UNDO (object)->undo_type)
     {
-      g_assert (text_undo->pspec->owner_type == GIMP_TYPE_TEXT);
+    case GIMP_UNDO_TEXT_LAYER:
+      if (text_undo->pspec)
+        {
+          g_assert (text_undo->pspec->owner_type == GIMP_TYPE_TEXT);
 
-      text_undo->value = g_new0 (GValue, 1);
+          text_undo->value = g_new0 (GValue, 1);
 
-      g_value_init (text_undo->value, text_undo->pspec->value_type);
-      g_object_get_property (G_OBJECT (layer->text),
-                             text_undo->pspec->name, text_undo->value);
-    }
-  else if (layer->text)
-    {
-      text_undo->text = gimp_config_duplicate (GIMP_CONFIG (layer->text));
+          g_value_init (text_undo->value, text_undo->pspec->value_type);
+          g_object_get_property (G_OBJECT (layer->text),
+                                 text_undo->pspec->name, text_undo->value);
+        }
+      else if (layer->text)
+        {
+          text_undo->text = gimp_config_duplicate (GIMP_CONFIG (layer->text));
+        }
+      break;
+
+    case GIMP_UNDO_TEXT_LAYER_MODIFIED:
+      text_undo->modified = layer->modified;
+      break;
+
+    default:
+      g_assert_not_reached ();
     }
 
   return object;
@@ -143,6 +155,7 @@ gimp_text_undo_set_property (GObject      *object,
     case PROP_PARAM:
       text_undo->pspec = g_value_get_param (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -162,6 +175,7 @@ gimp_text_undo_get_property (GObject    *object,
     case PROP_PARAM:
       g_value_set_param (value, (GParamSpec *) text_undo->pspec);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -193,46 +207,72 @@ gimp_text_undo_pop (GimpUndo            *undo,
   GimpTextUndo  *text_undo = GIMP_TEXT_UNDO (undo);
   GimpTextLayer *layer     = GIMP_TEXT_LAYER (GIMP_ITEM_UNDO (undo)->item);
 
-  if (text_undo->pspec)
-    {
-      GValue *value;
-
-      g_return_if_fail (layer->text != NULL);
-
-      value = g_new0 (GValue, 1);
-      g_value_init (value, text_undo->pspec->value_type);
-
-      g_object_get_property (G_OBJECT (layer->text),
-                             text_undo->pspec->name, value);
-
-      g_object_set_property (G_OBJECT (layer->text),
-                             text_undo->pspec->name, text_undo->value);
-
-      g_value_unset (text_undo->value);
-      g_free (text_undo->value);
-
-      text_undo->value = value;
-    }
-  else
-    {
-      GimpText *text;
-
-      text = (layer->text ?
-              gimp_config_duplicate (GIMP_CONFIG (layer->text)) : NULL);
-
-      if (layer->text && text_undo->text)
-        gimp_config_sync (G_OBJECT (text_undo->text),
-                          G_OBJECT (layer->text), 0);
-      else
-        gimp_text_layer_set_text (layer, text_undo->text);
-
-      if (text_undo->text)
-        g_object_unref (text_undo->text);
-
-      text_undo->text = text;
-    }
-
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+
+  switch (undo->undo_type)
+    {
+    case GIMP_UNDO_TEXT_LAYER:
+      if (text_undo->pspec)
+        {
+          GValue *value;
+
+          g_return_if_fail (layer->text != NULL);
+
+          value = g_new0 (GValue, 1);
+          g_value_init (value, text_undo->pspec->value_type);
+
+          g_object_get_property (G_OBJECT (layer->text),
+                                 text_undo->pspec->name, value);
+
+          g_object_set_property (G_OBJECT (layer->text),
+                                 text_undo->pspec->name, text_undo->value);
+
+          g_value_unset (text_undo->value);
+          g_free (text_undo->value);
+
+          text_undo->value = value;
+        }
+      else
+        {
+          GimpText *text;
+
+          text = (layer->text ?
+                  gimp_config_duplicate (GIMP_CONFIG (layer->text)) : NULL);
+
+          if (layer->text && text_undo->text)
+            gimp_config_sync (G_OBJECT (text_undo->text),
+                              G_OBJECT (layer->text), 0);
+          else
+            gimp_text_layer_set_text (layer, text_undo->text);
+
+          if (text_undo->text)
+            g_object_unref (text_undo->text);
+
+          text_undo->text = text;
+        }
+      break;
+
+    case GIMP_UNDO_TEXT_LAYER_MODIFIED:
+      {
+        gboolean modified;
+
+#if 0
+        g_print ("setting layer->modified from %s to %s\n",
+                 layer->modified ? "TRUE" : "FALSE",
+                 text_undo->modified ? "TRUE" : "FALSE");
+#endif
+
+        modified = layer->modified;
+        g_object_set (layer, "modified", text_undo->modified, NULL);
+        text_undo->modified = modified;
+
+        gimp_viewable_invalidate_preview (GIMP_VIEWABLE (layer));
+      }
+      break;
+
+    default:
+      g_assert_not_reached ();
+    }
 }
 
 static void
