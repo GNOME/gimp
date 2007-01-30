@@ -33,9 +33,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-07 22:15+0100\n"
-"PO-Revision-Date: 2006-10-18 21:56+0200\n"
-"Last-Translator: Antonio C. Codazzi <f_sofia@libero.it>\n"
+"POT-Creation-Date: 2007-01-30 10:15+0100\n"
+"PO-Revision-Date: 2007-01-30 10:15+0100\n"
+"Last-Translator: Antonio C. Codazzi <f_sophia@libero.it>\n"
 "Language-Team: eo-tradukado.tuxfamily.org\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -51,8 +51,9 @@ msgid "GNU Image Manipulation Program"
 msgstr "Bildmanipulilo (GIMP = GNU Image Manipulation Program)"
 
 #: ../app/about.h:30
+#, fuzzy
 msgid ""
-"Copyright © 1995-2006\n"
+"Copyright © 1995-2007\n"
 "Spencer Kimball, Peter Mattis and the GIMP Development Team"
 msgstr ""
 "Kopirajto © 1995-2006\n"
@@ -86,11 +87,7 @@ msgstr ""
 "alikaze skribu al la Free Software Foundation, Inc., 59 Temple Place - Suite "
 "330, Boston, MA 02111-1307, USA."
 
-#: ../app/app_procs.c:133
-msgid "(This console window will close in ten seconds)\n"
-msgstr "(Ĉi konzolfenestro fermiĝos en 10 sekundoj)\n"
-
-#: ../app/app_procs.c:243
+#: ../app/app_procs.c:208
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -102,11 +99,6 @@ msgstr ""
 "\n"
 "Por datuma protekto, kontrolu en la Agordoj lokadon kaj rajtigojn de la "
 "svopa dosierujo (nune ili estas \"%s\")."
-
-#: ../app/app_procs.c:301
-#, c-format
-msgid "Opening '%s' failed: %s"
-msgstr "Malfermo de \"%s\" malsukcesis: %s"
 
 #: ../app/batch.c:75
 #, c-format
@@ -121,93 +113,97 @@ msgstr ""
 "La skriptinterpretilo \"%s\" ne estas disponebla. Skriptmoduso estas "
 "malebligita."
 
-#: ../app/main.c:125 ../tools/gimp-remote.c:79
+#: ../app/main.c:142 ../tools/gimp-remote.c:79
 msgid "Show version information and exit"
 msgstr "Montru informojn pri versio kaj eliru"
 
-#: ../app/main.c:130
+#: ../app/main.c:147
 msgid "Show license information and exit"
 msgstr "Montru informojn pri licenco e kaj eliru"
 
-#: ../app/main.c:135
+#: ../app/main.c:152
 msgid "Be more verbose"
 msgstr "Estu pli parolema"
 
-#: ../app/main.c:140
+#: ../app/main.c:157
+msgid "Start a new GIMP instance"
+msgstr ""
+
+#: ../app/main.c:162
 msgid "Run without a user interface"
 msgstr "Lanĉu sen interfaco de la Uzanto"
 
-#: ../app/main.c:145
+#: ../app/main.c:167
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Ne ŝargu penikojn, gradientojn, motivojn, ..."
 
-#: ../app/main.c:150
+#: ../app/main.c:172
 msgid "Do not load any fonts"
 msgstr "Ne ŝargu iun ajn tiparon"
 
-#: ../app/main.c:155
+#: ../app/main.c:177
 msgid "Do not show a startup window"
 msgstr "Ne montru unuan fenestron"
 
-#: ../app/main.c:160
+#: ../app/main.c:182
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "Ne utiligu kunpartigitan memoron inter GIMP kaj kromaĵoj"
 
-#: ../app/main.c:165
+#: ../app/main.c:187
 msgid "Do not use special CPU acceleration functions"
 msgstr "Ne utiligu specialajn akcelojn de CPU"
 
-#: ../app/main.c:170
+#: ../app/main.c:192
 msgid "Use an alternate sessionrc file"
 msgstr "Uzu alternativan sessionrc dosieron"
 
-#: ../app/main.c:175
+#: ../app/main.c:197
 msgid "Use an alternate user gimprc file"
 msgstr "Uzu alternativan gimprc Uzant-dosieron"
 
-#: ../app/main.c:180
+#: ../app/main.c:202
 msgid "Use an alternate system gimprc file"
 msgstr "Uzu alternativan gimprc sistemdosieron"
 
-#: ../app/main.c:185
+#: ../app/main.c:207
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Lanĉenda skript-komandon (ĝi estas uzebla plifoje)"
 
-#: ../app/main.c:190
+#: ../app/main.c:212
 msgid "The procedure to process batch commands with"
 msgstr "Proceduro por procezi skript-komandojn"
 
-#: ../app/main.c:195
+#: ../app/main.c:217
 msgid "Send messages to console instead of using a dialog"
 msgstr "Sendu mesaĝojn sur konsolon anstataŭ en dialog-fenestron"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:201
+#: ../app/main.c:223
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Moduso PDB-kompatibila (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:207
+#: ../app/main.c:229
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Lanĉu erarserĉilon en okazo de blokiĝo (never|query|always)"
 
-#: ../app/main.c:212
+#: ../app/main.c:234
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Ebligu sencimigon laŭ nefatalaj signaloj"
 
-#: ../app/main.c:217
+#: ../app/main.c:239
 msgid "Make all warnings fatal"
 msgstr "Igu ĉiujn avertojn fatalaj"
 
-#: ../app/main.c:222
+#: ../app/main.c:244
 msgid "Output a gimprc file with default settings"
 msgstr "Kreu gimprc dosieron per defaŭltaj valoroj"
 
-#: ../app/main.c:292
+#: ../app/main.c:327
 msgid "[FILE|URI...]"
 msgstr "[FILE|URI...]"
 
-#: ../app/main.c:307
+#: ../app/main.c:345
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -215,7 +211,24 @@ msgstr ""
 "GIMP ne povas prepari grafikan interfacon.\n"
 "Kontrolu ke ĝusta agordado de grafika medio ekzistas."
 
-#: ../app/main.c:457 ../tools/gimp-remote.c:321
+#: ../app/main.c:392
+msgid "Another GIMP instance is already running."
+msgstr ""
+
+#: ../app/main.c:467
+msgid "GIMP output. Type any character to close this window."
+msgstr ""
+
+#: ../app/main.c:468
+#, c-format
+msgid "(Type any character to close this window)\n"
+msgstr ""
+
+#: ../app/main.c:485
+msgid "GIMP output. You can minimize this window, but don't close it."
+msgstr ""
+
+#: ../app/main.c:587 ../tools/gimp-remote.c:323
 #, c-format
 msgid "%s version %s"
 msgstr "%s versio %s"
@@ -256,7 +269,7 @@ msgstr "Redaktilo de Penikoj"
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:102 ../app/actions/dialogs-actions.c:130
 #: ../app/core/gimp.c:817 ../app/dialogs/dialogs.c:148
-#: ../app/dialogs/preferences-dialog.c:2588
+#: ../app/dialogs/preferences-dialog.c:2587
 msgid "Brushes"
 msgstr "Penikoj"
 
@@ -326,7 +339,7 @@ msgstr "Dosiero"
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:147 ../app/actions/dialogs-actions.c:150
 #: ../app/core/gimp.c:833 ../app/dialogs/dialogs.c:156
-#: ../app/dialogs/preferences-dialog.c:2604
+#: ../app/dialogs/preferences-dialog.c:2603
 msgid "Fonts"
 msgstr "Tiparoj"
 
@@ -338,7 +351,7 @@ msgstr "Redaktilo de Gradientoj"
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:153 ../app/actions/dialogs-actions.c:140
 #: ../app/core/gimp.c:829 ../app/dialogs/dialogs.c:152
-#: ../app/dialogs/preferences-dialog.c:2600
+#: ../app/dialogs/preferences-dialog.c:2599
 msgid "Gradients"
 msgstr "Gradientoj"
 
@@ -370,18 +383,18 @@ msgstr "Redaktilo de Paletro"
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:171 ../app/actions/dialogs-actions.c:145
 #: ../app/core/gimp.c:825 ../app/dialogs/dialogs.c:154
-#: ../app/dialogs/preferences-dialog.c:2596
+#: ../app/dialogs/preferences-dialog.c:2595
 msgid "Palettes"
 msgstr "Paletroj"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:174 ../app/actions/dialogs-actions.c:135
 #: ../app/core/gimp.c:821 ../app/dialogs/dialogs.c:150
-#: ../app/dialogs/preferences-dialog.c:2592
+#: ../app/dialogs/preferences-dialog.c:2591
 msgid "Patterns"
 msgstr "Motivoj"
 
-#: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2608
+#: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2607
 msgid "Plug-Ins"
 msgstr "Kromaĵoj"
 
@@ -411,7 +424,7 @@ msgstr "Tekst-redaktilo"
 
 #: ../app/actions/actions.c:195 ../app/actions/dialogs-actions.c:65
 #: ../app/dialogs/dialogs.c:129 ../app/dialogs/preferences-dialog.c:1753
-#: ../app/gui/gui.c:423
+#: ../app/gui/gui.c:438
 msgid "Tool Options"
 msgstr "Opcioj de Iloj"
 
@@ -832,10 +845,10 @@ msgid "Sample Merged"
 msgstr "Difuza Samplado"
 
 #: ../app/actions/data-commands.c:104 ../app/actions/documents-commands.c:320
-#: ../app/actions/file-commands.c:177 ../app/dialogs/file-open-dialog.c:205
+#: ../app/actions/file-commands.c:169 ../app/dialogs/file-open-dialog.c:205
 #: ../app/dialogs/file-open-dialog.c:251
-#: ../app/dialogs/file-open-location-dialog.c:216
-#: ../app/dialogs/file-open-location-dialog.c:228
+#: ../app/dialogs/file-open-location-dialog.c:213
+#: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:449
 #: ../app/widgets/gimplayertreeview.c:763 ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:912
@@ -850,10 +863,10 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:130
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1365
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1370
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:336 ../app/dialogs/palette-import-dialog.c:771
-#: ../app/pdb/image_cmds.c:1978 ../app/widgets/gimpdnd-xds.c:97
+#: ../app/pdb/image_cmds.c:2005 ../app/widgets/gimpdnd-xds.c:97
 msgid "Untitled"
 msgstr "Sen Titolo"
 
@@ -1408,9 +1421,8 @@ msgid "Remove all operations from the undo history"
 msgstr "Formovu ĉiujn agadojn el la historio de nuligoj"
 
 #: ../app/actions/edit-actions.c:102 ../app/actions/edit-actions.c:299
-#, fuzzy
 msgid "_Fade..."
-msgstr "_Nova..."
+msgstr "_Dissolvo..."
 
 #: ../app/actions/edit-actions.c:107
 msgid "Cu_t"
@@ -1525,9 +1537,9 @@ msgid "_Redo %s"
 msgstr "_Reigu %s"
 
 #: ../app/actions/edit-actions.c:286
-#, fuzzy, c-format
+#, c-format
 msgid "_Fade %s..."
-msgstr "Konservu _kiel..."
+msgstr "_Dissolvo de %s..."
 
 #: ../app/actions/edit-commands.c:133
 msgid "Clear Undo History"
@@ -1544,7 +1556,7 @@ msgstr "Vakigo de la nulig-historio laŭ ĉi bildo liberigos %s da memoro."
 
 #: ../app/actions/edit-commands.c:270 ../app/actions/edit-commands.c:446
 msgid "There is no image data in the clipboard to paste."
-msgstr ""
+msgstr "Neniu emnetenda bildo ĉeestas en la poŝo"
 
 #: ../app/actions/edit-commands.c:284
 msgid "Cut Named"
@@ -1641,74 +1653,71 @@ msgstr "Malfermu _Freŝdatojn"
 msgid "Acq_uire"
 msgstr "Ak_irado"
 
-#: ../app/actions/file-actions.c:69 ../app/actions/file-actions.c:74
+#: ../app/actions/file-actions.c:69
 msgid "_Open..."
 msgstr "_Malfermu..."
 
-#: ../app/actions/file-actions.c:79
-#, fuzzy
+#: ../app/actions/file-actions.c:74
 msgid "Op_en as Layers..."
 msgstr "Malfermu k_iel Tavolo..."
 
-#: ../app/actions/file-actions.c:84
+#: ../app/actions/file-actions.c:79
 msgid "Open _Location..."
 msgstr "Malfermu _Lokadon... "
 
-#: ../app/actions/file-actions.c:89
-msgid "_Save"
-msgstr "_Konservu"
-
-#: ../app/actions/file-actions.c:94
-msgid "Save _As..."
-msgstr "Konservu _kiel..."
-
-#: ../app/actions/file-actions.c:99
-msgid "Save a Cop_y..."
-msgstr "Konservu _Kopion..."
-
-#: ../app/actions/file-actions.c:104
-#, fuzzy
-msgid "Save and Close..."
-msgstr "Konservu _Kopion..."
-
-#: ../app/actions/file-actions.c:109
+#: ../app/actions/file-actions.c:84
 msgid "Save as _Template..."
 msgstr "Konservu kiel _Modelo..."
 
-#: ../app/actions/file-actions.c:110
+#: ../app/actions/file-actions.c:85
 msgid "Create a new template from this image"
 msgstr "Kreu novan modelon el ĉi bildo"
 
-#: ../app/actions/file-actions.c:115
+#: ../app/actions/file-actions.c:90
 msgid "Re_vert"
 msgstr "_Reŝarĝu"
 
-#: ../app/actions/file-actions.c:116
+#: ../app/actions/file-actions.c:91
 msgid "Reload the image file from disk"
 msgstr "Reŝargu la bildon el la dosiero en disko"
 
-#: ../app/actions/file-actions.c:121
+#: ../app/actions/file-actions.c:96
 msgid "Close all"
 msgstr "Fermu ĉion"
 
-#: ../app/actions/file-actions.c:122
+#: ../app/actions/file-actions.c:97
 msgid "Close all opened images"
 msgstr "Fermu ciujn malfermitajn bildojn"
 
-#: ../app/actions/file-actions.c:127
+#: ../app/actions/file-actions.c:102
 msgid "_Quit"
 msgstr "_Eliro"
 
-#: ../app/actions/file-actions.c:128
+#: ../app/actions/file-actions.c:103
 msgid "Quit the GNU Image Manipulation Program"
 msgstr "Eliru el GNU Image Manipulation Program (GIMP)"
 
-#: ../app/actions/file-commands.c:244
-#, fuzzy
+#: ../app/actions/file-actions.c:111
+msgid "_Save"
+msgstr "_Konservu"
+
+#: ../app/actions/file-actions.c:116
+msgid "Save _As..."
+msgstr "Konservu _kiel..."
+
+#: ../app/actions/file-actions.c:121
+msgid "Save a Cop_y..."
+msgstr "Konservu _Kopion..."
+
+#: ../app/actions/file-actions.c:126
+msgid "Save and Close..."
+msgstr "Konservu _Kopion..."
+
+#: ../app/actions/file-commands.c:246
 msgid "Saving canceled"
 msgstr "Konservo de Bildoj"
 
-#: ../app/actions/file-commands.c:253 ../app/dialogs/file-save-dialog.c:513
+#: ../app/actions/file-commands.c:255 ../app/dialogs/file-save-dialog.c:545
 #: ../app/widgets/gimpdnd-xds.c:174
 #, c-format
 msgid ""
@@ -1720,36 +1729,36 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/file-commands.c:286 ../app/dialogs/file-save-dialog.c:82
+#: ../app/actions/file-commands.c:285 ../app/dialogs/file-save-dialog.c:86
 msgid "Save Image"
 msgstr "Konservu Bildon"
 
-#: ../app/actions/file-commands.c:302
+#: ../app/actions/file-commands.c:291
 msgid "Save a Copy of the Image"
 msgstr "Konservu Kopion de la Bildo"
 
-#: ../app/actions/file-commands.c:326
+#: ../app/actions/file-commands.c:311
 msgid "Create New Template"
 msgstr "Kreu Novan Modelon"
 
-#: ../app/actions/file-commands.c:330
+#: ../app/actions/file-commands.c:315
 msgid "Enter a name for this template"
 msgstr "Enigu nomon de ĉi modelo"
 
-#: ../app/actions/file-commands.c:356
+#: ../app/actions/file-commands.c:341
 msgid "Revert failed. No file name associated with this image."
 msgstr "Reŝarĝo malsukcesis. Neniu dosiernomo estas kuna kun ĉi bildo."
 
-#: ../app/actions/file-commands.c:369
+#: ../app/actions/file-commands.c:354
 msgid "Revert Image"
 msgstr "Reŝarĝu Bildon"
 
-#: ../app/actions/file-commands.c:395
+#: ../app/actions/file-commands.c:380
 #, c-format
 msgid "Revert '%s' to '%s'?"
 msgstr "Reŝarĝu \"%s\" al \"%s\"?"
 
-#: ../app/actions/file-commands.c:401
+#: ../app/actions/file-commands.c:386
 msgid ""
 "By reverting the image to the state saved on disk, you will lose all "
 "changes, including all undo information."
@@ -1757,20 +1766,19 @@ msgstr ""
 "Reŝargante bildon per storita stato en la durdisko, vi perdos ciujn modifojn "
 "kaj ankaŭ ciujn informojn pri Nuligo."
 
-#: ../app/actions/file-commands.c:473
-#, fuzzy
+#: ../app/actions/file-commands.c:458
 msgid "Open Image as Layers"
 msgstr "Malfermu Bildon kiel Tavolo"
 
-#: ../app/actions/file-commands.c:478 ../app/dialogs/file-open-dialog.c:75
+#: ../app/actions/file-commands.c:463 ../app/dialogs/file-open-dialog.c:75
 msgid "Open Image"
 msgstr "Malfermu Bildon"
 
-#: ../app/actions/file-commands.c:549
+#: ../app/actions/file-commands.c:538
 msgid "(Unnamed Template)"
 msgstr "(Sennoma Modelo)"
 
-#: ../app/actions/file-commands.c:597
+#: ../app/actions/file-commands.c:586
 #, c-format
 msgid ""
 "Reverting to '%s' failed:\n"
@@ -2233,7 +2241,6 @@ msgid "_Map"
 msgstr "_Mapo"
 
 #: ../app/actions/image-actions.c:69
-#, fuzzy
 msgid "C_omponents"
 msgstr "_Komponantoj"
 
@@ -2318,7 +2325,6 @@ msgid "Configure the grid for this image"
 msgstr "Agordu kradon por ĉi bildo"
 
 #: ../app/actions/image-actions.c:138
-#, fuzzy
 msgid "Image Pr_operties"
 msgstr "Ecoj de Bildo"
 
@@ -2621,9 +2627,8 @@ msgid "Change the size of the layer content"
 msgstr "Ŝanĝu grandecon de tavola enteno"
 
 #: ../app/actions/layers-actions.c:182
-#, fuzzy
 msgid "_Crop Layer"
-msgstr "Tranĉu Tavolon"
+msgstr "_Tranĉu Tavolon"
 
 #: ../app/actions/layers-actions.c:183
 msgid "Crop the layer to the extents of the selection"
@@ -3592,11 +3597,11 @@ msgstr "_Libera Rotacio..."
 
 #: ../app/actions/tools-actions.c:313
 msgid "Toggle Fixed-Aspect Option for Rectangle"
-msgstr ""
+msgstr "Ŝanĝu la opcion de Fiksaspetto por Rektangulo"
 
 #: ../app/actions/tools-actions.c:318
 msgid "Toggle Expand-From-Center Option for Rectangle"
-msgstr ""
+msgstr "Ŝanĝu la opcion de Ekspansio-el-Centro por Rektangulo"
 
 #: ../app/actions/vectors-actions.c:44
 msgid "Paths Menu"
@@ -3776,7 +3781,7 @@ msgid "New Path Options"
 msgstr "Novaj Opciojn de Streko"
 
 #: ../app/actions/vectors-commands.c:297 ../app/pdb/paths_cmds.c:610
-#: ../app/pdb/vectors_cmds.c:1093
+#: ../app/pdb/vectors_cmds.c:1121
 msgid "Path to Selection"
 msgstr "Streku laŭ Elekto"
 
@@ -4145,21 +4150,18 @@ msgid "Color erase"
 msgstr "Forigo de koloro"
 
 #: ../app/base/base-enums.c:134
-#, fuzzy
 msgid "Erase"
 msgstr "Gumo"
 
 #: ../app/base/base-enums.c:135
-#, fuzzy
 msgid "Replace"
-msgstr "_Anstataŭigu"
+msgstr "Anstataŭigu"
 
 #: ../app/base/base-enums.c:136
-#, fuzzy
 msgid "Anti erase"
-msgstr "Kontraŭforigo  (%s)"
+msgstr "Kontraŭforigo"
 
-#: ../app/base/tile-swap.c:419
+#: ../app/base/tile-swap.c:436
 msgid ""
 "Unable to open swap file. The Gimp has run out of memory and cannot use the "
 "swap file. Some parts of your images may be corrupted. Try to save your work "
@@ -4238,7 +4240,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:33
 msgid "How to handle embedded color profiles when opening a file."
-msgstr ""
+msgstr "Mastrumo de kaŝitaj koloroj dum la malfermo de dosiero"
 
 #: ../app/config/gimprc-blurbs.h:36
 msgid "Ask for confirmation before closing an image without saving."
@@ -4367,7 +4369,6 @@ msgid "When enabled, GIMP will show mnemonics in menus."
 msgstr "Se ĝi estas ebligita, GIMP montros notojn en menuoj."
 
 #: ../app/config/gimprc-blurbs.h:188
-#, fuzzy
 msgid ""
 "Generally only a concern for 8-bit displays, this sets the minimum number of "
 "system colors allocated for GIMP."
@@ -4478,13 +4479,11 @@ msgstr ""
 "dokumentoj en disko."
 
 #: ../app/config/gimprc-blurbs.h:272
-#, fuzzy
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
 msgstr ""
 "Dumelire el GIMP, konservu lokadojn kaj grandojn de ĉefaj dialogfenestroj."
 
 #: ../app/config/gimprc-blurbs.h:275
-#, fuzzy
 msgid "Save the tool options when GIMP exits."
 msgstr "Konservu opciojn de iloj dumelire el GIMP."
 
@@ -4636,7 +4635,6 @@ msgstr ""
 "klavopremo dum menua ero evidentiĝas."
 
 #: ../app/config/gimprc-blurbs.h:361
-#, fuzzy
 msgid "Save changed keyboard shortcuts when GIMP exits."
 msgstr "Dumelire de Gimp, konservu modifitajn klavarkurtvojojn."
 
@@ -4645,7 +4643,6 @@ msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr "Riparu konservitaj klavarkurtvojojn dum ĉiu GIMP starto."
 
 #: ../app/config/gimprc-blurbs.h:367
-#, fuzzy
 msgid ""
 "Sets the folder for temporary storage. Files will appear here during the "
 "course of running GIMP.  Most files will disappear when GIMP exits, but some "
@@ -4701,7 +4698,6 @@ msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "Agordu grandecon de la krado uzata por montri diafanecon."
 
 #: ../app/config/gimprc-blurbs.h:407
-#, fuzzy
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
@@ -5043,16 +5039,16 @@ msgid "Merge paths"
 msgstr "Kunfandu strekojn"
 
 #: ../app/core/core-enums.c:859 ../app/core/core-enums.c:890
-msgid "Guide"
-msgstr "Gvidrelo"
-
-#: ../app/core/core-enums.c:860 ../app/core/core-enums.c:891
 #: ../app/core/gimpimage-grid.c:58 ../app/dialogs/grid-dialog.c:149
 #: ../app/tools/tools-enums.c:211
 msgid "Grid"
 msgstr "Krado"
 
-#: ../app/core/core-enums.c:861 ../app/core/core-enums.c:892
+#: ../app/core/core-enums.c:860 ../app/core/core-enums.c:892
+msgid "Guide"
+msgstr "Gvidrelo"
+
+#: ../app/core/core-enums.c:861 ../app/core/core-enums.c:893
 msgid "Sample Point"
 msgstr "Samplada Punkto"
 
@@ -5093,9 +5089,8 @@ msgid "Resize item"
 msgstr "Readaptu eron"
 
 #: ../app/core/core-enums.c:871
-#, fuzzy
 msgid "Add layer"
-msgstr "Aldonu Tavolon"
+msgstr "Aldonu tavolon"
 
 #: ../app/core/core-enums.c:872 ../app/core/core-enums.c:909
 msgid "Add layer mask"
@@ -5156,7 +5151,7 @@ msgstr "Formovu paraziton"
 msgid "Import paths"
 msgstr "Importu strekojn"
 
-#: ../app/core/core-enums.c:886 ../app/pdb/drawable_cmds.c:775
+#: ../app/core/core-enums.c:886 ../app/pdb/drawable_cmds.c:803
 msgid "Plug-In"
 msgstr "Kromaĵo"
 
@@ -5172,7 +5167,7 @@ msgstr "Bildgrandeco"
 msgid "Image resolution change"
 msgstr "Ŝanĝo de bildan difinon"
 
-#: ../app/core/core-enums.c:893
+#: ../app/core/core-enums.c:891
 msgid "Change indexed palette"
 msgstr "Ŝanĝu indicitajn paletron"
 
@@ -5274,30 +5269,26 @@ msgid "Composite"
 msgstr "Miksita"
 
 #: ../app/core/core-enums.c:1228
-#, fuzzy
 msgid "Message"
-msgstr "Mesaĝo %s"
+msgstr "Mesaĝo"
 
 #: ../app/core/core-enums.c:1229
-#, fuzzy
 msgid "Warning"
-msgstr "Dekliveco"
+msgstr "Averto"
 
 #: ../app/core/core-enums.c:1230
-#, fuzzy
 msgid "Error"
 msgstr "Eraroj"
 
 #: ../app/core/core-enums.c:1258
 msgid "Ask what to do"
-msgstr ""
+msgstr "Demandu pri tasko"
 
 #: ../app/core/core-enums.c:1259
 msgid "Keep embedded profile"
-msgstr ""
+msgstr "Tenu kaŝitan profilon"
 
 #: ../app/core/core-enums.c:1260
-#, fuzzy
 msgid "Convert to RGB workspace"
 msgstr "Konvertu la bildon en RGB kolorspaco"
 
@@ -5413,7 +5404,7 @@ msgid "Documents"
 msgstr "Dokumentoj"
 
 #. initialize the module list
-#: ../app/core/gimp.c:846 ../app/dialogs/preferences-dialog.c:2616
+#: ../app/core/gimp.c:846 ../app/dialogs/preferences-dialog.c:2615
 msgid "Modules"
 msgstr "Modjuloj"
 
@@ -5499,26 +5490,30 @@ msgstr ""
 "Fatala analizeraro en penikodosiero '%s': Ĝi ne estas GIMP-penikodosiero."
 
 #: ../app/core/gimpbrushgenerated-load.c:104
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
-msgstr "Fatala analizeraro en penikodosiero '%s': Nekonata GIMP-penika versio."
+msgstr ""
+"Fatala analizeraro en penikodosiero '%s': Nekonata GIMP-penikversio en linio "
+"%d."
 
 #: ../app/core/gimpbrushgenerated-load.c:150
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
-msgstr "Fatala analizeraro en penikodosiero '%s': Nekonata GIMP-penika formo."
+msgstr ""
+"Fatala analizeraro en penikodosiero '%s': Nekonata GIMP-penikformo en linio %"
+"d."
 
 #: ../app/core/gimpbrushgenerated-load.c:226
-#, fuzzy, c-format
+#, c-format
 msgid "Line %d: %s"
-msgstr "Diko de linio:"
+msgstr "Linio %d: %s"
 
 #: ../app/core/gimpbrushgenerated-load.c:228
 #, fuzzy, c-format
 msgid "File is truncated in line %d"
-msgstr "Dosiero estas interrompita"
+msgstr "Dosiero estas interrompita %d"
 
 #: ../app/core/gimpbrushgenerated-load.c:231
 #, c-format
@@ -5540,9 +5535,8 @@ msgid "command|Ellipse Select"
 msgstr "Elipsa Elekto"
 
 #: ../app/core/gimpchannel-select.c:162
-#, fuzzy
 msgid "command|Rounded Rectangle Select"
-msgstr "Rektangula Elekto"
+msgstr "Elekto de Ronda Rektangulo"
 
 #: ../app/core/gimpchannel-select.c:431
 msgid "Alpha to Selection"
@@ -5675,7 +5669,7 @@ msgstr "%s kopio"
 
 #: ../app/core/gimpdatafactory.c:566
 msgid "You don't have a writable data folder configured."
-msgstr ""
+msgstr "Vi ne havas dosierujon agorditan por skribeblaj datumoj"
 
 #: ../app/core/gimpdatafactory.c:726
 #, c-format
@@ -5688,7 +5682,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable-blend.c:247 ../app/tools/gimpblendtool.c:106
+#: ../app/core/gimpdrawable-blend.c:247 ../app/tools/gimpblendtool.c:111
 msgid "Blend"
 msgstr "Stompado"
 
@@ -5750,7 +5744,7 @@ msgstr "Transformo"
 
 #: ../app/core/gimpgradient-load.c:71 ../app/core/gimpgradient-load.c:96
 #: ../app/core/gimpgradient-load.c:117 ../app/core/gimpgradient-load.c:168
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in gradient file '%s': Read error in line %d."
 msgstr "Fatala analizeraro en paletrodosiero '%s': Lega eraro en linio %d."
 
@@ -5767,16 +5761,17 @@ msgid "Invalid UTF-8 string in gradient file '%s'."
 msgstr "Nevalida UTF-8 ĉeno en gradienta dosiero '%s'."
 
 #: ../app/core/gimpgradient-load.c:136
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt in line %d."
-msgstr "Fatala analizeraro en gradienta dosiero '%s': Difektita Dosiero."
+msgstr ""
+"Fatala analizeraro en gradienta dosiero '%s': Ĝi estas difektita en linio %d."
 
 #: ../app/core/gimpgradient-load.c:218 ../app/core/gimpgradient-load.c:229
-#, fuzzy, c-format
+#, c-format
 msgid "Fatal parse error in gradient file '%s': Corrupt segment %d in line %d."
 msgstr ""
-"Fatala analizeraro en gradienta dosiero: '%s' ne estas gradientan dosieron "
-"de Gimp."
+"Fatala analizeraro en gradienta dosiero: '%s' Difektita segmento %d estas en "
+"linio %d."
 
 #: ../app/core/gimpgradient-load.c:241 ../app/core/gimpgradient-load.c:255
 #, c-format
@@ -5881,7 +5876,7 @@ msgstr "Aldonu Horizontalan Gvidrelon"
 msgid "Add Vertical Guide"
 msgstr "Aldonu Vertikalan Gvidrelon"
 
-#: ../app/core/gimpimage-guides.c:113 ../app/tools/gimpmovetool.c:538
+#: ../app/core/gimpimage-guides.c:113 ../app/tools/gimpmovetool.c:539
 msgid "Remove Guide"
 msgstr "Formovu Gvidrelon"
 
@@ -5937,7 +5932,7 @@ msgstr "Malebligu Rapidmaskon"
 msgid "Add Sample_Point"
 msgstr "Aldonu Sampladan _Punkton"
 
-#: ../app/core/gimpimage-sample-points.c:121 ../app/tools/gimpcolortool.c:420
+#: ../app/core/gimpimage-sample-points.c:121 ../app/tools/gimpcolortool.c:421
 msgid "Remove Sample Point"
 msgstr "Formovu Sampladan Punkton"
 
@@ -5945,136 +5940,136 @@ msgstr "Formovu Sampladan Punkton"
 msgid "Move Sample Point"
 msgstr "Movu Sampladan Punkton"
 
-#: ../app/core/gimpimage-undo-push.c:3248
+#: ../app/core/gimpimage-undo-push.c:2293
 #, c-format
 msgid "Can't undo %s"
 msgstr "Estas neeble nuligi %s"
 
-#: ../app/core/gimpimage.c:1439
+#: ../app/core/gimpimage.c:1440
 msgid "Change Image Resolution"
 msgstr "Ŝanĝu Difinon de Bildo"
 
-#: ../app/core/gimpimage.c:1479
+#: ../app/core/gimpimage.c:1480
 msgid "Change Image Unit"
 msgstr "Ŝanĝu Uniton de Bildo"
 
-#: ../app/core/gimpimage.c:2321
+#: ../app/core/gimpimage.c:2322
 msgid "Attach Parasite to Image"
 msgstr "Aldonu Paraziton al la Bildo"
 
-#: ../app/core/gimpimage.c:2359
+#: ../app/core/gimpimage.c:2360
 msgid "Remove Parasite from Image"
 msgstr "Formovu Paraziton el la Bildo"
 
-#: ../app/core/gimpimage.c:2814
+#: ../app/core/gimpimage.c:2815
 msgid "Add Layer"
 msgstr "Aldonu Tavolon"
 
-#: ../app/core/gimpimage.c:2879 ../app/core/gimpimage.c:2892
+#: ../app/core/gimpimage.c:2880 ../app/core/gimpimage.c:2893
 msgid "Remove Layer"
 msgstr "Formovu Tavolon"
 
-#: ../app/core/gimpimage.c:3031
+#: ../app/core/gimpimage.c:3032
 msgid "Layer cannot be raised higher."
 msgstr "Tavolo ne estas plue suprentirebla."
 
-#: ../app/core/gimpimage.c:3036
+#: ../app/core/gimpimage.c:3037
 msgid "Raise Layer"
 msgstr "Suprentiru Tavolon"
 
-#: ../app/core/gimpimage.c:3053
+#: ../app/core/gimpimage.c:3054
 msgid "Layer cannot be lowered more."
 msgstr "Tavolo ne estas plue subentirebla."
 
-#: ../app/core/gimpimage.c:3058
+#: ../app/core/gimpimage.c:3059
 msgid "Lower Layer"
 msgstr "Subentiru Tavolon"
 
-#: ../app/core/gimpimage.c:3069
+#: ../app/core/gimpimage.c:3070
 msgid "Raise Layer to Top"
 msgstr "Suprentiru Tavolon ĝis la Pinto"
 
-#: ../app/core/gimpimage.c:3084
+#: ../app/core/gimpimage.c:3085
 msgid "Lower Layer to Bottom"
 msgstr "Subentiru Tavolon ĝis la Fundo"
 
-#: ../app/core/gimpimage.c:3157
+#: ../app/core/gimpimage.c:3158
 msgid "Add Channel"
 msgstr "Aldonu Kanalon"
 
-#: ../app/core/gimpimage.c:3202 ../app/core/gimpimage.c:3213
+#: ../app/core/gimpimage.c:3203 ../app/core/gimpimage.c:3214
 msgid "Remove Channel"
 msgstr "Formovu Kanalon"
 
-#: ../app/core/gimpimage.c:3260
+#: ../app/core/gimpimage.c:3261
 msgid "Channel cannot be raised higher."
 msgstr "Kanalo ne estas plue suprentirebla."
 
-#: ../app/core/gimpimage.c:3265
+#: ../app/core/gimpimage.c:3266
 msgid "Raise Channel"
 msgstr "Suprentiru Kanalon"
 
-#: ../app/core/gimpimage.c:3282
+#: ../app/core/gimpimage.c:3283
 msgid "Channel is already on top."
 msgstr "Kanalo jam estas supre."
 
-#: ../app/core/gimpimage.c:3287
+#: ../app/core/gimpimage.c:3288
 msgid "Raise Channel to Top"
 msgstr "Suprentiru Kanalon ĝis la Pinto"
 
-#: ../app/core/gimpimage.c:3304
+#: ../app/core/gimpimage.c:3305
 msgid "Channel cannot be lowered more."
 msgstr "Kanalo ne estas plue subentirebla."
 
-#: ../app/core/gimpimage.c:3309
+#: ../app/core/gimpimage.c:3310
 msgid "Lower Channel"
 msgstr "Subentiru Kanalon"
 
-#: ../app/core/gimpimage.c:3329
+#: ../app/core/gimpimage.c:3330
 msgid "Channel is already on the bottom."
 msgstr "Kanalo jam estas sube."
 
-#: ../app/core/gimpimage.c:3334
+#: ../app/core/gimpimage.c:3335
 msgid "Lower Channel to Bottom"
 msgstr "Subentiru Kanalon ĝis la Fundo"
 
-#: ../app/core/gimpimage.c:3409
+#: ../app/core/gimpimage.c:3410
 msgid "Add Path"
 msgstr "Aldonu Strekojn"
 
-#: ../app/core/gimpimage.c:3455
+#: ../app/core/gimpimage.c:3456
 msgid "Remove Path"
 msgstr "Formovu Strekojn"
 
-#: ../app/core/gimpimage.c:3499
+#: ../app/core/gimpimage.c:3500
 msgid "Path cannot be raised higher."
 msgstr "Streko ne estas plue suprentirebla."
 
-#: ../app/core/gimpimage.c:3504
+#: ../app/core/gimpimage.c:3505
 msgid "Raise Path"
 msgstr "Suprentiru Strekon"
 
-#: ../app/core/gimpimage.c:3521
+#: ../app/core/gimpimage.c:3522
 msgid "Path is already on top."
 msgstr "Streko jam estas supre."
 
-#: ../app/core/gimpimage.c:3526
+#: ../app/core/gimpimage.c:3527
 msgid "Raise Path to Top"
 msgstr "Suprentiru Strekon ĝis la Pinto"
 
-#: ../app/core/gimpimage.c:3543
+#: ../app/core/gimpimage.c:3544
 msgid "Path cannot be lowered more."
 msgstr "Streko ne estas plue subentirebla."
 
-#: ../app/core/gimpimage.c:3548
+#: ../app/core/gimpimage.c:3549
 msgid "Lower Path"
 msgstr "Subentiru Strekon"
 
-#: ../app/core/gimpimage.c:3568
+#: ../app/core/gimpimage.c:3569
 msgid "Path is already on the bottom."
 msgstr "Streko jam estas sube."
 
-#: ../app/core/gimpimage.c:3573
+#: ../app/core/gimpimage.c:3574
 msgid "Lower Path to Bottom"
 msgstr "Subentiru Strekon ĝis la Fundo"
 
@@ -6277,7 +6272,7 @@ msgstr "Fatala analizeraro en paletrodosiero '%s': Lega eraro en linio %d."
 #: ../app/core/gimppalette-load.c:95
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
-msgstr "Fatala analizeraro en paletrodosiero '%s': mancas magia titolado."
+msgstr "Fatala analizeraro en paletrodosiero '%s': mankas magia titolado."
 
 #: ../app/core/gimppalette-load.c:123
 #, c-format
@@ -6372,9 +6367,8 @@ msgid "Invert Selection"
 msgstr "Inversigu Elekton"
 
 #: ../app/core/gimpselection.c:274
-#, fuzzy
 msgid "There is no selection to stroke."
-msgstr "Neniu elekto por transformi."
+msgstr "Neniu elekto por konturi."
 
 #: ../app/core/gimpselection.c:786
 msgid "Cannot float selection because the selected region is empty."
@@ -6420,7 +6414,7 @@ msgstr "bildero"
 
 #: ../app/core/gimpunit.c:55 ../app/tools/gimpmeasuretool.c:804
 #: ../app/tools/gimpmeasuretool.c:945 ../app/tools/gimpmeasuretool.c:997
-#: ../app/tools/gimpmeasuretool.c:1023 ../app/tools/gimppainttool.c:600
+#: ../app/tools/gimpmeasuretool.c:1023 ../app/tools/gimppainttool.c:601
 msgid "pixels"
 msgstr "bilderoj"
 
@@ -6546,7 +6540,7 @@ msgstr "_Malsaturado"
 msgid "Choose shade of gray based on:"
 msgstr "Elektu grizan nuancon kiu devenas de:"
 
-#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:154
+#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:168
 #: ../app/gui/gui-message.c:146
 msgid "GIMP Message"
 msgstr "GIMP Mesaĝo"
@@ -6576,39 +6570,35 @@ msgid "FG/BG"
 msgstr "PP/SF"
 
 #: ../app/dialogs/fade-dialog.c:111
-#, fuzzy, c-format
+#, c-format
 msgid "Fade %s"
-msgstr "Elire Stompado"
+msgstr "Dissolvu %s"
 
 #: ../app/dialogs/fade-dialog.c:124
-#, fuzzy
 msgid "_Fade"
-msgstr "Elire Stompado"
+msgstr "_Dissolvo"
 
 #: ../app/dialogs/fade-dialog.c:157
-#, fuzzy
 msgid "_Mode:"
-msgstr "_Moduso"
+msgstr "_Moduso:"
 
 #: ../app/dialogs/fade-dialog.c:163
-#, fuzzy
 msgid "_Opacity:"
-msgstr "_Opakeco"
+msgstr "_Opakeco:"
 
 #: ../app/dialogs/file-open-dialog.c:238
-#, fuzzy
 msgid "Open layers"
-msgstr "Nova tavolo"
+msgstr "Malfermu tavolojn"
 
-#: ../app/dialogs/file-open-location-dialog.c:74
+#: ../app/dialogs/file-open-location-dialog.c:72
 msgid "Open Location"
 msgstr "Malfermu Lokadon"
 
-#: ../app/dialogs/file-open-location-dialog.c:112
+#: ../app/dialogs/file-open-location-dialog.c:110
 msgid "Enter location (URI):"
 msgstr "Enigu lokadon (URI):"
 
-#: ../app/dialogs/file-save-dialog.c:286 ../app/dialogs/file-save-dialog.c:329
+#: ../app/dialogs/file-save-dialog.c:312 ../app/dialogs/file-save-dialog.c:355
 msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
@@ -6616,7 +6606,7 @@ msgstr ""
 "La dosiernomo havas nekonatan finaĵon. Bonvolu, enigu konatan finaĵon aŭ "
 "elektu dosierspecon el la listo."
 
-#: ../app/dialogs/file-save-dialog.c:371
+#: ../app/dialogs/file-save-dialog.c:397
 msgid ""
 "Saving remote files needs to determine the file format from the file "
 "extension. Please enter a file extension that matches the selected file "
@@ -6626,15 +6616,15 @@ msgstr ""
 "ĝia finaĵo. Bonvolu, enigu neniun finaĵon aŭ finaĵon kiu respondas al "
 "elektita dosierspeco."
 
-#: ../app/dialogs/file-save-dialog.c:431
+#: ../app/dialogs/file-save-dialog.c:457
 msgid "Extension Mismatch"
 msgstr "Neresponda Finaĵo"
 
-#: ../app/dialogs/file-save-dialog.c:447
+#: ../app/dialogs/file-save-dialog.c:473
 msgid "The given file extension does not match the chosen file type."
 msgstr "Dosierfinaĵo ne respondas al elektita dosierspeco."
 
-#: ../app/dialogs/file-save-dialog.c:451
+#: ../app/dialogs/file-save-dialog.c:477
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Ĉu vi volas ĉiukaze uzi ĉi nomon por konservi la bildon?"
 
@@ -6712,19 +6702,16 @@ msgid "Image Properties"
 msgstr "Ecoj de Bildo"
 
 #: ../app/dialogs/image-properties-dialog.c:91
-#, fuzzy
 msgid "Properties"
-msgstr "_Ecoj"
+msgstr "Ecoj"
 
 #: ../app/dialogs/image-properties-dialog.c:97
-#, fuzzy
 msgid "Color Profile"
-msgstr "Kolor-eltirilo"
+msgstr "Profilo de Koloro"
 
 #: ../app/dialogs/image-properties-dialog.c:103
-#, fuzzy
 msgid "Comment"
-msgstr "Kome_nto:"
+msgstr "Komento:"
 
 #: ../app/dialogs/image-scale-dialog.c:108
 msgid "dialog-title|Scale Image"
@@ -7108,7 +7095,7 @@ msgid "Preferences"
 msgstr "Agordoj"
 
 #: ../app/dialogs/preferences-dialog.c:1444
-#: ../app/dialogs/preferences-dialog.c:2624
+#: ../app/dialogs/preferences-dialog.c:2623
 msgid "Environment"
 msgstr "Medio"
 
@@ -7386,9 +7373,8 @@ msgid "Space Bar"
 msgstr "Spacoklavo"
 
 #: ../app/dialogs/preferences-dialog.c:1990
-#, fuzzy
 msgid "_While space bar is pressed:"
-msgstr "Ĝis spacoklavo estas premita:"
+msgstr "_Ĝis spacoklavo estas premita:"
 
 #. Mouse Pointers
 #: ../app/dialogs/preferences-dialog.c:1994
@@ -7472,7 +7458,8 @@ msgid "Check _size:"
 msgstr "Kvadratogrando:"
 
 #: ../app/dialogs/preferences-dialog.c:2194
-msgid "Get Monitor Resolution"
+#, fuzzy
+msgid "Monitor Resolution"
 msgstr "Difino de Ekrano"
 
 #: ../app/dialogs/preferences-dialog.c:2198
@@ -7487,272 +7474,272 @@ msgid "ppi"
 msgstr "ppi"
 
 #: ../app/dialogs/preferences-dialog.c:2236
-#, c-format
-msgid "From _windowing system (currently %d × %d ppi)"
+#, fuzzy, c-format
+msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "El _fenestrosistemo (nune %d x %d dpi)"
 
-#: ../app/dialogs/preferences-dialog.c:2257
-msgid "_Manually"
+#: ../app/dialogs/preferences-dialog.c:2256
+#, fuzzy
+msgid "_Enter manually"
 msgstr "_Mane"
 
-#: ../app/dialogs/preferences-dialog.c:2272
+#: ../app/dialogs/preferences-dialog.c:2271
 msgid "C_alibrate..."
 msgstr "K_alibru..."
 
-#: ../app/dialogs/preferences-dialog.c:2294
+#: ../app/dialogs/preferences-dialog.c:2293
 msgid "Color Management"
 msgstr "Administrado de Koloro"
 
-#: ../app/dialogs/preferences-dialog.c:2314
+#: ../app/dialogs/preferences-dialog.c:2313
 msgid "_RGB profile:"
 msgstr "Profilo de _RGB:"
 
-#: ../app/dialogs/preferences-dialog.c:2315
+#: ../app/dialogs/preferences-dialog.c:2314
 msgid "Select RGB Color Profile"
 msgstr "Elektu Profilon de RGB Koloro"
 
-#: ../app/dialogs/preferences-dialog.c:2316
+#: ../app/dialogs/preferences-dialog.c:2315
 msgid "_CMYK profile:"
 msgstr "Profilo de _CMYK:"
 
-#: ../app/dialogs/preferences-dialog.c:2317
+#: ../app/dialogs/preferences-dialog.c:2316
 msgid "Select CMYK Color Profile"
 msgstr "Elektu Profilon de CMYK Koloro"
 
-#: ../app/dialogs/preferences-dialog.c:2318
+#: ../app/dialogs/preferences-dialog.c:2317
 msgid "_Monitor profile:"
 msgstr "Profilo de _ekrano:"
 
-#: ../app/dialogs/preferences-dialog.c:2319
+#: ../app/dialogs/preferences-dialog.c:2318
 msgid "Select Monitor Color Profile"
 msgstr "Elektu Profilon de Ekrana Koloro"
 
-#: ../app/dialogs/preferences-dialog.c:2320
+#: ../app/dialogs/preferences-dialog.c:2319
 msgid "_Print simulation profile:"
 msgstr "_Profilo de presa simulado:"
 
-#: ../app/dialogs/preferences-dialog.c:2321
+#: ../app/dialogs/preferences-dialog.c:2320
 msgid "Select Printer Color Profile"
 msgstr "Elektu Profilon de Printila Koloro"
 
-#: ../app/dialogs/preferences-dialog.c:2330
+#: ../app/dialogs/preferences-dialog.c:2329
 msgid "_Mode of operation:"
 msgstr "_Moduso de operacio:"
 
-#: ../app/dialogs/preferences-dialog.c:2356
+#: ../app/dialogs/preferences-dialog.c:2355
 msgid "_Try to obtain the monitor profile from the X server"
 msgstr "Provu akiri ekranan profilon el X-servilo"
 
-#: ../app/dialogs/preferences-dialog.c:2367
+#: ../app/dialogs/preferences-dialog.c:2366
 msgid "_Display rendering intent:"
 msgstr "Bildiga maniero sur _ekrano:"
 
-#: ../app/dialogs/preferences-dialog.c:2375
+#: ../app/dialogs/preferences-dialog.c:2374
 msgid "_Softproof rendering intent:"
 msgstr "Bildiga maniero sur _specimeno:"
 
-#: ../app/dialogs/preferences-dialog.c:2385
-#, fuzzy
+#: ../app/dialogs/preferences-dialog.c:2384
 msgid "File Open behaviour:"
-msgstr "Dosier-Malfermada Fenestro"
+msgstr "Dosier-Malfermada agmaniero:"
 
-#: ../app/dialogs/preferences-dialog.c:2395
+#: ../app/dialogs/preferences-dialog.c:2394
 msgid "Input Devices"
 msgstr "Enigaj Periferiaĵoj"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2405
+#: ../app/dialogs/preferences-dialog.c:2404
 msgid "Extended Input Devices"
 msgstr "Vastigitaj Enigaj Periferiaĵoj"
 
-#: ../app/dialogs/preferences-dialog.c:2409
+#: ../app/dialogs/preferences-dialog.c:2408
 msgid "Configure E_xtended Input Devices..."
 msgstr "Agordo de Vastigitaj Enigaj Periferiaĵoj..."
 
-#: ../app/dialogs/preferences-dialog.c:2416
+#: ../app/dialogs/preferences-dialog.c:2415
 msgid "_Save input device settings on exit"
 msgstr "Dumelire _konservu agordojn de enigaj periferiaĵoj"
 
-#: ../app/dialogs/preferences-dialog.c:2420
+#: ../app/dialogs/preferences-dialog.c:2419
 msgid "Save Input Device Settings _Now"
 msgstr "Konservu Agordojn de Enigaj Periferiaĵoj _Nun"
 
-#: ../app/dialogs/preferences-dialog.c:2427
+#: ../app/dialogs/preferences-dialog.c:2426
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr ""
 "_Resetu Konservitajn Agordojn de Enigaj Periferiaĵoj per Defaŭltaj Valoroj"
 
-#: ../app/dialogs/preferences-dialog.c:2442
+#: ../app/dialogs/preferences-dialog.c:2441
 msgid "Additional Input Controllers"
 msgstr "Ekstraj Enigaj Reĝiloj"
 
-#: ../app/dialogs/preferences-dialog.c:2445
+#: ../app/dialogs/preferences-dialog.c:2444
 msgid "Input Controllers"
 msgstr "Enigaj Reĝiloj"
 
-#: ../app/dialogs/preferences-dialog.c:2461
+#: ../app/dialogs/preferences-dialog.c:2460
 msgid "Window Management"
 msgstr "Administrado de Fenestroj"
 
-#: ../app/dialogs/preferences-dialog.c:2470
+#: ../app/dialogs/preferences-dialog.c:2469
 msgid "Window Manager Hints"
 msgstr "Poluro de Fenestradministrilo"
 
-#: ../app/dialogs/preferences-dialog.c:2476
+#: ../app/dialogs/preferences-dialog.c:2475
 msgid "Hint for the _toolbox:"
 msgstr "Poluro pri _iloj:"
 
-#: ../app/dialogs/preferences-dialog.c:2480
+#: ../app/dialogs/preferences-dialog.c:2479
 msgid "Hint for other _docks:"
 msgstr "Poluro pri aliaj dokoj:"
 
-#: ../app/dialogs/preferences-dialog.c:2485
+#: ../app/dialogs/preferences-dialog.c:2484
 msgid "Toolbox and other docks are transient to the active image window"
 msgstr ""
 "Ilarkesto kaj aliaj dokoj estas dumtempaj kaj subordigitaj de aktiva fenestro"
 
-#: ../app/dialogs/preferences-dialog.c:2490
+#: ../app/dialogs/preferences-dialog.c:2489
 msgid "Focus"
 msgstr "Fokuso"
 
-#: ../app/dialogs/preferences-dialog.c:2494
+#: ../app/dialogs/preferences-dialog.c:2493
 msgid "Activate the _focused image"
 msgstr "Aktivigu _enfokusitan bildon"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2498
+#: ../app/dialogs/preferences-dialog.c:2497
 msgid "Window Positions"
 msgstr "Fenestraj Lokadoj"
 
-#: ../app/dialogs/preferences-dialog.c:2501
+#: ../app/dialogs/preferences-dialog.c:2500
 msgid "_Save window positions on exit"
 msgstr "Dumelire _konservu fenestrajn lokadojn"
 
-#: ../app/dialogs/preferences-dialog.c:2505
+#: ../app/dialogs/preferences-dialog.c:2504
 msgid "Save Window Positions _Now"
 msgstr "Konservu Fenestrajn Lokadojn _Nun"
 
-#: ../app/dialogs/preferences-dialog.c:2512
+#: ../app/dialogs/preferences-dialog.c:2511
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Resetu Konservitajn Fenestrajn Lokadojn per Defaŭltaj Valoroj"
 
-#: ../app/dialogs/preferences-dialog.c:2527
+#: ../app/dialogs/preferences-dialog.c:2526
 msgid "Folders"
 msgstr "Dosierujoj"
 
-#: ../app/dialogs/preferences-dialog.c:2547
+#: ../app/dialogs/preferences-dialog.c:2546
 msgid "Temporary folder:"
 msgstr "Dumtempa dosierujo:"
 
-#: ../app/dialogs/preferences-dialog.c:2548
+#: ../app/dialogs/preferences-dialog.c:2547
 msgid "Select Folder for Temporary Files"
 msgstr "Elektu Dosierujon por Dumpempaj Dosieroj"
 
-#: ../app/dialogs/preferences-dialog.c:2552
+#: ../app/dialogs/preferences-dialog.c:2551
 msgid "Swap folder:"
 msgstr "Svopa dosierujo:"
 
-#: ../app/dialogs/preferences-dialog.c:2553
+#: ../app/dialogs/preferences-dialog.c:2552
 msgid "Select Swap Folder"
 msgstr "Elektu Svopan Dosierujon"
 
-#: ../app/dialogs/preferences-dialog.c:2588
+#: ../app/dialogs/preferences-dialog.c:2587
 msgid "Brush Folders"
 msgstr "Penikaj Dosierujoj"
 
-#: ../app/dialogs/preferences-dialog.c:2590
+#: ../app/dialogs/preferences-dialog.c:2589
 msgid "Select Brush Folders"
 msgstr "Elektu Penikajn Dosierujojn"
 
-#: ../app/dialogs/preferences-dialog.c:2592
+#: ../app/dialogs/preferences-dialog.c:2591
 msgid "Pattern Folders"
 msgstr "Motivaj Dosierujoj"
 
-#: ../app/dialogs/preferences-dialog.c:2594
+#: ../app/dialogs/preferences-dialog.c:2593
 msgid "Select Pattern Folders"
 msgstr "Elektu Motivajn Dosierujojn"
 
-#: ../app/dialogs/preferences-dialog.c:2596
+#: ../app/dialogs/preferences-dialog.c:2595
 msgid "Palette Folders"
 msgstr "Paletraj Dosierujoj"
 
-#: ../app/dialogs/preferences-dialog.c:2598
+#: ../app/dialogs/preferences-dialog.c:2597
 msgid "Select Palette Folders"
 msgstr "Elektu Paletrajn Dosierujojn"
 
-#: ../app/dialogs/preferences-dialog.c:2600
+#: ../app/dialogs/preferences-dialog.c:2599
 msgid "Gradient Folders"
 msgstr "Gradientaj Dosierujoj"
 
-#: ../app/dialogs/preferences-dialog.c:2602
+#: ../app/dialogs/preferences-dialog.c:2601
 msgid "Select Gradient Folders"
 msgstr "Elektu Gradientajn Dosierujojn"
 
-#: ../app/dialogs/preferences-dialog.c:2604
+#: ../app/dialogs/preferences-dialog.c:2603
 msgid "Font Folders"
 msgstr "Tiparaj Dosierujoj"
 
-#: ../app/dialogs/preferences-dialog.c:2606
+#: ../app/dialogs/preferences-dialog.c:2605
 msgid "Select Font Folders"
 msgstr "Elektu Tiparajn Dosierujojn"
 
-#: ../app/dialogs/preferences-dialog.c:2608
+#: ../app/dialogs/preferences-dialog.c:2607
 msgid "Plug-In Folders"
 msgstr "Dosierujoj de Kromaĵoj"
 
-#: ../app/dialogs/preferences-dialog.c:2610
+#: ../app/dialogs/preferences-dialog.c:2609
 msgid "Select Plug-In Folders"
 msgstr "Elektu Dosierujojn de Kromaĵoj"
 
-#: ../app/dialogs/preferences-dialog.c:2612
+#: ../app/dialogs/preferences-dialog.c:2611
 msgid "Scripts"
 msgstr "Skriptoj"
 
-#: ../app/dialogs/preferences-dialog.c:2612
+#: ../app/dialogs/preferences-dialog.c:2611
 msgid "Script-Fu Folders"
 msgstr "Skripto-Fu Dosierujoj"
 
-#: ../app/dialogs/preferences-dialog.c:2614
+#: ../app/dialogs/preferences-dialog.c:2613
 msgid "Select Script-Fu Folders"
 msgstr "Elektu Skripto-Fu Dosierujojn"
 
-#: ../app/dialogs/preferences-dialog.c:2616
+#: ../app/dialogs/preferences-dialog.c:2615
 msgid "Module Folders"
 msgstr "Modjulaj Dosierujoj"
 
-#: ../app/dialogs/preferences-dialog.c:2618
+#: ../app/dialogs/preferences-dialog.c:2617
 msgid "Select Module Folders"
 msgstr "Elektu Modjulajn Dosierujojn"
 
-#: ../app/dialogs/preferences-dialog.c:2620
+#: ../app/dialogs/preferences-dialog.c:2619
 msgid "Interpreters"
 msgstr "Interpretiloj"
 
-#: ../app/dialogs/preferences-dialog.c:2620
+#: ../app/dialogs/preferences-dialog.c:2619
 msgid "Interpreter Folders"
 msgstr "Dosierujoj de Interpretiloj"
 
-#: ../app/dialogs/preferences-dialog.c:2622
+#: ../app/dialogs/preferences-dialog.c:2621
 msgid "Select Interpreter Folders"
 msgstr "Elektu Dosierujojn de Interpretiloj"
 
-#: ../app/dialogs/preferences-dialog.c:2624
+#: ../app/dialogs/preferences-dialog.c:2623
 msgid "Environment Folders"
 msgstr "Medidosierujoj"
 
-#: ../app/dialogs/preferences-dialog.c:2626
+#: ../app/dialogs/preferences-dialog.c:2625
 msgid "Select Environment Folders"
 msgstr "Elektu Medidosierujojn"
 
-#: ../app/dialogs/preferences-dialog.c:2628
+#: ../app/dialogs/preferences-dialog.c:2627
 msgid "Themes"
 msgstr "Temoj"
 
-#: ../app/dialogs/preferences-dialog.c:2628
+#: ../app/dialogs/preferences-dialog.c:2627
 msgid "Theme Folders"
 msgstr "Temaj Dosierujoj"
 
-#: ../app/dialogs/preferences-dialog.c:2630
+#: ../app/dialogs/preferences-dialog.c:2629
 msgid "Select Theme Folders"
 msgstr "Elektu Temajn Dosierujojn"
 
@@ -7873,9 +7860,8 @@ msgid "Paint tool:"
 msgstr "Pentrilo:"
 
 #: ../app/dialogs/tips-dialog.c:89
-#, fuzzy
 msgid "Your GIMP tips file appears to be missing!"
-msgstr "<b>Dosiero de la GIMP-sugestoj mankas!</b>"
+msgstr "Dosiero de la GIMP-sugestoj mankas!"
 
 #: ../app/dialogs/tips-dialog.c:91
 #, c-format
@@ -7883,9 +7869,8 @@ msgid "There should be a file called '%s'. Please check your installation."
 msgstr "Dosiero nomiĝita '%s' devus ekzisti. Kontrolu la instaladon."
 
 #: ../app/dialogs/tips-dialog.c:97
-#, fuzzy
 msgid "The GIMP tips file could not be parsed!"
-msgstr "<b>Estas neeble trakti GIMP-sugestan dosieron!</b>"
+msgstr "Estas neeble trakti GIMP-sugestan dosieron!"
 
 #: ../app/dialogs/tips-dialog.c:130
 msgid "GIMP Tip of the Day"
@@ -7946,7 +7931,7 @@ msgid "Import Paths from SVG"
 msgstr "Importu Strekon el SVG"
 
 #: ../app/dialogs/vectors-import-dialog.c:88
-#: ../app/widgets/gimpprofilechooserdialog.c:137
+#: ../app/widgets/gimpprofilechooserdialog.c:149
 msgid "All files (*.*)"
 msgstr "Ĉiuj Dosieroj (*.*)"
 
@@ -8006,24 +7991,22 @@ msgstr "Suma vido"
 msgid "Switch to Move tool"
 msgstr "Pasu al ilo de Movo"
 
-#: ../app/display/gimpdisplay-handlers.c:151
+#: ../app/display/gimpdisplay-handlers.c:153
 #, c-format
 msgid "Image saved to '%s'"
-msgstr ""
+msgstr "Bildo estis konservita en '%s'"
 
 #: ../app/display/gimpdisplayshell.c:849
-#, fuzzy
 msgid "Access the image menu"
-msgstr "Aranĝu dimensiojn de la bildo"
+msgstr "Aliru al menuo de bildo"
 
 #: ../app/display/gimpdisplayshell.c:958
 msgid "Zoom image when window size changes"
 msgstr "Zomu bildon kiam fenestrgrandeco ŝanĝas "
 
 #: ../app/display/gimpdisplayshell.c:1008
-#, fuzzy
 msgid "Navigate the image display"
-msgstr "Suprentiru ĉi bildan fenestron"
+msgstr "Eksploru ekranon de bildo"
 
 #: ../app/display/gimpdisplayshell-close.c:125
 #: ../app/display/gimpdisplayshell-close.c:202
@@ -8040,31 +8023,34 @@ msgstr "_Ne Konservu"
 msgid "Save the changes to image '%s' before closing?"
 msgstr "Ĉu vi volas konservi modifojn de la bildo '%s' antaŭ eliro?"
 
-#: ../app/display/gimpdisplayshell-close.c:231
-#, c-format
+#: ../app/display/gimpdisplayshell-close.c:232
+#, fuzzy, c-format
+msgid "If you don't save the image, changes from the last hour will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d hours will be lost."
+msgstr[0] "Se vi ne konservas bildon, la modifoj el lasta %s estos perditaj"
+msgstr[1] "Se vi ne konservas bildon, la modifoj el lasta %s estos perditaj"
+
+#: ../app/display/gimpdisplayshell-close.c:242
+#, fuzzy, c-format
 msgid ""
-"If you don't save the image, changes from the last %s and %s will be lost."
-msgstr ""
+"If you don't save the image, changes from the last hour and %d minute will "
+"be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last hour and %d minutes will "
+"be lost."
+msgstr[0] ""
+"Se vi ne konservas bildon, la modifoj el lasta %s kaj %s estos perditaj"
+msgstr[1] ""
 "Se vi ne konservas bildon, la modifoj el lasta %s kaj %s estos perditaj"
 
-#: ../app/display/gimpdisplayshell-close.c:237
-#, c-format
-msgid "If you don't save the image, changes from the last %s will be lost."
-msgstr "Se vi ne konservas bildon, la modifoj el lasta %s estos perditaj"
-
-#: ../app/display/gimpdisplayshell-close.c:299
-#, c-format
-msgid "%d hour"
-msgid_plural "%d hours"
-msgstr[0] "%d horo"
-msgstr[1] "%d horoj"
-
-#: ../app/display/gimpdisplayshell-close.c:305
-#, c-format
-msgid "minute"
-msgid_plural "%d minutes"
-msgstr[0] "%d minuto"
-msgstr[1] "%d minutoj"
+#: ../app/display/gimpdisplayshell-close.c:253
+#, fuzzy, c-format
+msgid "If you don't save the image, changes from the last minute will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d minutes will be lost."
+msgstr[0] "Se vi ne konservas bildon, la modifoj el lasta %s estos perditaj"
+msgstr[1] "Se vi ne konservas bildon, la modifoj el lasta %s estos perditaj"
 
 #: ../app/display/gimpdisplayshell-dnd.c:200
 #: ../app/display/gimpdisplayshell-dnd.c:500
@@ -8078,9 +8064,8 @@ msgstr "Nova Streko"
 
 #: ../app/display/gimpdisplayshell-dnd.c:439
 #: ../app/widgets/gimplayertreeview.c:752
-#, fuzzy
 msgid "Drop layers"
-msgstr "Tranĉu Tavolon"
+msgstr "Tranĉu tavolojn"
 
 #: ../app/display/gimpdisplayshell-dnd.c:541
 #: ../app/widgets/gimplayertreeview.c:834 ../app/widgets/gimptoolbox-dnd.c:355
@@ -8149,11 +8134,11 @@ msgstr "(vakigita)"
 msgid "(none)"
 msgstr "(nenio)"
 
-#: ../app/display/gimpstatusbar.c:215
+#: ../app/display/gimpstatusbar.c:218
 msgid "Cancel"
 msgstr "Forigu"
 
-#: ../app/display/gimpstatusbar.c:452
+#: ../app/display/gimpstatusbar.c:455
 msgid "Other..."
 msgstr "Alio..."
 
@@ -8170,24 +8155,28 @@ msgid "Plug-In could not open image"
 msgstr "Kromaĵo ne povas malfermi bildon"
 
 #: ../app/file/file-open.c:449
-#, fuzzy
 msgid "Image doesn't contain any layers"
-msgstr "Bildo ne enhavas videblan tavolon"
+msgstr "Bildo ne enhavas tavolojn"
+
+#: ../app/file/file-open.c:495
+#, c-format
+msgid "Opening '%s' failed: %s"
+msgstr "Malfermo de \"%s\" malsukcesis: %s"
 
 #: ../app/file/file-save.c:193
 msgid "Plug-In could not save image"
 msgstr "Kromaĵo ne povas konservi bildon"
 
-#: ../app/file/file-utils.c:124
+#: ../app/file/file-utils.c:127
 msgid "Invalid character sequence in URI"
 msgstr "Nevalida tipovico en URI"
 
-#: ../app/file/file-utils.c:141
+#: ../app/file/file-utils.c:144
 #, c-format
 msgid "URI scheme '%s:' is not supported"
-msgstr ""
+msgstr "Skemo '%s:' de URI ne estas subportita"
 
-#: ../app/file/file-utils.c:327
+#: ../app/file/file-utils.c:358
 msgid "Unknown file type"
 msgstr "Nekonata dosierspeco"
 
@@ -8218,9 +8207,8 @@ msgid "Clone"
 msgstr "Duplikatu"
 
 #: ../app/paint/gimpclone.c:141
-#, fuzzy
 msgid "No patterns available for use with this tool."
-msgstr "Neniu disponebla peniko estas uzebla per ĉi ilo."
+msgstr "Neniu disponebla motivo estas uzebla per ĉi ilo."
 
 #: ../app/paint/gimpconvolve.c:121
 msgid "Convolve"
@@ -8239,7 +8227,6 @@ msgid "Heal"
 msgstr "Plastro"
 
 #: ../app/paint/gimpheal.c:125
-#, fuzzy
 msgid "Healing does not operate on indexed layers."
 msgstr "Ekvilibrigo ne efikas laŭ indicitaj tavoloj."
 
@@ -8251,15 +8238,14 @@ msgstr "Peniko"
 msgid "Pencil"
 msgstr "Krajono"
 
-#: ../app/paint/gimpperspectiveclone.c:95 ../app/paint/paint-enums.c:52
+#: ../app/paint/gimpperspectiveclone.c:96 ../app/paint/paint-enums.c:52
 #: ../app/tools/gimpperspectiveclonetool.c:120
 msgid "Perspective Clone"
 msgstr "Duplikatu Perspektivon"
 
-#: ../app/paint/gimpperspectiveclone.c:163
-#, fuzzy
+#: ../app/paint/gimpperspectiveclone.c:161
 msgid "Perspective Clone does not operate on indexed layers."
-msgstr "Ne eblas ke indicitaj tavoloj iĝi kiel afiŝoj."
+msgstr "Klono de perspektivo ne efikas laŭ indicitaj tavoloj."
 
 #: ../app/paint/gimpsmudge.c:78 ../app/tools/gimpsmudgetool.c:54
 msgid "Smudge"
@@ -8267,7 +8253,7 @@ msgstr "Stompilo"
 
 #: ../app/paint/gimpsourcecore.c:227
 msgid "Set a source image first."
-msgstr ""
+msgstr "Agordu fonton de bildo antaŭe."
 
 #: ../app/paint/paint-enums.c:51
 msgid "Modify Perspective Plane"
@@ -8350,7 +8336,7 @@ msgstr "Trasformo en 2D"
 msgid "2D Transforming"
 msgstr "Trasformante en 2D"
 
-#: ../app/pdb/edit_cmds.c:634 ../app/tools/gimpblendtool.c:225
+#: ../app/pdb/edit_cmds.c:634 ../app/tools/gimpblendtool.c:250
 msgid "Blending"
 msgstr "Stompante"
 
@@ -8378,6 +8364,8 @@ msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
 "Expected %s, got %s."
 msgstr ""
+"La proceduro '%s' redonis nekorektan valorspeco por redona valoro '%s' (#%"
+"d). La atendita valoro estis %s, sed ĝi rezultis %s."
 
 #: ../app/pdb/gimpprocedure.c:523
 #, c-format
@@ -8385,6 +8373,8 @@ msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
 "d). Expected %s, got %s."
 msgstr ""
+"La proceduro '%s' estis vokita per nekorekta valorspeco por argumento '%s' (#"
+"%d).La atendita valoro estis %s, sed ĝi rezultis %s."
 
 #: ../app/pdb/gimpprocedure.c:554
 #, c-format
@@ -8392,6 +8382,8 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
+"La proceduro '%s' redonis nevalidan ID por argumento '%s'. Eble kromaĵo "
+"provas labori super tavolo kiu ne plu estas."
 
 #: ../app/pdb/gimpprocedure.c:565
 #, c-format
@@ -8399,6 +8391,8 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on a layer that doesn't exist any longer."
 msgstr ""
+"La proceduro '%s' estis vokita per nevalida ID por argumento '%s'. Eble "
+"kromaĵo provas labori super tavolo kiu ne plu estas."
 
 #: ../app/pdb/gimpprocedure.c:580
 #, c-format
@@ -8406,6 +8400,8 @@ msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
 "in is trying to work on an image that doesn't exist any longer."
 msgstr ""
+"La proceduro '%s' redonis nevalidan ID por argumento '%s'. Eble kromaĵo "
+"provas labori super bildo kiu ne plu estas."
 
 #: ../app/pdb/gimpprocedure.c:591
 #, c-format
@@ -8413,6 +8409,8 @@ msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
 "likely a plug-in is trying to work on an image that doesn't exist any longer."
 msgstr ""
+"La proceduro '%s' estis vokita per nevalida ID por argumento '%s'. Eble "
+"kromaĵo provas labori super bildo kiu ne plu estas."
 
 #: ../app/pdb/gimpprocedure.c:605
 #, c-format
@@ -8420,6 +8418,8 @@ msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
 msgstr ""
+"Proceduro '%s' redonis '%s' kiel redona valoro '%s' (#%d, speco %s). Ĉi "
+"valoro estas ekster amplekso."
 
 #: ../app/pdb/gimpprocedure.c:617
 #, c-format
@@ -8427,8 +8427,10 @@ msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
 "s). This value is out of range."
 msgstr ""
+"Proceduro '%s' estis vokita per '%s' valoro pro '%s' argumento (#%d, speco %"
+"s). Ĉi valoro estas ekster amplekso."
 
-#: ../app/pdb/image_cmds.c:2044
+#: ../app/pdb/image_cmds.c:2071
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr "Bilda difino estas supermezura, oni uzos defaŭltan difinon."
@@ -8457,12 +8459,12 @@ msgstr "Erara rilato al interpretilo en interpretila dosiero %s: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Erara binarĉeno en interpretila dosiero %s"
 
-#: ../app/plug-in/gimpplugin.c:431 ../app/plug-in/gimpplugin.c:470
+#: ../app/plug-in/gimpplugin.c:437 ../app/plug-in/gimpplugin.c:476
 #, c-format
 msgid "Terminating plug-in: '%s'\n"
 msgstr "Fermante kromaĵon: '%s'\n"
 
-#: ../app/plug-in/gimpplugin.c:614
+#: ../app/plug-in/gimpplugin.c:620
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -8527,16 +8529,16 @@ msgstr "Startante plivastigaĵon: '%s'\n"
 #: ../app/plug-in/plug-in-icc-profile.c:103
 #: ../app/plug-in/plug-in-icc-profile.c:169
 #: ../app/plug-in/plug-in-icc-profile.c:224
-#, fuzzy, c-format
+#, c-format
 msgid "Error running '%s'"
-msgstr "Eraro dum la skribo de \"%s\": %s"
+msgstr "Eraro dum la lanĉo de '%s'"
 
 #: ../app/plug-in/plug-in-icc-profile.c:126
 #: ../app/plug-in/plug-in-icc-profile.c:179
 #: ../app/plug-in/plug-in-icc-profile.c:234
 #, c-format
 msgid "Plug-In missing (%s)"
-msgstr ""
+msgstr "Mankas kromaĵo (%s)"
 
 #: ../app/plug-in/plug-in-rc.c:206
 #, c-format
@@ -8651,9 +8653,8 @@ msgstr ""
 "ne havas opciojn."
 
 #: ../app/tools/gimpairbrushtool.c:55
-#, fuzzy
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
-msgstr "Ŝprucpistolo laŭ varia premo"
+msgstr "Ŝprucpistolo: pentru per peniko kun varia premo"
 
 #: ../app/tools/gimpairbrushtool.c:56
 msgid "_Airbrush"
@@ -8673,7 +8674,6 @@ msgid "Align"
 msgstr "Laŭliniigu"
 
 #: ../app/tools/gimpaligntool.c:119
-#, fuzzy
 msgid "Alignment Tool: Align or arrange layers and other objects"
 msgstr "Laŭliniigu aŭ aranĝu tavolojn kaj aliajn erojn"
 
@@ -8682,9 +8682,8 @@ msgid "_Align"
 msgstr "_Laŭliniigu"
 
 #: ../app/tools/gimpaligntool.c:591
-#, fuzzy
 msgid "Relative to:"
-msgstr "Rilati al"
+msgstr "Rilate al:"
 
 #: ../app/tools/gimpaligntool.c:609
 msgid "Align left edge of target"
@@ -8719,7 +8718,6 @@ msgid "Distribute left edges of targets"
 msgstr "Distribuu maldekstren randojn de celaĵoj"
 
 #: ../app/tools/gimpaligntool.c:668
-#, fuzzy
 msgid "Distribute horizontal centers of targets"
 msgstr "Distribuu horizontale centrojn de celaĵoj"
 
@@ -8765,28 +8763,30 @@ msgstr "Maksimuma difino:"
 msgid "Threshold:"
 msgstr "Sojlo:"
 
-#: ../app/tools/gimpblendtool.c:107
-#, fuzzy
+#: ../app/tools/gimpblendtool.c:112
 msgid "Blend Tool: Fill selected area with a color gradient"
-msgstr "Plenigu per kolora gradiento"
+msgstr "Stompado: plenigu elektitan areon per kolora gradiento"
 
-#: ../app/tools/gimpblendtool.c:108
+#: ../app/tools/gimpblendtool.c:113
 msgid "Blen_d"
 msgstr "S_tompado"
 
-#: ../app/tools/gimpblendtool.c:161
-#, fuzzy
+#: ../app/tools/gimpblendtool.c:167
 msgid "Blend does not operate on indexed layers."
-msgstr "Ekvilibrigo ne efikas laŭ indicitaj tavoloj."
+msgstr "Stompado ne efikas laŭ indicitaj tavoloj."
 
-#: ../app/tools/gimpblendtool.c:378
+#: ../app/tools/gimpblendtool.c:408 ../app/tools/gimppainttool.c:592
+#, c-format
+msgid "%s for constrained angles"
+msgstr "%s por blokitaj anguloj"
+
+#: ../app/tools/gimpblendtool.c:411
 msgid "Blend: "
 msgstr "Stompado:"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:101
-#, fuzzy
 msgid "Brightness/Contrast Tool: Adjust brightness and contrast"
-msgstr "Aranĝu helecon kaj kontraston"
+msgstr "Heleco/Kontrasto: aranĝu helecon kaj kontraston"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:102
 msgid "B_rightness-Contrast..."
@@ -8867,9 +8867,8 @@ msgid "Bucket Fill"
 msgstr "Pleniganta Koloro"
 
 #: ../app/tools/gimpbucketfilltool.c:89
-#, fuzzy
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
-msgstr "Plenigu per koloro aŭ motivo"
+msgstr "Plenigo: plenigu elektitan areon per koloro aŭ motivo"
 
 #: ../app/tools/gimpbucketfilltool.c:90
 msgid "_Bucket Fill"
@@ -8881,7 +8880,7 @@ msgstr "Elektu per Koloro"
 
 #: ../app/tools/gimpbycolorselecttool.c:66
 msgid "Select by Color Tool: Select regions with similar colors"
-msgstr ""
+msgstr "Elektu per Koloro: elektu areojn kiuj havas similajn kolorojn"
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "_By Color Select"
@@ -8889,7 +8888,7 @@ msgstr "Elekto Per _Koloro"
 
 #: ../app/tools/gimpclonetool.c:62
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
-msgstr ""
+msgstr "Klono: detale kopiu el bildo aŭ el motivo per peniko"
 
 #: ../app/tools/gimpclonetool.c:63
 msgid "_Clone"
@@ -8920,7 +8919,7 @@ msgstr "Laŭliniigo:"
 
 #: ../app/tools/gimpcolorbalancetool.c:95
 msgid "Color Balance Tool: Adjust color distribution"
-msgstr ""
+msgstr "Ekvilibrigo de Koloro: aranĝu dismeton de koloro"
 
 #: ../app/tools/gimpcolorbalancetool.c:96
 msgid "Color _Balance..."
@@ -8931,7 +8930,6 @@ msgid "Adjust Color Balance"
 msgstr "Aranĝu Koloran Ekvilibrigon"
 
 #: ../app/tools/gimpcolorbalancetool.c:159
-#, fuzzy
 msgid "Color Balance operates only on RGB color layers."
 msgstr "Kolora ekvilibrigo efikas nur laŭ RGB kolor-tavoloj."
 
@@ -8967,9 +8965,8 @@ msgid "Preserve _luminosity"
 msgstr "Tenu _lumecon"
 
 #: ../app/tools/gimpcolorizetool.c:93
-#, fuzzy
 msgid "Colorize Tool: Colorize the image"
-msgstr "Koloru la bildon"
+msgstr "Kolorado: koloru la bildon"
 
 #: ../app/tools/gimpcolorizetool.c:94
 msgid "Colori_ze..."
@@ -9025,49 +9022,64 @@ msgstr "Eltira Moduso  (%s)"
 msgid "Use info window  (%s)"
 msgstr "Uzu inform-feneston  (%s)"
 
-#: ../app/tools/gimpcolorpickertool.c:99
+#: ../app/tools/gimpcolorpickertool.c:100
 msgid "Color Picker"
 msgstr "Kolor-eltirilo"
 
-#: ../app/tools/gimpcolorpickertool.c:100
-#, fuzzy
-msgid "Color Picker Tool: Set colors from image pixels"
-msgstr "Eltiru koloron el la bildo"
-
 #: ../app/tools/gimpcolorpickertool.c:101
+msgid "Color Picker Tool: Set colors from image pixels"
+msgstr "Koloreltirilo: agordu koloron el bilderojn de la bildo"
+
+#: ../app/tools/gimpcolorpickertool.c:102
 msgid "C_olor Picker"
 msgstr "K_olor-eltirilo"
 
+#: ../app/tools/gimpcolorpickertool.c:247
+#, fuzzy
+msgid "Click in any image to view its color"
+msgstr "Klaku sur iu ajn bildo por eltiri malfonan koloron"
+
+#: ../app/tools/gimpcolorpickertool.c:254 ../app/tools/gimppainttool.c:495
+msgid "Click in any image to pick the foreground color"
+msgstr "Klaku sur iu ajn bildo por eltiri malfonan koloron"
+
+#: ../app/tools/gimpcolorpickertool.c:262 ../app/tools/gimppainttool.c:501
+msgid "Click in any image to pick the background color"
+msgstr "Klaku sur iu ajn bildo por eltiri fonan koloron"
+
+#: ../app/tools/gimpcolorpickertool.c:270
+#, fuzzy
+msgid "Click in any image to add the color to the palette"
+msgstr "Klaku sur iu ajn bildo por eltiri malfonan koloron"
+
 #. tool->display->shell
-#: ../app/tools/gimpcolorpickertool.c:271
+#: ../app/tools/gimpcolorpickertool.c:323
 msgid "Color Picker Information"
 msgstr "Pri Kolor-eltirilo"
 
-#: ../app/tools/gimpcolortool.c:252 ../app/tools/gimpcolortool.c:427
+#: ../app/tools/gimpcolortool.c:252 ../app/tools/gimpcolortool.c:428
 msgid "Move Sample Point: "
 msgstr "Movu Sampladan Punkton: "
 
-#: ../app/tools/gimpcolortool.c:421
+#: ../app/tools/gimpcolortool.c:422
 msgid "Cancel Sample Point"
 msgstr "Forigu Sampladan Punkton"
 
-#: ../app/tools/gimpcolortool.c:428
+#: ../app/tools/gimpcolortool.c:429
 msgid "Add Sample Point: "
 msgstr "Aldonu Sampladan Punkton: "
 
 #: ../app/tools/gimpconvolvetool.c:73
-#, fuzzy
 msgid "Blur / Sharpen"
-msgstr "Malfokusu aŭ Kontrastigu"
+msgstr "Malfokusu / Kontrastigu"
 
 #: ../app/tools/gimpconvolvetool.c:74
 msgid "Blur / Sharpen Tool: Selective blurring or unblurring using a brush"
-msgstr ""
+msgstr "Malfokuso / Kontrastigo: malfokusu aŭ kontrastigu per peniko"
 
 #: ../app/tools/gimpconvolvetool.c:75
-#, fuzzy
 msgid "Bl_ur / Sharpen"
-msgstr "Malfokusu aŭ Kontrastigu"
+msgstr "Malfok_usu / Kontrastigu"
 
 #: ../app/tools/gimpconvolvetool.c:170
 msgid "Click to blur"
@@ -9111,7 +9123,7 @@ msgstr "Tranĉu"
 
 #: ../app/tools/gimpcroptool.c:100
 msgid "Crop Tool: Remove edge areas from image or layer"
-msgstr ""
+msgstr "Tranĉilo: formovu eksterajn areojn el bildo aŭ tavolo"
 
 #: ../app/tools/gimpcroptool.c:101
 msgid "_Crop"
@@ -9122,9 +9134,8 @@ msgid "Click or press enter to crop"
 msgstr "Klaku aŭ premu enigoklavon por tranĉi"
 
 #: ../app/tools/gimpcurvestool.c:149
-#, fuzzy
 msgid "Curves Tool: Adjust color curves"
-msgstr "Aranĝu kolorajn kurbojn"
+msgstr "Ilo por kurboj: aranĝu kurbojn de koloro"
 
 #: ../app/tools/gimpcurvestool.c:150
 msgid "_Curves..."
@@ -9132,7 +9143,7 @@ msgstr "_Kurbojn..."
 
 #: ../app/tools/gimpcurvestool.c:176
 msgid "Adjust Color Curves"
-msgstr "Aranĝu Kolorajn Kurbojn"
+msgstr "Aranĝu Kurbojn de Koloro"
 
 #: ../app/tools/gimpcurvestool.c:178
 msgid "Load Curves"
@@ -9151,7 +9162,6 @@ msgid "Save curves settings to file"
 msgstr "Konservu agordojn de kurboj en dosiero"
 
 #: ../app/tools/gimpcurvestool.c:258
-#, fuzzy
 msgid "Curves does not operate on indexed layers."
 msgstr "Inversigo ne efikas laŭ indicitaj tavoloj."
 
@@ -9190,16 +9200,14 @@ msgid "parse error"
 msgstr "analiz-eraro"
 
 #: ../app/tools/gimpdodgeburntool.c:73
-#, fuzzy
 msgid "Dodge / Burn"
 msgstr "Ekranŝirmu/Bruligu"
 
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
-msgstr ""
+msgstr "Ekranŝirmo/Bruligo: heligu aŭ malheligu per peniko"
 
 #: ../app/tools/gimpdodgeburntool.c:75
-#, fuzzy
 msgid "Dod_ge / Burn"
 msgstr "Ekranŝirmu/Bruligu"
 
@@ -9245,7 +9253,7 @@ msgid "Exposure:"
 msgstr "Ekspono:"
 
 #: ../app/tools/gimpeditselectiontool.c:199
-#: ../app/tools/gimpeditselectiontool.c:1146
+#: ../app/tools/gimpeditselectiontool.c:1147
 msgid "Move Floating Selection"
 msgstr "Movu Flosantan Elekton"
 
@@ -9259,18 +9267,16 @@ msgid "Ellipse Select"
 msgstr "Elipsa Elekto"
 
 #: ../app/tools/gimpellipseselecttool.c:73
-#, fuzzy
 msgid "Ellipse Select Tool: Select an elliptical region"
-msgstr "Elipse elektu areojn"
+msgstr "Elipsa Elekto: elektu elipsan areon"
 
 #: ../app/tools/gimpellipseselecttool.c:74
 msgid "_Ellipse Select"
 msgstr "Elipsa _Elekto"
 
 #: ../app/tools/gimperasertool.c:67
-#, fuzzy
 msgid "Eraser Tool: Erase to background or transparency using a brush"
-msgstr "Forigu sur fono aŭ sur diafaneco"
+msgstr "Gumo: forigu sur fono aŭ sur diafaneco per peniko"
 
 #: ../app/tools/gimperasertool.c:68
 msgid "_Eraser"
@@ -9307,12 +9313,13 @@ msgstr "Renversa Maniero  (%s)"
 
 #: ../app/tools/gimpfliptool.c:77
 msgid "Flip"
-msgstr "Renverso"
+msgstr "Renversu"
 
 #: ../app/tools/gimpfliptool.c:78
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr ""
+"Renverso: renversigu tavolon, elekton aŭ motivo horizontale aŭ vertikale"
 
 #: ../app/tools/gimpfliptool.c:80
 msgid "_Flip"
@@ -9392,7 +9399,7 @@ msgstr "Malfona Elekto"
 
 #: ../app/tools/gimpforegroundselecttool.c:144
 msgid "Foreground Select Tool: Select a region containing foreground objects"
-msgstr ""
+msgstr "Malfona Elekto: elektu areon kiu entenas malfonajn objektojn"
 
 #: ../app/tools/gimpforegroundselecttool.c:145
 msgid "F_oreground Select"
@@ -9415,9 +9422,8 @@ msgid "command|Foreground Select"
 msgstr "Elektu Malfonon"
 
 #: ../app/tools/gimpfreeselecttool.c:96
-#, fuzzy
 msgid "Free Select Tool: Select a hand-drawn region"
-msgstr "Lazo-elekto"
+msgstr "Lazo-elekto: elektu areon libermane"
 
 #: ../app/tools/gimpfreeselecttool.c:97
 msgid "_Free Select"
@@ -9433,16 +9439,15 @@ msgstr "Svaga Elekto"
 
 #: ../app/tools/gimpfuzzyselecttool.c:64
 msgid "Fuzzy Select Tool: Select a contiguous region on the basis of color"
-msgstr ""
+msgstr "Svaga Elekto: elektu samlimajn areojn per bazo de koloro"
 
 #: ../app/tools/gimpfuzzyselecttool.c:65
 msgid "Fu_zzy Select"
 msgstr "Sva_ga Elekto"
 
 #: ../app/tools/gimphealtool.c:58
-#, fuzzy
 msgid "Healing Tool: Heal image irregularities"
-msgstr "Plastru malregulaĵojn en la bildo"
+msgstr "Plastro: plastru malregulaĵojn en la bildo"
 
 #: ../app/tools/gimphealtool.c:59
 msgid "_Heal"
@@ -9467,7 +9472,7 @@ msgstr "Laŭskale Aranĝu Histogramon"
 
 #: ../app/tools/gimphuesaturationtool.c:114
 msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
-msgstr ""
+msgstr "Nuanco-_Saturado: aranĝu nuancon, saturado kaj lumecon"
 
 #: ../app/tools/gimphuesaturationtool.c:115
 msgid "Hue-_Saturation..."
@@ -9542,9 +9547,9 @@ msgid "Quick Save"
 msgstr "Rapide Konservu"
 
 #: ../app/tools/gimpimagemaptool.c:608
-#, fuzzy, c-format
+#, c-format
 msgid "Settings saved to '%s'"
-msgstr "Startante plivastigaĵon: '%s'\n"
+msgstr "Startante plivastigaĵon: '%s'"
 
 #. adjust sliders
 #: ../app/tools/gimpinkoptions-gui.c:56
@@ -9585,26 +9590,60 @@ msgstr "Formo"
 
 #: ../app/tools/gimpinktool.c:56
 msgid "Ink Tool: Calligraphy-style painting"
-msgstr ""
+msgstr "Grifelo: pentrado per kaligrafia stilo"
 
 #: ../app/tools/gimpinktool.c:57
 msgid "In_k"
 msgstr "_Grifelo"
 
-#: ../app/tools/gimpiscissorstool.c:271
+#: ../app/tools/gimpiscissorstool.c:277
 msgid "Scissors"
 msgstr "Tondilo"
 
-#: ../app/tools/gimpiscissorstool.c:272
+#: ../app/tools/gimpiscissorstool.c:278
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
+msgstr "Tondila Elekto: elektu formojn per saĝa konturilo"
+
+#: ../app/tools/gimpiscissorstool.c:279
+msgid "Intelligent _Scissors"
+msgstr "_Saĝa Tondilo"
+
+#: ../app/tools/gimpiscissorstool.c:919
+#, fuzzy
+msgid "Click-Drag to move this point"
+msgstr "Klaku kaj Trenu por movi strekon"
+
+#: ../app/tools/gimpiscissorstool.c:921 ../app/tools/gimpiscissorstool.c:988
+#, c-format
+msgid "%s: disable auto-snap"
 msgstr ""
 
-#: ../app/tools/gimpiscissorstool.c:273
-msgid "Intelligent _Scissors"
-msgstr "_Saga Tondilo"
+#: ../app/tools/gimpiscissorstool.c:940
+#, fuzzy
+msgid "Click to close the curve"
+msgstr "Klaku por krei antaŭmontron"
+
+#: ../app/tools/gimpiscissorstool.c:946
+#, fuzzy
+msgid "Click to add a point on this segment"
+msgstr "Klaku por aldoni regan punkton"
+
+#: ../app/tools/gimpiscissorstool.c:960
+#, fuzzy
+msgid "Click or press Enter to convert to a selection"
+msgstr "Klaku aŭ premu enigoklavon por tranĉi"
+
+#: ../app/tools/gimpiscissorstool.c:970
+#, fuzzy
+msgid "Press Enter to convert to a selection"
+msgstr "Aldonu konturaĵojn aŭ premu Enigoklavon por akcepti la elekton"
+
+#: ../app/tools/gimpiscissorstool.c:985
+#, fuzzy
+msgid "Click or Click-Drag to add a point"
+msgstr "Klaku por aldoni regan punkton"
 
 #: ../app/tools/gimplevelstool.c:155
-#, fuzzy
 msgid "Levels Tool: Adjust color levels"
 msgstr "Aranĝu nivelojn de koloro"
 
@@ -9629,7 +9668,6 @@ msgid "Save levels settings to file"
 msgstr "Konservu agordojn de niveloj en dosiero"
 
 #: ../app/tools/gimplevelstool.c:242
-#, fuzzy
 msgid "Levels does not operate on indexed layers."
 msgstr "Inversigo ne efikas laŭ indicitaj tavoloj."
 
@@ -9679,7 +9717,7 @@ msgstr "Zomo"
 
 #: ../app/tools/gimpmagnifytool.c:92
 msgid "Zoom Tool: Adjust the zoom level"
-msgstr ""
+msgstr "Zomo: adaptu nivelon de zomo"
 
 #: ../app/tools/gimpmagnifytool.c:93
 msgid "tool|_Zoom"
@@ -9694,9 +9732,8 @@ msgid "Measure"
 msgstr "Mezurilo"
 
 #: ../app/tools/gimpmeasuretool.c:121
-#, fuzzy
 msgid "Measure Tool: Measure distances and angles"
-msgstr "Mezuru distancojn kaj angulojn"
+msgstr "Mezurilo: mezuru distancojn kaj angulojn"
 
 #: ../app/tools/gimpmeasuretool.c:122
 msgid "_Measure"
@@ -9736,7 +9773,6 @@ msgid "Move the active path"
 msgstr "Movu aktivan strekon"
 
 #: ../app/tools/gimpmoveoptions.c:178
-#, fuzzy
 msgid "Move:"
 msgstr "Movu: "
 
@@ -9746,27 +9782,27 @@ msgstr "Movu"
 
 #: ../app/tools/gimpmovetool.c:118
 msgid "Move Tool: Move layers, selections, and other objects"
-msgstr ""
+msgstr "Movilo: movu tavolojn, elektojn kaj aliajn objektojn"
 
 #: ../app/tools/gimpmovetool.c:119
 msgid "_Move"
 msgstr "_Movu"
 
-#: ../app/tools/gimpmovetool.c:267 ../app/tools/gimpmovetool.c:544
+#: ../app/tools/gimpmovetool.c:267 ../app/tools/gimpmovetool.c:545
 msgid "Move Guide: "
 msgstr "Movu Gvidrelon:"
 
-#: ../app/tools/gimpmovetool.c:538
+#: ../app/tools/gimpmovetool.c:539
 msgid "Cancel Guide"
 msgstr "Forigu Gvidrelon"
 
-#: ../app/tools/gimpmovetool.c:544
+#: ../app/tools/gimpmovetool.c:545
 msgid "Add Guide: "
 msgstr "Aldonu Gvidrelon:"
 
 #: ../app/tools/gimppaintbrushtool.c:52
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
-msgstr ""
+msgstr "Pentropeniko: pentru delikatajn strekojn per peniko"
 
 #: ../app/tools/gimppaintbrushtool.c:53
 msgid "_Paintbrush"
@@ -9788,9 +9824,8 @@ msgid "Brush:"
 msgstr "Peniko:"
 
 #: ../app/tools/gimppaintoptions-gui.c:134
-#, fuzzy
 msgid "Scale:"
-msgstr "Laŭskale Aranĝu"
+msgstr "Skalo:"
 
 #: ../app/tools/gimppaintoptions-gui.c:148
 #: ../app/tools/gimppaintoptions-gui.c:437
@@ -9860,27 +9895,14 @@ msgstr "Klaku por desegni linion"
 msgid "%s to pick a color"
 msgstr "%s por eltiri koloron"
 
-#: ../app/tools/gimppainttool.c:494
-msgid "Click in any image to pick the foreground color"
-msgstr "Klaku sur iu ajn bildo por eltiri malfonan koloron"
-
-#: ../app/tools/gimppainttool.c:500
-msgid "Click in any image to pick the background color"
-msgstr "Klaku sur iu ajn bildo por eltiri fonan koloron"
-
-#: ../app/tools/gimppainttool.c:591
-#, c-format
-msgid "%s for constrained angles"
-msgstr "%s por blokitaj anguloj"
-
-#: ../app/tools/gimppainttool.c:643
+#: ../app/tools/gimppainttool.c:644
 #, c-format
 msgid "%s for a straight line"
 msgstr "%s por rekta linio"
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Pencil Tool: Hard edge painting using a brush"
-msgstr ""
+msgstr "Krajono: pentru netajn randojn per peniko"
 
 #: ../app/tools/gimppenciltool.c:53
 msgid "Pe_ncil"
@@ -9891,21 +9913,20 @@ msgid ""
 "Perspective Clone Tool: Clone from an image source after applying a "
 "perspective transformation"
 msgstr ""
+"Klono de perspektivo: duplikatu el bildofonto post apliko de perspektiva "
+"transformado"
 
 #: ../app/tools/gimpperspectiveclonetool.c:123
-#, fuzzy
 msgid "_Perspective Clone"
-msgstr "Duplikatu Perspektivon"
+msgstr "Duplikatu _Perspektivon"
 
 #: ../app/tools/gimpperspectiveclonetool.c:640
-#, fuzzy
 msgid "Ctrl-Click to set a clone source"
-msgstr "Klaku por agordi novan duplikatfonton"
+msgstr "Strkl-alklako por agordi novan duplikatfonton"
 
 #: ../app/tools/gimpperspectivetool.c:69
-#, fuzzy
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
-msgstr "Ŝanĝu perspektivon de tavolo aŭ de elekto"
+msgstr "Perspektivo: ŝanĝu perspektivon de tavolo, de motivo aŭ de elekto"
 
 #: ../app/tools/gimpperspectivetool.c:71
 msgid "_Perspective"
@@ -9924,9 +9945,8 @@ msgid "Transformation Matrix"
 msgstr "Matrico de Trasformado"
 
 #: ../app/tools/gimpposterizetool.c:78
-#, fuzzy
 msgid "Posterize Tool: Reduce to a limited set of colors"
-msgstr "Igu kiel _Afiŝo (Reduktu KolorNombron)"
+msgstr "Igu kiel _Afiŝo: reduktu al limiĝita nombro de koloroj"
 
 #: ../app/tools/gimpposterizetool.c:79
 msgid "_Posterize..."
@@ -9991,25 +10011,22 @@ msgid "Aspect"
 msgstr "Aspekto"
 
 #: ../app/tools/gimprectangleselectoptions.c:155
-#, fuzzy
 msgid "Rounded corners"
-msgstr "Musaj Celumiloj"
+msgstr "Rondaj anguloj"
 
 #: ../app/tools/gimprectangleselecttool.c:135
-#, fuzzy
 msgid "Rectangle Select"
 msgstr "Rektangula Elekto"
 
 #: ../app/tools/gimprectangleselecttool.c:136
 msgid "Rectangle Select Tool: Select a rectangular region"
-msgstr ""
+msgstr "Rektagula Elekto: elektu rektangulan areon"
 
 #: ../app/tools/gimprectangleselecttool.c:137
-#, fuzzy
 msgid "_Rectangle Select"
 msgstr "_Rektangula Elekto"
 
-#: ../app/tools/gimprectangletool.c:1052 ../app/tools/gimprectangletool.c:1696
+#: ../app/tools/gimprectangletool.c:1054 ../app/tools/gimprectangletool.c:1719
 msgid "Rectangle: "
 msgstr "Rektangulo: "
 
@@ -10022,9 +10039,8 @@ msgid "Rotate"
 msgstr "Rotacio"
 
 #: ../app/tools/gimprotatetool.c:87
-#, fuzzy
 msgid "Rotate Tool: Rotate the layer, selection or path"
-msgstr "Turnu tavolon aŭ elekton"
+msgstr "Rotacio: turnu tavolon, motivon aŭ elekton"
 
 #: ../app/tools/gimprotatetool.c:88
 msgid "_Rotate"
@@ -10035,28 +10051,24 @@ msgid "Rotation Information"
 msgstr "Pri Rotacio"
 
 #: ../app/tools/gimprotatetool.c:144
-#, fuzzy
 msgid "_Angle:"
-msgstr "Angulo:"
+msgstr "_Angulo:"
 
 #: ../app/tools/gimprotatetool.c:159
-#, fuzzy
 msgid "Center _X:"
-msgstr "Centro X:"
+msgstr "Centro _X:"
 
 #: ../app/tools/gimprotatetool.c:168
-#, fuzzy
 msgid "Center _Y:"
-msgstr "Centro Y:"
+msgstr "Centro _Y:"
 
 #: ../app/tools/gimpscaletool.c:79
 msgid "Scale"
 msgstr "Laŭskale Aranĝu"
 
 #: ../app/tools/gimpscaletool.c:80
-#, fuzzy
 msgid "Scale Tool: Scale the layer, selection or path"
-msgstr "Laŭskale aranĝu tavolon aŭ elekton"
+msgstr "Skalo: laŭskale aranĝu tavolon, motivon aŭ elekton"
 
 #: ../app/tools/gimpscaletool.c:81
 msgid "_Scale"
@@ -10143,9 +10155,8 @@ msgid "Shear"
 msgstr "Klinu"
 
 #: ../app/tools/gimpsheartool.c:87
-#, fuzzy
 msgid "Shear Tool: Shear the layer, selection or path"
-msgstr "Klinu tavolon aŭ elekton"
+msgstr "Klinado: klinu tavolon, motivon aŭ elekton"
 
 #: ../app/tools/gimpsheartool.c:88
 msgid "S_hear"
@@ -10160,18 +10171,16 @@ msgid "Shearing Information"
 msgstr "Pri Klinado"
 
 #: ../app/tools/gimpsheartool.c:139
-#, fuzzy
 msgid "Shear magnitude _X:"
-msgstr "Klinada valoro X:"
+msgstr "Klinada valoro _X:"
 
 #: ../app/tools/gimpsheartool.c:149
-#, fuzzy
 msgid "Shear magnitude _Y:"
-msgstr "Klinada valoro Y:"
+msgstr "Klinada valoro _Y:"
 
 #: ../app/tools/gimpsmudgetool.c:55
 msgid "Smudge Tool: Smudge selectively using a brush"
-msgstr ""
+msgstr "Stompilo: stompu per peniko"
 
 #: ../app/tools/gimpsmudgetool.c:56
 msgid "_Smudge"
@@ -10244,7 +10253,7 @@ msgstr "Teksto laŭ Streko"
 
 #: ../app/tools/gimptexttool.c:144
 msgid "Text Tool: Create or edit text layers"
-msgstr ""
+msgstr "Ilo de Teksto: kreu aŭ redaktu tekstajn tavolojn"
 
 #: ../app/tools/gimptexttool.c:145
 msgid "Te_xt"
@@ -10272,9 +10281,8 @@ msgstr ""
 "Vi povas redakti ĉi tavolon aŭ krei novan tekstotavolon per ĝiaj ecoj."
 
 #: ../app/tools/gimpthresholdtool.c:83
-#, fuzzy
 msgid "Threshold Tool: Reduce image to two colors using a threshold"
-msgstr "Readaptu bildon laŭ du koloroj per sojlo"
+msgstr "_Sojlo: readaptu bildon laŭ du koloroj per sojlo"
 
 #: ../app/tools/gimpthresholdtool.c:84
 msgid "_Threshold..."
@@ -10293,14 +10301,12 @@ msgid "Automatically adjust to optimal binarization threshold"
 msgstr "Aŭtomata aranĝo por optimuma binarigo de sojlo"
 
 #: ../app/tools/gimptransformoptions.c:282
-#, fuzzy
 msgid "Transform:"
-msgstr "Transformu"
+msgstr "Transformu:"
 
 #: ../app/tools/gimptransformoptions.c:288
-#, fuzzy
 msgid "Direction"
-msgstr "Priskribo"
+msgstr "Direkto"
 
 #: ../app/tools/gimptransformoptions.c:297
 msgid "Interpolation:"
@@ -10311,9 +10317,8 @@ msgid "Supersampling"
 msgstr "Supersamplado"
 
 #: ../app/tools/gimptransformoptions.c:316
-#, fuzzy
 msgid "Clipping:"
-msgstr "Renverso"
+msgstr "Agrafo:"
 
 #: ../app/tools/gimptransformoptions.c:334
 msgid "Preview:"
@@ -10347,7 +10352,7 @@ msgstr "Limigi redaktadon nur al plurlateroj"
 
 #: ../app/tools/gimpvectoroptions.c:145
 msgid "Edit Mode"
-msgstr "Redaktu Moduson"
+msgstr "Redakta Moduso"
 
 #: ../app/tools/gimpvectoroptions.c:150
 msgid "Polygonal"
@@ -10373,12 +10378,11 @@ msgstr "Kreu Elekton el Streko"
 #: ../app/tools/gimpvectortool.c:159
 #, fuzzy
 msgid "Paths Tool: Create and edit paths"
-msgstr "Kreu kaj redaktu strekojn"
+msgstr "Strekoj: kreu kaj redaktu strekojn"
 
 #: ../app/tools/gimpvectortool.c:160
-#, fuzzy
 msgid "Pat_hs"
-msgstr "Strekoj"
+msgstr "St_rekoj"
 
 #: ../app/tools/gimpvectortool.c:319
 msgid "Add Stroke"
@@ -10846,14 +10850,12 @@ msgid "Larger Previews"
 msgstr "Pli Grandaj Antaŭmontroj"
 
 #: ../app/widgets/gimpcontrollereditor.c:196
-#, fuzzy
 msgid "_Dump events from this controller"
-msgstr "Transĵetu agojn de ĉi regilo"
+msgstr "Trans_ĵetu agojn de ĉi regilo"
 
 #: ../app/widgets/gimpcontrollereditor.c:201
-#, fuzzy
 msgid "_Enable this controller"
-msgstr "Ebligu ĉi regilon"
+msgstr "_Ebligu ĉi regilon"
 
 #: ../app/widgets/gimpcontrollereditor.c:222
 #: ../app/widgets/gimpimageprofileview.c:83
@@ -11196,15 +11198,15 @@ msgstr "Aŭtomate"
 msgid "By Extension"
 msgstr "Laŭ Finaĵo"
 
-#: ../app/widgets/gimpfiledialog.c:516
+#: ../app/widgets/gimpfiledialog.c:523
 msgid "All files"
 msgstr "Ĉiuj dosieroj"
 
-#: ../app/widgets/gimpfiledialog.c:521
+#: ../app/widgets/gimpfiledialog.c:528
 msgid "All images"
 msgstr "Ĉiuj bildoj"
 
-#: ../app/widgets/gimpfiledialog.c:657
+#: ../app/widgets/gimpfiledialog.c:661
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Elektu Dosier_Specon (%s)"
@@ -11387,19 +11389,16 @@ msgid "Channel:"
 msgstr "Kanalo:"
 
 #: ../app/widgets/gimpimageprofileview.c:86
-#, fuzzy
 msgid "Description:"
-msgstr "Priskribo"
+msgstr "Priskribo:"
 
 #: ../app/widgets/gimpimageprofileview.c:89
-#, fuzzy
 msgid "Info:"
-msgstr "_Pri..."
+msgstr "Pri:"
 
 #: ../app/widgets/gimpimageprofileview.c:211
-#, fuzzy
 msgid "Querying..."
-msgstr "Informpeto"
+msgstr "Informpeto..."
 
 #: ../app/widgets/gimpimagepropview.c:119
 msgid "Pixel dimensions:"
@@ -11524,9 +11523,10 @@ msgstr "Nedefinita"
 msgid "Columns:"
 msgstr "Kolumnoj:"
 
-#: ../app/widgets/gimpprofilechooserdialog.c:142
-msgid "ICC color profile (*.icc)"
-msgstr ""
+#: ../app/widgets/gimpprofilechooserdialog.c:154
+#, fuzzy
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr "Profilo de ICC koloro (*.icc)"
 
 #: ../app/widgets/gimpprogressdialog.c:215
 msgid "Progress"
@@ -11534,12 +11534,11 @@ msgstr "Procezante"
 
 #: ../app/widgets/gimppropwidgets.c:666
 msgid "1:1"
-msgstr ""
+msgstr "1:1"
 
 #: ../app/widgets/gimppropwidgets.c:673
-#, fuzzy
 msgid "Set"
-msgstr "Elektu"
+msgstr "Agordu"
 
 #: ../app/widgets/gimpselectiondata.c:258
 #, c-format
@@ -11566,35 +11565,35 @@ msgstr "%d × %d ppi"
 msgid "%d ppi"
 msgstr "%d ppi"
 
-#: ../app/widgets/gimpstrokeeditor.c:180
+#: ../app/widgets/gimpstrokeeditor.c:183
 msgid "Line width:"
 msgstr "Diko de linio:"
 
-#: ../app/widgets/gimpstrokeeditor.c:196
+#: ../app/widgets/gimpstrokeeditor.c:199
 msgid "_Line Style"
 msgstr "Stilo de _Linio"
 
-#: ../app/widgets/gimpstrokeeditor.c:215
+#: ../app/widgets/gimpstrokeeditor.c:218
 msgid "_Cap style:"
 msgstr "_Pluma Stilo:"
 
-#: ../app/widgets/gimpstrokeeditor.c:221
+#: ../app/widgets/gimpstrokeeditor.c:224
 msgid "_Join style:"
 msgstr "Kun_iga Stilo:"
 
-#: ../app/widgets/gimpstrokeeditor.c:226
+#: ../app/widgets/gimpstrokeeditor.c:229
 msgid "_Miter limit:"
-msgstr "Eĝolimo:"
+msgstr "E_ĝolimo:"
 
-#: ../app/widgets/gimpstrokeeditor.c:233
+#: ../app/widgets/gimpstrokeeditor.c:236
 msgid "Dash pattern:"
 msgstr "Modelo de haĉado:"
 
-#: ../app/widgets/gimpstrokeeditor.c:275
+#: ../app/widgets/gimpstrokeeditor.c:299
 msgid "Dash _preset:"
 msgstr "An_taŭagordado de haĉado:"
 
-#: ../app/widgets/gimpstrokeeditor.c:296
+#: ../app/widgets/gimpstrokeeditor.c:320
 msgid "_Antialiasing"
 msgstr "_Glatigo"
 
@@ -11656,7 +11655,7 @@ msgstr "Ant_aŭmontro"
 
 #: ../app/widgets/gimpthumbbox.c:393 ../app/widgets/gimpthumbbox.c:468
 msgid "No selection"
-msgstr "Ne elekto"
+msgstr "Neniu elekto"
 
 #: ../app/widgets/gimpthumbbox.c:596 ../app/widgets/gimpthumbbox.c:620
 #, c-format
@@ -11733,9 +11732,9 @@ msgid "Delete saved options..."
 msgstr "Forigu konservitajn opciojn..."
 
 #: ../app/widgets/gimptooloptionseditor.c:472
-#, fuzzy, c-format
+#, c-format
 msgid "Error saving tool options presets: %s"
-msgstr "Eraro dum konservo de XCF dosiero: %s"
+msgstr "Eraro dum konservo de opcioj: %s"
 
 #: ../app/widgets/gimpuimanager.c:716
 msgid "Your GIMP installation is incomplete:"
@@ -11776,7 +11775,7 @@ msgstr "Malfermu fenestron por elekti gradienton"
 
 #: ../app/widgets/gimpviewablebox.c:219
 msgid "Reverse"
-msgstr "Inverso"
+msgstr "Inversa"
 
 #: ../app/widgets/gimpviewablebox.c:298
 msgid "Open the palette selection dialog"
@@ -11976,7 +11975,6 @@ msgid "Only check if GIMP is running, then quit"
 msgstr "Kontrolu nur ke GIMP plenumiĝas kaj eliru"
 
 #: ../tools/gimp-remote.c:94
-#, fuzzy
 msgid "Print X window ID of GIMP toolbox window, then quit"
 msgstr "Presu ID X window de la GIMPa ilarkesto kaj eliru"
 
@@ -11984,180 +11982,29 @@ msgstr "Presu ID X window de la GIMPa ilarkesto kaj eliru"
 msgid "Start GIMP without showing the startup window"
 msgstr "Lanĉu GIMP, senmontrante unuan fenestron"
 
-#: ../tools/gimp-remote.c:203
+#: ../tools/gimp-remote.c:205
 msgid "Could not connect to GIMP."
 msgstr "Estas neeble kunligiĝi kun Gimp"
 
-#: ../tools/gimp-remote.c:204
+#: ../tools/gimp-remote.c:206
 msgid "Make sure that the Toolbox is visible!"
 msgstr "Kontrolu ke Iloj estas videblaj!"
 
 #. if execv and execvp return, there was an error
-#: ../tools/gimp-remote.c:305
+#: ../tools/gimp-remote.c:307
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Estas neeble starti \"%s\": %s"
 
-#~ msgid "Colormap Editor"
-#~ msgstr "Redaktilo de Kolormapo"
+#~ msgid "(This console window will close in ten seconds)\n"
+#~ msgstr "(Ĉi konzolfenestro fermiĝos en 10 sekundoj)\n"
 
-#~ msgid "Ma_p"
-#~ msgstr "Ma_po"
+#~ msgid "%d hour"
+#~ msgid_plural "%d hours"
+#~ msgstr[0] "%d horo"
+#~ msgstr[1] "%d horoj"
 
-#~ msgid "Cr_op Layer"
-#~ msgstr "_Tranĉu Tavolon"
-
-#~ msgid "Invalid width or height. Both must be positive."
-#~ msgstr "Larĝo aŭ alto estas nevalida. Ambaŭ devas havi pozitivan valoron."
-
-#~ msgid "Corrupt segment %d in gradient file '%s'."
-#~ msgstr "Difektita segmento %d en gradienta dosiero '%s'."
-
-#~ msgid ""
-#~ "Fatal parse error in palette file '%s': Missing magic header.\n"
-#~ "Does this file need converting from DOS?"
-#~ msgstr ""
-#~ "Fatala analizeraro en paletrodosiero '%s': mancas magia titolado.\n"
-#~ "Ĉu eble estas necese konverti el DOS?"
-
-#~ msgid "No selection to stroke."
-#~ msgstr "Neniu elekto por konturi"
-
-#~ msgid "Shadow type"
-#~ msgstr "Speco de ombro"
-
-#~ msgid "Style of bevel around the statusbar text"
-#~ msgstr "Stilo de malakrigita eĝo ĉirkaŭ teksto de statostango"
-
-#~ msgid "Indexed images are not currently supported."
-#~ msgstr "La indicitaj bildoj nun ne estas procezeblaj"
-
-#~ msgid ""
-#~ "PDB calling error for procedure '%s':\n"
-#~ "Argument '%s' (#%d, type %s) type mismatch (got %s)."
-#~ msgstr ""
-#~ "PDB eraro de voko por proceduro \"%s\":\n"
-#~ "Neresponda speco de argumento\"%s\" (#%d, speco %s) (atingita %s)"
-
-#~ msgid ""
-#~ "PDB calling error for procedure '%s':\n"
-#~ "Argument '%s' (#%d, type %s) out of bounds (validation changed '%s' to '%"
-#~ "s')"
-#~ msgstr ""
-#~ "PDB eraro de voko por proceduro \"%s\":\n"
-#~ "Supermezura argumento \"%s\" (#%d, speco %s) (validigo estas ŝanĝita el "
-#~ "\"%s\" al \"%s\")"
-
-#~ msgid "(invalid UTF-8 string)"
-#~ msgstr "(nevalida UTF-8 ĉeno)"
-
-#~ msgid "Alignment Tool"
-#~ msgstr "Ilo de Laŭliniigo"
-
-#~ msgid "Blend: Invalid for indexed images."
-#~ msgstr "Stompado estas nevalida laŭ indicitaj bildoj."
-
-#~ msgid "Select regions by color"
-#~ msgstr "Elektu areojn per koloro"
-
-#~ msgid "Paint using Patterns or Image Regions"
-#~ msgstr "Pentru per motivoj aŭ bildoj"
-
-#~ msgid "Adjust color balance"
-#~ msgstr "Aranĝu koloran ekvilibrigon"
-
-#~ msgid "Con_volve"
-#~ msgstr "_Ruliĝo"
-
-#~ msgid "Crop an image"
-#~ msgstr "Tranĉu bildon"
-
-#~ msgid "Curves for indexed layers cannot be adjusted."
-#~ msgstr "Kurboj de indicitaj tavoloj ne estas aranĝeblaj."
-
-#~ msgid "Dodge or Burn strokes"
-#~ msgstr "Ekranŝirmu aŭ Bruligu konturojn"
-
-#~ msgid "Dod_geBurn"
-#~ msgstr "Ekr_anŝirmu-Bruligu"
-
-#~ msgid "Flip the layer or selection"
-#~ msgstr "Renversu Tavolon aŭ Elekton"
-
-#~ msgid "Extract foreground objects"
-#~ msgstr "Ekstaktu malfonajn objektojn"
-
-#~ msgid "Select contiguous regions"
-#~ msgstr "Elektu samlimajn areojn"
-
-#~ msgid "Adjust hue and saturation"
-#~ msgstr "Aranĝu nuancon kaj saturadon"
-
-#~ msgid "Draw in ink"
-#~ msgstr "Desegnu per grifelo"
-
-#~ msgid "Select shapes from image"
-#~ msgstr "Elektu formojn el bildo"
-
-#~ msgid "Levels for indexed layers cannot be adjusted."
-#~ msgstr "Niveloj de indicitaj koloroj ne estas aranĝeblaj."
-
-#~ msgid "Zoom in & out"
-#~ msgstr "Zomu kaj Malzomu"
-
-#~ msgid "Move layers & selections"
-#~ msgstr "Movu tavolojn kaj elektojn"
-
-#~ msgid "Paint fuzzy brush strokes"
-#~ msgstr "Pentru per suplan penikon"
-
-#~ msgid "Paint hard edged pixels"
-#~ msgstr "Pentru akraeĝajn punktojn"
-
-#~ msgid "Reduce image to a fixed number of colors"
-#~ msgstr "Readaptu bildon per fiksa nombro de koloroj"
-
-#~ msgid "Make square"
-#~ msgstr "Ortigu"
-
-#~ msgid "Rectangle Controls"
-#~ msgstr "Regoj de Rektangulo"
-
-#~ msgid "1 "
-#~ msgstr "1 "
-
-#~ msgid "2 "
-#~ msgstr "2 "
-
-#~ msgid "Select a Rectangular part of an image"
-#~ msgstr "Elektu Rektangulajn areojn de bildo"
-
-#~ msgid "Smudge image"
-#~ msgstr "Stompu bildon"
-
-#~ msgid "Add text to the image"
-#~ msgstr "Aldonu tekston al bildo"
-
-#~ msgid "Transform Direction"
-#~ msgstr "Transforma Direkto"
-
-#~ msgid "Clip result"
-#~ msgstr "Poŝi rezulton"
-
-#~ msgid "No constraint"
-#~ msgstr "Neniu ligilo"
-
-#~ msgid "Image bounds"
-#~ msgstr "Bildolimoj"
-
-#~ msgid "Drawable bounds"
-#~ msgstr "Desegneblaj limoj"
-
-#~ msgid "Transform layer"
-#~ msgstr "Transformu tavolon"
-
-#~ msgid "Transform selection"
-#~ msgstr "Transformu elekton"
-
-#~ msgid "Transform path"
-#~ msgstr "Transformu strekon"
+#~ msgid "minute"
+#~ msgid_plural "%d minutes"
+#~ msgstr[0] "%d minuto"
+#~ msgstr[1] "%d minutoj"
