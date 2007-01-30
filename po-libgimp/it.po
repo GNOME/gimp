@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-28 15:05+0100\n"
-"PO-Revision-Date: 2007-01-28 15:06+0100\n"
+"POT-Creation-Date: 2007-01-30 10:58+0100\n"
+"PO-Revision-Date: 2007-01-30 10:57+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1373,7 +1373,7 @@ msgstr "Fitro a prova di colore usando i profili di colore ICC"
 
 #: ../modules/cdisplay_proof.c:179
 msgid "Color Proof"
-msgstr "A prova di colore"
+msgstr "Prova di colore"
 
 #: ../modules/cdisplay_proof.c:306
 msgid "_Intent:"
