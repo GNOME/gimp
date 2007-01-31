@@ -31,6 +31,7 @@
 #include "gimp-parasites.h"
 #include "gimpchannelpropundo.h"
 #include "gimpchannelundo.h"
+#include "gimpdrawablemodundo.h"
 #include "gimpdrawableundo.h"
 #include "gimpgrid.h"
 #include "gimpguide.h"
@@ -180,9 +181,9 @@ gimp_image_undo_push_sample_point (GimpImage       *image,
 }
 
 
-/*******************/
-/*  Drawable Undo  */
-/*******************/
+/********************/
+/*  Drawable Undos  */
+/********************/
 
 GimpUndo *
 gimp_image_undo_push_drawable (GimpImage    *image,
@@ -230,104 +231,22 @@ gimp_image_undo_push_drawable (GimpImage    *image,
                                NULL);
 }
 
-
-/***********************/
-/*  Drawable Mod Undo  */
-/***********************/
-
-typedef struct _DrawableModUndo DrawableModUndo;
-
-struct _DrawableModUndo
-{
-  TileManager   *tiles;
-  GimpImageType  type;
-  gint           offset_x;
-  gint           offset_y;
-};
-
-static gboolean undo_pop_drawable_mod  (GimpUndo            *undo,
-                                        GimpUndoMode         undo_mode,
-                                        GimpUndoAccumulator *accum);
-static void     undo_free_drawable_mod (GimpUndo            *undo,
-                                        GimpUndoMode         undo_mode);
-
 GimpUndo *
 gimp_image_undo_push_drawable_mod (GimpImage    *image,
                                    const gchar  *undo_desc,
                                    GimpDrawable *drawable)
 {
-  GimpUndo *new;
-  gint64    size;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
 
-  size = sizeof (DrawableModUndo) + tile_manager_get_memsize (drawable->tiles,
-                                                              FALSE);
-
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_UNDO,
-                                   size, sizeof (DrawableModUndo),
-                                   GIMP_UNDO_DRAWABLE_MOD, undo_desc,
-                                   GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
-                                   undo_pop_drawable_mod,
-                                   undo_free_drawable_mod,
-                                   "item", drawable,
-                                   NULL)))
-    {
-      DrawableModUndo *drawable_undo = new->data;
-
-      drawable_undo->tiles    = tile_manager_ref (drawable->tiles);
-      drawable_undo->type     = drawable->type;
-      drawable_undo->offset_x = GIMP_ITEM (drawable)->offset_x;
-      drawable_undo->offset_y = GIMP_ITEM (drawable)->offset_y;
-
-      return new;
-    }
-
-  return NULL;
-}
-
-static gboolean
-undo_pop_drawable_mod (GimpUndo            *undo,
-                       GimpUndoMode         undo_mode,
-                       GimpUndoAccumulator *accum)
-{
-  DrawableModUndo *drawable_undo = undo->data;
-  GimpDrawable    *drawable      = GIMP_DRAWABLE (GIMP_ITEM_UNDO (undo)->item);
-  TileManager     *tiles;
-  GimpImageType    drawable_type;
-  gint             offset_x, offset_y;
-
-  undo->size -= tile_manager_get_memsize (drawable_undo->tiles, FALSE);
-
-  tiles         = drawable_undo->tiles;
-  drawable_type = drawable_undo->type;
-  offset_x      = drawable_undo->offset_x;
-  offset_y      = drawable_undo->offset_y;
-
-  drawable_undo->tiles    = tile_manager_ref (drawable->tiles);
-  drawable_undo->type     = drawable->type;
-  drawable_undo->offset_x = GIMP_ITEM (drawable)->offset_x;
-  drawable_undo->offset_y = GIMP_ITEM (drawable)->offset_y;
-
-  gimp_drawable_set_tiles_full (drawable, FALSE, NULL,
-                                tiles, drawable_type, offset_x, offset_y);
-  tile_manager_unref (tiles);
-
-  undo->size += tile_manager_get_memsize (drawable_undo->tiles, FALSE);
-
-  return TRUE;
-}
-
-static void
-undo_free_drawable_mod (GimpUndo     *undo,
-                        GimpUndoMode  undo_mode)
-{
-  DrawableModUndo *drawable_undo = undo->data;
-
-  tile_manager_unref (drawable_undo->tiles);
-  g_free (drawable_undo);
+  return gimp_image_undo_push (image, GIMP_TYPE_DRAWABLE_MOD_UNDO,
+                               0, 0,
+                               GIMP_UNDO_DRAWABLE_MOD, undo_desc,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_DRAWABLE,
+                               NULL, NULL,
+                               "item", drawable,
+                               NULL);
 }
 
 

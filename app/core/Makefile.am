@@ -126,6 +126,8 @@ libappcore_a_sources = \
 	gimpdrawable-stroke.h		\
 	gimpdrawable-transform.c	\
 	gimpdrawable-transform.h	\
+	gimpdrawablemodundo.c		\
+	gimpdrawablemodundo.h		\
 	gimpdrawableundo.c		\
 	gimpdrawableundo.h		\
 	gimpgradient.c			\
