@@ -925,7 +925,7 @@ shoot_dialog (GdkScreen **screen)
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  gimp_help_set_help_data (spinner, _("The number of seconds to wait after "
+  gimp_help_set_help_data (spinner, _("The number of seconds to wait before "
                                       "selecting the window or region and "
                                       "actually taking the screenshot."), NULL);
 
