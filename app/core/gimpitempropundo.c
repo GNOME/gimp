@@ -22,8 +22,6 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimpbase.h"
-
 #include "core-types.h"
 
 #include "gimpitem.h"
@@ -33,6 +31,9 @@
 static GObject * gimp_item_prop_undo_constructor (GType                  type,
                                                   guint                  n_params,
                                                   GObjectConstructParam *params);
+
+static gint64    gimp_item_prop_undo_get_memsize (GimpObject            *object,
+                                                  gint64                *gui_size);
 
 static void      gimp_item_prop_undo_pop         (GimpUndo              *undo,
                                                   GimpUndoMode           undo_mode,
@@ -49,13 +50,16 @@ G_DEFINE_TYPE (GimpItemPropUndo, gimp_item_prop_undo, GIMP_TYPE_ITEM_UNDO)
 static void
 gimp_item_prop_undo_class_init (GimpItemPropUndoClass *klass)
 {
-  GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
+  GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor = gimp_item_prop_undo_constructor;
+  object_class->constructor      = gimp_item_prop_undo_constructor;
 
-  undo_class->pop           = gimp_item_prop_undo_pop;
-  undo_class->free          = gimp_item_prop_undo_free;
+  gimp_object_class->get_memsize = gimp_item_prop_undo_get_memsize;
+
+  undo_class->pop                = gimp_item_prop_undo_pop;
+  undo_class->free               = gimp_item_prop_undo_free;
 }
 
 static void
@@ -82,7 +86,6 @@ gimp_item_prop_undo_constructor (GType                  type,
     {
     case GIMP_UNDO_ITEM_RENAME:
       item_prop_undo->name = g_strdup (gimp_object_get_name (GIMP_OBJECT (item)));
-      GIMP_UNDO (object)->size += strlen (item_prop_undo->name) + 1;
       break;
 
     case GIMP_UNDO_ITEM_DISPLACE:
@@ -106,6 +109,20 @@ gimp_item_prop_undo_constructor (GType                  type,
   return object;
 }
 
+static gint64
+gimp_item_prop_undo_get_memsize (GimpObject *object,
+                                 gint64     *gui_size)
+{
+  GimpItemPropUndo *item_prop_undo = GIMP_ITEM_PROP_UNDO (object);
+  gint64            memsize        = 0;
+
+  if (item_prop_undo->name)
+    memsize += strlen (item_prop_undo->name) + 1;
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
+}
+
 static void
 gimp_item_prop_undo_pop (GimpUndo            *undo,
                          GimpUndoMode         undo_mode,
@@ -122,13 +139,9 @@ gimp_item_prop_undo_pop (GimpUndo            *undo,
       {
         gchar *name;
 
-        undo->size -= strlen (item_prop_undo->name) + 1;
-
         name = g_strdup (gimp_object_get_name (GIMP_OBJECT (item)));
         gimp_object_take_name (GIMP_OBJECT (item), item_prop_undo->name);
         item_prop_undo->name = name;
-
-        undo->size += strlen (item_prop_undo->name) + 1;
       }
       break;
 

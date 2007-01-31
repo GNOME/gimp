@@ -1,5 +1,11 @@
 2007-01-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpmaskundo.c
+	* app/core/gimpitempropundo.c: implement GimpObject::get_memsize()
+	instead of fiddling with undo->size.
+
+2007-01-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpimage-undo-push.[ch]
 	(gimp_image_undo_push_fs_to_layer): removed "drawable" parameter
 	because it's always the drawable the floating selection is

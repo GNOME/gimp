@@ -27,7 +27,6 @@
 
 #include "paint-funcs/paint-funcs.h"
 
-#include "gimpimage.h"
 #include "gimpchannel.h"
 #include "gimpmaskundo.h"
 
@@ -35,6 +34,9 @@
 static GObject * gimp_mask_undo_constructor (GType                  type,
                                              guint                  n_params,
                                              GObjectConstructParam *params);
+
+static gint64    gimp_mask_undo_get_memsize (GimpObject            *object,
+                                             gint64                *gui_size);
 
 static void      gimp_mask_undo_pop         (GimpUndo              *undo,
                                              GimpUndoMode           undo_mode,
@@ -51,13 +53,16 @@ G_DEFINE_TYPE (GimpMaskUndo, gimp_mask_undo, GIMP_TYPE_ITEM_UNDO)
 static void
 gimp_mask_undo_class_init (GimpMaskUndoClass *klass)
 {
-  GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
+  GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor = gimp_mask_undo_constructor;
+  object_class->constructor      = gimp_mask_undo_constructor;
 
-  undo_class->pop           = gimp_mask_undo_pop;
-  undo_class->free          = gimp_mask_undo_free;
+  gimp_object_class->get_memsize = gimp_mask_undo_get_memsize;
+
+  undo_class->pop                = gimp_mask_undo_pop;
+  undo_class->free               = gimp_mask_undo_free;
 }
 
 static void
@@ -99,12 +104,23 @@ gimp_mask_undo_constructor (GType                  type,
                          0, 0, x2 - x1, y2 - y1, TRUE);
 
       copy_region (&srcPR, &destPR);
-
-      GIMP_UNDO (object)->size +=
-        tile_manager_get_memsize (mask_undo->tiles, FALSE);
     }
 
   return object;
+}
+
+static gint64
+gimp_mask_undo_get_memsize (GimpObject *object,
+                            gint64     *gui_size)
+{
+  GimpMaskUndo *mask_undo = GIMP_MASK_UNDO (object);
+  gint64        memsize   = 0;
+
+  if (mask_undo->tiles)
+    memsize += tile_manager_get_memsize (mask_undo->tiles, FALSE);
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
 }
 
 static void
@@ -121,9 +137,6 @@ gimp_mask_undo_pop (GimpUndo            *undo,
   gint          height = 0;
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
-
-  if (mask_undo->tiles)
-    undo->size -= tile_manager_get_memsize (mask_undo->tiles, FALSE);
 
   if (gimp_channel_bounds (channel, &x1, &y1, &x2, &y2))
     {
@@ -195,9 +208,6 @@ gimp_mask_undo_pop (GimpUndo            *undo,
                         0, 0,
                         GIMP_ITEM (channel)->width,
                         GIMP_ITEM (channel)->height);
-
-  if (mask_undo->tiles)
-    undo->size += tile_manager_get_memsize (mask_undo->tiles, FALSE);
 }
 
 static void
