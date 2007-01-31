@@ -1173,6 +1173,7 @@ gimp_item_parasite_detach (GimpItem    *item,
   const GimpParasite *parasite;
 
   g_return_if_fail (GIMP_IS_ITEM (item));
+  g_return_if_fail (name != NULL);
 
   parasite = gimp_parasite_list_find (item->parasites, name);
 

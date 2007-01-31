@@ -1,5 +1,17 @@
 2007-01-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpitem.c (gimp_item_parasite_detach): require "name"
+	being non-NULL.
+
+	* app/core/gimpimage-undo-push.c (undo_pop_parasite): removed dead
+	code which handled parasites of the Gimp itself, don't include
+	"gimp-parasites.h".
+
+	Require "parasite" and "name" being non-NULL in all public
+	parasite undo functions.
+
+2007-01-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpmaskundo.c
 	* app/core/gimpitempropundo.c: implement GimpObject::get_memsize()
 	instead of fiddling with undo->size.

@@ -28,7 +28,6 @@
 #include "base/tile-manager.h"
 
 #include "gimp.h"
-#include "gimp-parasites.h"
 #include "gimpchannelpropundo.h"
 #include "gimpchannelundo.h"
 #include "gimpdrawablemodundo.h"
@@ -1003,6 +1002,7 @@ gimp_image_undo_push_image_parasite (GimpImage          *image,
   GimpUndo *new;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (parasite != NULL, NULL);
 
   if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
                                    sizeof (ParasiteUndo),
@@ -1035,6 +1035,7 @@ gimp_image_undo_push_image_parasite_remove (GimpImage   *image,
   GimpUndo *new;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
 
   if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
                                    sizeof (ParasiteUndo),
@@ -1070,6 +1071,7 @@ gimp_image_undo_push_item_parasite (GimpImage          *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
   g_return_val_if_fail (gimp_item_is_attached (item), NULL);
+  g_return_val_if_fail (parasite != NULL, NULL);
 
   if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
                                    sizeof (ParasiteUndo),
@@ -1104,6 +1106,7 @@ gimp_image_undo_push_item_parasite_remove (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
   g_return_val_if_fail (gimp_item_is_attached (item), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
 
   if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
                                    sizeof (ParasiteUndo),
@@ -1155,15 +1158,6 @@ undo_pop_parasite (GimpUndo            *undo,
       else
         gimp_parasite_list_remove (pu->item->parasites, pu->name);
     }
-  else
-    {
-      pu->parasite = gimp_parasite_copy (gimp_parasite_find (undo->image->gimp,
-                                                             pu->name));
-      if (tmp)
-        gimp_parasite_attach (undo->image->gimp, tmp);
-      else
-        gimp_parasite_detach (undo->image->gimp, pu->name);
-    }
 
   if (tmp)
     gimp_parasite_free (tmp);
@@ -1179,6 +1173,7 @@ undo_free_parasite (GimpUndo     *undo,
 
   if (pu->parasite)
     gimp_parasite_free (pu->parasite);
+
   if (pu->name)
     g_free (pu->name);
 
