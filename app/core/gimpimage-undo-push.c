@@ -58,6 +58,7 @@
 #include "text/gimptextundo.h"
 
 #include "vectors/gimpvectors.h"
+#include "vectors/gimpvectorsmodundo.h"
 #include "vectors/gimpvectorspropundo.h"
 #include "vectors/gimpvectorsundo.h"
 
@@ -764,105 +765,22 @@ gimp_image_undo_push_vectors_remove (GimpImage   *image,
 /*  Vectors Mod Undo  */
 /**********************/
 
-typedef struct _VectorsModUndo VectorsModUndo;
-
-struct _VectorsModUndo
-{
-  GimpVectors *vectors;
-};
-
-static gboolean undo_pop_vectors_mod  (GimpUndo            *undo,
-                                       GimpUndoMode         undo_mode,
-                                       GimpUndoAccumulator *accum);
-static void     undo_free_vectors_mod (GimpUndo            *undo,
-                                       GimpUndoMode         undo_mode);
-
 GimpUndo *
 gimp_image_undo_push_vectors_mod (GimpImage   *image,
                                   const gchar *undo_desc,
                                   GimpVectors *vectors)
 {
-  GimpVectors *copy;
-  GimpUndo    *new;
-  gint64       size;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_VECTORS (vectors), NULL);
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (vectors)), NULL);
 
-  copy = GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
-                                            G_TYPE_FROM_INSTANCE (vectors),
-                                            FALSE));
-
-  size = (sizeof (VectorsModUndo) +
-          gimp_object_get_memsize (GIMP_OBJECT (copy), NULL));
-
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_UNDO,
-                                   size, sizeof (VectorsModUndo),
-                                   GIMP_UNDO_VECTORS_MOD, undo_desc,
-                                   GIMP_DIRTY_ITEM | GIMP_DIRTY_VECTORS,
-                                   undo_pop_vectors_mod,
-                                   undo_free_vectors_mod,
-                                   "item", vectors,
-                                   NULL)))
-    {
-      VectorsModUndo *vmu = new->data;
-
-      vmu->vectors = copy;
-
-      return new;
-    }
-
-  if (copy)
-    g_object_unref (copy);
-
-  return NULL;
-}
-
-static gboolean
-undo_pop_vectors_mod (GimpUndo            *undo,
-                      GimpUndoMode         undo_mode,
-                      GimpUndoAccumulator *accum)
-{
-  VectorsModUndo *vmu     = undo->data;
-  GimpVectors    *vectors = GIMP_VECTORS (GIMP_ITEM_UNDO (undo)->item);
-  GimpVectors    *temp;
-
-  undo->size -= gimp_object_get_memsize (GIMP_OBJECT (vmu->vectors), NULL);
-
-  temp = vmu->vectors;
-
-  vmu->vectors =
-    GIMP_VECTORS (gimp_item_duplicate (GIMP_ITEM (vectors),
-                                       G_TYPE_FROM_INSTANCE (vectors),
-                                       FALSE));
-
-  gimp_vectors_freeze (vectors);
-
-  gimp_vectors_copy_strokes (temp, vectors);
-
-  GIMP_ITEM (vectors)->width    = GIMP_ITEM (temp)->width;
-  GIMP_ITEM (vectors)->height   = GIMP_ITEM (temp)->height;
-  GIMP_ITEM (vectors)->offset_x = GIMP_ITEM (temp)->offset_x;
-  GIMP_ITEM (vectors)->offset_y = GIMP_ITEM (temp)->offset_y;
-
-  g_object_unref (temp);
-
-  gimp_vectors_thaw (vectors);
-
-  undo->size += gimp_object_get_memsize (GIMP_OBJECT (vmu->vectors), NULL);
-
-  return TRUE;
-}
-
-static void
-undo_free_vectors_mod (GimpUndo     *undo,
-                       GimpUndoMode  undo_mode)
-{
-  VectorsModUndo *vmu = undo->data;
-
-  g_object_unref (vmu->vectors);
-  g_free (vmu);
+  return gimp_image_undo_push (image, GIMP_TYPE_VECTORS_MOD_UNDO,
+                               0, 0,
+                               GIMP_UNDO_VECTORS_MOD, undo_desc,
+                               GIMP_DIRTY_ITEM | GIMP_DIRTY_VECTORS,
+                               NULL, NULL,
+                               "item", vectors,
+                               NULL);
 }
 
 

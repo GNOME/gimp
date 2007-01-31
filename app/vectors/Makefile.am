@@ -38,6 +38,8 @@ libappvectors_a_SOURCES = \
 	gimpvectors-preview.h	\
 	gimpvectors-warp.c	\
 	gimpvectors-warp.h	\
+	gimpvectorsmodundo.c	\
+	gimpvectorsmodundo.h	\
 	gimpvectorspropundo.c	\
 	gimpvectorspropundo.h	\
 	gimpvectorsundo.c	\

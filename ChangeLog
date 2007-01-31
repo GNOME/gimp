@@ -1,5 +1,16 @@
 2007-01-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/vectors/Makefile.am
+	* app/vectors/vectors-types.h
+	* app/vectors/gimpvectorsmodundo.[ch]: new undo class for
+	GIMP_UNDO_VECTORS_MOD.
+
+	* app/core/gimpimage-undo-push.c: use it here.
+
+	* app/core/gimpdrawablemodundo.h: fix typo in include guard.
+
+2007-01-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/core-types.h
 	* app/core/gimpdrawablemodundo.[ch]: new undo class for
