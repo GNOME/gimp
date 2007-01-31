@@ -224,8 +224,7 @@ floating_sel_to_layer (GimpLayer *layer)
                         item->width,
                         item->height);
 
-  gimp_image_undo_push_fs_to_layer (image, NULL,
-                                    layer, layer->fs.drawable);
+  gimp_image_undo_push_fs_to_layer (image, NULL, layer);
 
   /*  clear the selection  */
   gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (layer));

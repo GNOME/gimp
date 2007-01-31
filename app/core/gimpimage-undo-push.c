@@ -829,14 +829,12 @@ static void     undo_free_fs_to_layer (GimpUndo            *undo,
 GimpUndo *
 gimp_image_undo_push_fs_to_layer (GimpImage    *image,
                                   const gchar  *undo_desc,
-                                  GimpLayer    *floating_layer,
-                                  GimpDrawable *drawable)
+                                  GimpLayer    *floating_layer)
 {
   GimpUndo *new;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_LAYER (floating_layer), NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
 
   if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
                                    sizeof (FStoLayerUndo),
@@ -850,7 +848,7 @@ gimp_image_undo_push_fs_to_layer (GimpImage    *image,
       FStoLayerUndo *fsu = new->data;
 
       fsu->floating_layer = floating_layer;
-      fsu->drawable       = drawable;
+      fsu->drawable       = floating_layer->fs.drawable;
 
       return new;
     }

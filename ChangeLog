@@ -1,5 +1,15 @@
 2007-01-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimage-undo-push.[ch]
+	(gimp_image_undo_push_fs_to_layer): removed "drawable" parameter
+	because it's always the drawable the floating selection is
+	attached to.
+
+	* app/core/gimplayer-floating-sel.c (floating_sel_to_layer):
+	changed accordingly.
+
+2007-01-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/Makefile.am
 	* app/core/core-types.h
 	* app/core/gimpfloatingselundo.[ch]: new undo class for
