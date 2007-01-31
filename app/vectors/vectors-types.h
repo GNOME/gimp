@@ -29,6 +29,7 @@
 typedef struct _GimpAnchor          GimpAnchor;
 
 typedef struct _GimpVectors         GimpVectors;
+typedef struct _GimpVectorsUndo     GimpVectorsUndo;
 typedef struct _GimpVectorsPropUndo GimpVectorsPropUndo;
 typedef struct _GimpStroke          GimpStroke;
 typedef struct _GimpBezierStroke    GimpBezierStroke;

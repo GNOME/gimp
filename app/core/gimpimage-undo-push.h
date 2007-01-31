@@ -45,7 +45,7 @@ GimpUndo * gimp_image_undo_push_sample_point        (GimpImage     *image,
                                                      GimpSamplePoint *sample_point);
 
 
-/*  drawable undo  */
+/*  drawable undos  */
 
 GimpUndo * gimp_image_undo_push_drawable            (GimpImage     *image,
                                                      const gchar   *undo_desc,
@@ -89,7 +89,6 @@ GimpUndo * gimp_image_undo_push_item_linked         (GimpImage     *image,
 GimpUndo * gimp_image_undo_push_layer_add           (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpLayer     *layer,
-                                                     gint           prev_position,
                                                      GimpLayer     *prev_layer);
 GimpUndo * gimp_image_undo_push_layer_remove        (GimpImage     *image,
                                                      const gchar   *undo_desc,
@@ -144,7 +143,6 @@ GimpUndo * gimp_image_undo_push_layer_mask_show     (GimpImage     *image,
 GimpUndo * gimp_image_undo_push_channel_add         (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpChannel   *channel,
-                                                     gint           prev_position,
                                                      GimpChannel   *prev_channel);
 GimpUndo * gimp_image_undo_push_channel_remove      (GimpImage     *image,
                                                      const gchar   *undo_desc,
@@ -164,7 +162,6 @@ GimpUndo * gimp_image_undo_push_channel_color       (GimpImage     *image,
 GimpUndo * gimp_image_undo_push_vectors_add         (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpVectors   *vectors,
-                                                     gint           prev_position,
                                                      GimpVectors   *prev_vectors);
 GimpUndo * gimp_image_undo_push_vectors_remove      (GimpImage     *image,
                                                      const gchar   *undo_desc,

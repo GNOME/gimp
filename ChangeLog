@@ -1,3 +1,22 @@
+2007-01-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpchannelundo.[ch]
+	* app/core/gimplayerundo.[ch]
+	* app/core/gimplayermaskundo.[ch]: new undo classes implementing
+	channel, layer and layer mask add and remove undos.
+
+	* app/vectors/Makefile.am
+	* app/vectors/vectors-types.h
+	* app/vectors/gimpvectorsundo.[ch]: vectors add and remove undos.
+
+	* app/core/gimpimage-undo-push.[ch]: use the new undo classes.
+	Removed "position" parameter from all "add" functions because
+	it's useless.
+
+	* app/core/gimpimage.c: changed accordingly.
+
 2007-01-31  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/screenshot.c (select_window_x11): if we can't
