@@ -2,6 +2,15 @@
 
 	* app/core/Makefile.am
 	* app/core/core-types.h
+	* app/core/gimplayermaskpropundo.[ch]: new undo class for
+	GIMP_UNDO_LAYER_MASK_APPLY and GIMP_UNDO_LAYER_MASK_SHOW.
+
+	* app/core/gimpimage-undo-push.c: use it here.
+
+2007-01-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/Makefile.am
+	* app/core/core-types.h
 	* app/core/gimpchannelundo.[ch]
 	* app/core/gimplayerundo.[ch]
 	* app/core/gimplayermaskundo.[ch]: new undo classes implementing
