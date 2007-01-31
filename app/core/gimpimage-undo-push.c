@@ -33,6 +33,7 @@
 #include "gimpchannelundo.h"
 #include "gimpdrawablemodundo.h"
 #include "gimpdrawableundo.h"
+#include "gimpfloatingselundo.h"
 #include "gimpgrid.h"
 #include "gimpguide.h"
 #include "gimpguideundo.h"
@@ -937,123 +938,42 @@ undo_free_fs_to_layer (GimpUndo     *undo,
 }
 
 
-/***********************************/
-/*  Floating Selection Rigor Undo  */
-/***********************************/
-
-static gboolean undo_pop_fs_rigor (GimpUndo            *undo,
-                                   GimpUndoMode         undo_mode,
-                                   GimpUndoAccumulator *accum);
+/******************************************/
+/*  Floating Selection Rigor/Relax Undos  */
+/******************************************/
 
 GimpUndo *
 gimp_image_undo_push_fs_rigor (GimpImage    *image,
                                const gchar  *undo_desc,
                                GimpLayer    *floating_layer)
 {
-  GimpUndo *new;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_LAYER (floating_layer), NULL);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_UNDO,
-                                   0, 0,
-                                   GIMP_UNDO_FS_RIGOR, undo_desc,
-                                   GIMP_DIRTY_NONE,
-                                   undo_pop_fs_rigor,
-                                   NULL,
-                                   "item", floating_layer,
-                                   NULL)))
-    {
-      return new;
-    }
-
-  return NULL;
+  return gimp_image_undo_push (image, GIMP_TYPE_FLOATING_SEL_UNDO,
+                               0, 0,
+                               GIMP_UNDO_FS_RIGOR, undo_desc,
+                               GIMP_DIRTY_NONE,
+                               NULL, NULL,
+                               "item", floating_layer,
+                               NULL);
 }
-
-static gboolean
-undo_pop_fs_rigor (GimpUndo            *undo,
-                   GimpUndoMode         undo_mode,
-                   GimpUndoAccumulator *accum)
-{
-  GimpLayer *floating_layer;
-
-  floating_layer = GIMP_LAYER (GIMP_ITEM_UNDO (undo)->item);
-
-  if (! gimp_layer_is_floating_sel (floating_layer))
-    return FALSE;
-
-  switch (undo_mode)
-    {
-    case GIMP_UNDO_MODE_UNDO:
-      floating_sel_relax (floating_layer, FALSE);
-      break;
-
-    case GIMP_UNDO_MODE_REDO:
-      floating_sel_rigor (floating_layer, FALSE);
-      break;
-    }
-
-  return TRUE;
-}
-
-
-/***********************************/
-/*  Floating Selection Relax Undo  */
-/***********************************/
-
-static gboolean undo_pop_fs_relax (GimpUndo            *undo,
-                                   GimpUndoMode         undo_mode,
-                                   GimpUndoAccumulator *accum);
 
 GimpUndo *
 gimp_image_undo_push_fs_relax (GimpImage   *image,
                                const gchar *undo_desc,
                                GimpLayer   *floating_layer)
 {
-  GimpUndo *new;
-
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_LAYER (floating_layer), NULL);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_ITEM_UNDO,
-                                   0, 0,
-                                   GIMP_UNDO_FS_RELAX, undo_desc,
-                                   GIMP_DIRTY_NONE,
-                                   undo_pop_fs_relax,
-                                   NULL,
-                                   "item", floating_layer,
-                                   NULL)))
-    {
-      return new;
-    }
-
-  return NULL;
-}
-
-static gboolean
-undo_pop_fs_relax (GimpUndo            *undo,
-                   GimpUndoMode         undo_mode,
-                   GimpUndoAccumulator *accum)
-{
-  GimpLayer *floating_layer;
-
-  floating_layer = GIMP_LAYER (GIMP_ITEM_UNDO (undo)->item);
-
-  if (! gimp_layer_is_floating_sel (floating_layer))
-    return FALSE;
-
-  switch (undo_mode)
-    {
-    case GIMP_UNDO_MODE_UNDO:
-      floating_sel_rigor (floating_layer, FALSE);
-      break;
-
-    case GIMP_UNDO_MODE_REDO:
-      floating_sel_relax (floating_layer, FALSE);
-      break;
-    }
-
-  return TRUE;
+  return gimp_image_undo_push (image, GIMP_TYPE_FLOATING_SEL_UNDO,
+                               0, 0,
+                               GIMP_UNDO_FS_RELAX, undo_desc,
+                               GIMP_DIRTY_NONE,
+                               NULL, NULL,
+                               "item", floating_layer,
+                               NULL);
 }
 
 

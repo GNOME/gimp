@@ -130,6 +130,8 @@ libappcore_a_sources = \
 	gimpdrawablemodundo.h		\
 	gimpdrawableundo.c		\
 	gimpdrawableundo.h		\
+	gimpfloatingselundo.c		\
+	gimpfloatingselundo.h		\
 	gimpgradient.c			\
 	gimpgradient.h			\
 	gimpgradient-load.c		\

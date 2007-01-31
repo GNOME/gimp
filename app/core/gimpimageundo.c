@@ -20,7 +20,6 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
@@ -52,6 +51,9 @@ static void      gimp_image_undo_get_property (GObject               *object,
                                                GValue                *value,
                                                GParamSpec            *pspec);
 
+static gint64    gimp_image_undo_get_memsize  (GimpObject            *object,
+                                               gint64                *gui_size);
+
 static void      gimp_image_undo_pop          (GimpUndo              *undo,
                                                GimpUndoMode           undo_mode,
                                                GimpUndoAccumulator   *accum);
@@ -67,15 +69,18 @@ G_DEFINE_TYPE (GimpImageUndo, gimp_image_undo, GIMP_TYPE_UNDO)
 static void
 gimp_image_undo_class_init (GimpImageUndoClass *klass)
 {
-  GObjectClass  *object_class = G_OBJECT_CLASS (klass);
-  GimpUndoClass *undo_class   = GIMP_UNDO_CLASS (klass);
+  GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
 
-  object_class->constructor  = gimp_image_undo_constructor;
-  object_class->set_property = gimp_image_undo_set_property;
-  object_class->get_property = gimp_image_undo_get_property;
+  object_class->constructor      = gimp_image_undo_constructor;
+  object_class->set_property     = gimp_image_undo_set_property;
+  object_class->get_property     = gimp_image_undo_get_property;
 
-  undo_class->pop            = gimp_image_undo_pop;
-  undo_class->free           = gimp_image_undo_free;
+  gimp_object_class->get_memsize = gimp_image_undo_get_memsize;
+
+  undo_class->pop                = gimp_image_undo_pop;
+  undo_class->free               = gimp_image_undo_free;
 
   g_object_class_install_property (object_class, PROP_GRID,
                                    g_param_spec_object ("grid", NULL, NULL,
@@ -123,17 +128,12 @@ gimp_image_undo_constructor (GType                  type,
 
     case GIMP_UNDO_IMAGE_GRID:
       g_assert (GIMP_IS_GRID (image_undo->grid));
-
-      GIMP_UNDO (object)->size +=
-        gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid), NULL);
       break;
 
     case GIMP_UNDO_IMAGE_COLORMAP:
       image_undo->num_colors = gimp_image_get_colormap_size (image);
       image_undo->colormap   = g_memdup (gimp_image_get_colormap (image),
                                          image_undo->num_colors * 3);
-
-      GIMP_UNDO (object)->size += image_undo->num_colors * 3;
       break;
 
     default:
@@ -188,6 +188,24 @@ gimp_image_undo_get_property (GObject    *object,
     }
 }
 
+static gint64
+gimp_image_undo_get_memsize (GimpObject *object,
+                             gint64     *gui_size)
+{
+  GimpImageUndo *image_undo = GIMP_IMAGE_UNDO (object);
+  gint64         memsize    = 0;
+
+  if (image_undo->colormap)
+    memsize += image_undo->num_colors * 3;
+
+  if (image_undo->grid)
+    memsize += gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid),
+                                        gui_size);
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
+}
+
 static void
 gimp_image_undo_pop (GimpUndo            *undo,
                      GimpUndoMode         undo_mode,
@@ -230,7 +248,8 @@ gimp_image_undo_pop (GimpUndo            *undo,
                       "height", height,
                       NULL);
 
-        gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (gimp_image_get_mask (undo->image)));
+        gimp_drawable_invalidate_boundary
+          (GIMP_DRAWABLE (gimp_image_get_mask (undo->image)));
 
         if (undo->image->width  != image_undo->width ||
             undo->image->height != image_undo->height)
@@ -273,18 +292,12 @@ gimp_image_undo_pop (GimpUndo            *undo,
       {
         GimpGrid *grid;
 
-        undo->size -= gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid),
-                                               NULL);
-
         grid = gimp_config_duplicate (GIMP_CONFIG (undo->image->grid));
 
         gimp_image_set_grid (undo->image, image_undo->grid, FALSE);
 
         g_object_unref (image_undo->grid);
         image_undo->grid = grid;
-
-        undo->size += gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid),
-                                               NULL);
       }
       break;
 
@@ -292,8 +305,6 @@ gimp_image_undo_pop (GimpUndo            *undo,
       {
         guchar *colormap;
         gint    num_colors;
-
-        undo->size -= image_undo->num_colors * 3;
 
         num_colors = gimp_image_get_colormap_size (undo->image);
         colormap   = g_memdup (gimp_image_get_colormap (undo->image),
@@ -308,8 +319,6 @@ gimp_image_undo_pop (GimpUndo            *undo,
 
         image_undo->num_colors = num_colors;
         image_undo->colormap   = colormap;
-
-        undo->size += image_undo->num_colors * 3;
       }
       break;
 

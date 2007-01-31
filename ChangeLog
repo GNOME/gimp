@@ -1,5 +1,18 @@
 2007-01-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/Makefile.am
+	* app/core/core-types.h
+	* app/core/gimpfloatingselundo.[ch]: new undo class for
+	GIMP_UNDO_FS_RIGOR and GIMP_UNDO_FS_RELAX.
+
+	* app/core/gimpimage-undo-push.c: use it here.
+
+	* app/core/gimpimageundo.c
+	* app/core/gimpdrawableundo.c: implement GimpObject::get_memsize()
+	instead of fiddling with undo->size.
+
+2007-01-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/vectors/Makefile.am
 	* app/vectors/vectors-types.h
 	* app/vectors/gimpvectorsmodundo.[ch]: new undo class for
