@@ -1,5 +1,11 @@
 2007-01-31  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/screenshot.c (select_window_x11): if we can't
+	grab the pointer, use the window under the pointer instead of
+	bailing out with an error message.
+
+2007-01-31  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/screenshot.c (shoot_dialog): fixed tooltip.
 
 2007-01-30  Michael Natterer  <mitch@gimp.org>

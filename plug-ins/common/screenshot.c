@@ -236,8 +236,8 @@ query (void)
                           "of the region to be grabbed.",
 			  "Sven Neumann <sven@gimp.org>, "
                           "Henrik Brix Andersen <brix@gimp.org>",
-			  "1998 - 2003",
-			  "v0.9.7 (2003/11/15)",
+			  "1998 - 2007",
+			  "v0.9.8 (2007/01/31)",
 			  N_("_Screenshot..."),
 			  NULL,
 			  GIMP_PLUGIN,
@@ -291,10 +291,8 @@ run (const gchar      *name,
       if (nparams == 3)
 	{
           gboolean do_root = param[1].data.d_int32;
-          if (do_root)
-            shootvals.shoot_type = SHOOT_ROOT;
-          else
-            shootvals.shoot_type = SHOOT_WINDOW;
+
+          shootvals.shoot_type   = do_root ? SHOOT_ROOT : SHOOT_WINDOW;
 	  shootvals.window_id    = param[2].data.d_int32;
           shootvals.select_delay = 0;
 	}
@@ -398,10 +396,14 @@ select_window_x11 (GdkScreen *screen)
 
   if (status != GrabSuccess)
     {
-      g_message (_("Error grabbing the pointer"));
+      gint  x, y;
+      guint xmask;
 
-      XFreeCursor (x_dpy, x_cursor);
-      return 0;
+      /* if we can't grab the pointer, return the window under the pointer */
+      XQueryPointer (x_dpy, x_root, &x_root, &x_win, &x, &y, &x, &y, &xmask);
+
+      if (x_win == None || x_win == x_root)
+        g_message (_("Error selecting the window"));
     }
 
   if (shootvals.shoot_type == SHOOT_REGION)
@@ -574,9 +576,11 @@ select_window_x11 (GdkScreen *screen)
       g_free (keys);
     }
 
-  XUngrabPointer (x_dpy, CurrentTime);
+  if (status == GrabSuccess)
+    XUngrabPointer (x_dpy, CurrentTime);
 
   XFreeCursor (x_dpy, x_cursor);
+
   if (x_gc != None)
     XFreeGC (x_dpy, x_gc);
 
