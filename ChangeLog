@@ -1,3 +1,10 @@
+2007-02-01  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpdisplayconfig.c
+	* app/widgets/gimpwidgets-utils.c (gimp_get_screen_resolution):
+	changed the default monitor resolution to 96 dpi and also use that
+	as a fallback value.
+
 2007-01-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpitem.c (gimp_item_parasite_detach): require "name"

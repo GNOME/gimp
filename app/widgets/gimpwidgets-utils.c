@@ -732,10 +732,10 @@ gimp_get_screen_resolution (GdkScreen *screen,
       y < GIMP_MIN_RESOLUTION || y > GIMP_MAX_RESOLUTION)
     {
       g_warning ("GDK returned bogus values for the screen resolution, "
-                 "using 75 dpi instead.");
+                 "using 96 dpi instead.");
 
-      x = 75.0;
-      y = 75.0;
+      x = 96.0;
+      y = 96.0;
     }
 
   /*  round the value to full integers to give more pleasant results  */

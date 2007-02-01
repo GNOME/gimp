@@ -37,8 +37,8 @@
 #include "gimp-intl.h"
 
 
-#define DEFAULT_ACTIVATE_ON_FOCUS TRUE
-
+#define DEFAULT_ACTIVATE_ON_FOCUS   TRUE
+#define DEFAULT_MONITOR_RESOLUTION  96.0
 
 enum
 {
@@ -181,12 +181,12 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_MONITOR_XRESOLUTION,
                                        "monitor-xresolution",
                                        MONITOR_XRESOLUTION_BLURB,
-                                       72.0,
+                                       DEFAULT_MONITOR_RESOLUTION,
                                        GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_MONITOR_YRESOLUTION,
                                        "monitor-yresolution",
                                        MONITOR_YRESOLUTION_BLURB,
-                                       72.0,
+                                       DEFAULT_MONITOR_RESOLUTION,
                                        GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_MONITOR_RES_FROM_GDK,
                                     "monitor-resolution-from-windowing-system",
