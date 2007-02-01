@@ -72,6 +72,7 @@ gimp_progress_bar_init (GimpProgressBar *bar)
   GimpProgressVtable vtable = { 0, };
 
   gtk_progress_bar_set_text (GTK_PROGRESS_BAR (bar), " ");
+  gtk_progress_bar_set_ellipsize (GTK_PROGRESS_BAR (bar), PANGO_ELLIPSIZE_END);
 
   vtable.start      = gimp_progress_bar_start;
   vtable.end        = gimp_progress_bar_end;

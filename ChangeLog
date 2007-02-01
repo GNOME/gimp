@@ -1,5 +1,14 @@
 2007-02-01  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpprogressbox.c: ellipsize progress label.
+
+	* app/widgets/gimpprogressdialog.c: set a fixed width for progress
+	dialogs.
+
+	* libgimp/gimpprogressbar.c: ellipsize progress label.
+
+2007-02-01  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpdisplayconfig.c
 	* app/widgets/gimpwidgets-utils.c (gimp_get_screen_resolution):
 	changed the default monitor resolution to 96 dpi and also use that

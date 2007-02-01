@@ -35,6 +35,9 @@
 #include "gimp-intl.h"
 
 
+#define PROGRESS_DIALOG_WIDTH  400
+
+
 static void    gimp_progress_dialog_progress_iface_init (GimpProgressInterface *iface);
 
 static void     gimp_progress_dialog_response           (GtkDialog    *dialog,
@@ -85,6 +88,8 @@ gimp_progress_dialog_init (GimpProgressDialog *dialog)
   gtk_dialog_add_button (GTK_DIALOG (dialog),
                          GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL);
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_CANCEL);
+
+  gtk_widget_set_size_request (GTK_WIDGET (dialog), PROGRESS_DIALOG_WIDTH, -1);
 }
 
 static void
