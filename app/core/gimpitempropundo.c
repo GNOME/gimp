@@ -22,24 +22,42 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "core-types.h"
 
 #include "gimpitem.h"
 #include "gimpitempropundo.h"
+#include "gimpparasitelist.h"
 
 
-static GObject * gimp_item_prop_undo_constructor (GType                  type,
-                                                  guint                  n_params,
-                                                  GObjectConstructParam *params);
+enum
+{
+  PROP_0,
+  PROP_PARASITE_NAME
+};
 
-static gint64    gimp_item_prop_undo_get_memsize (GimpObject            *object,
-                                                  gint64                *gui_size);
 
-static void      gimp_item_prop_undo_pop         (GimpUndo              *undo,
-                                                  GimpUndoMode           undo_mode,
-                                                  GimpUndoAccumulator   *accum);
-static void      gimp_item_prop_undo_free        (GimpUndo              *undo,
-                                                  GimpUndoMode           undo_mode);
+static GObject * gimp_item_prop_undo_constructor  (GType                  type,
+                                                   guint                  n_params,
+                                                   GObjectConstructParam *params);
+static void      gimp_item_prop_undo_set_property (GObject               *object,
+                                                   guint                  property_id,
+                                                   const GValue          *value,
+                                                   GParamSpec            *pspec);
+static void      gimp_item_prop_undo_get_property (GObject               *object,
+                                                   guint                  property_id,
+                                                   GValue                *value,
+                                                   GParamSpec            *pspec);
+
+static gint64    gimp_item_prop_undo_get_memsize  (GimpObject            *object,
+                                                   gint64                *gui_size);
+
+static void      gimp_item_prop_undo_pop          (GimpUndo              *undo,
+                                                   GimpUndoMode           undo_mode,
+                                                   GimpUndoAccumulator   *accum);
+static void      gimp_item_prop_undo_free         (GimpUndo              *undo,
+                                                   GimpUndoMode           undo_mode);
 
 
 G_DEFINE_TYPE (GimpItemPropUndo, gimp_item_prop_undo, GIMP_TYPE_ITEM_UNDO)
@@ -55,11 +73,20 @@ gimp_item_prop_undo_class_init (GimpItemPropUndoClass *klass)
   GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
 
   object_class->constructor      = gimp_item_prop_undo_constructor;
+  object_class->set_property     = gimp_item_prop_undo_set_property;
+  object_class->get_property     = gimp_item_prop_undo_get_property;
 
   gimp_object_class->get_memsize = gimp_item_prop_undo_get_memsize;
 
   undo_class->pop                = gimp_item_prop_undo_pop;
   undo_class->free               = gimp_item_prop_undo_free;
+
+  g_object_class_install_property (object_class, PROP_PARASITE_NAME,
+                                   g_param_spec_string ("parasite-name",
+                                                        NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -102,11 +129,59 @@ gimp_item_prop_undo_constructor (GType                  type,
       item_prop_undo->linked  = gimp_item_get_linked (item);
       break;
 
+    case GIMP_UNDO_PARASITE_ATTACH:
+    case GIMP_UNDO_PARASITE_REMOVE:
+      g_assert (item_prop_undo->parasite_name != NULL);
+
+      item_prop_undo->parasite = gimp_parasite_copy
+        (gimp_item_parasite_find (item, item_prop_undo->parasite_name));
+      break;
+
     default:
       g_assert_not_reached ();
     }
 
   return object;
+}
+
+static void
+gimp_item_prop_undo_set_property (GObject      *object,
+                                  guint         property_id,
+                                  const GValue *value,
+                                  GParamSpec   *pspec)
+{
+  GimpItemPropUndo *item_prop_undo = GIMP_ITEM_PROP_UNDO (object);
+
+  switch (property_id)
+    {
+    case PROP_PARASITE_NAME:
+      item_prop_undo->parasite_name = g_value_dup_string (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_item_prop_undo_get_property (GObject    *object,
+                                  guint       property_id,
+                                  GValue     *value,
+                                  GParamSpec *pspec)
+{
+  GimpItemPropUndo *item_prop_undo = GIMP_ITEM_PROP_UNDO (object);
+
+  switch (property_id)
+    {
+    case PROP_PARASITE_NAME:
+      g_value_set_string (value, item_prop_undo->parasite_name);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static gint64
@@ -118,6 +193,14 @@ gimp_item_prop_undo_get_memsize (GimpObject *object,
 
   if (item_prop_undo->name)
     memsize += strlen (item_prop_undo->name) + 1;
+
+  if (item_prop_undo->parasite_name)
+    memsize += strlen (item_prop_undo->parasite_name) + 1;
+
+  if (item_prop_undo->parasite)
+    memsize += (sizeof (GimpParasite) +
+                strlen (item_prop_undo->parasite->name) + 1 +
+                item_prop_undo->parasite->size);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -182,6 +265,27 @@ gimp_item_prop_undo_pop (GimpUndo            *undo,
       }
       break;
 
+    case GIMP_UNDO_PARASITE_ATTACH:
+    case GIMP_UNDO_PARASITE_REMOVE:
+      {
+        GimpParasite *parasite;
+
+        parasite = item_prop_undo->parasite;
+
+        item_prop_undo->parasite = gimp_parasite_copy
+          (gimp_item_parasite_find (item, item_prop_undo->parasite_name));
+
+        if (parasite)
+          gimp_parasite_list_add (item->parasites, parasite);
+        else
+          gimp_parasite_list_remove (item->parasites,
+                                     item_prop_undo->parasite_name);
+
+        if (parasite)
+          gimp_parasite_free (parasite);
+      }
+      break;
+
     default:
       g_assert_not_reached ();
     }
@@ -197,6 +301,18 @@ gimp_item_prop_undo_free (GimpUndo     *undo,
     {
       g_free (item_prop_undo->name);
       item_prop_undo->name = NULL;
+    }
+
+  if (item_prop_undo->parasite_name)
+    {
+      g_free (item_prop_undo->parasite_name);
+      item_prop_undo->parasite_name = NULL;
+    }
+
+  if (item_prop_undo->parasite)
+    {
+      gimp_parasite_free (item_prop_undo->parasite);
+      item_prop_undo->parasite = NULL;
     }
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);

@@ -18,8 +18,11 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
@@ -30,12 +33,14 @@
 #include "gimpimage-colormap.h"
 #include "gimpimage-grid.h"
 #include "gimpimageundo.h"
+#include "gimpparasitelist.h"
 
 
 enum
 {
   PROP_0,
-  PROP_GRID
+  PROP_GRID,
+  PROP_PARASITE_NAME
 };
 
 
@@ -87,6 +92,13 @@ gimp_image_undo_class_init (GimpImageUndoClass *klass)
                                                         GIMP_TYPE_GRID,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_PARASITE_NAME,
+                                   g_param_spec_string ("parasite-name",
+                                                        NULL, NULL,
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -136,6 +148,14 @@ gimp_image_undo_constructor (GType                  type,
                                          image_undo->num_colors * 3);
       break;
 
+    case GIMP_UNDO_PARASITE_ATTACH:
+    case GIMP_UNDO_PARASITE_REMOVE:
+      g_assert (image_undo->parasite_name != NULL);
+
+      image_undo->parasite = gimp_parasite_copy
+        (gimp_image_parasite_find (image, image_undo->parasite_name));
+      break;
+
     default:
       g_assert_not_reached ();
     }
@@ -161,6 +181,9 @@ gimp_image_undo_set_property (GObject      *object,
           image_undo->grid = gimp_config_duplicate (GIMP_CONFIG (grid));
       }
       break;
+    case PROP_PARASITE_NAME:
+      image_undo->parasite_name = g_value_dup_string (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -181,6 +204,9 @@ gimp_image_undo_get_property (GObject    *object,
     case PROP_GRID:
       g_value_set_object (value, image_undo->grid);
        break;
+    case PROP_PARASITE_NAME:
+      g_value_set_string (value, image_undo->parasite_name);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -201,6 +227,14 @@ gimp_image_undo_get_memsize (GimpObject *object,
   if (image_undo->grid)
     memsize += gimp_object_get_memsize (GIMP_OBJECT (image_undo->grid),
                                         gui_size);
+
+  if (image_undo->parasite_name)
+    memsize += strlen (image_undo->parasite_name) + 1;
+
+  if (image_undo->parasite)
+    memsize += (sizeof (GimpParasite) +
+                strlen (image_undo->parasite->name) + 1 +
+                image_undo->parasite->size);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -322,6 +356,27 @@ gimp_image_undo_pop (GimpUndo            *undo,
       }
       break;
 
+    case GIMP_UNDO_PARASITE_ATTACH:
+    case GIMP_UNDO_PARASITE_REMOVE:
+      {
+        GimpParasite *parasite;
+
+        parasite = image_undo->parasite;
+
+        image_undo->parasite = gimp_parasite_copy
+          (gimp_image_parasite_find (undo->image, image_undo->parasite_name));
+
+        if (parasite)
+          gimp_parasite_list_add (undo->image->parasites, parasite);
+        else
+          gimp_parasite_list_remove (undo->image->parasites,
+                                     image_undo->parasite_name);
+
+        if (parasite)
+          gimp_parasite_free (parasite);
+      }
+      break;
+
     default:
       g_assert_not_reached ();
     }
@@ -343,6 +398,18 @@ gimp_image_undo_free (GimpUndo     *undo,
     {
       g_free (image_undo->colormap);
       image_undo->colormap = NULL;
+    }
+
+  if (image_undo->parasite_name)
+    {
+      g_free (image_undo->parasite_name);
+      image_undo->parasite_name = NULL;
+    }
+
+  if (image_undo->parasite)
+    {
+      gimp_parasite_free (image_undo->parasite);
+      image_undo->parasite = NULL;
     }
 
   GIMP_UNDO_CLASS (parent_class)->free (undo, undo_mode);

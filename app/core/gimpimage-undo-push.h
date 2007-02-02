@@ -33,6 +33,12 @@ GimpUndo * gimp_image_undo_push_image_grid          (GimpImage     *image,
                                                      GimpGrid      *grid);
 GimpUndo * gimp_image_undo_push_image_colormap      (GimpImage     *image,
                                                      const gchar   *undo_desc);
+GimpUndo * gimp_image_undo_push_image_parasite      (GimpImage     *image,
+                                                     const gchar   *undo_desc,
+                                                     const GimpParasite *parasite);
+GimpUndo * gimp_image_undo_push_image_parasite_remove (GimpImage   *image,
+                                                     const gchar   *undo_desc,
+                                                     const gchar   *name);
 
 
 /*  guide & sample point undos  */
@@ -82,6 +88,15 @@ GimpUndo * gimp_image_undo_push_item_visibility     (GimpImage     *image,
 GimpUndo * gimp_image_undo_push_item_linked         (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpItem      *item);
+GimpUndo * gimp_image_undo_push_item_parasite       (GimpImage     *image,
+                                                     const gchar   *undo_desc,
+                                                     GimpItem      *item,
+                                                     const GimpParasite *parasite);
+GimpUndo * gimp_image_undo_push_item_parasite_remove(GimpImage     *image,
+                                                     const gchar   *undo_desc,
+                                                     GimpItem      *item,
+                                                     const gchar   *name);
+
 
 
 /*  layer undos  */
@@ -187,25 +202,6 @@ GimpUndo * gimp_image_undo_push_fs_rigor            (GimpImage     *image,
 GimpUndo * gimp_image_undo_push_fs_relax            (GimpImage     *image,
                                                      const gchar   *undo_desc,
                                                      GimpLayer     *floating_layer);
-
-
-/*  parasite undos  */
-
-GimpUndo * gimp_image_undo_push_image_parasite      (GimpImage     *image,
-                                                     const gchar   *undo_desc,
-                                                     const GimpParasite *parasite);
-GimpUndo * gimp_image_undo_push_image_parasite_remove (GimpImage   *image,
-                                                     const gchar   *undo_desc,
-                                                     const gchar   *name);
-
-GimpUndo * gimp_image_undo_push_item_parasite       (GimpImage     *image,
-                                                     const gchar   *undo_desc,
-                                                     GimpItem      *item,
-                                                     const GimpParasite *parasite);
-GimpUndo * gimp_image_undo_push_item_parasite_remove(GimpImage     *image,
-                                                     const gchar   *undo_desc,
-                                                     GimpItem      *item,
-                                                     const gchar   *name);
 
 
 /*  EEK undo  */

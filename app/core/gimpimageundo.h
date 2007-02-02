@@ -46,6 +46,8 @@ struct _GimpImageUndo
   GimpGrid          *grid;
   gint               num_colors;
   guchar            *colormap;
+  gchar             *parasite_name;
+  GimpParasite      *parasite;
 };
 
 struct _GimpImageUndoClass

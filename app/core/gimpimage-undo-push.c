@@ -21,7 +21,6 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
 
@@ -49,7 +48,6 @@
 #include "gimplayerpropundo.h"
 #include "gimplayerundo.h"
 #include "gimpmaskundo.h"
-#include "gimpparasitelist.h"
 #include "gimpsamplepoint.h"
 #include "gimpsamplepointundo.h"
 #include "gimpselection.h"
@@ -139,6 +137,40 @@ gimp_image_undo_push_image_colormap (GimpImage   *image,
                                GIMP_UNDO_IMAGE_COLORMAP, undo_desc,
                                GIMP_DIRTY_IMAGE,
                                NULL, NULL,
+                               NULL);
+}
+
+GimpUndo *
+gimp_image_undo_push_image_parasite (GimpImage          *image,
+                                     const gchar        *undo_desc,
+                                     const GimpParasite *parasite)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (parasite != NULL, NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_IMAGE_UNDO,
+                               0, 0,
+                               GIMP_UNDO_PARASITE_ATTACH, undo_desc,
+                               GIMP_DIRTY_IMAGE_META,
+                               NULL, NULL,
+                               "parasite-name", gimp_parasite_name (parasite),
+                               NULL);
+}
+
+GimpUndo *
+gimp_image_undo_push_image_parasite_remove (GimpImage   *image,
+                                            const gchar *undo_desc,
+                                            const gchar *name)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_IMAGE_UNDO,
+                               0, 0,
+                               GIMP_UNDO_PARASITE_REMOVE, undo_desc,
+                               GIMP_DIRTY_IMAGE_META,
+                               NULL, NULL,
+                               "parasite-name", name,
                                NULL);
 }
 
@@ -351,6 +383,48 @@ gimp_image_undo_push_item_linked (GimpImage   *image,
                                GIMP_DIRTY_ITEM_META,
                                NULL, NULL,
                                "item", item,
+                               NULL);
+}
+
+GimpUndo *
+gimp_image_undo_push_item_parasite (GimpImage          *image,
+                                    const gchar        *undo_desc,
+                                    GimpItem           *item,
+                                    const GimpParasite *parasite)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (item), NULL);
+  g_return_val_if_fail (parasite != NULL, NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_ITEM_PROP_UNDO,
+                               0, 0,
+                               GIMP_UNDO_PARASITE_ATTACH, undo_desc,
+                               GIMP_DIRTY_ITEM_META,
+                               NULL, NULL,
+                               "item",          item,
+                               "parasite-name", gimp_parasite_name (parasite),
+                               NULL);
+}
+
+GimpUndo *
+gimp_image_undo_push_item_parasite_remove (GimpImage   *image,
+                                           const gchar *undo_desc,
+                                           GimpItem    *item,
+                                           const gchar *name)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
+  g_return_val_if_fail (gimp_item_is_attached (item), NULL);
+  g_return_val_if_fail (name != NULL, NULL);
+
+  return gimp_image_undo_push (image, GIMP_TYPE_ITEM_PROP_UNDO,
+                               0, 0,
+                               GIMP_UNDO_PARASITE_REMOVE, undo_desc,
+                               GIMP_DIRTY_ITEM_META,
+                               NULL, NULL,
+                               "item",          item,
+                               "parasite-name", name,
                                NULL);
 }
 
@@ -971,213 +1045,6 @@ gimp_image_undo_push_fs_relax (GimpImage   *image,
                                NULL, NULL,
                                "item", floating_layer,
                                NULL);
-}
-
-
-/*******************/
-/*  Parasite Undo  */
-/*******************/
-
-typedef struct _ParasiteUndo ParasiteUndo;
-
-struct _ParasiteUndo
-{
-  GimpImage    *image;
-  GimpItem     *item;
-  GimpParasite *parasite;
-  gchar        *name;
-};
-
-static gboolean undo_pop_parasite  (GimpUndo            *undo,
-                                    GimpUndoMode         undo_mode,
-                                    GimpUndoAccumulator *accum);
-static void     undo_free_parasite (GimpUndo            *undo,
-                                    GimpUndoMode         undo_mode);
-
-GimpUndo *
-gimp_image_undo_push_image_parasite (GimpImage          *image,
-                                     const gchar        *undo_desc,
-                                     const GimpParasite *parasite)
-{
-  GimpUndo *new;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (parasite != NULL, NULL);
-
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
-                                   sizeof (ParasiteUndo),
-                                   sizeof (ParasiteUndo),
-                                   GIMP_UNDO_PARASITE_ATTACH, undo_desc,
-                                   GIMP_DIRTY_IMAGE_META,
-                                   undo_pop_parasite,
-                                   undo_free_parasite,
-                                   NULL)))
-    {
-      ParasiteUndo *pu = new->data;
-
-      pu->image    = image;
-      pu->item     = NULL;
-      pu->name     = g_strdup (gimp_parasite_name (parasite));
-      pu->parasite = gimp_parasite_copy (gimp_image_parasite_find (image,
-                                                                   pu->name));
-
-      return new;
-    }
-
-  return NULL;
-}
-
-GimpUndo *
-gimp_image_undo_push_image_parasite_remove (GimpImage   *image,
-                                            const gchar *undo_desc,
-                                            const gchar *name)
-{
-  GimpUndo *new;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
-
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
-                                   sizeof (ParasiteUndo),
-                                   sizeof (ParasiteUndo),
-                                   GIMP_UNDO_PARASITE_REMOVE, undo_desc,
-                                   GIMP_DIRTY_IMAGE_META,
-                                   undo_pop_parasite,
-                                   undo_free_parasite,
-                                   NULL)))
-    {
-      ParasiteUndo *pu = new->data;
-
-      pu->image    = image;
-      pu->item     = NULL;
-      pu->name     = g_strdup (name);
-      pu->parasite = gimp_parasite_copy (gimp_image_parasite_find (image,
-                                                                   pu->name));
-
-      return new;
-    }
-
-  return NULL;
-}
-
-GimpUndo *
-gimp_image_undo_push_item_parasite (GimpImage          *image,
-                                    const gchar        *undo_desc,
-                                    GimpItem           *item,
-                                    const GimpParasite *parasite)
-{
-  GimpUndo *new;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (item), NULL);
-  g_return_val_if_fail (parasite != NULL, NULL);
-
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
-                                   sizeof (ParasiteUndo),
-                                   sizeof (ParasiteUndo),
-                                   GIMP_UNDO_PARASITE_ATTACH, undo_desc,
-                                   GIMP_DIRTY_ITEM_META,
-                                   undo_pop_parasite,
-                                   undo_free_parasite,
-                                   NULL)))
-    {
-      ParasiteUndo *pu = new->data;
-
-      pu->image    = NULL;
-      pu->item     = item;
-      pu->name     = g_strdup (gimp_parasite_name (parasite));
-      pu->parasite = gimp_parasite_copy (gimp_item_parasite_find (item,
-                                                                  pu->name));
-      return new;
-    }
-
-  return NULL;
-}
-
-GimpUndo *
-gimp_image_undo_push_item_parasite_remove (GimpImage   *image,
-                                           const gchar *undo_desc,
-                                           GimpItem    *item,
-                                           const gchar *name)
-{
-  GimpUndo *new;
-
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-  g_return_val_if_fail (GIMP_IS_ITEM (item), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (item), NULL);
-  g_return_val_if_fail (name != NULL, NULL);
-
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
-                                   sizeof (ParasiteUndo),
-                                   sizeof (ParasiteUndo),
-                                   GIMP_UNDO_PARASITE_REMOVE, undo_desc,
-                                   GIMP_DIRTY_ITEM_META,
-                                   undo_pop_parasite,
-                                   undo_free_parasite,
-                                   NULL)))
-    {
-      ParasiteUndo *pu = new->data;
-
-      pu->image    = NULL;
-      pu->item     = item;
-      pu->name     = g_strdup (name);
-      pu->parasite = gimp_parasite_copy (gimp_item_parasite_find (item,
-                                                                  pu->name));
-      return new;
-    }
-
-  return NULL;
-}
-
-static gboolean
-undo_pop_parasite (GimpUndo            *undo,
-                   GimpUndoMode         undo_mode,
-                   GimpUndoAccumulator *accum)
-{
-  ParasiteUndo *pu = undo->data;
-  GimpParasite *tmp;
-
-  tmp = pu->parasite;
-
-  if (pu->image)
-    {
-      pu->parasite = gimp_parasite_copy (gimp_image_parasite_find (undo->image,
-                                                                   pu->name));
-      if (tmp)
-        gimp_parasite_list_add (pu->image->parasites, tmp);
-      else
-        gimp_parasite_list_remove (pu->image->parasites, pu->name);
-    }
-  else if (pu->item)
-    {
-      pu->parasite = gimp_parasite_copy (gimp_item_parasite_find (pu->item,
-                                                                  pu->name));
-      if (tmp)
-        gimp_parasite_list_add (pu->item->parasites, tmp);
-      else
-        gimp_parasite_list_remove (pu->item->parasites, pu->name);
-    }
-
-  if (tmp)
-    gimp_parasite_free (tmp);
-
-  return TRUE;
-}
-
-static void
-undo_free_parasite (GimpUndo     *undo,
-                    GimpUndoMode  undo_mode)
-{
-  ParasiteUndo *pu = undo->data;
-
-  if (pu->parasite)
-    gimp_parasite_free (pu->parasite);
-
-  if (pu->name)
-    g_free (pu->name);
-
-  g_free (pu);
 }
 
 

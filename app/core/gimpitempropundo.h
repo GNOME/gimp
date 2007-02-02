@@ -42,6 +42,8 @@ struct _GimpItemPropUndo
   gint          offset_y;
   gboolean      visible;
   gboolean      linked;
+  gchar        *parasite_name;
+  GimpParasite *parasite;
 };
 
 struct _GimpItemPropUndoClass
