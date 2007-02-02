@@ -90,6 +90,9 @@ gradients_save_as_pov_ray_cmd_callback (GtkAction *action,
   gtk_window_set_role (GTK_WINDOW (chooser), "gimp-gradient-save-pov");
   gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
 
+  gtk_dialog_set_default_response (GTK_DIALOG (chooser), GTK_RESPONSE_OK);
+  gtk_file_chooser_set_do_overwrite_confirmation (chooser, TRUE);
+
   g_signal_connect (chooser, "response",
                     G_CALLBACK (gradients_save_as_pov_ray_response),
                     gradient);

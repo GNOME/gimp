@@ -40,6 +40,7 @@ vectors_export_dialog_new (GimpImage *image,
 {
   VectorsExportDialog *dialog;
   GtkWidget           *combo;
+  GtkFileChooser      *chooser;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
@@ -58,6 +59,8 @@ vectors_export_dialog_new (GimpImage *image,
 
                                  NULL);
 
+  chooser = GTK_FILE_CHOOSER (dialog->dialog);
+
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
@@ -68,6 +71,9 @@ vectors_export_dialog_new (GimpImage *image,
 
   gtk_window_set_role (GTK_WINDOW (dialog->dialog), "gimp-vectors-export");
   gtk_window_set_position (GTK_WINDOW (dialog->dialog), GTK_WIN_POS_MOUSE);
+
+  gtk_dialog_set_default_response (GTK_DIALOG (chooser), GTK_RESPONSE_OK);
+  gtk_file_chooser_set_do_overwrite_confirmation (chooser, TRUE);
 
   g_object_weak_ref (G_OBJECT (dialog->dialog),
                      (GWeakNotify) g_free, dialog);
@@ -85,7 +91,7 @@ vectors_export_dialog_new (GimpImage *image,
                                   NULL);
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo),
                                  dialog->active_only);
-  gtk_file_chooser_set_extra_widget (GTK_FILE_CHOOSER (dialog->dialog), combo);
+  gtk_file_chooser_set_extra_widget (chooser, combo);
 
   g_signal_connect (combo, "changed",
                     G_CALLBACK (gimp_int_combo_box_get_active),

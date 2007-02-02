@@ -73,6 +73,9 @@ vectors_import_dialog_new (GimpImage *image,
   gtk_window_set_role (GTK_WINDOW (dialog->dialog), "gimp-vectors-import");
   gtk_window_set_position (GTK_WINDOW (dialog->dialog), GTK_WIN_POS_MOUSE);
 
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog->dialog),
+                                   GTK_RESPONSE_OK);
+
   g_object_weak_ref (G_OBJECT (dialog->dialog),
                      (GWeakNotify) g_free, dialog);
 

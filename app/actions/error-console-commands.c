@@ -118,6 +118,9 @@ error_console_save_cmd_callback (GtkAction *action,
   gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
   gtk_window_set_role (GTK_WINDOW (chooser), "gimp-save-errors");
 
+  gtk_dialog_set_default_response (GTK_DIALOG (chooser), GTK_RESPONSE_OK);
+  gtk_file_chooser_set_do_overwrite_confirmation (chooser, TRUE);
+
   g_signal_connect (chooser, "response",
                     G_CALLBACK (error_console_save_response),
                     console);

@@ -83,6 +83,8 @@ text_editor_load_cmd_callback (GtkAction *action,
   gtk_window_set_position (GTK_WINDOW (chooser), GTK_WIN_POS_MOUSE);
   gtk_window_set_destroy_with_parent (GTK_WINDOW (chooser), TRUE);
 
+  gtk_dialog_set_default_response (GTK_DIALOG (chooser), GTK_RESPONSE_OK);
+
   g_signal_connect (chooser, "response",
                     G_CALLBACK (text_editor_load_response),
                     editor);
