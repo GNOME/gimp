@@ -734,7 +734,7 @@ dialog_save (GtkWidget *widget,
 
   parent = gtk_widget_get_toplevel (widget);
 
-  dialog = gtk_file_chooser_dialog_new (_("Save (middle transform) as QBE File"),
+  dialog = gtk_file_chooser_dialog_new (_("Save as QBE File"),
                                         GTK_WINDOW (parent),
                                         GTK_FILE_CHOOSER_ACTION_SAVE,
 
@@ -747,8 +747,10 @@ dialog_save (GtkWidget *widget,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
-
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+  gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
+                                                  TRUE);
 
   gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), qbist_info.path);
 

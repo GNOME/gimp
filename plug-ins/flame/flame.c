@@ -481,10 +481,14 @@ make_file_dialog (const gchar *title,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
+  gtk_dialog_set_default_response (GTK_DIALOG (file_dialog), GTK_RESPONSE_OK);
+
+  if (! load_save)
+    gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (file_dialog),
+                                                    TRUE);
 
   g_object_add_weak_pointer (G_OBJECT (file_dialog), (gpointer) &file_dialog);
 
-  gtk_dialog_set_default_response (GTK_DIALOG (file_dialog), GTK_RESPONSE_OK);
   gtk_window_set_destroy_with_parent (GTK_WINDOW (file_dialog), TRUE);
 
   g_signal_connect (file_dialog, "delete-event",

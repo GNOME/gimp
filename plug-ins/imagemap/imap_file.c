@@ -110,31 +110,6 @@ really_overwrite_cb (GtkMessageDialog *dialog,
 }
 
 static void
-do_file_exists_dialog (GtkWidget *parent)
-{
-  GtkWidget *dialog;
-  gchar     *message;
-
-  message =
-    g_strdup_printf ("<span weight=\"bold\" size=\"larger\">%s</span>\n\n"
-                     "%s",
-                     _("File already exists"),
-                     _("Do you really want to overwrite?"));
-
-  dialog = gtk_message_dialog_new_with_markup (GTK_WINDOW (parent),
-                                               GTK_DIALOG_DESTROY_WITH_PARENT,
-                                               GTK_MESSAGE_QUESTION,
-                                               GTK_BUTTONS_YES_NO,
-                                               message);
-  g_free (message);
-  g_signal_connect (dialog, "response",
-                    G_CALLBACK (really_overwrite_cb),
-                    parent);
-
-  gtk_widget_show (dialog);
-}
-
-static void
 save_cb (GtkWidget *dialog,
          gint       response_id,
          gpointer   data)
@@ -144,13 +119,6 @@ save_cb (GtkWidget *dialog,
       gchar *filename;
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
-
-      if (g_file_test (filename, G_FILE_TEST_IS_REGULAR))
-        {
-          do_file_exists_dialog (dialog);
-          g_free (filename);
-          return;
-        }
 
       save_as (filename);
       g_free (filename);
@@ -180,8 +148,10 @@ do_file_save_as_dialog (void)
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
-
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+      gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
+                                                      TRUE);
 
       g_signal_connect (dialog, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),

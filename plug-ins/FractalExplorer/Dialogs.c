@@ -1679,13 +1679,14 @@ create_save_file_chooser (GtkWidget *widget,
 
                                      NULL);
 
-      gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
-
       gtk_dialog_set_alternative_button_order (GTK_DIALOG (window),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
+      gtk_dialog_set_default_response (GTK_DIALOG (window), GTK_RESPONSE_OK);
 
+      gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (window),
+                                                      TRUE);
       g_signal_connect (window, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),
                         &window);

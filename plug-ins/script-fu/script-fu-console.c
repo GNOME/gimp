@@ -314,12 +314,15 @@ script_fu_console_save_dialog (ConsoleInterface *console)
                                      GTK_STOCK_SAVE,   GTK_RESPONSE_OK,
                                      NULL);
 
-      gtk_dialog_set_default_response (GTK_DIALOG (console->save_dialog),
-                                       GTK_RESPONSE_OK);
       gtk_dialog_set_alternative_button_order (GTK_DIALOG (console->save_dialog),
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
+      gtk_dialog_set_default_response (GTK_DIALOG (console->save_dialog),
+                                       GTK_RESPONSE_OK);
+
+      gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (console->save_dialog),
+                                                      TRUE);
 
       g_object_add_weak_pointer (G_OBJECT (console->save_dialog),
                                  (gpointer) &console->save_dialog);

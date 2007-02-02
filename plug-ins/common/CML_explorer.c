@@ -379,8 +379,6 @@ static void    CML_save_to_file_callback   (GtkWidget        *widget,
 static void    CML_save_to_file_response   (GtkWidget        *dialog,
                                             gint              response_id,
                                             gpointer          data);
-static gboolean force_overwrite            (const gchar      *filename,
-                                            GtkWidget        *parent);
 
 static void    CML_preview_update_callback (GtkWidget        *widget,
                                             gpointer          data);
@@ -1947,7 +1945,7 @@ CML_save_to_file_callback (GtkWidget *widget,
   if (! dialog)
     {
       dialog =
-        gtk_file_chooser_dialog_new (_("Save Parameters To"),
+        gtk_file_chooser_dialog_new (_("Save CML Explorer Parameters"),
                                      GTK_WINDOW (gtk_widget_get_toplevel (widget)),
                                      GTK_FILE_CHOOSER_ACTION_SAVE,
 
@@ -1960,8 +1958,10 @@ CML_save_to_file_callback (GtkWidget *widget,
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
-
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+      gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
+                                                      TRUE);
 
       g_signal_connect (dialog, "response",
                         G_CALLBACK (CML_save_to_file_response),
@@ -1995,10 +1995,6 @@ CML_save_to_file_response (GtkWidget *dialog,
 
   filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
   if (! filename)
-    return;
-
-  if (g_file_test (filename, G_FILE_TEST_EXISTS) &&
-      ! force_overwrite (filename, dialog))
     return;
 
   file = g_fopen (filename, "w");
@@ -2071,48 +2067,6 @@ CML_save_to_file_response (GtkWidget *dialog,
   gtk_widget_hide (dialog);
 }
 
-static gboolean
-force_overwrite (const gchar *filename,
-                 GtkWidget   *parent)
-{
-  GtkWidget *dialog;
-  GtkWidget *label;
-  GtkWidget *hbox;
-  gchar     *buffer;
-  gboolean   overwrite;
-
-  dialog = gimp_dialog_new (_("CML Explorer: Overwrite File?"), "cml_explorer",
-                            parent, GTK_DIALOG_MODAL,
-                            gimp_standard_help_func, PLUG_IN_PROC,
-
-                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
-
-                            NULL);
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox),
-                      hbox, FALSE, FALSE, 12);
-  gtk_widget_show (hbox);
-
-  buffer = g_strdup_printf (_("File '%s' exists.\n"
-                              "Overwrite it?"), filename);
-  label = gtk_label_new (buffer);
-  g_free (buffer);
-
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 12);
-  gtk_widget_show (label);
-
-  gtk_widget_show (dialog);
-
-  overwrite = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
-
-  gtk_widget_destroy (dialog);
-
-  return overwrite;
-}
-
 /*  parameter file loading functions  */
 
 static void
@@ -2124,7 +2078,7 @@ CML_load_from_file_callback (GtkWidget *widget,
   if (! dialog)
     {
       dialog =
-        gtk_file_chooser_dialog_new ("",
+        gtk_file_chooser_dialog_new (_("Load CML Explorer Parameters"),
                                      GTK_WINDOW (gtk_widget_get_toplevel (widget)),
                                      GTK_FILE_CHOOSER_ACTION_OPEN,
 
@@ -2147,11 +2101,6 @@ CML_load_from_file_callback (GtkWidget *widget,
                         G_CALLBACK (gtk_true),
                         NULL);
     }
-
-  if ((selective_load_source == 0) || (selective_load_destination == 0))
-    gtk_window_set_title (GTK_WINDOW (dialog), _("Load Parameters From"));
-  else
-    gtk_window_set_title (GTK_WINDOW (dialog), _("Selective Load From"));
 
   if (strlen (VALS.last_file_name) > 0)
     gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog),
@@ -2256,9 +2205,10 @@ CML_load_parameter_file (const gchar *filename,
           if (version < PARAM_FILE_FORMAT_VERSION)
             g_message (_("Warning: '%s' is an old format file."),
                        gimp_filename_to_utf8 (filename));
+
           if (PARAM_FILE_FORMAT_VERSION < version)
-            g_message (_("Warning: '%s' is a parameter file for newer "
-                         "CML_explorer than me."),
+            g_message (_("Warning: '%s' is a parameter file for a newer "
+                         "version of CML Explorer."),
                        gimp_filename_to_utf8 (filename));
         }
       for (channel_id = 0; flag && (channel_id < 3); channel_id++)

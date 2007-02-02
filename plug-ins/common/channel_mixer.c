@@ -120,9 +120,6 @@ static void     cm_reset_callback               (GtkWidget        *widget,
 static void     cm_combo_callback               (GtkWidget        *widget,
                                                  CmParamsType     *mix);
 
-static gboolean cm_force_overwrite              (const gchar      *filename,
-                                                 GtkWidget        *parent);
-
 static gdouble  cm_calculate_norm               (CmParamsType     *mix,
                                                  CmChannelType    *ch);
 
@@ -1012,8 +1009,10 @@ cm_save_file_callback (GtkWidget    *widget,
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
-
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+      gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
+                                                      TRUE);
 
       g_signal_connect (dialog, "response",
                         G_CALLBACK (cm_save_file_response_callback),
@@ -1048,13 +1047,6 @@ cm_save_file_response_callback (GtkWidget    *dialog,
   if (! filename)
     return;
 
-  if (g_file_test (filename, G_FILE_TEST_EXISTS) &&
-      ! cm_force_overwrite (filename, dialog))
-    {
-      g_free (filename);
-      return;
-    }
-
   file = g_fopen (filename, "w");
 
   if (! file)
@@ -1071,49 +1063,6 @@ cm_save_file_response_callback (GtkWidget    *dialog,
              gimp_filename_to_utf8 (filename));
 
   gtk_widget_hide (dialog);
-}
-
-static gboolean
-cm_force_overwrite (const gchar *filename,
-                    GtkWidget   *parent)
-{
-  GtkWidget *dlg;
-  GtkWidget *label;
-  GtkWidget *hbox;
-  gchar     *buffer;
-  gboolean   overwrite;
-
-  dlg = gimp_dialog_new (_("Channel Mixer File Operation Warning"),
-                         PLUG_IN_BINARY,
-                         parent, GTK_DIALOG_MODAL,
-                         gimp_standard_help_func, PLUG_IN_PROC,
-
-                         GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-                         GTK_STOCK_OK,     GTK_RESPONSE_OK,
-
-                         NULL);
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  buffer = g_strdup_printf (_("File '%s' exists.\n"
-                              "Overwrite it?"), filename);
-  label = gtk_label_new (buffer);
-  g_free (buffer);
-
-  gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_LEFT);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  gtk_widget_show (dlg);
-
-  overwrite = (gimp_dialog_run (GIMP_DIALOG (dlg)) == GTK_RESPONSE_OK);
-
-  gtk_widget_destroy (dlg);
-
-  return overwrite;
 }
 
 static void

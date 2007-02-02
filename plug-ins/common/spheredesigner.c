@@ -2195,7 +2195,7 @@ fileselect (GtkFileChooserAction  action,
   gchar *titles[]   = { N_("Open File"), N_("Save File") };
   void  *handlers[] = { loadpreset_response,   savepreset_response };
 
-  if (!windows[action])
+  if (! windows[action])
     {
       GtkWidget *dialog = windows[action] =
         gtk_file_chooser_dialog_new (gettext (titles[action]),
@@ -2216,6 +2216,10 @@ fileselect (GtkFileChooserAction  action,
                                                -1);
 
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+      if (action == GTK_FILE_CHOOSER_ACTION_SAVE)
+        gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
+                                                        TRUE);
 
       g_signal_connect (dialog, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),

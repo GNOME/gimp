@@ -696,8 +696,10 @@ gfig_save_action_callback (GtkAction *action,
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
-
       gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+      gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
+                                                      TRUE);
 
       g_object_add_weak_pointer (G_OBJECT (dialog), (gpointer) &dialog);
 

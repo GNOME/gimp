@@ -506,8 +506,6 @@ file_import_dialog (GtkWidget   *parent,
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
-
-      /* FIXME: gimp_help_connect? */
       gtk_dialog_set_default_response (GTK_DIALOG (dlg), GTK_RESPONSE_OK);
 
       g_signal_connect (dlg, "destroy",
@@ -606,9 +604,10 @@ file_export_dialog (GtkWidget   *parent,
                                                GTK_RESPONSE_OK,
                                                GTK_RESPONSE_CANCEL,
                                                -1);
-
-      /* FIXME: gimp_help_connect? */
       gtk_dialog_set_default_response (GTK_DIALOG (dlg), GTK_RESPONSE_OK);
+
+      gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dlg),
+                                                      TRUE);
 
       g_signal_connect (dlg, "destroy",
                         G_CALLBACK (gtk_widget_destroyed),

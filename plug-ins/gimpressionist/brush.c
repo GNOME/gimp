@@ -245,8 +245,10 @@ savebrush (GtkWidget *wg,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
-
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
+
+  gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog),
+                                                  TRUE);
 
   path = g_build_filename ((gchar *)thispath->data, "Brushes", NULL);
 
