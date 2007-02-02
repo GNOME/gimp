@@ -52,7 +52,7 @@
 #include "gui/gui.h"
 #endif
 
-#include "app_procs.h"
+#include "app.h"
 #include "batch.h"
 #include "errors.h"
 #include "units.h"
@@ -138,7 +138,6 @@ app_run (const gchar         *full_prog_name,
   GimpBaseConfig     *config;
   GMainLoop          *loop;
   gboolean            swap_is_ok;
-  gint                i;
 
   /*  Create an instance of the "Gimp" object which is the root of the
    *  core object system

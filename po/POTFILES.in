@@ -4,7 +4,7 @@
 [encoding: UTF-8]
 
 app/about.h
-app/app_procs.c
+app/app.c
 app/batch.c
 app/main.c
 app/sanity.c

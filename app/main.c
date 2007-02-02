@@ -58,7 +58,7 @@
 #include "widgets/gimpdbusservice.h"
 
 #include "about.h"
-#include "app_procs.h"
+#include "app.h"
 #include "errors.h"
 #include "sanity.h"
 #include "units.h"

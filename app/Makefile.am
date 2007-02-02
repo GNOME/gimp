@@ -38,14 +38,14 @@ bin_PROGRAMS = gimp-2.3
 endif
 
 app_sources = \
-	app_procs.c	\
-	app_procs.h	\
-	main.c		\
 	about.h		\
+	app.c		\
+	app.h		\
 	batch.c		\
 	batch.h		\
 	errors.c	\
 	errors.h	\
+	main.c		\
 	sanity.c	\
 	sanity.h	\
 	units.c		\
