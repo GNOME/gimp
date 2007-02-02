@@ -954,13 +954,13 @@ gimp_item_tree_view_toggle_clicked (GtkCellRendererToggle *toggle,
   GimpUndoType           group_type;
   const gchar           *undo_desc;
 
-  gboolean (* getter)  (const GimpItem *item);
-  void     (* setter)  (GimpItem       *item,
-                        gboolean        value,
-                        gboolean        push_undo);
-  gboolean (* pusher)  (GimpImage      *image,
-                        const gchar    *undo_desc,
-                        GimpItem       *item);
+  gboolean   (* getter) (const GimpItem *item);
+  void       (* setter) (GimpItem       *item,
+                         gboolean        value,
+                         gboolean        push_undo);
+  GimpUndo * (* pusher) (GimpImage      *image,
+                         const gchar    *undo_desc,
+                         GimpItem       *item);
 
   switch (undo_type)
     {

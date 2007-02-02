@@ -1,3 +1,8 @@
+2007-02-02  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpitemtreeview.c (gimp_item_tree_view_toggle_clicked):
+	changed function signature according to changes in internal undo API.
+
 2007-02-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimageundo.[ch]
