@@ -817,7 +817,7 @@ find_gradients (GimpDrawable *drawable,
   GimpPixelRgn  dest_rgn;
   gint          bytes;
   gint          i, j;
-  guchar       *gr, * dh, * dv;
+  guchar       *gr, *dh, *dv;
   gint          hmax, vmax;
   gint          row, rows;
   gint          ith_row;
@@ -894,13 +894,15 @@ find_gradients (GimpDrawable *drawable,
         {
           /*  Find the gradient  */
           if (!j || !i || (j == width - 1) || (i == height - 1))
-            *gr = MAG_THRESHOLD;
+            {
+              *gr = MAG_THRESHOLD;
+            }
           else
             {
               hmax = *dh - 128;
               vmax = *dv - 128;
 
-              *gr = (guchar)sqrt (SQR (hmax) + SQR (hmax));
+              *gr = (guchar) sqrt (SQR (hmax) + SQR (vmax));
             }
         }
     }
