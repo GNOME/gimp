@@ -93,23 +93,6 @@ do_file_open_dialog (void)
 }
 
 static void
-really_overwrite_cb (GtkMessageDialog *dialog,
-		     gint              response_id,
-		     gpointer          data)
-{
-  if (response_id == GTK_RESPONSE_YES)
-    {
-      gchar *filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (data));
-
-      save_as (filename);
-      g_free (filename);
-    }
-
-  gtk_widget_destroy (GTK_WIDGET (dialog));
-  gtk_widget_hide (GTK_WIDGET (data));
-}
-
-static void
 save_cb (GtkWidget *dialog,
          gint       response_id,
          gpointer   data)
