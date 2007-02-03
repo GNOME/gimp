@@ -36,6 +36,8 @@ typedef struct _GimpFloatingSelUndoClass GimpFloatingSelUndoClass;
 struct _GimpFloatingSelUndo
 {
   GimpItemUndo  parent_instance;
+
+  GimpDrawable *drawable;
 };
 
 struct _GimpFloatingSelUndoClass

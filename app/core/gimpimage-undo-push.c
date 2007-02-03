@@ -41,7 +41,6 @@
 #include "gimpimageundo.h"
 #include "gimpitempropundo.h"
 #include "gimplayer.h"
-#include "gimplayer-floating-sel.h"
 #include "gimplayermask.h"
 #include "gimplayermaskpropundo.h"
 #include "gimplayermaskundo.h"
@@ -885,127 +884,31 @@ gimp_image_undo_push_vectors_reposition (GimpImage   *image,
 /*  Floating Selection to Layer Undo  */
 /**************************************/
 
-typedef struct _FStoLayerUndo FStoLayerUndo;
-
-struct _FStoLayerUndo
-{
-  GimpLayer    *floating_layer; /*  the floating layer        */
-  GimpDrawable *drawable;       /*  drawable of floating sel  */
-};
-
-static gboolean undo_pop_fs_to_layer  (GimpUndo            *undo,
-                                       GimpUndoMode         undo_mode,
-                                       GimpUndoAccumulator *accum);
-static void     undo_free_fs_to_layer (GimpUndo            *undo,
-                                       GimpUndoMode         undo_mode);
-
 GimpUndo *
 gimp_image_undo_push_fs_to_layer (GimpImage    *image,
                                   const gchar  *undo_desc,
                                   GimpLayer    *floating_layer)
 {
-  GimpUndo *new;
+  GimpUndo *undo;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_LAYER (floating_layer), NULL);
 
-  if ((new = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
-                                   sizeof (FStoLayerUndo),
-                                   sizeof (FStoLayerUndo),
-                                   GIMP_UNDO_FS_TO_LAYER, undo_desc,
-                                   GIMP_DIRTY_IMAGE_STRUCTURE,
-                                   undo_pop_fs_to_layer,
-                                   undo_free_fs_to_layer,
-                                   NULL)))
+  undo = gimp_image_undo_push (image, GIMP_TYPE_FLOATING_SEL_UNDO,
+                               0, 0,
+                               GIMP_UNDO_FS_TO_LAYER, undo_desc,
+                               GIMP_DIRTY_IMAGE_STRUCTURE,
+                               NULL, NULL,
+                               "item", floating_layer,
+                               NULL);
+
+  if (! undo)
     {
-      FStoLayerUndo *fsu = new->data;
-
-      fsu->floating_layer = floating_layer;
-      fsu->drawable       = floating_layer->fs.drawable;
-
-      return new;
+      tile_manager_unref (floating_layer->fs.backing_store);
+      floating_layer->fs.backing_store = NULL;
     }
 
-  tile_manager_unref (floating_layer->fs.backing_store);
-  floating_layer->fs.backing_store = NULL;
-
-  return NULL;
-}
-
-static gboolean
-undo_pop_fs_to_layer (GimpUndo            *undo,
-                      GimpUndoMode         undo_mode,
-                      GimpUndoAccumulator *accum)
-{
-  FStoLayerUndo *fsu = undo->data;
-
-  switch (undo_mode)
-    {
-    case GIMP_UNDO_MODE_UNDO:
-      /*  Update the preview for the floating sel  */
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (fsu->floating_layer));
-
-      fsu->floating_layer->fs.drawable = fsu->drawable;
-      gimp_image_set_active_layer (undo->image, fsu->floating_layer);
-      undo->image->floating_sel = fsu->floating_layer;
-
-      /*  store the contents of the drawable  */
-      floating_sel_store (fsu->floating_layer,
-                          GIMP_ITEM (fsu->floating_layer)->offset_x,
-                          GIMP_ITEM (fsu->floating_layer)->offset_y,
-                          GIMP_ITEM (fsu->floating_layer)->width,
-                          GIMP_ITEM (fsu->floating_layer)->height);
-      fsu->floating_layer->fs.initial = TRUE;
-
-      /*  clear the selection  */
-      gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (fsu->floating_layer));
-      break;
-
-    case GIMP_UNDO_MODE_REDO:
-      /*  restore the contents of the drawable  */
-      floating_sel_restore (fsu->floating_layer,
-                            GIMP_ITEM (fsu->floating_layer)->offset_x,
-                            GIMP_ITEM (fsu->floating_layer)->offset_y,
-                            GIMP_ITEM (fsu->floating_layer)->width,
-                            GIMP_ITEM (fsu->floating_layer)->height);
-
-      /*  Update the preview for the underlying drawable  */
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (fsu->floating_layer));
-
-      /*  clear the selection  */
-      gimp_drawable_invalidate_boundary (GIMP_DRAWABLE (fsu->floating_layer));
-
-      /*  update the pointers  */
-      fsu->floating_layer->fs.drawable = NULL;
-      undo->image->floating_sel       = NULL;
-      break;
-    }
-
-  gimp_object_name_changed (GIMP_OBJECT (fsu->floating_layer));
-
-  gimp_drawable_update (GIMP_DRAWABLE (fsu->floating_layer),
-                        0, 0,
-                        GIMP_ITEM (fsu->floating_layer)->width,
-                        GIMP_ITEM (fsu->floating_layer)->height);
-
-  gimp_image_floating_selection_changed (undo->image);
-
-  return TRUE;
-}
-
-static void
-undo_free_fs_to_layer (GimpUndo     *undo,
-                       GimpUndoMode  undo_mode)
-{
-  FStoLayerUndo *fsu = undo->data;
-
-  if (undo_mode == GIMP_UNDO_MODE_UNDO)
-    {
-      tile_manager_unref (fsu->floating_layer->fs.backing_store);
-      fsu->floating_layer->fs.backing_store = NULL;
-    }
-
-  g_free (fsu);
+  return undo;
 }
 
 
@@ -1052,31 +955,7 @@ gimp_image_undo_push_fs_relax (GimpImage   *image,
 /*  Something for which programmer is too lazy to write an undo function for  */
 /******************************************************************************/
 
-static gboolean undo_pop_cantundo (GimpUndo            *undo,
-                                   GimpUndoMode         undo_mode,
-                                   GimpUndoAccumulator *accum);
-
-GimpUndo *
-gimp_image_undo_push_cantundo (GimpImage   *image,
-                               const gchar *undo_desc)
-{
-  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
-
-  /* This is the sole purpose of this type of undo: the ability to
-   * mark an image as having been mutated, without really providing
-   * any adequate undo facility.
-   */
-
-  return gimp_image_undo_push (image, GIMP_TYPE_UNDO,
-                               0, 0,
-                               GIMP_UNDO_CANT, undo_desc,
-                               GIMP_DIRTY_ALL,
-                               undo_pop_cantundo,
-                               NULL,
-                               NULL);
-}
-
-static gboolean
+static void
 undo_pop_cantundo (GimpUndo            *undo,
                    GimpUndoMode         undo_mode,
                    GimpUndoAccumulator *accum)
@@ -1091,6 +970,32 @@ undo_pop_cantundo (GimpUndo            *undo,
     case GIMP_UNDO_MODE_REDO:
       break;
     }
+}
 
-  return TRUE;
+GimpUndo *
+gimp_image_undo_push_cantundo (GimpImage   *image,
+                               const gchar *undo_desc)
+{
+  GimpUndo *undo;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  /* This is the sole purpose of this type of undo: the ability to
+   * mark an image as having been mutated, without really providing
+   * any adequate undo facility.
+   */
+
+  undo = gimp_image_undo_push (image, GIMP_TYPE_UNDO,
+                               0, 0,
+                               GIMP_UNDO_CANT, undo_desc,
+                               GIMP_DIRTY_ALL,
+                               NULL, NULL,
+                               NULL);
+
+  if (undo)
+    g_signal_connect (undo, "pop",
+                      G_CALLBACK (undo_pop_cantundo),
+                      NULL);
+
+  return undo;
 }
