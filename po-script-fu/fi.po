@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tiny-fu \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-02 17:03+0300\n"
-"PO-Revision-Date: 2006-11-02 17:05+0300\n"
+"POT-Creation-Date: 2007-02-03 17:23+0300\n"
+"PO-Revision-Date: 2007-02-03 17:24+0300\n"
 "Last-Translator: Mikko Paananen <mikko@ipi.fi>\n"
 "Language-Team: fi\n"
 "MIME-Version: 1.0\n"
@@ -36,12 +36,12 @@ msgstr "_Selaa..."
 msgid "Save Script-Fu Console Output"
 msgstr "Tallenna Script-Fu-konsolin tuloste"
 
-#: ../plug-ins/script-fu/script-fu-console.c:354
+#: ../plug-ins/script-fu/script-fu-console.c:357
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "\"%s\" ei voitu avata kirjoitettavaksi: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:383
+#: ../plug-ins/script-fu/script-fu-console.c:386
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu:n proseduuriselain"
 
@@ -76,39 +76,39 @@ msgstr "Script-Fu: %s"
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:329
+#: ../plug-ins/script-fu/script-fu-interface.c:335
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu väriselain"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:441
+#: ../plug-ins/script-fu/script-fu-interface.c:447
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu tiedostojen valinta"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:444
+#: ../plug-ins/script-fu/script-fu-interface.c:450
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu kansiovalinta"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:456
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu merkistövalinta"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:464
+#: ../plug-ins/script-fu/script-fu-interface.c:470
 msgid "Script-Fu Palette Selection"
 msgstr "Script-fu palettiselain"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:473
+#: ../plug-ins/script-fu/script-fu-interface.c:479
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-fu kuviovalitsin"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:482
+#: ../plug-ins/script-fu/script-fu-interface.c:488
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu väriliukuselain"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:491
+#: ../plug-ins/script-fu/script-fu-interface.c:497
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu sivellinselain"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:655
+#: ../plug-ins/script-fu/script-fu-scripts.c:661
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -962,8 +962,8 @@ msgstr "Polta..."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid ""
-"Burn-In: Needs two layers in total!\n"
-"A foreground text layer with transparency and a background layer."
+"Burn-In: Needs two layers in total!\\nA foreground text layer with "
+"transparency and a background layer."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
@@ -1245,12 +1245,8 @@ msgid "Add realistic looking coffee stains to the image"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
-msgid ""
-"Darken only\n"
-"(Better, but only for images with a lot of white)"
-msgstr ""
-"Vain tummennus\n"
-"(Parempi, mutta vain kuville jossa on paljon valkoista)"
+msgid "Darken only\\n(Better, but only for images with a lot of white)"
+msgstr "Vain tummennus\\n(Parempi, mutta vain kuville joissa on paljon valkoista)"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
@@ -1303,7 +1299,7 @@ msgid "Effect size (pixels)"
 msgstr "Efektin koko (pikseliä)"
 
 #: ../plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "This procedure is deprecated! use 'gimp-edit-copy-visible' instead."
+msgid "This procedure is deprecated! use \\'gimp-edit-copy-visible\\' instead."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
@@ -1355,8 +1351,8 @@ msgid "_Distort..."
 msgstr "_Väännä..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-msgid "Add a drop-shadow to the selected region (or alpha)"
-msgstr "Lisää varjo valitulle alueelle (tai alfalle)"
+msgid "Add a drop shadow to the selected region (or alpha)"
+msgstr "Lisää varjo valitulle alueelle tai alfakanavalle"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
@@ -1394,8 +1390,8 @@ msgid "Opacity"
 msgstr "Peitto"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
-msgid "_Drop-Shadow..."
-msgstr "Varjo..."
+msgid "_Drop Shadow..."
+msgstr "_Varjo..."
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:1
 msgid "Columns"
@@ -2059,7 +2055,7 @@ msgid "Cell size (pixels)"
 msgstr "Solun koko (pikseliä)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:4
-msgid "Create a logo in the style newpaper printing"
+msgid "Create a logo in the style of newspaper printing"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6

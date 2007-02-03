@@ -7,50 +7,50 @@ msgid ""
 msgstr ""
 "Project-Id-Version: tiny-fu \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-30 08:35+0300\n"
-"PO-Revision-Date: 2006-10-30 08:44+0300\n"
+"POT-Creation-Date: 2007-02-03 17:28+0300\n"
+"PO-Revision-Date: 2007-02-03 17:29+0300\n"
 "Last-Translator: Mikko Paananen <mikko@ipi.fi>\n"
 "Language-Team: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:333
+#: ../plug-ins/pygimp/gimpfu.py:335
 msgid "Missing exception information"
 msgstr "Poikkeustietoja puuttuu"
 
-#: ../plug-ins/pygimp/gimpfu.py:342
+#: ../plug-ins/pygimp/gimpfu.py:344
 #, python-format
 msgid "An error occured running %s"
 msgstr "Tapahtui virhe suoritettaessa %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:353
+#: ../plug-ins/pygimp/gimpfu.py:355
 msgid "_More Information"
 msgstr "_Lisätietoja"
 
-#: ../plug-ins/pygimp/gimpfu.py:459 ../plug-ins/pygimp/gimpfu.py:471
-#: ../plug-ins/pygimp/gimpfu.py:477
+#: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
+#: ../plug-ins/pygimp/gimpfu.py:479
 msgid "No"
 msgstr "Ei"
 
-#: ../plug-ins/pygimp/gimpfu.py:469 ../plug-ins/pygimp/gimpfu.py:477
+#: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
 msgid "Yes"
 msgstr "Kyllä"
 
-#: ../plug-ins/pygimp/gimpfu.py:515 ../plug-ins/pygimp/gimpui.py:200
+#: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu tiedostovalinta"
 
-#: ../plug-ins/pygimp/gimpfu.py:526
+#: ../plug-ins/pygimp/gimpfu.py:528
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu kansiovalinta"
 
-#: ../plug-ins/pygimp/gimpfu.py:615
+#: ../plug-ins/pygimp/gimpfu.py:618
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Virheellinen syöte skriptille \"%s\""
 
-#: ../plug-ins/pygimp/gimpui.py:153
+#: ../plug-ins/pygimp/gimpui.py:175
 msgid "Python-Fu Color Selection"
 msgstr "Python-Fu värivalinta"
 
@@ -108,13 +108,13 @@ msgstr "Python-proseduuriselain"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
 #, python-format
-msgid "Could not open '%(filename)s' for writing: %(error)s"
-msgstr "Tiedostoa \"%(filename)s\" ei voi avata kirjoitettavaksi: %(error)s"
+msgid "Could not open '%s' for writing: %s"
+msgstr "Tiedostoa \"%s\" ei voi avata kirjoitettavaksi: %s"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
 #, python-format
-msgid "Could not write to '%(filename)s': %(strerror)s"
-msgstr "Tiedostoon \"%(filename)s ei voi kirjoittaa\": %(strerror)s"
+msgid "Could not write to '%s': %s"
+msgstr "Tiedostoon \"%s\" ei voi kirjoittaa: %s"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
 msgid "Save Python-Fu Console Output"
@@ -259,23 +259,23 @@ msgstr "Kuvannimen etuliite"
 msgid "Image format"
 msgstr "Kuvamuoto"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
 msgid "Separate image folder"
 msgstr "Erillinen kuvakansio"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Folder for image export"
 msgstr "Kansio, johon kuvat viedään"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Space between table elements"
 msgstr "Väli taulun alkioiden välillä"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
-msgid "Javascript for onmouseover and clicked)"
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript \"onmouseover\" ja \"clicked\""
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Skip animation for table caps"
 msgstr "Ohita animaatio taulun otsikoille"
 
@@ -306,4 +306,3 @@ msgstr "Varjon X-siirtymä"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "Drop shadow Y displacement"
 msgstr "Varjon Y-siirtymä"
-

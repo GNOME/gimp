@@ -7,14 +7,23 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-02 16:52+0300\n"
-"PO-Revision-Date: 2006-11-02 16:53+0300\n"
+"POT-Creation-Date: 2007-02-03 17:30+0300\n"
+"PO-Revision-Date: 2007-02-03 17:31+0300\n"
 "Last-Translator: Mikko Paananen <mikko at ipi.fi>\n"
 "Language-Team: Finnish <fi@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../libgimp/gimpbrushselectbutton.c:170
+msgid "Brush Selection"
+msgstr "Siveltimen valinta"
+
+#: ../libgimp/gimpbrushselectbutton.c:911
+#: ../libgimp/gimppatternselectbutton.c:712
+msgid "_Browse..."
+msgstr "_Selaa..."
 
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
@@ -189,9 +198,21 @@ msgstr "Kirjasimen valinta"
 msgid "Sans"
 msgstr "Sans"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
+#: ../libgimp/gimpgradientselectbutton.c:148
+msgid "Gradient Selection"
+msgstr "Liukuvärin valinta"
+
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
 msgid "(Empty)"
 msgstr "(tyhjä)"
+
+#: ../libgimp/gimppaletteselectbutton.c:130
+msgid "Palette Selection"
+msgstr "Paletin valinta"
+
+#: ../libgimp/gimppatternselectbutton.c:156
+msgid "Pattern Selection"
+msgstr "Kuvion valinta"
 
 #: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
@@ -592,7 +613,7 @@ msgstr "Jatkuva"
 msgid "Incremental"
 msgstr "Inkrementaalinen"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:258
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:267
 msgid "None"
 msgstr "Ei mitään"
 
@@ -644,19 +665,35 @@ msgstr "Eteenpäin"
 msgid "Backward"
 msgstr "Taaksepäin"
 
-#: ../libgimpbase/gimpbaseenums.c:848
+#: ../libgimpbase/gimpbaseenums.c:775
+msgid "Adjust"
+msgstr "Säädä"
+
+#: ../libgimpbase/gimpbaseenums.c:776
+msgid "Clip"
+msgstr "Rajaa"
+
+#: ../libgimpbase/gimpbaseenums.c:777
+msgid "Crop to result"
+msgstr "Rajaa tulokseen"
+
+#: ../libgimpbase/gimpbaseenums.c:778
+msgid "Crop with aspect"
+msgstr "Rajaa kuvasuhteessa"
+
+#: ../libgimpbase/gimpbaseenums.c:881
 msgid "Internal GIMP procedure"
 msgstr "Sisäinen GIMP-proseduuri"
 
-#: ../libgimpbase/gimpbaseenums.c:849
+#: ../libgimpbase/gimpbaseenums.c:882
 msgid "GIMP Plug-In"
 msgstr "GIMP-liitänninen"
 
-#: ../libgimpbase/gimpbaseenums.c:850
+#: ../libgimpbase/gimpbaseenums.c:883
 msgid "GIMP Extension"
 msgstr "GIMP-laajennos"
 
-#: ../libgimpbase/gimpbaseenums.c:851
+#: ../libgimpbase/gimpbaseenums.c:884
 msgid "Temporary Procedure"
 msgstr "Väliaikainen proseduuri"
 
@@ -713,7 +750,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:250
+#: ../modules/cdisplay_lcms.c:259
 msgid "(invalid UTF-8 string)"
 msgstr "(Kelpaamaton unicode merkkijono)"
 
@@ -726,14 +763,15 @@ msgid "The color profile of your (primary) monitor."
 msgstr "Ensisijaisen näytön väriprofiili."
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
+#, fuzzy
 msgid ""
-"When enabled, the GIMP will try to use the display color profile from the "
+"When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
 "Jos käytössä, GIMP yrittää käyttää näytön väriprofiilia "
-"ikkunointijärjestelmästä. Määriteltyä näyttöprofiilia käytetään tällöin "
-"vain varavaihtoehtona."
+"ikkunointijärjestelmästä. Määriteltyä näyttöprofiilia käytetään tällöin vain "
+"varavaihtoehtona."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
 msgid "The default RGB working space color profile."
@@ -871,26 +909,26 @@ msgstr "Epäkelpo unicode-merkkijono"
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Virhe jäsennettäessä tiedostoa '%s' rivillä %d: %s"
 
-#: ../libgimpmodule/gimpmodule.c:152 ../libgimpmodule/gimpmodule.c:170
-#: ../libgimpmodule/gimpmodule.c:279 ../libgimpmodule/gimpmodule.c:306
-#: ../libgimpmodule/gimpmodule.c:417
+#: ../libgimpmodule/gimpmodule.c:153 ../libgimpmodule/gimpmodule.c:171
+#: ../libgimpmodule/gimpmodule.c:280 ../libgimpmodule/gimpmodule.c:307
+#: ../libgimpmodule/gimpmodule.c:418
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Modulin '%s' latausvirhe: %s"
 
-#: ../libgimpmodule/gimpmodule.c:374
+#: ../libgimpmodule/gimpmodule.c:375
 msgid "Module error"
 msgstr "Modulivirhe"
 
-#: ../libgimpmodule/gimpmodule.c:375
+#: ../libgimpmodule/gimpmodule.c:376
 msgid "Loaded"
 msgstr "Ladattu"
 
-#: ../libgimpmodule/gimpmodule.c:376
+#: ../libgimpmodule/gimpmodule.c:377
 msgid "Load failed"
 msgstr "Lataus epäonnistui"
 
-#: ../libgimpmodule/gimpmodule.c:377
+#: ../libgimpmodule/gimpmodule.c:378
 msgid "Not loaded"
 msgstr "Ei ladattu"
 
@@ -1050,7 +1088,7 @@ msgid "Check Style"
 msgstr "Tarkista tyyli"
 
 #. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:265
+#: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "_Esikatselu"
 
@@ -1138,7 +1176,7 @@ msgstr "_Kierrä"
 msgid "_Shear"
 msgstr "_Väännä"
 
-#: ../libgimpwidgets/gimpunitmenu.c:267
+#: ../libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
 msgstr "Lisää..."
 
@@ -1146,11 +1184,11 @@ msgstr "Lisää..."
 msgid "Unit Selection"
 msgstr "Mittayksikön valinta"
 
-#: ../libgimpwidgets/gimpunitmenu.c:625
+#: ../libgimpwidgets/gimpunitmenu.c:626
 msgid "Unit"
 msgstr "Mittayksikkö"
 
-#: ../libgimpwidgets/gimpunitmenu.c:629
+#: ../libgimpwidgets/gimpunitmenu.c:630
 msgid "Factor"
 msgstr "Kerroin"
 
@@ -1278,34 +1316,35 @@ msgstr "Kontrasti"
 msgid "Contrast c_ycles:"
 msgstr "Kontrasti_kierrokset:"
 
-#: ../modules/cdisplay_lcms.c:107
+#: ../modules/cdisplay_lcms.c:116
 msgid "Color management display filter using ICC color profiles"
 msgstr "Värikorjaussuodatin käyttäen ICC-profiileja"
 
-#: ../modules/cdisplay_lcms.c:175
+#: ../modules/cdisplay_lcms.c:184
 msgid "Color Management"
 msgstr "Värinhallinta"
 
-#: ../modules/cdisplay_lcms.c:281
+#: ../modules/cdisplay_lcms.c:288
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
 "Tämä suodatin ottaa asetuksensa Värienhallinta-osiosta asetusikkunassa."
 
-#: ../modules/cdisplay_lcms.c:295
+#: ../modules/cdisplay_lcms.c:302
 msgid "Mode of operation:"
 msgstr "Toimintatila:"
 
-#: ../modules/cdisplay_lcms.c:306
-msgid "RGB workspace profile:"
+#: ../modules/cdisplay_lcms.c:309
+#, fuzzy
+msgid "RGB working space profile:"
 msgstr "RGB-työtilan profiili:"
 
 #: ../modules/cdisplay_lcms.c:316
 msgid "Monitor profile:"
 msgstr "Näytön profiili:"
 
-#: ../modules/cdisplay_lcms.c:326
+#: ../modules/cdisplay_lcms.c:323
 msgid "Print simulation profile:"
 msgstr "Tulostus-simulaation profiili:"
 
@@ -1487,59 +1526,117 @@ msgid "Button Gear Up"
 msgstr "Vaihde ylös-nappi"
 
 #: ../modules/controller_linux_input.c:87
-msgid "Wheel Turn Left"
-msgstr "Ohjauspyörä vasemmalle"
+msgid "X Move Left"
+msgstr ""
 
 #: ../modules/controller_linux_input.c:88
-msgid "Wheel Turn Right"
-msgstr "Ohjauspyörä oikealle"
+msgid "X Move Right"
+msgstr ""
 
 #: ../modules/controller_linux_input.c:89
+msgid "Y Move Away"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:90
+msgid "Y Move Near"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:91
+msgid "Z Move Up"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:92
+msgid "Z Move Down"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:94
+msgid "X Axis Tilt Away"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:95
+msgid "X Axis Tilt Near"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:96
+msgid "Y Axis Tilt Right"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:97
+msgid "Y Axis Tilt Left"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:98
+#, fuzzy
+msgid "Z Axis Turn Left"
+msgstr "Valitsin vasemmalle"
+
+#: ../modules/controller_linux_input.c:99
+#, fuzzy
+msgid "Z Axis Turn Right"
+msgstr "Valitsin oikealle"
+
+#: ../modules/controller_linux_input.c:101
+msgid "Horiz. Wheel Turn Back"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:102
+msgid "Horiz. Wheel Turn Forward"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:103
 msgid "Dial Turn Left"
 msgstr "Valitsin vasemmalle"
 
-#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_linux_input.c:104
 msgid "Dial Turn Right"
 msgstr "Valitsin oikealle"
 
-#: ../modules/controller_linux_input.c:154
+#: ../modules/controller_linux_input.c:105
+msgid "Wheel Turn Left"
+msgstr "Ohjauspyörä vasemmalle"
+
+#: ../modules/controller_linux_input.c:106
+msgid "Wheel Turn Right"
+msgstr "Ohjauspyörä oikealle"
+
+#: ../modules/controller_linux_input.c:170
 msgid "Linux input event controller"
 msgstr "Linuxin syötetapahtumien ohjain"
 
-#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:246
+#: ../modules/controller_linux_input.c:238 ../modules/controller_midi.c:246
 msgid "Device:"
 msgstr "Laite:"
 
-#: ../modules/controller_linux_input.c:223
+#: ../modules/controller_linux_input.c:239
 msgid "The name of the device to read Linux Input events from."
 msgstr "Laite, josta Linuxin syötetapahtumia luetaan."
 
-#: ../modules/controller_linux_input.c:227
+#: ../modules/controller_linux_input.c:243
 msgid "Linux Input"
 msgstr "Linuxin syöte"
 
-#: ../modules/controller_linux_input.c:352
+#: ../modules/controller_linux_input.c:368
 msgid "Linux Input Events"
 msgstr "Linuxin syötetapahtumat"
 
-#: ../modules/controller_linux_input.c:373 ../modules/controller_midi.c:483
+#: ../modules/controller_linux_input.c:389 ../modules/controller_midi.c:483
 #: ../modules/controller_midi.c:509
 #, c-format
 msgid "Reading from %s"
 msgstr "Luetaan laitteelta %s"
 
-#: ../modules/controller_linux_input.c:389
-#: ../modules/controller_linux_input.c:432 ../modules/controller_midi.c:465
+#: ../modules/controller_linux_input.c:405
+#: ../modules/controller_linux_input.c:448 ../modules/controller_midi.c:465
 #: ../modules/controller_midi.c:526 ../modules/controller_midi.c:597
 #, c-format
 msgid "Device not available: %s"
 msgstr "Laite ei ole käytettävissä: %s"
 
-#: ../modules/controller_linux_input.c:397 ../modules/controller_midi.c:534
+#: ../modules/controller_linux_input.c:413 ../modules/controller_midi.c:534
 msgid "No device configured"
 msgstr "Laitetta ei ole määritelty"
 
-#: ../modules/controller_linux_input.c:441 ../modules/controller_midi.c:606
+#: ../modules/controller_linux_input.c:457 ../modules/controller_midi.c:606
 msgid "End of file"
 msgstr "Tiedosto päättyi"
 
@@ -1589,6 +1686,14 @@ msgstr "Ohjain %03d"
 #: ../modules/controller_midi.c:437
 msgid "MIDI Events"
 msgstr "MIDI-tapahtumat"
+
+#: ../modules/controller_midi.c:455
+msgid "GIMP"
+msgstr ""
+
+#: ../modules/controller_midi.c:457
+msgid "GIMP MIDI Input Controller"
+msgstr "MIDI-tapahtumaohjain"
 
 #~ msgid "Ask"
 #~ msgstr "Kysy"
