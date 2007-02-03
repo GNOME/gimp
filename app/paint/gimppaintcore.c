@@ -280,10 +280,8 @@ gimp_paint_core_real_push_undo (GimpPaintCore *core,
                                 const gchar   *undo_desc)
 {
   return gimp_image_undo_push (image, GIMP_TYPE_PAINT_CORE_UNDO,
-                               0, 0,
                                GIMP_UNDO_PAINT, undo_desc,
                                0,
-                               NULL, NULL,
                                "paint-core", core,
                                NULL);
 }

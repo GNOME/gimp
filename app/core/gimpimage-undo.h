@@ -35,13 +35,9 @@ gboolean   gimp_image_undo_group_end    (GimpImage        *image);
 
 GimpUndo * gimp_image_undo_push         (GimpImage        *image,
                                          GType             object_type,
-                                         gint64            size,
-                                         gsize             struct_size,
                                          GimpUndoType      undo_type,
                                          const gchar      *name,
                                          GimpDirtyMask     dirty_mask,
-                                         GimpUndoPopFunc   pop_func,
-                                         GimpUndoFreeFunc  free_func,
                                          ...) G_GNUC_NULL_TERMINATED;
 
 GimpUndo * gimp_image_undo_can_compress (GimpImage        *image,

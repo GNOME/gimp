@@ -1,5 +1,24 @@
 2007-02-03  Michael Natterer  <mitch@gimp.org>
 
+	Remove support for the old undo pop and free cruft:
+
+	* app/core/core-types.h: remove typedefs GimpUndoPopFunc and
+	GimpUndoFreeFunc.
+
+	* app/core/gimpundo.[ch]: remove members and properties size,
+	data, pop_func and free_func.
+
+	* app/core/gimpimage-undo.[ch] (gimp_image_undo_push): remove
+	parameters size, struct_size, pop_func and free_func.
+
+	* app/core/gimpimage-undo-push.c
+	* app/tools/gimptransformtool.c
+	* app/paint/gimpink.c
+	* app/paint/gimppaintcore.c: change calls to above function
+	accordingly.
+
+2007-02-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpfloatingselundo.[ch]: implement GIMP_UNDO_FS_TO_LAYER.
 
 	* app/core/gimpimage-undo-push.c: use it. Also changed

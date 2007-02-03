@@ -236,10 +236,8 @@ gimp_ink_push_undo (GimpPaintCore *core,
                     const gchar   *undo_desc)
 {
   return gimp_image_undo_push (image, GIMP_TYPE_INK_UNDO,
-                               0, 0,
                                GIMP_UNDO_INK, undo_desc,
                                0,
-                               NULL, NULL,
                                "paint-core", core,
                                NULL);
 }

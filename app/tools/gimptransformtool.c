@@ -1281,10 +1281,8 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
   tool->drawable = gimp_image_active_drawable (display->image);
 
   gimp_image_undo_push (display->image, GIMP_TYPE_TRANSFORM_TOOL_UNDO,
-                        0, 0,
                         GIMP_UNDO_TRANSFORM, NULL,
                         0,
-                        NULL, NULL,
                         "transform-tool", tr_tool,
                         NULL);
 

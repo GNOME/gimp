@@ -248,20 +248,15 @@ gimp_image_undo_group_end (GimpImage *image)
 GimpUndo *
 gimp_image_undo_push (GimpImage        *image,
                       GType             object_type,
-                      gint64            size,
-                      gsize             struct_size,
                       GimpUndoType      undo_type,
                       const gchar      *name,
                       GimpDirtyMask     dirty_mask,
-                      GimpUndoPopFunc   pop_func,
-                      GimpUndoFreeFunc  free_func,
                       ...)
 {
   GParameter *params   = NULL;
   gint        n_params = 0;
   va_list     args;
   GimpUndo   *undo;
-  gpointer    undo_struct = NULL;
 
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (g_type_is_a (object_type, GIMP_TYPE_UNDO), NULL);
@@ -279,21 +274,14 @@ gimp_image_undo_push (GimpImage        *image,
   if (! name)
     name = gimp_undo_type_to_name (undo_type);
 
-  if (struct_size > 0)
-    undo_struct = g_malloc0 (struct_size);
-
   params = gimp_parameters_append (object_type, params, &n_params,
                                    "name",       name,
                                    "image",      image,
                                    "undo-type",  undo_type,
                                    "dirty-mask", dirty_mask,
-                                   "data",       undo_struct,
-                                   "size",       size,
-                                   "pop-func",   pop_func,
-                                   "free-func",  free_func,
                                    NULL);
 
-  va_start (args, free_func);
+  va_start (args, dirty_mask);
   params = gimp_parameters_append_valist (object_type, params, &n_params, args);
   va_end (args);
 

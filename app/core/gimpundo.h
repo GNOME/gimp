@@ -52,12 +52,7 @@ struct _GimpUndo
   guint             time;           /* time of undo step construction     */
 
   GimpUndoType      undo_type;      /* undo type                          */
-  gpointer          data;           /* data to implement the undo         */
-  gint64            size;           /* size of undo item                  */
   GimpDirtyMask     dirty_mask;     /* affected parts of the image        */
-
-  GimpUndoPopFunc   pop_func;       /* function pointer to undo pop proc  */
-  GimpUndoFreeFunc  free_func;      /* function pointer to free undo data */
 
   TempBuf          *preview;
   guint             preview_idle_id;
