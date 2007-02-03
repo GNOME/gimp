@@ -74,8 +74,8 @@ libapptools_a_sources = \
 	gimpforegroundselectoptions.h	\
 	gimpforegroundselecttool.c	\
 	gimpforegroundselecttool.h	\
-	gimpforegroundselecttool-undo.c	\
-	gimpforegroundselecttool-undo.h	\
+	gimpforegroundselecttoolundo.c	\
+	gimpforegroundselecttoolundo.h	\
 	gimpfuzzyselecttool.c		\
 	gimpfuzzyselecttool.h		\
 	gimphealtool.c			\
@@ -162,8 +162,8 @@ libapptools_a_sources = \
 	gimptransformoptions.h     	\
 	gimptransformtool.c		\
 	gimptransformtool.h		\
-	gimptransformtool-undo.c	\
-	gimptransformtool-undo.h	\
+	gimptransformtoolundo.c		\
+	gimptransformtoolundo.h		\
 	gimpvectoroptions.c		\
 	gimpvectoroptions.h		\
 	gimpvectortool.c		\

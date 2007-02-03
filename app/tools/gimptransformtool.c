@@ -61,7 +61,7 @@
 #include "gimptoolcontrol.h"
 #include "gimptransformoptions.h"
 #include "gimptransformtool.h"
-#include "gimptransformtool-undo.h"
+#include "gimptransformtoolundo.h"
 
 #include "gimp-intl.h"
 
@@ -1280,11 +1280,13 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
    */
   tool->drawable = gimp_image_active_drawable (display->image);
 
-  gimp_transform_tool_push_undo (display->image, NULL,
-                                 tool->ID,
-                                 G_TYPE_FROM_INSTANCE (tool),
-                                 tr_tool->old_trans_info,
-                                 NULL);
+  gimp_image_undo_push (display->image, GIMP_TYPE_TRANSFORM_TOOL_UNDO,
+                        0, 0,
+                        GIMP_UNDO_TRANSFORM, NULL,
+                        0,
+                        NULL, NULL,
+                        "transform-tool", tr_tool,
+                        NULL);
 
   /*  push the undo group end  */
   gimp_image_undo_group_end (display->image);

@@ -1,5 +1,18 @@
 2007-02-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpforegroundselecttool-undo.[ch]
+	* app/tools/gimptransformtool-undo.[ch]: removed...
+
+	* app/tools/Makefile.am
+	* app/tools/tools-types.h
+	* app/tools/gimpforegroundselecttoolundo.[ch]
+	* app/tools/gimptransformtoolundo.[ch]: ...and added a proper undo
+	classes.
+
+	* app/tools/gimptransformtool.c: push undos using the new class.
+
+2007-02-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppaintcore-undo.[ch]
 	* app/paint/gimpink-undo.[ch]: removed...
 
