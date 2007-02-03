@@ -33,11 +33,12 @@
 
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
+#include "core/gimpimage-undo.h"
 
 #include "gimpinkoptions.h"
 #include "gimpink.h"
 #include "gimpink-blob.h"
-#include "gimpink-undo.h"
+#include "gimpinkundo.h"
 
 #include "gimp-intl.h"
 
@@ -57,6 +58,9 @@ static void      gimp_ink_paint          (GimpPaintCore    *paint_core,
 static TempBuf * gimp_ink_get_paint_area (GimpPaintCore    *paint_core,
                                           GimpDrawable     *drawable,
                                           GimpPaintOptions *paint_options);
+static GimpUndo* gimp_ink_push_undo      (GimpPaintCore    *core,
+                                          GimpImage        *image,
+                                          const gchar      *undo_desc);
 
 static void      gimp_ink_motion         (GimpPaintCore    *paint_core,
                                           GimpDrawable     *drawable,
@@ -224,6 +228,20 @@ gimp_ink_get_paint_area (GimpPaintCore    *paint_core,
     return NULL;
 
   return paint_core->canvas_buf;
+}
+
+static GimpUndo *
+gimp_ink_push_undo (GimpPaintCore *core,
+                    GimpImage     *image,
+                    const gchar   *undo_desc)
+{
+  return gimp_image_undo_push (image, GIMP_TYPE_INK_UNDO,
+                               0, 0,
+                               GIMP_UNDO_INK, undo_desc,
+                               0,
+                               NULL, NULL,
+                               "paint-core", core,
+                               NULL);
 }
 
 static void

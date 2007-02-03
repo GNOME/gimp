@@ -38,7 +38,7 @@
 #include "core/gimppickable.h"
 
 #include "gimppaintcore.h"
-#include "gimppaintcore-undo.h"
+#include "gimppaintcoreundo.h"
 #include "gimppaintoptions.h"
 
 #include "gimpairbrush.h"
@@ -92,6 +92,9 @@ static void      gimp_paint_core_real_interpolate    (GimpPaintCore    *core,
 static TempBuf * gimp_paint_core_real_get_paint_area (GimpPaintCore    *core,
                                                       GimpDrawable     *drawable,
                                                       GimpPaintOptions *options);
+static GimpUndo* gimp_paint_core_real_push_undo      (GimpPaintCore    *core,
+                                                      GimpImage        *image,
+                                                      const gchar      *undo_desc);
 
 static void      paint_mask_to_canvas_tiles          (GimpPaintCore    *core,
                                                       PixelRegion      *paint_maskPR,
@@ -269,6 +272,20 @@ gimp_paint_core_real_get_paint_area (GimpPaintCore    *core,
                                      GimpPaintOptions *paint_options)
 {
   return NULL;
+}
+
+static GimpUndo *
+gimp_paint_core_real_push_undo (GimpPaintCore *core,
+                                GimpImage     *image,
+                                const gchar   *undo_desc)
+{
+  return gimp_image_undo_push (image, GIMP_TYPE_PAINT_CORE_UNDO,
+                               0, 0,
+                               GIMP_UNDO_PAINT, undo_desc,
+                               0,
+                               NULL, NULL,
+                               "paint-core", core,
+                               NULL);
 }
 
 void
