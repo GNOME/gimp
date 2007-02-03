@@ -159,7 +159,7 @@ static void   write_gint16         (FILE *fd, gint16 val, gchar *why);
 static void   write_gint32         (FILE *fd, gint32 val, gchar *why);
 
 static void   write_pixel_data     (FILE *fd, gint32 drawableID,
-				    gint32 *ChanLenPosition,
+				    glong *ChanLenPosition,
 				    gint32 rowlenOffset);
 
 
@@ -391,7 +391,7 @@ static void
 write_gchar (FILE *fd, guchar val, gchar *why)
 {
   unsigned char b[2];
-  gint32 pos;
+  glong         pos;
 
   b[0] = val;
   b[1] = 0;
@@ -667,9 +667,9 @@ save_resources (FILE *fd, gint32 image_id)
   guint      nActiveLayer = 0;    /* Number of the active layer */
   gboolean   ActiveLayerPresent;  /* TRUE if there's an active layer */
 
-  gint32     eof_pos;             /* Position for End of file */
-  gint32     rsc_pos;             /* Position for Lengths of Resources section */
-  gint32     name_sec;            /* Position for Lengths of Channel Names */
+  glong      eof_pos;             /* Position for End of file */
+  glong      rsc_pos;             /* Position for Lengths of Resources section */
+  glong      name_sec;            /* Position for Lengths of Channel Names */
 
 
   /* Only relevant resources in GIMP are: 0x03EE, 0x03F0 & 0x0400 */
@@ -916,18 +916,18 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
   gchar   *layerName;                   /* Layer name */
   gint     mask;                        /* Layer mask */
 
-  gint32   eof_pos;                     /* Position: End of file */
-  gint32   ExtraDataPos;                /* Position: Extra data length */
-  gint32   LayerMaskPos;                /* Position: Layer & Mask section length */
-  gint32   LayerInfoPos;                /* Position: Layer info section length*/
-  gint32 **ChannelLengthPos;            /* Position: Channel length */
+  glong    eof_pos;                     /* Position: End of file */
+  glong    ExtraDataPos;                /* Position: Extra data length */
+  glong    LayerMaskPos;                /* Position: Layer & Mask section length */
+  glong    LayerInfoPos;                /* Position: Layer info section length*/
+  glong  **ChannelLengthPos;            /* Position: Channel length */
 
 
   IFDBG printf (" Function: save_layer_and_mask\n");
 
   /* Create first array dimension (layers, channels) */
 
-  ChannelLengthPos = g_new (gint32 *, PSDImageData.nLayers);
+  ChannelLengthPos = g_new (glong *, PSDImageData.nLayers);
 
   /* Layer and mask information section */
 
@@ -983,7 +983,7 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
 
       /* Create second array dimension (layers, channels) */
 
-      ChannelLengthPos[i] = g_new (gint32, nChannelsLayer);
+      ChannelLengthPos[i] = g_new (glong, nChannelsLayer);
 
       /* Try with gimp_drawable_bpp() */
 
@@ -1114,7 +1114,7 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
 
 
 static void
-write_pixel_data (FILE *fd, gint32 drawableID, gint32 *ChanLenPosition,
+write_pixel_data (FILE *fd, gint32 drawableID, glong *ChanLenPosition,
 		  gint32 ltable_offset)
 {
   GimpPixelRgn region;      /* Image region */
@@ -1134,7 +1134,7 @@ write_pixel_data (FILE *fd, gint32 drawableID, gint32 *ChanLenPosition,
   gint32   len;                  /* Length of compressed data */
   gint16 *LengthsTable;         /* Lengths of every compressed row */
   guchar *rledata;              /* Compressed data from a region */
-  gint32 length_table_pos;      /* position in file of the length table */
+  glong  length_table_pos;      /* position in file of the length table */
   int i, j;
 
   IFDBG printf (" Function: write_pixel_data, drw %d, lto %d\n",
@@ -1188,7 +1188,7 @@ write_pixel_data (FILE *fd, gint32 drawableID, gint32 *ChanLenPosition,
 	  xfwrite (fd, LengthsTable, height * sizeof(gint16),
 		   "Dummy RLE length");
           len += height * sizeof(gint16);
-          IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %d len %d\n", length_table_pos, len);
+          IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %ld len %d\n", length_table_pos, len);
         }
 
       for (y = 0; y < height; y += tile_height)
@@ -1240,7 +1240,7 @@ write_pixel_data (FILE *fd, gint32 drawableID, gint32 *ChanLenPosition,
     if (ltable_offset > 0)
       {
         length_table_pos = ltable_offset + 2 * (bytes+1) * height;
-        IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %d\n", length_table_pos);
+        IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %ld\n", length_table_pos);
       }
     else
       {
@@ -1249,7 +1249,7 @@ write_pixel_data (FILE *fd, gint32 drawableID, gint32 *ChanLenPosition,
         xfwrite (fd, LengthsTable, height * sizeof(gint16),
                  "Dummy RLE length");
         len += height * sizeof(gint16);
-        IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %d len %d\n", length_table_pos, len);
+        IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %ld len %d\n", length_table_pos, len);
       }
 
     for (y = 0; y < height; y += tile_height)
@@ -1304,7 +1304,7 @@ save_data (FILE *fd, gint32 image_id)
   gint i, j;
   gint nChannel;
   gint32 imageHeight;                   /* Height of image */
-  gint32 offset;                         /* offset in file of rle lengths */
+  glong offset;                         /* offset in file of rle lengths */
   gint chan;
   gint32 bottom_layer;
 

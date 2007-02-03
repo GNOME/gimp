@@ -1388,7 +1388,7 @@ do_layer_and_mask (FILE *fd)
   guint32 offset = 0;
   guint32 Size   = PSDheader.miscsizelen;
 
-  guint32 offset_now = ftell(fd);
+  glong   offset_now = ftell (fd);
 
   IFDBG printf ("LAYER AND MASK INFO\n");
   IFDBG printf ("\tSECTION LENGTH: %u\n", Size);
@@ -2488,7 +2488,7 @@ load_image (const gchar *name)
   gimp_displays_flush ();
 
   IFDBG printf ("--- %d layers : pos %ld : a-alph %d ---\n",
-                psd_image.num_layers, (glong) ftell(fd),
+                psd_image.num_layers, ftell (fd),
                 psd_image.absolute_alpha);
 
   return image_ID;
@@ -2803,7 +2803,7 @@ throwchunk (size_t  n,
   if (n == 0)
     return;
 
-  if (fseek (fd, n, SEEK_CUR) != 0)
+  if (fseek (fd, (glong) n, SEEK_CUR) != 0)
     {
       printf ("PSD: unable to seek forward while reading '%s' chunk\n", why);
       gimp_quit();
@@ -2937,7 +2937,7 @@ static void
 read_whole_file (FILE *fd)
 {
     guint16 w;
-    gint32  pos;
+    glong   pos;
     gchar   dummy[6];
     gint    i;
 
