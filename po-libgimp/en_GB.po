@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp CVS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-24 07:01+0000\n"
-"PO-Revision-Date: 2007-01-24 07:02-0000\n"
+"POT-Creation-Date: 2007-02-05 22:14+0000\n"
+"PO-Revision-Date: 2007-02-05 22:15-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -541,7 +541,7 @@ msgstr "Spiral (cw)"
 
 #: ../libgimpbase/gimpbaseenums.c:398
 msgid "Spiral (ccw)"
-msgstr "Spiral (ccw)"
+msgstr "Spiral (acw)"
 
 #: ../libgimpbase/gimpbaseenums.c:429
 msgid "Intersections (dots)"

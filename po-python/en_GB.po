@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-24 07:04+0000\n"
+"POT-Creation-Date: 2007-02-05 22:16+0000\n"
 "PO-Revision-Date: 2007-01-24 07:05-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: English, British\n"
@@ -28,19 +28,16 @@ msgstr "An error occured running %s"
 msgid "_More Information"
 msgstr "_More Information"
 
-#: ../plug-ins/pygimp/gimpfu.py:461
-#: ../plug-ins/pygimp/gimpfu.py:473
+#: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
 #: ../plug-ins/pygimp/gimpfu.py:479
 msgid "No"
 msgstr "No"
 
-#: ../plug-ins/pygimp/gimpfu.py:471
-#: ../plug-ins/pygimp/gimpfu.py:479
+#: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
 msgid "Yes"
 msgstr "Yes"
 
-#: ../plug-ins/pygimp/gimpfu.py:517
-#: ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu File Selection"
 
@@ -240,7 +237,8 @@ msgstr "Slice"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr ""
+"Cuts an image along its guides, creates images and a HTML table snippet"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
@@ -313,4 +311,3 @@ msgstr "Drop shadow Y displacement"
 #, fuzzy
 #~ msgid "Gimp-Python Console"
 #~ msgstr "Python Console"
-

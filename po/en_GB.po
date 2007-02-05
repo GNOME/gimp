@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.24\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-24 07:00+0000\n"
-"PO-Revision-Date: 2007-01-24 07:01-0000\n"
+"POT-Creation-Date: 2007-02-05 22:13+0000\n"
+"PO-Revision-Date: 2007-02-05 22:14-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: English, British\n"
 "MIME-Version: 1.0\n"
@@ -49,11 +49,7 @@ msgstr ""
 "\n"
 "You should have received a copy of the GNU General Public Licence along with GIMP; if not, write to the Free Software Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
 
-#: ../app/app_procs.c:130
-msgid "(This console window will close in ten seconds)\n"
-msgstr "(This console window will close in ten seconds)\n"
-
-#: ../app/app_procs.c:240
+#: ../app/app.c:207
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -75,98 +71,98 @@ msgstr "No batch interpreter specified, using the default '%s'.\n"
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr "The batch interpreter '%s' is not available. Batch mode disabled."
 
-#: ../app/main.c:136
+#: ../app/main.c:142
 #: ../tools/gimp-remote.c:79
 msgid "Show version information and exit"
 msgstr "Show version information and exit"
 
-#: ../app/main.c:141
+#: ../app/main.c:147
 msgid "Show license information and exit"
 msgstr "Show licence information and exit"
 
-#: ../app/main.c:146
+#: ../app/main.c:152
 msgid "Be more verbose"
 msgstr "Be more verbose"
 
-#: ../app/main.c:151
+#: ../app/main.c:157
 msgid "Start a new GIMP instance"
 msgstr "Start a new GIMP instance"
 
-#: ../app/main.c:156
+#: ../app/main.c:162
 msgid "Run without a user interface"
 msgstr "Run without a user interface"
 
-#: ../app/main.c:161
+#: ../app/main.c:167
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Do not load brushes, gradients, patterns, ..."
 
-#: ../app/main.c:166
+#: ../app/main.c:172
 msgid "Do not load any fonts"
 msgstr "Do not load any fonts"
 
-#: ../app/main.c:171
+#: ../app/main.c:177
 msgid "Do not show a startup window"
 msgstr "Do not show a startup window"
 
-#: ../app/main.c:176
+#: ../app/main.c:182
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "Do not use shared memory between GIMP and plugins"
 
-#: ../app/main.c:181
+#: ../app/main.c:187
 msgid "Do not use special CPU acceleration functions"
 msgstr "Do not use special CPU acceleration functions"
 
-#: ../app/main.c:186
+#: ../app/main.c:192
 msgid "Use an alternate sessionrc file"
 msgstr "Use an alternate sessionrc file"
 
-#: ../app/main.c:191
+#: ../app/main.c:197
 msgid "Use an alternate user gimprc file"
 msgstr "Use an alternate user gimprc file"
 
-#: ../app/main.c:196
+#: ../app/main.c:202
 msgid "Use an alternate system gimprc file"
 msgstr "Use an alternate system gimprc file"
 
-#: ../app/main.c:201
+#: ../app/main.c:207
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Batch command to run (can be used multiple times)"
 
-#: ../app/main.c:206
+#: ../app/main.c:212
 msgid "The procedure to process batch commands with"
 msgstr "The procedure to process batch commands with"
 
-#: ../app/main.c:211
+#: ../app/main.c:217
 msgid "Send messages to console instead of using a dialog"
 msgstr "Send messages to console instead of using a dialogue"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:217
+#: ../app/main.c:223
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "PDB compatibility mode (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:223
+#: ../app/main.c:229
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Debug in case of a crash (never|query|always)"
 
-#: ../app/main.c:228
+#: ../app/main.c:234
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Enable non-fatal debugging signal handlers"
 
-#: ../app/main.c:233
+#: ../app/main.c:239
 msgid "Make all warnings fatal"
 msgstr "Make all warnings fatal"
 
-#: ../app/main.c:238
+#: ../app/main.c:244
 msgid "Output a gimprc file with default settings"
 msgstr "Output a gimprc file with default settings"
 
-#: ../app/main.c:308
+#: ../app/main.c:327
 msgid "[FILE|URI...]"
 msgstr "[FILE|URI...]"
 
-#: ../app/main.c:325
+#: ../app/main.c:345
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -174,11 +170,24 @@ msgstr ""
 "GIMP could not initialise the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 
-#: ../app/main.c:369
+#: ../app/main.c:392
 msgid "Another GIMP instance is already running."
 msgstr "Another GIMP instance is already running."
 
-#: ../app/main.c:529
+#: ../app/main.c:467
+msgid "GIMP output. Type any character to close this window."
+msgstr "GIMP output. Type any character to close this window."
+
+#: ../app/main.c:468
+#, c-format
+msgid "(Type any character to close this window)\n"
+msgstr "(Type any character to close this window)\n"
+
+#: ../app/main.c:485
+msgid "GIMP output. You can minimize this window, but don't close it."
+msgstr "GIMP output. You can minimise this window, but don't close it."
+
+#: ../app/main.c:587
 #: ../tools/gimp-remote.c:323
 #, c-format
 msgid "%s version %s"
@@ -858,7 +867,7 @@ msgstr ""
 
 #: ../app/actions/data-commands.c:130
 #: ../app/core/gimpbrushgenerated-load.c:125
-#: ../app/core/gimpimage.c:1370
+#: ../app/core/gimpimage.c:1371
 #: ../app/core/gimppalette-import.c:210
 #: ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:336
@@ -1351,7 +1360,7 @@ msgstr "Turn upside-down"
 #: ../app/actions/drawable-actions.c:122
 #: ../app/actions/image-actions.c:192
 msgid "Rotate 90° counter-clock_wise"
-msgstr "Rotate 90° counter-clock_wise"
+msgstr "Rotate 90° anti-clock_wise"
 
 #: ../app/actions/drawable-actions.c:123
 msgid "Rotate 90 degrees to the left"
@@ -1648,7 +1657,7 @@ msgstr "Cannot save. Nothing is selected."
 msgid "Save Error Log to File"
 msgstr "Save Error Log to File"
 
-#: ../app/actions/error-console-commands.c:153
+#: ../app/actions/error-console-commands.c:156
 #, c-format
 msgid ""
 "Error writing file '%s':\n"
@@ -1734,7 +1743,7 @@ msgid "Saving canceled"
 msgstr "Saving cancelled"
 
 #: ../app/actions/file-commands.c:255
-#: ../app/dialogs/file-save-dialog.c:545
+#: ../app/dialogs/file-save-dialog.c:538
 #: ../app/widgets/gimpdnd-xds.c:174
 #, c-format
 msgid ""
@@ -1747,7 +1756,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/file-commands.c:285
-#: ../app/dialogs/file-save-dialog.c:86
+#: ../app/dialogs/file-save-dialog.c:85
 msgid "Save Image"
 msgstr "Save Image"
 
@@ -2436,7 +2445,7 @@ msgid "Change Print Size"
 msgstr "Change Print Size"
 
 #: ../app/actions/image-commands.c:621
-#: ../app/core/gimpimage-scale.c:73
+#: ../app/core/gimpimage-scale.c:74
 msgid "Scale Image"
 msgstr "Scale Image"
 
@@ -3186,7 +3195,7 @@ msgid "Toggle _Quick Mask"
 msgstr "Toggle _Quick Mask"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:987
+#: ../app/display/gimpdisplayshell.c:986
 msgid "Toggle Quick Mask"
 msgstr "Toggle Quick Mask"
 
@@ -3484,7 +3493,7 @@ msgstr "From right to left"
 msgid "Open Text File (UTF-8)"
 msgstr "Open Text File (UTF-8)"
 
-#: ../app/actions/text-editor-commands.c:142
+#: ../app/actions/text-editor-commands.c:144
 #: ../app/config/gimpconfig-file.c:59
 #: ../app/core/gimpbrush-load.c:115
 #: ../app/core/gimpbrush-load.c:395
@@ -4229,7 +4238,7 @@ msgstr "Replace"
 msgid "Anti erase"
 msgstr "Anti erase"
 
-#: ../app/base/tile-swap.c:419
+#: ../app/base/tile-swap.c:436
 msgid "Unable to open swap file. The Gimp has run out of memory and cannot use the swap file. Some parts of your images may be corrupted. Try to save your work using different filenames, restart the Gimp and check the location of the swap directory in your Preferences."
 msgstr "Unable to open swap file. The Gimp has run out of memory and cannot use the swap file. Some parts of your images may be corrupted. Try to save your work using different filenames, restart the Gimp and check the location of the swap directory in your Preferences."
 
@@ -4889,19 +4898,19 @@ msgstr "Merge paths"
 
 #: ../app/core/core-enums.c:859
 #: ../app/core/core-enums.c:890
-msgid "Guide"
-msgstr "Guide"
-
-#: ../app/core/core-enums.c:860
-#: ../app/core/core-enums.c:891
 #: ../app/core/gimpimage-grid.c:58
 #: ../app/dialogs/grid-dialog.c:149
 #: ../app/tools/tools-enums.c:211
 msgid "Grid"
 msgstr "Grid"
 
-#: ../app/core/core-enums.c:861
+#: ../app/core/core-enums.c:860
 #: ../app/core/core-enums.c:892
+msgid "Guide"
+msgstr "Guide"
+
+#: ../app/core/core-enums.c:861
+#: ../app/core/core-enums.c:893
 msgid "Sample Point"
 msgstr "Sample Point"
 
@@ -5002,7 +5011,7 @@ msgstr "Transform"
 
 #: ../app/core/core-enums.c:882
 #: ../app/core/core-enums.c:925
-#: ../app/paint/gimppaintcore.c:131
+#: ../app/paint/gimppaintcore.c:134
 msgid "Paint"
 msgstr "Paint"
 
@@ -5037,7 +5046,7 @@ msgstr "Image size"
 msgid "Image resolution change"
 msgstr "Image resolution change"
 
-#: ../app/core/core-enums.c:893
+#: ../app/core/core-enums.c:891
 msgid "Change indexed palette"
 msgstr "Change indexed palette"
 
@@ -5122,7 +5131,7 @@ msgid "FS relax"
 msgstr "FS relax"
 
 #: ../app/core/core-enums.c:926
-#: ../app/paint/gimpink.c:103
+#: ../app/paint/gimpink.c:107
 #: ../app/tools/gimpinktool.c:55
 msgid "Ink"
 msgstr "Ink"
@@ -5733,12 +5742,12 @@ msgstr "Converting to indexed (stage 2)"
 msgid "Converting to indexed (stage 3)"
 msgstr "Converting to indexed (stage 3)"
 
-#: ../app/core/gimpimage-crop.c:125
+#: ../app/core/gimpimage-crop.c:126
 msgid "command|Crop Image"
 msgstr "Crop Image"
 
-#: ../app/core/gimpimage-crop.c:128
-#: ../app/core/gimpimage-resize.c:88
+#: ../app/core/gimpimage-crop.c:129
+#: ../app/core/gimpimage-resize.c:89
 msgid "Resize Image"
 msgstr "Resize Image"
 
@@ -5804,151 +5813,151 @@ msgstr "Enable Quick Mask"
 msgid "Disable Quick Mask"
 msgstr "Disable Quick Mask"
 
-#: ../app/core/gimpimage-sample-points.c:55
+#: ../app/core/gimpimage-sample-points.c:51
 msgid "Add Sample_Point"
 msgstr "Add Sample_Point"
 
-#: ../app/core/gimpimage-sample-points.c:121
-#: ../app/tools/gimpcolortool.c:421
+#: ../app/core/gimpimage-sample-points.c:96
+#: ../app/tools/gimpcolortool.c:422
 msgid "Remove Sample Point"
 msgstr "Remove Sample Point"
 
-#: ../app/core/gimpimage-sample-points.c:158
+#: ../app/core/gimpimage-sample-points.c:133
 msgid "Move Sample Point"
 msgstr "Move Sample Point"
 
-#: ../app/core/gimpimage-undo-push.c:3248
+#: ../app/core/gimpimage-undo-push.c:855
 #, c-format
 msgid "Can't undo %s"
 msgstr "Can't undo %s"
 
-#: ../app/core/gimpimage.c:1440
+#: ../app/core/gimpimage.c:1441
 msgid "Change Image Resolution"
 msgstr "Change Image Resolution"
 
-#: ../app/core/gimpimage.c:1480
+#: ../app/core/gimpimage.c:1481
 msgid "Change Image Unit"
 msgstr "Change Image Unit"
 
-#: ../app/core/gimpimage.c:2322
+#: ../app/core/gimpimage.c:2323
 msgid "Attach Parasite to Image"
 msgstr "Attach Parasite to Image"
 
-#: ../app/core/gimpimage.c:2360
+#: ../app/core/gimpimage.c:2361
 msgid "Remove Parasite from Image"
 msgstr "Remove Parasite from Image"
 
-#: ../app/core/gimpimage.c:2815
+#: ../app/core/gimpimage.c:2816
 msgid "Add Layer"
 msgstr "Add Layer"
 
-#: ../app/core/gimpimage.c:2880
-#: ../app/core/gimpimage.c:2893
+#: ../app/core/gimpimage.c:2881
+#: ../app/core/gimpimage.c:2894
 msgid "Remove Layer"
 msgstr "Remove Layer"
 
-#: ../app/core/gimpimage.c:3032
+#: ../app/core/gimpimage.c:3033
 msgid "Layer cannot be raised higher."
 msgstr "Layer cannot be raised higher."
 
-#: ../app/core/gimpimage.c:3037
+#: ../app/core/gimpimage.c:3038
 msgid "Raise Layer"
 msgstr "Raise Layer"
 
-#: ../app/core/gimpimage.c:3054
+#: ../app/core/gimpimage.c:3055
 msgid "Layer cannot be lowered more."
 msgstr "Layer cannot be lowered more."
 
-#: ../app/core/gimpimage.c:3059
+#: ../app/core/gimpimage.c:3060
 msgid "Lower Layer"
 msgstr "Lower Layer"
 
-#: ../app/core/gimpimage.c:3070
+#: ../app/core/gimpimage.c:3071
 msgid "Raise Layer to Top"
 msgstr "Raise Layer to Top"
 
-#: ../app/core/gimpimage.c:3085
+#: ../app/core/gimpimage.c:3086
 msgid "Lower Layer to Bottom"
 msgstr "Lower Layer to Bottom"
 
-#: ../app/core/gimpimage.c:3158
+#: ../app/core/gimpimage.c:3159
 msgid "Add Channel"
 msgstr "Add Channel"
 
-#: ../app/core/gimpimage.c:3203
-#: ../app/core/gimpimage.c:3214
+#: ../app/core/gimpimage.c:3204
+#: ../app/core/gimpimage.c:3215
 msgid "Remove Channel"
 msgstr "Remove Channel"
 
-#: ../app/core/gimpimage.c:3261
+#: ../app/core/gimpimage.c:3262
 msgid "Channel cannot be raised higher."
 msgstr "Channel cannot be raised higher."
 
-#: ../app/core/gimpimage.c:3266
+#: ../app/core/gimpimage.c:3267
 msgid "Raise Channel"
 msgstr "Raise Channel"
 
-#: ../app/core/gimpimage.c:3283
+#: ../app/core/gimpimage.c:3284
 msgid "Channel is already on top."
 msgstr "Channel is already on top."
 
-#: ../app/core/gimpimage.c:3288
+#: ../app/core/gimpimage.c:3289
 msgid "Raise Channel to Top"
 msgstr "Raise Channel to Top"
 
-#: ../app/core/gimpimage.c:3305
+#: ../app/core/gimpimage.c:3306
 msgid "Channel cannot be lowered more."
 msgstr "Channel cannot be lowered more."
 
-#: ../app/core/gimpimage.c:3310
+#: ../app/core/gimpimage.c:3311
 msgid "Lower Channel"
 msgstr "Lower Channel"
 
-#: ../app/core/gimpimage.c:3330
+#: ../app/core/gimpimage.c:3331
 msgid "Channel is already on the bottom."
 msgstr "Channel is already on the bottom."
 
-#: ../app/core/gimpimage.c:3335
+#: ../app/core/gimpimage.c:3336
 msgid "Lower Channel to Bottom"
 msgstr "Lower Channel to Bottom"
 
-#: ../app/core/gimpimage.c:3410
+#: ../app/core/gimpimage.c:3411
 msgid "Add Path"
 msgstr "Add Path"
 
-#: ../app/core/gimpimage.c:3456
+#: ../app/core/gimpimage.c:3457
 msgid "Remove Path"
 msgstr "Remove Path"
 
-#: ../app/core/gimpimage.c:3500
+#: ../app/core/gimpimage.c:3501
 msgid "Path cannot be raised higher."
 msgstr "Path cannot be raised higher."
 
-#: ../app/core/gimpimage.c:3505
+#: ../app/core/gimpimage.c:3506
 msgid "Raise Path"
 msgstr "Raise Path"
 
-#: ../app/core/gimpimage.c:3522
+#: ../app/core/gimpimage.c:3523
 msgid "Path is already on top."
 msgstr "Path is already on top."
 
-#: ../app/core/gimpimage.c:3527
+#: ../app/core/gimpimage.c:3528
 msgid "Raise Path to Top"
 msgstr "Raise Path to Top"
 
-#: ../app/core/gimpimage.c:3544
+#: ../app/core/gimpimage.c:3545
 msgid "Path cannot be lowered more."
 msgstr "Path cannot be lowered more."
 
-#: ../app/core/gimpimage.c:3549
+#: ../app/core/gimpimage.c:3550
 msgid "Lower Path"
 msgstr "Lower Path"
 
-#: ../app/core/gimpimage.c:3569
+#: ../app/core/gimpimage.c:3570
 msgid "Path is already on the bottom."
 msgstr "Path is already on the bottom."
 
-#: ../app/core/gimpimage.c:3574
+#: ../app/core/gimpimage.c:3575
 msgid "Lower Path to Bottom"
 msgstr "Lower Path to Bottom"
 
@@ -6017,8 +6026,8 @@ msgstr "Attach Parasite"
 msgid "Attach Parasite to Item"
 msgstr "Attach Parasite to Item"
 
-#: ../app/core/gimpitem.c:1185
-#: ../app/core/gimpitem.c:1192
+#: ../app/core/gimpitem.c:1186
+#: ../app/core/gimpitem.c:1193
 msgid "Remove Parasite from Item"
 msgstr "Remove Parasite from Item"
 
@@ -6483,24 +6492,24 @@ msgstr "Open Location"
 msgid "Enter location (URI):"
 msgstr "Enter location (URI):"
 
-#: ../app/dialogs/file-save-dialog.c:312
-#: ../app/dialogs/file-save-dialog.c:355
+#: ../app/dialogs/file-save-dialog.c:308
+#: ../app/dialogs/file-save-dialog.c:351
 msgid "The given filename does not have any known file extension. Please enter a known file extension or select a file format from the file format list."
 msgstr "The given filename does not have any known file extension. Please enter a known file extension or select a file format from the file format list."
 
-#: ../app/dialogs/file-save-dialog.c:397
+#: ../app/dialogs/file-save-dialog.c:393
 msgid "Saving remote files needs to determine the file format from the file extension. Please enter a file extension that matches the selected file format or enter no file extension at all."
 msgstr "Saving remote files needs to determine the file format from the file extension. Please enter a file extension that matches the selected file format or enter no file extension at all."
 
-#: ../app/dialogs/file-save-dialog.c:457
+#: ../app/dialogs/file-save-dialog.c:453
 msgid "Extension Mismatch"
 msgstr "Extension Mismatch"
 
-#: ../app/dialogs/file-save-dialog.c:473
+#: ../app/dialogs/file-save-dialog.c:469
 msgid "The given file extension does not match the chosen file type."
 msgstr "The given file extension does not match the chosen file type."
 
-#: ../app/dialogs/file-save-dialog.c:477
+#: ../app/dialogs/file-save-dialog.c:473
 msgid "Do you want to save the image using this name anyway?"
 msgstr "Do you want to save the image using this name anyway?"
 
@@ -7763,15 +7772,15 @@ msgstr "The GIMP user installation failed; see the log for details."
 msgid "Installation Log"
 msgstr "Installation Log"
 
-#: ../app/dialogs/vectors-export-dialog.c:53
+#: ../app/dialogs/vectors-export-dialog.c:54
 msgid "Export Path to SVG"
 msgstr "Export Path to SVG"
 
-#: ../app/dialogs/vectors-export-dialog.c:83
+#: ../app/dialogs/vectors-export-dialog.c:89
 msgid "Export the active path"
 msgstr "Export the active path"
 
-#: ../app/dialogs/vectors-export-dialog.c:84
+#: ../app/dialogs/vectors-export-dialog.c:90
 msgid "Export all paths from this image"
 msgstr "Export all paths from this image"
 
@@ -7779,20 +7788,20 @@ msgstr "Export all paths from this image"
 msgid "Import Paths from SVG"
 msgstr "Import Paths from SVG"
 
-#: ../app/dialogs/vectors-import-dialog.c:88
+#: ../app/dialogs/vectors-import-dialog.c:91
 #: ../app/widgets/gimpprofilechooserdialog.c:149
 msgid "All files (*.*)"
 msgstr "All files (*.*)"
 
-#: ../app/dialogs/vectors-import-dialog.c:93
+#: ../app/dialogs/vectors-import-dialog.c:96
 msgid "Scalable SVG image (*.svg)"
 msgstr "Scalable SVG image (*.svg)"
 
-#: ../app/dialogs/vectors-import-dialog.c:104
+#: ../app/dialogs/vectors-import-dialog.c:107
 msgid "_Merge imported paths"
 msgstr "_Merge imported paths"
 
-#: ../app/dialogs/vectors-import-dialog.c:114
+#: ../app/dialogs/vectors-import-dialog.c:117
 msgid "_Scale imported paths to fit image"
 msgstr "_Scale imported paths to fit image"
 
@@ -7845,15 +7854,15 @@ msgstr "Switch to Move tool"
 msgid "Image saved to '%s'"
 msgstr "Image saved to '%s'"
 
-#: ../app/display/gimpdisplayshell.c:849
+#: ../app/display/gimpdisplayshell.c:848
 msgid "Access the image menu"
 msgstr "Access the image menu"
 
-#: ../app/display/gimpdisplayshell.c:958
+#: ../app/display/gimpdisplayshell.c:957
 msgid "Zoom image when window size changes"
 msgstr "Zoom image when window size changes"
 
-#: ../app/display/gimpdisplayshell.c:1008
+#: ../app/display/gimpdisplayshell.c:1007
 msgid "Navigate the image display"
 msgstr "Navigate the image display"
 
@@ -8290,13 +8299,13 @@ msgstr "Bad interpreter referenced in interpreter file %s: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Bad binary format string in interpreter file %s"
 
-#: ../app/plug-in/gimpplugin.c:431
-#: ../app/plug-in/gimpplugin.c:470
+#: ../app/plug-in/gimpplugin.c:437
+#: ../app/plug-in/gimpplugin.c:476
 #, c-format
 msgid "Terminating plug-in: '%s'\n"
 msgstr "Terminating plug-in: '%s'\n"
 
-#: ../app/plug-in/gimpplugin.c:614
+#: ../app/plug-in/gimpplugin.c:620
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -8898,16 +8907,16 @@ msgstr "Click in any image to add the colour to the palette"
 msgid "Color Picker Information"
 msgstr "Colour Picker Information"
 
-#: ../app/tools/gimpcolortool.c:252
-#: ../app/tools/gimpcolortool.c:428
+#: ../app/tools/gimpcolortool.c:253
+#: ../app/tools/gimpcolortool.c:429
 msgid "Move Sample Point: "
 msgstr "Move Sample Point: "
 
-#: ../app/tools/gimpcolortool.c:422
+#: ../app/tools/gimpcolortool.c:423
 msgid "Cancel Sample Point"
 msgstr "Cancel Sample Point"
 
-#: ../app/tools/gimpcolortool.c:429
+#: ../app/tools/gimpcolortool.c:430
 msgid "Add Sample Point: "
 msgstr "Add Sample Point: "
 
@@ -9870,8 +9879,8 @@ msgstr "Rectangle Select Tool: Select a rectangular region"
 msgid "_Rectangle Select"
 msgstr "_Rectangle Select"
 
-#: ../app/tools/gimprectangletool.c:1052
-#: ../app/tools/gimprectangletool.c:1755
+#: ../app/tools/gimprectangletool.c:1054
+#: ../app/tools/gimprectangletool.c:1719
 msgid "Rectangle: "
 msgstr "Rectangle: "
 
@@ -11363,7 +11372,7 @@ msgstr "Columns:"
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC color profile (*.icc, *.icm)"
 
-#: ../app/widgets/gimpprogressdialog.c:215
+#: ../app/widgets/gimpprogressdialog.c:220
 msgid "Progress"
 msgstr "Progress"
 
@@ -11756,11 +11765,11 @@ msgstr ""
 msgid "Invalid UTF-8 string in XCF file"
 msgstr "Invalid UTF-8 string in XCF file"
 
-#: ../app/xcf/xcf-save.c:164
-#: ../app/xcf/xcf-save.c:176
-#: ../app/xcf/xcf-save.c:188
-#: ../app/xcf/xcf-save.c:200
-#: ../app/xcf/xcf-save.c:226
+#: ../app/xcf/xcf-save.c:165
+#: ../app/xcf/xcf-save.c:177
+#: ../app/xcf/xcf-save.c:189
+#: ../app/xcf/xcf-save.c:201
+#: ../app/xcf/xcf-save.c:227
 #: ../app/xcf/xcf.c:386
 #, c-format
 msgid "Error saving XCF file: %s"
@@ -11836,6 +11845,8 @@ msgstr "Make sure that the Toolbox is visible!"
 msgid "Couldn't start '%s': %s"
 msgstr "Couldn't start '%s': %s"
 
+#~ msgid "(This console window will close in ten seconds)\n"
+#~ msgstr "(This console window will close in ten seconds)\n"
 #~ msgid "%d hour"
 #~ msgid_plural "%d hours"
 #~ msgstr[0] "%d hour"
