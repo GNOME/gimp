@@ -24,6 +24,12 @@ Bugs fixed in GIMP 2.2.14
 - load channels in the proper order when opening an XCF file (bug #378003)
 - deal with floating selections in the Burn-In Animation script (bug #384096)
 - fixed clipping in the GimpPreviewArea widget (bug #392692)
+- fixed a potential crash in gimp-remote (bug #392111)
+- work around a file-chooser problem on Windows (bug #398726)
+- fixed markup of the gimp(1) manual page (bug #401145)
+- fixed the fix for the right-to-left layout in layers dialog (bug #348347)
+- fixed PSD save plug-in on 64bit architectures (bug #335130)
+- added missing dependency in gimpui-2.0.pc file (bug #356394)
 
 
 Bugs fixed in GIMP 2.2.13
