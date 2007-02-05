@@ -1,5 +1,12 @@
 2007-02-05  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/file-save-dialog.c (file_save_dialog_save_image):
+	let the return value indicate whether the file has been saved.
+	(file_save_dialog_response): only hide the dialog after the image
+	has been saved.
+
+2007-02-05  Sven Neumann  <sven@gimp.org>
+
 	* gimpui.pc.in (Requires): require gimp-2.0 >= $GIMP_APP_VERSION.
 
 2007-02-05  Sven Neumann  <sven@gimp.org>
