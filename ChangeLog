@@ -1,5 +1,9 @@
 2007-02-05  Sven Neumann  <sven@gimp.org>
 
+	* gimpui.pc.in (Requires): require gimp-2.0 >= $GIMP_APP_VERSION.
+
+2007-02-05  Sven Neumann  <sven@gimp.org>
+
 	* gimp.pc.in (Requires)
 	* gimpui.pc.in (Requires): substitute minimum required versions of
 	glib and gtk+ instead of hardcoding them.
