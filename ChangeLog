@@ -1,3 +1,9 @@
+2007-02-05  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+        * gimpui.pc.in (Libs): added gimpmodule-2.0. Fixes bug #356394.
+	
 2007-02-03  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/psd_save.c: Backported fixes from bug #335130 to
