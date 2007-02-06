@@ -51,6 +51,7 @@ enum
 {
   PROP_0,
   PROP_IMAGE,
+  PROP_TIME,
   PROP_UNDO_TYPE,
   PROP_DIRTY_MASK
 };
@@ -149,6 +150,11 @@ gimp_undo_class_init (GimpUndoClass *klass)
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
 
+  g_object_class_install_property (object_class, PROP_TIME,
+                                   g_param_spec_uint ("time", NULL, NULL,
+                                                      0, G_MAXUINT, 0,
+                                                      GIMP_PARAM_READWRITE));
+
   g_object_class_install_property (object_class, PROP_UNDO_TYPE,
                                    g_param_spec_enum ("undo-type", NULL, NULL,
                                                       GIMP_TYPE_UNDO_TYPE,
@@ -222,6 +228,9 @@ gimp_undo_set_property (GObject      *object,
       /* don't ref */
       undo->image = g_value_get_object (value);
       break;
+    case PROP_TIME:
+      undo->time = g_value_get_uint (value);
+      break;
     case PROP_UNDO_TYPE:
       undo->undo_type = g_value_get_enum (value);
       break;
@@ -247,6 +256,9 @@ gimp_undo_get_property (GObject    *object,
     {
     case PROP_IMAGE:
       g_value_set_object (value, undo->image);
+      break;
+    case PROP_TIME:
+      g_value_set_uint (value, undo->time);
       break;
     case PROP_UNDO_TYPE:
       g_value_set_enum (value, undo->undo_type);
@@ -421,8 +433,8 @@ gimp_undo_create_preview (GimpUndo    *undo,
 
       undo->preview_idle_id =
         g_idle_add_full (G_PRIORITY_DEFAULT_IDLE,
-                         gimp_undo_create_preview_idle,
-                         idle, (GDestroyNotify) gimp_undo_idle_free);
+                         gimp_undo_create_preview_idle, idle,
+                         (GDestroyNotify) gimp_undo_idle_free);
     }
 }
 
@@ -548,4 +560,37 @@ gimp_undo_is_weak (GimpUndo *undo)
     }
 
   return FALSE;
+}
+
+/**
+ * gimp_undo_get_age:
+ * @undo:
+ *
+ * Return value: the time in seconds since this undo item was created
+ */
+gint
+gimp_undo_get_age (GimpUndo *undo)
+{
+  guint now = time (NULL);
+
+  g_return_val_if_fail (GIMP_IS_UNDO (undo), 0);
+  g_return_val_if_fail (now >= undo->time, 0);
+
+  return now - undo->time;
+}
+
+/**
+ * gimp_undo_reset_age:
+ * @undo:
+ *
+ * Changes the creation time of this undo item to the current time.
+ */
+void
+gimp_undo_reset_age (GimpUndo *undo)
+{
+  g_return_if_fail (GIMP_IS_UNDO (undo));
+
+  undo->time = time (NULL);
+
+  g_object_notify (G_OBJECT (undo), "time");
 }

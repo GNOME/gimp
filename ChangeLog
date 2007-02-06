@@ -1,3 +1,10 @@
+2007-02-06  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpundo.[ch]: made time a property and added utility
+	functions to work the undo's age.
+	
+	* app/tools/gimptexttool.c: use the utility functions.
+
 2007-02-05  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/file-save-dialog.c (file_save_dialog_save_image):

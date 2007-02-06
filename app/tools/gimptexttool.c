@@ -543,15 +543,12 @@ gimp_text_tool_apply (GimpTextTool *text_tool)
 
           if (text_undo->pspec == pspec)
             {
-              guint now = time (NULL);
-
-              if (now >= undo->time &&
-                  now - undo->time < TEXT_UNDO_TIMEOUT)
+              if (gimp_undo_get_age (undo) < TEXT_UNDO_TIMEOUT)
                 {
                   GimpTool *tool = GIMP_TOOL (text_tool);
 
                   push_undo = FALSE;
-                  undo->time = now;
+                  gimp_undo_reset_age (undo);
                   gimp_undo_refresh_preview (undo,
                                              GIMP_CONTEXT (gimp_tool_get_options (tool)));
                 }

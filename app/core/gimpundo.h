@@ -87,5 +87,8 @@ void          gimp_undo_refresh_preview (GimpUndo            *undo,
 const gchar * gimp_undo_type_to_name    (GimpUndoType         type);
 
 gboolean      gimp_undo_is_weak         (GimpUndo            *undo);
+gint          gimp_undo_get_age         (GimpUndo            *undo);
+void          gimp_undo_reset_age       (GimpUndo            *undo);
+
 
 #endif /* __GIMP_UNDO_H__ */
