@@ -1082,7 +1082,7 @@ prefs_color_button_add (GObject      *config,
 {
   GtkWidget *button = gimp_prop_color_button_new (config, property_name,
                                                   title,
-                                                  60, 20,
+                                                  60, 24,
                                                   GIMP_COLOR_AREA_FLAT);
 
   if (button)
