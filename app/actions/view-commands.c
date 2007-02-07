@@ -109,6 +109,16 @@ view_zoom_fit_to_cmd_callback (GtkAction *action,
 }
 
 void
+view_zoom_revert_cmd_callback (GtkAction *action,
+                               gpointer   data)
+{
+  GimpDisplay *display;
+  return_if_no_display (display, data);
+
+  gimp_display_shell_scale_revert (GIMP_DISPLAY_SHELL (display->shell));
+}
+
+void
 view_zoom_cmd_callback (GtkAction *action,
                         gint       value,
                         gpointer   data)

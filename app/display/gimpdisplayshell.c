@@ -220,6 +220,10 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->offset_x               = 0;
   shell->offset_y               = 0;
 
+  shell->last_scale             = 0.0;
+  shell->last_offset_x          = 0;
+  shell->last_offset_y          = 0;
+
   shell->disp_width             = 0;
   shell->disp_height            = 0;
   shell->disp_xoffset           = 0;

@@ -22,6 +22,9 @@
 
 void   gimp_display_shell_scale_setup           (GimpDisplayShell *shell);
 
+gboolean gimp_display_shell_scale_revert        (GimpDisplayShell *shell);
+gboolean gimp_display_shell_scale_can_revert    (GimpDisplayShell *shell);
+
 void   gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
                                                  gboolean          dot_for_dot);
 

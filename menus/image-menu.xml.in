@@ -219,11 +219,12 @@
       <menuitem action="view-new" />
       <menuitem action="view-dot-for-dot" />
       <menu action="view-zoom-menu" name="Zoom">
+        <menuitem action="view-zoom-revert" />
         <menuitem action="view-zoom-out" />
         <menuitem action="view-zoom-in" />
         <menuitem action="view-zoom-fit-in" />
         <menuitem action="view-zoom-fit-to" />
-	<separator />
+        <separator />
         <menuitem action="view-zoom-16-1" />
         <menuitem action="view-zoom-8-1" />
         <menuitem action="view-zoom-4-1" />

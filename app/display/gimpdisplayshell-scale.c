@@ -44,6 +44,8 @@
 #include "gimp-intl.h"
 
 
+#define SCALE_EPSILON 0.0001
+
 typedef struct _ScaleDialogData ScaleDialogData;
 
 struct _ScaleDialogData
@@ -182,6 +184,47 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
               shell->disp_width, shell->disp_height,
               shell->disp_xoffset, shell->disp_yoffset);
 #endif
+}
+
+/**
+ * gimp_display_shell_scale_revert:
+ * @shell:     the #GimpDisplayShell
+ *
+ * Reverts the display to the previously used scale.  If no previous scale
+ * exist then the call does nothing.
+ *
+ * Return value: %TRUE if the scale was reverted, otherwise %FALSE.
+ **/
+gboolean
+gimp_display_shell_scale_revert (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  /* don't bother if no scale has been set */
+  if (shell->last_scale < SCALE_EPSILON)
+    return FALSE;
+
+  gimp_display_shell_scale_by_values (shell,
+                                      shell->last_scale,
+                                      shell->last_offset_x,
+                                      shell->last_offset_y,
+                                      FALSE);   /* don't resize the window */
+
+  return TRUE;
+}
+
+/**
+ * gimp_display_shell_scale_can_revert:
+ * @shell:     the #GimpDisplayShell
+ *
+ * Return value: %TRUE if a previous display scale exists, otherwise %FALSE.
+ **/
+gboolean
+gimp_display_shell_scale_can_revert (GimpDisplayShell *shell)
+{
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), FALSE);
+
+  return (shell->last_scale > SCALE_EPSILON);
 }
 
 void
@@ -390,6 +433,11 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
       shell->offset_y == offset_y)
     return;
 
+  /* remember the current scale and offsets to allow reverting the scaling */
+  shell->last_scale    = gimp_zoom_model_get_factor (shell->zoom);
+  shell->last_offset_x = shell->offset_x;
+  shell->last_offset_y = shell->offset_y;
+
   /* freeze the active tool */
   gimp_display_shell_pause (shell);
 
@@ -459,7 +507,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
       return;
     }
 
-  if (fabs (shell->other_scale) <= 0.0001)
+  if (fabs (shell->other_scale) < SCALE_EPSILON)
     {
       /* other_scale not yet initialized */
       shell->other_scale = gimp_zoom_model_get_factor (shell->zoom);

@@ -40,6 +40,7 @@
 #include "display/gimpdisplayoptions.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
+#include "display/gimpdisplayshell-scale.h"
 #include "display/gimpdisplayshell-selection.h"
 
 #include "actions.h"
@@ -92,6 +93,12 @@ static const GimpActionEntry view_actions[] =
     N_("Adjust the zoom ratio so that the window is used optimally"),
     G_CALLBACK (view_zoom_fit_to_cmd_callback),
     GIMP_HELP_VIEW_ZOOM_FIT_TO },
+
+  { "view-zoom-revert", NULL,
+    N_("Re_vert Zoom"), "grave",
+    N_("Restore the previous zoom level"),
+    G_CALLBACK (view_zoom_revert_cmd_callback),
+    GIMP_HELP_VIEW_ZOOM_REVERT },
 
   { "view-navigation-window", GIMP_STOCK_NAVIGATION,
     N_("Na_vigation Window"), NULL,
@@ -497,10 +504,12 @@ void
 view_actions_update (GimpActionGroup *group,
                      gpointer         data)
 {
-  GimpDisplay        *display    = action_data_get_display (data);
-  GimpDisplayShell   *shell      = NULL;
-  GimpDisplayOptions *options    = NULL;
-  gboolean            fullscreen = FALSE;
+  GimpDisplay        *display        = action_data_get_display (data);
+  GimpDisplayShell   *shell          = NULL;
+  GimpDisplayOptions *options        = NULL;
+  gchar              *label          = NULL;
+  gboolean            fullscreen     = FALSE;
+  gboolean            revert_enabled = FALSE;   /* able to revert zoom? */
 
   if (display)
     {
@@ -509,6 +518,8 @@ view_actions_update (GimpActionGroup *group,
       fullscreen = gimp_display_shell_get_fullscreen (shell);
 
       options = fullscreen ? shell->fullscreen_options : shell->options;
+
+      revert_enabled = gimp_display_shell_scale_can_revert (shell);
     }
 
 #define SET_ACTIVE(action,condition) \
@@ -523,6 +534,20 @@ view_actions_update (GimpActionGroup *group,
 
   SET_SENSITIVE ("view-dot-for-dot", display);
   SET_ACTIVE    ("view-dot-for-dot", display && shell->dot_for_dot);
+
+  SET_SENSITIVE ("view-zoom-revert", revert_enabled);
+  if (revert_enabled)
+    {
+      label = g_strdup_printf (_("Re_vert Zoom (%d%%)"),
+                               ROUND (shell->last_scale * 100));
+      gimp_action_group_set_action_label (group, "view-zoom-revert", label);
+      g_free (label);
+    }
+  else
+    {
+      gimp_action_group_set_action_label (group, "view-zoom-revert",
+                                          N_("Re_vert Zoom"));
+    }
 
   SET_SENSITIVE ("view-zoom-out",    display);
   SET_SENSITIVE ("view-zoom-in",     display);
