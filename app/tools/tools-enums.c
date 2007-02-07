@@ -10,38 +10,6 @@
 
 /* enumerations from "./tools-enums.h" */
 GType
-gimp_color_pick_mode_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_COLOR_PICK_MODE_NONE, "GIMP_COLOR_PICK_MODE_NONE", "none" },
-    { GIMP_COLOR_PICK_MODE_FOREGROUND, "GIMP_COLOR_PICK_MODE_FOREGROUND", "foreground" },
-    { GIMP_COLOR_PICK_MODE_BACKGROUND, "GIMP_COLOR_PICK_MODE_BACKGROUND", "background" },
-    { GIMP_COLOR_PICK_MODE_PALETTE, "GIMP_COLOR_PICK_MODE_PALETTE", "palette" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_COLOR_PICK_MODE_NONE, N_("Pick only"), NULL },
-    { GIMP_COLOR_PICK_MODE_FOREGROUND, N_("Set foreground color"), NULL },
-    { GIMP_COLOR_PICK_MODE_BACKGROUND, N_("Set background color"), NULL },
-    { GIMP_COLOR_PICK_MODE_PALETTE, N_("Add to palette"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpColorPickMode", values);
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_rectangle_guide_get_type (void)
 {
   static const GEnumValue values[] =

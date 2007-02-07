@@ -157,9 +157,8 @@ static gboolean  view_events                      (GtkWidget          *widget,
 static void      view_set_hint                    (GimpGradientEditor *editor,
                                                    gint                x);
 
-static void      view_set_foreground              (GimpGradientEditor *editor,
-                                                   gint                x);
-static void      view_set_background              (GimpGradientEditor *editor,
+static void      view_pick_color                  (GimpGradientEditor *editor,
+                                                   GimpColorPickMode   mode,
                                                    gint                x);
 
 /* Gradient control functions */
@@ -868,10 +867,11 @@ view_events (GtkWidget          *widget,
 
             if (editor->view_button_down)
               {
-                if (mevent->state & GDK_CONTROL_MASK)
-                  view_set_background (editor, x);
-                else
-                  view_set_foreground (editor, x);
+                view_pick_color (editor,
+                                 (mevent->state & GDK_CONTROL_MASK) ?
+                                 GIMP_COLOR_PICK_MODE_BACKGROUND :
+                                 GIMP_COLOR_PICK_MODE_FOREGROUND,
+                                 x);
               }
             else
               {
@@ -892,10 +892,12 @@ view_events (GtkWidget          *widget,
           case 1:
             editor->view_last_x = x;
             editor->view_button_down = TRUE;
-            if (bevent->state & GDK_CONTROL_MASK)
-              view_set_background (editor, x);
-            else
-              view_set_foreground (editor, x);
+
+            view_pick_color (editor,
+                             (bevent->state & GDK_CONTROL_MASK) ?
+                             GIMP_COLOR_PICK_MODE_BACKGROUND :
+                             GIMP_COLOR_PICK_MODE_FOREGROUND,
+                             x);
             break;
 
           case 3:
@@ -963,10 +965,12 @@ view_events (GtkWidget          *widget,
 
           editor->view_last_x = x;
           editor->view_button_down = FALSE;
-          if (bevent->state & GDK_CONTROL_MASK)
-            view_set_background (editor, x);
-          else
-            view_set_foreground (editor, x);
+
+          view_pick_color (editor,
+                           (bevent->state & GDK_CONTROL_MASK) ?
+                           GIMP_COLOR_PICK_MODE_BACKGROUND :
+                           GIMP_COLOR_PICK_MODE_FOREGROUND,
+                           x);
           break;
         }
       break;
@@ -983,9 +987,9 @@ view_set_hint (GimpGradientEditor *editor,
                gint                x)
 {
   GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
-  gdouble         xpos;
   GimpRGB         rgb;
   GimpHSV         hsv;
+  gdouble         xpos;
   gchar          *str1;
   gchar          *str2;
   gchar          *str3;
@@ -1019,24 +1023,23 @@ view_set_hint (GimpGradientEditor *editor,
 }
 
 static void
-view_set_foreground (GimpGradientEditor *editor,
-                     gint                x)
+view_pick_color (GimpGradientEditor *editor,
+                 GimpColorPickMode   mode,
+                 gint                x)
 {
-  GimpGradient *gradient;
-  GimpRGB       color;
-  gdouble       xpos;
-  gchar        *str2;
-  gchar        *str3;
-
-  gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
+  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+  GimpRGB         color;
+  gdouble         xpos;
+  gchar          *str2;
+  gchar          *str3;
 
   xpos = control_calc_g_pos (editor, x);
 
-  gimp_gradient_get_color_at (gradient,
-                              GIMP_DATA_EDITOR (editor)->context,
-                              NULL, xpos, FALSE, &color);
+  gimp_gradient_get_color_at (GIMP_GRADIENT (data_editor->data),
+                              data_editor->context, NULL,
+                              xpos, FALSE, &color);
 
-  gimp_context_set_foreground (GIMP_DATA_EDITOR (editor)->context, &color);
+  gimp_color_area_set_color (GIMP_COLOR_AREA (editor->current_color), &color);
 
   str2 = g_strdup_printf (_("RGB (%d, %d, %d)"),
                           (gint) (color.r * 255.0),
@@ -1045,43 +1048,20 @@ view_set_foreground (GimpGradientEditor *editor,
 
   str3 = g_strdup_printf ("(%0.3f, %0.3f, %0.3f)", color.r, color.g, color.b);
 
-  gradient_editor_set_hint (editor,
-                            _("Foreground color set to:"), str2, str3, NULL);
+  if (mode == GIMP_COLOR_PICK_MODE_FOREGROUND)
+    {
+      gimp_context_set_foreground (data_editor->context, &color);
 
-  g_free (str2);
-  g_free (str3);
-}
+      gradient_editor_set_hint (editor, _("Foreground color set to:"),
+                                str2, str3, NULL);
+    }
+  else
+    {
+      gimp_context_set_background (data_editor->context, &color);
 
-static void
-view_set_background (GimpGradientEditor *editor,
-                     gint                x)
-{
-  GimpGradient *gradient;
-  GimpRGB       color;
-  gdouble       xpos;
-  gchar        *str2;
-  gchar        *str3;
-
-  gradient = GIMP_GRADIENT (GIMP_DATA_EDITOR (editor)->data);
-
-  xpos = control_calc_g_pos (editor, x);
-
-  gimp_gradient_get_color_at (gradient,
-                              GIMP_DATA_EDITOR (editor)->context,
-                              NULL, xpos, FALSE, &color);
-
-  gimp_context_set_background (GIMP_DATA_EDITOR (editor)->context, &color);
-
-  str2 = g_strdup_printf (_("RGB (%d, %d, %d)"),
-                          (gint) (color.r * 255.0),
-                          (gint) (color.g * 255.0),
-                          (gint) (color.b * 255.0));
-
-  str3 = g_strdup_printf (_("(%0.3f, %0.3f, %0.3f)"),
-                          color.r, color.g, color.b);
-
-  gradient_editor_set_hint (editor,
-                            _("Background color set to:"), str2, str3, NULL);
+      gradient_editor_set_hint (editor, _("Background color set to:"),
+                                str2, str3, NULL);
+    }
 
   g_free (str2);
   g_free (str3);
