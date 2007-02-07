@@ -1,3 +1,7 @@
+2007-02-07  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am (GTKDOC_LIBS): fixed linking of app-scan.
+
 2007-01-12  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt: added gimp_get_default_unit().

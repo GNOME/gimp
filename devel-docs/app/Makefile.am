@@ -62,7 +62,9 @@ GTKDOC_CFLAGS = \
 	-I$(includedir)
 
 GTKDOC_LIBS = \
-	-u $(SYMPREFIX)xcf_init -u $(SYMPREFIX)internal_procs_init	     \
+	-u $(SYMPREFIX)xcf_init		   \
+	-u $(SYMPREFIX)internal_procs_init \
+	-u $(SYMPREFIX)gimp_coords_mix	   \
 	$(top_builddir)/app/app_procs.o					     \
         $(top_builddir)/app/batch.o					     \
         $(top_builddir)/app/errors.o					     \
@@ -80,8 +82,8 @@ GTKDOC_LIBS = \
         $(top_builddir)/app/file/libappfile.a				     \
         $(top_builddir)/app/plug-in/libappplug-in.a			     \
         $(top_builddir)/app/pdb/libapppdb.a				     \
-        $(top_builddir)/app/vectors/libappvectors.a			     \
         $(top_builddir)/app/core/libappcore.a				     \
+        $(top_builddir)/app/vectors/libappvectors.a			     \
         $(top_builddir)/app/paint/libapppaint.a				     \
         $(top_builddir)/app/text/libapptext.a				     \
         $(top_builddir)/app/config/libappconfig.a			     \
@@ -101,6 +103,7 @@ GTKDOC_LIBS = \
         $(PANGOFT2_LIBS)                                                     \
         $(FONTCONFIG_LIBS)                                                   \
         $(FREETYPE_LIBS)                                                     \
+	$(DBUS_GLIB_LIBS)						     \
         $(GTHREAD_LIBS)                                                      \
 	$(RT_LIBS)							     \
         $(INTLLIBS)
