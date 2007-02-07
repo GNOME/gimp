@@ -1,5 +1,10 @@
 2007-02-07  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/gui.c: #define DBUS_API_SUBJECT_TO_CHANGE to fix
+	compilation with outdated versions of D-Bus.
+
+2007-02-07  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/view-actions.c
 	* app/actions/view-commands.[ch]
 	* app/display/gimpdisplayshell.[ch]
