@@ -4,7 +4,8 @@
 
 	* app.types: added new undo classes.
 
-	* app-sections.txt: minor update.
+	* app-docs.sgml
+	* app-sections.txt: minor updates.
 
 2007-01-12  Sven Neumann  <sven@gimp.org>
 

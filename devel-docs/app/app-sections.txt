@@ -748,6 +748,188 @@ GIMP_DRAWABLE_UNDO_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpimageundo</FILE>
+<TITLE>GimpImageUndo</TITLE>
+GimpImageUndo
+<SUBSECTION Standard>
+GIMP_IMAGE_UNDO
+GIMP_IS_IMAGE_UNDO
+GIMP_TYPE_IMAGE_UNDO
+gimp_image_undo_get_type
+GIMP_IMAGE_UNDO_CLASS
+GIMP_IS_IMAGE_UNDO_CLASS
+GIMP_IMAGE_UNDO_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimplayerpropundo</FILE>
+<TITLE>GimpLayerPropUndo</TITLE>
+GimpLayerPropUndo
+<SUBSECTION Standard>
+GIMP_LAYER_PROP_UNDO
+GIMP_IS_LAYER_PROP_UNDO
+GIMP_TYPE_LAYER_PROP_UNDO
+gimp_layer_prop_undo_get_type
+GIMP_LAYER_PROP_UNDO_CLASS
+GIMP_IS_LAYER_PROP_UNDO_CLASS
+GIMP_LAYER_PROP_UNDO_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpitempropundo</FILE>
+<TITLE>GimpItemPropUndo</TITLE>
+GimpItemPropUndo
+<SUBSECTION Standard>
+GIMP_ITEM_PROP_UNDO
+GIMP_IS_ITEM_PROP_UNDO
+GIMP_TYPE_ITEM_PROP_UNDO
+gimp_item_prop_undo_get_type
+GIMP_ITEM_PROP_UNDO_CLASS
+GIMP_IS_ITEM_PROP_UNDO_CLASS
+GIMP_ITEM_PROP_UNDO_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpchannelpropundo</FILE>
+<TITLE>GimpChannelPropUndo</TITLE>
+GimpChannelPropUndo
+<SUBSECTION Standard>
+GIMP_CHANNEL_PROP_UNDO
+GIMP_IS_CHANNEL_PROP_UNDO
+GIMP_TYPE_CHANNEL_PROP_UNDO
+gimp_channel_prop_undo_get_type
+GIMP_CHANNEL_PROP_UNDO_CLASS
+GIMP_IS_CHANNEL_PROP_UNDO_CLASS
+GIMP_CHANNEL_PROP_UNDO_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpmaskundo</FILE>
+<TITLE>GimpMaskUndo</TITLE>
+GimpMaskUndo
+<SUBSECTION Standard>
+GIMP_MASK_UNDO
+GIMP_IS_MASK_UNDO
+GIMP_TYPE_MASK_UNDO
+gimp_mask_undo_get_type
+GIMP_MASK_UNDO_CLASS
+GIMP_IS_MASK_UNDO_CLASS
+GIMP_MASK_UNDO_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpguideundo</FILE>
+<TITLE>GimpGuideUndo</TITLE>
+GimpGuideUndo
+<SUBSECTION Standard>
+GIMP_GUIDE_UNDO
+GIMP_IS_GUIDE_UNDO
+GIMP_TYPE_GUIDE_UNDO
+gimp_guide_undo_get_type
+GIMP_GUIDE_UNDO_CLASS
+GIMP_IS_GUIDE_UNDO_CLASS
+GIMP_GUIDE_UNDO_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpsamplepointundo</FILE>
+<TITLE>GimpSamplePointUndo</TITLE>
+GimpSamplePointUndo
+<SUBSECTION Standard>
+GIMP_SAMPLE_POINT_UNDO
+GIMP_IS_SAMPLE_POINT_UNDO
+GIMP_TYPE_SAMPLE_POINT_UNDO
+gimp_sample_point_undo_get_type
+GIMP_SAMPLE_POINT_UNDO_CLASS
+GIMP_IS_SAMPLE_POINT_UNDO_CLASS
+GIMP_SAMPLE_POINT_UNDO_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimplayerundo</FILE>
+<TITLE>GimpLayerUndo</TITLE>
+GimpLayerUndo
+<SUBSECTION Standard>
+GIMP_LAYER_UNDO
+GIMP_IS_LAYER_UNDO
+GIMP_TYPE_LAYER_UNDO
+gimp_layer_undo_get_type
+GIMP_LAYER_UNDO_CLASS
+GIMP_IS_LAYER_UNDO_CLASS
+GIMP_LAYER_UNDO_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpchannelundo</FILE>
+<TITLE>GimpChannelUndo</TITLE>
+GimpChannelUndo
+<SUBSECTION Standard>
+GIMP_CHANNEL_UNDO
+GIMP_IS_CHANNEL_UNDO
+GIMP_TYPE_CHANNEL_UNDO
+gimp_channel_undo_get_type
+GIMP_CHANNEL_UNDO_CLASS
+GIMP_IS_CHANNEL_UNDO_CLASS
+GIMP_CHANNEL_UNDO_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimplayermaskundo</FILE>
+<TITLE>GimpLayerMaskUndo</TITLE>
+GimpLayerMaskUndo
+<SUBSECTION Standard>
+GIMP_LAYER_MASK_UNDO
+GIMP_IS_LAYER_MASK_UNDO
+GIMP_TYPE_LAYER_MASK_UNDO
+gimp_layer_mask_undo_get_type
+GIMP_LAYER_MASK_UNDO_CLASS
+GIMP_IS_LAYER_MASK_UNDO_CLASS
+GIMP_LAYER_MASK_UNDO_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpfloatingselundo</FILE>
+<TITLE>GimpFloatingSelUndo</TITLE>
+GimpFloatingSelUndo
+<SUBSECTION Standard>
+GIMP_FLOATING_SEL_UNDO
+GIMP_IS_FLOATING_SEL_UNDO
+GIMP_TYPE_FLOATING_SEL_UNDO
+gimp_floating_sel_undo_get_type
+GIMP_FLOATING_SEL_UNDO_CLASS
+GIMP_IS_FLOATING_SEL_UNDO_CLASS
+GIMP_FLOATING_SEL_UNDO_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpdrawablemodundo</FILE>
+<TITLE>GimpDrawableModUndo</TITLE>
+GimpDrawableModUndo
+<SUBSECTION Standard>
+GIMP_DRAWABLE_MOD_UNDO
+GIMP_IS_DRAWABLE_MOD_UNDO
+GIMP_TYPE_DRAWABLE_MOD_UNDO
+gimp_drawable_mod_undo_get_type
+GIMP_DRAWABLE_MOD_UNDO_CLASS
+GIMP_IS_DRAWABLE_MOD_UNDO_CLASS
+GIMP_DRAWABLE_MOD_UNDO_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimplayermaskpropundo</FILE>
+<TITLE>GimpLayerMaskPropUndo</TITLE>
+GimpLayerMaskPropUndo
+<SUBSECTION Standard>
+GIMP_LAYER_MASK_PROP_UNDO
+GIMP_IS_LAYER_MASK_PROP_UNDO
+GIMP_TYPE_LAYER_MASK_PROP_UNDO
+gimp_layer_mask_prop_undo_get_type
+GIMP_LAYER_MASK_PROP_UNDO_CLASS
+GIMP_IS_LAYER_MASK_PROP_UNDO_CLASS
+GIMP_LAYER_MASK_PROP_UNDO_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpenvirontable</FILE>
 <TITLE>GimpEnvironTable</TITLE>
 GimpEnvironTable
@@ -1463,11 +1645,11 @@ GIMP_STROKE_DESC_GET_CLASS
 <SECTION>
 <FILE>gimpdashpattern</FILE>
 <TITLE>GimpDashPattern</TITLE>
-gimp_dash_pattern_from_preset
-gimp_dash_pattern_from_segments
-gimp_dash_pattern_segments_set
-gimp_dash_pattern_from_value
-gimp_dash_pattern_value_set
+gimp_dash_pattern_new_from_preset
+gimp_dash_pattern_new_from_segments
+gimp_dash_pattern_fill_segments
+gimp_dash_pattern_from_value_array
+gimp_dash_pattern_to_value_array
 gimp_dash_pattern_copy
 gimp_dash_pattern_free
 </SECTION>
@@ -1513,7 +1695,6 @@ GimpToolOptions
 gimp_tool_options_reset
 gimp_tool_options_serialize
 gimp_tool_options_deserialize
-gimp_tool_options_build_filename
 <SUBSECTION Standard>
 GimpToolOptionsClass
 GIMP_TOOL_OPTIONS
@@ -1536,6 +1717,8 @@ gimp_undo_create_preview
 gimp_undo_refresh_preview
 gimp_undo_type_to_name
 gimp_undo_is_weak
+gimp_undo_get_age
+gimp_undo_reset_age
 <SUBSECTION Standard>
 GimpUndoClass
 GIMP_UNDO
@@ -2416,9 +2599,17 @@ gimp_paint_core_stroke_vectors
 </SECTION>
 
 <SECTION>
-<FILE>gimppaintcore-undo</FILE>
-<TITLE>GimpPaintCore-undo</TITLE>
-gimp_paint_core_real_push_undo
+<FILE>gimppaintcoreundo</FILE>
+<TITLE>GimpPaintCoreUndo</TITLE>
+GimpPaintCoreUndo
+<SUBSECTION Standard>
+GIMP_PAINT_CORE_UNDO
+GIMP_IS_PAINT_CORE_UNDO
+GIMP_TYPE_PAINT_CORE_UNDO
+gimp_paint_core_undo_get_type
+GIMP_PAINT_CORE_UNDO_CLASS
+GIMP_IS_PAINT_CORE_UNDO_CLASS
+GIMP_PAINT_CORE_UNDO_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -2492,7 +2683,6 @@ TIME_SMOOTHER_BUFFER
 <TITLE>GimpInk</TITLE>
 GimpInk
 gimp_ink_register
-gimp_ink_push_undo
 <SUBSECTION Standard>
 GimpInkClass
 GIMP_INK
@@ -4106,9 +4296,17 @@ GIMP_TRANSFORM_TOOL_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>gimptransformtool-undo</FILE>
-<TITLE>GimpTransformTool-undo</TITLE>
-gimp_transform_tool_push_undo
+<FILE>gimptransformtoolundo</FILE>
+<TITLE>GimpTransformToolUndo</TITLE>
+GimpTransformToolUndo
+<SUBSECTION Standard>
+GIMP_TRANSFORM_TOOL_UNDO
+GIMP_IS_TRANSFORM_TOOL_UNDO
+GIMP_TYPE_TRANSFORM_TOOL_UNDO
+gimp_transform_tool_undo_get_type
+GIMP_TRANSFORM_TOOL_UNDO_CLASS
+GIMP_IS_TRANSFORM_TOOL_UNDO_CLASS
+GIMP_TRANSFORM_TOOL_UNDO_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -7351,11 +7549,11 @@ gimp_image_get_next_guide
 <TITLE>GimpImage-sample-points</TITLE>
 GimpSamplePoint
 GIMP_SAMPLE_POINT_DRAW_SIZE
+gimp_sample_point_ref
+gimp_sample_point_unref
 gimp_image_add_sample_point
 gimp_image_add_sample_point_at_pos
 gimp_image_remove_sample_point
-gimp_image_sample_point_ref
-gimp_image_sample_point_unref
 gimp_image_move_sample_point
 gimp_image_find_sample_point
 </SECTION>
@@ -7440,8 +7638,6 @@ gimp_image_undo_push_image_type
 gimp_image_undo_push_image_size
 gimp_image_undo_push_image_resolution
 gimp_image_undo_push_image_grid
-gimp_image_undo_push_image_guide
-gimp_image_undo_push_image_sample_point
 gimp_image_undo_push_image_colormap
 gimp_image_undo_push_drawable
 gimp_image_undo_push_drawable_mod
@@ -7477,6 +7673,8 @@ gimp_image_undo_push_image_parasite
 gimp_image_undo_push_image_parasite_remove
 gimp_image_undo_push_item_parasite
 gimp_image_undo_push_item_parasite_remove
+gimp_image_undo_push_guide
+gimp_image_undo_push_sample_point
 gimp_image_undo_push_cantundo
 </SECTION>
 
@@ -8618,8 +8816,8 @@ GimpAnchor
 GIMP_ANCHOR
 GIMP_VALUE_HOLDS_ANCHOR
 gimp_anchor_new
+gimp_anchor_copy
 gimp_anchor_free
-gimp_anchor_duplicate
 <SUBSECTION Standard>
 GIMP_TYPE_ANCHOR
 gimp_anchor_get_type
@@ -9363,12 +9561,9 @@ error_console_clear_cmd_callback
 <FILE>file-commands</FILE>
 file_open_cmd_callback
 file_open_as_layers_cmd_callback
-file_open_from_image_cmd_callback
 file_open_location_cmd_callback
 file_last_opened_cmd_callback
 file_save_cmd_callback
-file_save_as_cmd_callback
-file_save_a_copy_cmd_callback
 file_save_template_cmd_callback
 file_revert_cmd_callback
 file_close_all_cmd_callback

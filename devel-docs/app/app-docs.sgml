@@ -254,8 +254,21 @@
       <title>The Image Undo System</title>
       <xi:include href="xml/gimpundo.xml" />
       <xi:include href="xml/gimpundostack.xml" />
+      <xi:include href="xml/gimpimageundo.xml" />
       <xi:include href="xml/gimpitemundo.xml" />
+      <xi:include href="xml/gimpitempropundo.xml" />
       <xi:include href="xml/gimpdrawableundo.xml" />
+      <xi:include href="xml/gimpdrawablemodundo.xml" />
+      <xi:include href="xml/gimpchannelundo.xml" />
+      <xi:include href="xml/gimpchannelpropundo.xml" />
+      <xi:include href="xml/gimplayerundo.xml" />
+      <xi:include href="xml/gimplayerpropundo.xml" />
+      <xi:include href="xml/gimplayermaskundo.xml" />
+      <xi:include href="xml/gimplayermaskpropundo.xml" />
+      <xi:include href="xml/gimpfloatingselundo.xml" />
+      <xi:include href="xml/gimpmaskundo.xml" />
+      <xi:include href="xml/gimpguideundo.xml" />
+      <xi:include href="xml/gimpsamplepointundo.xml" />
     </chapter>
 
     <chapter id="app-core-misc-objects">
@@ -403,7 +416,7 @@
       <title>The Paint Core &amp; Options</title>
       <xi:include href="xml/gimppaintcore.xml" />
       <xi:include href="xml/gimppaintcore-stroke.xml" />
-      <xi:include href="xml/gimppaintcore-undo.xml" />
+      <xi:include href="xml/gimppaintcoreundo.xml" />
       <xi:include href="xml/gimppaintoptions.xml" />
       <xi:include href="xml/gimpbrushcore.xml" />
       <xi:include href="xml/gimpbrushcore-kernels.xml" />
@@ -616,7 +629,7 @@
       <xi:include href="xml/gimpcropoptions.xml" />
       <xi:include href="xml/gimptransformoptions.xml" />
       <xi:include href="xml/gimptransformtool.xml" />
-      <xi:include href="xml/gimptransformtool-undo.xml" />
+      <xi:include href="xml/gimptransformtoolundo.xml" />
       <xi:include href="xml/gimpfliptool.xml" />
       <xi:include href="xml/gimpflipoptions.xml" />
       <xi:include href="xml/gimpperspectivetool.xml" />
