@@ -2,6 +2,10 @@
 
 	* app/Makefile.am (GTKDOC_LIBS): fixed linking of app-scan.
 
+	* app.types: added new undo classes.
+
+	* app-sections.txt: minor update.
+
 2007-01-12  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt: added gimp_get_default_unit().

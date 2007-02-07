@@ -6295,7 +6295,7 @@ gimp_text_editor_get_type
 <TITLE>GimpThumbBox</TITLE>
 GimpThumbBox
 gimp_thumb_box_new
-gimp_thumb_box_set_uri
+gimp_thumb_box_take_uri
 gimp_thumb_box_take_uris
 <SUBSECTION Standard>
 GimpThumbBoxClass
@@ -7151,8 +7151,6 @@ GIMP_COORDS_DEFAULT_VALUES
 GimpTattoo
 GimpInitStatusFunc
 GimpObjectFilterFunc
-GimpUndoPopFunc
-GimpUndoFreeFunc
 </SECTION>
 
 <SECTION>
