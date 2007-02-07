@@ -46,6 +46,9 @@
 
 #define SCALE_EPSILON 0.0001
 
+#define SCALE_EQUALS(a,b) (fabs ((a) - (b)) < SCALE_EPSILON)
+
+
 typedef struct _ScaleDialogData ScaleDialogData;
 
 struct _ScaleDialogData
@@ -273,7 +276,7 @@ gimp_display_shell_scale (GimpDisplayShell *shell,
   g_return_if_fail (shell->canvas != NULL);
 
   if (zoom_type == GIMP_ZOOM_TO &&
-      new_scale == gimp_zoom_model_get_factor (shell->zoom))
+      SCALE_EQUALS (new_scale, gimp_zoom_model_get_factor (shell->zoom)))
     return;
 
   x = shell->disp_width  / 2;
@@ -428,8 +431,8 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
   /*  Abort early if the values are all setup already. We don't
    *  want to inadvertently resize the window (bug #164281).
    */
-  if (gimp_zoom_model_get_factor (shell->zoom) == scale &&
-      shell->offset_x == offset_x                       &&
+  if (SCALE_EQUALS (gimp_zoom_model_get_factor (shell->zoom), scale) &&
+      shell->offset_x == offset_x &&
       shell->offset_y == offset_y)
     return;
 
@@ -507,7 +510,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
       return;
     }
 
-  if (fabs (shell->other_scale) < SCALE_EPSILON)
+  if (SCALE_EQUALS (shell->other_scale, 0.0))
     {
       /* other_scale not yet initialized */
       shell->other_scale = gimp_zoom_model_get_factor (shell->zoom);

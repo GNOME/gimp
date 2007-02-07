@@ -1,5 +1,10 @@
 2007-02-07  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-scale.c: don't compare floating
+	point numbers for equality.
+
+2007-02-07  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/gui.c: #define DBUS_API_SUBJECT_TO_CHANGE to fix
 	compilation with outdated versions of D-Bus.
 
