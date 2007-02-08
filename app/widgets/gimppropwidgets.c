@@ -554,17 +554,11 @@ typedef struct
   const gchar *numerator_property;
   const gchar *denominator_property;
   const gchar *fixed_aspect_property;
-  const gchar *width_property;
-  const gchar *height_property;
 } AspectData;
 
 static void  gimp_prop_ratio_entry_notify   (GObject    *config,
                                              GParamSpec *param_spec,
                                              GtkEntry   *entry);
-
-static void  gimp_prop_aspect_notify_aspect (GtkWidget  *widget,
-                                             GParamSpec *param_spec,
-                                             AspectData *data);
 static void  gimp_prop_aspect_ratio_changed (GtkWidget  *widget,
                                              AspectData *data);
 
@@ -574,21 +568,15 @@ static void  gimp_prop_aspect_ratio_changed (GtkWidget  *widget,
  * @config:                Object to which property is attached.
  * @numerator_property:    Name of double property for numerator.
  * @denominator_property:  Name of double property for denominator.
- * @fixed_aspect_property: Name of boolean property for fixed aspect.
- * @width_property:        Name of double property for width.
- * @height_property:       Name of double property for height.
+ * @fixed_aspect_property: Name of boolean property for fixed aspect (or %NULL).
  *
- * The @fixed_aspect_property, @width_property, and @height_property can
- * be set to #NULL, in which case the controls will not do anything
- * affecting or depending on these properties.
+ * Return value: a #GimpRatioEntry widget
  */
 GtkWidget *
 gimp_prop_aspect_ratio_new (GObject     *config,
                             const gchar *numerator_property,
                             const gchar *denominator_property,
-                            const gchar *fixed_aspect_property,
-                            const gchar *width_property,
-                            const gchar *height_property)
+                            const gchar *fixed_aspect_property)
 {
   AspectData *aspect_data;
   GtkWidget  *entry;
@@ -606,8 +594,6 @@ gimp_prop_aspect_ratio_new (GObject     *config,
   aspect_data->numerator_property    = numerator_property;
   aspect_data->denominator_property  = denominator_property;
   aspect_data->fixed_aspect_property = fixed_aspect_property;
-  aspect_data->width_property        = width_property;
-  aspect_data->height_property       = height_property;
 
   entry = gimp_ratio_entry_new ();
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 7);
@@ -618,9 +604,6 @@ gimp_prop_aspect_ratio_new (GObject     *config,
   gimp_ratio_entry_set_fraction (GIMP_RATIO_ENTRY (entry),
                                  numerator, denominator);
 
-  g_signal_connect (entry, "notify::aspect",
-                    G_CALLBACK (gimp_prop_aspect_notify_aspect),
-                    aspect_data);
   g_signal_connect (entry, "ratio-changed",
                     G_CALLBACK (gimp_prop_aspect_ratio_changed),
                     aspect_data);
@@ -654,39 +637,6 @@ gimp_prop_ratio_entry_notify (GObject    *config,
   gimp_ratio_entry_set_fraction (GIMP_RATIO_ENTRY (entry), num, denom);
 }
 
-static void
-gimp_prop_aspect_notify_aspect (GtkWidget  *widget,
-                                GParamSpec *param_spec,
-                                AspectData *data)
-{
-  gboolean  fixed_aspect = FALSE;
-
-  if (data->fixed_aspect_property)
-    {
-      g_object_get (data->config,
-                    data->fixed_aspect_property, &fixed_aspect,
-                    NULL);
-    }
-
-  if (! fixed_aspect)
-    return;
-
-  if (data->width_property && data->height_property)
-    {
-      gdouble  height;
-      gdouble  width;
-
-      g_object_get (data->config,
-                    data->width_property,  &width,
-                    data->height_property, &height,
-                    NULL);
-
-      g_object_set (data->config,
-                    data->width_property,  height,
-                    data->height_property, width,
-                    NULL);
-    }
-}
 
 static void
 gimp_prop_aspect_ratio_changed (GtkWidget  *widget,
