@@ -525,9 +525,11 @@ dialog_info_init (ModuleDialog *dialog,
 
       dialog->label[i] = gtk_label_new ("");
       gtk_misc_set_alignment (GTK_MISC (dialog->label[i]), 0.0, 0.5);
+      gtk_label_set_ellipsize (GTK_LABEL (dialog->label[i]),
+                               PANGO_ELLIPSIZE_END);
       gtk_table_attach (GTK_TABLE (dialog->table), dialog->label[i],
                         1, 2, i, i + 1,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
+                        GTK_EXPAND | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 2);
       gtk_widget_show (dialog->label[i]);
     }
 }
