@@ -351,6 +351,7 @@ gimp_enum_stock_box_new_with_range (GType         enum_type,
 
       button = gtk_radio_button_new (group);
 
+      gtk_button_set_relief (GTK_BUTTON (button), GTK_RELIEF_NONE);
       gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
 
       if (first_button && *first_button == NULL)
