@@ -1,5 +1,10 @@
 2007-02-08  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):
+	code cleanup. Pack the widgets the way we usually do this.
+
+2007-02-08  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-scale.c: applied patch from Robert
 	Helgesson. Adds documentation (bug #405760).
 
