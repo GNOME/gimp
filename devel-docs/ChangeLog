@@ -1,3 +1,9 @@
+2007-02-08  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt: updated.
+
+	* libgimpwidgets/tmpl/gimpratioentry.sgml: regenerated.
+
 2007-02-07  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am (GTKDOC_LIBS): fixed linking of app-scan.

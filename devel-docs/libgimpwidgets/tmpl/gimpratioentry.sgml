@@ -30,6 +30,11 @@ GimpRatioEntry
 
 @gimpratioentry: the object which received the signal.
 
+<!-- ##### ARG GimpRatioEntry:aspect ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG GimpRatioEntry:denominator ##### -->
 <para>
 
@@ -44,6 +49,15 @@ GimpRatioEntry
 <para>
 
 </para>
+
+<!-- ##### ENUM GimpAspectType ##### -->
+<para>
+
+</para>
+
+@GIMP_ASPECT_SQUARE: 
+@GIMP_ASPECT_PORTRAIT: 
+@GIMP_ASPECT_LANDSCAPE: 
 
 <!-- ##### FUNCTION gimp_ratio_entry_new ##### -->
 <para>
@@ -83,6 +97,24 @@ GimpRatioEntry
 
 
 <!-- ##### FUNCTION gimp_ratio_entry_get_ratio ##### -->
+<para>
+
+</para>
+
+@entry: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_ratio_entry_set_aspect ##### -->
+<para>
+
+</para>
+
+@entry: 
+@aspect: 
+
+
+<!-- ##### FUNCTION gimp_ratio_entry_get_aspect ##### -->
 <para>
 
 </para>

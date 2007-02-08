@@ -471,11 +471,14 @@ gimp_size_entry_update_policy_get_type
 <FILE>gimpratioentry</FILE>
 <TITLE>GimpRatioEntry</TITLE>
 GimpRatioEntry
+GimpAspectType
 gimp_ratio_entry_new
 gimp_ratio_entry_set_fraction
 gimp_ratio_entry_get_fraction
 gimp_ratio_entry_set_ratio
 gimp_ratio_entry_get_ratio
+gimp_ratio_entry_set_aspect
+gimp_ratio_entry_get_aspect
 <SUBSECTION Standard>
 GIMP_RATIO_ENTRY
 GIMP_IS_RATIO_ENTRY
@@ -485,6 +488,8 @@ GimpRatioEntryClass
 GIMP_RATIO_ENTRY_CLASS
 GIMP_IS_RATIO_ENTRY_CLASS
 GIMP_RATIO_ENTRY_GET_CLASS
+GIMP_TYPE_ASPECT_TYPE
+gimp_aspect_type_get_type
 </SECTION>
 
 <SECTION>
