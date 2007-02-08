@@ -718,7 +718,6 @@ gimp_curves_tool_dialog (GimpImageMapTool *image_map_tool)
   gimp_enum_stock_box_set_child_padding (hbox, padding, -1);
 
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 2);
-  gtk_box_set_spacing (GTK_BOX (hbox), 4);
 
   gtk_container_add (GTK_CONTAINER (frame), hbox);
   gtk_widget_show (hbox);

@@ -1,5 +1,20 @@
 2007-02-08  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpenumwidgets.c
+	(gimp_enum_stock_box_new_with_range): reduced default spacing.
+
+	* app/tools/gimpcurvestool.c (gimp_curves_tool_dialog): don't
+	increase the box's spacing.
+
+	* app/tools/gimprectangleoptions.c: added portrait/landscape
+	buttons.
+
+	* app/widgets/gimppropwidgets.c (gimp_prop_aspect_ratio_new):
+	reduced default width of entry.  Swap width and height when the
+	aspect changes and fixed-aspect is chosen.
+
+2007-02-08  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangleoptions.c
 	* app/widgets/gimppropwidgets.[ch]: cleaned out some cruft. Still
 	work in progress.

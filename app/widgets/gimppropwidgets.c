@@ -562,7 +562,8 @@ static void  gimp_prop_ratio_entry_notify   (GObject    *config,
                                              GParamSpec *param_spec,
                                              GtkEntry   *entry);
 
-static void  gimp_prop_aspect_ratio_flip    (GtkWidget  *widget,
+static void  gimp_prop_aspect_notify_aspect (GtkWidget  *widget,
+                                             GParamSpec *param_spec,
                                              AspectData *data);
 static void  gimp_prop_aspect_ratio_changed (GtkWidget  *widget,
                                              AspectData *data);
@@ -609,7 +610,7 @@ gimp_prop_aspect_ratio_new (GObject     *config,
   aspect_data->height_property       = height_property;
 
   entry = gimp_ratio_entry_new ();
-  gtk_entry_set_width_chars (GTK_ENTRY (entry), 9);
+  gtk_entry_set_width_chars (GTK_ENTRY (entry), 7);
 
   g_object_set_data (G_OBJECT (entry),
                      "gimp-ratio-entry-aspect-data", aspect_data);
@@ -617,6 +618,9 @@ gimp_prop_aspect_ratio_new (GObject     *config,
   gimp_ratio_entry_set_fraction (GIMP_RATIO_ENTRY (entry),
                                  numerator, denominator);
 
+  g_signal_connect (entry, "notify::aspect",
+                    G_CALLBACK (gimp_prop_aspect_notify_aspect),
+                    aspect_data);
   g_signal_connect (entry, "ratio-changed",
                     G_CALLBACK (gimp_prop_aspect_ratio_changed),
                     aspect_data);
@@ -651,13 +655,10 @@ gimp_prop_ratio_entry_notify (GObject    *config,
 }
 
 static void
-gimp_prop_aspect_ratio_flip (GtkWidget  *widget,
-                             AspectData *data)
+gimp_prop_aspect_notify_aspect (GtkWidget  *widget,
+                                GParamSpec *param_spec,
+                                AspectData *data)
 {
-  gdouble   numerator;
-  gdouble   denominator;
-  gdouble   height;
-  gdouble   width;
   gboolean  fixed_aspect = FALSE;
 
   if (data->fixed_aspect_property)
@@ -667,36 +668,23 @@ gimp_prop_aspect_ratio_flip (GtkWidget  *widget,
                     NULL);
     }
 
-  g_object_get (data->config,
-                data->numerator_property,   &numerator,
-                data->denominator_property, &denominator,
-                NULL);
+  if (! fixed_aspect)
+    return;
 
-  if (fixed_aspect)
+  if (data->width_property && data->height_property)
     {
-      if (data->width_property && data->height_property)
-        {
-          g_object_get (data->config,
-                        data->width_property,  &width,
-                        data->height_property, &height,
-                        NULL);
-        }
-    }
+      gdouble  height;
+      gdouble  width;
 
-  g_object_set (data->config,
-                data->numerator_property,   denominator,
-                data->denominator_property, numerator,
-                NULL);
+      g_object_get (data->config,
+                    data->width_property,  &width,
+                    data->height_property, &height,
+                    NULL);
 
-  if (fixed_aspect)
-    {
-      if (data->width_property && data->height_property)
-        {
-          g_object_set (data->config,
-                        data->width_property,  height,
-                        data->height_property, width,
-                        NULL);
-        }
+      g_object_set (data->config,
+                    data->width_property,  height,
+                    data->height_property, width,
+                    NULL);
     }
 }
 
