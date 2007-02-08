@@ -31,14 +31,18 @@
 #define GIMP_ERASER_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ERASER_OPTIONS, GimpEraserOptionsClass))
 
 
-typedef struct _GimpEraserOptions     GimpEraserOptions;
-typedef struct _GimpPaintOptionsClass GimpEraserOptionsClass;
+typedef struct _GimpEraserOptionsClass GimpEraserOptionsClass;
 
 struct _GimpEraserOptions
 {
-  GimpPaintOptions  paint_options;
+  GimpPaintOptions  parent_instance;
 
   gboolean          anti_erase;
+};
+
+struct _GimpEraserOptionsClass
+{
+  GimpPaintOptionsClass  parent_class;
 };
 
 

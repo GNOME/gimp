@@ -33,7 +33,6 @@
 #define GIMP_SMUDGE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SMUDGE, GimpSmudgeClass))
 
 
-typedef struct _GimpSmudge      GimpSmudge;
 typedef struct _GimpSmudgeClass GimpSmudgeClass;
 
 struct _GimpSmudge
@@ -47,7 +46,7 @@ struct _GimpSmudge
 
 struct _GimpSmudgeClass
 {
-  GimpBrushCoreClass parent_class;
+  GimpBrushCoreClass  parent_class;
 };
 
 

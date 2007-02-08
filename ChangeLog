@@ -1,3 +1,10 @@
+2007-02-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/paint-types.h
+	* app/paint/*.h: move opaque typedefs of object instances to
+	paint-types.h, don't typedef empty class stuctures as their parent
+	class (gtk-doc gets confused), cleanups.
+
 2007-02-08  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimprectangleoptions.c

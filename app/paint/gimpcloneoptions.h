@@ -31,7 +31,6 @@
 #define GIMP_CLONE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CLONE_OPTIONS, GimpCloneOptionsClass))
 
 
-typedef struct _GimpCloneOptions      GimpCloneOptions;
 typedef struct _GimpCloneOptionsClass GimpCloneOptionsClass;
 
 struct _GimpCloneOptions

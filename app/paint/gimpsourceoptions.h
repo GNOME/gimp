@@ -31,22 +31,21 @@
 #define GIMP_SOURCE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SOURCE_OPTIONS, GimpSourceOptionsClass))
 
 
-typedef struct _GimpSourceOptions      GimpSourceOptions;
 typedef struct _GimpSourceOptionsClass GimpSourceOptionsClass;
 
 struct _GimpSourceOptions
 {
-  GimpPaintOptions    parent_instance;
+  GimpPaintOptions     parent_instance;
 
-  GimpSourceAlignMode align_mode;
-  gboolean            sample_merged;
+  GimpSourceAlignMode  align_mode;
+  gboolean             sample_merged;
 
-  gboolean            use_source; /* not a property */
+  gboolean             use_source; /* not a property */
 };
 
 struct _GimpSourceOptionsClass
 {
-  GimpPaintOptionsClass parent_class;
+  GimpPaintOptionsClass  parent_class;
 };
 
 

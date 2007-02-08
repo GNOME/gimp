@@ -31,8 +31,7 @@
 #define GIMP_AIRBRUSH_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_AIRBRUSH_OPTIONS, GimpAirbrushOptionsClass))
 
 
-typedef struct _GimpAirbrushOptions   GimpAirbrushOptions;
-typedef struct _GimpPaintOptionsClass GimpAirbrushOptionsClass;
+typedef struct _GimpAirbrushOptionsClass GimpAirbrushOptionsClass;
 
 struct _GimpAirbrushOptions
 {
@@ -40,6 +39,11 @@ struct _GimpAirbrushOptions
 
   gdouble           rate;
   gdouble           pressure;
+};
+
+struct _GimpAirbrushOptionsClass
+{
+  GimpPaintOptionsClass  parent_class;
 };
 
 

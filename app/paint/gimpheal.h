@@ -31,7 +31,6 @@
 #define GIMP_HEAL_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_HEAL, GimpHealClass))
 
 
-typedef struct _GimpHeal      GimpHeal;
 typedef struct _GimpHealClass GimpHealClass;
 
 struct _GimpHeal

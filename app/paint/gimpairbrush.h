@@ -31,7 +31,6 @@
 #define GIMP_AIRBRUSH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_AIRBRUSH, GimpAirbrushClass))
 
 
-typedef struct _GimpAirbrush      GimpAirbrush;
 typedef struct _GimpAirbrushClass GimpAirbrushClass;
 
 struct _GimpAirbrush
@@ -45,7 +44,7 @@ struct _GimpAirbrush
 
 struct _GimpAirbrushClass
 {
-  GimpPaintbrushClass parent_class;
+  GimpPaintbrushClass  parent_class;
 };
 
 

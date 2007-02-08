@@ -31,14 +31,18 @@
 #define GIMP_SMUDGE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SMUDGE_OPTIONS, GimpSmudgeOptionsClass))
 
 
-typedef struct _GimpSmudgeOptions     GimpSmudgeOptions;
-typedef struct _GimpPaintOptionsClass GimpSmudgeOptionsClass;
+typedef struct _GimpSmudgeOptionsClass GimpSmudgeOptionsClass;
 
 struct _GimpSmudgeOptions
 {
-  GimpPaintOptions  paint_options;
+  GimpPaintOptions  parent_instance;
 
   gdouble           rate;
+};
+
+struct _GimpSmudgeOptionsClass
+{
+  GimpPaintOptionsClass  parent_class;
 };
 
 

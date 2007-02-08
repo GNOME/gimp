@@ -31,16 +31,20 @@
 #define GIMP_DODGE_BURN_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_DODGE_BURN_OPTIONS, GimpDodgeBurnOptionsClass))
 
 
-typedef struct _GimpDodgeBurnOptions  GimpDodgeBurnOptions;
-typedef struct _GimpPaintOptionsClass GimpDodgeBurnOptionsClass;
+typedef struct _GimpDodgeBurnOptionsClass GimpDodgeBurnOptionsClass;
 
 struct _GimpDodgeBurnOptions
 {
-  GimpPaintOptions   paint_options;
+  GimpPaintOptions   parent_instance;
 
   GimpDodgeBurnType  type;
   GimpTransferMode   mode;     /*highlights, midtones, shadows*/
   gdouble            exposure;
+};
+
+struct _GimpDodgeBurnOptionsClass
+{
+  GimpPaintOptionsClass  parent_class;
 };
 
 

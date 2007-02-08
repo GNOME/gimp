@@ -31,7 +31,6 @@
 #define GIMP_CONVOLVE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONVOLVE, GimpConvolveClass))
 
 
-typedef struct _GimpConvolve      GimpConvolve;
 typedef struct _GimpConvolveClass GimpConvolveClass;
 
 struct _GimpConvolve

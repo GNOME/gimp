@@ -36,7 +36,6 @@
 #define GIMP_INK_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_INK, GimpInkClass))
 
 
-typedef struct _GimpInk      GimpInk;
 typedef struct _GimpInkClass GimpInkClass;
 
 struct _GimpInk

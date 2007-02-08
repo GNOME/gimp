@@ -31,7 +31,6 @@
 #define GIMP_SOURCE_CORE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_SOURCE_CORE, GimpSourceCoreClass))
 
 
-typedef struct _GimpSourceCore      GimpSourceCore;
 typedef struct _GimpSourceCoreClass GimpSourceCoreClass;
 
 struct _GimpSourceCore

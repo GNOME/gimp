@@ -24,14 +24,45 @@
 #include "paint/paint-enums.h"
 
 
-/*  objects  */
+/*  paint cores  */
 
-typedef struct _GimpPaintCore     GimpPaintCore;
+typedef struct _GimpPaintCore        GimpPaintCore;
+typedef struct _GimpBrushCore        GimpBrushCore;
+typedef struct _GimpSourceCore       GimpSourceCore;
+
+typedef struct _GimpAirbrush         GimpAirbrush;
+typedef struct _GimpClone            GimpClone;
+typedef struct _GimpConvolve         GimpConvolve;
+typedef struct _GimpDodgeBurn        GimpDodgeBurn;
+typedef struct _GimpEraser           GimpEraser;
+typedef struct _GimpHeal             GimpHeal;
+typedef struct _GimpInk              GimpInk;
+typedef struct _GimpPaintbrush       GimpPaintbrush;
+typedef struct _GimpPencil           GimpPencil;
+typedef struct _GimpPerspectiveClone GimpPerspectiveClone;
+typedef struct _GimpSmudge           GimpSmudge;
+
+
+/*  paint options  */
+
+typedef struct _GimpPaintOptions            GimpPaintOptions;
+typedef struct _GimpSourceOptions           GimpSourceOptions;
+
+typedef struct _GimpAirbrushOptions         GimpAirbrushOptions;
+typedef struct _GimpCloneOptions            GimpCloneOptions;
+typedef struct _GimpConvolveOptions         GimpConvolveOptions;
+typedef struct _GimpDodgeBurnOptions        GimpDodgeBurnOptions;
+typedef struct _GimpEraserOptions           GimpEraserOptions;
+typedef struct _GimpInkOptions              GimpInkOptions;
+typedef struct _GimpPencilOptions           GimpPencilOptions;
+typedef struct _GimpPerspectiveCloneOptions GimpPerspectiveCloneOptions;
+typedef struct _GimpSmudgeOptions           GimpSmudgeOptions;
+
+
+/*  paint undos  */
+
 typedef struct _GimpPaintCoreUndo GimpPaintCoreUndo;
-typedef struct _GimpBrushCore     GimpBrushCore;
 typedef struct _GimpInkUndo       GimpInkUndo;
-
-typedef struct _GimpPaintOptions  GimpPaintOptions;
 
 
 /*  functions  */

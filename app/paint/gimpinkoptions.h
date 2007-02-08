@@ -31,12 +31,11 @@
 #define GIMP_INK_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_INK_OPTIONS, GimpInkOptionsClass))
 
 
-typedef struct _GimpInkOptions        GimpInkOptions;
-typedef struct _GimpPaintOptionsClass GimpInkOptionsClass;
+typedef struct _GimpInkOptionsClass GimpInkOptionsClass;
 
 struct _GimpInkOptions
 {
-  GimpPaintOptions  paint_options;
+  GimpPaintOptions  parent_instance;
 
   gdouble           size;
   gdouble           tilt_angle;
@@ -48,6 +47,11 @@ struct _GimpInkOptions
   GimpInkBlobType   blob_type;
   gdouble           blob_aspect;
   gdouble           blob_angle;
+};
+
+struct _GimpInkOptionsClass
+{
+  GimpPaintOptionsClass  parent_instance;
 };
 
 

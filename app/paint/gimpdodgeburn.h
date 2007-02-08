@@ -30,7 +30,6 @@
 #define GIMP_IS_DODGE_BURN_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_DODGE_BURN))
 
 
-typedef struct _GimpDodgeBurn      GimpDodgeBurn;
 typedef struct _GimpDodgeBurnClass GimpDodgeBurnClass;
 
 struct _GimpDodgeBurn
@@ -42,7 +41,7 @@ struct _GimpDodgeBurn
 
 struct _GimpDodgeBurnClass
 {
-  GimpBrushCoreClass parent_class;
+  GimpBrushCoreClass  parent_class;
 };
 
 

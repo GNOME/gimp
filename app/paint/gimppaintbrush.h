@@ -31,17 +31,16 @@
 #define GIMP_PAINTBRUSH_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PAINTBRUSH, GimpPaintbrushClass))
 
 
-typedef struct _GimpPaintbrush      GimpPaintbrush;
 typedef struct _GimpPaintbrushClass GimpPaintbrushClass;
 
 struct _GimpPaintbrush
 {
-  GimpBrushCore parent_instance;
+  GimpBrushCore  parent_instance;
 };
 
 struct _GimpPaintbrushClass
 {
-  GimpBrushCoreClass parent_class;
+  GimpBrushCoreClass  parent_class;
 };
 
 

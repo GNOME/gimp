@@ -31,19 +31,18 @@
 #define GIMP_PERSPECTIVE_CLONE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PERSPECTIVE_CLONE_OPTIONS, GimpPerspectiveCloneOptionsClass))
 
 
-typedef struct _GimpPerspectiveCloneOptions      GimpPerspectiveCloneOptions;
 typedef struct _GimpPerspectiveCloneOptionsClass GimpPerspectiveCloneOptionsClass;
 
 struct _GimpPerspectiveCloneOptions
 {
-  GimpCloneOptions         paint_instance;
+  GimpCloneOptions          paint_instance;
 
-  GimpPerspectiveCloneMode clone_mode;
+  GimpPerspectiveCloneMode  clone_mode;
 };
 
 struct _GimpPerspectiveCloneOptionsClass
 {
-  GimpCloneOptionsClass parent_class;
+  GimpCloneOptionsClass  parent_class;
 };
 
 

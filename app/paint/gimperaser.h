@@ -31,17 +31,16 @@
 #define GIMP_ERASER_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_ERASER, GimpEraserClass))
 
 
-typedef struct _GimpEraser      GimpEraser;
 typedef struct _GimpEraserClass GimpEraserClass;
 
 struct _GimpEraser
 {
-  GimpBrushCore parent_instance;
+  GimpBrushCore  parent_instance;
 };
 
 struct _GimpEraserClass
 {
-  GimpBrushCoreClass parent_class;
+  GimpBrushCoreClass  parent_class;
 };
 
 

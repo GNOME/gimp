@@ -31,7 +31,6 @@
 #define GIMP_PERSPECTIVE_CLONE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PERSPECTIVE_CLONE, GimpPerspectiveCloneClass))
 
 
-typedef struct _GimpPerspectiveClone      GimpPerspectiveClone;
 typedef struct _GimpPerspectiveCloneClass GimpPerspectiveCloneClass;
 
 struct _GimpPerspectiveClone

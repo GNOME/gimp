@@ -31,15 +31,19 @@
 #define GIMP_CONVOLVE_OPTIONS_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CONVOLVE_OPTIONS, GimpConvolveOptionsClass))
 
 
-typedef struct _GimpConvolveOptions   GimpConvolveOptions;
-typedef struct _GimpPaintOptionsClass GimpConvolveOptionsClass;
+typedef struct _GimpConvolveOptionsClass GimpConvolveOptionsClass;
 
 struct _GimpConvolveOptions
 {
-  GimpPaintOptions  paint_options;
+  GimpPaintOptions  parent_instance;
 
   GimpConvolveType  type;
   gdouble           rate;
+};
+
+struct _GimpConvolveOptionsClass
+{
+  GimpPaintOptionsClass  parent_class;
 };
 
 

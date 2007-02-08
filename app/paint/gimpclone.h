@@ -31,17 +31,16 @@
 #define GIMP_CLONE_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_CLONE, GimpCloneClass))
 
 
-typedef struct _GimpClone      GimpClone;
 typedef struct _GimpCloneClass GimpCloneClass;
 
 struct _GimpClone
 {
-  GimpSourceCore parent_instance;
+  GimpSourceCore  parent_instance;
 };
 
 struct _GimpCloneClass
 {
-  GimpSourceCoreClass parent_class;
+  GimpSourceCoreClass  parent_class;
 };
 
 
