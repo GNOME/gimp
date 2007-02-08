@@ -91,7 +91,7 @@ static void     gimp_rect_select_tool_cursor_update       (GimpTool          *to
                                                            GdkModifierType    state,
                                                            GimpDisplay       *display);
 static void     gimp_rect_select_tool_draw                (GimpDrawTool      *draw_tool);
-static void     gimp_rect_select_tool_select              (GimpRectangleTool *rect_tool,
+static gboolean gimp_rect_select_tool_select              (GimpRectangleTool *rect_tool,
                                                            gint               x,
                                                            gint               y,
                                                            gint               w,
@@ -483,7 +483,7 @@ gimp_rect_select_tool_cursor_update (GimpTool        *tool,
 }
 
 
-static void
+static gboolean
 gimp_rect_select_tool_select (GimpRectangleTool *rectangle,
                               gint               x,
                               gint               y,
@@ -517,6 +517,8 @@ gimp_rect_select_tool_select (GimpRectangleTool *rectangle,
     GIMP_RECT_SELECT_TOOL_GET_CLASS (rect_select)->select (rect_select,
                                                            operation,
                                                            x, y, w, h);
+
+  return rectangle_exists;
 }
 
 static void
@@ -743,11 +745,14 @@ gimp_rect_select_tool_rectangle_changed (GimpRectangleTool *rectangle)
                     "y2", &y2,
                     NULL);
 
-      gimp_rect_select_tool_select (rectangle, x1, y1, x2 - x1, y2 - y1);
-
-      /* save the undo that we got when executing */
-      rect_select->undo = gimp_undo_stack_peek (image->undo_stack);
-      rect_select->redo = NULL;
+      if (gimp_rect_select_tool_select (rectangle, x1, y1, x2 - x1, y2 - y1))
+        {
+          /* save the undo that we got when executing, but only if
+           * we actually selected something
+           */
+          rect_select->undo = gimp_undo_stack_peek (image->undo_stack);
+          rect_select->redo = NULL;
+        }
 
       if (! rect_select->use_saved_op)
         {
