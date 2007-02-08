@@ -1,5 +1,10 @@
 2007-02-08  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpratioentry.c (gimp_ratio_entry_set_fraction):
+	emit property change notifications.
+
+2007-02-08  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpenumwidgets.c
 	(gimp_enum_stock_box_new_with_range): use GTK_RELIEF_NONE for the
 	buttons.

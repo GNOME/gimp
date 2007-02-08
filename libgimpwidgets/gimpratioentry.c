@@ -23,17 +23,20 @@
 
 #include "config.h"
 
-#include <math.h>
 #include <string.h>
 
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "gimpwidgetstypes.h"
 
 #include "gimpratioentry.h"
 
+
 #define EPSILON 0.000001
+
 
 enum
 {
@@ -73,7 +76,7 @@ static void      gimp_ratio_entry_format_text    (GimpRatioEntry     *entry);
 static void      gimp_ratio_entry_parse_text     (GimpRatioEntry     *entry,
                                                   const gchar        *text);
 
-static gboolean gimp_ratio_entry_history_select (GtkEntryCompletion *completion,
+static gboolean  gimp_ratio_entry_history_select (GtkEntryCompletion *completion,
                                                   GtkTreeModel       *model,
                                                   GtkTreeIter        *iter,
                                                   GimpRatioEntry     *entry);
@@ -346,13 +349,15 @@ gimp_ratio_entry_set_fraction (GimpRatioEntry *entry,
                                gdouble         numerator,
                                gdouble         denominator)
 {
-  gdouble old_ratio;
+  GimpAspectType  old_aspect;
+  gdouble         old_ratio;
 
   g_return_if_fail (GIMP_IS_RATIO_ENTRY (entry));
 
-  old_ratio = entry->numerator / entry->denominator;
+  old_aspect = gimp_ratio_entry_get_aspect (entry);
+  old_ratio  = gimp_ratio_entry_get_ratio (entry);
 
-  entry->numerator = numerator;
+  entry->numerator   = numerator;
   entry->denominator = denominator;
 
   if (entry->denominator < 0)
@@ -366,8 +371,26 @@ gimp_ratio_entry_set_fraction (GimpRatioEntry *entry,
 
   gimp_ratio_entry_format_text (entry);
 
+  g_object_freeze_notify (G_OBJECT (entry));
+
+  g_object_notify (G_OBJECT (entry), "numerator");
+  g_object_notify (G_OBJECT (entry), "denominator");
+
   if (fabs (old_ratio - entry->numerator / entry->denominator) > EPSILON)
-    g_signal_emit (entry, entry_signals[RATIO_CHANGED], 0);
+    {
+      g_object_notify (G_OBJECT (entry), "ratio");
+
+      if (old_aspect != gimp_ratio_entry_get_aspect (entry))
+        g_object_notify (G_OBJECT (entry), "aspect");
+
+      g_object_thaw_notify (G_OBJECT (entry));
+
+      g_signal_emit (entry, entry_signals[RATIO_CHANGED], 0);
+    }
+  else
+    {
+      g_object_thaw_notify (G_OBJECT (entry));
+    }
 }
 
 /**
