@@ -141,6 +141,7 @@ static void     gimp_rectangle_tool_auto_shrink     (GimpRectangleTool *rectangl
 static GtkAnchorType gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private,
                                                      gint                     *w,
                                                      gint                     *h);
+static void     gimp_rectangle_tool_set_highlight   (GimpRectangleTool *rectangle);
 
 
 static guint gimp_rectangle_tool_signals[LAST_SIGNAL] = { 0 };
@@ -1667,7 +1668,6 @@ gimp_rectangle_tool_configure (GimpRectangleTool *rectangle)
   GimpDisplayShell         *shell;
   gint                      dx1, dx2;
   gint                      dy1, dy2;
-  gboolean                  highlight;
 
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
   options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
@@ -1675,21 +1675,9 @@ gimp_rectangle_tool_configure (GimpRectangleTool *rectangle)
   if (! tool->display)
     return;
 
+  gimp_rectangle_tool_set_highlight (rectangle);
+
   shell = GIMP_DISPLAY_SHELL (tool->display->shell);
-
-  g_object_get (options, "highlight", &highlight, NULL);
-
-  if (highlight)
-    {
-      GdkRectangle rect;
-
-      rect.x      = private->x1;
-      rect.y      = private->y1;
-      rect.width  = private->x2 - private->x1;
-      rect.height = private->y2 - private->y1;
-
-      gimp_display_shell_set_highlight (shell, &rect);
-    }
 
   gimp_display_shell_transform_xy (shell,
                                    private->x1, private->y1,
@@ -1991,28 +1979,7 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
     }
   else if (! strcmp (pspec->name, "highlight"))
     {
-      GimpDisplayShell *shell;
-      gboolean          highlight;
-
-      shell = GIMP_DISPLAY_SHELL (tool->display->shell);
-
-      g_object_get (options, "highlight", &highlight, NULL);
-
-      if (highlight)
-        {
-          GdkRectangle rect;
-
-          rect.x      = private->x1;
-          rect.y      = private->y1;
-          rect.width  = private->x2 - private->x1;
-          rect.height = private->y2 - private->y1;
-
-          gimp_display_shell_set_highlight (shell, &rect);
-        }
-      else
-        {
-          gimp_display_shell_set_highlight (shell, NULL);
-        }
+      gimp_rectangle_tool_set_highlight (rectangle);
     }
 }
 
@@ -2239,5 +2206,35 @@ gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private,
 
     default:
       return GTK_ANCHOR_CENTER;
+    }
+}
+
+static void
+gimp_rectangle_tool_set_highlight (GimpRectangleTool *rectangle)
+{
+  GimpTool             *tool      = GIMP_TOOL (rectangle);
+  GimpRectangleOptions *options   = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
+  GimpDisplayShell     *shell     = GIMP_DISPLAY_SHELL (tool->display->shell);
+  gboolean              highlight = FALSE;
+
+  g_object_get (options, "highlight", &highlight, NULL);
+
+  if (highlight)
+    {
+      GimpRectangleToolPrivate *private;
+      GdkRectangle              rect;
+
+      private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
+
+      rect.x      = private->x1;
+      rect.y      = private->y1;
+      rect.width  = private->x2 - private->x1;
+      rect.height = private->y2 - private->y1;
+
+      gimp_display_shell_set_highlight (shell, &rect);
+    }
+  else
+    {
+      gimp_display_shell_set_highlight (shell, NULL);
     }
 }

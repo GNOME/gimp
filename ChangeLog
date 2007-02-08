@@ -1,3 +1,8 @@
+2007-02-09  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangletool.c: moved duplicated code to
+	utility function gimp_rectangle_tool_set_highlight().
+
 2007-02-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/paint-types.h
