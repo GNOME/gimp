@@ -232,6 +232,7 @@ gimp_ratio_entry_init (GimpRatioEntry *entry)
   completion = g_object_new (GTK_TYPE_ENTRY_COMPLETION,
                              "model",
                              GIMP_RATIO_ENTRY_GET_CLASS (entry)->history,
+                             "inline-completion", TRUE,
                              NULL);
   gtk_entry_completion_set_text_column (completion, COLUMN_TEXT);
   gtk_entry_set_completion (GTK_ENTRY (entry), completion);
