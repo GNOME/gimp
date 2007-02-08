@@ -489,8 +489,8 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 {
   GimpRectangleOptionsPrivate *private;
 
-  GObject     *config  = G_OBJECT (tool_options);
-  GtkWidget   *vbox    = gimp_tool_options_gui (tool_options);
+  GObject     *config = G_OBJECT (tool_options);
+  GtkWidget   *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget   *button;
   GtkWidget   *combo;
   GtkWidget   *table;
@@ -599,15 +599,14 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, row, row + 1);
   gtk_widget_show (label);
 
-  gimp_prop_aspect_ratio_new (config,
-                              "aspect-numerator",
-                              "aspect-denominator",
-                              "fixed-aspect",
-                              "width",
-                              "height",
-                              3,
-                              GTK_TABLE (table),
-                              row, 2);
+  entry = gimp_prop_aspect_ratio_new (config,
+                                      "aspect-numerator",
+                                      "aspect-denominator",
+                                      "fixed-aspect",
+                                      "width",
+                                      "height");
+  gtk_table_attach_defaults (GTK_TABLE (table), entry, 2, 5, row, row + 1);
+  gtk_widget_show (entry);
 
   button = gimp_prop_check_button_new (config, "fixed-aspect", _("Fix"));
   gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
