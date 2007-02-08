@@ -75,6 +75,13 @@ static gdouble img2real                              (GimpDisplayShell *shell,
 
 /*  public functions  */
 
+/**
+ * gimp_display_shell_scale_setup:
+ * @shell:        the #GimpDisplayShell
+ *
+ * Prepares the display for drawing the image at current scale and offset.
+ * This preparation involves, for example, setting up scrollbars and rulers.
+ **/
 void
 gimp_display_shell_scale_setup (GimpDisplayShell *shell)
 {
@@ -193,8 +200,8 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
  * gimp_display_shell_scale_revert:
  * @shell:     the #GimpDisplayShell
  *
- * Reverts the display to the previously used scale.  If no previous scale
- * exist then the call does nothing.
+ * Reverts the display to the previously used scale. If no previous scale exist
+ * then the call does nothing.
  *
  * Return value: %TRUE if the scale was reverted, otherwise %FALSE.
  **/
@@ -230,6 +237,15 @@ gimp_display_shell_scale_can_revert (GimpDisplayShell *shell)
   return (shell->last_scale > SCALE_EPSILON);
 }
 
+/**
+ * gimp_display_shell_scale_set_dot_for_dot:
+ * @shell:        the #GimpDisplayShell
+ * @dot_for_dot:  whether "Dot for Dot" should be enabled
+ *
+ * If @dot_for_dot is set to %TRUE then the "Dot for Dot" mode (where image and
+ * screen pixels are of the same size) is activated. Dually, the mode is
+ * disabled if @dot_for_dot is %FALSE.
+ **/
 void
 gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
                                           gboolean          dot_for_dot)
@@ -361,6 +377,13 @@ gimp_display_shell_scale_to (GimpDisplayShell *shell,
                                       config->resize_windows_on_zoom);
 }
 
+/**
+ * gimp_display_shell_scale_fit_in:
+ * @shell:     the #GimpDisplayShell
+ *
+ * Sets the scale such that the entire image precisely fits in the display
+ * area.
+ **/
 void
 gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
 {
@@ -390,6 +413,13 @@ gimp_display_shell_scale_fit_in (GimpDisplayShell *shell)
   gimp_display_shell_scale (shell, GIMP_ZOOM_TO, zoom_factor);
 }
 
+/**
+ * gimp_display_shell_scale_fit_to:
+ * @shell:     the #GimpDisplayShell
+ *
+ * Sets the scale such that the entire display area is precisely filled by the
+ * image.
+ **/
 void
 gimp_display_shell_scale_fit_to (GimpDisplayShell *shell)
 {
@@ -419,6 +449,18 @@ gimp_display_shell_scale_fit_to (GimpDisplayShell *shell)
   gimp_display_shell_scale (shell, GIMP_ZOOM_TO, zoom_factor);
 }
 
+/**
+ * gimp_display_shell_scale_by_values:
+ * @shell:          the #GimpDisplayShell
+ * @scale:          the new scale
+ * @offset_x:       the new X offset
+ * @offset_y:       the new Y offset
+ * @resize_window:  whether the display window should be resized
+ *
+ * Directly sets the image scale and image offsets used by the display. If
+ * @resize_window is %TRUE then the display window is resized to better
+ * accomodate the image, see gimp_display_shell_shrink_wrap().
+ **/
 void
 gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
                                     gdouble           scale,
@@ -455,6 +497,13 @@ gimp_display_shell_scale_by_values (GimpDisplayShell *shell,
   gimp_display_shell_resume (shell);
 }
 
+/**
+ * gimp_display_shell_scale_shrink_wrap:
+ * @shell:          the #GimpDisplayShell
+ *
+ * Convenience function with the same functionality as
+ * gimp_display_shell_scale_resize(@shell, TRUE, TRUE).
+ **/
 void
 gimp_display_shell_scale_shrink_wrap (GimpDisplayShell *shell)
 {
@@ -463,6 +512,17 @@ gimp_display_shell_scale_shrink_wrap (GimpDisplayShell *shell)
   gimp_display_shell_scale_resize (shell, TRUE, TRUE);
 }
 
+/**
+ * gimp_display_shell_scale_resize:
+ * @shell:          the #GimpDisplayShell
+ * @resize_window:  whether the display window should be resized
+ * @redisplay:      whether the display window should be redrawn
+ *
+ * Function commonly called after a change in display scale to make the changes
+ * visible to the user. If @resize_window is %TRUE then the display window is
+ * resized to accomodate the display image as per
+ * gimp_display_shell_shrink_wrap().
+ **/
 void
 gimp_display_shell_scale_resize (GimpDisplayShell *shell,
                                  gboolean          resize_window,
@@ -491,6 +551,13 @@ gimp_display_shell_scale_resize (GimpDisplayShell *shell,
   gimp_display_shell_resume (shell);
 }
 
+/**
+ * gimp_display_shell_scale_dialog:
+ * @shell:          the #GimpDisplayShell
+ *
+ * Constructs and displays a dialog allowing the user to enter a custom display
+ * scale.
+ **/
 void
 gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
 {
