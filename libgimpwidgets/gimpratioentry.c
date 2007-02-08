@@ -3,6 +3,7 @@
  *
  * gimpratioentry.c
  * Copyright (C) 2006  Simon Budig  <simon@gimp.org>
+ * Copyright (C) 2007  Sven Neumann  <sven@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -46,6 +47,7 @@ enum
   PROP_RATIO,
   PROP_NUMERATOR,
   PROP_DENOMINATOR,
+  PROP_ASPECT
 };
 
 enum
@@ -126,6 +128,13 @@ gimp_ratio_entry_class_init (GimpRatioEntryClass *klass)
                                                         G_MINDOUBLE, G_MAXDOUBLE,
                                                         1.0,
                                                         GIMP_PARAM_READWRITE));
+  g_object_class_install_property (object_class, PROP_ASPECT,
+                                   g_param_spec_enum ("aspect",
+                                                      "Aspect", NULL,
+                                                      GIMP_TYPE_ASPECT_TYPE,
+                                                      GIMP_ASPECT_SQUARE,
+                                                      GIMP_PARAM_READWRITE));
+
 
   klass->history = gtk_list_store_new (NUM_COLUMNS,
                                        G_TYPE_DOUBLE, G_TYPE_DOUBLE,
@@ -145,15 +154,25 @@ gimp_ratio_entry_set_property (GObject      *object,
     case PROP_RATIO:
       gimp_ratio_entry_set_ratio (entry, g_value_get_double (value));
       break;
+
     case PROP_NUMERATOR:
       gimp_ratio_entry_set_fraction (entry,
                                      g_value_get_double (value),
                                      entry->denominator);
       break;
+
     case PROP_DENOMINATOR:
       gimp_ratio_entry_set_fraction (entry,
                                      entry->numerator,
                                      g_value_get_double (value));
+      break;
+
+    case PROP_ASPECT:
+      gimp_ratio_entry_set_aspect (entry, g_value_get_enum (value));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
@@ -171,11 +190,21 @@ gimp_ratio_entry_get_property (GObject    *object,
     case PROP_RATIO:
       g_value_set_double (value, gimp_ratio_entry_get_ratio (entry));
       break;
+
     case PROP_NUMERATOR:
       g_value_set_double (value, entry->numerator);
       break;
+
     case PROP_DENOMINATOR:
       g_value_set_double (value, entry->denominator);
+      break;
+
+    case PROP_ASPECT:
+      g_value_set_enum (value, gimp_ratio_entry_get_aspect (entry));
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
 }
@@ -314,8 +343,8 @@ gimp_ratio_entry_get_ratio (GimpRatioEntry *entry)
  **/
 void
 gimp_ratio_entry_set_fraction (GimpRatioEntry *entry,
-                               const gdouble   numerator,
-                               const gdouble   denominator)
+                               gdouble         numerator,
+                               gdouble         denominator)
 {
   gdouble old_ratio;
 
@@ -366,6 +395,68 @@ gimp_ratio_entry_get_fraction (GimpRatioEntry *entry,
 
   *numerator = entry->numerator;
   *denominator = entry->denominator;
+}
+
+/**
+ * gimp_ratio_entry_set_aspect:
+ * @entry: a #GimpRatioEntry widget
+ * @aspect: the new aspect
+ *
+ * Sets the aspect of the ratio by swapping the numerator and denominator
+ * (or setting them to 1.0 in case that @aspect is %GIMP_ASPECT_SQUARE).
+ *
+ * Since: GIMP 2.4
+ **/
+void
+gimp_ratio_entry_set_aspect (GimpRatioEntry *entry,
+                             GimpAspectType  aspect)
+{
+  g_return_if_fail (GIMP_IS_RATIO_ENTRY (entry));
+
+  if (gimp_ratio_entry_get_aspect (entry) == aspect)
+    return;
+
+  switch (aspect)
+    {
+    case GIMP_ASPECT_SQUARE:
+      gimp_ratio_entry_set_fraction (entry, 1.0, 1.0);
+      break;
+
+    case GIMP_ASPECT_LANDSCAPE:
+    case GIMP_ASPECT_PORTRAIT:
+      gimp_ratio_entry_set_fraction (entry,
+                                     entry->denominator, entry->numerator);
+      break;
+    }
+}
+
+/**
+ * gimp_ratio_entry_get_aspect:
+ * @entry: a #GimpRatioEntry widget
+ *
+ * Gets the aspect of the ratio displayed by a #GimpRatioEntry.
+ *
+ * Returns: The entry's current aspect.
+ *
+ * Since: GIMP 2.4
+ **/
+GimpAspectType
+gimp_ratio_entry_get_aspect (GimpRatioEntry *entry)
+{
+  g_return_val_if_fail (GIMP_IS_RATIO_ENTRY (entry), GIMP_ASPECT_SQUARE);
+
+  if (entry->numerator > entry->denominator)
+    {
+      return GIMP_ASPECT_LANDSCAPE;
+    }
+  else if (entry->numerator < entry->denominator)
+    {
+      return GIMP_ASPECT_PORTRAIT;
+    }
+  else
+    {
+      return GIMP_ASPECT_SQUARE;
+    }
 }
 
 static gboolean

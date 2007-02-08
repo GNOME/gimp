@@ -1,3 +1,14 @@
+2007-02-08  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/widgets-enums.c
+	* libgimpwidgets/gimpwidgetsenums.[ch]: moved enum GimpAspectType
+	to libgimpwidgets.
+
+	* libgimpwidgets/gimpratioentry.[ch]: added property "aspect" with
+	getters and setters.
+
+	* libgimpwidgets/gimpwidgets.def: updated.
+
 2007-02-08  Michael Natterer  <mitch@gimp.org>
 
 	Unbreak rectangle select tool undo handling a bit:

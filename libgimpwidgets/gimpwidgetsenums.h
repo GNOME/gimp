@@ -26,6 +26,18 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+#define GIMP_TYPE_ASPECT_TYPE (gimp_aspect_type_get_type ())
+
+GType gimp_aspect_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_ASPECT_SQUARE,    /*< desc="Square"    >*/
+  GIMP_ASPECT_PORTRAIT,  /*< desc="Portrait"  >*/
+  GIMP_ASPECT_LANDSCAPE  /*< desc="Landscape" >*/
+} GimpAspectType;
+
+
 #define GIMP_TYPE_CHAIN_POSITION (gimp_chain_position_get_type ())
 
 GType gimp_chain_position_get_type (void) G_GNUC_CONST;

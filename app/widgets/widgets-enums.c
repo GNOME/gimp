@@ -37,36 +37,6 @@ gimp_active_color_get_type (void)
 }
 
 GType
-gimp_aspect_type_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_ASPECT_SQUARE, "GIMP_ASPECT_SQUARE", "square" },
-    { GIMP_ASPECT_PORTRAIT, "GIMP_ASPECT_PORTRAIT", "portrait" },
-    { GIMP_ASPECT_LANDSCAPE, "GIMP_ASPECT_LANDSCAPE", "landscape" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_ASPECT_SQUARE, "GIMP_ASPECT_SQUARE", NULL },
-    { GIMP_ASPECT_PORTRAIT, N_("Portrait"), NULL },
-    { GIMP_ASPECT_LANDSCAPE, N_("Landscape"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpAspectType", values);
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_color_dialog_state_get_type (void)
 {
   static const GEnumValue values[] =

@@ -3,6 +3,7 @@
  *
  * gimpratioentry.h
  * Copyright (C) 2006  Simon Budig  <simon@gimp.org>
+ * Copyright (C) 2007  Sven Neumann  <sven@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -60,20 +61,24 @@ struct _GimpRatioEntryClass
 };
 
 
-GType       gimp_ratio_entry_get_type     (void) G_GNUC_CONST;
+GType           gimp_ratio_entry_get_type     (void) G_GNUC_CONST;
 
-GtkWidget * gimp_ratio_entry_new          (void);
+GtkWidget *     gimp_ratio_entry_new          (void);
 
-void        gimp_ratio_entry_set_fraction (GimpRatioEntry *entry,
-                                           gdouble         numerator,
-                                           gdouble         denominator);
-void        gimp_ratio_entry_get_fraction (GimpRatioEntry *entry,
-                                           gdouble        *numerator,
-                                           gdouble        *denominator);
+void            gimp_ratio_entry_set_fraction (GimpRatioEntry *entry,
+                                               gdouble         numerator,
+                                               gdouble         denominator);
+void            gimp_ratio_entry_get_fraction (GimpRatioEntry *entry,
+                                               gdouble        *numerator,
+                                               gdouble        *denominator);
 
-void        gimp_ratio_entry_set_ratio    (GimpRatioEntry *entry,
-                                           gdouble         ratio);
-gdouble     gimp_ratio_entry_get_ratio    (GimpRatioEntry *entry);
+void            gimp_ratio_entry_set_ratio    (GimpRatioEntry *entry,
+                                               gdouble         ratio);
+gdouble         gimp_ratio_entry_get_ratio    (GimpRatioEntry *entry);
+
+void            gimp_ratio_entry_set_aspect   (GimpRatioEntry *entry,
+                                               GimpAspectType  aspect);
+GimpAspectType  gimp_ratio_entry_get_aspect   (GimpRatioEntry *entry);
 
 
 G_END_DECLS

@@ -1,4 +1,5 @@
 EXPORTS
+	gimp_aspect_type_get_type
 	gimp_browser_add_search_types
 	gimp_browser_get_type
 	gimp_browser_new
@@ -268,10 +269,12 @@ EXPORTS
 	gimp_radio_group_new2
 	gimp_radio_group_set_active
 	gimp_random_seed_new
+	gimp_ratio_entry_get_aspect
 	gimp_ratio_entry_get_fraction
 	gimp_ratio_entry_get_ratio
 	gimp_ratio_entry_get_type
 	gimp_ratio_entry_new
+	gimp_ratio_entry_set_aspect
 	gimp_ratio_entry_set_fraction
 	gimp_ratio_entry_set_ratio
 	gimp_resolution_entry_attach_label

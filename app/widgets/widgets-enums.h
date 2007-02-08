@@ -35,18 +35,6 @@ typedef enum
 } GimpActiveColor;
 
 
-#define GIMP_TYPE_ASPECT_TYPE (gimp_aspect_type_get_type ())
-
-GType gimp_aspect_type_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_ASPECT_SQUARE,
-  GIMP_ASPECT_PORTRAIT,       /*< desc="Portrait"  >*/
-  GIMP_ASPECT_LANDSCAPE       /*< desc="Landscape" >*/
-} GimpAspectType;
-
-
 #define GIMP_TYPE_COLOR_DIALOG_STATE (gimp_color_dialog_state_get_type ())
 
 GType gimp_color_dialog_state_get_type (void) G_GNUC_CONST;
