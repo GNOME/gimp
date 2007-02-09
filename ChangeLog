@@ -1,3 +1,7 @@
+2007-02-09  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangleoptions.c: moved ratio entry up.
+
 2007-02-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/module-dialog.c (dialog_info_init): ellipsize the

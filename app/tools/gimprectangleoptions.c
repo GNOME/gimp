@@ -540,15 +540,52 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
+  /* Aspect */
+  frame = gimp_frame_new (NULL);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
+
+  button = gimp_prop_check_button_new (config, "fixed-aspect",
+                                       _("Fixed aspect ratio"));
+  gtk_frame_set_label_widget (GTK_FRAME (frame), button);
+  gtk_widget_show (button);
+
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
+  entry = gimp_prop_aspect_ratio_new (config,
+                                      "aspect-numerator",
+                                      "aspect-denominator",
+                                      "fixed-aspect");
+  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
+  gtk_widget_show (entry);
+
+  aspect = gimp_prop_enum_stock_box_new (G_OBJECT (entry),
+                                         "aspect", "gimp", -1, -1);
+  gtk_box_pack_start (GTK_BOX (hbox), aspect, FALSE, FALSE, 0);
+  gtk_widget_show (aspect);
+
+  /* hide "square" */
+  children = gtk_container_get_children (GTK_CONTAINER (aspect));
+  gtk_widget_hide (children->data);
+  g_list_free (children);
+
+  g_signal_connect (entry, "notify::aspect",
+                    G_CALLBACK (gimp_rectangle_options_notify_aspect),
+                    config);
+
+  /*  Highlight  */
   button = gimp_prop_check_button_new (config, "highlight",
                                        _("Highlight"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  table = gtk_table_new (6, 6, FALSE);
+  table = gtk_table_new (4, 6, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 3);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+  gtk_widget_show (table);
 
   /* X */
   entry = gimp_prop_size_entry_new (config, "x0", "unit", "%a",
@@ -594,39 +631,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gtk_table_attach_defaults (GTK_TABLE (table), button, 2, 3, row, row + 1);
   row++;
 
-  /* Aspect */
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, row, row + 1);
-  gtk_widget_show (hbox);
-
-  entry = gimp_prop_aspect_ratio_new (config,
-                                      "aspect-numerator",
-                                      "aspect-denominator",
-                                      "fixed-aspect");
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_show (entry);
-
-  aspect = gimp_prop_enum_stock_box_new (G_OBJECT (entry),
-                                         "aspect", "gimp", -1, -1);
-  gtk_box_pack_start (GTK_BOX (hbox), aspect, FALSE, FALSE, 0);
-  gtk_widget_show (aspect);
-
-  /* hide "square" */
-  children = gtk_container_get_children (GTK_CONTAINER (aspect));
-  gtk_widget_hide (children->data);
-  g_list_free (children);
-
-  g_signal_connect (entry, "notify::aspect",
-                    G_CALLBACK (gimp_rectangle_options_notify_aspect),
-                    config);
-
-  button = gimp_prop_check_button_new (config, "fixed-aspect", _("Fix"));
-  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
-  gtk_widget_show (button);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, 2, 3, row, row + 1);
-
-  gtk_widget_show (table);
-
+  /*  Guide  */
   hbox = gtk_hbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
