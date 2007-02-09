@@ -426,7 +426,6 @@ linux_input_read_event (GIOChannel   *io,
   GError               *error = NULL;
   struct input_event    ev;
   gsize                 n_bytes;
-  gint                  i;
 
   status = g_io_channel_read_chars (io,
                                     (gchar *) &ev,
@@ -469,7 +468,8 @@ linux_input_read_event (GIOChannel   *io,
   if (n_bytes == sizeof (struct input_event))
     {
       GimpController      *controller = GIMP_CONTROLLER (data);
-      GimpControllerEvent  cevent;
+      GimpControllerEvent  cevent     = { 0, };
+      gint                 i;
 
       switch (ev.type)
         {
@@ -495,22 +495,24 @@ linux_input_read_event (GIOChannel   *io,
                 cevent.any.source   = controller;
                 cevent.any.event_id = G_N_ELEMENTS (key_events) + i;
 
+                g_value_init (&cevent.value.value, G_TYPE_DOUBLE);
+
                 if (ev.value < 0)
                   {
-                    g_value_init (&cevent.value.value, G_TYPE_DOUBLE);
                     g_value_set_double (&cevent.value.value, -ev.value);
                   }
                 else
                   {
                     cevent.any.event_id++;
 
-                    g_value_init (&cevent.value.value, G_TYPE_DOUBLE);
                     g_value_set_double (&cevent.value.value, ev.value);
                   }
 
                 gimp_controller_event (controller, &cevent);
 
-                break;
+                g_value_unset (&cevent.value.value);
+
+               break;
               }
           break;
 

@@ -1,5 +1,10 @@
 2007-02-09  Michael Natterer  <mitch@gimp.org>
 
+	* modules/controller_linux_input.c (linux_input_read_event): fix
+	last commit a bit...
+
+2007-02-09  Michael Natterer  <mitch@gimp.org>
+
 	* modules/controller_linux_input.c (linux_input_read_event): emit
 	GIMP_CONTROLLER_EVENT_VALUE, not TRIGGER for movements on relative
 	axes. Reduces the number of events significantly. Now we can start
