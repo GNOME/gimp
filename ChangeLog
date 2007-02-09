@@ -1,3 +1,19 @@
+2007-02-09  Tor Lillqvist  <tml@novell.com>
+
+	* app/plug-in/gimpenvirontable.c
+	(gimp_environ_table_case_insensitive_hash)
+	(gimp_environ_table_case_insensitive_equal): Win32-only case-
+	insensitive hash and equality functions.
+	(gimp_environ_table_load): On Win32, use the above functions for
+	the vars hash table. This fixes the problem that occurs when the
+	actual PATH environment variable is spelled Path (as it seems to
+	often be), but the default.env file as set up by the installer
+	provides PATH. They didn't match so both would be passed to the
+	plug-in child process, and apparently which one then was used to
+	look for DLLs was more or less random. If it was the original
+	Path, it didn't contain the directories the installer put in PATH
+	in default.env, and plug-ins didn't find the DLLs.
+
 2007-02-09  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimprectangleoptions.c: moved ratio entry up.

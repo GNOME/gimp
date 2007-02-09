@@ -104,6 +104,35 @@ gimp_environ_table_new (void)
   return g_object_new (GIMP_TYPE_ENVIRON_TABLE, NULL);
 }
 
+#ifdef G_OS_WIN32
+
+static guint
+gimp_environ_table_case_insensitive_hash (gconstpointer v)
+{
+  gchar *p = g_ascii_strup ((const gchar *) v, -1);
+  guint retval = g_str_hash (p);
+
+  g_free (p);
+
+  return retval;
+}
+
+static gboolean
+gimp_environ_table_case_insensitive_equal (gconstpointer v1,
+                                           gconstpointer v2)
+{
+  gchar *string1 = g_ascii_strup ((const gchar *) v1, -1);
+  gchar *string2 = g_ascii_strup ((const gchar *) v2, -1);
+  gboolean retval = g_str_equal (string1, string2);
+
+  g_free (string1);
+  g_free (string2);
+  
+  return retval;
+}
+
+#endif
+
 void
 gimp_environ_table_load (GimpEnvironTable *environ_table,
                          const gchar      *env_path)
@@ -112,9 +141,16 @@ gimp_environ_table_load (GimpEnvironTable *environ_table,
 
   gimp_environ_table_clear (environ_table);
 
+#ifndef G_OS_WIN32
   environ_table->vars =
     g_hash_table_new_full (g_str_hash, g_str_equal,
                            g_free, gimp_environ_table_free_value);
+#else
+  environ_table->vars =
+    g_hash_table_new_full (gimp_environ_table_case_insensitive_hash,
+                           gimp_environ_table_case_insensitive_equal,
+                           g_free, gimp_environ_table_free_value);
+#endif
 
   gimp_datafiles_read_directories (env_path,
                                    G_FILE_TEST_EXISTS,
