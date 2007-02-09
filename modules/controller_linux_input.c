@@ -71,6 +71,7 @@ static const LinuxInputEvent key_events[] =
   { BTN_EXTRA,     "button-extra",     N_("Button Extra")     },
   { BTN_FORWARD,   "button-forward",   N_("Button Forward")   },
   { BTN_BACK,      "button-back",      N_("Button Forward")   },
+  { BTN_TASK,      "button-task",      N_("Button Task")      },
 #ifdef BTN_WHEEL
   { BTN_WHEEL,     "button-wheel",     N_("Button Wheel")     },
 #endif
@@ -347,6 +348,113 @@ linux_input_get_event_blurb (GimpController *controller,
     }
 }
 
+#define BITS_PER_LONG        (sizeof(long) * 8)
+#define NBITS(x)             ((((x)-1)/BITS_PER_LONG)+1)
+#define OFF(x)               ((x)%BITS_PER_LONG)
+#define BIT(x)               (1UL<<OFF(x))
+#define LONG(x)              ((x)/BITS_PER_LONG)
+#define test_bit(bit, array) ((array[LONG(bit)] >> OFF(bit)) & 1)
+
+static void
+linux_input_get_device_info (ControllerLinuxInput *controller,
+                             int                   fd)
+{
+  unsigned long evbit[NBITS (EV_MAX)];
+  unsigned long keybit[NBITS (KEY_MAX)];
+  unsigned long relbit[NBITS (REL_MAX)];
+  unsigned long absbit[NBITS (ABS_MAX)];
+
+  gint num_keys     = 0;
+  gint num_ext_keys = 0;
+  gint num_buttons  = 0;
+  gint num_rels     = 0;
+  gint num_abs      = 0;
+
+  /* get event type bits */
+  ioctl (fd, EVIOCGBIT (0, EV_MAX), evbit);
+
+  if (test_bit (EV_KEY, evbit))
+    {
+      gint i;
+
+      /* get keyboard bits */
+      ioctl (fd, EVIOCGBIT (EV_KEY, KEY_MAX), keybit);
+
+      /**  count typical keyboard keys only */
+      for (i = KEY_Q; i < KEY_M; i++)
+        if (test_bit (i, keybit))
+          {
+            num_keys++;
+
+            g_print ("%s: key 0x%02x present\n", G_STRFUNC, i);
+          }
+
+      g_print ("%s: #keys = %d\n", G_STRFUNC, num_keys);
+
+      for (i = KEY_OK; i < KEY_MAX; i++)
+        if (test_bit (i, keybit))
+          {
+            num_ext_keys++;
+
+            g_print ("%s: ext key 0x%02x present\n", G_STRFUNC, i);
+          }
+
+      g_print ("%s: #ext_keys = %d\n", G_STRFUNC, num_ext_keys);
+
+      for (i = BTN_MISC; i < KEY_OK; i++)
+        if (test_bit (i, keybit))
+          {
+            num_buttons++;
+
+            g_print ("%s: button 0x%02x present\n", G_STRFUNC, i);
+          }
+
+      g_print ("%s: #buttons = %d\n", G_STRFUNC, num_buttons);
+    }
+
+  if (test_bit (EV_REL, evbit))
+    {
+      gint i;
+
+      /* get bits for relative axes */
+      ioctl (fd, EVIOCGBIT (EV_REL, REL_MAX), relbit);
+
+      for (i = 0; i < REL_MAX; i++)
+        if (test_bit (i, relbit))
+          {
+            num_rels++;
+
+            g_print ("%s: rel 0x%02x present\n", G_STRFUNC, i);
+          }
+
+      g_print ("%s: #rels = %d\n", G_STRFUNC, num_rels);
+    }
+
+  if (test_bit (EV_ABS, evbit))
+    {
+      gint i;
+
+      /* get bits for absolute axes */
+      ioctl (fd, EVIOCGBIT (EV_ABS, ABS_MAX), absbit);
+
+      for (i = 0; i < ABS_MAX; i++)
+        if (test_bit (i, absbit))
+          {
+            struct input_absinfo absinfo;
+
+            num_abs++;
+
+            /* get info for the absolute axis */
+            ioctl (fd, EVIOCGABS (i), &absinfo);
+
+            g_print ("%s: abs 0x%02x present [%d..%d]\n", G_STRFUNC, i,
+                     absinfo.minimum, absinfo.maximum);
+          }
+
+      g_print ("%s: #abs = %d\n", G_STRFUNC, num_abs);
+    }
+}
+
 static gboolean
 linux_input_set_device (ControllerLinuxInput *controller,
                         const gchar          *device)
@@ -385,6 +493,8 @@ linux_input_set_device (ControllerLinuxInput *controller,
             {
               g_object_set (controller, "name", name, NULL);
             }
+
+          linux_input_get_device_info (controller, fd);
 
           state = g_strdup_printf (_("Reading from %s"), controller->device);
           g_object_set (controller, "state", state, NULL);
@@ -474,6 +584,8 @@ linux_input_read_event (GIOChannel   *io,
       switch (ev.type)
         {
         case EV_KEY:
+          g_print ("%s: EV_KEY code = 0x%02x\n", G_STRFUNC, ev.code);
+
           for (i = 0; i < G_N_ELEMENTS (key_events); i++)
             if (ev.code == key_events[i].code)
               {
@@ -488,6 +600,9 @@ linux_input_read_event (GIOChannel   *io,
           break;
 
         case EV_REL:
+          g_print ("%s: EV_REL code = 0x%02x (value = %d)\n", G_STRFUNC,
+                   ev.code, ev.value);
+
           for (i = 0; i < G_N_ELEMENTS (rel_events); i++)
             if (ev.code == rel_events[i].code)
               {
@@ -514,6 +629,11 @@ linux_input_read_event (GIOChannel   *io,
 
                break;
               }
+          break;
+
+        case EV_ABS:
+          g_print ("%s: EV_ABS code = 0x%02x (value = %d)\n", G_STRFUNC,
+                   ev.code, ev.value);
           break;
 
         default:
