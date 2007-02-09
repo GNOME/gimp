@@ -1,3 +1,10 @@
+2007-02-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/gimpenvirontable.c: renamed newly added functions to
+	gimp_environ_table_str_hash() and gimp_environ_table_str_equal()
+	and always use them. Move the #ifdef G_OS_WIN32 inside the
+	functions.
+
 2007-02-09  Tor Lillqvist  <tml@novell.com>
 
 	* app/plug-in/gimpenvirontable.c
