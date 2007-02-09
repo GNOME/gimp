@@ -468,17 +468,17 @@ linux_input_read_event (GIOChannel   *io,
 
   if (n_bytes == sizeof (struct input_event))
     {
+      GimpController      *controller = GIMP_CONTROLLER (data);
+      GimpControllerEvent  cevent;
+
       switch (ev.type)
         {
         case EV_KEY:
           for (i = 0; i < G_N_ELEMENTS (key_events); i++)
             if (ev.code == key_events[i].code)
               {
-                GimpController      *controller = GIMP_CONTROLLER (data);
-                GimpControllerEvent  cevent;
-
                 cevent.any.type     = GIMP_CONTROLLER_EVENT_TRIGGER;
-                cevent.any.source   = GIMP_CONTROLLER (data);
+                cevent.any.source   = controller;
                 cevent.any.event_id = i;
 
                 gimp_controller_event (controller, &cevent);
@@ -491,21 +491,24 @@ linux_input_read_event (GIOChannel   *io,
           for (i = 0; i < G_N_ELEMENTS (rel_events); i++)
             if (ev.code == rel_events[i].code)
               {
-                GimpController      *controller = GIMP_CONTROLLER (data);
-                GimpControllerEvent  cevent;
-                gint                 count;
-
-                cevent.any.type     = GIMP_CONTROLLER_EVENT_TRIGGER;
+                cevent.any.type     = GIMP_CONTROLLER_EVENT_VALUE;
                 cevent.any.source   = controller;
                 cevent.any.event_id = G_N_ELEMENTS (key_events) + i;
 
-                for (count = ev.value; count < 0; count++)
-                  gimp_controller_event (controller, &cevent);
+                if (ev.value < 0)
+                  {
+                    g_value_init (&cevent.value.value, G_TYPE_DOUBLE);
+                    g_value_set_double (&cevent.value.value, -ev.value);
+                  }
+                else
+                  {
+                    cevent.any.event_id++;
 
-                cevent.any.event_id++;
+                    g_value_init (&cevent.value.value, G_TYPE_DOUBLE);
+                    g_value_set_double (&cevent.value.value, ev.value);
+                  }
 
-                for (count = ev.value; count > 0; count--)
-                  gimp_controller_event (controller, &cevent);
+                gimp_controller_event (controller, &cevent);
 
                 break;
               }
