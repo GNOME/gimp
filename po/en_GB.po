@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.24\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-05 22:13+0000\n"
-"PO-Revision-Date: 2007-02-05 22:14-0000\n"
+"POT-Creation-Date: 2007-02-09 10:34+0000\n"
+"PO-Revision-Date: 2007-02-09 10:35-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: English, British\n"
 "MIME-Version: 1.0\n"
@@ -288,7 +288,7 @@ msgid "Drawable"
 msgstr "Drawable"
 
 #: ../app/actions/actions.c:138
-#: ../app/tools/tools-enums.c:180
+#: ../app/tools/tools-enums.c:148
 msgid "Edit"
 msgstr "Edit"
 
@@ -332,7 +332,7 @@ msgstr "Help"
 
 #: ../app/actions/actions.c:159
 #: ../app/core/core-enums.c:212
-#: ../app/tools/tools-enums.c:212
+#: ../app/tools/tools-enums.c:180
 msgid "Image"
 msgstr "Image"
 
@@ -410,7 +410,7 @@ msgstr "Text Editor"
 #: ../app/actions/dialogs-actions.c:65
 #: ../app/dialogs/dialogs.c:129
 #: ../app/dialogs/preferences-dialog.c:1753
-#: ../app/gui/gui.c:437
+#: ../app/gui/gui.c:438
 msgid "Tool Options"
 msgstr "Tool Options"
 
@@ -1071,7 +1071,7 @@ msgid "Close Dock"
 msgstr "Close Dock"
 
 #: ../app/actions/dock-actions.c:52
-#: ../app/actions/view-actions.c:115
+#: ../app/actions/view-actions.c:122
 msgid "_Open Display..."
 msgstr "_Open Display..."
 
@@ -1965,21 +1965,21 @@ msgstr "Zoom In"
 
 #: ../app/actions/gradient-editor-actions.c:371
 #: ../app/actions/palette-editor-actions.c:88
-#: ../app/actions/view-actions.c:243
-#: ../app/actions/view-actions.c:254
-#: ../app/actions/view-actions.c:255
+#: ../app/actions/view-actions.c:250
+#: ../app/actions/view-actions.c:261
+#: ../app/actions/view-actions.c:262
 msgid "Zoom in"
 msgstr "Zoom in"
 
 #: ../app/actions/gradient-editor-actions.c:376
-#: ../app/actions/view-actions.c:248
+#: ../app/actions/view-actions.c:255
 msgid "Zoom Out"
 msgstr "Zoom Out"
 
 #: ../app/actions/gradient-editor-actions.c:377
 #: ../app/actions/palette-editor-actions.c:94
-#: ../app/actions/view-actions.c:237
-#: ../app/actions/view-actions.c:249
+#: ../app/actions/view-actions.c:244
+#: ../app/actions/view-actions.c:256
 msgid "Zoom out"
 msgstr "Zoom out"
 
@@ -2473,7 +2473,7 @@ msgid "Raise this image's displays"
 msgstr "Raise this image's displays"
 
 #: ../app/actions/images-actions.c:53
-#: ../app/actions/view-actions.c:73
+#: ../app/actions/view-actions.c:74
 msgid "_New View"
 msgstr "_New View"
 
@@ -2911,12 +2911,12 @@ msgid "New color from background color"
 msgstr "New color from background colour"
 
 #: ../app/actions/palette-editor-actions.c:87
-#: ../app/actions/view-actions.c:242
+#: ../app/actions/view-actions.c:249
 msgid "Zoom _In"
 msgstr "Zoom _In"
 
 #: ../app/actions/palette-editor-actions.c:93
-#: ../app/actions/view-actions.c:236
+#: ../app/actions/view-actions.c:243
 msgid "Zoom _Out"
 msgstr "Zoom _Out"
 
@@ -3195,7 +3195,7 @@ msgid "Toggle _Quick Mask"
 msgstr "Toggle _Quick Mask"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:986
+#: ../app/display/gimpdisplayshell.c:990
 msgid "Toggle Quick Mask"
 msgstr "Toggle Quick Mask"
 
@@ -3859,233 +3859,247 @@ msgstr "Path to Selection"
 msgid "Stroke Path"
 msgstr "Stroke Path"
 
-#: ../app/actions/view-actions.c:65
+#: ../app/actions/view-actions.c:66
 msgid "_View"
 msgstr "_View"
 
-#: ../app/actions/view-actions.c:66
+#: ../app/actions/view-actions.c:67
 msgid "_Zoom"
 msgstr "_Zoom"
 
-#: ../app/actions/view-actions.c:67
+#: ../app/actions/view-actions.c:68
 msgid "_Padding Color"
 msgstr "_Padding Colour"
 
-#: ../app/actions/view-actions.c:69
+#: ../app/actions/view-actions.c:70
 msgid "Move to Screen"
 msgstr "Move to Screen"
 
-#: ../app/actions/view-actions.c:74
+#: ../app/actions/view-actions.c:75
 msgid "Create another view on this image"
 msgstr "Create another view on this image"
 
-#: ../app/actions/view-actions.c:79
+#: ../app/actions/view-actions.c:80
 msgid "_Close"
 msgstr "_Close"
 
-#: ../app/actions/view-actions.c:80
+#: ../app/actions/view-actions.c:81
 msgid "Close this image window"
 msgstr "Close this image window"
 
-#: ../app/actions/view-actions.c:85
+#: ../app/actions/view-actions.c:86
 msgid "_Fit Image in Window"
 msgstr "_Fit Image in Window"
 
-#: ../app/actions/view-actions.c:86
+#: ../app/actions/view-actions.c:87
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
 msgstr "Adjust the zoom ratio so that the image becomes fully visible"
 
-#: ../app/actions/view-actions.c:91
+#: ../app/actions/view-actions.c:92
 msgid "Fit Image _to Window"
 msgstr "Fit Image _to Window"
 
-#: ../app/actions/view-actions.c:92
+#: ../app/actions/view-actions.c:93
 msgid "Adjust the zoom ratio so that the window is used optimally"
 msgstr "Adjust the zoom ratio so that the window is used optimally"
 
-#: ../app/actions/view-actions.c:97
+#: ../app/actions/view-actions.c:98
+#: ../app/actions/view-actions.c:549
+msgid "Re_vert Zoom"
+msgstr "Re_vert Zoom"
+
+#: ../app/actions/view-actions.c:99
+msgid "Restore the previous zoom level"
+msgstr "Restore the previous zoom level"
+
+#: ../app/actions/view-actions.c:104
 msgid "Na_vigation Window"
 msgstr "Na_vigation Window"
 
-#: ../app/actions/view-actions.c:98
+#: ../app/actions/view-actions.c:105
 msgid "Show an overview window for this image"
 msgstr "Show an overview window for this image"
 
-#: ../app/actions/view-actions.c:103
+#: ../app/actions/view-actions.c:110
 msgid "Display _Filters..."
 msgstr "Display _Filters..."
 
-#: ../app/actions/view-actions.c:104
+#: ../app/actions/view-actions.c:111
 msgid "Configure filters applied to this view"
 msgstr "Configure filters applied to this view"
 
-#: ../app/actions/view-actions.c:109
+#: ../app/actions/view-actions.c:116
 msgid "Shrink _Wrap"
 msgstr "Shrink _Wrap"
 
-#: ../app/actions/view-actions.c:110
+#: ../app/actions/view-actions.c:117
 msgid "Reduce the image window to the size of the image display"
 msgstr "Reduce the image window to the size of the image display"
 
-#: ../app/actions/view-actions.c:116
+#: ../app/actions/view-actions.c:123
 msgid "Connect to another display"
 msgstr "Connect to another display"
 
-#: ../app/actions/view-actions.c:124
+#: ../app/actions/view-actions.c:131
 msgid "_Dot for Dot"
 msgstr "_Dot for Dot"
 
-#: ../app/actions/view-actions.c:125
+#: ../app/actions/view-actions.c:132
 msgid "A pixel on the screen represents an image pixel"
 msgstr "A pixel on the screen represents an image pixel"
 
-#: ../app/actions/view-actions.c:131
+#: ../app/actions/view-actions.c:138
 msgid "Show _Selection"
 msgstr "Show _Selection"
 
-#: ../app/actions/view-actions.c:132
+#: ../app/actions/view-actions.c:139
 msgid "Display the selection outline"
 msgstr "Display the selection outline"
 
-#: ../app/actions/view-actions.c:138
+#: ../app/actions/view-actions.c:145
 msgid "Show _Layer Boundary"
 msgstr "Show _Layer Boundary"
 
-#: ../app/actions/view-actions.c:139
+#: ../app/actions/view-actions.c:146
 msgid "Draw a border around the active layer"
 msgstr "Draw a border around the active layer"
 
-#: ../app/actions/view-actions.c:145
+#: ../app/actions/view-actions.c:152
 msgid "Show _Guides"
 msgstr "Show _Guides"
 
-#: ../app/actions/view-actions.c:151
+#: ../app/actions/view-actions.c:158
 msgid "S_how Grid"
 msgstr "S_how Grid"
 
-#: ../app/actions/view-actions.c:157
+#: ../app/actions/view-actions.c:164
 msgid "Show Sample Points"
 msgstr "Show Sample Points"
 
-#: ../app/actions/view-actions.c:163
+#: ../app/actions/view-actions.c:170
 msgid "Sn_ap to Guides"
 msgstr "Sn_ap to Guides"
 
-#: ../app/actions/view-actions.c:169
+#: ../app/actions/view-actions.c:176
 msgid "Sna_p to Grid"
 msgstr "Sna_p to Grid"
 
-#: ../app/actions/view-actions.c:175
+#: ../app/actions/view-actions.c:182
 msgid "Snap to _Canvas Edges"
 msgstr "Snap to _Canvas Edges"
 
-#: ../app/actions/view-actions.c:181
+#: ../app/actions/view-actions.c:188
 msgid "Snap t_o Active Path"
 msgstr "Snap t_o Active Path"
 
-#: ../app/actions/view-actions.c:187
+#: ../app/actions/view-actions.c:194
 msgid "Show _Menubar"
 msgstr "Show _Menubar"
 
-#: ../app/actions/view-actions.c:193
+#: ../app/actions/view-actions.c:200
 msgid "Show R_ulers"
 msgstr "Show R_ulers"
 
-#: ../app/actions/view-actions.c:199
+#: ../app/actions/view-actions.c:206
 msgid "Show Scroll_bars"
 msgstr "Show Scroll_bars"
 
-#: ../app/actions/view-actions.c:205
+#: ../app/actions/view-actions.c:212
 msgid "Show S_tatusbar"
 msgstr "Show S_tatusbar"
 
-#: ../app/actions/view-actions.c:211
+#: ../app/actions/view-actions.c:218
 msgid "Fullscr_een"
 msgstr "Fullscr_een"
 
-#: ../app/actions/view-actions.c:212
+#: ../app/actions/view-actions.c:219
 msgid "Toggle fullscreen view"
 msgstr "Toggle fullscreen view"
 
-#: ../app/actions/view-actions.c:273
+#: ../app/actions/view-actions.c:280
 msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600%)"
 
-#: ../app/actions/view-actions.c:278
+#: ../app/actions/view-actions.c:285
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800%)"
 
-#: ../app/actions/view-actions.c:283
+#: ../app/actions/view-actions.c:290
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400%)"
 
-#: ../app/actions/view-actions.c:288
+#: ../app/actions/view-actions.c:295
 msgid "_2:1  (200%)"
 msgstr "_2:1  (200%)"
 
-#: ../app/actions/view-actions.c:293
+#: ../app/actions/view-actions.c:300
 msgid "_1:1  (100%)"
 msgstr "_1:1  (100%)"
 
-#: ../app/actions/view-actions.c:294
+#: ../app/actions/view-actions.c:301
 msgid "Zoom 1:1"
 msgstr "Zoom 1:1"
 
-#: ../app/actions/view-actions.c:299
+#: ../app/actions/view-actions.c:306
 msgid "1:_2  (50%)"
 msgstr "1:_2  (50%)"
 
-#: ../app/actions/view-actions.c:304
+#: ../app/actions/view-actions.c:311
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25%)"
 
-#: ../app/actions/view-actions.c:309
+#: ../app/actions/view-actions.c:316
 msgid "1:_8  (12.5%)"
 msgstr "1:_8  (12.5%)"
 
-#: ../app/actions/view-actions.c:314
+#: ../app/actions/view-actions.c:321
 msgid "1:1_6  (6.25%)"
 msgstr "1:1_6  (6.25%)"
 
-#: ../app/actions/view-actions.c:319
+#: ../app/actions/view-actions.c:326
 msgid "Othe_r..."
 msgstr "Othe_r..."
 
-#: ../app/actions/view-actions.c:327
+#: ../app/actions/view-actions.c:334
 msgid "From _Theme"
 msgstr "From _Theme"
 
-#: ../app/actions/view-actions.c:332
+#: ../app/actions/view-actions.c:339
 msgid "_Light Check Color"
 msgstr "_Light Check Colour"
 
-#: ../app/actions/view-actions.c:337
+#: ../app/actions/view-actions.c:344
 msgid "_Dark Check Color"
 msgstr "_Dark Check Colour"
 
-#: ../app/actions/view-actions.c:342
+#: ../app/actions/view-actions.c:349
 msgid "Select _Custom Color..."
 msgstr "Select _Custom Colour..."
 
-#: ../app/actions/view-actions.c:347
+#: ../app/actions/view-actions.c:354
 msgid "As in _Preferences"
 msgstr "As in _Preferences"
 
-#: ../app/actions/view-actions.c:639
+#: ../app/actions/view-actions.c:541
+#, c-format
+msgid "Re_vert Zoom (%d%%)"
+msgstr "Re_vert Zoom (%d%%)"
+
+#: ../app/actions/view-actions.c:664
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "Othe_r (%s)..."
 
-#: ../app/actions/view-actions.c:648
+#: ../app/actions/view-actions.c:673
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Zoom (%s)"
 
-#: ../app/actions/view-commands.c:575
+#: ../app/actions/view-commands.c:585
 msgid "Set Canvas Padding Color"
 msgstr "Set Canvas Padding Colour"
 
-#: ../app/actions/view-commands.c:577
+#: ../app/actions/view-commands.c:587
 msgid "Set Custom Canvas Padding Color"
 msgstr "Set Custom Canvas Padding Colour"
 
@@ -4135,7 +4149,7 @@ msgstr "Alpha"
 
 #: ../app/base/base-enums.c:60
 #: ../app/display/gimpdisplayshell-title.c:226
-#: ../app/widgets/widgets-enums.c:114
+#: ../app/widgets/widgets-enums.c:84
 msgid "RGB"
 msgstr "RGB"
 
@@ -4645,7 +4659,7 @@ msgstr "First item"
 
 #: ../app/core/core-enums.c:213
 #: ../app/dialogs/dialogs.c:189
-#: ../app/tools/tools-enums.c:150
+#: ../app/tools/tools-enums.c:118
 msgid "Selection"
 msgstr "Selection"
 
@@ -4900,7 +4914,7 @@ msgstr "Merge paths"
 #: ../app/core/core-enums.c:890
 #: ../app/core/gimpimage-grid.c:58
 #: ../app/dialogs/grid-dialog.c:149
-#: ../app/tools/tools-enums.c:211
+#: ../app/tools/tools-enums.c:179
 msgid "Grid"
 msgstr "Grid"
 
@@ -4999,7 +5013,7 @@ msgstr "Cut"
 
 #: ../app/core/core-enums.c:880
 #: ../app/tools/gimptexttool.c:143
-#: ../app/widgets/widgets-enums.c:263
+#: ../app/widgets/widgets-enums.c:265
 msgid "Text"
 msgstr "Text"
 
@@ -6052,7 +6066,7 @@ msgid "Floating Selection to Layer"
 msgstr "Floating Selection to Layer"
 
 #: ../app/core/gimplayer.c:245
-#: ../app/tools/tools-enums.c:149
+#: ../app/tools/tools-enums.c:117
 msgid "Layer"
 msgstr "Layer"
 
@@ -6434,7 +6448,7 @@ msgid "Choose shade of gray based on:"
 msgstr "Choose shade of grey based on:"
 
 #: ../app/dialogs/dialogs-constructors.c:184
-#: ../app/gui/gui.c:167
+#: ../app/gui/gui.c:168
 #: ../app/gui/gui-message.c:146
 msgid "GIMP Message"
 msgstr "GIMP Message"
@@ -6647,11 +6661,13 @@ msgstr "Layer _name:"
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:133
 #: ../app/tools/gimpmeasuretool.c:987
+#: ../app/tools/gimprectangleoptions.c:557
 msgid "Width:"
 msgstr "Width:"
 
 #: ../app/dialogs/layer-options-dialog.c:139
 #: ../app/tools/gimpmeasuretool.c:1013
+#: ../app/tools/gimprectangleoptions.c:571
 msgid "Height:"
 msgstr "Height:"
 
@@ -7854,15 +7870,15 @@ msgstr "Switch to Move tool"
 msgid "Image saved to '%s'"
 msgstr "Image saved to '%s'"
 
-#: ../app/display/gimpdisplayshell.c:848
+#: ../app/display/gimpdisplayshell.c:852
 msgid "Access the image menu"
 msgstr "Access the image menu"
 
-#: ../app/display/gimpdisplayshell.c:957
+#: ../app/display/gimpdisplayshell.c:961
 msgid "Zoom image when window size changes"
 msgstr "Zoom image when window size changes"
 
-#: ../app/display/gimpdisplayshell.c:1007
+#: ../app/display/gimpdisplayshell.c:1011
 msgid "Navigate the image display"
 msgstr "Navigate the image display"
 
@@ -7935,19 +7951,19 @@ msgstr "Configure Colour Display Filters"
 msgid "Layer Select"
 msgstr "Layer Select"
 
-#: ../app/display/gimpdisplayshell-scale.c:480
+#: ../app/display/gimpdisplayshell-scale.c:598
 msgid "Zoom Ratio"
 msgstr "Zoom Ratio"
 
-#: ../app/display/gimpdisplayshell-scale.c:482
+#: ../app/display/gimpdisplayshell-scale.c:600
 msgid "Select Zoom Ratio"
 msgstr "Select Zoom Ratio"
 
-#: ../app/display/gimpdisplayshell-scale.c:525
+#: ../app/display/gimpdisplayshell-scale.c:643
 msgid "Zoom ratio:"
 msgstr "Zoom ratio:"
 
-#: ../app/display/gimpdisplayshell-scale.c:550
+#: ../app/display/gimpdisplayshell-scale.c:668
 msgid "Zoom:"
 msgstr "Zoom:"
 
@@ -8421,7 +8437,7 @@ msgstr ""
 "five dozen liquor jugs."
 
 #: ../app/text/gimptext-compat.c:108
-#: ../app/tools/gimptexttool.c:711
+#: ../app/tools/gimptexttool.c:708
 msgid "Add Text Layer"
 msgstr "Add Text Layer"
 
@@ -8699,7 +8715,7 @@ msgstr "Fill transparent areas"
 #: ../app/tools/gimpcolorpickeroptions.c:160
 #: ../app/tools/gimphealtool.c:103
 #: ../app/tools/gimpperspectiveclonetool.c:895
-#: ../app/tools/gimprectangleoptions.c:515
+#: ../app/tools/gimprectangleoptions.c:517
 #: ../app/tools/gimpselectionoptions.c:410
 msgid "Sample merged"
 msgstr "Sample merged"
@@ -9045,12 +9061,12 @@ msgstr "All Channels"
 msgid "Curve Type"
 msgstr "Curve Type"
 
-#: ../app/tools/gimpcurvestool.c:760
+#: ../app/tools/gimpcurvestool.c:759
 #: ../app/tools/gimplevelstool.c:665
 msgid "not a GIMP Levels file"
 msgstr "not a GIMP Levels file"
 
-#: ../app/tools/gimpcurvestool.c:774
+#: ../app/tools/gimpcurvestool.c:773
 #: ../app/tools/gimplevelstool.c:704
 msgid "parse error"
 msgstr "parse error"
@@ -9817,51 +9833,31 @@ msgstr "Posterise _levels:"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Use all visible layers when shrinking the selection"
 
-#: ../app/tools/gimprectangleoptions.c:509
+#: ../app/tools/gimprectangleoptions.c:511
 msgid "Auto shrink selection"
 msgstr "Auto shrink selection"
 
-#: ../app/tools/gimprectangleoptions.c:520
+#: ../app/tools/gimprectangleoptions.c:522
 msgid "Expand from center"
 msgstr "Expand from centre"
 
-#: ../app/tools/gimprectangleoptions.c:525
+#: ../app/tools/gimprectangleoptions.c:527
 msgid "Highlight"
 msgstr "Highlight"
 
-#: ../app/tools/gimprectangleoptions.c:542
-#: ../app/widgets/gimpcursorview.c:136
-#: ../app/widgets/gimpcursorview.c:158
-msgid "X"
-msgstr "X"
+#: ../app/tools/gimprectangleoptions.c:541
+msgid "X:"
+msgstr "X:"
 
-#: ../app/tools/gimprectangleoptions.c:554
-#: ../app/widgets/gimpcursorview.c:142
-#: ../app/widgets/gimpcursorview.c:164
-msgid "Y"
-msgstr "Y"
+#: ../app/tools/gimprectangleoptions.c:549
+msgid "Y:"
+msgstr "Y:"
 
-#: ../app/tools/gimprectangleoptions.c:566
-#: ../app/widgets/gimpgrideditor.c:257
-#: ../app/widgets/gimpgrideditor.c:289
-msgid "Width"
-msgstr "Width"
-
+#: ../app/tools/gimprectangleoptions.c:560
 #: ../app/tools/gimprectangleoptions.c:574
-#: ../app/tools/gimprectangleoptions.c:591
-#: ../app/tools/gimprectangleoptions.c:612
+#: ../app/tools/gimprectangleoptions.c:604
 msgid "Fix"
 msgstr "Fix"
-
-#: ../app/tools/gimprectangleoptions.c:581
-#: ../app/widgets/gimpgrideditor.c:259
-#: ../app/widgets/gimpgrideditor.c:291
-msgid "Height"
-msgstr "Height"
-
-#: ../app/tools/gimprectangleoptions.c:598
-msgid "Aspect"
-msgstr "Aspect"
 
 #: ../app/tools/gimprectangleselectoptions.c:155
 msgid "Rounded corners"
@@ -10109,16 +10105,16 @@ msgstr "Text Tool: Create or edit text layers"
 msgid "Te_xt"
 msgstr "Te_xt"
 
-#: ../app/tools/gimptexttool.c:758
+#: ../app/tools/gimptexttool.c:755
 msgid "GIMP Text Editor"
 msgstr "GIMP Text Editor"
 
+#: ../app/tools/gimptexttool.c:866
 #: ../app/tools/gimptexttool.c:869
-#: ../app/tools/gimptexttool.c:872
 msgid "Confirm Text Editing"
 msgstr "Confirm Text Editing"
 
-#: ../app/tools/gimptexttool.c:901
+#: ../app/tools/gimptexttool.c:898
 msgid ""
 "The layer you selected is a text layer but it has been modified using other tools. Editing the layer with the text tool will discard these modifications.\n"
 "\n"
@@ -10358,75 +10354,59 @@ msgid "There is no active layer or channel to stroke to"
 msgstr "There is no active layer or channel to stroke to"
 
 #: ../app/tools/tools-enums.c:26
-msgid "Pick only"
-msgstr "Pick only"
-
-#: ../app/tools/tools-enums.c:27
-msgid "Set foreground color"
-msgstr "Set foreground colour"
-
-#: ../app/tools/tools-enums.c:28
-msgid "Set background color"
-msgstr "Set background colour"
-
-#: ../app/tools/tools-enums.c:29
-msgid "Add to palette"
-msgstr "Add to palette"
-
-#: ../app/tools/tools-enums.c:58
 msgid "No guides"
 msgstr "No guides"
 
-#: ../app/tools/tools-enums.c:59
+#: ../app/tools/tools-enums.c:27
 msgid "Center lines"
 msgstr "Centre lines"
 
-#: ../app/tools/tools-enums.c:60
+#: ../app/tools/tools-enums.c:28
 msgid "Rule of thirds"
 msgstr "Rule of thirds"
 
-#: ../app/tools/tools-enums.c:61
+#: ../app/tools/tools-enums.c:29
 msgid "Golden sections"
 msgstr "Golden sections"
 
-#: ../app/tools/tools-enums.c:119
+#: ../app/tools/tools-enums.c:87
 msgid "Free select"
 msgstr "Free select"
 
-#: ../app/tools/tools-enums.c:120
+#: ../app/tools/tools-enums.c:88
 msgid "Fixed size"
 msgstr "Fixed size"
 
-#: ../app/tools/tools-enums.c:121
+#: ../app/tools/tools-enums.c:89
 msgid "Fixed aspect ratio"
 msgstr "Fixed aspect ratio"
 
-#: ../app/tools/tools-enums.c:151
+#: ../app/tools/tools-enums.c:119
 #: ../app/vectors/gimpvectors.c:191
 msgid "Path"
 msgstr "Path"
 
-#: ../app/tools/tools-enums.c:179
+#: ../app/tools/tools-enums.c:147
 msgid "Design"
 msgstr "Design"
 
-#: ../app/tools/tools-enums.c:181
+#: ../app/tools/tools-enums.c:149
 msgid "Move"
 msgstr "Move"
 
-#: ../app/tools/tools-enums.c:210
+#: ../app/tools/tools-enums.c:178
 msgid "Outline"
 msgstr "Outline"
 
-#: ../app/tools/tools-enums.c:213
+#: ../app/tools/tools-enums.c:181
 msgid "Image + Grid"
 msgstr "Image + Grid"
 
-#: ../app/tools/tools-enums.c:240
+#: ../app/tools/tools-enums.c:208
 msgid "Number of grid lines"
 msgstr "Number of grid lines"
 
-#: ../app/tools/tools-enums.c:241
+#: ../app/tools/tools-enums.c:209
 msgid "Grid line spacing"
 msgstr "Grid line spacing"
 
@@ -10947,6 +10927,16 @@ msgstr "Mouse Wheel"
 msgid "Mouse Wheel Events"
 msgstr "Mouse Wheel Events"
 
+#: ../app/widgets/gimpcursorview.c:136
+#: ../app/widgets/gimpcursorview.c:158
+msgid "X"
+msgstr "X"
+
+#: ../app/widgets/gimpcursorview.c:142
+#: ../app/widgets/gimpcursorview.c:164
+msgid "Y"
+msgstr "Y"
+
 #: ../app/widgets/gimpcursorview.c:145
 msgid "Units"
 msgstr "Units"
@@ -11068,97 +11058,92 @@ msgstr "File Type"
 msgid "Extensions"
 msgstr "Extensions"
 
-#: ../app/widgets/gimpgradienteditor.c:393
+#. Instant update toggle
+#: ../app/widgets/gimpgradienteditor.c:412
 msgid "Instant update"
 msgstr "Instant update"
 
-#: ../app/widgets/gimpgradienteditor.c:767
+#: ../app/widgets/gimpgradienteditor.c:786
 #, c-format
 msgid "Zoom factor: %d:1"
 msgstr "Zoom factor: %d:1"
 
-#: ../app/widgets/gimpgradienteditor.c:770
+#: ../app/widgets/gimpgradienteditor.c:789
 #, c-format
-msgid "Displaying [%0.6f, %0.6f]"
-msgstr "Displaying [%0.6f, %0.6f]"
+msgid "Displaying [%0.4f, %0.4f]"
+msgstr "Displaying [%0.4f, %0.4f]"
 
-#: ../app/widgets/gimpgradienteditor.c:983
+#: ../app/widgets/gimpgradienteditor.c:1008
 #, c-format
-msgid "Position: %0.6f"
-msgstr "Position: %0.6f"
+msgid "Position: %0.4f"
+msgstr "Position: %0.4f"
 
-#: ../app/widgets/gimpgradienteditor.c:984
+#: ../app/widgets/gimpgradienteditor.c:1009
 #, c-format
 msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpgradienteditor.c:986
+#: ../app/widgets/gimpgradienteditor.c:1011
 #, c-format
-msgid "HSV (%0.3f, %0.3f, %0.3f)"
-msgstr "HSV (%0.3f, %0.3f, %0.3f)"
+msgid "HSV (%0.1f, %0.1f, %0.1f)"
+msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 
-#: ../app/widgets/gimpgradienteditor.c:988
+#: ../app/widgets/gimpgradienteditor.c:1013
 #, c-format
-msgid "Luminance: %0.3f    Opacity: %0.3f"
-msgstr "Luminance: %0.3f    Opacity: %0.3f"
+msgid "Luminance: %0.1f    Opacity: %0.1f"
+msgstr "Luminance: %0.1f    Opacity: %0.1f"
 
-#: ../app/widgets/gimpgradienteditor.c:1020
-#: ../app/widgets/gimpgradienteditor.c:1054
+#: ../app/widgets/gimpgradienteditor.c:1044
 #, c-format
 msgid "RGB (%d, %d, %d)"
 msgstr "RGB (%d, %d, %d)"
 
-#: ../app/widgets/gimpgradienteditor.c:1028
+#: ../app/widgets/gimpgradienteditor.c:1055
 msgid "Foreground color set to:"
 msgstr "Foreground colour set to:"
 
-#: ../app/widgets/gimpgradienteditor.c:1059
-#, c-format
-msgid "(%0.3f, %0.3f, %0.3f)"
-msgstr "(%0.3f, %0.3f, %0.3f)"
-
-#: ../app/widgets/gimpgradienteditor.c:1063
+#: ../app/widgets/gimpgradienteditor.c:1062
 msgid "Background color set to:"
 msgstr "Background colour set to:"
 
-#: ../app/widgets/gimpgradienteditor.c:1272
-#: ../app/widgets/gimpgradienteditor.c:1338
+#: ../app/widgets/gimpgradienteditor.c:1273
+#: ../app/widgets/gimpgradienteditor.c:1339
 #, c-format
 msgid "%s%sDrag: move & compress"
 msgstr "%s%sDrag: move & compress"
 
-#: ../app/widgets/gimpgradienteditor.c:1278
+#: ../app/widgets/gimpgradienteditor.c:1279
 msgid "Drag: move"
 msgstr "Drag: move"
 
-#: ../app/widgets/gimpgradienteditor.c:1285
-#: ../app/widgets/gimpgradienteditor.c:1299
-#: ../app/widgets/gimpgradienteditor.c:1313
-#: ../app/widgets/gimpgradienteditor.c:1335
+#: ../app/widgets/gimpgradienteditor.c:1286
+#: ../app/widgets/gimpgradienteditor.c:1300
+#: ../app/widgets/gimpgradienteditor.c:1314
+#: ../app/widgets/gimpgradienteditor.c:1336
 #, c-format
 msgid "%s%sClick: extend selection"
 msgstr "%s%sClick: extend selection"
 
-#: ../app/widgets/gimpgradienteditor.c:1291
-#: ../app/widgets/gimpgradienteditor.c:1305
+#: ../app/widgets/gimpgradienteditor.c:1292
+#: ../app/widgets/gimpgradienteditor.c:1306
 msgid "Click: select"
 msgstr "Click: select"
 
-#: ../app/widgets/gimpgradienteditor.c:1319
-#: ../app/widgets/gimpgradienteditor.c:1343
+#: ../app/widgets/gimpgradienteditor.c:1320
+#: ../app/widgets/gimpgradienteditor.c:1344
 msgid "Click: select    Drag: move"
 msgstr "Click: select    Drag: move"
 
-#: ../app/widgets/gimpgradienteditor.c:1558
-#: ../app/widgets/gimpgradienteditor.c:1566
+#: ../app/widgets/gimpgradienteditor.c:1559
+#: ../app/widgets/gimpgradienteditor.c:1567
 #, c-format
-msgid "Handle position: %0.6f"
-msgstr "Handle position: %0.6f"
+msgid "Handle position: %0.4f"
+msgstr "Handle position: %0.4f"
 
-#: ../app/widgets/gimpgradienteditor.c:1583
+#: ../app/widgets/gimpgradienteditor.c:1584
 #, c-format
-msgid "Distance: %0.6f"
-msgstr "Distance: %0.6f"
+msgid "Distance: %0.4f"
+msgstr "Distance: %0.4f"
 
 #: ../app/widgets/gimpgrideditor.c:209
 msgid "Line _style:"
@@ -11183,6 +11168,16 @@ msgstr "_Background colour:"
 #: ../app/widgets/gimpgrideditor.c:236
 msgid "Spacing"
 msgstr "Spacing"
+
+#: ../app/widgets/gimpgrideditor.c:257
+#: ../app/widgets/gimpgrideditor.c:289
+msgid "Width"
+msgstr "Width"
+
+#: ../app/widgets/gimpgrideditor.c:259
+#: ../app/widgets/gimpgrideditor.c:291
+msgid "Height"
+msgstr "Height"
 
 #: ../app/widgets/gimphelp.c:193
 msgid "Help browser not found"
@@ -11375,14 +11370,6 @@ msgstr "ICC color profile (*.icc, *.icm)"
 #: ../app/widgets/gimpprogressdialog.c:220
 msgid "Progress"
 msgstr "Progress"
-
-#: ../app/widgets/gimppropwidgets.c:666
-msgid "1:1"
-msgstr "1:1"
-
-#: ../app/widgets/gimppropwidgets.c:673
-msgid "Set"
-msgstr "Set"
 
 #: ../app/widgets/gimpselectiondata.c:258
 #, c-format
@@ -11667,87 +11654,95 @@ msgstr "Invalid UTF-8 data in file '%s'."
 msgid "Foreground"
 msgstr "Foreground"
 
-#: ../app/widgets/widgets-enums.c:53
-msgid "Portrait"
-msgstr "Portrait"
-
-#: ../app/widgets/widgets-enums.c:54
-msgid "Landscape"
-msgstr "Landscape"
-
-#: ../app/widgets/widgets-enums.c:113
+#: ../app/widgets/widgets-enums.c:83
 msgid "Pixel"
 msgstr "Pixel"
 
-#: ../app/widgets/widgets-enums.c:115
+#: ../app/widgets/widgets-enums.c:85
 msgid "HSV"
 msgstr "HSV"
 
-#: ../app/widgets/widgets-enums.c:116
+#: ../app/widgets/widgets-enums.c:86
 msgid "CMYK"
 msgstr "CMYK"
 
-#: ../app/widgets/widgets-enums.c:171
+#: ../app/widgets/widgets-enums.c:115
+msgid "Pick only"
+msgstr "Pick only"
+
+#: ../app/widgets/widgets-enums.c:116
+msgid "Set foreground color"
+msgstr "Set foreground colour"
+
+#: ../app/widgets/widgets-enums.c:117
+msgid "Set background color"
+msgstr "Set background colour"
+
+#: ../app/widgets/widgets-enums.c:118
+msgid "Add to palette"
+msgstr "Add to palette"
+
+#: ../app/widgets/widgets-enums.c:173
 msgid "Black & white"
 msgstr "Black & white"
 
-#: ../app/widgets/widgets-enums.c:172
+#: ../app/widgets/widgets-enums.c:174
 msgid "Fancy"
 msgstr "Fancy"
 
-#: ../app/widgets/widgets-enums.c:199
+#: ../app/widgets/widgets-enums.c:201
 msgid "GIMP help browser"
 msgstr "GIMP help browser"
 
-#: ../app/widgets/widgets-enums.c:200
+#: ../app/widgets/widgets-enums.c:202
 msgid "Web browser"
 msgstr "Web browser"
 
-#: ../app/widgets/widgets-enums.c:227
+#: ../app/widgets/widgets-enums.c:229
 msgid "Linear"
 msgstr "Linear"
 
-#: ../app/widgets/widgets-enums.c:228
+#: ../app/widgets/widgets-enums.c:230
 msgid "Logarithmic"
 msgstr "Logarithmic"
 
-#: ../app/widgets/widgets-enums.c:261
+#: ../app/widgets/widgets-enums.c:263
 msgid "Icon"
 msgstr "Icon"
 
-#: ../app/widgets/widgets-enums.c:262
+#: ../app/widgets/widgets-enums.c:264
 msgid "Current status"
 msgstr "Current status"
 
-#: ../app/widgets/widgets-enums.c:264
+#: ../app/widgets/widgets-enums.c:266
 msgid "Description"
 msgstr "Description"
 
-#: ../app/widgets/widgets-enums.c:265
+#: ../app/widgets/widgets-enums.c:267
 msgid "Icon & text"
 msgstr "Icon & text"
 
-#: ../app/widgets/widgets-enums.c:266
+#: ../app/widgets/widgets-enums.c:268
 msgid "Icon & desc"
 msgstr "Icon & desc"
 
-#: ../app/widgets/widgets-enums.c:267
+#: ../app/widgets/widgets-enums.c:269
 msgid "Status & text"
 msgstr "Status & text"
 
-#: ../app/widgets/widgets-enums.c:268
+#: ../app/widgets/widgets-enums.c:270
 msgid "Status & desc"
 msgstr "Status & desc"
 
-#: ../app/widgets/widgets-enums.c:296
+#: ../app/widgets/widgets-enums.c:298
 msgid "Normal window"
 msgstr "Normal window"
 
-#: ../app/widgets/widgets-enums.c:297
+#: ../app/widgets/widgets-enums.c:299
 msgid "Utility window"
 msgstr "Utility window"
 
-#: ../app/widgets/widgets-enums.c:298
+#: ../app/widgets/widgets-enums.c:300
 msgid "Keep above"
 msgstr "Keep above"
 
@@ -11845,6 +11840,18 @@ msgstr "Make sure that the Toolbox is visible!"
 msgid "Couldn't start '%s': %s"
 msgstr "Couldn't start '%s': %s"
 
+#~ msgid "Aspect"
+#~ msgstr "Aspect"
+#~ msgid "(%0.3f, %0.3f, %0.3f)"
+#~ msgstr "(%0.3f, %0.3f, %0.3f)"
+#~ msgid "1:1"
+#~ msgstr "1:1"
+#~ msgid "Set"
+#~ msgstr "Set"
+#~ msgid "Portrait"
+#~ msgstr "Portrait"
+#~ msgid "Landscape"
+#~ msgstr "Landscape"
 #~ msgid "(This console window will close in ten seconds)\n"
 #~ msgstr "(This console window will close in ten seconds)\n"
 #~ msgid "%d hour"
@@ -13289,8 +13296,6 @@ msgstr "Couldn't start '%s': %s"
 #~ msgstr "Pixel values"
 #~ msgid "Keep aspect ratio"
 #~ msgstr "Keep aspect ratio"
-#~ msgid "Y:"
-#~ msgstr "Y:"
 #~ msgid "Transformations do not work on layers that contain layer masks."
 #~ msgstr "Transformations do not work on layers that contain layer masks."
 #~ msgid "Main Keyboard"
