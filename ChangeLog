@@ -1,5 +1,20 @@
 2007-02-10  Michael Natterer  <mitch@gimp.org>
 
+	Made templates say "ppi" instead of "dpi". Fixes bug #376990:
+
+	* app/core/gimp-templates.c
+	(gimp_templates_migrate_get_child_by_name): find the child also
+	if the name differs only in the substrings "dpi" and "ppi".
+
+	* app/core/gimpcontainer.c (gimp_container_deserialize): if we
+	found a child, give it the deserialized name if it isn't the same
+	as its old name.
+
+	* etc/templaterc: applied patch from Michael Schumacher that
+	replaces "dpi" by "ppi".
+
+2007-02-10  Michael Natterer  <mitch@gimp.org>
+
 	* modules/controller_linux_input.c: added some code stolen from
 	DirectFB and forgotten on my disk a long time ago which queries
 	the input device for available keys and axes (just for debugging

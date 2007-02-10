@@ -114,23 +114,47 @@ gimp_templates_save (Gimp *gimp)
 }
 
 
-/*  just like gimp_list_get_child_by_name() but matches case-insensitive  */
+/*  just like gimp_list_get_child_by_name() but matches case-insensitive
+ *  and dpi/ppi-insensitive
+ */
 static GimpObject *
 gimp_templates_migrate_get_child_by_name (const GimpContainer *container,
                                           const gchar         *name)
 {
-  GimpList *list = GIMP_LIST (container);
-  GList    *glist;
+  GimpList   *list   = GIMP_LIST (container);
+  GimpObject *retval = NULL;
+  GList      *glist;
 
   for (glist = list->list; glist; glist = g_list_next (glist))
     {
       GimpObject *object = glist->data;
+      gchar      *str1   = g_ascii_strdown (object->name, -1);
+      gchar      *str2   = g_ascii_strdown (name, -1);
 
-      if (! g_ascii_strcasecmp (object->name, name))
-        return object;
+      if (! strcmp (str1, str2))
+        {
+          retval = object;
+        }
+      else
+        {
+          gchar *dpi = strstr (str1, "dpi");
+
+          if (dpi)
+            {
+              strncpy (dpi, "ppi", 3);
+
+              g_print ("replaced: %s\n", str1);
+
+              if (! strcmp (str1, str2))
+                retval = object;
+            }
+        }
+
+      g_free (str1);
+      g_free (str2);
     }
 
-  return NULL;
+  return retval;
 }
 
 /**
@@ -154,10 +178,12 @@ gimp_templates_migrate (const gchar *olddir)
       gchar *tmp = g_build_filename (gimp_sysconf_directory (),
                                      "templaterc", NULL);
 
-      if (olddir && strstr (olddir, "2.0"))
+      if (olddir && (strstr (olddir, "2.0") || strstr (olddir, "2.2")))
         {
-          /* We changed the spelling of a couple of template names
-           * from upper to lower case between 2.0 and 2.2.
+          /* We changed the spelling of a couple of template names:
+           *
+           * - from upper to lower case between 2.0 and 2.2
+           * - from "dpi" to "ppi" between 2.2 and 2.4
            */
           GimpContainerClass *class = GIMP_CONTAINER_GET_CLASS (templates);
           gpointer            func  = class->get_child_by_name;
