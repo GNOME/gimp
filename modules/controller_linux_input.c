@@ -41,6 +41,8 @@
 #define GIMP_ENABLE_CONTROLLER_UNDER_CONSTRUCTION
 #include "libgimpwidgets/gimpcontroller.h"
 
+#include "gimpinputdevicestore.h"
+
 #include "libgimp/libgimp-intl.h"
 
 
@@ -142,6 +144,7 @@ struct _ControllerLinuxInputClass
 
 GType         linux_input_get_type     (GTypeModule    *module);
 static void   linux_input_class_init   (ControllerLinuxInputClass *klass);
+static void   linux_input_init         (ControllerLinuxInput      *controller);
 static void   linux_input_dispose      (GObject        *object);
 static void   linux_input_set_property (GObject        *object,
                                         guint           property_id,
@@ -210,7 +213,7 @@ linux_input_get_type (GTypeModule *module)
         NULL,           /* class_data     */
         sizeof (ControllerLinuxInput),
         0,              /* n_preallocs    */
-        NULL            /* instance_init  */
+        (GInstanceInitFunc) linux_input_init
       };
 
       controller_type = g_type_module_register_type (module,
@@ -248,6 +251,12 @@ linux_input_class_init (ControllerLinuxInputClass *klass)
   controller_class->get_n_events    = linux_input_get_n_events;
   controller_class->get_event_name  = linux_input_get_event_name;
   controller_class->get_event_blurb = linux_input_get_event_blurb;
+}
+
+static void
+linux_input_init (ControllerLinuxInput *controller)
+{
+  gimp_input_device_store_new ();
 }
 
 static void

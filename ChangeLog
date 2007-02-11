@@ -1,3 +1,15 @@
+2007-02-11  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: check for libhal if Linux Input support is enabled.
+
+	* modules/Makefile.am
+	* modules/gimpinputdevicestore.[ch]: added class derived from
+	GtkListStore that keeps a list of devices with capability
+	"input.mouse".
+
+	* modules/controller_linux_input.c: for now, just instantiate a
+	GimpInputDeviceStore.
+
 2007-02-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpcontainer.c (gimp_container_deserialize): plug leak

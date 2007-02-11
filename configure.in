@@ -57,6 +57,7 @@ m4_define([gnomeui_required_version], [2.10.0])
 m4_define([gnome_keyring_required_version], [0.4.5])
 m4_define([libcurl_required_version], [7.15.1])
 m4_define([dbus_glib_required_version], [0.70])
+m4_define([libhal_required_version], [0.5.8])
 
 
 AC_INIT([GIMP], [gimp_version],
@@ -1310,28 +1311,6 @@ if test "x$have_gnome_keyring" = xyes; then
 fi
 
 
-###############################
-# Check for D-Bus glib bindings
-###############################
-
-PKG_CHECK_MODULES(DBUS_GLIB, dbus-glib-1 >= dbus_glib_required_version,
-  have_dbus_glib=yes,
-  AC_MSG_RESULT([no])
-  have_dbus_glib=no)
-
-if test "x$have_dbus_glib" = xyes; then
-  AC_PATH_PROG(DBUS_BINDING_TOOL, dbus-binding-tool, no)
-  if test x$DBUS_BINDING_TOOL = xno; then
-    AC_MSG_WARN(Could not find dbus-binding-tool in your PATH)
-    have_dbus_glib="no (dbus-binding-tool not found)"
-  fi
-fi
-
-if test "x$have_dbus_glib" = xyes; then
-  AC_DEFINE(HAVE_DBUS_GLIB, 1,
-            [Define to 1 if D-Bus GLib bindings are available])
-  GIMP_COMMAND='gimp-gimp_app_version'
-fi
 
 
 ###################
@@ -1408,7 +1387,7 @@ fi
 
 
 #######################
-# Check for linux input
+# Check for Linux Input
 #######################
 
 AC_ARG_WITH(linux-input, [  --without-linux-input   don't build linux input event controller module])
@@ -1419,6 +1398,49 @@ if test "x$with_linux_input" != "xno"; then
 fi
 
 AM_CONDITIONAL(HAVE_LINUX_INPUT, test $have_linux_input = yes)
+
+
+###############################
+# Check for D-Bus GLib bindings
+###############################
+
+PKG_CHECK_MODULES(DBUS_GLIB, dbus-glib-1 >= dbus_glib_required_version,
+  have_dbus_glib=yes,
+  AC_MSG_RESULT([no])
+  have_dbus_glib=no)
+
+if test "x$have_dbus_glib" = xyes; then
+  AC_PATH_PROG(DBUS_BINDING_TOOL, dbus-binding-tool, no)
+  if test x$DBUS_BINDING_TOOL = xno; then
+    AC_MSG_WARN([Could not find dbus-binding-tool in your PATH])
+    have_dbus_glib="no (dbus-binding-tool not found)"
+  fi
+fi
+
+if test "x$have_dbus_glib" = xyes; then
+  AC_DEFINE(HAVE_DBUS_GLIB, 1,
+            [Define to 1 if D-Bus GLib bindings are available])
+  GIMP_COMMAND='gimp-gimp_app_version'
+fi
+
+
+###############################################
+# Check for libhal (Hardware Abstraction Layer)
+###############################################
+
+have_libhal=no
+
+if test "x$have_linux_input" = xyes && test "x$have_dbus_glib" = xyes; then
+  PKG_CHECK_MODULES(HAL, hal >= libhal_required_version,
+    have_libhal=yes,
+    AC_MSG_RESULT([no])
+    have_libhal="no (libhal not found)"
+    )
+fi
+
+if test "x$have_libhal" = xyes; then
+  AC_DEFINE(HAVE_LIBHAL, 1, [Define to 1 if libhal is available])
+fi
 
 
 ############################################################
@@ -1964,7 +1986,7 @@ Plug-In Features:
 
 Optional Modules:
   ALSA (MIDI Input): $have_alsa
-  Linux Input:       $have_linux_input
+  Linux Input:       $have_linux_input (HAL support: $have_libhal)
   Color Correction:  $have_lcms
   Soft Proof:        $have_lcms
 ]);

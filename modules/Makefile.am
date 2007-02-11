@@ -86,9 +86,14 @@ libcdisplay_proof_la_SOURCES = cdisplay_proof.c
 libcdisplay_proof_la_LDFLAGS = -avoid-version -module $(no_undefined)
 libcdisplay_proof_la_LIBADD = $(cdisplay_libadd) $(LIBLCMS)
 
-libcontroller_linux_input_la_SOURCES = controller_linux_input.c
+libcontroller_linux_input_la_SOURCES = \
+	gimpinputdevicestore.c	\
+	gimpinputdevicestore.h	\
+	controller_linux_input.c
+libcontroller_linux_input_la_CFLAGS = $(DBUS_GLIB_CFLAGS) $(HAL_CFLAGS)
 libcontroller_linux_input_la_LDFLAGS = -avoid-version -module $(no_undefined)
-libcontroller_linux_input_la_LIBADD = $(controller_libadd)
+libcontroller_linux_input_la_LIBADD = \
+	$(controller_libadd) $(DBUS_GLIB_LIBS) $(HAL_LIBS)
 
 libcontroller_midi_la_SOURCES = controller_midi.c
 libcontroller_midi_la_CFLAGS = $(ALSA_CFLAGS)
