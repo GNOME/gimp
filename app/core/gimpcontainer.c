@@ -431,32 +431,18 @@ gimp_container_deserialize (GimpConfig *config,
             if (! child)
               {
                 if (GIMP_IS_GIMP (data))
-                  {
-                    child = g_object_new (type,
-                                          "name", name,
-                                          "gimp", data, NULL);
-                  }
+                  child = g_object_new (type, "gimp", data, NULL);
                 else
-                  {
-                    child = g_object_new (type,
-                                          "name", name, NULL);
-                 }
+                  child = g_object_new (type, NULL);
 
                 add_child = TRUE;
               }
-            else if (strcmp (name, gimp_object_get_name (child)))
-              {
-                /*  we found the child by name, but the name isn't the same?
-                 *  this must be an obscure case like template migration,
-                 *  so set the deserialized name on the already existing
-                 *  object.
-                 */
-                gimp_object_take_name (child, name);
-              }
-            else
-              {
-                g_free (name);
-              }
+
+            /*  always use the deserialized name. while it normally
+             *  doesn't make a difference there are obscure case like
+             *  template migration.
+             */
+            gimp_object_take_name (child, name);
 
             if (! GIMP_CONFIG_GET_INTERFACE (child)->deserialize (GIMP_CONFIG (child),
                                                                   scanner,

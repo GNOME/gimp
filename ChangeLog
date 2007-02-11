@@ -1,3 +1,9 @@
+2007-02-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpcontainer.c (gimp_container_deserialize): plug leak
+	introduced with last commit: simply always use the deserialized
+	name, also on ojects already existing in the container.
+
 2007-02-10  Sven Neumann  <sven@gimp.org>
 
 	* modules/controller_linux_input.c
