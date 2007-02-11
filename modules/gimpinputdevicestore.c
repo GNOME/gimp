@@ -110,7 +110,7 @@ gimp_input_device_store_init (GimpInputDeviceStore *store)
       char **devices;
       int    i, num_devices;
 
-      devices = libhal_find_device_by_capability (store->context, "input.mouse",
+      devices = libhal_find_device_by_capability (store->context, "input",
                                                   &num_devices, NULL);
 
       for (i = 0; i < num_devices; i++)
@@ -187,7 +187,7 @@ gimp_input_device_store_add (GimpInputDeviceStore *store,
     {
       char *str;
 
-      if (strcmp (caps[i], "input.mouse"))
+      if (strcmp (caps[i], "input"))
         continue;
 
       str = libhal_device_get_property_string (store->context,
@@ -260,7 +260,7 @@ gimp_input_device_store_get_device_file (GimpInputDeviceStore *store,
   if (gimp_input_device_store_lookup (store, &iter, udi))
     {
       char *str = libhal_device_get_property_string (store->context,
-                                                     udi, "linux.device_file",
+                                                     udi, "input.device",
                                                      NULL);
 
       if (str)

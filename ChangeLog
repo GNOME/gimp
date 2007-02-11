@@ -1,5 +1,10 @@
 2007-02-11  Sven Neumann  <sven@gimp.org>
 
+	* modules/gimpinputdevicestore.c: don't limit the store to
+	"input.mouse", list all input devices.
+
+2007-02-11  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: check for libhal if Linux Input support is enabled.
 
 	* modules/Makefile.am
