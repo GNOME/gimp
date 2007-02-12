@@ -61,6 +61,10 @@ static GParamSpec * check_param_spec   (GObject     *object,
                                         const gchar *property_name,
                                         GType         type,
                                         const gchar *strloc);
+static GParamSpec * check_param_spec_w (GObject     *object,
+                                        const gchar *property_name,
+                                        GType         type,
+                                        const gchar *strloc);
 
 static void         connect_notify     (GObject     *config,
                                         const gchar *property_name,
@@ -83,8 +87,8 @@ gimp_prop_expanding_frame_new (GObject      *config,
   GtkWidget *toggle;
   gboolean   value;
 
-  if (! check_param_spec (config, property_name,
-                          G_TYPE_PARAM_BOOLEAN, G_STRFUNC))
+  if (! check_param_spec_w (config, property_name,
+                            G_TYPE_PARAM_BOOLEAN, G_STRFUNC))
     return NULL;
 
   frame = gimp_frame_new (NULL);
@@ -148,8 +152,8 @@ gimp_prop_paint_mode_menu_new (GObject     *config,
   GtkWidget  *menu;
   gint        value;
 
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_ENUM, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -254,8 +258,8 @@ gimp_prop_color_button_new (GObject           *config,
   GtkWidget  *button;
   GimpRGB    *value;
 
-  param_spec = check_param_spec (config, property_name,
-                                 GIMP_TYPE_PARAM_RGB, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   GIMP_TYPE_PARAM_RGB, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -366,8 +370,8 @@ gimp_prop_view_new (GObject     *config,
   GtkWidget    *view;
   GimpViewable *viewable;
 
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_OBJECT, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_OBJECT, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -450,101 +454,6 @@ gimp_prop_view_notify (GObject      *config,
 
   if (viewable)
     g_object_unref (viewable);
-}
-
-
-/*******************************/
-/*  private utility functions  */
-/*******************************/
-
-static GQuark param_spec_quark = 0;
-
-static void
-set_param_spec (GObject     *object,
-                GtkWidget   *widget,
-                GParamSpec  *param_spec)
-{
-  if (object)
-    {
-      if (! param_spec_quark)
-        param_spec_quark = g_quark_from_static_string ("gimp-config-param-spec");
-
-      g_object_set_qdata (object, param_spec_quark, param_spec);
-    }
-
-  if (widget)
-    {
-      const gchar *blurb = g_param_spec_get_blurb (param_spec);
-
-      if (blurb)
-        gimp_help_set_help_data (widget, gettext (blurb), NULL);
-    }
-}
-
-static GParamSpec *
-get_param_spec (GObject *object)
-{
-  if (! param_spec_quark)
-    param_spec_quark = g_quark_from_static_string ("gimp-config-param-spec");
-
-  return g_object_get_qdata (object, param_spec_quark);
-}
-
-static GParamSpec *
-find_param_spec (GObject     *object,
-                 const gchar *property_name,
-                 const gchar *strloc)
-{
-  GParamSpec *param_spec;
-
-  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (object),
-                                             property_name);
-
-  if (! param_spec)
-    g_warning ("%s: %s has no property named '%s'",
-               strloc,
-               g_type_name (G_TYPE_FROM_INSTANCE (object)),
-               property_name);
-
-  return param_spec;
-}
-
-static GParamSpec *
-check_param_spec (GObject     *object,
-                  const gchar *property_name,
-                  GType        type,
-                  const gchar *strloc)
-{
-  GParamSpec *param_spec;
-
-  param_spec = find_param_spec (object, property_name, strloc);
-
-  if (param_spec && ! g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), type))
-    {
-      g_warning ("%s: property '%s' of %s is not a %s",
-                 strloc,
-                 param_spec->name,
-                 g_type_name (param_spec->owner_type),
-                 g_type_name (type));
-      return NULL;
-    }
-
-  return param_spec;
-}
-
-static void
-connect_notify (GObject     *config,
-                const gchar *property_name,
-                GCallback    callback,
-                gpointer     callback_data)
-{
-  gchar *notify_name;
-
-  notify_name = g_strconcat ("notify::", property_name, NULL);
-
-  g_signal_connect_object (config, notify_name, callback, callback_data, 0);
-
-  g_free (notify_name);
 }
 
 
@@ -651,4 +560,122 @@ gimp_prop_aspect_ratio_changed (GtkWidget  *widget,
                 data->denominator_property,  denom,
                 data->fixed_aspect_property, TRUE,
                 NULL);
+}
+
+
+/*******************************/
+/*  private utility functions  */
+/*******************************/
+
+static GQuark param_spec_quark = 0;
+
+static void
+set_param_spec (GObject     *object,
+                GtkWidget   *widget,
+                GParamSpec  *param_spec)
+{
+  if (object)
+    {
+      if (! param_spec_quark)
+        param_spec_quark = g_quark_from_static_string ("gimp-config-param-spec");
+
+      g_object_set_qdata (object, param_spec_quark, param_spec);
+    }
+
+  if (widget)
+    {
+      const gchar *blurb = g_param_spec_get_blurb (param_spec);
+
+      if (blurb)
+        gimp_help_set_help_data (widget, gettext (blurb), NULL);
+    }
+}
+
+static GParamSpec *
+get_param_spec (GObject *object)
+{
+  if (! param_spec_quark)
+    param_spec_quark = g_quark_from_static_string ("gimp-config-param-spec");
+
+  return g_object_get_qdata (object, param_spec_quark);
+}
+
+static GParamSpec *
+find_param_spec (GObject     *object,
+                 const gchar *property_name,
+                 const gchar *strloc)
+{
+  GParamSpec *param_spec;
+
+  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (object),
+                                             property_name);
+
+  if (! param_spec)
+    g_warning ("%s: %s has no property named '%s'",
+               strloc,
+               g_type_name (G_TYPE_FROM_INSTANCE (object)),
+               property_name);
+
+  return param_spec;
+}
+
+static GParamSpec *
+check_param_spec (GObject     *object,
+                  const gchar *property_name,
+                  GType        type,
+                  const gchar *strloc)
+{
+  GParamSpec *param_spec;
+
+  param_spec = find_param_spec (object, property_name, strloc);
+
+  if (param_spec && ! g_type_is_a (G_TYPE_FROM_INSTANCE (param_spec), type))
+    {
+      g_warning ("%s: property '%s' of %s is not a %s",
+                 strloc,
+                 param_spec->name,
+                 g_type_name (param_spec->owner_type),
+                 g_type_name (type));
+      return NULL;
+    }
+
+  return param_spec;
+}
+
+static GParamSpec *
+check_param_spec_w (GObject     *object,
+                    const gchar *property_name,
+                    GType        type,
+                    const gchar *strloc)
+{
+  GParamSpec *param_spec;
+
+  param_spec = check_param_spec (object, property_name, type, strloc);
+
+  if (param_spec &&
+      (param_spec->flags & G_PARAM_WRITABLE) == 0)
+    {
+      g_warning ("%s: property '%s' of %s is writable",
+                 strloc,
+                 param_spec->name,
+                 g_type_name (param_spec->owner_type));
+      return NULL;
+    }
+
+  return param_spec;
+}
+
+static void
+connect_notify (GObject     *config,
+                const gchar *property_name,
+                GCallback    callback,
+                gpointer     callback_data)
+{
+  gchar *notify_name;
+
+  notify_name = g_strconcat ("notify::", property_name, NULL);
+
+  g_signal_connect_object (config, notify_name, callback, callback_data, 0);
+
+  g_free (notify_name);
 }

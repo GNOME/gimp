@@ -2,7 +2,7 @@
  * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * gimppropwidgets.c
- * Copyright (C) 2002-2004  Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2002-2007  Michael Natterer <mitch@gimp.org>
  *                          Sven Neumann <sven@gimp.org>
  *
  * This library is distributed in the hope that it will be useful,
@@ -46,7 +46,11 @@ static GParamSpec * find_param_spec    (GObject     *object,
                                         const gchar *strloc);
 static GParamSpec * check_param_spec   (GObject     *object,
                                         const gchar *property_name,
-                                        GType         type,
+                                        GType        type,
+                                        const gchar *strloc);
+static GParamSpec * check_param_spec_w (GObject     *object,
+                                        const gchar *property_name,
+                                        GType        type,
                                         const gchar *strloc);
 
 static gboolean     get_numeric_values (GObject     *object,
@@ -97,8 +101,8 @@ gimp_prop_check_button_new (GObject     *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -203,8 +207,8 @@ gimp_prop_enum_check_button_new (GObject     *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_ENUM, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -346,8 +350,8 @@ gimp_prop_int_combo_box_new (GObject      *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_INT, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_INT, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -418,8 +422,8 @@ gimp_prop_enum_combo_box_new (GObject     *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_ENUM, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -556,8 +560,8 @@ gimp_prop_boolean_combo_box_new (GObject     *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -681,8 +685,8 @@ gimp_prop_enum_radio_frame_new (GObject     *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_ENUM, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -753,8 +757,8 @@ gimp_prop_enum_radio_box_new (GObject     *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_ENUM, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -885,8 +889,8 @@ gimp_prop_boolean_radio_frame_new (GObject     *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -948,8 +952,8 @@ gimp_prop_enum_stock_box_new (GObject     *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_ENUM, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_ENUM, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -1284,8 +1288,8 @@ gimp_prop_opacity_entry_new (GObject     *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_DOUBLE, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_DOUBLE, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -1506,8 +1510,8 @@ gimp_prop_memsize_entry_new (GObject     *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
-  param_spec = check_param_spec (config, property_name,
-                                 GIMP_TYPE_PARAM_MEMSIZE, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   GIMP_TYPE_PARAM_MEMSIZE, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -1732,6 +1736,9 @@ gimp_prop_entry_new (GObject     *config,
   if (max_len > 0)
     gtk_entry_set_max_length (GTK_ENTRY (entry), max_len);
 
+  gtk_editable_set_editable (GTK_EDITABLE (entry),
+                             param_spec->flags & G_PARAM_WRITABLE);
+
   set_param_spec (G_OBJECT (entry), entry, param_spec);
 
   g_signal_connect (entry, "changed",
@@ -1837,8 +1844,8 @@ gimp_prop_text_buffer_new (GObject     *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_STRING, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_STRING, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -1988,8 +1995,8 @@ gimp_prop_file_chooser_button_new (GObject              *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
-  param_spec = check_param_spec (config, property_name,
-                                 GIMP_TYPE_PARAM_CONFIG_PATH, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   GIMP_TYPE_PARAM_CONFIG_PATH, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -2030,8 +2037,8 @@ gimp_prop_file_chooser_button_new_with_dialog (GObject     *config,
   g_return_val_if_fail (property_name != NULL, NULL);
   g_return_val_if_fail (GTK_IS_FILE_CHOOSER_DIALOG (dialog), NULL);
 
-  param_spec = check_param_spec (config, property_name,
-                                 GIMP_TYPE_PARAM_CONFIG_PATH, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   GIMP_TYPE_PARAM_CONFIG_PATH, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -2198,16 +2205,16 @@ gimp_prop_path_editor_new (GObject     *config,
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (path_property_name != NULL, NULL);
 
-  path_param_spec = check_param_spec (config, path_property_name,
-                                      GIMP_TYPE_PARAM_CONFIG_PATH, G_STRFUNC);
+  path_param_spec = check_param_spec_w (config, path_property_name,
+                                        GIMP_TYPE_PARAM_CONFIG_PATH, G_STRFUNC);
   if (! path_param_spec)
     return NULL;
 
   if (writable_property_name)
     {
-      writable_param_spec = check_param_spec (config, writable_property_name,
-                                              GIMP_TYPE_PARAM_CONFIG_PATH,
-                                              G_STRFUNC);
+      writable_param_spec = check_param_spec_w (config, writable_property_name,
+                                                GIMP_TYPE_PARAM_CONFIG_PATH,
+                                                G_STRFUNC);
       if (! writable_param_spec)
         return NULL;
     }
@@ -2472,8 +2479,8 @@ gimp_prop_size_entry_new (GObject                   *config,
     {
       GValue value = { 0 };
 
-      unit_param_spec = check_param_spec (config, unit_property_name,
-                                          GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
+      unit_param_spec = check_param_spec_w (config, unit_property_name,
+                                            GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
       if (! unit_param_spec)
         return NULL;
 
@@ -2790,8 +2797,8 @@ gimp_prop_coordinates_connect (GObject     *config,
 
   if (unit_property_name)
     {
-      unit_param_spec = check_param_spec (config, unit_property_name,
-                                          GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
+      unit_param_spec = check_param_spec_w (config, unit_property_name,
+                                            GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
       if (! unit_param_spec)
         return FALSE;
 
@@ -3155,8 +3162,8 @@ gimp_prop_color_area_new (GObject           *config,
   GtkWidget  *area;
   GimpRGB    *value;
 
-  param_spec = check_param_spec (config, property_name,
-                                 GIMP_TYPE_PARAM_RGB, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   GIMP_TYPE_PARAM_RGB, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -3270,8 +3277,8 @@ gimp_prop_unit_menu_new (GObject     *config,
   gboolean    show_pixels;
   gboolean    show_percent;
 
-  param_spec = check_param_spec (config, property_name,
-                                 GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   GIMP_TYPE_PARAM_UNIT, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -3463,8 +3470,8 @@ gimp_prop_expander_new (GObject     *config,
   GtkWidget  *expander;
   gboolean    value;
 
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_BOOLEAN, G_STRFUNC);
   if (! param_spec)
     return NULL;
 
@@ -3622,6 +3629,29 @@ check_param_spec (GObject     *object,
                  param_spec->name,
                  g_type_name (param_spec->owner_type),
                  g_type_name (type));
+      return NULL;
+    }
+
+  return param_spec;
+}
+
+static GParamSpec *
+check_param_spec_w (GObject     *object,
+                    const gchar *property_name,
+                    GType        type,
+                    const gchar *strloc)
+{
+  GParamSpec *param_spec;
+
+  param_spec = check_param_spec (object, property_name, type, strloc);
+
+  if (param_spec &&
+      (param_spec->flags & G_PARAM_WRITABLE) == 0)
+    {
+      g_warning ("%s: property '%s' of %s is writable",
+                 strloc,
+                 param_spec->name,
+                 g_type_name (param_spec->owner_type));
       return NULL;
     }
 
