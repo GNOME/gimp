@@ -257,6 +257,7 @@ EXPORTS
 	gimp_prop_size_entry_new
 	gimp_prop_spin_button_new
 	gimp_prop_stock_image_new
+	gimp_prop_string_combo_box_new
 	gimp_prop_text_buffer_new
 	gimp_prop_unit_menu_new
 	gimp_query_boolean_box
@@ -343,6 +344,10 @@ EXPORTS
 	gimp_spin_button_new
 	gimp_standard_help_func
 	gimp_stock_init
+	gimp_string_combo_box_get_active
+	gimp_string_combo_box_get_type
+	gimp_string_combo_box_new
+	gimp_string_combo_box_set_active
 	gimp_table_attach_aligned
 	gimp_toggle_button_sensitive_update
 	gimp_toggle_button_update

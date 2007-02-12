@@ -129,11 +129,12 @@ typedef struct _ControllerLinuxInputClass ControllerLinuxInputClass;
 
 struct _ControllerLinuxInput
 {
-  GimpController  parent_instance;
+  GimpController        parent_instance;
 
-  gchar          *device;
-  GIOChannel     *io;
-  guint           io_id;
+  GimpInputDeviceStore *store;
+  gchar                *device;
+  GIOChannel           *io;
+  guint                 io_id;
 };
 
 struct _ControllerLinuxInputClass
@@ -146,6 +147,7 @@ GType         linux_input_get_type     (GTypeModule    *module);
 static void   linux_input_class_init   (ControllerLinuxInputClass *klass);
 static void   linux_input_init         (ControllerLinuxInput      *controller);
 static void   linux_input_dispose      (GObject        *object);
+static void   linux_input_finalize     (GObject        *object);
 static void   linux_input_set_property (GObject        *object,
                                         guint           property_id,
                                         const GValue   *value,
@@ -234,6 +236,7 @@ linux_input_class_init (ControllerLinuxInputClass *klass)
   parent_class = g_type_class_peek_parent (klass);
 
   object_class->dispose            = linux_input_dispose;
+  object_class->finalize           = linux_input_finalize;
   object_class->get_property       = linux_input_get_property;
   object_class->set_property       = linux_input_set_property;
 
@@ -256,7 +259,7 @@ linux_input_class_init (ControllerLinuxInputClass *klass)
 static void
 linux_input_init (ControllerLinuxInput *controller)
 {
-  gimp_input_device_store_new ();
+  controller->store = gimp_input_device_store_new ();
 }
 
 static void
@@ -267,6 +270,20 @@ linux_input_dispose (GObject *object)
   linux_input_set_device (controller, NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+linux_input_finalize (GObject *object)
+{
+  ControllerLinuxInput *controller = CONTROLLER_LINUX_INPUT (object);
+
+  if (controller->store)
+    {
+      g_object_unref (controller->store);
+      controller->store = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void

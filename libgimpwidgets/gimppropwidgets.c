@@ -1952,6 +1952,131 @@ gimp_prop_text_buffer_notify (GObject       *config,
 }
 
 
+/***********************/
+/*  string combo box   */
+/***********************/
+
+static void   gimp_prop_string_combo_box_callback (GtkWidget   *widget,
+                                                   GObject     *config);
+static void   gimp_prop_string_combo_box_notify   (GObject     *config,
+                                                   GParamSpec  *param_spec,
+                                                   GtkWidget   *widget);
+
+/**
+ * gimp_prop_string_combo_box_new:
+ * @config:        Object to which property is attached.
+ * @property_name: Name of int property controlled by combo box.
+ * @store:         #GtkTreeStore holding list of values
+ * @id_column:     column in @store that holds string IDs
+ * @label_column:  column in @store that holds labels to use in the combo-box
+ *
+ * Creates a #GimpStringComboBox widget to display and set the
+ * specified property.  The contents of the widget are determined by
+ * @store.
+ *
+ * Return value: The newly created #GimpStringComboBox widget, optionally
+ *               wrapped into a #GtkEventBox.
+ *
+ * Since GIMP 2.4
+ */
+GtkWidget *
+gimp_prop_string_combo_box_new (GObject      *config,
+                                const gchar  *property_name,
+                                GtkTreeStore *store,
+                                gint          id_column,
+                                gint          label_column)
+{
+  GParamSpec *param_spec;
+  GtkWidget  *combo_box;
+  GtkWidget  *widget;
+  gchar      *value;
+
+  g_return_val_if_fail (G_IS_OBJECT (config), NULL);
+  g_return_val_if_fail (property_name != NULL, NULL);
+
+  param_spec = check_param_spec_w (config, property_name,
+                                   G_TYPE_PARAM_STRING, G_STRFUNC);
+  if (! param_spec)
+    return NULL;
+
+  g_object_get (config,
+                property_name, &value,
+                NULL);
+
+  combo_box = gimp_string_combo_box_new (store, id_column, label_column);
+
+  gimp_string_combo_box_set_active (GIMP_STRING_COMBO_BOX (combo_box), value);
+
+  g_signal_connect (combo_box, "changed",
+                    G_CALLBACK (gimp_prop_string_combo_box_callback),
+                    config);
+
+  /*  can't set a tooltip on a combo_box  */
+  if (g_param_spec_get_blurb (param_spec))
+    {
+      widget = gtk_event_box_new ();
+      gtk_container_add (GTK_CONTAINER (widget), combo_box);
+      gtk_widget_show (combo_box);
+    }
+  else
+    {
+      widget = combo_box;
+    }
+
+  set_param_spec (G_OBJECT (combo_box), widget, param_spec);
+
+  connect_notify (config, property_name,
+                  G_CALLBACK (gimp_prop_string_combo_box_notify),
+                  combo_box);
+
+  return widget;
+}
+
+static void
+gimp_prop_string_combo_box_callback (GtkWidget *widget,
+                                     GObject   *config)
+{
+  GParamSpec  *param_spec;
+  gchar       *value;
+
+  param_spec = get_param_spec (G_OBJECT (widget));
+  if (! param_spec)
+    return;
+
+  value = gimp_string_combo_box_get_active (GIMP_STRING_COMBO_BOX (widget));
+
+  g_object_set (config,
+                param_spec->name, value,
+                NULL);
+
+  g_free (value);
+}
+
+static void
+gimp_prop_string_combo_box_notify (GObject    *config,
+                                   GParamSpec *param_spec,
+                                   GtkWidget  *combo_box)
+{
+  gchar *value;
+
+  g_object_get (config,
+                param_spec->name, &value,
+                NULL);
+
+  g_signal_handlers_block_by_func (combo_box,
+                                   gimp_prop_string_combo_box_callback,
+                                   config);
+
+  gimp_string_combo_box_set_active (GIMP_STRING_COMBO_BOX (combo_box), value);
+
+  g_signal_handlers_unblock_by_func (combo_box,
+                                     gimp_prop_string_combo_box_callback,
+                                     config);
+
+  g_free (value);
+}
+
+
 /*************************/
 /*  file chooser button  */
 /*************************/

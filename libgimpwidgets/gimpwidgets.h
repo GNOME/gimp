@@ -68,6 +68,7 @@
 #include <libgimpwidgets/gimpscrolledpreview.h>
 #include <libgimpwidgets/gimpsizeentry.h>
 #include <libgimpwidgets/gimpstock.h>
+#include <libgimpwidgets/gimpstringcombobox.h>
 #include <libgimpwidgets/gimpunitmenu.h>
 #include <libgimpwidgets/gimpzoommodel.h>
 

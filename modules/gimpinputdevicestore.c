@@ -144,30 +144,32 @@ gimp_input_device_store_finalize (GObject *object)
 
 static gboolean
 gimp_input_device_store_lookup (GimpInputDeviceStore *store,
-                                GtkTreeIter          *iter,
-                                const gchar          *udi)
+                                const gchar          *udi,
+                                GtkTreeIter          *iter)
 {
   GtkTreeModel *model = GTK_TREE_MODEL (store);
+  GValue        value = { 0, };
   gboolean      iter_valid;
+
+  g_value_init (&value, G_TYPE_STRING);
 
   for (iter_valid = gtk_tree_model_get_iter_first (model, iter);
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (model, iter))
     {
-      gchar *this;
+      const gchar *str;
 
-      gtk_tree_model_get (model, iter,
-                          COLUMN_UDI, &this,
-                          -1);
+      gtk_tree_model_get_value (model, iter, COLUMN_UDI, &value);
 
-      if (strcmp (this, udi) == 0)
-        {
-          g_free (this);
-          break;
-        }
+      str = g_value_get_string (&value);
 
-      g_free (this);
+      if (strcmp (str, udi) == 0)
+        break;
+
+      g_value_reset (&value);
     }
+
+  g_value_unset (&value);
 
   return iter_valid;
 }
@@ -234,7 +236,7 @@ gimp_input_device_store_remove (GimpInputDeviceStore *store,
 {
   GtkTreeIter  iter;
 
-  if (gimp_input_device_store_lookup (store, &iter, udi))
+  if (gimp_input_device_store_lookup (store, udi, &iter))
     gtk_list_store_remove (GTK_LIST_STORE (store), &iter);
 }
 
@@ -271,7 +273,7 @@ gimp_input_device_store_get_device_file (GimpInputDeviceStore *store,
   g_return_val_if_fail (GIMP_IS_INPUT_DEVICE_STORE (store), NULL);
   g_return_val_if_fail (udi != NULL, NULL);
 
-  if (gimp_input_device_store_lookup (store, &iter, udi))
+  if (gimp_input_device_store_lookup (store, udi, &iter))
     {
       char *str = libhal_device_get_property_string (store->context,
                                                      udi, "input.device",

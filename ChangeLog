@@ -1,5 +1,25 @@
 2007-02-12  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpstringcombobox.[ch]: added GimpStringComboBox.
+
+	* libgimpwidgets/gimppropwidgets.[ch]: added a prop widget
+	constructor that uses the new widget.
+
+	* libgimpwidgets/gimpwidgets.def: updated.
+
+	* app/widgets/gimpcontrollereditor.c: use a GimpStringComboBox if
+	the module specifies a tree model with string values.
+
+	* modules/gimpinputdevicestore.c: minor cleanup.
+
+	* modules/controller_linux_input.c: keep a pointer to the input
+	device store and unref it in the finalizer.
+
+2007-02-12  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontrollerlist.c (gimp_controller_list_edit_clicked):
 	use a GimpDialog instead of a GimpViewableDialog.
 

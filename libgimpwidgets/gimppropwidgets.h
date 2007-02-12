@@ -136,6 +136,11 @@ GtkWidget     * gimp_prop_entry_new               (GObject       *config,
 GtkTextBuffer * gimp_prop_text_buffer_new         (GObject       *config,
                                                    const gchar   *property_name,
                                                    gint           max_len);
+GtkWidget     * gimp_prop_string_combo_box_new    (GObject       *config,
+                                                   const gchar   *property_name,
+                                                   GtkTreeStore  *store,
+                                                   gint           id_column,
+                                                   gint           label_column);
 
 
 /*  GimpParamPath  */

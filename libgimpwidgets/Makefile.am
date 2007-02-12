@@ -152,6 +152,8 @@ libgimpwidgets_2_0_la_sources = \
 	gimpsizeentry.h		\
 	gimpstock.c		\
 	gimpstock.h		\
+	gimpstringcombobox.c	\
+	gimpstringcombobox.h	\
 	gimpunitmenu.c		\
 	gimpunitmenu.h		\
 	gimpzoommodel.c		\
@@ -219,6 +221,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpscrolledpreview.h	\
 	gimpsizeentry.h		\
 	gimpstock.h		\
+	gimpstringcombobox.h	\
 	gimpunitmenu.h		\
 	gimpzoommodel.h
 

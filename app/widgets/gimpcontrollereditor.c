@@ -817,7 +817,33 @@ gimp_controller_string_view_new (GimpController *controller,
 
   if (pspec->flags & G_PARAM_WRITABLE)
     {
-      widget = gimp_prop_entry_new (G_OBJECT (controller), pspec->name, -1);
+      GtkTreeModel *model      = NULL;
+      gchar        *model_name = g_strdup_printf ("%s-values", pspec->name);
+      GParamSpec   *model_spec;
+
+      model_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (controller),
+                                                 model_name);
+
+      if (G_IS_PARAM_SPEC_OBJECT (model_spec) &&
+          g_type_is_a (model_spec->value_type, GTK_TYPE_LIST_STORE))
+        {
+          g_object_get (controller,
+                        model_name, &model,
+                        NULL);
+        }
+
+      g_free (model_name);
+
+      if (model)
+        {
+          widget = gimp_prop_string_combo_box_new (G_OBJECT (controller),
+                                                   pspec->name, model, 0, 1);
+          g_object_unref (model);
+        }
+      else
+        {
+          widget = gimp_prop_entry_new (G_OBJECT (controller), pspec->name, -1);
+        }
     }
   else
     {
