@@ -1,5 +1,10 @@
 2007-02-12  Sven Neumann  <sven@gimp.org>
 
+	* modules/cdisplay_colorblind.c: set translation domain for the
+	registered enum type.
+
+2007-02-12  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: lower minimum required version of libhal to 0.5.7.
 
 	* modules/gimpinputdevicestore.c: don't list PC Speaker, even

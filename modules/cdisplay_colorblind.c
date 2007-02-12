@@ -263,6 +263,8 @@ cdisplay_colorblind_deficiency_get_type (GTypeModule *module)
         g_type_module_register_enum (module, "CDisplayColorblindDeficiency",
                                      enum_values);
 
+      gimp_type_set_translation_domain (cdisplay_colorblind_deficiency_type,
+                                        GETTEXT_PACKAGE "-libgimp");
       gimp_enum_set_value_descriptions (cdisplay_colorblind_deficiency_type,
                                         enum_descs);
     }
