@@ -49,7 +49,6 @@
 #include "gimpmessagedialog.h"
 #include "gimppropwidgets.h"
 #include "gimpuimanager.h"
-#include "gimpviewabledialog.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
@@ -629,19 +628,16 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
       return;
     }
 
-  dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (list->dest_info),
-                                     gimp_get_user_context (list->gimp),
-                                     _("Configure Controller"),
-                                     "gimp-controller-editor-dialog",
-                                     GTK_STOCK_EDIT,
-                                     _("Configure Input Controller"),
-                                     GTK_WIDGET (list),
-                                     gimp_standard_help_func,
-                                     GIMP_HELP_PREFS_INPUT_CONTROLLERS,
+  dialog = gimp_dialog_new (_("Configure Input Controller"),
+                            "gimp-controller-editor-dialog",
+                            gtk_widget_get_toplevel (button),
+                            GTK_DIALOG_DESTROY_WITH_PARENT,
+                            gimp_standard_help_func,
+                            GIMP_HELP_PREFS_INPUT_CONTROLLERS,
 
-                                     GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
+                            GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE,
 
-                                     NULL);
+                            NULL);
 
   gimp_dialog_factory_add_foreign (gimp_dialog_factory_from_name ("toplevel"),
                                    "gimp-controller-editor-dialog",

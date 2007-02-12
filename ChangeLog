@@ -1,5 +1,10 @@
 2007-02-12  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontrollerlist.c (gimp_controller_list_edit_clicked):
+	use a GimpDialog instead of a GimpViewableDialog.
+
+2007-02-12  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimppropwidgets.c
 	* libgimpwidgets/gimppropwidgets.c: most property widgets rely on
 	a writable property. Check for that or make the widget non-editable
