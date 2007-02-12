@@ -187,13 +187,27 @@ gimp_input_device_store_add (GimpInputDeviceStore *store,
     {
       char *str;
 
-      if (strcmp (caps[i], "input"))
+      if (strcmp (caps[i], "input") != 0)
         continue;
+
+      /*  skip "PC Speaker" (why is this an input device at all?)  */
+      str = libhal_device_get_property_string (store->context,
+                                               udi, "input.physical_device",
+                                               NULL);
+      if (str)
+        {
+          gboolean speaker =
+            strcmp (str, "/org/freedesktop/Hal/devices/platform_pcspkr") == 0;
+
+          libhal_free_string (str);
+
+          if (speaker)
+            continue;
+        }
 
       str = libhal_device_get_property_string (store->context,
                                                udi, "input.product",
                                                NULL);
-
       if (str)
         {
           GtkTreeIter iter;
