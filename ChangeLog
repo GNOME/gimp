@@ -1,5 +1,11 @@
 2007-02-12  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpstringcombobox.c (gimp_string_model_lookup)
+	* modules/gimpinputdevicestore.c (gimp_input_device_store_lookup):
+	fixed wrong use of GValue.
+
+2007-02-12  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/Makefile.am
 	* libgimpwidgets/gimpwidgetstypes.h
 	* libgimpwidgets/gimpwidgets.h

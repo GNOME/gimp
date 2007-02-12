@@ -151,8 +151,6 @@ gimp_input_device_store_lookup (GimpInputDeviceStore *store,
   GValue        value = { 0, };
   gboolean      iter_valid;
 
-  g_value_init (&value, G_TYPE_STRING);
-
   for (iter_valid = gtk_tree_model_get_iter_first (model, iter);
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (model, iter))
@@ -164,12 +162,13 @@ gimp_input_device_store_lookup (GimpInputDeviceStore *store,
       str = g_value_get_string (&value);
 
       if (strcmp (str, udi) == 0)
-        break;
+        {
+          g_value_unset (&value);
+          break;
+        }
 
-      g_value_reset (&value);
+      g_value_unset (&value);
     }
-
-  g_value_unset (&value);
 
   return iter_valid;
 }

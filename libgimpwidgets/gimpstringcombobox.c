@@ -250,8 +250,6 @@ gimp_string_model_lookup (GtkTreeModel *model,
    *  is a GtkComboBox, there shouldn't be many entries anyway...
    */
 
-  g_value_init (&value, G_TYPE_STRING);
-
   for (iter_valid = gtk_tree_model_get_iter_first (model, iter);
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (model, iter))
@@ -263,12 +261,13 @@ gimp_string_model_lookup (GtkTreeModel *model,
       str = g_value_get_string (&value);
 
       if (str && strcmp (str, id) == 0)
-        break;
+        {
+          g_value_unset (&value);
+          break;
+        }
 
-      g_value_reset (&value);
+      g_value_unset (&value);
     }
-
-  g_value_unset (&value);
 
   return iter_valid;
 }
