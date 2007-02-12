@@ -1598,8 +1598,9 @@ static void   gimp_prop_label_notify (GObject    *config,
  * @config:        Object to which property is attached.
  * @property_name: Name of string property.
  *
- * Creates a #GtkLabel to display the value of the specified String
- * property.  If the user should be able to edit the string, use
+ * Creates a #GtkLabel to display the value of the specified property.
+ * The property should be a string property or at least transformable
+ * to a string.  If the user should be able to edit the string, use
  * gimp_prop_entry_new() instead.
  *
  * Return value:  A new #GtkLabel widget.
@@ -1612,28 +1613,33 @@ gimp_prop_label_new (GObject     *config,
 {
   GParamSpec *param_spec;
   GtkWidget  *label;
-  gchar      *value;
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
 
-  param_spec = check_param_spec (config, property_name,
-                                 G_TYPE_PARAM_STRING, G_STRFUNC);
+  param_spec = find_param_spec (config, property_name, G_STRFUNC);
+
   if (! param_spec)
     return NULL;
 
-  g_object_get (config,
-                property_name, &value,
-                NULL);
+  if (! g_value_type_transformable (param_spec->value_type, G_TYPE_STRING))
+    {
+      g_warning ("%s: property '%s' of %s is not transformable to string",
+                 G_STRLOC,
+                 param_spec->name,
+                 g_type_name (param_spec->owner_type));
+      return NULL;
+    }
 
-  label = gtk_label_new (value ? value : "");
-  g_free (value);
+  label = gtk_label_new (NULL);
 
   set_param_spec (G_OBJECT (label), label, param_spec);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_label_notify),
                   label);
+
+  gimp_prop_label_notify (config, param_spec, label);
 
   return label;
 }
@@ -1643,15 +1649,34 @@ gimp_prop_label_notify (GObject    *config,
                         GParamSpec *param_spec,
                         GtkWidget  *label)
 {
-  gchar *value;
+  GValue  value = { 0, };
 
-  g_object_get (config,
-                param_spec->name, &value,
-                NULL);
+  g_value_init (&value, param_spec->value_type);
 
-  gtk_label_set_text (GTK_LABEL (label), value ? value : "");
+  g_object_get_property (config, param_spec->name, &value);
 
-  g_free (value);
+  if (G_VALUE_HOLDS_STRING (&value))
+    {
+      const gchar *str = g_value_get_string (&value);
+
+      gtk_label_set_text (GTK_LABEL (label), str ? str : "");
+    }
+  else
+    {
+      GValue       str_value = { 0, };
+      const gchar *str;
+
+      g_value_init (&str_value, G_TYPE_STRING);
+      g_value_transform (&value, &str_value);
+
+      str = g_value_get_string (&str_value);
+
+      gtk_label_set_text (GTK_LABEL (label), str ? str : "");
+
+      g_value_unset (&str_value);
+    }
+
+  g_value_unset (&value);
 }
 
 

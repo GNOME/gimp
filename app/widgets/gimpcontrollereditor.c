@@ -101,6 +101,12 @@ static void gimp_controller_editor_edit_response  (GtkWidget            *dialog,
                                                    gint                  response_id,
                                                    GimpControllerEditor *editor);
 
+static GtkWidget *  gimp_controller_editor_string_view_new (GObject    *controller,
+                                                            GParamSpec *pspec);
+static GtkWidget *  gimp_controller_editor_int_view_new    (GObject    *controller,
+                                                            GParamSpec *pspec,
+                                                            GParamSpec *next_pspec);
+
 
 G_DEFINE_TYPE (GimpControllerEditor, gimp_controller_editor, GTK_TYPE_VBOX)
 
@@ -236,68 +242,37 @@ gimp_controller_editor_constructor (GType                  type,
 
   for (i = 0; i < n_property_specs; i++)
     {
-      GParamSpec *prop_spec = property_specs[i];
-      GtkWidget  *widget    = NULL;
+      GParamSpec *pspec = property_specs[i];
+      GtkWidget  *widget;
 
-      if (prop_spec->owner_type == GIMP_TYPE_CONTROLLER)
+      if (pspec->owner_type == GIMP_TYPE_CONTROLLER)
         continue;
 
-      if (G_IS_PARAM_SPEC_STRING (prop_spec))
+      if (G_IS_PARAM_SPEC_STRING (pspec))
         {
-          if (prop_spec->flags & G_PARAM_WRITABLE)
-            widget = gimp_prop_entry_new (G_OBJECT (controller),
-                                          prop_spec->name, -1);
-          else
-            widget = gimp_prop_label_new (G_OBJECT (controller),
-                                          prop_spec->name);
+          widget =
+            gimp_controller_editor_string_view_new (G_OBJECT (controller),
+                                                    pspec);
 
           gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                     g_param_spec_get_nick (prop_spec),
+                                     g_param_spec_get_nick (pspec),
                                      0.0, 0.5,
                                      widget,
                                      1, FALSE);
         }
-      else if (G_IS_PARAM_SPEC_INT (prop_spec))
+      else if (G_IS_PARAM_SPEC_INT (pspec))
         {
-          if (prop_spec->flags & G_PARAM_WRITABLE)
-            {
-              GimpIntStore *model      = NULL;
-              gchar        *model_name = g_strdup_printf ("%s-values",
-                                                          prop_spec->name);
+          GParamSpec *next  = (i + 1 < n_property_specs ?
+                               property_specs[i + 1] : NULL);
 
-              if (((i + 1) < n_property_specs)                       &&
-                  ! strcmp (model_name, property_specs[i + 1]->name) &&
-                  G_IS_PARAM_SPEC_OBJECT (property_specs[i + 1])     &&
-                  g_type_is_a (property_specs[i + 1]->value_type,
-                               GIMP_TYPE_INT_STORE))
-                {
-                  g_object_get (controller,
-                                property_specs[i + 1]->name, &model,
-                                NULL);
-                }
+          widget = gimp_controller_editor_int_view_new (G_OBJECT (controller),
+                                                        pspec, next);
 
-              g_free (model_name);
-
-              if (model)
-                {
-                  widget = gimp_prop_int_combo_box_new (G_OBJECT (controller),
-                                                        prop_spec->name,
-                                                        model);
-                  g_object_unref (model);
-                }
-              else
-                {
-                  widget = gimp_prop_spin_button_new (G_OBJECT (controller),
-                                                      prop_spec->name,
-                                                      1, 8, 0);
-                }
-
-              gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                                         g_param_spec_get_nick (prop_spec),
-                                         0.0, 0.5,
-                                         widget,
-                                         1, TRUE);
-            }
+          gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
+                                     g_param_spec_get_nick (pspec),
+                                     0.0, 0.5,
+                                     widget,
+                                     1, TRUE);
         }
     }
 
@@ -837,4 +812,72 @@ gimp_controller_editor_edit_response (GtkWidget            *dialog,
     }
 
   gtk_widget_destroy (dialog);
+}
+
+static GtkWidget *
+gimp_controller_editor_string_view_new (GObject    *controller,
+                                        GParamSpec *pspec)
+{
+  GtkWidget *widget = NULL;
+
+  g_return_val_if_fail (G_IS_PARAM_SPEC_STRING (pspec), NULL);
+
+  if (pspec->flags & G_PARAM_WRITABLE)
+    {
+      widget = gimp_prop_entry_new (controller, pspec->name, -1);
+    }
+  else
+    {
+      widget = gimp_prop_label_new (controller, pspec->name);
+    }
+
+  return widget;
+}
+
+
+static GtkWidget *
+gimp_controller_editor_int_view_new (GObject    *controller,
+                                     GParamSpec *pspec,
+                                     GParamSpec *next_pspec)
+{
+  GtkWidget *widget = NULL;
+
+  g_return_val_if_fail (G_IS_PARAM_SPEC_INT (pspec), NULL);
+
+  if (pspec->flags & G_PARAM_WRITABLE)
+    {
+      GimpIntStore *model = NULL;
+
+      if (next_pspec)
+        {
+          gchar *model_name = g_strdup_printf ("%s-values", pspec->name);
+
+          if (next_pspec && strcmp (model_name, next_pspec->name) &&
+              G_IS_PARAM_SPEC_OBJECT (next_pspec)   &&
+              g_type_is_a (next_pspec->value_type, GIMP_TYPE_INT_STORE))
+            {
+              g_object_get (controller,
+                            next_pspec->name, &model,
+                            NULL);
+            }
+
+          g_free (model_name);
+        }
+
+      if (model)
+        {
+          widget = gimp_prop_int_combo_box_new (controller, pspec->name, model);
+          g_object_unref (model);
+        }
+      else
+        {
+          widget = gimp_prop_spin_button_new (controller, pspec->name, 1, 8, 0);
+        }
+    }
+  else
+    {
+      widget = gimp_prop_label_new (controller, pspec->name);
+    }
+
+  return widget;
 }

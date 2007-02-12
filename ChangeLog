@@ -1,5 +1,13 @@
 2007-02-12  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontrollereditor.c: minor refactoring.
+
+	* libgimpwidgets/gimppropwidgets.c (gimp_prop_label_new): allow
+	this function to be used with properties that are transformable to
+	string values, not only with string properties.
+
+2007-02-12  Sven Neumann  <sven@gimp.org>
+
 	* modules/cdisplay_colorblind.c: set translation domain for the
 	registered enum type.
 
