@@ -239,7 +239,7 @@ init_guides_dialog(GuidesDialog_t *dialog, ObjectList_t *list)
 }
 
 static void
-do_create_guides_dialog(ObjectList_t *list)
+do_create_guides_dialog_local (ObjectList_t *list)
 {
    static GuidesDialog_t *dialog;
 
@@ -276,6 +276,6 @@ static CmdExecuteValue_t
 guides_command_execute(Command_t *parent)
 {
    GuidesCommand_t *command = (GuidesCommand_t*) parent;
-   do_create_guides_dialog(command->list);
+   do_create_guides_dialog_local (command->list);
    return CMD_DESTRUCT;
 }

@@ -43,32 +43,6 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-/* Fix me: move all of these prototypes to imap_menu.h */
-
-void save();
-void do_close();
-void do_quit();
-void do_cut();
-void do_copy();
-void do_paste();
-void do_clear();
-void do_select_all();
-void do_deselect_all();
-void do_grid_settings_dialog();
-void do_zoom_in();
-void do_zoom_out();
-void do_move_to_front();
-void do_send_to_back();
-void do_edit_selected_shape();
-void do_create_guides_dialog();
-void do_use_gimp_guides_dialog();
-
-void imap_help();
-void set_func(int func);
-void set_preview_color();
-void set_zoom_factor();
-void toggle_area_list();
-
 static Menu_t _menu;
 static GtkUIManager *ui_manager;
 

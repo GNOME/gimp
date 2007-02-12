@@ -64,6 +64,9 @@
 
 #define PLUG_IN_PROC "plug-in-imagemap"
 
+static gint             zoom_in         (void);
+static gint             zoom_out        (void);
+
 
 /* Global variables */
 static MapInfo_t   _map_info;
@@ -75,7 +78,7 @@ static GimpDrawable *_drawable;
 static GdkCursorType _cursor = GDK_TOP_LEFT_ARROW;
 static gboolean     _show_url = TRUE;
 static gchar       *_filename = NULL;
-static char        *_image_name;
+static gchar       *_image_name;
 static gint        _image_width;
 static gint        _image_height;
 static GtkWidget   *_dlg;
@@ -283,7 +286,7 @@ zoom_in(void)
    return _zoom_factor;
 }
 
-gint
+static gint
 zoom_out(void)
 {
    if (_zoom_factor > 1) {
@@ -398,7 +401,7 @@ set_zoom_factor (GtkRadioAction *action, GtkRadioAction *current,
   set_zoom (factor + 1);
 }
 
-const char*
+const gchar *
 get_image_name(void)
 {
    return _image_name;

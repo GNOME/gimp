@@ -32,6 +32,10 @@
 #include "imap_object.h"
 #include "imap_string.h"
 
+static Object_t* object_factory_create_object (ObjectFactory_t *factory,
+                                                gint x, gint y);
+
+
 typedef struct {
    ObjectListCallbackFunc_t func;
    gpointer data;

@@ -160,7 +160,7 @@ struct ObjectList_t {
    ObjectListCallback_t geometry_cb;
 };
 
-ObjectList_t *make_object_list();
+ObjectList_t *make_object_list (void);
 void object_list_destruct(ObjectList_t *list);
 ObjectList_t *object_list_copy(ObjectList_t *des, ObjectList_t *src);
 ObjectList_t *object_list_append_list(ObjectList_t *des, ObjectList_t *src);

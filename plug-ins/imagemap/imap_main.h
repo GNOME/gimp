@@ -91,4 +91,32 @@ void preview_thaw(void);
 void show_url(void);
 void hide_url(void);
 
+void            set_preview_color          (GtkRadioAction *action, GtkRadioAction *current,
+                                               gpointer user_data);
+void            set_zoom_factor            (GtkRadioAction *action, GtkRadioAction *current,
+                                               gpointer user_data);
+void            set_func                   (GtkRadioAction *action, GtkRadioAction *current,
+                                               gpointer user_data);
+void            do_edit_selected_shape     (void);
+void            do_zoom_in                 (void);
+void            do_zoom_out                (void);
+void            do_close                   (void);
+void            do_quit                    (void);
+void            do_cut                     (void);
+void            do_copy                    (void);
+void            do_paste                   (void);
+void            do_select_all              (void);
+void            do_deselect_all            (void);
+void            do_clear                   (void);
+void            do_move_up                 (void);
+void            do_move_down               (void);
+void            do_move_to_front           (void);
+void            do_send_to_back            (void);
+void            do_use_gimp_guides_dialog  (void);
+void            do_create_guides_dialog    (void);
+void            save                       (void);
+void            imap_help                  (void);
+void            toggle_area_list           (void);
+const gchar *   get_image_name             (void);
+
 #endif /* _IMAP_MAIN_H */

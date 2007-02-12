@@ -50,7 +50,7 @@ typedef struct {
    GdkGC 	       *selected_gc;
 } PreferencesData_t;
 
-void do_preferences_dialog();
+void do_preferences_dialog(void);
 gboolean preferences_load(PreferencesData_t *data);
 void preferences_save(PreferencesData_t *data);
 

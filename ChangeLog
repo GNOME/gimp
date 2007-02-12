@@ -1,3 +1,14 @@
+2007-02-12  Mukund Sivaraman <muks@mukund.org>
+
+	* plug-ins/imagemap/imap_cmd_guides.c
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_main.h
+	* plug-ins/imagemap/imap_menu.c
+	* plug-ins/imagemap/imap_object.c
+	* plug-ins/imagemap/imap_preferences.h
+	* plug-ins/imagemap/imap_object.h: Cleaned up some warnings in
+	the imagemap plug-in; also fixed many function declarations.
+
 2007-02-12  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpstringcombobox.c: fixed some issues with the
