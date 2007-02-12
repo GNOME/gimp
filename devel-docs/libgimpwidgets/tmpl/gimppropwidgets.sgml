@@ -17,17 +17,6 @@ GimpPropWidgets
 <!-- ##### SECTION Stability_Level ##### -->
 
 
-<!-- ##### FUNCTION gimp_prop_check_button_new ##### -->
-<para>
-
-</para>
-
-@config: 
-@property_name: 
-@label: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_prop_boolean_combo_box_new ##### -->
 <para>
 
@@ -53,6 +42,147 @@ GimpPropWidgets
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_prop_check_button_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@label: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_prop_color_area_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@width: 
+@height: 
+@type: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_prop_coordinates_connect ##### -->
+<para>
+
+</para>
+
+@config: 
+@x_property_name: 
+@y_property_name: 
+@unit_property_name: 
+@sizeentry: 
+@chainbutton: 
+@xresolution: 
+@yresolution: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_prop_coordinates_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@x_property_name: 
+@y_property_name: 
+@unit_property_name: 
+@unit_format: 
+@update_policy: 
+@xresolution: 
+@yresolution: 
+@has_chainbutton: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_prop_entry_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@max_len: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_prop_enum_check_button_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@label: 
+@false_value: 
+@true_value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_prop_enum_combo_box_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@minimum: 
+@maximum: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_prop_enum_label_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_prop_enum_radio_box_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@minimum: 
+@maximum: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_prop_enum_radio_frame_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@title: 
+@minimum: 
+@maximum: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_prop_enum_stock_box_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@stock_prefix: 
+@minimum: 
+@maximum: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_prop_expander_new ##### -->
 <para>
 
@@ -61,6 +191,29 @@ GimpPropWidgets
 @config: 
 @property_name: 
 @label: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_prop_file_chooser_button_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@title: 
+@action: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_prop_file_chooser_button_new_with_dialog ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@dialog: 
 @Returns: 
 
 
@@ -88,89 +241,49 @@ GimpPropWidgets
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_prop_enum_combo_box_new ##### -->
+<!-- ##### FUNCTION gimp_prop_label_new ##### -->
 <para>
 
 </para>
 
 @config: 
 @property_name: 
-@minimum: 
-@maximum: 
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_prop_enum_check_button_new ##### -->
+<!-- ##### FUNCTION gimp_prop_memsize_entry_new ##### -->
 <para>
 
 </para>
 
 @config: 
 @property_name: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_prop_opacity_entry_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@table: 
+@column: 
+@row: 
 @label: 
-@false_value: 
-@true_value: 
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_prop_enum_label_new ##### -->
+<!-- ##### FUNCTION gimp_prop_path_editor_new ##### -->
 <para>
 
 </para>
 
 @config: 
-@property_name: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_prop_enum_radio_frame_new ##### -->
-<para>
-
-</para>
-
-@config: 
-@property_name: 
-@title: 
-@minimum: 
-@maximum: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_prop_enum_radio_box_new ##### -->
-<para>
-
-</para>
-
-@config: 
-@property_name: 
-@minimum: 
-@maximum: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_prop_enum_stock_box_new ##### -->
-<para>
-
-</para>
-
-@config: 
-@property_name: 
-@stock_prefix: 
-@minimum: 
-@maximum: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_prop_spin_button_new ##### -->
-<para>
-
-</para>
-
-@config: 
-@property_name: 
-@step_increment: 
-@page_increment: 
-@digits: 
+@path_property_name: 
+@writable_property_name: 
+@filesel_title: 
 @Returns: 
 
 
@@ -194,97 +307,6 @@ GimpPropWidgets
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_prop_opacity_entry_new ##### -->
-<para>
-
-</para>
-
-@config: 
-@property_name: 
-@table: 
-@column: 
-@row: 
-@label: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_prop_memsize_entry_new ##### -->
-<para>
-
-</para>
-
-@config: 
-@property_name: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_prop_label_new ##### -->
-<para>
-
-</para>
-
-@config: 
-@property_name: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_prop_entry_new ##### -->
-<para>
-
-</para>
-
-@config: 
-@property_name: 
-@max_len: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_prop_text_buffer_new ##### -->
-<para>
-
-</para>
-
-@config: 
-@property_name: 
-@max_len: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_prop_file_chooser_button_new ##### -->
-<para>
-
-</para>
-
-@config: 
-@property_name: 
-@title: 
-@action: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_prop_file_chooser_button_new_with_dialog ##### -->
-<para>
-
-</para>
-
-@config: 
-@property_name: 
-@dialog: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_prop_path_editor_new ##### -->
-<para>
-
-</para>
-
-@config: 
-@path_property_name: 
-@writable_property_name: 
-@filesel_title: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_prop_size_entry_new ##### -->
 <para>
 
@@ -299,60 +321,16 @@ GimpPropWidgets
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_prop_coordinates_new ##### -->
-<para>
-
-</para>
-
-@config: 
-@x_property_name: 
-@y_property_name: 
-@unit_property_name: 
-@unit_format: 
-@update_policy: 
-@xresolution: 
-@yresolution: 
-@has_chainbutton: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_prop_coordinates_connect ##### -->
-<para>
-
-</para>
-
-@config: 
-@x_property_name: 
-@y_property_name: 
-@unit_property_name: 
-@sizeentry: 
-@chainbutton: 
-@xresolution: 
-@yresolution: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_prop_color_area_new ##### -->
+<!-- ##### FUNCTION gimp_prop_spin_button_new ##### -->
 <para>
 
 </para>
 
 @config: 
 @property_name: 
-@width: 
-@height: 
-@type: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_prop_unit_menu_new ##### -->
-<para>
-
-</para>
-
-@config: 
-@property_name: 
-@unit_format: 
+@step_increment: 
+@page_increment: 
+@digits: 
 @Returns: 
 
 
@@ -364,6 +342,41 @@ GimpPropWidgets
 @config: 
 @property_name: 
 @icon_size: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_prop_string_combo_box_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@store: 
+@id_column: 
+@label_column: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_prop_text_buffer_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@max_len: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_prop_unit_menu_new ##### -->
+<para>
+
+</para>
+
+@config: 
+@property_name: 
+@unit_format: 
 @Returns: 
 
 

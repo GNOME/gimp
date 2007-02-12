@@ -39,5 +39,6 @@ gimp_preview_get_type
 gimp_ratio_entry_get_type
 gimp_scrolled_preview_get_type
 gimp_size_entry_get_type
+gimp_string_combo_box_get_type
 gimp_unit_menu_get_type
 gimp_zoom_model_get_type
