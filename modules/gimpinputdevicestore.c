@@ -214,9 +214,6 @@ gimp_input_device_store_add (GimpInputDeviceStore *store,
           GtkTreeIter iter;
 
           gtk_list_store_append (GTK_LIST_STORE (store), &iter);
-
-          g_printerr ("%s\n", str);
-
           gtk_list_store_set (GTK_LIST_STORE (store), &iter,
                               COLUMN_UDI,   udi,
                               COLUMN_LABEL, str,

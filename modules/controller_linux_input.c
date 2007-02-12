@@ -113,7 +113,8 @@ static const LinuxInputEvent rel_events[] =
 enum
 {
   PROP_0,
-  PROP_DEVICE
+  PROP_DEVICE,
+  PROP_DEVICE_STORE
 };
 
 
@@ -246,6 +247,11 @@ linux_input_class_init (ControllerLinuxInputClass *klass)
                                                         _("The name of the device to read Linux Input events from."),
                                                         NULL,
                                                         GIMP_CONFIG_PARAM_FLAGS));
+  g_object_class_install_property (object_class, PROP_DEVICE_STORE,
+                                   g_param_spec_object ("device-values",
+                                                        NULL, NULL,
+                                                        GIMP_TYPE_INPUT_DEVICE_STORE,
+                                                        G_PARAM_READABLE));
 
   controller_class->name            = _("Linux Input");
   controller_class->help_id         = "gimp-controller-linux-input";
@@ -317,6 +323,9 @@ linux_input_get_property (GObject    *object,
     {
     case PROP_DEVICE:
       g_value_set_string (value, controller->device);
+      break;
+    case PROP_DEVICE_STORE:
+      g_value_set_object (value, controller->store);
       break;
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -503,10 +512,17 @@ linux_input_set_device (ControllerLinuxInput *controller,
 
   if (controller->device && strlen (controller->device))
     {
+      gchar *filename;
       gchar *state;
       gint   fd;
 
-      fd = g_open (controller->device, O_RDONLY, 0);
+      if (controller->store)
+        filename = gimp_input_device_store_get_device_file (controller->store,
+                                                            controller->device);
+      else
+        filename = g_strdup (controller->device);
+
+      fd = g_open (filename, O_RDONLY, 0);
 
       if (fd >= 0)
         {
@@ -522,9 +538,11 @@ linux_input_set_device (ControllerLinuxInput *controller,
 
           linux_input_get_device_info (controller, fd);
 
-          state = g_strdup_printf (_("Reading from %s"), controller->device);
+          state = g_strdup_printf (_("Reading from %s"), filename);
           g_object_set (controller, "state", state, NULL);
           g_free (state);
+
+          g_free (filename);
 
           controller->io = g_io_channel_unix_new (fd);
           g_io_channel_set_close_on_unref (controller->io, TRUE);
@@ -543,6 +561,8 @@ linux_input_set_device (ControllerLinuxInput *controller,
           g_object_set (controller, "state", state, NULL);
           g_free (state);
         }
+
+      g_free (filename);
     }
   else
     {

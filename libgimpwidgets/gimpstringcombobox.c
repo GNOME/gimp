@@ -143,37 +143,17 @@ gimp_string_combo_box_constructor (GType                  type,
                                    GObjectConstructParam *params)
 {
   GObject                   *object;
-  GimpStringComboBox        *combo;
   GimpStringComboBoxPrivate *priv;
-  GtkTreeModel              *model;
   GtkCellRenderer           *cell;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
-  combo = GIMP_STRING_COMBO_BOX (object);
-  priv = GIMP_STRING_COMBO_BOX_GET_PRIVATE (combo);
-
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
-
-  if (! g_type_is_a (gtk_tree_model_get_column_type (model, priv->id_column),
-                     G_TYPE_STRING))
-    {
-      g_warning ("GimpStringComboBox: ID column must hold string values");
-      return object;
-    }
-
-  if (! g_type_is_a (gtk_tree_model_get_column_type (model, priv->label_column),
-                     G_TYPE_STRING))
-    {
-      g_warning ("GimpStringComboBox: label column must hold string values");
-      return object;
-    }
-
+  priv = GIMP_STRING_COMBO_BOX_GET_PRIVATE (object);
 
   priv->text_renderer = cell = gtk_cell_renderer_text_new ();
 
-  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (combo), cell, TRUE);
-  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (combo), cell,
+  gtk_cell_layout_pack_start (GTK_CELL_LAYOUT (object), cell, TRUE);
+  gtk_cell_layout_set_attributes (GTK_CELL_LAYOUT (object), cell,
                                   "text", priv->label_column,
                                   NULL);
 
@@ -317,24 +297,32 @@ gboolean
 gimp_string_combo_box_set_active (GimpStringComboBox *combo_box,
                                   const gchar        *id)
 {
-  GtkTreeModel *model;
-  GtkTreeIter   iter;
-  gint          column;
-
   g_return_val_if_fail (GIMP_IS_STRING_COMBO_BOX (combo_box), FALSE);
-  g_return_val_if_fail (id != NULL, FALSE);
 
-  model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
-
-  column = GIMP_STRING_COMBO_BOX_GET_PRIVATE (combo_box)->id_column;
-
-  if (gimp_string_model_lookup (model, column, id, &iter))
+  if (id)
     {
-      gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
+      GtkTreeModel *model;
+      GtkTreeIter   iter;
+      gint          column;
+
+      model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo_box));
+
+      column = GIMP_STRING_COMBO_BOX_GET_PRIVATE (combo_box)->id_column;
+
+      if (gimp_string_model_lookup (model, column, id, &iter))
+        {
+          gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo_box), &iter);
+          return TRUE;
+        }
+
+      return FALSE;
+    }
+  else
+    {
+      gtk_combo_box_set_active (GTK_COMBO_BOX (combo_box), -1);
+
       return TRUE;
     }
-
-  return FALSE;
 }
 
 /**
