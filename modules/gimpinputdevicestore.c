@@ -449,8 +449,8 @@ gimp_input_device_store_get_type (GTypeModule *module)
   return G_TYPE_NONE;
 }
 
-GtkListStore *
-gimp_input_device_store_new (GError **error)
+GimpInputDeviceStore *
+gimp_input_device_store_new (void)
 {
   return NULL;
 }
