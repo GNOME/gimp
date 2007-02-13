@@ -164,11 +164,13 @@ static const gchar * linux_input_get_event_name   (GimpController *controller,
 static const gchar * linux_input_get_event_blurb  (GimpController *controller,
                                                    gint            event_id);
 
-static gboolean      linux_input_set_device (ControllerLinuxInput *controller,
-                                             const gchar          *device);
-static gboolean      linux_input_read_event (GIOChannel           *io,
-                                             GIOCondition          cond,
-                                             gpointer              data);
+static void          linux_input_device_changed   (ControllerLinuxInput *controller,
+                                                   const gchar          *udi);
+static gboolean      linux_input_set_device       (ControllerLinuxInput *controller,
+                                                   const gchar          *device);
+static gboolean      linux_input_read_event       (GIOChannel           *io,
+                                                   GIOCondition          cond,
+                                                   gpointer              data);
 
 
 static const GimpModuleInfo linux_input_info =
@@ -266,6 +268,16 @@ static void
 linux_input_init (ControllerLinuxInput *controller)
 {
   controller->store = gimp_input_device_store_new ();
+
+  if (controller->store)
+    {
+      g_signal_connect_swapped (controller->store, "device-added",
+                                G_CALLBACK (linux_input_device_changed),
+                                controller);
+      g_signal_connect_swapped (controller->store, "device-removed",
+                                G_CALLBACK (linux_input_device_changed),
+                                controller);
+    }
 }
 
 static void
@@ -490,10 +502,23 @@ linux_input_get_device_info (ControllerLinuxInput *controller,
     }
 }
 
+static void
+linux_input_device_changed (ControllerLinuxInput *controller,
+                            const gchar          *udi)
+{
+  if (controller->device && strcmp (udi, controller->device) == 0)
+    {
+      linux_input_set_device (controller, udi);
+      g_object_notify (G_OBJECT (controller), "device");
+    }
+}
+
 static gboolean
 linux_input_set_device (ControllerLinuxInput *controller,
                         const gchar          *device)
 {
+  gchar *filename;
+
   if (controller->io)
     {
       g_source_remove (controller->io_id);
@@ -512,15 +537,23 @@ linux_input_set_device (ControllerLinuxInput *controller,
 
   if (controller->device && strlen (controller->device))
     {
-      gchar *filename;
-      gchar *state;
-      gint   fd;
-
       if (controller->store)
         filename = gimp_input_device_store_get_device_file (controller->store,
                                                             controller->device);
       else
         filename = g_strdup (controller->device);
+    }
+  else
+    {
+      g_object_set (controller, "state", _("No device configured"), NULL);
+
+      return FALSE;
+    }
+
+  if (filename)
+    {
+      gchar *state;
+      gint   fd;
 
       fd = g_open (filename, O_RDONLY, 0);
 
@@ -566,7 +599,7 @@ linux_input_set_device (ControllerLinuxInput *controller,
     }
   else
     {
-      g_object_set (controller, "state", _("No device configured"), NULL);
+      g_object_set (controller, "state", _("Device not available"), NULL);
     }
 
   return FALSE;

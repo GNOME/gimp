@@ -30,11 +30,11 @@
 typedef struct _GimpInputDeviceStore GimpInputDeviceStore;
 
 
-GType          gimp_input_device_store_get_type        (void) G_GNUC_CONST;
+GType                  gimp_input_device_store_get_type        (void) G_GNUC_CONST;
 
-GtkListStore * gimp_input_device_store_new             (void);
-gchar        * gimp_input_device_store_get_device_file (GimpInputDeviceStore *store,
-                                                        const gchar          *udi);
+GimpInputDeviceStore * gimp_input_device_store_new             (void);
+gchar                * gimp_input_device_store_get_device_file (GimpInputDeviceStore *store,
+                                                                const gchar          *udi);
 
 
 #endif  /* __GIMP_INPUT_DEVICE_STORE_H__ */
