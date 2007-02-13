@@ -211,7 +211,6 @@ gimp_input_device_store_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-
 static gboolean
 gimp_input_device_store_lookup (GimpInputDeviceStore *store,
                                 const gchar          *udi,
@@ -241,6 +240,43 @@ gimp_input_device_store_lookup (GimpInputDeviceStore *store,
     }
 
   return iter_valid;
+}
+
+/*  insert in alphabetic order  */
+static void
+gimp_input_device_store_insert (GimpInputDeviceStore *store,
+                                const gchar          *udi,
+                                const gchar          *label)
+{
+  GtkTreeModel *model = GTK_TREE_MODEL (store);
+  GtkTreeIter   iter;
+  GValue        value = { 0, };
+  gint          pos   = 0;
+  gboolean      iter_valid;
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter), pos++)
+    {
+      const gchar *str;
+
+      gtk_tree_model_get_value (model, &iter, COLUMN_LABEL, &value);
+
+      str = g_value_get_string (&value);
+
+      if (g_utf8_collate (label, str) < 0)
+        {
+          g_value_unset (&value);
+          break;
+        }
+
+      g_value_unset (&value);
+    }
+
+  gtk_list_store_insert_with_values (GTK_LIST_STORE (store), &iter, pos,
+                                     COLUMN_UDI,   udi,
+                                     COLUMN_LABEL, label,
+                                     -1);
 }
 
 static gboolean
@@ -282,13 +318,7 @@ gimp_input_device_store_add (GimpInputDeviceStore *store,
                                                NULL);
       if (str)
         {
-          GtkTreeIter iter;
-
-          gtk_list_store_append (GTK_LIST_STORE (store), &iter);
-          gtk_list_store_set (GTK_LIST_STORE (store), &iter,
-                              COLUMN_UDI,   udi,
-                              COLUMN_LABEL, str,
-                              -1);
+          gimp_input_device_store_insert (store, udi, str);
 
           libhal_free_string (str);
 
