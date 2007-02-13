@@ -86,16 +86,45 @@ static void      gimp_input_device_store_device_removed (LibHalContext *ctx,
                                                          const char    *udi);
 
 
-static guint store_signals[LAST_SIGNAL] = { 0 };
+GType                     gimp_input_device_store_type = 0;
+static GtkListStoreClass *parent_class                 = NULL;
+static guint              store_signals[LAST_SIGNAL]   = { 0 };
 
-G_DEFINE_TYPE (GimpInputDeviceStore,
-               gimp_input_device_store, GTK_TYPE_LIST_STORE)
+
+GType
+gimp_input_device_store_get_type (GTypeModule *module)
+{
+  if (! gimp_input_device_store_type)
+    {
+      const GTypeInfo info =
+      {
+        sizeof (GimpInputDeviceStoreClass),
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_input_device_store_class_init,
+        NULL,           /* class_finalize */
+        NULL,           /* class_data     */
+        sizeof (GimpInputDeviceStore),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_input_device_store_init
+      };
+
+      gimp_input_device_store_type =
+        g_type_module_register_type (module, GTK_TYPE_LIST_STORE,
+                                     "GimpInputDeviceStore",
+                                     &info, 0);
+    }
+
+  return gimp_input_device_store_type;
+}
 
 
 static void
 gimp_input_device_store_class_init (GimpInputDeviceStoreClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
 
   store_signals[DEVICE_ADDED] =
     g_signal_new ("device-added",
@@ -179,7 +208,7 @@ gimp_input_device_store_finalize (GObject *object)
       store->context = NULL;
     }
 
-  G_OBJECT_CLASS (gimp_input_device_store_parent_class)->finalize (object);
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 
@@ -348,7 +377,7 @@ gimp_input_device_store_get_device_file (GimpInputDeviceStore *store,
 #else
 
 GType
-gimp_input_device_store_get_type (void)
+gimp_input_device_store_get_type (GTypeModule *module)
 {
   return G_TYPE_NONE;
 }

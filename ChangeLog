@@ -1,3 +1,11 @@
+2007-02-13  Michael Natterer  <mitch@gimp.org>
+
+	* modules/gimpinputdevicestore.[ch]: made dynamically loadable
+	using GTypeModule.
+
+	* modules/controller_linux_input.c (gimp_module_register):
+	register the new dynamic type.
+
 2007-02-13  Sven Neumann  <sven@gimp.org>
 
 	* modules/controller_linux_input.c (key_events): corrected string

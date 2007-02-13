@@ -23,14 +23,17 @@
 #define __GIMP_INPUT_DEVICE_STORE_H__
 
 
-#define GIMP_TYPE_INPUT_DEVICE_STORE    (gimp_input_device_store_get_type ())
+#define GIMP_TYPE_INPUT_DEVICE_STORE    (gimp_input_device_store_type)
 #define GIMP_INPUT_DEVICE_STORE(obj)    (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_INPUT_DEVICE_STORE, GimpInputDeviceStore))
 #define GIMP_IS_INPUT_DEVICE_STORE(obj) (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_INPUT_DEVICE_STORE))
 
 typedef struct _GimpInputDeviceStore GimpInputDeviceStore;
 
 
-GType                  gimp_input_device_store_get_type        (void) G_GNUC_CONST;
+extern GType gimp_input_device_store_type;
+
+GType        gimp_input_device_store_get_type (GTypeModule *module);
+
 
 GimpInputDeviceStore * gimp_input_device_store_new             (void);
 gchar                * gimp_input_device_store_get_device_file (GimpInputDeviceStore *store,
