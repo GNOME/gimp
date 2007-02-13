@@ -1,5 +1,9 @@
 2007-02-13  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-convert.c: update the progress less often.
+
+2007-02-13  Sven Neumann  <sven@gimp.org>
+
 	* modules/gimpinputdevicestore.[ch]
 	* modules/controller_linux_input.c: improved error handling.
 

@@ -977,19 +977,15 @@ gimp_image_convert (GimpImage              *image,
         {
         case GIMP_RGB:
           gimp_drawable_convert_rgb (GIMP_DRAWABLE (layer),
-                                     new_tiles,
-                                     old_type);
+                                     new_tiles, old_type);
           break;
         case GIMP_GRAY:
           gimp_drawable_convert_grayscale (GIMP_DRAWABLE (layer),
-                                           new_tiles,
-                                           old_type);
+                                           new_tiles, old_type);
           break;
         case GIMP_INDEXED:
           quantobj->nth_layer = nth_layer;
-          (* quantobj->second_pass) (quantobj,
-                                     layer,
-                                     new_tiles);
+          (* quantobj->second_pass) (quantobj, layer, new_tiles);
           break;
         default:
           break;
@@ -1176,6 +1172,7 @@ generate_histogram_rgb (CFHistogram   histogram,
   gint         offsetx, offsety;
   glong        layer_size;
   glong        total_size = 0;
+  gint         count      = 0;
   gboolean     has_alpha  = gimp_drawable_has_alpha (GIMP_DRAWABLE (layer));
 
   gimp_item_offsets (GIMP_ITEM (layer), &offsetx, &offsety);
@@ -1195,7 +1192,7 @@ generate_histogram_rgb (CFHistogram   histogram,
 
   for (pr = pixel_regions_register (1, &srcPR);
        pr != NULL;
-       pr = pixel_regions_process (pr))
+       pr = pixel_regions_process (pr), count++)
     {
       const guchar *data = srcPR.data;
       gint          size = srcPR.w * srcPR.h;
@@ -1348,7 +1345,7 @@ generate_histogram_rgb (CFHistogram   histogram,
             }
         }
 
-      if (progress)
+      if (progress && (count % 16 == 0))
         gimp_progress_set_value (progress,
                                  (nth_layer + ((gdouble) total_size)/
                                   layer_size) / (gdouble) n_layers);
@@ -2043,7 +2040,7 @@ median_cut_rgb (CFHistogram   histogram,
       /* Update stats for boxes */
       numboxes++;
 
-      if (progress)
+      if (progress && (numboxes % 16 == 0))
         gimp_progress_set_value (progress, (gdouble) numboxes / desired_colors);
 
       update_box_rgb (histogram, b1, desired_colors - numboxes);
@@ -3018,6 +3015,7 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
   gulong       *index_used_count = quantobj->index_used_count;
   glong         total_size       = 0;
   glong         layer_size;
+  gint          count            = 0;
   gint          nth_layer        = quantobj->nth_layer;
   gint          n_layers         = quantobj->n_layers;
 
@@ -3049,7 +3047,7 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
        pr != NULL;
-       pr = pixel_regions_process (pr))
+       pr = pixel_regions_process (pr), count++)
     {
       src = srcPR.data;
       dest = destPR.data;
@@ -3107,7 +3105,7 @@ median_cut_pass2_no_dither_rgb (QuantizeObj *quantobj,
             }
         }
 
-       if (quantobj->progress)
+      if (quantobj->progress && (count % 16 == 0))
          gimp_progress_set_value (quantobj->progress,
                                   (nth_layer + ((gdouble) total_size)/
                                    layer_size) / (gdouble) n_layers);
@@ -3141,6 +3139,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
   gulong       *index_used_count = quantobj->index_used_count;
   glong         total_size       = 0;
   glong         layer_size;
+  gint          count            = 0;
   gint          nth_layer        = quantobj->nth_layer;
   gint          n_layers         = quantobj->n_layers;
 
@@ -3172,7 +3171,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
 
   for (pr = pixel_regions_register (2, &srcPR, &destPR);
        pr != NULL;
-       pr = pixel_regions_process (pr))
+       pr = pixel_regions_process (pr), count++)
     {
       src = srcPR.data;
       dest = destPR.data;
@@ -3316,7 +3315,7 @@ median_cut_pass2_fixed_dither_rgb (QuantizeObj *quantobj,
             }
         }
 
-      if (quantobj->progress)
+      if (quantobj->progress && (count % 16 == 0))
         gimp_progress_set_value (quantobj->progress,
                                  (nth_layer + ((gdouble) total_size)/
                                   layer_size) / (gdouble) n_layers);
@@ -4133,7 +4132,7 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
 
       pixel_region_set_row (&destPR, 0, row, width, dest_buf);
 
-      if (quantobj->progress)
+      if (quantobj->progress && (row % 16 == 0))
         gimp_progress_set_value (quantobj->progress,
                                  (nth_layer + ((gdouble) row) /
                                   height) / (gdouble) n_layers);
