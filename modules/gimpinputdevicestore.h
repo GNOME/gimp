@@ -32,12 +32,13 @@ typedef struct _GimpInputDeviceStore GimpInputDeviceStore;
 
 extern GType gimp_input_device_store_type;
 
-GType        gimp_input_device_store_get_type (GTypeModule *module);
+GType                  gimp_input_device_store_get_type        (GTypeModule           *module);
 
 
 GimpInputDeviceStore * gimp_input_device_store_new             (void);
-gchar                * gimp_input_device_store_get_device_file (GimpInputDeviceStore *store,
-                                                                const gchar          *udi);
+gchar                * gimp_input_device_store_get_device_file (GimpInputDeviceStore  *store,
+                                                                const gchar           *udi);
+GError               * gimp_input_device_store_get_error       (GimpInputDeviceStore  *store);
 
 
 #endif  /* __GIMP_INPUT_DEVICE_STORE_H__ */

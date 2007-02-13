@@ -1,5 +1,10 @@
 2007-02-13  Sven Neumann  <sven@gimp.org>
 
+	* modules/gimpinputdevicestore.[ch]
+	* modules/controller_linux_input.c: improved error handling.
+
+2007-02-13  Sven Neumann  <sven@gimp.org>
+
 	* modules/gimpinputdevicestore.c: keep devices sorted alphabetically.
 
 2007-02-13  Michael Natterer  <mitch@gimp.org>

@@ -45,6 +45,12 @@ enum
 
 enum
 {
+  PROP_0,
+  PROP_CONSTRUCT_ERROR
+};
+
+enum
+{
   DEVICE_ADDED,
   DEVICE_REMOVED,
   LAST_SIGNAL
@@ -54,9 +60,10 @@ typedef struct _GimpInputDeviceStoreClass GimpInputDeviceStoreClass;
 
 struct _GimpInputDeviceStore
 {
-  GtkListStore   parent_instance;
+  GtkListStore    parent_instance;
 
-  LibHalContext *context;
+  LibHalContext  *context;
+  GError         *error;
 };
 
 
@@ -74,7 +81,6 @@ struct _GimpInputDeviceStoreClass
 static void      gimp_input_device_store_class_init (GimpInputDeviceStoreClass *klass);
 static void      gimp_input_device_store_init       (GimpInputDeviceStore *store);
 static void      gimp_input_device_store_finalize   (GObject              *object);
-
 static gboolean  gimp_input_device_store_add        (GimpInputDeviceStore *store,
                                                      const gchar          *udi);
 static gboolean  gimp_input_device_store_remove     (GimpInputDeviceStore *store,
@@ -153,21 +159,17 @@ gimp_input_device_store_class_init (GimpInputDeviceStoreClass *klass)
 static void
 gimp_input_device_store_init (GimpInputDeviceStore *store)
 {
-  DBusGConnection *connection;
   GType            types[] = { G_TYPE_STRING, G_TYPE_STRING };
-  GError          *error = NULL;
+  DBusGConnection *connection;
+  DBusError        dbus_error;
 
   gtk_list_store_set_column_types (GTK_LIST_STORE (store),
                                    G_N_ELEMENTS (types), types);
 
-  connection = dbus_g_bus_get (DBUS_BUS_SYSTEM, &error);
+  connection = dbus_g_bus_get (DBUS_BUS_SYSTEM, &store->error);
 
   if (! connection)
-    {
-      g_printerr (error->message);
-      g_error_free (error);
-      return;
-    }
+    return;
 
   store->context = libhal_ctx_new ();
 
@@ -175,7 +177,9 @@ gimp_input_device_store_init (GimpInputDeviceStore *store)
                                   dbus_g_connection_get_connection (connection));
   dbus_g_connection_unref (connection);
 
-  if (libhal_ctx_init (store->context, NULL))
+  dbus_error_init (&dbus_error);
+
+  if (libhal_ctx_init (store->context, &dbus_error))
     {
       char **devices;
       int    i, num_devices;
@@ -189,10 +193,26 @@ gimp_input_device_store_init (GimpInputDeviceStore *store)
       libhal_free_string_array (devices);
 
       libhal_ctx_set_user_data (store->context, store);
+
       libhal_ctx_set_device_added (store->context,
                                    gimp_input_device_store_device_added);
       libhal_ctx_set_device_removed (store->context,
                                      gimp_input_device_store_device_removed);
+    }
+  else
+    {
+      if (dbus_error_is_set (&dbus_error))
+        {
+          dbus_set_g_error (&store->error, &dbus_error);
+          dbus_error_free (&dbus_error);
+        }
+      else
+        {
+          g_set_error (&store->error, 0, 0, "Unable to connect to hald");
+        }
+
+      libhal_ctx_free (store->context);
+      store->context = NULL;
     }
 }
 
@@ -206,6 +226,12 @@ gimp_input_device_store_finalize (GObject *object)
       libhal_ctx_shutdown (store->context, NULL);
       libhal_ctx_free (store->context);
       store->context = NULL;
+    }
+
+  if (store->error)
+    {
+      g_error_free (store->error);
+      store->error = NULL;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -385,6 +411,9 @@ gimp_input_device_store_get_device_file (GimpInputDeviceStore *store,
   g_return_val_if_fail (GIMP_IS_INPUT_DEVICE_STORE (store), NULL);
   g_return_val_if_fail (udi != NULL, NULL);
 
+  if (! store->context)
+    return NULL;
+
   if (gimp_input_device_store_lookup (store, udi, &iter))
     {
       char *str = libhal_device_get_property_string (store->context,
@@ -404,6 +433,14 @@ gimp_input_device_store_get_device_file (GimpInputDeviceStore *store,
   return NULL;
 }
 
+GError *
+gimp_input_device_store_get_error (GimpInputDeviceStore  *store)
+{
+  g_return_val_if_fail (GIMP_IS_INPUT_DEVICE_STORE (store), NULL);
+
+  return store->error ? g_error_copy (store->error) : NULL;
+}
+
 #else
 
 GType
@@ -413,7 +450,7 @@ gimp_input_device_store_get_type (GTypeModule *module)
 }
 
 GtkListStore *
-gimp_input_device_store_new (void)
+gimp_input_device_store_new (GError **error)
 {
   return NULL;
 }
@@ -421,6 +458,12 @@ gimp_input_device_store_new (void)
 gchar *
 gimp_input_device_store_get_device_file (GimpInputDeviceStore *store,
                                          const gchar          *udi)
+{
+  return NULL;
+}
+
+GError *
+gimp_input_device_store_get_error (GimpInputDeviceStore  *store)
 {
   return NULL;
 }

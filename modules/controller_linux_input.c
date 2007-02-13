@@ -598,9 +598,19 @@ linux_input_set_device (ControllerLinuxInput *controller,
 
       g_free (filename);
     }
-  else
+  else if (controller->store)
     {
-      g_object_set (controller, "state", _("Device not available"), NULL);
+      GError *error = gimp_input_device_store_get_error (controller->store);
+
+      if (error)
+        {
+          g_object_set (controller, "state", error->message, NULL);
+          g_error_free (error);
+        }
+      else
+        {
+          g_object_set (controller, "state", _("Device not available"), NULL);
+        }
     }
 
   return FALSE;
