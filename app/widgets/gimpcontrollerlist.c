@@ -630,7 +630,7 @@ gimp_controller_list_edit_clicked (GtkWidget          *button,
 
   dialog = gimp_dialog_new (_("Configure Input Controller"),
                             "gimp-controller-editor-dialog",
-                            gtk_widget_get_toplevel (button),
+                            gtk_widget_get_toplevel (GTK_WIDGET (list)),
                             GTK_DIALOG_DESTROY_WITH_PARENT,
                             gimp_standard_help_func,
                             GIMP_HELP_PREFS_INPUT_CONTROLLERS,
