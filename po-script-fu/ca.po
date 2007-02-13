@@ -3,7 +3,7 @@
 # Copyright © 2000, 2001, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 # Softcatala <linux@softcatala.org>, 2000-2001.
 # Xavier Beà <xbea a pie.xtec.es>, 2003, 2004.
-# Xavier Conde Rueda <xaviconde a eresmas.com>, 2004.
+# Xavier Conde Rueda <xavi.conde@gmail.com>, 2004.
 # Quim Perez Noguer <noguer a gmail.com>, 2005, 2006.
 #
 #
@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-25 22:37+0100\n"
-"PO-Revision-Date: 2007-01-17 22:49+0100\n"
+"POT-Creation-Date: 2007-02-13 08:48+0100\n"
+"PO-Revision-Date: 2007-02-07 21:09+0100\n"
 "Last-Translator: Quim Perez i Noguer\n"
 "Language-Team: Català <gimp@softcatala.net>\n"
 "MIME-Version: 1.0\n"
@@ -32,7 +32,7 @@ msgstr "Benvinguts al TinyScheme"
 
 #: ../plug-ins/script-fu/script-fu-console.c:212
 msgid "Interactive Scheme Development"
-msgstr "Consola interactiva del Scheme"
+msgstr "Consola interactiva de l'Scheme"
 
 #: ../plug-ins/script-fu/script-fu-console.c:248
 msgid "_Browse..."
@@ -42,16 +42,16 @@ msgstr "_Cerca..."
 msgid "Save Script-Fu Console Output"
 msgstr "Desa la sortida de la consola de funcions"
 
-#: ../plug-ins/script-fu/script-fu-console.c:354
+#: ../plug-ins/script-fu/script-fu-console.c:357
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "No s'ha pogut obrir '%s' per escriure: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:383
+#: ../plug-ins/script-fu/script-fu-console.c:386
 msgid "Script-Fu Procedure Browser"
 msgstr "Gestor de funcions"
 
-#: ../plug-ins/script-fu/script-fu-console.c:708
+#: ../plug-ins/script-fu/script-fu-console.c:711
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "Si s'activa l'avaluador de funcions només es permetrà la invocació no "
@@ -226,7 +226,7 @@ msgstr "_Clàssic.Gimp.org"
 
 #: ../plug-ins/script-fu/script-fu.c:327
 msgid "Alpha to _Logo"
-msgstr "Capa transparent a _Logotip"
+msgstr "Capa transparent a _logotip"
 
 #: ../plug-ins/script-fu/script-fu.c:329
 msgid "An_imation"
@@ -286,8 +286,8 @@ msgid ""
 "Please close all Script-Fu windows and try again."
 msgstr ""
 "No podeu utilitzar «Actualitza les funcions» si teniu obert un diàleg "
-"d'alguna funció.  Tanqueu totes les finestres de funcions i filtres, i "
-"torneu-ho a provar."
+"d'alguna funció. Tanqueu totes les finestres de funcions i filtres, i torneu-"
+"ho a provar."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -1003,7 +1003,7 @@ msgid ""
 "Burn-In: Needs two layers in total!\n"
 "A foreground text layer with transparency and a background layer."
 msgstr ""
-"Creama: Necessita dos capes en total!\n"
+"Crema: Necessita dos capes en total!\n"
 " Una capa transparent amb el text i una capa de fons. "
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
@@ -1016,7 +1016,7 @@ msgid ""
 "between two layers"
 msgstr ""
 "Crea els fotogrames intermedis per a produir una transició animada entre "
-"dues capes, com si passes un incendi"
+"dues capes, com si hi passés un incendi"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout"
@@ -1053,7 +1053,7 @@ msgstr "Crea una imatge plena d'un patró de camuflatge"
 #: ../plug-ins/script-fu/scripts/camo.scm.h:6
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:6
 msgid "Granularity"
-msgstr "Granulació"
+msgstr "Granularitat"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:7
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:7
@@ -1098,8 +1098,8 @@ msgid ""
 "Create a logo with text raised above or carved in to the specified "
 "background image"
 msgstr ""
-"Crea un logotip amb un text que sobresurt o està enfonsat en una imatge de "
-"fons"
+"Crea un logotip amb un text que pot sobresortir o estar escúlpit en una "
+"imatge de fons"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
@@ -1112,14 +1112,12 @@ msgstr "Color del _guix"
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:3
 msgid "Create a chalk drawing effect for the selected region (or alpha)"
 msgstr ""
-"Crea un efecte com si s'hagués dibuixat amb un llapis de guix sobre la regió "
-"seleccionada (o canal alfa)"
+"Crea un efecte com si s'hagués dibuixat amb guix sobre la regió seleccionada "
+"(o canal alfa)"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:4
 msgid "Create a logo resembling chalk scribbled on a blackboard"
-msgstr ""
-"Crea un logotip que sembla que s'hagi dibuixat amb un llapis de guix damunt "
-"d'un fons"
+msgstr "Crea un logotip que sembli dibuixat amb guix damunt d'una pissarra"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:8
 msgid "_Chalk..."
@@ -1144,7 +1142,7 @@ msgstr "Quantitat de bocins"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Create a logo resembling a chipped wood carving"
-msgstr "Crea un logotip que sembla que s'hagi esculpit sobre fusta"
+msgstr "Crea un logotip que sembli esculpit sobre fusta"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Drop shadow"
@@ -1303,7 +1301,7 @@ msgid ""
 "Darken only\n"
 "(Better, but only for images with a lot of white)"
 msgstr ""
-"Només enfosqueja\n"
+"Només enfosqueix\n"
 "(Millor, però només per a imatges amb molt de blanc)"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
@@ -1385,7 +1383,7 @@ msgstr "Núvols per diferència..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
 msgid "Solid noise applied with Difference layer mode"
-msgstr "Soroll sòlid aplicat amb el mode de capa Diferència"
+msgstr "Soroll sòlid aplicat amb el mode de capa «Diferència»"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "Distress the selection"
@@ -1472,7 +1470,7 @@ msgstr "Esborra totes les altres files i columnes"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/fill"
-msgstr "Esborra/Omple"
+msgstr "Esborra/omple"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:5
 msgid "Even"
@@ -1496,7 +1494,7 @@ msgstr "Files"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:10
 msgid "Rows/cols"
-msgstr "Files/Columnes"
+msgstr "Files/columnes"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:11
 msgid "_Erase Every Other Row..."
@@ -1730,13 +1728,13 @@ msgid ""
 "Create an image of a Tube Button Label Header using the gimp.org webpage "
 "theme"
 msgstr ""
-"Crea una imatge d'una botó tubular d'una capçalera, emprant el tema de la "
+"Crea una imatge d'un botó tubular d'una capçalera, emprant el tema de la "
 "pàgina web del Gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
 msgstr ""
-"Crea una imatge d'una botó tubular d'una etiqueta, emprant el tema de la "
+"Crea una imatge d'un botó tubular d'una etiqueta, emprant el tema de la "
 "pàgina web del Gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
@@ -1744,15 +1742,15 @@ msgid ""
 "Create an image of a second level Tube Button Label using the gimp.org "
 "webpage theme"
 msgstr ""
-"Crea una imatge d'una botó tubular d'una etiqueta de segon nivell, emprant "
-"el tema de la pàgina web del Gimp.org"
+"Crea una imatge d'un botó tubular d'una etiqueta de segon nivell, emprant el "
+"tema de la pàgina web del Gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
 msgid ""
 "Create an image of a third level Tube Button Label using the gimp.org "
 "webpage theme"
 msgstr ""
-"Crea una imatge d'una botó tubular d'una etiqueta de tercer nivell, emprant "
+"Crea una imatge d'un botó tubular d'una etiqueta de tercer nivell, emprant "
 "el tema de la pàgina web del Gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
@@ -2243,7 +2241,7 @@ msgstr "_Prespectiva..."
 #: ../plug-ins/script-fu/scripts/predator.scm.h:1
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
 msgstr ""
-"Afegeix un efecte 'Àlien Predator' a la regió seleccionada (o canal alfa)"
+"Afegeix un efecte «Àlien Predator» a la regió seleccionada (o canal alfa)"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge amount"
@@ -2259,11 +2257,11 @@ msgstr "Pixelitza"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:7
 msgid "_Predator..."
-msgstr "Estil Àlien _Predator... "
+msgstr "Estil «Àlien _Predator»..."
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:2
 msgid "Create images, each containing an oval button graphic"
-msgstr "Crea imatges, cada una amb un dibuix d'un botó oval"
+msgstr "Crea imatges, cadascuna amb un dibuix d'un botó oval"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:5
 msgid "Lower color"
@@ -2337,7 +2335,7 @@ msgstr "Negre"
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current image"
 msgstr ""
-"Crea una imatge de vàries capes afegint un efecte de rinxol de paper a la "
+"Crea una imatge de vàries capes afegint un efecte de rínxol de paper a la "
 "imatge actual, com si es passés pàgina"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
@@ -2456,11 +2454,11 @@ msgstr "Emmarca com un _fotograma..."
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Create a State Of The Art chromed logo"
-msgstr "Crea un logotip amb crom estil 'State Of The Art'"
+msgstr "Crea un modern logotip amb crom estil 'State Of The Art'"
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
 msgid "SOTA Chrome..."
-msgstr "SOTA crom..."
+msgstr "Crom modern (SOTA)..."
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
 msgid "Create a logo with a speedy text effect"
@@ -2666,8 +2664,8 @@ msgstr "_Llum d'estrella..."
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
 msgstr ""
-"Crea un logotip emprant un text en forma de roca dura amb una ombra i  "
-"il·luminat per un focus de llum"
+"Crea un logotip emprant una textura en forma de roca dura, il·luminat per un "
+"focus de llum i amb una ombra"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 msgid "Effect size (pixels * 4)"
@@ -2678,8 +2676,8 @@ msgid ""
 "Fill the selected region (or alpha) with a rock-like texture, a nova glow, "
 "and shadow"
 msgstr ""
-"Omple la regió seleccionada (o canal alfa) emprant una textura de roca dura "
-"amb ombra i il·luminant l'escena amb un focus de llum"
+"Omple la regió seleccionada (o canal alfa) emprant una textura de roca dura, "
+"il·luminada per un focus de llum i amb una ombra"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
 msgid "Sta_rscape..."
@@ -2884,7 +2882,7 @@ msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
 msgstr ""
-"Crea una imatge amb varis fotogrames que imita l'efecta de llençar una pedra "
+"Crea una imatge amb varis fotogrames que imita l'efecte de llençar una pedra "
 "a l'aigua, on es reflexa la imatge actual"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
@@ -2904,8 +2902,8 @@ msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr ""
-"Crea una nova capa plena d'una ona que es pot emprar per sobreposar o com a "
-"mapa d'elevació"
+"Crea una nova capa plena d'un efecte d'ona, que es pot emprar per a "
+"sobreposar o com a mapa d'elevació"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
@@ -2941,11 +2939,11 @@ msgstr "Tei_xit de cistella..."
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
 msgid "Bookmark to the GIMP web site"
-msgstr "Punt al web del GIMP"
+msgstr "Web del GIMP"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
 msgid "Bookmark to the user manual"
-msgstr "Punt al manual de l'usuari"
+msgstr "Manual de l'usuari"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "Create and Use _Selections"
