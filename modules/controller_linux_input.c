@@ -72,7 +72,7 @@ static const LinuxInputEvent key_events[] =
   { BTN_SIDE,      "button-side",      N_("Button Side")      },
   { BTN_EXTRA,     "button-extra",     N_("Button Extra")     },
   { BTN_FORWARD,   "button-forward",   N_("Button Forward")   },
-  { BTN_BACK,      "button-back",      N_("Button Forward")   },
+  { BTN_BACK,      "button-back",      N_("Button Back")      },
   { BTN_TASK,      "button-task",      N_("Button Task")      },
 #ifdef BTN_WHEEL
   { BTN_WHEEL,     "button-wheel",     N_("Button Wheel")     },
