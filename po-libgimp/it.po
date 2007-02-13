@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-30 10:58+0100\n"
-"PO-Revision-Date: 2007-01-30 10:57+0100\n"
+"POT-Creation-Date: 2007-02-13 15:15+0100\n"
+"PO-Revision-Date: 2007-02-13 15:14+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -407,15 +407,15 @@ msgstr "Rimpiazza ls selezione corrente"
 msgid "Intersect with the current selection"
 msgstr "Interseca con la selezione corrente"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Red"
 msgstr "Rosso"
 
-#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Green"
 msgstr "Verde"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Blue"
 msgstr "Blu"
 
@@ -427,7 +427,7 @@ msgstr "Grigio"
 msgid "Indexed"
 msgstr "Indicizzato"
 
-#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -507,7 +507,7 @@ msgstr "Bi-lineare"
 msgid "Radial"
 msgstr "Radiale"
 
-#: ../libgimpbase/gimpbaseenums.c:391
+#: ../libgimpbase/gimpbaseenums.c:391 ../libgimpwidgets/gimpwidgetsenums.c:24
 msgid "Square"
 msgstr "Quadratica"
 
@@ -1109,7 +1109,7 @@ msgstr "Stile scacchi"
 msgid "_Preview"
 msgstr "Ante_prima"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1869
+#: ../libgimpwidgets/gimppropwidgets.c:1901
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1231,59 +1231,67 @@ msgstr "Generatore del seme di casualità con un numero generato casualmente"
 msgid "_Randomize"
 msgstr "_Casualizza"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:25
+msgid "Portrait"
+msgstr "Verticale"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:26
+msgid "Landscape"
+msgstr "Orizzontale"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "_H"
 msgstr "_H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "Hue"
 msgstr "Tonalità"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "_S"
 msgstr "_S"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "Saturation"
 msgstr "Saturazione"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "_V"
 msgstr "_V"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "Value"
 msgstr "Valore"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "_R"
 msgstr "_R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "_G"
 msgstr "_G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "_B"
 msgstr "_B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "_A"
 msgstr "_A"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpwidgets/gimpwidgetsenums.c:157
 msgid "Layers"
 msgstr "Livelli"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpwidgets/gimpwidgetsenums.c:158
 msgid "Images"
 msgstr "Immagini"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:186
+#: ../libgimpwidgets/gimpwidgetsenums.c:217
 msgid "Zoom in"
 msgstr "Aumenta ingrandimento"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:187
+#: ../libgimpwidgets/gimpwidgetsenums.c:218
 msgid "Zoom out"
 msgstr "Riduci ingrandimento"
 
@@ -1303,11 +1311,11 @@ msgstr "Tritanopia (insensibilità al blu)"
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Filtro di simulazione deficit colore (algoritmo Brettel-Vienot-Mollon)"
 
-#: ../modules/cdisplay_colorblind.c:290
+#: ../modules/cdisplay_colorblind.c:292
 msgid "Color Deficient Vision"
 msgstr "Visione con deficit di colore"
 
-#: ../modules/cdisplay_colorblind.c:505
+#: ../modules/cdisplay_colorblind.c:507
 msgid "Color _deficiency type:"
 msgstr "Tipo di _deficit di colore:"
 
@@ -1463,217 +1471,228 @@ msgstr "Acquerelli"
 msgid "Pressure"
 msgstr "Pressione"
 
-#: ../modules/controller_linux_input.c:56
+#: ../modules/controller_linux_input.c:58
 msgid "Button 0"
 msgstr "Pulsante 0"
 
-#: ../modules/controller_linux_input.c:57
+#: ../modules/controller_linux_input.c:59
 msgid "Button 1"
 msgstr "Pulsante 1"
 
-#: ../modules/controller_linux_input.c:58
+#: ../modules/controller_linux_input.c:60
 msgid "Button 2"
 msgstr "Pulsante 2"
 
-#: ../modules/controller_linux_input.c:59
+#: ../modules/controller_linux_input.c:61
 msgid "Button 3"
 msgstr "Pulsante 3"
 
-#: ../modules/controller_linux_input.c:60
+#: ../modules/controller_linux_input.c:62
 msgid "Button 4"
 msgstr "Pulsante 4"
 
-#: ../modules/controller_linux_input.c:61
+#: ../modules/controller_linux_input.c:63
 msgid "Button 5"
 msgstr "Pulsante 5"
 
-#: ../modules/controller_linux_input.c:62
+#: ../modules/controller_linux_input.c:64
 msgid "Button 6"
 msgstr "Pulsante 6"
 
-#: ../modules/controller_linux_input.c:63
+#: ../modules/controller_linux_input.c:65
 msgid "Button 7"
 msgstr "Pulsante 7"
 
-#: ../modules/controller_linux_input.c:64
+#: ../modules/controller_linux_input.c:66
 msgid "Button 8"
 msgstr "Pulsante 8"
 
-#: ../modules/controller_linux_input.c:65
+#: ../modules/controller_linux_input.c:67
 msgid "Button 9"
 msgstr "Pulsante 9"
 
-#: ../modules/controller_linux_input.c:66
+#: ../modules/controller_linux_input.c:68
 msgid "Button Mouse"
 msgstr "Pulsante mouse"
 
-#: ../modules/controller_linux_input.c:67
+#: ../modules/controller_linux_input.c:69
 msgid "Button Left"
 msgstr "Pulsante sinistra"
 
-#: ../modules/controller_linux_input.c:68
+#: ../modules/controller_linux_input.c:70
 msgid "Button Right"
 msgstr "Pulsante destra"
 
-#: ../modules/controller_linux_input.c:69
+#: ../modules/controller_linux_input.c:71
 msgid "Button Middle"
 msgstr "Pulsante centrale"
 
-#: ../modules/controller_linux_input.c:70
+#: ../modules/controller_linux_input.c:72
 msgid "Button Side"
 msgstr "Pulsante laterale"
 
-#: ../modules/controller_linux_input.c:71
+#: ../modules/controller_linux_input.c:73
 msgid "Button Extra"
 msgstr "Pulsante extra"
 
-#: ../modules/controller_linux_input.c:72
-#: ../modules/controller_linux_input.c:73
+#: ../modules/controller_linux_input.c:74
 msgid "Button Forward"
 msgstr "Pulsante avanti"
 
 #: ../modules/controller_linux_input.c:75
+msgid "Button Back"
+msgstr "Pulsante indietro"
+
+#: ../modules/controller_linux_input.c:76
+msgid "Button Task"
+msgstr "Pulsante esecuzione"
+
+#: ../modules/controller_linux_input.c:78
 msgid "Button Wheel"
 msgstr "Pulsante rotella"
 
-#: ../modules/controller_linux_input.c:78
+#: ../modules/controller_linux_input.c:81
 msgid "Button Gear Down"
 msgstr "Pulsante rotella giù"
 
-#: ../modules/controller_linux_input.c:81
+#: ../modules/controller_linux_input.c:84
 msgid "Button Gear Up"
 msgstr "Pulsante rotella su"
 
-#: ../modules/controller_linux_input.c:87
+#: ../modules/controller_linux_input.c:90
 msgid "X Move Left"
 msgstr "A sinistra spostamento X"
 
-#: ../modules/controller_linux_input.c:88
+#: ../modules/controller_linux_input.c:91
 msgid "X Move Right"
 msgstr "A destra Spostamento X"
 
-#: ../modules/controller_linux_input.c:89
+#: ../modules/controller_linux_input.c:92
 msgid "Y Move Away"
 msgstr "Allontanamento in Y"
 
-#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_linux_input.c:93
 msgid "Y Move Near"
 msgstr "Avvicinamento in Y"
 
-#: ../modules/controller_linux_input.c:91
+#: ../modules/controller_linux_input.c:94
 msgid "Z Move Up"
 msgstr "In alto spostamento Z"
 
-#: ../modules/controller_linux_input.c:92
+#: ../modules/controller_linux_input.c:95
 msgid "Z Move Down"
 msgstr "In basso spostamento Z"
 
-#: ../modules/controller_linux_input.c:94
+#: ../modules/controller_linux_input.c:97
 msgid "X Axis Tilt Away"
 msgstr "Inclinazione asse X lontana"
 
-#: ../modules/controller_linux_input.c:95
+#: ../modules/controller_linux_input.c:98
 msgid "X Axis Tilt Near"
 msgstr "Inclinazione asse X vicina"
 
-#: ../modules/controller_linux_input.c:96
+#: ../modules/controller_linux_input.c:99
 msgid "Y Axis Tilt Right"
 msgstr "Inclinazione asse Y a destra"
 
-#: ../modules/controller_linux_input.c:97
+#: ../modules/controller_linux_input.c:100
 msgid "Y Axis Tilt Left"
 msgstr "Inclinazione asse Y a sinistra"
 
-#: ../modules/controller_linux_input.c:98
+#: ../modules/controller_linux_input.c:101
 msgid "Z Axis Turn Left"
 msgstr "Giro a sinistra asse Z"
 
-#: ../modules/controller_linux_input.c:99
+#: ../modules/controller_linux_input.c:102
 msgid "Z Axis Turn Right"
 msgstr "Giro a destra asse Z"
 
-#: ../modules/controller_linux_input.c:101
+#: ../modules/controller_linux_input.c:104
 msgid "Horiz. Wheel Turn Back"
 msgstr "Marcia indietro rotella orizzontale"
 
-#: ../modules/controller_linux_input.c:102
+#: ../modules/controller_linux_input.c:105
 msgid "Horiz. Wheel Turn Forward"
 msgstr "Marcia avanti rotella orizzontale"
 
-#: ../modules/controller_linux_input.c:103
+#: ../modules/controller_linux_input.c:106
 msgid "Dial Turn Left"
 msgstr "Tasto a sinistra"
 
-#: ../modules/controller_linux_input.c:104
+#: ../modules/controller_linux_input.c:107
 msgid "Dial Turn Right"
 msgstr "Tasto a destra"
 
-#: ../modules/controller_linux_input.c:105
+#: ../modules/controller_linux_input.c:108
 msgid "Wheel Turn Left"
 msgstr "Rotella a sinistra"
 
-#: ../modules/controller_linux_input.c:106
+#: ../modules/controller_linux_input.c:109
 msgid "Wheel Turn Right"
 msgstr "Rotella a destra"
 
-#: ../modules/controller_linux_input.c:170
+#: ../modules/controller_linux_input.c:179
 msgid "Linux input event controller"
 msgstr "Controllore eventi in ingresso di Linux"
 
-#: ../modules/controller_linux_input.c:238 ../modules/controller_midi.c:246
+#: ../modules/controller_linux_input.c:249 ../modules/controller_midi.c:245
 msgid "Device:"
 msgstr "Dispositivo:"
 
-#: ../modules/controller_linux_input.c:239
+#: ../modules/controller_linux_input.c:250
 msgid "The name of the device to read Linux Input events from."
 msgstr "Il nome del dispositivo da cui leggere gli eventi Linux in ingresso."
 
-#: ../modules/controller_linux_input.c:243
+#: ../modules/controller_linux_input.c:259
 msgid "Linux Input"
 msgstr "Ingresso Linux"
 
-#: ../modules/controller_linux_input.c:368
+#: ../modules/controller_linux_input.c:537
 msgid "Linux Input Events"
 msgstr "Eventi Linux in ingresso"
 
-#: ../modules/controller_linux_input.c:389 ../modules/controller_midi.c:483
-#: ../modules/controller_midi.c:509
+#: ../modules/controller_linux_input.c:549 ../modules/controller_midi.c:533
+msgid "No device configured"
+msgstr "Nessun dispositivo configurato"
+
+#: ../modules/controller_linux_input.c:575 ../modules/controller_midi.c:482
+#: ../modules/controller_midi.c:508
 #, c-format
 msgid "Reading from %s"
 msgstr "Lettura da %s"
 
-#: ../modules/controller_linux_input.c:405
-#: ../modules/controller_linux_input.c:448 ../modules/controller_midi.c:465
-#: ../modules/controller_midi.c:526 ../modules/controller_midi.c:597
+#: ../modules/controller_linux_input.c:593
+#: ../modules/controller_linux_input.c:647 ../modules/controller_midi.c:464
+#: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
 #, c-format
 msgid "Device not available: %s"
 msgstr "Dispositivo non disponibile: %s"
 
-#: ../modules/controller_linux_input.c:413 ../modules/controller_midi.c:534
-msgid "No device configured"
-msgstr "Nessun dispositivo configurato"
+#: ../modules/controller_linux_input.c:612
+msgid "Device not available"
+msgstr "Dispositivo non disponibile"
 
-#: ../modules/controller_linux_input.c:457 ../modules/controller_midi.c:606
+#: ../modules/controller_linux_input.c:656 ../modules/controller_midi.c:605
 msgid "End of file"
 msgstr "Fine del file"
 
-#: ../modules/controller_midi.c:168
+#: ../modules/controller_midi.c:167
 msgid "MIDI event controller"
 msgstr "Controllore eventi MIDI"
 
-#: ../modules/controller_midi.c:237
+#: ../modules/controller_midi.c:236
 msgid "The name of the device to read MIDI events from."
 msgstr "Il nome del dispositivo da cui leggere gli eventi MIDI."
 
-#: ../modules/controller_midi.c:240
+#: ../modules/controller_midi.c:239
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Immettere 'alsa' per usare il sequencer ALSA."
 
-#: ../modules/controller_midi.c:255
+#: ../modules/controller_midi.c:254
 msgid "Channel:"
 msgstr "Canale:"
 
-#: ../modules/controller_midi.c:256
+#: ../modules/controller_midi.c:255
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
@@ -1681,33 +1700,33 @@ msgstr ""
 "Il canale MIDI da cui leggere gli eventi. Impostare a -1 per leggere gli "
 "eventi MIDI da tutti i canali."
 
-#: ../modules/controller_midi.c:260
+#: ../modules/controller_midi.c:259
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:384
+#: ../modules/controller_midi.c:383
 #, c-format
 msgid "Note %02x on"
 msgstr "Nota %02x on"
 
-#: ../modules/controller_midi.c:387
+#: ../modules/controller_midi.c:386
 #, c-format
 msgid "Note %02x off"
 msgstr "Nota %02x off"
 
-#: ../modules/controller_midi.c:390
+#: ../modules/controller_midi.c:389
 #, c-format
 msgid "Controller %03d"
 msgstr "Controllore %03d"
 
-#: ../modules/controller_midi.c:437
+#: ../modules/controller_midi.c:436
 msgid "MIDI Events"
 msgstr "Eventi MIDI"
 
-#: ../modules/controller_midi.c:455
+#: ../modules/controller_midi.c:454
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../modules/controller_midi.c:457
+#: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr "Controllore di ingresso MIDI di GIMP"
