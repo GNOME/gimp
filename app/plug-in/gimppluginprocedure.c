@@ -518,6 +518,23 @@ gimp_plug_in_procedure_get_label (const GimpPlugInProcedure *proc,
   return label;
 }
 
+const gchar *
+gimp_plug_in_procedure_get_blurb (const GimpPlugInProcedure *proc,
+                                  const gchar               *locale_domain)
+{
+  GimpProcedure *procedure;
+
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
+
+  procedure = GIMP_PROCEDURE (proc);
+
+  /*  do not to pass the empty string to gettext()  */
+  if (procedure->blurb && strlen (procedure->blurb))
+    return dgettext (locale_domain, procedure->blurb);
+
+  return NULL;
+}
+
 void
 gimp_plug_in_procedure_set_icon (GimpPlugInProcedure *proc,
                                  GimpIconType         icon_type,

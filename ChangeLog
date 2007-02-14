@@ -1,5 +1,12 @@
 2007-02-14  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/plug-in-actions.c
+	* app/plug-in/gimppluginprocedure.[ch]: added utility function to
+	retrieve the translated blurb of a plug-in procedure. Make sure
+	that gettext isn't called with the empty string.
+
+2007-02-14  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpstatusbar.c: when multi-line strings end up
 	being passed to the statusbar, only show the first line.
 

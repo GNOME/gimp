@@ -416,7 +416,6 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
   const gchar           *locale_domain;
   const gchar           *help_domain;
   const gchar           *label;
-  const gchar           *tooltip          = NULL;
   gchar                 *path_original    = NULL;
   gchar                 *path_translated  = NULL;
 
@@ -454,14 +453,11 @@ plug_in_actions_add_proc (GimpActionGroup     *group,
       label = p2 + 1;
     }
 
-  if (GIMP_PROCEDURE (proc)->blurb)
-    tooltip = dgettext (locale_domain, GIMP_PROCEDURE (proc)->blurb);
-
   entry.name        = GIMP_OBJECT (proc)->name;
   entry.stock_id    = gimp_plug_in_procedure_get_stock_id (proc);
   entry.label       = label;
   entry.accelerator = NULL;
-  entry.tooltip     = tooltip;
+  entry.tooltip     = gimp_plug_in_procedure_get_blurb (proc, locale_domain);
   entry.procedure   = proc;
   entry.help_id     = gimp_plug_in_procedure_get_help_id (proc, help_domain);
 
@@ -543,10 +539,9 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
 
   for (i = 0; i < gimp_plug_in_manager_history_length (manager); i++)
     {
-      GtkAction   *action;
-      gchar       *name    = g_strdup_printf ("plug-in-recent-%02d", i + 1);
-      gchar       *label;
-      const gchar *tooltip = NULL;
+      GtkAction *action;
+      gchar     *name    = g_strdup_printf ("plug-in-recent-%02d", i + 1);
+      gchar     *label;
 
       action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), name);
       g_free (name);
@@ -558,15 +553,12 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
 
       label = gimp_plug_in_procedure_get_label (proc, domain);
 
-      if (GIMP_PROCEDURE (proc)->blurb)
-        tooltip = dgettext (domain, GIMP_PROCEDURE (proc)->blurb);
-
       g_object_set (action,
                     "visible",   TRUE,
                     "procedure", proc,
                     "label",     label,
                     "stock-id",  gimp_plug_in_procedure_get_stock_id (proc),
-                    "tooltip",   tooltip,
+                    "tooltip",   gimp_plug_in_procedure_get_blurb (proc, domain),
                     NULL);
 
       g_free (label);
