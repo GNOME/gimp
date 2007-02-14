@@ -108,6 +108,9 @@ static gboolean gimp_statusbar_temp_timeout       (GimpStatusbar     *statusbar)
 
 static void     gimp_statusbar_msg_free           (GimpStatusbarMsg  *msg);
 
+static gchar *  gimp_statusbar_vprintf            (const gchar       *format,
+                                                   va_list            args);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpStatusbar, gimp_statusbar, GTK_TYPE_HBOX,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
@@ -494,7 +497,7 @@ gimp_statusbar_push_valist (GimpStatusbar *statusbar,
   g_return_if_fail (context != NULL);
   g_return_if_fail (format != NULL);
 
-  message = g_strdup_vprintf (format, args);
+  message = gimp_statusbar_vprintf (format, args);
 
   context_id = gimp_statusbar_get_context_id (statusbar, context);
 
@@ -671,7 +674,7 @@ gimp_statusbar_replace_valist (GimpStatusbar *statusbar,
   g_return_if_fail (context != NULL);
   g_return_if_fail (format != NULL);
 
-  message = g_strdup_vprintf (format, args);
+  message =  gimp_statusbar_vprintf (format, args);
 
   context_id = gimp_statusbar_get_context_id (statusbar, context);
 
@@ -760,7 +763,7 @@ gimp_statusbar_push_temp_valist (GimpStatusbar *statusbar,
   g_return_if_fail (GIMP_IS_STATUSBAR (statusbar));
   g_return_if_fail (format != NULL);
 
-  message = g_strdup_vprintf (format, args);
+  message = gimp_statusbar_vprintf (format, args);
 
   if (statusbar->temp_timeout_id)
     g_source_remove (statusbar->temp_timeout_id);
@@ -1098,4 +1101,21 @@ gimp_statusbar_msg_free (GimpStatusbarMsg *msg)
   g_free (msg->stock_id);
   g_free (msg->text);
   g_free (msg);
+}
+
+static gchar *
+gimp_statusbar_vprintf (const gchar *format,
+                        va_list      args)
+{
+  gchar *message;
+  gchar *newline;
+
+  message = g_strdup_vprintf (format, args);
+
+  /*  guard us from multi-line strings  */
+  newline = strchr (message, '\n');
+  if (newline)
+    *newline = '\0';
+
+  return message;
 }

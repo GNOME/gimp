@@ -1,5 +1,10 @@
 2007-02-14  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpstatusbar.c: when multi-line strings end up
+	being passed to the statusbar, only show the first line.
+
+2007-02-14  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/tiff.c: added CCITT Group 3 and 4 compression
 	schemes to TIFF save plug-in. These modes are selectable for
 	indexed image with a b/w colormap only. Fixes bug #162119 with the
