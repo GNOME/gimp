@@ -86,83 +86,86 @@ static void   run       (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static gint32 load_image    (const gchar  *filename);
+static gboolean  image_is_monochrome (gint32 image);
 
-static void   load_rgba     (TIFF         *tif,
-                             channel_data *channel);
-static void   load_lines    (TIFF         *tif,
-                             channel_data *channel,
-                             gushort       bps,
-                             gushort       photomet,
-                             gboolean      alpha,
-                             gboolean      is_bw,
-                             gint          extra);
-static void   load_tiles    (TIFF         *tif,
-                             channel_data *channel,
-                             gushort       bps,
-                             gushort       photomet,
-                             gboolean      alpha,
-                             gboolean      is_bw,
-                             gint          extra);
-static void   load_paths    (TIFF         *tif,
-                             gint          image);
+static gint32    load_image    (const gchar  *filename);
 
-static void   read_separate (const guchar *source,
-                             channel_data *channel,
-                             gushort       bps,
-                             gushort       photomet,
-                             gint          startcol,
-                             gint          startrow,
-                             gint          rows,
-                             gint          cols,
-                             gboolean      alpha,
-                             gint          extra,
-                             gint          sample);
-static void   read_16bit    (const guchar *source,
-                             channel_data *channel,
-                             gushort       photomet,
-                             gint          startcol,
-                             gint          startrow,
-                             gint          rows,
-                             gint          cols,
-                             gboolean      alpha,
-                             gint          extra,
-                             gint          align);
-static void   read_8bit     (const guchar *source,
-                             channel_data *channel,
-                             gushort       photomet,
-                             gint          startcol,
-                             gint          startrow,
-                             gint          rows,
-                             gint          cols,
-                             gboolean      alpha,
-                             gint          extra,
-                             gint          align);
-static void   read_bw       (const guchar *source,
-                             channel_data *channel,
-                             gint          startcol,
-                             gint          startrow,
-                             gint          rows,
-                             gint          cols,
-                             gint          align);
-static void   read_default  (const guchar *source,
-                             channel_data *channel,
-                             gushort       bps,
-                             gushort       photomet,
-                             gint          startcol,
-                             gint          startrow,
-                             gint          rows,
-                             gint          cols,
-                             gboolean      alpha,
-                             gint          extra,
-                             gint          align);
+static void      load_rgba     (TIFF         *tif,
+                                channel_data *channel);
+static void      load_lines    (TIFF         *tif,
+                                channel_data *channel,
+                                gushort       bps,
+                                gushort       photomet,
+                                gboolean      alpha,
+                                gboolean      is_bw,
+                                gint          extra);
+static void      load_tiles    (TIFF         *tif,
+                                channel_data *channel,
+                                gushort       bps,
+                                gushort       photomet,
+                                gboolean      alpha,
+                                gboolean      is_bw,
+                                gint          extra);
+static void      load_paths    (TIFF         *tif,
+                                gint          image);
+
+static void      read_separate (const guchar *source,
+                                channel_data *channel,
+                                gushort       bps,
+                                gushort       photomet,
+                                gint          startcol,
+                                gint          startrow,
+                                gint          rows,
+                                gint          cols,
+                                gboolean      alpha,
+                                gint          extra,
+                                gint          sample);
+static void      read_16bit    (const guchar *source,
+                                channel_data *channel,
+                                gushort       photomet,
+                                gint          startcol,
+                                gint          startrow,
+                                gint          rows,
+                                gint          cols,
+                                gboolean      alpha,
+                                gint          extra,
+                                gint          align);
+static void      read_8bit     (const guchar *source,
+                                channel_data *channel,
+                                gushort       photomet,
+                                gint          startcol,
+                                gint          startrow,
+                                gint          rows,
+                                gint          cols,
+                                gboolean      alpha,
+                                gint          extra,
+                                gint          align);
+static void      read_bw       (const guchar *source,
+                                channel_data *channel,
+                                gint          startcol,
+                                gint          startrow,
+                                gint          rows,
+                                gint          cols,
+                                gint          align);
+static void      read_default  (const guchar *source,
+                                channel_data *channel,
+                                gushort       bps,
+                                gushort       photomet,
+                                gint          startcol,
+                                gint          startrow,
+                                gint          rows,
+                                gint          cols,
+                                gboolean      alpha,
+                                gint          extra,
+                                gint          align);
 
 static gboolean  save_image             (const gchar  *filename,
                                          gint32        image,
                                          gint32        drawable,
                                          gint32        orig_image);
 
-static gboolean  save_dialog            (gboolean      alpha);
+static gboolean  save_dialog            (gboolean      has_alpha,
+                                         gboolean      is_monochrome);
 
 static void      comment_entry_callback (GtkWidget    *widget,
                                          gpointer      data);
@@ -184,8 +187,8 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 static TiffSaveVals tsvals =
 {
-  COMPRESSION_NONE,    /*  compression  */
-  TRUE,               /*  alpha handling */
+  COMPRESSION_NONE,    /*  compression    */
+  TRUE,                /*  alpha handling */
 };
 
 
@@ -217,7 +220,7 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable",     "Drawable to save" },\
     { GIMP_PDB_STRING,   "filename",     "The name of the file to save the image in" },\
     { GIMP_PDB_STRING,   "raw-filename", "The name of the file to save the image in" },\
-    { GIMP_PDB_INT32,    "compression",  "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4) }" }
+    { GIMP_PDB_INT32,    "compression",  "Compression type: { NONE (0), LZW (1), PACKBITS (2), DEFLATE (3), JPEG (4), CCITT G3 Fax (5), CCITT G4 Fax (6) }" }
 
   static const GimpParamDef save_args_old[] =
   {
@@ -379,7 +382,8 @@ run (const gchar      *name,
           gimp_parasite_free (parasite);
 
           /*  First acquire information with a dialog  */
-          if (! save_dialog (gimp_drawable_has_alpha (drawable)))
+          if (! save_dialog (gimp_drawable_has_alpha (drawable),
+                             image_is_monochrome (image)))
             status = GIMP_PDB_CANCEL;
           break;
 
@@ -389,11 +393,13 @@ run (const gchar      *name,
             {
               switch (param[5].data.d_int32)
                 {
-                case 0: tsvals.compression = COMPRESSION_NONE;     break;
-                case 1: tsvals.compression = COMPRESSION_LZW;      break;
-                case 2: tsvals.compression = COMPRESSION_PACKBITS; break;
-                case 3: tsvals.compression = COMPRESSION_DEFLATE;  break;
-                case 4: tsvals.compression = COMPRESSION_JPEG;  break;
+                case 0: tsvals.compression = COMPRESSION_NONE;      break;
+                case 1: tsvals.compression = COMPRESSION_LZW;       break;
+                case 2: tsvals.compression = COMPRESSION_PACKBITS;  break;
+                case 3: tsvals.compression = COMPRESSION_DEFLATE;   break;
+                case 4: tsvals.compression = COMPRESSION_JPEG;      break;
+                case 5: tsvals.compression = COMPRESSION_CCITTFAX3; break;
+                case 6: tsvals.compression = COMPRESSION_CCITTFAX4; break;
                 default: status = GIMP_PDB_CALLING_ERROR; break;
                 }
 
@@ -452,9 +458,9 @@ run (const gchar      *name,
 }
 
 static void
-tiff_warning(const gchar *module,
-             const gchar *fmt,
-             va_list      ap)
+tiff_warning (const gchar *module,
+              const gchar *fmt,
+              va_list      ap)
 {
   va_list ap_test;
 
@@ -488,6 +494,37 @@ tiff_error (const gchar *module,
   if (! strcmp (fmt, "Compression algorithm does not support random access"))
     return;
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
+}
+
+static gboolean
+image_is_monochrome (gint32 image)
+{
+  guchar   *colors;
+  gint      num_colors;
+  gboolean  monochrome = FALSE;
+
+  g_return_val_if_fail (image != -1, FALSE);
+
+  colors = gimp_image_get_colormap (image, &num_colors);
+
+  if (colors)
+    {
+      if (num_colors == 2)
+        {
+          const guchar   bw_map[] = { 0, 0, 0, 255, 255, 255 };
+          const guchar   wb_map[] = { 255, 255, 255, 0, 0, 0 };
+
+          if (memcmp (colors, bw_map, 6) == 0 ||
+              memcmp (colors, wb_map, 6) == 0)
+            {
+              monochrome = TRUE;
+            }
+        }
+
+      g_free (colors);
+    }
+
+  return monochrome;
 }
 
 static gint32
@@ -729,6 +766,8 @@ load_image (const gchar *filename)
             case COMPRESSION_PACKBITS:
             case COMPRESSION_DEFLATE:
             case COMPRESSION_JPEG:
+            case COMPRESSION_CCITTFAX3:
+            case COMPRESSION_CCITTFAX4:
               save_vals.compression = tmp;
               break;
 
@@ -2108,9 +2147,10 @@ save_image (const gchar *filename,
   GimpPixelRgn   pixel_rgn;
   gint           tile_height;
   gint           y, yend;
-  gboolean       is_bw = FALSE, invert = TRUE;
-  guchar         bw_map[] = { 0, 0, 0, 255, 255, 255 };
-  guchar         wb_map[] = { 255, 255, 255, 0, 0, 0 };
+  gboolean       is_bw    = FALSE;
+  gboolean       invert   = TRUE;
+  const guchar   bw_map[] = { 0, 0, 0, 255, 255, 255 };
+  const guchar   wb_map[] = { 255, 255, 255, 0, 0, 0 };
 
   compression = tsvals.compression;
 
@@ -2159,6 +2199,7 @@ save_image (const gchar *filename,
       bytesperrow     = cols * 3;
       alpha           = FALSE;
       break;
+
     case GIMP_GRAY_IMAGE:
       samplesperpixel = 1;
       bitspersample   = 8;
@@ -2166,6 +2207,7 @@ save_image (const gchar *filename,
       bytesperrow     = cols;
       alpha           = FALSE;
       break;
+
     case GIMP_RGBA_IMAGE:
       predictor       = 2;
       samplesperpixel = 4;
@@ -2174,6 +2216,7 @@ save_image (const gchar *filename,
       bytesperrow     = cols * 4;
       alpha           = TRUE;
       break;
+
     case GIMP_GRAYA_IMAGE:
       samplesperpixel = 2;
       bitspersample   = 8;
@@ -2181,6 +2224,7 @@ save_image (const gchar *filename,
       bytesperrow     = cols * 2;
       alpha           = TRUE;
       break;
+
     case GIMP_INDEXED_IMAGE:
       cmap = gimp_image_get_colormap (image, &colors);
 
@@ -2218,11 +2262,24 @@ save_image (const gchar *filename,
       samplesperpixel = 1;
       bytesperrow     = cols;
       alpha           = FALSE;
+
+      g_free (cmap);
       break;
+
     case GIMP_INDEXEDA_IMAGE:
       g_message ("TIFF save cannot handle indexed images with alpha channel.");
     default:
        return FALSE;
+    }
+
+  if (compression == COMPRESSION_CCITTFAX3 ||
+      compression == COMPRESSION_CCITTFAX4)
+    {
+      if (bitspersample != 1 || samplesperpixel != 1)
+        {
+          g_message ("Only monochrome pictures can be compressed with \"CCITT Group 4\" or \"CCITT Group 3\".");
+          return FALSE;
+        }
     }
 
   /* Set TIFF parameters. */
@@ -2371,8 +2428,9 @@ save_image (const gchar *filename,
                   success = (TIFFWriteScanline (tif, data, row, 0) >= 0);
                 }
               else
+                {
                   success = (TIFFWriteScanline (tif, t, row, 0) >= 0);
-
+                }
               break;
 
             case GIMP_GRAY_IMAGE:
@@ -2450,7 +2508,8 @@ save_image (const gchar *filename,
 }
 
 static gboolean
-save_dialog (gboolean alpha)
+save_dialog (gboolean has_alpha,
+             gboolean is_monochrome)
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
@@ -2459,6 +2518,8 @@ save_dialog (gboolean alpha)
   GtkWidget *label;
   GtkWidget *entry;
   GtkWidget *toggle;
+  GtkWidget *g3;
+  GtkWidget *g4;
   gboolean   run;
 
   dialog = gimp_dialog_new (_("Save as TIFF"), PLUG_IN_BINARY,
@@ -2492,8 +2553,23 @@ save_dialog (gboolean alpha)
                                     _("_Pack Bits"), COMPRESSION_PACKBITS, NULL,
                                     _("_Deflate"),   COMPRESSION_DEFLATE,  NULL,
                                     _("_JPEG"),      COMPRESSION_JPEG,     NULL,
+                                    _("CCITT Group _3 fax"), COMPRESSION_CCITTFAX3, &g3,
+                                    _("CCITT Group _4 fax"), COMPRESSION_CCITTFAX4, &g4,
 
                                     NULL);
+
+  gtk_widget_set_sensitive (g3, is_monochrome);
+  gtk_widget_set_sensitive (g4, is_monochrome);
+
+  if (! is_monochrome)
+    {
+      if (tsvals.compression == COMPRESSION_CCITTFAX3 ||
+          tsvals.compression ==  COMPRESSION_CCITTFAX4)
+        {
+          gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (g3),
+                                           COMPRESSION_NONE);
+        }
+    }
 
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -2502,8 +2578,8 @@ save_dialog (gboolean alpha)
   toggle = gtk_check_button_new_with_mnemonic
     ( _("Save _color values from transparent pixels"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                alpha && tsvals.save_transp_pixels);
-  gtk_widget_set_sensitive (toggle, alpha);
+                                has_alpha && tsvals.save_transp_pixels);
+  gtk_widget_set_sensitive (toggle, has_alpha);
   gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
   gtk_widget_show (toggle);
 

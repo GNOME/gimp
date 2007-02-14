@@ -1,3 +1,10 @@
+2007-02-14  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/tiff.c: added CCITT Group 3 and 4 compression
+	schemes to TIFF save plug-in. These modes are selectable for
+	indexed image with a b/w colormap only. Fixes bug #162119 with the
+	help of Manfred Joerg.
+
 2007-02-13  Raphaël Quinet  <raphael@gimp.org>
 
 	* modules/gimpinputdevicestore.c (gimp_input_device_store_new):
