@@ -1044,17 +1044,12 @@ shoot_dialog (GdkScreen **screen)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  gimp_help_set_help_data (button, _("If enabled, you can use the mouse to "
-                                     "select a rectangular region of the "
-                                     "screen."), NULL);
-
   g_object_set_data (G_OBJECT (button), "gimp-item-data",
                      GINT_TO_POINTER (SHOOT_REGION));
 
   g_signal_connect (button, "toggled",
                     G_CALLBACK (shoot_radio_button_toggled),
                     notebook);
-
 
   /*  Delay  */
   frame = gimp_frame_new (_("Delay"));
