@@ -872,11 +872,43 @@ shoot (GdkScreen *screen)
 
 /*  Screenshot dialog  */
 
+static void
+shoot_dialog_add_hint (GtkNotebook *notebook,
+                       ShootType    type,
+                       const gchar *hint)
+{
+  GtkWidget *label;
+
+  label = g_object_new (GTK_TYPE_LABEL,
+                        "label",   hint,
+                        "wrap",    TRUE,
+                        "justify", GTK_JUSTIFY_LEFT,
+                        "xalign",  0.0,
+                        "yalign",  0.0,
+                        NULL);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+
+  gtk_notebook_insert_page (notebook, label, NULL, type);
+  gtk_widget_show (label);
+}
+
+static void
+shoot_radio_button_toggled (GtkWidget *widget,
+                            GtkWidget *notebook)
+{
+  gimp_radio_button_update (widget, &shootvals.shoot_type);
+
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), shootvals.shoot_type);
+}
+
 static gboolean
 shoot_dialog (GdkScreen **screen)
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
+  GtkWidget *notebook;
   GtkWidget *frame;
   GtkWidget *vbox;
   GtkWidget *hbox;
@@ -921,6 +953,25 @@ shoot_dialog (GdkScreen **screen)
                       FALSE, FALSE, 0);
   gtk_widget_show (main_vbox);
 
+  /*  Hints  */
+  notebook = g_object_new (GTK_TYPE_NOTEBOOK,
+                           "show-tabs", FALSE,
+                           NULL);
+  gtk_box_pack_end (GTK_BOX (main_vbox), notebook, FALSE, FALSE, 0);
+  gtk_widget_show (notebook);
+
+  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_ROOT,
+                         _("After the delay, the screenshot is taken."));
+  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_REGION,
+                         _("After the delay, drag your mouse to select "
+                           "the region for the screenshot."));
+  shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_WINDOW,
+                         _("After the delay, click in a window to snap it. Or "
+                           "click and hold in a window before the delay ends."));
+
+  gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), shootvals.shoot_type);
+
+  /*  Area  */
   frame = gimp_frame_new (_("Area"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -944,8 +995,8 @@ shoot_dialog (GdkScreen **screen)
                      GINT_TO_POINTER (SHOOT_WINDOW));
 
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_radio_button_update),
-                    &shootvals.shoot_type);
+                    G_CALLBACK (shoot_radio_button_toggled),
+                    notebook);
 
 #ifdef HAVE_X11_XMU_WINUTIL_H
 
@@ -981,9 +1032,8 @@ shoot_dialog (GdkScreen **screen)
                      GINT_TO_POINTER (SHOOT_ROOT));
 
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_radio_button_update),
-                    &shootvals.shoot_type);
-
+                    G_CALLBACK (shoot_radio_button_toggled),
+                    notebook);
 
   /*  dragged region  */
   button = gtk_radio_button_new_with_mnemonic (radio_group,
@@ -1002,11 +1052,11 @@ shoot_dialog (GdkScreen **screen)
                      GINT_TO_POINTER (SHOOT_REGION));
 
   g_signal_connect (button, "toggled",
-                    G_CALLBACK (gimp_radio_button_update),
-                    &shootvals.shoot_type);
+                    G_CALLBACK (shoot_radio_button_toggled),
+                    notebook);
 
 
-  /*  grab delay  */
+  /*  Delay  */
   frame = gimp_frame_new (_("Delay"));
   gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
@@ -1019,30 +1069,19 @@ shoot_dialog (GdkScreen **screen)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  /* this string is part of "Wait [spinbutton] seconds before grabbing" */
-  label = gtk_label_new_with_mnemonic (_("W_ait"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
   spinner = gimp_spin_button_new (&adj, shootvals.select_delay,
                                   0.0, 100.0, 1.0, 5.0, 0.0, 0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), spinner, FALSE, FALSE, 0);
   gtk_widget_show (spinner);
 
-  gtk_label_set_mnemonic_widget (GTK_LABEL (label), spinner);
-
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &shootvals.select_delay);
 
-  /* this string is part of "Wait [spinbutton] seconds before grabbing" */
-  label = gtk_label_new (_("seconds before grabbing"));
+  /* this is the unit label of a spinbutton */
+  label = gtk_label_new (_("seconds"));
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
-
-  gimp_help_set_help_data (spinner, _("The number of seconds to wait before "
-                                      "selecting the window or region and "
-                                      "actually taking the screenshot."), NULL);
 
   gtk_widget_show (dialog);
 

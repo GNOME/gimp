@@ -1,5 +1,9 @@
 2007-02-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/screenshot.c: added hints to the dialog.
+
+2007-02-15  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/screenshot.c: for shaped windows, add an alpha
 	channel and erase pixels outside the shape.
 
