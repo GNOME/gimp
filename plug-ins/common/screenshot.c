@@ -185,7 +185,9 @@ static void      run   (const gchar      *name,
 static GdkNativeWindow   select_window (GdkScreen       *screen);
 static GdkPixbuf       * remove_shape  (GdkPixbuf       *pixbuf,
                                         GdkScreen       *screen,
-                                        GdkNativeWindow  window);
+                                        GdkNativeWindow  window,
+                                        gint             offset_x,
+                                        gint             offset_y);
 static gint32            create_image  (GdkPixbuf       *pixbuf);
 
 static gint32     shoot                (GdkScreen    *screen);
@@ -637,7 +639,9 @@ select_window (GdkScreen *screen)
 static GdkPixbuf *
 remove_shape (GdkPixbuf       *pixbuf,
               GdkScreen       *screen,
-              GdkNativeWindow  window)
+              GdkNativeWindow  window,
+              gint             offset_x,
+              gint             offset_y)
 {
 #if defined(GDK_WINDOWING_X11)
   Display      *x_dpy = GDK_SCREEN_XDISPLAY (screen);
@@ -651,21 +655,24 @@ remove_shape (GdkPixbuf       *pixbuf,
 
   if (rects)
     {
-      GdkPixbuf *retval;
-      gint       width         = gdk_pixbuf_get_width (pixbuf);
-      gint       height        = gdk_pixbuf_get_height (pixbuf);
-      gint       src_bpp       = gdk_pixbuf_get_n_channels (pixbuf);
-      gint       src_rowstride = gdk_pixbuf_get_rowstride (pixbuf);
-      gint       dest_rowstride;
+      GdkPixbuf    *retval;
+      GdkRectangle  area;
+      gint          width         = gdk_pixbuf_get_width (pixbuf);
+      gint          height        = gdk_pixbuf_get_height (pixbuf);
+      gint          src_bpp       = gdk_pixbuf_get_n_channels (pixbuf);
+      gint          src_rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+      gint          dest_rowstride;
 
-      if (rect_count == 1 && (rects[0].x == 0 &&
-                              rects[0].y == 0 &&
-                              rects[0].width  == width &&
-                              rects[0].height == height))
+      if (rect_count == 1)
         {
           XFree (rects);
           return pixbuf;
         }
+
+      area.x      = 0;
+      area.y      = 0;
+      area.width  = width;
+      area.height = height;
 
       retval = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, width, height);
 
@@ -675,24 +682,29 @@ remove_shape (GdkPixbuf       *pixbuf,
 
       for (i = 0; i < rect_count; i++)
         {
-          XRectangle *rect = rects + i;
-          gint        x, y;
+          GdkRectangle  rect;
+          gint          x, y;
 
-          for (y = rect->y; y < rect->y + rect->height; y++)
+          rect.x      = rects[i].x - offset_x;
+          rect.y      = rects[i].y - offset_y;
+          rect.width  = rects[i].width;
+          rect.height = rects[i].height;
+
+          if (! gdk_rectangle_intersect (&area, &rect, &rect))
+            continue;
+
+          for (y = rect.y; y < rect.y + rect.height; y++)
             {
-              const guchar *s;
-              guchar       *d;
+              const guchar *s = gdk_pixbuf_get_pixels (pixbuf);
+              guchar       *d = gdk_pixbuf_get_pixels (retval);
 
-              s = gdk_pixbuf_get_pixels (pixbuf);
-              s += y * src_rowstride + rect->x * src_bpp;
-
-              d = gdk_pixbuf_get_pixels (retval);
-              d += y * dest_rowstride + rect->x * 4;
+              s += y * src_rowstride + rect.x * src_bpp;
+              d += y * dest_rowstride + rect.x * 4;
 
               switch (src_bpp)
                 {
                 case 3:
-                  for (x = rect->x; x < rect->x + rect->width; x++)
+                  for (x = rect.x; x < rect.x + rect.width; x++)
                     {
                       *d++ = *s++;
                       *d++ = *s++;
@@ -702,7 +714,7 @@ remove_shape (GdkPixbuf       *pixbuf,
                   break;
 
                 case 4:
-                  memcpy (d, s, rect->width * 4);
+                  memcpy (d, s, rect.width * 4);
                   break;
                 }
             }
@@ -775,6 +787,8 @@ shoot (GdkScreen *screen)
   GdkRectangle  rect;
   GdkRectangle  screen_rect;
   gint32        image;
+  gint          screen_x;
+  gint          screen_y;
   gint          x, y;
 
   /* use default screen if we are running non-interactively */
@@ -821,16 +835,17 @@ shoot (GdkScreen *screen)
       rect.y = y;
     }
 
-  window = gdk_screen_get_root_window (screen);
-  gdk_window_get_origin (window, &x, &y);
-
   if (! gdk_rectangle_intersect (&rect, &screen_rect, &rect))
     return -1;
 
+  window = gdk_screen_get_root_window (screen);
+  gdk_window_get_origin (window, &screen_x, &screen_y);
+
   screenshot = gdk_pixbuf_get_from_drawable (NULL, window,
                                              NULL,
-                                             rect.x - x, rect.y - y, 0, 0,
-                                             rect.width, rect.height);
+                                             rect.x - screen_x,
+                                             rect.y - screen_y,
+                                             0, 0, rect.width, rect.height);
 
   gdk_display_beep (gdk_screen_get_display (screen));
   gdk_flush ();
@@ -842,7 +857,11 @@ shoot (GdkScreen *screen)
     }
 
   if (shootvals.shoot_type == SHOOT_WINDOW)
-    screenshot = remove_shape (screenshot, screen, shootvals.window_id);
+    {
+      screenshot = remove_shape (screenshot,
+                                 screen, shootvals.window_id,
+                                 rect.x - x, rect.y - y);
+    }
 
   image = create_image (screenshot);
 
