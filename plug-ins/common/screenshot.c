@@ -36,6 +36,7 @@
 
 #if defined(GDK_WINDOWING_X11)
 #include <gdk/gdkx.h>
+#include <X11/extensions/shape.h>
 
 #ifdef HAVE_X11_XMU_WINUTIL_H
 #include <X11/Xmu/WinUtil.h>
@@ -181,14 +182,17 @@ static void      run   (const gchar      *name,
 			gint             *nreturn_vals,
 			GimpParam       **return_vals);
 
-static GdkNativeWindow select_window  (GdkScreen  *screen);
-static gint32          create_image   (GdkPixbuf  *pixbuf);
+static GdkNativeWindow   select_window (GdkScreen       *screen);
+static GdkPixbuf       * remove_shape  (GdkPixbuf       *pixbuf,
+                                        GdkScreen       *screen,
+                                        GdkNativeWindow  window);
+static gint32            create_image  (GdkPixbuf       *pixbuf);
 
-static gint32    shoot                (GdkScreen  *screen);
-static gboolean  shoot_dialog         (GdkScreen **screen);
-static void      shoot_delay          (gint32      delay);
-static gboolean  shoot_delay_callback (gpointer    data);
-static gboolean  shoot_quit_timeout   (gpointer    data);
+static gint32     shoot                (GdkScreen    *screen);
+static gboolean   shoot_dialog         (GdkScreen   **screen);
+static void       shoot_delay          (gint32        delay);
+static gboolean   shoot_delay_callback (gpointer      data);
+static gboolean   shoot_quit_timeout   (gpointer      data);
 
 
 /* Global Variables */
@@ -237,7 +241,7 @@ query (void)
 			  "Sven Neumann <sven@gimp.org>, "
                           "Henrik Brix Andersen <brix@gimp.org>",
 			  "1998 - 2007",
-			  "v0.9.8 (2007/01/31)",
+			  "v0.9.9 (2007/02/15)",
 			  N_("_Screenshot..."),
 			  NULL,
 			  GIMP_PLUGIN,
@@ -630,18 +634,103 @@ select_window (GdkScreen *screen)
 #endif
 }
 
+static GdkPixbuf *
+remove_shape (GdkPixbuf       *pixbuf,
+              GdkScreen       *screen,
+              GdkNativeWindow  window)
+{
+#if defined(GDK_WINDOWING_X11)
+  Display      *x_dpy = GDK_SCREEN_XDISPLAY (screen);
+  XRectangle   *rects;
+  gint          rect_count;
+  gint          rect_order;
+  gint          i;
+
+  rects = XShapeGetRectangles (x_dpy, window, ShapeBounding,
+                               &rect_count, &rect_order);
+
+  if (rects)
+    {
+      GdkPixbuf *retval;
+      gint       width         = gdk_pixbuf_get_width (pixbuf);
+      gint       height        = gdk_pixbuf_get_height (pixbuf);
+      gint       src_bpp       = gdk_pixbuf_get_n_channels (pixbuf);
+      gint       src_rowstride = gdk_pixbuf_get_rowstride (pixbuf);
+      gint       dest_rowstride;
+
+      if (rect_count == 1 && (rects[0].x == 0 &&
+                              rects[0].y == 0 &&
+                              rects[0].width  == width &&
+                              rects[0].height == height))
+        {
+          XFree (rects);
+          return pixbuf;
+        }
+
+      retval = gdk_pixbuf_new (GDK_COLORSPACE_RGB, TRUE, 8, width, height);
+
+      dest_rowstride = gdk_pixbuf_get_rowstride (retval);
+
+      gdk_pixbuf_fill (retval, 0);
+
+      for (i = 0; i < rect_count; i++)
+        {
+          XRectangle *rect = rects + i;
+          gint        x, y;
+
+          for (y = rect->y; y < rect->y + rect->height; y++)
+            {
+              const guchar *s;
+              guchar       *d;
+
+              s = gdk_pixbuf_get_pixels (pixbuf);
+              s += y * src_rowstride + rect->x * src_bpp;
+
+              d = gdk_pixbuf_get_pixels (retval);
+              d += y * dest_rowstride + rect->x * 4;
+
+              switch (src_bpp)
+                {
+                case 3:
+                  for (x = rect->x; x < rect->x + rect->width; x++)
+                    {
+                      *d++ = *s++;
+                      *d++ = *s++;
+                      *d++ = *s++;
+                      *d++ = 255;
+                    }
+                  break;
+
+                case 4:
+                  memcpy (d, s, rect->width * 4);
+                  break;
+                }
+            }
+        }
+
+      XFree (rects);
+
+      g_object_unref (pixbuf);
+
+      return retval;
+    }
+#endif
+
+  return pixbuf;
+}
+
 
 /* Create a GimpImage from a GdkPixbuf */
 
 static gint32
 create_image (GdkPixbuf *pixbuf)
 {
-  gint32        image;
-  gint32        layer;
-  gdouble       xres, yres;
-  gchar        *comment;
-  gint          width, height;
-  gboolean      status;
+  gint32    image;
+  gint32    layer;
+  gdouble   xres, yres;
+  gchar    *comment;
+  gint      width, height;
+  gboolean  status;
 
   status = gimp_progress_init (_("Importing screenshot"));
 
@@ -751,6 +840,9 @@ shoot (GdkScreen *screen)
       g_message (_("There was an error taking the screenshot."));
       return -1;
     }
+
+  if (shootvals.shoot_type == SHOOT_WINDOW)
+    screenshot = remove_shape (screenshot, screen, shootvals.window_id);
 
   image = create_image (screenshot);
 
