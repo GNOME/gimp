@@ -8,9 +8,9 @@ libgimpmodule = $(top_builddir)/libgimpmodule/libgimpmodule-$(GIMP_API_VERSION).
 libgimpwidgets = $(top_builddir)/libgimpwidgets/libgimpwidgets-$(GIMP_API_VERSION).la
 
 
-INCLUDES = \
-	-I$(top_srcdir)	\
-	$(GTK_CFLAGS)
+AM_CPPFLAGS = $(GTK_CFLAGS) -DTOP_SRCDIR=\"$(top_srcdir)\"
+
+INCLUDES = -I$(top_srcdir)
 
 
 if ENABLE_GTK_DOC

@@ -90,7 +90,6 @@ new_widget_info (const char *name,
   info->size     = size;
   info->no_focus = TRUE;
 
-
   if (GTK_IS_WINDOW (widget))
     {
       info->window = widget;
@@ -103,10 +102,14 @@ new_widget_info (const char *name,
     {
       info->window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
 
+      gtk_window_set_accept_focus (GTK_WINDOW (info->window), FALSE);
+
       gtk_container_set_border_width (GTK_CONTAINER (info->window), 12);
       gtk_container_add (GTK_CONTAINER (info->window), widget);
       gtk_widget_show_all (widget);
    }
+
+  gtk_window_set_skip_taskbar_hint (GTK_WINDOW (info->window), TRUE);
 
   gtk_widget_set_app_paintable (info->window, TRUE);
   g_signal_connect (info->window, "focus", G_CALLBACK (gtk_true), NULL);
@@ -134,6 +137,21 @@ color_init (GimpRGB *rgb)
 {
   gimp_rgb_parse_name (rgb, "goldenrod", -1);
   gimp_rgb_set_alpha (rgb, 0.7);
+}
+
+static GdkPixbuf *
+load_image (const gchar *name)
+{
+  GdkPixbuf *pixbuf;
+  gchar     *filename;
+
+  filename = g_build_filename (TOP_SRCDIR, "data", "images", name, NULL);
+
+  pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
+
+  g_free (filename);
+
+  return pixbuf;
 }
 
 static WidgetInfo *
@@ -573,8 +591,7 @@ area_realize (GimpPreviewArea *area)
 {
   GdkPixbuf *pixbuf;
 
-  pixbuf = gdk_pixbuf_new_from_file ("../../data/images/wilber-wizard.png",
-                                     NULL);
+  pixbuf = load_image ("wilber-wizard.png");
   gimp_preview_area_draw (GIMP_PREVIEW_AREA (area), 0, 0,
                           gdk_pixbuf_get_width (pixbuf),
                           gdk_pixbuf_get_height (pixbuf),
@@ -600,8 +617,7 @@ create_preview_area (void)
   g_signal_connect (area, "realize",
                     G_CALLBACK (area_realize), NULL);
   gtk_container_add (GTK_CONTAINER (align), area);
-  pixbuf = gdk_pixbuf_new_from_file ("../../data/images/wilber-wizard.png",
-                                     NULL);
+  pixbuf = load_image ("wilber-wizard.png");
   gtk_widget_set_size_request (area,
                                gdk_pixbuf_get_width (pixbuf),
                                gdk_pixbuf_get_height (pixbuf));
@@ -630,6 +646,31 @@ create_ratio_entry (void)
                       gtk_label_new ("Ratio Entry"), FALSE, FALSE, 0);
 
   return new_widget_info ("gimp-ratio-entry", vbox, SMALL);
+}
+
+static WidgetInfo *
+create_string_combo_box (void)
+{
+  GtkWidget    *vbox;
+  GtkWidget    *combo;
+  GtkWidget    *align;
+  GtkListStore *store;
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
+  store = gtk_list_store_new (1, G_TYPE_STRING);
+  gtk_list_store_insert_with_values (store, NULL, 0, 0, "Foo", -1);
+  gtk_list_store_insert_with_values (store, NULL, 1, 0, "Bar", -1);
+  combo = gimp_string_combo_box_new (GTK_TREE_MODEL (store), 0, 0);
+  g_object_unref (store);
+  gimp_string_combo_box_set_active (GIMP_STRING_COMBO_BOX (combo), "Foo");
+
+  gtk_container_add (GTK_CONTAINER (align), combo);
+  gtk_box_pack_start_defaults (GTK_BOX (vbox), align);
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      gtk_label_new ("String Combo Box"), FALSE, FALSE, 0);
+
+  return new_widget_info ("gimp-string-combo-box", vbox, SMALL);
 }
 
 static WidgetInfo *
@@ -677,6 +718,7 @@ get_all_widgets (void)
   retval = g_list_append (retval, create_pick_button ());
   retval = g_list_append (retval, create_preview_area ());
   retval = g_list_append (retval, create_ratio_entry ());
+  retval = g_list_append (retval, create_string_combo_box ());
   retval = g_list_append (retval, create_unit_menu ());
 
   return retval;

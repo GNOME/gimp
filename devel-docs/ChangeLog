@@ -1,3 +1,9 @@
+2007-02-15  Sven Neumann  <sven@gimp.org>
+
+	* tools/Makefile.am
+	* tools/widgets.c: added GimpStringComboBox; improved image loading;
+	set some window manager hints to make the doc-shooter less intrusive.
+
 2007-02-12  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-docs.sgml
