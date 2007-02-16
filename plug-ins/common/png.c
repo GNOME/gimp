@@ -592,6 +592,59 @@ run (const gchar      *name,
 }
 
 
+struct read_error_data
+{
+  GimpPixelRgn *pixel_rgn;       /* Pixel region for layer */
+  guchar       *pixel;           /* Pixel data */
+  GimpDrawable *drawable;        /* Drawable for layer */
+  guint32       width;           /* png_infop->width */
+  guint32       height;          /* png_infop->height */
+  gint          bpp;             /* Bytes per pixel */
+  gint          tile_height;     /* Height of tile in GIMP */
+  gint          begin;           /* Beginning tile row */
+  gint          end;             /* Ending tile row */
+  gint          num;             /* Number of rows to load */
+};
+
+static void
+on_read_error (png_structp png_ptr, png_const_charp error_msg)
+{
+  struct read_error_data *error_data = png_get_error_ptr (png_ptr);
+  gint                    begin;
+  gint                    end;
+  gint                    num;
+
+  g_warning (_("Error loading PNG file: %s"), error_msg);
+
+  /* Flush the current half-read row of tiles */
+
+  gimp_pixel_rgn_set_rect (error_data->pixel_rgn, error_data->pixel, 0,
+                                error_data->begin, error_data->drawable->width,
+                                error_data->num);
+
+  /* Fill the rest of the rows of tiles with 0s */
+
+  memset (error_data->pixel, 0,
+          error_data->tile_height * error_data->width * error_data->bpp);
+
+  for (begin = error_data->begin + error_data->tile_height,
+        end = error_data->end + error_data->tile_height;
+        begin < error_data->height;
+        begin += error_data->tile_height, end += error_data->tile_height)
+    {
+      if (end > error_data->height)
+        end = error_data->height;
+
+      num = end - begin;
+
+      gimp_pixel_rgn_set_rect (error_data->pixel_rgn, error_data->pixel, 0,
+                                begin,
+                                error_data->drawable->width, num);
+    }
+
+  longjmp (png_ptr->jmpbuf, 1);
+}
+
 /*
  * 'load_image()' - Load a PNG image into a new image window.
  */
@@ -623,6 +676,8 @@ load_image (const gchar *filename,
    *pixel;                      /* Pixel data */
   guchar alpha[256],            /* Index -> Alpha */
    *alpha_ptr;                  /* Temporary pointer */
+  struct read_error_data
+   error_data;
 
   png_textp  text;
   gint       num_texts;
@@ -900,11 +955,21 @@ load_image (const gchar *filename,
    */
 
   tile_height = gimp_tile_height ();
-  pixel = g_new (guchar, tile_height * info->width * bpp);
+  pixel = g_new0 (guchar, tile_height * info->width * bpp);
   pixels = g_new (guchar *, tile_height);
 
   for (i = 0; i < tile_height; i++)
     pixels[i] = pixel + info->width * info->channels * i;
+
+  /* Install our own error handler to handle incomplete PNG files better */
+  error_data.drawable = drawable;
+  error_data.pixel = pixel;
+  error_data.tile_height = tile_height;
+  error_data.width = info->width;
+  error_data.height = info->height;
+  error_data.bpp = bpp;
+  
+  png_set_error_fn (pp, &error_data, on_read_error, NULL);
 
   for (pass = 0; pass < num_passes; pass++)
     {
@@ -924,16 +989,26 @@ load_image (const gchar *filename,
             gimp_pixel_rgn_get_rect (&pixel_rgn, pixel, 0, begin,
                                      drawable->width, num);
 
+          error_data.begin = begin;
+          error_data.end = end;
+          error_data.num = num;
+          error_data.pixel_rgn = &pixel_rgn;
+          
           png_read_rows (pp, pixels, NULL, num);
 
           gimp_pixel_rgn_set_rect (&pixel_rgn, pixel, 0, begin,
                                    drawable->width, num);
+
+          memset (pixel, 0, tile_height * info->width * bpp);
 
           gimp_progress_update (((double) pass +
                                  (double) end / (double) info->height) /
                                 (double) num_passes);
         }
     }
+
+  /* Switch back to default error handler */
+  png_set_error_fn (pp, NULL, NULL, NULL);
 
   png_read_end (pp, info);
 
