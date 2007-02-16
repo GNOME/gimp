@@ -126,7 +126,7 @@ gimp_display_shell_close_dialog (GimpDisplayShell *shell,
   g_free (name);
 
   shell->close_dialog =
-    dialog = gimp_message_dialog_new (title, GIMP_STOCK_WARNING,
+    dialog = gimp_message_dialog_new (title, GTK_STOCK_SAVE,
                                       GTK_WIDGET (shell),
                                       GTK_DIALOG_DESTROY_WITH_PARENT,
                                       gimp_standard_help_func, NULL,

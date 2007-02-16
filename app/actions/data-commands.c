@@ -206,7 +206,8 @@ data_delete_cmd_callback (GtkAction *action,
   GimpContext         *context;
   GimpData            *data;
 
-  context = gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
+  context =
+    gimp_container_view_get_context (GIMP_CONTAINER_EDITOR (view)->view);
 
   data = (GimpData *)
     gimp_context_get_by_type (context,
@@ -246,9 +247,13 @@ data_delete_cmd_callback (GtkAction *action,
                         delete_data);
 
       gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
-                                         _("Are you sure you want to delete "
-                                           "'%s' from the list and from disk?"),
+                                         _("Delete '%s'?"),
                                          GIMP_OBJECT (data)->name);
+      gimp_message_box_set_text(GIMP_MESSAGE_DIALOG (dialog)->box,
+                                _("Are you sure you want to remove '%s' "
+                                  "from the list and delete it on disk?"),
+                                GIMP_OBJECT (data)->name);
+
       gtk_widget_show (dialog);
     }
 }
