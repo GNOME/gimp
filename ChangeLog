@@ -1,5 +1,13 @@
 2007-02-16  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimp.c: let gimp_gamma() return 2.2 and document the
+	fact that this is a fixed value and that all pixel data is in the
+	sRGB colorspace.
+
+	* plug-ins/common/mng.c: removed check for gimp_gamma() returning 1.0.
+
+2007-02-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/lcms.c: added a button icon and fixed use of
 	gtk_vbox_new().
 

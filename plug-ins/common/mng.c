@@ -513,7 +513,6 @@ mng_save_image (const gchar *filename,
                 gint32       original_image_id)
 {
   gint            rows, cols;
-  gdouble         gamma;
   volatile gint   i;
   time_t          t;
   struct tm      *gmt;
@@ -691,12 +690,9 @@ mng_save_image (const gchar *filename,
 
   if (mng_data.gama)
     {
-      gamma = gimp_gamma ();
-
       if ((ret =
            mng_putchunk_gama (handle, MNG_FALSE,
-                              (1.0 / ((gamma != 1.0) ? gamma : 2.2)) *
-                              100000)) != MNG_NOERROR)
+                              (1.0 / (gimp_gamma ()) * 100000))) != MNG_NOERROR)
         {
           g_warning ("Unable to mng_putchunk_gama() in mng_save_image()");
           mng_cleanup (&handle);
