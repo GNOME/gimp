@@ -868,7 +868,7 @@ lcms_icc_profile_src_label_new (gint32       image,
   gchar     *desc;
   gchar     *text;
 
-  vbox = gtk_vbox_new (6, FALSE);
+  vbox = gtk_vbox_new (FALSE, 6);
 
   name = gimp_image_get_name (image);
   text = g_strdup_printf (_("The image '%s' has an embedded color profile:"),
@@ -941,6 +941,7 @@ lcms_icc_apply_dialog (gint32       image,
   GtkWidget *dialog;
   GtkWidget *vbox;
   GtkWidget *label;
+  GtkWidget *button;
   GtkWidget *toggle = NULL;
   gboolean   run;
 
@@ -952,9 +953,14 @@ lcms_icc_apply_dialog (gint32       image,
                             gimp_standard_help_func, PLUG_IN_PROC_APPLY,
 
                             _("_Keep"),    GTK_RESPONSE_CANCEL,
-                            _("_Convert"), GTK_RESPONSE_OK,
 
                             NULL);
+
+  button = gtk_dialog_add_button (GTK_DIALOG (dialog),
+                                  _("_Convert"), GTK_RESPONSE_OK);
+  gtk_button_set_image (GTK_BUTTON (button),
+                        gtk_image_new_from_stock (GTK_STOCK_CONVERT,
+                                                  GTK_ICON_SIZE_BUTTON));
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
