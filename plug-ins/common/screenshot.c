@@ -932,7 +932,7 @@ shoot_dialog (GdkScreen **screen)
 			    NULL);
 
   button = gtk_dialog_add_button (GTK_DIALOG (dialog),
-                                  _("_Grab"), GTK_RESPONSE_OK);
+                                  _("S_nap"), GTK_RESPONSE_OK);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
@@ -966,8 +966,8 @@ shoot_dialog (GdkScreen **screen)
                          _("After the delay, drag your mouse to select "
                            "the region for the screenshot."));
   shoot_dialog_add_hint (GTK_NOTEBOOK (notebook), SHOOT_WINDOW,
-                         _("After the delay, click in a window to snap it. Or "
-                           "click and hold in a window before the delay ends."));
+                         _("At the end of the delay, click in a window "
+                           "to snap it."));
 
   gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), shootvals.shoot_type);
 
