@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp CVS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-09 10:52+0000\n"
-"PO-Revision-Date: 2007-02-09 10:52-0000\n"
+"POT-Creation-Date: 2007-02-17 00:20+0000\n"
+"PO-Revision-Date: 2007-02-17 00:20-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -1095,7 +1095,7 @@ msgstr "Check Style"
 msgid "_Preview"
 msgstr "_Preview"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1869
+#: ../libgimpwidgets/gimppropwidgets.c:1901
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1293,11 +1293,11 @@ msgstr "Tritanopia (insensitivity to blue)"
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Colour deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 
-#: ../modules/cdisplay_colorblind.c:290
+#: ../modules/cdisplay_colorblind.c:292
 msgid "Color Deficient Vision"
 msgstr "Colour Deficient Vision"
 
-#: ../modules/cdisplay_colorblind.c:505
+#: ../modules/cdisplay_colorblind.c:507
 msgid "Color _deficiency type:"
 msgstr "Colour _deficiency type:"
 
@@ -1449,254 +1449,265 @@ msgstr "Watercolour"
 msgid "Pressure"
 msgstr "Pressure"
 
-#: ../modules/controller_linux_input.c:56
+#: ../modules/controller_linux_input.c:58
 msgid "Button 0"
 msgstr "Button 0"
 
-#: ../modules/controller_linux_input.c:57
+#: ../modules/controller_linux_input.c:59
 msgid "Button 1"
 msgstr "Button 1"
 
-#: ../modules/controller_linux_input.c:58
+#: ../modules/controller_linux_input.c:60
 msgid "Button 2"
 msgstr "Button 2"
 
-#: ../modules/controller_linux_input.c:59
+#: ../modules/controller_linux_input.c:61
 msgid "Button 3"
 msgstr "Button 3"
 
-#: ../modules/controller_linux_input.c:60
+#: ../modules/controller_linux_input.c:62
 msgid "Button 4"
 msgstr "Button 4"
 
-#: ../modules/controller_linux_input.c:61
+#: ../modules/controller_linux_input.c:63
 msgid "Button 5"
 msgstr "Button 5"
 
-#: ../modules/controller_linux_input.c:62
+#: ../modules/controller_linux_input.c:64
 msgid "Button 6"
 msgstr "Button 6"
 
-#: ../modules/controller_linux_input.c:63
+#: ../modules/controller_linux_input.c:65
 msgid "Button 7"
 msgstr "Button 7"
 
-#: ../modules/controller_linux_input.c:64
+#: ../modules/controller_linux_input.c:66
 msgid "Button 8"
 msgstr "Button 8"
 
-#: ../modules/controller_linux_input.c:65
+#: ../modules/controller_linux_input.c:67
 msgid "Button 9"
 msgstr "Button 9"
 
-#: ../modules/controller_linux_input.c:66
+#: ../modules/controller_linux_input.c:68
 msgid "Button Mouse"
 msgstr "Button Mouse"
 
-#: ../modules/controller_linux_input.c:67
+#: ../modules/controller_linux_input.c:69
 msgid "Button Left"
 msgstr "Button Left"
 
-#: ../modules/controller_linux_input.c:68
+#: ../modules/controller_linux_input.c:70
 msgid "Button Right"
 msgstr "Button Right"
 
-#: ../modules/controller_linux_input.c:69
+#: ../modules/controller_linux_input.c:71
 msgid "Button Middle"
 msgstr "Button Middle"
 
-#: ../modules/controller_linux_input.c:70
+#: ../modules/controller_linux_input.c:72
 msgid "Button Side"
 msgstr "Button Side"
 
-#: ../modules/controller_linux_input.c:71
+#: ../modules/controller_linux_input.c:73
 msgid "Button Extra"
 msgstr "Button Extra"
 
-#: ../modules/controller_linux_input.c:72
-#: ../modules/controller_linux_input.c:73
+#: ../modules/controller_linux_input.c:74
 msgid "Button Forward"
 msgstr "Button Forward"
 
 #: ../modules/controller_linux_input.c:75
+msgid "Button Back"
+msgstr "Button Back"
+
+#: ../modules/controller_linux_input.c:76
+msgid "Button Task"
+msgstr "Button Task"
+
+#: ../modules/controller_linux_input.c:78
 msgid "Button Wheel"
 msgstr "Button Wheel"
 
-#: ../modules/controller_linux_input.c:78
+#: ../modules/controller_linux_input.c:81
 msgid "Button Gear Down"
 msgstr "Button Gear Down"
 
-#: ../modules/controller_linux_input.c:81
+#: ../modules/controller_linux_input.c:84
 msgid "Button Gear Up"
 msgstr "Button Gear Up"
 
-#: ../modules/controller_linux_input.c:87
+#: ../modules/controller_linux_input.c:90
 msgid "X Move Left"
 msgstr "X Move Left"
 
-#: ../modules/controller_linux_input.c:88
+#: ../modules/controller_linux_input.c:91
 msgid "X Move Right"
 msgstr "X Move Right"
 
-#: ../modules/controller_linux_input.c:89
+#: ../modules/controller_linux_input.c:92
 msgid "Y Move Away"
 msgstr "Y Move Away"
 
-#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_linux_input.c:93
 msgid "Y Move Near"
 msgstr "Y Move Near"
 
-#: ../modules/controller_linux_input.c:91
+#: ../modules/controller_linux_input.c:94
 msgid "Z Move Up"
 msgstr "Z Move Up"
 
-#: ../modules/controller_linux_input.c:92
+#: ../modules/controller_linux_input.c:95
 msgid "Z Move Down"
 msgstr "Z Move Down"
 
-#: ../modules/controller_linux_input.c:94
+#: ../modules/controller_linux_input.c:97
 msgid "X Axis Tilt Away"
 msgstr "X Axis Tilt Away"
 
-#: ../modules/controller_linux_input.c:95
+#: ../modules/controller_linux_input.c:98
 msgid "X Axis Tilt Near"
 msgstr "X Axis Tilt Near"
 
-#: ../modules/controller_linux_input.c:96
+#: ../modules/controller_linux_input.c:99
 msgid "Y Axis Tilt Right"
 msgstr "Y Axis Tilt Right"
 
-#: ../modules/controller_linux_input.c:97
+#: ../modules/controller_linux_input.c:100
 msgid "Y Axis Tilt Left"
 msgstr "Y Axis Tilt Left"
 
-#: ../modules/controller_linux_input.c:98
+#: ../modules/controller_linux_input.c:101
 msgid "Z Axis Turn Left"
 msgstr "Z Axis Turn Left"
 
-#: ../modules/controller_linux_input.c:99
+#: ../modules/controller_linux_input.c:102
 msgid "Z Axis Turn Right"
 msgstr "Z Axis Turn Right"
 
-#: ../modules/controller_linux_input.c:101
+#: ../modules/controller_linux_input.c:104
 msgid "Horiz. Wheel Turn Back"
 msgstr "Horiz. Wheel Turn Back"
 
-#: ../modules/controller_linux_input.c:102
+#: ../modules/controller_linux_input.c:105
 msgid "Horiz. Wheel Turn Forward"
 msgstr "Horiz. Wheel Turn Forward"
 
-#: ../modules/controller_linux_input.c:103
+#: ../modules/controller_linux_input.c:106
 msgid "Dial Turn Left"
 msgstr "Dial Turn Left"
 
-#: ../modules/controller_linux_input.c:104
+#: ../modules/controller_linux_input.c:107
 msgid "Dial Turn Right"
 msgstr "Dial Turn Right"
 
-#: ../modules/controller_linux_input.c:105
+#: ../modules/controller_linux_input.c:108
 msgid "Wheel Turn Left"
 msgstr "Wheel Turn Left"
 
-#: ../modules/controller_linux_input.c:106
+#: ../modules/controller_linux_input.c:109
 msgid "Wheel Turn Right"
 msgstr "Wheel Turn Right"
 
-#: ../modules/controller_linux_input.c:170
+#: ../modules/controller_linux_input.c:179
 msgid "Linux input event controller"
 msgstr "Linux input event controller"
 
-#: ../modules/controller_linux_input.c:238
-#: ../modules/controller_midi.c:246
+#: ../modules/controller_linux_input.c:249
+#: ../modules/controller_midi.c:245
 msgid "Device:"
 msgstr "Device:"
 
-#: ../modules/controller_linux_input.c:239
+#: ../modules/controller_linux_input.c:250
 msgid "The name of the device to read Linux Input events from."
 msgstr "The name of the device to read Linux Input events from."
 
-#: ../modules/controller_linux_input.c:243
+#: ../modules/controller_linux_input.c:259
 msgid "Linux Input"
 msgstr "Linux Input"
 
-#: ../modules/controller_linux_input.c:368
+#: ../modules/controller_linux_input.c:537
 msgid "Linux Input Events"
 msgstr "Linux Input Events"
 
-#: ../modules/controller_linux_input.c:389
-#: ../modules/controller_midi.c:483
-#: ../modules/controller_midi.c:509
+#: ../modules/controller_linux_input.c:549
+#: ../modules/controller_midi.c:533
+msgid "No device configured"
+msgstr "No device configured"
+
+#: ../modules/controller_linux_input.c:575
+#: ../modules/controller_midi.c:482
+#: ../modules/controller_midi.c:508
 #, c-format
 msgid "Reading from %s"
 msgstr "Reading from %s"
 
-#: ../modules/controller_linux_input.c:405
-#: ../modules/controller_linux_input.c:448
-#: ../modules/controller_midi.c:465
-#: ../modules/controller_midi.c:526
-#: ../modules/controller_midi.c:597
+#: ../modules/controller_linux_input.c:593
+#: ../modules/controller_linux_input.c:647
+#: ../modules/controller_midi.c:464
+#: ../modules/controller_midi.c:525
+#: ../modules/controller_midi.c:596
 #, c-format
 msgid "Device not available: %s"
 msgstr "Device not available: %s"
 
-#: ../modules/controller_linux_input.c:413
-#: ../modules/controller_midi.c:534
-msgid "No device configured"
-msgstr "No device configured"
+#: ../modules/controller_linux_input.c:612
+msgid "Device not available"
+msgstr "Device not available"
 
-#: ../modules/controller_linux_input.c:457
-#: ../modules/controller_midi.c:606
+#: ../modules/controller_linux_input.c:656
+#: ../modules/controller_midi.c:605
 msgid "End of file"
 msgstr "End of file"
 
-#: ../modules/controller_midi.c:168
+#: ../modules/controller_midi.c:167
 msgid "MIDI event controller"
 msgstr "MIDI event controller"
 
-#: ../modules/controller_midi.c:237
+#: ../modules/controller_midi.c:236
 msgid "The name of the device to read MIDI events from."
 msgstr "The name of the device to read MIDI events from."
 
-#: ../modules/controller_midi.c:240
+#: ../modules/controller_midi.c:239
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Enter 'alsa' to use the ALSA sequencer."
 
-#: ../modules/controller_midi.c:255
+#: ../modules/controller_midi.c:254
 msgid "Channel:"
 msgstr "Channel:"
 
-#: ../modules/controller_midi.c:256
+#: ../modules/controller_midi.c:255
 msgid "The MIDI channel to read events from. Set to -1 for reading from all MIDI channels."
 msgstr "The MIDI channel to read events from. Set to -1 for reading from all MIDI channels."
 
-#: ../modules/controller_midi.c:260
+#: ../modules/controller_midi.c:259
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:384
+#: ../modules/controller_midi.c:383
 #, c-format
 msgid "Note %02x on"
 msgstr "Note %02x on"
 
-#: ../modules/controller_midi.c:387
+#: ../modules/controller_midi.c:386
 #, c-format
 msgid "Note %02x off"
 msgstr "Note %02x off"
 
-#: ../modules/controller_midi.c:390
+#: ../modules/controller_midi.c:389
 #, c-format
 msgid "Controller %03d"
 msgstr "Controller %03d"
 
-#: ../modules/controller_midi.c:437
+#: ../modules/controller_midi.c:436
 msgid "MIDI Events"
 msgstr "MIDI Events"
 
-#: ../modules/controller_midi.c:455
+#: ../modules/controller_midi.c:454
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../modules/controller_midi.c:457
+#: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMP MIDI Input Controller"
 

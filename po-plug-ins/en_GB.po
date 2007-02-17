@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp CVS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-05 22:15+0000\n"
-"PO-Revision-Date: 2007-02-05 22:16-0000\n"
+"POT-Creation-Date: 2007-02-17 00:21+0000\n"
+"PO-Revision-Date: 2007-02-17 00:21-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -348,12 +348,12 @@ msgstr "_Fractals"
 #: ../plug-ins/common/gif.c:986
 #: ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225
-#: ../plug-ins/common/mng.c:562
-#: ../plug-ins/common/mng.c:954
+#: ../plug-ins/common/mng.c:561
+#: ../plug-ins/common/mng.c:950
 #: ../plug-ins/common/pat.c:447
 #: ../plug-ins/common/pcx.c:588
 #: ../plug-ins/common/pix.c:508
-#: ../plug-ins/common/png.c:1168
+#: ../plug-ins/common/png.c:1243
 #: ../plug-ins/common/pnm.c:929
 #: ../plug-ins/common/postscript.c:1185
 #: ../plug-ins/common/psd_save.c:1448
@@ -362,7 +362,7 @@ msgstr "_Fractals"
 #: ../plug-ins/common/spheredesigner.c:2119
 #: ../plug-ins/common/sunras.c:507
 #: ../plug-ins/common/tga.c:1027
-#: ../plug-ins/common/tiff.c:2131
+#: ../plug-ins/common/tiff.c:2171
 #: ../plug-ins/common/xbm.c:1002
 #: ../plug-ins/common/xwd.c:565
 #: ../plug-ins/fits/fits.c:454
@@ -407,11 +407,11 @@ msgstr "Save Fractal Parameters"
 #: ../plug-ins/common/gifload.c:309
 #: ../plug-ins/common/gih.c:649
 #: ../plug-ins/common/lcms.c:655
-#: ../plug-ins/common/mng.c:1125
+#: ../plug-ins/common/mng.c:1121
 #: ../plug-ins/common/pat.c:317
 #: ../plug-ins/common/pcx.c:309
 #: ../plug-ins/common/pix.c:329
-#: ../plug-ins/common/png.c:652
+#: ../plug-ins/common/png.c:707
 #: ../plug-ins/common/pnm.c:480
 #: ../plug-ins/common/poppler.c:368
 #: ../plug-ins/common/postscript.c:1012
@@ -425,7 +425,7 @@ msgstr "Save Fractal Parameters"
 #: ../plug-ins/common/svg.c:316
 #: ../plug-ins/common/svg.c:686
 #: ../plug-ins/common/tga.c:411
-#: ../plug-ins/common/tiff.c:543
+#: ../plug-ins/common/tiff.c:580
 #: ../plug-ins/common/xbm.c:720
 #: ../plug-ins/common/xwd.c:420
 #: ../plug-ins/faxg3/faxg3.c:219
@@ -1198,7 +1198,7 @@ msgstr "Bad colourmap"
 #: ../plug-ins/common/pat.c:322
 #: ../plug-ins/common/pcx.c:314
 #: ../plug-ins/common/pix.c:334
-#: ../plug-ins/common/png.c:659
+#: ../plug-ins/common/png.c:714
 #: ../plug-ins/common/pnm.c:485
 #: ../plug-ins/common/poppler.c:414
 #: ../plug-ins/common/postscript.c:1018
@@ -1206,7 +1206,7 @@ msgstr "Bad colourmap"
 #: ../plug-ins/common/raw.c:650
 #: ../plug-ins/common/sunras.c:433
 #: ../plug-ins/common/tga.c:416
-#: ../plug-ins/common/tiff.c:551
+#: ../plug-ins/common/tiff.c:588
 #: ../plug-ins/common/wmf.c:954
 #: ../plug-ins/common/xbm.c:725
 #: ../plug-ins/common/xpm.c:343
@@ -1266,14 +1266,14 @@ msgstr "Unsupported or invalid bitdepth."
 #: ../plug-ins/common/pcx.c:339
 #: ../plug-ins/common/pcx.c:345
 #: ../plug-ins/common/pix.c:368
-#: ../plug-ins/common/png.c:780
+#: ../plug-ins/common/png.c:835
 #: ../plug-ins/common/pnm.c:564
 #: ../plug-ins/common/psd.c:2310
 #: ../plug-ins/common/raw.c:691
 #: ../plug-ins/common/smooth_palette.c:257
 #: ../plug-ins/common/sunras.c:917
 #: ../plug-ins/common/tga.c:928
-#: ../plug-ins/common/tiff.c:906
+#: ../plug-ins/common/tiff.c:945
 #: ../plug-ins/common/tile.c:265
 #: ../plug-ins/common/xbm.c:866
 #: ../plug-ins/faxg3/faxg3.c:464
@@ -1315,13 +1315,13 @@ msgstr "Alpha channel will be ignored."
 #: ../plug-ins/common/pat.c:452
 #: ../plug-ins/common/pcx.c:550
 #: ../plug-ins/common/pix.c:513
-#: ../plug-ins/common/png.c:1175
+#: ../plug-ins/common/png.c:1250
 #: ../plug-ins/common/pnm.c:934
 #: ../plug-ins/common/postscript.c:1190
 #: ../plug-ins/common/psd_save.c:1453
 #: ../plug-ins/common/sunras.c:512
 #: ../plug-ins/common/tga.c:1032
-#: ../plug-ins/common/tiff.c:2139
+#: ../plug-ins/common/tiff.c:2179
 #: ../plug-ins/common/xbm.c:1007
 #: ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:570
@@ -4480,7 +4480,7 @@ msgid "_Delay between frames where unspecified:"
 msgstr "_Delay between frames where unspecified:"
 
 #: ../plug-ins/common/gif.c:1368
-#: ../plug-ins/common/mng.c:1543
+#: ../plug-ins/common/mng.c:1539
 msgid "milliseconds"
 msgstr "milliseconds"
 
@@ -4707,7 +4707,7 @@ msgstr "Drawing grid"
 
 #: ../plug-ins/common/grid.c:635
 #: ../plug-ins/gfig/gfig-dialog.c:1355
-#: ../plug-ins/imagemap/imap_menu.c:244
+#: ../plug-ins/imagemap/imap_menu.c:218
 msgid "Grid"
 msgstr "Grid"
 
@@ -5191,19 +5191,19 @@ msgstr "The image '%s' has an embedded colour profile:"
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Convert the image to the RGB working space (%s)?"
 
-#: ../plug-ins/common/lcms.c:949
+#: ../plug-ins/common/lcms.c:950
 msgid "Convert to RGB working space?"
 msgstr "Convert to RGB working space?"
 
-#: ../plug-ins/common/lcms.c:954
+#: ../plug-ins/common/lcms.c:955
 msgid "_Keep"
 msgstr "_Keep"
 
-#: ../plug-ins/common/lcms.c:955
+#: ../plug-ins/common/lcms.c:960
 msgid "_Convert"
 msgstr "_Convert"
 
-#: ../plug-ins/common/lcms.c:981
+#: ../plug-ins/common/lcms.c:987
 #: ../plug-ins/jpeg/jpeg-exif.c:390
 msgid "_Don't ask me again"
 msgstr "_Don't ask me again"
@@ -5499,7 +5499,7 @@ msgid "_Radial"
 msgstr "_Radial"
 
 #: ../plug-ins/common/mblur.c:949
-#: ../plug-ins/imagemap/imap_menu.c:238
+#: ../plug-ins/imagemap/imap_menu.c:212
 msgid "_Zoom"
 msgstr "_Zoom"
 
@@ -5523,108 +5523,108 @@ msgstr "_Angle:"
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
 #: ../plug-ins/common/mng.c:499
-#: ../plug-ins/common/png.c:1654
+#: ../plug-ins/common/png.c:1729
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr "Couldn't losslessly save transparency, saving opacity instead."
 
-#: ../plug-ins/common/mng.c:1323
+#: ../plug-ins/common/mng.c:1319
 msgid "Save as MNG"
 msgstr "Save as MNG"
 
-#: ../plug-ins/common/mng.c:1343
+#: ../plug-ins/common/mng.c:1339
 msgid "MNG Options"
 msgstr "MNG Options"
 
-#: ../plug-ins/common/mng.c:1349
+#: ../plug-ins/common/mng.c:1345
 msgid "Interlace"
 msgstr "Interlace"
 
-#: ../plug-ins/common/mng.c:1361
+#: ../plug-ins/common/mng.c:1357
 msgid "Save background color"
 msgstr "Save background color"
 
-#: ../plug-ins/common/mng.c:1372
+#: ../plug-ins/common/mng.c:1368
 msgid "Save gamma"
 msgstr "Save gamma"
 
-#: ../plug-ins/common/mng.c:1382
+#: ../plug-ins/common/mng.c:1378
 msgid "Save resolution"
 msgstr "Save resolution"
 
-#: ../plug-ins/common/mng.c:1393
+#: ../plug-ins/common/mng.c:1389
 msgid "Save creation time"
 msgstr "Save creation time"
 
-#: ../plug-ins/common/mng.c:1412
+#: ../plug-ins/common/mng.c:1408
 msgid "PNG"
 msgstr "PNG"
 
-#: ../plug-ins/common/mng.c:1413
+#: ../plug-ins/common/mng.c:1409
 msgid "JNG"
 msgstr "JNG"
 
-#: ../plug-ins/common/mng.c:1416
+#: ../plug-ins/common/mng.c:1412
 msgid "PNG + delta PNG"
 msgstr "PNG + delta PNG"
 
-#: ../plug-ins/common/mng.c:1417
+#: ../plug-ins/common/mng.c:1413
 msgid "JNG + delta PNG"
 msgstr "JNG + delta PNG"
 
-#: ../plug-ins/common/mng.c:1418
+#: ../plug-ins/common/mng.c:1414
 msgid "All PNG"
 msgstr "All PNG"
 
-#: ../plug-ins/common/mng.c:1419
+#: ../plug-ins/common/mng.c:1415
 msgid "All JNG"
 msgstr "All JNG"
 
-#: ../plug-ins/common/mng.c:1431
+#: ../plug-ins/common/mng.c:1427
 msgid "Default chunks type:"
 msgstr "Default chunks type:"
 
-#: ../plug-ins/common/mng.c:1434
+#: ../plug-ins/common/mng.c:1430
 msgid "Combine"
 msgstr "Combine"
 
-#: ../plug-ins/common/mng.c:1435
+#: ../plug-ins/common/mng.c:1431
 msgid "Replace"
 msgstr "Replace"
 
-#: ../plug-ins/common/mng.c:1446
+#: ../plug-ins/common/mng.c:1442
 msgid "Default frame disposal:"
 msgstr "Default frame disposal:"
 
-#: ../plug-ins/common/mng.c:1458
+#: ../plug-ins/common/mng.c:1454
 msgid "PNG compression level:"
 msgstr "PNG compression level:"
 
-#: ../plug-ins/common/mng.c:1466
-#: ../plug-ins/common/png.c:1801
+#: ../plug-ins/common/mng.c:1462
+#: ../plug-ins/common/png.c:1876
 msgid "Choose a high compression level for small file size"
 msgstr "Choose a high compression level for small file size"
 
-#: ../plug-ins/common/mng.c:1480
+#: ../plug-ins/common/mng.c:1476
 msgid "JPEG compression quality:"
 msgstr "JPEG compression quality:"
 
-#: ../plug-ins/common/mng.c:1497
+#: ../plug-ins/common/mng.c:1493
 msgid "JPEG smoothing factor:"
 msgstr "JPEG smoothing factor:"
 
-#: ../plug-ins/common/mng.c:1507
+#: ../plug-ins/common/mng.c:1503
 msgid "Animated MNG Options"
 msgstr "Animated MNG Options"
 
-#: ../plug-ins/common/mng.c:1513
+#: ../plug-ins/common/mng.c:1509
 msgid "Loop"
 msgstr "Loop"
 
-#: ../plug-ins/common/mng.c:1527
+#: ../plug-ins/common/mng.c:1523
 msgid "Default frame delay:"
 msgstr "Default frame delay:"
 
-#: ../plug-ins/common/mng.c:1600
+#: ../plug-ins/common/mng.c:1596
 msgid "MNG animation"
 msgstr "MNG animation"
 
@@ -6246,71 +6246,76 @@ msgstr "Tree View"
 msgid "PNG image"
 msgstr "PNG image"
 
-#: ../plug-ins/common/png.c:635
+#: ../plug-ins/common/png.c:617
+#, c-format
+msgid "Error loading PNG file: %s"
+msgstr "Error loading PNG file: %s"
+
+#: ../plug-ins/common/png.c:690
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Error while reading '%s'. File corrupted?"
 
 #. Aie! Unknown type
-#: ../plug-ins/common/png.c:763
+#: ../plug-ins/common/png.c:818
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Unknown colour model in PNG file '%s'."
 
-#: ../plug-ins/common/png.c:817
+#: ../plug-ins/common/png.c:872
 msgid "The PNG file specifies an offset that caused the layer to be positioned outside the image."
 msgstr "The PNG file specifies an offset that caused the layer to be positioned outside the image."
 
-#: ../plug-ins/common/png.c:1153
+#: ../plug-ins/common/png.c:1228
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Error while saving '%s'. Could not save image."
 
-#: ../plug-ins/common/png.c:1679
+#: ../plug-ins/common/png.c:1754
 msgid "Save as PNG"
 msgstr "Save as PNG"
 
-#: ../plug-ins/common/png.c:1710
+#: ../plug-ins/common/png.c:1785
 msgid "_Interlacing (Adam7)"
 msgstr "_Interlacing (Adam7)"
 
-#: ../plug-ins/common/png.c:1721
+#: ../plug-ins/common/png.c:1796
 msgid "Save _background color"
 msgstr "Save _background colour"
 
-#: ../plug-ins/common/png.c:1729
+#: ../plug-ins/common/png.c:1804
 msgid "Save _gamma"
 msgstr "Save _gamma"
 
-#: ../plug-ins/common/png.c:1739
+#: ../plug-ins/common/png.c:1814
 msgid "Save layer o_ffset"
 msgstr "Save layer o_ffset"
 
-#: ../plug-ins/common/png.c:1748
+#: ../plug-ins/common/png.c:1823
 msgid "Save _resolution"
 msgstr "Save _resolution"
 
-#: ../plug-ins/common/png.c:1758
+#: ../plug-ins/common/png.c:1833
 msgid "Save creation _time"
 msgstr "Save creation _time"
 
-#: ../plug-ins/common/png.c:1767
+#: ../plug-ins/common/png.c:1842
 msgid "Save comme_nt"
 msgstr "Save comme_nt"
 
-#: ../plug-ins/common/png.c:1783
+#: ../plug-ins/common/png.c:1858
 msgid "Save color _values from transparent pixels"
 msgstr "Save colour _values from transparent pixels"
 
-#: ../plug-ins/common/png.c:1797
+#: ../plug-ins/common/png.c:1872
 msgid "Co_mpression level:"
 msgstr "Co_mpression level:"
 
-#: ../plug-ins/common/png.c:1815
+#: ../plug-ins/common/png.c:1890
 msgid "_Load Defaults"
 msgstr "_Load Defaults"
 
-#: ../plug-ins/common/png.c:1823
+#: ../plug-ins/common/png.c:1898
 msgid "S_ave Defaults"
 msgstr "S_ave Defaults"
 
@@ -6508,7 +6513,7 @@ msgstr ""
 "(%s)"
 
 #: ../plug-ins/common/postscript.c:1886
-#: ../plug-ins/common/tiff.c:908
+#: ../plug-ins/common/tiff.c:947
 #, c-format
 msgid "Page %d"
 msgstr "Page %d"
@@ -6575,7 +6580,7 @@ msgid "B/W"
 msgstr "B/W"
 
 #: ../plug-ins/common/postscript.c:3168
-#: ../plug-ins/imagemap/imap_menu.c:249
+#: ../plug-ins/imagemap/imap_menu.c:223
 #: ../plug-ins/rcm/rcm_dialog.c:419
 msgid "Gray"
 msgstr "Grey"
@@ -6584,7 +6589,7 @@ msgstr "Grey"
 #: ../plug-ins/common/xpm.c:468
 #: ../plug-ins/gimpressionist/color.c:48
 #: ../plug-ins/gimpressionist/general.c:152
-#: ../plug-ins/imagemap/imap_menu.c:248
+#: ../plug-ins/imagemap/imap_menu.c:222
 msgid "Color"
 msgstr "Colour"
 
@@ -7109,81 +7114,81 @@ msgstr "_Holdness:"
 msgid "H_ue:"
 msgstr "H_ue:"
 
-#: ../plug-ins/common/screenshot.c:228
+#: ../plug-ins/common/screenshot.c:234
 msgid "Create an image from an area of the screen"
 msgstr "Create an image from an area of the screen"
 
-#: ../plug-ins/common/screenshot.c:241
+#: ../plug-ins/common/screenshot.c:247
 msgid "_Screenshot..."
 msgstr "_Screenshot..."
 
-#: ../plug-ins/common/screenshot.c:406
+#: ../plug-ins/common/screenshot.c:412
 msgid "Error selecting the window"
 msgstr "Error selecting the window"
 
-#: ../plug-ins/common/screenshot.c:646
+#: ../plug-ins/common/screenshot.c:747
 msgid "Importing screenshot"
 msgstr "Importing screenshot"
 
-#: ../plug-ins/common/screenshot.c:654
-#: ../plug-ins/common/screenshot.c:783
+#: ../plug-ins/common/screenshot.c:755
+#: ../plug-ins/common/screenshot.c:926
 msgid "Screenshot"
 msgstr "Screenshot"
 
-#: ../plug-ins/common/screenshot.c:724
+#: ../plug-ins/common/screenshot.c:827
 msgid "Specified window not found"
 msgstr "Specified window not found"
 
-#: ../plug-ins/common/screenshot.c:751
+#: ../plug-ins/common/screenshot.c:855
 msgid "There was an error taking the screenshot."
 msgstr "There was an error taking the screenshot."
 
-#: ../plug-ins/common/screenshot.c:792
-msgid "_Grab"
-msgstr "_Grab"
+#: ../plug-ins/common/screenshot.c:935
+msgid "S_nap"
+msgstr "S_nap"
 
-#: ../plug-ins/common/screenshot.c:813
+#: ../plug-ins/common/screenshot.c:964
+msgid "After the delay, the screenshot is taken."
+msgstr "After the delay, the screenshot is taken."
+
+#: ../plug-ins/common/screenshot.c:966
+msgid "After the delay, drag your mouse to select the region for the screenshot."
+msgstr "After the delay, drag your mouse to select the region for the screenshot."
+
+#: ../plug-ins/common/screenshot.c:969
+msgid "At the end of the delay, click in a window to snap it."
+msgstr "At the end of the delay, click in a window to snap it."
+
+#. Area
+#: ../plug-ins/common/screenshot.c:975
 msgid "Area"
 msgstr "Area"
 
-#: ../plug-ins/common/screenshot.c:824
+#: ../plug-ins/common/screenshot.c:986
 msgid "Take a screenshot of a single _window"
 msgstr "Take a screenshot of a single _window"
 
-#: ../plug-ins/common/screenshot.c:845
+#: ../plug-ins/common/screenshot.c:1007
 msgid "Include window _decoration"
 msgstr "Include window _decoration"
 
-#: ../plug-ins/common/screenshot.c:861
+#: ../plug-ins/common/screenshot.c:1023
 msgid "Take a screenshot of the entire _screen"
 msgstr "Take a screenshot of the entire _screen"
 
-#: ../plug-ins/common/screenshot.c:879
+#: ../plug-ins/common/screenshot.c:1040
 msgid "Select a _region to grab"
 msgstr "Select a _region to grab"
 
-#: ../plug-ins/common/screenshot.c:886
-msgid "If enabled, you can use the mouse to select a rectangular region of the screen."
-msgstr "If enabled, you can use the mouse to select a rectangular region of the screen."
-
-#. grab delay
-#: ../plug-ins/common/screenshot.c:899
+#. Delay
+#: ../plug-ins/common/screenshot.c:1055
 msgid "Delay"
 msgstr "Delay"
 
-#. this string is part of "Wait [spinbutton] seconds before grabbing"
-#: ../plug-ins/common/screenshot.c:912
-msgid "W_ait"
-msgstr "W_ait"
-
-#. this string is part of "Wait [spinbutton] seconds before grabbing"
-#: ../plug-ins/common/screenshot.c:928
-msgid "seconds before grabbing"
-msgstr "seconds before grabbing"
-
-#: ../plug-ins/common/screenshot.c:932
-msgid "The number of seconds to wait before selecting the window or region and actually taking the screenshot."
-msgstr "The number of seconds to wait before selecting the window or region and actually taking the screenshot."
+#. this is the unit label of a spinbutton
+#: ../plug-ins/common/screenshot.c:1077
+msgid "seconds"
+msgstr "seconds"
 
 #: ../plug-ins/common/sel_gauss.c:106
 msgid "Blur neighboring pixels, but only in low-contrast areas"
@@ -8036,17 +8041,17 @@ msgstr "Threshold Alpha"
 msgid "Threshold:"
 msgstr "Threshold:"
 
-#: ../plug-ins/common/tiff.c:239
-#: ../plug-ins/common/tiff.c:260
-#: ../plug-ins/common/tiff.c:277
+#: ../plug-ins/common/tiff.c:242
+#: ../plug-ins/common/tiff.c:263
+#: ../plug-ins/common/tiff.c:280
 msgid "TIFF image"
 msgstr "TIFF image"
 
-#: ../plug-ins/common/tiff.c:924
+#: ../plug-ins/common/tiff.c:963
 msgid "TIFF Channel"
 msgstr "TIFF Channel"
 
-#: ../plug-ins/common/tiff.c:933
+#: ../plug-ins/common/tiff.c:972
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 bit, so it will be converted for you. Information will be lost because of this conversion."
@@ -8054,7 +8059,7 @@ msgstr ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 bit, so it will be converted for you. Information will be lost because of this conversion."
 
-#: ../plug-ins/common/tiff.c:2301
+#: ../plug-ins/common/tiff.c:2358
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -8062,40 +8067,48 @@ msgstr ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 
-#: ../plug-ins/common/tiff.c:2464
+#: ../plug-ins/common/tiff.c:2525
 msgid "Save as TIFF"
 msgstr "Save as TIFF"
 
 #. compression
-#: ../plug-ins/common/tiff.c:2486
+#: ../plug-ins/common/tiff.c:2547
 msgid "Compression"
 msgstr "Compression"
 
-#: ../plug-ins/common/tiff.c:2490
+#: ../plug-ins/common/tiff.c:2551
 msgid "_None"
 msgstr "_None"
 
-#: ../plug-ins/common/tiff.c:2491
+#: ../plug-ins/common/tiff.c:2552
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/tiff.c:2492
+#: ../plug-ins/common/tiff.c:2553
 msgid "_Pack Bits"
 msgstr "_Pack Bits"
 
-#: ../plug-ins/common/tiff.c:2493
+#: ../plug-ins/common/tiff.c:2554
 msgid "_Deflate"
 msgstr "_Deflate"
 
-#: ../plug-ins/common/tiff.c:2494
+#: ../plug-ins/common/tiff.c:2555
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/tiff.c:2503
+#: ../plug-ins/common/tiff.c:2556
+msgid "CCITT Group _3 fax"
+msgstr "CCITT Group _3 fax"
+
+#: ../plug-ins/common/tiff.c:2557
+msgid "CCITT Group _4 fax"
+msgstr "CCITT Group _4 fax"
+
+#: ../plug-ins/common/tiff.c:2579
 msgid "Save _color values from transparent pixels"
 msgstr "Save _colour values from transparent pixels"
 
-#: ../plug-ins/common/tiff.c:2519
+#: ../plug-ins/common/tiff.c:2595
 #: ../plug-ins/common/xbm.c:1213
 msgid "Comment:"
 msgstr "Comment:"
@@ -9253,7 +9266,7 @@ msgid "_Clear"
 msgstr "_Clear"
 
 #: ../plug-ins/gfig/gfig-dialog.c:878
-#: ../plug-ins/imagemap/imap_menu.c:244
+#: ../plug-ins/imagemap/imap_menu.c:218
 msgid "_Grid"
 msgstr "_Grid"
 
@@ -9384,7 +9397,7 @@ msgstr "Foreground"
 #: ../plug-ins/gfig/gfig-dialog.c:1287
 #: ../plug-ins/imagemap/imap_cmd_copy.c:54
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:55
-#: ../plug-ins/imagemap/imap_menu.c:195
+#: ../plug-ins/imagemap/imap_menu.c:169
 msgid "Copy"
 msgstr "Copy"
 
@@ -9417,7 +9430,7 @@ msgid "Polar grid radius interval:"
 msgstr "Polar grid radius interval:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1441
-#: ../plug-ins/imagemap/imap_menu.c:255
+#: ../plug-ins/imagemap/imap_menu.c:229
 msgid "Rectangle"
 msgstr "Rectangle"
 
@@ -9791,12 +9804,12 @@ msgid "Shape of Second Flares"
 msgstr "Shape of Second Flares"
 
 #: ../plug-ins/gflare/gflare.c:3812
-#: ../plug-ins/imagemap/imap_menu.c:257
+#: ../plug-ins/imagemap/imap_menu.c:231
 msgid "Circle"
 msgstr "Circle"
 
 #: ../plug-ins/gflare/gflare.c:3829
-#: ../plug-ins/imagemap/imap_menu.c:259
+#: ../plug-ins/imagemap/imap_menu.c:233
 msgid "Polygon"
 msgstr "Polygon"
 
@@ -10553,7 +10566,7 @@ msgid "Relative probability:"
 msgstr "Relative probability:"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1058
-#: ../plug-ins/imagemap/imap_menu.c:198
+#: ../plug-ins/imagemap/imap_menu.c:172
 msgid "Select _All"
 msgstr "Select _All"
 
@@ -10689,17 +10702,17 @@ msgstr "Create"
 
 #: ../plug-ins/imagemap/imap_cmd_cut.c:55
 #: ../plug-ins/imagemap/imap_cmd_cut_object.c:51
-#: ../plug-ins/imagemap/imap_menu.c:194
+#: ../plug-ins/imagemap/imap_menu.c:168
 msgid "Cut"
 msgstr "Cut"
 
 #: ../plug-ins/imagemap/imap_cmd_delete.c:57
-#: ../plug-ins/imagemap/imap_menu.c:197
+#: ../plug-ins/imagemap/imap_menu.c:171
 msgid "Delete"
 msgstr "Delete"
 
 #: ../plug-ins/imagemap/imap_cmd_delete_point.c:61
-#: ../plug-ins/imagemap/imap_menu.c:214
+#: ../plug-ins/imagemap/imap_menu.c:188
 msgid "Delete Point"
 msgstr "Delete Point"
 
@@ -10797,13 +10810,13 @@ msgid "Guides"
 msgstr "Guides"
 
 #: ../plug-ins/imagemap/imap_cmd_insert_point.c:62
-#: ../plug-ins/imagemap/imap_menu.c:213
+#: ../plug-ins/imagemap/imap_menu.c:187
 msgid "Insert Point"
 msgstr "Insert Point"
 
 #: ../plug-ins/imagemap/imap_cmd_move_down.c:53
 #: ../plug-ins/imagemap/imap_cmd_object_down.c:55
-#: ../plug-ins/imagemap/imap_menu.c:211
+#: ../plug-ins/imagemap/imap_menu.c:185
 msgid "Move Down"
 msgstr "Move Down"
 
@@ -10821,12 +10834,12 @@ msgstr "Move To Front"
 
 #: ../plug-ins/imagemap/imap_cmd_move_up.c:53
 #: ../plug-ins/imagemap/imap_cmd_object_up.c:55
-#: ../plug-ins/imagemap/imap_menu.c:210
+#: ../plug-ins/imagemap/imap_menu.c:184
 msgid "Move Up"
 msgstr "Move Up"
 
 #: ../plug-ins/imagemap/imap_cmd_paste.c:51
-#: ../plug-ins/imagemap/imap_menu.c:196
+#: ../plug-ins/imagemap/imap_menu.c:170
 msgid "Paste"
 msgstr "Paste"
 
@@ -10945,7 +10958,7 @@ msgid "Area #%d Settings"
 msgstr "Area #%d Settings"
 
 #: ../plug-ins/imagemap/imap_file.c:48
-#: ../plug-ins/imagemap/imap_menu.c:97
+#: ../plug-ins/imagemap/imap_menu.c:71
 msgid "Error opening file"
 msgstr "Error opening file"
 
@@ -11009,204 +11022,204 @@ msgstr "pixels from _top"
 msgid "_Preview"
 msgstr "_Preview"
 
-#: ../plug-ins/imagemap/imap_main.c:122
+#: ../plug-ins/imagemap/imap_main.c:125
 msgid "Create a clickable imagemap"
 msgstr "Create a clickable imagemap"
 
-#: ../plug-ins/imagemap/imap_main.c:127
+#: ../plug-ins/imagemap/imap_main.c:130
 msgid "_Image Map..."
 msgstr "_Image Map..."
 
-#: ../plug-ins/imagemap/imap_main.c:517
+#: ../plug-ins/imagemap/imap_main.c:520
 #: ../plug-ins/imagemap/imap_settings.c:171
 msgid "<Untitled>"
 msgstr "<Untitled>"
 
-#: ../plug-ins/imagemap/imap_main.c:660
+#: ../plug-ins/imagemap/imap_main.c:663
 msgid "Some data has been changed!"
 msgstr "Some data has been changed!"
 
-#: ../plug-ins/imagemap/imap_main.c:663
+#: ../plug-ins/imagemap/imap_main.c:666
 msgid "Do you really want to discard your changes?"
 msgstr "Do you really want to discard your changes?"
 
-#: ../plug-ins/imagemap/imap_main.c:875
+#: ../plug-ins/imagemap/imap_main.c:878
 #, c-format
 msgid "File \"%s\" saved."
 msgstr "File \"%s\" saved."
 
-#: ../plug-ins/imagemap/imap_main.c:879
+#: ../plug-ins/imagemap/imap_main.c:882
 msgid "Couldn't save file:"
 msgstr "Couldn't save file:"
 
-#: ../plug-ins/imagemap/imap_main.c:892
+#: ../plug-ins/imagemap/imap_main.c:895
 msgid "Image size has changed."
 msgstr "Image size has changed."
 
-#: ../plug-ins/imagemap/imap_main.c:893
+#: ../plug-ins/imagemap/imap_main.c:896
 msgid "Resize area's?"
 msgstr "Resize area's?"
 
-#: ../plug-ins/imagemap/imap_main.c:927
+#: ../plug-ins/imagemap/imap_main.c:930
 msgid "Couldn't read file:"
 msgstr "Couldn't read file:"
 
-#: ../plug-ins/imagemap/imap_main.c:974
+#: ../plug-ins/imagemap/imap_main.c:977
 #, c-format
 msgid "URL: %s"
 msgstr "URL: %s"
 
-#: ../plug-ins/imagemap/imap_menu.c:137
+#: ../plug-ins/imagemap/imap_menu.c:111
 #, c-format
 msgid "_Undo %s"
 msgstr "_Undo %s"
 
-#: ../plug-ins/imagemap/imap_menu.c:153
+#: ../plug-ins/imagemap/imap_menu.c:127
 #, c-format
 msgid "_Redo %s"
 msgstr "_Redo %s"
 
-#: ../plug-ins/imagemap/imap_menu.c:181
+#: ../plug-ins/imagemap/imap_menu.c:155
 msgid "_File"
 msgstr "_File"
 
-#: ../plug-ins/imagemap/imap_menu.c:182
+#: ../plug-ins/imagemap/imap_menu.c:156
 msgid "_Open..."
 msgstr "_Open..."
 
-#: ../plug-ins/imagemap/imap_menu.c:182
+#: ../plug-ins/imagemap/imap_menu.c:156
 msgid "Open"
 msgstr "Open"
 
-#: ../plug-ins/imagemap/imap_menu.c:184
+#: ../plug-ins/imagemap/imap_menu.c:158
 msgid "_Save..."
 msgstr "_Save..."
 
-#: ../plug-ins/imagemap/imap_menu.c:184
+#: ../plug-ins/imagemap/imap_menu.c:158
 msgid "Save"
 msgstr "Save"
 
-#: ../plug-ins/imagemap/imap_menu.c:186
+#: ../plug-ins/imagemap/imap_menu.c:160
 msgid "Save _As..."
 msgstr "Save _As..."
 
-#: ../plug-ins/imagemap/imap_menu.c:191
+#: ../plug-ins/imagemap/imap_menu.c:165
 msgid "_Edit"
 msgstr "_Edit"
 
-#: ../plug-ins/imagemap/imap_menu.c:192
+#: ../plug-ins/imagemap/imap_menu.c:166
 msgid "Undo"
 msgstr "Undo"
 
-#: ../plug-ins/imagemap/imap_menu.c:193
+#: ../plug-ins/imagemap/imap_menu.c:167
 msgid "Redo"
 msgstr "Redo"
 
-#: ../plug-ins/imagemap/imap_menu.c:199
+#: ../plug-ins/imagemap/imap_menu.c:173
 msgid "D_eselect All"
 msgstr "D_eselect All"
 
-#: ../plug-ins/imagemap/imap_menu.c:201
+#: ../plug-ins/imagemap/imap_menu.c:175
 msgid "Edit Area _Info..."
 msgstr "Edit Area _Info..."
 
-#: ../plug-ins/imagemap/imap_menu.c:202
+#: ../plug-ins/imagemap/imap_menu.c:176
 msgid "Edit selected area info"
 msgstr "Edit selected area info"
 
-#: ../plug-ins/imagemap/imap_menu.c:203
+#: ../plug-ins/imagemap/imap_menu.c:177
 msgid "Preferences"
 msgstr "Preferences"
 
-#: ../plug-ins/imagemap/imap_menu.c:205
+#: ../plug-ins/imagemap/imap_menu.c:179
 msgid "Move to Front"
 msgstr "Move to Front"
 
-#: ../plug-ins/imagemap/imap_menu.c:207
+#: ../plug-ins/imagemap/imap_menu.c:181
 msgid "Send to Back"
 msgstr "Send to Back"
 
-#: ../plug-ins/imagemap/imap_menu.c:209
+#: ../plug-ins/imagemap/imap_menu.c:183
 msgid "Delete Area"
 msgstr "Delete Area"
 
-#: ../plug-ins/imagemap/imap_menu.c:216
+#: ../plug-ins/imagemap/imap_menu.c:190
 msgid "_View"
 msgstr "_View"
 
-#: ../plug-ins/imagemap/imap_menu.c:217
+#: ../plug-ins/imagemap/imap_menu.c:191
 msgid "Source..."
 msgstr "Source..."
 
-#: ../plug-ins/imagemap/imap_menu.c:218
+#: ../plug-ins/imagemap/imap_menu.c:192
 msgid "Zoom in"
 msgstr "Zoom in"
 
-#: ../plug-ins/imagemap/imap_menu.c:219
+#: ../plug-ins/imagemap/imap_menu.c:193
 msgid "Zoom out"
 msgstr "Zoom out"
 
-#: ../plug-ins/imagemap/imap_menu.c:220
+#: ../plug-ins/imagemap/imap_menu.c:194
 msgid "_Zoom To"
 msgstr "_Zoom To"
 
-#: ../plug-ins/imagemap/imap_menu.c:222
+#: ../plug-ins/imagemap/imap_menu.c:196
 msgid "_Mapping"
 msgstr "_Mapping"
 
-#: ../plug-ins/imagemap/imap_menu.c:223
+#: ../plug-ins/imagemap/imap_menu.c:197
 msgid "Edit Map Info..."
 msgstr "Edit Map Info..."
 
-#: ../plug-ins/imagemap/imap_menu.c:224
+#: ../plug-ins/imagemap/imap_menu.c:198
 msgid "Edit Map Info"
 msgstr "Edit Map Info"
 
-#: ../plug-ins/imagemap/imap_menu.c:226
+#: ../plug-ins/imagemap/imap_menu.c:200
 msgid "_Tools"
 msgstr "_Tools"
 
-#: ../plug-ins/imagemap/imap_menu.c:227
+#: ../plug-ins/imagemap/imap_menu.c:201
 msgid "Grid Settings..."
 msgstr "Grid Settings..."
 
-#: ../plug-ins/imagemap/imap_menu.c:229
+#: ../plug-ins/imagemap/imap_menu.c:203
 msgid "Use GIMP Guides..."
 msgstr "Use GIMP Guides..."
 
-#: ../plug-ins/imagemap/imap_menu.c:231
+#: ../plug-ins/imagemap/imap_menu.c:205
 msgid "Create Guides..."
 msgstr "Create Guides..."
 
-#: ../plug-ins/imagemap/imap_menu.c:234
+#: ../plug-ins/imagemap/imap_menu.c:208
 msgid "_Help"
 msgstr "_Help"
 
-#: ../plug-ins/imagemap/imap_menu.c:235
+#: ../plug-ins/imagemap/imap_menu.c:209
 msgid "_Contents"
 msgstr "_Contents"
 
-#: ../plug-ins/imagemap/imap_menu.c:243
+#: ../plug-ins/imagemap/imap_menu.c:217
 msgid "Area List"
 msgstr "Area List"
 
-#: ../plug-ins/imagemap/imap_menu.c:253
+#: ../plug-ins/imagemap/imap_menu.c:227
 msgid "Arrow"
 msgstr "Arrow"
 
-#: ../plug-ins/imagemap/imap_menu.c:254
+#: ../plug-ins/imagemap/imap_menu.c:228
 msgid "Select existing area"
 msgstr "Select existing area"
 
-#: ../plug-ins/imagemap/imap_menu.c:256
+#: ../plug-ins/imagemap/imap_menu.c:230
 msgid "Define Rectangle area"
 msgstr "Define Rectangle area"
 
-#: ../plug-ins/imagemap/imap_menu.c:258
+#: ../plug-ins/imagemap/imap_menu.c:232
 msgid "Define Circle/Oval area"
 msgstr "Define Circle/Oval area"
 
-#: ../plug-ins/imagemap/imap_menu.c:260
+#: ../plug-ins/imagemap/imap_menu.c:234
 msgid "Define Polygon area"
 msgstr "Define Polygon area"
 
@@ -12249,6 +12262,18 @@ msgstr "Error: Could not read XJT property file '%s'."
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Error: XJT property file '%s' is empty."
 
+#~ msgid "_Grab"
+#~ msgstr "_Grab"
+#~ msgid "W_ait"
+#~ msgstr "W_ait"
+#~ msgid "seconds before grabbing"
+#~ msgstr "seconds before grabbing"
+#~ msgid ""
+#~ "The number of seconds to wait before selecting the window or region and "
+#~ "actually taking the screenshot."
+#~ msgstr ""
+#~ "The number of seconds to wait before selecting the window or region and "
+#~ "actually taking the screenshot."
 #~ msgid "Save Parameters To"
 #~ msgstr "Save Parameters To"
 #~ msgid "CML Explorer: Overwrite File?"
@@ -12485,8 +12510,6 @@ msgstr "Error: XJT property file '%s' is empty."
 #~ msgstr "Selected Region"
 #~ msgid "the _Whole Screen"
 #~ msgstr "the _Whole Screen"
-#~ msgid "seconds"
-#~ msgstr "seconds"
 #~ msgid "Selective Gaussian Blur..."
 #~ msgstr "Selective Gaussian Blur..."
 #~ msgid "Sobel Edge Detecting..."
