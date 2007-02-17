@@ -33,7 +33,6 @@
 
 #include "widgets-types.h"
 
-#include "core/gimp-utils.h"
 #include "core/gimpmarshal.h"
 
 #include "gimpcontrollerinfo.h"
@@ -130,7 +129,7 @@ gimp_controller_info_class_init (GimpControllerInfoClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpControllerInfoClass, event_mapped),
-                  gimp_boolean_handled_accum, NULL,
+                  g_signal_accumulator_true_handled, NULL,
                   gimp_marshal_BOOLEAN__OBJECT_POINTER_STRING,
                   G_TYPE_BOOLEAN, 3,
                   G_TYPE_OBJECT,

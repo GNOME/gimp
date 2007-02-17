@@ -33,11 +33,6 @@ gint64        gimp_g_param_spec_get_memsize    (GParamSpec    *pspec);
 gchar       * gimp_get_default_language        (const gchar   *category);
 GimpUnit      gimp_get_default_unit            (void);
 
-gboolean      gimp_boolean_handled_accum       (GSignalInvocationHint *ihint,
-                                                GValue        *return_accu,
-                                                const GValue  *handler_return,
-                                                gpointer       dummy);
-
 GParameter  * gimp_parameters_append           (GType          object_type,
                                                 GParameter    *params,
                                                 gint          *n_params,

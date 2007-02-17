@@ -147,7 +147,7 @@ gimp_class_init (GimpClass *klass)
                   G_TYPE_FROM_CLASS (klass),
                   G_SIGNAL_RUN_LAST,
                   G_STRUCT_OFFSET (GimpClass, exit),
-                  gimp_boolean_handled_accum, NULL,
+                  g_signal_accumulator_true_handled, NULL,
                   gimp_marshal_BOOLEAN__BOOLEAN,
                   G_TYPE_BOOLEAN, 1,
                   G_TYPE_BOOLEAN);
