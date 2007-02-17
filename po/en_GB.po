@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 1.1.24\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-09 10:34+0000\n"
-"PO-Revision-Date: 2007-02-09 10:35-0000\n"
+"POT-Creation-Date: 2007-02-17 10:13+0000\n"
+"PO-Revision-Date: 2007-02-17 10:13-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: English, British\n"
 "MIME-Version: 1.0\n"
@@ -877,14 +877,19 @@ msgstr ""
 msgid "Untitled"
 msgstr "Untitled"
 
-#: ../app/actions/data-commands.c:226
+#: ../app/actions/data-commands.c:227
 msgid "Delete Object"
 msgstr "Delete Object"
 
-#: ../app/actions/data-commands.c:249
+#: ../app/actions/data-commands.c:250
 #, c-format
-msgid "Are you sure you want to delete '%s' from the list and from disk?"
-msgstr "Are you sure you want to delete '%s' from the list and from disk?"
+msgid "Delete '%s'?"
+msgstr "Delete '%s'?"
+
+#: ../app/actions/data-commands.c:253
+#, c-format
+msgid "Are you sure you want to remove '%s' from the list and delete it on disk?"
+msgstr "Are you sure you want to remove '%s' from the list and delete it on disk?"
 
 #: ../app/actions/dialogs-actions.c:38
 msgid "_Dialogs"
@@ -3156,21 +3161,21 @@ msgstr "R_e-Show Last"
 msgid "Show the last used plug-in dialog again"
 msgstr "Show the last used plug-in dialogue again"
 
-#: ../app/actions/plug-in-actions.c:525
+#: ../app/actions/plug-in-actions.c:521
 #, c-format
 msgid "Re_peat \"%s\""
 msgstr "Re_peat \"%s\""
 
-#: ../app/actions/plug-in-actions.c:526
+#: ../app/actions/plug-in-actions.c:522
 #, c-format
 msgid "R_e-Show \"%s\""
 msgstr "R_e-Show \"%s\""
 
-#: ../app/actions/plug-in-actions.c:539
+#: ../app/actions/plug-in-actions.c:535
 msgid "Repeat Last"
 msgstr "Repeat Last"
 
-#: ../app/actions/plug-in-actions.c:541
+#: ../app/actions/plug-in-actions.c:537
 msgid "Re-Show Last"
 msgstr "Re-Show Last"
 
@@ -6661,13 +6666,13 @@ msgstr "Layer _name:"
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:133
 #: ../app/tools/gimpmeasuretool.c:987
-#: ../app/tools/gimprectangleoptions.c:557
+#: ../app/tools/gimprectangleoptions.c:611
 msgid "Width:"
 msgstr "Width:"
 
 #: ../app/dialogs/layer-options-dialog.c:139
 #: ../app/tools/gimpmeasuretool.c:1013
-#: ../app/tools/gimprectangleoptions.c:571
+#: ../app/tools/gimprectangleoptions.c:625
 msgid "Height:"
 msgstr "Height:"
 
@@ -6745,7 +6750,7 @@ msgid "Location:"
 msgstr "Location:"
 
 #: ../app/dialogs/module-dialog.c:513
-#: ../app/widgets/gimpcontrollereditor.c:228
+#: ../app/widgets/gimpcontrollereditor.c:233
 msgid "State:"
 msgstr "State:"
 
@@ -7099,7 +7104,7 @@ msgstr "Help System"
 #: ../app/dialogs/preferences-dialog.c:1714
 #: ../app/dialogs/preferences-dialog.c:1765
 #: ../app/dialogs/preferences-dialog.c:1952
-#: ../app/widgets/gimpcontrollereditor.c:183
+#: ../app/widgets/gimpcontrollereditor.c:188
 msgid "General"
 msgstr "General"
 
@@ -8001,11 +8006,11 @@ msgstr "(clean)"
 msgid "(none)"
 msgstr "(none)"
 
-#: ../app/display/gimpstatusbar.c:218
+#: ../app/display/gimpstatusbar.c:221
 msgid "Cancel"
 msgstr "Cancel"
 
-#: ../app/display/gimpstatusbar.c:455
+#: ../app/display/gimpstatusbar.c:458
 msgid "Other..."
 msgstr "Other..."
 
@@ -8295,12 +8300,12 @@ msgstr "Image resolution is out of bounds, using the default resolution instead.
 msgid "Free Select"
 msgstr "Free Select"
 
-#: ../app/plug-in/gimpenvirontable.c:245
+#: ../app/plug-in/gimpenvirontable.c:279
 #, c-format
 msgid "Empty variable name in environment file %s"
 msgstr "Empty variable name in environment file %s"
 
-#: ../app/plug-in/gimpenvirontable.c:263
+#: ../app/plug-in/gimpenvirontable.c:297
 #, c-format
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Illegal variable name in environment file %s: %s"
@@ -8715,7 +8720,7 @@ msgstr "Fill transparent areas"
 #: ../app/tools/gimpcolorpickeroptions.c:160
 #: ../app/tools/gimphealtool.c:103
 #: ../app/tools/gimpperspectiveclonetool.c:895
-#: ../app/tools/gimprectangleoptions.c:517
+#: ../app/tools/gimprectangleoptions.c:534
 #: ../app/tools/gimpselectionoptions.c:410
 msgid "Sample merged"
 msgstr "Sample merged"
@@ -9833,29 +9838,33 @@ msgstr "Posterise _levels:"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Use all visible layers when shrinking the selection"
 
-#: ../app/tools/gimprectangleoptions.c:511
+#: ../app/tools/gimprectangleoptions.c:528
 msgid "Auto shrink selection"
 msgstr "Auto shrink selection"
 
-#: ../app/tools/gimprectangleoptions.c:522
+#: ../app/tools/gimprectangleoptions.c:539
 msgid "Expand from center"
 msgstr "Expand from centre"
 
-#: ../app/tools/gimprectangleoptions.c:527
+#: ../app/tools/gimprectangleoptions.c:549
+#: ../app/tools/tools-enums.c:89
+msgid "Fixed aspect ratio"
+msgstr "Fixed aspect ratio"
+
+#: ../app/tools/gimprectangleoptions.c:580
 msgid "Highlight"
 msgstr "Highlight"
 
-#: ../app/tools/gimprectangleoptions.c:541
+#: ../app/tools/gimprectangleoptions.c:595
 msgid "X:"
 msgstr "X:"
 
-#: ../app/tools/gimprectangleoptions.c:549
+#: ../app/tools/gimprectangleoptions.c:603
 msgid "Y:"
 msgstr "Y:"
 
-#: ../app/tools/gimprectangleoptions.c:560
-#: ../app/tools/gimprectangleoptions.c:574
-#: ../app/tools/gimprectangleoptions.c:604
+#: ../app/tools/gimprectangleoptions.c:614
+#: ../app/tools/gimprectangleoptions.c:628
 msgid "Fix"
 msgstr "Fix"
 
@@ -9875,8 +9884,8 @@ msgstr "Rectangle Select Tool: Select a rectangular region"
 msgid "_Rectangle Select"
 msgstr "_Rectangle Select"
 
-#: ../app/tools/gimprectangletool.c:1054
-#: ../app/tools/gimprectangletool.c:1719
+#: ../app/tools/gimprectangletool.c:1055
+#: ../app/tools/gimprectangletool.c:1707
 msgid "Rectangle: "
 msgstr "Rectangle: "
 
@@ -10377,10 +10386,6 @@ msgstr "Free select"
 msgid "Fixed size"
 msgstr "Fixed size"
 
-#: ../app/tools/tools-enums.c:89
-msgid "Fixed aspect ratio"
-msgstr "Fixed aspect ratio"
-
 #: ../app/tools/tools-enums.c:119
 #: ../app/vectors/gimpvectors.c:191
 msgid "Path"
@@ -10475,7 +10480,7 @@ msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
 #: ../app/widgets/gimpactionview.c:305
-#: ../app/widgets/gimpcontrollereditor.c:379
+#: ../app/widgets/gimpcontrollereditor.c:347
 msgid "Action"
 msgstr "Action"
 
@@ -10689,47 +10694,47 @@ msgstr "Smaller Previews"
 msgid "Larger Previews"
 msgstr "Larger Previews"
 
-#: ../app/widgets/gimpcontrollereditor.c:196
+#: ../app/widgets/gimpcontrollereditor.c:201
 msgid "_Dump events from this controller"
 msgstr "_Dump events from this controller"
 
-#: ../app/widgets/gimpcontrollereditor.c:201
+#: ../app/widgets/gimpcontrollereditor.c:206
 msgid "_Enable this controller"
 msgstr "_Enable this controller"
 
-#: ../app/widgets/gimpcontrollereditor.c:222
+#: ../app/widgets/gimpcontrollereditor.c:227
 #: ../app/widgets/gimpimageprofileview.c:83
 msgid "Name:"
 msgstr "Name:"
 
-#: ../app/widgets/gimpcontrollereditor.c:373
+#: ../app/widgets/gimpcontrollereditor.c:341
 msgid "Event"
 msgstr "Event"
 
-#: ../app/widgets/gimpcontrollereditor.c:398
+#: ../app/widgets/gimpcontrollereditor.c:366
 msgid "_Grab event"
 msgstr "_Grab event"
 
-#: ../app/widgets/gimpcontrollereditor.c:408
+#: ../app/widgets/gimpcontrollereditor.c:376
 msgid "Select the next event arriving from the controller"
 msgstr "Select the next event arriving from the controller"
 
-#: ../app/widgets/gimpcontrollereditor.c:565
+#: ../app/widgets/gimpcontrollereditor.c:533
 #, c-format
 msgid "Remove the action assigned to '%s'"
 msgstr "Remove the action assigned to '%s'"
 
-#: ../app/widgets/gimpcontrollereditor.c:569
+#: ../app/widgets/gimpcontrollereditor.c:537
 #, c-format
 msgid "Assign an action to '%s'"
 msgstr "Assign an action to '%s'"
 
-#: ../app/widgets/gimpcontrollereditor.c:691
+#: ../app/widgets/gimpcontrollereditor.c:659
 #, c-format
 msgid "Select Action for Event '%s'"
 msgstr "Select Action for Event '%s'"
 
-#: ../app/widgets/gimpcontrollereditor.c:696
+#: ../app/widgets/gimpcontrollereditor.c:664
 msgid "Select Controller Event Action"
 msgstr "Select Controller Event Action"
 
@@ -10790,37 +10795,37 @@ msgstr "Keyboard Events"
 msgid "Ready"
 msgstr "Ready"
 
-#: ../app/widgets/gimpcontrollerlist.c:183
+#: ../app/widgets/gimpcontrollerlist.c:182
 msgid "Available Controllers"
 msgstr "Available Controllers"
 
-#: ../app/widgets/gimpcontrollerlist.c:275
+#: ../app/widgets/gimpcontrollerlist.c:274
 msgid "Active Controllers"
 msgstr "Active Controllers"
 
-#: ../app/widgets/gimpcontrollerlist.c:291
+#: ../app/widgets/gimpcontrollerlist.c:290
 msgid "Configure the selected controller"
 msgstr "Configure the selected controller"
 
-#: ../app/widgets/gimpcontrollerlist.c:299
+#: ../app/widgets/gimpcontrollerlist.c:298
 msgid "Move the selected controller up"
 msgstr "Move the selected controller up"
 
-#: ../app/widgets/gimpcontrollerlist.c:307
+#: ../app/widgets/gimpcontrollerlist.c:306
 msgid "Move the selected controller down"
 msgstr "Move the selected controller down"
 
-#: ../app/widgets/gimpcontrollerlist.c:429
+#: ../app/widgets/gimpcontrollerlist.c:428
 #, c-format
 msgid "Add '%s' to the list of active controllers"
 msgstr "Add '%s' to the list of active controllers"
 
-#: ../app/widgets/gimpcontrollerlist.c:480
+#: ../app/widgets/gimpcontrollerlist.c:479
 #, c-format
 msgid "Remove '%s' from the list of active controllers"
 msgstr "Remove '%s' from the list of active controllers"
 
-#: ../app/widgets/gimpcontrollerlist.c:513
+#: ../app/widgets/gimpcontrollerlist.c:512
 msgid ""
 "There can only be one active keyboard controller.\n"
 "\n"
@@ -10830,7 +10835,7 @@ msgstr ""
 "\n"
 "You already have a keyboard controller in your list of active controllers."
 
-#: ../app/widgets/gimpcontrollerlist.c:523
+#: ../app/widgets/gimpcontrollerlist.c:522
 msgid ""
 "There can only be one active wheel controller.\n"
 "\n"
@@ -10840,24 +10845,24 @@ msgstr ""
 "\n"
 "You already have a wheel controller in your list of active controllers."
 
-#: ../app/widgets/gimpcontrollerlist.c:550
+#: ../app/widgets/gimpcontrollerlist.c:549
 msgid "Remove Controller?"
 msgstr "Remove Controller?"
 
-#: ../app/widgets/gimpcontrollerlist.c:555
+#: ../app/widgets/gimpcontrollerlist.c:554
 msgid "Disable Controller"
 msgstr "Disable Controller"
 
-#: ../app/widgets/gimpcontrollerlist.c:557
+#: ../app/widgets/gimpcontrollerlist.c:556
 msgid "Remove Controller"
 msgstr "Remove Controller"
 
-#: ../app/widgets/gimpcontrollerlist.c:568
+#: ../app/widgets/gimpcontrollerlist.c:567
 #, c-format
 msgid "Remove Controller '%s'?"
 msgstr "Remove Controller '%s'?"
 
-#: ../app/widgets/gimpcontrollerlist.c:572
+#: ../app/widgets/gimpcontrollerlist.c:571
 msgid ""
 "Removing this controller from the list of active controllers will permanently delete all event mappings you have configured.\n"
 "\n"
@@ -10867,11 +10872,7 @@ msgstr ""
 "\n"
 "Selecting \"Disable Controller\" will disable the controller without removing it."
 
-#: ../app/widgets/gimpcontrollerlist.c:634
-msgid "Configure Controller"
-msgstr "Configure Controller"
-
-#: ../app/widgets/gimpcontrollerlist.c:637
+#: ../app/widgets/gimpcontrollerlist.c:631
 msgid "Configure Input Controller"
 msgstr "Configure Input Controller"
 
@@ -11840,6 +11841,8 @@ msgstr "Make sure that the Toolbox is visible!"
 msgid "Couldn't start '%s': %s"
 msgstr "Couldn't start '%s': %s"
 
+#~ msgid "Configure Controller"
+#~ msgstr "Configure Controller"
 #~ msgid "Aspect"
 #~ msgstr "Aspect"
 #~ msgid "(%0.3f, %0.3f, %0.3f)"
