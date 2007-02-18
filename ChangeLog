@@ -5,7 +5,7 @@
 	because these files have to parse strings that never had a clearly
 	specified format.
 
-	* plug-ins/script-fu/tinyscheme/scheme.c
+	* plug-ins/script-fu/tinyscheme/scheme.c (bug #409091)
 	* plug-ins/imagemap/imap_cern.l
 	* plug-ins/imagemap/imap_csim.l
 	* plug-ins/imagemap/imap_csim.y
