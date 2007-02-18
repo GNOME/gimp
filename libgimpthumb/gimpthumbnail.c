@@ -45,6 +45,7 @@
 #endif
 
 #include "gimpthumb-types.h"
+#include "gimpthumb-error.h"
 #include "gimpthumb-utils.h"
 #include "gimpthumbnail.h"
 
@@ -477,7 +478,8 @@ gimp_thumbnail_set_from_thumb (GimpThumbnail  *thumbnail,
                                const gchar    *filename,
                                GError        **error)
 {
-  GdkPixbuf *pixbuf;
+  GdkPixbuf   *pixbuf;
+  const gchar *uri;
 
   g_return_val_if_fail (GIMP_IS_THUMBNAIL (thumbnail), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
@@ -489,9 +491,16 @@ gimp_thumbnail_set_from_thumb (GimpThumbnail  *thumbnail,
   if (! pixbuf)
     return FALSE;
 
-  gimp_thumbnail_set_uri (thumbnail,
-                          gdk_pixbuf_get_option (pixbuf, TAG_THUMB_URI));
+  uri = gdk_pixbuf_get_option (pixbuf, TAG_THUMB_URI);
+  if (! uri)
+    {
+      g_set_error (error, GIMP_THUMB_ERROR, 0,
+                   _("Thumbnail contains no Thumb::URI tag"));
+      g_object_unref (pixbuf);
+      return FALSE;
+    }
 
+  gimp_thumbnail_set_uri (thumbnail, uri);
   g_object_unref (pixbuf);
 
   return TRUE;
@@ -799,7 +808,7 @@ gimp_thumbnail_save (GimpThumbnail  *thumbnail,
   gint          i = 0;
 
   keys[i]   = TAG_DESCRIPTION;
-  values[i] = g_strdup_printf ("Thumbnail of %s",   thumbnail->image_uri);
+  values[i] = g_strdup_printf ("Thumbnail of %s",  thumbnail->image_uri);
   i++;
 
   keys[i]   = TAG_SOFTWARE;

@@ -1,5 +1,10 @@
 2007-02-18  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpthumb/gimpthumbnail.c (gimp_thumbnail_set_from_thumb):
+	return failure if the thumbnail PNG contains no Thumb::URI tag.
+
+2007-02-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/gimppluginprocedure.[ch]: add "locale_domain" and
 	"help_domain" members and APIs to get/set them. Removed locale and
 	help domain parameters from all other functions.
