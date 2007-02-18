@@ -1,3 +1,8 @@
+2007-02-18  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/common/png.c: Moved an invariant (in the last
+	  changeset to this file) out of the loop.
+
 2007-02-17  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme-private.h: Add define for

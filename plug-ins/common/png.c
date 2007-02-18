@@ -968,6 +968,7 @@ load_image (const gchar *filename,
   error_data.width = info->width;
   error_data.height = info->height;
   error_data.bpp = bpp;
+  error_data.pixel_rgn = &pixel_rgn;
   
   png_set_error_fn (pp, &error_data, on_read_error, NULL);
 
@@ -992,7 +993,6 @@ load_image (const gchar *filename,
           error_data.begin = begin;
           error_data.end = end;
           error_data.num = num;
-          error_data.pixel_rgn = &pixel_rgn;
           
           png_read_rows (pp, pixels, NULL, num);
 
