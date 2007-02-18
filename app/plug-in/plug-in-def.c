@@ -68,6 +68,11 @@ plug_in_def_add_procedure (PlugInDef           *plug_in_def,
 
   proc->mtime = plug_in_def->mtime;
 
+  gimp_plug_in_procedure_set_locale_domain (proc,
+                                            plug_in_def->locale_domain_name);
+  gimp_plug_in_procedure_set_help_domain (proc,
+                                          plug_in_def->help_domain_name);
+
   plug_in_def->procedures = g_slist_append (plug_in_def->procedures,
                                             g_object_ref (proc));
 }
@@ -87,11 +92,21 @@ void
 plug_in_def_set_locale_domain_name (PlugInDef   *plug_in_def,
                                     const gchar *domain_name)
 {
+  GSList *list;
+
   g_return_if_fail (plug_in_def != NULL);
 
   if (plug_in_def->locale_domain_name)
     g_free (plug_in_def->locale_domain_name);
   plug_in_def->locale_domain_name = g_strdup (domain_name);
+
+  for (list = plug_in_def->procedures; list; list = g_slist_next (list))
+    {
+      GimpPlugInProcedure *procedure = list->data;
+
+      gimp_plug_in_procedure_set_locale_domain (procedure,
+                                                plug_in_def->locale_domain_name);
+    }
 }
 
 void
@@ -109,11 +124,21 @@ void
 plug_in_def_set_help_domain_name (PlugInDef   *plug_in_def,
                                   const gchar *domain_name)
 {
+  GSList *list;
+
   g_return_if_fail (plug_in_def != NULL);
 
   if (plug_in_def->help_domain_name)
     g_free (plug_in_def->help_domain_name);
   plug_in_def->help_domain_name = g_strdup (domain_name);
+
+  for (list = plug_in_def->procedures; list; list = g_slist_next (list))
+    {
+      GimpPlugInProcedure *procedure = list->data;
+
+      gimp_plug_in_procedure_set_help_domain (procedure,
+                                              plug_in_def->help_domain_name);
+    }
 }
 
 void

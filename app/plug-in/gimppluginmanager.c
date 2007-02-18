@@ -769,20 +769,6 @@ gimp_plug_in_manager_history_changed (GimpPlugInManager *manager)
   g_signal_emit (manager, manager_signals[HISTORY_CHANGED], 0);
 }
 
-gchar *
-gimp_plug_in_manager_get_label (GimpPlugInManager   *manager,
-                                GimpPlugInProcedure *proc)
-{
-  const gchar *domain;
-
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager), NULL);
-  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
-
-  domain = gimp_plug_in_manager_get_locale_domain (manager, proc->prog, NULL);
-
-  return gimp_plug_in_procedure_get_label (proc, domain);
-}
-
 
 /*  private functions  */
 
@@ -950,11 +936,8 @@ gimp_plug_in_manager_file_proc_compare (gconstpointer a,
                                         gconstpointer b,
                                         gpointer      data)
 {
-  GimpPlugInManager         *manager = data;
   const GimpPlugInProcedure *proc_a  = a;
   const GimpPlugInProcedure *proc_b  = b;
-  const gchar               *domain_a;
-  const gchar               *domain_b;
   gchar                     *label_a;
   gchar                     *label_b;
   gint                       retval  = 0;
@@ -965,13 +948,8 @@ gimp_plug_in_manager_file_proc_compare (gconstpointer a,
   if (g_str_has_prefix (proc_b->prog, "gimp-xcf"))
     return 1;
 
-  domain_a = gimp_plug_in_manager_get_locale_domain (manager, proc_a->prog,
-                                                     NULL);
-  domain_b = gimp_plug_in_manager_get_locale_domain (manager, proc_b->prog,
-                                                     NULL);
-
-  label_a = gimp_plug_in_procedure_get_label (proc_a, domain_a);
-  label_b = gimp_plug_in_procedure_get_label (proc_b, domain_b);
+  label_a = gimp_plug_in_procedure_get_label (proc_a);
+  label_b = gimp_plug_in_procedure_get_label (proc_b);
 
   if (label_a && label_b)
     retval = g_utf8_collate (label_a, label_b);

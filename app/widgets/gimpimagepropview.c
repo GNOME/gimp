@@ -46,6 +46,7 @@
 #include "file/file-utils.h"
 
 #include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginprocedure.h"
 
 #include "gimpimagepropview.h"
 #include "gimppropwidgets.h"
@@ -376,7 +377,7 @@ gimp_image_prop_view_label_set_filetype (GtkWidget *label,
         }
     }
 
-  text = proc ? gimp_plug_in_manager_get_label (manager, proc) : NULL;
+  text = proc ? gimp_plug_in_procedure_get_label (proc) : NULL;
 
   gtk_label_set_text (GTK_LABEL (label), text);
   g_free (text);

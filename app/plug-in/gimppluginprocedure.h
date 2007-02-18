@@ -44,6 +44,8 @@ struct _GimpPlugInProcedure
 
   /*  common members  */
   gchar               *prog;
+  gchar               *locale_domain;
+  gchar               *help_domain;
   gchar               *menu_label;
   GList               *menu_paths;
   GimpIconType         icon_type;
@@ -88,14 +90,22 @@ GimpPlugInProcedure * gimp_plug_in_procedure_find    (GSList                    
                                                       const gchar               *proc_name);
 
 const gchar * gimp_plug_in_procedure_get_progname    (const GimpPlugInProcedure *proc);
+
+void          gimp_plug_in_procedure_set_locale_domain (GimpPlugInProcedure     *proc,
+                                                        const gchar             *locale_domain);
+const gchar * gimp_plug_in_procedure_get_locale_domain (const GimpPlugInProcedure *proc);
+
+void          gimp_plug_in_procedure_set_help_domain (GimpPlugInProcedure       *proc,
+                                                      const gchar               *help_domain);
+const gchar * gimp_plug_in_procedure_get_help_domain (const GimpPlugInProcedure *proc);
+
 gboolean      gimp_plug_in_procedure_add_menu_path   (GimpPlugInProcedure       *proc,
                                                       const gchar               *menu_path,
                                                       GError                   **error);
-gchar       * gimp_plug_in_procedure_get_label       (const GimpPlugInProcedure *proc,
-                                                      const gchar               *locale_domain);
 
-const gchar * gimp_plug_in_procedure_get_blurb       (const GimpPlugInProcedure *proc,
-                                                      const gchar               *locale_domain);
+gchar       * gimp_plug_in_procedure_get_label       (const GimpPlugInProcedure *proc);
+const gchar * gimp_plug_in_procedure_get_blurb       (const GimpPlugInProcedure *proc);
+
 void          gimp_plug_in_procedure_set_icon        (GimpPlugInProcedure       *proc,
                                                       GimpIconType               type,
                                                       const guint8              *data,
@@ -103,8 +113,8 @@ void          gimp_plug_in_procedure_set_icon        (GimpPlugInProcedure       
 const gchar * gimp_plug_in_procedure_get_stock_id    (const GimpPlugInProcedure *proc);
 GdkPixbuf   * gimp_plug_in_procedure_get_pixbuf      (const GimpPlugInProcedure *proc);
 
-gchar       * gimp_plug_in_procedure_get_help_id     (const GimpPlugInProcedure *proc,
-                                                      const gchar               *help_domain);
+gchar       * gimp_plug_in_procedure_get_help_id     (const GimpPlugInProcedure *proc);
+
 gboolean      gimp_plug_in_procedure_get_sensitive   (const GimpPlugInProcedure *proc,
                                                       GimpImageType              image_type);
 

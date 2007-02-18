@@ -117,6 +117,8 @@ gimp_plug_in_procedure_finalize (GObject *object)
   GimpPlugInProcedure *proc = GIMP_PLUG_IN_PROCEDURE (object);
 
   g_free (proc->prog);
+  g_free (proc->locale_domain);
+  g_free (proc->help_domain);
   g_free (proc->menu_label);
 
   g_list_foreach (proc->menu_paths, (GFunc) g_free, NULL);
@@ -286,6 +288,42 @@ gimp_plug_in_procedure_get_progname (const GimpPlugInProcedure *proc)
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
 
   return GIMP_PLUG_IN_PROCEDURE_GET_CLASS (proc)->get_progname (proc);
+}
+
+void
+gimp_plug_in_procedure_set_locale_domain (GimpPlugInProcedure *proc,
+                                          const gchar         *locale_domain)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+
+  g_free (proc->locale_domain);
+  proc->locale_domain = g_strdup (locale_domain);
+}
+
+const gchar *
+gimp_plug_in_procedure_get_locale_domain (const GimpPlugInProcedure *proc)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
+
+  return proc->locale_domain;
+}
+
+void
+gimp_plug_in_procedure_set_help_domain (GimpPlugInProcedure *proc,
+                                        const gchar         *help_domain)
+{
+  g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+
+  g_free (proc->help_domain);
+  proc->help_domain = g_strdup (help_domain);
+}
+
+const gchar *
+gimp_plug_in_procedure_get_help_domain (const GimpPlugInProcedure *proc)
+{
+  g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
+
+  return proc->help_domain;
 }
 
 gboolean
@@ -481,8 +519,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
 }
 
 gchar *
-gimp_plug_in_procedure_get_label (const GimpPlugInProcedure *proc,
-                                  const gchar               *locale_domain)
+gimp_plug_in_procedure_get_label (const GimpPlugInProcedure *proc)
 {
   const gchar *path;
   gchar       *stripped;
@@ -492,9 +529,9 @@ gimp_plug_in_procedure_get_label (const GimpPlugInProcedure *proc,
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
 
   if (proc->menu_label)
-    path = dgettext (locale_domain, proc->menu_label);
+    path = dgettext (proc->locale_domain, proc->menu_label);
   else if (proc->menu_paths)
-    path = dgettext (locale_domain, proc->menu_paths->data);
+    path = dgettext (proc->locale_domain, proc->menu_paths->data);
   else
     return NULL;
 
@@ -519,8 +556,7 @@ gimp_plug_in_procedure_get_label (const GimpPlugInProcedure *proc,
 }
 
 const gchar *
-gimp_plug_in_procedure_get_blurb (const GimpPlugInProcedure *proc,
-                                  const gchar               *locale_domain)
+gimp_plug_in_procedure_get_blurb (const GimpPlugInProcedure *proc)
 {
   GimpProcedure *procedure;
 
@@ -530,7 +566,7 @@ gimp_plug_in_procedure_get_blurb (const GimpPlugInProcedure *proc,
 
   /*  do not to pass the empty string to gettext()  */
   if (procedure->blurb && strlen (procedure->blurb))
-    return dgettext (locale_domain, procedure->blurb);
+    return dgettext (proc->locale_domain, procedure->blurb);
 
   return NULL;
 }
@@ -618,13 +654,12 @@ gimp_plug_in_procedure_get_pixbuf (const GimpPlugInProcedure *proc)
 }
 
 gchar *
-gimp_plug_in_procedure_get_help_id (const GimpPlugInProcedure *proc,
-                                    const gchar               *help_domain)
+gimp_plug_in_procedure_get_help_id (const GimpPlugInProcedure *proc)
 {
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
 
-  if (help_domain)
-    return g_strconcat (help_domain, "?", GIMP_OBJECT (proc)->name, NULL);
+  if (proc->help_domain)
+    return g_strconcat (proc->help_domain, "?", GIMP_OBJECT (proc)->name, NULL);
 
   return g_strdup (GIMP_OBJECT (proc)->name);
 }

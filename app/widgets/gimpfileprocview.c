@@ -30,8 +30,6 @@
 #include "core/gimp.h"
 #include "core/gimpmarshal.h"
 
-#include "plug-in/gimppluginmanager-help-domain.h"
-#include "plug-in/gimppluginmanager-locale-domain.h"
 #include "plug-in/gimppluginprocedure.h"
 
 #include "gimpfileprocview.h"
@@ -141,18 +139,9 @@ gimp_file_proc_view_new (Gimp        *gimp,
 
       if (! proc->prefixes_list) /*  skip URL loaders  */
         {
-          const gchar *locale_domain;
-          const gchar *help_domain;
-          gchar       *label;
-          gchar       *help_id;
-          GSList      *list2;
-
-          locale_domain = gimp_plug_in_manager_get_locale_domain (gimp->plug_in_manager,
-                                                                  proc->prog, NULL);
-          help_domain   = gimp_plug_in_manager_get_help_domain (gimp->plug_in_manager,
-                                                                proc->prog, NULL);
-          label         = gimp_plug_in_procedure_get_label (proc, locale_domain);
-          help_id       = gimp_plug_in_procedure_get_help_id (proc, help_domain);
+          gchar  *label   = gimp_plug_in_procedure_get_label (proc);
+          gchar  *help_id = gimp_plug_in_procedure_get_help_id (proc);
+          GSList *list2;
 
           if (label)
             {

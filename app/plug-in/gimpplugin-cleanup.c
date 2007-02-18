@@ -34,7 +34,6 @@
 #include "gimpplugin.h"
 #include "gimpplugin-cleanup.h"
 #include "gimppluginmanager.h"
-#include "gimppluginmanager-locale-domain.h"
 #include "gimppluginprocedure.h"
 
 
@@ -160,13 +159,9 @@ gimp_plug_in_cleanup (GimpPlugIn          *plug_in,
 
       if (cleanup->undo_group_count != image->group_count)
         {
-          const gchar *domain;
-          gchar       *label;
+          gchar *label;
 
-          domain = gimp_plug_in_manager_get_locale_domain (plug_in->manager,
-                                                           plug_in->prog, NULL);
-          label = gimp_plug_in_procedure_get_label (GIMP_PLUG_IN_PROCEDURE (proc_frame->procedure),
-                                                    domain);
+          label = gimp_plug_in_procedure_get_label (GIMP_PLUG_IN_PROCEDURE (proc_frame->procedure));
 
           g_message ("Plug-In '%s' left image undo in inconsistent state, "
                      "closing open undo groups.", label);

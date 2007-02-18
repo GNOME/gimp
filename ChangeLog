@@ -1,3 +1,25 @@
+2007-02-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/gimppluginprocedure.[ch]: add "locale_domain" and
+	"help_domain" members and APIs to get/set them. Removed locale and
+	help domain parameters from all other functions.
+
+	* app/plug-in/gimpplugin.c (gimp_plug_in_add_temp_proc)
+	* app/plug-in/plug-in-def.c (plug_in_def_add_procedure)
+	(plug_in_def_set_locale_domain_name)
+	(plug_in_def_set_help_domain_name): make sure all plug-in procedures
+	have locale and help domains.
+
+	* app/plug-in/gimppluginmanager.[ch]: removed function
+	gimp_plug_in_manager_get_label().
+
+	* app/plug-in/gimppluginmanager.c
+	* app/plug-in/gimpplugin-cleanup.c
+	* app/actions/plug-in-actions.c
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimpfileprocview.c
+	* app/widgets/gimpimagepropview.c: changed (simplified) accordingly.
+
 2007-02-18  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimppixbuf.c (gimp_pixbuf_targets_add): skip Windows

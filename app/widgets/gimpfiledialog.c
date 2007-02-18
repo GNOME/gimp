@@ -540,8 +540,7 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
           GSList        *ext;
           gint           i;
 
-          label = gimp_plug_in_manager_get_label (gimp->plug_in_manager,
-                                                  file_proc);
+          label = gimp_plug_in_procedure_get_label (file_proc);
           str = g_string_new (label);
           g_free (label);
 

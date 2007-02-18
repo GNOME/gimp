@@ -115,8 +115,5 @@ void    gimp_plug_in_manager_plug_in_pop         (GimpPlugInManager   *manager);
 
 void    gimp_plug_in_manager_history_changed     (GimpPlugInManager   *manager);
 
-gchar * gimp_plug_in_manager_get_label           (GimpPlugInManager   *manager,
-                                                  GimpPlugInProcedure *proc);
-
 
 #endif  /* __GIMP_PLUG_IN_MANAGER_H__ */
