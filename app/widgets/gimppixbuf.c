@@ -70,9 +70,13 @@ gimp_pixbuf_targets_add (GtkTargetList *target_list,
 
       for (type = mime_types; *type; type++)
         {
-          GdkAtom atom = gdk_atom_intern (*type, FALSE);
+          /*  skip Windows ICO as writable format  */
+          if (writable && strcmp (*type, "image/x-icon") == 0)
+            continue;
 
-          gtk_target_list_add (target_list, atom, 0, info);
+          gtk_target_list_add (target_list,
+                               gdk_atom_intern (*type, FALSE), 0, info);
+
         }
 
       g_strfreev (mime_types);
@@ -101,9 +105,8 @@ gimp_pixbuf_targets_remove (GtkTargetList *target_list)
 
       for (type = mime_types; *type; type++)
         {
-          GdkAtom atom = gdk_atom_intern (*type, FALSE);
-
-          gtk_target_list_remove (target_list, atom);
+          gtk_target_list_remove (target_list,
+                                  gdk_atom_intern (*type, FALSE));
         }
 
       g_strfreev (mime_types);

@@ -1,3 +1,9 @@
+2007-02-18  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimppixbuf.c (gimp_pixbuf_targets_add): skip Windows
+	ICO as writable format. It's not well suited as a general image
+	exchange format and the GdkPixbuf save routine seems to be buggy.
+
 2007-02-18  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/png.c: Moved an invariant (in the last
