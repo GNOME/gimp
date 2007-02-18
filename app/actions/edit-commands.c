@@ -203,7 +203,15 @@ edit_copy_cmd_callback (GtkAction *action,
   return_if_no_drawable (image, drawable, data);
 
   if (gimp_edit_copy (image, drawable, action_data_get_context (data)))
-    gimp_image_flush (image);
+    {
+      GimpDisplay *display = action_data_get_display (data);
+
+      if (display)
+        gimp_message (image->gimp, G_OBJECT (display), GIMP_MESSAGE_INFO,
+                      _("Copied pixels to the clipboard"));
+
+      gimp_image_flush (image);
+    }
 }
 
 void
