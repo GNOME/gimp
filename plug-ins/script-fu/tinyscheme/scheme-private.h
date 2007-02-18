@@ -172,6 +172,7 @@ pointer set_cdr(pointer p, pointer q);
 
 int is_symbol(pointer p);
 char *symname(pointer p);
+char *symkey(pointer p);
 int hasprop(pointer p);
 
 int is_syntax(pointer p);

@@ -1467,6 +1467,7 @@ static gunichar basic_inchar(port *pt) {
        s = &utf8[1];
        for (i = 0; i < len; ++i)
          *s++ = fgetc(pt->rep.stdio.file);
+       /* FIXME: Check for bad character and search for next good char. */
        return g_utf8_get_char_validated(utf8, len+1);
     }
     return (gunichar)utf8[0];
@@ -1479,8 +1480,21 @@ static gunichar basic_inchar(port *pt) {
 
       len = pt->rep.string.past_the_end - pt->rep.string.curr;
       c = g_utf8_get_char_validated(pt->rep.string.curr, len);
-      len = g_unichar_to_utf8(c, NULL);
-      pt->rep.string.curr += len;
+
+      if (c < 0)
+      {
+        pt->rep.string.curr = g_utf8_find_next_char(pt->rep.string.curr,
+                                                    pt->rep.string.past_the_end);
+        if (pt->rep.string.curr == NULL)
+            pt->rep.string.curr = pt->rep.string.past_the_end;
+        c = ' ';
+      }
+      else
+      {
+        len = g_unichar_to_utf8(c, NULL);
+        pt->rep.string.curr += len;
+      }
+
       return c;
     }
   }
