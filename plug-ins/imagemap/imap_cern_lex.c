@@ -561,6 +561,8 @@ char *cern_text;
 
 #include <string.h>
 
+#include <glib.h>
+
 #include "imap_cern_parse.h"
 
 #ifdef FLEX_SCANNER
@@ -568,7 +570,7 @@ char *cern_text;
 #endif /* FLEX_SCANNER */
 
 
-#line 572 "<stdout>"
+#line 574 "<stdout>"
 
 #define INITIAL 0
 #define comment 1
@@ -722,10 +724,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 43 "imap_cern.l"
+#line 45 "imap_cern.l"
 
 
-#line 729 "<stdout>"
+#line 731 "<stdout>"
 
 	if ( !(yy_init) )
 		{
@@ -811,7 +813,7 @@ do_action:	/* This label is used only to access EOF actions. */
 case 1:
 /* rule 1 can match eol */
 YY_RULE_SETUP
-#line 45 "imap_cern.l"
+#line 47 "imap_cern.l"
 {
 				   BEGIN(comment);
 				   return AUTHOR;
@@ -820,7 +822,7 @@ YY_RULE_SETUP
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 50 "imap_cern.l"
+#line 52 "imap_cern.l"
 {
 				   BEGIN(comment);
 				   return DESCRIPTION;
@@ -829,7 +831,7 @@ YY_RULE_SETUP
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 55 "imap_cern.l"
+#line 57 "imap_cern.l"
 {
 				   BEGIN(comment);
 				   return BEGIN_COMMENT;
@@ -840,7 +842,7 @@ case 4:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up cern_text again */
 YY_RULE_SETUP
-#line 60 "imap_cern.l"
+#line 62 "imap_cern.l"
 {
 				   BEGIN(INITIAL);
    				   strcpy(cern_lval.id, cern_text);
@@ -849,22 +851,22 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 66 "imap_cern.l"
+#line 68 "imap_cern.l"
 return RECTANGLE;
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 68 "imap_cern.l"
+#line 70 "imap_cern.l"
 return CIRCLE;
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 70 "imap_cern.l"
+#line 72 "imap_cern.l"
 return POLYGON;
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 72 "imap_cern.l"
+#line 74 "imap_cern.l"
 return DEFAULT;
 	YY_BREAK
 case 9:
@@ -872,7 +874,7 @@ case 9:
 (yy_c_buf_p) = yy_cp -= 1;
 YY_DO_BEFORE_ACTION; /* set up cern_text again */
 YY_RULE_SETUP
-#line 74 "imap_cern.l"
+#line 76 "imap_cern.l"
 {
    				   strcpy(cern_lval.id, cern_text);
 				   return LINK;
@@ -880,29 +882,29 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 79 "imap_cern.l"
+#line 81 "imap_cern.l"
 {
-                                   cern_lval.value = atof(cern_text);
+                                   cern_lval.value = g_ascii_strtod (cern_text, NULL);
 				   return FLOAT;
 				}
 	YY_BREAK
 case 11:
 /* rule 11 can match eol */
 YY_RULE_SETUP
-#line 84 "imap_cern.l"
+#line 86 "imap_cern.l"
 ; /* Eat white space */
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 86 "imap_cern.l"
+#line 88 "imap_cern.l"
 return *cern_text;
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 88 "imap_cern.l"
+#line 90 "imap_cern.l"
 ECHO;
 	YY_BREAK
-#line 906 "<stdout>"
+#line 908 "<stdout>"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(comment):
 	yyterminate();
@@ -1889,7 +1891,7 @@ void cern_free (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 88 "imap_cern.l"
+#line 90 "imap_cern.l"
 
 
 

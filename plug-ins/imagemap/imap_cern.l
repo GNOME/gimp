@@ -24,6 +24,8 @@
 
 #include <string.h>
 
+#include <glib.h>
+
 #include "imap_cern_parse.h"
 
 #ifdef FLEX_SCANNER
@@ -77,7 +79,7 @@ DEFAULT				return DEFAULT;
 				}
 
 -?{DIGIT}*"."?{DIGIT}*([Ee][-+]?{DIGIT}*)? {
-                                   cern_lval.value = atof(yytext);
+                                   cern_lval.value = g_ascii_strtod (yytext, NULL);
 				   return FLOAT;
 				}
 

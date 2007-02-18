@@ -808,7 +808,7 @@ void parse_control_point(ss, cp)
 	slot = &cmap_inter;
 	set_cmap_inter = 1;
       } else
-	 *slot++ = atof(argv[i]);
+        *slot++ = g_strtod(argv[i], NULL);
    }
    if (set_cm) {
       cp->cmap_index = (int) cm;

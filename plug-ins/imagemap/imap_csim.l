@@ -24,6 +24,8 @@
 
 #include <string.h>
 
+#include <glib.h>
+
 #include "imap_csim_parse.h"
 
 #ifdef FLEX_SCANNER
@@ -122,7 +124,7 @@ NOHREF				return NOHREF;
 <quoted_string>[^\"]*		strcpy(csim_lval.id, yytext);
 
 -?{DIGIT}*"."?{DIGIT}*([Ee][-+]?{DIGIT}*)? {
-                                   csim_lval.value = atof(yytext);
+                                   csim_lval.value = g_ascii_strtod (yytext, NULL);
 				   return FLOAT;
 				}
 

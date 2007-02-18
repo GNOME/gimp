@@ -1136,7 +1136,7 @@ static pointer mk_atom(scheme *sc, char *q) {
           }
      }
      if(has_dec_point) {
-          return mk_real(sc,atof(q));
+       return mk_real(sc,g_ascii_strtod(q,NULL));
      }
      return (mk_integer(sc, atol(q)));
 }

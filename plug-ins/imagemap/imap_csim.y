@@ -101,7 +101,7 @@ integer_value	: FLOAT
 		}
 		| STRING
 		{
-		  $$ = (gint) atof($1);
+		  $$ = (gint) g_ascii_strtod ($1, NULL);
 		}
 		;
 

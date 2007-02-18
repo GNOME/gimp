@@ -24,6 +24,8 @@
 
 #include <string.h>
 
+#include <glib.h>
+
 #include "imap_ncsa_parse.h"
 
 #ifdef FLEX_SCANNER
@@ -97,7 +99,7 @@ DEFAULT				{
 				}
 
 -?{DIGIT}*"."?{DIGIT}*([Ee][-+]?{DIGIT}*)? {
-                                   ncsa_lval.value = atof(yytext);
+                                   ncsa_lval.value = g_ascii_strtod (yytext, NULL);
 				   return FLOAT;
 				}
 

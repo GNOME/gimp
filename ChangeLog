@@ -1,3 +1,28 @@
+2007-02-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/text/gimptext-parasite.c
+	* plug-ins/flame/libifs.c: use g_strtod() instead of atof()
+	because these files have to parse strings that never had a clearly
+	specified format.
+
+	* plug-ins/script-fu/tinyscheme/scheme.c
+	* plug-ins/imagemap/imap_cern.l
+	* plug-ins/imagemap/imap_csim.l
+	* plug-ins/imagemap/imap_csim.y
+	* plug-ins/imagemap/imap_ncsa.l: use g_ascii_strtod() instead of
+	atof() because scheme code and imagemap files with wrong decimal
+	separators are clearly broken and should be rejected.
+
+	* plug-ins/imagemap/imap_cern_lex.c
+	* plug-ins/imagemap/imap_csim_lex.c
+	* plug-ins/imagemap/imap_csim_parse.c
+	* plug-ins/imagemap/imap_ncsa_lex.c: regenerated.
+
+	* plug-ins/common/sample_colorize.c: round numbers using sane code
+	instead of sprintf() and atod().
+
+	* plug-ins/Lighting/lighting_ui.c: removed some dead code.
+
 2007-02-18  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/edit-commands.c (edit_copy_cmd_callback): show an

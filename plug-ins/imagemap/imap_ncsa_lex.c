@@ -531,6 +531,8 @@ char *ncsa_text;
 
 #include <string.h>
 
+#include <glib.h>
+
 #include "imap_ncsa_parse.h"
 
 #ifdef FLEX_SCANNER
@@ -539,7 +541,7 @@ char *ncsa_text;
 
 
 
-#line 543 "<stdout>"
+#line 545 "<stdout>"
 
 #define INITIAL 0
 #define imap_link 1
@@ -694,10 +696,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
     
-#line 44 "imap_ncsa.l"
+#line 46 "imap_ncsa.l"
 
 
-#line 701 "<stdout>"
+#line 703 "<stdout>"
 
 	if ( !(yy_init) )
 		{
@@ -782,7 +784,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 46 "imap_ncsa.l"
+#line 48 "imap_ncsa.l"
 {
 				   BEGIN(comment);
 				   return AUTHOR;
@@ -790,7 +792,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 51 "imap_ncsa.l"
+#line 53 "imap_ncsa.l"
 {
 				   BEGIN(comment);
 				   return TITLE;
@@ -798,7 +800,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 56 "imap_ncsa.l"
+#line 58 "imap_ncsa.l"
 {
 				   BEGIN(comment);
 				   return DESCRIPTION;
@@ -806,7 +808,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 61 "imap_ncsa.l"
+#line 63 "imap_ncsa.l"
 {
 				   BEGIN(comment);
 				   return BEGIN_COMMENT;
@@ -814,7 +816,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 66 "imap_ncsa.l"
+#line 68 "imap_ncsa.l"
 {
 				   BEGIN(INITIAL);
    				   strcpy(ncsa_lval.id, ncsa_text);
@@ -823,7 +825,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 72 "imap_ncsa.l"
+#line 74 "imap_ncsa.l"
 {
 				   BEGIN(imap_link);
    				   return RECTANGLE;
@@ -831,7 +833,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 77 "imap_ncsa.l"
+#line 79 "imap_ncsa.l"
 {
 				   BEGIN(imap_link);
 				   return CIRCLE;
@@ -839,7 +841,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 82 "imap_ncsa.l"
+#line 84 "imap_ncsa.l"
 {
 				   BEGIN(imap_link);
 				   return POLYGON;
@@ -847,7 +849,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 87 "imap_ncsa.l"
+#line 89 "imap_ncsa.l"
 {
 				   BEGIN(imap_link);
 				   return DEFAULT;
@@ -855,7 +857,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 92 "imap_ncsa.l"
+#line 94 "imap_ncsa.l"
 {
    				   BEGIN(INITIAL);
    				   strcpy(ncsa_lval.id, ncsa_text);
@@ -865,29 +867,29 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 99 "imap_ncsa.l"
+#line 101 "imap_ncsa.l"
 {
-                                   ncsa_lval.value = atof(ncsa_text);
+                                   ncsa_lval.value = g_ascii_strtod (ncsa_text, NULL);
 				   return FLOAT;
 				}
 	YY_BREAK
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 104 "imap_ncsa.l"
+#line 106 "imap_ncsa.l"
 ; /* Eat white space */
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 106 "imap_ncsa.l"
+#line 108 "imap_ncsa.l"
 return *ncsa_text;
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 108 "imap_ncsa.l"
+#line 110 "imap_ncsa.l"
 ECHO;
 	YY_BREAK
-#line 891 "<stdout>"
+#line 893 "<stdout>"
 case YY_STATE_EOF(INITIAL):
 case YY_STATE_EOF(imap_link):
 case YY_STATE_EOF(comment):
@@ -1875,7 +1877,7 @@ void ncsa_free (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 108 "imap_ncsa.l"
+#line 110 "imap_ncsa.l"
 
 
 

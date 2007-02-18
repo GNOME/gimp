@@ -1550,7 +1550,7 @@ yyreduce:
   case 14:
 #line 103 "imap_csim.y"
     {
-		  (yyval.val) = (gint) atof((yyvsp[(1) - (1)].id));
+		  (yyval.val) = (gint) g_ascii_strtod ((yyvsp[(1) - (1)].id), NULL);
 		}
     break;
 

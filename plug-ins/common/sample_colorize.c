@@ -1162,8 +1162,8 @@ level_in_events (GtkWidget *widget,
           g_values.lvl_in_gamma = 1.0 / pow (10, tmp);
 
           /*  round the gamma value to the nearest 1/100th  */
-          sprintf (text, "%2.2f", g_values.lvl_in_gamma);
-          g_values.lvl_in_gamma = atof (text);
+          g_values.lvl_in_gamma =
+            floor (g_values.lvl_in_gamma * 100 + 0.5) / 100.0;
           break;
 
         case 2:  /*  high input  */

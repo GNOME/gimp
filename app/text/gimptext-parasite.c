@@ -169,9 +169,9 @@ gimp_text_from_gdyntext_parasite (const GimpParasite *parasite)
     case 2:  justify = GIMP_TEXT_JUSTIFY_RIGHT;  break;
     }
 
-  spacing = atof (params[LINE_SPACING]);
+  spacing = g_strtod (params[LINE_SPACING], NULL);
 
-  color        = strtol (params[COLOR], NULL, 16);
+  color = strtol (params[COLOR], NULL, 16);
   gimp_rgba_set_uchar (&rgb, color >> 16, color >> 8, color, 255);
 
   retval = g_object_new (GIMP_TYPE_TEXT,

@@ -60,10 +60,6 @@ static gchar     *lighting_effects_path = NULL;
 
 static void create_main_notebook      (GtkWidget       *container);
 
-#ifdef _LIGHTNING_UNUSED_CODE
-static void xyzval_update             (GtkEntry        *entry);
-#endif
-
 static void toggle_update             (GtkWidget       *widget,
                                        gpointer         data);
 
@@ -94,25 +90,6 @@ static void     apply_settings        (GtkWidget       *widget,
                                        gpointer         data);
 static void     isolate_selected_light (GtkWidget      *widget,
                                         gpointer        data);
-
-
-#ifdef _LIGHTNING_UNUSED_CODE
-/**********************************************************/
-/* Update entry fields that affect the preview parameters */
-/**********************************************************/
-
-static void
-xyzval_update (GtkEntry *entry)
-{
-  gdouble *valueptr;
-  gdouble  value;
-
-  valueptr = (gdouble *) g_object_get_data (G_OBJECT (entry), "ValuePtr");
-  value = atof (gtk_entry_get_text (entry));
-
-  *valueptr = value;
-}
-#endif
 
 
 /**********************/
