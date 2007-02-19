@@ -1,3 +1,10 @@
+2007-02-19  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/common/psd_save.c: check the return value of
+	gimp_image_flatten(). Fixes the crash reported in bug #395385.
+
 2007-02-05  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:

@@ -154,7 +154,7 @@ static void   write_string         (FILE *fd, char *val, gchar *why);
 static void   write_gchar          (FILE *fd, guchar val, gchar *why);
 static void   write_gint16         (FILE *fd, gint16 val, gchar *why);
 static void   write_gint32         (FILE *fd, gint32 val, gchar *why);
-    
+
 static void   write_pixel_data     (FILE *fd, gint32 drawableID,
 				    gint32 *ChanLenPosition,
 				    gint32 rowlenOffset);
@@ -1144,7 +1144,7 @@ write_pixel_data (FILE *fd, gint32 drawableID, gint32 *ChanLenPosition,
   gimp_tile_cache_ntiles (2* (drawable->width / gimp_tile_width () + 1));
 
   LengthsTable = g_new (gint16, height);
-  rledata = g_new (guchar, (MIN(height, tile_height) * 
+  rledata = g_new (guchar, (MIN(height, tile_height) *
 			   (width + 10 + (width/100))));
 
 
@@ -1208,7 +1208,7 @@ write_pixel_data (FILE *fd, gint32 drawableID, gint32 *ChanLenPosition,
       fseek (fd, length_table_pos, SEEK_SET);
       for (j = 0; j < height; j++) /* write real length table */
 	write_gint16 (fd, LengthsTable[j], "RLE length");
-    
+
       if (ChanLenPosition)    /* Update total compressed length */
 	{
 	  fseek (fd, ChanLenPosition[i], SEEK_SET);
@@ -1251,7 +1251,7 @@ save_data (FILE *fd, gint32 image_id)
 
 
   write_gint16 (fd, 1, "RLE compression");
- 
+
   /* All line lengths go before the rle pixel data */
 
   offset = ftell(fd); /* Offset in file of line lengths */
@@ -1259,7 +1259,7 @@ save_data (FILE *fd, gint32 image_id)
   for (i = 0; i < ChanCount; i++)
     for (j = 0; j < imageHeight; j++)
       write_gint16 (fd, 0, "junk line lengths");
-      
+
   bottom_layer = PSDImageData.lLayers[PSDImageData.nLayers - 1];
 
   if (PSDImageData.nLayers != 1 ||
@@ -1274,8 +1274,12 @@ save_data (FILE *fd, gint32 image_id)
       gimp_image_undo_disable (flat_image);
       flat_drawable = gimp_image_flatten (flat_image);
 
-      IFDBG printf ("\n     Writing compressed flattened image data\n");
-      write_pixel_data (fd, flat_drawable, NULL, offset);
+      /* gimp_image_flatten() may fail if there are no visible layers */
+      if (flat_drawable != -1)
+        {
+          IFDBG printf ("\n     Writing compressed flattened image data\n");
+          write_pixel_data (fd, flat_drawable, NULL, offset);
+        }
 
       gimp_image_delete (flat_image);
     }
