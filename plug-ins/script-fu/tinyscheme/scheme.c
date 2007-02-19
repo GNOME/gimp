@@ -1923,7 +1923,8 @@ static void atom2str(scheme *sc, pointer l, int f, char **pp, int *plen) {
           if(is_integer(l)) {
                sprintf(p, "%ld", ivalue_unchecked(l));
           } else {
-               sprintf(p, "%.10g", rvalue_unchecked(l));
+               g_ascii_formatd (p, sizeof (sc->strbuff), "%.10g",
+                                rvalue_unchecked(l));
           }
      } else if (is_string(l)) {
           if (!f) {

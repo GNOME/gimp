@@ -1,5 +1,10 @@
 2007-02-19  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/tinyscheme/scheme.c (atom2str): use
+	locale-independent function to convert a float value to a string.
+
+2007-02-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/curve_bend.c
 	* plug-ins/common/depthmerge.c
 	* plug-ins/common/neon.c
