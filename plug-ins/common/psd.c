@@ -2009,7 +2009,7 @@ load_image (const gchar *name)
                         g_free (layer->channel[1].data);
                         g_free (layer->channel[2].data);
 
-                        IFDBG fprintf (stderr, "YAH0a\n");
+                        IFDBG g_printerr ("YAH0a\n");
                       }
                     else
                       {
@@ -2059,11 +2059,11 @@ load_image (const gchar *name)
                         g_free (layer->channel[2].data);
                         g_free (layer->channel[3].data);
 
-                        IFDBG fprintf (stderr, "YAH0b\n");
+                        IFDBG g_printerr ("YAH0b\n");
                       }
                   }
 
-		IFDBG fprintf (stderr, "YAH1\n");
+		IFDBG g_printerr ("YAH1\n");
 
 		layer_ID = gimp_layer_new (image_ID,
 					   psd_image.layer[lnum].name,
@@ -2074,7 +2074,7 @@ load_image (const gchar *name)
 					   (100.0 * psd_image.layer[lnum].opacity) / 255.0,
 					   psd_lmode_to_gimp_lmode(psd_image.layer[lnum].blendkey));
 
-		IFDBG fprintf(stderr, "YAH2\n");
+		IFDBG g_printerr ("YAH2\n");
 	      }
               break;
 
@@ -2086,7 +2086,7 @@ load_image (const gchar *name)
 
 	  gimp_image_add_layer (image_ID, layer_ID, 0);
 
-	  IFDBG fprintf (stderr, "YAH3\n");
+	  IFDBG g_printerr ("YAH3\n");
 
 	  /* Do a layer mask if it exists */
 	  for (iter = 0; !empty && iter < layer->num_channels; iter++)
@@ -2096,7 +2096,7 @@ load_image (const gchar *name)
 		  gint32  mask_id;
 		  guchar *lm_data;
 
-		  IFDBG fprintf (stderr, "Unpacking a layer mask!\n");
+		  IFDBG g_printerr ("Unpacking a layer mask!\n");
 
 		  lm_data = g_malloc (layer->width * layer->height);
 		  {
@@ -2153,7 +2153,7 @@ load_image (const gchar *name)
 		}
 	    }
 
-	  IFDBG fprintf(stderr, "YAH4\n");
+	  IFDBG g_printerr ("YAH4\n");
 
 	  gimp_layer_translate (layer_ID, layer->x, layer->y);
 
@@ -2162,12 +2162,12 @@ load_image (const gchar *name)
 
 	  drawable = gimp_drawable_get (layer_ID);
 
-	  IFDBG fprintf (stderr, "YAH5 - merged_data=%p, drawable=%p, drawdim=%dx%dx%d\n",
-                         merged_data,
-                         drawable,
-                         drawable->width,
-                         drawable->height,
-                         drawable->bpp);
+	  IFDBG g_printerr ("YAH5 - merged_data=%p, drawable=%p, drawdim=%dx%dx%d\n",
+                            merged_data,
+                            drawable,
+                            drawable->width,
+                            drawable->height,
+                            drawable->bpp);
 
           if (empty)
             {
@@ -2181,7 +2181,7 @@ load_image (const gchar *name)
               gimp_pixel_rgn_set_rect (&pixel_rgn, merged_data, 0, 0,
                                        layer->width, layer->height);
 
-              IFDBG fprintf(stderr, "YAH6\n");
+              IFDBG g_printerr ("YAH6\n");
             }
 
 	  gimp_drawable_flush (drawable);

@@ -61,7 +61,7 @@
 /* #define PIX_DEBUG */
 
 #ifdef PIX_DEBUG
-#    define PIX_DEBUG_PRINT(a,b) fprintf(stderr,a,b)
+#    define PIX_DEBUG_PRINT(a,b) g_printerr (a,b)
 #else
 #    define PIX_DEBUG_PRINT(a,b)
 #endif

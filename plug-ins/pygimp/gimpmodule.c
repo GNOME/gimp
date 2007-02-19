@@ -129,7 +129,7 @@ pygimp_run_proc(const char *name, int nparams, const GimpParam *params,
     g_free(b); g_free(h); g_free(a); g_free(c); g_free(d); g_free(pd);
 
 #if PG_DEBUG > 0
-    fprintf(stderr, "Params for %s:", name);
+    g_printerr("Params for %s:", name);
     print_GParam(nparams, params);
 #endif
 

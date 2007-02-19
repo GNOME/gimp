@@ -1109,10 +1109,6 @@ util_convertColorspace (guchar   *dest,
   gint sourceColorBPP = sourceHasAlpha ? (sourceBPP - 1) : sourceBPP;
   gint destColorBPP   = destHasAlpha   ? (destBPP   - 1) : destBPP;
 
-  if (((sourceColorBPP != 1) && (sourceColorBPP != 3)) ||
-      ((destColorBPP   != 1) && (destColorBPP   != 3)))
-    fprintf (stderr, "Warning: I don't _like_ this color space.  This is a suggestion, not a threat.\n");
-
   if ((sourceColorBPP == destColorBPP) &&
       (sourceBPP      == destBPP     ))
     {

@@ -947,7 +947,8 @@ print_socket_api_error (const gchar *api_name)
       emsg = unk;
       break;
     }
-  fprintf (stderr, "%s failed: %s\n", api_name, emsg);
+
+  g_printerr ("%s failed: %s\n", api_name, emsg);
 #else
   perror (api_name);
 #endif

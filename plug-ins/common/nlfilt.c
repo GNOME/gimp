@@ -457,8 +457,8 @@ nlfiltInit (gdouble alpha, gdouble radius, FilterType filter)
        }
        break;
        default:
-          fprintf(stderr, "unknown filter %d\n", filter);
-          return -1;
+         g_printerr ("unknown filter %d\n", filter);
+         return -1;
    }
        /*
         * Setup pixel weighting tables -

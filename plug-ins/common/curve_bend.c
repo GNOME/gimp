@@ -2738,7 +2738,7 @@ p_add_layer (gint       width,
   l_new_drawable = gimp_drawable_get (l_new_layer_id);
   if (!l_new_drawable)
     {
-      fprintf (stderr, "p_ad_layer: cant get new_drawable\n");
+      g_printerr ("p_add_layer: cant get new_drawable\n");
       return NULL;
     }
 

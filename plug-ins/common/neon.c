@@ -652,15 +652,6 @@ find_constants (gdouble n_p[],
     gdouble sum_n_p, sum_n_m, sum_d;
     gdouble a, b;
 
-    /*
-    for (i = 0; i <=4; i++)
-      {
-        fprintf (stderr, "n_p[%d] = %f\n", i, n_p[i]);
-        fprintf (stderr, "n_m[%d] = %f\n", i, n_m[i]);
-        fprintf (stderr, "d_p[%d] = %f\n", i, d_p[i]);
-      }
-    */
-
     sum_n_p = 0.0;
     sum_n_m = 0.0;
     sum_d   = 0.0;

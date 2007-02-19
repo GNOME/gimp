@@ -76,41 +76,41 @@ pygimp_param_print(int nparams, GimpParam *params)
     for (i = 0; i < nparams; i++) {
 	switch(params[i].type) {
 	case GIMP_PDB_INT32:
-	    fprintf(stderr, "%i. int %i\n", i,
-		    params[i].data.d_int32);
+	    g_printerr("%i. int %i\n", i,
+                       params[i].data.d_int32);
 	    break;
 	case GIMP_PDB_INT16:
-	    fprintf(stderr, "%i. int %i\n", i,
-		    params[i].data.d_int16);
+	    g_printerr("%i. int %i\n", i,
+                       params[i].data.d_int16);
 	    break;
 	case GIMP_PDB_INT8:
-	    fprintf(stderr, "%i. int %u\n", i,
-		    params[i].data.d_int8);
+	    g_printerr("%i. int %u\n", i,
+                       params[i].data.d_int8);
 	    break;
 	case GIMP_PDB_FLOAT:
-	    fprintf(stderr, "%i. float %f\n", i,
-		    params[i].data.d_float);
+	    g_printerr("%i. float %f\n", i,
+                       params[i].data.d_float);
 	    break;
 	case GIMP_PDB_STRING:
-	    fprintf(stderr, "%i. string %s\n", i,
-		    params[i].data.d_string);
+	    g_printerr("%i. string %s\n", i,
+                       params[i].data.d_string);
 	    break;
 	case GIMP_PDB_INT32ARRAY:
 	case GIMP_PDB_INT16ARRAY:
 	case GIMP_PDB_INT8ARRAY:
 	case GIMP_PDB_FLOATARRAY:
 	case GIMP_PDB_STRINGARRAY:
-	    fprintf(stderr, "%i. array of type %i %s\n", i,
-		    params[i].type, params[i].data.d_int32array
-		    == NULL ? "(null)":"");
+	    g_printerr("%i. array of type %i %s\n", i,
+                       params[i].type,
+                       params[i].data.d_int32array == NULL ? "(null)":"");
 	    break;
 	case GIMP_PDB_STATUS:
-	    fprintf(stderr, "%i. status %i\n", i,
-		    params[i].data.d_status);
+	    g_printerr("%i. status %i\n", i,
+                       params[i].data.d_status);
 	    break;
 	default:
-	    fprintf(stderr, "%i. other %i\n", i,
-		    params[i].data.d_int32);
+	    g_printerr("%i. other %i\n", i,
+                       params[i].data.d_int32);
 	    break;
 	}
     }
@@ -780,7 +780,7 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
     PyObject *t = NULL, *r;
 
 #if PG_DEBUG > 0
-    fprintf(stderr, "--- %s --- ", PyString_AsString(self->proc_name));
+    g_printerr("--- %s --- ", PyString_AsString(self->proc_name));
 #endif
 
     if (self->nparams > 0 && !strcmp(self->params[0].name, "run-mode")) {
@@ -817,7 +817,7 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
     if (!ret) {
 	PyErr_SetString(pygimp_error, "no status returned");
 #if PG_DEBUG >= 1
-	fprintf(stderr, "ret == NULL\n");
+	g_printerr("ret == NULL\n");
 #endif
 	return NULL;
     }
@@ -825,7 +825,7 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
     switch(ret[0].data.d_status) {
     case GIMP_PDB_EXECUTION_ERROR:
 #if PG_DEBUG > 0
-	fprintf(stderr, "execution error\n");
+	g_printerr("execution error\n");
 #endif
 	gimp_destroy_params(ret, nret);
 	PyErr_SetString(PyExc_RuntimeError, "execution error");
@@ -834,7 +834,7 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
 
     case GIMP_PDB_CALLING_ERROR:
 #if PG_DEBUG > 0
-	fprintf(stderr, "calling error\n");
+	g_printerr("calling error\n");
 #endif
 	gimp_destroy_params(ret, nret);
 	PyErr_SetString(PyExc_TypeError, "invalid arguments");
@@ -843,7 +843,7 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
 
     case GIMP_PDB_SUCCESS:
 #if PG_DEBUG > 0
-	fprintf(stderr, "success\n");
+	g_printerr("success\n");
 #endif
 	t = pygimp_param_to_tuple(nret-1, ret+1);
 	gimp_destroy_params(ret, nret);
@@ -856,8 +856,8 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
 
     default:
 #if PG_DEBUG > 0
-	fprintf(stderr, "unknown - %i (type %i)\n",
-		ret[0].data.d_status, ret[0].type);
+	g_printerr("unknown - %i (type %i)\n",
+                   ret[0].data.d_status, ret[0].type);
 #endif
 	PyErr_SetString(pygimp_error, "unknown return code");
 	return NULL;

@@ -128,7 +128,7 @@ xjpg_load_layer (const char    *filename,
       if (infile)
 	fclose (infile);
 
-      fprintf(stderr, "XJT: JPEG load error\n");
+      g_printerr ("XJT: JPEG load error\n");
       return -1;
   }
 
@@ -184,7 +184,7 @@ xjpg_load_layer (const char    *filename,
       l_layer_type = GIMP_RGB_IMAGE;
       break;
     default:
-      fprintf(stderr, "XJT: cant load layer %s (type is not GRAY and not RGB)\n", filename);
+      g_printerr ("XJT: cant load layer %s (type is not GRAY and not RGB)\n", filename);
       fclose (infile);
       return -1;
     }
@@ -198,7 +198,7 @@ xjpg_load_layer (const char    *filename,
 			     layer_mode);
   if(l_layer_id < 0)
   {
-      fprintf(stderr, "XJT: cant create new layer\n");
+      g_printerr ("XJT: cant create new layer\n");
       fclose (infile);
       return -1;
   }
@@ -317,7 +317,7 @@ xjpg_load_layer_alpha (const char *filename,
       if (infile)
 	fclose (infile);
 
-      fprintf(stderr, "XJT: JPEG alpha load error\n");
+      g_printerr ("XJT: JPEG alpha load error\n");
       return -1;
   }
 
@@ -366,7 +366,7 @@ xjpg_load_layer_alpha (const char *filename,
   l_drawable = gimp_drawable_get (layer_id);
   if(l_drawable == NULL)
   {
-    fprintf(stderr, "XJT: gimp_drawable_get failed on layer id %d\n", (int)layer_id);
+    g_printerr ("XJT: gimp_drawable_get failed on layer id %d\n", (int)layer_id);
     fclose(infile);
     return -1;
   }
@@ -377,7 +377,7 @@ xjpg_load_layer_alpha (const char *filename,
      (cinfo.output_width  != l_drawable->width) ||
      (cinfo.output_height != l_drawable->height))
   {
-     fprintf(stderr, "XJT: cant load %s as alpha channel\n", filename);
+     g_printerr ("XJT: cant load %s as alpha channel\n", filename);
      fclose (infile);
      return -1;
   }
@@ -509,7 +509,7 @@ xjpg_load_channel (const char   *filename,
       if (infile)
 	fclose (infile);
 
-      fprintf(stderr, "XJT: JPEG load error\n");
+      g_printerr ("XJT: JPEG load error\n");
       return -1;
   }
 
@@ -559,7 +559,7 @@ xjpg_load_channel (const char   *filename,
    */
   if(cinfo.output_components != 1)
   {
-      fprintf(stderr, "XJT: cant load RGB layer %s into GRAY Image\n", filename);
+      g_printerr ("XJT: cant load RGB layer %s into GRAY Image\n", filename);
       fclose (infile);
       return -1;
   }
@@ -574,7 +574,7 @@ xjpg_load_channel (const char   *filename,
 				       &l_color);
      if(l_drawable_id < 0)
      {
-         fprintf(stderr, "XJT: cant create new channel\n");
+         g_printerr ("XJT: cant create new channel\n");
          fclose (infile);
          return -1;
      }
@@ -590,7 +590,7 @@ xjpg_load_channel (const char   *filename,
   || (l_drawable->height != cinfo.output_height)
   || (l_drawable->bpp != cinfo.output_components) )
   {
-         fprintf(stderr, "XJT: cant load-overwrite drawable (size missmatch)\n");
+         g_printerr ("XJT: cant load-overwrite drawable (size missmatch)\n");
          fclose (infile);
          return -1;
   }

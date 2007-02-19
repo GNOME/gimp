@@ -550,11 +550,6 @@ export_dialog_response (GtkWidget *dlg,
           return;
         }
 
-      /*
-      fprintf (stderr, "\nwriting %d bytes to %s...\n",
-               strlen (buffer), filename);
-      */
-
       if (write (fd, buffer->str, buffer->len) < 0)
         {
           metadata_message_dialog (GTK_MESSAGE_ERROR, GTK_WINDOW (dlg),

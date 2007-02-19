@@ -441,7 +441,7 @@ int p_system(const gchar *cmd)
   {
      /* Shift 8 Bits gets Retcode of the executed Program */
      l_rc2 = l_rc >> 8;
-     fprintf(stderr, "ERROR system: %s\nreturncodes %d %d", cmd, l_rc, l_rc2);
+     g_printerr ("ERROR system: %s\nreturncodes %d %d", cmd, l_rc, l_rc2);
      return -1;
   }
   return 0;
@@ -2168,8 +2168,8 @@ p_scann_token(gchar        *scan_ptr,
            param->int_val1 = TRUE;
            if(*l_ptr == ':')
            {
-              fprintf(stderr, "XJT: PRP syntax error (bool property %s terminated with :)\n",
-                      l_token);
+              g_printerr ("XJT: PRP syntax error (bool property %s terminated with :)\n",
+                          l_token);
               *prop_id  = PROP_SYNTAX_ERROR;
               return (l_ptr);
            }
@@ -2185,8 +2185,8 @@ p_scann_token(gchar        *scan_ptr,
        case PTYP_INT:
            if(*l_ptr != ':')
            {
-              fprintf(stderr, "XJT: PRP syntax error (int property %s not terminated with :)\n",
-                     l_token);
+              g_printerr ("XJT: PRP syntax error (int property %s not terminated with :)\n",
+                          l_token);
               *prop_id  = PROP_SYNTAX_ERROR;
            }
            else
@@ -2195,8 +2195,8 @@ p_scann_token(gchar        *scan_ptr,
               param->int_val1 = strtol(l_ptr, &l_ptr2, 10);   /* Scan 1.st integer (base = 10) */
               if (l_ptr == l_ptr2 )
               {
-                 fprintf(stderr, "XJT: PRP syntax error (int property %s :integer value missing)\n",
-                        l_token);
+                 g_printerr ("XJT: PRP syntax error (int property %s :integer value missing)\n",
+                             l_token);
                  *prop_id  = PROP_SYNTAX_ERROR;
                  return(l_ptr);
               }
@@ -2208,8 +2208,8 @@ p_scann_token(gchar        *scan_ptr,
               {
                  if(*l_ptr != ',')
                  {
-                    fprintf(stderr, "XJT: PRP syntax error (int property %s comma missing)\n",
-                           l_token);
+                    g_printerr ("XJT: PRP syntax error (int property %s comma missing)\n",
+                                l_token);
                     *prop_id  = PROP_SYNTAX_ERROR;
                     return(l_ptr);
                  }
@@ -2217,8 +2217,8 @@ p_scann_token(gchar        *scan_ptr,
                  param->int_val2 = strtol(l_ptr, &l_ptr2, 10);   /*  Scan 2.nd integer (base = 10)  */
                  if (l_ptr == l_ptr2 )
                  {
-                    fprintf(stderr, "XJT: PRP syntax error (int property %s : 2.nd integer value missing)\n",
-                           l_token);
+                    g_printerr ("XJT: PRP syntax error (int property %s : 2.nd integer value missing)\n",
+                                l_token);
                     *prop_id  = PROP_SYNTAX_ERROR;
                     return(l_ptr);
                  }
@@ -2229,8 +2229,8 @@ p_scann_token(gchar        *scan_ptr,
                  {
                     if(*l_ptr != ',')
                     {
-                       fprintf(stderr, "XJT: PRP syntax error (int property %s comma missing)\n",
-                              l_token);
+                       g_printerr ("XJT: PRP syntax error (int property %s comma missing)\n",
+                                   l_token);
                        *prop_id  = PROP_SYNTAX_ERROR;
                        return(l_ptr);
                     }
@@ -2238,8 +2238,8 @@ p_scann_token(gchar        *scan_ptr,
                     param->int_val3 = strtol(l_ptr, &l_ptr2, 10);   /*  Scan 3.rd integer (base = 10)  */
                     if (l_ptr == l_ptr2 )
                     {
-                       fprintf(stderr, "XJT: PRP syntax error (int property %s : 3.rd integer value missing)\n",
-                              l_token);
+                       g_printerr ("XJT: PRP syntax error (int property %s : 3.rd integer value missing)\n",
+                                   l_token);
                        *prop_id  = PROP_SYNTAX_ERROR;
                        return(l_ptr);
                     }
@@ -2254,8 +2254,8 @@ p_scann_token(gchar        *scan_ptr,
        case PTYP_FLT:
            if(*l_ptr != ':')
            {
-              fprintf(stderr, "XJT: PRP syntax error (float property %s not terminated with :)\n",
-                     l_token);
+              g_printerr ("XJT: PRP syntax error (float property %s not terminated with :)\n",
+                          l_token);
               *prop_id  = PROP_SYNTAX_ERROR;
            }
            else
@@ -2264,8 +2264,8 @@ p_scann_token(gchar        *scan_ptr,
               param->flt_val1 = p_my_ascii_strtod(l_ptr, &l_ptr2);
               if (l_ptr == l_ptr2 )
               {
-                 fprintf(stderr, "XJT: PRP syntax error (float property %s :float value missing)\n",
-                        l_token);
+                 g_printerr ("XJT: PRP syntax error (float property %s :float value missing)\n",
+                             l_token);
                  *prop_id  = PROP_SYNTAX_ERROR;
                  return(l_ptr);
               }
@@ -2277,8 +2277,8 @@ p_scann_token(gchar        *scan_ptr,
               {
                  if(*l_ptr != ',')
                  {
-                    fprintf(stderr, "XJT: PRP syntax error (float property %s comma missing)\n",
-                           l_token);
+                    g_printerr ("XJT: PRP syntax error (float property %s comma missing)\n",
+                                l_token);
                     *prop_id  = PROP_SYNTAX_ERROR;
                     return(l_ptr);
                  }
@@ -2286,8 +2286,8 @@ p_scann_token(gchar        *scan_ptr,
                  param->flt_val2 = p_my_ascii_strtod(l_ptr, &l_ptr2);
                  if (l_ptr == l_ptr2 )
                  {
-                    fprintf(stderr, "XJT: PRP syntax error (float property %s : 2.nd float value missing)\n",
-                           l_token);
+                    g_printerr ("XJT: PRP syntax error (float property %s : 2.nd float value missing)\n",
+                                l_token);
                     *prop_id  = PROP_SYNTAX_ERROR;
                     return(l_ptr);
                  }
@@ -2298,8 +2298,8 @@ p_scann_token(gchar        *scan_ptr,
                  {
                     if(*l_ptr != ',')
                     {
-                       fprintf(stderr, "XJT: PRP syntax error (float property %s comma missing)\n",
-                              l_token);
+                       g_printerr ("XJT: PRP syntax error (float property %s comma missing)\n",
+                                   l_token);
                        *prop_id  = PROP_SYNTAX_ERROR;
                        return(l_ptr);
                     }
@@ -2307,8 +2307,8 @@ p_scann_token(gchar        *scan_ptr,
                     param->flt_val3 = p_my_ascii_strtod(l_ptr, &l_ptr2);
                     if (l_ptr == l_ptr2 )
                     {
-                       fprintf(stderr, "XJT: PRP syntax error (float property %s : 3.rd float value missing)\n",
-                              l_token);
+                       g_printerr ("XJT: PRP syntax error (float property %s : 3.rd float value missing)\n",
+                                   l_token);
                        *prop_id  = PROP_SYNTAX_ERROR;
                        return(l_ptr);
                     }
@@ -2321,8 +2321,8 @@ p_scann_token(gchar        *scan_ptr,
        case PTYP_FLIST:
            if(*l_ptr != ':')
            {
-              fprintf(stderr, "XJT: PRP syntax error (floatlist property %s not terminated with :)\n",
-                     l_token);
+              g_printerr ("XJT: PRP syntax error (floatlist property %s not terminated with :)\n",
+                          l_token);
               *prop_id  = PROP_SYNTAX_ERROR;
            }
            else
@@ -2354,8 +2354,8 @@ p_scann_token(gchar        *scan_ptr,
                 {
                    if(param->num_fvals == 0)
                    {
-                     fprintf(stderr, "XJT: PRP syntax error (floatlist property %s :no float value found)\n",
-                            l_token);
+                     g_printerr ("XJT: PRP syntax error (floatlist property %s :no float value found)\n",
+                                 l_token);
                      *prop_id  = PROP_SYNTAX_ERROR;
                      return(l_ptr);
                    }
@@ -2369,8 +2369,8 @@ p_scann_token(gchar        *scan_ptr,
                   if((*l_ptr2 != '\0')
                   && (*l_ptr2 != '\n'))
                   {
-                     fprintf(stderr, "XJT: PRP syntax error (floatlist property %s :list contains illegal character: %c)\n",
-                            l_token, *l_ptr);
+                     g_printerr ("XJT: PRP syntax error (floatlist property %s :list contains illegal character: %c)\n",
+                                 l_token, *l_ptr);
                      *prop_id  = PROP_SYNTAX_ERROR;
                      return(l_ptr);
                   }
@@ -2383,16 +2383,16 @@ p_scann_token(gchar        *scan_ptr,
        case PTYP_STRING:
            if(*l_ptr != ':')
            {
-              fprintf(stderr, "XJT: PRP syntax error (string property %s not terminated with :)\n",
-                     l_token);
+              g_printerr ("XJT: PRP syntax error (string property %s not terminated with :)\n",
+                          l_token);
               *prop_id  = PROP_SYNTAX_ERROR;
               return (l_ptr);
            }
            l_ptr++;
            if(*l_ptr != '\"')
            {
-              fprintf(stderr, "XJT: PRP syntax error (string property %s starting \" is missing)\n",
-                     l_token);
+              g_printerr ("XJT: PRP syntax error (string property %s starting \" is missing)\n",
+                          l_token);
               *prop_id  = PROP_SYNTAX_ERROR;
                return (l_ptr);
            }
@@ -2447,14 +2447,15 @@ p_scann_token(gchar        *scan_ptr,
           }
            else
            {
-             fprintf(stderr, "XJT: PRP syntax error (string property %s terminating \" is missing)\n",
-                  l_token);
+             g_printerr ("XJT: PRP syntax error (string property %s terminating \" is missing)\n",
+                         l_token);
              *prop_id  = PROP_SYNTAX_ERROR;
            }
            g_free(l_string_buff);
            break;
        default:
-           fprintf(stderr, "XJT: ** Warning ** PRP file with unsupported property %s\n", l_token);
+           g_printerr ("XJT: ** Warning ** PRP file with unsupported property %s\n",
+                       l_token);
            *prop_id  = PROP_SYNTAX_ERROR;
            break;
     }
@@ -2482,7 +2483,7 @@ p_scann_token(gchar        *scan_ptr,
 
   if(*prop_id  == PROP_SYNTAX_ERROR)
   {
-    fprintf(stderr, "XJT: ** Warning ** PRP file skipping property: %s\n", l_token);
+    g_printerr ("XJT: ** Warning ** PRP file skipping property: %s\n", l_token);
   }
 
   g_free(l_token);
@@ -2649,7 +2650,7 @@ p_scann_layer_prop (gchar         *scan_ptr,
   l_new_prop->layer_pos = strtol(&scan_ptr[1], &l_ptr, 10);   /*  Scan integer (base = 10)  */
   if(l_ptr == scan_ptr)
   {
-     fprintf(stderr, "XJT: PRP file layer# missing, scanned bad line:\n%s\n", scan_ptr);
+     g_printerr ("XJT: PRP file layer# missing, scanned bad line:\n%s\n", scan_ptr);
      return -1;
   }
 
@@ -2723,7 +2724,7 @@ p_scann_layer_prop (gchar         *scan_ptr,
             }
             break;
        default :
-            /* fprintf(stderr, "XJT: PRP file scanned bad line:\n%s\n", scan_ptr); */
+            /* g_printerr ("XJT: PRP file scanned bad line:\n%s\n", scan_ptr); */
             /* return -1; */ /* skip unknow tokens */
             break;
      }
@@ -2754,7 +2755,8 @@ p_scann_channel_prop (const gchar   *scan_ptr,
   l_new_prop->channel_pos = strtol(&scan_ptr[1], &l_ptr, 10);   /*  Scan integer (base = 10)  */
   if(l_ptr == scan_ptr)
   {
-     fprintf(stderr, "XJT: PRP file channel# missing, scanned bad line:\n%s\n", scan_ptr);
+     g_printerr ("XJT: PRP file channel# missing, scanned bad line:\n%s\n",
+                 scan_ptr);
      return -1;
   }
 
@@ -2835,7 +2837,7 @@ p_scann_channel_prop (const gchar   *scan_ptr,
             }
             break;
        default :
-            /* fprintf(stderr, "XJT: PRP file scanned bad line:\n%s\n", scan_ptr); */
+            /* g_printerr ("XJT: PRP file scanned bad line:\n%s\n", scan_ptr); */
             /* return -1; */ /* skip unknow tokens */
             break;
      }
@@ -2860,7 +2862,8 @@ p_scann_image_prop (gchar         *scan_ptr,
 
   if(strncmp(scan_ptr, GIMP_XJ_IMAGE, strlen(GIMP_XJ_IMAGE)) != 0)
   {
-    fprintf(stderr, "XJT: PRP file %s identstring missing, scanned bad line:\n%s\n", GIMP_XJ_IMAGE, scan_ptr);
+    g_printerr ("XJT: PRP file %s identstring missing, scanned bad line:\n%s\n",
+                GIMP_XJ_IMAGE, scan_ptr);
     return -1;
   }
 
@@ -2894,7 +2897,8 @@ p_scann_image_prop (gchar         *scan_ptr,
                 image_prop->image_type = GIMP_GRAY;
                 break;
               default:
-                fprintf(stderr, "XJT: PRP unsupported image_type %d\n", (int)l_param.int_val1);
+                g_printerr ("XJT: PRP unsupported image_type %d\n",
+                            (int)l_param.int_val1);
                 return -1;
                 break;
             }
@@ -2944,7 +2948,7 @@ p_scann_image_prop (gchar         *scan_ptr,
             image_prop->tattoo_state = l_param.int_val1;
             break;
        default :
-            /* fprintf(stderr, "XJT: Warning PRP unexpected token in line:\n%s\n", scan_ptr); */
+            /* g_printerr ("XJT: Warning PRP unexpected token in line:\n%s\n", scan_ptr); */
             /* return -1; */ /* skip unknow tokens */
             break;
      }
@@ -2971,7 +2975,8 @@ p_scann_parasite_prop (const gchar   *scan_ptr,
   l_parasite_id = strtol(&scan_ptr[1], &l_ptr, 10);   /*  Scan integer (base = 10)  */
   if(l_ptr == scan_ptr)
   {
-     fprintf(stderr, "XJT: PRP file parasite# missing, scanned bad line:\n%s\n", scan_ptr);
+     g_printerr ("XJT: PRP file parasite# missing, scanned bad line:\n%s\n",
+                 scan_ptr);
      return -1;
   }
 
@@ -3008,7 +3013,7 @@ p_scann_parasite_prop (const gchar   *scan_ptr,
             l_new_prop->flags = l_param.int_val1;
             break;
        default :
-            /* fprintf(stderr, "XJT: PRP file scanned bad line:\n%s\n", scan_ptr); */
+            /* g_printerr ("XJT: PRP file scanned bad line:\n%s\n", scan_ptr); */
             /* return -1; */ /* skip unknow tokens */
             break;
      }
@@ -3038,7 +3043,7 @@ p_scann_path_prop (gchar         *scan_ptr,
 
   if (strncmp (scan_ptr, "PATH", strlen ("PATH")) != 0)
     {
-      fprintf (stderr, "XJT: PRP scanned bad line:\n%s\n", scan_ptr);
+      g_printerr ("XJT: PRP scanned bad line:\n%s\n", scan_ptr);
       return -1;
     }
   l_ptr = scan_ptr + strlen ("PATH");
@@ -3073,7 +3078,7 @@ p_scann_path_prop (gchar         *scan_ptr,
           l_new_prop->path_points = l_param.flt_val_list;
           break;
         default :
-          /* fprintf (stderr, "XJT: PRP file scanned bad line:\n%s\n", scan_ptr); */
+          /* g_printerr ("XJT: PRP file scanned bad line:\n%s\n", scan_ptr); */
           /* return -1; */ /* skip unknow tokens */
           break;
         }
@@ -3279,7 +3284,8 @@ p_load_prop_file (const gchar *prop_filename)
            }
            else
            {
-             fprintf(stderr, "XJT: Warning, undefined PRP line scanned:\n%s\n", l_line_ptr);
+             g_printerr ("XJT: Warning, undefined PRP line scanned:\n%s\n",
+                         l_line_ptr);
              /* goto cleanup; */
            }
          }
