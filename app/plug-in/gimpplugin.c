@@ -928,11 +928,19 @@ void
 gimp_plug_in_add_temp_proc (GimpPlugIn             *plug_in,
                             GimpTemporaryProcedure *proc)
 {
-  const gchar *locale_domain;
-  const gchar *help_domain;
+  GimpPlugInProcedure *overridden;
+  const gchar         *locale_domain;
+  const gchar         *help_domain;
 
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
   g_return_if_fail (GIMP_IS_TEMPORARY_PROCEDURE (proc));
+
+  overridden = gimp_plug_in_procedure_find (plug_in->temp_procedures,
+                                            GIMP_OBJECT (proc)->name);
+
+  if (overridden)
+    gimp_plug_in_remove_temp_proc (plug_in,
+                                   GIMP_TEMPORARY_PROCEDURE (overridden));
 
   locale_domain = gimp_plug_in_manager_get_locale_domain (plug_in->manager,
                                                           plug_in->prog,

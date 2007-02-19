@@ -125,8 +125,16 @@ void
 gimp_plug_in_def_add_procedure (GimpPlugInDef       *plug_in_def,
                                 GimpPlugInProcedure *proc)
 {
+  GimpPlugInProcedure *overridden;
+
   g_return_if_fail (GIMP_IS_PLUG_IN_DEF (plug_in_def));
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+
+  overridden = gimp_plug_in_procedure_find (plug_in_def->procedures,
+                                            GIMP_OBJECT (proc)->name);
+
+  if (overridden)
+    gimp_plug_in_def_remove_procedure (plug_in_def, overridden);
 
   proc->mtime = plug_in_def->mtime;
 

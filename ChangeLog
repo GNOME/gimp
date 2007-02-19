@@ -1,5 +1,14 @@
 2007-02-19  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/gimpplugin.c (gimp_plug_in_add_temp_proc)
+	* app/plug-in/gimpplugindef.c (gimp_plug_in_def_add_procedure):
+	remove duplicate procedures before adding the new one.
+	
+	* app/plug-in/gimpplugin-message.c
+	(gimp_plug_in_handle_proc_install): don't remove duplicates here.
+
+2007-02-19  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/Makefile.am
 	* app/plug-in/plug-in-types.h
 	* app/plug-in/plug-in-def.[ch]: removed...

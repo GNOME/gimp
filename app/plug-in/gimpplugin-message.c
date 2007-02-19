@@ -603,22 +603,11 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
     {
     case GIMP_PLUGIN:
     case GIMP_EXTENSION:
-      proc = gimp_plug_in_procedure_find (plug_in->plug_in_def->procedures,
-                                          canonical);
-
-      if (proc)
-        gimp_plug_in_def_remove_procedure (plug_in->plug_in_def, proc);
-
       procedure = gimp_plug_in_procedure_new (proc_install->type,
                                               plug_in->prog);
       break;
 
     case GIMP_TEMPORARY:
-      proc = gimp_plug_in_procedure_find (plug_in->temp_procedures, canonical);
-
-      if (proc)
-        gimp_plug_in_remove_temp_proc (plug_in, GIMP_TEMPORARY_PROCEDURE (proc));
-
       procedure = gimp_temporary_procedure_new (plug_in);
       break;
     }
