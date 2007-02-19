@@ -28,10 +28,10 @@
 #include "core/gimpparamspecs.h"
 
 #include "gimpplugin.h"
+#include "gimpplugindef.h"
 #include "gimppluginmanager.h"
 #include "gimppluginmanager-file.h"
 #include "gimppluginprocedure.h"
-#include "plug-in-def.h"
 
 
 /*  public functions  */

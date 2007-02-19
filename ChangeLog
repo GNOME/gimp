@@ -1,3 +1,22 @@
+2007-02-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/Makefile.am
+	* app/plug-in/plug-in-types.h
+	* app/plug-in/plug-in-def.[ch]: removed...
+
+	* app/plug-in/gimpplugindef.[ch]: ...and added as object. Merged
+	locale and help domain setters into one function each.
+
+	* app/plug-in/gimpplugin-message.c
+	* app/plug-in/gimpplugin.[ch]
+	* app/plug-in/gimppluginmanager-call.[ch]
+	* app/plug-in/gimppluginmanager-file.c
+	* app/plug-in/gimppluginmanager.c
+	* app/plug-in/plug-in-rc.c
+	* tools/pdbgen/pdb/plug_in.pdb: changed accordingly.
+
+	* app/pdb/plug_in_cmds.c: regenerated.
+
 2007-02-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/text/gimptext-parasite.c

@@ -30,13 +30,13 @@
  */
 void          gimp_plug_in_manager_call_query    (GimpPlugInManager      *manager,
                                                   GimpContext            *context,
-                                                  PlugInDef              *plug_in_def);
+                                                  GimpPlugInDef          *plug_in_def);
 
 /*  Call the plug-in's init() function
  */
 void          gimp_plug_in_manager_call_init     (GimpPlugInManager      *manager,
                                                   GimpContext            *context,
-                                                  PlugInDef              *plug_in_def);
+                                                  GimpPlugInDef          *plug_in_def);
 
 /*  Run a plug-in as if it were a procedure database procedure
  */

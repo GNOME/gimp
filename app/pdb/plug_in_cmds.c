@@ -34,11 +34,11 @@
 
 #include "core/gimp.h"
 #include "plug-in/gimpplugin.h"
+#include "plug-in/gimpplugindef.h"
 #include "plug-in/gimppluginmanager-menu-branch.h"
 #include "plug-in/gimppluginmanager-query.h"
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginprocedure.h"
-#include "plug-in/plug-in-def.h"
 
 #include "internal_procs.h"
 
@@ -109,8 +109,8 @@ plugin_domain_register_invoker (GimpProcedure     *procedure,
 
       if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
         {
-          plug_in_def_set_locale_domain_name (plug_in->plug_in_def, domain_name);
-          plug_in_def_set_locale_domain_path (plug_in->plug_in_def, domain_path);
+          gimp_plug_in_def_set_locale_domain (plug_in->plug_in_def,
+                                              domain_name, domain_path);
         }
       else
         success = FALSE;
@@ -139,8 +139,8 @@ plugin_help_register_invoker (GimpProcedure     *procedure,
 
       if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
         {
-          plug_in_def_set_help_domain_name (plug_in->plug_in_def, domain_name);
-          plug_in_def_set_help_domain_uri  (plug_in->plug_in_def, domain_uri);
+          gimp_plug_in_def_set_help_domain (plug_in->plug_in_def,
+                                            domain_name, domain_uri);
         }
       else
         success = FALSE;

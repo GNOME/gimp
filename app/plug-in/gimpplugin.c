@@ -82,11 +82,11 @@
 #include "gimpplugin-message.h"
 #include "gimpplugin-progress.h"
 #include "gimpplugindebug.h"
+#include "gimpplugindef.h"
 #include "gimppluginmanager.h"
 #include "gimppluginmanager-help-domain.h"
 #include "gimppluginmanager-locale-domain.h"
 #include "gimptemporaryprocedure.h"
-#include "plug-in-def.h"
 #include "plug-in-params.h"
 
 #include "gimp-intl.h"

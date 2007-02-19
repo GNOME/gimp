@@ -67,7 +67,7 @@ struct _GimpPlugIn
 
   GList               *temp_proc_frames;
 
-  PlugInDef           *plug_in_def;     /*  Valid during query() and init()   */
+  GimpPlugInDef       *plug_in_def;     /*  Valid during query() and init()   */
 };
 
 struct _GimpPlugInClass

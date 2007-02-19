@@ -103,8 +103,8 @@ HELP
 
   if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
     {
-      plug_in_def_set_locale_domain_name (plug_in->plug_in_def, domain_name);
-      plug_in_def_set_locale_domain_path (plug_in->plug_in_def, domain_path);
+      gimp_plug_in_def_set_locale_domain (plug_in->plug_in_def,
+                                          domain_name, domain_path);
     }
   else
     success = FALSE;
@@ -138,8 +138,8 @@ HELP
 
   if (plug_in && plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
     {
-      plug_in_def_set_help_domain_name (plug_in->plug_in_def, domain_name);
-      plug_in_def_set_help_domain_uri  (plug_in->plug_in_def, domain_uri);
+      gimp_plug_in_def_set_help_domain (plug_in->plug_in_def,
+                                        domain_name, domain_uri);
     }
   else
     success = FALSE;
@@ -274,11 +274,11 @@ CODE
               "libgimpbase/gimpbase.h"
               "core/gimp.h"
               "plug-in/gimpplugin.h"
+              "plug-in/gimpplugindef.h"
               "plug-in/gimppluginmanager.h"
               "plug-in/gimppluginmanager-menu-branch.h"
               "plug-in/gimppluginmanager-query.h"
-              "plug-in/gimppluginprocedure.h"
-              "plug-in/plug-in-def.h");
+              "plug-in/gimppluginprocedure.h");
 
 @procs = qw(plugins_query
 	    plugin_domain_register plugin_help_register

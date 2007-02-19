@@ -40,12 +40,12 @@
 
 #include "gimpplugin.h"
 #include "gimpplugin-message.h"
+#include "gimpplugindef.h"
 #include "gimppluginmanager.h"
 #define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
 #include "gimppluginmanager-call.h"
 #include "gimppluginshm.h"
 #include "gimptemporaryprocedure.h"
-#include "plug-in-def.h"
 #include "plug-in-params.h"
 
 #include "gimp-intl.h"
@@ -56,13 +56,13 @@
 void
 gimp_plug_in_manager_call_query (GimpPlugInManager *manager,
                                  GimpContext       *context,
-                                 PlugInDef         *plug_in_def)
+                                 GimpPlugInDef     *plug_in_def)
 {
   GimpPlugIn *plug_in;
 
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (plug_in_def != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN_DEF (plug_in_def));
 
   plug_in = gimp_plug_in_new (manager, context, NULL,
                               NULL, plug_in_def->prog);
@@ -96,13 +96,13 @@ gimp_plug_in_manager_call_query (GimpPlugInManager *manager,
 void
 gimp_plug_in_manager_call_init (GimpPlugInManager *manager,
                                 GimpContext       *context,
-                                PlugInDef         *plug_in_def)
+                                GimpPlugInDef     *plug_in_def)
 {
   GimpPlugIn *plug_in;
 
   g_return_if_fail (GIMP_IS_PLUG_IN_MANAGER (manager));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
-  g_return_if_fail (plug_in_def != NULL);
+  g_return_if_fail (GIMP_IS_PLUG_IN_DEF (plug_in_def));
 
   plug_in = gimp_plug_in_new (manager, context, NULL,
                               NULL, plug_in_def->prog);

@@ -33,8 +33,8 @@
 
 #include "pdb/gimp-pdb-compat.h"
 
+#include "gimpplugindef.h"
 #include "gimppluginprocedure.h"
-#include "plug-in-def.h"
 #include "plug-in-rc.h"
 
 #include "gimp-intl.h"
@@ -63,11 +63,11 @@ static GTokenType plug_in_proc_arg_deserialize   (GScanner             *scanner,
                                                   GimpProcedure        *procedure,
                                                   gboolean              return_value);
 static GTokenType plug_in_locale_def_deserialize (GScanner             *scanner,
-                                                  PlugInDef            *plug_in_def);
+                                                  GimpPlugInDef        *plug_in_def);
 static GTokenType plug_in_help_def_deserialize   (GScanner             *scanner,
-                                                  PlugInDef            *plug_in_def);
+                                                  GimpPlugInDef        *plug_in_def);
 static GTokenType plug_in_has_init_deserialize   (GScanner             *scanner,
-                                                  PlugInDef            *plug_in_def);
+                                                  GimpPlugInDef        *plug_in_def);
 
 
 enum
@@ -213,7 +213,7 @@ plug_in_rc_parse (Gimp         *gimp,
                                  _("fatal parse error"), TRUE);
         }
 
-      g_slist_foreach (plug_in_defs, (GFunc) plug_in_def_free, NULL);
+      g_slist_foreach (plug_in_defs, (GFunc) g_object_unref, NULL);
       g_slist_free (plug_in_defs);
       plug_in_defs = NULL;
     }
@@ -230,7 +230,7 @@ plug_in_def_deserialize (Gimp      *gimp,
                          GScanner  *scanner,
                          GSList   **plug_in_defs)
 {
-  PlugInDef           *plug_in_def;
+  GimpPlugInDef       *plug_in_def;
   GimpPlugInProcedure *proc = NULL;
   gchar               *name;
   gchar               *path;
@@ -243,12 +243,12 @@ plug_in_def_deserialize (Gimp      *gimp,
   path = gimp_config_path_expand (name, TRUE, NULL);
   g_free (name);
 
-  plug_in_def = plug_in_def_new (path);
+  plug_in_def = gimp_plug_in_def_new (path);
   g_free (path);
 
   if (! gimp_scanner_parse_int (scanner, &mtime))
     {
-      plug_in_def_free (plug_in_def);
+      g_object_unref (plug_in_def);
       return G_TOKEN_INT;
     }
 
@@ -275,7 +275,7 @@ plug_in_def_deserialize (Gimp      *gimp,
                                                      &proc);
 
               if (token == G_TOKEN_LEFT_PAREN)
-                plug_in_def_add_procedure (plug_in_def, proc);
+                gimp_plug_in_def_add_procedure (plug_in_def, proc);
 
               if (proc)
                 g_object_unref (proc);
@@ -318,7 +318,7 @@ plug_in_def_deserialize (Gimp      *gimp,
         }
     }
 
-  plug_in_def_free (plug_in_def);
+  g_object_unref (plug_in_def);
 
   return token;
 }
@@ -689,22 +689,22 @@ plug_in_proc_arg_deserialize (GScanner      *scanner,
 }
 
 static GTokenType
-plug_in_locale_def_deserialize (GScanner  *scanner,
-                                PlugInDef *plug_in_def)
+plug_in_locale_def_deserialize (GScanner      *scanner,
+                                GimpPlugInDef *plug_in_def)
 {
-  gchar *string;
+  gchar *domain_name;
+  gchar *domain_path;
 
-  if (! gimp_scanner_parse_string (scanner, &string))
+  if (! gimp_scanner_parse_string (scanner, &domain_name))
     return G_TOKEN_STRING;
 
-  plug_in_def_set_locale_domain_name (plug_in_def, string);
-  g_free (string);
+  if (! gimp_scanner_parse_string (scanner, &domain_path))
+    domain_path = NULL;
 
-  if (gimp_scanner_parse_string (scanner, &string))
-    {
-      plug_in_def_set_locale_domain_path (plug_in_def, string);
-      g_free (string);
-    }
+  gimp_plug_in_def_set_locale_domain (plug_in_def, domain_name, domain_path);
+
+  g_free (domain_name);
+  g_free (domain_path);
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;
@@ -713,22 +713,22 @@ plug_in_locale_def_deserialize (GScanner  *scanner,
 }
 
 static GTokenType
-plug_in_help_def_deserialize (GScanner  *scanner,
-                              PlugInDef *plug_in_def)
+plug_in_help_def_deserialize (GScanner      *scanner,
+                              GimpPlugInDef *plug_in_def)
 {
-  gchar *string;
+  gchar *domain_name;
+  gchar *domain_uri;
 
-  if (! gimp_scanner_parse_string (scanner, &string))
+  if (! gimp_scanner_parse_string (scanner, &domain_name))
     return G_TOKEN_STRING;
 
-  plug_in_def_set_help_domain_name (plug_in_def, string);
-  g_free (string);
+  if (! gimp_scanner_parse_string (scanner, &domain_uri))
+    domain_uri = NULL;
 
-  if (gimp_scanner_parse_string (scanner, &string))
-    {
-      plug_in_def_set_help_domain_uri (plug_in_def, string);
-      g_free (string);
-    }
+  gimp_plug_in_def_set_help_domain (plug_in_def, domain_name, domain_uri);
+
+  g_free (domain_name);
+  g_free (domain_uri);
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;
@@ -737,10 +737,10 @@ plug_in_help_def_deserialize (GScanner  *scanner,
 }
 
 static GTokenType
-plug_in_has_init_deserialize (GScanner  *scanner,
-                              PlugInDef *plug_in_def)
+plug_in_has_init_deserialize (GScanner      *scanner,
+                              GimpPlugInDef *plug_in_def)
 {
-  plug_in_def_set_has_init (plug_in_def, TRUE);
+  gimp_plug_in_def_set_has_init (plug_in_def, TRUE);
 
   if (! gimp_scanner_parse_token (scanner, G_TOKEN_RIGHT_PAREN))
     return G_TOKEN_RIGHT_PAREN;
@@ -779,7 +779,7 @@ plug_in_rc_write (GSList       *plug_in_defs,
 
   for (list = plug_in_defs; list; list = list->next)
     {
-      PlugInDef *plug_in_def = list->data;
+      GimpPlugInDef *plug_in_def = list->data;
 
       if (plug_in_def->procedures)
         {

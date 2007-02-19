@@ -42,9 +42,9 @@
 #include "gimpplugin.h"
 #include "gimpplugin-message.h"
 #include "gimppluginmanager.h"
+#include "gimpplugindef.h"
 #include "gimppluginshm.h"
 #include "gimptemporaryprocedure.h"
-#include "plug-in-def.h"
 #include "plug-in-params.h"
 
 
@@ -607,7 +607,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
                                           canonical);
 
       if (proc)
-        plug_in_def_remove_procedure (plug_in->plug_in_def, proc);
+        gimp_plug_in_def_remove_procedure (plug_in->plug_in_def, proc);
 
       procedure = gimp_plug_in_procedure_new (proc_install->type,
                                               plug_in->prog);
@@ -691,7 +691,7 @@ gimp_plug_in_handle_proc_install (GimpPlugIn    *plug_in,
     {
     case GIMP_PLUGIN:
     case GIMP_EXTENSION:
-      plug_in_def_add_procedure (plug_in->plug_in_def, proc);
+      gimp_plug_in_def_add_procedure (plug_in->plug_in_def, proc);
       break;
 
     case GIMP_TEMPORARY:
@@ -743,7 +743,7 @@ gimp_plug_in_handle_has_init (GimpPlugIn *plug_in)
 {
   if (plug_in->call_mode == GIMP_PLUG_IN_CALL_QUERY)
     {
-      plug_in_def_set_has_init (plug_in->plug_in_def, TRUE);
+      gimp_plug_in_def_set_has_init (plug_in->plug_in_def, TRUE);
     }
   else
     {
