@@ -250,11 +250,13 @@ linux_input_class_init (ControllerLinuxInputClass *klass)
                                                         _("The name of the device to read Linux Input events from."),
                                                         NULL,
                                                         GIMP_CONFIG_PARAM_FLAGS));
+#ifdef HAVE_LIBHAL
   g_object_class_install_property (object_class, PROP_DEVICE_STORE,
                                    g_param_spec_object ("device-values",
                                                         NULL, NULL,
                                                         GIMP_TYPE_INPUT_DEVICE_STORE,
                                                         G_PARAM_READABLE));
+#endif
 
   controller_class->name            = _("Linux Input");
   controller_class->help_id         = "gimp-controller-linux-input";
