@@ -443,6 +443,8 @@ gimp_input_device_store_get_error (GimpInputDeviceStore  *store)
 
 #else
 
+GType gimp_input_device_store_type = 0;
+
 GType
 gimp_input_device_store_get_type (GTypeModule *module)
 {
