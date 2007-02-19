@@ -1345,8 +1345,12 @@ save_data (FILE *fd, gint32 image_id)
       gimp_image_undo_disable (flat_image);
       flat_drawable = gimp_image_flatten (flat_image);
 
-      IFDBG printf ("\t\tWriting compressed flattened image data\n");
-      write_pixel_data (fd, flat_drawable, NULL, offset);
+      /* gimp_image_flatten() may fail if there are no visible layers */
+      if (flat_drawable != -1)
+        {
+          IFDBG printf ("\t\tWriting compressed flattened image data\n");
+          write_pixel_data (fd, flat_drawable, NULL, offset);
+        }
 
       gimp_image_delete (flat_image);
     }
