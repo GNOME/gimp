@@ -129,8 +129,8 @@ script_fu_find_scripts (const gchar *path)
 static pointer
 my_err(scheme *sc, char *msg)
 {
-    fprintf(stderr, msg);
-    return sc->F;
+  g_printerr (msg);
+  return sc->F;
 }
 #endif
 

@@ -673,7 +673,7 @@ char *status_types[] = {
   "GIMP_PDB_CANCEL"
 };
 
-fprintf (stderr, "\nIn marshall_proc_db_call ()\n");
+g_printerr ("\nIn marshall_proc_db_call ()\n");
 #endif
 
   /*  Make sure there are arguments  */
@@ -689,10 +689,10 @@ fprintf (stderr, "\nIn marshall_proc_db_call ()\n");
     proc_name = g_strdup (sc->vptr->string_value (a));
 
 #ifdef DEBUG_MARSHALL
-fprintf (stderr, "  proc name: %s\n", proc_name);
+g_printerr ("  proc name: %s\n", proc_name);
 #endif
 #if DEBUG_MARSHALL
-fprintf (stderr, "  parms rcvd: %d\n", sc->vptr->list_length (sc, a)-1);
+g_printerr ("  parms rcvd: %d\n", sc->vptr->list_length (sc, a)-1);
 #endif
 
   /*  report the current command  */
@@ -710,7 +710,7 @@ fprintf (stderr, "  parms rcvd: %d\n", sc->vptr->list_length (sc, a)-1);
                                       &params, &return_vals))
     {
 #ifdef DEBUG_MARSHALL
-fprintf (stderr, "  Invalid procedure name\n");
+g_printerr ("  Invalid procedure name\n");
 #endif
       g_snprintf (error_str, sizeof (error_str),
                   "Invalid procedure name %s specified", proc_name);
@@ -733,7 +733,7 @@ fprintf (stderr, "  Invalid procedure name\n");
   if ( (sc->vptr->list_length (sc, a) - 1) != nparams)
     {
 #if DEBUG_MARSHALL
-fprintf (stderr, "  Invalid number of arguments (expected %d but received %d)",
+g_printerr ("  Invalid number of arguments (expected %d but received %d)",
                  nparams, (sc->vptr->list_length (sc, a) - 1));
 #endif
       g_snprintf (error_str, sizeof (error_str),
@@ -753,9 +753,9 @@ fprintf (stderr, "  Invalid number of arguments (expected %d but received %d)",
       a = sc->vptr->pair_cdr (a);
 
 #if DEBUG_MARSHALL
-fprintf (stderr, "    param %d - expecting type %s (%d)\n",
+g_printerr ("    param %d - expecting type %s (%d)\n",
                  i+1, ret_types[ params[i].type ], params[i].type);
-fprintf (stderr, "      passed arg is type %s (%d)\n",
+g_printerr ("      passed arg is type %s (%d)\n",
                  ts_types[ type(sc->vptr->pair_car (a)) ],
                  type(sc->vptr->pair_car (a)));
 #endif
@@ -779,7 +779,7 @@ fprintf (stderr, "      passed arg is type %s (%d)\n",
             {
               args[i].data.d_int32 = sc->vptr->ivalue (sc->vptr->pair_car (a));
 #if DEBUG_MARSHALL
-fprintf (stderr, "      int32 arg is '%d'\n", args[i].data.d_int32);
+g_printerr ("      int32 arg is '%d'\n", args[i].data.d_int32);
 #endif
             }
           break;
@@ -791,7 +791,7 @@ fprintf (stderr, "      int32 arg is '%d'\n", args[i].data.d_int32);
             {
               args[i].data.d_int16 = (gint16) sc->vptr->ivalue (sc->vptr->pair_car (a));
 #if DEBUG_MARSHALL
-fprintf (stderr, "      int16 arg is '%d'\n", args[i].data.d_int16);
+g_printerr ("      int16 arg is '%d'\n", args[i].data.d_int16);
 #endif
             }
           break;
@@ -803,7 +803,7 @@ fprintf (stderr, "      int16 arg is '%d'\n", args[i].data.d_int16);
             {
               args[i].data.d_int8 = (guint8) sc->vptr->ivalue (sc->vptr->pair_car (a));
 #if DEBUG_MARSHALL
-fprintf (stderr, "      int8 arg is '%u'\n", args[i].data.d_int8);
+g_printerr ("      int8 arg is '%u'\n", args[i].data.d_int8);
 #endif
             }
           break;
@@ -815,7 +815,7 @@ fprintf (stderr, "      int8 arg is '%u'\n", args[i].data.d_int8);
             {
               args[i].data.d_float = sc->vptr->rvalue (sc->vptr->pair_car (a));
 #if DEBUG_MARSHALL
-fprintf (stderr, "      float arg is '%f'\n", args[i].data.d_float);
+g_printerr ("      float arg is '%f'\n", args[i].data.d_float);
 #endif
             }
           break;
@@ -827,7 +827,7 @@ fprintf (stderr, "      float arg is '%f'\n", args[i].data.d_float);
             {
               args[i].data.d_string = sc->vptr->string_value (sc->vptr->pair_car (a));
 #if DEBUG_MARSHALL
-fprintf (stderr, "      string arg is '%s'\n", args[i].data.d_string);
+g_printerr ("      string arg is '%s'\n", args[i].data.d_string);
 #endif
             }
           break;
@@ -871,14 +871,14 @@ fprintf (stderr, "      string arg is '%s'\n", args[i].data.d_string);
 #if DEBUG_MARSHALL
 {
 glong count = sc->vptr->vector_length (vector);
-fprintf (stderr, "      int32 vector has %ld elements\n", count);
+g_printerr ("      int32 vector has %ld elements\n", count);
 if (count > 0)
   {
-    fprintf (stderr, "     ");
+    g_printerr ("     ");
     for (j = 0; j < count; ++j)
-      fprintf (stderr, " %ld",
+      g_printerr (" %ld",
                sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
-    fprintf (stderr, "\n");
+    g_printerr ("\n");
   }
 }
 #endif
@@ -922,14 +922,14 @@ if (count > 0)
 #if DEBUG_MARSHALL
 {
 glong count = sc->vptr->vector_length (vector);
-fprintf (stderr, "      int16 vector has %ld elements\n", count);
+g_printerr ("      int16 vector has %ld elements\n", count);
 if (count > 0)
   {
-    fprintf (stderr, "     ");
+    g_printerr ("     ");
     for (j = 0; j < count; ++j)
-      fprintf (stderr, " %ld",
+      g_printerr (" %ld",
                sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
-    fprintf (stderr, "\n");
+    g_printerr ("\n");
   }
 }
 #endif
@@ -973,14 +973,14 @@ if (count > 0)
 #if DEBUG_MARSHALL
 {
 glong count = sc->vptr->vector_length (vector);
-fprintf (stderr, "      int8 vector has %ld elements\n", count);
+g_printerr ("      int8 vector has %ld elements\n", count);
 if (count > 0)
   {
-    fprintf (stderr, "     ");
+    g_printerr ("     ");
     for (j = 0; j < count; ++j)
-      fprintf (stderr, " %ld",
+      g_printerr (" %ld",
                sc->vptr->ivalue ( sc->vptr->vector_elem (vector, j) ));
-    fprintf (stderr, "\n");
+    g_printerr ("\n");
   }
 }
 #endif
@@ -1024,14 +1024,14 @@ if (count > 0)
 #if DEBUG_MARSHALL
 {
 glong count = sc->vptr->vector_length (vector);
-fprintf (stderr, "      float vector has %ld elements\n", count);
+g_printerr ("      float vector has %ld elements\n", count);
 if (count > 0)
   {
-    fprintf (stderr, "     ");
+    g_printerr ("     ");
     for (j = 0; j < count; ++j)
-      fprintf (stderr, " %f",
+      g_printerr (" %f",
                sc->vptr->rvalue ( sc->vptr->vector_elem (vector, j) ));
-    fprintf (stderr, "\n");
+    g_printerr ("\n");
   }
 }
 #endif
@@ -1075,14 +1075,14 @@ if (count > 0)
 #if DEBUG_MARSHALL
 {
 glong count = sc->vptr->vector_length (vector);
-fprintf (stderr, "      string vector has %ld elements\n", count);
+g_printerr ("      string vector has %ld elements\n", count);
 if (count > 0)
   {
-    fprintf (stderr, "     ");
+    g_printerr ("     ");
     for (j = 0; j < count; ++j)
-      fprintf (stderr, " \"%s\"",
+      g_printerr (" \"%s\"",
                sc->vptr->string_value ( sc->vptr->vector_elem (vector, j) ));
-    fprintf (stderr, "\n");
+    g_printerr ("\n");
   }
 }
 #endif
@@ -1099,7 +1099,7 @@ if (count > 0)
 
               gimp_rgb_set_alpha (&args[i].data.d_color, 1.0);
 #if DEBUG_MARSHALL
-fprintf (stderr, "      (%s)\n",
+g_printerr ("      (%s)\n",
                  sc->vptr->string_value (sc->vptr->pair_car (a)));
 #endif
             }
@@ -1118,7 +1118,7 @@ fprintf (stderr, "      (%s)\n",
 
               gimp_rgba_set_uchar (&args[i].data.d_color, r, g, b, 255);
 #if DEBUG_MARSHALL
-fprintf (stderr, "      (%d %d %d)\n", r, g, b);
+g_printerr ("      (%d %d %d)\n", r, g, b);
 #endif
             }
           else
@@ -1148,7 +1148,7 @@ fprintf (stderr, "      (%d %d %d)\n", r, g, b);
               args[i].data.d_region.height =
                            sc->vptr->ivalue (sc->vptr->pair_car (region));
 #if DEBUG_MARSHALL
-fprintf (stderr, "      (%d %d %d %d)\n",
+g_printerr ("      (%d %d %d %d)\n",
                  args[i].data.d_region.x,
                  args[i].data.d_region.y,
                  args[i].data.d_region.width,
@@ -1175,7 +1175,7 @@ fprintf (stderr, "      (%d %d %d %d)\n",
               args[i].data.d_parasite.name =
                 sc->vptr->string_value (sc->vptr->pair_car (intermediate_val));
 #if DEBUG_MARSHALL
-fprintf (stderr, "      name '%s'\n", args[i].data.d_parasite.name);
+g_printerr ("      name '%s'\n", args[i].data.d_parasite.name);
 #endif
 
               /* parasite->flags */
@@ -1190,7 +1190,7 @@ fprintf (stderr, "      name '%s'\n", args[i].data.d_parasite.name);
               args[i].data.d_parasite.flags =
                 sc->vptr->ivalue (sc->vptr->pair_car (intermediate_val));
 #if DEBUG_MARSHALL
-fprintf (stderr, "      flags %d", args[i].data.d_parasite.flags);
+g_printerr ("      flags %d", args[i].data.d_parasite.flags);
 #endif
 
               /* parasite->data */
@@ -1207,8 +1207,8 @@ fprintf (stderr, "      flags %d", args[i].data.d_parasite.flags);
               args[i].data.d_parasite.data =
                 sc->vptr->string_value (sc->vptr->pair_car (intermediate_val));
 #if DEBUG_MARSHALL
-fprintf (stderr, ", size %d\n", args[i].data.d_parasite.size);
-fprintf (stderr, "      data '%s'\n", (char *)args[i].data.d_parasite.data);
+g_printerr (", size %d\n", args[i].data.d_parasite.size);
+g_printerr ("      data '%s'\n", (char *)args[i].data.d_parasite.data);
 #endif
             }
           break;
@@ -1233,17 +1233,17 @@ fprintf (stderr, "      data '%s'\n", (char *)args[i].data.d_parasite.data);
   if (success)
 #if DEBUG_MARSHALL
 {
-fprintf (stderr, "    calling %s...", proc_name);
+g_printerr ("    calling %s...", proc_name);
 #endif
     values = gimp_run_procedure2 (proc_name, &nvalues, nparams, args);
 #if DEBUG_MARSHALL
-fprintf (stderr, "  done.\n");
+g_printerr ("  done.\n");
 }
 #endif
   else
     {
 #if DEBUG_MARSHALL
-fprintf (stderr, "  Invalid type for argument %d\n", i+1);
+g_printerr ("  Invalid type for argument %d\n", i+1);
 #endif
       g_snprintf (error_str, sizeof (error_str),
                   "Invalid type for argument %d to %s",
@@ -1255,7 +1255,7 @@ fprintf (stderr, "  Invalid type for argument %d\n", i+1);
   if (! values)
     {
 #if DEBUG_MARSHALL
-fprintf (stderr, "  Did not return status\n");
+g_printerr ("  Did not return status\n");
 #endif
       g_snprintf (error_str, sizeof(error_str),
                "Procedural database execution of %s did not return a status:\n    ",
@@ -1265,7 +1265,7 @@ fprintf (stderr, "  Did not return status\n");
     }
 
 #if DEBUG_MARSHALL
-fprintf (stderr, "    return value is %s\n",
+g_printerr ("    return value is %s\n",
                  status_types[ values[0].data.d_status ]);
 #endif
 
@@ -1287,12 +1287,12 @@ fprintf (stderr, "    return value is %s\n",
 
     case GIMP_PDB_SUCCESS:
 #if DEBUG_MARSHALL
-fprintf (stderr, "    values returned: %d\n", nvalues-1);
+g_printerr ("    values returned: %d\n", nvalues-1);
 #endif
       for (i = nvalues - 2; i >= 0; --i)
         {
 #if DEBUG_MARSHALL
-fprintf (stderr, "      value %d is type %s (%d)\n",
+g_printerr ("      value %d is type %s (%d)\n",
                  i, ret_types[ return_vals[i].type ], return_vals[i].type);
 #endif
           switch (return_vals[i].type)
@@ -1523,10 +1523,10 @@ fprintf (stderr, "      value %d is type %s (%d)\n",
                     set_safe_foreign (sc, return_val);
 
 #if DEBUG_MARSHALL
-fprintf (stderr, "      name '%s'\n", values[i+1].data.d_parasite.name);
-fprintf (stderr, "      flags %d", values[i+1].data.d_parasite.flags);
-fprintf (stderr, ", size %d\n", values[i+1].data.d_parasite.size);
-fprintf (stderr, "      data '%.*s'\n",
+g_printerr ("      name '%s'\n", values[i+1].data.d_parasite.name);
+g_printerr ("      flags %d", values[i+1].data.d_parasite.flags);
+g_printerr (", size %d\n", values[i+1].data.d_parasite.size);
+g_printerr ("      data '%.*s'\n",
                  values[i+1].data.d_parasite.size,
                  (char *)values[i+1].data.d_parasite.data);
 #endif
