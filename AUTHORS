@@ -31,10 +31,12 @@ This file is generated from authors.xml, do not edit it directly.
   Marco Ciampa
   Sean Cier
   Winston Chang
+  Stephane Chauveau
   Zbigniew Chyla
   Branko Collin
   Ed Connel
   Piers Cornwell
+  David Costanzo
   Daniel Cotting
   Jay Cox
   Kevin Cozens
@@ -49,25 +51,33 @@ This file is generated from authors.xml, do not edit it directly.
   Daniel Egger
   Morton Eriksen
   Larry Ewing
+  Pedro Alonso Ferrer
   Nick Fetchak
+  Piotr Filiciak
   Shlomi Fish
+  Sylvain Foret
   David Forsyth
   Raphael Francois
   Jakub Friedl
+  Gerald Friedland
   Jochen Friedrich
+  Daniel Richard G
   Jordi Gay
   Jim Geuther
+  GG
   Graeme Gill
   Pedro Gimeno
   Scott Goehring
   Heiko Goller
   Marcelo de Gomensoro Malheiros
+  Saul Goode
   David Gowers
   Cameron Gregory
   Pavel Grinfeld
   Dov Grobgeld
   Michael Hammel
   Julien Hardelin
+  Robert Helgesson
   James Henstridge
   Eric Hernes
   David Hodson
@@ -78,9 +88,11 @@ This file is generated from authors.xml, do not edit it directly.
   Ben Jackson
   Simon Janes
   Tim Janik
+  Kristian Jantz
   Róman Joost
   Hans de Jonge
   Geert Jordaens
+  Aurimas Juška
   Andrew Kieschnick
   Peter Kirchgessner
   Philipp Klaus
@@ -95,6 +107,7 @@ This file is generated from authors.xml, do not edit it directly.
   Karl La Rocca
   Philip Lafleur
   Chris Lahey
+  Eric Lamarque
   Nick Lamb
   Marco Lamberto
   Jens Lautenbacher
@@ -102,6 +115,8 @@ This file is generated from authors.xml, do not edit it directly.
   Elliot Lee
   Marc Lehmann
   Ray Lehtiniemi
+  Tobias Lenz
+  Frederic Leroy
   Raph Levien
   Wing Tung Leung
   Adrian Likins
@@ -117,9 +132,12 @@ This file is generated from authors.xml, do not edit it directly.
   Gordon Matzigkeit
   Gregory McLean
   Federico Mena Quintero
+  Loren Merritt
   Jim Meyer
   James Mitchell
   Hirotsuna Mizuno
+  Chris Mohler
+  Chris Moller
   David Monniaux
   Adam D Moss
   Balazs Nagy
@@ -133,6 +151,7 @@ This file is generated from authors.xml, do not edit it directly.
   Andreas Nilsson
   Stephen Robert Norris
   Tim Newsome
+  Martin Nordholts
   Erik Nygren
   Miles O'Neal
   David Odin
@@ -152,6 +171,7 @@ This file is generated from authors.xml, do not edit it directly.
   Jens Restemeier
   Maurits Rijk
   Daniel Risacher
+  Clarence Risher
   James Robinson
   Guillermo S. Romero
   Tim Rowley
@@ -164,9 +184,12 @@ This file is generated from authors.xml, do not edit it directly.
   Tracy Scott
   Craig Setera
   Aaron Sherman
+  Jernej Simončič
   Manish Singh
+  Mukund Sivaraman
   William Skaggs
   Daniel Skarda
+  Kevin Sookocheff
   Carol Spears
   Adam Spiers
   Jakub Steiner
@@ -179,6 +202,7 @@ This file is generated from authors.xml, do not edit it directly.
   Owen Taylor
   Ian Tester
   Andy Thomas
+  Patrice Tremblay
   Kevin Turner
   Brion Vibber
   Helvetix Victorinox
@@ -190,5 +214,6 @@ This file is generated from authors.xml, do not edit it directly.
   Nigel Wetten
   Calvin Williamson
   Matthew Wilson
+  Karl Günter Wünsch
   Shirasaki Yasuhiro
 

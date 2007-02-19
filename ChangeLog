@@ -1,3 +1,12 @@
+2007-02-19  Karine Delvare  <edhel@gimp.org>
+
+	* authors.dtd
+	* authors.xml: added mandatory last-active attribute, and added
+	several 2.4 contributors.
+
+	* AUTHORS
+	* app/dialogs/authors.h: regenerated.
+
 2007-02-19  Manish Singh  <yosh@gimp.org>
 
 	* modules/gimpinputdevicestore.c: gimp_input_device_store_type

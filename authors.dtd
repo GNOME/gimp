@@ -5,6 +5,8 @@
 
 <!ELEMENT creator (#PCDATA)>
 <!ATTLIST creator role CDATA #REQUIRED>
+<!ATTLIST creator last-active CDATA #REQUIRED>
 
 <!ELEMENT contributor (#PCDATA)>
 <!ATTLIST contributor role CDATA #REQUIRED>
+<!ATTLIST contributor last-active CDATA #REQUIRED>
