@@ -1,5 +1,11 @@
 2007-02-19  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpbaseenums.[ch]: changed description for
+	GIMP_INTERPOLATION_LANCZOS to "Sinc (Lanczos3)". More correct and
+	more in sync with the other terms.
+
+2007-02-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/tinyscheme/scheme.c (atom2str): use
 	locale-independent function to convert a float value to a string.
 

@@ -248,7 +248,7 @@ typedef enum
   GIMP_INTERPOLATION_NONE,   /*< desc="interpolation|None"   >*/
   GIMP_INTERPOLATION_LINEAR, /*< desc="interpolation|Linear" >*/
   GIMP_INTERPOLATION_CUBIC,  /*< desc="Cubic"                >*/
-  GIMP_INTERPOLATION_LANCZOS /*< desc="Lanczos"              >*/
+  GIMP_INTERPOLATION_LANCZOS /*< desc="Sinc (Lanczos3)"      >*/
 } GimpInterpolationType;
 
 
