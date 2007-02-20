@@ -25,6 +25,11 @@ cdisplay_lcms_module = libcdisplay_lcms.la
 cdisplay_proof_module = libcdisplay_proof.la
 endif
 
+if PLATFORM_WIN32
+else
+controller_midi_module = libcontroller_midi.la
+endif
+
 if HAVE_LINUX_INPUT
 controller_linux_input_module = libcontroller_linux_input.la
 endif
@@ -42,7 +47,7 @@ lib_LTLIBRARIES = \
 	libcdisplay_highcontrast.la	\
 	$(cdisplay_lcms_module)		\
 	$(cdisplay_proof_module)	\
-	libcontroller_midi.la		\
+	$(controller_midi_module)	\
 	$(controller_linux_input_module)\
 	$(controller_dx_dinput_module)
 

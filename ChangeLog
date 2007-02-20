@@ -1,3 +1,10 @@
+2007-02-21  Tor Lillqvist  <tml@novell.com>
+
+	* modules/Makefile.am: It's pointless to build
+	libcontroller_midi.la on Windows, even if it happens to compile
+	and build. There are no MIDI "device files" on Windows. A totally
+	specific MIDI API would have to be used.
+
 2007-02-20  DindinX  <dindinx@gimp.org>
 
 	* plug-ins/common/gee.c: use our indentation and spacing way.
