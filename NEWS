@@ -7,6 +7,22 @@ This is the development branch of GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
+Changes in GIMP 2.3.15
+======================
+
+- added keyboard control to rectangle tools and improved their tool options
+- improved console handling on Win32
+- support large XCF files (> 2GB) on Win32 also
+- cleanup of the internal undo system
+- ask before overwriting files, not only for image files
+- added "Revert Zoom" functionality
+- added GimpStringComboBox widget to libgimpwidgets
+- added HAL support for hotplug of Linux Input devices
+- added support for shaped windows to the Screenshot plug-in
+- improved handling of incomplete PNG files
+- bug fixes and code cleanup
+
+
 Changes in GIMP 2.3.14
 ======================
 
