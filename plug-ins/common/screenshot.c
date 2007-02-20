@@ -833,7 +833,8 @@ shoot (GdkScreen *screen)
     {
       shape = window_get_shape (screen, shootvals.window_id);
 
-      gdk_region_offset (shape, x - rect.x, y - rect.y);
+      if (shape)
+        gdk_region_offset (shape, x - rect.x, y - rect.y);
     }
 
   image = create_image (screenshot, shape);
