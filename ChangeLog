@@ -1,3 +1,14 @@
+2007-02-20  Tor Lillqvist  <tml@novell.com>
+
+	* modules/controller_dx_dinput.c: New file. Low level
+	GimpController support for DirectInput controllers on Win32.
+
+	* modules/gimpinputdevicestore.c: Add implementation for
+	DirectInput devices.
+
+	* modules/Makefile.am: Add libcontroller_dx_dinput.la with above
+	source files.
+
 2007-02-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/screenshot.c: reworked shape support. Instead of

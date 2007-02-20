@@ -29,6 +29,10 @@ if HAVE_LINUX_INPUT
 controller_linux_input_module = libcontroller_linux_input.la
 endif
 
+if HAVE_DX_DINPUT
+controller_dx_dinput_module = libcontroller_dx_dinput.la
+endif
+
 lib_LTLIBRARIES = \
 	libcolorsel_cmyk.la		\
 	libcolorsel_triangle.la		\
@@ -39,7 +43,8 @@ lib_LTLIBRARIES = \
 	$(cdisplay_lcms_module)		\
 	$(cdisplay_proof_module)	\
 	libcontroller_midi.la		\
-	$(controller_linux_input_module)
+	$(controller_linux_input_module)\
+	$(controller_dx_dinput_module)
 
 
 modules_libadd = $(libgimpmodule) $(libgimpwidgets) $(GTK_LIBS)
@@ -94,6 +99,15 @@ libcontroller_linux_input_la_CFLAGS = $(DBUS_GLIB_CFLAGS) $(HAL_CFLAGS)
 libcontroller_linux_input_la_LDFLAGS = -avoid-version -module $(no_undefined)
 libcontroller_linux_input_la_LIBADD = \
 	$(controller_libadd) $(DBUS_GLIB_LIBS) $(HAL_LIBS)
+
+libcontroller_dx_dinput_la_SOURCES = \
+	gimpinputdevicestore.c	\
+	gimpinputdevicestore.h	\
+	controller_dx_dinput.c
+# Use -Wl to avoid libtool lossage
+libcontroller_dx_dinput_la_LDFLAGS = -avoid-version -module $(no_undefined) -Wl,-ldinput8 -Wl,-ldxguid
+libcontroller_dx_dinput_la_LIBADD = \
+	$(controller_libadd) -lrpcrt4
 
 libcontroller_midi_la_SOURCES = controller_midi.c
 libcontroller_midi_la_CFLAGS = $(ALSA_CFLAGS)
