@@ -21,6 +21,13 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+/* When using gcc with the February 2007 version of the DirectX SDK,
+ * at least, you need to fix a couple of duplicate typedefs in the
+ * DirectX <dinput.h>. Unfortunately I can't include the diff here,
+ * both for copyright reasons, and because that would confuse the C
+ * lexer even if inside #if 0.
+ */
+
 #include "config.h"
 
 #include <errno.h>
