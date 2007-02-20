@@ -65,4 +65,5 @@ modules/colorsel_cmyk.c
 modules/colorsel_triangle.c
 modules/colorsel_water.c
 modules/controller_linux_input.c
+modules/controller_dx_dinput.c
 modules/controller_midi.c
