@@ -52,10 +52,10 @@ enum
   PROP_DEVICE_STORE
 };
 
-#define NUM_EVENTS_PER_BUTTON 3	/* Button click, press and release */
-#define NUM_EVENTS_PER_AXIS 2	/* Axis decrease and increase */
-#define NUM_EVENTS_PER_SLIDER 2	/* Slider decrease and increase */
-#define NUM_EVENTS_PER_POV 3	/* POV view vector X and Y view and return */
+#define NUM_EVENTS_PER_BUTTON 3 /* Button click, press and release */
+#define NUM_EVENTS_PER_AXIS 2   /* Axis decrease and increase */
+#define NUM_EVENTS_PER_SLIDER 2 /* Slider decrease and increase */
+#define NUM_EVENTS_PER_POV 3    /* POV view vector X and Y view and return */
 
 #define CONTROLLER_TYPE_DX_DINPUT            (controller_type)
 #define CONTROLLER_DX_DINPUT(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), CONTROLLER_TYPE_DX_DINPUT, ControllerDXDInput))
@@ -396,18 +396,18 @@ count_objects (const DIDEVICEOBJECTINSTANCEW *doi,
       range.diph.dwHow = DIPH_BYID;
 
       if (FAILED ((hresult = IDirectInputDevice8_GetProperty (controller->didevice8,
-							      DIPROP_PHYSICALRANGE,
-							      &range.diph))))
-	g_warning ("IDirectInputDevice8::GetProperty failed: %s",
-		   g_win32_error_message (hresult));
+                                                              DIPROP_PHYSICALRANGE,
+                                                              &range.diph))))
+        g_warning ("IDirectInputDevice8::GetProperty failed: %s",
+                   g_win32_error_message (hresult));
       else
-	{
-	  if (FAILED ((hresult = IDirectInputDevice8_SetProperty (controller->didevice8,
-								  DIPROP_RANGE,
-								  &range.diph))))
-	    g_warning ("IDirectInputDevice8::SetProperty failed: %s",
-		       g_win32_error_message (hresult));
-	}
+        {
+          if (FAILED ((hresult = IDirectInputDevice8_SetProperty (controller->didevice8,
+                                                                  DIPROP_RANGE,
+                                                                  &range.diph))))
+            g_warning ("IDirectInputDevice8::SetProperty failed: %s",
+                       g_win32_error_message (hresult));
+        }
     }
 
   if (IsEqualGUID (&doi->guidType, &GUID_Button))
@@ -429,7 +429,7 @@ count_objects (const DIDEVICEOBJECTINSTANCEW *doi,
 
 static BOOL CALLBACK
 name_objects (const DIDEVICEOBJECTINSTANCEW *doi,
-	      void                          *user_data)
+              void                          *user_data)
 {
   ControllerDXDInput *controller = (ControllerDXDInput *) user_data;
 
@@ -450,66 +450,66 @@ name_objects (const DIDEVICEOBJECTINSTANCEW *doi,
       controller->bi++;
     }
   else if (IsEqualGUID (&doi->guidType, &GUID_XAxis) ||
-	   IsEqualGUID (&doi->guidType, &GUID_YAxis) ||
+           IsEqualGUID (&doi->guidType, &GUID_YAxis) ||
            IsEqualGUID (&doi->guidType, &GUID_ZAxis) ||
            IsEqualGUID (&doi->guidType, &GUID_RxAxis) ||
            IsEqualGUID (&doi->guidType, &GUID_RyAxis) ||
            IsEqualGUID (&doi->guidType, &GUID_RzAxis))
     {
       if (IsEqualGUID (&doi->guidType, &GUID_XAxis))
-	{
-	  controller->event_names[controller->aei] = g_strdup ("x-move-left");
-	  controller->event_blurbs[controller->aei] = g_strdup (_("X Move Left"));
-	  controller->aei++;
-	  controller->event_names[controller->aei] = g_strdup ("x-move-right");
-	  controller->event_blurbs[controller->aei] = g_strdup (_("X Move Right"));
-	  controller->aei++;
-	}
+        {
+          controller->event_names[controller->aei] = g_strdup ("x-move-left");
+          controller->event_blurbs[controller->aei] = g_strdup (_("X Move Left"));
+          controller->aei++;
+          controller->event_names[controller->aei] = g_strdup ("x-move-right");
+          controller->event_blurbs[controller->aei] = g_strdup (_("X Move Right"));
+          controller->aei++;
+        }
       else if (IsEqualGUID (&doi->guidType, &GUID_YAxis))
-	{
-	  controller->event_names[controller->aei] = g_strdup ("y-move-away");
-	  controller->event_blurbs[controller->aei] = g_strdup (_("Y Move Away"));
-	  controller->aei++;
-	  controller->event_names[controller->aei] = g_strdup ("y-move-near");
-	  controller->event_blurbs[controller->aei] = g_strdup (_("Y Move Near"));
-	  controller->aei++;
-	}
+        {
+          controller->event_names[controller->aei] = g_strdup ("y-move-away");
+          controller->event_blurbs[controller->aei] = g_strdup (_("Y Move Away"));
+          controller->aei++;
+          controller->event_names[controller->aei] = g_strdup ("y-move-near");
+          controller->event_blurbs[controller->aei] = g_strdup (_("Y Move Near"));
+          controller->aei++;
+        }
       else if (IsEqualGUID (&doi->guidType, &GUID_ZAxis))
-	{
-	  controller->event_names[controller->aei] = g_strdup ("z-move-up");
-	  controller->event_blurbs[controller->aei] = g_strdup (_("Z Move Up"));
-	  controller->aei++;
-	  controller->event_names[controller->aei] = g_strdup ("z-move-down");
-	  controller->event_blurbs[controller->aei] = g_strdup (_("Z Move Down"));
-	  controller->aei++;
-	}
+        {
+          controller->event_names[controller->aei] = g_strdup ("z-move-up");
+          controller->event_blurbs[controller->aei] = g_strdup (_("Z Move Up"));
+          controller->aei++;
+          controller->event_names[controller->aei] = g_strdup ("z-move-down");
+          controller->event_blurbs[controller->aei] = g_strdup (_("Z Move Down"));
+          controller->aei++;
+        }
       else if (IsEqualGUID (&doi->guidType, &GUID_RxAxis))
-	{
-	  controller->event_names[controller->aei] = g_strdup ("x-axis-tilt-away");
-	  controller->event_blurbs[controller->aei] = g_strdup (_("X Axis Tilt Away"));
-	  controller->aei++;
-	  controller->event_names[controller->aei] = g_strdup ("x-axis-tilt-near");
-	  controller->event_blurbs[controller->aei] = g_strdup (_("X Axis Tilt Near"));
-	  controller->aei++;
-	}
+        {
+          controller->event_names[controller->aei] = g_strdup ("x-axis-tilt-away");
+          controller->event_blurbs[controller->aei] = g_strdup (_("X Axis Tilt Away"));
+          controller->aei++;
+          controller->event_names[controller->aei] = g_strdup ("x-axis-tilt-near");
+          controller->event_blurbs[controller->aei] = g_strdup (_("X Axis Tilt Near"));
+          controller->aei++;
+        }
       else if (IsEqualGUID (&doi->guidType, &GUID_RyAxis))
-	{
-	  controller->event_names[controller->aei] = g_strdup ("y-axis-tilt-right");
-	  controller->event_blurbs[controller->aei] = g_strdup (_("Y Axis Tilt Right"));
-	  controller->aei++;
-	  controller->event_names[controller->aei] = g_strdup ("y-axis-tilt-left");
-	  controller->event_blurbs[controller->aei] = g_strdup (_("Y Axis Tilt Left"));
-	  controller->aei++;
-	}
+        {
+          controller->event_names[controller->aei] = g_strdup ("y-axis-tilt-right");
+          controller->event_blurbs[controller->aei] = g_strdup (_("Y Axis Tilt Right"));
+          controller->aei++;
+          controller->event_names[controller->aei] = g_strdup ("y-axis-tilt-left");
+          controller->event_blurbs[controller->aei] = g_strdup (_("Y Axis Tilt Left"));
+          controller->aei++;
+        }
       else if (IsEqualGUID (&doi->guidType, &GUID_RzAxis))
-	{
-	  controller->event_names[controller->aei] = g_strdup ("z-axis-turn-left");
-	  controller->event_blurbs[controller->aei] = g_strdup (_("Z Axis Turn Left"));
-	  controller->aei++;
-	  controller->event_names[controller->aei] = g_strdup ("z-axis-turn-right");
-	  controller->event_blurbs[controller->aei] = g_strdup (_("Z Axis Turn Right"));
-	  controller->aei++;
-	}
+        {
+          controller->event_names[controller->aei] = g_strdup ("z-axis-turn-left");
+          controller->event_blurbs[controller->aei] = g_strdup (_("Z Axis Turn Left"));
+          controller->aei++;
+          controller->event_names[controller->aei] = g_strdup ("z-axis-turn-right");
+          controller->event_blurbs[controller->aei] = g_strdup (_("Z Axis Turn Right"));
+          controller->aei++;
+        }
 
       g_assert (controller->ai < controller->num_axes);
 
@@ -550,7 +550,7 @@ name_objects (const DIDEVICEOBJECTINSTANCEW *doi,
 
 static gboolean
 dx_dinput_get_device_info (ControllerDXDInput *controller,
-			   GError            **error)
+                           GError            **error)
 {
   HRESULT hresult;
 
@@ -570,8 +570,8 @@ dx_dinput_get_device_info (ControllerDXDInput *controller,
                                                           DIDFT_TGLBUTTON))))
     {
       g_set_error (error, 0, 0,
-		   "IDirectInputDevice8::EnumObjects failed: %s",
-		   g_win32_error_message (hresult));
+                   "IDirectInputDevice8::EnumObjects failed: %s",
+                   g_win32_error_message (hresult));
       return FALSE;
     }
 
@@ -610,8 +610,8 @@ dx_dinput_get_device_info (ControllerDXDInput *controller,
       g_free (controller->event_blurbs);
 
       g_set_error (error, 0, 0,
-		   "IDirectInputDevice8::EnumObjects failed: %s",
-		   g_win32_error_message (hresult));
+                   "IDirectInputDevice8::EnumObjects failed: %s",
+                   g_win32_error_message (hresult));
       return FALSE;
     }
 
@@ -676,8 +676,8 @@ dx_dinput_event_dispatch (GSource     *source,
   data = g_malloc (format->dwDataSize);
 
   if (FAILED ((hresult = IDirectInputDevice8_GetDeviceState (input->didevice8,
-							     format->dwDataSize,
-							     data))))
+                                                             format->dwDataSize,
+                                                             data))))
     {
       g_free (data);
       return TRUE;
@@ -688,28 +688,28 @@ dx_dinput_event_dispatch (GSource     *source,
   for (i = 0; i < input->num_buttons; i++)
     {
       if (input->prevdata[rgodf->dwOfs] != data[rgodf->dwOfs])
-	{
-	  if (data[rgodf->dwOfs] & 0x80)
-	    {
-	      /* Click event, compatibility with Linux Input */
-	      cevent.any.type = GIMP_CONTROLLER_EVENT_TRIGGER;
-	      cevent.any.source = controller;
-	      cevent.any.event_id = i*NUM_EVENTS_PER_BUTTON;
-	      gimp_controller_event (controller, &cevent);
+        {
+          if (data[rgodf->dwOfs] & 0x80)
+            {
+              /* Click event, compatibility with Linux Input */
+              cevent.any.type = GIMP_CONTROLLER_EVENT_TRIGGER;
+              cevent.any.source = controller;
+              cevent.any.event_id = i*NUM_EVENTS_PER_BUTTON;
+              gimp_controller_event (controller, &cevent);
 
-	      /* Press event */
-	      cevent.any.event_id = i*NUM_EVENTS_PER_BUTTON + 1;
-	      gimp_controller_event (controller, &cevent);
-	    }
-	  else
-	    {
-	      /* Release event */
-	      cevent.any.type = GIMP_CONTROLLER_EVENT_TRIGGER;
-	      cevent.any.source = controller;
-	      cevent.any.event_id = i*NUM_EVENTS_PER_BUTTON + 2;
-	      gimp_controller_event (controller, &cevent);
-	    }
-	}
+              /* Press event */
+              cevent.any.event_id = i*NUM_EVENTS_PER_BUTTON + 1;
+              gimp_controller_event (controller, &cevent);
+            }
+          else
+            {
+              /* Release event */
+              cevent.any.type = GIMP_CONTROLLER_EVENT_TRIGGER;
+              cevent.any.source = controller;
+              cevent.any.event_id = i*NUM_EVENTS_PER_BUTTON + 2;
+              gimp_controller_event (controller, &cevent);
+            }
+        }
       rgodf++;
     }
 
@@ -719,27 +719,27 @@ dx_dinput_event_dispatch (GSource     *source,
       LONG *curr = (LONG *)(data+rgodf->dwOfs);
 
       if (ABS (*prev - *curr) > 1)
-	{
-	  cevent.any.type = GIMP_CONTROLLER_EVENT_VALUE;
-	  cevent.any.source = controller;
-	  cevent.any.event_id =
-	    input->num_button_events +
-	    i*NUM_EVENTS_PER_AXIS;
-	  g_value_init (&cevent.value.value, G_TYPE_DOUBLE);
-	  if (*curr - *prev < 0)
-	    {
-	      g_value_set_double (&cevent.value.value, *prev - *curr);
-	    }
-	  else
-	    {
-	      cevent.any.event_id++;
-	      g_value_set_double (&cevent.value.value, *curr - *prev);
-	    }
-	  gimp_controller_event (controller, &cevent);
-	  g_value_unset (&cevent.value.value);
-	}
+        {
+          cevent.any.type = GIMP_CONTROLLER_EVENT_VALUE;
+          cevent.any.source = controller;
+          cevent.any.event_id =
+            input->num_button_events +
+            i*NUM_EVENTS_PER_AXIS;
+          g_value_init (&cevent.value.value, G_TYPE_DOUBLE);
+          if (*curr - *prev < 0)
+            {
+              g_value_set_double (&cevent.value.value, *prev - *curr);
+            }
+          else
+            {
+              cevent.any.event_id++;
+              g_value_set_double (&cevent.value.value, *curr - *prev);
+            }
+          gimp_controller_event (controller, &cevent);
+          g_value_unset (&cevent.value.value);
+        }
       else
-	*curr = *prev;
+        *curr = *prev;
       rgodf++;
     }
   
@@ -749,28 +749,28 @@ dx_dinput_event_dispatch (GSource     *source,
       LONG *curr = (LONG *)(data+rgodf->dwOfs);
 
       if (ABS (*prev - *curr) > 1)
-	{
-	  cevent.any.type = GIMP_CONTROLLER_EVENT_VALUE;
-	  cevent.any.source = controller;
-	  cevent.any.event_id =
-	    input->num_button_events +
-	    input->num_axis_events +
-	    i*NUM_EVENTS_PER_SLIDER;
-	  g_value_init (&cevent.value.value, G_TYPE_DOUBLE);
-	  if (*curr - *prev < 0)
-	    {
-	      g_value_set_double (&cevent.value.value, *prev - *curr);
-	    }
-	  else
-	    {
-	      cevent.any.event_id++;
-	      g_value_set_double (&cevent.value.value, *curr - *prev);
-	    }
-	  gimp_controller_event (controller, &cevent);
-	  g_value_unset (&cevent.value.value);
-	}
+        {
+          cevent.any.type = GIMP_CONTROLLER_EVENT_VALUE;
+          cevent.any.source = controller;
+          cevent.any.event_id =
+            input->num_button_events +
+            input->num_axis_events +
+            i*NUM_EVENTS_PER_SLIDER;
+          g_value_init (&cevent.value.value, G_TYPE_DOUBLE);
+          if (*curr - *prev < 0)
+            {
+              g_value_set_double (&cevent.value.value, *prev - *curr);
+            }
+          else
+            {
+              cevent.any.event_id++;
+              g_value_set_double (&cevent.value.value, *curr - *prev);
+            }
+          gimp_controller_event (controller, &cevent);
+          g_value_unset (&cevent.value.value);
+        }
       else
-	*curr = *prev;
+        *curr = *prev;
       rgodf++;
     }
   
@@ -782,49 +782,49 @@ dx_dinput_event_dispatch (GSource     *source,
       double currx, curry;
 
       if (prev != curr)
-	{
-	  if (prev == -1)
-	    {
-	      prevx = 0.;
-	      prevy = 0.;
-	    }
-	  else
-	    {
-	      prevx = sin (prev/36000.*2.*G_PI);
-	      prevy = cos (prev/36000.*2.*G_PI);
-	    }
-	  if (curr == -1)
-	    {
-	      currx = 0.;
-	      curry = 0.;
-	    }
-	  else
-	    {
-	      currx = sin (curr/36000.*2.*G_PI);
-	      curry = cos (curr/36000.*2.*G_PI);
-	    }
+        {
+          if (prev == -1)
+            {
+              prevx = 0.;
+              prevy = 0.;
+            }
+          else
+            {
+              prevx = sin (prev/36000.*2.*G_PI);
+              prevy = cos (prev/36000.*2.*G_PI);
+            }
+          if (curr == -1)
+            {
+              currx = 0.;
+              curry = 0.;
+            }
+          else
+            {
+              currx = sin (curr/36000.*2.*G_PI);
+              curry = cos (curr/36000.*2.*G_PI);
+            }
 
-	  cevent.any.type = GIMP_CONTROLLER_EVENT_VALUE;
-	  cevent.any.source = controller;
-	  cevent.any.event_id =
-	    input->num_button_events +
-	    input->num_axis_events +
-	    input->num_slider_events +
-	    i*NUM_EVENTS_PER_POV;
-	  g_value_init (&cevent.value.value, G_TYPE_DOUBLE);
-	  g_value_set_double (&cevent.value.value, currx - prevx);
-	  gimp_controller_event (controller, &cevent);
-	  cevent.any.event_id++;
-	  g_value_set_double (&cevent.value.value, curry - prevy);
-	  gimp_controller_event (controller, &cevent);
-	  g_value_unset (&cevent.value.value);
-	  if (curr == -1)
-	    {
-	      cevent.any.type = GIMP_CONTROLLER_EVENT_TRIGGER;
-	      cevent.any.event_id++;
-	      gimp_controller_event (controller, &cevent);
-	    }
-	}
+          cevent.any.type = GIMP_CONTROLLER_EVENT_VALUE;
+          cevent.any.source = controller;
+          cevent.any.event_id =
+            input->num_button_events +
+            input->num_axis_events +
+            input->num_slider_events +
+            i*NUM_EVENTS_PER_POV;
+          g_value_init (&cevent.value.value, G_TYPE_DOUBLE);
+          g_value_set_double (&cevent.value.value, currx - prevx);
+          gimp_controller_event (controller, &cevent);
+          cevent.any.event_id++;
+          g_value_set_double (&cevent.value.value, curry - prevy);
+          gimp_controller_event (controller, &cevent);
+          g_value_unset (&cevent.value.value);
+          if (curr == -1)
+            {
+              cevent.any.type = GIMP_CONTROLLER_EVENT_TRIGGER;
+              cevent.any.event_id++;
+              gimp_controller_event (controller, &cevent);
+            }
+        }
       rgodf++;
     }
   
@@ -871,36 +871,36 @@ dump_data_format (const DIDATAFORMAT *format)
       
       g_print ("Object %d:\n", i);
       if (oformat->pguid == NULL)
-	g_print ("  pguid: NULL\n");
+        g_print ("  pguid: NULL\n");
       else
-	{
-	  UuidToString (oformat->pguid, &guid);
-	  g_print ("  pguid: %s\n", guid);
-	  RpcStringFree (&guid);
-	}
+        {
+          UuidToString (oformat->pguid, &guid);
+          g_print ("  pguid: %s\n", guid);
+          RpcStringFree (&guid);
+        }
 
       g_print ("  dwOfs: %ld\n", oformat->dwOfs);
       g_print ("  dwType: ");
       switch (DIDFT_GETTYPE (oformat->dwType))
-	{
+        {
 #define CASE(x) case DIDFT_##x: g_print ("DIDFT_"#x); break
-	CASE (RELAXIS);
-	CASE (ABSAXIS);
-	CASE (AXIS);
-	CASE (PSHBUTTON);
-	CASE (TGLBUTTON);
-	CASE (BUTTON);
-	CASE (POV);
-	CASE (COLLECTION);
-	CASE (NODATA);
+        CASE (RELAXIS);
+        CASE (ABSAXIS);
+        CASE (AXIS);
+        CASE (PSHBUTTON);
+        CASE (TGLBUTTON);
+        CASE (BUTTON);
+        CASE (POV);
+        CASE (COLLECTION);
+        CASE (NODATA);
 #undef CASE
-	default: g_print ("%#x", DIDFT_GETTYPE (oformat->dwType));
-	}
+        default: g_print ("%#x", DIDFT_GETTYPE (oformat->dwType));
+        }
       g_print (" ");
       if (DIDFT_GETINSTANCE (oformat->dwType) == DIDFT_GETINSTANCE (DIDFT_ANYINSTANCE))
-	g_print ("ANYINSTANCE");
+        g_print ("ANYINSTANCE");
       else
-	g_print ("#%d", DIDFT_GETINSTANCE (oformat->dwType));
+        g_print ("#%d", DIDFT_GETINSTANCE (oformat->dwType));
 #define BIT(x) if (oformat->dwType & DIDFT_##x) g_print (" "#x)
       BIT (FFACTUATOR);
       BIT (FFEFFECTTRIGGER);
@@ -913,13 +913,13 @@ dump_data_format (const DIDATAFORMAT *format)
       g_print ("  dwFlags:");
 #define BIT(x) if (oformat->dwFlags & DIDOI_ASPECT##x) g_print (" DIDOI_ASPECT"#x)
       switch (oformat->dwFlags & DIDOI_ASPECTACCEL)
-	{
-	case DIDOI_ASPECTPOSITION: g_print (" DIDOI_ASPECTPOSITION"); break;
-	case DIDOI_ASPECTVELOCITY: g_print (" DIDOI_ASPECTVELOCITY"); break;
-	case DIDOI_ASPECTACCEL: g_print (" DIDOI_ASPECTACCEL"); break;
-	}
+        {
+        case DIDOI_ASPECTPOSITION: g_print (" DIDOI_ASPECTPOSITION"); break;
+        case DIDOI_ASPECTVELOCITY: g_print (" DIDOI_ASPECTVELOCITY"); break;
+        case DIDOI_ASPECTACCEL: g_print (" DIDOI_ASPECTACCEL"); break;
+        }
       if (oformat->dwFlags & DIDOI_ASPECTFORCE)
-	g_print (" DIDOI_ASPECTFORCE");
+        g_print (" DIDOI_ASPECTFORCE");
       g_print ("\n");
     }
 #endif
@@ -927,7 +927,7 @@ dump_data_format (const DIDATAFORMAT *format)
 
 static gboolean
 dx_dinput_setup_events (ControllerDXDInput *controller,
-			GError            **error)
+                        GError            **error)
 {
   HRESULT         hresult;
   DIPROPDWORD     dword;
@@ -937,8 +937,8 @@ dx_dinput_setup_events (ControllerDXDInput *controller,
   if ((controller->event = CreateEvent (NULL, TRUE, FALSE, NULL)) == NULL)
     {
       g_set_error (error, 0, 0,
-		   "CreateEvent failed: %s",
-		   g_win32_error_message (GetLastError ()));
+                   "CreateEvent failed: %s",
+                   g_win32_error_message (GetLastError ()));
       return FALSE;
     }
 
@@ -953,15 +953,15 @@ dx_dinput_setup_events (ControllerDXDInput *controller,
 
   /* Get the axis mode so we can use the same in the format */
   if (FAILED ((hresult = IDirectInputDevice8_GetProperty (controller->didevice8,
-							  DIPROP_AXISMODE,
-							  &dword.diph))))
+                                                          DIPROP_AXISMODE,
+                                                          &dword.diph))))
     {
       g_set_error (error, 0, 0,
-		   "IDirectInputDevice8::GetParameters failed: %s",
-		   g_win32_error_message (hresult));
+                   "IDirectInputDevice8::GetParameters failed: %s",
+                   g_win32_error_message (hresult));
       goto fail0;
     }
-							  
+                                                          
   controller->format->dwFlags = dword.dwData + 1;
 
   controller->format->dwNumObjs =
@@ -1025,43 +1025,43 @@ dx_dinput_setup_events (ControllerDXDInput *controller,
   dump_data_format (controller->format);
 
   if (FAILED ((hresult = IDirectInputDevice8_SetDataFormat (controller->didevice8,
-							    controller->format))))
+                                                            controller->format))))
     {
       g_set_error (error, 0, 0,
-		   "IDirectInputDevice8::SetDataFormat failed: %s",
-		   g_win32_error_message (hresult));
+                   "IDirectInputDevice8::SetDataFormat failed: %s",
+                   g_win32_error_message (hresult));
       goto fail1;
     }
 
   if (FAILED ((hresult = IDirectInputDevice8_SetEventNotification (controller->didevice8,
-								   controller->event))))
+                                                                   controller->event))))
     {
       g_set_error (error, 0, 0,
-		   "IDirectInputDevice8::SetEventNotification failed: %s",
-		   g_win32_error_message (hresult));
+                   "IDirectInputDevice8::SetEventNotification failed: %s",
+                   g_win32_error_message (hresult));
       goto fail2;
     }
 
   if (FAILED ((hresult = IDirectInputDevice8_Acquire (controller->didevice8))))
     {
       g_set_error (error, 0, 0,
-		   "IDirectInputDevice8::Acquire failed: %s",
-		   g_win32_error_message (hresult));
+                   "IDirectInputDevice8::Acquire failed: %s",
+                   g_win32_error_message (hresult));
       goto fail2;
     }
     
   if (FAILED ((hresult = IDirectInputDevice8_GetDeviceState (controller->didevice8,
-							     controller->format->dwDataSize,
-							     controller->prevdata))))
+                                                             controller->format->dwDataSize,
+                                                             controller->prevdata))))
     {
       g_set_error (error, 0, 0,
-		   "IDirectInputDevice8::GetDeviceState failed: %s",
-		   g_win32_error_message (hresult));
+                   "IDirectInputDevice8::GetDeviceState failed: %s",
+                   g_win32_error_message (hresult));
       goto fail2;
     }
 
   source = (DXDInputSource *) g_source_new (&dx_dinput_event_funcs,
-					    sizeof (DXDInputSource));
+                                            sizeof (DXDInputSource));
   source->controller = controller;
   controller->source = (GSource *) source;
 
@@ -1120,11 +1120,11 @@ dx_dinput_set_device (ControllerDXDInput *controller,
   if (controller->didevice8)
     {
       if (!dx_dinput_get_device_info (controller, &error) ||
-	  !dx_dinput_setup_events (controller, &error))
-	{
-	  g_object_set (controller, "state", error->message, NULL);
-	  g_error_free (error);
-	}
+          !dx_dinput_setup_events (controller, &error))
+        {
+          g_object_set (controller, "state", error->message, NULL);
+          g_error_free (error);
+        }
     }
   else if (controller->store)
     {

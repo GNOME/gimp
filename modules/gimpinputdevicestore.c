@@ -580,8 +580,8 @@ gimp_input_device_store_class_init (GimpInputDeviceStoreClass *klass)
 
 static GdkFilterReturn
 aux_window_filter (GdkXEvent *xevent,
-		   GdkEvent  *event,
-		   gpointer   data)
+                   GdkEvent  *event,
+                   gpointer   data)
 {
   GimpInputDeviceStore *store = (GimpInputDeviceStore *) data;
   const MSG *msg = (MSG *) xevent;
@@ -619,7 +619,7 @@ create_aux_window (GimpInputDeviceStore *store)
 
 static BOOL CALLBACK
 enum_devices (const DIDEVICEINSTANCEW *di,
-	      void                    *user_data)
+              void                    *user_data)
 {
   GimpInputDeviceStore *store = (GimpInputDeviceStore *) user_data;
 
@@ -645,8 +645,8 @@ gimp_input_device_store_init (GimpInputDeviceStore *store)
                                    G_N_ELEMENTS (types), types);
 
   if (!GetModuleHandleEx (GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS,
-			  (LPCTSTR) &gimp_input_device_store_init,
-			  &thismodule))
+                          (LPCTSTR) &gimp_input_device_store_init,
+                          &thismodule))
     return;
 
   if ((store->window = create_aux_window (store)) == NULL)
@@ -668,20 +668,20 @@ gimp_input_device_store_init (GimpInputDeviceStore *store)
     }
   
   if (FAILED ((hresult = (*p_DirectInput8Create) (thismodule,
-						  DIRECTINPUT_VERSION,
-						  &IID_IDirectInput8W,
-						  (LPVOID *) &store->directinput8,
-						  NULL))))
+                                                  DIRECTINPUT_VERSION,
+                                                  &IID_IDirectInput8W,
+                                                  (LPVOID *) &store->directinput8,
+                                                  NULL))))
     {
       g_set_error (&store->error, 0, 0, "DirectInput8Create failed: %s", g_win32_error_message (hresult));
       return;
     }
 
   if (FAILED ((hresult = IDirectInput8_EnumDevices (store->directinput8,
-						    DI8DEVCLASS_GAMECTRL,
-						    enum_devices,
-						    store,
-						    DIEDFL_ATTACHEDONLY))))
+                                                    DI8DEVCLASS_GAMECTRL,
+                                                    enum_devices,
+                                                    store,
+                                                    DIEDFL_ATTACHEDONLY))))
     {
       g_set_error (&store->error, 0, 0, "IDirectInput8::EnumDevices failed: %s", g_win32_error_message (hresult));
       return;
@@ -744,7 +744,7 @@ static void
 gimp_input_device_store_insert (GimpInputDeviceStore  *store,
                                 const gchar           *guid,
                                 const gchar           *label,
-				LPDIRECTINPUTDEVICE8W  didevice8)
+                                LPDIRECTINPUTDEVICE8W  didevice8)
 {
   GtkTreeModel *model = GTK_TREE_MODEL (store);
   GtkTreeIter   iter;
@@ -774,7 +774,7 @@ gimp_input_device_store_insert (GimpInputDeviceStore  *store,
   gtk_list_store_insert_with_values (GTK_LIST_STORE (store), &iter, pos,
                                      COLUMN_GUID,    guid,
                                      COLUMN_LABEL,   label,
-				     COLUMN_IDEVICE, didevice8,
+                                     COLUMN_IDEVICE, didevice8,
                                      -1);
 }
 
@@ -782,7 +782,7 @@ static gboolean
 gimp_input_device_store_add (GimpInputDeviceStore *store,
                              const GUID           *guid)
 {
-  HRESULT    	        hresult;
+  HRESULT               hresult;
   LPDIRECTINPUTDEVICE8W didevice8;
   DIDEVICEINSTANCEW     di;
   gboolean              added = FALSE;
@@ -796,26 +796,26 @@ gimp_input_device_store_add (GimpInputDeviceStore *store,
   RpcStringFree (&s);
 
   if (FAILED ((hresult = IDirectInput8_CreateDevice (store->directinput8,
-						     guid,
-						     &didevice8,
-						     NULL))))
+                                                     guid,
+                                                     &didevice8,
+                                                     NULL))))
     return FALSE;
 
   if (FAILED ((hresult = IDirectInputDevice8_SetCooperativeLevel (didevice8,
-								  (HWND) gdk_win32_drawable_get_handle (store->window),
-								  DISCL_NONEXCLUSIVE | DISCL_BACKGROUND))))
+                                                                  (HWND) gdk_win32_drawable_get_handle (store->window),
+                                                                  DISCL_NONEXCLUSIVE | DISCL_BACKGROUND))))
     {
       g_warning ("IDirectInputDevice8::SetCooperativeLevel failed: %s",
-		 g_win32_error_message (hresult));
+                 g_win32_error_message (hresult));
       return FALSE;
     }
 
   di.dwSize = sizeof (DIDEVICEINSTANCEW);
   if (FAILED ((hresult = IDirectInputDevice8_GetDeviceInfo (didevice8,
-							    &di))))
+                                                            &di))))
     {
       g_warning ("IDirectInputDevice8::GetDeviceInfo failed: %s",
-		 g_win32_error_message (hresult));
+                 g_win32_error_message (hresult));
       return FALSE;
     }
 
