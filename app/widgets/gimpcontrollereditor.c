@@ -529,12 +529,14 @@ gimp_controller_editor_sel_changed (GtkTreeSelection     *sel,
           g_free (action);
 
           delete_sensitive = TRUE;
-          delete_help =
-            g_strdup_printf (_("Remove the action assigned to '%s'"), event);
+          if (event)
+            delete_help =
+              g_strdup_printf (_("Remove the action assigned to '%s'"), event);
         }
 
       edit_sensitive = TRUE;
-      edit_help = g_strdup_printf (_("Assign an action to '%s'"), event);
+      if (event)
+        edit_help = g_strdup_printf (_("Assign an action to '%s'"), event);
 
       g_free (event);
     }

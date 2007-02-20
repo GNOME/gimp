@@ -1,5 +1,9 @@
 2007-02-20  Tor Lillqvist  <tml@novell.com>
 
+	* app/widgets/gimpcontrollereditor.c
+	(gimp_controller_editor_sel_changed): Guard against event being
+	NULL.
+
 	* modules/controller_dx_dinput.c: New file. Low level
 	GimpController support for DirectInput controllers on Win32.
 
