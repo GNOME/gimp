@@ -100,7 +100,7 @@ EXTRA_DIST = \
 	makefile.msc
 
 
-authors.h: $(top_srcdir)/authors.xml
+authors.h: $(top_srcdir)/authors.xml authors.xsl
 if HAVE_XSLTPROC
 	$(XSLTPROC) authors.xsl $< > $(@) || rm -f $(@)
 endif

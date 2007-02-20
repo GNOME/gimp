@@ -1,3 +1,12 @@
+2007-02-20  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/Makefile.am: let authors.h depend on authors.xsl.
+
+	* app/dialogs/authors.h: removed from repository, it's generated.
+
+	* app/dialogs/authors.xsl: only include contributors that have
+	contributed to GIMP 2.x. We might want to limit this even further.
+
 2007-02-19  Karine Delvare  <edhel@gimp.org>
 
 	* authors.dtd
