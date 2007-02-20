@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!--  simple XSL transformation to create a header file from authors.xml  -->
+<!--  XSL transformation to create a header file from authors.xml  -->
 
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -15,7 +15,7 @@ static const gchar * const authors[] =
 {
 </xsl:text>
   <xsl:apply-templates select="dc:creator" />
-  <xsl:apply-templates select="dc:contributor[contains(@role, 'author') and contains(@last-active, '2.')]" />
+  <xsl:apply-templates select="dc:contributor[contains(@role, 'author') and number(@last-active) >= 2.4]" />
 <xsl:text>  NULL
 };
 </xsl:text>
@@ -24,7 +24,7 @@ static const gchar * const authors[] =
 static const gchar * const artists[] =
 {
 </xsl:text>
-  <xsl:apply-templates select="dc:contributor[contains(@role, 'artist') and contains(@last-active, '2.')]" />
+  <xsl:apply-templates select="dc:contributor[contains(@role, 'artist') and number(@last-active) >= 2.4]" />
 <xsl:text>  NULL
 };
 </xsl:text>
@@ -33,7 +33,7 @@ static const gchar * const artists[] =
 static const gchar * const documenters[] =
 {
 </xsl:text>
-  <xsl:apply-templates select="dc:contributor[contains(@role, 'documenter') and contains(@last-active, '2.')]" />
+  <xsl:apply-templates select="dc:contributor[contains(@role, 'documenter') and number(@last-active) >= 2.4]" />
 <xsl:text>  NULL
 };
 </xsl:text>
