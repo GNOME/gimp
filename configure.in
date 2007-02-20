@@ -1401,6 +1401,25 @@ AM_CONDITIONAL(HAVE_LINUX_INPUT, test $have_linux_input = yes)
 
 
 ###############################
+# Check for DirectX DirectInput
+###############################
+
+AC_ARG_WITH(directinput, [  --without-directinput   don't build DirectX DirectInput event controller module])
+
+have_dx_dinput=no
+if test "x$with_directinput" != "xno"; then
+  AC_CHECK_HEADER(dinput.h,
+                  [AC_CHECK_LIB(dxguid, GUID_XAxis, have_dx_dinput=yes)])
+fi
+
+if test "x$have_dx_dinput" = xyes; then
+  AC_DEFINE(HAVE_DX_DINPUT, 1, [Define to 1 if you have DirectX DirectInput headers and libraries])
+fi
+
+AM_CONDITIONAL(HAVE_DX_DINPUT, test $have_dx_dinput = yes)
+
+
+###############################
 # Check for D-Bus GLib bindings
 ###############################
 

@@ -1,3 +1,12 @@
+2007-02-20  Tor Lillqvist  <tml@novell.com>
+
+	* configure.in: Add check for DirectX DirectInput header and
+	library. To disable, pass --without-directinput. To find the
+	DirectInput headers and libraries, one needs to set CPPFLAGS and
+	LDFLAGS env vars appropriately for now. It should really add a
+	--with-dx-sdk switch instead. Set HAVE_DX_DINPUT config.h macro
+	and HAVE_DX_DINPUT Automake conditional.
+
 2007-02-20  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/Makefile.am: let authors.h depend on authors.xsl.
