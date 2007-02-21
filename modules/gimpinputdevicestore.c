@@ -38,6 +38,10 @@
 #include <dinput.h>
 #include <rpc.h>
 
+#ifndef GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS
+#define GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS 0x00000004
+#endif
+
 #include <gdk/gdkwin32.h>
 #endif
 

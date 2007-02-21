@@ -1,5 +1,8 @@
 2007-02-22  Tor Lillqvist  <tml@novell.com>
 
+	* modules/gimpinputdevicestore.c: Define
+	GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS if necessary.
+
 	* configure.in: Add --with-directx-sdk switch instead of relying
 	on CPPFLAGS and LDFLAGS. Drop the --without-directinput switch.
 
