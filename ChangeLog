@@ -1,3 +1,7 @@
+2007-02-21  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/Makefile.am: added an explicit dependency on authors.h.
+
 2007-02-21  Tor Lillqvist  <tml@novell.com>
 
 	* modules/Makefile.am: It's pointless to build
