@@ -1,3 +1,8 @@
+2007-02-22  Tor Lillqvist  <tml@novell.com>
+
+	* configure.in: Add --with-directx-sdk switch instead of relying
+	on CPPFLAGS and LDFLAGS. Drop the --without-directinput switch.
+
 2007-02-21  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/Makefile.am: added an explicit dependency on authors.h.

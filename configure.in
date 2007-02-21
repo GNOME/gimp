@@ -1404,16 +1404,32 @@ AM_CONDITIONAL(HAVE_LINUX_INPUT, test $have_linux_input = yes)
 # Check for DirectX DirectInput
 ###############################
 
-AC_ARG_WITH(directinput, [  --without-directinput   don't build DirectX DirectInput event controller module])
+AC_ARG_WITH(directx-sdk, [  --with-directx-sdk=PFX  prefix where the DirectX SDK is installed(optional)])
 
 have_dx_dinput=no
-if test "x$with_directinput" != "xno"; then
-  AC_CHECK_HEADER(dinput.h,
-                  [AC_CHECK_LIB(dxguid, GUID_XAxis, have_dx_dinput=yes)])
-fi
+if test x"$os_win32" = xyes; then
+  case "$with_directx_sdk" in
+    *" "*) AC_MSG_WARN([The DirectX SDK should be accessible through a path without spaces. Use MSYS mounts. Ignoring your --with-directx-sdk switch.])
+           with_directx_sdk=;;
+    *\\*) AC_MSG_WARN([Use plain (forward) slashes only in your --with-directx-sdk switch. Ignoring your --with-directx-sdk switch.])
+           with_directx_sdk=;;
+  esac
 
-if test "x$have_dx_dinput" = xyes; then
-  AC_DEFINE(HAVE_DX_DINPUT, 1, [Define to 1 if you have DirectX DirectInput headers and libraries])
+  if test "x$with_directx_sdk" != x; then
+    dinput_save_CPPFLAGS="$CPPFLAGS"
+    CPPFLAGS="-I $with_directx_sdk/Include $CPPFLAGS"
+    dinput_save_LDFLAGS="$CPPFLAGS"
+    LDFLAGS="-L $with_directx_sdk/Lib/x86 $LDFLAGS"
+    AC_CHECK_HEADER(dinput.h,
+                    [AC_CHECK_LIB(dxguid, GUID_XAxis, have_dx_dinput=yes)])
+  fi
+
+  if test "x$have_dx_dinput" = xyes; then
+    AC_DEFINE(HAVE_DX_DINPUT, 1, [Define to 1 if you have DirectX DirectInput headers and libraries])
+  else
+    CPPFLAGS="$dinput_save_CPPFLAGS"
+    LDFLAGS="$dinput_save_LDFLAGS"
+  fi
 fi
 
 AM_CONDITIONAL(HAVE_DX_DINPUT, test $have_dx_dinput = yes)
@@ -2006,6 +2022,7 @@ Plug-In Features:
 Optional Modules:
   ALSA (MIDI Input): $have_alsa
   Linux Input:       $have_linux_input (HAL support: $have_libhal)
+  DirectInput (Win32): $have_dx_dinput
   Color Correction:  $have_lcms
   Soft Proof:        $have_lcms
 ]);
