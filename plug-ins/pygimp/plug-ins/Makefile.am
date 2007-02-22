@@ -1,3 +1,5 @@
+## Process this file with automake to produce Makefile.in
+
 pluginexecdir = $(gimpplugindir)/plug-ins
 
 scripts = \
@@ -17,12 +19,8 @@ test_scripts = \
 	sphere.py		\
 	whirlpinch.py
 
-if GIMP_UNSTABLE
-pluginexec_SCRIPTS = $(scripts) $(test_scripts)
-else
 pluginexec_SCRIPTS = $(scripts)
-endif
 
 pluginexec_DATA = pyconsole.py
 
-EXTRA_DIST = $(pluginexec_DATA) $(pluginexec_SCRIPTS) $(test_scripts)
+EXTRA_DIST = $(pluginexec_DATA) $(scripts) $(test_scripts)

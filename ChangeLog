@@ -1,5 +1,11 @@
 2007-02-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/plug-ins/Makefile.am
+	* plug-ins/script-fu/scripts/Makefile.am: stop installing any test
+	scripts.
+
+2007-02-22  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/authors.xsl: use a named template to avoid code
 	duplication.
 

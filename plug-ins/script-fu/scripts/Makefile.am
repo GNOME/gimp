@@ -111,15 +111,11 @@ scripts = \
 	xach-effect.scm
 
 test_scripts = \
-	test-sphere.scm		\
+	test-sphere.scm			\
 	ts-helloworld.scm
 
 
-if GIMP_UNSTABLE
-scriptdata_DATA = $(scripts) $(test_scripts)
-else
 scriptdata_DATA = $(scripts)
-endif
 
 
 EXTRA_DIST = $(scripts) $(test_scripts)
