@@ -1,3 +1,15 @@
+2007-02-22  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile.[ch]: made tile_ref_count a static variable and
+	added a function to access it.  Declared other (unused) global
+	counters as static variables and moved them into #ifdefs.
+
+	* app/base/tile-swap.c: use the function instead of declaring
+	tile_ref_count as extern.
+
+	* app/base/tile-manager.c
+	* app/base/pixel-surround.c: cosmetics.
+
 2007-02-23  Tor Lillqvist  <tml@novell.com>
 
 	* configure.in: Fix logic error in saving and restoring CPPFLAGS

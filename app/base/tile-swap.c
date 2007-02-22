@@ -174,12 +174,11 @@ tile_swap_exit1 (gpointer key,
                  gpointer value,
                  gpointer data)
 {
-  extern gint  tile_ref_count;
   SwapFile    *swap_file;
   DefSwapFile *def_swap_file;
 
-  if (tile_ref_count != 0)
-    g_warning ("tile ref count balance: %d\n", tile_ref_count);
+  if (tile_global_refcount () != 0)
+    g_warning ("tile ref count balance: %d\n", tile_global_refcount ());
 
   swap_file = value;
   if (swap_file->swap_func == tile_swap_default)

@@ -32,14 +32,33 @@
 /*  Uncomment for verbose debugging on copy-on-write logic  */
 /*  #define TILE_DEBUG  */
 
+/*  Uncomment to enable global counters to profile the tile system. */
+/*  #define TILE_PROFILING */
+
 /*  Sanity checks on tile hinting code  */
 /*  #define HINTS_SANITY */
 
 
+/*  This is being used from tile-swap, but just for debugging purposes.  */
+static gint tile_ref_count    = 0;
+
+
+#ifdef TILE_PROFILING
+
+static gint tile_count        = 0;
+static gint tile_share_count  = 0;
+static gint tile_active_count = 0;
+
+#ifdef HINTS_SANITY
+static gint tile_exist_peak   = 0;
+static gint tile_exist_count  = 0;
+#endif
+
+#endif
+
+
 static void tile_destroy (Tile *tile);
 
-
-gint tile_count = 0;
 
 void
 tile_sanitize_rowhints (Tile *tile)
@@ -58,7 +77,10 @@ tile_get_rowhint (Tile *tile,
       return tile->rowhint[yoff];
     }
   else
-    g_error("GET_ROWHINT OUT OF RANGE");
+    {
+      g_error ("GET_ROWHINT OUT OF RANGE");
+    }
+
   return TILEROWHINT_OUTOFRANGE;
 #else
   return tile->rowhint[yoff];
@@ -103,17 +125,10 @@ tile_init (Tile *tile,
   tile->listhead    = NULL;
   tile->rowhint     = NULL;
 
+#ifdef TILE_PROFILING
   tile_count++;
-}
-
-gint tile_ref_count    = 0;
-gint tile_share_count  = 0;
-gint tile_active_count = 0;
-
-#ifdef HINTS_SANITY
-gint tile_exist_peak  = 0;
-gint tile_exist_count = 0;
 #endif
+}
 
 void
 tile_lock (Tile *tile)
@@ -133,8 +148,12 @@ tile_lock (Tile *tile)
           /* remove from cache, move to main store */
           tile_cache_flush (tile);
         }
+
+#ifdef TILE_PROFILING
       tile_active_count++;
+#endif
     }
+
   if (tile->data == NULL)
     {
       /* There is no data, so the tile must be swapped out */
@@ -173,15 +192,15 @@ tile_release (Tile     *tile,
       if (tile->rowhint)
         {
           for (y = 0; y < tile->eheight; y++)
-            {
-              tile->rowhint[y] = TILEROWHINT_UNKNOWN;
-            }
+            tile->rowhint[y] = TILEROWHINT_UNKNOWN;
         }
     }
 
   if (tile->ref_count == 0)
     {
+#ifdef TILE_PROFILING
       tile_active_count--;
+#endif
 
       if (tile->share_count == 0)
         {
@@ -208,10 +227,12 @@ tile_alloc (Tile *tile)
    */
   tile->data = g_new (guchar, tile->size);
 
+#ifdef TILE_PROFILING
 #ifdef HINTS_SANITY
   tile_exist_count++;
   if (tile_exist_count > tile_exist_peak)
     tile_exist_peak = tile_exist_count;
+#endif
 #endif
 }
 
@@ -250,10 +271,13 @@ tile_destroy (Tile *tile)
 
   g_free (tile);
 
+#ifdef TILE_PROFILING
   tile_count--;
 
 #ifdef HINTS_SANITY
   tile_exist_count--;
+#endif
+
 #endif
 }
 
@@ -310,7 +334,10 @@ tile_attach (Tile *tile,
     }
 
   tile->share_count++;
+
+#ifdef TILE_PROFILING
   tile_share_count++;
+#endif
 
 #ifdef TILE_DEBUG
   g_printerr ("tile_attach: %p -> (%p,%d) *%d\n",
@@ -357,7 +384,10 @@ tile_detach (Tile *tile,
   *link = tmp->next;
   g_free (tmp);
 
+#ifdef TILE_PROFILING
   tile_share_count--;
+#endif
+
   tile->share_count--;
 
   if (tile->share_count == 0 && tile->ref_count == 0)
@@ -372,4 +402,10 @@ tile_data_pointer (Tile *tile,
   gsize offset = yoff * tile->ewidth + xoff;
 
   return (gpointer) (tile->data + offset * tile->bpp);
+}
+
+gint
+tile_global_refcount (void)
+{
+  return tile_ref_count;
 }

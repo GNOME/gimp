@@ -98,7 +98,7 @@ pixel_surround_lock (PixelSurround *ps,
                                                 i % TILE_WIDTH,
                                                 j % TILE_HEIGHT);
 
-              for (k = buff; k < buff+ps->bpp; ++k, ++ptr)
+              for (k = buff; k < buff + ps->bpp; ++k, ++ptr)
                 *ptr = *k;
 
               tile_release (tile, FALSE);

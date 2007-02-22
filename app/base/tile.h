@@ -85,6 +85,8 @@ void        * tile_data_pointer      (Tile        *tile,
                                       gint         xoff,
                                       gint         yoff);
 
+gint          tile_global_refcount   (void);
+
 /* tile_attach attaches a tile to a tile manager: this function
  * increments the tile's share count and inserts a tilelink into the
  * tile's link list.  tile_detach reverses the process.

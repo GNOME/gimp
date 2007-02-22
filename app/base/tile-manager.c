@@ -149,7 +149,7 @@ tile_manager_get (TileManager *tm,
   if ((tile_num < 0) || (tile_num >= ntiles))
     return NULL;
 
-  if (!tm->tiles)
+  if (! tm->tiles)
     {
       tm->tiles = g_new (Tile *, ntiles);
       tiles = tm->tiles;
