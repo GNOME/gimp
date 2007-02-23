@@ -1,5 +1,10 @@
 2007-02-22  Sven Neumann  <sven@gimp.org>
 
+	* app/base/pixel-surround.c: allocate the PixelSurround struct and
+	its buffer in one chunk.
+
+2007-02-22  Sven Neumann  <sven@gimp.org>
+
 	* app/base/base-types.h
 	* app/base/pixel-surround.[ch]: hide PixelSurround struct and
 	cleaned up the PixelSurround API.

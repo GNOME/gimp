@@ -30,14 +30,13 @@
 
 struct _PixelSurround
 {
-  Tile        *tile;
   TileManager *mgr;
-  guchar      *buff;
-  gint         buff_size;
   gint         bpp;
   gint         w;
   gint         h;
   guchar       bg[MAX_CHANNELS];
+  Tile        *tile;
+  guchar       buff[0];
 };
 
 
@@ -48,21 +47,24 @@ pixel_surround_new (TileManager  *tm,
                     const guchar  bg[MAX_CHANNELS])
 {
   PixelSurround *ps;
+  gint           size;
   gint           i;
 
   g_return_val_if_fail (tm != NULL, NULL);
 
-  ps = g_new0 (PixelSurround, 1);
+  size = w * h * tile_manager_bpp (tm);
 
-  ps->mgr       = tm;
-  ps->bpp       = tile_manager_bpp (tm);
-  ps->w         = w;
-  ps->h         = h;
-  ps->buff_size = w * h * ps->bpp;
-  ps->buff      = g_new (guchar, ps->buff_size);
+  ps = g_malloc (sizeof (PixelSurround) + size);
+
+  ps->mgr = tm;
+  ps->bpp = tile_manager_bpp (tm);
+  ps->w   = w;
+  ps->h   = h;
 
   for (i = 0; i < MAX_CHANNELS; ++i)
     ps->bg[i] = bg[i];
+
+  ps->tile = NULL;
 
   return ps;
 }
@@ -82,17 +84,17 @@ pixel_surround_lock (PixelSurround *ps,
   i = x % TILE_WIDTH;
   j = y % TILE_HEIGHT;
 
-  /* do we have the whole region? */
+  /* does the tile cover the whole region? */
   if (ps->tile &&
-      (i < (tile_ewidth (ps->tile) - ps->w)) &&
-      (j < (tile_eheight (ps->tile) - ps->h)))
+      i + ps->w < tile_ewidth (ps->tile) &&
+      j + ps->h < tile_eheight (ps->tile))
     {
       *rowstride = tile_ewidth (ps->tile) * ps->bpp;
 
       return tile_data_pointer (ps->tile, i, j);
     }
 
-  /* nope, do this the hard way (for now) */
+  /* nope, we will use our internal buffer */
   if (ps->tile)
     {
       tile_release (ps->tile, FALSE);
@@ -100,7 +102,6 @@ pixel_surround_lock (PixelSurround *ps,
     }
 
   /* copy pixels, one by one */
-  /* no, this is not the best way, but it's much better than before */
   ptr = ps->buff;
 
   for (j = y; j < y + ps->h; ++j)
@@ -146,10 +147,5 @@ pixel_surround_release (PixelSurround *ps)
 void
 pixel_surround_destroy (PixelSurround *ps)
 {
-  g_return_if_fail (ps != NULL);
-
-  if (ps->buff)
-    g_free (ps->buff);
-
   g_free (ps);
 }
