@@ -1419,7 +1419,7 @@ if test x"$os_win32" = xyes; then
   dinput_save_LDFLAGS="$CPPFLAGS"
   if test "x$with_directx_sdk" != x; then
     CPPFLAGS="-I $with_directx_sdk/Include $CPPFLAGS"
-    LDFLAGS="-L $with_directx_sdk/Lib/x86 $LDFLAGS"
+    LDFLAGS="-L$with_directx_sdk/Lib/x86 $LDFLAGS"
     AC_CHECK_HEADER(dinput.h,
                     [AC_CHECK_LIB(dxguid, GUID_XAxis, have_dx_dinput=yes)])
   fi

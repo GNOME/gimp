@@ -1,5 +1,10 @@
 2007-02-23  Tor Lillqvist  <tml@novell.com>
 
+	* configure.in: Remove space after the -L in what we add to
+	LDFLAGS for DirectInput.
+
+2007-02-23  Tor Lillqvist  <tml@novell.com>
+
 	* plug-ins/common/psd.c: Inspired by mail from a user, improve
 	some error messages to be more informative. Use g_message()
 	instead of plain printf() in a couple of places in situations that
