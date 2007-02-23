@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-13 15:15+0100\n"
-"PO-Revision-Date: 2007-02-13 15:14+0100\n"
+"POT-Creation-Date: 2007-02-23 09:29+0100\n"
+"PO-Revision-Date: 2007-02-23 10:38+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -612,8 +612,8 @@ msgid "Cubic"
 msgstr "Cubica"
 
 #: ../libgimpbase/gimpbaseenums.c:565
-msgid "Lanczos"
-msgstr "Lanczos"
+msgid "Sinc (Lanczos3)"
+msgstr "Sinc (Lanczos3)"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -959,7 +959,11 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Fallita la creazione della cartella per le miniature \"%s\"."
 
-#: ../libgimpthumb/gimpthumbnail.c:889
+#: ../libgimpthumb/gimpthumbnail.c:498
+msgid "Thumbnail contains no Thumb::URI tag"
+msgstr "La miniatura non contiene la tag Thumb::URI"
+
+#: ../libgimpthumb/gimpthumbnail.c:898
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Impossibile creare la miniatura per %s: %s"
@@ -1560,50 +1564,62 @@ msgid "Button Gear Up"
 msgstr "Pulsante rotella su"
 
 #: ../modules/controller_linux_input.c:90
+#: ../modules/controller_dx_dinput.c:469
 msgid "X Move Left"
 msgstr "A sinistra spostamento X"
 
 #: ../modules/controller_linux_input.c:91
+#: ../modules/controller_dx_dinput.c:472
 msgid "X Move Right"
 msgstr "A destra Spostamento X"
 
 #: ../modules/controller_linux_input.c:92
+#: ../modules/controller_dx_dinput.c:478
 msgid "Y Move Away"
 msgstr "Allontanamento in Y"
 
 #: ../modules/controller_linux_input.c:93
+#: ../modules/controller_dx_dinput.c:481
 msgid "Y Move Near"
 msgstr "Avvicinamento in Y"
 
 #: ../modules/controller_linux_input.c:94
+#: ../modules/controller_dx_dinput.c:487
 msgid "Z Move Up"
 msgstr "In alto spostamento Z"
 
 #: ../modules/controller_linux_input.c:95
+#: ../modules/controller_dx_dinput.c:490
 msgid "Z Move Down"
 msgstr "In basso spostamento Z"
 
 #: ../modules/controller_linux_input.c:97
+#: ../modules/controller_dx_dinput.c:496
 msgid "X Axis Tilt Away"
 msgstr "Inclinazione asse X lontana"
 
 #: ../modules/controller_linux_input.c:98
+#: ../modules/controller_dx_dinput.c:499
 msgid "X Axis Tilt Near"
 msgstr "Inclinazione asse X vicina"
 
 #: ../modules/controller_linux_input.c:99
+#: ../modules/controller_dx_dinput.c:505
 msgid "Y Axis Tilt Right"
 msgstr "Inclinazione asse Y a destra"
 
 #: ../modules/controller_linux_input.c:100
+#: ../modules/controller_dx_dinput.c:508
 msgid "Y Axis Tilt Left"
 msgstr "Inclinazione asse Y a sinistra"
 
 #: ../modules/controller_linux_input.c:101
+#: ../modules/controller_dx_dinput.c:514
 msgid "Z Axis Turn Left"
 msgstr "Giro a sinistra asse Z"
 
 #: ../modules/controller_linux_input.c:102
+#: ../modules/controller_dx_dinput.c:517
 msgid "Z Axis Turn Right"
 msgstr "Giro a destra asse Z"
 
@@ -1635,7 +1651,8 @@ msgstr "Rotella a destra"
 msgid "Linux input event controller"
 msgstr "Controllore eventi in ingresso di Linux"
 
-#: ../modules/controller_linux_input.c:249 ../modules/controller_midi.c:245
+#: ../modules/controller_linux_input.c:249
+#: ../modules/controller_dx_dinput.c:227 ../modules/controller_midi.c:245
 msgid "Device:"
 msgstr "Dispositivo:"
 
@@ -1643,38 +1660,96 @@ msgstr "Dispositivo:"
 msgid "The name of the device to read Linux Input events from."
 msgstr "Il nome del dispositivo da cui leggere gli eventi Linux in ingresso."
 
-#: ../modules/controller_linux_input.c:259
+#: ../modules/controller_linux_input.c:261
 msgid "Linux Input"
 msgstr "Ingresso Linux"
 
-#: ../modules/controller_linux_input.c:537
+#: ../modules/controller_linux_input.c:539
 msgid "Linux Input Events"
 msgstr "Eventi Linux in ingresso"
 
-#: ../modules/controller_linux_input.c:549 ../modules/controller_midi.c:533
+#: ../modules/controller_linux_input.c:551
+#: ../modules/controller_dx_dinput.c:1122 ../modules/controller_midi.c:533
 msgid "No device configured"
 msgstr "Nessun dispositivo configurato"
 
-#: ../modules/controller_linux_input.c:575 ../modules/controller_midi.c:482
+#: ../modules/controller_linux_input.c:577 ../modules/controller_midi.c:482
 #: ../modules/controller_midi.c:508
 #, c-format
 msgid "Reading from %s"
 msgstr "Lettura da %s"
 
-#: ../modules/controller_linux_input.c:593
-#: ../modules/controller_linux_input.c:647 ../modules/controller_midi.c:464
+#: ../modules/controller_linux_input.c:595
+#: ../modules/controller_linux_input.c:649 ../modules/controller_midi.c:464
 #: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
 #, c-format
 msgid "Device not available: %s"
 msgstr "Dispositivo non disponibile: %s"
 
-#: ../modules/controller_linux_input.c:612
+#: ../modules/controller_linux_input.c:614
+#: ../modules/controller_dx_dinput.c:1147
 msgid "Device not available"
 msgstr "Dispositivo non disponibile"
 
-#: ../modules/controller_linux_input.c:656 ../modules/controller_midi.c:605
+#: ../modules/controller_linux_input.c:658 ../modules/controller_midi.c:605
 msgid "End of file"
 msgstr "Fine del file"
+
+#: ../modules/controller_dx_dinput.c:157
+msgid "DirectX DirectInput event controller"
+msgstr "Controllore eventi DirectInput DirectX"
+
+#: ../modules/controller_dx_dinput.c:228
+msgid "The device to read DirectInput events from."
+msgstr "Il dispositivo da cui leggere gli eventi DirectInput."
+
+#: ../modules/controller_dx_dinput.c:237
+msgid "DirectX DirectInput"
+msgstr "DirectInput DirectX"
+
+#: ../modules/controller_dx_dinput.c:446
+#, c-format
+msgid "Button %d"
+msgstr "Pulsante %d"
+
+#: ../modules/controller_dx_dinput.c:449
+#, c-format
+msgid "Button %d Press"
+msgstr "Pressione pulsante %d"
+
+#: ../modules/controller_dx_dinput.c:452
+#, c-format
+msgid "Button %d Release"
+msgstr "Rilascio pulsante %d"
+
+#: ../modules/controller_dx_dinput.c:528
+#, c-format
+msgid "Slider %d Increase"
+msgstr "Incremento cursore %d"
+
+#: ../modules/controller_dx_dinput.c:531
+#, c-format
+msgid "Slider %d Decrease"
+msgstr "Decremento cursore %d"
+
+#: ../modules/controller_dx_dinput.c:541
+#, c-format
+msgid "POV %d X View"
+msgstr "Vista X POV %d"
+
+#: ../modules/controller_dx_dinput.c:544
+#, c-format
+msgid "POV %d Y View"
+msgstr "Vista Y POV %d"
+
+#: ../modules/controller_dx_dinput.c:547
+#, c-format
+msgid "POV %d Return"
+msgstr "Invio POV %d"
+
+#: ../modules/controller_dx_dinput.c:1111
+msgid "DirectInput Events"
+msgstr "Eventi DirectInput"
 
 #: ../modules/controller_midi.c:167
 msgid "MIDI event controller"
