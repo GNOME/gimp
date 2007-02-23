@@ -44,6 +44,21 @@
 
 /*  forward function prototypes  */
 
+static void  gimp_transform_region_lanczos (TileManager  *orig_tiles,
+                                            PixelRegion  *destPR,
+                                            gint          dest_x1,
+                                            gint          dest_y1,
+                                            gint          dest_x2,
+                                            gint          dest_y2,
+                                            gint          u1,
+                                            gint          v1,
+                                            gint          u2,
+                                            gint          v2,
+                                            GimpMatrix3  *m,
+                                            gint          alpha,
+                                            guchar       *bg_color,
+                                            GimpProgress *progress);
+
 static inline gboolean supersample_dtest (gdouble u0, gdouble v0,
                                           gdouble u1, gdouble v1,
                                           gdouble u2, gdouble v2,
@@ -129,8 +144,6 @@ gimp_transform_region (GimpPickable          *pickable,
   gimp_matrix3_invert (&m);
 
   alpha = 0;
-  width = dest_x2 - dest_x1;
-  bytes = destPR->bytes;
 
   /*  turn interpolation off for simple transformations (e.g. rot90)  */
   if (gimp_matrix3_is_simple (matrix))
@@ -185,163 +198,18 @@ gimp_transform_region (GimpPickable          *pickable,
       surround = pixel_surround_new (orig_tiles, 4, 4, bg_color);
       break;
     case GIMP_INTERPOLATION_LANCZOS:
-      break;
+      /*  lanczos is currently implemented separately  */
+      gimp_transform_region_lanczos (orig_tiles, destPR,
+                                     dest_x1, dest_y1, dest_x2, dest_y2,
+                                     u1, v1, u2, v2,
+                                     &m, alpha, bg_color, progress);
+      return;
     }
+
+  width = dest_x2 - dest_x1;
+  bytes = destPR->bytes;
 
   dest = g_new (guchar, width * bytes);
-
-  /* these loops could be rearranged, depending on which bit of code
-   * you'd most like to write more than once.
-   */
-  if (interpolation_type == GIMP_INTERPOLATION_LANCZOS)
-    {
-      gfloat  *lanczos;                  /* Lanczos lookup table         */
-      gdouble  x_kernel[LANCZOS_WIDTH2]; /* 1-D kernels of window coeffs */
-      gdouble  y_kernel[LANCZOS_WIDTH2];
-      gdouble  x_sum, y_sum;             /* sum of Lanczos weights       */
-
-      gdouble  uw;
-      gdouble  ww;
-      gdouble  vw;
-      gdouble  du;
-      gdouble  dv;
-
-      gint     pos;
-      gdouble  newval;
-      gdouble  arecip;
-      gdouble  aval;
-
-      guchar   lwin[LANCZOS_WIDTH2 * LANCZOS_WIDTH2][MAX_CHANNELS + 1];
-      gint     b, u, v, i, j;
-      gint     pu, pv, su, sv;
-
-      /* allocate and fill lanczos lookup table */
-      lanczos = create_lanczos_lookup ();
-
-      for (y = dest_y1; y < dest_y2; y++)
-        {
-          if (progress && !(y & 0xf))
-            gimp_progress_set_value (progress,
-                                     (gdouble) (y - dest_y1) /
-                                     (gdouble) (dest_y2 - dest_y1));
-
-          pixel_region_get_row (destPR, 0, (y - dest_y1), width, dest, 1);
-
-          d = dest;
-
-          for (x = dest_x1; x < dest_x2; x++)
-            {
-              du = uw = m.coeff[0][0] * x + m.coeff[0][1] * y + m.coeff[0][2];
-              dv = vw = m.coeff[1][0] * x + m.coeff[1][1] * y + m.coeff[1][2];
-              ww =      m.coeff[2][0] * x + m.coeff[2][1] * y + m.coeff[2][2];
-
-              if (ww == 1.0)
-                {
-                  du = uw;
-                  dv = vw;
-                }
-              else if (ww != 0.0)
-                {
-                  du = uw / ww;
-                  dv = vw / ww;
-                }
-              else
-                {
-                  g_warning ("homogeneous coordinate = 0...\n");
-                }
-
-              u = (gint) du;
-              v = (gint) dv;
-              /* get weight for fractional error */
-              su = (gint) ((du - u) * LANCZOS_SPP);
-              sv = (gint) ((dv - v) * LANCZOS_SPP);
-
-              if (u <  u1 || v <  v1 ||
-                  u >= u2 || v >= v2)
-                {
-                  /* not in source range */
-                  /* increment the destination pointers  */
-                  for (b = 0; b < bytes; b++)
-                    *d++ = bg_color[b];
-                }
-              else
-                {
-                  pos = 0;
-                  for (j = 0; j < LANCZOS_WIDTH2 ; j++)
-                    for (i = 0; i < LANCZOS_WIDTH2 ; i++, pos++)
-                      {
-                        pu = CLAMP (u + i - LANCZOS_WIDTH, u1, u2 - 1);
-                        pv = CLAMP (v + j - LANCZOS_WIDTH, v1, v2 - 1);
-
-                        read_pixel_data_1 (orig_tiles, pu - u1, pv - v1,
-                                           &lwin[pos][0]);
-                      }
-
-                  /* fill 1D kernels */
-                  for (x_sum = y_sum = 0.0, i = LANCZOS_WIDTH;
-                       i >= -LANCZOS_WIDTH;
-                       i--)
-                    {
-                      pos = i * LANCZOS_SPP;
-                      x_sum += x_kernel[LANCZOS_WIDTH + i] = lanczos[ABS (su - pos)];
-                      y_sum += y_kernel[LANCZOS_WIDTH + i] = lanczos[ABS (sv - pos)];
-                    }
-
-                  /* normalise the weighted arrays */
-                  for (i = 0; i < LANCZOS_WIDTH2 ; i++)
-                    {
-                      x_kernel[i] /= x_sum;
-                      y_kernel[i] /= y_sum;
-                    }
-
-                  pos = 0;
-                  aval = 0.0;
-                  for (j = 0; j < LANCZOS_WIDTH2 ; j++)
-                    for (i = 0; i < LANCZOS_WIDTH2 ; i++, pos++)
-                      {
-                        aval += y_kernel[j] * x_kernel[i] * lwin[pos][alpha];
-                      }
-
-                  if (aval <= 0.0)
-                    {
-                      arecip = 0.0;
-                      aval = 0;
-                    }
-                  else if (aval > 255.0)
-                    {
-                      arecip = 1.0 / aval;
-                      aval = 255;
-                    }
-                  else
-                    {
-                      arecip = 1.0 / aval;
-                    }
-
-                  for (b = 0; b < alpha; b++)
-                    {
-                      pos = 0;
-                      newval = 0.0;
-                      for (j = 0; j < LANCZOS_WIDTH2 ; j++)
-                        for (i = 0; i < LANCZOS_WIDTH2 ; i++, pos++)
-                          {
-                            newval += y_kernel[j] * x_kernel[i] * lwin[pos][b] * lwin[pos][alpha];
-                          }
-                      newval *= arecip;
-                      *d++ = CLAMP (newval, 0, 255);
-                    }
-
-                  *d++ = RINT (aval);
-                }
-            }
-
-          /*  set the pixel region row  */
-          pixel_region_set_row (destPR, 0, (y - dest_y1), width, dest);
-        }
-
-      g_free (lanczos);
-
-      goto done;
-    }
 
   uinc = m.coeff[0][0];
   vinc = m.coeff[1][0];
@@ -512,17 +380,189 @@ gimp_transform_region (GimpPickable          *pickable,
       pixel_region_set_row (destPR, 0, (y - dest_y1), width, dest);
     }
 
- done:
-
-  if (progress)
-    gimp_progress_set_value (progress, 1.0);
-
   if (surround)
     pixel_surround_destroy (surround);
 
   g_free (dest);
 }
 
+static void
+gimp_transform_region_lanczos (TileManager  *orig_tiles,
+                               PixelRegion  *destPR,
+                               gint          dest_x1,
+                               gint          dest_y1,
+                               gint          dest_x2,
+                               gint          dest_y2,
+                               gint          u1,
+                               gint          v1,
+                               gint          u2,
+                               gint          v2,
+                               GimpMatrix3  *m,
+                               gint          alpha,
+                               guchar       *bg_color,
+                               GimpProgress *progress)
+{
+  gfloat  *lanczos;                  /* Lanczos lookup table         */
+  gdouble  x_kernel[LANCZOS_WIDTH2]; /* 1-D kernels of window coeffs */
+  gdouble  y_kernel[LANCZOS_WIDTH2];
+  gdouble  x_sum, y_sum;             /* sum of Lanczos weights       */
+
+  gdouble  uw;
+  gdouble  ww;
+  gdouble  vw;
+  gdouble  du;
+  gdouble  dv;
+
+  guchar  *dest, *d;
+  gint     x, y;
+  gint     width;
+  gint     bytes;
+  gint     pos;
+  gdouble  newval;
+  gdouble  arecip;
+  gdouble  aval;
+
+  guchar   lwin[LANCZOS_WIDTH2 * LANCZOS_WIDTH2][MAX_CHANNELS + 1];
+  gint     b, u, v, i, j;
+  gint     pu, pv, su, sv;
+
+  /* allocate and fill lanczos lookup table */
+  lanczos = create_lanczos_lookup ();
+
+  width = dest_x2 - dest_x1;
+  bytes = destPR->bytes;
+
+  dest = g_new (guchar, width * bytes);
+
+  for (y = dest_y1; y < dest_y2; y++)
+    {
+      if (progress && !(y & 0xf))
+        gimp_progress_set_value (progress,
+                                 (gdouble) (y - dest_y1) /
+                                 (gdouble) (dest_y2 - dest_y1));
+
+      pixel_region_get_row (destPR, 0, (y - dest_y1), width, dest, 1);
+
+      d = dest;
+
+      for (x = dest_x1; x < dest_x2; x++)
+        {
+          du = uw = m->coeff[0][0] * x + m->coeff[0][1] * y + m->coeff[0][2];
+          dv = vw = m->coeff[1][0] * x + m->coeff[1][1] * y + m->coeff[1][2];
+          ww =      m->coeff[2][0] * x + m->coeff[2][1] * y + m->coeff[2][2];
+
+          if (ww == 1.0)
+            {
+              du = uw;
+              dv = vw;
+            }
+          else if (ww != 0.0)
+            {
+              du = uw / ww;
+              dv = vw / ww;
+            }
+          else
+            {
+              g_warning ("homogeneous coordinate = 0...\n");
+            }
+
+          u = (gint) du;
+          v = (gint) dv;
+          /* get weight for fractional error */
+          su = (gint) ((du - u) * LANCZOS_SPP);
+          sv = (gint) ((dv - v) * LANCZOS_SPP);
+
+          if (u <  u1 || v <  v1 ||
+              u >= u2 || v >= v2)
+            {
+              /* not in source range */
+              /* increment the destination pointers  */
+              for (b = 0; b < bytes; b++)
+                *d++ = bg_color[b];
+            }
+          else
+            {
+              pos = 0;
+
+              for (j = 0; j < LANCZOS_WIDTH2 ; j++)
+                for (i = 0; i < LANCZOS_WIDTH2 ; i++, pos++)
+                  {
+                    pu = CLAMP (u + i - LANCZOS_WIDTH, u1, u2 - 1);
+                    pv = CLAMP (v + j - LANCZOS_WIDTH, v1, v2 - 1);
+
+                    read_pixel_data_1 (orig_tiles,
+                                       pu - u1, pv - v1, &lwin[pos][0]);
+                  }
+
+              /* fill 1D kernels */
+              for (x_sum = y_sum = 0.0, i = LANCZOS_WIDTH;
+                   i >= -LANCZOS_WIDTH;
+                   i--)
+                {
+                  pos = i * LANCZOS_SPP;
+                  x_sum += x_kernel[LANCZOS_WIDTH + i] = lanczos[ABS (su - pos)];
+                  y_sum += y_kernel[LANCZOS_WIDTH + i] = lanczos[ABS (sv - pos)];
+                }
+
+              /* normalise the weighted arrays */
+              for (i = 0; i < LANCZOS_WIDTH2 ; i++)
+                {
+                  x_kernel[i] /= x_sum;
+                  y_kernel[i] /= y_sum;
+                }
+
+              pos = 0;
+              aval = 0.0;
+
+              for (j = 0; j < LANCZOS_WIDTH2 ; j++)
+                for (i = 0; i < LANCZOS_WIDTH2 ; i++, pos++)
+                  {
+                    aval += y_kernel[j] * x_kernel[i] * lwin[pos][alpha];
+                  }
+
+              if (aval <= 0.0)
+                {
+                  arecip = 0.0;
+                  aval = 0;
+                }
+              else if (aval > 255.0)
+                {
+                  arecip = 1.0 / aval;
+                  aval = 255;
+                }
+              else
+                {
+                  arecip = 1.0 / aval;
+                }
+
+              for (b = 0; b < alpha; b++)
+                {
+                  pos = 0;
+                  newval = 0.0;
+
+                  for (j = 0; j < LANCZOS_WIDTH2 ; j++)
+                    for (i = 0; i < LANCZOS_WIDTH2 ; i++, pos++)
+                      {
+                        newval += y_kernel[j] * x_kernel[i] * lwin[pos][b] * lwin[pos][alpha];
+                      }
+                  newval *= arecip;
+                  *d++ = CLAMP (newval, 0, 255);
+                }
+
+              *d++ = RINT (aval);
+            }
+        }
+
+      /*  set the pixel region row  */
+      pixel_region_set_row (destPR, 0, (y - dest_y1), width, dest);
+    }
+
+  g_free (dest);
+  g_free (lanczos);
+
+  if (progress)
+    gimp_progress_set_value (progress, 1.0);
+}
 
 /*  private functions  */
 
