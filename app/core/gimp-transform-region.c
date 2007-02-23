@@ -462,11 +462,11 @@ gimp_transform_region (GimpPickable          *pickable,
                                          u[3], v[3], u[4], v[4]))
                     {
                       sample_adapt (orig_tiles,
-                                    u[0]-u1, v[0]-v1,
-                                    u[1]-u1, v[1]-v1,
-                                    u[2]-u1, v[2]-v1,
-                                    u[3]-u1, v[3]-v1,
-                                    u[4]-u1, v[4]-v1,
+                                    u[0] - u1, v[0] - v1,
+                                    u[1] - u1, v[1] - v1,
+                                    u[2] - u1, v[2] - v1,
+                                    u[3] - u1, v[3] - v1,
+                                    u[4] - u1, v[4] - v1,
                                     recursion_level,
                                     color, bg_color, bytes, alpha);
                     }
@@ -593,8 +593,6 @@ sample_linear (PixelSurround *surround,
 
       color[i] = CLAMP (newval, 0, 255);
     }
-
-  pixel_surround_release (surround);
 }
 
 /* macros to handle conversion to/from fixed point, this fixed point code
@@ -690,17 +688,15 @@ supersample_test (gint x0, gint y0,
                   gint x2, gint y2,
                   gint x3, gint y3)
 {
-  if (abs (x0 - x1) > FIXED_UNIT ||
-      abs (x1 - x2) > FIXED_UNIT ||
-      abs (x2 - x3) > FIXED_UNIT ||
-      abs (x3 - x0) > FIXED_UNIT ||
+  return (abs (x0 - x1) > FIXED_UNIT ||
+          abs (x1 - x2) > FIXED_UNIT ||
+          abs (x2 - x3) > FIXED_UNIT ||
+          abs (x3 - x0) > FIXED_UNIT ||
 
-      abs (y0 - y1) > FIXED_UNIT ||
-      abs (y1 - y2) > FIXED_UNIT ||
-      abs (y2 - y3) > FIXED_UNIT ||
-      abs (y3 - y0) > FIXED_UNIT) return TRUE;
-
-  return FALSE;
+          abs (y0 - y1) > FIXED_UNIT ||
+          abs (y1 - y2) > FIXED_UNIT ||
+          abs (y2 - y3) > FIXED_UNIT ||
+          abs (y3 - y0) > FIXED_UNIT);
 }
 
 /*
@@ -717,6 +713,7 @@ supersample_dtest (gdouble x0, gdouble y0,
           fabs (x1 - x2) > 1.0 ||
           fabs (x2 - x3) > 1.0 ||
           fabs (x3 - x0) > 1.0 ||
+
           fabs (y0 - y1) > 1.0 ||
           fabs (y1 - y2) > 1.0 ||
           fabs (y2 - y3) > 1.0 ||
@@ -978,7 +975,5 @@ sample_cubic (PixelSurround *surround,
 
       color[i] = CLAMP (newval, 0, 255);
     }
-
-  pixel_surround_release (surround);
 }
 

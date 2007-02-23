@@ -36,130 +36,183 @@ struct _PixelSurround
   gint         h;
   guchar       bg[MAX_CHANNELS];
   Tile        *tile;
+  gint         tile_x;
+  gint         tile_y;
+  gint         tile_w;
+  gint         tile_h;
   guchar       buff[0];
 };
 
 
-PixelSurround *
-pixel_surround_new (TileManager  *tm,
-                    gint          w,
-                    gint          h,
-                    const guchar  bg[MAX_CHANNELS])
+/*  inlining this function gives a few percent speedup  */
+static inline gboolean
+pixel_surround_get_tile (PixelSurround *surround,
+                         gint           x,
+                         gint           y)
 {
-  PixelSurround *ps;
-  gint           size;
-  gint           i;
+  /*  do we still have a tile lock that we can use?  */
+  if (surround->tile)
+    {
+      if (x < surround->tile_x || x >= surround->tile_x + surround->tile_w ||
+          y < surround->tile_y || y >= surround->tile_y + surround->tile_h)
+        {
+          tile_release (surround->tile, FALSE);
+          surround->tile = NULL;
+        }
+    }
 
-  g_return_val_if_fail (tm != NULL, NULL);
+  /*  if not, try to get one for the target pixel  */
+  if (! surround->tile)
+    {
+      surround->tile = tile_manager_get_tile (surround->mgr, x, y, TRUE, FALSE);
 
-  size = w * h * tile_manager_bpp (tm);
+      if (surround->tile)
+        {
+          surround->tile_x = x & ~(TILE_WIDTH - 1);
+          surround->tile_y = y & ~(TILE_HEIGHT - 1);
+          surround->tile_w = tile_ewidth (surround->tile);
+          surround->tile_h = tile_eheight (surround->tile);
+        }
+    }
 
-  ps = g_malloc (sizeof (PixelSurround) + size);
-
-  ps->mgr = tm;
-  ps->bpp = tile_manager_bpp (tm);
-  ps->w   = w;
-  ps->h   = h;
-
-  for (i = 0; i < MAX_CHANNELS; ++i)
-    ps->bg[i] = bg[i];
-
-  ps->tile = NULL;
-
-  return ps;
+  return (surround->tile != NULL);
 }
 
-#define PIXEL_COPY(dest, src, bpp) \
-  switch (bpp)              \
-  {                         \
-  case 4: *dest++ = *src++; \
-  case 3: *dest++ = *src++; \
-  case 2: *dest++ = *src++; \
-  case 1: *dest++ = *src++; \
-  }
+/**
+ * pixel_surround_new:
+ * @tm:     tile manager
+ * @width:  width of surround region
+ * @height: height of surround region
+ * @bg:     color to use for pixels that are not covered by the tile manager
+ *
+ * Return value: a new #PixelSurround.
+ */
+PixelSurround *
+pixel_surround_new (TileManager  *tiles,
+                    gint          width,
+                    gint          height,
+                    const guchar  bg[MAX_CHANNELS])
+{
+  PixelSurround *surround;
+  gint           i;
 
+  g_return_val_if_fail (tiles != NULL, NULL);
+
+  surround = g_malloc (sizeof (PixelSurround) +
+                       width * height * tile_manager_bpp (tiles));
+
+  surround->mgr  = tiles;
+  surround->bpp  = tile_manager_bpp (tiles);
+  surround->w    = width;
+  surround->h    = height;
+
+  for (i = 0; i < surround->bpp; ++i)
+    surround->bg[i] = bg[i];
+
+  surround->tile = NULL;
+
+  return surround;
+}
+
+/**
+ * pixel_surround_lock:
+ * @surround:  a #PixelSurround
+ * @x:         X coordinate of upper left corner
+ * @y:         Y coordinate of upper left corner
+ * @rowstride: return location for rowstride
+ *
+ * Gives access to a region of pixels. The upper left corner is
+ * specified by the @x and @y parameters. The size of the region
+ * is determined by the dimensions given when creating the @surround.
+ *
+ * When you don't need to read from the pixels any longer, you should
+ * unlock the @surround using pixel_surround_unlock(). If you need a
+ * different region, just call pixel_surround_lock() again.
+ *
+ * Return value: pointer to pixel data (read-only)
+ */
 const guchar *
-pixel_surround_lock (PixelSurround *ps,
+pixel_surround_lock (PixelSurround *surround,
                      gint           x,
                      gint           y,
                      gint          *rowstride)
 {
-  Tile   *tile;
   guchar *dest;
-  gint    i;
-  gint    j;
+  gint    i = x % TILE_WIDTH;
+  gint    j = y % TILE_HEIGHT;
 
-  /*  check that PixelSurround isn't already locked  */
-  g_return_val_if_fail (ps->tile == NULL, NULL);
-
-  tile = tile_manager_get_tile (ps->mgr, x, y, TRUE, FALSE);
-
-  i = x % TILE_WIDTH;
-  j = y % TILE_HEIGHT;
-
-  /* does the tile cover the whole region? */
-  if (tile &&
-      i + ps->w < tile_ewidth (tile) &&
-      j + ps->h < tile_eheight (tile))
+  /*  return a pointer to the tile data if the tile covers the whole region  */
+  if (pixel_surround_get_tile (surround, x, y) &&
+      i + surround->w <= surround->tile_w      &&
+      j + surround->h <= surround->tile_h)
     {
-      ps->tile = tile;
+      *rowstride = surround->tile_w * surround->bpp;
 
-      *rowstride = tile_ewidth (tile) * ps->bpp;
-
-      return tile_data_pointer (tile, i, j);
+      return tile_data_pointer (surround->tile, i, j);
     }
 
-  if (tile)
-    tile_release (tile, FALSE);
+  /*  otherwise, copy region to our internal buffer  */
+  dest = surround->buff;
 
-  /* copy pixels, one by one */
-  dest = ps->buff;
-
-  for (j = y; j < y + ps->h; ++j)
+  for (j = y; j < y + surround->h; j++)
     {
-      for (i = x; i < x + ps->w; ++i)
+      for (i = x; i < x + surround->w; i++)
         {
           const guchar *src;
 
-          tile = tile_manager_get_tile (ps->mgr, i, j, TRUE, FALSE);
-
-          if (tile)
+          if (pixel_surround_get_tile (surround, i, j))
             {
-              src = tile_data_pointer (tile, i % TILE_WIDTH, j % TILE_HEIGHT);
-
-              PIXEL_COPY (dest, src, ps->bpp);
-
-              tile_release (tile, FALSE);
+              src = tile_data_pointer (surround->tile,
+                                       i % TILE_WIDTH, j % TILE_HEIGHT);
             }
           else
             {
-              src = ps->bg;
+              src = surround->bg;
+            }
 
-              PIXEL_COPY (dest, src, ps->bpp);
+          switch (surround->bpp)
+            {
+            case 4: *dest++ = *src++;
+            case 3: *dest++ = *src++;
+            case 2: *dest++ = *src++;
+            case 1: *dest++ = *src++;
             }
         }
     }
 
-  *rowstride = ps->w * ps->bpp;
+  *rowstride = surround->w * surround->bpp;
 
-  return ps->buff;
+  return surround->buff;
 }
 
+/**
+ * pixel_surround_release:
+ * @surround: #PixelSurround
+ *
+ * Unlocks pixels locked by @surround. See pixel_surround_lock().
+ */
 void
-pixel_surround_release (PixelSurround *ps)
+pixel_surround_release (PixelSurround *surround)
 {
-  if (ps->tile)
+  if (surround->tile)
     {
-      tile_release (ps->tile, FALSE);
-      ps->tile = NULL;
+      tile_release (surround->tile, FALSE);
+      surround->tile = NULL;
     }
 }
 
+/**
+ * pixel_surround_destroy:
+ * @surround: #PixelSurround
+ *
+ * Unlocks pixels and frees any resources allocated for @surround. You
+ * must not use @surround any longer after calling this function.
+ */
 void
-pixel_surround_destroy (PixelSurround *ps)
+pixel_surround_destroy (PixelSurround *surround)
 {
-  /*  check that PixelSurround is not locked  */
-  g_return_if_fail (ps->tile == NULL);
+  g_return_if_fail (surround != NULL);
 
-  g_free (ps);
+  pixel_surround_release (surround);
+  g_free (surround);
 }

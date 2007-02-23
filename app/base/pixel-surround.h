@@ -25,9 +25,9 @@
  */
 
 
-PixelSurround * pixel_surround_new      (TileManager   *tm,
-                                         gint           w,
-                                         gint           h,
+PixelSurround * pixel_surround_new      (TileManager   *tiles,
+                                         gint           width,
+                                         gint           height,
                                          const guchar   bg[MAX_CHANNELS]);
 
 /* return a pointer to a buffer which contains all the surrounding pixels
