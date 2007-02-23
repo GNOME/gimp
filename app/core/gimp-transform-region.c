@@ -44,10 +44,10 @@
 
 /*  forward function prototypes  */
 
-static gboolean supersample_dtest (gdouble u0, gdouble v0,
-                                   gdouble u1, gdouble v1,
-                                   gdouble u2, gdouble v2,
-                                   gdouble u3, gdouble v3);
+static inline gboolean supersample_dtest (gdouble u0, gdouble v0,
+                                          gdouble u1, gdouble v1,
+                                          gdouble u2, gdouble v2,
+                                          gdouble u3, gdouble v3);
 
 static void     sample_adapt      (TileManager   *tm,
                                    gdouble        uc,     gdouble     vc,
@@ -57,7 +57,7 @@ static void     sample_adapt      (TileManager   *tm,
                                    gdouble        u3,     gdouble     v3,
                                    gint           level,
                                    guchar        *color,
-                                   guchar        *bg_color,
+                                   const guchar  *bg_color,
                                    gint           bpp,
                                    gint           alpha);
 
@@ -93,7 +93,7 @@ gimp_transform_region (GimpPickable          *pickable,
                        gint                   recursion_level,
                        GimpProgress          *progress)
 {
-  PixelSurround  surround;
+  PixelSurround *surround = NULL;
   GimpImageType  pickable_type;
   GimpMatrix3    m;
 
@@ -121,6 +121,7 @@ gimp_transform_region (GimpPickable          *pickable,
   guchar         bg_color[MAX_CHANNELS];
 
   tile_manager_get_offsets (orig_tiles, &u1, &v1);
+
   u2 = u1 + tile_manager_width (orig_tiles);
   v2 = v1 + tile_manager_height (orig_tiles);
 
@@ -178,10 +179,10 @@ gimp_transform_region (GimpPickable          *pickable,
     case GIMP_INTERPOLATION_NONE:
       break;
     case GIMP_INTERPOLATION_CUBIC:
-      pixel_surround_init (&surround, orig_tiles, 4, 4, bg_color);
+      surround = pixel_surround_new (orig_tiles, 4, 4, bg_color);
       break;
     case GIMP_INTERPOLATION_LINEAR:
-      pixel_surround_init (&surround, orig_tiles, 2, 2, bg_color);
+      surround = pixel_surround_new (orig_tiles, 2, 2, bg_color);
       break;
     case GIMP_INTERPOLATION_LANCZOS:
       break;
@@ -476,11 +477,11 @@ gimp_transform_region (GimpPickable          *pickable,
                         case GIMP_INTERPOLATION_NONE:
                           break;
                         case GIMP_INTERPOLATION_LINEAR:
-                          sample_linear (&surround, u[0] - u1, v[0] - v1,
+                          sample_linear (surround, u[0] - u1, v[0] - v1,
                                          color, bytes, alpha);
                           break;
                         case GIMP_INTERPOLATION_CUBIC:
-                          sample_cubic (&surround, u[0] - u1, v[0] - v1,
+                          sample_cubic (surround, u[0] - u1, v[0] - v1,
                                         color, bytes, alpha);
                           break;
                         case GIMP_INTERPOLATION_LANCZOS:
@@ -511,17 +512,8 @@ gimp_transform_region (GimpPickable          *pickable,
   if (progress)
     gimp_progress_set_value (progress, 1.0);
 
-  switch (interpolation_type)
-    {
-    case GIMP_INTERPOLATION_NONE:
-      break;
-    case GIMP_INTERPOLATION_CUBIC:
-    case GIMP_INTERPOLATION_LINEAR:
-      pixel_surround_clear (&surround);
-      break;
-    case GIMP_INTERPOLATION_LANCZOS:
-      break;
-    }
+  if (surround)
+    pixel_surround_destroy (surround);
 
   g_free (dest);
 }
@@ -546,19 +538,17 @@ sample_linear (PixelSurround *surround,
                gint           bytes,
                gint           alpha)
 {
-  gdouble  a_val, a_recip;
-  gint     i;
-  gint     iu = floor (u);
-  gint     iv = floor (v);
-  gint     row;
-  gdouble  du,dv;
-  guchar  *alphachan;
-  guchar  *data;
+  gdouble       a_val, a_recip;
+  gint          i;
+  gint          iu = floor (u);
+  gint          iv = floor (v);
+  gint          rowstride;
+  gdouble       du, dv;
+  const guchar *alphachan;
+  const guchar *data;
 
   /* lock the pixel surround */
-  data = pixel_surround_lock (surround, iu, iv);
-
-  row = pixel_surround_rowstride (surround);
+  data = pixel_surround_lock (surround, iu, iv, &rowstride);
 
   /* the fractional error */
   du = u - iu;
@@ -566,8 +556,9 @@ sample_linear (PixelSurround *surround,
 
   /* calculate alpha value of result pixel */
   alphachan = &data[alpha];
-  a_val = BILINEAR (alphachan[0],   alphachan[bytes],
-                    alphachan[row], alphachan[row + bytes], du, dv);
+  a_val = BILINEAR (alphachan[0],         alphachan[bytes],
+                    alphachan[rowstride], alphachan[rowstride + bytes], du, dv);
+
   if (a_val <= 0.0)
     {
       a_recip = 0.0;
@@ -591,12 +582,14 @@ sample_linear (PixelSurround *surround,
    */
   for (i = 0; i < alpha; i++)
     {
-      gint newval = (a_recip *
-                     BILINEAR (alphachan[0]           * data[i],
-                               alphachan[bytes]       * data[bytes + i],
-                               alphachan[row]         * data[row + i],
-                               alphachan[row + bytes] * data[row + bytes + i],
-                               du, dv));
+      gint newval;
+
+      newval = (a_recip *
+                BILINEAR (alphachan[0]                 * data[i],
+                          alphachan[bytes]             * data[bytes + i],
+                          alphachan[rowstride]         * data[rowstride + i],
+                          alphachan[rowstride + bytes] * data[rowstride + bytes + i],
+                          du, dv));
 
       color[i] = CLAMP (newval, 0, 255);
     }
@@ -626,13 +619,13 @@ sample_linear (PixelSurround *surround,
     bilinear interpolation of a fixed point pixel
 */
 static void
-sample_bi (TileManager *tm,
-           gint         x,
-           gint         y,
-           guchar      *color,
-           guchar      *bg_color,
-           gint         bpp,
-           gint         alpha)
+sample_bi (TileManager  *tm,
+           gint          x,
+           gint          y,
+           guchar       *color,
+           const guchar *bg_color,
+           gint          bpp,
+           gint          alpha)
 {
   guchar C[4][4];
   gint   i;
@@ -691,7 +684,7 @@ sample_bi (TileManager *tm,
  * Returns TRUE if one of the deltas of the
  * quad edge is > 1.0 (16.16 fixed values).
  */
-static gboolean
+static inline gboolean
 supersample_test (gint x0, gint y0,
                   gint x1, gint y1,
                   gint x2, gint y2,
@@ -714,24 +707,20 @@ supersample_test (gint x0, gint y0,
  *  Returns TRUE if one of the deltas of the
  *  quad edge is > 1.0 (double values).
  */
-static gboolean
+static inline gboolean
 supersample_dtest (gdouble x0, gdouble y0,
                    gdouble x1, gdouble y1,
                    gdouble x2, gdouble y2,
                    gdouble x3, gdouble y3)
 {
-  if (fabs (x0 - x1) > 1.0 ||
-      fabs (x1 - x2) > 1.0 ||
-      fabs (x2 - x3) > 1.0 ||
-      fabs (x3 - x0) > 1.0 ||
-
-      fabs (y0 - y1) > 1.0 ||
-      fabs (y1 - y2) > 1.0 ||
-      fabs (y2 - y3) > 1.0 ||
-      fabs (y3 - y0) > 1.0)
-    return TRUE;
-
-  return FALSE;
+  return (fabs (x0 - x1) > 1.0 ||
+          fabs (x1 - x2) > 1.0 ||
+          fabs (x2 - x3) > 1.0 ||
+          fabs (x3 - x0) > 1.0 ||
+          fabs (y0 - y1) > 1.0 ||
+          fabs (y1 - y2) > 1.0 ||
+          fabs (y2 - y3) > 1.0 ||
+          fabs (y3 - y0) > 1.0);
 }
 
 /*
@@ -740,18 +729,18 @@ supersample_dtest (gdouble x0, gdouble y0,
     0..3 is a cycle around the quad
 */
 static void
-get_sample (TileManager *tm,
-            gint         xc,  gint yc,
-            gint         x0,  gint y0,
-            gint         x1,  gint y1,
-            gint         x2,  gint y2,
-            gint         x3,  gint y3,
-            gint        *cc,
-            gint         level,
-            guint       *color,
-            guchar      *bg_color,
-            gint         bpp,
-            gint         alpha)
+get_sample (TileManager  *tm,
+            gint          xc,  gint yc,
+            gint          x0,  gint y0,
+            gint          x1,  gint y1,
+            gint          x2,  gint y2,
+            gint          x3,  gint y3,
+            gint         *cc,
+            gint          level,
+            guint        *color,
+            const guchar *bg_color,
+            gint          bpp,
+            gint          alpha)
 {
   if (!level || !supersample_test (x0, y0, x1, y1, x2, y2, x3, y3))
     {
@@ -815,17 +804,22 @@ get_sample (TileManager *tm,
 }
 
 static void
-sample_adapt (TileManager *tm,
-              gdouble     xc,  gdouble yc,
-              gdouble     x0,  gdouble y0,
-              gdouble     x1,  gdouble y1,
-              gdouble     x2,  gdouble y2,
-              gdouble     x3,  gdouble y3,
-              gint        level,
-              guchar     *color,
-              guchar     *bg_color,
-              gint        bpp,
-              gint        alpha)
+sample_adapt (TileManager  *tm,
+              gdouble       xc,
+              gdouble       yc,
+              gdouble       x0,
+              gdouble       y0,
+              gdouble       x1,
+              gdouble       y1,
+              gdouble       x2,
+              gdouble       y2,
+              gdouble       x3,
+              gdouble       y3,
+              gint          level,
+              guchar       *color,
+              const guchar *bg_color,
+              gint          bpp,
+              gint          alpha)
 {
     gint  cc = 0;
     gint  i;
@@ -916,18 +910,16 @@ sample_cubic (PixelSurround *surround,
               gint           bytes,
               gint           alpha)
 {
-  gdouble  a_val, a_recip;
-  gint     i;
-  gint     iu = floor(u);
-  gint     iv = floor(v);
-  gint     row;
-  gdouble  du,dv;
-  guchar  *data;
+  gdouble       a_val, a_recip;
+  gint          i;
+  gint          iu = floor(u);
+  gint          iv = floor(v);
+  gint          rowstride;
+  gdouble       du, dv;
+  const guchar *data;
 
   /* lock the pixel surround */
-  data = pixel_surround_lock (surround, iu - 1 , iv - 1 );
-
-  row = pixel_surround_rowstride (surround);
+  data = pixel_surround_lock (surround, iu - 1 , iv - 1, &rowstride);
 
   /* the fractional error */
   du = u - iu;
@@ -936,10 +928,10 @@ sample_cubic (PixelSurround *surround,
   /* calculate alpha of result */
   a_val = gimp_drawable_transform_cubic
     (dv,
-     CUBIC_ROW (du, data + alpha + row * 0, bytes),
-     CUBIC_ROW (du, data + alpha + row * 1, bytes),
-     CUBIC_ROW (du, data + alpha + row * 2, bytes),
-     CUBIC_ROW (du, data + alpha + row * 3, bytes));
+     CUBIC_ROW (du, data + alpha + rowstride * 0, bytes),
+     CUBIC_ROW (du, data + alpha + rowstride * 1, bytes),
+     CUBIC_ROW (du, data + alpha + rowstride * 2, bytes),
+     CUBIC_ROW (du, data + alpha + rowstride * 3, bytes));
 
   if (a_val <= 0.0)
     {
@@ -968,20 +960,20 @@ sample_cubic (PixelSurround *surround,
                      gimp_drawable_transform_cubic
                      (dv,
                       CUBIC_SCALED_ROW (du,
-                                        i + data + row * 0,
-                                        data + alpha + row * 0,
+                                        i + data + rowstride * 0,
+                                        data + alpha + rowstride * 0,
                                         bytes),
                       CUBIC_SCALED_ROW (du,
-                                        i + data + row * 1,
-                                        data + alpha + row * 1,
+                                        i + data + rowstride * 1,
+                                        data + alpha + rowstride * 1,
                                         bytes),
                       CUBIC_SCALED_ROW (du,
-                                        i + data + row * 2,
-                                        data + alpha + row * 2,
+                                        i + data + rowstride * 2,
+                                        data + alpha + rowstride * 2,
                                         bytes),
                       CUBIC_SCALED_ROW (du,
-                                        i + data + row * 3,
-                                        data + alpha + row * 3,
+                                        i + data + rowstride * 3,
+                                        data + alpha + rowstride * 3,
                                         bytes)));
 
       color[i] = CLAMP (newval, 0, 255);

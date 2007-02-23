@@ -61,6 +61,8 @@ typedef struct _PixelRegionIterator PixelRegionIterator;
 typedef struct _PixelRegion         PixelRegion;
 typedef struct _PixelRegionHolder   PixelRegionHolder;
 
+typedef struct _PixelSurround       PixelSurround;
+
 typedef struct _SioxState           SioxState;
 
 typedef struct _TempBuf             TempBuf;

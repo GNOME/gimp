@@ -28,37 +28,54 @@
 #include "tile.h"
 
 
-void
-pixel_surround_init (PixelSurround *ps,
-                     TileManager   *tm,
-                     gint           w,
-                     gint           h,
-                     const guchar   bg[MAX_CHANNELS])
+struct _PixelSurround
 {
-  gint i;
+  Tile        *tile;
+  TileManager *mgr;
+  guchar      *buff;
+  gint         buff_size;
+  gint         bpp;
+  gint         w;
+  gint         h;
+  guchar       bg[MAX_CHANNELS];
+};
 
-  for (i = 0; i < MAX_CHANNELS; ++i)
-    ps->bg[i] = bg[i];
 
-  ps->tile      = NULL;
+PixelSurround *
+pixel_surround_new (TileManager  *tm,
+                    gint          w,
+                    gint          h,
+                    const guchar  bg[MAX_CHANNELS])
+{
+  PixelSurround *ps;
+  gint           i;
+
+  g_return_val_if_fail (tm != NULL, NULL);
+
+  ps = g_new0 (PixelSurround, 1);
+
   ps->mgr       = tm;
   ps->bpp       = tile_manager_bpp (tm);
   ps->w         = w;
   ps->h         = h;
-  /* make sure buffer is big enough */
   ps->buff_size = w * h * ps->bpp;
   ps->buff      = g_new (guchar, ps->buff_size);
-  ps->rowstride = 0;
+
+  for (i = 0; i < MAX_CHANNELS; ++i)
+    ps->bg[i] = bg[i];
+
+  return ps;
 }
 
-guchar *
+const guchar *
 pixel_surround_lock (PixelSurround *ps,
                      gint           x,
-                     gint           y)
+                     gint           y,
+                     gint          *rowstride)
 {
-  gint    i, j;
-  guchar *k;
-  guchar *ptr;
+  gint          i, j;
+  const guchar *k;
+  guchar       *ptr;
 
   ps->tile = tile_manager_get_tile (ps->mgr, x, y, TRUE, FALSE);
 
@@ -70,9 +87,8 @@ pixel_surround_lock (PixelSurround *ps,
       (i < (tile_ewidth (ps->tile) - ps->w)) &&
       (j < (tile_eheight (ps->tile) - ps->h)))
     {
-      ps->rowstride = tile_ewidth (ps->tile) * ps->bpp;
+      *rowstride = tile_ewidth (ps->tile) * ps->bpp;
 
-      /* is this really the correct way? */
       return tile_data_pointer (ps->tile, i, j);
     }
 
@@ -86,6 +102,7 @@ pixel_surround_lock (PixelSurround *ps,
   /* copy pixels, one by one */
   /* no, this is not the best way, but it's much better than before */
   ptr = ps->buff;
+
   for (j = y; j < y + ps->h; ++j)
     {
       for (i = x; i < x + ps->w; ++i)
@@ -94,9 +111,9 @@ pixel_surround_lock (PixelSurround *ps,
 
           if (tile)
             {
-              guchar *buff = tile_data_pointer (tile,
-                                                i % TILE_WIDTH,
-                                                j % TILE_HEIGHT);
+              const guchar *buff = tile_data_pointer (tile,
+                                                      i % TILE_WIDTH,
+                                                      j % TILE_HEIGHT);
 
               for (k = buff; k < buff + ps->bpp; ++k, ++ptr)
                 *ptr = *k;
@@ -111,21 +128,14 @@ pixel_surround_lock (PixelSurround *ps,
         }
     }
 
-  ps->rowstride = ps->w * ps->bpp;
+  *rowstride = ps->w * ps->bpp;
 
   return ps->buff;
-}
-
-gint
-pixel_surround_rowstride (PixelSurround *ps)
-{
-  return ps->rowstride;
 }
 
 void
 pixel_surround_release (PixelSurround *ps)
 {
-  /* always get new tile (for now), so release the old one */
   if (ps->tile)
     {
       tile_release (ps->tile, FALSE);
@@ -134,12 +144,12 @@ pixel_surround_release (PixelSurround *ps)
 }
 
 void
-pixel_surround_clear (PixelSurround *ps)
+pixel_surround_destroy (PixelSurround *ps)
 {
+  g_return_if_fail (ps != NULL);
+
   if (ps->buff)
-    {
-      g_free (ps->buff);
-      ps->buff      = NULL;
-      ps->buff_size = 0;
-    }
+    g_free (ps->buff);
+
+  g_free (ps);
 }

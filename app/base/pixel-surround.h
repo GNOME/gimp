@@ -24,39 +24,24 @@
  *  region around a pixel in a tile manager
  */
 
-typedef struct _PixelSurround
-{
-  Tile        *tile;
-  TileManager *mgr;
-  guchar      *buff;
-  gint         buff_size;
-  gint         bpp;
-  gint         w;
-  gint         h;
-  guchar       bg[MAX_CHANNELS];
-  gint         rowstride;
-} PixelSurround;
 
-
-void     pixel_surround_init      (PixelSurround *ps,
-                                   TileManager   *tm,
-                                   gint           w,
-                                   gint           h,
-                                   const guchar   bg[MAX_CHANNELS]);
+PixelSurround * pixel_surround_new      (TileManager   *tm,
+                                         gint           w,
+                                         gint           h,
+                                         const guchar   bg[MAX_CHANNELS]);
 
 /* return a pointer to a buffer which contains all the surrounding pixels
  * strategy: if we are in the middle of a tile, use the tile storage
  * otherwise just copy into our own malloced buffer and return that
  */
-guchar * pixel_surround_lock      (PixelSurround *ps,
-                                   gint           x,
-                                   gint           y);
+const guchar  * pixel_surround_lock     (PixelSurround *surround,
+                                         gint           x,
+                                         gint           y,
+                                         gint          *rowstride);
 
-gint     pixel_surround_rowstride (PixelSurround *ps);
+void            pixel_surround_release  (PixelSurround *surround);
 
-void     pixel_surround_release   (PixelSurround *ps);
-
-void     pixel_surround_clear     (PixelSurround *ps);
+void            pixel_surround_destroy  (PixelSurround *surround);
 
 
 #endif /* __PIXEL_SURROUND_H__ */
