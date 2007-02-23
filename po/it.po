@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-19 20:10+0100\n"
-"PO-Revision-Date: 2007-02-19 20:12+0100\n"
+"POT-Creation-Date: 2007-02-23 11:07+0100\n"
+"PO-Revision-Date: 2007-02-23 11:06+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -4189,7 +4189,7 @@ msgstr "Rimpiazza"
 msgid "Anti erase"
 msgstr "Anti cancella"
 
-#: ../app/base/tile-swap.c:436
+#: ../app/base/tile-swap.c:435
 msgid ""
 "Unable to open swap file. The Gimp has run out of memory and cannot use the "
 "swap file. Some parts of your images may be corrupted. Try to save your work "
@@ -10982,22 +10982,22 @@ msgstr "_Cattura evento"
 msgid "Select the next event arriving from the controller"
 msgstr "Seleziona il prossimo evento proveniente dal controller"
 
-#: ../app/widgets/gimpcontrollereditor.c:533
+#: ../app/widgets/gimpcontrollereditor.c:534
 #, c-format
 msgid "Remove the action assigned to '%s'"
 msgstr "Rimuovi l'azione assegnata a \"%s\""
 
-#: ../app/widgets/gimpcontrollereditor.c:537
+#: ../app/widgets/gimpcontrollereditor.c:539
 #, c-format
 msgid "Assign an action to '%s'"
 msgstr "Assegna un'azione a \"%s\""
 
-#: ../app/widgets/gimpcontrollereditor.c:659
+#: ../app/widgets/gimpcontrollereditor.c:661
 #, c-format
 msgid "Select Action for Event '%s'"
 msgstr "Seleziona l'azione per l'evento '%s'"
 
-#: ../app/widgets/gimpcontrollereditor.c:664
+#: ../app/widgets/gimpcontrollereditor.c:666
 msgid "Select Controller Event Action"
 msgstr "Seleziona l'azione evento controller"
 
@@ -11950,7 +11950,7 @@ msgstr "CMYK"
 
 #: ../app/widgets/widgets-enums.c:115
 msgid "Pick only"
-msgstr "Prendi solo"
+msgstr "Solo prelievo"
 
 #: ../app/widgets/widgets-enums.c:116
 msgid "Set foreground color"
@@ -12115,6 +12115,3 @@ msgstr "Controlla che gli strumenti siano visibili!"
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Impossibile eseguire \"%s\": %s"
-
-#~ msgid "Configure Controller"
-#~ msgstr "Configura controllore"
