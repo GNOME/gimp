@@ -581,9 +581,12 @@ psd_type_to_gimp_base_type (psd_imagetype psdtype)
     case PSD_INDEXEDA_IMAGE:
     case PSD_INDEXED_IMAGE: return GIMP_INDEXED;
     default:
+      /* If I follow the code that calls this function correctly, this
+       * should never happen, so a g_assert_not_reached() would
+       * probably be better. --tml
+       */
       g_message ("Error: Can't convert PSD imagetype to GIMP imagetype");
       gimp_quit();
-      return GIMP_RGB;
     }
 }
 
@@ -610,15 +613,32 @@ psd_unit_to_gimp_unit (int psdunit)
 static GimpImageBaseType
 psd_mode_to_gimp_base_type (guint16 psdtype)
 {
-  switch(psdtype)
+  switch (psdtype)
     {
-    case 1: return GIMP_GRAY;
-    case 2: return GIMP_INDEXED;
-    case 3: return GIMP_RGB;
-    default:
-      g_message ("Error: Can't convert PSD mode to GIMP base imagetype");
+    case 0: 
+      g_message (_("Cannot handle bitmap PSD files"));
       gimp_quit();
+    case 1:
+      return GIMP_GRAY;
+    case 2:
+      return GIMP_INDEXED;
+    case 3:
       return GIMP_RGB;
+    case 4:
+      g_message (_("Cannot handle PSD files in CMYK color"));
+      gimp_quit();
+    case 7:
+      g_message (_("Cannot handle PSD files in Multichannel color"));
+      gimp_quit();
+    case 8:
+      g_message (_("Cannot handle PSD files in Duotone color"));
+      gimp_quit();
+    case 9:
+      g_message (_("Cannot handle PSD files in Lab color"));
+      gimp_quit();
+    default:
+      g_message (_("Cannot handle the color mode %d of the PSD file"), psdtype);
+      gimp_quit();
     }
 }
 
@@ -711,8 +731,8 @@ dispatch_resID (guint    ID,
 
 		  if (psd_image.num_aux_channels > MAX_CHANNELS)
 		    {
-		      printf("\nPSD: Sorry - this image has too many "
-			     "aux channels.  Tell Adam!\n");
+		      g_message (_("Cannot handle PSD file with more than %d channels"),
+				 MAX_CHANNELS);
 		      gimp_quit();
 		    }
 		}
@@ -1359,7 +1379,6 @@ seek_to_and_unpack_pixeldata (FILE *fd,
       IFDBG {printf("\nEEP!\n");fflush(stdout);}
       g_message ("*** Unknown compression type in channel.");
       gimp_quit();
-      break;
     }
 
   g_free (tmpline);
@@ -2043,7 +2062,6 @@ load_image (const gchar *name)
                           {
                             g_message ("Error: Cannot identify required RGBA channels");
                             gimp_quit ();
-                            break;
                           }
 
                         merged_data =
@@ -2081,7 +2099,6 @@ load_image (const gchar *name)
 	    default:
               g_message ("Error: Sorry, can't deal with a layered image of this type.\n");
               gimp_quit();
-              break;
 	    }
 
 	  gimp_image_add_layer (image_ID, layer_ID, 0);
@@ -2242,7 +2259,7 @@ load_image (const gchar *name)
 	      imagetype = PSD_RGBA_IMAGE;
 	      break;
 	    default:
-	      printf ("PSD: cannot handle CMYK with more than 5 channels\n");
+	      g_message (_("Cannot handle PSD files in CMYK color with more than 5 channels"));
 	      return -1;
 	      break;
 	    }
@@ -2257,16 +2274,16 @@ load_image (const gchar *name)
 
       if (imagetype == PSD_UNKNOWN_IMAGE)
 	{
-	  printf("PSD: Image type %d (%s) is not supported in this data format\n",
-		 PSDheader.mode, (PSDheader.mode > 10) ?
-		 "<out of range>" : modename[PSDheader.mode]);
+	  g_message (_("Cannot handle image mode %d (%s)"),
+		     PSDheader.mode,
+		     (PSDheader.mode >= G_N_ELEMENTS (modename)) ?
+		     "<out of range>" : modename[PSDheader.mode]);
 	  return -1;
 	}
 
       if ((PSDheader.bpp != 8) && (PSDheader.bpp != 1))
 	{
-	  printf("PSD: GIMP only supports 8-bit or 1-bit deep PSD images "
-		 "at this time.\n");
+	  g_message (_("Cannot handle %d bits per channel PSD files"), PSDheader.bpp);
 	  return -1;
 	}
 
@@ -2999,12 +3016,12 @@ read_whole_file (FILE *fd)
 
     if (strncmp (PSDheader.signature, "8BPS", 4) != 0)
       {
-	printf ("PSD: not an Adobe Photoshop PSD file\n");
+	g_message (_("This is not an Adobe Photoshop PSD file"));
 	gimp_quit ();
       }
     if (PSDheader.version != 1)
       {
-	printf ("PSD: bad version number '%d', not 1\n", PSDheader.version);
+	g_message (_("The PSD file has bad version number '%d', not 1"), PSDheader.version);
 	gimp_quit ();
       }
     w = PSDheader.mode;
