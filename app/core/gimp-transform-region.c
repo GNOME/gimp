@@ -178,11 +178,11 @@ gimp_transform_region (GimpPickable          *pickable,
     {
     case GIMP_INTERPOLATION_NONE:
       break;
-    case GIMP_INTERPOLATION_CUBIC:
-      surround = pixel_surround_new (orig_tiles, 4, 4, bg_color);
-      break;
     case GIMP_INTERPOLATION_LINEAR:
       surround = pixel_surround_new (orig_tiles, 2, 2, bg_color);
+      break;
+    case GIMP_INTERPOLATION_CUBIC:
+      surround = pixel_surround_new (orig_tiles, 4, 4, bg_color);
       break;
     case GIMP_INTERPOLATION_LANCZOS:
       break;
@@ -278,7 +278,9 @@ gimp_transform_region (GimpPickable          *pickable,
                       }
 
                   /* fill 1D kernels */
-                  for (x_sum = y_sum = 0.0, i = LANCZOS_WIDTH; i >= -LANCZOS_WIDTH; i--)
+                  for (x_sum = y_sum = 0.0, i = LANCZOS_WIDTH;
+                       i >= -LANCZOS_WIDTH;
+                       i--)
                     {
                       pos = i * LANCZOS_SPP;
                       x_sum += x_kernel[LANCZOS_WIDTH + i] = lanczos[ABS (su - pos)];
@@ -476,14 +478,17 @@ gimp_transform_region (GimpPickable          *pickable,
                         {
                         case GIMP_INTERPOLATION_NONE:
                           break;
+
                         case GIMP_INTERPOLATION_LINEAR:
                           sample_linear (surround, u[0] - u1, v[0] - v1,
                                          color, bytes, alpha);
                           break;
+
                         case GIMP_INTERPOLATION_CUBIC:
                           sample_cubic (surround, u[0] - u1, v[0] - v1,
                                         color, bytes, alpha);
                           break;
+
                         case GIMP_INTERPOLATION_LANCZOS:
                           break;
                         }
@@ -727,11 +732,16 @@ supersample_dtest (gdouble x0, gdouble y0,
 */
 static void
 get_sample (TileManager  *tm,
-            gint          xc,  gint yc,
-            gint          x0,  gint y0,
-            gint          x1,  gint y1,
-            gint          x2,  gint y2,
-            gint          x3,  gint y3,
+            gint          xc,
+            gint          yc,
+            gint          x0,
+            gint          y0,
+            gint          x1,
+            gint          y1,
+            gint          x2,
+            gint          y2,
+            gint          x3,
+            gint          y3,
             gint         *cc,
             gint          level,
             guint        *color,
@@ -976,4 +986,3 @@ sample_cubic (PixelSurround *surround,
       color[i] = CLAMP (newval, 0, 255);
     }
 }
-
