@@ -69,62 +69,73 @@ pixel_surround_new (TileManager  *tm,
   return ps;
 }
 
+#define PIXEL_COPY(dest, src, bpp) \
+  switch (bpp)              \
+  {                         \
+  case 4: *dest++ = *src++; \
+  case 3: *dest++ = *src++; \
+  case 2: *dest++ = *src++; \
+  case 1: *dest++ = *src++; \
+  }
+
 const guchar *
 pixel_surround_lock (PixelSurround *ps,
                      gint           x,
                      gint           y,
                      gint          *rowstride)
 {
-  gint          i, j;
-  const guchar *k;
-  guchar       *ptr;
+  Tile   *tile;
+  guchar *dest;
+  gint    i;
+  gint    j;
 
-  ps->tile = tile_manager_get_tile (ps->mgr, x, y, TRUE, FALSE);
+  /*  check that PixelSurround isn't already locked  */
+  g_return_val_if_fail (ps->tile == NULL, NULL);
+
+  tile = tile_manager_get_tile (ps->mgr, x, y, TRUE, FALSE);
 
   i = x % TILE_WIDTH;
   j = y % TILE_HEIGHT;
 
   /* does the tile cover the whole region? */
-  if (ps->tile &&
-      i + ps->w < tile_ewidth (ps->tile) &&
-      j + ps->h < tile_eheight (ps->tile))
+  if (tile &&
+      i + ps->w < tile_ewidth (tile) &&
+      j + ps->h < tile_eheight (tile))
     {
-      *rowstride = tile_ewidth (ps->tile) * ps->bpp;
+      ps->tile = tile;
 
-      return tile_data_pointer (ps->tile, i, j);
+      *rowstride = tile_ewidth (tile) * ps->bpp;
+
+      return tile_data_pointer (tile, i, j);
     }
 
-  /* nope, we will use our internal buffer */
-  if (ps->tile)
-    {
-      tile_release (ps->tile, FALSE);
-      ps->tile = NULL;
-    }
+  if (tile)
+    tile_release (tile, FALSE);
 
   /* copy pixels, one by one */
-  ptr = ps->buff;
+  dest = ps->buff;
 
   for (j = y; j < y + ps->h; ++j)
     {
       for (i = x; i < x + ps->w; ++i)
         {
-          Tile *tile = tile_manager_get_tile (ps->mgr, i, j, TRUE, FALSE);
+          const guchar *src;
+
+          tile = tile_manager_get_tile (ps->mgr, i, j, TRUE, FALSE);
 
           if (tile)
             {
-              const guchar *buff = tile_data_pointer (tile,
-                                                      i % TILE_WIDTH,
-                                                      j % TILE_HEIGHT);
+              src = tile_data_pointer (tile, i % TILE_WIDTH, j % TILE_HEIGHT);
 
-              for (k = buff; k < buff + ps->bpp; ++k, ++ptr)
-                *ptr = *k;
+              PIXEL_COPY (dest, src, ps->bpp);
 
               tile_release (tile, FALSE);
             }
           else
             {
-              for (k = ps->bg; k < ps->bg + ps->bpp; ++k, ++ptr)
-                *ptr = *k;
+              src = ps->bg;
+
+              PIXEL_COPY (dest, src, ps->bpp);
             }
         }
     }
@@ -147,5 +158,8 @@ pixel_surround_release (PixelSurround *ps)
 void
 pixel_surround_destroy (PixelSurround *ps)
 {
+  /*  check that PixelSurround is not locked  */
+  g_return_if_fail (ps->tile == NULL);
+
   g_free (ps);
 }
