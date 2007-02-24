@@ -378,76 +378,81 @@ gimp_transform_region_nearest (TileManager  *orig_tiles,
                                guchar       *bg_color,
                                GimpProgress *progress)
 {
-  guchar  *dest;
-  gint     x, y;
-  gint     width;
-  gint     bytes;
-  gdouble  uinc, vinc, winc;  /* increments in source coordinates  */
-
-  width = dest_x2 - dest_x1;
-  bytes = destPR->bytes;
-
-  dest = g_new (guchar, width * bytes);
+  gdouble   uinc, vinc, winc;  /* increments in source coordinates  */
+  gint      pixels;
+  gint      total;
+  gint      n;
+  gpointer  pr;
 
   uinc = m->coeff[0][0];
   vinc = m->coeff[1][0];
   winc = m->coeff[2][0];
 
-  for (y = dest_y1; y < dest_y2; y++)
+  total = destPR->w * destPR->h;
+
+  for (pr = pixel_regions_register (1, destPR), pixels = 0, n = 0;
+       pr != NULL;
+       pr = pixel_regions_process (pr), n++)
     {
-      guchar  *d = dest;
-      gdouble  tu, tv, tw;   /* undivided source coordinates and divisor */
+      guchar *dest = destPR->data;
+      gint    y;
 
-      /* set up inverse transform steps */
-      tu = uinc * dest_x1 + m->coeff[0][1] * y + m->coeff[0][2];
-      tv = vinc * dest_x1 + m->coeff[1][1] * y + m->coeff[1][2];
-      tw = winc * dest_x1 + m->coeff[2][1] * y + m->coeff[2][2];
-
-      if (progress && !(y & 0xf))
-        gimp_progress_set_value (progress,
-                                 (gdouble) (y - dest_y1) /
-                                 (gdouble) (dest_y2 - dest_y1));
-
-      for (x = dest_x1; x < dest_x2; x++)
+      for (y = destPR->y; y < destPR->y + destPR->h; y++)
         {
-          guchar  color[MAX_CHANNELS];
-          gdouble u, v; /* source coordinates */
-          gint    iu, iv;
-          gint    b;
+          gint     x     = dest_x1 + destPR->x;
+          gint     width = destPR->w;
+          guchar  *d     = dest;
+          gdouble  tu, tv, tw;   /* undivided source coordinates and divisor */
 
-          /*  normalize homogeneous coords  */
-          transform_coordinates (1, &tu, &tv, &tw, &u, &v);
+          /* set up inverse transform steps */
+          tu = uinc * x + m->coeff[0][1] * (dest_y1 + y) + m->coeff[0][2];
+          tv = vinc * x + m->coeff[1][1] * (dest_y1 + y) + m->coeff[1][2];
+          tw = winc * x + m->coeff[2][1] * (dest_y1 + y) + m->coeff[2][2];
 
-          iu = (gint) u;
-          iv = (gint) v;
-
-          /*  Set the destination pixels  */
-          if (iu >= u1 && iu < u2 &&
-              iv >= v1 && iv < v2)
+          while (width--)
             {
-              read_pixel_data_1 (orig_tiles, iu - u1, iv - v1, color);
+              gdouble u, v; /* source coordinates */
+              gint    iu, iv;
 
-              for (b = 0; b < bytes; b++)
-                *d++ = color[b];
+              /*  normalize homogeneous coords  */
+              transform_coordinates (1, &tu, &tv, &tw, &u, &v);
+
+              iu = (gint) u;
+              iv = (gint) v;
+
+              /*  Set the destination pixels  */
+              if (iu >= u1 && iu < u2 &&
+                  iv >= v1 && iv < v2)
+                {
+                  read_pixel_data_1 (orig_tiles, iu - u1, iv - v1, d);
+
+                  d += destPR->bytes;
+                }
+              else /* not in source range */
+                {
+                  gint b;
+
+                  for (b = 0; b < destPR->bytes; b++)
+                    *d++ = bg_color[b];
+                }
+
+              tu += uinc;
+              tv += vinc;
+              tw += winc;
             }
-          else /* not in source range */
-            {
-              /*  increment the destination pointers  */
 
-              for (b = 0; b < bytes; b++)
-                *d++ = bg_color[b];
-            }
-
-          tu += uinc;
-          tv += vinc;
-          tw += winc;
+          dest += destPR->rowstride;
         }
 
-      /*  set the pixel region row  */
-      pixel_region_set_row (destPR, 0, (y - dest_y1), width, dest);
-    }
+      if (progress)
+        {
+          pixels += destPR->w * destPR->h;
 
-  g_free (dest);
+          if (n % 16 == 0)
+            gimp_progress_set_value (progress,
+                                     (gdouble) pixels / (gdouble) total);
+        }
+    }
 }
 
 static void
