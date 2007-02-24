@@ -44,6 +44,20 @@
 
 /*  forward function prototypes  */
 
+static void  gimp_transform_region_nearest (TileManager  *orig_tiles,
+                                            PixelRegion  *destPR,
+                                            gint          dest_x1,
+                                            gint          dest_y1,
+                                            gint          dest_x2,
+                                            gint          dest_y2,
+                                            gint          u1,
+                                            gint          v1,
+                                            gint          u2,
+                                            gint          v2,
+                                            GimpMatrix3  *m,
+                                            gint          alpha,
+                                            guchar       *bg_color,
+                                            GimpProgress *progress);
 static void  gimp_transform_region_lanczos (TileManager  *orig_tiles,
                                             PixelRegion  *destPR,
                                             gint          dest_x1,
@@ -58,6 +72,13 @@ static void  gimp_transform_region_lanczos (TileManager  *orig_tiles,
                                             gint          alpha,
                                             guchar       *bg_color,
                                             GimpProgress *progress);
+
+static inline void  transform_coordinates (const gint     coords,
+                                           const gdouble *tu,
+                                           const gdouble *tv,
+                                           const gdouble *tw,
+                                           gdouble       *u,
+                                           gdouble       *v);
 
 static inline gboolean supersample_dtest (gdouble u0, gdouble v0,
                                           gdouble u1, gdouble v1,
@@ -128,7 +149,6 @@ gimp_transform_region (GimpPickable          *pickable,
   gdouble        tu[5], tv[5], tw[5];  /* undivided source coordinates and
                                         * divisor
                                         */
-  gint           coords;
   gint           alpha;
   gint           width;
   gint           bytes;
@@ -190,15 +210,21 @@ gimp_transform_region (GimpPickable          *pickable,
   switch (interpolation_type)
     {
     case GIMP_INTERPOLATION_NONE:
-      break;
+      gimp_transform_region_nearest (orig_tiles, destPR,
+                                     dest_x1, dest_y1, dest_x2, dest_y2,
+                                     u1, v1, u2, v2,
+                                     &m, alpha, bg_color, progress);
+      return;
+
     case GIMP_INTERPOLATION_LINEAR:
       surround = pixel_surround_new (orig_tiles, 2, 2, bg_color);
       break;
+
     case GIMP_INTERPOLATION_CUBIC:
       surround = pixel_surround_new (orig_tiles, 4, 4, bg_color);
       break;
+
     case GIMP_INTERPOLATION_LANCZOS:
-      /*  lanczos is currently implemented separately  */
       gimp_transform_region_lanczos (orig_tiles, destPR,
                                      dest_x1, dest_y1, dest_x2, dest_y2,
                                      u1, v1, u2, v2,
@@ -215,8 +241,6 @@ gimp_transform_region (GimpPickable          *pickable,
   vinc = m.coeff[1][0];
   winc = m.coeff[2][0];
 
-  coords = (interpolation_type != GIMP_INTERPOLATION_NONE) ? 5 : 1;
-
   for (y = dest_y1; y < dest_y2; y++)
     {
       if (progress && !(y & 0xf))
@@ -229,146 +253,98 @@ gimp_transform_region (GimpPickable          *pickable,
       tv[0] = vinc * dest_x1 + m.coeff[1][1] * y + m.coeff[1][2];
       tw[0] = winc * dest_x1 + m.coeff[2][1] * y + m.coeff[2][2];
 
-      if (interpolation_type != GIMP_INTERPOLATION_NONE)
-        {
-          gdouble xx = dest_x1;
-          gdouble yy = y;
+      {
+        gdouble xx = dest_x1;
+        gdouble yy = y;
 
-          tu[1] = uinc * (xx - 1) + m.coeff[0][1] * (yy    ) + m.coeff[0][2];
-          tv[1] = vinc * (xx - 1) + m.coeff[1][1] * (yy    ) + m.coeff[1][2];
-          tw[1] = winc * (xx - 1) + m.coeff[2][1] * (yy    ) + m.coeff[2][2];
+        tu[1] = uinc * (xx - 1) + m.coeff[0][1] * (yy    ) + m.coeff[0][2];
+        tv[1] = vinc * (xx - 1) + m.coeff[1][1] * (yy    ) + m.coeff[1][2];
+        tw[1] = winc * (xx - 1) + m.coeff[2][1] * (yy    ) + m.coeff[2][2];
 
-          tu[2] = uinc * (xx    ) + m.coeff[0][1] * (yy - 1) + m.coeff[0][2];
-          tv[2] = vinc * (xx    ) + m.coeff[1][1] * (yy - 1) + m.coeff[1][2];
-          tw[2] = winc * (xx    ) + m.coeff[2][1] * (yy - 1) + m.coeff[2][2];
+        tu[2] = uinc * (xx    ) + m.coeff[0][1] * (yy - 1) + m.coeff[0][2];
+        tv[2] = vinc * (xx    ) + m.coeff[1][1] * (yy - 1) + m.coeff[1][2];
+        tw[2] = winc * (xx    ) + m.coeff[2][1] * (yy - 1) + m.coeff[2][2];
 
-          tu[3] = uinc * (xx + 1) + m.coeff[0][1] * (yy    ) + m.coeff[0][2];
-          tv[3] = vinc * (xx + 1) + m.coeff[1][1] * (yy    ) + m.coeff[1][2];
-          tw[3] = winc * (xx + 1) + m.coeff[2][1] * (yy    ) + m.coeff[2][2];
+        tu[3] = uinc * (xx + 1) + m.coeff[0][1] * (yy    ) + m.coeff[0][2];
+        tv[3] = vinc * (xx + 1) + m.coeff[1][1] * (yy    ) + m.coeff[1][2];
+        tw[3] = winc * (xx + 1) + m.coeff[2][1] * (yy    ) + m.coeff[2][2];
 
-          tu[4] = uinc * (xx    ) + m.coeff[0][1] * (yy + 1) + m.coeff[0][2];
-          tv[4] = vinc * (xx    ) + m.coeff[1][1] * (yy + 1) + m.coeff[1][2];
-          tw[4] = winc * (xx    ) + m.coeff[2][1] * (yy + 1) + m.coeff[2][2];
-        }
+        tu[4] = uinc * (xx    ) + m.coeff[0][1] * (yy + 1) + m.coeff[0][2];
+        tv[4] = vinc * (xx    ) + m.coeff[1][1] * (yy + 1) + m.coeff[1][2];
+        tw[4] = winc * (xx    ) + m.coeff[2][1] * (yy + 1) + m.coeff[2][2];
+      }
 
       d = dest;
 
       for (x = dest_x1; x < dest_x2; x++)
         {
-          gint i;     /*  normalize homogeneous coords  */
+          gint i;
 
-          for (i = 0; i < coords; i++)
-            {
-              if (tw[i] == 1.0)
-                {
-                  u[i] = tu[i];
-                  v[i] = tv[i];
-                }
-              else if (tw[i] != 0.0)
-                {
-                  u[i] = tu[i] / tw[i];
-                  v[i] = tv[i] / tw[i];
-                }
-              else
-                {
-                  g_warning ("homogeneous coordinate = 0...\n");
-                }
-            }
+          /*  normalize homogeneous coords  */
+          transform_coordinates (5, tu, tv, tw, u, v);
 
           /*  Set the destination pixels  */
-          if (interpolation_type == GIMP_INTERPOLATION_NONE)
+          if (u[0] <  u1 || v[0] <  v1 ||
+              u[0] >= u2 || v[0] >= v2 )
             {
-              guchar color[MAX_CHANNELS];
-              gint   iu = (gint) u[0];
-              gint   iv = (gint) v[0];
-              gint   b;
+              /* not in source range */
+              /* increment the destination pointers  */
 
-              if (iu >= u1 && iu < u2 &&
-                  iv >= v1 && iv < v2)
-                {
-                  /*  u, v coordinates into source tiles  */
-                  gint u = iu - u1;
-                  gint v = iv - v1;
-
-                  read_pixel_data_1 (orig_tiles, u, v, color);
-
-                  for (b = 0; b < bytes; b++)
-                    *d++ = color[b];
-                }
-              else /* not in source range */
-                {
-                  /*  increment the destination pointers  */
-
-                  for (b = 0; b < bytes; b++)
-                    *d++ = bg_color[b];
-                }
+              for (i = 0; i < bytes; i++)
+                *d++ = bg_color[i];
             }
           else
             {
-              gint b;
+              guchar color[MAX_CHANNELS];
 
-              if (u [0] <  u1 || v [0] <  v1 ||
-                  u [0] >= u2 || v [0] >= v2 )
+              /* clamp texture coordinates */
+              for (i = 0; i < 5; i++)
                 {
-                  /* not in source range */
-                  /* increment the destination pointers  */
+                  u[i] = CLAMP (u[i], u1, u2 - 1);
+                  v[i] = CLAMP (v[i], v1, v2 - 1);
+                }
 
-                  for (b = 0; b < bytes; b++)
-                    *d++ = bg_color[b];
+              if (supersample &&
+                  supersample_dtest (u[1], v[1], u[2], v[2],
+                                     u[3], v[3], u[4], v[4]))
+                {
+                  sample_adapt (orig_tiles,
+                                u[0] - u1, v[0] - v1,
+                                u[1] - u1, v[1] - v1,
+                                u[2] - u1, v[2] - v1,
+                                u[3] - u1, v[3] - v1,
+                                u[4] - u1, v[4] - v1,
+                                recursion_level,
+                                color, bg_color, bytes, alpha);
                 }
               else
                 {
-                  guchar color[MAX_CHANNELS];
-
-                  /* clamp texture coordinates */
-                  for (b = 0; b < 5; b++)
+                  switch (interpolation_type)
                     {
-                      u[b] = CLAMP (u[b], u1, u2 - 1);
-                      v[b] = CLAMP (v[b], v1, v2 - 1);
+                    case GIMP_INTERPOLATION_NONE:
+                      break;
+
+                    case GIMP_INTERPOLATION_LINEAR:
+                      sample_linear (surround, u[0] - u1, v[0] - v1,
+                                     color, bytes, alpha);
+                      break;
+
+                    case GIMP_INTERPOLATION_CUBIC:
+                      sample_cubic (surround, u[0] - u1, v[0] - v1,
+                                    color, bytes, alpha);
+                      break;
+
+                    case GIMP_INTERPOLATION_LANCZOS:
+                      break;
                     }
-
-                  if (supersample &&
-                      supersample_dtest (u[1], v[1], u[2], v[2],
-                                         u[3], v[3], u[4], v[4]))
-                    {
-                      sample_adapt (orig_tiles,
-                                    u[0] - u1, v[0] - v1,
-                                    u[1] - u1, v[1] - v1,
-                                    u[2] - u1, v[2] - v1,
-                                    u[3] - u1, v[3] - v1,
-                                    u[4] - u1, v[4] - v1,
-                                    recursion_level,
-                                    color, bg_color, bytes, alpha);
-                    }
-                  else
-                    {
-                      switch (interpolation_type)
-                        {
-                        case GIMP_INTERPOLATION_NONE:
-                          break;
-
-                        case GIMP_INTERPOLATION_LINEAR:
-                          sample_linear (surround, u[0] - u1, v[0] - v1,
-                                         color, bytes, alpha);
-                          break;
-
-                        case GIMP_INTERPOLATION_CUBIC:
-                          sample_cubic (surround, u[0] - u1, v[0] - v1,
-                                        color, bytes, alpha);
-                          break;
-
-                        case GIMP_INTERPOLATION_LANCZOS:
-                          break;
-                        }
-                    }
-
-                  /*  Set the destination pixel  */
-                  for (b = 0; b < bytes; b++)
-                    *d++ = color[b];
                 }
+
+              /*  Set the destination pixel  */
+              for (i = 0; i < bytes; i++)
+                *d++ = color[i];
             }
 
-          for (i = 0; i < coords; i++)
+          for (i = 0; i < 5; i++)
             {
               tu[i] += uinc;
               tv[i] += vinc;
@@ -382,6 +358,94 @@ gimp_transform_region (GimpPickable          *pickable,
 
   if (surround)
     pixel_surround_destroy (surround);
+
+  g_free (dest);
+}
+
+static void
+gimp_transform_region_nearest (TileManager  *orig_tiles,
+                               PixelRegion  *destPR,
+                               gint          dest_x1,
+                               gint          dest_y1,
+                               gint          dest_x2,
+                               gint          dest_y2,
+                               gint          u1,
+                               gint          v1,
+                               gint          u2,
+                               gint          v2,
+                               GimpMatrix3  *m,
+                               gint          alpha,
+                               guchar       *bg_color,
+                               GimpProgress *progress)
+{
+  guchar  *dest;
+  gint     x, y;
+  gint     width;
+  gint     bytes;
+  gdouble  uinc, vinc, winc;  /* increments in source coordinates  */
+
+  width = dest_x2 - dest_x1;
+  bytes = destPR->bytes;
+
+  dest = g_new (guchar, width * bytes);
+
+  uinc = m->coeff[0][0];
+  vinc = m->coeff[1][0];
+  winc = m->coeff[2][0];
+
+  for (y = dest_y1; y < dest_y2; y++)
+    {
+      guchar  *d = dest;
+      gdouble  tu, tv, tw;   /* undivided source coordinates and divisor */
+
+      /* set up inverse transform steps */
+      tu = uinc * dest_x1 + m->coeff[0][1] * y + m->coeff[0][2];
+      tv = vinc * dest_x1 + m->coeff[1][1] * y + m->coeff[1][2];
+      tw = winc * dest_x1 + m->coeff[2][1] * y + m->coeff[2][2];
+
+      if (progress && !(y & 0xf))
+        gimp_progress_set_value (progress,
+                                 (gdouble) (y - dest_y1) /
+                                 (gdouble) (dest_y2 - dest_y1));
+
+      for (x = dest_x1; x < dest_x2; x++)
+        {
+          guchar  color[MAX_CHANNELS];
+          gdouble u, v; /* source coordinates */
+          gint    iu, iv;
+          gint    b;
+
+          /*  normalize homogeneous coords  */
+          transform_coordinates (1, &tu, &tv, &tw, &u, &v);
+
+          iu = (gint) u;
+          iv = (gint) v;
+
+          /*  Set the destination pixels  */
+          if (iu >= u1 && iu < u2 &&
+              iv >= v1 && iv < v2)
+            {
+              read_pixel_data_1 (orig_tiles, iu - u1, iv - v1, color);
+
+              for (b = 0; b < bytes; b++)
+                *d++ = color[b];
+            }
+          else /* not in source range */
+            {
+              /*  increment the destination pointers  */
+
+              for (b = 0; b < bytes; b++)
+                *d++ = bg_color[b];
+            }
+
+          tu += uinc;
+          tv += vinc;
+          tw += winc;
+        }
+
+      /*  set the pixel region row  */
+      pixel_region_set_row (destPR, 0, (y - dest_y1), width, dest);
+    }
 
   g_free (dest);
 }
@@ -447,27 +511,15 @@ gimp_transform_region_lanczos (TileManager  *orig_tiles,
 
       for (x = dest_x1; x < dest_x2; x++)
         {
-          du = uw = m->coeff[0][0] * x + m->coeff[0][1] * y + m->coeff[0][2];
-          dv = vw = m->coeff[1][0] * x + m->coeff[1][1] * y + m->coeff[1][2];
-          ww =      m->coeff[2][0] * x + m->coeff[2][1] * y + m->coeff[2][2];
+          uw = m->coeff[0][0] * x + m->coeff[0][1] * y + m->coeff[0][2];
+          vw = m->coeff[1][0] * x + m->coeff[1][1] * y + m->coeff[1][2];
+          ww = m->coeff[2][0] * x + m->coeff[2][1] * y + m->coeff[2][2];
 
-          if (ww == 1.0)
-            {
-              du = uw;
-              dv = vw;
-            }
-          else if (ww != 0.0)
-            {
-              du = uw / ww;
-              dv = vw / ww;
-            }
-          else
-            {
-              g_warning ("homogeneous coordinate = 0...\n");
-            }
+          transform_coordinates (1, &uw, &vw, &ww, &du, &dv);
 
           u = (gint) du;
           v = (gint) dv;
+
           /* get weight for fractional error */
           su = (gint) ((du - u) * LANCZOS_SPP);
           sv = (gint) ((dv - v) * LANCZOS_SPP);
@@ -564,7 +616,42 @@ gimp_transform_region_lanczos (TileManager  *orig_tiles,
     gimp_progress_set_value (progress, 1.0);
 }
 
+
 /*  private functions  */
+
+static inline void
+transform_coordinates (const gint     coords,
+                       const gdouble *tu,
+                       const gdouble *tv,
+                       const gdouble *tw,
+                       gdouble       *u,
+                       gdouble       *v)
+{
+  gint i;
+
+  /*  normalize homogeneous coords  */
+  for (i = 0; i < coords; i++)
+    {
+      if (tw[i] == 1.0)
+        {
+          u[i] = tu[i];
+          v[i] = tv[i];
+        }
+      else if (tw[i] != 0.0)
+        {
+          u[i] = tu[i] / tw[i];
+          v[i] = tv[i] / tw[i];
+        }
+      else
+        {
+          g_warning ("homogeneous coordinate = 0...\n");
+
+          u[i] = tu[i];
+          v[i] = tv[i];
+        }
+    }
+}
+
 
 #define BILINEAR(jk, j1k, jk1, j1k1, dx, dy) \
                 ((1 - dy) * (jk  + dx * (j1k  - jk)) + \
