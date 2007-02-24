@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-23 11:07+0100\n"
-"PO-Revision-Date: 2007-02-23 11:06+0100\n"
+"POT-Creation-Date: 2007-02-24 19:04+0100\n"
+"PO-Revision-Date: 2007-02-24 16:45+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -282,7 +282,7 @@ msgstr "Canali"
 #: ../app/actions/actions.c:111 ../app/actions/dialogs-actions.c:90
 #: ../app/dialogs/convert-dialog.c:173 ../app/dialogs/dialogs.c:181
 msgid "Colormap"
-msgstr "Mappa colore"
+msgstr "Mappatura colore"
 
 #: ../app/actions/actions.c:114
 msgid "Context"
