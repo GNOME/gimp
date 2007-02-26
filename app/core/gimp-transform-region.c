@@ -732,15 +732,9 @@ normalize_coords (const gint     coords,
 {
   gint i;
 
-  /*  normalize homogeneous coords  */
   for (i = 0; i < coords; i++)
     {
-      if (tw[i] == 1.0)
-        {
-          u[i] = tu[i];
-          v[i] = tv[i];
-        }
-      else if (tw[i] != 0.0)
+      if (G_LIKELY (tw[i] != 0.0))
         {
           u[i] = tu[i] / tw[i];
           v[i] = tv[i] / tw[i];
