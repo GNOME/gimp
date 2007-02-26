@@ -1147,6 +1147,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
   GimpTool             *tool        = GIMP_TOOL (tr_tool);
   GimpTransformOptions *options     = GIMP_TRANSFORM_TOOL_GET_OPTIONS (tool);
   GimpContext          *context     = GIMP_CONTEXT (options);
+  GimpDisplayShell     *shell       = GIMP_DISPLAY_SHELL (display->shell);
   GimpItem             *active_item = NULL;
   TileManager          *new_tiles;
   const gchar          *message     = NULL;
@@ -1180,13 +1181,12 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
 
   mask_empty = gimp_channel_is_empty (gimp_image_get_mask (display->image));
 
-  if (gimp_display_shell_get_show_transform (GIMP_DISPLAY_SHELL (display->shell)))
+  if (gimp_display_shell_get_show_transform (shell))
     {
-      gimp_display_shell_set_show_transform (GIMP_DISPLAY_SHELL (display->shell),
-                                             FALSE);
+      gimp_display_shell_set_show_transform (shell, FALSE);
 
       /* get rid of preview artifacts left outside the drawable's area */
-      gimp_transform_tool_expose_preview (tr_tool);
+      gtk_widget_queue_draw (display->shell);
     }
 
   gimp_set_busy (display->image->gimp);

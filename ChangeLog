@@ -1,5 +1,11 @@
 2007-02-26  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptransformtool.c (gimp_transform_tool_doit): queue
+	a redraw of the display shell instead of exposing the transform
+	preview. Removes annoying flicker when the tool is finished.
+
+2007-02-26  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp-transform-region.c: moved common code to an
 	inlined function. gimp_transform_region_lanczos() now also does
 	supersampling.  Removed boundary checks and clamping as
