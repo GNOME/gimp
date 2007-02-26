@@ -1,4 +1,3 @@
-# translation of cs.po to Czech
 # translation of cs.po to
 # Translation of gimp-libgimp to Czech
 # Copyright (C) 2000,2003, 2006, 2007 Free Software Foundation, Inc.
@@ -12,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-22 15:25+0100\n"
-"PO-Revision-Date: 2007-01-22 15:25+0100\n"
+"POT-Creation-Date: 2007-02-26 15:47+0100\n"
+"PO-Revision-Date: 2007-02-26 15:47+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
+"Language-Team:  <cs@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -407,15 +406,15 @@ msgstr "Nahradit aktuální výběr"
 msgid "Intersect with the current selection"
 msgstr "Průnik s aktuálním výběrem"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Red"
 msgstr "Červená"
 
-#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Green"
 msgstr "Zelená"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Blue"
 msgstr "Modrá"
 
@@ -427,7 +426,7 @@ msgstr "Šedá"
 msgid "Indexed"
 msgstr "Indexovaná"
 
-#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -507,7 +506,7 @@ msgstr "Bilineární"
 msgid "Radial"
 msgstr "Radiální"
 
-#: ../libgimpbase/gimpbaseenums.c:391
+#: ../libgimpbase/gimpbaseenums.c:391 ../libgimpwidgets/gimpwidgetsenums.c:24
 msgid "Square"
 msgstr "Čtvercový"
 
@@ -612,8 +611,8 @@ msgid "Cubic"
 msgstr "Kubická"
 
 #: ../libgimpbase/gimpbaseenums.c:565
-msgid "Lanczos"
-msgstr "Lanczos"
+msgid "Sinc (Lanczos3)"
+msgstr "Sinc (Lanczos3)"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -957,7 +956,11 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Nemohu vytvořit adresář miniatur '%s'."
 
-#: ../libgimpthumb/gimpthumbnail.c:889
+#: ../libgimpthumb/gimpthumbnail.c:498
+msgid "Thumbnail contains no Thumb::URI tag"
+msgstr "Miniatura neobsahuje tag Thumb::URI tag"
+
+#: ../libgimpthumb/gimpthumbnail.c:898
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Nemohu vytvořit miniaturu %s: %s"
@@ -1104,7 +1107,7 @@ msgstr "Zkotrolovat styl"
 msgid "_Preview"
 msgstr "Ná_hled"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1869
+#: ../libgimpwidgets/gimppropwidgets.c:1901
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1225,59 +1228,67 @@ msgstr "Hnízdo generátoru náhodného čísla z generovaného náhodného čí
 msgid "_Randomize"
 msgstr "_Randomizovat"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:25
+msgid "Portrait"
+msgstr "Na výšku"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:26
+msgid "Landscape"
+msgstr "Na délku"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "_H"
 msgstr "_O"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "Hue"
 msgstr "Odstín"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "_S"
 msgstr "_S"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "Saturation"
 msgstr "Sytost"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "_V"
 msgstr "_H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "Value"
 msgstr "Hodnota"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "_R"
 msgstr "_R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "_G"
 msgstr "_G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "_B"
 msgstr "_B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "_A"
 msgstr "_A"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpwidgets/gimpwidgetsenums.c:157
 msgid "Layers"
 msgstr "Vrstvy"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpwidgets/gimpwidgetsenums.c:158
 msgid "Images"
 msgstr "Obrázky"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:186
+#: ../libgimpwidgets/gimpwidgetsenums.c:217
 msgid "Zoom in"
 msgstr "Přiblížit"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:187
+#: ../libgimpwidgets/gimpwidgetsenums.c:218
 msgid "Zoom out"
 msgstr "Oddálit"
 
@@ -1297,11 +1308,11 @@ msgstr "Tritanopie (necitlivost na modrou)"
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Filtr simulace barevné poruchy (algoritmus Brettel-Vienot-Mollon)"
 
-#: ../modules/cdisplay_colorblind.c:290
+#: ../modules/cdisplay_colorblind.c:292
 msgid "Color Deficient Vision"
 msgstr "Vidění s barevnou poruchou"
 
-#: ../modules/cdisplay_colorblind.c:505
+#: ../modules/cdisplay_colorblind.c:507
 msgid "Color _deficiency type:"
 msgstr "Typ barevné _poruchy:"
 
@@ -1456,217 +1467,304 @@ msgstr "Vodová barva"
 msgid "Pressure"
 msgstr "Tlak"
 
-#: ../modules/controller_linux_input.c:56
+#: ../modules/controller_linux_input.c:58
 msgid "Button 0"
 msgstr "Tlačítko 0"
 
-#: ../modules/controller_linux_input.c:57
+#: ../modules/controller_linux_input.c:59
 msgid "Button 1"
 msgstr "Tlačítko 1"
 
-#: ../modules/controller_linux_input.c:58
+#: ../modules/controller_linux_input.c:60
 msgid "Button 2"
 msgstr "Tlačítko 2"
 
-#: ../modules/controller_linux_input.c:59
+#: ../modules/controller_linux_input.c:61
 msgid "Button 3"
 msgstr "Tlačítko 3"
 
-#: ../modules/controller_linux_input.c:60
+#: ../modules/controller_linux_input.c:62
 msgid "Button 4"
 msgstr "Tlačítko 4"
 
-#: ../modules/controller_linux_input.c:61
+#: ../modules/controller_linux_input.c:63
 msgid "Button 5"
 msgstr "Tlačítko 5"
 
-#: ../modules/controller_linux_input.c:62
+#: ../modules/controller_linux_input.c:64
 msgid "Button 6"
 msgstr "Tlačítko 6"
 
-#: ../modules/controller_linux_input.c:63
+#: ../modules/controller_linux_input.c:65
 msgid "Button 7"
 msgstr "Tlačítko 7"
 
-#: ../modules/controller_linux_input.c:64
+#: ../modules/controller_linux_input.c:66
 msgid "Button 8"
 msgstr "Tlačítko 8"
 
-#: ../modules/controller_linux_input.c:65
+#: ../modules/controller_linux_input.c:67
 msgid "Button 9"
 msgstr "Tlačítko 9"
 
-#: ../modules/controller_linux_input.c:66
+#: ../modules/controller_linux_input.c:68
 msgid "Button Mouse"
 msgstr "Tlačítko myši"
 
-#: ../modules/controller_linux_input.c:67
+#: ../modules/controller_linux_input.c:69
 msgid "Button Left"
 msgstr "Levé tlačítko"
 
-#: ../modules/controller_linux_input.c:68
+#: ../modules/controller_linux_input.c:70
 msgid "Button Right"
 msgstr "Pravé tlačítko"
 
-#: ../modules/controller_linux_input.c:69
+#: ../modules/controller_linux_input.c:71
 msgid "Button Middle"
 msgstr "Prostřední tlačítko"
 
-#: ../modules/controller_linux_input.c:70
+#: ../modules/controller_linux_input.c:72
 msgid "Button Side"
 msgstr "Postranní tlačítko"
 
-#: ../modules/controller_linux_input.c:71
+#: ../modules/controller_linux_input.c:73
 msgid "Button Extra"
 msgstr "Extra tlačítko"
 
-#: ../modules/controller_linux_input.c:72
-#: ../modules/controller_linux_input.c:73
+#: ../modules/controller_linux_input.c:74
 msgid "Button Forward"
 msgstr "Tlačítko vpřed"
 
 #: ../modules/controller_linux_input.c:75
+#, fuzzy
+msgid "Button Back"
+msgstr "Tlačítko 0"
+
+#: ../modules/controller_linux_input.c:76
+#, fuzzy
+msgid "Button Task"
+msgstr "Tlačítko 0"
+
+#: ../modules/controller_linux_input.c:78
 msgid "Button Wheel"
 msgstr "Tlačítko kolečka"
 
-#: ../modules/controller_linux_input.c:78
+#: ../modules/controller_linux_input.c:81
 msgid "Button Gear Down"
 msgstr "Tlačítko kolečka stlačeno"
 
-#: ../modules/controller_linux_input.c:81
+#: ../modules/controller_linux_input.c:84
 msgid "Button Gear Up"
 msgstr "Tlačítko kolečka uvolněno"
 
-#: ../modules/controller_linux_input.c:87
+#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_dx_dinput.c:469
 msgid "X Move Left"
 msgstr "X vlevo"
 
-#: ../modules/controller_linux_input.c:88
+#: ../modules/controller_linux_input.c:91
+#: ../modules/controller_dx_dinput.c:472
 msgid "X Move Right"
 msgstr "X vpravo"
 
-#: ../modules/controller_linux_input.c:89
+#: ../modules/controller_linux_input.c:92
+#: ../modules/controller_dx_dinput.c:478
 msgid "Y Move Away"
 msgstr "Y posun pryč"
 
-#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_linux_input.c:93
+#: ../modules/controller_dx_dinput.c:481
 msgid "Y Move Near"
 msgstr "Y posun blízko"
 
-#: ../modules/controller_linux_input.c:91
+#: ../modules/controller_linux_input.c:94
+#: ../modules/controller_dx_dinput.c:487
 msgid "Z Move Up"
 msgstr "Z nahoru"
 
-#: ../modules/controller_linux_input.c:92
+#: ../modules/controller_linux_input.c:95
+#: ../modules/controller_dx_dinput.c:490
 msgid "Z Move Down"
 msgstr "Z dolů"
 
-#: ../modules/controller_linux_input.c:94
+#: ../modules/controller_linux_input.c:97
+#: ../modules/controller_dx_dinput.c:496
 msgid "X Axis Tilt Away"
 msgstr "X odklonění"
 
-#: ../modules/controller_linux_input.c:95
+#: ../modules/controller_linux_input.c:98
+#: ../modules/controller_dx_dinput.c:499
 msgid "X Axis Tilt Near"
 msgstr "X přiklonění"
 
-#: ../modules/controller_linux_input.c:96
+#: ../modules/controller_linux_input.c:99
+#: ../modules/controller_dx_dinput.c:505
 msgid "Y Axis Tilt Right"
 msgstr "Y naklonění vpravo"
 
-#: ../modules/controller_linux_input.c:97
+#: ../modules/controller_linux_input.c:100
+#: ../modules/controller_dx_dinput.c:508
 msgid "Y Axis Tilt Left"
 msgstr "Y naklonění vlevo"
 
-#: ../modules/controller_linux_input.c:98
+#: ../modules/controller_linux_input.c:101
+#: ../modules/controller_dx_dinput.c:514
 msgid "Z Axis Turn Left"
 msgstr "Vlevo podle osy Z"
 
-#: ../modules/controller_linux_input.c:99
+#: ../modules/controller_linux_input.c:102
+#: ../modules/controller_dx_dinput.c:517
 msgid "Z Axis Turn Right"
 msgstr "Vpravo podle osy Z"
 
-#: ../modules/controller_linux_input.c:101
+#: ../modules/controller_linux_input.c:104
 msgid "Horiz. Wheel Turn Back"
 msgstr "Horizontální kolečko vzad"
 
-#: ../modules/controller_linux_input.c:102
+#: ../modules/controller_linux_input.c:105
 msgid "Horiz. Wheel Turn Forward"
 msgstr "Horizontální kolečko vpřed"
 
-#: ../modules/controller_linux_input.c:103
+#: ../modules/controller_linux_input.c:106
 msgid "Dial Turn Left"
 msgstr "Číselník vlevo"
 
-#: ../modules/controller_linux_input.c:104
+#: ../modules/controller_linux_input.c:107
 msgid "Dial Turn Right"
 msgstr "Číselník vpravo"
 
-#: ../modules/controller_linux_input.c:105
+#: ../modules/controller_linux_input.c:108
 msgid "Wheel Turn Left"
 msgstr "Kolečko vlevo"
 
-#: ../modules/controller_linux_input.c:106
+#: ../modules/controller_linux_input.c:109
 msgid "Wheel Turn Right"
 msgstr "Kolečko vpravo"
 
-#: ../modules/controller_linux_input.c:170
+#: ../modules/controller_linux_input.c:179
 msgid "Linux input event controller"
 msgstr "Ovladač událostí linuxového vstupu"
 
-#: ../modules/controller_linux_input.c:238 ../modules/controller_midi.c:246
+#: ../modules/controller_linux_input.c:249
+#: ../modules/controller_dx_dinput.c:227 ../modules/controller_midi.c:245
 msgid "Device:"
 msgstr "Zařízení:"
 
-#: ../modules/controller_linux_input.c:239
+#: ../modules/controller_linux_input.c:250
 msgid "The name of the device to read Linux Input events from."
 msgstr "Jméno zařízení pro načítání událostí linuxového vstupu."
 
-#: ../modules/controller_linux_input.c:243
+#: ../modules/controller_linux_input.c:261
 msgid "Linux Input"
 msgstr "Linuxový vstup"
 
-#: ../modules/controller_linux_input.c:368
+#: ../modules/controller_linux_input.c:539
 msgid "Linux Input Events"
 msgstr "Události linuxového vstupu"
 
-#: ../modules/controller_linux_input.c:389 ../modules/controller_midi.c:483
-#: ../modules/controller_midi.c:509
+#: ../modules/controller_linux_input.c:551
+#: ../modules/controller_dx_dinput.c:1122 ../modules/controller_midi.c:533
+msgid "No device configured"
+msgstr "Není konfigurováno žádné zařízení"
+
+#: ../modules/controller_linux_input.c:577 ../modules/controller_midi.c:482
+#: ../modules/controller_midi.c:508
 #, c-format
 msgid "Reading from %s"
 msgstr "Čtení z %s"
 
-#: ../modules/controller_linux_input.c:405
-#: ../modules/controller_linux_input.c:448 ../modules/controller_midi.c:465
-#: ../modules/controller_midi.c:526 ../modules/controller_midi.c:597
+#: ../modules/controller_linux_input.c:595
+#: ../modules/controller_linux_input.c:649 ../modules/controller_midi.c:464
+#: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
 #, c-format
 msgid "Device not available: %s"
 msgstr "Zařízení není dostupné: %s"
 
-#: ../modules/controller_linux_input.c:413 ../modules/controller_midi.c:534
-msgid "No device configured"
-msgstr "Není konfigurováno žádné zařízení"
+#: ../modules/controller_linux_input.c:614
+#: ../modules/controller_dx_dinput.c:1147
+msgid "Device not available"
+msgstr "Zařízení není dostupné"
 
-#: ../modules/controller_linux_input.c:457 ../modules/controller_midi.c:606
+#: ../modules/controller_linux_input.c:658 ../modules/controller_midi.c:605
 msgid "End of file"
 msgstr "Konec souboru"
 
-#: ../modules/controller_midi.c:168
+#: ../modules/controller_dx_dinput.c:157
+#, fuzzy
+msgid "DirectX DirectInput event controller"
+msgstr "Ovladač událostí linuxového vstupu"
+
+#: ../modules/controller_dx_dinput.c:228
+#, fuzzy
+msgid "The device to read DirectInput events from."
+msgstr "Jméno zařízení pro načítání událostí linuxového vstupu."
+
+#: ../modules/controller_dx_dinput.c:237
+msgid "DirectX DirectInput"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:446
+#, c-format
+msgid "Button %d"
+msgstr "Tlačítko %d"
+
+#: ../modules/controller_dx_dinput.c:449
+#, c-format
+msgid "Button %d Press"
+msgstr "Stisknutí tlačítka %d"
+
+#: ../modules/controller_dx_dinput.c:452
+#, c-format
+msgid "Button %d Release"
+msgstr "Uvolnění tlačítka %d"
+
+#: ../modules/controller_dx_dinput.c:528
+#, c-format
+msgid "Slider %d Increase"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:531
+#, c-format
+msgid "Slider %d Decrease"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:541
+#, c-format
+msgid "POV %d X View"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:544
+#, c-format
+msgid "POV %d Y View"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:547
+#, c-format
+msgid "POV %d Return"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:1111
+#, fuzzy
+msgid "DirectInput Events"
+msgstr "Události linuxového vstupu"
+
+#: ../modules/controller_midi.c:167
 msgid "MIDI event controller"
 msgstr "Ovladač událostí MIDI"
 
-#: ../modules/controller_midi.c:237
+#: ../modules/controller_midi.c:236
 msgid "The name of the device to read MIDI events from."
 msgstr "Jméno zařízení pro načítání událostí MIDI."
 
-#: ../modules/controller_midi.c:240
+#: ../modules/controller_midi.c:239
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Pro použití ALSA sekvencéru zadejte 'alsa'."
 
-#: ../modules/controller_midi.c:255
+#: ../modules/controller_midi.c:254
 msgid "Channel:"
 msgstr "Kanál:"
 
-#: ../modules/controller_midi.c:256
+#: ../modules/controller_midi.c:255
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
@@ -1674,33 +1772,33 @@ msgstr ""
 "Kanál MIDI pro načítání událostí. Chcete-li číst ze všech kanálů MIDI, "
 "nastavte na -1."
 
-#: ../modules/controller_midi.c:260
+#: ../modules/controller_midi.c:259
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:384
+#: ../modules/controller_midi.c:383
 #, c-format
 msgid "Note %02x on"
 msgstr "Nota %02x zapnuta"
 
-#: ../modules/controller_midi.c:387
+#: ../modules/controller_midi.c:386
 #, c-format
 msgid "Note %02x off"
 msgstr "Nota %02x vypnuta"
 
-#: ../modules/controller_midi.c:390
+#: ../modules/controller_midi.c:389
 #, c-format
 msgid "Controller %03d"
 msgstr "Řadič %03d"
 
-#: ../modules/controller_midi.c:437
+#: ../modules/controller_midi.c:436
 msgid "MIDI Events"
 msgstr "Události MIDI"
 
-#: ../modules/controller_midi.c:455
+#: ../modules/controller_midi.c:454
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../modules/controller_midi.c:457
+#: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr "Gimpí ovladač vstupu MIDI"
