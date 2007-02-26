@@ -1,219 +1,239 @@
-This file is generated from authors.xml, do not edit it directly.
-    
+ -- This file is generated from authors.xml, do not edit it directly. --
 
-  Spencer Kimball
-  Peter Mattis
+GIMP was originally written by:
 
-  Lauri Alanko
-  Shawn Amundson
-  Sven Anders
-  Henrik Brix Andersen
-  Karl-Johan Andersson
-  John Beale
-  Zach Beane
-  Tom Bech
-  Marc Bless
-  Edward Blevins
-  Reagan Blundell
-  Xavier Bouchoux
-  Roberto Boyd
-  Stanislav Brabec
-  Hans Breuer
-  Simon Budig
-  João S. O. Bueno Calligaris
-  Carey Bunks
-  Seth Burgess
-  Brent Burton
-  Francisco Bustamante
-  Albert Cahalan
-  Lapo Calamandrei
-  George J. Carrette
-  Marco Ciampa
-  Sean Cier
-  Winston Chang
-  Stephane Chauveau
-  Zbigniew Chyla
-  Branko Collin
-  Ed Connel
-  Piers Cornwell
-  David Costanzo
-  Daniel Cotting
-  Jay Cox
-  Kevin Cozens
-  Brian Degenhardt
-  Karine Delvare
-  Andreas Dilger
-  Austin Donnelly
-  Scott Draves
-  Daniel Dunbar
-  Dust
-  Misha Dynin
-  Daniel Egger
-  Morton Eriksen
-  Larry Ewing
-  Pedro Alonso Ferrer
-  Nick Fetchak
-  Piotr Filiciak
-  Shlomi Fish
-  Sylvain Foret
-  David Forsyth
-  Raphael Francois
-  Jakub Friedl
-  Gerald Friedland
-  Jochen Friedrich
-  Daniel Richard G
-  Jordi Gay
-  Jim Geuther
-  GG
-  Graeme Gill
-  Pedro Gimeno
-  Scott Goehring
-  Heiko Goller
-  Marcelo de Gomensoro Malheiros
-  Saul Goode
-  David Gowers
-  Cameron Gregory
-  Pavel Grinfeld
-  Dov Grobgeld
-  Michael Hammel
-  Julien Hardelin
-  Robert Helgesson
-  James Henstridge
-  Eric Hernes
-  David Hodson
-  Christoph Hoegl
-  Wolfgang Hofer
-  Alan Horkan
-  Jan Hubička
-  Ben Jackson
-  Simon Janes
-  Tim Janik
-  Kristian Jantz
-  Róman Joost
-  Hans de Jonge
-  Geert Jordaens
-  Aurimas Juška
-  Andrew Kieschnick
-  Peter Kirchgessner
-  Philipp Klaus
-  David Koblas
-  Daniel Kobras
-  Øyvind Kolås
-  Robert L Krawitz
-  Semka Kuloviæ-Debals
-  Tuomas Kuosmanen
-  Karin Kylander
-  Olof S Kylander
-  Karl La Rocca
-  Philip Lafleur
-  Chris Lahey
-  Eric Lamarque
-  Nick Lamb
-  Marco Lamberto
-  Jens Lautenbacher
-  Laramie Leavitt
-  Elliot Lee
-  Marc Lehmann
-  Ray Lehtiniemi
-  Tobias Lenz
-  Frederic Leroy
-  Raph Levien
-  Wing Tung Leung
-  Adrian Likins
-  Tor Lillqvist
-  Ingo Lütkebohle
-  Josh MacDonald
-  Ed Mackey
-  Vidar Madsen
-  Ian Main
-  Kjartan Maraas
-  Kelly Martin
-  Torsten Martinsen
-  Gordon Matzigkeit
-  Gregory McLean
-  Federico Mena Quintero
-  Loren Merritt
-  Jim Meyer
-  James Mitchell
-  Hirotsuna Mizuno
-  Chris Mohler
-  Chris Moller
-  David Monniaux
-  Adam D Moss
-  Balazs Nagy
-  Yukihiro Nakai
-  Shuji Narazaki
-  Felix Natter
-  Michael Natterer
-  David Neary
-  David Necas
-  Sven Neumann
-  Andreas Nilsson
-  Stephen Robert Norris
-  Tim Newsome
-  Martin Nordholts
-  Erik Nygren
-  Miles O'Neal
-  David Odin
-  Robert Ögren
-  Thom van Os
-  Garry R. Osgood
-  Alan Paeth
-  Jay Painter
-  Ville Pätsi
-  Akkana Peck
-  Asbjorn Pettersen
-  Mike Phillips
-  Ari Pollak
-  Raphaël Quinet
-  Manuel Quiñones
-  Tom Rathborne
-  Jens Restemeier
-  Maurits Rijk
-  Daniel Risacher
-  Clarence Risher
-  James Robinson
-  Guillermo S. Romero
-  Tim Rowley
-  Mike Schaeffer
-  John Schlag
-  Norbert Schmitz
-  Thorsten Schnier
-  Alexander Schulz
-  Michael Schumacher
-  Tracy Scott
-  Craig Setera
-  Aaron Sherman
-  Jernej Simončič
-  Manish Singh
-  Mukund Sivaraman
-  William Skaggs
-  Daniel Skarda
-  Kevin Sookocheff
-  Carol Spears
-  Adam Spiers
-  Jakub Steiner
-  Nathan Summers
-  Mike Sweet
-  William Szilveszter
-  Eiichi Takamori
-  Tristan Tarrant
-  Michael Taylor
-  Owen Taylor
-  Ian Tester
-  Andy Thomas
-  Patrice Tremblay
-  Kevin Turner
-  Brion Vibber
-  Helvetix Victorinox
-  Rebecca Walter
-  Martin Weber
-  James Wang
-  Kris Wehner
-  Axel Wernicke
-  Nigel Wetten
-  Calvin Williamson
-  Matthew Wilson
-  Karl Günter Wünsch
-  Shirasaki Yasuhiro
+ Spencer Kimball
+ Peter Mattis
 
+
+The following people have contributed code to GIMP:
+
+ Lauri Alanko
+ Shawn Amundson
+ Sven Anders
+ Henrik Brix Andersen
+ Karl-Johan Andersson
+ John Beale
+ Zach Beane
+ Tom Bech
+ Marc Bless
+ Edward Blevins
+ Reagan Blundell
+ Xavier Bouchoux
+ Roberto Boyd
+ Stanislav Brabec
+ Hans Breuer
+ Simon Budig
+ João S. O. Bueno Calligaris
+ Seth Burgess
+ Brent Burton
+ Francisco Bustamante
+ Albert Cahalan
+ George J. Carrette
+ Sean Cier
+ Winston Chang
+ Stephane Chauveau
+ Zbigniew Chyla
+ Branko Collin
+ Ed Connel
+ Piers Cornwell
+ David Costanzo
+ Daniel Cotting
+ Jay Cox
+ Kevin Cozens
+ Brian Degenhardt
+ Karine Delvare
+ Andreas Dilger
+ Austin Donnelly
+ Scott Draves
+ Daniel Dunbar
+ Misha Dynin
+ Daniel Egger
+ Morton Eriksen
+ Larry Ewing
+ Pedro Alonso Ferrer
+ Nick Fetchak
+ Piotr Filiciak
+ Shlomi Fish
+ Sylvain Foret
+ David Forsyth
+ Raphael Francois
+ Gerald Friedland
+ Jochen Friedrich
+ Daniel Richard G
+ Jordi Gay
+ Jim Geuther
+ GG
+ Graeme Gill
+ Pedro Gimeno
+ Scott Goehring
+ Heiko Goller
+ Marcelo de Gomensoro Malheiros
+ Saul Goode
+ David Gowers
+ Cameron Gregory
+ Pavel Grinfeld
+ Dov Grobgeld
+ Michael Hammel
+ Robert Helgesson
+ James Henstridge
+ Eric Hernes
+ David Hodson
+ Christoph Hoegl
+ Wolfgang Hofer
+ Alan Horkan
+ Jan Hubička
+ Ben Jackson
+ Tim Janik
+ Kristian Jantz
+ Róman Joost
+ Geert Jordaens
+ Aurimas Juška
+ Andrew Kieschnick
+ Peter Kirchgessner
+ Philipp Klaus
+ David Koblas
+ Daniel Kobras
+ Øyvind Kolås
+ Robert L Krawitz
+ Tuomas Kuosmanen
+ Olof S Kylander
+ Philip Lafleur
+ Chris Lahey
+ Eric Lamarque
+ Nick Lamb
+ Marco Lamberto
+ Jens Lautenbacher
+ Laramie Leavitt
+ Elliot Lee
+ Marc Lehmann
+ Ray Lehtiniemi
+ Tobias Lenz
+ Frederic Leroy
+ Raph Levien
+ Wing Tung Leung
+ Adrian Likins
+ Tor Lillqvist
+ Ingo Lütkebohle
+ Josh MacDonald
+ Ed Mackey
+ Vidar Madsen
+ Ian Main
+ Kjartan Maraas
+ Kelly Martin
+ Torsten Martinsen
+ Gordon Matzigkeit
+ Gregory McLean
+ Federico Mena Quintero
+ Loren Merritt
+ Jim Meyer
+ James Mitchell
+ Hirotsuna Mizuno
+ Chris Mohler
+ Chris Moller
+ David Monniaux
+ Adam D Moss
+ Balazs Nagy
+ Yukihiro Nakai
+ Shuji Narazaki
+ Felix Natter
+ Michael Natterer
+ David Neary
+ David Necas
+ Sven Neumann
+ Stephen Robert Norris
+ Tim Newsome
+ Martin Nordholts
+ Erik Nygren
+ Miles O'Neal
+ David Odin
+ Robert Ögren
+ Thom van Os
+ Garry R. Osgood
+ Alan Paeth
+ Jay Painter
+ Ville Pätsi
+ Akkana Peck
+ Asbjorn Pettersen
+ Mike Phillips
+ Ari Pollak
+ Raphaël Quinet
+ Tom Rathborne
+ Jens Restemeier
+ Maurits Rijk
+ Daniel Risacher
+ Clarence Risher
+ James Robinson
+ Guillermo S. Romero
+ Tim Rowley
+ Mike Schaeffer
+ John Schlag
+ Norbert Schmitz
+ Thorsten Schnier
+ Alexander Schulz
+ Michael Schumacher
+ Tracy Scott
+ Craig Setera
+ Aaron Sherman
+ Jernej Simončič
+ Manish Singh
+ Mukund Sivaraman
+ William Skaggs
+ Daniel Skarda
+ Kevin Sookocheff
+ Adam Spiers
+ Jakub Steiner
+ Nathan Summers
+ Mike Sweet
+ Eiichi Takamori
+ Tristan Tarrant
+ Michael Taylor
+ Owen Taylor
+ Ian Tester
+ Andy Thomas
+ Patrice Tremblay
+ Kevin Turner
+ Brion Vibber
+ Helvetix Victorinox
+ Rebecca Walter
+ Martin Weber
+ James Wang
+ Kris Wehner
+ Nigel Wetten
+ Calvin Williamson
+ Matthew Wilson
+ Karl Günter Wünsch
+ Shirasaki Yasuhiro
+
+
+The following people have contributed art to GIMP:
+
+ Lapo Calamandrei
+ Tuomas Kuosmanen
+ Karl La Rocca
+ Andreas Nilsson
+ Mike Schaeffer
+ Carol Spears
+ Jakub Steiner
+ William Szilveszter
+
+
+The following people have helped to document GIMP:
+ Carey Bunks
+ Marco Ciampa
+ Alessandro Falappa
+ Dust
+ Jakub Friedl
+ Michael Hammel
+ Julien Hardelin
+ Simon Janes
+ Róman Joost
+ Hans de Jonge
+ Semka Kuloviæ-Debals
+ Karin Kylander
+ Olof S Kylander
+ Ed Mackey
+ Ian Main
+ Manuel Quiñones
+ James Robinson
+ Axel Wernicke

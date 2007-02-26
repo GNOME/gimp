@@ -39,7 +39,7 @@ pkgconfig_DATA = \
 	gimpui-@GIMP_PKGCONFIG_VERSION@.pc
 
 
-AUTHORS: authors.xml
+AUTHORS: authors.xml authors.xsl
 if HAVE_XSLTPROC
 	$(XSLTPROC) authors.xsl $< > $(@) || rm -f $(@)
 endif
