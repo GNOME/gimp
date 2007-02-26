@@ -102,15 +102,23 @@ static void  gimp_transform_region_lanczos (TileManager       *orig_tiles,
                                             gint               v2,
                                             const GimpMatrix3 *m,
                                             gint               alpha,
+                                            gboolean           supersample,
+                                            gint               recursion_level,
                                             const guchar      *bg_color,
                                             GimpProgress      *progress);
 
-static inline void  normalize_coordinates (const gint     coords,
-                                           const gdouble *tu,
-                                           const gdouble *tv,
-                                           const gdouble *tw,
-                                           gdouble       *u,
-                                           gdouble       *v);
+static inline void  untransform_coords   (const GimpMatrix3 *m,
+                                          gint               x,
+                                          gint               y,
+                                          gdouble           *tu,
+                                          gdouble           *tv,
+                                          gdouble           *tw);
+static inline void  normalize_coords     (const gint         coords,
+                                          const gdouble     *tu,
+                                          const gdouble     *tv,
+                                          const gdouble     *tw,
+                                          gdouble           *u,
+                                          gdouble           *v);
 
 static inline gboolean supersample_dtest (gdouble u0, gdouble v0,
                                           gdouble u1, gdouble v1,
@@ -258,7 +266,8 @@ gimp_transform_region (GimpPickable          *pickable,
       gimp_transform_region_lanczos (orig_tiles, destPR,
                                      dest_x1, dest_y1, dest_x2, dest_y2,
                                      u1, v1, u2, v2,
-                                     &m, alpha, bg_color, progress);
+                                     &m, alpha, supersample, recursion_level,
+                                     bg_color, progress);
       break;
     }
 }
@@ -316,7 +325,7 @@ gimp_transform_region_nearest (TileManager        *orig_tiles,
               gint    iu, iv;
 
               /*  normalize homogeneous coords  */
-              normalize_coordinates (1, &tu, &tv, &tw, &u, &v);
+              normalize_coords (1, &tu, &tv, &tw, &u, &v);
 
               iu = (gint) u;
               iv = (gint) v;
@@ -398,34 +407,13 @@ gimp_transform_region_linear (TileManager        *orig_tiles,
 
       for (y = destPR->y; y < destPR->y + destPR->h; y++)
         {
-          gint     x     = dest_x1 + destPR->x;
-          gint     yy    = dest_y1 + y;
-          gint     width = destPR->w;
           guchar  *d     = dest;
-
+          gint     width = destPR->w;
           gdouble  tu[5], tv[5];   /* undivided source coordinates */
           gdouble  tw[5];          /* divisor                      */
 
           /* set up inverse transform steps */
-          tu[0] = uinc * (x    ) + m->coeff[0][1] * (yy    ) + m->coeff[0][2];
-          tv[0] = vinc * (x    ) + m->coeff[1][1] * (yy    ) + m->coeff[1][2];
-          tw[0] = winc * (x    ) + m->coeff[2][1] * (yy    ) + m->coeff[2][2];
-
-          tu[1] = uinc * (x - 1) + m->coeff[0][1] * (yy    ) + m->coeff[0][2];
-          tv[1] = vinc * (x - 1) + m->coeff[1][1] * (yy    ) + m->coeff[1][2];
-          tw[1] = winc * (x - 1) + m->coeff[2][1] * (yy    ) + m->coeff[2][2];
-
-          tu[2] = uinc * (x    ) + m->coeff[0][1] * (yy - 1) + m->coeff[0][2];
-          tv[2] = vinc * (x    ) + m->coeff[1][1] * (yy - 1) + m->coeff[1][2];
-          tw[2] = winc * (x    ) + m->coeff[2][1] * (yy - 1) + m->coeff[2][2];
-
-          tu[3] = uinc * (x + 1) + m->coeff[0][1] * (yy    ) + m->coeff[0][2];
-          tv[3] = vinc * (x + 1) + m->coeff[1][1] * (yy    ) + m->coeff[1][2];
-          tw[3] = winc * (x + 1) + m->coeff[2][1] * (yy    ) + m->coeff[2][2];
-
-          tu[4] = uinc * (x    ) + m->coeff[0][1] * (yy + 1) + m->coeff[0][2];
-          tv[4] = vinc * (x    ) + m->coeff[1][1] * (yy + 1) + m->coeff[1][2];
-          tw[4] = winc * (x    ) + m->coeff[2][1] * (yy + 1) + m->coeff[2][2];
+          untransform_coords (m, dest_x1 + destPR->x, dest_y1 + y, tu, tv, tw);
 
           while (width--)
             {
@@ -433,46 +421,29 @@ gimp_transform_region_linear (TileManager        *orig_tiles,
               gint    i;
 
               /*  normalize homogeneous coords  */
-              normalize_coordinates (5, tu, tv, tw, u, v);
+              normalize_coords (5, tu, tv, tw, u, v);
 
               /*  Set the destination pixels  */
-              if (u[0] <  u1 || v[0] <  v1 ||
-                  u[0] >= u2 || v[0] >= v2 )
+              if (supersample &&
+                  supersample_dtest (u[1], v[1], u[2], v[2],
+                                     u[3], v[3], u[4], v[4]))
                 {
-                  /* not in source range */
-                  for (i = 0; i < destPR->bytes; i++)
-                    *d++ = bg_color[i];
+                  sample_adapt (orig_tiles,
+                                u[0] - u1, v[0] - v1,
+                                u[1] - u1, v[1] - v1,
+                                u[2] - u1, v[2] - v1,
+                                u[3] - u1, v[3] - v1,
+                                u[4] - u1, v[4] - v1,
+                                recursion_level,
+                                d, bg_color, destPR->bytes, alpha);
                 }
               else
                 {
-                  /* clamp texture coordinates */
-                  for (i = 0; i < 5; i++)
-                    {
-                      u[i] = CLAMP (u[i], u1, u2 - 1);
-                      v[i] = CLAMP (v[i], v1, v2 - 1);
-                    }
-
-                  if (supersample &&
-                      supersample_dtest (u[1], v[1], u[2], v[2],
-                                         u[3], v[3], u[4], v[4]))
-                    {
-                      sample_adapt (orig_tiles,
-                                    u[0] - u1, v[0] - v1,
-                                    u[1] - u1, v[1] - v1,
-                                    u[2] - u1, v[2] - v1,
-                                    u[3] - u1, v[3] - v1,
-                                    u[4] - u1, v[4] - v1,
-                                    recursion_level,
-                                    d, bg_color, destPR->bytes, alpha);
-                    }
-                  else
-                    {
-                      sample_linear (surround, u[0] - u1, v[0] - v1,
-                                     d, destPR->bytes, alpha);
-                    }
-
-                  d += destPR->bytes;
+                  sample_linear (surround, u[0] - u1, v[0] - v1,
+                                 d, destPR->bytes, alpha);
                 }
+
+              d += destPR->bytes;
 
               for (i = 0; i < 5; i++)
                 {
@@ -540,34 +511,13 @@ gimp_transform_region_cubic (TileManager        *orig_tiles,
 
       for (y = destPR->y; y < destPR->y + destPR->h; y++)
         {
-          gint     x     = dest_x1 + destPR->x;
-          gint     yy    = dest_y1 + y;
-          gint     width = destPR->w;
           guchar  *d     = dest;
-
+          gint     width = destPR->w;
           gdouble  tu[5], tv[5];   /* undivided source coordinates */
           gdouble  tw[5];          /* divisor                      */
 
           /* set up inverse transform steps */
-          tu[0] = uinc * (x    ) + m->coeff[0][1] * (yy    ) + m->coeff[0][2];
-          tv[0] = vinc * (x    ) + m->coeff[1][1] * (yy    ) + m->coeff[1][2];
-          tw[0] = winc * (x    ) + m->coeff[2][1] * (yy    ) + m->coeff[2][2];
-
-          tu[1] = uinc * (x - 1) + m->coeff[0][1] * (yy    ) + m->coeff[0][2];
-          tv[1] = vinc * (x - 1) + m->coeff[1][1] * (yy    ) + m->coeff[1][2];
-          tw[1] = winc * (x - 1) + m->coeff[2][1] * (yy    ) + m->coeff[2][2];
-
-          tu[2] = uinc * (x    ) + m->coeff[0][1] * (yy - 1) + m->coeff[0][2];
-          tv[2] = vinc * (x    ) + m->coeff[1][1] * (yy - 1) + m->coeff[1][2];
-          tw[2] = winc * (x    ) + m->coeff[2][1] * (yy - 1) + m->coeff[2][2];
-
-          tu[3] = uinc * (x + 1) + m->coeff[0][1] * (yy    ) + m->coeff[0][2];
-          tv[3] = vinc * (x + 1) + m->coeff[1][1] * (yy    ) + m->coeff[1][2];
-          tw[3] = winc * (x + 1) + m->coeff[2][1] * (yy    ) + m->coeff[2][2];
-
-          tu[4] = uinc * (x    ) + m->coeff[0][1] * (yy + 1) + m->coeff[0][2];
-          tv[4] = vinc * (x    ) + m->coeff[1][1] * (yy + 1) + m->coeff[1][2];
-          tw[4] = winc * (x    ) + m->coeff[2][1] * (yy + 1) + m->coeff[2][2];
+          untransform_coords (m, dest_x1 + destPR->x, dest_y1 + y, tu, tv, tw);
 
           while (width--)
             {
@@ -575,46 +525,28 @@ gimp_transform_region_cubic (TileManager        *orig_tiles,
               gint    i;
 
               /*  normalize homogeneous coords  */
-              normalize_coordinates (5, tu, tv, tw, u, v);
+              normalize_coords (5, tu, tv, tw, u, v);
 
-              /*  Set the destination pixels  */
-              if (u[0] <  u1 || v[0] <  v1 ||
-                  u[0] >= u2 || v[0] >= v2 )
+              if (supersample &&
+                  supersample_dtest (u[1], v[1], u[2], v[2],
+                                     u[3], v[3], u[4], v[4]))
                 {
-                  /* not in source range */
-                  for (i = 0; i < destPR->bytes; i++)
-                    *d++ = bg_color[i];
+                  sample_adapt (orig_tiles,
+                                u[0] - u1, v[0] - v1,
+                                u[1] - u1, v[1] - v1,
+                                u[2] - u1, v[2] - v1,
+                                u[3] - u1, v[3] - v1,
+                                u[4] - u1, v[4] - v1,
+                                recursion_level,
+                                d, bg_color, destPR->bytes, alpha);
                 }
               else
                 {
-                  /* clamp texture coordinates */
-                  for (i = 0; i < 5; i++)
-                    {
-                      u[i] = CLAMP (u[i], u1, u2 - 1);
-                      v[i] = CLAMP (v[i], v1, v2 - 1);
-                    }
-
-                  if (supersample &&
-                      supersample_dtest (u[1], v[1], u[2], v[2],
-                                         u[3], v[3], u[4], v[4]))
-                    {
-                      sample_adapt (orig_tiles,
-                                    u[0] - u1, v[0] - v1,
-                                    u[1] - u1, v[1] - v1,
-                                    u[2] - u1, v[2] - v1,
-                                    u[3] - u1, v[3] - v1,
-                                    u[4] - u1, v[4] - v1,
-                                    recursion_level,
-                                    d, bg_color, destPR->bytes, alpha);
-                    }
-                  else
-                    {
-                      sample_cubic (surround, u[0] - u1, v[0] - v1,
-                                    d, destPR->bytes, alpha);
-                    }
-
-                  d += destPR->bytes;
+                  sample_cubic (surround, u[0] - u1, v[0] - v1,
+                                d, destPR->bytes, alpha);
                 }
+
+              d += destPR->bytes;
 
               for (i = 0; i < 5; i++)
                 {
@@ -653,6 +585,8 @@ gimp_transform_region_lanczos (TileManager       *orig_tiles,
                                gint               v2,
                                const GimpMatrix3 *m,
                                gint               alpha,
+                               gboolean           supersample,
+                               gint               recursion_level,
                                const guchar      *bg_color,
                                GimpProgress      *progress)
 {
@@ -685,42 +619,49 @@ gimp_transform_region_lanczos (TileManager       *orig_tiles,
 
       for (y = destPR->y; y < destPR->y + destPR->h; y++)
         {
-          gint     x     = dest_x1 + destPR->x;
-          gint     width = destPR->w;
           guchar  *d     = dest;
-          gdouble  tu, tv, tw; /* undivided source coordinates and divisor */
+          gint     width = destPR->w;
+          gdouble  tu[5], tv[5];   /* undivided source coordinates */
+          gdouble  tw[5];          /* divisor                      */
 
           /* set up inverse transform steps */
-          tu = uinc * x + m->coeff[0][1] * (dest_y1 + y) + m->coeff[0][2];
-          tv = vinc * x + m->coeff[1][1] * (dest_y1 + y) + m->coeff[1][2];
-          tw = winc * x + m->coeff[2][1] * (dest_y1 + y) + m->coeff[2][2];
+          untransform_coords (m, dest_x1 + destPR->x, dest_y1 + y, tu, tv, tw);
 
           while (width--)
             {
-              gdouble u, v; /* source coordinates */
-              gint    b;
+              gdouble u[5], v[5]; /* source coordinates */
+              gint    i;
 
               /*  normalize homogeneous coords  */
-              normalize_coordinates (1, &tu, &tv, &tw, &u, &v);
+              normalize_coords (5, tu, tv, tw, u, v);
 
-              if (u <  u1 || v <  v1 ||
-                  u >= u2 || v >= v2)
+              if (supersample &&
+                  supersample_dtest (u[1], v[1], u[2], v[2],
+                                     u[3], v[3], u[4], v[4]))
                 {
-                  /* not in source range */
-                  for (b = 0; b < destPR->bytes; b++)
-                    *d++ = bg_color[b];
+                  sample_adapt (orig_tiles,
+                                u[0] - u1, v[0] - v1,
+                                u[1] - u1, v[1] - v1,
+                                u[2] - u1, v[2] - v1,
+                                u[3] - u1, v[3] - v1,
+                                u[4] - u1, v[4] - v1,
+                                recursion_level,
+                                d, bg_color, destPR->bytes, alpha);
                 }
               else
                 {
-                  sample_lanczos (surround, lanczos, u - u1, v - v1,
+                  sample_lanczos (surround, lanczos, u[0] - u1, v[0] - v1,
                                   d, destPR->bytes, alpha);
-
-                  d += destPR->bytes;
                 }
 
-              tu += uinc;
-              tv += vinc;
-              tw += winc;
+              d += destPR->bytes;
+
+              for (i = 0; i < 5; i++)
+                {
+                  tu[i] += uinc;
+                  tv[i] += vinc;
+                  tw[i] += winc;
+                }
             }
 
           dest += destPR->rowstride;
@@ -744,12 +685,41 @@ gimp_transform_region_lanczos (TileManager       *orig_tiles,
 /*  private functions  */
 
 static inline void
-normalize_coordinates (const gint     coords,
-                       const gdouble *tu,
-                       const gdouble *tv,
-                       const gdouble *tw,
-                       gdouble       *u,
-                       gdouble       *v)
+untransform_coords (const GimpMatrix3 *m,
+                    gint               x,
+                    gint               y,
+                    gdouble           *tu,
+                    gdouble           *tv,
+                    gdouble           *tw)
+{
+  tu[0] = m->coeff[0][0] * (x    ) + m->coeff[0][1] * (y    ) + m->coeff[0][2];
+  tv[0] = m->coeff[1][0] * (x    ) + m->coeff[1][1] * (y    ) + m->coeff[1][2];
+  tw[0] = m->coeff[2][0] * (x    ) + m->coeff[2][1] * (y    ) + m->coeff[2][2];
+
+  tu[1] = m->coeff[0][0] * (x - 1) + m->coeff[0][1] * (y    ) + m->coeff[0][2];
+  tv[1] = m->coeff[1][0] * (x - 1) + m->coeff[1][1] * (y    ) + m->coeff[1][2];
+  tw[1] = m->coeff[2][0] * (x - 1) + m->coeff[2][1] * (y    ) + m->coeff[2][2];
+
+  tu[2] = m->coeff[0][0] * (x    ) + m->coeff[0][1] * (y - 1) + m->coeff[0][2];
+  tv[2] = m->coeff[1][0] * (x    ) + m->coeff[1][1] * (y - 1) + m->coeff[1][2];
+  tw[2] = m->coeff[2][0] * (x    ) + m->coeff[2][1] * (y - 1) + m->coeff[2][2];
+
+  tu[3] = m->coeff[0][0] * (x + 1) + m->coeff[0][1] * (y    ) + m->coeff[0][2];
+  tv[3] = m->coeff[1][0] * (x + 1) + m->coeff[1][1] * (y    ) + m->coeff[1][2];
+  tw[3] = m->coeff[2][0] * (x + 1) + m->coeff[2][1] * (y    ) + m->coeff[2][2];
+
+  tu[4] = m->coeff[0][0] * (x    ) + m->coeff[0][1] * (y + 1) + m->coeff[0][2];
+  tv[4] = m->coeff[1][0] * (x    ) + m->coeff[1][1] * (y + 1) + m->coeff[1][2];
+  tw[4] = m->coeff[2][0] * (x    ) + m->coeff[2][1] * (y + 1) + m->coeff[2][2];
+}
+
+static inline void
+normalize_coords (const gint     coords,
+                  const gdouble *tu,
+                  const gdouble *tv,
+                  const gdouble *tw,
+                  gdouble       *u,
+                  gdouble       *v)
 {
   gint i;
 
