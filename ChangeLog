@@ -1,7 +1,7 @@
 2007-02-26  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptransformtool.c (gimp_transform_tool_doit): queue
-	a redraw of the display shell instead of exposing the transform
+	a redraw of the canvas instead of exposing the transform
 	preview. Removes annoying flicker when the tool is finished.
 
 2007-02-26  Sven Neumann  <sven@gimp.org>

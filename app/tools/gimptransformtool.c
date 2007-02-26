@@ -1186,7 +1186,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
       gimp_display_shell_set_show_transform (shell, FALSE);
 
       /* get rid of preview artifacts left outside the drawable's area */
-      gtk_widget_queue_draw (display->shell);
+      gtk_widget_queue_draw (shell->canvas);
     }
 
   gimp_set_busy (display->image->gimp);
