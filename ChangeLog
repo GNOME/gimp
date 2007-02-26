@@ -1,5 +1,11 @@
 2007-02-26  Sven Neumann  <sven@gimp.org>
 
+	* configure.in:
+	* plug-ins/common/screenshot.c: added checks for X11 Shape
+	Extension and build the shaped window feature conditionally.
+
+2007-02-26  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp-transform-region.c: added more const qualifiers.
 
 2007-02-25  Marco Ciampa  <ciampix@libero.it>

@@ -36,7 +36,10 @@
 
 #if defined(GDK_WINDOWING_X11)
 #include <gdk/gdkx.h>
+
+#ifdef HAVE_X11_EXTENSIONS_SHAPE_H
 #include <X11/extensions/shape.h>
+#endif /* HAVE_X11_EXTENSIONS_SHAPE_H */
 
 #ifdef HAVE_X11_XMU_WINUTIL_H
 #include <X11/Xmu/WinUtil.h>
@@ -636,12 +639,13 @@ static GdkRegion *
 window_get_shape (GdkScreen       *screen,
                   GdkNativeWindow  window)
 {
-  GdkRegion    *shape = NULL;
-#if defined(GDK_WINDOWING_X11)
-  Display      *x_dpy = GDK_SCREEN_XDISPLAY (screen);
-  XRectangle   *rects;
-  gint          rect_count;
-  gint          rect_order;
+  GdkRegion  *shape = NULL;
+
+#if defined(GDK_WINDOWING_X11) && defined(HAVE_X11_EXTENSIONS_SHAPE_H)
+  Display    *x_dpy = GDK_SCREEN_XDISPLAY (screen);
+  XRectangle *rects;
+  gint        rect_count;
+  gint        rect_order;
 
   rects = XShapeGetRectangles (x_dpy, window, ShapeBounding,
                                &rect_count, &rect_order);

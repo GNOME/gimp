@@ -905,13 +905,14 @@ if test "$gdk_target" = x11; then
    dnl doc-shooter is X11 specific
    DOC_SHOOTER=doc-shooter
 
+   gimp_save_CFLAGS="$CFLAGS"
+   gimp_save_LDFLAGS="$LDFLAGS"
+   CFLAGS="$CFLAGS $GTK_CFLAGS"
+   LDFLAGS="$LDFLAGS $X_LIBS"
+
    dnl Test for Xmu
    enable_gimp_remote=yes
    if test -z "$LIBXMU"; then
-      gimp_save_CFLAGS="$CFLAGS"
-      gimp_save_LDFLAGS="$LDFLAGS"
-      CFLAGS="$CFLAGS $GTK_CFLAGS"
-      LDFLAGS="$LDFLAGS $X_LIBS"
       AC_CHECK_LIB(Xmu, XmuClientWindow,
         [AC_CHECK_HEADERS(X11/Xmu/WinUtil.h,
           GIMP_REMOTE='gimp-remote-gimp_app_version$(EXEEXT)';
@@ -920,10 +921,17 @@ if test "$gdk_target" = x11; then
           LIBXMU="$X_LIBS $X_PRE_LIBS -lX11 -lXmu -lXt",
 	  [enable_gimp_remote="no (XMU header file not found)"],[#include <gdk/gdkx.h>])],
 	[enable_gimp_remote="no (XMU library not found)"], -lXt -lX11)
-      CFLAGS="$gimp_save_CFLAGS"
-      LDFLAGS="$gimp_save_LDFLAGS"
       LIBSCREENSHOT="$LIBXMU"
    fi
+
+   dnl Check for shaped window extension
+   AC_CHECK_LIB(Xext, XShapeGetRectangles,
+     [AC_CHECK_HEADERS(X11/extensions/shape.h,
+        LIBSCREENSHOT="$LIBSCREENSHOT -lXext",,[#include <gdk/gdkx.h>])],,
+     -lX11 -lXext)
+
+   CFLAGS="$gimp_save_CFLAGS"
+   LDFLAGS="$gimp_save_LDFLAGS"
 else
    enable_gimp_remote="no (building for $gdk_target)"
 fi
