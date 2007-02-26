@@ -107,30 +107,39 @@ static void  gimp_transform_region_lanczos (TileManager       *orig_tiles,
                                             const guchar      *bg_color,
                                             GimpProgress      *progress);
 
-static inline void  untransform_coords   (const GimpMatrix3 *m,
-                                          gint               x,
-                                          gint               y,
-                                          gdouble           *tu,
-                                          gdouble           *tv,
-                                          gdouble           *tw);
-static inline void  normalize_coords     (const gint         coords,
-                                          const gdouble     *tu,
-                                          const gdouble     *tv,
-                                          const gdouble     *tw,
-                                          gdouble           *u,
-                                          gdouble           *v);
+static inline void  untransform_coords     (const GimpMatrix3 *m,
+                                            gint               x,
+                                            gint               y,
+                                            gdouble           *tu,
+                                            gdouble           *tv,
+                                            gdouble           *tw);
+static inline void  normalize_coords       (const gint         coords,
+                                            const gdouble     *tu,
+                                            const gdouble     *tv,
+                                            const gdouble     *tw,
+                                            gdouble           *u,
+                                            gdouble           *v);
 
-static inline gboolean supersample_dtest (gdouble u0, gdouble v0,
-                                          gdouble u1, gdouble v1,
-                                          gdouble u2, gdouble v2,
-                                          gdouble u3, gdouble v3);
+static inline gboolean supersample_dtest   (gdouble u0,
+                                            gdouble v0,
+                                            gdouble u1,
+                                            gdouble v1,
+                                            gdouble u2,
+                                            gdouble v2,
+                                            gdouble u3,
+                                            gdouble v3);
 
 static void     sample_adapt      (TileManager   *tm,
-                                   gdouble        uc,     gdouble     vc,
-                                   gdouble        u0,     gdouble     v0,
-                                   gdouble        u1,     gdouble     v1,
-                                   gdouble        u2,     gdouble     v2,
-                                   gdouble        u3,     gdouble     v3,
+                                   gdouble        uc,
+                                   gdouble        vc,
+                                   gdouble        u0,
+                                   gdouble        v0,
+                                   gdouble        u1,
+                                   gdouble        v1,
+                                   gdouble        u2,
+                                   gdouble        v2,
+                                   gdouble        u3,
+                                   gdouble        v3,
                                    gint           level,
                                    guchar        *color,
                                    const guchar  *bg_color,
@@ -873,7 +882,7 @@ sample_bi (TileManager  *tm,
   read_pixel_data_1 (tm, x0, y1, C[1]);
   read_pixel_data_1 (tm, x1, y1, C[3]);
 
-#define lerp(v1,v2,r) \
+#define lerp(v1, v2, r) \
         (((guint)(v1) * (FIXED_UNIT - (guint)(r)) + \
           (guint)(v2) * (guint)(r)) >> FIXED_SHIFT)
 
@@ -882,7 +891,7 @@ sample_bi (TileManager  *tm,
 
   if (color[alpha])
     { /* to avoid problems, calculate with premultiplied alpha */
-      for (i=0; i<alpha; i++)
+      for (i = 0; i < alpha; i++)
         {
           C[0][i] = (C[0][i] * C[0][alpha] / 255);
           C[1][i] = (C[1][i] * C[1][alpha] / 255);
