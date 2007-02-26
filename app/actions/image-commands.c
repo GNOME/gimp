@@ -631,8 +631,7 @@ image_scale_callback (GtkWidget              *dialog,
           progress = gimp_progress_start (GIMP_PROGRESS (user_data),
                                           _("Scaling"), FALSE);
 
-          gimp_image_scale (image, width, height, interpolation,
-                            progress);
+          gimp_image_scale (image, width, height, interpolation, progress);
 
           if (progress)
             gimp_progress_end (progress);

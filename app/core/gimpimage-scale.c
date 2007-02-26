@@ -92,7 +92,7 @@ gimp_image_scale (GimpImage             *image,
        list;
        list = g_list_next (list))
     {
-      item = (GimpItem *) list->data;
+      item = list->data;
 
       gimp_item_scale (item,
                        new_width, new_height, 0, 0,
@@ -107,7 +107,7 @@ gimp_image_scale (GimpImage             *image,
        list;
        list = g_list_next (list))
     {
-      item = (GimpItem *) list->data;
+      item = list->data;
 
       gimp_item_scale (item,
                        new_width, new_height, 0, 0,
@@ -130,7 +130,7 @@ gimp_image_scale (GimpImage             *image,
        list;
        list = g_list_next (list))
     {
-      item = (GimpItem *) list->data;
+      item = list->data;
 
       if (! gimp_item_scale_by_factors (item,
                                         img_scale_w, img_scale_h,
