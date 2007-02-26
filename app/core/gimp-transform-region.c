@@ -129,14 +129,20 @@ static void     sample_adapt      (TileManager   *tm,
                                    gint           bpp,
                                    gint           alpha);
 
+static void     sample_linear     (PixelSurround *surround,
+                                   gdouble        u,
+                                   gdouble        v,
+                                   guchar        *color,
+                                   gint           bytes,
+                                   gint           alpha);
 static void     sample_cubic      (PixelSurround *surround,
                                    gdouble        u,
                                    gdouble        v,
                                    guchar        *color,
                                    gint           bytes,
                                    gint           alpha);
-
-static void     sample_linear     (PixelSurround *surround,
+static void     sample_lanczos    (PixelSurround *surround,
+                                   const gfloat  *lanczos,
                                    gdouble        u,
                                    gdouble        v,
                                    guchar        *color,
@@ -434,8 +440,6 @@ gimp_transform_region_linear (TileManager        *orig_tiles,
                   u[0] >= u2 || v[0] >= v2 )
                 {
                   /* not in source range */
-                  /* increment the destination pointers  */
-
                   for (i = 0; i < destPR->bytes; i++)
                     *d++ = bg_color[i];
                 }
@@ -578,8 +582,6 @@ gimp_transform_region_cubic (TileManager        *orig_tiles,
                   u[0] >= u2 || v[0] >= v2 )
                 {
                   /* not in source range */
-                  /* increment the destination pointers  */
-
                   for (i = 0; i < destPR->bytes; i++)
                     *d++ = bg_color[i];
                 }
@@ -654,18 +656,16 @@ gimp_transform_region_lanczos (TileManager       *orig_tiles,
                                const guchar      *bg_color,
                                GimpProgress      *progress)
 {
-  gfloat  *lanczos;                  /* Lanczos lookup table         */
-  guchar   lwin[LANCZOS_WIDTH2 * LANCZOS_WIDTH2][MAX_CHANNELS + 1];
-  gdouble  x_kernel[LANCZOS_WIDTH2]; /* 1-D kernels of window coeffs */
-  gdouble  y_kernel[LANCZOS_WIDTH2];
-  gdouble  x_sum, y_sum;             /* sum of Lanczos weights       */
+  PixelSurround *surround;
+  gfloat        *lanczos;           /* Lanczos lookup table              */
+  gdouble        uinc, vinc, winc;  /* increments in source coordinates  */
+  gint           pixels;
+  gint           total;
+  gint           n;
+  gpointer       pr;
 
-
-  gdouble   uinc, vinc, winc;  /* increments in source coordinates  */
-  gint      pixels;
-  gint      total;
-  gint      n;
-  gpointer  pr;
+  surround = pixel_surround_new (orig_tiles,
+                                 LANCZOS_WIDTH2, LANCZOS_WIDTH2, bg_color);
 
   /* allocate and fill lanczos lookup table */
   lanczos = create_lanczos_lookup ();
@@ -698,17 +698,13 @@ gimp_transform_region_lanczos (TileManager       *orig_tiles,
           while (width--)
             {
               gdouble u, v; /* source coordinates */
-              gint    iu, iv;
               gint    b;
 
               /*  normalize homogeneous coords  */
               normalize_coordinates (1, &tu, &tv, &tw, &u, &v);
 
-              iu = (gint) u;
-              iv = (gint) v;
-
-              if (iu <  u1 || iv <  v1 ||
-                  iu >= u2 || iv >= v2)
+              if (u <  u1 || v <  v1 ||
+                  u >= u2 || v >= v2)
                 {
                   /* not in source range */
                   for (b = 0; b < destPR->bytes; b++)
@@ -716,82 +712,10 @@ gimp_transform_region_lanczos (TileManager       *orig_tiles,
                 }
               else
                 {
-                  gdouble  arecip;
-                  gdouble  aval;
-                  gint     pos;
-                  gint     su, sv;
-                  gint     i, j;
+                  sample_lanczos (surround, lanczos, u - u1, v - v1,
+                                  d, destPR->bytes, alpha);
 
-                  /* get weight for fractional error */
-                  su = (gint) ((u - iu) * LANCZOS_SPP);
-                  sv = (gint) ((v - iv) * LANCZOS_SPP);
-
-                  for (pos = 0, j = 0; j < LANCZOS_WIDTH2 ; j++)
-                    for (i = 0; i < LANCZOS_WIDTH2 ; i++, pos++)
-                      {
-                        gint pu = CLAMP (iu + i - LANCZOS_WIDTH, u1, u2 - 1);
-                        gint pv = CLAMP (iv + j - LANCZOS_WIDTH, v1, v2 - 1);
-
-                        read_pixel_data_1 (orig_tiles,
-                                           pu - u1, pv - v1, &lwin[pos][0]);
-                      }
-
-                  /* fill 1D kernels */
-                  for (x_sum = y_sum = 0.0, i = LANCZOS_WIDTH;
-                       i >= -LANCZOS_WIDTH;
-                       i--)
-                    {
-                      pos = i * LANCZOS_SPP;
-                      x_sum += x_kernel[LANCZOS_WIDTH + i] = lanczos[ABS (su - pos)];
-                      y_sum += y_kernel[LANCZOS_WIDTH + i] = lanczos[ABS (sv - pos)];
-                    }
-
-                  /* normalise the weighted arrays */
-                  for (i = 0; i < LANCZOS_WIDTH2 ; i++)
-                    {
-                      x_kernel[i] /= x_sum;
-                      y_kernel[i] /= y_sum;
-                    }
-
-                  aval = 0.0;
-
-                  for (pos = 0, j = 0; j < LANCZOS_WIDTH2 ; j++)
-                    for (i = 0; i < LANCZOS_WIDTH2 ; i++, pos++)
-                      {
-                        aval += y_kernel[j] * x_kernel[i] * lwin[pos][alpha];
-                      }
-
-                  if (aval <= 0.0)
-                    {
-                      arecip = 0.0;
-                      aval = 0;
-                    }
-                  else if (aval > 255.0)
-                    {
-                      arecip = 1.0 / aval;
-                      aval = 255;
-                    }
-                  else
-                    {
-                      arecip = 1.0 / aval;
-                    }
-
-                  for (b = 0; b < alpha; b++)
-                    {
-                      gdouble newval = 0.0;
-
-                      for (pos = 0, j = 0; j < LANCZOS_WIDTH2; j++)
-                        for (i = 0; i < LANCZOS_WIDTH2; i++, pos++)
-                          {
-                            newval += (y_kernel[j] * x_kernel[i] *
-                                       lwin[pos][b] * lwin[pos][alpha]);
-                          }
-
-                      newval *= arecip;
-                      *d++ = CLAMP (newval, 0, 255);
-                    }
-
-                  *d++ = RINT (aval);
+                  d += destPR->bytes;
                 }
 
               tu += uinc;
@@ -813,6 +737,7 @@ gimp_transform_region_lanczos (TileManager       *orig_tiles,
    }
 
   g_free (lanczos);
+  pixel_surround_destroy (surround);
 }
 
 
@@ -1311,4 +1236,105 @@ sample_cubic (PixelSurround *surround,
 
       color[i] = CLAMP (newval, 0, 255);
     }
+}
+
+static void
+sample_lanczos (PixelSurround *surround,
+                const gfloat  *lanczos,
+                gdouble        u,
+                gdouble        v,
+                guchar        *color,
+                gint           bytes,
+                gint           alpha)
+{
+  gdouble       x_kernel[LANCZOS_WIDTH2]; /* 1-D kernels of window coeffs */
+  gdouble       y_kernel[LANCZOS_WIDTH2];
+  gdouble       x_sum, y_sum;             /* sum of Lanczos weights       */
+  gdouble       arecip;
+  gdouble       aval;
+  gint          su, sv;
+  gint          b;
+  gint          i, j;
+  gint          iu, iv;
+  gint          rowstride;
+  const guchar *data;
+  const guchar *src;
+
+  iu = (gint) u;
+  iv = (gint) v;
+
+  /* get weight for fractional error */
+  su = (gint) ((u - iu) * LANCZOS_SPP);
+  sv = (gint) ((v - iv) * LANCZOS_SPP);
+
+  /* fill 1D kernels */
+  for (x_sum = y_sum = 0.0, i = LANCZOS_WIDTH; i >= -LANCZOS_WIDTH; i--)
+    {
+      gint pos = i * LANCZOS_SPP;
+
+      x_sum += x_kernel[LANCZOS_WIDTH + i] = lanczos[ABS (su - pos)];
+      y_sum += y_kernel[LANCZOS_WIDTH + i] = lanczos[ABS (sv - pos)];
+    }
+
+  /* normalise the weighted arrays */
+  for (i = 0; i < LANCZOS_WIDTH2 ; i++)
+    {
+      x_kernel[i] /= x_sum;
+      y_kernel[i] /= y_sum;
+    }
+
+  /* lock the pixel surround */
+  data = pixel_surround_lock (surround,
+                              iu - LANCZOS_WIDTH, iv - LANCZOS_WIDTH,
+                              &rowstride);
+
+  src = data + alpha;
+  aval = 0.0;
+
+  for (j = 0; j < LANCZOS_WIDTH2 ; j++)
+    {
+      for (i = 0; i < LANCZOS_WIDTH2 ; i++)
+        aval += y_kernel[j] * x_kernel[i] * (gdouble) src[i * bytes];
+
+      src += rowstride;
+    }
+
+  if (aval <= 0.0)
+    {
+      arecip = 0.0;
+      aval = 0;
+    }
+  else if (aval > 255.0)
+    {
+      arecip = 1.0 / aval;
+      aval = 255;
+    }
+  else
+    {
+      arecip = 1.0 / aval;
+    }
+
+  for (b = 0; b < alpha; b++)
+    {
+      const guchar *asrc;
+      gdouble       newval = 0.0;
+
+      src  = data + b;
+      asrc = data + alpha;
+
+      for (j = 0; j < LANCZOS_WIDTH2; j++)
+        {
+          for (i = 0; i < LANCZOS_WIDTH2; i++)
+            newval += (y_kernel[j] * x_kernel[i] *
+                       (gdouble) src[i * bytes] * (gdouble) asrc[i * bytes]);
+
+          src += rowstride;
+          asrc += rowstride;
+        }
+
+      newval *= arecip;
+      color[b] = CLAMP (newval, 0, 255);
+    }
+
+  color[alpha] = RINT (aval);
 }

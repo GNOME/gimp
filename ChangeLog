@@ -1,6 +1,12 @@
 2007-02-26  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-transform-region.c (gimp_transform_region_lanczos):
+	use PixelSurround instead of read_pixel_data_1(). This yields a
+	dramatic speedup.
+
+2007-02-26  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp-transform-region.c (gimp_transform_region_lanczos):
 	iterate	over tiles instead of rows in the destination buffer.
 
 2007-02-26  Sven Neumann  <sven@gimp.org>
