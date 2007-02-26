@@ -44,36 +44,36 @@
 
 /*  forward function prototypes  */
 
-static void  gimp_transform_region_nearest (TileManager  *orig_tiles,
-                                            PixelRegion  *destPR,
-                                            gint          dest_x1,
-                                            gint          dest_y1,
-                                            gint          dest_x2,
-                                            gint          dest_y2,
-                                            gint          u1,
-                                            gint          v1,
-                                            gint          u2,
-                                            gint          v2,
-                                            GimpMatrix3  *m,
-                                            gint          alpha,
-                                            guchar       *bg_color,
-                                            GimpProgress *progress);
-static void  gimp_transform_region_lanczos (TileManager  *orig_tiles,
-                                            PixelRegion  *destPR,
-                                            gint          dest_x1,
-                                            gint          dest_y1,
-                                            gint          dest_x2,
-                                            gint          dest_y2,
-                                            gint          u1,
-                                            gint          v1,
-                                            gint          u2,
-                                            gint          v2,
-                                            GimpMatrix3  *m,
-                                            gint          alpha,
-                                            guchar       *bg_color,
-                                            GimpProgress *progress);
+static void  gimp_transform_region_nearest (TileManager       *orig_tiles,
+                                            PixelRegion       *destPR,
+                                            gint               dest_x1,
+                                            gint               dest_y1,
+                                            gint               dest_x2,
+                                            gint               dest_y2,
+                                            gint               u1,
+                                            gint               v1,
+                                            gint               u2,
+                                            gint               v2,
+                                            const GimpMatrix3 *m,
+                                            gint               alpha,
+                                            const guchar      *bg_color,
+                                            GimpProgress      *progress);
+static void  gimp_transform_region_lanczos (TileManager       *orig_tiles,
+                                            PixelRegion       *destPR,
+                                            gint               dest_x1,
+                                            gint               dest_y1,
+                                            gint               dest_x2,
+                                            gint               dest_y2,
+                                            gint               u1,
+                                            gint               v1,
+                                            gint               u2,
+                                            gint               v2,
+                                            const GimpMatrix3 *m,
+                                            gint               alpha,
+                                            const guchar      *bg_color,
+                                            GimpProgress      *progress);
 
-static inline void  transform_coordinates (const gint     coords,
+static inline void  normalize_coordinates (const gint     coords,
                                            const gdouble *tu,
                                            const gdouble *tv,
                                            const gdouble *tw,
@@ -281,7 +281,7 @@ gimp_transform_region (GimpPickable          *pickable,
           gint i;
 
           /*  normalize homogeneous coords  */
-          transform_coordinates (5, tu, tv, tw, u, v);
+          normalize_coordinates (5, tu, tv, tw, u, v);
 
           /*  Set the destination pixels  */
           if (u[0] <  u1 || v[0] <  v1 ||
@@ -363,20 +363,20 @@ gimp_transform_region (GimpPickable          *pickable,
 }
 
 static void
-gimp_transform_region_nearest (TileManager  *orig_tiles,
-                               PixelRegion  *destPR,
-                               gint          dest_x1,
-                               gint          dest_y1,
-                               gint          dest_x2,
-                               gint          dest_y2,
-                               gint          u1,
-                               gint          v1,
-                               gint          u2,
-                               gint          v2,
-                               GimpMatrix3  *m,
-                               gint          alpha,
-                               guchar       *bg_color,
-                               GimpProgress *progress)
+gimp_transform_region_nearest (TileManager        *orig_tiles,
+                               PixelRegion        *destPR,
+                               gint                dest_x1,
+                               gint                dest_y1,
+                               gint                dest_x2,
+                               gint                dest_y2,
+                               gint                u1,
+                               gint                v1,
+                               gint                u2,
+                               gint                v2,
+                               const GimpMatrix3  *m,
+                               gint                alpha,
+                               const guchar       *bg_color,
+                               GimpProgress       *progress)
 {
   gdouble   uinc, vinc, winc;  /* increments in source coordinates  */
   gint      pixels;
@@ -415,7 +415,7 @@ gimp_transform_region_nearest (TileManager  *orig_tiles,
               gint    iu, iv;
 
               /*  normalize homogeneous coords  */
-              transform_coordinates (1, &tu, &tv, &tw, &u, &v);
+              normalize_coordinates (1, &tu, &tv, &tw, &u, &v);
 
               iu = (gint) u;
               iv = (gint) v;
@@ -456,20 +456,20 @@ gimp_transform_region_nearest (TileManager  *orig_tiles,
 }
 
 static void
-gimp_transform_region_lanczos (TileManager  *orig_tiles,
-                               PixelRegion  *destPR,
-                               gint          dest_x1,
-                               gint          dest_y1,
-                               gint          dest_x2,
-                               gint          dest_y2,
-                               gint          u1,
-                               gint          v1,
-                               gint          u2,
-                               gint          v2,
-                               GimpMatrix3  *m,
-                               gint          alpha,
-                               guchar       *bg_color,
-                               GimpProgress *progress)
+gimp_transform_region_lanczos (TileManager       *orig_tiles,
+                               PixelRegion       *destPR,
+                               gint               dest_x1,
+                               gint               dest_y1,
+                               gint               dest_x2,
+                               gint               dest_y2,
+                               gint               u1,
+                               gint               v1,
+                               gint               u2,
+                               gint               v2,
+                               const GimpMatrix3 *m,
+                               gint               alpha,
+                               const guchar      *bg_color,
+                               GimpProgress      *progress)
 {
   gfloat  *lanczos;                  /* Lanczos lookup table         */
   gdouble  x_kernel[LANCZOS_WIDTH2]; /* 1-D kernels of window coeffs */
@@ -520,7 +520,7 @@ gimp_transform_region_lanczos (TileManager  *orig_tiles,
           vw = m->coeff[1][0] * x + m->coeff[1][1] * y + m->coeff[1][2];
           ww = m->coeff[2][0] * x + m->coeff[2][1] * y + m->coeff[2][2];
 
-          transform_coordinates (1, &uw, &vw, &ww, &du, &dv);
+          normalize_coordinates (1, &uw, &vw, &ww, &du, &dv);
 
           u = (gint) du;
           v = (gint) dv;
@@ -625,7 +625,7 @@ gimp_transform_region_lanczos (TileManager  *orig_tiles,
 /*  private functions  */
 
 static inline void
-transform_coordinates (const gint     coords,
+normalize_coordinates (const gint     coords,
                        const gdouble *tu,
                        const gdouble *tv,
                        const gdouble *tw,
