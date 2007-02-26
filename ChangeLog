@@ -1,5 +1,9 @@
 2007-02-26  Sven Neumann  <sven@gimp.org>
 
+	* authors.xml: restored alphabetical order.
+
+2007-02-26  Sven Neumann  <sven@gimp.org>
+
 	* Makefile.am: added a dependency for AUTHORS on authors.xsl.
 
 	* authors.xsl: changed to list contributors with their role.

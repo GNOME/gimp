@@ -4,6 +4,8 @@
 <!-- This file is supposed to list all GIMP authors and contributors.       -->
 <!-- It's in XML format so that it can easily be used for the About dialog. -->
 
+<!-- When changing this file, please keep the alphabetical order.           -->
+
 <gimp-authors xmlns="http://purl.org/dc/elements/1.1/">
 
   <creator role="author" last-active="2.2">Spencer Kimball</creator>
@@ -34,7 +36,6 @@
   <contributor role="artist" last-active="2.4">Lapo Calamandrei</contributor>
   <contributor role="author" last-active="2.0">George J. Carrette</contributor>
   <contributor role="documenter" last-active="2.4">Marco Ciampa</contributor>
-  <contributor role="documenter" last-active="2.4">Alessandro Falappa</contributor>
   <contributor role="author" last-active="1.0">Sean Cier</contributor>
   <contributor role="author" last-active="1.2">Winston Chang</contributor>
   <contributor role="author" last-active="2.4">Stephane Chauveau</contributor>
@@ -57,6 +58,7 @@
   <contributor role="author" last-active="2.4">Daniel Egger</contributor>
   <contributor role="author" last-active="2.0">Morton Eriksen</contributor>
   <contributor role="author" last-active="2.0">Larry Ewing</contributor>
+  <contributor role="documenter" last-active="2.4">Alessandro Falappa</contributor>
   <contributor role="author" last-active="2.4">Pedro Alonso Ferrer</contributor>
   <contributor role="author" last-active="1.2">Nick Fetchak</contributor>
   <contributor role="author" last-active="2.4">Piotr Filiciak</contributor>
