@@ -141,6 +141,7 @@ typedef struct _GimpInterpreterDB   GimpInterpreterDB;
 typedef struct _GimpParasiteList    GimpParasiteList;
 typedef struct _GimpPdbProgress     GimpPdbProgress;
 typedef struct _GimpProjection      GimpProjection;
+typedef struct _GimpSubProgress     GimpSubProgress;
 typedef struct _GimpStrokeDesc      GimpStrokeDesc;
 /* typedef struct _GimpTemplate     GimpTemplate; in config-types.h */
 
