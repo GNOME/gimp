@@ -639,7 +639,7 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
 
   if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
     {
-      if (gimp_rectangle_tool_no_movement (rectangle))
+      if (release_type == GIMP_BUTTON_RELEASE_CLICK)
         {
           if (gimp_rectangle_tool_execute (rectangle))
             gimp_rectangle_tool_halt (rectangle);
@@ -2014,17 +2014,6 @@ gimp_rectangle_tool_set_function (GimpRectangleTool     *rectangle,
 
       gimp_draw_tool_resume (draw_tool);
     }
-}
-
-gboolean
-gimp_rectangle_tool_no_movement (GimpRectangleTool *rectangle)
-{
-  GimpRectangleToolPrivate *private;
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
-
-  return (private->lastx == private->pressx &&
-          private->lasty == private->pressy);
 }
 
 /*

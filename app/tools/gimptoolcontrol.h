@@ -46,6 +46,7 @@ struct _GimpToolControl
   gboolean           scroll_lock;        /*  allow scrolling or not          */
   gboolean           handle_empty_image; /*  invoke the tool on images       *
                                           *  without active drawable         */
+  gboolean           wants_click;        /*  wants click detection           */
   GimpDirtyMask      dirty_mask;         /*  if preserve is FALSE, cancel    *
                                           *  the tool on these events        */
   GimpMotionMode     motion_mode;        /*  how to process motion events    *
@@ -101,6 +102,10 @@ gboolean       gimp_tool_control_get_scroll_lock  (GimpToolControl *control);
 void     gimp_tool_control_set_handle_empty_image (GimpToolControl *control,
                                                    gboolean         handle_empty);
 gboolean gimp_tool_control_get_handle_empty_image (GimpToolControl *control);
+
+void           gimp_tool_control_set_wants_click  (GimpToolControl *control,
+                                                   gboolean         wants_click);
+gboolean       gimp_tool_control_get_wants_click  (GimpToolControl *control);
 
 void           gimp_tool_control_set_dirty_mask   (GimpToolControl *control,
                                                    GimpDirtyMask    dirty_mask);

@@ -181,6 +181,7 @@ gimp_rect_select_tool_init (GimpRectSelectTool *rect_select)
 {
   GimpTool *tool = GIMP_TOOL (rect_select);
 
+  gimp_tool_control_set_wants_click (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_RECT_SELECT);
   gimp_tool_control_set_dirty_mask  (tool->control,
@@ -385,7 +386,6 @@ gimp_rect_select_tool_button_release (GimpTool              *tool,
                                       GimpDisplay           *display)
 {
   GimpRectSelectTool *rect_select = GIMP_RECT_SELECT_TOOL (tool);
-  GimpRectangleTool  *rectangle   = GIMP_RECTANGLE_TOOL (tool);
 
   gimp_tool_pop_status (tool, display);
   gimp_display_shell_set_show_selection (GIMP_DISPLAY_SHELL (display->shell),
@@ -395,7 +395,7 @@ gimp_rect_select_tool_button_release (GimpTool              *tool,
    * if the user has not moved the mouse, we need to redo the operation
    * that was undone on button press.
    */
-  if (gimp_rectangle_tool_no_movement (rectangle))
+  if (release_type == GIMP_BUTTON_RELEASE_CLICK)
     {
       GimpImage *image = tool->display->image;
       GimpUndo  *redo;

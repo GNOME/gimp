@@ -57,6 +57,10 @@ struct _GimpTool
   GdkModifierType  modifier_state;
   GdkModifierType  button_press_state;
   GdkModifierType  active_modifier_state;
+
+  gboolean         in_click_distance;
+  GimpCoords       press_coords;
+  guint32          press_time;
 };
 
 struct _GimpToolClass

@@ -1,5 +1,33 @@
 2007-02-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimptoolcontrol.[ch]: added "gboolean wants_click"
+	member and getters/setters.
+
+	* app/tools/gimptool.[ch] (struct GimpTool): added members
+	in_click_distance, press_coords and press_time.
+
+	(gimp_tool_button_press): if the tool wants click events, record
+	press_coords and press_time.
+
+	(gimp_tool_motion): check if we are still in click distance.
+
+	(gimp_tool_button_release): ditto. If we are still in click
+	distance, synthesize a motion event back to the recorded
+	press_coords and send the tool release_type = CLICK.
+
+	(gimp_tool_check_click_distance): utility function which checks
+	the current coords and time against the recorded ones, using
+	gtk-double-click-time and gtk-double-click-distance as thresholds.
+
+	* app/tools/gimpcroptool.c
+	* app/tools/gimprectangleselecttool.c: request click events
+	and handle them.
+
+	* app/tools/gimprectangletool.[ch]: handle click events. Removed
+	gimp_rectangle_tool_no_movement().
+
+2007-02-27  Michael Natterer  <mitch@gimp.org>
+
 	Step one towards enabling tool cancellation by other means than
 	mouse button 3 and towards proper "clicked" semantics.
 

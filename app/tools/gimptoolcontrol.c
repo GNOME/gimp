@@ -203,6 +203,23 @@ gimp_tool_control_get_handle_empty_image (GimpToolControl *control)
 }
 
 void
+gimp_tool_control_set_wants_click (GimpToolControl *control,
+                                   gboolean         wants_click)
+{
+  g_return_if_fail (GIMP_IS_TOOL_CONTROL (control));
+
+  control->wants_click = wants_click ? TRUE : FALSE;
+}
+
+gboolean
+gimp_tool_control_get_wants_click (GimpToolControl *control)
+{
+  g_return_val_if_fail (GIMP_IS_TOOL_CONTROL (control), FALSE);
+
+  return control->wants_click;
+}
+
+void
 gimp_tool_control_set_dirty_mask (GimpToolControl *control,
                                   GimpDirtyMask    dirty_mask)
 {
