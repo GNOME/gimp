@@ -605,11 +605,12 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
 }
 
 void
-gimp_rectangle_tool_button_release (GimpTool        *tool,
-                                    GimpCoords      *coords,
-                                    guint32          time,
-                                    GdkModifierType  state,
-                                    GimpDisplay     *display)
+gimp_rectangle_tool_button_release (GimpTool              *tool,
+                                    GimpCoords            *coords,
+                                    guint32                time,
+                                    GdkModifierType        state,
+                                    GimpButtonReleaseType  release_type,
+                                    GimpDisplay           *display)
 {
   GimpRectangleTool        *rectangle;
   GimpRectangleToolPrivate *private;
@@ -636,7 +637,7 @@ gimp_rectangle_tool_button_release (GimpTool        *tool,
   if (private->function == RECT_EXECUTING)
     gimp_tool_pop_status (tool, display);
 
-  if (! (state & GDK_BUTTON3_MASK))
+  if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
     {
       if (gimp_rectangle_tool_no_movement (rectangle))
         {

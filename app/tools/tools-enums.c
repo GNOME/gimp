@@ -10,6 +10,36 @@
 
 /* enumerations from "./tools-enums.h" */
 GType
+gimp_button_release_type_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_BUTTON_RELEASE_NORMAL, "GIMP_BUTTON_RELEASE_NORMAL", "normal" },
+    { GIMP_BUTTON_RELEASE_CANCEL, "GIMP_BUTTON_RELEASE_CANCEL", "cancel" },
+    { GIMP_BUTTON_RELEASE_CLICK, "GIMP_BUTTON_RELEASE_CLICK", "click" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_BUTTON_RELEASE_NORMAL, "GIMP_BUTTON_RELEASE_NORMAL", NULL },
+    { GIMP_BUTTON_RELEASE_CANCEL, "GIMP_BUTTON_RELEASE_CANCEL", NULL },
+    { GIMP_BUTTON_RELEASE_CLICK, "GIMP_BUTTON_RELEASE_CLICK", NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpButtonReleaseType", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_rectangle_guide_get_type (void)
 {
   static const GEnumValue values[] =
@@ -132,36 +162,6 @@ gimp_transform_type_get_type (void)
 }
 
 GType
-gimp_vector_mode_get_type (void)
-{
-  static const GEnumValue values[] =
-  {
-    { GIMP_VECTOR_MODE_DESIGN, "GIMP_VECTOR_MODE_DESIGN", "design" },
-    { GIMP_VECTOR_MODE_EDIT, "GIMP_VECTOR_MODE_EDIT", "edit" },
-    { GIMP_VECTOR_MODE_MOVE, "GIMP_VECTOR_MODE_MOVE", "move" },
-    { 0, NULL, NULL }
-  };
-
-  static const GimpEnumDesc descs[] =
-  {
-    { GIMP_VECTOR_MODE_DESIGN, N_("Design"), NULL },
-    { GIMP_VECTOR_MODE_EDIT, N_("Edit"), NULL },
-    { GIMP_VECTOR_MODE_MOVE, N_("Move"), NULL },
-    { 0, NULL, NULL }
-  };
-
-  static GType type = 0;
-
-  if (! type)
-    {
-      type = g_enum_register_static ("GimpVectorMode", values);
-      gimp_enum_set_value_descriptions (type, descs);
-    }
-
-  return type;
-}
-
-GType
 gimp_transform_preview_type_get_type (void)
 {
   static const GEnumValue values[] =
@@ -215,6 +215,36 @@ gimp_transform_grid_type_get_type (void)
   if (! type)
     {
       type = g_enum_register_static ("GimpTransformGridType", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
+gimp_vector_mode_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_VECTOR_MODE_DESIGN, "GIMP_VECTOR_MODE_DESIGN", "design" },
+    { GIMP_VECTOR_MODE_EDIT, "GIMP_VECTOR_MODE_EDIT", "edit" },
+    { GIMP_VECTOR_MODE_MOVE, "GIMP_VECTOR_MODE_MOVE", "move" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_VECTOR_MODE_DESIGN, N_("Design"), NULL },
+    { GIMP_VECTOR_MODE_EDIT, N_("Edit"), NULL },
+    { GIMP_VECTOR_MODE_MOVE, N_("Move"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpVectorMode", values);
       gimp_enum_set_value_descriptions (type, descs);
     }
 

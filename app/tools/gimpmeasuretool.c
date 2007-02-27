@@ -58,49 +58,50 @@
 
 /*  local function prototypes  */
 
-static void     gimp_measure_tool_control         (GimpTool        *tool,
-                                                   GimpToolAction   action,
-                                                   GimpDisplay     *display);
-static void     gimp_measure_tool_button_press    (GimpTool        *tool,
-                                                   GimpCoords      *coords,
-                                                   guint32          time,
-                                                   GdkModifierType  state,
-                                                   GimpDisplay     *display);
-static void     gimp_measure_tool_button_release  (GimpTool        *tool,
-                                                   GimpCoords      *coords,
-                                                   guint32          time,
-                                                   GdkModifierType  state,
-                                                   GimpDisplay     *display);
-static void     gimp_measure_tool_motion          (GimpTool        *tool,
-                                                   GimpCoords      *coords,
-                                                   guint32          time,
-                                                   GdkModifierType  state,
-                                                   GimpDisplay     *display);
-static gboolean gimp_measure_tool_key_press       (GimpTool        *tool,
-                                                   GdkEventKey     *kevent,
-                                                   GimpDisplay     *display);
-static void gimp_measure_tool_active_modifier_key (GimpTool        *tool,
-                                                   GdkModifierType  key,
-                                                   gboolean         press,
-                                                   GdkModifierType  state,
-                                                   GimpDisplay     *display);
-static void     gimp_measure_tool_cursor_update   (GimpTool        *tool,
-                                                   GimpCoords      *coords,
-                                                   GdkModifierType  state,
-                                                   GimpDisplay     *display);
+static void     gimp_measure_tool_control         (GimpTool              *tool,
+                                                   GimpToolAction         action,
+                                                   GimpDisplay           *display);
+static void     gimp_measure_tool_button_press    (GimpTool              *tool,
+                                                   GimpCoords            *coords,
+                                                   guint32                time,
+                                                   GdkModifierType        state,
+                                                   GimpDisplay           *display);
+static void     gimp_measure_tool_button_release  (GimpTool              *tool,
+                                                   GimpCoords            *coords,
+                                                   guint32                time,
+                                                   GdkModifierType        state,
+                                                   GimpButtonReleaseType  release_type,
+                                                   GimpDisplay           *display);
+static void     gimp_measure_tool_motion          (GimpTool              *tool,
+                                                   GimpCoords            *coords,
+                                                   guint32                time,
+                                                   GdkModifierType        state,
+                                                   GimpDisplay           *display);
+static gboolean gimp_measure_tool_key_press       (GimpTool              *tool,
+                                                   GdkEventKey           *kevent,
+                                                   GimpDisplay           *display);
+static void gimp_measure_tool_active_modifier_key (GimpTool              *tool,
+                                                   GdkModifierType        key,
+                                                   gboolean               press,
+                                                   GdkModifierType        state,
+                                                   GimpDisplay           *display);
+static void     gimp_measure_tool_cursor_update   (GimpTool              *tool,
+                                                   GimpCoords            *coords,
+                                                   GdkModifierType        state,
+                                                   GimpDisplay           *display);
 
-static void     gimp_measure_tool_draw            (GimpDrawTool    *draw_tool);
+static void     gimp_measure_tool_draw            (GimpDrawTool          *draw_tool);
 
-static void     gimp_measure_tool_halt            (GimpMeasureTool *measure);
+static void     gimp_measure_tool_halt            (GimpMeasureTool       *measure);
 
-static gdouble     gimp_measure_tool_get_angle     (gint             dx,
-                                                    gint             dy,
-                                                    gdouble          xres,
-                                                    gdouble          yres);
+static gdouble  gimp_measure_tool_get_angle       (gint                   dx,
+                                                   gint                   dy,
+                                                   gdouble                xres,
+                                                   gdouble                yres);
 
-static GtkWidget * gimp_measure_tool_dialog_new    (GimpMeasureTool *measure);
-static void        gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
-                                                    GimpDisplay     *display);
+static GtkWidget * gimp_measure_tool_dialog_new   (GimpMeasureTool       *measure);
+static void     gimp_measure_tool_dialog_update   (GimpMeasureTool       *measure,
+                                                   GimpDisplay           *display);
 
 
 G_DEFINE_TYPE (GimpMeasureTool, gimp_measure_tool, GIMP_TYPE_DRAW_TOOL)
@@ -339,11 +340,12 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 }
 
 static void
-gimp_measure_tool_button_release (GimpTool        *tool,
-                                  GimpCoords      *coords,
-                                  guint32          time,
-                                  GdkModifierType  state,
-                                  GimpDisplay     *display)
+gimp_measure_tool_button_release (GimpTool              *tool,
+                                  GimpCoords            *coords,
+                                  guint32                time,
+                                  GdkModifierType        state,
+                                  GimpButtonReleaseType  release_type,
+                                  GimpDisplay           *display)
 {
   GimpMeasureTool *measure = GIMP_MEASURE_TOOL (tool);
 

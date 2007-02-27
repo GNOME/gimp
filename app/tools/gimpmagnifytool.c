@@ -46,32 +46,33 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_magnify_tool_button_press    (GimpTool        *tool,
-                                                 GimpCoords      *coords,
-                                                 guint32          time,
-                                                 GdkModifierType  state,
-                                                 GimpDisplay     *display);
-static void   gimp_magnify_tool_button_release  (GimpTool        *tool,
-                                                 GimpCoords      *coords,
-                                                 guint32          time,
-                                                 GdkModifierType  state,
-                                                 GimpDisplay     *display);
-static void   gimp_magnify_tool_motion          (GimpTool        *tool,
-                                                 GimpCoords      *coords,
-                                                 guint32          time,
-                                                 GdkModifierType  state,
-                                                 GimpDisplay     *display);
-static void   gimp_magnify_tool_modifier_key    (GimpTool        *tool,
-                                                 GdkModifierType  key,
-                                                 gboolean         press,
-                                                 GdkModifierType  state,
-                                                 GimpDisplay     *display);
-static void   gimp_magnify_tool_cursor_update   (GimpTool        *tool,
-                                                 GimpCoords      *coords,
-                                                 GdkModifierType  state,
-                                                 GimpDisplay     *display);
+static void   gimp_magnify_tool_button_press   (GimpTool              *tool,
+                                                GimpCoords            *coords,
+                                                guint32                time,
+                                                GdkModifierType        state,
+                                                GimpDisplay           *display);
+static void   gimp_magnify_tool_button_release (GimpTool              *tool,
+                                                GimpCoords            *coords,
+                                                guint32                time,
+                                                GdkModifierType        state,
+                                                GimpButtonReleaseType  release_type,
+                                                GimpDisplay           *display);
+static void   gimp_magnify_tool_motion         (GimpTool              *tool,
+                                                GimpCoords            *coords,
+                                                guint32                time,
+                                                GdkModifierType        state,
+                                                GimpDisplay           *display);
+static void   gimp_magnify_tool_modifier_key   (GimpTool              *tool,
+                                                GdkModifierType        key,
+                                                gboolean               press,
+                                                GdkModifierType        state,
+                                                GimpDisplay           *display);
+static void   gimp_magnify_tool_cursor_update  (GimpTool              *tool,
+                                                GimpCoords            *coords,
+                                                GdkModifierType        state,
+                                                GimpDisplay           *display);
 
-static void   gimp_magnify_tool_draw            (GimpDrawTool    *draw_tool);
+static void   gimp_magnify_tool_draw           (GimpDrawTool          *draw_tool);
 
 
 G_DEFINE_TYPE (GimpMagnifyTool, gimp_magnify_tool, GIMP_TYPE_DRAW_TOOL)
@@ -156,11 +157,12 @@ gimp_magnify_tool_button_press (GimpTool        *tool,
 }
 
 static void
-gimp_magnify_tool_button_release (GimpTool        *tool,
-                                  GimpCoords      *coords,
-                                  guint32          time,
-                                  GdkModifierType  state,
-                                  GimpDisplay     *display)
+gimp_magnify_tool_button_release (GimpTool              *tool,
+                                  GimpCoords            *coords,
+                                  guint32                time,
+                                  GdkModifierType        state,
+                                  GimpButtonReleaseType  release_type,
+                                  GimpDisplay           *display)
 {
   GimpMagnifyTool    *magnify = GIMP_MAGNIFY_TOOL (tool);
   GimpMagnifyOptions *options = GIMP_MAGNIFY_TOOL_GET_OPTIONS (tool);
@@ -173,8 +175,7 @@ gimp_magnify_tool_button_release (GimpTool        *tool,
 
   gimp_tool_control_halt (tool->control);
 
-  /*  First take care of the case where the user "cancels" the action  */
-  if (! (state & GDK_BUTTON3_MASK))
+  if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
     {
       gint    x1, y1, x2, y2, w, h;
       gint    win_width, win_height;

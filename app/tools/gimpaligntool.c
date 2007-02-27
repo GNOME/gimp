@@ -50,56 +50,57 @@
 
 /*  local function prototypes  */
 
-static GObject * gimp_align_tool_constructor (GType              type,
-                                              guint              n_params,
+static GObject * gimp_align_tool_constructor (GType                  type,
+                                              guint                  n_params,
                                               GObjectConstructParam *params);
-static gboolean gimp_align_tool_initialize   (GimpTool          *tool,
-                                              GimpDisplay       *display,
-                                              GError           **error);
-static void   gimp_align_tool_finalize       (GObject           *object);
+static gboolean gimp_align_tool_initialize   (GimpTool              *tool,
+                                              GimpDisplay           *display,
+                                              GError               **error);
+static void   gimp_align_tool_finalize       (GObject               *object);
 
-static void   gimp_align_tool_control        (GimpTool          *tool,
-                                              GimpToolAction     action,
-                                              GimpDisplay       *display);
-static void   gimp_align_tool_button_press   (GimpTool          *tool,
-                                              GimpCoords        *coords,
-                                              guint32            time,
-                                              GdkModifierType    state,
-                                              GimpDisplay       *display);
-static void   gimp_align_tool_button_release (GimpTool          *tool,
-                                              GimpCoords        *coords,
-                                              guint32            time,
-                                              GdkModifierType    state,
-                                              GimpDisplay       *display);
-static void   gimp_align_tool_motion         (GimpTool          *tool,
-                                              GimpCoords        *coords,
-                                              guint32            time,
-                                              GdkModifierType    state,
-                                              GimpDisplay       *display);
-static void   gimp_align_tool_cursor_update  (GimpTool          *tool,
-                                              GimpCoords        *coords,
-                                              GdkModifierType    state,
-                                              GimpDisplay       *display);
+static void   gimp_align_tool_control        (GimpTool              *tool,
+                                              GimpToolAction         action,
+                                              GimpDisplay           *display);
+static void   gimp_align_tool_button_press   (GimpTool              *tool,
+                                              GimpCoords            *coords,
+                                              guint32                time,
+                                              GdkModifierType        state,
+                                              GimpDisplay           *display);
+static void   gimp_align_tool_button_release (GimpTool              *tool,
+                                              GimpCoords            *coords,
+                                              guint32                time,
+                                              GdkModifierType        state,
+                                              GimpButtonReleaseType  release_tyle,
+                                              GimpDisplay           *display);
+static void   gimp_align_tool_motion         (GimpTool              *tool,
+                                              GimpCoords            *coords,
+                                              guint32                time,
+                                              GdkModifierType        state,
+                                              GimpDisplay           *display);
+static void   gimp_align_tool_cursor_update  (GimpTool              *tool,
+                                              GimpCoords            *coords,
+                                              GdkModifierType        state,
+                                              GimpDisplay           *display);
 
-static void   gimp_align_tool_draw           (GimpDrawTool      *draw_tool);
+static void   gimp_align_tool_draw           (GimpDrawTool          *draw_tool);
 
-static GtkWidget *button_with_stock          (GimpAlignmentType  action,
-                                              GimpAlignTool     *align_tool);
-static GtkWidget *gimp_align_tool_controls   (GimpAlignTool     *align_tool);
-static void   do_alignment                   (GtkWidget         *widget,
-                                              gpointer           data);
-static void   clear_selected_object          (GObject           *object,
-                                              GimpAlignTool     *align_tool);
-static void   clear_all_selected_objects     (GimpAlignTool     *align_tool);
-static GimpLayer *select_layer_by_coords     (GimpImage         *image,
-                                              gint               x,
-                                              gint               y);
-void          gimp_image_arrange_objects     (GimpImage         *image,
-                                              GList             *list,
-                                              GimpAlignmentType  alignment,
-                                              GObject           *reference,
-                                              GimpAlignmentType  reference_alignment,
-                                              gint               offset);
+static GtkWidget *button_with_stock          (GimpAlignmentType      action,
+                                              GimpAlignTool         *align_tool);
+static GtkWidget *gimp_align_tool_controls   (GimpAlignTool         *align_tool);
+static void   do_alignment                   (GtkWidget             *widget,
+                                              gpointer               data);
+static void   clear_selected_object          (GObject               *object,
+                                              GimpAlignTool         *align_tool);
+static void   clear_all_selected_objects     (GimpAlignTool         *align_tool);
+static GimpLayer *select_layer_by_coords     (GimpImage             *image,
+                                              gint                   x,
+                                              gint                   y);
+void          gimp_image_arrange_objects     (GimpImage             *image,
+                                              GList                 *list,
+                                              GimpAlignmentType      alignment,
+                                              GObject               *reference,
+                                              GimpAlignmentType      reference_alignment,
+                                              gint                   offset);
 
 G_DEFINE_TYPE (GimpAlignTool, gimp_align_tool, GIMP_TYPE_DRAW_TOOL)
 
@@ -287,11 +288,12 @@ gimp_align_tool_button_press (GimpTool        *tool,
  * be used as reference.
  */
 static void
-gimp_align_tool_button_release (GimpTool        *tool,
-                                GimpCoords      *coords,
-                                guint32          time,
-                                GdkModifierType  state,
-                                GimpDisplay     *display)
+gimp_align_tool_button_release (GimpTool              *tool,
+                                GimpCoords            *coords,
+                                guint32                time,
+                                GdkModifierType        state,
+                                GimpButtonReleaseType  release_type,
+                                GimpDisplay           *display)
 {
   GimpAlignTool    *align_tool = GIMP_ALIGN_TOOL (tool);
   GimpDisplayShell *shell      = GIMP_DISPLAY_SHELL (display->shell);
@@ -301,7 +303,7 @@ gimp_align_tool_button_release (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  if (state & GDK_BUTTON3_MASK) /* cancel this action */
+  if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
       align_tool->x1 = align_tool->x0;
       align_tool->y1 = align_tool->y0;

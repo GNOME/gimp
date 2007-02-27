@@ -75,6 +75,7 @@ static void     gimp_rect_select_tool_button_release      (GimpTool          *to
                                                            GimpCoords        *coords,
                                                            guint32            time,
                                                            GdkModifierType    state,
+                                                           GimpButtonReleaseType release_type,
                                                            GimpDisplay       *display);
 static void     gimp_rect_select_tool_active_modifier_key (GimpTool          *tool,
                                                            GdkModifierType    key,
@@ -376,11 +377,12 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
 }
 
 static void
-gimp_rect_select_tool_button_release (GimpTool        *tool,
-                                      GimpCoords      *coords,
-                                      guint32          time,
-                                      GdkModifierType  state,
-                                      GimpDisplay     *display)
+gimp_rect_select_tool_button_release (GimpTool              *tool,
+                                      GimpCoords            *coords,
+                                      guint32                time,
+                                      GdkModifierType        state,
+                                      GimpButtonReleaseType  release_type,
+                                      GimpDisplay           *display)
 {
   GimpRectSelectTool *rect_select = GIMP_RECT_SELECT_TOOL (tool);
   GimpRectangleTool  *rectangle   = GIMP_RECTANGLE_TOOL (tool);
@@ -395,8 +397,8 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
    */
   if (gimp_rectangle_tool_no_movement (rectangle))
     {
-      GimpImage             *image       = tool->display->image;
-      GimpUndo              *redo;
+      GimpImage *image = tool->display->image;
+      GimpUndo  *redo;
 
       redo = gimp_undo_stack_peek (image->redo_stack);
 
@@ -412,9 +414,10 @@ gimp_rect_select_tool_button_release (GimpTool        *tool,
         }
     }
 
-  gimp_rectangle_tool_button_release (tool, coords, time, state, display);
+  gimp_rectangle_tool_button_release (tool, coords, time, state, release_type,
+                                      display);
 
-  if ((state & GDK_BUTTON3_MASK))
+  if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
       if (rect_select->redo)
         {

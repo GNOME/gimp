@@ -65,18 +65,19 @@
 #define ARROW_VELOCITY          25
 
 
-static void    gimp_edit_selection_tool_button_release (GimpTool        *tool,
-                                                        GimpCoords      *coords,
-                                                        guint32          time,
-                                                        GdkModifierType  state,
-                                                        GimpDisplay     *display);
-static void    gimp_edit_selection_tool_motion         (GimpTool        *tool,
-                                                        GimpCoords      *coords,
-                                                        guint32          time,
-                                                        GdkModifierType  state,
-                                                        GimpDisplay     *display);
+static void   gimp_edit_selection_tool_button_release (GimpTool              *tool,
+                                                       GimpCoords            *coords,
+                                                       guint32                time,
+                                                       GdkModifierType        state,
+                                                       GimpButtonReleaseType  release_type,
+                                                       GimpDisplay           *display);
+static void   gimp_edit_selection_tool_motion         (GimpTool              *tool,
+                                                       GimpCoords            *coords,
+                                                       guint32                time,
+                                                       GdkModifierType        state,
+                                                       GimpDisplay           *display);
 
-static void    gimp_edit_selection_tool_draw           (GimpDrawTool    *tool);
+static void   gimp_edit_selection_tool_draw           (GimpDrawTool          *tool);
 
 
 G_DEFINE_TYPE (GimpEditSelectionTool, gimp_edit_selection_tool,
@@ -405,11 +406,12 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
 
 
 static void
-gimp_edit_selection_tool_button_release (GimpTool        *tool,
-                                         GimpCoords      *coords,
-                                         guint32          time,
-                                         GdkModifierType  state,
-                                         GimpDisplay     *display)
+gimp_edit_selection_tool_button_release (GimpTool              *tool,
+                                         GimpCoords            *coords,
+                                         guint32                time,
+                                         GdkModifierType        state,
+                                         GimpButtonReleaseType  release_type,
+                                         GimpDisplay           *display)
 {
   GimpEditSelectionTool *edit_select = GIMP_EDIT_SELECTION_TOOL (tool);
   GimpDisplayShell      *shell       = GIMP_DISPLAY_SHELL (display->shell);
@@ -467,7 +469,7 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
       edit_select->edit_mode == GIMP_TRANSLATE_MODE_CHANNEL ||
       edit_select->edit_mode == GIMP_TRANSLATE_MODE_LAYER)
     {
-      if (! (state & GDK_BUTTON3_MASK) &&
+      if ((release_type != GIMP_BUTTON_RELEASE_CANCEL) &&
           (edit_select->cumlx != 0 ||
            edit_select->cumly != 0))
         {
@@ -495,7 +497,7 @@ gimp_edit_selection_tool_button_release (GimpTool        *tool,
 
   gimp_image_undo_group_end (display->image);
 
-  if (state & GDK_BUTTON3_MASK) /* OPERATION CANCELLED */
+  if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     {
       /* Operation cancelled - undo the undo-group! */
       gimp_image_undo (display->image);

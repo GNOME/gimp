@@ -42,63 +42,64 @@ enum
 };
 
 
-static void          gimp_tool_finalize            (GObject         *object);
-static void          gimp_tool_set_property        (GObject         *object,
-                                                    guint            property_id,
-                                                    const GValue    *value,
-                                                    GParamSpec      *pspec);
-static void          gimp_tool_get_property        (GObject         *object,
-                                                    guint            property_id,
-                                                    GValue          *value,
-                                                    GParamSpec      *pspec);
+static void       gimp_tool_finalize            (GObject               *object);
+static void       gimp_tool_set_property        (GObject               *object,
+                                                 guint                  property_id,
+                                                 const GValue          *value,
+                                                 GParamSpec            *pspec);
+static void       gimp_tool_get_property        (GObject               *object,
+                                                 guint                  property_id,
+                                                 GValue                *value,
+                                                 GParamSpec            *pspec);
 
-static gboolean      gimp_tool_real_has_display    (GimpTool        *tool,
-                                                    GimpDisplay     *display);
-static GimpDisplay * gimp_tool_real_has_image      (GimpTool        *tool,
-                                                    GimpImage       *image);
-static gboolean      gimp_tool_real_initialize     (GimpTool        *tool,
-                                                    GimpDisplay     *display,
-                                                    GError         **error);
-static void          gimp_tool_real_control        (GimpTool        *tool,
-                                                    GimpToolAction   action,
-                                                    GimpDisplay     *display);
-static void          gimp_tool_real_button_press   (GimpTool        *tool,
-                                                    GimpCoords      *coords,
-                                                    guint32          time,
-                                                    GdkModifierType  state,
-                                                    GimpDisplay     *display);
-static void          gimp_tool_real_button_release (GimpTool        *tool,
-                                                    GimpCoords      *coords,
-                                                    guint32          time,
-                                                    GdkModifierType  state,
-                                                    GimpDisplay     *display);
-static void          gimp_tool_real_motion         (GimpTool        *tool,
-                                                    GimpCoords      *coords,
-                                                    guint32          time,
-                                                    GdkModifierType  state,
-                                                    GimpDisplay     *display);
-static gboolean      gimp_tool_real_key_press      (GimpTool        *tool,
-                                                    GdkEventKey     *kevent,
-                                                    GimpDisplay     *display);
-static void          gimp_tool_real_modifier_key   (GimpTool        *tool,
-                                                    GdkModifierType  key,
-                                                    gboolean         press,
-                                                    GdkModifierType  state,
-                                                    GimpDisplay     *display);
-static void     gimp_tool_real_active_modifier_key (GimpTool        *tool,
-                                                    GdkModifierType  key,
-                                                    gboolean         press,
-                                                    GdkModifierType  state,
-                                                    GimpDisplay     *display);
-static void          gimp_tool_real_oper_update    (GimpTool        *tool,
-                                                    GimpCoords      *coords,
-                                                    GdkModifierType  state,
-                                                    gboolean         proximity,
-                                                    GimpDisplay     *display);
-static void          gimp_tool_real_cursor_update  (GimpTool        *tool,
-                                                    GimpCoords      *coords,
-                                                    GdkModifierType  state,
-                                                    GimpDisplay     *display);
+static gboolean   gimp_tool_real_has_display    (GimpTool              *tool,
+                                                 GimpDisplay           *display);
+static GimpDisplay * gimp_tool_real_has_image   (GimpTool              *tool,
+                                                 GimpImage             *image);
+static gboolean   gimp_tool_real_initialize     (GimpTool              *tool,
+                                                 GimpDisplay           *display,
+                                                 GError               **error);
+static void       gimp_tool_real_control        (GimpTool              *tool,
+                                                 GimpToolAction         action,
+                                                 GimpDisplay           *display);
+static void       gimp_tool_real_button_press   (GimpTool              *tool,
+                                                 GimpCoords            *coords,
+                                                 guint32                time,
+                                                 GdkModifierType        state,
+                                                 GimpDisplay           *display);
+static void       gimp_tool_real_button_release (GimpTool              *tool,
+                                                 GimpCoords            *coords,
+                                                 guint32                time,
+                                                 GdkModifierType        state,
+                                                 GimpButtonReleaseType  release_type,
+                                                 GimpDisplay           *display);
+static void       gimp_tool_real_motion         (GimpTool              *tool,
+                                                 GimpCoords            *coords,
+                                                 guint32                time,
+                                                 GdkModifierType        state,
+                                                 GimpDisplay           *display);
+static gboolean   gimp_tool_real_key_press      (GimpTool              *tool,
+                                                 GdkEventKey           *kevent,
+                                                 GimpDisplay           *display);
+static void       gimp_tool_real_modifier_key   (GimpTool              *tool,
+                                                 GdkModifierType        key,
+                                                 gboolean               press,
+                                                 GdkModifierType        state,
+                                                 GimpDisplay           *display);
+static void  gimp_tool_real_active_modifier_key (GimpTool              *tool,
+                                                 GdkModifierType        key,
+                                                 gboolean               press,
+                                                 GdkModifierType        state,
+                                                 GimpDisplay           *display);
+static void       gimp_tool_real_oper_update    (GimpTool              *tool,
+                                                 GimpCoords            *coords,
+                                                 GdkModifierType        state,
+                                                 gboolean               proximity,
+                                                 GimpDisplay           *display);
+static void       gimp_tool_real_cursor_update  (GimpTool              *tool,
+                                                 GimpCoords            *coords,
+                                                 GdkModifierType        state,
+                                                 GimpDisplay           *display);
 
 
 G_DEFINE_TYPE (GimpTool, gimp_tool, GIMP_TYPE_OBJECT)
@@ -278,11 +279,12 @@ gimp_tool_real_button_press (GimpTool        *tool,
 }
 
 static void
-gimp_tool_real_button_release (GimpTool        *tool,
-                               GimpCoords      *coords,
-                               guint32          time,
-                               GdkModifierType  state,
-                               GimpDisplay     *display)
+gimp_tool_real_button_release (GimpTool              *tool,
+                               GimpCoords            *coords,
+                               guint32                time,
+                               GdkModifierType        state,
+                               GimpButtonReleaseType  release_type,
+                               GimpDisplay           *display)
 {
   gimp_tool_control_halt (tool->control);
 }
@@ -462,14 +464,19 @@ gimp_tool_button_release (GimpTool        *tool,
                           GdkModifierType  state,
                           GimpDisplay     *display)
 {
+  GimpButtonReleaseType release_type = GIMP_BUTTON_RELEASE_NORMAL;
+
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
   g_object_ref (tool);
 
+  if (state & GDK_BUTTON3_MASK)
+    release_type = GIMP_BUTTON_RELEASE_CANCEL;
+
   GIMP_TOOL_GET_CLASS (tool)->button_release (tool, coords, time, state,
-                                              display);
+                                              release_type, display);
 
   if (tool->active_modifier_state != 0)
     gimp_tool_set_active_modifier_state (tool, 0, display);

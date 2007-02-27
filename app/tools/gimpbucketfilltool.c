@@ -46,25 +46,26 @@
 
 /*  local function prototypes  */
 
-static void   gimp_bucket_fill_tool_button_press   (GimpTool        *tool,
-                                                    GimpCoords      *coords,
-                                                    guint32          time,
-                                                    GdkModifierType  state,
-                                                    GimpDisplay     *display);
-static void   gimp_bucket_fill_tool_button_release (GimpTool        *tool,
-                                                    GimpCoords      *coords,
-                                                    guint32          time,
-                                                    GdkModifierType  state,
-                                                    GimpDisplay     *display);
-static void   gimp_bucket_fill_tool_modifier_key   (GimpTool        *tool,
-                                                    GdkModifierType  key,
-                                                    gboolean         press,
-                                                    GdkModifierType  state,
-                                                    GimpDisplay     *display);
-static void   gimp_bucket_fill_tool_cursor_update  (GimpTool        *tool,
-                                                    GimpCoords      *coords,
-                                                    GdkModifierType  state,
-                                                    GimpDisplay     *display);
+static void   gimp_bucket_fill_tool_button_press   (GimpTool              *tool,
+                                                    GimpCoords            *coords,
+                                                    guint32                time,
+                                                    GdkModifierType        state,
+                                                    GimpDisplay           *display);
+static void   gimp_bucket_fill_tool_button_release (GimpTool              *tool,
+                                                    GimpCoords            *coords,
+                                                    guint32                time,
+                                                    GdkModifierType        state,
+                                                    GimpButtonReleaseType  release_type,
+                                                    GimpDisplay           *display);
+static void   gimp_bucket_fill_tool_modifier_key   (GimpTool              *tool,
+                                                    GdkModifierType        key,
+                                                    gboolean               press,
+                                                    GdkModifierType        state,
+                                                    GimpDisplay           *display);
+static void   gimp_bucket_fill_tool_cursor_update  (GimpTool              *tool,
+                                                    GimpCoords            *coords,
+                                                    GdkModifierType        state,
+                                                    GimpDisplay           *display);
 
 
 G_DEFINE_TYPE (GimpBucketFillTool, gimp_bucket_fill_tool, GIMP_TYPE_TOOL)
@@ -147,18 +148,18 @@ gimp_bucket_fill_tool_button_press (GimpTool        *tool,
 }
 
 static void
-gimp_bucket_fill_tool_button_release (GimpTool        *tool,
-                                      GimpCoords      *coords,
-                                      guint32          time,
-                                      GdkModifierType  state,
-                                      GimpDisplay     *display)
+gimp_bucket_fill_tool_button_release (GimpTool              *tool,
+                                      GimpCoords            *coords,
+                                      guint32                time,
+                                      GdkModifierType        state,
+                                      GimpButtonReleaseType  release_type,
+                                      GimpDisplay           *display)
 {
   GimpBucketFillTool    *bucket_tool = GIMP_BUCKET_FILL_TOOL (tool);
   GimpBucketFillOptions *options     = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
   GimpContext           *context     = GIMP_CONTEXT (options);
 
-  /*  if the 3rd button isn't pressed, fill the selected region  */
-  if (! (state & GDK_BUTTON3_MASK))
+  if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
     {
       gimp_drawable_bucket_fill (gimp_image_active_drawable (display->image),
                                  context,

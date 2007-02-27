@@ -60,44 +60,45 @@
 
 /*  local function prototypes  */
 
-static void   gimp_move_tool_control        (GimpTool          *tool,
-                                             GimpToolAction     action,
-                                             GimpDisplay       *display);
-static void   gimp_move_tool_button_press   (GimpTool          *tool,
-                                             GimpCoords        *coords,
-                                             guint32            time,
-                                             GdkModifierType    state,
-                                             GimpDisplay       *display);
-static void   gimp_move_tool_button_release (GimpTool          *tool,
-                                             GimpCoords        *coords,
-                                             guint32            time,
-                                             GdkModifierType    state,
-                                             GimpDisplay       *display);
-static void   gimp_move_tool_motion         (GimpTool          *tool,
-                                             GimpCoords        *coords,
-                                             guint32            time,
-                                             GdkModifierType    state,
-                                             GimpDisplay       *display);
-static void   gimp_move_tool_modifier_key   (GimpTool          *tool,
-                                             GdkModifierType    key,
-                                             gboolean           press,
-                                             GdkModifierType    state,
-                                             GimpDisplay       *display);
-static void   gimp_move_tool_oper_update    (GimpTool          *tool,
-                                             GimpCoords        *coords,
-                                             GdkModifierType    state,
-                                             gboolean           proximity,
-                                             GimpDisplay       *display);
-static void   gimp_move_tool_cursor_update  (GimpTool          *tool,
-                                             GimpCoords        *coords,
-                                             GdkModifierType    state,
-                                             GimpDisplay       *display);
+static void   gimp_move_tool_control        (GimpTool              *tool,
+                                             GimpToolAction         action,
+                                             GimpDisplay           *display);
+static void   gimp_move_tool_button_press   (GimpTool              *tool,
+                                             GimpCoords            *coords,
+                                             guint32                time,
+                                             GdkModifierType        state,
+                                             GimpDisplay           *display);
+static void   gimp_move_tool_button_release (GimpTool              *tool,
+                                             GimpCoords            *coords,
+                                             guint32                time,
+                                             GdkModifierType        state,
+                                             GimpButtonReleaseType  release_type,
+                                             GimpDisplay           *display);
+static void   gimp_move_tool_motion         (GimpTool              *tool,
+                                             GimpCoords            *coords,
+                                             guint32                time,
+                                             GdkModifierType        state,
+                                             GimpDisplay           *display);
+static void   gimp_move_tool_modifier_key   (GimpTool              *tool,
+                                             GdkModifierType        key,
+                                             gboolean               press,
+                                             GdkModifierType        state,
+                                             GimpDisplay           *display);
+static void   gimp_move_tool_oper_update    (GimpTool              *tool,
+                                             GimpCoords            *coords,
+                                             GdkModifierType        state,
+                                             gboolean               proximity,
+                                             GimpDisplay           *display);
+static void   gimp_move_tool_cursor_update  (GimpTool              *tool,
+                                             GimpCoords            *coords,
+                                             GdkModifierType        state,
+                                             GimpDisplay           *display);
 
-static void   gimp_move_tool_draw           (GimpDrawTool      *draw_tool);
+static void   gimp_move_tool_draw           (GimpDrawTool          *draw_tool);
 
-static void   gimp_move_tool_start_guide    (GimpMoveTool      *move,
-                                             GimpDisplay       *display,
-                                             GimpOrientationType  orientation);
+static void   gimp_move_tool_start_guide    (GimpMoveTool          *move,
+                                             GimpDisplay           *display,
+                                             GimpOrientationType    orientation);
 
 
 G_DEFINE_TYPE (GimpMoveTool, gimp_move_tool, GIMP_TYPE_DRAW_TOOL)
@@ -336,11 +337,12 @@ gimp_move_tool_button_press (GimpTool        *tool,
 }
 
 static void
-gimp_move_tool_button_release (GimpTool        *tool,
-                               GimpCoords      *coords,
-                               guint32          time,
-                               GdkModifierType  state,
-                               GimpDisplay     *display)
+gimp_move_tool_button_release (GimpTool              *tool,
+                               GimpCoords            *coords,
+                               guint32                time,
+                               GdkModifierType        state,
+                               GimpButtonReleaseType  release_type,
+                               GimpDisplay           *display)
 {
   GimpMoveTool     *move   = GIMP_MOVE_TOOL (tool);
   GimpDisplayShell *shell  = GIMP_DISPLAY_SHELL (display->shell);
@@ -359,7 +361,7 @@ gimp_move_tool_button_release (GimpTool        *tool,
       gimp_tool_control_set_scroll_lock (tool->control, FALSE);
       gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
-      if (state & GDK_BUTTON3_MASK)
+      if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
         {
           move->moving_guide      = FALSE;
           move->guide_position    = -1;

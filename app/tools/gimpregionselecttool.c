@@ -49,34 +49,34 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_region_select_tool_finalize       (GObject         *object);
+static void   gimp_region_select_tool_finalize       (GObject               *object);
 
-static void   gimp_region_select_tool_button_press   (GimpTool        *tool,
-                                                      GimpCoords      *coords,
-                                                      guint32          time,
-                                                      GdkModifierType  state,
-                                                      GimpDisplay     *display);
-static void   gimp_region_select_tool_button_release (GimpTool        *tool,
-                                                      GimpCoords      *coords,
-                                                      guint32          time,
-                                                      GdkModifierType  state,
-                                                      GimpDisplay     *display);
-static void   gimp_region_select_tool_motion         (GimpTool        *tool,
-                                                      GimpCoords      *coords,
-                                                      guint32          time,
-                                                      GdkModifierType  state,
-                                                      GimpDisplay     *display);
-static void   gimp_region_select_tool_cursor_update  (GimpTool        *tool,
-                                                      GimpCoords      *coords,
-                                                      GdkModifierType  state,
-                                                      GimpDisplay     *display);
+static void   gimp_region_select_tool_button_press   (GimpTool              *tool,
+                                                      GimpCoords            *coords,
+                                                      guint32                time,
+                                                      GdkModifierType        state,
+                                                      GimpDisplay           *display);
+static void   gimp_region_select_tool_button_release (GimpTool              *tool,
+                                                      GimpCoords            *coords,
+                                                      guint32                time,
+                                                      GdkModifierType        state,
+                                                      GimpButtonReleaseType  release_type,
+                                                      GimpDisplay           *display);
+static void   gimp_region_select_tool_motion         (GimpTool              *tool,
+                                                      GimpCoords            *coords,
+                                                      guint32                time,
+                                                      GdkModifierType        state,
+                                                      GimpDisplay           *display);
+static void   gimp_region_select_tool_cursor_update  (GimpTool              *tool,
+                                                      GimpCoords            *coords,
+                                                      GdkModifierType        state,
+                                                      GimpDisplay           *display);
 
-static void   gimp_region_select_tool_draw           (GimpDrawTool    *draw_tool);
+static void   gimp_region_select_tool_draw           (GimpDrawTool          *draw_tool);
 
-static GdkSegment *
-              gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
-                                                 GimpDisplay          *display,
-                                                 gint                 *num_segs);
+static GdkSegment *gimp_region_select_tool_calculate (GimpRegionSelectTool  *region_sel,
+                                                      GimpDisplay           *display,
+                                                      gint                  *num_segs);
 
 
 G_DEFINE_TYPE (GimpRegionSelectTool, gimp_region_select_tool,
@@ -171,11 +171,12 @@ gimp_region_select_tool_button_press (GimpTool        *tool,
 }
 
 static void
-gimp_region_select_tool_button_release (GimpTool        *tool,
-                                        GimpCoords      *coords,
-                                        guint32          time,
-                                        GdkModifierType  state,
-                                        GimpDisplay     *display)
+gimp_region_select_tool_button_release (GimpTool              *tool,
+                                        GimpCoords            *coords,
+                                        guint32                time,
+                                        GdkModifierType        state,
+                                        GimpButtonReleaseType  release_type,
+                                        GimpDisplay           *display)
 {
   GimpRegionSelectTool *region_sel = GIMP_REGION_SELECT_TOOL (tool);
   GimpSelectionOptions *options    = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
@@ -186,8 +187,7 @@ gimp_region_select_tool_button_release (GimpTool        *tool,
 
   gimp_tool_control_halt (tool->control);
 
-  /*  First take care of the case where the user "cancels" the action  */
-  if (! (state & GDK_BUTTON3_MASK))
+  if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
     {
       gint off_x, off_y;
 

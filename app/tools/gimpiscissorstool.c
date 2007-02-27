@@ -115,43 +115,44 @@ struct _ICurve
 
 /*  local function prototypes  */
 
-static void   gimp_iscissors_tool_finalize       (GObject           *object);
+static void   gimp_iscissors_tool_finalize       (GObject               *object);
 
-static void   gimp_iscissors_tool_control        (GimpTool          *tool,
-                                                  GimpToolAction     action,
-                                                  GimpDisplay       *display);
-static void   gimp_iscissors_tool_button_press   (GimpTool          *tool,
-                                                  GimpCoords        *coords,
-                                                  guint32            time,
-                                                  GdkModifierType    state,
-                                                  GimpDisplay       *display);
-static void   gimp_iscissors_tool_button_release (GimpTool          *tool,
-                                                  GimpCoords        *coords,
-                                                  guint32            time,
-                                                  GdkModifierType    state,
-                                                  GimpDisplay       *display);
-static void   gimp_iscissors_tool_motion         (GimpTool          *tool,
-                                                  GimpCoords        *coords,
-                                                  guint32            time,
-                                                  GdkModifierType    state,
-                                                  GimpDisplay       *display);
-static void   gimp_iscissors_tool_oper_update    (GimpTool          *tool,
-                                                  GimpCoords        *coords,
-                                                  GdkModifierType    state,
-                                                  gboolean           proximity,
-                                                  GimpDisplay       *display);
-static void   gimp_iscissors_tool_cursor_update  (GimpTool          *tool,
-                                                  GimpCoords        *coords,
-                                                  GdkModifierType    state,
-                                                  GimpDisplay       *display);
-static gboolean gimp_iscissors_tool_key_press    (GimpTool          *tool,
-                                                  GdkEventKey       *kevent,
-                                                  GimpDisplay       *display);
+static void   gimp_iscissors_tool_control        (GimpTool              *tool,
+                                                  GimpToolAction         action,
+                                                  GimpDisplay           *display);
+static void   gimp_iscissors_tool_button_press   (GimpTool              *tool,
+                                                  GimpCoords            *coords,
+                                                  guint32                time,
+                                                  GdkModifierType        state,
+                                                  GimpDisplay           *display);
+static void   gimp_iscissors_tool_button_release (GimpTool              *tool,
+                                                  GimpCoords            *coords,
+                                                  guint32                time,
+                                                  GdkModifierType        state,
+                                                  GimpButtonReleaseType  release_type,
+                                                  GimpDisplay           *display);
+static void   gimp_iscissors_tool_motion         (GimpTool              *tool,
+                                                  GimpCoords            *coords,
+                                                  guint32                time,
+                                                  GdkModifierType        state,
+                                                  GimpDisplay           *display);
+static void   gimp_iscissors_tool_oper_update    (GimpTool              *tool,
+                                                  GimpCoords            *coords,
+                                                  GdkModifierType        state,
+                                                  gboolean               proximity,
+                                                  GimpDisplay           *display);
+static void   gimp_iscissors_tool_cursor_update  (GimpTool              *tool,
+                                                  GimpCoords            *coords,
+                                                  GdkModifierType        state,
+                                                  GimpDisplay           *display);
+static gboolean gimp_iscissors_tool_key_press    (GimpTool              *tool,
+                                                  GdkEventKey           *kevent,
+                                                  GimpDisplay           *display);
 
-static void   gimp_iscissors_tool_apply          (GimpIscissorsTool *iscissors,
-                                                  GimpDisplay       *display);
-static void   gimp_iscissors_tool_reset          (GimpIscissorsTool *iscissors);
-static void   gimp_iscissors_tool_draw           (GimpDrawTool      *draw_tool);
+static void   gimp_iscissors_tool_apply          (GimpIscissorsTool     *iscissors,
+                                                  GimpDisplay           *display);
+static void   gimp_iscissors_tool_reset          (GimpIscissorsTool     *iscissors);
+static void   gimp_iscissors_tool_draw           (GimpDrawTool          *draw_tool);
 
 
 static void          iscissors_convert         (GimpIscissorsTool *iscissors,
@@ -538,11 +539,12 @@ iscissors_convert (GimpIscissorsTool *iscissors,
 }
 
 static void
-gimp_iscissors_tool_button_release (GimpTool        *tool,
-                                    GimpCoords      *coords,
-                                    guint32          time,
-                                    GdkModifierType  state,
-                                    GimpDisplay     *display)
+gimp_iscissors_tool_button_release (GimpTool              *tool,
+                                    GimpCoords            *coords,
+                                    guint32                time,
+                                    GdkModifierType        state,
+                                    GimpButtonReleaseType  release_type,
+                                    GimpDisplay           *display)
 {
   GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
   GimpSelectionOptions *options   = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
@@ -571,8 +573,7 @@ gimp_iscissors_tool_button_release (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  /*  First take care of the case where the user "cancels" the action  */
-  if (! (state & GDK_BUTTON3_MASK))
+  if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
     {
       /*  Progress to the next stage of intelligent selection  */
       switch (iscissors->state)

@@ -94,6 +94,7 @@ void        gimp_rectangle_tool_button_release      (GimpTool                *to
                                                      GimpCoords              *coords,
                                                      guint32                  time,
                                                      GdkModifierType          state,
+                                                     GimpButtonReleaseType    release_type,
                                                      GimpDisplay             *display);
 void        gimp_rectangle_tool_motion              (GimpTool                *tool,
                                                      GimpCoords              *coords,

@@ -52,42 +52,43 @@
 
 /*  local function prototypes  */
 
-static gboolean gimp_blend_tool_initialize        (GimpTool        *tool,
-                                                   GimpDisplay     *display,
-                                                   GError         **error);
-static void   gimp_blend_tool_control             (GimpTool        *tool,
-                                                   GimpToolAction   action,
-                                                   GimpDisplay     *display);
-static void   gimp_blend_tool_button_press        (GimpTool        *tool,
-                                                   GimpCoords      *coords,
-                                                   guint32          time,
-                                                   GdkModifierType  state,
-                                                   GimpDisplay     *display);
-static void   gimp_blend_tool_button_release      (GimpTool        *tool,
-                                                   GimpCoords      *coords,
-                                                   guint32          time,
-                                                   GdkModifierType  state,
-                                                   GimpDisplay     *display);
-static void   gimp_blend_tool_motion              (GimpTool        *tool,
-                                                   GimpCoords      *coords,
-                                                   guint32          time,
-                                                   GdkModifierType  state,
-                                                   GimpDisplay     *display);
-static void   gimp_blend_tool_active_modifier_key (GimpTool        *tool,
-                                                   GdkModifierType  key,
-                                                   gboolean         press,
-                                                   GdkModifierType  state,
-                                                   GimpDisplay     *display);
-static void   gimp_blend_tool_cursor_update       (GimpTool        *tool,
-                                                   GimpCoords      *coords,
-                                                   GdkModifierType  state,
-                                                   GimpDisplay     *display);
+static gboolean gimp_blend_tool_initialize        (GimpTool              *tool,
+                                                   GimpDisplay           *display,
+                                                   GError               **error);
+static void   gimp_blend_tool_control             (GimpTool              *tool,
+                                                   GimpToolAction         action,
+                                                   GimpDisplay           *display);
+static void   gimp_blend_tool_button_press        (GimpTool              *tool,
+                                                   GimpCoords            *coords,
+                                                   guint32                time,
+                                                   GdkModifierType        state,
+                                                   GimpDisplay           *display);
+static void   gimp_blend_tool_button_release      (GimpTool              *tool,
+                                                   GimpCoords            *coords,
+                                                   guint32                time,
+                                                   GdkModifierType        state,
+                                                   GimpButtonReleaseType  release_type,
+                                                   GimpDisplay           *display);
+static void   gimp_blend_tool_motion              (GimpTool              *tool,
+                                                   GimpCoords            *coords,
+                                                   guint32                time,
+                                                   GdkModifierType        state,
+                                                   GimpDisplay           *display);
+static void   gimp_blend_tool_active_modifier_key (GimpTool              *tool,
+                                                   GdkModifierType        key,
+                                                   gboolean               press,
+                                                   GdkModifierType        state,
+                                                   GimpDisplay           *display);
+static void   gimp_blend_tool_cursor_update       (GimpTool              *tool,
+                                                   GimpCoords            *coords,
+                                                   GdkModifierType        state,
+                                                   GimpDisplay           *display);
 
-static void   gimp_blend_tool_draw                (GimpDrawTool    *draw_tool);
+static void   gimp_blend_tool_draw                (GimpDrawTool          *draw_tool);
 
-static void   gimp_blend_tool_push_status         (GimpBlendTool   *blend_tool,
-                                                   GdkModifierType  state,
-                                                   GimpDisplay     *display);
+static void   gimp_blend_tool_push_status         (GimpBlendTool         *blend_tool,
+                                                   GdkModifierType        state,
+                                                   GimpDisplay           *display);
 
 
 G_DEFINE_TYPE (GimpBlendTool, gimp_blend_tool, GIMP_TYPE_DRAW_TOOL)
@@ -221,11 +222,12 @@ gimp_blend_tool_button_press (GimpTool        *tool,
 }
 
 static void
-gimp_blend_tool_button_release (GimpTool        *tool,
-                                GimpCoords      *coords,
-                                guint32          time,
-                                GdkModifierType  state,
-                                GimpDisplay     *display)
+gimp_blend_tool_button_release (GimpTool              *tool,
+                                GimpCoords            *coords,
+                                guint32                time,
+                                GdkModifierType        state,
+                                GimpButtonReleaseType  release_type,
+                                GimpDisplay           *display)
 {
   GimpBlendTool    *blend_tool    = GIMP_BLEND_TOOL (tool);
   GimpBlendOptions *options       = GIMP_BLEND_TOOL_GET_OPTIONS (tool);
@@ -239,8 +241,7 @@ gimp_blend_tool_button_release (GimpTool        *tool,
 
   gimp_tool_control_halt (tool->control);
 
-  /*  if the 3rd button isn't pressed, fill the selected region  */
-  if (! (state & GDK_BUTTON3_MASK) &&
+  if ((release_type != GIMP_BUTTON_RELEASE_CANCEL) &&
       ((blend_tool->startx != blend_tool->endx) ||
        (blend_tool->starty != blend_tool->endy)))
     {

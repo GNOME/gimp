@@ -1,5 +1,44 @@
 2007-02-27  Michael Natterer  <mitch@gimp.org>
 
+	Step one towards enabling tool cancellation by other means than
+	mouse button 3 and towards proper "clicked" semantics.
+
+	* app/tools/tools-enums.[ch]: added enum GimpButtonReleaseType
+	which can be one of { NORMAL, CANCEL, CLICK } (click is curently
+	unused).
+
+	* app/tools/gimptool.[ch] (GimpTool::button_release): added
+	"release_type" parameter.
+
+	(gimp_tool_button_release): if the state contains
+	GDK_BUTTON3_MASK, call the tool's button_release() with CANCEL,
+	use NORMAL otherwise.
+
+	* app/tools/gimpaligntool.c
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpbrightnesscontrasttool.c
+	* app/tools/gimpbucketfilltool.c
+	* app/tools/gimpcolortool.c
+	* app/tools/gimpcroptool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpeditselectiontool.c
+	* app/tools/gimpforegroundselecttool.c
+	* app/tools/gimpfreeselecttool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimpmagnifytool.c
+	* app/tools/gimpmeasuretool.c
+	* app/tools/gimpmovetool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimprectangleselecttool.c
+	* app/tools/gimprectangletool.[ch]
+	* app/tools/gimpregionselecttool.c
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpvectortool.c (button_release): added
+	"release_type" parameters and get rid of own checks for
+	GDK_BUTTON3_MASK.
+
+2007-02-27  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpblendoptions.c (gimp_blend_options_gui): set the
 	gradient-type and gradient-repeat combo boxes to ELLIPSIZE_END so
 	the blend options can be one tool icon size smaller without

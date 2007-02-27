@@ -52,41 +52,42 @@
 #define STATUSBAR_SIZE 200
 
 
-static GObject * gimp_paint_tool_constructor (GType                type,
-                                              guint                n_params,
+static GObject * gimp_paint_tool_constructor (GType                  type,
+                                              guint                  n_params,
                                               GObjectConstructParam *params);
-static void   gimp_paint_tool_finalize       (GObject             *object);
+static void   gimp_paint_tool_finalize       (GObject               *object);
 
-static void   gimp_paint_tool_control        (GimpTool            *tool,
-                                              GimpToolAction       action,
-                                              GimpDisplay         *display);
-static void   gimp_paint_tool_button_press   (GimpTool            *tool,
-                                              GimpCoords          *coords,
-                                              guint32              time,
-                                              GdkModifierType      state,
-                                              GimpDisplay         *display);
-static void   gimp_paint_tool_button_release (GimpTool            *tool,
-                                              GimpCoords          *coords,
-                                              guint32              time,
-                                              GdkModifierType      state,
-                                              GimpDisplay         *display);
-static void   gimp_paint_tool_motion         (GimpTool            *tool,
-                                              GimpCoords          *coords,
-                                              guint32              time,
-                                              GdkModifierType      state,
-                                              GimpDisplay         *display);
-static void   gimp_paint_tool_modifier_key   (GimpTool            *tool,
-                                              GdkModifierType      key,
-                                              gboolean             press,
-                                              GdkModifierType      state,
-                                              GimpDisplay         *display);
-static void   gimp_paint_tool_oper_update    (GimpTool            *tool,
-                                              GimpCoords          *coords,
-                                              GdkModifierType      state,
-                                              gboolean             proximity,
-                                              GimpDisplay         *display);
+static void   gimp_paint_tool_control        (GimpTool              *tool,
+                                              GimpToolAction         action,
+                                              GimpDisplay           *display);
+static void   gimp_paint_tool_button_press   (GimpTool              *tool,
+                                              GimpCoords            *coords,
+                                              guint32                time,
+                                              GdkModifierType        state,
+                                              GimpDisplay           *display);
+static void   gimp_paint_tool_button_release (GimpTool              *tool,
+                                              GimpCoords            *coords,
+                                              guint32                time,
+                                              GdkModifierType        state,
+                                              GimpButtonReleaseType  release_type,
+                                              GimpDisplay           *display);
+static void   gimp_paint_tool_motion         (GimpTool              *tool,
+                                              GimpCoords            *coords,
+                                              guint32                time,
+                                              GdkModifierType        state,
+                                              GimpDisplay           *display);
+static void   gimp_paint_tool_modifier_key   (GimpTool              *tool,
+                                              GdkModifierType        key,
+                                              gboolean               press,
+                                              GdkModifierType        state,
+                                              GimpDisplay           *display);
+static void   gimp_paint_tool_oper_update    (GimpTool              *tool,
+                                              GimpCoords            *coords,
+                                              GdkModifierType        state,
+                                              gboolean               proximity,
+                                              GimpDisplay           *display);
 
-static void   gimp_paint_tool_draw           (GimpDrawTool        *draw_tool);
+static void   gimp_paint_tool_draw           (GimpDrawTool          *draw_tool);
 
 
 G_DEFINE_TYPE (GimpPaintTool, gimp_paint_tool, GIMP_TYPE_COLOR_TOOL)
@@ -375,11 +376,12 @@ gimp_paint_tool_button_press (GimpTool        *tool,
 }
 
 static void
-gimp_paint_tool_button_release (GimpTool        *tool,
-                                GimpCoords      *coords,
-                                guint32          time,
-                                GdkModifierType  state,
-                                GimpDisplay     *display)
+gimp_paint_tool_button_release (GimpTool              *tool,
+                                GimpCoords            *coords,
+                                guint32                time,
+                                GdkModifierType        state,
+                                GimpButtonReleaseType  release_type,
+                                GimpDisplay           *display)
 {
   GimpPaintTool    *paint_tool    = GIMP_PAINT_TOOL (tool);
   GimpPaintOptions *paint_options = GIMP_PAINT_TOOL_GET_OPTIONS (tool);
@@ -389,7 +391,8 @@ gimp_paint_tool_button_release (GimpTool        *tool,
   if (gimp_color_tool_is_enabled (GIMP_COLOR_TOOL (tool)))
     {
       GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time,
-                                                      state, display);
+                                                      state, release_type,
+                                                      display);
       return;
     }
 
@@ -406,9 +409,9 @@ gimp_paint_tool_button_release (GimpTool        *tool,
 
   /*  chain up to halt the tool */
   GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
-                                                  display);
+                                                  release_type, display);
 
-  if (state & GDK_BUTTON3_MASK)
+  if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
     gimp_paint_core_cancel (core, drawable);
   else
     gimp_paint_core_finish (core, drawable);

@@ -23,6 +23,18 @@
  * these enums are registered with the type system
  */
 
+#define GIMP_TYPE_BUTTON_RELEASE_TYPE (gimp_button_release_type_get_type ())
+
+GType gimp_button_release_type_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_BUTTON_RELEASE_NORMAL,
+  GIMP_BUTTON_RELEASE_CANCEL,
+  GIMP_BUTTON_RELEASE_CLICK
+} GimpButtonReleaseType;
+
+
 #define GIMP_TYPE_RECTANGLE_GUIDE (gimp_rectangle_guide_get_type ())
 
 GType gimp_rectangle_guide_get_type (void) G_GNUC_CONST;
@@ -72,18 +84,6 @@ typedef enum
 } GimpTransformType;
 
 
-#define GIMP_TYPE_VECTOR_MODE (gimp_vector_mode_get_type ())
-
-GType gimp_vector_mode_get_type (void) G_GNUC_CONST;
-
-typedef enum
-{
-  GIMP_VECTOR_MODE_DESIGN,      /*< desc="Design" >*/
-  GIMP_VECTOR_MODE_EDIT,        /*< desc="Edit"   >*/
-  GIMP_VECTOR_MODE_MOVE         /*< desc="Move"   >*/
-} GimpVectorMode;
-
-
 #define GIMP_TYPE_TRANSFORM_PREVIEW_TYPE (gimp_transform_preview_type_get_type ())
 
 GType gimp_transform_preview_type_get_type (void) G_GNUC_CONST;
@@ -106,6 +106,18 @@ typedef enum
   GIMP_TRANSFORM_GRID_TYPE_N_LINES,  /*< desc="Number of grid lines" >*/
   GIMP_TRANSFORM_GRID_TYPE_SPACING   /*< desc="Grid line spacing"    >*/
 } GimpTransformGridType;
+
+
+#define GIMP_TYPE_VECTOR_MODE (gimp_vector_mode_get_type ())
+
+GType gimp_vector_mode_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_VECTOR_MODE_DESIGN,      /*< desc="Design" >*/
+  GIMP_VECTOR_MODE_EDIT,        /*< desc="Edit"   >*/
+  GIMP_VECTOR_MODE_MOVE         /*< desc="Move"   >*/
+} GimpVectorMode;
 
 
 /*
