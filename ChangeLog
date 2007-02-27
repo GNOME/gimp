@@ -1,3 +1,10 @@
+2007-02-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpblendoptions.c (gimp_blend_options_gui): set the
+	gradient-type and gradient-repeat combo boxes to ELLIPSIZE_END so
+	the blend options can be one tool icon size smaller without
+	scrolling horizontally.
+
 2007-02-27  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/scale-funcs.c: update the progress less often.

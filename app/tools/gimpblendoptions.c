@@ -216,6 +216,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
 
   /*  the gradient type menu  */
   combo = gimp_prop_enum_combo_box_new (config, "gradient-type", 0, 0);
+  g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gimp_enum_combo_box_set_stock_prefix (GIMP_ENUM_COMBO_BOX (combo),
                                         "gimp-gradient");
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 4,
@@ -224,6 +225,7 @@ gimp_blend_options_gui (GimpToolOptions *tool_options)
 
   /*  the repeat option  */
   combo = gimp_prop_enum_combo_box_new (config, "gradient-repeat", 0, 0);
+  g_object_set (combo, "ellipsize", PANGO_ELLIPSIZE_END, NULL);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 5,
                              _("Repeat:"), 0.0, 0.5,
                              combo, 2, FALSE);
