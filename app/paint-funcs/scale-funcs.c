@@ -82,19 +82,20 @@ static void
 scale_region_no_resample (PixelRegion *srcPR,
                           PixelRegion *destPR)
 {
-  const gint    width       = destPR->w;
-  const gint    height      = destPR->h;
-  const gint    orig_width  = srcPR->w;
-  const gint    orig_height = srcPR->h;
-  const gint    bytes       = srcPR->bytes;
-  gint         *x_src_offsets;
-  gint         *y_src_offsets;
-  guchar       *src;
-  guchar       *dest;
-  gint          last_src_y;
-  gint          row_bytes;
-  gint          x, y;
-  gint          b;
+  const gint  width       = destPR->w;
+  const gint  height      = destPR->h;
+  const gint  orig_width  = srcPR->w;
+  const gint  orig_height = srcPR->h;
+  const gint  bytes       = srcPR->bytes;
+  gint       *x_src_offsets;
+  gint       *y_src_offsets;
+  gint       *offset;
+  guchar     *src;
+  guchar     *dest;
+  gint        last_src_y;
+  gint        row_bytes;
+  gint        x, y;
+  gint        b;
 
   /*  the data pointers...  */
   x_src_offsets = g_new (gint, width * bytes);
@@ -103,13 +104,14 @@ scale_region_no_resample (PixelRegion *srcPR,
   dest = g_new (guchar, width * bytes);
 
   /*  pre-calc the scale tables  */
-  for (b = 0; b < bytes; b++)
-    for (x = 0; x < width; x++)
-      x_src_offsets [b + x * bytes] =
-        b + bytes * ((x * orig_width + orig_width / 2) / width);
+  offset = x_src_offsets;
+  for (x = 0; x < width; x++)
+    for (b = 0; b < bytes; b++)
+      *offset++ = b + bytes * ((x * orig_width + orig_width / 2) / width);
 
+  offset = y_src_offsets;
   for (y = 0; y < height; y++)
-    y_src_offsets [y] = (y * orig_height + orig_height / 2) / height;
+    *offset++ = (y * orig_height + orig_height / 2) / height;
 
   /*  do the scaling  */
   row_bytes = width * bytes;
@@ -252,9 +254,6 @@ expand_line (gdouble               *dest,
       break;
 
     case GIMP_INTERPOLATION_NONE:
-      g_assert_not_reached ();
-      break;
-
     case GIMP_INTERPOLATION_LANCZOS:
       g_assert_not_reached ();
       break;
@@ -478,8 +477,8 @@ scale_region (PixelRegion           *srcPR,
 
   for (y = 0; y < height; y++)
     {
-      if (progress_callback && !(y & 0xf))
-        (* progress_callback) (0, height, y, progress_data);
+      if (progress_callback && (y % 64 == 0))
+        progress_callback (0, height, y, progress_data);
 
       if (height < orig_height)
         {
@@ -568,9 +567,6 @@ scale_region (PixelRegion           *srcPR,
               break;
 
             case GIMP_INTERPOLATION_NONE:
-              g_assert_not_reached ();
-              break;
-
             case GIMP_INTERPOLATION_LANCZOS:
               g_assert_not_reached ();
               break;
@@ -588,10 +584,10 @@ scale_region (PixelRegion           *srcPR,
         {
           /* unmultiply the alpha */
           gdouble  inv_alpha;
-          gdouble *p = accum;
+          gdouble *p     = accum;
           gint     alpha = bytes - 1;
           gint     result;
-          guchar  *d = dest;
+          guchar  *d     = dest;
 
           for (x = 0; x < width; x++)
             {
@@ -668,8 +664,8 @@ subsample_region (PixelRegion *srcPR,
   const gint     height      = destPR->h;
   const gint     orig_width  = srcPR->w / subsample;
   const gint     orig_height = srcPR->h / subsample;
-  const gdouble  x_ratio       = (gdouble) orig_width / (gdouble) width;
-  const gdouble  y_ratio       = (gdouble) orig_height / (gdouble) height;
+  const gdouble  x_ratio     = (gdouble) orig_width / (gdouble) width;
+  const gdouble  y_ratio     = (gdouble) orig_height / (gdouble) height;
   const gint     bytes       = destPR->bytes;
   const gint     destwidth   = destPR->rowstride;
   guchar        *src,  *s;
@@ -913,10 +909,10 @@ create_lanczos_lookup (void)
 }
 
 static void
-scale_region_lanczos (PixelRegion           *srcPR,
-                      PixelRegion           *dstPR,
-                      GimpProgressFunc       progress_callback,
-                      gpointer               progress_data)
+scale_region_lanczos (PixelRegion      *srcPR,
+                      PixelRegion      *dstPR,
+                      GimpProgressFunc  progress_callback,
+                      gpointer          progress_data)
 
 {
   gfloat        *kernel_lookup  = NULL;             /* Lanczos lookup table                */
@@ -992,8 +988,8 @@ scale_region_lanczos (PixelRegion           *srcPR,
 
   for (row = y = 0; y < dst_height; y++)
     {
-      if (progress_callback && !(y & 0xf))
-        (* progress_callback) (0, dst_height, y, progress_data);
+      if (progress_callback && (y % 64 == 0))
+        progress_callback (0, dst_height, y, progress_data);
 
       pixel_region_get_row (dstPR, 0, y, dst_width, dst_buf, 1);
       for  (x = 0; x < dst_width; x++)
@@ -1157,4 +1153,3 @@ scale_region_lanczos (PixelRegion           *srcPR,
   g_free (win_buf);
   g_free (kernel_lookup);
 }
-
