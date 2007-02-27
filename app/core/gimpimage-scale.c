@@ -98,8 +98,8 @@ gimp_image_scale (GimpImage             *image,
     {
       item = list->data;
 
-      gimp_sub_progress_set_steps (GIMP_SUB_PROGRESS (sub_progress),
-                                   progress_current++, progress_steps);
+      gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
+                                  progress_current++, progress_steps);
 
       gimp_item_scale (item,
                        new_width, new_height, 0, 0,
@@ -113,8 +113,8 @@ gimp_image_scale (GimpImage             *image,
     {
       item = list->data;
 
-      gimp_sub_progress_set_steps (GIMP_SUB_PROGRESS (sub_progress),
-                                   progress_current++, progress_steps);
+      gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
+                                  progress_current++, progress_steps);
 
       gimp_item_scale (item,
                        new_width, new_height, 0, 0,
@@ -122,8 +122,8 @@ gimp_image_scale (GimpImage             *image,
     }
 
   /*  Don't forget the selection mask!  */
-  gimp_sub_progress_set_steps (GIMP_SUB_PROGRESS (sub_progress),
-                               progress_current++, progress_steps);
+  gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
+                              progress_current++, progress_steps);
 
   gimp_item_scale (GIMP_ITEM (gimp_image_get_mask (image)),
                    new_width, new_height, 0, 0,
@@ -136,8 +136,8 @@ gimp_image_scale (GimpImage             *image,
     {
       item = list->data;
 
-      gimp_sub_progress_set_steps (GIMP_SUB_PROGRESS (sub_progress),
-                                   progress_current++, progress_steps);
+      gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
+                                  progress_current++, progress_steps);
 
       if (! gimp_item_scale_by_factors (item,
                                         img_scale_w, img_scale_h,
