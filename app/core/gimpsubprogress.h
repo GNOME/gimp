@@ -51,9 +51,9 @@ GimpProgress * gimp_sub_progress_new       (GimpProgress    *progress);
 void           gimp_sub_progress_set_range (GimpSubProgress *progress,
                                             gdouble          start,
                                             gdouble          end);
-void           gimp_sub_progress_set_steps (GimpSubProgress *progress,
-                                            gint             num,
-                                            gint             steps);
+void           gimp_sub_progress_set_step  (GimpSubProgress *progress,
+                                            gint             index,
+                                            gint             num_steps);
 
 
 

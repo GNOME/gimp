@@ -190,20 +190,41 @@ gimp_sub_progress_message (GimpProgress        *progress,
   return FALSE;
 }
 
+/**
+ * gimp_sub_progress_new:
+ * @progress: parent progress or %NULL
+ *
+ * GimpSubProgress implements the GimpProgress interface and can be
+ * used whereever a GimpProgress is needed. It maps progress
+ * information to a sub-range of its parent @progress. This is useful
+ * when an action breaks down into multiple sub-actions that itself
+ * need a #GimpProgress pointer. See gimp_image_scale() for an example.
+ *
+ * Return value: a new #GimpProgress object
+ */
 GimpProgress *
 gimp_sub_progress_new (GimpProgress *progress)
 {
   GimpSubProgress *sub;
 
-  g_return_val_if_fail (GIMP_IS_PROGRESS (progress), NULL);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
 
   sub = g_object_new (GIMP_TYPE_SUB_PROGRESS, NULL);
 
-  sub->progress = g_object_ref (progress);
+  if (progress)
+    sub->progress = g_object_ref (progress);
 
   return GIMP_PROGRESS (sub);
 }
 
+/**
+ * gimp_sub_progress_set_range:
+ * @start: start value of range on the parent process
+ * @end:   end value of range on the parent process
+ *
+ * Sets a range on the parent progress that this @progress should be
+ * mapped to.
+ */
 void
 gimp_sub_progress_set_range (GimpSubProgress *progress,
                              gdouble          start,
@@ -216,14 +237,21 @@ gimp_sub_progress_set_range (GimpSubProgress *progress,
   progress->end   = end;
 }
 
+/**
+ * gimp_sub_progress_set_step:
+ * @index:     step index
+ * @num_steps: number of steps
+ *
+ * A more convenient form of gimp_sub_progress_set_range().
+ */
 void
-gimp_sub_progress_set_steps (GimpSubProgress *progress,
-                             gint             num,
-                             gint             steps)
+gimp_sub_progress_set_step (GimpSubProgress *progress,
+                            gint             index,
+                            gint             num_steps)
 {
   g_return_if_fail (GIMP_IS_SUB_PROGRESS (progress));
-  g_return_if_fail (num < steps && steps > 0);
+  g_return_if_fail (index < num_steps && num_steps > 0);
 
-  progress->start = (gdouble) num / steps;
-  progress->end   = (gdouble) (num + 1) / steps;
+  progress->start = (gdouble) index / num_steps;
+  progress->end   = (gdouble) (index + 1) / num_steps;
 }
