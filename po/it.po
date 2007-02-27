@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-24 19:04+0100\n"
-"PO-Revision-Date: 2007-02-24 16:45+0100\n"
+"POT-Creation-Date: 2007-02-27 13:34+0100\n"
+"PO-Revision-Date: 2007-02-27 13:33+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2414,7 +2414,7 @@ msgstr "Non è possibile ritagliare perché la regione selezionata è vuota."
 msgid "Change Print Size"
 msgstr "Modifica le dimensioni della stampa"
 
-#: ../app/actions/image-commands.c:621 ../app/core/gimpimage-scale.c:74
+#: ../app/actions/image-commands.c:621 ../app/core/gimpimage-scale.c:78
 msgid "Scale Image"
 msgstr "Scala immagine"
 
@@ -4023,7 +4023,7 @@ msgstr "Seleziona _colore personalizzato..."
 
 #: ../app/actions/view-actions.c:354
 msgid "As in _Preferences"
-msgstr "Come in _preferenze"
+msgstr "Come nelle _preferenze"
 
 #: ../app/actions/view-actions.c:541
 #, c-format
@@ -10463,11 +10463,11 @@ msgstr "Mantieni l'aspetto  (%s)"
 msgid "Transforming"
 msgstr "Trasformazione"
 
-#: ../app/tools/gimptransformtool.c:1160
+#: ../app/tools/gimptransformtool.c:1161
 msgid "There is no layer to transform."
 msgstr "Nessun livello da trasformare."
 
-#: ../app/tools/gimptransformtool.c:1171
+#: ../app/tools/gimptransformtool.c:1172
 msgid "There is no path to transform."
 msgstr "Nessun tracciato da trasformare."
 
