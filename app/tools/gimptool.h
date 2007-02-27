@@ -48,19 +48,19 @@ struct _GimpTool
   GimpDisplay     *display;     /*  pointer to currently active display    */
   GimpDrawable    *drawable;    /*  pointer to the tool's current drawable */
 
-  /*  focus_display and [active_]modifier_state are *private* state of
-   *  gimp_tool_set_focus_display() and
-   *  gimp_tool_set_[active_]modifier_state().
-   *  ignore them in tool implementations, they don't exist!
+  /*  private state of gimp_tool_set_focus_display() and
+   *  gimp_tool_set_[active_]modifier_state()
    */
   GimpDisplay     *focus_display;
   GdkModifierType  modifier_state;
   GdkModifierType  button_press_state;
   GdkModifierType  active_modifier_state;
 
+  /*  private state for click detection
+   */
   gboolean         in_click_distance;
-  GimpCoords       press_coords;
-  guint32          press_time;
+  GimpCoords       button_press_coords;
+  guint32          button_press_time;
 };
 
 struct _GimpToolClass

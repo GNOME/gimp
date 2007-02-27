@@ -457,9 +457,9 @@ gimp_tool_button_press (GimpTool        *tool,
 
       if (gimp_tool_control_get_wants_click (tool->control))
         {
-          tool->in_click_distance = TRUE;
-          tool->press_coords      = *coords;
-          tool->press_time        = time;
+          tool->in_click_distance   = TRUE;
+          tool->button_press_coords = *coords;
+          tool->button_press_time   = time;
         }
       else
         {
@@ -483,9 +483,9 @@ gimp_tool_check_click_distance (GimpTool    *tool,
                 "gtk-double-click-distance", &double_click_distance,
                 NULL);
 
-  if ((time - tool->press_time) > double_click_time ||
-      sqrt (SQR (tool->press_coords.x - coords->x) +
-            SQR (tool->press_coords.y - coords->y)) > double_click_distance)
+  if ((time - tool->button_press_time) > double_click_time ||
+      sqrt (SQR (tool->button_press_coords.x - coords->x) +
+            SQR (tool->button_press_coords.y - coords->y)) > double_click_distance)
     {
       tool->in_click_distance = FALSE;
     }
@@ -499,12 +499,15 @@ gimp_tool_button_release (GimpTool        *tool,
                           GimpDisplay     *display)
 {
   GimpButtonReleaseType release_type = GIMP_BUTTON_RELEASE_NORMAL;
+  GimpCoords            my_coords;
 
   g_return_if_fail (GIMP_IS_TOOL (tool));
   g_return_if_fail (coords != NULL);
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
   g_object_ref (tool);
+
+  my_coords = *coords;
 
   if (state & GDK_BUTTON3_MASK)
     {
@@ -517,14 +520,15 @@ gimp_tool_button_release (GimpTool        *tool,
       if (tool->in_click_distance)
         {
           release_type = GIMP_BUTTON_RELEASE_CLICK;
+          my_coords    = tool->button_press_coords;
 
-          GIMP_TOOL_GET_CLASS (tool)->motion (tool, &tool->press_coords, time,
+          GIMP_TOOL_GET_CLASS (tool)->motion (tool, &my_coords, time,
                                               state & GDK_BUTTON1_MASK,
                                               display);
         }
     }
 
-  GIMP_TOOL_GET_CLASS (tool)->button_release (tool, coords, time, state,
+  GIMP_TOOL_GET_CLASS (tool)->button_release (tool, &my_coords, time, state,
                                               release_type, display);
 
   if (tool->active_modifier_state != 0)
