@@ -8,6 +8,8 @@
 
 2007-02-27  Michael Natterer  <mitch@gimp.org>
 
+	Improve click behavior of rectangle tools. Addresses bug #410670.
+
 	* app/tools/gimptoolcontrol.[ch]: added "gboolean wants_click"
 	member and getters/setters.
 
