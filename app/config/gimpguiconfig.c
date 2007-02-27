@@ -180,7 +180,7 @@ gimp_gui_config_class_init (GimpGuiConfigClass *klass)
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_MAX_NEW_IMAGE_SIZE,
                                     "max-new-image-size",
                                     MAX_NEW_IMAGE_SIZE_BLURB,
-                                    0, GIMP_MAX_MEMSIZE, 1 << 26,
+                                    0, GIMP_MAX_MEMSIZE, 1 << 27, /* 128MB */
                                     GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_TOOLBOX_COLOR_AREA,
                                     "toolbox-color-area",

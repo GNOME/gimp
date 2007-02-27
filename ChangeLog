@@ -1,3 +1,11 @@
+2007-02-27  Sven Neumann  <sven@gimp.org>
+
+	* app/config/gimpcoreconfig.c: increased default value for
+	"undo-size" to 64 MB.
+
+	* app/config/gimpguiconfig.c: increased default value for
+	'max-new-image-size' to 128 MB.
+
 2007-02-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptoolcontrol.[ch]: added "gboolean wants_click"
