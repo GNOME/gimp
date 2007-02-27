@@ -30,17 +30,17 @@
 
 struct _PixelSurround
 {
-  TileManager *mgr;
-  gint         bpp;
-  gint         w;
-  gint         h;
-  guchar       bg[MAX_CHANNELS];
-  Tile        *tile;
-  gint         tile_x;
-  gint         tile_y;
-  gint         tile_w;
-  gint         tile_h;
-  guchar       buff[0];
+  TileManager *mgr;               /*  tile manager to access tiles from   */
+  gint         bpp;               /*  bytes per pixel in tile manager     */
+  gint         w;                 /*  width of pixel surround area        */
+  gint         h;                 /*  height of pixel surround area       */
+  guchar       bg[MAX_CHANNELS];  /*  color to use for uncovered regions  */
+  Tile        *tile;              /*  locked tile (may be NULL)           */
+  gint         tile_x;            /*  origin of locked tile               */
+  gint         tile_y;            /*  origin of locked tile               */
+  gint         tile_w;            /*  width of locked tile                */
+  gint         tile_h;            /*  height of locked tile               */
+  guchar       buf[0];
 };
 
 
@@ -152,7 +152,7 @@ pixel_surround_lock (PixelSurround *surround,
     }
 
   /*  otherwise, copy region to our internal buffer  */
-  dest = surround->buff;
+  dest = surround->buf;
 
   for (j = y; j < y + surround->h; j++)
     {
@@ -182,7 +182,7 @@ pixel_surround_lock (PixelSurround *surround,
 
   *rowstride = surround->w * surround->bpp;
 
-  return surround->buff;
+  return surround->buf;
 }
 
 /**
