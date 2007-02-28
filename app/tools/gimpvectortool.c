@@ -1129,7 +1129,8 @@ gimp_vector_tool_status_update (GimpTool        *tool,
                                 GdkModifierType  state,
                                 gboolean         proximity)
 {
-  GimpVectorTool *vector_tool = GIMP_VECTOR_TOOL (tool);
+  GimpVectorTool    *vector_tool = GIMP_VECTOR_TOOL (tool);
+  GimpVectorOptions *options     = GIMP_VECTOR_TOOL_GET_OPTIONS (tool);
 
   gimp_tool_pop_status (tool, display);
 
@@ -1150,13 +1151,23 @@ gimp_vector_tool_status_update (GimpTool        *tool,
           status = _("Click to create a new component of the path");
           break;
         case VECTORS_ADD_ANCHOR:
-          status = gimp_suggest_modifiers (_("Click to create a new anchor"),
+          status = gimp_suggest_modifiers (_("Click or Click-Drag to create "
+                                             "a new anchor"),
                                            GDK_SHIFT_MASK & ~state,
                                            NULL, NULL, NULL);
           free_status = TRUE;
           break;
         case VECTORS_MOVE_ANCHOR:
-          status = _("Click-Drag to move the anchor around");
+          if (options->edit_mode != GIMP_VECTOR_MODE_EDIT)
+            {
+              status = gimp_suggest_modifiers (_("Click-Drag to move the "
+                                                 "anchor around"),
+                                               GDK_CONTROL_MASK & ~state,
+                                               NULL, NULL, NULL);
+              free_status = TRUE;
+            }
+          else
+            status = _("Click-Drag to move the anchor around");
           break;
         case VECTORS_MOVE_ANCHORSET:
           status = _("Click-Drag to move the anchors around");

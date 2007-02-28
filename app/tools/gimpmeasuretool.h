@@ -63,6 +63,7 @@ struct _GimpMeasureTool
   gint             y[3];        /*  three y coordinates        */
   gdouble          angle1;      /*  first angle                */
   gdouble          angle2;      /*  second angle               */
+  gboolean         status_help; /*  help is currently in s.bar */
 
   GtkWidget       *dialog;
   GtkWidget       *distance_label[2];

@@ -40,6 +40,7 @@
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimptooldialog.h"
 #include "widgets/gimpviewabledialog.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -151,6 +152,8 @@ gimp_measure_tool_init (GimpMeasureTool *measure_tool)
   gimp_tool_control_set_handle_empty_image (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor        (tool->control,
                                             GIMP_TOOL_CURSOR_MEASURE);
+  measure_tool->function = CREATING;
+  measure_tool->status_help = TRUE;
 }
 
 static void
@@ -526,7 +529,9 @@ gimp_measure_tool_cursor_update (GimpTool        *tool,
   gboolean           in_handle = FALSE;
   GimpCursorType     cursor    = GIMP_CURSOR_CROSSHAIR_SMALL;
   GimpCursorModifier modifier  = GIMP_CURSOR_MODIFIER_NONE;
+  gchar             *status    = NULL;
   gint               i;
+
 
   if (gimp_tool_control_is_active (tool->control) && tool->display == display)
     {
@@ -547,32 +552,90 @@ gimp_measure_tool_cursor_update (GimpTool        *tool,
               if (state & GDK_CONTROL_MASK)
                 {
                   if (state & GDK_MOD1_MASK)
-                    cursor = GIMP_CURSOR_CORNER_BOTTOM_RIGHT;
+                    {
+                      cursor = GIMP_CURSOR_CORNER_BOTTOM_RIGHT;
+                      status = gimp_suggest_modifiers (_("Click to place "
+                                                         "vertical and "
+                                                         "horizontal guides"),
+                                                       0,
+                                                       NULL, NULL, NULL);
+                    }
                   else
-                    cursor = GIMP_CURSOR_SIDE_BOTTOM;
+                    {
+                      cursor = GIMP_CURSOR_SIDE_BOTTOM;
+                      status = gimp_suggest_modifiers (_("Click to place a "
+                                                         "horizontal guide"),
+                                                       GDK_MOD1_MASK & ~state,
+                                                       NULL, NULL, NULL);
+                    }
+                  gimp_tool_replace_status (tool, display, status);
+                  g_free (status);
+                  measure->status_help = TRUE;
                   break;
                 }
 
               if (state & GDK_MOD1_MASK)
                 {
                   cursor = GIMP_CURSOR_SIDE_RIGHT;
+                  status = gimp_suggest_modifiers (_("Click to place a "
+                                                     "vertical guide"),
+                                                   GDK_CONTROL_MASK & ~state,
+                                                   NULL, NULL, NULL);
+                  gimp_tool_replace_status (tool, display, status);
+                  g_free (status);
+                  measure->status_help = TRUE;
                   break;
                 }
 
-              if (state & GDK_SHIFT_MASK)
-                modifier = GIMP_CURSOR_MODIFIER_PLUS;
+              if ((state & GDK_SHIFT_MASK)
+                  && ! ((i == 0) && (measure->num_points == 3)))
+                {
+                  modifier = GIMP_CURSOR_MODIFIER_PLUS;
+                  status = gimp_suggest_modifiers (_("Click-Drag to add a "
+                                                     "new point"),
+                                                   (GDK_CONTROL_MASK
+                                                    | GDK_MOD1_MASK) & ~state,
+                                                   NULL, NULL, NULL);
+                }
               else
-                modifier = GIMP_CURSOR_MODIFIER_MOVE;
-
-              if (i == 0 && measure->num_points == 3 &&
-                  modifier == GIMP_CURSOR_MODIFIER_PLUS)
-                modifier = GIMP_CURSOR_MODIFIER_MOVE;
+                {
+                  modifier = GIMP_CURSOR_MODIFIER_MOVE;
+                  status = gimp_suggest_modifiers (_("Click-Drag to move this "
+                                                     "point"),
+                                                   (GDK_SHIFT_MASK
+                                                    | GDK_CONTROL_MASK
+                                                    | GDK_MOD1_MASK) & ~state,
+                                                   NULL, NULL, NULL);
+                }
+              gimp_tool_replace_status (tool, display, status);
+              g_free (status);
+              measure->status_help = TRUE;
               break;
             }
         }
 
-      if (! in_handle && measure->num_points > 1 && state & GDK_MOD1_MASK)
-        modifier = GIMP_CURSOR_MODIFIER_MOVE;
+      if (! in_handle)
+        {
+          if ((measure->num_points > 1) && (state & GDK_MOD1_MASK))
+            {
+              modifier = GIMP_CURSOR_MODIFIER_MOVE;
+              gimp_tool_replace_status (tool, display, _("Click-Drag to move "
+                                                         "all points"));
+              measure->status_help = TRUE;
+            }
+          else if (measure->status_help)
+            {
+              if (measure->num_points > 1)
+                {
+                  /* replace status bar hint by distance and angle */
+                  gimp_measure_tool_dialog_update (measure, display);
+                }
+              else
+                {
+                  gimp_tool_replace_status (tool, display, " ");
+                }
+            }
+        }
     }
 
   gimp_tool_control_set_cursor          (tool->control, cursor);
@@ -819,6 +882,7 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
                                 unit_distance, unit_angle,
                                 unit_width, unit_height);
     }
+  measure->status_help = FALSE;
 
   if (measure->dialog)
     {

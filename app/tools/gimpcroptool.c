@@ -215,7 +215,7 @@ gimp_crop_tool_button_release (GimpTool              *tool,
                                GimpButtonReleaseType  release_type,
                                GimpDisplay           *display)
 {
-  gimp_tool_push_status (tool, display, _("Click or press enter to crop"));
+  gimp_tool_push_status (tool, display, _("Click or press Enter to crop"));
 
   gimp_rectangle_tool_button_release (tool, coords, time, state, release_type,
                                       display);
