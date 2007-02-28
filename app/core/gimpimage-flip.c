@@ -43,11 +43,10 @@ gimp_image_flip (GimpImage           *image,
                  GimpOrientationType  flip_type,
                  GimpProgress        *progress)
 {
-  GimpItem *item;
-  GList    *list;
-  gdouble   axis;
-  gdouble   progress_max;
-  gdouble   progress_current = 1.0;
+  GList   *list;
+  gdouble  axis;
+  gdouble  progress_max;
+  gdouble  progress_current = 1.0;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (GIMP_IS_CONTEXT (context));
@@ -82,7 +81,7 @@ gimp_image_flip (GimpImage           *image,
        list;
        list = g_list_next (list))
     {
-      item = (GimpItem *) list->data;
+      GimpItem *item = list->data;
 
       gimp_item_flip (item, context, flip_type, axis, TRUE);
 
@@ -95,7 +94,7 @@ gimp_image_flip (GimpImage           *image,
        list;
        list = g_list_next (list))
     {
-      item = (GimpItem *) list->data;
+      GimpItem *item = list->data;
 
       gimp_item_flip (item, context, flip_type, axis, FALSE);
 
@@ -115,7 +114,7 @@ gimp_image_flip (GimpImage           *image,
        list;
        list = g_list_next (list))
     {
-      item = (GimpItem *) list->data;
+      GimpItem *item = list->data;
 
       gimp_item_flip (item, context, flip_type, axis, FALSE);
 

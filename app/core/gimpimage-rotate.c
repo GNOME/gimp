@@ -54,7 +54,6 @@ gimp_image_rotate (GimpImage        *image,
                    GimpRotationType  rotate_type,
                    GimpProgress     *progress)
 {
-  GimpItem *item;
   GList    *list;
   gdouble   center_x;
   gdouble   center_y;
@@ -108,7 +107,7 @@ gimp_image_rotate (GimpImage        *image,
        list;
        list = g_list_next (list))
     {
-      item = (GimpItem *) list->data;
+      GimpItem *item = list->data;
 
       gimp_item_rotate (item, context, rotate_type, center_x, center_y, FALSE);
 
@@ -124,7 +123,7 @@ gimp_image_rotate (GimpImage        *image,
        list;
        list = g_list_next (list))
     {
-      item = (GimpItem *) list->data;
+      GimpItem *item = list->data;
 
       gimp_item_rotate (item, context, rotate_type, center_x, center_y, FALSE);
 
@@ -157,9 +156,9 @@ gimp_image_rotate (GimpImage        *image,
        list;
        list = g_list_next (list))
     {
-      gint off_x, off_y;
-
-      item = (GimpItem *) list->data;
+      GimpItem *item = list->data;
+      gint      off_x;
+      gint      off_y;
 
       gimp_item_offsets (item, &off_x, &off_y);
 
@@ -193,7 +192,7 @@ gimp_image_rotate (GimpImage        *image,
 
           gimp_image_undo_push_image_resolution (image, NULL);
 
-          tmp                 = image->xresolution;
+          tmp                = image->xresolution;
           image->yresolution = image->xresolution;
           image->xresolution = tmp;
         }

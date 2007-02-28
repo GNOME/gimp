@@ -48,16 +48,15 @@ gimp_image_scale (GimpImage             *image,
                   GimpInterpolationType  interpolation_type,
                   GimpProgress          *progress)
 {
-  GimpItem     *item;
   GimpProgress *sub_progress;
   GList        *list;
-  GList        *remove      = NULL;
+  GList        *remove           = NULL;
   gint          old_width;
   gint          old_height;
-  gdouble       img_scale_w = 1.0;
-  gdouble       img_scale_h = 1.0;
+  gdouble       img_scale_w      = 1.0;
+  gdouble       img_scale_h      = 1.0;
   gint          progress_steps;
-  gint          progress_current;
+  gint          progress_current = 0;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (new_width > 0 && new_height > 0);
@@ -80,10 +79,10 @@ gimp_image_scale (GimpImage             *image,
   /*  Push the image size to the stack  */
   gimp_image_undo_push_image_size (image, NULL);
 
-  old_width      = image->width;
-  old_height     = image->height;
-  img_scale_w    = (gdouble) new_width  / (gdouble) old_width;
-  img_scale_h    = (gdouble) new_height / (gdouble) old_height;
+  old_width   = image->width;
+  old_height  = image->height;
+  img_scale_w = (gdouble) new_width  / (gdouble) old_width;
+  img_scale_h = (gdouble) new_height / (gdouble) old_height;
 
   /*  Set the new width and height  */
   g_object_set (image,
@@ -96,7 +95,7 @@ gimp_image_scale (GimpImage             *image,
        list;
        list = g_list_next (list))
     {
-      item = list->data;
+      GimpItem *item = list->data;
 
       gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
                                   progress_current++, progress_steps);
@@ -111,7 +110,7 @@ gimp_image_scale (GimpImage             *image,
        list;
        list = g_list_next (list))
     {
-      item = list->data;
+      GimpItem *item = list->data;
 
       gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
                                   progress_current++, progress_steps);
@@ -134,7 +133,7 @@ gimp_image_scale (GimpImage             *image,
        list;
        list = g_list_next (list))
     {
-      item = list->data;
+      GimpItem *item = list->data;
 
       gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (sub_progress),
                                   progress_current++, progress_steps);

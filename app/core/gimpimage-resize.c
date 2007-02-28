@@ -230,9 +230,10 @@ gimp_image_resize_to_layers (GimpImage    *image,
                              GimpContext  *context,
                              GimpProgress *progress)
 {
-  gint   min_x, max_x, min_y, max_y;
-  GList *list = GIMP_LIST (image->layers)->list;
+  GList    *list = GIMP_LIST (image->layers)->list;
   GimpItem *item;
+  gint      min_x, max_x;
+  gint      min_y, max_y;
 
   if (!list)
     return;
