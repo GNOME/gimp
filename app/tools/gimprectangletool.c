@@ -128,14 +128,12 @@ static void     gimp_rectangle_tool_check_function  (GimpRectangleTool *rectangl
                                                      gint              *x2,
                                                      gint              *y2);
 static void gimp_rectangle_tool_rectangle_changed   (GimpRectangleTool *rectangle);
-static gboolean
-            gimp_rectangle_tool_constraint_violated (GimpRectangleTool *rectangle,
-                                                     gint               x1,
-                                                     gint               y1,
-                                                     gint               x2,
-                                                     gint               y2,
-                                                     gdouble           *alpha,
-                                                     gdouble           *beta);
+
+static void gimp_rectangle_tool_constrain           (GimpRectangleTool *rectangle,
+                                                     gint               *x1,
+                                                     gint               *y1,
+                                                     gint               *x2,
+                                                     gint               *y2);
 
 static void     gimp_rectangle_tool_auto_shrink     (GimpRectangleTool *rectangle);
 
@@ -144,6 +142,8 @@ static GtkAnchorType gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *p
                                                      gint                     *h);
 static void     gimp_rectangle_tool_set_highlight   (GimpRectangleTool *rectangle);
 
+static guint
+           gimp_rectangle_tool_fix_resize_direction (GimpRectangleToolPrivate *private);
 
 static guint gimp_rectangle_tool_signals[LAST_SIGNAL] = { 0 };
 
@@ -690,8 +690,6 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   gboolean                  fixed_center;
   gdouble                   width, height;
   gdouble                   center_x, center_y;
-  gdouble                   alpha;
-  gdouble                   beta;
   gboolean                  created_now = FALSE;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
@@ -944,32 +942,11 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   private->lasty = cury;
 
   /* Check to see whether the new rectangle obeys the boundary
-   * constraints, if any.  If not, see whether we can downscale the
-   * mouse movement and call this motion handler again recursively.
-   * The reason for the recursive call is to avoid leaving the
-   * rectangle edge hanging some pixels away from the constraining
-   * boundary if the user moves the pointer quickly.
+   * constraints, if any, and constrain it.
    */
-  if (gimp_rectangle_tool_constraint_violated (rectangle, x1, y1, x2, y2,
-                                               &alpha, &beta))
-    {
-      GimpCoords new_coords;
 
-      inc_x *= alpha;
-      inc_y *= beta;
+  gimp_rectangle_tool_constrain (rectangle, &x1, &y1, &x2, &y2);
 
-      if (inc_x != 0 || inc_y != 0)
-        {
-          new_coords.x = private->startx - snap_x + inc_x;
-          new_coords.y = private->starty - snap_y + inc_y;
-
-          gimp_rectangle_tool_motion (tool, &new_coords, time, state, display);
-        }
-
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-
-      return;
-    }
 
   /* set startx, starty according to function, to keep rect on cursor */
   switch (private->function)
@@ -2022,18 +1999,15 @@ gimp_rectangle_tool_rectangle_changed (GimpRectangleTool *rectangle)
 
 /*
  * check whether the coordinates extend outside the bounds of the image
- * or active drawable, if it is constrained not to.  If it does,
- * caculate how much the current movement needs to be downscaled in
- * order to obey the constraint.
+ * or active drawable, if it is constrained not to.  If it does,truncates
+ * the corrners to the constraints.
  */
-static gboolean
-gimp_rectangle_tool_constraint_violated (GimpRectangleTool *rectangle,
-                                         gint               x1,
-                                         gint               y1,
-                                         gint               x2,
-                                         gint               y2,
-                                         gdouble           *alpha,
-                                         gdouble           *beta)
+void
+gimp_rectangle_tool_constrain (GimpRectangleTool *rectangle,
+                               gint               *x1,
+                               gint               *y1,
+                               gint               *x2,
+                               gint               *y2)
 {
   GimpTool                 *tool = GIMP_TOOL (rectangle);
   GimpRectangleToolPrivate *private;
@@ -2046,12 +2020,10 @@ gimp_rectangle_tool_constraint_violated (GimpRectangleTool *rectangle,
   constraint = gimp_rectangle_tool_get_constraint (rectangle);
   image      = tool->display->image;
 
-  *alpha = *beta = 1;
-
   switch (constraint)
     {
     case GIMP_RECTANGLE_CONSTRAIN_NONE:
-      return FALSE;
+      return ;
 
     case GIMP_RECTANGLE_CONSTRAIN_IMAGE:
       min_x = 0;
@@ -2075,31 +2047,22 @@ gimp_rectangle_tool_constraint_violated (GimpRectangleTool *rectangle,
       return FALSE;
     }
 
-  if (x1 < min_x)
-    {
-      *alpha = (private->x1 - min_x) / (gdouble) (private->x1 - x1);
-      return TRUE;
-    }
-
-  if (y1 < min_y)
-    {
-      *beta = (private->y1 - min_y) / (gdouble) (private->y1 - y1);
-      return TRUE;
-    }
-
-  if (x2 > max_x)
-    {
-      *alpha = (max_x - private->x2) / (gdouble) (x2 - private->x2);
-      return TRUE;
-    }
-
-  if (y2 > max_y)
-    {
-      *beta = (max_y - private->y2) / (gdouble) (y2 - private->y2);
-      return TRUE;
-    }
-
-  return FALSE;
+      if (*x1 < min_x)
+        {
+          *x1 = min_x;
+        }
+      if (*x2 > max_x)
+        {
+          *x2 = max_x;
+        }
+      if (*y1 < min_y)
+        {
+          *y1 = min_y;
+        }
+      if (*y2 > max_y)
+        {
+          *y2 = max_y;
+        }
 }
 
 static void

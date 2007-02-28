@@ -1,3 +1,8 @@
+2007-02-28  João S. O. Bueno Calligaris <gwidion@mpc.com.br>
+
+        * app/tools/gimprectangletool.c: removes recursive code 
+	when adjusting rectangle size. Fixes bug #410234.
+
 2007-02-28  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptool.c (gimp_tool_check_click_distance):
