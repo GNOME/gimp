@@ -840,8 +840,8 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
         }
       else
         {
-          gtk_label_set_text (GTK_LABEL (measure->distance_label[1]), " ");
-          gtk_label_set_text (GTK_LABEL (measure->unit_label[0]),  " ");
+          gtk_label_set_text (GTK_LABEL (measure->distance_label[1]), NULL);
+          gtk_label_set_text (GTK_LABEL (measure->unit_label[0]), NULL);
         }
 
       /* Angle */
@@ -857,8 +857,8 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
         }
       else
         {
-          gtk_label_set_text (GTK_LABEL (measure->angle_label[1]), " ");
-          gtk_label_set_text (GTK_LABEL (measure->unit_label[1]),  " ");
+          gtk_label_set_text (GTK_LABEL (measure->angle_label[1]), NULL);
+          gtk_label_set_text (GTK_LABEL (measure->unit_label[1]), NULL);
         }
 
       /* Width */
@@ -875,8 +875,8 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
         }
       else
         {
-          gtk_label_set_text (GTK_LABEL (measure->width_label[1]), " ");
-          gtk_label_set_text (GTK_LABEL (measure->unit_label[2]), " ");
+          gtk_label_set_text (GTK_LABEL (measure->width_label[1]), NULL);
+          gtk_label_set_text (GTK_LABEL (measure->unit_label[2]), NULL);
         }
 
       g_snprintf (buf, sizeof (buf), "%d", pixel_height);
@@ -893,8 +893,8 @@ gimp_measure_tool_dialog_update (GimpMeasureTool *measure,
         }
       else
         {
-          gtk_label_set_text (GTK_LABEL (measure->height_label[1]), " ");
-          gtk_label_set_text (GTK_LABEL (measure->unit_label[3]), " ");
+          gtk_label_set_text (GTK_LABEL (measure->height_label[1]), NULL);
+          gtk_label_set_text (GTK_LABEL (measure->unit_label[3]), NULL);
         }
 
       if (GTK_WIDGET_VISIBLE (measure->dialog))
@@ -940,6 +940,7 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   gtk_widget_show (label);
 
   measure->distance_label[0] = label = gtk_label_new ("0.0");
+  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, 0, 1);
   gtk_widget_show (label);
@@ -950,11 +951,12 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   gtk_widget_show (label);
 
   measure->distance_label[1] = label = gtk_label_new ("0.0");
+  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 3, 4, 0, 1);
   gtk_widget_show (label);
 
-  measure->unit_label[0] = label = gtk_label_new (" ");
+  measure->unit_label[0] = label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 4, 5, 0, 1);
   gtk_widget_show (label);
@@ -966,6 +968,7 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   gtk_widget_show (label);
 
   measure->angle_label[0] = label = gtk_label_new ("0.0");
+  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, 1, 2);
   gtk_widget_show (label);
@@ -975,12 +978,13 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   gtk_table_attach_defaults (GTK_TABLE (table), label, 2, 3, 1, 2);
   gtk_widget_show (label);
 
-  measure->angle_label[1] = label = gtk_label_new (" ");
+  measure->angle_label[1] = label = gtk_label_new (NULL);
+  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 3, 4, 1, 2);
   gtk_widget_show (label);
 
-  measure->unit_label[1] = label = gtk_label_new (" ");
+  measure->unit_label[1] = label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 4, 5, 1, 2);
   gtk_widget_show (label);
@@ -992,6 +996,7 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   gtk_widget_show (label);
 
   measure->width_label[0] = label = gtk_label_new ("0.0");
+  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, 2, 3);
   gtk_widget_show (label);
@@ -1002,11 +1007,12 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   gtk_widget_show (label);
 
   measure->width_label[1] = label = gtk_label_new ("0.0");
+  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 3, 4, 2, 3);
   gtk_widget_show (label);
 
-  measure->unit_label[2] = label = gtk_label_new (" ");
+  measure->unit_label[2] = label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 4, 5, 2, 3);
   gtk_widget_show (label);
@@ -1018,6 +1024,7 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   gtk_widget_show (label);
 
   measure->height_label[0] = label = gtk_label_new ("0.0");
+  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 1, 2, 3, 4);
   gtk_widget_show (label);
@@ -1028,11 +1035,12 @@ gimp_measure_tool_dialog_new (GimpMeasureTool *measure)
   gtk_widget_show (label);
 
   measure->height_label[1] = label = gtk_label_new ("0.0");
+  gtk_label_set_selectable (GTK_LABEL (label), TRUE);
   gtk_misc_set_alignment (GTK_MISC (label), 1.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 3, 4, 3, 4);
   gtk_widget_show (label);
 
-  measure->unit_label[3] = label = gtk_label_new (" ");
+  measure->unit_label[3] = label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_table_attach_defaults (GTK_TABLE (table), label, 4, 5, 3, 4);
   gtk_widget_show (label);
