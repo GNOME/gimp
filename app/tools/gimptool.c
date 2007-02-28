@@ -463,35 +463,48 @@ gimp_tool_button_press (GimpTool        *tool,
         }
       else
         {
-          tool->in_click_distance = FALSE;
+          tool->in_click_distance   = FALSE;
         }
     }
 }
 
-static void
+static gboolean
 gimp_tool_check_click_distance (GimpTool    *tool,
                                 GimpCoords  *coords,
                                 guint32      time,
                                 GimpDisplay *display)
 {
-  GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (display->shell);
-  GtkSettings      *settings = gtk_widget_get_settings (display->shell);
-  gint              double_click_time;
-  gint              double_click_distance;
+  gint double_click_time;
+  gint double_click_distance;
 
-  g_object_get (settings,
+  if (! tool->in_click_distance)
+    return FALSE;
+
+  g_object_get (gtk_widget_get_settings (display->shell),
                 "gtk-double-click-time",     &double_click_time,
                 "gtk-double-click-distance", &double_click_distance,
                 NULL);
 
-  if ((time - tool->button_press_time) > double_click_time ||
-
-      sqrt (SQR (SCALEX (shell, tool->button_press_coords.x - coords->x)) +
-            SQR (SCALEY (shell, tool->button_press_coords.y - coords->y))) >
-      double_click_distance)
+  if ((time - tool->button_press_time) > double_click_time)
     {
       tool->in_click_distance = FALSE;
     }
+  else
+    {
+      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (display->shell);
+      gdouble           dx;
+      gdouble           dy;
+
+      dx = SCALEX (shell, tool->button_press_coords.x - coords->x);
+      dy = SCALEY (shell, tool->button_press_coords.y - coords->y);
+
+      if (sqrt (SQR (dx) + SQR (dy)) > double_click_distance)
+        {
+          tool->in_click_distance = FALSE;
+        }
+    }
+
+  return tool->in_click_distance;
 }
 
 void
@@ -516,19 +529,15 @@ gimp_tool_button_release (GimpTool        *tool,
     {
       release_type = GIMP_BUTTON_RELEASE_CANCEL;
     }
-  else if (tool->in_click_distance)
+  else if (gimp_tool_check_click_distance (tool, coords, time, display))
     {
-      gimp_tool_check_click_distance (tool, coords, time, display);
+      release_type = GIMP_BUTTON_RELEASE_CLICK;
+      my_coords    = tool->button_press_coords;
 
-      if (tool->in_click_distance)
-        {
-          release_type = GIMP_BUTTON_RELEASE_CLICK;
-          my_coords    = tool->button_press_coords;
-
-          GIMP_TOOL_GET_CLASS (tool)->motion (tool, &my_coords, time,
-                                              state & GDK_BUTTON1_MASK,
-                                              display);
-        }
+      /*  synthesize a motion event back to the recorded press coordinates  */
+      GIMP_TOOL_GET_CLASS (tool)->motion (tool, &my_coords, time,
+                                          state & GDK_BUTTON1_MASK,
+                                          display);
     }
 
   GIMP_TOOL_GET_CLASS (tool)->button_release (tool, &my_coords, time, state,
@@ -554,8 +563,7 @@ gimp_tool_motion (GimpTool        *tool,
   g_return_if_fail (GIMP_IS_DISPLAY (display));
   g_return_if_fail (gimp_tool_control_is_active (tool->control));
 
-  if (tool->in_click_distance)
-    gimp_tool_check_click_distance (tool, coords, time, display);
+  gimp_tool_check_click_distance (tool, coords, time, display);
 
   GIMP_TOOL_GET_CLASS (tool)->motion (tool, coords, time, state, display);
 }
