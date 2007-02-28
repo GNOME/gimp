@@ -440,7 +440,8 @@ gimp_move_tool_button_release (GimpTool              *tool,
     }
   else
     {
-      if (! config->move_tool_changes_active || (state & GDK_BUTTON3_MASK))
+      if (! config->move_tool_changes_active ||
+          (release_type == GIMP_BUTTON_RELEASE_CANCEL))
         {
           if (move->old_active_layer)
             {
@@ -457,8 +458,7 @@ gimp_move_tool_button_release (GimpTool              *tool,
             }
         }
 
-      /*  Take care of the case where the user "cancels" the action  */
-      if (! (state & GDK_BUTTON3_MASK))
+      if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
         {
           if (move->floating_layer)
             {

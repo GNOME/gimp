@@ -474,9 +474,10 @@ gimp_tool_check_click_distance (GimpTool    *tool,
                                 guint32      time,
                                 GimpDisplay *display)
 {
-  GtkSettings *settings = gtk_widget_get_settings (display->shell);
-  gint         double_click_time;
-  gint         double_click_distance;
+  GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (display->shell);
+  GtkSettings      *settings = gtk_widget_get_settings (display->shell);
+  gint              double_click_time;
+  gint              double_click_distance;
 
   g_object_get (settings,
                 "gtk-double-click-time",     &double_click_time,
@@ -484,8 +485,10 @@ gimp_tool_check_click_distance (GimpTool    *tool,
                 NULL);
 
   if ((time - tool->button_press_time) > double_click_time ||
-      sqrt (SQR (tool->button_press_coords.x - coords->x) +
-            SQR (tool->button_press_coords.y - coords->y)) > double_click_distance)
+
+      sqrt (SQR (SCALEX (shell, tool->button_press_coords.x - coords->x)) +
+            SQR (SCALEY (shell, tool->button_press_coords.y - coords->y))) >
+      double_click_distance)
     {
       tool->in_click_distance = FALSE;
     }

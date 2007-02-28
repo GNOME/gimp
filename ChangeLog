@@ -1,5 +1,13 @@
 2007-02-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimptool.c (gimp_tool_check_click_distance): need to
+	check the distance in screen coords, not image coords.
+
+	* app/tools/gimpmovetool.c (gimp_move_tool_button_release): forgot
+	two manual checks for GDK_BUTTON3_MASK.
+
+2007-02-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp-transform-resize.c: even more whitespace cleanup.
 
 2007-02-28  Sven Neumann  <sven@gimp.org>
