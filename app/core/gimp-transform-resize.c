@@ -186,11 +186,11 @@ edge_init (Edge        *edge,
 {
   gdouble den;
 
-  edge->xmin  = MIN ( (p->x),  (q->x));
-  edge->xmax  = MAX ( (p->x),  (q->x));
+  edge->xmin  = MIN ((p->x), (q->x));
+  edge->xmax  = MAX ((p->x), (q->x));
 
-  edge->ymin  = MIN ( (p->y),  (q->y));
-  edge->ymax  = MAX ( (p->y),  (q->y));
+  edge->ymin  = MIN ((p->y), (q->y));
+  edge->ymax  = MAX ((p->y), (q->y));
 
   edge->top   = p->x > q->x;
   edge->right = p->y > q->y;
@@ -200,8 +200,8 @@ edge_init (Edge        *edge,
   if (den == 0)
     den = 0.001;
 
-  edge->m   = ((gdouble) q->y - p->y) / den;
-  edge->b     = p->y - edge->m * p->x;
+  edge->m = ((gdouble) q->y - p->y) / den;
+  edge->b = p->y - edge->m * p->x;
 }
 
 static const Edge *
@@ -217,7 +217,8 @@ find_edge (const Edge *edges,
     {
       if ((e->xmin == x) && (e->xmax != e->xmin) &&
           ((e->top && top) || (!e->top && !top)))
-            emax = e;
+        emax = e;
+
       e++;
     }
 
@@ -348,19 +349,18 @@ gimp_transform_resize_crop (gdouble  dx1,
       min = 3;
 
       for (j = i; j < 4; j++)
-      {
-        gdouble sy = points[j].y - points[i - 1].y;
-        gdouble sx = points[j].x - points[i - 1].x;
+        {
+          gdouble sy = points[j].y - points[i - 1].y;
+          gdouble sx = points[j].x - points[i - 1].x;
+          theta = atan2 (sy, sx);
 
-        theta = atan2 (sy, sx);
-
-        if ((theta < theta_m) &&
-            ((theta > theta_v) || ((theta == theta_v) && (sx > 0))))
-          {
-            theta_m = theta;
-            min = j;
-          }
-      }
+          if ((theta < theta_m) &&
+              ((theta > theta_v) || ((theta == theta_v) && (sx > 0))))
+            {
+              theta_m = theta;
+              min = j;
+            }
+        }
 
       theta_v = theta_m;
 
@@ -397,7 +397,7 @@ gimp_transform_resize_crop (gdouble  dx1,
 
   for (i = 0, a = points + 3, b = points; i < 4; i++, a = b, b++)
     {
-      if (G_UNLIKELY(i == 0))
+      if (G_UNLIKELY (i == 0))
         {
           cxmin = cxmax = a->x;
           cymin = cymax = a->y;
@@ -459,7 +459,7 @@ gimp_transform_resize_crop (gdouble  dx1,
 
                   if (aspect != 0)
                     {
-                      fixed_width = (gint) ceil((gdouble) height * aspect);
+                      fixed_width = (gint) ceil ((gdouble) height * aspect);
 
                       if (fixed_width <= width)
                         width = fixed_width;
