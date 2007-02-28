@@ -102,13 +102,13 @@ gimp_transform_resize_boundary (const GimpMatrix3   *inv,
   gdouble dy1, dy2, dy3, dy4;
 
   g_return_if_fail (inv != NULL);
-  
+
   /*  initialize with the original boundary  */
   *x1 = u1;
   *y1 = v1;
   *x2 = u2;
   *y2 = v2;
-  
+
   if (resize == GIMP_TRANSFORM_RESIZE_CLIP)
     return;
 
@@ -252,7 +252,8 @@ intersect_y (const Edge *edge,
   gdouble yfirst = edge->m * (xi - 0.5) + edge->b;
   gdouble ylast  = edge->m * (xi + 0.5) + edge->b;
 
-  return (gint) (edge->top ? ceil (MAX (yfirst, ylast)) : floor (MIN (yfirst, ylast)));
+  return (gint) (edge->top ?
+                 ceil (MAX (yfirst, ylast)) : floor (MIN (yfirst, ylast)));
 }
 
 static void
@@ -274,7 +275,7 @@ gimp_transform_resize_crop (gdouble  dx1,
   gint         ax, ay;
   int          min;
   gint         tx, ty;
-  
+
   Edge         edges[4];
   const Point *a;
   const Point *b;
@@ -283,7 +284,7 @@ gimp_transform_resize_crop (gdouble  dx1,
   gint         cxmin, cymin;
   gint         cxmax, cymax;
   Point       *xint;
-  
+
   gint         ymin, ymax;
   gint         maxarea = 0;
   gint         xi;
@@ -298,12 +299,12 @@ gimp_transform_resize_crop (gdouble  dx1,
   points[2].y = floor (dy3);
   points[3].x = floor (dx4);
   points[3].y = floor (dy4);
-  
+
   /*  first, translate the vertices into the first quadrant */
 
   ax = 0;
   ay = 0;
-  
+
   for (i = 0; i < 4; i++)
     {
       if (points[i].x < ax)
@@ -311,17 +312,17 @@ gimp_transform_resize_crop (gdouble  dx1,
       if (points[i].y < ay)
         ay = points[i].y;
     }
-  
+
   for (i = 0; i < 4; i++)
     {
       points[i].x += (-ax) * 2;
       points[i].y += (-ay) * 2;
     }
-  
+
   /* find the convex hull using Jarvis's March as the points are passed
    * in different orders due to gimp_matrix3_transform_point()
    */
-  
+
   min = 0;
   for (i = 0; i < 4; i++)
     {
@@ -331,28 +332,30 @@ gimp_transform_resize_crop (gdouble  dx1,
 
   tx = points[0].x;
   ty = points[0].y;
-  
+
   points[0].x = points[min].x;
   points[0].y = points[min].y;
-  
+
   points[min].x = tx;
   points[min].y = ty;
-  
+
   for (i = 1; i < 4; i++)
     {
       gdouble theta, theta_m = 2 * G_PI;
       gdouble theta_v = 0;
       gint    j;
-      
+
       min = 3;
 
       for (j = i; j < 4; j++)
       {
         gdouble sy = points[j].y - points[i - 1].y;
         gdouble sx = points[j].x - points[i - 1].x;
+
         theta = atan2 (sy, sx);
 
-        if ((theta < theta_m) && ((theta > theta_v) || ((theta == theta_v) && (sx > 0))))
+        if ((theta < theta_m) &&
+            ((theta > theta_v) || ((theta == theta_v) && (sx > 0))))
           {
             theta_m = theta;
             min = j;
@@ -363,16 +366,16 @@ gimp_transform_resize_crop (gdouble  dx1,
 
       tx = points[i].x;
       ty = points[i].y;
-      
+
       points[i].x = points[min].x;
       points[i].y = points[min].y;
-      
+
       points[min].x = tx;
       points[min].y = ty;
     }
-  
+
   /* reverse the order of points */
-  
+
   tx = points[0].x; ty = points[0].y;
   points[0].x = points[3].x; points[0].y = points[3].y;
   points[3].x = tx; points[3].y = ty;
@@ -380,18 +383,18 @@ gimp_transform_resize_crop (gdouble  dx1,
   tx = points[1].x; ty = points[1].y;
   points[1].x = points[2].x; points[1].y = points[2].y;
   points[2].x = tx; points[2].y = ty;
-  
+
 
   /* now, find the largest rectangle using the method described in
    * "Computing the Largest Inscribed Isothetic Rectangle" by
    * D. Hsu, J. Snoeyink, et al.
    */
-  
+
   /*  first create an array of edges  */
-  
+
   cxmin = cxmax = points[3].x;
   cymin = cymax = points[3].y;
-  
+
   for (i = 0, a = points + 3, b = points; i < 4; i++, a = b, b++)
     {
       if (G_UNLIKELY(i == 0))
@@ -413,12 +416,12 @@ gimp_transform_resize_crop (gdouble  dx1,
           if (a->y > cymax)
             cymax = a->y;
         }
-        
+
       edge_init (edges + i, a, b);
     }
 
   xint = g_new (Point, cymax);
-  
+
   for (i = 0; i < cymax; i++)
     {
       xint[i].x = intersect_x (edges, i);
@@ -441,14 +444,14 @@ gimp_transform_resize_crop (gdouble  dx1,
             {
               if (yhi > ylo)
                 {
-                  gint     xlo, xhi;
-                  gint     xright;
-                  gint     height, width, fixed_width;
-                  gint     area;
+                  gint xlo, xhi;
+                  gint xright;
+                  gint height, width, fixed_width;
+                  gint area;
 
                   xlo = xint[ylo].x;
                   xhi = xint[yhi].x;
-                        
+
                   xright = MIN (xlo, xhi);
 
                   height = yhi - ylo;
@@ -456,20 +459,20 @@ gimp_transform_resize_crop (gdouble  dx1,
 
                   if (aspect != 0)
                     {
-                      fixed_width = (int) ceil((gdouble) height * aspect);
+                      fixed_width = (gint) ceil((gdouble) height * aspect);
 
                       if (fixed_width <= width)
                         width = fixed_width;
                       else
                         width = 0;
                     }
-                  
+
                   area = width * height;
 
                   if (area > maxarea)
                     {
                       maxarea = area;
-                      
+
                       *x1 = xi;
                       *y1 = ylo;
                       *x2 = xi + width;
@@ -487,7 +490,7 @@ gimp_transform_resize_crop (gdouble  dx1,
     }
 
   g_free (xint);
-  
+
   /* translate back the vertices */
 
   *x1 = *x1 - ((-ax) * 2);
