@@ -722,7 +722,7 @@ gimp_rect_select_tool_rectangle_changed (GimpRectangleTool *rectangle)
   /* prevent change in selection from halting the tool */
   gimp_tool_control_set_preserve (tool->control, TRUE);
 
-  if (tool->display)
+  if (tool->display && ! gimp_tool_control_is_active (tool->control))
     {
       GimpRectSelectTool *rect_select = GIMP_RECT_SELECT_TOOL (tool);
       GimpImage          *image       = tool->display->image;

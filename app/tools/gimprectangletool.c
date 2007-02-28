@@ -123,10 +123,11 @@ static void     gimp_rectangle_tool_options_notify  (GimpRectangleOptions *optio
                                                      GimpRectangleTool  *rectangle);
 
 static void     gimp_rectangle_tool_check_function  (GimpRectangleTool *rectangle,
-                                                     gint               *x1,
-                                                     gint               *y1,
-                                                     gint               *x2,
-                                                     gint               *y2);
+                                                     gint              *x1,
+                                                     gint              *y1,
+                                                     gint              *x2,
+                                                     gint              *y2);
+static void gimp_rectangle_tool_rectangle_changed   (GimpRectangleTool *rectangle);
 static gboolean
             gimp_rectangle_tool_constraint_violated (GimpRectangleTool *rectangle,
                                                      gint               x1,
@@ -646,8 +647,7 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
         }
       else
         {
-          g_signal_emit (rectangle,
-                         gimp_rectangle_tool_signals[RECTANGLE_CHANGED], 0);
+          gimp_rectangle_tool_rectangle_changed (rectangle);
         }
     }
   else
@@ -1070,7 +1070,7 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
         function = RECT_RESIZING_LOWER_RIGHT;
 
       created_now = TRUE;
-      
+
       gimp_rectangle_tool_set_function (rectangle, function);
     }
 
@@ -1343,9 +1343,6 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
   gimp_rectangle_tool_configure (rectangle);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-
-  g_signal_emit (rectangle,
-                 gimp_rectangle_tool_signals[RECTANGLE_CHANGED], 0);
 
   /*  Evil hack to suppress oper updates. We do this because we don't
    *  want the rectangle tool to change function while the rectangle
@@ -1855,7 +1852,7 @@ gimp_rectangle_tool_synthesize_motion (GimpTool   *tool,
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
-  g_signal_emit (tool, gimp_rectangle_tool_signals[RECTANGLE_CHANGED], 0);
+  gimp_rectangle_tool_rectangle_changed (GIMP_RECTANGLE_TOOL (tool));
 }
 
 static void
@@ -2014,6 +2011,13 @@ gimp_rectangle_tool_set_function (GimpRectangleTool     *rectangle,
 
       gimp_draw_tool_resume (draw_tool);
     }
+}
+
+static void
+gimp_rectangle_tool_rectangle_changed (GimpRectangleTool *rectangle)
+{
+  g_signal_emit (rectangle,
+                 gimp_rectangle_tool_signals[RECTANGLE_CHANGED], 0);
 }
 
 /*

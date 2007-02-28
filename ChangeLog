@@ -1,3 +1,12 @@
+2007-02-28  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangleselecttool.c
+	(gimp_rect_select_tool_rectangle_changed): don't change the
+	selection while the tool is active. Fixes bug #398185. Thanks to
+	Martin Nordholts for investigating this problem.
+
+	* app/tools/gimprectangletool.c: minor cleanup.
+
 2007-02-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptool.c (gimp_tool_check_click_distance): need to
