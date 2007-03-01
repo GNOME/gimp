@@ -1,3 +1,9 @@
+2007-03-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdrawable-blend.c (gimp_drawable_blend): use
+	gimp_drawable_bytes_with_alpha() instead of manually adding
+	alpha to the value returned by gimp_drawable_bytes()
+
 2007-03-01 João S. O. Bueno Calligaris <gwidon@mpc.com.br>
 
         * plug-ins/common/postscript.c: add callback to resolution

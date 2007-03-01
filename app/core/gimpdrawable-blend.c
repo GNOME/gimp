@@ -219,11 +219,8 @@ gimp_drawable_blend (GimpDrawable         *drawable,
 
   gimp_set_busy (image->gimp);
 
-  bytes = gimp_drawable_bytes (drawable);
-
   /*  Always create an alpha temp buf (for generality) */
-  if (! gimp_drawable_has_alpha (drawable))
-    bytes += 1;
+  bytes = gimp_drawable_bytes_with_alpha (drawable);
 
   buf_tiles = tile_manager_new (width, height, bytes);
   pixel_region_init (&bufPR, buf_tiles, 0, 0, width, height, TRUE);
