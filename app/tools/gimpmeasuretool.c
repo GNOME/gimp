@@ -600,6 +600,8 @@ gimp_measure_tool_cursor_update (GimpTool        *tool,
               else
                 {
                   modifier = GIMP_CURSOR_MODIFIER_MOVE;
+                  if ((i == 0) && (measure->num_points == 3))
+                    state |= GDK_SHIFT_MASK;
                   status = gimp_suggest_modifiers (_("Click-Drag to move this "
                                                      "point"),
                                                    (GDK_SHIFT_MASK
