@@ -1,4 +1,10 @@
-2007-02-29  Raphaël Quinet  <raphael@gimp.org>
+2007-03-01 João S. O. Bueno Calligaris <gwidon@mpc.com.br>
+
+        * plug-ins/common/postscript.c: add callback to resolution
+	changes in the postscipt load dialog to update the image size
+	in pixels.
+
+2007-03-01  Raphaël Quinet  <raphael@gimp.org>
 
 	* app/tools/gimpmeasuretool.c (gimp_measure_tool_cursor_update): 
 	don't suggest Shift when a new point cannot be added to point 0.
