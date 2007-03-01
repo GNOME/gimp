@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-28 14:39+0100\n"
-"PO-Revision-Date: 2007-02-28 14:53+0100\n"
+"POT-Creation-Date: 2007-03-01 10:18+0100\n"
+"PO-Revision-Date: 2007-03-01 10:20+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3703,7 +3703,7 @@ msgstr "_Importovat cestu..."
 msgid "Path to Sele_ction"
 msgstr "Cesta do _výběru"
 
-#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1864
+#: ../app/actions/vectors-actions.c:163 ../app/tools/gimpvectortool.c:1875
 msgid "Path to selection"
 msgstr "Cesta do výběru"
 
@@ -3766,7 +3766,7 @@ msgid "Path to Selection"
 msgstr "Cesta do výběru"
 
 #: ../app/actions/vectors-commands.c:369 ../app/tools/gimpvectoroptions.c:174
-#: ../app/tools/gimpvectortool.c:1897 ../app/vectors/gimpvectors.c:199
+#: ../app/tools/gimpvectortool.c:1908 ../app/vectors/gimpvectors.c:199
 msgid "Stroke Path"
 msgstr "Vykreslit cestu"
 
@@ -6392,9 +6392,9 @@ msgstr "Pozadí"
 msgid "pixel"
 msgstr "pixel"
 
-#: ../app/core/gimpunit.c:55 ../app/tools/gimpmeasuretool.c:806
-#: ../app/tools/gimpmeasuretool.c:947 ../app/tools/gimpmeasuretool.c:999
-#: ../app/tools/gimpmeasuretool.c:1025 ../app/tools/gimppainttool.c:604
+#: ../app/core/gimpunit.c:55 ../app/tools/gimpmeasuretool.c:871
+#: ../app/tools/gimpmeasuretool.c:1014 ../app/tools/gimpmeasuretool.c:1070
+#: ../app/tools/gimpmeasuretool.c:1098 ../app/tools/gimppainttool.c:604
 msgid "pixels"
 msgstr "pixelů"
 
@@ -6759,12 +6759,12 @@ msgstr "Jmé_no vrstvy:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:133
-#: ../app/tools/gimpmeasuretool.c:989 ../app/tools/gimprectangleoptions.c:611
+#: ../app/tools/gimpmeasuretool.c:1059 ../app/tools/gimprectangleoptions.c:611
 msgid "Width:"
 msgstr "Šířka:"
 
 #: ../app/dialogs/layer-options-dialog.c:139
-#: ../app/tools/gimpmeasuretool.c:1015 ../app/tools/gimprectangleoptions.c:625
+#: ../app/tools/gimpmeasuretool.c:1087 ../app/tools/gimprectangleoptions.c:625
 msgid "Height:"
 msgstr "Výška:"
 
@@ -9127,7 +9127,7 @@ msgid "_Crop"
 msgstr "_Ořezat"
 
 #: ../app/tools/gimpcroptool.c:218
-msgid "Click or press enter to crop"
+msgid "Click or press Enter to crop"
 msgstr "Klikněte nebo stiskněte Enter pro oříznutí"
 
 #: ../app/tools/gimpcurvestool.c:150
@@ -9554,7 +9554,7 @@ msgstr "Nastavení"
 msgid "Size:"
 msgstr "Velikost:"
 
-#: ../app/tools/gimpinkoptions-gui.c:76 ../app/tools/gimpmeasuretool.c:963
+#: ../app/tools/gimpinkoptions-gui.c:76 ../app/tools/gimpmeasuretool.c:1031
 #: ../app/widgets/gimpbrusheditor.c:208
 msgid "Angle:"
 msgstr "Úhel:"
@@ -9601,7 +9601,7 @@ msgstr "Výběr nůžkami: Výběr tvarů pomocí inteligentního hledání hran
 msgid "Intelligent _Scissors"
 msgstr "_Inteligentní nůžky"
 
-#: ../app/tools/gimpiscissorstool.c:920
+#: ../app/tools/gimpiscissorstool.c:920 ../app/tools/gimpmeasuretool.c:605
 msgid "Click-Drag to move this point"
 msgstr "Klikněte a táhněte pro přesun tohoto bodu"
 
@@ -9714,28 +9714,48 @@ msgstr "_Přiblížení"
 msgid "Use info window"
 msgstr "Použít informační okno"
 
-#: ../app/tools/gimpmeasuretool.c:121
+#: ../app/tools/gimpmeasuretool.c:122
 msgid "Measure"
 msgstr "Měřidlo"
 
-#: ../app/tools/gimpmeasuretool.c:122
+#: ../app/tools/gimpmeasuretool.c:123
 msgid "Measure Tool: Measure distances and angles"
 msgstr "Měřidlo: Měření vzdáleností a úhlů"
 
-#: ../app/tools/gimpmeasuretool.c:123
+#: ../app/tools/gimpmeasuretool.c:124
 msgid "_Measure"
 msgstr "_Měřidlo"
 
-#: ../app/tools/gimpmeasuretool.c:238
+#: ../app/tools/gimpmeasuretool.c:241
 msgid "Add Guides"
 msgstr "Přidat vodítka"
 
+#: ../app/tools/gimpmeasuretool.c:557
+msgid "Click to place vertical and horizontal guides"
+msgstr "Klikněte pro umístění svislých a vodorovných vodítek"
+
+#: ../app/tools/gimpmeasuretool.c:566
+msgid "Click to place a horizontal guide"
+msgstr "Klikněte pro umístění vodorovného vodítka"
+
+#: ../app/tools/gimpmeasuretool.c:580
+msgid "Click to place a vertical guide"
+msgstr "Klikněte pro umístění svislého vodítka"
+
+#: ../app/tools/gimpmeasuretool.c:594
+msgid "Click-Drag to add a new point"
+msgstr "Klikněte a táhněte pro přidání nového bodu"
+
+#: ../app/tools/gimpmeasuretool.c:624
+msgid "Click-Drag to move all points"
+msgstr "Klikněte a táhněte pro přesun všech bodů"
+
 #. tool->display->shell
-#: ../app/tools/gimpmeasuretool.c:917
+#: ../app/tools/gimpmeasuretool.c:983
 msgid "Measure Distances and Angles"
 msgstr "Měření úhlů a vzdáleností"
 
-#: ../app/tools/gimpmeasuretool.c:937
+#: ../app/tools/gimpmeasuretool.c:1003
 msgid "Distance:"
 msgstr "Vzdálenost:"
 
@@ -10000,7 +10020,7 @@ msgstr "Výběr obdélníku: výběr obdélníkové oblasti"
 msgid "_Rectangle Select"
 msgstr "Výběr _obdélníku"
 
-#: ../app/tools/gimprectangletool.c:1056 ../app/tools/gimprectangletool.c:1705
+#: ../app/tools/gimprectangletool.c:1033 ../app/tools/gimprectangletool.c:1682
 msgid "Rectangle: "
 msgstr "Obdélník: "
 
@@ -10409,76 +10429,76 @@ msgstr "Odstranit segment"
 msgid "Move Anchors"
 msgstr "Přesunout ukotvení"
 
-#: ../app/tools/gimpvectortool.c:1144
+#: ../app/tools/gimpvectortool.c:1145
 msgid "Click to pick path to edit"
 msgstr "Kliknutím vyberete cestu k úpravám"
 
-#: ../app/tools/gimpvectortool.c:1147
+#: ../app/tools/gimpvectortool.c:1148
 msgid "Click to create a new path"
 msgstr "Kliknutím vytvoříte novou cestu"
 
-#: ../app/tools/gimpvectortool.c:1150
+#: ../app/tools/gimpvectortool.c:1151
 msgid "Click to create a new component of the path"
 msgstr "Kliknutím vytvoříte novou komponentu cesty"
 
-#: ../app/tools/gimpvectortool.c:1153
-msgid "Click to create a new anchor"
-msgstr "Klikněte pro vytvoření nového ukotvení"
+#: ../app/tools/gimpvectortool.c:1154
+msgid "Click or Click-Drag to create a new anchor"
+msgstr "Klikněte nebo klikněte a táhněte pro vytvoření nového ukotvení"
 
-#: ../app/tools/gimpvectortool.c:1159
+#: ../app/tools/gimpvectortool.c:1163 ../app/tools/gimpvectortool.c:1170
 msgid "Click-Drag to move the anchor around"
 msgstr "Kliknutím a tažením přesunete ukotvení"
 
-#: ../app/tools/gimpvectortool.c:1162 ../app/tools/gimpvectortool.c:1173
+#: ../app/tools/gimpvectortool.c:1173 ../app/tools/gimpvectortool.c:1184
 msgid "Click-Drag to move the anchors around"
 msgstr "Kliknutím a tažením přesunete ukotvení"
 
-#: ../app/tools/gimpvectortool.c:1165
+#: ../app/tools/gimpvectortool.c:1176
 msgid "Click-Drag to move the handle around"
 msgstr "Klikněte a táhněte pro přesun řídícího bodu"
 
-#: ../app/tools/gimpvectortool.c:1178
+#: ../app/tools/gimpvectortool.c:1189
 msgid "Click-Drag to change the shape of the curve"
 msgstr "Kliknutím a tažením změníte tvar křivky"
 
-#: ../app/tools/gimpvectortool.c:1181
+#: ../app/tools/gimpvectortool.c:1192
 #, c-format
 msgid "%s: symmetrical"
 msgstr "%s: symetrický"
 
-#: ../app/tools/gimpvectortool.c:1185
+#: ../app/tools/gimpvectortool.c:1196
 msgid "Click-Drag to move the component around"
 msgstr "Kliknutím a tažením přesunete komponentu"
 
-#: ../app/tools/gimpvectortool.c:1192
+#: ../app/tools/gimpvectortool.c:1203
 msgid "Click-Drag to move the path around"
 msgstr "Kliknutím a tažením přesunete cestu"
 
-#: ../app/tools/gimpvectortool.c:1195
+#: ../app/tools/gimpvectortool.c:1206
 msgid "Click-Drag to insert an anchor on the path"
 msgstr "Kliknutím a tažením vložíte do cesty ukotvení"
 
-#: ../app/tools/gimpvectortool.c:1202
+#: ../app/tools/gimpvectortool.c:1213
 msgid "Click to delete this anchor"
 msgstr "Kliknutím odstraníte toto ukotvení"
 
-#: ../app/tools/gimpvectortool.c:1205
+#: ../app/tools/gimpvectortool.c:1216
 msgid "Click to connect this anchor with the selected endpoint"
 msgstr "Kliknutím spojíte toto ukotvení s vybraným koncovým bodem"
 
-#: ../app/tools/gimpvectortool.c:1209
+#: ../app/tools/gimpvectortool.c:1220
 msgid "Click to open up the path"
 msgstr "Kliknutím otevřete cestu"
 
-#: ../app/tools/gimpvectortool.c:1212
+#: ../app/tools/gimpvectortool.c:1223
 msgid "Click to make this node angular"
 msgstr "Kliknutím změníte tento uzel na úhlový"
 
-#: ../app/tools/gimpvectortool.c:1718
+#: ../app/tools/gimpvectortool.c:1729
 msgid "Delete Anchors"
 msgstr "Odstranit ukotvení"
 
-#: ../app/tools/gimpvectortool.c:1891
+#: ../app/tools/gimpvectortool.c:1902
 msgid "There is no active layer or channel to stroke to"
 msgstr "Není žádná aktivní vrstva nebo kanál, kam vykreslovat"
 
