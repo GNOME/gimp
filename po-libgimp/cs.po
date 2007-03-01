@@ -1,3 +1,4 @@
+# translation of cs.po to Czech
 # translation of cs.po to
 # Translation of gimp-libgimp to Czech
 # Copyright (C) 2000,2003, 2006, 2007 Free Software Foundation, Inc.
@@ -11,10 +12,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-26 15:47+0100\n"
-"PO-Revision-Date: 2007-02-26 15:47+0100\n"
+"POT-Creation-Date: 2007-03-01 10:22+0100\n"
+"PO-Revision-Date: 2007-03-01 10:31+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team:  <cs@li.org>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1352,8 +1353,7 @@ msgstr "Správa barev"
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
-msgstr ""
-"Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
+msgstr "Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
 
 #: ../modules/cdisplay_lcms.c:302
 msgid "Mode of operation:"
@@ -1536,14 +1536,12 @@ msgid "Button Forward"
 msgstr "Tlačítko vpřed"
 
 #: ../modules/controller_linux_input.c:75
-#, fuzzy
 msgid "Button Back"
-msgstr "Tlačítko 0"
+msgstr "Tlačítko zpět"
 
 #: ../modules/controller_linux_input.c:76
-#, fuzzy
 msgid "Button Task"
-msgstr "Tlačítko 0"
+msgstr "Úloha tlačítka"
 
 #: ../modules/controller_linux_input.c:78
 msgid "Button Wheel"
@@ -1690,18 +1688,16 @@ msgid "End of file"
 msgstr "Konec souboru"
 
 #: ../modules/controller_dx_dinput.c:157
-#, fuzzy
 msgid "DirectX DirectInput event controller"
-msgstr "Ovladač událostí linuxového vstupu"
+msgstr "Ovladač událostí DirectX DirectInput"
 
 #: ../modules/controller_dx_dinput.c:228
-#, fuzzy
 msgid "The device to read DirectInput events from."
-msgstr "Jméno zařízení pro načítání událostí linuxového vstupu."
+msgstr "Jméno zařízení pro načítání událostí DirectInput."
 
 #: ../modules/controller_dx_dinput.c:237
 msgid "DirectX DirectInput"
-msgstr ""
+msgstr "DirectX DirectInput"
 
 #: ../modules/controller_dx_dinput.c:446
 #, c-format
@@ -1721,32 +1717,31 @@ msgstr "Uvolnění tlačítka %d"
 #: ../modules/controller_dx_dinput.c:528
 #, c-format
 msgid "Slider %d Increase"
-msgstr ""
+msgstr "Navýšení posuvníku %d"
 
 #: ../modules/controller_dx_dinput.c:531
 #, c-format
 msgid "Slider %d Decrease"
-msgstr ""
+msgstr "Snížení posuvníku %d"
 
 #: ../modules/controller_dx_dinput.c:541
 #, c-format
 msgid "POV %d X View"
-msgstr ""
+msgstr "POV %d X View"
 
 #: ../modules/controller_dx_dinput.c:544
 #, c-format
 msgid "POV %d Y View"
-msgstr ""
+msgstr "POV %d Y View"
 
 #: ../modules/controller_dx_dinput.c:547
 #, c-format
 msgid "POV %d Return"
-msgstr ""
+msgstr "POV %d Return"
 
 #: ../modules/controller_dx_dinput.c:1111
-#, fuzzy
 msgid "DirectInput Events"
-msgstr "Události linuxového vstupu"
+msgstr "Události DirectInput"
 
 #: ../modules/controller_midi.c:167
 msgid "MIDI event controller"
@@ -1802,3 +1797,4 @@ msgstr "GIMP"
 #: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr "Gimpí ovladač vstupu MIDI"
+
