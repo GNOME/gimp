@@ -2,7 +2,7 @@
 
         * plug-ins/common/postscript.c: add callback to resolution
 	changes in the postscipt load dialog to update the image size
-	in pixels.
+	in pixels. Fixes bug #413347.
 
 2007-03-01  Raphaël Quinet  <raphael@gimp.org>
 
