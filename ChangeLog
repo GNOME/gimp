@@ -1,3 +1,13 @@
+2007-03-02  Sven Neumann  <sven@gimp.org>
+
+	* libgimpconfig/gimpconfig-serialize.c
+	* libgimpconfig/gimpconfig-error.c
+	* libgimpconfig/gimpconfig-path.c
+	* libgimpconfig/gimpconfig-deserialize.c
+	* libgimpconfig/gimpconfig-utils.c
+	* libgimpconfig/gimpconfig-iface.c: corrected copyright notice
+	(bug #413731).
+
 2007-03-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-blend.c (gimp_drawable_blend): use
