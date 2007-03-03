@@ -1,3 +1,7 @@
+2007-03-03  Roman Joost  <romanofski@gimp.org>
+
+	* authors.xml: added missing, active documentation authors.
+
 2007-03-02  Sven Neumann  <sven@gimp.org>
 
 	* libgimpconfig/gimpconfig-serialize.c
