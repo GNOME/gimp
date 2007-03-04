@@ -430,10 +430,15 @@ gimp_object_get_memsize (GimpObject *object,
 
       if (indent_level == 0)
         {
-          g_list_foreach (aggregation_tree, (GFunc) g_print, NULL);
-          g_list_foreach (aggregation_tree, (GFunc) g_free, NULL);
-          g_list_free (aggregation_tree);
+          GList *list;
 
+          for (list = aggregation_tree; list; list = g_list_next (list))
+            {
+              g_print ("%s", (gchar *) list->data);
+              g_free (list->data);
+            }
+
+          g_list_free (aggregation_tree);
           aggregation_tree = NULL;
         }
 

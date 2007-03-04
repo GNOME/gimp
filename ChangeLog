@@ -1,3 +1,9 @@
+2007-03-04  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpobject.c (gimp_object_get_memsize): don't pass
+	random strings to g_print() without running them through %s.
+	Fixes crash/warning when the string contains '%'.
+
 2007-03-04  Hans Breuer  <hans@breuer.org>
 
 	* **/makefile.msc app/gimpcore.def : updated
