@@ -40,13 +40,13 @@ OBJECTS = \
 	gimperaseroptions.obj \
 	gimpink.obj \
 	gimpink-blob.obj \
-	gimpink-undo.obj \
+	gimpinkundo.obj \
 	gimpinkoptions.obj \
 	gimpheal.obj \
 	gimppaintbrush.obj \
 	gimppaintcore.obj \
 	gimppaintcore-stroke.obj \
-	gimppaintcore-undo.obj \
+	gimppaintcoreundo.obj \
 	gimppaintoptions.obj \
 	gimppencil.obj \
 	gimppenciloptions.obj \

@@ -23,6 +23,7 @@ OBJECTS = \
 	gimpplugin-cleanup.obj \
 	gimpplugin-context.obj \
 	gimpplugindebug.obj \
+	gimpplugindef.obj \
 	gimppluginmanager.obj \
 	gimppluginmanager-call.obj \
 	gimppluginmanager-data.obj \
@@ -39,7 +40,6 @@ OBJECTS = \
 	gimppluginshm.obj \
 	gimptemporaryprocedure.obj \
 	\
-	plug-in-def.obj \
 	plug-in-enums.obj \
 	plug-in-icc-profile.obj \
 	plug-in-params.obj \

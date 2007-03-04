@@ -41,6 +41,7 @@ OBJECTS = \
 	gimp-parasites.obj \
 	gimp-templates.obj \
 	gimp-transform-region.obj \
+	gimp-transform-resize.obj \
 	gimp-transform-utils.obj \
 	gimp-units.obj \
 	gimp-user-install.obj \
@@ -59,6 +60,8 @@ OBJECTS = \
 	gimpchannel-combine.obj \
 	gimpchannel-select.obj \
 	gimpchannel.obj \
+	gimpchannelpropundo.obj \
+	gimpchannelundo.obj \
 	gimpcontainer-filter.obj \
 	gimpcontainer.obj \
 	gimpcontext.obj \
@@ -82,12 +85,15 @@ OBJECTS = \
 	gimpdrawable-stroke.obj \
 	gimpdrawable-transform.obj \
 	gimpdrawable.obj \
+	gimpdrawablemodundo.obj \
 	gimpdrawableundo.obj \
+	gimpfloatingselundo.obj \
 	gimpgradient-load.obj \
 	gimpgradient-save.obj \
 	gimpgradient.obj \
 	gimpgrid.obj \
 	gimpguide.obj \
+	gimpguideundo.obj \
 	gimpimage-arrange.obj \
 	gimpimage-colorhash.obj \
 	gimpimage-colormap.obj \
@@ -114,15 +120,22 @@ OBJECTS = \
 	gimpimage.obj \
 	gimpimagefile.obj \
 	gimpimagemap.obj \
+	gimpimageundo.obj \
 	gimpitem-linked.obj \
 	gimpitem-preview.obj \
 	gimpitem.obj \
+	gimpitempropundo.obj \
 	gimpitemundo.obj \
 	gimplayer-floating-sel.obj \
 	gimplayer.obj \
 	gimplayermask.obj \
+	gimplayermaskpropundo.obj \
+	gimplayermaskundo.obj \
+	gimplayerpropundo.obj \
+	gimplayerundo.obj \
 	gimplist.obj \
 	gimpmarshal.obj \
+	gimpmaskundo.obj \
 	gimpobject.obj \
 	gimppaintinfo.obj \
 	gimppalette-import.obj \
@@ -141,15 +154,17 @@ OBJECTS = \
 	gimpprogress.obj \
 	gimpprojection-construct.obj \
 	gimpprojection.obj \
+	gimpsamplepoint.obj \
+	gimpsamplepointundo.obj \
 	gimpscanconvert.obj \
 	gimpselection.obj \
 	gimpstrokedesc.obj \
 	gimpstrokeoptions.obj \
+	gimpsubprogress.obj \
 	gimptemplate.obj \
 	gimptoolinfo.obj \
 	gimptooloptions.obj \
 	gimptoolpresets.obj \
-	gimp-transform-resize.obj \
 	gimpundo.obj \
 	gimpundostack.obj \
 	gimpunit.obj \

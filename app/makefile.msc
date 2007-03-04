@@ -106,8 +106,8 @@ OBJECTS = \
 	widgets/appwidgets.lib \
 	display/appdisplay.lib \
 
-app_procs_console.obj : app_procs.c
-	$(CC) $(CFLAGS) -DGIMP_CONSOLE_COMPILATION -GD -c $(PKG_CFLAGS) -Foapp_procs_console.obj app_procs.c
+app_console.obj : app.c
+	$(CC) $(CFLAGS) -DGIMP_CONSOLE_COMPILATION -GD -c $(PKG_CFLAGS) -Foapp_console.obj app.c
 
 EXTRA_DIST = \
 	makefile.mingw \
@@ -148,13 +148,13 @@ gimp-core-$(PKG_VER).dll : $(GIMP_CORE_OBJECTS) gimpcore.def
 $(PACKAGE)-$(PKG_VER).dll : $(PKG_LINK) $(OBJECTS) $(PACKAGE).def
 	$(CC) $(CFLAGS) -LD -Fe$(PACKAGE)-$(PKG_VER).dll $(OBJECTS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:$(PACKAGE).def
 
-gimp-console.exe : $(OBJECTS) app_procs_console.obj $(PACKAGE).res $(PKG_LINK)
-	$(CC) $(CFLAGS) -Fegimp-console.exe $(PACKAGE).res app_procs_console.obj $(OBJECTS) $(PKG_LINK) \
+gimp-console.exe : $(OBJECTS) app_console.obj $(PACKAGE).res $(PKG_LINK)
+	$(CC) $(CFLAGS) -Fegimp-console.exe $(PACKAGE).res app_console.obj $(OBJECTS) $(PKG_LINK) \
 	gimp-core-$(PKG_VER).lib \
 	user32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS)
 
-$(PACKAGE).exe : $(OBJECTS) app_procs.obj $(PACKAGE).res $(PKG_LINK)
-	$(CC) $(CFLAGS) -Fe$(PACKAGE).exe $(PACKAGE).res app_procs.obj $(OBJECTS) \
+$(PACKAGE).exe : $(OBJECTS) app.obj $(PACKAGE).res $(PKG_LINK)
+	$(CC) $(CFLAGS) -Fe$(PACKAGE).exe $(PACKAGE).res app.obj $(OBJECTS) \
 	gimp-core-$(PKG_VER).lib \
 	$(PKG_LINK) user32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS)
 

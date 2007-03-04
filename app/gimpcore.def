@@ -47,7 +47,6 @@ EXPORTS
 	gimp_base_config_get_type
 	gimp_bezier_stroke_extend
 	gimp_bezier_stroke_new
-	gimp_boolean_handled_accum
 	gimp_brush_core_get_type
 	gimp_brush_core_set_brush
 	gimp_brush_generated_get_angle
@@ -707,8 +706,6 @@ gimp_progress_pulse
 gimp_image_find_sample_point
 gimp_image_move_sample_point
 gimp_image_remove_sample_point
-gimp_image_sample_point_ref
-gimp_image_sample_point_unref
 gimp_image_add_sample_point_at_pos
 gimp_gradient_segment_split_midpoint
 gimp_image_resize_with_layers
@@ -867,8 +864,10 @@ gimp_pattern_load_pixbuf
 gimp_get_tool_info
 gimp_gradient_save_pov
 gimp_message_valist
-gimp_plug_in_manager_get_label
 gimp_viewable_set_stock_id
+
+gimp_plug_in_procedure_get_blurb
+gimp_plug_in_procedure_get_locale_domain
 
 gimp_channel_select_round_rect
 gimp_drawable_undo_get_type
@@ -894,3 +893,8 @@ plug_in_icc_profile_file_info
 
 gimp_dash_pattern_get_type
 gimp_dash_pattern_fill_segments
+
+file_open_from_command_line
+gimp_color_pick_mode_get_type
+gimp_undo_get_age
+gimp_undo_reset_age

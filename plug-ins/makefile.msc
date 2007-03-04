@@ -454,20 +454,26 @@ OPTIMIZE =
 
 !IFDEF EXTRA_jpeg
 EXTRACFLAGS = -I$(JPEG) \
-!IFDEF EXIF_CFLAGS
+!IFDEF EXIF
 	$(EXIF_CFLAGS) -DHAVE_EXIF -DHAVE_EXIF_0_6
 !ENDIF
 
 EXTRALIBS = \
-	$(JPEG)\libjpeg.lib $(EXIF_LIBS)
+	$(JPEG)\libjpeg.lib \
+!IFDEF EXIF
+	$(EXIF_LIBS)
+!ENDIF
 
 OBJECTS = \
-	gimpexif.obj \
 	jpeg.obj \
 	jpeg-exif.obj \
 	jpeg-icc.obj \
 	jpeg-load.obj \
-	jpeg-save.obj
+	jpeg-save.obj \
+!IFDEF EXIF
+	gimpexif.obj
+!ENDIF
+
 !ENDIF
 
 !IFDEF EXTRA_lcms 

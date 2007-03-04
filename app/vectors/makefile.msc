@@ -27,15 +27,18 @@ INCLUDES = \
 
 OBJECTS = \
 	gimpanchor.obj \
-	gimpstroke.obj \
-	gimpvectors-export.obj \
-	gimpvectors-import.obj \
 	gimpbezierstroke.obj \
 	gimpstroke-new.obj \
-	gimpvectors.obj \
+	gimpstroke.obj \
 	gimpvectors-compat.obj \
+	gimpvectors-export.obj \
+	gimpvectors-import.obj \
 	gimpvectors-preview.obj \
 	gimpvectors-warp.obj \
+	gimpvectors.obj \
+	gimpvectorsmodundo.obj \
+	gimpvectorspropundo.obj \
+	gimpvectorsundo.obj \
 
 all : \
 	$(PRJ_TOP)\config.h \

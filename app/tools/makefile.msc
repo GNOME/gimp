@@ -56,7 +56,7 @@ OBJECTS = \
 	gimpfliptool.obj \
 	gimpforegroundselectoptions.obj \
 	gimpforegroundselecttool.obj \
-	gimpforegroundselecttool-undo.obj \
+	gimpforegroundselecttoolundo.obj \
 	gimpfreeselecttool.obj \
 	gimpfuzzyselecttool.obj \
 	gimphealtool.obj \
@@ -101,7 +101,7 @@ OBJECTS = \
 	gimptooloptions-gui.obj \
 	gimptransformoptions.obj \
 	gimptransformtool.obj \
-	gimptransformtool-undo.obj \
+	gimptransformtoolundo.obj \
 	gimpvectoroptions.obj \
 	gimpvectortool.obj \
 	tool_manager.obj \

@@ -72,6 +72,7 @@ OBJECTS = \
 	gimppropwidgets.obj \
 	gimpratioentry.obj \
 	gimpscrolledpreview.obj \
+	gimpstringcombobox.obj \
 	gimpquerybox.obj \
 	gimpresolutionentry.obj \
 	gimpsizeentry.obj \
