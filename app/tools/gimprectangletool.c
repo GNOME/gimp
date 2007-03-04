@@ -142,8 +142,6 @@ static GtkAnchorType gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *p
                                                      gint                     *h);
 static void     gimp_rectangle_tool_set_highlight   (GimpRectangleTool *rectangle);
 
-static guint
-           gimp_rectangle_tool_fix_resize_direction (GimpRectangleToolPrivate *private);
 
 static guint gimp_rectangle_tool_signals[LAST_SIGNAL] = { 0 };
 
@@ -2044,25 +2042,25 @@ gimp_rectangle_tool_constrain (GimpRectangleTool *rectangle,
 
     default:
       g_warning ("Invalid rectangle constraint.\n");
-      return FALSE;
+      return;
     }
 
-      if (*x1 < min_x)
-        {
-          *x1 = min_x;
-        }
-      if (*x2 > max_x)
-        {
-          *x2 = max_x;
-        }
-      if (*y1 < min_y)
-        {
-          *y1 = min_y;
-        }
-      if (*y2 > max_y)
-        {
-          *y2 = max_y;
-        }
+  if (*x1 < min_x)
+    {
+      *x1 = min_x;
+    }
+  if (*x2 > max_x)
+    {
+      *x2 = max_x;
+    }
+  if (*y1 < min_y)
+    {
+      *y1 = min_y;
+    }
+  if (*y2 > max_y)
+    {
+      *y2 = max_y;
+    }
 }
 
 static void

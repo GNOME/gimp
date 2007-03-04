@@ -84,6 +84,7 @@ struct _GimpDisplayShell
   gint              offset_y;
 
   gdouble           last_scale;        /*  scale used when reverting zoom     */
+  guint             last_scale_time;   /*  time when last_scale was set       */
   gint              last_offset_x;     /*  offsets used when reverting zoom   */
   gint              last_offset_y;
 
