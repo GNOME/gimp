@@ -93,6 +93,7 @@ struct _GimpChannelClass
                               gint             radius_x,
                               gint             radius_y,
                               gboolean         feather,
+                              gboolean         edge_lock,
                               gboolean         push_undo);
   void     (* grow)          (GimpChannel     *channel,
                               gint             radius_x,
@@ -194,6 +195,7 @@ void          gimp_channel_border             (GimpChannel      *mask,
                                                gint              radius_x,
                                                gint              radius_y,
                                                gboolean          feather,
+                                               gboolean          edge_lock,
                                                gboolean          push_undo);
 void          gimp_channel_grow               (GimpChannel      *mask,
                                                gint              radius_x,

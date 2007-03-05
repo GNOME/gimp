@@ -70,11 +70,12 @@ static void   select_shrink_callback  (GtkWidget *widget,
 /*  private variables  */
 
 static gdouble   select_feather_radius    = 5.0;
-static gint      select_border_radius     = 5;
 static gint      select_grow_pixels       = 1;
 static gint      select_shrink_pixels     = 1;
 static gboolean  select_shrink_edge_lock  = FALSE;
+static gint      select_border_radius     = 5;
 static gboolean  select_border_feather    = FALSE;
+static gboolean  select_border_edge_lock  = FALSE;
 
 
 /*  public functions  */
@@ -240,6 +241,7 @@ select_border_cmd_callback (GtkAction *action,
                                 G_OBJECT (display->image), "disconnect",
                                 select_border_callback, display->image);
 
+  /* Feather button */
   button = gtk_check_button_new_with_mnemonic (_("_Feather border"));
 
   gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), button,
@@ -250,6 +252,21 @@ select_border_cmd_callback (GtkAction *action,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
                                 select_border_feather);
   gtk_widget_show (button);
+
+
+  /* Edge lock button */
+  button = gtk_check_button_new_with_mnemonic (_("_Lock selection to image edges"));
+
+  gtk_box_pack_start (GTK_BOX (GIMP_QUERY_BOX_VBOX (dialog)), button,
+                      FALSE, FALSE, 0);
+
+  g_object_set_data (G_OBJECT (dialog), "edge-lock-toggle", button);
+
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                select_border_edge_lock);
+  gtk_widget_show (button);
+
+
 
   gtk_widget_show (dialog);
 }
@@ -376,15 +393,20 @@ select_border_callback (GtkWidget *widget,
                         gpointer   data)
 {
   GimpImage *image  = GIMP_IMAGE (data);
-  GtkWidget *button = g_object_get_data (G_OBJECT (widget),
-					 "border-feather-toggle");
+  GtkWidget *feather_button = g_object_get_data (G_OBJECT (widget),
+                                                 "border-feather-toggle");
+  GtkWidget *edge_lock_button = g_object_get_data (G_OBJECT (widget),
+                                                   "edge-lock-toggle");
   gdouble    radius_x;
   gdouble    radius_y;
 
   radius_x = radius_y = select_border_radius = ROUND (size);
 
   select_border_feather =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (button));
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (feather_button));
+
+  select_border_edge_lock =
+    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (edge_lock_button));
 
   if (unit != GIMP_UNIT_PIXEL)
     {
@@ -400,7 +422,7 @@ select_border_callback (GtkWidget *widget,
     }
 
   gimp_channel_border (gimp_image_get_mask (image), radius_x, radius_y,
-                       select_border_feather, TRUE);
+                       select_border_feather, select_border_edge_lock, TRUE);
   gimp_image_flush (image);
 }
 

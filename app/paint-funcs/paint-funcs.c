@@ -3531,29 +3531,47 @@ dilate_region (PixelRegion *region)
   g_free (out);
 }
 
+/* Computes whether pixels in `buf[1]', if they are selected, have neighbouring
+   pixels that are unselected. Put result in `transition'. */
 static void
 compute_transition (guchar  *transition,
                     guchar **buf,
-                    gint32   width)
+                    gint32   width,
+                    gboolean edge_lock)
 {
   register gint32 x = 0;
 
   if (width == 1)
     {
-      if (buf[1][x] > 127 && (buf[0][x] < 128 || buf[2][x] < 128))
-        transition[x] = 255;
+      if (buf[1][0] > 127 && (buf[0][0] < 128 || buf[2][0] < 128))
+        transition[0] = 255;
       else
-        transition[x] = 0;
+        transition[0] = 0;
       return;
     }
-  if (buf[1][x] > 127)
+
+  if (buf[1][0] > 127 && edge_lock)
     {
-      if ( buf[0][x] < 128 || buf[0][x + 1] < 128 ||
-           buf[1][x + 1] < 128 ||
-           buf[2][x] < 128 || buf[2][x + 1] < 128 )
-        transition[x] = 255;
+      /* The pixel to the left (outside of the canvas) is considered selected,
+         so we check if there are any unselected pixels in neighbouring pixels
+         _on_ the canvas. */
+      if (buf[0][x] < 128 || buf[0][x + 1] < 128 ||
+                             buf[1][x + 1] < 128 ||
+          buf[2][x] < 128 || buf[2][x + 1] < 128 )
+        {
+          transition[x] = 255;
+        }
       else
-        transition[x] = 0;
+        {
+          transition[x] = 0;
+        }
+    }
+  else if (buf[1][0] > 127 && !edge_lock)
+    {
+      /* We must not care about neighbouring pixels on the image canvas since
+         there always are unselected pixels to the left (which is outside of
+         the image canvas). */
+      transition[x] = 255;
     }
   else
     {
@@ -3565,7 +3583,7 @@ compute_transition (guchar  *transition,
       if (buf[1][x] >= 128)
         {
           if (buf[0][x - 1] < 128 || buf[0][x] < 128 || buf[0][x + 1] < 128 ||
-              buf[1][x - 1] < 128           ||          buf[1][x + 1] < 128 ||
+              buf[1][x - 1] < 128 ||                    buf[1][x + 1] < 128 ||
               buf[2][x - 1] < 128 || buf[2][x] < 128 || buf[2][x + 1] < 128)
             transition[x] = 255;
           else
@@ -3577,18 +3595,32 @@ compute_transition (guchar  *transition,
         }
     }
 
-  if (buf[1][x] >= 128)
+  if (buf[1][width - 1] >= 128 && edge_lock)
     {
+      /* The pixel to the right (outside of the canvas) is considered selected,
+         so we check if there are any unselected pixels in neighbouring pixels
+         _on_ the canvas. */
       if ( buf[0][x - 1] < 128 || buf[0][x] < 128 ||
            buf[1][x - 1] < 128 ||
            buf[2][x - 1] < 128 || buf[2][x] < 128)
-        transition[x] = 255;
+        {
+          transition[width - 1] = 255;
+        }
       else
-        transition[x] = 0;
+        {
+          transition[width - 1] = 0;
+        }
+    }
+  else if (buf[1][width - 1] >= 128 && !edge_lock)
+    {
+      /* We must not care about neighbouring pixels on the image canvas since
+         there always are unselected pixels to the right (which is outside of
+         the image canvas). */
+      transition[width - 1] = 255;
     }
   else
     {
-      transition[x] = 0;
+      transition[width - 1] = 0;
     }
 }
 
@@ -3596,18 +3628,35 @@ void
 border_region (PixelRegion *src,
                gint16       xradius,
                gint16       yradius,
-               gboolean     feather)
+               gboolean     feather,
+               gboolean     edge_lock)
 {
   /*
      This function has no bugs, but if you imagine some you can
      blame them on jaycox@gimp.org
   */
+
   register gint32 i, j, x, y;
+
+  /* A cache used in the algorithm as it works its way down. `buf[1]' is the
+     current row. Thus, at algorithm initialization, `buf[0]' represents the
+     row 'above' the first row of the region. */
   guchar  *buf[3];
+
+  /* The resulting selection is calculated row by row, and this buffer holds the
+     output for each individual row, on each iteration. */
   guchar  *out;
-  gint16  *max;
-  guchar **density;
+
+  /* Keeps track of transitional pixels (pixels that are selected and have
+     unselected neighbouring pixels). */
   guchar **transition;
+  
+  /* TODO: Figure out role clearly in algorithm. */
+  gint16  *max;
+
+  /* TODO: Figure out role clearly in algorithm. */
+  guchar **density;
+
   guchar   last_max;
   gint16   last_index;
 
@@ -3617,6 +3666,7 @@ border_region (PixelRegion *src,
       return;
     }
 
+  /* A border without a width is no border at all; return an empty region. */
   if (xradius == 0 || yradius == 0)
     {
       guchar color[] = "\0\0\0\0";
@@ -3625,7 +3675,8 @@ border_region (PixelRegion *src,
       return;
     }
 
-  if (xradius == 1 && yradius == 1) /* optimize this case specifically */
+  /* optimize this case specifically */
+  if (xradius == 1 && yradius == 1)
     {
       guchar *transition;
       guchar *source[3];
@@ -3634,16 +3685,19 @@ border_region (PixelRegion *src,
         source[i] = g_new (guchar, src->w);
 
       transition = g_new (guchar, src->w);
+      
+      /* With `edge_lock', initialize row above image as selected, otherwise,
+         initialize as unselected. */
+      memset (source[0], edge_lock ? 255 : 0, src->w);
 
-      pixel_region_get_row (src, src->x, src->y + 0, src->w, source[0], 1);
-      memcpy (source[1], source[0], src->w);
+      pixel_region_get_row (src, src->x, src->y + 0, src->w, source[1], 1);
 
       if (src->h > 1)
         pixel_region_get_row (src, src->x, src->y + 1, src->w, source[2], 1);
       else
         memcpy (source[2], source[1], src->w);
 
-      compute_transition (transition, source, src->w);
+      compute_transition (transition, source, src->w, edge_lock);
       pixel_region_set_row (src, src->x, src->y , src->w, transition);
 
       for (y = 1; y < src->h; y++)
@@ -3651,12 +3705,18 @@ border_region (PixelRegion *src,
           rotate_pointers (source, 3);
 
           if (y + 1 < src->h)
-            pixel_region_get_row (src, src->x, src->y + y + 1, src->w,
-                                  source[2], 1);
+            {
+              pixel_region_get_row (src, src->x, src->y + y + 1, src->w,
+                                    source[2], 1);
+            }
           else
-            memcpy(source[2], source[1], src->w);
+            {
+              /* Depending on `edge_lock', set the row below the image as either
+                 selected or non-selected. */
+              memset(source[2], edge_lock ? 255 : 0, src->w);
+            }
 
-          compute_transition (transition, source, src->w);
+          compute_transition (transition, source, src->w, edge_lock);
           pixel_region_set_row (src, src->x, src->y + y, src->w, transition);
         }
 
@@ -3665,6 +3725,7 @@ border_region (PixelRegion *src,
 
       g_free (transition);
 
+      /* Finnished handling the radius = 1 special case, return here. */
       return;
     }
 
@@ -3692,14 +3753,16 @@ border_region (PixelRegion *src,
   density = g_new (guchar *, 2 * xradius + 1);
   density += xradius;
 
-  for (x = 0; x < (xradius + 1); x++) /* allocate density[][] */
+   /* allocate density[][] */
+  for (x = 0; x < (xradius + 1); x++)
     {
       density[ x]  = g_new (guchar, 2 * yradius + 1);
       density[ x] += yradius;
       density[-x]  = density[x];
     }
 
-  for (x = 0; x < (xradius + 1); x++) /* compute density[][] */
+  /* compute density[][] */
+  for (x = 0; x < (xradius + 1); x++)
     {
       register gdouble tmpx, tmpy, dist;
       guchar a;
@@ -3742,24 +3805,30 @@ border_region (PixelRegion *src,
         }
     }
 
-  pixel_region_get_row (src, src->x, src->y + 0, src->w, buf[0], 1);
-  memcpy (buf[1], buf[0], src->w);
+  /* Since the algorithm considerers `buf[0]' to be 'over' the row currently
+     calculated, we must start with `buf[0]' as non-selected if there is no
+     `edge_lock. If there is an 'edge_lock', initialize the first row to
+     'selected'. Refer to bug #350009. */
+  memset (buf[0], edge_lock ? 255 : 0, src->w);
+  pixel_region_get_row (src, src->x, src->y + 0, src->w, buf[1], 1);
 
   if (src->h > 1)
     pixel_region_get_row (src, src->x, src->y + 1, src->w, buf[2], 1);
   else
     memcpy (buf[2], buf[1], src->w);
 
-  compute_transition (transition[1], buf, src->w);
+  compute_transition (transition[1], buf, src->w, edge_lock);
 
-  for (y = 1; y < yradius && y + 1 < src->h; y++) /* set up top of image */
+   /* set up top of image */
+  for (y = 1; y < yradius && y + 1 < src->h; y++)
     {
       rotate_pointers (buf, 3);
       pixel_region_get_row (src, src->x, src->y + y + 1, src->w, buf[2], 1);
-      compute_transition (transition[y + 1], buf, src->w);
+      compute_transition (transition[y + 1], buf, src->w, edge_lock);
     }
 
-  for (x = 0; x < src->w; x++) /* set up max[] for top of image */
+  /* set up max[] for top of image */
+  for (x = 0; x < src->w; x++)
     {
       max[x] = -(yradius + 7);
 
@@ -3771,7 +3840,8 @@ border_region (PixelRegion *src,
           }
     }
 
-  for (y = 0; y < src->h; y++) /* main calculation loop */
+  /* main calculation loop */
+  for (y = 0; y < src->h; y++)
     {
       rotate_pointers (buf, 3);
       rotate_pointers (transition, yradius + 1);
@@ -3780,14 +3850,25 @@ border_region (PixelRegion *src,
         {
           pixel_region_get_row (src, src->x, src->y + y + yradius + 1, src->w,
                                 buf[2], 1);
-          compute_transition (transition[yradius], buf, src->w);
+          compute_transition (transition[yradius], buf, src->w, edge_lock);
         }
       else
         {
-          memcpy (transition[yradius], transition[yradius - 1], src->w);
+          if (edge_lock)
+            {
+              memcpy (transition[yradius], transition[yradius - 1], src->w);
+            }
+          else
+            {
+              /* No edge lock, set everything 'below canvas' as seen from the
+                 algorithm as unselected. */
+              memset (buf[2], 0, src->w);
+              compute_transition (transition[yradius], buf, src->w, edge_lock);
+            }
         }
 
-      for (x = 0; x < src->w; x++) /* update max array */
+       /* update max array */
+      for (x = 0; x < src->w; x++)
         {
           if (max[x] < 1)
             {
@@ -3820,7 +3901,8 @@ border_region (PixelRegion *src,
       last_max =  max[0][density[-1]];
       last_index = 1;
 
-      for (x = 0 ; x < src->w; x++) /* render scan line */
+       /* render scan line */
+      for (x = 0 ; x < src->w; x++)
         {
           last_index--;
 
@@ -3928,6 +4010,8 @@ swap_region (PixelRegion *src,
 }
 
 
+/* Computes whether pixels in `buf[1]' have neighbouring pixels that are
+   unselected. Put result in `transition'. */
 static void
 apply_mask_to_sub_region (gint        *opacityp,
                           PixelRegion *src,

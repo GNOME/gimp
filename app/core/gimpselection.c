@@ -110,6 +110,7 @@ static void       gimp_selection_border        (GimpChannel     *channel,
                                                 gint             radius_x,
                                                 gint             radius_y,
                                                 gboolean         feather,
+                                                gboolean         edge_lock,
                                                 gboolean         push_undo);
 static void       gimp_selection_grow          (GimpChannel     *channel,
                                                 gint             radius_x,
@@ -464,11 +465,13 @@ gimp_selection_border (GimpChannel *channel,
                        gint         radius_x,
                        gint         radius_y,
                        gboolean     feather,
+                       gboolean     edge_lock,
                        gboolean     push_undo)
 {
   GIMP_CHANNEL_CLASS (parent_class)->border (channel,
-					     radius_x, radius_y, feather,
-					     push_undo);
+                                             radius_x, radius_y,
+                                             feather, edge_lock,
+                                             push_undo);
 }
 
 static void

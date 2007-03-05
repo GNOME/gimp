@@ -1,5 +1,27 @@
 2007-03-05  Michael Natterer  <mitch@gimp.org>
 
+	Makes default Select -> Border behaviour consistent, and makes
+	'sticky image edges' optional by adding a checkbox in the Border
+	Selection dialog. Patch by Martin Nordholts. Fixes bug #350009.
+
+	* app/actions/select-commands.c (select_border_cmd_callback)
+	(select_border_callback): Added edge-lock checkbox to dialog and
+	modified calls accordingly.
+
+	* app/paint-funcs/paint-funcs.c (border_region)
+	(compute_transition): Fixed algorithm. (compute_transition is a
+	helper function to the algorithm). Also clarified many parts of
+	the algorithm with comments.
+
+	* app/paint-funcs/paint-funcs.h
+	* app/core/gimpchannel.[ch]
+	* app/core/gimpselection.c: Added gboolean edge_lock to function
+	calls/signatures.
+
+	* app/pdb/selection_cmds.c: Regenerated. 
+
+2007-03-05  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/core-types.h: added typdef GimpMemsizeFunc.
 
 	* app/core/gimp-utils.[ch]: added _foreach() variants of

@@ -405,7 +405,8 @@ void  gaussian_blur_region                (PixelRegion *srcR,
 void  border_region                       (PixelRegion *src,
                                            gint16       xradius,
                                            gint16       yradius,
-                                           gboolean     feather);
+                                           gboolean     feather,
+                                           gboolean     edge_lock);
 
 gfloat shapeburst_region                  (PixelRegion      *srcPR,
                                            PixelRegion      *distPR,
