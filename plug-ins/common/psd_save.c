@@ -159,8 +159,8 @@ static void   write_gint16         (FILE *fd, gint16 val, gchar *why);
 static void   write_gint32         (FILE *fd, gint32 val, gchar *why);
 
 static void   write_pixel_data     (FILE *fd, gint32 drawableID,
-				    glong *ChanLenPosition,
-				    gint32 rowlenOffset);
+                                    glong *ChanLenPosition,
+                                    gint32 rowlenOffset);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -237,9 +237,9 @@ run (const gchar      *name,
       drawable_id = param[2].data.d_int32;
 
       switch (run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	case GIMP_RUN_WITH_LAST_VALS:
+        {
+        case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
           gimp_ui_init (PLUG_IN_BINARY, FALSE);
           export = gimp_export_image (&image_id, &drawable_id, "PSD",
                                       GIMP_EXPORT_CAN_HANDLE_RGB     |
@@ -308,7 +308,13 @@ psd_lmode_layer (gint32 idLayer, gchar *psdMode)
     case GIMP_VALUE_MODE:                  /* ? */
       strcpy (psdMode, "lum ");
       break;
-    case GIMP_OVERLAY_MODE:                /* ? */
+    case GIMP_HARDLIGHT_MODE:
+      strcpy (psdMode, "hLit");
+      break;
+    case GIMP_SOFTLIGHT_MODE:
+      strcpy (psdMode, "sLit");
+      break;
+    case GIMP_OVERLAY_MODE:
       strcpy (psdMode, "over");
       break;
     default:
@@ -448,7 +454,7 @@ write_gint32 (FILE *fd, gint32 val, gchar *why)
 
 static gint32
 pack_pb_line (guchar *start, gint32 length, gint32 stride,
-	       guchar *dest_ptr)
+               guchar *dest_ptr)
 {
   gint i,j;
   gint32 remaining;
@@ -674,7 +680,7 @@ save_resources (FILE *fd, gint32 image_id)
 
   /* Only relevant resources in GIMP are: 0x03EE, 0x03F0 & 0x0400 */
   /* For Adobe Photoshop version 4.0 these can also be considered:
-     0x0408, 0x040A & 0x040B */
+     0x0408, 0x040A & 0x040B (1006, 1008, 1024, 1032, 1034, and 1035) */
 
   IFDBG printf (" Function: save_resources\n");
 
@@ -718,7 +724,7 @@ save_resources (FILE *fd, gint32 image_id)
   if (PSDImageData.nChannels > 0)
     {
       xfwrite (fd, "8BIM", 4, "imageresources signature");
-      write_gint16 (fd, 0x03EE, "0x03EE Id");
+      write_gint16 (fd, 0x03EE, "0x03EE Id"); /* 1006 */
       /* write_pascalstring (fd, Name, "Id name"); */
       write_gint16 (fd, 0, "Id name"); /* Set to null string (two zeros) */
 
@@ -762,10 +768,10 @@ save_resources (FILE *fd, gint32 image_id)
 
       /* Count the guides */
       while ((guide_id = gimp_image_find_next_guide(image_id, guide_id)))
-	n_guides++;
+        n_guides++;
 
       xfwrite (fd, "8BIM", 4, "imageresources signature");
-      write_gint16 (fd, 0x0408, "0x0408 Id (Guides)");
+      write_gint16 (fd, 0x0408, "0x0408 Id (Guides)"); /* 1032 */
       /* write_pascalstring (fd, Name, "Id name"); */
       write_gint16 (fd, 0, "Id name"); /* Set to null string (two zeros) */
       write_gint32 (fd, 16 + 5 * n_guides, "0x0408 resource size");
@@ -778,19 +784,19 @@ save_resources (FILE *fd, gint32 image_id)
       /* write the guides */
       while ((guide_id = gimp_image_find_next_guide(image_id, guide_id)))
         {
-	  gchar orientation;
-	  gint32 position;
-	  orientation = gimp_image_get_guide_orientation(image_id, guide_id);
-	  position    = 32 * gimp_image_get_guide_position(image_id, guide_id);
-	  orientation ^= 1; /* in the psd vert =0 , horiz = 1 */
-	  write_gint32 (fd, position, "Position of guide");
-	  write_gchar (fd, orientation, "Orientation of guide");
-	  n_guides--;
-	}
+          gchar orientation;
+          gint32 position;
+          orientation = gimp_image_get_guide_orientation(image_id, guide_id);
+          position    = 32 * gimp_image_get_guide_position(image_id, guide_id);
+          orientation ^= 1; /* in the psd vert =0 , horiz = 1 */
+          write_gint32 (fd, position, "Position of guide");
+          write_gchar (fd, orientation, "Orientation of guide");
+          n_guides--;
+        }
       if ((ftell(fd) & 1))
-	write_gchar(fd, 0, "pad byte");
+        write_gchar(fd, 0, "pad byte");
       if (n_guides != 0)
-	g_warning("Screwed up guide resource:: wrong number of guides\n");
+        g_warning("Screwed up guide resource:: wrong number of guides\n");
       IFDBG printf ("\tTotal length of 0x0400 resource: %d\n", (int) sizeof (gint16));
     }
 
@@ -808,21 +814,21 @@ save_resources (FILE *fd, gint32 image_id)
       {
         gdouble factor = gimp_unit_get_factor (g_unit) / 10.0;
 
-	xres /= factor;
+        xres /= factor;
         yres /= factor;
 
-	psd_unit = PSD_UNIT_CM;
+        psd_unit = PSD_UNIT_CM;
       }
     else
       {
-	psd_unit = PSD_UNIT_INCH;
+        psd_unit = PSD_UNIT_INCH;
       }
 
     xres_fix = xres * 65536.0 + .5; /* Convert to 16.16 fixed point */
     yres_fix = yres * 65536.0 + .5; /* Convert to 16.16 fixed point */
 
     xfwrite (fd, "8BIM", 4, "imageresources signature (for resolution)");
-    write_gint16(fd, 0x03ed, "0x03ed Id (resolution)");
+    write_gint16(fd, 0x03ed, "0x03ed Id (resolution)"); /* 1005 */
     write_gint16 (fd, 0, "Id name"); /* Set to null string (two zeros) */
     write_gint32 (fd, 16, "0x0400 resource size");
     write_gint32 (fd,  xres_fix, "hRes (16.16 fixed point)");
@@ -837,7 +843,7 @@ save_resources (FILE *fd, gint32 image_id)
   if (ActiveLayerPresent)
     {
       xfwrite (fd, "8BIM", 4, "imageresources signature");
-      write_gint16 (fd, 0x0400, "0x0400 Id");
+      write_gint16 (fd, 0x0400, "0x0400 Id"); /* 1024 */
       /* write_pascalstring (fd, Name, "Id name"); */
       write_gint16 (fd, 0, "Id name"); /* Set to null string (two zeros) */
       write_gint32 (fd, sizeof (gint16), "0x0400 resource size");
@@ -868,11 +874,11 @@ save_resources (FILE *fd, gint32 image_id)
 
 static int
 get_compress_channel_data (guchar  *channel_data,
-			   gint32   channel_cols,
-			   gint32   channel_rows,
-			   gint32   stride,
-			   gint16  *LengthsTable,
-			   guchar  *remdata)
+                           gint32   channel_cols,
+                           gint32   channel_rows,
+                           gint32   stride,
+                           gint16  *LengthsTable,
+                           guchar  *remdata)
 {
   gint    i;
   gint32  len;                 /* Length of compressed data */
@@ -890,7 +896,7 @@ get_compress_channel_data (guchar  *channel_data,
 
       /* Create packed data for this row */
       LengthsTable[i] = pack_pb_line (start, channel_cols, stride,
-				       &remdata[len]);
+                                       &remdata[len]);
       len += LengthsTable[i];
     }
 
@@ -1039,18 +1045,18 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
       if (mask  >= 0)
         {
           IFDBG printf ("\t\tLayer mask size: %d\n", 20);
-	  write_gint32  (fd, 20,                        "Layer mask size");
-	  write_gint32  (fd, 0,                         "Layer mask top");
-	  write_gint32  (fd, 0,                         "Layer mask left");
-	  write_gint32  (fd, gimp_drawable_height(mask),"Layer mask bottom");
-	  write_gint32  (fd, gimp_drawable_width(mask), "Layer mask right");
-	  write_gchar  (fd, 0,                         "lmask default color");
-	  flags = (1                                        | /* relative */
-		   (gimp_layer_get_apply_mask(PSDImageData.lLayers[i]) << 1) | /* disabled?*/
-		   (0 << 2)                                   /* invert   */);
-	  write_gchar  (fd, flags,                      "layer mask flags");
-	  write_gint16 (fd, 0,                          "Layer mask Padding");
-	}
+          write_gint32  (fd, 20,                        "Layer mask size");
+          write_gint32  (fd, 0,                         "Layer mask top");
+          write_gint32  (fd, 0,                         "Layer mask left");
+          write_gint32  (fd, gimp_drawable_height(mask),"Layer mask bottom");
+          write_gint32  (fd, gimp_drawable_width(mask), "Layer mask right");
+          write_gchar  (fd, 0,                         "lmask default color");
+          flags = (1                                        | /* relative */
+                   (gimp_layer_get_apply_mask(PSDImageData.lLayers[i]) << 1) | /* disabled?*/
+                   (0 << 2)                                   /* invert   */);
+          write_gchar  (fd, flags,                      "layer mask flags");
+          write_gint16 (fd, 0,                          "Layer mask Padding");
+        }
       else
         {
           /* NOTE Writing empty Layer mask / adjustment layer data */
@@ -1115,7 +1121,7 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
 
 static void
 write_pixel_data (FILE *fd, gint32 drawableID, glong *ChanLenPosition,
-		  gint32 ltable_offset)
+                  gint32 ltable_offset)
 {
   GimpPixelRgn region;      /* Image region */
   guchar *data;             /* Temporary copy of pixel data */
@@ -1152,7 +1158,7 @@ write_pixel_data (FILE *fd, gint32 drawableID, glong *ChanLenPosition,
   data = g_new (guchar, MIN(height, tile_height) * width * bytes);
 
   gimp_pixel_rgn_init (&region, drawable, 0, 0,
-		       width, height, FALSE, FALSE);
+                       width, height, FALSE, FALSE);
 
   for (i = 0; i < bytes; i++)
     {
@@ -1160,64 +1166,64 @@ write_pixel_data (FILE *fd, gint32 drawableID, glong *ChanLenPosition,
       len = 0;
       if (bytes != colors) /* Need to write alpha channel first */
         {
-	  if (i == 0)
+          if (i == 0)
             {
-	      if (ltable_offset > 0)
-		continue;
-	      chan = bytes - 1;
-	    }
-	  else
-	    chan = i - 1;
-	}
+              if (ltable_offset > 0)
+                continue;
+              chan = bytes - 1;
+            }
+          else
+            chan = i - 1;
+        }
       else
-	chan = i;
+        chan = i;
       if (ChanLenPosition)
         {
-	  write_gint16 (fd, 1, "Compression type (RLE)");
-	  len += 2;
-	}
+          write_gint16 (fd, 1, "Compression type (RLE)");
+          len += 2;
+        }
 
       if (ltable_offset > 0)
         {
-	  length_table_pos = ltable_offset + 2 * chan * height;
-	}
+          length_table_pos = ltable_offset + 2 * chan * height;
+        }
       else
         {
-	  length_table_pos = ftell(fd);
+          length_table_pos = ftell(fd);
 
-	  xfwrite (fd, LengthsTable, height * sizeof(gint16),
-		   "Dummy RLE length");
+          xfwrite (fd, LengthsTable, height * sizeof(gint16),
+                   "Dummy RLE length");
           len += height * sizeof(gint16);
           IF_DEEP_DBG printf ("\t\t\t\t. ltable, pos %ld len %d\n", length_table_pos, len);
         }
 
       for (y = 0; y < height; y += tile_height)
-	{
-	  int tlen;
-  	  gimp_pixel_rgn_get_rect (&region, data, 0, y,
-				   width, MIN(height - y, tile_height));
-	  tlen = get_compress_channel_data (&data[chan],
-					     width,
-					     MIN(height - y, tile_height),
-					     bytes,
-					     &LengthsTable[y],
-					     rledata);
-	  len += tlen;
-	  xfwrite (fd, rledata, tlen, "Compressed pixel data");
+        {
+          int tlen;
+            gimp_pixel_rgn_get_rect (&region, data, 0, y,
+                                   width, MIN(height - y, tile_height));
+          tlen = get_compress_channel_data (&data[chan],
+                                             width,
+                                             MIN(height - y, tile_height),
+                                             bytes,
+                                             &LengthsTable[y],
+                                             rledata);
+          len += tlen;
+          xfwrite (fd, rledata, tlen, "Compressed pixel data");
           IF_DEEP_DBG printf ("\t\t\t\t. Writing compressed pixels, stream of %d\n", tlen);
-	}
+        }
 
       /* Write compressed lengths table */
       fseek (fd, length_table_pos, SEEK_SET);
       for (j = 0; j < height; j++) /* write real length table */
-	write_gint16 (fd, LengthsTable[j], "RLE length");
+        write_gint16 (fd, LengthsTable[j], "RLE length");
 
       if (ChanLenPosition)    /* Update total compressed length */
-	{
-	  fseek (fd, ChanLenPosition[i], SEEK_SET);
-	  write_gint32 (fd, len, "channel data length");
+        {
+          fseek (fd, ChanLenPosition[i], SEEK_SET);
+          write_gint32 (fd, len, "channel data length");
           IFDBG printf ("\t\tUpdating data len to %d\n", len);
-	}
+        }
       fseek (fd, 0, SEEK_END);
       IF_DEEP_DBG printf ("\t\t\t\t. Cur pos %ld\n", ftell(fd));
     }
@@ -1358,7 +1364,7 @@ save_data (FILE *fd, gint32 image_id)
     {
       IFDBG printf ("\t\tWriting compressed image data\n");
       write_pixel_data (fd, PSDImageData.lLayers[PSDImageData.nLayers - 1],
-			NULL, offset);
+                        NULL, offset);
     }
 
   chan = nChansLayer (PSDImageData.baseType, 0, 0);
@@ -1366,9 +1372,9 @@ save_data (FILE *fd, gint32 image_id)
   for (i = PSDImageData.nChannels - 1; i >= 0; i--)
     {
       IFDBG printf ("\t\tWriting compressed channel data for channel %d\n",
-		    i);
+                    i);
       write_pixel_data (fd, PSDImageData.lChannels[i], NULL,
-			offset + 2*imageHeight*chan);
+                        offset + 2*imageHeight*chan);
       chan++;
     }
 }
@@ -1437,11 +1443,11 @@ save_image (const gchar *filename,
       drawable = gimp_drawable_get (layers[i]);
       if (drawable->width > 30000 || drawable->height > 30000)
         {
-	  g_message (_("Unable to save '%s'.  The psd file format does not support images with layers that are more than 30000 pixels wide or tall."),
-		     gimp_filename_to_utf8 (filename));
-	  g_free (layers);
-	  return FALSE;
-	}
+          g_message (_("Unable to save '%s'.  The psd file format does not support images with layers that are more than 30000 pixels wide or tall."),
+                     gimp_filename_to_utf8 (filename));
+          g_free (layers);
+          return FALSE;
+        }
     }
   g_free (layers);
 

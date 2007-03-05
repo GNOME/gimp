@@ -1,3 +1,13 @@
+2007-02-17  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/common/psd.c: De-tabified. Fixed limit checks on resource
+	ID's used for path data. Added comments showing decimal value of image
+	resource ID's 
+
+	* plug-ins/common/psd_save.c: De-tabified. Added support for layer
+	modes HARDLIGHT_MODE and SOFTLIGHT_MODE. Added comments showing
+	decimal value of image resource ID's 
+
 2007-03-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpobject.c (gimp_object_get_memsize): don't pass
