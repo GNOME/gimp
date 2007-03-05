@@ -8,6 +8,10 @@
 
 2007-03-05  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpexport.c: changed strings as suggested in bug #304148).
+
+2007-03-05  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpstrokeeditor.c: added missing cast.
 
 2007-03-05  Michael Natterer  <mitch@gimp.org>

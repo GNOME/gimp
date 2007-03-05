@@ -214,7 +214,7 @@ static ExportAction export_action_merge =
 {
   export_merge,
   NULL,
-  N_("%s can't handle layers"),
+  N_("%s plug-in can't handle layers"),
   { N_("Merge Visible Layers"), NULL },
   0
 };
@@ -223,7 +223,7 @@ static ExportAction export_action_merge_single =
 {
   export_merge,
   NULL,
-  N_("%s can't handle layer offsets, size or opacity"),
+  N_("%s plug-in can't handle layer offsets, size or opacity"),
   { N_("Merge Visible Layers"), NULL },
   0
 };
@@ -232,7 +232,7 @@ static ExportAction export_action_animate_or_merge =
 {
   export_merge,
   NULL,
-  N_("%s can only handle layers as animation frames"),
+  N_("%s plug-in can only handle layers as animation frames"),
   { N_("Merge Visible Layers"), N_("Save as Animation")},
   0
 };
@@ -241,7 +241,7 @@ static ExportAction export_action_animate_or_flatten =
 {
   export_flatten,
   NULL,
-  N_("%s can only handle layers as animation frames"),
+  N_("%s plug-in can only handle layers as animation frames"),
   { N_("Flatten Image"), N_("Save as Animation") },
   0
 };
@@ -250,7 +250,7 @@ static ExportAction export_action_merge_or_flatten =
 {
   export_flatten,
   export_merge,
-  N_("%s can't handle layers"),
+  N_("%s plug-in can't handle layers"),
   { N_("Flatten Image"), N_("Merge Visible Layers") },
   1
 };
@@ -259,7 +259,7 @@ static ExportAction export_action_flatten =
 {
   export_flatten,
   NULL,
-  N_("%s can't handle transparency"),
+  N_("%s plug-in can't handle transparency"),
   { N_("Flatten Image"), NULL },
   0
 };
@@ -268,7 +268,7 @@ static ExportAction export_action_apply_masks =
 {
   export_apply_masks,
   NULL,
-  N_("%s can't handle layer masks"),
+  N_("%s plug-in can't handle layer masks"),
   { N_("Apply Layer Masks"), NULL },
   0
 };
@@ -277,7 +277,7 @@ static ExportAction export_action_convert_rgb =
 {
   export_convert_rgb,
   NULL,
-  N_("%s can only handle RGB images"),
+  N_("%s plug-in can only handle RGB images"),
   { N_("Convert to RGB"), NULL },
   0
 };
@@ -286,7 +286,7 @@ static ExportAction export_action_convert_grayscale =
 {
   export_convert_grayscale,
   NULL,
-  N_("%s can only handle grayscale images"),
+  N_("%s plug-in can only handle grayscale images"),
   { N_("Convert to Grayscale"), NULL },
   0
 };
@@ -295,7 +295,7 @@ static ExportAction export_action_convert_indexed =
 {
   export_convert_indexed,
   NULL,
-  N_("%s can only handle indexed images"),
+  N_("%s plug-in can only handle indexed images"),
   { N_("Convert to Indexed using default settings\n"
        "(Do it manually to tune the result)"), NULL },
   0
@@ -305,7 +305,7 @@ static ExportAction export_action_convert_bitmap =
 {
   export_convert_bitmap,
   NULL,
-  N_("%s can only handle bitmap (two color) indexed images"),
+  N_("%s plug-in can only handle bitmap (two color) indexed images"),
   { N_("Convert to Indexed using bitmap default settings\n"
        "(Do it manually to tune the result)"), NULL },
   0
@@ -315,7 +315,7 @@ static ExportAction export_action_convert_rgb_or_grayscale =
 {
   export_convert_rgb,
   export_convert_grayscale,
-  N_("%s can only handle RGB or grayscale images"),
+  N_("%s plug-in can only handle RGB or grayscale images"),
   { N_("Convert to RGB"), N_("Convert to Grayscale")},
   0
 };
@@ -324,7 +324,7 @@ static ExportAction export_action_convert_rgb_or_indexed =
 {
   export_convert_rgb,
   export_convert_indexed,
-  N_("%s can only handle RGB or indexed images"),
+  N_("%s plug-in  can only handle RGB or indexed images"),
   { N_("Convert to RGB"), N_("Convert to Indexed using default settings\n"
                              "(Do it manually to tune the result)")},
   0
@@ -334,7 +334,7 @@ static ExportAction export_action_convert_indexed_or_grayscale =
 {
   export_convert_indexed,
   export_convert_grayscale,
-  N_("%s can only handle grayscale or indexed images"),
+  N_("%s plug-in can only handle grayscale or indexed images"),
   { N_("Convert to Indexed using default settings\n"
        "(Do it manually to tune the result)"),
     N_("Convert to Grayscale") },
@@ -345,7 +345,7 @@ static ExportAction export_action_add_alpha =
 {
   export_add_alpha,
   NULL,
-  N_("%s needs an alpha channel"),
+  N_("%s plug-in needs an alpha channel"),
   { N_("Add Alpha Channel"), NULL},
   0
 };
