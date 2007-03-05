@@ -1,3 +1,7 @@
+2007-03-05  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimpexport.c: changed strings as suggested in bug #304148).
+
 2007-03-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimprectangleselecttool.c
@@ -5,10 +9,6 @@
 	existing selection, initialize the rectangle tool to the entire
 	selection, not just to the part of it that is within the active
 	drawable. Also removed some dead code.
-
-2007-03-05  Sven Neumann  <sven@gimp.org>
-
-	* libgimp/gimpexport.c: changed strings as suggested in bug #304148).
 
 2007-03-05  Sven Neumann  <sven@gimp.org>
 
@@ -110,7 +110,7 @@
 2007-03-01 João S. O. Bueno Calligaris <gwidon@mpc.com.br>
 
         * plug-ins/common/postscript.c: add callback to resolution
-	changes in the postscipt load dialog to update the image size
+	changes in the Postscript load dialog to update the image size
 	in pixels. Fixes bug #413347.
 
 2007-03-01  Raphaël Quinet  <raphael@gimp.org>
