@@ -163,7 +163,7 @@ query (void)
                           "Fabien Pelisson",
                           "Fabien Pelisson",
                           "2003",
-                          N_("_Retinex..."),
+                          N_("Retine_x..."),
                           "RGB*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
