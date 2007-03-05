@@ -80,13 +80,54 @@ gimp_g_object_get_memsize (GObject *object)
 }
 
 gint64
-gimp_g_hash_table_get_memsize (GHashTable *hash)
+gimp_g_hash_table_get_memsize (GHashTable *hash,
+                               gint64      data_size)
 {
   g_return_val_if_fail (hash != NULL, 0);
 
   return (2 * sizeof (gint) +
           5 * sizeof (gpointer) +
-          g_hash_table_size (hash) * 3 * sizeof (gpointer));
+          g_hash_table_size (hash) * (3 * sizeof (gpointer) + data_size));
+}
+
+typedef struct
+{
+  GimpMemsizeFunc func;
+  gint64          memsize;
+  gint64          gui_size;
+} HashMemsize;
+
+static void
+hash_memsize_foreach (gpointer     key,
+                      gpointer     value,
+                      HashMemsize *memsize)
+{
+  gint64 gui_size = 0;
+
+  memsize->memsize  += memsize->func (value, &gui_size);
+  memsize->gui_size += gui_size;
+}
+
+gint64
+gimp_g_hash_table_get_memsize_foreach (GHashTable      *hash,
+                                       GimpMemsizeFunc  func,
+                                       gint64          *gui_size)
+{
+  HashMemsize memsize;
+
+  g_return_val_if_fail (hash != NULL, 0);
+  g_return_val_if_fail (func != NULL, 0);
+
+  memsize.func     = func;
+  memsize.memsize  = 0;
+  memsize.gui_size = 0;
+
+  g_hash_table_foreach (hash, (GHFunc) hash_memsize_foreach, &memsize);
+
+  if (gui_size)
+    *gui_size = memsize.gui_size;
+
+  return memsize.memsize + gimp_g_hash_table_get_memsize (hash, 0);
 }
 
 gint64
@@ -97,10 +138,42 @@ gimp_g_slist_get_memsize (GSList  *slist,
 }
 
 gint64
+gimp_g_slist_get_memsize_foreach (GSList          *slist,
+                                  GimpMemsizeFunc  func,
+                                  gint64          *gui_size)
+{
+  GSList *l;
+  gint64  memsize = 0;
+
+  g_return_val_if_fail (func != NULL, 0);
+
+  for (l = slist; l; l = g_slist_next (l))
+    memsize += sizeof (GSList) + func (l->data, gui_size);
+
+  return memsize;
+}
+
+gint64
 gimp_g_list_get_memsize (GList  *list,
                          gint64  data_size)
 {
   return g_list_length (list) * (data_size + sizeof (GList));
+}
+
+gint64
+gimp_g_list_get_memsize_foreach (GList           *list,
+                                 GimpMemsizeFunc  func,
+                                 gint64          *gui_size)
+{
+  GList  *l;
+  gint64  memsize = 0;
+
+  g_return_val_if_fail (func != NULL, 0);
+
+  for (l = list; l; l = g_list_next (l))
+    memsize += sizeof (GList) + func (l->data, gui_size);
+
+  return memsize;
 }
 
 gint64
@@ -208,6 +281,20 @@ gimp_g_param_spec_get_memsize (GParamSpec *pspec)
     }
 
   return memsize + gimp_g_type_instance_get_memsize ((GTypeInstance *) pspec);
+}
+
+gint64
+gimp_parasite_get_memsize (GimpParasite *parasite,
+                           gint64       *gui_size)
+{
+  gint64 memsize = 0;
+
+  if (parasite)
+    memsize += (sizeof (GimpParasite) +
+                strlen (parasite->name) + 1 +
+                parasite->size);
+
+  return memsize;
 }
 
 

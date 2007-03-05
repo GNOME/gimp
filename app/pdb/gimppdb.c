@@ -60,9 +60,8 @@ static void     gimp_pdb_real_unregister_procedure (GimpPDB       *pdb,
 static void     gimp_pdb_entry_free                (gpointer       key,
                                                     gpointer       value,
                                                     gpointer       user_data);
-static void     gimp_pdb_entry_memsize             (gpointer       key,
-                                                    gpointer       value,
-                                                    gpointer       user_data);
+static gint64   gimp_pdb_entry_get_memsize         (GList         *procedures,
+                                                    gint64        *gui_size);
 
 
 G_DEFINE_TYPE (GimpPDB, gimp_pdb, GIMP_TYPE_OBJECT)
@@ -141,10 +140,11 @@ gimp_pdb_get_memsize (GimpObject *object,
   GimpPDB *pdb     = GIMP_PDB (object);
   gint64   memsize = 0;
 
-  memsize += gimp_g_hash_table_get_memsize (pdb->procedures);
-  memsize += gimp_g_hash_table_get_memsize (pdb->compat_proc_names);
-
-  g_hash_table_foreach (pdb->procedures, gimp_pdb_entry_memsize, &memsize);
+  memsize += gimp_g_hash_table_get_memsize_foreach (pdb->procedures,
+                                                    (GimpMemsizeFunc)
+                                                    gimp_pdb_entry_get_memsize,
+                                                    gui_size);
+  memsize += gimp_g_hash_table_get_memsize (pdb->compat_proc_names, 0);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -452,17 +452,12 @@ gimp_pdb_entry_free (gpointer key,
     }
 }
 
-static void
-gimp_pdb_entry_memsize (gpointer key,
-                        gpointer value,
-                        gpointer user_data)
+static gint64
+gimp_pdb_entry_get_memsize (GList  *procedures,
+                            gint64 *gui_size)
 {
-  if (value)
-    {
-      gint64 *memsize = user_data;
-      GList  *list;
-
-      for (list = value; list; list = g_list_next (list))
-        *memsize += sizeof (GList) + gimp_object_get_memsize (list->data, NULL);
-    }
+  return gimp_g_list_get_memsize_foreach (procedures,
+                                          (GimpMemsizeFunc)
+                                          gimp_object_get_memsize,
+                                          gui_size);
 }

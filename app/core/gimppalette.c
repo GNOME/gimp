@@ -29,6 +29,7 @@
 
 #include "base/temp-buf.h"
 
+#include "gimp-utils.h"
 #include "gimppalette.h"
 #include "gimppalette-load.h"
 #include "gimppalette-save.h"
@@ -66,6 +67,8 @@ static gchar    * gimp_palette_get_extension    (GimpData          *data);
 static GimpData * gimp_palette_duplicate        (GimpData          *data);
 
 static void       gimp_palette_entry_free       (GimpPaletteEntry  *entry);
+static gint64     gimp_palette_entry_get_memsize(GimpPaletteEntry  *entry,
+                                                 gint64            *gui_size);
 
 
 G_DEFINE_TYPE (GimpPalette, gimp_palette, GIMP_TYPE_DATA)
@@ -124,18 +127,12 @@ gimp_palette_get_memsize (GimpObject *object,
                           gint64     *gui_size)
 {
   GimpPalette *palette = GIMP_PALETTE (object);
-  GList       *list;
   gint64       memsize = 0;
 
-  for (list = palette->colors; list; list = g_list_next (list))
-    {
-      GimpPaletteEntry *entry = list->data;
-
-      memsize += sizeof (GList) + sizeof (GimpPaletteEntry);
-
-      if (entry->name)
-        memsize += strlen (entry->name) + 1;
-    }
+  memsize += gimp_g_list_get_memsize_foreach (palette->colors,
+                                              (GimpMemsizeFunc)
+                                              gimp_palette_entry_get_memsize,
+                                              gui_size);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -497,4 +494,16 @@ gimp_palette_entry_free (GimpPaletteEntry *entry)
 
   g_free (entry->name);
   g_free (entry);
+}
+
+static gint64
+gimp_palette_entry_get_memsize (GimpPaletteEntry *entry,
+                                gint64           *gui_size)
+{
+  gint64 memsize = sizeof (GimpPaletteEntry);
+
+  if (entry->name)
+    memsize += strlen (entry->name) + 1;
+
+  return memsize;
 }

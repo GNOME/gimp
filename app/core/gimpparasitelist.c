@@ -149,19 +149,6 @@ gimp_parasite_list_finalize (GObject *object)
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
-static void
-gimp_parasite_list_get_memsize_foreach (gpointer key,
-                                        gpointer p,
-                                        gpointer m)
-{
-  GimpParasite *parasite = p;
-  gint64       *memsize  = m;
-
-  *memsize += (sizeof (GimpParasite) +
-               strlen (parasite->name) + 1 +
-               parasite->size);
-}
-
 static gint64
 gimp_parasite_list_get_memsize (GimpObject *object,
                                 gint64     *gui_size)
@@ -170,13 +157,10 @@ gimp_parasite_list_get_memsize (GimpObject *object,
   gint64            memsize = 0;
 
   if (list->table)
-    {
-      memsize += gimp_g_hash_table_get_memsize (list->table);
-
-      g_hash_table_foreach (list->table,
-                            gimp_parasite_list_get_memsize_foreach,
-                            &memsize);
-    }
+    memsize += gimp_g_hash_table_get_memsize_foreach (list->table,
+                                                      (GimpMemsizeFunc)
+                                                      gimp_parasite_get_memsize,
+                                                      gui_size);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

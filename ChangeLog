@@ -1,3 +1,20 @@
+2007-03-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-types.h: added typdef GimpMemsizeFunc.
+
+	* app/core/gimp-utils.[ch]: added _foreach() variants of
+	GHashTable, GList and GSList functions which take GimpMemsizeFunc
+	callbacks. Added gimp_parasite_get_memsize(). Added "data_size"
+	parameter to gimp_g_hash_table_get_memsize().
+
+	* app/core/gimp.c
+	* app/core/gimppalette.c
+	* app/core/gimpparasitelist.c
+	* app/pdb/gimppdb.c
+	* app/plug-in/gimppluginmanager.c: use the new functions instead
+	of itering manually or ignoring the containers' elements. Changed
+	callers of gimp_g_hash_table_get_memsize().
+
 2007-03-05  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/colorify.c

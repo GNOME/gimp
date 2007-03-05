@@ -20,35 +20,48 @@
 #define __APP_GIMP_UTILS_H__
 
 
-gint64        gimp_g_type_instance_get_memsize (GTypeInstance *instance);
-gint64        gimp_g_object_get_memsize        (GObject       *object);
-gint64        gimp_g_hash_table_get_memsize    (GHashTable    *hash);
-gint64        gimp_g_slist_get_memsize         (GSList        *slist,
-                                                gint64         data_size);
-gint64        gimp_g_list_get_memsize          (GList         *list,
-                                                gint64         data_size);
-gint64        gimp_g_value_get_memsize         (GValue        *value);
-gint64        gimp_g_param_spec_get_memsize    (GParamSpec    *pspec);
+gint64       gimp_g_type_instance_get_memsize      (GTypeInstance   *instance);
+gint64       gimp_g_object_get_memsize             (GObject         *object);
+gint64       gimp_g_hash_table_get_memsize         (GHashTable      *hash,
+                                                    gint64           data_size);
+gint64       gimp_g_hash_table_get_memsize_foreach (GHashTable      *hash,
+                                                    GimpMemsizeFunc  func,
+                                                    gint64          *gui_size);
+gint64       gimp_g_slist_get_memsize              (GSList          *slist,
+                                                    gint64           data_size);
+gint64       gimp_g_slist_get_memsize_foreach      (GSList          *slist,
+                                                    GimpMemsizeFunc  func,
+                                                    gint64          *gui_size);
+gint64       gimp_g_list_get_memsize               (GList           *list,
+                                                    gint64           data_size);
+gint64       gimp_g_list_get_memsize_foreach       (GList            *slist,
+                                                    GimpMemsizeFunc  func,
+                                                    gint64          *gui_size);
+gint64       gimp_g_value_get_memsize              (GValue          *value);
+gint64       gimp_g_param_spec_get_memsize         (GParamSpec      *pspec);
 
-gchar       * gimp_get_default_language        (const gchar   *category);
-GimpUnit      gimp_get_default_unit            (void);
+gint64       gimp_parasite_get_memsize             (GimpParasite    *parasite,
+                                                    gint64          *gui_size);
 
-GParameter  * gimp_parameters_append           (GType          object_type,
-                                                GParameter    *params,
-                                                gint          *n_params,
-                                                ...) G_GNUC_NULL_TERMINATED;
-GParameter  * gimp_parameters_append_valist    (GType          object_type,
-                                                GParameter    *params,
-                                                gint          *n_params,
-                                                va_list        args);
-void          gimp_parameters_free             (GParameter    *params,
-                                                gint           n_params);
+gchar      * gimp_get_default_language             (const gchar     *category);
+GimpUnit     gimp_get_default_unit                 (void);
 
-void          gimp_value_array_truncate        (GValueArray   *args,
-                                                gint           n_values);
+GParameter * gimp_parameters_append                (GType            object_type,
+                                                    GParameter      *params,
+                                                    gint            *n_params,
+                                                    ...) G_GNUC_NULL_TERMINATED;
+GParameter * gimp_parameters_append_valist         (GType            object_type,
+                                                    GParameter      *params,
+                                                    gint            *n_params,
+                                                    va_list          args);
+void         gimp_parameters_free                  (GParameter      *params,
+                                                    gint             n_params);
 
-gchar       * gimp_get_temp_filename           (Gimp          *gimp,
-                                                const gchar   *extension);
+void         gimp_value_array_truncate             (GValueArray     *args,
+                                                    gint             n_values);
+
+gchar      * gimp_get_temp_filename                (Gimp            *gimp,
+                                                    const gchar     *extension);
 
 
 #endif /* __APP_GIMP_UTILS_H__ */

@@ -209,6 +209,13 @@ gimp_plug_in_manager_finalize (GObject *object)
       manager->plug_in_procedures = NULL;
     }
 
+  if (manager->plug_in_defs)
+    {
+      g_slist_foreach (manager->plug_in_defs, (GFunc) g_object_unref, NULL);
+      g_slist_free (manager->plug_in_defs);
+      manager->plug_in_defs = NULL;
+    }
+
   if (manager->shm)
     {
       gimp_plug_in_shm_free (manager->shm);
@@ -248,21 +255,33 @@ gimp_plug_in_manager_get_memsize (GimpObject *object,
   GimpPlugInManager *manager = GIMP_PLUG_IN_MANAGER (object);
   gint64             memsize = 0;
 
-  memsize += gimp_g_slist_get_memsize (manager->load_procs, 0 /* FIXME */);
-  memsize += gimp_g_slist_get_memsize (manager->save_procs, 0 /* FIXME */);
+  memsize += gimp_g_slist_get_memsize_foreach (manager->plug_in_defs,
+                                               (GimpMemsizeFunc)
+                                               gimp_object_get_memsize,
+                                               gui_size);
 
-  memsize += gimp_g_slist_get_memsize (manager->menu_branches,
-                                       0 /* FIXME */);
-  memsize += gimp_g_slist_get_memsize (manager->locale_domains,
-                                       0 /* FIXME */);
-  memsize += gimp_g_slist_get_memsize (manager->help_domains,
-                                       0 /* FIXME */);
+  memsize += gimp_g_slist_get_memsize (manager->plug_in_procedures, 0);
+  memsize += gimp_g_slist_get_memsize (manager->load_procs, 0);
+  memsize += gimp_g_slist_get_memsize (manager->save_procs, 0);
+
+  memsize += gimp_g_slist_get_memsize (manager->menu_branches,  0 /* FIXME */);
+  memsize += gimp_g_slist_get_memsize (manager->locale_domains, 0 /* FIXME */);
+  memsize += gimp_g_slist_get_memsize (manager->help_domains,   0 /* FIXME */);
+
+  memsize += gimp_g_slist_get_memsize_foreach (manager->open_plug_ins,
+                                               (GimpMemsizeFunc)
+                                               gimp_object_get_memsize,
+                                               gui_size);
+  memsize += gimp_g_slist_get_memsize (manager->plug_in_stack, 0 /* FIXME */);
+  memsize += gimp_g_slist_get_memsize (manager->history,       0);
+
+  memsize += 0; /* FIXME manager->shm */
   memsize += gimp_object_get_memsize (GIMP_OBJECT (manager->interpreter_db),
                                       gui_size);
   memsize += gimp_object_get_memsize (GIMP_OBJECT (manager->environ_table),
                                       gui_size);
-  memsize += gimp_g_list_get_memsize (manager->data_list,
-                                      0 /* FIXME */);
+  memsize += 0; /* FIXME manager->plug_in_debug */
+  memsize += gimp_g_list_get_memsize (manager->data_list, 0 /* FIXME */);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);

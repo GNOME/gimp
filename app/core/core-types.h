@@ -173,6 +173,9 @@ typedef void     (* GimpInitStatusFunc)   (const gchar      *text1,
 typedef gboolean (* GimpObjectFilterFunc) (const GimpObject *object,
                                            gpointer          user_data);
 
+typedef gint64   (* GimpMemsizeFunc)      (gpointer          instance,
+                                           gint64           *gui_size);
+
 
 /*  structs  */
 
