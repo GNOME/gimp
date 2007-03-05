@@ -1,3 +1,7 @@
+2007-03-05  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpstrokeeditor.c: added missing cast.
+
 2007-03-05  Michael Natterer  <mitch@gimp.org>
 
 	Makes default Select -> Border behaviour consistent, and makes
