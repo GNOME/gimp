@@ -1,3 +1,11 @@
+2007-03-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimprectangleselecttool.c
+	(gimp_rect_select_tool_execute): if the user clicks inside an
+	existing selection, initialize the rectangle tool to the entire
+	selection, not just to the part of it that is within the active
+	drawable. Also removed some dead code.
+
 2007-03-05  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpstrokeeditor.c: added missing cast.

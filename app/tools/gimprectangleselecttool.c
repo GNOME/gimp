@@ -607,55 +607,17 @@ gimp_rect_select_tool_execute (GimpRectangleTool *rectangle,
 
       /*  if the click was inside the marching ants  */
       if (gimp_pickable_get_opacity_at (GIMP_PICKABLE (selection),
-                                        pressx, pressy) > 127)
+                                        pressx, pressy) > BOUNDARY_HALF_WAY)
         {
-          const BoundSeg *segs_in;
-          const BoundSeg *segs_out;
-          gint            n_segs_in;
-          gint            n_segs_out;
+          gint x1, y1, x2, y2;
 
-          if (gimp_channel_boundary (selection,
-                                     &segs_in, &segs_out,
-                                     &n_segs_in, &n_segs_out,
-                                     0, 0, 0, 0))
+          if (gimp_channel_bounds (selection, &x1, &y1, &x2, &y2))
             {
-              gint x1 = 0;
-              gint y1 = 0;
-              gint x2 = 0;
-              gint y2 = 0;
-
-              if (n_segs_in > 0)
-                {
-                  gint i;
-
-                  x1 = segs_in[0].x1;
-                  x2 = segs_in[0].x1;
-                  y1 = segs_in[0].y1;
-                  y2 = segs_in[0].y1;
-
-                  for (i = 1; i < n_segs_in; i++)
-                    {
-                      x1 = MIN (x1, segs_in[i].x1);
-                      x2 = MAX (x2, segs_in[i].x1);
-                      y1 = MIN (y1, segs_in[i].y1);
-                      y2 = MAX (y2, segs_in[i].y1);
-                    }
-                }
-
               g_object_set (rectangle,
                             "x1", x1,
                             "y1", y1,
                             "x2", x2,
                             "y2", y2,
-                            NULL);
-            }
-          else
-            {
-              g_object_set (rectangle,
-                            "x1", 0,
-                            "y1", 0,
-                            "x2", image->width,
-                            "y2", image->height,
                             NULL);
             }
 
