@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-23 10:39+0100\n"
-"PO-Revision-Date: 2007-02-23 10:50+0100\n"
+"POT-Creation-Date: 2007-03-05 11:07+0100\n"
+"PO-Revision-Date: 2007-03-05 11:15+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -245,8 +245,8 @@ msgstr "Coseno"
 #: ../plug-ins/FractalExplorer/Dialogs.c:1081
 #: ../plug-ins/Lighting/lighting_ui.c:383
 #: ../plug-ins/common/CML_explorer.c:166 ../plug-ins/common/align_layers.c:421
-#: ../plug-ins/common/align_layers.c:452 ../plug-ins/common/postscript.c:3184
-#: ../plug-ins/common/postscript.c:3196 ../plug-ins/common/psp.c:418
+#: ../plug-ins/common/align_layers.c:452 ../plug-ins/common/postscript.c:3202
+#: ../plug-ins/common/postscript.c:3214 ../plug-ins/common/psp.c:418
 #: ../plug-ins/fits/fits.c:1019
 msgid "None"
 msgstr "Nessuna"
@@ -345,7 +345,7 @@ msgstr "_Frattali"
 #: ../plug-ins/common/mng.c:950 ../plug-ins/common/pat.c:447
 #: ../plug-ins/common/pcx.c:588 ../plug-ins/common/pix.c:508
 #: ../plug-ins/common/png.c:1243 ../plug-ins/common/pnm.c:929
-#: ../plug-ins/common/postscript.c:1185 ../plug-ins/common/psd_save.c:1452
+#: ../plug-ins/common/postscript.c:1194 ../plug-ins/common/psd_save.c:1458
 #: ../plug-ins/common/raw.c:528 ../plug-ins/common/raw.c:555
 #: ../plug-ins/common/spheredesigner.c:2119 ../plug-ins/common/sunras.c:507
 #: ../plug-ins/common/tga.c:1027 ../plug-ins/common/tiff.c:2171
@@ -386,8 +386,8 @@ msgstr "Salva parametri frattali"
 #: ../plug-ins/common/pat.c:317 ../plug-ins/common/pcx.c:309
 #: ../plug-ins/common/pix.c:329 ../plug-ins/common/png.c:707
 #: ../plug-ins/common/pnm.c:480 ../plug-ins/common/poppler.c:368
-#: ../plug-ins/common/postscript.c:1012 ../plug-ins/common/postscript.c:2993
-#: ../plug-ins/common/psd.c:1880 ../plug-ins/common/psp.c:1460
+#: ../plug-ins/common/postscript.c:1021 ../plug-ins/common/postscript.c:3002
+#: ../plug-ins/common/psd.c:1899 ../plug-ins/common/psp.c:1460
 #: ../plug-ins/common/raw.c:243 ../plug-ins/common/raw.c:645
 #: ../plug-ins/common/spheredesigner.c:2009 ../plug-ins/common/sunras.c:379
 #: ../plug-ins/common/svg.c:316 ../plug-ins/common/svg.c:686
@@ -1026,7 +1026,7 @@ msgstr "Posizione oggetto Z nello spazio XYZ"
 
 #. Rotation
 #: ../plug-ins/MapObject/mapobject_ui.c:1047
-#: ../plug-ins/common/postscript.c:3382
+#: ../plug-ins/common/postscript.c:3400
 msgid "Rotation"
 msgstr "Rotazione"
 
@@ -1142,7 +1142,7 @@ msgstr "Mappa colore non valida"
 #: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:314
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:714
 #: ../plug-ins/common/pnm.c:485 ../plug-ins/common/poppler.c:414
-#: ../plug-ins/common/postscript.c:1018 ../plug-ins/common/psd.c:1885
+#: ../plug-ins/common/postscript.c:1027 ../plug-ins/common/psd.c:1904
 #: ../plug-ins/common/raw.c:650 ../plug-ins/common/sunras.c:433
 #: ../plug-ins/common/tga.c:416 ../plug-ins/common/tiff.c:588
 #: ../plug-ins/common/wmf.c:954 ../plug-ins/common/xbm.c:725
@@ -1187,7 +1187,7 @@ msgstr "Profondità di colore (in bit) non supportata o non valida."
 #: ../plug-ins/common/gifload.c:879 ../plug-ins/common/pcx.c:339
 #: ../plug-ins/common/pcx.c:345 ../plug-ins/common/pix.c:368
 #: ../plug-ins/common/png.c:835 ../plug-ins/common/pnm.c:564
-#: ../plug-ins/common/psd.c:2310 ../plug-ins/common/raw.c:691
+#: ../plug-ins/common/psd.c:2327 ../plug-ins/common/raw.c:691
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:917
 #: ../plug-ins/common/tga.c:928 ../plug-ins/common/tiff.c:945
 #: ../plug-ins/common/tile.c:265 ../plug-ins/common/xbm.c:866
@@ -1221,8 +1221,8 @@ msgstr "Il canale alfa verrà ignorato."
 #: ../plug-ins/common/gih.c:1263 ../plug-ins/common/gtm.c:245
 #: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:550
 #: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1250
-#: ../plug-ins/common/pnm.c:934 ../plug-ins/common/postscript.c:1190
-#: ../plug-ins/common/psd_save.c:1457 ../plug-ins/common/sunras.c:512
+#: ../plug-ins/common/pnm.c:934 ../plug-ins/common/postscript.c:1199
+#: ../plug-ins/common/psd_save.c:1463 ../plug-ins/common/sunras.c:512
 #: ../plug-ins/common/tga.c:1032 ../plug-ins/common/tiff.c:2179
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:570 ../plug-ins/fits/fits.c:459
@@ -2240,7 +2240,7 @@ msgstr "_Azimut:"
 msgid "_Elevation:"
 msgstr "_Elevazione:"
 
-#: ../plug-ins/common/bumpmap.c:997 ../plug-ins/common/postscript.c:3335
+#: ../plug-ins/common/bumpmap.c:997 ../plug-ins/common/postscript.c:3353
 msgid "_X offset:"
 msgstr "Scostamento _X:"
 
@@ -2252,7 +2252,7 @@ msgstr ""
 "Lo spostamento può essere impostato trascinando l'anteprima con il tasto "
 "centrale del mouse."
 
-#: ../plug-ins/common/bumpmap.c:1011 ../plug-ins/common/postscript.c:3344
+#: ../plug-ins/common/bumpmap.c:1011 ../plug-ins/common/postscript.c:3362
 msgid "_Y offset:"
 msgstr "Scostamento _Y:"
 
@@ -3409,7 +3409,7 @@ msgid "Destripe"
 msgstr "Destriscia"
 
 #: ../plug-ins/common/destripe.c:472 ../plug-ins/common/gtm.c:583
-#: ../plug-ins/common/postscript.c:3109 ../plug-ins/common/postscript.c:3317
+#: ../plug-ins/common/postscript.c:3126 ../plug-ins/common/postscript.c:3335
 #: ../plug-ins/common/raw.c:1035 ../plug-ins/common/smooth_palette.c:436
 #: ../plug-ins/common/tile.c:423 ../plug-ins/imagemap/imap_cmd_guides.c:165
 #: ../plug-ins/imagemap/imap_rectangle.c:403
@@ -3439,7 +3439,7 @@ msgstr "'%s' non è un file DICOM"
 msgid "Cannot save images with alpha channel."
 msgstr "Impossibile salvare immagini con canali alfa."
 
-#: ../plug-ins/common/dicom.c:676 ../plug-ins/common/postscript.c:1176
+#: ../plug-ins/common/dicom.c:676 ../plug-ins/common/postscript.c:1185
 #: ../plug-ins/common/xwd.c:556 ../plug-ins/fits/fits.c:445
 #: ../plug-ins/xjt/xjt.c:1690
 msgid "Cannot operate on unknown image types."
@@ -3683,8 +3683,8 @@ msgid "Engrave"
 msgstr "Incisione"
 
 #: ../plug-ins/common/engrave.c:245 ../plug-ins/common/film.c:1003
-#: ../plug-ins/common/gtm.c:599 ../plug-ins/common/postscript.c:3118
-#: ../plug-ins/common/postscript.c:3326 ../plug-ins/common/raw.c:1048
+#: ../plug-ins/common/gtm.c:599 ../plug-ins/common/postscript.c:3136
+#: ../plug-ins/common/postscript.c:3344 ../plug-ins/common/raw.c:1048
 #: ../plug-ins/common/smooth_palette.c:441 ../plug-ins/common/tile.c:427
 #: ../plug-ins/imagemap/imap_cmd_guides.c:175
 #: ../plug-ins/imagemap/imap_rectangle.c:410
@@ -6249,7 +6249,7 @@ msgstr "PDF"
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/poppler.c:454 ../plug-ins/common/postscript.c:1100
+#: ../plug-ins/common/poppler.c:454 ../plug-ins/common/postscript.c:1109
 #, c-format
 msgid "%s-pages"
 msgstr "%s-pagine"
@@ -6258,7 +6258,7 @@ msgstr "%s-pagine"
 msgid "Import from PDF"
 msgstr "Importa da file PDF"
 
-#: ../plug-ins/common/poppler.c:655 ../plug-ins/common/postscript.c:3048
+#: ../plug-ins/common/poppler.c:655 ../plug-ins/common/postscript.c:3057
 msgid "_Import"
 msgstr "_Importa"
 
@@ -6279,28 +6279,28 @@ msgstr "_Risoluzione:"
 msgid "A_ntialiasing"
 msgstr "A_ntialiasing"
 
-#: ../plug-ins/common/postscript.c:588 ../plug-ins/common/postscript.c:680
+#: ../plug-ins/common/postscript.c:597 ../plug-ins/common/postscript.c:689
 msgid "PostScript document"
 msgstr "Documento postscript"
 
-#: ../plug-ins/common/postscript.c:607 ../plug-ins/common/postscript.c:696
+#: ../plug-ins/common/postscript.c:616 ../plug-ins/common/postscript.c:705
 msgid "Encapsulated PostScript image"
 msgstr "Immagine postscript incapsulata"
 
-#: ../plug-ins/common/postscript.c:627
+#: ../plug-ins/common/postscript.c:636
 msgid "PDF document"
 msgstr "Documento PDF"
 
-#: ../plug-ins/common/postscript.c:1025
+#: ../plug-ins/common/postscript.c:1034
 #, c-format
 msgid "Could not interpret '%s'"
 msgstr "Impossibile interpretare '%s'"
 
-#: ../plug-ins/common/postscript.c:1165
+#: ../plug-ins/common/postscript.c:1174
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr "Il salvataggio PostScript non può gestire immagini con canali alfa"
 
-#: ../plug-ins/common/postscript.c:1692 ../plug-ins/common/postscript.c:1722
+#: ../plug-ins/common/postscript.c:1701 ../plug-ins/common/postscript.c:1731
 #, c-format
 msgid ""
 "Error starting Ghostscript. Make sure that Ghostscript is installed and - if "
@@ -6313,114 +6313,114 @@ msgstr ""
 "comunicare a GIMP la sua posizione.\n"
 "(%s)"
 
-#: ../plug-ins/common/postscript.c:1886 ../plug-ins/common/tiff.c:947
+#: ../plug-ins/common/postscript.c:1895 ../plug-ins/common/tiff.c:947
 #, c-format
 msgid "Page %d"
 msgstr "Pagina %d"
 
-#: ../plug-ins/common/postscript.c:2554 ../plug-ins/common/postscript.c:2687
-#: ../plug-ins/common/postscript.c:2839 ../plug-ins/common/postscript.c:2968
+#: ../plug-ins/common/postscript.c:2563 ../plug-ins/common/postscript.c:2696
+#: ../plug-ins/common/postscript.c:2848 ../plug-ins/common/postscript.c:2977
 #: ../plug-ins/common/sunras.c:1446 ../plug-ins/common/sunras.c:1554
 #: ../plug-ins/fits/fits.c:828 ../plug-ins/fits/fits.c:952
 msgid "Write error occurred"
 msgstr "Errore di scrittura"
 
-#: ../plug-ins/common/postscript.c:3043
+#: ../plug-ins/common/postscript.c:3052
 msgid "Import from PostScript"
 msgstr "Importa da file postScript"
 
 #. Rendering
-#: ../plug-ins/common/postscript.c:3084
+#: ../plug-ins/common/postscript.c:3093
 msgid "Rendering"
 msgstr "Rendering"
 
 #. Resolution
-#: ../plug-ins/common/postscript.c:3100 ../plug-ins/common/svg.c:880
+#: ../plug-ins/common/postscript.c:3109 ../plug-ins/common/svg.c:880
 #: ../plug-ins/common/wmf.c:670
 msgid "Resolution:"
 msgstr "Risoluzione:"
 
-#: ../plug-ins/common/postscript.c:3130
+#: ../plug-ins/common/postscript.c:3148
 msgid "Pages:"
 msgstr "Pagine:"
 
-#: ../plug-ins/common/postscript.c:3137
+#: ../plug-ins/common/postscript.c:3155
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Pagine da caricare (per es.: 1-4 o 1,3,5-7)"
 
-#: ../plug-ins/common/postscript.c:3141
+#: ../plug-ins/common/postscript.c:3159
 #: ../plug-ins/common/spheredesigner.c:2649
 msgid "Layers"
 msgstr "Livelli"
 
-#: ../plug-ins/common/postscript.c:3143
+#: ../plug-ins/common/postscript.c:3161
 msgid "Images"
 msgstr "Immagini"
 
-#: ../plug-ins/common/postscript.c:3146
+#: ../plug-ins/common/postscript.c:3164
 msgid "Open as"
 msgstr "Apri come"
 
-#: ../plug-ins/common/postscript.c:3150
+#: ../plug-ins/common/postscript.c:3168
 msgid "Try Bounding Box"
 msgstr "Prova a incorniciare"
 
 #. Colouring
-#: ../plug-ins/common/postscript.c:3163
+#: ../plug-ins/common/postscript.c:3181
 msgid "Coloring"
 msgstr "Colorazione"
 
-#: ../plug-ins/common/postscript.c:3167
+#: ../plug-ins/common/postscript.c:3185
 msgid "B/W"
 msgstr "Bianco/Nero"
 
-#: ../plug-ins/common/postscript.c:3168 ../plug-ins/imagemap/imap_menu.c:223
+#: ../plug-ins/common/postscript.c:3186 ../plug-ins/imagemap/imap_menu.c:223
 #: ../plug-ins/rcm/rcm_dialog.c:419
 msgid "Gray"
 msgstr "Grigio"
 
-#: ../plug-ins/common/postscript.c:3169 ../plug-ins/common/xpm.c:468
+#: ../plug-ins/common/postscript.c:3187 ../plug-ins/common/xpm.c:468
 #: ../plug-ins/gimpressionist/color.c:48
 #: ../plug-ins/gimpressionist/general.c:152
 #: ../plug-ins/imagemap/imap_menu.c:222
 msgid "Color"
 msgstr "Colore"
 
-#: ../plug-ins/common/postscript.c:3170 ../plug-ins/fits/fits.c:1007
+#: ../plug-ins/common/postscript.c:3188 ../plug-ins/fits/fits.c:1007
 msgid "Automatic"
 msgstr "Automatico"
 
-#: ../plug-ins/common/postscript.c:3180
+#: ../plug-ins/common/postscript.c:3198
 msgid "Text antialiasing"
 msgstr "Antialiasing del testo"
 
-#: ../plug-ins/common/postscript.c:3185 ../plug-ins/common/postscript.c:3197
+#: ../plug-ins/common/postscript.c:3203 ../plug-ins/common/postscript.c:3215
 msgid "Weak"
 msgstr "Debole"
 
-#: ../plug-ins/common/postscript.c:3186 ../plug-ins/common/postscript.c:3198
+#: ../plug-ins/common/postscript.c:3204 ../plug-ins/common/postscript.c:3216
 msgid "Strong"
 msgstr "Forte"
 
-#: ../plug-ins/common/postscript.c:3192
+#: ../plug-ins/common/postscript.c:3210
 msgid "Graphic antialiasing"
 msgstr "Antialiasing grafico"
 
-#: ../plug-ins/common/postscript.c:3270
+#: ../plug-ins/common/postscript.c:3288
 msgid "Save as PostScript"
 msgstr "Salva come PostScript"
 
 #. Image Size
-#: ../plug-ins/common/postscript.c:3301
+#: ../plug-ins/common/postscript.c:3319
 #: ../plug-ins/print/print-page-layout.c:202
 msgid "Image Size"
 msgstr "Dimensione immagine"
 
-#: ../plug-ins/common/postscript.c:3350
+#: ../plug-ins/common/postscript.c:3368
 msgid "_Keep aspect ratio"
 msgstr "_Mantieni le proporzioni"
 
-#: ../plug-ins/common/postscript.c:3356
+#: ../plug-ins/common/postscript.c:3374
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -6429,36 +6429,36 @@ msgstr ""
 "dimensione data senza cambiare le proporzioni."
 
 #. Unit
-#: ../plug-ins/common/postscript.c:3366
+#: ../plug-ins/common/postscript.c:3384
 msgid "Unit"
 msgstr "Unità"
 
-#: ../plug-ins/common/postscript.c:3370
+#: ../plug-ins/common/postscript.c:3388
 msgid "_Inch"
 msgstr "Poll_ici"
 
-#: ../plug-ins/common/postscript.c:3371
+#: ../plug-ins/common/postscript.c:3389
 msgid "_Millimeter"
 msgstr "_Millimetri"
 
 #. Format
-#: ../plug-ins/common/postscript.c:3397
+#: ../plug-ins/common/postscript.c:3415
 msgid "Output"
 msgstr "Uscita"
 
-#: ../plug-ins/common/postscript.c:3403
+#: ../plug-ins/common/postscript.c:3421
 msgid "_PostScript level 2"
 msgstr "_PostScript Livello 2"
 
-#: ../plug-ins/common/postscript.c:3412
+#: ../plug-ins/common/postscript.c:3430
 msgid "_Encapsulated PostScript"
 msgstr "Postscript inca_psulato"
 
-#: ../plug-ins/common/postscript.c:3421
+#: ../plug-ins/common/postscript.c:3439
 msgid "P_review"
 msgstr "_Anteprima"
 
-#: ../plug-ins/common/postscript.c:3442
+#: ../plug-ins/common/postscript.c:3460
 msgid "Preview _size:"
 msgstr "_Dimensioni anteprima:"
 
@@ -6478,11 +6478,64 @@ msgstr "Navigatore di procedure"
 msgid "Invalid UTF-8 string in PSD file"
 msgstr "Stringa UTF-8 non valida nel file PSD"
 
+#: ../plug-ins/common/psd.c:619
+msgid "Cannot handle bitmap PSD files"
+msgstr "Impossibile gestire i file bitmap PSD"
+
+#: ../plug-ins/common/psd.c:628
+msgid "Cannot handle PSD files in CMYK color"
+msgstr "Impossibile gestire i file PSD a colori CMYK"
+
+#: ../plug-ins/common/psd.c:631
+msgid "Cannot handle PSD files in Multichannel color"
+msgstr "Impossibile gestire i file PSD a colori multicanale"
+
+#: ../plug-ins/common/psd.c:634
+msgid "Cannot handle PSD files in Duotone color"
+msgstr "Impossibile gestire i file PSD a colori Duotone"
+
+#: ../plug-ins/common/psd.c:637
+msgid "Cannot handle PSD files in Lab color"
+msgstr "Impossibile gestire i file PSD a colori Lab"
+
+#: ../plug-ins/common/psd.c:640
+#, c-format
+msgid "Cannot handle the color mode %d of the PSD file"
+msgstr "Impossibile gestire la modalità di colore %d del file PSD"
+
+#: ../plug-ins/common/psd.c:734
+#, c-format
+msgid "Cannot handle PSD file with more than %d channels"
+msgstr "Impossibile gestire il file PSD con più di %d canali"
+
+#: ../plug-ins/common/psd.c:2262
+msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
+msgstr "Impossibile gestire i file PSD a colori CMYK con più di 5 canali"
+
+#: ../plug-ins/common/psd.c:2277
+#, c-format
+msgid "Cannot handle image mode %d (%s)"
+msgstr "Impossibile gestire la modalità immagine %d (%s)"
+
+#: ../plug-ins/common/psd.c:2286
+#, c-format
+msgid "Cannot handle %d bits per channel PSD files"
+msgstr "Impossibile gestire i file PSD con %d bit per canale"
+
+#: ../plug-ins/common/psd.c:3019
+msgid "This is not an Adobe Photoshop PSD file"
+msgstr "Questo non è un file PSD Adobe Photoshop"
+
+#: ../plug-ins/common/psd.c:3024
+#, c-format
+msgid "The PSD file has bad version number '%d', not 1"
+msgstr "Il file PSD possiede il numero di versione \"%d\", diverso da 1"
+
 #: ../plug-ins/common/psd_save.c:198
 msgid "Photoshop image"
 msgstr "Immagine Photoshop"
 
-#: ../plug-ins/common/psd_save.c:322
+#: ../plug-ins/common/psd_save.c:328
 #, c-format
 msgid ""
 "Unable to save layer with mode '%s'.  Either the PSD file format or the save "
@@ -6492,12 +6545,12 @@ msgstr ""
 "o il plug-in di salvataggio non lo supportano; in alternativa si fa uso "
 "della modalità normale."
 
-#: ../plug-ins/common/psd_save.c:523
+#: ../plug-ins/common/psd_save.c:529
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr ""
 "Errore: impossibile convertire l'immagine di tipo base GIMP in modalità PSD"
 
-#: ../plug-ins/common/psd_save.c:1428
+#: ../plug-ins/common/psd_save.c:1434
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
@@ -6506,7 +6559,7 @@ msgstr ""
 "Impossibile salvare '%s'. Il formato del file psd non supporta immagini più "
 "larghe o alte di 30000 pixel."
 
-#: ../plug-ins/common/psd_save.c:1440
+#: ../plug-ins/common/psd_save.c:1446
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
@@ -6918,79 +6971,80 @@ msgstr "_Tenuta:"
 msgid "H_ue:"
 msgstr "T_onalità:"
 
-#: ../plug-ins/common/screenshot.c:230
+#: ../plug-ins/common/screenshot.c:233
 msgid "Create an image from an area of the screen"
 msgstr "Crea un'immagine da un'area dello schermo"
 
-#: ../plug-ins/common/screenshot.c:243
+#: ../plug-ins/common/screenshot.c:246
 msgid "_Screenshot..."
 msgstr "_Schermata..."
 
-#: ../plug-ins/common/screenshot.c:408
+#: ../plug-ins/common/screenshot.c:411
 msgid "Error selecting the window"
 msgstr "Errore nella selezione della finestra"
 
-#: ../plug-ins/common/screenshot.c:711
+#: ../plug-ins/common/screenshot.c:715
 msgid "Importing screenshot"
 msgstr "Importazione schermata"
 
-#: ../plug-ins/common/screenshot.c:735 ../plug-ins/common/screenshot.c:903
+#: ../plug-ins/common/screenshot.c:739 ../plug-ins/common/screenshot.c:907
 msgid "Screenshot"
 msgstr "Schermata"
 
-#: ../plug-ins/common/screenshot.c:800
+#: ../plug-ins/common/screenshot.c:804
 msgid "Specified window not found"
 msgstr "La finestra specificata non è stata trovata"
 
-#: ../plug-ins/common/screenshot.c:828
+#: ../plug-ins/common/screenshot.c:832
 msgid "There was an error taking the screenshot."
 msgstr "Si è verificato un errore durante la foto della schermata."
 
-#: ../plug-ins/common/screenshot.c:912
+#: ../plug-ins/common/screenshot.c:916
 msgid "S_nap"
 msgstr "Scat_ta"
 
-#: ../plug-ins/common/screenshot.c:941
+#: ../plug-ins/common/screenshot.c:945
 msgid "After the delay, the screenshot is taken."
 msgstr "Dopo il ritardo verrà fotografata la schermata."
 
-#: ../plug-ins/common/screenshot.c:943
+#: ../plug-ins/common/screenshot.c:947
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
-msgstr "Dopo il ritardo, usare il mouse per selezionare la regione da fotografare."
+msgstr ""
+"Dopo il ritardo, usare il mouse per selezionare la regione da fotografare."
 
-#: ../plug-ins/common/screenshot.c:946
+#: ../plug-ins/common/screenshot.c:950
 msgid "At the end of the delay, click in a window to snap it."
 msgstr "Alla fine del ritardo, fare clic in una finestra per fotografarla."
 
 #. Area
-#: ../plug-ins/common/screenshot.c:952
+#: ../plug-ins/common/screenshot.c:956
 msgid "Area"
 msgstr "Area"
 
-#: ../plug-ins/common/screenshot.c:963
+#: ../plug-ins/common/screenshot.c:967
 msgid "Take a screenshot of a single _window"
 msgstr "Cattura una schermata di una _finestra singola"
 
-#: ../plug-ins/common/screenshot.c:984
+#: ../plug-ins/common/screenshot.c:988
 msgid "Include window _decoration"
 msgstr "Includi _decorazioni della finestra"
 
-#: ../plug-ins/common/screenshot.c:1000
+#: ../plug-ins/common/screenshot.c:1004
 msgid "Take a screenshot of the entire _screen"
 msgstr "Cattura l'immagine di tutto lo _schermo"
 
-#: ../plug-ins/common/screenshot.c:1017
+#: ../plug-ins/common/screenshot.c:1021
 msgid "Select a _region to grab"
 msgstr "Seleziona la _regione da catturare"
 
 #. Delay
-#: ../plug-ins/common/screenshot.c:1032
+#: ../plug-ins/common/screenshot.c:1036
 msgid "Delay"
 msgstr "Ritardo"
 
 #. this is the unit label of a spinbutton
-#: ../plug-ins/common/screenshot.c:1054
+#: ../plug-ins/common/screenshot.c:1058
 msgid "seconds"
 msgstr "secondi"
 
