@@ -1,3 +1,7 @@
+2007-03-06  Sven Neumann  <sven@gimp.org>
+
+	* app/app.types: added GimpSubProgress.
+
 2007-02-15  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/visual-index.xml: updated the widget gallery.

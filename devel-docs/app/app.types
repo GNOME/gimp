@@ -259,6 +259,7 @@ gimp_stroke_desc_get_type
 gimp_stroke_editor_get_type
 gimp_stroke_get_type
 gimp_stroke_options_get_type
+gimp_sub_progress_get_type
 gimp_template_editor_get_type
 gimp_template_get_type
 gimp_template_view_get_type
