@@ -1,3 +1,16 @@
+2007-03-06  Sven Neumann  <sven@gimp.org>
+
+	Patch by Martin Nordholts. Fixes bug #328001.
+
+	* app/tools/gimpeditselectiontool.[ch] (process_event_queue_keys):
+	Made process_event_queue_keys public for use of gimpmovetool.c.
+	Still needs to be renamed and moved to another place.
+
+	* app/tools/gimpmovetool.c (gimp_move_tool_key_press): Created
+	gimp_move_tool_key_press() which takes care of events that
+	gimp_edit_selection_tool_key_press() is not is able to
+	handle. Otherwise just pass key events on to that method.
+
 2007-03-05  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: Make --without-script-fu work. Also make the spacing
@@ -39,7 +52,7 @@
 	* app/core/gimpselection.c: Added gboolean edge_lock to function
 	calls/signatures.
 
-	* app/pdb/selection_cmds.c: Regenerated. 
+	* app/pdb/selection_cmds.c: Regenerated.
 
 2007-03-05  Michael Natterer  <mitch@gimp.org>
 
@@ -68,11 +81,11 @@
 
 	* plug-ins/common/psd.c: De-tabified. Fixed limit checks on resource
 	ID's used for path data. Added comments showing decimal value of image
-	resource ID's 
+	resource ID's
 
 	* plug-ins/common/psd_save.c: De-tabified. Added support for layer
 	modes HARDLIGHT_MODE and SOFTLIGHT_MODE. Added comments showing
-	decimal value of image resource ID's 
+	decimal value of image resource ID's
 
 2007-03-04  Michael Natterer  <mitch@gimp.org>
 
@@ -120,7 +133,7 @@
 
 2007-03-01  Raphaël Quinet  <raphael@gimp.org>
 
-	* app/tools/gimpmeasuretool.c (gimp_measure_tool_cursor_update): 
+	* app/tools/gimpmeasuretool.c (gimp_measure_tool_cursor_update):
 	don't suggest Shift when a new point cannot be added to point 0.
 
 2007-02-28  Raphaël Quinet  <raphael@gimp.org>
@@ -140,7 +153,7 @@
 
 2007-02-28  João S. O. Bueno Calligaris <gwidion@mpc.com.br>
 
-        * app/tools/gimprectangletool.c: removes recursive code 
+        * app/tools/gimprectangletool.c: removes recursive code
 	when adjusting rectangle size. Fixes bug #410234.
 
 2007-02-28  Sven Neumann  <sven@gimp.org>
@@ -575,7 +588,7 @@
 	* app/plug-in/gimpplugin.c (gimp_plug_in_add_temp_proc)
 	* app/plug-in/gimpplugindef.c (gimp_plug_in_def_add_procedure):
 	remove duplicate procedures before adding the new one.
-	
+
 	* app/plug-in/gimpplugin-message.c
 	(gimp_plug_in_handle_proc_install): don't remove duplicates here.
 
@@ -1098,7 +1111,7 @@
 
 	* app/core/gimpundo.[ch]: made time a property and added utility
 	functions to work the undo's age.
-	
+
 	* app/tools/gimptexttool.c: use the utility functions.
 
 2007-02-05  Sven Neumann  <sven@gimp.org>
@@ -1566,7 +1579,7 @@
 
 	Make the handling of console output make more sense Win32. Should
 	mostly fix #400927.
-	    
+
 	* app/app_procs.c (app_exit): Drop the Win32 "This console window
 	will close in ten seconds" message from here.
 	(app_run): Drop the call to FreeConsole() from here. GIMP is built
@@ -1734,7 +1747,7 @@
 2007-01-21  Michael Natterer  <mitch@gimp.org>
 
 	* modules/controller_midi.c (midi_set_device): set the name
-	of the alsa client to "GIMP" and the name of the port to 
+	of the alsa client to "GIMP" and the name of the port to
 	"GIMP MIDI Input Controller". Provides reasonable strings in
 	apps which display "client::port" as well as in apps which
 	display only "port".
@@ -1752,7 +1765,7 @@
 	gimp_statusbar_push_length().
 
 	* app/tools/gimpcolortool.c
-	* app/tools/gimpeditselectiontool.c 
+	* app/tools/gimpeditselectiontool.c
 	* app/tools/gimpmovetool.c
 	* app/tools/gimprectangletool.c: use the updated functions.
 
@@ -2106,10 +2119,10 @@
 	* tools/pdbgen/pdb/drawable.pdb
 	* tools/pdbgen/pdb/gradient_select.pdb: improved wording and fixed
 	spelling errors.
-	
+
 	* libgimp/gimp.c: fixed spelling errors.
 
-	* app/pdb/*.h: 
+	* app/pdb/*.h:
 	* libgimp/gimp*_pdb.[ch]: regenerated.
 
 2007-01-08  Sven Neumann  <sven@gimp.org>
@@ -2321,7 +2334,7 @@
 	* print-draw-page.c: fill rectangles instead of masking the spans.
 
 2006-12-28  Seth Burgess  <sjburges@gimp.org>
-	
+
 	* app/widgets/gimpdasheditor.h
 	* app/widgets/gimphistogramview.h: fixed improper _GET_CLASS macros
 

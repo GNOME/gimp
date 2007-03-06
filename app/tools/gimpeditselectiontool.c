@@ -872,10 +872,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
   GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 }
 
-/* could move this function to a more central location
- * so it can be used by other tools?
- */
-static gint
+gint
 process_event_queue_keys (GdkEventKey *kevent,
                           ... /* GdkKeyType, GdkModifierType, value ... 0 */)
 {
@@ -993,7 +990,7 @@ gimp_edit_selection_tool_key_press (GimpTool    *tool,
       kevent->keyval != GDK_Down)
     return FALSE;
 
-  /*  adapt arrow velocity to the zoom factor  */
+  /*  adapt arrow velocity to the zoom factor when holding <shift>  */
   velocity = (ARROW_VELOCITY /
               gimp_zoom_model_get_factor (GIMP_DISPLAY_SHELL (display->shell)->zoom));
   velocity = MAX (1.0, velocity);

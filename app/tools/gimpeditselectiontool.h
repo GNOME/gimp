@@ -73,5 +73,10 @@ gboolean   gimp_edit_selection_tool_key_press (GimpTool          *tool,
                                                GdkEventKey       *kevent,
                                                GimpDisplay       *display);
 
+/* could move this function to a more central location
+ * so it can be used by other tools?
+ */
+gint       process_event_queue_keys           (GdkEventKey *kevent,
+                                               ... /* GdkKeyType, GdkModifierType, value ... 0 */);
 
 #endif  /*  __GIMP_EDIT_SELECTION_TOOL_H__  */
