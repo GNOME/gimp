@@ -1,3 +1,9 @@
+2007-03-07  Sven Neumann  <sven@gimp.org>
+
+	* app/base/pixel-surround.c: keep an internal buffer filled with
+	the background color and use it for out of bounds requests. Speed
+	up filling the internal buffer by copying data row-by-row.
+
 2007-03-06  Sven Neumann  <sven@gimp.org>
 
 	Patch by Martin Nordholts. Fixes bug #328001.

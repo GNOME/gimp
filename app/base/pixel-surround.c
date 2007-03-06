@@ -34,21 +34,25 @@ struct _PixelSurround
   gint         bpp;               /*  bytes per pixel in tile manager     */
   gint         w;                 /*  width of pixel surround area        */
   gint         h;                 /*  height of pixel surround area       */
-  guchar       bg[MAX_CHANNELS];  /*  color to use for uncovered regions  */
   Tile        *tile;              /*  locked tile (may be NULL)           */
   gint         tile_x;            /*  origin of locked tile               */
   gint         tile_y;            /*  origin of locked tile               */
   gint         tile_w;            /*  width of locked tile                */
   gint         tile_h;            /*  height of locked tile               */
-  guchar       buf[0];
+  gint         rowstride;
+  guchar      *bg;
+  guchar      *buf;
 };
 
 
 /*  inlining this function gives a few percent speedup  */
-static inline gboolean
-pixel_surround_get_tile (PixelSurround *surround,
+static inline const guchar *
+pixel_surround_get_data (PixelSurround *surround,
                          gint           x,
-                         gint           y)
+                         gint           y,
+                         gint          *w,
+                         gint          *h,
+                         gint          *rowstride)
 {
   /*  do we still have a tile lock that we can use?  */
   if (surround->tile)
@@ -63,19 +67,32 @@ pixel_surround_get_tile (PixelSurround *surround,
 
   /*  if not, try to get one for the target pixel  */
   if (! surround->tile)
+    surround->tile = tile_manager_get_tile (surround->mgr, x, y, TRUE, FALSE);
+
+  if (surround->tile)
     {
-      surround->tile = tile_manager_get_tile (surround->mgr, x, y, TRUE, FALSE);
+      /*  store offset and size of the locked tile  */
+      surround->tile_x = x & ~(TILE_WIDTH - 1);
+      surround->tile_y = y & ~(TILE_HEIGHT - 1);
+      surround->tile_w = tile_ewidth (surround->tile);
+      surround->tile_h = tile_eheight (surround->tile);
 
-      if (surround->tile)
-        {
-          surround->tile_x = x & ~(TILE_WIDTH - 1);
-          surround->tile_y = y & ~(TILE_HEIGHT - 1);
-          surround->tile_w = tile_ewidth (surround->tile);
-          surround->tile_h = tile_eheight (surround->tile);
-        }
+      *w = surround->tile_x + surround->tile_w - x;
+      *h = surround->tile_y + surround->tile_h - y;
+
+      *rowstride = surround->tile_w * surround->bpp;
+
+      return tile_data_pointer (surround->tile, x % TILE_WIDTH, y % TILE_WIDTH);
     }
+  else
+    {
+      /*   return a pointer to the buffer that's filled with the bg color  */
+      *w         = surround->w;
+      *h         = surround->h;
+      *rowstride = surround->rowstride;
 
-  return (surround->tile != NULL);
+      return surround->bg;
+    }
 }
 
 /**
@@ -94,22 +111,31 @@ pixel_surround_new (TileManager  *tiles,
                     const guchar  bg[MAX_CHANNELS])
 {
   PixelSurround *surround;
-  gint           i;
+  guchar        *dest;
+  gint           pixels;
 
   g_return_val_if_fail (tiles != NULL, NULL);
 
-  surround = g_malloc (sizeof (PixelSurround) +
-                       width * height * tile_manager_bpp (tiles));
+  surround = g_new0 (PixelSurround, 1);
 
-  surround->mgr  = tiles;
-  surround->bpp  = tile_manager_bpp (tiles);
-  surround->w    = width;
-  surround->h    = height;
+  surround->mgr       = tiles;
+  surround->bpp       = tile_manager_bpp (tiles);
+  surround->w         = width;
+  surround->h         = height;
+  surround->rowstride = width * surround->bpp;
+  surround->bg        = g_new (guchar, surround->rowstride * height);
+  surround->buf       = g_new (guchar, surround->rowstride * height);
 
-  for (i = 0; i < surround->bpp; ++i)
-    surround->bg[i] = bg[i];
+  dest = surround->bg;
+  pixels = width * height;
 
-  surround->tile = NULL;
+  while (pixels--)
+    {
+      gint i;
+
+      for (i = 0; i < surround->bpp; i++)
+        *dest++ = bg[i];
+    }
 
   return surround;
 }
@@ -137,46 +163,39 @@ pixel_surround_lock (PixelSurround *surround,
                      gint           y,
                      gint          *rowstride)
 {
-  guchar *dest;
-  gint    i = x % TILE_WIDTH;
-  gint    j = y % TILE_HEIGHT;
+  const guchar *src;
+  guchar       *dest;
+  gint          i, j;
+  gint          w, h;
 
-  /*  return a pointer to the tile data if the tile covers the whole region  */
-  if (pixel_surround_get_tile (surround, x, y) &&
-      i + surround->w <= surround->tile_w      &&
-      j + surround->h <= surround->tile_h)
-    {
-      *rowstride = surround->tile_w * surround->bpp;
+  /*  return a pointer to the data if it covers the whole region  */
+  src = pixel_surround_get_data (surround, x, y, &w, &h, rowstride);
 
-      return tile_data_pointer (surround->tile, i, j);
-    }
+  if (w >= surround->w && h >= surround->h)
+    return src;
 
   /*  otherwise, copy region to our internal buffer  */
   dest = surround->buf;
 
-  for (j = y; j < y + surround->h; j++)
+  for (j = 0; j < surround->h; j++)
     {
-      for (i = x; i < x + surround->w; i++)
+      gint yy = y + j;
+
+      for (i = 0; i < surround->w;)
         {
-          const guchar *src;
+          gint xx = x + i;
+          gint bytes;
 
-          if (pixel_surround_get_tile (surround, i, j))
-            {
-              src = tile_data_pointer (surround->tile,
-                                       i % TILE_WIDTH, j % TILE_HEIGHT);
-            }
-          else
-            {
-              src = surround->bg;
-            }
+          src = pixel_surround_get_data (surround, xx, yy, &w, &h, rowstride);
 
-          switch (surround->bpp)
-            {
-            case 4: *dest++ = *src++;
-            case 3: *dest++ = *src++;
-            case 2: *dest++ = *src++;
-            case 1: *dest++ = *src++;
-            }
+          w = MIN (w, surround->w - i);
+
+          bytes = w * surround->bpp;
+
+          while (bytes--)
+            *dest++ = *src++;
+
+          i += w;
         }
     }
 
@@ -214,5 +233,8 @@ pixel_surround_destroy (PixelSurround *surround)
   g_return_if_fail (surround != NULL);
 
   pixel_surround_release (surround);
+
+  g_free (surround->buf);
+  g_free (surround->bg);
   g_free (surround);
 }
