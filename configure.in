@@ -1608,12 +1608,10 @@ AC_ARG_WITH(script-fu,
   AC_HELP_STRING([--without-script-fu],
                  [do not build the script-fu extension]))
 
-if test "x$have_script_fu" = "xyes"; then
-    have_script_fu="yes"
-else
-    have_script_fu="no (script-fu extension disabled)"
+if test "x$with_script_fu" = "xno"; then
+  have_script_fu="no (script-fu extension disabled)"
 fi
-AM_CONDITIONAL(BUILD_SCRIPT_FU, test "x$have_script_fu" == "xyes")
+AM_CONDITIONAL(BUILD_SCRIPT_FU, test "x$with_script_fu" != "xno")
 
 
 ###########################################################
@@ -1994,43 +1992,43 @@ Building GIMP with prefix=$prefix, datarootdir=$datarootdir
 Desktop files install into $DESKTOP_DATADIR
 
 Extra Binaries:
-  gimp-console:      $enable_gimp_console
-  gimp-remote:       $enable_gimp_remote
+  gimp-console:        $enable_gimp_console
+  gimp-remote:         $enable_gimp_remote
 
 Optional Features:
-  D-Bus service:     $have_dbus_glib
+  D-Bus service:       $have_dbus_glib
 
 Optional Plug-Ins:
-  Ascii Art:         $have_libaa
-  Help Browser:      $have_gtkhtml2
-  LCMS:              $have_lcms
-  JPEG:              $jpeg_ok
-  MNG:               $have_libmng
-  PDF:               $have_poppler
-  PNG:               $have_libpng
-  Print:             $enable_print
-  PSP:               $have_zlib
-  Python:            $enable_python
-  Script-Fu:         $have_script_fu
-  SVG:               $have_librsvg
-  TIFF:              $have_libtiff
-  TWAIN (MacOS X):   $mac_twain_ok
-  TWAIN (Win32):     $os_win32
-  URI:               $uri_plugin
-  Windows ICO        $have_libpng
-  WMF:               $have_libwmf
-  XJT:               $have_xjt
-  XPM:               $have_libxpm
+  Ascii Art:           $have_libaa
+  Help Browser:        $have_gtkhtml2
+  LCMS:                $have_lcms
+  JPEG:                $jpeg_ok
+  MNG:                 $have_libmng
+  PDF:                 $have_poppler
+  PNG:                 $have_libpng
+  Print:               $enable_print
+  PSP:                 $have_zlib
+  Python:              $enable_python
+  Script-Fu:           $have_script_fu
+  SVG:                 $have_librsvg
+  TIFF:                $have_libtiff
+  TWAIN (MacOS X):     $mac_twain_ok
+  TWAIN (Win32):       $os_win32
+  URI:                 $uri_plugin
+  Windows ICO          $have_libpng
+  WMF:                 $have_libwmf
+  XJT:                 $have_xjt
+  XPM:                 $have_libxpm
 
 Plug-In Features:
-  EXIF support:      $have_libexif
-  GNOME UI:          $have_gnomeui
-  GNOME keyring:     $have_gnome_keyring
+  EXIF support:        $have_libexif
+  GNOME UI:            $have_gnomeui
+  GNOME keyring:       $have_gnome_keyring
 
 Optional Modules:
-  ALSA (MIDI Input): $have_alsa
-  Linux Input:       $have_linux_input (HAL support: $have_libhal)
+  ALSA (MIDI Input):   $have_alsa
+  Linux Input:         $have_linux_input (HAL support: $have_libhal)
   DirectInput (Win32): $have_dx_dinput
-  Color Correction:  $have_lcms
-  Soft Proof:        $have_lcms
+  Color Correction:    $have_lcms
+  Soft Proof:          $have_lcms
 ]);

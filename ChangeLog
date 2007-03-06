@@ -1,3 +1,8 @@
+2007-03-05  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: Make --without-script-fu work. Also make the spacing
+	line up again in the post configure option summary.
+
 2007-03-05  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimpexport.c: changed strings as suggested in bug #304148).
