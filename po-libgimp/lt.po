@@ -1,16 +1,16 @@
 # Lithuanian translation of GIMP (libgimp).
-# Copyright (C) 2001-2006 Free Software Foundation, Inc.
+# Copyright (C) 2001-2007 Free Software Foundation, Inc.
 # Mantas Kriaučiūnas <mantas@akl.lt>, 2001.
 # Linas Vasiliauskas <linasv@centras.lt>, 2004.
-# Žygimantas Beručka <zygis@gnome.org>, 2004-2006.
+# Žygimantas Beručka <zygis@gnome.org>, 2004-2007.
 #
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP (libgimp) HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-12 14:26+0200\n"
-"PO-Revision-Date: 2006-12-19 11:10+0200\n"
+"POT-Creation-Date: 2007-03-06 22:12+0200\n"
+"PO-Revision-Date: 2007-03-06 22:19+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -18,10 +18,19 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
+#: ../libgimp/gimpbrushselectbutton.c:170
+msgid "Brush Selection"
+msgstr "Teptuko pasirinkimas"
+
+#: ../libgimp/gimpbrushselectbutton.c:911
+#: ../libgimp/gimppatternselectbutton.c:712
+msgid "_Browse..."
+msgstr "_Naršyti..."
+
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
-msgid "%s can't handle layers"
-msgstr "%s negali apdoroti sluoksnių"
+msgid "%s plug-in can't handle layers"
+msgstr "Įskiepis %s negali apdoroti sluoksnių"
 
 #: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
@@ -30,13 +39,13 @@ msgstr "Sujungti matomus sluoksnius"
 
 #: ../libgimp/gimpexport.c:226
 #, c-format
-msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s negali suprasti sluoksnio poslinkių, dydžio ar nepermatomumo"
+msgid "%s plug-in can't handle layer offsets, size or opacity"
+msgstr "Įskiepis %s negali suprasti sluoksnio poslinkių, dydžio ar nepermatomumo"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
-msgid "%s can only handle layers as animation frames"
-msgstr "%s gali suprasti sluoksnius tik kaip animacijos kadrus"
+msgid "%s plug-in can only handle layers as animation frames"
+msgstr "Įskiepis %s gali suprasti sluoksnius tik kaip animacijos kadrus"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
@@ -49,13 +58,13 @@ msgstr "Suploti paveikslėlį"
 
 #: ../libgimp/gimpexport.c:262
 #, c-format
-msgid "%s can't handle transparency"
-msgstr "%s negali suprasti permatomumo"
+msgid "%s plug-in can't handle transparency"
+msgstr "Įskiepis %s negali suprasti permatomumo"
 
 #: ../libgimp/gimpexport.c:271
 #, c-format
-msgid "%s can't handle layer masks"
-msgstr "%s negali suprasti sluoksnio kaukių"
+msgid "%s plug-in can't handle layer masks"
+msgstr "Įskiepis %s negali suprasti sluoksnio kaukių"
 
 #: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
@@ -63,8 +72,8 @@ msgstr "Pritaikyti sluoksnio kaukes"
 
 #: ../libgimp/gimpexport.c:280
 #, c-format
-msgid "%s can only handle RGB images"
-msgstr "%s gali suprasti tik RGB paveikslėlius"
+msgid "%s plug-in can only handle RGB images"
+msgstr "Įskiepis %s gali suprasti tik RGB paveikslėlius"
 
 #: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
@@ -73,8 +82,8 @@ msgstr "Konvertuoti į RGB"
 
 #: ../libgimp/gimpexport.c:289
 #, c-format
-msgid "%s can only handle grayscale images"
-msgstr "%s gali suprasti tik pilkumo atspalvių (grayscale) paveikslėlius"
+msgid "%s plug-in can only handle grayscale images"
+msgstr "Įskiepis %s gali suprasti tik pilkumo atspalvių (grayscale) paveikslėlius"
 
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
@@ -83,8 +92,8 @@ msgstr "Konvertuoti į pilkumo atspalvius (grayscale)"
 
 #: ../libgimp/gimpexport.c:298
 #, c-format
-msgid "%s can only handle indexed images"
-msgstr "%s gali suprasti tik indeksuotus paveikslėlius"
+msgid "%s plug-in can only handle indexed images"
+msgstr "Įskiepis %s gali suprasti tik indeksuotus paveikslėlius"
 
 #: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
 #: ../libgimp/gimpexport.c:338
@@ -97,8 +106,9 @@ msgstr ""
 
 #: ../libgimp/gimpexport.c:308
 #, c-format
-msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s gali suprasti tik bitmap (dviejų spalvų) indeksuotus paveikslėlius"
+msgid "%s plug-in can only handle bitmap (two color) indexed images"
+msgstr ""
+"Įskiepis %s gali suprasti tik bitmap (dviejų spalvų) indeksuotus paveikslėlius"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -110,24 +120,25 @@ msgstr ""
 
 #: ../libgimp/gimpexport.c:318
 #, c-format
-msgid "%s can only handle RGB or grayscale images"
+msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr ""
-"%s gali suprasti tik RGB ar pilkumo atspalvių (grayscale) paveikslėlius"
+"Įskiepis %s gali suprasti tik RGB arba pilkumo atspalvių (grayscale) paveikslėlius"
 
 #: ../libgimp/gimpexport.c:327
 #, c-format
-msgid "%s can only handle RGB or indexed images"
-msgstr "%s gali suprasti tik RGB ar indeksuotus paveikslėlius"
+msgid "%s plug-in  can only handle RGB or indexed images"
+msgstr "Įskiepis %s gali suprasti tik RGB arba indeksuotus paveikslėlius"
 
 #: ../libgimp/gimpexport.c:337
 #, c-format
-msgid "%s can only handle grayscale or indexed images"
-msgstr "%s gali apdoroti tik pilkumo atspalvių ar indeksuotus paveikslėlius"
+msgid "%s plug-in can only handle grayscale or indexed images"
+msgstr ""
+"Įskiepis %s gali apdoroti tik pilkumo atspalvių arba indeksuotus paveikslėlius"
 
 #: ../libgimp/gimpexport.c:348
 #, c-format
-msgid "%s needs an alpha channel"
-msgstr "%s reikia alfa kanalo"
+msgid "%s plug-in needs an alpha channel"
+msgstr "Įskiepiui %s reikia alfa kanalo"
 
 #: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
@@ -194,9 +205,21 @@ msgstr "Šriftų pasirinkimas"
 msgid "Sans"
 msgstr "Sans"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
+#: ../libgimp/gimpgradientselectbutton.c:148
+msgid "Gradient Selection"
+msgstr "Gradientų pasirinkimas"
+
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
 msgid "(Empty)"
 msgstr "(Tuščias)"
+
+#: ../libgimp/gimppaletteselectbutton.c:130
+msgid "Palette Selection"
+msgstr "Palečių pasirinkimas"
+
+#: ../libgimp/gimppatternselectbutton.c:156
+msgid "Pattern Selection"
+msgstr "Raštų pasirinkimas"
 
 #: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
@@ -383,15 +406,15 @@ msgstr "Pakeisti aktyvų pažymėjimą"
 msgid "Intersect with the current selection"
 msgstr "Sankirta su aktyviu pažymėjimu"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Red"
 msgstr "Raudona"
 
-#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Green"
 msgstr "Žalia"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Blue"
 msgstr "Mėlyna"
 
@@ -403,7 +426,7 @@ msgstr "Pilka"
 msgid "Indexed"
 msgstr "Indeksuota"
 
-#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -483,7 +506,7 @@ msgstr "Tiesinis dvikryptis"
 msgid "Radial"
 msgstr "Radialinis"
 
-#: ../libgimpbase/gimpbaseenums.c:391
+#: ../libgimpbase/gimpbaseenums.c:391 ../libgimpwidgets/gimpwidgetsenums.c:24
 msgid "Square"
 msgstr "Kvadratas"
 
@@ -588,8 +611,8 @@ msgid "Cubic"
 msgstr "Kubinė"
 
 #: ../libgimpbase/gimpbaseenums.c:565
-msgid "Lanczos"
-msgstr "Lanczos"
+msgid "Sinc (Lanczos3)"
+msgstr "Sinc (Lanczos3)"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -651,19 +674,35 @@ msgstr "Į priekį"
 msgid "Backward"
 msgstr "Atgal"
 
-#: ../libgimpbase/gimpbaseenums.c:848
+#: ../libgimpbase/gimpbaseenums.c:775
+msgid "Adjust"
+msgstr "Koreguoti"
+
+#: ../libgimpbase/gimpbaseenums.c:776
+msgid "Clip"
+msgstr "Apkarpyti"
+
+#: ../libgimpbase/gimpbaseenums.c:777
+msgid "Crop to result"
+msgstr "Apkarpytu iki rezultato"
+
+#: ../libgimpbase/gimpbaseenums.c:778
+msgid "Crop with aspect"
+msgstr "Apkarpyti išsaugant proporciją"
+
+#: ../libgimpbase/gimpbaseenums.c:881
 msgid "Internal GIMP procedure"
 msgstr "Vidinė GIMP procedūra"
 
-#: ../libgimpbase/gimpbaseenums.c:849
+#: ../libgimpbase/gimpbaseenums.c:882
 msgid "GIMP Plug-In"
 msgstr "GIMP įskiepis"
 
-#: ../libgimpbase/gimpbaseenums.c:850
+#: ../libgimpbase/gimpbaseenums.c:883
 msgid "GIMP Extension"
 msgstr "GIMP išplėtimas"
 
-#: ../libgimpbase/gimpbaseenums.c:851
+#: ../libgimpbase/gimpbaseenums.c:884
 msgid "Temporary Procedure"
 msgstr "Laikina procedūra"
 
@@ -735,7 +774,7 @@ msgstr "Jūsų (pirminio) monitoriaus spalvų profilis."
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid ""
-"When enabled, the GIMP will try to use the display color profile from the "
+"When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
@@ -782,54 +821,53 @@ msgstr "Spausdinimo simuliacija"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:56
 msgid "Perceptual"
-msgstr ""
+msgstr "Percepcinis"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57
 msgid "Relative colorimetric"
-msgstr ""
+msgstr "Santykinis kolorimetrinis"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#, fuzzy
 msgid "intent|Saturation"
 msgstr "Sodrumas"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
-msgstr ""
+msgstr "Absoliutinis kolorimetrinis"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#: ../libgimpconfig/gimpconfig-deserialize.c:96
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "žymės %s reikšmė nėra UTF-8 eilutė"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:426
+#: ../libgimpconfig/gimpconfig-deserialize.c:427
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "tikėtasi „yes“ arba „no“ loginei žymei %s, gauta „%s“"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:500
+#: ../libgimpconfig/gimpconfig-deserialize.c:501
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "nekorektiška „%s“ reikšmė %s žymei"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:515
+#: ../libgimpconfig/gimpconfig-deserialize.c:516
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "nekorektiška „%ld“ reikšmė %s žymei"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:584
+#: ../libgimpconfig/gimpconfig-deserialize.c:585
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "apdorojant žymę „%s“: %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:453
-#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpconfig-iface.c:454
+#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
 msgid "fatal parse error"
 msgstr "kritinė skaitymo klaida"
 
-#: ../libgimpconfig/gimpconfig-path.c:376
+#: ../libgimpconfig/gimpconfig-path.c:377
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Negalima išplėsti ${%s}"
@@ -911,17 +949,21 @@ msgid ""
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
 "Nepavyko aptikti tinkamo namų aplanko.\n"
-"Todėl mini vaizdai bus išsaugoti laikinųjų rinkmenų aplanke (%s)."
+"Todėl miniatiūros bus išsaugotos laikinųjų rinkmenų aplanke (%s)."
 
 #: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "Nepavyko sukurti mini vaizdų aplanko „%s“."
+msgstr "Nepavyko sukurti miniatiūrų aplanko „%s“."
 
-#: ../libgimpthumb/gimpthumbnail.c:889
+#: ../libgimpthumb/gimpthumbnail.c:498
+msgid "Thumbnail contains no Thumb::URI tag"
+msgstr "Miniatiūroje nėra Thumb::URI žymės"
+
+#: ../libgimpthumb/gimpthumbnail.c:898
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "Nepavyko sukurti %s mini vaizdo: %s"
+msgstr "Nepavyko sukurti %s miniatiūros: %s"
 
 #: ../libgimpwidgets/gimpbrowser.c:98
 msgid "_Search:"
@@ -1061,11 +1103,11 @@ msgid "Check Style"
 msgstr "Kvadratėlių stilius"
 
 #. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:265
+#: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "_Peržiūra"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1869
+#: ../libgimpwidgets/gimppropwidgets.c:1901
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1150,7 +1192,7 @@ msgstr "_Pasukti"
 msgid "_Shear"
 msgstr "Š_lytis"
 
-#: ../libgimpwidgets/gimpunitmenu.c:267
+#: ../libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
 msgstr "Daugiau..."
 
@@ -1158,11 +1200,11 @@ msgstr "Daugiau..."
 msgid "Unit Selection"
 msgstr "Matavimo vienetų pasirinkimas"
 
-#: ../libgimpwidgets/gimpunitmenu.c:625
+#: ../libgimpwidgets/gimpunitmenu.c:626
 msgid "Unit"
 msgstr "Matavimo vienetai"
 
-#: ../libgimpwidgets/gimpunitmenu.c:629
+#: ../libgimpwidgets/gimpunitmenu.c:630
 msgid "Factor"
 msgstr "Koeficientas"
 
@@ -1187,59 +1229,67 @@ msgstr ""
 msgid "_Randomize"
 msgstr "_Atsitiktinai"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:25
+msgid "Portrait"
+msgstr "Stačias"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:26
+msgid "Landscape"
+msgstr "Gulsčias"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "_H"
 msgstr "_H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "Hue"
 msgstr "Atspalvis"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "_S"
 msgstr "_S"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "Saturation"
 msgstr "Sodrumas"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "_V"
 msgstr "_V"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "Value"
 msgstr "Reikšmė"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "_R"
 msgstr "_R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "_G"
 msgstr "_G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "_B"
 msgstr "_B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "_A"
 msgstr "_A"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpwidgets/gimpwidgetsenums.c:157
 msgid "Layers"
 msgstr "Sluoksniai"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpwidgets/gimpwidgetsenums.c:158
 msgid "Images"
 msgstr "Paveikslėliai"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:186
+#: ../libgimpwidgets/gimpwidgetsenums.c:217
 msgid "Zoom in"
 msgstr "Pritraukti"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:187
+#: ../libgimpwidgets/gimpwidgetsenums.c:218
 msgid "Zoom out"
 msgstr "Atitraukti"
 
@@ -1259,11 +1309,11 @@ msgstr "Tritanopia (nejautrumas mėlynai)"
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Spalvų deficito simuliavimo filtras (Brettel-Vienot-Mollon algoritmas)"
 
-#: ../modules/cdisplay_colorblind.c:290
+#: ../modules/cdisplay_colorblind.c:292
 msgid "Color Deficient Vision"
 msgstr "Matymas su spalvų deficitu"
 
-#: ../modules/cdisplay_colorblind.c:505
+#: ../modules/cdisplay_colorblind.c:507
 msgid "Color _deficiency type:"
 msgstr "Spalvų _deficito tipas:"
 
@@ -1419,189 +1469,333 @@ msgstr "Vandeniniai dažai"
 msgid "Pressure"
 msgstr "Spaudimas"
 
-#: ../modules/controller_linux_input.c:56
+#: ../modules/controller_linux_input.c:58
 msgid "Button 0"
 msgstr "Mygtukas 0"
 
-#: ../modules/controller_linux_input.c:57
+#: ../modules/controller_linux_input.c:59
 msgid "Button 1"
 msgstr "Mygtukas 1"
 
-#: ../modules/controller_linux_input.c:58
+#: ../modules/controller_linux_input.c:60
 msgid "Button 2"
 msgstr "Mygtukas 2"
 
-#: ../modules/controller_linux_input.c:59
+#: ../modules/controller_linux_input.c:61
 msgid "Button 3"
 msgstr "Mygtukas 3"
 
-#: ../modules/controller_linux_input.c:60
+#: ../modules/controller_linux_input.c:62
 msgid "Button 4"
 msgstr "Mygtukas 4"
 
-#: ../modules/controller_linux_input.c:61
+#: ../modules/controller_linux_input.c:63
 msgid "Button 5"
 msgstr "Mygtukas 5"
 
-#: ../modules/controller_linux_input.c:62
+#: ../modules/controller_linux_input.c:64
 msgid "Button 6"
 msgstr "Mygtukas 6"
 
-#: ../modules/controller_linux_input.c:63
+#: ../modules/controller_linux_input.c:65
 msgid "Button 7"
 msgstr "Mygtukas 7"
 
-#: ../modules/controller_linux_input.c:64
+#: ../modules/controller_linux_input.c:66
 msgid "Button 8"
 msgstr "Mygtukas 8"
 
-#: ../modules/controller_linux_input.c:65
+#: ../modules/controller_linux_input.c:67
 msgid "Button 9"
 msgstr "Mygtukas 9"
 
-#: ../modules/controller_linux_input.c:66
+#: ../modules/controller_linux_input.c:68
 msgid "Button Mouse"
 msgstr "Mygtukas pelė"
 
-#: ../modules/controller_linux_input.c:67
+#: ../modules/controller_linux_input.c:69
 msgid "Button Left"
 msgstr "Mygtukas kairėn"
 
-#: ../modules/controller_linux_input.c:68
+#: ../modules/controller_linux_input.c:70
 msgid "Button Right"
 msgstr "Mygtukas dešinėn"
 
-#: ../modules/controller_linux_input.c:69
+#: ../modules/controller_linux_input.c:71
 msgid "Button Middle"
 msgstr "Mygtukas vidurinis"
 
-#: ../modules/controller_linux_input.c:70
+#: ../modules/controller_linux_input.c:72
 msgid "Button Side"
 msgstr "Mygtukas šoninis"
 
-#: ../modules/controller_linux_input.c:71
+#: ../modules/controller_linux_input.c:73
 msgid "Button Extra"
 msgstr "Mygtukas papildomas"
 
-#: ../modules/controller_linux_input.c:72
-#: ../modules/controller_linux_input.c:73
+#: ../modules/controller_linux_input.c:74
 msgid "Button Forward"
 msgstr "Mygtukas pirmyn"
 
 #: ../modules/controller_linux_input.c:75
+msgid "Button Back"
+msgstr "Mygtukas atgal"
+
+#: ../modules/controller_linux_input.c:76
+msgid "Button Task"
+msgstr "Mygtukas užduotis"
+
+#: ../modules/controller_linux_input.c:78
 msgid "Button Wheel"
 msgstr "Mygtukas ratukas"
 
-#: ../modules/controller_linux_input.c:78
-msgid "Button Gear Down"
-msgstr ""
-
 #: ../modules/controller_linux_input.c:81
+msgid "Button Gear Down"
+msgstr "Mygtukas sulėtinamas"
+
+#: ../modules/controller_linux_input.c:84
 msgid "Button Gear Up"
-msgstr ""
-
-#: ../modules/controller_linux_input.c:87
-msgid "Wheel Turn Left"
-msgstr ""
-
-#: ../modules/controller_linux_input.c:88
-msgid "Wheel Turn Right"
-msgstr ""
-
-#: ../modules/controller_linux_input.c:89
-msgid "Dial Turn Left"
-msgstr ""
+msgstr "Mygtukas pagreitinamas"
 
 #: ../modules/controller_linux_input.c:90
-msgid "Dial Turn Right"
-msgstr ""
+#: ../modules/controller_dx_dinput.c:469
+msgid "X Move Left"
+msgstr "X judesys kairėn"
 
-#: ../modules/controller_linux_input.c:154
+#: ../modules/controller_linux_input.c:91
+#: ../modules/controller_dx_dinput.c:472
+msgid "X Move Right"
+msgstr "X judesys dešinėn"
+
+#: ../modules/controller_linux_input.c:92
+#: ../modules/controller_dx_dinput.c:478
+msgid "Y Move Away"
+msgstr "Y judesys tolyn"
+
+#: ../modules/controller_linux_input.c:93
+#: ../modules/controller_dx_dinput.c:481
+msgid "Y Move Near"
+msgstr "Y judesys artyn"
+
+#: ../modules/controller_linux_input.c:94
+#: ../modules/controller_dx_dinput.c:487
+msgid "Z Move Up"
+msgstr "Z judesys aukštyn"
+
+#: ../modules/controller_linux_input.c:95
+#: ../modules/controller_dx_dinput.c:490
+msgid "Z Move Down"
+msgstr "Z judesys žemyn"
+
+#: ../modules/controller_linux_input.c:97
+#: ../modules/controller_dx_dinput.c:496
+msgid "X Axis Tilt Away"
+msgstr "X ašies pasvirimas tolyn"
+
+#: ../modules/controller_linux_input.c:98
+#: ../modules/controller_dx_dinput.c:499
+msgid "X Axis Tilt Near"
+msgstr "X ašies pasvirimas artyn"
+
+#: ../modules/controller_linux_input.c:99
+#: ../modules/controller_dx_dinput.c:505
+msgid "Y Axis Tilt Right"
+msgstr "Y ašies pasvirinimas dešinėn"
+
+#: ../modules/controller_linux_input.c:100
+#: ../modules/controller_dx_dinput.c:508
+msgid "Y Axis Tilt Left"
+msgstr "Y ašies pasvirinimas kairėn"
+
+#: ../modules/controller_linux_input.c:101
+#: ../modules/controller_dx_dinput.c:514
+msgid "Z Axis Turn Left"
+msgstr "Z ašies pasukimas kairėn"
+
+#: ../modules/controller_linux_input.c:102
+#: ../modules/controller_dx_dinput.c:517
+msgid "Z Axis Turn Right"
+msgstr "Z ašies pasukimas dešinėn"
+
+#: ../modules/controller_linux_input.c:104
+msgid "Horiz. Wheel Turn Back"
+msgstr "Horizontalaus ratuko pasukimas atgal"
+
+#: ../modules/controller_linux_input.c:105
+msgid "Horiz. Wheel Turn Forward"
+msgstr "Horizontalaus ratuko pasukimas pirmyn"
+
+#: ../modules/controller_linux_input.c:106
+msgid "Dial Turn Left"
+msgstr "Disko pasukimas kairėn"
+
+#: ../modules/controller_linux_input.c:107
+msgid "Dial Turn Right"
+msgstr "Disko pasukimas dešinėn"
+
+#: ../modules/controller_linux_input.c:108
+msgid "Wheel Turn Left"
+msgstr "Ratuko pasukimas kairėn"
+
+#: ../modules/controller_linux_input.c:109
+msgid "Wheel Turn Right"
+msgstr "Ratuko pasukimas dešinėn"
+
+#: ../modules/controller_linux_input.c:179
 msgid "Linux input event controller"
 msgstr "Linux įvesties įvykių kontroleris"
 
-#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:246
+#: ../modules/controller_linux_input.c:249
+#: ../modules/controller_dx_dinput.c:227 ../modules/controller_midi.c:245
 msgid "Device:"
 msgstr "Įrenginys:"
 
-#: ../modules/controller_linux_input.c:223
+#: ../modules/controller_linux_input.c:250
 msgid "The name of the device to read Linux Input events from."
 msgstr "Įrenginio iš kurio skaityti Linux įvesties įvykius pavadinimas:"
 
-#: ../modules/controller_linux_input.c:227
+#: ../modules/controller_linux_input.c:261
 msgid "Linux Input"
 msgstr "Linux įvestis"
 
-#: ../modules/controller_linux_input.c:352
+#: ../modules/controller_linux_input.c:539
 msgid "Linux Input Events"
 msgstr "Linux įvesties įvykiai"
 
-#: ../modules/controller_linux_input.c:373 ../modules/controller_midi.c:484
-#: ../modules/controller_midi.c:510
+#: ../modules/controller_linux_input.c:551
+#: ../modules/controller_dx_dinput.c:1122 ../modules/controller_midi.c:533
+msgid "No device configured"
+msgstr "Nėra sukonfigūruoto įrenginio"
+
+#: ../modules/controller_linux_input.c:577 ../modules/controller_midi.c:482
+#: ../modules/controller_midi.c:508
 #, c-format
 msgid "Reading from %s"
 msgstr "Skaitoma iš %s"
 
-#: ../modules/controller_linux_input.c:389
-#: ../modules/controller_linux_input.c:432 ../modules/controller_midi.c:466
-#: ../modules/controller_midi.c:527 ../modules/controller_midi.c:598
+#: ../modules/controller_linux_input.c:595
+#: ../modules/controller_linux_input.c:649 ../modules/controller_midi.c:464
+#: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
 #, c-format
 msgid "Device not available: %s"
 msgstr "Įrenginys neprieinamas: %s"
 
-#: ../modules/controller_linux_input.c:397 ../modules/controller_midi.c:535
-msgid "No device configured"
-msgstr "Nėra sukonfigūruoto įrenginio"
+#: ../modules/controller_linux_input.c:614
+#: ../modules/controller_dx_dinput.c:1147
+msgid "Device not available"
+msgstr "Įrenginys neprieinamas"
 
-#: ../modules/controller_linux_input.c:441 ../modules/controller_midi.c:607
+#: ../modules/controller_linux_input.c:658 ../modules/controller_midi.c:605
 msgid "End of file"
 msgstr "Rinkmenos pabaiga"
 
-#: ../modules/controller_midi.c:168
+#: ../modules/controller_dx_dinput.c:157
+msgid "DirectX DirectInput event controller"
+msgstr "DirectX DirectInput įvykių kontroleris"
+
+#: ../modules/controller_dx_dinput.c:228
+msgid "The device to read DirectInput events from."
+msgstr "Įrenginys, iš kurio skaityti DirectInput įvykius."
+
+#: ../modules/controller_dx_dinput.c:237
+msgid "DirectX DirectInput"
+msgstr "DirectX DirectInput"
+
+#: ../modules/controller_dx_dinput.c:446
+#, c-format
+msgid "Button %d"
+msgstr "Mygtukas %d"
+
+#: ../modules/controller_dx_dinput.c:449
+#, c-format
+msgid "Button %d Press"
+msgstr "Mygtuko %d paspaudimas"
+
+#: ../modules/controller_dx_dinput.c:452
+#, c-format
+msgid "Button %d Release"
+msgstr "Mygtuko %d atleidimas"
+
+#: ../modules/controller_dx_dinput.c:528
+#, c-format
+msgid "Slider %d Increase"
+msgstr "Slankiklio %d padidėjimas"
+
+#: ../modules/controller_dx_dinput.c:531
+#, c-format
+msgid "Slider %d Decrease"
+msgstr "Slankiklio %d sumažėjimas"
+
+#: ../modules/controller_dx_dinput.c:541
+#, c-format
+msgid "POV %d X View"
+msgstr "POV %d X rodinys"
+
+#: ../modules/controller_dx_dinput.c:544
+#, c-format
+msgid "POV %d Y View"
+msgstr "POV %d Y rodinys"
+
+#: ../modules/controller_dx_dinput.c:547
+#, c-format
+msgid "POV %d Return"
+msgstr "POV %d grįžtis"
+
+#: ../modules/controller_dx_dinput.c:1111
+msgid "DirectInput Events"
+msgstr "DirectInput įvykiai"
+
+#: ../modules/controller_midi.c:167
 msgid "MIDI event controller"
 msgstr "MIDI įvykių kontroleris"
 
-#: ../modules/controller_midi.c:237
+#: ../modules/controller_midi.c:236
 msgid "The name of the device to read MIDI events from."
 msgstr "Įrenginio iš kurio skaityti MIDI įvykius pavadinimas."
 
-#: ../modules/controller_midi.c:240
+#: ../modules/controller_midi.c:239
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Įveskite „alsa“ norėdami naudoti ALSA seką."
 
-#: ../modules/controller_midi.c:255
+#: ../modules/controller_midi.c:254
 msgid "Channel:"
 msgstr "Kanalas:"
 
-#: ../modules/controller_midi.c:256
+#: ../modules/controller_midi.c:255
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
 msgstr ""
+"MIDI kanalas, iš kurio skaityti įvykius. Nurodykite -1, kad būtų skaitoma iš "
+"visų MIDI kanalų."
 
-#: ../modules/controller_midi.c:260
+#: ../modules/controller_midi.c:259
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:384
+#: ../modules/controller_midi.c:383
 #, c-format
 msgid "Note %02x on"
 msgstr "Signalas %02x įjungtas"
 
-#: ../modules/controller_midi.c:387
+#: ../modules/controller_midi.c:386
 #, c-format
 msgid "Note %02x off"
 msgstr "Signalas %02x išjungtas"
 
-#: ../modules/controller_midi.c:390
+#: ../modules/controller_midi.c:389
 #, c-format
 msgid "Controller %03d"
 msgstr "Kontroleris %03d"
 
-#: ../modules/controller_midi.c:437
+#: ../modules/controller_midi.c:436
 msgid "MIDI Events"
 msgstr "MIDI įvykiai"
 
-#: ../modules/controller_midi.c:458
-msgid "GIMP MIDI controller"
-msgstr "GIMP MIDI kontroleris"
+#: ../modules/controller_midi.c:454
+msgid "GIMP"
+msgstr "GIMP"
+
+#: ../modules/controller_midi.c:456
+msgid "GIMP MIDI Input Controller"
+msgstr "GIMP MIDI įvesties kontroleris"
