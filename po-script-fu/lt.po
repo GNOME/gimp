@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-18 00:33+0200\n"
-"PO-Revision-Date: 2006-12-19 18:22+0200\n"
+"POT-Creation-Date: 2007-03-06 23:28+0200\n"
+"PO-Revision-Date: 2007-03-06 23:31+0200\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -36,16 +36,16 @@ msgstr "_Naršyti..."
 msgid "Save Script-Fu Console Output"
 msgstr "Išsaugoti Script-Fu konsolės išvestį"
 
-#: ../plug-ins/script-fu/script-fu-console.c:354
+#: ../plug-ins/script-fu/script-fu-console.c:357
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nepavyko atverti „%s“ rašymui: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:383
+#: ../plug-ins/script-fu/script-fu-console.c:386
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu procedūrų naršyklė"
 
-#: ../plug-ins/script-fu/script-fu-console.c:708
+#: ../plug-ins/script-fu/script-fu-console.c:711
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Scrip-Fu įvertinimo režime galimas tik neinteraktyvus iškvietimas"
 
@@ -377,8 +377,7 @@ msgstr "Kontūro išliejimo spindulys"
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
 msgid ""
 "Outline the selected region (or alpha) with a pattern and add a drop shadow"
-msgstr ""
-"Apvesti pasirinktą regioną (ar permatomumą) raštu ir pridėti šešėlį"
+msgstr "Apvesti pasirinktą regioną (ar permatomumą) raštu ir pridėti šešėlį"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -749,8 +748,7 @@ msgstr ""
 msgid ""
 "Create a plain text logo with a gradient effect, a drop shadow, and a "
 "background"
-msgstr ""
-"Sukurti paprasto teksto logotipą su gradiento efektu, šešėliu ir fonu"
+msgstr "Sukurti paprasto teksto logotipą su gradiento efektu, šešėliu ir fonu"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
@@ -968,11 +966,11 @@ msgstr "Iš_deginimas..."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid ""
-"Burn-In: Needs two layers in total!\n"
-"A foreground text layer with transparency and a background layer."
+"Burn-In: Needs two layers in total!\\nA foreground text layer with "
+"transparency and a background layer."
 msgstr ""
-"Išdeginimas: Reikia iš viso dviejų sluoksnių!\n"
-"Permatomo priekinio plano teksto sluoksnio ir fono sluoksnio."
+"Išdeginimas: Reikia iš viso dviejų sluoksnių!\\nPermatomo priekinio plano "
+"teksto sluoksnio ir fono sluoksnio."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Corona width"
@@ -1262,12 +1260,8 @@ msgid "Add realistic looking coffee stains to the image"
 msgstr "Pridėti tikroviškai atrodančias kavos dėmes paveikslėliui"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
-msgid ""
-"Darken only\n"
-"(Better, but only for images with a lot of white)"
-msgstr ""
-"Tik patamsinti\n"
-"(Geriau, bet tik paveikslėliams, kuriuose daug baltos)"
+msgid "Darken only\\n(Better, but only for images with a lot of white)"
+msgstr "Tik patamsinti\\n(Geriau, bet tik paveikslėliams, kuriuose daug baltos)"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
@@ -1325,9 +1319,9 @@ msgid "Effect size (pixels)"
 msgstr "Efekto dydis (taškeliais)"
 
 #: ../plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "This procedure is deprecated! use 'gimp-edit-copy-visible' instead."
+msgid "This procedure is deprecated! use \\'gimp-edit-copy-visible\\' instead."
 msgstr ""
-"Šis procedūra nebenaudojama! Vietoje jos naudokite „gimp-edit-copy-visible“"
+"Šis procedūra nebenaudojama! Vietoje jos naudokite „gimp-edit-copy-visible“."
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "Background image"
@@ -1379,8 +1373,8 @@ msgid "_Distort..."
 msgstr "_Iškraipyti..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-msgid "Add a drop-shadow to the selected region (or alpha)"
-msgstr "Pridėti šešėlį pasirinktam regionui (ar permatomumui)"
+msgid "Add a drop shadow to the selected region (or alpha)"
+msgstr "Pridėti pasirinktos srities (arba permatomumo) šešėlį"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
@@ -1418,7 +1412,7 @@ msgid "Opacity"
 msgstr "Nepermatomumas"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
-msgid "_Drop-Shadow..."
+msgid "_Drop Shadow..."
 msgstr "_Mesti šešėlį..."
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:1
@@ -1636,7 +1630,8 @@ msgstr "Automatinis apkirpimas"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "Create an image of a large header using the gimp.org webpage theme"
-msgstr "Sukurti didelės antraštės paveikslėlį naudojant gimp.org svetainės temą"
+msgstr ""
+"Sukurti didelės antraštės paveikslėlį naudojant gimp.org svetainės temą"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "Create an image of a small header using the gimp.org webpage theme"
@@ -1802,7 +1797,8 @@ msgstr "Karštas šv_ytėjimas..."
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
 msgstr ""
-"Pasirinktam regionui (ar permatomumui) pridėti švytėjimo ir nuožulnumo efektus"
+"Pasirinktam regionui (ar permatomumui) pridėti švytėjimo ir nuožulnumo "
+"efektus"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
@@ -1998,8 +1994,8 @@ msgstr "_Lava..."
 msgid ""
 "Fill a layer with rays emanating outward from its center using the FG color"
 msgstr ""
-"Užpildyti sluoksnį spinduliais sklindančiais iš jo centro naudojant priekinio "
-"plano spalvą"
+"Užpildyti sluoksnį spinduliais sklindančiais iš jo centro naudojant "
+"priekinio plano spalvą"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
@@ -2094,7 +2090,7 @@ msgid "Cell size (pixels)"
 msgstr "Langelio dydis (taškeliais)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:4
-msgid "Create a logo in the style newpaper printing"
+msgid "Create a logo in the style of newspaper printing"
 msgstr "Sukurti laikraščio spausdinimo stiliaus logotipą"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6
@@ -2323,8 +2319,7 @@ msgstr "Krašto spindulys"
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
 msgid ""
 "Round the corners of an image and optionally add a drop-shadow and background"
-msgstr ""
-"Suapvalinti paveikslėlio kampus ir pageidaujant pridėti šešėlį ir foną"
+msgstr "Suapvalinti paveikslėlio kampus ir pageidaujant pridėti šešėlį ir foną"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
 msgid "_Round Corners..."
@@ -2591,8 +2586,8 @@ msgid ""
 "Fill the selected region (or alpha) with a starburst gradient and add a "
 "shadow"
 msgstr ""
-"Užpildyti pasirinktą regioną (ar nepermatomumą) žvaigždės sprogimo "
-"gradientu ir pridėti šešėlį"
+"Užpildyti pasirinktą regioną (ar nepermatomumą) žvaigždės sprogimo gradientu "
+"ir pridėti šešėlį"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:8
 msgid "Starb_urst..."
@@ -2713,8 +2708,8 @@ msgid ""
 "Fill the selected region (or alpha) with a texture and add highlights, "
 "shadows, and a mosaic background"
 msgstr ""
-"Užpildyti pasirinktą regioną (ar permatomumą) tekstūra ir pridėti "
-"šviesos efektus, šešėlius bei mozaikinį foną"
+"Užpildyti pasirinktą regioną (ar permatomumą) tekstūra ir pridėti šviesos "
+"efektus, šešėlius bei mozaikinį foną"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
@@ -2961,4 +2956,3 @@ msgstr "Paryškinimo nepermatomumas"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach efektas..."
-
