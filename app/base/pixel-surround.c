@@ -82,7 +82,8 @@ pixel_surround_get_data (PixelSurround *surround,
 
       *rowstride = surround->tile_w * surround->bpp;
 
-      return tile_data_pointer (surround->tile, x % TILE_WIDTH, y % TILE_WIDTH);
+      return tile_data_pointer (surround->tile,
+                                x % TILE_WIDTH, y % TILE_HEIGHT);
     }
   else
     {
@@ -175,31 +176,48 @@ pixel_surround_lock (PixelSurround *surround,
     return src;
 
   /*  otherwise, copy region to our internal buffer  */
-  dest = surround->buf;
 
-  for (j = 0; j < surround->h; j++)
+  /*  These loops are somewhat twisted. The idea is to make as few
+   *  calls to pixel_surround_get_data() as possible. Thus whenever we
+   *  have source data, we copy all of it to the destination buffer.
+   *  The inner loops that copy data are nested into outer loops that
+   *  make sure that the destination area is completley filled.
+   */
+  for (i = 0; i < surround->w;)
     {
-      gint yy = y + j;
+      dest = surround->buf + i * surround->bpp;
 
-      for (i = 0; i < surround->w;)
+      for (j = 0; j < surround->h;)
         {
-          gint xx = x + i;
-          gint bytes;
+          gint rows;
 
-          src = pixel_surround_get_data (surround, xx, yy, &w, &h, rowstride);
+          src = pixel_surround_get_data (surround,
+                                         x + i, y + j, &w, &h, rowstride);
 
           w = MIN (w, surround->w - i);
+          h = MIN (h, surround->h - j);
 
-          bytes = w * surround->bpp;
+          rows = h;
+          while (rows--)
+            {
+              const guchar *s = src;
+              guchar       *d = dest;
+              gint          b = w * surround->bpp;
 
-          while (bytes--)
-            *dest++ = *src++;
+              while (b--)
+                *d++ = *s++;
 
-          i += w;
+              src += *rowstride;
+              dest += surround->rowstride;
+            }
+
+          j += h;
         }
+
+      i += w;
     }
 
-  *rowstride = surround->w * surround->bpp;
+  *rowstride = surround->rowstride;
 
   return surround->buf;
 }

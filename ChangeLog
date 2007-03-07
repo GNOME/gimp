@@ -1,3 +1,8 @@
+2007-03-07  Sven Neumann  <sven@gimp.org>
+
+	* app/base/pixel-surround.c (pixel_surround_lock): reduced number
+	of calls to tile_manager_get_tile().
+
 2007-03-07  Michael Natterer  <mitch@gimp.org>
 
 	Clean up fix for bug #328001:
