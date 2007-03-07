@@ -1,5 +1,10 @@
 2007-03-07  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpvectoroptions.c (gimp_vector_options_gui): describe
+	usage of modifiers as suggested in bug #415796.
+
+2007-03-07  Sven Neumann  <sven@gimp.org>
+
 	* app/base/pixel-surround.c (pixel_surround_lock): reduced number
 	of calls to tile_manager_get_tile().
 

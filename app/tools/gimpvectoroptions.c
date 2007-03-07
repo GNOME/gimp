@@ -129,6 +129,17 @@ gimp_vector_options_get_property (GObject    *object,
     }
 }
 
+static void
+button_append_modifier (GtkWidget       *button,
+                        GdkModifierType  modifiers)
+{
+  gchar *str = g_strdup_printf ("%s (%s)",
+                                gtk_button_get_label (GTK_BUTTON (button)),
+                                gimp_get_mod_string (modifiers));
+
+  gtk_button_set_label (GTK_BUTTON (button), str);
+  g_free (str);
+}
 
 GtkWidget *
 gimp_vector_options_gui (GimpToolOptions *tool_options)
@@ -145,6 +156,19 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
                                           _("Edit Mode"), 0, 0);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
+
+  button = g_object_get_data (G_OBJECT (frame), "radio-button");
+
+  if (GTK_IS_RADIO_BUTTON (button))
+    {
+      GSList *list = gtk_radio_button_get_group (GTK_RADIO_BUTTON (button));
+
+      /* GIMP_VECTOR_MODE_MOVE  */
+      button_append_modifier (list->data, GDK_MOD1_MASK);
+
+      if (list->next)   /* GIMP_VECTOR_MODE_EDIT  */
+        button_append_modifier (list->next->data, GDK_CONTROL_MASK);
+    }
 
   button = gimp_prop_check_button_new (config, "vectors-polygonal",
                                        _("Polygonal"));
