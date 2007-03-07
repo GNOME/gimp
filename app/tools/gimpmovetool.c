@@ -84,6 +84,9 @@ static void   gimp_move_tool_motion         (GimpTool              *tool,
                                              guint32                time,
                                              GdkModifierType        state,
                                              GimpDisplay           *display);
+static gboolean gimp_move_tool_key_press    (GimpTool              *tool,
+                                             GdkEventKey           *kevent,
+                                             GimpDisplay           *display);
 static void   gimp_move_tool_modifier_key   (GimpTool              *tool,
                                              GdkModifierType        key,
                                              gboolean               press,
@@ -104,10 +107,6 @@ static void   gimp_move_tool_draw           (GimpDrawTool          *draw_tool);
 static void   gimp_move_tool_start_guide    (GimpMoveTool          *move,
                                              GimpDisplay           *display,
                                              GimpOrientationType    orientation);
-
-static gboolean gimp_move_tool_key_press    (GimpTool              *tool,
-                                             GdkEventKey           *kevent,
-                                             GimpDisplay           *display);
 
 
 G_DEFINE_TYPE (GimpMoveTool, gimp_move_tool, GIMP_TYPE_DRAW_TOOL)
@@ -561,6 +560,18 @@ gimp_move_tool_motion (GimpTool        *tool,
     }
 }
 
+static gboolean
+gimp_move_tool_key_press (GimpTool    *tool,
+                          GdkEventKey *kevent,
+                          GimpDisplay *display)
+{
+  GimpMoveOptions *options = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
+
+  return gimp_edit_selection_tool_translate (tool, kevent,
+                                             options->move_type,
+                                             display);
+}
+
 static void
 gimp_move_tool_modifier_key (GimpTool        *tool,
                              GdkModifierType  key,
@@ -830,132 +841,3 @@ gimp_move_tool_start_guide (GimpMoveTool        *move,
 
   gimp_draw_tool_start (GIMP_DRAW_TOOL (move), display);
 }
-
-gboolean
-gimp_move_tool_key_press (GimpTool    *tool,
-                          GdkEventKey *kevent,
-                          GimpDisplay *display)
-{
-  GimpMoveOptions *options   = GIMP_MOVE_TOOL_GET_OPTIONS (tool);
-  GimpUndo        *undo;
-  GimpItem        *item;
-  GimpUndoType     undo_type;
-  const gchar     *undo_desc;
-  gboolean         push_undo;
-  gint             inc_x;
-  gint             inc_y;
-  gint             velocity;
-
-  /* bail out early if it is not an arrow key event */
-  if (kevent->keyval != GDK_Left &&
-      kevent->keyval != GDK_Right &&
-      kevent->keyval != GDK_Up &&
-      kevent->keyval != GDK_Down)
-    return FALSE;
-
-  /* Handle cases gimp_edit_selection_tool_key_press can't handle here,
-     otherwise just pass everything on to it. */
-  switch (options->move_type)
-    {
-    /* Fix bug #328001 */
-    case GIMP_TRANSFORM_TYPE_SELECTION:
-
-      if (gimp_channel_is_empty (gimp_image_get_mask (display->image)))
-        {
-          return TRUE;
-        }
-
-      item = GIMP_ITEM (gimp_image_get_mask (display->image));
-
-      /*  adapt arrow velocity to the zoom factor when holding <shift> */
-      velocity = (ARROW_VELOCITY /
-                  gimp_zoom_model_get_factor (GIMP_DISPLAY_SHELL (display->shell)->zoom));
-      velocity = MAX (1.0, velocity);
-
-      inc_x = process_event_queue_keys (kevent,
-                                        GDK_Left, GDK_SHIFT_MASK,
-                                        -1 * velocity,
-
-                                        GDK_Left, 0,
-                                        -1,
-
-                                        GDK_Right, GDK_SHIFT_MASK,
-                                        1 * velocity,
-
-                                        GDK_Right, 0,
-                                        1,
-
-                                        0);
-
-      inc_y = process_event_queue_keys (kevent,
-                                        GDK_Up, GDK_SHIFT_MASK,
-                                        -1 * velocity,
-
-                                        GDK_Up, 0,
-                                        -1,
-
-                                        GDK_Down, GDK_SHIFT_MASK,
-                                        1 * velocity,
-
-                                        GDK_Down, 0,
-                                        1,
-
-                                        0);
-
-      undo_type = GIMP_UNDO_GROUP_ITEM_DISPLACE;
-      undo_desc = GIMP_ITEM_GET_CLASS (item)->translate_desc;
-
-      /* compress undo */
-      undo = gimp_image_undo_can_compress (display->image, GIMP_TYPE_UNDO_STACK,
-                                           undo_type);
-
-      /* Only push undo if we're not working on the same group of undo:s as in
-         the previous call to this function. */
-      push_undo = ! (undo &&
-                     g_object_get_data (G_OBJECT (undo),
-                                        "move-tool") == (gpointer) tool &&
-                     g_object_get_data (G_OBJECT (undo),
-                                        "move-tool-item") == (gpointer) item &&
-                     g_object_get_data (G_OBJECT (undo),
-                                        "move-tool-type") == GINT_TO_POINTER (options->move_type));
-
-      if (push_undo)
-        {
-          if (gimp_image_undo_group_start (display->image, undo_type, undo_desc))
-            {
-              undo = gimp_image_undo_can_compress (display->image,
-                                                   GIMP_TYPE_UNDO_STACK,
-                                                   undo_type);
-
-              if (undo)
-                {
-                  g_object_set_data (G_OBJECT (undo), "move-tool",
-                                     tool);
-                  g_object_set_data (G_OBJECT (undo), "move-tool-item",
-                                     item);
-                  g_object_set_data (G_OBJECT (undo), "move-tool-type",
-                                     GINT_TO_POINTER (options->move_type));
-                }
-            }
-        }
-
-      gimp_item_translate (item, inc_x, inc_y, push_undo);
-
-      if (push_undo)
-        {
-          gimp_image_undo_group_end (display->image);
-        }
-      else
-        {
-          gimp_undo_refresh_preview (undo,
-                                   gimp_get_user_context (display->image->gimp));
-        }
-
-      gimp_image_flush (display->image);
-      return TRUE;
-
-    default:
-      return gimp_edit_selection_tool_key_press (tool, kevent, display);
-    }
-}
-

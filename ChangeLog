@@ -1,3 +1,24 @@
+2007-03-07  Michael Natterer  <mitch@gimp.org>
+
+	Clean up fix for bug #328001:
+
+	* app/tools/gimpeditselectiontool.[ch] (process_event_queue_keys):
+	made private again.
+
+	(gimp_edit_selection_tool_translate): new function which has an
+	additional GimpTransformType parameter to determine what transform
+	to perform. Do all the work here, ignoring the key event's
+	modifier state.
+
+	(gimp_edit_selection_tool_key_press): just determine the transform
+	type from the key event's modifier state and call
+	gimp_edit_selection_tool_translate().
+
+	* app/tools/gimpmovetool.c (gimp_move_tool_key_press): removed all
+	code and call gimp_edit_selection_tool_translate() with
+	options->move_type. Moved the function to its proper place in the
+	file.
+
 2007-03-07  Sven Neumann  <sven@gimp.org>
 
 	* app/base/pixel-surround.c: keep an internal buffer filled with
