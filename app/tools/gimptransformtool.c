@@ -234,7 +234,6 @@ gimp_transform_tool_init (GimpTransformTool *tr_tool)
 
   tr_tool->undo_desc        = NULL;
 
-  tr_tool->shell_desc       = NULL;
   tr_tool->progress_text    = _("Transforming");
   tr_tool->dialog           = NULL;
 }
@@ -1666,7 +1665,7 @@ gimp_transform_tool_dialog (GimpTransformTool *tr_tool)
 
   tr_tool->dialog = gimp_tool_dialog_new (tool_info,
                                           NULL /* tool->display->shell */,
-                                          tr_tool->shell_desc,
+                                          tool_info->blurb,
                                           GIMP_STOCK_RESET, RESPONSE_RESET,
                                           GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
                                           stock_id,         GTK_RESPONSE_OK,

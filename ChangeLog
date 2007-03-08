@@ -1,5 +1,15 @@
 2007-03-08  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpperspectivetool.c
+	* app/tools/gimpscaletool.c
+	* app/tools/gimprotatetool.c
+	* app/tools/gimpfliptool.c
+	* app/tools/gimpsheartool.c
+	* app/tools/gimptransformtool.[ch]: removed shell_desc member from
+	GimpTransformToolClass and just use the tool blurb instead.
+
+2007-03-08  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_key_press):
 	added missing call to gimp_rectangle_tool_rectangle_changed().
 	Fixes bug #415833.

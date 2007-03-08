@@ -112,7 +112,6 @@ gimp_shear_tool_init (GimpShearTool *shear_tool)
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_SHEAR);
 
   tr_tool->undo_desc     = Q_("command|Shear");
-  tr_tool->shell_desc    = _("Shearing Information");
   tr_tool->progress_text = _("Shearing");
 
   tr_tool->use_grid      = TRUE;

@@ -108,6 +108,7 @@ gimp_flip_tool_init (GimpFlipTool *flip_tool)
                                             GIMP_TOOL_CURSOR_FLIP_HORIZONTAL);
   gimp_tool_control_set_toggle_tool_cursor (tool->control,
                                             GIMP_TOOL_CURSOR_FLIP_VERTICAL);
+
   tr_tool->undo_desc = Q_("command|Flip");
 }
 
