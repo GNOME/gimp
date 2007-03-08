@@ -416,10 +416,11 @@ gimp_blend_tool_push_status (GimpBlendTool   *blend_tool,
   gchar *status_help;
 
   status_help = gimp_suggest_modifiers ("",
-                                        GDK_CONTROL_MASK & ~state,
+                                        ((GDK_CONTROL_MASK | GDK_MOD1_MASK)
+                                         & ~state),
                                         NULL,
                                         _("%s for constrained angles"),
-                                        NULL);
+                                        _("%s to move the whole line"));
   gimp_tool_push_status_coords (GIMP_TOOL (blend_tool), display,
                                 _("Blend: "),
                                 blend_tool->end_x - blend_tool->start_x,

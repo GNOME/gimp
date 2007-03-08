@@ -1,3 +1,9 @@
+2007-03-09  Raphaël Quinet  <raphael@gimp.org>
+
+	* app/tools/gimpblendtool.c (gimp_blend_tool_push_status): make
+	the new feature visible in the status bar (alas, this implies a
+	new translatable string).
+
 2007-03-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpblendtool.h (struct GimpBlendTool): renamed
