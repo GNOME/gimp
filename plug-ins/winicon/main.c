@@ -151,7 +151,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  static GimpParam   values[2];
+  static GimpParam   values[4];
   gint32             image_ID;
   gint32             drawable_ID;
   GimpRunMode        run_mode;

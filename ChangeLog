@@ -1,3 +1,9 @@
+2007-03-08  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/winicon/main.c (run): fixed the incorrect declaration
+	of the values[] array.  Thanks to Petr Gajdos <pgajdos@suze.cz>
+	for reporting this problem and for supplying a patch.
+
 2007-03-08  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpperspectivetool.c
