@@ -1,3 +1,8 @@
+2007-03-08  Sven Neumann  <sven@gimp.org>
+
+	* app/base/pixel-surround.c (pixel_surround_get_data): do one less
+	call to tile_manager_get_tile().
+
 2007-03-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpbucketfilltool.[ch]: request click events, removed

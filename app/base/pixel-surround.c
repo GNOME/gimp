@@ -173,56 +173,66 @@ pixel_surround_lock (PixelSurround *surround,
                      gint          *rowstride)
 {
   const guchar *src;
-  guchar       *dest;
-  gint          i, j;
   gint          w, h;
 
-  /*  return a pointer to the data if it covers the whole region  */
   src = pixel_surround_get_data (surround, x, y, &w, &h, rowstride);
 
   if (w >= surround->w && h >= surround->h)
-    return src;
-
-  /*  otherwise, copy region to our internal buffer  */
-
-  /*  These loops are somewhat twisted. The idea is to make as few
-   *  calls to pixel_surround_get_data() as possible. Thus whenever we
-   *  have source data, we copy all of it to the destination buffer.
-   *  The inner loops that copy data are nested into outer loops that
-   *  make sure that the destination area is completley filled.
-   */
-  for (i = 0; i < surround->w;)
     {
-      dest = surround->buf + i * surround->bpp;
+      /*  return a pointer to the data if it covers the whole region  */
+      return src;
+    }
+  else
+    {
+      /*  otherwise, copy region to our internal buffer  */
+      guchar *dest = surround->buf;
+      gint    i    = 0;
+      gint    j    = 0;
 
-      for (j = 0; j < surround->h;)
+      /*  These loops are somewhat twisted. The idea is to make as few
+       *  calls to pixel_surround_get_data() as possible. Thus whenever we
+       *  have source data, we copy all of it to the destination buffer.
+       *  The inner loops that copy data are nested into outer loops that
+       *  make sure that the destination area is completley filled.
+       */
+
+      /*  jump right into the loops since we already have source data  */
+      goto start;
+
+      while (i < surround->w)
         {
-          gint rows;
+          dest = surround->buf + i * surround->bpp;
 
-          src = pixel_surround_get_data (surround,
-                                         x + i, y + j, &w, &h, rowstride);
-
-          w = MIN (w, surround->w - i);
-          h = MIN (h, surround->h - j);
-
-          rows = h;
-          while (rows--)
+          for (j = 0; j < surround->h;)
             {
-              const guchar *s = src;
-              guchar       *d = dest;
-              gint          b = w * surround->bpp;
+              gint rows;
 
-              while (b--)
-                *d++ = *s++;
+              src = pixel_surround_get_data (surround,
+                                             x + i, y + j, &w, &h, rowstride);
 
-              src += *rowstride;
-              dest += surround->rowstride;
+            start:
+              w = MIN (w, surround->w - i);
+              h = MIN (h, surround->h - j);
+
+              rows = h;
+              while (rows--)
+                {
+                  const guchar *s     = src;
+                  guchar       *d     = dest;
+                  gint          bytes = w * surround->bpp;
+
+                  while (bytes--)
+                    *d++ = *s++;
+
+                  src += *rowstride;
+                  dest += surround->rowstride;
+                }
+
+              j += h;
             }
 
-          j += h;
+          i += w;
         }
-
-      i += w;
     }
 
   *rowstride = surround->rowstride;
