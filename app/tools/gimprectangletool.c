@@ -1298,7 +1298,6 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
       break;
     }
 
-
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
   x1 = private->x1 + inc_x1;
@@ -1318,6 +1317,8 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
   gimp_rectangle_tool_configure (rectangle);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+
+  gimp_rectangle_tool_rectangle_changed (rectangle);
 
   /*  Evil hack to suppress oper updates. We do this because we don't
    *  want the rectangle tool to change function while the rectangle

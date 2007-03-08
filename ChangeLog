@@ -1,3 +1,9 @@
+2007-03-08  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_key_press):
+	added missing call to gimp_rectangle_tool_rectangle_changed().
+	Fixes bug #415833.
+
 2007-03-07  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpvectoroptions.c (gimp_vector_options_gui): describe
