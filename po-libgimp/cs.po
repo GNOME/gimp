@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-01 10:22+0100\n"
-"PO-Revision-Date: 2007-03-01 10:31+0100\n"
+"POT-Creation-Date: 2007-03-08 10:43+0100\n"
+"PO-Revision-Date: 2007-03-08 10:45+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -33,8 +33,8 @@ msgstr "_Procházet..."
 
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
-msgid "%s can't handle layers"
-msgstr "%s neumí zpracovat vrstvy"
+msgid "%s plug-in can't handle layers"
+msgstr "Modul %s neumí zpracovat vrstvy"
 
 #: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
@@ -43,13 +43,13 @@ msgstr "Sloučit viditelné vrstvy"
 
 #: ../libgimp/gimpexport.c:226
 #, c-format
-msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s neumí zpracovat posuny vrstev, velikost nebo krytí"
+msgid "%s plug-in can't handle layer offsets, size or opacity"
+msgstr "Modul %s neumí zpracovat posuny vrstev, velikost nebo krytí"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
-msgid "%s can only handle layers as animation frames"
-msgstr "%s umí zpracovat vrstvy pouze jako políčka animace"
+msgid "%s plug-in can only handle layers as animation frames"
+msgstr "Modul %s umí zpracovat vrstvy pouze jako políčka animace"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
@@ -62,13 +62,13 @@ msgstr "Sloučit obraz"
 
 #: ../libgimp/gimpexport.c:262
 #, c-format
-msgid "%s can't handle transparency"
-msgstr "%s neumí zpracovat průhlednost"
+msgid "%s plug-in can't handle transparency"
+msgstr "Modul %s neumí zpracovat průhlednost"
 
 #: ../libgimp/gimpexport.c:271
 #, c-format
-msgid "%s can't handle layer masks"
-msgstr "%s neumí zpracovat masky vrstev"
+msgid "%s plug-in can't handle layer masks"
+msgstr "Modul %s neumí zpracovat masky vrstev"
 
 #: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
@@ -76,8 +76,8 @@ msgstr "Použít masky vrstev"
 
 #: ../libgimp/gimpexport.c:280
 #, c-format
-msgid "%s can only handle RGB images"
-msgstr "%s umí zpracovat pouze RGB obrázky"
+msgid "%s plug-in can only handle RGB images"
+msgstr "Modul %s umí zpracovat pouze RGB obrázky"
 
 #: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
@@ -86,8 +86,8 @@ msgstr "Převést do RGB"
 
 #: ../libgimp/gimpexport.c:289
 #, c-format
-msgid "%s can only handle grayscale images"
-msgstr "%s umí zpracovat pouze obrázky ve stupních šedi"
+msgid "%s plug-in can only handle grayscale images"
+msgstr "Modul %s umí zpracovat pouze obrázky ve stupních šedi"
 
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
@@ -96,8 +96,8 @@ msgstr "Převést do šedí"
 
 #: ../libgimp/gimpexport.c:298
 #, c-format
-msgid "%s can only handle indexed images"
-msgstr "%s umí zpracovat pouze indexované obrázky"
+msgid "%s plug-in can only handle indexed images"
+msgstr "Modul %s umí zpracovat pouze indexované obrázky"
 
 #: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
 #: ../libgimp/gimpexport.c:338
@@ -110,8 +110,8 @@ msgstr ""
 
 #: ../libgimp/gimpexport.c:308
 #, c-format
-msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s umí zpracovat pouze bitmapové (dvoubarevné) indexované obrázky"
+msgid "%s plug-in can only handle bitmap (two color) indexed images"
+msgstr "Modul %s umí zpracovat pouze bitmapové (dvoubarevné) indexované obrázky"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -123,23 +123,23 @@ msgstr ""
 
 #: ../libgimp/gimpexport.c:318
 #, c-format
-msgid "%s can only handle RGB or grayscale images"
-msgstr "%s umí zpracovat pouze RGB obrázky nebo obrázky ve stupních šedi"
+msgid "%s plug-in can only handle RGB or grayscale images"
+msgstr "Modul %s umí zpracovat pouze RGB obrázky nebo obrázky ve stupních šedi"
 
 #: ../libgimp/gimpexport.c:327
 #, c-format
-msgid "%s can only handle RGB or indexed images"
-msgstr "%s umí zpracovat pouze RGB nebo indexované obrázky"
+msgid "%s plug-in  can only handle RGB or indexed images"
+msgstr "Modul %s umí zpracovat pouze RGB nebo indexované obrázky"
 
 #: ../libgimp/gimpexport.c:337
 #, c-format
-msgid "%s can only handle grayscale or indexed images"
-msgstr "%s umí zpracovat pouze obrázky ve stupních šedi nebo indexované"
+msgid "%s plug-in can only handle grayscale or indexed images"
+msgstr "Modul %s umí zpracovat pouze obrázky ve stupních šedi nebo indexované"
 
 #: ../libgimp/gimpexport.c:348
 #, c-format
-msgid "%s needs an alpha channel"
-msgstr "%s vyžaduje alfa kanál"
+msgid "%s plug-in needs an alpha channel"
+msgstr "Modul %s vyžaduje alfa kanál"
 
 #: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
@@ -834,41 +834,41 @@ msgstr "Sytost"
 msgid "Absolute colorimetric"
 msgstr "Absolutní kolorimetrický"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#: ../libgimpconfig/gimpconfig-deserialize.c:96
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "hodnota pro prvek %s není platný řetězec v kódování UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:426
+#: ../libgimpconfig/gimpconfig-deserialize.c:427
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "očekávána hodnota 'yes' nebo 'no' pro prvek typu boolean %s, obdržena "
 "hodnota '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:500
+#: ../libgimpconfig/gimpconfig-deserialize.c:501
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "neplatná hodnota '%s' pro prvek %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:515
+#: ../libgimpconfig/gimpconfig-deserialize.c:516
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "neplatná hodnota '%ld' pro prvek %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:584
+#: ../libgimpconfig/gimpconfig-deserialize.c:585
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "při zpracování prvku '%s': %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:453
-#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpconfig-iface.c:454
+#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
 msgid "fatal parse error"
 msgstr "fatální chyba zpracování"
 
-#: ../libgimpconfig/gimpconfig-path.c:376
+#: ../libgimpconfig/gimpconfig-path.c:377
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Nemohu expandovat ${%s}"
