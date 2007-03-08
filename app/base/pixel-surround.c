@@ -88,8 +88,16 @@ pixel_surround_get_data (PixelSurround *surround,
   else
     {
       /*   return a pointer to the buffer that's filled with the bg color  */
-      *w         = surround->w;
-      *h         = surround->h;
+      if (x < 0)
+        *w = MIN (- x, surround->w);
+      else
+        *w = surround->w;
+
+      if (y < 0)
+        *h = MIN (- y, surround->h);
+      else
+        *h = surround->h;
+
       *rowstride = surround->rowstride;
 
       return surround->bg;

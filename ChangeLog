@@ -1,5 +1,9 @@
 2007-03-08  Sven Neumann  <sven@gimp.org>
 
+	* app/base/pixel-surround.c: fixed boundary case.
+
+2007-03-08  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppropwidgets.[ch]: gimp_prop_string_combo_box_new()
 	takes a GtkTreeModel, not a GtkTreeStore.
 
