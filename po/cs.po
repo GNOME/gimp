@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-01 10:18+0100\n"
-"PO-Revision-Date: 2007-03-01 10:20+0100\n"
+"POT-Creation-Date: 2007-03-08 10:40+0100\n"
+"PO-Revision-Date: 2007-03-08 10:42+0100\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -373,7 +373,7 @@ msgid "Plug-Ins"
 msgstr "Zásuvné moduly"
 
 #: ../app/actions/actions.c:180 ../app/core/core-enums.c:858
-#: ../app/core/gimpchannel.c:361
+#: ../app/core/gimpchannel.c:362
 msgid "Quick Mask"
 msgstr "Rychlá maska"
 
@@ -675,7 +675,7 @@ msgstr "Barva nového kanálu"
 msgid "%s Channel Copy"
 msgstr "Kopie kanálu %s"
 
-#: ../app/actions/channels-commands.c:308 ../app/core/gimpselection.c:557
+#: ../app/actions/channels-commands.c:308 ../app/core/gimpselection.c:560
 #: ../app/pdb/selection_cmds.c:423 ../app/pdb/selection_cmds.c:486
 msgid "Channel to Selection"
 msgstr "Kanál do výběru"
@@ -839,7 +839,7 @@ msgstr ""
 #: ../app/actions/data-commands.c:130
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1371
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
-#: ../app/core/gimppalette.c:336 ../app/dialogs/palette-import-dialog.c:771
+#: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:771
 #: ../app/pdb/image_cmds.c:2005 ../app/widgets/gimpdnd-xds.c:97
 msgid "Untitled"
 msgstr "Bez názvu"
@@ -2375,7 +2375,7 @@ msgstr "Překlápím..."
 #: ../app/actions/image-commands.c:372
 #: ../app/pdb/drawable_transform_cmds.c:515
 #: ../app/pdb/drawable_transform_cmds.c:593
-#: ../app/pdb/transform_tools_cmds.c:209 ../app/tools/gimprotatetool.c:116
+#: ../app/pdb/transform_tools_cmds.c:209 ../app/tools/gimprotatetool.c:115
 msgid "Rotating"
 msgstr "Rotuji..."
 
@@ -2396,7 +2396,7 @@ msgstr "Velikost obrázku"
 #: ../app/dialogs/preferences-dialog.c:1798
 #: ../app/pdb/drawable_transform_cmds.c:670
 #: ../app/pdb/drawable_transform_cmds.c:745
-#: ../app/pdb/transform_tools_cmds.c:283 ../app/tools/gimpscaletool.c:109
+#: ../app/pdb/transform_tools_cmds.c:283 ../app/tools/gimpscaletool.c:108
 msgid "Scaling"
 msgstr "Změna velikosti"
 
@@ -3129,7 +3129,7 @@ msgid "Toggle _Quick Mask"
 msgstr "_Přepnout Rychlou masku"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:990
+#: ../app/display/gimpdisplayshell.c:991
 msgid "Toggle Quick Mask"
 msgstr "Přepnout Rychlou masku"
 
@@ -3265,53 +3265,59 @@ msgstr "_Vykreslit výběr"
 msgid "Stroke the selection with last used values"
 msgstr "Vykreslit výběr s naposledy použitými hodnotami"
 
-#: ../app/actions/select-commands.c:137 ../app/core/gimpselection.c:167
+#: ../app/actions/select-commands.c:138 ../app/core/gimpselection.c:168
 msgid "Feather Selection"
 msgstr "Zaoblit výběr"
 
-#: ../app/actions/select-commands.c:141
+#: ../app/actions/select-commands.c:142
 msgid "Feather selection by"
 msgstr "Zaoblit výběr o"
 
-#: ../app/actions/select-commands.c:172 ../app/core/gimpselection.c:174
+#: ../app/actions/select-commands.c:173 ../app/core/gimpselection.c:175
 msgid "Shrink Selection"
 msgstr "Zmenšit výběr"
 
-#: ../app/actions/select-commands.c:176
+#: ../app/actions/select-commands.c:177
 msgid "Shrink selection by"
 msgstr "Zmenšit výběr o"
 
-#: ../app/actions/select-commands.c:185
+#: ../app/actions/select-commands.c:186
 msgid "_Shrink from image border"
 msgstr "_Zmenšit dle hranic obrázku"
 
-#: ../app/actions/select-commands.c:206 ../app/core/gimpselection.c:173
+#: ../app/actions/select-commands.c:207 ../app/core/gimpselection.c:174
 msgid "Grow Selection"
 msgstr "Zvětšit výběr"
 
-#: ../app/actions/select-commands.c:210
+#: ../app/actions/select-commands.c:211
 msgid "Grow selection by"
 msgstr "Zvětšit výběr o"
 
-#: ../app/actions/select-commands.c:230 ../app/core/gimpselection.c:172
+#: ../app/actions/select-commands.c:231 ../app/core/gimpselection.c:173
 msgid "Border Selection"
 msgstr "Vybrat obvod"
 
-#: ../app/actions/select-commands.c:234
+#: ../app/actions/select-commands.c:235
 msgid "Border selection by"
 msgstr "Vybrat obvod"
 
-#: ../app/actions/select-commands.c:243
+#. Feather button
+#: ../app/actions/select-commands.c:245
 msgid "_Feather border"
 msgstr "_Prolnout okraje"
 
-#: ../app/actions/select-commands.c:290 ../app/actions/select-commands.c:321
+#. Edge lock button
+#: ../app/actions/select-commands.c:258
+msgid "_Lock selection to image edges"
+msgstr "_Omezit výběr okraji obrázku"
+
+#: ../app/actions/select-commands.c:307 ../app/actions/select-commands.c:338
 #: ../app/actions/vectors-commands.c:363 ../app/actions/vectors-commands.c:395
 #: ../app/dialogs/stroke-dialog.c:283
 msgid "There is no active layer or channel to stroke to."
 msgstr "Není žádná aktivní vrstva nebo kanál, kam vykreslovat."
 
-#: ../app/actions/select-commands.c:296 ../app/core/gimpselection.c:151
+#: ../app/actions/select-commands.c:313 ../app/core/gimpselection.c:152
 msgid "Stroke Selection"
 msgstr "Vykreslit výběr"
 
@@ -3765,7 +3771,7 @@ msgstr "Volby nové cesty"
 msgid "Path to Selection"
 msgstr "Cesta do výběru"
 
-#: ../app/actions/vectors-commands.c:369 ../app/tools/gimpvectoroptions.c:174
+#: ../app/actions/vectors-commands.c:369 ../app/tools/gimpvectoroptions.c:198
 #: ../app/tools/gimpvectortool.c:1908 ../app/vectors/gimpvectors.c:199
 msgid "Stroke Path"
 msgstr "Vykreslit cestu"
@@ -4195,7 +4201,7 @@ msgstr ""
 "hodnoty. Byla vytvořena záloha vaší konfigurace v '%s'."
 
 #: ../app/config/gimprc.c:259 ../app/config/gimprc.c:272
-#: ../app/plug-in/gimppluginmanager.c:374
+#: ../app/plug-in/gimppluginmanager.c:393
 #, c-format
 msgid "Parsing '%s'\n"
 msgstr "Zpracovávám '%s'\n"
@@ -5311,7 +5317,7 @@ msgstr "Vyplnit průhledností"
 msgid "Fill with Pattern"
 msgstr "Vyplnit vzorkem"
 
-#: ../app/core/gimp-edit.c:562 ../app/core/gimpselection.c:631
+#: ../app/core/gimp-edit.c:562 ../app/core/gimpselection.c:634
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Nemohu vyříznout nebo kopírovat, protože zvolená oblast je prázdná."
 
@@ -5540,87 +5546,87 @@ msgstr "Přibližný výběr"
 msgid "command|Select by Color"
 msgstr "Výběr dle barvy"
 
-#: ../app/core/gimpchannel.c:256
+#: ../app/core/gimpchannel.c:257
 msgid "Channel"
 msgstr "Kanál"
 
-#: ../app/core/gimpchannel.c:257
+#: ../app/core/gimpchannel.c:258
 msgid "Rename Channel"
 msgstr "Přejmenovat kanál"
 
-#: ../app/core/gimpchannel.c:258
+#: ../app/core/gimpchannel.c:259
 msgid "Move Channel"
 msgstr "Přesunout kanál"
 
-#: ../app/core/gimpchannel.c:259
+#: ../app/core/gimpchannel.c:260
 msgid "Scale Channel"
 msgstr "Velikost kanálu"
 
-#: ../app/core/gimpchannel.c:260
+#: ../app/core/gimpchannel.c:261
 msgid "Resize Channel"
 msgstr "Změnit velikost kanálu"
 
-#: ../app/core/gimpchannel.c:261
+#: ../app/core/gimpchannel.c:262
 msgid "Flip Channel"
 msgstr "Překlopit kanál"
 
-#: ../app/core/gimpchannel.c:262
+#: ../app/core/gimpchannel.c:263
 msgid "Rotate Channel"
 msgstr "Rotovat kanál"
 
-#: ../app/core/gimpchannel.c:263 ../app/core/gimpdrawable-transform.c:826
+#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:826
 msgid "Transform Channel"
 msgstr "Transformovat kanál"
 
-#: ../app/core/gimpchannel.c:264
+#: ../app/core/gimpchannel.c:265
 msgid "Stroke Channel"
 msgstr "Vykreslit kanál"
 
-#: ../app/core/gimpchannel.c:285
+#: ../app/core/gimpchannel.c:286
 msgid "Feather Channel"
 msgstr "Zaoblit kanál"
 
-#: ../app/core/gimpchannel.c:286
+#: ../app/core/gimpchannel.c:287
 msgid "Sharpen Channel"
 msgstr "Zaostřit kanál"
 
-#: ../app/core/gimpchannel.c:287
+#: ../app/core/gimpchannel.c:288
 msgid "Clear Channel"
 msgstr "Vymazat kanál"
 
-#: ../app/core/gimpchannel.c:288
+#: ../app/core/gimpchannel.c:289
 msgid "Fill Channel"
 msgstr "Vyplnit kanál"
 
-#: ../app/core/gimpchannel.c:289
+#: ../app/core/gimpchannel.c:290
 msgid "Invert Channel"
 msgstr "Invertovat kanál"
 
-#: ../app/core/gimpchannel.c:290
+#: ../app/core/gimpchannel.c:291
 msgid "Border Channel"
 msgstr "Kanál okraje"
 
-#: ../app/core/gimpchannel.c:291
+#: ../app/core/gimpchannel.c:292
 msgid "Grow Channel"
 msgstr "Zvětšit kanál"
 
-#: ../app/core/gimpchannel.c:292
+#: ../app/core/gimpchannel.c:293
 msgid "Shrink Channel"
 msgstr "Zmenšit kanál"
 
-#: ../app/core/gimpchannel.c:689
+#: ../app/core/gimpchannel.c:690
 msgid "Cannot stroke empty channel."
 msgstr "Nemohu vykreslit prázdný kanál."
 
-#: ../app/core/gimpchannel.c:1589
+#: ../app/core/gimpchannel.c:1591
 msgid "Set Channel Color"
 msgstr "Nastavit barvu kanálu"
 
-#: ../app/core/gimpchannel.c:1637
+#: ../app/core/gimpchannel.c:1639
 msgid "Set Channel Opacity"
 msgstr "Nastavit krytí kanálu"
 
-#: ../app/core/gimpchannel.c:1705 ../app/core/gimpselection.c:525
+#: ../app/core/gimpchannel.c:1707 ../app/core/gimpselection.c:528
 msgid "Selection Mask"
 msgstr "Maska výběru"
 
@@ -5666,7 +5672,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdrawable-blend.c:247 ../app/tools/gimpblendtool.c:112
+#: ../app/core/gimpdrawable-blend.c:244 ../app/tools/gimpblendtool.c:112
 msgid "Blend"
 msgstr "Mísení"
 
@@ -5709,7 +5715,7 @@ msgid "Render Stroke"
 msgstr "Vykreslit"
 
 #. Start a transform undo group
-#: ../app/core/gimpdrawable-transform.c:620 ../app/tools/gimpfliptool.c:111
+#: ../app/core/gimpdrawable-transform.c:620 ../app/tools/gimpfliptool.c:112
 msgid "command|Flip"
 msgstr "Překlopit"
 
@@ -5857,7 +5863,7 @@ msgstr "Přidat vodorovné vodítko"
 msgid "Add Vertical Guide"
 msgstr "Přidat svislé vodítko"
 
-#: ../app/core/gimpimage-guides.c:113 ../app/tools/gimpmovetool.c:541
+#: ../app/core/gimpimage-guides.c:113 ../app/tools/gimpmovetool.c:549
 msgid "Remove Guide"
 msgstr "Odstranit vodítko"
 
@@ -6327,39 +6333,39 @@ msgstr "Nemohu spustit zpětné volání %s. Příslušný zásuvný modul možn
 msgid "Please wait"
 msgstr "Prosím čekejte"
 
-#: ../app/core/gimpselection.c:150 ../app/tools/gimpeditselectiontool.c:196
+#: ../app/core/gimpselection.c:151 ../app/tools/gimpeditselectiontool.c:196
 msgid "Move Selection"
 msgstr "Přesunout výběr"
 
-#: ../app/core/gimpselection.c:168
+#: ../app/core/gimpselection.c:169
 msgid "Sharpen Selection"
 msgstr "Zaostřit výběr"
 
-#: ../app/core/gimpselection.c:169
+#: ../app/core/gimpselection.c:170
 msgid "Select None"
 msgstr "Vybrat nic"
 
-#: ../app/core/gimpselection.c:170
+#: ../app/core/gimpselection.c:171
 msgid "Select All"
 msgstr "Vybrat vše"
 
-#: ../app/core/gimpselection.c:171
+#: ../app/core/gimpselection.c:172
 msgid "Invert Selection"
 msgstr "Invertovat výběr"
 
-#: ../app/core/gimpselection.c:274
+#: ../app/core/gimpselection.c:275
 msgid "There is no selection to stroke."
 msgstr "Není žádný výběr k vytažení."
 
-#: ../app/core/gimpselection.c:786
+#: ../app/core/gimpselection.c:789
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Nemohu udělat výběr plovoucí, protože vybraná oblast je prázdná."
 
-#: ../app/core/gimpselection.c:793
+#: ../app/core/gimpselection.c:796
 msgid "Float Selection"
 msgstr "Plovoucí výběr"
 
-#: ../app/core/gimpselection.c:810
+#: ../app/core/gimpselection.c:813
 msgid "Floated Layer"
 msgstr "Plovoucí vrstva"
 
@@ -7976,15 +7982,15 @@ msgstr "Přepnout na nástroj přesun"
 msgid "Image saved to '%s'"
 msgstr "Obrázek uložen do '%s'"
 
-#: ../app/display/gimpdisplayshell.c:852
+#: ../app/display/gimpdisplayshell.c:853
 msgid "Access the image menu"
 msgstr "Přístup k nabídce obrázku"
 
-#: ../app/display/gimpdisplayshell.c:961
+#: ../app/display/gimpdisplayshell.c:962
 msgid "Zoom image when window size changes"
 msgstr "Změnit přiblížení obrázku při změně velikosti okna"
 
-#: ../app/display/gimpdisplayshell.c:1011
+#: ../app/display/gimpdisplayshell.c:1012
 msgid "Navigate the image display"
 msgstr "Navigace v obrázku"
 
@@ -8084,19 +8090,19 @@ msgstr "Nastavit filtry barevného zobrazení"
 msgid "Layer Select"
 msgstr "Vrstva výběru"
 
-#: ../app/display/gimpdisplayshell-scale.c:598
+#: ../app/display/gimpdisplayshell-scale.c:612
 msgid "Zoom Ratio"
 msgstr "Stupeň přiblížení"
 
-#: ../app/display/gimpdisplayshell-scale.c:600
+#: ../app/display/gimpdisplayshell-scale.c:614
 msgid "Select Zoom Ratio"
 msgstr "Zvolte stupeň přiblížení"
 
-#: ../app/display/gimpdisplayshell-scale.c:643
+#: ../app/display/gimpdisplayshell-scale.c:657
 msgid "Zoom ratio:"
 msgstr "Stupeň přiblížení:"
 
-#: ../app/display/gimpdisplayshell-scale.c:668
+#: ../app/display/gimpdisplayshell-scale.c:682
 msgid "Zoom:"
 msgstr "Přiblížení:"
 
@@ -8184,7 +8190,7 @@ msgstr "Neznámý typ souboru"
 msgid "GIMP Startup"
 msgstr "Spouštím GIMP"
 
-#: ../app/gui/themes.c:231 ../app/plug-in/gimppluginmanager.c:485
+#: ../app/gui/themes.c:231 ../app/plug-in/gimppluginmanager.c:504
 #, c-format
 msgid "Writing '%s'\n"
 msgstr "Zapisuji '%s'\n"
@@ -8315,13 +8321,12 @@ msgstr "Práh"
 #: ../app/pdb/drawable_transform_cmds.c:304
 #: ../app/pdb/drawable_transform_cmds.c:388
 #: ../app/pdb/transform_tools_cmds.c:142 ../app/tools/gimpperspectivetool.c:68
-#: ../app/tools/gimpperspectivetool.c:100
 msgid "Perspective"
 msgstr "Perspektiva"
 
 #: ../app/pdb/drawable_transform_cmds.c:818
 #: ../app/pdb/drawable_transform_cmds.c:889
-#: ../app/pdb/transform_tools_cmds.c:352 ../app/tools/gimpsheartool.c:116
+#: ../app/pdb/transform_tools_cmds.c:352 ../app/tools/gimpsheartool.c:115
 msgid "Shearing"
 msgstr "Naklánění"
 
@@ -8478,49 +8483,49 @@ msgstr ""
 "Během svého ukončení mohl modul narušit vnitřní stav GIMPu. K opětovnému "
 "dosažení bezpečného stavu je vhodné uložit obrázky a restartovat GIMP."
 
-#: ../app/plug-in/gimppluginmanager.c:292
+#: ../app/plug-in/gimppluginmanager.c:311
 msgid "Plug-In Interpreters"
 msgstr "Interpretry zásuvných modulů"
 
-#: ../app/plug-in/gimppluginmanager.c:299
+#: ../app/plug-in/gimppluginmanager.c:318
 msgid "Plug-In Environment"
 msgstr "Prostředí zásuvných modulů"
 
-#: ../app/plug-in/gimppluginmanager.c:339
+#: ../app/plug-in/gimppluginmanager.c:358
 msgid "Searching Plug-Ins"
 msgstr "Probíhá hledání zásuvných modulů"
 
-#: ../app/plug-in/gimppluginmanager.c:370
+#: ../app/plug-in/gimppluginmanager.c:389
 msgid "Resource configuration"
 msgstr "Konfigurace zdrojů"
 
 #. query any plug-ins that have changed since we last wrote out
 #. *  the pluginrc file
 #.
-#: ../app/plug-in/gimppluginmanager.c:396
+#: ../app/plug-in/gimppluginmanager.c:415
 msgid "Querying new Plug-ins"
 msgstr "Hledám nové zásuvné moduly"
 
-#: ../app/plug-in/gimppluginmanager.c:424
+#: ../app/plug-in/gimppluginmanager.c:443
 #, c-format
 msgid "Querying plug-in: '%s'\n"
 msgstr "Hledám zásuvný modul: '%s'\n"
 
 #. initialize the plug-ins
-#: ../app/plug-in/gimppluginmanager.c:433
+#: ../app/plug-in/gimppluginmanager.c:452
 msgid "Initializing Plug-ins"
 msgstr "Inicializuji zásuvného moduly"
 
-#: ../app/plug-in/gimppluginmanager.c:459
+#: ../app/plug-in/gimppluginmanager.c:478
 #, c-format
 msgid "Initializing plug-in: '%s'\n"
 msgstr "Inicializuji zásuvný modul: '%s'\n"
 
-#: ../app/plug-in/gimppluginmanager.c:584
+#: ../app/plug-in/gimppluginmanager.c:603
 msgid "Starting Extensions"
 msgstr "Spouštím rozšíření"
 
-#: ../app/plug-in/gimppluginmanager.c:592
+#: ../app/plug-in/gimppluginmanager.c:611
 #, c-format
 msgid "Starting extension: '%s'\n"
 msgstr "Spouštím rozšíření: '%s'\n"
@@ -9250,7 +9255,7 @@ msgid "Exposure:"
 msgstr "Míra:"
 
 #: ../app/tools/gimpeditselectiontool.c:200
-#: ../app/tools/gimpeditselectiontool.c:1149
+#: ../app/tools/gimpeditselectiontool.c:1111
 msgid "Move Floating Selection"
 msgstr "Odstranit plovoucí výběr"
 
@@ -9783,27 +9788,27 @@ msgstr "Přesunout aktivní cestu"
 msgid "Move:"
 msgstr "Přesun:"
 
-#: ../app/tools/gimpmovetool.c:118
+#: ../app/tools/gimpmovetool.c:126
 msgid "tool|Move"
 msgstr "Přesun"
 
-#: ../app/tools/gimpmovetool.c:119
+#: ../app/tools/gimpmovetool.c:127
 msgid "Move Tool: Move layers, selections, and other objects"
 msgstr "Přesun: přesun vrstev, výběrů a dalších objektů"
 
-#: ../app/tools/gimpmovetool.c:120
+#: ../app/tools/gimpmovetool.c:128
 msgid "_Move"
 msgstr "_Přesun"
 
-#: ../app/tools/gimpmovetool.c:268 ../app/tools/gimpmovetool.c:547
+#: ../app/tools/gimpmovetool.c:276 ../app/tools/gimpmovetool.c:555
 msgid "Move Guide: "
 msgstr "Přesunout vodítko: "
 
-#: ../app/tools/gimpmovetool.c:541
+#: ../app/tools/gimpmovetool.c:549
 msgid "Cancel Guide"
 msgstr "Zrušit vodítko"
 
-#: ../app/tools/gimpmovetool.c:547
+#: ../app/tools/gimpmovetool.c:555
 msgid "Add Guide: "
 msgstr "Přidat vodítko: "
 
@@ -9944,10 +9949,10 @@ msgid "command|Perspective"
 msgstr "Perspektiva"
 
 #: ../app/tools/gimpperspectivetool.c:99
-msgid "Perspective Transform Information"
-msgstr "Informace o transformaci perspektivy"
+msgid "Perspective transformation"
+msgstr "Transformace perspektivy"
 
-#: ../app/tools/gimpperspectivetool.c:115
+#: ../app/tools/gimpperspectivetool.c:114
 msgid "Transformation Matrix"
 msgstr "Transformační matrix"
 
@@ -10020,7 +10025,7 @@ msgstr "Výběr obdélníku: výběr obdélníkové oblasti"
 msgid "_Rectangle Select"
 msgstr "Výběr _obdélníku"
 
-#: ../app/tools/gimprectangletool.c:1033 ../app/tools/gimprectangletool.c:1682
+#: ../app/tools/gimprectangletool.c:1031 ../app/tools/gimprectangletool.c:1681
 msgid "Rectangle: "
 msgstr "Obdélník: "
 
@@ -10040,19 +10045,15 @@ msgstr "Nástroj rotace: Rotace vrstvy, výběru či cesty"
 msgid "_Rotate"
 msgstr "_Rotovat"
 
-#: ../app/tools/gimprotatetool.c:115
-msgid "Rotation Information"
-msgstr "Informace o rotaci"
-
-#: ../app/tools/gimprotatetool.c:144
+#: ../app/tools/gimprotatetool.c:143
 msgid "_Angle:"
 msgstr "Ú_hel:"
 
-#: ../app/tools/gimprotatetool.c:159
+#: ../app/tools/gimprotatetool.c:158
 msgid "Center _X:"
 msgstr "Střed _X:"
 
-#: ../app/tools/gimprotatetool.c:168
+#: ../app/tools/gimprotatetool.c:167
 msgid "Center _Y:"
 msgstr "Střed _Y:"
 
@@ -10071,10 +10072,6 @@ msgstr "_Škála"
 #: ../app/tools/gimpscaletool.c:107
 msgid "command|Scale"
 msgstr "Změnit velikost"
-
-#: ../app/tools/gimpscaletool.c:108
-msgid "Scaling Information"
-msgstr "Informace o škálování"
 
 #: ../app/tools/gimpselectionoptions.c:99
 msgid "Smooth edges"
@@ -10160,15 +10157,11 @@ msgstr "_Naklonit"
 msgid "command|Shear"
 msgstr "Naklonit"
 
-#: ../app/tools/gimpsheartool.c:115
-msgid "Shearing Information"
-msgstr "Informace o naklonění"
-
-#: ../app/tools/gimpsheartool.c:139
+#: ../app/tools/gimpsheartool.c:138
 msgid "Shear magnitude _X:"
 msgstr "Zvětšení _X naklonění:"
 
-#: ../app/tools/gimpsheartool.c:149
+#: ../app/tools/gimpsheartool.c:148
 msgid "Shear magnitude _Y:"
 msgstr "Zvětšení _Y naklonění:"
 
@@ -10328,15 +10321,15 @@ msgstr "15 stupňů  (%s)"
 msgid "Keep aspect  (%s)"
 msgstr "Ponechat poměr stran  (%s)"
 
-#: ../app/tools/gimptransformtool.c:238
+#: ../app/tools/gimptransformtool.c:237
 msgid "Transforming"
 msgstr "Transformuji..."
 
-#: ../app/tools/gimptransformtool.c:1162
+#: ../app/tools/gimptransformtool.c:1161
 msgid "There is no layer to transform."
 msgstr "Není žádná vrstva pro transformaci."
 
-#: ../app/tools/gimptransformtool.c:1173
+#: ../app/tools/gimptransformtool.c:1172
 msgid "There is no path to transform."
 msgstr "Není žádná cesta pro transformaci."
 
@@ -10344,15 +10337,15 @@ msgstr "Není žádná cesta pro transformaci."
 msgid "Restrict editing to polygons"
 msgstr "Omezit úpravy na mnohoúhelníky"
 
-#: ../app/tools/gimpvectoroptions.c:145
+#: ../app/tools/gimpvectoroptions.c:156
 msgid "Edit Mode"
 msgstr "Režim úprav"
 
-#: ../app/tools/gimpvectoroptions.c:150
+#: ../app/tools/gimpvectoroptions.c:174
 msgid "Polygonal"
 msgstr "Mnohoúhelník"
 
-#: ../app/tools/gimpvectoroptions.c:154
+#: ../app/tools/gimpvectoroptions.c:178
 #, c-format
 msgid ""
 "Path to Selection\n"
@@ -10365,7 +10358,7 @@ msgstr ""
 "%s  Rozdíl\n"
 "%s  Průnik"
 
-#: ../app/tools/gimpvectoroptions.c:164
+#: ../app/tools/gimpvectoroptions.c:188
 msgid "Create Selection from Path"
 msgstr "Vytvořit výběr z cesty"
 
@@ -11528,35 +11521,35 @@ msgstr "%d × %d ppi"
 msgid "%d ppi"
 msgstr "%d ppi"
 
-#: ../app/widgets/gimpstrokeeditor.c:183
+#: ../app/widgets/gimpstrokeeditor.c:185
 msgid "Line width:"
 msgstr "Šířka čáry:"
 
-#: ../app/widgets/gimpstrokeeditor.c:199
+#: ../app/widgets/gimpstrokeeditor.c:201
 msgid "_Line Style"
 msgstr "_Styl čáry"
 
-#: ../app/widgets/gimpstrokeeditor.c:218
+#: ../app/widgets/gimpstrokeeditor.c:220
 msgid "_Cap style:"
 msgstr "Styl za_končení:"
 
-#: ../app/widgets/gimpstrokeeditor.c:224
+#: ../app/widgets/gimpstrokeeditor.c:226
 msgid "_Join style:"
 msgstr "_Styl spojení:"
 
-#: ../app/widgets/gimpstrokeeditor.c:229
+#: ../app/widgets/gimpstrokeeditor.c:231
 msgid "_Miter limit:"
 msgstr "Limit _ostrosti:"
 
-#: ../app/widgets/gimpstrokeeditor.c:236
+#: ../app/widgets/gimpstrokeeditor.c:238
 msgid "Dash pattern:"
 msgstr "Vzorek čárkování:"
 
-#: ../app/widgets/gimpstrokeeditor.c:299
+#: ../app/widgets/gimpstrokeeditor.c:301
 msgid "Dash _preset:"
 msgstr "_Přednastavení čárkování:"
 
-#: ../app/widgets/gimpstrokeeditor.c:320
+#: ../app/widgets/gimpstrokeeditor.c:322
 msgid "_Antialiasing"
 msgstr "_Vyhlazování"
 
