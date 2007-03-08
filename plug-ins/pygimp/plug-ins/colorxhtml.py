@@ -189,14 +189,14 @@ register(
     N_("Colored XHTML"),
     "RGB",
     [
-        (PF_RADIO, "source", _("Character source"), 0,
+        (PF_RADIO, "source", _("Character _source"), 0,
                    ((_("Source code"), CHARS_SOURCE),
                     (_("Text file"),   CHARS_FILE),
                     (_("Entry box"),   CHARS_PARAMETER))),
-        (PF_FILE,  "characters", _("File to read or characters to use"),
+        (PF_FILE,  "characters", _("_File to read or characters to use"),
                    ""),
-        (PF_INT,   "font-size",  _("Font size in pixels"), 10),
-        (PF_BOOL,  "separate",   _("Write a separate CSS file"),   True)
+        (PF_INT,   "font-size",  _("Fo_nt size in pixels"), 10),
+        (PF_BOOL,  "separate",   _("_Write a separate CSS file"),   True)
     ],
     [],
     colorxhtml, on_query=register_save,

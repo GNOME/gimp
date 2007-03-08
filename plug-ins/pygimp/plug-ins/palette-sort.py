@@ -55,14 +55,14 @@ register(
     "",
     [
         (PF_PALETTE, "palette",  _("Palette"), ""),
-        (PF_RADIO,   "model",    _("Color model"), "HSV", 
+        (PF_RADIO,   "model",    _("Color _model"), "HSV", 
                                     ((_("RGB"), "RGB"), 
                                      (_("HSV"), "HSV"))),
-        (PF_RADIO,   "channel",  _("Channel to sort"), 2, 
+        (PF_RADIO,   "channel",  _("Channel to _sort"), 2, 
                                     ((_("Red or Hue"),          0), 
                                      (_("Green or Saturation"), 1), 
                                      (_("Blue or Value"),       2))),
-        (PF_BOOL,   "ascending", _("Ascending"), True)
+        (PF_BOOL,   "ascending", _("_Ascending"), True)
     ],     
     [],
     palette_sort,

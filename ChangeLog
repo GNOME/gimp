@@ -1,5 +1,15 @@
 2007-03-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/gimpfu.py: support mnemonics in parameter labels.
+
+	* plug-ins/pygimp/plug-ins/foggify.py
+	* plug-ins/pygimp/plug-ins/colorxhtml.py
+	* plug-ins/pygimp/plug-ins/shadow_bevel.py
+	* plug-ins/pygimp/plug-ins/palette-offset.py
+	* plug-ins/pygimp/plug-ins/palette-sort.py: added mnemonics.
+
+2007-03-08  Sven Neumann  <sven@gimp.org>
+
 	* app/base/pixel-surround.c: fixed boundary case.
 
 2007-03-08  Sven Neumann  <sven@gimp.org>

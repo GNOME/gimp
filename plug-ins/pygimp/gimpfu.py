@@ -637,15 +637,18 @@ def _interact(proc_name, start_params):
         def_val = defaults[i]
 
         label = gtk.Label(desc)
-        label.set_alignment(1.0, 0.5)
-        table.attach(label, 1,2, i,i+1, xoptions=gtk.FILL)
+        label.set_use_underline(True)
+        label.set_alignment(0.0, 0.5)
+        table.attach(label, 1, 2, i, i+1, xoptions=gtk.FILL)
         label.show()
 
         if pf_type in (PF_SPINNER, PF_SLIDER, PF_RADIO):
             wid = _edit_mapping[pf_type](def_val, params[i][4])
         else:
             wid = _edit_mapping[pf_type](def_val)
-        
+
+        label.set_mnemonic_widget(wid)
+
         table.attach(wid, 2,3, i,i+1, yoptions=0)
 
         if pf_type != PF_TEXT:
