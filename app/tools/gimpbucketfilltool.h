@@ -39,9 +39,6 @@ typedef struct _GimpBucketFillToolClass GimpBucketFillToolClass;
 struct _GimpBucketFillTool
 {
   GimpTool  parent_instance;
-
-  gint      target_x;  /*  starting x coord  */
-  gint      target_y;  /*  starting y coord  */
 };
 
 struct _GimpBucketFillToolClass

@@ -1,3 +1,10 @@
+2007-03-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpbucketfilltool.[ch]: request click events, removed
+	target_x,y struct members and button_press() implementation and
+	use the coords passed in button_release(). Also make sure that
+	a click has no effect in areas where we show the bad corsor.
+
 2007-03-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/gimpfu.py: support mnemonics in parameter labels.
