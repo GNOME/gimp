@@ -199,18 +199,12 @@ gimp_blend_tool_button_press (GimpTool        *tool,
                               GimpDisplay     *display)
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
-  GimpDrawable  *drawable;
-  gint           off_x, off_y;
 
-  drawable = gimp_image_active_drawable (display->image);
+  blend_tool->start_x = blend_tool->end_x = coords->x;
+  blend_tool->start_y = blend_tool->end_y = coords->y;
 
-  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
-
-  blend_tool->mousex = coords->x - off_x;
-  blend_tool->mousey = coords->y - off_y;
-
-  blend_tool->endx = blend_tool->startx = blend_tool->mousex;
-  blend_tool->endy = blend_tool->starty = blend_tool->mousey;
+  blend_tool->last_x = blend_tool->mouse_x = coords->x;
+  blend_tool->last_y = blend_tool->mouse_y = coords->y;
 
   tool->display = display;
 
@@ -242,13 +236,17 @@ gimp_blend_tool_button_release (GimpTool              *tool,
   gimp_tool_control_halt (tool->control);
 
   if ((release_type != GIMP_BUTTON_RELEASE_CANCEL) &&
-      ((blend_tool->startx != blend_tool->endx) ||
-       (blend_tool->starty != blend_tool->endy)))
+      ((blend_tool->start_x != blend_tool->end_x) ||
+       (blend_tool->start_y != blend_tool->end_y)))
     {
       GimpProgress *progress;
+      gint          off_x, off_y;
 
       progress = gimp_progress_start (GIMP_PROGRESS (display),
                                       _("Blending"), FALSE);
+
+      gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (image)),
+                         &off_x, &off_y);
 
       gimp_drawable_blend (gimp_image_active_drawable (image),
                            context,
@@ -263,10 +261,10 @@ gimp_blend_tool_button_release (GimpTool              *tool,
                            options->supersample_depth,
                            options->supersample_threshold,
                            options->dither,
-                           blend_tool->startx,
-                           blend_tool->starty,
-                           blend_tool->endx,
-                           blend_tool->endy,
+                           blend_tool->start_x - off_x,
+                           blend_tool->start_y - off_y,
+                           blend_tool->end_x - off_y,
+                           blend_tool->end_y - off_y,
                            progress);
 
       if (progress)
@@ -284,31 +282,44 @@ gimp_blend_tool_motion (GimpTool        *tool,
                         GimpDisplay     *display)
 {
   GimpBlendTool *blend_tool = GIMP_BLEND_TOOL (tool);
-  gint           off_x, off_y;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (display->image)),
-                     &off_x, &off_y);
+  blend_tool->mouse_x = coords->x;
+  blend_tool->mouse_y = coords->y;
 
-  /*  Get the current coordinates  */
-  blend_tool->mousex = coords->x - off_x;
-  blend_tool->mousey = coords->y - off_y;
+  /* Move the whole line if alt is pressed */
+  if (state & GDK_MOD1_MASK)
+    {
+      gdouble dx = blend_tool->last_x - coords->x;
+      gdouble dy = blend_tool->last_y - coords->y;
 
-  blend_tool->endx = blend_tool->mousex;
-  blend_tool->endy = blend_tool->mousey;
+      blend_tool->start_x -= dx;
+      blend_tool->start_y -= dy;
+
+      blend_tool->end_x -= dx;
+      blend_tool->end_y -= dy;
+    }
+  else
+    {
+      blend_tool->end_x = coords->x;
+      blend_tool->end_y = coords->y;
+    }
 
   /* Restrict to multiples of 15 degrees if ctrl is pressed */
   if (state & GDK_CONTROL_MASK)
     {
-      gimp_tool_motion_constrain (blend_tool->startx, blend_tool->starty,
-                                  &blend_tool->endx, &blend_tool->endy);
+      gimp_tool_motion_constrain (blend_tool->start_x, blend_tool->start_y,
+                                  &blend_tool->end_x, &blend_tool->end_y);
     }
 
   gimp_tool_pop_status (tool, display);
   gimp_blend_tool_push_status (blend_tool, state, display);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+
+  blend_tool->last_x = coords->x;
+  blend_tool->last_y = coords->y;
 }
 
 static void
@@ -324,13 +335,14 @@ gimp_blend_tool_active_modifier_key (GimpTool        *tool,
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-      blend_tool->endx = blend_tool->mousex;
-      blend_tool->endy = blend_tool->mousey;
+      blend_tool->end_x = blend_tool->mouse_x;
+      blend_tool->end_y = blend_tool->mouse_y;
 
+      /* Restrict to multiples of 15 degrees if ctrl is pressed */
       if (press)
         {
-          gimp_tool_motion_constrain (blend_tool->startx, blend_tool->starty,
-                                      &blend_tool->endx, &blend_tool->endy);
+          gimp_tool_motion_constrain (blend_tool->start_x, blend_tool->start_y,
+                                      &blend_tool->end_x, &blend_tool->end_y);
         }
 
       gimp_tool_pop_status (tool, display);
@@ -370,30 +382,30 @@ gimp_blend_tool_draw (GimpDrawTool *draw_tool)
   /*  Draw start target  */
   gimp_draw_tool_draw_handle (draw_tool,
                               GIMP_HANDLE_CROSS,
-                              floor (blend_tool->startx) + 0.5,
-                              floor (blend_tool->starty) + 0.5,
+                              floor (blend_tool->start_x) + 0.5,
+                              floor (blend_tool->start_y) + 0.5,
                               TARGET_SIZE,
                               TARGET_SIZE,
                               GTK_ANCHOR_CENTER,
-                              TRUE);
+                              FALSE);
 
   /*  Draw end target  */
   gimp_draw_tool_draw_handle (draw_tool,
                               GIMP_HANDLE_CROSS,
-                              floor (blend_tool->endx) + 0.5,
-                              floor (blend_tool->endy) + 0.5,
+                              floor (blend_tool->end_x) + 0.5,
+                              floor (blend_tool->end_y) + 0.5,
                               TARGET_SIZE,
                               TARGET_SIZE,
                               GTK_ANCHOR_CENTER,
-                              TRUE);
+                              FALSE);
 
   /*  Draw the line between the start and end coords  */
   gimp_draw_tool_draw_line (draw_tool,
-                            floor (blend_tool->startx) + 0.5,
-                            floor (blend_tool->starty) + 0.5,
-                            floor (blend_tool->endx) + 0.5,
-                            floor (blend_tool->endy) + 0.5,
-                            TRUE);
+                            floor (blend_tool->start_x) + 0.5,
+                            floor (blend_tool->start_y) + 0.5,
+                            floor (blend_tool->end_x) + 0.5,
+                            floor (blend_tool->end_y) + 0.5,
+                            FALSE);
 }
 
 static void
@@ -410,9 +422,9 @@ gimp_blend_tool_push_status (GimpBlendTool   *blend_tool,
                                         NULL);
   gimp_tool_push_status_coords (GIMP_TOOL (blend_tool), display,
                                 _("Blend: "),
-                                blend_tool->endx - blend_tool->startx,
+                                blend_tool->end_x - blend_tool->start_x,
                                 ", ",
-                                blend_tool->endy - blend_tool->starty,
+                                blend_tool->end_y - blend_tool->start_y,
                                 status_help);
   g_free (status_help);
 }

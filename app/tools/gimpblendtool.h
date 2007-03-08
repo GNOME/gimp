@@ -40,13 +40,15 @@ struct _GimpBlendTool
 {
   GimpDrawTool  parent_instance;
 
-  gdouble       startx;      /*  starting x coord  */
-  gdouble       starty;      /*  starting y coord  */
-  gdouble       endx;        /*  ending x coord    */
-  gdouble       endy;        /*  ending y coord    */
+  gdouble       start_x;    /*  starting x coord  */
+  gdouble       start_y;    /*  starting y coord  */
+  gdouble       end_x;      /*  ending x coord    */
+  gdouble       end_y;      /*  ending y coord    */
 
-  gdouble       mousex;      /*  pointer x coord   */
-  gdouble       mousey;      /*  pointer y coord   */
+  gdouble       last_x;     /*  last x coord      */
+  gdouble       last_y;     /*  last y coord      */
+  gdouble       mouse_x;    /*  pointer x coord   */
+  gdouble       mouse_y;    /*  pointer y coord   */
 };
 
 struct _GimpBlendToolClass
