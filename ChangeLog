@@ -1,3 +1,8 @@
+2007-03-08  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimppropwidgets.[ch]: gimp_prop_string_combo_box_new()
+	takes a GtkTreeModel, not a GtkTreeStore.
+
 2007-03-08  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/winicon/main.c (run): fixed the incorrect declaration

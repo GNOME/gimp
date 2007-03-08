@@ -1966,7 +1966,7 @@ static void   gimp_prop_string_combo_box_notify   (GObject     *config,
  * gimp_prop_string_combo_box_new:
  * @config:        Object to which property is attached.
  * @property_name: Name of int property controlled by combo box.
- * @store:         #GtkTreeStore holding list of values
+ * @model:         #GtkTreeStore holding list of values
  * @id_column:     column in @store that holds string IDs
  * @label_column:  column in @store that holds labels to use in the combo-box
  *
@@ -1982,7 +1982,7 @@ static void   gimp_prop_string_combo_box_notify   (GObject     *config,
 GtkWidget *
 gimp_prop_string_combo_box_new (GObject      *config,
                                 const gchar  *property_name,
-                                GtkTreeStore *store,
+                                GtkTreeModel *model,
                                 gint          id_column,
                                 gint          label_column)
 {
@@ -1993,6 +1993,7 @@ gimp_prop_string_combo_box_new (GObject      *config,
 
   g_return_val_if_fail (G_IS_OBJECT (config), NULL);
   g_return_val_if_fail (property_name != NULL, NULL);
+  g_return_val_if_fail (GTK_IS_TREE_MODEL (model), NULL);
 
   param_spec = check_param_spec_w (config, property_name,
                                    G_TYPE_PARAM_STRING, G_STRFUNC);
@@ -2003,7 +2004,7 @@ gimp_prop_string_combo_box_new (GObject      *config,
                 property_name, &value,
                 NULL);
 
-  combo_box = gimp_string_combo_box_new (store, id_column, label_column);
+  combo_box = gimp_string_combo_box_new (model, id_column, label_column);
 
   gimp_string_combo_box_set_active (GIMP_STRING_COMBO_BOX (combo_box), value);
 

@@ -138,7 +138,7 @@ GtkTextBuffer * gimp_prop_text_buffer_new         (GObject       *config,
                                                    gint           max_len);
 GtkWidget     * gimp_prop_string_combo_box_new    (GObject       *config,
                                                    const gchar   *property_name,
-                                                   GtkTreeStore  *store,
+                                                   GtkTreeModel  *model,
                                                    gint           id_column,
                                                    gint           label_column);
 
