@@ -15,10 +15,6 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 
-; Resizes the image so as to include the selected layer.
-; The resulting image has the selected layer size.
-; Copyright (C) 2002 Chauk-Mean PROUM
-;
 (define (script-fu-set-pt a index x y)
   (aset a (* index 2) x)
   (aset a (+ (* index 2) 1) y)

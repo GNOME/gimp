@@ -52,7 +52,7 @@
 
 (script-fu-register "script-fu-set-cmap"
     _"Se_t Colormap"
-    _"Change the colourmap of an image to the colours in a specified palette."
+    _"Change the colormap of an image to the colors in a specified palette."
     "Kevin Cozens <kcozens@interlog.com>"
     "Kevin Cozens"
     "September 29, 2004"
