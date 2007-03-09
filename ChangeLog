@@ -1,3 +1,7 @@
+2007-03-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/*.c: remove useless includes. Some minor cleanup.
+
 2007-03-09  Sven Neumann  <sven@gimp.org>
 
 	* app/base/pixel-surround.c: replaced inner loop by a call to memcpy.

@@ -21,7 +21,6 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
-#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -581,4 +580,3 @@ hue_saturation_overlap_adjustment_update (GtkAdjustment *adjustment,
       gimp_image_map_tool_preview (GIMP_IMAGE_MAP_TOOL (hs_tool));
     }
 }
-

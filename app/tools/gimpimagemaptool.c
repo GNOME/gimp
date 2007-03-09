@@ -41,7 +41,6 @@
 #include "core/gimptoolinfo.h"
 
 #include "widgets/gimptooldialog.h"
-#include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"

@@ -23,7 +23,6 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -33,7 +32,6 @@
 #include "base/tile-manager.h"
 
 #include "core/gimp.h"
-#include "core/gimpchannel.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdrawable-transform.h"
 #include "core/gimpimage.h"
@@ -51,7 +49,6 @@
 
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimptooldialog.h"
-#include "widgets/gimpviewabledialog.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"

@@ -24,13 +24,9 @@
 
 #include "tools-types.h"
 
-#include "paint/gimpheal.h"
 #include "paint/gimpsourceoptions.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpwidgets-utils.h"
-
-#include "display/gimpdisplay.h"
 
 #include "gimphealtool.h"
 #include "gimppaintoptions-gui.h"

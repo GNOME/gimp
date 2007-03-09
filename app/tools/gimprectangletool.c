@@ -34,7 +34,6 @@
 #include "core/gimppickable.h"
 #include "core/gimpmarshal.h"
 
-#include "display/gimpcanvas.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"

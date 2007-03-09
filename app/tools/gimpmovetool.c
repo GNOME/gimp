@@ -39,14 +39,14 @@
 #include "core/gimpitem.h"
 #include "core/gimpundostack.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-appearance.h"
 #include "display/gimpdisplayshell-draw.h"
 #include "display/gimpdisplayshell-selection.h"
 #include "display/gimpdisplayshell-transform.h"
-
-#include "widgets/gimphelp-ids.h"
 
 #include "gimpeditselectiontool.h"
 #include "gimpmoveoptions.h"
@@ -55,12 +55,12 @@
 
 #include "gimp-intl.h"
 
+
 #define ARROW_VELOCITY 25
 
 #define SWAP_ORIENT(orient) ((orient) == GIMP_ORIENTATION_HORIZONTAL ? \
                              GIMP_ORIENTATION_VERTICAL : \
                              GIMP_ORIENTATION_HORIZONTAL)
-
 
 
 /*  local function prototypes  */
@@ -186,17 +186,13 @@ gimp_move_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_RESUME:
-      if (move->guide &&
-          gimp_display_shell_get_show_guides (GIMP_DISPLAY_SHELL (shell)))
-        gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (shell),
-                                       move->guide, TRUE);
+      if (move->guide && gimp_display_shell_get_show_guides (shell))
+        gimp_display_shell_draw_guide (shell, move->guide, TRUE);
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      if (move->guide &&
-          gimp_display_shell_get_show_guides (GIMP_DISPLAY_SHELL (shell)))
-        gimp_display_shell_draw_guide (GIMP_DISPLAY_SHELL (shell),
-                                       move->guide, FALSE);
+      if (move->guide && gimp_display_shell_get_show_guides (shell))
+        gimp_display_shell_draw_guide (shell, move->guide, FALSE);
       break;
     }
 

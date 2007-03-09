@@ -27,7 +27,6 @@
 #include "paint/gimpsmudgeoptions.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpsmudgetool.h"
 #include "gimppaintoptions-gui.h"

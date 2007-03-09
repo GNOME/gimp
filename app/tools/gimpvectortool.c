@@ -24,7 +24,6 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -38,7 +37,6 @@
 #include "core/gimplist.h"
 #include "core/gimpprogress.h"
 #include "core/gimptoolinfo.h"
-#include "core/gimpundo.h"
 #include "core/gimpundostack.h"
 
 #include "vectors/gimpanchor.h"

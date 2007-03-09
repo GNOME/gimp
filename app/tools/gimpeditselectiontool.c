@@ -24,10 +24,6 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpmath/gimpmath.h"
-#include "libgimpbase/gimpbase.h"
-#include "libgimpwidgets/gimpwidgets.h"
-
 #include "tools-types.h"
 
 #include "base/boundary.h"
@@ -117,15 +113,11 @@ gimp_edit_selection_tool_init (GimpEditSelectionTool *edit_selection_tool)
 
 static void
 gimp_edit_selection_tool_calc_coords (GimpEditSelectionTool *edit_select,
-                                      GimpDisplay           *display,
                                       gdouble                x,
                                       gdouble                y)
 {
-  GimpDisplayShell *shell;
-  gdouble           x1, y1;
-  gdouble           dx, dy;
-
-  shell = GIMP_DISPLAY_SHELL (display->shell);
+  gdouble x1, y1;
+  gdouble dx, dy;
 
   dx = x - edit_select->origx;
   dy = y - edit_select->origy;
@@ -257,7 +249,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
                                  &edit_select->x2, &edit_select->y2);
     }
 
-  gimp_edit_selection_tool_calc_coords (edit_select, display,
+  gimp_edit_selection_tool_calc_coords (edit_select,
                                         edit_select->origx,
                                         edit_select->origy);
 
@@ -432,7 +424,7 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
   else
     active_item = GIMP_ITEM (gimp_image_active_drawable (display->image));
 
-  gimp_edit_selection_tool_calc_coords (edit_select, display,
+  gimp_edit_selection_tool_calc_coords (edit_select,
                                         coords->x,
                                         coords->y);
 
@@ -553,7 +545,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 
   /* now do the actual move. */
 
-  gimp_edit_selection_tool_calc_coords (edit_select, display,
+  gimp_edit_selection_tool_calc_coords (edit_select,
                                         motion_x,
                                         motion_y);
 

@@ -70,7 +70,7 @@ gimp_ink_tool_init (GimpInkTool *ink_tool)
 {
   GimpTool *tool = GIMP_TOOL (ink_tool);
 
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_INK);
+  gimp_tool_control_set_tool_cursor    (tool->control, GIMP_TOOL_CURSOR_INK);
   gimp_tool_control_set_action_value_2 (tool->control,
                                         "tools/tools-ink-blob-size-set");
   gimp_tool_control_set_action_value_3 (tool->control,

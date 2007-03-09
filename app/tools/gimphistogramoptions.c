@@ -89,6 +89,7 @@ gimp_histogram_options_set_property (GObject      *object,
     case PROP_SCALE:
       options->scale = g_value_get_enum (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -108,6 +109,8 @@ gimp_histogram_options_get_property (GObject    *object,
     case PROP_SCALE:
       g_value_set_enum (value, options->scale);
       break;
+
+    default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }

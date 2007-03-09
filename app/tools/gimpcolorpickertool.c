@@ -21,19 +21,15 @@
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
-#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimp.h"
 #include "core/gimpdrawable.h"
-#include "core/gimpimage.h"
 
 #include "widgets/gimpcolorframe.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimptooldialog.h"
-#include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"

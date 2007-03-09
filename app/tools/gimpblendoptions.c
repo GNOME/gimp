@@ -25,7 +25,6 @@
 
 #include "tools-types.h"
 
-#include "core/gimp.h"
 #include "core/gimpdatafactory.h"
 
 #include "widgets/gimppropwidgets.h"

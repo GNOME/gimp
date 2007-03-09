@@ -22,12 +22,10 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpdrawable-blend.h"
 #include "core/gimpgradient.h"

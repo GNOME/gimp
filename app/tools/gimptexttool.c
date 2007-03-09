@@ -28,7 +28,6 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
@@ -42,7 +41,6 @@
 #include "core/gimplayer-floating-sel.h"
 #include "core/gimplist.h"
 #include "core/gimptoolinfo.h"
-#include "core/gimpundo.h"
 #include "core/gimpundostack.h"
 
 #include "text/gimptext.h"
@@ -50,12 +48,12 @@
 #include "text/gimptextlayer.h"
 #include "text/gimptextundo.h"
 
+#include "vectors/gimpvectors-warp.h"
+
 #include "widgets/gimpdialogfactory.h"
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimptexteditor.h"
 #include "widgets/gimpviewabledialog.h"
-
-#include "vectors/gimpvectors-warp.h"
 
 #include "display/gimpdisplay.h"
 

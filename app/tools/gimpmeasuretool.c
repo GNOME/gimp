@@ -26,7 +26,6 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -39,7 +38,6 @@
 
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimptooldialog.h"
-#include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
@@ -184,10 +182,8 @@ gimp_measure_tool_button_press (GimpTool        *tool,
 {
   GimpMeasureTool    *measure = GIMP_MEASURE_TOOL (tool);
   GimpMeasureOptions *options = GIMP_MEASURE_TOOL_GET_OPTIONS (tool);
-  GimpDisplayShell   *shell;
+  GimpDisplayShell   *shell   = GIMP_DISPLAY_SHELL (display->shell);
   gint                i;
-
-  shell = GIMP_DISPLAY_SHELL (display->shell);
 
   /*  if we are changing displays, pop the statusbar of the old one  */
   if (gimp_tool_control_is_active (tool->control) && display != tool->display)

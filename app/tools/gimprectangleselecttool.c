@@ -33,7 +33,6 @@
 #include "core/gimpimage-undo.h"
 #include "core/gimppickable.h"
 #include "core/gimp-utils.h"
-#include "core/gimpundo.h"
 #include "core/gimpundostack.h"
 
 #include "widgets/gimpdialogfactory.h"
@@ -41,7 +40,6 @@
 #include "widgets/gimpviewabledialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
-#include "display/gimpcanvas.h"
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-transform.h"

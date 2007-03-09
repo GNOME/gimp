@@ -24,8 +24,6 @@
 
 #include "libgimpwidgets/gimpwidgets.h"
 
-#include "libgimpmath/gimpmath.h"
-
 #include "tools-types.h"
 
 #include "base/boundary.h"
@@ -345,13 +343,11 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
 {
   GimpTool             *tool    = GIMP_TOOL (region_sel);
   GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
-  GimpDisplayShell     *shell;
+  GimpDisplayShell     *shell   = GIMP_DISPLAY_SHELL (display->shell);
   GimpDrawable         *drawable;
   GdkSegment           *segs;
   BoundSeg             *bsegs;
   PixelRegion           maskPR;
-
-  shell = GIMP_DISPLAY_SHELL (display->shell);
 
   drawable = gimp_image_active_drawable (display->image);
 

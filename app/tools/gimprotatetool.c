@@ -20,14 +20,12 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
 #include "core/gimp-transform-utils.h"
 #include "core/gimpimage.h"
-#include "core/gimpdrawable-transform.h"
 
 #include "widgets/gimphelp-ids.h"
 

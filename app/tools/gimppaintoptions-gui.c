@@ -20,13 +20,10 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpconfig/gimpconfig.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
-#include "core/gimp.h"
 #include "core/gimptoolinfo.h"
 
 #include "paint/gimppaintoptions.h"
@@ -42,11 +39,9 @@
 #include "gimpclonetool.h"
 #include "gimpconvolvetool.h"
 #include "gimpdodgeburntool.h"
-#include "gimpdodgeburntool.h"
 #include "gimperasertool.h"
 #include "gimphealtool.h"
 #include "gimpinktool.h"
-#include "gimppaintbrushtool.h"
 #include "gimppaintoptions-gui.h"
 #include "gimppenciltool.h"
 #include "gimpperspectiveclonetool.h"

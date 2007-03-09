@@ -21,15 +21,11 @@
 #include <stdlib.h>
 
 #include <gtk/gtk.h>
-#include <gdk/gdkkeysyms.h>
 
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
 
-#include "config/gimpdisplayconfig.h"
-
-#include "core/gimp.h"
 #include "core/gimpimage.h"
 
 #include "display/gimpdisplay.h"
@@ -37,7 +33,6 @@
 #include "display/gimpdisplayshell-scale.h"
 
 #include "widgets/gimphelp-ids.h"
-#include "widgets/gimpwidgets-utils.h"
 
 #include "gimpmagnifyoptions.h"
 #include "gimpmagnifytool.h"
@@ -166,10 +161,8 @@ gimp_magnify_tool_button_release (GimpTool              *tool,
 {
   GimpMagnifyTool    *magnify = GIMP_MAGNIFY_TOOL (tool);
   GimpMagnifyOptions *options = GIMP_MAGNIFY_TOOL_GET_OPTIONS (tool);
-  GimpDisplayShell   *shell;
+  GimpDisplayShell   *shell   = GIMP_DISPLAY_SHELL (tool->display->shell);
   gdouble             current;
-
-  shell = GIMP_DISPLAY_SHELL (tool->display->shell);
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 

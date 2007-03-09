@@ -207,15 +207,15 @@ gimp_color_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_RESUME:
       if (color_tool->sample_point &&
-          gimp_display_shell_get_show_sample_points (GIMP_DISPLAY_SHELL (shell)))
-        gimp_display_shell_draw_sample_point (GIMP_DISPLAY_SHELL (shell),
+          gimp_display_shell_get_show_sample_points (shell))
+        gimp_display_shell_draw_sample_point (shell,
                                               color_tool->sample_point, TRUE);
       break;
 
     case GIMP_TOOL_ACTION_HALT:
       if (color_tool->sample_point &&
-          gimp_display_shell_get_show_sample_points (GIMP_DISPLAY_SHELL (shell)))
-        gimp_display_shell_draw_sample_point (GIMP_DISPLAY_SHELL (shell),
+          gimp_display_shell_get_show_sample_points (shell))
+        gimp_display_shell_draw_sample_point (shell,
                                               color_tool->sample_point, FALSE);
       break;
     }
