@@ -92,16 +92,16 @@ pixel_surround_get_data (PixelSurround *surround,
     }
   else
     {
-      /*   return a pointer to a virtual empty tile  */
+      /*   return a pointer to a virtual background tile  */
       if (x < 0)
-        *w = MIN (- x, TILE_WIDTH);
+        *w = MIN (- x, surround->w);
       else
-        *w = TILE_WIDTH - (x % TILE_WIDTH);
+        *w = surround->w;
 
       if (y < 0)
-        *h = MIN (- y, TILE_HEIGHT);
+        *h = MIN (- y, surround->h);
       else
-        *h = TILE_HEIGHT - (y % TILE_HEIGHT);
+        *h = surround->h;
 
       *rowstride = surround->rowstride;
 
@@ -191,6 +191,7 @@ pixel_surround_lock (PixelSurround *surround,
     {
       /*  otherwise, copy region to our internal buffer  */
       guchar *dest = surround->buf;
+      gint    inc  = surround->w;
       gint    i    = 0;
       gint    j    = 0;
 
@@ -238,9 +239,10 @@ pixel_surround_lock (PixelSurround *surround,
                 }
 
               j += h;
+              inc = MIN (inc, w);
             }
 
-          i += w;
+          i += inc;
         }
     }
 
