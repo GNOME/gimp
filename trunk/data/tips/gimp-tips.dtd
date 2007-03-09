@@ -1,0 +1,18 @@
+<!-- Simple DTD for GIMP tips -->
+
+<!ELEMENT gimp-tips (tip+)>
+
+<!ELEMENT tip (welcome*, thetip+)>
+<!ATTLIST tip level (start|beginner|intermediate|advanced) #REQUIRED>
+
+<!ENTITY % markup "(#PCDATA|b|big|tt)*">
+
+<!ELEMENT b %markup;>
+<!ELEMENT big %markup;>
+<!ELEMENT tt %markup;>
+
+<!ELEMENT welcome %markup;>
+<!ATTLIST welcome xml:lang CDATA #IMPLIED>
+
+<!ELEMENT thetip %markup;>
+<!ATTLIST thetip xml:lang CDATA #IMPLIED>

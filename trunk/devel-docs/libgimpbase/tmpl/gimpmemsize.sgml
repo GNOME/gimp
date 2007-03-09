@@ -1,0 +1,92 @@
+<!-- ##### SECTION Title ##### -->
+gimpmemsize
+
+<!-- ##### SECTION Short_Description ##### -->
+Functions to (de)serialize a given memory size.
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+Functions to (de)serialize a given memory size.
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### FUNCTION gimp_memsize_serialize ##### -->
+<para>
+
+</para>
+
+@memsize: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_memsize_deserialize ##### -->
+<para>
+
+</para>
+
+@string: 
+@memsize: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_memsize_to_string ##### -->
+<para>
+
+</para>
+
+@memsize: 
+@Returns: 
+
+
+<!-- ##### MACRO GIMP_TYPE_MEMSIZE ##### -->
+<para>
+#GIMP_TYPE_MEMSIZE is a #GType derived from #G_TYPE_UINT64.
+</para>
+
+
+
+<!-- ##### MACRO GIMP_TYPE_PARAM_MEMSIZE ##### -->
+<para>
+
+</para>
+
+
+
+<!-- ##### MACRO GIMP_IS_PARAM_SPEC_MEMSIZE ##### -->
+<para>
+
+</para>
+
+@pspec: 
+
+
+<!-- ##### FUNCTION gimp_param_spec_memsize ##### -->
+<para>
+
+</para>
+
+@name: 
+@nick: 
+@blurb: 
+@minimum: 
+@maximum: 
+@default_value: 
+@flags: 
+@Returns: 
+
+
+<!-- ##### MACRO GIMP_VALUE_HOLDS_MEMSIZE ##### -->
+<para>
+
+</para>
+
+@value: 
+
+

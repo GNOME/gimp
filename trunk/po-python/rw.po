@@ -1,0 +1,42 @@
+# translation of gimp-python to Kinyarwanda.
+# Copyright (C) 2005 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gimp-python package.
+# Steve Murphy <murf@e-tools.com>, 2005
+# Steve performed initial rough translation from compendium built from translations provided by the following translators:
+# Philibert Ndandali  <ndandali@yahoo.fr>, 2005.
+# Viateur MUGENZI <muvia1@yahoo.fr>, 2005.
+# Noëlla Mupole <s24211045@tuks.co.za>, 2005.
+# Carole Karema <karemacarole@hotmail.com>, 2005.
+# JEAN BAPTISTE NGENDAHAYO <ngenda_denis@yahoo.co.uk>, 2005.
+# Augustin KIBERWA  <akiberwa@yahoo.co.uk>, 2005.
+# Donatien NSENGIYUMVA <ndonatienuk@yahoo.co.uk>, 2005..
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-python HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2005-03-31 20:55-0700\n"
+"Last-Translator: Steve Murphy <murf@e-tools.com>\n"
+"Language-Team: Kinyarwanda <translation-team-rw@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"ULL NAME <EMAIL@ADDRESS>\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#, fuzzy
+msgid "_Browse..."
+msgstr "Gushakisha..."
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+msgid "Gimp-Python Console"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+msgid "Interactive Python Development"
+msgstr ""

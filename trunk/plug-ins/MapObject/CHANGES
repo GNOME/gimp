@@ -1,0 +1,22 @@
+
+Changes (post 0.3.1):
+=====================
+
+-> 0.3.1   Merged MapPlane and MapSphere. Added support for non-interactive
+           execution (for script-fu).
+-> 0.3.2   Fixed a bug in the bilinear interpolation function. Added "tile" option.
+           Added some icons to the material page to illustrate the effects of the
+           parameters. I'm not sure they help much.
+-> 0.4.0   Some source/algorithm cleanups, fixed gtk+ object refcounting bugs. Some
+           changes to compile with gtk+ 0.99.4.
+-> 1.0.0   First non-beta release. Replaced GckNotebook with GtkNotebook, fixed a few
+           annoying bugs. Better support for partial transparency (only filtered
+           transparency now, perhaps additive later). Compiles without warnings with
+           -Wall and -ansi.
+-> 1.1.0   Added box object and changed PDB interface accordingly; this will unfortunately
+           break old scripts. The transparency code should be a little saner now.
+-> 1.2.0   Added cylinder object. Fixed a few things, thanks to Yosh <yosh@gimp.org> and
+           Pedro <pkaempf@master.echo.ch> for pointing them out to me.
+     
+
+

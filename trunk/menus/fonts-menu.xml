@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
+
+<ui>
+  <popup action="fonts-popup">
+    <menuitem action="fonts-refresh" />
+    <separator />
+  </popup>
+</ui>

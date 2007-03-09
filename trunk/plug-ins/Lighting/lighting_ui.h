@@ -1,0 +1,22 @@
+#ifndef __LIGHTING_UI_H__
+#define __LIGHTING_UI_H__
+
+/* Externally visible variables */
+/* ============================ */
+
+extern GdkGC     *gc;
+extern GtkWidget *previewarea;
+
+extern GtkWidget *spin_pos_x;
+extern GtkWidget *spin_pos_y;
+extern GtkWidget *spin_pos_z;
+extern GtkWidget *spin_dir_x;
+extern GtkWidget *spin_dir_y;
+extern GtkWidget *spin_dir_z;
+
+/* Externally visible functions */
+/* ============================ */
+
+gboolean main_dialog (GimpDrawable *drawable);
+
+#endif  /* __LIGHTING_UI_H__ */

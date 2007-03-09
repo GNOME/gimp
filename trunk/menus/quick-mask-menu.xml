@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
+
+<ui>
+  <popup action="quick-mask-popup">
+    <menuitem action="quick-mask-toggle" />
+    <separator />
+    <menuitem action="quick-mask-invert-on" />
+    <menuitem action="quick-mask-invert-off" />
+    <separator />
+    <menuitem action="quick-mask-configure" />
+  </popup>
+</ui>

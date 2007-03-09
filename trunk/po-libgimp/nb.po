@@ -1,0 +1,1095 @@
+# Norwegian translation of gimp-modules.
+# Copyright (C) 1999-2001 Free Software Foundation, Inc.
+# Kjartan Maraas <kmaraas@gnome.org>, 1999-2001.
+# Runar Ingebrigtsen <ringe@skolelinux.no>, 2004
+# Sigurd Gartmann <sigurd-translate@brogar.org>, 2004
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GIMP HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-02-02 19:54+0100\n"
+"PO-Revision-Date: 2004-12-04 17:15+0100\n"
+"Last-Translator: Sigurd Gartmann <sigurd-translate@brogar.org>\n"
+"Language-Team: Norwegian Bokmål<i18n-no@lister.ping.uio.no>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../libgimp/gimpbrushmenu.c:129
+msgid "Brush Selection"
+msgstr "Penselvalg"
+
+#: ../libgimp/gimpbrushmenu.c:158 ../libgimp/gimppatternmenu.c:142
+msgid "_Browse..."
+msgstr "_Bla gjennom..."
+
+#: ../libgimp/gimpexport.c:215 ../libgimp/gimpexport.c:251
+#, c-format
+msgid "%s can't handle layers"
+msgstr "%s kan ikke håndtere lag"
+
+#: ../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
+#: ../libgimp/gimpexport.c:234
+msgid "Merge Visible Layers"
+msgstr "Flett sammen synlige lag"
+
+#: ../libgimp/gimpexport.c:224
+#, c-format
+msgid "%s can't handle layer offsets, size or opacity"
+msgstr ""
+"%s kan ikke håndtere avstand, størrelse eller ugjennomsiktighet for lag"
+
+#: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
+#, c-format
+msgid "%s can only handle layers as animation frames"
+msgstr "%s kan kun håndtere lag som animasjonsbilder"
+
+#: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:243
+msgid "Save as Animation"
+msgstr "Lagre som en animasjon"
+
+#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:252
+#: ../libgimp/gimpexport.c:261
+msgid "Flatten Image"
+msgstr "Flat ut bilde"
+
+#: ../libgimp/gimpexport.c:260
+#, c-format
+msgid "%s can't handle transparency"
+msgstr "%s kan ikke håndtere gjennomsiktighet"
+
+#: ../libgimp/gimpexport.c:269
+#, c-format
+msgid "%s can't handle layer masks"
+msgstr "%s kan ikke håndtere lagmasker"
+
+#: ../libgimp/gimpexport.c:270
+msgid "Apply Layer Masks"
+msgstr "Bruk lagmasker"
+
+#: ../libgimp/gimpexport.c:278
+#, c-format
+msgid "%s can only handle RGB images"
+msgstr "%s kan kun håndtere RGB-bilder"
+
+#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:317
+#: ../libgimp/gimpexport.c:326
+msgid "Convert to RGB"
+msgstr "Konverter til RGB"
+
+#: ../libgimp/gimpexport.c:287
+#, c-format
+msgid "%s can only handle grayscale images"
+msgstr "%s kan kun håndtere bilder i gråtoner"
+
+#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:317
+#: ../libgimp/gimpexport.c:338
+msgid "Convert to Grayscale"
+msgstr "Konverter til gråtoner"
+
+#: ../libgimp/gimpexport.c:296
+#, c-format
+msgid "%s can only handle indexed images"
+msgstr "%s kan kun håndtere indekserte bilder"
+
+#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:326
+#: ../libgimp/gimpexport.c:336
+msgid ""
+"Convert to Indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"Konverter til indeksert og bruk standard\n"
+"innstillinger (Gjør det manuelt for å\n"
+"finjustere resultatet)"
+
+#: ../libgimp/gimpexport.c:306
+#, c-format
+msgid "%s can only handle bitmap (two color) indexed images"
+msgstr "%s kan kun håndtere indekserte punktgrafikkbilder (i to farger)"
+
+#: ../libgimp/gimpexport.c:307
+msgid ""
+"Convert to Indexed using bitmap default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"Konverter til indeksert ved bruk av standard-\n"
+"innstillinger (Gjør det manuelt for å\n"
+"finjustere resultatet)"
+
+#: ../libgimp/gimpexport.c:316
+#, c-format
+msgid "%s can only handle RGB or grayscale images"
+msgstr "%s kan kun håndtere RGB eller gråskala bilder"
+
+#: ../libgimp/gimpexport.c:325
+#, c-format
+msgid "%s can only handle RGB or indexed images"
+msgstr "%s kan kun håndtere RGB eller indekserte bilder"
+
+#: ../libgimp/gimpexport.c:335
+#, c-format
+msgid "%s can only handle grayscale or indexed images"
+msgstr "%s kan kun håndtere gråtone eller indekserte bilder"
+
+#: ../libgimp/gimpexport.c:346
+#, c-format
+msgid "%s needs an alpha channel"
+msgstr "%s må ha en alfakanal"
+
+#: ../libgimp/gimpexport.c:347
+msgid "Add Alpha Channel"
+msgstr "Legg til alfakanal"
+
+#: ../libgimp/gimpexport.c:381
+msgid "Confirm Save"
+msgstr "Bekreft lagring"
+
+#: ../libgimp/gimpexport.c:387
+msgid "Confirm"
+msgstr "Bekreft"
+
+#: ../libgimp/gimpexport.c:454
+msgid "Export File"
+msgstr "Eksporter fil"
+
+#: ../libgimp/gimpexport.c:458
+msgid "_Ignore"
+msgstr "_Ignorer"
+
+#: ../libgimp/gimpexport.c:460
+msgid "_Export"
+msgstr "_Eksporter"
+
+#. the headline
+#: ../libgimp/gimpexport.c:482
+#, c-format
+msgid ""
+"Your image should be exported before it can be saved as %s for the following "
+"reasons:"
+msgstr "Bildet bør eksporteres før det kan lagres som %s av følgende årsaker:"
+
+#. the footline
+#: ../libgimp/gimpexport.c:553
+msgid "The export conversion won't modify your original image."
+msgstr "Konverteringen under eksport vil ikke endre ditt originale bilde."
+
+#: ../libgimp/gimpexport.c:653
+#, c-format
+msgid ""
+"You are about to save a layer mask as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"Du er i ferd med å lagre en lagmaske som %s.\n"
+"Dette vil ikke lagre synlige lag."
+
+#: ../libgimp/gimpexport.c:659
+#, c-format
+msgid ""
+"You are about to save a channel (saved selection) as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"Du er i ferd med å lagre en kanal (lagret utvalg) som %s.\n"
+"Dette vil ikke lagre synlige lag."
+
+#: ../libgimp/gimpfontmenu.c:89
+msgid "Font Selection"
+msgstr "Skrifttypevalg"
+
+#: ../libgimp/gimpgradientmenu.c:104
+msgid "Gradient Selection"
+msgstr "Graderingsvalg"
+
+#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:181
+msgid "(Empty)"
+msgstr "(Tomt)"
+
+#: ../libgimp/gimppalettemenu.c:91
+msgid "Palette Selection"
+msgstr "Palettvalg"
+
+#: ../libgimp/gimppatternmenu.c:113
+msgid "Pattern Selection"
+msgstr "Mønstervalg"
+
+#: ../libgimp/gimpunitcache.c:57
+msgid "percent"
+msgstr "prosent"
+
+#: ../libgimpbase/gimpbaseenums.c:26
+msgid "_White (full opacity)"
+msgstr "_Hvit (helt ugjennomsiktig)"
+
+#: ../libgimpbase/gimpbaseenums.c:27
+msgid "_Black (full transparency)"
+msgstr "_Svart (helt gjennomsiktig)"
+
+#: ../libgimpbase/gimpbaseenums.c:28
+msgid "Layer's _alpha channel"
+msgstr "Lagets _alfakanal"
+
+#: ../libgimpbase/gimpbaseenums.c:29
+msgid "_Transfer layer's alpha channel"
+msgstr "_Overfør lagets alfakanal"
+
+#: ../libgimpbase/gimpbaseenums.c:30
+msgid "_Selection"
+msgstr "_Utvalg"
+
+#: ../libgimpbase/gimpbaseenums.c:31
+msgid "_Grayscale copy of layer"
+msgstr "_Gråtonekopi av lag"
+
+#: ../libgimpbase/gimpbaseenums.c:61
+msgid "FG to BG (RGB)"
+msgstr "Forgrunn til bakgrunn (RGB)"
+
+#: ../libgimpbase/gimpbaseenums.c:62
+msgid "FG to BG (HSV)"
+msgstr "Forgrunn til bakgrunn (HSV)"
+
+#: ../libgimpbase/gimpbaseenums.c:63
+msgid "FG to transparent"
+msgstr "Forgrunn til gjennomsiktig"
+
+#: ../libgimpbase/gimpbaseenums.c:64
+msgid "Custom gradient"
+msgstr "Egendefinert gradering"
+
+#: ../libgimpbase/gimpbaseenums.c:93
+msgid "FG color fill"
+msgstr "Forgrunnsfargefyll"
+
+#: ../libgimpbase/gimpbaseenums.c:94
+msgid "BG color fill"
+msgstr "Bakgrunnsfargefyll"
+
+#: ../libgimpbase/gimpbaseenums.c:95
+msgid "Pattern fill"
+msgstr "Mønsterfyll"
+
+#: ../libgimpbase/gimpbaseenums.c:125
+msgid "Add to the current selection"
+msgstr "Legg til i dette utvalget"
+
+#: ../libgimpbase/gimpbaseenums.c:126
+msgid "Subtract from the current selection"
+msgstr "Trekk fra dette utvalget"
+
+#: ../libgimpbase/gimpbaseenums.c:127
+msgid "Replace the current selection"
+msgstr "Erstatt dette utvalget"
+
+#: ../libgimpbase/gimpbaseenums.c:128
+msgid "Intersect with the current selection"
+msgstr "Kryss med dette utvalget"
+
+#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpcolorscales.c:168
+#: ../libgimpwidgets/gimpcolorselect.c:352
+msgid "Red"
+msgstr "Rød"
+
+#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpcolorscales.c:169
+#: ../libgimpwidgets/gimpcolorselect.c:353
+msgid "Green"
+msgstr "Grønn"
+
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpcolorscales.c:170
+#: ../libgimpwidgets/gimpcolorselect.c:354
+msgid "Blue"
+msgstr "Blå"
+
+#: ../libgimpbase/gimpbaseenums.c:163
+msgid "Gray"
+msgstr "Grå"
+
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:436
+msgid "Indexed"
+msgstr "Indeksert"
+
+#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpcolorscales.c:171
+#: ../libgimpwidgets/gimpcolorselect.c:355
+msgid "Alpha"
+msgstr "Alpha"
+
+#: ../libgimpbase/gimpbaseenums.c:194
+msgid "Small"
+msgstr "Liten"
+
+#: ../libgimpbase/gimpbaseenums.c:195
+msgid "Medium"
+msgstr "Middels"
+
+#: ../libgimpbase/gimpbaseenums.c:196
+msgid "Large"
+msgstr "Stor"
+
+#: ../libgimpbase/gimpbaseenums.c:228
+msgid "Light Checks"
+msgstr "Lyse ruter"
+
+#: ../libgimpbase/gimpbaseenums.c:229
+msgid "Mid-Tone Checks"
+msgstr "Middels lyse ruter"
+
+#: ../libgimpbase/gimpbaseenums.c:230
+msgid "Dark Checks"
+msgstr "Mørke ruter"
+
+#: ../libgimpbase/gimpbaseenums.c:231
+msgid "White Only"
+msgstr "Kun hvit"
+
+#: ../libgimpbase/gimpbaseenums.c:232
+msgid "Gray Only"
+msgstr "Kun grå"
+
+#: ../libgimpbase/gimpbaseenums.c:233
+msgid "Black Only"
+msgstr "Kun svart"
+
+#: ../libgimpbase/gimpbaseenums.c:261
+msgid "Image source"
+msgstr "Bildekilde"
+
+#: ../libgimpbase/gimpbaseenums.c:262
+msgid "Pattern source"
+msgstr "Mønsterkilde"
+
+#: ../libgimpbase/gimpbaseenums.c:290
+msgid "Dodge"
+msgstr "Blek"
+
+#: ../libgimpbase/gimpbaseenums.c:291
+msgid "Burn"
+msgstr "Brenn"
+
+#: ../libgimpbase/gimpbaseenums.c:328 ../libgimpbase/gimpbaseenums.c:468
+msgid "Linear"
+msgstr "Lineær"
+
+#: ../libgimpbase/gimpbaseenums.c:329
+msgid "Bi-linear"
+msgstr "Bi-lineær"
+
+#: ../libgimpbase/gimpbaseenums.c:330
+msgid "Radial"
+msgstr "Radial"
+
+#: ../libgimpbase/gimpbaseenums.c:331
+msgid "Square"
+msgstr "Firkantet"
+
+#: ../libgimpbase/gimpbaseenums.c:332
+msgid "Conical (sym)"
+msgstr "Konisk (symmetrisk)"
+
+#: ../libgimpbase/gimpbaseenums.c:333
+msgid "Conical (asym)"
+msgstr "Konisk (asymmetrisk)"
+
+#: ../libgimpbase/gimpbaseenums.c:334
+msgid "Shaped (angular)"
+msgstr "Formet (vinklet)"
+
+#: ../libgimpbase/gimpbaseenums.c:335
+msgid "Shaped (spherical)"
+msgstr "Formet (sfærisk)"
+
+#: ../libgimpbase/gimpbaseenums.c:336
+msgid "Shaped (dimpled)"
+msgstr "Formet (prikket)"
+
+#: ../libgimpbase/gimpbaseenums.c:337
+msgid "Spiral (cw)"
+msgstr "Spiral (med klokken)"
+
+#: ../libgimpbase/gimpbaseenums.c:338
+msgid "Spiral (ccw)"
+msgstr "Spiral (mot klokken)"
+
+#: ../libgimpbase/gimpbaseenums.c:367
+msgid "Stock ID"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:368
+msgid "Inline pixbuf"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:369
+msgid "Image file"
+msgstr "Bildefil"
+
+#: ../libgimpbase/gimpbaseenums.c:398
+msgid "RGB color"
+msgstr "RGB-farge"
+
+#: ../libgimpbase/gimpbaseenums.c:399 ../libgimpbase/gimpbaseenums.c:434
+msgid "Grayscale"
+msgstr "Gråtoner"
+
+#: ../libgimpbase/gimpbaseenums.c:400
+msgid "Indexed color"
+msgstr "Indeksert farge"
+
+#: ../libgimpbase/gimpbaseenums.c:432
+msgid "RGB"
+msgstr "RGB"
+
+#: ../libgimpbase/gimpbaseenums.c:433
+msgid "RGB-alpha"
+msgstr "RGB-gjennomsiktighet"
+
+#: ../libgimpbase/gimpbaseenums.c:435
+msgid "Grayscale-alpha"
+msgstr "Gråtone-gjennomsiktighet"
+
+#: ../libgimpbase/gimpbaseenums.c:437
+msgid "Indexed-alpha"
+msgstr "Indeksert-gjennomsiktighet"
+
+#: ../libgimpbase/gimpbaseenums.c:467
+msgid "None (Fastest)"
+msgstr "Ingen (Raskest)"
+
+#: ../libgimpbase/gimpbaseenums.c:469
+msgid "Cubic"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:470
+#, fuzzy
+msgid "Lanczos (Best)"
+msgstr "Kubisk (Beste)"
+
+#: ../libgimpbase/gimpbaseenums.c:498
+msgid "Constant"
+msgstr "Konstant"
+
+#: ../libgimpbase/gimpbaseenums.c:499
+msgid "Incremental"
+msgstr "Inkrementell"
+
+#: ../libgimpbase/gimpbaseenums.c:528
+msgid "None"
+msgstr "Ingen"
+
+#: ../libgimpbase/gimpbaseenums.c:529
+msgid "Sawtooth wave"
+msgstr "Sagtann-bølge"
+
+#: ../libgimpbase/gimpbaseenums.c:530
+msgid "Triangular wave"
+msgstr "Triangulær bølge"
+
+#: ../libgimpbase/gimpbaseenums.c:558
+msgid "Pixels"
+msgstr "Piksler"
+
+#: ../libgimpbase/gimpbaseenums.c:559
+#, fuzzy
+msgid "Points"
+msgstr "punkter"
+
+#: ../libgimpbase/gimpbaseenums.c:588
+msgid "Shadows"
+msgstr "Skygger"
+
+#: ../libgimpbase/gimpbaseenums.c:589
+msgid "Midtones"
+msgstr "Mellomtoner"
+
+#: ../libgimpbase/gimpbaseenums.c:590
+msgid "Highlights"
+msgstr "Lyse toner"
+
+#: ../libgimpbase/gimpbaseenums.c:618
+msgid "Forward (traditional)"
+msgstr "Fremover (tradisjonell)"
+
+#: ../libgimpbase/gimpbaseenums.c:619
+msgid "Backward (corrective)"
+msgstr "Bakover (korrektiv)"
+
+#: ../libgimpbase/gimpmemsize.c:177
+#, c-format
+msgid "%d Bytes"
+msgstr "%d Bytes"
+
+#: ../libgimpbase/gimpmemsize.c:182
+#, c-format
+msgid "%.2f KB"
+msgstr "%.2f KB"
+
+#: ../libgimpbase/gimpmemsize.c:186
+#, c-format
+msgid "%.1f KB"
+msgstr "%.1f KB"
+
+#: ../libgimpbase/gimpmemsize.c:190
+#, c-format
+msgid "%d KB"
+msgstr "%d KB"
+
+#: ../libgimpbase/gimpmemsize.c:197
+#, c-format
+msgid "%.2f MB"
+msgstr "%.2f MB"
+
+#: ../libgimpbase/gimpmemsize.c:201
+#, c-format
+msgid "%.1f MB"
+msgstr "%.1f MB"
+
+#: ../libgimpbase/gimpmemsize.c:205
+#, c-format
+msgid "%d MB"
+msgstr "%d MB"
+
+#: ../libgimpbase/gimpmemsize.c:212
+#, c-format
+msgid "%.2f GB"
+msgstr "%.2f GB"
+
+#: ../libgimpbase/gimpmemsize.c:216
+#, c-format
+msgid "%.1f GB"
+msgstr "%.1f GB"
+
+#: ../libgimpbase/gimpmemsize.c:220
+#, c-format
+msgid "%d GB"
+msgstr "%d GB"
+
+#: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
+msgid "(invalid UTF-8 string)"
+msgstr "(ugyldig «UTF-8»-streng)"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#, c-format
+msgid "value for token %s is not a valid UTF-8 string"
+msgstr "verdi for tegn %s er ikke en gyldig UTF-8-streng"
+
+#. please don't translate 'yes' and 'no'
+#: ../libgimpconfig/gimpconfig-deserialize.c:423
+#, c-format
+msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
+msgstr "forventet «ja» eller «nei» for bolsk tegn %s, fikk «%s»"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:497
+#, c-format
+msgid "invalid value '%s' for token %s"
+msgstr "ugyldig verdi «%s» for tegn %s"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:512
+#, c-format
+msgid "invalid value '%ld' for token %s"
+msgstr "ugyldig verdi «%ld» for tegn %s"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:581
+#, c-format
+msgid "while parsing token '%s': %s"
+msgstr "under lesing av «%s»: %s"
+
+#: ../libgimpconfig/gimpconfig-iface.c:454
+#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:513
+#: ../libgimpconfig/gimpscanner.c:594
+msgid "fatal parse error"
+msgstr "fatal feil i tolking"
+
+#: ../libgimpconfig/gimpconfig-path.c:349
+#, c-format
+msgid "Cannot expand ${%s}"
+msgstr "Kan ikke utvide $(%s)"
+
+#: ../libgimpconfig/gimpconfigwriter.c:134
+#, c-format
+msgid "Could not create temporary file for '%s': %s"
+msgstr "Kunne ikke opprette midlertidig fil for «%s»: %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:147
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Kan ikke åpne «%s» for skriving: %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:666
+#, c-format
+msgid ""
+"Error writing to temporary file for '%s': %s\n"
+"The original file has not been touched."
+msgstr ""
+"Feil under skriving til midlertidig fil for «%s»: %s\n"
+"Originalfilen ble ikke rørt."
+
+#: ../libgimpconfig/gimpconfigwriter.c:674
+#, c-format
+msgid ""
+"Error writing to temporary file for '%s': %s\n"
+"No file has been created."
+msgstr ""
+"Feil under skriving til midlertidig fil for «%s»: %s\n"
+"Ingen fil ble opprettet."
+
+#: ../libgimpconfig/gimpconfigwriter.c:685
+#, c-format
+msgid "Error writing to '%s': %s"
+msgstr "Feil under skriving av «%s»: %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:703
+#, c-format
+msgid "Could not create '%s': %s"
+msgstr "Kunne ikke opprette «%s»: %s"
+
+#: ../libgimpconfig/gimpscanner.c:100
+#, c-format
+msgid "Could not open '%s' for reading: %s"
+msgstr "Kan ikke åpne «%s» for lesing: %s"
+
+#: ../libgimpconfig/gimpscanner.c:270
+msgid "invalid UTF-8 string"
+msgstr "ugyldig UTF-8-streng"
+
+#: ../libgimpconfig/gimpscanner.c:621
+#, c-format
+msgid "Error while parsing '%s' in line %d: %s"
+msgstr ""
+"Feil ved lesing av «%s» på linje %d:\n"
+" %s"
+
+#: ../libgimpmodule/gimpmodule.c:177
+#, c-format
+msgid "Loading module: '%s'\n"
+msgstr "Laster modul: «%s»\n"
+
+#: ../libgimpmodule/gimpmodule.c:193 ../libgimpmodule/gimpmodule.c:212
+#: ../libgimpmodule/gimpmodule.c:326 ../libgimpmodule/gimpmodule.c:354
+#: ../libgimpmodule/gimpmodule.c:478
+#, c-format
+msgid "Module '%s' load error: %s"
+msgstr "Modul «%s» kunne ikke lastes: %s"
+
+#: ../libgimpmodule/gimpmodule.c:282
+#, c-format
+msgid "Skipping module: '%s'\n"
+msgstr "Hopper over modul «%s»\n"
+
+#: ../libgimpmodule/gimpmodule.c:422
+msgid "Module error"
+msgstr "Feil med modul"
+
+#: ../libgimpmodule/gimpmodule.c:423
+msgid "Loaded"
+msgstr "Lastet"
+
+#: ../libgimpmodule/gimpmodule.c:424
+msgid "Load failed"
+msgstr "Lasting feilet"
+
+#: ../libgimpmodule/gimpmodule.c:425
+msgid "Not loaded"
+msgstr "Ikke lastet"
+
+#: ../libgimpthumb/gimpthumb-utils.c:227 ../libgimpthumb/gimpthumb-utils.c:295
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr "Kunne ikke opprette miniatyrbildemappe «%s.»"
+
+#: ../libgimpthumb/gimpthumbnail.c:919
+#, c-format
+msgid "Could not create thumbnail for %s: %s"
+msgstr "Kunne ikke opprette miniatyrbilde for %s: %s"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:99
+msgid "_Foreground Color"
+msgstr "_Forgrunnsfarge"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:103
+msgid "_Background Color"
+msgstr "_Bakgrunnsfarge"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:107
+msgid "Blac_k"
+msgstr "_Svart"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:111
+msgid "_White"
+msgstr "_Hvit"
+
+#: ../libgimpwidgets/gimpcolorscales.c:133
+msgid "Scales"
+msgstr "Skalaer"
+
+#: ../libgimpwidgets/gimpcolorscales.c:155
+#: ../libgimpwidgets/gimpcolorselect.c:345
+msgid "_H"
+msgstr "_H"
+
+#: ../libgimpwidgets/gimpcolorscales.c:156
+#: ../libgimpwidgets/gimpcolorselect.c:345
+msgid "_S"
+msgstr "_S"
+
+#: ../libgimpwidgets/gimpcolorscales.c:157
+#: ../libgimpwidgets/gimpcolorselect.c:345
+msgid "_V"
+msgstr "_V"
+
+#: ../libgimpwidgets/gimpcolorscales.c:158
+#: ../libgimpwidgets/gimpcolorselect.c:345
+msgid "_R"
+msgstr "_R"
+
+#: ../libgimpwidgets/gimpcolorscales.c:159
+#: ../libgimpwidgets/gimpcolorselect.c:345
+msgid "_G"
+msgstr "_G"
+
+#: ../libgimpwidgets/gimpcolorscales.c:160
+#: ../libgimpwidgets/gimpcolorselect.c:345
+msgid "_B"
+msgstr "_B"
+
+#: ../libgimpwidgets/gimpcolorscales.c:161
+msgid "_A"
+msgstr "_A"
+
+#: ../libgimpwidgets/gimpcolorscales.c:165
+#: ../libgimpwidgets/gimpcolorselect.c:349
+msgid "Hue"
+msgstr "Glød"
+
+#: ../libgimpwidgets/gimpcolorscales.c:166
+#: ../libgimpwidgets/gimpcolorselect.c:350 ../modules/cdisplay_proof.c:59
+msgid "Saturation"
+msgstr "Metning"
+
+#: ../libgimpwidgets/gimpcolorscales.c:167
+#: ../libgimpwidgets/gimpcolorselect.c:351
+msgid "Value"
+msgstr "Verdi"
+
+#: ../libgimpwidgets/gimpcolorscales.c:243
+msgid "Hexadecimal color notation as used in HTML and CSS"
+msgstr "Heksadesimal fargenotasjon som brukt i HTML og CSS"
+
+#: ../libgimpwidgets/gimpcolorscales.c:248
+msgid "HTML _Notation:"
+msgstr "HTML-_notasjon:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:203
+msgid "Current:"
+msgstr "Nåværende:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:225
+msgid "Old:"
+msgstr "Gammel:"
+
+#: ../libgimpwidgets/gimpfileentry.c:351
+msgid "Select Folder"
+msgstr "Velg mappe"
+
+#: ../libgimpwidgets/gimpfileentry.c:353
+msgid "Select File"
+msgstr "Velg fil"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:232
+msgid "Kilobytes"
+msgstr "Kilobyte"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:233
+msgid "Megabytes"
+msgstr "Megabyte"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:234
+msgid "Gigabytes"
+msgstr "Gigabyte"
+
+#: ../libgimpwidgets/gimppatheditor.c:243
+msgid "Writable"
+msgstr "Skrivbar"
+
+#: ../libgimpwidgets/gimppatheditor.c:252
+msgid "Folder"
+msgstr "Mappe"
+
+#: ../libgimpwidgets/gimppickbutton.c:138
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
+"Klikk på dråpetelleren og klikk så på en farge hvor som helst på skjermen "
+"for å velge denne fargen."
+
+#: ../libgimpwidgets/gimppreviewarea.c:126
+msgid "Check Size"
+msgstr "Rutestørrelse"
+
+#: ../libgimpwidgets/gimppreviewarea.c:133
+msgid "Check Style"
+msgstr "Rutestil"
+
+#. toggle button to (des)activate the instant preview
+#: ../libgimpwidgets/gimppreview.c:240
+msgid "_Preview"
+msgstr "_Forhåndsvisning"
+
+#: ../libgimpwidgets/gimpstock.c:113
+msgid "Anchor"
+msgstr "Anker"
+
+#: ../libgimpwidgets/gimpstock.c:114
+msgid "C_enter"
+msgstr "S_enter"
+
+#: ../libgimpwidgets/gimpstock.c:115
+msgid "_Duplicate"
+msgstr "_Kopiér"
+
+#: ../libgimpwidgets/gimpstock.c:116
+msgid "_Edit"
+msgstr "R_ediger"
+
+#: ../libgimpwidgets/gimpstock.c:117
+msgid "Linked"
+msgstr "Lenket"
+
+#: ../libgimpwidgets/gimpstock.c:118
+msgid "Paste as New"
+msgstr "Lim inn som nytt"
+
+#: ../libgimpwidgets/gimpstock.c:119
+msgid "Paste Into"
+msgstr "Lim inn i"
+
+#: ../libgimpwidgets/gimpstock.c:120
+msgid "_Reset"
+msgstr "_Nullstill"
+
+#: ../libgimpwidgets/gimpstock.c:121
+msgid "Visible"
+msgstr "Synlig"
+
+#: ../libgimpwidgets/gimpstock.c:154 ../libgimpwidgets/gimpstock.c:158
+msgid "_Stroke"
+msgstr "_Strek"
+
+#: ../libgimpwidgets/gimpstock.c:170
+msgid "L_etter Spacing"
+msgstr "M_ellomrom mellom bokstaver"
+
+#: ../libgimpwidgets/gimpstock.c:171
+msgid "L_ine Spacing"
+msgstr "Mellomrom mellom l_injer"
+
+#: ../libgimpwidgets/gimpstock.c:187
+msgid "_Resize"
+msgstr "End_re størrelse"
+
+#: ../libgimpwidgets/gimpstock.c:188 ../libgimpwidgets/gimpstock.c:292
+msgid "_Scale"
+msgstr "_Skaler"
+
+#: ../libgimpwidgets/gimpstock.c:271
+msgid "Crop"
+msgstr "Beskjær"
+
+#: ../libgimpwidgets/gimpstock.c:288
+msgid "_Transform"
+msgstr "_Transformer"
+
+#: ../libgimpwidgets/gimpstock.c:291
+msgid "_Rotate"
+msgstr "_Roter"
+
+#: ../libgimpwidgets/gimpstock.c:293
+msgid "_Shear"
+msgstr "_Klipp"
+
+#: ../libgimpwidgets/gimpunitmenu.c:302
+msgid "More..."
+msgstr "Mer..."
+
+#: ../libgimpwidgets/gimpunitmenu.c:612
+msgid "Unit Selection"
+msgstr "Utvalg for enhet"
+
+#: ../libgimpwidgets/gimpunitmenu.c:655
+msgid "Unit"
+msgstr "Enhet"
+
+#: ../libgimpwidgets/gimpunitmenu.c:659
+msgid "Factor"
+msgstr "Faktor"
+
+#: ../libgimpwidgets/gimpwidgets.c:1001
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
+msgstr ""
+"Bruk denne verdien som startverdi for generering av tilfeldige tall - dette "
+"lar deg gjenta en gitt «tilfeldig» operasjon"
+
+#: ../libgimpwidgets/gimpwidgets.c:1005
+msgid "_New Seed"
+msgstr "_Nytt frø"
+
+#: ../libgimpwidgets/gimpwidgets.c:1018
+msgid "Seed random number generator with a generated random number"
+msgstr ""
+"Gi generator for tilfeldige tall et generert tilfeldig tall som startverdi"
+
+#: ../libgimpwidgets/gimpwidgets.c:1022
+msgid "_Randomize"
+msgstr "Gjør _tilfeldig"
+
+#: ../modules/cdisplay_colorblind.c:68
+#, fuzzy
+msgid "Protanopia (insensitivity to red"
+msgstr "Protanopi (usensitiv for rød)"
+
+#: ../modules/cdisplay_colorblind.c:70
+msgid "Deuteranopia (insensitivity to green)"
+msgstr "Deuteranopi (usensitiv for grønn)"
+
+#: ../modules/cdisplay_colorblind.c:72
+msgid "Tritanopia (insensitivity to blue)"
+msgstr "Tritanopi (usensitiv for blå)"
+
+#: ../modules/cdisplay_colorblind.c:163
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr "Simuleringsfilter for fargeblindhet (Brettel-Vienot-Mollon-algoritmen)"
+
+#: ../modules/cdisplay_colorblind.c:256
+msgid "Color Deficient Vision"
+msgstr "Fargesvakt syn"
+
+#: ../modules/cdisplay_colorblind.c:554
+msgid "Color _Deficiency Type:"
+msgstr "Fargeblin_dhetstype:"
+
+#: ../modules/cdisplay_gamma.c:105
+msgid "Gamma color display filter"
+msgstr "Visningsfilter for gammafarger"
+
+#: ../modules/cdisplay_gamma.c:178
+msgid "Gamma"
+msgstr "Gamme"
+
+#: ../modules/cdisplay_gamma.c:352
+msgid "_Gamma:"
+msgstr "_Gamma:"
+
+#: ../modules/cdisplay_highcontrast.c:105
+msgid "High Contrast color display filter"
+msgstr "Visningsfilter for høykontrastfarger"
+
+#: ../modules/cdisplay_highcontrast.c:178
+msgid "Contrast"
+msgstr "Kontrast"
+
+#: ../modules/cdisplay_highcontrast.c:352
+msgid "Contrast C_ycles:"
+msgstr "_Kontrastsykluser:"
+
+#: ../modules/cdisplay_proof.c:57
+msgid "Perceptual"
+msgstr "Perseptuell"
+
+#: ../modules/cdisplay_proof.c:58
+msgid "Relative Colorimetric"
+msgstr "Relativ fastsetting av farge"
+
+#: ../modules/cdisplay_proof.c:60
+msgid "Absolute Colorimetric"
+msgstr "Absolutt fastsetting av farge"
+
+#: ../modules/cdisplay_proof.c:147
+msgid "Color proof filter using ICC color profile"
+msgstr "Fargeprøvefilter for ICC fargeprofil"
+
+#: ../modules/cdisplay_proof.c:251
+msgid "Color Proof"
+msgstr "Fargeprøve"
+
+#: ../modules/cdisplay_proof.c:462
+msgid "_Intent:"
+msgstr "_Hensikt:"
+
+#: ../modules/cdisplay_proof.c:465
+msgid "Choose an ICC Color Profile"
+msgstr "Velg en ICC fargeprofil"
+
+#: ../modules/cdisplay_proof.c:468
+msgid "_Profile:"
+msgstr "_Profil:"
+
+#: ../modules/cdisplay_proof.c:476
+msgid "_Black Point Compensation"
+msgstr "_Svartpunktskompensering"
+
+#: ../modules/colorsel_cmyk.c:73
+msgid "CMYK color selector"
+msgstr "CMYK fargevelger"
+
+#: ../modules/colorsel_cmyk.c:130
+msgid "CMYK"
+msgstr "CMYK"
+
+#: ../modules/colorsel_cmyk.c:147
+msgid "_C"
+msgstr "_C"
+
+#: ../modules/colorsel_cmyk.c:148
+msgid "_M"
+msgstr "_M"
+
+#: ../modules/colorsel_cmyk.c:149
+msgid "_Y"
+msgstr "_Y"
+
+#: ../modules/colorsel_cmyk.c:150
+msgid "_K"
+msgstr "_K"
+
+#: ../modules/colorsel_cmyk.c:154
+msgid "Cyan"
+msgstr "Cyan"
+
+#: ../modules/colorsel_cmyk.c:155
+msgid "Magenta"
+msgstr "Magenta"
+
+#: ../modules/colorsel_cmyk.c:156
+msgid "Yellow"
+msgstr "Yellow"
+
+#: ../modules/colorsel_cmyk.c:157
+msgid "Black"
+msgstr "Sort"
+
+#: ../modules/colorsel_cmyk.c:191
+msgid "Black _Pullout:"
+msgstr "Begrensing av svart:"
+
+#: ../modules/colorsel_cmyk.c:208
+msgid "The percentage of black to pull out of the colored inks."
+msgstr "Prosentandel av svart som skal trekkes ut av farget blekk."
+
+#: ../modules/colorsel_triangle.c:104
+msgid "Painter-style triangle color selector"
+msgstr "Fargevelger i malerstil"
+
+#: ../modules/colorsel_triangle.c:170
+msgid "Triangle"
+msgstr "Trekant"
+
+#: ../modules/colorsel_water.c:88
+msgid "Watercolor style color selector"
+msgstr "Fargevelger i vannfargestil"
+
+#: ../modules/colorsel_water.c:154
+msgid "Watercolor"
+msgstr "Vannfarge"
+
+#: ../modules/colorsel_water.c:220
+msgid "Pressure"
+msgstr "Trykk"

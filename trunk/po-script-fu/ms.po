@@ -1,0 +1,3323 @@
+# Malay Translation of Gimp-script-fu HEAD.
+# Copyright (C) 2003 MIMOS Open Source Developement Group
+# This file is distributed under the same license as the PACKAGE package.
+# MIMOS Open Source Development Group <opensource@mimos.my>, 2003.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Gimp-script-fu HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-12-28 15:42+0100\n"
+"PO-Revision-Date: 2003-10-30 09:35+0800\n"
+"Last-Translator: MIMOS Open Source Development Group <ismas@mimos.my>\n"
+"Language-Team: Projek Gabai <gabai-penyumbang@lists.sf.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: plug-ins/script-fu/script-fu-console.c:129
+#: plug-ins/script-fu/script-fu-text-console.c:66
+msgid "Script-Fu console mode allows only interactive invocation"
+msgstr "mod konsol Script-Fu membolehkan panggilan interaktif sahaja"
+
+#: plug-ins/script-fu/script-fu-console.c:156
+msgid "Script-Fu Console"
+msgstr "Konsol Script-Fu"
+
+#: plug-ins/script-fu/script-fu-console.c:183
+msgid "SIOD Output"
+msgstr "Output SIOD"
+
+#: plug-ins/script-fu/script-fu-console.c:249
+msgid "Current Command"
+msgstr "Arahan Semasa"
+
+#: plug-ins/script-fu/script-fu-console.c:267
+#, fuzzy
+msgid "_Browse..."
+msgstr "Layari..."
+
+#: plug-ins/script-fu/script-fu-console.c:548
+msgid "Script-Fu evaluate mode allows only noninteractive invocation"
+msgstr "Mod penilai Script-Fu membolehkan panggilan bukan interaktif sahaja"
+
+#: plug-ins/script-fu/script-fu-interface.c:177
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-interface.c:179
+#, c-format
+msgid "You are already running the \"%s\" script."
+msgstr ""
+
+#. strip the first part of the menupath if it contains _("/Script-Fu/")
+#: plug-ins/script-fu/script-fu-interface.c:202
+#: plug-ins/script-fu/script-fu-interface.c:204
+msgid "/Script-Fu/"
+msgstr "/Script-Fu/"
+
+#: plug-ins/script-fu/script-fu-interface.c:217
+#, c-format
+msgid "Script-Fu: %s"
+msgstr "Script-Fu: %s"
+
+#. the script arguments frame
+#: plug-ins/script-fu/script-fu-interface.c:254
+msgid "Script Arguments"
+msgstr "Argumen Skrip"
+
+#. we add a colon after the label;
+#. some languages want an extra space here
+#: plug-ins/script-fu/script-fu-interface.c:285
+#, c-format
+msgid "%s:"
+msgstr "%s:"
+
+#: plug-ins/script-fu/script-fu-interface.c:328
+msgid "Script-Fu Color Selection"
+msgstr "Pemilihan Warna Script-Fu"
+
+#: plug-ins/script-fu/script-fu-interface.c:431
+msgid "Script-Fu File Selection"
+msgstr "Pemilihan Fail Script-Fu"
+
+#: plug-ins/script-fu/script-fu-interface.c:435
+msgid "Script-Fu Folder Selection"
+msgstr "Pemilihan Folder Script-Fu"
+
+#: plug-ins/script-fu/script-fu-interface.c:447
+msgid "Script-Fu Font Selection"
+msgstr "Pemilihan Fon Script-Fu"
+
+#: plug-ins/script-fu/script-fu-interface.c:454
+#, fuzzy
+msgid "Script-Fu Palette Selection"
+msgstr "Pemilihan Corak Script-Fu"
+
+#: plug-ins/script-fu/script-fu-interface.c:462
+msgid "Script-fu Pattern Selection"
+msgstr "Pemilihan Corak Script-Fu"
+
+#: plug-ins/script-fu/script-fu-interface.c:469
+msgid "Script-Fu Gradient Selection"
+msgstr "Pemilihan Kecerunan Script-Fu"
+
+#: plug-ins/script-fu/script-fu-interface.c:477
+msgid "Script-Fu Brush Selection"
+msgstr "Pemilihan Berus Script-Fu"
+
+#. the script progress frame
+#: plug-ins/script-fu/script-fu-interface.c:533
+#, fuzzy
+msgid "Script Progress"
+msgstr "Argumen Skrip"
+
+#: plug-ins/script-fu/script-fu-interface.c:541
+msgid "(none)"
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-interface.c:1058
+#: plug-ins/dbbrowser/gimpprocview.c:198
+msgid "Author:"
+msgstr "Pengarang"
+
+#: plug-ins/script-fu/script-fu-interface.c:1065
+#: plug-ins/dbbrowser/gimpprocview.c:220
+msgid "Copyright:"
+msgstr "Hak cipta"
+
+#: plug-ins/script-fu/script-fu-interface.c:1072
+#: plug-ins/dbbrowser/gimpprocview.c:209
+msgid "Date:"
+msgstr "Tarikh"
+
+#: plug-ins/script-fu/script-fu-interface.c:1081
+msgid "Image Types:"
+msgstr "Jenis Imej"
+
+#: plug-ins/script-fu/script-fu-scripts.c:611
+#, fuzzy, c-format
+msgid ""
+"Error while executing\n"
+"%s\n"
+"%s"
+msgstr ""
+"Ralat Script-Fu semasa melaksanakan\n"
+" %s\n"
+"%s"
+
+#: plug-ins/script-fu/script-fu-server.c:642
+msgid "Script-Fu Server Options"
+msgstr "Opsyen Pelayan Script-Fu"
+
+#: plug-ins/script-fu/script-fu-server.c:670
+msgid "Server Port:"
+msgstr "Port Pelayan"
+
+#: plug-ins/script-fu/script-fu-server.c:676
+msgid "Server Logfile:"
+msgstr "Fail log Pelayan"
+
+#: plug-ins/script-fu/script-fu.c:122
+#, fuzzy
+msgid "Script-Fu _Console"
+msgstr "Konsol Script-Fu"
+
+#: plug-ins/script-fu/script-fu.c:129 plug-ins/script-fu/script-fu.c:158
+#: plug-ins/script-fu/script-fu.c:290
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu"
+msgstr "<Toolbox>/Xtns/Script-Fu/Logo/N_eon..."
+
+#: plug-ins/script-fu/script-fu.c:151
+msgid "_Start Server..."
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:282
+msgid "_Refresh Scripts"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:128
+#: plug-ins/dbbrowser/gimpprocbrowser.c:142
+msgid "Procedure Browser"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:132
+#: plug-ins/dbbrowser/gimpprocbrowser.c:146
+msgid "Search by _Name"
+msgstr "Cari dengan _Nama"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:133
+#: plug-ins/dbbrowser/gimpprocbrowser.c:147
+msgid "Search by _Blurb"
+msgstr "Cari dengan -Blurb"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:224
+msgid "_Search:"
+msgstr "_Cari:"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:386
+msgid "Searching by name - please wait"
+msgstr "Mencari dengan menggunakan nama - sila tunggu"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:410
+msgid "Searching by blurb - please wait"
+msgstr "Mencari dengan menggunakan blurb - sila tunggu"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:421
+msgid "Searching - please wait"
+msgstr "Mencari - sila tunggu"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:428
+msgid "1 Procedure"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:430
+#, c-format
+msgid "%d Procedures"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:476
+msgid "No matches"
+msgstr "Tiada padanan"
+
+#: plug-ins/dbbrowser/gimpprocview.c:133
+#, fuzzy
+msgid "Parameters"
+msgstr "Garis pusat"
+
+#: plug-ins/dbbrowser/gimpprocview.c:146
+msgid "Return Values"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:159
+msgid "Additional Information"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:319
+msgid "Internal GIMP procedure"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:320
+msgid "GIMP Plug-In"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:321
+msgid "GIMP Extension"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:322
+msgid "Temporary Procedure"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:1
+msgid "3D _Outline..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:1
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:1
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
+#: plug-ins/script-fu/scripts/chalk.scm.h:1
+#: plug-ins/script-fu/scripts/chip-away.scm.h:1
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:1
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
+#: plug-ins/script-fu/scripts/glossy.scm.h:1
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:1
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Alpha to Logo"
+msgstr "<Image>/Script-Fu/Alfa ke Logo/N_eon..."
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:3
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:2
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:2
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:1
+#: plug-ins/script-fu/scripts/chalk.scm.h:2
+#: plug-ins/script-fu/scripts/chip-away.scm.h:2
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:2
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
+#: plug-ins/script-fu/scripts/glossy.scm.h:2
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:2
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:2
+#: plug-ins/script-fu/scripts/news-text.scm.h:1
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
+#: plug-ins/script-fu/scripts/speed-text.scm.h:1
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
+#: plug-ins/script-fu/scripts/text-circle.scm.h:1
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:2
+#: plug-ins/script-fu/scripts/title-header.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Logos"
+msgstr "<Toolbox>/Xtns/Script-Fu/Logo/N_eon..."
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:4
+#, fuzzy
+msgid "Bumpmap (alpha layer) blur radius"
+msgstr "Jejari Kabur (Lapisan Alfa) Bumpmap"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:5
+#: plug-ins/script-fu/scripts/glossy.scm.h:7
+#, fuzzy
+msgid "Default bumpmap settings"
+msgstr "Seting Piawai Bumpmap"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:4
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:11
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:5
+#: plug-ins/script-fu/scripts/chalk.scm.h:5
+#: plug-ins/script-fu/scripts/chip-away.scm.h:8
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:5
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:6
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+#: plug-ins/script-fu/scripts/glossy.scm.h:8
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:5
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:6
+#: plug-ins/script-fu/scripts/news-text.scm.h:7
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:3
+#: plug-ins/script-fu/scripts/slide.scm.h:2
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
+#: plug-ins/script-fu/scripts/speed-text.scm.h:5
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:6
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
+#: plug-ins/script-fu/scripts/text-circle.scm.h:4
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:6
+#: plug-ins/script-fu/scripts/title-header.scm.h:2
+msgid "Font"
+msgstr "Fon"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:7
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:12
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:6
+#: plug-ins/script-fu/scripts/chalk.scm.h:6
+#: plug-ins/script-fu/scripts/chip-away.scm.h:9
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:6
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:7
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:6
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
+#: plug-ins/script-fu/scripts/glossy.scm.h:9
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:6
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:7
+#: plug-ins/script-fu/scripts/news-text.scm.h:8
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:4
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
+#: plug-ins/script-fu/scripts/speed-text.scm.h:6
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:7
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
+#: plug-ins/script-fu/scripts/text-circle.scm.h:5
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:7
+#: plug-ins/script-fu/scripts/title-header.scm.h:3
+#, fuzzy
+msgid "Font size (pixels)"
+msgstr "Saiz Fon (piksel)"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:8
+#, fuzzy
+msgid "Outline blur radius"
+msgstr "Jejari Kabur Garis luar"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
+#: plug-ins/script-fu/scripts/chip-away.scm.h:13
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:11
+msgid "Pattern"
+msgstr "Corak"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#: plug-ins/script-fu/scripts/glossy.scm.h:17
+#: plug-ins/script-fu/scripts/round-corners.scm.h:6
+#, fuzzy
+msgid "Shadow X offset"
+msgstr "Ofset Bayang X"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:11
+#: plug-ins/script-fu/scripts/glossy.scm.h:18
+#: plug-ins/script-fu/scripts/round-corners.scm.h:7
+#, fuzzy
+msgid "Shadow Y offset"
+msgstr "Ofset Bayang Y"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:12
+#, fuzzy
+msgid "Shadow blur radius"
+msgstr "Jejari Kabur Bayang"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:13
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:6
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:17
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:10
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:8
+#: plug-ins/script-fu/scripts/chalk.scm.h:7
+#: plug-ins/script-fu/scripts/chip-away.scm.h:14
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:9
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:11
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:8
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:7
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:12
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:14
+#: plug-ins/script-fu/scripts/glossy.scm.h:19
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:8
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:11
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:10
+#: plug-ins/script-fu/scripts/news-text.scm.h:10
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:13
+#: plug-ins/script-fu/scripts/slide.scm.h:5
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:11
+#: plug-ins/script-fu/scripts/speed-text.scm.h:8
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:9
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:8
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
+#: plug-ins/script-fu/scripts/text-circle.scm.h:8
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:14
+#: plug-ins/script-fu/scripts/title-header.scm.h:5
+msgid "Text"
+msgstr "Teks"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
+msgid "3_D Truchet..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
+#: plug-ins/script-fu/scripts/camo.scm.h:1
+#: plug-ins/script-fu/scripts/flatland.scm.h:1
+#: plug-ins/script-fu/scripts/land.scm.h:1
+#: plug-ins/script-fu/scripts/rendermap.scm.h:1
+#: plug-ins/script-fu/scripts/swirltile.scm.h:1
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
+#: plug-ins/script-fu/scripts/truchet.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns"
+msgstr "<Toolbox>/Xtns/Script-Fu/Corak/_Tanah..."
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:3
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:3
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+#: plug-ins/script-fu/scripts/chalk.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:3
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:3
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+#: plug-ins/script-fu/scripts/glossy.scm.h:3
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:3
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
+#: plug-ins/script-fu/scripts/image-structure.scm.h:3
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:3
+#: plug-ins/script-fu/scripts/news-text.scm.h:2
+#: plug-ins/script-fu/scripts/speed-text.scm.h:2
+#: plug-ins/script-fu/scripts/sphere.scm.h:2
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:3
+#: plug-ins/script-fu/scripts/swirltile.scm.h:3
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:3
+#: plug-ins/script-fu/scripts/truchet.scm.h:2
+#, fuzzy
+msgid "Background color"
+msgstr "Warna Latar belakang"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:4
+#: plug-ins/script-fu/scripts/truchet.scm.h:3
+#, fuzzy
+msgid "Block size"
+msgstr "Saiz Blok"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:5
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:7
+#, fuzzy
+msgid "End blend"
+msgstr "Campuran Berakhir"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:6
+#: plug-ins/script-fu/scripts/truchet.scm.h:5
+#, fuzzy
+msgid "Number of X tiles"
+msgstr "Bilangan Jubin X"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
+#: plug-ins/script-fu/scripts/truchet.scm.h:6
+#, fuzzy
+msgid "Number of Y tiles"
+msgstr "Bilangan Jubin Y"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:8
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:16
+#, fuzzy
+msgid "Start blend"
+msgstr "Mula Campur"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:9
+msgid "Supersample"
+msgstr "Sampel hebat"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:10
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:4
+#: plug-ins/script-fu/scripts/truchet.scm.h:8
+msgid "Thickness"
+msgstr "Ketebalan"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:1
+#: plug-ins/script-fu/scripts/addborder.scm.h:1
+#: plug-ins/script-fu/scripts/coffee.scm.h:1
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
+#: plug-ins/script-fu/scripts/old-photo.scm.h:1
+#: plug-ins/script-fu/scripts/round-corners.scm.h:1
+#: plug-ins/script-fu/scripts/slide.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Decor"
+msgstr "<Image>/Script-Fu/Hias/_Slaid..."
+
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:2
+msgid "Add B_evel..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:3
+#: plug-ins/script-fu/scripts/chip-away.scm.h:12
+#, fuzzy
+msgid "Keep bump layer"
+msgstr "Simpan Lapisan Bump"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:5
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
+#: plug-ins/script-fu/scripts/old-photo.scm.h:6
+#: plug-ins/script-fu/scripts/round-corners.scm.h:8
+#: plug-ins/script-fu/scripts/slide.scm.h:6
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:6
+#, fuzzy
+msgid "Work on copy"
+msgstr "Buat pada Salinan"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:2
+#, fuzzy
+msgid "Add _Border..."
+msgstr "Sempadan"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:3
+#, fuzzy
+msgid "Border X size"
+msgstr "Saiz Sempadan X"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:4
+#, fuzzy
+msgid "Border Y size"
+msgstr "Saiz Sempadan Y"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:5
+#, fuzzy
+msgid "Border color"
+msgstr "Warna Sempadan"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:6
+#, fuzzy
+msgid "Delta value on color"
+msgstr "Nilai Delta pada Warna"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow"
+msgstr "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Cahaya Berlainan/_Hrule..."
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+msgid "Down"
+msgstr "Ke Bawah"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#: plug-ins/script-fu/scripts/camo.scm.h:5
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
+#, fuzzy
+msgid "Flatten image"
+msgstr "Imej Rata"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:8
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+#, fuzzy
+msgid "Glow color"
+msgstr "Warna Bercahaya"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
+msgid "Left"
+msgstr "Ke Kiri"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
+msgid "Orientation"
+msgstr "Orientasi"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
+msgid "Right"
+msgstr "Ke Kanan"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: plug-ins/script-fu/scripts/lava.scm.h:7
+msgid "Size"
+msgstr "Saiz"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
+msgid "Up"
+msgstr "Ke Atas"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:11
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:9
+#, fuzzy
+msgid "_Arrow..."
+msgstr "Layari..."
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
+#, fuzzy
+msgid "Bar height"
+msgstr "Tinggi Bar"
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+#, fuzzy
+msgid "Bar length"
+msgstr "Panjang Bar"
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
+#, fuzzy
+msgid "_Hrule..."
+msgstr "Layari..."
+
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
+#: plug-ins/script-fu/scripts/text-circle.scm.h:6
+#: plug-ins/script-fu/scripts/tileblur.scm.h:6
+msgid "Radius"
+msgstr "Jejari"
+
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
+#, fuzzy
+msgid "_Bullet..."
+msgstr "Layari..."
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+msgid "B_utton..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
+#, fuzzy
+msgid "Glow radius"
+msgstr "Jejari Bercahaya"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:6
+msgid "Padding"
+msgstr "Pad"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:10
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:18
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:13
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:15
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
+#: plug-ins/script-fu/scripts/news-text.scm.h:11
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:14
+#: plug-ins/script-fu/scripts/speed-text.scm.h:9
+#, fuzzy
+msgid "Text color"
+msgstr "Warna Teks"
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
+msgid "Alien _Glow..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
+#, fuzzy
+msgid "Glow size (pixels * 4)"
+msgstr "Jumlah Cahaya (Piksel * 4)"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+msgid "Alien _Neon..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
+#, fuzzy
+msgid "Fade away"
+msgstr "Semakin Lenyap"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
+#, fuzzy
+msgid "Number of bands"
+msgstr "Bilangan Jalur"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
+#, fuzzy
+msgid "Width of bands"
+msgstr "Lebar Jalur"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:12
+#, fuzzy
+msgid "Width of gaps"
+msgstr "Lebar Sela"
+
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:8
+msgid "_Basic I..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
+msgid "B_asic II..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:1
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons"
+msgstr "<Toolbox>/Xtns/Script-Fu/Logo/N_eon..."
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:2
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:2
+#, fuzzy
+msgid "Bevel width"
+msgstr "Lebar Permukaan Serong"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:5
+#, fuzzy
+msgid "Lower-right color"
+msgstr "Warna sebelah Kanan Bawah"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:11
+msgid "Pressed"
+msgstr "Ditekan"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:8
+#, fuzzy
+msgid "Simple _Beveled Button..."
+msgstr "<Toolbox>/Xtns/Script-Fu/Butang/Butang _Serong Ringkas..."
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:11
+#, fuzzy
+msgid "Upper-left color"
+msgstr "Warna sebelah Kiri Bawah"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern"
+msgstr "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Corak Serong/_Anak panah..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
+msgid "Diameter"
+msgstr "Garis pusat"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+#, fuzzy
+msgid "Transparent background"
+msgstr "Latar belakang Lut sinar"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
+msgid "H_eading..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:5
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:4
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
+#: plug-ins/script-fu/scripts/swirltile.scm.h:7
+msgid "Height"
+msgstr "Tinggi"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:5
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:8
+#: plug-ins/script-fu/scripts/swirltile.scm.h:11
+msgid "Width"
+msgstr "Lebar"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:1
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Animators"
+msgstr "<Image>/Script-Fu/Juruanimasi/_Campur..."
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:2
+#, fuzzy
+msgid "Intermediate frames"
+msgstr "Bingkai Perantaraan"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:3
+msgid "Looped"
+msgstr "Gelung"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:4
+#, fuzzy
+msgid "Max. blur radius"
+msgstr "Jejari Kabur Maksimum"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:5
+#, fuzzy
+msgid "_Blend..."
+msgstr "Layari..."
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:4
+msgid "Blen_ded..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:5
+#, fuzzy
+msgid "Blend mode"
+msgstr "Mod Campur"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:6
+msgid "Custom Gradient"
+msgstr "Kecerunan Biasa"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:8
+msgid "FG-BG-HSV"
+msgstr "FG-BG-HSV"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:9
+msgid "FG-BG-RGB"
+msgstr "FG-BG-RGB"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:10
+msgid "FG-Transparent"
+msgstr "EG-Lut sinar"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:13
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: plug-ins/script-fu/scripts/land.scm.h:3
+#: plug-ins/script-fu/scripts/lava.scm.h:2
+#: plug-ins/script-fu/scripts/rendermap.scm.h:4
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
+msgid "Gradient"
+msgstr "Kecerunan"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:14
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:8
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:9
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:3
+#: plug-ins/script-fu/scripts/rendermap.scm.h:5
+#: plug-ins/script-fu/scripts/title-header.scm.h:4
+#, fuzzy
+msgid "Gradient reverse"
+msgstr "Kecerunan Songsang"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:15
+msgid "Offset (pixels)"
+msgstr "Ofset (Piksel)"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+msgid "Background Color"
+msgstr "Warna Latar belakang"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+msgid "Bo_vination..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+msgid "Spots density X"
+msgstr "Kepadatan titik X"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:9
+msgid "Spots density Y"
+msgstr "Kepadatan titik Y"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
+#, fuzzy
+msgid "Add glowing"
+msgstr "Tambahkan Cahaya"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
+#, fuzzy
+msgid "After glow"
+msgstr "Selepas Bercahaya"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
+msgid "B_urn-In..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
+msgid "Burn-In: Need two layers in total!"
+msgstr "Menulis: Perlu dua lapisan kesemuanya!"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+#, fuzzy
+msgid "Corona width"
+msgstr "Lebar Corona"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+msgid "Fadeout"
+msgstr "Lenyap"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#, fuzzy
+msgid "Fadeout width"
+msgstr "Lebar Lenyap"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+msgid "Prepare for GIF"
+msgstr "Sediakan untuk GIF"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+msgid "Speed (pixels/frame)"
+msgstr "Kelajuan (piksel/bingkai)"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:2
+msgid "Color 1"
+msgstr "Warna 1"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:3
+msgid "Color 2"
+msgstr "Warna 2"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:4
+msgid "Color 3"
+msgstr "Warna 3"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:6
+#: plug-ins/script-fu/scripts/rendermap.scm.h:6
+msgid "Granularity"
+msgstr "Pembutiran"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:7
+#: plug-ins/script-fu/scripts/rendermap.scm.h:7
+#, fuzzy
+msgid "Image size"
+msgstr "Saiz Imej"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:8
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:3
+msgid "Smooth"
+msgstr "Licin"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:9
+msgid "_Camouflage..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:1
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Stencil Ops"
+msgstr "<Image>/Script-Fu/Stensil Ops/U_kirnya..."
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:2
+msgid "C_arve-It..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:3
+#, fuzzy
+msgid "Carve white areas"
+msgstr "Ukir Kawasan Putih"
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:4
+#, fuzzy
+msgid "Image to carve"
+msgstr "Imej untuk Ukir"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:2
+msgid "Background Image"
+msgstr "Imej Latar belakang"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:3
+#, fuzzy
+msgid "Carve raised text"
+msgstr "Ukir Teks yang Ditinggikan"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:4
+msgid "Carved..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:7
+#, fuzzy
+msgid "Padding around text"
+msgstr "Pad Keliling Teks"
+
+#: plug-ins/script-fu/scripts/chalk.scm.h:4
+#, fuzzy
+msgid "Chalk color"
+msgstr "Warna Kapur"
+
+#: plug-ins/script-fu/scripts/chalk.scm.h:8
+msgid "_Chalk..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:3
+#, fuzzy
+msgid "Blur amount"
+msgstr "Jumlah Kabur"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:4
+msgid "Chip Awa_y..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:5
+#, fuzzy
+msgid "Chip amount"
+msgstr "Jumlah Chip"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:6
+#, fuzzy
+msgid "Drop shadow"
+msgstr "Lepaskan Bayang"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:7
+#, fuzzy
+msgid "Fill BG with pattern"
+msgstr "Isi BG dengan Corak"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:10
+msgid "Invert"
+msgstr "Songsangkan"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:11
+#, fuzzy
+msgid "Keep background"
+msgstr "Kekalkan Latar belakang"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:2
+#, fuzzy
+msgid "C_hrome-It..."
+msgstr "Layari..."
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
+#, fuzzy
+msgid "Chrome balance"
+msgstr "Keseimbangan Warna Krom"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
+#, fuzzy
+msgid "Chrome factor"
+msgstr "Faktor Warna Krom"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
+#, fuzzy
+msgid "Chrome lightness"
+msgstr "Pencahayaan Warna Krom"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:6
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
+#, fuzzy
+msgid "Chrome saturation"
+msgstr "Ketepuan Warna Krom"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#, fuzzy
+msgid "Chrome white areas"
+msgstr "Kawasan Putih Warna Krom"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:5
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
+#, fuzzy
+msgid "Environment map"
+msgstr "Peta Persekitaran"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:9
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
+#, fuzzy
+msgid "Highlight balance"
+msgstr "Tonjolkan Keseimbangan"
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+#, fuzzy
+msgid "C_hrome..."
+msgstr "Layari..."
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:8
+msgid "Offsets (pixels * 2)"
+msgstr "Ofset (piksel * 2)"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:1
+#: plug-ins/script-fu/scripts/grid-system.scm.h:1
+#: plug-ins/script-fu/scripts/lava.scm.h:1
+#: plug-ins/script-fu/scripts/line-nova.scm.h:1
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Render"
+msgstr "<Image>/Script-Fu/Render/_Lava..."
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:2
+#, fuzzy
+msgid "Circuit seed"
+msgstr "Benih Litar"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:3
+#: plug-ins/script-fu/scripts/lava.scm.h:3
+#: plug-ins/script-fu/scripts/predator.scm.h:3
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:11
+#, fuzzy
+msgid "Keep selection"
+msgstr "Kekalkan Pemilihan"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:4
+#, fuzzy
+msgid "No background (only for separate layer)"
+msgstr "Tiada Latar belakang (hanya untuk lapisan berasingan)"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:5
+#, fuzzy
+msgid "Oilify mask size"
+msgstr "Meminyakkan Saiz Topeng"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:6
+#: plug-ins/script-fu/scripts/lava.scm.h:6
+#: plug-ins/script-fu/scripts/predator.scm.h:6
+#, fuzzy
+msgid "Separate layer"
+msgstr "Lapisan Berasingan"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:7
+#, fuzzy
+msgid "_Circuit..."
+msgstr "Benih Litar"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:1
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:1
+#: plug-ins/script-fu/scripts/predator.scm.h:1
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
+#: plug-ins/script-fu/scripts/weave.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Alchemy"
+msgstr "<Image>/Script-Fu/Alkimia/_Jalinan..."
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:2
+#: plug-ins/script-fu/scripts/swirltile.scm.h:2
+msgid "Azimuth"
+msgstr "Azimut"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:3
+msgid "Blur X"
+msgstr "Kaburkan X"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:4
+msgid "Blur Y"
+msgstr "Kaburkan Y"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:5
+#: plug-ins/script-fu/scripts/swirltile.scm.h:5
+msgid "Depth"
+msgstr "Kedalaman"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:6
+#: plug-ins/script-fu/scripts/swirltile.scm.h:6
+msgid "Elevation"
+msgstr "Meningkat"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:7
+msgid "_Clothify..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:2
+#, fuzzy
+msgid ""
+"Darken only\n"
+"(Better, but only for images with alot of white)"
+msgstr ""
+"Gelapkan hanya\n"
+"(Lebih baik, tetapi hanya untuk Imej yang banyak Putih)"
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:3
+msgid "Stains"
+msgstr "Kesan"
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:4
+msgid "_Coffee Stain..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:4
+msgid "Comic Boo_k..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:9
+#, fuzzy
+msgid "Outline color"
+msgstr "Warna Garis luar"
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:10
+#: plug-ins/script-fu/scripts/glossy.scm.h:12
+#, fuzzy
+msgid "Outline size"
+msgstr "Saiz Garis luar"
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
+msgid "Cool _Metal..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
+#, fuzzy
+msgid "Effect size (pixels)"
+msgstr "Saiz yang Terjejas (piksel)"
+
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
+#, fuzzy
+msgid "Background image"
+msgstr "Imej Latar belakang"
+
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
+msgid "Crystal..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:1
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:1
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
+#: plug-ins/script-fu/scripts/select-to-image.scm.h:1
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Selection"
+msgstr "<Image>/Script-Fu/Pemilihan/Ke _Imej"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:2
+#, fuzzy
+msgid "Granularity (1 is low)"
+msgstr "Pembutiran (1 adalah Rendah)"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:4
+#, fuzzy
+msgid "Smooth horizontally"
+msgstr "Licin secara Mengufuk"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:5
+#, fuzzy
+msgid "Smooth vertically"
+msgstr "Licin secara Menegak"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:6
+msgid "Spread"
+msgstr "Hamparan"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:7
+#, fuzzy
+msgid "Threshold (bigger 1<-->255 smaller)"
+msgstr "Ambang (Lebih Besar 1<--> 255 Lebih Kecil)"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:8
+#, fuzzy
+msgid "_Distress Selection..."
+msgstr "<Image>/Script-Fu/Pemilihan/Pemilihan _Distres..."
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Shadow"
+msgstr "<Image>/Script-Fu/Bayang/_Lepaskan Bayang..."
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
+#, fuzzy
+msgid "Allow resizing"
+msgstr "Benarkan Pensaizan semula"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:3
+#: plug-ins/script-fu/scripts/news-text.scm.h:3
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
+#: plug-ins/script-fu/scripts/round-corners.scm.h:4
+#: plug-ins/script-fu/scripts/swirltile.scm.h:4
+#, fuzzy
+msgid "Blur radius"
+msgstr "Jejari Kabur"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
+msgid "Color"
+msgstr "Warna"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
+msgid "Offset X"
+msgstr "Ofset X"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:6
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
+msgid "Offset Y"
+msgstr "Ofset Y"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
+msgid "Opacity"
+msgstr "Kelegapan"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:8
+#, fuzzy
+msgid "_Drop-Shadow..."
+msgstr "Lepaskan Bayang"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:2
+msgid "Columns"
+msgstr "Lajur"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:3
+msgid "Erase"
+msgstr "Padam"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:4
+#, fuzzy
+msgid "Erase/fill"
+msgstr "Padam/Isi"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:5
+msgid "Even"
+msgstr "Genap"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:6
+#, fuzzy
+msgid "Even/odd"
+msgstr "Genap/Ganjil"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:7
+msgid "Fill with BG"
+msgstr "Isi dengan BG"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:8
+msgid "Odd"
+msgstr "Ganjil"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:9
+msgid "Rows"
+msgstr "Baris"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:10
+#, fuzzy
+msgid "Rows/cols"
+msgstr "Baris/Lajur"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:11
+#, fuzzy
+msgid "_Erase every other Row..."
+msgstr "<Image>/Script-Fu/Alkimia/_Padam selang Sebaris..."
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:2
+#, fuzzy
+msgid "Apply generated layermask"
+msgstr "Gunakan Topeng Lapisan yang Dihasilkan"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:3
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: plug-ins/script-fu/scripts/old-photo.scm.h:2
+#, fuzzy
+msgid "Border size"
+msgstr "Saiz Sempadan"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:4
+#, fuzzy
+msgid "Clear unselected maskarea"
+msgstr "Bersihkan Kawasan Topeng yang Tidak Dipilih"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:6
+#, fuzzy, no-c-format
+msgid "Fade from %"
+msgstr "Lenyapkan Dari %"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:8
+#, fuzzy, no-c-format
+msgid "Fade to   %"
+msgstr "Lenyapkan Kepada   %"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:9
+#, fuzzy
+msgid "Use growing selection"
+msgstr "Gunakan Pemilihan yang Semakin Banyak"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:10
+msgid "_Fade Outline..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:2
+#: plug-ins/script-fu/scripts/land.scm.h:2
+#, fuzzy
+msgid "Detail level"
+msgstr "Tahap yang Terperinci"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:3
+#: plug-ins/script-fu/scripts/land.scm.h:4
+#, fuzzy
+msgid "Image height"
+msgstr "Tinggi Imej"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:4
+#: plug-ins/script-fu/scripts/land.scm.h:5
+#, fuzzy
+msgid "Image width"
+msgstr "Lebar Imej"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:5
+#: plug-ins/script-fu/scripts/land.scm.h:7
+#, fuzzy
+msgid "Random seed"
+msgstr "Benih Rawak"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:6
+#: plug-ins/script-fu/scripts/land.scm.h:8
+msgid "Scale X"
+msgstr "Skala X"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:7
+#: plug-ins/script-fu/scripts/land.scm.h:9
+msgid "Scale Y"
+msgstr "Skala Y"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:8
+msgid "_Flatland..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:1
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Utils"
+msgstr "<Toolbox>/Xtns/Script-Fu/Logo/N_eon..."
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:2
+#, fuzzy
+msgid "Active colors"
+msgstr "Warna Aktif"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:3
+#, fuzzy
+msgid "Black on white"
+msgstr "Hitam atas Putih"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:4
+#, fuzzy
+msgid "Font _size (pixels)"
+msgstr "_Saiz Fon (piksel)"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:5
+#, fuzzy
+msgid "Use font _name as text"
+msgstr "Guna _Nama Fon sebagai Teks"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:6
+msgid "_Border (pixels)"
+msgstr "_Sempadan (piksel)"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:7
+#, fuzzy
+msgid "_Color scheme"
+msgstr "Skema _Warna"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:8
+msgid "_Filter (regexp)"
+msgstr "_Penapis (regexp)"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:9
+msgid "_Font Map..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:10
+msgid "_Labels"
+msgstr "_Label"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:11
+msgid "_Text"
+msgstr "_Teks"
+
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:8
+#, fuzzy
+msgid "_Frosty..."
+msgstr "Layari..."
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
+#, fuzzy
+msgid "Add shadow"
+msgstr "Tambahkan Bayang"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
+#, fuzzy
+msgid "Blur border"
+msgstr "Kaburkan Sempadan"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
+msgid "Granularity (1 is Low)"
+msgstr "Pembutiran (1 adalah Rendah)"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
+#, fuzzy, no-c-format
+msgid "Shadow weight (%)"
+msgstr "Tinggi Bayang (%)"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
+msgid "_Fuzzy Border..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org"
+msgstr "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Gimp.Org/Tajuk _Besar..."
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
+#, fuzzy
+msgid "Autocrop"
+msgstr "AutoCrop"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
+#, fuzzy
+msgid "Dark color"
+msgstr "Warna Gelap"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:6
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:9
+#, fuzzy
+msgid "Highlight color"
+msgstr "Tonjolkan Warna"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:6
+#, fuzzy
+msgid "Index image"
+msgstr "Imej Indeks"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:7
+#, fuzzy
+msgid "Number of colors"
+msgstr "Bilangan Warna"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:9
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:10
+#, fuzzy
+msgid "Remove background"
+msgstr "Keluarkan Latar Belakang"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:10
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:11
+#, fuzzy
+msgid "Select-by-color threshold"
+msgstr "Ambang Pilih Ikut Warna"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:12
+#, fuzzy
+msgid "Shadow color"
+msgstr "Warna Bayang"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:14
+msgid "_Big Header..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:15
+msgid "_Small Header..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:13
+msgid "T_ube Sub-Button Label..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
+msgid "Tub_e Sub-Sub-Button Label..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:17
+msgid "_General Tube Labels..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:18
+msgid "_Tube Button Label..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:4
+#, fuzzy
+msgid "Blend gradient (Text)"
+msgstr "Campur Kecerunan (Teks)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:5
+#, fuzzy
+msgid "Blend gradient (outline)"
+msgstr "Campur Kecerunan (Garis kasar)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:6
+#, fuzzy
+msgid "Blend gradient (text)"
+msgstr "Campur Kecerunan (Teks)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:10
+msgid "Glo_ssy..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:11
+#, fuzzy
+msgid "Outline gradient reverse"
+msgstr "Kecerunan Garis Kasar Songsang"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:13
+#, fuzzy
+msgid "Pattern (outline)"
+msgstr "Corak (Garis kasar)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:14
+#, fuzzy
+msgid "Pattern (overlay)"
+msgstr "Corak (Tindihan atas)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:15
+#, fuzzy
+msgid "Pattern (text)"
+msgstr "Corak (Teks)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:16
+#: plug-ins/script-fu/scripts/sphere.scm.h:5
+msgid "Shadow"
+msgstr "Bayang"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:20
+#, fuzzy
+msgid "Text gradient reverse"
+msgstr "Kecerunan Teks Songsang"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:21
+#, fuzzy
+msgid "Use pattern for outline instead of gradient"
+msgstr "Gunakan Corak untuk Garis kasar dan bukan Kecerunan"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:22
+#, fuzzy
+msgid "Use pattern for text instead of gradient"
+msgstr "Gunakan Corak untuk Teks dan bukan Kecerunan"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:23
+#, fuzzy
+msgid "Use pattern overlay"
+msgstr "Gunakan Tindihan Atas Corak"
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
+#, fuzzy
+msgid "Effect size (pixels * 3)"
+msgstr "Beri Kesan kepada Saiz (piksel * 3)"
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:7
+msgid "Glo_wing Hot..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
+#, fuzzy
+msgid "Bevel height (Sharpness)"
+msgstr "Tinggi Serong (Ketajaman)"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+#, fuzzy
+msgid "Bevel height (sharpness)"
+msgstr "Tinggi Serong (Ketajaman)"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:4
+#, fuzzy
+msgid "Border size (pixels)"
+msgstr "Saiz Sempadan (piksel)"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
+#, fuzzy
+msgid "Gradient Beve_l..."
+msgstr "Kecerunan Songsang"
+
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:2
+#, fuzzy
+msgid "Custom _Gradient..."
+msgstr "Kecerunan Biasa"
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:2
+#, fuzzy
+msgid "X divisions"
+msgstr "Divisyen X"
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:3
+#, fuzzy
+msgid "Y divisions"
+msgstr "Divisyen Y"
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:4
+msgid "_Grid..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
+msgid "Creates four Guides around the bounding box of the current selection."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
+msgid "New Guides from _Selection"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
+#: plug-ins/script-fu/scripts/guides-new.scm.h:1
+#, fuzzy
+msgid "Direction"
+msgstr "Huraian"
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
+#: plug-ins/script-fu/scripts/guides-new.scm.h:2
+#, fuzzy
+msgid "Horizontal"
+msgstr "Kaburkan secara Mengufuk"
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
+msgid "New Guide (by _Percent)..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:5
+#, no-c-format
+msgid "Position (in %)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
+#: plug-ins/script-fu/scripts/guides-new.scm.h:4
+#, fuzzy
+msgid "Vertical"
+msgstr "Kaburkan secara Menegak"
+
+#: plug-ins/script-fu/scripts/guides-new.scm.h:3
+msgid "New _Guide..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
+msgid "_Remove all Guides"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
+#: plug-ins/script-fu/scripts/image-structure.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Utils"
+msgstr "<Image>/Script-Fu/Utils/ASCII ke Lapisan Imej..."
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
+#, fuzzy
+msgid "BG opacity"
+msgstr "Kelegapan BG"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:3
+#, fuzzy
+msgid "Draw _HSV Graph..."
+msgstr "<Image>/Script-Fu/Util/Lukis Graf _HSV..."
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:4
+msgid "End X"
+msgstr "Hujung X"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:5
+msgid "End Y"
+msgstr "Hujung Y"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:6
+#, fuzzy
+msgid "From top-left to bottom-right"
+msgstr "Dari Kiri Atas ke Bawah Kanan"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:7
+#, fuzzy
+msgid "Graph scale"
+msgstr "Skala Graf"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:8
+msgid "Start X"
+msgstr "Mula X"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
+msgid "Start Y"
+msgstr "Mula Y"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:10
+#, fuzzy
+msgid "Use selection bounds instead of belows"
+msgstr "Gunakan Batas Pemilihan dan Tidak di Bawah"
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
+#, fuzzy
+msgid "Frame color"
+msgstr "Warna Bingkai"
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
+#, fuzzy
+msgid "Frame size"
+msgstr "Saiz Bingkai"
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
+msgid "Imigre-26..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:2
+#, fuzzy
+msgid "Apply layer mask (or discard)"
+msgstr "Gunakan Topeng Lapisan (atau buang)"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:4
+#, fuzzy
+msgid "Create new image"
+msgstr "Wujudkan Imej Baru"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:5
+#, fuzzy
+msgid "Insert layer names"
+msgstr "Sisipkan Nama Lapisan"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:6
+#, fuzzy
+msgid "Make new background"
+msgstr "Buat Latar Belakang Baru"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:7
+#, fuzzy
+msgid "Outer border"
+msgstr "Sempadan Luar"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:8
+#, fuzzy
+msgid "Pad color"
+msgstr "Warna Pad"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:9
+#, fuzzy
+msgid "Pad opacity"
+msgstr "Kelegapan Pad"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:10
+#, fuzzy
+msgid "Padding for transparent regions"
+msgstr "Pad untuk Kawasan Lut sinar"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:11
+#, fuzzy
+msgid "Shear length"
+msgstr "Panjang Ricih"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:12
+#, fuzzy
+msgid "Show Image _Structure..."
+msgstr "<Image>/Script-Fu/Util/Tunjukkan _Struktur Imej..."
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:13
+#, fuzzy
+msgid "Space between layers"
+msgstr "Ruang Di antara Lapisan"
+
+#: plug-ins/script-fu/scripts/land.scm.h:6
+#, fuzzy
+msgid "Land height"
+msgstr "Tinggi Tanah"
+
+#: plug-ins/script-fu/scripts/land.scm.h:10
+#, fuzzy
+msgid "Sea depth"
+msgstr "Kedalaman Laut"
+
+#: plug-ins/script-fu/scripts/land.scm.h:11
+msgid "_Land..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/lava.scm.h:4
+#: plug-ins/script-fu/scripts/swirltile.scm.h:8
+msgid "Roughness"
+msgstr "Kekasaran"
+
+#: plug-ins/script-fu/scripts/lava.scm.h:5
+msgid "Seed"
+msgstr "Benih"
+
+#: plug-ins/script-fu/scripts/lava.scm.h:8
+#, fuzzy
+msgid "Use current gradient"
+msgstr "Gunakan Kecerunan Semasa"
+
+#: plug-ins/script-fu/scripts/lava.scm.h:9
+msgid "_Lava..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:2
+msgid "Line _Nova..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:3
+#, fuzzy
+msgid "Number of lines"
+msgstr "Bilangan Garis"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:4
+#, fuzzy
+msgid "Offset radius"
+msgstr "Ofset Jejari"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:5
+msgid "Randomness"
+msgstr "Kerawakan"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:6
+msgid "Sharpness (degrees)"
+msgstr "Kejelasan (tahap)"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush"
+msgstr "<Toolbox>/Xtns/Script-Fu/Buat Berus/Berbentuk _Elips..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:2
+msgid "Elli_ptical, Feathered..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:3
+msgid "Feathering"
+msgstr "Memberikan Bulu Pelepah"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:5
+#, fuzzy
+msgid "Name"
+msgstr "Nama"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:6
+msgid "Re_ctangular, Feathered..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
+msgid "Spacing"
+msgstr "Langkau"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:9
+msgid "_Elliptical..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:10
+msgid "_Rectangular..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:4
+#, fuzzy
+msgid "Create shadow"
+msgstr "Wujudkan Bayang"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:5
+#, fuzzy
+msgid "Effect size (pixels * 5)"
+msgstr "Beri kesan kepada Saiz (piksel * 5)"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:9
+msgid "N_eon..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:4
+#, fuzzy
+msgid "Cell size (pixels)"
+msgstr "Saiz Sel (piksel)"
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:6
+#: plug-ins/script-fu/scripts/speed-text.scm.h:4
+#, no-c-format
+msgid "Density (%)"
+msgstr "Ketumpatan (%)"
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:9
+msgid "Newsprint Text..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/old-photo.scm.h:3
+msgid "Defocus"
+msgstr "Tidak fokus"
+
+#: plug-ins/script-fu/scripts/old-photo.scm.h:4
+msgid "Mottle"
+msgstr "Berbelak-belak"
+
+#: plug-ins/script-fu/scripts/old-photo.scm.h:5
+msgid "Sepia"
+msgstr "Warna Sepia"
+
+#: plug-ins/script-fu/scripts/old-photo.scm.h:7
+msgid "_Old Photo..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
+msgid "Angle"
+msgstr "Sudut"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
+msgid "Cubic"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+#, fuzzy
+msgid "Interpolation"
+msgstr "Sisipkan"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+msgid "Linear"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+msgid "None"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:11
+#, fuzzy
+msgid "Relative distance of horizon"
+msgstr "Jarak Relatif Ufuk"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:12
+#, fuzzy
+msgid "Relative length of shadow"
+msgstr "Panjang Relatif Bayang"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:13
+msgid "_Perspective..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/predator.scm.h:2
+#, fuzzy
+msgid "Edge amount"
+msgstr "Jumlah Tepi"
+
+#: plug-ins/script-fu/scripts/predator.scm.h:4
+#, fuzzy
+msgid "Pixel amount"
+msgstr "Jumlah Piksel"
+
+#: plug-ins/script-fu/scripts/predator.scm.h:5
+msgid "Pixelize"
+msgstr "Berpiksel"
+
+#: plug-ins/script-fu/scripts/predator.scm.h:7
+msgid "_Predator..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:5
+#, fuzzy
+msgid "Lower color"
+msgstr "Pudarkan Warna"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:6
+#, fuzzy
+msgid "Lower color (active)"
+msgstr "Pudarkan Warna (Aktif)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:7
+#, fuzzy
+msgid "Not pressed"
+msgstr "Tidak Ditekan"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:8
+#, fuzzy
+msgid "Not pressed (active)"
+msgstr "Tidak Ditekan (Aktif)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:9
+msgid "Padding X"
+msgstr "Pad X"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:10
+msgid "Padding Y"
+msgstr "Pad Y"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:12
+#, fuzzy
+msgid "Round ratio"
+msgstr "Nisbah Nombor Bulat"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:15
+#, fuzzy
+msgid "Text color (active)"
+msgstr "Warna Teks (Aktif)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:16
+#, fuzzy
+msgid "Upper color"
+msgstr "Warna Atas"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:17
+#, fuzzy
+msgid "Upper color (active)"
+msgstr "Warna Atas (Aktif)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:18
+msgid "_Round Button..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:2
+msgid "Behaviour"
+msgstr "Peri laku"
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:3
+msgid "Detail in Middle"
+msgstr "Perincian di Tengah"
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:8
+msgid "Render _Map..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:9
+msgid "Tile"
+msgstr "Jubin"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
+msgid "Black"
+msgstr "Hitam"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+#, fuzzy
+msgid "Edge behaviour"
+msgstr "Peri laku Tepi"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:4
+#, fuzzy
+msgid "Number of frames"
+msgstr "Bilangan Bingkai"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
+#, fuzzy
+msgid "Rippling strength"
+msgstr "Kekuatan Riak"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
+msgid "Smear"
+msgstr "Comot"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
+msgid "Wrap"
+msgstr "Pusing"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:8
+msgid "_Rippling..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:2
+#, fuzzy
+msgid "Add background"
+msgstr "Tambahkan Latar Belakang"
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:3
+#, fuzzy
+msgid "Add drop-shadow"
+msgstr "Tambahkan Lepaskan Bayang"
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:5
+#, fuzzy
+msgid "Edge radius"
+msgstr "Jejari Tepi"
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:9
+msgid "_Round Corners..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+#, fuzzy
+msgid "Brush name"
+msgstr "Nama Berus"
+
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
+#, fuzzy
+msgid "File name"
+msgstr "Nama fail"
+
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
+#, fuzzy
+msgid "To _Brush..."
+msgstr "Layari..."
+
+#: plug-ins/script-fu/scripts/select-to-image.scm.h:2
+msgid "To _Image"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
+msgid "Filename"
+msgstr "Nama fail"
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
+#, fuzzy
+msgid "Pattern name"
+msgstr "Corak"
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
+#, fuzzy
+msgid "To _Pattern..."
+msgstr "Corak"
+
+#: plug-ins/script-fu/scripts/selection-round.scm.h:1
+msgid "Concave"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/selection-round.scm.h:3
+#, fuzzy, no-c-format
+msgid "Radius (%)"
+msgstr "Jejari"
+
+#: plug-ins/script-fu/scripts/selection-round.scm.h:4
+#, fuzzy
+msgid "Rounded R_ectangle..."
+msgstr "<Image>/Script-Fu/Pemilihan/_Bundar..."
+
+#: plug-ins/script-fu/scripts/slide.scm.h:3
+#, fuzzy
+msgid "Font color"
+msgstr "Warna Fon"
+
+#: plug-ins/script-fu/scripts/slide.scm.h:4
+msgid "Number"
+msgstr "Nombor"
+
+#: plug-ins/script-fu/scripts/slide.scm.h:7
+msgid "_Slide..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
+msgid "SOTA Chrome..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/speed-text.scm.h:7
+msgid "Speed Text..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Misc"
+msgstr "<Toolbox>/Xtns/Script-Fu/Logo/N_eon..."
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:3
+msgid "Lighting (degrees)"
+msgstr "Pencahayaan (Tahap)"
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:4
+msgid "Radius (pixels)"
+msgstr "Jejari (piksel)"
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:6
+#, fuzzy
+msgid "Sphere color"
+msgstr "Warna Sfera"
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:7
+#, fuzzy
+msgid "_Sphere..."
+msgstr "Layari..."
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
+msgid "Frames"
+msgstr "Bingkai"
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
+#, fuzzy
+msgid "Index to n colors (0 = remain RGB)"
+msgstr "Indeks ke Warna n (0 = Baki RGB)"
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
+#, fuzzy
+msgid "Turn from left to right"
+msgstr "Pusingkan dari Kiri ke Kanan"
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:7
+msgid "_Spinning Globe..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
+msgid "Airbrush"
+msgstr "Penyembur"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
+msgid "Brush"
+msgstr "Berus"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
+msgid "Circle"
+msgstr "Bulatan"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
+#, fuzzy
+msgid "Color method"
+msgstr "Kaedah Warna"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+msgid ""
+"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
+"netword.com/*spyrogimp"
+msgstr ""
+"Melukis Spirographs, Epitrochoids and Lengkung Lissajous. Lebih banyak "
+"maklumat di http://netword.com*spyrogimp"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
+msgid "Epitrochoid"
+msgstr "Epitrochoid"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
+msgid "Frame"
+msgstr "Bingkai"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
+msgid "Gradient: Loop Sawtooth"
+msgstr "Kecerunan: Gelung Sawtooth"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
+msgid "Gradient: Loop Triangle"
+msgstr "Kecerunan: Segi tiga Gelung"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
+msgid "Hexagon"
+msgstr "Heksagon"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
+#, fuzzy
+msgid "Hole ratio"
+msgstr "Nisbah Lubang"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
+#, fuzzy
+msgid "Inner teeth"
+msgstr "Gigi Dalam"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
+msgid "Lissajous"
+msgstr "Lissajous"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
+msgid "Margin (pixels)"
+msgstr "Jidar (piksel)"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
+#, fuzzy
+msgid "Outer teeth"
+msgstr "Gigi Luar"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
+msgid "Pencil"
+msgstr "Pensel"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
+msgid "Pentagon"
+msgstr "Pentagon"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
+msgid "Polygon: 10 sides"
+msgstr "Poligon: 10 sisi"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
+msgid "Polygon: 7 sides"
+msgstr "Poligon: 7 sisi"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
+msgid "Polygon: 8 sides"
+msgstr "Poligon: 8 sisi"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+msgid "Polygon: 9 sides"
+msgstr "Poligon: 9 sisi"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+msgid "Shape"
+msgstr "Bentuk"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+msgid "Solid Color"
+msgstr "Warna Pejal"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+msgid "Spyrograph"
+msgstr "Spyrograf"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
+msgid "Square"
+msgstr "Segi empat sama"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+#: plug-ins/script-fu/scripts/text-circle.scm.h:7
+#, fuzzy
+msgid "Start angle"
+msgstr "Sudut Mula"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+msgid "Tool"
+msgstr "Alat"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:31
+msgid "Triangle"
+msgstr "Segi tiga"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:32
+msgid "Type"
+msgstr "Jenis"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:33
+#, fuzzy
+msgid "_Spyrogimp..."
+msgstr "Spyrograf"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
+#, fuzzy
+msgid "Burst color"
+msgstr "Warna Bertabur"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
+#, fuzzy
+msgid "Effect size (pixels * 30)"
+msgstr "Saiz yang Terjejas (piksel * 30)"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:8
+msgid "Starb_urst..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
+#, fuzzy
+msgid "Effect size (pixels * 4)"
+msgstr "Saiz yang Terjejas (piksel * 4)"
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:7
+#, fuzzy
+msgid "Sta_rscape..."
+msgstr "Layari..."
+
+#: plug-ins/script-fu/scripts/swirltile.scm.h:9
+msgid "Swirl-_Tile..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/swirltile.scm.h:10
+#, fuzzy
+msgid "Whirl amount"
+msgstr "Jumlah Pusaran"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
+#, fuzzy
+msgid "Number of times to whirl"
+msgstr "Bilangan untuk Berpusar"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
+#, fuzzy
+msgid "Quarter size"
+msgstr "Saiz Suku"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
+#, fuzzy
+msgid "Whirl angle"
+msgstr "Sudut Pusaran"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:5
+msgid "_Swirly..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
+#, fuzzy
+msgid "Base color"
+msgstr "Warna Asas"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
+#, fuzzy
+msgid "Edge only"
+msgstr "Tepi Sahaja"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
+#, fuzzy
+msgid "Edge width"
+msgstr "Lebar Tepi"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
+#, fuzzy
+msgid "Hit rate"
+msgstr "Kadar Hentaman"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:12
+msgid "_Particle Trace..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:2
+msgid "Antialias"
+msgstr "Antialias"
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:3
+#, fuzzy
+msgid "Fill angle"
+msgstr "Sudut yang Dipenuhi"
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:9
+#, fuzzy
+msgid "Text Circle..."
+msgstr "Bulatan"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:5
+#, fuzzy
+msgid "Ending blend"
+msgstr "Mengakhiri Campuran"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:8
+msgid "Hexagons"
+msgstr "Segi enam"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:9
+#, fuzzy
+msgid "Mosaic tile type"
+msgstr "Jenis Jubin Mozaik"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:10
+msgid "Octagons"
+msgstr "Segi Lapan"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:12
+msgid "Squares"
+msgstr "Segi empat sama"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:13
+#, fuzzy
+msgid "Starting blend"
+msgstr "Mula Campur"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:15
+#, fuzzy
+msgid "Text pattern"
+msgstr "Corak Teks"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:16
+msgid "_Textured..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:1
+#, fuzzy
+msgid "Blur horizontally"
+msgstr "Kaburkan secara Mengufuk"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:2
+#, fuzzy
+msgid "Blur type"
+msgstr "Kaburkan Jenis"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:3
+#, fuzzy
+msgid "Blur vertically"
+msgstr "Kaburkan secara Menegak"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:4
+msgid "IIR"
+msgstr "IIR"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:5
+msgid "RLE"
+msgstr "RLE"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:7
+#, fuzzy
+msgid "_Tileable Blur..."
+msgstr "<Image>/Penapis/Kabur/Kabur _Berjubin..."
+
+#: plug-ins/script-fu/scripts/title-header.scm.h:6
+msgid "Web Title Header..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/truchet.scm.h:4
+#, fuzzy
+msgid "Foreground color"
+msgstr "Warna Latar Depan"
+
+#: plug-ins/script-fu/scripts/truchet.scm.h:7
+msgid "T_ruchet..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
+#, fuzzy
+msgid "Mask opacity"
+msgstr "Kelegapan Topeng"
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
+#, fuzzy
+msgid "Mask size"
+msgstr "Saiz Topeng"
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:4
+msgid "_Unsharp Mask..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:2
+msgid "Amplitude"
+msgstr "Amplitud"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:3
+msgid "Invert direction"
+msgstr "Arah songsang"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:5
+msgid "Wavelength"
+msgstr "Jarak Gelombang"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:6
+msgid "_Waves..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/weave.scm.h:2
+#, fuzzy
+msgid "Ribbon spacing"
+msgstr "Jarak Reben"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:3
+#, fuzzy
+msgid "Ribbon width"
+msgstr "Lebar Reben"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:4
+#, fuzzy
+msgid "Shadow darkness"
+msgstr "Gelap Bayang"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:5
+#, fuzzy
+msgid "Shadow depth"
+msgstr "Dalam Bayang"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:6
+#, fuzzy
+msgid "Thread density"
+msgstr "Ketumpatan Bebenang"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:7
+#, fuzzy
+msgid "Thread intensity"
+msgstr "Keamatan Bebenang"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:8
+#, fuzzy
+msgid "Thread length"
+msgstr "Panjang Bebenang"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:9
+msgid "_Weave..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Help/The GIMP Online"
+msgstr "<Toolbox>/Bantuan/GIMP dalam talian/Laman Web _Utama"
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:2
+msgid "Plug-in _Registry"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:3
+msgid "_Developer Web Site"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:4
+msgid "_Main Web Site"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:2
+#, fuzzy
+msgid "Drop shadow X offset"
+msgstr "Gugurkan Ofset Bayang X"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:3
+#, fuzzy
+msgid "Drop shadow Y offset"
+msgstr "Gugurkan Ofset Bayang Y"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:4
+#, fuzzy
+msgid "Drop shadow blur radius"
+msgstr "Gugurkan Jejari Kabur Bayang"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:5
+#, fuzzy
+msgid "Drop shadow color"
+msgstr "Gugurkan Warna Bayang"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:6
+#, fuzzy
+msgid "Drop shadow opacity"
+msgstr "Gugurkan Kelegapan Bayang"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:7
+#, fuzzy
+msgid "Highlight X offset"
+msgstr "Tonjolkan Ofset X"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:8
+#, fuzzy
+msgid "Highlight Y offset"
+msgstr "Tonjolkan Ofset Y"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:10
+#, fuzzy
+msgid "Highlight opacity"
+msgstr "Tonjolkan Kelegapan"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:12
+msgid "_Xach-Effect..."
+msgstr ""
+
+#, fuzzy
+#~ msgid "Buffer amount (% height of text)"
+#~ msgstr "Jumlah Penimbal (% Tinggi Teks)"
+
+#, fuzzy
+#~ msgid "_ASCII to Layer..."
+#~ msgstr "<Image>/Script-Fu/Utils/ASCII ke Lapisan Imej..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/_Refresh Scripts"
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/_Muat semula Skrip"
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/3D _Outline..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/_Garis luar 3D..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/3D _Outline..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/_Garis luar 3D..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/3_D Truchet..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Corak/Truchet 3_D..."
+
+#~ msgid "<Image>/Script-Fu/Decor/Add B_evel..."
+#~ msgstr "<Image>/Script-Fu/Hias/Tambah B_evel..."
+
+#~ msgid "<Image>/Script-Fu/Decor/Add _Border..."
+#~ msgstr "<Image>/Script-Fu/Hias/Tambah _Sempadan..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Arrow..."
+#~ msgstr ""
+#~ "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Cahaya Berlainan/_Anak panah..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/_Bullet..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Cahaya Berlainan/_Bulet..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow/B_utton..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Cahaya Berlainan/B_utang..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Glow..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/_Cahaya Berlainan..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Glow..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/_Cahaya Berlainan..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Alien _Neon..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/_Cahaya Berlainan..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Alien _Neon..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/_Neon Berlainan..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_ASCII to Image..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Util/_ASCII ke Imej..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Basic I..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/_Basic I..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Basic I..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/_Basic I..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/B_asic II..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/B_asic II..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/B_asic II..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/B_asic II..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Bullet..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Corak Serong/_Bulet..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/B_utton..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Corak Serong/B_utang..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/H_eading..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Corak Serong/T_ajuk..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern/_Hrule..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Corak Serong/_Hrule..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Blen_ded..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/Di_campur..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Blen_ded..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Di_campur..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Bo_vination..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/Pe_mbovinan..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Bo_vination..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/ Pem_bovinan..."
+
+#~ msgid "<Image>/Script-Fu/Animators/B_urn-In..."
+#~ msgstr "<Image>/Script-Fu/Juruanimasi/_Tulis..."
+
+#~ msgid "Burn-in like effect on a fg (text) layer and a bg layer; V2.1"
+#~ msgstr "Tulis seperti kesan pada lapisan fg (teks) dan lapisan bg; V2.1"
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Camouflage..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Corak/_Penyamaran..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Carved..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Diukir..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Chalk..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/_Kapur..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Chalk..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/_Kapur..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Chip Awa_y..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/Chip Awa_y..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Chip Awa_y..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Chip Awa_y..."
+
+#~ msgid "<Image>/Script-Fu/Stencil Ops/C_hrome-It..."
+#~ msgstr "<Image>/Script-Fu/Stensil Ops/K_rom..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/C_hrome..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/K_rom..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/C_hrome..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/K_rom..."
+
+#~ msgid "<Image>/Script-Fu/Render/_Circuit..."
+#~ msgstr "<Image>/Script-Fu/Render/_Litar..."
+
+#~ msgid "<Image>/Script-Fu/Alchemy/_Clothify..."
+#~ msgstr "<Image>/Script-Fu/Alkimia/_Clothify..."
+
+#~ msgid "<Image>/Script-Fu/Decor/_Coffee Stain..."
+#~ msgstr "<Image>/Script-Fu/Hias/Kesan _Kopi..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Comic Boo_k..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/Buk_u Komik..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Comic Boo_k..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Buk_u Komik..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Cool _Metal..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/Cool _Metal"
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Cool _Metal..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Cool _Metal..."
+
+#, fuzzy
+#~ msgid "<Image>/Edit/Copy/Copy _Visible"
+#~ msgstr "<Image>/Edit/Salinan _Dapat Dilihat..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Crystal..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Kristal..."
+
+#~ msgid "<Image>/Script-Fu/Selection/_Fade Outline..."
+#~ msgstr "<Image>/Script-Fu/Pemilihan/_Lenyapkan Garis luar..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Flatland..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Corak/_Tanah rata..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Utils/_Font Map..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Util/Peta _Fon..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Frosty..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/_Berfros..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Frosty..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/_Berfros..."
+
+#~ msgid "<Image>/Script-Fu/Decor/_Fuzzy Border..."
+#~ msgstr "<Image>/Script-Fu/Hias/Sempadan _Kabur..."
+
+#, fuzzy
+#~ msgid ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Small Header..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Gimp.Org/Tajuk _Kecil..."
+
+#, fuzzy
+#~ msgid ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/T_ube Sub-"
+#~ "Button Label..."
+#~ msgstr ""
+#~ "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Gimp.Org/Label Sub-Butang T_iub..."
+
+#, fuzzy
+#~ msgid ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/Tub_e Sub-Sub-"
+#~ "Button Label..."
+#~ msgstr ""
+#~ "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Gimp.Org/Sub-Sub-Butang T_iub..."
+#~ "Label..."
+
+#, fuzzy
+#~ msgid ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_General Tube "
+#~ "Labels..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Gimp.Org/Label Tiub _Am..."
+
+#, fuzzy
+#~ msgid ""
+#~ "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org/_Tube Button "
+#~ "Label..."
+#~ msgstr ""
+#~ "<Toolbox>/Xtns/Script-Fu/Tema Laman Web/Gimp.Org/Label Butang _Tiub..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Glo_ssy..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/Ber_kilat..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_ssy..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Ber_kilat..."
+
+#, fuzzy
+#~ msgid "Use tattern for outline instead of gradient"
+#~ msgstr "Gunakan Corak untuk Garis kasar dan bukan Kecerunan"
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Glo_wing Hot..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/Ber_cahaya Terang..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Glo_wing Hot..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Ber_cahaya Terang..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Gradient Beve_l..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/Sero_ng Kecerunan..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Gradient Beve_l..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Sero_ng Kecerunan..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Utils/Custom _Gradient..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Util/_Kecerunan Biasa..."
+
+#~ msgid "<Image>/Script-Fu/Render/_Grid..."
+#~ msgstr "<Image>/Script-Fu/Render/Grid..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Imigre-26..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Imigre-26..."
+
+#~ msgid "<Image>/Script-Fu/Render/Line _Nova..."
+#~ msgstr "<Image>/Script-Fu/Render/_Nova Garis..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Elli_ptical, Feathered..."
+#~ msgstr ""
+#~ "<Toolbox>/Xtns/Script-Fu/Buat Berus/Berbentuk E_lips, Berbulu Pelepah..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/Re_ctangular, Feathered..."
+#~ msgstr ""
+#~ "<Toolbox>/Xtns/Script-Fu/Buat Berus/S_egi Empat Tepat, Berbulu Pelepah..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush/_Rectangular..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Buat Berus/_Segi Empat Tepat..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/N_eon..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/N_eon..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Newsprint Text..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Teks Cetakan Baru..."
+
+#~ msgid "<Image>/Script-Fu/Decor/_Old Photo..."
+#~ msgstr "<Image>/Script-Fu/Hias/Foto _Lama..."
+
+#~ msgid "<Image>/Script-Fu/Shadow/_Perspective..."
+#~ msgstr "<Image>/Script-Fu/Bayang/_Perspektif..."
+
+#~ msgid "<Image>/Script-Fu/Alchemy/_Predator..."
+#~ msgstr "<Image>/Script-Fu/Alkimia/_Pemangsa..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Buttons/_Round Button..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Butang/Butang _Bundar..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Render _Map..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Corak/Render _Peta..."
+
+#~ msgid "<Image>/Script-Fu/Animators/_Rippling..."
+#~ msgstr "<Image>/Script-Fu/Juruanimasi/_Beriak..."
+
+#~ msgid "<Image>/Script-Fu/Decor/_Round Corners..."
+#~ msgstr "<Image>/Script-Fu/Hias/Sudut _Bundar..."
+
+#~ msgid "<Image>/Script-Fu/Selection/To _Brush..."
+#~ msgstr "<Image>/Script-Fu/Pemilihan/Ke _Berus..."
+
+#, fuzzy
+#~ msgid "<Image>/Script-Fu/Selection/To _Pattern..."
+#~ msgstr "<Image>/Script-Fu/Pemilihan/Ke _Berus..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/SOTA Chrome..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Kuning Kunyit SOTA..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Speed Text..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Teks Laju..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Misc/_Sphere..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Pelbagai/_Sfera..."
+
+#~ msgid "<Image>/Script-Fu/Animators/_Spinning Globe..."
+#~ msgstr "<Image>/Script-Fu/Juruanimasi/Glob _Berputar..."
+
+#~ msgid "<Image>/Script-Fu/Render/_Spyrogimp..."
+#~ msgstr "<Image>/Script-Fu/Render/_Spyrogimp..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Starb_urst..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/Bintang _Bertaburan..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Starb_urst..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Bintang _Bertaburan..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/Sta_rscape..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/Sta_rscape..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Sta_rscape..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Sta_rscape..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Swirl-_Tile..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Corak/_Jubin Berpusar..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Corak/_Berpusar..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Particle Trace..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/Surihan _Zarah..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Particle Trace..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Surihan _Zarah..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Text Circle..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Bulatan Teks..."
+
+#~ msgid "<Image>/Script-Fu/Alpha to Logo/_Textured..."
+#~ msgstr "<Image>/Script-Fu/Alfa ke Logo/_Bertekstur..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/_Textured..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/_Bertekstur..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Logos/Web Title Header..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Pengepala Judul Web..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/T_ruchet..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Corak/T_ruchet..."
+
+#~ msgid "<Image>/Script-Fu/Alchemy/_Unsharp Mask..."
+#~ msgstr "<Image>/Script-Fu/Alkimia/Topeng Tidak _Terang..."
+
+#~ msgid "<Image>/Script-Fu/Animators/_Waves..."
+#~ msgstr "<Image>/Script-Fu/Juruanimasi/_Gelombang..."
+
+#~ msgid "<Toolbox>/Help/The GIMP Online/Plug-in _Registry"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/_Pendaftaran Plug-In"
+
+#~ msgid "<Toolbox>/Help/The GIMP Online/_Developer Web Site"
+#~ msgstr "<Toolbox>/Bantuan/GIMP dalam talian/Laman Web _Pembangun"
+
+#~ msgid "<Image>/Script-Fu/Shadow/_Xach-Effect..."
+#~ msgstr "<Image>/Script-Fu/Bayang/Kesan _Xach..."
+
+#~ msgid "Re-read all available scripts"
+#~ msgstr "Baca semula semua skrip yang ada"
+
+#~ msgid ""
+#~ "\n"
+#~ "\t\t    SF-ADJUSTMENT _"
+#~ msgstr ""
+#~ "\n"
+#~ "\t\t\t SF-ADJUSTMENT _"
+
+#~ msgid ""
+#~ "\n"
+#~ "\t\t    SF-COLOR      _"
+#~ msgstr ""
+#~ "\n"
+#~ "\t\t\t SF-COLOR_     _"
+
+#, fuzzy
+#~ msgid "Relative radius"
+#~ msgstr "Jejari Relatif"
+
+#, fuzzy
+#~ msgid "_About"
+#~ msgstr "Tentang"
+
+#~ msgid "DB Browser"
+#~ msgstr "Pelayar DB"
+
+#~ msgid "Blurb:"
+#~ msgstr "Blurb"
+
+#~ msgid "In:"
+#~ msgstr "Dalam:"
+
+#~ msgid "Out:"
+#~ msgstr "Luar:"
+
+#~ msgid "Help:"
+#~ msgstr "Bantuan:"
+
+#~ msgid "Font Size (pixels)"
+#~ msgstr "Saiz Fon (piksel)"
+
+#~ msgid "Text Color"
+#~ msgstr "Warna Teks"
+
+#~ msgid "Transparent Background"
+#~ msgstr "Latar belakang Lut sinar"
+
+#~ msgid ""
+#~ ")))\n"
+#~ "     (filename (string-append data-dir\n"
+#~ "\t\t\t      "
+#~ msgstr ""
+#~ ")))\n"
+#~ "     (filename (string-append data-dir\n"
+#~ "\t\t\t      "
+
+#~ msgid ""
+#~ ")))\n"
+#~ "     (filename (string-append data-dir\n"
+#~ "               "
+#~ msgstr ""
+#~ ")))\n"
+#~ "     (filename (string-append data-dir\n"
+#~ "               "
+
+#~ msgid ""
+#~ ")))\n"
+#~ "    (filename (string-append data-dir\n"
+#~ "               "
+#~ msgstr ""
+#~ ")))\n"
+#~ "    (filename (string-append data-dir\n"
+#~ "               "
+
+#~ msgid ""
+#~ ")))\n"
+#~ "    (set! filename2 (string-append data-dir\n"
+#~ "\t\t\t\t   "
+#~ msgstr ""
+#~ ")))\n"
+#~ "    (set! filename2 (string-append data-dir\n"
+#~ "\t\t\t\t   "
+
+#, fuzzy
+#~ msgid ""
+#~ ")))\n"
+#~ "  (set! filename2 (string-append data-dir\n"
+#~ "\t\t\t\t "
+#~ msgstr ""
+#~ ")))\n"
+#~ "    (set! filename2 (string-append data-dir\n"
+#~ "\t\t\t\t   "
+
+#~ msgid "Unable to open a stream on the SIOD output pipe"
+#~ msgstr "Tidak boleh buka paip output SIOD"
+
+#~ msgid "Unable to open the SIOD output pipe"
+#~ msgstr "Tidak boleh buka paip output SIOD"
+
+#, fuzzy
+#~ msgid "Blend gradient (sext)"
+#~ msgstr "Campur Kecerunan (Teks)"
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Script-Fu _Console"
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/_Konsol Script-Fu"
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/_Start Server..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/_Mulakan Pelayan..."
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/_Swirly (tileable)..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Corak/_Berpusar (berjubin)..."
+
+#~ msgid "Fonts"
+#~ msgstr "Fon"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/Developer FAQ"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/FAQ Pembangun"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Bugs"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Pepijat GIMP"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Manual"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Manual GIMP"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP News"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Berita GIMP"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP Tutorials"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Tutorial GIMP"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Documenation"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Dokumentasi"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Download"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Muat turun "
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GIMP Art"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Seni GIMP"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/GTK"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/GTK"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Links"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Pautan"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Mailing Lists"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Pautan"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/Resources"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/Sumber"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/GIMP.ORG/The GIMP"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/GIMP.ORG/GIMP"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/Gimp-Savvy.com"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Gimp-Savvy.com"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/Grokking the GIMP"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/Memahamkan GIMP"
+
+#~ msgid "<Toolbox>/Xtns/Web Browser/User FAQ"
+#~ msgstr "<Toolbox>/Xtns/Pelayar Web/FAQ Pengguna"
+
+#~ msgid ""
+#~ "Burn-In: Need two layers in total!\n"
+#~ "        A foreground text layer with transparency\n"
+#~ "        and a background layer."
+#~ msgstr ""
+#~ "Burn-In: Keseluruhannya memerlukan dua lapisan!\n"
+#~ "        Lapisan teks latar depan dengan kelutsinaran\n"
+#~ "        dan lapisan latar belakang"
+
+#~ msgid "<Image>/Script-Fu/Render/Make Grid System..."
+#~ msgstr "<Image>/Script-Fu/Berikan/Bercahaya Terang..."
+
+#~ msgid "Grids X"
+#~ msgstr "Grid X"
+
+#~ msgid "Grids Y"
+#~ msgstr "Grid Y"
+
+#~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns/Trochoid..."
+#~ msgstr "<Toolbox>/Xtns/Script-Fu/Logo/Bertekstur..."
+
+#~ msgid "Base Radius (pixels)"
+#~ msgstr "Jejari Asas (piksel)"
+
+#~ msgid "Erase before Draw"
+#~ msgstr "Padam sebelum Lukis"
+
+#~ msgid "Hue Rate"
+#~ msgstr "Kadar Warna"
+
+#~ msgid "Pen Rad. / Wheel Rad. [0.0:1.0]"
+#~ msgstr "Jejari Pen / Jejari Roda [0.0:1.0]"
+
+#~ msgid "Wheel Radius (hypo < 0 < epi)"
+#~ msgstr "Jejari Roda (hipe < 0 < epi)"

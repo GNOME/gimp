@@ -1,0 +1,13 @@
+The doc-shooter is a small utility used to create screenshots of
+widgets for the GIMP API reference manuals.  This utility is X11
+specific, so it should only be built when GIMP is being compiled
+for the X11 GDK backend.
+
+Taking the screenshots is not part of the docs build.
+Instead, the images are created, and then copied by hand into
+devel-docs/libgimpwidgets/images.  Ideally, the images should be
+taken once a release, and all images should be updated at the
+same time. A simple theme should be used to take the screenshots.
+
+The GTK+ docs team came up with the idea for this utility as
+well as some of the code to implement it.

@@ -1,0 +1,1120 @@
+# gimp-plug-ins ko.po
+# Copyright (C) 1999 Free Software Foundation, Inc.
+# Sung-Hyun Nam <namsh@kldp.org>, 1999
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-plug-ins 1.1.10\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-02-02 19:53+0100\n"
+"PO-Revision-Date: 2003-06-05 07:55+0800\n"
+"Last-Translator: Dongsu Jang <iolo@hellocity.net>\n"
+"Language-Team: Korean <ko@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../libgimp/gimpbrushmenu.c:129
+msgid "Brush Selection"
+msgstr "브러시 선택"
+
+#: ../libgimp/gimpbrushmenu.c:158 ../libgimp/gimppatternmenu.c:142
+msgid "_Browse..."
+msgstr "찾아보기(_B)..."
+
+#: ../libgimp/gimpexport.c:215 ../libgimp/gimpexport.c:251
+#, c-format
+msgid "%s can't handle layers"
+msgstr "%s은(는) 레이어를 처리할 수 없습니다"
+
+#: ../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
+#: ../libgimp/gimpexport.c:234
+msgid "Merge Visible Layers"
+msgstr "보이는 레이어 합치기"
+
+#: ../libgimp/gimpexport.c:224
+#, c-format
+msgid "%s can't handle layer offsets, size or opacity"
+msgstr "%s은(는) 레어어 위치, 크기, 투명도를 처리할 수 없습니다"
+
+#: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
+#, c-format
+msgid "%s can only handle layers as animation frames"
+msgstr "%s은(는) 에니메이션 프래임 레이어만 처리할 수 있습니다"
+
+#: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:243
+msgid "Save as Animation"
+msgstr "에니메이션으로 저장"
+
+#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:252
+#: ../libgimp/gimpexport.c:261
+msgid "Flatten Image"
+msgstr "이미지 배경으로 합치기"
+
+#: ../libgimp/gimpexport.c:260
+#, c-format
+msgid "%s can't handle transparency"
+msgstr "%s은(는) 투명도를 처리할 수 없습니다"
+
+#: ../libgimp/gimpexport.c:269
+#, c-format
+msgid "%s can't handle layer masks"
+msgstr "%s은(는) 레이어 마스크를 처리할 수 없습니다"
+
+#: ../libgimp/gimpexport.c:270
+msgid "Apply Layer Masks"
+msgstr "레이어 마스크 적용"
+
+#: ../libgimp/gimpexport.c:278
+#, c-format
+msgid "%s can only handle RGB images"
+msgstr "%s은(는) RGB 이미지만 처리할 수 있습니다"
+
+#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:317
+#: ../libgimp/gimpexport.c:326
+msgid "Convert to RGB"
+msgstr "RGB로 바꾸기"
+
+#: ../libgimp/gimpexport.c:287
+#, c-format
+msgid "%s can only handle grayscale images"
+msgstr "%s은(는) 그레이스케일 이미지만 처리할 수 있습니다"
+
+#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:317
+#: ../libgimp/gimpexport.c:338
+msgid "Convert to Grayscale"
+msgstr "그레이스케일로 바꾸기"
+
+#: ../libgimp/gimpexport.c:296
+#, c-format
+msgid "%s can only handle indexed images"
+msgstr "%s은(는) 인덱스된 이미지만 처리할 수 있습니다"
+
+#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:326
+#: ../libgimp/gimpexport.c:336
+msgid ""
+"Convert to Indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"기본 설정을 사용하여 인덱스된 이미지로 바꾸기\n"
+"(결과를 수동으로 조절하십시오)"
+
+#: ../libgimp/gimpexport.c:306
+#, c-format
+msgid "%s can only handle bitmap (two color) indexed images"
+msgstr "%s은(는) 비트맵(두가지 색상) 인덱스된 이미지만 처리할 수 있습니다"
+
+#: ../libgimp/gimpexport.c:307
+msgid ""
+"Convert to Indexed using bitmap default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"비트맵 기본 설정을 사용하여 인덱스된 이미지로 바꾸기\n"
+"(결과를 수동으로 조절하십시오)"
+
+#: ../libgimp/gimpexport.c:316
+#, c-format
+msgid "%s can only handle RGB or grayscale images"
+msgstr "%s은(는) RGB나 그레이스케일 이미지만 처리할 수 있습니다"
+
+#: ../libgimp/gimpexport.c:325
+#, c-format
+msgid "%s can only handle RGB or indexed images"
+msgstr "%s은(는) RGB나 인덱스된 이미지만 처리할 수 있습니다"
+
+#: ../libgimp/gimpexport.c:335
+#, c-format
+msgid "%s can only handle grayscale or indexed images"
+msgstr "%s은(는) 그레이스케일이나 인덱스된 이미지만 처리할 수 있습니다"
+
+#: ../libgimp/gimpexport.c:346
+#, c-format
+msgid "%s needs an alpha channel"
+msgstr "%s은(는) 알파 채널이 필요합니다"
+
+#: ../libgimp/gimpexport.c:347
+msgid "Add Alpha Channel"
+msgstr "알파 채널 더하기"
+
+#: ../libgimp/gimpexport.c:381
+msgid "Confirm Save"
+msgstr "저장 확인"
+
+#: ../libgimp/gimpexport.c:387
+msgid "Confirm"
+msgstr "확인"
+
+#: ../libgimp/gimpexport.c:454
+msgid "Export File"
+msgstr "파일 내보내기"
+
+#: ../libgimp/gimpexport.c:458
+msgid "_Ignore"
+msgstr "무시(_I)"
+
+#: ../libgimp/gimpexport.c:460
+msgid "_Export"
+msgstr "내보내기(_E)"
+
+#. the headline
+#: ../libgimp/gimpexport.c:482
+#, c-format
+msgid ""
+"Your image should be exported before it can be saved as %s for the following "
+"reasons:"
+msgstr "다음 이유 때문에, %s(으)로 저장하기 전에 이미지를 내보내야 합니다:"
+
+#. the footline
+#: ../libgimp/gimpexport.c:553
+msgid "The export conversion won't modify your original image."
+msgstr "내보내기 변환은 원래의 이미지를 바꾸지 않습니다."
+
+#: ../libgimp/gimpexport.c:653
+#, c-format
+msgid ""
+"You are about to save a layer mask as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"레이어 마스크를 %s(으)로 저장하려고 합니다.\n"
+"보이는 레이어를 저장하는 것이 아닙니다."
+
+#: ../libgimp/gimpexport.c:659
+#, c-format
+msgid ""
+"You are about to save a channel (saved selection) as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"채널(저장된 선택)을 %s(으)로 저장하려고 합니다.\n"
+"보이는 레이어를 저장하는 것이 아닙니다."
+
+#: ../libgimp/gimpfontmenu.c:89
+msgid "Font Selection"
+msgstr "글꼴 선택"
+
+#: ../libgimp/gimpgradientmenu.c:104
+msgid "Gradient Selection"
+msgstr "그라디언트 선택"
+
+#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:181
+msgid "(Empty)"
+msgstr ""
+
+#: ../libgimp/gimppalettemenu.c:91
+#, fuzzy
+msgid "Palette Selection"
+msgstr "무늬 선택"
+
+#: ../libgimp/gimppatternmenu.c:113
+msgid "Pattern Selection"
+msgstr "무늬 선택"
+
+#: ../libgimp/gimpunitcache.c:57
+msgid "percent"
+msgstr "백분율"
+
+#: ../libgimpbase/gimpbaseenums.c:26
+#, fuzzy
+msgid "_White (full opacity)"
+msgstr "흰색(_W) (완전 불투명)"
+
+#: ../libgimpbase/gimpbaseenums.c:27
+#, fuzzy
+msgid "_Black (full transparency)"
+msgstr "검정색(_B) (완전 투명)"
+
+#: ../libgimpbase/gimpbaseenums.c:28
+#, fuzzy
+msgid "Layer's _alpha channel"
+msgstr "레이어의 알파 채널(_A)"
+
+#: ../libgimpbase/gimpbaseenums.c:29
+#, fuzzy
+msgid "_Transfer layer's alpha channel"
+msgstr "레이어의 알파 채널 전송(_T)"
+
+#: ../libgimpbase/gimpbaseenums.c:30
+msgid "_Selection"
+msgstr "선택(_S)"
+
+#: ../libgimpbase/gimpbaseenums.c:31
+#, fuzzy
+msgid "_Grayscale copy of layer"
+msgstr "레이어의 그레이스케일 사본(_G)"
+
+#: ../libgimpbase/gimpbaseenums.c:61
+msgid "FG to BG (RGB)"
+msgstr "전경을 배경으로 (RGB)"
+
+#: ../libgimpbase/gimpbaseenums.c:62
+msgid "FG to BG (HSV)"
+msgstr "전경을 배경으로 (HSV)"
+
+#: ../libgimpbase/gimpbaseenums.c:63
+#, fuzzy
+msgid "FG to transparent"
+msgstr "전경색을 투명하게"
+
+#: ../libgimpbase/gimpbaseenums.c:64
+#, fuzzy
+msgid "Custom gradient"
+msgstr "사용자 그라디언트"
+
+#: ../libgimpbase/gimpbaseenums.c:93
+#, fuzzy
+msgid "FG color fill"
+msgstr "전경색으로 채우기"
+
+#: ../libgimpbase/gimpbaseenums.c:94
+#, fuzzy
+msgid "BG color fill"
+msgstr "배경색으로 채우기"
+
+#: ../libgimpbase/gimpbaseenums.c:95
+#, fuzzy
+msgid "Pattern fill"
+msgstr "무늬로 채우기"
+
+#: ../libgimpbase/gimpbaseenums.c:125
+msgid "Add to the current selection"
+msgstr "현재 선택에 더하기"
+
+#: ../libgimpbase/gimpbaseenums.c:126
+msgid "Subtract from the current selection"
+msgstr "현재 선택에서 빼기"
+
+#: ../libgimpbase/gimpbaseenums.c:127
+msgid "Replace the current selection"
+msgstr "현재 선택 바꾸기"
+
+#: ../libgimpbase/gimpbaseenums.c:128
+msgid "Intersect with the current selection"
+msgstr "현재 선택과 교차하기"
+
+#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpcolorscales.c:168
+#: ../libgimpwidgets/gimpcolorselect.c:352
+msgid "Red"
+msgstr "빨강"
+
+#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpcolorscales.c:169
+#: ../libgimpwidgets/gimpcolorselect.c:353
+msgid "Green"
+msgstr "초록"
+
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpcolorscales.c:170
+#: ../libgimpwidgets/gimpcolorselect.c:354
+msgid "Blue"
+msgstr "파랑"
+
+#: ../libgimpbase/gimpbaseenums.c:163
+msgid "Gray"
+msgstr "회색"
+
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:436
+msgid "Indexed"
+msgstr "인덱스됨"
+
+#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpcolorscales.c:171
+#: ../libgimpwidgets/gimpcolorselect.c:355
+msgid "Alpha"
+msgstr "알파"
+
+#: ../libgimpbase/gimpbaseenums.c:194
+msgid "Small"
+msgstr "작게"
+
+#: ../libgimpbase/gimpbaseenums.c:195
+msgid "Medium"
+msgstr "중간"
+
+#: ../libgimpbase/gimpbaseenums.c:196
+msgid "Large"
+msgstr "크게"
+
+#: ../libgimpbase/gimpbaseenums.c:228
+msgid "Light Checks"
+msgstr "밝은 격자"
+
+#: ../libgimpbase/gimpbaseenums.c:229
+msgid "Mid-Tone Checks"
+msgstr "중간 격자"
+
+#: ../libgimpbase/gimpbaseenums.c:230
+msgid "Dark Checks"
+msgstr "어두운 격자"
+
+#: ../libgimpbase/gimpbaseenums.c:231
+msgid "White Only"
+msgstr "흰색으로"
+
+#: ../libgimpbase/gimpbaseenums.c:232
+msgid "Gray Only"
+msgstr "회색으로"
+
+#: ../libgimpbase/gimpbaseenums.c:233
+msgid "Black Only"
+msgstr "검정색으로"
+
+#: ../libgimpbase/gimpbaseenums.c:261
+#, fuzzy
+msgid "Image source"
+msgstr "이미지 소스"
+
+#: ../libgimpbase/gimpbaseenums.c:262
+#, fuzzy
+msgid "Pattern source"
+msgstr "무늬 소스"
+
+#: ../libgimpbase/gimpbaseenums.c:290
+msgid "Dodge"
+msgstr "피하기"
+
+#: ../libgimpbase/gimpbaseenums.c:291
+msgid "Burn"
+msgstr "태우기"
+
+#: ../libgimpbase/gimpbaseenums.c:328 ../libgimpbase/gimpbaseenums.c:468
+msgid "Linear"
+msgstr "선형"
+
+#: ../libgimpbase/gimpbaseenums.c:329
+#, fuzzy
+msgid "Bi-linear"
+msgstr "중복 선형"
+
+#: ../libgimpbase/gimpbaseenums.c:330
+msgid "Radial"
+msgstr "원형"
+
+#: ../libgimpbase/gimpbaseenums.c:331
+msgid "Square"
+msgstr "각지게"
+
+#: ../libgimpbase/gimpbaseenums.c:332
+#, fuzzy
+msgid "Conical (sym)"
+msgstr "원뿔형 (대칭)"
+
+#: ../libgimpbase/gimpbaseenums.c:333
+#, fuzzy
+msgid "Conical (asym)"
+msgstr "원뿔형 (비대칭)"
+
+#: ../libgimpbase/gimpbaseenums.c:334
+#, fuzzy
+msgid "Shaped (angular)"
+msgstr "돌출형 (각지게)"
+
+#: ../libgimpbase/gimpbaseenums.c:335
+#, fuzzy
+msgid "Shaped (spherical)"
+msgstr "폭발형 (구형)"
+
+#: ../libgimpbase/gimpbaseenums.c:336
+#, fuzzy
+msgid "Shaped (dimpled)"
+msgstr "돌출형 (물결)"
+
+#: ../libgimpbase/gimpbaseenums.c:337
+#, fuzzy
+msgid "Spiral (cw)"
+msgstr "나선형 (시계방향)"
+
+#: ../libgimpbase/gimpbaseenums.c:338
+#, fuzzy
+msgid "Spiral (ccw)"
+msgstr "나선형 (시계방향)"
+
+#: ../libgimpbase/gimpbaseenums.c:367
+msgid "Stock ID"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:368
+msgid "Inline pixbuf"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:369
+#, fuzzy
+msgid "Image file"
+msgstr "이미지 크기"
+
+#: ../libgimpbase/gimpbaseenums.c:398
+msgid "RGB color"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:399 ../libgimpbase/gimpbaseenums.c:434
+msgid "Grayscale"
+msgstr "그레이스케일"
+
+#: ../libgimpbase/gimpbaseenums.c:400
+msgid "Indexed color"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:432
+msgid "RGB"
+msgstr "RGB"
+
+#: ../libgimpbase/gimpbaseenums.c:433
+msgid "RGB-alpha"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:435
+msgid "Grayscale-alpha"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:437
+msgid "Indexed-alpha"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:467
+msgid "None (Fastest)"
+msgstr "안함 (속도위주)"
+
+#: ../libgimpbase/gimpbaseenums.c:469
+msgid "Cubic"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:470
+#, fuzzy
+msgid "Lanczos (Best)"
+msgstr "3차곡선 (품질위주)"
+
+#: ../libgimpbase/gimpbaseenums.c:498
+msgid "Constant"
+msgstr "상수"
+
+#: ../libgimpbase/gimpbaseenums.c:499
+msgid "Incremental"
+msgstr "증가"
+
+#: ../libgimpbase/gimpbaseenums.c:528
+msgid "None"
+msgstr "없음"
+
+#: ../libgimpbase/gimpbaseenums.c:529
+#, fuzzy
+msgid "Sawtooth wave"
+msgstr "톱니파형"
+
+#: ../libgimpbase/gimpbaseenums.c:530
+#, fuzzy
+msgid "Triangular wave"
+msgstr "삼각파형"
+
+#: ../libgimpbase/gimpbaseenums.c:558
+msgid "Pixels"
+msgstr "픽셀"
+
+#: ../libgimpbase/gimpbaseenums.c:559
+#, fuzzy
+msgid "Points"
+msgstr "포인트"
+
+#: ../libgimpbase/gimpbaseenums.c:588
+msgid "Shadows"
+msgstr "그림자"
+
+#: ../libgimpbase/gimpbaseenums.c:589
+msgid "Midtones"
+msgstr "중간톤"
+
+#: ../libgimpbase/gimpbaseenums.c:590
+msgid "Highlights"
+msgstr "강조"
+
+#: ../libgimpbase/gimpbaseenums.c:618
+#, fuzzy
+msgid "Forward (traditional)"
+msgstr "전진 (전통적)"
+
+#: ../libgimpbase/gimpbaseenums.c:619
+#, fuzzy
+msgid "Backward (corrective)"
+msgstr "후진 (교정)"
+
+#: ../libgimpbase/gimpmemsize.c:177
+#, c-format
+msgid "%d Bytes"
+msgstr "%d 바이트"
+
+#: ../libgimpbase/gimpmemsize.c:182
+#, c-format
+msgid "%.2f KB"
+msgstr "%.2f KB"
+
+#: ../libgimpbase/gimpmemsize.c:186
+#, c-format
+msgid "%.1f KB"
+msgstr "%.1f KB"
+
+#: ../libgimpbase/gimpmemsize.c:190
+#, c-format
+msgid "%d KB"
+msgstr "%d KB"
+
+#: ../libgimpbase/gimpmemsize.c:197
+#, c-format
+msgid "%.2f MB"
+msgstr "%.2f MB"
+
+#: ../libgimpbase/gimpmemsize.c:201
+#, c-format
+msgid "%.1f MB"
+msgstr "%.1f MB"
+
+#: ../libgimpbase/gimpmemsize.c:205
+#, c-format
+msgid "%d MB"
+msgstr "%d MB"
+
+#: ../libgimpbase/gimpmemsize.c:212
+#, c-format
+msgid "%.2f GB"
+msgstr "%.2f GB"
+
+#: ../libgimpbase/gimpmemsize.c:216
+#, c-format
+msgid "%.1f GB"
+msgstr "%.1f GB"
+
+#: ../libgimpbase/gimpmemsize.c:220
+#, c-format
+msgid "%d GB"
+msgstr "%d GB"
+
+#: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
+msgid "(invalid UTF-8 string)"
+msgstr "(잘못된 UTF-8 문자열)"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#, c-format
+msgid "value for token %s is not a valid UTF-8 string"
+msgstr "잘못된 UTF-8 문자열 (토큰 %s)"
+
+#. please don't translate 'yes' and 'no'
+#: ../libgimpconfig/gimpconfig-deserialize.c:423
+#, c-format
+msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
+msgstr "불린 토큰 %s의 값 '%s'은(는) 'yes'나 'no'가 되어야 합니다."
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:497
+#, c-format
+msgid "invalid value '%s' for token %s"
+msgstr "잘못된 값 '%s' (토큰 '%s')"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:512
+#, c-format
+msgid "invalid value '%ld' for token %s"
+msgstr "잘못된 값 '%ld' (토큰 %s)"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:581
+#, c-format
+msgid "while parsing token '%s': %s"
+msgstr "토큰 '%s' 해석 중: %s"
+
+#: ../libgimpconfig/gimpconfig-iface.c:454
+#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:513
+#: ../libgimpconfig/gimpscanner.c:594
+msgid "fatal parse error"
+msgstr "치명적인 해석 오류"
+
+#: ../libgimpconfig/gimpconfig-path.c:349
+#, c-format
+msgid "Cannot expand ${%s}"
+msgstr "${%s}을(를) 확장할 수 없습니다."
+
+#: ../libgimpconfig/gimpconfigwriter.c:134
+#, c-format
+msgid "Could not create temporary file for '%s': %s"
+msgstr "임시 파일 '%s' 만들기 실패: %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:147
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "'%s'을(를) 쓰기 모드로 열기 실패: %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:666
+#, c-format
+msgid ""
+"Error writing to temporary file for '%s': %s\n"
+"The original file has not been touched."
+msgstr ""
+"임시 파일 '%s' 쓰기 오류: %s\n"
+"원래 파일은 바뀌지 않았습니다."
+
+#: ../libgimpconfig/gimpconfigwriter.c:674
+#, c-format
+msgid ""
+"Error writing to temporary file for '%s': %s\n"
+"No file has been created."
+msgstr ""
+"임시 파일 '%s'에 쓰기 실패: %s\n"
+"아무 파일도 만들어 지지 않았습니다."
+
+#: ../libgimpconfig/gimpconfigwriter.c:685
+#, c-format
+msgid "Error writing to '%s': %s"
+msgstr "'%s' 쓰기 오류: %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:703
+#, c-format
+msgid "Could not create '%s': %s"
+msgstr "'%s'을(를) 만들 수 없습니다: %s"
+
+#: ../libgimpconfig/gimpscanner.c:100
+#, c-format
+msgid "Could not open '%s' for reading: %s"
+msgstr "읽기 모드로 '%s'을(를) 열 수 없습니다. %s"
+
+#: ../libgimpconfig/gimpscanner.c:270
+msgid "invalid UTF-8 string"
+msgstr "잘못된 UTF-8 문자열"
+
+#: ../libgimpconfig/gimpscanner.c:621
+#, c-format
+msgid "Error while parsing '%s' in line %d: %s"
+msgstr "'%s'의 %d행 해석 오류: %s"
+
+#: ../libgimpmodule/gimpmodule.c:177
+#, c-format
+msgid "Loading module: '%s'\n"
+msgstr "모듈 불러오는 중: '%s'\n"
+
+#: ../libgimpmodule/gimpmodule.c:193 ../libgimpmodule/gimpmodule.c:212
+#: ../libgimpmodule/gimpmodule.c:326 ../libgimpmodule/gimpmodule.c:354
+#: ../libgimpmodule/gimpmodule.c:478
+#, c-format
+msgid "Module '%s' load error: %s"
+msgstr "모듈 '%s'을(를) 불러오는 중 오류: %s"
+
+#: ../libgimpmodule/gimpmodule.c:282
+#, c-format
+msgid "Skipping module: '%s'\n"
+msgstr "모듈 건너뛰는 중: '%s'\n"
+
+#: ../libgimpmodule/gimpmodule.c:422
+msgid "Module error"
+msgstr "모듈 오류"
+
+#: ../libgimpmodule/gimpmodule.c:423
+msgid "Loaded"
+msgstr "불러오기 완료"
+
+#: ../libgimpmodule/gimpmodule.c:424
+msgid "Load failed"
+msgstr "불러오기 실패"
+
+#: ../libgimpmodule/gimpmodule.c:425
+msgid "Not loaded"
+msgstr "불러오지 않음"
+
+#: ../libgimpthumb/gimpthumb-utils.c:227 ../libgimpthumb/gimpthumb-utils.c:295
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr "썸네일 폴더 '%s'을(를) 만들지 못했습니다."
+
+#: ../libgimpthumb/gimpthumbnail.c:919
+#, fuzzy, c-format
+msgid "Could not create thumbnail for %s: %s"
+msgstr "썸네일 폴더 '%s'을(를) 만들지 못했습니다."
+
+#: ../libgimpwidgets/gimpcolorbutton.c:99
+#, fuzzy
+msgid "_Foreground Color"
+msgstr "/전경색(_F)"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:103
+#, fuzzy
+msgid "_Background Color"
+msgstr "/배경색(_B)"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:107
+#, fuzzy
+msgid "Blac_k"
+msgstr "/검정색(_K)"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:111
+#, fuzzy
+msgid "_White"
+msgstr "/흰색(_W)"
+
+#: ../libgimpwidgets/gimpcolorscales.c:133
+msgid "Scales"
+msgstr "배율"
+
+#: ../libgimpwidgets/gimpcolorscales.c:155
+#: ../libgimpwidgets/gimpcolorselect.c:345
+msgid "_H"
+msgstr "_H"
+
+#: ../libgimpwidgets/gimpcolorscales.c:156
+#: ../libgimpwidgets/gimpcolorselect.c:345
+msgid "_S"
+msgstr "_S"
+
+#: ../libgimpwidgets/gimpcolorscales.c:157
+#: ../libgimpwidgets/gimpcolorselect.c:345
+msgid "_V"
+msgstr "_V"
+
+#: ../libgimpwidgets/gimpcolorscales.c:158
+#: ../libgimpwidgets/gimpcolorselect.c:345
+msgid "_R"
+msgstr "_R"
+
+#: ../libgimpwidgets/gimpcolorscales.c:159
+#: ../libgimpwidgets/gimpcolorselect.c:345
+msgid "_G"
+msgstr "_G"
+
+#: ../libgimpwidgets/gimpcolorscales.c:160
+#: ../libgimpwidgets/gimpcolorselect.c:345
+msgid "_B"
+msgstr "_B"
+
+#: ../libgimpwidgets/gimpcolorscales.c:161
+msgid "_A"
+msgstr "_A"
+
+#: ../libgimpwidgets/gimpcolorscales.c:165
+#: ../libgimpwidgets/gimpcolorselect.c:349
+msgid "Hue"
+msgstr "색상"
+
+#: ../libgimpwidgets/gimpcolorscales.c:166
+#: ../libgimpwidgets/gimpcolorselect.c:350 ../modules/cdisplay_proof.c:59
+msgid "Saturation"
+msgstr "채도"
+
+#: ../libgimpwidgets/gimpcolorscales.c:167
+#: ../libgimpwidgets/gimpcolorselect.c:351
+msgid "Value"
+msgstr "명도"
+
+#: ../libgimpwidgets/gimpcolorscales.c:243
+#, fuzzy
+msgid "Hexadecimal color notation as used in HTML and CSS"
+msgstr "HTML용 16진수 색상 표기"
+
+#: ../libgimpwidgets/gimpcolorscales.c:248
+msgid "HTML _Notation:"
+msgstr ""
+
+#: ../libgimpwidgets/gimpcolorselection.c:203
+msgid "Current:"
+msgstr "현재:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:225
+msgid "Old:"
+msgstr "이전:"
+
+#: ../libgimpwidgets/gimpfileentry.c:351
+msgid "Select Folder"
+msgstr "폴더 선택"
+
+#: ../libgimpwidgets/gimpfileentry.c:353
+msgid "Select File"
+msgstr "파일 선택"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:232
+#, fuzzy
+msgid "Kilobytes"
+msgstr "킬로바이트"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:233
+#, fuzzy
+msgid "Megabytes"
+msgstr "메가바이트"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:234
+#, fuzzy
+msgid "Gigabytes"
+msgstr "기가바이트"
+
+#: ../libgimpwidgets/gimppatheditor.c:243
+msgid "Writable"
+msgstr "기록 가능"
+
+#: ../libgimpwidgets/gimppatheditor.c:252
+msgid "Folder"
+msgstr "폴더"
+
+#: ../libgimpwidgets/gimppickbutton.c:138
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
+"스포이드를 클릭한 다음, 화면 상의 아무 곳이나 클릭하여 색상을 선택합니다."
+
+#: ../libgimpwidgets/gimppreviewarea.c:126
+msgid "Check Size"
+msgstr ""
+
+#: ../libgimpwidgets/gimppreviewarea.c:133
+msgid "Check Style"
+msgstr ""
+
+#. toggle button to (des)activate the instant preview
+#: ../libgimpwidgets/gimppreview.c:240
+msgid "_Preview"
+msgstr "미리보기(_P)"
+
+#: ../libgimpwidgets/gimpstock.c:113
+msgid "Anchor"
+msgstr "고정점"
+
+#: ../libgimpwidgets/gimpstock.c:114
+msgid "C_enter"
+msgstr "가운데(_E)"
+
+#: ../libgimpwidgets/gimpstock.c:115
+msgid "_Duplicate"
+msgstr "복제(_D)"
+
+#: ../libgimpwidgets/gimpstock.c:116
+msgid "_Edit"
+msgstr "편집(_E)"
+
+#: ../libgimpwidgets/gimpstock.c:117
+msgid "Linked"
+msgstr "연결됨"
+
+#: ../libgimpwidgets/gimpstock.c:118
+msgid "Paste as New"
+msgstr "새로 붙여 넣기"
+
+#: ../libgimpwidgets/gimpstock.c:119
+msgid "Paste Into"
+msgstr "안에 붙여 넣기"
+
+#: ../libgimpwidgets/gimpstock.c:120
+msgid "_Reset"
+msgstr "원래대로(_R)"
+
+#: ../libgimpwidgets/gimpstock.c:121
+msgid "Visible"
+msgstr "보임"
+
+#: ../libgimpwidgets/gimpstock.c:154 ../libgimpwidgets/gimpstock.c:158
+msgid "_Stroke"
+msgstr ""
+
+#: ../libgimpwidgets/gimpstock.c:170
+msgid "L_etter Spacing"
+msgstr "자간(_E)"
+
+#: ../libgimpwidgets/gimpstock.c:171
+msgid "L_ine Spacing"
+msgstr "행간(_I)"
+
+#: ../libgimpwidgets/gimpstock.c:187
+msgid "_Resize"
+msgstr "크기 조절(_R)"
+
+#: ../libgimpwidgets/gimpstock.c:188 ../libgimpwidgets/gimpstock.c:292
+msgid "_Scale"
+msgstr "배율 조절(_S)"
+
+#: ../libgimpwidgets/gimpstock.c:271
+msgid "Crop"
+msgstr "자르기"
+
+#: ../libgimpwidgets/gimpstock.c:288
+msgid "_Transform"
+msgstr "변형(_T)"
+
+#: ../libgimpwidgets/gimpstock.c:291
+msgid "_Rotate"
+msgstr "회전(_R)"
+
+#: ../libgimpwidgets/gimpstock.c:293
+msgid "_Shear"
+msgstr "기울이기(_S)"
+
+#: ../libgimpwidgets/gimpunitmenu.c:302
+msgid "More..."
+msgstr "좀 더..."
+
+#: ../libgimpwidgets/gimpunitmenu.c:612
+msgid "Unit Selection"
+msgstr "단위 선택"
+
+#: ../libgimpwidgets/gimpunitmenu.c:655
+msgid "Unit"
+msgstr "단위"
+
+#: ../libgimpwidgets/gimpunitmenu.c:659
+msgid "Factor"
+msgstr "팩터"
+
+#: ../libgimpwidgets/gimpwidgets.c:1001
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
+msgstr ""
+"이 값을 난수 생성기의 씨앗으로 사용합니다 - 주어진 \"난수\" 연산을 반복할 수 "
+"있습니다"
+
+#: ../libgimpwidgets/gimpwidgets.c:1005
+msgid "_New Seed"
+msgstr "새 씨앗 값(_N)"
+
+#: ../libgimpwidgets/gimpwidgets.c:1018
+msgid "Seed random number generator with a generated random number"
+msgstr "생성된 난수를 난수 생성기의 씨앗으로 사용합니다"
+
+#: ../libgimpwidgets/gimpwidgets.c:1022
+msgid "_Randomize"
+msgstr "난수화(_R)"
+
+#: ../modules/cdisplay_colorblind.c:68
+#, fuzzy
+msgid "Protanopia (insensitivity to red"
+msgstr "제 1 색맹 (적색맹)"
+
+#: ../modules/cdisplay_colorblind.c:70
+msgid "Deuteranopia (insensitivity to green)"
+msgstr "제 2 색맹 (녹색맹)"
+
+#: ../modules/cdisplay_colorblind.c:72
+msgid "Tritanopia (insensitivity to blue)"
+msgstr "제 3 색맹 (청색맹)"
+
+#: ../modules/cdisplay_colorblind.c:163
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr "색맹 모의 실험 필터 (Brettel-Vienot-Mollon 알고리즘)"
+
+#: ../modules/cdisplay_colorblind.c:256
+msgid "Color Deficient Vision"
+msgstr "색맹 보기"
+
+#: ../modules/cdisplay_colorblind.c:554
+msgid "Color _Deficiency Type:"
+msgstr "색맹 유형(_D):"
+
+#: ../modules/cdisplay_gamma.c:105
+msgid "Gamma color display filter"
+msgstr "감마 색상 화면 표시 필터"
+
+#: ../modules/cdisplay_gamma.c:178
+msgid "Gamma"
+msgstr "감마"
+
+#: ../modules/cdisplay_gamma.c:352
+msgid "_Gamma:"
+msgstr "감마(_G):"
+
+#: ../modules/cdisplay_highcontrast.c:105
+msgid "High Contrast color display filter"
+msgstr "고휘도 색상 화면 표시 필터"
+
+#: ../modules/cdisplay_highcontrast.c:178
+msgid "Contrast"
+msgstr "휘도"
+
+#: ../modules/cdisplay_highcontrast.c:352
+msgid "Contrast C_ycles:"
+msgstr "휘도 순환(_Y):"
+
+#: ../modules/cdisplay_proof.c:57
+msgid "Perceptual"
+msgstr "인식"
+
+#: ../modules/cdisplay_proof.c:58
+msgid "Relative Colorimetric"
+msgstr "상대 비색계"
+
+#: ../modules/cdisplay_proof.c:60
+msgid "Absolute Colorimetric"
+msgstr "절대 비색계"
+
+#: ../modules/cdisplay_proof.c:147
+msgid "Color proof filter using ICC color profile"
+msgstr "ICC 생삭 프로파일을 사용하는 색상 교정 필터"
+
+#: ../modules/cdisplay_proof.c:251
+msgid "Color Proof"
+msgstr "색상 교정"
+
+#: ../modules/cdisplay_proof.c:462
+msgid "_Intent:"
+msgstr "의도(_I):"
+
+#: ../modules/cdisplay_proof.c:465
+msgid "Choose an ICC Color Profile"
+msgstr "ICC 색상 프로파일 선택"
+
+#: ../modules/cdisplay_proof.c:468
+msgid "_Profile:"
+msgstr "프로파일(_P):"
+
+#: ../modules/cdisplay_proof.c:476
+msgid "_Black Point Compensation"
+msgstr "검정색 점 보상(_B)"
+
+#: ../modules/colorsel_cmyk.c:73
+msgid "CMYK color selector"
+msgstr "CMYK 색상 선택기"
+
+#: ../modules/colorsel_cmyk.c:130
+msgid "CMYK"
+msgstr "CMYK"
+
+#: ../modules/colorsel_cmyk.c:147
+msgid "_C"
+msgstr "_C"
+
+#: ../modules/colorsel_cmyk.c:148
+msgid "_M"
+msgstr "_M"
+
+#: ../modules/colorsel_cmyk.c:149
+msgid "_Y"
+msgstr "_Y"
+
+#: ../modules/colorsel_cmyk.c:150
+msgid "_K"
+msgstr "_K"
+
+#: ../modules/colorsel_cmyk.c:154
+msgid "Cyan"
+msgstr "청록"
+
+#: ../modules/colorsel_cmyk.c:155
+msgid "Magenta"
+msgstr "자홍"
+
+#: ../modules/colorsel_cmyk.c:156
+msgid "Yellow"
+msgstr "노랑"
+
+#: ../modules/colorsel_cmyk.c:157
+msgid "Black"
+msgstr "검정"
+
+#: ../modules/colorsel_cmyk.c:191
+#, fuzzy
+msgid "Black _Pullout:"
+msgstr "검정색 농도 (%):"
+
+#: ../modules/colorsel_cmyk.c:208
+msgid "The percentage of black to pull out of the colored inks."
+msgstr ""
+
+#: ../modules/colorsel_triangle.c:104
+msgid "Painter-style triangle color selector"
+msgstr "페인터같은 삼각형 색 선택기"
+
+#: ../modules/colorsel_triangle.c:170
+msgid "Triangle"
+msgstr "삼각형"
+
+#: ../modules/colorsel_water.c:88
+msgid "Watercolor style color selector"
+msgstr "수채화 형태의 색 선택기"
+
+#: ../modules/colorsel_water.c:154
+msgid "Watercolor"
+msgstr "수채화"
+
+#: ../modules/colorsel_water.c:220
+msgid "Pressure"
+msgstr "압력"

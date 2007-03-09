@@ -1,0 +1,485 @@
+# Swedish messages for gimp-tips.
+# Copyright (C) 2002, 2003 Free Software Foundation, Inc.
+# Christian Rose <menthos@menthos.com>, 2002, 2003.
+# Jan Morén <jan.moren@lucs.lu.se>, 2004.
+#
+# $Id: sv.po,v 1.1 2005/06/10 16:38:36 neo Exp $
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-tips\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-05-14 17:18+0200\n"
+"PO-Revision-Date: 2004-11-15 10:56+0900\n"
+"Last-Translator: Jan Morén <jan.moren@lucs.lu.se>\n"
+"Language-Team: Swedish <sv@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../tips/gimp-tips.xml.in.h:1
+#, fuzzy
+msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
+msgstr "<big>Välkommen till GIMP!</big>"
+
+#: ../tips/gimp-tips.xml.in.h:2
+msgid ""
+"<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles "
+"viewing the mask directly."
+msgstr ""
+"<tt>Alt</tt>-klick på lagermaskens förhandsgranskning i lagerdialogen växlar "
+"direkt visning av masken."
+
+#: ../tips/gimp-tips.xml.in.h:3
+msgid ""
+"<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
+"the effect of the layer mask."
+msgstr ""
+"<tt>Ctrl</tt>-klick på lagermaskens förhandsgranskning i lagerdialogen "
+"växlar effekten av lagermasken."
+
+#: ../tips/gimp-tips.xml.in.h:4
+msgid ""
+"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
+"color instead of the foreground color."
+msgstr ""
+"<tt>Ctrl</tt>-klicka med fyllnadsverktyget för att göra så att det använder "
+"bakgrundsbilden istället för förgrundsfärgen."
+
+#: ../tips/gimp-tips.xml.in.h:5
+msgid ""
+"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
+"degree angles."
+msgstr ""
+"<tt>Ctrl</tt>-drag med rotationsverktyget kommer att begränsa rotationen "
+"till 15-gradersvinklar."
+
+#: ../tips/gimp-tips.xml.in.h:6
+msgid ""
+"<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
+"but that one. <tt>Shift</tt>-click again to show all layers."
+msgstr ""
+"<tt>Skift</tt>-klicka på ögonikonen i lagerdialogen för att dölja alla lager "
+"utom det. <tt>Skift</tt>-klicka igen för att visa alla lager."
+
+#: ../tips/gimp-tips.xml.in.h:7
+msgid ""
+"A floating selection must be anchored to a new layer or to the last active "
+"layer before doing other operations on the image. Click on the &quot;New "
+"Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
+"use the menus to do the same."
+msgstr ""
+"En flytande markering måste ankras vid ett nytt lager eller i det senast "
+"aktiva lagret innan andra åtgärder utförs på bilden. Klicka på knapparna "
+"&quot;Nytt lager&quot; eller &quot;Ankra lager&quot; i lagerdialogen, eller "
+"använd menyerna för att utföra samma sak."
+
+#: ../tips/gimp-tips.xml.in.h:8
+msgid ""
+"After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
+"dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
+"selecting a menu item, and pressing the desired key combination. If &quot;"
+"Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
+"you exit GIMP."
+msgstr ""
+"När du har aktiverat &quot;Dynamiska kortkommandon&quot; i "
+"inställningsdialogen kan du ställa om snabbtangenter. Detta gör du genom att "
+"ta fram menyn, markera ett menyval och trycka på den önskade "
+"snabbtangentskombinationen. Detta sparas då du avslutar GIMP om &quot;Spara "
+"kortkommandon&quot; är aktiverat."
+
+#: ../tips/gimp-tips.xml.in.h:9
+msgid ""
+"Click and drag on a ruler to place a guide on an image. All dragged "
+"selections will snap to the guides. You can remove guides by dragging them "
+"off the image with the Move tool."
+msgstr ""
+"Klicka på en linjal och drag den för att placera en hjälplinje på en bild. "
+"Alla markeringar som dras kommer att fästas vid hjälplinjerna. Du kan ta "
+"bort hjälplinjer genom att dra dem utanför bilden med flyttverktyget."
+
+#: ../tips/gimp-tips.xml.in.h:10
+#, fuzzy
+msgid ""
+"GIMP allows you to undo most changes to the image, so feel free to "
+"experiment."
+msgstr "GIMP kan ångra de flesta ändringar i bilden, så experimentera gärna."
+
+#: ../tips/gimp-tips.xml.in.h:11
+#, fuzzy
+msgid ""
+"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"bz2</tt>, if you have bzip2 installed) to the filename and your image will "
+"be saved compressed. Of course loading compressed images works too."
+msgstr ""
+"GIMP stöder direkt gzip-komprimering. Lägg bara till <tt>.gz</tt> (eller "
+"<tt>.bz2</tt>, om du har bzip2 installerat) till filnamnet och din bild "
+"kommer att sparas komprimerad. Givetvis fungerar även inläsning av "
+"komprimerade bilder."
+
+#: ../tips/gimp-tips.xml.in.h:12
+#, fuzzy
+msgid ""
+"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"slides or filters, such that looking through them you see a composite of "
+"their contents."
+msgstr ""
+"GIMP använder lager så att du kan organisera din bild. Betrakta dem som en "
+"hög med overheadbilder eller filter, som gör att när du tittar genom dem ser "
+"en sammansättning av deras innehåll."
+
+#: ../tips/gimp-tips.xml.in.h:13
+msgid ""
+"If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
+"layer doesn't have an alpha-channel. You can add an alpha-channel using "
+"Layer-&gt;Transparency-&gt;Add Alpha Channel."
+msgstr ""
+
+# Vad är color casts?
+#: ../tips/gimp-tips.xml.in.h:14
+msgid ""
+"If some of your scanned photos do not look colorful enough, you can easily "
+"improve their tonal range with the &quot;Auto&quot; button in the Levels "
+"tool (Layer-&gt;Colors-&gt;Levels). If there are any color casts, you can "
+"correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
+msgstr ""
+"Om en del av dina inlästa bilder inte ser ut att vara tillräckligt "
+"färggranna kan du enkelt förbättra deras färgtonsintervall med knappen &quot;"
+"Auto&quot; i nivåverktyget (Lager-&gt;Färger-&gt;Nivåer). Om det finns några "
+"färgskiftningar kan du korrigera dem med kurvverktyget (Lager-&gt;Färger-&gt;"
+"Kurvor)."
+
+#: ../tips/gimp-tips.xml.in.h:15
+msgid ""
+"If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
+"with their current settings. You can use the Paintbrush in gradient mode or "
+"even the Eraser or the Smudge tool."
+msgstr ""
+"Om du stryker en slinga (Redigera-&gt;Stryk längs markering) kan "
+"ritverktygen användas med deras aktuella inställningar. Du kan använda "
+"målarpenseln i toningsläget eller till och med suddaren eller smetverktyget."
+
+#: ../tips/gimp-tips.xml.in.h:16
+msgid ""
+"If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
+"in an image window to hide or show the toolbox and other dialogs."
+msgstr ""
+"Om din bildskärm är för stökig kan du trycka <tt>Tabb</tt> flera gånger i "
+"ett bildfönster för att dölja eller visa vertygslådan och andra dialoger."
+
+#: ../tips/gimp-tips.xml.in.h:17
+msgid ""
+"Most plug-ins work on the current layer of the current image. In some cases, "
+"you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
+"plug-in to work on the whole image."
+msgstr ""
+"De flesta insticksmoduler arbetar med det aktuella lagret på den aktuella "
+"bilden. I en del fall måste du slå samman alla lager (Bild-&gt;Platta till "
+"bilden) om du vill att insticksmodulen ska arbeta på hela bilden."
+
+#: ../tips/gimp-tips.xml.in.h:18
+msgid ""
+"Not all effects can be applied to all kinds of images. This is indicated by "
+"a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layer-&gt;Transparency-&gt;Add "
+"Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
+msgstr ""
+"Alla effekter kan inte tillämpas på alla typer av bilder. Detta visas genom "
+"att menyposten är gråtonad. Du kan behöva ändra bildläget till RGB (Bild-&gt;"
+"Läge-&gt;RGB), lägga till en alfakanal (Lager-&gt;Transparens-&gt;Lägg till "
+"alfakanal) eller platta till den (Bild-&gt;Platta till bild)."
+
+#: ../tips/gimp-tips.xml.in.h:19
+msgid ""
+"Pressing and holding the <tt>Shift</tt> key before making a selection allows "
+"you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
+"tt> before making a selection subtracts from the current one."
+msgstr ""
+"Att trycka på <tt>Skift</tt> och hålla den nedtryckt innan en markering görs "
+"låter dig lägga till den aktuella markeringen istället för att ersätta den. "
+"Att använda <tt>Ctrl</tt> innan en markering görs tar bort från den aktuella."
+
+#: ../tips/gimp-tips.xml.in.h:20
+msgid ""
+"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
+"ellipse select. To place a circle precisely, drag horizontal and vertical "
+"guides tangent to the circle you want to select, place your cursor at the "
+"intersection of the guides, and the resulting selection will just touch the "
+"guides."
+msgstr ""
+"För att skapa en perfekt cirkel håller du nere <tt>Skift</tt> när du gör en "
+"ellipsmarkering. För att placera cirkeln exakt drar du horisontella och "
+"vertikala hjälplinjer till den cirkel som du vill markera, placerar din "
+"markör på skärningen av hjälplinjerna, och den resulterande markeringen "
+"kommer att precis röra vid hjälplinjerna."
+
+#: ../tips/gimp-tips.xml.in.h:21
+msgid ""
+"When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
+"click will draw a straight line from your last drawing point to your current "
+"cursor position. If you also press <tt>Ctrl</tt>, the line will be "
+"constrained to 15 degree angles."
+msgstr ""
+"Då ritverktyget används (målarpensel, airbrush, eller penna) ritar "
+"<tt>Skift</tt>-klick en rak linje från din senaste ritpunkt till din "
+"aktuella markörposition. Om du även trycker <tt>Ctrl</tt> kommer linjen att "
+"begränsas till 15-gradersvinklar."
+
+#: ../tips/gimp-tips.xml.in.h:22
+#, fuzzy
+msgid ""
+"When you save an image to work on it again later, try using XCF, GIMP's "
+"native file format (use the file extension <tt>.xcf</tt>). This preserves "
+"the layers and every aspect of your work-in-progress. Once a project is "
+"completed, you can save it as JPEG, PNG, GIF, ..."
+msgstr ""
+"Prova att använda XCF, GIMP:s inbyggda filformat (använd filtillägget <tt>."
+"xcf</tt>), då du sparar en bild för att arbeta med den senare. Detta bevarar "
+"lager och alla aspekter av ditt pågående arbete. När ett projekt väl är "
+"färdigt kan du spara det som JPEG, PNG, GIF, ..."
+
+#: ../tips/gimp-tips.xml.in.h:23
+msgid ""
+"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
+"the window move, your window manager uses the <tt>Alt</tt> key already. Try "
+"pressing <tt>Shift</tt> at the same time."
+msgstr ""
+"Du kan justera och placera om en markering genom att använda <tt>Alt</tt>-"
+"drag. Om detta gör att fönstret flyttar sig använder din fönsterhanterare "
+"redan <tt>Alt</tt>-tangenten. Prova att trycka <tt>Shift</tt> på samma gång."
+
+#: ../tips/gimp-tips.xml.in.h:24
+msgid ""
+"You can adjust the selection range for fuzzy select by clicking and dragging "
+"left and right."
+msgstr ""
+"Du kan justera markeringsintervallet för luddig markering genom att klicka "
+"och dra vänster och höger."
+
+#: ../tips/gimp-tips.xml.in.h:25
+msgid ""
+"You can create and edit complex selections using the Path tool. The Paths "
+"dialog allows you to work on multiple paths and to convert them to "
+"selections."
+msgstr ""
+"Du kan skapa och redigera komplexa markeringar genom att använda "
+"slingverktyget. Slingdialogen låter dig arbeta med flera slingor och "
+"konvertera dem till markeringar."
+
+#: ../tips/gimp-tips.xml.in.h:26
+msgid ""
+"You can drag a layer from the Layers dialog and drop it onto the toolbox. "
+"This will create a new image containing only that layer."
+msgstr ""
+"Du kan dra ett lager från lagerdialogen och släppa den på verktygslådan. "
+"Detta skapar en ny bild som innehåller endast det lagret."
+
+#: ../tips/gimp-tips.xml.in.h:27
+#, fuzzy
+msgid ""
+"You can drag and drop many things in GIMP. For example, dragging a color "
+"from the toolbox or from a color palette and dropping it into an image will "
+"fill the current image or selection with that color."
+msgstr ""
+"Du kan dra och släppa många saker i GIMP. Att dra en färg från verktygslådan "
+"eller från en färgpalett och släppa den i en bild gör till exempel att den "
+"aktuella bilden eller markeringen fylls med den färgen."
+
+#: ../tips/gimp-tips.xml.in.h:28
+msgid ""
+"You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
+"strokes the edge of your current selection. More complex shapes can be drawn "
+"using the Path tool or with Filters-&gt;Render-&gt;Gfig."
+msgstr ""
+"Du kan rita enkla fyrkanter och cirklar genom att använda Redigera-&gt;Stryk "
+"längs markering. Det ritar hörnet på din aktuella markering. Mer komplexa "
+"figurer kan ritas med slingverktyget eller Filter-&gt;Rendera-&gt;Gfig."
+
+#: ../tips/gimp-tips.xml.in.h:29
+msgid ""
+"You can get context-sensitive help for most of the GIMP's features by "
+"pressing the F1 key at any time. This also works inside the menus."
+msgstr ""
+"Du kan få sammanhangskänslig hjälp till de flesta av GIMP:s funktioner genom "
+"att när som helst trycka på F1-tangenten. Detta fungerar även inuti menyer."
+
+#: ../tips/gimp-tips.xml.in.h:30
+msgid ""
+"You can perform many layer operations by right-clicking on the text label of "
+"a layer in the Layers dialog."
+msgstr ""
+"Du kan utföra många lageråtgärder genom att högerklicka på textetiketten i "
+"ett lager i lagerdialogen."
+
+#: ../tips/gimp-tips.xml.in.h:31
+msgid ""
+"You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
+"are making a selection in order to constrain it to a square or a circle, or "
+"to have it centered on its starting point."
+msgstr ""
+"Du kan trycka eller släppa <tt>Skift</tt>- och <tt>Ctrl</tt>-knapparna då du "
+"skapar en markering för att begränsa den till en perfekt kvadrat eller "
+"cirkel, eller för att centrera den på dess startpunkt."
+
+#: ../tips/gimp-tips.xml.in.h:32
+msgid ""
+"You can save a selection to a channel (Select-&gt;Save to Channel) and then "
+"modify this channel with any paint tools. Using the buttons in the Channels "
+"dialog, you can toggle the visibility of this new channel or convert it to a "
+"selection."
+msgstr ""
+"Du kan spara en markering till en kanal (Markera-&gt;Spara till kanal) och "
+"sedan ändra denna kanal med alla målarverktyg. Genom att använda knapparna i "
+"kanaldialogen kan du växla synligheten på denna nya kanal eller konvertera "
+"den till en markering."
+
+#: ../tips/gimp-tips.xml.in.h:33
+msgid ""
+"You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
+"image (if your window manager doesn't trap those keys...)."
+msgstr ""
+"Du kan använda <tt>Alt</tt>-<tt>Tabb</tt> för att växla mellan alla lager i "
+"en bild (om din fönsterhanterare inte fångar dessa tangenter...)."
+
+#: ../tips/gimp-tips.xml.in.h:34
+msgid ""
+"You can use the middle mouse button to pan around the image, if it's larger "
+"than its display window."
+msgstr ""
+"Du kan använda den mittersta musknappen för att panorera över bilden om den "
+"är större än dess visningsfönster."
+
+#: ../tips/gimp-tips.xml.in.h:35
+msgid ""
+"You can use the paint tools to change the selection. Click on the &quot;"
+"Quick Mask&quot; button at the bottom left of an image window. Change your "
+"selection by painting in the image and click on the button again to convert "
+"it back to a normal selection."
+msgstr ""
+"Du kan använda målarverktygen för att ändra markeringen. Klicka på &quot;"
+"Snabbmask&quot;-knappen i nedre vänstra hörnet i ett bildfönster. Ändra din "
+"markering genom att måla i bilden och klicka på knappen igen för att "
+"konvertera den tillbaka till en normal markering."
+
+#~ msgid ""
+#~ "The layer named &quot;Background&quot; is special because it lacks "
+#~ "transparency. This prevents you from moving the layer up in the stack. "
+#~ "You may add transparency to it by right-clicking in the Layers dialog and "
+#~ "selecting &quot;Add Alpha Channel&quot;."
+#~ msgstr ""
+#~ "Lagret med namnet &quot;Bakgrund&quot; är speciell eftersom den saknar "
+#~ "transparens. Detta förhindrar dig från att lägga till en lagermask eller "
+#~ "flytta lagret upp i stacken. Du kan lägga till transparens till den genom "
+#~ "att högerklicka i lagerdialogen och välja &quot;Lägga till "
+#~ "alfakanal&quot;."
+
+#~ msgid ""
+#~ "The file selection dialog box has command-line completion with <tt>Tab</"
+#~ "tt>, just like the shell. Type part of a filename, hit <tt>Tab</tt>, and "
+#~ "voila, it's completed."
+#~ msgstr ""
+#~ "Filmarkeringsdialogrutan har kommandoradsifyllning med <tt>Tabb</tt>, "
+#~ "precis som skalet. Skriv in en del av ett filnamn, tryck <tt>Tabb</tt>, "
+#~ "och vips är det komplett."
+
+#~ msgid ""
+#~ "A Floating Selection must be anchored to a new layer or to the last "
+#~ "active layer before doing other operations on the image. Click on the "
+#~ "\"New Layer\" or \"Anchor Layer buttons\" in the Layers dialog, or use "
+#~ "the menus to do the same."
+#~ msgstr ""
+#~ "En flytande markering måste ankras vid ett nytt lager eller i det senast "
+#~ "aktiva lagret innan andra åtgärder utförs på bilden. Klicka på knapparna "
+#~ "\"Nytt lager\" eller \"Ankra lager\" i lagerdialogen, eller använd "
+#~ "menyerna för att utföra samma sak."
+
+#~ msgid ""
+#~ "Nearly all image operations are performed by right-clicking on the image. "
+#~ "And don't worry, you can undo most mistakes..."
+#~ msgstr ""
+#~ "Nästan alla bildåtgärder utförs genom att högerklicka på bilden. Och oroa "
+#~ "dig inte, du kan ångra de flesta misstag..."
+
+#, fuzzy
+#~ msgid ""
+#~ "If you stroke a path (Edit-&gt;Stroke), the current drawing tool and its "
+#~ "settings are used. You can use the Paintbrush in gradient mode, the Clone "
+#~ "tool with a pattern or even the Eraser or the Smudge tool."
+#~ msgstr ""
+#~ "Om du stryker en slinga (Redigera->Stryk) används det aktuella "
+#~ "ritverktyget och dess inställningar. Du kan använda målarpenseln i "
+#~ "toningsläget, klonverktyget med ett mönster eller till och med suddaren "
+#~ "eller smetverktyget."
+
+#, fuzzy
+#~ msgid ""
+#~ "Most plug-ins work on the current layer of the current image. In some "
+#~ "cases, you will have to merge all layers (Layers-&gt;Flatten Image) if "
+#~ "you want the plug-in to work on the whole image."
+#~ msgstr ""
+#~ "De flesta insticksmoduler arbetar med det aktuella lagret på den aktuella "
+#~ "bilden. I en del fall måste du slå samman alla lager (Lager->Platta till "
+#~ "bilden) om du vill att insticksmodulen ska arbeta på hela bilden."
+
+#, fuzzy
+#~ msgid ""
+#~ "Not all effects can be applied to all kinds of images. This is indicated "
+#~ "by a grayed-out menu-entry. You may need to change the image mode to RGB "
+#~ "(Image-&gt;Mode-&gt;RGB), add an alpha-channel (Layers-&gt;Add Alpha "
+#~ "Channel) or flatten it (Layers-&gt;Flatten Image)."
+#~ msgstr ""
+#~ "Alla effekter kan inte tillämpas på alla typer av bilder. Detta visas "
+#~ "genom att menyposten är inaktiv. Du kan behöva ändra bilden till RGB "
+#~ "(Bild->Läge->RGB), lägga till en alfakanal (Lager->Lägg till alfakanal) "
+#~ "eller platta till den (Lager->Platta till bild)."
+
+#, fuzzy
+#~ msgid ""
+#~ "Using Edit-&gt;Stroke allows you to draw simple squares or circles by "
+#~ "painting the edge of your current selection with the active brush. More "
+#~ "complex shapes can be drawn with Filters-&gt;Render-&gt;Gfig."
+#~ msgstr ""
+#~ "Att använda Redigera->Stryk låter dig rita enkla fyrkanter och cirklar "
+#~ "genom att rita hörnet på din aktuella markering med den aktiva penseln. "
+#~ "Mer komplexa figurer kan ritas med Filter->Rendera->Gfig."
+
+#~ msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
+#~ msgstr ""
+#~ "Du kan justera och flytta en markering genom att använda <tt>Alt</tt>-"
+#~ "drag."
+
+#~ msgid ""
+#~ "If your fonts turn out blocky, that's because they're not scalable fonts. "
+#~ "Most X servers support scalable Type 1 Postscript fonts. Download and "
+#~ "install them. Some font servers allow you to use TrueType (<tt>.ttf</tt>) "
+#~ "fonts, which are also scalable."
+#~ msgstr ""
+#~ "Om dina typsnitt verkar blockiga beror det på att de inte är skalbara. De "
+#~ "flesta X-servrar stöder skalbara Postscript-typsnitt av typ 1. Hämta och "
+#~ "installera dem. En del typsnittsservrar låter dig använda TrueType-"
+#~ "typsnitt (<tt>.ttf</tt>), som också är skalbara."
+
+# Vad är color casts?
+#~ msgid ""
+#~ "If some of your scanned photos do not look colorful enough, you can "
+#~ "easily improve their tonal range with the \"Auto\" button in the Levels "
+#~ "tool (Image->Colors->Levels). If there are any color casts, you can "
+#~ "correct them with the Curves tool (Image->Colors->Curves)."
+#~ msgstr ""
+#~ "Om en del av dina inlästa bilder inte ser ut att vara tillräckligt "
+#~ "färggranna kan du enkelt förbättra deras färgtonsintervall med knappen "
+#~ "\"Auto\" i nivåverktyget (Bild->Färger->Nivåer). Om det finns några "
+#~ "färgskiftningar kan du korrigera dem med kurvverktyget (Bild->Färger-"
+#~ ">Kurvor)."
+
+#~ msgid ""
+#~ "You can save a selection to a channel (Select->Save to Channel) and then "
+#~ "modify this channel with any paint tools. Using the buttons in the "
+#~ "\"Channels\" tab of the \"Layers, Channels and Paths\" dialog, you can "
+#~ "toggle the visibility of this new channel or convert it to a selection."
+#~ msgstr ""
+#~ "Du kan spara en markering till en kanal (Markera->Spara till kanal) och "
+#~ "sedan ändra denna kanal med alla målarverktyg. Genom att använda "
+#~ "knapparna i \"Kanal\"-fliken i dialogen \"Lager, kanaler och slingor\" "
+#~ "kan du växla synligheten på denna nya kanal eller konvertera den till en "
+#~ "markering."

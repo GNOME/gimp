@@ -1,0 +1,35 @@
+# translation of gimp-python.HEAD.po to Hebrew
+# translation of gimp-script-fy-he.po to Hebrew
+# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# dovix <dovix2003@yahoo.com>, 2003
+# Gil 'Dolfin' Osher <dolfin@rpg.org.il>, 2003
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-python.HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2003-08-13 22:11+0300\n"
+"Last-Translator: Gil 'Dolfin' Osher <dolfin@rpg.org.il>\n"
+"Language-Team: Hebrew <he@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.0.1\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+msgid "_Browse..."
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+msgid "Gimp-Python Console"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+msgid "Interactive Python Development"
+msgstr ""

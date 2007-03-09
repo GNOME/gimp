@@ -1,0 +1,50 @@
+## Makefile for building the GIMP DLLs and LIBs with Microsoft C.
+## Use: nmake -f makefile.msc
+
+TOP = ..\..
+PRJ_TOP = ..
+!include $(TOP)\glib\build\win32\make.msc
+
+!INCLUDE $(PRJ_TOP)\gimpdefs.msc
+PKG_VER = $(GIMP_VER)
+
+################################################################
+
+# Nothing much configurable below
+
+INCLUDES = -I.. 
+# DEFINES = -DG_LOG_DOMAIN=\"LibGimpConfig\"
+DEPCFLAGS = \
+	-FImsvc_recommended_pragmas.h \
+	$(GLIB_CFLAGS)
+
+DEPLIBS = $(GLIB_LIBS) $(INTL_LIBS) \
+	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
+	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
+	..\libgimpmath\gimpmath-$(GIMP_VER).lib \
+
+all : \
+	..\config.h \
+	gimpconfig-$(GIMP_VER).dll
+
+..\config.h : ..\config.h.win32
+	copy ..\config.h.win32 ..\config.h
+
+install : all
+	$(INSTALL) gimpconfig-$(GIMP_VER).dll $(BIN)
+
+OBJECTS = \
+	gimpcolorconfig-enums.obj \
+	gimpcolorconfig.obj \
+	gimpconfig-deserialize.obj \
+	gimpconfig-error.obj \
+	gimpconfig-iface.obj \
+	gimpconfig-path.obj \
+	gimpconfig-serialize.obj \
+	gimpconfig-utils.obj \
+	gimpconfigwriter.obj \
+	gimpscanner.obj \
+
+gimpconfig-$(GIMP_VER).dll : $(OBJECTS) gimpconfig.def
+	$(CC) $(CFLAGS) -LD -Fegimpconfig-$(GIMP_VER).dll $(OBJECTS) $(DEPLIBS) $(LDFLAGS) user32.lib /def:gimpconfig.def
+

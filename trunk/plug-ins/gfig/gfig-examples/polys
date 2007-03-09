@@ -1,0 +1,40 @@
+GFIG Version 0.1
+Name: polys
+Version: 0.000000
+ObjCount: 4
+<OPTIONS>
+GridSpacing: 10
+GridType: RECT_GRID
+DrawGrid: TRUE
+Snap2Grid: TRUE
+LockOnGrid: FALSE
+ShowControl: TRUE
+</OPTIONS>
+<POLY>
+60 40
+60 100
+<EXTRA>
+3
+</EXTRA>
+</POLY>
+<POLY>
+170 60
+200 110
+<EXTRA>
+4
+</EXTRA>
+</POLY>
+<POLY>
+50 170
+70 210
+<EXTRA>
+5
+</EXTRA>
+</POLY>
+<POLY>
+170 170
+110 160
+<EXTRA>
+6
+</EXTRA>
+</POLY>

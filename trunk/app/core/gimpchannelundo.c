@@ -1,0 +1,221 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#include "config.h"
+
+#include <glib-object.h>
+
+#include "core-types.h"
+
+#include "gimpcontainer.h"
+#include "gimpimage.h"
+#include "gimpchannel.h"
+#include "gimpchannelundo.h"
+
+
+enum
+{
+  PROP_0,
+  PROP_PREV_POSITION,
+  PROP_PREV_CHANNEL
+};
+
+
+static GObject * gimp_channel_undo_constructor  (GType                  type,
+                                                 guint                  n_params,
+                                                 GObjectConstructParam *params);
+static void      gimp_channel_undo_set_property (GObject               *object,
+                                                 guint                  property_id,
+                                                 const GValue          *value,
+                                                 GParamSpec            *pspec);
+static void      gimp_channel_undo_get_property (GObject               *object,
+                                                 guint                  property_id,
+                                                 GValue                *value,
+                                                 GParamSpec            *pspec);
+
+static gint64    gimp_channel_undo_get_memsize  (GimpObject            *object,
+                                                 gint64                *gui_size);
+
+static void      gimp_channel_undo_pop          (GimpUndo              *undo,
+                                                 GimpUndoMode           undo_mode,
+                                                 GimpUndoAccumulator   *accum);
+
+
+G_DEFINE_TYPE (GimpChannelUndo, gimp_channel_undo, GIMP_TYPE_ITEM_UNDO)
+
+#define parent_class gimp_channel_undo_parent_class
+
+
+static void
+gimp_channel_undo_class_init (GimpChannelUndoClass *klass)
+{
+  GObjectClass    *object_class      = G_OBJECT_CLASS (klass);
+  GimpObjectClass *gimp_object_class = GIMP_OBJECT_CLASS (klass);
+  GimpUndoClass   *undo_class        = GIMP_UNDO_CLASS (klass);
+
+  object_class->constructor      = gimp_channel_undo_constructor;
+  object_class->set_property     = gimp_channel_undo_set_property;
+  object_class->get_property     = gimp_channel_undo_get_property;
+
+  gimp_object_class->get_memsize = gimp_channel_undo_get_memsize;
+
+  undo_class->pop                = gimp_channel_undo_pop;
+
+  g_object_class_install_property (object_class, PROP_PREV_POSITION,
+                                   g_param_spec_int ("prev-position", NULL, NULL,
+                                                     0, G_MAXINT, 0,
+                                                     GIMP_PARAM_READWRITE |
+                                                     G_PARAM_CONSTRUCT_ONLY));
+
+  g_object_class_install_property (object_class, PROP_PREV_CHANNEL,
+                                   g_param_spec_object ("prev-channel", NULL, NULL,
+                                                        GIMP_TYPE_CHANNEL,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
+}
+
+static void
+gimp_channel_undo_init (GimpChannelUndo *undo)
+{
+}
+
+static GObject *
+gimp_channel_undo_constructor (GType                  type,
+                               guint                  n_params,
+                               GObjectConstructParam *params)
+{
+  GObject       *object;
+  GimpChannelUndo *channel_undo;
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  channel_undo = GIMP_CHANNEL_UNDO (object);
+
+  g_assert (GIMP_IS_CHANNEL (GIMP_ITEM_UNDO (object)->item));
+
+  return object;
+}
+
+static void
+gimp_channel_undo_set_property (GObject      *object,
+                                guint         property_id,
+                                const GValue *value,
+                                GParamSpec   *pspec)
+{
+  GimpChannelUndo *channel_undo = GIMP_CHANNEL_UNDO (object);
+
+  switch (property_id)
+    {
+    case PROP_PREV_POSITION:
+      channel_undo->prev_position = g_value_get_int (value);
+      break;
+    case PROP_PREV_CHANNEL:
+      channel_undo->prev_channel = g_value_get_object (value);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_channel_undo_get_property (GObject    *object,
+                                guint       property_id,
+                                GValue     *value,
+                                GParamSpec *pspec)
+{
+  GimpChannelUndo *channel_undo = GIMP_CHANNEL_UNDO (object);
+
+  switch (property_id)
+    {
+    case PROP_PREV_POSITION:
+      g_value_set_int (value, channel_undo->prev_position);
+      break;
+    case PROP_PREV_CHANNEL:
+      g_value_set_object (value, channel_undo->prev_channel);
+      break;
+
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static gint64
+gimp_channel_undo_get_memsize (GimpObject *object,
+                               gint64     *gui_size)
+{
+  GimpItemUndo *item_undo = GIMP_ITEM_UNDO (object);
+  gint64        memsize   = 0;
+
+  if (! gimp_item_is_attached (item_undo->item))
+    memsize += gimp_object_get_memsize (GIMP_OBJECT (item_undo->item),
+                                        gui_size);
+
+  return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
+                                                                  gui_size);
+}
+
+static void
+gimp_channel_undo_pop (GimpUndo            *undo,
+                       GimpUndoMode         undo_mode,
+                       GimpUndoAccumulator *accum)
+{
+  GimpChannelUndo *channel_undo = GIMP_CHANNEL_UNDO (undo);
+  GimpChannel     *channel      = GIMP_CHANNEL (GIMP_ITEM_UNDO (undo)->item);
+
+  GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
+
+  if ((undo_mode       == GIMP_UNDO_MODE_UNDO &&
+       undo->undo_type == GIMP_UNDO_CHANNEL_ADD) ||
+      (undo_mode       == GIMP_UNDO_MODE_REDO &&
+       undo->undo_type == GIMP_UNDO_CHANNEL_REMOVE))
+    {
+      /*  remove channel  */
+
+      /*  record the current position  */
+      channel_undo->prev_position = gimp_image_get_channel_index (undo->image,
+                                                                  channel);
+
+      gimp_container_remove (undo->image->channels, GIMP_OBJECT (channel));
+      gimp_item_removed (GIMP_ITEM (channel));
+
+      if (channel == gimp_image_get_active_channel (undo->image))
+        {
+          if (channel_undo->prev_channel)
+            gimp_image_set_active_channel (undo->image,
+                                           channel_undo->prev_channel);
+          else
+            gimp_image_unset_active_channel (undo->image);
+        }
+    }
+  else
+    {
+      /*  restore channel  */
+
+      /*  record the active channel  */
+      channel_undo->prev_channel = gimp_image_get_active_channel (undo->image);
+
+      gimp_container_insert (undo->image->channels, GIMP_OBJECT (channel),
+                             channel_undo->prev_position);
+      gimp_image_set_active_channel (undo->image, channel);
+
+      GIMP_ITEM (channel)->removed = FALSE;
+    }
+}

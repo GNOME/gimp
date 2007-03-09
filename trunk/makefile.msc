@@ -1,0 +1,69 @@
+TOP = ..
+PRJ_TOP = .
+PACKAGE = gimp
+!INCLUDE $(TOP)\glib\build\win32\make.msc
+
+!INCLUDE $(PRJ_TOP)\gimpdefs.msc
+PKG_VER = $(GIMP_VER)
+
+# in required build order
+# ./themes gets extra handling below
+SUBDIRS = \
+	libgimpbase \
+	libgimpcolor \
+	libgimpmath \
+	libgimpconfig \
+	libgimpthumb \
+	libgimpwidgets \
+	libgimp \
+#	libgimptool \
+	libgimpmodule \
+	regexrepl \
+	cursors \
+	app \
+#	plug-ins \
+	modules
+
+sub-all: 
+	for %d in ($(SUBDIRS)) do nmake -nologo -f makefile.msc sub-one THIS=%d
+
+sub-one:
+	cd $(THIS)
+	nmake -nologo -f makefile.msc $(TARGET)
+	cd ..
+
+clean :: sub-clean
+
+sub-clean:
+	for %d in ($(SUBDIRS)) do nmake -nologo -f makefile.msc sub-one THIS=%d TARGET=clean
+
+sub-themes:
+	cd cursors
+	nmake -nologo -f makefile.msc
+	cd ..
+	cd themes\Default\images
+	nmake -nologo -f makefile.msc
+	cd ..\..\..
+
+all : \
+	$(PRJ_TOP)\config.h \
+	sub-themes \
+	sub-all
+
+$(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32
+	copy $(PRJ_TOP)\config.h.win32 $(PRJ_TOP)\config.h
+
+RESOURCE = $(PACKAGE).res
+
+$(PACKAGE).lib : $(OBJECTS)
+	lib /out:$(PACKAGE).lib $(OBJECTS)
+
+$(PACKAGE)-$(PKG_VER).dll : $(PKG_LINK) $(OBJECTS) $(PACKAGE).def
+	$(CC) $(CFLAGS) -LD -Fe$(PACKAGE)-$(PKG_VER).dll $(OBJECTS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:$(PACKAGE).def
+
+$(PACKAGE).exe : $(OBJECTS) $(PACKAGE).def $(PACKAGE).res
+	$(CC) $(CFLAGS) -Fe$(PACKAGE).exe $(PACKAGE).res $(OBJECTS) $(PKG_LINK) \
+	user32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS) /def:$(PACKAGE).def
+
+.c.obj :
+	$(CC) $(CFLAGS) -GD -c $(PKG_CFLAGS) $<

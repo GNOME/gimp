@@ -1,0 +1,27 @@
+* The GIMP application core, and other portions of the official GIMP
+  distribution not explicitly licensed otherwise, are licensed under
+  the GNU GENERAL PUBLIC LICENSE -- see the 'COPYING' file in this
+  directory for details.
+
+[ The below explicit exemption, we hope, clears up the GIMP
+  developers' position concerning an ambiguity with the GNU General
+  Public License concerning what constitutes a 'mere aggregation'
+  versus a combined or derived work.  The intention is to make it
+  clear that arbitrarily-licensed programs such as GIMP plug-ins do
+  not automatically assume the GNU General Public License (GPL)
+  themselves simply because of their invokation of (or by) procedures
+  implemented in GPL-licensed code, via libgimp or a similar interface
+  to methods provided by the pdb: ]
+
+* If you create a program which invokes (or provides) methods within
+  (or for) the GPL GIMP application core through the medium of libgimp
+  or another implementation of the 'procedural database' (pdb) serial
+  protocol, then the GIMP developers' position is that this is a 'mere
+  aggregation' of the program invoking the method and the program
+  implementing the method as per section 2 of the GNU General Public
+  License.
+
+* 'libgimp' and the other GIMP libraries are licensed under the
+  GNU LESSER GENERAL PUBLIC LICENSE -- see the 'COPYING' file in the
+  libgimp directory for details.
+

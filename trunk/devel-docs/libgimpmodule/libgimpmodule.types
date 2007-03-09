@@ -1,0 +1,6 @@
+#include <glib-object.h>
+#include <libgimpmodule/gimpmodule.h>
+
+gimp_module_get_type
+gimp_module_db_get_type
+

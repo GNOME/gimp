@@ -1,0 +1,3044 @@
+# Georgian translation of gimp.
+# This file is distributed under the same license as the gimp package.
+# George Machitidze  გიორგი მაჩითიძე  <giomac@gmail.com>
+
+msgid ""
+msgstr ""
+"Project-Id-Version: ka\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-04-19 20:30-0400\n"
+"PO-Revision-Date: 2005-06-08 15:37+0400\n"
+"Last-Translator: George Machitidze <giomac@gmail.com>\n"
+"Language-Team: Georgian <gnome@inet.ge>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.10.1\n"
+
+msgid "%d Layers"
+msgstr "%d ფენა"
+
+msgid "%d dpi"
+msgstr "%d dpi"
+
+msgid "%d dpi, %s"
+msgstr "%d dpi, %s"
+
+msgid "%d minutes"
+msgstr "%d წუთი"
+
+msgid "%d seconds"
+msgstr "%d წამი"
+
+msgid "%d x %d dpi"
+msgstr "%d x %d dpi"
+
+msgid "%d x %d dpi, %s"
+msgstr "%d x %d dpi, %s"
+
+msgid "%s Channel Copy"
+msgstr "%s არხის კოპირება"
+
+msgid "%s Message"
+msgstr "%s შეტყობინება"
+
+msgid "%s mask"
+msgstr "%s მასკა"
+
+msgid "%s version %s"
+msgstr "%s ვერსია %s"
+
+msgid "(%0.3f, %0.3f, %0.3f)"
+msgstr "(%0.3f, %0.3f, %0.3f)"
+
+msgid "(This console window will close in ten seconds)\n"
+msgstr "(ეს კონსოლი დაიკეტება ათ წამში)\n"
+
+msgid "(Unnamed Buffer)"
+msgstr "(უსახელო ბუფერი)"
+
+msgid "(Unnamed Template)"
+msgstr "(უსახელო ნიმუში)"
+
+msgid "(Varies)"
+msgstr "(ცვალებადი)"
+
+msgid "(clean)"
+msgstr "(სუფთა)"
+
+msgid "(invalid UTF-8 string)"
+msgstr "(არასწორი UTF-8 სტრიქონი)"
+
+msgid "(modified)"
+msgstr "(შეცვლილი)"
+
+msgid "1 "
+msgstr "1 "
+
+msgid "1 Layer"
+msgstr "1 ფენა"
+
+msgid "1 layer"
+msgstr "1 ფენა"
+
+msgid "1:1_6  (6.25%)"
+msgstr "1:1_6  (6.25%)"
+
+msgid "1:_2  (50%)"
+msgstr "1:_2  (50%)"
+
+msgid "1:_4  (25%)"
+msgstr "1:_4  (25%)"
+
+msgid "1:_8  (12.5%)"
+msgstr "1:_8  (12.5%)"
+
+msgid "1_6:1  (1600%)"
+msgstr "1_6:1  (1600%)"
+
+msgid "2 "
+msgstr "2 "
+
+msgid "2D Transform..."
+msgstr "2D გარდაქმნა..."
+
+msgid "<%s>"
+msgstr "<%s>"
+
+msgid "<No modules>"
+msgstr "<მოდულები არ არის>"
+
+msgid "A_ngle"
+msgstr "_კუთხე"
+
+msgid "About The GIMP"
+msgstr "GIMP-ის შესახებ"
+
+msgid "Action"
+msgstr "მოქმედება"
+
+msgid "Active Filters"
+msgstr "აქტიური ფილტრები"
+
+msgid "Add"
+msgstr "დამატება"
+
+msgid "Add Alpha C_hannel"
+msgstr "Alpha-არ_ხის დამატება"
+
+msgid "Add Alpha Channel"
+msgstr "Alpha-არხის დამატება"
+
+msgid "Add Channel"
+msgstr "არხის დამატება"
+
+msgid "Add Color to Colormap"
+msgstr "ფერის ფერთა რუქაში დამატება"
+
+msgid "Add Layer"
+msgstr "ფენის დამატება"
+
+msgid "Add Text Layer"
+msgstr "ტექსტური ფენის დამატება"
+
+msgid "Add text to the image"
+msgstr "გამოსახულებაში ტექსტის დამატება"
+
+msgid "Addition"
+msgstr "დამატება"
+
+msgid "Adjust Brightness and Contrast"
+msgstr "სიკაშკაშის და კონტრასტის დარეგულირება"
+
+msgid "Adjust Color Balance"
+msgstr "ფერთა ბალანსის დარეგულირება"
+
+msgid "Adjust Color Curves"
+msgstr "ფერთა წირების დარეგულირება"
+
+msgid "Adjust Color Levels"
+msgstr "ფერის დონეების დარეგულირება"
+
+msgid "Adjust brightness and contrast"
+msgstr "სიკაშკაშის და კონტრასტის დარეგულირება"
+
+msgid "Adjust color balance"
+msgstr "ფერთა ბალანსის დარეგულირება"
+
+msgid "Adjust color levels"
+msgstr "ფერის დონეების დარეგულირება"
+
+msgid "Adjust levels automatically"
+msgstr "დონეების ავტომატურად დარეგულირება"
+
+msgid "Adjustment"
+msgstr "დარეგულირება"
+
+msgid "Advanced options"
+msgstr "დამატებითი პარამეტრები"
+
+msgid "Airbrush"
+msgstr "აეროგრაფი"
+
+msgid "All Channels"
+msgstr "ყველა არხი"
+
+msgid "All Files"
+msgstr "ყველა ფაილი"
+
+msgid "All Files (*.*)"
+msgstr "ყველა ფაილი (*.*)"
+
+msgid "All Images"
+msgstr "ყველა გამოსახულება"
+
+msgid "All layers"
+msgstr "ყველა ფენა"
+
+msgid "All visible layers"
+msgstr "ყველა ხილული ფენა"
+
+msgid "An_imation"
+msgstr "ან_იმაცია"
+
+msgid "Angle:"
+msgstr "კუთხე:"
+
+msgid "Antialiasing"
+msgstr "ანტიალიასინგი"
+
+msgid "Are you sure you want to delete '%s' from the list and from disk?"
+msgstr "დარწმუნებული ხართ, რომ გსურთ '%s'-ის წაშლა სიიდან და დისკიდან?"
+
+msgid ""
+"Are you sure you want to delete template '%s' from the list and from disk?"
+msgstr "ნამდვილად გსურთ '%s'-ის მეხსიერებიდან და დისკიდან წაშლა?"
+
+msgid "As in _Preferences"
+msgstr "როგორც _პარამეტრებში"
+
+msgid "Aspect"
+msgstr "ფარდობა"
+
+msgid "Aspect Ratio:"
+msgstr "გვერდების ფარდობა:"
+
+msgid "Aspect ratio:"
+msgstr "ფარდობის კოეფ.:"
+
+msgid "Author:"
+msgstr "ავტორი:"
+
+msgid "Auto"
+msgstr "ავტო"
+
+msgid "Autoload"
+msgstr "ავტოჩატვირთვა"
+
+msgid "Automatically Detected"
+msgstr "ავტომატურად აღმოჩენილი"
+
+msgid "Available Filters"
+msgstr "ხელმისაწვდომი ფილტრები"
+
+msgid "Available Types:"
+msgstr "ხელმისაწვდომი ტიპები:"
+
+msgid "B_rightness-Contrast..."
+msgstr "სიკაშკაშე-კონტ_რასტი..."
+
+msgid "B_uffers"
+msgstr "ბ_უფერები"
+
+msgid "Background"
+msgstr "ფონი"
+
+msgid "Black & white"
+msgstr "შავ-თეთრი"
+
+msgid "Black:"
+msgstr "შავი:"
+
+msgid "Blue"
+msgstr "ლურჯი"
+
+msgid "Blue:"
+msgstr "ლურჯი:"
+
+msgid "Bo_rder..."
+msgstr "ჩარჩ_ო..."
+
+msgid "Brightness-Contrast"
+msgstr "სიკაშკაშე-კონტრასტი"
+
+msgid "Brightness-Contrast does not operate on indexed layers."
+msgstr "სიკაშკაშე და კონტრასტი ინდექსირებულ ფენებზე არ იცვლება."
+
+msgid "Brush"
+msgstr "ფუნჯი"
+
+msgid "Brush Editor"
+msgstr "ფუნჯის რედაქტორი"
+
+msgid "Brush Folders"
+msgstr "ფუნჯების საქაღალდეები"
+
+msgid "Brush:"
+msgstr "ფუნჯი:"
+
+msgid "Brushes"
+msgstr "ფუნჯები"
+
+msgid "Brushes Menu"
+msgstr "ფუნჯთა მენიუ"
+
+msgid "Buffers"
+msgstr "ბუფერები"
+
+msgid "Buffers Menu"
+msgstr "ბუფერების მენიუ"
+
+msgid "Burn"
+msgstr "დაწვა"
+
+msgid "By Extension"
+msgstr "გაფართოების მიხედვით"
+
+msgid "CMYK"
+msgstr "CMYK"
+
+msgid "C_alibrate..."
+msgstr "კ_ალიბრაცია..."
+
+msgid "C_olumns:"
+msgstr "_სვეტები:"
+
+msgid "Calibrate Monitor Resolution"
+msgstr "მონიტორის გარჩევადობის კალიბრაცია"
+
+msgid "Can't undo %s"
+msgstr "შეუძლებელია %s-ის დაბრუნება"
+
+msgid "Cancel"
+msgstr "შეწყვეტა"
+
+msgid "Cannot crop because the current selection is empty."
+msgstr "Cannot crop because the current selection is empty."
+
+msgid "Cannot save. Nothing is selected."
+msgstr "შენახვა შეუძლებელია. არჩეული არაფერი არ არის."
+
+msgid "Centered"
+msgstr "ცენტრირებული"
+
+msgid "Cha_nnel:"
+msgstr "არ_ხი:"
+
+msgid "Change Image Resolution"
+msgstr "გამოსახულების გარჩევადობის შეცვლა"
+
+msgid "Change Image Unit"
+msgstr "გამოსახულების ერთეულის შეცვლა"
+
+msgid "Change Print Size"
+msgstr "საბეჭდი ზომის შეცვლა"
+
+msgid "Change indexed palette"
+msgstr "ინდექსირებული პალიტრის შეცვლა"
+
+msgid "Channel"
+msgstr "არხი"
+
+msgid "Channel Attributes"
+msgstr "არხის ატრიბუტები"
+
+msgid "Channel Name:"
+msgstr "არხის სახელი:"
+
+msgid "Channel cannot be lowered more."
+msgstr "არხი უფრო ქვემოთ ვერ დაიწევა."
+
+msgid "Channel cannot be raised higher."
+msgstr "არხი უფრო ზემოთ ვერ აიწევა."
+
+msgid "Channel color"
+msgstr "არხის ფერი"
+
+msgid "Channel is already on the bottom."
+msgstr "არხი უკვე სულ ქვევითაა."
+
+msgid "Channel is already on top."
+msgstr "არხი უკვე სულ ზევითაა."
+
+msgid "Channel:"
+msgstr "არხი:"
+
+msgid "Channels"
+msgstr "არხები"
+
+msgid "Channels Menu"
+msgstr "არხების მენიუ"
+
+msgid "Check _size:"
+msgstr "ზომის _შემოწმება:"
+
+msgid "Circle"
+msgstr "წრე"
+
+msgid "Cl_ear"
+msgstr "_გასუფთავება"
+
+msgid "Clear"
+msgstr "გაწმენდა"
+
+msgid "Clear Channel"
+msgstr "არხის გაწმენდა"
+
+msgid "Clear Undo History"
+msgstr "დაბრუნების ისტორიის გაწმენდა"
+
+msgid "Clear all text"
+msgstr "მთელი ტექსტის გაწმენდა"
+
+msgid "Clear errors"
+msgstr "შეცდომების გასუფთაბევა"
+
+msgid "Clear undo history..."
+msgstr "დაბრუნების ისტორიის გაწმენდა..."
+
+msgid "Clone"
+msgstr "კლონირება"
+
+msgid "Close %s"
+msgstr "დაკეტე %s"
+
+msgid "Colo_rs"
+msgstr "ფერე_ბი"
+
+msgid "Color"
+msgstr "ფერი"
+
+msgid "Color Balance"
+msgstr "ფერთა ბალანსი"
+
+msgid "Color Management"
+msgstr "ფერთა მართვა"
+
+msgid "Color _Balance..."
+msgstr "ფერთა _ბალანსი..."
+
+msgid "Color _space:"
+msgstr "ფერთა _სივრცე:"
+
+msgid "Color erase"
+msgstr "გაუფერულება"
+
+msgid "Color:"
+msgstr "ფერი:"
+
+msgid "Color_map"
+msgstr "ფერთა რუ_ქა"
+
+msgid "Colormap"
+msgstr "ფერთა რუქა"
+
+msgid "Colormap Editor"
+msgstr "ფერთა რუქის რედაქტორი"
+
+msgid "Colormap Menu"
+msgstr "ფერთა რუქის მენიუ"
+
+msgid "Columns:"
+msgstr "სვეტები:"
+
+msgid "Comme_nt:"
+msgstr "კომე_ნტარი:"
+
+msgid "Con_trast:"
+msgstr "კონ_ტრასტი:"
+
+msgid "Confirm Image Size"
+msgstr "გამოსახულების ზომის დადასტურება"
+
+msgid "Confirm Scaling"
+msgstr "მასშტაბირების დადასტურება"
+
+msgid "Confirm Text Editing"
+msgstr "ტექსტის რედაქტირების დადასტურება"
+
+msgid "Context"
+msgstr "კონტექსტი"
+
+msgid "Continue"
+msgstr "გაგრძელება"
+
+msgid "Convert"
+msgstr "გარდაქმნა"
+
+msgid "Convert Image to Grayscale"
+msgstr "გამოსახულების ნაცრისფერში გარდაქმნა"
+
+msgid "Convert Image to Indexed"
+msgstr "გამოსახულების ინდექსირებულად გარდაქმნა"
+
+msgid "Convert Image to RGB"
+msgstr "გამოსახულების RGB-ში გარდაქმნა"
+
+msgid "Convert image"
+msgstr "გამოსახულების გარდაქმნა"
+
+msgid "Converting to indexed (stage 2)..."
+msgstr "გამოსახულების ინდექსირებულად გარდაქმნა (ეტაპი 2)..."
+
+msgid "Converting to indexed (stage 3)..."
+msgstr "გამოსახულების ინდექსირებულად გარდაქმნა (ეტაპი 3)..."
+
+msgid "Converting to indexed..."
+msgstr "ინდექსირებულად გარდაქმნა..."
+
+msgid "Copy _Visible"
+msgstr "_ხილულის კოპირება"
+
+msgid "Copyright:"
+msgstr "უფლებები:"
+
+msgid "Could not connect to GIMP."
+msgstr "შეუძლებელია GIMP-თან დაკავშირება."
+
+msgid "Could not delete '%s': %s"
+msgstr "ვერ წავშალე '%s': %s"
+
+msgid "Couldn't start '%s': %s"
+msgstr "ვერ გავუშვი '%s': %s"
+
+msgid "Create New Template"
+msgstr "ახალი ნიმუშის შექმნა"
+
+msgid "Create a New Image"
+msgstr "ახალი გამოსახულების შექმნა"
+
+msgid "Create a New Layer"
+msgstr "ახალი ფენის შექმნა"
+
+msgid "Create a New Template"
+msgstr "ახალი ნიმუშის შექმნა"
+
+msgid "Create a new image from the selected template"
+msgstr "არჩეული ნიმუშიდან ახალი გამოსახულების შექმნა"
+
+msgid "Create a new template"
+msgstr "ახალი ნიმუშის შექმნა"
+
+msgid "Creating folder '%s'..."
+msgstr "საქაღალდის შექმნა '%s'..."
+
+msgid "Cu_t"
+msgstr "ამო_ჭრა"
+
+msgid "Current _Status"
+msgstr "მიმდინარე _სტატუსი"
+
+msgid "Current format"
+msgstr "მიმდინარე ფორმატი"
+
+msgid "Current height:"
+msgstr "მიმდინარე სიმაღლე:"
+
+msgid "Current status"
+msgstr "მიმდინარე სტატუსი"
+
+msgid "Current width:"
+msgstr "მიმდინარე სიგანე:"
+
+msgid "Cursor"
+msgstr "კურსორი"
+
+msgid "Curve Type"
+msgstr "წირის ტიპი"
+
+msgid "Curves"
+msgstr "წირები"
+
+msgid "Cut"
+msgstr "ამოჭრა"
+
+msgid "D_uplicate Brush"
+msgstr "ფუნჯის _დუბლირება"
+
+msgid "D_uplicate Channel"
+msgstr "არხის დ_უბლირება"
+
+msgid "D_uplicate Gradient"
+msgstr "გრადაციის დ_უბლირება"
+
+msgid "D_uplicate Layer"
+msgstr "ფენის დ_უბლირება"
+
+msgid "D_uplicate Palette"
+msgstr "პალიტრის დ_უბლირება"
+
+msgid "D_uplicate Pattern"
+msgstr "შაბლონი დ_უბლირება"
+
+msgid "D_uplicate Template..."
+msgstr "ნიმუშის დ_უბლირება..."
+
+msgid "Date:"
+msgstr "თარიღი:"
+
+msgid "Default format"
+msgstr "ნაგულისხმევი ფორმატი"
+
+msgid "Delete Object"
+msgstr "ობიექტის წაშლა"
+
+msgid "Delete Segment"
+msgstr "სეგმენტის წაშლა"
+
+msgid "Delete Template"
+msgstr "ნიმუშის წაშლა"
+
+msgid "Delete brush"
+msgstr "ფუნჯის წაშლა"
+
+msgid "Delete channel"
+msgstr "არხის წაშლა"
+
+msgid "Delete color"
+msgstr "ფერის წაშლა"
+
+msgid "Delete gradient"
+msgstr "გრადაციის წაშლა"
+
+msgid "Delete layer"
+msgstr "ფენის წაშლა"
+
+msgid "Delete palette"
+msgstr "პალიტრის წაშლა"
+
+msgid "Delete pattern"
+msgstr "შაბლონის წაშლა"
+
+msgid "Delete the selected buffer"
+msgstr "არჩეული ბუფერის წაშლა"
+
+msgid "Delete the selected template"
+msgstr "არჩეული ნიმუშის წაშლა"
+
+msgid "Delete this image"
+msgstr "ამ გამოსახულების წაშლა"
+
+msgid "Delete vectors"
+msgstr "ვექტორების წაშლა"
+
+msgid "Deleting \"%s\" failed: %s"
+msgstr "\"%s\"-ის წაშლა ჩაიშალა: %s"
+
+msgid "Dense dots"
+msgstr "მკვრივი წერტილები"
+
+msgid "Desaturate"
+msgstr "გაუფერულება"
+
+msgid "Description"
+msgstr "აღწერა"
+
+msgid "Design"
+msgstr "დიზაინი"
+
+msgid "Device Status"
+msgstr "მოწყობილობის სტატუსი"
+
+msgid "Devices"
+msgstr "მოწყობილობები"
+
+msgid "Dialogs"
+msgstr "დიალოგები"
+
+msgid "Dialogs Menu"
+msgstr "დიალოგები მენიუ"
+
+msgid "Difference"
+msgstr "სხვაობა"
+
+msgid "Disable Quick Mask"
+msgstr "სწრაფი მასკის გათიშვა"
+
+msgid "Display Navigation"
+msgstr "ნავიგაციის ჩვენება"
+
+msgid "Display _Filters..."
+msgstr "აჩვენე _ფილტერები..."
+
+msgid "Display procedures"
+msgstr "აჩვენე პროცედურები"
+
+msgid "Distance:"
+msgstr "მანძილი:"
+
+msgid "Divide"
+msgstr "გაყოფა"
+
+msgid "Do not load any fonts"
+msgstr "არ ჩატვირთო შრიფტები"
+
+msgid "Do not show a startup window"
+msgstr "არ აჩვენო მისასალმებელი ფანჯარა"
+
+msgid "Do_n't save"
+msgstr "არ შეი_ნახო"
+
+msgid "Document Histor_y"
+msgstr "დოკუმენტთა ისტო_რია"
+
+msgid "Document History"
+msgstr "დოკუმენტთა ისტორია"
+
+msgid "Documents"
+msgstr "დოკუმენტები"
+
+msgid "Documents Menu"
+msgstr "დოკუმენტთა მენიუ"
+
+msgid "Duplicate brush"
+msgstr "ფუნჯის დუბლირება"
+
+msgid "Duplicate channel"
+msgstr "არხის დუბლირება"
+
+msgid "Duplicate gradient"
+msgstr "გრადაციის დუბლირება"
+
+msgid "Duplicate layer"
+msgstr "ფენის დუბლირება"
+
+msgid "Duplicate palette"
+msgstr "პალიტრის დუბლირება"
+
+msgid "Duplicate pattern"
+msgstr "შაბლონის დუბლირება"
+
+msgid "Duplicate the selected template"
+msgstr "არჩეული ნუმუშის დუბლირება"
+
+msgid "E_xtra Small"
+msgstr "ძა_ლიან პატარა"
+
+msgid "Edit"
+msgstr "რედაქტირება"
+
+msgid "Edit Channel Attributes"
+msgstr "არხის ატრიბუტების რედაქტირება"
+
+msgid "Edit Channel Color"
+msgstr "არხის ფერის რედაქტირება"
+
+msgid "Edit Layer Attributes"
+msgstr "ფენის ატრიბუტების რედაქტირება"
+
+msgid "Edit Mode"
+msgstr "რედაქტირების რეჟიმი"
+
+msgid "Edit Palette Color"
+msgstr "პალიტრის ფერის რედაქტირება"
+
+msgid "Edit Quick Mask Attributes"
+msgstr "სწრაფი მასკის ატრიბუტების რედაქტირება"
+
+msgid "Edit Quick Mask Color"
+msgstr "სწრაფი მასკის ფერის რედაქტირება"
+
+msgid "Edit Template"
+msgstr "ნიმუშის რედაქტირება"
+
+msgid "Edit brush"
+msgstr "ფუნჯის რედაქტირება"
+
+msgid "Edit channel attributes"
+msgstr "არხის ატრიბუტების რედაქტირება"
+
+msgid "Edit color"
+msgstr "ფერის რედაქტირებ"
+
+msgid "Edit gradient"
+msgstr "გრადაციის რედაქტირება"
+
+msgid "Edit layer attributes"
+msgstr "ფენის თვისებების რედაქტირება"
+
+msgid "Edit palette"
+msgstr "პალიტრის რედაქტირება"
+
+msgid "Edit pattern"
+msgstr "შაბლონის რედაქტირება"
+
+msgid "Edit procedures"
+msgstr "პროცედურების რედაქტირება"
+
+msgid "Edit the selected template"
+msgstr "არჩეული ნიმუშის რედაქტირება"
+
+msgid "Empty Layer"
+msgstr "ცარიელი ფენა"
+
+msgid "Empty Text Layer"
+msgstr "ტექსტური ფენის დაცარიელება"
+
+msgid "Enable Quick Mask"
+msgstr "სწრაფი მასკის ჩართვა"
+
+msgid "Enter a name for the merged palette"
+msgstr "შეუყვანეთ გაერთიანებული პალიტრის სახელი"
+
+msgid "Enter a name for the saved options"
+msgstr "შეიყვანეთ სახელი შენახული პარამეტრებისათვის"
+
+msgid "Enter a name for this buffer"
+msgstr "შეიყვანეთ სახელი ამ ბუფერისდათვის"
+
+msgid "Enter a name for this template"
+msgstr "შეიყვანეთ ამ ნიმუშის სახელი"
+
+msgid "Enter a new name for the saved options"
+msgstr "შეიყვანეთ შენახული პარამეტრებისათვის ახალი სახელი"
+
+msgid "Enter location (URI):"
+msgstr "შეიყვანეთ ადგილმდებარეობა (URI):"
+
+msgid "Environment"
+msgstr "გარემო"
+
+msgid "Environment Folders"
+msgstr "გარემოების საქაღალდეები"
+
+msgid "Equalize"
+msgstr "ექუალიზირება"
+
+msgid "Equalize does not operate on indexed layers."
+msgstr "ექუალიზირება ინდექსირებულ ფენებზე არ მოქმედებს."
+
+msgid "Eraser"
+msgstr "საშლელი"
+
+msgid "Error Co_nsole"
+msgstr "შეცდომათა კო_ნსოლი"
+
+msgid "Error Console"
+msgstr "შეცდომათა კონსოლი"
+
+msgid "Error Console Menu"
+msgstr "შეცდომათა კონსოლის მენიუ"
+
+msgid "Error saving XCF file: %s"
+msgstr "შეცდომა XCF ფაილის შენახვისას: %s"
+
+msgid "Error while reading '%s': %s"
+msgstr "'%s'-ის კითხვისას: %s"
+
+msgid "Error while writing '%s': %s"
+msgstr "შეცდომა '%s'-ის ჩაწერისას: %s"
+
+msgid "Error writing XCF: %s"
+msgstr "შეცდომა XCF-ის ჩაწერისას: %s"
+
+msgid ""
+"Error writing file '%s':\n"
+"%s"
+msgstr ""
+"შეცდომა '%s' ფაილის ჩაწერისას:\n"
+"%s"
+
+msgid "Errors"
+msgstr "შედომები"
+
+msgid "Event"
+msgstr "მოქმედება"
+
+msgid "Ex_tra Large"
+msgstr "_ძალიან გრძელი"
+
+msgid "Execute"
+msgstr "გაშვება"
+
+msgid "Extensions"
+msgstr "გაფართოებები"
+
+msgid "File"
+msgstr "ფაილი"
+
+msgid "File Open _Dialog"
+msgstr "ფაილის გახსნის _დიალოგი"
+
+msgid "File Operations"
+msgstr "ფაილური ოპერაციები"
+
+msgid "File Type"
+msgstr "ფაილის ტიპი"
+
+msgid "File exists"
+msgstr "ფაილი უკვე არსებობს"
+
+msgid "Fill Channel"
+msgstr "არხის შევსება"
+
+msgid "Fill Opacity:"
+msgstr "შევსება:"
+
+msgid "Fill transparent areas"
+msgstr "აავსე გამჭვირვალე არეალი"
+
+msgid "Fill with P_attern"
+msgstr "_აავსე შაბლონით"
+
+msgid "Fill with Pattern"
+msgstr "აავსე შაბლონით"
+
+msgid "Fill with Transparency"
+msgstr "გახადე გამჭირვალე"
+
+msgid "Fill with White"
+msgstr "აავსე თეთრით"
+
+msgid "Fill with a color gradient"
+msgstr "ფერადი გრადაციით ავსება"
+
+msgid "Fill with a color or pattern"
+msgstr "ფერით ან შაბლონით ავსება"
+
+msgid "Filled"
+msgstr "შევსებული"
+
+msgid "Filte_rs"
+msgstr "ფილტ_რები"
+
+msgid "Final, Merged Layer should be:"
+msgstr "საბოლოო, გაერთიანებული ფენა უნდა იყოს:"
+
+msgid "Fixed aspect"
+msgstr "ფიქსირებული ფარდობა"
+
+msgid "Fixed aspect ratio"
+msgstr "ფიქსირებული ფარდობა"
+
+msgid "Fixed height"
+msgstr "ფიქსირებული სიმაღლე"
+
+msgid "Fixed size"
+msgstr "ფიქსირებული ზომა"
+
+msgid "Fixed width"
+msgstr "ფიქსირებული სიგანე"
+
+msgid "Flip _Horizontally"
+msgstr "_ჰორიზონტალურად შებრუნება"
+
+msgid "Flip _Vertically"
+msgstr "_ვერტიკალურად შებრუნება"
+
+msgid "Focus"
+msgstr "ფოკუსი"
+
+msgid "Folder"
+msgstr "საქაღალდე"
+
+msgid "Folders"
+msgstr "საქაღალდეები"
+
+msgid "Font Folders"
+msgstr "შრიფტების საქაღალდეები"
+
+msgid "Font:"
+msgstr "შრიფტი:"
+
+msgid "Fonts"
+msgstr "შრიფტები"
+
+msgid "Fonts Menu"
+msgstr "შრიფტების მენიუ"
+
+msgid "From _Theme"
+msgstr "_თემიდან"
+
+msgid "From left to right"
+msgstr "მარცხნიდან მარჯვნივ"
+
+msgid "From right to left"
+msgstr "მარჯვნიდან მარცხნივ"
+
+msgid "From theme"
+msgstr "თემიდან"
+
+msgid "Fullscr_een"
+msgstr "მთ_ელს ეკრანზე"
+
+msgid "GIMP"
+msgstr "GIMP"
+
+msgid "GIMP Extension"
+msgstr "GIMP-ის გაფართოება"
+
+msgid "GIMP Message"
+msgstr "GIMP-ის შეტყობინება"
+
+msgid "GIMP Plug-In"
+msgstr "GIMP-ის პლაგინი"
+
+msgid "GIMP Text Editor"
+msgstr "GIMP-ის ტექსტური რედაქტორი"
+
+msgid "GIMP XCF image"
+msgstr "GIMP-ის XCF გამოსახულება"
+
+msgid "Gamma"
+msgstr "გამა"
+
+msgid "General"
+msgstr "მთავარი"
+
+msgid "Get Monitor Resolution"
+msgstr "მონიტორის გარჩევადობის გარკვევა"
+
+msgid "Gigantic"
+msgstr "გიგანტური"
+
+msgid "Gimprc procedures"
+msgstr "Gimprc პროცედურები"
+
+msgid "Gla_ss Effects"
+msgstr "_შუშის ეფექტები"
+
+msgid "Gradient"
+msgstr "გრადაცია"
+
+msgid "Gradient Editor"
+msgstr "გრადაციების რედაქტორი"
+
+msgid "Gradient Editor Menu"
+msgstr "გრადაციების რედაქტორის მენიუ"
+
+msgid "Gradient Folders"
+msgstr "გრადაციების საქაღალდეები"
+
+msgid "Gradient:"
+msgstr "გრადაცია:"
+
+msgid "Gradients"
+msgstr "გრადაციები"
+
+msgid "Gradients Menu"
+msgstr "გრადაციათა მენიუ"
+
+msgid "Grayscale"
+msgstr "ნაცრისფერი"
+
+msgid "Green"
+msgstr "მწვანე"
+
+msgid "Green:"
+msgstr "მწვანე:"
+
+msgid "HSV"
+msgstr "HSV"
+
+msgid "HSV (%0.3f, %0.3f, %0.3f)"
+msgstr "HSV (%0.3f, %0.3f, %0.3f)"
+
+msgid "H_eight:"
+msgstr "სიმაღლ_ე:"
+
+msgid "Hardness"
+msgstr "სიმაგრე"
+
+msgid "Hardness:"
+msgstr "სიმაგრე:"
+
+msgid "Height"
+msgstr "სიმაღლე"
+
+msgid "Height:"
+msgstr "სიმაღლე:"
+
+msgid "Help"
+msgstr "დახმარება"
+
+msgid "Help System"
+msgstr "დახმარების სისტემა"
+
+msgid "Histogra_m"
+msgstr "ჰისტოგრა_მა"
+
+msgid "Histogram"
+msgstr "ჰისტოგრამა"
+
+msgid "Histogram Scale"
+msgstr "ჰისტოგრამის მასშტაბი"
+
+msgid "History"
+msgstr "ისტორია"
+
+msgid "Horizontal"
+msgstr "ჰორიზონტალური"
+
+msgid "Huge"
+msgstr "უზარმაზარი"
+
+msgid "I_con & Text"
+msgstr "ხა_ტი & ტექსტი"
+
+msgid "I_mage"
+msgstr "გა_მოსახულება"
+
+msgid "I_nterval:"
+msgstr "ი_ნტერვალი:"
+
+msgid "Icon"
+msgstr "ხატი"
+
+msgid "Image"
+msgstr "გამოსახულება"
+
+msgid "Image Editor"
+msgstr "გამოსახულებების რედაქტორი"
+
+msgid "Image Menu"
+msgstr "გამოსახულების მენიუ"
+
+msgid "Image Properties"
+msgstr "გამოსახულების თვისებები"
+
+msgid "Image Size"
+msgstr "გამოსახულების ზომა"
+
+msgid "Image Windows"
+msgstr "გამოსახულებათა ფანჯრები"
+
+msgid "Image mask"
+msgstr "გამოსახულების მასკა"
+
+msgid "Image size"
+msgstr "გამოსახულების ზომა"
+
+msgid "Image type"
+msgstr "გამოსახულების ტიპი"
+
+msgid "Images"
+msgstr "გამოსახულებები"
+
+msgid "Images Menu"
+msgstr "გამოსახულებათა მენიუ"
+
+msgid "Import Options"
+msgstr "პარამეტრების იმპორტირება"
+
+msgid "Import Palette"
+msgstr "პალიტრის იმპორტირება"
+
+msgid "Import a New Palette"
+msgstr "ახალი პალიტრის იმპორტირება"
+
+msgid "Import palette"
+msgstr "პალიტრის შემოტანა"
+
+msgid "In_k"
+msgstr "მე_ლანი"
+
+msgid "In_vert"
+msgstr "ინ_ვერსია"
+
+msgid "In_vert Mask"
+msgstr "მასკის ინ_ვერსია"
+
+msgid "Index:"
+msgstr "ინდექსი:"
+
+msgid "Indexed Color"
+msgstr "ინდექსირებული ფერი"
+
+msgid "Initializing Plug-ins"
+msgstr "პლაგინების ინიციალიზაცია"
+
+msgid "Initializing plug-in: '%s'\n"
+msgstr "პლაგინის ინიციალიზაცია: '%s'\n"
+
+msgid "Ink"
+msgstr "მელანი"
+
+msgid "Input Levels"
+msgstr "შემავალი დონეები"
+
+msgid "Interface"
+msgstr "ინტერფეისი"
+
+msgid "Internal GIMP procedure"
+msgstr "GIMP-ის შიდა პროცედურა"
+
+msgid "Internal Procedures"
+msgstr "შიდა პროცედურები"
+
+msgid "Interpolation:"
+msgstr "ინტერპოლაცია:"
+
+msgid "Interpreter Folders"
+msgstr "ინტერპრეტატორების საქაღალდეები"
+
+msgid "Interpreters"
+msgstr "ინტერპრეტატორები"
+
+msgid "Invalid width or height. Both must be positive."
+msgstr "სიმაღლე ან სიგანე არასწორია. ორივე დადებითი უნდა იყოს."
+
+msgid "Invert"
+msgstr "ინვერსია"
+
+msgid "Invert Channel"
+msgstr "არხის ინვერსია"
+
+msgid "Invert does not operate on indexed layers."
+msgstr "ინვერსია ინდექსირებულ ფენებზე არ მოქმედებს."
+
+msgid "Invert selection"
+msgstr "არჩევანის ინვერსია"
+
+msgid "Kee_p Transparency"
+msgstr "გამჭვირვალობის შ_ენახვა"
+
+msgid "Keep aspect  %s"
+msgstr "%s  ფარდობის შენარჩუნება"
+
+msgid "Keep aspect ratio  %s"
+msgstr "%s  ფარდობის შენარჩუნება"
+
+msgid "Keep height  %s"
+msgstr "შეინარჩუნე სიმაღლე  %s"
+
+msgid "Keep transparency"
+msgstr "გამჭვირვალობის შენარჩუნება"
+
+msgid "Keep width  %s"
+msgstr "შეინარჩუნე სიგანე  %s"
+
+msgid "Keyboard"
+msgstr "კლავიატურა"
+
+msgid "LTR"
+msgstr "მარცხნიდან მარჯვნივ"
+
+msgid "Large"
+msgstr "დიდი"
+
+msgid "Large (256x256)"
+msgstr "დიდი (256x256)"
+
+msgid "Last Error:"
+msgstr "უკანასკნელი შეცდომა:"
+
+msgid "Layer"
+msgstr "ფენა"
+
+msgid "Layer Attributes"
+msgstr "ფენის ატრიბუტები"
+
+msgid "Layer Size"
+msgstr "ფენის ზომა"
+
+msgid "Layer _Name:"
+msgstr "ფე_ნის სახელი:"
+
+msgid "Layer cannot be lowered more."
+msgstr "ფენა უფრო მეტად ვერ დაიწევა."
+
+msgid "Layer cannot be raised higher."
+msgstr "ფენა უფრო ზემოთ ვერ აიწევა."
+
+msgid "Layer is already on the bottom."
+msgstr "ფენა უკვე სულ ქვევითაა."
+
+msgid "Layer is already on top."
+msgstr "ფენა უკვე სულ ზევითაა."
+
+msgid "Layers"
+msgstr "ფენები"
+
+msgid "Layers Menu"
+msgstr "ფენათა მენიუ"
+
+msgid "Layers Merge Options"
+msgstr "ფენების გაერთიანების პარამეტრები"
+
+msgid "Length:"
+msgstr "სიგრძე:"
+
+msgid "Levels"
+msgstr "დონეები"
+
+msgid "Line"
+msgstr "ხაზი"
+
+msgid "Line Width:"
+msgstr "ხაზის სიგანე:"
+
+msgid "Linear"
+msgstr "წრფივი"
+
+msgid "Load"
+msgstr "ჩატვირთვა"
+
+msgid "Load Curves"
+msgstr "წირების ჩატვირთვა"
+
+msgid "Load Levels"
+msgstr "დონეების ჩატვირთვა"
+
+msgid "Load levels settings from file"
+msgstr "დონეების პარამეტრების ფაილიდან ჩატვირთვა"
+
+msgid "Load text from file"
+msgstr "ტექსტის ფაილიდან ჩატვირთვა"
+
+msgid "Location:"
+msgstr "მდებარეობა:"
+
+msgid "Logarithmic"
+msgstr "ლოგარითმული"
+
+msgid "Looking for data files"
+msgstr "ვეძებ მონაცემთა ფაილებს"
+
+msgid "Lower Channel"
+msgstr "არხის დაწევა"
+
+msgid "Lower Channel to Bottom"
+msgstr "არხის ბოლომდე დაწევა"
+
+msgid "Lower Layer"
+msgstr "ფენის დაწევა"
+
+msgid "Lower Layer to Bottom"
+msgstr "ფენის ბოლომდე დაწევა"
+
+msgid "M_agnify"
+msgstr "გ_ადიდება"
+
+msgid "M_aster"
+msgstr "მთ_ავარი"
+
+msgid "Ma_p"
+msgstr "რუ_ქა"
+
+msgid "Magnify"
+msgstr "გადიდება"
+
+msgid "Make _transparent"
+msgstr "გახადე გამ_ჭვირვალე"
+
+msgid "Matrix:"
+msgstr "მატრიცა:"
+
+msgid "Max Depth:"
+msgstr "მაქს. სიღრმე:"
+
+msgid "Maximum _new image size:"
+msgstr "ახალი გამოსა_ხულების მაქს. ზომა:"
+
+msgid "Maximum color difference"
+msgstr "ფერთა მაქსიმალური სხვაობა"
+
+msgid "Measure"
+msgstr "გაზომვა"
+
+msgid "Measure Distances and Angles"
+msgstr "მანძილების და კუთხეების გაზმვა"
+
+msgid "Measure distances and angles"
+msgstr "მანძილის და კუთხის გაზომვა"
+
+msgid "Medium"
+msgstr "საშუალო"
+
+msgid "Merge Do_wn"
+msgstr "ძირს გაერ_თიანებაMerge Do_wn"
+
+msgid "Merge Down"
+msgstr "ძირს გაერთიანება"
+
+msgid "Merge Layers"
+msgstr "ფენების გაერთიანება"
+
+msgid "Merge Palette"
+msgstr "პალიტრების გაერთიანება"
+
+msgid "Merge Visible Layers"
+msgstr "ხილული ფენების გაერთიანება"
+
+msgid "Merge Visible _Layers..."
+msgstr "ხი_ლული ფენების გაერთიანება..."
+
+msgid "Merge _Visible Layers..."
+msgstr "ხილუ_ლი ფენების გაერთიანება..."
+
+msgid "Merge layers"
+msgstr "ფენების გაერთიანება"
+
+msgid "Merge palettes"
+msgstr "პალიტრების გაერთოანება"
+
+msgid "Merge vectors"
+msgstr "ვექტორების გაერთიანება"
+
+msgid "Miscellaneous"
+msgstr "სხვადასხვა"
+
+msgid "Mode"
+msgstr "რეჟიმი"
+
+msgid "Mode:"
+msgstr "რეჟიმი:"
+
+msgid "Modify all colors"
+msgstr "ყველა ფერის შეცვლა"
+
+msgid "Module Folders"
+msgstr "მოდულების საქაღალდეები"
+
+msgid "Module Manager"
+msgstr "მოდულების მმართველი"
+
+msgid "Module path"
+msgstr "მოდულის ადგილმდებარეობა"
+
+msgid "Modules"
+msgstr "მოდულები"
+
+msgid "Move"
+msgstr "გადაადგილება"
+
+msgid "Move Channel"
+msgstr "არხის გადაადგილება"
+
+msgid "Move Layer"
+msgstr "ფენის გადაადგილება"
+
+msgid "Move Text Layer"
+msgstr "ტექსტური ფენის გადაადგილება"
+
+msgid "Move Tool"
+msgstr "გადამაადგილებელი ინსტრუმენტი"
+
+msgid "Move the current layer"
+msgstr "მიმდინარე ფენის გადაადგილება"
+
+msgid "Move: "
+msgstr "გადაადგილება: "
+
+msgid "Multiply"
+msgstr "გამრავლება"
+
+msgid "N_umber of colors:"
+msgstr "ფერების რაოდე_ნობა:"
+
+msgid "Na_vigation"
+msgstr "ნა_ვიგაცია"
+
+msgid "Na_vigation Window"
+msgstr "ნა_ვიგაციის ფანჯარა"
+
+msgid "Name"
+msgstr "სახელი"
+
+msgid "Name:"
+msgstr "სახელი:"
+
+msgid "Navigation"
+msgstr "ნავიგაცია"
+
+msgid "New Channel"
+msgstr "ახალი არხი"
+
+msgid "New Channel Color"
+msgstr "ახალი არხის ფერი"
+
+msgid "New Channel Options"
+msgstr "ახალი არხის პარამეტრები"
+
+msgid "New Layer"
+msgstr "ახალი ფენა"
+
+msgid "New Template"
+msgstr "ახალი ნიმუში"
+
+msgid "New brush"
+msgstr "ახალი ფუნჯი"
+
+msgid "New channel"
+msgstr "ახალი არხი"
+
+msgid "New channel with last values"
+msgstr "ახალი არხი უკანასკნელი მნიშვნელობებით"
+
+msgid "New channel..."
+msgstr "ახალი არხი..."
+
+msgid "New gradient"
+msgstr "ახალი გრადაცია"
+
+msgid "New import"
+msgstr "ახალი იმპორტირება"
+
+msgid "New layer"
+msgstr "ახალი ფენა"
+
+msgid "New layer with last values"
+msgstr "ახალი ფენა უკანასკნელი მნიშვნელობებით"
+
+msgid "New layer..."
+msgstr "ახალი ფენა..."
+
+msgid "New palette"
+msgstr "ახალი პალიტრა"
+
+msgid "New pattern"
+msgstr "ახალი შაბლონი"
+
+msgid "New vectors"
+msgstr "ახალი ვექტორები"
+
+msgid "No filter selected"
+msgstr "ფილტრი არ არის არჩეული"
+
+msgid "No longer available"
+msgstr "აღარ არის ხელმისაწვდომი"
+
+msgid "Normal"
+msgstr "ნორმალური"
+
+msgid "Normal (128x128)"
+msgstr "ნორმალური (128x128)"
+
+msgid "Normal dots"
+msgstr "ნორმალური წეტილები"
+
+msgid "Number of _processors to use:"
+msgstr "გამოსაყენებელი _პროცესორების რიცხვი:"
+
+msgid "On disk"
+msgstr "დისკზე"
+
+msgid "Only in memory"
+msgstr "მხოლოდ მეხსიერებაში"
+
+msgid "Op_en as Layer..."
+msgstr "როგორც ფ_ენის გახსნა..."
+
+msgid "Open"
+msgstr "გახსნა"
+
+msgid "Open Image"
+msgstr "გამოსახულების გახსნა"
+
+msgid "Open Image as Layer"
+msgstr "გამოსახულების როგორც ფენის გახსნა"
+
+msgid "Open Location"
+msgstr "მდებარეობის გახსნა"
+
+msgid "Open Text File (UTF-8)"
+msgstr "ტექსტური ფაილის გახსნა (UTF-8)"
+
+msgid "Open _Location..."
+msgstr "მდებარეობის გახ_სნა..."
+
+msgid "Open image dialog"
+msgstr "გამოსახულების გახსნის დიალოგი"
+
+msgid "Open pattern as image"
+msgstr "შაბლონის გახსნა გამოსახულების სახით"
+
+msgid ""
+"Opening '%s' failed:\n"
+"\n"
+"%s"
+msgstr ""
+"'%s'-ის გახსნა ჩაიშალა:\n"
+"\n"
+"%s"
+
+msgid "Opening '%s' failed: %s"
+msgstr "'%s'-ის გახსნა ჩაიშალა: %s"
+
+msgid "Origin X:"
+msgstr "X ღერძი:"
+
+msgid "Origin Y:"
+msgstr "Y ღერძი:"
+
+msgid "Original Width:"
+msgstr "ორიგინალური სიგანე:"
+
+msgid "Othe_r (%s) ..."
+msgstr "ს_ხვა (%s) ..."
+
+msgid "Othe_r..."
+msgstr "ს_ხვა..."
+
+msgid "Other..."
+msgstr "სხვა..."
+
+msgid "Output Levels"
+msgstr "გამომავალი დონეები"
+
+msgid "Overlay"
+msgstr "დადება"
+
+msgid "P_atterns"
+msgstr "შ_აბლონები"
+
+msgid "Paint Tool:"
+msgstr "სახატავი ინსტრუმენტი:"
+
+msgid "Paint _Mode"
+msgstr "ხატვის _რეჟიმი"
+
+msgid "Paintbrush"
+msgstr "სახატავი ფუნჯი"
+
+msgid "Pal_ettes"
+msgstr "პალიტრ_ები"
+
+msgid "Palette"
+msgstr "პალიტრა"
+
+msgid "Palette Editor"
+msgstr "პალიტრის რედაქტორი"
+
+msgid "Palette Editor Menu"
+msgstr "პალიტრის რედაქტორის მენიუ"
+
+msgid "Palette Folders"
+msgstr "პალიტრების საქაღალდეები"
+
+msgid "Palette _Name:"
+msgstr "პალიტრის _სახელი:"
+
+msgid "Palette _file"
+msgstr "პალიტრის _ფაილი"
+
+msgid "Palettes"
+msgstr "პალიტრები"
+
+msgid "Palettes Menu"
+msgstr "პალიტრების მენიუ"
+
+msgid "Parsing '%s'\n"
+msgstr "ვამუშავებ '%s'-ს\n"
+
+msgid "Paste"
+msgstr "ჩასმა"
+
+msgid "Paste _Into"
+msgstr "_შიგნით ჩასმა"
+
+msgid "Paste as _New"
+msgstr "როგორც ახ_ლის ჩასმა"
+
+msgid "Paste the selected buffer"
+msgstr "არჩეული ბუფერის ჩასმა"
+
+msgid "Pasted Layer"
+msgstr "ჩასმული ფენა"
+
+msgid "Paths"
+msgstr "წირები"
+
+msgid "Pattern"
+msgstr "შაბლონი"
+
+msgid "Pattern Folders"
+msgstr "შაბლონების საქაღალდეები"
+
+msgid "Patterns"
+msgstr "შაბლონები"
+
+msgid "Patterns Menu"
+msgstr "შაბლონების მენიუ"
+
+msgid "Pe_ncil"
+msgstr "ფა_ნქარი"
+
+msgid "Pencil"
+msgstr "ფანქარი"
+
+msgid "Perspective"
+msgstr "პერსპექტივა"
+
+msgid "Perspective..."
+msgstr "პერსპექტივა..."
+
+msgid "Pick black point"
+msgstr "შავი წერტილის არჩევა"
+
+msgid "Pick gray point"
+msgstr "ნაცრისფერი წერტილის არჩევა"
+
+msgid "Pick white point"
+msgstr "თეთრი წერტილის არჩევა"
+
+msgid "Pixels"
+msgstr "პიქსელი"
+
+msgid "Pixels:"
+msgstr "პიქსელები:"
+
+msgid "Please wait..."
+msgstr "გთხოვთ დაიცადოთ..."
+
+msgid "Plug-In"
+msgstr "პლაგინი"
+
+msgid "Plug-In Environment"
+msgstr "პლაგინების გარემო"
+
+msgid "Plug-In Folders"
+msgstr "პლაგინების საქაღალდეები"
+
+msgid "Plug-In Interpreters"
+msgstr "პლაგინების ინტერპრეტატორები"
+
+msgid "Plug-Ins"
+msgstr "პლაგინები"
+
+msgid "Plug-in"
+msgstr "პლაგინი"
+
+msgid "Position: %0.6f"
+msgstr "პოზიცია: %0.6f"
+
+msgid "Preferences"
+msgstr "პარამეტრები"
+
+msgid "Pressure:"
+msgstr "წნევა:"
+
+msgid "Print Size"
+msgstr "საბეჭდი ზომა"
+
+msgid "Print size:"
+msgstr "საბეჭდი ზომა:"
+
+msgid "Procedural Database"
+msgstr "პროცედურული მოაცემთა ბაზა"
+
+msgid "Procedural database"
+msgstr "პროცედურული მონაცემთა ბაზა"
+
+msgid "Progress"
+msgstr "პროგრესი"
+
+msgid "Purpose:"
+msgstr "გამოყენება:"
+
+msgid "Quality"
+msgstr "ხარისხი"
+
+msgid "Quick Load"
+msgstr "სწრაფი ჩატვირთვა"
+
+msgid "Quick Mask"
+msgstr "სწრაფი მასკა"
+
+msgid "Quick Mask Attributes"
+msgstr "სწრაფი მასკის ატრიბუტებიQuick Mask Attributes"
+
+msgid "Quick Mask Menu"
+msgstr "სწრაფი მასკის მენიუQuick Mask Menu"
+
+msgid "Quick Save"
+msgstr "სწრაფი შენახვა"
+
+msgid "QuickMask"
+msgstr "სწრაფი მასკა"
+
+msgid "Quit The GIMP"
+msgstr "GIMP-დან გასვლა"
+
+msgid "RGB"
+msgstr "RGB"
+
+msgid "RGB (%0.3f, %0.3f, %0.3f)"
+msgstr "RGB (%0.3f, %0.3f, %0.3f)"
+
+msgid "RGB (%d, %d, %d)"
+msgstr "RGB (%d, %d, %d)"
+
+msgid "RGB Color"
+msgstr "RGB ფერები"
+
+msgid "RGB-empty"
+msgstr "ცარიელი RGB"
+
+msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
+
+msgid "RTL"
+msgstr "მარჯვნიდან მარცხნივ"
+
+msgid "R_eset Tool Options"
+msgstr "R_eset Tool Options"
+
+msgid "Radius:"
+msgstr "რადიუსი:"
+
+msgid "Raise Channel"
+msgstr "არხის აწევა"
+
+msgid "Raise Channel to Top"
+msgstr "არხის ბოლომდე აწევა"
+
+msgid "Raise Layer"
+msgstr "ფენის აწევა"
+
+msgid "Raise Layer to Top"
+msgstr "ფენის ბოლომდე აწევა"
+
+msgid "Raise Path to _Top"
+msgstr "Raise Path to _Top"
+
+msgid "Raise channel"
+msgstr "არხის აწევა"
+
+msgid "Raise layer"
+msgstr "ფენის აწევა"
+
+msgid "Raise layer to top"
+msgstr "ფენის ბოლომდე აწევა"
+
+msgid "Raise window if already open"
+msgstr "ასწიე ფანჯარა, თუ უკვე გახსნილია"
+
+msgid "Re_peat Last"
+msgstr "_უკანასკნელის გამეორება"
+
+msgid "Re_vert..."
+msgstr "ა_ღდგენა..."
+
+msgid "Ready"
+msgstr "მზადაა"
+
+msgid "Really clear image's undo history?"
+msgstr "ნამდვილად გავწმინდო გამოსახულების დაბრუნების ისტორია?"
+
+msgid "Rectangle: "
+msgstr "მართკუთხედი: "
+
+msgid "Red"
+msgstr "წითელი"
+
+msgid "Red:"
+msgstr "წითელი:"
+
+msgid "Redo"
+msgstr "გამეორება"
+
+msgid "Refresh brushes"
+msgstr "ფუნჯების განახლება"
+
+msgid "Refresh gradients"
+msgstr "გრადაციების განახლება"
+
+msgid "Refresh palettes"
+msgstr "პალიტრების განახლება"
+
+msgid "Refresh patterns"
+msgstr "შაბლონების განახლება"
+
+msgid "Remote File"
+msgstr "ფაილის ამოღება"
+
+msgid "Remove Channel"
+msgstr "არხის ამოღება"
+
+msgid "Remove Layer"
+msgstr "ფენის ამოღება"
+
+msgid "Remove colors"
+msgstr "ფერების ამოღება"
+
+msgid "Rename Channel"
+msgstr "არხის გადარქმევა"
+
+msgid "Rename Layer"
+msgstr "ფენის გადარქმევა"
+
+msgid "Rename Saved Tool Options"
+msgstr "Rename Saved Tool Options"
+
+msgid "Rename Text Layer"
+msgstr "ტექსტური ფენის გადარქმევა"
+
+msgid "Repeat Last"
+msgstr "უკანასკნელის გამეორებაRepeat Last"
+
+msgid "Repeat:"
+msgstr "გამეორება:"
+
+msgid "Reset all tool options"
+msgstr "Reset all tool options"
+
+msgid "Reset to default values"
+msgstr "საწყის მდგომარეობებზე დაბრუნება"
+
+msgid "Resize"
+msgstr "ზომის შეცვლა"
+
+msgid "Resize Channel"
+msgstr "არხის ზომის შეცვლა"
+
+msgid "Resize Image"
+msgstr "გამოსახულების ზომის შეცვლა"
+
+msgid "Resize Layer"
+msgstr "ფენის ზომის შეცვლა"
+
+msgid "Resize Text Layer"
+msgstr "ტექსტური ფენის ზომის შეცვლა"
+
+msgid "Resize image"
+msgstr "გამოსახულების ზომის შეცვლა"
+
+msgid "Resizing..."
+msgstr "ზომის შეცვლა..."
+
+msgid "Resolution change"
+msgstr "გარჩევადობის შეცვლა"
+
+msgid "Resolution:"
+msgstr "გარჩევადობა:"
+
+msgid "Revert '%s' to '%s'?"
+msgstr "აღვადგინო '%s' - '%s'-ით?"
+
+msgid "Revert Image"
+msgstr "გამოსახულების აღდგენა"
+
+msgid ""
+"Reverting to '%s' failed:\n"
+"\n"
+"%s"
+msgstr ""
+"'%s'-ით აღდგენა ჩაიშალა:\n"
+"\n"
+"%s"
+
+msgid "Rotate"
+msgstr "დატრიალება"
+
+msgid "Rotate 90 degrees CC_W"
+msgstr "90 გრადუსით სს_მ დატრიალება"
+
+msgid "Rotate 90 degrees _CW"
+msgstr "90 გრადუსით _სმ დატრიალება"
+
+msgid "Rotate Channel"
+msgstr "არხის დატრიალება"
+
+msgid "Rotate Layer"
+msgstr "ფენის დატრიალება"
+
+msgid "Rotate Text Layer"
+msgstr "ტექსტური ფენის დატრიალება"
+
+msgid "Rotate _180 degrees"
+msgstr "_180 გრადუსით დატრიალება"
+
+msgid "Rotate image"
+msgstr "გამოსახულების დატრიალება"
+
+msgid "Rotating..."
+msgstr "დატრიალება..."
+
+msgid "Rotation Information"
+msgstr "ინფორმაცია ბრუნვაზე"
+
+msgid "Round"
+msgstr "მრგვალი"
+
+msgid "Run without a user interface"
+msgstr "გაუშვი სამომხმარებლო ინტერფეისის გარეშე"
+
+msgid "S_pikes"
+msgstr "რასტრის _წერტილები"
+
+msgid "S_wap Colors"
+msgstr "ფერების გა_ცვლა"
+
+msgid "Save"
+msgstr "შენახვა"
+
+msgid "Save '%s' as POV-Ray"
+msgstr "'%s'-ის POV-სხივის სახით შენახვა"
+
+msgid "Save Curves"
+msgstr "წირების შენახვა"
+
+msgid "Save Error Log to File"
+msgstr "შეცდომათა ჟურნალის ფაილში შენახვა"
+
+msgid "Save Image"
+msgstr "გამოსახულების შენახვა"
+
+msgid "Save Levels"
+msgstr "დონეების შენახვა"
+
+msgid "Save _All Errors to File..."
+msgstr "ყველა შეცდომის _შენახვა ფაილში..."
+
+msgid "Save _Selection to File..."
+msgstr "_მონიშნულის ფაილში შენახვა..."
+
+msgid "Save _as..."
+msgstr "შეინახვა როგორ_ც..."
+
+msgid "Save a Cop_y..."
+msgstr "ას_ლის შენახვა..."
+
+msgid "Save a Copy of the Image"
+msgstr "გამოსახულების ასლის შენახვა"
+
+msgid "Save all errors"
+msgstr "ყველა შეცდომის შენახვა"
+
+msgid "Save as _POV-Ray..."
+msgstr "_POV-ხსივის სახით შენახვა..."
+
+msgid "Save as _Template..."
+msgstr "ნი_მუში..."
+
+msgid "Save gradient as POV-Ray"
+msgstr "გრადაციის POV-სხივის სახით შენახვა"
+
+msgid "Save levels settings to file"
+msgstr "დონეების პარამეტრების ფაილში შენახვა"
+
+msgid "Save selection"
+msgstr "მონიშნულის შენხვა"
+
+msgid "Saved Options"
+msgstr "შენახული პარამეტრები"
+
+msgid "Saving '%s'\n"
+msgstr "ვინახავ '%s'-ს\n"
+
+msgid ""
+"Saving '%s' failed:\n"
+"\n"
+"%s"
+msgstr ""
+"'%s'-ის შენახვა ჩაიშალა:\n"
+"\n"
+"%s"
+
+msgid "Saving Images"
+msgstr "გამოსახულებათა შენახვა"
+
+msgid "Scale Channel"
+msgstr "არხის მასშტაბირება"
+
+msgid "Scale Image"
+msgstr "გამოსახულების მასშტაბირება"
+
+msgid "Scale Layer"
+msgstr "ფენის მასშტაბირება"
+
+msgid "Scale Text Layer"
+msgstr "ტექსტური ფენის მასშტაბირება"
+
+msgid "Scale image"
+msgstr "გამოსახულების მასშტაბირება"
+
+msgid "Scale ratio X:"
+msgstr "X-ის მასშტაბი:"
+
+msgid "Scale ratio Y:"
+msgstr "Y-ის მასშტაბი:"
+
+msgid "Scaling"
+msgstr "მასშტაბირება"
+
+msgid "Scaling information"
+msgstr "მასშტაბირების ინფორმაცია"
+
+msgid "Scaling..."
+msgstr "მასშტაბირება..."
+
+msgid "Scissors"
+msgstr "მაკრატლები"
+
+msgid "Script-Fu Folders"
+msgstr "Script-Fu საქაღალდეები"
+
+msgid "Scripts"
+msgstr "სკრიპტები"
+
+msgid "Select"
+msgstr "არჩევა"
+
+msgid "Select All"
+msgstr "ყველაფრის არჩევა"
+
+msgid "Select Color"
+msgstr "ფერის არჩევა"
+
+msgid "Select File _Type (%s)"
+msgstr "აირჩიეთ ფაილის _ტიპი (%s)"
+
+msgid "Select Source"
+msgstr "წყაროს არჩევა"
+
+msgid "Select Theme"
+msgstr "თემის არჩევა"
+
+msgid "Select all"
+msgstr "აირჩიე ყველა"
+
+msgid "Select by Color"
+msgstr "ფერის მიხედვით არჩევა"
+
+msgid "Select elliptical regions"
+msgstr "ადგილების ელიფსური მონიშვნა"
+
+msgid "Select palette file"
+msgstr "პალიტრის ფაილის არჩევა"
+
+msgid "Select rectangular regions"
+msgstr "ადგილების მართკუთხა მონიშვნა"
+
+msgid ""
+"Select the number of times\n"
+"to replicate the selection."
+msgstr ""
+"of times\n"
+"to replicate the selection."
+
+msgid "Sensitivity"
+msgstr "მგრძნობიარობა"
+
+msgid "Shadow type"
+msgstr "ჩრდილის ტიპი"
+
+msgid "Shape"
+msgstr "ფორმა"
+
+msgid "Shape:"
+msgstr "ფორმა:"
+
+msgid "Show R_ulers"
+msgstr "აჩვენე ს_ახაზავები"
+
+msgid "Show S_tatusbar"
+msgstr "აჩვენე ს_ტატუსის დაფა"
+
+msgid "Show _Menubar"
+msgstr "აჩვენე _მენიუს დაფა"
+
+msgid "Show _rulers"
+msgstr "სა_ხაზავების ჩვენება"
+
+msgid "Show help _buttons"
+msgstr "დახმარე_ბის ღილაკების ჩვენება"
+
+msgid "Shrink Selection"
+msgstr "hrink Selection"
+
+msgid "Size"
+msgstr "ზომა"
+
+msgid "Size:"
+msgstr "ზომა:"
+
+msgid "Small"
+msgstr "პატარა"
+
+msgid "Solid"
+msgstr "მთელი"
+
+msgid "Source"
+msgstr "წყარო"
+
+msgid "Special File"
+msgstr "სპეციალური ფაილი"
+
+msgid "Speed:"
+msgstr "სიჩქარე:"
+
+msgid "Spikes:"
+msgstr "რასტრის წერტილები:"
+
+msgid "Split"
+msgstr "გაყოფა"
+
+msgid "Split Segment at _Midpoint"
+msgstr "სეგ_მენტის შუაწერტილზე გაყოფა"
+
+msgid "Square"
+msgstr "კვადრატული"
+
+msgid "St_atus & Text"
+msgstr "სტ_ატუსი & ტექსტი"
+
+msgid "Starting Extensions"
+msgstr "გაფართოებათა გაშვება"
+
+msgid "Starting extension: '%s'\n"
+msgstr "გაფართოების გაშვება: '%s'\n"
+
+msgid "State:"
+msgstr "მდგომარეობა:"
+
+msgid "Stroke path with last values"
+msgstr "Stroke path with last values"
+
+msgid "T_ools"
+msgstr "_ინსტრუმენტები"
+
+msgid "Te_xt"
+msgstr "ტე_ქსტი"
+
+msgid "Templates"
+msgstr "ნიმუშები"
+
+msgid "Templates Menu"
+msgstr "ნიმუშების მენიუ"
+
+msgid "Temporary Procedure"
+msgstr "დროებითი პროცედურა"
+
+msgid "Terminating plug-in: '%s'\n"
+msgstr "პლაგინის შეჩერება: '%s'\n"
+
+msgid "Text"
+msgstr "ტექსტი"
+
+msgid "Text Color"
+msgstr "ტექსტის ფერი"
+
+msgid "Text Editor"
+msgstr "ტექსტური რედაქტორი"
+
+msgid "Text Layer"
+msgstr "ტექსტური ფენა"
+
+msgid "The GIMP"
+msgstr "GIMP"
+
+msgid "The horizontal image resolution."
+msgstr "გამოსახულების ჰორიზონტალური გარჩევადობა."
+
+msgid "The vertical image resolution."
+msgstr "გამოსახულების ვერტიკალური გარჩევადობა."
+
+msgid "Theme"
+msgstr "თემა"
+
+msgid "Theme Folders"
+msgstr "თემების საქაღალდეები"
+
+msgid "Themes"
+msgstr "თემები"
+
+msgid "There is no active layer or channel to copy from."
+msgstr "იქ არ არის აქტიური ფენა, საიდანაც შეიძლება კოპირება."
+
+msgid "There is no active layer or channel to cut from."
+msgstr "იქ არ არის აქტიური ფენა, საიდანაც შეიძლება ამოჭრა."
+
+msgid ""
+"There was an error parsing your '%s' file. Default values will be used. A "
+"backup of your configuration has been created at '%s'."
+msgstr ""
+"'%s' ფაილის დამუშვებისას დაშვებულია შეცდომა. გამოყენებული იქნება "
+"ნაგულისხმევი პარამეტრები. თქვენი კონფიგურაციის '%s'."
+
+msgid "Tiny"
+msgstr "წვრილი"
+
+msgid "To_ys"
+msgstr "სათამაშ_ოები"
+
+msgid "Tool Options"
+msgstr "ინსტრუმენტების პარამეტრები"
+
+msgid "Tool Options Menu"
+msgstr "ინსტრუმენტის პარამეტრების მენიუ"
+
+msgid "Tool _Options"
+msgstr "ინსტრუმენტის _პარამეტრები"
+
+msgid "Tool icon"
+msgstr "ინსტრუმენტის ხატი"
+
+msgid "Tools"
+msgstr "ინსტრუმენტები"
+
+msgid "Tools Menu"
+msgstr "ინსტრუმენტთა მენიუ"
+
+msgid "Tr_ansparency"
+msgstr "გ_ამჭვირვალობა"
+
+msgid "Transform"
+msgstr "ტრასფორმირება"
+
+msgid "Transform Channel"
+msgstr "არხის ტრანსფორმირება"
+
+msgid "Transform Direction"
+msgstr "გარდაქმნის მიმართულება"
+
+msgid "Transform Layer"
+msgstr "ფენის ტრანსფორმირება"
+
+msgid "Transform Text Layer"
+msgstr "ტექსტური ფენის ტრანსფორმირება"
+
+msgid "Transform layer"
+msgstr "ფენის ტრანსფორმირება"
+
+msgid "Transformation"
+msgstr "ტრანსფორმირება"
+
+msgid "Transforming..."
+msgstr "ტრანსფორმირება..."
+
+msgid "Translation by"
+msgstr "თარგმანი"
+
+msgid "Transparency"
+msgstr "გამჭვირვალე"
+
+msgid "Transparency _type:"
+msgstr "გამჭვირვალობის _ტიპი:"
+
+msgid "Type"
+msgstr "ტიპი"
+
+msgid "Undo"
+msgstr "დაბრუნება"
+
+msgid "Units"
+msgstr "ერთეულები"
+
+msgid "Unknown"
+msgstr "უცნობი"
+
+msgid "Unknown file type"
+msgstr "ფაილის უცნობი ტიპი"
+
+msgid "Unnamed"
+msgstr "უსახელო"
+
+msgid "Untitled"
+msgstr "უსათაურო"
+
+msgid "Use an alternate sessionrc file"
+msgstr "გამოიყენე ალტერნატიული sessionrc ფაილი"
+
+msgid "Use black and white (1-bit) palette"
+msgstr "გამოიყენე შავ-თეთრი (1-ბიტიანი) პალიტრა"
+
+msgid "Use info window"
+msgstr "გამოიყენე საინფორმაციო ფანჯარა"
+
+msgid "User Interface"
+msgstr "სამომხმარებლო ინტერფეისი"
+
+msgid "Value"
+msgstr "მნიშვნელობა"
+
+msgid "Value:"
+msgstr "მნიშვნელობა:"
+
+msgid "Version %s brought to you by"
+msgstr "ვერსია %s შექმნილია თქვენთვის"
+
+msgid "Version:"
+msgstr "ვერსია:"
+
+msgid "Vertical"
+msgstr "ვერტიკალური"
+
+msgid "Very large"
+msgstr "ძალიან დიდი"
+
+msgid "Very small"
+msgstr "ძალიან პატარა"
+
+msgid "View"
+msgstr "ხედი"
+
+msgid "Web Browser"
+msgstr "ვებ ბრაუზერი"
+
+msgid "Web browser"
+msgstr "ვებ-ბრაუზერი"
+
+msgid "White"
+msgstr "თეთრი"
+
+msgid "White Balance operates only on RGB color layers."
+msgstr "თეთრის ბალანსი მოქმედებს მხოლოდ RGB ფერის ფენებზე."
+
+msgid "Width"
+msgstr "სიგანე"
+
+msgid "Width:"
+msgstr "სიგანე:"
+
+msgid "Window Management"
+msgstr "ფანჯრების მართვა"
+
+msgid "Window Positions"
+msgstr "ფანჯარათა მდებარეობა"
+
+msgid "Writing '%s'\n"
+msgstr "'%s'-ის წაშლა\n"
+
+msgid "X"
+msgstr "X"
+
+msgid "Y"
+msgstr "Y"
+
+msgid "Yellow"
+msgstr "ყვითელი"
+
+msgid "Yellow:"
+msgstr "ყვითელი:"
+
+msgid "Zoom 1:1"
+msgstr "გადიდება 1:1"
+
+msgid "Zoom Ratio"
+msgstr "გადიდების კოეფიციენტი"
+
+msgid "Zoom Ratio:"
+msgstr "გადიდების კოეფიციენტი:"
+
+msgid "Zoom _In"
+msgstr "გა_დიდება"
+
+msgid "Zoom _Out"
+msgstr "და_პატარავება"
+
+msgid "Zoom in & out"
+msgstr "გადიდება & დაპატარავება"
+
+msgid "Zoom:"
+msgstr "გადიდება:"
+
+msgid "_2:1  (200%)"
+msgstr "_2:1  (200%)"
+
+msgid "_4:1  (400%)"
+msgstr "_4:1  (400%)"
+
+msgid "_8:1  (800%)"
+msgstr "_8:1  (800%)"
+
+msgid "_About"
+msgstr "_შესახებ"
+
+msgid "_Add Tab"
+msgstr "დაფის დ_ამატება"
+
+msgid "_Advanced Options"
+msgstr "დ_ამატებითი პარამეტრები"
+
+msgid "_Airbrush"
+msgstr "_აეროგრაფი"
+
+msgid "_All"
+msgstr "_ყველა"
+
+msgid "_Antialiasing"
+msgstr "_ანტიალიასინგი"
+
+msgid "_Artistic"
+msgstr "_არტისტული"
+
+msgid "_Aspect"
+msgstr "_ფარდობა"
+
+msgid "_B"
+msgstr "_B"
+
+msgid "_Brightness:"
+msgstr "სიკა_შკაშე:"
+
+msgid "_Brush"
+msgstr "_ფუნჯი"
+
+msgid "_Brushes"
+msgstr "_ფუნჯები"
+
+msgid "_Buffer"
+msgstr "_ბუფერი"
+
+msgid "_By Color"
+msgstr "_ფერის მიხედვით"
+
+msgid "_C"
+msgstr "_C"
+
+msgid "_CMYK Profile:"
+msgstr "_CMYK პროფილი:"
+
+msgid "_Channels"
+msgstr "_არხები"
+
+msgid "_Clear Errors"
+msgstr "შეცდომების _გასუფთავება"
+
+msgid "_Clear Undo History"
+msgstr "დაბრუნების ისტორიის გა_წმენდა"
+
+msgid "_Clone"
+msgstr "_კლონირება"
+
+msgid "_Close"
+msgstr "_დაკეტვა"
+
+msgid "_Close Tab"
+msgstr "დაფის და_კეტვა"
+
+msgid "_Clouds"
+msgstr "_ღრუბლები"
+
+msgid "_Color Tools"
+msgstr "_ფერის ინსტრუმენტები"
+
+msgid "_Colors"
+msgstr "_ფერები"
+
+msgid "_Context"
+msgstr "_კონტექსტი"
+
+msgid "_Copy"
+msgstr "_კოპირება"
+
+msgid "_Create Image from Template..."
+msgstr "_ნიმუშიდან გამოსახულების შექმნაe..."
+
+msgid "_Cursor"
+msgstr "_კურსორი"
+
+msgid "_Curved"
+msgstr "წი_რული"
+
+msgid "_Curves..."
+msgstr "_წირები..."
+
+msgid "_Default Colors"
+msgstr "_ნაგულისხმევი ფერები"
+
+msgid "_Delete Brush"
+msgstr "ფუნჯის _წაშლა"
+
+msgid "_Delete Buffer"
+msgstr "ბუფერის _წაშლა"
+
+msgid "_Delete Channel"
+msgstr "არხის _წაშლა"
+
+msgid "_Delete Color"
+msgstr "ფერის _წაშლა"
+
+msgid "_Delete Gradient..."
+msgstr "გრადაციის _წაშლა..."
+
+msgid "_Delete Image"
+msgstr "_გამოსახულების წაშლა"
+
+msgid "_Delete Layer"
+msgstr "ფენის _წაშლა"
+
+msgid "_Delete Palette"
+msgstr "პალიტრის _წაშლა"
+
+msgid "_Delete Pattern..."
+msgstr "_შაბლონის წაშლა..."
+
+msgid "_Delete Saved Options"
+msgstr "_Delete Saved Options"
+
+msgid "_Delete Segment"
+msgstr "სეგმენტის _წაშლა"
+
+msgid "_Delete Template"
+msgstr "ნიმუშის _წაშლა"
+
+msgid "_Detach Tab"
+msgstr "დაფის _მოხსნა"
+
+msgid "_Device Status"
+msgstr "_მოწყობილობის სტატუსი"
+
+msgid "_Dialogs"
+msgstr "_დიალოგები"
+
+msgid "_Distorts"
+msgstr "_დამახინჯებები"
+
+msgid "_Duplicate"
+msgstr "_დუბლირება"
+
+msgid "_Edit"
+msgstr "_რედაქტირება"
+
+msgid "_Edit Brush..."
+msgstr "ფუნჯის _რედაქტირება..."
+
+msgid "_Edit Channel Attributes..."
+msgstr "არ_ხის ატრიბუტების რედაქტირება..."
+
+msgid "_Edit Color..."
+msgstr "ფერის _რედაქტირება..."
+
+msgid "_Edit Gradient..."
+msgstr "გრადაციის _რედაქტირება..."
+
+msgid "_Edit Layer Attributes..."
+msgstr "ფ_ენის თვისებების რედაქტირება..."
+
+msgid "_Edit Palette..."
+msgstr "პალიტრის _რედაქტირება..."
+
+msgid "_Edit Pattern..."
+msgstr "შაბლონის რ_ედაქტირება..."
+
+msgid "_Edit Template..."
+msgstr "ნიმუშის რ_ედაქტირება..."
+
+msgid "_Ellipse Select"
+msgstr "_ელიფსური მონიშვნა"
+
+msgid "_Eraser"
+msgstr "_საშლელი"
+
+msgid "_File"
+msgstr "_ფაილი"
+
+msgid "_Fill with:"
+msgstr "_შევსება:"
+
+msgid "_Float"
+msgstr "_მცურავი"
+
+msgid "_Font"
+msgstr "_შრიფტი"
+
+msgid "_Fonts"
+msgstr "_შრიფტები"
+
+msgid "_G"
+msgstr "_G"
+
+msgid "_Gigantic"
+msgstr "გიგან_ტური"
+
+msgid "_Gradient"
+msgstr "_გრადაცია"
+
+msgid "_Gradients"
+msgstr "_გრადაციები"
+
+msgid "_Grayscale"
+msgstr "ნა_ცრისფერი"
+
+msgid "_Grow..."
+msgstr "გა_ზრდა..._Grow..."
+
+msgid "_Hardness"
+msgstr "_სიმაგრე"
+
+msgid "_Help"
+msgstr "_დახმარება"
+
+msgid "_Horizontal:"
+msgstr "_ჰორიზონტალირი:"
+
+msgid "_Huge"
+msgstr "_უზარმაზარი"
+
+msgid "_Icon"
+msgstr "_ხატი"
+
+msgid "_Icon:"
+msgstr "_ხატი:"
+
+msgid "_Image"
+msgstr "_გამოსახულება"
+
+msgid "_Images"
+msgstr "_გამოსახულებები"
+
+msgid "_Import"
+msgstr "_იმპორტირება"
+
+msgid "_Import Palette..."
+msgstr "პალიტრის _შემოტანა..."
+
+msgid "_Indexed..."
+msgstr "_ინდექსირებული..."
+
+msgid "_Invert"
+msgstr "_ინვერსია"
+
+msgid "_Large"
+msgstr "_გრძელი"
+
+msgid "_Layer"
+msgstr "_ფენა"
+
+msgid "_Layers"
+msgstr "_ფენები"
+
+msgid "_Layers, Channels & Paths"
+msgstr "ფ_ენები, არხები და წირები"
+
+msgid "_Levels..."
+msgstr "_დონეები..."
+
+msgid "_Light Effects"
+msgstr "_სინათლის ეფექტები"
+
+msgid "_Line Style"
+msgstr "ხაზის სტი_ლი"
+
+msgid "_Linear"
+msgstr "_წრფივი"
+
+msgid "_M"
+msgstr "_M"
+
+msgid "_Manually"
+msgstr "_ხელით"
+
+msgid "_Map"
+msgstr "_რუქა"
+
+msgid "_Mask"
+msgstr "_მასკა"
+
+msgid "_Maximum number of colors:"
+msgstr "ფერების _მაქსიმალური რაოდენობა:"
+
+msgid "_Measure"
+msgstr "_გაზომვა"
+
+msgid "_Medium"
+msgstr "_საშუალო"
+
+msgid "_Merge Palettes..."
+msgstr "პალიტრების _გაერთოანება..."
+
+msgid "_Mode"
+msgstr "_რეჟიმი"
+
+msgid "_Module Manager"
+msgstr "_მოდულების მმართველი"
+
+msgid "_Monitor Profile:"
+msgstr "_მონიტორის პროფილი:"
+
+msgid "_Move"
+msgstr "_გადაადგილება"
+
+msgid "_Name:"
+msgstr "_სახელი:"
+
+msgid "_Nature"
+msgstr "_ბუნება"
+
+msgid "_New Brush"
+msgstr "_ახალი ფუნჯი"
+
+msgid "_New Channel"
+msgstr "_ახალი არხი"
+
+msgid "_New Channel..."
+msgstr "_ახალი არხი..."
+
+msgid "_New Entry..."
+msgstr "..."
+
+msgid "_New Gradient"
+msgstr "ახალი გრადა_ცია"
+
+msgid "_New Layer"
+msgstr "_ახალი ფენა"
+
+msgid "_New Layer..."
+msgstr "ახალი ფე_ნა..."
+
+msgid "_New Palette"
+msgstr "_ახალი პალიტრა"
+
+msgid "_New Pattern"
+msgstr "ახალი შაბლო_ნი"
+
+msgid "_New Template..."
+msgstr "_ახალი ნიმუში..."
+
+msgid "_New View"
+msgstr "_ახალი ხედი"
+
+msgid "_New..."
+msgstr "_ახალი..."
+
+msgid "_Noise"
+msgstr "_ხმაური"
+
+msgid "_None"
+msgstr "არა_ფერი"
+
+msgid "_Offset..."
+msgstr "_გადახრა..."
+
+msgid "_Open Image"
+msgstr "_გამოსახულების გახსნა"
+
+msgid "_Open Pattern as Image"
+msgstr "შაბლ_ონის გასნა გამოსახულების სახით"
+
+msgid "_Open..."
+msgstr "_გახსნა..."
+
+msgid "_Paint Tools"
+msgstr "_სახატავი ინსტრუმენტები"
+
+msgid "_Paintbrush"
+msgstr "_სახატავი გუნჯი"
+
+msgid "_Palette"
+msgstr "_პალიტრა"
+
+msgid "_Paste"
+msgstr "_ჩასმა"
+
+msgid "_Paste Buffer"
+msgstr "ბუფერიდან _ჩასმა"
+
+msgid "_Paths"
+msgstr "_წირები"
+
+msgid "_Pattern"
+msgstr "_შაბლონი"
+
+msgid "_Perspective"
+msgstr "_პერსპექტივა"
+
+msgid "_Preferences"
+msgstr "_პარამეტრები"
+
+msgid "_Print Size..."
+msgstr "_საბეჭდი ზომა..."
+
+msgid "_Printer Profile:"
+msgstr "_პრინტერის პროფილი:"
+
+msgid "_Properties"
+msgstr "_თვისებები"
+
+msgid "_Quick Mask Active"
+msgstr "ს_წრაფი მასკა აქტიურია"
+
+msgid "_Quit"
+msgstr "გასვ_ლა"
+
+msgid "_R"
+msgstr "_R"
+
+msgid "_RGB"
+msgstr "_RGB"
+
+msgid "_RGB Profile:"
+msgstr "_RGB პროფილი:"
+
+msgid "_Radius"
+msgstr "_რადიუსი"
+
+msgid "_Raise Channel"
+msgstr "ა_რხის აწევა"
+
+msgid "_Raise Layer"
+msgstr "ფენის _აწევა"
+
+msgid "_Redo"
+msgstr "_გამეორება"
+
+msgid "_Redo %s"
+msgstr "%s-ის გამეორება"
+
+msgid "_Refresh Brushes"
+msgstr "ფუნჯების _განახლება"
+
+msgid "_Refresh Gradients"
+msgstr "გრადაციების განახ_ლება"
+
+msgid "_Refresh Palettes"
+msgstr "პალიტრების განა_ხლება"
+
+msgid "_Refresh Patterns"
+msgstr "შაბლონების _განახლება"
+
+msgid "_Replace"
+msgstr "_გამოცვალე"
+
+msgid "_Rotate"
+msgstr "დატ_რიალება"
+
+msgid "_Save"
+msgstr "_შენახვა"
+
+msgid "_Scale Image..."
+msgstr "გამოსახულების მა_სშტაბირება..."
+
+msgid "_Scale Layer..."
+msgstr "ფენის მასშ_ტაბირება..."
+
+msgid "_Select"
+msgstr "_არჩევა"
+
+msgid "_Shape"
+msgstr "_ფორმა"
+
+msgid "_Show in Toolbox"
+msgstr "_Show in Toolbox"
+
+msgid "_Sinusoidal"
+msgstr "_სინუსოიდალური"
+
+msgid "_Small"
+msgstr "_პატარა"
+
+msgid "_Tab Style"
+msgstr "_დაფის სტილი"
+
+msgid "_Template:"
+msgstr "ნიმ_უში"
+
+msgid "_Templates"
+msgstr "_ნიმუში"
+
+msgid "_Text"
+msgstr "_ტექსტი"
+
+msgid "_Tiny"
+msgstr "_წვრილი"
+
+msgid "_Tool"
+msgstr "_ინსტრუმენტი"
+
+msgid "_Tools"
+msgstr "_ინსტრუმენტები"
+
+msgid "_Transform"
+msgstr "_ტრანსფორმირება"
+
+msgid "_Transform Tools"
+msgstr "_გარდაქმნის ინსტრუმენტები"
+
+msgid "_Undo"
+msgstr "_დაბრუნება"
+
+msgid "_Undo %s"
+msgstr "%s-ის _დაბრუნება"
+
+msgid "_Vertical:"
+msgstr "_ვერტიკალური:"
+
+msgid "_View"
+msgstr "_ხედი"
+
+msgid "_Visible"
+msgstr "_ხილული"
+
+msgid "_White Balance"
+msgstr "_თეთრის ბალანსი"
+
+msgid "_Width:"
+msgstr "სიგა_ნე:"
+
+msgid "_X resolution:"
+msgstr "_X გარჩევადობა:"
+
+msgid "_X:"
+msgstr "_X:"
+
+msgid "_Xtns"
+msgstr "_გაფართოებები"
+
+msgid "_Y"
+msgstr "_Y"
+
+msgid "_Y resolution:"
+msgstr "_Y გარჩევადობა:"
+
+msgid "_Y:"
+msgstr "_Y:"
+
+msgid "_Zoom"
+msgstr "_გადიდება"
+
+msgid "colors"
+msgstr "ფერები"
+
+msgid "copy"
+msgstr "კოპირება"
+
+msgid "dpi"
+msgstr "dpi"
+
+msgid "fatal parse error"
+msgstr "ფატალური შეცდომა დამუშავებისას"
+
+msgid "grayscale"
+msgstr "ნაცრისფერი"
+
+msgid "grayscale-empty"
+msgstr "ცარიელი ნაცრისფერი"
+
+msgid "inch"
+msgstr "დუიმი"
+
+msgid "indexed"
+msgstr "ინდექსირებული"
+
+msgid "indexed-empty"
+msgstr "ცარიელი ინდექსირებული"
+
+msgid "millimeter"
+msgstr "მილიმეტრი"
+
+msgid "minute"
+msgstr "წუთი"
+
+msgid "percent"
+msgstr "პროცენტი"
+
+msgid "pixel"
+msgstr "პიქსელი"
+
+msgid "pixels/%a"
+msgstr "პიქსელი/%a"
+
+msgid "pixels/%s"
+msgstr "პიქსელი/%s"
+
+msgid "second"
+msgstr "წამი"
+
+msgid "tips-locale:C"
+msgstr "tips-locale:ka"
+
+msgid "translator-credits"
+msgstr "გიორგი მაჩიტიძე"

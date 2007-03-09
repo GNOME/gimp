@@ -1,0 +1,107 @@
+Debugging Plug-ins
+==================
+
+Eeek! The plug-in you're working on has a bug in it! And the fix isn't
+completely obvious, so you want to use debugger to see what is going on.
+But hmm, how does one start a plug-in under a debugger if GIMP is the one
+who is starting the plug-in...
+
+To address this issue, libgimp has some hooks controlled by the
+GIMP_PLUGIN_DEBUG environment variable. The idea is that you can attach
+a debugger to the pid of the plug-in you want to debug. The format is as
+follows:
+
+
+GIMP_PLUGIN_DEBUG=name<,options>
+
+"name" refers to the name of the plug-in binary that you wish to debug.
+
+"options" is one or more of the following options, separated by :'s
+
+    run:            suspend the plug-in when its run_proc is called.
+    query:          suspend the plug-in when its query_proc is called.
+    init:           suspend the plug-in when its init_proc is called.
+    pid:            just print the pid of the plug-in on run_proc.
+    fatal-warnings: emulate passing --g-fatal-warnings on the command line.
+    fw:             shorthand for above.
+    on:             shorthand for run:fatal-warnings. This is also the default
+                    in the absence of an options string.
+
+
+The steps to debug a plug-in are as follows:
+
+  0. Make sure GIMP is built with debugging information (gcc -g)
+
+  1. Start GIMP with the appropriate debugging environment variables
+
+  2. Load the standalone plug-in program in the debugger (gdb or
+     the ddd frontend to gdb)
+
+  3. Invoke the plug-in procedure in GIMP. GIMP will start the plug-in
+     process, then send a STOP signal to it and then print a message with
+     the pid of the plug-in process to the terminal.
+
+  4. Attach to the pid of the plug-in process in the debugger
+
+  5. Set breakpoints where you want the plug-in to stop in the debugger
+
+  6. Send the CONT signal (kill -CONT <pid>) to the plug-in process
+
+  7. Enter "continue" in the debugger. The plug-in will then continue
+     and break at the breakpoints.
+
+
+Examples:
+
+GIMP_PLUGIN_DEBUG=blur
+
+    When the blur plug-in is called to perform an action, it is suspended
+    and the following is printed to the console:
+
+    (blur:9000): LibGimp-DEBUG: Waiting for debugger...
+
+    9000 is the pid of the new plug-in process. You can start your debugger,
+    attach to it, set breakpoints/watches/etc. and continue from there.
+    In case of the gdb typing "continue" will start the plugin.
+
+GIMP_PLUGIN_DEBUG=blur,on
+
+    Same effect as above.
+
+GIMP_PLUGIN_DEBUG=blur,run:fatal-warnings
+
+    Same effect as above.
+
+GIMP_PLUGIN_DEBUG=blur,pid
+
+    Prints:
+
+    (blur:9000): LibGimp-DEBUG: Here I am!
+
+    This simply prints the pid but doesn't halt the plug-in. It is simply
+    convenience, since if your plug-in has a GUI, the GUI can start up
+    and you can attach to it there while it is waiting for user input.
+
+GIMP_PLUGIN_DEBUG=blur,query
+
+    Same effect as if you did run, but instead suspends when the plug-in
+    is queried on GIMP startup.
+
+GIMP_PLUGIN_DEBUG=blur,init
+
+    Same as above, but in the init phase of startup.
+
+
+Hmm, but what about memory debuggers such as valgrind or purify? For those
+you can set the following:
+
+GIMP_PLUGIN_DEBUG_WRAP=name<,options>
+
+    This is similar to GIMP_PLUGIN_DEBUG. Only "query", "init", and "run"
+    are valid, and "on" defaults to simply "run"
+
+GIMP_PLUGIN_DEBUG_WRAPPER=debugger
+
+    debugger refers to the debugger program, such as valgrind. You can
+    put command line options here too, they will be parsed like they do
+    in the shell.

@@ -1,0 +1,89 @@
+/* GIMP - The GNU Image Manipulation Program
+ * Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis
+ *
+ * gimpdocked.h
+ * Copyright (C) 2003  Michael Natterer <mitch@gimp.org>
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#ifndef __GIMP_DOCKED_H__
+#define __GIMP_DOCKED_H__
+
+
+#define GIMP_TYPE_DOCKED               (gimp_docked_interface_get_type ())
+#define GIMP_IS_DOCKED(obj)            (G_TYPE_CHECK_INSTANCE_TYPE ((obj), GIMP_TYPE_DOCKED))
+#define GIMP_DOCKED(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_DOCKED, GimpDocked))
+#define GIMP_DOCKED_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_DOCKED, GimpDockedInterface))
+
+
+typedef struct _GimpDockedInterface GimpDockedInterface;
+
+struct _GimpDockedInterface
+{
+  GTypeInterface base_iface;
+
+  /*  signals  */
+  void            (* title_changed)       (GimpDocked   *docked);
+
+  /*  virtual functions  */
+  void            (* set_aux_info)        (GimpDocked   *docked,
+                                           GList        *aux_info);
+  GList         * (* get_aux_info)        (GimpDocked   *docked);
+
+  GtkWidget     * (* get_preview)         (GimpDocked   *docked,
+                                           GimpContext  *context,
+                                           GtkIconSize   size);
+  GimpUIManager * (* get_menu)            (GimpDocked   *docked,
+                                           const gchar **ui_path,
+                                           gpointer     *popup_data);
+  gchar         * (* get_title)           (GimpDocked   *docked);
+
+  void            (* set_context)         (GimpDocked   *docked,
+                                           GimpContext  *context);
+
+  gboolean        (* has_button_bar)      (GimpDocked   *docked);
+  void            (* set_show_button_bar) (GimpDocked   *docked,
+                                           gboolean      show);
+  gboolean        (* get_show_button_bar) (GimpDocked   *docked);
+};
+
+
+GType           gimp_docked_interface_get_type  (void) G_GNUC_CONST;
+
+void            gimp_docked_title_changed       (GimpDocked   *docked);
+
+void            gimp_docked_set_aux_info        (GimpDocked   *docked,
+                                                 GList        *aux_info);
+GList         * gimp_docked_get_aux_info        (GimpDocked   *docked);
+
+GtkWidget     * gimp_docked_get_preview         (GimpDocked   *docked,
+                                                 GimpContext  *context,
+                                                 GtkIconSize   size);
+GimpUIManager * gimp_docked_get_menu            (GimpDocked   *docked,
+                                                 const gchar **ui_path,
+                                                 gpointer     *popup_data);
+gchar         * gimp_docked_get_title           (GimpDocked   *docked);
+
+void            gimp_docked_set_context         (GimpDocked   *docked,
+                                                 GimpContext  *context);
+
+gboolean        gimp_docked_has_button_bar      (GimpDocked   *docked);
+void            gimp_docked_set_show_button_bar (GimpDocked   *docked,
+                                                 gboolean      show);
+gboolean        gimp_docked_get_show_button_bar (GimpDocked   *docked);
+
+
+#endif  /* __GIMP_DOCKED_H__ */

@@ -1,0 +1,64 @@
+flame - cosmic recursive fractal flames
+Scott Draves <spot@cs.cmu.edu>
+
+get source code from
+http://www.cs.cmu.edu/~spot/gimp/flame.tar.gz
+
+images, documentation, and other interfaces (a batch animation
+renderer and a low-quality interactive editor) are available from
+http://www.cs.cmu.edu/~spot/flame.html
+
+-----------------------
+
+you are encouraged to exhibit the output of this software publicly as
+long as this software is credited as the source of the images.
+
+i also encourage you to let me know what you make with it, what you
+dis/like about it, and how it can be improved.
+
+-----------------------
+
+0.12 as of Thu Oct 9
+added variation_same. made preview have same aspect ratio as final
+image.  included binary in tar file.
+
+0.11 as of Sun Sep 28
+patch from Owen Taylor <owt1@cornell.edu> gtk_signal_connect_object ->
+gtk_signal_connect.  hacked mw routines so i can update my previews.
+removed much of mw code that i don't use.
+
+0.10 as of Fri Sep 26
+Added "eight directions" edit window.  relayedout other widgets.
+
+0.9 as of Tue Sep 23
+reconfigured to use Makefile.am.  cleaned warnings out of code.
+
+0.8 as of Thu Sep 18
+added Makefile.in.patch, made gimp integration easier.  changed
+license.  added some built-in cmaps to the menu.
+
+0.7 as of Sun Sep 14
+fixed image leak (thx Marcelo Malheiros).  removed UI to black cmap
+(default is now gradient).  added preview of the flame, disabled
+randomize mode in favor of a randomize button.  added beginning of
+edit dialog, including multi-threaded computation of previews, but
+disabled for the release.
+
+0.6 as of Thu Sep 11
+added preview of cmap.  added black cmap.  added access to current
+gradient, but there is an image leak.
+
+0.5 as of Sat Sep 6
+cmaps now come from image menus.  clarified license terms.
+
+0.4 as of Thu Sep 4
+added variation menu.  removed text display, added load/store buttons.
+fixed alpha blend to be stable (alpha of 0 has no effect) and protect
+against overflow.
+
+0.3 as of Tue Sep 2
+added alpha channel
+
+0.2 as of Aug 24 1997
+real -> double, other header file reorganization.  added new cmaps.
+added gimp interface.

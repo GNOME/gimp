@@ -1,0 +1,1166 @@
+# gimp ro translation
+# Copyright (C) YEAR Free Software Foundation, Inc.
+# Robert Claudiu Gheorghe <rgheorghe@writeme.com>, 2001.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-libgimp\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-02-02 19:54+0100\n"
+"PO-Revision-Date: 2000-11-24 15:46+0100\n"
+"Last-Translator: Robert Claudiu Gheorghe <rgheorghe@writeme.com>\n"
+"Language-Team: Română <ro@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../libgimp/gimpbrushmenu.c:129
+msgid "Brush Selection"
+msgstr "Selecţie pensulă"
+
+#: ../libgimp/gimpbrushmenu.c:158 ../libgimp/gimppatternmenu.c:142
+msgid "_Browse..."
+msgstr ""
+
+#: ../libgimp/gimpexport.c:215 ../libgimp/gimpexport.c:251
+#, fuzzy, c-format
+msgid "%s can't handle layers"
+msgstr "Scalează stratul"
+
+#: ../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
+#: ../libgimp/gimpexport.c:234
+#, fuzzy
+msgid "Merge Visible Layers"
+msgstr "/Combină stratele vizibile..."
+
+#: ../libgimp/gimpexport.c:224
+#, fuzzy, c-format
+msgid "%s can't handle layer offsets, size or opacity"
+msgstr "Scalează stratul"
+
+#: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
+#, fuzzy, c-format
+msgid "%s can only handle layers as animation frames"
+msgstr "Amestec: Invalid pentru imaginii indexate"
+
+#: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:243
+#, fuzzy
+msgid "Save as Animation"
+msgstr "/Filtre/Animaţie"
+
+#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:252
+#: ../libgimp/gimpexport.c:261
+#, fuzzy
+msgid "Flatten Image"
+msgstr "/Aplatizează imaginea"
+
+#: ../libgimp/gimpexport.c:260
+#, fuzzy, c-format
+msgid "%s can't handle transparency"
+msgstr "Păstrează Transparenţa"
+
+#: ../libgimp/gimpexport.c:269
+#, fuzzy, c-format
+msgid "%s can't handle layer masks"
+msgstr "Scalează stratul"
+
+#: ../libgimp/gimpexport.c:270
+#, fuzzy
+msgid "Apply Layer Masks"
+msgstr "/Aplică stratul mască"
+
+#: ../libgimp/gimpexport.c:278
+#, fuzzy, c-format
+msgid "%s can only handle RGB images"
+msgstr "Amestec: Invalid pentru imaginii indexate"
+
+#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:317
+#: ../libgimp/gimpexport.c:326
+#, fuzzy
+msgid "Convert to RGB"
+msgstr "Conversie"
+
+#: ../libgimp/gimpexport.c:287
+#, fuzzy, c-format
+msgid "%s can only handle grayscale images"
+msgstr "Amestec: Invalid pentru imaginii indexate"
+
+#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:317
+#: ../libgimp/gimpexport.c:338
+#, fuzzy
+msgid "Convert to Grayscale"
+msgstr "Scară de gri-uri "
+
+#: ../libgimp/gimpexport.c:296
+#, fuzzy, c-format
+msgid "%s can only handle indexed images"
+msgstr "Amestec: Invalid pentru imaginii indexate"
+
+#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:326
+#: ../libgimp/gimpexport.c:336
+msgid ""
+"Convert to Indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+
+#: ../libgimp/gimpexport.c:306
+#, fuzzy, c-format
+msgid "%s can only handle bitmap (two color) indexed images"
+msgstr "Amestec: Invalid pentru imaginii indexate"
+
+#: ../libgimp/gimpexport.c:307
+msgid ""
+"Convert to Indexed using bitmap default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+
+#: ../libgimp/gimpexport.c:316
+#, fuzzy, c-format
+msgid "%s can only handle RGB or grayscale images"
+msgstr "Amestec: Invalid pentru imaginii indexate"
+
+#: ../libgimp/gimpexport.c:325
+#, fuzzy, c-format
+msgid "%s can only handle RGB or indexed images"
+msgstr "Amestec: Invalid pentru imaginii indexate"
+
+#: ../libgimp/gimpexport.c:335
+#, fuzzy, c-format
+msgid "%s can only handle grayscale or indexed images"
+msgstr "Amestec: Invalid pentru imaginii indexate"
+
+#: ../libgimp/gimpexport.c:346
+#, fuzzy, c-format
+msgid "%s needs an alpha channel"
+msgstr "Canalul alfa al stratului"
+
+#: ../libgimp/gimpexport.c:347
+#, fuzzy
+msgid "Add Alpha Channel"
+msgstr "/Adaugă canal de transparenţa"
+
+#: ../libgimp/gimpexport.c:381
+#, fuzzy
+msgid "Confirm Save"
+msgstr "Confirmă dimensiunea imaginii"
+
+#: ../libgimp/gimpexport.c:387
+msgid "Confirm"
+msgstr ""
+
+#: ../libgimp/gimpexport.c:454
+#, fuzzy
+msgid "Export File"
+msgstr "Expunere:"
+
+#: ../libgimp/gimpexport.c:458
+#, fuzzy
+msgid "_Ignore"
+msgstr "nimic"
+
+#: ../libgimp/gimpexport.c:460
+#, fuzzy
+msgid "_Export"
+msgstr "Expunere:"
+
+#. the headline
+#: ../libgimp/gimpexport.c:482
+#, c-format
+msgid ""
+"Your image should be exported before it can be saved as %s for the following "
+"reasons:"
+msgstr ""
+
+#. the footline
+#: ../libgimp/gimpexport.c:553
+msgid "The export conversion won't modify your original image."
+msgstr ""
+
+#: ../libgimp/gimpexport.c:653
+#, c-format
+msgid ""
+"You are about to save a layer mask as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+
+#: ../libgimp/gimpexport.c:659
+#, c-format
+msgid ""
+"You are about to save a channel (saved selection) as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+
+#: ../libgimp/gimpfontmenu.c:89
+#, fuzzy
+msgid "Font Selection"
+msgstr "Din selecţie"
+
+#: ../libgimp/gimpgradientmenu.c:104
+msgid "Gradient Selection"
+msgstr "Selectie Gradient"
+
+#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:181
+msgid "(Empty)"
+msgstr ""
+
+#: ../libgimp/gimppalettemenu.c:91
+#, fuzzy
+msgid "Palette Selection"
+msgstr "Selecţie model"
+
+#: ../libgimp/gimppatternmenu.c:113
+msgid "Pattern Selection"
+msgstr "Selecţie model"
+
+#: ../libgimp/gimpunitcache.c:57
+msgid "percent"
+msgstr "procent"
+
+#: ../libgimpbase/gimpbaseenums.c:26
+#, fuzzy
+msgid "_White (full opacity)"
+msgstr "Alb (total opac)"
+
+#: ../libgimpbase/gimpbaseenums.c:27
+#, fuzzy
+msgid "_Black (full transparency)"
+msgstr "Negru (total transparent)"
+
+#: ../libgimpbase/gimpbaseenums.c:28
+#, fuzzy
+msgid "Layer's _alpha channel"
+msgstr "Canalul alfa al stratului"
+
+#: ../libgimpbase/gimpbaseenums.c:29
+#, fuzzy
+msgid "_Transfer layer's alpha channel"
+msgstr "Canalul alfa al stratului"
+
+#: ../libgimpbase/gimpbaseenums.c:30
+#, fuzzy
+msgid "_Selection"
+msgstr "Selecţie"
+
+#: ../libgimpbase/gimpbaseenums.c:31
+msgid "_Grayscale copy of layer"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:61
+msgid "FG to BG (RGB)"
+msgstr "Prim plan -> Fundal (RGB)"
+
+#: ../libgimpbase/gimpbaseenums.c:62
+msgid "FG to BG (HSV)"
+msgstr "Prim plan -> Fundal (HSV)"
+
+#: ../libgimpbase/gimpbaseenums.c:63
+#, fuzzy
+msgid "FG to transparent"
+msgstr "Prim plan -> Transparent"
+
+#: ../libgimpbase/gimpbaseenums.c:64
+#, fuzzy
+msgid "Custom gradient"
+msgstr "Gradient personalizat"
+
+#: ../libgimpbase/gimpbaseenums.c:93
+#, fuzzy
+msgid "FG color fill"
+msgstr "Umplere cu culoarea de prim-plan"
+
+#: ../libgimpbase/gimpbaseenums.c:94
+#, fuzzy
+msgid "BG color fill"
+msgstr "Umplere cu culoarea de fundal"
+
+#: ../libgimpbase/gimpbaseenums.c:95
+#, fuzzy
+msgid "Pattern fill"
+msgstr "Umplere cu un model"
+
+#: ../libgimpbase/gimpbaseenums.c:125
+#, fuzzy
+msgid "Add to the current selection"
+msgstr "/Adaugă la selecţie"
+
+#: ../libgimpbase/gimpbaseenums.c:126
+#, fuzzy
+msgid "Subtract from the current selection"
+msgstr "/Scade din selecţie"
+
+#: ../libgimpbase/gimpbaseenums.c:127
+#, fuzzy
+msgid "Replace the current selection"
+msgstr "Replicare selecţie"
+
+#: ../libgimpbase/gimpbaseenums.c:128
+#, fuzzy
+msgid "Intersect with the current selection"
+msgstr "/Intersectează cu selecţia"
+
+#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpcolorscales.c:168
+#: ../libgimpwidgets/gimpcolorselect.c:352
+msgid "Red"
+msgstr "Roşu"
+
+#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpcolorscales.c:169
+#: ../libgimpwidgets/gimpcolorselect.c:353
+msgid "Green"
+msgstr "Verde"
+
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpcolorscales.c:170
+#: ../libgimpwidgets/gimpcolorselect.c:354
+msgid "Blue"
+msgstr "Albastru"
+
+#: ../libgimpbase/gimpbaseenums.c:163
+msgid "Gray"
+msgstr "Gri"
+
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:436
+msgid "Indexed"
+msgstr "Indexat"
+
+#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpcolorscales.c:171
+#: ../libgimpwidgets/gimpcolorselect.c:355
+msgid "Alpha"
+msgstr "Alfa"
+
+#: ../libgimpbase/gimpbaseenums.c:194
+msgid "Small"
+msgstr "Mic"
+
+#: ../libgimpbase/gimpbaseenums.c:195
+msgid "Medium"
+msgstr "Mediu"
+
+#: ../libgimpbase/gimpbaseenums.c:196
+msgid "Large"
+msgstr "Mare"
+
+#: ../libgimpbase/gimpbaseenums.c:228
+#, fuzzy
+msgid "Light Checks"
+msgstr "Luminozitate:"
+
+#: ../libgimpbase/gimpbaseenums.c:229
+msgid "Mid-Tone Checks"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:230
+msgid "Dark Checks"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:231
+msgid "White Only"
+msgstr "Numai alb"
+
+#: ../libgimpbase/gimpbaseenums.c:232
+msgid "Gray Only"
+msgstr "Numai gri"
+
+#: ../libgimpbase/gimpbaseenums.c:233
+msgid "Black Only"
+msgstr "Numai negru"
+
+#: ../libgimpbase/gimpbaseenums.c:261
+#, fuzzy
+msgid "Image source"
+msgstr "Imagine sursă"
+
+#: ../libgimpbase/gimpbaseenums.c:262
+#, fuzzy
+msgid "Pattern source"
+msgstr "Model sursă"
+
+#: ../libgimpbase/gimpbaseenums.c:290
+msgid "Dodge"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:291
+msgid "Burn"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:328 ../libgimpbase/gimpbaseenums.c:468
+msgid "Linear"
+msgstr "Linear"
+
+#: ../libgimpbase/gimpbaseenums.c:329
+#, fuzzy
+msgid "Bi-linear"
+msgstr "Bi-Linear"
+
+#: ../libgimpbase/gimpbaseenums.c:330
+msgid "Radial"
+msgstr "Radial"
+
+#: ../libgimpbase/gimpbaseenums.c:331
+msgid "Square"
+msgstr "Pătrat"
+
+#: ../libgimpbase/gimpbaseenums.c:332
+#, fuzzy
+msgid "Conical (sym)"
+msgstr "Conic (simetric)"
+
+#: ../libgimpbase/gimpbaseenums.c:333
+#, fuzzy
+msgid "Conical (asym)"
+msgstr "Conic (asimetric)"
+
+#: ../libgimpbase/gimpbaseenums.c:334
+msgid "Shaped (angular)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:335
+msgid "Shaped (spherical)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:336
+msgid "Shaped (dimpled)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:337
+#, fuzzy
+msgid "Spiral (cw)"
+msgstr "Spirală (sensul acelor de ceas)"
+
+#: ../libgimpbase/gimpbaseenums.c:338
+#, fuzzy
+msgid "Spiral (ccw)"
+msgstr "Spirală (sensul acelor de ceas)"
+
+#: ../libgimpbase/gimpbaseenums.c:367
+msgid "Stock ID"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:368
+msgid "Inline pixbuf"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:369
+#, fuzzy
+msgid "Image file"
+msgstr "Dimensiunea imaginii: %s"
+
+#: ../libgimpbase/gimpbaseenums.c:398
+#, fuzzy
+msgid "RGB color"
+msgstr "Culoare RGB"
+
+#: ../libgimpbase/gimpbaseenums.c:399 ../libgimpbase/gimpbaseenums.c:434
+msgid "Grayscale"
+msgstr "Scară de gri-uri "
+
+#: ../libgimpbase/gimpbaseenums.c:400
+#, fuzzy
+msgid "Indexed color"
+msgstr "Culoare indexată"
+
+#: ../libgimpbase/gimpbaseenums.c:432
+msgid "RGB"
+msgstr "RGB"
+
+#: ../libgimpbase/gimpbaseenums.c:433
+msgid "RGB-alpha"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:435
+#, fuzzy
+msgid "Grayscale-alpha"
+msgstr "nivele de gri"
+
+#: ../libgimpbase/gimpbaseenums.c:437
+#, fuzzy
+msgid "Indexed-alpha"
+msgstr "Indexat"
+
+#: ../libgimpbase/gimpbaseenums.c:467
+msgid "None (Fastest)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:469
+msgid "Cubic"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:470
+#, fuzzy
+msgid "Lanczos (Best)"
+msgstr "Cubic (Incet)"
+
+#: ../libgimpbase/gimpbaseenums.c:498
+#, fuzzy
+msgid "Constant"
+msgstr "Contrast:"
+
+#: ../libgimpbase/gimpbaseenums.c:499
+msgid "Incremental"
+msgstr "Incremental"
+
+#: ../libgimpbase/gimpbaseenums.c:528
+msgid "None"
+msgstr "Nimic"
+
+#: ../libgimpbase/gimpbaseenums.c:529
+#, fuzzy
+msgid "Sawtooth wave"
+msgstr "Undă în dinţi de fierastrău"
+
+#: ../libgimpbase/gimpbaseenums.c:530
+#, fuzzy
+msgid "Triangular wave"
+msgstr "Undă triunghiulara"
+
+#: ../libgimpbase/gimpbaseenums.c:558
+msgid "Pixels"
+msgstr "Puncte ecran"
+
+#: ../libgimpbase/gimpbaseenums.c:559
+#, fuzzy
+msgid "Points"
+msgstr "puncte"
+
+#: ../libgimpbase/gimpbaseenums.c:588
+msgid "Shadows"
+msgstr "Umbre"
+
+#: ../libgimpbase/gimpbaseenums.c:589
+msgid "Midtones"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:590
+msgid "Highlights"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:618
+msgid "Forward (traditional)"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:619
+msgid "Backward (corrective)"
+msgstr ""
+
+#: ../libgimpbase/gimpmemsize.c:177
+#, fuzzy, c-format
+msgid "%d Bytes"
+msgstr "%d Octeţi"
+
+#: ../libgimpbase/gimpmemsize.c:182
+#, c-format
+msgid "%.2f KB"
+msgstr "%.2f KOcteţi"
+
+#: ../libgimpbase/gimpmemsize.c:186
+#, c-format
+msgid "%.1f KB"
+msgstr "%.1f KOcteţi"
+
+#: ../libgimpbase/gimpmemsize.c:190
+#, c-format
+msgid "%d KB"
+msgstr "%d KOcteţi"
+
+#: ../libgimpbase/gimpmemsize.c:197
+#, c-format
+msgid "%.2f MB"
+msgstr "%.2f MOcteţi"
+
+#: ../libgimpbase/gimpmemsize.c:201
+#, c-format
+msgid "%.1f MB"
+msgstr "%.1f MOcteţi"
+
+#: ../libgimpbase/gimpmemsize.c:205
+#, fuzzy, c-format
+msgid "%d MB"
+msgstr "%d KOcteţi"
+
+#: ../libgimpbase/gimpmemsize.c:212
+#, fuzzy, c-format
+msgid "%.2f GB"
+msgstr "%.2f MOcteţi"
+
+#: ../libgimpbase/gimpmemsize.c:216
+#, fuzzy, c-format
+msgid "%.1f GB"
+msgstr "%.1f MOcteţi"
+
+#: ../libgimpbase/gimpmemsize.c:220
+#, fuzzy, c-format
+msgid "%d GB"
+msgstr "%d KOcteţi"
+
+#: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
+msgid "(invalid UTF-8 string)"
+msgstr ""
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#, c-format
+msgid "value for token %s is not a valid UTF-8 string"
+msgstr ""
+
+#. please don't translate 'yes' and 'no'
+#: ../libgimpconfig/gimpconfig-deserialize.c:423
+#, c-format
+msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
+msgstr ""
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:497
+#, c-format
+msgid "invalid value '%s' for token %s"
+msgstr ""
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:512
+#, c-format
+msgid "invalid value '%ld' for token %s"
+msgstr ""
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:581
+#, fuzzy, c-format
+msgid "while parsing token '%s': %s"
+msgstr "Eroare la deschiderea fişierului %s: %s"
+
+#: ../libgimpconfig/gimpconfig-iface.c:454
+#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:513
+#: ../libgimpconfig/gimpscanner.c:594
+msgid "fatal parse error"
+msgstr ""
+
+#: ../libgimpconfig/gimpconfig-path.c:349
+#, fuzzy, c-format
+msgid "Cannot expand ${%s}"
+msgstr "Nu pot reface %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:134
+#, fuzzy, c-format
+msgid "Could not create temporary file for '%s': %s"
+msgstr "Nu am putut deschide fişierul %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:147
+#, fuzzy, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Nu am putut redeschide %s\n"
+
+#: ../libgimpconfig/gimpconfigwriter.c:666
+#, fuzzy, c-format
+msgid ""
+"Error writing to temporary file for '%s': %s\n"
+"The original file has not been touched."
+msgstr "Eroare la deschiderea fişierului %s: %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:674
+#, fuzzy, c-format
+msgid ""
+"Error writing to temporary file for '%s': %s\n"
+"No file has been created."
+msgstr "Eroare la deschiderea fişierului %s: %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:685
+#, fuzzy, c-format
+msgid "Error writing to '%s': %s"
+msgstr "eroare de procesare: \"%s\"\n"
+
+#: ../libgimpconfig/gimpconfigwriter.c:703
+#, fuzzy, c-format
+msgid "Could not create '%s': %s"
+msgstr "Nu am putut redeschide %s\n"
+
+#: ../libgimpconfig/gimpscanner.c:100
+#, fuzzy, c-format
+msgid "Could not open '%s' for reading: %s"
+msgstr "Nu am putut redeschide %s\n"
+
+#: ../libgimpconfig/gimpscanner.c:270
+#, fuzzy
+msgid "invalid UTF-8 string"
+msgstr "Eroare în fişierul de pensule al GIMP \"%s\"."
+
+#: ../libgimpconfig/gimpscanner.c:621
+#, fuzzy, c-format
+msgid "Error while parsing '%s' in line %d: %s"
+msgstr "Eroare la deschiderea fişierului %s: %s"
+
+#: ../libgimpmodule/gimpmodule.c:177
+#, fuzzy, c-format
+msgid "Loading module: '%s'\n"
+msgstr "încarc modulul: \"%s\"\n"
+
+#: ../libgimpmodule/gimpmodule.c:193 ../libgimpmodule/gimpmodule.c:212
+#: ../libgimpmodule/gimpmodule.c:326 ../libgimpmodule/gimpmodule.c:354
+#: ../libgimpmodule/gimpmodule.c:478
+#, fuzzy, c-format
+msgid "Module '%s' load error: %s"
+msgstr "eroare la încărcare modul: %s: %s"
+
+#: ../libgimpmodule/gimpmodule.c:282
+#, fuzzy, c-format
+msgid "Skipping module: '%s'\n"
+msgstr "ignor modulul: \"%s\"\n"
+
+#: ../libgimpmodule/gimpmodule.c:422
+msgid "Module error"
+msgstr "Eroare în modul"
+
+#: ../libgimpmodule/gimpmodule.c:423
+#, fuzzy
+msgid "Loaded"
+msgstr "Incărcat cu SUCCES"
+
+#: ../libgimpmodule/gimpmodule.c:424
+msgid "Load failed"
+msgstr "Incărcarea a eşuat"
+
+#: ../libgimpmodule/gimpmodule.c:425
+msgid "Not loaded"
+msgstr ""
+
+#: ../libgimpthumb/gimpthumb-utils.c:227 ../libgimpthumb/gimpthumb-utils.c:295
+#, fuzzy, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr "Nu am reuşit să citesc traseul din %s"
+
+#: ../libgimpthumb/gimpthumbnail.c:919
+#, fuzzy, c-format
+msgid "Could not create thumbnail for %s: %s"
+msgstr "Nu am reuşit să citesc traseul din %s"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:99
+#, fuzzy
+msgid "_Foreground Color"
+msgstr "Prim Plan "
+
+#: ../libgimpwidgets/gimpcolorbutton.c:103
+#, fuzzy
+msgid "_Background Color"
+msgstr "Fundal"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:107
+#, fuzzy
+msgid "Blac_k"
+msgstr "Numai negru"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:111
+#, fuzzy
+msgid "_White"
+msgstr "Alb"
+
+#: ../libgimpwidgets/gimpcolorscales.c:133
+#, fuzzy
+msgid "Scales"
+msgstr "Scalare"
+
+#: ../libgimpwidgets/gimpcolorscales.c:155
+#: ../libgimpwidgets/gimpcolorselect.c:345
+#, fuzzy
+msgid "_H"
+msgstr "H"
+
+#: ../libgimpwidgets/gimpcolorscales.c:156
+#: ../libgimpwidgets/gimpcolorselect.c:345
+#, fuzzy
+msgid "_S"
+msgstr "S"
+
+#: ../libgimpwidgets/gimpcolorscales.c:157
+#: ../libgimpwidgets/gimpcolorselect.c:345
+#, fuzzy
+msgid "_V"
+msgstr "V"
+
+#: ../libgimpwidgets/gimpcolorscales.c:158
+#: ../libgimpwidgets/gimpcolorselect.c:345
+#, fuzzy
+msgid "_R"
+msgstr "R"
+
+#: ../libgimpwidgets/gimpcolorscales.c:159
+#: ../libgimpwidgets/gimpcolorselect.c:345
+#, fuzzy
+msgid "_G"
+msgstr "G"
+
+#: ../libgimpwidgets/gimpcolorscales.c:160
+#: ../libgimpwidgets/gimpcolorselect.c:345
+#, fuzzy
+msgid "_B"
+msgstr "B"
+
+#: ../libgimpwidgets/gimpcolorscales.c:161
+#, fuzzy
+msgid "_A"
+msgstr "A"
+
+#: ../libgimpwidgets/gimpcolorscales.c:165
+#: ../libgimpwidgets/gimpcolorselect.c:349
+msgid "Hue"
+msgstr "Nuanţă"
+
+#: ../libgimpwidgets/gimpcolorscales.c:166
+#: ../libgimpwidgets/gimpcolorselect.c:350 ../modules/cdisplay_proof.c:59
+msgid "Saturation"
+msgstr "Saturare"
+
+#: ../libgimpwidgets/gimpcolorscales.c:167
+#: ../libgimpwidgets/gimpcolorselect.c:351
+msgid "Value"
+msgstr "Valoare"
+
+#: ../libgimpwidgets/gimpcolorscales.c:243
+msgid "Hexadecimal color notation as used in HTML and CSS"
+msgstr ""
+
+#: ../libgimpwidgets/gimpcolorscales.c:248
+#, fuzzy
+msgid "HTML _Notation:"
+msgstr "Amplasare:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:203
+#, fuzzy
+msgid "Current:"
+msgstr "Lăţimea curentă:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:225
+#, fuzzy
+msgid "Old:"
+msgstr "Amestec:"
+
+#: ../libgimpwidgets/gimpfileentry.c:351
+#, fuzzy
+msgid "Select Folder"
+msgstr "Selectează"
+
+#: ../libgimpwidgets/gimpfileentry.c:353
+#, fuzzy
+msgid "Select File"
+msgstr "Selectează"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:232
+msgid "Kilobytes"
+msgstr ""
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:233
+#, fuzzy
+msgid "Megabytes"
+msgstr "%d Octeţi"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:234
+#, fuzzy
+msgid "Gigabytes"
+msgstr "%d Octeţi"
+
+#: ../libgimpwidgets/gimppatheditor.c:243
+#, fuzzy
+msgid "Writable"
+msgstr "Triunghi"
+
+#: ../libgimpwidgets/gimppatheditor.c:252
+#, fuzzy
+msgid "Folder"
+msgstr "Selectează"
+
+#: ../libgimpwidgets/gimppickbutton.c:138
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
+
+#: ../libgimpwidgets/gimppreviewarea.c:126
+msgid "Check Size"
+msgstr ""
+
+#: ../libgimpwidgets/gimppreviewarea.c:133
+msgid "Check Style"
+msgstr ""
+
+#. toggle button to (des)activate the instant preview
+#: ../libgimpwidgets/gimppreview.c:240
+#, fuzzy
+msgid "_Preview"
+msgstr "Previzualizare"
+
+#: ../libgimpwidgets/gimpstock.c:113
+#, fuzzy
+msgid "Anchor"
+msgstr "Ancorează stratul"
+
+#: ../libgimpwidgets/gimpstock.c:114
+#, fuzzy
+msgid "C_enter"
+msgstr "Centru X:"
+
+#: ../libgimpwidgets/gimpstock.c:115
+#, fuzzy
+msgid "_Duplicate"
+msgstr "Clonează traseul"
+
+#: ../libgimpwidgets/gimpstock.c:116
+#, fuzzy
+msgid "_Edit"
+msgstr "Modifică"
+
+#: ../libgimpwidgets/gimpstock.c:117
+#, fuzzy
+msgid "Linked"
+msgstr "Linear"
+
+#: ../libgimpwidgets/gimpstock.c:118
+msgid "Paste as New"
+msgstr "Inserează ca nou"
+
+#: ../libgimpwidgets/gimpstock.c:119
+msgid "Paste Into"
+msgstr "Inserează în"
+
+#: ../libgimpwidgets/gimpstock.c:120
+#, fuzzy
+msgid "_Reset"
+msgstr "Iniţializează"
+
+#: ../libgimpwidgets/gimpstock.c:121
+msgid "Visible"
+msgstr ""
+
+#: ../libgimpwidgets/gimpstock.c:154 ../libgimpwidgets/gimpstock.c:158
+#, fuzzy
+msgid "_Stroke"
+msgstr "/Modificare/Stanţă"
+
+#: ../libgimpwidgets/gimpstock.c:170
+#, fuzzy
+msgid "L_etter Spacing"
+msgstr "Spaţiere:"
+
+#: ../libgimpwidgets/gimpstock.c:171
+#, fuzzy
+msgid "L_ine Spacing"
+msgstr "Salvare de fişiere"
+
+#: ../libgimpwidgets/gimpstock.c:187
+#, fuzzy
+msgid "_Resize"
+msgstr "Redimensionare"
+
+#: ../libgimpwidgets/gimpstock.c:188 ../libgimpwidgets/gimpstock.c:292
+#, fuzzy
+msgid "_Scale"
+msgstr "Scalare"
+
+#: ../libgimpwidgets/gimpstock.c:271
+msgid "Crop"
+msgstr "Decupare"
+
+#: ../libgimpwidgets/gimpstock.c:288
+#, fuzzy
+msgid "_Transform"
+msgstr "Transformare"
+
+#: ../libgimpwidgets/gimpstock.c:291
+#, fuzzy
+msgid "_Rotate"
+msgstr "Rotire"
+
+#: ../libgimpwidgets/gimpstock.c:293
+#, fuzzy
+msgid "_Shear"
+msgstr "Decupare"
+
+#: ../libgimpwidgets/gimpunitmenu.c:302
+msgid "More..."
+msgstr ""
+
+#: ../libgimpwidgets/gimpunitmenu.c:612
+#, fuzzy
+msgid "Unit Selection"
+msgstr "Selecţie"
+
+#: ../libgimpwidgets/gimpunitmenu.c:655
+#, fuzzy
+msgid "Unit"
+msgstr "Unitate de masură:"
+
+#: ../libgimpwidgets/gimpunitmenu.c:659
+#, fuzzy
+msgid "Factor"
+msgstr "Pană"
+
+#: ../libgimpwidgets/gimpwidgets.c:1001
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
+msgstr ""
+
+#: ../libgimpwidgets/gimpwidgets.c:1005
+msgid "_New Seed"
+msgstr ""
+
+#: ../libgimpwidgets/gimpwidgets.c:1018
+msgid "Seed random number generator with a generated random number"
+msgstr ""
+
+#: ../libgimpwidgets/gimpwidgets.c:1022
+msgid "_Randomize"
+msgstr ""
+
+#: ../modules/cdisplay_colorblind.c:68
+msgid "Protanopia (insensitivity to red"
+msgstr ""
+
+#: ../modules/cdisplay_colorblind.c:70
+msgid "Deuteranopia (insensitivity to green)"
+msgstr ""
+
+#: ../modules/cdisplay_colorblind.c:72
+msgid "Tritanopia (insensitivity to blue)"
+msgstr ""
+
+#: ../modules/cdisplay_colorblind.c:163
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr ""
+
+#: ../modules/cdisplay_colorblind.c:256
+#, fuzzy
+msgid "Color Deficient Vision"
+msgstr "Selecţie culoare"
+
+#: ../modules/cdisplay_colorblind.c:554
+#, fuzzy
+msgid "Color _Deficiency Type:"
+msgstr "Selecţie culoare"
+
+#: ../modules/cdisplay_gamma.c:105
+msgid "Gamma color display filter"
+msgstr ""
+
+#: ../modules/cdisplay_gamma.c:178
+msgid "Gamma"
+msgstr ""
+
+#: ../modules/cdisplay_gamma.c:352
+msgid "_Gamma:"
+msgstr ""
+
+#: ../modules/cdisplay_highcontrast.c:105
+msgid "High Contrast color display filter"
+msgstr ""
+
+#: ../modules/cdisplay_highcontrast.c:178
+#, fuzzy
+msgid "Contrast"
+msgstr "Contrast:"
+
+#: ../modules/cdisplay_highcontrast.c:352
+#, fuzzy
+msgid "Contrast C_ycles:"
+msgstr "Contrast:"
+
+#: ../modules/cdisplay_proof.c:57
+msgid "Perceptual"
+msgstr ""
+
+#: ../modules/cdisplay_proof.c:58
+msgid "Relative Colorimetric"
+msgstr ""
+
+#: ../modules/cdisplay_proof.c:60
+msgid "Absolute Colorimetric"
+msgstr ""
+
+#: ../modules/cdisplay_proof.c:147
+msgid "Color proof filter using ICC color profile"
+msgstr ""
+
+#: ../modules/cdisplay_proof.c:251
+#, fuzzy
+msgid "Color Proof"
+msgstr "Selector de culori"
+
+#: ../modules/cdisplay_proof.c:462
+#, fuzzy
+msgid "_Intent:"
+msgstr "Intensitate:"
+
+#: ../modules/cdisplay_proof.c:465
+msgid "Choose an ICC Color Profile"
+msgstr ""
+
+#: ../modules/cdisplay_proof.c:468
+msgid "_Profile:"
+msgstr ""
+
+#: ../modules/cdisplay_proof.c:476
+msgid "_Black Point Compensation"
+msgstr ""
+
+#: ../modules/colorsel_cmyk.c:73
+#, fuzzy
+msgid "CMYK color selector"
+msgstr "Selecţie după culoare"
+
+#: ../modules/colorsel_cmyk.c:130
+msgid "CMYK"
+msgstr ""
+
+#: ../modules/colorsel_cmyk.c:147
+#, fuzzy
+msgid "_C"
+msgstr "C"
+
+#: ../modules/colorsel_cmyk.c:148
+#, fuzzy
+msgid "_M"
+msgstr "M"
+
+#: ../modules/colorsel_cmyk.c:149
+#, fuzzy
+msgid "_Y"
+msgstr "Y"
+
+#: ../modules/colorsel_cmyk.c:150
+msgid "_K"
+msgstr ""
+
+#: ../modules/colorsel_cmyk.c:154
+msgid "Cyan"
+msgstr "Bleu"
+
+#: ../modules/colorsel_cmyk.c:155
+msgid "Magenta"
+msgstr "Violet"
+
+#: ../modules/colorsel_cmyk.c:156
+msgid "Yellow"
+msgstr "Galben"
+
+#: ../modules/colorsel_cmyk.c:157
+#, fuzzy
+msgid "Black"
+msgstr "Numai negru"
+
+#: ../modules/colorsel_cmyk.c:191
+msgid "Black _Pullout:"
+msgstr ""
+
+#: ../modules/colorsel_cmyk.c:208
+msgid "The percentage of black to pull out of the colored inks."
+msgstr ""
+
+#: ../modules/colorsel_triangle.c:104
+msgid "Painter-style triangle color selector"
+msgstr ""
+
+#: ../modules/colorsel_triangle.c:170
+msgid "Triangle"
+msgstr "Triunghi"
+
+#: ../modules/colorsel_water.c:88
+#, fuzzy
+msgid "Watercolor style color selector"
+msgstr "Tipul de colorare pentru selecţie"
+
+#: ../modules/colorsel_water.c:154
+msgid "Watercolor"
+msgstr "Culoarea Apei"
+
+#: ../modules/colorsel_water.c:220
+msgid "Pressure"
+msgstr "Presiune"

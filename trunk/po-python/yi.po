@@ -1,0 +1,31 @@
+# Yiddish version
+# Copyright (C) 2003 Free Software Foundation, Inc.
+# Raphael Finkel <raphael@cs.uky.edu>, 2003.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: 1.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2003-03-19\n"
+"Last-Translator: Raphael Finkel <raphael@cs.uky.edu>\n"
+"Language-Team: Yiddish <raphael@cs.uky.edu>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+msgid "_Browse..."
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+msgid "Gimp-Python Console"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+msgid "Interactive Python Development"
+msgstr ""

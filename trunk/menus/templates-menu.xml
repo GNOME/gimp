@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
+
+<ui>
+  <popup action="templates-popup">
+    <menuitem action="templates-create-image" />
+    <separator />
+    <menuitem action="templates-new" />
+    <menuitem action="templates-duplicate" />
+    <menuitem action="templates-edit" />
+    <menuitem action="templates-delete" />
+  </popup>
+</ui>

@@ -1,0 +1,2583 @@
+# translation of pa.po to Punjabi
+# translation of gimp-script-fu.po to Punjabi
+# Copyright (C) 2004 THE gimp-script-fu'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the gimp-script-fu packageJaswinder Singh Phulewala <jaswinderlinux@netscape.net>, 2004.
+# Amanpreet Singh Alam <aalam@redhat.com>, 2004.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pa\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2004-12-28 15:42+0100\n"
+"PO-Revision-Date: 2005-05-14 21:16+0530\n"
+"Last-Translator: Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>\n"
+"Language-Team: Punjabi <punlinux-i18n@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"\n"
+
+#: plug-ins/script-fu/script-fu-console.c:129
+#: plug-ins/script-fu/script-fu-text-console.c:66
+msgid "Script-Fu console mode allows only interactive invocation"
+msgstr "ਸਕਰਿਪਟ-Fu ਕਨਸੋਲ ਰੂਪ ਸਿਰਫ ਪ੍ਰਭਾਵੀ ਬੁਲਾਵੇ ਨੂੰ ਇਜਾਜ਼ਤ ਦਿੰਦਾ ਹੈ"
+
+#: plug-ins/script-fu/script-fu-console.c:156
+msgid "Script-Fu Console"
+msgstr "ਸਕਰਿਪਟ-Fu ਕਨਸੋਲ"
+
+#: plug-ins/script-fu/script-fu-console.c:183
+msgid "SIOD Output"
+msgstr "SIOD ਆਊਟ-ਪੁੱਟ"
+
+#: plug-ins/script-fu/script-fu-console.c:249
+msgid "Current Command"
+msgstr "ਮੌਜੂਦਾ ਕਮਾਂਡ"
+
+#: plug-ins/script-fu/script-fu-console.c:267
+msgid "_Browse..."
+msgstr "ਝਲਕ(_B)..."
+
+#: plug-ins/script-fu/script-fu-console.c:548
+msgid "Script-Fu evaluate mode allows only noninteractive invocation"
+msgstr "ਸਕਰਿਪਟ-Fu ਕਨਸੋਲ ਰੂਪ ਸਿਰਫ ਬਿਨ-ਪ੍ਰਭਾਵੀ ਬੁਲਾਵੇ ਨੂੰ ਇਜਾਜ਼ਤ ਦਿੰਦਾ ਹੈ"
+
+#: plug-ins/script-fu/script-fu-interface.c:177
+msgid "Script-Fu cannot process two scripts at the same time."
+msgstr ""
+
+#: plug-ins/script-fu/script-fu-interface.c:179
+#, c-format
+msgid "You are already running the \"%s\" script."
+msgstr ""
+
+#. strip the first part of the menupath if it contains _("/Script-Fu/")
+#: plug-ins/script-fu/script-fu-interface.c:202
+#: plug-ins/script-fu/script-fu-interface.c:204
+msgid "/Script-Fu/"
+msgstr "/ਸਕਰਿਪਟ-Fu/"
+
+#: plug-ins/script-fu/script-fu-interface.c:217
+#, c-format
+msgid "Script-Fu: %s"
+msgstr "ਸਕਰਿਪਟ-Fu: %s"
+
+#. the script arguments frame
+#: plug-ins/script-fu/script-fu-interface.c:254
+msgid "Script Arguments"
+msgstr "ਸਕਰਿਪਟ ਆਰਗੂਮੈਂਟਸ"
+
+#. we add a colon after the label;
+#. some languages want an extra space here
+#: plug-ins/script-fu/script-fu-interface.c:285
+#, c-format
+msgid "%s:"
+msgstr "%s:"
+
+#: plug-ins/script-fu/script-fu-interface.c:328
+msgid "Script-Fu Color Selection"
+msgstr "ਸਕਰਿਪਟ-Fu ਰੰਗ ਚੋਣ"
+
+#: plug-ins/script-fu/script-fu-interface.c:431
+msgid "Script-Fu File Selection"
+msgstr "ਸਕਰਿਪਟ-Fu ਫਾਇਲ ਚੋਣ"
+
+#: plug-ins/script-fu/script-fu-interface.c:435
+msgid "Script-Fu Folder Selection"
+msgstr "ਸਕਰਿਪਟ-Fu ਫੋਲਡਰ ਚੋਣ"
+
+#: plug-ins/script-fu/script-fu-interface.c:447
+msgid "Script-Fu Font Selection"
+msgstr "ਸਕਰਿਪਟ-Fu ਫੋਟ ਚੋਣ"
+
+#: plug-ins/script-fu/script-fu-interface.c:454
+msgid "Script-Fu Palette Selection"
+msgstr "ਸਕਰਿਪਟ-Fu ਤਰਤੀਬ ਚੋਣ"
+
+#: plug-ins/script-fu/script-fu-interface.c:462
+msgid "Script-fu Pattern Selection"
+msgstr "ਸਕਰਿਪਟ-fu ਤਰਤੀਬ ਚੋਣ"
+
+#: plug-ins/script-fu/script-fu-interface.c:469
+msgid "Script-Fu Gradient Selection"
+msgstr "ਸਕਰਿਪਟ-Fu ਢਾਂਲਵਾ ਚੋਣ"
+
+#: plug-ins/script-fu/script-fu-interface.c:477
+msgid "Script-Fu Brush Selection"
+msgstr "ਸਕਰਿਪਟ-Fu ਬੁਰਸ਼ ਚੋਣ"
+
+#. the script progress frame
+#: plug-ins/script-fu/script-fu-interface.c:533
+msgid "Script Progress"
+msgstr "ਸਕਰਿਪਟ ਤਰੱਕੀ"
+
+#: plug-ins/script-fu/script-fu-interface.c:541
+msgid "(none)"
+msgstr "(ਕੋਈ ਨਹੀਂ)"
+
+#: plug-ins/script-fu/script-fu-interface.c:1058
+#: plug-ins/dbbrowser/gimpprocview.c:198
+msgid "Author:"
+msgstr "ਲੇਖਕ:"
+
+#: plug-ins/script-fu/script-fu-interface.c:1065
+#: plug-ins/dbbrowser/gimpprocview.c:220
+msgid "Copyright:"
+msgstr "ਹੱਕ ਰਾਖਵੇਂ ਹਨ:"
+
+#: plug-ins/script-fu/script-fu-interface.c:1072
+#: plug-ins/dbbrowser/gimpprocview.c:209
+msgid "Date:"
+msgstr "ਮਿਤੀ:"
+
+#: plug-ins/script-fu/script-fu-interface.c:1081
+msgid "Image Types:"
+msgstr "ਚਿੱਤਰ ਕਿਸਮਾਂ:"
+
+#: plug-ins/script-fu/script-fu-scripts.c:611
+#, c-format
+msgid ""
+"Error while executing\n"
+"%s\n"
+"%s"
+msgstr ""
+"ਚਲਾਉਣ ਸਮੇਂ ਗਲਤੀ\n"
+"%s\n"
+"%s"
+
+#: plug-ins/script-fu/script-fu-server.c:642
+msgid "Script-Fu Server Options"
+msgstr "ਸਕਰਿਪਟ-Fu ਸਰਵਰ ਚੋਣ"
+
+#: plug-ins/script-fu/script-fu-server.c:670
+msgid "Server Port:"
+msgstr "ਸਰਵਰ ਪੋਰਟ:"
+
+#: plug-ins/script-fu/script-fu-server.c:676
+msgid "Server Logfile:"
+msgstr "ਸਰਵਰ ਲਾਗ-ਫਾਇਲ:"
+
+#: plug-ins/script-fu/script-fu.c:122
+msgid "Script-Fu _Console"
+msgstr "ਸਕਰਿਪਟ-Fu ਕਨਸੋਲ(_C)"
+
+#: plug-ins/script-fu/script-fu.c:129 plug-ins/script-fu/script-fu.c:158
+#: plug-ins/script-fu/script-fu.c:290
+msgid "<Toolbox>/Xtns/Script-Fu"
+msgstr "<Toolbox>/Xtns/ਸਕਰਿਪਟ-Fu"
+
+#: plug-ins/script-fu/script-fu.c:151
+msgid "_Start Server..."
+msgstr ""
+
+#: plug-ins/script-fu/script-fu.c:282
+msgid "_Refresh Scripts"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:128
+#: plug-ins/dbbrowser/gimpprocbrowser.c:142
+msgid "Procedure Browser"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:132
+#: plug-ins/dbbrowser/gimpprocbrowser.c:146
+msgid "Search by _Name"
+msgstr "ਨਾਂ ਦੁਆਰਾ ਲੱਭੋ"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:133
+#: plug-ins/dbbrowser/gimpprocbrowser.c:147
+msgid "Search by _Blurb"
+msgstr "ਅਸਪੱਸ਼ਟ ਧੱਬੇ ਦੁਆਰਾ ਲੱਭੋ"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:224
+msgid "_Search:"
+msgstr "ਖੋਜ:"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:386
+msgid "Searching by name - please wait"
+msgstr "ਨਾਂ ਦੁਆਰਾ ਲੱਭ ਰਿਹਾ ਹੈ - ਕਿਰਪਾ ਕਰਕੇ ਉਡੀਕ ਕਰੋ"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:410
+msgid "Searching by blurb - please wait"
+msgstr "ਅਸਪੱਸ਼ਟ ਧੱਬੇ ਦੁਆਰਾ ਲੱਭ ਰਿਹਾ ਹੈ - ਕਿਰਪਾ ਕਰਕੇ ਉਡੀਕ ਕਰੋ"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:421
+msgid "Searching - please wait"
+msgstr "ਲੱਭ ਰਿਹਾ ਹੈ - ਕਿਰਪਾ ਕਰਕੇ ਉਡੀਕ ਕਰੋ"
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:428
+msgid "1 Procedure"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:430
+#, c-format
+msgid "%d Procedures"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocbrowser.c:476
+msgid "No matches"
+msgstr "ਕੋਈ ਸੁਮੇਲ ਨਹੀ ਹੋਇਆ"
+
+#: plug-ins/dbbrowser/gimpprocview.c:133
+msgid "Parameters"
+msgstr "ਮੁੱਲ"
+
+#: plug-ins/dbbrowser/gimpprocview.c:146
+msgid "Return Values"
+msgstr ""
+
+#: plug-ins/dbbrowser/gimpprocview.c:159
+msgid "Additional Information"
+msgstr "ਹੋਰ ਜਾਣਕਾਰੀ"
+
+#: plug-ins/dbbrowser/gimpprocview.c:319
+msgid "Internal GIMP procedure"
+msgstr "ਅੰਦਰੂਨੀ ਜੈਮਪ ਤਰੀਕਾ"
+
+#: plug-ins/dbbrowser/gimpprocview.c:320
+msgid "GIMP Plug-In"
+msgstr "ਜੈਮਪ ਪਲੱਗਿੰਨ"
+
+#: plug-ins/dbbrowser/gimpprocview.c:321
+msgid "GIMP Extension"
+msgstr "ਜੈਮਪ ਵਿਸਥਾਰ"
+
+#: plug-ins/dbbrowser/gimpprocview.c:322
+msgid "Temporary Procedure"
+msgstr "ਆਰਜ਼ੀ ਤਰੀਕਾ"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:1
+msgid "3D _Outline..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:1
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:1
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:1
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
+#: plug-ins/script-fu/scripts/chalk.scm.h:1
+#: plug-ins/script-fu/scripts/chip-away.scm.h:1
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:1
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:1
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:1
+#: plug-ins/script-fu/scripts/glossy.scm.h:1
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:1
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:1
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:1
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:1
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:1
+msgid "<Image>/Script-Fu/Alpha to Logo"
+msgstr "<Image>/ਸਕਰਿਪਟ-Fu/ਐਲਫਾ ਤੋਂ ਲੋਗੋ"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:3
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:2
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:2
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:2
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:1
+#: plug-ins/script-fu/scripts/chalk.scm.h:2
+#: plug-ins/script-fu/scripts/chip-away.scm.h:2
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:2
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:1
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:2
+#: plug-ins/script-fu/scripts/glossy.scm.h:2
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:2
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:2
+#: plug-ins/script-fu/scripts/news-text.scm.h:1
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
+#: plug-ins/script-fu/scripts/speed-text.scm.h:1
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:2
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:2
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
+#: plug-ins/script-fu/scripts/text-circle.scm.h:1
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:2
+#: plug-ins/script-fu/scripts/title-header.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Logos"
+msgstr "<Toolbox>/Xtns/ਸਕਰਿਪਟ-Fu/ਲੋਗੋ"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:4
+msgid "Bumpmap (alpha layer) blur radius"
+msgstr "ਬੰਪਮੈਪ (ਐਲਫਾ ਪਰਤ) ਧੱਬਾ ਅਰਧ-ਵਿਆਸ"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:5
+#: plug-ins/script-fu/scripts/glossy.scm.h:7
+msgid "Default bumpmap settings"
+msgstr "ਮੂਲ ਬੰਪਮੈਪ ਵਿਵਸਥਾ"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:4
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:11
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:5
+#: plug-ins/script-fu/scripts/chalk.scm.h:5
+#: plug-ins/script-fu/scripts/chip-away.scm.h:8
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:5
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:6
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:4
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+#: plug-ins/script-fu/scripts/glossy.scm.h:8
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:5
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:6
+#: plug-ins/script-fu/scripts/news-text.scm.h:7
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:3
+#: plug-ins/script-fu/scripts/slide.scm.h:2
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
+#: plug-ins/script-fu/scripts/speed-text.scm.h:5
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:6
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
+#: plug-ins/script-fu/scripts/text-circle.scm.h:4
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:6
+#: plug-ins/script-fu/scripts/title-header.scm.h:2
+msgid "Font"
+msgstr "ਫੋਟ"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:7
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:5
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:12
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:6
+#: plug-ins/script-fu/scripts/chalk.scm.h:6
+#: plug-ins/script-fu/scripts/chip-away.scm.h:9
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:6
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:7
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:6
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:4
+#: plug-ins/script-fu/scripts/glossy.scm.h:9
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:6
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:7
+#: plug-ins/script-fu/scripts/news-text.scm.h:8
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:4
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
+#: plug-ins/script-fu/scripts/speed-text.scm.h:6
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:7
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
+#: plug-ins/script-fu/scripts/text-circle.scm.h:5
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:7
+#: plug-ins/script-fu/scripts/title-header.scm.h:3
+msgid "Font size (pixels)"
+msgstr "ਫੋਂਟ ਆਕਾਰ (ਪਿਕਸਲ)"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:8
+msgid "Outline blur radius"
+msgstr "ਰੇਖਾ ਚਿੱਤਰ ਧੱਬਾ ਅਰਧ-ਵਿਆਸ"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
+#: plug-ins/script-fu/scripts/chip-away.scm.h:13
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:11
+msgid "Pattern"
+msgstr "ਤਰਤੀਬ"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#: plug-ins/script-fu/scripts/glossy.scm.h:17
+#: plug-ins/script-fu/scripts/round-corners.scm.h:6
+msgid "Shadow X offset"
+msgstr "X ਪੂਰਤੀ ਛਾਂ"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:11
+#: plug-ins/script-fu/scripts/glossy.scm.h:18
+#: plug-ins/script-fu/scripts/round-corners.scm.h:7
+msgid "Shadow Y offset"
+msgstr "Y ਪੂਰਤੀ ਛਾਂ"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:12
+msgid "Shadow blur radius"
+msgstr "ਧੱਬਾ ਅਰਧ-ਵਿਆਸ ਛਾਂ"
+
+#: plug-ins/script-fu/scripts/3d-outline.scm.h:13
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:6
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:17
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:10
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:8
+#: plug-ins/script-fu/scripts/chalk.scm.h:7
+#: plug-ins/script-fu/scripts/chip-away.scm.h:14
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:9
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:11
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:8
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:7
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:12
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:14
+#: plug-ins/script-fu/scripts/glossy.scm.h:19
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:8
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:11
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:10
+#: plug-ins/script-fu/scripts/news-text.scm.h:10
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:13
+#: plug-ins/script-fu/scripts/slide.scm.h:5
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:11
+#: plug-ins/script-fu/scripts/speed-text.scm.h:8
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:9
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:8
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
+#: plug-ins/script-fu/scripts/text-circle.scm.h:8
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:14
+#: plug-ins/script-fu/scripts/title-header.scm.h:5
+msgid "Text"
+msgstr "ਪਾਠ"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:1
+msgid "3_D Truchet..."
+msgstr "3_D Truchet..."
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:2
+#: plug-ins/script-fu/scripts/camo.scm.h:1
+#: plug-ins/script-fu/scripts/flatland.scm.h:1
+#: plug-ins/script-fu/scripts/land.scm.h:1
+#: plug-ins/script-fu/scripts/rendermap.scm.h:1
+#: plug-ins/script-fu/scripts/swirltile.scm.h:1
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
+#: plug-ins/script-fu/scripts/truchet.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Patterns"
+msgstr "<Toolbox>/Xtns/ਸਕਰਿਪਟ-Fu/ਤਰਤੀਬ"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:3
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:3
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:4
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:3
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+#: plug-ins/script-fu/scripts/chalk.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:3
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:3
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+#: plug-ins/script-fu/scripts/glossy.scm.h:3
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:3
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
+#: plug-ins/script-fu/scripts/image-structure.scm.h:3
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:3
+#: plug-ins/script-fu/scripts/news-text.scm.h:2
+#: plug-ins/script-fu/scripts/speed-text.scm.h:2
+#: plug-ins/script-fu/scripts/sphere.scm.h:2
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:3
+#: plug-ins/script-fu/scripts/swirltile.scm.h:3
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:3
+#: plug-ins/script-fu/scripts/truchet.scm.h:2
+msgid "Background color"
+msgstr "ਪਿੱਠਭੂਮੀ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:4
+#: plug-ins/script-fu/scripts/truchet.scm.h:3
+msgid "Block size"
+msgstr "ਬਲਾਕ ਆਕਾਰ"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:5
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:7
+msgid "End blend"
+msgstr "ਅੰਤਲਾ ਮਿਸ਼ਰਣ"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:6
+#: plug-ins/script-fu/scripts/truchet.scm.h:5
+msgid "Number of X tiles"
+msgstr "X ਟਾਈਲਾਂ ਦੀ ਗਿਣਤੀ"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:7
+#: plug-ins/script-fu/scripts/truchet.scm.h:6
+msgid "Number of Y tiles"
+msgstr "Y ਟਾਈਲਾਂ ਦੀ ਗਿਣਤੀ"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:8
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:16
+msgid "Start blend"
+msgstr "ਸ਼ੁਰੂਆਤੀ ਮਿਸ਼ਰਣ"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:9
+msgid "Supersample"
+msgstr "ਉੱਤਮ ਤਰਤੀਬ"
+
+#: plug-ins/script-fu/scripts/3dTruchet.scm.h:10
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:4
+#: plug-ins/script-fu/scripts/truchet.scm.h:8
+msgid "Thickness"
+msgstr "ਚੌਡ਼ਾਈ"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:1
+#: plug-ins/script-fu/scripts/addborder.scm.h:1
+#: plug-ins/script-fu/scripts/coffee.scm.h:1
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
+#: plug-ins/script-fu/scripts/old-photo.scm.h:1
+#: plug-ins/script-fu/scripts/round-corners.scm.h:1
+#: plug-ins/script-fu/scripts/slide.scm.h:1
+msgid "<Image>/Script-Fu/Decor"
+msgstr "<Image>/ਸਕਰਿਪਟ-Fu/ਸਜਾਵਟ"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:2
+msgid "Add B_evel..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:3
+#: plug-ins/script-fu/scripts/chip-away.scm.h:12
+msgid "Keep bump layer"
+msgstr "ਬੰਪ ਪਰਤ ਰੱਖੋ"
+
+#: plug-ins/script-fu/scripts/add-bevel.scm.h:5
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
+#: plug-ins/script-fu/scripts/old-photo.scm.h:6
+#: plug-ins/script-fu/scripts/round-corners.scm.h:8
+#: plug-ins/script-fu/scripts/slide.scm.h:6
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:6
+msgid "Work on copy"
+msgstr "ਨਕਲ ਉੱਪਰ ਕੰਮ ਕਰੋ"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:2
+msgid "Add _Border..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:3
+msgid "Border X size"
+msgstr "ਹਾਸ਼ੀਆ X ਆਕਾਰ"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:4
+msgid "Border Y size"
+msgstr "ਹਾਸ਼ੀਆ Y ਆਕਾਰ"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:5
+msgid "Border color"
+msgstr "ਹਾਸ਼ੀਆ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/addborder.scm.h:6
+msgid "Delta value on color"
+msgstr "ਰੰਗ ਉੱਪਰ ਡੈਲਟਾ ਮੁੱਲ"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow"
+msgstr "<Toolbox>/Xtns/ਸਕਰਿਪਟ-Fu/ਵੈਬ ਸਫਾ ਸਰੂਪ/ਵੱਖਰੀ ਚਮਕ"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+msgid "Down"
+msgstr "ਹੇਠਾਂ"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#: plug-ins/script-fu/scripts/camo.scm.h:5
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
+msgid "Flatten image"
+msgstr "ਸਮਤਲ ਚਿੱਤਰ"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:8
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:6
+msgid "Glow color"
+msgstr "ਚਮਕ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
+msgid "Left"
+msgstr "ਖੱਬਾ"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
+msgid "Orientation"
+msgstr "ਸਥਿਤੀ"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
+msgid "Right"
+msgstr "ਸੱਜਾ"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: plug-ins/script-fu/scripts/lava.scm.h:7
+msgid "Size"
+msgstr "ਆਕਾਰ"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
+msgid "Up"
+msgstr "ਉੱਪਰ"
+
+#: plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:11
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:9
+msgid "_Arrow..."
+msgstr "ਤੀਰ(_A)..."
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:3
+msgid "Bar height"
+msgstr "ਪੱਟੀ ਉਚਾਈ"
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+msgid "Bar length"
+msgstr "ਪੱਟੀ ਲੰਬਾਈ"
+
+#: plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
+msgid "_Hrule..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
+#: plug-ins/script-fu/scripts/text-circle.scm.h:6
+#: plug-ins/script-fu/scripts/tileblur.scm.h:6
+msgid "Radius"
+msgstr "ਅਰਧ-ਵਿਆਸ"
+
+#: plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
+msgid "_Bullet..."
+msgstr "ਬਿੰਦੀ(_B)..."
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+msgid "B_utton..."
+msgstr "ਬਟਨ(_u)..."
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
+msgid "Glow radius"
+msgstr "ਚਮਕਦਾ ਅਰਧ-ਵਿਆਸ"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:6
+msgid "Padding"
+msgstr "ਚਿਣਿਆ"
+
+#: plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:7
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:8
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:10
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:18
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:13
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:15
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
+#: plug-ins/script-fu/scripts/news-text.scm.h:11
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:14
+#: plug-ins/script-fu/scripts/speed-text.scm.h:9
+msgid "Text color"
+msgstr "ਪਾਠ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
+msgid "Alien _Glow..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
+msgid "Glow size (pixels * 4)"
+msgstr "ਚਮਕਦਾ ਆਕਾਰ (ਪਿਕਸਲ * 4)"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+msgid "Alien _Neon..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
+msgid "Fade away"
+msgstr "ਫਿੱਕਾ ਕਰੋ"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
+msgid "Number of bands"
+msgstr "ਧਾਰੀਆਂ ਦੀ ਗਿਣਤੀ"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
+msgid "Width of bands"
+msgstr "ਧਾਰੀਆਂ ਦੀ ਚੌਡ਼ਾਈ"
+
+#: plug-ins/script-fu/scripts/alien-neon-logo.scm.h:12
+msgid "Width of gaps"
+msgstr "ਖਾਲੀ ਥਾਂ ਦੀ ਚੌਡ਼ਾਈ"
+
+#: plug-ins/script-fu/scripts/basic1-logo.scm.h:8
+msgid "_Basic I..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/basic2-logo.scm.h:3
+msgid "B_asic II..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:1
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Buttons"
+msgstr "<Toolbox>/Xtns/ਸਕਰਿਪਟ-Fu/ਬਟਨ"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:2
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:2
+msgid "Bevel width"
+msgstr "ਢਲਵੀਂ ਚੌਡ਼ਾਈ"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:5
+msgid "Lower-right color"
+msgstr "ਹੇਠਲਾ-ਸੱਜਾ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:7
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:11
+msgid "Pressed"
+msgstr "ਦਬਾਇਆ"
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:8
+#, fuzzy
+msgid "Simple _Beveled Button..."
+msgstr "<Toolbox>/Xtns/ਸਕਰਿਪਟ-Fu/ਬਟਨ/ਸਾਧਾਰਨ ਢਲਵਾਂ ਬਟਨ..."
+
+#: plug-ins/script-fu/scripts/beveled-button.scm.h:11
+msgid "Upper-left color"
+msgstr "ਉੱਪਰਲਾ-ਖੱਬਾ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+#: plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
+#, fuzzy
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern"
+msgstr "<Toolbox>/Xtns/ਸਕਰਿਪਟ-Fu/ਵੈਬ ਸਫਾ ਸਰੂਪ/ਢਲਵਾਂ ਤਰਤੀਬ/ਤੀਰ..."
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
+msgid "Diameter"
+msgstr "ਵਿਆਸ"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+msgid "Transparent background"
+msgstr "ਪਾਰਦਰਸ਼ੀ ਪਿੱਠਭੂਮੀ"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
+msgid "H_eading..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:5
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:4
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:4
+#: plug-ins/script-fu/scripts/swirltile.scm.h:7
+msgid "Height"
+msgstr "ਉਚਾਈ"
+
+#: plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:5
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:8
+#: plug-ins/script-fu/scripts/swirltile.scm.h:11
+msgid "Width"
+msgstr "ਚੌਡ਼ਾਈ"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:1
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:1
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:1
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:1
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:1
+msgid "<Image>/Script-Fu/Animators"
+msgstr "<Image>/ਸਕਰਿਪਟ-Fu/ਸਜੀਵਕਾਰ"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:2
+msgid "Intermediate frames"
+msgstr "ਵਿਚਕਾਰਲੇ ਫਰੇਮ"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:3
+msgid "Looped"
+msgstr "ਚਾਪੀ"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:4
+msgid "Max. blur radius"
+msgstr "ਅਧਿਕਤਮ ਧੱਬਾ ਅਰਧ-ਵਿਆਸ"
+
+#: plug-ins/script-fu/scripts/blend-anim.scm.h:5
+msgid "_Blend..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:4
+msgid "Blen_ded..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:5
+msgid "Blend mode"
+msgstr "ਮਿਸ਼ਰਣ ਰੂਪ"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:6
+msgid "Custom Gradient"
+msgstr "ਕਸਟਮ ਢਾਂਲਵਾ"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:8
+msgid "FG-BG-HSV"
+msgstr "FG-BG-HSV"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:9
+msgid "FG-BG-RGB"
+msgstr "FG-BG-RGB"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:10
+msgid "FG-Transparent"
+msgstr "FG-ਪਾਰਦਰਸ਼ੀ"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:13
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: plug-ins/script-fu/scripts/land.scm.h:3
+#: plug-ins/script-fu/scripts/lava.scm.h:2
+#: plug-ins/script-fu/scripts/rendermap.scm.h:4
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:10
+msgid "Gradient"
+msgstr "ਢਾਂਲਵਾ"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:14
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:8
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:9
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:3
+#: plug-ins/script-fu/scripts/rendermap.scm.h:5
+#: plug-ins/script-fu/scripts/title-header.scm.h:4
+msgid "Gradient reverse"
+msgstr "ਢਾਂਲਵਾ ਉਲਟਾ"
+
+#: plug-ins/script-fu/scripts/blended-logo.scm.h:15
+msgid "Offset (pixels)"
+msgstr "ਪੂਰਤੀ (ਪਿਕਸਲ)"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+msgid "Background Color"
+msgstr "ਪਿੱਠਭੂਮੀ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+msgid "Bo_vination..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+msgid "Spots density X"
+msgstr "ਚਿੰਨ ਘਣਤਾ X"
+
+#: plug-ins/script-fu/scripts/bovinated-logo.scm.h:9
+msgid "Spots density Y"
+msgstr "ਚਿੰਨ ਘਣਤਾ Y"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:2
+msgid "Add glowing"
+msgstr "ਚਮਕਤਾ ਜੋੜ੍ਹੋ"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:3
+msgid "After glow"
+msgstr "ਚਮਕ ਤੋਂ ਬਾਅਦ"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
+msgid "B_urn-In..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
+msgid "Burn-In: Need two layers in total!"
+msgstr "ਬਰਨ-ਇਨ: ਕੁੱਲ ਵਾਸਤੇ ਦੋ ਪਰਤਾਂ ਦੀ ਲੋਡ਼ ਹੈ!"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+msgid "Corona width"
+msgstr "ਮੰਡਲ ਦੀ ਚੌਡ਼ਾਈ"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+msgid "Fadeout"
+msgstr "ਫਿੱਕਾ ਕਰੋ"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+msgid "Fadeout width"
+msgstr "ਚੌਡ਼ਾਈ ਫਿੱਕੀ ਕਰੋ"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+msgid "Prepare for GIF"
+msgstr "GIF ਲਈ ਤਿਆਰ ਕਰੋ"
+
+#: plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+msgid "Speed (pixels/frame)"
+msgstr "ਗਤੀ (ਪਿਕਸਲ/ਫਰੇਮ)"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:2
+msgid "Color 1"
+msgstr "ਰੰਗ 1"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:3
+msgid "Color 2"
+msgstr "ਰੰਗ 2"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:4
+msgid "Color 3"
+msgstr "ਰੰਗ 3"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:6
+#: plug-ins/script-fu/scripts/rendermap.scm.h:6
+msgid "Granularity"
+msgstr "ਖੁਰਦਰਾਪਣ"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:7
+#: plug-ins/script-fu/scripts/rendermap.scm.h:7
+msgid "Image size"
+msgstr "ਚਿੱਤਰ ਆਕਾਰ"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:8
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:3
+msgid "Smooth"
+msgstr "ਮੁਲਾਇਮ"
+
+#: plug-ins/script-fu/scripts/camo.scm.h:9
+msgid "_Camouflage..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:1
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:1
+#, fuzzy
+msgid "<Image>/Script-Fu/Stencil Ops"
+msgstr "<Image>/ਸਕਰਿਪਟ-Fu/ਉਕਰਨ ਕਿਰਿਆ/ਮੀਨਾਕ"
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:2
+msgid "C_arve-It..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:3
+msgid "Carve white areas"
+msgstr "ਮੀਨਾਕਾਰੀ ਸਫੈਦ ਖੇਤਰ"
+
+#: plug-ins/script-fu/scripts/carve-it.scm.h:4
+msgid "Image to carve"
+msgstr "ਮੀਨਾਕਾਰੀ ਲਈ ਚਿੱਤਰ"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:2
+msgid "Background Image"
+msgstr "ਪਿੱਠਭੂਮੀ ਚਿੱਤਰ"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:3
+#, fuzzy
+msgid "Carve raised text"
+msgstr "ਮੀਨਾਕਾਰੀ ਨਾਲ ਉਭਾਰਿਆ ਪਾਠ"
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:4
+msgid "Carved..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/carved-logo.scm.h:7
+msgid "Padding around text"
+msgstr "ਪਾਠ ਦੁਆਲੇ ਚਿਣੋ"
+
+#: plug-ins/script-fu/scripts/chalk.scm.h:4
+msgid "Chalk color"
+msgstr "ਚਾਕ ਦਾ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/chalk.scm.h:8
+msgid "_Chalk..."
+msgstr "ਚਾਕ(_C)..."
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:3
+msgid "Blur amount"
+msgstr "ਧੱਬੇ ਦਾ ਮੁੱਲ"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:4
+msgid "Chip Awa_y..."
+msgstr "ਖੁਰਦਰੀ ਦੂਰ(_y)..."
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:5
+msgid "Chip amount"
+msgstr "ਖੁਰਦਰੀ ਮੁੱਲ"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:6
+msgid "Drop shadow"
+msgstr "ਬੂੰਦ ਪਰਛਾਂਵਾ"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:7
+#, fuzzy
+msgid "Fill BG with pattern"
+msgstr "ਪਿੱਠਭੂਮੀ ਨੂੰ ਨਮੂਨੇ ਨਾਲ ਭਰੋ"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:10
+msgid "Invert"
+msgstr "ਉਲਟਾ"
+
+#: plug-ins/script-fu/scripts/chip-away.scm.h:11
+msgid "Keep background"
+msgstr "ਪਿੱਠਭੂਮੀ ਰੱਖੋ"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:2
+#, fuzzy
+msgid "C_hrome-It..."
+msgstr "ਝਲਕ..."
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
+msgid "Chrome balance"
+msgstr "ਕਰੋਮ ਸੰਤੁਲਨ"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:3
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
+msgid "Chrome factor"
+msgstr "ਕਰੋਮ ਗੁਣਾਂਕ"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
+msgid "Chrome lightness"
+msgstr "ਕਰੋਮ ਫਿੱਕਾਪਣ"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:6
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
+msgid "Chrome saturation"
+msgstr "ਕਰੋਮ ਸੰਤ੍ਰਿਪਤੀ"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:7
+msgid "Chrome white areas"
+msgstr "ਕਰੋਮ ਸਫੈਦ ਖੇਤਰ"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:5
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
+msgid "Environment map"
+msgstr "ਵਾਤਾਵਰਨ ਨਕਸ਼ਾ"
+
+#: plug-ins/script-fu/scripts/chrome-it.scm.h:9
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
+msgid "Highlight balance"
+msgstr "ਸੰਤੁਲਿਨ ਉਭਾਰੋ"
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+#, fuzzy
+msgid "C_hrome..."
+msgstr "ਝਲਕ..."
+
+#: plug-ins/script-fu/scripts/chrome-logo.scm.h:8
+msgid "Offsets (pixels * 2)"
+msgstr "ਪੂਰਤੀ (ਪਿਕਸਲ * 2)"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:1
+#: plug-ins/script-fu/scripts/grid-system.scm.h:1
+#: plug-ins/script-fu/scripts/lava.scm.h:1
+#: plug-ins/script-fu/scripts/line-nova.scm.h:1
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+msgid "<Image>/Script-Fu/Render"
+msgstr "<Image>/ਸਕਰਿਪਟ-Fu/ਚਿਤਰਿਤ ਕਰੋ"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:2
+msgid "Circuit seed"
+msgstr "ਘੇਰੇ ਦਾ ਮੂਲ"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:3
+#: plug-ins/script-fu/scripts/lava.scm.h:3
+#: plug-ins/script-fu/scripts/predator.scm.h:3
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:11
+msgid "Keep selection"
+msgstr "ਚੋਣ ਰੱਖੋ"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:4
+msgid "No background (only for separate layer)"
+msgstr "ਕੋਈ ਪਿੱਠਭੂਮੀ ਨਹੀ (ਸਿਰਫ ਵੱਖਰੀ ਪਰਤ ਲਈ)"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:5
+msgid "Oilify mask size"
+msgstr "ਤੇਲਯੁਕਤ ਮਖੌਟੇ ਦਾ ਆਕਾਰ"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:6
+#: plug-ins/script-fu/scripts/lava.scm.h:6
+#: plug-ins/script-fu/scripts/predator.scm.h:6
+msgid "Separate layer"
+msgstr "ਵੱਖਰੀ ਪਰਤ"
+
+#: plug-ins/script-fu/scripts/circuit.scm.h:7
+msgid "_Circuit..."
+msgstr "ਸਰਕਟ(_C)..."
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:1
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:1
+#: plug-ins/script-fu/scripts/predator.scm.h:1
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:1
+#: plug-ins/script-fu/scripts/weave.scm.h:1
+msgid "<Image>/Script-Fu/Alchemy"
+msgstr "<Image>/ਸਕਰਿਪਟ-Fu/ਰਸਾਇਣ-ਵਿੱਦਿਆ"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:2
+#: plug-ins/script-fu/scripts/swirltile.scm.h:2
+msgid "Azimuth"
+msgstr "ਐਜ਼ੀਮੁਥ"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:3
+msgid "Blur X"
+msgstr "ਧੱਬਾ X"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:4
+msgid "Blur Y"
+msgstr "ਧੱਬਾ Y"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:5
+#: plug-ins/script-fu/scripts/swirltile.scm.h:5
+msgid "Depth"
+msgstr "ਡੂੰਘਾਈ"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:6
+#: plug-ins/script-fu/scripts/swirltile.scm.h:6
+msgid "Elevation"
+msgstr "ਸ਼ਾਨ"
+
+#: plug-ins/script-fu/scripts/clothify.scm.h:7
+msgid "_Clothify..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:2
+msgid ""
+"Darken only\n"
+"(Better, but only for images with alot of white)"
+msgstr ""
+"ਸਿਰਫ ਕਾਲਾ ਕਰੋ\n"
+"(ਵਧੀਆ ਹੈ, ਪਰ ਕੁੱਝ ਸਫੈਦ ਚਿੱਤਰਾਂ ਲਈ)"
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:3
+msgid "Stains"
+msgstr "ਚਿੰਨ੍ਹ"
+
+#: plug-ins/script-fu/scripts/coffee.scm.h:4
+msgid "_Coffee Stain..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:4
+msgid "Comic Boo_k..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:9
+msgid "Outline color"
+msgstr "ਰੇਖਾ-ਚਿੱਤਰ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/comic-logo.scm.h:10
+#: plug-ins/script-fu/scripts/glossy.scm.h:12
+msgid "Outline size"
+msgstr "ਰੇਖਾ-ਚਿੱਤਰ ਆਕਾਰ"
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
+msgid "Cool _Metal..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:4
+msgid "Effect size (pixels)"
+msgstr "ਆਕਾਰ ਪ੍ਰਭਾਵਿਤ ਕਰੋ (ਪਿਕਸਲ)"
+
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:2
+msgid "Background image"
+msgstr "ਪਿੱਠਭੂਮੀ ਚਿੱਤਰ"
+
+#: plug-ins/script-fu/scripts/crystal-logo.scm.h:4
+msgid "Crystal..."
+msgstr "ਰਵੇ..."
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:1
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:1
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:1
+#: plug-ins/script-fu/scripts/select-to-image.scm.h:1
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+msgid "<Image>/Script-Fu/Selection"
+msgstr "<Image>/ਸਕਰਿਪਟ-Fu/ਚੋਣ/"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:2
+msgid "Granularity (1 is low)"
+msgstr "ਖੁਰਦਰਾਪਣ (1 ਘੱਟ ਹੈ)"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:4
+msgid "Smooth horizontally"
+msgstr "ਲੇਟਵਾਂ ਮੁਲਾਇਮ"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:5
+msgid "Smooth vertically"
+msgstr "ਲੰਬਕਾਰੀ ਮੁਲਾਇਮ"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:6
+msgid "Spread"
+msgstr "ਫੈਲਾਓ"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:7
+msgid "Threshold (bigger 1<-->255 smaller)"
+msgstr "ਸ਼ੁਰੂਆਤ (ਵੱਡਾ 1<-->255 ਛੋਟਾ)"
+
+#: plug-ins/script-fu/scripts/distress-selection.scm.h:8
+#, fuzzy
+msgid "_Distress Selection..."
+msgstr "<Image>/ਸਕਰਿਪਟ-Fu/ਚੋਣ/ਕਠਿਨ ਚੋਣ..."
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:1
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:1
+msgid "<Image>/Script-Fu/Shadow"
+msgstr "<Image>/ਸਕਰਿਪਟ-Fu/ਛਾਂ"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:2
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
+msgid "Allow resizing"
+msgstr "ਮੁਡ਼-ਆਕਾਰ ਸਵੀਕਾਰ"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:3
+#: plug-ins/script-fu/scripts/news-text.scm.h:3
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
+#: plug-ins/script-fu/scripts/round-corners.scm.h:4
+#: plug-ins/script-fu/scripts/swirltile.scm.h:4
+msgid "Blur radius"
+msgstr "ਧੱਬਾ ਅਰਧ-ਵਿਆਸ"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:4
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:5
+msgid "Color"
+msgstr "ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:5
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:8
+msgid "Offset X"
+msgstr "ਪੂਰਤੀ X"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:6
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:9
+msgid "Offset Y"
+msgstr "ਪੂਰਤੀ Y"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:7
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
+msgid "Opacity"
+msgstr "ਧੁੰਦਲਾਪਨ"
+
+#: plug-ins/script-fu/scripts/drop-shadow.scm.h:8
+msgid "_Drop-Shadow..."
+msgstr "ਬੂੰਦ ਛਾਂ(_D)..."
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:2
+msgid "Columns"
+msgstr "ਕਾਲਮ"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:3
+msgid "Erase"
+msgstr "ਮਿਟਾਓ"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:4
+msgid "Erase/fill"
+msgstr "ਮਿਟਾਓ/ਭਰੋ"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:5
+msgid "Even"
+msgstr "ਜਿਸਤ"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:6
+msgid "Even/odd"
+msgstr "ਜਿਸਤ/ਟਾਂਕ"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:7
+msgid "Fill with BG"
+msgstr "ਪਿੱਠਭੂਮੀ ਨਾਲ ਭਰੋ"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:8
+msgid "Odd"
+msgstr "ਟਾਂਕ"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:9
+msgid "Rows"
+msgstr "ਕਤਾਰਾਂ"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:10
+msgid "Rows/cols"
+msgstr "ਕਤਾਰਾਂ/ਕਾਲਮ"
+
+#: plug-ins/script-fu/scripts/erase-rows.scm.h:11
+#, fuzzy
+msgid "_Erase every other Row..."
+msgstr "<Image>/ਸਕਰਿਪਟ-Fu/ਰਸਾਇਣ ਵਿੱਦਿਆ/ਹੋਰ ਵਾਧੂ ਮਿਟਾਓ..."
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:2
+#, fuzzy
+msgid "Apply generated layermask"
+msgstr "ਬਣਾਇਆ ਪਰਤ-ਮਖੌਟਾ ਲਾਗੂ ਕਰੋ"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:3
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: plug-ins/script-fu/scripts/old-photo.scm.h:2
+#, fuzzy
+msgid "Border size"
+msgstr "ਹਾਸ਼ੀਆ ਆਕਾਰ"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:4
+#, fuzzy
+msgid "Clear unselected maskarea"
+msgstr "ਨਾ-ਚੁਣਿਆ ਮਖੌਟਾ-ਖੇਤਰ ਸਾਫ ਕਰੋ"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:6
+#, no-c-format
+msgid "Fade from %"
+msgstr "% ਤੋਂ ਫਿੱਕਾ ਕਰੋ"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:8
+#, no-c-format
+msgid "Fade to   %"
+msgstr "% ਤੱਕ ਫਿੱਕਾ ਕਰੋ"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:9
+#, fuzzy
+msgid "Use growing selection"
+msgstr "ਵਿਕਾਸ ਵਾਲੀ ਚੋਣ ਵਰਤੋ"
+
+#: plug-ins/script-fu/scripts/fade-outline.scm.h:10
+msgid "_Fade Outline..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:2
+#: plug-ins/script-fu/scripts/land.scm.h:2
+msgid "Detail level"
+msgstr "ਵੇਰਵਾ ਪੱਧਰ"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:3
+#: plug-ins/script-fu/scripts/land.scm.h:4
+msgid "Image height"
+msgstr "ਚਿੱਤਰ ਉਚਾਈ"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:4
+#: plug-ins/script-fu/scripts/land.scm.h:5
+msgid "Image width"
+msgstr "ਚਿੱਤਰ ਚੌਡ਼ਾਈ"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:5
+#: plug-ins/script-fu/scripts/land.scm.h:7
+msgid "Random seed"
+msgstr "ਬੇਤਰਤੀਬ ਮੁੱਢਲਾ"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:6
+#: plug-ins/script-fu/scripts/land.scm.h:8
+msgid "Scale X"
+msgstr "ਪੈਮਾਨਾ X"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:7
+#: plug-ins/script-fu/scripts/land.scm.h:9
+msgid "Scale Y"
+msgstr "ਪੈਮਾਨਾ Y"
+
+#: plug-ins/script-fu/scripts/flatland.scm.h:8
+msgid "_Flatland..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:1
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Utils"
+msgstr "<Toolbox>/Xtns/ਸਕਰਿਪਟ-Fu/ਸਹਾਇਕ"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:2
+msgid "Active colors"
+msgstr "ਸਰਗਰਮ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:3
+msgid "Black on white"
+msgstr "ਸਫੈਦ ਉੱਪਰ ਕਾਲਾ"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:4
+#, fuzzy
+msgid "Font _size (pixels)"
+msgstr "ਫੋਟ ਆਕਾਰ (ਪਿਕਸਲ)"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:5
+#, fuzzy
+msgid "Use font _name as text"
+msgstr "ਫੋਟ ਨਾਂ ਨੂੰ ਪਾਠ ਦੇ ਤੌਰ ਤੇ ਵਰਤੋ"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:6
+msgid "_Border (pixels)"
+msgstr "ਹਾਸ਼ੀਆ (ਪਿਕਸਲ)"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:7
+msgid "_Color scheme"
+msgstr "ਰੰਗ ਵਿਵਸਥਾ(_C)"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:8
+msgid "_Filter (regexp)"
+msgstr "ਫਿਲਟਰ (regexp)"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:9
+msgid "_Font Map..."
+msgstr "ਫੋਂਟ ਮੈਪ(_F)..."
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:10
+msgid "_Labels"
+msgstr "ਲੇਬਲ"
+
+#: plug-ins/script-fu/scripts/font-map.scm.h:11
+msgid "_Text"
+msgstr "ਪਾਠ"
+
+#: plug-ins/script-fu/scripts/frosty-logo.scm.h:8
+#, fuzzy
+msgid "_Frosty..."
+msgstr "ਝਲਕ..."
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
+msgid "Add shadow"
+msgstr "ਛਾਂ ਜੋੜ੍ਹੋ"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
+msgid "Blur border"
+msgstr "ਧੱਬੇਦਾਰ ਹਾਸ਼ੀਆ"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
+msgid "Granularity (1 is Low)"
+msgstr "ਖੁਰਦਰਾਪਣ (1 ਘੱਟ ਹੈ)"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
+#, no-c-format
+msgid "Shadow weight (%)"
+msgstr "ਪਰਛਾਂਵਾ ਭਾਰ (%)"
+
+#: plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
+msgid "_Fuzzy Border..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:1
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Classic.Gimp.Org"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:2
+msgid "Autocrop"
+msgstr "ਸਵੈ-ਤਿਆਰ"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:3
+msgid "Dark color"
+msgstr "ਗੂਡ਼ਾ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:6
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:9
+msgid "Highlight color"
+msgstr "ਉਭਾਰਨ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:7
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:6
+msgid "Index image"
+msgstr "ਸੂਚੀ ਚਿੱਤਰ"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:8
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:7
+msgid "Number of colors"
+msgstr "ਰੰਗਾਂ ਦੀ ਗਿਣਤੀ"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:9
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:10
+msgid "Remove background"
+msgstr "ਪਿੱਠਭੂਮੀ ਹਟਾਓ"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:10
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:11
+#, fuzzy
+msgid "Select-by-color threshold"
+msgstr "ਰੰਗ ਸ਼ੁਰੂਆਤੀ ਦੁਆਰਾ ਚੁਣੋ"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:11
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:12
+msgid "Shadow color"
+msgstr "ਛਾਂ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:14
+msgid "_Big Header..."
+msgstr "ਵੱਡਾ ਸਿਰਲੇਖ(_B)..."
+
+#: plug-ins/script-fu/scripts/gimp-headers.scm.h:15
+msgid "_Small Header..."
+msgstr "ਛੋਟਾ ਸਿਰਲੇਖ(_S)..."
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:13
+msgid "T_ube Sub-Button Label..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:16
+msgid "Tub_e Sub-Sub-Button Label..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:17
+msgid "_General Tube Labels..."
+msgstr "ਸਧਾਰਨ ਟਿਊਬ ਲੇਬਲ(_G)..."
+
+#: plug-ins/script-fu/scripts/gimp-labels.scm.h:18
+msgid "_Tube Button Label..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:4
+msgid "Blend gradient (Text)"
+msgstr "ਮਿਸ਼ਰਿਤ ਢਾਂਲਵਾ(ਪਾਠ)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:5
+msgid "Blend gradient (outline)"
+msgstr "ਮਿਸ਼ਰਿਤ ਢਾਂਲਵਾ(ਰੇਖਾ-ਚਿੱਤਰ)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:6
+msgid "Blend gradient (text)"
+msgstr "ਮਿਸ਼ਰਿਤ ਢਾਂਲਵਾ(ਪਾਠ)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:10
+msgid "Glo_ssy..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:11
+msgid "Outline gradient reverse"
+msgstr "ਰੇਖਾ-ਚਿੱਤਰ ਢਾਂਲਵਾ ਉਲਟ"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:13
+msgid "Pattern (outline)"
+msgstr "ਤਰਤੀਬ (ਰੇਖਾ-ਚਿੱਤਰ)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:14
+msgid "Pattern (overlay)"
+msgstr "ਤਰਤੀਬ (ਤਲ-ਪਰਤ)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:15
+msgid "Pattern (text)"
+msgstr "ਤਰਤੀਬ (ਪਾਠ)"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:16
+#: plug-ins/script-fu/scripts/sphere.scm.h:5
+msgid "Shadow"
+msgstr "ਪਰਛਾਂਵਾ"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:20
+msgid "Text gradient reverse"
+msgstr "ਪਾਠ ਢਾਂਲਵਾ ਉਲਟ"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:21
+msgid "Use pattern for outline instead of gradient"
+msgstr "ਰੇਖਾ-ਚਿੱਤਰ ਲਈ ਢਾਂਲਵੇ ਦੀ ਬਜਾਏ ਤਰਤੀਬ ਵਰਤੋ"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:22
+msgid "Use pattern for text instead of gradient"
+msgstr "ਪਾਠ ਲਈ ਢਾਂਲਵੇ ਦੀ ਬਜਾਏ ਤਰਤੀਬ ਵਰਤੋ"
+
+#: plug-ins/script-fu/scripts/glossy.scm.h:23
+msgid "Use pattern overlay"
+msgstr "ਤਲ-ਪਰਤ ਤਰਤੀਬ ਵਰਤੋ"
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:4
+msgid "Effect size (pixels * 3)"
+msgstr "ਆਕਾਰ ਪ੍ਰਭਾਵਿਤ ਕਰੋ (ਪਿਕਸਲ * 3)"
+
+#: plug-ins/script-fu/scripts/glowing-logo.scm.h:7
+msgid "Glo_wing Hot..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
+msgid "Bevel height (Sharpness)"
+msgstr "ਢਲਾਣ ਉਚਾਈ (ਨੋਕੀਲੀ)"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+msgid "Bevel height (sharpness)"
+msgstr "ਢਲਾਣ ਉਚਾਈ (ਨੋਕੀਲੀ)"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:4
+msgid "Border size (pixels)"
+msgstr "ਹਾਸ਼ੀਆ ਆਕਾਰ (ਪਿਕਸਲ)"
+
+#: plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
+msgid "Gradient Beve_l..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/gradient-example.scm.h:2
+msgid "Custom _Gradient..."
+msgstr "ਕਸਟਮ ਢਾਂਲਵਾ(_G)..."
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:2
+msgid "X divisions"
+msgstr "X ਵਿਭਾਜਨ"
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:3
+msgid "Y divisions"
+msgstr "Y ਵਿਭਾਜਨ"
+
+#: plug-ins/script-fu/scripts/grid-system.scm.h:4
+msgid "_Grid..."
+msgstr "ਗਰਿੱਡ(_G)..."
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
+msgid "Creates four Guides around the bounding box of the current selection."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
+msgid "New Guides from _Selection"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
+#: plug-ins/script-fu/scripts/guides-new.scm.h:1
+msgid "Direction"
+msgstr "ਦਿਸ਼ਾ"
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
+#: plug-ins/script-fu/scripts/guides-new.scm.h:2
+msgid "Horizontal"
+msgstr "ਖਿਤਿਜੀ"
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
+msgid "New Guide (by _Percent)..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:5
+#, no-c-format
+msgid "Position (in %)"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
+#: plug-ins/script-fu/scripts/guides-new.scm.h:4
+msgid "Vertical"
+msgstr "ਲੰਬਕਾਰੀ"
+
+#: plug-ins/script-fu/scripts/guides-new.scm.h:3
+msgid "New _Guide..."
+msgstr "ਨਵੀਂ ਗਾਈਡ(_G)...."
+
+#: plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
+msgid "_Remove all Guides"
+msgstr "ਸਭ ਗਾਈਡ ਹਟਾਓ(_R)"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:1
+#: plug-ins/script-fu/scripts/image-structure.scm.h:1
+msgid "<Image>/Script-Fu/Utils"
+msgstr "<Image>/ਸਕਰਿਪਟ-Fu/ਸਹਾਇਕ"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:2
+#, fuzzy
+msgid "BG opacity"
+msgstr "ਪਿੱਠਭੂਮੀ ਧੁੰਦਲਾਪਣ"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:3
+msgid "Draw _HSV Graph..."
+msgstr "_HSV ਗਰਾਫ ਉਲੀਕੋ..."
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:4
+msgid "End X"
+msgstr "ਅੰਤ X"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:5
+msgid "End Y"
+msgstr "ਅੰਤ Y"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:6
+msgid "From top-left to bottom-right"
+msgstr "ਉੱਪਰ ਖੱਬੇ ਤੋਂ ਹੇਠਾਂ ਸੱਜੇ"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:7
+msgid "Graph scale"
+msgstr "ਗਰਾਫ ਪੈਮਾਨਾ"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:8
+msgid "Start X"
+msgstr "ਸ਼ੁਰੂਆਤ X"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:9
+msgid "Start Y"
+msgstr "ਸ਼ੁਰੂਆਤ Y"
+
+#: plug-ins/script-fu/scripts/hsv-graph.scm.h:10
+msgid "Use selection bounds instead of belows"
+msgstr "ਹੇਠਲਿਆਂ ਦੀ ਬਜਾਇ ਚੋਣ ਹੱਦ-ਬੰਦੀ ਵਰਤੋ"
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
+msgid "Frame color"
+msgstr "ਫਰੇਮ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
+msgid "Frame size"
+msgstr "ਫਰੇਮ ਆਕਾਰ"
+
+#: plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
+msgid "Imigre-26..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:2
+msgid "Apply layer mask (or discard)"
+msgstr "ਪਰਤ ਮਖੌਟਾ ਲਾਗੂ ਕਰੋ(ਜਾਂ ਰੱਦ ਕਰੋ)"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:4
+msgid "Create new image"
+msgstr "ਨਵਾਂ ਚਿੱਤਰ ਬਣਾਓ"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:5
+msgid "Insert layer names"
+msgstr "ਪਰਤ ਨਾਂ ਜੋਡ਼ੋ"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:6
+msgid "Make new background"
+msgstr "ਨਵੀਂ ਪਿੱਠਭੂਮੀ ਬਣਾਓ"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:7
+msgid "Outer border"
+msgstr "ਬਾਹਰੀ ਹਾਸ਼ੀਆ"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:8
+msgid "Pad color"
+msgstr "ਪੈਡ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:9
+msgid "Pad opacity"
+msgstr "ਪੈਡ ਧੁੰਦਲਾਪਣ"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:10
+msgid "Padding for transparent regions"
+msgstr "ਪਾਰਦਰਸ਼ੀ ਖੇਤਰ ਲਈ ਪੈਡਿੰਗ"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:11
+msgid "Shear length"
+msgstr "ਧੱਕਣ ਦੀ ਲੰਬਾਈ"
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:12
+msgid "Show Image _Structure..."
+msgstr "ਚਿੱਤਰ ਅਕ੍ਰਿਤੀ ਵਿਖਾਓ(_S)..."
+
+#: plug-ins/script-fu/scripts/image-structure.scm.h:13
+msgid "Space between layers"
+msgstr "ਪਰਤਾਂ ਵਿਚਕਾਰ ਜਗ੍ਹਾ"
+
+#: plug-ins/script-fu/scripts/land.scm.h:6
+msgid "Land height"
+msgstr "ਭੂ-ਖੰਡ ਉਚਾਈ"
+
+#: plug-ins/script-fu/scripts/land.scm.h:10
+msgid "Sea depth"
+msgstr "ਸਮੁੰਦਰੀ ਡੂੰਘਾਈ"
+
+#: plug-ins/script-fu/scripts/land.scm.h:11
+msgid "_Land..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/lava.scm.h:4
+#: plug-ins/script-fu/scripts/swirltile.scm.h:8
+msgid "Roughness"
+msgstr "ਖੁਰਦਰਾਪਣ"
+
+#: plug-ins/script-fu/scripts/lava.scm.h:5
+msgid "Seed"
+msgstr "ਮੁੱਢਲਾ"
+
+#: plug-ins/script-fu/scripts/lava.scm.h:8
+msgid "Use current gradient"
+msgstr "ਮੌਜੂਦ ਢਾਂਲਵਾ ਵਰਤੋਂ"
+
+#: plug-ins/script-fu/scripts/lava.scm.h:9
+msgid "_Lava..."
+msgstr "ਲਾਵਾ(_L)..."
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:2
+msgid "Line _Nova..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:3
+msgid "Number of lines"
+msgstr "ਸਤਰਾਂ ਦੀ ਗਿਣਤੀ"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:4
+msgid "Offset radius"
+msgstr "ਪੂਰਤੀ ਅਰਧ-ਵਿਆਸ"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:5
+msgid "Randomness"
+msgstr "ਬੇਤਰਤੀਬਾ-ਪਣ"
+
+#: plug-ins/script-fu/scripts/line-nova.scm.h:6
+msgid "Sharpness (degrees)"
+msgstr "ਨੋਕੀਲਾ-ਪਣ (ਡਿਗਰੀ)"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Make Brush"
+msgstr "<Toolbox>/Xtns/ਸਕਰਿਪਟ-Fu/ਬੁਰਸ਼ ਬਣਾਓ"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:2
+msgid "Elli_ptical, Feathered..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:3
+msgid "Feathering"
+msgstr "ਖੰਭਦਾਰੀ"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:5
+msgid "Name"
+msgstr "ਨਾਂ"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:6
+msgid "Re_ctangular, Feathered..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:4
+msgid "Spacing"
+msgstr "ਜਗ੍ਹਾ ਛੱਡੋ"
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:9
+msgid "_Elliptical..."
+msgstr "ਅੰਡਾਕਾਰ(_E)..."
+
+#: plug-ins/script-fu/scripts/mkbrush.scm.h:10
+msgid "_Rectangular..."
+msgstr "ਚਤੁਰਭੁਜ(_R)..."
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:4
+msgid "Create shadow"
+msgstr "ਪਰਛਾਂਵਾ ਬਣਾਓ"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:5
+msgid "Effect size (pixels * 5)"
+msgstr "ਆਕਾਰ ਪ੍ਰਭਾਵਿਤ(ਪਿਕਸਲ * 5)"
+
+#: plug-ins/script-fu/scripts/neon-logo.scm.h:9
+msgid "N_eon..."
+msgstr "ਨੀਆਨ(_e)..."
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:4
+msgid "Cell size (pixels)"
+msgstr "ਸੈਲ ਆਕਾਰ (ਪਿਕਸਲ)"
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:6
+#: plug-ins/script-fu/scripts/speed-text.scm.h:4
+#, no-c-format
+msgid "Density (%)"
+msgstr "ਘਣਤਾ (%)"
+
+#: plug-ins/script-fu/scripts/news-text.scm.h:9
+msgid "Newsprint Text..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/old-photo.scm.h:3
+msgid "Defocus"
+msgstr "ਕੇਦਰਤ ਨਾ ਕਰੋ"
+
+#: plug-ins/script-fu/scripts/old-photo.scm.h:4
+msgid "Mottle"
+msgstr "ਰੰਗ-ਬਰੰਗਾ"
+
+#: plug-ins/script-fu/scripts/old-photo.scm.h:5
+msgid "Sepia"
+msgstr "ਭੂਰਾ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/old-photo.scm.h:7
+msgid "_Old Photo..."
+msgstr "ਪੁਰਾਣੀ ਫੋਟੋ(_O)..."
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
+msgid "Angle"
+msgstr "ਕੋਣ"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
+msgid "Cubic"
+msgstr "ਘਣਕਾਰ"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+msgid "Interpolation"
+msgstr "ਪਿੱਛੇ ਵਧਾਉਣਾ"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+msgid "Linear"
+msgstr "ਰੇਖਿਕ"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+msgid "None"
+msgstr "ਕੋਈ ਨਹੀਂ"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:11
+msgid "Relative distance of horizon"
+msgstr "ਦੁਮੇਲ ਨਾਲ ਸੰਬੰਧਿਤ ਦੂਰੀ"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:12
+msgid "Relative length of shadow"
+msgstr "ਛਾਂ ਨਾਲ ਸੰਬੰਧਿਤ ਦੂਰੀ"
+
+#: plug-ins/script-fu/scripts/perspective-shadow.scm.h:13
+msgid "_Perspective..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/predator.scm.h:2
+msgid "Edge amount"
+msgstr "ਕਿਨਾਰਾ ਮੁੱਲ"
+
+#: plug-ins/script-fu/scripts/predator.scm.h:4
+msgid "Pixel amount"
+msgstr "ਪਿਕਸਲ ਮੁੱਲ"
+
+#: plug-ins/script-fu/scripts/predator.scm.h:5
+msgid "Pixelize"
+msgstr "ਪਿਕਸਲਾਂ-ਵਾਲਾ"
+
+#: plug-ins/script-fu/scripts/predator.scm.h:7
+msgid "_Predator..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:5
+msgid "Lower color"
+msgstr "ਹੇਠਲਾ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:6
+msgid "Lower color (active)"
+msgstr "ਹੇਠਲਾ ਰੰਗ (ਸਰਗਰਮ)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:7
+msgid "Not pressed"
+msgstr "ਦਬਾਇਆ ਨਹੀ"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:8
+msgid "Not pressed (active)"
+msgstr "ਦਬਾਇਆ ਨਹੀ (ਸਰਗਰਮ)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:9
+msgid "Padding X"
+msgstr "ਚਿਣਿਆ X"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:10
+msgid "Padding Y"
+msgstr "ਚਿਣਿਆ Y"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:12
+msgid "Round ratio"
+msgstr "ਪੂਰਾ ਅਨੁਪਾਤ"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:15
+msgid "Text color (active)"
+msgstr "ਪਾਠ ਰੰਗ (ਸਰਗਰਮ)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:16
+msgid "Upper color"
+msgstr "ਉੱਪਰਲਾ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:17
+msgid "Upper color (active)"
+msgstr "ਉੱਪਰਲਾ ਰੰਗ (ਸਰਗਰਮ)"
+
+#: plug-ins/script-fu/scripts/pupi-button.scm.h:18
+msgid "_Round Button..."
+msgstr "ਗੋਲ ਬਟਨ(_R)..."
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:2
+msgid "Behaviour"
+msgstr "ਵਰਤਾਓ"
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:3
+msgid "Detail in Middle"
+msgstr "ਵਿਚਕਾਰ ਵਿਸਥਾਰ"
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:8
+msgid "Render _Map..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/rendermap.scm.h:9
+msgid "Tile"
+msgstr "ਟਾਈਲ"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:2
+msgid "Black"
+msgstr "ਕਾਲਾ"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:3
+msgid "Edge behaviour"
+msgstr "ਕਿਨਾਰਾ ਵਰਤਾਓ"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:4
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:4
+msgid "Number of frames"
+msgstr "ਫਰੇਮਾਂ ਦੀ ਗਿਣਤੀ"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:5
+msgid "Rippling strength"
+msgstr "ਲਹਿਰਾਂ ਦੀ ਗਿਣਤੀ"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:6
+msgid "Smear"
+msgstr "ਧੱਬਾ"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:7
+msgid "Wrap"
+msgstr "ਲਪੇਟੋ"
+
+#: plug-ins/script-fu/scripts/ripply-anim.scm.h:8
+msgid "_Rippling..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:2
+msgid "Add background"
+msgstr "ਪਿੱਠਭੂਮੀ ਜੋਡ਼ੋ"
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:3
+msgid "Add drop-shadow"
+msgstr "ਬੂੰਦ-ਛਾਂ ਜੋਡ਼ੋ"
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:5
+msgid "Edge radius"
+msgstr "ਕਿਨਾਰਾ ਅਰਧ-ਵਿਆਸ"
+
+#: plug-ins/script-fu/scripts/round-corners.scm.h:9
+msgid "_Round Corners..."
+msgstr "ਕਿਨਾਰੇ ਗੋਲ(_R)..."
+
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+msgid "Brush name"
+msgstr "ਬੁਰਸ਼ ਨਾਂ"
+
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:3
+msgid "File name"
+msgstr "ਫਾਇਲ ਨਾਂ"
+
+#: plug-ins/script-fu/scripts/select-to-brush.scm.h:5
+msgid "To _Brush..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/select-to-image.scm.h:2
+msgid "To _Image"
+msgstr "ਚਿੱਤਰ ਤੋਂ(_I)"
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
+msgid "Filename"
+msgstr "ਫਾਇਲ ਨਾਂ"
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
+msgid "Pattern name"
+msgstr "ਤਰਤੀਬ ਨਾਂ"
+
+#: plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
+msgid "To _Pattern..."
+msgstr "ਤਰਤੀਬ ਤੋਂ(_P)..."
+
+#: plug-ins/script-fu/scripts/selection-round.scm.h:1
+msgid "Concave"
+msgstr ""
+
+#: plug-ins/script-fu/scripts/selection-round.scm.h:3
+#, no-c-format
+msgid "Radius (%)"
+msgstr "ਅਰਧ-ਵਿਆਸ (%)"
+
+#: plug-ins/script-fu/scripts/selection-round.scm.h:4
+msgid "Rounded R_ectangle..."
+msgstr "ਗੋਲ ਚਤੁਰਭੁਜ(_e)..."
+
+#: plug-ins/script-fu/scripts/slide.scm.h:3
+msgid "Font color"
+msgstr "ਫੋਂਟ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/slide.scm.h:4
+msgid "Number"
+msgstr "ਨੰਬਰ"
+
+#: plug-ins/script-fu/scripts/slide.scm.h:7
+msgid "_Slide..."
+msgstr "ਸਲਾਇਡ(_S)..."
+
+#: plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
+msgid "SOTA Chrome..."
+msgstr "SOTA Chrome..."
+
+#: plug-ins/script-fu/scripts/speed-text.scm.h:7
+msgid "Speed Text..."
+msgstr "ਗਤੀ ਪਾਠ..."
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:1
+msgid "<Toolbox>/Xtns/Script-Fu/Misc"
+msgstr "<Toolbox>/Xtns/ਸਕਰਿਪਟ-Fu/ਫੁਟਕਲ"
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:3
+msgid "Lighting (degrees)"
+msgstr "ਚਮਕਾਉਣਾ (ਡਿਗਰੀ)"
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:4
+msgid "Radius (pixels)"
+msgstr "ਅਰਧ-ਵਿਆਸ (ਪਿਕਸਲ)"
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:6
+msgid "Sphere color"
+msgstr "ਗੋਲਾ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/sphere.scm.h:7
+msgid "_Sphere..."
+msgstr "ਗੋਲਾ(_S)..."
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:2
+msgid "Frames"
+msgstr "ਫਰੇਮ"
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:3
+msgid "Index to n colors (0 = remain RGB)"
+msgstr "n ਰੰਗਾਂ ਲਈ ਸ਼ੂਚੀ (0 = ਬਾਕੀ RGB)"
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:5
+msgid "Turn from left to right"
+msgstr "ਖੱਬੇ ਤੋ ਸੱਜੇ ਮੁਡ਼ੋ"
+
+#: plug-ins/script-fu/scripts/spinning-globe.scm.h:7
+msgid "_Spinning Globe..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:2
+msgid "Airbrush"
+msgstr "ਹਵਾਈ-ਬੁਰਸ਼"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:3
+msgid "Brush"
+msgstr "ਬੁਰਸ਼"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:4
+msgid "Circle"
+msgstr "ਚੱਕਰ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:6
+msgid "Color method"
+msgstr "ਰੰਗ ਵਿਧੀ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:7
+msgid ""
+"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
+"netword.com/*spyrogimp"
+msgstr ""
+"ਸਪਾਇਰੋ-ਗਰਾਫ ਉਲੀਕੋ, ਇਪੀਟਰੋਕੁਆਇਡਸ ਅਤੇ ਲਿਜ਼ਾਜਸ ਚਾਪਾਂ । ਵਧੇਰੇ ਜਾਣਕਾਰੀ ਲਈ  http://netword."
+"com/*spyrogimp"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:8
+msgid "Epitrochoid"
+msgstr "ਇਪੀਟਰੋਕੁਆਇਡਸ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:9
+msgid "Frame"
+msgstr "ਫਰੇਮ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:11
+msgid "Gradient: Loop Sawtooth"
+msgstr "ਢਾਂਲਵਾ: ਆਰੀ-ਦੰਦੇ ਲਪੇਟੋ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:12
+msgid "Gradient: Loop Triangle"
+msgstr "ਢਾਂਲਵਾ: ਤਿਕੋਣ ਲਪੇਟੋ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:13
+msgid "Hexagon"
+msgstr "ਛੇ-ਭੁਜ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:14
+msgid "Hole ratio"
+msgstr "ਛੇਕ ਅਨੁਪਾਤ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:15
+msgid "Inner teeth"
+msgstr "ਅੰਦਰੂਨੀ ਦੰਦੇ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:16
+msgid "Lissajous"
+msgstr "ਲਿਜ਼ਾਜਸ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:17
+msgid "Margin (pixels)"
+msgstr "ਹਾਸ਼ੀਆ (ਪਿਕਸਲ)"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:18
+msgid "Outer teeth"
+msgstr "ਬਾਹਰੀ ਦੰਦੇ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:19
+msgid "Pencil"
+msgstr "ਪੈਨਸਿਲ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:20
+msgid "Pentagon"
+msgstr "ਪੰਜ-ਭੁਜ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:21
+msgid "Polygon: 10 sides"
+msgstr "ਬਹੁ-ਭੁਜ: 10 ਭੁਜਾਵਾਂ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:22
+msgid "Polygon: 7 sides"
+msgstr "ਬਹੁ-ਭੁਜ: 7 ਭੁਜਾਵਾਂ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:23
+msgid "Polygon: 8 sides"
+msgstr "ਬਹੁ-ਭੁਜ: 8 ਭੁਜਾਵਾਂ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+msgid "Polygon: 9 sides"
+msgstr "ਬਹੁ-ਭੁਜ: 9 ਭੁਜਾਵਾਂ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+msgid "Shape"
+msgstr "ਸ਼ਕਲ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+msgid "Solid Color"
+msgstr "ਠੋਸ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+msgid "Spyrograph"
+msgstr "ਸਪਾਇਰੋ-ਗਰਾਫ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:28
+msgid "Square"
+msgstr "ਵਰਗ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+#: plug-ins/script-fu/scripts/text-circle.scm.h:7
+msgid "Start angle"
+msgstr "ਸ਼ੁਰੂ ਕੋਣ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+msgid "Tool"
+msgstr "ਸੰਦ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:31
+msgid "Triangle"
+msgstr "ਤਿਕੋਣ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:32
+msgid "Type"
+msgstr "ਕਿਸਮ"
+
+#: plug-ins/script-fu/scripts/spyrogimp.scm.h:33
+msgid "_Spyrogimp..."
+msgstr "ਸਪਾਇਰੋ-ਗਰਾਫ(_S)..."
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:4
+msgid "Burst color"
+msgstr "ਬੱਰਸਟ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:5
+msgid "Effect size (pixels * 30)"
+msgstr "ਆਕਾਰ ਪ੍ਰਭਾਵਿਤ ਕਰੋ (ਪਿਕਸਲ * 30)"
+
+#: plug-ins/script-fu/scripts/starburst-logo.scm.h:8
+msgid "Starb_urst..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:3
+#, fuzzy
+msgid "Effect size (pixels * 4)"
+msgstr "ਆਕਾਰ ਪ੍ਰਭਾਵਿਤ ਕਰੋ (ਪਿਕਸਲ * 4)"
+
+#: plug-ins/script-fu/scripts/starscape-logo.scm.h:7
+#, fuzzy
+msgid "Sta_rscape..."
+msgstr "ਝਲਕ..."
+
+#: plug-ins/script-fu/scripts/swirltile.scm.h:9
+msgid "Swirl-_Tile..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/swirltile.scm.h:10
+msgid "Whirl amount"
+msgstr "ਘੁੰਮਾਓ ਮੁੱਲ"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
+msgid "Number of times to whirl"
+msgstr "ਘੁੰਮਣ ਚੱਕਰਾਂ ਦੀ ਗਿਣਤੀ"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
+msgid "Quarter size"
+msgstr "ਚੌਥਾਈ ਆਕਾਰ"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
+msgid "Whirl angle"
+msgstr "ਘੁੰਮਾਓ ਕੋਣ"
+
+#: plug-ins/script-fu/scripts/swirly-pattern.scm.h:5
+msgid "_Swirly..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
+msgid "Base color"
+msgstr "ਮੂਲ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
+msgid "Edge only"
+msgstr "ਸਿਰਫ ਕਿਨਾਰਾ"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
+msgid "Edge width"
+msgstr "ਕਿਨਾਰਾ ਚੌਡ਼ਾਈ"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
+msgid "Hit rate"
+msgstr "ਹਿੱਟ ਦਰਜਾ"
+
+#: plug-ins/script-fu/scripts/t-o-p-logo.scm.h:12
+msgid "_Particle Trace..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:2
+msgid "Antialias"
+msgstr "ਉਪ-ਨਾਂ ਵਿਰੋਧੀ"
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:3
+msgid "Fill angle"
+msgstr "ਭਰਨ ਕੋਣ"
+
+#: plug-ins/script-fu/scripts/text-circle.scm.h:9
+msgid "Text Circle..."
+msgstr "ਪਾਠ ਚੱਕਰ..."
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:5
+#, fuzzy
+msgid "Ending blend"
+msgstr "ਅੰਤਲਾ ਮਿਸ਼ਰਣ"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:8
+msgid "Hexagons"
+msgstr "ਛੇ-ਭੁਜ"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:9
+#, fuzzy
+msgid "Mosaic tile type"
+msgstr "ਮੋਜ਼ੇਕ ਟਾਇਲ ਕਿਸਮ"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:10
+msgid "Octagons"
+msgstr "ਅੱਠ-ਭੁਜ"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:12
+msgid "Squares"
+msgstr "ਵਰਗ"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:13
+msgid "Starting blend"
+msgstr "ਸ਼ੁਰੂਆਈ ਮਿਸ਼ਰਣ"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:15
+msgid "Text pattern"
+msgstr "ਪਾਠ ਤਰਤੀਬ"
+
+#: plug-ins/script-fu/scripts/textured-logo.scm.h:16
+msgid "_Textured..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:1
+msgid "Blur horizontally"
+msgstr "ਲੇਟਵਾਂ ਚਿੰਨ੍ਹ ਬਣਾਓ"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:2
+msgid "Blur type"
+msgstr "ਧੱਬਾ ਕਿਸਮ"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:3
+msgid "Blur vertically"
+msgstr "ਲੰਬਕਾਰੀ ਚਿੰਨ੍ਹ ਬਣਾਓ"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:4
+msgid "IIR"
+msgstr "IIR"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:5
+msgid "RLE"
+msgstr "RLE"
+
+#: plug-ins/script-fu/scripts/tileblur.scm.h:7
+msgid "_Tileable Blur..."
+msgstr "ਟਾਇਲ-ਯੋਗ ਧੱਬਾ(_T)..."
+
+#: plug-ins/script-fu/scripts/title-header.scm.h:6
+msgid "Web Title Header..."
+msgstr "ਵੈਬ ਟਾਇਟਲ ਹੈਂਡਰ..."
+
+#: plug-ins/script-fu/scripts/truchet.scm.h:4
+msgid "Foreground color"
+msgstr "ਮੁੱਖ-ਭੂਮੀ ਰੰਗ"
+
+#: plug-ins/script-fu/scripts/truchet.scm.h:7
+msgid "T_ruchet..."
+msgstr "T_ruchet..."
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:2
+msgid "Mask opacity"
+msgstr "ਮਖੌਟਾ ਧੁੰਦਲਾਪਣ"
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
+msgid "Mask size"
+msgstr "ਮਖੌਟਾ ਆਕਾਰ"
+
+#: plug-ins/script-fu/scripts/unsharp-mask.scm.h:4
+msgid "_Unsharp Mask..."
+msgstr ""
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:2
+msgid "Amplitude"
+msgstr "ਅਧਿਕਤਾ"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:3
+msgid "Invert direction"
+msgstr "ਦਿਸ਼ਾ ਉਲਟਾਓ"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:5
+msgid "Wavelength"
+msgstr "ਤਰੰਗ-ਲੰਬਾਈ"
+
+#: plug-ins/script-fu/scripts/waves-anim.scm.h:6
+msgid "_Waves..."
+msgstr "ਤਰੰਗ(_W)..."
+
+#: plug-ins/script-fu/scripts/weave.scm.h:2
+#, fuzzy
+msgid "Ribbon spacing"
+msgstr "ਪੱਟੀ ਵਿਸਥਾਪਨ"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:3
+#, fuzzy
+msgid "Ribbon width"
+msgstr "ਪੱਟੀ ਚੌਡ਼ਾਈ"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:4
+msgid "Shadow darkness"
+msgstr "ਛਾਂ ਧੁੰਦਲਾਪਣ"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:5
+msgid "Shadow depth"
+msgstr "ਛਾਂ ਡੂੰਘਾਈ"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:6
+msgid "Thread density"
+msgstr "ਥਰਿੱਡ ਘਣਤਾ"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:7
+msgid "Thread intensity"
+msgstr "ਥਰਿੱਡ ਤੀਬਰਤਾ"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:8
+msgid "Thread length"
+msgstr "ਥਰਿੱਡ ਲੰਬਾਈ"
+
+#: plug-ins/script-fu/scripts/weave.scm.h:9
+msgid "_Weave..."
+msgstr "_Weave..."
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:1
+msgid "<Toolbox>/Help/The GIMP Online"
+msgstr "<Toolbox>/ਸਹਾਇਤਾ/ਜੈਮਪ ਆਨ-ਲਾਈਨ"
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:2
+msgid "Plug-in _Registry"
+msgstr "ਪਲੱਗਿੰਨ ਰਜਿਸਟਰੀ(_R)"
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:3
+msgid "_Developer Web Site"
+msgstr "ਖੋਜੀ ਵੈਬ ਸਾਇਟ(_D)"
+
+#: plug-ins/script-fu/scripts/web-browser.scm.h:4
+msgid "_Main Web Site"
+msgstr "ਮੁੱਖ ਵੈਬ ਸਾਇਟ(_M)"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:2
+msgid "Drop shadow X offset"
+msgstr "ਬੂੰਦ ਛਾਂ X ਪੂਰਤੀ"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:3
+msgid "Drop shadow Y offset"
+msgstr "ਬੂੰਦ ਛਾਂ Y ਪੂਰਤੀ"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:4
+msgid "Drop shadow blur radius"
+msgstr "ਬੂੰਦ ਛਾਂ ਵਾਲਾ ਧੱਬਾ ਅਰਧ-ਵਿਆਸ"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:5
+msgid "Drop shadow color"
+msgstr "ਬੂੰਦ ਛਾਂ ਰੰਗ "
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:6
+msgid "Drop shadow opacity"
+msgstr "ਬੂੰਦ ਛਾਂ ਧੁੰਦਲਾਪਣ"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:7
+msgid "Highlight X offset"
+msgstr "X ਪੂਰਤੀ ਉਭਾਰੋ"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:8
+msgid "Highlight Y offset"
+msgstr "Y ਪੂਰਤੀ ਉਭਾਰੋ"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:10
+msgid "Highlight opacity"
+msgstr "ਉਭਾਰੋ ਧੁੰਦਲਾਪਣ"
+
+#: plug-ins/script-fu/scripts/xach-effect.scm.h:12
+msgid "_Xach-Effect..."
+msgstr "_Xach-ਪ੍ਰਭਾਵ..."
+

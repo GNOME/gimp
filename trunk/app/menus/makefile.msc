@@ -1,0 +1,56 @@
+PACKAGE = appmenus
+TOP = ..\..\..
+PRJ_TOP = ..\..
+!include $(TOP)\glib\build\win32\make.msc
+
+!INCLUDE $(PRJ_TOP)\gimpdefs.msc
+PKG_VER = $(GIMP_VER)
+
+INCLUDES = \
+	-FImsvc_recommended_pragmas.h \
+	-I$(PRJ_TOP) \
+	-I$(PRJ_TOP)/app \
+	$(GTK2_CFLAGS) \
+
+DEFINES = \
+	-DGIMP_COMPILATION \
+	-DG_LOG_DOMAIN=\"Gimp-Menus\"
+
+all : \
+	$(PRJ_TOP)\config.h \
+	$(PACKAGE).lib \
+!IFDEF DLLGIMP
+	$(PACKAGE)-$(PKG_VER).dll
+!ENDIF
+
+OBJECTS = \
+	dockable-menu.obj \
+	file-menu.obj \
+	image-menu.obj \
+	menus.obj \
+	plug-in-menus.obj \
+	toolbox-menu.obj \
+	tool-options-menu.obj \
+	window-menu.obj \
+
+$(PRJ_TOP)\config.h: $(PRJ_TOP)\config.h.win32
+	copy $(PRJ_TOP)\config.h.win32 $(PRJ_TOP)\config.h
+
+RESOURCE = $(PACKAGE).res
+
+$(PACKAGE).lib : $(OBJECTS)
+	lib /out:$(PACKAGE).lib $(OBJECTS)
+
+$(PACKAGE)-$(PKG_VER).dll : $(OBJECTS) $(PACKAGE).def
+	$(CC) $(CFLAGS) -LD -Fe$(PACKAGE)-$(PKG_VER).dll $(OBJECTS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:$(PACKAGE).def
+
+$(PACKAGE).exe : $(OBJECTS) $(PACKAGE).def $(PACKAGE).res
+	$(CC) $(CFLAGS) -Fe$(PACKAGE).exe $(PACKAGE).res $(OBJECTS) $(PKG_LINK) \
+	user32.lib advapi32.lib shell32.lib wsock32.lib winspool.lib $(LDFLAGS) /def:$(PACKAGE).def
+
+gimpcore-$(PKG_VER).dll : $(DLLOBJS) gimpcore.def
+	$(CC) $(CFLAGS) -LD -Fegimpcore-$(PKG_VER).dll $(DLLOBJS) $(PKG_LINK) user32.lib advapi32.lib wsock32.lib $(LDFLAGS) /def:gimpcore.def
+
+.c.obj :
+	$(CC) $(CFLAGS) -GD -c $(PKG_CFLAGS) $<
+

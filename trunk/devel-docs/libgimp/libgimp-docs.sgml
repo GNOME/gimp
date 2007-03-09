@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE book PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<book id="index" xmlns:xi="http://www.w3.org/2001/XInclude">
+
+  <bookinfo>
+    <title>GIMP Library Reference Manual</title>
+    <releaseinfo>
+      for GIMP <xi:include href="version" parse="text"/>
+    </releaseinfo>
+  </bookinfo>
+
+  <part id="libgimp">
+    <title>GIMP Library</title>
+
+    <partintro id="libgimp-introduction">
+      <para>
+	GIMP's Procedural Database (PDB) offers an interface to core
+	functions and to functionality provided by plug-ins. The role
+	of libgimp is to provide C bindings for this interface.
+      </para>
+    </partintro>
+
+    <chapter id="libgimp-general">
+      <title>Functions not Related to Specific Images</title>
+      <xi:include href="xml/gimp.xml" />
+      <xi:include href="xml/gimpenums.xml" />
+      <xi:include href="xml/gimpbuffer.xml" />
+      <xi:include href="xml/gimpcontext.xml" />
+      <xi:include href="xml/gimpgimprc.xml" />
+      <xi:include href="xml/gimphelp.xml" />
+      <xi:include href="xml/gimpmessage.xml" />
+      <xi:include href="xml/gimpplugin.xml" />
+      <xi:include href="xml/gimpproceduraldb.xml" />
+      <xi:include href="xml/gimpprogress.xml" />
+    </chapter>
+
+    <chapter id="libgimp-image">
+      <title>Manupulating Images and their Properties</title>
+      <xi:include href="xml/gimpchannel.xml" />
+      <xi:include href="xml/gimpcolor.xml" />
+      <xi:include href="xml/gimpconvert.xml" />
+      <xi:include href="xml/gimpdisplay.xml" />
+      <xi:include href="xml/gimpdrawable.xml" />
+      <xi:include href="xml/gimpdrawabletransform.xml" />
+      <xi:include href="xml/gimpedit.xml" />
+      <xi:include href="xml/gimpfileops.xml" />
+      <xi:include href="xml/gimpfloatingsel.xml" />
+      <xi:include href="xml/gimpgrid.xml" />
+      <xi:include href="xml/gimpguides.xml" />
+      <xi:include href="xml/gimpimage.xml" />
+      <xi:include href="xml/gimplayer.xml" />
+      <xi:include href="xml/gimppaths.xml" />
+      <xi:include href="xml/gimppixelfetcher.xml" />
+      <xi:include href="xml/gimppixelrgn.xml" />
+      <xi:include href="xml/gimpregioniterator.xml" />
+      <xi:include href="xml/gimpselection.xml" />
+      <xi:include href="xml/gimptexttool.xml" />
+      <xi:include href="xml/gimptile.xml" />
+      <xi:include href="xml/gimptools.xml" />
+      <xi:include href="xml/gimpundo.xml" />
+      <xi:include href="xml/gimpvectors.xml" />
+    </chapter>
+
+    <chapter id="libgimp-data">
+      <title>Data Objects</title>
+      <xi:include href="xml/gimpbrush.xml" />
+      <xi:include href="xml/gimpbrushes.xml" />
+      <xi:include href="xml/gimpfonts.xml" />
+      <xi:include href="xml/gimpgradient.xml" />
+      <xi:include href="xml/gimpgradients.xml" />
+      <xi:include href="xml/gimppalette.xml" />
+      <xi:include href="xml/gimppalettes.xml" />
+      <xi:include href="xml/gimppattern.xml" />
+      <xi:include href="xml/gimppatterns.xml" />
+    </chapter>
+
+    <chapter id="libgimp-selectors">
+      <title>Controlling the Core's Selection Dialogs</title>
+      <xi:include href="xml/gimpselectbutton.xml" />
+      <xi:include href="xml/gimpbrushselectbutton.xml" />
+      <xi:include href="xml/gimpfontselectbutton.xml" />
+      <xi:include href="xml/gimpgradientselectbutton.xml" />
+      <xi:include href="xml/gimppaletteselectbutton.xml" />
+      <xi:include href="xml/gimppatternselectbutton.xml" />
+
+      <xi:include href="xml/gimpbrushselect.xml" />
+      <xi:include href="xml/gimpfontselect.xml" />
+      <xi:include href="xml/gimpgradientselect.xml" />
+      <xi:include href="xml/gimppaletteselect.xml" />
+      <xi:include href="xml/gimppatternselect.xml" />
+    </chapter>
+  </part>
+
+  <part id="libgimpui">
+    <title>GIMP User Interface Library</title>
+
+    <chapter id="libgimpui-hierarchy">
+      <title>Object Hierarchy</title>
+      <xi:include href="xml/tree_index.sgml" />
+    </chapter>    
+
+    <xi:include href="xml/gimpui.xml" />
+    <xi:include href="xml/gimpexport.xml" />
+    <xi:include href="xml/gimpdrawablepreview.xml" />
+    <xi:include href="xml/gimpaspectpreview.xml" />
+    <xi:include href="xml/gimpzoompreview.xml" />
+    <xi:include href="xml/gimpitemcombobox.xml" />
+    <xi:include href="xml/gimpimagecombobox.xml" />
+    <xi:include href="xml/gimppixbuf.xml" />
+    <xi:include href="xml/gimpprogressbar.xml" />
+    <xi:include href="xml/gimpmenu.xml" />
+    <xi:include href="xml/gimpbrushmenu.xml" />
+    <xi:include href="xml/gimpfontmenu.xml" />
+    <xi:include href="xml/gimpgradientmenu.xml" />
+    <xi:include href="xml/gimppalettemenu.xml" />
+    <xi:include href="xml/gimppatternmenu.xml" />
+    <xi:include href="xml/gimpprocbrowserdialog.xml" />
+    <xi:include href="xml/gimpprocview.xml" />
+  </part>
+
+  <index id="libgimp-index">
+    <title>Index</title>
+  </index>
+  <index role="GIMP 2.2" id="libgimp-index-new-in-2-2">
+    <title>Index of new symbols in GIMP 2.2</title>
+  </index>
+  <index role="GIMP 2.4" id="libgimp-index-new-in-2-4">
+    <title>Index of new symbols in GIMP 2.4</title>
+  </index>
+  <index role="deprecated" id="libgimp-index-deprecated">
+    <title>Index of deprecated symbols</title>
+  </index>
+
+</book>

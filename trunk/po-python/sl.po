@@ -1,0 +1,35 @@
+# This is the English, British catalog for GIMP Python.
+# Copyright (C) 2000 Free Software Foundation, Inc.
+# Piers Cornwell <piers.cornwell@usa.net>, 2000.
+# Gareth Owen <gowen72@yahoo.com>, David Lodge <dave@cirt.net>, 2004.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GIMP 2.0 scriptfu\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2005-03-31 22:23+0200\n"
+"Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
+"Language-Team: Lugos <sl@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%100==1 ? 1 : n%100==2 ? 2 : n%100==3 || n"
+"%100==4 ? 3 : 0);\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr "Konzola Python"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+msgid "_Browse..."
+msgstr "_Prebrskaj ..."
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#, fuzzy
+msgid "Gimp-Python Console"
+msgstr "Konzola Python"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+msgid "Interactive Python Development"
+msgstr ""

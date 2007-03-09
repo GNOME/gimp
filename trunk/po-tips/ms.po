@@ -1,0 +1,424 @@
+# Malay Translation of Gimp-tips HEAD.
+# Copyright (C) 2003 MIMOS Open Source Developement Group
+# This file is distributed under the same license as the PACKAGE package.
+# MIMOS Open Source Development Group <opensource@mimos.my>, 2003.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Gimp-tips HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2005-05-14 17:18+0200\n"
+"PO-Revision-Date: 2003-11-04 12:20+0800\n"
+"Last-Translator: MIMOS Open Source Development Group <ismas@mimos.my>\n"
+"Language-Team: Projek Gabai <gabai-penyumbang@lists.sf.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../tips/gimp-tips.xml.in.h:1
+#, fuzzy
+msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
+msgstr "<big>Selamat Datang ke GIMP !</big>"
+
+#: ../tips/gimp-tips.xml.in.h:2
+msgid ""
+"<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles "
+"viewing the mask directly."
+msgstr ""
+"<tt>Alt</tt>-klik pralihat topeng lapisan dalam dialog Lapisan toggle semasa "
+"melihat topeng secara terus."
+
+#: ../tips/gimp-tips.xml.in.h:3
+msgid ""
+"<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
+"the effect of the layer mask."
+msgstr ""
+"<tt>Ctrl</tt>-klik pralihat topeng lapisan dalam dialog Lapisan toggle kesan "
+"daripada topeng lapisan."
+
+#: ../tips/gimp-tips.xml.in.h:4
+msgid ""
+"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
+"color instead of the foreground color."
+msgstr ""
+"<tt>Ctrl</tt>-klik alat Isian Baldi supaya warna latar belakang digunakan "
+"bukannya warna latar depan."
+
+#: ../tips/gimp-tips.xml.in.h:5
+#, fuzzy
+msgid ""
+"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
+"degree angles."
+msgstr ""
+"<tt>Ctrl</tt>-seret dengan alat Putar akan mengekang putaran kepada sudut 15 "
+"darjah."
+
+#: ../tips/gimp-tips.xml.in.h:6
+msgid ""
+"<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
+"but that one. <tt>Shift</tt>-click again to show all layers."
+msgstr ""
+"<tt>Shift</tt>-klik pada ikon mata dalam dialog Lapisan untuk menyembunyikan "
+"semua lapisan melainkan yang itu. <tt>Shift</tt>-klik sekali lagi untuk "
+"menunjukkan semua lapisan."
+
+#: ../tips/gimp-tips.xml.in.h:7
+#, fuzzy
+msgid ""
+"A floating selection must be anchored to a new layer or to the last active "
+"layer before doing other operations on the image. Click on the &quot;New "
+"Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
+"use the menus to do the same."
+msgstr ""
+"Pemilihan Apung mestilah ditambat pada lapisan baru atau pada lapisan aktif "
+"terakhir sebelum melakukan pengendalian lain pada imej. Klik \"Lapisan Baru"
+"\" atau \"butang Lapisan Tambat\" dalam dialog Lapisan, atau gunakan menu "
+"untuk melakukan perkara yang sama."
+
+#: ../tips/gimp-tips.xml.in.h:8
+#, fuzzy
+msgid ""
+"After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
+"dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
+"selecting a menu item, and pressing the desired key combination. If &quot;"
+"Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
+"you exit GIMP."
+msgstr ""
+"Selepas anda aktifkan \"Kekunci Pintas Dinamik\" dalam dialog Keutamaan, "
+"anda boleh mengumpukkan semula kekunci pintas. Lakukannya dengan membesarkan "
+"menu tersebut, memilih item menu, dan menekan gabungan kekunci yang baru. "
+"Jika \"Simpan Kekunci Pintas\" diaktifkan, ikatan kekunci disimpan bila anda "
+"keluar dari GIMP."
+
+#: ../tips/gimp-tips.xml.in.h:9
+#, fuzzy
+msgid ""
+"Click and drag on a ruler to place a guide on an image. All dragged "
+"selections will snap to the guides. You can remove guides by dragging them "
+"off the image with the Move tool."
+msgstr ""
+"Klik dan seret pembaris untuk meletakkan Panduan pada imej. Semua pemilihan "
+"yang diseret akan dipetik ke panduan. Anda boleh mengeluarkan panduan dengan "
+"menyeretnya keluar dari imej dengan alat Alih."
+
+#: ../tips/gimp-tips.xml.in.h:10
+msgid ""
+"GIMP allows you to undo most changes to the image, so feel free to "
+"experiment."
+msgstr ""
+
+#: ../tips/gimp-tips.xml.in.h:11
+#, fuzzy
+msgid ""
+"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
+"bz2</tt>, if you have bzip2 installed) to the filename and your image will "
+"be saved compressed. Of course loading compressed images works too."
+msgstr ""
+"GIMP menyokong pemampatan gzip secara layang. Hanya tambahkan <tt>.gz</tt> "
+"(atau <tt>.bz2</tt>, jika bzip2 telah dipasang) pada nama fail dan imej anda "
+"akan disimpan secara mampat. Sudah tentu, memuatkan imej mampat juga boleh "
+"dilakukan."
+
+#: ../tips/gimp-tips.xml.in.h:12
+#, fuzzy
+msgid ""
+"GIMP uses layers to let you organize your image. Think of them as a stack of "
+"slides or filters, such that looking through them you see a composite of "
+"their contents."
+msgstr ""
+"GIMP menggunakan lapisan bagi membolehkan anda menyusun imej anda. "
+"Fikirkannya sebagai tindanan slaid atau penapis, iaitu apabila anda "
+"memandangnya anda dapat melihat gabungan bagi kandungan imej tersebut."
+
+#: ../tips/gimp-tips.xml.in.h:13
+msgid ""
+"If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
+"layer doesn't have an alpha-channel. You can add an alpha-channel using "
+"Layer-&gt;Transparency-&gt;Add Alpha Channel."
+msgstr ""
+
+#: ../tips/gimp-tips.xml.in.h:14
+#, fuzzy
+msgid ""
+"If some of your scanned photos do not look colorful enough, you can easily "
+"improve their tonal range with the &quot;Auto&quot; button in the Levels "
+"tool (Layer-&gt;Colors-&gt;Levels). If there are any color casts, you can "
+"correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
+msgstr ""
+"Jika ada antara gambar anda yang diimbas tidak cukup jelas, dengan mudah "
+"anda boleh meningkatkan julat kesan warnanya dengan butang \"Auto\" pada "
+"alat Aras (Lapisan-&gt;Warna-&gt;Aras). Jika terdapat apa-apa percikan "
+"warna, anda boleh membetulkannya dengan alat Lengkung (Lapisan-&gt;Warna-&gt;"
+"Lengkung)."
+
+#: ../tips/gimp-tips.xml.in.h:15
+#, fuzzy
+msgid ""
+"If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
+"with their current settings. You can use the Paintbrush in gradient mode or "
+"even the Eraser or the Smudge tool."
+msgstr ""
+"Jika anda menanda laluan (Edit-&gt;Tanda Pemilihan), alat lukisan boleh "
+"digunakan dengan seting semasa mereka. Anda boleh menggunakan Berus cat "
+"dalam mod kecerunan atau Pemadam atau alat Comot."
+
+#: ../tips/gimp-tips.xml.in.h:16
+msgid ""
+"If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
+"in an image window to hide or show the toolbox and other dialogs."
+msgstr ""
+"Jika skrin anda terlalu berselerak, anda boleh menekan <tt>Tab</tt> beberapa "
+"kali dalam tetingkap imej untuk menyembunyikan atau menunjukkan dialog kotak "
+"alatan dan dialog lain."
+
+#: ../tips/gimp-tips.xml.in.h:17
+#, fuzzy
+msgid ""
+"Most plug-ins work on the current layer of the current image. In some cases, "
+"you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
+"plug-in to work on the whole image."
+msgstr ""
+"Kebanyakan plug-in berfungsi pada lapisan semasa bagi imej semasa. Dalam "
+"sesetengah kes, anda perlu mencantumkan semua lapisan (Imej-&gt;Ratakan "
+"Imej) jika anda ingin plug-in berfungsi pada seluruh imej."
+
+#: ../tips/gimp-tips.xml.in.h:18
+#, fuzzy
+msgid ""
+"Not all effects can be applied to all kinds of images. This is indicated by "
+"a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
+"&gt;Mode-&gt;RGB), add an alpha-channel (Layer-&gt;Transparency-&gt;Add "
+"Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
+msgstr ""
+"Bukan semua kesan boleh digunakan untuk semua jenis imej. Ini ditunjukkan "
+"melalui entri menu yang dikelabukan. Anda mungkin perlu mengubah mod imej "
+"kepada RGB (Imej-&gt;Mod-&gt;RGB), menambahkan saluran alfa (Lapisan-&gt; "
+"Kelutsinaran-&gt;Tambah Saluran Alfa) atau meratakannya (Imej-&gt;Ratakan "
+"Imej)."
+
+#: ../tips/gimp-tips.xml.in.h:19
+msgid ""
+"Pressing and holding the <tt>Shift</tt> key before making a selection allows "
+"you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
+"tt> before making a selection subtracts from the current one."
+msgstr ""
+"Dengan menekan seketika kekunci <tt>Shift</tt> sebelum membuat pemilihan "
+"membolehkan anda menambahkan pemilihan semasa bukannya menggantikannya. "
+"Dengan menggunakan <tt>Ctrl</tt> sebelum membuat pemilihan tolak daripada "
+"yang ada sekarang."
+
+#: ../tips/gimp-tips.xml.in.h:20
+#, fuzzy
+msgid ""
+"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
+"ellipse select. To place a circle precisely, drag horizontal and vertical "
+"guides tangent to the circle you want to select, place your cursor at the "
+"intersection of the guides, and the resulting selection will just touch the "
+"guides."
+msgstr ""
+"Untuk mewujudkan bulatan yang lengkap, tekan <tt>Shift</tt> semasa memilih "
+"elips. Untuk meletakkan bulatan dengan tepat, seret tangen panduan mengufuk "
+"dan menegak ke bulatan yang ingin anda pilih, letakkan kursor anda pada "
+"persilangan panduan tersebut, dan pemilihan yang terhasil hanya akan "
+"menyentuh panduan tersebut."
+
+#: ../tips/gimp-tips.xml.in.h:21
+msgid ""
+"When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
+"click will draw a straight line from your last drawing point to your current "
+"cursor position. If you also press <tt>Ctrl</tt>, the line will be "
+"constrained to 15 degree angles."
+msgstr ""
+"Apabila menggunakan alat lukisan (Beberus Cat, Penyembur, atau Pensel), "
+"dengan mengklik <tt>Shift</tt>-garis lurus akan dilukis dari titik lukisan "
+"terakhir anda ke kedudukan kursor semasa. Jika anda menekan juga <tt>Ctrl</"
+"tt>, garis tersebut akan mengekang kepada sudut 15 darjah."
+
+#: ../tips/gimp-tips.xml.in.h:22
+#, fuzzy
+msgid ""
+"When you save an image to work on it again later, try using XCF, GIMP's "
+"native file format (use the file extension <tt>.xcf</tt>). This preserves "
+"the layers and every aspect of your work-in-progress. Once a project is "
+"completed, you can save it as JPEG, PNG, GIF, ..."
+msgstr ""
+"Apabila anda menyimpan imej yang akan digunakan kemudian, cuba gunakan XCF, "
+"format fail natif GIMP (gunakan sambungan fail <tt>.xcf</tt>). Cara ini "
+"melindungi lapisan dan segala aspek kerja yang sedang anda jalankan. Selesai "
+"sahaja projek, anda boleh menyimpannya sebagai JPEG, PNG, GIF, ..."
+
+#: ../tips/gimp-tips.xml.in.h:23
+#, fuzzy
+msgid ""
+"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
+"the window move, your window manager uses the <tt>Alt</tt> key already. Try "
+"pressing <tt>Shift</tt> at the same time."
+msgstr ""
+"Anda boleh selaraskan dan gantikan pemilihan menggunakan <tt>ALt</tt>. Jika "
+"ini membuatkan tetingkap beralih, pengurus tetingkap anda telah menggunakan "
+"kekunci <tt>Alt</tt>. Cuba tekan <tt>Shift</tt> pada masa yang sama."
+
+#: ../tips/gimp-tips.xml.in.h:24
+msgid ""
+"You can adjust the selection range for fuzzy select by clicking and dragging "
+"left and right."
+msgstr ""
+"Anda boleh menyelaraskan jenis pemilihan untuk pilih kabur dengan mengklik "
+"dan menyeret ke kiri dan kanan."
+
+#: ../tips/gimp-tips.xml.in.h:25
+#, fuzzy
+msgid ""
+"You can create and edit complex selections using the Path tool. The Paths "
+"dialog allows you to work on multiple paths and to convert them to "
+"selections."
+msgstr ""
+"Anda boleh mewujudkan dan mengedit pemilihan kompleks dengan menggunakan "
+"alat Laluan. Dialog Laluan membolehkan anda menggunakan beberapa laluan dan "
+"menukarkannya kepada pemilihan."
+
+#: ../tips/gimp-tips.xml.in.h:26
+msgid ""
+"You can drag a layer from the Layers dialog and drop it onto the toolbox. "
+"This will create a new image containing only that layer."
+msgstr ""
+"Anda boleh menyeret lapisan dari dialog Lapisan dan melepaskannya ke dalam "
+"kotak alatan. Ini akan mewujudkan imej baru yang hanya mengandungi lapisan "
+"tersebut."
+
+#: ../tips/gimp-tips.xml.in.h:27
+#, fuzzy
+msgid ""
+"You can drag and drop many things in GIMP. For example, dragging a color "
+"from the toolbox or from a color palette and dropping it into an image will "
+"fill the current image or selection with that color."
+msgstr ""
+"Anda boleh menyeret dan melepaskan banyak benda dalam GIMP. Contohnya, "
+"menyeret warna dari kotak alatan atau dari pelet warna dan melepaskannya ke "
+"dalam imej akan mengisi imej atau pemilihan semasa dengan warna tersebut."
+
+#: ../tips/gimp-tips.xml.in.h:28
+#, fuzzy
+msgid ""
+"You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
+"strokes the edge of your current selection. More complex shapes can be drawn "
+"using the Path tool or with Filters-&gt;Render-&gt;Gfig."
+msgstr ""
+"Anda boleh melukis segi empat sama atau bulatan ringkas menggunakan Edit-&gt;"
+"TandakanPemilihan. Ia menanda tepi pemilihan semasa anda. Banyak lagi bentuk "
+"kompleks boleh dilukis dengan alat Laluan atau Penapis-&gt;Render-&gt;Gfig."
+
+#: ../tips/gimp-tips.xml.in.h:29
+msgid ""
+"You can get context-sensitive help for most of the GIMP's features by "
+"pressing the F1 key at any time. This also works inside the menus."
+msgstr ""
+"Anda boleh mendapatkan bantuan peka konteks bagi kebanyakan ciri GIMP dengan "
+"menekan kekunci F1 pada bila-bila masa. Ini juga boleh dilakukan dalam menu."
+
+#: ../tips/gimp-tips.xml.in.h:30
+msgid ""
+"You can perform many layer operations by right-clicking on the text label of "
+"a layer in the Layers dialog."
+msgstr ""
+"Anda boleh melaksanakan banyak pengendalian lapisan dengan mengklik kanan "
+"label teks lapisan dalam dialog Lapisan."
+
+#: ../tips/gimp-tips.xml.in.h:31
+#, fuzzy
+msgid ""
+"You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
+"are making a selection in order to constrain it to a square or a circle, or "
+"to have it centered on its starting point."
+msgstr ""
+"Anda boleh menekan atau melepaskan kekunci <tt>Shift</tt> dan <tt>Ctrl</tt> "
+"semasa anda membuat pemilihan untuk mengekangnya kepada segi empat sama atau "
+"bulatan yang lengkap, atau untuk meletakkannya di tengah-tengah pada titik "
+"mula."
+
+#: ../tips/gimp-tips.xml.in.h:32
+msgid ""
+"You can save a selection to a channel (Select-&gt;Save to Channel) and then "
+"modify this channel with any paint tools. Using the buttons in the Channels "
+"dialog, you can toggle the visibility of this new channel or convert it to a "
+"selection."
+msgstr ""
+"Anda boleh menyimpan pemilihan ke saluran (Pilih-&gt;Simpan ke Saluran) dan "
+"kemudian mengubah suai saluran ini dengan mana-mana alat cat. Dengan "
+"menggunakan butang dalam dialog Saluran, anda boleh togol kejelasan saluran "
+"baru ini atau menukarkannya kepada pemilihan."
+
+#: ../tips/gimp-tips.xml.in.h:33
+msgid ""
+"You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
+"image (if your window manager doesn't trap those keys...)."
+msgstr ""
+"Anda boleh menggunakan <tt>Alt</tt>-<tt>Tab</tt> untuk mengitar di seluruh "
+"lapisan dalam imej (jika pengurus tetingkap anda tidak menyekat kekunci "
+"tersebut...)."
+
+#: ../tips/gimp-tips.xml.in.h:34
+msgid ""
+"You can use the middle mouse button to pan around the image, if it's larger "
+"than its display window."
+msgstr ""
+"Anda boleh menggunakan butang tengah tetikus untuk menyorot di sekitar imej, "
+"jika ia lebih besar daripada tetingkap paparannya."
+
+#: ../tips/gimp-tips.xml.in.h:35
+#, fuzzy
+msgid ""
+"You can use the paint tools to change the selection. Click on the &quot;"
+"Quick Mask&quot; button at the bottom left of an image window. Change your "
+"selection by painting in the image and click on the button again to convert "
+"it back to a normal selection."
+msgstr ""
+"Anda boleh menggunakan alat cat untuk menukar pemilihan. Klik butang "
+"\"Topeng Cepat\" di sebelah bawah kiri tetingkap imej. Tukar pemilihan anda "
+"dengan mengecat imej dan klik butang tersebut sekali lagi untuk "
+"menukarkannya semula kepada pemilihan normal."
+
+#, fuzzy
+#~ msgid ""
+#~ "The layer named &quot;Background&quot; is special because it lacks "
+#~ "transparency. This prevents you from moving the layer up in the stack. "
+#~ "You may add transparency to it by right-clicking in the Layers dialog and "
+#~ "selecting &quot;Add Alpha Channel&quot;."
+#~ msgstr ""
+#~ "Lapisan yang dinamai \"Latar Belakang\" adalah istimewa kerana kurang "
+#~ "kelutsinaran. Ini menghalang anda daripada menambahkan topeng lapisan "
+#~ "atau mengalihkan lapisan ke bahagian atas dalam tindanan itu. Anda boleh "
+#~ "menambah kelutsinaran padanya dengan mengklik kanan dialog Lapisan dan "
+#~ "memilih \"Tambahkan Saluran Alfa\"."
+
+#~ msgid ""
+#~ "The file selection dialog box has command-line completion with <tt>Tab</"
+#~ "tt>, just like the shell. Type part of a filename, hit <tt>Tab</tt>, and "
+#~ "voila, it's completed."
+#~ msgstr ""
+#~ "Kotak dialog pemilihan fail mempunyai pelengkapan baris arahan dengan "
+#~ "<tt>Tab</tt>, seperti juga cangkerang. Taip sebahagian daripada nama "
+#~ "fail, tekan <tt>Tab</tt>, dan Selesai."
+
+#~ msgid ""
+#~ "Nearly all image operations are performed by right-clicking on the image. "
+#~ "And don't worry, you can undo most mistakes..."
+#~ msgstr ""
+#~ "Hampir semua pengendalian imej dilaksanakan dengan mengklik kanan pada "
+#~ "imej Dan jangan bimbang, anda boleh membuat asal kebanyakan kesilapan..."
+
+#~ msgid "You can adjust and re-place a selection by using <tt>Alt</tt>-drag."
+#~ msgstr ""
+#~ "Anda boleh menyelaraskan dan menggantikan pemilihan dengan menggunakan "
+#~ "<tt>Alt</tt>-seret."
+
+#~ msgid ""
+#~ "If your fonts turn out blocky, that's because they're not scalable fonts. "
+#~ "Most X servers support scalable Type 1 Postscript fonts. Download and "
+#~ "install them. Some font servers allow you to use TrueType (<tt>.ttf</tt>) "
+#~ "fonts, which are also scalable."
+#~ msgstr ""
+#~ "Jika fon anda menjadi berblok, ini kerana fon tersebut tidak berskala. "
+#~ "Kebanyakan pelayan X menyokong fon Pascaskrip Jenis 1. Muat turun dan "
+#~ "pasangkannya. Beberapa pelayan fon membenarkan anda menggunakan fon "
+#~ "TrueType (<tt>.ttf</tt>) yang juga berskala."

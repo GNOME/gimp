@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE ui SYSTEM "gtkuimanager.dtd">
+
+<ui>
+  <popup action="images-popup">
+    <menuitem action="images-raise-views" />
+    <menuitem action="images-new-view" />
+    <menuitem action="images-delete" />
+  </popup>
+</ui>

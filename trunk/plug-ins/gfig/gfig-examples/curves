@@ -1,0 +1,57 @@
+GFIG Version 0.1
+Name: curves
+Version: 0.000000
+ObjCount: 9
+<OPTIONS>
+GridSpacing: 13
+GridType: POLAR_GRID
+DrawGrid: TRUE
+Snap2Grid: TRUE
+LockOnGrid: FALSE
+ShowControl: TRUE
+</OPTIONS>
+<ARC>
+53 39
+109 13
+170 19
+</ARC>
+<ARC>
+177 37
+217 75
+231 115
+</ARC>
+<ARC>
+219 128
+199 184
+160 212
+</ARC>
+<ARC>
+146 203
+105 202
+71 180
+</ARC>
+<ARC>
+75 164
+64 132
+70 99
+</ARC>
+<ARC>
+95 89
+128 77
+158 87
+</ARC>
+<ARC>
+158 104
+166 128
+155 156
+</ARC>
+<ARC>
+143 148
+121 152
+105 139
+</ARC>
+<ARC>
+116 130
+125 116
+139 123
+</ARC>

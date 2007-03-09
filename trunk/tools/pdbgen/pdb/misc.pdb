@@ -1,0 +1,101 @@
+# GIMP - The GNU Image Manipulation Program
+# Copyright (C) 1995 Spencer Kimball and Peter Mattis
+
+# This program is free software; you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation; either version 2 of the License, or
+# (at your option) any later version.
+
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+
+# You should have received a copy of the GNU General Public License
+# along with this program; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+
+# "Perlized" from C source by Manish Singh <yosh@gimp.org>
+
+sub version {
+    $blurb = 'Returns the host GIMP version.';
+
+    $help = <<'HELP';
+This procedure returns the version number of the currently running GIMP.
+HELP
+
+    &yosh_pdb_misc('1999');
+
+    @outargs = (
+	{ name => 'version', type => 'string',
+	  desc => 'GIMP version number' }
+    );
+
+    %invoke = (
+	headers => [ qw("libgimpbase/gimpbase.h") ],
+	code    => <<'CODE'
+{
+  version = g_strdup (GIMP_VERSION);
+}
+CODE
+    );
+}
+
+sub getpid {
+    $blurb = 'Returns the PID of the host GIMP process.';
+
+    $help = <<'HELP';
+This procedure returns the process ID of the currently running GIMP.
+HELP
+
+    &mitch_pdb_misc('2005', '2.4');
+
+    @outargs = (
+	{ name => 'pid', type => 'int32',
+	  desc => 'The PID' }
+    );
+
+    %invoke = (
+	headers => [ qw(<sys/types.h> <unistd.h> <process.h>) ],
+	code    => <<'CODE'
+{
+  pid = getpid ();
+}
+CODE
+    );
+}
+
+sub quit {
+    $blurb = 'Causes GIMP to exit gracefully.';
+
+    $help = <<'HELP';
+If there are unsaved images in an interactive GIMP session, the user
+will be asked for confirmation. If force is TRUE, the application is
+quit without querying the user to save any dirty images.
+HELP
+
+    &std_pdb_misc;
+
+    @inargs = (
+	{ name => 'force', type => 'boolean',
+	  desc => 'Force GIMP to quit without asking' }
+    );
+
+    %invoke = (
+	headers => [ qw("core/gimp.h") ],
+	code    => <<'CODE'
+{
+  gimp_exit (gimp, force);
+}
+CODE
+    );
+}
+
+
+@procs = qw(version getpid quit);
+
+%exports = (app => [@procs], lib => [@procs[0..1]]);
+
+$desc = 'Miscellaneous';
+
+1;

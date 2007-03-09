@@ -1,0 +1,592 @@
+# translation of gimp-libgimp.HEAD.ru.po to belarusian
+# translation of gimp-libgimp.HEAD.be.po to belarusian
+# Copyright (C) 1999-2002,2003 Free Software Foundation, Inc.
+# Vital Khilko <dojlid@mova.org>, 2003
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-libgimp.HEAD.ru\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2003-08-28 12:03+0200\n"
+"PO-Revision-Date: 2003-09-01 20:21+0300\n"
+"Last-Translator: Vital Khilko <dojlid@mova.org>\n"
+"Language-Team: belarusian <i18n@mova.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.0\n"
+
+#: libgimp/gimpbrushmenu.c:132
+msgid "Brush Selection"
+msgstr "Выбар пэнзаля"
+
+#: libgimp/gimpexport.c:183 libgimp/gimpexport.c:219
+#, c-format
+msgid "%s can't handle layers"
+msgstr "%s ня можа апрацаваць слаі"
+
+#: libgimp/gimpexport.c:184 libgimp/gimpexport.c:193 libgimp/gimpexport.c:202
+msgid "Merge Visible Layers"
+msgstr "Аб'яднаць бачныя слаі"
+
+#: libgimp/gimpexport.c:192
+#, c-format
+msgid "%s can't handle layer offsets, size or opacity"
+msgstr "%s ня можа апрацаваць зрух, памер ці шчыльнасьць"
+
+#: libgimp/gimpexport.c:201 libgimp/gimpexport.c:210
+#, c-format
+msgid "%s can only handle layers as animation frames"
+msgstr "%s можа апрацаваць слаі толькі як анімаваныя кадры"
+
+#: libgimp/gimpexport.c:202 libgimp/gimpexport.c:211
+msgid "Save as Animation"
+msgstr "Захаваць як анімацыю"
+
+#: libgimp/gimpexport.c:211 libgimp/gimpexport.c:220 libgimp/gimpexport.c:229
+msgid "Flatten Image"
+msgstr "Зьвясьці відарыс"
+
+#: libgimp/gimpexport.c:228
+#, c-format
+msgid "%s can't handle transparency"
+msgstr "%s ня можа апрацаваць празрыстасьць"
+
+#: libgimp/gimpexport.c:237
+#, c-format
+msgid "%s can only handle RGB images"
+msgstr "%s можа апрацаваць толькі RGB-відарысы"
+
+#: libgimp/gimpexport.c:238 libgimp/gimpexport.c:266 libgimp/gimpexport.c:275
+msgid "Convert to RGB"
+msgstr "Пераўтварыць у RGB"
+
+#: libgimp/gimpexport.c:246
+#, c-format
+msgid "%s can only handle grayscale images"
+msgstr "%s можа апрацаваць толькі только відарысы у ступенях шэрага"
+
+#: libgimp/gimpexport.c:247 libgimp/gimpexport.c:266 libgimp/gimpexport.c:287
+msgid "Convert to Grayscale"
+msgstr "Пераўтварыць у ступені шэрага"
+
+#: libgimp/gimpexport.c:255
+#, c-format
+msgid "%s can only handle indexed images"
+msgstr "%s можа апрацаваць толькі індэксаваныя відарысы"
+
+#: libgimp/gimpexport.c:256 libgimp/gimpexport.c:275 libgimp/gimpexport.c:285
+msgid ""
+"Convert to Indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"Пераўтвараць у індэксаванае праз дапомныя наладкі\n"
+"(Вынік можна наладзіць асабіста)"
+
+#: libgimp/gimpexport.c:265
+#, c-format
+msgid "%s can only handle RGB or grayscale images"
+msgstr "%s можа апрацаваць толькі відарысы ў ступенях шэрага ці RGB"
+
+#: libgimp/gimpexport.c:274
+#, c-format
+msgid "%s can only handle RGB or indexed images"
+msgstr "%s можа апрацаваць толькі RGB ці індэксаваныя відарысы"
+
+#: libgimp/gimpexport.c:284
+#, c-format
+msgid "%s can only handle grayscale or indexed images"
+msgstr "%s можа апрацаваць толькі відарысы ў ступенях шэрага ці індэксаваныя"
+
+#: libgimp/gimpexport.c:295
+#, c-format
+msgid "%s needs an alpha channel"
+msgstr "%s патрэбны альфа-канал"
+
+#: libgimp/gimpexport.c:296
+msgid "Add Alpha Channel"
+msgstr "Дадаць альфа-канал"
+
+#.
+#. *  Plug-ins must have called gtk_init () before calling gimp_export ().
+#. *  Otherwise bad things will happen now!!
+#.
+#. the dialog
+#: libgimp/gimpexport.c:370
+msgid "Confirm Save"
+msgstr "Падцьвердзіць захаваньне"
+
+#: libgimp/gimpexport.c:378
+msgid "Confirm"
+msgstr "Падцьвердзіць"
+
+#.
+#. *  Plug-ins must have called gtk_init () before calling gimp_export ().
+#. *  Otherwise bad things will happen now!!
+#.
+#. the dialog
+#: libgimp/gimpexport.c:431
+msgid "Export File"
+msgstr "Экспартаваць файл"
+
+#: libgimp/gimpexport.c:436
+msgid "Ignore"
+msgstr "Ігнараваць"
+
+#: libgimp/gimpexport.c:442
+msgid "Export"
+msgstr "Экспарт"
+
+#: libgimp/gimpexport.c:468
+msgid ""
+"Your image should be exported before it can be saved for the following "
+"reasons:"
+msgstr ""
+"Ваш відарыс мусіць быць экспартаваны да таго як ён можа быць "
+"захаваны па наступным нагодам:"
+
+#. the footline
+#: libgimp/gimpexport.c:541
+msgid "The export conversion won't modify your original image."
+msgstr "Экспартнае пераўтварэньне ня зьменіць ваш зыходны відарыс."
+
+#: libgimp/gimpexport.c:611
+#, c-format
+msgid ""
+"You are about to save a layer mask as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"Вы зьбіраецеся захаваць маску слоя як %s.\n"
+"Бачныя слаі не будуць захаваны."
+
+#: libgimp/gimpexport.c:617
+#, c-format
+msgid ""
+"You are about to save a channel (saved selection) as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"Вы зьбіраецеся захаваць канал (захаванае вылучэньне) як %s.\n"
+"Бачныя слаі не будуць захаваны."
+
+#: libgimp/gimpfontmenu.c:89
+msgid "Font Selection"
+msgstr "Выбар шрыфта"
+
+#: libgimp/gimpgradientmenu.c:103
+msgid "Gradient Selection"
+msgstr "Выбар градыента"
+
+#: libgimp/gimpmenu.c:401
+msgid "None"
+msgstr "Няма"
+
+#: libgimp/gimpmiscui.c:50
+msgid "Preview"
+msgstr "Перадпрагляд"
+
+#: libgimp/gimpmiscui.c:536
+#, c-format
+msgid ""
+"No %s in gimprc:\n"
+"You need to add an entry like\n"
+"(%s \"%s\")\n"
+"to your %s file."
+msgstr ""
+"Адсутнічае %s у файле gimprc:\n"
+"Вам трэба запіс тыпу\n"
+"(%s \"%s\")\n"
+"да файла %s."
+
+#: libgimp/gimppatternmenu.c:115
+msgid "Pattern Selection"
+msgstr "Выбар шаблёна"
+
+#: libgimp/gimpunit.c:56
+msgid "percent"
+msgstr "адсотка"
+
+#: libgimpbase/gimputils.c:118
+#, c-format
+msgid "%d Bytes"
+msgstr "%d байт"
+
+#: libgimpbase/gimputils.c:122
+#, c-format
+msgid "%.2f KB"
+msgstr "%.2f КБ"
+
+#: libgimpbase/gimputils.c:126
+#, c-format
+msgid "%.1f KB"
+msgstr "%.1f КБ"
+
+#: libgimpbase/gimputils.c:130
+#, c-format
+msgid "%d KB"
+msgstr "%d КБ"
+
+#: libgimpbase/gimputils.c:135
+#, c-format
+msgid "%.2f MB"
+msgstr "%.2f МБ"
+
+#: libgimpbase/gimputils.c:140
+#, c-format
+msgid "%.1f MB"
+msgstr "%.1f МБ"
+
+#: libgimpmodule/gimpmodule.c:174
+#, c-format
+msgid "Loading module: '%s'\n"
+msgstr "Загрузка модуля: \"%s\"\n"
+
+#: libgimpmodule/gimpmodule.c:190 libgimpmodule/gimpmodule.c:207
+#: libgimpmodule/gimpmodule.c:314 libgimpmodule/gimpmodule.c:341
+#: libgimpmodule/gimpmodule.c:434
+#, c-format
+msgid ""
+"Module '%s' load error:\n"
+"%s"
+msgstr ""
+"Памылка загрузкі модуля \"%s\":\n"
+"%s"
+
+#: libgimpmodule/gimpmodule.c:271
+#, c-format
+msgid "Skipping module: '%s'\n"
+msgstr "Пропуск модуля: \"%s\"\n"
+
+#: libgimpmodule/gimpmodule.c:408
+msgid "Module error"
+msgstr "Памылка модуля"
+
+#: libgimpmodule/gimpmodule.c:409
+msgid "Loaded"
+msgstr "Загружаны"
+
+#: libgimpmodule/gimpmodule.c:410
+msgid "Load failed"
+msgstr "Збой загрузкі"
+
+#: libgimpmodule/gimpmodule.c:411
+msgid "Not loaded"
+msgstr "Не загружаны"
+
+#: libgimpwidgets/gimpcolorbutton.c:84
+msgid "/Foreground Color"
+msgstr "/Асноўны колер"
+
+#: libgimpwidgets/gimpcolorbutton.c:86
+msgid "/Background Color"
+msgstr "/Колер тла"
+
+#: libgimpwidgets/gimpcolorbutton.c:89
+msgid "/Black"
+msgstr "/Чорны"
+
+#: libgimpwidgets/gimpcolorbutton.c:91
+msgid "/White"
+msgstr "/Белы"
+
+#: libgimpwidgets/gimpcolorscales.c:142
+msgid "Scales"
+msgstr "Маштабы"
+
+#: libgimpwidgets/gimpcolorscales.c:164 libgimpwidgets/gimpcolorselect.c:354
+msgid "_H"
+msgstr "_А"
+
+#: libgimpwidgets/gimpcolorscales.c:165 libgimpwidgets/gimpcolorselect.c:354
+msgid "_S"
+msgstr "_Н"
+
+#: libgimpwidgets/gimpcolorscales.c:166 libgimpwidgets/gimpcolorselect.c:354
+msgid "_V"
+msgstr "_З"
+
+#: libgimpwidgets/gimpcolorscales.c:167 libgimpwidgets/gimpcolorselect.c:354
+msgid "_R"
+msgstr "_Ч"
+
+#: libgimpwidgets/gimpcolorscales.c:168 libgimpwidgets/gimpcolorselect.c:354
+msgid "_G"
+msgstr "_З"
+
+#: libgimpwidgets/gimpcolorscales.c:169 libgimpwidgets/gimpcolorselect.c:354
+msgid "_B"
+msgstr "_С"
+
+#: libgimpwidgets/gimpcolorscales.c:170
+msgid "_A"
+msgstr "_A"
+
+#: libgimpwidgets/gimpcolorscales.c:174 libgimpwidgets/gimpcolorselect.c:358
+msgid "Hue"
+msgstr "Адценьне"
+
+#: libgimpwidgets/gimpcolorscales.c:175 libgimpwidgets/gimpcolorselect.c:359
+msgid "Saturation"
+msgstr "Насычанасьць"
+
+#: libgimpwidgets/gimpcolorscales.c:176 libgimpwidgets/gimpcolorselect.c:360
+msgid "Value"
+msgstr "Значэньне"
+
+#: libgimpwidgets/gimpcolorscales.c:177 libgimpwidgets/gimpcolorselect.c:361
+msgid "Red"
+msgstr "Чырвоны"
+
+#: libgimpwidgets/gimpcolorscales.c:178 libgimpwidgets/gimpcolorselect.c:362
+msgid "Green"
+msgstr "Зялёны"
+
+#: libgimpwidgets/gimpcolorscales.c:179 libgimpwidgets/gimpcolorselect.c:363
+msgid "Blue"
+msgstr "Сіні"
+
+#: libgimpwidgets/gimpcolorscales.c:180 libgimpwidgets/gimpcolorselect.c:364
+msgid "Alpha"
+msgstr "Альфа"
+
+#: libgimpwidgets/gimpcolorscales.c:254
+msgid "Hexadecimal color notation as used in HTML"
+msgstr "Шаснаццацірычны запіс колера які выкарыстоўваецца ў HTML"
+
+#: libgimpwidgets/gimpcolorscales.c:268
+msgid "He_x Triplet:"
+msgstr "Шаснаццацірычны трыплет:"
+
+#: libgimpwidgets/gimpfileselection.c:352
+msgid "Select Folder"
+msgstr "Выбраць каталёг"
+
+#: libgimpwidgets/gimpfileselection.c:366
+msgid "Select File"
+msgstr "Выбраць файл"
+
+#: libgimpwidgets/gimpmemsizeentry.c:187
+msgid "KiloBytes"
+msgstr "Кілябайты"
+
+#: libgimpwidgets/gimpmemsizeentry.c:188
+msgid "MegaBytes"
+msgstr "Мэгабайты"
+
+#: libgimpwidgets/gimpmemsizeentry.c:189
+msgid "GigaBytes"
+msgstr "Гігабайты"
+
+#: libgimpwidgets/gimppickbutton.c:141
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr "Выбярыце піпетку, затым пазначце колер дзе-небудзь на экране, каб выбраць яго."
+
+#: libgimpwidgets/gimpstock.c:101
+msgid "Anchor"
+msgstr "Прычапіць"
+
+#: libgimpwidgets/gimpstock.c:102
+msgid "_Duplicate"
+msgstr "_Падвоіць"
+
+#: libgimpwidgets/gimpstock.c:103
+msgid "_Edit"
+msgstr "_Рэдагаваць"
+
+#: libgimpwidgets/gimpstock.c:104
+msgid "Linked"
+msgstr "Зьвязаныя"
+
+#: libgimpwidgets/gimpstock.c:105
+msgid "Paste as New"
+msgstr "Уставіць як новае"
+
+#: libgimpwidgets/gimpstock.c:106
+msgid "Paste Into"
+msgstr "Уставіць у"
+
+#: libgimpwidgets/gimpstock.c:107
+msgid "_Reset"
+msgstr "_Скінуць"
+
+#: libgimpwidgets/gimpstock.c:108
+msgid "Visible"
+msgstr "Бачны"
+
+#: libgimpwidgets/gimpstock.c:156
+msgid "L_etter Spacing"
+msgstr "Між _літарны інтэрвал"
+
+#: libgimpwidgets/gimpstock.c:157
+msgid "L_ine Spacing"
+msgstr "Між_радковы інтэрвал"
+
+#: libgimpwidgets/gimpstock.c:172
+msgid "_Resize"
+msgstr "_Зьмяніць памер"
+
+#: libgimpwidgets/gimpstock.c:173 libgimpwidgets/gimpstock.c:257
+msgid "_Scale"
+msgstr "_Маштабаваць"
+
+#: libgimpwidgets/gimpstock.c:235
+msgid "Crop"
+msgstr "Кадраваць"
+
+#: libgimpwidgets/gimpstock.c:253
+msgid "_Transform"
+msgstr "_Трансфармаваць"
+
+#: libgimpwidgets/gimpstock.c:256
+msgid "_Rotate"
+msgstr "_Варочаць"
+
+#: libgimpwidgets/gimpstock.c:258
+msgid "_Shear"
+msgstr "_Зрушыць"
+
+#: libgimpwidgets/gimpunitmenu.c:267
+msgid "More..."
+msgstr "Болей..."
+
+#: libgimpwidgets/gimpunitmenu.c:527
+msgid "Unit Selection"
+msgstr "Выбар адзінак"
+
+#: libgimpwidgets/gimpunitmenu.c:573
+msgid "Unit"
+msgstr "Адзінка"
+
+#: libgimpwidgets/gimpunitmenu.c:577
+msgid "Factor"
+msgstr "Множнік"
+
+#: libgimpwidgets/gimpwidgets.c:943
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
+msgstr ""
+"Выкарыстоўвайце гэтае значэньне для генерацыі выпадковага ліку - гэта дазволіць "
+"паўтарыць гэтую \"выпадковую\" апэрыцыю"
+
+#: libgimpwidgets/gimpwidgets.c:947
+msgid "_Randomize"
+msgstr "_Шуфляваць"
+
+#: libgimpwidgets/gimpwidgets.c:958
+msgid "Seed random number generator with a generated random number"
+msgstr "Ініцыяваць генератар выпадковых лікаў згенераваным выпадковым лікам"
+
+#: modules/cdisplay_colorblind.c:122
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr "Фільтар які мадэлюе недахоп колера (алгарытм Брэтэля-Віенота-Малёна)"
+
+#: modules/cdisplay_colorblind.c:188
+msgid "Color Deficient Vision"
+msgstr "Бачнасьць з недахопам чуласьці да колера"
+
+#: modules/cdisplay_colorblind.c:473
+msgid "Color Deficiency Type:"
+msgstr "Тып недахопу колера:"
+
+#: modules/cdisplay_colorblind.c:483
+msgid "None (normal vision)"
+msgstr "Няма (нармальная бачнасьць)"
+
+#: modules/cdisplay_colorblind.c:487
+msgid "Protanopia (insensitivity to red)"
+msgstr "Протанопія (нячуласьць да чырвонага)"
+
+#: modules/cdisplay_colorblind.c:491
+msgid "Deuteranopia (insensitivity to green)"
+msgstr "Дэўтеранопія (нячуласьць да зялёнага)"
+
+#: modules/cdisplay_colorblind.c:495
+msgid "Tritanopia (insensitivity to blue)"
+msgstr "Трытанопія (нячуласьць да сіняга)"
+
+#: modules/cdisplay_gamma.c:90
+msgid "Gamma color display filter"
+msgstr "Фільтар адлюстраваньня гама-колера"
+
+#: modules/cdisplay_gamma.c:156
+msgid "Gamma"
+msgstr "Гама"
+
+#: modules/cdisplay_gamma.c:320
+msgid "Gamma:"
+msgstr "Гама:"
+
+#: modules/cdisplay_highcontrast.c:90
+msgid "High Contrast color display filter"
+msgstr "Фільтар адлюстраваньня колераў з высокім кантрастам"
+
+#: modules/cdisplay_highcontrast.c:156
+msgid "Contrast"
+msgstr "Кантраст"
+
+#: modules/cdisplay_highcontrast.c:318
+msgid "Contrast Cycles:"
+msgstr "Цыклі кантраста:"
+
+#: modules/colorsel_cmyk.c:70
+msgid "CMYK color selector"
+msgstr "Выбарнік колеру CMYK"
+
+#: modules/colorsel_cmyk.c:129
+msgid "CMYK"
+msgstr "CMYK"
+
+#: modules/colorsel_cmyk.c:143
+msgid "_C"
+msgstr "_C"
+
+#: modules/colorsel_cmyk.c:144
+msgid "_M"
+msgstr "_M"
+
+#: modules/colorsel_cmyk.c:145
+msgid "_Y"
+msgstr "_Y"
+
+#: modules/colorsel_cmyk.c:146
+msgid "_K"
+msgstr "_K"
+
+#: modules/colorsel_cmyk.c:150
+msgid "Cyan"
+msgstr "Блакітны"
+
+#: modules/colorsel_cmyk.c:151
+msgid "Magenta"
+msgstr "Малінавы"
+
+#: modules/colorsel_cmyk.c:152
+msgid "Yellow"
+msgstr "Жоўты"
+
+#: modules/colorsel_cmyk.c:153
+msgid "Black"
+msgstr "Чорны"
+
+#: modules/colorsel_triangle.c:110
+msgid "Painter-style triangle color selector"
+msgstr "Выбарнік колеру ў выглядзе трохкутніка"
+
+#: modules/colorsel_triangle.c:182
+msgid "Triangle"
+msgstr "Трохкутнік"
+
+#: modules/colorsel_water.c:104
+msgid "Watercolor style color selector"
+msgstr "Выбарнік колеру ў выглядзе вадкіх колераў"
+
+#: modules/colorsel_water.c:176
+msgid "Watercolor"
+msgstr "Вадкі колер"
+
+#: modules/colorsel_water.c:251
+msgid "Pressure"
+msgstr "Ціск"
+

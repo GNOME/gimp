@@ -1,0 +1,81 @@
+# translation of pa.po to Punjabi
+# translation of gimp-python.po to Punjabi
+# Copyright (C) 2004 THE gimp-python'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the gimp-python packageJaswinder Singh Phulewala <jaswinderlinux@netscape.net>, 2004.
+# Amanpreet Singh Alam <aalam@redhat.com>, 2004.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+# Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
+#
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: pa\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2006-09-13 21:07+0200\n"
+"PO-Revision-Date: 2005-05-14 21:16+0530\n"
+"Last-Translator: Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>\n"
+"Language-Team: Punjabi <punlinux-i18n@lists.sourceforge.net>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.9.1\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"\n"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+msgid "Python Console"
+msgstr "ਸਕਰਿਪਟ-Fu ਕਨਸੋਲ"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+msgid "_Browse..."
+msgstr "ਝਲਕ(_B)..."
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
+#, fuzzy
+msgid "Gimp-Python Console"
+msgstr "ਸਕਰਿਪਟ-Fu ਕਨਸੋਲ"
+
+#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
+msgid "Interactive Python Development"
+msgstr ""
