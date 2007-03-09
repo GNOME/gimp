@@ -22,6 +22,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "paint-types.h"
 
 #include "base/boundary.h"

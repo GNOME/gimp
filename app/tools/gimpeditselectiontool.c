@@ -24,6 +24,8 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "tools-types.h"
 
 #include "base/boundary.h"

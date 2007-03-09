@@ -49,6 +49,7 @@
 #endif
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 

@@ -20,6 +20,7 @@
 #define __GIMP_PERSPECTIVE_CLONE_H__
 
 
+#include "libgimpmath/gimpmatrix.h"
 #include "gimpclone.h"
 
 

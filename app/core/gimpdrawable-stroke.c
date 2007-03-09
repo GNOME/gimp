@@ -23,6 +23,7 @@
 
 #include <glib-object.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "core-types.h"

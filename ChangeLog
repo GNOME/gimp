@@ -1,5 +1,23 @@
 2007-03-09  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/core-types.h: include "libgimpmath/gimpmathtypes.h"
+	instead of "libgimpmath/gimpmath.h".
+
+	* app/core/gimpbrush.h
+	* app/paint/gimppaintcore.h
+	* app/paint/gimpperspectiveclone.h
+	* app/text/gimptext.h
+	* app/tools/gimptransformtool.h: include gimpvector.h and
+	gimpmatrix.h explicitely where they are needed in public structs.
+
+	* app/*/*.c
+	* tools/pdbgen/pdb/paths.pdb: include "libgimpmath/gimpmath.h"
+	where needed.
+
+	* app/pdb/paths_cmds.c: regenerated.
+
+2007-03-09  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/*.c: remove useless includes. Some minor cleanup.
 
 2007-03-09  Sven Neumann  <sven@gimp.org>

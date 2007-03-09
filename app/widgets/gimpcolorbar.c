@@ -22,8 +22,9 @@
 
 #include <gtk/gtk.h>
 
-#include "libgimpconfig/gimpconfig.h"
+#include "libgimpmath/gimpmath.h"
 #include "libgimpcolor/gimpcolor.h"
+#include "libgimpconfig/gimpconfig.h"
 
 #include "widgets-types.h"
 

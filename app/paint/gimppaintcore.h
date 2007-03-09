@@ -20,6 +20,7 @@
 #define __GIMP_PAINT_CORE_H__
 
 
+#include "libgimpmath/gimpvector.h"
 #include "core/gimpobject.h"
 
 

@@ -24,6 +24,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "pdb-types.h"
 #include "gimppdb.h"
 #include "gimpprocedure.h"

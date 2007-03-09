@@ -26,6 +26,8 @@
 
 #include "text-types.h"
 
+#include "libgimpmath/gimpmath.h"
+
 #include "core/gimpimage.h"
 #include "core/gimpunit.h"
 

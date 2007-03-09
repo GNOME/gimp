@@ -25,6 +25,7 @@
 
 #include <glib-object.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"

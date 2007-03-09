@@ -23,6 +23,7 @@
 #define __GIMP_TEXT_H__
 
 
+#include "libgimpmath/gimpmatrix.h"
 #include "core/gimpobject.h"
 
 

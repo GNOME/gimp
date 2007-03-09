@@ -20,6 +20,7 @@
 #define __GIMP_TRANSFORM_TOOL_H__
 
 
+#include "libgimpmath/gimpmatrix.h"
 #include "gimpdrawtool.h"
 
 

@@ -21,6 +21,7 @@
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
+#include "libgimpmath/gimpmath.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "tools-types.h"
@@ -55,8 +56,6 @@
 
 #include "gimp-intl.h"
 
-
-#define ARROW_VELOCITY 25
 
 #define SWAP_ORIENT(orient) ((orient) == GIMP_ORIENTATION_HORIZONTAL ? \
                              GIMP_ORIENTATION_VERTICAL : \
