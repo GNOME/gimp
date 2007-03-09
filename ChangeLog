@@ -1,3 +1,9 @@
+2007-03-09  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_key_press):
+	added missing call to gimp_rectangle_tool_update_options (). Fixes
+	bug #416268.
+
 2007-03-09  Raphaël Quinet  <raphael@gimp.org>
 
 	* app/tools/gimpblendtool.c (gimp_blend_tool_push_status): make

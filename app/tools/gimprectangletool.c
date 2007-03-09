@@ -1316,6 +1316,8 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
 
   gimp_rectangle_tool_configure (rectangle);
 
+  gimp_rectangle_tool_update_options (rectangle, display);
+
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
   gimp_rectangle_tool_rectangle_changed (rectangle);
