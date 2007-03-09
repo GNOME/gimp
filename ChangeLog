@@ -1,5 +1,9 @@
 2007-03-09  Sven Neumann  <sven@gimp.org>
 
+	* app/base/pixel-surround.c: replaced inner loop by a call to memcpy.
+
+2007-03-09  Sven Neumann  <sven@gimp.org>
+
 	* app/base/pixel-surround.c: fixed handling of uncovered regions.
 
 2007-03-09  Sven Neumann  <sven@gimp.org>

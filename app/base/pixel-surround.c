@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <glib-object.h>
 
 #include "base-types.h"
@@ -225,14 +227,7 @@ pixel_surround_lock (PixelSurround *surround,
 
               while (rows--)
                 {
-                  const guchar *s = src;
-                  guchar       *d = dest;
-                  gint          bytes;
-
-                  bytes = w * surround->bpp;
-
-                  while (bytes--)
-                    *d++ = *s++;
+                  memcpy (dest, src, w * surround->bpp);
 
                   src += *rowstride;
                   dest += surround->rowstride;
