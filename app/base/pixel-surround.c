@@ -67,16 +67,21 @@ pixel_surround_get_data (PixelSurround *surround,
 
   /*  if not, try to get one for the target pixel  */
   if (! surround->tile)
-    surround->tile = tile_manager_get_tile (surround->mgr, x, y, TRUE, FALSE);
+    {
+      surround->tile = tile_manager_get_tile (surround->mgr, x, y, TRUE, FALSE);
+
+      if (surround->tile)
+        {
+          /*  store offset and size of the locked tile  */
+          surround->tile_x = x & ~(TILE_WIDTH - 1);
+          surround->tile_y = y & ~(TILE_HEIGHT - 1);
+          surround->tile_w = tile_ewidth (surround->tile);
+          surround->tile_h = tile_eheight (surround->tile);
+        }
+    }
 
   if (surround->tile)
     {
-      /*  store offset and size of the locked tile  */
-      surround->tile_x = x & ~(TILE_WIDTH - 1);
-      surround->tile_y = y & ~(TILE_HEIGHT - 1);
-      surround->tile_w = tile_ewidth (surround->tile);
-      surround->tile_h = tile_eheight (surround->tile);
-
       *w = surround->tile_x + surround->tile_w - x;
       *h = surround->tile_y + surround->tile_h - y;
 
@@ -87,16 +92,16 @@ pixel_surround_get_data (PixelSurround *surround,
     }
   else
     {
-      /*   return a pointer to the buffer that's filled with the bg color  */
+      /*   return a pointer to a virtual empty tile  */
       if (x < 0)
-        *w = MIN (- x, surround->w);
+        *w = MIN (- x, TILE_WIDTH);
       else
-        *w = surround->w;
+        *w = TILE_WIDTH - (x % TILE_WIDTH);
 
       if (y < 0)
-        *h = MIN (- y, surround->h);
+        *h = MIN (- y, TILE_HEIGHT);
       else
-        *h = surround->h;
+        *h = TILE_HEIGHT - (y % TILE_HEIGHT);
 
       *rowstride = surround->rowstride;
 
@@ -211,15 +216,19 @@ pixel_surround_lock (PixelSurround *surround,
                                              x + i, y + j, &w, &h, rowstride);
 
             start:
+
               w = MIN (w, surround->w - i);
               h = MIN (h, surround->h - j);
 
               rows = h;
+
               while (rows--)
                 {
-                  const guchar *s     = src;
-                  guchar       *d     = dest;
-                  gint          bytes = w * surround->bpp;
+                  const guchar *s = src;
+                  guchar       *d = dest;
+                  gint          bytes;
+
+                  bytes = w * surround->bpp;
 
                   while (bytes--)
                     *d++ = *s++;
