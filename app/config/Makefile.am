@@ -65,7 +65,7 @@ TESTS = test-config
 
 test_config_DEPENDENCIES = $(gimpconfig_libs)
 
-test_config_LDFLAGS = -u xcf_init -u internal_procs_init
+test_config_LDFLAGS = -u xcf_init -u internal_procs_init -u gimp_coords_mix
 
 test_config_LDADD = \
 	../widgets/widgets-enums.o		\
@@ -76,8 +76,8 @@ test_config_LDADD = \
 	../file/libappfile.a			\
 	../plug-in/libappplug-in.a		\
 	../pdb/libapppdb.a			\
-	../vectors/libappvectors.a		\
 	../core/libappcore.a			\
+	../vectors/libappvectors.a		\
 	../paint/libapppaint.a			\
 	../text/libapptext.a			\
 	libappconfig.a				\
