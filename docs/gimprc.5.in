@@ -242,7 +242,7 @@ kept available until the undo-size limit is reached.  This is an integer
 value.
 
 .TP
-(undo-size 32M)
+(undo-size 64M)
 
 Sets an upper limit to the memory that is used per image to keep operations on
 the undo stack. Regardless of this setting, at least as many undo-levels as
@@ -541,14 +541,14 @@ Ask for confirmation before closing an image without saving.  Possible values
 are yes and no.
 
 .TP
-(monitor-xresolution 72.000000)
+(monitor-xresolution 96.000000)
 
 Sets the monitor's horizontal resolution, in dots per inch.  If set to 0,
 forces the X server to be queried for both horizontal and vertical resolution
 information.  This is a float value.
 
 .TP
-(monitor-yresolution 72.000000)
+(monitor-yresolution 96.000000)
 
 Sets the monitor's vertical resolution, in dots per inch.  If set to 0, forces
 the X server to be queried for both horizontal and vertical resolution
@@ -707,7 +707,7 @@ How many recently opened image filenames to keep on the File menu.  This is an
 integer value.
 
 .TP
-(max-new-image-size 64M)
+(max-new-image-size 128M)
 
 GIMP will warn the user if an attempt is made to create an image that would
 take more memory than the size specified here.  The integer size can contain a

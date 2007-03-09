@@ -1,5 +1,9 @@
 2007-03-09  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.3.15 development release.
+
+2007-03-09  Sven Neumann  <sven@gimp.org>
+
 	* app/config/Makefile.am: fixed build of test-config.
 
 2007-03-09  Kevin Cozens  <kcozens@cvs.gnome.org>

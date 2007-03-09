@@ -352,7 +352,7 @@ GimpPropWidgets
 
 @config: 
 @property_name: 
-@store: 
+@model: 
 @id_column: 
 @label_column: 
 @Returns: 

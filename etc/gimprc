@@ -195,7 +195,7 @@
 # bytes, kilobytes, megabytes or gigabytes. If no suffix is specified the
 # size defaults to being specified in kilobytes.
 # 
-# (undo-size 32M)
+# (undo-size 64M)
 
 # Sets the size of the previews in the Undo History.  Possible values are
 # tiny, extra-small, small, medium, large, extra-large, huge, enormous and
@@ -411,13 +411,13 @@
 # forces the X server to be queried for both horizontal and vertical
 # resolution information.  This is a float value.
 # 
-# (monitor-xresolution 72.000000)
+# (monitor-xresolution 96.000000)
 
 # Sets the monitor's vertical resolution, in dots per inch.  If set to 0,
 # forces the X server to be queried for both horizontal and vertical
 # resolution information.  This is a float value.
 # 
-# (monitor-yresolution 72.000000)
+# (monitor-yresolution 96.000000)
 
 # When enabled, GIMP will use the monitor resolution from the windowing
 # system.  Possible values are yes and no.
@@ -556,7 +556,7 @@
 # size as being specified in bytes, kilobytes, megabytes or gigabytes. If no
 # suffix is specified the size defaults to being specified in kilobytes.
 # 
-# (max-new-image-size 64M)
+# (max-new-image-size 128M)
 
 # The toolbox-color-area property has no description.  Possible values are
 # yes and no.
