@@ -124,6 +124,8 @@ gimp_plug_in_procedure_finalize (GObject *object)
   g_list_foreach (proc->menu_paths, (GFunc) g_free, NULL);
   g_list_free (proc->menu_paths);
 
+  g_free (proc->label);
+
   g_free (proc->icon_data);
   g_free (proc->image_types);
 
@@ -518,8 +520,8 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
   return FALSE;
 }
 
-gchar *
-gimp_plug_in_procedure_get_label (const GimpPlugInProcedure *proc)
+const gchar *
+gimp_plug_in_procedure_get_label (GimpPlugInProcedure *proc)
 {
   const gchar *path;
   gchar       *stripped;
@@ -527,6 +529,9 @@ gimp_plug_in_procedure_get_label (const GimpPlugInProcedure *proc)
   gchar       *label;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), NULL);
+
+  if (proc->label)
+    return proc->label;
 
   if (proc->menu_label)
     path = dgettext (proc->locale_domain, proc->menu_label);
@@ -552,7 +557,9 @@ gimp_plug_in_procedure_get_label (const GimpPlugInProcedure *proc)
   if (ellipsis && ellipsis == (label + strlen (label) - 3))
     *ellipsis = '\0';
 
-  return label;
+  proc->label = label;
+
+  return proc->label;
 }
 
 const gchar *

@@ -139,9 +139,9 @@ gimp_file_proc_view_new (Gimp        *gimp,
 
       if (! proc->prefixes_list) /*  skip URL loaders  */
         {
-          gchar  *label   = gimp_plug_in_procedure_get_label (proc);
-          gchar  *help_id = gimp_plug_in_procedure_get_help_id (proc);
-          GSList *list2;
+          const gchar *label   = gimp_plug_in_procedure_get_label (proc);
+          gchar       *help_id = gimp_plug_in_procedure_get_help_id (proc);
+          GSList      *list2;
 
           if (label)
             {
@@ -152,8 +152,6 @@ gimp_file_proc_view_new (Gimp        *gimp,
                                   COLUMN_EXTENSIONS, proc->extensions,
                                   COLUMN_HELP_ID,    help_id,
                                   -1);
-
-              g_free (label);
             }
 
           g_free (help_id);

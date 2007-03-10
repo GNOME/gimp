@@ -166,15 +166,17 @@ file_open_image (Gimp                *gimp,
       else
         {
           g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                       _("Plug-In returned SUCCESS but did not "
-                         "return an image"));
+                       _("%s plug-in returned SUCCESS but did not "
+                         "return an image"),
+                       gimp_plug_in_procedure_get_label (file_proc));
           *status = GIMP_PDB_EXECUTION_ERROR;
         }
     }
   else if (*status != GIMP_PDB_CANCEL)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Plug-In could not open image"));
+                   _("%s plug-In could not open image"),
+                   gimp_plug_in_procedure_get_label (file_proc));
     }
 
   g_value_array_free (return_vals);

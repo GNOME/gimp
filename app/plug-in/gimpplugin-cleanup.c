@@ -159,14 +159,11 @@ gimp_plug_in_cleanup (GimpPlugIn          *plug_in,
 
       if (cleanup->undo_group_count != image->group_count)
         {
-          gchar *label;
-
-          label = gimp_plug_in_procedure_get_label (GIMP_PLUG_IN_PROCEDURE (proc_frame->procedure));
+          GimpProcedure *proc = proc_frame->procedure;
 
           g_message ("Plug-In '%s' left image undo in inconsistent state, "
-                     "closing open undo groups.", label);
-
-          g_free (label);
+                     "closing open undo groups.",
+                     gimp_plug_in_procedure_get_label (GIMP_PLUG_IN_PROCEDURE (proc)));
 
           while (image->pushing_undo_group != GIMP_UNDO_GROUP_NONE &&
                  cleanup->undo_group_count < image->group_count)

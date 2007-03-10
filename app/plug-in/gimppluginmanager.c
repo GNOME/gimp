@@ -955,11 +955,11 @@ gimp_plug_in_manager_file_proc_compare (gconstpointer a,
                                         gconstpointer b,
                                         gpointer      data)
 {
-  const GimpPlugInProcedure *proc_a  = a;
-  const GimpPlugInProcedure *proc_b  = b;
-  gchar                     *label_a;
-  gchar                     *label_b;
-  gint                       retval  = 0;
+  GimpPlugInProcedure *proc_a = GIMP_PLUG_IN_PROCEDURE (a);
+  GimpPlugInProcedure *proc_b = GIMP_PLUG_IN_PROCEDURE (b);
+  const gchar         *label_a;
+  const gchar         *label_b;
+  gint                 retval = 0;
 
   if (g_str_has_prefix (proc_a->prog, "gimp-xcf"))
     return -1;
@@ -972,9 +972,6 @@ gimp_plug_in_manager_file_proc_compare (gconstpointer a,
 
   if (label_a && label_b)
     retval = g_utf8_collate (label_a, label_b);
-
-  g_free (label_a);
-  g_free (label_b);
 
   return retval;
 }

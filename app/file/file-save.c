@@ -190,7 +190,8 @@ file_save (GimpImage           *image,
   else if (status != GIMP_PDB_CANCEL)
     {
       g_set_error (error, G_FILE_ERROR, G_FILE_ERROR_FAILED,
-                   _("Plug-In could not save image"));
+                   _("%s plug-in could not save image"),
+                   gimp_plug_in_procedure_get_label (file_proc));
     }
 
   g_object_unref (image);

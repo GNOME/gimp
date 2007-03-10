@@ -535,14 +535,11 @@ gimp_file_dialog_add_filters (GimpFileDialog *dialog,
       if (file_proc->extensions_list)
         {
           GtkFileFilter *filter = gtk_file_filter_new ();
-          gchar         *label;
           GString       *str;
           GSList        *ext;
           gint           i;
 
-          label = gimp_plug_in_procedure_get_label (file_proc);
-          str = g_string_new (label);
-          g_free (label);
+          str = g_string_new (gimp_plug_in_procedure_get_label (file_proc));
 
 /*  an arbitrary limit to keep the file dialog from becoming too wide  */
 #define MAX_EXTENSIONS  4

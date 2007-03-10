@@ -495,16 +495,14 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
 
   if (proc)
     {
-      gchar *label;
-      gchar *repeat;
-      gchar *reshow;
+      const gchar *label;
+      gchar       *repeat;
+      gchar       *reshow;
 
       label = gimp_plug_in_procedure_get_label (proc);
 
       repeat = g_strdup_printf (_("Re_peat \"%s\""),  label);
       reshow = g_strdup_printf (_("R_e-Show \"%s\""), label);
-
-      g_free (label);
 
       gimp_action_group_set_action_label (group, "plug-in-repeat", repeat);
       gimp_action_group_set_action_label (group, "plug-in-reshow", reshow);
@@ -523,25 +521,20 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
   for (i = 0; i < gimp_plug_in_manager_history_length (manager); i++)
     {
       GtkAction *action;
-      gchar     *name    = g_strdup_printf ("plug-in-recent-%02d", i + 1);
-      gchar     *label;
+      gchar     *name = g_strdup_printf ("plug-in-recent-%02d", i + 1);
 
       action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), name);
       g_free (name);
 
       proc  = gimp_plug_in_manager_history_nth (manager, i);
 
-      label = gimp_plug_in_procedure_get_label (proc);
-
       g_object_set (action,
                     "visible",   TRUE,
                     "procedure", proc,
-                    "label",     label,
+                    "label",     gimp_plug_in_procedure_get_label (proc),
                     "stock-id",  gimp_plug_in_procedure_get_stock_id (proc),
                     "tooltip",   gimp_plug_in_procedure_get_blurb (proc),
                     NULL);
-
-      g_free (label);
     }
 
   for (; i < gimp_plug_in_manager_history_size (manager); i++)

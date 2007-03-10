@@ -363,7 +363,6 @@ gimp_image_prop_view_label_set_filetype (GtkWidget *label,
 {
   GimpPlugInManager   *manager = image->gimp->plug_in_manager;
   GimpPlugInProcedure *proc;
-  gchar               *text;
 
   proc = gimp_image_get_save_proc (image);
   if (! proc)
@@ -377,10 +376,8 @@ gimp_image_prop_view_label_set_filetype (GtkWidget *label,
         }
     }
 
-  text = proc ? gimp_plug_in_procedure_get_label (proc) : NULL;
-
-  gtk_label_set_text (GTK_LABEL (label), text);
-  g_free (text);
+  gtk_label_set_text (GTK_LABEL (label),
+                      proc ? gimp_plug_in_procedure_get_label (proc) : NULL);
 }
 
 static void

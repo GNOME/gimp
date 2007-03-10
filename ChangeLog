@@ -1,3 +1,20 @@
+2007-03-10  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/gimppluginprocedure.[ch]: cache the result of
+	gimp_plug_in_procedure_get_label() and made the return value const.
+
+
+	* app/actions/plug-in-actions.c
+	* app/plug-in/gimpplugin-cleanup.c
+	* app/plug-in/gimppluginmanager.c
+	* app/widgets/gimpfiledialog.c
+	* app/widgets/gimpfileprocview.c
+	* app/widgets/gimpimagepropview.c: changed accordingly.
+
+	* app/file/file-open.c
+	* app/file/file-save.c: include the plug-in name (or actually the
+	label) in the error messages.
+
 2007-03-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/core-types.h: don't include libgimpmath/gimpmathtypes.h
