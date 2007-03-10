@@ -299,12 +299,12 @@ gimp_statusbar_progress_end (GimpProgress *progress)
     {
       GtkWidget *bar = statusbar->progressbar;
 
+      statusbar->progress_active = FALSE;
+
       gimp_statusbar_pop (statusbar, "progress");
       gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (bar), 0.0);
       gtk_widget_set_sensitive (statusbar->cancel_button, FALSE);
       gtk_widget_hide (statusbar->cancel_button);
-
-      statusbar->progress_active = FALSE;
     }
 }
 
