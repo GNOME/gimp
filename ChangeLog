@@ -1,3 +1,7 @@
+2007-03-10  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version to 2.3.16.
+
 2007-03-10  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/tools-enums.[ch] (enum GimpButtonReleaseType): added
