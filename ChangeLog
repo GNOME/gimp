@@ -1,3 +1,10 @@
+2007-03-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-types.h: don't include libgimpmath/gimpmathtypes.h
+
+	* app/base/base-types.h: include it here. Also include
+	libgimpcolor/gimpcolortypes.h
+
 2007-03-10  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.3.16.

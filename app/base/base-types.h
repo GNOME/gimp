@@ -21,6 +21,8 @@
 
 
 #include "libgimpbase/gimpbasetypes.h"
+#include "libgimpmath/gimpmathtypes.h"
+#include "libgimpcolor/gimpcolortypes.h"
 
 #include "paint-funcs/paint-funcs-types.h"
 
