@@ -1,5 +1,11 @@
 2007-03-10  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpstatusbar.c (gimp_statusbar_update): while the
+	statusbar is being used as a progress bar, only show progress
+	messages.
+
+2007-03-10  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimppluginprocedure.[ch]: cache the result of
 	gimp_plug_in_procedure_get_label() and made the return value const.
 

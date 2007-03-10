@@ -417,6 +417,16 @@ gimp_statusbar_update (GimpStatusbar *statusbar)
     {
       GimpStatusbarMsg *msg = statusbar->messages->data;
 
+      /*  only allow progress messages while the progress is active  */
+      if (statusbar->progress_active)
+        {
+          guint context_id = gimp_statusbar_get_context_id (statusbar,
+                                                            "progress");
+ 
+          if (context_id != msg->context_id)
+            return;
+        }
+
       text = msg->text;
     }
 
