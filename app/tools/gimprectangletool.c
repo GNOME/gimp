@@ -636,20 +636,13 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
   if (private->function == RECT_EXECUTING)
     gimp_tool_pop_status (tool, display);
 
-  if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
+  switch (release_type)
     {
-      if (release_type == GIMP_BUTTON_RELEASE_CLICK)
-        {
-          if (gimp_rectangle_tool_execute (rectangle))
-            gimp_rectangle_tool_halt (rectangle);
-        }
-      else
-        {
-          gimp_rectangle_tool_rectangle_changed (rectangle);
-        }
-    }
-  else
-    {
+    case GIMP_BUTTON_RELEASE_NORMAL:
+      gimp_rectangle_tool_rectangle_changed (rectangle);
+      break;
+
+    case GIMP_BUTTON_RELEASE_CANCEL:
       g_object_set (options,
                     "center-x", private->saved_center_x,
                     "center-y", private->saved_center_y,
@@ -661,6 +654,15 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
                     "x2", private->saved_x2,
                     "y2", private->saved_y2,
                     NULL);
+      break;
+
+    case GIMP_BUTTON_RELEASE_CLICK:
+      if (gimp_rectangle_tool_execute (rectangle))
+        gimp_rectangle_tool_halt (rectangle);
+      break;
+
+    case GIMP_BUTTON_RELEASE_NO_MOTION:
+      break;
     }
 
   gimp_tool_control_set_snap_offsets (tool->control, 0, 0, 0, 0);
