@@ -120,7 +120,8 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
 {
   GimpBucketFillOptions *options = GIMP_BUCKET_FILL_TOOL_GET_OPTIONS (tool);
 
-  if (release_type == GIMP_BUTTON_RELEASE_CLICK &&
+  if ((release_type == GIMP_BUTTON_RELEASE_CLICK ||
+       release_type == GIMP_BUTTON_RELEASE_NO_MOTION) &&
       gimp_image_coords_in_active_pickable (display->image, coords,
                                             options->sample_merged, TRUE))
     {

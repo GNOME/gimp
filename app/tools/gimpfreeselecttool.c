@@ -127,6 +127,7 @@ gimp_free_select_tool_init (GimpFreeSelectTool *free_select)
   GimpTool *tool = GIMP_TOOL (free_select);
 
   gimp_tool_control_set_scroll_lock (tool->control, FALSE);
+  gimp_tool_control_set_wants_click (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control,
                                      GIMP_TOOL_CURSOR_FREE_SELECT);
 
@@ -205,11 +206,17 @@ gimp_free_select_tool_button_release (GimpTool              *tool,
 
   gimp_tool_control_halt (tool->control);
 
-  if (release_type == GIMP_BUTTON_RELEASE_CANCEL)
-    return;
-
-  if (free_sel->num_points == 1)
+  switch (release_type)
     {
+    case GIMP_BUTTON_RELEASE_NORMAL:
+      GIMP_FREE_SELECT_TOOL_GET_CLASS (free_sel)->select (free_sel, display);
+      break;
+
+    case GIMP_BUTTON_RELEASE_CANCEL:
+      return;
+
+    case GIMP_BUTTON_RELEASE_CLICK:
+    case GIMP_BUTTON_RELEASE_NO_MOTION:
       if (gimp_image_floating_sel (display->image))
         {
           /*  If there is a floating selection, anchor it  */
@@ -220,10 +227,7 @@ gimp_free_select_tool_button_release (GimpTool              *tool,
           /*  Otherwise, clear the selection mask  */
           gimp_channel_clear (gimp_image_get_mask (display->image), NULL, TRUE);
         }
-    }
-  else
-    {
-      GIMP_FREE_SELECT_TOOL_GET_CLASS (free_sel)->select (free_sel, display);
+      break;
     }
 
   gimp_image_flush (display->image);

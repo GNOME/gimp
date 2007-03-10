@@ -59,6 +59,7 @@ struct _GimpTool
   /*  private state for click detection
    */
   gboolean         in_click_distance;
+  gboolean         got_motion_event;
   GimpCoords       button_press_coords;
   guint32          button_press_time;
 };

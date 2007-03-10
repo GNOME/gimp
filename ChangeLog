@@ -1,3 +1,20 @@
+2007-03-10  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/tools-enums.[ch] (enum GimpButtonReleaseType): added
+	value GIMP_BUTTON_RELEASE_NO_MOTION.
+
+	* app/tools/gimptool.[ch]: when click events are requested and the
+	click was too long for a "click" event, send a NO_MOTION event if
+	the pointer didn't move at all.
+
+	* app/tools/gimpbucketfilltool.c: treat NO_MOTION as tool
+	confirmation too.
+
+	* app/tools/gimpfreeselecttool.c: request click events and treat
+	both CLICK and NO_MOTION as tool confirmation.
+
+	* app/tools/gimprectangletool.c: ignore NO_MOTION.
+
 2007-03-09  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.3.15 development release.

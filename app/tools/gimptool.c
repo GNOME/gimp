@@ -460,6 +460,7 @@ gimp_tool_button_press (GimpTool        *tool,
       if (gimp_tool_control_get_wants_click (tool->control))
         {
           tool->in_click_distance   = TRUE;
+          tool->got_motion_event    = FALSE;
           tool->button_press_coords = *coords;
           tool->button_press_time   = time;
         }
@@ -531,15 +532,24 @@ gimp_tool_button_release (GimpTool        *tool,
     {
       release_type = GIMP_BUTTON_RELEASE_CANCEL;
     }
-  else if (gimp_tool_check_click_distance (tool, coords, time, display))
+  else if (gimp_tool_control_get_wants_click (tool->control))
     {
-      release_type = GIMP_BUTTON_RELEASE_CLICK;
-      my_coords    = tool->button_press_coords;
+      if (gimp_tool_check_click_distance (tool, coords, time, display))
+        {
+          release_type = GIMP_BUTTON_RELEASE_CLICK;
+          my_coords    = tool->button_press_coords;
 
-      /*  synthesize a motion event back to the recorded press coordinates  */
-      GIMP_TOOL_GET_CLASS (tool)->motion (tool, &my_coords, time,
-                                          state & GDK_BUTTON1_MASK,
-                                          display);
+          /*  synthesize a motion event back to the recorded press
+           *  coordinates
+           */
+          GIMP_TOOL_GET_CLASS (tool)->motion (tool, &my_coords, time,
+                                              state & GDK_BUTTON1_MASK,
+                                              display);
+        }
+      else if (! tool->got_motion_event)
+        {
+          release_type = GIMP_BUTTON_RELEASE_NO_MOTION;
+        }
     }
 
   GIMP_TOOL_GET_CLASS (tool)->button_release (tool, &my_coords, time, state,
@@ -565,6 +575,7 @@ gimp_tool_motion (GimpTool        *tool,
   g_return_if_fail (GIMP_IS_DISPLAY (display));
   g_return_if_fail (gimp_tool_control_is_active (tool->control));
 
+  tool->got_motion_event = TRUE;
   gimp_tool_check_click_distance (tool, coords, time, display);
 
   GIMP_TOOL_GET_CLASS (tool)->motion (tool, coords, time, state, display);
