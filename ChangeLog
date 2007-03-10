@@ -1,5 +1,10 @@
 2007-03-10  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpeditselectiontool.c (gimp_edit_selection_tool_motion):
+	removed default label from enum switch statement.
+
+2007-03-10  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpstatusbar.c (gimp_statusbar_update): while the
 	statusbar is being used as a progress bar, only show progress
 	messages.
@@ -8,7 +13,6 @@
 
 	* app/plug-in/gimppluginprocedure.[ch]: cache the result of
 	gimp_plug_in_procedure_get_label() and made the return value const.
-
 
 	* app/actions/plug-in-actions.c
 	* app/plug-in/gimpplugin-cleanup.c

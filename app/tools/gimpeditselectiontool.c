@@ -648,9 +648,6 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
             gimp_item_translate (active_item, xoffset, yoffset,
                                  edit_select->first_move);
             break;
-
-          default:
-            g_warning ("esm / BAD FALLTHROUGH");
           }
 
         edit_select->first_move = FALSE;
