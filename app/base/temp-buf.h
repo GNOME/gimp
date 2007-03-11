@@ -72,7 +72,8 @@ gsize     temp_buf_get_memsize (TempBuf       *buf);
 /* The mask buffer functions  */
 
 MaskBuf * mask_buf_new         (gint           width,
-                                gint           height);
+                                gint           height,
+                                gint           bpp);
 void      mask_buf_free        (MaskBuf       *mask_buf);
 guchar  * mask_buf_data        (MaskBuf       *mask_buf);
 guchar  * mask_buf_data_clear  (MaskBuf       *mask_buf);

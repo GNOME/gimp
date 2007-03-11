@@ -1,3 +1,38 @@
+2007-03-11  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	Made brushes scalable (both up and down) by using existing
+	scaling routines, and also refactored some brush-code. Patch by
+	Martin Nordholts. Fixes bug #65030.
+
+	* app/paint/gimpbrushcore.c:
+	(gimp_brush_core_calc_brush_length_scale) Refactored 'get brush
+	size' code to where it belongs, in GimpBrush-classes, and renamed
+	gimp_brush_core_calc_brush_size to
+	gimp_brush_core_calc_brush_length_scale.
+
+	* app/paint/gimppaintoptions.c (gimp_paint_options_class_init):
+	Changed Scale scale to [0.0, 100.0].
+
+	* app/base/temp-buf.[ch] (mask_buf_new): Change signature to also
+	take a bpp parameter.
+
+	* app/base/brush-scale.[ch]: Changed brush_scale_(mask|pixmap) to
+	the new brush_scale_buf, which uses existing scaling routines
+	(scale_region) instead of dedicated down-scaling only routines.
+
+	* app/tools/gimppaintoptions-gui.c (gimp_paint_options_gui): Made
+	the brush Scale-slider logarithmic.
+
+	* app/core/gimpbrushgenerated.c: Implemented the new
+	get_scaled_size method inherited from GimpBrush, and modified
+	gimp_brush_generated_calc to use this helper function.
+
+	* app/core/gimpbrush.[ch]: Added public virtual method
+	get_scaled_size to GimpBrush, overridden by GimpBrushGenerated,
+	which calculates the buffer sizes for a given brush scaled with a
+	given scale. Also changed calls to brush_scale_(mask|pixmap) to
+	the new brush_scale_buf.
+
 2007-03-10  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpeditselectiontool.c (gimp_edit_selection_tool_motion):
