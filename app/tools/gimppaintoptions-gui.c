@@ -78,7 +78,6 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
   GtkWidget        *menu;
   GtkWidget        *label;
   GtkWidget        *button;
-  GtkWidget        *adj;
   GtkWidget        *incremental_toggle = NULL;
   gint              table_row          = 0;
   GType             tool_type;
@@ -125,14 +124,11 @@ gimp_paint_options_gui (GimpToolOptions *tool_options)
 
       if (tool_type != GIMP_TYPE_SMUDGE_TOOL)
         {
-          adj = gimp_prop_scale_entry_new (config, "brush-scale",
-                                           GTK_TABLE (table), 0, table_row++,
-                                           _("Scale:"),
-                                           0.01, 0.1, 2,
-                                           FALSE, 0.0, 0.0);
-
-          gimp_scale_entry_set_logarithmic (adj, TRUE);
-
+          gimp_prop_scale_entry_new (config, "brush-scale",
+                                     GTK_TABLE (table), 0, table_row++,
+                                     _("Scale:"),
+                                     0.01, 0.1, 2,
+                                     FALSE, 0.0, 0.0);
         }
     }
 

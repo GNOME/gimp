@@ -131,7 +131,7 @@ gimp_paint_options_class_init (GimpPaintOptionsClass *klass)
 
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_BRUSH_SCALE,
                                    "brush-scale", NULL,
-                                   0.0, 100.0, DEFAULT_BRUSH_SCALE,
+                                   0.0, 1.0, DEFAULT_BRUSH_SCALE,
                                    GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_APPLICATION_MODE,
                                  "application-mode", NULL,

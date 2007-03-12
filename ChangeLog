@@ -1,3 +1,15 @@
+2007-03-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpbrush.[ch]
+	* app/core/gimpbrushgenerated.c
+	* app/tools/gimppaintoptions-gui.c
+	* app/base/brush-scale.[ch]
+	* app/base/temp-buf.[ch]
+	* app/paint/gimppaintoptions.c
+	* app/paint/gimpbrushcore.c: revert last commit. The patch needs
+	more review and it's easier to start from quare one than have
+	patches on top of patches.
+
 2007-03-11  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	Made brushes scalable (both up and down) by using existing

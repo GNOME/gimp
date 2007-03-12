@@ -487,12 +487,11 @@ temp_buf_to_gray (TempBuf *src_buf,
 
 MaskBuf *
 mask_buf_new (gint width,
-              gint height,
-              gint bpp)
+              gint height)
 {
   static guchar empty = 0;
 
-  return temp_buf_new (width, height, bpp, 0, 0, &empty);
+  return temp_buf_new (width, height, 1, 0, 0, &empty);
 }
 
 void

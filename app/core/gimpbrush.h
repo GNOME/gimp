@@ -61,10 +61,6 @@ struct _GimpBrushClass
                                     gdouble     scale);
   TempBuf   * (* scale_pixmap)     (GimpBrush  *brush,
                                     gdouble     scale);
-  void        (* get_scaled_size)  (GimpBrush  *brush,
-                                    gdouble     scale,
-                                    gint       *width,
-                                    gint       *height);
 
   /*  signals  */
   void        (* spacing_changed)  (GimpBrush  *brush);
@@ -87,12 +83,6 @@ TempBuf   * gimp_brush_scale_mask       (GimpBrush        *brush,
                                          gdouble           scale);
 TempBuf   * gimp_brush_scale_pixmap     (GimpBrush        *brush,
                                          gdouble           scale);
-
-/* Gets width and height of the scaled mask of the brush, with given scale. */
-void        gimp_brush_get_scaled_size  (GimpBrush        *brush,
-                                         gdouble           scale,
-                                         gint             *width,
-                                         gint             *height);
 
 TempBuf   * gimp_brush_get_mask         (const GimpBrush  *brush);
 TempBuf   * gimp_brush_get_pixmap       (const GimpBrush  *brush);

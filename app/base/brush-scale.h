@@ -20,10 +20,12 @@
 #define __BRUSH_SCALE_H__
 
 
-MaskBuf * brush_scale_buf (MaskBuf *brush_mask,
-                           gint     dest_width,
-                           gint     dest_height,
-                           gint     bpp);
+MaskBuf * brush_scale_mask   (MaskBuf *brush_mask,
+                              gint     dest_width,
+                              gint     dest_height);
+MaskBuf * brush_scale_pixmap (MaskBuf *pixmap,
+                              gint     dest_width,
+                              gint     dest_height);
 
 
 #endif  /*  __BRUSH_SCALE_H__  */
