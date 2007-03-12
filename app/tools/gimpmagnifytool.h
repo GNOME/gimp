@@ -40,8 +40,8 @@ struct _GimpMagnifyTool
 {
   GimpDrawTool  parent_instance;
 
-  gint          x, y;  /*  upper left hand coordinate  */
-  gint          w, h;  /*  width and height            */
+  gdouble       x, y;  /*  upper left hand coordinate  */
+  gdouble       w, h;  /*  width and height            */
 };
 
 struct _GimpMagnifyToolClass

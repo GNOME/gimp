@@ -18,8 +18,6 @@
 
 #include "config.h"
 
-#include <stdlib.h>
-
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
@@ -29,11 +27,11 @@
 
 #include "core/gimpimage.h"
 
+#include "widgets/gimphelp-ids.h"
+
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
 #include "display/gimpdisplayshell-scale.h"
-
-#include "widgets/gimphelp-ids.h"
 
 #include "gimpmagnifyoptions.h"
 #include "gimpmagnifytool.h"
@@ -120,6 +118,7 @@ gimp_magnify_tool_init (GimpMagnifyTool *magnify_tool)
 
   gimp_tool_control_set_scroll_lock            (tool->control, TRUE);
   gimp_tool_control_set_handle_empty_image     (tool->control, TRUE);
+  gimp_tool_control_set_wants_click            (tool->control, TRUE);
   gimp_tool_control_set_snap_to                (tool->control, FALSE);
 
   gimp_tool_control_set_cursor                 (tool->control,
@@ -163,7 +162,6 @@ gimp_magnify_tool_button_release (GimpTool              *tool,
   GimpMagnifyTool    *magnify = GIMP_MAGNIFY_TOOL (tool);
   GimpMagnifyOptions *options = GIMP_MAGNIFY_TOOL_GET_OPTIONS (tool);
   GimpDisplayShell   *shell   = GIMP_DISPLAY_SHELL (tool->display->shell);
-  gdouble             current;
 
   gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
@@ -171,68 +169,121 @@ gimp_magnify_tool_button_release (GimpTool              *tool,
 
   if (release_type != GIMP_BUTTON_RELEASE_CANCEL)
     {
-      gint    x1, y1, x2, y2, w, h;
-      gint    win_width, win_height;
-      gint    offset_x, offset_y;
+      gdouble x1, y1, x2, y2;
+      gdouble width, height;
+      gdouble current_scale;
       gdouble new_scale;
 
-      x1 = (magnify->w < 0) ?  magnify->x + magnify->w : magnify->x;
-      y1 = (magnify->h < 0) ?  magnify->y + magnify->h : magnify->y;
-      w  = (magnify->w < 0) ? -magnify->w : magnify->w;
-      h  = (magnify->h < 0) ? -magnify->h : magnify->h;
-      x2 = x1 + w;
-      y2 = y1 + h;
+      x1     = (magnify->w < 0) ?  magnify->x + magnify->w : magnify->x;
+      y1     = (magnify->h < 0) ?  magnify->y + magnify->h : magnify->y;
+      width  = (magnify->w < 0) ? -magnify->w : magnify->w;
+      height = (magnify->h < 0) ? -magnify->h : magnify->h;
+      x2     = x1 + width;
+      y2     = y1 + height;
 
-      win_width  = shell->disp_width;
-      win_height = shell->disp_height;
+      width  = MAX (1.0, width);
+      height = MAX (1.0, height);
 
-      current = gimp_zoom_model_get_factor (shell->zoom);
+      current_scale = gimp_zoom_model_get_factor (shell->zoom);
 
-      /* we need to compute the mouse movement in screen coordinates */
-      if ((SCALEX (shell, w) < options->threshold) ||
-          (SCALEY (shell, h) < options->threshold))
+      if (release_type == GIMP_BUTTON_RELEASE_CLICK ||
+          release_type == GIMP_BUTTON_RELEASE_NO_MOTION)
         {
-          new_scale = gimp_zoom_model_zoom_step (options->zoom_type, current);
+          new_scale = gimp_zoom_model_zoom_step (options->zoom_type,
+                                                 current_scale);
         }
       else
         {
-          gint    width, height;
-          gdouble scale = 1.0;
+          gdouble display_width;
+          gdouble display_height;
+          gdouble factor = 1.0;
 
-          width  = UNSCALEX (shell, win_width);
-          height = UNSCALEY (shell, win_height);
+          display_width  = FUNSCALEX (shell, shell->disp_width);
+          display_height = FUNSCALEY (shell, shell->disp_height);
 
           switch (options->zoom_type)
             {
             case GIMP_ZOOM_IN:
-              scale = MIN (((gdouble) width  / (gdouble) w),
-                           ((gdouble) height / (gdouble) h));
+              factor = MIN ((display_width  / width),
+                            (display_height / height));
               break;
 
             case GIMP_ZOOM_OUT:
-              scale = MIN (((gdouble) w / (gdouble) width),
-                           ((gdouble) h / (gdouble) height));
+              factor = MAX ((width  / display_width),
+                            (height / display_height));
               break;
 
             default:
               break;
             }
 
-          new_scale = current * scale;
+          new_scale = current_scale * factor;
         }
 
-      offset_x = (new_scale * ((x1 + x2) / 2)
-                  * SCREEN_XRES (shell) / display->image->xresolution
-                  - (win_width  / 2));
+      if (new_scale != current_scale)
+        {
+          gint offset_x = 0;
+          gint offset_y = 0;
 
-      offset_y = (new_scale * ((y1 + y2) / 2)
-                  * SCREEN_YRES (shell) / display->image->yresolution
-                  - (win_height / 2));
+          switch (options->zoom_type)
+            {
+            case GIMP_ZOOM_IN:
+              /*  move the center of the rectangle to the center of the
+               *  viewport:
+               *
+               *  new_offset = center of rectangle in new scale screen coords
+               *               including offset
+               *               -
+               *               center of viewport in screen coords without
+               *               offset
+               */
+              offset_x = RINT (new_scale * ((x1 + x2) / 2.0) *
+                               SCREEN_XRES (shell) / display->image->xresolution
+                               -
+                               (shell->disp_width / 2.0));
 
-      gimp_display_shell_scale_by_values (shell,
-                                          new_scale,
-                                          offset_x, offset_y,
-                                          options->auto_resize);
+              offset_y = RINT (new_scale * ((y1 + y2) / 2.0) *
+                               SCREEN_YRES (shell) / display->image->yresolution
+                               -
+                               (shell->disp_height / 2.0));
+              break;
+
+            case GIMP_ZOOM_OUT:
+              /*  move the center of the viewport to the center of the
+               *  rectangle:
+               *
+               *  new_offset = center of viewport in new scale screen coords
+               *               including offset
+               *               -
+               *               center of rectangle in screen coords without
+               *               offset
+               */
+              offset_x = RINT (new_scale * UNSCALEX (shell,
+                                                     shell->offset_x +
+                                                     shell->disp_width / 2.0) *
+                               SCREEN_XRES (shell) / display->image->xresolution
+                               -
+                               (SCALEX (shell, (x1 + x2) / 2.0) -
+                                shell->offset_x));
+
+              offset_y = RINT (new_scale * UNSCALEY (shell,
+                                                     shell->offset_y +
+                                                     shell->disp_height / 2.0) *
+                               SCREEN_YRES (shell) / display->image->yresolution
+                               -
+                               (SCALEY (shell, (y1 + y2) / 2.0) -
+                                shell->offset_y));
+              break;
+
+            default:
+              break;
+            }
+
+          gimp_display_shell_scale_by_values (shell,
+                                              new_scale,
+                                              offset_x, offset_y,
+                                              options->auto_resize);
+        }
     }
 }
 
@@ -247,8 +298,8 @@ gimp_magnify_tool_motion (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  magnify->w = (coords->x - magnify->x);
-  magnify->h = (coords->y - magnify->y);
+  magnify->w = coords->x - magnify->x;
+  magnify->h = coords->y - magnify->y;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }

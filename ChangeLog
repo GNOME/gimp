@@ -1,3 +1,18 @@
+2007-03-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpmagnifytool.[ch]: lots of fixes and changes:
+
+	- Request click events and use them instead of looking at the
+	  distance the mouse travelled ourselves.
+	- Also zoom when the user draws a very thin rectangle or just a
+	  line, there is no reason to treat that as click.
+	- Changed all calculations and stored values to double so the tool
+	  continues to work smoothly at high zoom levels.
+	- Fix scale calculation when zooming out (was totally b0rk).
+	- Changed offset calculation when zooming out so that the current
+	  viewport ends up within the drawn rectangle (which is the
+	  opposite of what zooming in does).
+
 2007-03-12  Sven Neumann  <sven@gimp.org>
 
 	* app/plug-in/gimpplugin.[ch]: gimp_plug_in_get_undo_desc() uses
