@@ -826,6 +826,7 @@ const gchar *
 gimp_plug_in_get_undo_desc (GimpPlugIn *plug_in)
 {
   GimpPlugInProcFrame *proc_frame;
+  const gchar         *undo_desc = NULL;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
 
@@ -838,10 +839,10 @@ gimp_plug_in_get_undo_desc (GimpPlugIn *plug_in)
       proc = GIMP_PLUG_IN_PROCEDURE (proc_frame->procedure);
 
       if (proc)
-        return gimp_plug_in_procedure_get_label (proc);
+        undo_desc = gimp_plug_in_procedure_get_label (proc);
     }
 
-  return gimp_object_get_name (GIMP_OBJECT (plug_in));
+  return undo_desc ? undo_desc : gimp_object_get_name (GIMP_OBJECT (plug_in));
 }
 
 /*  called from the PDB (gimp_plugin_menu_register)  */
