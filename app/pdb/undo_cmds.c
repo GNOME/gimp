@@ -52,8 +52,8 @@ image_undo_group_start_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      GimpPlugIn *plug_in   = gimp->plug_in_manager->current_plug_in;
-      gchar      *undo_desc = NULL;
+      GimpPlugIn  *plug_in   = gimp->plug_in_manager->current_plug_in;
+      const gchar *undo_desc = NULL;
 
       if (plug_in)
         {
@@ -65,9 +65,6 @@ image_undo_group_start_invoker (GimpProcedure     *procedure,
 
       if (success)
         gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_MISC, undo_desc);
-
-      if (undo_desc)
-        g_free (undo_desc);
     }
 
   return gimp_procedure_get_return_values (procedure, success);

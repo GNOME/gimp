@@ -51,14 +51,12 @@ message_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      gchar *domain = NULL;
+      const gchar *domain = NULL;
 
       if (gimp->plug_in_manager->current_plug_in)
         domain = gimp_plug_in_get_undo_desc (gimp->plug_in_manager->current_plug_in);
       gimp_show_message (gimp, G_OBJECT (progress), GIMP_MESSAGE_WARNING,
                          domain, message);
-
-      g_free (domain);
     }
 
   return gimp_procedure_get_return_values (procedure, success);

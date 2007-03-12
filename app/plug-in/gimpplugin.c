@@ -822,27 +822,26 @@ gimp_plug_in_main_loop_quit (GimpPlugIn *plug_in)
   g_main_loop_quit (proc_frame->main_loop);
 }
 
-gchar *
+const gchar *
 gimp_plug_in_get_undo_desc (GimpPlugIn *plug_in)
 {
-  GimpPlugInProcFrame *proc_frame = NULL;
-  GimpPlugInProcedure *proc       = NULL;
-  gchar               *undo_desc  = NULL;
+  GimpPlugInProcFrame *proc_frame;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN (plug_in), NULL);
 
   proc_frame = gimp_plug_in_get_proc_frame (plug_in);
 
   if (proc_frame)
-    proc = GIMP_PLUG_IN_PROCEDURE (proc_frame->procedure);
+    {
+      GimpPlugInProcedure *proc;
 
-  if (proc)
-    undo_desc = gimp_plug_in_procedure_get_label (proc);
+      proc = GIMP_PLUG_IN_PROCEDURE (proc_frame->procedure);
 
-  if (! undo_desc)
-    undo_desc = g_strdup (gimp_object_get_name (GIMP_OBJECT (plug_in)));
+      if (proc)
+        return gimp_plug_in_procedure_get_label (proc);
+    }
 
-  return undo_desc;
+  return gimp_object_get_name (GIMP_OBJECT (plug_in));
 }
 
 /*  called from the PDB (gimp_plugin_menu_register)  */

@@ -76,43 +76,43 @@ struct _GimpPlugInClass
 };
 
 
-GType        gimp_plug_in_get_type         (void) G_GNUC_CONST;
+GType         gimp_plug_in_get_type         (void) G_GNUC_CONST;
 
-GimpPlugIn * gimp_plug_in_new              (GimpPlugInManager      *manager,
-                                            GimpContext            *context,
-                                            GimpProgress           *progress,
-                                            GimpPlugInProcedure    *procedure,
-                                            const gchar            *prog);
+GimpPlugIn  * gimp_plug_in_new              (GimpPlugInManager      *manager,
+                                             GimpContext            *context,
+                                             GimpProgress           *progress,
+                                             GimpPlugInProcedure    *procedure,
+                                             const gchar            *prog);
 
-gboolean     gimp_plug_in_open             (GimpPlugIn             *plug_in,
-                                            GimpPlugInCallMode      call_mode,
-                                            gboolean                synchronous);
-void         gimp_plug_in_close            (GimpPlugIn             *plug_in,
-                                            gboolean                kill_it);
-
-GimpPlugInProcFrame *
-             gimp_plug_in_get_proc_frame   (GimpPlugIn             *plug_in);
+gboolean      gimp_plug_in_open             (GimpPlugIn             *plug_in,
+                                             GimpPlugInCallMode      call_mode,
+                                             gboolean                synchronous);
+void          gimp_plug_in_close            (GimpPlugIn             *plug_in,
+                                             gboolean                kill_it);
 
 GimpPlugInProcFrame *
-             gimp_plug_in_proc_frame_push  (GimpPlugIn             *plug_in,
-                                            GimpContext            *context,
-                                            GimpProgress           *progress,
-                                            GimpTemporaryProcedure *procedure);
-void         gimp_plug_in_proc_frame_pop   (GimpPlugIn             *plug_in);
+              gimp_plug_in_get_proc_frame   (GimpPlugIn             *plug_in);
 
-void         gimp_plug_in_main_loop        (GimpPlugIn             *plug_in);
-void         gimp_plug_in_main_loop_quit   (GimpPlugIn             *plug_in);
+GimpPlugInProcFrame *
+              gimp_plug_in_proc_frame_push  (GimpPlugIn             *plug_in,
+                                             GimpContext            *context,
+                                             GimpProgress           *progress,
+                                             GimpTemporaryProcedure *procedure);
+void          gimp_plug_in_proc_frame_pop   (GimpPlugIn             *plug_in);
 
-gchar      * gimp_plug_in_get_undo_desc    (GimpPlugIn             *plug_in);
+void          gimp_plug_in_main_loop        (GimpPlugIn             *plug_in);
+void          gimp_plug_in_main_loop_quit   (GimpPlugIn             *plug_in);
 
-gboolean     gimp_plug_in_menu_register    (GimpPlugIn             *plug_in,
-                                            const gchar            *proc_name,
-                                            const gchar            *menu_path);
+const gchar * gimp_plug_in_get_undo_desc    (GimpPlugIn             *plug_in);
 
-void         gimp_plug_in_add_temp_proc    (GimpPlugIn             *plug_in,
-                                            GimpTemporaryProcedure *procedure);
-void         gimp_plug_in_remove_temp_proc (GimpPlugIn             *plug_in,
-                                            GimpTemporaryProcedure *procedure);
+gboolean      gimp_plug_in_menu_register    (GimpPlugIn             *plug_in,
+                                             const gchar            *proc_name,
+                                             const gchar            *menu_path);
+
+void          gimp_plug_in_add_temp_proc    (GimpPlugIn             *plug_in,
+                                             GimpTemporaryProcedure *procedure);
+void          gimp_plug_in_remove_temp_proc (GimpPlugIn             *plug_in,
+                                             GimpTemporaryProcedure *procedure);
 
 
 #endif /* __GIMP_PLUG_IN_H__ */

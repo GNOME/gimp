@@ -108,6 +108,7 @@ gimp_plug_in_procedure_init (GimpPlugInProcedure *proc)
 {
   GIMP_PROCEDURE (proc)->proc_type = GIMP_PLUGIN;
 
+  proc->label            = NULL;
   proc->icon_data_length = -1;
 }
 

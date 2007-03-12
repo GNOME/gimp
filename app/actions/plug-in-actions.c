@@ -526,7 +526,7 @@ plug_in_actions_history_changed (GimpPlugInManager *manager,
       action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), name);
       g_free (name);
 
-      proc  = gimp_plug_in_manager_history_nth (manager, i);
+      proc = gimp_plug_in_manager_history_nth (manager, i);
 
       g_object_set (action,
                     "visible",   TRUE,

@@ -72,17 +72,12 @@ HELP
 {
   if (gimp_item_is_attached (GIMP_ITEM (drawable)))
     {
-      gchar *undo_desc = NULL;
+      const gchar *undo_desc = _("Plug-In");
 
       if (gimp->plug_in_manager->current_plug_in)
         undo_desc = gimp_plug_in_get_undo_desc (gimp->plug_in_manager->current_plug_in);
 
-      if (! undo_desc)
-        undo_desc = g_strdup (_("Plug-In"));
-
       gimp_drawable_merge_shadow (drawable, undo, undo_desc);
-
-      g_free (undo_desc);
     }
   else
     success = FALSE;
