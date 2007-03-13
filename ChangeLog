@@ -1,3 +1,10 @@
+2007-03-13  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/script-fu/script-fu-console.c: Fix for bug #417467
+	based on modified patch by Eric Lamarque and suggested by Mitch.
+	Allows build without warnings and correct localization for Solaris
+	and other platforms.
+
 2007-03-13  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimptransformtool.c (gimp_transform_tool_response):

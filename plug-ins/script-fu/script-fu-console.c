@@ -203,13 +203,13 @@ script_fu_console_interface (void)
   {
     const gchar * const greetings[] =
     {
-      "strong",   _("Welcome to TinyScheme"),
+      "strong",   N_("Welcome to TinyScheme"),
       NULL,       "\n",
       NULL,       "Copyright (c) Dimitrios Souflis",
       NULL,       "\n",
-      "strong",   _("Script-Fu Console"),
+      "strong",   N_("Script-Fu Console"),
       NULL,       " - ",
-      "emphasis", _("Interactive Scheme Development"),
+      "emphasis", N_("Interactive Scheme Development"),
       NULL,       "\n"
     };
 
@@ -222,12 +222,12 @@ script_fu_console_interface (void)
       {
         if (greetings[i])
           gtk_text_buffer_insert_with_tags_by_name (console->console, &cursor,
-                                                    greetings[i + 1], -1,
-                                                    greetings[i],
+                                                    gettext (greetings[i + 1]),
+                                                    -1, greetings[i],
                                                     NULL);
         else
           gtk_text_buffer_insert (console->console, &cursor,
-                                  greetings[i + 1], -1);
+                                  gettext (greetings[i + 1]), -1);
       }
   }
 
