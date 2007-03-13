@@ -1749,7 +1749,7 @@ gimp_label_set_attributes (GtkLabel *label,
           break;
 
         case PANGO_ATTR_STRIKETHROUGH:
-          attr = pango_attr_underline_new (va_arg (args, gboolean));
+          attr = pango_attr_strikethrough_new (va_arg (args, gboolean));
           break;
 
         case PANGO_ATTR_RISE:
