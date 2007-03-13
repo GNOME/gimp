@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-23 09:29+0100\n"
-"PO-Revision-Date: 2007-02-23 10:38+0100\n"
+"POT-Creation-Date: 2007-03-14 00:00+0100\n"
+"PO-Revision-Date: 2007-03-13 23:59+0100\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -29,8 +29,8 @@ msgstr "_Naviga..."
 # %s è il tipo di formato, p.e. "PNG non può gestire i livelli" -Luca
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
-msgid "%s can't handle layers"
-msgstr "%s non può gestire i livelli"
+msgid "%s plug-in can't handle layers"
+msgstr "Il plug-in %s non può gestire livelli"
 
 #: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
@@ -39,13 +39,14 @@ msgstr "Unisci livelli visibili"
 
 #: ../libgimp/gimpexport.c:226
 #, c-format
-msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s non può gestire offset, dimensione o opacità dei livelli"
+msgid "%s plug-in can't handle layer offsets, size or opacity"
+msgstr ""
+"Il plug-in %s non può gestire la posizione, dimensione o opacità dei livelli"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
-msgid "%s can only handle layers as animation frames"
-msgstr "%s può gestire i livelli solo come fotogrammi di animazione"
+msgid "%s plug-in can only handle layers as animation frames"
+msgstr "Il plug-in %s può gestire i livelli solo come fotogrammi di animazione"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
@@ -58,13 +59,13 @@ msgstr "Immagine appiattita"
 
 #: ../libgimp/gimpexport.c:262
 #, c-format
-msgid "%s can't handle transparency"
-msgstr "%s non può gestire la trasparenza"
+msgid "%s plug-in can't handle transparency"
+msgstr "Il plug-in %s non può gestire la trasparenza"
 
 #: ../libgimp/gimpexport.c:271
 #, c-format
-msgid "%s can't handle layer masks"
-msgstr "%s non può agire sulle maschere di livello"
+msgid "%s plug-in can't handle layer masks"
+msgstr "Il plug-in %s non può gestire maschere di livello"
 
 #: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
@@ -72,8 +73,8 @@ msgstr "Applica maschere di livello"
 
 #: ../libgimp/gimpexport.c:280
 #, c-format
-msgid "%s can only handle RGB images"
-msgstr "%s può gestire solo immagini RGB"
+msgid "%s plug-in can only handle RGB images"
+msgstr "Il plug-in %s può gestire solo immagini RGB"
 
 #: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
@@ -82,8 +83,8 @@ msgstr "Conversione a RGB"
 
 #: ../libgimp/gimpexport.c:289
 #, c-format
-msgid "%s can only handle grayscale images"
-msgstr "%s può gestire solo immagini in scala di grigi"
+msgid "%s plug-in can only handle grayscale images"
+msgstr "Il plug-in %s può gestire solo immagini in scala di grigi"
 
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
@@ -92,8 +93,8 @@ msgstr "Converti in scala di grigi"
 
 #: ../libgimp/gimpexport.c:298
 #, c-format
-msgid "%s can only handle indexed images"
-msgstr "%s può gestire solo immagini indicizzate"
+msgid "%s plug-in can only handle indexed images"
+msgstr "Il plug-in %s può gestire solo immagini indicizzate"
 
 #: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
 #: ../libgimp/gimpexport.c:338
@@ -107,8 +108,9 @@ msgstr ""
 
 #: ../libgimp/gimpexport.c:308
 #, c-format
-msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s può gestire solo immagini bitmap (due colori) o indicizzate"
+msgid "%s plug-in can only handle bitmap (two color) indexed images"
+msgstr ""
+"Il plug-in %s può gestire solo immagini bitmap (due colori) o indicizzate"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -121,27 +123,28 @@ msgstr ""
 
 #: ../libgimp/gimpexport.c:318
 #, c-format
-msgid "%s can only handle RGB or grayscale images"
-msgstr "%s può gestire solo immagini RGB o in scala di grigi"
+msgid "%s plug-in can only handle RGB or grayscale images"
+msgstr "Il plug-in %s può gestire solo immagini RGB o in scala di grigi"
 
 #: ../libgimp/gimpexport.c:327
 #, c-format
-msgid "%s can only handle RGB or indexed images"
-msgstr "%s può gestire solo immagini RGB o indicizzate"
+msgid "%s plug-in  can only handle RGB or indexed images"
+msgstr "Il plug-in %s può gestire solo immagini RGB o indicizzate"
 
 #: ../libgimp/gimpexport.c:337
 #, c-format
-msgid "%s can only handle grayscale or indexed images"
-msgstr "%s può gestire solo immagini in scala di grigi o indicizzate"
+msgid "%s plug-in can only handle grayscale or indexed images"
+msgstr ""
+"Il plug-in %s può gestire solo immagini in scala di grigi o indicizzate"
 
 #: ../libgimp/gimpexport.c:348
 #, c-format
-msgid "%s needs an alpha channel"
-msgstr "%s necessita di un canale alpha"
+msgid "%s plug-in needs an alpha channel"
+msgstr "Il plug-in %s necessita di un canale alfa"
 
 #: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
-msgstr "Aggiungi canale alpha"
+msgstr "Aggiungi canale alfa"
 
 #: ../libgimp/gimpexport.c:383
 msgid "Confirm Save"
@@ -836,40 +839,40 @@ msgstr "Saturazione"
 msgid "Absolute colorimetric"
 msgstr "Colorimetrico assoluto"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#: ../libgimpconfig/gimpconfig-deserialize.c:96
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "il valore per il token %s non è una stringa UTF-8 valida"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:426
+#: ../libgimpconfig/gimpconfig-deserialize.c:427
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "per un token booleano %s era previsto \"yes\" o \"no\" ma è arrivato \"%s\""
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:500
+#: ../libgimpconfig/gimpconfig-deserialize.c:501
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "valore \"%s\" non valido per il token %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:515
+#: ../libgimpconfig/gimpconfig-deserialize.c:516
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "valore non valido \"%ld\" per il token %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:584
+#: ../libgimpconfig/gimpconfig-deserialize.c:585
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "durante l'analisi del token \"%s\": %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:453
-#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpconfig-iface.c:454
+#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
 msgid "fatal parse error"
 msgstr "errore di analisi fatale"
 
-#: ../libgimpconfig/gimpconfig-path.c:376
+#: ../libgimpconfig/gimpconfig-path.c:377
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Impossibile espandere $(%s)"
