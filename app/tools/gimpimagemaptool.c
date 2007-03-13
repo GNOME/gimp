@@ -40,6 +40,7 @@
 #include "core/gimpprojection.h"
 #include "core/gimptoolinfo.h"
 
+#include "widgets/gimpdialogfactory.h"
 #include "widgets/gimptooldialog.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -469,7 +470,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
       break;
 
     case GTK_RESPONSE_OK:
-      gtk_widget_hide (image_map_tool->shell);
+      gimp_dialog_factory_hide_dialog (image_map_tool->shell);
 
       if (image_map_tool->image_map)
         {
@@ -494,7 +495,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
       break;
 
     default:
-      gtk_widget_hide (image_map_tool->shell);
+      gimp_dialog_factory_hide_dialog (image_map_tool->shell);
 
       if (image_map_tool->image_map)
         {

@@ -1,3 +1,15 @@
+2007-03-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpdialogfactory.[ch]: added new ugly function
+	gimp_dialog_factory_hide_dialog() which does gtk_widget_hide() and
+	sets the stored visibility state to GIMP_DIALOG_VISIBILITY_INVISIBLE
+	in order to avoid re-showing dialogs that were already insivible due
+	to TAB-toggling when we gtk_widget_hided them.
+
+	* app/tools/gimptransformtool.c
+	* app/tools/gimpimagemaptool.c: use the new function instead of
+	gtk_widget_hide() to hide tool dialogs. Fixes bug #414006.
+
 2007-03-13  Sven Neumann  <sven@gimp.org>
 
 	* data/brushes/Makefile.am

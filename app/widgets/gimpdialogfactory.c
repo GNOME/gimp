@@ -97,6 +97,8 @@ G_DEFINE_TYPE (GimpDialogFactory, gimp_dialog_factory, GIMP_TYPE_OBJECT)
 
 #define parent_class gimp_dialog_factory_parent_class
 
+static gboolean dialogs_shown = TRUE;  /* FIXME */
+
 
 static void
 gimp_dialog_factory_class_init (GimpDialogFactoryClass *klass)
@@ -1014,6 +1016,26 @@ gimp_dialog_factory_show_toolbox (GimpDialogFactory *toolbox_factory)
 }
 
 void
+gimp_dialog_factory_hide_dialog (GtkWidget *dialog)
+{
+  g_return_if_fail (GTK_IS_WIDGET (dialog));
+  g_return_if_fail (GTK_WIDGET_TOPLEVEL (dialog));
+
+  if (! gimp_dialog_factory_from_widget (dialog, NULL))
+    {
+      g_warning ("%s: dialog was not created by a GimpDialogFactory",
+                 G_STRFUNC);
+      return;
+    }
+
+  gtk_widget_hide (dialog);
+
+  if (! dialogs_shown)
+    g_object_set_data (G_OBJECT (dialog), GIMP_DIALOG_VISIBILITY_KEY,
+                       GINT_TO_POINTER (GIMP_DIALOG_VISIBILITY_INVISIBLE));
+}
+
+void
 gimp_dialog_factories_session_save (GimpConfigWriter *writer)
 {
   GimpDialogFactoryClass *factory_class;
@@ -1054,22 +1076,20 @@ gimp_dialog_factories_session_clear (void)
 void
 gimp_dialog_factories_toggle (void)
 {
-  static gboolean shown = TRUE;  /* FIXME */
-
   GimpDialogFactoryClass *factory_class;
 
   factory_class = g_type_class_peek (GIMP_TYPE_DIALOG_FACTORY);
 
-  if (shown)
+  if (dialogs_shown)
     {
-      shown = FALSE;
+      dialogs_shown = FALSE;
       g_hash_table_foreach (factory_class->factories,
                             (GHFunc) gimp_dialog_factories_hide_foreach,
                             NULL);
     }
   else
     {
-      shown = TRUE;
+      dialogs_shown = TRUE;
       g_hash_table_foreach (factory_class->factories,
                             (GHFunc) gimp_dialog_factories_show_foreach,
                             NULL);

@@ -1455,7 +1455,7 @@ gimp_transform_tool_halt (GimpTransformTool *tr_tool)
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (tr_tool));
 
   if (tr_tool->dialog)
-    gtk_widget_hide (tr_tool->dialog);
+    gimp_dialog_factory_hide_dialog (tr_tool->dialog);
 
   tool->display  = NULL;
   tool->drawable = NULL;
