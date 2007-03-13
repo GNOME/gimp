@@ -1,3 +1,9 @@
+2007-03-13  Sven Neumann  <sven@gimp.org>
+
+	* data/brushes/Makefile.am
+	* data/brushes/thegimp.gbr
+	* data/brushes/xcf.gbr: removed two legacy brushes.
+
 2007-03-13  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/script-fu/script-fu-console.c: Fix for bug #417467

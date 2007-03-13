@@ -48,8 +48,6 @@ brushdata_DATA = \
 	hsparks.gih		\
 	pepper.gbr		\
 	pixel.gbr		\
-	thegimp.gbr		\
-	vine.gih		\
-	xcf.gbr
+	vine.gih
 
 EXTRA_DIST = $(brushdata_DATA)
