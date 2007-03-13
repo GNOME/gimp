@@ -1734,14 +1734,13 @@ gimp_transform_tool_response (GtkWidget         *widget,
                               gint               response_id,
                               GimpTransformTool *tr_tool)
 {
+  GimpTool *tool = GIMP_TOOL (tr_tool);
+
   switch (response_id)
     {
     case RESPONSE_RESET:
       {
-        GimpTool *tool;
-        gint      i;
-
-        tool = GIMP_TOOL (tr_tool);
+        gint i;
 
         gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -1763,7 +1762,8 @@ gimp_transform_tool_response (GtkWidget         *widget,
       break;
 
     case GTK_RESPONSE_OK:
-      gimp_transform_tool_doit (tr_tool, GIMP_TOOL (tr_tool)->display);
+      g_return_if_fail (tool->display != NULL);
+      gimp_transform_tool_doit (tr_tool, tool->display);
       break;
 
     default:

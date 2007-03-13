@@ -1,5 +1,10 @@
 2007-03-13  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptransformtool.c (gimp_transform_tool_response):
+	added a g_return_if_fail() check to catch bug #414006.
+
+2007-03-13  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpwidgets.c (gimp_label_set_attributes): fixed
 	implementation for PANGO_ATTR_STRIKETHROUGH, spotted by Behdad
 	Esfahbod.
