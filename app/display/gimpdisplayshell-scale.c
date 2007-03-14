@@ -91,7 +91,6 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   GtkRuler *hruler;
   GtkRuler *vruler;
   gfloat    sx, sy;
-  gfloat    stepx, stepy;
   gint      image_width, image_height;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
@@ -102,22 +101,20 @@ gimp_display_shell_scale_setup (GimpDisplayShell *shell)
   image_width  = shell->display->image->width;
   image_height = shell->display->image->height;
 
-  sx    = SCALEX (shell, image_width);
-  sy    = SCALEY (shell, image_height);
-  stepx = SCALEFACTOR_X (shell);
-  stepy = SCALEFACTOR_Y (shell);
+  sx = SCALEX (shell, image_width);
+  sy = SCALEY (shell, image_height);
 
   shell->hsbdata->value          = shell->offset_x;
   shell->hsbdata->upper          = sx;
   shell->hsbdata->page_size      = MIN (sx, shell->disp_width);
   shell->hsbdata->page_increment = shell->disp_width / 2;
-  shell->hsbdata->step_increment = stepx;
+  shell->hsbdata->step_increment = shell->scale_x;
 
   shell->vsbdata->value          = shell->offset_y;
   shell->vsbdata->upper          = sy;
   shell->vsbdata->page_size      = MIN (sy, shell->disp_height);
   shell->vsbdata->page_increment = shell->disp_height / 2;
-  shell->vsbdata->step_increment = stepy;
+  shell->vsbdata->step_increment = shell->scale_y;
 
   gtk_adjustment_changed (shell->hsbdata);
   gtk_adjustment_changed (shell->vsbdata);
@@ -266,7 +263,7 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
 
       shell->dot_for_dot = dot_for_dot;
 
-      gimp_display_shell_scale_factor_changed (shell);
+      gimp_display_shell_scale_changed (shell);
 
       gimp_display_shell_scale_resize (shell,
                                        GIMP_DISPLAY_CONFIG (gimp->config)->resize_windows_on_zoom,

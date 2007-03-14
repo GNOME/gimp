@@ -54,8 +54,8 @@ gimp_display_shell_transform_coordinate (GimpDisplayShell *shell,
 
   *display_coords = *image_coords;
 
-  display_coords->x = SCALEFACTOR_X (shell) * image_coords->x;
-  display_coords->y = SCALEFACTOR_Y (shell) * image_coords->y;
+  display_coords->x = shell->scale_x * image_coords->x;
+  display_coords->y = shell->scale_y * image_coords->y;
 
   display_coords->x += - shell->offset_x + shell->disp_xoffset;
   display_coords->y += - shell->offset_y + shell->disp_yoffset;
@@ -84,8 +84,8 @@ gimp_display_shell_untransform_coordinate (GimpDisplayShell *shell,
   image_coords->x = display_coords->x - shell->disp_xoffset + shell->offset_x;
   image_coords->y = display_coords->y - shell->disp_yoffset + shell->offset_y;
 
-  image_coords->x /= SCALEFACTOR_X (shell);
-  image_coords->y /= SCALEFACTOR_Y (shell);
+  image_coords->x /= shell->scale_x;
+  image_coords->y /= shell->scale_y;
 }
 
 void
@@ -111,8 +111,8 @@ gimp_display_shell_transform_xy (GimpDisplayShell *shell,
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 
-  x = SCALEFACTOR_X (shell) * (x + offset_x) - shell->offset_x;
-  y = SCALEFACTOR_Y (shell) * (y + offset_y) - shell->offset_y;
+  x = shell->scale_x * (x + offset_x) - shell->offset_x;
+  y = shell->scale_y * (y + offset_y) - shell->offset_y;
 
   /* The projected coordinates can easily overflow a gint in the case of big
      images at high zoom levels, so we clamp them here to avoid problems.  */
@@ -168,13 +168,13 @@ gimp_display_shell_untransform_xy (GimpDisplayShell *shell,
 
   if (round)
     {
-      *nx = ROUND ((x + shell->offset_x) / SCALEFACTOR_X (shell) - offset_x);
-      *ny = ROUND ((y + shell->offset_y) / SCALEFACTOR_Y (shell) - offset_y);
+      *nx = ROUND ((x + shell->offset_x) / shell->scale_x - offset_x);
+      *ny = ROUND ((y + shell->offset_y) / shell->scale_y - offset_y);
     }
   else
     {
-      *nx = (gint) ((x + shell->offset_x) / SCALEFACTOR_X (shell) - offset_x);
-      *ny = (gint) ((y + shell->offset_y) / SCALEFACTOR_Y (shell) - offset_y);
+      *nx = (gint) ((x + shell->offset_x) / shell->scale_x - offset_x);
+      *ny = (gint) ((y + shell->offset_y) / shell->scale_y - offset_y);
     }
 }
 
@@ -214,8 +214,8 @@ gimp_display_shell_transform_xy_f  (GimpDisplayShell *shell,
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 
-  *nx = SCALEFACTOR_X (shell) * (x + offset_x) - shell->offset_x;
-  *ny = SCALEFACTOR_Y (shell) * (y + offset_y) - shell->offset_y;
+  *nx = shell->scale_x * (x + offset_x) - shell->offset_x;
+  *ny = shell->scale_y * (y + offset_y) - shell->offset_y;
 
   *nx += shell->disp_xoffset;
   *ny += shell->disp_yoffset;
@@ -261,8 +261,8 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 
-  *nx = (x + shell->offset_x) / SCALEFACTOR_X (shell) - offset_x;
-  *ny = (y + shell->offset_y) / SCALEFACTOR_Y (shell) - offset_y;
+  *nx = (x + shell->offset_x) / shell->scale_x - offset_x;
+  *ny = (y + shell->offset_y) / shell->scale_y - offset_y;
 }
 
 /**
@@ -284,17 +284,11 @@ gimp_display_shell_transform_points (GimpDisplayShell *shell,
                                      gint              n_points,
                                      gboolean          use_offsets)
 {
-  gdouble scalex;
-  gdouble scaley;
-  gint    offset_x = 0;
-  gint    offset_y = 0;
-  gint    i;
+  gint offset_x = 0;
+  gint offset_y = 0;
+  gint i;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  /*  transform from image coordinates to screen coordinates  */
-  scalex = SCALEFACTOR_X (shell);
-  scaley = SCALEFACTOR_Y (shell);
 
   if (use_offsets)
     {
@@ -306,8 +300,10 @@ gimp_display_shell_transform_points (GimpDisplayShell *shell,
 
   for (i = 0; i < n_points ; i++)
     {
-      gdouble x = scalex * (points[i * 2]     + offset_x) - shell->offset_x;
-      gdouble y = scaley * (points[i * 2 + 1] + offset_y) - shell->offset_y;
+      gdouble x, y;
+
+      x = shell->scale_x * (points[i * 2]     + offset_x) - shell->offset_x;
+      y = shell->scale_y * (points[i * 2 + 1] + offset_y) - shell->offset_y;
 
       /* The projected coordinates can easily overflow a gint in the
          case of big images at high zoom levels, so we clamp them here
@@ -340,17 +336,11 @@ gimp_display_shell_transform_coords (GimpDisplayShell *shell,
                                      gint              n_coords,
                                      gboolean          use_offsets)
 {
-  gdouble scalex;
-  gdouble scaley;
-  gint    offset_x = 0;
-  gint    offset_y = 0;
-  gint    i;
+  gint offset_x = 0;
+  gint offset_y = 0;
+  gint i;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  /*  transform from image coordinates to screen coordinates  */
-  scalex = SCALEFACTOR_X (shell);
-  scaley = SCALEFACTOR_Y (shell);
 
   if (use_offsets)
     {
@@ -362,8 +352,10 @@ gimp_display_shell_transform_coords (GimpDisplayShell *shell,
 
   for (i = 0; i < n_coords ; i++)
     {
-      gdouble x = scalex * (image_coords[i].x + offset_x) - shell->offset_x;
-      gdouble y = scaley * (image_coords[i].y + offset_y) - shell->offset_y;
+      gdouble x, y;
+
+      x = shell->scale_x * (image_coords[i].x + offset_x) - shell->offset_x;
+      y = shell->scale_y * (image_coords[i].y + offset_y) - shell->offset_y;
 
       /* The projected coordinates can easily overflow a gint in the
          case of big images at high zoom levels, so we clamp them here
@@ -396,17 +388,11 @@ gimp_display_shell_transform_segments (GimpDisplayShell *shell,
                                        gint              n_segs,
                                        gboolean          use_offsets)
 {
-  gdouble scalex;
-  gdouble scaley;
-  gint    offset_x = 0;
-  gint    offset_y = 0;
-  gint    i;
+  gint offset_x = 0;
+  gint offset_y = 0;
+  gint i;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
-
-  /*  transform from image coordinates to screen coordinates  */
-  scalex = SCALEFACTOR_X (shell);
-  scaley = SCALEFACTOR_Y (shell);
 
   if (use_offsets)
     {
@@ -418,10 +404,13 @@ gimp_display_shell_transform_segments (GimpDisplayShell *shell,
 
   for (i = 0; i < n_segs ; i++)
     {
-      gdouble x1 = scalex * (src_segs[i].x1 + offset_x) - shell->offset_x;
-      gdouble x2 = scalex * (src_segs[i].x2 + offset_x) - shell->offset_x;
-      gdouble y1 = scaley * (src_segs[i].y1 + offset_y) - shell->offset_y;
-      gdouble y2 = scaley * (src_segs[i].y2 + offset_y) - shell->offset_y;
+      gdouble x1, x2;
+      gdouble y1, y2;
+
+      x1 = shell->scale_x * (src_segs[i].x1 + offset_x) - shell->offset_x;
+      x2 = shell->scale_x * (src_segs[i].x2 + offset_x) - shell->offset_x;
+      y1 = shell->scale_y * (src_segs[i].y1 + offset_y) - shell->offset_y;
+      y2 = shell->scale_y * (src_segs[i].y2 + offset_y) - shell->offset_y;
 
       /* The projected coordinates can easily overflow a gint in the
          case of big images at high zoom levels, so we clamp them here

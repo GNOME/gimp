@@ -841,8 +841,8 @@ render_image_init_info_full (RenderInfo       *info,
   info->shell      = shell;
   info->w          = w;
   info->h          = h;
-  info->scalex     = SCALEFACTOR_X (shell);
-  info->scaley     = SCALEFACTOR_Y (shell);
+  info->scalex     = shell->scale_x;
+  info->scaley     = shell->scale_y;
   info->dest_bpp   = 3;
   info->dest_bpl   = info->dest_bpp * GIMP_RENDER_BUF_WIDTH;
   info->dest_width = info->dest_bpp * info->w;

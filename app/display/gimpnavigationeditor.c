@@ -493,13 +493,10 @@ gimp_navigation_editor_marker_changed (GimpNavigationView   *view,
   if (editor->shell)
     {
       GimpDisplayShell *shell = editor->shell;
-      gint              xoffset;
-      gint              yoffset;
 
-      xoffset = RINT (x * SCALEFACTOR_X (shell) - shell->offset_x);
-      yoffset = RINT (y * SCALEFACTOR_Y (shell) - shell->offset_y);
-
-      gimp_display_shell_scroll (shell, xoffset, yoffset);
+      gimp_display_shell_scroll (shell,
+                                 RINT (x * shell->scale_x - shell->offset_x),
+                                 RINT (y * shell->scale_y - shell->offset_y));
     }
 }
 
@@ -636,15 +633,13 @@ gimp_navigation_editor_update_marker (GimpNavigationEditor *editor)
 {
   GimpViewRenderer *renderer = GIMP_VIEW (editor->view)->renderer;
   GimpDisplayShell *shell    = editor->shell;
-  gdouble           xratio   = SCALEFACTOR_X (shell);
-  gdouble           yratio   = SCALEFACTOR_Y (shell);
 
   if (renderer->dot_for_dot != shell->dot_for_dot)
     gimp_view_renderer_set_dot_for_dot (renderer, shell->dot_for_dot);
 
   gimp_navigation_view_set_marker (GIMP_NAVIGATION_VIEW (editor->view),
-                                   shell->offset_x    / xratio,
-                                   shell->offset_y    / yratio,
-                                   shell->disp_width  / xratio,
-                                   shell->disp_height / yratio);
+                                   shell->offset_x    / shell->scale_x,
+                                   shell->offset_y    / shell->scale_y,
+                                   shell->disp_width  / shell->scale_x,
+                                   shell->disp_height / shell->scale_y);
 }

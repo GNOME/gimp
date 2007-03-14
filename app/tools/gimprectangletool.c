@@ -1362,8 +1362,8 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
       coords->y > private->y1 && coords->y < private->y2)
     {
       GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (tool->display->shell);
-      gdouble           handle_w = private->handle_w / SCALEFACTOR_X (shell);
-      gdouble           handle_h = private->handle_h / SCALEFACTOR_Y (shell);
+      gdouble           handle_w = private->handle_w / shell->scale_x;
+      gdouble           handle_h = private->handle_h / shell->scale_y;
 
       if (gimp_draw_tool_on_handle (draw_tool, display,
                                     coords->x, coords->y,

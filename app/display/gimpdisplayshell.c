@@ -220,9 +220,8 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   shell->offset_x               = 0;
   shell->offset_y               = 0;
-
-  shell->scale_factor_x         = 1.0;
-  shell->scale_factor_y         = 1.0;
+  shell->scale_x                = 1.0;
+  shell->scale_y                = 1.0;
 
   shell->last_scale             = 0.0;
   shell->last_scale_time        = 0;
@@ -328,7 +327,7 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   /*  zoom model callback  */
   g_signal_connect_swapped (shell->zoom, "zoomed",
-                            G_CALLBACK (gimp_display_shell_scale_factor_changed),
+                            G_CALLBACK (gimp_display_shell_scale_changed),
                             shell);
 
   /*  active display callback  */
@@ -1111,17 +1110,17 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
  * shell and call this function whenever they need to be recalculated.
  */
 void
-gimp_display_shell_scale_factor_changed (GimpDisplayShell *shell)
+gimp_display_shell_scale_changed (GimpDisplayShell *shell)
 {
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
-  shell->scale_factor_x = (gimp_zoom_model_get_factor (shell->zoom)
-                           * SCREEN_XRES (shell)
-                           / shell->display->image->xresolution);
+  shell->scale_x = (gimp_zoom_model_get_factor (shell->zoom)
+                    * SCREEN_XRES (shell)
+                    / shell->display->image->xresolution);
 
-  shell->scale_factor_y = (gimp_zoom_model_get_factor (shell->zoom)
-                           * SCREEN_YRES (shell)
-                           / shell->display->image->yresolution);
+  shell->scale_y = (gimp_zoom_model_get_factor (shell->zoom)
+                    * SCREEN_YRES (shell)
+                    / shell->display->image->yresolution);
 }
 
 void

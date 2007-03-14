@@ -566,14 +566,13 @@ gimp_foreground_select_tool_draw (GimpDrawTool *draw_tool)
 
   if (fg_select->mask)
     {
-      GimpFreeSelectTool *sel = GIMP_FREE_SELECT_TOOL (tool);
-      gint                x   = sel->last_coords.x;
-      gint                y   = sel->last_coords.y;
+      GimpFreeSelectTool *sel   = GIMP_FREE_SELECT_TOOL (tool);
+      GimpDisplayShell   *shell = GIMP_DISPLAY_SHELL (draw_tool->display->shell);
+      gint                x     = sel->last_coords.x;
+      gint                y     = sel->last_coords.y;
       gdouble             radius;
 
-      radius = (options->stroke_width /
-                SCALEFACTOR_Y (GIMP_DISPLAY_SHELL (draw_tool->display->shell)));
-      radius /= 2;
+      radius = (options->stroke_width / shell->scale_y) / 2;
 
       /*  warn if the user is drawing outside of the working area  */
       if (FALSE)
@@ -802,8 +801,7 @@ gimp_foreground_select_tool_push_stroke (GimpForegroundSelectTool    *fg_select,
   stroke = g_new (FgSelectStroke, 1);
 
   stroke->background = options->background;
-  stroke->width      = ROUND ((gdouble) options->stroke_width /
-                              SCALEFACTOR_Y (shell));
+  stroke->width      = ROUND ((gdouble) options->stroke_width / shell->scale_y);
   stroke->num_points = fg_select->stroke->len;
   stroke->points     = (GimpVector2 *) g_array_free (fg_select->stroke, FALSE);
 

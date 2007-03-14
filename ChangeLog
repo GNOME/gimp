@@ -1,3 +1,16 @@
+2007-03-14  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell.[ch]: renamed newly added members
+	to scale_x and scale_y and removed the SCALEFACTOR macros.
+
+	* app/display/gimpdisplayshell-handlers.c
+	* app/display/gimpdisplayshell-render.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/display/gimpdisplayshell-transform.c
+	* app/display/gimpnavigationeditor.c
+	* app/tools/gimpforegroundselecttool.c
+	* app/tools/gimprectangletool.c: changed accordingly.
+
 2007-03-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpbrush.c
