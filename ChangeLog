@@ -1,5 +1,9 @@
 2007-03-14  Sven Neumann  <sven@gimp.org>
 
+	* app/base/pixel-surround.c (struct _PixelSurround): documentation.
+
+2007-03-14  Sven Neumann  <sven@gimp.org>
+
 	* app/base/siox.c (siox_drb): moved calculations out of MIN() macro.
 
 2007-03-14  Sven Neumann  <sven@gimp.org>
