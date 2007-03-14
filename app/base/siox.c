@@ -1330,9 +1330,15 @@ siox_drb (SioxState   *state,
                     continue;
 
                   if (mindistfg == 0.0)
-                    alpha = 1.0; /* avoid div by zero */
+                    {
+                      alpha = 1.0; /* avoid div by zero */
+                    }
                   else
-                    alpha = MIN (mindistbg / mindistfg, 1.0);
+                    {
+                      gdouble d = mindistbg / mindistfg;
+
+                      alpha = MIN (d, 1.0);
+                    }
                 }
               else /*if (brush_mode == SIOX_DRB_SUBTRACT)*/
                 {
@@ -1340,9 +1346,15 @@ siox_drb (SioxState   *state,
                     continue;
 
                   if (mindistbg == 0.0)
-                    alpha = 0.0; /* avoid div by zero */
+                    {
+                      alpha = 0.0; /* avoid div by zero */
+                    }
                   else
-                    alpha = 1.0 - MIN (mindistfg / mindistbg, 1.0);
+                    {
+                      gdouble d = mindistfg / mindistbg;
+
+                      alpha = 1.0 - MIN (d, 1.0);
+                    }
                 }
 
               if (alpha < threshold)
