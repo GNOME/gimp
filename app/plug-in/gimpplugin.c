@@ -188,10 +188,14 @@ gimp_plug_in_new (GimpPlugInManager   *manager,
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (procedure == NULL ||
                         GIMP_IS_PLUG_IN_PROCEDURE (procedure), NULL);
-  g_return_val_if_fail (prog != NULL, NULL);
-  g_return_val_if_fail (g_path_is_absolute (prog), NULL);
+  g_return_val_if_fail (prog == NULL || g_path_is_absolute (prog), NULL);
+  g_return_val_if_fail ((procedure != NULL || prog != NULL) &&
+                        ! (procedure != NULL && prog != NULL), NULL);
 
   plug_in = g_object_new (GIMP_TYPE_PLUG_IN, NULL);
+
+  if (! prog)
+    prog = gimp_plug_in_procedure_get_progname (procedure);
 
   gimp_object_take_name (GIMP_OBJECT (plug_in),
                          g_filename_display_basename (prog));

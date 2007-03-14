@@ -1,3 +1,14 @@
+2007-03-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/gimpplugin.c (gimp_plug_in_new): require either
+	"procedure" or "prog" being non-NULL, not both of them at the same
+	time. Get the executable name from the procedure if the procedure
+	was passed.
+
+	* app/plug-in/gimppluginmanager-call.c
+	(gimp_plug_in_manager_call_run): pass a NULL prog since we already
+	pass the procedure.
+
 2007-03-14  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c: sprinkled some const

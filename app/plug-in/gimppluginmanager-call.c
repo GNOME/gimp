@@ -154,7 +154,7 @@ gimp_plug_in_manager_call_run (GimpPlugInManager   *manager,
   g_return_val_if_fail (display == NULL || GIMP_IS_OBJECT (display), NULL);
 
   plug_in = gimp_plug_in_new (manager, context, progress,
-                              procedure, procedure->prog);
+                              procedure, NULL);
 
   if (plug_in)
     {
