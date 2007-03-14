@@ -62,6 +62,10 @@ struct _GimpTool
   gboolean         got_motion_event;
   GimpCoords       button_press_coords;
   guint32          button_press_time;
+
+  /*  private list of displays which have a status message from this tool
+   */
+  GList           *status_displays;
 };
 
 struct _GimpToolClass
@@ -202,6 +206,7 @@ void          gimp_tool_replace_status      (GimpTool            *tool,
                                              ...) G_GNUC_PRINTF(3,4);
 void          gimp_tool_pop_status          (GimpTool            *tool,
                                              GimpDisplay         *display);
+void          gimp_tool_clear_status        (GimpTool            *tool);
 
 void          gimp_tool_message             (GimpTool            *tool,
                                              GimpDisplay         *display,

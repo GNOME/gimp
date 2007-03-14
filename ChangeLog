@@ -1,5 +1,20 @@
 2007-03-14  Michael Natterer  <mitch@gimp.org>
 
+	Fix stuck statusbar messages when changing tools (bug #398913):
+
+	* app/tools/gimptool.[ch]: keep a list of status_displays around.
+	Update the list in all status push, replace and pop functions.
+	Added gimp_tool_clear_status() which removes the status messages
+	from all displays in the list. Call the function from
+	gimp_tool_real_control(HALT).
+
+	* app/tools/tool_manager.c (tool_manager_control_active): if we
+	can't call gimp_tool_control() because we have no display to pass,
+	still call gimp_tool_clear_status() so the messages go away from
+	displays the tool was only hovering.
+
+2007-03-14  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/gimpplugin.c (gimp_plug_in_new): require either
 	"procedure" or "prog" being non-NULL, not both of them at the same
 	time. Get the executable name from the procedure if the procedure

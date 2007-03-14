@@ -25,6 +25,7 @@
 #include "tools-types.h"
 
 #include "core/gimp.h"
+#include "core/gimpcontainer.h"
 #include "core/gimpimage.h"
 #include "core/gimptoolinfo.h"
 
@@ -172,6 +173,12 @@ gimp_tool_finalize (GObject *object)
       tool->control = NULL;
     }
 
+  if (tool->status_displays)
+    {
+      g_list_free (tool->status_displays);
+      tool->status_displays = NULL;
+    }
+
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
@@ -263,6 +270,7 @@ gimp_tool_real_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_HALT:
       tool->display = NULL;
+      gimp_tool_clear_status (tool);
       break;
     }
 }
@@ -819,6 +827,9 @@ gimp_tool_push_status (GimpTool    *tool,
                               format, args);
 
   va_end (args);
+
+  tool->status_displays = g_list_remove (tool->status_displays, display);
+  tool->status_displays = g_list_prepend (tool->status_displays, display);
 }
 
 void
@@ -840,6 +851,9 @@ gimp_tool_push_status_coords (GimpTool    *tool,
   gimp_statusbar_push_coords (GIMP_STATUSBAR (shell->statusbar),
                               G_OBJECT_TYPE_NAME (tool),
                               title, x, separator, y, help);
+
+  tool->status_displays = g_list_remove (tool->status_displays, display);
+  tool->status_displays = g_list_prepend (tool->status_displays, display);
 }
 
 void
@@ -860,6 +874,9 @@ gimp_tool_push_status_length (GimpTool            *tool,
   gimp_statusbar_push_length (GIMP_STATUSBAR (shell->statusbar),
                               G_OBJECT_TYPE_NAME (tool),
                               title, axis, value, help);
+
+  tool->status_displays = g_list_remove (tool->status_displays, display);
+  tool->status_displays = g_list_prepend (tool->status_displays, display);
 }
 
 void
@@ -884,6 +901,9 @@ gimp_tool_replace_status (GimpTool    *tool,
                                  format, args);
 
   va_end (args);
+
+  tool->status_displays = g_list_remove (tool->status_displays, display);
+  tool->status_displays = g_list_prepend (tool->status_displays, display);
 }
 
 void
@@ -899,6 +919,37 @@ gimp_tool_pop_status (GimpTool    *tool,
 
   gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar),
                       G_OBJECT_TYPE_NAME (tool));
+
+  tool->status_displays = g_list_remove (tool->status_displays, display);
+}
+
+void
+gimp_tool_clear_status (GimpTool *tool)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
+  list = tool->status_displays;
+  while (list)
+    {
+      GimpDisplay *display = list->data;
+
+      /*  get next element early because we modify the list  */
+      list = g_list_next (list);
+
+      if (gimp_container_have (tool->tool_info->gimp->displays,
+                               (GimpObject *) display))
+        {
+          gimp_tool_pop_status (tool, display);
+        }
+      else
+        {
+          tool->status_displays = g_list_remove (tool->status_displays,
+                                                 display);
+        }
+
+    }
 }
 
 void
