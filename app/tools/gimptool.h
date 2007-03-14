@@ -206,7 +206,6 @@ void          gimp_tool_replace_status      (GimpTool            *tool,
                                              ...) G_GNUC_PRINTF(3,4);
 void          gimp_tool_pop_status          (GimpTool            *tool,
                                              GimpDisplay         *display);
-void          gimp_tool_clear_status        (GimpTool            *tool);
 
 void          gimp_tool_message             (GimpTool            *tool,
                                              GimpDisplay         *display,

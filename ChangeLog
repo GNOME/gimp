@@ -1,5 +1,19 @@
 2007-03-14  Michael Natterer  <mitch@gimp.org>
 
+	Make the status display stuff local to GimpTool:
+
+	* app/tools/tool_manager.c (tool_manager_control_active): don't
+	call gimp_tool_clear_status().
+
+	* app/tools/gimptool.[ch]: make gimp_tool_clear_status() a
+	private function. Move call to gimp_tool_clear_status() from
+	real_control() to control(). Check the status_displays too in
+	gimp_tool_real_has_display() and gimp_tool_has_image() so the
+	normal mechanism of control(HALT)ing (and thus popping all
+	status messages) the tool on display close works.
+
+2007-03-14  Michael Natterer  <mitch@gimp.org>
+
 	Fix stuck statusbar messages when changing tools (bug #398913):
 
 	* app/tools/gimptool.[ch]: keep a list of status_displays around.

@@ -104,6 +104,8 @@ static void       gimp_tool_real_cursor_update  (GimpTool              *tool,
                                                  GdkModifierType        state,
                                                  GimpDisplay           *display);
 
+static void       gimp_tool_clear_status        (GimpTool              *tool);
+
 
 G_DEFINE_TYPE (GimpTool, gimp_tool, GIMP_TYPE_OBJECT)
 
@@ -229,7 +231,8 @@ static gboolean
 gimp_tool_real_has_display (GimpTool    *tool,
                             GimpDisplay *display)
 {
-  return (display == tool->display);
+  return (display == tool->display ||
+          g_list_find (tool->status_displays, display));
 }
 
 static GimpDisplay *
@@ -270,7 +273,6 @@ gimp_tool_real_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_HALT:
       tool->display = NULL;
-      gimp_tool_clear_status (tool);
       break;
     }
 }
@@ -381,10 +383,34 @@ GimpDisplay *
 gimp_tool_has_image (GimpTool  *tool,
                      GimpImage *image)
 {
+  GimpDisplay *display;
+
   g_return_val_if_fail (GIMP_IS_TOOL (tool), NULL);
   g_return_val_if_fail (image == NULL || GIMP_IS_IMAGE (image), NULL);
 
-  return GIMP_TOOL_GET_CLASS (tool)->has_image (tool, image);
+  display = GIMP_TOOL_GET_CLASS (tool)->has_image (tool, image);
+
+  /*  check status displays last because they don't affect the tool
+   *  itself (unlike tool->display or draw_tool->display)
+   */
+  if (! display && tool->status_displays)
+    {
+      GList *list;
+
+      for (list = tool->status_displays; list; list = g_list_next (list))
+        {
+          GimpDisplay *status_display = list->data;
+
+          if (status_display->image == image)
+            return status_display;
+        }
+
+      /*  NULL image means any display  */
+      if (! image)
+        return tool->status_displays->data;
+    }
+
+  return display;
 }
 
 gboolean
@@ -442,6 +468,8 @@ gimp_tool_control (GimpTool       *tool,
 
       if (gimp_tool_control_is_active (tool->control))
         gimp_tool_control_halt (tool->control);
+
+      gimp_tool_clear_status (tool);
       break;
     }
 }
@@ -924,35 +952,6 @@ gimp_tool_pop_status (GimpTool    *tool,
 }
 
 void
-gimp_tool_clear_status (GimpTool *tool)
-{
-  GList *list;
-
-  g_return_if_fail (GIMP_IS_TOOL (tool));
-
-  list = tool->status_displays;
-  while (list)
-    {
-      GimpDisplay *display = list->data;
-
-      /*  get next element early because we modify the list  */
-      list = g_list_next (list);
-
-      if (gimp_container_have (tool->tool_info->gimp->displays,
-                               (GimpObject *) display))
-        {
-          gimp_tool_pop_status (tool, display);
-        }
-      else
-        {
-          tool->status_displays = g_list_remove (tool->status_displays,
-                                                 display);
-        }
-
-    }
-}
-
-void
 gimp_tool_message (GimpTool    *tool,
                    GimpDisplay *display,
                    const gchar *format,
@@ -984,4 +983,26 @@ gimp_tool_set_cursor (GimpTool           *tool,
 
   gimp_display_shell_set_cursor (GIMP_DISPLAY_SHELL (display->shell),
                                  cursor, tool_cursor, modifier);
+}
+
+
+/*  private functions  */
+
+static void
+gimp_tool_clear_status (GimpTool *tool)
+{
+  GList *list;
+
+  g_return_if_fail (GIMP_IS_TOOL (tool));
+
+  list = tool->status_displays;
+  while (list)
+    {
+      GimpDisplay *display = list->data;
+
+      /*  get next element early because we modify the list  */
+      list = g_list_next (list);
+
+      gimp_tool_pop_status (tool, display);
+    }
 }

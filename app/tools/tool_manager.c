@@ -267,8 +267,6 @@ tool_manager_control_active (Gimp           *gimp,
         {
           if (gimp_tool_control_is_active (tool->control))
             gimp_tool_control_halt (tool->control);
-
-          gimp_tool_clear_status (tool);
         }
     }
 }
