@@ -48,20 +48,14 @@ gimp_display_shell_transform_coordinate (GimpDisplayShell *shell,
                                          GimpCoords       *image_coords,
                                          GimpCoords       *display_coords)
 {
-  gdouble scalex;
-  gdouble scaley;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (image_coords != NULL);
   g_return_if_fail (display_coords != NULL);
 
   *display_coords = *image_coords;
 
-  scalex = SCALEFACTOR_X (shell);
-  scaley = SCALEFACTOR_Y (shell);
-
-  display_coords->x = scalex * image_coords->x;
-  display_coords->y = scaley * image_coords->y;
+  display_coords->x = SCALEFACTOR_X (shell) * image_coords->x;
+  display_coords->y = SCALEFACTOR_Y (shell) * image_coords->y;
 
   display_coords->x += - shell->offset_x + shell->disp_xoffset;
   display_coords->y += - shell->offset_y + shell->disp_yoffset;
@@ -81,23 +75,17 @@ gimp_display_shell_untransform_coordinate (GimpDisplayShell *shell,
                                            GimpCoords       *display_coords,
                                            GimpCoords       *image_coords)
 {
-  gdouble scalex;
-  gdouble scaley;
-
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (display_coords != NULL);
   g_return_if_fail (image_coords != NULL);
 
   *image_coords = *display_coords;
 
-  scalex = SCALEFACTOR_X (shell);
-  scaley = SCALEFACTOR_Y (shell);
-
   image_coords->x = display_coords->x - shell->disp_xoffset + shell->offset_x;
   image_coords->y = display_coords->y - shell->disp_yoffset + shell->offset_y;
 
-  image_coords->x /= scalex;
-  image_coords->y /= scaley;
+  image_coords->x /= SCALEFACTOR_X (shell);
+  image_coords->y /= SCALEFACTOR_Y (shell);
 }
 
 void
@@ -108,18 +96,12 @@ gimp_display_shell_transform_xy (GimpDisplayShell *shell,
                                  gint             *ny,
                                  gboolean          use_offsets)
 {
-  gdouble scalex;
-  gdouble scaley;
-  gint    offset_x = 0;
-  gint    offset_y = 0;
+  gint offset_x = 0;
+  gint offset_y = 0;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (nx != NULL);
   g_return_if_fail (ny != NULL);
-
-  /*  transform from image coordinates to screen coordinates  */
-  scalex = SCALEFACTOR_X (shell);
-  scaley = SCALEFACTOR_Y (shell);
 
   if (use_offsets)
     {
@@ -129,8 +111,8 @@ gimp_display_shell_transform_xy (GimpDisplayShell *shell,
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 
-  x = (scalex * (x + offset_x) - shell->offset_x);
-  y = (scaley * (y + offset_y) - shell->offset_y);
+  x = SCALEFACTOR_X (shell) * (x + offset_x) - shell->offset_x;
+  y = SCALEFACTOR_Y (shell) * (y + offset_y) - shell->offset_y;
 
   /* The projected coordinates can easily overflow a gint in the case of big
      images at high zoom levels, so we clamp them here to avoid problems.  */
@@ -166,10 +148,8 @@ gimp_display_shell_untransform_xy (GimpDisplayShell *shell,
                                    gboolean          round,
                                    gboolean          use_offsets)
 {
-  gdouble scalex;
-  gdouble scaley;
-  gint    offset_x = 0;
-  gint    offset_y = 0;
+  gint offset_x = 0;
+  gint offset_y = 0;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (nx != NULL);
@@ -177,10 +157,6 @@ gimp_display_shell_untransform_xy (GimpDisplayShell *shell,
 
   x -= shell->disp_xoffset;
   y -= shell->disp_yoffset;
-
-  /*  transform from screen coordinates to image coordinates  */
-  scalex = SCALEFACTOR_X (shell);
-  scaley = SCALEFACTOR_Y (shell);
 
   if (use_offsets)
     {
@@ -192,13 +168,13 @@ gimp_display_shell_untransform_xy (GimpDisplayShell *shell,
 
   if (round)
     {
-      *nx = ROUND ((x + shell->offset_x) / scalex - offset_x);
-      *ny = ROUND ((y + shell->offset_y) / scaley - offset_y);
+      *nx = ROUND ((x + shell->offset_x) / SCALEFACTOR_X (shell) - offset_x);
+      *ny = ROUND ((y + shell->offset_y) / SCALEFACTOR_Y (shell) - offset_y);
     }
   else
     {
-      *nx = (gint) ((x + shell->offset_x) / scalex - offset_x);
-      *ny = (gint) ((y + shell->offset_y) / scaley - offset_y);
+      *nx = (gint) ((x + shell->offset_x) / SCALEFACTOR_X (shell) - offset_x);
+      *ny = (gint) ((y + shell->offset_y) / SCALEFACTOR_Y (shell) - offset_y);
     }
 }
 
@@ -223,18 +199,12 @@ gimp_display_shell_transform_xy_f  (GimpDisplayShell *shell,
                                     gdouble          *ny,
                                     gboolean          use_offsets)
 {
-  gdouble scalex;
-  gdouble scaley;
-  gint    offset_x = 0;
-  gint    offset_y = 0;
+  gint offset_x = 0;
+  gint offset_y = 0;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (nx != NULL);
   g_return_if_fail (ny != NULL);
-
-  /*  transform from gimp coordinates to screen coordinates  */
-  scalex = SCALEFACTOR_X (shell);
-  scaley = SCALEFACTOR_Y (shell);
 
   if (use_offsets)
     {
@@ -244,8 +214,8 @@ gimp_display_shell_transform_xy_f  (GimpDisplayShell *shell,
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 
-  *nx = scalex * (x + offset_x) - shell->offset_x;
-  *ny = scaley * (y + offset_y) - shell->offset_y;
+  *nx = SCALEFACTOR_X (shell) * (x + offset_x) - shell->offset_x;
+  *ny = SCALEFACTOR_Y (shell) * (y + offset_y) - shell->offset_y;
 
   *nx += shell->disp_xoffset;
   *ny += shell->disp_yoffset;
@@ -273,10 +243,8 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
                                      gdouble          *ny,
                                      gboolean          use_offsets)
 {
-  gdouble scalex;
-  gdouble scaley;
-  gint    offset_x = 0;
-  gint    offset_y = 0;
+  gint offset_x = 0;
+  gint offset_y = 0;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (nx != NULL);
@@ -284,10 +252,6 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
 
   x -= shell->disp_xoffset;
   y -= shell->disp_yoffset;
-
-  /*  transform from screen coordinates to gimp coordinates  */
-  scalex = SCALEFACTOR_X (shell);
-  scaley = SCALEFACTOR_Y (shell);
 
   if (use_offsets)
     {
@@ -297,8 +261,8 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 
-  *nx = (x + shell->offset_x) / scalex - offset_x;
-  *ny = (y + shell->offset_y) / scaley - offset_y;
+  *nx = (x + shell->offset_x) / SCALEFACTOR_X (shell) - offset_x;
+  *ny = (y + shell->offset_y) / SCALEFACTOR_Y (shell) - offset_y;
 }
 
 /**

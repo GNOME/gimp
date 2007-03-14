@@ -35,10 +35,8 @@
                            (s)->display->image->yresolution : (s)->monitor_yres)
 
 /* calculate scale factors (double) */
-#define  SCALEFACTOR_X(s) (gimp_zoom_model_get_factor ((s)->zoom) \
-                           * SCREEN_XRES(s) / (s)->display->image->xresolution)
-#define  SCALEFACTOR_Y(s) (gimp_zoom_model_get_factor ((s)->zoom) \
-                           * SCREEN_YRES(s) / (s)->display->image->yresolution)
+#define  SCALEFACTOR_X(s) (s->scale_factor_x)
+#define  SCALEFACTOR_Y(s) (s->scale_factor_y)
 
 /* scale values */
 #define  SCALEX(s,x)      PROJ_ROUND ((x) * SCALEFACTOR_X(s))
@@ -82,6 +80,9 @@ struct _GimpDisplayShell
 
   gint              offset_x;          /*  offset of display image into raw image  */
   gint              offset_y;
+
+  gdouble           scale_factor_x;    /*  cache for scale factor             */
+  gdouble           scale_factor_y;    /*  cache for scale factor             */
 
   gdouble           last_scale;        /*  scale used when reverting zoom     */
   guint             last_scale_time;   /*  time when last_scale was set       */
@@ -199,6 +200,8 @@ GtkWidget * gimp_display_shell_new                 (GimpDisplay        *display,
                                                     GimpUIManager      *popup_manager);
 
 void        gimp_display_shell_reconnect           (GimpDisplayShell   *shell);
+
+void        gimp_display_shell_scale_factor_changed (GimpDisplayShell  *shell);
 
 void        gimp_display_shell_scaled              (GimpDisplayShell   *shell);
 void        gimp_display_shell_scrolled            (GimpDisplayShell   *shell);

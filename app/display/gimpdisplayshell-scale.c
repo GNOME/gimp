@@ -266,6 +266,8 @@ gimp_display_shell_scale_set_dot_for_dot (GimpDisplayShell *shell,
 
       shell->dot_for_dot = dot_for_dot;
 
+      gimp_display_shell_scale_factor_changed (shell);
+
       gimp_display_shell_scale_resize (shell,
                                        GIMP_DISPLAY_CONFIG (gimp->config)->resize_windows_on_zoom,
                                        TRUE);

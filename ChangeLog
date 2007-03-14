@@ -1,5 +1,21 @@
 2007-03-14  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell.[ch]: cache the display scale
+	factors in the GimpDisplayShell struct and recalculate it in
+	gimp_display_shell_scale_factor_changed().
+
+	* app/display/gimpdisplayshell-scale.c
+	(gimp_display_shell_scale_set_dot_for_dot)
+	* app/display/gimpdisplayshell-handlers.c
+	(gimp_display_shell_resolution_changed_handler)
+	(gimp_display_shell_monitor_res_notify_handler): update the scale
+	factors by calling gimp_display_shell_scale_factor_changed().
+
+	* app/display/gimpdisplayshell-transform.c
+	* app/display/gimpnavigationeditor.c: code cleanup.
+
+2007-03-14  Sven Neumann  <sven@gimp.org>
+
 	* app/base/pixel-surround.c (struct _PixelSurround): documentation.
 
 2007-03-14  Sven Neumann  <sven@gimp.org>

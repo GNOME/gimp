@@ -323,19 +323,19 @@ gimp_navigation_editor_new_private (GimpMenuFactory  *menu_factory,
 
   if (shell)
     {
-      GimpDisplayConfig *config;
+      Gimp              *gimp   = shell->display->image->gimp;
+      GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (gimp->config);
       GimpView          *view;
 
       editor = g_object_new (GIMP_TYPE_NAVIGATION_EDITOR, NULL);
 
-      config = GIMP_DISPLAY_CONFIG (shell->display->image->gimp->config);
-      view   = GIMP_VIEW (editor->view);
+      view = GIMP_VIEW (editor->view);
 
       gimp_view_renderer_set_size (view->renderer,
                                    config->nav_preview_size * 3,
                                    view->renderer->border_width);
       gimp_view_renderer_set_context (view->renderer,
-                                      gimp_get_user_context (shell->display->image->gimp));
+                                      gimp_get_user_context (gimp));
 
       gimp_navigation_editor_set_shell (editor, shell);
 
@@ -492,18 +492,14 @@ gimp_navigation_editor_marker_changed (GimpNavigationView   *view,
 {
   if (editor->shell)
     {
-      gdouble xratio;
-      gdouble yratio;
-      gint    xoffset;
-      gint    yoffset;
+      GimpDisplayShell *shell = editor->shell;
+      gint              xoffset;
+      gint              yoffset;
 
-      xratio = SCALEFACTOR_X (editor->shell);
-      yratio = SCALEFACTOR_Y (editor->shell);
+      xoffset = RINT (x * SCALEFACTOR_X (shell) - shell->offset_x);
+      yoffset = RINT (y * SCALEFACTOR_Y (shell) - shell->offset_y);
 
-      xoffset = RINT (x * xratio - editor->shell->offset_x);
-      yoffset = RINT (y * yratio - editor->shell->offset_y);
-
-      gimp_display_shell_scroll (editor->shell, xoffset, yoffset);
+      gimp_display_shell_scroll (shell, xoffset, yoffset);
     }
 }
 
@@ -638,22 +634,17 @@ gimp_navigation_editor_shell_reconnect (GimpDisplayShell     *shell,
 static void
 gimp_navigation_editor_update_marker (GimpNavigationEditor *editor)
 {
-  GimpViewRenderer *renderer;
-  gdouble           xratio;
-  gdouble           yratio;
+  GimpViewRenderer *renderer = GIMP_VIEW (editor->view)->renderer;
+  GimpDisplayShell *shell    = editor->shell;
+  gdouble           xratio   = SCALEFACTOR_X (shell);
+  gdouble           yratio   = SCALEFACTOR_Y (shell);
 
-  renderer = GIMP_VIEW (editor->view)->renderer;
-
-  xratio = SCALEFACTOR_X (editor->shell);
-  yratio = SCALEFACTOR_Y (editor->shell);
-
-  if (renderer->dot_for_dot != editor->shell->dot_for_dot)
-    gimp_view_renderer_set_dot_for_dot (renderer,
-                                        editor->shell->dot_for_dot);
+  if (renderer->dot_for_dot != shell->dot_for_dot)
+    gimp_view_renderer_set_dot_for_dot (renderer, shell->dot_for_dot);
 
   gimp_navigation_view_set_marker (GIMP_NAVIGATION_VIEW (editor->view),
-                                   editor->shell->offset_x    / xratio,
-                                   editor->shell->offset_y    / yratio,
-                                   editor->shell->disp_width  / xratio,
-                                   editor->shell->disp_height / yratio);
+                                   shell->offset_x    / xratio,
+                                   shell->offset_y    / yratio,
+                                   shell->disp_width  / xratio,
+                                   shell->disp_height / yratio);
 }
