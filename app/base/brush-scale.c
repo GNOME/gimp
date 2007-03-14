@@ -55,8 +55,9 @@ brush_scale_mask (MaskBuf *brush_mask,
   dest = mask_buf_data (scale_brush);
   src  = mask_buf_data (brush_mask);
 
-  fx = fx0 = (256.0 * src_width) / dest_width;
-  fy = fy0 = (256.0 * src_height) / dest_height;
+  fx = fx0 = (src_width << 8) / dest_width;
+  fy = fy0 = (src_height << 8) / dest_height;
+
   area = (fx0 * fy0) >> 8;
 
   x = x0 = 0;
@@ -98,6 +99,7 @@ brush_scale_mask (MaskBuf *brush_mask,
                   value += fx * dy * src[x + src_width * y] >> 8;
                   dx = 256 - fx;
                 }
+
               y++;
               fy -= dy;
               dy = 0;
@@ -127,6 +129,7 @@ brush_scale_mask (MaskBuf *brush_mask,
                   value += fx * src[x + src_width * y];
                   dx = 256 - fx;
                 }
+
               y++;
               fy -= 256;
             }
@@ -155,14 +158,17 @@ brush_scale_mask (MaskBuf *brush_mask,
                   value += (fx * fy * src[x + src_width * y]) >> 8;
                   dx = 256 - fx;
                 }
+
               dy = 256 - fy;
             }
 
-          *dest++ = MIN ((value / area), 255);
+          value /= area;
+          *dest++ = MIN (value, 255);
 
           x0  = x;
           dx0 = dx;
         }
+
       x0  = 0;
       dx0 = 0;
       y0  = y;
@@ -208,8 +214,8 @@ brush_scale_pixmap (MaskBuf *pixmap,
   dest = mask_buf_data (scale_brush);
   src  = mask_buf_data (pixmap);
 
-  fx = fx0 = (256.0 * src_width) / dest_width;
-  fy = fy0 = (256.0 * src_height) / dest_height;
+  fx = fx0 = (src_width << 8) / dest_width;
+  fy = fy0 = (src_height << 8) / dest_height;
   area = (fx0 * fy0) >> 8;
 
   x = x0 = 0;
@@ -259,6 +265,7 @@ brush_scale_pixmap (MaskBuf *pixmap,
                   ADD_RGB (value, factor, src_ptr);
                   dx = 256 - fx;
                 }
+
               y++;
               fy -= dy;
               dy = 0;
@@ -294,6 +301,7 @@ brush_scale_pixmap (MaskBuf *pixmap,
                   ADD_RGB (value, factor, src_ptr);
                   dx = 256 - fx;
                 }
+
               y++;
               fy -= 256;
             }
@@ -328,16 +336,22 @@ brush_scale_pixmap (MaskBuf *pixmap,
                   ADD_RGB (value, factor, src_ptr);
                   dx = 256 - fx;
                 }
+
               dy = 256 - fy;
             }
 
-          *dest++ = MIN ((value[0] / area), 255);
-          *dest++ = MIN ((value[1] / area), 255);
-          *dest++ = MIN ((value[2] / area), 255);
+          value[0] /= area;
+          value[1] /= area;
+          value[2] /= area;
+
+          *dest++ = MIN (value[0], 255);
+          *dest++ = MIN (value[1], 255);
+          *dest++ = MIN (value[2], 255);
 
           x0  = x;
           dx0 = dx;
         }
+
       x0  = 0;
       dx0 = 0;
       y0  = y;

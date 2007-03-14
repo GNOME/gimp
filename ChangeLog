@@ -1,3 +1,8 @@
+2007-03-14  Sven Neumann  <sven@gimp.org>
+
+	* app/base/brush-scale.c: minor cleanups, moved calculations out
+	of the MIN() macro, avoid unneeded floating-point calculations.
+
 2007-03-14  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Made brushes upscalable by using scale_region. Downscaling still
