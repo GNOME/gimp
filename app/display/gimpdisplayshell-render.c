@@ -55,9 +55,9 @@ struct _RenderInfo
 {
   GimpDisplayShell *shell;
   TileManager      *src_tiles;
-  guint            *alpha;
-  guchar           *scale;
-  guchar           *src;
+  const guint      *alpha;
+  const guchar     *scale;
+  const guchar     *src;
   guchar           *dest;
   gint              x, y;
   gint              w, h;
@@ -77,7 +77,7 @@ static void   render_setup_notify (gpointer    config,
 
 
 static guchar *tile_buf    = NULL;
-static guint   tile_shift  = 0;
+
 static guint   check_mod   = 0;
 static guint   check_shift = 0;
 
@@ -86,6 +86,7 @@ void
 gimp_display_shell_render_init (Gimp *gimp)
 {
   g_return_if_fail (GIMP_IS_GIMP (gimp));
+  g_return_if_fail (tile_buf == NULL);
 
   g_signal_connect (gimp->config, "notify::transparency-size",
                     G_CALLBACK (render_setup_notify),
@@ -93,6 +94,9 @@ gimp_display_shell_render_init (Gimp *gimp)
   g_signal_connect (gimp->config, "notify::transparency-type",
                     G_CALLBACK (render_setup_notify),
                     gimp);
+
+  /*  allocate a buffer for arranging information from a row of tiles  */
+  tile_buf = g_new (guchar, GIMP_RENDER_BUF_WIDTH * MAX_CHANNELS);
 
   render_setup_notify (gimp->config, NULL, gimp);
 }
@@ -113,7 +117,6 @@ gimp_display_shell_render_exit (Gimp *gimp)
     }
 }
 
-
 static void
 render_setup_notify (gpointer    config,
                      GParamSpec *param_spec,
@@ -124,17 +127,6 @@ render_setup_notify (gpointer    config,
   g_object_get (config,
                 "transparency-size", &check_size,
                 NULL);
-
-  /*  based on the tile size, determine the tile shift amount
-   *  (assume here that tile_height and tile_width are equal)
-   */
-  tile_shift = 0;
-  while ((1 << tile_shift) < TILE_WIDTH)
-    tile_shift++;
-
-  /*  allocate a buffer for arranging information from a row of tiles  */
-  if (! tile_buf)
-    tile_buf = g_new (guchar, GIMP_RENDER_BUF_WIDTH * MAX_CHANNELS);
 
   switch (check_size)
     {
@@ -175,11 +167,12 @@ static void     render_image_init_info          (RenderInfo       *info,
                                                  gint              x,
                                                  gint              y,
                                                  TileManager      *tiles);
-static guint  * render_image_init_alpha         (gint              mult);
-static guchar * render_image_accelerate_scaling (gint              width,
-                                                 gint              start,
-                                                 gdouble           scalex);
-static guchar * render_image_tile_fault         (RenderInfo       *info);
+static const guint  * render_image_init_alpha         (gint        mult);
+
+static const guchar * render_image_accelerate_scaling (gint        width,
+                                                       gint        start,
+                                                       gdouble     scalex);
+static const guchar * render_image_tile_fault         (RenderInfo *info);
 
 
 static RenderFunc render_funcs[6] =
@@ -875,7 +868,7 @@ render_image_init_info (RenderInfo       *info,
   info->dest      = shell->render_buf;
 }
 
-static guint *
+static const guint *
 render_image_init_alpha (gint mult)
 {
   static guint *alpha_mult = NULL;
@@ -896,7 +889,7 @@ render_image_init_alpha (gint mult)
   return alpha_mult;
 }
 
-static guchar *
+static const guchar *
 render_image_accelerate_scaling (gint    width,
                                  gint    start,
                                  gdouble scalex)
@@ -917,7 +910,7 @@ render_image_accelerate_scaling (gint    width,
   return scale;
 }
 
-static guchar *
+static const guchar *
 render_image_tile_fault (RenderInfo *info)
 {
   Tile         *tile;
@@ -971,7 +964,7 @@ render_image_tile_fault (RenderInfo *info)
           x += step;
           src += step * bpp;
 
-          if ((x >> tile_shift) != tilex)
+          if ((x / TILE_WIDTH) != tilex)
             {
               tile_release (tile, FALSE);
               tilex += 1;

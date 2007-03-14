@@ -1,5 +1,11 @@
 2007-03-14  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-render.c: sprinkled some const
+	qualifiers and removed obscure shift code in favor of letting the
+	compiler do this optimization.
+
+2007-03-14  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell.[ch]: renamed newly added members
 	to scale_x and scale_y and removed the SCALEFACTOR macros.
 
