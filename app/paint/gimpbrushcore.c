@@ -84,7 +84,7 @@ static void     gimp_brush_core_real_set_brush    (GimpBrushCore    *core,
                                                    GimpBrush        *brush);
 
 static gdouble  gimp_brush_core_calc_brush_size   (GimpBrushCore    *core,
-                                                   MaskBuf          *mask,
+                                                   GimpBrush        *brush,
                                                    gdouble           scale,
                                                    gint             *width,
                                                    gint             *height);
@@ -703,12 +703,12 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
       core->scale *= paint_options->brush_scale;
     }
 
-  gimp_brush_core_calc_brush_size (core, core->brush->mask, core->scale,
+  gimp_brush_core_calc_brush_size (core, core->brush, core->scale,
                                    &brush_width, &brush_height);
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
-  x = (gint) floor (paint_core->cur_coords.x) - (brush_width  >> 1);
-  y = (gint) floor (paint_core->cur_coords.y) - (brush_height >> 1);
+  x = (gint) floor (paint_core->cur_coords.x) - (brush_width  / 2);
+  y = (gint) floor (paint_core->cur_coords.y) - (brush_height / 2);
 
   drawable_width  = gimp_item_width  (GIMP_ITEM (drawable));
   drawable_height = gimp_item_height (GIMP_ITEM (drawable));
@@ -794,7 +794,7 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->use_scale)
     scale *= paint_options->brush_scale;
 
-  scale = gimp_brush_core_calc_brush_size (core, core->main_brush->mask, scale,
+  scale = gimp_brush_core_calc_brush_size (core, core->main_brush, scale,
                                            &brush_width, &brush_height);
 
   if (scale > 0.0)
@@ -933,38 +933,31 @@ gimp_brush_core_invalidate_cache (GimpBrush     *brush,
 
 static gdouble
 gimp_brush_core_calc_brush_size (GimpBrushCore *core,
-                                 MaskBuf       *mask,
+                                 GimpBrush     *brush,
                                  gdouble        scale,
                                  gint          *width,
                                  gint          *height)
 {
   gdouble ratio = 1.0;
 
-  scale = CLAMP (scale, 0.0, 1.0);
-
   if (scale == 1.0)
     {
-      ratio = scale;
-
-      if (mask)
+      if (brush)
         {
-          *width  = mask->width;
-          *height = mask->height;
+          *width  = brush->mask->width;
+          *height = brush->mask->height;
         }
+
+      return 1.0;
     }
+
+  if (scale < 1 / 256.0)
+    ratio = 1 / 16.0;
   else
-    {
-      if (scale < 1 / 256)
-        ratio = 1 / 16;
-      else
-        ratio = sqrt (scale);
+    ratio = sqrt (scale);
 
-      if (mask)
-        {
-          *width  = MAX ((gint) (mask->width  * ratio + 0.5), 1);
-          *height = MAX ((gint) (mask->height * ratio + 0.5), 1);
-        }
-    }
+  if (brush)
+    gimp_brush_scale_size (brush, ratio, width, height);
 
   return ratio;
 }
@@ -1314,7 +1307,7 @@ gimp_brush_core_scale_mask (GimpBrushCore *core,
   if (scale == 1.0)
     return brush->mask;
 
-  scale = gimp_brush_core_calc_brush_size (core, brush->mask, scale,
+  scale = gimp_brush_core_calc_brush_size (core, brush, scale,
                                            &dest_width, &dest_height);
 
   if (! core->cache_invalid                 &&
@@ -1357,7 +1350,7 @@ gimp_brush_core_scale_pixmap (GimpBrushCore *core,
   if (scale == 1.0)
     return brush->pixmap;
 
-  scale = gimp_brush_core_calc_brush_size (core, brush->pixmap, scale,
+  scale = gimp_brush_core_calc_brush_size (core, brush, scale,
                                            &dest_width, &dest_height);
 
   if (! core->cache_invalid                        &&

@@ -57,6 +57,10 @@ struct _GimpBrushClass
   gboolean    (* want_null_motion) (GimpBrush  *brush,
                                     GimpCoords *last_coords,
                                     GimpCoords *cur_coords);
+  void        (* scale_size)       (GimpBrush  *brush,
+                                    gdouble     scale,
+                                    gint       *width,
+                                    gint       *height);
   TempBuf   * (* scale_mask)       (GimpBrush  *brush,
                                     gdouble     scale);
   TempBuf   * (* scale_pixmap)     (GimpBrush  *brush,
@@ -79,6 +83,11 @@ gboolean    gimp_brush_want_null_motion (GimpBrush        *brush,
                                          GimpCoords       *last_coords,
                                          GimpCoords       *cur_coords);
 
+/* Gets width and height of a scaled mask of the brush, for provided scale. */
+void        gimp_brush_scale_size       (GimpBrush        *brush,
+                                         gdouble           scale,
+                                         gint             *width,
+                                         gint             *height);
 TempBuf   * gimp_brush_scale_mask       (GimpBrush        *brush,
                                          gdouble           scale);
 TempBuf   * gimp_brush_scale_pixmap     (GimpBrush        *brush,

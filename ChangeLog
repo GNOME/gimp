@@ -1,3 +1,31 @@
+2007-03-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Made brushes upscalable by using scale_region. Downscaling still
+	uses functions in app/base/brush-scale.c (because of better
+	performance). Parametric brushes of course recalculates masks
+	instead of using bitmap scaling. Fixes bug #65030.
+
+	* app/core/gimpbrush.[ch]: Added a private scale_buf method which
+	uses scale_region (with GIMP_INTERPOLATION_LINEAR) to scale its
+	masks and pixmaps. Also added public virtual method scale_size to
+	GimpBrush (overridden by GimpBrushGenerated) which calculates the
+	buffer sizes for a given brush scaled with a given scale.
+
+	* app/core/gimpbrushgenerated.c: Implemented the new scale_size
+	method inherited from GimpBrush, and modified
+	gimp_brush_generated_calc to use this helper function.
+
+	* app/tools/gimppaintoptions-gui.c (gimp_paint_options_gui): Made
+	the brush Scale-slider logarithmic.
+
+	* app/paint/gimppaintoptions.c (gimp_paint_options_class_init):
+	Changed Scale scale to [0.0, 10.0].
+
+	* app/paint/gimpbrushcore.c:
+	(gimp_brush_core_calc_brush_size): Refactored 'get brush size' code
+	to where it belongs, in GimpBrush-classes, and allowed scales
+	larger than 1.0.
+
 2007-03-13  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdialogfactory.[ch]: added new ugly function

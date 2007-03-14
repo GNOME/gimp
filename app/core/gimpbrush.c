@@ -24,8 +24,12 @@
 
 #include "core-types.h"
 
+#include "base/base-types.h"
 #include "base/brush-scale.h"
+#include "base/pixel-region.h"
 #include "base/temp-buf.h"
+
+#include "paint-funcs/scale-funcs.h"
 
 #include "gimpbrush.h"
 #include "gimpbrush-load.h"
@@ -78,6 +82,13 @@ static GimpBrush * gimp_brush_real_select_brush     (GimpBrush     *brush,
 static gboolean    gimp_brush_real_want_null_motion (GimpBrush     *brush,
                                                      GimpCoords    *last_coords,
                                                      GimpCoords    *cur_coords);
+static TempBuf *   gimp_brush_scale_buf             (TempBuf       *brush_buf,
+                                                     gint           dest_width,
+                                                     gint           dest_height);
+static void        gimp_brush_real_scale_size       (GimpBrush     *brush,
+                                                     gdouble        scale,
+                                                     gint          *scaled_width,
+                                                     gint          *scaled_height);
 static TempBuf   * gimp_brush_real_scale_mask       (GimpBrush     *brush,
                                                      gdouble        scale);
 static TempBuf   * gimp_brush_real_scale_pixmap     (GimpBrush     *brush,
@@ -123,6 +134,7 @@ gimp_brush_class_init (GimpBrushClass *klass)
 
   klass->select_brush              = gimp_brush_real_select_brush;
   klass->want_null_motion          = gimp_brush_real_want_null_motion;
+  klass->scale_size                = gimp_brush_real_scale_size;
   klass->scale_mask                = gimp_brush_real_scale_mask;
   klass->scale_pixmap              = gimp_brush_real_scale_pixmap;
   klass->spacing_changed           = NULL;
@@ -364,37 +376,88 @@ gimp_brush_real_want_null_motion (GimpBrush  *brush,
 }
 
 static TempBuf *
+gimp_brush_scale_buf (TempBuf *brush_buf,
+                      gint     dest_width,
+                      gint     dest_height)
+{
+  PixelRegion  source_region;
+  PixelRegion  dest_region;
+  TempBuf     *dest_brush_buf;
+
+  pixel_region_init_temp_buf (&source_region, brush_buf,
+                              brush_buf->x,
+                              brush_buf->y,
+                              brush_buf->width,
+                              brush_buf->height);
+
+  dest_brush_buf = temp_buf_new (dest_width, dest_height, brush_buf->bytes, 0, 0, NULL);
+
+  pixel_region_init_temp_buf (&dest_region, dest_brush_buf,
+                              brush_buf->x,
+                              brush_buf->y,
+                              dest_width,
+                              dest_height);
+
+  scale_region (&source_region, &dest_region, GIMP_INTERPOLATION_LINEAR,
+                NULL, NULL);
+
+  return dest_brush_buf;
+}
+
+static void
+gimp_brush_real_scale_size (GimpBrush *brush,
+                            gdouble    scale,
+                            gint      *width,
+                            gint      *height)
+{
+  *width  = (gint) (brush->mask->width  * scale + 0.5);
+  *height = (gint) (brush->mask->height * scale + 0.5);
+}
+
+static TempBuf *
 gimp_brush_real_scale_mask (GimpBrush *brush,
                             gdouble    scale)
 {
-  gint width;
-  gint height;
+  gint dest_width;
+  gint dest_height;
 
-  width  = (gint) (brush->mask->width  * scale + 0.5);
-  height = (gint) (brush->mask->height * scale + 0.5);
+  gimp_brush_scale_size (brush, scale, &dest_width, &dest_height);
 
-  if (width > 0 && height > 0)
-    return brush_scale_mask (brush->mask, width, height);
+  if (dest_width <= 0 || dest_height <= 0)
+    return NULL;
 
-  return NULL;
+  if (scale <= 1.0)
+    {
+      /* Downscaling with brush_scale_mask is much faster than with
+       *  gimp_brush_scale_buf.
+       */
+      return brush_scale_mask (brush->mask, dest_width, dest_height);
+    }
+  else
+    return gimp_brush_scale_buf (brush->mask, dest_width, dest_height);
 }
 
 static TempBuf *
 gimp_brush_real_scale_pixmap (GimpBrush *brush,
                               gdouble    scale)
 {
-  gint width;
-  gint height;
+  gint dest_width;
+  gint dest_height;
 
-  width  = (gint) (brush->pixmap->width  * scale + 0.5);
-  height = (gint) (brush->pixmap->height * scale + 0.5);
+  gimp_brush_scale_size (brush, scale, &dest_width, &dest_height);
 
-  if (width > 0 && height > 0)
-    return brush_scale_pixmap (brush->pixmap, width, height);
+  if (dest_width <= 0 || dest_height <= 0)
+    return NULL;
 
-  return NULL;
+  if (scale <= 1.0)
+    {
+      /* Downscaling with brush_scale_pixmap is much faster than with
+       * gimp_brush_scale_buf. */
+      return brush_scale_pixmap (brush->pixmap, dest_width, dest_height);
+    }
+  else
+    return gimp_brush_scale_buf (brush->pixmap, dest_width, dest_height);
 }
-
 
 /*  public functions  */
 
@@ -474,6 +537,18 @@ gimp_brush_scale_pixmap (GimpBrush *brush,
   g_return_val_if_fail (scale > 0.0, NULL);
 
   return GIMP_BRUSH_GET_CLASS (brush)->scale_pixmap (brush, scale);
+}
+
+void
+gimp_brush_scale_size (GimpBrush     *brush,
+                       gdouble        scale,
+                       gint          *width,
+                       gint          *height)
+{
+  g_return_if_fail (GIMP_IS_BRUSH (brush));
+  g_return_if_fail (scale > 0.0);
+
+  return GIMP_BRUSH_GET_CLASS (brush)->scale_size (brush, scale, width, height);
 }
 
 TempBuf *
