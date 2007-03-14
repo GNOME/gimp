@@ -1,5 +1,9 @@
 2007-03-14  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimppaintoptions.c: limit brush scale to [0.01, 10.0]
+
+2007-03-14  Sven Neumann  <sven@gimp.org>
+
 	* app/base/brush-scale.c: minor cleanups, moved calculations out
 	of the MIN() macro, avoid unneeded floating-point calculations.
 
