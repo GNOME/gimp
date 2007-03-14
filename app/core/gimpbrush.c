@@ -385,16 +385,15 @@ gimp_brush_scale_buf (TempBuf *brush_buf,
   TempBuf     *dest_brush_buf;
 
   pixel_region_init_temp_buf (&source_region, brush_buf,
-                              brush_buf->x,
-                              brush_buf->y,
+                              0, 0,
                               brush_buf->width,
                               brush_buf->height);
 
-  dest_brush_buf = temp_buf_new (dest_width, dest_height, brush_buf->bytes, 0, 0, NULL);
+  dest_brush_buf = temp_buf_new (dest_width, dest_height, brush_buf->bytes,
+                                 0, 0, NULL);
 
   pixel_region_init_temp_buf (&dest_region, dest_brush_buf,
-                              brush_buf->x,
-                              brush_buf->y,
+                              0, 0,
                               dest_width,
                               dest_height);
 
@@ -428,13 +427,13 @@ gimp_brush_real_scale_mask (GimpBrush *brush,
 
   if (scale <= 1.0)
     {
-      /* Downscaling with brush_scale_mask is much faster than with
+      /*  Downscaling with brush_scale_mask is much faster than with
        *  gimp_brush_scale_buf.
        */
       return brush_scale_mask (brush->mask, dest_width, dest_height);
     }
-  else
-    return gimp_brush_scale_buf (brush->mask, dest_width, dest_height);
+
+  return gimp_brush_scale_buf (brush->mask, dest_width, dest_height);
 }
 
 static TempBuf *
@@ -451,13 +450,15 @@ gimp_brush_real_scale_pixmap (GimpBrush *brush,
 
   if (scale <= 1.0)
     {
-      /* Downscaling with brush_scale_pixmap is much faster than with
-       * gimp_brush_scale_buf. */
+      /*  Downscaling with brush_scale_pixmap is much faster than with
+       *  gimp_brush_scale_buf.
+       */
       return brush_scale_pixmap (brush->pixmap, dest_width, dest_height);
     }
-  else
-    return gimp_brush_scale_buf (brush->pixmap, dest_width, dest_height);
+
+  return gimp_brush_scale_buf (brush->pixmap, dest_width, dest_height);
 }
+
 
 /*  public functions  */
 
@@ -518,6 +519,21 @@ gimp_brush_want_null_motion (GimpBrush  *brush,
                                                          cur_coords);
 }
 
+void
+gimp_brush_scale_size (GimpBrush     *brush,
+                       gdouble        scale,
+                       gint          *width,
+                       gint          *height)
+{
+  g_return_if_fail (GIMP_IS_BRUSH (brush));
+  g_return_if_fail (scale > 0.0);
+  g_return_if_fail (width != NULL);
+  g_return_if_fail (height != NULL);
+
+  return GIMP_BRUSH_GET_CLASS (brush)->scale_size (brush, scale,
+                                                   width, height);
+}
+
 TempBuf *
 gimp_brush_scale_mask (GimpBrush *brush,
                        gdouble    scale)
@@ -537,18 +553,6 @@ gimp_brush_scale_pixmap (GimpBrush *brush,
   g_return_val_if_fail (scale > 0.0, NULL);
 
   return GIMP_BRUSH_GET_CLASS (brush)->scale_pixmap (brush, scale);
-}
-
-void
-gimp_brush_scale_size (GimpBrush     *brush,
-                       gdouble        scale,
-                       gint          *width,
-                       gint          *height)
-{
-  g_return_if_fail (GIMP_IS_BRUSH (brush));
-  g_return_if_fail (scale > 0.0);
-
-  return GIMP_BRUSH_GET_CLASS (brush)->scale_size (brush, scale, width, height);
 }
 
 TempBuf *

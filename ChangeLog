@@ -1,3 +1,9 @@
+2007-03-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpbrush.c
+	* app/core/gimpbrushgenerated.c: some minor fixes and stylistic
+	paranoia i overlooked in last night's late review.
+
 2007-03-14  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell.[ch]: cache the display scale

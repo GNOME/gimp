@@ -427,8 +427,8 @@ gimp_brush_generated_dirty (GimpData *data)
 }
 
 /* This function is shared between gimp_brush_scale_size and
- * gimp_brush_generated_calc, therefore we provide a bunch of optional pointers
- * for returnvalues.
+ * gimp_brush_generated_calc, therefore we provide a bunch of optional
+ * pointers for returnvalues.
  */
 static void
 gimp_brush_generated_get_half_size (GimpBrushGenerated      *gbrush,
@@ -487,8 +487,9 @@ gimp_brush_generated_get_half_size (GimpBrushGenerated      *gbrush,
       y_axis.y = c * radius;
     }
 
-  /* These will typically be set then this function is called by
-     gimp_brush_generated_calc, which needs the values in its algorithms. */
+  /*  These will typically be set then this function is called by
+   *  gimp_brush_generated_calc, which needs the values in its algorithms.
+   */
   if (_s != NULL)
     *_s = s;
 
@@ -503,28 +504,26 @@ gimp_brush_generated_get_half_size (GimpBrushGenerated      *gbrush,
 }
 
 static void
-gimp_brush_generated_real_scale_size (GimpBrush  *brush,
+gimp_brush_generated_real_scale_size (GimpBrush  *gbrush,
                                       gdouble     scale,
                                       gint       *width,
                                       gint       *height)
 {
-  GimpBrushGenerated *gbrush;
+  GimpBrushGenerated *brush = GIMP_BRUSH_GENERATED (gbrush);
   gint                half_width;
   gint                half_height;
 
-  gbrush = GIMP_BRUSH_GENERATED (brush);
-
-  gimp_brush_generated_get_half_size (gbrush,
-                                      gbrush->shape,
-                                      gbrush->radius * scale,
-                                      gbrush->spikes,
-                                      gbrush->hardness,
-                                      gbrush->aspect_ratio,
-                                      gbrush->angle,
+  gimp_brush_generated_get_half_size (brush,
+                                      brush->shape,
+                                      brush->radius * scale,
+                                      brush->spikes,
+                                      brush->hardness,
+                                      brush->aspect_ratio,
+                                      brush->angle,
                                       &half_width, &half_height,
                                       NULL, NULL, NULL, NULL);
 
-  *width = half_width * 2 + 1;
+  *width  = half_width  * 2 + 1;
   *height = half_height * 2 + 1;
 }
 
