@@ -1,3 +1,14 @@
+2007-03-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_halt): check
+	if tool->display is there before dereferencing it (bug #418504).
+
+	(gimp_rectangle_tool_start): add "display" parameter and set
+	tool->display here.
+
+	(gimp_rectangle_tool_button_press): pass the display to start()
+	and don't set tool->display here.
+
 2007-03-14  Michael Natterer  <mitch@gimp.org>
 
 	Make the status display stuff local to GimpTool:

@@ -110,7 +110,8 @@ GimpRectangleConstraint
                 gimp_rectangle_tool_get_constraint  (GimpRectangleTool *rectangle);
 
 /*  Rectangle helper functions  */
-static void     gimp_rectangle_tool_start           (GimpRectangleTool *rectangle);
+static void     gimp_rectangle_tool_start           (GimpRectangleTool *rectangle,
+                                                     GimpDisplay       *display);
 static void     gimp_rectangle_tool_halt            (GimpRectangleTool *rectangle);
 static void     gimp_rectangle_tool_draw_guides     (GimpDrawTool      *draw_tool);
 
@@ -487,8 +488,7 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
                     "y2", y,
                     NULL);
 
-      tool->display = display;
-      gimp_rectangle_tool_start (rectangle);
+      gimp_rectangle_tool_start (rectangle, display);
     }
 
   /* save existing shape in case of cancellation */
@@ -1674,10 +1674,12 @@ gimp_rectangle_tool_configure (GimpRectangleTool *rectangle)
 }
 
 static void
-gimp_rectangle_tool_start (GimpRectangleTool *rectangle)
+gimp_rectangle_tool_start (GimpRectangleTool *rectangle,
+                           GimpDisplay       *display)
 {
   GimpTool *tool = GIMP_TOOL (rectangle);
 
+  tool->display = display;
   gimp_rectangle_tool_configure (rectangle);
 
   /* initialize the statusbar display */
@@ -1692,8 +1694,9 @@ gimp_rectangle_tool_halt (GimpRectangleTool *rectangle)
 {
   GimpTool *tool = GIMP_TOOL (rectangle);
 
-  gimp_display_shell_set_highlight (GIMP_DISPLAY_SHELL (tool->display->shell),
-                                    NULL);
+  if (tool->display)
+    gimp_display_shell_set_highlight (GIMP_DISPLAY_SHELL (tool->display->shell),
+                                      NULL);
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (rectangle)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (rectangle));
