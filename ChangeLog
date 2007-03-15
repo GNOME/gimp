@@ -1,3 +1,21 @@
+2007-03-15  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Converted .gbr to .vbr brushes where possible. Fixes bug #322176 and
+	bug #157506.
+
+	* data/brushes/Makefile.am: Changed .gbr for .vbr-counterparts for
+	converted brushes.
+
+	* data/brushes/*circle.gbr:
+	* data/brushes/*fcircle.gbr:
+	* data/brushes/DStar*.gbr:
+	* data/brushes/callig*.gbr: Removed.
+
+	* data/brushes/Circle-*.vbr:
+	* data/brushes/Circle-Fuzzy-*.vbr:
+	* data/brushes/Diagonal-Star-*.vbr:
+	* data/brushes/Calligraphic-Brush-*.vbr: Added.
+
 2007-03-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpaligntool.c
