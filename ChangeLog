@@ -1,3 +1,7 @@
+2007-03-15  Michael Natterer  <mitch@gimp.org>
+
+	* data/brushes/Makefile.am: group files by type.
+
 2007-03-15  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Converted .gbr to .vbr brushes where possible. Fixes bug #322176 and

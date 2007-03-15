@@ -9,6 +9,14 @@ brushdata_DATA = \
 	20x20squareBlur.gbr		\
 	5x5square.gbr			\
 	5x5squareBlur.gbr		\
+	confetti.gbr			\
+	dunes.gbr			\
+	galaxy.gbr			\
+	galaxy_big.gbr			\
+	galaxy_small.gbr		\
+	pepper.gbr			\
+	pixel.gbr			\
+	\
 	Calligraphic-Brush-0.vbr	\
 	Calligraphic-Brush-1.vbr	\
 	Calligraphic-Brush-2.vbr	\
@@ -35,19 +43,13 @@ brushdata_DATA = \
 	Diagonal-Star-11.vbr		\
 	Diagonal-Star-17.vbr		\
 	Diagonal-Star-25.vbr		\
+	\
 	SketchBrush-16.gih		\
 	SketchBrush-32.gih		\
 	SketchBrush-64.gih		\
-	confetti.gbr			\
 	confetti.gih			\
-	dunes.gbr			\
 	feltpen.gih			\
-	galaxy.gbr			\
-	galaxy_big.gbr			\
-	galaxy_small.gbr		\
 	hsparks.gih			\
-	pepper.gbr			\
-	pixel.gbr			\
 	vine.gih
 
 EXTRA_DIST = $(brushdata_DATA)
