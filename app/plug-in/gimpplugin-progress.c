@@ -136,13 +136,11 @@ gimp_plug_in_progress_start (GimpPlugIn  *plug_in,
 }
 
 void
-gimp_plug_in_progress_end (GimpPlugIn *plug_in)
+gimp_plug_in_progress_end (GimpPlugIn          *plug_in,
+                           GimpPlugInProcFrame *proc_frame)
 {
-  GimpPlugInProcFrame *proc_frame;
-
   g_return_if_fail (GIMP_IS_PLUG_IN (plug_in));
-
-  proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+  g_return_if_fail (proc_frame != NULL);
 
   if (proc_frame->progress)
     {
@@ -263,7 +261,7 @@ gimp_plug_in_progress_install (GimpPlugIn  *plug_in,
 
   if (proc_frame->progress)
     {
-      gimp_plug_in_progress_end (plug_in);
+      gimp_plug_in_progress_end (plug_in, proc_frame);
 
       if (proc_frame->progress)
         {
@@ -296,7 +294,7 @@ gimp_plug_in_progress_uninstall (GimpPlugIn  *plug_in,
 
   if (GIMP_IS_PDB_PROGRESS (proc_frame->progress))
     {
-      gimp_plug_in_progress_end (plug_in);
+      gimp_plug_in_progress_end (plug_in, proc_frame);
       g_object_unref (proc_frame->progress);
       proc_frame->progress = NULL;
 

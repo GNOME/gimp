@@ -91,7 +91,7 @@ gimp_plug_in_proc_frame_dispose (GimpPlugInProcFrame *proc_frame,
 
   if (proc_frame->progress)
     {
-      gimp_plug_in_progress_end (plug_in);
+      gimp_plug_in_progress_end (plug_in, proc_frame);
 
       if (proc_frame->progress)
         {

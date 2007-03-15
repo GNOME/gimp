@@ -1,3 +1,23 @@
+2007-03-16  Michael Natterer  <mitch@gimp.org>
+
+	Fix stuck progress bars (bug #393832):
+
+	* app/plug-in/gimpplugin-progress.[ch] (gimp_plug_in_progress_end):
+	added PlugInProcFrame parameter instead of blindly using the topmost
+	in the procedure stack...
+
+	* app/plug-in/gimppluginprocframe.c
+	(gimp_plug_in_proc_frame_dispose): ...because we call it from here,
+	when the proc_frame is already removed from the procedure stack.
+
+	Unrelated:
+
+	* plug-ins/script-fu/scripts/difference-clouds.scm: use
+	RUN-INTERACTVE instead of 0, added (gimp-displays-flush)
+
+	* plug-ins/common/snoise.c (solid_noide): update the progress to
+	1.0 after rendering.
+
 2007-03-15  Michael Natterer  <mitch@gimp.org>
 
 	* data/brushes/Makefile.am: group files by type.

@@ -361,6 +361,8 @@ solid_noise (GimpDrawable *drawable,
           if (i % 16 == 0)
             gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
         }
+
+      gimp_progress_update (1.0);
     }
 
   /*  Update the drawable  */

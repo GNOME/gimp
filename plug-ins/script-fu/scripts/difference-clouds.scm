@@ -53,12 +53,14 @@
       (gimp-layer-translate diff-clouds offset-x offset-y))
 
     ; Show the solid noise dialog
-    (plug-in-solid-noise 0 image diff-clouds 0 0 0 1 4.0 4.0)
+    (plug-in-solid-noise RUN-INTERACTIVE image diff-clouds 0 0 0 1 4.0 4.0)
 
     ; Merge the clouds layer with the layer below
     (gimp-image-merge-down image diff-clouds EXPAND-AS-NECESSARY)
 
     (gimp-image-undo-group-end image)
+
+    (gimp-displays-flush)
   )
 )
 
