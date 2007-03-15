@@ -1,5 +1,10 @@
 2007-03-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimppaintoptions-gui.c (gimp_paint_options_gui): "adj"
+	is a GtkObject not a GtkWidget, also moved it to its local scope.
+
+2007-03-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_halt): check
 	if tool->display is there before dereferencing it (bug #418504).
 
