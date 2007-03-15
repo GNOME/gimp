@@ -239,7 +239,6 @@ gimp_align_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_HALT:
       clear_all_selected_objects (align_tool);
-      gimp_tool_pop_status (tool, display);
       break;
     }
 

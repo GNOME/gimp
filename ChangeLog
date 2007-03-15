@@ -1,5 +1,17 @@
 2007-03-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpaligntool.c
+	* app/tools/gimpcolorpickertool.c
+	* app/tools/gimppainttool.c
+	* app/tools/gimpvectortool.c: remove gimp_tool_pop_status() from
+	control() implementations because GimpTool does this generically now.
+
+	* app/tools/gimpblendtool.c
+	* app/tools/gimpselectiontool.c: remove entire control()
+	implementations because they were doing nothing else.
+
+2007-03-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimppaintoptions-gui.c (gimp_paint_options_gui): "adj"
 	is a GtkObject not a GtkWidget, also moved it to its local scope.
 

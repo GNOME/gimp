@@ -54,9 +54,6 @@
 static gboolean gimp_blend_tool_initialize        (GimpTool              *tool,
                                                    GimpDisplay           *display,
                                                    GError               **error);
-static void   gimp_blend_tool_control             (GimpTool              *tool,
-                                                   GimpToolAction         action,
-                                                   GimpDisplay           *display);
 static void   gimp_blend_tool_button_press        (GimpTool              *tool,
                                                    GimpCoords            *coords,
                                                    guint32                time,
@@ -122,7 +119,6 @@ gimp_blend_tool_class_init (GimpBlendToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  tool_class->control             = gimp_blend_tool_control;
   tool_class->initialize          = gimp_blend_tool_initialize;
   tool_class->button_press        = gimp_blend_tool_button_press;
   tool_class->button_release      = gimp_blend_tool_button_release;
@@ -169,25 +165,6 @@ gimp_blend_tool_initialize (GimpTool     *tool,
     }
 
   return TRUE;
-}
-
-static void
-gimp_blend_tool_control (GimpTool       *tool,
-                         GimpToolAction  action,
-                         GimpDisplay    *display)
-{
-  switch (action)
-    {
-    case GIMP_TOOL_ACTION_PAUSE:
-    case GIMP_TOOL_ACTION_RESUME:
-      break;
-
-    case GIMP_TOOL_ACTION_HALT:
-      gimp_tool_pop_status (tool, display);
-      break;
-    }
-
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void

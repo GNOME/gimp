@@ -173,7 +173,6 @@ gimp_color_picker_tool_control (GimpTool       *tool,
       if (picker_tool->dialog)
         gimp_color_picker_tool_info_response (NULL, GTK_RESPONSE_CLOSE,
                                               picker_tool);
-      gimp_tool_pop_status (tool, display);
       break;
     }
 

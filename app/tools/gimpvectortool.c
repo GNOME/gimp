@@ -231,7 +231,6 @@ gimp_vector_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_HALT:
       gimp_vector_tool_set_vectors (vector_tool, NULL);
-      gimp_tool_pop_status (tool, display);
       break;
     }
 

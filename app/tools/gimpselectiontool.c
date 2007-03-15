@@ -41,9 +41,6 @@
 #include "gimp-intl.h"
 
 
-static void   gimp_selection_tool_control       (GimpTool        *tool,
-                                                 GimpToolAction   action,
-                                                 GimpDisplay     *display);
 static void   gimp_selection_tool_modifier_key  (GimpTool        *tool,
                                                  GdkModifierType  key,
                                                  gboolean         press,
@@ -70,7 +67,6 @@ gimp_selection_tool_class_init (GimpSelectionToolClass *klass)
 {
   GimpToolClass *tool_class = GIMP_TOOL_CLASS (klass);
 
-  tool_class->control       = gimp_selection_tool_control;
   tool_class->modifier_key  = gimp_selection_tool_modifier_key;
   tool_class->key_press     = gimp_edit_selection_tool_key_press;
   tool_class->oper_update   = gimp_selection_tool_oper_update;
@@ -84,25 +80,6 @@ gimp_selection_tool_init (GimpSelectionTool *selection_tool)
   selection_tool->saved_operation = GIMP_CHANNEL_OP_REPLACE;
 
   selection_tool->allow_move      = TRUE;
-}
-
-static void
-gimp_selection_tool_control (GimpTool       *tool,
-                             GimpToolAction  action,
-                             GimpDisplay    *display)
-{
-  switch (action)
-    {
-    case GIMP_TOOL_ACTION_PAUSE:
-    case GIMP_TOOL_ACTION_RESUME:
-      break;
-
-    case GIMP_TOOL_ACTION_HALT:
-      gimp_tool_pop_status (tool, display);
-      break;
-    }
-
-  GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
 }
 
 static void

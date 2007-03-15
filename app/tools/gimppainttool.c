@@ -222,7 +222,6 @@ gimp_paint_tool_control (GimpTool       *tool,
                              GIMP_PAINT_TOOL_GET_OPTIONS (tool),
                              GIMP_PAINT_STATE_FINISH, 0);
       gimp_paint_core_cleanup (paint_tool->core);
-      gimp_tool_pop_status (tool, display);
       break;
     }
 
