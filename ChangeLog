@@ -1,5 +1,10 @@
 2007-03-16  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/script-fu.c: remove N_() from calls to
+	gimp_plugin_menu_register().
+
+2007-03-16  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/scripts/spyrogimp.scm: update the progress
 	to avoid looking like the script hangs. Fixes bug #356677.
 

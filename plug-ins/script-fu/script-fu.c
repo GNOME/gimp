@@ -120,7 +120,7 @@ script_fu_query (void)
                           console_args, NULL);
 
   gimp_plugin_menu_register ("plug-in-script-fu-console",
-                             N_("<Toolbox>/Xtns/Languages/Script-Fu"));
+                             "<Toolbox>/Xtns/Languages/Script-Fu");
 
   gimp_install_procedure ("plug-in-script-fu-text-console",
                           "Provides a text console mode for script-fu "
@@ -149,7 +149,7 @@ script_fu_query (void)
                           server_args, NULL);
 
   gimp_plugin_menu_register ("plug-in-script-fu-server",
-                             N_("<Toolbox>/Xtns/Languages/Script-Fu"));
+                             "<Toolbox>/Xtns/Languages/Script-Fu");
 
   gimp_install_procedure ("plug-in-script-fu-eval",
                           "Evaluate scheme code",
@@ -362,7 +362,7 @@ script_fu_extension_init (void)
                           script_fu_refresh_proc);
 
   gimp_plugin_menu_register ("script-fu-refresh",
-                             N_("<Toolbox>/Xtns/Languages/Script-Fu"));
+                             "<Toolbox>/Xtns/Languages/Script-Fu");
 }
 
 static void
