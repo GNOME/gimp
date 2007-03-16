@@ -131,26 +131,38 @@ script_fu_interface_report_cc (const gchar *command)
   if (sf_interface->last_command &&
       strcmp (sf_interface->last_command, command) == 0)
     {
-      gchar *new_command;
-
       sf_interface->command_count++;
 
-      new_command = g_strdup_printf ("%s <%d>",
-                                     command, sf_interface->command_count);
-      gtk_label_set_text (GTK_LABEL (sf_interface->progress_label),
-                          new_command);
-      g_free (new_command);
+      if (! g_str_has_prefix (command, "gimp-progress-"))
+        {
+          gchar *new_command;
+
+          new_command = g_strdup_printf ("%s <%d>",
+                                         command, sf_interface->command_count);
+          gtk_label_set_text (GTK_LABEL (sf_interface->progress_label),
+                              new_command);
+          g_free (new_command);
+        }
     }
   else
     {
       sf_interface->command_count = 1;
-      gtk_label_set_text (GTK_LABEL (sf_interface->progress_label), command);
 
       g_free (sf_interface->last_command);
       sf_interface->last_command = g_strdup (command);
+
+      if (! g_str_has_prefix (command, "gimp-progress-"))
+        {
+          gtk_label_set_text (GTK_LABEL (sf_interface->progress_label), command);
+        }
+      else
+        {
+          gtk_label_set_text (GTK_LABEL (sf_interface->progress_label), "");
+        }
     }
 
-  while (gtk_main_iteration ());
+  while (g_main_context_pending (NULL))
+    g_main_context_iteration (NULL, TRUE);
 }
 
 void

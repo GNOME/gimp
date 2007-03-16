@@ -1,5 +1,17 @@
 2007-03-16  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/scripts/spyrogimp.scm: update the progress
+	to avoid looking like the script hangs. Fixes bug #356677.
+
+	* plug-ins/script-fu/script-fu-interface.c
+	(script_fu_interface_report_cc): if the command starts with
+	"gimp-progress-", the script is obviously showing a progress bar
+	for itself, so clear the text instead of showing an endless number
+	of "gimp-progress-update" messages. Also fixed manual main loop
+	iteration.
+
+2007-03-16  Michael Natterer  <mitch@gimp.org>
+
 	Fix stuck progress bars (bug #393832):
 
 	* app/plug-in/gimpplugin-progress.[ch] (gimp_plug_in_progress_end):

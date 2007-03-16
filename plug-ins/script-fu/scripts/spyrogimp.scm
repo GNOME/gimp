@@ -240,6 +240,8 @@
       (gimp-context-set-opacity (* 100 (car (cdr brush))))
       (gimp-context-set-paint-mode (car (cdr (cdr (cdr brush)))))
 
+      (gimp-progress-set-text _"Rendering Spyro")
+
       (while (< index steps)
 
           (calc-and-step!)
@@ -269,11 +271,16 @@
           )
 
           (set! index (+ index 1))
-      )
 
+	  (if (= 0 (modulo index 16))
+	      (gimp-progress-update (/ index steps))
+	  )
+      )
 
       ; Draw remaining points.
       (flush-points point-index)
+
+      (gimp-progress-update 1.0)
 
       (gimp-image-undo-group-end img)
       (gimp-displays-flush)
