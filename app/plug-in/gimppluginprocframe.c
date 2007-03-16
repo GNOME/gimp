@@ -179,9 +179,15 @@ gimp_plug_in_proc_frame_get_return_vals (GimpPlugInProcFrame *proc_frame)
           memcpy (return_vals->values, proc_frame->return_vals->values,
                   sizeof (GValue) * proc_frame->return_vals->n_values);
 
-          /* Free the old argument pointer. */
-          g_free (proc_frame->return_vals);
+          /* Free the old arguments. */
+          g_free (proc_frame->return_vals->values);
+          proc_frame->return_vals->values = 0;
+          proc_frame->return_vals->n_values = 0;
+          g_value_array_free (proc_frame->return_vals);
         }
+
+      /* We have consumed any saved values, so clear them. */
+      proc_frame->return_vals = NULL;
     }
   else
     {
@@ -189,9 +195,6 @@ gimp_plug_in_proc_frame_get_return_vals (GimpPlugInProcFrame *proc_frame)
       return_vals = gimp_procedure_get_return_values (proc_frame->procedure,
                                                       FALSE);
     }
-
-  /* We have consumed any saved values, so clear them. */
-  proc_frame->return_vals = NULL;
 
   return return_vals;
 }

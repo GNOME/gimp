@@ -1,5 +1,14 @@
 2007-03-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/plug-in/gimppluginprocframe.c
+	(gimp_plug_in_proc_frame_get_return_vals): don't just g_free() the
+	GValueArray after we memcpy()-stole its values because this both
+	leaks the contained array of GValues and crashes with glib trunk
+	where GValueArray is slice-allocated. Instead, free the array of
+	GValues manually, set it to NULL and use g_value_array_free().
+
+2007-03-16  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/script-fu/script-fu.c: remove N_() from calls to
 	gimp_plugin_menu_register().
 
