@@ -234,7 +234,10 @@ query (void)
                           load_args, load_return_vals);
 
   gimp_register_file_handler_mime (LOAD_PROC, "image/x-tga");
-  gimp_register_load_handler (LOAD_PROC, "tga", "");
+  gimp_register_magic_load_handler (LOAD_PROC,
+                                    "tga,vda,icb,vst",
+                                    "",
+                                    "-18&,string,TRUEVISION-XFILE.,-1,byte,0");
 
   gimp_install_procedure (SAVE_PROC,
                           "saves files in the Targa file format",

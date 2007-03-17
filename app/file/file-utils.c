@@ -276,7 +276,6 @@ file_utils_find_proc (GSList       *procs,
       FILE                *ifp               = NULL;
       gint                 head_size         = -2;
       gint                 size_match_count  = 0;
-      FileMatchType        match_val;
       guchar               head[256];
 
       while (procs)
@@ -305,16 +304,19 @@ file_utils_find_proc (GSList       *procs,
 
               if (head_size >= 4)
                 {
+                  FileMatchType match_val;
+
                   match_val = file_check_magic_list (file_proc->magics_list,
                                                      head, head_size,
                                                      ifp);
 
-                  if (match_val == 2)  /* size match ? */
-                    { /* Use it only if no other magic matches */
+                  if (match_val == FILE_MATCH_SIZE)
+                    {
+                      /* Use it only if no other magic matches */
                       size_match_count++;
                       size_matched_proc = file_proc;
                     }
-                  else if (match_val)
+                  else if (match_val != FILE_MATCH_NONE)
                     {
                       fclose (ifp);
                       g_free (filename);
@@ -817,9 +819,6 @@ file_check_single_magic (const gchar  *offset,
   if (sscanf (offset, "%ld", &offs) != 1)
     return FILE_MATCH_NONE;
 
-  if (offs < 0)
-    return FILE_MATCH_NONE;
-
   /* Check type of test */
   num_operator_ptr = NULL;
   num_operator     = '\0';
@@ -895,16 +894,17 @@ file_check_single_magic (const gchar  *offset,
 
           fileval = buf.st_size;
         }
-      else if (offs + numbytes <= headsize)  /* We have it in memory ? */
+      else if (offs > 0 &&
+               (offs + numbytes <= headsize)) /* We have it in memory ? */
         {
           for (k = 0; k < numbytes; k++)
-            fileval = (fileval << 8) | (glong) file_head[offs+k];
+            fileval = (fileval << 8) | (glong) file_head[offs + k];
         }
       else   /* Read it from file */
         {
           gint c = 0;
 
-          if (fseek (ifp, offs, SEEK_SET) < 0)
+          if (fseek (ifp, offs, (offs > 0) ? SEEK_SET : SEEK_END) < 0)
             return FILE_MATCH_NONE;
 
           for (k = 0; k < numbytes; k++)
@@ -938,13 +938,14 @@ file_check_single_magic (const gchar  *offset,
       if (numbytes <= 0)
         return FILE_MATCH_NONE;
 
-      if (offs + numbytes <= headsize)  /* We have it in memory ? */
+      if (offs > 0 &&
+          (offs + numbytes <= headsize)) /* We have it in memory ? */
         {
           found = (memcmp (mem_testval, file_head + offs, numbytes) == 0);
         }
       else   /* Read it from file */
         {
-          if (fseek (ifp, offs, SEEK_SET) < 0)
+          if (fseek (ifp, offs, (offs > 0) ? SEEK_SET : SEEK_END) < 0)
             return FILE_MATCH_NONE;
 
           found = FILE_MATCH_MAGIC;
@@ -972,7 +973,7 @@ file_check_magic_list (GSList       *magics_list,
   const gchar   *type;
   const gchar   *value;
   gboolean       and   = FALSE;
-  FileMatchType  found = FILE_MATCH_NONE;
+  gboolean       found = FALSE;
   FileMatchType  match_val;
 
   while (magics_list)
@@ -989,13 +990,13 @@ file_check_magic_list (GSList       *magics_list,
                                            head, headsize,
                                            ifp);
       if (and)
-        found = found && match_val;
+        found = found && (match_val != FILE_MATCH_NONE);
       else
-        found = match_val;
+        found = (match_val != FILE_MATCH_NONE);
 
       and = (strchr (offset, '&') != NULL);
 
-      if ((! and) && found)
+      if (! and && found)
         return match_val;
     }
 

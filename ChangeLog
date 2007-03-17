@@ -1,5 +1,21 @@
 2007-03-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/file/file-utils.c (file_check_single_magic): alow negative
+	offsets in magics and interpret them as relative to the end of the
+	file.
+
+	(file_utils_find_proc)
+	(file_check_magic_list): some cleanup.
+
+	* plug-ins/common/tga.c (query): register the magic string
+	"TRUEVISION-XFILE.\0" 18 bytes before the end of the file.
+	This way, "new style" TGA files are detected regardless of
+	their filename. "old style" TGA files still need the right
+	extension to be treated as TGA. Added "vda", "icb" and "vst"
+	to the list of extensions. Fixes bug #133798.
+
+2007-03-17  Michael Natterer  <mitch@gimp.org>
+
 	Make the height of the previews in data editors configurable.
 	Fixes bug #337757.
 
