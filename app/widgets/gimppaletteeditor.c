@@ -171,28 +171,28 @@ gimp_palette_editor_docked_iface_init (GimpDockedInterface *iface)
 static void
 gimp_palette_editor_init (GimpPaletteEditor *editor)
 {
-  GtkWidget *scrolled_win;
-  GtkWidget *eventbox;
-  GtkWidget *alignment;
-  GtkWidget *hbox;
-  GtkWidget *label;
-  GtkWidget *spinbutton;
+  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+  GtkWidget      *eventbox;
+  GtkWidget      *alignment;
+  GtkWidget      *hbox;
+  GtkWidget      *label;
+  GtkWidget      *spinbutton;
 
   editor->zoom_factor = 1.0;
   editor->col_width   = 0;
   editor->last_width  = 0;
   editor->columns     = COLUMNS;
 
-  editor->scrolled_window = scrolled_win = gtk_scrolled_window_new (NULL, NULL);
-  gtk_widget_set_size_request (scrolled_win, -1, PREVIEW_HEIGHT);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_win),
+  data_editor->view = gtk_scrolled_window_new (NULL, NULL);
+  gtk_widget_set_size_request (data_editor->view, -1, PREVIEW_HEIGHT);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (data_editor->view),
                                   GTK_POLICY_AUTOMATIC,
                                   GTK_POLICY_AUTOMATIC);
-  gtk_box_pack_start (GTK_BOX (editor), scrolled_win, TRUE, TRUE, 0);
-  gtk_widget_show (scrolled_win);
+  gtk_box_pack_start (GTK_BOX (editor), data_editor->view, TRUE, TRUE, 0);
+  gtk_widget_show (data_editor->view);
 
   eventbox = gtk_event_box_new ();
-  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolled_win),
+  gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (data_editor->view),
                                          eventbox);
   gtk_widget_show (eventbox);
 
@@ -870,14 +870,15 @@ palette_editor_resize (GimpPaletteEditor *editor,
 static void
 palette_editor_scroll_top_left (GimpPaletteEditor *palette_editor)
 {
-  GtkAdjustment *hadj;
-  GtkAdjustment *vadj;
+  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (palette_editor);
+  GtkAdjustment  *hadj;
+  GtkAdjustment  *vadj;
 
-  if (! palette_editor->scrolled_window)
+  if (! data_editor->view)
     return;
 
-  hadj = gtk_scrolled_window_get_hadjustment (GTK_SCROLLED_WINDOW (palette_editor->scrolled_window));
-  vadj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (palette_editor->scrolled_window));
+  hadj = gtk_scrolled_window_get_hadjustment (GTK_SCROLLED_WINDOW (data_editor->view));
+  vadj = gtk_scrolled_window_get_vadjustment (GTK_SCROLLED_WINDOW (data_editor->view));
 
   if (hadj)
     gtk_adjustment_set_value (hadj, 0.0);

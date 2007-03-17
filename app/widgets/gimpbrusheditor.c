@@ -42,8 +42,7 @@
 #include "gimp-intl.h"
 
 
-#define BRUSH_VIEW_WIDTH  128
-#define BRUSH_VIEW_HEIGHT  96
+#define BRUSH_VIEW_SIZE 96
 
 
 /*  local function prototypes  */
@@ -105,26 +104,26 @@ gimp_brush_editor_docked_iface_init (GimpDockedInterface *iface)
 static void
 gimp_brush_editor_init (GimpBrushEditor *editor)
 {
-  GtkWidget *frame;
-  GtkWidget *box;
-  gint       row = 0;
+  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (editor);
+  GtkWidget      *frame;
+  GtkWidget      *box;
+  gint            row = 0;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (editor), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-  editor->view = gimp_view_new_full_by_types (NULL,
-                                              GIMP_TYPE_VIEW,
-                                              GIMP_TYPE_BRUSH,
-                                              BRUSH_VIEW_WIDTH,
-                                              BRUSH_VIEW_HEIGHT, 0,
-                                              FALSE, FALSE, TRUE);
-  gtk_widget_set_size_request (editor->view,
-                               BRUSH_VIEW_WIDTH, BRUSH_VIEW_HEIGHT);
-  gimp_view_set_expand (GIMP_VIEW (editor->view), TRUE);
-  gtk_container_add (GTK_CONTAINER (frame), editor->view);
-  gtk_widget_show (editor->view);
+  data_editor->view = gimp_view_new_full_by_types (NULL,
+                                                   GIMP_TYPE_VIEW,
+                                                   GIMP_TYPE_BRUSH,
+                                                   BRUSH_VIEW_SIZE,
+                                                   BRUSH_VIEW_SIZE, 0,
+                                                   FALSE, FALSE, TRUE);
+  gtk_widget_set_size_request (data_editor->view, -1, BRUSH_VIEW_SIZE);
+  gimp_view_set_expand (GIMP_VIEW (data_editor->view), TRUE);
+  gtk_container_add (GTK_CONTAINER (frame), data_editor->view);
+  gtk_widget_show (data_editor->view);
 
   editor->shape_group = NULL;
 
@@ -269,8 +268,7 @@ gimp_brush_editor_set_data (GimpDataEditor *editor,
                       G_CALLBACK (gimp_brush_editor_notify_brush),
                       editor);
 
-  gimp_view_set_viewable (GIMP_VIEW (brush_editor->view),
-                          (GimpViewable *) data);
+  gimp_view_set_viewable (GIMP_VIEW (editor->view), GIMP_VIEWABLE (data));
 
   if (editor->data && GIMP_IS_BRUSH_GENERATED (editor->data))
     {
@@ -302,11 +300,11 @@ static void
 gimp_brush_editor_set_context (GimpDocked  *docked,
                                GimpContext *context)
 {
-  GimpBrushEditor *editor = GIMP_BRUSH_EDITOR (docked);
+  GimpDataEditor *data_editor = GIMP_DATA_EDITOR (docked);
 
   parent_docked_iface->set_context (docked, context);
 
-  gimp_view_renderer_set_context (GIMP_VIEW (editor->view)->renderer,
+  gimp_view_renderer_set_context (GIMP_VIEW (data_editor->view)->renderer,
                                   context);
 }
 

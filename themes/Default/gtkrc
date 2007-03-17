@@ -51,6 +51,7 @@ style "gimp-default-style"
   GimpEditor::content_spacing       = 2
   GimpEditor::button_spacing        = 2
   GimpEditor::button_icon_size      = menu
+  GimpDataEditor::minimal_height    = 96
   GtkDialog::content_area_border    = 0
   GtkDialog::button_spacing         = 6
   GtkDialog::action_area_border     = 12

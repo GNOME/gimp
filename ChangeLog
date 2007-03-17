@@ -1,3 +1,24 @@
+2007-03-17  Michael Natterer  <mitch@gimp.org>
+
+	Make the height of the previews in data editors configurable.
+	Fixes bug #337757.
+
+	* app/widgets/gimpdataeditor.[ch]: add member "view" which needs
+	to be set by subclasses. Add style property "minimal-height" which
+	defaults to 96. Add style_set() implementation which sets
+	editor->view's height to the configured value.
+
+	* app/widgets/gimpbrusheditor.[ch]
+	* app/widgets/gimpgradienteditor.[ch]
+	* app/widgets/gimppaletteeditor.[ch]: use data_editor->view for
+	storing the view widget and removed own view members. Remove
+	separate #defines for the view's default width and height, it's
+	width follows the dialog anyway.
+
+	* themes/Default/gtkrc: document the default value of 96.
+
+	* themes/Small/gtkrc: set it to 64.
+
 2007-03-17  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/script-fu-compat.init: Fixed syntax

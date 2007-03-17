@@ -38,7 +38,6 @@ struct _GimpPaletteEditor
   GimpDataEditor    parent_instance;
 
   GtkWidget        *view;
-  GtkWidget        *scrolled_window;
 
   GtkWidget        *color_name;
   GtkAdjustment    *columns_data;

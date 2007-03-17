@@ -58,7 +58,6 @@ struct _GimpGradientEditor
   GtkWidget      *hint_label3;
   GtkWidget      *hint_label4;
   GtkWidget      *scrollbar;
-  GtkWidget      *view;
   GtkWidget      *control;
 
   /*  Zoom and scrollbar  */

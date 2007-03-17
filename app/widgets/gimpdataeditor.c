@@ -45,6 +45,9 @@
 #include "gimp-intl.h"
 
 
+#define DEFAULT_MINIMAL_HEIGHT 96
+
+
 enum
 {
   PROP_0,
@@ -68,6 +71,9 @@ static void       gimp_data_editor_get_property      (GObject        *object,
                                                       GValue         *value,
                                                       GParamSpec     *pspec);
 static void       gimp_data_editor_dispose           (GObject        *object);
+
+static void       gimp_data_editor_style_set         (GtkWidget      *widget,
+                                                      GtkStyle       *prev_style);
 
 static void       gimp_data_editor_set_context       (GimpDocked     *docked,
                                                       GimpContext    *context);
@@ -113,12 +119,15 @@ static GimpDockedInterface *parent_docked_iface = NULL;
 static void
 gimp_data_editor_class_init (GimpDataEditorClass *klass)
 {
-  GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
+  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
   object_class->constructor  = gimp_data_editor_constructor;
   object_class->set_property = gimp_data_editor_set_property;
   object_class->get_property = gimp_data_editor_get_property;
   object_class->dispose      = gimp_data_editor_dispose;
+
+  widget_class->style_set    = gimp_data_editor_style_set;
 
   klass->set_data            = gimp_data_editor_real_set_data;
 
@@ -140,6 +149,14 @@ gimp_data_editor_class_init (GimpDataEditorClass *klass)
                                                         NULL, NULL,
                                                         GIMP_TYPE_DATA,
                                                         GIMP_PARAM_READWRITE));
+
+  gtk_widget_class_install_style_property (widget_class,
+                                           g_param_spec_int ("minimal-height",
+                                                             NULL, NULL,
+                                                             32,
+                                                             G_MAXINT,
+                                                             DEFAULT_MINIMAL_HEIGHT,
+                                                             GIMP_PARAM_READABLE));
 }
 
 static void
@@ -287,6 +304,24 @@ gimp_data_editor_dispose (GObject *object)
     gimp_docked_set_context (GIMP_DOCKED (editor), NULL);
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_data_editor_style_set (GtkWidget *widget,
+                            GtkStyle  *prev_style)
+{
+  GimpDataEditor *editor = GIMP_DATA_EDITOR (widget);
+  gint            minimal_height;
+
+  if (GTK_WIDGET_CLASS (parent_class)->style_set)
+    GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
+
+  gtk_widget_style_get (widget,
+                        "minimal-height", &minimal_height,
+                        NULL);
+
+  if (editor->view)
+    gtk_widget_set_size_request (editor->view, -1, minimal_height);
 }
 
 static void

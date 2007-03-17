@@ -49,6 +49,8 @@ struct _GimpDataEditor
 
   GtkWidget       *name_entry;
 
+  GtkWidget       *view; /* filled by subclasses */
+
   GtkWidget       *save_button;
   GtkWidget       *revert_button;
 };
