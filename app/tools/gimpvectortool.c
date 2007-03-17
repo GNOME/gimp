@@ -39,6 +39,8 @@
 #include "core/gimptoolinfo.h"
 #include "core/gimpundostack.h"
 
+#include "paint/gimppaintoptions.h" /* GIMP_PAINT_OPTIONS_CONTEXT_MASK */
+
 #include "vectors/gimpanchor.h"
 #include "vectors/gimpvectors.h"
 #include "vectors/gimpbezierstroke.h"
@@ -152,7 +154,8 @@ gimp_vector_tool_register (GimpToolRegisterCallback callback,
   (* callback) (GIMP_TYPE_VECTOR_TOOL,
                 GIMP_TYPE_VECTOR_OPTIONS,
                 gimp_vector_options_gui,
-                0,
+                GIMP_PAINT_OPTIONS_CONTEXT_MASK |
+                GIMP_CONTEXT_GRADIENT_MASK, /* for stroking */
                 "gimp-vector-tool",
                 _("Paths"),
                 _("Paths Tool: Create and edit paths"),
