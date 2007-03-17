@@ -1,3 +1,9 @@
+2007-03-17  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scripts/script-fu-compat.init: Fixed syntax
+	error in string-trim-left function (spotted by Saul Goode). Added
+	compatability routine for 'verbose'.
+
 2007-03-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpvectortool.c (gimp_vector_tool_register):

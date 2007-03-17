@@ -197,7 +197,7 @@
 
 (define (string-trim-left str)
   (let (
-       (strlen string-length str)
+       (strlen (string-length str))
        (i 0)
        )
 
@@ -358,4 +358,13 @@
 
 (define (trunc n)
   (inexact->exact (truncate n))
+)
+
+(define verbose
+  (lambda n
+    (if (or (null? n) (not (number? (car n))))
+      0
+      (car n)
+    )
+  )
 )
