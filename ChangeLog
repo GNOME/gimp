@@ -1,6 +1,12 @@
+2007-03-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/file/file-utils.c (file_check_single_magic): jikes, the
+	offset is to be interpreted as offset from the start of the file
+	for offset >= 0, not offset > 0.
+
 2007-03-17  Michael Natterer  <mitch@gimp.org>
 
-	* app/file/file-utils.c (file_check_single_magic): alow negative
+	* app/file/file-utils.c (file_check_single_magic): allow negative
 	offsets in magics and interpret them as relative to the end of the
 	file.
 

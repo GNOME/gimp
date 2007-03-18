@@ -894,7 +894,7 @@ file_check_single_magic (const gchar  *offset,
 
           fileval = buf.st_size;
         }
-      else if (offs > 0 &&
+      else if (offs >= 0 &&
                (offs + numbytes <= headsize)) /* We have it in memory ? */
         {
           for (k = 0; k < numbytes; k++)
@@ -904,7 +904,7 @@ file_check_single_magic (const gchar  *offset,
         {
           gint c = 0;
 
-          if (fseek (ifp, offs, (offs > 0) ? SEEK_SET : SEEK_END) < 0)
+          if (fseek (ifp, offs, (offs >= 0) ? SEEK_SET : SEEK_END) < 0)
             return FILE_MATCH_NONE;
 
           for (k = 0; k < numbytes; k++)
@@ -938,14 +938,14 @@ file_check_single_magic (const gchar  *offset,
       if (numbytes <= 0)
         return FILE_MATCH_NONE;
 
-      if (offs > 0 &&
+      if (offs >= 0 &&
           (offs + numbytes <= headsize)) /* We have it in memory ? */
         {
           found = (memcmp (mem_testval, file_head + offs, numbytes) == 0);
         }
       else   /* Read it from file */
         {
-          if (fseek (ifp, offs, (offs > 0) ? SEEK_SET : SEEK_END) < 0)
+          if (fseek (ifp, offs, (offs >= 0) ? SEEK_SET : SEEK_END) < 0)
             return FILE_MATCH_NONE;
 
           found = FILE_MATCH_MAGIC;
