@@ -902,11 +902,9 @@ gimp_brush_core_calc_brush_scale (GimpBrushCore    *core,
     {
       if (GIMP_PAINT_CORE (core)->use_pressure)
         {
-          GimpPressureOptions *pressure_options = paint_options->pressure_options;
-
-          if (pressure_options->inverse_size)
+          if (paint_options->pressure_options->inverse_size)
             scale = 1.0 - 0.9 * pressure;
-          else if (pressure_options->size)
+          else if (paint_options->pressure_options->size)
             scale = pressure;
 
           if (scale < 1 / 256.0)
@@ -1097,6 +1095,7 @@ gimp_brush_core_pressurize_mask (GimpBrushCore *core,
                                        brush_mask->height + 2);
 
 #ifdef FANCY_PRESSURE
+
   /* Create the pressure profile
    *
    * It is: I'(I) = tanh (20 * (pressure - 0.5) * I)           : pressure > 0.5
@@ -1106,10 +1105,10 @@ gimp_brush_core_pressurize_mask (GimpBrushCore *core,
    *
    *    low pressure      medium pressure     high pressure
    *
-   *         |                   /                 --
-   *         |                    /                 /
-   *        /                    /                 |
-   *      --                  /                         |
+   *         |                   /                  --
+   *         |                  /                  /
+   *        /                  /                  |
+   *      --                  /                   |
    */
   {
     static gdouble  map[256];
@@ -1140,11 +1139,13 @@ gimp_brush_core_pressurize_mask (GimpBrushCore *core,
             map[i] = s / c;
             s += c * ds;
             c += s * ds;
-        }
+          }
 
         for (i = 0; i < 256; i++)
           mapi[i] = (gint) (255 * (1 - map[i] / map[0]));
       }
+  }
+
 #else /* ! FANCY_PRESSURE */
 
   {
@@ -1254,8 +1255,8 @@ static MaskBuf *
 gimp_brush_core_scale_mask (GimpBrushCore *core,
                             GimpBrush     *brush)
 {
-  gint dest_width;
-  gint dest_height;
+  gint width;
+  gint height;
 
   if (core->scale <= 0.0)
     return NULL;
@@ -1263,20 +1264,20 @@ gimp_brush_core_scale_mask (GimpBrushCore *core,
   if (core->scale == 1.0)
     return brush->mask;
 
-  gimp_brush_scale_size (brush, core->scale, &dest_width, &dest_height);
+  gimp_brush_scale_size (brush, core->scale, &width, &height);
 
   if (! core->cache_invalid                 &&
       core->scale_brush                     &&
       brush->mask == core->last_scale_brush &&
-      dest_width  == core->last_scale_width &&
-      dest_height == core->last_scale_height)
+      width       == core->last_scale_width &&
+      height      == core->last_scale_height)
     {
       return core->scale_brush;
     }
 
   core->last_scale_brush  = brush->mask;
-  core->last_scale_width  = dest_width;
-  core->last_scale_height = dest_height;
+  core->last_scale_width  = width;
+  core->last_scale_height = height;
 
   if (core->scale_brush)
     mask_buf_free (core->scale_brush);
@@ -1293,8 +1294,8 @@ static MaskBuf *
 gimp_brush_core_scale_pixmap (GimpBrushCore *core,
                               GimpBrush     *brush)
 {
-  gint dest_width;
-  gint dest_height;
+  gint width;
+  gint height;
 
   if (core->scale <= 0.0)
     return NULL;
@@ -1302,20 +1303,20 @@ gimp_brush_core_scale_pixmap (GimpBrushCore *core,
   if (core->scale == 1.0)
     return brush->pixmap;
 
-  gimp_brush_scale_size (brush, core->scale, &dest_width, &dest_height);
+  gimp_brush_scale_size (brush, core->scale, &width, &height);
 
   if (! core->cache_invalid                          &&
       core->scale_pixmap                             &&
       brush->pixmap == core->last_scale_pixmap       &&
-      dest_width    == core->last_scale_pixmap_width &&
-      dest_height   == core->last_scale_pixmap_height)
+      width         == core->last_scale_pixmap_width &&
+      height        == core->last_scale_pixmap_height)
     {
       return core->scale_pixmap;
     }
 
   core->last_scale_pixmap        = brush->pixmap;
-  core->last_scale_pixmap_width  = dest_width;
-  core->last_scale_pixmap_height = dest_height;
+  core->last_scale_pixmap_width  = width;
+  core->last_scale_pixmap_height = height;
 
   if (core->scale_pixmap)
     mask_buf_free (core->scale_pixmap);

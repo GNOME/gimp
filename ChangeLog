@@ -1,5 +1,9 @@
 2007-03-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpbrushcore.c: cosmetic cleanup.
+
+2007-03-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimpbrushcore.c
 	(gimp_brush_core_scale_mask)
 	(gimp_brush_core_scale_pixmap)
