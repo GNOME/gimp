@@ -1391,13 +1391,12 @@ gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
 
 void
 gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
-                                        GimpImage                *dest,
                                         GimpDrawable             *drawable,
                                         TempBuf                  *area,
-                                        gdouble                   scale,
                                         GimpBrushApplicationMode  mode)
 {
   GimpPaintCore *paint_core = GIMP_PAINT_CORE (core);
+  GimpImage     *image;
   PixelRegion    destPR;
   void          *pr;
   guchar        *d;
@@ -1414,14 +1413,16 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
   g_return_if_fail (GIMP_IS_BRUSH (core->brush));
   g_return_if_fail (core->brush->pixmap != NULL);
 
+  image = gimp_item_get_image (GIMP_ITEM (drawable));
+
   /*  scale the brushes  */
-  pixmap_mask = gimp_brush_core_scale_pixmap (core, core->brush, scale);
+  pixmap_mask = gimp_brush_core_scale_pixmap (core, core->brush, core->scale);
 
   if (! pixmap_mask)
     return;
 
   if (mode != GIMP_BRUSH_HARD)
-    brush_mask = gimp_brush_core_scale_mask (core, core->brush, scale);
+    brush_mask = gimp_brush_core_scale_mask (core, core->brush, core->scale);
   else
     brush_mask = NULL;
 
@@ -1453,7 +1454,7 @@ gimp_brush_core_color_area_with_pixmap (GimpBrushCore            *core,
 
       for (y = 0; y < destPR.h; y++)
         {
-          paint_line_pixmap_mask (dest, drawable, pixmap_mask, brush_mask,
+          paint_line_pixmap_mask (image, drawable, pixmap_mask, brush_mask,
                                   d, offsetx, y + offsety,
                                   destPR.bytes, destPR.w, mode);
           d += destPR.rowstride;

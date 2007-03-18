@@ -1,5 +1,16 @@
 2007-03-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpbrushcore.[ch]
+	(gimp_brush_core_color_area_with_pixmap): removed parameters
+	"GimpImage *dest" (because it's always the passed drawable's
+	image) and "gdouble scale" (because passing anything but
+	brush_core->scale makes no sense whatsoever).
+
+	* app/paint/gimppaintbrush.c (_gimp_paintbrush_motion): changed
+	accordingly.
+
+2007-03-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimpbrushcore.c: simplified brush scale calculation by
 	making sure that brush_core->scale always contains a value that's
 	suited as input for gimp_brush_scale_mask/pixmap() (bug #419290).
