@@ -1,5 +1,21 @@
 2007-03-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpbrushcore.c
+	(gimp_brush_core_scale_mask)
+	(gimp_brush_core_scale_pixmap)
+	(gimp_brush_core_get_brush_mask): remove parameter
+	"gdouble scale" and use core->scale.
+
+	(gimp_brush_core_paste_canvas)
+	(gimp_brush_core_replace_canvas)
+	(gimp_brush_core_get_brush_mask)
+	(gimp_brush_core_color_area_with_pixmap): don't pass core->scale.
+	As below, passing anything else makes no sense.
+
+	(gimp_brush_core_interpolate): cleanup.
+
+2007-03-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimpbrushcore.[ch]
 	(gimp_brush_core_color_area_with_pixmap): removed parameters
 	"GimpImage *dest" (because it's always the passed drawable's
