@@ -530,6 +530,14 @@ gimp_brush_scale_size (GimpBrush     *brush,
   g_return_if_fail (width != NULL);
   g_return_if_fail (height != NULL);
 
+  if (scale == 1.0)
+    {
+      *width  = brush->mask->width;
+      *height = brush->mask->height;
+
+      return;
+    }
+
   return GIMP_BRUSH_GET_CLASS (brush)->scale_size (brush, scale,
                                                    width, height);
 }

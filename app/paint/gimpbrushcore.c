@@ -83,11 +83,9 @@ static TempBuf *gimp_brush_core_get_paint_area    (GimpPaintCore    *paint_core,
 static void     gimp_brush_core_real_set_brush    (GimpBrushCore    *core,
                                                    GimpBrush        *brush);
 
-static gdouble  gimp_brush_core_calc_brush_size   (GimpBrushCore    *core,
-                                                   GimpBrush        *brush,
-                                                   gdouble           scale,
-                                                   gint             *width,
-                                                   gint             *height);
+static gdouble  gimp_brush_core_calc_brush_scale  (GimpBrushCore    *core,
+                                                   GimpPaintOptions *paint_options,
+                                                   gdouble           pressure);
 static inline void rotate_pointers                (gulong          **p,
                                                    guint32           n);
 static MaskBuf * gimp_brush_core_subsample_mask   (GimpBrushCore    *core,
@@ -352,22 +350,8 @@ gimp_brush_core_start (GimpPaintCore     *paint_core,
       return FALSE;
     }
 
-  if (GIMP_BRUSH_CORE_GET_CLASS (core)->use_scale)
-    {
-      GimpPressureOptions *pressure_options = paint_options->pressure_options;
-
-      core->scale = 1.0;
-
-      if (paint_core->use_pressure)
-        {
-          if (pressure_options->inverse_size)
-            core->scale = 1.0 - 0.9 * paint_core->cur_coords.pressure;
-          else if (pressure_options->size)
-            core->scale = paint_core->cur_coords.pressure;
-        }
-
-      core->scale *= paint_options->brush_scale;
-    }
+  core->scale = gimp_brush_core_calc_brush_scale (core, paint_options,
+                                                  coords->pressure);
 
   core->spacing = (gdouble) gimp_brush_get_spacing (core->main_brush) / 100.0;
 
@@ -447,8 +431,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
       ! delta_wheel)
     return;
 
-  scale = gimp_brush_core_calc_brush_size (core, NULL, core->scale,
-                                           NULL, NULL);
+  scale = core->scale;
 
   /* calculate the distance traveled in the coordinate space of the brush */
   temp_vec = core->brush->x_axis;
@@ -686,25 +669,11 @@ gimp_brush_core_get_paint_area (GimpPaintCore    *paint_core,
   gint           drawable_width, drawable_height;
   gint           brush_width, brush_height;
 
-  if (GIMP_BRUSH_CORE_GET_CLASS (core)->use_scale)
-    {
-      GimpPressureOptions *pressure_options = paint_options->pressure_options;
+  core->scale = gimp_brush_core_calc_brush_scale (core, paint_options,
+                                                  paint_core->cur_coords.pressure);
 
-      core->scale = 1.0;
-
-      if (paint_core->use_pressure)
-        {
-          if (pressure_options->inverse_size)
-            core->scale = 1.0 - 0.9 * paint_core->cur_coords.pressure;
-          else if (pressure_options->size)
-            core->scale = paint_core->cur_coords.pressure;
-        }
-
-      core->scale *= paint_options->brush_scale;
-    }
-
-  gimp_brush_core_calc_brush_size (core, core->brush, core->scale,
-                                   &brush_width, &brush_height);
+  gimp_brush_scale_size (core->brush, core->scale,
+                         &brush_width, &brush_height);
 
   /*  adjust the x and y coordinates to the upper left corner of the brush  */
   x = (gint) floor (paint_core->cur_coords.x) - (brush_width  / 2);
@@ -784,18 +753,13 @@ gimp_brush_core_create_bound_segs (GimpBrushCore    *core,
 {
   TempBuf *mask  = NULL;
   gdouble  scale = 1.0;
-  gint     brush_width;
-  gint     brush_height;
 
   g_return_if_fail (GIMP_IS_BRUSH_CORE (core));
   g_return_if_fail (core->main_brush != NULL);
   g_return_if_fail (core->brush_bound_segs == NULL);
 
   if (GIMP_BRUSH_CORE_GET_CLASS (core)->use_scale)
-    scale *= paint_options->brush_scale;
-
-  scale = gimp_brush_core_calc_brush_size (core, core->main_brush, scale,
-                                           &brush_width, &brush_height);
+    scale = paint_options->brush_scale;
 
   if (scale > 0.0)
     mask = gimp_brush_scale_mask (core->main_brush, scale);
@@ -927,39 +891,39 @@ gimp_brush_core_invalidate_cache (GimpBrush     *brush,
   gimp_brush_core_set_brush (core, brush);
 }
 
+
 /************************************************************
  *             LOCAL FUNCTION DEFINITIONS                   *
  ************************************************************/
 
 static gdouble
-gimp_brush_core_calc_brush_size (GimpBrushCore *core,
-                                 GimpBrush     *brush,
-                                 gdouble        scale,
-                                 gint          *width,
-                                 gint          *height)
+gimp_brush_core_calc_brush_scale (GimpBrushCore    *core,
+                                  GimpPaintOptions *paint_options,
+                                  gdouble           pressure)
 {
-  gdouble ratio = 1.0;
+  gdouble scale = 1.0;
 
-  if (scale == 1.0)
+  if (GIMP_BRUSH_CORE_GET_CLASS (core)->use_scale)
     {
-      if (brush)
+      if (GIMP_PAINT_CORE (core)->use_pressure)
         {
-          *width  = brush->mask->width;
-          *height = brush->mask->height;
+          GimpPressureOptions *pressure_options = paint_options->pressure_options;
+
+          if (pressure_options->inverse_size)
+            scale = 1.0 - 0.9 * pressure;
+          else if (pressure_options->size)
+            scale = pressure;
+
+          if (scale < 1 / 256.0)
+            scale = 1 / 16.0;
+          else
+            scale = sqrt (scale);
         }
 
-      return 1.0;
+      scale *= paint_options->brush_scale;
     }
 
-  if (scale < 1 / 256.0)
-    ratio = 1 / 16.0;
-  else
-    ratio = sqrt (scale);
-
-  if (brush)
-    gimp_brush_scale_size (brush, ratio, width, height);
-
-  return ratio;
+  return scale;
 }
 
 static inline void
@@ -1307,12 +1271,11 @@ gimp_brush_core_scale_mask (GimpBrushCore *core,
   if (scale == 1.0)
     return brush->mask;
 
-  scale = gimp_brush_core_calc_brush_size (core, brush, scale,
-                                           &dest_width, &dest_height);
+  gimp_brush_scale_size (brush, scale, &dest_width, &dest_height);
 
   if (! core->cache_invalid                 &&
-      brush->mask == core->last_scale_brush &&
       core->scale_brush                     &&
+      brush->mask == core->last_scale_brush &&
       dest_width  == core->last_scale_width &&
       dest_height == core->last_scale_height)
     {
@@ -1350,14 +1313,13 @@ gimp_brush_core_scale_pixmap (GimpBrushCore *core,
   if (scale == 1.0)
     return brush->pixmap;
 
-  scale = gimp_brush_core_calc_brush_size (core, brush, scale,
-                                           &dest_width, &dest_height);
+  gimp_brush_scale_size (brush, scale, &dest_width, &dest_height);
 
-  if (! core->cache_invalid                        &&
-      brush->pixmap == core->last_scale_pixmap     &&
-      core->scale_pixmap                           &&
-      dest_width  == core->last_scale_pixmap_width &&
-      dest_height == core->last_scale_pixmap_height)
+  if (! core->cache_invalid                          &&
+      core->scale_pixmap                             &&
+      brush->pixmap == core->last_scale_pixmap       &&
+      dest_width    == core->last_scale_pixmap_width &&
+      dest_height   == core->last_scale_pixmap_height)
     {
       return core->scale_pixmap;
     }

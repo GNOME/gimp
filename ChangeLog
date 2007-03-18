@@ -1,5 +1,39 @@
 2007-03-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimpbrushcore.c: simplified brush scale calculation by
+	making sure that brush_core->scale always contains a value that's
+	suited as input for gimp_brush_scale_mask/pixmap() (bug #419290).
+
+	(gimp_brush_core_calc_brush_size): removed this function. All
+	places can now call gimp_brush_scale_size() directly with
+	core->scale as parameter.
+
+	(gimp_brush_core_calc_brush_scale): new function which returns
+	a linear scale factor which contains both the area-based pressure
+	scale factor and the linear paint options scale factor.
+
+	(gimp_brush_core_start)
+	(gimp_brush_core_get_paint_area): use the new function instead
+	of doing these calculations manually.
+
+	(gimp_brush_core_interpolate): remove call to
+	gimp_brush_core_scale_brush_size() and use core->scale directly.
+
+	(gimp_brush_core_get_paint_area)
+	(gimp_brush_core_scale_mask)
+	(gimp_brush_core_scale_pixmap): use gimp_brush_scale_size()
+	instead of the removed gimp_brush_core_scale_brush_size().
+
+	(gimp_brush_core_create_bound_segs): use only
+	paint_options->brush_scale here since the canvas brush preview
+	always has to asume full pressure.
+
+	* app/core/gimpbrush.c (gimp_brush_scale_size): special case
+	scale == 1.0 and return the mask's width/height without calling
+	the virtual function.
+
+2007-03-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/file/file-utils.c (file_check_single_magic): jikes, the
 	offset is to be interpreted as offset from the start of the file
 	for offset >= 0, not offset > 0.
