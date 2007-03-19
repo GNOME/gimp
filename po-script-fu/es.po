@@ -1,7 +1,7 @@
 # Spanish translation for gimp-script-fu.
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
-# Francisco Vila <francisco.vila@hispalinux.es>, 2006.
+# Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007.
 # Copyright © 1998-2000,2003, 2006 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 # Oscar Cebellán Ramos <cebaman@bigfoot.com>
@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: pan2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-02 20:14+0100\n"
-"PO-Revision-Date: 2006-11-30 13:18+0100\n"
+"POT-Creation-Date: 2007-01-13 21:10+0000\n"
+"PO-Revision-Date: 2007-03-19 18:00-0400\n"
 "Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1422,7 +1422,7 @@ msgid "_Distort..."
 msgstr "_Distorsión..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-msgid "Add a drop-shadow to the selected region (or alpha)"
+msgid "Add a drop shadow to the selected region (or alpha)"
 msgstr "Añadir una sombra arrojada a la región o transparencia seleccionada"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
@@ -1461,8 +1461,8 @@ msgid "Opacity"
 msgstr "Opacidad"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
-msgid "_Drop-Shadow..."
-msgstr "_Sombra base"
+msgid "_Drop Shadow..."
+msgstr "_Sombra arrojada..."
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:1
 msgid "Columns"
@@ -2159,7 +2159,7 @@ msgid "Cell size (pixels)"
 msgstr "Tamaño de celda (píxeles)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:4
-msgid "Create a logo in the style newpaper printing"
+msgid "Create a logo in the style of newspaper printing"
 msgstr "Crear un logotipo al estilo de la impresión en periódico"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6
