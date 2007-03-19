@@ -741,8 +741,8 @@ gimp_transform_direction_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_TRANSFORM_FORWARD, N_("Forward"), NULL },
-    { GIMP_TRANSFORM_BACKWARD, N_("Backward"), NULL },
+    { GIMP_TRANSFORM_FORWARD, N_("Normal (Forward)"), NULL },
+    { GIMP_TRANSFORM_BACKWARD, N_("Corrective (Backward)"), NULL },
     { 0, NULL, NULL }
   };
 
