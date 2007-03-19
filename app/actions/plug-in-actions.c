@@ -165,23 +165,10 @@ plug_in_actions_setup (GimpActionGroup *group)
     {
       GimpPlugInProcedure *plug_in_proc = list->data;
 
-      if (! plug_in_proc->prog)
-        continue;
-
-      g_signal_connect_object (plug_in_proc, "menu-path-added",
-                               G_CALLBACK (plug_in_actions_menu_path_added),
-                               group, 0);
-
-      if (plug_in_proc->prog         &&
-          plug_in_proc->menu_paths   &&
-          ! plug_in_proc->extensions &&
-          ! plug_in_proc->prefixes   &&
-          ! plug_in_proc->magics)
-        {
-          plug_in_actions_register_procedure (group->gimp->pdb,
-                                              GIMP_PROCEDURE (plug_in_proc),
-                                              group);
-        }
+      if (plug_in_proc->prog)
+        plug_in_actions_register_procedure (group->gimp->pdb,
+                                            GIMP_PROCEDURE (plug_in_proc),
+                                            group);
     }
 
   g_signal_connect_object (group->gimp->pdb, "register-procedure",
@@ -248,7 +235,8 @@ plug_in_actions_update (GimpActionGroup *group,
     {
       GimpPlugInProcedure *proc = list->data;
 
-      if (proc->menu_paths      &&
+      if ((proc->menu_label ||
+           proc->menu_paths)    &&
           proc->image_types_val &&
           ! proc->extensions    &&
           ! proc->prefixes      &&
@@ -337,7 +325,11 @@ plug_in_actions_register_procedure (GimpPDB         *pdb,
                                G_CALLBACK (plug_in_actions_menu_path_added),
                                group, 0);
 
-      if (plug_in_proc->menu_label || plug_in_proc->menu_paths)
+      if ((plug_in_proc->menu_label ||
+           plug_in_proc->menu_paths) &&
+          ! plug_in_proc->extensions &&
+          ! plug_in_proc->prefixes   &&
+          ! plug_in_proc->magics)
         {
 #if 0
           g_print ("%s: %s\n", G_STRFUNC,
@@ -362,7 +354,11 @@ plug_in_actions_unregister_procedure (GimpPDB         *pdb,
                                             plug_in_actions_menu_path_added,
                                             group);
 
-      if (plug_in_proc->menu_label || plug_in_proc->menu_paths)
+      if ((plug_in_proc->menu_label ||
+           plug_in_proc->menu_paths) &&
+          ! plug_in_proc->extensions &&
+          ! plug_in_proc->prefixes   &&
+          ! plug_in_proc->magics)
         {
           GtkAction *action;
 

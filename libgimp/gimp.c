@@ -503,12 +503,18 @@ gimp_quit (void)
  * documentation, should you.
  *
  * @menu_label defines the label that should be used for the
- * procedure's menu entry (use #NULL if the procedure shouldn't have a
- * menu entry).  The position where to register in the menu hierarchy
- * is chosen using gimp_plugin_menu_register().  This function also
- * still accepts the old (pre-2.2) way of registering a menu entry and
- * takes a string in the form "&lt;Domain&gt;/Path/To/My/Menu"
+ * procedure's menu entry. The position where to register in the menu
+ * hierarchy is chosen using gimp_plugin_menu_register().  This
+ * function also still accepts the old (pre-2.2) way of registering a
+ * menu entry and takes a string in the form
+ * "&lt;Domain&gt;/Path/To/My/Menu"
  * (e.g. "&lt;Image&gt;/Filters/Render/Useless").
+ *
+ * It is possible to register a procedure for keyboard-shortcut activation
+ * only by not registering any menu path with gimp_plugin_menu_register()
+ * but still passing a @menu_label to gimp_install_procedure(). In this
+ * case, the given @menu_label will only be used as the procedure's
+ * user-visible name in the keyboard shortcut editor.
  *
  * @type must be one of #GIMP_PLUGIN or #GIMP_EXTENSION. Note that
  * temporary procedures must be installed using

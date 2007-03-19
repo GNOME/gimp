@@ -1,3 +1,25 @@
+2007-03-19  Michael Natterer  <mitch@gimp.org>
+
+	Make sure we create actions for all plug-in procedures which have
+	a menu_label, so it's possible to assign shortcuts to them.
+	Fixes bug #371300.
+
+	* app/actions/plug-in-actions.c (plug_in_actions_setup): removed
+	duplicate code and simply call plug_in_actions_register_procedure()
+	on all actions, it already does all needed checks and signal
+	connections by itself.
+
+	(plug_in_actions_update)
+	(plug_in_actions_register_procedure)
+	(plug_in_actions_unregister_procedure): unified checks for whether
+	a plug-in procedure needs an action or not: it needs either a
+	menu_label or menu_paths and must not have extensions, prefixes or
+	magics.
+
+	* libgimp/gimp.c (gimp_install_procedure): document that it's
+	possible to install shortcut-only procedures by registering a
+	menu_label but no menu_paths.
+
 2007-03-19  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpbaseenums.[ch]: changed labels for
