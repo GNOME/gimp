@@ -1,3 +1,8 @@
+2007-03-19  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimp.c (gimp_install_procedure): rephrased new
+	documentation.
+
 2007-03-19  Michael Natterer  <mitch@gimp.org>
 
 	Make sure we create actions for all plug-in procedures which have
