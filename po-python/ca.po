@@ -1,6 +1,6 @@
 # translation of ca.po to Català
 # gimp-python translation to Catalan.
-# Copyright © 2000, 2001, 2003, 2004, 2005, 2006 Free Software Foundation, Inc.
+# Copyright © 2000, 2001, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
 # Softcatala <linux a softcatala.org>, 2000-2001.
 # Xavier Beà <xbea a pie.xtec.es>, 2003, 2004.
 # Xavier Conde Rueda <xaviconde a eresmas.com>, 2004.
@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-25 22:37+0100\n"
-"PO-Revision-Date: 2006-12-20 00:41+0100\n"
+"POT-Creation-Date: 2007-03-20 08:17+0100\n"
+"PO-Revision-Date: 2007-03-20 08:26+0100\n"
 "Last-Translator: Quim Perez i Noguer\n"
 "Language-Team: Català <gimp@softcatala.net>\n"
 "MIME-Version: 1.0\n"
@@ -73,8 +73,8 @@ msgid "Colored XHTML"
 msgstr "XHTML amb colors"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
-msgid "Character source"
-msgstr "Origen del caràcter"
+msgid "Character _source"
+msgstr "_Origen del caràcter"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
 msgid "Source code"
@@ -89,16 +89,16 @@ msgid "Entry box"
 msgstr "Camp d'entrada"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
-msgid "File to read or characters to use"
-msgstr "Fitxer per llegir o caràcters per emprar"
+msgid "_File to read or characters to use"
+msgstr "_Fitxer a llegir o caràcters a emprar"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
-msgid "Font size in pixels"
-msgstr "Mida de la lletra en píxels"
+msgid "Fo_nt size in pixels"
+msgstr "_Mida de la lletra en píxels"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
-msgid "Write a separate CSS file"
-msgstr "Escriu un fitxer CSS separat"
+msgid "_Write a separate CSS file"
+msgstr "_Escriu un fitxer CSS separat"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
@@ -143,24 +143,24 @@ msgid "_Fog..."
 msgstr "_Boira..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:59
-msgid "Layer name"
-msgstr "Nom de la capa"
+msgid "_Layer name"
+msgstr "_Nom de la capa"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:59
 msgid "Clouds"
 msgstr "Núvols"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:60
-msgid "Fog color"
-msgstr "Color de la boira"
+msgid "_Fog color"
+msgstr "Color de la _boira"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:61
-msgid "Turbulence"
-msgstr "Turbulència"
+msgid "_Turbulence"
+msgstr "_Turbulència"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:62
-msgid "Opacity"
-msgstr "Opacitat"
+msgid "Op_acity"
+msgstr "Op_acitat"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
 msgid "Offset the colors in a palette"
@@ -168,7 +168,7 @@ msgstr "Mou els colors en la paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
 msgid "_Offset Palette..."
-msgstr "_Rota la paleta..."
+msgstr "_Desplaça la paleta..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
@@ -178,8 +178,8 @@ msgid "Palette"
 msgstr "Paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
-msgid "Offset"
-msgstr "Desplaçament"
+msgid "Off_set"
+msgstr "De_splaçament"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
 msgid "Sort the colors in a palette"
@@ -190,8 +190,8 @@ msgid "_Sort Palette..."
 msgstr "_Ordena la paleta..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-msgid "Color model"
-msgstr "Model de color"
+msgid "Color _model"
+msgstr "_Model de color"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
 msgid "RGB"
@@ -202,8 +202,8 @@ msgid "HSV"
 msgstr "HSV"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-msgid "Channel to sort"
-msgstr "Canal per ordena"
+msgid "Channel to _sort"
+msgstr "Canal per _ordenar"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
 msgid "Red or Hue"
@@ -218,8 +218,8 @@ msgid "Blue or Value"
 msgstr "Blau o valor"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
-msgid "Ascending"
-msgstr "Ascendent"
+msgid "_Ascending"
+msgstr "_Ascendent"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
@@ -296,21 +296,21 @@ msgid "_Drop Shadow and Bevel..."
 msgstr "_Ombra i bisell..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
-msgid "Shadow blur"
-msgstr "Difuminat de l'ombra"
+msgid "_Shadow blur"
+msgstr "_Difuminat de l'ombra"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
-msgid "Bevel"
-msgstr "Bisell"
+msgid "_Bevel"
+msgstr "_Bisell"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
-msgid "Drop shadow"
-msgstr "Ombra"
+msgid "_Drop shadow"
+msgstr "_Ombra"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
-msgid "Drop shadow X displacement"
-msgstr "Longitud X de l'ombra"
+msgid "Drop shadow _X displacement"
+msgstr "Longitud _X de l'ombra"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
-msgid "Drop shadow Y displacement"
-msgstr "Longitud Y de l'ombra"
+msgid "Drop shadow _Y displacement"
+msgstr "Longitud _Y de l'ombra"

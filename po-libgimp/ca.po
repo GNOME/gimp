@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-25 22:35+0100\n"
-"PO-Revision-Date: 2007-01-24 21:43+0100\n"
+"POT-Creation-Date: 2007-03-20 08:07+0100\n"
+"PO-Revision-Date: 2007-03-20 08:08+0100\n"
 "Last-Translator: Quim Perez i Noguer\n"
 "Language-Team: Català <gimp@softcatala.net>\n"
 "MIME-Version: 1.0\n"
@@ -31,8 +31,8 @@ msgstr "_Navega..."
 
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
-msgid "%s can't handle layers"
-msgstr "%s no pot gestionar capes"
+msgid "%s plug-in can't handle layers"
+msgstr "El connector %s no pot gestionar capes"
 
 #: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
@@ -41,13 +41,15 @@ msgstr "Fusiona les capes visibles"
 
 #: ../libgimp/gimpexport.c:226
 #, c-format
-msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s no pot gestionar desplaçaments de capa, mida o opacitat"
+msgid "%s plug-in can't handle layer offsets, size or opacity"
+msgstr ""
+"El connector %s no pot gestionar desplaçaments de capa, mida o opacitat"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
-msgid "%s can only handle layers as animation frames"
-msgstr "%s només pot gestionar les capes com a fotogrames de l'animació"
+msgid "%s plug-in can only handle layers as animation frames"
+msgstr ""
+"El connector %s només pot gestionar les capes com a fotogrames d'una animació"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
@@ -60,13 +62,13 @@ msgstr "Aplana la imatge"
 
 #: ../libgimp/gimpexport.c:262
 #, c-format
-msgid "%s can't handle transparency"
-msgstr "%s no pot gestionar transparències"
+msgid "%s plug-in can't handle transparency"
+msgstr "El connector %s no pot gestionar transparències"
 
 #: ../libgimp/gimpexport.c:271
 #, c-format
-msgid "%s can't handle layer masks"
-msgstr "%s no pot gestionar màscares de capa"
+msgid "%s plug-in can't handle layer masks"
+msgstr "El connector %s no pot gestionar màscares de capa"
 
 #: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
@@ -74,8 +76,8 @@ msgstr "Aplica les màscares de capa"
 
 #: ../libgimp/gimpexport.c:280
 #, c-format
-msgid "%s can only handle RGB images"
-msgstr "%s només pot gestionar imatges RGB"
+msgid "%s plug-in can only handle RGB images"
+msgstr "El connector %s només pot gestionar imatges RGB"
 
 #: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
@@ -84,8 +86,8 @@ msgstr "Converteix a RGB"
 
 #: ../libgimp/gimpexport.c:289
 #, c-format
-msgid "%s can only handle grayscale images"
-msgstr "%s només pot gestionar imatges d'escala de grisos"
+msgid "%s plug-in can only handle grayscale images"
+msgstr "El connector %s només pot gestionar imatges en escala de grisos"
 
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
@@ -94,8 +96,8 @@ msgstr "Converteix a escala de grisos"
 
 #: ../libgimp/gimpexport.c:298
 #, c-format
-msgid "%s can only handle indexed images"
-msgstr "%s només pot gestionar imatges indexades"
+msgid "%s plug-in can only handle indexed images"
+msgstr "El connector %s només pot gestionar imatges indexades"
 
 #: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
 #: ../libgimp/gimpexport.c:338
@@ -108,9 +110,10 @@ msgstr ""
 
 #: ../libgimp/gimpexport.c:308
 #, c-format
-msgid "%s can only handle bitmap (two color) indexed images"
+msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
-"%s només pot gestionar els mapes de bits (dos colors) o les imatges indexades"
+"El connector %s només pot gestionar els mapes de bits (dos colors) o les "
+"imatges indexades"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -122,23 +125,25 @@ msgstr ""
 
 #: ../libgimp/gimpexport.c:318
 #, c-format
-msgid "%s can only handle RGB or grayscale images"
-msgstr "%s només pot gestionar imatges RGB o d'escala de grisos"
+msgid "%s plug-in can only handle RGB or grayscale images"
+msgstr "El connector %s només pot gestionar imatges RGB o en escala de grisos"
 
 #: ../libgimp/gimpexport.c:327
 #, c-format
-msgid "%s can only handle RGB or indexed images"
-msgstr "%s només pot gestionar les imatges RGB o les indexades"
+msgid "%s plug-in  can only handle RGB or indexed images"
+msgstr "El connector %s només pot gestionar les imatges RGB o indexades"
 
 #: ../libgimp/gimpexport.c:337
 #, c-format
-msgid "%s can only handle grayscale or indexed images"
-msgstr "%s només pot gestionar les imatges d'escala de grisos o les indexades"
+msgid "%s plug-in can only handle grayscale or indexed images"
+msgstr ""
+"El connector %s només pot gestionar les imatges en escala de grisos o les "
+"indexades"
 
 #: ../libgimp/gimpexport.c:348
 #, c-format
-msgid "%s needs an alpha channel"
-msgstr "%s necessita un canal alfa"
+msgid "%s plug-in needs an alpha channel"
+msgstr "El connector %s necessita un canal alfa"
 
 #: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
@@ -404,15 +409,15 @@ msgstr "Canvia la selecció actual"
 msgid "Intersect with the current selection"
 msgstr "Creua amb la selecció"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Red"
 msgstr "Vermell"
 
-#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Green"
 msgstr "Verd"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Blue"
 msgstr "Blau"
 
@@ -424,7 +429,7 @@ msgstr "Gris"
 msgid "Indexed"
 msgstr "Indexat"
 
-#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "Alpha"
 msgstr "Alfa"
 
@@ -507,7 +512,7 @@ msgstr "Bilineal"
 msgid "Radial"
 msgstr "Radial"
 
-#: ../libgimpbase/gimpbaseenums.c:391
+#: ../libgimpbase/gimpbaseenums.c:391 ../libgimpwidgets/gimpwidgetsenums.c:24
 msgid "Square"
 msgstr "Quadrat"
 
@@ -612,8 +617,8 @@ msgid "Cubic"
 msgstr "Cúbic"
 
 #: ../libgimpbase/gimpbaseenums.c:565
-msgid "Lanczos"
-msgstr "Lanczos"
+msgid "Sinc (Lanczos3)"
+msgstr "Sinc (Lanczos3)"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -668,12 +673,12 @@ msgid "Highlights"
 msgstr "Ressaltats"
 
 #: ../libgimpbase/gimpbaseenums.c:744
-msgid "Forward"
-msgstr "Endavant"
+msgid "Normal (Forward)"
+msgstr "Normal (endavant)"
 
 #: ../libgimpbase/gimpbaseenums.c:745
-msgid "Backward"
-msgstr "Endarrere"
+msgid "Corrective (Backward)"
+msgstr "Correctiu (endarrere)"
 
 #: ../libgimpbase/gimpbaseenums.c:775
 msgid "Adjust"
@@ -834,39 +839,39 @@ msgstr "Saturació"
 msgid "Absolute colorimetric"
 msgstr "Mètrica de color absoluta"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#: ../libgimpconfig/gimpconfig-deserialize.c:96
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "el valor per a l'element %s no és una cadena de text UTF-8 vàlida"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:426
+#: ../libgimpconfig/gimpconfig-deserialize.c:427
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "S'esperava 'yes' o 'no' per a l'element booleà %s. S'obtingué '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:500
+#: ../libgimpconfig/gimpconfig-deserialize.c:501
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "El valor '%s' no és vàlid per a l'element %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:515
+#: ../libgimpconfig/gimpconfig-deserialize.c:516
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "El valor '%ld' no és vàlid per a l'element %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:584
+#: ../libgimpconfig/gimpconfig-deserialize.c:585
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "en analitzar l'element '%s': %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:453
-#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpconfig-iface.c:454
+#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
 msgid "fatal parse error"
 msgstr "s'ha produït un error fatal d'anàlisi"
 
-#: ../libgimpconfig/gimpconfig-path.c:376
+#: ../libgimpconfig/gimpconfig-path.c:377
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "No es pot expandir ${%s}"
@@ -955,7 +960,11 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "No s'ha pogut crear la carpeta de miniatures '%s'."
 
-#: ../libgimpthumb/gimpthumbnail.c:889
+#: ../libgimpthumb/gimpthumbnail.c:498
+msgid "Thumbnail contains no Thumb::URI tag"
+msgstr "La miniatura no conté cap element Thumb::URI"
+
+#: ../libgimpthumb/gimpthumbnail.c:898
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "No s'ha pogut crear la miniatura de %s: %s"
@@ -1102,7 +1111,7 @@ msgstr "Comprova l'estil"
 msgid "_Preview"
 msgstr "_Previsualitza"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1869
+#: ../libgimpwidgets/gimppropwidgets.c:1901
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1223,59 +1232,67 @@ msgstr ""
 msgid "_Randomize"
 msgstr "Aleato_ritza"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:25
+msgid "Portrait"
+msgstr "Vertical"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:26
+msgid "Landscape"
+msgstr "Apaïsat"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "_H"
 msgstr "_H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "Hue"
 msgstr "To"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "_S"
 msgstr "_S"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "Saturation"
 msgstr "Saturació"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "_V"
 msgstr "_V"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "Value"
 msgstr "Valor"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "_R"
 msgstr "_R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "_G"
 msgstr "_G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "_B"
 msgstr "_B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "_A"
 msgstr "_A"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpwidgets/gimpwidgetsenums.c:157
 msgid "Layers"
 msgstr "Capes"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpwidgets/gimpwidgetsenums.c:158
 msgid "Images"
 msgstr "Imatges"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:186
+#: ../libgimpwidgets/gimpwidgetsenums.c:217
 msgid "Zoom in"
 msgstr "Amplia"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:187
+#: ../libgimpwidgets/gimpwidgetsenums.c:218
 msgid "Zoom out"
 msgstr "Redueix"
 
@@ -1296,11 +1313,11 @@ msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr ""
 "Filtre de simulació de dèficit de color (algorisme de Brettel-Vienot-Mollon)"
 
-#: ../modules/cdisplay_colorblind.c:290
+#: ../modules/cdisplay_colorblind.c:292
 msgid "Color Deficient Vision"
 msgstr "Visió amb dèficit de color"
 
-#: ../modules/cdisplay_colorblind.c:505
+#: ../modules/cdisplay_colorblind.c:507
 msgid "Color _deficiency type:"
 msgstr "Tipus _de dèficit de color:"
 
@@ -1457,217 +1474,299 @@ msgstr "Aquarel·la"
 msgid "Pressure"
 msgstr "Pressió"
 
-#: ../modules/controller_linux_input.c:56
+#: ../modules/controller_linux_input.c:58
 msgid "Button 0"
 msgstr "Botó 0"
 
-#: ../modules/controller_linux_input.c:57
+#: ../modules/controller_linux_input.c:59
 msgid "Button 1"
 msgstr "Botó 1"
 
-#: ../modules/controller_linux_input.c:58
+#: ../modules/controller_linux_input.c:60
 msgid "Button 2"
 msgstr "Botó 2"
 
-#: ../modules/controller_linux_input.c:59
+#: ../modules/controller_linux_input.c:61
 msgid "Button 3"
 msgstr "Botó 3"
 
-#: ../modules/controller_linux_input.c:60
+#: ../modules/controller_linux_input.c:62
 msgid "Button 4"
 msgstr "Botó 4"
 
-#: ../modules/controller_linux_input.c:61
+#: ../modules/controller_linux_input.c:63
 msgid "Button 5"
 msgstr "Botó 5"
 
-#: ../modules/controller_linux_input.c:62
+#: ../modules/controller_linux_input.c:64
 msgid "Button 6"
 msgstr "Botó 6"
 
-#: ../modules/controller_linux_input.c:63
+#: ../modules/controller_linux_input.c:65
 msgid "Button 7"
 msgstr "Botó 7"
 
-#: ../modules/controller_linux_input.c:64
+#: ../modules/controller_linux_input.c:66
 msgid "Button 8"
 msgstr "Botó 8"
 
-#: ../modules/controller_linux_input.c:65
+#: ../modules/controller_linux_input.c:67
 msgid "Button 9"
 msgstr "Botó 9"
 
-#: ../modules/controller_linux_input.c:66
+#: ../modules/controller_linux_input.c:68
 msgid "Button Mouse"
 msgstr "Botó del ratolí"
 
-#: ../modules/controller_linux_input.c:67
+#: ../modules/controller_linux_input.c:69
 msgid "Button Left"
 msgstr "Botó esquerre"
 
-#: ../modules/controller_linux_input.c:68
+#: ../modules/controller_linux_input.c:70
 msgid "Button Right"
 msgstr "Botó dret"
 
-#: ../modules/controller_linux_input.c:69
+#: ../modules/controller_linux_input.c:71
 msgid "Button Middle"
 msgstr "Botó del mig"
 
-#: ../modules/controller_linux_input.c:70
+#: ../modules/controller_linux_input.c:72
 msgid "Button Side"
 msgstr "Botó del cantó"
 
-#: ../modules/controller_linux_input.c:71
+#: ../modules/controller_linux_input.c:73
 msgid "Button Extra"
 msgstr "Botó extra"
 
-#: ../modules/controller_linux_input.c:72
-#: ../modules/controller_linux_input.c:73
+#: ../modules/controller_linux_input.c:74
 msgid "Button Forward"
 msgstr "Botó endavant"
 
 #: ../modules/controller_linux_input.c:75
+msgid "Button Back"
+msgstr "Botó enrere"
+
+#: ../modules/controller_linux_input.c:76
+msgid "Button Task"
+msgstr "Botó tasca"
+
+#: ../modules/controller_linux_input.c:78
 msgid "Button Wheel"
 msgstr "Botó rodeta"
 
-#: ../modules/controller_linux_input.c:78
+#: ../modules/controller_linux_input.c:81
 msgid "Button Gear Down"
 msgstr "Botó reduir marxa"
 
-#: ../modules/controller_linux_input.c:81
+#: ../modules/controller_linux_input.c:84
 msgid "Button Gear Up"
 msgstr "Botó augmentar marxa"
 
-#: ../modules/controller_linux_input.c:87
+#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_dx_dinput.c:469
 msgid "X Move Left"
 msgstr "Moviment X esquerra"
 
-#: ../modules/controller_linux_input.c:88
+#: ../modules/controller_linux_input.c:91
+#: ../modules/controller_dx_dinput.c:472
 msgid "X Move Right"
 msgstr "Moviment X dreta"
 
-#: ../modules/controller_linux_input.c:89
+#: ../modules/controller_linux_input.c:92
+#: ../modules/controller_dx_dinput.c:478
 msgid "Y Move Away"
 msgstr "Moviment Y allunya"
 
-#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_linux_input.c:93
+#: ../modules/controller_dx_dinput.c:481
 msgid "Y Move Near"
 msgstr "Moviment Y apropa"
 
-#: ../modules/controller_linux_input.c:91
+#: ../modules/controller_linux_input.c:94
+#: ../modules/controller_dx_dinput.c:487
 msgid "Z Move Up"
 msgstr "Moviment Z amunt"
 
-#: ../modules/controller_linux_input.c:92
+#: ../modules/controller_linux_input.c:95
+#: ../modules/controller_dx_dinput.c:490
 msgid "Z Move Down"
 msgstr "Moviment Z avall"
 
-#: ../modules/controller_linux_input.c:94
+#: ../modules/controller_linux_input.c:97
+#: ../modules/controller_dx_dinput.c:496
 msgid "X Axis Tilt Away"
 msgstr "Eix X cap enfora"
 
-#: ../modules/controller_linux_input.c:95
+#: ../modules/controller_linux_input.c:98
+#: ../modules/controller_dx_dinput.c:499
 msgid "X Axis Tilt Near"
 msgstr "Eix Y cap endavant"
 
-#: ../modules/controller_linux_input.c:96
+#: ../modules/controller_linux_input.c:99
+#: ../modules/controller_dx_dinput.c:505
 msgid "Y Axis Tilt Right"
 msgstr "Eix Y cap a la dreta"
 
-#: ../modules/controller_linux_input.c:97
+#: ../modules/controller_linux_input.c:100
+#: ../modules/controller_dx_dinput.c:508
 msgid "Y Axis Tilt Left"
 msgstr "Eix Y cap a l'esquerra"
 
-#: ../modules/controller_linux_input.c:98
+#: ../modules/controller_linux_input.c:101
+#: ../modules/controller_dx_dinput.c:514
 msgid "Z Axis Turn Left"
 msgstr "Eix Z cap a l'esquerra"
 
-#: ../modules/controller_linux_input.c:99
+#: ../modules/controller_linux_input.c:102
+#: ../modules/controller_dx_dinput.c:517
 msgid "Z Axis Turn Right"
 msgstr "Eix Z cap a la dreta"
 
-#: ../modules/controller_linux_input.c:101
+#: ../modules/controller_linux_input.c:104
 msgid "Horiz. Wheel Turn Back"
 msgstr "Roda horitz. cap enrere"
 
-#: ../modules/controller_linux_input.c:102
+#: ../modules/controller_linux_input.c:105
 msgid "Horiz. Wheel Turn Forward"
 msgstr "Roda horitz. cap endavant"
 
-#: ../modules/controller_linux_input.c:103
+#: ../modules/controller_linux_input.c:106
 msgid "Dial Turn Left"
 msgstr "Dial cap a l'esquerra"
 
-#: ../modules/controller_linux_input.c:104
+#: ../modules/controller_linux_input.c:107
 msgid "Dial Turn Right"
 msgstr "Dial cap a la dreta"
 
-#: ../modules/controller_linux_input.c:105
+#: ../modules/controller_linux_input.c:108
 msgid "Wheel Turn Left"
 msgstr "Volant cap a l'esquerra"
 
-#: ../modules/controller_linux_input.c:106
+#: ../modules/controller_linux_input.c:109
 msgid "Wheel Turn Right"
 msgstr "Volant cap a la dreta"
 
-#: ../modules/controller_linux_input.c:170
+#: ../modules/controller_linux_input.c:179
 msgid "Linux input event controller"
 msgstr "Controlador de senyals d'entrada del Linux"
 
-#: ../modules/controller_linux_input.c:238 ../modules/controller_midi.c:246
+#: ../modules/controller_linux_input.c:249
+#: ../modules/controller_dx_dinput.c:227 ../modules/controller_midi.c:245
 msgid "Device:"
 msgstr "Dispositiu:"
 
-#: ../modules/controller_linux_input.c:239
+#: ../modules/controller_linux_input.c:250
 msgid "The name of the device to read Linux Input events from."
 msgstr "Nom del dispositiu del qual s'han de rebre esdeveniments."
 
-#: ../modules/controller_linux_input.c:243
+#: ../modules/controller_linux_input.c:261
 msgid "Linux Input"
 msgstr "Senyal del Linux"
 
-#: ../modules/controller_linux_input.c:368
+#: ../modules/controller_linux_input.c:539
 msgid "Linux Input Events"
 msgstr "Senyals del Linux"
 
-#: ../modules/controller_linux_input.c:389 ../modules/controller_midi.c:483
-#: ../modules/controller_midi.c:509
+#: ../modules/controller_linux_input.c:551
+#: ../modules/controller_dx_dinput.c:1122 ../modules/controller_midi.c:533
+msgid "No device configured"
+msgstr "No s'ha configurat cap dispositiu"
+
+#: ../modules/controller_linux_input.c:577 ../modules/controller_midi.c:482
+#: ../modules/controller_midi.c:508
 #, c-format
 msgid "Reading from %s"
 msgstr "S'està llegint de %s"
 
-#: ../modules/controller_linux_input.c:405
-#: ../modules/controller_linux_input.c:448 ../modules/controller_midi.c:465
-#: ../modules/controller_midi.c:526 ../modules/controller_midi.c:597
+#: ../modules/controller_linux_input.c:595
+#: ../modules/controller_linux_input.c:649 ../modules/controller_midi.c:464
+#: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
 #, c-format
 msgid "Device not available: %s"
 msgstr "Dispositiu desconnectat: %s"
 
-#: ../modules/controller_linux_input.c:413 ../modules/controller_midi.c:534
-msgid "No device configured"
-msgstr "No s'ha configurat cap dispositiu"
+#: ../modules/controller_linux_input.c:614
+#: ../modules/controller_dx_dinput.c:1147
+msgid "Device not available"
+msgstr "Dispositiu desconnectat"
 
-#: ../modules/controller_linux_input.c:457 ../modules/controller_midi.c:606
+#: ../modules/controller_linux_input.c:658 ../modules/controller_midi.c:605
 msgid "End of file"
 msgstr "Fi del fitxer"
 
-#: ../modules/controller_midi.c:168
+#: ../modules/controller_dx_dinput.c:157
+msgid "DirectX DirectInput event controller"
+msgstr "Controlador de senyals d'entrada DirectInput del DirectX"
+
+#: ../modules/controller_dx_dinput.c:228
+msgid "The device to read DirectInput events from."
+msgstr "El dispositiu d'on ha de rebre esdeveniments DirectInput."
+
+#: ../modules/controller_dx_dinput.c:237
+msgid "DirectX DirectInput"
+msgstr "DirectInput del DirectX"
+
+#: ../modules/controller_dx_dinput.c:446
+#, c-format
+msgid "Button %d"
+msgstr "Botó %d"
+
+#: ../modules/controller_dx_dinput.c:449
+#, c-format
+msgid "Button %d Press"
+msgstr "Botó %d prem"
+
+#: ../modules/controller_dx_dinput.c:452
+#, c-format
+msgid "Button %d Release"
+msgstr "Botó %d allibera"
+
+#: ../modules/controller_dx_dinput.c:528
+#, c-format
+msgid "Slider %d Increase"
+msgstr "Nivell %d apuja"
+
+#: ../modules/controller_dx_dinput.c:531
+#, c-format
+msgid "Slider %d Decrease"
+msgstr "Nivell %d abaixa"
+
+#: ../modules/controller_dx_dinput.c:541
+#, c-format
+msgid "POV %d X View"
+msgstr "POV %d Vista X"
+
+#: ../modules/controller_dx_dinput.c:544
+#, c-format
+msgid "POV %d Y View"
+msgstr "POV %d Vista Y"
+
+#: ../modules/controller_dx_dinput.c:547
+#, c-format
+msgid "POV %d Return"
+msgstr "POV %d Retorna"
+
+#: ../modules/controller_dx_dinput.c:1111
+msgid "DirectInput Events"
+msgstr "Senyals del DirectInput"
+
+#: ../modules/controller_midi.c:167
 msgid "MIDI event controller"
 msgstr "Controlador MIDI"
 
-#: ../modules/controller_midi.c:237
+#: ../modules/controller_midi.c:236
 msgid "The name of the device to read MIDI events from."
 msgstr "Nom del dispositiu que rebrà els senyals MIDI."
 
-#: ../modules/controller_midi.c:240
+#: ../modules/controller_midi.c:239
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Escriviu 'alsa' si voleu utilitzar el seqüenciador ALSA."
 
-#: ../modules/controller_midi.c:255
+#: ../modules/controller_midi.c:254
 msgid "Channel:"
 msgstr "Canal:"
 
-#: ../modules/controller_midi.c:256
+#: ../modules/controller_midi.c:255
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
@@ -1675,33 +1774,33 @@ msgstr ""
 "Canal MIDI d'on es rebran els senyals. Poseu-ho a -1 per rebre senyal de "
 "tots els canals MIDI."
 
-#: ../modules/controller_midi.c:260
+#: ../modules/controller_midi.c:259
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:384
+#: ../modules/controller_midi.c:383
 #, c-format
 msgid "Note %02x on"
 msgstr "Nota %02x activa"
 
-#: ../modules/controller_midi.c:387
+#: ../modules/controller_midi.c:386
 #, c-format
 msgid "Note %02x off"
 msgstr "Nota %02x aturada"
 
-#: ../modules/controller_midi.c:390
+#: ../modules/controller_midi.c:389
 #, c-format
 msgid "Controller %03d"
 msgstr "Controlador %03d"
 
-#: ../modules/controller_midi.c:437
+#: ../modules/controller_midi.c:436
 msgid "MIDI Events"
 msgstr "Senyals MIDI"
 
-#: ../modules/controller_midi.c:455
+#: ../modules/controller_midi.c:454
 msgid "GIMP"
 msgstr "GIMP"
 
-#: ../modules/controller_midi.c:457
+#: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr "Controlador d'entrada MIDI del GIMP"
