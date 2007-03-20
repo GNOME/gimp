@@ -367,7 +367,6 @@ gimp_cursor_view_get_sample_merged (GimpCursorView *view)
   return view->sample_merged;
 }
 
-
 void
 gimp_cursor_view_update_cursor (GimpCursorView   *view,
                                 GimpImage        *image,
@@ -375,65 +374,54 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
                                 gdouble           x,
                                 gdouble           y)
 {
+  gboolean      in_image;
+  gdouble       unit_factor;
+  gint          unit_digits;
+  const gchar  *unit_str;
+  gchar         format_buf[32];
+  gchar         buf[32];
   GimpImageType sample_type;
   GimpRGB       color;
   gint          color_index;
 
   g_return_if_fail (GIMP_IS_CURSOR_VIEW (view));
-  g_return_if_fail (image == NULL || GIMP_IS_IMAGE (image));
+  g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  if (image && unit == GIMP_UNIT_PIXEL)
+  if (unit == GIMP_UNIT_PIXEL)
     unit = gimp_image_get_unit (image);
 
-  if (image)
-    {
-      gboolean     in_image;
-      gdouble      unit_factor;
-      gint         unit_digits;
-      const gchar *unit_str;
-      gchar        format_buf[32];
-      gchar        buf[32];
+  in_image = (x >= 0.0 && x < gimp_image_get_width  (image) &&
+              y >= 0.0 && y < gimp_image_get_height (image));
 
-      in_image = (x >= 0.0 && x < gimp_image_get_width  (image) &&
-                  y >= 0.0 && y < gimp_image_get_height (image));
-
-      unit_factor = _gimp_unit_get_factor (image->gimp, unit);
-      unit_digits = _gimp_unit_get_digits (image->gimp, unit);
-      unit_str    = _gimp_unit_get_abbreviation (image->gimp, unit);
+  unit_factor = _gimp_unit_get_factor (image->gimp, unit);
+  unit_digits = _gimp_unit_get_digits (image->gimp, unit);
+  unit_str    = _gimp_unit_get_abbreviation (image->gimp, unit);
 
 #define FORMAT_STRING(s) (in_image ? (s) : "("s")")
 
-      g_snprintf (buf, sizeof (buf), FORMAT_STRING ("%d"), (gint) floor (x));
-      gtk_label_set_text (GTK_LABEL (view->pixel_x_label), buf);
+  g_snprintf (buf, sizeof (buf), FORMAT_STRING ("%d"), (gint) floor (x));
+  gtk_label_set_text (GTK_LABEL (view->pixel_x_label), buf);
 
-      g_snprintf (buf, sizeof (buf), FORMAT_STRING ("%d"), (gint) floor (y));
-      gtk_label_set_text (GTK_LABEL (view->pixel_y_label), buf);
+  g_snprintf (buf, sizeof (buf), FORMAT_STRING ("%d"), (gint) floor (y));
+  gtk_label_set_text (GTK_LABEL (view->pixel_y_label), buf);
 
-      g_snprintf (format_buf, sizeof (format_buf),
-                  FORMAT_STRING ("%%.%df %s"), unit_digits, unit_str);
+  g_snprintf (format_buf, sizeof (format_buf),
+              FORMAT_STRING ("%%.%df %s"), unit_digits, unit_str);
 
-      g_snprintf (buf, sizeof (buf), format_buf,
-                  x * unit_factor / image->xresolution);
-      gtk_label_set_text (GTK_LABEL (view->unit_x_label), buf);
+  g_snprintf (buf, sizeof (buf), format_buf,
+              x * unit_factor / image->xresolution);
+  gtk_label_set_text (GTK_LABEL (view->unit_x_label), buf);
 
-      g_snprintf (buf, sizeof (buf), format_buf,
-                  y * unit_factor / image->yresolution);
-      gtk_label_set_text (GTK_LABEL (view->unit_y_label), buf);
-    }
-  else
-    {
-      gtk_label_set_text (GTK_LABEL (view->pixel_x_label), _("n/a"));
-      gtk_label_set_text (GTK_LABEL (view->pixel_y_label), _("n/a"));
-      gtk_label_set_text (GTK_LABEL (view->unit_x_label),  _("n/a"));
-      gtk_label_set_text (GTK_LABEL (view->unit_y_label),  _("n/a"));
-    }
+  g_snprintf (buf, sizeof (buf), format_buf,
+              y * unit_factor / image->yresolution);
+  gtk_label_set_text (GTK_LABEL (view->unit_y_label), buf);
 
-  if (image && gimp_image_pick_color (image, NULL,
-                                      (gint) floor (x),
-                                      (gint) floor (y),
-                                      view->sample_merged,
-                                      FALSE, 0.0,
-                                      &sample_type, &color, &color_index))
+  if (gimp_image_pick_color (image, NULL,
+                             (gint) floor (x),
+                             (gint) floor (y),
+                             view->sample_merged,
+                             FALSE, 0.0,
+                             &sample_type, &color, &color_index))
     {
       gimp_color_frame_set_color (GIMP_COLOR_FRAME (view->color_frame_1),
                                   sample_type, &color, color_index);
@@ -445,4 +433,18 @@ gimp_cursor_view_update_cursor (GimpCursorView   *view,
       gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->color_frame_1));
       gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->color_frame_2));
     }
+}
+
+void
+gimp_cursor_view_clear_cursor (GimpCursorView *view)
+{
+  g_return_if_fail (GIMP_IS_CURSOR_VIEW (view));
+
+  gtk_label_set_text (GTK_LABEL (view->pixel_x_label), _("n/a"));
+  gtk_label_set_text (GTK_LABEL (view->pixel_y_label), _("n/a"));
+  gtk_label_set_text (GTK_LABEL (view->unit_x_label),  _("n/a"));
+  gtk_label_set_text (GTK_LABEL (view->unit_y_label),  _("n/a"));
+
+  gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->color_frame_1));
+  gimp_color_frame_set_invalid (GIMP_COLOR_FRAME (view->color_frame_2));
 }

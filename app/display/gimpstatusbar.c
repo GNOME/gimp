@@ -843,9 +843,9 @@ gimp_statusbar_pop_temp (GimpStatusbar *statusbar)
 }
 
 void
-gimp_statusbar_set_cursor (GimpStatusbar *statusbar,
-                           gdouble        x,
-                           gdouble        y)
+gimp_statusbar_update_cursor (GimpStatusbar *statusbar,
+                              gdouble        x,
+                              gdouble        y)
 {
   GimpDisplayShell *shell;
   GtkTreeModel     *model;
@@ -1034,7 +1034,7 @@ gimp_statusbar_shell_scaled (GimpDisplayShell *shell,
                   _gimp_unit_get_digits (image->gimp, shell->unit));
     }
 
-  gimp_statusbar_set_cursor (statusbar, - image->width, - image->height);
+  gimp_statusbar_update_cursor (statusbar, -image->width, -image->height);
 
   text = gtk_label_get_text (GTK_LABEL (statusbar->cursor_label));
 

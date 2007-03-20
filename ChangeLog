@@ -1,5 +1,28 @@
 2007-03-20  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpcursorview.[ch] (gimp_color_frame_update_cursor):
+	disallow passing a NULL image.
+
+	(gimp_color_frame_clear_cursor): new function that clears the
+	cursor view.
+
+	* app/widgets/gimpcolorframe.c (gimp_color_frame_update): if
+	color_frame->sample_valid is FALSE, don't do any color
+	transformations and don't construct any string because none
+	of them is going to be used (all labels will show "n/a").
+
+	* app/display/gimpstatusbar.[ch]: renamed set_cursor() API
+	to update_cursor().
+
+	* app/display/gimpdisplayshell-cursor.c
+	(gimp_display_shell_update_cursor): move variables to local
+	scopes. Follow GimpStatusbar API change. Cleanup.
+
+	(gimp_display_shell_clear_cursor): ditto. Follow GimpColorFrame
+	API change.
+
+2007-03-20  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/plug-in-actions.c
 	* app/menus/plug-in-menus.c: GimpPlugInProcedure has a boolean
 	member "file_proc" now, use it instead of checking prefixes,

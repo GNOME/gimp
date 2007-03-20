@@ -72,5 +72,7 @@ void        gimp_cursor_view_update_cursor     (GimpCursorView  *view,
                                                 GimpUnit         unit,
                                                 gdouble          x,
                                                 gdouble          y);
+void        gimp_cursor_view_clear_cursor      (GimpCursorView  *view);
+
 
 #endif /* __GIMP_CURSOR_VIEW_H__ */

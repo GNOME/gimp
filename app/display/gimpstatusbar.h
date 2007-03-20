@@ -114,7 +114,7 @@ void        gimp_statusbar_push_temp_valist (GimpStatusbar       *statusbar,
                                              va_list              args);
 void        gimp_statusbar_pop_temp         (GimpStatusbar       *statusbar);
 
-void        gimp_statusbar_set_cursor       (GimpStatusbar       *statusbar,
+void        gimp_statusbar_update_cursor    (GimpStatusbar       *statusbar,
                                              gdouble              x,
                                              gdouble              y);
 void        gimp_statusbar_clear_cursor     (GimpStatusbar       *statusbar);
