@@ -131,10 +131,8 @@ plug_in_menus_setup (GimpUIManager *manager,
                                G_CALLBACK (plug_in_menus_menu_path_added),
                                manager, 0);
 
-      if (plug_in_proc->menu_paths   &&
-          ! plug_in_proc->extensions &&
-          ! plug_in_proc->prefixes   &&
-          ! plug_in_proc->magics)
+      if (plug_in_proc->menu_paths &&
+          ! plug_in_proc->file_proc)
         {
           GList *path;
 
@@ -215,7 +213,8 @@ plug_in_menus_register_procedure (GimpPDB       *pdb,
                                G_CALLBACK (plug_in_menus_menu_path_added),
                                manager, 0);
 
-      if (plug_in_proc->menu_label || plug_in_proc->menu_paths)
+      if ((plug_in_proc->menu_label || plug_in_proc->menu_paths) &&
+          ! plug_in_proc->file_proc)
         {
           GList *list;
 
@@ -243,7 +242,8 @@ plug_in_menus_unregister_procedure (GimpPDB       *pdb,
                                             plug_in_menus_menu_path_added,
                                             manager);
 
-      if (plug_in_proc->menu_label || plug_in_proc->menu_paths)
+      if ((plug_in_proc->menu_label || plug_in_proc->menu_paths) &&
+          ! plug_in_proc->file_proc)
         {
           GList *list;
 

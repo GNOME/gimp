@@ -888,6 +888,8 @@ gimp_plug_in_procedure_set_mime_type (GimpPlugInProcedure *proc,
 {
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
 
+  proc->file_proc = TRUE;
+
   if (proc->mime_type)
     g_free (proc->mime_type);
 
@@ -899,6 +901,8 @@ gimp_plug_in_procedure_set_thumb_loader (GimpPlugInProcedure *proc,
                                          const gchar         *thumb_loader)
 {
   g_return_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc));
+
+  proc->file_proc = TRUE;
 
   if (proc->thumb_loader)
     g_free (proc->thumb_loader);

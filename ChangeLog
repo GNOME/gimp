@@ -1,3 +1,19 @@
+2007-03-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/plug-in-actions.c
+	* app/menus/plug-in-menus.c: GimpPlugInProcedure has a boolean
+	member "file_proc" now, use it instead of checking prefixes,
+	extensions and magics manually.
+
+	* app/plug-in/gimppluginprocedure.c
+	(gimp_plug_in_procedure_set_mime_type)
+	(gimp_plug_in_procedure_set_thumb_loader): set
+	plug_in_proc->file_proc to TRUE here too.
+
+	* plug-ins/common/pnm.c: register "image/x-portable-anymap" as
+	mime-type and "pnm" as extension for file-pnm-save so it's
+	recognized as file procedure.
+
 2007-03-19  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimp.c (gimp_install_procedure): rephrased new

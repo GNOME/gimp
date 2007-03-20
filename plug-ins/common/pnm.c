@@ -306,9 +306,11 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
+  gimp_register_file_handler_mime (PNM_SAVE_PROC, "image/x-portable-anymap");
   gimp_register_file_handler_mime (PBM_SAVE_PROC, "image/x-portable-bitmap");
   gimp_register_file_handler_mime (PGM_SAVE_PROC, "image/x-portable-graymap");
   gimp_register_file_handler_mime (PPM_SAVE_PROC, "image/x-portable-pixmap");
+  gimp_register_save_handler (PNM_SAVE_PROC, "pnm", "");
   gimp_register_save_handler (PBM_SAVE_PROC, "pbm", "");
   gimp_register_save_handler (PGM_SAVE_PROC, "pgm", "");
   gimp_register_save_handler (PPM_SAVE_PROC, "ppm", "");

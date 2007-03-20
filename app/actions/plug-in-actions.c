@@ -235,12 +235,9 @@ plug_in_actions_update (GimpActionGroup *group,
     {
       GimpPlugInProcedure *proc = list->data;
 
-      if ((proc->menu_label ||
-           proc->menu_paths)    &&
-          proc->image_types_val &&
-          ! proc->extensions    &&
-          ! proc->prefixes      &&
-          ! proc->magics)
+      if ((proc->menu_label || proc->menu_paths) &&
+          ! proc->file_proc                      &&
+          proc->image_types_val)
         {
           gboolean sensitive = gimp_plug_in_procedure_get_sensitive (proc, type);
 
@@ -325,11 +322,8 @@ plug_in_actions_register_procedure (GimpPDB         *pdb,
                                G_CALLBACK (plug_in_actions_menu_path_added),
                                group, 0);
 
-      if ((plug_in_proc->menu_label ||
-           plug_in_proc->menu_paths) &&
-          ! plug_in_proc->extensions &&
-          ! plug_in_proc->prefixes   &&
-          ! plug_in_proc->magics)
+      if ((plug_in_proc->menu_label || plug_in_proc->menu_paths) &&
+          ! plug_in_proc->file_proc)
         {
 #if 0
           g_print ("%s: %s\n", G_STRFUNC,
@@ -354,11 +348,8 @@ plug_in_actions_unregister_procedure (GimpPDB         *pdb,
                                             plug_in_actions_menu_path_added,
                                             group);
 
-      if ((plug_in_proc->menu_label ||
-           plug_in_proc->menu_paths) &&
-          ! plug_in_proc->extensions &&
-          ! plug_in_proc->prefixes   &&
-          ! plug_in_proc->magics)
+      if ((plug_in_proc->menu_label || plug_in_proc->menu_paths) &&
+          ! plug_in_proc->file_proc)
         {
           GtkAction *action;
 
