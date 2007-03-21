@@ -400,7 +400,8 @@ gimp_display_shell_draw_tri (GimpDrawable *texture,
                                                  *right, u_r, v_r,
                                                  ry);
             }
-          left ++;      right ++;
+
+          left++;       right++;
           u_l += dul;   v_l += dvl;
           u_r += dur;   v_r += dvr;
         }
@@ -433,7 +434,8 @@ gimp_display_shell_draw_tri (GimpDrawable *texture,
                                                  *right, u_r, v_r,
                                                  ry);
             }
-          left ++;      right ++;
+
+          left++;       right++;
           u_l += dul;   v_l += dvl;
           u_r += dur;   v_r += dvr;
         }
@@ -467,7 +469,7 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
   const guchar *cmap;
   gint          offset;
 
-  if (! (x2 - x1))
+  if (x2 == x1)
     return;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (texture));
@@ -484,7 +486,7 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
 
   if (x1 > x2)
     {
-      gint tmp;
+      gint   tmp;
       gfloat ftmp;
 
       tmp  = x2;  x2 = x1;  x1 = tmp;
@@ -506,11 +508,11 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
     }
   else if (x1 > gdk_pixbuf_get_width (row))
     return;
+
   if (x2 < 0)
     return;
   else if (x2 > gdk_pixbuf_get_width (row))
     x2 = gdk_pixbuf_get_width (row);
-
 
   dx = x2 - x1;
 
@@ -628,7 +630,7 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
   const guchar *cmap;
   gint          offset;
 
-  if (! (x2 - x1))
+  if (x2 == x1)
     return;
 
   g_return_if_fail (GIMP_IS_DRAWABLE (texture));
@@ -668,6 +670,7 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
     }
   else if (x1 > gdk_pixbuf_get_width (row))
     return;
+
   if (x2 < 0)
     return;
   else if (x2 > gdk_pixbuf_get_width (row))
@@ -811,7 +814,7 @@ gimp_display_shell_trace_tri_edge (gint *dest,
   gint        b;
   gint       *dptr;
 
-  if (dy == 0)
+  if (dy <= 0)
     return;
 
   g_return_if_fail (dest != NULL);
@@ -887,4 +890,3 @@ gimp_display_shell_trace_tri_edge (gint *dest,
         }
     }
 }
-
