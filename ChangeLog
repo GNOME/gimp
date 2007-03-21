@@ -1,3 +1,7 @@
+2007-03-21  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/svg.c: fixed incorrect PDB documentation.
+
 2007-03-21  Martin Nordholts  <martin@svn.gnome.org>
 
 	* plug-ins/common/svg.c (run): Added comment to explain why the

@@ -101,7 +101,7 @@ query (void)
     { GIMP_PDB_STRING, "filename",     "The name of the file to load"        },
     { GIMP_PDB_STRING, "raw-filename", "The name of the file to load"        },
     { GIMP_PDB_FLOAT,  "resolution",
-      "Resolution to use for rendering the SVG (defaults to 72 dpi"          },
+      "Resolution to use for rendering the SVG (defaults to 90 dpi)"         },
     { GIMP_PDB_INT32,  "width",
       "Width (in pixels) to load the SVG in. "
       "(0 for original width, a negative width to specify a maximum width)"  },
@@ -213,8 +213,8 @@ run (const gchar      *name,
           break;
         }
 
-      /* Don't clamp this, insane values are probably not meant to be used as
-       * resoution anyway.
+      /* Don't clamp this; insane values are probably not meant to be
+       * used as resolution anyway.
        */
       if (load_vals.resolution < GIMP_MIN_RESOLUTION ||
           load_vals.resolution > GIMP_MAX_RESOLUTION)
@@ -231,17 +231,18 @@ run (const gchar      *name,
             {
               if (load_vals.import)
                 {
-                  gint num_vectors;
                   gint32 *vectors;
+                  gint    num_vectors;
 
                   gimp_vectors_import_from_file (image_ID, filename,
                                                  load_vals.merge, TRUE,
                                                  &num_vectors, &vectors);
-                  if (num_vectors)
+                  if (num_vectors > 0)
                     g_free (vectors);
                 }
 
               *nreturn_vals = 2;
+
               values[1].type         = GIMP_PDB_IMAGE;
               values[1].data.d_image = image_ID;
             }
