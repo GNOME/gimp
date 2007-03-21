@@ -811,7 +811,7 @@ gimp_display_shell_trace_tri_edge (gint *dest,
   gint        b;
   gint       *dptr;
 
-  if (dy == 0)
+  if (dy <= 0)
     return;
 
   g_return_if_fail (dest != NULL);
