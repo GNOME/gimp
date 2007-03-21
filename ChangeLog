@@ -1,3 +1,9 @@
+2007-03-21  Martin Nordholts  <martin@svn.gnome.org>
+
+	* plug-ins/common/svg.c (run): Added comment to explain why the
+	svg file provided resolution is not clamped against
+	GIMP_MIN/MAX_RESOLUTION.
+
 2007-03-21  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_new): don't

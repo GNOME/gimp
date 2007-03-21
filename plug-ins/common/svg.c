@@ -213,6 +213,9 @@ run (const gchar      *name,
           break;
         }
 
+      /* Don't clamp this, insane values are probably not meant to be used as
+       * resoution anyway.
+       */
       if (load_vals.resolution < GIMP_MIN_RESOLUTION ||
           load_vals.resolution > GIMP_MAX_RESOLUTION)
         {
