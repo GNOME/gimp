@@ -511,11 +511,10 @@ gimp_quit (void)
  * (e.g. "&lt;Image&gt;/Filters/Render/Useless").
  *
  * It is possible to register a procedure only for keyboard-shortcut
- * activation by not registering any menu path with
- * gimp_plugin_menu_register() but still passing a @menu_label to
- * gimp_install_procedure(). In this case, the given @menu_label will
- * only be used as the procedure's user-visible name in the keyboard
- * shortcut editor.
+ * activation by passing a @menu_label to gimp_install_procedure() but
+ * not registering any menu path with gimp_plugin_menu_register(). In
+ * this case, the given @menu_label will only be used as the
+ * procedure's user-visible name in the keyboard shortcut editor.
  *
  * @type must be one of #GIMP_PLUGIN or #GIMP_EXTENSION. Note that
  * temporary procedures must be installed using
