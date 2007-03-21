@@ -216,7 +216,8 @@ gimp_blend_tool_button_release (GimpTool              *tool,
        (blend_tool->start_y != blend_tool->end_y)))
     {
       GimpProgress *progress;
-      gint          off_x, off_y;
+      gint          off_x;
+      gint          off_y;
 
       progress = gimp_progress_start (GIMP_PROGRESS (display),
                                       _("Blending"), FALSE);
@@ -239,7 +240,7 @@ gimp_blend_tool_button_release (GimpTool              *tool,
                            options->dither,
                            blend_tool->start_x - off_x,
                            blend_tool->start_y - off_y,
-                           blend_tool->end_x - off_y,
+                           blend_tool->end_x - off_x,
                            blend_tool->end_y - off_y,
                            progress);
 

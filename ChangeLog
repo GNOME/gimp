@@ -1,5 +1,10 @@
 2007-03-21  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpblendtool.c (gimp_blend_tool_button_release): fixed
+	typo spotted by Bill Skaggs.
+
+2007-03-21  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-preview.c
 	(gimp_display_shell_trace_tri_edge): be more robust to avoid
 	crashes like bug #420595.
