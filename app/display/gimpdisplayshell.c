@@ -631,8 +631,6 @@ gimp_display_shell_new (GimpDisplay     *display,
                         "unit",    unit,
                         NULL);
 
-  gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, scale);
-
   shell->display = display;
 
   image_width  = display->image->width;
@@ -646,6 +644,8 @@ gimp_display_shell_new (GimpDisplay     *display,
                     G_OBJECT (shell->options), 0);
   gimp_config_sync (G_OBJECT (display_config->default_fullscreen_view),
                     G_OBJECT (shell->fullscreen_options), 0);
+
+  gimp_zoom_model_zoom (shell->zoom, GIMP_ZOOM_TO, scale);
 
   /* adjust the initial scale -- so that window fits on screen the 75%
    * value is the same as in gimp_display_shell_shrink_wrap. It

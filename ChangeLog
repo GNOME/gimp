@@ -1,5 +1,11 @@
 2007-03-21  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): don't
+	call gimp_zoom_model_zoom() before assigning shell->display. Fixes
+	bug #421044.
+
+2007-03-21  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpblendtool.c (gimp_blend_tool_button_release): fixed
 	typo spotted by Bill Skaggs.
 
