@@ -4,17 +4,18 @@
 #
 # Raymond Ostertag <r.ostertag@caramail.com>, 2007.
 # Jonathan Ernst <jonathan@ernstfamily.ch>, 2007.
+# Laurent Monin <gimp@norz.org>, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-14 22:36+0100\n"
-"PO-Revision-Date: 2007-02-14 22:19+0100\n"
-"Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
+"POT-Creation-Date: 2007-03-21 23:46+0100\n"
+"PO-Revision-Date: 2007-03-21 23:47+0100\n"
+"Last-Translator: Laurent Monin <gimp@norz.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:335
@@ -24,7 +25,7 @@ msgstr "Informations manquantes sur l'exception"
 #: ../plug-ins/pygimp/gimpfu.py:344
 #, python-format
 msgid "An error occured running %s"
-msgstr "Une erreur est intervenue durant l'exécution de %s"
+msgstr "Une erreur est survenue durant l'exécution de %s"
 
 #: ../plug-ins/pygimp/gimpfu.py:355
 msgid "_More Information"
@@ -69,8 +70,8 @@ msgid "Colored XHTML"
 msgstr "XHTML coloré"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
-msgid "Character source"
-msgstr "Source caractère"
+msgid "Character _source"
+msgstr "_Source caractère"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
 msgid "Source code"
@@ -85,16 +86,16 @@ msgid "Entry box"
 msgstr "Boîte d'entrée"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
-msgid "File to read or characters to use"
-msgstr "Fichier à lire ou caractères à utiliser"
+msgid "_File to read or characters to use"
+msgstr "_Fichier à lire ou caractères à utiliser"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
-msgid "Font size in pixels"
-msgstr "Taille de police en pixels"
+msgid "Fo_nt size in pixels"
+msgstr "_Taille de police en pixels"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
-msgid "Write a separate CSS file"
-msgstr "Écrire séparément un fichier CSS"
+msgid "_Write a separate CSS file"
+msgstr "É_crire séparément un fichier CSS"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
@@ -111,7 +112,7 @@ msgstr "Navigateur de procédures python"
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "Impossible d'ouvrir « %s » pour écrire %s"
+msgstr "Impossible d'ouvrir « %s » pour écrire : %s"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
 #, python-format
@@ -139,24 +140,24 @@ msgid "_Fog..."
 msgstr "_Brouillard..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:59
-msgid "Layer name"
-msgstr "Nom de calque"
+msgid "_Layer name"
+msgstr "_Nom de calque"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:59
 msgid "Clouds"
 msgstr "Nuages"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:60
-msgid "Fog color"
-msgstr "Couleur de brouillard"
+msgid "_Fog color"
+msgstr "_Couleur de brouillard"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:61
-msgid "Turbulence"
-msgstr "Turbulence"
+msgid "_Turbulence"
+msgstr "_Turbulence"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:62
-msgid "Opacity"
-msgstr "Opacité"
+msgid "Op_acity"
+msgstr "Op_acité"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
 msgid "Offset the colors in a palette"
@@ -174,8 +175,8 @@ msgid "Palette"
 msgstr "Palette"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
-msgid "Offset"
-msgstr "Décalage"
+msgid "Off_set"
+msgstr "Décala_ge"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
 msgid "Sort the colors in a palette"
@@ -186,8 +187,8 @@ msgid "_Sort Palette..."
 msgstr "_Trier la palette..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-msgid "Color model"
-msgstr "Modèle de couleur"
+msgid "Color _model"
+msgstr "_Modèle de couleur"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
 msgid "RGB"
@@ -198,8 +199,8 @@ msgid "HSV"
 msgstr "TSV"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-msgid "Channel to sort"
-msgstr "Canal à trier"
+msgid "Channel to _sort"
+msgstr "Canal à _trier"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
 msgid "Red or Hue"
@@ -214,8 +215,8 @@ msgid "Blue or Value"
 msgstr "Bleu ou valeur"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
-msgid "Ascending"
-msgstr "Monter"
+msgid "_Ascending"
+msgstr "_Ascendant"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
@@ -223,7 +224,7 @@ msgstr "Créé un dégradé répétitif en utilisant les couleurs de la palette"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
 msgid "Palette to _Repeating Gradient"
-msgstr "Palette vers _dégradé répétitif"
+msgstr "Palette vers dégradé _répétitif"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
 msgid "Create a gradient using colors from the palette"
@@ -240,7 +241,7 @@ msgstr "Tranche"
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
 msgstr ""
-"Découpe une image selon ses guides, créé les images et une table HTML "
+"Découpe une image selon ses guides, crée les images et une table HTML "
 "associée"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
@@ -292,21 +293,21 @@ msgid "_Drop Shadow and Bevel..."
 msgstr "_Ombre portée et biseau..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
-msgid "Shadow blur"
-msgstr "Portée du flou"
+msgid "_Shadow blur"
+msgstr "Flou de l'_ombre"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
-msgid "Bevel"
-msgstr "Biseau"
+msgid "_Bevel"
+msgstr "_Biseau"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
-msgid "Drop shadow"
-msgstr "Ombre portée"
+msgid "_Drop shadow"
+msgstr "Ombre _portée"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
-msgid "Drop shadow X displacement"
-msgstr "Déplacement X de l'ombre portée"
+msgid "Drop shadow _X displacement"
+msgstr "Déplacement _X de l'ombre portée"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
-msgid "Drop shadow Y displacement"
-msgstr "Déplacement Y de l'ombre portée"
+msgid "Drop shadow _Y displacement"
+msgstr "Déplacement _Y de l'ombre portée"

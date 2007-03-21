@@ -10,14 +10,15 @@
 # Jean-Louis Berliet <jl.berliet@free.fr>, 2004.
 # Julien Hardelin, 2004-2007.
 # Jonathan Ernst <jonathan@ernstfamily.ch>, 2007.
+# Laurent Monin <gimp@norz.org>, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-14 22:36+0100\n"
-"PO-Revision-Date: 2007-02-14 22:35+0100\n"
-"Last-Translator: Jonathan Ernst <jonathan@ernstfamily.ch>\n"
+"POT-Creation-Date: 2007-03-21 23:52+0100\n"
+"PO-Revision-Date: 2007-03-15 19:43+0100\n"
+"Last-Translator: Laurent Monin <gimp@norz.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -252,10 +253,10 @@ msgstr "Cosinus"
 #: ../plug-ins/FractalExplorer/Dialogs.c:999
 #: ../plug-ins/FractalExplorer/Dialogs.c:1040
 #: ../plug-ins/FractalExplorer/Dialogs.c:1081
-#: ../plug-ins/Lighting/lighting_ui.c:406
+#: ../plug-ins/Lighting/lighting_ui.c:383
 #: ../plug-ins/common/CML_explorer.c:166 ../plug-ins/common/align_layers.c:421
-#: ../plug-ins/common/align_layers.c:452 ../plug-ins/common/postscript.c:3184
-#: ../plug-ins/common/postscript.c:3196 ../plug-ins/common/psp.c:418
+#: ../plug-ins/common/align_layers.c:452 ../plug-ins/common/postscript.c:3202
+#: ../plug-ins/common/postscript.c:3214 ../plug-ins/common/psp.c:418
 #: ../plug-ins/fits/fits.c:1019
 msgid "None"
 msgstr "Aucun"
@@ -346,20 +347,20 @@ msgid "_Fractals"
 msgstr "_Fractales"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1546
-#: ../plug-ins/Lighting/lighting_ui.c:1170 ../plug-ins/bmp/bmpwrite.c:294
+#: ../plug-ins/Lighting/lighting_ui.c:1147 ../plug-ins/bmp/bmpwrite.c:294
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2004
 #: ../plug-ins/common/channel_mixer.c:1054 ../plug-ins/common/compressor.c:410
 #: ../plug-ins/common/compressor.c:545 ../plug-ins/common/curve_bend.c:818
 #: ../plug-ins/common/dicom.c:691 ../plug-ins/common/gbr.c:616
 #: ../plug-ins/common/gif.c:986 ../plug-ins/common/gih.c:1258
-#: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:562
-#: ../plug-ins/common/mng.c:954 ../plug-ins/common/pat.c:447
+#: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
+#: ../plug-ins/common/mng.c:950 ../plug-ins/common/pat.c:447
 #: ../plug-ins/common/pcx.c:588 ../plug-ins/common/pix.c:508
-#: ../plug-ins/common/png.c:1168 ../plug-ins/common/pnm.c:929
-#: ../plug-ins/common/postscript.c:1185 ../plug-ins/common/psd_save.c:1448
+#: ../plug-ins/common/png.c:1243 ../plug-ins/common/pnm.c:931
+#: ../plug-ins/common/postscript.c:1194 ../plug-ins/common/psd_save.c:1458
 #: ../plug-ins/common/raw.c:528 ../plug-ins/common/raw.c:555
 #: ../plug-ins/common/spheredesigner.c:2119 ../plug-ins/common/sunras.c:507
-#: ../plug-ins/common/tga.c:1027 ../plug-ins/common/tiff.c:2171
+#: ../plug-ins/common/tga.c:1030 ../plug-ins/common/tiff.c:2171
 #: ../plug-ins/common/xbm.c:1002 ../plug-ins/common/xwd.c:565
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/gfli/gfli.c:715
@@ -388,21 +389,21 @@ msgstr "Enregistrer les paramètres de la fractale"
 #. stat error (file does not exist)
 #: ../plug-ins/FractalExplorer/Dialogs.c:1863
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:933
-#: ../plug-ins/Lighting/lighting_ui.c:1313 ../plug-ins/bmp/bmpread.c:149
+#: ../plug-ins/Lighting/lighting_ui.c:1290 ../plug-ins/bmp/bmpread.c:149
 #: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2177
 #: ../plug-ins/common/channel_mixer.c:976 ../plug-ins/common/curve_bend.c:870
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gifload.c:309 ../plug-ins/common/gih.c:649
-#: ../plug-ins/common/lcms.c:655 ../plug-ins/common/mng.c:1125
+#: ../plug-ins/common/lcms.c:655 ../plug-ins/common/mng.c:1121
 #: ../plug-ins/common/pat.c:317 ../plug-ins/common/pcx.c:309
-#: ../plug-ins/common/pix.c:329 ../plug-ins/common/png.c:652
-#: ../plug-ins/common/pnm.c:480 ../plug-ins/common/poppler.c:368
-#: ../plug-ins/common/postscript.c:1012 ../plug-ins/common/postscript.c:2993
-#: ../plug-ins/common/psd.c:1880 ../plug-ins/common/psp.c:1460
+#: ../plug-ins/common/pix.c:329 ../plug-ins/common/png.c:707
+#: ../plug-ins/common/pnm.c:482 ../plug-ins/common/poppler.c:368
+#: ../plug-ins/common/postscript.c:1021 ../plug-ins/common/postscript.c:3002
+#: ../plug-ins/common/psd.c:1899 ../plug-ins/common/psp.c:1460
 #: ../plug-ins/common/raw.c:243 ../plug-ins/common/raw.c:645
 #: ../plug-ins/common/spheredesigner.c:2009 ../plug-ins/common/sunras.c:379
 #: ../plug-ins/common/svg.c:316 ../plug-ins/common/svg.c:686
-#: ../plug-ins/common/tga.c:411 ../plug-ins/common/tiff.c:580
+#: ../plug-ins/common/tga.c:414 ../plug-ins/common/tiff.c:580
 #: ../plug-ins/common/xbm.c:720 ../plug-ins/common/xwd.c:420
 #: ../plug-ins/faxg3/faxg3.c:219 ../plug-ins/fits/fits.c:342
 #: ../plug-ins/flame/flame.c:411 ../plug-ins/gfig/gfig.c:434
@@ -410,8 +411,8 @@ msgstr "Enregistrer les paramètres de la fractale"
 #: ../plug-ins/help/gimphelplocale.c:193 ../plug-ins/jpeg/jpeg-load.c:88
 #: ../plug-ins/jpeg/jpeg-load.c:874 ../plug-ins/uri/uri-backend-gnomevfs.c:259
 #: ../plug-ins/uri/uri-backend-libcurl.c:172 ../plug-ins/winicon/icoload.c:651
-#: ../plug-ins/winicon/icoload.c:728 ../plug-ins/xjt/xjt.c:2543
-#: ../plug-ins/xjt/xjt.c:2551
+#: ../plug-ins/winicon/icoload.c:728 ../plug-ins/xjt/xjt.c:2544
+#: ../plug-ins/xjt/xjt.c:2552
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossible d'ouvrir « %s » en lecture : %s"
@@ -487,7 +488,7 @@ msgid "Add FractalExplorer Path"
 msgstr "Ajoutez un chemin FractalExplorer"
 
 #: ../plug-ins/Lighting/lighting_apply.c:104
-#: ../plug-ins/Lighting/lighting_ui.c:978
+#: ../plug-ins/Lighting/lighting_ui.c:955
 msgid "Lighting Effects"
 msgstr "Effets d'éclairage"
 
@@ -500,145 +501,145 @@ msgid "_Lighting Effects..."
 msgstr "_Effets d'éclairage..."
 
 #. General options
-#: ../plug-ins/Lighting/lighting_ui.c:284
+#: ../plug-ins/Lighting/lighting_ui.c:261
 #: ../plug-ins/MapObject/mapobject_ui.c:473
 msgid "General Options"
 msgstr "Options générales"
 
-#: ../plug-ins/Lighting/lighting_ui.c:292
+#: ../plug-ins/Lighting/lighting_ui.c:269
 msgid "T_ransparent background"
 msgstr "Arrière-plan tr_ansparent"
 
-#: ../plug-ins/Lighting/lighting_ui.c:302
+#: ../plug-ins/Lighting/lighting_ui.c:279
 msgid "Make destination image transparent where bump height is zero"
 msgstr "Rendre l'image destination transparente là où le relief est nul"
 
-#: ../plug-ins/Lighting/lighting_ui.c:305
+#: ../plug-ins/Lighting/lighting_ui.c:282
 msgid "Cre_ate new image"
 msgstr "Créer une n_ouvelle image"
 
-#: ../plug-ins/Lighting/lighting_ui.c:315
+#: ../plug-ins/Lighting/lighting_ui.c:292
 #: ../plug-ins/MapObject/mapobject_ui.c:547
 msgid "Create a new image when applying filter"
 msgstr "Créer une nouvelle image lors de l'application du filtre"
 
-#: ../plug-ins/Lighting/lighting_ui.c:317
+#: ../plug-ins/Lighting/lighting_ui.c:294
 msgid "High _quality preview"
 msgstr "Aperçu de haute _qualité"
 
-#: ../plug-ins/Lighting/lighting_ui.c:327
+#: ../plug-ins/Lighting/lighting_ui.c:304
 msgid "Enable/disable high quality preview"
 msgstr "(Dés)activer l'aperçu de haute qualité"
 
-#: ../plug-ins/Lighting/lighting_ui.c:334
+#: ../plug-ins/Lighting/lighting_ui.c:311
 msgid "Distance:"
 msgstr "Distance :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:368
+#: ../plug-ins/Lighting/lighting_ui.c:345
 #: ../plug-ins/MapObject/mapobject_ui.c:626
 msgid "Light Settings"
 msgstr "Paramètres de la lumière"
 
-#: ../plug-ins/Lighting/lighting_ui.c:381
+#: ../plug-ins/Lighting/lighting_ui.c:358
 msgid "Light 1"
 msgstr "Lumière 1"
 
-#: ../plug-ins/Lighting/lighting_ui.c:382
+#: ../plug-ins/Lighting/lighting_ui.c:359
 msgid "Light 2"
 msgstr "Lumière 2"
 
-#: ../plug-ins/Lighting/lighting_ui.c:383
+#: ../plug-ins/Lighting/lighting_ui.c:360
 msgid "Light 3"
 msgstr "Lumière 3"
 
-#: ../plug-ins/Lighting/lighting_ui.c:384
+#: ../plug-ins/Lighting/lighting_ui.c:361
 msgid "Light 4"
 msgstr "Lumière 4"
 
-#: ../plug-ins/Lighting/lighting_ui.c:385
+#: ../plug-ins/Lighting/lighting_ui.c:362
 msgid "Light 5"
 msgstr "Lumière 5"
 
-#: ../plug-ins/Lighting/lighting_ui.c:386
+#: ../plug-ins/Lighting/lighting_ui.c:363
 msgid "Light 6"
 msgstr "Lumière 6"
 
 #. row labels
-#: ../plug-ins/Lighting/lighting_ui.c:395
+#: ../plug-ins/Lighting/lighting_ui.c:372
 #: ../plug-ins/common/spheredesigner.c:2705
 msgid "Type:"
 msgstr "Type :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:400
+#: ../plug-ins/Lighting/lighting_ui.c:377
 msgid "Color:"
 msgstr "Couleur :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:407
+#: ../plug-ins/Lighting/lighting_ui.c:384
 msgid "Directional"
 msgstr "Directionnel"
 
-#: ../plug-ins/Lighting/lighting_ui.c:408
+#: ../plug-ins/Lighting/lighting_ui.c:385
 msgid "Point"
 msgstr "Point"
 
-#: ../plug-ins/Lighting/lighting_ui.c:423
+#: ../plug-ins/Lighting/lighting_ui.c:400
 #: ../plug-ins/MapObject/mapobject_ui.c:654
 msgid "Type of light source to apply"
 msgstr "Type de la source de lumière à appliquer"
 
-#: ../plug-ins/Lighting/lighting_ui.c:425
+#: ../plug-ins/Lighting/lighting_ui.c:402
 #: ../plug-ins/MapObject/mapobject_ui.c:656
 msgid "Select lightsource color"
 msgstr "Régler la couleur de la source de lumière"
 
-#: ../plug-ins/Lighting/lighting_ui.c:437
+#: ../plug-ins/Lighting/lighting_ui.c:414
 #: ../plug-ins/MapObject/mapobject_ui.c:669
 msgid "Set light source color"
 msgstr "Régler la couleur de la source de lumière"
 
-#: ../plug-ins/Lighting/lighting_ui.c:445
+#: ../plug-ins/Lighting/lighting_ui.c:422
 msgid "_Intensity:"
 msgstr "_Intensité :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:451
+#: ../plug-ins/Lighting/lighting_ui.c:428
 msgid "Light intensity"
 msgstr "Intensité de la lumière"
 
-#: ../plug-ins/Lighting/lighting_ui.c:454
+#: ../plug-ins/Lighting/lighting_ui.c:431
 #: ../plug-ins/MapObject/mapobject_ui.c:671
 #: ../plug-ins/MapObject/mapobject_ui.c:998
 msgid "Position"
 msgstr "Position"
 
-#: ../plug-ins/Lighting/lighting_ui.c:464 ../plug-ins/common/flarefx.c:765
+#: ../plug-ins/Lighting/lighting_ui.c:441 ../plug-ins/common/flarefx.c:765
 #: ../plug-ins/common/mblur.c:992 ../plug-ins/common/nova.c:462
 #: ../plug-ins/common/papertile.c:273 ../plug-ins/flame/flame.c:1227
 #: ../plug-ins/gflare/gflare.c:2651
 msgid "_X:"
 msgstr "_X :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:470
+#: ../plug-ins/Lighting/lighting_ui.c:447
 #: ../plug-ins/MapObject/mapobject_ui.c:695
 msgid "Light source X position in XYZ space"
 msgstr "Position X de la source en espace XYZ"
 
-#: ../plug-ins/Lighting/lighting_ui.c:477 ../plug-ins/common/flarefx.c:770
+#: ../plug-ins/Lighting/lighting_ui.c:454 ../plug-ins/common/flarefx.c:770
 #: ../plug-ins/common/mblur.c:997 ../plug-ins/common/nova.c:467
 #: ../plug-ins/common/papertile.c:282 ../plug-ins/flame/flame.c:1241
 #: ../plug-ins/gflare/gflare.c:2655
 msgid "_Y:"
 msgstr "_Y :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:483
+#: ../plug-ins/Lighting/lighting_ui.c:460
 #: ../plug-ins/MapObject/mapobject_ui.c:709
 msgid "Light source Y position in XYZ space"
 msgstr "Position Y de la source en espace XYZ"
 
-#: ../plug-ins/Lighting/lighting_ui.c:490
+#: ../plug-ins/Lighting/lighting_ui.c:467
 msgid "_Z:"
 msgstr "_Z :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:496
+#: ../plug-ins/Lighting/lighting_ui.c:473
 #: ../plug-ins/MapObject/mapobject_ui.c:723
 msgid "Light source Z position in XYZ space"
 msgstr "Position Z de la source en espace XYZ"
@@ -646,13 +647,13 @@ msgstr "Position Z de la source en espace XYZ"
 #. *****************************************************
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
-#: ../plug-ins/Lighting/lighting_ui.c:499 ../plug-ins/common/struc.c:1294
+#: ../plug-ins/Lighting/lighting_ui.c:476 ../plug-ins/common/struc.c:1294
 #: ../plug-ins/common/wind.c:945
 msgid "Direction"
 msgstr "Direction"
 
 #. X
-#: ../plug-ins/Lighting/lighting_ui.c:508
+#: ../plug-ins/Lighting/lighting_ui.c:485
 #: ../plug-ins/MapObject/mapobject_ui.c:687
 #: ../plug-ins/MapObject/mapobject_ui.c:741
 #: ../plug-ins/MapObject/mapobject_ui.c:1009
@@ -661,13 +662,13 @@ msgstr "Direction"
 msgid "X:"
 msgstr "X :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:514
+#: ../plug-ins/Lighting/lighting_ui.c:491
 #: ../plug-ins/MapObject/mapobject_ui.c:749
 msgid "Light source X direction in XYZ space"
 msgstr "Direction X de la source lumineuse en espace XYZ"
 
 #. Y
-#: ../plug-ins/Lighting/lighting_ui.c:520
+#: ../plug-ins/Lighting/lighting_ui.c:497
 #: ../plug-ins/MapObject/mapobject_ui.c:701
 #: ../plug-ins/MapObject/mapobject_ui.c:754
 #: ../plug-ins/MapObject/mapobject_ui.c:1022
@@ -677,12 +678,12 @@ msgstr "Direction X de la source lumineuse en espace XYZ"
 msgid "Y:"
 msgstr "Y :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:526
+#: ../plug-ins/Lighting/lighting_ui.c:503
 #: ../plug-ins/MapObject/mapobject_ui.c:762
 msgid "Light source Y direction in XYZ space"
 msgstr "Direction Y de la source lumineuse en espace XYZ"
 
-#: ../plug-ins/Lighting/lighting_ui.c:532
+#: ../plug-ins/Lighting/lighting_ui.c:509
 #: ../plug-ins/MapObject/mapobject_ui.c:715
 #: ../plug-ins/MapObject/mapobject_ui.c:767
 #: ../plug-ins/MapObject/mapobject_ui.c:1035
@@ -691,171 +692,171 @@ msgstr "Direction Y de la source lumineuse en espace XYZ"
 msgid "Z:"
 msgstr "Z :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:538
+#: ../plug-ins/Lighting/lighting_ui.c:515
 #: ../plug-ins/MapObject/mapobject_ui.c:775
 msgid "Light source Z direction in XYZ space"
 msgstr "Direction Z de la source lumineuse en espace XYZ"
 
-#: ../plug-ins/Lighting/lighting_ui.c:541
+#: ../plug-ins/Lighting/lighting_ui.c:518
 msgid "I_solate"
 msgstr "I_soler"
 
-#: ../plug-ins/Lighting/lighting_ui.c:550
+#: ../plug-ins/Lighting/lighting_ui.c:527
 msgid "Lighting preset:"
 msgstr "Éclairage préréglé :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:596
+#: ../plug-ins/Lighting/lighting_ui.c:573
 msgid "Material Properties"
 msgstr "Propriétés du matériau"
 
-#: ../plug-ins/Lighting/lighting_ui.c:614
+#: ../plug-ins/Lighting/lighting_ui.c:591
 msgid "_Glowing:"
 msgstr "Ra_yonnement :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:630
+#: ../plug-ins/Lighting/lighting_ui.c:607
 #: ../plug-ins/MapObject/mapobject_ui.c:836
 msgid "Amount of original color to show where no direct light falls"
 msgstr "Intensité de la couleur originelle lorsque non éclairée"
 
-#: ../plug-ins/Lighting/lighting_ui.c:643
+#: ../plug-ins/Lighting/lighting_ui.c:620
 msgid "_Bright:"
 msgstr "Lumin_osité :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:659
+#: ../plug-ins/Lighting/lighting_ui.c:636
 #: ../plug-ins/MapObject/mapobject_ui.c:865
 msgid "Intensity of original color when lit by a light source"
 msgstr "Intensité de la couleur originelle lorsque éclairée"
 
-#: ../plug-ins/Lighting/lighting_ui.c:672
+#: ../plug-ins/Lighting/lighting_ui.c:649
 msgid "_Shiny:"
 msgstr "_Brillant :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:688
+#: ../plug-ins/Lighting/lighting_ui.c:665
 #: ../plug-ins/MapObject/mapobject_ui.c:937
 msgid "Controls how intense the highlights will be"
 msgstr "Contrôle l'intensité des taches de lumière"
 
-#: ../plug-ins/Lighting/lighting_ui.c:700
+#: ../plug-ins/Lighting/lighting_ui.c:677
 msgid "_Polished:"
 msgstr "_Poli :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:716
+#: ../plug-ins/Lighting/lighting_ui.c:693
 #: ../plug-ins/MapObject/mapobject_ui.c:966
 msgid "Higher values makes the highlights more focused"
 msgstr "Plus la valeur est élevée, plus les taches de lumière seront ramassées"
 
 #. Metallic
-#: ../plug-ins/Lighting/lighting_ui.c:725
+#: ../plug-ins/Lighting/lighting_ui.c:702
 msgid "_Metallic"
 msgstr "Métalli_que"
 
-#: ../plug-ins/Lighting/lighting_ui.c:761
+#: ../plug-ins/Lighting/lighting_ui.c:738
 msgid "E_nable bump mapping"
 msgstr "Activer le re_poussage"
 
-#: ../plug-ins/Lighting/lighting_ui.c:775
+#: ../plug-ins/Lighting/lighting_ui.c:752
 msgid "Enable/disable bump-mapping (image depth)"
 msgstr "(Dés)activer le repoussage (image de relief)"
 
-#: ../plug-ins/Lighting/lighting_ui.c:793
+#: ../plug-ins/Lighting/lighting_ui.c:770
 msgid "Bumpm_ap image:"
 msgstr "_Carte de repoussage :"
 
 #. Map type menu
-#: ../plug-ins/Lighting/lighting_ui.c:796 ../plug-ins/common/bumpmap.c:902
+#: ../plug-ins/Lighting/lighting_ui.c:773 ../plug-ins/common/bumpmap.c:902
 #: ../plug-ins/flame/flame.c:746
 msgid "Linear"
 msgstr "Linéaire"
 
-#: ../plug-ins/Lighting/lighting_ui.c:797
+#: ../plug-ins/Lighting/lighting_ui.c:774
 msgid "Logarithmic"
 msgstr "Logarithmique"
 
-#: ../plug-ins/Lighting/lighting_ui.c:798 ../plug-ins/common/bumpmap.c:904
+#: ../plug-ins/Lighting/lighting_ui.c:775 ../plug-ins/common/bumpmap.c:904
 #: ../plug-ins/flame/flame.c:747
 msgid "Sinusoidal"
 msgstr "Sinusoïdal"
 
-#: ../plug-ins/Lighting/lighting_ui.c:799 ../plug-ins/common/bumpmap.c:903
+#: ../plug-ins/Lighting/lighting_ui.c:776 ../plug-ins/common/bumpmap.c:903
 #: ../plug-ins/flame/flame.c:748
 msgid "Spherical"
 msgstr "Sphérique"
 
-#: ../plug-ins/Lighting/lighting_ui.c:809
+#: ../plug-ins/Lighting/lighting_ui.c:786
 msgid "Cu_rve:"
 msgstr "Cour_be :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:814
+#: ../plug-ins/Lighting/lighting_ui.c:791
 msgid "Ma_ximum height:"
 msgstr "Hauteur ma_ximum :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:824
+#: ../plug-ins/Lighting/lighting_ui.c:801
 msgid "Maximum height for bumps"
 msgstr "Hauteur maximum des bosses"
 
-#: ../plug-ins/Lighting/lighting_ui.c:849
+#: ../plug-ins/Lighting/lighting_ui.c:826
 msgid "E_nable environment mapping"
 msgstr "Activer la cartographie d'envir_onnement"
 
-#: ../plug-ins/Lighting/lighting_ui.c:863
+#: ../plug-ins/Lighting/lighting_ui.c:840
 msgid "Enable/disable environment-mapping (reflection)"
 msgstr "(Dés)activer la cartographie d'environnement (réflexion)"
 
-#: ../plug-ins/Lighting/lighting_ui.c:885
+#: ../plug-ins/Lighting/lighting_ui.c:862
 msgid "En_vironment image:"
 msgstr "Ima_ge pour l'environnement :"
 
-#: ../plug-ins/Lighting/lighting_ui.c:887
+#: ../plug-ins/Lighting/lighting_ui.c:864
 msgid "Environment image to use"
 msgstr "Image pour l'environnement à utiliser"
 
-#: ../plug-ins/Lighting/lighting_ui.c:909
+#: ../plug-ins/Lighting/lighting_ui.c:886
 msgid "Op_tions"
 msgstr "Op_tions"
 
-#: ../plug-ins/Lighting/lighting_ui.c:913
+#: ../plug-ins/Lighting/lighting_ui.c:890
 #: ../plug-ins/MapObject/mapobject_ui.c:1303
 msgid "_Light"
 msgstr "_Lumière"
 
-#: ../plug-ins/Lighting/lighting_ui.c:917
+#: ../plug-ins/Lighting/lighting_ui.c:894
 #: ../plug-ins/MapObject/mapobject_ui.c:1307
 msgid "_Material"
 msgstr "_Matériau"
 
-#: ../plug-ins/Lighting/lighting_ui.c:921
+#: ../plug-ins/Lighting/lighting_ui.c:898
 msgid "_Bump Map"
 msgstr "_Repoussage d'après une carte"
 
-#: ../plug-ins/Lighting/lighting_ui.c:925
+#: ../plug-ins/Lighting/lighting_ui.c:902
 msgid "_Environment Map"
 msgstr "Carte d'_environnement"
 
-#: ../plug-ins/Lighting/lighting_ui.c:1034
+#: ../plug-ins/Lighting/lighting_ui.c:1011
 #: ../plug-ins/gimpressionist/preview.c:186
 #: ../plug-ins/gimpressionist/repaint.c:1166
 #: ../plug-ins/imagemap/imap_polygon.c:515
 msgid "_Update"
 msgstr "Mettre à _jour"
 
-#: ../plug-ins/Lighting/lighting_ui.c:1041
+#: ../plug-ins/Lighting/lighting_ui.c:1018
 #: ../plug-ins/MapObject/mapobject_ui.c:1409
 msgid "Recompute preview image"
 msgstr "Recalculer l'aperçu"
 
-#: ../plug-ins/Lighting/lighting_ui.c:1043
+#: ../plug-ins/Lighting/lighting_ui.c:1020
 msgid "I_nteractive"
 msgstr "_Interactif"
 
-#: ../plug-ins/Lighting/lighting_ui.c:1057
+#: ../plug-ins/Lighting/lighting_ui.c:1034
 msgid "Enable/disable real time preview of changes"
 msgstr "(Dés)activer l'aperçu en temps-réel des changements"
 
-#: ../plug-ins/Lighting/lighting_ui.c:1096
+#: ../plug-ins/Lighting/lighting_ui.c:1073
 msgid "Save Lighting Preset"
 msgstr "Enregistrer les réglages d'éclairage"
 
-#: ../plug-ins/Lighting/lighting_ui.c:1240
+#: ../plug-ins/Lighting/lighting_ui.c:1217
 msgid "Load Lighting Preset"
 msgstr "Charger les réglages d'éclairage"
 
@@ -1040,7 +1041,7 @@ msgstr "Position Z de la source en espace XYZ"
 
 #. Rotation
 #: ../plug-ins/MapObject/mapobject_ui.c:1047
-#: ../plug-ins/common/postscript.c:3382
+#: ../plug-ins/common/postscript.c:3400
 msgid "Rotation"
 msgstr "Rotation"
 
@@ -1154,16 +1155,16 @@ msgstr "Mauvaise palette de couleurs"
 #: ../plug-ins/common/dicom.c:301 ../plug-ins/common/gbr.c:353
 #: ../plug-ins/common/gifload.c:314 ../plug-ins/common/gih.c:654
 #: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:314
-#: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:659
-#: ../plug-ins/common/pnm.c:485 ../plug-ins/common/poppler.c:414
-#: ../plug-ins/common/postscript.c:1018 ../plug-ins/common/psd.c:1885
+#: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:714
+#: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:414
+#: ../plug-ins/common/postscript.c:1027 ../plug-ins/common/psd.c:1904
 #: ../plug-ins/common/raw.c:650 ../plug-ins/common/sunras.c:433
-#: ../plug-ins/common/tga.c:416 ../plug-ins/common/tiff.c:588
+#: ../plug-ins/common/tga.c:419 ../plug-ins/common/tiff.c:588
 #: ../plug-ins/common/wmf.c:954 ../plug-ins/common/xbm.c:725
 #: ../plug-ins/common/xpm.c:343 ../plug-ins/common/xwd.c:473
 #: ../plug-ins/faxg3/faxg3.c:204 ../plug-ins/gfli/gfli.c:469
 #: ../plug-ins/jpeg/jpeg-load.c:94 ../plug-ins/sgi/sgi.c:318
-#: ../plug-ins/winicon/icoload.c:645 ../plug-ins/xjt/xjt.c:3337
+#: ../plug-ins/winicon/icoload.c:645 ../plug-ins/xjt/xjt.c:3343
 #, c-format
 msgid "Opening '%s'"
 msgstr "Ouverture de « %s »"
@@ -1200,10 +1201,10 @@ msgstr "Profondeur de bit non valide ou non gérée."
 #: ../plug-ins/common/dicom.c:486 ../plug-ins/common/film.c:746
 #: ../plug-ins/common/gifload.c:879 ../plug-ins/common/pcx.c:339
 #: ../plug-ins/common/pcx.c:345 ../plug-ins/common/pix.c:368
-#: ../plug-ins/common/png.c:780 ../plug-ins/common/pnm.c:564
-#: ../plug-ins/common/psd.c:2310 ../plug-ins/common/raw.c:691
+#: ../plug-ins/common/png.c:835 ../plug-ins/common/pnm.c:566
+#: ../plug-ins/common/psd.c:2327 ../plug-ins/common/raw.c:691
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:917
-#: ../plug-ins/common/tga.c:928 ../plug-ins/common/tiff.c:945
+#: ../plug-ins/common/tga.c:931 ../plug-ins/common/tiff.c:945
 #: ../plug-ins/common/tile.c:265 ../plug-ins/common/xbm.c:866
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:508
 #: ../plug-ins/gfig/gfig-dialog.c:1284
@@ -1234,10 +1235,10 @@ msgstr "La canal alpha sera ignoré."
 #: ../plug-ins/common/gbr.c:621 ../plug-ins/common/gif.c:993
 #: ../plug-ins/common/gih.c:1263 ../plug-ins/common/gtm.c:245
 #: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:550
-#: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1175
-#: ../plug-ins/common/pnm.c:934 ../plug-ins/common/postscript.c:1190
-#: ../plug-ins/common/psd_save.c:1453 ../plug-ins/common/sunras.c:512
-#: ../plug-ins/common/tga.c:1032 ../plug-ins/common/tiff.c:2179
+#: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1250
+#: ../plug-ins/common/pnm.c:936 ../plug-ins/common/postscript.c:1199
+#: ../plug-ins/common/psd_save.c:1463 ../plug-ins/common/sunras.c:512
+#: ../plug-ins/common/tga.c:1035 ../plug-ins/common/tiff.c:2179
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:570 ../plug-ins/fits/fits.c:459
 #: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:226
@@ -2255,7 +2256,7 @@ msgstr "_Azimut :"
 msgid "_Elevation:"
 msgstr "É_lévation :"
 
-#: ../plug-ins/common/bumpmap.c:997 ../plug-ins/common/postscript.c:3335
+#: ../plug-ins/common/bumpmap.c:997 ../plug-ins/common/postscript.c:3353
 msgid "_X offset:"
 msgstr "Décalage _X :"
 
@@ -2267,7 +2268,7 @@ msgstr ""
 "Le décalage peut être ajusté en glissant l'aperçu avec le bouton du milieu "
 "de la souris."
 
-#: ../plug-ins/common/bumpmap.c:1011 ../plug-ins/common/postscript.c:3344
+#: ../plug-ins/common/bumpmap.c:1011 ../plug-ins/common/postscript.c:3362
 msgid "_Y offset:"
 msgstr "Décalage _Y :"
 
@@ -2457,7 +2458,7 @@ msgid "Replace all colors with shades of a specified color"
 msgstr "Remplacer toutes les couleurs par les tons d'une couleur spécifiée"
 
 #: ../plug-ins/common/colorify.c:108
-msgid "_Colorify..."
+msgid "Colorif_y..."
 msgstr "Color_iser..."
 
 #: ../plug-ins/common/colorify.c:169
@@ -3394,7 +3395,7 @@ msgstr "_Adaptatif"
 msgid "R_ecursive"
 msgstr "Ré_cursif"
 
-#: ../plug-ins/common/despeckle.c:461 ../plug-ins/common/neon.c:739
+#: ../plug-ins/common/despeckle.c:461 ../plug-ins/common/neon.c:730
 #: ../plug-ins/common/nlfilt.c:1090 ../plug-ins/common/nova.c:365
 #: ../plug-ins/common/unsharp.c:681 ../plug-ins/common/whirlpinch.c:587
 #: ../plug-ins/gflare/gflare.c:2684 ../plug-ins/imagemap/imap_circle.c:278
@@ -3426,7 +3427,7 @@ msgid "Destripe"
 msgstr "Anti-traînées"
 
 #: ../plug-ins/common/destripe.c:472 ../plug-ins/common/gtm.c:583
-#: ../plug-ins/common/postscript.c:3109 ../plug-ins/common/postscript.c:3317
+#: ../plug-ins/common/postscript.c:3126 ../plug-ins/common/postscript.c:3335
 #: ../plug-ins/common/raw.c:1035 ../plug-ins/common/smooth_palette.c:436
 #: ../plug-ins/common/tile.c:423 ../plug-ins/imagemap/imap_cmd_guides.c:165
 #: ../plug-ins/imagemap/imap_rectangle.c:403
@@ -3452,11 +3453,11 @@ msgid "'%s' is not a DICOM file."
 msgstr "« %s » n'est pas un fichier DICOM."
 
 #: ../plug-ins/common/dicom.c:661 ../plug-ins/common/pcx.c:582
-#: ../plug-ins/common/pnm.c:920
+#: ../plug-ins/common/pnm.c:922
 msgid "Cannot save images with alpha channel."
 msgstr "Impossible d'enregistrer des images avec un canal alpha."
 
-#: ../plug-ins/common/dicom.c:676 ../plug-ins/common/postscript.c:1176
+#: ../plug-ins/common/dicom.c:676 ../plug-ins/common/postscript.c:1185
 #: ../plug-ins/common/xwd.c:556 ../plug-ins/fits/fits.c:445
 #: ../plug-ins/xjt/xjt.c:1690
 msgid "Cannot operate on unknown image types."
@@ -3702,8 +3703,8 @@ msgid "Engrave"
 msgstr "Gravure"
 
 #: ../plug-ins/common/engrave.c:245 ../plug-ins/common/film.c:1003
-#: ../plug-ins/common/gtm.c:599 ../plug-ins/common/postscript.c:3118
-#: ../plug-ins/common/postscript.c:3326 ../plug-ins/common/raw.c:1048
+#: ../plug-ins/common/gtm.c:599 ../plug-ins/common/postscript.c:3136
+#: ../plug-ins/common/postscript.c:3344 ../plug-ins/common/raw.c:1048
 #: ../plug-ins/common/smooth_palette.c:441 ../plug-ins/common/tile.c:427
 #: ../plug-ins/imagemap/imap_cmd_guides.c:175
 #: ../plug-ins/imagemap/imap_rectangle.c:410
@@ -4198,19 +4199,19 @@ msgstr "Espacement :"
 msgid "Description:"
 msgstr "Description :"
 
-#: ../plug-ins/common/gee.c:101 ../plug-ins/common/gee_zoom.c:121
+#: ../plug-ins/common/gee.c:99 ../plug-ins/common/gee_zoom.c:121
 msgid "A big hello from the GIMP team!"
 msgstr "Un grand bonjour de l'équipe GIMP !"
 
-#: ../plug-ins/common/gee.c:106 ../plug-ins/common/gee.c:162
+#: ../plug-ins/common/gee.c:104 ../plug-ins/common/gee.c:160
 msgid "Gee Slime"
 msgstr "Gee-Slime"
 
-#: ../plug-ins/common/gee.c:168 ../plug-ins/common/gee_zoom.c:192
+#: ../plug-ins/common/gee.c:166 ../plug-ins/common/gee_zoom.c:192
 msgid "Thank You for Choosing GIMP"
 msgstr "Merci d'avoir choisi GIMP"
 
-#: ../plug-ins/common/gee.c:175
+#: ../plug-ins/common/gee.c:173
 #, c-format
 msgid "A less obsolete creation by %s"
 msgstr "Une création moins obsolète par %s"
@@ -4301,7 +4302,7 @@ msgstr "_Boucle infinie"
 msgid "_Delay between frames where unspecified:"
 msgstr "_Délai entre les images lorsque non spécifié :"
 
-#: ../plug-ins/common/gif.c:1368 ../plug-ins/common/mng.c:1543
+#: ../plug-ins/common/gif.c:1368 ../plug-ins/common/mng.c:1539
 msgid "milliseconds"
 msgstr "millisecondes"
 
@@ -5037,19 +5038,19 @@ msgstr "L'image « %s » a un profil de couleur embarqué :"
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Convertir l'image vers l'espace de travail RVB (%s) ?"
 
-#: ../plug-ins/common/lcms.c:949
+#: ../plug-ins/common/lcms.c:950
 msgid "Convert to RGB working space?"
 msgstr "Convertir vers l'espace de travail RVB ?"
 
-#: ../plug-ins/common/lcms.c:954
+#: ../plug-ins/common/lcms.c:955
 msgid "_Keep"
 msgstr "_Conserver"
 
-#: ../plug-ins/common/lcms.c:955
+#: ../plug-ins/common/lcms.c:960
 msgid "_Convert"
 msgstr "_Convertir"
 
-#: ../plug-ins/common/lcms.c:981 ../plug-ins/jpeg/jpeg-exif.c:390
+#: ../plug-ins/common/lcms.c:987 ../plug-ins/jpeg/jpeg-exif.c:390
 msgid "_Don't ask me again"
 msgstr "_Ne plus me demander"
 
@@ -5292,7 +5293,7 @@ msgid "Reduce image to pure red, green, and blue"
 msgstr "Réduire l'image à du pur rouge, vert ou bleu"
 
 #: ../plug-ins/common/max_rgb.c:95
-msgid "Ma_ximum RGB..."
+msgid "Maxim_um RGB..."
 msgstr "_Maximum RVB..."
 
 #: ../plug-ins/common/max_rgb.c:134
@@ -5366,110 +5367,110 @@ msgstr "_Angle :"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/mng.c:499 ../plug-ins/common/png.c:1654
+#: ../plug-ins/common/mng.c:499 ../plug-ins/common/png.c:1729
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Impossible d'enregistrer la transparence sans perte, enregistrement de "
 "l'opacité à la place."
 
-#: ../plug-ins/common/mng.c:1323
+#: ../plug-ins/common/mng.c:1319
 msgid "Save as MNG"
 msgstr "Enregistrer en MNG"
 
-#: ../plug-ins/common/mng.c:1343
+#: ../plug-ins/common/mng.c:1339
 msgid "MNG Options"
 msgstr "Options MNG"
 
-#: ../plug-ins/common/mng.c:1349
+#: ../plug-ins/common/mng.c:1345
 msgid "Interlace"
 msgstr "Entrelacement"
 
-#: ../plug-ins/common/mng.c:1361
+#: ../plug-ins/common/mng.c:1357
 msgid "Save background color"
 msgstr "Enregistrer la couleur d'arrière-plan"
 
-#: ../plug-ins/common/mng.c:1372
+#: ../plug-ins/common/mng.c:1368
 msgid "Save gamma"
 msgstr "Enregistrer le gamma"
 
-#: ../plug-ins/common/mng.c:1382
+#: ../plug-ins/common/mng.c:1378
 msgid "Save resolution"
 msgstr "Enregistrer la résolution"
 
-#: ../plug-ins/common/mng.c:1393
+#: ../plug-ins/common/mng.c:1389
 msgid "Save creation time"
 msgstr "Enregistrer la date de création"
 
-#: ../plug-ins/common/mng.c:1412
+#: ../plug-ins/common/mng.c:1408
 msgid "PNG"
 msgstr "PNG"
 
-#: ../plug-ins/common/mng.c:1413
+#: ../plug-ins/common/mng.c:1409
 msgid "JNG"
 msgstr "JNG"
 
-#: ../plug-ins/common/mng.c:1416
+#: ../plug-ins/common/mng.c:1412
 msgid "PNG + delta PNG"
 msgstr "PNG + delta PNG"
 
-#: ../plug-ins/common/mng.c:1417
+#: ../plug-ins/common/mng.c:1413
 msgid "JNG + delta PNG"
 msgstr "JNG + delta PNG"
 
-#: ../plug-ins/common/mng.c:1418
+#: ../plug-ins/common/mng.c:1414
 msgid "All PNG"
 msgstr "Tout PNG"
 
-#: ../plug-ins/common/mng.c:1419
+#: ../plug-ins/common/mng.c:1415
 msgid "All JNG"
 msgstr "Tout JNG"
 
-#: ../plug-ins/common/mng.c:1431
+#: ../plug-ins/common/mng.c:1427
 msgid "Default chunks type:"
 msgstr "Type de partitions par défaut :"
 
-#: ../plug-ins/common/mng.c:1434
+#: ../plug-ins/common/mng.c:1430
 msgid "Combine"
 msgstr "Combiner"
 
-#: ../plug-ins/common/mng.c:1435
+#: ../plug-ins/common/mng.c:1431
 msgid "Replace"
 msgstr "Remplacer"
 
-#: ../plug-ins/common/mng.c:1446
+#: ../plug-ins/common/mng.c:1442
 msgid "Default frame disposal:"
 msgstr "Découpage des séquences par défaut :"
 
-#: ../plug-ins/common/mng.c:1458
+#: ../plug-ins/common/mng.c:1454
 msgid "PNG compression level:"
 msgstr "Niveau de compression PNG :"
 
-#: ../plug-ins/common/mng.c:1466 ../plug-ins/common/png.c:1801
+#: ../plug-ins/common/mng.c:1462 ../plug-ins/common/png.c:1876
 msgid "Choose a high compression level for small file size"
 msgstr ""
 "Choisir un haut degré de compression pour des fichiers de petite taille"
 
-#: ../plug-ins/common/mng.c:1480
+#: ../plug-ins/common/mng.c:1476
 msgid "JPEG compression quality:"
 msgstr "Qualité de compression JPEG :"
 
-#: ../plug-ins/common/mng.c:1497
+#: ../plug-ins/common/mng.c:1493
 msgid "JPEG smoothing factor:"
 msgstr "Facteur d'adoucissement JPEG :"
 
-#: ../plug-ins/common/mng.c:1507
+#: ../plug-ins/common/mng.c:1503
 msgid "Animated MNG Options"
 msgstr "Options d'animation MNG"
 
-#: ../plug-ins/common/mng.c:1513
+#: ../plug-ins/common/mng.c:1509
 msgid "Loop"
 msgstr "Boucler"
 
-#: ../plug-ins/common/mng.c:1527
+#: ../plug-ins/common/mng.c:1523
 msgid "Default frame delay:"
 msgstr "Temps par défaut d'affichage d'une séquence :"
 
-#: ../plug-ins/common/mng.c:1600
+#: ../plug-ins/common/mng.c:1596
 msgid "MNG animation"
 msgstr "Animation MNG"
 
@@ -5568,11 +5569,11 @@ msgstr "_Néon..."
 msgid "Neon"
 msgstr "Néon"
 
-#: ../plug-ins/common/neon.c:702
+#: ../plug-ins/common/neon.c:693
 msgid "Neon Detection"
 msgstr "Détection néon"
 
-#: ../plug-ins/common/neon.c:754 ../plug-ins/common/unsharp.c:694
+#: ../plug-ins/common/neon.c:745 ../plug-ins/common/unsharp.c:694
 msgid "_Amount:"
 msgstr "_Quantité :"
 
@@ -6079,18 +6080,23 @@ msgstr "Affichage en arborescence"
 msgid "PNG image"
 msgstr "Image PNG"
 
-#: ../plug-ins/common/png.c:635
+#: ../plug-ins/common/png.c:617
+#, c-format
+msgid "Error loading PNG file: %s"
+msgstr "Erreur lors du chargement du fichier PNG : %s"
+
+#: ../plug-ins/common/png.c:690
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Erreur en lecture de « %s ». Fichier corrompu ?"
 
 #. Aie! Unknown type
-#: ../plug-ins/common/png.c:763
+#: ../plug-ins/common/png.c:818
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Modèle de couleur inconnu dans le fichier PNG « %s »."
 
-#: ../plug-ins/common/png.c:817
+#: ../plug-ins/common/png.c:872
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -6098,56 +6104,56 @@ msgstr ""
 "Le fichier PNG spécifie un décalage qui entraine un calque positionné en "
 "dehors de l'image."
 
-#: ../plug-ins/common/png.c:1153
+#: ../plug-ins/common/png.c:1228
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Erreur en écriture de « %s ». Impossible d'enregistrer l'image."
 
-#: ../plug-ins/common/png.c:1679
+#: ../plug-ins/common/png.c:1754
 msgid "Save as PNG"
 msgstr "Enregistrer en PNG"
 
-#: ../plug-ins/common/png.c:1710
+#: ../plug-ins/common/png.c:1785
 msgid "_Interlacing (Adam7)"
 msgstr "En_trelacement (Adam7)"
 
-#: ../plug-ins/common/png.c:1721
+#: ../plug-ins/common/png.c:1796
 msgid "Save _background color"
 msgstr "Enregistrer la couleur d'arr_ière-plan"
 
-#: ../plug-ins/common/png.c:1729
+#: ../plug-ins/common/png.c:1804
 msgid "Save _gamma"
 msgstr "Enregistrer le _gamma"
 
-#: ../plug-ins/common/png.c:1739
+#: ../plug-ins/common/png.c:1814
 msgid "Save layer o_ffset"
 msgstr "Enregistrer le d_écalage de calque"
 
-#: ../plug-ins/common/png.c:1748
+#: ../plug-ins/common/png.c:1823
 msgid "Save _resolution"
 msgstr "Enregistrer la _résolution"
 
-#: ../plug-ins/common/png.c:1758
+#: ../plug-ins/common/png.c:1833
 msgid "Save creation _time"
 msgstr "Enregistrer la _date de création"
 
-#: ../plug-ins/common/png.c:1767
+#: ../plug-ins/common/png.c:1842
 msgid "Save comme_nt"
 msgstr "Enregistrer un c_ommentaire"
 
-#: ../plug-ins/common/png.c:1783
+#: ../plug-ins/common/png.c:1858
 msgid "Save color _values from transparent pixels"
 msgstr "Enregistrer les valeurs de couleur pour les pixels _transparents"
 
-#: ../plug-ins/common/png.c:1797
+#: ../plug-ins/common/png.c:1872
 msgid "Co_mpression level:"
 msgstr "Niveau de _compression :"
 
-#: ../plug-ins/common/png.c:1815
+#: ../plug-ins/common/png.c:1890
 msgid "_Load Defaults"
 msgstr "_Charger défauts"
 
-#: ../plug-ins/common/png.c:1823
+#: ../plug-ins/common/png.c:1898
 msgid "S_ave Defaults"
 msgstr "_Enregistrer défauts"
 
@@ -6171,50 +6177,50 @@ msgstr "Image PGM"
 msgid "PPM image"
 msgstr "Image PPM"
 
-#: ../plug-ins/common/pnm.c:511 ../plug-ins/common/pnm.c:533
-#: ../plug-ins/common/pnm.c:540 ../plug-ins/common/pnm.c:549
-#: ../plug-ins/common/pnm.c:624 ../plug-ins/common/pnm.c:685
+#: ../plug-ins/common/pnm.c:513 ../plug-ins/common/pnm.c:535
+#: ../plug-ins/common/pnm.c:542 ../plug-ins/common/pnm.c:551
+#: ../plug-ins/common/pnm.c:626 ../plug-ins/common/pnm.c:687
 msgid "Premature end of file."
 msgstr "Fin de fichier prématurée."
 
-#: ../plug-ins/common/pnm.c:513
+#: ../plug-ins/common/pnm.c:515
 msgid "Invalid file."
 msgstr "Fichier invalide."
 
-#: ../plug-ins/common/pnm.c:527
+#: ../plug-ins/common/pnm.c:529
 msgid "File not in a supported format."
 msgstr "Le fichier est dans un format non supporté."
 
-#: ../plug-ins/common/pnm.c:536
+#: ../plug-ins/common/pnm.c:538
 msgid "Invalid X resolution."
 msgstr "Résolution X invalide."
 
-#: ../plug-ins/common/pnm.c:543
+#: ../plug-ins/common/pnm.c:545
 msgid "Invalid Y resolution."
 msgstr "Résolution Y invalide."
 
-#: ../plug-ins/common/pnm.c:555
+#: ../plug-ins/common/pnm.c:557
 msgid "Invalid maximum value."
 msgstr "Valeur maximale invalide."
 
-#: ../plug-ins/common/pnm.c:738
+#: ../plug-ins/common/pnm.c:740
 msgid "Error reading file."
 msgstr "Erreur de lecture du fichier."
 
-#: ../plug-ins/common/pnm.c:1103
+#: ../plug-ins/common/pnm.c:1105
 msgid "Save as PNM"
 msgstr "Enregistrer en PNM"
 
 #. file save type
-#: ../plug-ins/common/pnm.c:1120
+#: ../plug-ins/common/pnm.c:1122
 msgid "Data formatting"
 msgstr "Formatage des données"
 
-#: ../plug-ins/common/pnm.c:1124
+#: ../plug-ins/common/pnm.c:1126
 msgid "Raw"
 msgstr "Brut"
 
-#: ../plug-ins/common/pnm.c:1125
+#: ../plug-ins/common/pnm.c:1127
 msgid "Ascii"
 msgstr "Ascii"
 
@@ -6285,7 +6291,7 @@ msgstr "PDF (Portable Document Format)"
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/poppler.c:454 ../plug-ins/common/postscript.c:1100
+#: ../plug-ins/common/poppler.c:454 ../plug-ins/common/postscript.c:1109
 #, c-format
 msgid "%s-pages"
 msgstr "%s-pages"
@@ -6294,7 +6300,7 @@ msgstr "%s-pages"
 msgid "Import from PDF"
 msgstr "Import depuis PDF"
 
-#: ../plug-ins/common/poppler.c:655 ../plug-ins/common/postscript.c:3048
+#: ../plug-ins/common/poppler.c:655 ../plug-ins/common/postscript.c:3057
 msgid "_Import"
 msgstr "_Importer"
 
@@ -6315,30 +6321,30 @@ msgstr "_Résolution :"
 msgid "A_ntialiasing"
 msgstr "_Lissage"
 
-#: ../plug-ins/common/postscript.c:588 ../plug-ins/common/postscript.c:680
+#: ../plug-ins/common/postscript.c:597 ../plug-ins/common/postscript.c:689
 msgid "PostScript document"
 msgstr "Document PostScript"
 
-#: ../plug-ins/common/postscript.c:607 ../plug-ins/common/postscript.c:696
+#: ../plug-ins/common/postscript.c:616 ../plug-ins/common/postscript.c:705
 msgid "Encapsulated PostScript image"
 msgstr "Image PostScript encapsulé"
 
-#: ../plug-ins/common/postscript.c:627
+#: ../plug-ins/common/postscript.c:636
 msgid "PDF document"
 msgstr "Document PDF"
 
-#: ../plug-ins/common/postscript.c:1025
+#: ../plug-ins/common/postscript.c:1034
 #, c-format
 msgid "Could not interpret '%s'"
 msgstr "Impossible d'interpréter« %s »"
 
-#: ../plug-ins/common/postscript.c:1165
+#: ../plug-ins/common/postscript.c:1174
 msgid "PostScript save cannot handle images with alpha channels"
 msgstr ""
 "L'enregistrement PostScript ne peux pas gérer les images avec des canaux "
 "alpha"
 
-#: ../plug-ins/common/postscript.c:1692 ../plug-ins/common/postscript.c:1722
+#: ../plug-ins/common/postscript.c:1701 ../plug-ins/common/postscript.c:1731
 #, c-format
 msgid ""
 "Error starting Ghostscript. Make sure that Ghostscript is installed and - if "
@@ -6351,114 +6357,114 @@ msgstr ""
 "indiquer à GIMP son emplacement.\n"
 "(%s)"
 
-#: ../plug-ins/common/postscript.c:1886 ../plug-ins/common/tiff.c:947
+#: ../plug-ins/common/postscript.c:1895 ../plug-ins/common/tiff.c:947
 #, c-format
 msgid "Page %d"
 msgstr "Page %d"
 
-#: ../plug-ins/common/postscript.c:2554 ../plug-ins/common/postscript.c:2687
-#: ../plug-ins/common/postscript.c:2839 ../plug-ins/common/postscript.c:2968
+#: ../plug-ins/common/postscript.c:2563 ../plug-ins/common/postscript.c:2696
+#: ../plug-ins/common/postscript.c:2848 ../plug-ins/common/postscript.c:2977
 #: ../plug-ins/common/sunras.c:1446 ../plug-ins/common/sunras.c:1554
 #: ../plug-ins/fits/fits.c:828 ../plug-ins/fits/fits.c:952
 msgid "Write error occurred"
 msgstr "Une erreur d'écriture est survenue"
 
-#: ../plug-ins/common/postscript.c:3043
+#: ../plug-ins/common/postscript.c:3052
 msgid "Import from PostScript"
 msgstr "Importer depuis un PostScript"
 
 #. Rendering
-#: ../plug-ins/common/postscript.c:3084
+#: ../plug-ins/common/postscript.c:3093
 msgid "Rendering"
 msgstr "Interprétation"
 
 #. Resolution
-#: ../plug-ins/common/postscript.c:3100 ../plug-ins/common/svg.c:880
+#: ../plug-ins/common/postscript.c:3109 ../plug-ins/common/svg.c:880
 #: ../plug-ins/common/wmf.c:670
 msgid "Resolution:"
 msgstr "Résolution :"
 
-#: ../plug-ins/common/postscript.c:3130
+#: ../plug-ins/common/postscript.c:3148
 msgid "Pages:"
 msgstr "Pages :"
 
-#: ../plug-ins/common/postscript.c:3137
+#: ../plug-ins/common/postscript.c:3155
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
 msgstr "Pages à charger (par ex. : 1-4 ou 1,3,5-7)"
 
-#: ../plug-ins/common/postscript.c:3141
+#: ../plug-ins/common/postscript.c:3159
 #: ../plug-ins/common/spheredesigner.c:2649
 msgid "Layers"
 msgstr "Calques"
 
-#: ../plug-ins/common/postscript.c:3143
+#: ../plug-ins/common/postscript.c:3161
 msgid "Images"
 msgstr "Images"
 
-#: ../plug-ins/common/postscript.c:3146
+#: ../plug-ins/common/postscript.c:3164
 msgid "Open as"
 msgstr "Ouvrir comme"
 
-#: ../plug-ins/common/postscript.c:3150
+#: ../plug-ins/common/postscript.c:3168
 msgid "Try Bounding Box"
 msgstr "Essayer la BoundingBox"
 
 #. Colouring
-#: ../plug-ins/common/postscript.c:3163
+#: ../plug-ins/common/postscript.c:3181
 msgid "Coloring"
 msgstr "Coloration"
 
-#: ../plug-ins/common/postscript.c:3167
+#: ../plug-ins/common/postscript.c:3185
 msgid "B/W"
 msgstr "N/B"
 
-#: ../plug-ins/common/postscript.c:3168 ../plug-ins/imagemap/imap_menu.c:223
+#: ../plug-ins/common/postscript.c:3186 ../plug-ins/imagemap/imap_menu.c:223
 #: ../plug-ins/rcm/rcm_dialog.c:419
 msgid "Gray"
 msgstr "Gris"
 
-#: ../plug-ins/common/postscript.c:3169 ../plug-ins/common/xpm.c:468
+#: ../plug-ins/common/postscript.c:3187 ../plug-ins/common/xpm.c:468
 #: ../plug-ins/gimpressionist/color.c:48
 #: ../plug-ins/gimpressionist/general.c:152
 #: ../plug-ins/imagemap/imap_menu.c:222
 msgid "Color"
 msgstr "Couleur"
 
-#: ../plug-ins/common/postscript.c:3170 ../plug-ins/fits/fits.c:1007
+#: ../plug-ins/common/postscript.c:3188 ../plug-ins/fits/fits.c:1007
 msgid "Automatic"
 msgstr "Automatique"
 
-#: ../plug-ins/common/postscript.c:3180
+#: ../plug-ins/common/postscript.c:3198
 msgid "Text antialiasing"
 msgstr "Lissage du texte"
 
-#: ../plug-ins/common/postscript.c:3185 ../plug-ins/common/postscript.c:3197
+#: ../plug-ins/common/postscript.c:3203 ../plug-ins/common/postscript.c:3215
 msgid "Weak"
 msgstr "Faible"
 
-#: ../plug-ins/common/postscript.c:3186 ../plug-ins/common/postscript.c:3198
+#: ../plug-ins/common/postscript.c:3204 ../plug-ins/common/postscript.c:3216
 msgid "Strong"
 msgstr "Fort"
 
-#: ../plug-ins/common/postscript.c:3192
+#: ../plug-ins/common/postscript.c:3210
 msgid "Graphic antialiasing"
 msgstr "Lissage Graphique"
 
-#: ../plug-ins/common/postscript.c:3270
+#: ../plug-ins/common/postscript.c:3288
 msgid "Save as PostScript"
 msgstr "Enregistrer en PostScript"
 
 #. Image Size
-#: ../plug-ins/common/postscript.c:3301
+#: ../plug-ins/common/postscript.c:3319
 #: ../plug-ins/print/print-page-layout.c:202
 msgid "Image Size"
 msgstr "Taille de l'image"
 
-#: ../plug-ins/common/postscript.c:3350
+#: ../plug-ins/common/postscript.c:3368
 msgid "_Keep aspect ratio"
 msgstr "Ratio d'aspect _fixe"
 
-#: ../plug-ins/common/postscript.c:3356
+#: ../plug-ins/common/postscript.c:3374
 msgid ""
 "When toggled, the resulting image will be scaled to fit into the given size "
 "without changing the aspect ratio."
@@ -6467,36 +6473,36 @@ msgstr ""
 "taille donnée sans changer les proportions."
 
 #. Unit
-#: ../plug-ins/common/postscript.c:3366
+#: ../plug-ins/common/postscript.c:3384
 msgid "Unit"
 msgstr "Unité"
 
-#: ../plug-ins/common/postscript.c:3370
+#: ../plug-ins/common/postscript.c:3388
 msgid "_Inch"
 msgstr "_Pouce"
 
-#: ../plug-ins/common/postscript.c:3371
+#: ../plug-ins/common/postscript.c:3389
 msgid "_Millimeter"
 msgstr "_Millimètre"
 
 #. Format
-#: ../plug-ins/common/postscript.c:3397
+#: ../plug-ins/common/postscript.c:3415
 msgid "Output"
 msgstr "Sortie"
 
-#: ../plug-ins/common/postscript.c:3403
+#: ../plug-ins/common/postscript.c:3421
 msgid "_PostScript level 2"
 msgstr "_PostScript niveau 2"
 
-#: ../plug-ins/common/postscript.c:3412
+#: ../plug-ins/common/postscript.c:3430
 msgid "_Encapsulated PostScript"
 msgstr "PostScript _encapsulé"
 
-#: ../plug-ins/common/postscript.c:3421
+#: ../plug-ins/common/postscript.c:3439
 msgid "P_review"
 msgstr "Aperç_u"
 
-#: ../plug-ins/common/postscript.c:3442
+#: ../plug-ins/common/postscript.c:3460
 msgid "Preview _size:"
 msgstr "_Taille de l'aperçu :"
 
@@ -6514,13 +6520,67 @@ msgstr "Navigateur de procédures"
 
 #: ../plug-ins/common/psd.c:524
 msgid "Invalid UTF-8 string in PSD file"
-msgstr "Chaîne de caractèe UTF-8 non valide dans le fichiers PSD"
+msgstr "Chaîne de caractères UTF-8 non valide dans le fichier PSD"
+
+#: ../plug-ins/common/psd.c:619
+msgid "Cannot handle bitmap PSD files"
+msgstr "Impossible de gérer les fichiers PSD bitmap"
+
+#: ../plug-ins/common/psd.c:628
+msgid "Cannot handle PSD files in CMYK color"
+msgstr "Impossible de gérer les fichiers PSD en couleurs CMJN"
+
+#: ../plug-ins/common/psd.c:631
+msgid "Cannot handle PSD files in Multichannel color"
+msgstr "Impossible de gérer les fichiers PSD en couleurs Multichannel"
+
+#: ../plug-ins/common/psd.c:634
+msgid "Cannot handle PSD files in Duotone color"
+msgstr "Impossible de gérer les fichiers PSD en couleurs Duotone"
+
+#: ../plug-ins/common/psd.c:637
+msgid "Cannot handle PSD files in Lab color"
+msgstr "Impossible de gérer les fichiers PSD en couleurs Lab"
+
+#: ../plug-ins/common/psd.c:640
+#, c-format
+msgid "Cannot handle the color mode %d of the PSD file"
+msgstr "Impossible de gérer le mode couleurs %d du fichier PSD"
+
+#: ../plug-ins/common/psd.c:734
+#, c-format
+msgid "Cannot handle PSD file with more than %d channels"
+msgstr "Impossible de gérer un fichier PSD avec plus de %d canaux"
+
+#: ../plug-ins/common/psd.c:2262
+msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
+msgstr ""
+"Impossible de gérer les fichiers PSD avec plus de 5 canaux en couleurs CMJN"
+
+#: ../plug-ins/common/psd.c:2277
+#, c-format
+msgid "Cannot handle image mode %d (%s)"
+msgstr "Impossible de gérer le mode d'image %d (%s)"
+
+#: ../plug-ins/common/psd.c:2286
+#, c-format
+msgid "Cannot handle %d bits per channel PSD files"
+msgstr "Impossible de gérer les fichiers PSD avec %d bits par canal"
+
+#: ../plug-ins/common/psd.c:3019
+msgid "This is not an Adobe Photoshop PSD file"
+msgstr "Ce n'est pas un fichier PSD Adobe Photoshop"
+
+#: ../plug-ins/common/psd.c:3024
+#, c-format
+msgid "The PSD file has bad version number '%d', not 1"
+msgstr "Ce fichier PSD possède un mauvais numéro de version « %d », pas 1"
 
 #: ../plug-ins/common/psd_save.c:198
 msgid "Photoshop image"
 msgstr "Image Photoshop"
 
-#: ../plug-ins/common/psd_save.c:322
+#: ../plug-ins/common/psd_save.c:328
 #, c-format
 msgid ""
 "Unable to save layer with mode '%s'.  Either the PSD file format or the save "
@@ -6530,11 +6590,11 @@ msgstr ""
 "fichier PSD, soit le greffon d'enregistrement ne le supporte pas, "
 "utilisation du mode normal à la place."
 
-#: ../plug-ins/common/psd_save.c:523
+#: ../plug-ins/common/psd_save.c:529
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Erreur : ne peut convertir le type d'image de base GIMP en mode PSD"
 
-#: ../plug-ins/common/psd_save.c:1424
+#: ../plug-ins/common/psd_save.c:1434
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
@@ -6543,7 +6603,7 @@ msgstr ""
 "Impossible d'enregistrer « %s ». Le format PSD ne supporte pas les images "
 "deplus de 30000 pixels."
 
-#: ../plug-ins/common/psd_save.c:1436
+#: ../plug-ins/common/psd_save.c:1446
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
@@ -6609,7 +6669,7 @@ msgstr "_Piquer..."
 msgid "_Slur..."
 msgstr "_Mélanger..."
 
-#: ../plug-ins/common/randomize.c:744 ../plug-ins/common/snoise.c:601
+#: ../plug-ins/common/randomize.c:744 ../plug-ins/common/snoise.c:603
 msgid "_Random seed:"
 msgstr "_Graine aléatoire :"
 
@@ -6738,7 +6798,7 @@ msgid "Enhance contrast using the Retinex method"
 msgstr "Améliorer le contraste en utilisant la méthode Retinex"
 
 #: ../plug-ins/common/retinex.c:166
-msgid "_Retinex..."
+msgid "Retine_x..."
 msgstr "_Retinex..."
 
 #: ../plug-ins/common/retinex.c:250
@@ -6959,94 +7019,87 @@ msgstr "_Contrôle :"
 msgid "H_ue:"
 msgstr "_Teinte :"
 
-#: ../plug-ins/common/screenshot.c:228
+#: ../plug-ins/common/screenshot.c:233
 msgid "Create an image from an area of the screen"
 msgstr "Créer une image depuis une région de l'écran"
 
-#: ../plug-ins/common/screenshot.c:241
+#: ../plug-ins/common/screenshot.c:246
 msgid "_Screenshot..."
 msgstr "_Capture d'écran..."
 
-#: ../plug-ins/common/screenshot.c:406
+#: ../plug-ins/common/screenshot.c:411
 msgid "Error selecting the window"
 msgstr "Erreur de sélection de la fenêtre"
 
-#: ../plug-ins/common/screenshot.c:646
+#: ../plug-ins/common/screenshot.c:715
 msgid "Importing screenshot"
 msgstr "Importation de la capture d'écran"
 
-#: ../plug-ins/common/screenshot.c:654 ../plug-ins/common/screenshot.c:783
+#: ../plug-ins/common/screenshot.c:739 ../plug-ins/common/screenshot.c:907
 msgid "Screenshot"
 msgstr "Capture d'écran"
 
-#: ../plug-ins/common/screenshot.c:724
+#: ../plug-ins/common/screenshot.c:804
 msgid "Specified window not found"
 msgstr "Fenêtre spécifiée non trouvée"
 
-#: ../plug-ins/common/screenshot.c:751
+#: ../plug-ins/common/screenshot.c:832
 msgid "There was an error taking the screenshot."
 msgstr "Une erreur est survenu en prenant la capture d'écran."
 
-#: ../plug-ins/common/screenshot.c:792
-msgid "_Grab"
+#: ../plug-ins/common/screenshot.c:916
+msgid "S_nap"
 msgstr "_Capturer"
 
-#: ../plug-ins/common/screenshot.c:813
+#: ../plug-ins/common/screenshot.c:945
+msgid "After the delay, the screenshot is taken."
+msgstr "Après le délai, la capture est faite."
+
+#: ../plug-ins/common/screenshot.c:947
+msgid ""
+"After the delay, drag your mouse to select the region for the screenshot."
+msgstr ""
+"Après le délai, déplacez votre souris pour sélectionner la région à capturer."
+
+#: ../plug-ins/common/screenshot.c:950
+msgid "At the end of the delay, click in a window to snap it."
+msgstr "A la fin du délai, cliquez sur une fenêtre pour la capturer."
+
+#. Area
+#: ../plug-ins/common/screenshot.c:956
 msgid "Area"
 msgstr "Région"
 
-#: ../plug-ins/common/screenshot.c:824
+#: ../plug-ins/common/screenshot.c:967
 msgid "Take a screenshot of a single _window"
 msgstr "Prendre une capture d'écran d'une _fenêtre unique"
 
-#: ../plug-ins/common/screenshot.c:845
+#: ../plug-ins/common/screenshot.c:988
 msgid "Include window _decoration"
 msgstr "Inclure les _décorations de fenêtre"
 
-#: ../plug-ins/common/screenshot.c:861
+#: ../plug-ins/common/screenshot.c:1004
 msgid "Take a screenshot of the entire _screen"
 msgstr "Prendre une capture d'écran de l'é_cran entier"
 
-#: ../plug-ins/common/screenshot.c:879
+#: ../plug-ins/common/screenshot.c:1021
 msgid "Select a _region to grab"
 msgstr "Sélectionner une région à capturer"
 
-#: ../plug-ins/common/screenshot.c:886
-msgid ""
-"If enabled, you can use the mouse to select a rectangular region of the "
-"screen."
-msgstr ""
-"Si activé, vous pouvez utiliser la souris pour sélectionner une "
-"régionrectangulaire de l'écran."
-
-#. grab delay
-#: ../plug-ins/common/screenshot.c:899
+#. Delay
+#: ../plug-ins/common/screenshot.c:1036
 msgid "Delay"
 msgstr "Délai"
 
-#. this string is part of "Wait [spinbutton] seconds before grabbing"
-#: ../plug-ins/common/screenshot.c:912
-msgid "W_ait"
-msgstr "_Attendre"
-
-#. this string is part of "Wait [spinbutton] seconds before grabbing"
-#: ../plug-ins/common/screenshot.c:928
-msgid "seconds before grabbing"
-msgstr "secondes avant la capture"
-
-#: ../plug-ins/common/screenshot.c:932
-msgid ""
-"The number of seconds to wait before selecting the window or region and "
-"actually taking the screenshot."
-msgstr ""
-"Le nombre de secondes à attendre avant la sélection de la fenêtre ou de la "
-"région pour capturer l'écran."
+#. this is the unit label of a spinbutton
+#: ../plug-ins/common/screenshot.c:1058
+msgid "seconds"
+msgstr "secondes"
 
 #: ../plug-ins/common/sel_gauss.c:106
 msgid "Blur neighboring pixels, but only in low-contrast areas"
 msgstr ""
-"Rend flou les pixels au voisinage mais seulement dans les zones à faible "
-"contraste"
+"Rend flou les pixels voisins mais seulement dans les zones à faible contraste"
 
 #: ../plug-ins/common/sel_gauss.c:117
 msgid "_Selective Gaussian Blur..."
@@ -7278,29 +7331,29 @@ msgid "_Solid Noise..."
 msgstr "B_rouillage uni..."
 
 #. Dialog initialization
-#: ../plug-ins/common/snoise.c:317 ../plug-ins/common/snoise.c:563
+#: ../plug-ins/common/snoise.c:317 ../plug-ins/common/snoise.c:565
 msgid "Solid Noise"
 msgstr "Brouillage uni"
 
-#: ../plug-ins/common/snoise.c:614
+#: ../plug-ins/common/snoise.c:616
 msgid "_Detail:"
 msgstr "_Détail :"
 
 #. Turbulent
-#: ../plug-ins/common/snoise.c:624
+#: ../plug-ins/common/snoise.c:626
 msgid "T_urbulent"
 msgstr "_Turbulent"
 
 #. Tilable
-#: ../plug-ins/common/snoise.c:638
+#: ../plug-ins/common/snoise.c:640
 msgid "T_ilable"
 msgstr "Ra_ccordable"
 
-#: ../plug-ins/common/snoise.c:653
+#: ../plug-ins/common/snoise.c:655
 msgid "_X size:"
 msgstr "Taille _X :"
 
-#: ../plug-ins/common/snoise.c:666
+#: ../plug-ins/common/snoise.c:668
 msgid "_Y size:"
 msgstr "Taille _Y :"
 
@@ -7431,7 +7484,7 @@ msgstr "Teinte al_éatoire :"
 
 #: ../plug-ins/common/sparkle.c:470
 msgid "Adjust how much the hue should be changed randomly"
-msgstr "Ajuster de combien la teinte doit être modifiée aléatoirement"
+msgstr "Ajuster l'influence du hasard sur la teinte"
 
 #: ../plug-ins/common/sparkle.c:480
 msgid "Rando_m saturation:"
@@ -7439,7 +7492,7 @@ msgstr "Sat_uration aléatoire :"
 
 #: ../plug-ins/common/sparkle.c:483
 msgid "Adjust how much the saturation should be changed randomly"
-msgstr "Ajuster de combien la saturation doit être changée aléatoirement"
+msgstr "Ajuster l'influence du hasard sur la saturation"
 
 #: ../plug-ins/common/sparkle.c:500
 msgid "_Preserve luminosity"
@@ -7831,31 +7884,31 @@ msgstr ""
 msgid "Merge imported paths"
 msgstr "Fusionner les chemins importés"
 
-#: ../plug-ins/common/tga.c:229 ../plug-ins/common/tga.c:245
+#: ../plug-ins/common/tga.c:229 ../plug-ins/common/tga.c:248
 msgid "TarGA image"
 msgstr "Image TarGA"
 
-#: ../plug-ins/common/tga.c:422
+#: ../plug-ins/common/tga.c:425
 #, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "Impossible de lire le pied de page depuis « %s »"
 
-#: ../plug-ins/common/tga.c:438
+#: ../plug-ins/common/tga.c:441
 #, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "Impossible de lire l'extension depuis « %s »"
 
-#: ../plug-ins/common/tga.c:1186
+#: ../plug-ins/common/tga.c:1189
 msgid "Save as TGA"
 msgstr "Enregistrer en TGA"
 
 #. rle
-#: ../plug-ins/common/tga.c:1209
+#: ../plug-ins/common/tga.c:1212
 msgid "_RLE compression"
 msgstr "Compression _RLE"
 
 #. origin
-#: ../plug-ins/common/tga.c:1219
+#: ../plug-ins/common/tga.c:1222
 msgid "Or_igin at bottom left"
 msgstr "Or_igine en bas à gauche"
 
@@ -10328,8 +10381,8 @@ msgid ""
 "Please install the additional help package or use the online user manual at "
 "http://docs.gimp.org/."
 msgstr ""
-"S'il vous plaît, installez le paquetage d'aide ou utilisez le manuel en-"
-"ligne àhttp://docs.gimp.org/."
+"Veuillez installer le paquetage d'aide ou utilisez le manuel en ligne à "
+"http://docs.gimp.org/."
 
 #: ../plug-ins/help/gimphelpdomain.c:184
 msgid "There is a problem with the GIMP help files."
@@ -10519,7 +10572,7 @@ msgid "Transformation %s"
 msgstr "Transformation %s"
 
 #: ../plug-ins/ifscompose/ifscompose.c:2382
-#: ../plug-ins/metadata/interface.c:561 ../plug-ins/metadata/interface.c:571
+#: ../plug-ins/metadata/interface.c:556 ../plug-ins/metadata/interface.c:566
 msgid "Save failed"
 msgstr "Échec d'enregistrement"
 
@@ -10603,22 +10656,22 @@ msgstr "Supprimer"
 #: ../plug-ins/imagemap/imap_cmd_delete_point.c:61
 #: ../plug-ins/imagemap/imap_menu.c:188
 msgid "Delete Point"
-msgstr "Supprimer le Point"
+msgstr "Supprimer le point"
 
 #: ../plug-ins/imagemap/imap_cmd_edit_object.c:54
 msgid "Edit Object"
-msgstr "Éditer l'Objet"
+msgstr "Éditer l'objet"
 
 #. Create the areas
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:117
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:147
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:251
 msgid "Use Gimp Guides"
-msgstr "Utiliser les Guides GIMP"
+msgstr "Utiliser les guides GIMP"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:160
 msgid "Al_ternate"
-msgstr "Morceaux Al_ternés"
+msgstr "Morceaux al_ternés"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:165
 msgid "A_ll"
@@ -10626,7 +10679,7 @@ msgstr "T_out"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:169
 msgid "Add Additional Guides"
-msgstr "Ajouter des Guides supplémentaires"
+msgstr "Ajouter des guides supplémentaires"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:177
 msgid "L_eft border"
@@ -10651,12 +10704,12 @@ msgstr "URL de _base :"
 #: ../plug-ins/imagemap/imap_cmd_guides.c:74
 #: ../plug-ins/imagemap/imap_cmd_guides.c:140
 msgid "Create Guides"
-msgstr "Créer des Guides"
+msgstr "Créer des guides"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:113
 #, c-format
 msgid "Resulting Guide Bounds: %d,%d to %d,%d (%d areas)"
-msgstr "Limites du Guide Résultant: %d,%d à %d,%d (%d zones)"
+msgstr "Limites du guide résultant : %d,%d à %d,%d (%d zones)"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:144
 msgid ""
@@ -10665,10 +10718,10 @@ msgid ""
 "create the most common image map type - image collection of \"thumbnails\", "
 "suitable for navigation bars."
 msgstr ""
-"Les guides sont des rectangles prédéfinis couvrant l'image. Vous "
-"lesdéfinissez par leur longueur, leur hauteur et l'espacement entre "
-"chacund'eux. Cela vous permet de créer rapidement la cartographie de l'image "
-"-une collection de petites images pour les barres de navigation."
+"Les guides sont des rectangles prédéfinis couvrant l'image. Vous les "
+"définissez par leur longueur, leur hauteur et l'espacement entre chacun "
+"d'eux. Cela vous permet de créer rapidement la cartographie de l'image - une "
+"collection de petites images, pour les barres de navigation."
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:170
 msgid "_Left start at:"
@@ -10676,7 +10729,7 @@ msgstr "Départ _gauche à"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:180
 msgid "_Top start at:"
-msgstr "Départ Hau_t à :"
+msgstr "Départ hau_t à :"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:185
 msgid "_Horz. spacing:"
@@ -10684,7 +10737,7 @@ msgstr "Espacement _hor. :"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:191
 msgid "_No. across:"
-msgstr "_Nb. d'un coté à l'autre :"
+msgstr "_Nb. d'un côté à l'autre :"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:197
 msgid "_Vert. spacing:"
@@ -10700,7 +10753,7 @@ msgstr "_URL de base :"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:237
 msgid "Resulting Guide Bounds: 0,0 to 0,0 (0 areas)"
-msgstr "Limites du guide résultant: 0,0 à 0,0 (0 zones)"
+msgstr "Limites du guide résultant : 0,0 à 0,0 (0 zones)"
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:272
 msgid "Guides"
@@ -10709,7 +10762,7 @@ msgstr "Guides"
 #: ../plug-ins/imagemap/imap_cmd_insert_point.c:62
 #: ../plug-ins/imagemap/imap_menu.c:187
 msgid "Insert Point"
-msgstr "Insérer un Point"
+msgstr "Insérer un point"
 
 #: ../plug-ins/imagemap/imap_cmd_move_down.c:53
 #: ../plug-ins/imagemap/imap_cmd_object_down.c:55
@@ -10870,7 +10923,7 @@ msgstr "Enregistrer le plan de l'image"
 
 #: ../plug-ins/imagemap/imap_grid.c:197
 msgid "Grid Settings"
-msgstr "Paramètre de la grille"
+msgstr "Paramètres de la grille"
 
 #: ../plug-ins/imagemap/imap_grid.c:201
 msgid "_Snap-to grid enabled"
@@ -11553,27 +11606,27 @@ msgstr "Importer depuis le fichier XMP"
 msgid "Cannot create file"
 msgstr "Impossible de créer un fichier"
 
-#: ../plug-ins/metadata/interface.c:562
+#: ../plug-ins/metadata/interface.c:557
 msgid "Some error occurred while saving"
 msgstr "Une erreur d'enregistrement est survenue"
 
-#: ../plug-ins/metadata/interface.c:572
+#: ../plug-ins/metadata/interface.c:567
 msgid "Could not close the file"
 msgstr "Impossible de fermer le fichier"
 
-#: ../plug-ins/metadata/interface.c:594
+#: ../plug-ins/metadata/interface.c:589
 msgid "Export XMP to File"
 msgstr "Export XMP dans un fichier"
 
-#: ../plug-ins/metadata/interface.c:661
+#: ../plug-ins/metadata/interface.c:656
 msgid "Image Properties"
 msgstr "Propriétés du fichier"
 
-#: ../plug-ins/metadata/interface.c:665
+#: ../plug-ins/metadata/interface.c:660
 msgid "_Import XMP..."
 msgstr "__Import XPM..."
 
-#: ../plug-ins/metadata/interface.c:666
+#: ../plug-ins/metadata/interface.c:661
 msgid "_Export XMP..."
 msgstr "_Export XMP..."
 
@@ -12139,20 +12192,36 @@ msgstr "Qualité :"
 msgid "Smoothing:"
 msgstr "Adoucissement :"
 
-#: ../plug-ins/xjt/xjt.c:1703 ../plug-ins/xjt/xjt.c:3346
+#: ../plug-ins/xjt/xjt.c:1703 ../plug-ins/xjt/xjt.c:3352
 #, c-format
 msgid "Could not create working folder '%s': %s"
 msgstr "Impossible de créer le dossier de travail « %s » : %s"
 
-#: ../plug-ins/xjt/xjt.c:3216
+#: ../plug-ins/xjt/xjt.c:3221
 #, c-format
 msgid "Error: Could not read XJT property file '%s'."
 msgstr "Erreur : Impossible de lire le fichier de propriétés XJT « %s »."
 
-#: ../plug-ins/xjt/xjt.c:3222
+#: ../plug-ins/xjt/xjt.c:3227
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Erreur : le fichier de propriétés XJT « %s » est vide."
+
+#~ msgid "_Grab"
+#~ msgstr "_Capturer"
+
+#~ msgid "W_ait"
+#~ msgstr "_Attendre"
+
+#~ msgid "seconds before grabbing"
+#~ msgstr "secondes avant la capture"
+
+#~ msgid ""
+#~ "The number of seconds to wait before selecting the window or region and "
+#~ "actually taking the screenshot."
+#~ msgstr ""
+#~ "Le nombre de secondes à attendre avant la sélection de la fenêtre ou de "
+#~ "la région pour capturer l'écran."
 
 #~ msgid "Save Parameters To"
 #~ msgstr "Enregistrer les paramètres sous"
