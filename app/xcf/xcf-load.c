@@ -190,8 +190,17 @@ xcf_load_image (Gimp    *gimp,
 
       /* add the layer to the image if its not the floating selection */
       if (layer != info->floating_sel)
-        gimp_image_add_layer (gimage, layer,
-                              gimp_container_num_children (gimage->layers));
+        {
+          gint position = gimp_container_num_children (gimage->layers);
+
+          /*  GIMP 2.2 wants an alpha channel for layers above the
+           *  background layer
+           */
+          if (position > 0)
+            gimp_layer_add_alpha (layer);
+
+          gimp_image_add_layer (gimage, layer, position);
+        }
 
       /* restore the saved position so we'll be ready to
        *  read the next offset.
@@ -935,6 +944,9 @@ xcf_load_layer (XcfInfo   *info,
       layer_mask->apply_mask = apply_mask;
       layer_mask->edit_mask  = edit_mask;
       layer_mask->show_mask  = show_mask;
+
+      /*  GIMP 2.2 wants an alpha channel for layers with masks  */
+      gimp_layer_add_alpha (layer);
 
       gimp_layer_add_mask (layer, layer_mask, FALSE);
     }

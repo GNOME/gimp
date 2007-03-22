@@ -1,3 +1,9 @@
+2007-03-22  Sven Neumann  <sven@gimp.org>
+
+	* app/xcf/xcf-load.c: silently add an alpha channel for
+	non-background layers and layers with a layer mask. This improves
+	forward-compatibility for files created with GIMP 2.3 (bug #316207).
+
 2007-03-21  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
