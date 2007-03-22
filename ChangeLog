@@ -1,3 +1,8 @@
+2007-03-22  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimplayer.c (gimp_layer_add_mask): allow adding a mask
+	to a layer without alpha channel (bug #316207).
+
 2007-03-21  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/svg.c: fixed incorrect PDB documentation.

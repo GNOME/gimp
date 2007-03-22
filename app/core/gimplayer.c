@@ -1234,13 +1234,6 @@ gimp_layer_add_mask (GimpLayer     *layer,
       return NULL;
     }
 
-  if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-    {
-      g_message (_("Cannot add layer mask to a layer "
-                   "with no alpha channel."));
-      return NULL;
-    }
-
   if ((gimp_item_width (GIMP_ITEM (layer)) !=
        gimp_item_width (GIMP_ITEM (mask))) ||
       (gimp_item_height (GIMP_ITEM (layer)) !=
