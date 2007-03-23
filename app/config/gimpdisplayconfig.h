@@ -68,6 +68,7 @@ struct _GimpDisplayConfig
   GimpDisplayOptions *default_fullscreen_view;
   gboolean            activate_on_focus;
   GimpSpaceBarAction  space_bar_action;
+  GimpRGB             xor_color;
 };
 
 struct _GimpDisplayConfigClass

@@ -24,6 +24,7 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "config-types.h"
@@ -66,7 +67,8 @@ enum
   PROP_DEFAULT_VIEW,
   PROP_DEFAULT_FULLSCREEN_VIEW,
   PROP_ACTIVATE_ON_FOCUS,
-  PROP_SPACE_BAR_ACTION
+  PROP_SPACE_BAR_ACTION,
+  PROP_XOR_COLOR
 };
 
 
@@ -97,6 +99,9 @@ static void
 gimp_display_config_class_init (GimpDisplayConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GimpRGB       color;
+
+  gimp_rgb_set_uchar (&color, 0x80, 0xff, 0x80);
 
   object_class->finalize     = gimp_display_config_finalize;
   object_class->set_property = gimp_display_config_set_property;
@@ -222,6 +227,10 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
                                  GIMP_TYPE_SPACE_BAR_ACTION,
                                  GIMP_SPACE_BAR_ACTION_PAN,
                                  GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_XOR_COLOR,
+                                "xor-color", XOR_COLOR_BLURB,
+                                FALSE, &color,
+                                GIMP_PARAM_STATIC_STRINGS);
 }
 
 static void
@@ -348,6 +357,9 @@ gimp_display_config_set_property (GObject      *object,
     case PROP_SPACE_BAR_ACTION:
       display_config->space_bar_action = g_value_get_enum (value);
       break;
+    case PROP_XOR_COLOR:
+      display_config->xor_color = *(GimpRGB *) g_value_get_boxed (value);
+      break;
 
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
@@ -436,6 +448,9 @@ gimp_display_config_get_property (GObject    *object,
       break;
     case PROP_SPACE_BAR_ACTION:
       g_value_set_enum (value, display_config->space_bar_action);
+      break;
+    case PROP_XOR_COLOR:
+      g_value_set_boxed (value, &display_config->xor_color);
       break;
 
     default:

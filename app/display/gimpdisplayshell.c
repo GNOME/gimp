@@ -861,7 +861,7 @@ gimp_display_shell_new (GimpDisplay     *display,
                            _("Access the image menu"),
                            GIMP_HELP_IMAGE_WINDOW_ORIGIN);
 
-  shell->canvas = gimp_canvas_new ();
+  shell->canvas = gimp_canvas_new (shell->display->image->gimp);
 
   gimp_display_shell_selection_init (shell);
 

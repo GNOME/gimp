@@ -60,6 +60,8 @@ struct _GimpCanvas
 {
   GtkDrawingArea  parent_instance;
 
+  Gimp           *gimp;
+
   GdkGC          *gc[GIMP_CANVAS_NUM_STYLES];
   GdkBitmap      *stipple[GIMP_CANVAS_NUM_STIPPLES];
   PangoLayout    *layout;
@@ -73,7 +75,7 @@ struct _GimpCanvasClass
 
 GType        gimp_canvas_get_type          (void) G_GNUC_CONST;
 
-GtkWidget  * gimp_canvas_new               (void);
+GtkWidget  * gimp_canvas_new               (Gimp            *gimp);
 
 void         gimp_canvas_draw_cursor       (GimpCanvas      *canvas,
                                             gint             x,

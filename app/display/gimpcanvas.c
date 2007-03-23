@@ -20,19 +20,42 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "display-types.h"
+
+#include "config/gimpdisplayconfig.h"
+
+#include "core/gimp.h"
 
 #include "widgets/gimpwidgets-utils.h"
 
 #include "gimpcanvas.h"
 
 
+enum
+{
+  PROP_0,
+  PROP_GIMP
+};
+
+
 /*  local function prototypes  */
 
-static void    gimp_canvas_realize   (GtkWidget       *widget);
-static void    gimp_canvas_unrealize (GtkWidget       *widget);
-static GdkGC * gimp_canvas_gc_new    (GimpCanvas      *canvas,
-                                      GimpCanvasStyle  style);
+static void    gimp_canvas_set_property (GObject         *object,
+                                         guint            property_id,
+                                         const GValue    *value,
+                                         GParamSpec      *pspec);
+static void    gimp_canvas_get_property (GObject         *object,
+                                         guint            property_id,
+                                         GValue          *value,
+                                         GParamSpec      *pspec);
+
+static void    gimp_canvas_realize      (GtkWidget       *widget);
+static void    gimp_canvas_unrealize    (GtkWidget       *widget);
+
+static GdkGC * gimp_canvas_gc_new       (GimpCanvas      *canvas,
+                                         GimpCanvasStyle  style);
 
 
 G_DEFINE_TYPE (GimpCanvas, gimp_canvas, GTK_TYPE_DRAWING_AREA)
@@ -128,10 +151,20 @@ static const guchar stipples[GIMP_CANVAS_NUM_STIPPLES][8] =
 static void
 gimp_canvas_class_init (GimpCanvasClass *klass)
 {
+  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  widget_class->realize   = gimp_canvas_realize;
-  widget_class->unrealize = gimp_canvas_unrealize;
+  object_class->set_property = gimp_canvas_set_property;
+  object_class->get_property = gimp_canvas_get_property;
+
+  widget_class->realize      = gimp_canvas_realize;
+  widget_class->unrealize    = gimp_canvas_unrealize;
+
+  g_object_class_install_property (object_class, PROP_GIMP,
+                                   g_param_spec_object ("gimp", NULL, NULL,
+                                                        GIMP_TYPE_GIMP,
+                                                        GIMP_PARAM_READWRITE |
+                                                        G_PARAM_CONSTRUCT_ONLY));
 }
 
 static void
@@ -144,6 +177,44 @@ gimp_canvas_init (GimpCanvas *canvas)
 
   for (i = 0; i < GIMP_CANVAS_NUM_STIPPLES; i++)
     canvas->stipple[i] = NULL;
+}
+
+static void
+gimp_canvas_set_property (GObject      *object,
+                           guint         property_id,
+                           const GValue *value,
+                           GParamSpec   *pspec)
+{
+  GimpCanvas *canvas = GIMP_CANVAS (object);
+
+  switch (property_id)
+    {
+    case PROP_GIMP:
+      canvas->gimp = g_value_get_object (value);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
+}
+
+static void
+gimp_canvas_get_property (GObject    *object,
+                          guint       property_id,
+                          GValue     *value,
+                          GParamSpec *pspec)
+{
+  GimpCanvas *canvas = GIMP_CANVAS (object);
+
+  switch (property_id)
+    {
+    case PROP_GIMP:
+      g_value_set_object (value, canvas->gimp);
+      break;
+    default:
+      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
+      break;
+    }
 }
 
 static void
@@ -254,6 +325,10 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
       gdk_gc_set_dashes (gc, 0, &one, 1);
     }
 
+  bg.red   = 0x0;
+  bg.green = 0x0;
+  bg.blue  = 0x0;
+
   switch (style)
     {
     default:
@@ -262,23 +337,22 @@ gimp_canvas_gc_new (GimpCanvas      *canvas,
     case GIMP_CANVAS_STYLE_XOR_DOTTED:
     case GIMP_CANVAS_STYLE_XOR_DASHED:
     case GIMP_CANVAS_STYLE_XOR:
-      fg.red   = 0x8080;
-      fg.green = 0xffff;
-      fg.blue  = 0x8080;
+      {
+        GimpDisplayConfig *config = GIMP_DISPLAY_CONFIG (canvas->gimp->config);
+        guchar             r, g, b;
 
-      bg.red   = 0x0;
-      bg.green = 0x0;
-      bg.blue  = 0x0;
+        gimp_rgb_get_uchar (&config->xor_color, &r, &g, &b);
+
+        fg.red   = (r << 8) | r;
+        fg.green = (g << 8) | g;
+        fg.blue  = (b << 8) | b;
+      }
       break;
 
     case GIMP_CANVAS_STYLE_WHITE:
       fg.red   = 0xffff;
       fg.green = 0xffff;
       fg.blue  = 0xffff;
-
-      bg.red   = 0x0;
-      bg.green = 0x0;
-      bg.blue  = 0x0;
       break;
 
     case GIMP_CANVAS_STYLE_BLACK:
@@ -379,10 +453,13 @@ gimp_canvas_ensure_style (GimpCanvas      *canvas,
  * Return value: a new #GimpCanvas widget
  **/
 GtkWidget *
-gimp_canvas_new (void)
+gimp_canvas_new (Gimp *gimp)
 {
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
+
   return g_object_new (GIMP_TYPE_CANVAS,
                        "name", "gimp-canvas",
+                       "gimp", gimp,
                        NULL);
 }
 

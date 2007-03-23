@@ -1,3 +1,16 @@
+2007-03-23  Sven Neumann  <sven@gimp.org>
+
+	Make XOR color configurable (bug #421466):
+
+	* app/config/gimprc-blurbs.h
+	* app/config/gimpdisplayconfig.[ch]: added gimprc option for the
+	XOR color.
+
+	* app/display/gimpcanvas.[ch]: keep a reference to the Gimp object
+	and take the XOR color from GimpDisplayConfig.
+
+	* app/display/gimpdisplayshell.c: pass gimp to gimp_canvas_new().
+
 2007-03-22  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimplayer.c (gimp_layer_add_mask): allow adding a mask
