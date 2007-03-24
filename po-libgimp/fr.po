@@ -10,14 +10,19 @@
 # Jean-Louis Berliet <jl.berliet@free.fr>, 2004.
 # Jonathan Ernst <jonathan@ernstfamily.ch>, 2007.
 # Stéphane Raimbault <stephane.raimbault@gmail.com>, 2007.
+# Laurent Monin <gimp@norz.org>, 2007.
 #
+# Au sujet de "événement" contre "évènement", c'est ce dernier qui a été
+# retenu car préconisé par l'Académie française.
+#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-14 22:41+0100\n"
-"PO-Revision-Date: 2007-02-14 22:41+0100\n"
-"Last-Translator: Raymond Ostertag <r.ostertag@caramail.com>\n"
+"POT-Creation-Date: 2007-03-24 14:08+0100\n"
+"PO-Revision-Date: 2007-03-24 14:18+0100\n"
+"Last-Translator: Laurent Monin <gimp@norz.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -35,8 +40,8 @@ msgstr "_Parcourir..."
 
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
-msgid "%s can't handle layers"
-msgstr "%s ne peut gérer les calques"
+msgid "%s plug-in can't handle layers"
+msgstr "Le greffon %s ne peut gérer les calques"
 
 #: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
@@ -45,13 +50,15 @@ msgstr "Fusionner les calques visibles"
 
 #: ../libgimp/gimpexport.c:226
 #, c-format
-msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s ne peut gérer les décalages de calque, la taille ou l'opacité"
+msgid "%s plug-in can't handle layer offsets, size or opacity"
+msgstr ""
+"Le greffon %s ne peut gérer les décalages de calque, la taille ou l'opacité"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
-msgid "%s can only handle layers as animation frames"
-msgstr "%s ne peut gérer les calques qu'en tant qu'images d'une animation"
+msgid "%s plug-in can only handle layers as animation frames"
+msgstr ""
+"Le greffon %s ne peut gérer les calques qu'en tant qu'images d'une animation"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
@@ -64,13 +71,13 @@ msgstr "Aplatir l'image"
 
 #: ../libgimp/gimpexport.c:262
 #, c-format
-msgid "%s can't handle transparency"
-msgstr "%s ne peut gérer la transparence"
+msgid "%s plug-in can't handle transparency"
+msgstr "Le greffon %s ne peut gérer la transparence"
 
 #: ../libgimp/gimpexport.c:271
 #, c-format
-msgid "%s can't handle layer masks"
-msgstr "%s ne peut manipuler les masques de calque"
+msgid "%s plug-in can't handle layer masks"
+msgstr "Le greffon %s ne peut manipuler les masques de calque"
 
 #: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
@@ -78,8 +85,8 @@ msgstr "Appliquer les masques de calque"
 
 #: ../libgimp/gimpexport.c:280
 #, c-format
-msgid "%s can only handle RGB images"
-msgstr "%s ne peut gérer que les images RVB"
+msgid "%s plug-in can only handle RGB images"
+msgstr "Le greffon %s ne peut gérer que les images RVB"
 
 #: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
@@ -88,8 +95,8 @@ msgstr "Convertir en RVB"
 
 #: ../libgimp/gimpexport.c:289
 #, c-format
-msgid "%s can only handle grayscale images"
-msgstr "%s ne peut gérer que les images en niveaux de gris"
+msgid "%s plug-in can only handle grayscale images"
+msgstr "Le greffon %s ne peut gérer que les images en niveaux de gris"
 
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
@@ -98,8 +105,8 @@ msgstr "Convertir en niveaux de gris"
 
 #: ../libgimp/gimpexport.c:298
 #, c-format
-msgid "%s can only handle indexed images"
-msgstr "%s ne peut gérer que les images indexées"
+msgid "%s plug-in can only handle indexed images"
+msgstr "Le greffon %s ne peut gérer que les images indexées"
 
 #: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
 #: ../libgimp/gimpexport.c:338
@@ -113,8 +120,8 @@ msgstr ""
 
 #: ../libgimp/gimpexport.c:308
 #, c-format
-msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s ne peut manipuler que les images bitmap (2 couleurs) ou indexées"
+msgid "%s plug-in can only handle bitmap (two color) indexed images"
+msgstr "Le greffon %s ne peut gérer que images indexées bitmap (2 couleurs)"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -126,23 +133,24 @@ msgstr ""
 
 #: ../libgimp/gimpexport.c:318
 #, c-format
-msgid "%s can only handle RGB or grayscale images"
-msgstr "%s ne peut gérer que les images RVB ou en niveaux de gris"
+msgid "%s plug-in can only handle RGB or grayscale images"
+msgstr "Le greffon %s ne peut gérer que les images RVB ou en niveaux de gris"
 
 #: ../libgimp/gimpexport.c:327
 #, c-format
-msgid "%s can only handle RGB or indexed images"
-msgstr "%s ne gérer que les images RVB ou indexées"
+msgid "%s plug-in  can only handle RGB or indexed images"
+msgstr "Le greffon %s ne peut gérer que les images RVB ou indexées"
 
 #: ../libgimp/gimpexport.c:337
 #, c-format
-msgid "%s can only handle grayscale or indexed images"
-msgstr "%s ne peut gérer que les images en niveau de gris ou indexées"
+msgid "%s plug-in can only handle grayscale or indexed images"
+msgstr ""
+"Le greffon %s ne peut gérer que les images en niveaux de gris ou indexées"
 
 #: ../libgimp/gimpexport.c:348
 #, c-format
-msgid "%s needs an alpha channel"
-msgstr "%s a besoin d'un canal alpha"
+msgid "%s plug-in needs an alpha channel"
+msgstr "Le greffon %s a besoin d'un canal alpha"
 
 #: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
@@ -176,7 +184,7 @@ msgid ""
 "reasons:"
 msgstr ""
 "Votre image devrait être exportée avant d'être enregistrée en %s pour les "
-"raison suivantes :"
+"raisons suivantes :"
 
 #. the footline
 #: ../libgimp/gimpexport.c:573
@@ -264,7 +272,7 @@ msgstr "Recherche par nom"
 
 #: ../libgimp/gimpprocbrowserdialog.c:409
 msgid "Searching by description"
-msgstr "cc description"
+msgstr "Recherche par description"
 
 #: ../libgimp/gimpprocbrowserdialog.c:416
 msgid "Searching by help"
@@ -614,8 +622,8 @@ msgid "Cubic"
 msgstr "Cubique"
 
 #: ../libgimpbase/gimpbaseenums.c:565
-msgid "Lanczos"
-msgstr "Lanczos"
+msgid "Sinc (Lanczos3)"
+msgstr "Sinc (Lanczos3)"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -670,12 +678,12 @@ msgid "Highlights"
 msgstr "Tons clairs"
 
 #: ../libgimpbase/gimpbaseenums.c:744
-msgid "Forward"
-msgstr "En avant"
+msgid "Normal (Forward)"
+msgstr "Normal (en avant)"
 
 #: ../libgimpbase/gimpbaseenums.c:745
-msgid "Backward"
-msgstr "En arrière"
+msgid "Corrective (Backward)"
+msgstr "Correctif (en arrière)"
 
 #: ../libgimpbase/gimpbaseenums.c:775
 msgid "Adjust"
@@ -838,41 +846,41 @@ msgstr "Saturation"
 msgid "Absolute colorimetric"
 msgstr "Colorimétrie absolue"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#: ../libgimpconfig/gimpconfig-deserialize.c:96
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr ""
 "La valeur de l'expression %s n'est pas une chaîne de caractère UTF-8 valide"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:426
+#: ../libgimpconfig/gimpconfig-deserialize.c:427
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "« oui » ou « non » attendus pour l'expression booléenne %s, « %s » reçu"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:500
+#: ../libgimpconfig/gimpconfig-deserialize.c:501
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "Valeur « %s » non valide pour l'expression %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:515
+#: ../libgimpconfig/gimpconfig-deserialize.c:516
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "Valeur « %ld » non valide pour l'expression %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:584
+#: ../libgimpconfig/gimpconfig-deserialize.c:585
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "en interprétant l'expression « %s » : %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:453
-#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpconfig-iface.c:454
+#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
 msgid "fatal parse error"
 msgstr "erreur fatale d'interprétation"
 
-#: ../libgimpconfig/gimpconfig-path.c:376
+#: ../libgimpconfig/gimpconfig-path.c:377
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Impossible d'étendre ${%s}"
@@ -962,10 +970,14 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Échec lors de la création du dossier de vignettes « %s »."
 
-#: ../libgimpthumb/gimpthumbnail.c:889
+#: ../libgimpthumb/gimpthumbnail.c:498
+msgid "Thumbnail contains no Thumb::URI tag"
+msgstr "La vignette ne contient aucune balise Thumb::URI"
+
+#: ../libgimpthumb/gimpthumbnail.c:898
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
-msgstr "Impossible de créer de vignettes pour « %s » : %s"
+msgstr "Impossible de créer une vignette pour « %s » : %s"
 
 #: ../libgimpwidgets/gimpbrowser.c:98
 msgid "_Search:"
@@ -1112,13 +1124,13 @@ msgstr "_Aperçu"
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
-msgstr[0] "Ce champ de texte est limité à%0dun caractère."
+msgstr[0] "Ce champ de texte est limité à %d caractère."
 msgstr[1] "Ce champ de texte est limité à %d caractères."
 
 #: ../libgimpwidgets/gimpresolutionentry.c:382
 #, c-format
 msgid "pixels/%s"
-msgstr "Pixels/%s"
+msgstr "pixels/%s"
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -1561,50 +1573,62 @@ msgid "Button Gear Up"
 msgstr "Bouton roulette vers le haut"
 
 #: ../modules/controller_linux_input.c:90
+#: ../modules/controller_dx_dinput.c:469
 msgid "X Move Left"
 msgstr "X vers la gauche"
 
 #: ../modules/controller_linux_input.c:91
+#: ../modules/controller_dx_dinput.c:472
 msgid "X Move Right"
 msgstr "X vers la droite"
 
 #: ../modules/controller_linux_input.c:92
+#: ../modules/controller_dx_dinput.c:478
 msgid "Y Move Away"
 msgstr "Y s'éloigne"
 
 #: ../modules/controller_linux_input.c:93
+#: ../modules/controller_dx_dinput.c:481
 msgid "Y Move Near"
 msgstr "Y se rapproche"
 
 #: ../modules/controller_linux_input.c:94
+#: ../modules/controller_dx_dinput.c:487
 msgid "Z Move Up"
 msgstr "Z monte"
 
 #: ../modules/controller_linux_input.c:95
+#: ../modules/controller_dx_dinput.c:490
 msgid "Z Move Down"
 msgstr "Z descend"
 
 #: ../modules/controller_linux_input.c:97
+#: ../modules/controller_dx_dinput.c:496
 msgid "X Axis Tilt Away"
 msgstr "L'axe Y s'éloigne"
 
 #: ../modules/controller_linux_input.c:98
+#: ../modules/controller_dx_dinput.c:499
 msgid "X Axis Tilt Near"
 msgstr "L'axe Y se rapproche"
 
 #: ../modules/controller_linux_input.c:99
+#: ../modules/controller_dx_dinput.c:505
 msgid "Y Axis Tilt Right"
 msgstr "L'axe Y penche à droite"
 
 #: ../modules/controller_linux_input.c:100
+#: ../modules/controller_dx_dinput.c:508
 msgid "Y Axis Tilt Left"
 msgstr "L'axe Y penche à gauche"
 
 #: ../modules/controller_linux_input.c:101
+#: ../modules/controller_dx_dinput.c:514
 msgid "Z Axis Turn Left"
 msgstr "L'axe Z tourne à gauche"
 
 #: ../modules/controller_linux_input.c:102
+#: ../modules/controller_dx_dinput.c:517
 msgid "Z Axis Turn Right"
 msgstr "L'axe Z tourne à droite"
 
@@ -1634,60 +1658,119 @@ msgstr "Roulette tourne à droite"
 
 #: ../modules/controller_linux_input.c:179
 msgid "Linux input event controller"
-msgstr "Entrée du contrôleur d'événement Linux"
+msgstr "Entrée du contrôleur d'évènement Linux"
 
-#: ../modules/controller_linux_input.c:249 ../modules/controller_midi.c:245
+#: ../modules/controller_linux_input.c:249
+#: ../modules/controller_dx_dinput.c:227 ../modules/controller_midi.c:245
 msgid "Device:"
 msgstr "Périphérique :"
 
 #: ../modules/controller_linux_input.c:250
 msgid "The name of the device to read Linux Input events from."
-msgstr "Le nom du périphérique où lire les entrées d'événements Linux."
+msgstr "Le nom du périphérique où lire les entrées d'évènements Linux."
 
-#: ../modules/controller_linux_input.c:259
+#: ../modules/controller_linux_input.c:261
 msgid "Linux Input"
 msgstr "Entrée Linux"
 
-#: ../modules/controller_linux_input.c:537
+#: ../modules/controller_linux_input.c:539
 msgid "Linux Input Events"
-msgstr "Entrée d'événements Linux"
+msgstr "Entrée d'évènements Linux"
 
-#: ../modules/controller_linux_input.c:549 ../modules/controller_midi.c:533
+#: ../modules/controller_linux_input.c:551
+#: ../modules/controller_dx_dinput.c:1122 ../modules/controller_midi.c:533
 msgid "No device configured"
 msgstr "Aucun périphérique configuré"
 
-#: ../modules/controller_linux_input.c:575 ../modules/controller_midi.c:482
+#: ../modules/controller_linux_input.c:577 ../modules/controller_midi.c:482
 #: ../modules/controller_midi.c:508
 #, c-format
 msgid "Reading from %s"
 msgstr "Lire depuis %s"
 
-#: ../modules/controller_linux_input.c:593
-#: ../modules/controller_linux_input.c:647 ../modules/controller_midi.c:464
+#: ../modules/controller_linux_input.c:595
+#: ../modules/controller_linux_input.c:649 ../modules/controller_midi.c:464
 #: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
 #, c-format
 msgid "Device not available: %s"
 msgstr "Périphérique indisponible : %s"
 
-#: ../modules/controller_linux_input.c:612
+#: ../modules/controller_linux_input.c:614
+#: ../modules/controller_dx_dinput.c:1147
 msgid "Device not available"
 msgstr "Périphérique non disponible"
 
-#: ../modules/controller_linux_input.c:656 ../modules/controller_midi.c:605
+#: ../modules/controller_linux_input.c:658 ../modules/controller_midi.c:605
 msgid "End of file"
 msgstr "Fin du fichier"
 
+#: ../modules/controller_dx_dinput.c:157
+msgid "DirectX DirectInput event controller"
+msgstr "Contrôleur d'évènement DirectX DirectInput"
+
+#: ../modules/controller_dx_dinput.c:228
+msgid "The device to read DirectInput events from."
+msgstr "Le nom du périphérique où lire les entrées d'évènements DirectInput."
+
+#: ../modules/controller_dx_dinput.c:237
+msgid "DirectX DirectInput"
+msgstr "DirectX DirectInput"
+
+#: ../modules/controller_dx_dinput.c:446
+#, c-format
+msgid "Button %d"
+msgstr "Bouton %d"
+
+#: ../modules/controller_dx_dinput.c:449
+#, c-format
+msgid "Button %d Press"
+msgstr "Pression du bouton %d"
+
+#: ../modules/controller_dx_dinput.c:452
+#, c-format
+msgid "Button %d Release"
+msgstr "Relâchement du bouton %d"
+
+#: ../modules/controller_dx_dinput.c:528
+#, c-format
+msgid "Slider %d Increase"
+msgstr "Incrément de la molette %d"
+
+#: ../modules/controller_dx_dinput.c:531
+#, c-format
+msgid "Slider %d Decrease"
+msgstr "Décrément de la molette %d"
+
+#: ../modules/controller_dx_dinput.c:541
+#, c-format
+msgid "POV %d X View"
+msgstr "Vue X point de vue %d"
+
+#: ../modules/controller_dx_dinput.c:544
+#, c-format
+msgid "POV %d Y View"
+msgstr "Vue Y point de vue %d"
+
+#: ../modules/controller_dx_dinput.c:547
+#, c-format
+msgid "POV %d Return"
+msgstr "Retour du point de vue %d"
+
+#: ../modules/controller_dx_dinput.c:1111
+msgid "DirectInput Events"
+msgstr "Evènements DirectInput"
+
 #: ../modules/controller_midi.c:167
 msgid "MIDI event controller"
-msgstr "Contrôleur d'événement MIDI"
+msgstr "Contrôleur d'évènement MIDI"
 
 #: ../modules/controller_midi.c:236
 msgid "The name of the device to read MIDI events from."
-msgstr "Le nom du périphérique d'où lire les événements MIDI."
+msgstr "Le nom du périphérique d'où lire les évènements MIDI."
 
 #: ../modules/controller_midi.c:239
 msgid "Enter 'alsa' to use the ALSA sequencer."
-msgstr "Entrez « alsa » pour utiliser le séquenceur ALSA."
+msgstr "Saisissez « alsa » pour utiliser le séquenceur ALSA."
 
 #: ../modules/controller_midi.c:254
 msgid "Channel:"
@@ -1698,7 +1781,7 @@ msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
 msgstr ""
-"Le canal MIDI duquel lire les événements : régler à -1 pour lire tous les "
+"Le canal MIDI duquel lire les évènements : régler à -1 pour lire tous les "
 "canaux MIDI."
 
 #: ../modules/controller_midi.c:259
