@@ -1,13 +1,13 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000, 2001, 2002
-# Marco Ciampa <ciampix@libero.it>, 2003, 2004, 2005, 2006
+# Marco Ciampa <ciampix@libero.it>, 2003, 2004, 2005, 2006, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-11 11:12+0100\n"
-"PO-Revision-Date: 2006-11-06 18:29+0100\n"
+"POT-Creation-Date: 2007-03-25 15:17+0200\n"
+"PO-Revision-Date: 2007-03-25 15:29+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -66,8 +66,8 @@ msgid "Colored XHTML"
 msgstr "XHTML colorato"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
-msgid "Character source"
-msgstr "Sorgente carattere"
+msgid "Character _source"
+msgstr "_Sorgente carattere"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
 msgid "Source code"
@@ -82,16 +82,16 @@ msgid "Entry box"
 msgstr "Casella di immissione testo"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
-msgid "File to read or characters to use"
-msgstr "File da leggere o caratteri da usare"
+msgid "_File to read or characters to use"
+msgstr "_File da leggere o caratteri da usare"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
-msgid "Font size in pixels"
-msgstr "Dimensione carattere in pixel"
+msgid "Fo_nt size in pixels"
+msgstr "Dime_nsione carattere in pixel"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
-msgid "Write a separate CSS file"
-msgstr "Scrivi un file CSS separato"
+msgid "_Write a separate CSS file"
+msgstr "Sc_rivi un file CSS separato"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
@@ -136,24 +136,24 @@ msgid "_Fog..."
 msgstr "_Nebbia"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:59
-msgid "Layer name"
-msgstr "Nome livello"
+msgid "_Layer name"
+msgstr "Nome _livello"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:59
 msgid "Clouds"
 msgstr "Nuvole"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:60
-msgid "Fog color"
-msgstr "Colore nebbia"
+msgid "_Fog color"
+msgstr "Colore _nebbia"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:61
-msgid "Turbulence"
-msgstr "Turbolenza"
+msgid "_Turbulence"
+msgstr "_Turbolenza"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:62
-msgid "Opacity"
-msgstr "Opacità"
+msgid "Op_acity"
+msgstr "Op_acità"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
 msgid "Offset the colors in a palette"
@@ -171,8 +171,8 @@ msgid "Palette"
 msgstr "Tavolozza"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
-msgid "Offset"
-msgstr "Spostamento"
+msgid "Off_set"
+msgstr "_Spostamento"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
 msgid "Sort the colors in a palette"
@@ -183,8 +183,8 @@ msgid "_Sort Palette..."
 msgstr "Ordina tavoloz_za..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-msgid "Color model"
-msgstr "Modello di colore"
+msgid "Color _model"
+msgstr "_Modello di colore"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
 msgid "RGB"
@@ -195,8 +195,8 @@ msgid "HSV"
 msgstr "HSV"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-msgid "Channel to sort"
-msgstr "Canale da ordinare"
+msgid "Channel to _sort"
+msgstr "Canale da _ordinare"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
 msgid "Red or Hue"
@@ -211,8 +211,8 @@ msgid "Blue or Value"
 msgstr "Blu o valore"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
-msgid "Ascending"
-msgstr "Ascendente"
+msgid "_Ascending"
+msgstr "_Ascendente"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
@@ -289,21 +289,21 @@ msgid "_Drop Shadow and Bevel..."
 msgstr "Crea un'ombra e un'inclinazione..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
-msgid "Shadow blur"
-msgstr "Sfocatura ombra"
+msgid "_Shadow blur"
+msgstr "_Sfocatura ombra"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
-msgid "Bevel"
-msgstr "Inclinazione"
+msgid "_Bevel"
+msgstr "_Inclinazione"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
-msgid "Drop shadow"
-msgstr "Generazione ombra"
+msgid "_Drop shadow"
+msgstr "_Generazione ombra"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
-msgid "Drop shadow X displacement"
-msgstr "Spiazzamento X ombra generata"
+msgid "Drop shadow _X displacement"
+msgstr "Spiazzamento _X ombra generata"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
-msgid "Drop shadow Y displacement"
-msgstr "Spiazzamento Y ombra generata"
+msgid "Drop shadow _Y displacement"
+msgstr "Spiazzamento _Y ombra generata"
