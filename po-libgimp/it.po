@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-14 00:00+0100\n"
-"PO-Revision-Date: 2007-03-13 23:59+0100\n"
+"POT-Creation-Date: 2007-03-25 15:13+0200\n"
+"PO-Revision-Date: 2007-03-25 15:15+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -671,12 +671,12 @@ msgid "Highlights"
 msgstr "Toni luminosi"
 
 #: ../libgimpbase/gimpbaseenums.c:744
-msgid "Forward"
-msgstr "Avanti"
+msgid "Normal (Forward)"
+msgstr "Normale (avanti)"
 
 #: ../libgimpbase/gimpbaseenums.c:745
-msgid "Backward"
-msgstr "Indietro"
+msgid "Corrective (Backward)"
+msgstr "Correttiva (indietro)"
 
 #: ../libgimpbase/gimpbaseenums.c:775
 msgid "Adjust"
