@@ -457,14 +457,18 @@ save_image (const Compressor *compressor,
       {
         g_message (_("Could not open '%s' for reading: %s"),
                    gimp_filename_to_utf8 (tmpname), g_strerror (errno));
-        gimp_quit ();
-      }
+        g_free (tmpname);
+
+        return GIMP_PDB_EXECUTION_ERROR;
+       }
 
     if (out == NULL)
       {
         g_message (_("Could not open '%s' for writing: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
-        gimp_quit ();
+        g_free (tmpname);
+
+        return GIMP_PDB_EXECUTION_ERROR;
       }
 
     startupinfo.cb          = sizeof (STARTUPINFO);
@@ -607,14 +611,20 @@ load_image (const Compressor  *compressor,
       {
         g_message (_("Could not open '%s' for reading: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
-        gimp_quit ();
+        g_free (tmpname);
+
+        *status = GIMP_PDB_EXECUTION_ERROR;
+        return -1;
       }
 
     if (out == NULL)
       {
         g_message (_("Could not open '%s' for writing: %s"),
                    gimp_filename_to_utf8 (tmpname), g_strerror (errno));
-        gimp_quit ();
+        g_free (tmpname);
+
+        *status = GIMP_PDB_EXECUTION_ERROR;
+        return -1;
       }
 
     startupinfo.cb          = sizeof (STARTUPINFO);
