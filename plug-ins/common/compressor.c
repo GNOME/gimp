@@ -453,6 +453,20 @@ save_image (const Compressor *compressor,
     in  = fopen (tmpname, "rb");
     out = fopen (filename, "wb");
 
+    if (in == NULL)
+      {
+        g_message (_("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (tmpname), g_strerror (errno));
+        gimp_quit ();
+      }
+
+    if (out == NULL)
+      {
+        g_message (_("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+        gimp_quit ();
+      }
+
     startupinfo.cb          = sizeof (STARTUPINFO);
     startupinfo.lpReserved  = NULL;
     startupinfo.lpDesktop   = NULL;
@@ -588,6 +602,20 @@ load_image (const Compressor  *compressor,
 
     in  = fopen (filename, "rb");
     out = fopen (tmpname, "wb");
+
+    if (in == NULL)
+      {
+        g_message (_("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+        gimp_quit ();
+      }
+
+    if (out == NULL)
+      {
+        g_message (_("Could not open '%s' for writing: %s"),
+                   gimp_filename_to_utf8 (tmpname), g_strerror (errno));
+        gimp_quit ();
+      }
 
     startupinfo.cb          = sizeof (STARTUPINFO);
     startupinfo.lpReserved  = NULL;
