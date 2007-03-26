@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<node name="/org/gimp/GIMP/Remote">
+<node name="/org/gimp/GIMP/UI">
 
   <interface name="org.gimp.GIMP.UI">
     <annotation name="org.freedesktop.DBus.GLib.CSymbol"
