@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
-<node name="/org/gimp/GIMP">
+<node name="/org/gimp/GIMP/Remote">
 
-  <interface name="org.gimp.GIMP">
+  <interface name="org.gimp.GIMP.UI">
     <annotation name="org.freedesktop.DBus.GLib.CSymbol"
 		value="gimp_dbus_service" />
     <method name="Open">

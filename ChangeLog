@@ -1,3 +1,9 @@
+2007-03-26  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/dbus-service.xml
+	* app/widgets/gimpdbusservice.h: be more specific in the D-Bus
+	service and interface name.
+
 2007-03-23  Sven Neumann  <sven@gimp.org>
 
 	Make XOR color configurable (bug #421466):
