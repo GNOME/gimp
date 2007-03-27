@@ -30,6 +30,10 @@ Bugs fixed in GIMP 2.2.14
 - fixed the fix for the right-to-left layout in layers dialog (bug #348347)
 - fixed PSD save plug-in on 64bit architectures (bug #335130)
 - added missing dependency in gimpui-2.0.pc file (bug #356394)
+- fixed a crash in the PSD save plug-in (bug #395385)
+- improved robustness of transform tool preview code (bug #420595)
+- improved forward compatibility of XCF loader (bug #316207)
+- don't crash in the Compressor plug-in if files can't be opened (bug #422444)
 
 
 Bugs fixed in GIMP 2.2.13
