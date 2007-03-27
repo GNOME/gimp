@@ -68,8 +68,8 @@ GList     * file_open_layers                (Gimp                *gimp,
                                              GimpPDBStatusType   *status,
                                              GError             **error);
 
-void        file_open_from_command_line     (Gimp                *gimp,
-                                             const gchar        **uris);
+gboolean    file_open_from_command_line     (Gimp                *gimp,
+                                             const gchar         *filename);
 
 
 #endif /* __FILE_OPEN_H__ */

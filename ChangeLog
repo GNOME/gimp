@@ -1,3 +1,15 @@
+2007-03-27  Sven Neumann  <sven@gimp.org>
+
+	* app/file/file-open.[ch]: changed file_open_from_command_line()
+	to deal with a single filename only.
+
+	* app/widgets/gimpdbusservice.[ch]
+	* app/widgets/dbus-service.xml: changed the D-Bus Open method to
+	take only a single filename.
+
+	* app/app.c
+	* app/main.c: changed accordingly.
+
 2007-03-26  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* plug-ins/common/compressor.c (save_image, load_image): 

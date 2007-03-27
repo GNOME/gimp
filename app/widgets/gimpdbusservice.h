@@ -25,9 +25,9 @@
 G_BEGIN_DECLS
 
 
-#define GIMP_DBUS_SERVICE_NAME      "org.gimp.GIMP.UI"
-#define GIMP_DBUS_SERVICE_PATH      "/org/gimp/GIMP/UI"
-#define GIMP_DBUS_SERVICE_INTERFACE "org.gimp.GIMP.UI"
+#define GIMP_DBUS_SERVICE_NAME       "org.gimp.GIMP.UI"
+#define GIMP_DBUS_SERVICE_PATH       "/org/gimp/GIMP/UI"
+#define GIMP_DBUS_SERVICE_INTERFACE  "org.gimp.GIMP.UI"
 
 
 #define GIMP_TYPE_DBUS_SERVICE            (gimp_dbus_service_get_type ())
@@ -54,15 +54,15 @@ struct _GimpDBusServiceClass
 };
 
 
-GType     gimp_dbus_service_get_type (void) G_GNUC_CONST;
+GType     gimp_dbus_service_get_type    (void) G_GNUC_CONST;
 
-GObject * gimp_dbus_service_new      (Gimp             *gimp);
+GObject * gimp_dbus_service_new         (Gimp            *gimp);
 
-gboolean  gimp_dbus_service_open     (GimpDBusService  *service,
-                                      const gchar     **uris,
-                                      GError          **dbus_error);
-gboolean  gimp_dbus_service_activate (GimpDBusService  *service,
-                                      GError          **dbus_error);
+gboolean  gimp_dbus_service_open        (GimpDBusService  *service,
+                                         const gchar      *filename,
+                                         GError          **dbus_error);
+gboolean  gimp_dbus_service_activate    (GimpDBusService  *service,
+                                         GError          **dbus_error);
 
 
 G_END_DECLS

@@ -220,7 +220,12 @@ app_run (const gchar         *full_prog_name,
   /*  Load the images given on the command-line.
    */
   if (filenames)
-    file_open_from_command_line (gimp, filenames);
+    {
+      gint i;
+
+      for (i = 0; filenames[i] != NULL; i++)
+        file_open_from_command_line (gimp, filenames[i]);
+    }
 
 #ifndef GIMP_CONSOLE_COMPILATION
   if (! no_interface)

@@ -105,6 +105,10 @@ static void      gimp_open_console_window     (void);
 #define gimp_open_console_window() /* as nothing */
 #endif
 
+static gboolean  gimp_dbus_open               (const gchar **filenames,
+                                               gboolean      be_verbose);
+
+
 static const gchar        *system_gimprc     = NULL;
 static const gchar        *user_gimprc       = NULL;
 static const gchar        *session_name      = NULL;
@@ -356,56 +360,11 @@ main (int    argc,
   if (no_interface)
     new_instance = TRUE;
 
-#ifndef GIMP_CONSOLE_COMPILATION
-#if HAVE_DBUS_GLIB
   if (! new_instance)
     {
-      DBusGConnection *connection;
-
-      connection = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
-
-      if (connection)
-        {
-          DBusGProxy   *proxy;
-          gboolean      success;
-
-          proxy = dbus_g_proxy_new_for_name (connection,
-                                             GIMP_DBUS_SERVICE_NAME,
-                                             GIMP_DBUS_SERVICE_PATH,
-                                             GIMP_DBUS_SERVICE_INTERFACE);
-
-          if (filenames)
-            success = dbus_g_proxy_call (proxy, "Open", &error,
-                                         G_TYPE_STRV, filenames,
-                                         G_TYPE_INVALID, G_TYPE_INVALID);
-          else
-            success = dbus_g_proxy_call (proxy, "Activate", &error,
-                                         G_TYPE_INVALID, G_TYPE_INVALID);
-
-          g_object_unref (proxy);
-          dbus_g_connection_unref (connection);
-
-          if (success)
-            {
-              if (be_verbose)
-                g_print ("%s\n",
-                         _("Another GIMP instance is already running."));
-
-              gdk_notify_startup_complete ();
-
-              return EXIT_SUCCESS;
-            }
-          else if (! (error->domain == DBUS_GERROR &&
-                      error->code == DBUS_GERROR_SERVICE_UNKNOWN))
-            {
-              g_print ("%s\n", error->message);
-            }
-
-          g_clear_error (&error);
-        }
+      if (gimp_dbus_open (filenames, be_verbose))
+        return EXIT_SUCCESS;
     }
-#endif
-#endif
 
   abort_message = sanity_check ();
   if (abort_message)
@@ -718,3 +677,67 @@ gimp_sigfatal_handler (gint sig_num)
 }
 
 #endif /* ! G_OS_WIN32 */
+
+
+static gboolean
+gimp_dbus_open (const gchar **filenames,
+                gboolean      be_verbose)
+{
+#ifndef GIMP_CONSOLE_COMPILATION
+#if HAVE_DBUS_GLIB
+  DBusGConnection *connection = dbus_g_bus_get (DBUS_BUS_SESSION, NULL);
+
+  if (connection)
+    {
+      DBusGProxy *proxy;
+      gboolean    success;
+      GError     *error = NULL;
+
+      proxy = dbus_g_proxy_new_for_name (connection,
+                                         GIMP_DBUS_SERVICE_NAME,
+                                         GIMP_DBUS_SERVICE_PATH,
+                                         GIMP_DBUS_SERVICE_INTERFACE);
+
+      if (filenames)
+        {
+          gint i;
+
+          for (i = 0, success = TRUE; filenames[i] && success; i++)
+            {
+              success = dbus_g_proxy_call (proxy, "Open", &error,
+                                           G_TYPE_STRING, filenames[i],
+                                           G_TYPE_INVALID, G_TYPE_INVALID);
+            }
+        }
+      else
+        {
+          success = dbus_g_proxy_call (proxy, "Activate", &error,
+                                       G_TYPE_INVALID, G_TYPE_INVALID);
+        }
+
+      g_object_unref (proxy);
+      dbus_g_connection_unref (connection);
+
+      if (success)
+        {
+          if (be_verbose)
+            g_print ("%s\n",
+                     _("Another GIMP instance is already running."));
+
+          gdk_notify_startup_complete ();
+
+          return TRUE;
+        }
+      else if (! (error->domain == DBUS_GERROR &&
+                  error->code == DBUS_GERROR_SERVICE_UNKNOWN))
+        {
+          g_print ("%s\n", error->message);
+        }
+
+      g_clear_error (&error);
+    }
+#endif
+#endif
+
+  return FALSE;
+}

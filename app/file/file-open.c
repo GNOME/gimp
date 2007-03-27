@@ -462,59 +462,59 @@ file_open_layers (Gimp                *gimp,
 /*  This function is called for filenames passed on the command-line
  *  or from the D-Bus service.
  */
-void
-file_open_from_command_line (Gimp         *gimp,
-                             const gchar **uris)
+gboolean
+file_open_from_command_line (Gimp        *gimp,
+                             const gchar *filename)
 {
-  gint i;
+  GError   *error   = NULL;
+  gchar    *uri;
+  gboolean  success = FALSE;
 
-  g_return_if_fail (GIMP_IS_GIMP (gimp));
-  g_return_if_fail (uris != NULL);
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (filename != NULL, FALSE);
 
-  for (i = 0; uris[i]; i++)
+  /* we accept URI or filename */
+  uri = file_utils_any_to_uri (gimp, filename, &error);
+
+  if (uri)
     {
-      GError *error = NULL;
-      gchar  *uri;
+      GimpImage         *image;
+      GimpPDBStatusType  status;
 
-      /* we accept URIs and filenames */
-      uri = file_utils_any_to_uri (gimp, uris[i], &error);
+      image = file_open_with_display (gimp,
+                                      gimp_get_user_context (gimp),
+                                      NULL,
+                                      uri,
+                                      &status, &error);
 
-      if (uri)
+      if (image)
         {
-          GimpImage         *image;
-          GimpPDBStatusType  status;
-
-          image = file_open_with_display (gimp,
-                                          gimp_get_user_context (gimp),
-                                          NULL,
-                                          uri,
-                                          &status, &error);
-
-          if (! image && status != GIMP_PDB_CANCEL)
-            {
-              gchar *filename = file_utils_uri_to_utf8_filename (uri);
-
-              g_message (_("Opening '%s' failed: %s"),
-                         filename, error->message);
-              g_clear_error (&error);
-
-              g_free (filename);
-            }
-
-          g_free (uri);
+          success = TRUE;
         }
-      else
+      else if (status != GIMP_PDB_CANCEL)
         {
-          g_printerr ("conversion filename -> uri failed: %s\n",
-                      error->message);
+          gchar *filename = file_utils_uri_to_utf8_filename (uri);
+
+          g_message (_("Opening '%s' failed: %s"), filename, error->message);
           g_clear_error (&error);
+
+          g_free (filename);
         }
+
+      g_free (uri);
     }
+  else
+    {
+      g_printerr ("conversion filename -> uri failed: %s\n",
+                  error->message);
+      g_clear_error (&error);
+    }
+
+  return success;
 }
 
 
 /*  private functions  */
-
 
 static void
 file_open_sanitize_image (GimpImage *image)
