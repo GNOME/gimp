@@ -1,5 +1,11 @@
 2007-03-27  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdbusservice.[ch]
+	* app/widgets/dbus-service.xml: added a boolean return value to
+	the D-Bus Open method.
+
+2007-03-27  Sven Neumann  <sven@gimp.org>
+
 	* app/file/file-open.[ch]: changed file_open_from_command_line()
 	to deal with a single filename only.
 

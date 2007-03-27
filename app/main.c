@@ -704,9 +704,13 @@ gimp_dbus_open (const gchar **filenames,
 
           for (i = 0, success = TRUE; filenames[i] && success; i++)
             {
+              gboolean retval;  /* ignored */
+
               success = dbus_g_proxy_call (proxy, "Open", &error,
                                            G_TYPE_STRING, filenames[i],
-                                           G_TYPE_INVALID, G_TYPE_INVALID);
+                                           G_TYPE_INVALID,
+                                           G_TYPE_BOOLEAN, &retval,
+                                           G_TYPE_INVALID);
             }
         }
       else
