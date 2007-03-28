@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-10 10:35+0000\n"
-"PO-Revision-Date: 2006-05-03 06:36+0600\n"
-"Last-Translator: Dorji Tashi <dorjee_doss@hotmail.com>\n"
+"POT-Creation-Date: 2007-01-05 03:36+0000\n"
+"PO-Revision-Date: 2007-03-27 16:31+0530\n"
+"Last-Translator: sonam pelden <sonaa_peldn@yahoo.com>\n"
 "Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -17,247 +17,158 @@ msgstr ""
 "X-Generator: KBabel 1.10.2\n"
 "Plural-Forms: nplurals=2;plural=(n!=1)\n"
 
-#: ../tips/gimp-tips.xml.in.h:1
+#: ../data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
 msgstr "</big>ཇི་ཨིན་ཡུ་ མ་ནུ་པ་ལེ་ཤན་ ལས་རིམ་ལུ་ བྱོན་པ་ལེགས་སོ་ཡོད!</big>"
 
-#: ../tips/gimp-tips.xml.in.h:2
-msgid ""
-"<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles "
-"viewing the mask directly."
-msgstr "<tt>གདམ་ལྡེ་</tt>-གདོང་ཁེབས་ལུ་ཐད་ཀར་སྦེ་བལྟ་བའི་ཐོག་ལས་ བང་རིམ་ཌའིི་ལོག་སོར་སྟོན་ནང་ལུ་ཡོན་མི་ བང་རིམ་གདོང་ཁེབས་ཀྱི་སྔོན་བལྟའི་གུར་ ཨེབ་གཏང་འབད།"
+#: ../data/tips/gimp-tips.xml.in.h:2
+msgid "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking with the eyedropper tool sets the background color instead of the foreground color."
+msgstr "<tt>Ctrl</tt>-གདོང་གཞིའི་ཚོས་གཞི་གི་ཚབ་ལུ་རྒྱབ་གཞི་ཚོས་གཞི་ལག་ལེན་འཐབ་ནི་ལུ་   བ་ཀེཊི་བཀང་བའི་ལག་ཆས་དང་ཅིག་ཁར་ཨེབ་གཏང་འབད།  ཆ་འདྲ་བ་འབད་ <tt>Ctrl</tt>- ཚོས་གཞི་འདེམས་བྱེད་ལག་ཆས་དང་ཅིག་ཁར་ཨེབ་གཏང་འབད་མི་དེ་གིས་  གདོང་གཞི་ཚོས་གཞིའི་ཚབ་ལུ་རྒྱབ་གཞི་ཚོས་གཞི་འདི་  གཞི་སྒྲིག་འབདཝ་ཨིན།"
 
-#: ../tips/gimp-tips.xml.in.h:3
-msgid ""
-"<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
-"the effect of the layer mask."
-msgstr "<tt>ཚད་འཛིན་</tt>-བང་རིམ་ཌའི་ལོག་སོར་བལྟ་ནང་ལུ་ཡོད་མི་ བང་རིམ་གདོང་ཁེབས་དེ་གི་ནུས་པ་སོར་སྟོན་འབད་མི་ བང་རིམ་གདོང་ཁེབས་ཀྱི་སྔོན་བལྟའི་གུར་ ཨེབ་གཏང་འབད།"
+#: ../data/tips/gimp-tips.xml.in.h:3
+msgid "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer mask's preview in the Layers dialog toggles viewing the mask directly."
+msgstr "<tt>Ctrl</tt>-བང་རིམ་ཌའི་ལོག་བང་རིམ་གདོང་ཁེབས་སྔོན་ལྟ་གུ་ཨེབ་གཏང་འབད་མི་དེ་གིས་  བང་རིམ་གདོང་ཁེབས་གྱི་ནུས་པ་འདི་སོར་སྟོན་འབདཝ་ཨིན། <tt>Alt</tt>- བང་རིམ་ཌའི་ལོག་ནང་བང་རིམ་གདོང་ཁེབས་སྔོན་ལྟ་གུ་ཨེབ་གཏང་འབད་མི་དེ་གིས་  གདོང་ཁེབས་ཐད་ཀར་དུ་མཐོང་མི་དེ་ལུ་སོར་སྟོན་འབདཝ་ཨིན།"
 
-#: ../tips/gimp-tips.xml.in.h:4
-msgid ""
-"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
-"color instead of the foreground color."
-msgstr "<tt>ཚད་འཛིན་</tt>-དེ་གིས་ གདོང་གཞི་དེ་མེན་པར་རྒྱབ་གཞི་དེ་ལག་ལེན་འཐབ་ཙཅུག་ནིའི་དོན་ལུ་ བ་ཀེཊི་ཕིལ་ ལག་ཆས་ཀྱི་ཐོག་ལས་ ཨེབ་གཏང་འབད།"
+#: ../data/tips/gimp-tips.xml.in.h:4
+msgid "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 degree angles."
+msgstr "<tt>ཚད་འཛིན་</tt>-བསྒྱིར་ནིའི་ལག་ཆས་དང་གཅིག་ཁར་འདྲུད་མི་དེ་གིས་ བསྒྱིར་ནི་དེ་ དབྱེ་རིམ་གྲུ་ཟུར་༡༥་ཚུན་དམ་འོང་། "
 
-#: ../tips/gimp-tips.xml.in.h:5
-msgid ""
-"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
-"degree angles."
-msgstr ""
-"<tt>ཚད་འཛིན་</tt>-བསྒྱིར་ནིའི་ལག་ཆས་དང་གཅིག་ཁར་འདྲུད་མི་དེ་གིས་ བསྒྱིར་ནི་དེ་ དབྱེ་རིམ་གྲུ་ཟུར་༡༥་ཚུན་དམ་འོང་།"
-" "
+#: ../data/tips/gimp-tips.xml.in.h:5
+msgid "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers but that one. <tt>Shift</tt>-click again to show all layers."
+msgstr "<tt>སོར་ལྡེ་</tt>བང་རིམ་ཆ་མཉམ་སྦ་བཞག་ནིའི་དོན་ལུ་ བང་རིམ་ཌའི་ལོག་ནང་གི་ མིག་ཏོ་ངོས་པར་གུར་ ཨེབ་གཏང་འབད་ དོ་འབདཝ་ད་ འ་ཕི་<tt>སོར་ལྡེ་</tt>-བང་རིམ་ཆ་མཉམ་སྟོན་ནིའི་དོན་ལུ་ ལོག་ཨེབ་གཏང་འབད།"
 
-#: ../tips/gimp-tips.xml.in.h:6
-msgid ""
-"<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
-"but that one. <tt>Shift</tt>-click again to show all layers."
-msgstr ""
-"<tt>སོར་ལྡེ་</tt>བང་རིམ་ཆ་མཉམ་སྦ་བཞག་ནིའི་དོན་ལུ་ བང་རིམ་ཌའི་ལོག་ནང་གི་ མིག་ཏོ་ངོས་པར་གུར་ ཨེབ་གཏང་འབད་ དོ་འབདཝ་ད་ འ་ཕི་"
-"<tt>སོར་ལྡེ་</tt>-བང་རིམ་ཆ་མཉམ་སྟོན་ནིའི་དོན་ལུ་ ལོག་ཨེབ་གཏང་འབད།"
-
-#: ../tips/gimp-tips.xml.in.h:7
-msgid ""
-"A floating selection must be anchored to a new layer or to the last active "
-"layer before doing other operations on the image. Click on the &quot;New "
-"Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
-"use the menus to do the same."
+#: ../data/tips/gimp-tips.xml.in.h:6
+msgid "A floating selection must be anchored to a new layer or to the last active layer before doing other operations on the image. Click on the &quot;New Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or use the menus to do the same."
 msgstr "འཕུར་ལྡིང་འབད་ཡོད་པའི་སེལ་འཐུ་དེ་ བང་རིམ་གསརཔ་ལུ་དང་  ཡང་ན་ གཟུགས་བརྙན་གུ་ལུ་བཀོལ་སྤྱོད་མ་འབད་བའི་ཧེ་མ་ མཇུག་མམ་གྱི་ཤུགས་ལྡན་བང་རིམ་ལུ་ ཨེན་ཀོར་འབད་དགོ &quot;གུར་ཨེབ་གཏང་འབད། བང་རིམ་གསརཔ་&quot; ཡང་ན་ &quot;དེ། ཨེན་ཀོར་འབད་ནི་བང་རིམ་&quot; བང་རིམ་ཚུ་གུ་ཌའི་ལོག་ནང་གི་ཨེབ་རྟ་ ཡང་ན་ ཅོག་གཅིགཔ་སྦེ་འབད་ནི་དོན་ལུ་ དཀར་ཆག་ལག་ལེན་འཐབ།"
 
-#: ../tips/gimp-tips.xml.in.h:8
-msgid ""
-"After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
-"dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
-"selecting a menu item, and pressing the desired key combination. If &quot;"
-"Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP."
-msgstr "ཁྱོད་ཀྱིས་&quot;ནུས་ཅན་ལྡེ་སྒྲོམ་མགྱོགས་ཐབས་&quot; དེ་ དགའ་གདམ་ནང་ལུ་ཤུགས་ཅན་བཟོ་ཚར་བའི་ཤུལ་ལས་ འགན་སྤྲོད་འབད་ཚུགས། དེ་ཡང་ དཀར་ཆག་ཡར་འབག་འོང་སྟེ་འབད་ནི་དང་ དཀར་ཆག་གི་རྣམ་གྲངས་སེལ་འཐུ་འབད་བའི་ཐོག་ལས་དང་ རེ་འདུན་ཅན་གྱི་མཉམ་མཐུད་ལྡེ་སྒྲོམ་ཨེབ་པའི་ཐོག་ལས་འབད་དགོཔ་ཨིན། &quot;ལྡེ་སྒྲོམ་མགྱོགས་ཐབས་སྲུང་བཞག་འབད་ནི་&quot;དེ་ལྕོགས་ཅན་བཟོ་ཚར་བ་ཅིན་ ཁྱོད་ཀྱིས་ཇི་ཨའི་ཨེམ་པི་དེ་ཕྱིར་ཐོན་འབད་བའི་སྐབས་ལུ་  ཀི་བཱའིན་ཌིང་ཚུ་ སྲུང་བཞག་འབདཝ་ཨིན།"
+#: ../data/tips/gimp-tips.xml.in.h:7
+msgid "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences dialog, you can reassign shortcut keys. Do so by bringing up the menu, selecting a menu item, and pressing the desired key combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when you exit GIMP. You should probably disable &quot;Dynamic Keyboard Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning shortcuts."
+msgstr "དགའ་གདམ་ཌའི་ལོག་ནང་  ཁྱོད་ཀྱིས་&quot;ནུས་ཅན་ལྡེ་སྒྲོམ་མགྱོགས་ཐབས་&quot; དེ་ ཤུགས་ཅན་བཟོ་ཚར་བའི་ཤུལ་ལས་  ཁྱོད་ཀྱིས་མགྱོགས་ཐབས་ལྡེ་མིག་ཚུ་འགན་སྤྲོད་འབད་ཚུགས།  དེ་ཡང་ དཀར་ཆག་ཡར་འབག་འོང་སྟེ་འབད་ནི་དང་ དཀར་ཆག་གི་རྣམ་གྲངས་སེལ་འཐུ་འབད་བའི་ཐོག་ལས་དང་ རེ་འདུན་ཅན་གྱི་མཉམ་མཐུད་ལྡེ་སྒྲོམ་ཨེབ་པའི་ཐོག་ལས་འབད་དགོཔ་ཨིན།  &quot;ལྡེ་སྒྲོམ་མགྱོགས་ཐབས་སྲུང་བཞག་འབད་ནི་&quot;དེ་ལྕོགས་ཅན་བཟོ་ཚར་བ་ཅིན་  ཁྱོད་ཀྱིས་ཇི་ཨའི་ཨེམ་པི་དེ་ཕྱིར་ཐོན་འབད་བའི་སྐབས་ལུ་  ཀི་བཱའིན་ཌིང་ཚུ་ སྲུང་བཞག་འབདཝ་ཨིན།  ཁྱོད་ཀྱིས་ ཤུལ་ལས་&quot; ནུས་ཅན་ལྡེ་སྒྲོམ་མགྱོགས་ཐབས་&quot; འདི་ལྕོགས་མེད་བཟོ་དགོ་  དེ་ཡང་  གློ་བུར་དུ་འགན་སྤྲོད་འབད་ནི་/ལོག་འགན་སྤྲོད་འབད་བའི་མགྱོགས་ཐབས་ཚུ་སྔོན་བཀག་འབད་ནི་ལུ་ཨིན།"
 
-#: ../tips/gimp-tips.xml.in.h:9
-msgid ""
-"Click and drag on a ruler to place a guide on an image. All dragged "
-"selections will snap to the guides. You can remove guides by dragging them "
-"off the image with the Move tool."
+#: ../data/tips/gimp-tips.xml.in.h:8
+msgid "Click and drag on a ruler to place a guide on an image. All dragged selections will snap to the guides. You can remove guides by dragging them off the image with the Move tool."
 msgstr "ལམ་སྟོན་པ་དེ་ གཟུགས་བརྙན་གུར་བཞག་ནིའི་དོན་ལུ་ ཐིག་ཤིང་གུར་ཨེབ་གཏང་འབད་དེ་འདྲུད། འདྲུད་མི་སེལ་འཐུ་ཆ་མཉམ་གྱི་ ལམ་སྟོན་པ་ལུ་པར་བཏབ་ཨིན། ཁྱོད་ཀྱིས་ ལམ་སྟོན་པ་ཚུ་ གཟུགས་བརྙན་གུ་ལས་སྤོ་བཤུད་ལག་ཆས་གཅིག་ཁར་ ཕྱི་ཁར་ལུ་ འདྲུད་པའི་ཐོག་ལས་ རྩ་བསྐྲད་གཏང་ཚུགས། "
 
-#: ../tips/gimp-tips.xml.in.h:10
-msgid ""
-"GIMP allows you to undo most changes to the image, so feel free to "
-"experiment."
+#: ../data/tips/gimp-tips.xml.in.h:9
+msgid "GIMP allows you to undo most changes to the image, so feel free to experiment."
 msgstr "ཇི་ཨའི་ཨེམ་པི་གིས་ བསྒྱུར་བཅོས་མང་ཤོས་རང་གཟུགས་བརྙན་ལུ་འབད་བཤོལ་བཞག་བཅུགཔ་ཨིན་ དེ་འབདཝ་ལས་ ཐེ་ཚོམ་ག་ནི་ཡང་མེད་པར་ བརྟག་དཔྱད་འབད།"
 
-#: ../tips/gimp-tips.xml.in.h:11
-msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
-"bz2</tt>, if you have bzip2 installed) to the filename and your image will "
-"be saved compressed. Of course loading compressed images works too."
+#: ../data/tips/gimp-tips.xml.in.h:10
+msgid "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image will be saved compressed. Of course loading compressed images works too."
 msgstr "ཇི་ཨའི་ཨེམ་པི་གིས་ ཇི་ཛིབ་ཨེབ་བཙུགས་དེ་ ཕ་ལའི་གུར་རྒྱབ་སྐྱོར་འབདཝ་ཨིན།<tt>.gz</tt>(ཡང་ན་ ཁྱོད་ཀྱིས་ བི་ཛིབ་༢་དེ་གཞི་བཙུགས་འབད་དེ་ཡོད་པ་ཅིན་ཡང་ན་  <tt>.gz</tt>)དེ་ ཡིག་སྣོད་མིང་ལུ་ཁ་སྐོང་རྐྱབས་དང་ ཁྱོད་ཀྱི་གཟུགས་བརྙན་དེ་ཨེབ་བཙུགས་སྦེ་སྲུང་བཞག་འབད་བཞག་འོང་། དེ་མ་ཚད་ཨེབ་བཙུགས་འབད་ཡོད་པའི་གཟུགས་བརྙན་ལཱ་གཡོག་ཚུ་ མངོན་གསལ་འབད་ནི་ཡང་ ངེས་བདེན་སྲུང་བཞག་འབད་ཚུགས།"
 
-#: ../tips/gimp-tips.xml.in.h:12
-msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
-"slides or filters, such that looking through them you see a composite of "
-"their contents."
+#: ../data/tips/gimp-tips.xml.in.h:11
+msgid "GIMP uses layers to let you organize your image. Think of them as a stack of slides or filters, such that looking through them you see a composite of their contents."
 msgstr "ཇི་ཨའི་ཨེམ་པི་གིས་ ཁྱོད་ཀྱིས་ཁྱོད་རའི་གཟུགས་བརྙན་འགོ་འདྲེན་འཐབ་བཅུག་ནིའི་དོན་ལུ་ བང་རིམ་ཚུ་ལག་ལེན་འཐབ་ཨིན། ཁྱོད་ཀྱིས་དེ་ཚུ་ བཤུད་བརྙན་གྱི་བརྩེགས་ཕུང་དང་ཡང་ན་ ཚགས་མ་སྦེ་མནོ་་མནོ་བསམ་བཏངདེ་ཚེ་བརྒྱུད་དེ་བལྟ་མི་དེ་གིས་ དེ་ཚུའི་ནང་དོན་གྱི་སྣ་སྡུད་ཅིག་མཐོང་ཚུགས།་ཏེ་ "
 
-#: ../tips/gimp-tips.xml.in.h:13
-msgid ""
-"If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
-"layer doesn't have an alpha-channel. You can add an alpha-channel using "
-"Layer-&gt;Transparency-&gt;Add Alpha Channel."
-msgstr "བང་རིམ་ཌའི་ལོག་ནང་གི་བང་རིམ་གྱི་མིང་དེ་ <b>རྒྱགས་པ་</b>,ནང་ལུ་བསྐྲམ་སྟོན་འབད་དེ་ཡོད་པ་ཅིན་ བང་རིམ་འདི་ལུ་ ཨཱལ་ཕ་རྒྱུ་ལམ་དེ་མེདཔ་ཨིན། ཁྱོད་ཀྱིས་ བང་རིམ་-&gt;དྭངས་གསལ་ཅན་-&gt;དེ་ལག་ལེན་འཐབ་པའི་ཐོག་ལས་ ཨཱལ་ཕ་རྒྱུ་ལམ་དེ་ ཁ་སྐོང་རྐྱབ་ཚུགས། ཨཱལ་ཕ་རྒྱུ་་ལམ་ཁ་སྐོང་རྐྱབས།"
+#: ../data/tips/gimp-tips.xml.in.h:12
+msgid "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this layer doesn't have an alpha-channel. You can add an alpha-channel using Layer→Transparency→Add Alpha Channel."
+msgstr "བང་རིམ་ཌའི་ལོག་ནང་གི་བང་རིམ་གྱི་མིང་དེ་ <b>རྒྱགས་པ་</b>,ནང་ལུ་བསྐྲམ་སྟོན་འབད་དེ་ཡོད་པ་ཅིན་ བང་རིམ་འདི་ལུ་ ཨཱལ་ཕ་རྒྱུ་ལམ་དེ་མེདཔ་ཨིན། ཁྱོད་ཀྱིས་ བང་རིམ་→དྭངས་གསལ་ཅན་→དེ་ལག་ལེན་འཐབ་པའི་ཐོག་ལས་ ཨཱལ་ཕ་རྒྱུ་ལམ་དེ་ ཁ་སྐོང་རྐྱབ་ཚུགས། ཨཱལ་ཕ་རྒྱུ་་ལམ་ཁ་སྐོང་རྐྱབས།"
 
-#: ../tips/gimp-tips.xml.in.h:14
-msgid ""
-"If some of your scanned photos do not look colorful enough, you can easily "
-"improve their tonal range with the &quot;Auto&quot; button in the Levels "
-"tool (Layer-&gt;Colors-&gt;Levels). If there are any color casts, you can "
-"correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
-msgstr "ཁྱོད་ཀྱིས་ཞིབ་ལྟ་འབད་ཚར་མི་པར་ཚུ་ ཚོས་གཞི་དང་ལྡནམ་སྦེ་མ་མཐོང་པ་ཅིན་ ཁྱོད་ཀྱིས་ དེ་ཚུ་གི་ཊོ་ནལ་ཁྱབ་ཚད་ཚུ་ &quot;Auto&quot;གནས་རིམ་ནང་གི་ལག་ཆས་ཚུ་གི་ཐོག་ལས་་ལེགས་བཅོས་བཏང་ཚུགས་ (བང་རིམ་-&gt;ཚོས་གཞི་-&gt;གནས་རིམ་ཚུ་) དེ་ནང་ལུ་ཚོས་གཞི་གི་ཁྱད་པའ་ཡོད་པ་ཅིན་ ཁྱོད་ཀྱིས་ གུག་གུག་པའི་ལག་ཆས་ཀྱི་ཐོག་ལས་ ནོར་བཅོས་འབད་ཚུགས།(Layer-&gt;Colors-&gt;Curves)."
+#: ../data/tips/gimp-tips.xml.in.h:13
+msgid "If some of your scanned photos do not look colorful enough, you can easily improve their tonal range with the &quot;Auto&quot; button in the Levels tool (Colors→Levels). If there are any color casts, you can correct them with the Curves tool (Colors→Curves)."
+msgstr "ཁྱོད་ཀྱིས་ཞིབ་ལྟ་འབད་ཚར་མི་པར་ཚུ་ ཚོས་གཞི་དང་ལྡནམ་སྦེ་མ་མཐོང་པ་ཅིན་ ཁྱོད་ཀྱིས་ དེ་ཚུ་གི་ཊོ་ནལ་ཁྱབ་ཚད་ཚུ་ &quot;Auto&quot;གནས་རིམ་ནང་གི་ལག་ཆས་ཚུ་གི་ཐོག་ལས་་ལེགས་བཅོས་བཏང་ཚུགས་ (ཚོས་གཞི་→གནས་རིམ་→ཚུ་) དེ་ནང་ལུ་ཚོས་གཞི་གི་ཁྱད་པར་ཡོད་པ་ཅིན་ ཁྱོད་ཀྱིས་ གུག་གུག་པའི་ལག་ཆས་ཀྱི་ཐོག་ལས་ ནོར་བཅོས་འབད་ཚུགས། (ཚོས་གཞི་ཚུ་→གུག་གུགཔ་)"
 
-#: ../tips/gimp-tips.xml.in.h:15
-msgid ""
-"If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
-"with their current settings. You can use the Paintbrush in gradient mode or "
-"even the Eraser or the Smudge tool."
-msgstr "ཁྱོད་ཀྱིས་འགྲུལ་ལམ་ཅིག་སིཊོཀ་འབད་བ་ཅིན་(ཞུན་དག་-&gt;འགྲུལ་ལམ་སི་ཊོག་འབད་) ཚོན་གཏང་ནིའིལེ་ཆས་"
+#: ../data/tips/gimp-tips.xml.in.h:14
+msgid "If you stroke a path (Edit→Stroke Path), the paint tools can be used with their current settings. You can use the Paintbrush in gradient mode or even the Eraser or the Smudge tool."
+msgstr "ཁྱོད་ཀྱིས་འགྲུལ་ལམ་ཅིག་སིཊོཀ་འབད་བ་ཅིན་(ཞུན་དག་→འགྲུལ་ལམ་སི་ཊོག་འབད་) ཚོན་གཏང་ནིའི་ལག་ཆས་ཚུ་  དེ་ཚུའི་ད་ལྟོའི་སྒྲིག་སྟངས་ཚུ་དང་ཅིག་ཁར་ལག་ལེན་འཐབ་བཏུབ།  ཁྱོད་ཀྱིས་ཚོན་གཏང་པྱིར་འདི་སྟེགས་རིས་ཐབས་ལམ་ནང་ལུ་  ཡང་ན་  གསད་ནི་ཡང་ན་རབ་རིབ་ལག་ཆས་ནང་ལག་ལེན་འཐབ་བཏུབ།"
 
-#: ../tips/gimp-tips.xml.in.h:16
-msgid ""
-"If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
-"in an image window to hide or show the toolbox and other dialogs."
-msgstr "ཁྱོད་ཀྱི་གསལ་གཞི་དེ་གནམ་མེད་ས་མེད་ཟིང་ཆ་ཅན་ཅིག་ཨིན་པ་ཅིན་ ལག་ཆས་སྒྲོམ་དང་གཞན་མི་ཌའི་ལོག་ཚུ་སྦ་བཞག་ནི་དང་ ཡང་ན་ སྟོན་ནིའི་དོན་ལུ་ ཁྱོད་ཀྱིས་གཟུགས་བརྙན་སྒོ་སྒྲིག་ནང་གི་<tt>Tab</tt>དེ་ཚར་ལེ་ཤ་ཨེབ་དགོ"
+#: ../data/tips/gimp-tips.xml.in.h:15
+msgid "If your screen is too cluttered, you can press <tt>Tab</tt> in an image window to toggle the visibility of the toolbox and other dialogs."
+msgstr "ཁྱོད་ཀྱི་གསལ་གཞི་དེ་གནམ་མེད་ས་མེད་ཟིང་ཆ་ཅན་ཅིག་ཨིན་པ་ཅིན་ ལག་ཆས་སྒྲོམ་དང་གཞན་མི་ཌའི་ལོག་ཚུ་སོར་སྟོན་འབད་ནི་ལུ་  ཁྱོད་ཀྱིས་གཟུགས་བརྙན་སྒོ་སྒྲིག་ནང་གི་<tt>མཆོང་ལྡེ་</tt>འདི་ཨེབ་གཏང་།"
 
-#: ../tips/gimp-tips.xml.in.h:17
-msgid ""
-"Most plug-ins work on the current layer of the current image. In some cases, "
-"you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
-"plug-in to work on the whole image."
-msgstr "པ་ལག་ཨིནསི་མང་ཤོས་རང་ ད་ལྟོའི་གཟུགས་བརྙན་གྱི་བང་རིམ་གུར་ལཱ་འབདག་བཏུབ་ཨིན། གནད་དོན་ལ་ལུ་ཅིག་ནང་ལུ་ པ་ལག་ཨིན་དེ་གཟུགས་བརྙན་ཧྲིལ་བུམ་གུར་ལཱ་འབད་དགོ་པ་ཅིན་ ཁྱོད་ཀྱིས་བང་རིམ་ཚུ་ཆ་མཉམ་མཉམ་བསྡོམས་འབད་དགོ(Image-&gt;Flatten Image) "
+#: ../data/tips/gimp-tips.xml.in.h:16
+msgid "Most plug-ins work on the current layer of the current image. In some cases, you will have to merge all layers (Image→Flatten Image) if you want the plug-in to work on the whole image."
+msgstr "པ་ལག་ཨིནསི་མང་ཤོས་རང་ ད་ལྟོའི་གཟུགས་བརྙན་གྱི་བང་རིམ་གུར་ལཱ་འབདག་བཏུབ་ཨིན། གནད་དོན་ལ་ལུ་ཅིག་ནང་ལུ་ པ་ལག་ཨིན་དེ་གཟུགས་བརྙན་ཧྲིལ་བུམ་གུར་ལཱ་འབད་དགོ་པ་ཅིན་ ཁྱོད་ཀྱིས་བང་རིམ་ཚུ་ཆ་མཉམ་མཉམ་བསྡོམས་འབད་དགོ(གཟུགས་བརྙན་→གཟུགས་བརྙན་ལེབ་ཏེམ་བཟོ་) "
 
-#: ../tips/gimp-tips.xml.in.h:18
-msgid ""
-"Not all effects can be applied to all kinds of images. This is indicated by "
-"a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layer-&gt;Transparency-&gt;Add "
-"Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
-msgstr "ནུས་པ་ཚུ་ཆ་མཉམ་ གཟུགས་བརྙན་དབྱེ་ཁག་ཆ་མཆམ་ལུ་འཇུག་སྤྱོད་འབད་མི་བཏུབ། འདི་ཡང་ grayed-out དཀར་ཆག-བཙུགས་ ཀྱིས་བརྡ་སྟོནམ་ཨིན། ཁྱོད་ཀྱིས་གཟུགས་བརྙན་ཐབས་ལམ་དེ་ ཨཱར་བི་ཇི་ལུ་ བསྒྱུར་བཅོས་འབད་དགོཔ་འོང་། (གཟུགས་བརྙན་-&gt;ཐབས་ལམ་-&gt;ཨཱར་བི་ཇི་),ཨཱལ་ཕ་རྒྱུ་ལམ་ཁ་སྐོང་རྐྱབས་(བང་རིམ་-&gt;དྭངས་གསལ་-&gt;ཨཱལ་ཕ་རྒྱ྄་ལམ་ཁ་སྐོང་རྐྱབས་) ཡང་ན་དེ་ལེབ་ཏེམ་བཟོ་(གཟུགས་བརྙན་-&gt;གཟུགས་བརྙན་ལེབ་ཏེམ་བཟོ)."
+#: ../data/tips/gimp-tips.xml.in.h:17
+msgid "Not all effects can be applied to all kinds of images. This is indicated by a grayed-out menu-entry. You may need to change the image mode to RGB (Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha Channel) or flatten it (Image→Flatten Image)."
+msgstr "ནུས་པ་ཚུ་ཆ་མཉམ་ གཟུགས་བརྙན་དབྱེ་ཁག་ཆ་མཆམ་ལུ་འཇུག་སྤྱོད་འབད་མི་བཏུབ། འདི་ཡང་ grayed-out དཀར་ཆག-ཐོ་བཀོད་ཀྱིས་བརྡ་སྟོནམ་ཨིན།  ཁྱོད་ཀྱིས་གཟུགས་བརྙན་ཐབས་ལམ་དེ་ ཨཱར་བི་ཇི་ལུ་ བསྒྱུར་བཅོས་འབད་དགོཔ་འོང་། (གཟུགས་བརྙན་→ཐབས་ལམ་→ཨཱར་ཇི་བི་),ཨཱལ་ཕ་རྒྱུ་ལམ་ཁ་སྐོང་རྐྱབས་(བང་རིམ་→དྭངས་གསལ་→ཨཱལ་ཕ་རྒྱུ་ལམ་ཁ་སྐོང་རྐྱབས་) ཡང་ན་དེ་ལེབ་ཏེམ་བཟོ་(གཟུགས་བརྙན་→གཟུགས་བརྙན་ལེབ་ཏེམ་བཟོ)"
 
-#: ../tips/gimp-tips.xml.in.h:19
-msgid ""
-"Pressing and holding the <tt>Shift</tt> key before making a selection allows "
-"you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
-"tt> before making a selection subtracts from the current one."
+#: ../data/tips/gimp-tips.xml.in.h:18
+msgid "Pressing and holding the <tt>Shift</tt> key before making a selection allows you to add to the current selection instead of replacing it. Using <tt>Ctrl</tt> before making a selection subtracts from the current one."
 msgstr "ལྡེ་མིག་<tt>སོར་ལྡེ་</tt>དེ་ སེལ་འཐུ་མ་འབད་བའི་ཧེ་མ་ ཨེབ་ནི་དང་ འཆང་མི་དེ་གིས་ ཚབ་བཙུགས་ནི་གི་ཚབ་ལུ་ ད་ལྟོའི་སེལ་འཐུ་ལུ་ཁ་སྐོང་འབད་བཅུགཔ་ཨིན།སེལ་འཐུ་མ་འབད་བའི་ཧེ་མ་<tt>ཚད་འཛིན་</tt>དེལག་ལེན་འཐབ་མི་དེ་གིས་  ད་ལྟོ་གི་ནང་ལས་ཕབ་ཨིན།"
 
-#: ../tips/gimp-tips.xml.in.h:20
-msgid ""
-"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
-"ellipse select. To place a circle precisely, drag horizontal and vertical "
-"guides tangent to the circle you want to select, place your cursor at the "
-"intersection of the guides, and the resulting selection will just touch the "
-"guides."
+#: ../data/tips/gimp-tips.xml.in.h:19
+msgid "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an ellipse select. To place a circle precisely, drag horizontal and vertical guides tangent to the circle you want to select, place your cursor at the intersection of the guides, and the resulting selection will just touch the guides."
 msgstr "དབྱིབས་སྒོར་ཐིག་ཅན་དབྱིབས་སེལ་འཐུ་དེ་གསར་བསྐྲུན་འབད་ནི་དོན་ལུ་ སྒོང་དབྱིབས་སེལ་འཐུ་འབད་བའི་སྐབས་ལུ་ <tt>དེ་འཆང་</tt>སོར་གནང་། སྒོར་ཐིག་ཀྲིག་ཀྲིག་འབད་བཀལ་ནིའི་དོན་ལུ་ ཁྱོད་ཀྱིས་སེལ་འཐུ་སེལ་འཐུ་འབད་དགོ་མནོ་མི་སྒོར་ཐིག་དེ་ལུ་ ཐད་སྙོམས་དང་ཀེར་ཕྲེང་སྦེ་ཡོད་མི་ ལམ་སྟོན་ཊེན་ཇེནཊི་དོ་འདྲུད། ཁྱོད་ཀྱི་འོད་རྟགས་དེ་ལམ་སྟོན་པའི་འཛོམས་ས་ལུ་བཞག་ནི་དང་ འདི་ནང་ལས་གྲུབ་འབྲས་བྱིང་མི་སེལ་འཐུ་དེ་གིས་ ལམ་སྟོན་པ་ལུ་རེགཔ་ཨིན།"
 
-#: ../tips/gimp-tips.xml.in.h:21
-msgid ""
-"When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
-"click will draw a straight line from your last drawing point to your current "
-"cursor position. If you also press <tt>Ctrl</tt>, the line will be "
-"constrained to 15 degree angles."
-msgstr "པར་འབྲི་ནིའི་ལག་ཆས་ལག་ལེན་འཐབ་པའི་སྐབས་སུ་ (ཚོན་བཏང་ནིའི་པྱིར་,རླུང་པྱིར་, ཡང་ན་ ཞ་མྱུག),<tt>སོར་ལྡེ་</tt>-ཨེབ་གཏང་འབད་མི་དེ་གིས་ ཁྱོད་ཀྱི་མཐའ་མཇུག་ལུ་འབྲི་མི་ཡིག་ཚད་ལས་ ཁྱོད་རའི་ད་ལྟོའི་འོད་རྟགས་གནས་ས་ཚུན་ལུ་ གྲལ་ཐིག་ཕྲང་ཏང་ཏ་ཅིག་འབྲི་འོང་། དོ་རུང་ཁྱོད་ཀྱིས་<tt>Ctrl</tt>,ཨེབ་མི་དེ་གིས་ གྲལ་ཐིག་དེ་དབྱེ་རིམ་ཟུར་ཁུག་༡༥་ཚུན་ལུ་དམ་བཞག་འོང་།"
-
-#: ../tips/gimp-tips.xml.in.h:22
-msgid ""
-"When you save an image to work on it again later, try using XCF, GIMP's "
-"native file format (use the file extension <tt>.xcf</tt>). This preserves "
-"the layers and every aspect of your work-in-progress. Once a project is "
-"completed, you can save it as JPEG, PNG, GIF, ..."
+#: ../data/tips/gimp-tips.xml.in.h:20
+msgid "When you save an image to work on it again later, try using XCF, GIMP's native file format (use the file extension <tt>.xcf</tt>). This preserves the layers and every aspect of your work-in-progress. Once a project is completed, you can save it as JPEG, PNG, GIF, ..."
 msgstr "ཁྱོད་ཀྱིས་གཟུགས་བརྙན་དེ་ཤུལ་ལས་ཁོ་ར་ལུ་ལོག་ལཱ་འབད་བཏུབ་མི་སྲུང་བཞག་འབདཝ་སྐབས་ལུ་ ཨེགསི་སི་ཨེཕ་དང་ ཇི་ཨའི་ཨེམ་པི་གི་ནེ་ཊིབ་ཡིག་སྣོད་རྩ་སྒྲིག་དེ་ལག་ེན་འཐབ་པའི་ཐོག་ལས་འབད་རྩོལ་བསྐྱེད་(ཡིག་སྣོད་རྒྱ་བསྐྱེད་ལག་ལེན་འཐབ་<tt>.xcf</tt>).འདི་གིས་ཁྱོད་ཀྱི་བང་རིམ་དང་ ལཱ་གི་རྣམ་པ་ཡར་འཕེལ་བཏང་སྟེ་བཞག་ནི་ཚུ་ཉམས་སྲུང་འབདཝ་ཨིན། ལས་འགུལ་དེ་ཚར་ཅིག་མཇུག་བསྡུ་ཞིནམ་ལས་ ཁྱོད་ཀྱིས་དེ་ ཇེ་པི་ཨི་ཇི་ པི་ཨེན་ཀེ་ ཇི་ཨའི་ཨེཕ་སྦེ་སྲུང་བཞག་འབད་ཚུགས།"
 
-#: ../tips/gimp-tips.xml.in.h:23
-msgid ""
-"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
-"the window move, your window manager uses the <tt>Alt</tt> key already. Try "
-"pressing <tt>Shift</tt> at the same time."
-msgstr "ཁྱོད་ཀྱིས་<tt>གདམ་ལྡེ</tt>-འདྲུད་ དེ་ལག་ལེན་འཐབ་པའི་ཐོག་ལས་ སེལ་འཐུ་དེ་བདེ་སྒྲིག་འབད་ནི་དང་ ཡང་ན སྤོ་བཤུད་འབད་ནི་ཚུགས། འདི་གིས་ཁྱོད་ཀྱི་སྒོ་སྒྲིག་སྤོ་བཤུད་འབད་བཅུག་པ་ཅིན་ ཁྱོད་ཀྱི་སྒོ་སྒྲིག་འཛིན་སྐྱོང་པ་དེ་གིས་ <tt>གདམ་ལྡེ་</tt>ཧེ་མ་ལས་རང་ལྡེ་མིག་ལག་ལེན་འཐབ་ཨིན། ཚར་གཅིག་ལུ་རང་<tt>ཨེབ་ནི་དང་</tt>སོར་ནིལུ་འབད་རྩོལ་བསྐྱེད།"
+#: ../data/tips/gimp-tips.xml.in.h:21
+msgid "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes the window move, your window manager uses the <tt>Alt</tt> key already."
+msgstr "ཁྱོད་ཀྱིས་<tt>གདམ་ལྡེ</tt>-འདྲུད་ དེ་ལག་ལེན་འཐབ་པའི་ཐོག་ལས་ སེལ་འཐུ་དེ་བདེ་སྒྲིག་འབད་ནི་དང་ ཡང་ན སྤོ་བཤུད་འབད་ནི་ཚུགས། འདི་གིས་ཁྱོད་ཀྱི་སྒོ་སྒྲིག་སྤོ་བཤུད་འབད་བཅུག་པ་ཅིན་ ཁྱོད་ཀྱི་སྒོ་སྒྲིག་འཛིན་སྐྱོང་པ་དེ་གིས་ <tt>གདམ་ལྡེ་</tt>ཧེ་མ་ལས་རང་ལྡེ་མིག་ལག་ལེན་འཐབ་ཨིན། "
 
-#: ../tips/gimp-tips.xml.in.h:24
-msgid ""
-"You can adjust the selection range for fuzzy select by clicking and dragging "
-"left and right."
-msgstr "ཁྱོད་ཀྱིས་ཕུ་ཛི་སེལ་འཐུའི་དོན་ལུ་ གཡོན་དང་གནས་ལུ་ཨེབ་གཏང་འབད་དེ་དང་ འདྲུད་པའི་ཐོག་ལས་ སེལ་འཐུ་དེ་བདེ་སྒྲིག་འབད་ཚུགས།"
-
-#: ../tips/gimp-tips.xml.in.h:25
-msgid ""
-"You can create and edit complex selections using the Path tool. The Paths "
-"dialog allows you to work on multiple paths and to convert them to "
-"selections."
+#: ../data/tips/gimp-tips.xml.in.h:22
+msgid "You can create and edit complex selections using the Path tool. The Paths dialog allows you to work on multiple paths and to convert them to selections."
 msgstr "ཁྱོད་ཀྱིས་འགྲུལ་ལམ་ལག་ཆས་ལག་ལེན་འཐབ་པའི་ཐོག་ལས གོ་བཀའ་བའི་སེལ་འཐུ་ཚུ་ གསར་བསྐྲུན་འབད་ནི་དང་ ཞུན་དག་འབད་ཚུགས། འགྲུལ་ལམ་ཚུ་ཌའི་ལོག་གིས་ ཁྱོད་ལམ་སྣ་མང་གུར་ལཱ་འབད་ནི་དང་ དེ་ཚུ་སེལ་འཐུ་ལུ་གཞི་བསྒྱུར་འབད་བཅུགཔ་ཨིན།ུ་"
 
-#: ../tips/gimp-tips.xml.in.h:26
-msgid ""
-"You can drag a layer from the Layers dialog and drop it onto the toolbox. "
-"This will create a new image containing only that layer."
+#: ../data/tips/gimp-tips.xml.in.h:23
+msgid "You can drag a layer from the Layers dialog and drop it onto the toolbox. This will create a new image containing only that layer."
 msgstr "ཁྱོད་ཀྱིས་བང་རིམ་དེ་ བང་རིམ་ཚུ་གི་དའི་ལོག་དེ་ནང་ལས་འདྲུད་དེ་ འ་ནི་དེ་ལག་ཆས་སྒྲོམ་ནང་ལུ་སར་འཇོག་འབད་ཚུགས། འདི་གིས་འ་ཕི་བང་རིམ་རྐྱངམ་ཅིག་ཡོད་མི་གཟུགས་བརྙན་གསརཔ་ཅིག་གསར་བསྐྲུན་འབད་འོང་།"
 
-#: ../tips/gimp-tips.xml.in.h:27
-msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
-"from the toolbox or from a color palette and dropping it into an image will "
-"fill the current image or selection with that color."
-msgstr "ཁྱོད་ཀྱིས་ ཇི་ཨའི་ཨེམ་པི་ནང་ལུ་ ལེ་ཤ་ཅིག་རང་འདྲུད་དེ་ སར་འཇོག་འབད་ཚུགས། དཔེ་འབད་བ་ཅིན་ ཚོས་གཞི་ཅིག་ ལག་ཆས་སྒྲོམ་ནང་ལས་དང་ ཡང་ན་ ཚོས་གཞི་པེ་ལིཊི་ནང་ལས་ འདྲུད་དེ་ གཟུགས་བརྙན་ནང་ལུ་ སར་འཇོག་འབད་མི་དེ་གིས་ ད་ལྟོའི་གཟུགས་བརྙན་ ཡང་ན་ སེལ་འཐུ་དེ་ཚོས་གཞི་དང་གཅིག་ཁར་བཀང་འོང་།"
+#: ../data/tips/gimp-tips.xml.in.h:24
+msgid "You can drag and drop many things in GIMP. For example, dragging a color from the toolbox or from a color palette and dropping it into an image will fill the current selection with that color."
+msgstr "ཁྱོད་ཀྱིས་ ཇི་ཨའི་ཨེམ་པི་ནང་ལུ་ ལེ་ཤ་ཅིག་རང་འདྲུད་དེ་ སར་འཇོག་འབད་ཚུགས། དཔེ་འབད་བ་ཅིན་ ཚོས་གཞི་ཅིག་ ལག་ཆས་སྒྲོམ་ནང་ལས་དང་ ཡང་ན་ ཚོས་གཞི་པེ་ལིཊི་ནང་ལས་ འདྲུད་དེ་ གཟུགས་བརྙན་ནང་ལུ་སར་འཇོག་འབད་མི་དེ་གིས་ ད་ལྟོའི་གཟུགས་བརྙན་ ཡང་ན་ སེལ་འཐུ་དེ་ཚོས་གཞི་དང་གཅིག་ཁར་བཀང་འོང་།"
 
-#: ../tips/gimp-tips.xml.in.h:28
-msgid ""
-"You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
-"strokes the edge of your current selection. More complex shapes can be drawn "
-"using the Path tool or with Filters-&gt;Render-&gt;Gfig."
-msgstr "ཁྱོད་ཀྱིས་གྲུ་བཞི་ཡང་ན་ སྒོར་ཐིག་འཇམ་སམ་ཚུ་ ཞུན་དག་-&gt;སི་ཊོག་ སེལ་འཐུ་ དེ་ལག་ལེན་འཐབ་པའི་ཐོག་ལས་འབྲི་ཚུགས། གོ་བཀའ་བའི་དབྱིབས་ཧེང་བཀལ་ འགྲུལ་ལམ་ལག་ཆས་ ཡང་ན་.ཚགས་མ་-&gt;ལྷག་སྟོན་འབད་ནི་-&gtཇི་ཕིག་.དེ་གི་ཐོག་ལསའབྲི་ཚུགས།"
+#: ../data/tips/gimp-tips.xml.in.h:25
+msgid "You can draw simple squares or circles using Edit→Stroke Selection. It strokes the edge of your current selection. More complex shapes can be drawn using the Path tool or with Filters→Render→Gfig."
+msgstr "ཁྱོད་ཀྱིས་གྲུ་བཞི་ཡང་ན་ སྒོར་ཐིག་འཇམ་སམ་ཚུ་ ཞུན་དག་→སི་ཊོག་ སེལ་འཐུ་ དེ་ལག་ལེན་འཐབ་པའི་ཐོག་ལས་འབྲི་ཚུགས། གོ་བཀའ་བའི་དབྱིབས་ཧེང་བཀལ་ འགྲུལ་ལམ་ལག་ཆས་ ཡང་ན་  ཚགས་མ་→ལྷག་སྟོན་འབད་ནི་→ཇི་ཕིག་དེ་གི་ཐོག་ལསའབྲི་ཚུགས།"
 
-#: ../tips/gimp-tips.xml.in.h:29
-msgid ""
-"You can get context-sensitive help for most of the GIMP's features by "
-"pressing the F1 key at any time. This also works inside the menus."
+#: ../data/tips/gimp-tips.xml.in.h:26
+msgid "You can get context-sensitive help for most of the GIMP's features by pressing the F1 key at any time. This also works inside the menus."
 msgstr "དུས་ཚོད་ནམ་རང་འབད་རུང་ ཨེཕ་༡་ལྡེ་མིག་དེ་ཨེབ་པའི་ཐོག་ལས་ ཇི་ཨའི་ཨེམ་པི་གི་ཁྱད་རྣམ་ཚུ་མང་ཤོས་ཀྱི་དོན་ལུ་ ཁྱོད་ཀྱིས་ སྐབས་དོན་-ཚོར་ཅན་གྲོགས་རམ་འཐོབ་ཚུགས། འདི་གིས་དཀར་ཆག་ནང་ལུ་ཡང་ལཱ་འབད་བཏུབ་ཨིན།"
 
-#: ../tips/gimp-tips.xml.in.h:30
-msgid ""
-"You can perform many layer operations by right-clicking on the text label of "
-"a layer in the Layers dialog."
+#: ../data/tips/gimp-tips.xml.in.h:27
+msgid "You can perform many layer operations by right-clicking on the text label of a layer in the Layers dialog."
 msgstr "ཁྱོད་ཀྱིས་བང་རིམ་ཚུ་གི་ཌའི་ལོག་ནང་ལུ་ བང་རིམ་གྱི་ཚིག་ཡིག་ཁ་ཡིག་གུར་གཡས་ལུ་ ཨེབ་གཏང་འབད་བའི་ཐོག་ལས བང་རིམ་ལེ་ཤ་གི་བཀོལ་སྤྱོད་ཀྱི་ལཱ་འགན་འགྲུབ་ཚུགས།"
 
-#: ../tips/gimp-tips.xml.in.h:31
-msgid ""
-"You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
-"are making a selection in order to constrain it to a square or a circle, or "
-"to have it centered on its starting point."
-msgstr "གྲུ་བཞི་ཡང་ན་ སྒོར་ཐིག་ ཡང་ན་ འགོ་བཙུགས་གནས་ལུ་དབུས་སྒྲིག་འབད་བཞག་ནི་ལུ་དམ་ནིའི་དོན་ལུ་ སེལ་འཐུ་འབད་བའི་སྐབས་སུ་ ཁྱོད་ཀྱིས་<tt>སོར་ལྡེ་</tt> དང་ <tt>ཚད་འཛིན་</tt> སྡེ་མིག་དེ་  ཨེབ་ཡང་ན་འཛིན་གྲོལ་འབད་ཚགས།"
+#: ../data/tips/gimp-tips.xml.in.h:28
+msgid "You can save a selection to a channel (Select→Save to Channel) and then modify this channel with any paint tools. Using the buttons in the Channels dialog, you can toggle the visibility of this new channel or convert it to a selection."
+msgstr "ཁྱོད་ཀྱིས་སེལ་འཐུ་དེ་རྒྱུ་་ལམ་ལུ་སྲུང་བཞག་འབད་ཚུགས་(སེལ་འཐུ་→རྒྱུ་་ལམ་ལུ་སྲུང་བཞག་འབད་) དེ་ལས་ ཚོན་གཏང་ནིའི་ལག་ཆས་གང་རུང་ཅིག་གིས་ཐོག་ལས རྒྱ་ལམ་འདི་ལེགས་བཅོས་འབད། རྒྱུ་་ལམ་ཌའི་ལོག་ནང་གི་ཨེབ་རྟ་ལག་ལེན་འཐབ་མི་དེ་གིས་ ཁྱོད་ཀྱིས་རྒྱུ་ལམ་གསརཔ་འདི་གི་མཐོང་གསལ་སོར་སྟོན་འབད་ཚུགས་ཡང་ན་ སེལ་འཐུ་ལུ་གཞི་བསྒྱུར་འབད་ཚུགས།"
 
-#: ../tips/gimp-tips.xml.in.h:32
-msgid ""
-"You can save a selection to a channel (Select-&gt;Save to Channel) and then "
-"modify this channel with any paint tools. Using the buttons in the Channels "
-"dialog, you can toggle the visibility of this new channel or convert it to a "
-"selection."
-msgstr "ཁྱོད་ཀྱིས་སེལ་འཐུ་དེ་རྒྱུ་་ལམ་ལུ་སྲུང་བཞག་འབད་ཚུགས་(སེལ་འཐུ་-&gt;རྒྱུ་་ལམ་ལུ་སྲུང་བཞག་འབད་) དེ་ལས་ ཚོན་གཏང་ནིའི་ལག་ཆས་གང་རུང་ཅིག་གིས་ཐོག་ལས རྒྱ་ལམ་འདི་ལེགས་བཅོས་འབད། རྒྱུ་་ལམ་ཌའི་ལོག་ནང་གི་ཨེབ་རྟ་ལག་ལེན་འཐབ་མི་དེ་གིས་ ཁྱོད་ཀྱིས་རྒྱུ་ལམ་གསརཔ་འདི་གི་མཐོང་གསལ་སོར་སྟོན་འབད་ཚུགས་ཡང་ན་ སེལ་འཐུ་ལུ་གཞི་བསྒྱུར་འབད་ཚུགས།"
+#: ../data/tips/gimp-tips.xml.in.h:29
+msgid "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an image (if your window manager doesn't trap those keys...)."
+msgstr "ཁྱོད་ཀྱིས་ བང་རིམ་ཆ་མཉམ་བརྒྱུད་དེ་གཟུགས་བརྙན་ནང་ལུ་ བསྐྱར་འཁོར་འབད་ནིའི་དོན་ལུ་ <tt>གདམ་ལྡེ</tt>-<tt>མཆོང་ལྡེ་</tt>དེ་ལག་ལེན་འཐབ་ཚུགས་(ཁྱོད་རའི་སྒོ་སྒྲིག་འཛིན་སྐྱོང་པ་དེ་གིས་ ལྡེ་མིག་དེ་ཚུ་དམ་བཟུང་མ་འབད་བ་ཅིན་...)"
 
-#: ../tips/gimp-tips.xml.in.h:33
-msgid ""
-"You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
-"image (if your window manager doesn't trap those keys...)."
-msgstr "ཁྱོད་ཀྱིས་ བང་རིམ་ཆ་མཉམ་བརྒྱུད་དེ་གཟུགས་བརྙན་ནང་ལུ་ བསྐྱར་འཁོར་འབད་ནིའི་དོན་ལུ་ <tt>གདམ་ལྡེ</tt>-<tt>མཆོང་ལྡེ་</tt>དེ་ལག་ལེན་འཐབ་ཚུགས་(ཁྱོད་ཀྱིས་སྒོ་སྒྲིག་འཛིན་སྐྱོང་པ་གིས་ ལྡེ་མིག་དེ་ཚུ་དམ་བཟུང་མ་འབད་བ་ཅིན་་་་)"
+#: ../data/tips/gimp-tips.xml.in.h:30
+msgid "You can use the middle mouse button to pan around the image (or optionally hold <tt>Spacebar</tt> while you move the mouse.)"
+msgstr "གཟུགས་བརྙན་གྱི་མཐའ་སྐོར་ཏེ་པཱན་འབད་ནིའི་དོན་ལུ་  ཁྱོད་ཀྱིས་བར་ན་གི་མའུསུ་ཨེབ་རྟ་(ཡང་ན་གདམ་ཁ་ཅན་གྱི་ཐོག་ལས་ <tt>བར་སྟོང་ཕྲ་རིང་</tt> འཆང་ནི་དང་  དེ་ཡང་ཁྱོད་ཀྱིས་མཱའུསི་སྤོ་བཤུད་འབདཝ་ད་ཨིན་) དེ་ལག་ལེན་འཐབ།"
 
-#: ../tips/gimp-tips.xml.in.h:34
-msgid ""
-"You can use the middle mouse button to pan around the image, if it's larger "
-"than its display window."
-msgstr "གཟུགས་བརྙན་གྱི་མཐའ་སྐོར་ཏེ་པཱན་འབད་ནིའི་དོན་ལུ་ བཀྲམ་སྟོན་སྒོ་སྒྲིག་ལས་ཡང་འདི་སྦོམ་སུ་ཡོད་པ་ཅིན་ ཁྱོད་ཀྱིས་བར་ན་གི་མའུསུ་ཨེབ་རྟ་དེ་ལག་ལེན་འཐབ།"
-
-#: ../tips/gimp-tips.xml.in.h:35
-msgid ""
-"You can use the paint tools to change the selection. Click on the &quot;"
-"Quick Mask&quot; button at the bottom left of an image window. Change your "
-"selection by painting in the image and click on the button again to convert "
-"it back to a normal selection."
+#: ../data/tips/gimp-tips.xml.in.h:31
+msgid "You can use the paint tools to change the selection. Click on the &quot;Quick Mask&quot; button at the bottom left of an image window. Change your selection by painting in the image and click on the button again to convert it back to a normal selection."
 msgstr "ཁྱོད་ཀྱིས་སེལ་འཐུ་དེ་བསྒྱུར་བཅོས་འབད་ནིའི་དོན་ལུ་ ཚོན་གཏང་ནིའི་ལག་ཆས་ལག་ལེན་འཐབ།&quot;འཕྲལ་མགྱོགས་གདོང་ཁེབས་&quot;གཟུགས་བརྙན་སྒོ་སྒྲིག་གི་གཤམ་གྱི་གཡོན་ལུ་ཡོད་མི་ཨེབ་རྟ་ལུ་ ཨེབ་གཏང་འབད། ཁྱོད་ཀྱི་སེལ་འཐུ་དེ་ གཟུགས་བརྙན་ནང་ལུ་་ཚོན་གཏང་པའི་ཐོག་ལས་བསྒྱུར་བཅོས་འབད་ དེ་ལས་ པྱིར་གཏང་སེལ་འཐུ་ལུ་ལོག་གཞི་བསྒྱུར་འབད་ནིའི་དོན་ལུ་ ཨེབ་རྟ་ལུ་ལོག་ཨེབ་གཏང་འབད།"
+
+#~ msgid ""
+#~ "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog "
+#~ "toggles viewing the mask directly."
+#~ msgstr ""
+#~ "<tt>གདམ་ལྡེ་</tt>-གདོང་ཁེབས་ལུ་ཐད་ཀར་སྦེ་བལྟ་བའི་ཐོག་ལས་ བང་རིམ་ཌའིི་ལོག་སོར་སྟོན་ནང་ལུ་ཡོན་"
+#~ "མི་ བང་རིམ་གདོང་ཁེབས་ཀྱི་སྔོན་བལྟའི་གུར་ ཨེབ་གཏང་འབད།"
+#~ msgid ""
+#~ "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</"
+#~ "tt>-click will draw a straight line from your last drawing point to your "
+#~ "current cursor position. If you also press <tt>Ctrl</tt>, the line will "
+#~ "be constrained to 15 degree angles."
+#~ msgstr ""
+#~ "པར་འབྲི་ནིའི་ལག་ཆས་ལག་ལེན་འཐབ་པའི་སྐབས་སུ་ (ཚོན་བཏང་ནིའི་པྱིར་,རླུང་པྱིར་, ཡང་ན་ ཞ་མྱུག),"
+#~ "<tt>སོར་ལྡེ་</tt>-ཨེབ་གཏང་འབད་མི་དེ་གིས་ ཁྱོད་ཀྱི་མཐའ་མཇུག་ལུ་འབྲི་མི་ཡིག་ཚད་ལས་ ཁྱོད་རའི་ད་"
+#~ "ལྟོའི་འོད་རྟགས་གནས་ས་ཚུན་ལུ་ གྲལ་ཐིག་ཕྲང་ཏང་ཏ་ཅིག་འབྲི་འོང་། དོ་རུང་ཁྱོད་ཀྱིས་<tt>Ctrl</tt>,"
+#~ "ཨེབ་མི་དེ་གིས་ གྲལ་ཐིག་དེ་དབྱེ་རིམ་ཟུར་ཁུག་༡༥་ཚུན་ལུ་དམ་བཞག་འོང་།"
+#~ msgid ""
+#~ "You can adjust the selection range for fuzzy select by clicking and "
+#~ "dragging left and right."
+#~ msgstr ""
+#~ "ཁྱོད་ཀྱིས་ཕུ་ཛི་སེལ་འཐུའི་དོན་ལུ་ གཡོན་དང་གནས་ལུ་ཨེབ་གཏང་འབད་དེ་དང་ འདྲུད་པའི་ཐོག་ལས་ སེལ་འཐུ་"
+#~ "དེ་བདེ་སྒྲིག་འབད་ཚུགས།"
+#~ msgid ""
+#~ "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while "
+#~ "you are making a selection in order to constrain it to a square or a "
+#~ "circle, or to have it centered on its starting point."
+#~ msgstr ""
+#~ "གྲུ་བཞི་ཡང་ན་ སྒོར་ཐིག་ ཡང་ན་ འགོ་བཙུགས་གནས་ལུ་དབུས་སྒྲིག་འབད་བཞག་ནི་ལུ་དམ་ནིའི་དོན་ལུ་ སེལ་"
+#~ "འཐུ་འབད་བའི་སྐབས་སུ་ ཁྱོད་ཀྱིས་<tt>སོར་ལྡེ་</tt> དང་ <tt>ཚད་འཛིན་</tt> སྡེ་མིག་དེ་  ཨེབ་ཡང་"
+#~ "ན་འཛིན་གྲོལ་འབད་ཚགས།"
 
