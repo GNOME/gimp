@@ -108,7 +108,7 @@ sub layer_create_mask {
 
     $help = <<'HELP';
 This procedure creates a layer mask for the specified layer. Layer masks serve
-as an additional alpha channel for a layer. A number of ifferent types of
+as an additional alpha channel for a layer. A number of different types of
 masks are allowed for initialisation: completely white masks (which will
 leave the layer fully visible), completely black masks (which will give the
 layer complete transparency, the layer's already existing alpha channel
@@ -164,8 +164,7 @@ sub layer_add_mask {
 This procedure adds a layer mask to the specified layer. Layer masks serve as
 an additional alpha channel for a layer. This procedure will fail if a number
 of prerequisites aren't met. The layer cannot already have a layer mask. The
-specified mask must exist and have the same dimensions as the layer. Both the
-mask and the layer must have been created for use with the specified image.
+specified mask must exist and have the same dimensions as the layer. The layer must have been created for use with the specified image and the mask must have been created with the procedure 'gimp-layer-create-mask'.
 HELP
 
     &std_pdb_misc;

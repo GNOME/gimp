@@ -1,3 +1,8 @@
+2007-03-28 João S. O. Bueno Calligaris <gwidion@mpc.com.br>
+
+        * tools/pdbgen/pdb/layer.pdb: clarified documentation for
+	add_mask procedure; fixed typo in documentation for create_mask.
+
 2007-03-27  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdbusservice.[ch]
