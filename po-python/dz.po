@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp_script_fu.head.pot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-13 21:07+0200\n"
-"PO-Revision-Date: 2006-05-03 10:35-0500\n"
-"Last-Translator: sonam pelden\n"
+"POT-Creation-Date: 2007-03-09 03:35+0000\n"
+"PO-Revision-Date: 2007-03-27 15:37+0530\n"
+"Last-Translator: sonam pelden <sonaa_peldn@yahoo.com>\n"
 "Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -19,19 +19,302 @@ msgstr ""
 "X-Poedit-Country: Bhutan\n"
 "X-Poedit-SourceCharset: CHARSET\n"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+#: ../plug-ins/pygimp/gimpfu.py:335
+msgid "Missing exception information"
+msgstr "དམིགས་བསལ་བརྡ་དོན་བརླག་སྟོར་ཞུགས་ཡོདཔ་"
+
+#: ../plug-ins/pygimp/gimpfu.py:344
+#, python-format
+msgid "An error occured running %s"
+msgstr "%sགཡོག་བཀོལཝ་ད་ལུ་འཛོལ་བ་བྱུང་ཡོདཔ་"
+
+#: ../plug-ins/pygimp/gimpfu.py:355
+msgid "_More Information"
+msgstr "བརྡ་དོན་ཧེང་བཀལ། (_M)"
+
+#: ../plug-ins/pygimp/gimpfu.py:461
+#: ../plug-ins/pygimp/gimpfu.py:473
+#: ../plug-ins/pygimp/gimpfu.py:479
+msgid "No"
+msgstr "མེན་"
+
+#: ../plug-ins/pygimp/gimpfu.py:471
+#: ../plug-ins/pygimp/gimpfu.py:479
+msgid "Yes"
+msgstr "ཨིན་"
+
+#: ../plug-ins/pygimp/gimpfu.py:517
+#: ../plug-ins/pygimp/gimpui.py:222
+msgid "Python-Fu File Selection"
+msgstr "པ་ཡི་ཐཱོན་-ཕུ་ཡིག་སྣོད་སེལ་འཐུ་"
+
+#: ../plug-ins/pygimp/gimpfu.py:528
+msgid "Python-Fu Folder Selection"
+msgstr "པའི་ཐཱོན་-ཕུ་སྣོད་འཛིན་སེལ་འཐུ་"
+
+#: ../plug-ins/pygimp/gimpfu.py:618
+#, python-format
+msgid "Invalid input for '%s'"
+msgstr "'%s'གི་དོན་ལུ་ནུས་ཅན་མེད་པའི་ཨིན་པུཊི་"
+
+#: ../plug-ins/pygimp/gimpui.py:175
+msgid "Python-Fu Color Selection"
+msgstr "པའི་ཐཱོན་-ཕུ་ཚོས་གཞི་སེལ་འཐུ་"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+msgid "Saving as colored XHTML"
+msgstr "ཨེགསི་ཨེཆ་ཊི་ཨེམ་ཨེལ་ཚོས་གཞི་གཏང་ཡོདཔ་སྦེ་ སྲུང་དོ་"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
+msgid "Save as colored XHTML"
+msgstr "ཨེགསི་ཨེཆ་ཊི་ཨེམ་ཨེལ་ཚོས་གཞི་གཏང་ཡོདཔ་སྦེ་སྲུང་དོ་"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
+msgid "Colored XHTML"
+msgstr "ཚོས་གཞི་གཏང་པའི་ཨེགསི་ཨེཆ་ཊི་ཨེམ་ཨེལ་"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
+msgid "Character _source"
+msgstr "ཡིག་འབྲུའི་བྱུང་ཁུངས། (_s)"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
+msgid "Source code"
+msgstr "བྱུང་ཁུངས་ཨང་"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:194
+msgid "Text file"
+msgstr "ཚིག་ཡིག་ཡིག་སྣོད་"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+msgid "Entry box"
+msgstr "ཐོ་བཀོད་སྒྲོམ་"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+msgid "_File to read or characters to use"
+msgstr "ལྷག་ནིའི་དོན་ལུ་ཡིག་སྣོད་དང་ལག་ལེན་འཐབ་ནི་ལུ་ཡིག་འབྲུ་ཚུ། (_F)"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+msgid "Fo_nt size in pixels"
+msgstr "པིག་སེལསི་ནང་ཡིག་གཟུགས་ཀྱི་ཚད། (_n)"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+msgid "_Write a separate CSS file"
+msgstr "སི་ཨེསི་ཨེསི་ཡིག་སྣོད་སོ་སོ་གཅིག་འབྲི། (_W)"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
 msgstr "ཨིསི་ཀིརིཔིཊི་_ཕུ་མ་སྒྲོམ།"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
 msgid "_Browse..."
 msgstr "བརྡ་འཚོལ...(_B)"
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
-#, fuzzy
-msgid "Gimp-Python Console"
-msgstr "ཨིསི་ཀིརིཔིཊི་_ཕུ་མ་སྒྲོམ།"
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
+msgid "Python Procedure Browser"
+msgstr "པའི་ཐཱོན་བྱ་སྒོའི་ལམ་ལུགས་བརྡ་འཚོལ་པ་"
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
-msgid "Interactive Python Development"
-msgstr ""
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "འབྲི་ནིའི་དོན་ལུ་ '%s' འདི་ཁ་ཕྱེ་མ་ཚུགས: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "'%s' ལུ་འབྲི་མ་ཚུགས: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
+msgid "Save Python-Fu Console Output"
+msgstr "པའི་ཐཱོན་-ཕུ་མ་སྒྲོམ་ཨའུཊི་པུཊི་སྲུང་"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
+msgid "Interactive Gimp-Python interpreter"
+msgstr "ཕན་ཚུན་འབྲེལ་བའི་ཇིམ་-པའི་ཐཱོན་ཁ་བསྒྱུར་མི་"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
+msgid "_Console"
+msgstr "མ་སྒྲོམ། (_C)"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+msgid "Add a layer of fog"
+msgstr "ན་བུན་བང་རིམ་གཅིག་ཁ་སྐོང་བརྐྱབ་"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+msgid "_Fog..."
+msgstr "ན་བུན... (_F)"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+msgid "_Layer name"
+msgstr "བང་རིམ་གྱི་མིང་ (_L)"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+msgid "Clouds"
+msgstr "ས་སྨུག་"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:60
+msgid "_Fog color"
+msgstr "ན་བུན་ཚོས་གཞི། (_F)"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+msgid "_Turbulence"
+msgstr "དྲག་འགྱུར། (_T)"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+msgid "Op_acity"
+msgstr "དྭངས་སྒྲིབ། (_a)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
+msgid "Offset the colors in a palette"
+msgstr "པེ་ལེཊི་གཅིག་ནང་ཚོས་གཞི་ཚུ་བྱིནམ་ཨིན་"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
+msgid "_Offset Palette..."
+msgstr "པེ་ལེཊི་པར་ལེན... (_O)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+msgid "Palette"
+msgstr "པེ་ལེཊི་"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
+msgid "Off_set"
+msgstr "པར་ལེན། (_s)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
+msgid "Sort the colors in a palette"
+msgstr "པེ་ལེཊི་གཅིག་ནང་ཚོས་གཞི་འདི་དབྱེ་སེལ་འབད་"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
+msgid "_Sort Palette..."
+msgstr "པེ་ལེཊི་དབྱེ་སེལ་འབད... (_S)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+msgid "Color _model"
+msgstr "ཚོས་གཞི་དཔེ། (_m)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "RGB"
+msgstr "ཨར་ཇི་བི་"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+msgid "HSV"
+msgstr "ཨེཆ་ཨེསི་ཝི་"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+msgid "Channel to _sort"
+msgstr "དབྱེ་སེལ་འབད་ནི་ལུ་རྒྱུ་ལམ། (_s)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+msgid "Red or Hue"
+msgstr "དམརཔོ་ཡང་ན་ཚོན་མདངས་"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+msgid "Green or Saturation"
+msgstr "ལྗང་ཁུ་ཡང་ན་མཐའ་ཚད་"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+msgid "Blue or Value"
+msgstr "ཧོནམ་ཡང་ན་གནས་གོང་"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+msgid "_Ascending"
+msgstr "ཡར་འཛེགས། (_A)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "པེ་ལེཊི་ལས་ཚོས་གཞི་ལག་ལེན་འཐབ་སྟེ་  སྟེགས་རིས་ཡར་བསྐྱར་གཅིག་གསར་བསྐྲུན་འབད་"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
+msgid "Palette to _Repeating Gradient"
+msgstr "ཡང་བསྐྱར་སྟེགས་རིས་ལུ་པེ་ལེཊི། (_R)"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
+msgid "Create a gradient using colors from the palette"
+msgstr "པེ་ལེཊི་ལས་ཚོས་གཞི་ལག་ལེན་འཐབ་སྟེ་  སྟེགས་རིས་གཅིག་གསར་བསྐྲུན་འབད་"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
+msgid "Palette to _Gradient"
+msgstr "སྟེགས་རིས་ལུ་པེ་ལེཊི། (_G)"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
+msgid "Slice"
+msgstr "བགོ་བཤའ་"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr "དེའི་ལམ་སྟོན་པ་ལས་རྒྱུད་དེ་གཟུགས་བརྙན་ཅིག་  གཟུགས་བརྙན་གསར་བསྐྲུན་འབད་ནི་དང་  ཨེཆ་ཊི་ཨེམ་ཨེལ་ཐིག་ཁྲམ་ཕྲ་དུམ་ཚུ་བཏོག་ནི།"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
+msgid "_Slice..."
+msgstr "བགོ་བཤའ... (_S)"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:430
+msgid "Path for HTML export"
+msgstr "ཨེཆ་ཊི་ཨེམ་ཨེལ་ཕྱིར་འདྲེན་དོན་ལུ་འགྲུལ་ལམ་"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+msgid "Filename for export"
+msgstr "ཕྱིར་འདྲེན་དོན་ལུ་ཡིག་སྣོད་མིང་"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+msgid "Image name prefix"
+msgstr "གཟུགས་བརྙན་མིང་སྔོན་ཚིག་"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+msgid "Image format"
+msgstr "གཟུགས་བརྙན་རྩ་སྒྲིག་"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+msgid "Separate image folder"
+msgstr "གཟུགས་བརྙན་སྣོད་ཐོ་སོ་སོ་འཕྱལ་"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+msgid "Folder for image export"
+msgstr "གཟུགས་བརྙན་ཕྱིར་འདྲེན་གྱི་དོན་ལུ་ སྣོད་ཐོ་"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+msgid "Space between table elements"
+msgstr "ཐིག་ཁྲམ་ཆ་ཤས་ཚུ་གི་བར་ན་བར་སྟོང་"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+msgid "Javascript for onmouseover and clicked"
+msgstr "ཨོན་མཱའུསི་ཨོ་བར་དང་ཨེབ་གཏང་གི་དོན་ལུ་ཇ་བ་ཡིག་ཚུགས་"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+msgid "Skip animation for table caps"
+msgstr "ཐིག་ཁྲམ་ཀེཔ་ཚུ་གི་དོན་ལུ་བསྒུལ་བཟོ་གོམ་འགྱོ་"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+msgid "Add a drop shadow to a layer, and optionally bevel it"
+msgstr "བང་རིམ་གཅིག་ལུ་མར་བཞག་གྱིབ་མ་འདི་དང་གདམ་ཁའི་ཐོག་ལས་སེར་ཁ་འདི་ཁ་སྐོང་བརྐྱབ་"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
+msgid "_Drop Shadow and Bevel..."
+msgstr "སེར་ཁ་དང་གྱིབ་མ་བཞག... (_D)"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
+msgid "_Shadow blur"
+msgstr "གྱིབ་མ་རབ་རིབ། (_S)"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
+msgid "_Bevel"
+msgstr "སེར་ཁ། (_B)"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+msgid "_Drop shadow"
+msgstr "གྱིབ་མ་བཞག། (_D)"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+msgid "Drop shadow _X displacement"
+msgstr "གྱིབ་མ་ X གནས་སྤང་བཞག། (_X)"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+msgid "Drop shadow _Y displacement"
+msgstr "གྱིབ་མ་ Y གནས་སྤང་བཞག། (_Y)"
+
+#, fuzzy
+#~ msgid "Gimp-Python Console"
+#~ msgstr "ཨིསི་ཀིརིཔིཊི་_ཕུ་མ་སྒྲོམ།"
+
