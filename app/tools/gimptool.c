@@ -537,7 +537,7 @@ gimp_tool_check_click_distance (GimpTool    *tool,
       dx = SCALEX (shell, tool->button_press_coords.x - coords->x);
       dy = SCALEY (shell, tool->button_press_coords.y - coords->y);
 
-      if (sqrt (SQR (dx) + SQR (dy)) > double_click_distance)
+      if ((SQR (dx) + SQR (dy)) > SQR (double_click_distance))
         {
           tool->in_click_distance = FALSE;
         }

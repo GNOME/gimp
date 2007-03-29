@@ -1,3 +1,9 @@
+2007-03-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptool.c (gimp_tool_check_click_distance): don't
+	compare the result of sqrt() with something, compare the original
+	value with something's square instead.
+
 2007-03-29  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpbrushgenerated.c (gimp_brush_generated_calc): moved
@@ -120,7 +126,7 @@
 	(gimp_display_shell_update_cursor): move variables to local
 	scopes. Follow GimpStatusbar API change. Cleanup.
 
-	(gimp_display_shell_clear_cursor): ditto. Follow GimpColorFrame
+	(gimp_display_shell_clear_cursor): ditto. Follow GimpCursorView
 	API change.
 
 2007-03-20  Michael Natterer  <mitch@gimp.org>
