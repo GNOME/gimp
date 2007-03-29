@@ -34,7 +34,7 @@
 #include "gimpbrushgenerated-save.h"
 
 
-#define OVERSAMPLING 5
+#define OVERSAMPLING 4
 
 
 enum
@@ -256,61 +256,28 @@ gauss (gdouble f)
   return (2.0 * f*f);
 }
 
-static TempBuf *
-gimp_brush_generated_calc (GimpBrushGenerated      *brush,
-                           GimpBrushGeneratedShape  shape,
-                           gfloat                   radius,
-                           gint                     spikes,
-                           gfloat                   hardness,
-                           gfloat                   aspect_ratio,
-                           gfloat                   angle,
-                           GimpVector2             *xaxis,
-                           GimpVector2             *yaxis)
+/* set up lookup table */
+static guchar *
+gimp_brush_generated_calc_lut (gdouble radius,
+                               gdouble hardness)
 {
-  gint         x, y;
-  guchar      *centerp;
-  gdouble      d;
-  gdouble      exponent;
-  guchar       a;
-  gint         length;
-  gint         half_width  = 0;
-  gint         half_height = 0;
-  guchar      *lookup;
-  gdouble      sum;
-  gdouble      c, s, cs, ss;
-  gdouble      buffer[OVERSAMPLING];
-  GimpVector2  x_axis;
-  GimpVector2  y_axis;
-  TempBuf     *mask;
+  guchar  *lookup;
+  gint     length;
+  gint     x;
+  gdouble  d;
+  gdouble  sum;
+  gdouble  exponent;
+  gdouble  buffer[OVERSAMPLING];
 
-  gimp_brush_generated_get_half_size (brush,
-                                      shape,
-                                      radius,
-                                      spikes,
-                                      hardness,
-                                      aspect_ratio,
-                                      angle,
-                                      &half_width, &half_height,
-                                      &s, &c, &x_axis, &y_axis);
+  length = OVERSAMPLING * ceil (1 + sqrt (2 * SQR (ceil (radius + 1.0))));
 
-  mask = temp_buf_new (half_width  * 2 + 1,
-                       half_height * 2 + 1,
-                       1, half_width, half_height, NULL);
-
-  centerp = temp_buf_data (mask) + half_height * mask->width + half_width;
-
-  /* set up lookup table */
-  length = OVERSAMPLING * ceil (1 + sqrt (2 *
-                                          ceil (radius + 1.0) *
-                                          ceil (radius + 1.0)));
+  lookup = g_malloc (length);
+  sum = 0.0;
 
   if ((1.0 - hardness) < 0.0000004)
     exponent = 1000000.0;
   else
     exponent = 0.4 / (1.0 - hardness);
-
-  lookup = g_malloc (length);
-  sum = 0.0;
 
   for (x = 0; x < OVERSAMPLING; x++)
     {
@@ -342,6 +309,49 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
       lookup[x++] = 0;
     }
 
+  return lookup;
+}
+
+static TempBuf *
+gimp_brush_generated_calc (GimpBrushGenerated      *brush,
+                           GimpBrushGeneratedShape  shape,
+                           gfloat                   radius,
+                           gint                     spikes,
+                           gfloat                   hardness,
+                           gfloat                   aspect_ratio,
+                           gfloat                   angle,
+                           GimpVector2             *xaxis,
+                           GimpVector2             *yaxis)
+{
+  guchar      *centerp;
+  guchar      *lookup;
+  guchar       a;
+  gint         half_width  = 0;
+  gint         half_height = 0;
+  gint         x, y;
+  gdouble      c, s, cs, ss;
+  GimpVector2  x_axis;
+  GimpVector2  y_axis;
+  TempBuf     *mask;
+
+  gimp_brush_generated_get_half_size (brush,
+                                      shape,
+                                      radius,
+                                      spikes,
+                                      hardness,
+                                      aspect_ratio,
+                                      angle,
+                                      &half_width, &half_height,
+                                      &s, &c, &x_axis, &y_axis);
+
+  mask = temp_buf_new (half_width  * 2 + 1,
+                       half_height * 2 + 1,
+                       1, half_width, half_height, NULL);
+
+  centerp = temp_buf_data (mask) + half_height * mask->width + half_width;
+
+  lookup = gimp_brush_generated_calc_lut (radius, hardness);
+
   cs = cos (- 2 * G_PI / spikes);
   ss = sin (- 2 * G_PI / spikes);
 
@@ -350,7 +360,9 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
     {
       for (x = -half_width; x <= half_width; x++)
         {
-          gdouble tx, ty, angle;
+          gdouble tx, ty;
+          gdouble angle;
+          gdouble d = 0.0;
 
           tx = c*x - s*y;
           ty = fabs (s*x + c*y);
@@ -371,6 +383,7 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
             }
 
           ty *= aspect_ratio;
+
           switch (shape)
             {
             case GIMP_BRUSH_GENERATED_CIRCLE:
@@ -389,7 +402,7 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
           else
             a = 0;
 
-          centerp[ y * mask->width + x] = a;
+          centerp[y * mask->width + x] = a;
 
           if (spikes % 2 == 0)
             centerp[-1 * y * mask->width - x] = a;

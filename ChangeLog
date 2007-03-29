@@ -1,5 +1,11 @@
 2007-03-29  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpbrushgenerated.c (gimp_brush_generated_calc): moved
+	generation of the lookup table to it's own function. Also changed
+	SUPERSAMPLING from 5 to 4. Let's see if someone complains...
+
+2007-03-29  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimppixelrgn.c: code cleanup. Removed MEMCPY_IS_NICE
 	define and unconditionally use memcpy().
 
