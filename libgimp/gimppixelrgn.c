@@ -21,20 +21,7 @@
 
 #include "config.h"
 
-/* Experimental: comment-out the following #define if a memcpy() call is
-   slower than compiler-optimized memory copies for transfers of approx.
-   64-256 bytes.
-
-   FYI this #define is a win on Linux486/libc5.  Unbenchmarked on other
-   architectures.  --adam
-*/
-
-#define MEMCPY_IS_NICE
-
-#ifdef MEMCPY_IS_NICE
 #include <string.h>
-#endif
-
 #include <stdarg.h>
 
 #include "gimp.h"
@@ -203,9 +190,9 @@ gimp_pixel_rgn_get_pixel (GimpPixelRgn *pr,
                           gint          x,
                           gint          y)
 {
-  GimpTile *tile;
-  guchar   *tile_data;
-  gint      b;
+  GimpTile     *tile;
+  const guchar *tile_data;
+  gint          b;
 
   g_return_if_fail (pr != NULL && pr->drawable != NULL);
   g_return_if_fail (x >= 0 && x < pr->drawable->width);
@@ -214,7 +201,8 @@ gimp_pixel_rgn_get_pixel (GimpPixelRgn *pr,
   tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
   gimp_tile_ref (tile);
 
-  tile_data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
+  tile_data = (tile->data +
+               tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)));
 
   for (b = 0; b < tile->bpp; b++)
     *buf++ = *tile_data++;
@@ -241,14 +229,7 @@ gimp_pixel_rgn_get_row (GimpPixelRgn *pr,
                         gint          y,
                         gint          width)
 {
-  GimpTile *tile;
-  guchar   *tile_data;
-  gint      bpp, inc, min;
-  gint      end;
-  gint      boundary;
-#ifndef MEMCPY_IS_NICE
-  gint      b;
-#endif
+  gint end;
 
   g_return_if_fail (pr != NULL && pr->drawable != NULL);
   g_return_if_fail (buf != NULL);
@@ -260,28 +241,26 @@ gimp_pixel_rgn_get_row (GimpPixelRgn *pr,
 
   while (x < end)
     {
+      GimpTile     *tile;
+      const guchar *tile_data;
+      gint          inc, min;
+      gint          boundary;
+
       tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
       gimp_tile_ref (tile);
 
-      tile_data = tile->data + (int)tile->bpp * (int)(tile->ewidth * (int)(y % TILE_HEIGHT) + (x % TILE_WIDTH));
-      boundary = x + (tile->ewidth - (x % TILE_WIDTH));
-      bpp = tile->bpp;
+      tile_data = (tile->data +
+                   tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)));
 
-#ifdef MEMCPY_IS_NICE
-      memcpy ((void *)buf,
-              (const void *)tile_data,
-              inc = (bpp *
-                     ( (min = MIN (end, boundary)) -x) ) );
+      boundary = x + (tile->ewidth - (x % TILE_WIDTH));
+
+      min = MIN (end, boundary);
+      inc = tile->bpp * (min - x);
+
+      memcpy (buf, tile_data, inc);
+
       x = min;
       buf += inc;
-#else
-      for ( ; x < end && x < boundary; x++)
-        {
-          for (b = 0; b < tile->bpp; b++)
-            *buf++ = tile_data[b];
-          tile_data += bpp;
-        }
-#endif /* MEMCPY_IS_NICE */
 
       gimp_tile_unref (tile, FALSE);
     }
@@ -307,12 +286,7 @@ gimp_pixel_rgn_get_col (GimpPixelRgn *pr,
                         gint          y,
                         gint          height)
 {
-  GimpTile *tile;
-  guchar   *tile_data;
-  gint      inc;
-  gint      end;
-  gint      boundary;
-  gint      b;
+  gint end;
 
   g_return_if_fail (pr != NULL && pr->drawable != NULL);
   g_return_if_fail (buf != NULL);
@@ -324,10 +298,18 @@ gimp_pixel_rgn_get_col (GimpPixelRgn *pr,
 
   while (y < end)
     {
+      GimpTile     *tile;
+      const guchar *tile_data;
+      gint          inc;
+      gint          boundary;
+      gint          b;
+
       tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
       gimp_tile_ref (tile);
 
-      tile_data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
+      tile_data = (tile->data +
+                   tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)));
+
       boundary = y + (tile->eheight - (y % TILE_HEIGHT));
       inc = tile->bpp * tile->ewidth;
 
@@ -335,6 +317,7 @@ gimp_pixel_rgn_get_col (GimpPixelRgn *pr,
         {
           for (b = 0; b < tile->bpp; b++)
             *buf++ = tile_data[b];
+
           tile_data += inc;
         }
 
@@ -364,19 +347,13 @@ gimp_pixel_rgn_get_rect (GimpPixelRgn *pr,
                          gint          width,
                          gint          height)
 {
-  GimpTile *tile;
-  guchar   *src;
-  guchar   *dest;
-  gulong    bufstride;
-  gint      xstart, ystart;
-  gint      xend, yend;
-  gint      xboundary;
-  gint      yboundary;
-  gint      xstep, ystep;
-  gint      ty, bpp;
-#ifndef MEMCPY_IS_NICE
-  gint      b, tx;
-#endif
+  gulong  bufstride;
+  gint    xstart, ystart;
+  gint    xend, yend;
+  gint    xboundary;
+  gint    yboundary;
+  gint    xstep, ystep;
+  gint    ty, bpp;
 
   g_return_if_fail (pr != NULL && pr->drawable != NULL);
   g_return_if_fail (buf != NULL);
@@ -397,8 +374,11 @@ gimp_pixel_rgn_get_rect (GimpPixelRgn *pr,
   while (y < yend)
     {
       x = xstart;
+
       while (x < xend)
         {
+          GimpTile *tile;
+
           tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
           gimp_tile_ref (tile);
 
@@ -411,18 +391,14 @@ gimp_pixel_rgn_get_rect (GimpPixelRgn *pr,
 
           for (ty = y; ty < yboundary; ty++)
             {
-              src = tile->data + tile->bpp * (tile->ewidth * (ty % TILE_HEIGHT) + (x % TILE_WIDTH));
+              const guchar *src;
+              guchar       *dest;
+
+              src = (tile->data +
+                     tile->bpp * (tile->ewidth * (ty % TILE_HEIGHT) + (x % TILE_WIDTH)));
               dest = buf + bufstride * (ty - ystart) + bpp * (x - xstart);
 
-#ifdef MEMCPY_IS_NICE
-              memcpy ((void *)dest, (const void *)src, (xboundary-x)*bpp);
-#else
-              for (tx = x; tx < xboundary; tx++)
-                {
-                  for (b = 0; b < bpp; b++)
-                    *dest++ = *src++;
-                }
-#endif /* MEMCPY_IS_NICE */
+              memcpy (dest, src, (xboundary - x) * bpp);
             }
 
           gimp_tile_unref (tile, FALSE);
@@ -493,9 +469,6 @@ gimp_pixel_rgn_set_row (GimpPixelRgn *pr,
   gint      inc, min;
   gint      end;
   gint      boundary;
-#ifndef MEMCPY_IS_NICE
-  gint      b;
-#endif
 
   g_return_if_fail (pr != NULL && pr->drawable != NULL);
   g_return_if_fail (buf != NULL);
@@ -510,23 +483,18 @@ gimp_pixel_rgn_set_row (GimpPixelRgn *pr,
       tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
       gimp_tile_ref (tile);
 
-      tile_data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
+      tile_data = (tile->data +
+                   tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)));
+
       boundary = x + (tile->ewidth - (x % TILE_WIDTH));
 
-#ifdef MEMCPY_IS_NICE
-      memcpy ((void *)tile_data,
-              (const void *)buf,
-              inc = (tile->bpp *
-                     ( (min = MIN (end, boundary)) -x) ) );
+      min = MIN (end, boundary);
+      inc = tile->bpp * (min - x);
+
+      memcpy (tile_data, buf, inc);
+
       x = min;
       buf += inc;
-#else
-      for ( ; x < end && x < boundary; x++)
-        {
-          for (b = 0; b < tile->bpp; b++)
-            *tile_data++ = *buf++;
-        }
-#endif /* MEMCPY_IS_NICE */
 
       gimp_tile_unref (tile, TRUE);
     }
@@ -551,12 +519,7 @@ gimp_pixel_rgn_set_col (GimpPixelRgn *pr,
                         gint          y,
                         gint          height)
 {
-  GimpTile *tile;
-  guchar   *tile_data;
-  gint      inc;
   gint      end;
-  gint      boundary;
-  gint      b;
 
   g_return_if_fail (pr != NULL && pr->drawable != NULL);
   g_return_if_fail (buf != NULL);
@@ -568,17 +531,27 @@ gimp_pixel_rgn_set_col (GimpPixelRgn *pr,
 
   while (y < end)
     {
+      GimpTile *tile;
+      guchar   *tile_data;
+      gint      inc;
+      gint      boundary;
+
       tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
       gimp_tile_ref (tile);
 
-      tile_data = tile->data + tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH));
+      tile_data = (tile->data +
+                   tile->bpp * (tile->ewidth * (y % TILE_HEIGHT) + (x % TILE_WIDTH)));
+
       boundary = y + (tile->eheight - (y % TILE_HEIGHT));
       inc = tile->bpp * tile->ewidth;
 
       for ( ; y < end && y < boundary; y++)
         {
+          gint b;
+
           for (b = 0; b < tile->bpp; b++)
             tile_data[b] = *buf++;
+
           tile_data += inc;
         }
 
@@ -608,19 +581,13 @@ gimp_pixel_rgn_set_rect (GimpPixelRgn *pr,
                          gint          width,
                          gint          height)
 {
-  GimpTile     *tile;
-  const guchar *src;
-  guchar       *dest;
-  gulong        bufstride;
-  gint          xstart, ystart;
-  gint          xend, yend;
-  gint          xboundary;
-  gint          yboundary;
-  gint          xstep, ystep;
-  gint          ty, bpp;
-#ifndef MEMCPY_IS_NICE
-  gint          b, tx;
-#endif
+  gulong  bufstride;
+  gint    xstart, ystart;
+  gint    xend, yend;
+  gint    xboundary;
+  gint    yboundary;
+  gint    xstep, ystep;
+  gint    ty, bpp;
 
   g_return_if_fail (pr != NULL && pr->drawable != NULL);
   g_return_if_fail (buf != NULL);
@@ -641,8 +608,11 @@ gimp_pixel_rgn_set_rect (GimpPixelRgn *pr,
   while (y < yend)
     {
       x = xstart;
+
       while (x < xend)
         {
+          GimpTile *tile;
+
           tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
           gimp_tile_ref (tile);
 
@@ -655,19 +625,14 @@ gimp_pixel_rgn_set_rect (GimpPixelRgn *pr,
 
           for (ty = y; ty < yboundary; ty++)
             {
+              const guchar *src;
+              guchar       *dest;
+
               src = buf + bufstride * (ty - ystart) + bpp * (x - xstart);
               dest = tile->data + tile->bpp * (tile->ewidth *
                                                (ty % TILE_HEIGHT) + (x % TILE_WIDTH));
 
-#ifdef MEMCPY_IS_NICE
-              memcpy ((void *)dest, (const void *)src, (xboundary-x)*bpp);
-#else
-              for (tx = x; tx < xboundary; tx++)
-                {
-                  for (b = 0; b < bpp; b++)
-                    *dest++ = *src++;
-                }
-#endif /* MEMCPY_IS_NICE */
+              memcpy (dest, src, (xboundary - x) * bpp);
             }
 
           gimp_tile_unref (tile, TRUE);
@@ -730,7 +695,7 @@ gimp_pixel_rgns_register2 (gint           nrgns,
           prh->starty            = pr->y;
           prh->pr->process_count = 0;
 
-          if (!found)
+          if (! found)
             {
               found = TRUE;
               pri->region_width  = pr->w;

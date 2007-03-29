@@ -1,5 +1,10 @@
 2007-03-29  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimppixelrgn.c: code cleanup. Removed MEMCPY_IS_NICE
+	define and unconditionally use memcpy().
+
+2007-03-29  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimppixelrgn.c (gimp_pixel_rgn_init): initialize
 	rowstride to zero; it's meaningless as long as data is NULL.
 
