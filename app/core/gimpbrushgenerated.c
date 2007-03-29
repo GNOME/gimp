@@ -360,20 +360,18 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
     {
       for (x = -half_width; x <= half_width; x++)
         {
-          gdouble tx, ty;
-          gdouble angle;
-          gdouble d = 0.0;
-
-          tx = c*x - s*y;
-          ty = fabs (s*x + c*y);
+          gdouble d  = 0;
+          gdouble tx = c * x - s * y;
+          gdouble ty = fabs (s * x + c * y);
 
           if (spikes > 2)
             {
-              angle = atan2 (ty, tx);
+              gdouble angle = atan2 (ty, tx);
 
               while (angle > G_PI / spikes)
                 {
-                  gdouble sx = tx, sy = ty;
+                  gdouble sx = tx;
+                  gdouble sy = ty;
 
                   tx = cs * sx - ss * sy;
                   ty = ss * sx + cs * sy;
@@ -387,7 +385,7 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
           switch (shape)
             {
             case GIMP_BRUSH_GENERATED_CIRCLE:
-              d = sqrt (tx*tx + ty*ty);
+              d = sqrt (SQR (tx) + SQR (ty));
               break;
             case GIMP_BRUSH_GENERATED_SQUARE:
               d = MAX (fabs (tx), fabs (ty));
@@ -411,8 +409,11 @@ gimp_brush_generated_calc (GimpBrushGenerated      *brush,
 
   g_free (lookup);
 
-  if (xaxis) *xaxis = x_axis;
-  if (yaxis) *yaxis = y_axis;
+  if (xaxis)
+    *xaxis = x_axis;
+
+  if (yaxis)
+    *yaxis = y_axis;
 
   return mask;
 }
