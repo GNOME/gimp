@@ -140,7 +140,7 @@ gimp_pixel_rgn_init (GimpPixelRgn *pr,
   pr->data      = NULL;
   pr->drawable  = drawable;
   pr->bpp       = drawable->bpp;
-  pr->rowstride = pr->bpp * TILE_WIDTH;
+  pr->rowstride = 0;
   pr->x         = x;
   pr->y         = y;
   pr->w         = width;
