@@ -42,6 +42,8 @@
 #define RANDOM_SEED   314159265
 #define EPSILON       0.0001
 
+#define LOG_1_255     -5.541263545    /*  log (1.0 / 255.0)  */
+
 
 /*  Layer modes information  */
 typedef struct _LayerMode LayerMode;
@@ -54,10 +56,9 @@ struct _LayerMode
 };
 
 static const LayerMode layer_modes[] =
-                               /* This must obviously be in the same
-                                * order as the corresponding values
-                                 * in the GimpLayerModeEffects enumeration.
-                                */
+  /* This must be in the same order as the
+   * corresponding values in GimpLayerModeEffects.
+   */
 {
   { TRUE,  TRUE,  FALSE, },  /*  GIMP_NORMAL_MODE        */
   { TRUE,  TRUE,  FALSE, },  /*  GIMP_DISSOLVE_MODE      */
@@ -126,7 +127,7 @@ static const guchar  no_mask = OPAQUE_OPACITY;
 
 /*  Local function prototypes  */
 
-static gint *   make_curve               (gdouble         sigma,
+static gint *   make_curve               (gdouble         sigma_square,
                                           gint           *length);
 static gdouble  cubic                    (gdouble         dx,
                                           gint            jm1,
@@ -332,15 +333,15 @@ update_tile_rowhints (Tile *tile,
 
 /*
  * The equations: g(r) = exp (- r^2 / (2 * sigma^2))
- *                   r = sqrt (x^2 + y ^2)
+ *                   r = sqrt (x^2 + y^2)
  */
 
 static gint *
-make_curve (gdouble  sigma,
+make_curve (gdouble  sigma_square,
             gint    *length)
 {
-  const gdouble sigma2 = 2 * sigma * sigma;
-  const gdouble l      = sqrt (-sigma2 * log (1.0 / 255.0));
+  const gdouble sigma2 = 2 * sigma_square;
+  const gdouble l      = sqrt (-sigma2 * LOG_1_255);
 
   gint *curve;
   gint  i, n;
@@ -357,7 +358,7 @@ make_curve (gdouble  sigma,
 
   for (i = 1; i <= *length; i++)
     {
-      gint temp = (gint) (exp (- (i * i) / sigma2) * 255);
+      gint temp = (gint) (exp (- SQR (i) / sigma2) * 255);
 
       curve[-i] = temp;
       curve[i] = temp;
@@ -2660,7 +2661,6 @@ gaussian_blur_region (PixelRegion *srcR,
                       gdouble      radius_x,
                       gdouble      radius_y)
 {
-  gdouble std_dev;
   glong   width, height;
   guint   bytes;
   guchar *src, *sp;
@@ -2696,8 +2696,7 @@ gaussian_blur_region (PixelRegion *srcR,
 
   if (radius_y != 0.0)
     {
-      std_dev = sqrt (-(radius_y * radius_y) / (2 * log (1.0 / 255.0)));
-      curve = make_curve (std_dev, &length);
+      curve = make_curve (- SQR (radius_y) / (2 * LOG_1_255), &length);
 
       sum = g_new (gint, 2 * length + 1);
       sum[0] = 0;
@@ -2758,8 +2757,7 @@ gaussian_blur_region (PixelRegion *srcR,
 
   if (radius_x != 0.0)
     {
-      std_dev = sqrt (-(radius_x * radius_x) / (2 * log (1.0 / 255.0)));
-      curve = make_curve (std_dev, &length);
+      curve = make_curve (- SQR (radius_x) / (2 * LOG_1_255), &length);
 
       sum = g_new (gint, 2 * length + 1);
       sum[0] = 0;

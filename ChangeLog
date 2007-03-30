@@ -1,9 +1,13 @@
 2007-03-30  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/paint-funcs.c: hardcode the result of
+	log (1.0 / 255.0) and avoid a useless call to sqrt().
+
+2007-03-30  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimpheal.c (gimp_heal_laplace_iteration)
 	(gimp_heal_laplace_loop): compare square of errors instead of
-	calculating the square root. Rewritten loop to avoid code
-	duplication.
+	calculating the square root. Rewritten loop to avoid code duplication.
 
 2007-03-30  Sven Neumann  <sven@gimp.org>
 
