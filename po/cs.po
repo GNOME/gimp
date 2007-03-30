@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-30 10:56+0200\n"
-"PO-Revision-Date: 2007-03-30 11:32+0200\n"
+"POT-Creation-Date: 2007-03-30 13:19+0200\n"
+"PO-Revision-Date: 2007-03-30 13:20+0200\n"
 "Last-Translator: \n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -9850,7 +9850,7 @@ msgstr "Přechod:"
 
 #: ../app/tools/gimppaintoptions-gui.c:183
 msgid "Incremental"
-msgstr "Postupný"
+msgstr "Přírůstkově"
 
 #: ../app/tools/gimppaintoptions-gui.c:199
 msgid "Hard edge"
