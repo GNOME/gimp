@@ -1,3 +1,4 @@
+# translation of cs.po to Czech
 # translation of cs.po to
 # Stanislav Brabec <utx@penguin.cz>, 1998-2001.
 # Michal Bukovjan <bukm@centrum.cz>, 2002,2003.
@@ -10,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-29 09:55+0200\n"
-"PO-Revision-Date: 2007-03-29 10:00+0200\n"
-"Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team:  <cs@li.org>\n"
+"POT-Creation-Date: 2007-03-30 10:56+0200\n"
+"PO-Revision-Date: 2007-03-30 11:32+0200\n"
+"Last-Translator: \n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -4121,11 +4122,11 @@ msgstr "Dělení"
 
 #: ../app/base/base-enums.c:127
 msgid "Dodge"
-msgstr "Zesvětlování"
+msgstr "Zesvětlení"
 
 #: ../app/base/base-enums.c:128
 msgid "Burn"
-msgstr "Tmavnutí"
+msgstr "Ztmavení"
 
 #: ../app/base/base-enums.c:129
 msgid "Hard light"
@@ -8220,7 +8221,7 @@ msgstr "Změna ostrosti"
 
 #: ../app/paint/gimpdodgeburn.c:87
 msgid "Dodge/Burn"
-msgstr "Zesvětlování/tmavnutí"
+msgstr "Zesvětlení / Ztmavení"
 
 #: ../app/paint/gimperaser.c:62 ../app/tools/gimperasertool.c:66
 msgid "Eraser"
@@ -9206,7 +9207,7 @@ msgstr "chyba zpracování"
 
 #: ../app/tools/gimpdodgeburntool.c:73
 msgid "Dodge / Burn"
-msgstr "Zesvětlování / Tmavnutí"
+msgstr "Zesvětlení / Ztmavení"
 
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
@@ -9214,15 +9215,15 @@ msgstr "Zesvětlení / Ztmavení: selektivní zesvětlování či ztmavování �
 
 #: ../app/tools/gimpdodgeburntool.c:75
 msgid "Dod_ge / Burn"
-msgstr "Ze_světlování / Tmavnutí"
+msgstr "Ze_světlení / Ztmavení"
 
 #: ../app/tools/gimpdodgeburntool.c:173
 msgid "Click to dodge"
-msgstr "Klikněte pro zesvětlení"
+msgstr "Kliknutím zesvětlíte"
 
 #: ../app/tools/gimpdodgeburntool.c:174
 msgid "Click to dodge the line"
-msgstr "Klikněte pro zesvětlení čáry"
+msgstr "Kliknutím zesvětlíte čáru"
 
 #: ../app/tools/gimpdodgeburntool.c:175
 #, c-format
@@ -9231,11 +9232,11 @@ msgstr "%s pro ztmavení"
 
 #: ../app/tools/gimpdodgeburntool.c:179
 msgid "Click to burn"
-msgstr "Klikněte pro ztmavení"
+msgstr "Kliknutím ztmavíte"
 
 #: ../app/tools/gimpdodgeburntool.c:180
 msgid "Click to burn the line"
-msgstr "Klikněte pro ztmavení čáry"
+msgstr "Kliknutím ztmavíte čáru"
 
 #: ../app/tools/gimpdodgeburntool.c:181
 #, c-format
@@ -9877,8 +9878,9 @@ msgid "Size"
 msgstr "Velikost"
 
 #: ../app/tools/gimppaintoptions-gui.c:343
+#, fuzzy
 msgid "Fade out"
-msgstr "Doběh"
+msgstr "Slábnout"
 
 #: ../app/tools/gimppaintoptions-gui.c:352
 #: ../app/tools/gimppaintoptions-gui.c:445
@@ -10552,7 +10554,7 @@ msgstr "Přesun"
 
 #: ../app/vectors/gimpvectors.c:192
 msgid "Rename Path"
-msgstr "Přejmenování cesty"
+msgstr "Přejmenovat cestu"
 
 #: ../app/vectors/gimpvectors.c:193 ../app/vectors/gimpvectors.c:318
 msgid "Move Path"
