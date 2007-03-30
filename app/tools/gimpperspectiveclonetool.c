@@ -586,36 +586,37 @@ gimp_perspective_clone_tool_oper_update (GimpTool        *tool,
           gdouble closest_dist;
           gdouble dist;
 
-          closest_dist = gimp_draw_tool_calc_distance (draw_tool, display,
-                                                       coords->x, coords->y,
-                                                       clone_tool->tx1,
-                                                       clone_tool->ty1);
+          dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
+                                                      coords->x, coords->y,
+                                                      clone_tool->tx1,
+                                                      clone_tool->ty1);
+          closest_dist = dist;
           clone_tool->function = TRANSFORM_HANDLE_NW;
 
-          dist = gimp_draw_tool_calc_distance (draw_tool, display,
-                                               coords->x, coords->y,
-                                               clone_tool->tx2,
-                                               clone_tool->ty2);
+          dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
+                                                      coords->x, coords->y,
+                                                      clone_tool->tx2,
+                                                      clone_tool->ty2);
           if (dist < closest_dist)
             {
               closest_dist = dist;
               clone_tool->function = TRANSFORM_HANDLE_NE;
             }
 
-          dist = gimp_draw_tool_calc_distance (draw_tool, display,
-                                               coords->x, coords->y,
-                                               clone_tool->tx3,
-                                               clone_tool->ty3);
+          dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
+                                                      coords->x, coords->y,
+                                                      clone_tool->tx3,
+                                                      clone_tool->ty3);
           if (dist < closest_dist)
             {
               closest_dist = dist;
               clone_tool->function = TRANSFORM_HANDLE_SW;
             }
 
-          dist = gimp_draw_tool_calc_distance (draw_tool, display,
-                                               coords->x, coords->y,
-                                               clone_tool->tx4,
-                                               clone_tool->ty4);
+          dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
+                                                      coords->x, coords->y,
+                                                      clone_tool->tx4,
+                                                      clone_tool->ty4);
           if (dist < closest_dist)
             {
               closest_dist = dist;

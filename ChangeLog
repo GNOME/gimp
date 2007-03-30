@@ -1,5 +1,11 @@
 2007-03-30  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpdrawtool.[ch]
+	* app/tools/gimpperspectiveclonetool.c
+	* app/tools/gimptransformtool.c: compare squared distances.
+
+2007-03-30  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_draw_guides):
 	hardcode the result of sqrt(5).
 

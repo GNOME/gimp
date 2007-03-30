@@ -365,6 +365,9 @@ gimp_draw_tool_set_transform (GimpDrawTool *draw_tool,
  * @x2:        end point X in image coordinates
  * @y2:        end point Y in image coordinates
  *
+ * If you just need to compare distances, consider to use
+ * gimp_draw_tool_calc_distance_square() instead.
+ *
  * Returns: the distance between the given points in display coordinates
  **/
 gdouble
@@ -374,6 +377,34 @@ gimp_draw_tool_calc_distance (GimpDrawTool *draw_tool,
                               gdouble       y1,
                               gdouble       x2,
                               gdouble       y2)
+{
+  return sqrt (gimp_draw_tool_calc_distance_square (draw_tool, display,
+                                                    x1, y1, x2, y2));
+}
+
+/**
+ * gimp_draw_tool_calc_distance_square:
+ * @draw_tool: a #GimpDrawTool
+ * @display:   a #GimpDisplay
+ * @x1:        start point X in image coordinates
+ * @y1:        start point Y in image coordinates
+ * @x2:        end point X in image coordinates
+ * @y2:        end point Y in image coordinates
+ *
+ * This function is more effective than gimp_draw_tool_calc_distance()
+ * as it doesn't perform a sqrt(). Use this if you just need to compare
+ * distances.
+ *
+ * Returns: the square of the distance between the given points in
+            display coordinates
+ **/
+gdouble
+gimp_draw_tool_calc_distance_square (GimpDrawTool *draw_tool,
+                                     GimpDisplay  *display,
+                                     gdouble       x1,
+                                     gdouble       y1,
+                                     gdouble       x2,
+                                     gdouble       y2)
 {
   GimpDisplayShell *shell;
   gdouble           tx1, ty1;
@@ -387,7 +418,7 @@ gimp_draw_tool_calc_distance (GimpDrawTool *draw_tool,
   gimp_display_shell_transform_xy_f (shell, x1, y1, &tx1, &ty1, FALSE);
   gimp_display_shell_transform_xy_f (shell, x2, y2, &tx2, &ty2, FALSE);
 
-  return sqrt (SQR (tx2 - tx1) + SQR (ty2 - ty1));
+  return SQR (tx2 - tx1) + SQR (ty2 - ty1);
 }
 
 /**
@@ -414,19 +445,8 @@ gimp_draw_tool_in_radius (GimpDrawTool *draw_tool,
                           gdouble       y2,
                           gint          radius)
 {
-  GimpDisplayShell *shell;
-  gdouble           tx1, ty1;
-  gdouble           tx2, ty2;
-
-  g_return_val_if_fail (GIMP_IS_DRAW_TOOL (draw_tool), FALSE);
-  g_return_val_if_fail (GIMP_IS_DISPLAY (display), FALSE);
-
-  shell = GIMP_DISPLAY_SHELL (display->shell);
-
-  gimp_display_shell_transform_xy_f (shell, x1, y1, &tx1, &ty1, FALSE);
-  gimp_display_shell_transform_xy_f (shell, x2, y2, &tx2, &ty2, FALSE);
-
-  return (SQR (tx2 - tx1) + SQR (ty2 - ty1)) < SQR (radius);
+  return (gimp_draw_tool_calc_distance_square (draw_tool, display,
+                                               x1, y1, x2, y2) < SQR (radius));
 }
 
 /**

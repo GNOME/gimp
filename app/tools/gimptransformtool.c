@@ -559,32 +559,33 @@ gimp_transform_tool_oper_update (GimpTool        *tool,
       gdouble closest_dist;
       gdouble dist;
 
-      closest_dist = gimp_draw_tool_calc_distance (draw_tool, display,
-                                                   coords->x, coords->y,
-                                                   tr_tool->tx1, tr_tool->ty1);
+      dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
+                                                  coords->x, coords->y,
+                                                  tr_tool->tx1, tr_tool->ty1);
+      closest_dist = dist;
       tr_tool->function = TRANSFORM_HANDLE_NW;
 
-      dist = gimp_draw_tool_calc_distance (draw_tool, display,
-                                           coords->x, coords->y,
-                                           tr_tool->tx2, tr_tool->ty2);
+      dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
+                                                  coords->x, coords->y,
+                                                  tr_tool->tx2, tr_tool->ty2);
       if (dist < closest_dist)
         {
           closest_dist = dist;
           tr_tool->function = TRANSFORM_HANDLE_NE;
         }
 
-      dist = gimp_draw_tool_calc_distance (draw_tool, display,
-                                           coords->x, coords->y,
-                                           tr_tool->tx3, tr_tool->ty3);
+      dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
+                                                  coords->x, coords->y,
+                                                  tr_tool->tx3, tr_tool->ty3);
       if (dist < closest_dist)
         {
           closest_dist = dist;
           tr_tool->function = TRANSFORM_HANDLE_SW;
         }
 
-      dist = gimp_draw_tool_calc_distance (draw_tool, display,
-                                           coords->x, coords->y,
-                                           tr_tool->tx4, tr_tool->ty4);
+      dist = gimp_draw_tool_calc_distance_square (draw_tool, display,
+                                                  coords->x, coords->y,
+                                                  tr_tool->tx4, tr_tool->ty4);
       if (dist < closest_dist)
         {
           closest_dist = dist;
