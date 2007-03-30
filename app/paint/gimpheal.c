@@ -255,8 +255,9 @@ gimp_heal_multiply (gdouble     *first,
 }
 
 /*
- * Perform one iteration of the laplace solver for matrix.  Store the result in
- * solution and return the cummulative error of the solution.
+ * Perform one iteration of the laplace solver for matrix.  Store the
+ * result in solution and return the square of the cummulative error
+ * of the solution.
  */
 static gdouble
 gimp_heal_laplace_iteration (gdouble *matrix,
@@ -265,10 +266,10 @@ gimp_heal_laplace_iteration (gdouble *matrix,
                              gint     width,
                              gdouble *solution)
 {
-  gint     rowstride  = width * depth;
+  gint     rowstride = width * depth;
   gint     i, j, k;
-  gdouble  err        = 0.0;
   gdouble  tmp, diff;
+  gdouble  err       = 0.0;
 
   for (i = 0; i < height; i++)
     {
@@ -306,7 +307,7 @@ gimp_heal_laplace_iteration (gdouble *matrix,
         }
     }
 
-  return sqrt (err);
+  return err;
 }
 
 /*
@@ -321,25 +322,21 @@ gimp_heal_laplace_loop (gdouble *matrix,
 {
 #define EPSILON   0.0001
 #define MAX_ITER  500
-
-  gint num_iter = 0;
-  gdouble err;
-
-  /* do one iteration and store the amount of error */
-  err = gimp_heal_laplace_iteration (matrix, height, depth, width, solution);
-
-  /* copy solution to matrix */
-  memcpy (matrix, solution, width * height * depth * sizeof(double));
+  gint i;
 
   /* repeat until convergence or max iterations */
-  while (err > EPSILON)
+  for (i = 0; i < MAX_ITER; i++)
     {
-      err = gimp_heal_laplace_iteration (matrix, height, depth, width, solution);
-      memcpy (matrix, solution, width * height * depth * sizeof(double));
+      gdouble sqr_err;
 
-      num_iter++;
+      /* do one iteration and store the amount of error */
+      sqr_err = gimp_heal_laplace_iteration (matrix,
+                                             height, depth, width, solution);
 
-      if (num_iter >= MAX_ITER)
+      /* copy solution to matrix */
+      memcpy (matrix, solution, width * height * depth * sizeof (double));
+
+      if (sqr_err < SQR (EPSILON))
         break;
     }
 }

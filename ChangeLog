@@ -1,5 +1,12 @@
 2007-03-30  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimpheal.c (gimp_heal_laplace_iteration)
+	(gimp_heal_laplace_loop): compare square of errors instead of
+	calculating the square root. Rewritten loop to avoid code
+	duplication.
+
+2007-03-30  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpdrawtool.[ch]
 	* app/tools/gimpperspectiveclonetool.c
 	* app/tools/gimptransformtool.c: compare squared distances.
