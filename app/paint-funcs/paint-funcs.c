@@ -2993,8 +2993,8 @@ compute_border (gint16  *circ,
                 guint16  xradius,
                 guint16  yradius)
 {
-  gint32 i;
-  gint32 diameter = xradius * 2 + 1;
+  gint32  i;
+  gint32  diameter = xradius * 2 + 1;
   gdouble tmp;
 
   for (i = 0; i < diameter; i++)
@@ -3006,8 +3006,8 @@ compute_border (gint16  *circ,
     else
       tmp = 0.0;
 
-    circ[i] = RINT (yradius / (gdouble) xradius *
-                    sqrt (xradius * xradius - tmp * tmp));
+    circ[i] = RINT (yradius /
+                    (gdouble) xradius * sqrt (SQR (xradius) - SQR (tmp)));
   }
 }
 
@@ -3532,10 +3532,10 @@ dilate_region (PixelRegion *region)
 /* Computes whether pixels in `buf[1]', if they are selected, have neighbouring
    pixels that are unselected. Put result in `transition'. */
 static void
-compute_transition (guchar  *transition,
-                    guchar **buf,
-                    gint32   width,
-                    gboolean edge_lock)
+compute_transition (guchar    *transition,
+                    guchar   **buf,
+                    gint32     width,
+                    gboolean   edge_lock)
 {
   register gint32 x = 0;
 
@@ -3648,7 +3648,7 @@ border_region (PixelRegion *src,
   /* Keeps track of transitional pixels (pixels that are selected and have
      unselected neighbouring pixels). */
   guchar **transition;
-  
+
   /* TODO: Figure out role clearly in algorithm. */
   gint16  *max;
 
@@ -3683,7 +3683,7 @@ border_region (PixelRegion *src,
         source[i] = g_new (guchar, src->w);
 
       transition = g_new (guchar, src->w);
-      
+
       /* With `edge_lock', initialize row above image as selected, otherwise,
          initialize as unselected. */
       memset (source[0], edge_lock ? 255 : 0, src->w);
