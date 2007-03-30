@@ -1,3 +1,8 @@
+2007-03-30  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_draw_guides):
+	hardcode the result of sqrt(5).
+
 2007-03-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptool.c (gimp_tool_check_click_distance): don't

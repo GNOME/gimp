@@ -59,6 +59,8 @@ enum
 #define HANDLE_SIZE      50
 #define MIN_HANDLE_SIZE   6
 
+#define SQRT5   2.236067977
+
 
 #define GIMP_RECTANGLE_TOOL_GET_PRIVATE(obj) \
   (gimp_rectangle_tool_get_private (GIMP_RECTANGLE_TOOL (obj)))
@@ -1612,26 +1614,26 @@ gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
     case GIMP_RECTANGLE_GUIDE_GOLDEN:
       gimp_draw_tool_draw_line (draw_tool,
                                 x1,
-                                (2 * y1 + (1 + sqrt(5)) * y2) / (3 + sqrt(5)),
+                                (2 * y1 + (1 + SQRT5) * y2) / (3 + SQRT5),
                                 x2,
-                                (2 * y1 + (1 + sqrt(5)) * y2) / (3 + sqrt(5)),
+                                (2 * y1 + (1 + SQRT5) * y2) / (3 + SQRT5),
                                 FALSE);
       gimp_draw_tool_draw_line (draw_tool,
                                 x1,
-                                ((1 + sqrt(5)) * y1 + 2 * y2) / (3 + sqrt(5)),
+                                ((1 + SQRT5) * y1 + 2 * y2) / (3 + SQRT5),
                                 x2,
-                                ((1 + sqrt(5)) * y1 + 2 * y2) / (3 + sqrt(5)),
+                                ((1 + SQRT5) * y1 + 2 * y2) / (3 + SQRT5),
                                 FALSE);
       gimp_draw_tool_draw_line (draw_tool,
-                                (2 * x1 + (1 + sqrt(5)) * x2) / (3 + sqrt(5)),
+                                (2 * x1 + (1 + SQRT5) * x2) / (3 + SQRT5),
                                 y1,
-                                (2 * x1 + (1 + sqrt(5)) * x2) / (3 + sqrt(5)),
+                                (2 * x1 + (1 + SQRT5) * x2) / (3 + SQRT5),
                                 y2,
                                 FALSE);
       gimp_draw_tool_draw_line (draw_tool,
-                                ((1 + sqrt(5)) * x1 + 2 * x2) / (3 + sqrt(5)),
+                                ((1 + SQRT5) * x1 + 2 * x2) / (3 + SQRT5),
                                 y1,
-                                ((1 + sqrt(5)) * x1 + 2 * x2) / (3 + sqrt(5)),
+                                ((1 + SQRT5) * x1 + 2 * x2) / (3 + SQRT5),
                                 y2, FALSE);
       break;
     }
