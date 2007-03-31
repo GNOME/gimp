@@ -140,13 +140,10 @@ gimp_crop_tool_rectangle_tool_iface_init (GimpRectangleToolInterface *iface)
 static void
 gimp_crop_tool_init (GimpCropTool *crop_tool)
 {
-  GimpTool          *tool      = GIMP_TOOL (crop_tool);
-  GimpRectangleTool *rect_tool = GIMP_RECTANGLE_TOOL (crop_tool);
+  GimpTool *tool = GIMP_TOOL (crop_tool);
 
   gimp_tool_control_set_wants_click (tool->control, TRUE);
   gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_CROP);
-
-  gimp_rectangle_tool_set_constraint (rect_tool, TRUE);
 }
 
 static GObject *
@@ -154,32 +151,23 @@ gimp_crop_tool_constructor (GType                  type,
                             guint                  n_params,
                             GObjectConstructParam *params)
 {
-  GObject              *object;
-  GimpRectangleTool    *rectangle;
-  GimpRectangleOptions *options;
-  gboolean              layer_only;
+  GObject         *object;
+  GimpCropOptions *options;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   gimp_rectangle_tool_constructor (object);
 
-  rectangle = GIMP_RECTANGLE_TOOL (object);
-  options   = GIMP_RECTANGLE_TOOL_GET_OPTIONS (object);
+  options = GIMP_CROP_TOOL_GET_OPTIONS (object);
 
   g_signal_connect_object (options, "notify::layer-only",
                            G_CALLBACK (gimp_crop_tool_notify_layer_only),
                            object, 0);
 
-  g_object_get (options,
-                "layer-only", &layer_only,
-                NULL);
-
-  if (layer_only)
-    gimp_rectangle_tool_set_constraint (rectangle,
-                                        GIMP_RECTANGLE_CONSTRAIN_DRAWABLE);
-  else
-    gimp_rectangle_tool_set_constraint (rectangle,
-                                        GIMP_RECTANGLE_CONSTRAIN_IMAGE);
+  gimp_rectangle_tool_set_constraint (GIMP_RECTANGLE_TOOL (object),
+                                      options->layer_only ?
+                                      GIMP_RECTANGLE_CONSTRAIN_DRAWABLE :
+                                      GIMP_RECTANGLE_CONSTRAIN_IMAGE);
 
   return object;
 }
@@ -308,17 +296,8 @@ gimp_crop_tool_notify_layer_only (GimpCropOptions *options,
                                   GParamSpec      *pspec,
                                   GimpTool        *tool)
 {
-  GimpRectangleTool *rectangle = GIMP_RECTANGLE_TOOL (tool);
-  gboolean           layer_only;
-
-  g_object_get (options,
-                "layer-only", &layer_only,
-                NULL);
-
-  if (layer_only)
-    gimp_rectangle_tool_set_constraint (rectangle,
-                                        GIMP_RECTANGLE_CONSTRAIN_DRAWABLE);
-  else
-    gimp_rectangle_tool_set_constraint (rectangle,
-                                        GIMP_RECTANGLE_CONSTRAIN_IMAGE);
+  gimp_rectangle_tool_set_constraint (GIMP_RECTANGLE_TOOL (tool),
+                                      options->layer_only ?
+                                      GIMP_RECTANGLE_CONSTRAIN_DRAWABLE :
+                                      GIMP_RECTANGLE_CONSTRAIN_IMAGE);
 }

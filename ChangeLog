@@ -1,5 +1,11 @@
 2007-03-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpcroptool.c: access the GimpCropOptions structure
+	directly to read the "layer_only" option (don't use g_object_get),
+	some code cleanup.
+
+2007-03-31  Michael Natterer  <mitch@gimp.org>
+
 	Statusbar messages shouldn't depend on the emission of unrelated
 	signals:
 
