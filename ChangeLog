@@ -1,5 +1,14 @@
 2007-03-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimprectangleselecttool.c: read the "operation" member
+	of GimpSelectionOptions directly.
+
+	* app/tools/gimpellipseselecttool.c (gimp_ellipse_select_tool_draw):
+	chain up instead of calling gimp_rectangle_tool_draw() directly,
+	don't #include "gimprectantletool.h".
+
+2007-03-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpcroptool.c: access the GimpCropOptions structure
 	directly to read the "layer_only" option (don't use g_object_get),
 	some code cleanup.
@@ -28,7 +37,7 @@
 	* app/actions/view-actions.c
 	* app/actions/window-actions.c: add many missing action tooltips
 	and fixed some broken/inconsistent ones. Sorry for the big string
-	change but the inconsistenties were just too big to ship 2.4 like
+	change but the inconsistencies were just too big to ship 2.4 like
 	that.
 
 2007-03-30  Sven Neumann  <sven@gimp.org>

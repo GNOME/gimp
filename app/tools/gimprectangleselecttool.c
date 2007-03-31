@@ -346,9 +346,7 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
       if (rect_select->use_saved_op)
         operation = rect_select->operation;
       else
-        g_object_get (options,
-                      "operation", &operation,
-                      NULL);
+        operation = options->operation;
 
       undo = gimp_undo_stack_peek (image->undo_stack);
 
@@ -509,9 +507,7 @@ gimp_rect_select_tool_select (GimpRectangleTool *rectangle,
   if (rect_select->use_saved_op)
     operation = rect_select->operation;
   else
-    g_object_get (options,
-                  "operation", &operation,
-                  NULL);
+    operation = options->operation;
 
   /* if rectangle exists, turn it into a selection */
   if (rectangle_exists)
@@ -719,10 +715,10 @@ gimp_rect_select_tool_rectangle_changed (GimpRectangleTool *rectangle)
 
       if (! rect_select->use_saved_op)
         {
+          GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+
           /* remember the operation now in case we modify the rectangle */
-          g_object_get (gimp_tool_get_options (tool),
-                        "operation", &rect_select->operation,
-                        NULL);
+          rect_select->operation    = options->operation;
           rect_select->use_saved_op = TRUE;
         }
 

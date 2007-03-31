@@ -31,7 +31,6 @@
 
 #include "display/gimpdisplay.h"
 
-#include "gimprectangletool.h"
 #include "gimpellipseselecttool.h"
 #include "gimprectangleselectoptions.h"
 #include "gimptoolcontrol.h"
@@ -100,11 +99,11 @@ gimp_ellipse_select_tool_init (GimpEllipseSelectTool *ellipse_select)
 static void
 gimp_ellipse_select_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpRectSelectTool *rect_sel = GIMP_RECT_SELECT_TOOL (draw_tool);
-  gint                x1, y1;
-  gint                x2, y2;
+  gint x1, y1, x2, y2;
 
-  g_object_get (rect_sel,
+  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
+
+  g_object_get (draw_tool,
                 "x1", &x1,
                 "y1", &y1,
                 "x2", &x2,
@@ -117,8 +116,6 @@ gimp_ellipse_select_tool_draw (GimpDrawTool *draw_tool)
                            x2 - x1, y2 - y1,
                            0, 360 * 64,
                            FALSE);
-
-  gimp_rectangle_tool_draw (draw_tool);
 }
 
 static void
