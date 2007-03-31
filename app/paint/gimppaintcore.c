@@ -286,6 +286,9 @@ gimp_paint_core_real_push_undo (GimpPaintCore *core,
                                NULL);
 }
 
+
+/*  public functions  */
+
 void
 gimp_paint_core_paint (GimpPaintCore    *core,
                        GimpDrawable     *drawable,
@@ -361,6 +364,8 @@ gimp_paint_core_start (GimpPaintCore     *core,
   /*  Allocate the saved proj structure  */
   if (core->saved_proj_tiles)
     tile_manager_unref (core->saved_proj_tiles);
+
+  core->saved_proj_tiles = NULL;
 
   if (core->use_saved_proj)
     {

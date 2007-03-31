@@ -1,5 +1,12 @@
 2007-03-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/paint/gimppaintcore.c (gimp_paint_core_start): set
+	core->saved_proj_tiles to NULL after unrefing them.
+
+	* app/paint/gimppaintcore.h: whitespace fixes.
+
+2007-03-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimprectangleoptions.[ch]: made the
 	GimpRectangleOptionsPrivate struct public (ha ha).
 
