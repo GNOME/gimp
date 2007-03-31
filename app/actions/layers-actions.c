@@ -332,22 +332,26 @@ static const GimpEnumActionEntry layers_text_to_selection_actions[] =
 static const GimpEnumActionEntry layers_select_actions[] =
 {
   { "layers-select-top", NULL,
-    N_("Select _Top Layer"), "Home", NULL,
+    N_("Select _Top Layer"), "Home",
+    N_("Select the topmost layer"),
     GIMP_ACTION_SELECT_FIRST, FALSE,
     GIMP_HELP_LAYER_TOP },
 
   { "layers-select-bottom", NULL,
-    N_("Select _Bottom Layer"), "End", NULL,
+    N_("Select _Bottom Layer"), "End",
+    N_("Select the bottommost layer"),
     GIMP_ACTION_SELECT_LAST, FALSE,
     GIMP_HELP_LAYER_BOTTOM },
 
   { "layers-select-previous", NULL,
-    N_("Select _Previous Layer"), "Prior", NULL,
+    N_("Select _Previous Layer"), "Prior",
+    N_("Select the layer above the current layer"),
     GIMP_ACTION_SELECT_PREVIOUS, FALSE,
     GIMP_HELP_LAYER_PREVIOUS },
 
   { "layers-select-next", NULL,
-    N_("Select _Next Layer"), "Next", NULL,
+    N_("Select _Next Layer"), "Next",
+    N_("Select the layer below the current layer"),
     GIMP_ACTION_SELECT_NEXT, FALSE,
     GIMP_HELP_LAYER_NEXT }
 };

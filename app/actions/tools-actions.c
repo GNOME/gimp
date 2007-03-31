@@ -96,12 +96,14 @@ static const GimpToggleActionEntry tools_toggle_actions[] =
 static const GimpStringActionEntry tools_alternative_actions[] =
 {
   { "tools-by-color-select-short", GIMP_STOCK_TOOL_BY_COLOR_SELECT,
-    N_("_By Color"), NULL, NULL,
+    N_("_By Color"), NULL,
+    N_("Select regions with similar colors"),
     "gimp-by-color-select-tool",
     GIMP_HELP_TOOL_BY_COLOR_SELECT },
 
   { "tools-rotate-arbitrary", GIMP_STOCK_TOOL_ROTATE,
-    N_("_Arbitrary Rotation..."), "", NULL,
+    N_("_Arbitrary Rotation..."), "",
+    N_("Rotate by an arbitrary angle"),
     "gimp-rotate-layer",
     GIMP_HELP_TOOL_ROTATE }
 };

@@ -167,7 +167,8 @@ window_actions_display_opened (GdkDisplayManager *manager,
       entries[i].stock_id    = GIMP_STOCK_MOVE_TO_SCREEN;
       entries[i].label       = g_strdup_printf (_("Screen %s"), screen_name);
       entries[i].accelerator = NULL;
-      entries[i].tooltip     = NULL;
+      entries[i].tooltip     = g_strdup_printf (_("Move this window to "
+                                                  "screen %s"), screen_name);
       entries[i].value       = g_quark_from_string (screen_name);
       entries[i].help_id     = help_id;
 
@@ -193,6 +194,7 @@ window_actions_display_opened (GdkDisplayManager *manager,
         g_object_set_data (G_OBJECT (action), "screen", screen);
 
       g_free ((gchar *) entries[i].name);
+      g_free ((gchar *) entries[i].tooltip);
       g_free ((gchar *) entries[i].label);
     }
 

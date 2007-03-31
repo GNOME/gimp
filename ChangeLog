@@ -1,3 +1,20 @@
+2007-03-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/dialogs-actions.c
+	* app/actions/dock-actions.c
+	* app/actions/edit-actions.c
+	* app/actions/file-actions.c
+	* app/actions/help-actions.c
+	* app/actions/layers-actions.c
+	* app/actions/plug-in-actions.c
+	* app/actions/tools-actions.c
+	* app/actions/vectors-actions.c
+	* app/actions/view-actions.c
+	* app/actions/window-actions.c: add many missing action tooltips
+	and fixed some broken/inconsistent ones. Sorry for the big string
+	change but the inconsistenties were just too big to ship 2.4 like
+	that.
+
 2007-03-30  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c: hardcode the result of

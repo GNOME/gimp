@@ -110,13 +110,13 @@ static const GimpActionEntry vectors_actions[] =
 
   { "vectors-stroke", GIMP_STOCK_PATH_STROKE,
     N_("Stro_ke Path..."), NULL,
-    N_("Stroke path..."),
+    N_("Paint along the path"),
     G_CALLBACK (vectors_stroke_cmd_callback),
     GIMP_HELP_PATH_STROKE },
 
   { "vectors-stroke-last-values", GIMP_STOCK_PATH_STROKE,
     N_("Stro_ke Path"), NULL,
-    N_("Stroke path with last values"),
+    N_("Paint along the path with last values"),
     G_CALLBACK (vectors_stroke_last_vals_cmd_callback),
     GIMP_HELP_PATH_STROKE },
 
@@ -197,7 +197,8 @@ static const GimpEnumActionEntry vectors_selection_to_vectors_actions[] =
     GIMP_HELP_SELECTION_TO_PATH },
 
   { "vectors-selection-to-vectors-short", GIMP_STOCK_SELECTION_TO_PATH,
-    N_("To _Path"), NULL, NULL,
+    N_("To _Path"), NULL,
+    N_("Selection to path"),
     FALSE, FALSE,
     GIMP_HELP_SELECTION_TO_PATH },
 

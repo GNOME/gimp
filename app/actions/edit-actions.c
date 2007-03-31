@@ -99,7 +99,8 @@ static const GimpActionEntry edit_actions[] =
     GIMP_HELP_EDIT_UNDO_CLEAR },
 
   { "edit-fade", GTK_STOCK_UNDO,
-    N_("_Fade..."), "", NULL,
+    N_("_Fade..."), "",
+    N_("Modify paint mode and opacity of the last pixel manipulation"),
     G_CALLBACK (edit_fade_cmd_callback),
     GIMP_HELP_EDIT_FADE },
 
@@ -146,22 +147,26 @@ static const GimpActionEntry edit_actions[] =
     GIMP_HELP_EDIT_PASTE_AS_NEW },
 
   { "edit-named-cut", GTK_STOCK_CUT,
-    N_("Cu_t Named..."), "<control><shift>X",NULL,
+    N_("Cu_t Named..."), "<control><shift>X",
+    N_("Move the selected pixels to a named buffer"),
     G_CALLBACK (edit_named_cut_cmd_callback),
     GIMP_HELP_BUFFER_CUT },
 
   { "edit-named-copy", GTK_STOCK_COPY,
-    N_("_Copy Named..."), "<control><shift>C", NULL,
+    N_("_Copy Named..."), "<control><shift>C",
+    N_("Copy the selected pixels to a named buffer"),
     G_CALLBACK (edit_named_copy_cmd_callback),
     GIMP_HELP_BUFFER_COPY },
 
   { "edit-named-copy-visible", NULL, /* GIMP_STOCK_COPY_VISIBLE, */
-    N_("Copy _Visible Named..."), "", NULL,
+    N_("Copy _Visible Named..."), "",
+    N_("Copy the selected region to a named buffer"),
     G_CALLBACK (edit_named_copy_visible_cmd_callback),
     GIMP_HELP_BUFFER_COPY },
 
   { "edit-named-paste", GTK_STOCK_PASTE,
-    N_("_Paste Named..."), "<control><shift>V", NULL,
+    N_("_Paste Named..."), "<control><shift>V",
+    N_("Paste the content of a named buffer"),
     G_CALLBACK (edit_named_paste_cmd_callback),
     GIMP_HELP_BUFFER_PASTE },
 

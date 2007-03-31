@@ -101,7 +101,7 @@ static const GimpActionEntry plug_in_actions[] =
 
   { "plug-in-reset-all", GIMP_STOCK_RESET,
     N_("Reset all _Filters"), NULL,
-    N_("Set all plug-in to their default settings"),
+    N_("Reset all plug-ins to their default settings"),
     G_CALLBACK (plug_in_reset_all_cmd_callback),
     GIMP_HELP_FILTER_RESET_ALL }
 };

@@ -49,7 +49,8 @@ static const GimpActionEntry dock_actions[] =
     GIMP_HELP_DOCK_CLOSE },
 
   { "dock-open-display", NULL,
-    N_("_Open Display..."), NULL, NULL,
+    N_("_Open Display..."), NULL,
+    N_("Connect to another display"),
     G_CALLBACK (window_open_display_cmd_callback),
     NULL }
 };
