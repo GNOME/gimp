@@ -579,7 +579,7 @@ load_image (const gchar *filename)
     {
       g_message (_("Could not open '%s' for reading: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
-      gimp_quit ();
+      return -1;
     }
 
   TIFFSetWarningHandler (tiff_warning);
@@ -607,14 +607,14 @@ load_image (const gchar *filename)
         {
           g_message ("Could not get image width from '%s'",
                      gimp_filename_to_utf8 (filename));
-          gimp_quit ();
+          return -1;
         }
 
       if (!TIFFGetField (tif, TIFFTAG_IMAGELENGTH, &rows))
         {
           g_message ("Could not get image length from '%s'",
                      gimp_filename_to_utf8 (filename));
-          gimp_quit ();
+          return -1;
         }
 
       if (!TIFFGetField (tif, TIFFTAG_PHOTOMETRIC, &photomet))
@@ -730,7 +730,7 @@ load_image (const gchar *filename)
           if ((image = gimp_image_new (cols, rows, image_type)) == -1)
             {
               g_message ("Could not create a new image");
-              gimp_quit ();
+              return -1;
             }
 
           gimp_image_undo_disable (image);
@@ -907,7 +907,7 @@ load_image (const gchar *filename)
                 {
                   g_message ("Could not get colormaps from '%s'",
                              gimp_filename_to_utf8 (filename));
-                  gimp_quit ();
+                  return -1;
                 }
 
               for (i = 0, j = 0; i < (1 << bps); i++)

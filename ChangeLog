@@ -1,3 +1,14 @@
+2007-03-31  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* plug-ins/common/svg.c: 
+	* plug-ins/common/tiff.c: 
+	* plug-ins/common/wmf.c: 
+	* plug-ins/jpeg/jpeg-load.c: some file load plug-ins did call
+	gimp_quit() in their load functions. This aborts the plug-in
+	instead of returning a GIMP_PDB_EXECUTION_ERROR. The run()
+	function in each plug-in was already prepared to do this on
+	errors.
+
 2007-03-31  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdrawable-blend.c: use SQR(x) instead of x*x.

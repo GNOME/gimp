@@ -948,7 +948,7 @@ load_image (const gchar *filename)
     {
       g_message (_("Could not open '%s' for reading."),
                  gimp_filename_to_utf8 (filename));
-      gimp_quit ();
+      return -1;
     }
 
   gimp_progress_init_printf (_("Opening '%s'"),

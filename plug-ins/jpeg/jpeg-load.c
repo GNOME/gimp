@@ -87,7 +87,7 @@ load_image (const gchar *filename,
     {
       g_message (_("Could not open '%s' for reading: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
-      gimp_quit ();
+      return -1;
     }
 
   if (!preview)
@@ -112,7 +112,7 @@ load_image (const gchar *filename,
       if (preview)
         destroy_preview();
 
-      gimp_quit ();
+      return -1;
     }
 
   /* Now we can initialize the JPEG decompression object. */
@@ -203,7 +203,7 @@ load_image (const gchar *filename,
                  "with %d color channels, using colorspace %d (%d).",
                  cinfo.output_components, cinfo.out_color_space,
                  cinfo.jpeg_color_space);
-      gimp_quit ();
+      return -1;
       break;
     }
 

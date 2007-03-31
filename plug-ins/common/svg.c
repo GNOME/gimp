@@ -320,7 +320,7 @@ load_image (const gchar *filename)
       g_message (_("Could not open '%s' for reading: %s"),
                  gimp_filename_to_utf8 (filename),
                  error ? error->message : _("Unknown reason"));
-      gimp_quit ();
+      return -1;
     }
 
   gimp_progress_init (_("Rendering SVG"));
