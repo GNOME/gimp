@@ -36,43 +36,7 @@
 #include "gimp-intl.h"
 
 
-#define GIMP_RECTANGLE_OPTIONS_GET_PRIVATE(obj) \
-  (gimp_rectangle_options_get_private (GIMP_RECTANGLE_OPTIONS (obj)))
-
-typedef struct _GimpRectangleOptionsPrivate GimpRectangleOptionsPrivate;
-
-struct _GimpRectangleOptionsPrivate
-{
-  gboolean           auto_shrink;
-  gboolean           shrink_merged;
-
-  gboolean           highlight;
-  GimpRectangleGuide guide;
-
-  gdouble            x0;
-  gdouble            y0;
-
-  gboolean           fixed_width;
-  gdouble            width;
-
-  gboolean           fixed_height;
-  gdouble            height;
-
-  gboolean           fixed_aspect;
-  gdouble            aspect_numerator;
-  gdouble            aspect_denominator;
-
-  gboolean           fixed_center;
-  gdouble            center_x;
-  gdouble            center_y;
-
-  GimpUnit           unit;
-};
-
 static void gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *rectangle_options_iface);
-
-static GimpRectangleOptionsPrivate *
-            gimp_rectangle_options_get_private     (GimpRectangleOptions *options);
 
 
 GType
@@ -251,7 +215,7 @@ gimp_rectangle_options_private_finalize (GimpRectangleOptionsPrivate *private)
   g_free (private);
 }
 
-static GimpRectangleOptionsPrivate *
+GimpRectangleOptionsPrivate *
 gimp_rectangle_options_get_private (GimpRectangleOptions *options)
 {
   GimpRectangleOptionsPrivate *private;
@@ -407,6 +371,7 @@ gimp_rectangle_options_set_property (GObject      *object,
     case GIMP_RECTANGLE_OPTIONS_PROP_UNIT:
       private->unit = g_value_get_int (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -423,7 +388,6 @@ gimp_rectangle_options_get_property (GObject      *object,
   GimpRectangleOptionsPrivate *private;
 
   private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
-
 
   switch (property_id)
     {
@@ -478,6 +442,7 @@ gimp_rectangle_options_get_property (GObject      *object,
     case GIMP_RECTANGLE_OPTIONS_PROP_UNIT:
       g_value_set_int (value, private->unit);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -524,17 +489,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
   vbox2 = gtk_vbox_new (FALSE, 0);
 
-  frame = gimp_prop_expanding_frame_new (config, "auto-shrink",
-                                         _("Auto shrink selection"),
-                                         vbox2, NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
-
-  button = gimp_prop_check_button_new (config, "shrink-merged",
-                                       _("Sample merged"));
-  gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
+  /* Fixed Center */
   button = gimp_prop_check_button_new (config, "fixed-center",
                                        _("Expand from center"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -639,6 +594,19 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   combo = gimp_prop_enum_combo_box_new (config, "guide", 0, 0);
   gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
   gtk_widget_show (combo);
+
+  /*  Auto Shrink  */
+  button = gtk_button_new_with_label (_("Auto Shrink Selection"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_set_sensitive (button, FALSE);
+  gtk_widget_show (button);
+
+  private->auto_shrink_button = button;
+
+  button = gimp_prop_check_button_new (config, "shrink-merged",
+                                       _("Shrink merged"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   return vbox;
 }

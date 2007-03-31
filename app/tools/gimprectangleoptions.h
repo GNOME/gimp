@@ -49,31 +49,68 @@ typedef enum
 #define GIMP_RECTANGLE_OPTIONS(obj)               (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_RECTANGLE_OPTIONS, GimpRectangleOptions))
 #define GIMP_RECTANGLE_OPTIONS_GET_INTERFACE(obj) (G_TYPE_INSTANCE_GET_INTERFACE ((obj), GIMP_TYPE_RECTANGLE_OPTIONS, GimpRectangleOptionsInterface))
 
+#define GIMP_RECTANGLE_OPTIONS_GET_PRIVATE(obj)   (gimp_rectangle_options_get_private (GIMP_RECTANGLE_OPTIONS (obj)))
+
 
 typedef struct _GimpRectangleOptions          GimpRectangleOptions;
 typedef struct _GimpRectangleOptionsInterface GimpRectangleOptionsInterface;
+typedef struct _GimpRectangleOptionsPrivate   GimpRectangleOptionsPrivate;
 
 struct _GimpRectangleOptionsInterface
 {
   GTypeInterface base_iface;
 };
 
+struct _GimpRectangleOptionsPrivate
+{
+  gboolean           auto_shrink;
+  gboolean           shrink_merged;
+
+  gboolean           highlight;
+  GimpRectangleGuide guide;
+
+  gdouble            x0;
+  gdouble            y0;
+
+  gboolean           fixed_width;
+  gdouble            width;
+
+  gboolean           fixed_height;
+  gdouble            height;
+
+  gboolean           fixed_aspect;
+  gdouble            aspect_numerator;
+  gdouble            aspect_denominator;
+
+  gboolean           fixed_center;
+  gdouble            center_x;
+  gdouble            center_y;
+
+  GimpUnit           unit;
+
+  /* options gui */
+  GtkWidget         *auto_shrink_button;
+};
+
 
 GType       gimp_rectangle_options_interface_get_type  (void) G_GNUC_CONST;
 
-GtkWidget * gimp_rectangle_options_gui                 (GimpToolOptions *tool_options);
+GtkWidget * gimp_rectangle_options_gui                 (GimpToolOptions      *tool_options);
+
+GimpRectangleOptionsPrivate *
+            gimp_rectangle_options_get_private         (GimpRectangleOptions *options);
 
 
 /*  convenience functions  */
 
-void      gimp_rectangle_options_install_properties (GObjectClass *klass);
-void      gimp_rectangle_options_set_property       (GObject      *object,
-                                                     guint         property_id,
-                                                     const GValue *value,
-                                                     GParamSpec   *pspec);
-void      gimp_rectangle_options_get_property       (GObject      *object,
-                                                     guint         property_id,
-                                                     GValue       *value,
-                                                     GParamSpec   *pspec);
+void        gimp_rectangle_options_install_properties (GObjectClass *klass);
+void        gimp_rectangle_options_set_property       (GObject      *object,
+                                                       guint         property_id,
+                                                       const GValue *value,
+                                                       GParamSpec   *pspec);
+void        gimp_rectangle_options_get_property       (GObject      *object,
+                                                       guint         property_id,
+                                                       GValue       *value,
+                                                       GParamSpec   *pspec);
 
 #endif  /* __GIMP_RECTANGLE_OPTIONS_H__ */
