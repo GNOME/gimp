@@ -274,7 +274,7 @@ gradient_calc_conical_sym_factor (gdouble  dist,
 
       /* Calculate offset from the start in pixels */
 
-      r = sqrt (x * x + y * y);
+      r = sqrt (SQR (x) + SQR (y));
 
       vec[0] = x / r;
       vec[1] = y / r;

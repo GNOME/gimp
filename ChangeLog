@@ -1,5 +1,9 @@
 2007-03-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdrawable-blend.c: use SQR(x) instead of x*x.
+
+2007-03-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/paint/gimppaintcore.c (gimp_paint_core_start): set
 	core->saved_proj_tiles to NULL after unrefing them.
 
