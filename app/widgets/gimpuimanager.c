@@ -337,9 +337,18 @@ gimp_ui_manager_connect_proxy (GtkUIManager *manager,
                                           GIMP_HELP_ID));
 
   if (GTK_IS_MENU_ITEM (proxy))
-    g_signal_connect_after (proxy, "realize",
-                            G_CALLBACK (gimp_ui_manager_item_realize),
-                            manager);
+    {
+      g_signal_connect (proxy, "select",
+                        G_CALLBACK (gimp_ui_manager_menu_item_select),
+                        manager);
+      g_signal_connect (proxy, "deselect",
+                        G_CALLBACK (gimp_ui_manager_menu_item_deselect),
+                        manager);
+
+      g_signal_connect_after (proxy, "realize",
+                              G_CALLBACK (gimp_ui_manager_item_realize),
+                              manager);
+    }
 }
 
 static GtkWidget *
@@ -850,13 +859,6 @@ gimp_ui_manager_item_realize (GtkWidget     *widget,
   g_signal_handlers_disconnect_by_func (widget,
                                         gimp_ui_manager_item_realize,
                                         manager);
-
-  g_signal_connect (widget, "select",
-                    G_CALLBACK (gimp_ui_manager_menu_item_select),
-                    manager);
-  g_signal_connect (widget, "deselect",
-                    G_CALLBACK (gimp_ui_manager_menu_item_deselect),
-                    manager);
 
   if (GTK_IS_MENU_SHELL (widget->parent))
     {

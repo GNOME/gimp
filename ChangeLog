@@ -1,5 +1,15 @@
 2007-03-31  Michael Natterer  <mitch@gimp.org>
 
+	Statusbar messages shouldn't depend on the emission of unrelated
+	signals:
+
+	* app/widgets/gimpuimanager.c (gimp_ui_manager_connect_proxy):
+	connect to the menu items' "select" and "deselect" signals here...
+
+	(gimp_ui_manager_item_realize): ...instead of here.
+
+2007-03-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/actions/dialogs-actions.c
 	* app/actions/dock-actions.c
 	* app/actions/edit-actions.c
