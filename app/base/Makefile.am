@@ -10,8 +10,6 @@ libappbase_a_SOURCES = \
 	base-types.h		\
 	boundary.c		\
 	boundary.h		\
-	brush-scale.c		\
-	brush-scale.h		\
 	color-balance.c		\
 	color-balance.h		\
 	colorize.c		\

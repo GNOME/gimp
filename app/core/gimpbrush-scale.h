@@ -1,5 +1,7 @@
-/* GIMP - The GNU Image Manipulation Program
+/* The GIMP -- an image manipulation program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+ *
+ * gimpbrush-scale.h
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,16 +18,20 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __BRUSH_SCALE_H__
-#define __BRUSH_SCALE_H__
+#ifndef __GIMP_BRUSH_SCALE_H__
+#define __GIMP_BRUSH_SCALE_H__
 
 
-MaskBuf * brush_scale_mask   (MaskBuf *brush_mask,
-                              gint     dest_width,
-                              gint     dest_height);
-MaskBuf * brush_scale_pixmap (MaskBuf *pixmap,
-                              gint     dest_width,
-                              gint     dest_height);
+/*  virtual functions of GimpBrush, don't call directly  */
+
+void      gimp_brush_real_scale_size   (GimpBrush *brush,
+                                        gdouble    scale,
+                                        gint      *scaled_width,
+                                        gint      *scaled_height);
+TempBuf * gimp_brush_real_scale_mask   (GimpBrush *brush,
+                                        gdouble    scale);
+TempBuf * gimp_brush_real_scale_pixmap (GimpBrush *brush,
+                                        gdouble    scale);
 
 
-#endif  /*  __BRUSH_SCALE_H__  */
+#endif  /*  __GIMP_BRUSH_SCALE_H__  */

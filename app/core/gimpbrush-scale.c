@@ -1,6 +1,8 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * gimpbrush-scale.c
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -20,16 +22,125 @@
 
 #include <glib-object.h>
 
-#include "base-types.h"
+#include "core-types.h"
 
-#include "brush-scale.h"
-#include "temp-buf.h"
+#include "gimpbrush.h"
+#include "gimpbrush-scale.h"
+
+#include "base/pixel-region.h"
+#include "base/temp-buf.h"
+
+#include "paint-funcs/scale-funcs.h"
 
 
-MaskBuf *
-brush_scale_mask (MaskBuf *brush_mask,
-                  gint     dest_width,
-                  gint     dest_height)
+/*  local function prototypes  */
+
+static TempBuf * gimp_brush_scale_buf_up      (TempBuf *brush_buf,
+                                               gint     dest_width,
+                                               gint     dest_height);
+static MaskBuf * gimp_brush_scale_mask_down   (MaskBuf *brush_mask,
+                                               gint     dest_width,
+                                               gint     dest_height);
+static MaskBuf * gimp_brush_scale_pixmap_down (MaskBuf *pixmap,
+                                               gint     dest_width,
+                                               gint     dest_height);
+
+
+/*  public functions  */
+
+void
+gimp_brush_real_scale_size (GimpBrush *brush,
+                            gdouble    scale,
+                            gint      *width,
+                            gint      *height)
+{
+  *width  = (gint) (brush->mask->width  * scale + 0.5);
+  *height = (gint) (brush->mask->height * scale + 0.5);
+}
+
+TempBuf *
+gimp_brush_real_scale_mask (GimpBrush *brush,
+                            gdouble    scale)
+{
+  gint dest_width;
+  gint dest_height;
+
+  gimp_brush_scale_size (brush, scale, &dest_width, &dest_height);
+
+  if (dest_width <= 0 || dest_height <= 0)
+    return NULL;
+
+  if (scale <= 1.0)
+    {
+      /*  Downscaling with brush_scale_mask is much faster than with
+       *  gimp_brush_scale_buf.
+       */
+      return gimp_brush_scale_mask_down (brush->mask,
+                                         dest_width, dest_height);
+    }
+
+  return gimp_brush_scale_buf_up (brush->mask, dest_width, dest_height);
+}
+
+TempBuf *
+gimp_brush_real_scale_pixmap (GimpBrush *brush,
+                              gdouble    scale)
+{
+  gint dest_width;
+  gint dest_height;
+
+  gimp_brush_scale_size (brush, scale, &dest_width, &dest_height);
+
+  if (dest_width <= 0 || dest_height <= 0)
+    return NULL;
+
+  if (scale <= 1.0)
+    {
+      /*  Downscaling with brush_scale_pixmap is much faster than with
+       *  gimp_brush_scale_buf.
+       */
+      return gimp_brush_scale_pixmap_down (brush->pixmap,
+                                           dest_width, dest_height);
+    }
+
+  return gimp_brush_scale_buf_up (brush->pixmap, dest_width, dest_height);
+}
+
+
+/*  private functions  */
+
+static TempBuf *
+gimp_brush_scale_buf_up (TempBuf *brush_buf,
+                         gint     dest_width,
+                         gint     dest_height)
+{
+  PixelRegion  source_region;
+  PixelRegion  dest_region;
+  TempBuf     *dest_brush_buf;
+
+  pixel_region_init_temp_buf (&source_region, brush_buf,
+                              0, 0,
+                              brush_buf->width,
+                              brush_buf->height);
+
+  dest_brush_buf = temp_buf_new (dest_width, dest_height, brush_buf->bytes,
+                                 0, 0, NULL);
+
+  pixel_region_init_temp_buf (&dest_region, dest_brush_buf,
+                              0, 0,
+                              dest_width,
+                              dest_height);
+
+  scale_region (&source_region, &dest_region, GIMP_INTERPOLATION_LINEAR,
+                NULL, NULL);
+
+  return dest_brush_buf;
+}
+
+static MaskBuf *
+gimp_brush_scale_mask_down (MaskBuf *brush_mask,
+                            gint     dest_width,
+                            gint     dest_height)
 {
   MaskBuf *scale_brush;
   gint     src_width;
@@ -184,10 +295,10 @@ brush_scale_mask (MaskBuf *brush_mask,
   dest[1] += factor * src[1]; \
   dest[2] += factor * src[2];
 
-MaskBuf *
-brush_scale_pixmap (MaskBuf *pixmap,
-                    gint     dest_width,
-                    gint     dest_height)
+static MaskBuf *
+gimp_brush_scale_pixmap_down (MaskBuf *pixmap,
+                              gint     dest_width,
+                              gint     dest_height)
 {
   MaskBuf *scale_brush;
   gint     src_width;

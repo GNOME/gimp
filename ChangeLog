@@ -1,3 +1,24 @@
+2007-04-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/Makefile.am
+	* app/base/brush-scale.[ch]: removed these files.
+
+	* app/core/Makefile.am
+	* app/core/gimpbrush-scale.[ch]: added the functions here as
+	static utility functions. Also move the default implementations of
+	GimpBrush::scale_size(), ::scale_mask() and ::scale_pixmap() here,
+	including their utility functions.
+
+	* app/core/gimpbrush.c: remove all scale stuff and
+	include "gimpbrush-scale.h" instead.
+
+	(gimp_brush_get_new_preview): use GimpBrush's scale functions
+	instead of the now private ones. Cleanup.
+
+	(gimp_brush_scale_mask)
+	(gimp_brush_scale_pixmap): return a copy of the buf for
+	scale == 1.0.
+
 2007-03-31  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* plug-ins/common/svg.c: 
