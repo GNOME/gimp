@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-02 10:47+0200\n"
-"PO-Revision-Date: 2007-04-02 10:47+0200\n"
+"POT-Creation-Date: 2007-04-02 18:29+0200\n"
+"PO-Revision-Date: 2007-04-02 18:29+0200\n"
 "Last-Translator: \n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1010,18 +1010,16 @@ msgid "_Brushes"
 msgstr "_Stopy"
 
 #: ../app/actions/dialogs-actions.c:148
-#, fuzzy
 msgid "Open the brushes dialog"
-msgstr "Otevřít dialog výběru stopy"
+msgstr "Otevřít dialog stop"
 
 #: ../app/actions/dialogs-actions.c:153
 msgid "P_atterns"
 msgstr "_Vzorky"
 
 #: ../app/actions/dialogs-actions.c:154
-#, fuzzy
 msgid "Open the patterns dialog"
-msgstr "Otevřít dialog výběru vzorku"
+msgstr "Otevřít dialog vzorků"
 
 #: ../app/actions/dialogs-actions.c:159
 msgid "_Gradients"
@@ -3884,18 +3882,16 @@ msgid "Stro_ke Path..."
 msgstr "Vyk_reslit cestu..."
 
 #: ../app/actions/vectors-actions.c:113
-#, fuzzy
 msgid "Paint along the path"
-msgstr "Kreslit podél obrysu výběru"
+msgstr "Kreslit podél cesty"
 
 #: ../app/actions/vectors-actions.c:118
 msgid "Stro_ke Path"
 msgstr "_Vykreslit cestu"
 
 #: ../app/actions/vectors-actions.c:119
-#, fuzzy
 msgid "Paint along the path with last values"
-msgstr "Vykreslit cestu s posledními hodnotami"
+msgstr "Kreslit podél cesty s posledními hodnotami"
 
 #: ../app/actions/vectors-actions.c:124
 msgid "Co_py Path"
@@ -4089,9 +4085,8 @@ msgid "Show _Guides"
 msgstr "Zobrazovat _vodítka"
 
 #: ../app/actions/view-actions.c:154
-#, fuzzy
 msgid "Display the image's guides"
-msgstr "Zobrazit obrys výběru"
+msgstr "Zobrazit vodítka obrázku"
 
 #: ../app/actions/view-actions.c:160
 msgid "S_how Grid"
@@ -4147,9 +4142,8 @@ msgid "Show _Menubar"
 msgstr "Zobrazovat lištu s _menu"
 
 #: ../app/actions/view-actions.c:203
-#, fuzzy
 msgid "Show this window's menubar"
-msgstr "Zobrazovat lištu s _menu"
+msgstr "Zobrazovat lištu nabídky tohoto okna"
 
 #: ../app/actions/view-actions.c:209
 msgid "Show R_ulers"
@@ -4157,25 +4151,23 @@ msgstr "Zobrazovat p_ravítka"
 
 #: ../app/actions/view-actions.c:210
 msgid "Show this window's rulers"
-msgstr ""
+msgstr "Zobrazit pravítka tohoto okna"
 
 #: ../app/actions/view-actions.c:216
 msgid "Show Scroll_bars"
 msgstr "Zobrazovat _posuvné pruhy"
 
 #: ../app/actions/view-actions.c:217
-#, fuzzy
 msgid "Show this window's scrollbars"
-msgstr "Zobrazovat _posuvné lišty"
+msgstr "Zobrazovat posuvné lišty tohoto okna"
 
 #: ../app/actions/view-actions.c:223
 msgid "Show S_tatusbar"
 msgstr "Zobrazovat s_tavovou lištu"
 
 #: ../app/actions/view-actions.c:224
-#, fuzzy
 msgid "Show this window's statusbar"
-msgstr "Zobrazovat tipy při _spuštění"
+msgstr "Zobrazovat stavovou lištu tohoto okna"
 
 #: ../app/actions/view-actions.c:230
 msgid "Fullscr_een"
@@ -4259,7 +4251,7 @@ msgstr "_Jiné..."
 
 #: ../app/actions/view-actions.c:347
 msgid "Set a custom zoom factor"
-msgstr ""
+msgstr "Nastavit vlastní poměr přiblížení"
 
 #: ../app/actions/view-actions.c:355
 msgid "From _Theme"
@@ -4275,18 +4267,16 @@ msgid "_Light Check Color"
 msgstr "Barva _světlé šachovnice"
 
 #: ../app/actions/view-actions.c:362
-#, fuzzy
 msgid "Use the light check color"
-msgstr "Barva světlé šachovnice"
+msgstr "Použít barvu světlých polí šachovnice"
 
 #: ../app/actions/view-actions.c:367
 msgid "_Dark Check Color"
 msgstr "Barva _tmavé šachovnice"
 
 #: ../app/actions/view-actions.c:368
-#, fuzzy
 msgid "Use the dark check color"
-msgstr "Barva tmavé šachovnice"
+msgstr "Použít barvu tmavých polí šachovnice"
 
 #: ../app/actions/view-actions.c:373
 msgid "Select _Custom Color..."
@@ -4294,7 +4284,7 @@ msgstr "Vybrat _vlastní barvu..."
 
 #: ../app/actions/view-actions.c:374
 msgid "Use an arbitrary color"
-msgstr ""
+msgstr "Použít libovolnou barvu"
 
 #: ../app/actions/view-actions.c:379
 msgid "As in _Preferences"
