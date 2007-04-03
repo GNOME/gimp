@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-02 18:29+0200\n"
-"PO-Revision-Date: 2007-04-02 18:29+0200\n"
+"POT-Creation-Date: 2007-04-03 13:03+0200\n"
+"PO-Revision-Date: 2007-04-03 13:02+0200\n"
 "Last-Translator: \n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -867,9 +867,8 @@ msgid "_Brushes, Patterns & Gradients"
 msgstr "_Stopy, vzorky a přechody"
 
 #: ../app/actions/dialogs-actions.c:49
-#, fuzzy
 msgid "Open a Brushes, Patterns & Gradients dock"
-msgstr "_Stopy, vzorky a přechody"
+msgstr "Otevřít dok Stopy, vzorky a přechody"
 
 #: ../app/actions/dialogs-actions.c:54
 msgid "_Misc. Stuff"
@@ -893,72 +892,64 @@ msgid "Tool _Options"
 msgstr "_Volby nástrojů"
 
 #: ../app/actions/dialogs-actions.c:70
-#, fuzzy
 msgid "Open the tool options dialog"
-msgstr "Otevřít dialog výběru písma"
+msgstr "Otevřít dialog voleb nástrojů"
 
 #: ../app/actions/dialogs-actions.c:75
 msgid "_Device Status"
 msgstr "_Stav zařízení"
 
 #: ../app/actions/dialogs-actions.c:76
-#, fuzzy
 msgid "Open the device status dialog"
-msgstr "Otevřít dialog výběru přechodu"
+msgstr "Otevřít dialog stavu zařízení"
 
 #: ../app/actions/dialogs-actions.c:81
 msgid "_Layers"
 msgstr "_Vrstvy"
 
 #: ../app/actions/dialogs-actions.c:82
-#, fuzzy
 msgid "Open the layers dialog"
-msgstr "Otevřít dialog výběru vzorku"
+msgstr "Otevřít dialog vrstev"
 
 #: ../app/actions/dialogs-actions.c:87
 msgid "_Channels"
 msgstr "_Kanály"
 
 #: ../app/actions/dialogs-actions.c:88
-#, fuzzy
 msgid "Open the channels dialog"
-msgstr "Otevřít dialog výběru písma"
+msgstr "Otevřít dialog kanálů"
 
 #: ../app/actions/dialogs-actions.c:93
 msgid "_Paths"
 msgstr "_Cesty"
 
 #: ../app/actions/dialogs-actions.c:94
-#, fuzzy
 msgid "Open the paths dialog"
-msgstr "Otevřít dialog výběru vzorku"
+msgstr "Otevřít dialog cest"
 
 #: ../app/actions/dialogs-actions.c:99
 msgid "Color_map"
 msgstr "_Mapa barev"
 
 #: ../app/actions/dialogs-actions.c:100
-#, fuzzy
 msgid "Open the colormap dialog"
-msgstr "Otevřít dialog výběru písma"
+msgstr "Otevřít dialog mapy barev"
 
 #: ../app/actions/dialogs-actions.c:105
 msgid "Histogra_m"
 msgstr "_Histogram"
 
 #: ../app/actions/dialogs-actions.c:106
-#, fuzzy
 msgid "Open the histogram dialog"
-msgstr "Otevřít dialog výběru stopy"
+msgstr "Otevřít dialog histogramu"
 
 #: ../app/actions/dialogs-actions.c:111
 msgid "_Selection Editor"
 msgstr "_Editor výběru"
 
 #: ../app/actions/dialogs-actions.c:112
-#, fuzzy
 msgid "Open the selection editor"
-msgstr "Otevřít dialog výběru písma"
+msgstr "Otevřít editor výběru"
 
 #: ../app/actions/dialogs-actions.c:117
 msgid "Na_vigation"
@@ -2356,7 +2347,7 @@ msgstr "_Kontextová nápověda"
 
 #: ../app/actions/help-actions.c:48
 msgid "Show the help for a specific user interface item"
-msgstr ""
+msgstr "Zobrazit nápovědu pro určitý prvek grafického rozhraní"
 
 #: ../app/actions/image-actions.c:47
 msgid "Toolbox Menu"
