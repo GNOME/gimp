@@ -7,14 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Project\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-17 21:14+0000\n"
+"POT-Creation-Date: 2007-04-05 19:03+0100\n"
 "PO-Revision-Date: 2006-11-18 00:54+0100\n"
 "Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n == 0 ? 0 : n == 1 ? 1 : n == 2 ? 2 : n >= 3 && n <= 10 ? 3 : n >= 11 && n <= 99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=6; plural=n == 0 ? 0 : n == 1 ? 1 : n == 2 ? 2 : n >= "
+"3 && n <= 10 ? 3 : n >= 11 && n <= 99 ? 4 : 5;\n"
 "X-Poedit-Language: Arabic\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:335
@@ -32,21 +33,18 @@ msgstr "حدث خطأ مجهول"
 msgid "_More Information"
 msgstr "بيانات سيّئة"
 
-#: ../plug-ins/pygimp/gimpfu.py:461
-#: ../plug-ins/pygimp/gimpfu.py:473
+#: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
 #: ../plug-ins/pygimp/gimpfu.py:479
 #, fuzzy
 msgid "No"
 msgstr "لا"
 
-#: ../plug-ins/pygimp/gimpfu.py:471
-#: ../plug-ins/pygimp/gimpfu.py:479
+#: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
 #, fuzzy
 msgid "Yes"
 msgstr "نعم"
 
-#: ../plug-ins/pygimp/gimpfu.py:517
-#: ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
 #, fuzzy
 msgid "Python-Fu File Selection"
 msgstr "اعرض صندوق حوار اختيار ملف"
@@ -80,7 +78,7 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
 #, fuzzy
-msgid "Character source"
+msgid "Character _source"
 msgstr "_مصدر الصفحة"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
@@ -99,17 +97,17 @@ msgid "Entry box"
 msgstr "_صندوق البريد:"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
-msgid "File to read or characters to use"
+msgid "_File to read or characters to use"
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 #, fuzzy
-msgid "Font size in pixels"
+msgid "Fo_nt size in pixels"
 msgstr "حجم الخط بالنقاط"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 #, fuzzy
-msgid "Write a separate CSS file"
+msgid "_Write a separate CSS file"
 msgstr "فشلت كتابة الملف `%s': %s"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
@@ -162,7 +160,7 @@ msgstr "ضباب"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:59
 #, fuzzy
-msgid "Layer name"
+msgid "_Layer name"
 msgstr "اسم الموصول"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:59
@@ -172,16 +170,16 @@ msgstr "غيوم مفككة"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:60
 #, fuzzy
-msgid "Fog color"
+msgid "_Fog color"
 msgstr "إضبط الألوان"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:61
-msgid "Turbulence"
+msgid "_Turbulence"
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:62
 #, fuzzy
-msgid "Opacity"
+msgid "Op_acity"
 msgstr "عتمة الخلفية"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
@@ -204,7 +202,7 @@ msgstr "ال_لوحة:"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
 #, fuzzy
-msgid "Offset"
+msgid "Off_set"
 msgstr "الانزياح السّيني"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
@@ -219,7 +217,7 @@ msgstr "لوحة الرموز"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
 #, fuzzy
-msgid "Color model"
+msgid "Color _model"
 msgstr "<b>نسق اللغة:</b>"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
@@ -233,7 +231,7 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
 #, fuzzy
-msgid "Channel to sort"
+msgid "Channel to _sort"
 msgstr "نمط فرز العرض الشجري المستخدم للفرز"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
@@ -253,7 +251,7 @@ msgstr "قيمة التكبير المحلي"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
 #, fuzzy
-msgid "Ascending"
+msgid "_Ascending"
 msgstr "تصاعدي"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
@@ -340,25 +338,24 @@ msgstr "سحب و إسقاط متعدد"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
 #, fuzzy
-msgid "Shadow blur"
+msgid "_Shadow blur"
 msgstr "ظل السهم"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
-msgid "Bevel"
+msgid "_Bevel"
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 #, fuzzy
-msgid "Drop shadow"
+msgid "_Drop shadow"
 msgstr "ظل السهم"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 #, fuzzy
-msgid "Drop shadow X displacement"
+msgid "Drop shadow _X displacement"
 msgstr "<b>السحب والإسقاط</b>"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 #, fuzzy
-msgid "Drop shadow Y displacement"
+msgid "Drop shadow _Y displacement"
 msgstr "<b>السحب والإسقاط</b>"
-

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-17 21:16+0000\n"
+"POT-Creation-Date: 2007-04-05 19:03+0100\n"
 "PO-Revision-Date: 2006-11-18 13:04+0200\n"
 "Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <support@eglug.org>\n"
@@ -15,51 +15,57 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : n>=3 && n<=10 ? 2 : 3\n\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : n>=3 && n<=10 ? 2 : "
+"3\n"
+"\n"
 
-#: ../libgimp/gimpexport.c:217
-#: ../libgimp/gimpexport.c:253
-#, c-format
-msgid "%s can't handle layers"
+#: ../libgimp/gimpbrushselectbutton.c:170
+#, fuzzy
+msgid "Brush Selection"
+msgstr "ال_منتقى"
+
+#: ../libgimp/gimpbrushselectbutton.c:911
+#: ../libgimp/gimppatternselectbutton.c:712
+msgid "_Browse..."
+msgstr ""
+
+#: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
+#, fuzzy, c-format
+msgid "%s plug-in can't handle layers"
 msgstr "%s لا تستطيع معاملة الطبقات"
 
-#: ../libgimp/gimpexport.c:218
-#: ../libgimp/gimpexport.c:227
-#: ../libgimp/gimpexport.c:236
-#: ../libgimp/gimpexport.c:254
+#: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
+#: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
 msgid "Merge Visible Layers"
 msgstr "دمج الطبقات المرئية"
 
 #: ../libgimp/gimpexport.c:226
 #, c-format
-msgid "%s can't handle layer offsets, size or opacity"
+msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
 
-#: ../libgimp/gimpexport.c:235
-#: ../libgimp/gimpexport.c:244
-#, c-format
-msgid "%s can only handle layers as animation frames"
+#: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
+#, fuzzy, c-format
+msgid "%s plug-in can only handle layers as animation frames"
 msgstr "تستطيع فقط معاملة الطبقات كإطارات متحركة %s"
 
-#: ../libgimp/gimpexport.c:236
-#: ../libgimp/gimpexport.c:245
+#: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
 msgstr "حفظ كصورة متحركة"
 
-#: ../libgimp/gimpexport.c:245
-#: ../libgimp/gimpexport.c:254
+#: ../libgimp/gimpexport.c:245 ../libgimp/gimpexport.c:254
 #: ../libgimp/gimpexport.c:263
 msgid "Flatten Image"
 msgstr "تسطيح صورة"
 
 #: ../libgimp/gimpexport.c:262
-#, c-format
-msgid "%s can't handle transparency"
+#, fuzzy, c-format
+msgid "%s plug-in can't handle transparency"
 msgstr "%s لا تستطيع معاملة الشفافية"
 
 #: ../libgimp/gimpexport.c:271
-#, c-format
-msgid "%s can't handle layer masks"
+#, fuzzy, c-format
+msgid "%s plug-in can't handle layer masks"
 msgstr "%s لا تستطيع معاملة أقنعة الطبقة"
 
 #: ../libgimp/gimpexport.c:272
@@ -67,34 +73,31 @@ msgid "Apply Layer Masks"
 msgstr "تطبيق قناع طبقة"
 
 #: ../libgimp/gimpexport.c:280
-#, c-format
-msgid "%s can only handle RGB images"
+#, fuzzy, c-format
+msgid "%s plug-in can only handle RGB images"
 msgstr "%s  تستطيع فقط معاملة صور RBG"
 
-#: ../libgimp/gimpexport.c:281
-#: ../libgimp/gimpexport.c:319
+#: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
 msgid "Convert to RGB"
 msgstr "تحويل إلى RBG"
 
 #: ../libgimp/gimpexport.c:289
-#, c-format
-msgid "%s can only handle grayscale images"
+#, fuzzy, c-format
+msgid "%s plug-in can only handle grayscale images"
 msgstr "%s تستطيع فقط معاملة صور التدرج رمادي"
 
-#: ../libgimp/gimpexport.c:290
-#: ../libgimp/gimpexport.c:319
+#: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
 msgid "Convert to Grayscale"
 msgstr "تحويل إلى تدرج رمادي"
 
 #: ../libgimp/gimpexport.c:298
-#, c-format
-msgid "%s can only handle indexed images"
+#, fuzzy, c-format
+msgid "%s plug-in can only handle indexed images"
 msgstr "%s تستطيع فقط معاملة الصور المفهرسة"
 
-#: ../libgimp/gimpexport.c:299
-#: ../libgimp/gimpexport.c:328
+#: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
 #: ../libgimp/gimpexport.c:338
 msgid ""
 "Convert to Indexed using default settings\n"
@@ -104,8 +107,8 @@ msgstr ""
 ")اعملها يدويا لضبط النتيجة("
 
 #: ../libgimp/gimpexport.c:308
-#, c-format
-msgid "%s can only handle bitmap (two color) indexed images"
+#, fuzzy, c-format
+msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr "%s تستطيع فقط معاملة صور نقطية مفهرسة بلونين "
 
 #: ../libgimp/gimpexport.c:309
@@ -117,23 +120,23 @@ msgstr ""
 ")اعملها يدويا لضبط النتيجة("
 
 #: ../libgimp/gimpexport.c:318
-#, c-format
-msgid "%s can only handle RGB or grayscale images"
-msgstr ""
+#, fuzzy, c-format
+msgid "%s plug-in can only handle RGB or grayscale images"
+msgstr "%s تستطيع فقط معاملة صور التدرج رمادي"
 
 #: ../libgimp/gimpexport.c:327
-#, c-format
-msgid "%s can only handle RGB or indexed images"
+#, fuzzy, c-format
+msgid "%s plug-in  can only handle RGB or indexed images"
 msgstr "%s can only handle RGB or indexed images"
 
 #: ../libgimp/gimpexport.c:337
-#, c-format
-msgid "%s can only handle grayscale or indexed images"
+#, fuzzy, c-format
+msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "تستطيع فقط معاملة االصور المفهرسة أو تدرج الرمادي %s"
 
 #: ../libgimp/gimpexport.c:348
 #, fuzzy, c-format
-msgid "%s needs an alpha channel"
+msgid "%s plug-in needs an alpha channel"
 msgstr "فيما إذا كان للبكسبف شفافية (قنات ألفا)"
 
 #: ../libgimp/gimpexport.c:349
@@ -163,7 +166,9 @@ msgstr "تصدير"
 #. the headline
 #: ../libgimp/gimpexport.c:499
 #, c-format
-msgid "Your image should be exported before it can be saved as %s for the following reasons:"
+msgid ""
+"Your image should be exported before it can be saved as %s for the following "
+"reasons:"
 msgstr " صورتك ينبغي أن تصدّر قبل أن أن يمكن حفظها كـ%s للأسباب التالية:"
 
 #. the footline
@@ -194,10 +199,24 @@ msgstr "تحديد الخط"
 msgid "Sans"
 msgstr "Sans 8"
 
-#: ../libgimp/gimpmenu.c:450
-#: ../libgimpwidgets/gimpintstore.c:131
+#: ../libgimp/gimpgradientselectbutton.c:148
+#, fuzzy
+msgid "Gradient Selection"
+msgstr "تحديد الخط"
+
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
 msgid "(Empty)"
 msgstr "(فارغ)"
+
+#: ../libgimp/gimppaletteselectbutton.c:130
+#, fuzzy
+msgid "Palette Selection"
+msgstr "تحديد الخط"
+
+#: ../libgimp/gimppatternselectbutton.c:156
+#, fuzzy
+msgid "Pattern Selection"
+msgstr "تحديد الخط"
 
 #: ../libgimp/gimpprocbrowserdialog.c:140
 #, fuzzy
@@ -294,8 +313,7 @@ msgstr[0] ""
 msgstr[1] ""
 
 #. count label
-#: ../libgimp/gimpprocbrowserdialog.c:516
-#: ../libgimpwidgets/gimpbrowser.c:114
+#: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
 #, fuzzy
 msgid "No matches"
 msgstr " تطابقات متعددة..."
@@ -421,18 +439,15 @@ msgstr "تعويض المنتقى الحالي"
 msgid "Intersect with the current selection"
 msgstr "تصنيف المستند أو المنتقى الحالي"
 
-#: ../libgimpbase/gimpbaseenums.c:162
-#: ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Red"
 msgstr "أحمر"
 
-#: ../libgimpbase/gimpbaseenums.c:163
-#: ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Green"
 msgstr "أخضر"
 
-#: ../libgimpbase/gimpbaseenums.c:164
-#: ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Blue"
 msgstr "أزرق"
 
@@ -441,13 +456,11 @@ msgstr "أزرق"
 msgid "Gray"
 msgstr "رمادي"
 
-#: ../libgimpbase/gimpbaseenums.c:166
-#: ../libgimpbase/gimpbaseenums.c:531
+#: ../libgimpbase/gimpbaseenums.c:166 ../libgimpbase/gimpbaseenums.c:531
 msgid "Indexed"
 msgstr "مفهرس"
 
-#: ../libgimpbase/gimpbaseenums.c:167
-#: ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "Alpha"
 msgstr "ألفا"
 
@@ -540,7 +553,7 @@ msgstr "مقاطع خطية ب"
 msgid "Radial"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:391
+#: ../libgimpbase/gimpbaseenums.c:391 ../libgimpwidgets/gimpwidgetsenums.c:24
 #, fuzzy
 msgid "Square"
 msgstr "مربع"
@@ -616,8 +629,7 @@ msgstr "ملف الصورة:"
 msgid "RGB color"
 msgstr "لون RBG"
 
-#: ../libgimpbase/gimpbaseenums.c:494
-#: ../libgimpbase/gimpbaseenums.c:529
+#: ../libgimpbase/gimpbaseenums.c:494 ../libgimpbase/gimpbaseenums.c:529
 msgid "Grayscale"
 msgstr "تدرج رمادي"
 
@@ -659,7 +671,7 @@ msgid "Cubic"
 msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:565
-msgid "Lanczos"
+msgid "Sinc (Lanczos3)"
 msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:593
@@ -671,8 +683,7 @@ msgstr "رمزُ ثابت"
 msgid "Incremental"
 msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:623
-#: ../modules/cdisplay_lcms.c:267
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:267
 #, fuzzy
 msgid "None"
 msgstr "لا شيء"
@@ -725,30 +736,45 @@ msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:744
 #, fuzzy
-msgid "Forward"
+msgid "Normal (Forward)"
 msgstr "تمرير"
 
 #: ../libgimpbase/gimpbaseenums.c:745
-#, fuzzy
-msgid "Backward"
-msgstr "لل_خلف"
+msgid "Corrective (Backward)"
+msgstr ""
 
-#: ../libgimpbase/gimpbaseenums.c:848
+#: ../libgimpbase/gimpbaseenums.c:775
+msgid "Adjust"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:776
+msgid "Clip"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:777
+msgid "Crop to result"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:778
+msgid "Crop with aspect"
+msgstr ""
+
+#: ../libgimpbase/gimpbaseenums.c:881
 #, fuzzy
 msgid "Internal GIMP procedure"
 msgstr "مكّن إجراء الت_شغيل السريع"
 
-#: ../libgimpbase/gimpbaseenums.c:849
+#: ../libgimpbase/gimpbaseenums.c:882
 #, fuzzy
 msgid "GIMP Plug-In"
 msgstr "زر في اللوحة"
 
-#: ../libgimpbase/gimpbaseenums.c:850
+#: ../libgimpbase/gimpbaseenums.c:883
 #, fuzzy
 msgid "GIMP Extension"
 msgstr "ا_متداد الملف:"
 
-#: ../libgimpbase/gimpbaseenums.c:851
+#: ../libgimpbase/gimpbaseenums.c:884
 #, fuzzy
 msgid "Temporary Procedure"
 msgstr "<b>الملفات الوقتية</b>"
@@ -805,8 +831,7 @@ msgstr "%.1f جيجابايت"
 msgid "%d GB"
 msgstr "%.1f جيجابايت"
 
-#: ../libgimpbase/gimputils.c:170
-#: ../libgimpbase/gimputils.c:175
+#: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
 #: ../modules/cdisplay_lcms.c:259
 msgid "(invalid UTF-8 string)"
 msgstr "(غير صحيحة UTF-8 سلسة )"
@@ -820,7 +845,10 @@ msgid "The color profile of your (primary) monitor."
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
-msgid "When enabled, the GIMP will try to use the display color profile from the windowing system.  The configured monitor profile is then only used as a fallback."
+msgid ""
+"When enabled, GIMP will try to use the display color profile from the "
+"windowing system.  The configured monitor profile is then only used as a "
+"fallback."
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
@@ -840,7 +868,9 @@ msgid "Sets how colors are mapped for your display."
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
-msgid "Sets how colors are converted from RGB working space to the print simulation device."
+msgid ""
+"Sets how colors are converted from RGB working space to the print simulation "
+"device."
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
@@ -877,41 +907,40 @@ msgstr "تباين ألوان الفيديو"
 msgid "Absolute colorimetric"
 msgstr "<b>القيمة المطلقة</b>"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#: ../libgimpconfig/gimpconfig-deserialize.c:96
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr ""
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:426
+#: ../libgimpconfig/gimpconfig-deserialize.c:427
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:500
+#: ../libgimpconfig/gimpconfig-deserialize.c:501
 #, fuzzy, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "خطأ تلقي قيمة لـ '%s': %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:515
+#: ../libgimpconfig/gimpconfig-deserialize.c:516
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr ""
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:584
+#: ../libgimpconfig/gimpconfig-deserialize.c:585
 #, fuzzy, c-format
 msgid "while parsing token '%s': %s"
-msgstr "تغيير كلمة المرور..."
+msgstr "تغيير كلمة السر..."
 
-#: ../libgimpconfig/gimpconfig-iface.c:453
-#: ../libgimpconfig/gimpconfig-iface.c:466
-#: ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpconfig-iface.c:454
+#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
 #, fuzzy
 msgid "fatal parse error"
 msgstr "%s: خطأ X فادح - جاري إعادة التشغيل %s"
 
-#: ../libgimpconfig/gimpconfig-path.c:376
+#: ../libgimpconfig/gimpconfig-path.c:377
 #, fuzzy, c-format
 msgid "Cannot expand ${%s}"
 msgstr "تمديد اللسان"
@@ -960,28 +989,26 @@ msgstr "يو تي اف غير سليم في سلسلة القيمة عند '%s'"
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "خطأ أثناء إنشاء وصلة في \"%s\"."
 
-#: ../libgimpmodule/gimpmodule.c:152
-#: ../libgimpmodule/gimpmodule.c:170
-#: ../libgimpmodule/gimpmodule.c:279
-#: ../libgimpmodule/gimpmodule.c:306
-#: ../libgimpmodule/gimpmodule.c:417
+#: ../libgimpmodule/gimpmodule.c:153 ../libgimpmodule/gimpmodule.c:171
+#: ../libgimpmodule/gimpmodule.c:280 ../libgimpmodule/gimpmodule.c:307
+#: ../libgimpmodule/gimpmodule.c:418
 #, fuzzy, c-format
 msgid "Module '%s' load error: %s"
 msgstr "خطأ عند فتح الوحدة `%s': %s\n"
 
-#: ../libgimpmodule/gimpmodule.c:374
+#: ../libgimpmodule/gimpmodule.c:375
 msgid "Module error"
 msgstr "خطأ مركّبة"
 
-#: ../libgimpmodule/gimpmodule.c:375
+#: ../libgimpmodule/gimpmodule.c:376
 msgid "Loaded"
 msgstr "محمل"
 
-#: ../libgimpmodule/gimpmodule.c:376
+#: ../libgimpmodule/gimpmodule.c:377
 msgid "Load failed"
 msgstr "فشل التحميل"
 
-#: ../libgimpmodule/gimpmodule.c:377
+#: ../libgimpmodule/gimpmodule.c:378
 msgid "Not loaded"
 msgstr "غير محمل"
 
@@ -992,13 +1019,16 @@ msgid ""
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
 
-#: ../libgimpthumb/gimpthumb-utils.c:249
-#: ../libgimpthumb/gimpthumb-utils.c:317
+#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
 #, fuzzy, c-format
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "تحديد أين سيتم إنشاء المجلّد:"
 
-#: ../libgimpthumb/gimpthumbnail.c:889
+#: ../libgimpthumb/gimpthumbnail.c:498
+msgid "Thumbnail contains no Thumb::URI tag"
+msgstr ""
+
+#: ../libgimpthumb/gimpthumbnail.c:898
 #, fuzzy, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "لم أستطع إنشاء ذاكرة مخبئيّة لـ%s"
@@ -1038,7 +1068,9 @@ msgstr "القديم"
 
 #: ../libgimpwidgets/gimpcolorselection.c:286
 #, fuzzy
-msgid "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts CSS color names."
+msgid ""
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
+"CSS color names."
 msgstr " HTML و CSS التدوين الست عشري لاللون يستحدم في "
 
 #: ../libgimpwidgets/gimpcolorselection.c:292
@@ -1130,7 +1162,9 @@ msgstr "المجلد"
 
 #: ../libgimpwidgets/gimppickbutton.c:107
 #, fuzzy
-msgid "Click the eyedropper, then click a color anywhere on your screen to select that color."
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
 msgstr "إنقر القطّارة ثم إنقر أيّ لون في أيّ مكان على الشاشة لانتقاء ذلك اللون."
 
 #: ../libgimpwidgets/gimppreviewarea.c:94
@@ -1144,11 +1178,11 @@ msgid "Check Style"
 msgstr "<b>مظهر البرنامج:</b>"
 
 #. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:265
+#: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "معاينة"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1869
+#: ../libgimpwidgets/gimppropwidgets.c:1901
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
@@ -1196,8 +1230,7 @@ msgstr "تنضيد"
 msgid "Visible"
 msgstr "مرئي"
 
-#: ../libgimpwidgets/gimpstock.c:157
-#: ../libgimpwidgets/gimpstock.c:161
+#: ../libgimpwidgets/gimpstock.c:157 ../libgimpwidgets/gimpstock.c:161
 msgid "_Stroke"
 msgstr "ضربة"
 
@@ -1213,8 +1246,7 @@ msgstr "تباعد السطر"
 msgid "_Resize"
 msgstr "تغيير الحجم"
 
-#: ../libgimpwidgets/gimpstock.c:191
-#: ../libgimpwidgets/gimpstock.c:319
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:319
 msgid "_Scale"
 msgstr "وزن"
 
@@ -1235,7 +1267,7 @@ msgstr "تدوير"
 msgid "_Shear"
 msgstr "قص"
 
-#: ../libgimpwidgets/gimpunitmenu.c:267
+#: ../libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
 msgstr "أكثر..."
 
@@ -1243,16 +1275,18 @@ msgstr "أكثر..."
 msgid "Unit Selection"
 msgstr "تحديد الوحدة"
 
-#: ../libgimpwidgets/gimpunitmenu.c:625
+#: ../libgimpwidgets/gimpunitmenu.c:626
 msgid "Unit"
 msgstr "الوحدة"
 
-#: ../libgimpwidgets/gimpunitmenu.c:629
+#: ../libgimpwidgets/gimpunitmenu.c:630
 msgid "Factor"
 msgstr "العامل"
 
 #: ../libgimpwidgets/gimpwidgets.c:1005
-msgid "Use this value for random number generator seed - this allows you to repeat a given \"random\" operation"
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
 msgstr ""
 
 #: ../libgimpwidgets/gimpwidgets.c:1009
@@ -1267,62 +1301,71 @@ msgstr ""
 msgid "_Randomize"
 msgstr "عشوائي"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:25
+#, fuzzy
+msgid "Portrait"
+msgstr "التباين"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:26
+msgid "Landscape"
+msgstr ""
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "_H"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "Hue"
 msgstr "التدرج"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "_S"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "Saturation"
 msgstr "الإشباع"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "_V"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "Value"
 msgstr "القيمة"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "_R"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "_G"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "_B"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "_A"
 msgstr ""
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpwidgets/gimpwidgetsenums.c:157
 #, fuzzy
 msgid "Layers"
 msgstr "الطبقات"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpwidgets/gimpwidgetsenums.c:158
 #, fuzzy
 msgid "Images"
 msgstr "صور"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:186
+#: ../libgimpwidgets/gimpwidgetsenums.c:217
 #, fuzzy
 msgid "Zoom in"
 msgstr "تكبير"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:187
+#: ../libgimpwidgets/gimpwidgetsenums.c:218
 #, fuzzy
 msgid "Zoom out"
 msgstr "تصغير"
@@ -1343,12 +1386,12 @@ msgstr ""
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr ""
 
-#: ../modules/cdisplay_colorblind.c:290
+#: ../modules/cdisplay_colorblind.c:292
 #, fuzzy
 msgid "Color Deficient Vision"
 msgstr "لون GDK fill"
 
-#: ../modules/cdisplay_colorblind.c:505
+#: ../modules/cdisplay_colorblind.c:507
 #, fuzzy
 msgid "Color _deficiency type:"
 msgstr "نوع لون الإخفاء"
@@ -1388,7 +1431,9 @@ msgid "Color Management"
 msgstr "إدارة الحسابات"
 
 #: ../modules/cdisplay_lcms.c:288
-msgid "This filter takes its configuration from the Color Management section in the Preferences dialog."
+msgid ""
+"This filter takes its configuration from the Color Management section in the "
+"Preferences dialog."
 msgstr ""
 
 #: ../modules/cdisplay_lcms.c:302
@@ -1513,224 +1558,377 @@ msgstr "لون مائي"
 msgid "Pressure"
 msgstr "الضغط"
 
-#: ../modules/controller_linux_input.c:56
+#: ../modules/controller_linux_input.c:58
 #, fuzzy
 msgid "Button 0"
 msgstr "زر"
 
-#: ../modules/controller_linux_input.c:57
+#: ../modules/controller_linux_input.c:59
 #, fuzzy
 msgid "Button 1"
 msgstr "الزر 1"
 
-#: ../modules/controller_linux_input.c:58
+#: ../modules/controller_linux_input.c:60
 #, fuzzy
 msgid "Button 2"
 msgstr "الزر 2"
 
-#: ../modules/controller_linux_input.c:59
+#: ../modules/controller_linux_input.c:61
 #, fuzzy
 msgid "Button 3"
 msgstr "الزر 3"
 
-#: ../modules/controller_linux_input.c:60
+#: ../modules/controller_linux_input.c:62
 #, fuzzy
 msgid "Button 4"
 msgstr "زر"
 
-#: ../modules/controller_linux_input.c:61
+#: ../modules/controller_linux_input.c:63
 #, fuzzy
 msgid "Button 5"
 msgstr "زر"
 
-#: ../modules/controller_linux_input.c:62
+#: ../modules/controller_linux_input.c:64
 #, fuzzy
 msgid "Button 6"
 msgstr "زر"
 
-#: ../modules/controller_linux_input.c:63
+#: ../modules/controller_linux_input.c:65
 #, fuzzy
 msgid "Button 7"
 msgstr "زر"
 
-#: ../modules/controller_linux_input.c:64
+#: ../modules/controller_linux_input.c:66
 #, fuzzy
 msgid "Button 8"
 msgstr "زر"
 
-#: ../modules/controller_linux_input.c:65
+#: ../modules/controller_linux_input.c:67
 #, fuzzy
 msgid "Button 9"
 msgstr "زر"
 
-#: ../modules/controller_linux_input.c:66
+#: ../modules/controller_linux_input.c:68
 #, fuzzy
 msgid "Button Mouse"
 msgstr "زر الفأرة 4"
 
-#: ../modules/controller_linux_input.c:67
+#: ../modules/controller_linux_input.c:69
 #, fuzzy
 msgid "Button Left"
 msgstr "زر الفأرة الأيسر"
 
-#: ../modules/controller_linux_input.c:68
+#: ../modules/controller_linux_input.c:70
 #, fuzzy
 msgid "Button Right"
 msgstr " زر الفأرة الأيمن"
 
-#: ../modules/controller_linux_input.c:69
+#: ../modules/controller_linux_input.c:71
 #, fuzzy
 msgid "Button Middle"
 msgstr "زر الفأرة الأوسط "
 
-#: ../modules/controller_linux_input.c:70
+#: ../modules/controller_linux_input.c:72
 #, fuzzy
 msgid "Button Side"
 msgstr "ال_لوحة الجانبية"
 
-#: ../modules/controller_linux_input.c:71
+#: ../modules/controller_linux_input.c:73
 #, fuzzy
 msgid "Button Extra"
 msgstr "حيات اضافية"
 
-#: ../modules/controller_linux_input.c:72
-#: ../modules/controller_linux_input.c:73
+#: ../modules/controller_linux_input.c:74
 #, fuzzy
 msgid "Button Forward"
 msgstr "حوّل المكالمات"
 
 #: ../modules/controller_linux_input.c:75
 #, fuzzy
+msgid "Button Back"
+msgstr "زر"
+
+#: ../modules/controller_linux_input.c:76
+#, fuzzy
+msgid "Button Task"
+msgstr "زر"
+
+#: ../modules/controller_linux_input.c:78
+#, fuzzy
 msgid "Button Wheel"
 msgstr "عجلة اللّون"
 
-#: ../modules/controller_linux_input.c:78
+#: ../modules/controller_linux_input.c:81
 #, fuzzy
 msgid "Button Gear Down"
 msgstr "إلتفاف العرض إلى الأسفل"
 
-#: ../modules/controller_linux_input.c:81
+#: ../modules/controller_linux_input.c:84
 #, fuzzy
 msgid "Button Gear Up"
 msgstr "ت_عيين الطبع..."
 
-#: ../modules/controller_linux_input.c:87
+#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_dx_dinput.c:469
+msgid "X Move Left"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:91
+#: ../modules/controller_dx_dinput.c:472
+msgid "X Move Right"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:92
+#: ../modules/controller_dx_dinput.c:478
+msgid "Y Move Away"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:93
+#: ../modules/controller_dx_dinput.c:481
+msgid "Y Move Near"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:94
+#: ../modules/controller_dx_dinput.c:487
+msgid "Z Move Up"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:95
+#: ../modules/controller_dx_dinput.c:490
+msgid "Z Move Down"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:97
+#: ../modules/controller_dx_dinput.c:496
+msgid "X Axis Tilt Away"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:98
+#: ../modules/controller_dx_dinput.c:499
+msgid "X Axis Tilt Near"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:99
+#: ../modules/controller_dx_dinput.c:505
+msgid "Y Axis Tilt Right"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:100
+#: ../modules/controller_dx_dinput.c:508
+msgid "Y Axis Tilt Left"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:101
+#: ../modules/controller_dx_dinput.c:514
 #, fuzzy
-msgid "Wheel Turn Left"
+msgid "Z Axis Turn Left"
 msgstr "من اليسار إلى اليمين"
 
-#: ../modules/controller_linux_input.c:88
+#: ../modules/controller_linux_input.c:102
+#: ../modules/controller_dx_dinput.c:517
 #, fuzzy
-msgid "Wheel Turn Right"
+msgid "Z Axis Turn Right"
 msgstr "من اليسار إلى اليمين"
 
-#: ../modules/controller_linux_input.c:89
+#: ../modules/controller_linux_input.c:104
+msgid "Horiz. Wheel Turn Back"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:105
+msgid "Horiz. Wheel Turn Forward"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:106
 #, fuzzy
 msgid "Dial Turn Left"
 msgstr "من اليسار إلى اليمين"
 
-#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_linux_input.c:107
 #, fuzzy
 msgid "Dial Turn Right"
 msgstr "من اليسار إلى اليمين"
 
-#: ../modules/controller_linux_input.c:154
+#: ../modules/controller_linux_input.c:108
+#, fuzzy
+msgid "Wheel Turn Left"
+msgstr "من اليسار إلى اليمين"
+
+#: ../modules/controller_linux_input.c:109
+#, fuzzy
+msgid "Wheel Turn Right"
+msgstr "من اليسار إلى اليمين"
+
+#: ../modules/controller_linux_input.c:179
 msgid "Linux input event controller"
 msgstr ""
 
-#: ../modules/controller_linux_input.c:222
-#: ../modules/controller_midi.c:246
+#: ../modules/controller_linux_input.c:249
+#: ../modules/controller_dx_dinput.c:227 ../modules/controller_midi.c:245
 #, fuzzy
 msgid "Device:"
 msgstr "جهاز:"
 
-#: ../modules/controller_linux_input.c:223
+#: ../modules/controller_linux_input.c:250
 msgid "The name of the device to read Linux Input events from."
 msgstr ""
 
-#: ../modules/controller_linux_input.c:227
+#: ../modules/controller_linux_input.c:261
 #, fuzzy
 msgid "Linux Input"
 msgstr "<b>جهاز الإدخال</b>"
 
-#: ../modules/controller_linux_input.c:352
+#: ../modules/controller_linux_input.c:539
 #, fuzzy
 msgid "Linux Input Events"
 msgstr "أصوات لأحداث إكيجا"
 
-#: ../modules/controller_linux_input.c:373
-#: ../modules/controller_midi.c:483
-#: ../modules/controller_midi.c:509
-#, fuzzy, c-format
-msgid "Reading from %s"
-msgstr "خطأ عند القراءة من الابن: %s."
-
-#: ../modules/controller_linux_input.c:389
-#: ../modules/controller_linux_input.c:432
-#: ../modules/controller_midi.c:465
-#: ../modules/controller_midi.c:526
-#: ../modules/controller_midi.c:597
-#, fuzzy, c-format
-msgid "Device not available: %s"
-msgstr "الخيار غير متوفّر."
-
-#: ../modules/controller_linux_input.c:397
-#: ../modules/controller_midi.c:534
+#: ../modules/controller_linux_input.c:551
+#: ../modules/controller_dx_dinput.c:1122 ../modules/controller_midi.c:533
 #, fuzzy
 msgid "No device configured"
 msgstr "لم يُعثر على أي جهاز"
 
-#: ../modules/controller_linux_input.c:441
-#: ../modules/controller_midi.c:606
+#: ../modules/controller_linux_input.c:577 ../modules/controller_midi.c:482
+#: ../modules/controller_midi.c:508
+#, fuzzy, c-format
+msgid "Reading from %s"
+msgstr "خطأ عند القراءة من الابن: %s."
+
+#: ../modules/controller_linux_input.c:595
+#: ../modules/controller_linux_input.c:649 ../modules/controller_midi.c:464
+#: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
+#, fuzzy, c-format
+msgid "Device not available: %s"
+msgstr "الخيار غير متوفّر."
+
+#: ../modules/controller_linux_input.c:614
+#: ../modules/controller_dx_dinput.c:1147
+#, fuzzy
+msgid "Device not available"
+msgstr "الخيار غير متوفّر."
+
+#: ../modules/controller_linux_input.c:658 ../modules/controller_midi.c:605
 #, fuzzy
 msgid "End of file"
 msgstr "نهاية الملفّ"
 
-#: ../modules/controller_midi.c:168
+#: ../modules/controller_dx_dinput.c:157
+#, fuzzy
+msgid "DirectX DirectInput event controller"
+msgstr "مظهر أحداث الأشهر"
+
+#: ../modules/controller_dx_dinput.c:228
+msgid "The device to read DirectInput events from."
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:237
+msgid "DirectX DirectInput"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:446
+#, fuzzy, c-format
+msgid "Button %d"
+msgstr "زر"
+
+#: ../modules/controller_dx_dinput.c:449
+#, fuzzy, c-format
+msgid "Button %d Press"
+msgstr "ال_لوحة الجانبية"
+
+#: ../modules/controller_dx_dinput.c:452
+#, fuzzy, c-format
+msgid "Button %d Release"
+msgstr "زر الفأرة الأوسط "
+
+#: ../modules/controller_dx_dinput.c:528
+#, c-format
+msgid "Slider %d Increase"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:531
+#, c-format
+msgid "Slider %d Decrease"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:541
+#, c-format
+msgid "POV %d X View"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:544
+#, c-format
+msgid "POV %d Y View"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:547
+#, c-format
+msgid "POV %d Return"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:1111
+#, fuzzy
+msgid "DirectInput Events"
+msgstr "أصوات لأحداث إكيجا"
+
+#: ../modules/controller_midi.c:167
 #, fuzzy
 msgid "MIDI event controller"
 msgstr "مظهر أحداث الأشهر"
 
-#: ../modules/controller_midi.c:237
+#: ../modules/controller_midi.c:236
 msgid "The name of the device to read MIDI events from."
 msgstr ""
 
-#: ../modules/controller_midi.c:240
+#: ../modules/controller_midi.c:239
 #, fuzzy
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "أدخل مجموعة الرموز للاستخدام"
 
-#: ../modules/controller_midi.c:255
+#: ../modules/controller_midi.c:254
 #, fuzzy
 msgid "Channel:"
 msgstr "القناة:"
 
-#: ../modules/controller_midi.c:256
-msgid "The MIDI channel to read events from. Set to -1 for reading from all MIDI channels."
+#: ../modules/controller_midi.c:255
+msgid ""
+"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
+"channels."
 msgstr ""
 
-#: ../modules/controller_midi.c:260
+#: ../modules/controller_midi.c:259
 #, fuzzy
 msgid "MIDI"
 msgstr "ميدي"
 
-#: ../modules/controller_midi.c:384
+#: ../modules/controller_midi.c:383
 #, fuzzy, c-format
 msgid "Note %02x on"
 msgstr "استخدام الأدوات على هذه الملاحظة"
 
-#: ../modules/controller_midi.c:387
+#: ../modules/controller_midi.c:386
 #, fuzzy, c-format
 msgid "Note %02x off"
 msgstr "اطفيء الحاسوب"
 
-#: ../modules/controller_midi.c:390
+#: ../modules/controller_midi.c:389
 #, c-format
 msgid "Controller %03d"
 msgstr ""
 
-#: ../modules/controller_midi.c:437
+#: ../modules/controller_midi.c:436
 #, fuzzy
 msgid "MIDI Events"
 msgstr "الأحداث الصوتيّة"
 
+#: ../modules/controller_midi.c:454
+msgid "GIMP"
+msgstr ""
+
+#: ../modules/controller_midi.c:456
+#, fuzzy
+msgid "GIMP MIDI Input Controller"
+msgstr "مظهر أحداث الأشهر"
+
+#, fuzzy
+#~ msgid "Backward"
+#~ msgstr "لل_خلف"
