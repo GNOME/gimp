@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-03 13:03+0200\n"
-"PO-Revision-Date: 2007-04-03 13:02+0200\n"
+"POT-Creation-Date: 2007-04-05 14:19+0200\n"
+"PO-Revision-Date: 2007-04-05 14:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -965,18 +965,16 @@ msgid "Undo _History"
 msgstr "_Historie změn"
 
 #: ../app/actions/dialogs-actions.c:124
-#, fuzzy
 msgid "Open the undo history dialog"
-msgstr "Otevřít dialog výběru písma"
+msgstr "Otevřít dialog historie změn"
 
 #: ../app/actions/dialogs-actions.c:129 ../app/dialogs/dialogs.c:141
 msgid "Pointer"
 msgstr "Ukazatel"
 
 #: ../app/actions/dialogs-actions.c:130
-#, fuzzy
 msgid "Open the pointer information dialog"
-msgstr "Otevřít dialog výběru písma"
+msgstr "Otevřít dialog s informacemi o ukazateli"
 
 #: ../app/actions/dialogs-actions.c:135
 msgid "_Sample Points"
@@ -992,9 +990,8 @@ msgid "Colo_rs"
 msgstr "_Barvy"
 
 #: ../app/actions/dialogs-actions.c:142
-#, fuzzy
 msgid "Open the FG/BG color dialog"
-msgstr "Otevřít dialog výběru písma"
+msgstr "Otevřít dialog barvy popředí a pozadí"
 
 #: ../app/actions/dialogs-actions.c:147
 msgid "_Brushes"
@@ -1017,18 +1014,16 @@ msgid "_Gradients"
 msgstr "_Přechody"
 
 #: ../app/actions/dialogs-actions.c:160
-#, fuzzy
 msgid "Open the gradients dialog"
-msgstr "Otevřít dialog výběru přechodu"
+msgstr "Otevřít dialog přechodů"
 
 #: ../app/actions/dialogs-actions.c:165
 msgid "Pal_ettes"
 msgstr "Pa_lety"
 
 #: ../app/actions/dialogs-actions.c:166
-#, fuzzy
 msgid "Open the palettes dialog"
-msgstr "Otevřít dialog výběru palety"
+msgstr "Otevřít dialog palet"
 
 #: ../app/actions/dialogs-actions.c:171
 msgid "_Fonts"
@@ -1512,7 +1507,7 @@ msgstr "_Zeslabit..."
 
 #: ../app/actions/edit-actions.c:103
 msgid "Modify paint mode and opacity of the last pixel manipulation"
-msgstr ""
+msgstr "Změnit kreslící režim a krytí poslední manipulace s pixely"
 
 #: ../app/actions/edit-actions.c:108
 msgid "Cu_t"
@@ -3764,9 +3759,8 @@ msgid "_By Color"
 msgstr "Podle _barvy"
 
 #: ../app/actions/tools-actions.c:100
-#, fuzzy
 msgid "Select regions with similar colors"
-msgstr "Výběr dle barvy: Výběr oblastí s podobnou barvou"
+msgstr "Vybrat oblasti s podobnou barvou"
 
 #: ../app/actions/tools-actions.c:105
 msgid "_Arbitrary Rotation..."
@@ -4249,9 +4243,8 @@ msgid "From _Theme"
 msgstr "Z _tématu"
 
 #: ../app/actions/view-actions.c:356
-#, fuzzy
 msgid "Use the current theme's background color"
-msgstr "Přidat aktuální barvu z pozadí"
+msgstr "Použít barvu pozadí aktuálního motivu"
 
 #: ../app/actions/view-actions.c:361
 msgid "_Light Check Color"
@@ -4314,9 +4307,9 @@ msgid "Screen %s"
 msgstr "Obrazovka %s"
 
 #: ../app/actions/window-actions.c:170
-#, fuzzy, c-format
+#, c-format
 msgid "Move this window to screen %s"
-msgstr "Přesunout na obrazovku"
+msgstr "Přesunout toto okno na obrazovku %s"
 
 #: ../app/base/base-enums.c:23
 msgid "Smooth"
@@ -10358,7 +10351,6 @@ msgstr "Pevné"
 
 #. Auto Shrink
 #: ../app/tools/gimprectangleoptions.c:599
-#, fuzzy
 msgid "Auto Shrink Selection"
 msgstr "Automaticky zmenšit výběr"
 
