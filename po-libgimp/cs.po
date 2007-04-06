@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-30 11:50+0200\n"
-"PO-Revision-Date: 2007-03-30 11:52+0200\n"
+"POT-Creation-Date: 2007-04-06 15:23+0200\n"
+"PO-Revision-Date: 2007-04-06 15:23+0200\n"
 "Last-Translator: \n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -111,7 +111,8 @@ msgstr ""
 #: ../libgimp/gimpexport.c:308
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr "Modul %s umí zpracovat pouze bitmapové (dvoubarevné) indexované obrázky"
+msgstr ""
+"Modul %s umí zpracovat pouze bitmapové (dvoubarevné) indexované obrázky"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -668,13 +669,12 @@ msgid "Highlights"
 msgstr "Světla"
 
 #: ../libgimpbase/gimpbaseenums.c:744
-#, fuzzy
 msgid "Normal (Forward)"
-msgstr "Vpřed"
+msgstr "Normálně (vpřed)"
 
 #: ../libgimpbase/gimpbaseenums.c:745
 msgid "Corrective (Backward)"
-msgstr ""
+msgstr "Korektivně (vzad)"
 
 #: ../libgimpbase/gimpbaseenums.c:775
 msgid "Adjust"
@@ -1354,7 +1354,8 @@ msgstr "Správa barev"
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
-msgstr "Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
+msgstr ""
+"Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
 
 #: ../modules/cdisplay_lcms.c:302
 msgid "Mode of operation:"
@@ -1798,4 +1799,3 @@ msgstr "GIMP"
 #: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr "Gimpí ovladač vstupu MIDI"
-
