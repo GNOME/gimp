@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-05 14:19+0200\n"
-"PO-Revision-Date: 2007-04-05 14:19+0200\n"
+"POT-Creation-Date: 2007-04-06 15:11+0200\n"
+"PO-Revision-Date: 2007-04-06 15:11+0200\n"
 "Last-Translator: \n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -981,9 +981,8 @@ msgid "_Sample Points"
 msgstr "_Vzorkovací body"
 
 #: ../app/actions/dialogs-actions.c:136
-#, fuzzy
 msgid "Open the sample points dialog"
-msgstr "Otevřít dialog výběru písma"
+msgstr "Otevřít dialog vzorkovacích bodů"
 
 #: ../app/actions/dialogs-actions.c:141
 msgid "Colo_rs"
@@ -1038,9 +1037,8 @@ msgid "B_uffers"
 msgstr "_Buffery"
 
 #: ../app/actions/dialogs-actions.c:178
-#, fuzzy
 msgid "Open the named buffers dialog"
-msgstr "Otevřít dialog výběru vzorku"
+msgstr "Otevřít dialog pojmenovaných bufferů"
 
 #: ../app/actions/dialogs-actions.c:183
 msgid "_Images"
@@ -1055,18 +1053,16 @@ msgid "Document Histor_y"
 msgstr "_Historie dokumentů"
 
 #: ../app/actions/dialogs-actions.c:190
-#, fuzzy
 msgid "Open the document history dialog"
-msgstr "Otevřít dialog výběru písma"
+msgstr "Otevřít dialog historie dokumentu"
 
 #: ../app/actions/dialogs-actions.c:195
 msgid "_Templates"
 msgstr "_Šablony"
 
 #: ../app/actions/dialogs-actions.c:196
-#, fuzzy
 msgid "Open the image templates dialog"
-msgstr "Dialog Otevřít obrázek"
+msgstr "Otevřít dialog šablon obrázku"
 
 #: ../app/actions/dialogs-actions.c:201
 msgid "T_ools"
@@ -1567,18 +1563,16 @@ msgid "Cu_t Named..."
 msgstr "Vyjmout po_jmenované..."
 
 #: ../app/actions/edit-actions.c:151
-#, fuzzy
 msgid "Move the selected pixels to a named buffer"
-msgstr "Přesunout vybrané pixely do schránky"
+msgstr "Přesunout vybrané pixely do pojmenovaného bufferu"
 
 #: ../app/actions/edit-actions.c:156
 msgid "_Copy Named..."
 msgstr "Ko_pírovat pojmenované..."
 
 #: ../app/actions/edit-actions.c:157
-#, fuzzy
 msgid "Copy the selected pixels to a named buffer"
-msgstr "Kopírovat vybrané pixely do schránky"
+msgstr "Kopírovat vybrané pixely do pojmenovaného bufferu"
 
 #. GIMP_STOCK_COPY_VISIBLE,
 #: ../app/actions/edit-actions.c:162
@@ -1586,18 +1580,16 @@ msgid "Copy _Visible Named..."
 msgstr "Kopírovat _viditelné jménem..."
 
 #: ../app/actions/edit-actions.c:163
-#, fuzzy
 msgid "Copy the selected region to a named buffer"
-msgstr "Kopírovat vybranou oblast do schránky"
+msgstr "Kopírovat vybranou oblast do pojmenovaného bufferu"
 
 #: ../app/actions/edit-actions.c:168
 msgid "_Paste Named..."
 msgstr "Vlo_žit pojmenované..."
 
 #: ../app/actions/edit-actions.c:169
-#, fuzzy
 msgid "Paste the content of a named buffer"
-msgstr "Vložit obsah schránky"
+msgstr "Vložit obsahpojmenovaného bufferu"
 
 #: ../app/actions/edit-actions.c:174
 msgid "Cl_ear"
@@ -4087,7 +4079,7 @@ msgstr "Zobrazovat vzorkovací body"
 
 #: ../app/actions/view-actions.c:168
 msgid "Display the image's color sample points"
-msgstr ""
+msgstr "Zobrazit vzorkovací body obrázku"
 
 #: ../app/actions/view-actions.c:174
 msgid "Sn_ap to Guides"
