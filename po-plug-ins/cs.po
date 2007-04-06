@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-08 10:53+0100\n"
-"PO-Revision-Date: 2007-03-08 11:18+0100\n"
-"Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
+"POT-Creation-Date: 2007-04-06 15:27+0200\n"
+"PO-Revision-Date: 2007-04-06 15:43+0200\n"
+"Last-Translator: \n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -342,17 +342,18 @@ msgstr "_Fraktály"
 #: ../plug-ins/Lighting/lighting_ui.c:1147 ../plug-ins/bmp/bmpwrite.c:294
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2004
 #: ../plug-ins/common/channel_mixer.c:1054 ../plug-ins/common/compressor.c:410
-#: ../plug-ins/common/compressor.c:545 ../plug-ins/common/curve_bend.c:818
+#: ../plug-ins/common/compressor.c:473 ../plug-ins/common/compressor.c:563
+#: ../plug-ins/common/compressor.c:632 ../plug-ins/common/curve_bend.c:818
 #: ../plug-ins/common/dicom.c:691 ../plug-ins/common/gbr.c:616
 #: ../plug-ins/common/gif.c:986 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
 #: ../plug-ins/common/mng.c:950 ../plug-ins/common/pat.c:447
 #: ../plug-ins/common/pcx.c:588 ../plug-ins/common/pix.c:508
-#: ../plug-ins/common/png.c:1243 ../plug-ins/common/pnm.c:929
+#: ../plug-ins/common/png.c:1243 ../plug-ins/common/pnm.c:931
 #: ../plug-ins/common/postscript.c:1194 ../plug-ins/common/psd_save.c:1458
 #: ../plug-ins/common/raw.c:528 ../plug-ins/common/raw.c:555
 #: ../plug-ins/common/spheredesigner.c:2119 ../plug-ins/common/sunras.c:507
-#: ../plug-ins/common/tga.c:1027 ../plug-ins/common/tiff.c:2171
+#: ../plug-ins/common/tga.c:1030 ../plug-ins/common/tiff.c:2171
 #: ../plug-ins/common/xbm.c:1002 ../plug-ins/common/xwd.c:565
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/gfli/gfli.c:715
@@ -383,19 +384,20 @@ msgstr "Zapsat parametry fraktálu"
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:933
 #: ../plug-ins/Lighting/lighting_ui.c:1290 ../plug-ins/bmp/bmpread.c:149
 #: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2177
-#: ../plug-ins/common/channel_mixer.c:976 ../plug-ins/common/curve_bend.c:870
+#: ../plug-ins/common/channel_mixer.c:976 ../plug-ins/common/compressor.c:464
+#: ../plug-ins/common/compressor.c:622 ../plug-ins/common/curve_bend.c:870
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gifload.c:309 ../plug-ins/common/gih.c:649
 #: ../plug-ins/common/lcms.c:655 ../plug-ins/common/mng.c:1121
 #: ../plug-ins/common/pat.c:317 ../plug-ins/common/pcx.c:309
 #: ../plug-ins/common/pix.c:329 ../plug-ins/common/png.c:707
-#: ../plug-ins/common/pnm.c:480 ../plug-ins/common/poppler.c:368
+#: ../plug-ins/common/pnm.c:482 ../plug-ins/common/poppler.c:368
 #: ../plug-ins/common/postscript.c:1021 ../plug-ins/common/postscript.c:3002
 #: ../plug-ins/common/psd.c:1899 ../plug-ins/common/psp.c:1460
 #: ../plug-ins/common/raw.c:243 ../plug-ins/common/raw.c:645
 #: ../plug-ins/common/spheredesigner.c:2009 ../plug-ins/common/sunras.c:379
-#: ../plug-ins/common/svg.c:316 ../plug-ins/common/svg.c:686
-#: ../plug-ins/common/tga.c:411 ../plug-ins/common/tiff.c:580
+#: ../plug-ins/common/svg.c:320 ../plug-ins/common/svg.c:690
+#: ../plug-ins/common/tga.c:414 ../plug-ins/common/tiff.c:580
 #: ../plug-ins/common/xbm.c:720 ../plug-ins/common/xwd.c:420
 #: ../plug-ins/faxg3/faxg3.c:219 ../plug-ins/fits/fits.c:342
 #: ../plug-ins/flame/flame.c:411 ../plug-ins/gfig/gfig.c:434
@@ -1140,10 +1142,10 @@ msgstr "Špatná barevná mapa"
 #: ../plug-ins/common/gifload.c:314 ../plug-ins/common/gih.c:654
 #: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:314
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:714
-#: ../plug-ins/common/pnm.c:485 ../plug-ins/common/poppler.c:414
+#: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:414
 #: ../plug-ins/common/postscript.c:1027 ../plug-ins/common/psd.c:1904
 #: ../plug-ins/common/raw.c:650 ../plug-ins/common/sunras.c:433
-#: ../plug-ins/common/tga.c:416 ../plug-ins/common/tiff.c:588
+#: ../plug-ins/common/tga.c:419 ../plug-ins/common/tiff.c:588
 #: ../plug-ins/common/wmf.c:954 ../plug-ins/common/xbm.c:725
 #: ../plug-ins/common/xpm.c:343 ../plug-ins/common/xwd.c:473
 #: ../plug-ins/faxg3/faxg3.c:204 ../plug-ins/gfli/gfli.c:469
@@ -1185,10 +1187,10 @@ msgstr "Nepodporovaná nebo neplatná bitová hloubka"
 #: ../plug-ins/common/dicom.c:486 ../plug-ins/common/film.c:746
 #: ../plug-ins/common/gifload.c:879 ../plug-ins/common/pcx.c:339
 #: ../plug-ins/common/pcx.c:345 ../plug-ins/common/pix.c:368
-#: ../plug-ins/common/png.c:835 ../plug-ins/common/pnm.c:564
+#: ../plug-ins/common/png.c:835 ../plug-ins/common/pnm.c:566
 #: ../plug-ins/common/psd.c:2327 ../plug-ins/common/raw.c:691
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:917
-#: ../plug-ins/common/tga.c:928 ../plug-ins/common/tiff.c:945
+#: ../plug-ins/common/tga.c:931 ../plug-ins/common/tiff.c:945
 #: ../plug-ins/common/tile.c:265 ../plug-ins/common/xbm.c:866
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:508
 #: ../plug-ins/gfig/gfig-dialog.c:1284
@@ -1218,9 +1220,9 @@ msgstr "Alfa kanál bude ignorován."
 #: ../plug-ins/common/gih.c:1263 ../plug-ins/common/gtm.c:245
 #: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:550
 #: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1250
-#: ../plug-ins/common/pnm.c:934 ../plug-ins/common/postscript.c:1199
+#: ../plug-ins/common/pnm.c:936 ../plug-ins/common/postscript.c:1199
 #: ../plug-ins/common/psd_save.c:1463 ../plug-ins/common/sunras.c:512
-#: ../plug-ins/common/tga.c:1032 ../plug-ins/common/tiff.c:2179
+#: ../plug-ins/common/tga.c:1035 ../plug-ins/common/tiff.c:2179
 #: ../plug-ins/common/xbm.c:1007 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:570 ../plug-ins/fits/fits.c:459
 #: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:226
@@ -2758,7 +2760,7 @@ msgstr "archiv bzip"
 msgid "No sensible file extension, saving as compressed XCF."
 msgstr "Žádná rozumná přípona, ukládám jako komprimovaný XCF."
 
-#: ../plug-ins/common/compressor.c:518
+#: ../plug-ins/common/compressor.c:536
 msgid "No sensible file extension, attempting to load with file magic."
 msgstr "Žádná rozumná přípona, pokouším se načíst pomocí souborové magie."
 
@@ -3419,7 +3421,7 @@ msgid "'%s' is not a DICOM file."
 msgstr "'%s' není soubor DICOM."
 
 #: ../plug-ins/common/dicom.c:661 ../plug-ins/common/pcx.c:582
-#: ../plug-ins/common/pnm.c:920
+#: ../plug-ins/common/pnm.c:922
 msgid "Cannot save images with alpha channel."
 msgstr "Nemohu uložit obrázky s alfa kanálem."
 
@@ -4502,7 +4504,7 @@ msgid "Intersection"
 msgstr "Průnik"
 
 #. Width and Height
-#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:759
+#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:763
 #: ../plug-ins/common/wmf.c:549
 msgid "Width:"
 msgstr "Šířka:"
@@ -6107,50 +6109,50 @@ msgstr "Obrázek PGM"
 msgid "PPM image"
 msgstr "Obrázek PPM"
 
-#: ../plug-ins/common/pnm.c:511 ../plug-ins/common/pnm.c:533
-#: ../plug-ins/common/pnm.c:540 ../plug-ins/common/pnm.c:549
-#: ../plug-ins/common/pnm.c:624 ../plug-ins/common/pnm.c:685
+#: ../plug-ins/common/pnm.c:513 ../plug-ins/common/pnm.c:535
+#: ../plug-ins/common/pnm.c:542 ../plug-ins/common/pnm.c:551
+#: ../plug-ins/common/pnm.c:626 ../plug-ins/common/pnm.c:687
 msgid "Premature end of file."
 msgstr "Předčasný konec souboru."
 
-#: ../plug-ins/common/pnm.c:513
+#: ../plug-ins/common/pnm.c:515
 msgid "Invalid file."
 msgstr "Neplatný soubor."
 
-#: ../plug-ins/common/pnm.c:527
+#: ../plug-ins/common/pnm.c:529
 msgid "File not in a supported format."
 msgstr "Soubor není v podporovaném formátu."
 
-#: ../plug-ins/common/pnm.c:536
+#: ../plug-ins/common/pnm.c:538
 msgid "Invalid X resolution."
 msgstr "Neplatné rozlišení X."
 
-#: ../plug-ins/common/pnm.c:543
+#: ../plug-ins/common/pnm.c:545
 msgid "Invalid Y resolution."
 msgstr "Neplatné rozlišení Y."
 
-#: ../plug-ins/common/pnm.c:555
+#: ../plug-ins/common/pnm.c:557
 msgid "Invalid maximum value."
 msgstr "Neplatná maximální hodnota."
 
-#: ../plug-ins/common/pnm.c:738
+#: ../plug-ins/common/pnm.c:740
 msgid "Error reading file."
 msgstr "Chyba při čtení souboru."
 
-#: ../plug-ins/common/pnm.c:1103
+#: ../plug-ins/common/pnm.c:1105
 msgid "Save as PNM"
 msgstr "Zapsat jako PNM"
 
 #. file save type
-#: ../plug-ins/common/pnm.c:1120
+#: ../plug-ins/common/pnm.c:1122
 msgid "Data formatting"
 msgstr "Formátování dat"
 
-#: ../plug-ins/common/pnm.c:1124
+#: ../plug-ins/common/pnm.c:1126
 msgid "Raw"
 msgstr "Binární"
 
-#: ../plug-ins/common/pnm.c:1125
+#: ../plug-ins/common/pnm.c:1127
 msgid "Ascii"
 msgstr "ASCII"
 
@@ -6307,7 +6309,7 @@ msgid "Rendering"
 msgstr "Vyobrazení"
 
 #. Resolution
-#: ../plug-ins/common/postscript.c:3109 ../plug-ins/common/svg.c:880
+#: ../plug-ins/common/postscript.c:3109 ../plug-ins/common/svg.c:884
 #: ../plug-ins/common/wmf.c:670
 msgid "Resolution:"
 msgstr "Rozlišení:"
@@ -6595,7 +6597,7 @@ msgstr "_Vybrat..."
 msgid "_Slur..."
 msgstr "_Roztřepení..."
 
-#: ../plug-ins/common/randomize.c:744 ../plug-ins/common/snoise.c:601
+#: ../plug-ins/common/randomize.c:744 ../plug-ins/common/snoise.c:603
 msgid "_Random seed:"
 msgstr "_Hnízdo náhodných čísel:"
 
@@ -6968,9 +6970,8 @@ msgid "There was an error taking the screenshot."
 msgstr "Pří získávání snímku obrazovky došlo k chybě."
 
 #: ../plug-ins/common/screenshot.c:916
-#, fuzzy
 msgid "S_nap"
-msgstr "Pro_hodit"
+msgstr "Vytvořit s_nímek"
 
 #: ../plug-ins/common/screenshot.c:945
 msgid "After the delay, the screenshot is taken."
@@ -6982,7 +6983,7 @@ msgstr "Po uplynytí časové prodlevy vyberte oblast snímku obrazovky táhnut�
 
 #: ../plug-ins/common/screenshot.c:950
 msgid "At the end of the delay, click in a window to snap it."
-msgstr ""
+msgstr "Po uplynutí časové prodlevy klikněte do okna, jehož snímek chcete vytvořit."
 
 #. Area
 #: ../plug-ins/common/screenshot.c:956
@@ -7247,29 +7248,29 @@ msgid "_Solid Noise..."
 msgstr "_Pevný šum..."
 
 #. Dialog initialization
-#: ../plug-ins/common/snoise.c:317 ../plug-ins/common/snoise.c:563
+#: ../plug-ins/common/snoise.c:317 ../plug-ins/common/snoise.c:565
 msgid "Solid Noise"
 msgstr "Pevný šum"
 
-#: ../plug-ins/common/snoise.c:614
+#: ../plug-ins/common/snoise.c:616
 msgid "_Detail:"
 msgstr "_Detail:"
 
 #. Turbulent
-#: ../plug-ins/common/snoise.c:624
+#: ../plug-ins/common/snoise.c:626
 msgid "T_urbulent"
 msgstr "_Turbulentní"
 
 #. Tilable
-#: ../plug-ins/common/snoise.c:638
+#: ../plug-ins/common/snoise.c:640
 msgid "T_ilable"
 msgstr "Dlažd_icovatelný"
 
-#: ../plug-ins/common/snoise.c:653
+#: ../plug-ins/common/snoise.c:655
 msgid "_X size:"
 msgstr "Velikost _X:"
 
-#: ../plug-ins/common/snoise.c:666
+#: ../plug-ins/common/snoise.c:668
 msgid "_Y size:"
 msgstr "Velikost _Y:"
 
@@ -7728,19 +7729,19 @@ msgstr "Kódované RunLength"
 msgid "SVG image"
 msgstr "SVG obrázek"
 
-#: ../plug-ins/common/svg.c:318 ../plug-ins/common/svg.c:688
+#: ../plug-ins/common/svg.c:322 ../plug-ins/common/svg.c:692
 msgid "Unknown reason"
 msgstr "Neznámý důvod"
 
-#: ../plug-ins/common/svg.c:322
+#: ../plug-ins/common/svg.c:326
 msgid "Rendering SVG"
 msgstr "Vykresluje se SVG"
 
-#: ../plug-ins/common/svg.c:334
+#: ../plug-ins/common/svg.c:338
 msgid "Rendered SVG"
 msgstr "Vykreslené SVG"
 
-#: ../plug-ins/common/svg.c:484
+#: ../plug-ins/common/svg.c:488
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -7748,78 +7749,78 @@ msgstr ""
 "Soubor SVG neurčuje\n"
 "velikost!"
 
-#: ../plug-ins/common/svg.c:490 ../plug-ins/common/wmf.c:338
+#: ../plug-ins/common/svg.c:494 ../plug-ins/common/wmf.c:338
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: ../plug-ins/common/svg.c:695
+#: ../plug-ins/common/svg.c:699
 msgid "Render Scalable Vector Graphics"
 msgstr "Vykreslit Scalable Vector Graphics"
 
-#: ../plug-ins/common/svg.c:765 ../plug-ins/common/wmf.c:555
+#: ../plug-ins/common/svg.c:769 ../plug-ins/common/wmf.c:555
 msgid "Height:"
 msgstr "Výška:"
 
-#: ../plug-ins/common/svg.c:839 ../plug-ins/common/wmf.c:629
+#: ../plug-ins/common/svg.c:843 ../plug-ins/common/wmf.c:629
 msgid "_X ratio:"
 msgstr "Poměr _X:"
 
-#: ../plug-ins/common/svg.c:861 ../plug-ins/common/wmf.c:651
+#: ../plug-ins/common/svg.c:865 ../plug-ins/common/wmf.c:651
 msgid "_Y ratio:"
 msgstr "Poměr _Y:"
 
-#: ../plug-ins/common/svg.c:875 ../plug-ins/common/wmf.c:665
+#: ../plug-ins/common/svg.c:879 ../plug-ins/common/wmf.c:665
 msgid "Constrain aspect ratio"
 msgstr "Omezit poměr stran:"
 
-#: ../plug-ins/common/svg.c:886 ../plug-ins/common/wmf.c:676
+#: ../plug-ins/common/svg.c:890 ../plug-ins/common/wmf.c:676
 #: ../plug-ins/print/print-page-layout.c:261
 #, c-format
 msgid "pixels/%a"
 msgstr "pixely/%a"
 
 #. Path Import
-#: ../plug-ins/common/svg.c:906
+#: ../plug-ins/common/svg.c:910
 msgid "Import _paths"
 msgstr "Importovat _cesty"
 
-#: ../plug-ins/common/svg.c:912
+#: ../plug-ins/common/svg.c:916
 msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importovat elementy cesty z SVG, aby mohly být použity s nástrojem GIMPu pro "
 "cesty"
 
-#: ../plug-ins/common/svg.c:925
+#: ../plug-ins/common/svg.c:929
 msgid "Merge imported paths"
 msgstr "Sloučit importované cesty"
 
-#: ../plug-ins/common/tga.c:229 ../plug-ins/common/tga.c:245
+#: ../plug-ins/common/tga.c:229 ../plug-ins/common/tga.c:248
 msgid "TarGA image"
 msgstr "Obrázek TarGA"
 
-#: ../plug-ins/common/tga.c:422
+#: ../plug-ins/common/tga.c:425
 #, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "Nemohu číst patičku z '%s'"
 
-#: ../plug-ins/common/tga.c:438
+#: ../plug-ins/common/tga.c:441
 #, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "Nemohu číst rozšíření z '%s'"
 
-#: ../plug-ins/common/tga.c:1186
+#: ../plug-ins/common/tga.c:1189
 msgid "Save as TGA"
 msgstr "Zapsat jako TGA"
 
 #. rle
-#: ../plug-ins/common/tga.c:1209
+#: ../plug-ins/common/tga.c:1212
 msgid "_RLE compression"
 msgstr "Komprese _RLE"
 
 #. origin
-#: ../plug-ins/common/tga.c:1219
+#: ../plug-ins/common/tga.c:1222
 msgid "Or_igin at bottom left"
 msgstr "Počátek dol_e vlevo"
 
