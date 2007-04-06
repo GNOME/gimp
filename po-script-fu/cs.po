@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-06 15:57+0200\n"
-"PO-Revision-Date: 2007-04-06 16:16+0200\n"
+"PO-Revision-Date: 2007-04-06 17:01+0200\n"
 "Last-Translator: \n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1349,7 +1349,7 @@ msgstr "Vyhladit svisle"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:6
 msgid "Spread"
-msgstr "Rozšířit"
+msgstr "Rozprostřít"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (bigger 1<-->255 smaller)"
