@@ -1,3 +1,8 @@
+2007-04-09  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpperspectiveclone.c
+	* app/paint/gimppaintoptions.c: #include "libgimpmath/gimpmath.h"
+
 2007-04-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/Makefile.am
