@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-06 15:46+0200\n"
-"PO-Revision-Date: 2007-04-06 15:51+0200\n"
+"POT-Creation-Date: 2007-04-10 19:55+0200\n"
+"PO-Revision-Date: 2007-04-10 20:05+0200\n"
 "Last-Translator: \n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -74,9 +74,8 @@ msgid "Colored XHTML"
 msgstr "Barevné XHTML"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
-#, fuzzy
 msgid "Character _source"
-msgstr "Zdroj znaku"
+msgstr "Zdroj _znaku"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
 msgid "Source code"
@@ -91,14 +90,12 @@ msgid "Entry box"
 msgstr "Vstupní pole"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
-#, fuzzy
 msgid "_File to read or characters to use"
-msgstr "Soubor ke čtení nebo znaky k použití"
+msgstr "_Soubor ke čtení nebo znaky k použití"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
-#, fuzzy
 msgid "Fo_nt size in pixels"
-msgstr "Velikost písma v pixelech"
+msgstr "_Velikost písma v pixelech"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "_Write a separate CSS file"
@@ -206,9 +203,8 @@ msgid "HSV"
 msgstr "HSV"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-#, fuzzy
 msgid "Channel to _sort"
-msgstr "Kanál k setřídění"
+msgstr "Kanál k _setřídění"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
 msgid "Red or Hue"
@@ -223,9 +219,8 @@ msgid "Blue or Value"
 msgstr "Modrá nebo hodnota"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
-#, fuzzy
 msgid "_Ascending"
-msgstr "Klesající"
+msgstr "_Vzestupně"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
@@ -245,7 +240,7 @@ msgstr "Paleta do _přechodu"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:57
 msgid "Slice"
-msgstr ""
+msgstr "Rozřezat"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
@@ -253,7 +248,7 @@ msgstr "Rozřeže obrázek podle vodítek, vytvoří dílčí obrázky a kód ta
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
-msgstr ""
+msgstr "_Rozřezat..."
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:430
 msgid "Path for HTML export"
@@ -289,11 +284,11 @@ msgstr "Javascript při přejetí myší a kliknutí"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Skip animation for table caps"
-msgstr ""
+msgstr "Vynechat animaci záhlaví tabulky"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr ""
+msgstr "Přidat vrstvě stín a volitelně jej zkosit"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
 msgid "_Drop Shadow and Bevel..."
@@ -304,9 +299,8 @@ msgid "_Shadow blur"
 msgstr "Rozostření _stínu"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
-#, fuzzy
 msgid "_Bevel"
-msgstr "Zkosení"
+msgstr "_Zkosení"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 msgid "_Drop shadow"
