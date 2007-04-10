@@ -1,3 +1,7 @@
+2007-04-10  Sven Neumann  <sven@gimp.org>
+
+	* de.po: bug #392051.
+
 2007-04-06  Jakub Friedl  <jfriedl@suse.cz>
 
 	* cs.po: Fixed a Czech string.

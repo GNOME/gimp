@@ -13,14 +13,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-22 11:11+0100\n"
-"PO-Revision-Date: 2007-01-16 21:43+0100\n"
+"POT-Creation-Date: 2007-04-10 10:53+0200\n"
+"PO-Revision-Date: 2007-04-10 10:53+0200\n"
 "Last-Translator: Hendrik Richter <hendrikr@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:143
 #: ../plug-ins/script-fu/script-fu-console.c:210
@@ -43,76 +43,76 @@ msgstr "_Durchsuchen …"
 msgid "Save Script-Fu Console Output"
 msgstr "Ausgabe der Skript-Fu-Konsole speichern"
 
-#: ../plug-ins/script-fu/script-fu-console.c:354
+#: ../plug-ins/script-fu/script-fu-console.c:357
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "»%s« konnte nicht zum Schreiben geöffnet werden: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:383
+#: ../plug-ins/script-fu/script-fu-console.c:386
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu-Prozeduren-Browser"
 
-#: ../plug-ins/script-fu/script-fu-console.c:708
+#: ../plug-ins/script-fu/script-fu-console.c:711
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "Der Skript-Fu-Auswertungsmodus ermöglicht nur nicht-interaktive Aufrufe"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:179
+#: ../plug-ins/script-fu/script-fu-interface.c:191
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu kann nicht zwei Skripte gleichzeitig abarbeiten."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:181
+#: ../plug-ins/script-fu/script-fu-interface.c:193
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Sie haben das Skript »%s« bereits gestartet."
 
 #. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:204
-#: ../plug-ins/script-fu/script-fu-interface.c:207
+#: ../plug-ins/script-fu/script-fu-interface.c:216
+#: ../plug-ins/script-fu/script-fu-interface.c:219
 msgid "/Script-Fu/"
 msgstr "/Skript-Fu/"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:225
+#: ../plug-ins/script-fu/script-fu-interface.c:237
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Skript-Fu: %s"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:287
+#: ../plug-ins/script-fu/script-fu-interface.c:299
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:335
+#: ../plug-ins/script-fu/script-fu-interface.c:347
 msgid "Script-Fu Color Selection"
 msgstr "Skript-Fu-Farbauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:447
+#: ../plug-ins/script-fu/script-fu-interface.c:459
 msgid "Script-Fu File Selection"
 msgstr "Skript-Fu-Dateiauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:450
+#: ../plug-ins/script-fu/script-fu-interface.c:462
 msgid "Script-Fu Folder Selection"
 msgstr "Skript-Fu-Verzeichnisauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:474
 msgid "Script-Fu Font Selection"
 msgstr "Skript-Fu-Schriftartauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:470
+#: ../plug-ins/script-fu/script-fu-interface.c:482
 msgid "Script-Fu Palette Selection"
 msgstr "Skript-Fu-Palettenauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:479
+#: ../plug-ins/script-fu/script-fu-interface.c:491
 msgid "Script-Fu Pattern Selection"
 msgstr "Skript-Fu-Musterauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:488
+#: ../plug-ins/script-fu/script-fu-interface.c:500
 msgid "Script-Fu Gradient Selection"
 msgstr "Skript-Fu-Farbverlaufsauswahl"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:497
+#: ../plug-ins/script-fu/script-fu-interface.c:509
 msgid "Script-Fu Brush Selection"
 msgstr "Skript-Fu-Pinselauswahl"
 
@@ -123,7 +123,8 @@ msgid ""
 "%s\n"
 "\n"
 "%s"
-msgstr "Fehler beim Ausführen von\n"
+msgstr ""
+"Fehler beim Ausführen von\n"
 "%s\n"
 "\n"
 "%s"
@@ -151,11 +152,6 @@ msgstr "Interaktive Konsole für die Skript-Fu-Entwicklung"
 #: ../plug-ins/script-fu/script-fu.c:116
 msgid "Script-Fu _Console"
 msgstr "Skript-Fu-_Konsole"
-
-#: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:365
-msgid "<Toolbox>/Xtns/Languages/Script-Fu"
-msgstr "<Toolbox>/Xtns/Sprachen/Skript-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
@@ -385,7 +381,9 @@ msgstr "Umriss weichzeichnen (Radius)"
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
 msgid ""
 "Outline the selected region (or alpha) with a pattern and add a drop shadow"
-msgstr "Die Auswahl (oder Transparenz) mit einem Muster und einem Schlagschatten umreißen"
+msgstr ""
+"Die Auswahl (oder Transparenz) mit einem Muster und einem Schlagschatten "
+"umreißen"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -1336,9 +1334,8 @@ msgid "Solid noise applied with Difference layer mode"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
-#, fuzzy
 msgid "Distress the selection"
-msgstr "Auswahl erhalten"
+msgstr "Die Auswahl verformen"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:2
 msgid "Granularity (1 is low)"
@@ -1365,8 +1362,11 @@ msgid "_Distort..."
 msgstr "_Verzerren …"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-msgid "Add a drop-shadow to the selected region (or alpha)"
+#, fuzzy
+msgid "Add a drop shadow to the selected region (or alpha)"
 msgstr ""
+"Einen unterschwellig durchscheinenden 3D-Effekt zur Auswahl (oder "
+"Transparenz) hinzufügen"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
@@ -1404,7 +1404,8 @@ msgid "Opacity"
 msgstr "Deckkraft"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
-msgid "_Drop-Shadow..."
+#, fuzzy
+msgid "_Drop Shadow..."
 msgstr "_Schlagschatten …"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:1
@@ -1416,9 +1417,8 @@ msgid "Erase"
 msgstr "Löschen"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
-#, fuzzy
 msgid "Erase every other row or column"
-msgstr "_Jede zweite Zeile löschen …"
+msgstr "Jede zweite Zeile oder Spalte löschen"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/fill"
@@ -1487,7 +1487,7 @@ msgstr "Auswahl vergrößern"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:10
 msgid "_Fade to Layer Mask..."
-msgstr "_Ausblenden-auf-Ebenenmaske …"
+msgstr "_Ebenenmaske ausblenden …"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 msgid "Create an image filled with a Land Pattern"
@@ -1688,22 +1688,18 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
-#, fuzzy
 msgid "T_ube Sub-Button Label..."
-msgstr "Tube _Sub-Button Beschriftung …"
+msgstr "T_ube Sub-Button Beschriftung …"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
-#, fuzzy
 msgid "Tub_e Sub-Sub-Button Label..."
-msgstr "Tube Sub-Sub-_Button Beschriftung …"
+msgstr "Tub_e Sub-Sub-Button Beschriftung …"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
-#, fuzzy
 msgid "_General Tube Labels..."
 msgstr "_Allgemeine Tube Beschriftung …"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
-#, fuzzy
 msgid "_Tube Button Label..."
 msgstr "_Tube Button Beschriftung …"
 
@@ -2082,7 +2078,7 @@ msgid "Cell size (pixels)"
 msgstr "Zellengröße (Pixel)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:4
-msgid "Create a logo in the style newpaper printing"
+msgid "Create a logo in the style of newspaper printing"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6
@@ -2262,6 +2258,14 @@ msgstr "L_andkarte erstellen …"
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:9
 msgid "Tile"
 msgstr "Kacheln"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:1
+msgid "Reverse Layer Order"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:2
+msgid "Reverse the order of layers in the image"
+msgstr ""
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:1
 msgid "Black"
@@ -2533,39 +2537,43 @@ msgid "Polygon: 9 sides"
 msgstr "Polygon: 9 Seiten"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+msgid "Rendering Spyro"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
 msgstr "Form"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:26
 msgid "Solid Color"
 msgstr "Deckfarbe"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 msgid "Spyrograph"
 msgstr "Spyrograph"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Square"
 msgstr "Quadrat"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:29
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
 msgid "Start angle"
 msgstr "Startwinkel"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:30
 msgid "Tool"
 msgstr "Werkzeug"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:31
 msgid "Triangle"
 msgstr "Dreieck"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:31
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:32
 msgid "Type"
 msgstr "Sorte"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:32
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:33
 msgid "_Spyrogimp..."
 msgstr "_Spyrogimp …"
 
@@ -2906,7 +2914,9 @@ msgstr "_Arbeiten mit digitalen Photos"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-msgstr "Einen unterschwellig durchscheinenden 3D-Effekt zur Auswahl (oder Transparenz) hinzufügen"
+msgstr ""
+"Einen unterschwellig durchscheinenden 3D-Effekt zur Auswahl (oder "
+"Transparenz) hinzufügen"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow X offset"
@@ -2944,6 +2954,9 @@ msgstr "Glanzlichtdeckkraft"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-Effekt …"
+
+#~ msgid "<Toolbox>/Xtns/Languages/Script-Fu"
+#~ msgstr "<Toolbox>/Xtns/Sprachen/Skript-Fu"
 
 #~ msgid "Burn-In: Need two layers in total!"
 #~ msgstr "»Einbrennen« benötigt mindestens zwei Ebenen."
