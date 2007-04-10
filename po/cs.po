@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-06 15:11+0200\n"
-"PO-Revision-Date: 2007-04-06 15:11+0200\n"
+"POT-Creation-Date: 2007-04-10 16:08+0200\n"
+"PO-Revision-Date: 2007-04-10 16:07+0200\n"
 "Last-Translator: \n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -883,9 +883,8 @@ msgid "Tool_box"
 msgstr "_Nástroje"
 
 #: ../app/actions/dialogs-actions.c:61
-#, fuzzy
 msgid "Raise the toolbox"
-msgstr "Zvýšit nástroj"
+msgstr "Přesunout panel nástroju nahoru"
 
 #: ../app/actions/dialogs-actions.c:69
 msgid "Tool _Options"
@@ -956,9 +955,8 @@ msgid "Na_vigation"
 msgstr "_Navigace"
 
 #: ../app/actions/dialogs-actions.c:118
-#, fuzzy
 msgid "Open the display navigation dialog"
-msgstr "Otevřít dialog výběru přechodu"
+msgstr "Otevřít navigační dialog"
 
 #: ../app/actions/dialogs-actions.c:123
 msgid "Undo _History"
@@ -4087,7 +4085,7 @@ msgstr "_Chytat na vodítka"
 
 #: ../app/actions/view-actions.c:175
 msgid "Tool operations snap to guides"
-msgstr ""
+msgstr "Nástrojové operace se chytají k vodítkům"
 
 #: ../app/actions/view-actions.c:181
 msgid "Sna_p to Grid"
@@ -4095,7 +4093,7 @@ msgstr "_Chytat k mřížce"
 
 #: ../app/actions/view-actions.c:182
 msgid "Tool operations snap to the grid"
-msgstr ""
+msgstr "Nástrojové operace se chytají k mřížce"
 
 #: ../app/actions/view-actions.c:188
 msgid "Snap to _Canvas Edges"
@@ -4103,16 +4101,15 @@ msgstr "Chytat na _hrany plátna"
 
 #: ../app/actions/view-actions.c:189
 msgid "Tool operations snap to the canvas edges"
-msgstr ""
+msgstr "Nástrojové operace se chytají k okrajům plátna"
 
 #: ../app/actions/view-actions.c:195
 msgid "Snap t_o Active Path"
 msgstr "Chytat k _aktivní cestě"
 
 #: ../app/actions/view-actions.c:196
-#, fuzzy
 msgid "Tool operations snap to the active path"
-msgstr "Exportovat aktivní cestu"
+msgstr "Nástrojové operace se chytají k aktivní cestě"
 
 #: ../app/actions/view-actions.c:202
 msgid "Show _Menubar"
@@ -4268,7 +4265,7 @@ msgstr "Podle _předvoleb"
 
 #: ../app/actions/view-actions.c:380
 msgid "Reset padding color to what's configured in preferences"
-msgstr ""
+msgstr "Nastavit barvu doplnění podle předvoleb"
 
 #: ../app/actions/view-actions.c:567
 #, c-format
@@ -8571,12 +8568,12 @@ msgstr "Štětec"
 msgid "Pencil"
 msgstr "Tužka"
 
-#: ../app/paint/gimpperspectiveclone.c:96 ../app/paint/paint-enums.c:52
+#: ../app/paint/gimpperspectiveclone.c:95 ../app/paint/paint-enums.c:52
 #: ../app/tools/gimpperspectiveclonetool.c:120
 msgid "Perspective Clone"
 msgstr "Perspektivní klonování"
 
-#: ../app/paint/gimpperspectiveclone.c:161
+#: ../app/paint/gimpperspectiveclone.c:160
 msgid "Perspective Clone does not operate on indexed layers."
 msgstr "Perspektivní klonování nefunguje na indexovaných vrstvách."
 
@@ -10209,7 +10206,6 @@ msgid "Size"
 msgstr "Velikost"
 
 #: ../app/tools/gimppaintoptions-gui.c:343
-#, fuzzy
 msgid "Fade out"
 msgstr "Slábnout"
 
@@ -10347,9 +10343,8 @@ msgid "Auto Shrink Selection"
 msgstr "Automaticky zmenšit výběr"
 
 #: ../app/tools/gimprectangleoptions.c:607
-#, fuzzy
 msgid "Shrink merged"
-msgstr "Sloučení zrnitosti"
+msgstr "Zmenšit sloučené"
 
 #: ../app/tools/gimprectangleselectoptions.c:154
 msgid "Rounded corners"
