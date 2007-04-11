@@ -940,10 +940,12 @@ ifs_render (AffElement     **elements,
   /* now run the iteration */
   for (i = 0; i < nsteps; i++)
     {
-      if (!preview && (i > next_progress )) {
-        next_progress = i + nsteps/32 + 100 ;
-        gimp_progress_update ((gdouble) i / (gdouble) nsteps);
-      }
+      if (!preview && (i > next_progress))
+        {
+          next_progress = i + nsteps / 32 + 100;
+          gimp_progress_update ((gdouble) i / (gdouble) nsteps);
+        }
+
       p0 = g_random_int ();
       k = 0;
 
@@ -960,97 +962,106 @@ ifs_render (AffElement     **elements,
       gi = (gint) (255.0 * g + 0.5);
       bi = (gint) (255.0 * b + 0.5);
 
+      if ((ri < 0) || (ri > 255) ||
+          (gi < 0) || (gi > 255) ||
+          (bi < 0) || (bi > 255))
+        continue;
+
       if (preview)
         {
           if ((x < width) && (y < (band_y + band_height)) &&
-              (x >= 0) && (y >= band_y) &&
-              (ri >= 0) && (ri < 256) &&
-              (gi >= 0) && (gi < 256) &&
-              (bi >= 0) && (bi < 256))
+              (x >= 0) && (y >= band_y))
             {
               ptr = data + 3 * (((gint) (y - band_y)) * width + (gint) x);
+
               *ptr++ = ri;
               *ptr++ = gi;
-              *ptr = bi;
+              *ptr   = bi;
             }
         }
       else
-        if ((ri >= 0) && (ri < 256) &&
-            (gi >= 0) && (gi < 256) &&
-            (bi >= 0) && (bi < 256))
-          {
-            guint m_old;
-            guint m_new;
-            guint m_pix;
-            guint n_hits;
-            guint old_scale;
-            guint pix_scale;
+        {
+          if ((x < width * subdivide) && (y < height * subdivide) &&
+              (x >= 0) && (y >= 0))
+            {
+              gint ii;
+              gint jj;
+              gint jj0   = floor (y - brush_offset - band_y * subdivide);
+              gint ii0   = floor (x - brush_offset);
+              gint jjmin = 0;
+              gint iimin = 0;
+              gint jjmax;
+              gint iimax;
 
-            gint index;
-            gint ii,jj;
-            gint jj0 = floor (y - brush_offset - band_y * subdivide);
-            gint ii0 = floor (x - brush_offset);
-            gint jjmax,iimax;
-            gint jjmin = 0;
-            gint iimin = 0;
+              if (ii0 < 0)
+                iimin = - ii0;
+              else
+                iimin = 0;
 
-            if (ii0 < 0)
-              iimin = - ii0;
-            else
-              iimin = 0;
+              if (jj0 < 0)
+                jjmin = - jj0;
+              else
+                jjmin = 0;
 
-            if (jj0 < 0)
-              jjmin = - jj0;
-            else
-              jjmin = 0;
+              if (jj0 + brush_size >= subdivide * band_height)
+                jjmax = subdivide * band_height - jj0;
+              else
+                jjmax = brush_size;
 
-            if (jj0 + brush_size >= subdivide * band_height)
-              jjmax = subdivide * band_height - jj0;
-            else
-              jjmax = brush_size;
+              if (ii0 + brush_size >= subdivide * width)
+                iimax = subdivide * width - ii0;
+              else
+                iimax = brush_size;
 
-            if (ii0 + brush_size >= subdivide * width)
-              iimax = subdivide * width - ii0;
-            else
-              iimax = brush_size;
+              for (jj = jjmin; jj < jjmax; jj++)
+                for (ii = iimin; ii < iimax; ii++)
+                  {
+                    guint m_old;
+                    guint m_new;
+                    guint m_pix;
+                    guint n_hits;
+                    guint old_scale;
+                    guint pix_scale;
+                    gint  index = (jj0 + jj) * width * subdivide + ii0 + ii;
 
-            for (jj = jjmin; jj < jjmax; jj++)
-              for (ii = iimin; ii < iimax; ii++)
-                {
-                  index = (jj0 + jj) * width * subdivide + ii0 + ii;
-                  n_hits = nhits[index];
-                  if (n_hits == 255)
-                    continue;
+                    n_hits = nhits[index];
+                    if (n_hits == 255)
+                      continue;
 
-                  m_pix = brush[jj * brush_size + ii];
-                  if (!m_pix)
-                    continue;
-                  nhits[index] = ++n_hits;
-                  m_old = mask[index];
-                  m_new = m_old + m_pix - m_old * m_pix / 255;
-                  mask[index] = m_new;
+                    m_pix = brush[jj * brush_size + ii];
+                    if (!m_pix)
+                      continue;
 
-                  /* relative probability that old colored pixel is on top */
-                  old_scale = m_old * (255 * n_hits - m_pix);
-                  /* relative probability that new colored pixel is on top */
-                  pix_scale = m_pix * ((255 - m_old) * n_hits + m_old);
+                    nhits[index] = ++n_hits;
+                    m_old = mask[index];
+                    m_new = m_old + m_pix - m_old * m_pix / 255;
+                    mask[index] = m_new;
 
-                  ptr = data + 3 * index;
-                  *ptr = (old_scale * (*ptr) + pix_scale * ri) /
-                    (old_scale + pix_scale);
-                  ptr++;
-                  *ptr = (old_scale * (*ptr) + pix_scale * gi) /
-                    (old_scale + pix_scale);
-                  ptr++;
-                  *ptr = (old_scale * (*ptr) + pix_scale * bi) /
-                    (old_scale + pix_scale);
-                }
-          }
+                    /* relative probability that old colored pixel is on top */
+                    old_scale = m_old * (255 * n_hits - m_pix);
+
+                    /* relative probability that new colored pixel is on top */
+                    pix_scale = m_pix * ((255 - m_old) * n_hits + m_old);
+
+                    ptr = data + 3 * index;
+
+                    *ptr = ((old_scale * (*ptr) + pix_scale * ri) /
+                            (old_scale + pix_scale));
+                    ptr++;
+
+                    *ptr = ((old_scale * (*ptr) + pix_scale * gi) /
+                            (old_scale + pix_scale));
+                    ptr++;
+
+                    *ptr = ((old_scale * (*ptr) + pix_scale * bi) /
+                            (old_scale + pix_scale));
+                  }
+            }
+        }
     } /* main iteration */
-  
-  if (!preview ) {
+
+  if (!preview )
     gimp_progress_update (1.0);
-  }
 
   g_free (brush);
   g_free (prob);
