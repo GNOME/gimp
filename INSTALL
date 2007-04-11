@@ -123,6 +123,10 @@ These are:
      GIMP will be binary relocatable.  Plug-ins and data files will
      be searched relative to the gimp binary instead of in the paths
      defined at compile time.
+ 
+  --with-shm=[none|sysv|posix|auto].  This option allows you to specify
+     how image data is transported between the core and plug-ins. Usually
+     the best way to do this is detected automatically.
 
   --without-libtiff, --without-libjpeg, --without-libpng.  configure
      will bail out if libtiff, libjpeg or libpng can not be found. You
@@ -157,6 +161,21 @@ These are:
 
   --without-print.  If for some reason you don't want to build the Print
      plug-in based on the GtkPrint API, you can build with --without-print.
+
+  --without-gnomevfs.  If you don't want to use gnomevfs to access remote
+     files, you can pass --without-gnomevfs to the configure script.
+
+  --without-libcurl.  If you don't want to use libcurl to access remote
+     files, you can pass --without-gnomevfs to the configure script.
+
+  --without-alsa.  If you don't want to compile ALSA support into the
+     MIDI input controller module, you can use the --without-alsa option.
+
+  --without-linux-input.  If you don't want to compile the Linux Input
+     controller module, you can use the --without-linux-input option.
+
+  --without-dbus.  If you want to build without D-Bus support, you can
+     pass --without-dbus to the configure script.
 
   --with-gif-compression=[lzw|rle|none].  Allows to tune the compression
      algorithm used by the GIF plug-in. If you are afraid of Unisys' LZW
@@ -202,6 +221,7 @@ These are:
 
   --without-script-fu.  If for some reason you don't want to build the
      Script-Fu plug-in, you can use --without-script-fu.
+
 
 The `make' command builds several things:
  - A bunch of public libraries in the directories starting with 'libgimp'.

@@ -1,5 +1,7 @@
 2007-04-11  Sven Neumann  <sven@gimp.org>
 
+	* INSTALL: document the new options (and some not so new ones).
+
 	* configure.in: applied patch from Hanno Boeck that adds more
 	configure options (bug #425267).
 
