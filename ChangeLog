@@ -1,3 +1,24 @@
+2007-04-11  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/stock-display-filter-contrast-24.svg
+	* themes/Default/images/stock-display-filter-colorblind-24.svg
+	* themes/Default/images/stock-display-filter-contrast-24.png
+	* themes/Default/images/stock-display-filter-colorblind-24.png
+	* themes/Default/images/stock-display-filter-contrast-16.svg
+	* themes/Default/images/stock-display-filter-colorblind-16.svg
+	* themes/Default/images/stock-display-filter-lcms-24.svg
+	* themes/Default/images/stock-display-filter-contrast-16.png
+	* themes/Default/images/stock-display-filter-colorblind-16.png
+	* themes/Default/images/stock-display-filter-lcms-24.png
+	* themes/Default/images/stock-display-filter-lcms-16.svg
+	* themes/Default/images/stock-display-filter-gamma-24.svg
+	* themes/Default/images/stock-display-filter-lcms-16.png
+	* themes/Default/images/stock-display-filter-gamma-24.png
+	* themes/Default/images/stock-display-filter-gamma-16.svg
+	* themes/Default/images/stock-display-filter-gamma-16.png: how
+		could I have gone to LGM with a straight face without finishing
+		these?
+
 2007-04-11  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL: document the new options (and some not so new ones).
