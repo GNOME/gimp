@@ -1272,6 +1272,14 @@ fi
 uri_plugin=no
 gnome_vfs_modules="gnome-vfs-2.0 >= gnome_vfs_required_version"
 
+AC_ARG_WITH(gnomevfs,  [  --without-gnomevfs      build without gnomevfs support])
+
+have_gnomeui="no (disabled)"
+have_gnome_keyring="no (disabled)"
+have_gnomevfs="no (disabled)"
+
+if test x$with_gnomevfs != xno; then
+
 if $PKG_CONFIG --atleast-version=gnomeui_required_version libgnomeui-2.0; then
   have_gnomeui=yes
   gnome_vfs_modules="$gnome_vfs_modules libgnomeui-2.0"
@@ -1291,14 +1299,24 @@ PKG_CHECK_MODULES(URI_GNOME_VFS, $gnome_vfs_modules,
   AC_MSG_RESULT([no])
   have_gnomevfs="no (gnome-vfs-2.0 not found)")
 
+fi
+
 AM_CONDITIONAL(HAVE_GNOMEVFS, test x"$have_gnomevfs" = xyes)
 
 libcurl_modules="libcurl >= libcurl_required_version"
+
+AC_ARG_WITH(libcurl,  [  --without-libcurl       build without curl support])
+
+have_libcurl="no (disabled)"
+
+if test x$with_libcurl != xno; then
 
 PKG_CHECK_MODULES(URI_LIBCURL, $libcurl_modules,
   have_libcurl=yes,
   AC_MSG_RESULT([no])
   have_libcurl="no (libcurl not found)")
+
+fi
 
 AM_CONDITIONAL(HAVE_LIBCURL, test "x$have_libcurl" = xyes)
 
@@ -1447,10 +1465,18 @@ AM_CONDITIONAL(HAVE_DX_DINPUT, test $have_dx_dinput = yes)
 # Check for D-Bus GLib bindings
 ###############################
 
+AC_ARG_WITH(dbus,  [  --without-dbus          build without D-Bus support])
+
+have_dbus_glib="no (disabled)"
+
+if test x$with_dbus != xno; then
+
 PKG_CHECK_MODULES(DBUS_GLIB, dbus-glib-1 >= dbus_glib_required_version,
   have_dbus_glib=yes,
   AC_MSG_RESULT([no])
   have_dbus_glib=no)
+
+fi
 
 if test "x$have_dbus_glib" = xyes; then
   AC_PATH_PROG(DBUS_BINDING_TOOL, dbus-binding-tool, no)
