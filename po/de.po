@@ -3851,19 +3851,19 @@ msgstr "Fenstergröße an Bild anpassen."
 
 #: ../app/actions/view-actions.c:85
 msgid "_Fit Image in Window"
-msgstr "_Fenster an Bild anpassen"
+msgstr "Bild _in Fenster einpassen"
 
 #: ../app/actions/view-actions.c:86
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
-msgstr ""
+msgstr "Die Bildgröße so anpassen, dass das Bild vollständig sichtbar ist"
 
 #: ../app/actions/view-actions.c:91
 msgid "Fit Image _to Window"
-msgstr "_Bild dem Fenster anpassen"
+msgstr "Bild dem Fenster _anpassen"
 
 #: ../app/actions/view-actions.c:92
 msgid "Adjust the zoom ratio so that the window is used optimally"
-msgstr ""
+msgstr "Die Bildgröße so anpassen, dass das Fenster vollständig ausgefüllt ist"
 
 #: ../app/actions/view-actions.c:97
 msgid "Na_vigation Window"
