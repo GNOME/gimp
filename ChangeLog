@@ -1,3 +1,11 @@
+2007-04-11  Mukund Sivaraman  <muks@mukund.org>
+
+	* app/display/gimpstatusbar.c: Fixes a bug (#428493) where
+	  gimp_statusbar_push_temp() expects vaargs and
+	  gimp_statusbar_progress_message() directly passes a message
+	  to it as the format string.. in this case the message
+	  contains % (in the filename) and no arguments.
+
 2007-04-09  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimpperspectiveclone.c

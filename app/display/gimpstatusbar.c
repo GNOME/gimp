@@ -395,7 +395,7 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
     return FALSE;
 
   gimp_statusbar_push_temp (statusbar,
-                            gimp_get_message_stock_id (severity), message);
+                            gimp_get_message_stock_id (severity), "%s", message);
 
   return TRUE;
 }
