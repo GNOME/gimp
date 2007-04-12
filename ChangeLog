@@ -5,7 +5,7 @@
 	selection tool. This resurrects positioning of floating selections
 	with the cursor keys.
 
-2007-04-12  Raphaël Quinet  <raphael@gimp.org>
+2007-04-12  Sven Neumann  <sven@gimp.org>
 
 	* tools/pdbgen/pdb/display.pdb (display_delete): added a note that
 	calling this function may cause data loss.
