@@ -1,6 +1,7 @@
+#include <stdio.h>
 /* xmp-parse.c - simple parser for XMP metadata
  *
- * Copyright (C) 2004, Raphaël Quinet <raphael@gimp.org>
+ * Copyright (C) 2004-2007, Raphaël Quinet <raphael@gimp.org>
  *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
@@ -171,6 +172,10 @@ struct _XMPParseContext
   gint             depth;
 
   GSList          *namespaces;
+  gchar           *xmp_prefix;
+  guint            xmp_prefix_len;
+  gchar           *rdf_prefix;
+  guint            rdf_prefix_len;
 
   gchar           *property;
   XMLNameSpace    *property_ns;
@@ -348,9 +353,20 @@ push_namespace (XMPParseContext  *context,
 {
   XMLNameSpace *ns;
 
-  if (! strcmp (uri, "http://www.w3.org/1999/02/22-rdf-syntax-ns#" /* RDF */)
-      || ! strcmp (uri, "adobe:ns:meta/" /* xmpmeta */))
-    return;
+  if (! strcmp (uri, "adobe:ns:meta/"))
+    {
+      g_free (context->xmp_prefix);
+      context->xmp_prefix = g_strdup (prefix); /* XMP recommends "x:" */
+      context->xmp_prefix_len = strlen (prefix);
+      return;
+    }
+  if (! strcmp (uri, "http://www.w3.org/1999/02/22-rdf-syntax-ns#"))
+    {
+      g_free (context->rdf_prefix);
+      context->rdf_prefix = g_strdup (prefix); /* XMP recommends "rdf:" */
+      context->rdf_prefix_len = strlen (prefix);
+      return;
+    }
   ns = g_new (XMLNameSpace, 1);
   ns->depth = context->depth;
   ns->uri = g_strdup (uri);
@@ -403,6 +419,36 @@ has_ns_prefix (const gchar  *name,
     return FALSE;
   return ((strncmp (name, ns->prefix, ns->prefix_len) == 0)
           && (name[ns->prefix_len] == ':'));
+}
+
+/* checks if an element or attribute matches a target with the given prefix */
+static gboolean
+matches_with_prefix (const gchar *name,
+                     const gchar *prefix,
+                     guint        prefix_len,
+                     const gchar *target_name)
+{
+  if (prefix == NULL)
+    return FALSE;
+  return ((strncmp (name, prefix, prefix_len) == 0)
+          && (strlen (name) > prefix_len + 1)
+          && (name[prefix_len] == ':')
+          && (strcmp (name + prefix_len + 1, target_name) == 0));
+}
+
+/* checks if an element or attribute matches a target in the RDF namespace */
+static gboolean
+matches_rdf (const gchar     *name,
+             XMPParseContext *context,
+             const gchar     *target_name)
+{
+  if (context->rdf_prefix != NULL)
+    return matches_with_prefix (name,
+                                context->rdf_prefix,
+                                context->rdf_prefix_len,
+                                target_name);
+  else
+    return matches_with_prefix (name, "rdf", 3, target_name);
 }
 
 /* add a new property to the schema referenced by its prefix */
@@ -550,9 +596,11 @@ start_element_handler  (GMarkupParseContext  *markup_context,
     {
     case STATE_INSIDE_XPACKET:
       if (! strcmp (element_name, "x:xmpmeta")
-	  || ! strcmp (element_name, "x:xapmeta"))
+	  || ! strcmp (element_name, "x:xapmeta")
+          || matches_with_prefix (element_name, context->xmp_prefix,
+                                  context->xmp_prefix_len, "xmpmeta"))
 	context->state = STATE_INSIDE_XMPMETA;
-      else if (! strcmp (element_name, "rdf:RDF"))
+      else if (matches_rdf (element_name, context, "RDF"))
         {
           /* the x:xmpmeta element is missing, but this is allowed */
           context->depth++;
@@ -564,7 +612,7 @@ start_element_handler  (GMarkupParseContext  *markup_context,
       break;
 
     case STATE_INSIDE_XMPMETA:
-      if (! strcmp (element_name, "rdf:RDF"))
+      if (matches_rdf (element_name, context, "RDF"))
 	context->state = STATE_INSIDE_RDF;
       else
 	parse_error_element (context, error, "rdf:RDF",
@@ -572,7 +620,7 @@ start_element_handler  (GMarkupParseContext  *markup_context,
       break;
 
     case STATE_INSIDE_RDF:
-      if (! strcmp (element_name, "rdf:Description"))
+      if (matches_rdf (element_name, context, "Description"))
 	{
           XMLNameSpace *ns;
           gboolean      about_seen = FALSE;
@@ -580,7 +628,7 @@ start_element_handler  (GMarkupParseContext  *markup_context,
 	  context->state = STATE_INSIDE_TOPLEVEL_DESC;
 	  for (attr = 0; attribute_names[attr] != NULL; ++attr)
 	    {
-	      if (! strcmp (attribute_names[attr], "rdf:about")/* new style */
+              if (matches_rdf (attribute_names[attr], context, "about")
                   || ! strcmp (attribute_names[attr], "about") /* old style */)
                 about_seen = TRUE;
 	      else if (g_str_has_prefix (attribute_names[attr], "xmlns"))
@@ -622,10 +670,11 @@ start_element_handler  (GMarkupParseContext  *markup_context,
             context->state = STATE_INSIDE_PROPERTY;
             for (attr = 0; attribute_names[attr] != NULL; ++attr)
               {
-                if (! strcmp (attribute_names[attr], "rdf:resource"))
+                if (matches_rdf (attribute_names[attr], context, "resource"))
                   add_property_value (context, XMP_PTYPE_RESOURCE, NULL,
                                       g_strdup (attribute_values[attr]));
-                else if (! strcmp (attribute_names[attr], "rdf:parseType")
+                else if (matches_rdf (attribute_names[attr], context,
+                                      "parseType")
                          && ! strcmp (attribute_values[attr], "Resource"))
                   {
                     context->saved_state = STATE_INSIDE_TOPLEVEL_DESC;
@@ -643,7 +692,7 @@ start_element_handler  (GMarkupParseContext  *markup_context,
       break;
 
     case STATE_INSIDE_PROPERTY:
-      if (! strcmp (element_name, "rdf:Description"))
+      if (matches_rdf (element_name, context, "Description"))
 	{
           context->saved_state = context->state;
 	  context->state = STATE_INSIDE_QDESC;
@@ -660,18 +709,18 @@ start_element_handler  (GMarkupParseContext  *markup_context,
                                    attribute_values[attr]);
 	    }
 	}
-      else if (! strcmp (element_name, "rdf:Alt"))
+      else if (matches_rdf (element_name, context, "Alt"))
 	context->state = STATE_INSIDE_ALT;
-      else if (! strcmp (element_name, "rdf:Bag"))
+      else if (matches_rdf (element_name, context, "Bag"))
 	context->state = STATE_INSIDE_BAG;
-      else if (! strcmp (element_name, "rdf:Seq"))
+      else if (matches_rdf (element_name, context, "Seq"))
 	context->state = STATE_INSIDE_SEQ;
       else
         unknown_element (context, error, element_name);
       break;
 
     case STATE_INSIDE_QDESC:
-      if (! strcmp (element_name, "rdf:value"))
+      if (matches_rdf (element_name, context, "value"))
 	context->state = STATE_INSIDE_QDESC_VALUE;
       else
 	context->state = STATE_INSIDE_QDESC_QUAL;
@@ -717,12 +766,12 @@ start_element_handler  (GMarkupParseContext  *markup_context,
       break;
 
     case STATE_INSIDE_ALT:
-      if (! strcmp (element_name, "rdf:li"))
+      if (matches_rdf (element_name, context, "li"))
 	{
 	  context->state = STATE_INSIDE_ALT_LI;
 	  for (attr = 0; attribute_names[attr] != NULL; ++attr)
 	    {
-	      if (! strcmp (attribute_names[attr], "rdf:parseType")
+	      if (matches_rdf (attribute_names[attr], context, "parseType")
                   && ! strcmp (attribute_values[attr], "Resource"))
                 context->state = STATE_INSIDE_ALT_LI_RSC;
 	      else if (! strcmp (attribute_names[attr], "xml:lang"))
@@ -749,12 +798,12 @@ start_element_handler  (GMarkupParseContext  *markup_context,
       break;
 
     case STATE_INSIDE_BAG:
-      if (! strcmp (element_name, "rdf:li"))
+      if (matches_rdf (element_name, context, "li"))
 	{
           context->state = STATE_INSIDE_BAG_LI;
 	  for (attr = 0; attribute_names[attr] != NULL; ++attr)
 	    {
-	      if (! strcmp (attribute_names[attr], "rdf:parseType")
+	      if (matches_rdf (attribute_names[attr], context, "parseType")
                   && ! strcmp (attribute_values[attr], "Resource"))
                 context->state = STATE_INSIDE_BAG_LI_RSC;
 	      else
@@ -772,12 +821,12 @@ start_element_handler  (GMarkupParseContext  *markup_context,
       break;
 
     case STATE_INSIDE_SEQ:
-      if (! strcmp (element_name, "rdf:li"))
+      if (matches_rdf (element_name, context, "li"))
 	{
           context->state = STATE_INSIDE_SEQ_LI;
 	  for (attr = 0; attribute_names[attr] != NULL; ++attr)
 	    {
-	      if (! strcmp (attribute_names[attr], "rdf:parseType")
+	      if (matches_rdf (attribute_names[attr], context, "parseType")
                   && ! strcmp (attribute_values[attr], "Resource"))
                 context->state = STATE_INSIDE_SEQ_LI_RSC;
 	      else
@@ -796,7 +845,7 @@ start_element_handler  (GMarkupParseContext  *markup_context,
 
     case STATE_INSIDE_BAG_LI:
     case STATE_INSIDE_SEQ_LI:
-      if (! strcmp (element_name, "rdf:Description"))
+      if (matches_rdf (element_name, context, "Description"))
         {
           context->saved_state = context->state;
           context->state = STATE_INSIDE_QDESC;
@@ -829,8 +878,8 @@ start_element_handler  (GMarkupParseContext  *markup_context,
 
     default:
       parse_error (context, error, XMP_ERROR_PARSE,
-		       _("Nested elements (<%s>) are not allowed in this context"),
-                         element_name);
+                   _("Nested elements (<%s>) are not allowed in this context"),
+                   element_name);
       break;
     }
 }
@@ -922,18 +971,22 @@ end_element_handler    (GMarkupParseContext  *markup_context,
       break;
 
     case STATE_INSIDE_TOPLEVEL_DESC:
-      g_return_if_fail (! strcmp (element_name, "rdf:Description"));
+      g_return_if_fail (matches_rdf (element_name, context, "Description"));
       context->state = STATE_INSIDE_RDF;
       break;
 
     case STATE_INSIDE_RDF:
-      g_return_if_fail (! strcmp (element_name, "rdf:RDF"));
+      g_return_if_fail (matches_rdf (element_name, context, "RDF"));
       context->state = STATE_AFTER_RDF;
       break;
 
     case STATE_AFTER_RDF:
       g_return_if_fail (! strcmp (element_name, "x:xmpmeta")
-                        || ! strcmp (element_name, "x:xapmeta"));
+                        || ! strcmp (element_name, "x:xapmeta")
+                        || matches_with_prefix (element_name,
+                                                context->xmp_prefix,
+                                                context->xmp_prefix_len,
+                                                "xmpmeta"));
       context->state = STATE_AFTER_XMPMETA;
       break;
 
@@ -1169,6 +1222,10 @@ xmp_parse_context_new (const XMPParser *parser,
   context->depth = 0;
 
   context->namespaces = NULL;
+  context->xmp_prefix = NULL;
+  context->xmp_prefix_len = 0;
+  context->rdf_prefix = NULL;
+  context->rdf_prefix_len = 0;
 
   context->property = NULL;
   context->property_ns = NULL;
@@ -1199,6 +1256,8 @@ xmp_parse_context_free (XMPParseContext *context)
     (* context->user_data_dnotify) (context->user_data);
 
   g_slist_free (context->namespaces);
+  g_free (context->xmp_prefix);
+  g_free (context->rdf_prefix);
   if (! (context->flags & XMP_FLAG_DEFER_VALUE_FREE))
     {
       while (context->prop_cur_value >= 0)

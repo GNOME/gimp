@@ -1,3 +1,9 @@
+2007-04-12  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/metadata/xmp-parse.c: made the parser more tolerant and
+	accept XMP blocks that are not using the namespace prefixes
+	recommended by the XMP specification.
+
 2007-04-12  Sven Neumann  <sven@gimp.org>
 
 	* app/actions/plug-in-commands.c: if a plug-in or script
