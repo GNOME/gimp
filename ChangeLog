@@ -1,3 +1,16 @@
+2007-04-12  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/gimpprotocol.[ch] (struct _GPParam): don't redefine
+	the GimpParasite struct, just use it.
+
+	* libgimp/gimp.c: include gimpparasite.h.
+
+	* libgimp/gimpitemcombobox.c (gimp_item_combo_box_new): initialize
+	combo_box_type to suppress a compiler warning.
+
+	* libgimpwidgets/gimpmemsizeentry.c (gimp_memsize_entry_new):
+	avoid dereferencing a type-punned pointer.
+
 2007-04-11  Jakub Steiner <jimmac@ximian.com>
 
 	* themes/Default/images/stock-display-filter-contrast-24.svg
@@ -16,8 +29,8 @@
 	* themes/Default/images/stock-display-filter-gamma-24.png
 	* themes/Default/images/stock-display-filter-gamma-16.svg
 	* themes/Default/images/stock-display-filter-gamma-16.png: how
-		could I have gone to LGM with a straight face without finishing
-		these?
+	could I have gone to LGM with a straight face without finishing
+	these?
 
 2007-04-11  Sven Neumann  <sven@gimp.org>
 

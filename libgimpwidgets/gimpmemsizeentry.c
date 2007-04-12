@@ -157,6 +157,7 @@ gimp_memsize_entry_new (guint64  value,
                         guint64  upper)
 {
   GimpMemsizeEntry *entry;
+  GtkObject        *adj;
   guint             shift;
 
 #if _MSC_VER < 1300
@@ -181,7 +182,7 @@ gimp_memsize_entry_new (guint64  value,
   entry->upper = upper;
   entry->shift = shift;
 
-  entry->spinbutton = gimp_spin_button_new ((GtkObject **) &entry->adjustment,
+  entry->spinbutton = gimp_spin_button_new (&adj,
                                             CAST (value >> shift),
                                             CAST (lower >> shift),
                                             CAST (upper >> shift),
@@ -189,6 +190,7 @@ gimp_memsize_entry_new (guint64  value,
 
 #undef CAST
 
+  entry->adjustment = GTK_ADJUSTMENT (adj);
   g_object_ref_sink (entry->adjustment);
 
   gtk_entry_set_width_chars (GTK_ENTRY (entry->spinbutton), 10);

@@ -315,7 +315,7 @@ gimp_item_combo_box_new (GimpComboBoxType       type,
                          GimpItemConstraintFunc constraint,
                          gpointer               data)
 {
-  GType         combo_box_type;
+  GType         combo_box_type = G_TYPE_NONE;
   GtkWidget    *combo_box;
   GtkTreeModel *model;
   GtkTreeIter   iter;

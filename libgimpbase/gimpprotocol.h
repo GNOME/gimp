@@ -109,17 +109,17 @@ struct _GPParam
 
   union
   {
-    gint32    d_int32;
-    gint16    d_int16;
-    guint8    d_int8;
-    gdouble   d_float;
-    gchar    *d_string;
-    gint32   *d_int32array;
-    gint16   *d_int16array;
-    guint8   *d_int8array;
-    gdouble  *d_floatarray;
-    gchar   **d_stringarray;
-    GimpRGB   d_color;
+    gint32        d_int32;
+    gint16        d_int16;
+    guint8        d_int8;
+    gdouble       d_float;
+    gchar        *d_string;
+    gint32       *d_int32array;
+    gint16       *d_int16array;
+    guint8       *d_int8array;
+    gdouble      *d_floatarray;
+    gchar       **d_stringarray;
+    GimpRGB       d_color;
     struct
     {
       gint32 x;
@@ -127,23 +127,17 @@ struct _GPParam
       gint32 width;
       gint32 height;
     } d_region;
-    gint32 d_display;
-    gint32 d_image;
-    gint32 d_layer;
-    gint32 d_channel;
-    gint32 d_drawable;
-    gint32 d_selection;
-    gint32 d_boundary;
-    gint32 d_path; /* deprecated */
-    gint32 d_vectors;
-    struct
-    {
-      gchar    *name;
-      guint32   flags;
-      guint32   size;
-      gpointer  data;
-    } d_parasite;
-    gint32 d_status;
+    gint32        d_display;
+    gint32        d_image;
+    gint32        d_layer;
+    gint32        d_channel;
+    gint32        d_drawable;
+    gint32        d_selection;
+    gint32        d_boundary;
+    gint32        d_path; /* deprecated */
+    gint32        d_vectors;
+    gint32        d_status;
+    GimpParasite  d_parasite;
   } data;
 };
 

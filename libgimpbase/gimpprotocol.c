@@ -1680,7 +1680,7 @@ _gp_params_write (GIOChannel *channel,
 
         case GIMP_PDB_PARASITE:
           {
-            GimpParasite *p = (GimpParasite *) &params[i].data.d_parasite;
+            GimpParasite *p = &params[i].data.d_parasite;
 
             if (p->name == NULL)
               {
