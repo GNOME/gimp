@@ -1,5 +1,9 @@
 2007-04-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/sel2path/*.[ch]: updated copyright header.
+
+2007-04-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/channel_mixer.c
 	* plug-ins/gfig/gfig-style.c: get rid of compiler warnings about
 	dereferencing type-punned pointers.
