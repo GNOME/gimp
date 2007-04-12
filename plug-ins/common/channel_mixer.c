@@ -1144,10 +1144,14 @@ static void
 cm_combo_callback (GtkWidget    *widget,
                    CmParamsType *mix)
 {
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
-                                 (gint *) &mix->output_channel);
+  gint value;
 
-  cm_set_adjusters (mix);
+  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
+    {
+      mix->output_channel = value;
+
+      cm_set_adjusters (mix);
+    }
 }
 
 static void

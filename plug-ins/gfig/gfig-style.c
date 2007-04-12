@@ -204,6 +204,7 @@ gfig_load_style (Style *style,
   gchar   load_buf2[MAX_LOAD_LINE];
   gchar  *style_text[100];
   gint    nitems = 0;
+  gint    value;
   gint    k;
   gchar   name[100];
 
@@ -243,18 +244,28 @@ gfig_load_style (Style *style,
       return TRUE;
     }
 
-  gfig_read_parameter_string   (style_text, nitems, "BrushName",  &style->brush_name);
-  if (! &style->brush_name )
+  gfig_read_parameter_string (style_text, nitems, "BrushName",
+                              &style->brush_name);
+
+  if (style->brush_name == NULL)
     g_message ("Error loading style: got NULL for brush name.");
 
-  gfig_read_parameter_string   (style_text, nitems, "Pattern",     &style->pattern);
-  gfig_read_parameter_string   (style_text, nitems, "Gradient",    &style->gradient);
-  gfig_read_parameter_gimp_rgb (style_text, nitems, "Foreground",  &style->foreground);
-  gfig_read_parameter_gimp_rgb (style_text, nitems, "Background",  &style->background);
-  gfig_read_parameter_int      (style_text, nitems, "FillType",    (gint *)&style->fill_type);
-  gfig_read_parameter_int      (style_text, nitems, "PaintType",    (gint *)&style->paint_type);
-  gfig_read_parameter_double   (style_text, nitems, "FillOpacity",
-                                (gdouble *)&style->fill_opacity);
+  gfig_read_parameter_string (style_text, nitems, "Pattern", &style->pattern);
+  gfig_read_parameter_string (style_text, nitems, "Gradient", &style->gradient);
+
+  gfig_read_parameter_gimp_rgb (style_text, nitems, "Foreground",
+                                &style->foreground);
+  gfig_read_parameter_gimp_rgb (style_text, nitems, "Background",
+                                &style->background);
+
+  gfig_read_parameter_int (style_text, nitems, "FillType", &value);
+  style->fill_type = value;
+
+  gfig_read_parameter_int (style_text, nitems, "PaintType", &value);
+  style->paint_type = value;
+
+  gfig_read_parameter_double (style_text, nitems, "FillOpacity",
+                              &style->fill_opacity);
 
   for (k = 0; k < nitems; k++)
     {
@@ -694,8 +705,9 @@ gfig_style_set_context_from_style (Style *style)
 void
 gfig_style_set_style_from_context (Style *style)
 {
-  GimpRGB  color;
   Style   *current_style;
+  GimpRGB  color;
+  gint     value;
 
   style->name = "object";
   current_style = gfig_context_get_current_style ();
@@ -711,23 +723,22 @@ gfig_style_set_style_from_context (Style *style)
                                &color);
   gfig_rgba_copy (&style->background, &color);
 
-  style->brush_name   = current_style->brush_name;
+  style->brush_name = current_style->brush_name;
 
   if (!style->pattern || strcmp (style->pattern, current_style->pattern))
     {
-      style->pattern    = g_strdup (current_style->pattern); /* why strduping? */
+      style->pattern = g_strdup (current_style->pattern); /* why strduping? */
     }
 
-  style->gradient     = current_style->gradient;
+  style->gradient = current_style->gradient;
 
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (gfig_context->fillstyle_combo),
-                                 (gint *) &style->fill_type);
+  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (gfig_context->fillstyle_combo), &value))
+    style->fill_type = value;
 
   /* FIXME when there is an opacity control widget to read */
   style->fill_opacity = 100.;
 
-  style->paint_type =
-    gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (gfig_context->paint_type_toggle));
+  style->paint_type = gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (gfig_context->paint_type_toggle));
 }
 
 void
