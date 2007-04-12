@@ -1,3 +1,11 @@
+2007-04-12  Sven Neumann  <sven@gimp.org>
+
+	* tools/pdbgen/pdb/display.pdb (display_delete): added a note that
+	calling this function may cause data loss.
+
+	* app/pdb/display_cmds.c
+	* libgimp/gimpdisplay_pdb.c: regenerated.
+
 2007-04-12  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/metadata/xmp-parse.c: made the parser more tolerant and

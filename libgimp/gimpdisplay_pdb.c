@@ -100,7 +100,9 @@ gimp_display_new (gint32 image_ID)
  *
  * This procedure removes the specified display. If this is the last
  * remaining display for the underlying image, then the image is
- * deleted also.
+ * deleted also. Note that the display is closed no matter if the image
+ * is dirty or not. Better save the image before calling this
+ * procedure.
  *
  * Returns: TRUE on success.
  */

@@ -258,7 +258,7 @@ register_display_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-display-delete",
                                      "Delete the specified display.",
-                                     "This procedure removes the specified display. If this is the last remaining display for the underlying image, then the image is deleted also.",
+                                     "This procedure removes the specified display. If this is the last remaining display for the underlying image, then the image is deleted also. Note that the display is closed no matter if the image is dirty or not. Better save the image before calling this procedure.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
