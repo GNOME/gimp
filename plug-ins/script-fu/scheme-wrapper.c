@@ -92,6 +92,7 @@ struct named_constant const script_constants[] =
   { "SF-PALETTE",     SF_PALETTE    },
   { "SF-TEXT",        SF_TEXT       },
   { "SF-ENUM",        SF_ENUM       },
+  { "SF-DISPLAY",     SF_DISPLAY    },
 
   /* For SF-ADJUSTMENT */
   { "SF-SLIDER",      SF_SLIDER     },

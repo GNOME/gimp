@@ -249,8 +249,9 @@ script_fu_add_script (scheme *sc, pointer a)
                 case SF_LAYER:
                 case SF_CHANNEL:
                 case SF_VECTORS:
+                case SF_DISPLAY:
                   if (!sc->vptr->is_integer (sc->vptr->pair_car (a)))
-                    return my_err (sc, "script-fu-register: drawable defaults must be integer values");
+                    return my_err (sc, "script-fu-register: default IDs must be integer values");
                   script->arg_defaults[i].sfa_image =
                       sc->vptr->ivalue (sc->vptr->pair_car (a));
                   script->arg_values[i].sfa_image =
@@ -281,6 +282,11 @@ script_fu_add_script (scheme *sc, pointer a)
                     case SF_VECTORS:
                       args[i + 1].type = GIMP_PDB_VECTORS;
                       args[i + 1].name = "vectors";
+                      break;
+
+                    case SF_DISPLAY:
+                      args[i + 1].type = GIMP_PDB_DISPLAY;
+                      args[i + 1].name = "display";
                       break;
 
                     default:
@@ -592,9 +598,6 @@ script_fu_add_script (scheme *sc, pointer a)
                   args[i + 1].name        = "enum";
                   args[i + 1].description = script->arg_labels[i];
                   break;
-
-                default:
-                  break;
                 }
 
               a = sc->vptr->pair_cdr (a);
@@ -762,6 +765,73 @@ script_fu_remove_script (gpointer  foo G_GNUC_UNUSED,
   return FALSE;
 }
 
+static gboolean
+script_fu_param_init (SFScript        *script,
+                      gint             nparams,
+                      const GimpParam *params,
+                      SFArgType        type,
+                      gint             n)
+{
+  if (script->num_args > n && script->arg_types[n] == type && nparams > n + 1)
+    {
+      switch (type)
+        {
+        case SF_IMAGE:
+          if (params[n + 1].type == GIMP_PDB_IMAGE)
+            {
+              script->arg_values[n].sfa_image = params[n + 1].data.d_image;
+              return TRUE;
+            }
+          break;
+
+        case SF_DRAWABLE:
+          if (params[n + 1].type == GIMP_PDB_DRAWABLE)
+            {
+              script->arg_values[n].sfa_drawable = params[n + 1].data.d_drawable;
+              return TRUE;
+            }
+          break;
+
+        case SF_LAYER:
+          if (params[n + 1].type == GIMP_PDB_LAYER)
+            {
+              script->arg_values[n].sfa_layer = params[n + 1].data.d_layer;
+              return TRUE;
+            }
+          break;
+
+        case SF_CHANNEL:
+          if (params[n + 1].type == GIMP_PDB_CHANNEL)
+            {
+              script->arg_values[n].sfa_channel = params[n + 1].data.d_channel;
+              return TRUE;
+            }
+          break;
+
+        case SF_VECTORS:
+          if (params[n + 1].type == GIMP_PDB_VECTORS)
+            {
+              script->arg_values[n].sfa_vectors = params[n + 1].data.d_vectors;
+              return TRUE;
+            }
+          break;
+
+        case SF_DISPLAY:
+          if (params[n + 1].type == GIMP_PDB_DISPLAY)
+            {
+              script->arg_values[n].sfa_display = params[n + 1].data.d_display;
+              return TRUE;
+            }
+          break;
+
+        default:
+          break;
+        }
+    }
+
+  return FALSE;
+}
+
 static void
 script_fu_script_proc (const gchar      *name,
                        gint              nparams,
@@ -770,7 +840,7 @@ script_fu_script_proc (const gchar      *name,
                        GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
+  GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
   GimpRunMode        run_mode;
   SFScript          *script;
   gint               min_args = 0;
@@ -789,39 +859,46 @@ script_fu_script_proc (const gchar      *name,
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
-        case GIMP_RUN_WITH_LAST_VALS:
-          if (nparams > 1 && params[1].type == GIMP_PDB_IMAGE &&
-              script->num_args > 0 && script->arg_types[0] == SF_IMAGE)
+          /*  the first parameter may be a DISPLAY id  */
+          if (script_fu_param_init (script,
+                                    nparams, params, SF_DISPLAY, min_args))
             {
-              script->arg_values[0].sfa_image = params[1].data.d_image;
               min_args++;
             }
 
-          if (nparams > 2 && params[2].type == GIMP_PDB_DRAWABLE &&
-              script->num_args > 1 && script->arg_types[1] == SF_DRAWABLE)
+          /*  an IMAGE id may come first or after the DISPLAY id  */
+          if (script_fu_param_init (script,
+                                    nparams, params, SF_IMAGE, min_args))
             {
-              script->arg_values[1].sfa_drawable = params[2].data.d_drawable;
+              min_args++;
+
+              /*  and may be followed by a DRAWABLE id  */
+              if (script_fu_param_init (script,
+                                        nparams, params, SF_DRAWABLE, min_args))
+                min_args++;
+            }
+
+          /*  the first parameter may be a LAYER id  */
+          if (min_args == 0 &&
+              script_fu_param_init (script,
+                                    nparams, params, SF_LAYER, min_args))
+            {
               min_args++;
             }
 
-          if (nparams > 2 && params[2].type == GIMP_PDB_LAYER &&
-              script->num_args > 1 && script->arg_types[1] == SF_LAYER)
+          /*  the first parameter may be a CHANNEL id  */
+          if (min_args == 0 &&
+              script_fu_param_init (script,
+                                    nparams, params, SF_CHANNEL, min_args))
             {
-              script->arg_values[1].sfa_layer = params[2].data.d_layer;
               min_args++;
             }
 
-          if (nparams > 2 && params[2].type == GIMP_PDB_CHANNEL &&
-              script->num_args > 1 && script->arg_types[1] == SF_CHANNEL)
+          /*  the first parameter may be a VECTORS id  */
+          if (min_args == 0 &&
+              script_fu_param_init (script,
+                                    nparams, params, SF_VECTORS, min_args))
             {
-              script->arg_values[1].sfa_channel = params[2].data.d_channel;
-              min_args++;
-            }
-
-          if (nparams > 2 && params[2].type == GIMP_PDB_VECTORS &&
-              script->num_args > 1 && script->arg_types[1] == SF_VECTORS)
-            {
-              script->arg_values[1].sfa_vectors = params[2].data.d_vectors;
               min_args++;
             }
 
@@ -862,6 +939,7 @@ script_fu_script_proc (const gchar      *name,
                     case SF_LAYER:
                     case SF_CHANNEL:
                     case SF_VECTORS:
+                    case SF_DISPLAY:
                       g_string_append_printf (s, "%d", param->data.d_int32);
                       break;
 
@@ -914,9 +992,6 @@ script_fu_script_proc (const gchar      *name,
                     case SF_OPTION:
                     case SF_ENUM:
                       g_string_append_printf (s, "%d", param->data.d_int32);
-                      break;
-
-                    default:
                       break;
                     }
                 }
@@ -1011,7 +1086,9 @@ script_fu_free_script (SFScript *script)
         case SF_LAYER:
         case SF_CHANNEL:
         case SF_VECTORS:
+        case SF_DISPLAY:
         case SF_COLOR:
+        case SF_TOGGLE:
           break;
 
         case SF_VALUE:
@@ -1063,9 +1140,6 @@ script_fu_free_script (SFScript *script)
 
         case SF_ENUM:
           g_free (script->arg_defaults[i].sfa_enum.type_name);
-          break;
-
-        default:
           break;
         }
     }

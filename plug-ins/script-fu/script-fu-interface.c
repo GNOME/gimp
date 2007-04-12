@@ -544,6 +544,9 @@ script_fu_interface (SFScript *script,
                           G_CALLBACK (gimp_int_combo_box_get_active),
                           &script->arg_values[i].sfa_enum.history);
         break;
+
+      case SF_DISPLAY:
+        break;
       }
 
       if (widget)
@@ -780,6 +783,7 @@ script_fu_ok (SFScript *script)
         case SF_LAYER:
         case SF_CHANNEL:
         case SF_VECTORS:
+        case SF_DISPLAY:
           g_string_append_printf (s, "%d", arg_value->sfa_image);
           break;
 
@@ -915,6 +919,7 @@ script_fu_reset (SFScript *script)
         case SF_LAYER:
         case SF_CHANNEL:
         case SF_VECTORS:
+        case SF_DISPLAY:
           break;
 
         case SF_COLOR:

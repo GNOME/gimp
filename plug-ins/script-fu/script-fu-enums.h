@@ -42,7 +42,8 @@ typedef enum
   SF_OPTION,
   SF_PALETTE,
   SF_TEXT,
-  SF_ENUM
+  SF_ENUM,
+  SF_DISPLAY
 } SFArgType;
 
 typedef enum

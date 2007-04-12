@@ -1,5 +1,18 @@
 2007-04-12  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/plug-in-commands.c: if a plug-in or script
+	registered with a DISPLAY argument after the run-mode argument,
+	then pass the ID of the active display to the script, optionally
+	followed by image and drawable IDs.
+
+	* plug-ins/script-fu/scheme-wrapper.c
+	* plug-ins/script-fu/script-fu-enums.h
+	* plug-ins/script-fu/script-fu-interface.c
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-types.h: added SF-DISPLAY parameter.
+
+2007-04-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/sel2path/*.[ch]: updated copyright header.
 
 2007-04-12  Sven Neumann  <sven@gimp.org>
