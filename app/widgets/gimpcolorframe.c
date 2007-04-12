@@ -385,9 +385,13 @@ static void
 gimp_color_frame_menu_callback (GtkWidget      *widget,
                                 GimpColorFrame *frame)
 {
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
-                                 (gint *) &frame->frame_mode);
-  gimp_color_frame_update (frame);
+  gint value;
+
+  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
+    {
+      frame->frame_mode = value;
+      gimp_color_frame_update (frame);
+    }
 }
 
 static void

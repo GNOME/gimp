@@ -620,6 +620,7 @@ xcf_load_layer_props (XcfInfo   *info,
 {
   PropType prop_type;
   guint32  prop_size;
+  guint32  value;
 
   while (TRUE)
     {
@@ -700,7 +701,8 @@ xcf_load_layer_props (XcfInfo   *info,
           break;
 
         case PROP_MODE:
-          info->cp += xcf_read_int32 (info->fp, (guint32 *) &layer->mode, 1);
+          info->cp += xcf_read_int32 (info->fp, &value, 1);
+          layer->mode = value;
           break;
 
         case PROP_TATTOO:

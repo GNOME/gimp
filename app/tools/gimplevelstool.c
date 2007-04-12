@@ -857,17 +857,20 @@ static void
 levels_channel_callback (GtkWidget      *widget,
                          GimpLevelsTool *tool)
 {
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
-                                 (gint *) &tool->channel);
+  gint value;
 
-  gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->hist_view),
-                                   tool->channel);
+  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
+    {
+      tool->channel = value;
+      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->hist_view),
+                                       tool->channel);
 
-  /* FIXME: hack */
-  if (! tool->color)
-    tool->channel = (tool->channel == GIMP_HISTOGRAM_ALPHA) ? 1 : 0;
+      /* FIXME: hack */
+      if (! tool->color)
+        tool->channel = (tool->channel == GIMP_HISTOGRAM_ALPHA) ? 1 : 0;
 
-  levels_update (tool, ALL);
+      levels_update (tool, ALL);
+    }
 }
 
 static void

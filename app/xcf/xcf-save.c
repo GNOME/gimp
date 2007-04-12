@@ -282,13 +282,14 @@ xcf_save_image (XcfInfo   *info,
   GimpLayer   *layer;
   GimpLayer   *floating_layer;
   GimpChannel *channel;
+  GList       *list;
   guint32      saved_pos;
   guint32      offset;
+  guint32      value;
   guint        nlayers;
   guint        nchannels;
   guint        progress = 0;
   guint        max_progress;
-  GList       *list;
   gboolean     have_selection;
   gint         t1, t2, t3, t4;
   gchar        version_tag[16];
@@ -313,7 +314,9 @@ xcf_save_image (XcfInfo   *info,
   /* write out the width, height and image type information for the image */
   xcf_write_int32_print_error (info, (guint32 *) &image->width, 1);
   xcf_write_int32_print_error (info, (guint32 *) &image->height, 1);
-  xcf_write_int32_print_error (info, (guint32 *) &image->base_type, 1);
+
+  value = image->base_type;
+  xcf_write_int32_print_error (info, &value, 1);
 
   /* determine the number of layers and channels in the image */
   nlayers   = (guint) gimp_container_num_children (image->layers);
@@ -1133,10 +1136,10 @@ xcf_save_layer (XcfInfo    *info,
                 GimpLayer  *layer,
                 GError    **error)
 {
-  guint32 saved_pos;
-  guint32 offset;
-
-  GError *tmp_error = NULL;
+  guint32  saved_pos;
+  guint32  offset;
+  guint32  value;
+  GError  *tmp_error = NULL;
 
   /* check and see if this is the drawable that the floating
    *  selection is attached to.
@@ -1154,8 +1157,9 @@ xcf_save_layer (XcfInfo    *info,
                                (guint32 *) &GIMP_ITEM (layer)->width, 1);
   xcf_write_int32_check_error (info,
                                (guint32 *) &GIMP_ITEM (layer)->height, 1);
-  xcf_write_int32_check_error (info,
-                               (guint32 *) &GIMP_DRAWABLE (layer)->type, 1);
+
+  value = gimp_drawable_type (GIMP_DRAWABLE (layer));
+  xcf_write_int32_check_error (info, &value, 1);
 
   /* write out the layers name */
   xcf_write_string_check_error (info, &GIMP_OBJECT (layer)->name, 1);

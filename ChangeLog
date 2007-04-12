@@ -1,5 +1,16 @@
 2007-04-12  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimplevelstool.c
+	* app/tools/gimpcurvestool.c
+	* app/xcf/xcf-save.c
+	* app/xcf/xcf-load.c
+	* app/widgets/gimppaletteeditor.c
+	* app/widgets/gimpcolormapeditor.c
+	* app/widgets/gimpcolorframe.c: get rid of compiler warnings about
+	dereferencing type-punned pointers.
+
+2007-04-12  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpprotocol.[ch] (struct _GPParam): don't redefine
 	the GimpParasite struct, just use it.
 

@@ -895,19 +895,23 @@ static void
 curves_channel_callback (GtkWidget      *widget,
                          GimpCurvesTool *tool)
 {
-  gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget),
-                                 (gint *) &tool->channel);
-  gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->graph),
-                                   tool->channel);
+  gint value;
 
-  /* FIXME: hack */
-  if (! tool->color)
-    tool->channel = (tool->channel == GIMP_HISTOGRAM_ALPHA) ? 1 : 0;
+  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (widget), &value))
+    {
+      tool->channel = value;
+      gimp_histogram_view_set_channel (GIMP_HISTOGRAM_VIEW (tool->graph),
+                                       tool->channel);
 
-  gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (tool->curve_type),
-                                   tool->curves->curve_type[tool->channel]);
+      /* FIXME: hack */
+      if (! tool->color)
+        tool->channel = (tool->channel == GIMP_HISTOGRAM_ALPHA) ? 1 : 0;
 
-  curves_update (tool, ALL);
+      gimp_int_radio_group_set_active (GTK_RADIO_BUTTON (tool->curve_type),
+                                       tool->curves->curve_type[tool->channel]);
+
+      curves_update (tool, ALL);
+    }
 }
 
 static void
