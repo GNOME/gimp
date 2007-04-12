@@ -1,5 +1,12 @@
 2007-04-12  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimprectangleselecttool.c: implement
+	GimpTool::key_press and delegate to the rectangle tool or the edit
+	selection tool. This resurrects positioning of floating selections
+	with the cursor keys.
+
+2007-04-12  Raphaël Quinet  <raphael@gimp.org>
+
 	* tools/pdbgen/pdb/display.pdb (display_delete): added a note that
 	calling this function may cause data loss.
 
