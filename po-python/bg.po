@@ -1,172 +1,165 @@
-# translation of gimp-tiny-fu.HEAD.bg.po to Bulgarian
-# Bulgarian translation of Bulgarian translation of GIMP.
-# Copyright (C) 2006 THE Bulgarian translation of GIMP'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the Bulgarian translation of GIMP package.
+# Bulgarian translation of GIMP.
+# Copyright (C) 2006, 2007 Victor Dachev <vdachev@gmail.com>
+# This file is distributed under the same license as the GIMP package.
+# Victor Dachev <vdachev@gmail.com>, 2006, 2007.
 #
-#
-# Victor Dachev <vdachev@gmail.com>, 2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tiny-fu.HEAD.bg\n"
+"Project-Id-Version: gimp-po-python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-13 07:54+0300\n"
-"PO-Revision-Date: 2006-10-16 11:56+0300\n"
+"POT-Creation-Date: 2007-04-13 07:55+0300\n"
+"PO-Revision-Date: 2007-04-13 07:55+0300\n"
 "Last-Translator: Victor Dachev <vdachev@gmail.com>\n"
-"Language-Team: Bulgarian <bg@li.org>\n"
+"Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=n != 1;X-Generator: KBabel 1.11.2\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:335
 msgid "Missing exception information"
-msgstr ""
+msgstr "Липсва информация за изключенията"
 
 #: ../plug-ins/pygimp/gimpfu.py:344
 #, python-format
 msgid "An error occured running %s"
-msgstr ""
+msgstr "Грешка при стартиране на %s"
 
 #: ../plug-ins/pygimp/gimpfu.py:355
 msgid "_More Information"
-msgstr ""
+msgstr "_Още информация"
 
 #: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
 #: ../plug-ins/pygimp/gimpfu.py:479
 msgid "No"
-msgstr ""
+msgstr "Не"
 
 #: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
 msgid "Yes"
-msgstr ""
+msgstr "Да"
 
 #: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
-#, fuzzy
 msgid "Python-Fu File Selection"
-msgstr "Избор на файл за Tiny-Fu"
+msgstr "Избор на файл за Python-Fu"
 
 #: ../plug-ins/pygimp/gimpfu.py:528
-#, fuzzy
 msgid "Python-Fu Folder Selection"
-msgstr "Избор на папка за Tiny-Fu"
+msgstr "Избор на папка за Python-Fu"
 
 #: ../plug-ins/pygimp/gimpfu.py:618
 #, python-format
 msgid "Invalid input for '%s'"
-msgstr ""
+msgstr "Грешен изход за „%s“"
 
 #: ../plug-ins/pygimp/gimpui.py:175
-#, fuzzy
 msgid "Python-Fu Color Selection"
-msgstr "Избор на цветове за Tiny-Fu "
+msgstr "Избор на цветове за Python-FuFu"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
 msgid "Saving as colored XHTML"
-msgstr ""
+msgstr "Запазване като оцветен XHTML"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
 msgid "Save as colored XHTML"
-msgstr ""
+msgstr "Запазване като оцветен XHTML"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
-#, fuzzy
 msgid "Colored XHTML"
-msgstr "Цвят·3"
+msgstr "Оцветен XHTML"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
+#, fuzzy
 msgid "Character _source"
-msgstr ""
+msgstr "Източник на знака"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
 msgid "Source code"
-msgstr ""
+msgstr "Изходен код"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:194
-#, fuzzy
 msgid "Text file"
-msgstr "Текстови _кръг..."
+msgstr "Текстови файл"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
 msgid "Entry box"
-msgstr ""
+msgstr "Кутия за въвеждане"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+#, fuzzy
 msgid "_File to read or characters to use"
-msgstr ""
+msgstr "Файл за прочитане или символи за използване"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 #, fuzzy
 msgid "Fo_nt size in pixels"
-msgstr "Размер на шрифта (в пиксели)"
+msgstr "Размер на шрифта в пиксели"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#, fuzzy
 msgid "_Write a separate CSS file"
-msgstr ""
+msgstr "Записване на отделен CSS файл"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
-#, fuzzy
 msgid "Python Console"
-msgstr "Tiny-Fu конзола"
+msgstr "Python конзола"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
 msgid "_Browse..."
 msgstr "_Търсене..."
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
-#, fuzzy
 msgid "Python Procedure Browser"
-msgstr "Tiny-Fu четец на процедури"
+msgstr "Python четец на процедури"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
 #, python-format
 msgid "Could not open '%s' for writing: %s"
-msgstr ""
+msgstr "Не може да бъде отворен „%s“ за запис: %s"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
 #, python-format
 msgid "Could not write to '%s': %s"
-msgstr ""
+msgstr "Не може да бъде отворен „%s“ за запис: %s"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
 msgid "Save Python-Fu Console Output"
-msgstr ""
+msgstr "Запазване полученото от Python-Fu конзолата"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
 msgid "Interactive Gimp-Python interpreter"
-msgstr ""
+msgstr "Интерактивен Gimp-Python интерпретатор"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
-#, fuzzy
 msgid "_Console"
-msgstr "Tiny-Fu _Kонзола"
+msgstr "_Конзола"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:51
 msgid "Add a layer of fog"
-msgstr ""
+msgstr "Запазване като оцветен XHTML"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
-#, fuzzy
 msgid "_Fog..."
-msgstr "_Замразяване..."
+msgstr "_Мъгла..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:59
 #, fuzzy
 msgid "_Layer name"
-msgstr "Име на шарката"
+msgstr "Име на слоя"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:59
-#, fuzzy
 msgid "Clouds"
-msgstr "Колони"
+msgstr "Облаци"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:60
 #, fuzzy
 msgid "_Fog color"
-msgstr "Цвят на шрифта"
+msgstr "Цвят на мъглата"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#, fuzzy
 msgid "_Turbulence"
-msgstr ""
+msgstr "Турболентност"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:62
 #, fuzzy
@@ -175,11 +168,11 @@ msgstr "Плътност"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
 msgid "Offset the colors in a palette"
-msgstr ""
+msgstr "Отместване на цветовете в палитра"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
 msgid "_Offset Palette..."
-msgstr ""
+msgstr "_Отместена палитра..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
@@ -191,139 +184,132 @@ msgstr "Палитра"
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
 #, fuzzy
 msgid "Off_set"
-msgstr "Отместване·по·Y"
+msgstr "Отместване"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
 msgid "Sort the colors in a palette"
-msgstr ""
+msgstr "Подреждане на цветовете в палитра"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
-#, fuzzy
 msgid "_Sort Palette..."
-msgstr "В _шарка..."
+msgstr "_Подреждане на палитрата..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
 #, fuzzy
 msgid "Color _model"
-msgstr "Цветови метод"
+msgstr "Цветови модел"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
 msgid "RGB"
-msgstr ""
+msgstr "ЧЗС"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
 msgid "HSV"
-msgstr ""
+msgstr "ЦНС"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
 #, fuzzy
 msgid "Channel to _sort"
-msgstr "Цвят на тебешира"
+msgstr "Канал за подреждане"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
 msgid "Red or Hue"
-msgstr ""
+msgstr "Червено или Цвят"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
-#, fuzzy
 msgid "Green or Saturation"
-msgstr "Насищане на хрома"
+msgstr "Зелено или Насищане"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
 msgid "Blue or Value"
-msgstr ""
+msgstr "Синьо или Стойност"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+#, fuzzy
 msgid "_Ascending"
-msgstr ""
+msgstr "Възходящо"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
-msgstr ""
+msgstr "Създаване на повтаряща се преливка, използвайки светове от палитрата"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
 msgid "Palette to _Repeating Gradient"
-msgstr ""
+msgstr "Палитра в _Повтаряща се преливка"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
 msgid "Create a gradient using colors from the palette"
-msgstr ""
+msgstr "Създаване на преливка с цветове от палитрата"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
-#, fuzzy
 msgid "Palette to _Gradient"
-msgstr "Специална преливка"
+msgstr "Палитра в _Преливка"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:57
-#, fuzzy
 msgid "Slice"
-msgstr "Размер"
+msgstr "Нарязване"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr ""
+msgstr "Реже изображението по водачите, създава изображения и HTML таблица"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
-#, fuzzy
 msgid "_Slice..."
-msgstr "_Плъзгане..."
+msgstr "_Нарязване..."
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:430
 msgid "Path for HTML export"
-msgstr ""
+msgstr "Пътека за извеждане на HTML"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:431
 msgid "Filename for export"
-msgstr ""
+msgstr "Име на файла за извличане"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "Image name prefix"
-msgstr ""
+msgstr "Префикс на името на изображението"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:433
-#, fuzzy
 msgid "Image format"
-msgstr "Изображение за издълбаване"
+msgstr "Формат на изображението"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:434
-#, fuzzy
 msgid "Separate image folder"
-msgstr "Отделен слой"
+msgstr "Отделна папка за изображения"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Folder for image export"
-msgstr ""
+msgstr "Папка за извличане на изображения"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Space between table elements"
-msgstr ""
+msgstr "Разстояние между елементите на таблицата"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Javascript for onmouseover and clicked"
-msgstr ""
+msgstr "Javascript за поставяне на показалеца и натискане"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Skip animation for table caps"
-msgstr ""
+msgstr "Пропускане на анимацията за етикети на таблица"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr ""
+msgstr "Добавяне на падаща сянка към слой и по желание релеф"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
-#, fuzzy
 msgid "_Drop Shadow and Bevel..."
-msgstr "_Хвърляне на сянка..."
+msgstr "_Хвърляне на сянка и релеф..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
 #, fuzzy
 msgid "_Shadow blur"
-msgstr "Цвят на сянката"
+msgstr "Замъгляване на сянката"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
 #, fuzzy
 msgid "_Bevel"
-msgstr "Ширина на заоблянето"
+msgstr "Релеф"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 #, fuzzy
@@ -338,1503 +324,4 @@ msgstr "Отместване по хоризонтал на сянката"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 #, fuzzy
 msgid "Drop shadow _Y displacement"
-msgstr "Отместване·по·вертикал·на·сянката"
-
-#~ msgid "Interactive console for Script-Fu development"
-#~ msgstr "Интерактивна конзола за създаване на Script-Fu"
-
-#~ msgid "<Toolbox>/Xtns/Languages/Tiny-Fu"
-#~ msgstr "<Toolbox>/Разширения/Езици/Tiny-Fu"
-
-#~ msgid "_Start Server..."
-#~ msgstr "_Стартиране на сървъра..."
-
-#~ msgid "_GIMP Online"
-#~ msgstr "_GIMP онлайн"
-
-#~ msgid "_User Manual"
-#~ msgstr "_Ръководство"
-
-#~ msgid "_Tiny-Fu"
-#~ msgstr "_Tiny-Fu"
-
-#~ msgid "_Buttons"
-#~ msgstr "_Бутони"
-
-#~ msgid "_Logos"
-#~ msgstr "_Лога"
-
-#~ msgid "_Misc"
-#~ msgstr "_Други"
-
-#~ msgid "_Patterns"
-#~ msgstr "_Шарки"
-
-#~ msgid "_Test"
-#~ msgstr "_Тест"
-
-#~ msgid "_Utils"
-#~ msgstr "_Инструменти"
-
-#~ msgid "_Web Page Themes"
-#~ msgstr "_Теми за уеб сайтове"
-
-#~ msgid "_Alien Glow"
-#~ msgstr "_Извънземно сияние"
-
-#~ msgid "_Beveled Pattern"
-#~ msgstr "_Заоблена шарка"
-
-#~ msgid "_Classic.Gimp.Org"
-#~ msgstr "_Classic.Gimp.Org"
-
-#~ msgid "Alpha to _Logo"
-#~ msgstr "Прозрачност към _Лого"
-
-#~ msgid "An_imation"
-#~ msgstr "_Анимация"
-
-#~ msgid "_Animators"
-#~ msgstr "_Аниматори"
-
-#~ msgid "_Artistic"
-#~ msgstr "_Артистични"
-
-#~ msgid "_Blur"
-#~ msgstr "_Замъгляване"
-
-#~ msgid "_Decor"
-#~ msgstr "_Декор"
-
-#~ msgid "_Effects"
-#~ msgstr "_Ефекти"
-
-#~ msgid "En_hance"
-#~ msgstr "_Подобряване"
-
-#~ msgid "_Light and Shadow"
-#~ msgstr "_Светлина и сянка"
-
-#~ msgid "S_hadow"
-#~ msgstr "_Сянка"
-
-#~ msgid "_Render"
-#~ msgstr "_Генериране"
-
-#~ msgid "_Alchemy"
-#~ msgstr "_Алхимия"
-
-#~ msgid "_Refresh Scripts"
-#~ msgstr "_Обновяване·на·скриптовете"
-
-#~ msgid ""
-#~ "When a Tiny-Fu dialog box is open you can not use \"Refresh Scripts\"."
-#~ msgstr ""
-#~ "Не можете да използвате \"Обновяване на шрифтовете\", докато е отворена "
-#~ "диалогова кутия на Tiny-Fu"
-
-#~ msgid "Tiny-Fu console mode allows only interactive invocation"
-#~ msgstr ""
-#~ "Tiny-Fu в конзолен режим позволява единствено интерактивно извикване"
-
-#~ msgid "_Save Output"
-#~ msgstr "_Запазване на получаното"
-
-#~ msgid "Cl_ear Output"
-#~ msgstr "_Изчистване на полученото"
-
-#~ msgid "Welcome to TinyScheme\n"
-#~ msgstr "Добре дошли в TinyScheme\n"
-
-#~ msgid ""
-#~ "Copyright (c) Dimitrios Souflis\n"
-#~ "\n"
-#~ msgstr ""
-#~ "Авторски права (c) Dimitrios Souflis\n"
-#~ "\n"
-
-#~ msgid "Tiny-Fu Console - "
-#~ msgstr "Конзола на Tiny-Fu - "
-
-#~ msgid "Interactive Scheme Development"
-#~ msgstr "Създаване на интерактивна схема"
-
-#~ msgid "Save TinyScheme Output"
-#~ msgstr "Запазване на полученото от TinyScheme"
-
-#~ msgid "Tiny-Fu evaluate mode allows only noninteractive invocation"
-#~ msgstr ""
-#~ "Tiny-Fu в изчислителен режим позволява единствено неинтерактивно извикване"
-
-#~ msgid ""
-#~ "Error while executing\n"
-#~ "%s\n"
-#~ "\n"
-#~ "%s"
-#~ msgstr ""
-#~ "Грешка при изпълнение\n"
-#~ "%s\n"
-#~ "\n"
-#~ "%s"
-
-#~ msgid "Tiny-Fu Server Options"
-#~ msgstr "Tiny-Fu настройки на сървъра"
-
-#~ msgid "_Start Server"
-#~ msgstr "_Стартиране на сървъра"
-
-#~ msgid "Server Port:"
-#~ msgstr "Порт на сървъра:"
-
-#~ msgid "Server Logfile:"
-#~ msgstr "Логове на сървъра:"
-
-#~ msgid "Tiny-Fu cannot process two scripts at the same time."
-#~ msgstr "Tiny-Fu не може да обработи два скрипта едновременно"
-
-#~ msgid "You are already running the \"%s\" script."
-#~ msgstr "Скриптът „%s“ вече работи."
-
-#~ msgid "/Tiny-Fu/"
-#~ msgstr "/Tiny-Fu/"
-
-#~ msgid "Tiny-Fu: %s"
-#~ msgstr "Tiny-Fu: %s"
-
-#~ msgid "%s:"
-#~ msgstr "%s:"
-
-#~ msgid "Tiny-Fu Font Selection"
-#~ msgstr "Избор на шрифт за Tiny-Fu"
-
-#~ msgid "Tiny-Fu Palette Selection"
-#~ msgstr "Избор на палитра за Tiny-Fu"
-
-#~ msgid "Tiny-Fu Pattern Selection"
-#~ msgstr "Избор на шарка за Tiny-Fu "
-
-#~ msgid "Tiny-Fu Gradient Selection"
-#~ msgstr "Избор на преливка за Tiny-Fu"
-
-#~ msgid "Tiny-Fu Brush Selection"
-#~ msgstr "Избор на четка за Tiny-Fu"
-
-#~ msgid "Color"
-#~ msgstr "Цвят"
-
-#~ msgid "Font"
-#~ msgstr "Шрифт"
-
-#~ msgid "Hello World"
-#~ msgstr "Здравей свят"
-
-#~ msgid "Text string"
-#~ msgstr "Текстови низ"
-
-#~ msgid " contact sheets from a total of "
-#~ msgstr " контактни листа от общо "
-
-#~ msgid " for directory "
-#~ msgstr " за папка "
-
-#~ msgid " images"
-#~ msgstr " изображения"
-
-#~ msgid "Background color"
-#~ msgstr "Фонов цвят"
-
-#~ msgid "Contact Sheet"
-#~ msgstr "Контактен лист"
-
-#~ msgid "Created "
-#~ msgstr "Създадено "
-
-#~ msgid "Directory"
-#~ msgstr "Папка"
-
-#~ msgid "Legend font"
-#~ msgstr "Шрифт на легендата"
-
-#~ msgid "Sheet "
-#~ msgstr "Лист"
-
-#~ msgid "Sheet size"
-#~ msgstr "Размер на листа"
-
-#~ msgid "Text color"
-#~ msgstr "Цвят на текста"
-
-#~ msgid "Title font"
-#~ msgstr "Шрифт на заглавието"
-
-#~ msgid "Unable to open directory "
-#~ msgstr "Не може да бъде отворена папака "
-
-#~ msgid "3D _Outline..."
-#~ msgstr "3D _Очертание..."
-
-#~ msgid "Bumpmap (alpha layer) blur radius"
-#~ msgstr "Радиус на замъгляване за картата на релефа"
-
-#~ msgid "Default bumpmap settings"
-#~ msgstr "Настройки по подразбиране на картата на релефа"
-
-#~ msgid "Outline blur radius"
-#~ msgstr "Радиус за замъгляване на очертанието"
-
-#~ msgid "Shadow X offset"
-#~ msgstr "Отместване по X на сянката"
-
-#~ msgid "Shadow Y offset"
-#~ msgstr "Отместване·по·Y·на·сянката"
-
-#~ msgid "Shadow blur radius"
-#~ msgstr "Радиус за замъгляване на сянката"
-
-#~ msgid "Text"
-#~ msgstr "Текст"
-
-#~ msgid "3_D Truchet..."
-#~ msgstr "3_D·Truchet..."
-
-#~ msgid "Block size"
-#~ msgstr "Размер на елемента"
-
-#~ msgid "End blend"
-#~ msgstr "Крайно смесване"
-
-#~ msgid "Number of X tiles"
-#~ msgstr "Брой на X плочките"
-
-#~ msgid "Number of Y tiles"
-#~ msgstr "Брой·на·Y·плочките"
-
-#~ msgid "Start blend"
-#~ msgstr "Начало на смесването"
-
-#~ msgid "Supersample"
-#~ msgstr "Суперсемплиране"
-
-#~ msgid "Thickness"
-#~ msgstr "Дебелина"
-
-#~ msgid "Add B_evel..."
-#~ msgstr "Добавяне на _Заобленост..."
-
-#~ msgid "Keep bump layer"
-#~ msgstr "Запазване слоя за релефа"
-
-#~ msgid "Work on copy"
-#~ msgstr "Работа върху копие"
-
-#~ msgid "Add _Border..."
-#~ msgstr "Добавяне на _Граница..."
-
-#~ msgid "Border X size"
-#~ msgstr "Размер на границата по X"
-
-#~ msgid "Border Y size"
-#~ msgstr "Размер·на·границата·по·Y"
-
-#~ msgid "Border color"
-#~ msgstr "Цвят на границата"
-
-#~ msgid "Delta value on color"
-#~ msgstr "Делта стойност на цвят"
-
-#~ msgid "Down"
-#~ msgstr "Надолу"
-
-#~ msgid "Flatten image"
-#~ msgstr "Изравняване на изображението"
-
-#~ msgid "Glow color"
-#~ msgstr "Цвят на сиянието"
-
-#~ msgid "Left"
-#~ msgstr "Наляво"
-
-#~ msgid "Orientation"
-#~ msgstr "Ориентация"
-
-#~ msgid "Right"
-#~ msgstr "Надясно"
-
-#~ msgid "Up"
-#~ msgstr "Нагоре"
-
-#~ msgid "_Arrow..."
-#~ msgstr "_Стрелка..."
-
-#~ msgid "Bar height"
-#~ msgstr "Височина на лентата"
-
-#~ msgid "Bar length"
-#~ msgstr "Дължина·на·лентата"
-
-#~ msgid "_Hrule..."
-#~ msgstr "_Черта..."
-
-#~ msgid "Radius"
-#~ msgstr "Радиус"
-
-#~ msgid "_Bullet..."
-#~ msgstr "_Знак..."
-
-#~ msgid "B_utton..."
-#~ msgstr "_Бутон..."
-
-#~ msgid "Glow radius"
-#~ msgstr "Радиус на сиянието"
-
-#~ msgid "Padding"
-#~ msgstr "Уплътнение"
-
-#~ msgid "Alien _Glow..."
-#~ msgstr "_Извънземно сияние..."
-
-#~ msgid "Glow size (pixels * 4)"
-#~ msgstr "Размер на сиянието (в пиксели * 4)"
-
-#~ msgid "Alien _Neon..."
-#~ msgstr "Извънземен _Неон..."
-
-#~ msgid "Fade away"
-#~ msgstr "Отслабване"
-
-#~ msgid "Number of bands"
-#~ msgstr "Брой връзки"
-
-#~ msgid "Width of bands"
-#~ msgstr "Ширина на връзките"
-
-#~ msgid "Width of gaps"
-#~ msgstr "Ширина на пролуките"
-
-#~ msgid "_Basic I..."
-#~ msgstr "_Основен I..."
-
-#~ msgid "B_asic II..."
-#~ msgstr "_Основен·II..."
-
-#~ msgid "Lower-right color"
-#~ msgstr "Долен-десен цвят"
-
-#~ msgid "Pressed"
-#~ msgstr "Натиснат"
-
-#~ msgid "Simple _Beveled Button..."
-#~ msgstr "Прост _заоблен бутон..."
-
-#~ msgid "Upper-left color"
-#~ msgstr "Горен-ляв цвят"
-
-#~ msgid "Pattern"
-#~ msgstr "Шарка"
-
-#~ msgid "Diameter"
-#~ msgstr "Диаметър"
-
-#~ msgid "Transparent background"
-#~ msgstr "Прозрачен фон"
-
-#~ msgid "H_eading..."
-#~ msgstr "_Заглавие..."
-
-#~ msgid "Height"
-#~ msgstr "Височина"
-
-#~ msgid "Width"
-#~ msgstr "Ширина"
-
-#~ msgid "Blend Animation needs at least three source layers"
-#~ msgstr "Преливащата се анимация се нуждае от поне три изходни слоя"
-
-#~ msgid "Intermediate frames"
-#~ msgstr "Междинни кадри"
-
-#~ msgid "Looped"
-#~ msgstr "Повтаряща се"
-
-#~ msgid "Max. blur radius"
-#~ msgstr "Макс. радиус на замъгляване"
-
-#~ msgid "_Blend..."
-#~ msgstr "_Смесване..."
-
-#~ msgid "Blen_ded..."
-#~ msgstr "_Смесен..."
-
-#~ msgid "Blend mode"
-#~ msgstr "Режим на смесване"
-
-#~ msgid "FG-BG-HSV"
-#~ msgstr "ЦР-ЦФ-HSV"
-
-#~ msgid "FG-BG-RGB"
-#~ msgstr "ЦР-ЦФ-ЧЗС"
-
-#~ msgid "FG-Transparent"
-#~ msgstr "ЦР-прозрачно"
-
-#~ msgid "Gradient"
-#~ msgstr "Преливка"
-
-#~ msgid "Gradient reverse"
-#~ msgstr "Обърната преливка"
-
-#~ msgid "Offset (pixels)"
-#~ msgstr "Отместване (пиксели)"
-
-#~ msgid "Background Color"
-#~ msgstr "Фонов цвят"
-
-#~ msgid "Bo_vination..."
-#~ msgstr "_Забавяне..."
-
-#~ msgid "Spots density X"
-#~ msgstr "Гъстота на петната по X"
-
-#~ msgid "Spots density Y"
-#~ msgstr "Гъстота·на·петната·по·Y"
-
-#~ msgid "Add glowing"
-#~ msgstr "Добавяне на сияние"
-
-#~ msgid "After glow"
-#~ msgstr "След сиянието"
-
-#~ msgid "B_urn-In..."
-#~ msgstr "_Изгаряне..."
-
-#~ msgid ""
-#~ "Burn-In: Needs two layers in total!\n"
-#~ "A foreground text layer with transparency and a background layer."
-#~ msgstr ""
-#~ "Изгарянето се нуждае от общо два слоя!\n"
-#~ "Преден текстови с прозрачност и фонов."
-
-#~ msgid "Corona width"
-#~ msgstr "Ширина на короната"
-
-#~ msgid "Fadeout"
-#~ msgstr "Отслабване"
-
-#~ msgid "Fadeout width"
-#~ msgstr "Ширина на отслабването"
-
-#~ msgid "Prepare for GIF"
-#~ msgstr "Подготвяне за GIF"
-
-#~ msgid "Speed (pixels/frame)"
-#~ msgstr "Скорост (пиксели/кадър)"
-
-#~ msgid "Color 1"
-#~ msgstr "Цвят 1"
-
-#~ msgid "Color 2"
-#~ msgstr "Цвят·2"
-
-#~ msgid "Granularity"
-#~ msgstr "Сърнистост"
-
-#~ msgid "Image size"
-#~ msgstr "Размер на изображението"
-
-#~ msgid "Smooth"
-#~ msgstr "Заглаждане"
-
-#~ msgid "_Camouflage..."
-#~ msgstr "_Камуфлаж..."
-
-#~ msgid "Background Image"
-#~ msgstr "Фоново изображение"
-
-#~ msgid "Carve raised text"
-#~ msgstr "Издълбаване на повдигнатия текст"
-
-#~ msgid "Carved..."
-#~ msgstr "Издълбан..."
-
-#~ msgid "Padding around text"
-#~ msgstr "Запълване около текста"
-
-#~ msgid "Carve white areas"
-#~ msgstr "Запълване на белите зони"
-
-#~ msgid "Stencil C_arve..."
-#~ msgstr "Из_дълбаване по шаблон..."
-
-#~ msgid "_Chalk..."
-#~ msgstr "_Тебешир..."
-
-#~ msgid "Blur amount"
-#~ msgstr "Сила на замъгляване"
-
-#~ msgid "Chip Awa_y..."
-#~ msgstr "Из_дялкване..."
-
-#~ msgid "Chip amount"
-#~ msgstr "Сила на издялкване"
-
-#~ msgid "Fill BG with pattern"
-#~ msgstr "Запълване фона с шарка"
-
-#~ msgid "Invert"
-#~ msgstr "Обръщане"
-
-#~ msgid "Keep background"
-#~ msgstr "Запазване на фона"
-
-#~ msgid "Chrome balance"
-#~ msgstr "Баланс на хрома"
-
-#~ msgid "Chrome factor"
-#~ msgstr "Фактор на хрома"
-
-#~ msgid "Chrome lightness"
-#~ msgstr "Светлост на хрома"
-
-#~ msgid "Chrome white areas"
-#~ msgstr "Бели участъци на хрома"
-
-#~ msgid "Environment map"
-#~ msgstr "Карта на обкръжението"
-
-#~ msgid "Highlight balance"
-#~ msgstr "Баланс на светлите зони"
-
-#~ msgid "Stencil C_hrome..."
-#~ msgstr "Шаблонен х_ром..."
-
-#~ msgid "C_hrome..."
-#~ msgstr "_Хром..."
-
-#~ msgid "Offsets (pixels * 2)"
-#~ msgstr "Отместване (в пиксели * 2)"
-
-#~ msgid "Circuit seed"
-#~ msgstr "Скорост на циркулиране"
-
-#~ msgid "Keep selection"
-#~ msgstr "Запазване на селекцията"
-
-#~ msgid "No background (only for separate layer)"
-#~ msgstr "Без фон (само за отделен слой)"
-
-#~ msgid "Oilify mask size"
-#~ msgstr "Омазване размера на маската"
-
-#~ msgid "_Circuit..."
-#~ msgstr "_Циркулиране..."
-
-#~ msgid "Azimuth"
-#~ msgstr "Азимут"
-
-#~ msgid "Blur X"
-#~ msgstr "Замъгляване по хоризонтал"
-
-#~ msgid "Blur Y"
-#~ msgstr "Замъгляване·по·вертикал"
-
-#~ msgid "Depth"
-#~ msgstr "Дълбочина"
-
-#~ msgid "Elevation"
-#~ msgstr "Издигане"
-
-#~ msgid "_Clothify..."
-#~ msgstr "_Тъкан..."
-
-#~ msgid ""
-#~ "Darken only\n"
-#~ "(Better, but only for images with a lot of white)"
-#~ msgstr ""
-#~ "Само тъмните\n"
-#~ "(По-добро, но само за изображения с много бяло)"
-
-#~ msgid "Stains"
-#~ msgstr "Петна"
-
-#~ msgid "_Coffee Stain..."
-#~ msgstr "_Кафено петно..."
-
-#~ msgid "Comic Boo_k..."
-#~ msgstr "_Комикс..."
-
-#~ msgid "Outline color"
-#~ msgstr "Цвят на очертанието"
-
-#~ msgid "Outline size"
-#~ msgstr "Размер на очертанието"
-
-#~ msgid "Cool _Metal..."
-#~ msgstr "Хладен _метал..."
-
-#~ msgid "Effect size (pixels)"
-#~ msgstr "Размер на ефекта (в пиксели)"
-
-#~ msgid "Background image"
-#~ msgstr "Фоново изображение"
-
-#~ msgid "Crystal..."
-#~ msgstr "Кристал..."
-
-#~ msgid "Granularity (1 is low)"
-#~ msgstr "Зърнистост (1 е ниска)"
-
-#~ msgid "Smooth horizontally"
-#~ msgstr "Заглаждане по хоризонтал"
-
-#~ msgid "Smooth vertically"
-#~ msgstr "Заглаждане·по вертикал"
-
-#~ msgid "Spread"
-#~ msgstr "Разпръскване"
-
-#~ msgid "Threshold (bigger 1<-->255 smaller)"
-#~ msgstr "Праг (по-голям 1<-->255 по-малък)"
-
-#~ msgid "_Disort..."
-#~ msgstr "_Разкривяване..."
-
-#~ msgid "Allow resizing"
-#~ msgstr "Позволяване на преоразмеряването"
-
-#~ msgid "Blur radius"
-#~ msgstr "Радиус на замъгляване"
-
-#~ msgid "Offset X"
-#~ msgstr "Отместване по X"
-
-#~ msgid "Erase"
-#~ msgstr "Изтриване"
-
-#~ msgid "Erase/fill"
-#~ msgstr "Изтриване/запълване"
-
-#~ msgid "Even"
-#~ msgstr "Чифт"
-
-#~ msgid "Even/odd"
-#~ msgstr "Чифт/тек"
-
-#~ msgid "Fill with BG"
-#~ msgstr "Запълване с ЦФ"
-
-#~ msgid "Odd"
-#~ msgstr "Тек"
-
-#~ msgid "Rows"
-#~ msgstr "Редове"
-
-#~ msgid "Rows/cols"
-#~ msgstr "Редове/колони"
-
-#~ msgid "_Erase every other Row..."
-#~ msgstr "_Изтриване на всеки втори ред..."
-
-#~ msgid "Apply generated layermask"
-#~ msgstr "Прилагане на генерираната слоева маска"
-
-#~ msgid "Border size"
-#~ msgstr "Размер на границата"
-
-#~ msgid "Clear unselected maskarea"
-#~ msgstr "Изчистване на неизбраната област на маската"
-
-#~ msgid "Fade from %"
-#~ msgstr "Избледняване от·%"
-
-#~ msgid "Fade to %"
-#~ msgstr "Избледняване към·%"
-
-#~ msgid "Use growing selection"
-#~ msgstr "Използване на нарастваща селекция"
-
-#~ msgid "_Fade to Layer Mask..."
-#~ msgstr "_Избледняване към слоева маска..."
-
-#~ msgid "Detail level"
-#~ msgstr "Ниво на детайли"
-
-#~ msgid "Image height"
-#~ msgstr "Височина на изображението"
-
-#~ msgid "Image width"
-#~ msgstr "Ширина·на·изображението"
-
-#~ msgid "Random seed"
-#~ msgstr "Произволно разпръскване"
-
-#~ msgid "Scale X"
-#~ msgstr "Мащабиране по X"
-
-#~ msgid "Scale Y"
-#~ msgstr "Мащабиране·по·Y"
-
-#~ msgid "_Flatland..."
-#~ msgstr "_Равна земя..."
-
-#~ msgid "Active colors"
-#~ msgstr "Активни цветове"
-
-#~ msgid "Black on white"
-#~ msgstr "Черно на бяло"
-
-#~ msgid "Font _size (pixels)"
-#~ msgstr "_Размер на шрифта (в пиксели)"
-
-#~ msgid "Render _Font Map..."
-#~ msgstr "Генериране карта на _шрифта..."
-
-#~ msgid "Use font _name as text"
-#~ msgstr "Използване _името на шрифта като текст"
-
-#~ msgid "_Border (pixels)"
-#~ msgstr "_Граница (в пиксели)"
-
-#~ msgid "_Color scheme"
-#~ msgstr "_Цветова схема"
-
-#~ msgid "_Filter (regexp)"
-#~ msgstr "_Филтър·(regexp)"
-
-#~ msgid "_Labels"
-#~ msgstr "_Етикети"
-
-#~ msgid "_Text"
-#~ msgstr "_Текст"
-
-#~ msgid "Add shadow"
-#~ msgstr "Добавяне на сянка"
-
-#~ msgid "Blur border"
-#~ msgstr "Замъгляване на границата"
-
-#~ msgid "Granularity (1 is Low)"
-#~ msgstr "Зърнистост (1 е ниска)"
-
-#~ msgid "Shadow weight (%)"
-#~ msgstr "Ширина на сянката (%)"
-
-#~ msgid "_Fuzzy Border..."
-#~ msgstr "_Размита граница..."
-
-#~ msgid "Autocrop"
-#~ msgstr "Автоматично отрязване"
-
-#~ msgid "Dark color"
-#~ msgstr "Тъмен цвят"
-
-#~ msgid "Highlight color"
-#~ msgstr "Светъл цвят"
-
-#~ msgid "Index image"
-#~ msgstr "Индексиране на изображението"
-
-#~ msgid "Number of colors"
-#~ msgstr "Брой цветове"
-
-#~ msgid "Remove background"
-#~ msgstr "Премахване на фона"
-
-#~ msgid "Select-by-color threshold"
-#~ msgstr "Праг на избирането по цвят"
-
-#~ msgid "_Big Header..."
-#~ msgstr "_Голямо заглавие..."
-
-#~ msgid "_Small Header..."
-#~ msgstr "_Малко·заглавие..."
-
-#~ msgid "T_ube Sub-Button Label..."
-#~ msgstr "Етикет на _заоблен подбутон..."
-
-#~ msgid "Tub_e Sub-Sub-Button Label..."
-#~ msgstr "Етикет·на·_заоблен·подподбутон..."
-
-#~ msgid "_General Tube Labels..."
-#~ msgstr "_Общи заоблени етикети..."
-
-#~ msgid "_Tube Button Label..."
-#~ msgstr "_Етикет на заоблен бутон..."
-
-#~ msgid "Blend gradient (outline)"
-#~ msgstr "Смесване на преливка (очертание)"
-
-#~ msgid "Blend gradient (text)"
-#~ msgstr "Смесване·на·преливка·(текст)"
-
-#~ msgid "Glo_ssy..."
-#~ msgstr "_Лъскаво..."
-
-#~ msgid "Outline gradient reverse"
-#~ msgstr "Обърната преливка на очертание"
-
-#~ msgid "Pattern (outline)"
-#~ msgstr "Шарка (очертание)"
-
-#~ msgid "Pattern (overlay)"
-#~ msgstr "Шарка·(покриване)"
-
-#~ msgid "Pattern (text)"
-#~ msgstr "Шарка (текст)"
-
-#~ msgid "Shadow"
-#~ msgstr "Сянка"
-
-#~ msgid "Text gradient reverse"
-#~ msgstr "Обърната преливка на текста"
-
-#~ msgid "Use pattern for outline instead of gradient"
-#~ msgstr "Използване на шарка за очертаване, вместо преливка"
-
-#~ msgid "Use pattern for text instead of gradient"
-#~ msgstr "Използване·на·шарка·за·текст,·вместо·преливка"
-
-#~ msgid "Use pattern overlay"
-#~ msgstr "Използване на покриване с шарка"
-
-#~ msgid "Effect size (pixels * 3)"
-#~ msgstr "Размер на ефекта (пиксели * 3)"
-
-#~ msgid "Glo_wing Hot..."
-#~ msgstr "_Светещо горещо..."
-
-#~ msgid "Bevel height (sharpness)"
-#~ msgstr "Височина на заоблянето (рязкост)"
-
-#~ msgid "Border size (pixels)"
-#~ msgstr "Размер на границата (в пиксели)"
-
-#~ msgid "Gradient Beve_l..."
-#~ msgstr "_Заобляне с преливка..."
-
-#~ msgid "Render _Image..."
-#~ msgstr "Генериране на _изображение..."
-
-#~ msgid "X divisions"
-#~ msgstr "X подразделения"
-
-#~ msgid "Y divisions"
-#~ msgstr "Y·подразделения"
-
-#~ msgid "_Grid..."
-#~ msgstr "_Мрежа..."
-
-#~ msgid ""
-#~ "Creates four Guides around the bounding box of the current selection."
-#~ msgstr "Създава четири водача около текущата селекция"
-
-#~ msgid "New Guides from _Selection"
-#~ msgstr "Нови водачи от _селекция"
-
-#~ msgid "Direction"
-#~ msgstr "Посока"
-
-#~ msgid "Horizontal"
-#~ msgstr "Хоризонтал"
-
-#~ msgid "New Guide (by _Percent)..."
-#~ msgstr "Нов водач (по _процент)..."
-
-#~ msgid "Position (in %)"
-#~ msgstr "Положение (в·%)"
-
-#~ msgid "Vertical"
-#~ msgstr "Вертикал"
-
-#~ msgid "New _Guide..."
-#~ msgstr "Нов _Водач..."
-
-#~ msgid "Position"
-#~ msgstr "Положение"
-
-#~ msgid "_Remove all Guides"
-#~ msgstr "_Премахване на всички водачи"
-
-#~ msgid "BG opacity"
-#~ msgstr "Плътност на фона"
-
-#~ msgid "Draw _HSV Graph..."
-#~ msgstr "Рисуване на _HSV графика..."
-
-#~ msgid "End X"
-#~ msgstr "Край X"
-
-#~ msgid "End Y"
-#~ msgstr "Край·Y"
-
-#~ msgid "From top-left to bottom-right"
-#~ msgstr "От горе-ляво до долу-дясно"
-
-#~ msgid "Graph scale"
-#~ msgstr "Мащабиране на графиката"
-
-#~ msgid "Start X"
-#~ msgstr "Начало X"
-
-#~ msgid "Start Y"
-#~ msgstr "Начало·Y"
-
-#~ msgid "Use selection bounds instead of values below"
-#~ msgstr "Използване границите на селекцията, вместо долните стойности"
-
-#~ msgid "Frame color"
-#~ msgstr "Цвят на рамката"
-
-#~ msgid "Frame size"
-#~ msgstr "Размер на рамката"
-
-#~ msgid "Imigre-_26..."
-#~ msgstr "Imigre-_26..."
-
-#~ msgid "Land height"
-#~ msgstr "Височина на земята"
-
-#~ msgid "Sea depth"
-#~ msgstr "Дълбочина на морето"
-
-#~ msgid "_Land..."
-#~ msgstr "_Земя..."
-
-#~ msgid "Roughness"
-#~ msgstr "Релеф"
-
-#~ msgid "Seed"
-#~ msgstr "Разпръскване"
-
-#~ msgid "Use current gradient"
-#~ msgstr "Използване на текущата преливка"
-
-#~ msgid "_Lava..."
-#~ msgstr "_Лава..."
-
-#~ msgid "Line _Nova..."
-#~ msgstr "_Свръхнова..."
-
-#~ msgid "Number of lines"
-#~ msgstr "Брой линии"
-
-#~ msgid "Offset radius"
-#~ msgstr "Радиус на отместване"
-
-#~ msgid "Randomness"
-#~ msgstr "Произволност"
-
-#~ msgid "Sharpness (degrees)"
-#~ msgstr "Изостряне (градуси)"
-
-#~ msgid "Create size of brush"
-#~ msgstr "Създаване размер на четката"
-
-#~ msgid "Description"
-#~ msgstr "Обяснение"
-
-#~ msgid "Feathering"
-#~ msgstr "Избледняване"
-
-#~ msgid "New Ell_iptical..."
-#~ msgstr "Нова _заоблена..."
-
-#~ msgid "New Elli_ptical, Feathered..."
-#~ msgstr "Нова·заоблена, _мека..."
-
-#~ msgid "New Re_ctangular..."
-#~ msgstr "Нова _правоъгълна..."
-
-#~ msgid "New Rec_tangular, Feathered..."
-#~ msgstr "Нова·п_равоъгълна, мека..."
-
-#~ msgid "Spacing"
-#~ msgstr "Разстояние"
-
-#~ msgid "Create shadow"
-#~ msgstr "Създаване на сянка"
-
-#~ msgid "Effect size (pixels * 5)"
-#~ msgstr "Размер на ефекта (пиксели * 5)"
-
-#~ msgid "N_eon..."
-#~ msgstr "_Неон..."
-
-#~ msgid "Cell size (pixels)"
-#~ msgstr "Размер на клетката (в пиксели)"
-
-#~ msgid "Density (%)"
-#~ msgstr "Гъстота (%)"
-
-#~ msgid "Newsprint Te_xt..."
-#~ msgstr "Новинарски _текст..."
-
-#~ msgid "Defocus"
-#~ msgstr "Разфокусиране"
-
-#~ msgid "Mottle"
-#~ msgstr "Петна"
-
-#~ msgid "Sepia"
-#~ msgstr "Сепия"
-
-#~ msgid "_Old Photo..."
-#~ msgstr "_Стара снимка..."
-
-#~ msgid "Angle"
-#~ msgstr "Ъгъл"
-
-#~ msgid "Interpolation"
-#~ msgstr "Вмъкване"
-
-#~ msgid "Relative distance of horizon"
-#~ msgstr "Относително разстояние на хоризонта"
-
-#~ msgid "Relative length of shadow"
-#~ msgstr "Относителна дължина на сянката"
-
-#~ msgid "_Perspective..."
-#~ msgstr "_Перспектива..."
-
-#~ msgid "Edge amount"
-#~ msgstr "Сила на ръба"
-
-#~ msgid "Pixel amount"
-#~ msgstr "Количество пиксели"
-
-#~ msgid "Pixelize"
-#~ msgstr "Пикселизиране"
-
-#~ msgid "_Predator..."
-#~ msgstr "_Хищник..."
-
-#~ msgid "Lower color"
-#~ msgstr "Долен цвят"
-
-#~ msgid "Lower color (active)"
-#~ msgstr "Долен цвят (активен)"
-
-#~ msgid "Not pressed"
-#~ msgstr "Ненатиснат"
-
-#~ msgid "Not pressed (active)"
-#~ msgstr "Ненатиснат (активен)"
-
-#~ msgid "Padding X"
-#~ msgstr "Запълване X"
-
-#~ msgid "Padding Y"
-#~ msgstr "Запълване·Y"
-
-#~ msgid "Round ratio"
-#~ msgstr "Съотношение на заоблянето"
-
-#~ msgid "Text color (active)"
-#~ msgstr "Цвят на текста (активен)"
-
-#~ msgid "Upper color"
-#~ msgstr "Горен цвят"
-
-#~ msgid "Upper color (active)"
-#~ msgstr "Горен·цвят (активен)"
-
-#~ msgid "_Round Button..."
-#~ msgstr "_Заоблен бутон..."
-
-#~ msgid "Behavior"
-#~ msgstr "Поведение"
-
-#~ msgid "Detail in Middle"
-#~ msgstr "Детайли в средата"
-
-#~ msgid "Render _Map..."
-#~ msgstr "Генерирана _карта..."
-
-#~ msgid "Tile"
-#~ msgstr "Плочка"
-
-#~ msgid "Black"
-#~ msgstr "Черно"
-
-#~ msgid "Edge behavior"
-#~ msgstr "Поведение на ръба"
-
-#~ msgid "Number of frames"
-#~ msgstr "Брой кадри"
-
-#~ msgid "Rippling strength"
-#~ msgstr "Сила на вълнението"
-
-#~ msgid "Smear"
-#~ msgstr "Замазване"
-
-#~ msgid "Wrap"
-#~ msgstr "Обвиване"
-
-#~ msgid "_Rippling..."
-#~ msgstr "_Вълнички..."
-
-#~ msgid "Add background"
-#~ msgstr "Добавяне на фон"
-
-#~ msgid "Add drop-shadow"
-#~ msgstr "Добавяне на падаща сянка"
-
-#~ msgid "Edge radius"
-#~ msgstr "Радиус на ръба"
-
-#~ msgid "_Round Corners..."
-#~ msgstr "_Заоблени ъгли..."
-
-#~ msgid "Concave"
-#~ msgstr "Вдлъбнатина"
-
-#~ msgid "Radius (%)"
-#~ msgstr "Радиус (%)"
-
-#~ msgid "Rounded R_ectangle..."
-#~ msgstr "Заоблен _правоъгълник..."
-
-#~ msgid "Brush name"
-#~ msgstr "Име на четката"
-
-#~ msgid "File name"
-#~ msgstr "Име на файла"
-
-#~ msgid "To _Brush..."
-#~ msgstr "В _четка..."
-
-#~ msgid "To _Image"
-#~ msgstr "В _изображение"
-
-#~ msgid "Number"
-#~ msgstr "Номер"
-
-#~ msgid "SOTA Chrome..."
-#~ msgstr "SOTA Хром..."
-
-#~ msgid "Speed Text..."
-#~ msgstr "Бърз текст..."
-
-#~ msgid "Lighting (degrees)"
-#~ msgstr "Светлина (градуси)"
-
-#~ msgid "Radius (pixels)"
-#~ msgstr "Радиус (в пиксели)"
-
-#~ msgid "Sphere color"
-#~ msgstr "Цвят на сферата"
-
-#~ msgid "_Sphere..."
-#~ msgstr "_Сфера..."
-
-#~ msgid "Frames"
-#~ msgstr "Кадри"
-
-#~ msgid "Index to n colors (0 = remain RGB)"
-#~ msgstr "Индексиране до n цвята (0·=·запазва ЧЗС)"
-
-#~ msgid "Turn from left to right"
-#~ msgstr "Обръщане от ляво на дясно"
-
-#~ msgid "_Spinning Globe..."
-#~ msgstr "_Въртящ се глобус..."
-
-#~ msgid "Airbrush"
-#~ msgstr "Спрей"
-
-#~ msgid "Brush"
-#~ msgstr "Четка"
-
-#~ msgid "Circle"
-#~ msgstr "Кръг"
-
-#~ msgid "Epitrochoid"
-#~ msgstr "Епитрохида"
-
-#~ msgid "Frame"
-#~ msgstr "Рамка"
-
-#~ msgid "Gradient: Loop Sawtooth"
-#~ msgstr "Преливка: превъртане Sawtooth"
-
-#~ msgid "Gradient: Loop Triangle"
-#~ msgstr "Преливка:·превъртане·триъгълник"
-
-#~ msgid "Hexagon"
-#~ msgstr "Хексагон"
-
-#~ msgid "Hole ratio"
-#~ msgstr "Съотношение на дупката"
-
-#~ msgid "Inner teeth"
-#~ msgstr "Вътрешни зъби"
-
-#~ msgid "Lissajous"
-#~ msgstr "Lissajous"
-
-#~ msgid "Margin (pixels)"
-#~ msgstr "Граница (в пиксели)"
-
-#~ msgid "Outer teeth"
-#~ msgstr "Външни зъби"
-
-#~ msgid "Pencil"
-#~ msgstr "Молив"
-
-#~ msgid "Pentagon"
-#~ msgstr "Петоъгълник"
-
-#~ msgid "Polygon: 10 sides"
-#~ msgstr "Полигон:·10·страни"
-
-#~ msgid "Polygon: 7 sides"
-#~ msgstr "Полигон: 7 страни"
-
-#~ msgid "Polygon: 8 sides"
-#~ msgstr "Полигон: 8 страни"
-
-#~ msgid "Polygon: 9 sides"
-#~ msgstr "Полигон: 9 страни"
-
-#~ msgid "Shape"
-#~ msgstr "Форма"
-
-#~ msgid "Solid Color"
-#~ msgstr "Плътен цвят"
-
-#~ msgid "Spyrograph"
-#~ msgstr "Спирограф"
-
-#~ msgid "Square"
-#~ msgstr "Квадрат"
-
-#~ msgid "Start angle"
-#~ msgstr "Начален ъгъл"
-
-#~ msgid "Tool"
-#~ msgstr "Инструмент"
-
-#~ msgid "Triangle"
-#~ msgstr "Триъгълник"
-
-#~ msgid "Type"
-#~ msgstr "Тип"
-
-#~ msgid "_Spyrogimp..."
-#~ msgstr "_Спирогимп..."
-
-#~ msgid "Burst color"
-#~ msgstr "Цвят на експлозията"
-
-#~ msgid "Effect size (pixels * 30)"
-#~ msgstr "Размер на ефекта (пиксели * 30)"
-
-#~ msgid "Starb_urst..."
-#~ msgstr "_Звездна експлозия..."
-
-#~ msgid "Effect size (pixels * 4)"
-#~ msgstr "Размер на ефекта (в пиксели * 4)"
-
-#~ msgid "Sta_rscape..."
-#~ msgstr "_Звезди..."
-
-#~ msgid "Swirl-_Tile..."
-#~ msgstr "Завихряне-_редуване..."
-
-#~ msgid "Whirl amount"
-#~ msgstr "Сила на завихряне"
-
-#~ msgid "Number of times to whirl"
-#~ msgstr "Брой завъртания"
-
-#~ msgid "Quarter size"
-#~ msgstr "Размер на четвъртината"
-
-#~ msgid "Whirl angle"
-#~ msgstr "Ъгъл на завихряне"
-
-#~ msgid "_Swirly..."
-#~ msgstr "_Завихряне..."
-
-#~ msgid "Base color"
-#~ msgstr "Основен цвят"
-
-#~ msgid "Edge only"
-#~ msgstr "Само ръбовете"
-
-#~ msgid "Edge width"
-#~ msgstr "Ширина на ръбовете"
-
-#~ msgid "Hit rate"
-#~ msgstr "Сила на удара"
-
-#~ msgid "_Particle Trace..."
-#~ msgstr "_Проследяване на частици..."
-
-#~ msgid "_Sphere"
-#~ msgstr "_Сфера"
-
-#~ msgid "Antialias"
-#~ msgstr "Заглаждане"
-
-#~ msgid "Fill angle"
-#~ msgstr "Ъгъл на запълване"
-
-#~ msgid "Render the specified text along the perimeter of a circle"
-#~ msgstr "Показване на зададеният текст по обиколката на кръг"
-
-#~ msgid "Ending blend"
-#~ msgstr "Крайно смесване"
-
-#~ msgid "Hexagons"
-#~ msgstr "Шестоъгълници"
-
-#~ msgid "Mosaic tile type"
-#~ msgstr "Тип на мозаечното повтаряне"
-
-#~ msgid "Octagons"
-#~ msgstr "Осмоъгълници"
-
-#~ msgid "Squares"
-#~ msgstr "Квадрати"
-
-#~ msgid "Starting blend"
-#~ msgstr "Начално смесване"
-
-#~ msgid "Text pattern"
-#~ msgstr "Текстова шарка"
-
-#~ msgid "_Textured..."
-#~ msgstr "_Текстурирано..."
-
-#~ msgid "Blur horizontally"
-#~ msgstr "Хоризонтално замъгляване"
-
-#~ msgid "Blur type"
-#~ msgstr "Тип на замъгляването"
-
-#~ msgid "Blur vertically"
-#~ msgstr "Вертикално замъгляване"
-
-#~ msgid "IIR"
-#~ msgstr "IIR"
-
-#~ msgid "RLE"
-#~ msgstr "RLE"
-
-#~ msgid "_Tileable Blur..."
-#~ msgstr "_Повторяемо замъгляване..."
-
-#~ msgid "Set Colormap"
-#~ msgstr "Задаване на цветова карта"
-
-#~ msgid "Web Title Header..."
-#~ msgstr "Уеб заглавие..."
-
-#~ msgid "Foreground color"
-#~ msgstr "Цвят за рисуване"
-
-#~ msgid "T_ruchet..."
-#~ msgstr "T_ruchet..."
-
-#~ msgid "Mask opacity"
-#~ msgstr "Плътност на маската"
-
-#~ msgid "Mask size"
-#~ msgstr "Размер на маската"
-
-#~ msgid "Unsharp Mask 2..."
-#~ msgstr "Изостряща маска 2..."
-
-#~ msgid "Amplitude"
-#~ msgstr "Амплитуд"
-
-#~ msgid "Invert direction"
-#~ msgstr "Обръщане на посоката"
-
-#~ msgid "Wavelength"
-#~ msgstr "Дължина на вълната"
-
-#~ msgid "_Waves..."
-#~ msgstr "_Вълни..."
-
-#~ msgid "Ribbon spacing"
-#~ msgstr "Отстояние на лентичките"
-
-#~ msgid "Ribbon width"
-#~ msgstr "Ширина на лентичките"
-
-#~ msgid "Shadow darkness"
-#~ msgstr "Тъмнина на сянката"
-
-#~ msgid "Shadow depth"
-#~ msgstr "Дълбочина на сянката"
-
-#~ msgid "Thread density"
-#~ msgstr "Гъстота на нишките"
-
-#~ msgid "Thread intensity"
-#~ msgstr "Интензивност на нишките"
-
-#~ msgid "Thread length"
-#~ msgstr "Дължина на нишките"
-
-#~ msgid "_Weave..."
-#~ msgstr "_Вълна..."
-
-#~ msgid "Create and Use _Selections"
-#~ msgstr "Създаване и използване на _селекции"
-
-#~ msgid "Create, Open and Save _Files"
-#~ msgstr "Създаване, отваряне и запазване на _файлове"
-
-#~ msgid "Drawing _Simple Objects"
-#~ msgstr "Рисуване на _прости обекти"
-
-#~ msgid "How to Use _Dialogs"
-#~ msgstr "Как да се използват _диалози"
-
-#~ msgid "Plug-in _Registry"
-#~ msgstr "_Регистрация на приставките"
-
-#~ msgid "Using _Paths"
-#~ msgstr "Използване на _пътеки"
-
-#~ msgid "_Basic Concepts"
-#~ msgstr "_Основни положения"
-
-#~ msgid "_Developer Web Site"
-#~ msgstr "Сайт на _разработчиците"
-
-#~ msgid "_Main Web Site"
-#~ msgstr "_Основен сайт"
-
-#~ msgid "_Preparing your Images for the Web"
-#~ msgstr "_Подготвяне изображенията за мрежата"
-
-#~ msgid "_User Manual Web Site"
-#~ msgstr "Сайт с _ръководство"
-
-#~ msgid "_Working with Digital Camera Photos"
-#~ msgstr "_Работа със снимки от цифрова камера"
-
-#~ msgid "Drop shadow blur radius"
-#~ msgstr "Радиус за замъгляване на сянката"
-
-#~ msgid "Drop shadow color"
-#~ msgstr "Цвят на сянката"
-
-#~ msgid "Drop shadow opacity"
-#~ msgstr "Плътност на сянката"
-
-#~ msgid "Highlight X offset"
-#~ msgstr "Отместване по хоризонтал на светлите"
-
-#~ msgid "Highlight Y offset"
-#~ msgstr "Отместване·по·вертикал·на·светлите"
-
-#~ msgid "Highlight opacity"
-#~ msgstr "Плътност на светлите"
-
-#~ msgid "_Xach-Effect..."
-#~ msgstr "_Xach-ефект..."
+msgstr "Отместване по вертикал на сянката"
