@@ -38,10 +38,10 @@
 static TempBuf * gimp_brush_scale_buf_up      (TempBuf *brush_buf,
                                                gint     dest_width,
                                                gint     dest_height);
-static MaskBuf * gimp_brush_scale_mask_down   (MaskBuf *brush_mask,
+static TempBuf * gimp_brush_scale_mask_down   (TempBuf *brush_mask,
                                                gint     dest_width,
                                                gint     dest_height);
-static MaskBuf * gimp_brush_scale_pixmap_down (MaskBuf *pixmap,
+static TempBuf * gimp_brush_scale_pixmap_down (TempBuf *pixmap,
                                                gint     dest_width,
                                                gint     dest_height);
 
@@ -137,12 +137,12 @@ gimp_brush_scale_buf_up (TempBuf *brush_buf,
   return dest_brush_buf;
 }
 
-static MaskBuf *
-gimp_brush_scale_mask_down (MaskBuf *brush_mask,
+static TempBuf *
+gimp_brush_scale_mask_down (TempBuf *brush_mask,
                             gint     dest_width,
                             gint     dest_height)
 {
-  MaskBuf *scale_brush;
+  TempBuf *scale_brush;
   gint     src_width;
   gint     src_height;
   gint     value;
@@ -159,12 +159,12 @@ gimp_brush_scale_mask_down (MaskBuf *brush_mask,
   src_width  = brush_mask->width;
   src_height = brush_mask->height;
 
-  scale_brush = mask_buf_new (dest_width, dest_height);
+  scale_brush = temp_buf_new (dest_width, dest_height, 1, 0, 0, NULL);
   g_return_val_if_fail (scale_brush != NULL, NULL);
 
   /*  get the data  */
-  dest = mask_buf_data (scale_brush);
-  src  = mask_buf_data (brush_mask);
+  dest = temp_buf_data (scale_brush);
+  src  = temp_buf_data (brush_mask);
 
   fx = fx0 = (src_width << 8) / dest_width;
   fy = fy0 = (src_height << 8) / dest_height;
@@ -295,12 +295,12 @@ gimp_brush_scale_mask_down (MaskBuf *brush_mask,
   dest[1] += factor * src[1]; \
   dest[2] += factor * src[2];
 
-static MaskBuf *
-gimp_brush_scale_pixmap_down (MaskBuf *pixmap,
+static TempBuf *
+gimp_brush_scale_pixmap_down (TempBuf *pixmap,
                               gint     dest_width,
                               gint     dest_height)
 {
-  MaskBuf *scale_brush;
+  TempBuf *scale_brush;
   gint     src_width;
   gint     src_height;
   gint     value[3];
@@ -322,8 +322,8 @@ gimp_brush_scale_pixmap_down (MaskBuf *pixmap,
   g_return_val_if_fail (scale_brush != NULL, NULL);
 
   /*  get the data  */
-  dest = mask_buf_data (scale_brush);
-  src  = mask_buf_data (pixmap);
+  dest = temp_buf_data (scale_brush);
+  src  = temp_buf_data (pixmap);
 
   fx = fx0 = (src_width << 8) / dest_width;
   fy = fy0 = (src_height << 8) / dest_height;

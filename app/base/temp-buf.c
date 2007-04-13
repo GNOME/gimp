@@ -478,36 +478,3 @@ temp_buf_to_gray (TempBuf *src_buf,
       break;
     }
 }
-
-
-/******************************************************************
- *  Mask buffer functions                                         *
- ******************************************************************/
-
-
-MaskBuf *
-mask_buf_new (gint width,
-              gint height)
-{
-  static guchar empty = 0;
-
-  return temp_buf_new (width, height, 1, 0, 0, &empty);
-}
-
-void
-mask_buf_free (MaskBuf *mask)
-{
-  temp_buf_free ((TempBuf *) mask);
-}
-
-guchar *
-mask_buf_data (MaskBuf *mask_buf)
-{
-  return temp_buf_data ((TempBuf *) mask_buf);
-}
-
-guchar *
-mask_buf_data_clear (MaskBuf *mask_buf)
-{
-  return temp_buf_data_clear ((TempBuf *) mask_buf);
-}

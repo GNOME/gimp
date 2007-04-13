@@ -1,3 +1,14 @@
+2007-04-13  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/base-types.h
+	* app/base/temp-buf.[ch]: remove redundant and inconsistently used
+	MaskBuf type and API.
+
+	* app/core/gimpbrush-scale.c
+	* app/paint/gimpbrushcore.[ch]: use TempBuf and its API instead.
+	This also optimizes away a useless memset() on brush scaling,
+	we completely fill each of the created buffers anyway.
+
 2007-04-12  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimprectangleselecttool.c: implement

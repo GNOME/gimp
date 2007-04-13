@@ -49,25 +49,25 @@ struct _GimpBrushCore
   gdouble        scale;
 
   /*  brush buffers  */
-  MaskBuf       *pressure_brush;
+  TempBuf       *pressure_brush;
 
-  MaskBuf       *solid_brushes[BRUSH_CORE_SOLID_SUBSAMPLE][BRUSH_CORE_SOLID_SUBSAMPLE];
-  MaskBuf       *last_solid_brush;
+  TempBuf       *solid_brushes[BRUSH_CORE_SOLID_SUBSAMPLE][BRUSH_CORE_SOLID_SUBSAMPLE];
+  TempBuf       *last_solid_brush;
   gboolean       solid_cache_invalid;
 
-  MaskBuf       *scale_brush;
-  MaskBuf       *last_scale_brush;
+  TempBuf       *scale_brush;
+  TempBuf       *last_scale_brush;
   gint           last_scale_width;
   gint           last_scale_height;
 
-  MaskBuf       *scale_pixmap;
-  MaskBuf       *last_scale_pixmap;
+  TempBuf       *scale_pixmap;
+  TempBuf       *last_scale_pixmap;
   gint           last_scale_pixmap_width;
   gint           last_scale_pixmap_height;
 
-  MaskBuf       *kernel_brushes[BRUSH_CORE_SUBSAMPLE + 1][BRUSH_CORE_SUBSAMPLE + 1];
+  TempBuf       *kernel_brushes[BRUSH_CORE_SUBSAMPLE + 1][BRUSH_CORE_SUBSAMPLE + 1];
 
-  MaskBuf       *last_brush_mask;
+  TempBuf       *last_brush_mask;
   gboolean       cache_invalid;
 
   gdouble        jitter;

@@ -68,7 +68,6 @@ typedef struct _PixelSurround       PixelSurround;
 typedef struct _SioxState           SioxState;
 
 typedef struct _TempBuf             TempBuf;
-typedef struct _TempBuf             MaskBuf;
 
 typedef struct _Tile                Tile;
 typedef struct _TileManager         TileManager;

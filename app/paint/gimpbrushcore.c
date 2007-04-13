@@ -88,25 +88,25 @@ static gdouble  gimp_brush_core_calc_brush_scale  (GimpBrushCore    *core,
                                                    gdouble           pressure);
 static inline void rotate_pointers                (gulong          **p,
                                                    guint32           n);
-static MaskBuf * gimp_brush_core_subsample_mask   (GimpBrushCore    *core,
-                                                   MaskBuf          *mask,
+static TempBuf * gimp_brush_core_subsample_mask   (GimpBrushCore    *core,
+                                                   TempBuf          *mask,
                                                    gdouble           x,
                                                    gdouble           y);
-static MaskBuf * gimp_brush_core_pressurize_mask  (GimpBrushCore    *core,
-                                                   MaskBuf          *brush_mask,
+static TempBuf * gimp_brush_core_pressurize_mask  (GimpBrushCore    *core,
+                                                   TempBuf          *brush_mask,
                                                    gdouble           x,
                                                    gdouble           y,
                                                    gdouble           pressure);
-static MaskBuf * gimp_brush_core_solidify_mask    (GimpBrushCore    *core,
-                                                   MaskBuf          *brush_mask,
+static TempBuf * gimp_brush_core_solidify_mask    (GimpBrushCore    *core,
+                                                   TempBuf          *brush_mask,
                                                    gdouble           x,
                                                    gdouble           y);
-static MaskBuf * gimp_brush_core_scale_mask       (GimpBrushCore    *core,
+static TempBuf * gimp_brush_core_scale_mask       (GimpBrushCore    *core,
                                                    GimpBrush        *brush);
-static MaskBuf * gimp_brush_core_scale_pixmap     (GimpBrushCore    *core,
+static TempBuf * gimp_brush_core_scale_pixmap     (GimpBrushCore    *core,
                                                    GimpBrush        *brush);
 
-static MaskBuf * gimp_brush_core_get_brush_mask   (GimpBrushCore    *core,
+static TempBuf * gimp_brush_core_get_brush_mask   (GimpBrushCore    *core,
                                                    GimpBrushApplicationMode  brush_hardness);
 static void      gimp_brush_core_invalidate_cache (GimpBrush        *brush,
                                                    GimpBrushCore    *core);
@@ -799,7 +799,7 @@ gimp_brush_core_paste_canvas (GimpBrushCore            *core,
                               GimpBrushApplicationMode  brush_hardness,
                               GimpPaintApplicationMode  mode)
 {
-  MaskBuf *brush_mask = gimp_brush_core_get_brush_mask (core,
+  TempBuf *brush_mask = gimp_brush_core_get_brush_mask (core,
                                                         brush_hardness);
 
   if (brush_mask)
@@ -841,7 +841,7 @@ gimp_brush_core_replace_canvas (GimpBrushCore            *core,
                                 GimpBrushApplicationMode  brush_hardness,
                                 GimpPaintApplicationMode  mode)
 {
-  MaskBuf *brush_mask = gimp_brush_core_get_brush_mask (core,
+  TempBuf *brush_mask = gimp_brush_core_get_brush_mask (core,
                                                         brush_hardness);
 
   if (brush_mask)
@@ -934,16 +934,17 @@ rotate_pointers (gulong  **p,
   p[i] = tmp;
 }
 
-static MaskBuf *
+static TempBuf *
 gimp_brush_core_subsample_mask (GimpBrushCore *core,
-                                MaskBuf       *mask,
+                                TempBuf       *mask,
                                 gdouble        x,
                                 gdouble        y)
 {
-  MaskBuf    *dest;
+  TempBuf    *dest;
   gdouble     left;
   guchar     *m;
   guchar     *d;
+  guchar      empty         = TRANSPARENT_OPACITY;
   const gint *k;
   gint        index1;
   gint        index2;
@@ -1004,7 +1005,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
         for (j = 0; j < KERNEL_SUBSAMPLE + 1; j++)
           if (core->kernel_brushes[i][j])
             {
-              mask_buf_free (core->kernel_brushes[i][j]);
+              temp_buf_free (core->kernel_brushes[i][j]);
               core->kernel_brushes[i][j] = NULL;
             }
 
@@ -1012,8 +1013,9 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
       core->cache_invalid   = FALSE;
     }
 
-  dest = mask_buf_new (mask->width  + 2,
-                       mask->height + 2);
+  dest = temp_buf_new (mask->width  + 2,
+                       mask->height + 2,
+                       1, 0, 0, &empty);
 
   /* Allocate and initialize the accum buffer */
   for (i = 0; i < KERNEL_HEIGHT ; i++)
@@ -1021,7 +1023,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
 
   core->kernel_brushes[index2][index1] = dest;
 
-  m = mask_buf_data (mask);
+  m = temp_buf_data (mask);
   for (i = 0; i < mask->height; i++)
     {
       for (j = 0; j < mask->width; j++)
@@ -1038,7 +1040,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
         }
 
       /* store the accum buffer into the destination mask */
-      d = mask_buf_data (dest) + (i + dest_offset_y) * dest->width;
+      d = temp_buf_data (dest) + (i + dest_offset_y) * dest->width;
       for (j = 0; j < dest->width; j++)
         *d++ = (accum[0][j] + 127) / KERNEL_SUM;
 
@@ -1050,7 +1052,7 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
   /* store the rest of the accum buffer into the dest mask */
   while (i + dest_offset_y < dest->height)
     {
-      d = mask_buf_data (dest) + (i + dest_offset_y) * dest->width;
+      d = temp_buf_data (dest) + (i + dest_offset_y) * dest->width;
       for (j = 0; j < dest->width; j++)
         *d++ = (accum[0][j] + (KERNEL_SUM / 2)) / KERNEL_SUM;
 
@@ -1066,9 +1068,9 @@ gimp_brush_core_subsample_mask (GimpBrushCore *core,
 
 /* #define FANCY_PRESSURE */
 
-static MaskBuf *
+static TempBuf *
 gimp_brush_core_pressurize_mask (GimpBrushCore *core,
-                                 MaskBuf       *brush_mask,
+                                 TempBuf       *brush_mask,
                                  gdouble        x,
                                  gdouble        y,
                                  gdouble        pressure)
@@ -1076,7 +1078,8 @@ gimp_brush_core_pressurize_mask (GimpBrushCore *core,
   static guchar  mapi[256];
   guchar        *source;
   guchar        *dest;
-  MaskBuf       *subsample_mask;
+  guchar         empty = TRANSPARENT_OPACITY;
+  TempBuf       *subsample_mask;
   gint           i;
 
   /* Get the raw subsampled mask */
@@ -1089,10 +1092,11 @@ gimp_brush_core_pressurize_mask (GimpBrushCore *core,
     return subsample_mask;
 
   if (core->pressure_brush)
-    mask_buf_free (core->pressure_brush);
+    temp_buf_free (core->pressure_brush);
 
-  core->pressure_brush = mask_buf_new (brush_mask->width  + 2,
-                                       brush_mask->height + 2);
+  core->pressure_brush = temp_buf_new (brush_mask->width  + 2,
+                                       brush_mask->height + 2,
+                                       1, 0, 0, &empty);
 
 #ifdef FANCY_PRESSURE
 
@@ -1169,8 +1173,8 @@ gimp_brush_core_pressurize_mask (GimpBrushCore *core,
 
   /* Now convert the brush */
 
-  source = mask_buf_data (subsample_mask);
-  dest   = mask_buf_data (core->pressure_brush);
+  source = temp_buf_data (subsample_mask);
+  dest   = temp_buf_data (core->pressure_brush);
 
   i = subsample_mask->width * subsample_mask->height;
   while (i--)
@@ -1179,15 +1183,16 @@ gimp_brush_core_pressurize_mask (GimpBrushCore *core,
   return core->pressure_brush;
 }
 
-static MaskBuf *
+static TempBuf *
 gimp_brush_core_solidify_mask (GimpBrushCore *core,
-                               MaskBuf       *brush_mask,
+                               TempBuf       *brush_mask,
                                gdouble        x,
                                gdouble        y)
 {
-  MaskBuf *dest;
+  TempBuf *dest;
   guchar  *m;
   guchar  *d;
+  guchar   empty         = TRANSPARENT_OPACITY;
   gint     dest_offset_x = 0;
   gint     dest_offset_y = 0;
   gint     i, j;
@@ -1222,7 +1227,7 @@ gimp_brush_core_solidify_mask (GimpBrushCore *core,
         for (j = 0; j < BRUSH_CORE_SOLID_SUBSAMPLE; j++)
           if (core->solid_brushes[i][j])
             {
-              mask_buf_free (core->solid_brushes[i][j]);
+              temp_buf_free (core->solid_brushes[i][j]);
               core->solid_brushes[i][j] = NULL;
             }
 
@@ -1230,13 +1235,14 @@ gimp_brush_core_solidify_mask (GimpBrushCore *core,
       core->solid_cache_invalid = FALSE;
     }
 
-  dest = mask_buf_new (brush_mask->width  + 2,
-                       brush_mask->height + 2);
+  dest = temp_buf_new (brush_mask->width  + 2,
+                       brush_mask->height + 2,
+                       1, 0, 0, &empty);
 
   core->solid_brushes[dest_offset_y][dest_offset_x] = dest;
 
-  m = mask_buf_data (brush_mask);
-  d = (mask_buf_data (dest) +
+  m = temp_buf_data (brush_mask);
+  d = (temp_buf_data (dest) +
        (dest_offset_y + 1) * dest->width +
        (dest_offset_x + 1));
 
@@ -1251,7 +1257,7 @@ gimp_brush_core_solidify_mask (GimpBrushCore *core,
   return dest;
 }
 
-static MaskBuf *
+static TempBuf *
 gimp_brush_core_scale_mask (GimpBrushCore *core,
                             GimpBrush     *brush)
 {
@@ -1280,7 +1286,7 @@ gimp_brush_core_scale_mask (GimpBrushCore *core,
   core->last_scale_height = height;
 
   if (core->scale_brush)
-    mask_buf_free (core->scale_brush);
+    temp_buf_free (core->scale_brush);
 
   core->scale_brush = gimp_brush_scale_mask (brush, core->scale);
 
@@ -1290,7 +1296,7 @@ gimp_brush_core_scale_mask (GimpBrushCore *core,
   return core->scale_brush;
 }
 
-static MaskBuf *
+static TempBuf *
 gimp_brush_core_scale_pixmap (GimpBrushCore *core,
                               GimpBrush     *brush)
 {
@@ -1319,7 +1325,7 @@ gimp_brush_core_scale_pixmap (GimpBrushCore *core,
   core->last_scale_pixmap_height = height;
 
   if (core->scale_pixmap)
-    mask_buf_free (core->scale_pixmap);
+    temp_buf_free (core->scale_pixmap);
 
   core->scale_pixmap = gimp_brush_scale_pixmap (brush, core->scale);
 
@@ -1328,12 +1334,12 @@ gimp_brush_core_scale_pixmap (GimpBrushCore *core,
   return core->scale_pixmap;
 }
 
-static MaskBuf *
+static TempBuf *
 gimp_brush_core_get_brush_mask (GimpBrushCore            *core,
                                 GimpBrushApplicationMode  brush_hardness)
 {
   GimpPaintCore *paint_core = GIMP_PAINT_CORE (core);
-  MaskBuf       *mask;
+  TempBuf       *mask;
 
   mask = gimp_brush_core_scale_mask (core, core->brush);
 
