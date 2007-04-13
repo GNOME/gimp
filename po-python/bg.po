@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tiny-fu.HEAD.bg\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-28 13:13+0300\n"
+"POT-Creation-Date: 2007-04-13 07:54+0300\n"
 "PO-Revision-Date: 2006-10-16 11:56+0300\n"
 "Last-Translator: Victor Dachev <vdachev@gmail.com>\n"
 "Language-Team: Bulgarian <bg@li.org>\n"
@@ -18,44 +18,44 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;X-Generator: KBabel 1.11.2\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:333
+#: ../plug-ins/pygimp/gimpfu.py:335
 msgid "Missing exception information"
 msgstr ""
 
-#: ../plug-ins/pygimp/gimpfu.py:342
+#: ../plug-ins/pygimp/gimpfu.py:344
 #, python-format
 msgid "An error occured running %s"
 msgstr ""
 
-#: ../plug-ins/pygimp/gimpfu.py:353
+#: ../plug-ins/pygimp/gimpfu.py:355
 msgid "_More Information"
 msgstr ""
 
-#: ../plug-ins/pygimp/gimpfu.py:459 ../plug-ins/pygimp/gimpfu.py:471
-#: ../plug-ins/pygimp/gimpfu.py:477
+#: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
+#: ../plug-ins/pygimp/gimpfu.py:479
 msgid "No"
 msgstr ""
 
-#: ../plug-ins/pygimp/gimpfu.py:469 ../plug-ins/pygimp/gimpfu.py:477
+#: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
 msgid "Yes"
 msgstr ""
 
-#: ../plug-ins/pygimp/gimpfu.py:515 ../plug-ins/pygimp/gimpui.py:200
+#: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
 #, fuzzy
 msgid "Python-Fu File Selection"
 msgstr "Избор на файл за Tiny-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:526
+#: ../plug-ins/pygimp/gimpfu.py:528
 #, fuzzy
 msgid "Python-Fu Folder Selection"
 msgstr "Избор на папка за Tiny-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:615
+#: ../plug-ins/pygimp/gimpfu.py:618
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr ""
 
-#: ../plug-ins/pygimp/gimpui.py:153
+#: ../plug-ins/pygimp/gimpui.py:175
 #, fuzzy
 msgid "Python-Fu Color Selection"
 msgstr "Избор на цветове за Tiny-Fu "
@@ -74,7 +74,7 @@ msgid "Colored XHTML"
 msgstr "Цвят·3"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
-msgid "Character source"
+msgid "Character _source"
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
@@ -91,46 +91,51 @@ msgid "Entry box"
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
-msgid "File to read or characters to use"
+msgid "_File to read or characters to use"
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 #, fuzzy
-msgid "Font size in pixels"
+msgid "Fo_nt size in pixels"
 msgstr "Размер на шрифта (в пиксели)"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
-msgid "Write a separate CSS file"
+msgid "_Write a separate CSS file"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:55
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 #, fuzzy
 msgid "Python Console"
 msgstr "Tiny-Fu конзола"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:59
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
 msgid "_Browse..."
 msgstr "_Търсене..."
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:102
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
 #, fuzzy
 msgid "Python Procedure Browser"
 msgstr "Tiny-Fu четец на процедури"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:115
-msgid "Save Python-Fu Console Output"
-msgstr ""
-
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:130
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
 #, python-format
 msgid "Could not open '%s' for writing: %s"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:170
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
+msgid "Save Python-Fu Console Output"
+msgstr ""
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
 msgid "Interactive Gimp-Python interpreter"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:175
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
 #, fuzzy
 msgid "_Console"
 msgstr "Tiny-Fu _Kонзола"
@@ -146,7 +151,7 @@ msgstr "_Замразяване..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:59
 #, fuzzy
-msgid "Layer name"
+msgid "_Layer name"
 msgstr "Име на шарката"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:59
@@ -156,15 +161,16 @@ msgstr "Колони"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:60
 #, fuzzy
-msgid "Fog color"
+msgid "_Fog color"
 msgstr "Цвят на шрифта"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:61
-msgid "Turbulence"
+msgid "_Turbulence"
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:62
-msgid "Opacity"
+#, fuzzy
+msgid "Op_acity"
 msgstr "Плътност"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
@@ -177,14 +183,14 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:58
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:80
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
 msgid "Palette"
 msgstr "Палитра"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
 #, fuzzy
-msgid "Offset"
+msgid "Off_set"
 msgstr "Отместване·по·Y"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
@@ -198,7 +204,7 @@ msgstr "В _шарка..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
 #, fuzzy
-msgid "Color model"
+msgid "Color _model"
 msgstr "Цветови метод"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
@@ -211,7 +217,7 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
 #, fuzzy
-msgid "Channel to sort"
+msgid "Channel to _sort"
 msgstr "Цвят на тебешира"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
@@ -228,22 +234,22 @@ msgid "Blue or Value"
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
-msgid "Ascending"
+msgid "_Ascending"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:51
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:56
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
 msgid "Palette to _Repeating Gradient"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:73
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
 msgid "Create a gradient using colors from the palette"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:78
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
 #, fuzzy
 msgid "Palette to _Gradient"
 msgstr "Специална преливка"
@@ -279,24 +285,24 @@ msgstr ""
 msgid "Image format"
 msgstr "Изображение за издълбаване"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
 #, fuzzy
 msgid "Separate image folder"
 msgstr "Отделен слой"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Folder for image export"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
 msgid "Space between table elements"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:440
-msgid "Javascript for onmouseover and clicked)"
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+msgid "Javascript for onmouseover and clicked"
 msgstr ""
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:442
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Skip animation for table caps"
 msgstr ""
 
@@ -311,26 +317,27 @@ msgstr "_Хвърляне на сянка..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
 #, fuzzy
-msgid "Shadow blur"
+msgid "_Shadow blur"
 msgstr "Цвят на сянката"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
 #, fuzzy
-msgid "Bevel"
+msgid "_Bevel"
 msgstr "Ширина на заоблянето"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
-msgid "Drop shadow"
+#, fuzzy
+msgid "_Drop shadow"
 msgstr "Пускане на сянка"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 #, fuzzy
-msgid "Drop shadow X displacement"
+msgid "Drop shadow _X displacement"
 msgstr "Отместване по хоризонтал на сянката"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 #, fuzzy
-msgid "Drop shadow Y displacement"
+msgid "Drop shadow _Y displacement"
 msgstr "Отместване·по·вертикал·на·сянката"
 
 #~ msgid "Interactive console for Script-Fu development"
