@@ -26,8 +26,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-13 00:44+0100\n"
-"PO-Revision-Date: 2006-11-16 19:36+0100\n"
+"POT-Creation-Date: 2007-04-13 10:49+0200\n"
+"PO-Revision-Date: 2007-04-13 11:04+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -3960,11 +3960,11 @@ msgstr "Errore durante l'elaborazione di '%s' alla riga  %d: %s"
 
 #: ../app/core/core-enums.c:27
 msgid "_White (full opacity)"
-msgstr "_Bianco (totale opacità)"
+msgstr "_Bianco (opacità completa)"
 
 #: ../app/core/core-enums.c:28
 msgid "_Black (full transparency)"
-msgstr "_Nero (Trasparenza Totale)"
+msgstr "_Nero (trasparenza completa)"
 
 #: ../app/core/core-enums.c:29
 msgid "Layer's _alpha channel"
@@ -10255,11 +10255,11 @@ msgstr "Rilevato automaticamente"
 msgid "By Extension"
 msgstr "Per estensione"
 
-#: ../app/widgets/gimpfiledialog.c:466
+#: ../app/widgets/gimpfiledialog.c:511
 msgid "All Files"
 msgstr "Tutti i file"
 
-#: ../app/widgets/gimpfiledialog.c:605
+#: ../app/widgets/gimpfiledialog.c:650
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Seleziona _tipo di file (%s)"
@@ -10916,7 +10916,7 @@ msgstr "Finestra utilità"
 msgid "Keep above"
 msgstr "Mantieni sopra"
 
-#: ../app/xcf/xcf-load.c:297
+#: ../app/xcf/xcf-load.c:307
 msgid ""
 "XCF warning: version 0 of XCF file format\n"
 "did not save indexed colormaps correctly.\n"
