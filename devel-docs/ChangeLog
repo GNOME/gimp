@@ -1,3 +1,10 @@
+2007-04-16  Sven Neumann  <sven@gimp.org>
+
+	* app/app-sections.txt
+	* app/app.types
+	* app/app-docs.sgml: removed some stuff that doesn't exist any
+	longer and added some new docs.
+
 2007-03-06  Sven Neumann  <sven@gimp.org>
 
 	* app/app.types: added GimpSubProgress.
