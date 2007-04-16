@@ -157,6 +157,39 @@ apply_settings (GtkWidget *widget,
 
       interactive_preview_callback(NULL);
     }
+
+  if (widget == light_type_combo)
+    {
+      switch (mapvals.lightsource[k].type)
+        {
+        case NO_LIGHT:
+          gtk_widget_set_sensitive (spin_pos_x, FALSE);
+          gtk_widget_set_sensitive (spin_pos_y, FALSE);
+          gtk_widget_set_sensitive (spin_pos_z, FALSE);
+          gtk_widget_set_sensitive (spin_dir_x, FALSE);
+          gtk_widget_set_sensitive (spin_dir_y, FALSE);
+          gtk_widget_set_sensitive (spin_dir_z, FALSE);
+          break;
+        case POINT_LIGHT:
+          gtk_widget_set_sensitive (spin_pos_x, TRUE);
+          gtk_widget_set_sensitive (spin_pos_y, TRUE);
+          gtk_widget_set_sensitive (spin_pos_z, TRUE);
+          gtk_widget_set_sensitive (spin_dir_x, FALSE);
+          gtk_widget_set_sensitive (spin_dir_y, FALSE);
+          gtk_widget_set_sensitive (spin_dir_z, FALSE);
+          break;
+        case DIRECTIONAL_LIGHT:
+          gtk_widget_set_sensitive (spin_pos_x, FALSE);
+          gtk_widget_set_sensitive (spin_pos_y, FALSE);
+          gtk_widget_set_sensitive (spin_pos_z, FALSE);
+          gtk_widget_set_sensitive (spin_dir_x, TRUE);
+          gtk_widget_set_sensitive (spin_dir_y, TRUE);
+          gtk_widget_set_sensitive (spin_dir_z, TRUE);
+          break;
+        default:
+          break;
+        }
+    }
 }
 
 static void
@@ -1385,36 +1418,6 @@ lightselect_callback (GimpIntComboBox *combo,
                                  mapvals.lightsource[k].intensity);
 
       mapvals.update_enabled = TRUE;
-
-      switch (mapvals.lightsource[k].type)
-        {
-        case NO_LIGHT:
-          gtk_widget_set_sensitive (spin_pos_x, FALSE);
-          gtk_widget_set_sensitive (spin_pos_y, FALSE);
-          gtk_widget_set_sensitive (spin_pos_z, FALSE);
-          gtk_widget_set_sensitive (spin_dir_x, FALSE);
-          gtk_widget_set_sensitive (spin_dir_y, FALSE);
-          gtk_widget_set_sensitive (spin_dir_z, FALSE);
-          break;
-        case POINT_LIGHT:
-          gtk_widget_set_sensitive (spin_pos_x, TRUE);
-          gtk_widget_set_sensitive (spin_pos_y, TRUE);
-          gtk_widget_set_sensitive (spin_pos_z, TRUE);
-          gtk_widget_set_sensitive (spin_dir_x, FALSE);
-          gtk_widget_set_sensitive (spin_dir_y, FALSE);
-          gtk_widget_set_sensitive (spin_dir_z, FALSE);
-          break;
-        case DIRECTIONAL_LIGHT:
-          gtk_widget_set_sensitive (spin_pos_x, FALSE);
-          gtk_widget_set_sensitive (spin_pos_y, FALSE);
-          gtk_widget_set_sensitive (spin_pos_z, FALSE);
-          gtk_widget_set_sensitive (spin_dir_x, TRUE);
-          gtk_widget_set_sensitive (spin_dir_y, TRUE);
-          gtk_widget_set_sensitive (spin_dir_z, TRUE);
-          break;
-        default:
-          break;
-        }
 
       /* if we are isolating a light, need to switch */
       if (mapvals.light_isolated)
