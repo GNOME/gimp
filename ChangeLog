@@ -1,3 +1,11 @@
+2007-04-16  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/Lighting/lighting_ui.c: applied patch from Aurimas
+	Juška that fixes sensitivity of input fields related to the light
+	type (bug #359833).
+
 2007-03-26  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* plug-ins/common/compressor.c (save_image, load_image): 
