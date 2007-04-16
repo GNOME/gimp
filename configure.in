@@ -41,7 +41,7 @@ m4_define([gimp_full_name], [GNU Image Manipulation Program])
 
 # required versions of other packages
 m4_define([glib_required_version], [2.12.3])
-m4_define([gtk_required_version], [2.8.17])
+m4_define([gtk_required_version], [2.10.6])
 m4_define([gdk_pixbuf_required_version], [gtk_required_version])
 m4_define([pangoft2_required_version], [1.12.2])
 m4_define([fontconfig_required_version], [2.2.0])
@@ -1212,19 +1212,14 @@ AC_SUBST(LIBSVG)
 
 
 ####################################
-# Check for gtk+ 2.10 (for GtkPrint)
+# Allow to disable the print plug-in
 ####################################
 
-enable_print=no
+enable_print="no (disabled)"
 AC_ARG_WITH(print,[  --without-print         build without print support])
 
 if test "x$with_print" != xno; then
-  PKG_CHECK_MODULES(PRINT, gtk+-2.0 >= 2.9.3,
-    enable_print="yes",
-    AC_MSG_RESULT([no])
-    enable_print="no (gtk+ >= 2.9.3 not available)")
-else
-    enable_print="no (print support disabled)"
+    enable_print="yes"
 fi
 AM_CONDITIONAL(BUILD_PRINT, test "x$enable_print" == xyes)
 

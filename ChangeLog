@@ -1,5 +1,11 @@
 2007-04-16  Sven Neumann  <sven@gimp.org>
 
+	* INSTALL
+	* configure.in
+	* app/gui/gui.c (gui_sanity_check): require gtk+ >= 2.10.6.
+
+2007-04-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/Lighting/lighting_ui.c: applied patch from Aurimas
 	Juška that fixes sensitivity of input fields related to the light
 	type (bug #359833).
@@ -152,9 +158,9 @@
 
 2007-03-31  Michael Schumacher  <schumaml@cvs.gnome.org>
 
-	* plug-ins/common/svg.c: 
-	* plug-ins/common/tiff.c: 
-	* plug-ins/common/wmf.c: 
+	* plug-ins/common/svg.c:
+	* plug-ins/common/tiff.c:
+	* plug-ins/common/wmf.c:
 	* plug-ins/jpeg/jpeg-load.c: some file load plug-ins did call
 	gimp_quit() in their load functions. This aborts the plug-in
 	instead of returning a GIMP_PDB_EXECUTION_ERROR. The run()
@@ -308,7 +314,7 @@
 
 2007-03-26  Michael Schumacher  <schumaml@cvs.gnome.org>
 
-	* plug-ins/common/compressor.c (save_image, load_image): 
+	* plug-ins/common/compressor.c (save_image, load_image):
 	Check if the files to be read or written and the temporary files
 	have been opened. Otherwise, bail out safely instead of causing a
 	crash. Fixes bug #422444.

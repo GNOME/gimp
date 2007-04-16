@@ -28,7 +28,7 @@ header files installed.
   1. You need to have installed a recent version of pkg-config available
      from http://www.freedesktop.org/software/pkgconfig/.  
 
-  2. You need to have installed GTK+ version 2.8.17 or newer.  GIMP
+  2. You need to have installed GTK+ version 2.10.6 or newer.  GIMP
      needs an even more recent version of GLib (>= 2.12.3).  It also
      wants Pango (>= 1.12.2).  Sources for these can be grabbed from
      ftp://ftp.gtk.org/.
