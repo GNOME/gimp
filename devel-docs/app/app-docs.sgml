@@ -61,7 +61,6 @@
     <chapter id="app-base-utils">
       <title>Base Utilities</title>
       <xi:include href="xml/boundary.xml" />
-      <xi:include href="xml/brush-scale.xml" />
       <xi:include href="xml/cpercep.xml" />
       <xi:include href="xml/gimphistogram.xml" />
       <xi:include href="xml/gimplut.xml" />
@@ -381,8 +380,8 @@
 
     <chapter id="app-plug-in-management">
       <title>Initialization &amp; Plug-In Management</title>
-      <xi:include href="xml/plug-in-def.xml" />
       <xi:include href="xml/plug-in-rc.xml" />
+      <xi:include href="xml/gimpplugindef.xml" />
       <xi:include href="xml/gimppluginmanager.xml" />
       <xi:include href="xml/gimppluginmanager-call.xml" />
       <xi:include href="xml/gimppluginmanager-history.xml" />
@@ -855,7 +854,6 @@
 
     <chapter id="app-widgets-cell-renderers">
       <title>Cell Renderers for GtkTreeView</title>
-      <xi:include href="xml/gimpcellrendereraccel.xml" />
       <xi:include href="xml/gimpcellrendererdashes.xml" />
       <xi:include href="xml/gimpcellrendererviewable.xml" />
     </chapter>

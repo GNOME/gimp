@@ -251,7 +251,6 @@ gimp_g_type_instance_get_memsize
 gimp_g_value_get_memsize
 gimp_get_default_language
 gimp_get_default_unit
-gimp_boolean_handled_accum
 gimp_parameters_append
 gimp_parameters_append_valist
 gimp_parameters_free
@@ -2113,8 +2112,6 @@ GIMP_DISPLAY_OPTIONS_GET_CLASS
 PROJ_ROUND
 SCREEN_XRES
 SCREEN_YRES
-SCALEFACTOR_X
-SCALEFACTOR_Y
 SCALEX
 SCALEY
 UNSCALEX
@@ -2378,7 +2375,7 @@ gimp_statusbar_push_coords
 gimp_statusbar_push_length
 gimp_statusbar_replace
 gimp_statusbar_pop
-gimp_statusbar_set_cursor
+gimp_statusbar_update_cursor
 gimp_statusbar_clear_cursor
 <SUBSECTION Standard>
 GimpStatusbarClass
@@ -3947,7 +3944,6 @@ gimp_rectangle_tool_configure
 gimp_rectangle_tool_set_constraint
 gimp_rectangle_tool_get_function
 gimp_rectangle_tool_set_function
-gimp_rectangle_tool_no_movement
 gimp_rectangle_tool_get_press_coords
 gimp_rectangle_tool_install_properties
 gimp_rectangle_tool_set_property
@@ -4676,24 +4672,6 @@ gimp_buffer_view_get_type
 GIMP_BUFFER_VIEW_CLASS
 GIMP_IS_BUFFER_VIEW_CLASS
 GIMP_BUFFER_VIEW_GET_CLASS
-</SECTION>
-
-<SECTION>
-<FILE>gimpcellrendereraccel</FILE>
-<TITLE>GimpCellRendererAccel</TITLE>
-GimpCellRendererAccel
-gimp_cell_renderer_accel_new
-gimp_cell_renderer_accel_set_accelerator
-gimp_cell_renderer_accel_get_accelerator
-<SUBSECTION Standard>
-GimpCellRendererAccelClass
-GIMP_CELL_RENDERER_ACCEL
-GIMP_IS_CELL_RENDERER_ACCEL
-GIMP_TYPE_CELL_RENDERER_ACCEL
-gimp_cell_renderer_accel_get_type
-GIMP_CELL_RENDERER_ACCEL_CLASS
-GIMP_IS_CELL_RENDERER_ACCEL_CLASS
-GIMP_CELL_RENDERER_ACCEL_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -6865,12 +6843,6 @@ boundary_simplify
 </SECTION>
 
 <SECTION>
-<FILE>brush-scale</FILE>
-brush_scale_mask
-brush_scale_pixmap
-</SECTION>
-
-<SECTION>
 <FILE>color-balance</FILE>
 ColorBalance
 color_balance_init
@@ -7000,11 +6972,10 @@ pixel_regions_process_stop
 
 <SECTION>
 <FILE>pixel-surround</FILE>
-pixel_surround_init
+pixel_surround_new
 pixel_surround_lock
-pixel_surround_rowstride
 pixel_surround_release
-pixel_surround_clear
+pixel_surround_destroy
 </SECTION>
 
 <SECTION>
@@ -7026,7 +6997,6 @@ siox_drb
 <SECTION>
 <FILE>temp-buf</FILE>
 TempBuf
-MaskBuf
 temp_buf_new
 temp_buf_new_check
 temp_buf_copy
@@ -7037,10 +7007,6 @@ temp_buf_free
 temp_buf_data
 temp_buf_data_clear
 temp_buf_get_memsize
-mask_buf_new
-mask_buf_free
-mask_buf_data
-mask_buf_data_clear
 </SECTION>
 
 <SECTION>
@@ -8376,22 +8342,6 @@ register_vectors_procs
 </SECTION>
 
 <SECTION>
-<FILE>plug-in-def</FILE>
-PlugInDef
-plug_in_def_new
-plug_in_def_free
-plug_in_def_add_procedure
-plug_in_def_remove_procedure
-plug_in_def_set_locale_domain_name
-plug_in_def_set_locale_domain_path
-plug_in_def_set_help_domain_name
-plug_in_def_set_help_domain_uri
-plug_in_def_set_mtime
-plug_in_def_set_needs_query
-plug_in_def_set_has_init
-</SECTION>
-
-<SECTION>
 <FILE>gimp-pdb-compat</FILE>
 gimp_pdb_compat_param_spec
 gimp_pdb_compat_arg_type_to_gtype
@@ -8555,6 +8505,28 @@ gimp_plug_in_progress_cancel
 </SECTION>
 
 <SECTION>
+<FILE>gimpplugindef</FILE>
+<TITLE>GimpPlugInDef</TITLE>
+GimpPlugInDef
+gimp_plug_in_def_new
+gimp_plug_in_def_add_procedure
+gimp_plug_in_def_remove_procedure
+gimp_plug_in_def_set_locale_domain
+gimp_plug_in_def_set_help_domain
+gimp_plug_in_def_set_mtime
+gimp_plug_in_def_set_needs_query
+gimp_plug_in_def_set_has_init
+<SUBSECTION Standard>
+GimpPlugInDefClass
+GIMP_PLUG_IN_DEF
+GIMP_IS_PLUG_IN_DEF
+GIMP_TYPE_PLUG_IN_DEF
+gimp_plug_in_def_get_type
+GIMP_PLUG_IN_DEF_CLASS
+GIMP_IS_PLUG_IN_DEF_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimppluginprocframe</FILE>
 GimpPlugInProcFrame
 gimp_plug_in_proc_frame_new
@@ -8603,7 +8575,6 @@ gimp_plug_in_manager_remove_open_plug_in
 gimp_plug_in_manager_plug_in_push
 gimp_plug_in_manager_plug_in_pop
 gimp_plug_in_manager_history_changed
-gimp_plug_in_manager_get_label
 <SUBSECTION Standard>
 GimpPlugInManagerClass
 GIMP_PLUG_IN_MANAGER
@@ -8691,7 +8662,6 @@ plug_in_rc_write
 <SECTION>
 <FILE>plug-in-types</FILE>
 GimpPlugInMenuBranch
-PlugInDef
 </SECTION>
 
 <SECTION>
@@ -9035,8 +9005,6 @@ gimp_widget_set_accel_help
 <FILE>widgets-enums</FILE>
 GIMP_TYPE_ACTIVE_COLOR
 GimpActiveColor
-GIMP_TYPE_ASPECT_TYPE
-GimpAspectType
 GIMP_TYPE_COLOR_DIALOG_STATE
 GimpColorDialogState
 GIMP_TYPE_COLOR_FRAME_MODE
@@ -9064,7 +9032,6 @@ GimpCursorModifier
 GimpDeviceValues
 <SUBSECTION Standard>
 gimp_active_color_get_type
-gimp_aspect_type_get_type
 gimp_color_dialog_state_get_type
 gimp_color_frame_mode_get_type
 gimp_color_pick_state_get_type

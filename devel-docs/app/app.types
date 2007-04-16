@@ -32,7 +32,6 @@ gimp_buffer_get_type
 gimp_buffer_view_get_type
 gimp_by_color_select_tool_get_type
 gimp_canvas_get_type
-gimp_cell_renderer_accel_get_type
 gimp_cell_renderer_dashes_get_type
 gimp_cell_renderer_viewable_get_type
 gimp_channel_get_type
@@ -220,6 +219,7 @@ gimp_perspective_clone_tool_get_type
 gimp_perspective_tool_get_type
 gimp_pickable_interface_get_type
 gimp_plug_in_action_get_type
+gimp_plug_in_def_get_type
 gimp_plug_in_get_type
 gimp_plug_in_manager_get_type
 gimp_plug_in_procedure_get_type
