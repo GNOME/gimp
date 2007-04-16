@@ -1,7 +1,8 @@
 2007-04-16  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/Lighting/lighting_ui.c: applied patch from Aurimas Juška
-	that fixes sensitivity of input fields (bug #359833).
+	* plug-ins/Lighting/lighting_ui.c: applied patch from Aurimas
+	Juška that fixes sensitivity of input fields related to the light
+	type (bug #359833).
 
 2007-04-13  Michael Natterer  <mitch@gimp.org>
 
