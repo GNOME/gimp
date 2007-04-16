@@ -1,8 +1,13 @@
+2007-04-16  Sven Neumann  <sven@gimp.org>
+
+	* app/base/pixel-surround.c: documentation fix.
+
 2007-04-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
-	* app/widgets/gimpcellrendereraccel.[ch]: remove GimpCellRenererAccel.
+	* app/widgets/gimpcellrendereraccel.[ch]: remove
+	GimpCellRendererAccel.
 
 	* app/widgets/gimpactionview.c: use GtkCellRendererAccel instead.
 	If an action has no label, use its name as label. Always show the

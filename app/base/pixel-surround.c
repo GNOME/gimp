@@ -113,7 +113,7 @@ pixel_surround_get_data (PixelSurround *surround,
 
 /**
  * pixel_surround_new:
- * @tm:     tile manager
+ * @tiles:  tile manager
  * @width:  width of surround region
  * @height: height of surround region
  * @bg:     color to use for pixels that are not covered by the tile manager
