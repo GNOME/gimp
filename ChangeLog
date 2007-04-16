@@ -1,3 +1,14 @@
+2007-04-16  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpcellrendereraccel.[ch]: remove GimpCellRenererAccel.
+
+	* app/widgets/gimpactionview.c: use GtkCellRendererAccel instead.
+	If an action has no label, use its name as label. Always show the
+	"Name" column because there are too many actions with confusingly
+	similar names.
+
 2007-04-16  Sven Neumann  <sven@gimp.org>
 
 	* INSTALL

@@ -35,7 +35,6 @@
 #include "gimpaction.h"
 #include "gimpactiongroup.h"
 #include "gimpactionview.h"
-#include "gimpcellrendereraccel.h"
 #include "gimpmessagebox.h"
 #include "gimpmessagedialog.h"
 #include "gimpuimanager.h"
@@ -56,11 +55,14 @@ static void     gimp_action_view_accel_changed   (GtkAccelGroup   *accel_group,
                                                   GdkModifierType  unused2,
                                                   GClosure        *accel_closure,
                                                   GimpActionView  *view);
-static void     gimp_action_view_accel_edited    (GimpCellRendererAccel *accel,
+static void     gimp_action_view_accel_edited    (GtkCellRendererAccel *accel,
                                                   const char      *path_string,
-                                                  gboolean         delete,
                                                   guint            accel_key,
                                                   GdkModifierType  accel_mask,
+                                                  guint            hardware_keycode,
+                                                  GimpActionView  *view);
+static void     gimp_action_view_accel_cleared   (GtkCellRendererAccel *accel,
+                                                  const char      *path_string,
                                                   GimpActionView  *view);
 
 
@@ -241,6 +243,12 @@ gimp_action_view_new (GimpUIManager *manager,
           label = gimp_strip_uline (tmp);
           g_free (tmp);
 
+          if (! (label && strlen (label)))
+            {
+              g_free (label);
+              label = g_strdup (name);
+            }
+
           if (show_shortcuts)
             {
               accel_closure = gtk_action_get_accel_closure (action);
@@ -333,37 +341,38 @@ gimp_action_view_new (GimpUIManager *manager,
       column = gtk_tree_view_column_new ();
       gtk_tree_view_column_set_title (column, _("Shortcut"));
 
-      cell = gimp_cell_renderer_accel_new ();
+      cell = gtk_cell_renderer_accel_new ();
       cell->mode = GTK_CELL_RENDERER_MODE_EDITABLE;
       GTK_CELL_RENDERER_TEXT (cell)->editable = TRUE;
       gtk_tree_view_column_pack_start (column, cell, TRUE);
       gtk_tree_view_column_set_attributes (column, cell,
                                            "accel-key",
                                            GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,
-                                           "accel-mask",
+                                           "accel-mods",
                                            GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK,
                                            NULL);
 
       g_signal_connect (cell, "accel-edited",
                         G_CALLBACK (gimp_action_view_accel_edited),
                         view);
+      g_signal_connect (cell, "accel-cleared",
+                        G_CALLBACK (gimp_action_view_accel_cleared),
+                        view);
 
       gtk_tree_view_append_column (view, column);
     }
-  else
-    {
-      column = gtk_tree_view_column_new ();
-      gtk_tree_view_column_set_title (column, _("Name"));
 
-      cell = gtk_cell_renderer_text_new ();
-      gtk_tree_view_column_pack_start (column, cell, TRUE);
-      gtk_tree_view_column_set_attributes (column, cell,
-                                           "text",
-                                           GIMP_ACTION_VIEW_COLUMN_NAME,
-                                           NULL);
+  column = gtk_tree_view_column_new ();
+  gtk_tree_view_column_set_title (column, _("Name"));
 
-      gtk_tree_view_append_column (view, column);
-    }
+  cell = gtk_cell_renderer_text_new ();
+  gtk_tree_view_column_pack_start (column, cell, TRUE);
+  gtk_tree_view_column_set_attributes (column, cell,
+                                       "text",
+                                       GIMP_ACTION_VIEW_COLUMN_NAME,
+                                       NULL);
+
+  gtk_tree_view_append_column (view, column);
 
   if (select_path)
     {
@@ -560,13 +569,10 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
   gtk_widget_show (dialog);
 }
 
-static void
-gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
-                               const char            *path_string,
-                               gboolean               delete,
-                               guint                  accel_key,
-                               GdkModifierType        accel_mask,
-                               GimpActionView        *view)
+static const gchar *
+gimp_action_view_get_accel_action (GimpActionView  *view,
+                                   const gchar     *path_string,
+                                   GtkAction      **action_return)
 {
   GtkTreeModel *model;
   GtkTreePath  *path;
@@ -574,15 +580,13 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
 
   model = gtk_tree_view_get_model (GTK_TREE_VIEW (view));
   if (! model)
-    return;
+    return NULL;
 
   path = gtk_tree_path_new_from_string (path_string);
 
   if (gtk_tree_model_get_iter (model, &iter, path))
     {
-      GtkAction      *action;
-      GtkActionGroup *group;
-      const gchar    *accel_path;
+      GtkAction *action;
 
       gtk_tree_model_get (model, &iter,
                           GIMP_ACTION_VIEW_COLUMN_ACTION, &action,
@@ -591,100 +595,129 @@ gimp_action_view_accel_edited (GimpCellRendererAccel *accel,
       if (! action)
         goto done;
 
-      g_object_get (action, "action-group", &group, NULL);
-
-      if (! group)
-        {
-          g_object_unref (action);
-          goto done;
-        }
-
-      accel_path = gtk_action_get_accel_path (action);
-
-      if (delete)
-        {
-          if (! gtk_accel_map_change_entry (accel_path, 0, 0, FALSE))
-            {
-              gimp_message (view->manager->gimp, G_OBJECT (view),
-                            GIMP_MESSAGE_ERROR,
-                            _("Removing shortcut failed."));
-            }
-        }
-      else if (! accel_key)
-        {
-          gimp_message (view->manager->gimp, G_OBJECT (view),
-                        GIMP_MESSAGE_ERROR,
-                        _("Invalid shortcut."));
-        }
-      else if (! gtk_accel_map_change_entry (accel_path,
-                                             accel_key, accel_mask, FALSE))
-        {
-          GtkAction   *conflict_action = NULL;
-          GtkTreeIter  iter;
-          gboolean     iter_valid;
-
-          for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
-               iter_valid;
-               iter_valid = gtk_tree_model_iter_next (model, &iter))
-            {
-              GtkTreeIter child_iter;
-              gboolean    child_valid;
-
-              for (child_valid = gtk_tree_model_iter_children (model,
-                                                               &child_iter,
-                                                               &iter);
-                   child_valid;
-                   child_valid = gtk_tree_model_iter_next (model, &child_iter))
-                {
-                  guint           child_accel_key;
-                  GdkModifierType child_accel_mask;
-
-                  gtk_tree_model_get (model, &child_iter,
-                                      GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,
-                                      &child_accel_key,
-                                      GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK,
-                                      &child_accel_mask,
-                                      -1);
-
-                  if (accel_key  == child_accel_key &&
-                      accel_mask == child_accel_mask)
-                    {
-                      gtk_tree_model_get (model, &child_iter,
-                                          GIMP_ACTION_VIEW_COLUMN_ACTION,
-                                          &conflict_action,
-                                          -1);
-                      break;
-                    }
-                }
-
-              if (conflict_action)
-                break;
-            }
-
-          if (conflict_action != action)
-            {
-              if (conflict_action)
-                {
-                  gimp_action_view_conflict_confirm (view, conflict_action,
-                                                     accel_key,
-                                                     accel_mask,
-                                                     accel_path);
-                  g_object_unref (conflict_action);
-                }
-              else
-                {
-                  gimp_message (view->manager->gimp, G_OBJECT (view),
-                                GIMP_MESSAGE_ERROR,
-                                _("Changing shortcut failed."));
-                }
-            }
-        }
-
-      g_object_unref (group);
+      gtk_tree_path_free (path);
       g_object_unref (action);
+
+      *action_return = action;
+
+      return gtk_action_get_accel_path (action);
     }
 
  done:
-
   gtk_tree_path_free (path);
+
+  return NULL;
+}
+
+static void
+gimp_action_view_accel_edited (GtkCellRendererAccel *accel,
+                               const char           *path_string,
+                               guint                 accel_key,
+                               GdkModifierType       accel_mask,
+                               guint                 hardware_keycode,
+                               GimpActionView       *view)
+{
+  GtkAction   *action;
+  const gchar *accel_path;
+
+  accel_path = gimp_action_view_get_accel_action (view, path_string,
+                                                  &action);
+
+  if (! accel_path)
+    return;
+
+  if (! accel_key)
+    {
+      gimp_message (view->manager->gimp, G_OBJECT (view),
+                    GIMP_MESSAGE_ERROR,
+                    _("Invalid shortcut."));
+    }
+  else if (! gtk_accel_map_change_entry (accel_path,
+                                         accel_key, accel_mask, FALSE))
+    {
+      GtkTreeModel *model;
+      GtkAction    *conflict_action = NULL;
+      GtkTreeIter   iter;
+      gboolean      iter_valid;
+
+      model = gtk_tree_view_get_model (GTK_TREE_VIEW (view));
+
+      for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+           iter_valid;
+           iter_valid = gtk_tree_model_iter_next (model, &iter))
+        {
+          GtkTreeIter child_iter;
+          gboolean    child_valid;
+
+          for (child_valid = gtk_tree_model_iter_children (model,
+                                                           &child_iter,
+                                                           &iter);
+               child_valid;
+               child_valid = gtk_tree_model_iter_next (model, &child_iter))
+            {
+              guint           child_accel_key;
+              GdkModifierType child_accel_mask;
+
+              gtk_tree_model_get (model, &child_iter,
+                                  GIMP_ACTION_VIEW_COLUMN_ACCEL_KEY,
+                                  &child_accel_key,
+                                  GIMP_ACTION_VIEW_COLUMN_ACCEL_MASK,
+                                  &child_accel_mask,
+                                  -1);
+
+              if (accel_key  == child_accel_key &&
+                  accel_mask == child_accel_mask)
+                {
+                  gtk_tree_model_get (model, &child_iter,
+                                      GIMP_ACTION_VIEW_COLUMN_ACTION,
+                                      &conflict_action,
+                                      -1);
+                  break;
+                }
+            }
+
+          if (conflict_action)
+            break;
+        }
+
+      if (conflict_action != action)
+        {
+          if (conflict_action)
+            {
+              gimp_action_view_conflict_confirm (view, conflict_action,
+                                                 accel_key,
+                                                 accel_mask,
+                                                 accel_path);
+              g_object_unref (conflict_action);
+            }
+          else
+            {
+              gimp_message (view->manager->gimp, G_OBJECT (view),
+                            GIMP_MESSAGE_ERROR,
+                            _("Changing shortcut failed."));
+            }
+        }
+    }
+}
+
+static void
+gimp_action_view_accel_cleared (GtkCellRendererAccel *accel,
+                                const char           *path_string,
+                                GimpActionView       *view)
+{
+  GtkAction   *action;
+  const gchar *accel_path;
+
+  accel_path = gimp_action_view_get_accel_action (view, path_string,
+                                                  &action);
+
+  if (! accel_path)
+    return;
+
+  if (! gtk_accel_map_change_entry (accel_path, 0, 0, FALSE))
+    {
+      gimp_message (view->manager->gimp, G_OBJECT (view),
+                    GIMP_MESSAGE_ERROR,
+                    _("Removing shortcut failed."));
+    }
 }
