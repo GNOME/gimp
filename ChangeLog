@@ -1,3 +1,7 @@
+2007-04-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/Makefile.am: use GTK_CFLAGS and GTK_LIBS.
+
 2007-04-16  Sven Neumann  <sven@gimp.org>
 
 	* app/base/pixel-surround.c: documentation fix.

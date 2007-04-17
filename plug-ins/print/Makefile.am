@@ -16,7 +16,7 @@ AM_LDFLAGS = $(mwindows)
 
 INCLUDES = \
 	-I$(top_srcdir)		\
-	$(PRINT_CFLAGS)		\
+	$(GTK_CFLAGS)		\
 	-I$(includedir)
 
 LDADD = \
@@ -27,7 +27,7 @@ LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpmath)		\
 	$(libgimpbase)		\
-	$(PRINT_LIBS)		\
+	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
