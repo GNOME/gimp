@@ -1,5 +1,9 @@
 2007-04-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/fp.c: use g_malloc(); plugged memory leaks.
+
+2007-04-17  Sven Neumann  <sven@gimp.org>
+
 	Allow other applications to open images in GIMP as if they were
 	new images (without associating a filename). Fixes bug #423118.
 
@@ -19,7 +23,7 @@
 	* app/main.c: added new command-line option '--as-new'.
 
 	* app/widgets/gimpdbusservice.[ch]
-	* app/widgets/dbus-service.xml: added new method "OpenAsNew" to the
+	* app/widgets/dbus-service.xml: added new method OpenAsNew to the
 	D-Bus interface.
 
 	* docs/gimp.1.in: document the new command-line option.
