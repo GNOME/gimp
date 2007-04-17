@@ -347,7 +347,7 @@ gimp_preview_area_draw (GimpPreviewArea *area,
   gint          col;
 
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
-  g_return_if_fail (width > 0 && height > 0);
+  g_return_if_fail (width >= 0 && height >= 0);
   g_return_if_fail (buf != NULL);
   g_return_if_fail (rowstride > 0);
 
@@ -605,7 +605,7 @@ gimp_preview_area_blend (GimpPreviewArea *area,
   gint          i;
 
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
-  g_return_if_fail (width > 0 && height > 0);
+  g_return_if_fail (width >= 0 && height >= 0);
   g_return_if_fail (buf1 != NULL);
   g_return_if_fail (buf2 != NULL);
   g_return_if_fail (rowstride1 > 0);
@@ -986,7 +986,7 @@ gimp_preview_area_mask (GimpPreviewArea *area,
   gint          i;
 
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
-  g_return_if_fail (width > 0 && height > 0);
+  g_return_if_fail (width >= 0 && height >= 0);
   g_return_if_fail (buf1 != NULL);
   g_return_if_fail (buf2 != NULL);
   g_return_if_fail (mask != NULL);
@@ -1526,7 +1526,7 @@ gimp_preview_area_fill (GimpPreviewArea *area,
   gint    col;
 
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
-  g_return_if_fail (width > 0 && height > 0);
+  g_return_if_fail (width >= 0 && height >= 0);
 
   if (x + width < 0 || x >= area->width)
     return;
