@@ -1,3 +1,9 @@
+2007-04-17  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/neon-logo.scm: applied slightly
+	modified patch from Aurimas Juška which fixes bug #167260 by not
+	allowing the selection to shrink too much.
+
 2007-04-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/config/gimprc.c
