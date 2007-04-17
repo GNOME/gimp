@@ -1,3 +1,9 @@
+2007-04-17  Sven Neumann  <sven@gimp.org>
+
+	* INSTALL
+	* HACKING: merged some changes from trunk, mostly dealing with the
+	switch from CVS to Subversion.
+
 2007-04-16  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:

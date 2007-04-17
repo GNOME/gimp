@@ -42,8 +42,8 @@ header files installed.
      freetype2 being newer than version 2.1.7. Older versions are
      known to have bugs that seriously affect stability of The GIMP.
 
-  4. We use libart2. Grab the module libart_lgpl out of GNOME CVS or
-     fetch the tarball from
+  4. We use libart2. Grab the module libart_lgpl from the GNOME
+     Subversion repository or fetch the tarball from
      ftp://ftp.gnome.org/pub/gnome/sources/libart_lgpl/
 
   5. You may want to install other third party libraries or programs that
@@ -145,7 +145,7 @@ These are:
   --enable-gtk-doc.  This option controls whether the libgimp API
      references will be created using gtk-doc. The HTML pages are 
      included in a standard tarball, so you will only need this if you
-     are building from CVS.
+     are building from a Subversion checkout.
 
   --with-html-dir=PATH.  This option allows to specify where the
      libgimp API reference should be installed. You might want to modify
