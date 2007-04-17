@@ -1,5 +1,10 @@
 2007-04-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/fp.c (fp_render_preview): removed a conditional
+	that has become obsolete now. Fixed indentation.
+
+2007-04-17  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppreviewarea.c: allow the draw, blend, mask
 	and fill methods to be called with zero width or height. Nothing
 	will be drawn, but it's still a valid call.

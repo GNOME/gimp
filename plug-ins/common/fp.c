@@ -1786,106 +1786,110 @@ fp_render_preview (GtkWidget *preview,
   gint    P[3];
   gint    tempSat[JUDGE_BY][256];
 
-  if (RW == 0 || RH == 0)
-    return;
-
   a = g_new (guchar, 4 * RW * RH);
 
-  if (change_what==SATURATION)
+  if (change_what == SATURATION)
     for (k = 0; k < 256; k++)
       {
         for (JudgeBy = BY_HUE; JudgeBy < JUDGE_BY; JudgeBy++)
           tempSat[JudgeBy][k] = 0;
-        tempSat[fpvals.value_by][k] += change_which * nudgeArray[(k + fpvals.offset) % 256];
+
+        tempSat[fpvals.value_by][k] +=
+          change_which * nudgeArray[(k + fpvals.offset) % 256];
       }
 
   for (i = 0; i < RH; i++)
     {
       for (j = 0; j < RW; j++)
         {
-          backupP[0] = P[0]  = (int) reduced->rgb[i * RW * bytes + j * bytes + 0];
-          backupP[1] = P[1]  = (int) reduced->rgb[i * RW * bytes + j * bytes + 1];
-          backupP[2] = P[2]  = (int) reduced->rgb[i * RW * bytes + j * bytes + 2];
+          backupP[0] = P[0] = reduced->rgb[i * RW * bytes + j * bytes + 0];
+          backupP[1] = P[1] = reduced->rgb[i * RW * bytes + j * bytes + 1];
+          backupP[2] = P[2] = reduced->rgb[i * RW * bytes + j * bytes + 2];
 
-      m = MIN (MIN (P[0], P[1]), P[2]);
-      M = MAX (MAX (P[0], P[1]), P[2]);
+          m = MIN (MIN (P[0], P[1]), P[2]);
+          M = MAX (MAX (P[0], P[1]), P[2]);
 
-      middle = (M + m) / 2;
+          middle = (M + m) / 2;
 
-      for (k = 0; k < 3; k++)
-        if (P[k] != m && P[k] != M) middle = P[k];
+          for (k = 0; k < 3; k++)
+            if (P[k] != m && P[k] != M) middle = P[k];
 
-      partial = reduced->mask[i * RW + j] / 255.0;
+          partial = reduced->mask[i * RW + j] / 255.0;
 
-      for (JudgeBy = BY_HUE; JudgeBy < JUDGE_BY; JudgeBy++)
-        {
-         if (!fpvals.touched[JudgeBy]) continue;
-
-         Inten   = reduced->hsv[i * RW * bytes + j * bytes + JudgeBy] * 255.0;
-
-         /*DO SATURATION FIRST*/
-         if (change_what != NONEATALL)
-           {
-             if (M != m)
-               {
-                 for (k = 0; k < 3; k++)
-                   if (backupP[k] == M)
-                     P[k] = MAX (P[k] + partial * fpvals.sat_adjust[JudgeBy][Inten],
-                                 middle);
-                   else if (backupP[k] == m)
-                     P[k] = MIN (P[k] - partial * fpvals.sat_adjust[JudgeBy][Inten],
-                                 middle);
-               }
-
-             P[0]  += partial * fpvals.red_adjust[JudgeBy][Inten];
-             P[1]  += partial * fpvals.green_adjust[JudgeBy][Inten];
-             P[2]  += partial * fpvals.blue_adjust[JudgeBy][Inten];
-           }
-        }
-
-      Inten   = reduced->hsv[i * RW * bytes + j * bytes + fpvals.value_by] * 255.0;
-      nudge   = partial * nudgeArray[(Inten + fpvals.offset) % 256];
-
-      switch (change_what)
-        {
-        case HUE:
-          P[0]  += colorSign[RED][change_which]   * nudge;
-          P[1]  += colorSign[GREEN][change_which] * nudge;
-          P[2]  += colorSign[BLUE][change_which]  * nudge;
-          break;
-
-        case SATURATION:
           for (JudgeBy = BY_HUE; JudgeBy < JUDGE_BY; JudgeBy++)
-            for (k = 0; k < 3; k++)
-              if (M != m)
+            {
+              if (!fpvals.touched[JudgeBy])
+                continue;
+
+              Inten =
+                reduced->hsv[i * RW * bytes + j * bytes + JudgeBy] * 255.0;
+
+              /*DO SATURATION FIRST*/
+              if (change_what != NONEATALL)
                 {
-                  if (backupP[k] == M)
-                    P[k] = MAX (P[k] + partial * tempSat[JudgeBy][Inten],
-                                middle);
-                  else if (backupP[k] == m)
-                    P[k] = MIN (P[k]- partial * tempSat[JudgeBy][Inten],
-                                middle);
+                  if (M != m)
+                    {
+                      for (k = 0; k < 3; k++)
+                        if (backupP[k] == M)
+                          P[k] = MAX (P[k] +
+                                      partial * fpvals.sat_adjust[JudgeBy][Inten],
+                                      middle);
+                        else if (backupP[k] == m)
+                          P[k] = MIN (P[k] -
+                                      partial * fpvals.sat_adjust[JudgeBy][Inten],
+                                      middle);
+                    }
+
+                  P[0]  += partial * fpvals.red_adjust[JudgeBy][Inten];
+                  P[1]  += partial * fpvals.green_adjust[JudgeBy][Inten];
+                  P[2]  += partial * fpvals.blue_adjust[JudgeBy][Inten];
                 }
-          break;
+            }
 
-        case VALUE:
-          P[0]  += change_which * nudge;
-          P[1]  += change_which * nudge;
-          P[2]  += change_which * nudge;
-          break;
+          Inten =
+            reduced->hsv[i * RW * bytes + j * bytes + fpvals.value_by] * 255.0;
+          nudge = partial * nudgeArray[(Inten + fpvals.offset) % 256];
 
-        default:
-          break;
-        }
+          switch (change_what)
+            {
+            case HUE:
+              P[0]  += colorSign[RED][change_which]   * nudge;
+              P[1]  += colorSign[GREEN][change_which] * nudge;
+              P[2]  += colorSign[BLUE][change_which]  * nudge;
+              break;
 
-      a[(i * RW + j) * 4 + 0] = CLAMP0255(P[0]);
-      a[(i * RW + j) * 4 + 1] = CLAMP0255(P[1]);
-      a[(i * RW + j) * 4 + 2] = CLAMP0255(P[2]);
+            case SATURATION:
+              for (JudgeBy = BY_HUE; JudgeBy < JUDGE_BY; JudgeBy++)
+                for (k = 0; k < 3; k++)
+                  if (M != m)
+                    {
+                      if (backupP[k] == M)
+                        P[k] = MAX (P[k] + partial * tempSat[JudgeBy][Inten],
+                                    middle);
+                      else if (backupP[k] == m)
+                        P[k] = MIN (P[k]- partial * tempSat[JudgeBy][Inten],
+                                    middle);
+                }
+              break;
 
-      if (bytes == 4)
-        a[(i * RW + j) * 4 + 3] = reduced->rgb[i * RW * bytes + j * bytes + 3];
-      else
-        a[(i * RW + j) * 4 + 3] = 255;
+            case VALUE:
+              P[0]  += change_which * nudge;
+              P[1]  += change_which * nudge;
+              P[2]  += change_which * nudge;
+              break;
+
+            default:
+              break;
+            }
+
+          a[(i * RW + j) * 4 + 0] = CLAMP0255(P[0]);
+          a[(i * RW + j) * 4 + 1] = CLAMP0255(P[1]);
+          a[(i * RW + j) * 4 + 2] = CLAMP0255(P[2]);
+
+          if (bytes == 4)
+            a[(i * RW + j) * 4 + 3] = reduced->rgb[i * RW * bytes + j * bytes + 3];
+          else
+            a[(i * RW + j) * 4 + 3] = 255;
         }
     }
 
