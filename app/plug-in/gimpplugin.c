@@ -439,7 +439,7 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
       if (kill_it)
         {
           if (plug_in->manager->gimp->be_verbose)
-            g_print (_("Terminating plug-in: '%s'\n"),
+            g_print ("Terminating plug-in: '%s'\n",
                      gimp_filename_to_utf8 (plug_in->prog));
 
           /*  If the plug-in opened a process group, kill the group instead
@@ -478,7 +478,7 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
           if (dwExitCode == STILL_ACTIVE)
             {
               if (plug_in->manager->gimp->be_verbose)
-                g_print (_("Terminating plug-in: '%s'\n"),
+                g_print ("Terminating plug-in: '%s'\n",
                          gimp_filename_to_utf8 (plug_in->prog));
 
               TerminateProcess ((HANDLE) plug_in->pid, 0);

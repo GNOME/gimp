@@ -228,7 +228,7 @@ themes_apply_theme (Gimp        *gimp,
   themerc = gimp_personal_rc_file ("themerc");
 
   if (gimp->be_verbose)
-    g_print (_("Writing '%s'\n"),
+    g_print ("Writing '%s'\n",
              gimp_filename_to_utf8 (themerc));
 
   file = g_fopen (themerc, "w");
@@ -282,7 +282,7 @@ themes_directories_foreach (const GimpDatafileData *file_data,
   Gimp *gimp = GIMP (user_data);
 
   if (gimp->be_verbose)
-    g_print (_("Adding theme '%s' (%s)\n"),
+    g_print ("Adding theme '%s' (%s)\n",
              gimp_filename_to_utf8 (file_data->basename),
              gimp_filename_to_utf8 (file_data->filename));
 

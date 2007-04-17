@@ -1,5 +1,14 @@
 2007-04-17  Michael Natterer  <mitch@gimp.org>
 
+	* app/config/gimprc.c
+	* app/plug-in/gimppluginmanager.c
+	* app/plug-in/gimpplugin.c
+	* app/gui/themes.c: don't translate --verbose or g_printerr()
+	messages, they are debugging output that often end up in bugzilla
+	and should not depend on the locale.
+
+2007-04-17  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/gqbist.c: applied slightly modified patch from
 	Aurimas Juška which adds an undo button to go back to the previous
 	state. Fixes bug #356662.

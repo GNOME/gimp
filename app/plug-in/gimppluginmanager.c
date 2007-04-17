@@ -390,7 +390,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
                    gimp_filename_to_utf8 (pluginrc), 0.0);
 
   if (gimp->be_verbose)
-    g_print (_("Parsing '%s'\n"), gimp_filename_to_utf8 (pluginrc));
+    g_print ("Parsing '%s'\n", gimp_filename_to_utf8 (pluginrc));
 
   rc_defs = plug_in_rc_parse (gimp, pluginrc, &error);
 
@@ -440,7 +440,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
               g_free (basename);
 
               if (gimp->be_verbose)
-                g_print (_("Querying plug-in: '%s'\n"),
+                g_print ("Querying plug-in: '%s'\n",
                          gimp_filename_to_utf8 (plug_in_def->prog));
 
               gimp_plug_in_manager_call_query (manager, context, plug_in_def);
@@ -475,7 +475,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
               g_free (basename);
 
               if (gimp->be_verbose)
-                g_print (_("Initializing plug-in: '%s'\n"),
+                g_print ("Initializing plug-in: '%s'\n",
                          gimp_filename_to_utf8 (plug_in_def->prog));
 
               gimp_plug_in_manager_call_init (manager, context, plug_in_def);
@@ -501,7 +501,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
   if (manager->write_pluginrc)
     {
       if (gimp->be_verbose)
-        g_print (_("Writing '%s'\n"), gimp_filename_to_utf8 (pluginrc));
+        g_print ("Writing '%s'\n", gimp_filename_to_utf8 (pluginrc));
 
       if (! plug_in_rc_write (manager->plug_in_defs, pluginrc, &error))
         {
@@ -514,7 +514,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
 
   g_free (pluginrc);
 
-  /* create help_path and locale_domain lists */
+  /* create locale and help domain lists */
   for (list = manager->plug_in_defs; list; list = list->next)
     {
       GimpPlugInDef *plug_in_def = list->data;
@@ -608,7 +608,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
             GValueArray         *args;
 
             if (gimp->be_verbose)
-              g_print (_("Starting extension: '%s'\n"),
+              g_print ("Starting extension: '%s'\n",
                        GIMP_OBJECT (proc)->name);
 
             status_callback (NULL, GIMP_OBJECT (proc)->name,
@@ -658,7 +658,7 @@ gimp_plug_in_manager_add_procedure (GimpPlugInManager   *manager,
 
           list->data = g_object_ref (procedure);
 
-          g_printerr ("removing duplicate PDB procedure \"%s\" "
+          g_printerr ("Removing duplicate PDB procedure '%s' "
                       "registered by '%s'\n",
                       GIMP_OBJECT (tmp_proc)->name,
                       gimp_filename_to_utf8 (tmp_proc->prog));
@@ -808,7 +808,7 @@ gimp_plug_in_manager_add_from_file (const GimpDatafileData *file_data,
 
       if (g_ascii_strcasecmp (file_data->basename, plug_in_name) == 0)
         {
-          g_printerr ("skipping duplicate plug-in: '%s'\n",
+          g_printerr ("Skipping duplicate plug-in: '%s'\n",
                       gimp_filename_to_utf8 (file_data->filename));
 
           g_free (plug_in_name);
@@ -906,7 +906,7 @@ gimp_plug_in_manager_add_from_rc (GimpPlugInManager *manager,
   g_free (basename1);
 
   manager->write_pluginrc = TRUE;
-  g_printerr ("executable not found: '%s'\n",
+  g_printerr ("Executable not found: '%s'\n",
               gimp_filename_to_utf8 (plug_in_def->prog));
   g_object_unref (plug_in_def);
 }
