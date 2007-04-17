@@ -11,7 +11,7 @@ Bugs fixed in GIMP 2.2.14
 
 - avoid crashing on newer versions of the winicon format (bug #352899)
 - fixed crash in Postscript plug-in (bug #353381)
-- fixed handling of tabs in the text tool (bug #353132)
+- fixed handling of TABs in the text tool (bug #353132)
 - fixed bug in Depth Merge plug-in (bug #355219)
 - fixed bug in GimpDrawablePreview widget (bug #353639)
 - fixed bug in Line Nove script (bug #357433)
@@ -34,6 +34,7 @@ Bugs fixed in GIMP 2.2.14
 - improved robustness of transform tool preview code (bug #420595)
 - improved forward compatibility of XCF loader (bug #316207)
 - don't crash in the Compressor plug-in if files can't be opened (bug #422444)
+- fixed sensitivity of input fields in the Lighting plug-in #359833
 
 
 Bugs fixed in GIMP 2.2.13
