@@ -68,7 +68,7 @@ typedef enum
   MIDTONES,
   HIGHLIGHTS,
   INTENSITIES
-}FPIntensity;
+} FPIntensity;
 
 enum
 {
@@ -239,7 +239,7 @@ static const gchar *sat_less    = N_("Less Sat:");
 
 static const gchar *current_val = N_("Current:");
 
-static gint colorSign[3][ALL_PRIMARY]=
+static const gint colorSign[3][ALL_PRIMARY]=
 {{1,-1,-1,-1,1,1},{-1,1,-1,1,1,-1},{-1,-1,1,1,-1,1}};
 
 static AdvancedWindow AW = { NULL, NULL, NULL, NULL };
@@ -291,7 +291,8 @@ static FPValues fpvals =
   {0,0,0}             /* touched */
 };
 
-static GimpDrawable *drawable, *mask;
+static GimpDrawable *drawable;
+static GimpDrawable *mask;
 
 static void      query  (void);
 static void      run    (const gchar      *name,
@@ -990,7 +991,7 @@ fp_redraw_all_windows (void)
       g_free (reduced);
     }
 
-  reduced = fp_reduce_image (drawable,mask,
+  reduced = fp_reduce_image (drawable, mask,
                              fpvals.preview_size,
                              fpvals.selection_only);
 
@@ -1206,7 +1207,7 @@ fp_dialog (void)
   GtkWidget *control;
   GtkWidget *table;
 
-  reduced = fp_reduce_image (drawable,mask,
+  reduced = fp_reduce_image (drawable, mask,
                              fpvals.preview_size,
                              fpvals.selection_only);
 
@@ -1263,19 +1264,19 @@ fp_dialog (void)
                     GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
   gtk_table_attach (GTK_TABLE (table), control, 1, 2, 1, 3,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
 
   gtk_table_attach (GTK_TABLE (table), rough, 1, 2, 3, 4,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
 
   gtk_table_attach (GTK_TABLE (table), show, 0, 1, 1, 2,
-                    GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
 
   gtk_table_attach (GTK_TABLE (table), range, 0, 1, 2, 3,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
 
   gtk_table_attach (GTK_TABLE (table), pixelsBy, 0, 1, 3, 4,
-                    GTK_EXPAND | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
+                    GTK_FILL | GTK_SHRINK, GTK_FILL | GTK_SHRINK, 0, 0);
 
   gtk_widget_show (dlg);
 
@@ -1658,45 +1659,49 @@ fp_reset_filter_packs (void)
 }
 
 static ReducedImage *
-fp_reduce_image (GimpDrawable  *drawable,
+fp_reduce_image (GimpDrawable *drawable,
                  GimpDrawable *mask,
                  gint          longer_size,
                  gint          selection)
 {
-  gint          RH, RW, width, height, bytes = drawable->bpp;
-  ReducedImage *temp = g_new (ReducedImage, 1);
+  gint          RH, RW, bytes = drawable->bpp;
+  gint          x, y, width, height;
+  ReducedImage *temp = g_new0 (ReducedImage, 1);
   guchar       *tempRGB, *src_row, *tempmask, *src_mask_row, R, G, B;
-  gint          i, j, whichcol, whichrow, x1, x2, y1, y2;
+  gint          i, j, whichcol, whichrow;
   GimpPixelRgn  srcPR, srcMask;
-  gboolean      NoSelectionMade = TRUE;
   gdouble      *tempHSV;
   GimpRGB       rgb;
   GimpHSV       hsv;
 
-  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
-  width  = x2 - x1;
-  height = y2 - y1;
-
-  if (width != drawable->width && height != drawable->height)
-    NoSelectionMade = FALSE;
-
-  if (selection == 0)
+  switch (selection)
     {
-      x1 = 0;
-      x2 = drawable->width;
-      y1 = 0;
-      y2 = drawable->height;
-    }
-  else if (selection == 2)
-    {
-      x1 = MAX (0,                x1 - width  / 2.0);
-      x2 = MIN (drawable->width,  x2 + width  / 2.0);
-      y1 = MAX (0,                y1 - height / 2.0);
-      y2 = MIN (drawable->height, y2 + height / 2.0);
-    }
+    case 0:
+      x      = 0;
+      width  = drawable->width;
+      y      = 0;
+      height = drawable->height;
+      break;
 
-  width  = x2 - x1;
-  height = y2 - y1;
+    case 1:
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &x, &y, &width, &height))
+        return temp;
+      break;
+
+    case 2:
+      if (! gimp_drawable_mask_intersect (drawable->drawable_id,
+                                          &x, &y, &width, &height) ||
+          ! gimp_rectangle_intersect (x - width / 2, y - height / 2,
+                                      2 * width, 2 * height,
+                                      0, 0, drawable->width, drawable->height,
+                                      &x, &y, &width, &height))
+        return temp;
+      break;
+
+    default:
+      return temp;
+    }
 
   if (width > height)
     {
@@ -1713,8 +1718,8 @@ fp_reduce_image (GimpDrawable  *drawable,
   tempHSV  = g_new (gdouble, RW * RH * bytes);
   tempmask = g_new (guchar, RW * RH);
 
-  gimp_pixel_rgn_init (&srcPR, drawable, x1, y1, width, height, FALSE, FALSE);
-  gimp_pixel_rgn_init (&srcMask, mask, x1, y1, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&srcPR, drawable, x, y, width, height, FALSE, FALSE);
+  gimp_pixel_rgn_init (&srcMask, mask, x, y, width, height, FALSE, FALSE);
 
   src_row      = g_new (guchar, width * bytes);
   src_mask_row = g_new (guchar, width * bytes);
@@ -1723,17 +1728,14 @@ fp_reduce_image (GimpDrawable  *drawable,
     {
       whichrow = (gdouble) i * (gdouble) height / (gdouble) RH;
 
-      gimp_pixel_rgn_get_row (&srcPR, src_row, x1, y1 + whichrow, width);
-      gimp_pixel_rgn_get_row (&srcMask, src_mask_row, x1, y1 + whichrow, width);
+      gimp_pixel_rgn_get_row (&srcPR, src_row, x, y + whichrow, width);
+      gimp_pixel_rgn_get_row (&srcMask, src_mask_row, x, y + whichrow, width);
 
       for (j = 0; j < RW; j++)
         {
           whichcol = (gdouble) j * (gdouble) width / (gdouble) RW;
 
-          if (NoSelectionMade)
-            tempmask[i * RW + j] = 255;
-          else
-            tempmask[i * RW + j] = src_mask_row[whichcol];
+          tempmask[i * RW + j] = src_mask_row[whichcol];
 
           R = src_row[whichcol * bytes + 0];
           G = src_row[whichcol * bytes + 1];
@@ -1783,6 +1785,9 @@ fp_render_preview (GtkWidget *preview,
   gint    backupP[3];
   gint    P[3];
   gint    tempSat[JUDGE_BY][256];
+
+  if (RW == 0 || RH == 0)
+    return;
 
   a = g_new (guchar, 4 * RW * RH);
 
