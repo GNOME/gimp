@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.TIPS.ru\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 00:46+0100\n"
+"POT-Creation-Date: 2007-04-17 23:19+0200\n"
 "PO-Revision-Date: 2004-05-15 15:52+0400\n"
 "Last-Translator: AnatolyA. Yakushin <jaa@altlinux.ru>\n"
 "Language-Team: russian <ru@li.org>\n"
@@ -17,12 +17,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.3.1\n"
 
-#: tips/gimp-tips.xml.in.h:1
+#: ../tips/gimp-tips.xml.in.h:1
 #, fuzzy
 msgid "<big>Welcome to the GIMP!</big>"
 msgstr "<big>Добро пожаловать в GIMP !</big>"
 
-#: tips/gimp-tips.xml.in.h:2
+#: ../tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles "
 "viewing the mask directly."
@@ -30,7 +30,7 @@ msgstr ""
 "Чтобы увидеть маску слоя в окне изображения нажмите кнопкой мыши на эскизе "
 "маски в окне диалога слоев, удерживая клавишу <tt>Alt</tt>."
 
-#: tips/gimp-tips.xml.in.h:3
+#: ../tips/gimp-tips.xml.in.h:3
 msgid ""
 "<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
 "the effect of the layer mask."
@@ -38,7 +38,7 @@ msgstr ""
 "Чтобы переключить активность маски слоя нажмите кнопкой мыши на ее эскизе, "
 "удерживая клавишу <tt>Ctrl</tt>."
 
-#: tips/gimp-tips.xml.in.h:4
+#: ../tips/gimp-tips.xml.in.h:4
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color."
@@ -46,7 +46,7 @@ msgstr ""
 "Инструмент \"Заливка\" по умолчанию использует цвет переднего плана. Чтобы "
 "залить область цветом фона используйте клавишу <tt>Ctrl</tt>."
 
-#: tips/gimp-tips.xml.in.h:5
+#: ../tips/gimp-tips.xml.in.h:5
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -54,7 +54,7 @@ msgstr ""
 "Чтобы повернуть слой или выделенную область на число градусов, кратное 15, "
 "используйте клавишу <tt>Ctrl</tt>."
 
-#: tips/gimp-tips.xml.in.h:6
+#: ../tips/gimp-tips.xml.in.h:6
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -64,7 +64,7 @@ msgstr ""
 "сделать все слои видимыми, нажмите на ту же иконку удерживая клавишу "
 "<tt>Shift</tt>."
 
-#: tips/gimp-tips.xml.in.h:7
+#: ../tips/gimp-tips.xml.in.h:7
 #, fuzzy
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
@@ -77,7 +77,7 @@ msgstr ""
 "нажмите на кнопку \"Новый слой\" или \"Прикрепить плавающее выделение\", "
 "находящиеся в окне диалога слоев, или вызовите эти функции из меню."
 
-#: tips/gimp-tips.xml.in.h:8
+#: ../tips/gimp-tips.xml.in.h:8
 #, fuzzy
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
@@ -91,7 +91,7 @@ msgstr ""
 "доступа. Чтобы это сделать, наведите курсор мыши на нужный пункт меню и "
 "нажмите удобное вам сочетание клавиш. Оно будет сохранено при выходе из GIMP."
 
-#: tips/gimp-tips.xml.in.h:9
+#: ../tips/gimp-tips.xml.in.h:9
 #, fuzzy
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
@@ -102,7 +102,7 @@ msgstr ""
 "Все перемещаемые выделенные области будут \"прилипать\" к направляющим. "
 "Чтобы убрать направляющие, воспользуйтесь инструментом \"Перемещение\"."
 
-#: tips/gimp-tips.xml.in.h:10
+#: ../tips/gimp-tips.xml.in.h:10
 #, fuzzy
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
@@ -115,7 +115,7 @@ msgstr ""
 "Цвета-&gt;Уровни). Оттенки цвета можно редактировать при помощи инструмента "
 "\"Кривые\" (Слой-&gt;Цвета-&gt;Кривые)."
 
-#: tips/gimp-tips.xml.in.h:11
+#: ../tips/gimp-tips.xml.in.h:11
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
 "with their current settings. You can use the Paintbrush in gradient mode or "
@@ -126,7 +126,7 @@ msgstr ""
 "можете использовать \"Кисть\" в режиме градиента, \"Штамп\" с источником из "
 "шаблона или даже \"Ластик\" и \"Палец\"."
 
-#: tips/gimp-tips.xml.in.h:12
+#: ../tips/gimp-tips.xml.in.h:12
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
 "in an image window to hide or show the toolbox and other dialogs."
@@ -134,7 +134,7 @@ msgstr ""
 "Если на экране мало места, можно воспользоваться кнопкой <tt>Tab</tt> в окне "
 "изображения, чтобы скрыть или показать панель инструментов и окна диалогов."
 
-#: tips/gimp-tips.xml.in.h:13
+#: ../tips/gimp-tips.xml.in.h:13
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
@@ -144,7 +144,7 @@ msgstr ""
 "некоторых случаях надо объединять слои (Изображение-&gt;Свести изображение), "
 "чтобы плагин обработал все изображение ."
 
-#: tips/gimp-tips.xml.in.h:14
+#: ../tips/gimp-tips.xml.in.h:14
 #, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
@@ -158,7 +158,7 @@ msgstr ""
 "Добавить альфа-канал) или свести изображение (Изображение-&gt;Свести "
 "изображение)."
 
-#: tips/gimp-tips.xml.in.h:15
+#: ../tips/gimp-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -169,12 +169,12 @@ msgstr ""
 "Соответствующие клавиши нужно нажимать до начала выделения и удерживать до "
 "конца процедуры."
 
-#: tips/gimp-tips.xml.in.h:16
+#: ../tips/gimp-tips.xml.in.h:16
 msgid ""
 "The GIMP can undo most changes to the image, so feel free to experiment."
 msgstr ""
 
-#: tips/gimp-tips.xml.in.h:17
+#: ../tips/gimp-tips.xml.in.h:17
 msgid ""
 "The GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or "
 "<tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image "
@@ -184,7 +184,7 @@ msgstr ""
 "(или <tt>.bz2</tt>) к имени файла, и изображение будет заархивировано. "
 "Заархивированные изображения можно открывать так же, как обычные."
 
-#: tips/gimp-tips.xml.in.h:18
+#: ../tips/gimp-tips.xml.in.h:18
 msgid ""
 "The GIMP uses layers to let you organize your image. Think of them as a "
 "stack of slides or filters, such that looking through them you see a "
@@ -194,7 +194,7 @@ msgstr ""
 "что это такое, представьте себе стопку картинок, нарисованных на прозрачной "
 "пленке, так что при просмотре они видны все сразу."
 
-#: tips/gimp-tips.xml.in.h:19
+#: ../tips/gimp-tips.xml.in.h:19
 #, fuzzy
 msgid ""
 "The layer named &quot;Background&quot; is special because it lacks "
@@ -207,7 +207,7 @@ msgstr ""
 "добавить прозрачность для этого слоя, нажмите правой кнопкой мыши в диалоге "
 "слоев и выберите пункт \"Добавить альфа-канал\"."
 
-#: tips/gimp-tips.xml.in.h:20
+#: ../tips/gimp-tips.xml.in.h:20
 #, fuzzy
 msgid ""
 "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
@@ -221,7 +221,7 @@ msgstr ""
 "вертикальную направляющие, они будут касательными круга, поместите курсор в "
 "точку пересечения направляющих и создайте область выделения."
 
-#: tips/gimp-tips.xml.in.h:21
+#: ../tips/gimp-tips.xml.in.h:21
 msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
 "click will draw a straight line from your last drawing point to your current "
@@ -232,7 +232,7 @@ msgstr ""
 "<tt>Shift</tt>. Если вы одновременно нажмете <tt>Ctrl</tt>, угол наклона "
 "линий будет кратным 15 градусам."
 
-#: tips/gimp-tips.xml.in.h:22
+#: ../tips/gimp-tips.xml.in.h:22
 msgid ""
 "When you save an image to work on it again later, try using XCF, the GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -245,14 +245,14 @@ msgstr ""
 "сохранены именно в том виде, в котором вы их оставили. После окончания "
 "работы над изображением его можно сохранить в формате JPEG, PNG, GIF, ..."
 
-#: tips/gimp-tips.xml.in.h:23
+#: ../tips/gimp-tips.xml.in.h:23
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Try "
 "pressing <tt>Shift</tt> at the same time."
 msgstr ""
 
-#: tips/gimp-tips.xml.in.h:24
+#: ../tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
@@ -260,7 +260,7 @@ msgstr ""
 "Область связанного выделения определяется нажатием левой клавиши мыши и "
 "перемещением вправо и влево."
 
-#: tips/gimp-tips.xml.in.h:25
+#: ../tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -270,7 +270,7 @@ msgstr ""
 "выделения при помощи контуров. В диалоге контуров можно работать с "
 "несколькими контурами и преобразовывать их в области выделения."
 
-#: tips/gimp-tips.xml.in.h:26
+#: ../tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -278,7 +278,7 @@ msgstr ""
 "Если находясь в диалоге слоев переместить слой на панель инструментов, то "
 "будет создано новое изображение, состоящее только из этого слоя."
 
-#: tips/gimp-tips.xml.in.h:27
+#: ../tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can drag and drop many things in the GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -288,7 +288,7 @@ msgstr ""
 "переместить цвет с панели инструментов или из палитры на изображение, то оно "
 "(или его выделенная область) будет залито этим цветом."
 
-#: tips/gimp-tips.xml.in.h:28
+#: ../tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -300,7 +300,7 @@ msgstr ""
 "Более сложные геометрические фигуры можно нарисовать при помощи функции Gfig "
 "(Фильтры-&gt;Визуализация-&gt;Gfig."
 
-#: tips/gimp-tips.xml.in.h:29
+#: ../tips/gimp-tips.xml.in.h:29
 msgid ""
 "You can get context-sensitive help for most of the GIMP's features by "
 "pressing the F1 key at any time. This also works inside the menus."
@@ -308,7 +308,7 @@ msgstr ""
 "Контекстную помощь для большинства функций и пунктов меню можно вызвать "
 "клавишей F1."
 
-#: tips/gimp-tips.xml.in.h:30
+#: ../tips/gimp-tips.xml.in.h:30
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -316,7 +316,7 @@ msgstr ""
 "В диалоге слоев есть выпадающее меню, содержащее многие функции для работы "
 "со слоями. Оно вызывается нажатием правой кнопкой мыши на названии слоя."
 
-#: tips/gimp-tips.xml.in.h:31
+#: ../tips/gimp-tips.xml.in.h:31
 #, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
@@ -327,7 +327,7 @@ msgstr ""
 "создать выделенную область из указанного центра, используйте клавиши "
 "<tt>Shift</tt> и <tt>Ctrl</tt>."
 
-#: tips/gimp-tips.xml.in.h:32
+#: ../tips/gimp-tips.xml.in.h:32
 msgid ""
 "You can save a selection to a channel (Select-&gt;Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -339,7 +339,7 @@ msgstr ""
 "изменения видимости канала и преобразования его в выделенную область  "
 "используйте кнопки, находящиеся в диалоге каналов."
 
-#: tips/gimp-tips.xml.in.h:33
+#: ../tips/gimp-tips.xml.in.h:33
 msgid ""
 "You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -347,7 +347,7 @@ msgstr ""
 "Для переключения между слоями можно использовать <tt>Alt</tt>-<tt>Tab</tt> "
 "(если ваш оконный менеджер не использует это сочетание клавиш)."
 
-#: tips/gimp-tips.xml.in.h:34
+#: ../tips/gimp-tips.xml.in.h:34
 msgid ""
 "You can use the middle mouse button to pan around the image, if it's larger "
 "than its display window."
@@ -355,7 +355,7 @@ msgstr ""
 "Чтобы перемещаться по изображению, большему чем окно, используйте среднюю "
 "клавишу мыши."
 
-#: tips/gimp-tips.xml.in.h:35
+#: ../tips/gimp-tips.xml.in.h:35
 #, fuzzy
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"

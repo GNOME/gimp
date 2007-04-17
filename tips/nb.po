@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GNU gimp 2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 00:46+0100\n"
+"POT-Creation-Date: 2007-04-17 23:19+0200\n"
 "PO-Revision-Date: 2004-11-07 18:24+0100\n"
 "Last-Translator: Sigurd Gartmann <sigurd-translate@brogar.org>\n"
 "Language-Team: Norwegian <i18n-nb@lister.ping.uio.no>\n"
@@ -16,11 +16,11 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: tips/gimp-tips.xml.in.h:1
+#: ../tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GIMP!</big>"
 msgstr "<big>Velkommen til GIMP!</big>"
 
-#: tips/gimp-tips.xml.in.h:2
+#: ../tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles "
 "viewing the mask directly."
@@ -28,7 +28,7 @@ msgstr ""
 "<tt>Alt</tt>-klikk på lagmaskens forhåndsvisning i dialogen Lag bytter "
 "visningen til masken direkte."
 
-#: tips/gimp-tips.xml.in.h:3
+#: ../tips/gimp-tips.xml.in.h:3
 msgid ""
 "<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
 "the effect of the layer mask."
@@ -36,7 +36,7 @@ msgstr ""
 "<tt>Ctrl</tt>-klikk på lagmaskens forhåndsvisning i dialogen Lag bytter "
 "effekten for lagmasken."
 
-#: tips/gimp-tips.xml.in.h:4
+#: ../tips/gimp-tips.xml.in.h:4
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color."
@@ -44,7 +44,7 @@ msgstr ""
 "<tt>Ctrl</tt>-klikk med malingspannverktøyet for å få det til å bruke "
 "bakgrunnsfargen i stedet for forgrunnsfargen."
 
-#: tips/gimp-tips.xml.in.h:5
+#: ../tips/gimp-tips.xml.in.h:5
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -52,7 +52,7 @@ msgstr ""
 "<tt>Ctrl</tt>-dra med Rotasjonsverktøyet begrenser rotasjonen til 15-graders "
 "vinkler."
 
-#: tips/gimp-tips.xml.in.h:6
+#: ../tips/gimp-tips.xml.in.h:6
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -60,7 +60,7 @@ msgstr ""
 "<tt>Shift</tt>-klikk på øyeikonet i Lagdialogen for å gjemme alle lag untatt "
 "det du klikker på. <tt>Shift</tt>-klikk igjen for å se alle lag."
 
-#: tips/gimp-tips.xml.in.h:7
+#: ../tips/gimp-tips.xml.in.h:7
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -72,7 +72,7 @@ msgstr ""
 "Lag»- eller «Forankre Lag»-knappene i Lag-menyen, eller bruk menyene til å "
 "gjøre det samme."
 
-#: tips/gimp-tips.xml.in.h:8
+#: ../tips/gimp-tips.xml.in.h:8
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
@@ -86,7 +86,7 @@ msgstr ""
 "tastesnarveier» er aktivert, blir de nye innstillingene lagret når du "
 "avslutter GIMP."
 
-#: tips/gimp-tips.xml.in.h:9
+#: ../tips/gimp-tips.xml.in.h:9
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -96,7 +96,7 @@ msgstr ""
 "utvalg som blir dratt, vil tilpasses innrettingslinjene. Du kan fjerne "
 "innrettingslinjer ved å dra dem ut av bildet med flytteverktøyet."
 
-#: tips/gimp-tips.xml.in.h:10
+#: ../tips/gimp-tips.xml.in.h:10
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -108,7 +108,7 @@ msgstr ""
 "&gt;Nivåer). Hvis det er noen ujevnheter kan du rette dem med "
 "kurveverktøytet (Lag-&gt;Farger-&gt;Kurver)."
 
-#: tips/gimp-tips.xml.in.h:11
+#: ../tips/gimp-tips.xml.in.h:11
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
 "with their current settings. You can use the Paintbrush in gradient mode or "
@@ -119,7 +119,7 @@ msgstr ""
 "luftpensel i graderingsmodus eller til og med sletteverktøyet eller andre "
 "utsmøringsverktøyet."
 
-#: tips/gimp-tips.xml.in.h:12
+#: ../tips/gimp-tips.xml.in.h:12
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
 "in an image window to hide or show the toolbox and other dialogs."
@@ -127,7 +127,7 @@ msgstr ""
 "Hvis skjermen din er veldig rotete, kan du trykke <tt>Tab</tt> flere ganger "
 "i et bildevindu for å kjule eller vise verktøykassen og andre dialoger."
 
-#: tips/gimp-tips.xml.in.h:13
+#: ../tips/gimp-tips.xml.in.h:13
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
@@ -137,7 +137,7 @@ msgstr ""
 "I noen tilfeller vil du være nødt til å flette alle lag (Bilde-&gt;Flat ut "
 "bilde) hvis du vil at tillegget skal virke på hele bildet."
 
-#: tips/gimp-tips.xml.in.h:14
+#: ../tips/gimp-tips.xml.in.h:14
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
@@ -149,7 +149,7 @@ msgstr ""
 "&gt;RGB), legge til en alfakanal (Lag-&gt;Gjennomsiktighet-&gt;Legg til "
 "alfakanal) eller flate det ut (Bilde-&gt;Flat ut bilde)."
 
-#: tips/gimp-tips.xml.in.h:15
+#: ../tips/gimp-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -159,12 +159,12 @@ msgstr ""
 "til utvalget i stedet for å erstatte det. Bruk av <tt>Ctrl</tt> før du lager "
 "et utvalg lar det trekke fra det gjeldende utvalget."
 
-#: tips/gimp-tips.xml.in.h:16
+#: ../tips/gimp-tips.xml.in.h:16
 msgid ""
 "The GIMP can undo most changes to the image, so feel free to experiment."
 msgstr "GIMP gir deg mulighet til å angre alle handlinger utført på bildet."
 
-#: tips/gimp-tips.xml.in.h:17
+#: ../tips/gimp-tips.xml.in.h:17
 msgid ""
 "The GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or "
 "<tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image "
@@ -174,7 +174,7 @@ msgstr ""
 "bz2</tt>, hvis du har bzip2 installert) til filnavnet, og bildet du lagrer "
 "vil bli komprimert. Selvfølgelig støttes også åpning av komprimerte bilder."
 
-#: tips/gimp-tips.xml.in.h:18
+#: ../tips/gimp-tips.xml.in.h:18
 msgid ""
 "The GIMP uses layers to let you organize your image. Think of them as a "
 "stack of slides or filters, such that looking through them you see a "
@@ -183,7 +183,7 @@ msgstr ""
 "GIMP bruker lag for å la deg organisere bildet. Tenk på dem som en stabel av "
 "lysark eller filtre, slik at du ved å se gjennom dem set et sammensatt bilde."
 
-#: tips/gimp-tips.xml.in.h:19
+#: ../tips/gimp-tips.xml.in.h:19
 msgid ""
 "The layer named &quot;Background&quot; is special because it lacks "
 "transparency. This prevents you from moving the layer up in the stack. You "
@@ -195,7 +195,7 @@ msgstr ""
 "stabelen. Du kan legge til gjennomsiktiget veed å høyreklikke i Lag-menyen "
 "og velge «Legg til alfrakanal»."
 
-#: tips/gimp-tips.xml.in.h:20
+#: ../tips/gimp-tips.xml.in.h:20
 msgid ""
 "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
 "ellipse select. To place a circle precisely, drag horizontal and vertical "
@@ -209,7 +209,7 @@ msgstr ""
 "krysset mellom innrettingslinjene, og det resulterende utvalget vil akkurat "
 "treffe innrettingslinjene."
 
-#: tips/gimp-tips.xml.in.h:21
+#: ../tips/gimp-tips.xml.in.h:21
 msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
 "click will draw a straight line from your last drawing point to your current "
@@ -222,7 +222,7 @@ msgstr ""
 "posisjon. Hvis du også trykker <tt>Ctrl</tt>, vil linja bli begrenset til 15-"
 "graders vinkler."
 
-#: tips/gimp-tips.xml.in.h:22
+#: ../tips/gimp-tips.xml.in.h:22
 msgid ""
 "When you save an image to work on it again later, try using XCF, the GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -234,7 +234,7 @@ msgstr ""
 "hvert aspekt av ditt midlertidige arbeid beholdes. Så snart et prosjekt er "
 "ferdig, kan du lagre det som JPEG, PNG, GIF, ..."
 
-#: tips/gimp-tips.xml.in.h:23
+#: ../tips/gimp-tips.xml.in.h:23
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Try "
@@ -245,7 +245,7 @@ msgstr ""
 "tt>-knappen allerede. Prøv da å holde <tt>Shift</tt> nede samtidig for å "
 "unngå dette."
 
-#: tips/gimp-tips.xml.in.h:24
+#: ../tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
@@ -253,7 +253,7 @@ msgstr ""
 "Du kan justere utvalgsintervallet for uklart utvalg ved å klikke og dra til "
 "høyre og venstre."
 
-#: tips/gimp-tips.xml.in.h:25
+#: ../tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -263,7 +263,7 @@ msgstr ""
 "Banedialogen lar deg arbeide på flere baner samtidig og konvertere dem til "
 "utvalg."
 
-#: tips/gimp-tips.xml.in.h:26
+#: ../tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -271,7 +271,7 @@ msgstr ""
 "Du kan dra et lag fra Lagdialogen og slippe det i verktøykassen. Det vil "
 "opprette et nytt bilde som bare består av det ene laget."
 
-#: tips/gimp-tips.xml.in.h:27
+#: ../tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can drag and drop many things in the GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -281,7 +281,7 @@ msgstr ""
 "verktøykassen eller fra en fargepalett, og slippe det i et bilde, vil fylle "
 "bildet eller utvalget med den valgte fargen."
 
-#: tips/gimp-tips.xml.in.h:28
+#: ../tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -291,7 +291,7 @@ msgstr ""
 "tegne kantene på utvalget ditt. Mer komplekse former kan også bli tegnet ved "
 "å bruke Baneverktøyet eller med Filter-&gt;Render-&gt;Gfig."
 
-#: tips/gimp-tips.xml.in.h:29
+#: ../tips/gimp-tips.xml.in.h:29
 msgid ""
 "You can get context-sensitive help for most of the GIMP's features by "
 "pressing the F1 key at any time. This also works inside the menus."
@@ -299,7 +299,7 @@ msgstr ""
 "Du kan få hjelp for de fleste av GIMPs muligheter ved å trykke F1. Dette "
 "virker også inni menyer."
 
-#: tips/gimp-tips.xml.in.h:30
+#: ../tips/gimp-tips.xml.in.h:30
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -307,7 +307,7 @@ msgstr ""
 "Du kan gjøre mange lagoperasjoner ved å høyreklikke på merkelappen til et "
 "lag i Lagdialogen."
 
-#: tips/gimp-tips.xml.in.h:31
+#: ../tips/gimp-tips.xml.in.h:31
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
 "are making a selection in order to constrain it to a square or a circle, or "
@@ -317,7 +317,7 @@ msgstr ""
 "du gjør et utvalg for å begrense det til et kvadrat eller sirkel, eller for "
 "å ha det sentrert på startpunktet. "
 
-#: tips/gimp-tips.xml.in.h:32
+#: ../tips/gimp-tips.xml.in.h:32
 msgid ""
 "You can save a selection to a channel (Select-&gt;Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -329,7 +329,7 @@ msgstr ""
 "av og på synligheten til denne nye kanalen eller konvertere den til et "
 "utvalg."
 
-#: tips/gimp-tips.xml.in.h:33
+#: ../tips/gimp-tips.xml.in.h:33
 msgid ""
 "You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -337,7 +337,7 @@ msgstr ""
 "Du kan bruke <tt>Alt</tt>-<tt>Tab</tt> for å bytte mellom lagene i et bilde "
 "(hvis ikke vindushåndtereren allerede bruker denne tastekombinasjonen)."
 
-#: tips/gimp-tips.xml.in.h:34
+#: ../tips/gimp-tips.xml.in.h:34
 msgid ""
 "You can use the middle mouse button to pan around the image, if it's larger "
 "than its display window."
@@ -345,7 +345,7 @@ msgstr ""
 "Du kan bruke midterste musknapp for å bevege deg rundt i bildet, dersom det "
 "er større enn vinduet det vises i."
 
-#: tips/gimp-tips.xml.in.h:35
+#: ../tips/gimp-tips.xml.in.h:35
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "

@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips gimp-2-2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 00:46+0100\n"
+"POT-Creation-Date: 2007-04-17 23:19+0200\n"
 "PO-Revision-Date: 2005-10-26 23:00+0900\n"
 "Last-Translator: <kano@na.rim.or.jp>\n"
 "Language-Team: Japanese <translation@gnome.gr.jp>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: tips/gimp-tips.xml.in.h:1
+#: ../tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GIMP!</big>"
 msgstr "<big>GIMP へようこそ !</big>"
 
-#: tips/gimp-tips.xml.in.h:2
+#: ../tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles "
 "viewing the mask directly."
@@ -31,7 +31,7 @@ msgstr ""
 "レイヤーダイアログのレイヤーマスクの縮小表示を <tt>Alt</tt> を押しながらク"
 "リックするとレイヤーマスクを直接見るモードに切替えられるんだ。"
 
-#: tips/gimp-tips.xml.in.h:3
+#: ../tips/gimp-tips.xml.in.h:3
 msgid ""
 "<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
 "the effect of the layer mask."
@@ -39,7 +39,7 @@ msgstr ""
 "レイヤーダイアログのレイヤーマスクの縮小表示を <tt>Ctrl</tt> を押しながらク"
 "リックするとレイヤーマスクの有効無効を切替えられるんだ。"
 
-#: tips/gimp-tips.xml.in.h:4
+#: ../tips/gimp-tips.xml.in.h:4
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color."
@@ -47,7 +47,7 @@ msgstr ""
 "塗りつぶしツールでは <tt>Ctrl</tt> を押しながらクリックすると、背景色で塗りつ"
 "ぶすことができるよ。"
 
-#: tips/gimp-tips.xml.in.h:5
+#: ../tips/gimp-tips.xml.in.h:5
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -55,7 +55,7 @@ msgstr ""
 "変換ツールの回転モードでは <tt>Ctrl</tt> を押しながらドラッグすると、回転が15"
 "度単位になるんだ。"
 
-#: tips/gimp-tips.xml.in.h:6
+#: ../tips/gimp-tips.xml.in.h:6
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -64,7 +64,7 @@ msgstr ""
 "ることで、それ以外のレイヤー全部を隠すことができるんだ。もう一回同じ事をすれ"
 "ば全部のレイヤーが表示されるようになるよ。"
 
-#: tips/gimp-tips.xml.in.h:7
+#: ../tips/gimp-tips.xml.in.h:7
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
@@ -75,7 +75,7 @@ msgstr ""
 "必要があるんだ。レイヤーダイアログで &quot;新規レイヤー&quot; か &quot;レイ"
 "ヤー固定&quot;ボタンをクリックするか、メニューを使うのさ。"
 
-#: tips/gimp-tips.xml.in.h:8
+#: ../tips/gimp-tips.xml.in.h:8
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
@@ -89,7 +89,7 @@ msgstr ""
 "キーの組合せを押すだけで良いんだ。&quot;ショートカットの保存&quot; をオンにし"
 "ておけば、GIMP の終了時に自動的に保存されるよ。"
 
-#: tips/gimp-tips.xml.in.h:9
+#: ../tips/gimp-tips.xml.in.h:9
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
@@ -99,7 +99,7 @@ msgstr ""
 "定規に吸いつくようになってるんだ。この定規は移動ツールを使って画像上から追い"
 "出すこともできるようになってるよ。"
 
-#: tips/gimp-tips.xml.in.h:10
+#: ../tips/gimp-tips.xml.in.h:10
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
@@ -111,7 +111,7 @@ msgstr ""
 "ラーキャストがあれば、カーブツール (レイヤー-&gt;色-&gt;カーブ) で修正するこ"
 "とができるよ。"
 
-#: tips/gimp-tips.xml.in.h:11
+#: ../tips/gimp-tips.xml.in.h:11
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
 "with their current settings. You can use the Paintbrush in gradient mode or "
@@ -121,7 +121,7 @@ msgstr ""
 "定を使うんだ。グラデーションモードの絵筆やパターンを使ったスタンプツールや消"
 "しゴムやにじみツールだって使うことができるんだ。"
 
-#: tips/gimp-tips.xml.in.h:12
+#: ../tips/gimp-tips.xml.in.h:12
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
 "in an image window to hide or show the toolbox and other dialogs."
@@ -129,7 +129,7 @@ msgstr ""
 "画面がきゅうくつな時は、画像ウィンドウで何回か <tt>Tab</tt> キーを押すことで"
 "道具箱やダイアログを出し入れすることができるんだ。"
 
-#: tips/gimp-tips.xml.in.h:13
+#: ../tips/gimp-tips.xml.in.h:13
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
 "you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
@@ -139,7 +139,7 @@ msgstr ""
 "体に効果を与えたいときには画像を統合 (画像-&gt;画像の統合) する必要があるん"
 "じゃないかな。"
 
-#: tips/gimp-tips.xml.in.h:14
+#: ../tips/gimp-tips.xml.in.h:14
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
 "a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
@@ -152,7 +152,7 @@ msgstr ""
 "たり (レイヤー-&gt;透明部分-&gt;アルファチャンネルを追加する)、画像を統合して"
 "みたり (画像-&gt;画像の統合) するといいかもしれないね。"
 
-#: tips/gimp-tips.xml.in.h:15
+#: ../tips/gimp-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -162,12 +162,12 @@ msgstr ""
 "選択領域を置き換えるんじゃなくって、付け加える事が出来るんだ。<tt>Ctrl</tt>を"
 "押しながら始めれば領域をさっ引く事になるしね。"
 
-#: tips/gimp-tips.xml.in.h:16
+#: ../tips/gimp-tips.xml.in.h:16
 msgid ""
 "The GIMP can undo most changes to the image, so feel free to experiment."
 msgstr "GIMP ではほとんどの変更はやり直しがきくから、気軽に試すといいよ。"
 
-#: tips/gimp-tips.xml.in.h:17
+#: ../tips/gimp-tips.xml.in.h:17
 msgid ""
 "The GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or "
 "<tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image "
@@ -177,7 +177,7 @@ msgstr ""
 "がある時には <tt>.bz2</tt> の方がいいかな) 付けるだけで、自動的に圧縮されるよ"
 "うになってるんだ。もちろん、読み込む時にも自動で展開されるよ。"
 
-#: tips/gimp-tips.xml.in.h:18
+#: ../tips/gimp-tips.xml.in.h:18
 msgid ""
 "The GIMP uses layers to let you organize your image. Think of them as a "
 "stack of slides or filters, such that looking through them you see a "
@@ -186,7 +186,7 @@ msgstr ""
 "GIMP ではレイヤーを使って画像をまとめることができるんだ。まぁスライドとかフィ"
 "ルタを積み重ねたものをすかして見ているようなものだと思ってくれればいい。"
 
-#: tips/gimp-tips.xml.in.h:19
+#: ../tips/gimp-tips.xml.in.h:19
 msgid ""
 "The layer named &quot;Background&quot; is special because it lacks "
 "transparency. This prevents you from moving the layer up in the stack. You "
@@ -198,7 +198,7 @@ msgstr ""
 "イヤーダイアログ中で右クリックして、&quot;アルファチャンネルを追加&quot;を選"
 "択してやるといいよ。"
 
-#: tips/gimp-tips.xml.in.h:20
+#: ../tips/gimp-tips.xml.in.h:20
 msgid ""
 "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
 "ellipse select. To place a circle precisely, drag horizontal and vertical "
@@ -210,7 +210,7 @@ msgstr ""
 "んだ。さらに正確に位置を決める時には定規を円の接線となる場所に水平、垂直に置"
 "いておこう。で、最後に定規の交点にカーソルをもってこれば完璧さ。"
 
-#: tips/gimp-tips.xml.in.h:21
+#: ../tips/gimp-tips.xml.in.h:21
 msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
 "click will draw a straight line from your last drawing point to your current "
@@ -221,7 +221,7 @@ msgstr ""
 "ながらクリックするとカーソルのところまで直線が引かれるよ。さらに <tt>Ctrl</"
 "tt> を押してやれば、直線が15度単位になるんだ。"
 
-#: tips/gimp-tips.xml.in.h:22
+#: ../tips/gimp-tips.xml.in.h:22
 msgid ""
 "When you save an image to work on it again later, try using XCF, the GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -232,7 +232,7 @@ msgstr ""
 "は <tt>.xcf</tt>)。これは作業中の全ての状態を記録してくれるんだ。画像を完成さ"
 "せてから、JPEG, PNG, GIF として保存しようね..."
 
-#: tips/gimp-tips.xml.in.h:23
+#: ../tips/gimp-tips.xml.in.h:23
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already. Try "
@@ -243,7 +243,7 @@ msgstr ""
 "に <tt>Alt</tt> を使ってるんだ。そういうときは <tt>Shift</tt> も押しながら試"
 "してみてね。"
 
-#: tips/gimp-tips.xml.in.h:24
+#: ../tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
@@ -251,7 +251,7 @@ msgstr ""
 "ファジー選択ツールではクリックした後に、左右にドラッグする事で選択領域を広げ"
 "たり狭めたりできるんだ。"
 
-#: tips/gimp-tips.xml.in.h:25
+#: ../tips/gimp-tips.xml.in.h:25
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
@@ -260,7 +260,7 @@ msgstr ""
 "パスツールを使って複雑な選択領域を作れるよ。パスダイアログでは複数のパスで作"
 "業したり選択領域に変換したりできるんだ。"
 
-#: tips/gimp-tips.xml.in.h:26
+#: ../tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -268,7 +268,7 @@ msgstr ""
 "レイヤーダイアログから道具箱へレイヤーをドラッグして持っていくこともできるん"
 "だ。するとそのレイヤーで新しい画像を作るんだ。"
 
-#: tips/gimp-tips.xml.in.h:27
+#: ../tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can drag and drop many things in the GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -278,7 +278,7 @@ msgstr ""
 "レットから色をドラッグして画像へドロップすると、その色で画像や選択領域が塗り"
 "つぶされるんだ。"
 
-#: tips/gimp-tips.xml.in.h:28
+#: ../tips/gimp-tips.xml.in.h:28
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
@@ -288,7 +288,7 @@ msgstr ""
 "ことができるんだ。正方形や正円を書きたい時には便利だね。もっと複雑な図形を描"
 "きたい時にはパスツールや フィルタ -&gt; 下塗り -&gt; Gfig だね。"
 
-#: tips/gimp-tips.xml.in.h:29
+#: ../tips/gimp-tips.xml.in.h:29
 msgid ""
 "You can get context-sensitive help for most of the GIMP's features by "
 "pressing the F1 key at any time. This also works inside the menus."
@@ -296,7 +296,7 @@ msgstr ""
 "F1 キーを押すことでいつでも GIMP 機能の状況適応ヘルプを呼び出すことができるん"
 "だ。これはメニューの中でも使えるよ。"
 
-#: tips/gimp-tips.xml.in.h:30
+#: ../tips/gimp-tips.xml.in.h:30
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -304,7 +304,7 @@ msgstr ""
 "レイヤーダイアログ内のそれぞれのレイヤー名の上で右クリックをすることで、レイ"
 "ヤーに対するいろんな操作が行えるんだ。"
 
-#: tips/gimp-tips.xml.in.h:31
+#: ../tips/gimp-tips.xml.in.h:31
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
 "are making a selection in order to constrain it to a square or a circle, or "
@@ -314,7 +314,7 @@ msgstr ""
 "域を正方形や正円にしたり、領域を対角じゃなくって中心と角で指定することもでき"
 "たりするんだ。"
 
-#: tips/gimp-tips.xml.in.h:32
+#: ../tips/gimp-tips.xml.in.h:32
 msgid ""
 "You can save a selection to a channel (Select-&gt;Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
@@ -325,7 +325,7 @@ msgstr ""
 "チャンネルを修正することができるよ。チャンネルダイアログのボタンを使って、こ"
 "のチャンネルを表示したり選択領域に変換したりできるよ。"
 
-#: tips/gimp-tips.xml.in.h:33
+#: ../tips/gimp-tips.xml.in.h:33
 msgid ""
 "You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -333,7 +333,7 @@ msgstr ""
 "<tt>Alt</tt> を押しながら <tt>Tab</tt> を押すとレイヤーを順に切替えられるん"
 "だ。(ウィンドウマネージャがこのキー割当を横取りしてなければね‥‥)"
 
-#: tips/gimp-tips.xml.in.h:34
+#: ../tips/gimp-tips.xml.in.h:34
 msgid ""
 "You can use the middle mouse button to pan around the image, if it's larger "
 "than its display window."
@@ -341,7 +341,7 @@ msgstr ""
 "表示されている窓よりも画像の方が大きい場合には、マウスの中ボタンでずりずり表"
 "示領域を動かせるよ。"
 
-#: tips/gimp-tips.xml.in.h:35
+#: ../tips/gimp-tips.xml.in.h:35
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "

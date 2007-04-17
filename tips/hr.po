@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-12-18 00:46+0100\n"
+"POT-Creation-Date: 2007-04-17 23:19+0200\n"
 "PO-Revision-Date: 2004-02-09 20:24+0100\n"
 "Last-Translator: Robert Sedak <robert.sedak@sk.tel.hr>\n"
 "Language-Team: Croatian <lokalizacija@linux.hr>\n"
@@ -14,12 +14,12 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: TransDict server\n"
 
-#: tips/gimp-tips.xml.in.h:1
+#: ../tips/gimp-tips.xml.in.h:1
 #, fuzzy
 msgid "<big>Welcome to the GIMP!</big>"
 msgstr "<big>Dobro došli u GIMP !</big>"
 
-#: tips/gimp-tips.xml.in.h:2
+#: ../tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles "
 "viewing the mask directly."
@@ -27,7 +27,7 @@ msgstr ""
 "<tt>Alt</tt>-kliknite na pregled maske sloja (layera) u dijalogu slojeva "
 "gledajući direktno na masku."
 
-#: tips/gimp-tips.xml.in.h:3
+#: ../tips/gimp-tips.xml.in.h:3
 msgid ""
 "<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
 "the effect of the layer mask."
@@ -35,7 +35,7 @@ msgstr ""
 "<tt>Ctrl</tt>-kliknite na pregled maske sloja (layera) u dijalogu slojeva "
 "pod efekti maske sloja."
 
-#: tips/gimp-tips.xml.in.h:4
+#: ../tips/gimp-tips.xml.in.h:4
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
 "color instead of the foreground color."
@@ -43,7 +43,7 @@ msgstr ""
 "<tt>Ctrl</tt>-kliknite s alatom Bucket Fill kako bi koristio boju pozadine "
 "umjesto boje prednjeg plana."
 
-#: tips/gimp-tips.xml.in.h:5
+#: ../tips/gimp-tips.xml.in.h:5
 #, fuzzy
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
@@ -52,7 +52,7 @@ msgstr ""
 "<tt>Ctrl</tt>-povlačenje s alatom za rotaciju će ograničiti rotaciju na "
 "kutove koji su višekratnik s 15 stupnjeva."
 
-#: tips/gimp-tips.xml.in.h:6
+#: ../tips/gimp-tips.xml.in.h:6
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
@@ -61,7 +61,7 @@ msgstr ""
 "slojeve osim tog sloja. <tt>Shift</tt>-kliknite ponovno kako bi prikazali "
 "sve slojeve."
 
-#: tips/gimp-tips.xml.in.h:7
+#: ../tips/gimp-tips.xml.in.h:7
 #, fuzzy
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
@@ -74,7 +74,7 @@ msgstr ""
 "\"ili \"Usidri gumbe sloja\" u dijalogu slojeva, ili koristite izbornike za "
 "istu radnju."
 
-#: tips/gimp-tips.xml.in.h:8
+#: ../tips/gimp-tips.xml.in.h:8
 #, fuzzy
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
@@ -89,7 +89,7 @@ msgstr ""
 "Ukoliko je  uključeno čuvanje kratica tipkovnice, izmjene će biti spremljene "
 "kada zatvorite GIMP."
 
-#: tips/gimp-tips.xml.in.h:9
+#: ../tips/gimp-tips.xml.in.h:9
 #, fuzzy
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
@@ -100,7 +100,7 @@ msgstr ""
 "povučeni odabiri će biti privučeni prema vodčima. Vodiče možete maknuti tako "
 "da ih povučete sa slike s alatom za premicanje (move)."
 
-#: tips/gimp-tips.xml.in.h:10
+#: ../tips/gimp-tips.xml.in.h:10
 #, fuzzy
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
@@ -114,14 +114,14 @@ msgstr ""
 "preskočena možete je popraviti sa alatom „Krivulje“ (Slika-&gt;Boje-&gt;"
 "Krivulje)."
 
-#: tips/gimp-tips.xml.in.h:11
+#: ../tips/gimp-tips.xml.in.h:11
 msgid ""
 "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
 "with their current settings. You can use the Paintbrush in gradient mode or "
 "even the Eraser or the Smudge tool."
 msgstr ""
 
-#: tips/gimp-tips.xml.in.h:12
+#: ../tips/gimp-tips.xml.in.h:12
 msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
 "in an image window to hide or show the toolbox and other dialogs."
@@ -130,7 +130,7 @@ msgstr ""
 "tt> nekoliko puta u okviru prozora neke slike kako bi omogućili sakrivanje "
 "ili prikazivanje palete alata i ostalih dijaloga."
 
-#: tips/gimp-tips.xml.in.h:13
+#: ../tips/gimp-tips.xml.in.h:13
 #, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
@@ -141,7 +141,7 @@ msgstr ""
 "slučajevima ćete morati da spojite sve slojeve (Slojevi-&gt;Izravnaj sliku) "
 "ukoliko želite da se umetak primijeni na celu sliku."
 
-#: tips/gimp-tips.xml.in.h:14
+#: ../tips/gimp-tips.xml.in.h:14
 #, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
@@ -154,7 +154,7 @@ msgstr ""
 "RGB (Slika-&gt;Vrsta-&gt;RGB), dodati alfa kanal (Slojevi-&gt;Dodaj alfa "
 "kanal) ili je izravnati (Slojevi-&gt;Izravnaj sliku)."
 
-#: tips/gimp-tips.xml.in.h:15
+#: ../tips/gimp-tips.xml.in.h:15
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
@@ -165,12 +165,12 @@ msgstr ""
 "<tt>Ctrl</tt> prije odabira za izdvajanje novog izdvojili odabira iz već "
 "postojećeg odabira."
 
-#: tips/gimp-tips.xml.in.h:16
+#: ../tips/gimp-tips.xml.in.h:16
 msgid ""
 "The GIMP can undo most changes to the image, so feel free to experiment."
 msgstr ""
 
-#: tips/gimp-tips.xml.in.h:17
+#: ../tips/gimp-tips.xml.in.h:17
 msgid ""
 "The GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or "
 "<tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image "
@@ -181,7 +181,7 @@ msgstr ""
 "datoteke i vaša slika će biti spremljena i sažeta. Naravno, učitavanje "
 "sažetih slika u letu takođe radi kao i spremanje."
 
-#: tips/gimp-tips.xml.in.h:18
+#: ../tips/gimp-tips.xml.in.h:18
 msgid ""
 "The GIMP uses layers to let you organize your image. Think of them as a "
 "stack of slides or filters, such that looking through them you see a "
@@ -191,7 +191,7 @@ msgstr ""
 "gomilu slajdova ili filtera, kao da gledate kroz njih i vidite mješavinu "
 "njihovih sadržaja."
 
-#: tips/gimp-tips.xml.in.h:19
+#: ../tips/gimp-tips.xml.in.h:19
 #, fuzzy
 msgid ""
 "The layer named &quot;Background&quot; is special because it lacks "
@@ -204,7 +204,7 @@ msgstr ""
 "prozirnost ako kliknete desnom tipkom miša u dijalogu „Slojevi, kanali i "
 "putanje“ i odaberete opciju „Dodaj alfa kanal“."
 
-#: tips/gimp-tips.xml.in.h:20
+#: ../tips/gimp-tips.xml.in.h:20
 #, fuzzy
 msgid ""
 "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
@@ -219,7 +219,7 @@ msgstr ""
 "selekciju želite iscrtati, postavite pokazivač na presjek crtica, i potom će "
 "dobijeni odabi automatski dodirnuti crtice."
 
-#: tips/gimp-tips.xml.in.h:21
+#: ../tips/gimp-tips.xml.in.h:21
 msgid ""
 "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
 "click will draw a straight line from your last drawing point to your current "
@@ -231,7 +231,7 @@ msgstr ""
 "pozicije pokazivača. Ako pritisnete <tt>Ctrl</tt>, moći ćete rotirati liniju "
 "pod kutom od 15°."
 
-#: tips/gimp-tips.xml.in.h:22
+#: ../tips/gimp-tips.xml.in.h:22
 msgid ""
 "When you save an image to work on it again later, try using XCF, the GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
@@ -244,7 +244,7 @@ msgstr ""
 "spremljeni. Jednom kada završite projekt, možete ga sačuvati kao JPEG, PNG, "
 "GIF, ..."
 
-#: tips/gimp-tips.xml.in.h:23
+#: ../tips/gimp-tips.xml.in.h:23
 #, fuzzy
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
@@ -256,7 +256,7 @@ msgstr ""
 "koristi <tt>Alt</tt> tipku. Pokušajte s pritiskom na <tt>Shift</tt> "
 "istovremeno."
 
-#: tips/gimp-tips.xml.in.h:24
+#: ../tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can adjust the selection range for fuzzy select by clicking and dragging "
 "left and right."
@@ -264,7 +264,7 @@ msgstr ""
 "Možete prilagoditi područje odabira za nejasni odabir ako kliknete i "
 "povlačite pokazivač lijevo i desno."
 
-#: tips/gimp-tips.xml.in.h:25
+#: ../tips/gimp-tips.xml.in.h:25
 #, fuzzy
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
@@ -275,7 +275,7 @@ msgstr ""
 "Dijalog za putanje dozvoljava rad s više putanja i pretvaranje istih u "
 "odabire."
 
-#: tips/gimp-tips.xml.in.h:26
+#: ../tips/gimp-tips.xml.in.h:26
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
@@ -284,7 +284,7 @@ msgstr ""
 "paletu alata. Na taj način će se napraviti nova slika koja sadrži samo taj "
 "sloj."
 
-#: tips/gimp-tips.xml.in.h:27
+#: ../tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can drag and drop many things in the GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
@@ -294,7 +294,7 @@ msgstr ""
 "sa palete alata ili s palete boja i ispuštanjem na sliku, ispuniti će "
 "trenutnu sliku ili odabir odabranom bojom."
 
-#: tips/gimp-tips.xml.in.h:28
+#: ../tips/gimp-tips.xml.in.h:28
 #, fuzzy
 msgid ""
 "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
@@ -306,7 +306,7 @@ msgstr ""
 "Složeniji oblici se mogu crtati pomoću alata za putanje ili Filteri-&gt;"
 "Iscrtavanje-&gt;Gfig."
 
-#: tips/gimp-tips.xml.in.h:29
+#: ../tips/gimp-tips.xml.in.h:29
 msgid ""
 "You can get context-sensitive help for most of the GIMP's features by "
 "pressing the F1 key at any time. This also works inside the menus."
@@ -314,7 +314,7 @@ msgstr ""
 "U svakom trenutku možete dobiti trenutnu pomoć za većinu mogućnosti Gimpa "
 "ako pritisnete tipku F1. Ova opcija takođe radi i unutar izbornika."
 
-#: tips/gimp-tips.xml.in.h:30
+#: ../tips/gimp-tips.xml.in.h:30
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
@@ -322,7 +322,7 @@ msgstr ""
 "Možete izvesti mnoge operacija nad slojevima desnim klikom na tekstualnu "
 "oznaku sloja u dijalogu „Slojevi, kanali i putanje“."
 
-#: tips/gimp-tips.xml.in.h:31
+#: ../tips/gimp-tips.xml.in.h:31
 #, fuzzy
 msgid ""
 "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
@@ -333,7 +333,7 @@ msgstr ""
 "kreirate odabir u cilju iscrtavanja savršenog kvadrata ili kruga, ili radi "
 "njihovog centriranja u odnosu na njihovu početnu točku."
 
-#: tips/gimp-tips.xml.in.h:32
+#: ../tips/gimp-tips.xml.in.h:32
 #, fuzzy
 msgid ""
 "You can save a selection to a channel (Select-&gt;Save to Channel) and then "
@@ -346,7 +346,7 @@ msgstr ""
 "kartici „Kanali“ u dijalogu „Slojevi, kanali i putanje“, možete odrediti "
 "vidljivost tog novog kanala ili ga pretvoriti u odabir."
 
-#: tips/gimp-tips.xml.in.h:33
+#: ../tips/gimp-tips.xml.in.h:33
 msgid ""
 "You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
@@ -355,7 +355,7 @@ msgstr ""
 "slici koja se uređuje (ako upravitelj prozora koji koristite ne preuzme "
 "akcije tih tipaka...)."
 
-#: tips/gimp-tips.xml.in.h:34
+#: ../tips/gimp-tips.xml.in.h:34
 msgid ""
 "You can use the middle mouse button to pan around the image, if it's larger "
 "than its display window."
@@ -363,7 +363,7 @@ msgstr ""
 "Možete koristiti srednju tipku miša za pomicanje vidljivog dijela slike, ako "
 "je veća od prozora u kome je prikazana."
 
-#: tips/gimp-tips.xml.in.h:35
+#: ../tips/gimp-tips.xml.in.h:35
 #, fuzzy
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"

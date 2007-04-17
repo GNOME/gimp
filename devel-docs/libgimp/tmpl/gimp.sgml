@@ -194,8 +194,6 @@ all other GIMP Library headers.
 @n_return_vals: 
 @params: 
 @return_vals: 
-<!-- # Unused Parameters # -->
-@menu_path: 
 
 
 <!-- ##### FUNCTION gimp_install_temp_proc ##### -->
@@ -217,8 +215,6 @@ all other GIMP Library headers.
 @params: 
 @return_vals: 
 @run_proc: 
-<!-- # Unused Parameters # -->
-@menu_path: 
 
 
 <!-- ##### FUNCTION gimp_uninstall_temp_proc ##### -->
