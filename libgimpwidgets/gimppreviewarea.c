@@ -348,6 +348,10 @@ gimp_preview_area_draw (GimpPreviewArea *area,
 
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
   g_return_if_fail (width >= 0 && height >= 0);
+
+  if (width == 0 || height == 0)
+    return;
+
   g_return_if_fail (buf != NULL);
   g_return_if_fail (rowstride > 0);
 
@@ -606,6 +610,10 @@ gimp_preview_area_blend (GimpPreviewArea *area,
 
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
   g_return_if_fail (width >= 0 && height >= 0);
+
+  if (width == 0 || height == 0)
+    return;
+
   g_return_if_fail (buf1 != NULL);
   g_return_if_fail (buf2 != NULL);
   g_return_if_fail (rowstride1 > 0);
@@ -987,6 +995,10 @@ gimp_preview_area_mask (GimpPreviewArea *area,
 
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
   g_return_if_fail (width >= 0 && height >= 0);
+
+  if (width == 0 || height == 0)
+    return;
+
   g_return_if_fail (buf1 != NULL);
   g_return_if_fail (buf2 != NULL);
   g_return_if_fail (mask != NULL);
@@ -1499,14 +1511,14 @@ gimp_preview_area_mask (GimpPreviewArea *area,
  * @area:   a #GimpPreviewArea widget.
  * @x:      x offset in preview
  * @y:      y offset in preview
- * @width:  buffer width
- * @height: buffer height
+ * @width:  width of the rectangle to fill
+ * @height: height of the rectangle to fill
  * @red:    red component of the fill color (0-255)
  * @green:  green component of the fill color (0-255)
  * @blue:   red component of the fill color (0-255)
  *
- * Fills @area in the given color and queues a redraw on the given
- * rectangle.
+ * Fills the given rectangle of @area in the given color and queues a
+ * redraw.
  *
  * Since GIMP 2.2
  **/
@@ -1527,6 +1539,9 @@ gimp_preview_area_fill (GimpPreviewArea *area,
 
   g_return_if_fail (GIMP_IS_PREVIEW_AREA (area));
   g_return_if_fail (width >= 0 && height >= 0);
+
+  if (width == 0 || height == 0)
+    return;
 
   if (x + width < 0 || x >= area->width)
     return;
