@@ -554,7 +554,8 @@ run (const gchar      *name,
 /** User interface ***********************************************************/
 
 static GtkWidget *preview[9];
-static ExpInfo   info[9];
+static ExpInfo    info[9];
+static ExpInfo    last_info[9];
 
 static void
 dialog_new_variations (GtkWidget *widget,
@@ -593,6 +594,7 @@ static void
 dialog_select_preview (GtkWidget *widget,
                        ExpInfo   *n_info)
 {
+  memcpy (last_info, info, sizeof (info));
   info[0] = *n_info;
   dialog_new_variations (widget, NULL);
   dialog_update_previews (widget, NULL);
@@ -681,6 +683,17 @@ save_data (gchar *name)
   return TRUE;
 }
 
+static void
+dialog_undo (GtkWidget *widget,
+             gpointer   data)
+{
+  ExpInfo temp_info[9];
+
+  memcpy (temp_info, info, sizeof (info));
+  memcpy (info, last_info, sizeof (info));
+  dialog_update_previews (NULL, NULL);
+  memcpy (last_info, temp_info, sizeof (info));
+}
 
 static void
 dialog_load (GtkWidget *widget,
@@ -704,7 +717,6 @@ dialog_load (GtkWidget *widget,
                                            GTK_RESPONSE_OK,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
-
   gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_OK);
 
   gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (dialog), qbist_info.path);
@@ -765,7 +777,6 @@ dialog_save (GtkWidget *widget,
     }
 
   gtk_widget_destroy (dialog);
-
 }
 
 static void
@@ -819,6 +830,7 @@ dialog_run (void)
 
   info[0] = qbist_info.info;
   dialog_new_variations (NULL, NULL);
+  memcpy (last_info, info, sizeof (info));
 
   for (i = 0; i < 9; i++)
     {
@@ -853,8 +865,15 @@ dialog_run (void)
   gtk_box_pack_start (GTK_BOX (vbox), bbox, FALSE, FALSE, 0);
   gtk_widget_show (bbox);
 
+  button = gtk_button_new_from_stock (GTK_STOCK_UNDO);
+  gtk_container_add (GTK_CONTAINER (bbox), button);
+  gtk_widget_show (button);
+
+  g_signal_connect (button, "clicked",
+                    G_CALLBACK (dialog_undo),
+                    NULL);
+
   button = gtk_button_new_from_stock (GTK_STOCK_OPEN);
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
@@ -863,7 +882,6 @@ dialog_run (void)
                     NULL);
 
   button = gtk_button_new_from_stock (GTK_STOCK_SAVE);
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
 
