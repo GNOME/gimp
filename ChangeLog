@@ -1,5 +1,31 @@
 2007-04-17  Sven Neumann  <sven@gimp.org>
 
+	Allow other applications to open images in GIMP as if they were
+	new images (without associating a filename). Fixes bug #423118.
+
+	* app/file/file-open.[ch]: added parameter 'as_new' to
+	file_open_image() and its variants.
+
+	* app/actions/data-commands.c
+	* app/actions/documents-commands.c
+	* app/actions/file-commands.c
+	* app/core/gimpimagefile.c
+	* app/dialogs/file-open-dialog.c
+	* app/dialogs/file-open-location-dialog.c
+	* app/widgets/gimptoolbox.c
+	* app/widgets/gimptoolbox-dnd.c: changed accordingly.
+
+	* app/app.[ch]
+	* app/main.c: added new command-line option '--as-new'.
+
+	* app/widgets/gimpdbusservice.[ch]
+	* app/widgets/dbus-service.xml: added new method "OpenAsNew" to the
+	D-Bus interface.
+
+	* docs/gimp.1.in: document the new command-line option.
+
+2007-04-17  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/neon-logo.scm: applied slightly
 	modified patch from Aurimas Juška which fixes bug #167260 by not
 	allowing the selection to shrink too much.

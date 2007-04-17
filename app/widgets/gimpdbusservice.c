@@ -78,7 +78,22 @@ gimp_dbus_service_open (GimpDBusService  *service,
   g_return_val_if_fail (filename != NULL, FALSE);
   g_return_val_if_fail (success != NULL, FALSE);
 
-  *success = file_open_from_command_line (service->gimp, filename);
+  *success = file_open_from_command_line (service->gimp, filename, FALSE);
+
+  return TRUE;
+}
+
+gboolean
+gimp_dbus_service_open_as_new (GimpDBusService  *service,
+                               const gchar      *filename,
+                               gboolean         *success,
+                               GError          **dbus_error)
+{
+  g_return_val_if_fail (GIMP_IS_DBUS_SERVICE (service), FALSE);
+  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (success != NULL, FALSE);
+
+  *success = file_open_from_command_line (service->gimp, filename, TRUE);
 
   return TRUE;
 }

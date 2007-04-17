@@ -70,7 +70,8 @@
 #include "gimp-intl.h"
 
 
-static void  file_open_sanitize_image       (GimpImage    *image);
+static void  file_open_sanitize_image       (GimpImage    *image,
+                                             gboolean      as_new);
 static void  file_open_handle_color_profile (GimpImage    *image,
                                              GimpContext  *context,
                                              GimpProgress *progress,
@@ -85,6 +86,7 @@ file_open_image (Gimp                *gimp,
                  GimpProgress        *progress,
                  const gchar         *uri,
                  const gchar         *entered_filename,
+                 gboolean             as_new,
                  GimpPlugInProcedure *file_proc,
                  GimpRunMode          run_mode,
                  GimpPDBStatusType   *status,
@@ -158,7 +160,7 @@ file_open_image (Gimp                *gimp,
 
       if (image)
         {
-          file_open_sanitize_image (image);
+          file_open_sanitize_image (image, as_new);
 
           if (mime_type)
             *mime_type = file_proc->mime_type;
@@ -255,7 +257,7 @@ file_open_thumbnail (Gimp          *gimp,
 
           if (image)
             {
-              file_open_sanitize_image (image);
+              file_open_sanitize_image (image, FALSE);
 
               *mime_type = file_proc->mime_type;
 
@@ -279,11 +281,13 @@ file_open_with_display (Gimp               *gimp,
                         GimpContext        *context,
                         GimpProgress       *progress,
                         const gchar        *uri,
+                        gboolean            as_new,
                         GimpPDBStatusType  *status,
                         GError            **error)
 {
   return file_open_with_proc_and_display (gimp, context, progress,
-                                          uri, uri, NULL, status, error);
+                                          uri, uri, as_new, NULL,
+                                          status, error);
 }
 
 GimpImage *
@@ -292,6 +296,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
                                  GimpProgress        *progress,
                                  const gchar         *uri,
                                  const gchar         *entered_filename,
+                                 gboolean             as_new,
                                  GimpPlugInProcedure *file_proc,
                                  GimpPDBStatusType   *status,
                                  GError             **error)
@@ -307,6 +312,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
   image = file_open_image (gimp, context, progress,
                            uri,
                            entered_filename,
+                           as_new,
                            file_proc,
                            GIMP_RUN_INTERACTIVE,
                            status,
@@ -315,27 +321,30 @@ file_open_with_proc_and_display (Gimp                *gimp,
 
   if (image)
     {
-      GimpDocumentList *documents = GIMP_DOCUMENT_LIST (gimp->documents);
-      GimpImagefile    *imagefile;
-
       gimp_create_display (image->gimp, image, GIMP_UNIT_PIXEL, 1.0);
 
-      imagefile = gimp_document_list_add_uri (documents, uri, mime_type);
-
-      /*  can only create a thumbnail if the passed uri and the
-       *  resulting image's uri match.
-       */
-      if (strcmp (uri, gimp_image_get_uri (image)) == 0)
+      if (! as_new)
         {
-          /*  no need to save a thumbnail if there's a good one already  */
-          if (! gimp_imagefile_check_thumbnail (imagefile))
-            {
-              gimp_imagefile_save_thumbnail (imagefile, mime_type, image);
-            }
-        }
+          GimpDocumentList *documents = GIMP_DOCUMENT_LIST (gimp->documents);
+          GimpImagefile    *imagefile;
 
-      if (gimp->config->save_document_history)
-        gimp_recent_list_add_uri (uri, mime_type);
+          imagefile = gimp_document_list_add_uri (documents, uri, mime_type);
+
+          /*  can only create a thumbnail if the passed uri and the
+           *  resulting image's uri match.
+           */
+          if (strcmp (uri, gimp_image_get_uri (image)) == 0)
+            {
+              /*  no need to save a thumbnail if there's a good one already  */
+              if (! gimp_imagefile_check_thumbnail (imagefile))
+                {
+                  gimp_imagefile_save_thumbnail (imagefile, mime_type, image);
+                }
+            }
+
+          if (gimp->config->save_document_history)
+            gimp_recent_list_add_uri (uri, mime_type);
+        }
 
       /*  the display owns the image now  */
       g_object_unref (image);
@@ -369,7 +378,7 @@ file_open_layers (Gimp                *gimp,
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
   new_image = file_open_image (gimp, context, progress,
-                               uri, uri,
+                               uri, uri, FALSE,
                                file_proc,
                                run_mode,
                                status, &mime_type, error);
@@ -464,7 +473,8 @@ file_open_layers (Gimp                *gimp,
  */
 gboolean
 file_open_from_command_line (Gimp        *gimp,
-                             const gchar *filename)
+                             const gchar *filename,
+                             gboolean     as_new)
 {
   GError   *error   = NULL;
   gchar    *uri;
@@ -484,7 +494,7 @@ file_open_from_command_line (Gimp        *gimp,
       image = file_open_with_display (gimp,
                                       gimp_get_user_context (gimp),
                                       NULL,
-                                      uri,
+                                      uri, as_new,
                                       &status, &error);
 
       if (image)
@@ -517,8 +527,12 @@ file_open_from_command_line (Gimp        *gimp,
 /*  private functions  */
 
 static void
-file_open_sanitize_image (GimpImage *image)
+file_open_sanitize_image (GimpImage *image,
+                          gboolean   as_new)
 {
+  if (as_new)
+    gimp_object_set_name (GIMP_OBJECT (image), NULL);
+
   /* clear all undo steps */
   gimp_image_undo_free (image);
 

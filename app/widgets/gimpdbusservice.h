@@ -62,6 +62,10 @@ gboolean  gimp_dbus_service_open        (GimpDBusService  *service,
                                          const gchar      *filename,
                                          gboolean         *success,
                                          GError          **dbus_error);
+gboolean  gimp_dbus_service_open_as_new (GimpDBusService  *service,
+                                         const gchar      *filename,
+                                         gboolean         *success,
+                                         GError          **dbus_error);
 gboolean  gimp_dbus_service_activate    (GimpDBusService  *service,
                                          GError          **dbus_error);
 

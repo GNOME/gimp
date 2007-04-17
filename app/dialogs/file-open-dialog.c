@@ -187,11 +187,9 @@ file_open_dialog_open_image (GtkWidget           *open_dialog,
   image = file_open_with_proc_and_display (gimp,
                                            gimp_get_user_context (gimp),
                                            GIMP_PROGRESS (open_dialog),
-                                           uri,
-                                           entered_filename,
+                                           uri, entered_filename, FALSE,
                                            load_proc,
-                                           &status,
-                                           &error);
+                                           &status, &error);
 
   if (image)
     {

@@ -27,6 +27,7 @@ GimpImage * file_open_image                 (Gimp                *gimp,
                                              GimpProgress        *progress,
                                              const gchar         *uri,
                                              const gchar         *entered_filename,
+                                             gboolean             as_new,
                                              GimpPlugInProcedure *file_proc,
                                              GimpRunMode          run_mode,
                                              GimpPDBStatusType   *status,
@@ -45,6 +46,7 @@ GimpImage * file_open_with_display          (Gimp                *gimp,
                                              GimpContext         *context,
                                              GimpProgress        *progress,
                                              const gchar         *uri,
+                                             gboolean             as_new,
                                              GimpPDBStatusType   *status,
                                              GError             **error);
 
@@ -53,6 +55,7 @@ GimpImage * file_open_with_proc_and_display (Gimp                *gimp,
                                              GimpProgress        *progress,
                                              const gchar         *uri,
                                              const gchar         *entered_filename,
+                                             gboolean             as_new,
                                              GimpPlugInProcedure *file_proc,
                                              GimpPDBStatusType   *status,
                                              GError             **error);
@@ -69,7 +72,8 @@ GList     * file_open_layers                (Gimp                *gimp,
                                              GError             **error);
 
 gboolean    file_open_from_command_line     (Gimp                *gimp,
-                                             const gchar         *filename);
+                                             const gchar         *filename,
+                                             gboolean             as_new);
 
 
 #endif /* __FILE_OPEN_H__ */

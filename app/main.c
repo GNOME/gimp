@@ -106,6 +106,7 @@ static void      gimp_open_console_window     (void);
 #endif
 
 static gboolean  gimp_dbus_open               (const gchar **filenames,
+                                               gboolean      as_new,
                                                gboolean      be_verbose);
 
 
@@ -115,6 +116,7 @@ static const gchar        *session_name      = NULL;
 static const gchar        *batch_interpreter = NULL;
 static const gchar       **batch_commands    = NULL;
 static const gchar       **filenames         = NULL;
+static gboolean            as_new            = FALSE;
 static gboolean            no_interface      = FALSE;
 static gboolean            no_data           = FALSE;
 static gboolean            no_fonts          = FALSE;
@@ -159,6 +161,11 @@ static const GOptionEntry main_entries[] =
     "new-instance", 'n', 0,
     G_OPTION_ARG_NONE, &new_instance,
     N_("Start a new GIMP instance"), NULL
+  },
+  {
+    "as-new", 'a', 0,
+    G_OPTION_ARG_NONE, &as_new,
+    N_("Open images as new"), NULL
   },
   {
     "no-interface", 'i', 0,
@@ -362,7 +369,7 @@ main (int    argc,
 
   if (! new_instance)
     {
-      if (gimp_dbus_open (filenames, be_verbose))
+      if (gimp_dbus_open (filenames, as_new, be_verbose))
         return EXIT_SUCCESS;
     }
 
@@ -379,6 +386,7 @@ main (int    argc,
            session_name,
            batch_interpreter,
            batch_commands,
+           as_new,
            no_interface,
            no_data,
            no_fonts,
@@ -681,6 +689,7 @@ gimp_sigfatal_handler (gint sig_num)
 
 static gboolean
 gimp_dbus_open (const gchar **filenames,
+                gboolean      as_new,
                 gboolean      be_verbose)
 {
 #ifndef GIMP_CONSOLE_COMPILATION
@@ -700,13 +709,14 @@ gimp_dbus_open (const gchar **filenames,
 
       if (filenames)
         {
-          gint i;
+          const gchar *method = as_new ? "OpenAsNew" : "Open";
+          gint         i;
 
           for (i = 0, success = TRUE; filenames[i] && success; i++)
             {
               gboolean retval;  /* ignored */
 
-              success = dbus_g_proxy_call (proxy, "Open", &error,
+              success = dbus_g_proxy_call (proxy, method, &error,
                                            G_TYPE_STRING, filenames[i],
                                            G_TYPE_INVALID,
                                            G_TYPE_BOOLEAN, &retval,

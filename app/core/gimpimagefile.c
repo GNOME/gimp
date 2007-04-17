@@ -261,8 +261,9 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
           GimpPDBStatusType  status;
 
           image = file_open_image (imagefile->gimp, context, progress,
-                                   thumbnail->image_uri, thumbnail->image_uri,
-                                   NULL, GIMP_RUN_NONINTERACTIVE,
+                                   thumbnail->image_uri,
+                                   thumbnail->image_uri,
+                                   FALSE, NULL, GIMP_RUN_NONINTERACTIVE,
                                    &status, &mime_type, NULL);
 
           if (image)

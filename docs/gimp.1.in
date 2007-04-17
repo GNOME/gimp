@@ -7,7 +7,7 @@ gimp - an image manipulation and paint program.
 .SH SYNOPSIS
 .B gimp
 [\-h] [\-\-help] [\-\-help-all] [\-\-help-gtk] [-v] [\-\-version]
-[\-\-license] [\-\-verbose] [\-n] [\-\-new\-instance]
+[\-\-license] [\-\-verbose] [\-n] [\-\-new\-instance] [\-a] [\-\-as\-new]
 [\-i] [\-\-no\-interface] [\-d] [\-\-no\-data] [\-f] [\-\-no\-fonts]
 [\-s] [\-\-no\-splash]  [\-\-no\-shm] [\-\-no\-cpu\-accel]
 [\-\-display \fIdisplay\fP] [\-\-session \fI<name>\fP]
@@ -69,12 +69,16 @@ Output license information and exit.
 .B \-\-verbose
 Be verbose and create information on standard output.
 .TP 8
-.B \-i, \-\-no\-interface
-Run without a user interface.
-.TP 8
 .B \-n, \-\-new\-instance
 Do not attempt to reuse an already running GIMP instance. Always start a
 new one.
+.TP 8
+.B \-a, \-\-as\-new
+Open filenames passed on the command-line as new images, don't set the
+filename on them.
+.TP 8
+.B \-i, \-\-no\-interface
+Run without a user interface.
 .TP 8
 .B \-d, \-\-no\-data
 Do not load patterns, gradients, palettes, or brushes. Often useful

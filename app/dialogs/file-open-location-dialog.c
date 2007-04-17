@@ -202,7 +202,7 @@ file_open_location_response (GtkDialog *dialog,
           image = file_open_with_proc_and_display (gimp,
                                                    gimp_get_user_context (gimp),
                                                    GIMP_PROGRESS (box),
-                                                   uri, text, NULL,
+                                                   uri, text, FALSE, NULL,
                                                    &status, &error);
 
           if (image == NULL && status != GIMP_PDB_CANCEL)

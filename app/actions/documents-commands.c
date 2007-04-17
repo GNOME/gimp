@@ -309,8 +309,8 @@ documents_open_image (GimpContext   *context,
 
   uri = gimp_object_get_name (GIMP_OBJECT (imagefile));
 
-  image = file_open_with_display (context->gimp, context, NULL,
-                                  uri, &status, &error);
+  image = file_open_with_display (context->gimp, context, NULL, uri, FALSE,
+                                  &status, &error);
 
   if (! image && status != GIMP_PDB_CANCEL)
     {

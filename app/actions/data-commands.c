@@ -92,7 +92,8 @@ data_open_as_image_cmd_callback (GtkAction *action,
           GimpPDBStatusType  status;
           GError            *error = NULL;
 
-          image = file_open_with_display (context->gimp, context, NULL, uri,
+          image = file_open_with_display (context->gimp, context, NULL,
+                                          uri, FALSE,
                                           &status, &error);
 
           if (! image && status != GIMP_PDB_CANCEL)

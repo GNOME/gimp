@@ -148,7 +148,7 @@ gimp_toolbox_drop_uri_list (GtkWidget *widget,
       GError            *error = NULL;
 
       image = file_open_with_display (context->gimp, context, NULL,
-                                       uri, &status, &error);
+                                      uri, FALSE, &status, &error);
 
       if (! image && status != GIMP_PDB_CANCEL)
         {

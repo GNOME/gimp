@@ -9,6 +9,10 @@
       <arg type="s" name="filename" direction="in" />
       <arg type="b" name="success" direction="out" />
     </method>
+    <method name="OpenAsNew">
+      <arg type="s" name="filename" direction="in" />
+      <arg type="b" name="success" direction="out" />
+    </method>
     <method name="Activate" />
   </interface>
 

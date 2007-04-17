@@ -902,7 +902,7 @@ toolbox_paste_received (GtkClipboard *clipboard,
           GError            *error = NULL;
 
           image = file_open_with_display (context->gimp, context, NULL,
-                                          copy, &status, &error);
+                                          copy, FALSE, &status, &error);
 
           if (! image && status != GIMP_PDB_CANCEL)
             {
