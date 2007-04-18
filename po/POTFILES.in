@@ -348,7 +348,6 @@ app/widgets/gimpbrusheditor.c
 app/widgets/gimpbrushfactoryview.c
 app/widgets/gimpbrushselect.c
 app/widgets/gimpbufferview.c
-app/widgets/gimpcellrendereraccel.c
 app/widgets/gimpchanneltreeview.c
 app/widgets/gimpclipboard.c
 app/widgets/gimpcolordialog.c

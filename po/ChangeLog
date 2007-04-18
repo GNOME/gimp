@@ -1,3 +1,7 @@
+2007-04-18  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed app/widgets/gimpcellrendereraccel.c.
+
 2007-04-11  Sven Neumann  <sven@gimp.org>
 
 	* de.po: applied patch from bug #425532.
