@@ -252,6 +252,7 @@ app/plug-in/gimpenvirontable.c
 app/plug-in/gimpinterpreterdb.c
 app/plug-in/gimpplugin.c
 app/plug-in/gimppluginmanager-call.c
+app/plug-in/gimppluginmanager-restore.c
 app/plug-in/gimppluginmanager.c
 app/plug-in/gimppluginprocedure.c
 app/plug-in/gimptemporaryprocedure.c

@@ -1,5 +1,16 @@
 2007-04-18  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/Makefile.am
+	* app/plug-in/gimppluginmanager.[ch]
+	* app/plug-in/gimppluginmanager-restore.[ch]: moved
+	gimp_plug_in_manager_restore() to it's own file.
+
+	* app/core/gimp.c: changed accordingly.
+
+	* app/Makefile.am (LDFLAGS): convince the linker to do its job.
+
+2007-04-18  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimppluginmanager.c (gimp_plug_in_manager_restore):
 	try to improve readability by moving code to helper functions.
 

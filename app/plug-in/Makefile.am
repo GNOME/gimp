@@ -55,6 +55,8 @@ libappplug_in_a_SOURCES = \
 	gimppluginmanager-menu-branch.h		\
 	gimppluginmanager-query.c		\
 	gimppluginmanager-query.h		\
+	gimppluginmanager-restore.c		\
+	gimppluginmanager-restore.h		\
 	gimppluginprocedure.c			\
 	gimppluginprocedure.h			\
 	gimppluginprocframe.c			\

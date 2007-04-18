@@ -34,6 +34,7 @@
 #include "pdb/internal_procs.h"
 
 #include "plug-in/gimppluginmanager.h"
+#include "plug-in/gimppluginmanager-restore.h"
 
 #include "paint/gimp-paint.h"
 
@@ -88,25 +89,25 @@ enum
 };
 
 
-static void       gimp_dispose              (GObject           *object);
-static void       gimp_finalize             (GObject           *object);
+static void      gimp_dispose              (GObject           *object);
+static void      gimp_finalize             (GObject           *object);
 
-static gint64     gimp_get_memsize          (GimpObject        *object,
-                                             gint64            *gui_size);
+static gint64    gimp_get_memsize          (GimpObject        *object,
+                                            gint64            *gui_size);
 
-static void       gimp_real_initialize      (Gimp              *gimp,
-                                             GimpInitStatusFunc status_callback);
-static void       gimp_real_restore         (Gimp              *gimp,
-                                             GimpInitStatusFunc status_callback);
-static gboolean   gimp_real_exit            (Gimp              *gimp,
-                                             gboolean           force);
+static void      gimp_real_initialize      (Gimp              *gimp,
+                                            GimpInitStatusFunc status_callback);
+static void      gimp_real_restore         (Gimp              *gimp,
+                                            GimpInitStatusFunc status_callback);
+static gboolean  gimp_real_exit            (Gimp              *gimp,
+                                            gboolean           force);
 
-static void       gimp_global_config_notify (GObject           *global_config,
-                                             GParamSpec        *param_spec,
-                                             GObject           *edit_config);
-static void       gimp_edit_config_notify   (GObject           *edit_config,
-                                             GParamSpec        *param_spec,
-                                             GObject           *global_config);
+static void      gimp_global_config_notify (GObject           *global_config,
+                                            GParamSpec        *param_spec,
+                                            GObject           *edit_config);
+static void      gimp_edit_config_notify   (GObject           *edit_config,
+                                            GParamSpec        *param_spec,
+                                            GObject           *global_config);
 
 
 G_DEFINE_TYPE (Gimp, gimp, GIMP_TYPE_OBJECT)

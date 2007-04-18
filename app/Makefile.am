@@ -92,7 +92,11 @@ INCLUDES = \
 	$(DBUS_GLIB_CFLAGS)	\
 	-I$(includedir)
 
-gimp_2_3_LDFLAGS = $(mwindows) $(munix) -u $(SYMPREFIX)xcf_init -u $(SYMPREFIX)internal_procs_init -u $(SYMPREFIX)gimp_coords_mix
+LDFLAGS = $(mwindows) $(munix) \
+	-u $(SYMPREFIX)xcf_init			\
+	-u $(SYMPREFIX)internal_procs_init	\
+	-u $(SYMPREFIX)gimp_coords_mix		\
+	-u $(SYMPREFIX)gimp_plug_in_manager_restore
 
 gimp_2_3_LDADD = \
 	gui/libappgui.a			\
@@ -142,8 +146,6 @@ gimp_console_2_3_SOURCES = $(app_sources)
 gimp_console_2_3_CPPFLAGS = \
 	$(AM_CPPFLAGS)			\
 	-DGIMP_CONSOLE_COMPILATION
-
-gimp_console_2_3_LDFLAGS = $(mwindows) $(munix) -u $(SYMPREFIX)xcf_init -u $(SYMPREFIX)internal_procs_init -u $(SYMPREFIX)gimp_coords_mix
 
 gimp_console_2_3_LDADD = \
 	widgets/widgets-enums.o		\
