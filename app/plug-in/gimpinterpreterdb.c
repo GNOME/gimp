@@ -718,6 +718,10 @@ gimp_interpreter_db_resolve (GimpInterpreterDB  *db,
   gssize  len;
   gchar   buffer[BUFSIZE];
 
+  g_return_val_if_fail (GIMP_IS_INTERPRETER_DB (db), NULL);
+  g_return_val_if_fail (program_path != NULL, NULL);
+  g_return_val_if_fail (interp_arg != NULL, NULL);
+
   *interp_arg = NULL;
 
   fd = g_open (program_path, O_RDONLY | _O_BINARY, 0);
@@ -736,4 +740,41 @@ gimp_interpreter_db_resolve (GimpInterpreterDB  *db,
     return resolve_sh_bang (db, program_path, buffer, len, interp_arg);
 
   return resolve_magic (db, program_path, buffer);
+}
+
+static void
+collect_extensions (const gchar *ext,
+                    const gchar *program G_GNUC_UNUSED,
+                    GString     *str)
+{
+  if (str->len)
+    g_string_append_c (str, G_SEARCHPATH_SEPARATOR);
+
+  g_string_append_c (str, '.');
+  g_string_append (str, ext);
+}
+
+/**
+ * gimp_interpreter_db_get_extensions:
+ * @db:
+ *
+ * Return value: a newly allocated string with all registered file
+ *               extensions separated by %G_SEARCHPATH_SEPARATOR;
+ *               or %NULL if no extensions are registered
+ **/
+gchar *
+gimp_interpreter_db_get_extensions (GimpInterpreterDB *db)
+{
+  GString *str;
+
+  g_return_val_if_fail (GIMP_IS_INTERPRETER_DB (db), NULL);
+
+  if (g_hash_table_size (db->extensions) == 0)
+    return NULL;
+
+  str = g_string_new (NULL);
+
+  g_hash_table_foreach (db->extensions, (GHFunc) collect_extensions, str);
+
+  return g_string_free (str, FALSE);
 }

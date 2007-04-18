@@ -1,5 +1,15 @@
 2007-04-18  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/gimpinterpreterdb.[ch]: added a function that
+	returns all file extensions registered in the interpreter db.
+
+	* app/plug-in/gimppluginmanager.c (gimp_plug_in_manager_restore):
+	if the PATHEXT environment variable is set, append all registered
+	file extensions to it. This way GIMP can recognize Python scripts
+	as plug-ins on platforms where the executable bit is unknown.
+
+2007-04-18  Sven Neumann  <sven@gimp.org>
+
 	* data/tips/gimp-tips.xml.in: fixed a typo.
 
 2007-04-18  Sven Neumann  <sven@gimp.org>

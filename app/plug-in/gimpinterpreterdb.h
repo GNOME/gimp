@@ -63,6 +63,7 @@ void                gimp_interpreter_db_clear    (GimpInterpreterDB  *db);
 gchar             * gimp_interpreter_db_resolve  (GimpInterpreterDB  *db,
                                                   const gchar        *program_path,
                                                   gchar             **interp_arg);
+gchar       * gimp_interpreter_db_get_extensions (GimpInterpreterDB  *db);
 
 
 #endif /* __GIMP_INTERPRETER_DB_H__ */

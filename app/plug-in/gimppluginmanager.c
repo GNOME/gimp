@@ -353,7 +353,30 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
 
   /* search for binaries in the plug-in directory path */
   {
-    gchar *path;
+    gchar       *path;
+    const gchar *pathext = g_getenv ("PATHEXT");
+
+    /*  If PATHEXT is set, we are likely on Windows and need to add
+     *  the known file extensions.
+     */
+    if (pathext)
+      {
+        gchar *exts;
+
+        exts = gimp_interpreter_db_get_extensions (manager->interpreter_db);
+
+        if (exts)
+          {
+            gchar *value;
+
+            value = g_strconcat (pathext, G_SEARCHPATH_SEPARATOR_S, exts, NULL);
+
+            g_setenv ("PATHEXT", value, TRUE);
+
+            g_free (value);
+            g_free (exts);
+          }
+      }
 
     status_callback (_("Searching Plug-Ins"), "", 0.0);
 
