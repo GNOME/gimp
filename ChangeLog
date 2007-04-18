@@ -1,5 +1,9 @@
 2007-04-18  Sven Neumann  <sven@gimp.org>
 
+	* data/tips/gimp-tips.xml.in: fixed a typo.
+
+2007-04-18  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpscrolledpreview.c
 	(gimp_scrolled_preview_nav_button_press): applied patch from
 	Aurimas Juška that fixes positioning of the quick navigation
