@@ -89,6 +89,7 @@ static void     gimp_plug_in_manager_init_plug_ins     (GimpPlugInManager      *
 static void     gimp_plug_in_manager_run_extensions    (GimpPlugInManager      *manager,
                                                         GimpContext            *context,
                                                         GimpInitStatusFunc      status_callback);
+static void     gimp_plug_in_manager_bind_text_domains (GimpPlugInManager      *manager);
 
 static void     gimp_plug_in_manager_add_from_file     (const GimpDatafileData *file_data,
                                                         gpointer                data);
@@ -431,27 +432,7 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
   manager->plug_in_defs = NULL;
 
   /* bind plug-in text domains  */
-  {
-    gchar **locale_domains;
-    gchar **locale_paths;
-    gint    n_domains;
-    gint    i;
-
-    n_domains = gimp_plug_in_manager_get_locale_domains (manager,
-                                                         &locale_domains,
-                                                         &locale_paths);
-
-    for (i = 0; i < n_domains; i++)
-      {
-        bindtextdomain (locale_domains[i], locale_paths[i]);
-#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
-        bind_textdomain_codeset (locale_domains[i], "UTF-8");
-#endif
-      }
-
-    g_strfreev (locale_domains);
-    g_strfreev (locale_paths);
-  }
+  gimp_plug_in_manager_bind_text_domains (manager);
 
   /* add the plug-in procs to the procedure database */
   for (list = manager->plug_in_procedures; list; list = list->next)
@@ -894,6 +875,30 @@ gimp_plug_in_manager_run_extensions (GimpPlugInManager  *manager,
 
       status_callback (NULL, "", 1.0);
     }
+}
+
+static void
+gimp_plug_in_manager_bind_text_domains (GimpPlugInManager *manager)
+{
+  gchar **locale_domains;
+  gchar **locale_paths;
+  gint    n_domains;
+  gint    i;
+
+  n_domains = gimp_plug_in_manager_get_locale_domains (manager,
+                                                       &locale_domains,
+                                                       &locale_paths);
+
+  for (i = 0; i < n_domains; i++)
+    {
+      bindtextdomain (locale_domains[i], locale_paths[i]);
+#ifdef HAVE_BIND_TEXTDOMAIN_CODESET
+      bind_textdomain_codeset (locale_domains[i], "UTF-8");
+#endif
+    }
+
+  g_strfreev (locale_domains);
+  g_strfreev (locale_paths);
 }
 
 static void
