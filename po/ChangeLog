@@ -1,5 +1,7 @@
 2007-04-18  Sven Neumann  <sven@gimp.org>
 
+	* POTFILES.skip: removed generated file desktop/gimp.desktop.in.
+
 	* POTFILES.in: removed app/widgets/gimpcellrendereraccel.c.
 
 2007-04-11  Sven Neumann  <sven@gimp.org>
