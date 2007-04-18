@@ -531,7 +531,8 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
                                         GdkEventButton      *event,
                                         GimpScrolledPreview *preview)
 {
-  GimpPreview *gimp_preview = GIMP_PREVIEW (preview);
+  GimpPreview   *gimp_preview = GIMP_PREVIEW (preview);
+  GtkAdjustment *adj;
 
   if (preview->nav_popup)
     return TRUE;
@@ -584,10 +585,11 @@ gimp_scrolled_preview_nav_button_press (GtkWidget           *widget,
 
       gdk_window_get_origin (widget->window, &x, &y);
 
-      h = ((gdouble) (gimp_preview->xoff + gimp_preview->width  / 2) /
-           (gdouble) (gimp_preview->xmax - gimp_preview->xmin));
-      v = ((gdouble) (gimp_preview->yoff + gimp_preview->height / 2) /
-           (gdouble) (gimp_preview->ymax - gimp_preview->ymin));
+      adj = gtk_range_get_adjustment (GTK_RANGE (preview->hscr));
+      h = (adj->value / adj->upper) + (adj->page_size / adj->upper) / 2.0;
+
+      adj = gtk_range_get_adjustment (GTK_RANGE (preview->vscr));
+      v = (adj->value / adj->upper) + (adj->page_size / adj->upper) / 2.0;
 
       x += event->x - h * (gdouble) GIMP_PREVIEW_AREA (area)->width;
       y += event->y - v * (gdouble) GIMP_PREVIEW_AREA (area)->height;

@@ -1,3 +1,10 @@
+2007-04-18  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpscrolledpreview.c
+	(gimp_scrolled_preview_nav_button_press): applied patch from
+	Aurimas Juška that fixes positioning of the quick navigation
+	popup (bug #430917).
+
 2007-04-17  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/fp.c (fp_render_preview): removed a conditional
