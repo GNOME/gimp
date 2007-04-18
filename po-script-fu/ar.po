@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 0.1.2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-16 03:50+0100\n"
-"PO-Revision-Date: 2007-04-16 23:53+0100\n"
-"Last-Translator: Anas Husseini <anas_h_34@hotmail.com>\n"
+"POT-Creation-Date: 2007-04-18 11:43+0100\n"
+"PO-Revision-Date: 2007-04-18 12:23-0000\n"
+"Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
 "Language-Team: Arabic\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -262,12 +262,8 @@ msgid "_Refresh Scripts"
 msgstr "تحديث السكرب_تات"
 
 #: ../plug-ins/script-fu/script-fu.c:380
-msgid ""
-"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
-"Please close all Script-Fu windows and try again."
-msgstr ""
-"لا يمكنك استخدام \"إنعاش السكربتات\" حينما يكون صندوق الحوار مفتوحاً.  "
-"رجاءً أغلق جميع نوافذ سكربت-فو ثم حاول ثانية."
+msgid "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  Please close all Script-Fu windows and try again."
+msgstr "لا يمكنك استخدام \"إنعاش السكربتات\" حينما يكون صندوق الحوار مفتوحاً.  رجاءً أغلق جميع نوافذ سكربت-فو ثم حاول ثانية."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -370,10 +366,8 @@ msgid "Outline blur radius"
 msgstr "نصف-قطر غشاوة الخط الخارجي"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
-msgid ""
-"Outline the selected region (or alpha) with a pattern and add a drop shadow"
-msgstr ""
-"ارسم خطوطاً خارجية للمنطقة المحددة (أو ألفا) باستخدام نموذج مع رسم ظل"
+msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
+msgstr "ارسم خطوطاً خارجية للمنطقة المحددة (أو ألفا) باستخدام نموذج مع رسم ظل"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -733,17 +727,12 @@ msgid "Width of gaps"
 msgstr "عرض الانحرافات"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
-msgid ""
-"Add a gradient effect, a drop shadow, and a background to the selected "
-"region (or alpha)"
+msgid "Add a gradient effect, a drop shadow, and a background to the selected region (or alpha)"
 msgstr "إضافة تأثير تدرج الألوان، وظل، وخلفية إلى المنطقة المحددة (أو ألفا)"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
-msgid ""
-"Create a plain text logo with a gradient effect, a drop shadow, and a "
-"background"
-msgstr ""
-"إنشاء شعار نصي مع تدرج ألوان، وظل، وخلفية"
+msgid "Create a plain text logo with a gradient effect, a drop shadow, and a background"
+msgstr "إنشاء شعار نصي مع تدرج ألوان، وظل، وخلفية"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
@@ -843,11 +832,8 @@ msgid "Blend Animation needs at least three source layers"
 msgstr "رسوم الخليط المتحركة تحتاج على الأقل ثلاثة طبقات مصدرية"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
-msgid ""
-"Create intermediate layers to blend two or more layers over a background as "
-"an animation"
-msgstr ""
-"إنشاء طبقات وسيطة لمزج طبقتين أو أكثر فوق خلفية كرسوم متحركة"
+msgid "Create intermediate layers to blend two or more layers over a background as an animation"
+msgstr "إنشاء طبقات وسيطة لمزج طبقتين أو أكثر فوق خلفية كرسوم متحركة"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Intermediate frames"
@@ -866,11 +852,8 @@ msgid "_Blend..."
 msgstr "مز_ج..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
-msgid ""
-"Add blended backgrounds, highlights, and shadows to the selected region (or "
-"alpha)"
-msgstr ""
-"أضف الخلفيات الممزوجة، التمييز اللوني، والظلال إلى المنطق المحددة (أو ألفا)"
+msgid "Add blended backgrounds, highlights, and shadows to the selected region (or alpha)"
+msgstr "أضف الخلفيات الممزوجة، التمييز اللوني، والظلال إلى المنطق المحددة (أو ألفا)"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
@@ -962,10 +945,10 @@ msgstr "_حرق..."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid ""
-"Burn-In: Needs two layers in total!\n"
+"Burn-In: Needs two layers in total!\\n"
 "A foreground text layer with transparency and a background layer."
 msgstr ""
-"الحرق: يحتاج طبقتين!\n"
+"الحرق: يحتاج طبقتين!\\n"
 "الطبقة الأمامية عبارة عن نص مع شفافية وطبقة الخلفية."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
@@ -973,11 +956,8 @@ msgid "Corona width"
 msgstr "عرض الوهج"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
-msgid ""
-"Create intermediate layers to produce an animated 'burn-in' transition "
-"between two layers"
-msgstr ""
-"إنشاء طبقات وسيطة لإنتاج عملية حرق تحريكية بين طبقتين"
+msgid "Create intermediate layers to produce an animated 'burn-in' transition between two layers"
+msgstr "إنشاء طبقات وسيطة لإنتاج عملية حرق تحريكية بين طبقتين"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout"
@@ -1036,8 +1016,7 @@ msgstr "مساحات بيضاء مقطوعة"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
 msgid "Image to carve"
-msgstr ""
-"الصورة التي ينبغي قطعها"
+msgstr "الصورة التي ينبغي قطعها"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Stencil C_arve..."
@@ -1056,11 +1035,8 @@ msgid "Carved..."
 msgstr "مقطوع..."
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
-msgid ""
-"Create a logo with text raised above or carved in to the specified "
-"background image"
-msgstr ""
-"أنشئ شعار مع نص مرتفع فوقه أو مقطوع في صورة الخلفية المحددة"
+msgid "Create a logo with text raised above or carved in to the specified background image"
+msgstr "أنشئ شعار مع نص مرتفع فوقه أو مقطوع في صورة الخلفية المحددة"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
@@ -1119,11 +1095,8 @@ msgid "Keep background"
 msgstr "احتفظ بالخلفية"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:1
-msgid ""
-"Add a chrome effect to the selected region (or alpha) using a specified "
-"(grayscale) stencil"
-msgstr ""
-"إضافة تأثير الكروم إلى المنطقة المحددة (أو ألفا) باستخدام تدرج معدن فضي"
+msgid "Add a chrome effect to the selected region (or alpha) using a specified (grayscale) stencil"
+msgstr "إضافة تأثير الكروم إلى المنطقة المحددة (أو ألفا) باستخدام تدرج معدن فضي"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
@@ -1186,8 +1159,7 @@ msgid "Circuit seed"
 msgstr "بذرة الدائرة"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
-msgid ""
-"Fill the selected region (or alpha) with traces like those on a circuit board"
+msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr "املأ المنطقة المحددة (أو ألفا) بآثار كالموجودة على لوح الدائرة"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
@@ -1252,10 +1224,10 @@ msgstr "إضافة بقع قهوة حقيقية إلى الصورة"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid ""
-"Darken only\n"
+"Darken only\\n"
 "(Better, but only for images with a lot of white)"
 msgstr ""
-"تغميق فقط\n"
+"تغميق فقط\\n"
 "(أفضل فقط للصور التي تحوي الكثير من البياض)"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
@@ -1267,12 +1239,8 @@ msgid "_Coffee Stain..."
 msgstr "بقعة ق_هوة..."
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
-msgid ""
-"Add a comic-book effect to the selected region (or alpha) by outlining and "
-"filling with a gradient"
-msgstr ""
-"إضافة تأثير كتاب هزلي إلى المنطقة المحددة (أو ألفا) باستخدام "
-"التخطيط الخارجي والملء بالألوان المتدرجة"
+msgid "Add a comic-book effect to the selected region (or alpha) by outlining and filling with a gradient"
+msgstr "إضافة تأثير كتاب هزلي إلى المنطقة المحددة (أو ألفا) باستخدام التخطيط الخارجي والملء بالألوان المتدرجة"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
@@ -1292,11 +1260,8 @@ msgid "Outline size"
 msgstr "حجم الخط الخارجي"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
-msgid ""
-"Add a metallic effect to the selected region (or alpha) with reflections and "
-"perspective shadows"
-msgstr ""
-"إضافة تأثير معدني إلى المنطقة المحددة (أو ألفا) مع الانعكاسات والظلال الهندسية"
+msgid "Add a metallic effect to the selected region (or alpha) with reflections and perspective shadows"
+msgstr "إضافة تأثير معدني إلى المنطقة المحددة (أو ألفا) مع الانعكاسات والظلال الهندسية"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
@@ -1312,8 +1277,8 @@ msgid "Effect size (pixels)"
 msgstr "حجم التأثيرات (بالبكسل)"
 
 #: ../plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "This procedure is deprecated! use 'gimp-edit-copy-visible' instead."
-msgstr "هذا الإجراء لم يعد مستخدماً! استخدم 'القائمة تحرير-الخيار نسخ مرئي' بدلاً عنه."
+msgid "This procedure is deprecated! use \\'gimp-edit-copy-visible\\' instead."
+msgstr "هذا الإجراء لم يعد مستخدماً! استخدم \\'القائمة تحرير-الخيار نسخ مرئي\\' بدلاً عنه."
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "Background image"
@@ -1465,10 +1430,8 @@ msgid "Clear unselected maskarea"
 msgstr "حذف مساحة القناع غير المحددة"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:4
-msgid ""
-"Create a layermask that fades the edges of the selected region (or alpha)"
-msgstr ""
-"إنشاء قناع طبقة يحذف ألوان حواف المنطقة المحددة (أو ألفا)"
+msgid "Create a layermask that fades the edges of the selected region (or alpha)"
+msgstr "إنشاء قناع طبقة يحذف ألوان حواف المنطقة المحددة (أو ألفا)"
 
 #: ../plug-ins/script-fu/scripts/fade-outline.scm.h:6
 #, no-c-format
@@ -1535,8 +1498,7 @@ msgid "Black on white"
 msgstr "أسود على أبيض"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
-msgid ""
-"Create an image filled with previews of fonts matching a fontname filter"
+msgid "Create an image filled with previews of fonts matching a fontname filter"
 msgstr "أنشئ صورة مملوءة بعروض مسبقة لخطوط وفقاً لمصفي أسماء الخطوط"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
@@ -1572,11 +1534,8 @@ msgid "_Text"
 msgstr "_نص"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
-msgid ""
-"Add a frost effect to the selected region (or alpha) with an added drop "
-"shadow"
-msgstr ""
-"إضافة تأثير جليدي إلى المنطقة المحددة (أو ألفا) مع إضافة الظل"
+msgid "Add a frost effect to the selected region (or alpha) with an added drop shadow"
+msgstr "إضافة تأثير جليدي إلى المنطقة المحددة (أو ألفا) مع إضافة الظل"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
@@ -1666,29 +1625,20 @@ msgid "_Small Header..."
 msgstr "ترويسة صغي_رة..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-msgid ""
-"Create an image of a Tube Button Label Header using the gimp.org webpage "
-"theme"
-msgstr ""
-"أنشئ صورة لترويسة ملصق زر أنبوب باستخدام سمة صفحة ويب gimp.org"
+msgid "Create an image of a Tube Button Label Header using the gimp.org webpage theme"
+msgstr "أنشئ صورة لترويسة ملصق زر أنبوب باستخدام سمة صفحة ويب gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
 msgstr "أنشئ صورة لملصق زر أنبوب باستخدام سمة صفحة ويب gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-msgid ""
-"Create an image of a second level Tube Button Label using the gimp.org "
-"webpage theme"
-msgstr ""
-"أنشئ صورة لملصق زر أنبوب من الدرجة الثانية باستخدام سمة صفحة ويب gimp.org"
+msgid "Create an image of a second level Tube Button Label using the gimp.org webpage theme"
+msgstr "أنشئ صورة لملصق زر أنبوب من الدرجة الثانية باستخدام سمة صفحة ويب gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
-msgid ""
-"Create an image of a third level Tube Button Label using the gimp.org "
-"webpage theme"
-msgstr ""
-"أنشئ صورة لملصق زر أنبوب من الدرجة الثالثة باستخدام سمة صفحة ويب gimp.org"
+msgid "Create an image of a third level Tube Button Label using the gimp.org webpage theme"
+msgstr "أنشئ صورة لملصق زر أنبوب من الدرجة الثالثة باستخدام سمة صفحة ويب gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
@@ -1707,11 +1657,8 @@ msgid "_Tube Button Label..."
 msgstr "ملصق زر الأنبو_ب..."
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
-msgid ""
-"Add gradients, patterns, shadows, and bump maps to the selected region (or "
-"alpha)"
-msgstr ""
-"إضافة تدرجات، نماذج، ظلال، وخرائط نتوءات إلى المنطقة المحددة (أو ألفا)"
+msgid "Add gradients, patterns, shadows, and bump maps to the selected region (or alpha)"
+msgstr "إضافة تدرجات، نماذج، ظلال، وخرائط نتوءات إلى المنطقة المحددة (أو ألفا)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
@@ -1814,11 +1761,8 @@ msgstr "تدرج مخ_صص..."
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
-msgid ""
-"Draw a grid as specified by the lists of X and Y locations using the current "
-"brush"
-msgstr ""
-"رسم شبكة كما هو محد من قبل لائحات مواقع X و Y باستخدام الفرشاة الحالية"
+msgid "Draw a grid as specified by the lists of X and Y locations using the current brush"
+msgstr "رسم شبكة كما هو محد من قبل لائحات مواقع X و Y باستخدام الفرشاة الحالية"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X divisions"
@@ -1978,10 +1922,8 @@ msgid "_Lava..."
 msgstr "ال_حمم..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
-msgid ""
-"Fill a layer with rays emanating outward from its center using the FG color"
-msgstr ""
-"ملء الطبقة بالأشعة المنبعثة من المركز إلى الخارج باستخدام لون الطبقة الأمامية"
+msgid "Fill a layer with rays emanating outward from its center using the FG color"
+msgstr "ملء الطبقة بالأشعة المنبعثة من المركز إلى الخارج باستخدام لون الطبقة الأمامية"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
@@ -2265,8 +2207,7 @@ msgid "Black"
 msgstr "أسود"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
-msgid ""
-"Create a multi-layer image by adding a ripple effect to the current image"
+msgid "Create a multi-layer image by adding a ripple effect to the current image"
 msgstr "أنشئ صورة متعددة الطبقات بإضافة تأثير متموج إلى الصورة الحالية"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
@@ -2307,8 +2248,7 @@ msgid "Edge radius"
 msgstr "نصف-قطر الحافة"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
-msgid ""
-"Round the corners of an image and optionally add a drop-shadow and background"
+msgid "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr "تدوير زوايا صورة وإضافة ظل ساقط وخلفية بشكل اختياري"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
@@ -2353,11 +2293,8 @@ msgid "Round the corners of the current selection"
 msgstr "تدوير زوايا التحديد الحالي"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
-msgid ""
-"Round the corners of the current selection (deprecated, use Rounded "
-"Rectangle)"
-msgstr ""
-"تدوير زوايا التحديد الحالي (ملغاة حالياً، استخدم تدوير المستطيلات)"
+msgid "Round the corners of the current selection (deprecated, use Rounded Rectangle)"
+msgstr "تدوير زوايا التحديد الحالي (ملغاة حالياً، استخدم تدوير المستطيلات)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:6
 msgid "Rounded R_ectangle..."
@@ -2436,8 +2373,7 @@ msgid "_Spinning Globe..."
 msgstr "كر_ة دائرية..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-msgid ""
-"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgid "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr "إضافة انحناءات لولبية، حلقية، وشبكية إلى الطبقة الحالية"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
@@ -2574,11 +2510,8 @@ msgid "Effect size (pixels * 30)"
 msgstr "حجم التأثير (بكسل * 30)"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:5
-msgid ""
-"Fill the selected region (or alpha) with a starburst gradient and add a "
-"shadow"
-msgstr ""
-"ملء المنطقة المحددة (أو ألفا) بالتدرج النجمي الانفجاري وإضافة ظل"
+msgid "Fill the selected region (or alpha) with a starburst gradient and add a shadow"
+msgstr "ملء المنطقة المحددة (أو ألفا) بالتدرج النجمي الانفجاري وإضافة ظل"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:8
 msgid "Starb_urst..."
@@ -2593,11 +2526,8 @@ msgid "Effect size (pixels * 4)"
 msgstr "حجم التأثير (بكسل * 4)"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-msgid ""
-"Fill the selected region (or alpha) with a rock-like texture, a nova glow, "
-"and shadow"
-msgstr ""
-"ملء المنطقة المحددة (أو ألفا) بنقش صخري، توهج نوفا، وظل"
+msgid "Fill the selected region (or alpha) with a rock-like texture, a nova glow, and shadow"
+msgstr "ملء المنطقة المحددة (أو ألفا) بنقش صخري، توهج نوفا، وظل"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
 msgid "Sta_rscape..."
@@ -2668,10 +2598,8 @@ msgid "Antialias"
 msgstr "ضد التهدّب"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
-msgid ""
-"Create a logo by rendering the specified text along the perimeter of a circle"
-msgstr ""
-"أنشئ شعاراً بتصيير النص المحدد على طول محيط الدائرة"
+msgid "Create a logo by rendering the specified text along the perimeter of a circle"
+msgstr "أنشئ شعاراً بتصيير النص المحدد على طول محيط الدائرة"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 msgid "Fill angle"
@@ -2682,21 +2610,16 @@ msgid "Text C_ircle..."
 msgstr "تدو_ير النص..."
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
-msgid ""
-"Create a textured logo with highlights, shadows, and a mosaic background"
-msgstr ""
-"أنشئ شعاراً منقوشاً مع تمييز لوني، ظلال، وخلفية مبلطة"
+msgid "Create a textured logo with highlights, shadows, and a mosaic background"
+msgstr "أنشئ شعاراً منقوشاً مع تمييز لوني، ظلال، وخلفية مبلطة"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Ending blend"
 msgstr "المزج النهائي"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
-msgid ""
-"Fill the selected region (or alpha) with a texture and add highlights, "
-"shadows, and a mosaic background"
-msgstr ""
-"ملء المنطقة المحددة (أو ألفا) بنقش وإضافة تمييز لوني وظلال، وخلفية مبلطة"
+msgid "Fill the selected region (or alpha) with a texture and add highlights, shadows, and a mosaic background"
+msgstr "ملء المنطقة المحددة (أو ألفا) بنقش وإضافة تمييز لوني وظلال، وخلفية مبلطة"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
@@ -2787,11 +2710,8 @@ msgid "Amplitude"
 msgstr "الارتفاع"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:2
-msgid ""
-"Create a multi-layer image with an effect like a stone was thrown into the "
-"current image"
-msgstr ""
-"أنشئ صورة متعددة الطبقات مع تاُثير يشبه رمي حجر داخل الصورة الحالية"
+msgid "Create a multi-layer image with an effect like a stone was thrown into the current image"
+msgstr "أنشئ صورة متعددة الطبقات مع تاُثير يشبه رمي حجر داخل الصورة الحالية"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
@@ -2806,11 +2726,8 @@ msgid "_Waves..."
 msgstr "أ_مواج..."
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:1
-msgid ""
-"Create a new layer filled with a weave effect to be used as an overlay or "
-"bump map"
-msgstr ""
-"أنشئ طبقة جديدة مملوءة بتأثير النسيج لاستخدامها كغطاء أو خريطة نتوءات"
+msgid "Create a new layer filled with a weave effect to be used as an overlay or bump map"
+msgstr "أنشئ طبقة جديدة مملوءة بتأثير النسيج لاستخدامها كغطاء أو خريطة نتوءات"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
@@ -2942,114 +2859,78 @@ msgstr "تأثير-_Xach..."
 
 #~ msgid "<Toolbox>/Xtns/Languages/Script-Fu"
 #~ msgstr "<Toolbox>/Xtns/Languages/سكربت-فو"
-
 #~ msgid "Script Progress"
 #~ msgstr "تقدم السكربت"
-
 #~ msgid "(none)"
 #~ msgstr "(لا شيء)"
-
 #~ msgid "Author:"
 #~ msgstr "المؤلف:"
-
 #~ msgid "Copyright:"
 #~ msgstr "حقوق النسخ:"
-
 #~ msgid "Date:"
 #~ msgstr "التاريخ:"
-
 #~ msgid "Image Types:"
 #~ msgstr "أنواع الصور:"
-
 #~ msgid "Search by _Name"
 #~ msgstr "بحث بالا_سم"
-
 #~ msgid "_Search:"
 #~ msgstr "بح_ث:"
-
 #~ msgid "Searching by name - please wait"
 #~ msgstr "جاري البحث بالاسم - رجاء الانتظار"
-
 #~ msgid "Searching - please wait"
 #~ msgstr "جاري البحث - رجاء الانتظار"
-
 #~ msgid "No matches"
 #~ msgstr "لا مطابقات"
-
 #~ msgid "Parameters"
 #~ msgstr "الوسطاء"
-
 #~ msgid "Additional Information"
 #~ msgstr "معلومات إضافية"
-
 #~ msgid "GIMP Plug-In"
 #~ msgstr "إضافة GIMP"
-
 #~ msgid "<Image>/Script-Fu/Alpha to Logo"
 #~ msgstr "<Image>/Script-Fu/ألفا إلى شعار"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Logos"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/شعارات"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Patterns"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/نماذج"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Alien Glow"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/سمات صفحة الويب/توهج مغاير"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Buttons"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/أزرار"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Web Page Themes/Beveled Pattern"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/سمات صفحة الويب/نموذج منحرف"
-
 #~ msgid "<Image>/Script-Fu/Shadow"
 #~ msgstr "<Image>/Script-Fu/ظل"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Utils"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/أدوات مساعدة"
-
 #~ msgid "_Font Map..."
 #~ msgstr "خريطة ال_خط..."
-
 #~ msgid "Create new image"
 #~ msgstr "إنشاء صورة جديدة"
-
 #~ msgid "Make new background"
 #~ msgstr "صنع خلفية جديدة"
-
 #~ msgid "Pad color"
 #~ msgstr "لون الوسادة"
-
 #~ msgid "Pad opacity"
 #~ msgstr "إعتام الوسادة"
-
 #~ msgid "Padding for transparent regions"
 #~ msgstr "التوسيد للمناطق الشفافة"
-
 #~ msgid "Shear length"
 #~ msgstr "طول القص"
-
 #~ msgid "Show Image _Structure..."
 #~ msgstr "إ_ظهار بنية الصورة..."
-
 #~ msgid "Space between layers"
 #~ msgstr "المسافة بين الطبقات"
-
 #~ msgid "<Toolbox>/Xtns/Script-Fu/Make Brush"
 #~ msgstr "<Toolbox>/Xtns/Script-Fu/صنع فرشاة"
-
 #~ msgid "Cubic"
 #~ msgstr "مكعب"
-
 #~ msgid "Linear"
 #~ msgstr "خطي"
-
 #~ msgid "None"
 #~ msgstr "بدون"
-
 #~ msgid "Filename"
 #~ msgstr "اسم الملف"
-
 #~ msgid "<Toolbox>/Help/The GIMP Online"
 #~ msgstr "<Toolbox>/Help/GIMP على الخط"
+
