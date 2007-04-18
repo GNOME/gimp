@@ -92,7 +92,7 @@ INCLUDES = \
 	$(DBUS_GLIB_CFLAGS)	\
 	-I$(includedir)
 
-LDFLAGS = $(mwindows) $(munix) \
+AM_LDFLAGS = $(mwindows) $(munix) \
 	-u $(SYMPREFIX)xcf_init			\
 	-u $(SYMPREFIX)internal_procs_init	\
 	-u $(SYMPREFIX)gimp_coords_mix		\
