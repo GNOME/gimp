@@ -1,3 +1,8 @@
+2007-04-19  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bump the required version of pygtk to 2.10.4.
+	Older versions have a bug in the code generator (bug #381389).
+
 2007-04-18  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am: don't override LDFLAGS, use AM_LDFLAGS instead.
