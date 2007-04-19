@@ -34,7 +34,7 @@ Bugs fixed in GIMP 2.2.14
 - improved robustness of transform tool preview code (bug #420595)
 - improved forward compatibility of XCF loader (bug #316207)
 - don't crash in the Compressor plug-in if files can't be opened (bug #422444)
-- fixed sensitivity of input fields in the Lighting plug-in #359833
+- fixed sensitivity of input fields in the Lighting plug-in (bug #359833)
 
 
 Bugs fixed in GIMP 2.2.13
