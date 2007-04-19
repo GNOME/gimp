@@ -1,0 +1,311 @@
+#  translation of km.po to Khmer
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: km\n"
+"Report-Msgid-Bugs-To: translate-editor@lists.sourceforge.net\n"
+"POT-Creation-Date: 2007-04-18 14:41+0700\n"
+"PO-Revision-Date: 2007-04-19 14:34+0700\n"
+"Last-Translator: Khoem Sokhem<khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer<support@khmeros.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Pootling 0.2\n"
+
+#: ../plug-ins/pygimp/gimpfu.py:335
+msgid "Missing exception information"
+msgstr "បាត់បង់​ព័ត៌មាន​ករណី​លើកលែង"
+
+#: ../plug-ins/pygimp/gimpfu.py:344
+#, python-format
+msgid "An error occured running %s"
+msgstr "កំហុស​មួយ​បាន​កើត​ឡើង​ខណៈពេល​កំពុង​រត់ %s"
+
+#: ../plug-ins/pygimp/gimpfu.py:355
+msgid "_More Information"
+msgstr "_ព័ត៌មាន​បន្ថែម"
+
+#: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
+#: ../plug-ins/pygimp/gimpfu.py:479
+msgid "No"
+msgstr "ទេ"
+
+#: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
+msgid "Yes"
+msgstr "បាទ/ចាស"
+
+#: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
+msgid "Python-Fu File Selection"
+msgstr "ជម្រើស​ឯកសារ Python-Fu"
+
+#: ../plug-ins/pygimp/gimpfu.py:528
+msgid "Python-Fu Folder Selection"
+msgstr "ជម្រើស​ថត Python-Fu"
+
+#: ../plug-ins/pygimp/gimpfu.py:618
+#, python-format
+msgid "Invalid input for '%s'"
+msgstr "ការ​បញ្ចូល​មិន​ត្រឹមត្រូវ​សម្រាប់ '%s'"
+
+#: ../plug-ins/pygimp/gimpui.py:175
+msgid "Python-Fu Color Selection"
+msgstr "ជម្រើស​ពណ៌ Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+msgid "Saving as colored XHTML"
+msgstr "រក្សាទុក​ជា​ XHTML ដែល​មាន​ពណ៌"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
+msgid "Save as colored XHTML"
+msgstr "រក្សាទុក​ជា​ XHTML ដែល​មាន​ពណ៌"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
+msgid "Colored XHTML"
+msgstr "XHTML ដែល​មាន​ពណ៌"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
+msgid "Character _source"
+msgstr "ប្រភព​តួអក្សរ"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
+msgid "Source code"
+msgstr "កូដ​ប្រភព"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:194
+msgid "Text file"
+msgstr "ឯកសារ​អត្ថបទ"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+msgid "Entry box"
+msgstr "ប្រអប់ធាតុ"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+msgid "_File to read or characters to use"
+msgstr "_ឯកសារ​ត្រូវ​អាន ឬ​តួអក្សរ​ត្រូវ​ប្រើ"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+msgid "Fo_nt size in pixels"
+msgstr "ទំហំ​ពុម្ពអក្សរ​គិត​ជា​ភីកសែល"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+msgid "_Write a separate CSS file"
+msgstr "_សរសេរ​ជាំ​ឯកសារ CSS ដោយ​ឡែក"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
+msgid "Python Console"
+msgstr "កុងសូល​ Python"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
+msgid "_Browse..."
+msgstr "_រក​មើល..."
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
+msgid "Python Procedure Browser"
+msgstr "កម្មវិធី​រុករក​បែបបទ​របស់ Python"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "មិន​អាច​បើក '%s' ដើម្បី​សរសេរ ៖ %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "មិន​អាច​សរសេរ​ទៅ​កាន់ '%s': %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
+msgid "Save Python-Fu Console Output"
+msgstr "រក្សា​ទុក​លទ្ធផល​របស់កុងសូល Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
+msgid "Interactive Gimp-Python interpreter"
+msgstr "កម្មវិធីបកប្រែ Gimp-Python អន្តរសកម្ម"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
+msgid "_Console"
+msgstr "_កុងសូល"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+msgid "Add a layer of fog"
+msgstr "បន្ថែម​ស្រទាប់​របស់​អ័ព្ទ"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+msgid "_Fog..."
+msgstr "_អ័ព្ទ..."
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+msgid "_Layer name"
+msgstr "_ឈ្មោះ​ស្រទាប់"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+msgid "Clouds"
+msgstr "ពពក"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:60
+msgid "_Fog color"
+msgstr "_ពណ៌​អ័ព្ទ"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+msgid "_Turbulence"
+msgstr "_គួច"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+msgid "Op_acity"
+msgstr "ស្រអាប់"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
+msgid "Offset the colors in a palette"
+msgstr ""
+"អុហ្វសិត​ពណ៌​នៅ​ក្នុងក្ដារ"
+"​"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
+msgid "_Offset Palette..."
+msgstr "_អុហ្វសិត​ក្ដារ..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+msgid "Palette"
+msgstr "ក្ដារ"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
+msgid "Off_set"
+msgstr "អុហ្វសិត"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
+msgid "Sort the colors in a palette"
+msgstr "តម្រៀប​ពណ៌​នៅ​ក្នុង​ក្ដារ"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
+msgid "_Sort Palette..."
+msgstr "_តម្រៀប​ក្ដារ..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+msgid "Color _model"
+msgstr "ម៉ូដែល​ពណ៌"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "RGB"
+msgstr "RGB"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+msgid "HSV"
+msgstr "HSV"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+msgid "Channel to _sort"
+msgstr "ឆានែល​ត្រូវ​តម្រៀប"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+msgid "Red or Hue"
+msgstr "ក្រហម ឬពណ៌លាំៗ"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+msgid "Green or Saturation"
+msgstr "បៃតង ឬ​តិត្ថិភាព​"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+msgid "Blue or Value"
+msgstr "ខៀវ ឬ​តម្លៃ"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+msgid "_Ascending"
+msgstr "_ឡើង"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "បង្កើត​ពណ៌​ជម្រាល​ដដែល ដោយ​ប្រើ​ពណ៌​ពី​ក្ដារ"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
+msgid "Palette to _Repeating Gradient"
+msgstr "ក្ដារ​ត្រូវ​បង្កើត​ពណ៌​ជម្រាល​ដដែល"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
+msgid "Create a gradient using colors from the palette"
+msgstr "បង្កើត​ពណ៌​ជម្រាល ដោយ​ប្រើ​ពណ៌​ពី​ក្ដារ"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
+msgid "Palette to _Gradient"
+msgstr "ក្ដារ​ត្រូវ​បង្កើត​ពណ៌​ជម្រាល"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
+msgid "Slice"
+msgstr "ចំណិត"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr "កាត់​រូបភាព​ជា​មួយ​នឹង​បន្ទាត់​មគ្គុទ្ទេសក៍ បង្កើត​រូបភាព និង​តារាង HTML ដែល​បានច្រឹប​"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
+msgid "_Slice..."
+msgstr "_ចំណិត..."
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:430
+msgid "Path for HTML export"
+msgstr "ផ្លូវ​សម្រាប់​នាំចេញ HTML"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+msgid "Filename for export"
+msgstr "ឈ្មោះ​ឯកសារ​សម្រាប់​នាំចេញ"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+msgid "Image name prefix"
+msgstr "បុព្វបទ​ឈ្មោះ​រូបភាព"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+msgid "Image format"
+msgstr "ទ្រង់ទ្រាយ​រូបភាព"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+msgid "Separate image folder"
+msgstr "បំបែក​ថត​រូបភាព"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+msgid "Folder for image export"
+msgstr "ថត​សម្រាប់​នាំចេញ​រូបភាព"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+msgid "Space between table elements"
+msgstr "ចន្លោះ​រវាង​ធាតុ​តារាង"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+msgid "Javascript for onmouseover and clicked"
+msgstr "Javascript សម្រាប់​ដាក់កណ្ដុរ​លើ ហើយ​ចុច"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+msgid "Skip animation for table caps"
+msgstr "រំលង​ចលនា​សម្រាប់​ក្បាល​តារាង"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+msgid "Add a drop shadow to a layer, and optionally bevel it"
+msgstr "បន្ថែម​ការ​ដាក់​​ស្រមោល​​ទៅ​ស្រទាប់ ហើយ​ជា​ជម្រើស​ធ្វើ​ឲ្យ​វា​ទេរ"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
+msgid "_Drop Shadow and Bevel..."
+msgstr "_ដាក់​ស្រមោល ហើយ​ធ្វើ​ឲ្យ​ទេរ..."
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
+msgid "_Shadow blur"
+msgstr "_ស្រមោល​ព្រាលៗ"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
+msgid "_Bevel"
+msgstr "_ធ្វើ​ឲ្យ​ទេរ"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+msgid "_Drop shadow"
+msgstr "_ដាក់​ស្រមោល"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+msgid "Drop shadow _X displacement"
+msgstr "ដាក់​ស្រមោល​ការ​ជំនួស _X"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+msgid "Drop shadow _Y displacement"
+msgstr "ដាក់​ស្រមោលការ​ជំនួស _Y"

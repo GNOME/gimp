@@ -1,0 +1,1564 @@
+# translation of km.po to Khmer
+# Poch Sokun <sokun_poch@khmeros.info>, 2006.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2006, 2007.
+# Auk Piseth <piseth_dv@khmeros.info>, 2006.
+# Eng Vannak <evannak@khmeros.info>, 2006.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+msgid ""
+msgstr ""
+"Project-Id-Version: km\n"
+"Report-Msgid-Bugs-To: translate-editor@lists.sourceforge.net\n"
+"POT-Creation-Date: 2006-02-22 19:14+0100\n"
+"PO-Revision-Date: 2007-04-18 10:20+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: ../libgimp/gimpbrushmenu.c:140
+msgid "Brush Selection"
+msgstr "ការជ្រើស​ជក់"
+
+#: ../libgimp/gimpbrushmenu.c:180 ../libgimp/gimppatternmenu.c:165
+msgid "_Browse..."
+msgstr "_រកមើល..."
+
+#: ../libgimp/gimpexport.c:215 ../libgimp/gimpexport.c:251
+#, c-format
+msgid "%s can't handle layers"
+msgstr "%s មិន​អាច​គ្រប់គ្រង​ស្រទាប់"
+
+#: ../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
+#: ../libgimp/gimpexport.c:234
+msgid "Merge Visible Layers"
+msgstr "បញ្ចូល​ស្រទាប់​មើល​ឃើញ​ចូល​គ្នា"
+
+#: ../libgimp/gimpexport.c:224
+#, c-format
+msgid "%s can't handle layer offsets, size or opacity"
+msgstr "%s មិន​អាច​គ្រប់គ្រង​អុហ្វសិត​ស្រទាប់ ទំហំ ឬ ភាព​ស្រអាប់"
+
+#: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
+#, c-format
+msgid "%s can only handle layers as animation frames"
+msgstr "%s អាច​គ្រប់គ្រង​តែ​ស្រទាប់​ជា​ស៊ុម​ដែល​មាន​ចលនា"
+
+#: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:243
+msgid "Save as Animation"
+msgstr "រក្សា​ទុក​ជា​ចលនា"
+
+#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:252
+#: ../libgimp/gimpexport.c:261
+msgid "Flatten Image"
+msgstr "ធ្វើ​ឲ្យ​រូបភាព​រាបស្មើ"
+
+#: ../libgimp/gimpexport.c:260
+#, c-format
+msgid "%s can't handle transparency"
+msgstr "%s មិន​អាច​គ្រប់គ្រង​ភាព​ថ្លា"
+
+#: ../libgimp/gimpexport.c:269
+#, c-format
+msgid "%s can't handle layer masks"
+msgstr "%s មិន​អាច​គ្រប់គ្រង​របាំង​ស្រទាប់"
+
+#: ../libgimp/gimpexport.c:270
+msgid "Apply Layer Masks"
+msgstr "អនុវត្ត​របាំង​ស្រទាប់"
+
+#: ../libgimp/gimpexport.c:278
+#, c-format
+msgid "%s can only handle RGB images"
+msgstr "%s អាច​គ្រប់គ្រង​តែ​រូបភាព RGB ប៉ុណ្ណោះ"
+
+#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:317
+#: ../libgimp/gimpexport.c:326
+msgid "Convert to RGB"
+msgstr "បម្លែង​ទៅជា RGB"
+
+#: ../libgimp/gimpexport.c:287
+#, c-format
+msgid "%s can only handle grayscale images"
+msgstr "%s អាច​គ្រប់គ្រង​តែ​រូបភាព​ដែល​មាន​មាត្រដ្ឋាន​ប្រផេះ​ប៉ុណ្ណោះ"
+
+#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:317
+#: ../libgimp/gimpexport.c:338
+msgid "Convert to Grayscale"
+msgstr "បម្លែង​ទៅ​ជា​មាត្រដ្ឋាន​ប្រផេះ"
+
+#: ../libgimp/gimpexport.c:296
+#, c-format
+msgid "%s can only handle indexed images"
+msgstr "%s អាច​គ្រប់គ្រង​តែ​រូបភាព​ដែល​មាន​លិបិក្រម​ប៉ុណ្ណោះ"
+
+#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:326
+#: ../libgimp/gimpexport.c:336
+msgid ""
+"Convert to Indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"បម្លែង​ទៅ​ជា​រូបភាព​ដែល​បាន​ដាក់​លិបិក្រម ដោយ​ប្រើ​ការ​កំណត់​លំនាំដើម\n"
+"(ធ្វើ​វា​ដោយ​ដៃ​ដើម្បី​កែតម្រូវ​លទ្ធផល)"
+
+#: ../libgimp/gimpexport.c:306
+#, c-format
+msgid "%s can only handle bitmap (two color) indexed images"
+msgstr "%s អាច​គ្រប់គ្រង​តែ​រូបភាព​តូចៗ (ពីរពណ៌) រូបភាព​ដែល​មាន​លិបិក្រម"
+
+#: ../libgimp/gimpexport.c:307
+msgid ""
+"Convert to Indexed using bitmap default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"បម្លែង​ទៅ​ជា​រូបភាព​ដែល​បាន​ដាក់​លិបិក្រម ដោយ​ប្រើ​ការ​កំណត់​រូបភាព​លំនាំដើម\n"
+"(ធ្វើ​វា​ដោយ​ដៃ​ដើម្បី​កែតម្រូវ​លទ្ធផល)"
+
+#: ../libgimp/gimpexport.c:316
+#, c-format
+msgid "%s can only handle RGB or grayscale images"
+msgstr "%s អាច​គ្រប់គ្រង​តែ​រូបភាព RGB ឬ មាត្រដ្ឋាន​ប្រផេះ"
+
+#: ../libgimp/gimpexport.c:325
+#, c-format
+msgid "%s can only handle RGB or indexed images"
+msgstr "%s អាច​គ្រប់គ្រង​តែ​រូបភាព RGB ឬ មាន​លិបិក្រម"
+
+#: ../libgimp/gimpexport.c:335
+#, c-format
+msgid "%s can only handle grayscale or indexed images"
+msgstr "%s អាច​គ្រប់គ្រង​តែ​រូបភាព​មាន​ត្រដ្ឋាន​ប្រផេះ ឬ មាន​លិបិក្រម"
+
+#: ../libgimp/gimpexport.c:346
+#, c-format
+msgid "%s needs an alpha channel"
+msgstr "%s ត្រូវ​ការ​ឆានែល​អាល់ហ្វា​មួយ"
+
+#: ../libgimp/gimpexport.c:347
+msgid "Add Alpha Channel"
+msgstr "បន្ថែម​ឆានែល​អាល់ហ្វា"
+
+#: ../libgimp/gimpexport.c:381
+msgid "Confirm Save"
+msgstr "អះអាង​ការ​រក្សាទុក"
+
+#: ../libgimp/gimpexport.c:387
+msgid "Confirm"
+msgstr "អះអាង"
+
+#: ../libgimp/gimpexport.c:462
+msgid "Export File"
+msgstr "នាំ​ឯកសារ​ចេញ"
+
+#: ../libgimp/gimpexport.c:466
+msgid "_Ignore"
+msgstr "_មិន​អើពើ"
+
+#: ../libgimp/gimpexport.c:468
+msgid "_Export"
+msgstr "_នាំចេញ"
+
+#. the headline
+#: ../libgimp/gimpexport.c:497
+#, c-format
+msgid ""
+"Your image should be exported before it can be saved as %s for the following "
+"reasons:"
+msgstr "រូបភាព​របស់​អ្នក​គួរ​តែ​ត្រូវ​បាន​នាំ​ចេញ​មុនពេល​​វា​​ត្រូវ​បាន​រក្សា​ទុក​ជា %s សម្រាប់​ហេតុផល​ខាង​ក្រោម ៖"
+
+#. the footline
+#: ../libgimp/gimpexport.c:568
+msgid "The export conversion won't modify your original image."
+msgstr "នាំចេញ​ការ​បម្លែង​នឹង​មិន​កែប្រែ​រូបភាព​ដើម​របស់​អ្នក ។"
+
+#: ../libgimp/gimpexport.c:668
+#, c-format
+msgid ""
+"You are about to save a layer mask as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"អ្នក​រៀប​នឹង​រក្សាទុក​របាំង​ស្រទាប់​មួយ​ជា %s ។\n"
+"វា​នឹង​មិន​រក្សាទុក​ស្រទាប់​ដែល​មើលឃើញ ។"
+
+#: ../libgimp/gimpexport.c:674
+#, c-format
+msgid ""
+"You are about to save a channel (saved selection) as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"អ្នក​រៀប​នឹង​រក្សាទុក​ឆានែល​មួយ (ជម្រើស​ដែល​បាន​រក្សាទុក) ជា %s ។\n"
+"វា​នឹង​មិន​រក្សាទុក​ស្រទាប់​ដែល​មើលឃើញ ។"
+
+#: ../libgimp/gimpfontselectbutton.c:126 ../libgimp/gimpfontselectbutton.c:177
+msgid "Font Selection"
+msgstr "ការ​ជ្រើស​ពុម្ពអក្សរ"
+
+#: ../libgimp/gimpfontselectbutton.c:139 ../libgimp/gimpfontselectbutton.c:178
+msgid "Sans"
+msgstr "គ្មាន"
+
+#: ../libgimp/gimpgradientmenu.c:115
+msgid "Gradient Selection"
+msgstr "ជម្រើស​ជម្រាល"
+
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
+msgid "(Empty)"
+msgstr "(ទទេ)"
+
+#: ../libgimp/gimppalettemenu.c:102
+msgid "Palette Selection"
+msgstr "ជម្រើស​​​ក្ដារ​លាយពណ៌​"
+
+#: ../libgimp/gimppatternmenu.c:125
+msgid "Pattern Selection"
+msgstr "ជម្រើស​​​លំនាំ"
+
+#: ../libgimp/gimpprocbrowserdialog.c:140
+msgid "by name"
+msgstr "តាម​ឈ្មោះ"
+
+#: ../libgimp/gimpprocbrowserdialog.c:141
+msgid "by description"
+msgstr "តាម​សេចក្តី​អធិប្បាយ"
+
+#: ../libgimp/gimpprocbrowserdialog.c:142
+msgid "by help"
+msgstr "តាម​ជំនួយ"
+
+#: ../libgimp/gimpprocbrowserdialog.c:143
+msgid "by author"
+msgstr "តាម​អ្នក​និពន្ធ"
+
+#: ../libgimp/gimpprocbrowserdialog.c:144
+msgid "by copyright"
+msgstr "តាម​ច្បាប់​រក្សាសិទ្ធិ"
+
+#: ../libgimp/gimpprocbrowserdialog.c:145
+msgid "by date"
+msgstr "តាម​កាលបរិច្ឆេទ"
+
+#: ../libgimp/gimpprocbrowserdialog.c:146
+msgid "by type"
+msgstr "តាម​ប្រភេទ"
+
+#: ../libgimp/gimpprocbrowserdialog.c:377
+msgid "Searching"
+msgstr "ស្វែងរក"
+
+#: ../libgimp/gimpprocbrowserdialog.c:388
+msgid "Searching by name"
+msgstr "ស្វែងរក​តាម​ឈ្មោះ"
+
+#: ../libgimp/gimpprocbrowserdialog.c:409
+msgid "Searching by description"
+msgstr "ស្វែងរក​តាម​សេចក្ដី​អធិប្បាយ"
+
+#: ../libgimp/gimpprocbrowserdialog.c:416
+msgid "Searching by help"
+msgstr "ស្វែងរក​តាម​ជំនួយ"
+
+#: ../libgimp/gimpprocbrowserdialog.c:423
+msgid "Searching by author"
+msgstr "ស្វែងរក​តាម​អ្នក​និពន្ធ"
+
+#: ../libgimp/gimpprocbrowserdialog.c:430
+msgid "Searching by copyright"
+msgstr "ស្វែងរក​តាម​ច្បាប់​រក្សាសិទ្ធិ"
+
+#: ../libgimp/gimpprocbrowserdialog.c:437
+msgid "Searching by date"
+msgstr "ស្វែងរក​តាម​កាលបរិច្ឆេទ"
+
+#: ../libgimp/gimpprocbrowserdialog.c:444
+msgid "Searching by type"
+msgstr "ស្វែងរក​តាម​ប្រភេទ"
+
+#: ../libgimp/gimpprocbrowserdialog.c:454
+#, c-format
+msgid "%d procedure"
+msgid_plural "%d procedures"
+msgstr[0] "%d បែបបទ"
+
+#: ../libgimp/gimpprocbrowserdialog.c:463
+msgid "No matches for your query"
+msgstr "គ្មាន​ការ​ផ្គូផ្គង​សម្រាប់​សំណួរ​របស់​អ្នក​"
+
+#: ../libgimp/gimpprocbrowserdialog.c:467
+#, c-format
+msgid "%d procedure matches your query"
+msgid_plural "%d procedures match your query"
+msgstr[0] "បែបបទ %d ផ្គូផ្គង​សំណួរ​របស់​អ្នក"
+
+#. count label
+#: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
+msgid "No matches"
+msgstr "គ្មាន​ការ​ផ្គូផ្គង"
+
+#: ../libgimp/gimpprocview.c:143
+msgid "Parameters"
+msgstr "ប៉ារ៉ាម៉ែត្រ"
+
+#: ../libgimp/gimpprocview.c:156
+msgid "Return Values"
+msgstr "ត្រឡប់​តម្លៃ"
+
+#: ../libgimp/gimpprocview.c:169
+msgid "Additional Information"
+msgstr "ព័ត៌មាន​បន្ថែម"
+
+#: ../libgimp/gimpprocview.c:210
+msgid "Author:"
+msgstr "អ្នក​និពន្ធ ៖"
+
+#: ../libgimp/gimpprocview.c:222
+msgid "Date:"
+msgstr "កាល​បរិច្ឆេទ ៖"
+
+#: ../libgimp/gimpprocview.c:234
+msgid "Copyright:"
+msgstr "រក្សា​សិទ្ធិ ៖"
+
+#: ../libgimp/gimpunitcache.c:57
+msgid "percent"
+msgstr "ភាគរយ"
+
+#: ../libgimpbase/gimpbaseenums.c:26
+msgid "_White (full opacity)"
+msgstr "_ពណ៌ស (ភាព​ស្រអាប់​ពេញលេញ)"
+
+#: ../libgimpbase/gimpbaseenums.c:27
+msgid "_Black (full transparency)"
+msgstr "_ពណ៌ខ្មៅ (ភាព​ថ្លា​ពេញលេញ)"
+
+#: ../libgimpbase/gimpbaseenums.c:28
+msgid "Layer's _alpha channel"
+msgstr "ឆានែល​អាល់ហ្វារបស់​ស្រទាប់"
+
+#: ../libgimpbase/gimpbaseenums.c:29
+msgid "_Transfer layer's alpha channel"
+msgstr "_ផ្ទេរ​ឆានែល​អាល់ហ្វា​របស់​ស្រទាប់"
+
+#: ../libgimpbase/gimpbaseenums.c:30
+msgid "_Selection"
+msgstr "_ជម្រើស"
+
+#: ../libgimpbase/gimpbaseenums.c:31
+msgid "_Grayscale copy of layer"
+msgstr "_ច្បាប់​ចម្លង​របស់​ស្រទាប់​មាត្រដ្ឋាន​ប្រផេះ"
+
+#: ../libgimpbase/gimpbaseenums.c:61
+msgid "FG to BG (RGB)"
+msgstr "ផ្ទៃខាងមុខ​ទៅ​ផ្ទៃខាងក្រោយ (RGB)"
+
+#: ../libgimpbase/gimpbaseenums.c:62
+msgid "FG to BG (HSV)"
+msgstr "ផ្ទៃខាងមុខ​ទៅ​ផ្ទៃខាងក្រោយ (HSV)"
+
+#: ../libgimpbase/gimpbaseenums.c:63
+msgid "FG to transparent"
+msgstr "ផ្ទៃខាងមុខ​ទៅ​ជា​​ថ្លា"
+
+#: ../libgimpbase/gimpbaseenums.c:64
+msgid "Custom gradient"
+msgstr "ជម្រាល​ផ្ទាល់​ខ្លួន"
+
+#: ../libgimpbase/gimpbaseenums.c:93
+msgid "FG color fill"
+msgstr "បំពេញ​ពណ៌​ផ្ទៃខាងមុខ"
+
+#: ../libgimpbase/gimpbaseenums.c:94
+msgid "BG color fill"
+msgstr "បំពេញ​ពណ៌​ផ្ទៃខាងក្រោយ"
+
+#: ../libgimpbase/gimpbaseenums.c:95
+msgid "Pattern fill"
+msgstr "បំពេញ​លំនាំ"
+
+#: ../libgimpbase/gimpbaseenums.c:125
+msgid "Add to the current selection"
+msgstr "បន្ថែម​ទៅ​ជម្រើស​​បច្ចុប្បន្ន"
+
+#: ../libgimpbase/gimpbaseenums.c:126
+msgid "Subtract from the current selection"
+msgstr "ដក​ពីជម្រើស​បច្ចុប្បន្ន"
+
+#: ../libgimpbase/gimpbaseenums.c:127
+msgid "Replace the current selection"
+msgstr "ជំនួស​ជម្រើ​ស​​​បច្ចុប្បន្ន"
+
+#: ../libgimpbase/gimpbaseenums.c:128
+msgid "Intersect with the current selection"
+msgstr "ប្រសព្វ​ជា​មួយ​នឹង​ជម្រើស​បច្ចុប្បន្ន"
+
+#: ../libgimpbase/gimpbaseenums.c:160 ../libgimpwidgets/gimpwidgetsenums.c:95
+msgid "Red"
+msgstr "ពណ៌​​ក្រហម"
+
+#: ../libgimpbase/gimpbaseenums.c:161 ../libgimpwidgets/gimpwidgetsenums.c:96
+msgid "Green"
+msgstr "ពណ៌​​បៃតង"
+
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:97
+msgid "Blue"
+msgstr "ពណ៌​​ខៀវ"
+
+#: ../libgimpbase/gimpbaseenums.c:163
+msgid "Gray"
+msgstr "ប្រផេះ"
+
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpbase/gimpbaseenums.c:529
+msgid "Indexed"
+msgstr "មានលិបិក្រម"
+
+#: ../libgimpbase/gimpbaseenums.c:165 ../libgimpwidgets/gimpwidgetsenums.c:98
+msgid "Alpha"
+msgstr "អាល់ហ្វា"
+
+#: ../libgimpbase/gimpbaseenums.c:194
+msgid "Small"
+msgstr "តូច"
+
+#: ../libgimpbase/gimpbaseenums.c:195
+msgid "Medium"
+msgstr "មធ្យម"
+
+#: ../libgimpbase/gimpbaseenums.c:196
+msgid "Large"
+msgstr "ធំ"
+
+#: ../libgimpbase/gimpbaseenums.c:228
+msgid "Light checks"
+msgstr "ពិនិត្យ​ពន្លឺ"
+
+#: ../libgimpbase/gimpbaseenums.c:229
+msgid "Mid-tone checks"
+msgstr "ការពិនិត្យ​ពាក់​កណ្ដាល"
+
+#: ../libgimpbase/gimpbaseenums.c:230
+msgid "Dark checks"
+msgstr "ការ​ពិនិត្យភាព​ងងឹត"
+
+#: ../libgimpbase/gimpbaseenums.c:231
+msgid "White only"
+msgstr "តែពណ៌​ស​ប៉ុណ្ណោះ"
+
+#: ../libgimpbase/gimpbaseenums.c:232
+msgid "Gray only"
+msgstr "តែ​ពណ៌​ប្រផេះ​ប៉ុណ្ណោះ"
+
+#: ../libgimpbase/gimpbaseenums.c:233
+msgid "Black only"
+msgstr "តែ​ពណ៌​ខ្មៅ​ប៉ុណ្ណោះ"
+
+#: ../libgimpbase/gimpbaseenums.c:261
+msgid "Image source"
+msgstr "ប្រភព​រូបភាព"
+
+#: ../libgimpbase/gimpbaseenums.c:262
+msgid "Pattern source"
+msgstr "ប្រភព​លំនាំ"
+
+#: ../libgimpbase/gimpbaseenums.c:291
+msgid "Lightness"
+msgstr "ភាព​ភ្លឺ"
+
+#: ../libgimpbase/gimpbaseenums.c:292
+msgid "Luminosity"
+msgstr "ភាពមានពន្លឺ"
+
+#: ../libgimpbase/gimpbaseenums.c:293
+msgid "Average"
+msgstr "មធ្យម"
+
+#: ../libgimpbase/gimpbaseenums.c:321
+msgid "Dodge"
+msgstr "គេច​"
+
+#: ../libgimpbase/gimpbaseenums.c:322
+msgid "Burn"
+msgstr "ដុត"
+
+#: ../libgimpbase/gimpbaseenums.c:386 ../libgimpbase/gimpbaseenums.c:561
+msgid "Linear"
+msgstr "​លីនេអ៊ែរ"
+
+#: ../libgimpbase/gimpbaseenums.c:387
+msgid "Bi-linear"
+msgstr "ទ្វេលីនីអ៊ែរ"
+
+#: ../libgimpbase/gimpbaseenums.c:388
+msgid "Radial"
+msgstr "មូល"
+
+#: ../libgimpbase/gimpbaseenums.c:389
+msgid "Square"
+msgstr "ការេ"
+
+#: ../libgimpbase/gimpbaseenums.c:390
+msgid "Conical (sym)"
+msgstr "សាជី (sym)"
+
+#: ../libgimpbase/gimpbaseenums.c:391
+msgid "Conical (asym)"
+msgstr "សាជី (asym)"
+
+#: ../libgimpbase/gimpbaseenums.c:392
+msgid "Shaped (angular)"
+msgstr "រាង (មុំ)"
+
+#: ../libgimpbase/gimpbaseenums.c:393
+msgid "Shaped (spherical)"
+msgstr "រាង (ស្វែរ)"
+
+#: ../libgimpbase/gimpbaseenums.c:394
+msgid "Shaped (dimpled)"
+msgstr "រាង (ខួច)"
+
+#: ../libgimpbase/gimpbaseenums.c:395
+msgid "Spiral (cw)"
+msgstr "គួច (ស្រប​ទ្រនិច​នាឡិកា)"
+
+#: ../libgimpbase/gimpbaseenums.c:396
+msgid "Spiral (ccw)"
+msgstr "គួច (ច្រាស​ទ្រនិច​នាឡិកា)"
+
+#: ../libgimpbase/gimpbaseenums.c:427
+msgid "Intersections (dots)"
+msgstr "​ប្រសព្វ (ចំណុច)"
+
+#: ../libgimpbase/gimpbaseenums.c:428
+msgid "Intersections (crosshairs)"
+msgstr "​ប្រសព្វ (ខ្វែង)"
+
+#: ../libgimpbase/gimpbaseenums.c:429
+msgid "Dashed"
+msgstr "ដាច់ៗ"
+
+#: ../libgimpbase/gimpbaseenums.c:430
+msgid "Double dashed"
+msgstr "​ដាច់ទ្វេ​ដង​"
+
+#: ../libgimpbase/gimpbaseenums.c:431
+msgid "Solid"
+msgstr "តាន់​"
+
+#: ../libgimpbase/gimpbaseenums.c:460
+msgid "Stock ID"
+msgstr "លេខ​សម្គាល់​សន្និធិ"
+
+#: ../libgimpbase/gimpbaseenums.c:461
+msgid "Inline pixbuf"
+msgstr "pixbuf ក្នុង​តួ"
+
+#: ../libgimpbase/gimpbaseenums.c:462
+msgid "Image file"
+msgstr "ឯកសារ​រូបភាព"
+
+#: ../libgimpbase/gimpbaseenums.c:491
+msgid "RGB color"
+msgstr "ពណ៌ RGB"
+
+#: ../libgimpbase/gimpbaseenums.c:492 ../libgimpbase/gimpbaseenums.c:527
+msgid "Grayscale"
+msgstr "មាត្រដ្ឋាន​ប្រផេះ"
+
+#: ../libgimpbase/gimpbaseenums.c:493
+msgid "Indexed color"
+msgstr "ពណ៌​ដែល​មានលិបិក្រម"
+
+#: ../libgimpbase/gimpbaseenums.c:525
+msgid "RGB"
+msgstr "RGB"
+
+#: ../libgimpbase/gimpbaseenums.c:526
+msgid "RGB-alpha"
+msgstr "RGB-អាល់ហ្វា"
+
+#: ../libgimpbase/gimpbaseenums.c:528
+msgid "Grayscale-alpha"
+msgstr "មាត្រដ្ឋាន​ប្រផេះ-អាល់ហ្វា"
+
+#: ../libgimpbase/gimpbaseenums.c:530
+msgid "Indexed-alpha"
+msgstr "មានលិបិក្រម-អាល់ហ្វា"
+
+#: ../libgimpbase/gimpbaseenums.c:560
+msgid "None (Fastest)"
+msgstr "គ្មាន​ (លឿន​បំផុត)"
+
+#: ../libgimpbase/gimpbaseenums.c:562
+msgid "Cubic"
+msgstr "គូប"
+
+#: ../libgimpbase/gimpbaseenums.c:563
+msgid "Lanczos (Best)"
+msgstr "Lanczos (ល្អ​បំផុត)"
+
+#: ../libgimpbase/gimpbaseenums.c:591
+msgid "Constant"
+msgstr "ថេរ"
+
+#: ../libgimpbase/gimpbaseenums.c:592
+msgid "Incremental"
+msgstr "បន្ថែម"
+
+#: ../libgimpbase/gimpbaseenums.c:621 ../modules/cdisplay_lcms.c:254
+msgid "None"
+msgstr "គ្មាន"
+
+#: ../libgimpbase/gimpbaseenums.c:622
+msgid "Sawtooth wave"
+msgstr "រលក​រាង​ធ្មេញ​រណារ"
+
+#: ../libgimpbase/gimpbaseenums.c:623
+msgid "Triangular wave"
+msgstr "រលក​រាង​ត្រីកោណ"
+
+#: ../libgimpbase/gimpbaseenums.c:651
+msgid "Pixels"
+msgstr "ភីកសែល"
+
+#: ../libgimpbase/gimpbaseenums.c:652
+msgid "Points"
+msgstr "ចំណុច"
+
+#: ../libgimpbase/gimpbaseenums.c:681
+msgid "Shadows"
+msgstr "ស្រមោល"
+
+#: ../libgimpbase/gimpbaseenums.c:682
+msgid "Midtones"
+msgstr "ពណ៌​បន្ថែម​ពាក់​កណ្ដាល"
+
+#: ../libgimpbase/gimpbaseenums.c:683
+msgid "Highlights"
+msgstr "បន្លិច"
+
+#: ../libgimpbase/gimpbaseenums.c:711
+msgid "Forward"
+msgstr "ទៅ​មុខ"
+
+#: ../libgimpbase/gimpbaseenums.c:712
+msgid "Backward"
+msgstr "ត្រឡប់​ក្រោយ"
+
+#: ../libgimpbase/gimpbaseenums.c:815
+msgid "Internal GIMP procedure"
+msgstr "បែបបទ GIMP ខាង​ក្នុង"
+
+#: ../libgimpbase/gimpbaseenums.c:816
+msgid "GIMP Plug-In"
+msgstr "កម្មវិធី​ជំនួ​យ​របស់ GIMP"
+
+#: ../libgimpbase/gimpbaseenums.c:817
+msgid "GIMP Extension"
+msgstr "កន្ទុយ​របស់ GIMP"
+
+#: ../libgimpbase/gimpbaseenums.c:818
+msgid "Temporary Procedure"
+msgstr "បែបបទ​បណ្ដោះ​អាសន្ន"
+
+#: ../libgimpbase/gimpmemsize.c:180
+#, c-format
+msgid "%d Byte"
+msgid_plural "%d Bytes"
+msgstr[0] "%d បៃ"
+
+#: ../libgimpbase/gimpmemsize.c:186
+#, c-format
+msgid "%.2f KB"
+msgstr "%.2f គីឡូបៃ"
+
+#: ../libgimpbase/gimpmemsize.c:190
+#, c-format
+msgid "%.1f KB"
+msgstr "%.1f គីឡូបៃ"
+
+#: ../libgimpbase/gimpmemsize.c:194
+#, c-format
+msgid "%d KB"
+msgstr "%d គីឡូបៃ"
+
+#: ../libgimpbase/gimpmemsize.c:201
+#, c-format
+msgid "%.2f MB"
+msgstr "%.2f MB"
+
+#: ../libgimpbase/gimpmemsize.c:205
+#, c-format
+msgid "%.1f MB"
+msgstr "%.1f MB"
+
+#: ../libgimpbase/gimpmemsize.c:209
+#, c-format
+msgid "%d MB"
+msgstr "%d មេកាបៃ"
+
+#: ../libgimpbase/gimpmemsize.c:216
+#, c-format
+msgid "%.2f GB"
+msgstr "%.2f ជីកាបៃ"
+
+#: ../libgimpbase/gimpmemsize.c:220
+#, c-format
+msgid "%.1f GB"
+msgstr "%.1f GB"
+
+#: ../libgimpbase/gimpmemsize.c:224
+#, c-format
+msgid "%d GB"
+msgstr "%d ជីកាបៃ"
+
+#: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
+#: ../modules/cdisplay_lcms.c:246
+msgid "(invalid UTF-8 string)"
+msgstr "(ខ្សែ​អក្សរ UTF-8 មិន​ត្រឹមត្រូវ)"
+
+#: ../libgimpconfig/gimpcolorconfig.c:40
+msgid "Mode of operation for color management."
+msgstr "របៀប​នៃ​ការ​ប្រតិបត្តិការ​សម្រាប់​ការ​គ្រប់គ្រាន់​ពណ៌ ។"
+
+#: ../libgimpconfig/gimpcolorconfig.c:42
+msgid "The color profile of your (primary) monitor."
+msgstr "ទម្រង់​ពណ៌​នៃ​ម៉ូនីទ័រ (ចម្បង) របស់​អ្នក ។"
+
+#: ../libgimpconfig/gimpcolorconfig.c:44
+msgid ""
+"When enabled, the GIMP will try to use the display color profile from the "
+"windowing system. The configured monitor profile is then only used as a "
+"fallback."
+msgstr "នៅ​ពេល​បាន​អនុញ្ញាត GIMP នឹង​ព្យាយាម​ប្រើ​ទម្រង់​ពណ៌​បង្ហាញ​ពី​ប្រព័ន្ធ​វីនដូ ។ ទម្រង់​ម៉ូនីទ័រ​ដែល​បាន​កំណត់​រចនាសម្ព័ន្ធ​បន្ទាប់​មក​ត្រូវ​បាន​ប្រើ​ជា​ការ​ថយក្រោយតែប៉ុណ្ណោះ ។"
+
+#: ../libgimpconfig/gimpcolorconfig.c:48
+msgid "The default RGB workspace color profile."
+msgstr "ទម្រង់​ពណ៌​របស់​តំបន់​ការងារ RGB លំនាំដើម ។"
+
+#: ../libgimpconfig/gimpcolorconfig.c:50
+msgid "The CMYK color profile used to convert between RGB and CMYK."
+msgstr "ទម្រង់​ពណ៌ CMYK បាន​ប្រើ​ដើម្បី​បម្លែង​រវាង RGB និង CMYK ។"
+
+#: ../libgimpconfig/gimpcolorconfig.c:52
+msgid "The color profile used for simulating a printed version (softproof)."
+msgstr "ទម្រង់ពណ៌បានប្រើសម្រាប់ប្លែងកំណែដែលបានបោះពុម្ព (softproof)."
+
+#: ../libgimpconfig/gimpcolorconfig.c:54
+msgid "Sets how colors are mapped for your display."
+msgstr "កំណត់​វិធី​ដែល​ពណ៌​ត្រូវ​បាន​ផ្គូផ្គង​សម្រាប់​ការ​បង្ហាញ​របស់​អ្នក ។"
+
+#: ../libgimpconfig/gimpcolorconfig.c:56
+msgid "Sets how colors are converted from workspace to the print simulation device."
+msgstr "កំណត់​វិធី​ដែល​ពណ៌​ត្រូវ​បាន​បម្លែង​ពី​តំបន់​ការងារ​ទៅ​ជា​ឧបករណ៍​ប្លែង​បោះពុម្ព ។"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:24
+msgid "No color management"
+msgstr "គ្មាន​ការ​គ្រប់គ្រង​ពណ៌"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:25
+msgid "Color managed display"
+msgstr "​ពណ៌​បាន​គ្រប់គ្រង​ការ​បង្ហាញ"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:26
+msgid "Print simulation"
+msgstr "បោះពុម្ព​ការ​ប្លែង"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:56 ../modules/cdisplay_proof.c:55
+msgid "Perceptual"
+msgstr "ដែល​អាច​យល់​បាន"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:57 ../modules/cdisplay_proof.c:56
+msgid "Relative colorimetric"
+msgstr "ពណ៌មាត្រ​ដែល​ទាក់ទង"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:58
+#: ../libgimpwidgets/gimpwidgetsenums.c:93 ../modules/cdisplay_proof.c:57
+msgid "Saturation"
+msgstr "តិត្ថិភាព"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:59 ../modules/cdisplay_proof.c:58
+msgid "Absolute colorimetric"
+msgstr "ពណ៌មាត្រ​ដាច់ខាត"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:88
+msgid "Ask"
+msgstr "សួរ"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:89
+msgid "Use embedded profile"
+msgstr "ប្រើ​ទម្រង់​ដែល​បាន​បង្កប់​"
+
+#: ../libgimpconfig/gimpcolorconfig-enums.c:90
+msgid "Convert to RGB workspace"
+msgstr "បម្លែង​ទៅ​ជា​តំបន់​ការងារ RGB"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#, c-format
+msgid "value for token %s is not a valid UTF-8 string"
+msgstr "តម្លៃ​សម្រាប់​ថូខឹន %s មិនមែន​ជា​ខ្សែ UTF-8 ត្រឹមត្រូវ​មួយ"
+
+#. please don't translate 'yes' and 'no'
+#: ../libgimpconfig/gimpconfig-deserialize.c:423
+#, c-format
+msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
+msgstr "'បាទ/ចាស' ឬ 'ទេ' ដែល​រំពឹង​ទុក សម្រាប់​ថូខឹន​ប៊ូលីន %s បាន​ទទួល '%s'"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:497
+#, c-format
+msgid "invalid value '%s' for token %s"
+msgstr "តម្លៃ​មិន​ត្រឹមត្រូវ '%s' សម្រាប់​ថូខឹន %s"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:512
+#, c-format
+msgid "invalid value '%ld' for token %s"
+msgstr "តម្លៃ​មិនត្រឹមត្រូវ '%ld' សម្រាប់​ថូខឹន %s"
+
+#: ../libgimpconfig/gimpconfig-deserialize.c:581
+#, c-format
+msgid "while parsing token '%s': %s"
+msgstr "ខណៈពេល​ញែក​ថូខឹន '%s' ៖ %s"
+
+#: ../libgimpconfig/gimpconfig-iface.c:453
+#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpscanner.c:579
+msgid "fatal parse error"
+msgstr "កំហុស​ញែក​ធ្ងន់ធ្ងរ"
+
+#: ../libgimpconfig/gimpconfig-path.c:376
+#, c-format
+msgid "Cannot expand ${%s}"
+msgstr "មិន​អាច​ពង្រីក ${%s}"
+
+#: ../libgimpconfig/gimpconfigwriter.c:135
+#, c-format
+msgid "Could not create temporary file for '%s': %s"
+msgstr "មិន​អាច​បង្កើត​ឯកសារ​បណ្ដោះអាសន្ន​សម្រាប់ '%s' ៖ %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:148
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "មិន​អាច​បើក '%s' ដើម្បី​សរសេរ ៖ %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:667
+#, c-format
+msgid ""
+"Error writing to temporary file for '%s': %s\n"
+"The original file has not been touched."
+msgstr ""
+"កំហុស​ក្នុង​ការ​សរសេរ​ទៅ​កាន់​ឯកសារ​បណ្ដោះអាសន្ន​សម្រាប់ '%s' ៖ %s\n"
+"ឯកសារ​ដើម​មិន​ត្រូវ​បាន​ប៉ះពាល់​ទេ ។"
+
+#: ../libgimpconfig/gimpconfigwriter.c:675
+#, c-format
+msgid ""
+"Error writing to temporary file for '%s': %s\n"
+"No file has been created."
+msgstr ""
+"កំហុស​ក្នុង​ការ​សរសេរ​ទៅ​កាន់​ឯកសារ​បណ្ដោះអាសន្ន​សម្រាប់ '%s' ៖ %s\n"
+"គ្មាន​ឯកសារ​ត្រូវ​បាន​បង្កើត ។"
+
+#: ../libgimpconfig/gimpconfigwriter.c:686
+#, c-format
+msgid "Error writing to '%s': %s"
+msgstr "កំហុស​ក្នុង​ការ​សរសេរ​ទៅ​កាន់ '%s' ៖ %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:704
+#, c-format
+msgid "Could not create '%s': %s"
+msgstr "មិន​អាច​បង្កើត '%s' ៖ %s"
+
+#: ../libgimpconfig/gimpscanner.c:255
+msgid "invalid UTF-8 string"
+msgstr "ខ្សែ​អក្សរ UTF-8 មិន​ត្រឹមត្រូវ"
+
+#: ../libgimpconfig/gimpscanner.c:606
+#, c-format
+msgid "Error while parsing '%s' in line %d: %s"
+msgstr "កំហុស​ខណៈ​ពេល​ញែក '%s' នៅ​ក្នុង​បន្ទាត់ %d ៖ %s"
+
+#: ../libgimpmodule/gimpmodule.c:152 ../libgimpmodule/gimpmodule.c:170
+#: ../libgimpmodule/gimpmodule.c:279 ../libgimpmodule/gimpmodule.c:306
+#: ../libgimpmodule/gimpmodule.c:417
+#, c-format
+msgid "Module '%s' load error: %s"
+msgstr "កំហុស​ក្នុង​ការ​ផ្ទុក​ម៉ូឌុល '%s' ៖ %s"
+
+#: ../libgimpmodule/gimpmodule.c:374
+msgid "Module error"
+msgstr "កំហុស​ម៉ូឌុល"
+
+#: ../libgimpmodule/gimpmodule.c:375
+msgid "Loaded"
+msgstr "បាន​ផ្ទុក"
+
+#: ../libgimpmodule/gimpmodule.c:376
+msgid "Load failed"
+msgstr "ការផ្ទុក​បាន​បរាជ័យ"
+
+#: ../libgimpmodule/gimpmodule.c:377
+msgid "Not loaded"
+msgstr "មិន​បាន​ផ្ទុក"
+
+#: ../libgimpthumb/gimpthumb-utils.c:125
+#, c-format
+msgid ""
+"Cannot determine a valid home directory.\n"
+"Thumbnails will be stored in the folder for temporary files (%s) instead."
+msgstr ""
+"មិន​អាច​កំណត់​ថតផ្ទះ​ត្រឹមត្រូវ​មួយបានទេ ។\n"
+"រូបភាព​តូចៗ​នឹង​ត្រូវ​បាន​រក្សាទុក​នៅ​ក្នុង​ថត​សម្រាប់​ឯកសារ​បណ្ដោះអាសន្ន (%s) ជំនួស​វិញ ។"
+
+#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr "បាន​បរាជ័យ​ក្នុង​ការ​បង្កើត​ថត​រូបភាព​តូច '%s' ។"
+
+#: ../libgimpthumb/gimpthumbnail.c:889
+#, c-format
+msgid "Could not create thumbnail for %s: %s"
+msgstr "មិន​អាច​បង្កើត​រូបភាព​តូច​សម្រាប់ %s ៖ %s"
+
+#: ../libgimpwidgets/gimpbrowser.c:98
+msgid "_Search:"
+msgstr "_ស្វែងរក ៖"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:118
+msgid "_Foreground Color"
+msgstr "_ពណ៌​ផ្ទៃខាង​មុខ"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:122
+msgid "_Background Color"
+msgstr "_ពណ៌​ផ្ទៃខាង​ក្រោយ"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:126
+msgid "Blac_k"
+msgstr "ពណ៌​ខ្មៅ"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:130
+msgid "_White"
+msgstr "_ពណ៌ស"
+
+#: ../libgimpwidgets/gimpcolorscales.c:98
+msgid "Scales"
+msgstr "មាត្រ​ដ្ឋាន"
+
+#: ../libgimpwidgets/gimpcolorselection.c:187
+msgid "Current:"
+msgstr "បច្ចុប្បន្ន ៖"
+
+#: ../libgimpwidgets/gimpcolorselection.c:209
+msgid "Old:"
+msgstr "ចាស់ ៖"
+
+#: ../libgimpwidgets/gimpcolorselection.c:263
+msgid "Hexadecimal color notation as used in HTML and CSS"
+msgstr "ការ​កំណត់​ពណ៌​គោល ១៦ ដូច​ដែល​បាន​ប្រើ​ក្នុង HTML និង CSS"
+
+#: ../libgimpwidgets/gimpcolorselection.c:268
+msgid "HTML _notation:"
+msgstr "ការកំណត់ HTML ៖"
+
+#: ../libgimpwidgets/gimpfileentry.c:320
+msgid "Select Folder"
+msgstr "ជ្រើស​ថត"
+
+#: ../libgimpwidgets/gimpfileentry.c:322
+msgid "Select File"
+msgstr "ជ្រើស​ឯកសារ"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:203
+msgid "Kilobytes"
+msgstr "គីឡូបៃ"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
+msgid "Megabytes"
+msgstr "មេកាបៃ"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
+msgid "Gigabytes"
+msgstr "ជីកាបៃ"
+
+#. Count label
+#: ../libgimpwidgets/gimppageselector.c:269
+#: ../libgimpwidgets/gimppageselector.c:1171
+msgid "Nothing selected"
+msgstr "គ្មានអ្វី​បាន​ជ្រើស"
+
+#: ../libgimpwidgets/gimppageselector.c:287
+msgid "Select _All"
+msgstr "ជ្រើស​ទាំងអស់"
+
+#: ../libgimpwidgets/gimppageselector.c:307
+msgid "Select _range:"
+msgstr "ជ្រើស​ជួរ ៖"
+
+#: ../libgimpwidgets/gimppageselector.c:319
+msgid "Open _pages as"
+msgstr "បើក​ទំព័រ​ជា"
+
+#: ../libgimpwidgets/gimppageselector.c:420
+msgid "Page 000"
+msgstr "ទំព័រ 000"
+
+#: ../libgimpwidgets/gimppageselector.c:512
+#: ../libgimpwidgets/gimppageselector.c:749
+#, c-format
+msgid "Page %d"
+msgstr "ទំព័រ %d"
+
+#: ../libgimpwidgets/gimppageselector.c:1176
+msgid "One page selected"
+msgstr "បាន​ជ្រើស​មួយ​ទំព័រ"
+
+#: ../libgimpwidgets/gimppageselector.c:1183
+#, c-format
+msgid "All %d pages selected"
+msgstr "បាន​ជ្រើស​ទំព័រ %d"
+
+#: ../libgimpwidgets/gimppageselector.c:1185
+#, c-format
+msgid "%d pages selected"
+msgstr "បាន​ជ្រើស​ទំព័រ %d"
+
+#: ../libgimpwidgets/gimppatheditor.c:212
+msgid "Writable"
+msgstr "​អាច​សរសេរ​បាន"
+
+#: ../libgimpwidgets/gimppatheditor.c:221
+msgid "Folder"
+msgstr "ថត"
+
+#: ../libgimpwidgets/gimppickbutton.c:107
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
+"ចុច​"
+"លើ​ឧបករណ៍​ចាក់​ពណ៌ បន្ទាប់​មក​ចុច​ពណ៌​នៅ​កន្លែង​ណា​មួយ​នៅ​លើ​អេក្រង់​របស់​អ្នក ដើម្បី "
+"ជ្រើស​ពណ៌ ។"
+
+#: ../libgimpwidgets/gimppreviewarea.c:94
+msgid "Check Size"
+msgstr "ពិនិត្យ​មើល​ទំហំ"
+
+#: ../libgimpwidgets/gimppreviewarea.c:101
+msgid "Check Style"
+msgstr "ពិនិត្យ​រចនាប័ទ្ម"
+
+#. toggle button to (des)activate the instant preview
+#: ../libgimpwidgets/gimppreview.c:256
+msgid "_Preview"
+msgstr "_មើលជាមុន"
+
+#: ../libgimpwidgets/gimppropwidgets.c:1872
+#, c-format
+msgid "This text input field is limited to %d character."
+msgid_plural "This text input field is limited to %d characters."
+msgstr[0] "វាល​បញ្ចូល​អត្ថបទ​នេះ​ត្រូវ​បាន​កំណត់​ទៅ​ជា %d តួអក្សរ ។"
+
+#: ../libgimpwidgets/gimpresolutionentry.c:382
+#, c-format
+msgid "pixels/%s"
+msgstr "ភីកសែល/%s"
+
+#: ../libgimpwidgets/gimpstock.c:113
+msgid "Anchor"
+msgstr "យុថ្កា"
+
+#: ../libgimpwidgets/gimpstock.c:114
+msgid "C_enter"
+msgstr "កណ្ដាល"
+
+#: ../libgimpwidgets/gimpstock.c:115
+msgid "_Duplicate"
+msgstr "_ស្ទួន"
+
+#: ../libgimpwidgets/gimpstock.c:116
+msgid "_Edit"
+msgstr "_កែសម្រួល"
+
+#: ../libgimpwidgets/gimpstock.c:117
+msgid "Linked"
+msgstr "បានតភ្ជាប់"
+
+#: ../libgimpwidgets/gimpstock.c:118
+msgid "Paste as New"
+msgstr "បិទភ្ជាប់ជាថ្មី"
+
+#: ../libgimpwidgets/gimpstock.c:119
+msgid "Paste Into"
+msgstr "បិទភ្ជាប់​ទីកាន់"
+
+#: ../libgimpwidgets/gimpstock.c:120
+msgid "_Reset"
+msgstr "_កំណត់​ឡើងវិញ"
+
+#: ../libgimpwidgets/gimpstock.c:121
+msgid "Visible"
+msgstr "មើលឃើញ"
+
+#: ../libgimpwidgets/gimpstock.c:157 ../libgimpwidgets/gimpstock.c:161
+msgid "_Stroke"
+msgstr "_ខ្វាច់"
+
+#: ../libgimpwidgets/gimpstock.c:173
+msgid "L_etter Spacing"
+msgstr "ចន្លោះ​តួអក្សរ"
+
+#: ../libgimpwidgets/gimpstock.c:174
+msgid "L_ine Spacing"
+msgstr "ចន្លោះ​​បន្ទាត់"
+
+#: ../libgimpwidgets/gimpstock.c:190
+msgid "_Resize"
+msgstr "_ផ្លាស់ប្ដូរ​ទំហំ"
+
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:300
+msgid "_Scale"
+msgstr "_មាត្រដ្ឋាន"
+
+#: ../libgimpwidgets/gimpstock.c:278
+msgid "Crop"
+msgstr "​ច្រឹប"
+
+#: ../libgimpwidgets/gimpstock.c:296
+msgid "_Transform"
+msgstr "_ប្លែង"
+
+#: ../libgimpwidgets/gimpstock.c:299
+msgid "_Rotate"
+msgstr "_បង្វិល"
+
+#: ../libgimpwidgets/gimpstock.c:301
+msgid "_Shear"
+msgstr "_កាត់"
+
+#: ../libgimpwidgets/gimpunitmenu.c:267
+msgid "More..."
+msgstr "ច្រើនទៀត..."
+
+#: ../libgimpwidgets/gimpunitmenu.c:577
+msgid "Unit Selection"
+msgstr "ជម្រើស​ឯកតា"
+
+#: ../libgimpwidgets/gimpunitmenu.c:625
+msgid "Unit"
+msgstr "ឯកតា"
+
+#: ../libgimpwidgets/gimpunitmenu.c:629
+msgid "Factor"
+msgstr "កត្តា"
+
+#: ../libgimpwidgets/gimpwidgets.c:1003
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
+msgstr "ប្រើ​តម្លៃ​នេះ​​សម្រាប់​ប្រភព​កម្មវិធី​បង្កើត​ចំនួន​ដោយ​ចៃដន្យ - វា​អនុញ្ញាត​ឲ្យ​អ្នក​ធ្វើ​ប្រតិបត្តិ \"ដោយ​ចៃដន្យ\" ម្ដង​ទៀត"
+
+#: ../libgimpwidgets/gimpwidgets.c:1007
+msgid "_New Seed"
+msgstr "_ប្រភព​ថ្មី"
+
+#: ../libgimpwidgets/gimpwidgets.c:1020
+msgid "Seed random number generator with a generated random number"
+msgstr "កម្មវិធី​បង្កើត​ចំនួន​ចៃដន្យ​របស់​ប្រភព​​ជាមួយ​ចំនួន​ចៃដន្យ​ដែល​បាន​បង្កើត​"
+
+#: ../libgimpwidgets/gimpwidgets.c:1024
+msgid "_Randomize"
+msgstr "_ធ្វើដោយចៃដន្យ"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:92
+msgid "_H"
+msgstr "_H"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:92
+msgid "Hue"
+msgstr "ភាព​លាំៗ​នៃ​ពណ៌"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:93
+msgid "_S"
+msgstr "_S"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:94
+msgid "_V"
+msgstr "_V"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:94
+msgid "Value"
+msgstr "តម្លៃ"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:95
+msgid "_R"
+msgstr "_R"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:96
+msgid "_G"
+msgstr "_G"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:97
+msgid "_B"
+msgstr "_B"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:98
+msgid "_A"
+msgstr "_A"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
+msgid "Layers"
+msgstr "ស្រទាប់"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
+msgid "Images"
+msgstr "រូបភាព"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:186
+msgid "Zoom in"
+msgstr "ពង្រីក"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:187
+msgid "Zoom out"
+msgstr "បង្រួម"
+
+#: ../modules/cdisplay_colorblind.c:67
+msgid "Protanopia (insensitivity to red"
+msgstr "មើល​ឃើញ​ពណ៌ (មិន​ដឹង​ពណ៌​ក្រហម"
+
+#: ../modules/cdisplay_colorblind.c:69
+msgid "Deuteranopia (insensitivity to green)"
+msgstr "មើល​ពណ៌​មិន​ឃើញ (​មិន​ដឹង​​ពណ៌​បៃតង)"
+
+#: ../modules/cdisplay_colorblind.c:71
+msgid "Tritanopia (insensitivity to blue)"
+msgstr "មើល​ពណ៌​មិន​ឃើញ​ (​មិន​ដឹង​ពណ៌​ខៀវ​)"
+
+#: ../modules/cdisplay_colorblind.c:200
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr "តម្រង​ការ​ប្លែង​ឳនភាព​ពណ៌ (​ក្បួន​ដោះស្រាយ Brettel-Vienot-Mollon)"
+
+#: ../modules/cdisplay_colorblind.c:290
+msgid "Color Deficient Vision"
+msgstr "កំណែ​ពណ៌​មិន​គ្រប់គ្រាន់"
+
+#: ../modules/cdisplay_colorblind.c:503
+msgid "Color _deficiency type:"
+msgstr "ប្រភេទ​ពណ៌​មិន​គ្រប់គ្រាន់"
+
+#: ../modules/cdisplay_gamma.c:91
+msgid "Gamma color display filter"
+msgstr "តម្រង​បង្ហាញ​ពណ៌​ហ្គាម៉ា"
+
+#: ../modules/cdisplay_gamma.c:160
+msgid "Gamma"
+msgstr "ហ្គាម៉ា"
+
+#: ../modules/cdisplay_gamma.c:251
+msgid "_Gamma:"
+msgstr "_ហ្គាម៉ា ៖"
+
+#: ../modules/cdisplay_highcontrast.c:91
+msgid "High Contrast color display filter"
+msgstr "តម្រង​បង្ហាញ​ពណ៌​កម្រិត​ពណ៌​ខ្ពស់"
+
+#: ../modules/cdisplay_highcontrast.c:160
+msgid "Contrast"
+msgstr "កម្រិត​ពណ៌"
+
+#: ../modules/cdisplay_highcontrast.c:251
+msgid "Contrast c_ycles:"
+msgstr "រង្វង់កម្រិតពណ៌ ៖"
+
+#: ../modules/cdisplay_lcms.c:105
+msgid "Color management display filter using ICC color profiles"
+msgstr "តម្រង​បង្ហាញ​ការ​គ្រប់គ្រង​ពណ៌ ដោយ​ប្រើ​ទម្រង់ពណ៌ ICC"
+
+#: ../modules/cdisplay_lcms.c:173
+msgid "Color Management"
+msgstr "ការ​គ្រប់គ្រង​ពណ៌"
+
+#: ../modules/cdisplay_lcms.c:288
+msgid ""
+"This filter takes its configuration from the Color Management section in the "
+"Preferences dialog."
+msgstr "តម្រង​នេះ​យក​ការ​កំណត់​រចនាសម្ព័ន្ធ​របស់​វា​ពី​ភាគ​គ្រប់គ្រង​ពណ៌​នៅ​ក្នុង​ប្រអប់​ចំណូល​ចិត្ត ។"
+
+#: ../modules/cdisplay_lcms.c:311
+msgid "Mode of operation:"
+msgstr "របៀប​នៃ​ប្រតិបត្តិការ ៖"
+
+#: ../modules/cdisplay_lcms.c:322
+msgid "RGB workspace profile:"
+msgstr "ទម្រង់​តំបន់​ការងារ RGB ៖ "
+
+#: ../modules/cdisplay_lcms.c:332
+msgid "Monitor profile:"
+msgstr "ទម្រង់​ត្រួតពិនិត្យ ៖"
+
+#: ../modules/cdisplay_lcms.c:342
+msgid "Print simulation profile:"
+msgstr "ទម្រង់​បន្លែង​បោះពុម្ព ៖"
+
+#: ../modules/cdisplay_proof.c:127
+msgid "Color proof filter using ICC color profile"
+msgstr "តម្រង់​មើល​ពណ៌​ ដោយ​ប្រើ​ទម្រង់​ពណ៌ ICC"
+
+#: ../modules/cdisplay_proof.c:221
+msgid "Color Proof"
+msgstr "មើល​ពណ៌"
+
+#: ../modules/cdisplay_proof.c:346
+msgid "_Intent:"
+msgstr "_បំណង ៖"
+
+#: ../modules/cdisplay_proof.c:350
+msgid "Choose an ICC Color Profile"
+msgstr "ជ្រើស​ទម្រង់​ពណ៌ ICC មួយ"
+
+#: ../modules/cdisplay_proof.c:353
+msgid "_Profile:"
+msgstr "_ទម្រង់ ៖"
+
+#: ../modules/cdisplay_proof.c:358
+msgid "_Black Point Compensation"
+msgstr "_ការ​ជួសជុល​ចំណុច​ខ្មៅ"
+
+#: ../modules/colorsel_cmyk.c:73
+msgid "CMYK color selector"
+msgstr "ឧបករណ៍​ជ្រើ​ស​ពណ៌ CMYK"
+
+#: ../modules/colorsel_cmyk.c:130
+msgid "CMYK"
+msgstr "CMYK"
+
+#. Cyan
+#: ../modules/colorsel_cmyk.c:148
+msgid "_C"
+msgstr "_C"
+
+#. Magenta
+#: ../modules/colorsel_cmyk.c:150
+msgid "_M"
+msgstr "_M"
+
+#. Yellow
+#: ../modules/colorsel_cmyk.c:152
+msgid "_Y"
+msgstr "_Y"
+
+#. Key (Black)
+#: ../modules/colorsel_cmyk.c:154
+msgid "_K"
+msgstr "_K"
+
+#: ../modules/colorsel_cmyk.c:158
+msgid "Cyan"
+msgstr "ពណ៌​​ផ្ទៃមេឃ"
+
+#: ../modules/colorsel_cmyk.c:159
+msgid "Magenta"
+msgstr "​ក្រហម​ស្វាយ"
+
+#: ../modules/colorsel_cmyk.c:160
+msgid "Yellow"
+msgstr "ពណ៌​លឿង"
+
+#: ../modules/colorsel_cmyk.c:161
+msgid "Black"
+msgstr "ពណ៌ខ្មៅ"
+
+#: ../modules/colorsel_cmyk.c:195
+msgid "Black _pullout:"
+msgstr "ការ​ដក​ពណ៌​ខ្មៅ​ចេញ ៖"
+
+#: ../modules/colorsel_cmyk.c:212
+msgid "The percentage of black to pull out of the colored inks."
+msgstr "ភាគរយ​របស់​ពណ៌ខ្មៅ​ត្រូវដក​ចេញ​របស់​តំណ​ដែល​មាន​ពណ៌ ។"
+
+#: ../modules/colorsel_triangle.c:104
+msgid "Painter-style triangle color selector"
+msgstr "ឧបករណ៍​ជ្រើស​ពណ៌​រចនាប័ទ្ម​រាង​ត្រីកោណ​​របស់​ឧបករណ៍​គូរ"
+
+#: ../modules/colorsel_triangle.c:170
+msgid "Triangle"
+msgstr "ត្រីកោណ"
+
+#: ../modules/colorsel_water.c:88
+msgid "Watercolor style color selector"
+msgstr "ឧបករណ៍​ជ្រើស​ពណ៌​រចនាប័ទ្ម​ពណ៌​ទឹក"
+
+#: ../modules/colorsel_water.c:154
+msgid "Watercolor"
+msgstr "ពណ៌​ទឹក"
+
+#: ../modules/colorsel_water.c:220
+msgid "Pressure"
+msgstr "សម្ពាធ"
+
+#: ../modules/controller_linux_input.c:56
+msgid "Button 0"
+msgstr "ប៊ូតុង 0"
+
+#: ../modules/controller_linux_input.c:57
+msgid "Button 1"
+msgstr "ប៊ូតុង ១"
+
+#: ../modules/controller_linux_input.c:58
+msgid "Button 2"
+msgstr "ប៊ូតុង ២"
+
+#: ../modules/controller_linux_input.c:59
+msgid "Button 3"
+msgstr "ប៊ូតុង ៣"
+
+#: ../modules/controller_linux_input.c:60
+msgid "Button 4"
+msgstr "ប៊ូតុង ៤"
+
+#: ../modules/controller_linux_input.c:61
+msgid "Button 5"
+msgstr "ប៊ូតុង ៥"
+
+#: ../modules/controller_linux_input.c:62
+msgid "Button 6"
+msgstr "ប៊ូតុង ៦"
+
+#: ../modules/controller_linux_input.c:63
+msgid "Button 7"
+msgstr "ប៊ូតុង ៧"
+
+#: ../modules/controller_linux_input.c:64
+msgid "Button 8"
+msgstr "ប៊ូតុង ៨"
+
+#: ../modules/controller_linux_input.c:65
+msgid "Button 9"
+msgstr "ប៊ូតុង ៩"
+
+#: ../modules/controller_linux_input.c:66
+msgid "Button Mouse"
+msgstr "ប៊ូតុង​កណ្ដុរ"
+
+#: ../modules/controller_linux_input.c:67
+msgid "Button Left"
+msgstr "ប៊ូតុង​​ឆ្វេង"
+
+#: ../modules/controller_linux_input.c:68
+msgid "Button Right"
+msgstr "ប៊ូតុង​​ស្ដាំ"
+
+#: ../modules/controller_linux_input.c:69
+msgid "Button Middle"
+msgstr "ប៊ូតុង​កណ្ដាល"
+
+#: ../modules/controller_linux_input.c:70
+msgid "Button Side"
+msgstr "ប៊ូតុង​ចំហៀង​"
+
+#: ../modules/controller_linux_input.c:71
+msgid "Button Extra"
+msgstr "ប៊ូតុង​បន្ថែម"
+
+#: ../modules/controller_linux_input.c:72
+#: ../modules/controller_linux_input.c:73
+msgid "Button Forward"
+msgstr "ប៊ូតុង​ទៅ​មុខ"
+
+#: ../modules/controller_linux_input.c:75
+msgid "Button Wheel"
+msgstr "កង់ប៊ូតុង​"
+
+#: ../modules/controller_linux_input.c:78
+msgid "Button Gear Down"
+msgstr "ប៊ូតុង​បន្ថយ​ល្បឿន​"
+
+#: ../modules/controller_linux_input.c:81
+msgid "Button Gear Up"
+msgstr "ប៊ូតុង​បន្ថែម​ល្បឿម"
+
+#: ../modules/controller_linux_input.c:87
+msgid "Wheel Turn Left"
+msgstr "កង់​វិល​ទៅ​ឆ្វេង"
+
+#: ../modules/controller_linux_input.c:88
+msgid "Wheel Turn Right"
+msgstr "កង់​វិល​ទៅ​ស្ដាំ"
+
+#: ../modules/controller_linux_input.c:89
+msgid "Dial Turn Left"
+msgstr "រវៃ​ទៅ​ឆ្វេង"
+
+#: ../modules/controller_linux_input.c:90
+msgid "Dial Turn Right"
+msgstr "រវៃ​ទៅ​ស្ដាំ"
+
+#: ../modules/controller_linux_input.c:154
+msgid "Linux input event controller"
+msgstr "កម្មវិធី​បញ្ជា​ព្រឹត្តិការណ៍​បញ្ចូល​របស់​លីនុច"
+
+#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:244
+msgid "Device:"
+msgstr "ឧបករណ៍ ៖"
+
+#: ../modules/controller_linux_input.c:223
+msgid "The name of the device to read Linux Input events from."
+msgstr "ឈ្មោះ​របស់​​ឧបករណ៍​សម្រាប់​អាន​ព្រឹត្តិការ​ណ៍បញ្ចូល​របស់​លីនុច ។"
+
+#: ../modules/controller_linux_input.c:227
+msgid "Linux Input"
+msgstr "ការបញ្ចូល​របស់​លីនុច"
+
+#: ../modules/controller_linux_input.c:351
+msgid "Linux Input Events"
+msgstr "ព្រឹត្តិការ​ណ៍បញ្ចូលរបស់​​លីនុច"
+
+#: ../modules/controller_linux_input.c:372 ../modules/controller_midi.c:480
+#: ../modules/controller_midi.c:506
+#, c-format
+msgid "Reading from %s"
+msgstr "កំពុង​អាន​ពី %s"
+
+#: ../modules/controller_linux_input.c:388
+#: ../modules/controller_linux_input.c:431 ../modules/controller_midi.c:462
+#: ../modules/controller_midi.c:523 ../modules/controller_midi.c:594
+#, c-format
+msgid "Device not available: %s"
+msgstr "មិនមាន​ឧបករណ៍ ៖ %s"
+
+#: ../modules/controller_linux_input.c:396 ../modules/controller_midi.c:531
+msgid "No device configured"
+msgstr "គ្មាន​ឧបករណ៍​បាន​កំណត់​រចនាសម្ព័ន្ធ"
+
+#: ../modules/controller_linux_input.c:440 ../modules/controller_midi.c:603
+msgid "End of file"
+msgstr "ចុង​ឯកសារ"
+
+#: ../modules/controller_midi.c:166
+msgid "MIDI event controller"
+msgstr "ឧបករណ៍​បញ្ជា​ព្រឹត្តិការណ៍មីឌី"
+
+#: ../modules/controller_midi.c:235
+msgid "The name of the device to read MIDI events from."
+msgstr "ឈ្មោះឧបករណ៍ត្រូវអានព្រឹត្តិការណ៍មីឌី ។"
+
+#: ../modules/controller_midi.c:238
+msgid "Enter 'alsa' to use the ALSA sequencer."
+msgstr "បញ្ចូល 'alsa' ត្រូវ​ប្រើ​លំដាប់ ALSA ។"
+
+#: ../modules/controller_midi.c:253
+msgid "Channel:"
+msgstr "​ឆានែល​ ៖"
+
+#: ../modules/controller_midi.c:254
+msgid ""
+"The MIDI channel to read events from. Set to -1 for reading from all MIDI "
+"channels."
+msgstr "ឆានែល​មីឌី​ត្រូវ​អាន​ព្រឹត្តិការណ៍ ។ កំណត់​ទៅ -១ ដើម្បី​អាន​ពី​ឆានែល​មីឌី​ទាំងអស់ ។"
+
+#: ../modules/controller_midi.c:258
+msgid "MIDI"
+msgstr "មីឌី"
+
+#: ../modules/controller_midi.c:434
+msgid "MIDI Events"
+msgstr "ព្រឹត្តិការណ៍"
+
