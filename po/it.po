@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-13 10:49+0200\n"
-"PO-Revision-Date: 2007-04-13 11:04+0200\n"
+"PO-Revision-Date: 2007-04-20 18:57+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -1107,7 +1107,7 @@ msgstr "_Visibile"
 
 #: ../app/actions/drawable-actions.c:88 ../app/actions/image-actions.c:141
 msgid "Flip _Horizontally"
-msgstr "Rifletti _orizzontalmente"
+msgstr "Rifletti ori_zzontalmente"
 
 #: ../app/actions/drawable-actions.c:93 ../app/actions/image-actions.c:146
 msgid "Flip _Vertically"
@@ -2860,7 +2860,7 @@ msgstr "per _colore"
 
 #: ../app/actions/tools-actions.c:80
 msgid "_Arbitrary Rotation..."
-msgstr "Rotazione _arbitraria..."
+msgstr "_Rotazione arbitraria..."
 
 #: ../app/actions/vectors-actions.c:44
 msgid "Paths Menu"
