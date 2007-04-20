@@ -1,3 +1,8 @@
+2007-04-20  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-console.c: enable word-wrapping in
+	the Script-Fu console.
+
 2007-04-19  Sven Neumann  <sven@gimp.org>
 
 	* configure.in (ALL_LINGUAS): added 'km' (Khmer) (bug #420417).

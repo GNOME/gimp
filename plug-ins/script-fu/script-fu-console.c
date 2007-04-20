@@ -186,6 +186,8 @@ script_fu_console_interface (void)
   output = console->text_view;
 
   gtk_text_view_set_editable (GTK_TEXT_VIEW (console->text_view), FALSE);
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (console->text_view),
+                               GTK_WRAP_WORD);
   gtk_text_view_set_left_margin (GTK_TEXT_VIEW (console->text_view), 6);
   gtk_text_view_set_right_margin (GTK_TEXT_VIEW (console->text_view), 6);
   gtk_widget_set_size_request (console->text_view, TEXT_WIDTH, TEXT_HEIGHT);
