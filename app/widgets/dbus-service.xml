@@ -6,11 +6,11 @@
     <annotation name="org.freedesktop.DBus.GLib.CSymbol"
 		value="gimp_dbus_service" />
     <method name="Open">
-      <arg type="s" name="filename" direction="in" />
+      <arg type="s" name="uri" direction="in" />
       <arg type="b" name="success" direction="out" />
     </method>
     <method name="OpenAsNew">
-      <arg type="s" name="filename" direction="in" />
+      <arg type="s" name="uri" direction="in" />
       <arg type="b" name="success" direction="out" />
     </method>
     <method name="Activate" />

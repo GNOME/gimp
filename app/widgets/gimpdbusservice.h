@@ -59,11 +59,11 @@ GType     gimp_dbus_service_get_type    (void) G_GNUC_CONST;
 GObject * gimp_dbus_service_new         (Gimp            *gimp);
 
 gboolean  gimp_dbus_service_open        (GimpDBusService  *service,
-                                         const gchar      *filename,
+                                         const gchar      *uri,
                                          gboolean         *success,
                                          GError          **dbus_error);
 gboolean  gimp_dbus_service_open_as_new (GimpDBusService  *service,
-                                         const gchar      *filename,
+                                         const gchar      *uri,
                                          gboolean         *success,
                                          GError          **dbus_error);
 gboolean  gimp_dbus_service_activate    (GimpDBusService  *service,
