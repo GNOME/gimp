@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-21 00:04+0100\n"
-"PO-Revision-Date: 2007-03-21 00:31+0100\n"
+"POT-Creation-Date: 2007-04-21 10:58+0200\n"
+"PO-Revision-Date: 2007-04-21 11:02+0200\n"
 "Last-Translator: Laurent Monin <gimp@norz.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -24,36 +24,36 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:143
-#: ../plug-ins/script-fu/script-fu-console.c:210
+#: ../plug-ins/script-fu/script-fu-console.c:212
 msgid "Script-Fu Console"
 msgstr "Console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:206
+#: ../plug-ins/script-fu/script-fu-console.c:208
 msgid "Welcome to TinyScheme"
 msgstr "Bienvenue sur TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:212
+#: ../plug-ins/script-fu/script-fu-console.c:214
 msgid "Interactive Scheme Development"
 msgstr "Développement Scheme interactif"
 
-#: ../plug-ins/script-fu/script-fu-console.c:248
+#: ../plug-ins/script-fu/script-fu-console.c:250
 msgid "_Browse..."
 msgstr "_Parcourir..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:310
+#: ../plug-ins/script-fu/script-fu-console.c:312
 msgid "Save Script-Fu Console Output"
 msgstr "Enregistrer les sorties de la console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:357
+#: ../plug-ins/script-fu/script-fu-console.c:359
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossible d'ouvrir « %s » pour écrire : %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:386
+#: ../plug-ins/script-fu/script-fu-console.c:388
 msgid "Script-Fu Procedure Browser"
 msgstr "Navigateur de procédures Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:711
+#: ../plug-ins/script-fu/script-fu-console.c:713
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "Le mode d'évaluation de Script-Fu autorise uniquement un appel non-interactif"
@@ -117,7 +117,7 @@ msgstr "Sélection du dégradé Script-Fu"
 msgid "Script-Fu Brush Selection"
 msgstr "Sélection de la brosse Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:661
+#: ../plug-ins/script-fu/script-fu-scripts.c:664
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -983,8 +983,8 @@ msgid ""
 "Burn-In: Needs two layers in total!\n"
 "A foreground text layer with transparency and a background layer."
 msgstr ""
-"En flammes : a besoin de deux calques au total.\n"
-"Un calque de texte avec transparence en premier plan et un calque de fond."
+"L'effet « en flammes » nécessite deux calques au total,\n"
+"un calque de texte avec transparence en premier plan et un calque de fond."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Corona width"
@@ -2798,8 +2798,7 @@ msgstr "Rendre flou horizontalement"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
 msgid "Blur the edges of an image so the result tiles seamlessly"
-msgstr ""
-"Brouille les bords d'une image pour obtenir un carreau raccordable"
+msgstr "Brouille les bords d'une image pour obtenir un carreau raccordable"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
 msgid "Blur type"
