@@ -222,7 +222,7 @@ gradient_rename_invoker (GimpProcedure     *procedure,
       GimpGradient *gradient = (GimpGradient *)
         gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
-      if (gradient && GIMP_DATA (gradient)->writable)
+      if (gradient && GIMP_DATA (gradient)->writable && strlen (new_name))
         {
           gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
           actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (gradient)));
