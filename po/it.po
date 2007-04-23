@@ -27,7 +27,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-13 10:49+0200\n"
-"PO-Revision-Date: 2007-04-20 18:57+0200\n"
+"PO-Revision-Date: 2007-04-23 21:47+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -2077,7 +2077,7 @@ msgstr "_Abbandona informazioni sul testo"
 
 #: ../app/actions/layers-actions.c:148
 msgid "Layer B_oundary Size..."
-msgstr "Dimensione margine del livell_o..."
+msgstr "Dimensione margini del livell_o..."
 
 #: ../app/actions/layers-actions.c:153
 msgid "Layer to _Image Size"
@@ -2176,7 +2176,7 @@ msgstr "Crea un nuovo livello"
 
 #: ../app/actions/layers-commands.c:470
 msgid "Set Layer Boundary Size"
-msgstr "Configura contorno del livello"
+msgstr "Imposta dimensione margini del livello"
 
 #: ../app/actions/layers-commands.c:512 ../app/core/gimplayer.c:253
 msgid "Scale Layer"
@@ -3102,7 +3102,7 @@ msgstr "Mostra s_elezione"
 
 #: ../app/actions/view-actions.c:131
 msgid "Show _Layer Boundary"
-msgstr "Mostra il contorno del _livello"
+msgstr "Mostra i margini del _livello"
 
 #: ../app/actions/view-actions.c:137
 msgid "Show _Guides"
@@ -3763,25 +3763,19 @@ msgstr ""
 msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
-msgstr ""
-"Se abilitata, il contorno del livello è visibile. Questo comportamento può "
-"essere modificato anche con il comando \"Visualizza->Mostra barra dei menu\"."
+msgstr "Se abilitata, i margini del livello sono visibili. Questo comportamento può essere modificato anche con il comando \"Visualizza->Margini del livello\"."
 
 #: ../app/config/gimprc-blurbs.h:312
 msgid ""
 "When enabled, the guides are visible by default. This can also be toggled "
 "with the \"View->Show Guides\" command."
-msgstr ""
-"Se abilitata, le guide sono visibili. Questo comportamento può essere "
-"modificato anche con il comando \"Visualizza->Mostra le guide\"."
+msgstr "Se abilitata, le guide sono visibili. Questo comportamento può essere modificato anche con il comando \"Visualizza->Guide\"."
 
 #: ../app/config/gimprc-blurbs.h:316
 msgid ""
 "When enabled, the grid is visible by default. This can also be toggled with "
 "the \"View->Show Grid\" command."
-msgstr ""
-"Se abilitata, la griglia è visibile. Questo comportamento può essere "
-"modificato anche con il comando \"Visualizza->Mostra la griglia\"."
+msgstr "Se abilitata, la griglia è visibile. Questo comportamento può essere modificato anche con il comando \"Visualizza->Griglia\"."
 
 #: ../app/config/gimprc-blurbs.h:320
 msgid "Enable to display a handy GIMP tip on startup."
@@ -8384,7 +8378,7 @@ msgstr "Campiona a video"
 
 #: ../app/tools/gimpbucketfilltool.c:92
 msgid "Fill with a color or pattern"
-msgstr "Riempi con colore o pattern"
+msgstr "Riempi con un colore o un motivo"
 
 #: ../app/tools/gimpbucketfilltool.c:93
 msgid "_Bucket Fill"
@@ -10705,7 +10699,7 @@ msgstr "Apri la finestra di selezione pennello"
 
 #: ../app/widgets/gimpviewablebox.c:115
 msgid "Open the pattern selection dialog"
-msgstr "Apri la finestra di selezione pattern"
+msgstr "Apri la finestra di selezione motivi"
 
 #: ../app/widgets/gimpviewablebox.c:155
 msgid "Open the gradient selection dialog"
