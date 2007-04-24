@@ -1,3 +1,8 @@
+2007-04-24  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/common/poppler.c: set the page selector target
+	from lastvals before showing the dialog
+
 2007-04-24  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.3.16 development release.

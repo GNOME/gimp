@@ -676,6 +676,7 @@ load_dialog (PopplerDocument  *doc,
   gtk_box_pack_start (GTK_BOX (vbox), selector, TRUE, TRUE, 0);
   n_pages = poppler_document_get_n_pages (doc);
   gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector), n_pages);
+  gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (selector), loadvals.target);
 
   for (i = 0; i < n_pages; i++)
     {
