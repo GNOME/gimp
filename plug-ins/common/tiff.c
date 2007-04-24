@@ -77,6 +77,12 @@ typedef struct
   guchar       *pixel;
 } channel_data;
 
+typedef struct
+{
+  gint  n_pages;
+  gint *pages;
+} TiffSelectedPages;
+
 /* Declare some local functions.
  */
 static void   query     (void);
@@ -88,7 +94,8 @@ static void   run       (const gchar      *name,
 
 static gboolean  image_is_monochrome (gint32 image);
 
-static gint32    load_image    (const gchar  *filename);
+static gint32    load_image    (const gchar  *filename,
+                                TiffSelectedPages *pages);
 
 static void      load_rgba     (TIFF         *tif,
                                 channel_data *channel);
@@ -176,6 +183,15 @@ static void      byte2bit               (const guchar *byteline,
                                          gboolean      invert);
 static void      fill_bit2byte          (void);
 
+static void      tiff_warning           (const gchar *module,
+                                         const gchar *fmt,
+                                         va_list      ap);
+static void      tiff_error             (const gchar *module,
+                                         const gchar *fmt,
+                                         va_list      ap);
+
+static gboolean  load_dialog            (const gchar *filename,
+                                         TiffSelectedPages *pages);
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
@@ -194,6 +210,8 @@ static TiffSaveVals tsvals =
 
 static gchar       *image_comment = NULL;
 static GimpRunMode  run_mode      = GIMP_RUN_INTERACTIVE;
+static GimpPageSelectorTarget
+                    target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
 
 static guchar       bit2byte[256 * 8];
 
@@ -299,6 +317,7 @@ run (const gchar      *name,
   gint32             image;
   gint32             drawable;
   gint32             orig_image;
+  TiffSelectedPages  pages;
   GimpExportReturn   export = GIMP_EXPORT_CANCEL;
 
   run_mode = param[0].data.d_int32;
@@ -311,20 +330,34 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
+  TIFFSetWarningHandler (tiff_warning);
+  TIFFSetErrorHandler (tiff_error);
+
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      image = load_image (param[1].data.d_string);
+      gimp_get_data (LOAD_PROC, &target);
 
-      if (image != -1)
+      if (load_dialog (param[1].data.d_string, &pages))
         {
-          *nreturn_vals = 2;
-          values[1].type         = GIMP_PDB_IMAGE;
-          values[1].data.d_image = image;
+          gimp_set_data (LOAD_PROC, &target, sizeof (target));
+
+          image = load_image (param[1].data.d_string, &pages);
+
+          g_free (pages.pages);
+
+          if (image != -1)
+            {
+              *nreturn_vals = 2;
+              values[1].type         = GIMP_PDB_IMAGE;
+              values[1].data.d_image = image;
+            }
+          else
+            {
+              status = GIMP_PDB_EXECUTION_ERROR;
+            }
         }
       else
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
+        status = GIMP_PDB_CANCEL;
     }
   else if (strcmp (name, SAVE_PROC) == 0 ||
            strcmp (name, SAVE2_PROC) == 0)
@@ -527,8 +560,124 @@ image_is_monochrome (gint32 image)
   return monochrome;
 }
 
+static gboolean
+load_dialog (const gchar *filename, TiffSelectedPages *pages)
+{
+  GtkWidget  *dialog;
+  GtkWidget  *vbox;
+  GtkWidget  *selector;
+  gint        i;
+  gboolean    run;
+  TIFF       *tif;
+
+  tif = TIFFOpen (filename, "r");
+  if (! tif)
+    {
+      g_message (_("Could not open '%s' for reading: %s"),
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      return FALSE;
+    }
+
+  pages->n_pages = TIFFNumberOfDirectories (tif);
+
+
+  /* Return early if there are zero or one `pages' in the TIFF image */
+
+  if (pages->n_pages == 0)
+    {
+      g_message (_("TIFF '%s' does not contain any directories"),
+                 gimp_filename_to_utf8 (filename));
+      return FALSE;
+    }
+  else if (pages->n_pages == 1)
+    {
+      target = GIMP_PAGE_SELECTOR_TARGET_IMAGES;
+      pages->pages = g_new (gint, 1);
+      *(pages->pages) = 0;
+
+      return TRUE;
+    }
+
+  gimp_ui_init (PLUG_IN_BINARY, FALSE);
+
+  dialog = gimp_dialog_new (_("Import from TIFF"), PLUG_IN_BINARY,
+                            NULL, 0,
+                            gimp_standard_help_func, LOAD_PROC,
+
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            _("_Import"),     GTK_RESPONSE_OK,
+
+                            NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
+  gtk_widget_show (vbox);
+
+  /* Page Selector */
+  selector = gimp_page_selector_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), selector, TRUE, TRUE, 0);
+
+  gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector), pages->n_pages);
+  gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (selector), target);
+
+  for (i = 0; i < pages->n_pages; i++)
+    {
+      gchar *name;
+
+      if (! TIFFGetField (tif, TIFFTAG_PAGENAME, &name) ||
+          ! g_utf8_validate (name, -1, NULL))
+        {
+          name = NULL;
+        }
+
+      if (name)
+        gimp_page_selector_set_page_label (GIMP_PAGE_SELECTOR (selector), i, name);
+
+      g_free (name);
+
+      TIFFReadDirectory (tif);
+    }
+
+  g_signal_connect_swapped (selector, "activate",
+                            G_CALLBACK (gtk_window_activate_default),
+                            dialog);
+
+  gtk_widget_show (selector);
+
+  /* Setup done; display the dialog */
+  gtk_widget_show (dialog);
+
+  /* run the dialog */
+  run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
+
+  if (run)
+    target = gimp_page_selector_get_target (GIMP_PAGE_SELECTOR (selector));
+
+  pages->pages =
+    gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (selector),
+                                           &pages->n_pages);
+
+  /* select all if none selected */
+  if (pages->n_pages == 0)
+    {
+      gimp_page_selector_select_all (GIMP_PAGE_SELECTOR (selector));
+
+      pages->pages =
+        gimp_page_selector_get_selected_pages (GIMP_PAGE_SELECTOR (selector),
+                                               &pages->n_pages);
+    }
+
+  return run;
+}
+
 static gint32
-load_image (const gchar *filename)
+load_image (const gchar *filename, TiffSelectedPages *pages)
 {
   TIFF         *tif;
   gushort       bps, spp, photomet;
@@ -564,6 +713,10 @@ load_image (const gchar *filename)
 
   gchar        *name;
 
+  GList        *images_list = NULL, *images_list_temp;
+  gboolean      do_images;
+  gint          li;
+
   gboolean      flip_horizontal = FALSE;
   gboolean      flip_vertical   = FALSE;
 
@@ -582,17 +735,23 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  TIFFSetWarningHandler (tiff_warning);
-  TIFFSetErrorHandler (tiff_error);
+  if ((pages->n_pages > 1) && (target == GIMP_PAGE_SELECTOR_TARGET_LAYERS))
+    do_images = FALSE;
+  else
+    do_images = TRUE;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
-
   /* We will loop through the all pages in case of multipage TIFF
      and load every page as a separate layer. */
+
   ilayer = 0;
-  do
+
+  for (li = 0; li < pages->n_pages; li++)
     {
+      TIFFSetDirectory (tif, pages->pages[li]);
+      ilayer = pages->pages[li];
+
       TIFFGetFieldDefaulted (tif, TIFFTAG_BITSPERSAMPLE, &bps);
 
       if (bps > 8 && bps != 16)
@@ -725,7 +884,7 @@ load_image (const gchar *filename)
           layer_type = GIMP_RGBA_IMAGE;
         }
 
-      if (!image)
+      if (do_images || (! image))
         {
           if ((image = gimp_image_new (cols, rows, image_type)) == -1)
             {
@@ -734,7 +893,20 @@ load_image (const gchar *filename)
             }
 
           gimp_image_undo_disable (image);
-          gimp_image_set_filename (image, filename);
+
+          if (do_images)
+            {
+              gchar *fname;
+              fname = g_strdup_printf ("%s-%d", filename, ilayer);
+              gimp_image_set_filename (image, fname);
+              g_free (fname);
+
+              images_list = g_list_append (images_list, GINT_TO_POINTER (image));
+            }
+          else
+            {
+              gimp_image_set_filename (image, filename);
+            }
         }
 
 
@@ -1060,15 +1232,42 @@ load_image (const gchar *filename)
         gimp_layer_add_alpha (layer);
 
       gimp_image_add_layer (image, layer, -1);
-      ilayer++;
-    }
-  while (TIFFReadDirectory (tif));
 
-  /* resize image to bounding box of all layers */
-  gimp_image_resize (image,
+      if (do_images)
+        {
+          gimp_image_undo_enable (image);
+          gimp_image_clean_all (image);
+        }
+    }
+
+  if (! do_images)
+    {
+      /* resize image to bounding box of all layers */
+      gimp_image_resize (image,
                      max_col - min_col, max_row - min_row, -min_col, -min_row);
 
-  gimp_image_undo_enable (image);
+      gimp_image_undo_enable (image);
+    }
+  else
+    {
+      images_list_temp = images_list;
+
+      if (images_list)
+        {
+          image = GPOINTER_TO_INT (images_list->data);
+          images_list = images_list->next;
+        }
+
+      while (images_list)
+        {
+          gimp_display_new (GPOINTER_TO_INT (images_list->data));
+          images_list = images_list->next;
+        }
+
+      g_list_free (images_list_temp);
+    }
+
+  TIFFClose (tif);
 
   return image;
 }
