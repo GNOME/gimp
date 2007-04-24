@@ -936,7 +936,8 @@ shoot_dialog (GdkScreen **screen)
 
   /*  Hints  */
   notebook = g_object_new (GTK_TYPE_NOTEBOOK,
-                           "show-tabs", FALSE,
+                           "show-border", FALSE,
+                           "show-tabs",   FALSE,
                            NULL);
   gtk_box_pack_end (GTK_BOX (main_vbox), notebook, FALSE, FALSE, 0);
   gtk_widget_show (notebook);
