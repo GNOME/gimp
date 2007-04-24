@@ -1,5 +1,10 @@
 2007-04-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/screenshot.c: unset 'show-border' on the
+	GtkNotebook that holds the hints.
+
+2007-04-24  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimppluginprocedure.[ch]: use GQuark for locale and
 	help domains to avoid duplicating the same strings many times.
 
