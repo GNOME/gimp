@@ -1,3 +1,10 @@
+2007-04-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/gimppluginmanager-restore.c
+	(gimp_plug_in_manager_restore): set the default plug-in locale
+	domain on all GimpPlugInDefs which don't register a locale domain
+	themselves. Fixes bug #430146.
+
 2007-04-22  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/brush.pdb (brush_rename)

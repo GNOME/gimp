@@ -148,6 +148,13 @@ gimp_plug_in_manager_restore (GimpPlugInManager  *manager,
                                                 plug_in_def->prog,
                                                 plug_in_def->locale_domain_name,
                                                 plug_in_def->locale_domain_path);
+      else
+        /* FIXME: this consumes too much memory */
+        gimp_plug_in_def_set_locale_domain (plug_in_def,
+                                            gimp_plug_in_manager_get_locale_domain (manager,
+                                                                                    plug_in_def->prog,
+                                                                                    NULL),
+                                            NULL);
 
       if (plug_in_def->help_domain_name)
         gimp_plug_in_manager_add_help_domain (manager,
