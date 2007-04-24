@@ -65,7 +65,11 @@ TESTS = test-config
 
 test_config_DEPENDENCIES = $(gimpconfig_libs)
 
-test_config_LDFLAGS = -u xcf_init -u internal_procs_init -u gimp_coords_mix
+test_config_LDFLAGS = \
+	-u $(SYMPREFIX)xcf_init			\
+	-u $(SYMPREFIX)internal_procs_init	\
+	-u $(SYMPREFIX)gimp_coords_mix		\
+	-u $(SYMPREFIX)gimp_plug_in_manager_restore
 
 test_config_LDADD = \
 	../widgets/widgets-enums.o		\
