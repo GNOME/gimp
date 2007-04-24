@@ -1,5 +1,11 @@
 2007-04-25  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/common/tiff.c: initialize the pages[] array with
+	the page sequence for non-niteractive runs. Otherwise it'll
+	simply load N copies of page 0.
+
+2007-04-25  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/common/tiff.c: fixed an issue where the page selection
 	dialog was being shown even for non-interactive runs.
 

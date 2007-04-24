@@ -584,7 +584,10 @@ load_dialog (const gchar *filename, TiffSelectedPages *pages)
 
   if (run_mode != GIMP_RUN_INTERACTIVE)
     {
-      pages->pages = g_new0 (gint, pages->n_pages);
+      pages->pages = g_new (gint, pages->n_pages);
+
+      for (i = 0; i < pages->n_pages; i++)
+        pages->pages[i] = i;
 
       return TRUE;
     }
