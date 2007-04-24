@@ -44,8 +44,8 @@ struct _GimpPlugInProcedure
 
   /*  common members  */
   gchar               *prog;
-  gchar               *locale_domain;
-  gchar               *help_domain;
+  GQuark               locale_domain;
+  GQuark               help_domain;
   gchar               *menu_label;
   GList               *menu_paths;
   gchar               *label;

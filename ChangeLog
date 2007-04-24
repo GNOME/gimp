@@ -1,3 +1,10 @@
+2007-04-24  Sven Neumann  <sven@gimp.org>
+
+	* app/plug-in/gimppluginprocedure.[ch]: use GQuark for locale and
+	help domains to avoid duplicating the same strings many times.
+
+	* app/plug-in/gimppluginmanager-restore.c: removed FIXME.
+
 2007-04-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/gimppluginmanager-restore.c
