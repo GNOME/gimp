@@ -10,11 +10,6 @@ new stuff is being done that will one day be released as GIMP 2.4.
 Changes in GIMP 2.3.16
 ======================
 
-- depend on GTK+ >= 2.10.6 and use some of the new functions in GTK+ 2.10
-- allow filename passed on the command-line to be opened as new images
-- allow procedures to request the display ID they are being called from
-- added more menu tooltips
-- D-Bus methods now have a return value indicating success or failure
 - make the XOR color configurable as a workaround for broken drivers
 - allow to assign keyboard shortcuts to procedures without menu entry
 - allow to configure the height of the preview area in data editors
@@ -22,6 +17,11 @@ Changes in GIMP 2.3.16
 - improved brush scaling code, now also scales up
 - converted standard pixmap brushes to parametric ones
 - improved zoom tool behavior
+- D-Bus methods now have a return value indicating success or failure
+- added more menu tooltips
+- allow procedures to request the display ID they are being called from
+- depend on GTK+ >= 2.10.6 and use some of the new functions in GTK+ 2.10
+- allow filename passed on the command-line to be opened as new images
 - various optimizations
 - bug fixes and code cleanup
 
