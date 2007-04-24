@@ -1,5 +1,9 @@
 2007-04-24  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.3.16 development release.
+
+2007-04-24  Sven Neumann  <sven@gimp.org>
+
 	* app/config/Makefile.am: fiddle with test_config_LDFLAGS to make
 	test-config link again.
 
