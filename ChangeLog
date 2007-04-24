@@ -1,3 +1,8 @@
+2007-04-25  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/common/tiff.c: fixed an issue where the page selection
+	dialog was being shown even for non-interactive runs.
+
 2007-04-24  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/tiff.c: added support to load multi-page TIFF

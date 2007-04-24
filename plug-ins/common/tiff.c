@@ -580,6 +580,14 @@ load_dialog (const gchar *filename, TiffSelectedPages *pages)
 
   pages->n_pages = TIFFNumberOfDirectories (tif);
 
+  /* Return early if we're not running interactively */
+
+  if (run_mode != GIMP_RUN_INTERACTIVE)
+    {
+      pages->pages = g_new0 (gint, pages->n_pages);
+
+      return TRUE;
+    }
 
   /* Return early if there are zero or one `pages' in the TIFF image */
 
@@ -592,8 +600,7 @@ load_dialog (const gchar *filename, TiffSelectedPages *pages)
   else if (pages->n_pages == 1)
     {
       target = GIMP_PAGE_SELECTOR_TARGET_IMAGES;
-      pages->pages = g_new (gint, 1);
-      *(pages->pages) = 0;
+      pages->pages = g_new0 (gint, pages->n_pages);
 
       return TRUE;
     }
