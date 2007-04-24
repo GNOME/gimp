@@ -1,5 +1,9 @@
 2007-04-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/wind.c: increased MAX_STRENGTH to 100.
+
+2007-04-24  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/screenshot.c: unset 'show-border' on the
 	GtkNotebook that holds the hints.
 

@@ -41,13 +41,13 @@
 #define PLUG_IN_PROC   "plug-in-wind"
 #define PLUG_IN_BINARY "wind"
 
-#define COMPARE_WIDTH   3
+#define COMPARE_WIDTH    3
 
-#define SCALE_WIDTH   200
-#define MIN_THRESHOLD   0
-#define MAX_THRESHOLD  50
-#define MIN_STRENGTH    1
-#define MAX_STRENGTH   50
+#define SCALE_WIDTH    200
+#define MIN_THRESHOLD    0
+#define MAX_THRESHOLD   50
+#define MIN_STRENGTH     1
+#define MAX_STRENGTH   100
 
 typedef enum
 {
@@ -526,7 +526,7 @@ render_blast_row (guchar *buffer,
                               buffer + Ri + bytes,
                               edge,
                               threshold,
-                              (bytes > 3)))
+                              bytes > 3))
         {
           /* we have found an edge, do bleeding */
           sbi = Ri;
@@ -572,7 +572,7 @@ render_blast_row (guchar *buffer,
               buffer[i] = buffer[Ri];
               buffer[i+1] = buffer[Gi];
               buffer[i+2] = buffer[Bi];
-              if(bytes > 3)
+              if (bytes > 3)
                 buffer[i+3] = buffer[Ai];
             }
           j = lbi - bytes;
@@ -674,7 +674,7 @@ render_wind_row (guchar *sb,
                                        sb + i,
                                        edge,
                                        threshold,
-                                       (bytes>3))
+                                       bytes > 3)
                   && g_random_boolean ())
                 {
                   break;
@@ -684,7 +684,7 @@ render_wind_row (guchar *sb,
               blend_colour_G += blend_amt_G * n * denominator;
               blend_colour_B += blend_amt_B * n * denominator;
 
-              if(bytes > 3)
+              if (bytes > 3)
                 {
                   blend_colour_A += blend_amt_A * n * denominator;
                   if (blend_colour_A > 255)
@@ -719,17 +719,17 @@ render_wind_row (guchar *sb,
                                       sb + i + comp_stride,
                                       BOTH,
                                       threshold,
-                                      (bytes>3)))
+                                      bytes > 3))
                 {
                   target_colour_R = sb[i + comp_stride + 0];
                   target_colour_G = sb[i + comp_stride + 1];
                   target_colour_B = sb[i + comp_stride + 2];
-                  if(bytes > 3)
+                  if (bytes > 3)
                     target_colour_A = sb[i + comp_stride + 3];
                   blend_amt_R = target_colour_R - blend_colour_R;
                   blend_amt_G = target_colour_G - blend_colour_G;
                   blend_amt_B = target_colour_B - blend_colour_B;
-                  if(bytes > 3)
+                  if (bytes > 3)
                     blend_amt_A = target_colour_A - blend_colour_A;
                   denominator = n * n + n;
                   denominator = 2.0 / denominator;
@@ -747,24 +747,15 @@ threshold_exceeded (guchar  *pixel_R1,
                     gint     threshold,
                     gboolean has_alpha)
 {
-  gint     derivative_R, derivative_G, derivative_B, derivative_A;
-  gboolean return_value;
+  gint derivative_R, derivative_G, derivative_B, derivative_A;
 
   get_derivative (pixel_R1, pixel_R2, edge, has_alpha,
                   &derivative_R, &derivative_G, &derivative_B, &derivative_A);
 
-  if(((derivative_R +
-       derivative_G +
-       derivative_B +
-       derivative_A) / 4) > threshold)
-    {
-      return_value = TRUE;
-    }
-  else
-    {
-      return_value = FALSE;
-    }
-  return return_value;
+  return (((derivative_R +
+            derivative_G +
+            derivative_B +
+            derivative_A) / 4) > threshold);
 }
 
 static void
