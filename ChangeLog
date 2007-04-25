@@ -1,5 +1,7 @@
 2007-04-25  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/paint-funcs.c: whitespace cleanup.
+
 	* plug-ins/common/despeckle.c: minor cleanups.
 
 2007-04-25  Sven Neumann  <sven@gimp.org>
