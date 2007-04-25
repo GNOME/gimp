@@ -1967,15 +1967,15 @@ gimp_rectangle_tool_rectangle_changed (GimpRectangleTool *rectangle)
 
 /*
  * check whether the coordinates extend outside the bounds of the image
- * or active drawable, if it is constrained not to.  If it does,truncates
- * the corrners to the constraints.
+ * or active drawable, if it is constrained not to.  If it does, clamp
+ * the corners to the constraints.
  */
 void
 gimp_rectangle_tool_constrain (GimpRectangleTool *rectangle,
-                               gint               *x1,
-                               gint               *y1,
-                               gint               *x2,
-                               gint               *y2)
+                               gint              *x1,
+                               gint              *y1,
+                               gint              *x2,
+                               gint              *y2)
 {
   GimpTool                 *tool = GIMP_TOOL (rectangle);
   GimpRectangleToolPrivate *private;

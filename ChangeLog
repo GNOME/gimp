@@ -1,3 +1,14 @@
+2007-04-25  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpscrolledpreview.c: also use the middle mouse
+	button for panning.
+
+	* plug-ins/common/nova.c: override the default mouse handling of
+	the GimpScrolledPreview and allow to reposition the center using
+	the left mouse button. Fixes bug #364432.
+
+	* app/tools/gimprectangletool.c: formatting.
+
 2007-04-24  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.3.17.

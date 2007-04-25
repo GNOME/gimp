@@ -32,8 +32,8 @@
 #include "libgimp/libgimp-intl.h"
 
 
-#define POPUP_SIZE       100
-#define PEN_WIDTH          3
+#define POPUP_SIZE  100
+#define PEN_WIDTH     3
 
 
 typedef struct
@@ -129,9 +129,9 @@ gimp_scrolled_preview_class_init (GimpScrolledPreviewClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->dispose      = gimp_scrolled_preview_dispose;
+  object_class->dispose     = gimp_scrolled_preview_dispose;
 
-  preview_class->set_cursor  = gimp_scrolled_preview_set_cursor;
+  preview_class->set_cursor = gimp_scrolled_preview_set_cursor;
 
   g_type_class_add_private (object_class, sizeof (GimpScrolledPreviewPrivate));
 }
@@ -188,9 +188,12 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
                     preview->vscr, 1, 2, 0, 1,
                     GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
 
-  g_signal_connect (GIMP_PREVIEW (preview)->area, "event",
-                    G_CALLBACK (gimp_scrolled_preview_area_event),
-                    preview);
+  /* Connect after here so that plug-ins get a chance to override the
+   * default behavior. See bug #364432.
+   */
+  g_signal_connect_after (GIMP_PREVIEW (preview)->area, "event",
+                          G_CALLBACK (gimp_scrolled_preview_area_event),
+                          preview);
 
   g_signal_connect (GIMP_PREVIEW (preview)->area, "realize",
                     G_CALLBACK (gimp_scrolled_preview_area_realize),
@@ -374,6 +377,7 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
       switch (button_event->button)
         {
         case 1:
+        case 2:
           gtk_widget_get_pointer (area, &priv->drag_x, &priv->drag_y);
 
           priv->drag_xoff = GIMP_PREVIEW (preview)->xoff;
@@ -382,16 +386,14 @@ gimp_scrolled_preview_area_event (GtkWidget           *area,
           gtk_grab_add (area);
           break;
 
-        case 2:
-          break;
-
         case 3:
           return TRUE;
         }
       break;
 
     case GDK_BUTTON_RELEASE:
-      if (priv->in_drag && button_event->button == 1)
+      if (priv->in_drag &&
+          (button_event->button == 1 || button_event->button == 2))
         {
           gtk_grab_remove (area);
           priv->in_drag = FALSE;

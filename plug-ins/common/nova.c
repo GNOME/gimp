@@ -324,7 +324,8 @@ nova_dialog (GimpDrawable *drawable)
 
   preview = gimp_zoom_preview_new (drawable);
   gtk_widget_add_events (GIMP_PREVIEW (preview)->area,
-                         GDK_POINTER_MOTION_MASK);
+                         GDK_BUTTON_PRESS_MASK |
+                         GDK_BUTTON1_MOTION_MASK);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 
@@ -657,8 +658,15 @@ nova_center_preview_events (GtkWidget  *widget,
       {
         GdkEventMotion *mevent = (GdkEventMotion *) event;
 
-        if (mevent->state & GDK_BUTTON2_MASK)
-          return nova_center_update (widget, center, mevent->x, mevent->y);
+        if (mevent->state & GDK_BUTTON1_MASK)
+          {
+            GdkModifierType mask;
+            gint            x, y;
+
+            gdk_window_get_pointer (widget->window, &x, &y, &mask);
+
+            return nova_center_update (widget, center, x, y);
+          }
       }
       break;
 
@@ -666,7 +674,7 @@ nova_center_preview_events (GtkWidget  *widget,
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
 
-        if (bevent->button == 2)
+        if (bevent->button == 1)
           return nova_center_update (widget, center, bevent->x, bevent->y);
       }
       break;
