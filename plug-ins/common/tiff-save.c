@@ -214,8 +214,8 @@ run (const gchar      *name,
   TIFFSetWarningHandler (tiff_warning);
   TIFFSetErrorHandler (tiff_error);
 
-  if (strcmp (name, SAVE_PROC) == 0 ||
-           strcmp (name, SAVE2_PROC) == 0)
+  if ((strcmp (name, SAVE_PROC) == 0) ||
+      (strcmp (name, SAVE2_PROC) == 0))
     {
       /* Plug-in is either file_tiff_save or file_tiff_save2 */
       image = orig_image = param[1].data.d_int32;

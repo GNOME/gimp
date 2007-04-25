@@ -1,6 +1,11 @@
 2007-04-25  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/tiff-load.c
+	* plug-ins/common/tiff-save.c: indentation changes.
+
+2007-04-25  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/common/tiff-load.c
 	* plug-ins/common/tiff-save.c: fixed the names of the plug-in
 	binaries in PLUG_IN_BINARY.
 

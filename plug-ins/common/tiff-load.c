@@ -90,7 +90,10 @@ static void   run       (const gchar      *name,
                          gint             *nreturn_vals,
                          GimpParam       **return_vals);
 
-static gint32    load_image    (const gchar  *filename,
+static gboolean  load_dialog   (const gchar       *filename,
+                                TiffSelectedPages *pages);
+
+static gint32    load_image    (const gchar       *filename,
                                 TiffSelectedPages *pages);
 
 static void      load_rgba     (TIFF         *tif,
@@ -171,9 +174,6 @@ static void      tiff_error             (const gchar *module,
                                          const gchar *fmt,
                                          va_list      ap);
 
-static gboolean  load_dialog            (const gchar *filename,
-                                         TiffSelectedPages *pages);
-
 const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -189,9 +189,8 @@ static TiffSaveVals tsvals =
 };
 
 
-static GimpRunMode  run_mode      = GIMP_RUN_INTERACTIVE;
-static GimpPageSelectorTarget
-                    target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
+static GimpRunMode             run_mode      = GIMP_RUN_INTERACTIVE;
+static GimpPageSelectorTarget  target        = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
 
 static guchar       bit2byte[256 * 8];
 
@@ -331,7 +330,8 @@ tiff_error (const gchar *module,
 }
 
 static gboolean
-load_dialog (const gchar *filename, TiffSelectedPages *pages)
+load_dialog (const gchar       *filename,
+             TiffSelectedPages *pages)
 {
   GtkWidget  *dialog;
   GtkWidget  *vbox;
