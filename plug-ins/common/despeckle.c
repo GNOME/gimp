@@ -217,7 +217,7 @@ run (const gchar      *name,
       if (gimp_drawable_is_rgb(drawable->drawable_id) ||
           gimp_drawable_is_gray(drawable->drawable_id))
        {
-          if (!despeckle_dialog ())
+          if (! despeckle_dialog ())
           return;
        }
       break;
@@ -609,7 +609,7 @@ despeckle_median (guchar   *src,
   buf      = g_new (guchar *, box);
   ibuf     = g_new (guchar, box);
 
-  if (!preview)
+  if (! preview)
     gimp_progress_init(_("Despeckle"));
 
   for (y = 0; y < height; y++)
@@ -685,11 +685,11 @@ despeckle_median (guchar   *src,
 
       progress += width;
 
-      if (!preview && y % 20 == 0)
+      if (! preview && y % 32 == 0)
         gimp_progress_update ((gdouble) progress / (gdouble) max_progress);
     }
 
-  if (!preview)
+  if (! preview)
     gimp_progress_update (1.0);
 
   g_free (ibuf);
@@ -813,6 +813,15 @@ pixel_copy (guchar       *dest,
             const guchar *src,
             gint          bpp)
 {
-  for (; bpp > 0; bpp--, dest++, src++)
-    *dest = *src;
+  switch (bpp)
+    {
+    case 4:
+      *dest++ = *src++;
+    case 3:
+      *dest++ = *src++;
+    case 2:
+      *dest++ = *src++;
+    case 1:
+      *dest++ = *src++;
+    }
 }
