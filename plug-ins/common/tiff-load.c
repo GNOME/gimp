@@ -56,7 +56,7 @@
 
 
 #define LOAD_PROC      "file-tiff-load"
-#define PLUG_IN_BINARY "tiff"
+#define PLUG_IN_BINARY "tiff-load"
 
 
 typedef struct

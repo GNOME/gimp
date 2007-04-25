@@ -57,7 +57,7 @@
 
 #define SAVE_PROC      "file-tiff-save"
 #define SAVE2_PROC     "file-tiff-save2"
-#define PLUG_IN_BINARY "tiff"
+#define PLUG_IN_BINARY "tiff-save"
 
 
 typedef struct

@@ -1,6 +1,12 @@
 2007-04-25  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/tiff-load.c
+	* plug-ins/common/tiff-save.c: fixed the names of the plug-in binary
+	in PLUG_IN_BINARY.
+
+2007-04-25  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/common/tiff-load.c
 	* plug-ins/common/tiff-save.c
 	* plug-ins/common/plugin-defs.pl
 	* plug-ins/common/Makefile.am
