@@ -1,5 +1,11 @@
 2007-04-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpparamspecs.c (gimp_param_string_validate): added
+	#warning to use GParamSpecString's features once we depend on a
+	fixed version.
+
+2007-04-25  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpparamspecs.[ch] (struct GimpParamSpecString)
 	(gimp_param_spec_string): added "gboolean non_empty" to require
 	the string being non-empty. Changed validation accordingly.

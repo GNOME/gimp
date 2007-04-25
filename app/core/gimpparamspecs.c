@@ -361,6 +361,10 @@ gimp_param_string_validate (GParamSpec *pspec,
   GimpParamSpecString *sspec  = GIMP_PARAM_SPEC_STRING (pspec);
   gchar               *string = value->data[0].v_pointer;
 
+#ifdef __GNUC__
+#warning FIXME: use GParamSpecString::ensure_non_null and chain up once we depend on glib 2.12.11 or glib 2.14
+#endif
+
   if (string)
     {
       gchar *s;
