@@ -1,6 +1,12 @@
 2007-04-25  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/tiff-load.c
+	* plug-ins/common/tiff-save.c: make progress bars progress to
+	completion.
+
+2007-04-25  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/common/tiff-load.c
 	* plug-ins/common/tiff-save.c: indentation changes.
 
 2007-04-25  Mukund Sivaraman  <muks@mukund.org>

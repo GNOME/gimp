@@ -532,6 +532,8 @@ load_image (const gchar *filename, TiffSelectedPages *pages)
       TIFFSetDirectory (tif, pages->pages[li]);
       ilayer = pages->pages[li];
 
+      gimp_progress_update (0.0);
+
       TIFFGetFieldDefaulted (tif, TIFFTAG_BITSPERSAMPLE, &bps);
 
       if (bps > 8 && bps != 16)
@@ -1018,6 +1020,8 @@ load_image (const gchar *filename, TiffSelectedPages *pages)
           gimp_image_undo_enable (image);
           gimp_image_clean_all (image);
         }
+
+      gimp_progress_update (1.0);
     }
 
   if (! do_images)

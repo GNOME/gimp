@@ -815,6 +815,8 @@ save_image (const gchar *filename,
   TIFFFlushData (tif);
   TIFFClose (tif);
 
+  gimp_progress_update (1.0);
+
   gimp_drawable_detach (drawable);
   g_free (data);
 
