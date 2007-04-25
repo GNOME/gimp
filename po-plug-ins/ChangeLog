@@ -1,3 +1,8 @@
+2007-04-25  Mukund Sivaraman  <muks@mukund.org>
+
+        * POTFILES.in: split TIFF load and save functionality into
+	different plug-ins.
+
 2007-04-21  Djihed Afifi <djihed@gmail.com> 
 
 	* ar.po: Updated Arabic Translation by Djihed Afifi.

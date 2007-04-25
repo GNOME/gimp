@@ -1,18 +1,17 @@
 2007-04-25  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/tiff-load.c
-	* plug-ins/common/tiff-save.c: fixed the names of the plug-in binary
-	in PLUG_IN_BINARY.
+	* plug-ins/common/tiff-save.c: fixed the names of the plug-in
+	binaries in PLUG_IN_BINARY.
 
 2007-04-25  Mukund Sivaraman  <muks@mukund.org>
 
-	* plug-ins/common/tiff-load.c
-	* plug-ins/common/tiff-save.c
+	* configure.in
 	* plug-ins/common/plugin-defs.pl
 	* plug-ins/common/Makefile.am
-	* configure.in
-	* po-plug-ins/POTFILES.in: split TIFF load and save functionality
-	into different plug-ins.
+	* plug-ins/common/tiff-load.c
+	* plug-ins/common/tiff-save.c: split TIFF load and save
+	functionality into different plug-ins.
 
 	* plug-ins/common/mkgen.pl: modified to allow plug-ins to override
 	auto-generated library env; also use underscores instead of hyphens
