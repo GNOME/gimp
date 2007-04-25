@@ -141,7 +141,8 @@ plug-ins/common/sunras.c
 plug-ins/common/svg.c
 plug-ins/common/tga.c
 plug-ins/common/threshold_alpha.c
-plug-ins/common/tiff.c
+plug-ins/common/tiff-load.c
+plug-ins/common/tiff-save.c
 plug-ins/common/tile.c
 plug-ins/common/tileit.c
 plug-ins/common/tiler.c

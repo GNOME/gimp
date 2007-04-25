@@ -163,7 +163,8 @@ libexec_PROGRAMS = \
 	$(SVG) \
 	tga \
 	threshold_alpha \
-	$(TIFF) \
+	$(TIFF_LOAD) \
+	$(TIFF_SAVE) \
 	tile \
 	tileit \
 	tiler \
@@ -193,7 +194,8 @@ EXTRA_PROGRAMS = \
 	psp \
 	screenshot \
 	svg \
-	tiff \
+	tiff-load \
+	tiff-save \
 	wmf \
 	xpm
 
@@ -2207,10 +2209,27 @@ threshold_alpha_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-tiff_SOURCES = \
-	tiff.c
+tiff_load_SOURCES = \
+	tiff-load.c
 
-tiff_LDADD = \
+tiff_load_LDADD = \
+	$(libgimpui)		\
+	$(libgimpwidgets)	\
+	$(libgimpmodule)	\
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GTK_LIBS)		\
+	$(LIBTIFF)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+tiff_save_SOURCES = \
+	tiff-save.c
+
+tiff_save_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpmodule)	\

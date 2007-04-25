@@ -314,7 +314,7 @@ fi
 changequote([,])dnl
 
 
-# If possible, warn if C99isms are used 
+# If possible, warn if C99isms are used
 GIMP_DETECT_CFLAGS(extra_warnings, '-Wdeclaration-after-statement')
 CFLAGS="$CFLAGS $extra_warnings"
 
@@ -607,7 +607,7 @@ if test "x$enable_mmx" = xyes; then
 
   mmx_save_CFLAGS="$CFLAGS"
   CFLAGS="$mmx_save_CFLAGS $MMX_EXTRA_CFLAGS"
-  
+
   AC_COMPILE_IFELSE([asm ("movq 0, %mm0");],
 
     AC_DEFINE(USE_MMX, 1, [Define to 1 if MMX assembly is available.])
@@ -878,7 +878,7 @@ if test x"$os_win32" != xyes; then
 fi
 
 #############################
-# Threads and multi processor 
+# Threads and multi processor
 #############################
 
 AC_ARG_ENABLE(mp, [  --disable-mp            disable support for multiple processors])
@@ -955,26 +955,27 @@ AC_ARG_WITH(libtiff,  [  --without-libtiff       build without TIFF support])
     have_libtiff=yes
     AC_CHECK_LIB(tiff, TIFFReadScanline,
       [AC_CHECK_HEADER(tiffio.h,
-	TIFF='tiff$(EXEEXT)'; LIBTIFF='-ltiff',
+	TIFF_LOAD='tiff-load$(EXEEXT)'; TIFF_SAVE='tiff-save$(EXEEXT)'; LIBTIFF='-ltiff',
 	[have_libtiff="no (TIFF header files not found)"])],
       [AC_CHECK_LIB(tiff, TIFFWriteScanline,
 	[AC_CHECK_HEADER(tiffio.h,
-          TIFF='tiff$(EXEEXT)'; LIBTIFF='-ltiff -ljpeg -lz',
+          TIFF_LOAD='tiff-load$(EXEEXT)'; TIFF_SAVE='tiff-save$(EXEEXT)'; LIBTIFF='-ltiff -ljpeg -lz',
 	  [have_libtiff="no (TIFF header files not found)"])],
 	[AC_CHECK_LIB(tiff34, TIFFFlushData,
 	  [AC_CHECK_HEADER(tiffio.h,
-            TIFF='tiff$(EXEEXT)'; LIBTIFF='-ltiff34 -ljpeg -lz',
+            TIFF_LOAD='tiff-load$(EXEEXT)'; TIFF_SAVE='tiff-save$(EXEEXT)'; LIBTIFF='-ltiff34 -ljpeg -lz',
 	    [have_libtiff="no (TIFF header files not found)"])],
         [have_libtiff="no (TIFF library not found)"], -ljpeg -lz -lm)], -ljpeg -lz -lm)], -lm)
   fi
 
   if test x$with_libtiff != xno && test -z "$LIBTIFF"; then
      AC_MSG_ERROR([
-*** Checks for TIFF libary failed. You can build without it by passing 
+*** Checks for TIFF libary failed. You can build without it by passing
 *** --without-libtiff to configure but you won't be able to use TIFFs then.])
   fi
 
-AC_SUBST(TIFF)
+AC_SUBST(TIFF_LOAD)
+AC_SUBST(TIFF_SAVE)
 AC_SUBST(LIBTIFF)
 
 
@@ -1012,7 +1013,7 @@ AC_ARG_WITH(libjpeg,  [  --without-libjpeg       build without JPEG support])
 
   if test x$with_libjpeg != xno && test -z "$LIBJPEG"; then
      AC_MSG_ERROR([
-*** Checks for JPEG library failed. You can build without it by passing 
+*** Checks for JPEG library failed. You can build without it by passing
 *** --without-libjpeg to configure but you won't be able to use JPEGs then.])
   fi
 
@@ -1104,7 +1105,7 @@ have_libexif=no
 AC_ARG_WITH(libexif,  [  --without-libexif       build without EXIF support])
 if test x$with_libexif != xno && test -z "$LIBEXIF" && test -n "$LIBJPEG"; then
   have_libexif=yes
-  PKG_CHECK_MODULES(EXIF, libexif, 
+  PKG_CHECK_MODULES(EXIF, libexif,
     AC_DEFINE(HAVE_EXIF, 1, [Define to 1 if libexif is available]),
     have_libexif="no (libexif not found)")
   AC_MSG_CHECKING([if libexif is version 0.6.0 or newer])
@@ -1316,7 +1317,7 @@ fi
 AM_CONDITIONAL(HAVE_LIBCURL, test "x$have_libcurl" = xyes)
 
 if test "x$have_gnomevfs" = xyes; then
-  uri_plugin="yes (using gnome-vfs)" 
+  uri_plugin="yes (using gnome-vfs)"
 elif test x"$have_libcurl" = xyes; then
   uri_plugin="yes (using libcurl)"
 elif test x"$os_win32" = xno; then
@@ -1516,7 +1517,7 @@ fi
 # None: Raw data.
 ############################################################
 
-AC_ARG_WITH(gif-compression, 
+AC_ARG_WITH(gif-compression,
             [  --with-gif-compression=lzw|rle|none     GIF compression style (default=lzw)])
 
 case x"$with_gif_compression" in
@@ -1820,7 +1821,7 @@ _______EOF
 #define GIMP_VERSION                                    "$gimp_ver"
 #define GIMP_API_VERSION                                "$gimp_api_ver"
 _______EOF
-                                                                                
+
   cat >>$outfile <<\_______EOF
 #define GIMP_CHECK_VERSION(major, minor, micro) \
     (GIMP_MAJOR_VERSION > (major) || \

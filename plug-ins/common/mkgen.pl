@@ -19,7 +19,9 @@ $bins = ""; $opts = "";
 foreach (sort keys %plugins) {
     $bins .= "\t";
     if (exists $plugins{$_}->{optional}) {
-	$bins .= "\$(\U$_\E)";
+        my $makename = $_;
+        $makename =~ s/-/_/g;
+	$bins .= "\$(\U$makename\E)";
 	$opts .= "\t$_ \\\n";
     }
     else {
@@ -128,9 +130,14 @@ foreach (sort keys %plugins) {
     }
 
     my $optlib = "";
+
     if (exists $plugins{$_}->{optional}) {
-	my $name = exists $plugins{$_}->{libopt} ? $plugins{$_}->{libopt} : $_;
-	$optlib = "\n\t\$(LIB\U$name\E)\t\t\\";
+	if (exists $plugins{$_}->{libs}) {
+		$optlib = "\n\t\$(" . $plugins{$_}->{libs} . ")\t\t\\";
+	} else {
+		my $name = exists $plugins{$_}->{libopt} ? $plugins{$_}->{libopt} : $_;
+		$optlib = "\n\t\$(LIB\U$name\E)\t\t\\";
+	}
     }
 
     if (exists $plugins{$_}->{cflags}) {

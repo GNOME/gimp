@@ -1,3 +1,19 @@
+2007-04-25  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/common/tiff-load.c
+	* plug-ins/common/tiff-save.c
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/Makefile.am
+	* configure.in
+	* po-plug-ins/POTFILES.in: split TIFF load and save functionality
+	into different plug-ins.
+
+	* plug-ins/common/mkgen.pl: modified to allow plug-ins to override
+	auto-generated library env; also use underscores instead of hyphens
+	in the generated Makefile.am.
+
+	* plug-ins/common/tiff.c: removed.
+
 2007-04-25  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c (convolve_region): round pixel values
