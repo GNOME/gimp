@@ -299,7 +299,7 @@ run (const gchar      *name,
 
               if (pages.n_pages == 1)
                 {
-                  target = GIMP_PAGE_SELECTOR_TARGET_IMAGES;
+                  target = GIMP_PAGE_SELECTOR_TARGET_LAYERS;
                   pages.pages = g_new0 (gint, pages.n_pages);
 
                   run_it = TRUE;
@@ -520,10 +520,10 @@ load_image (const gchar       *filename,
 
   gimp_rgb_set (&color, 0.0, 0.0, 0.0);
 
-  if ((pages->n_pages > 1) && (target == GIMP_PAGE_SELECTOR_TARGET_LAYERS))
-    do_images = FALSE;
-  else
+  if ((pages->n_pages > 1) && (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES))
     do_images = TRUE;
+  else
+    do_images = FALSE;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));

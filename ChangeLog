@@ -1,5 +1,10 @@
 2007-04-25  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/common/tiff-load.c: set the filename to the original
+	filename in case of single-page loads.
+
+2007-04-25  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/common/tiff-load.c: moved the non-interactive check out
 	of load_dialog() and into run().
 
