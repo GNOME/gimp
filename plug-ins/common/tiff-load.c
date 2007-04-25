@@ -77,6 +77,7 @@ typedef struct
 
 typedef struct
 {
+  gint  o_pages;
   gint  n_pages;
   gint *pages;
 } TiffSelectedPages;
@@ -273,7 +274,7 @@ run (const gchar      *name,
         }
       else
         {
-          pages.n_pages = TIFFNumberOfDirectories (tif);
+          pages.n_pages = pages.o_pages = TIFFNumberOfDirectories (tif);
 
           if (pages.n_pages == 0)
             {
@@ -507,7 +508,6 @@ load_image (const gchar       *filename,
   gchar        *name;
 
   GList        *images_list = NULL, *images_list_temp;
-  gboolean      do_images;
   gint          li;
 
   gboolean      flip_horizontal = FALSE;
@@ -519,11 +519,6 @@ load_image (const gchar       *filename,
 #endif
 
   gimp_rgb_set (&color, 0.0, 0.0, 0.0);
-
-  if ((pages->n_pages > 1) && (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES))
-    do_images = TRUE;
-  else
-    do_images = FALSE;
 
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
@@ -671,7 +666,7 @@ load_image (const gchar       *filename,
           layer_type = GIMP_RGBA_IMAGE;
         }
 
-      if (do_images || (! image))
+      if ((target == GIMP_PAGE_SELECTOR_TARGET_IMAGES) || (! image))
         {
           if ((image = gimp_image_new (cols, rows, image_type)) == -1)
             {
@@ -681,7 +676,7 @@ load_image (const gchar       *filename,
 
           gimp_image_undo_disable (image);
 
-          if (do_images)
+          if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
             {
               gchar *fname;
               fname = g_strdup_printf ("%s-%d", filename, ilayer);
@@ -690,7 +685,7 @@ load_image (const gchar       *filename,
 
               images_list = g_list_append (images_list, GINT_TO_POINTER (image));
             }
-          else
+          else if (pages->o_pages == pages->n_pages)
             {
               gimp_image_set_filename (image, filename);
             }
@@ -1020,7 +1015,7 @@ load_image (const gchar       *filename,
 
       gimp_image_add_layer (image, layer, -1);
 
-      if (do_images)
+      if (target == GIMP_PAGE_SELECTOR_TARGET_IMAGES)
         {
           gimp_image_undo_enable (image);
           gimp_image_clean_all (image);
@@ -1029,7 +1024,7 @@ load_image (const gchar       *filename,
       gimp_progress_update (1.0);
     }
 
-  if (! do_images)
+  if (target != GIMP_PAGE_SELECTOR_TARGET_IMAGES)
     {
       /* resize image to bounding box of all layers */
       gimp_image_resize (image,

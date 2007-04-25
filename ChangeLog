@@ -1,5 +1,11 @@
 2007-04-25  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/common/tiff-load.c: set a different filename when
+	the number of pages loaded is lower than the number of pages
+	in the TIFF file.
+
+2007-04-25  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/common/tiff-load.c: set the filename to the original
 	filename in case of single-page loads.
 
