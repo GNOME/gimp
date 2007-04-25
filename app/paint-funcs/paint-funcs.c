@@ -2389,7 +2389,7 @@ convolve_region (PixelRegion         *srcR,
   guchar       *src, *s_row, *s;
   guchar       *dest, *d;
   const gfloat *m;
-  gdouble       total [4];
+  gdouble       total[4];
   gint          b, bytes;
   gint          alpha, a_byte;
   gint          length;
@@ -2523,7 +2523,7 @@ convolve_region (PixelRegion         *srcR,
                 if (total [b] < 0)
                   *d++ = 0;
                 else
-                  *d++ = (total [b] > 255.0) ? 255 : (guchar) total [b];
+                  *d++ = (total [b] > 255.0) ? 255 : (guchar) ROUND (total [b]);
               }
 
             s_row += bytes;
@@ -2564,7 +2564,7 @@ convolve_region (PixelRegion         *srcR,
                 if (total [b] < 0.0)
                   *d++ = 0.0;
                 else
-                  *d++ = (total [b] > 255.0) ? 255 : (guchar) total [b];
+                  *d++ = (total [b] > 255.0) ? 255 : (guchar) ROUND (total [b]);
               }
 
             s_row += bytes;
