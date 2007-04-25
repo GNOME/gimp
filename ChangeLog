@@ -1,3 +1,9 @@
+2007-04-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpbrush.c (gimp_brush_scale_size): removed bogus
+	"return" from void function. Fixes bug #433339, patch from Eric
+	Lamarque.
+
 2007-04-25  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/tiff-load.c: set a different filename when

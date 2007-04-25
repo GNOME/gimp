@@ -439,8 +439,7 @@ gimp_brush_scale_size (GimpBrush     *brush,
       return;
     }
 
-  return GIMP_BRUSH_GET_CLASS (brush)->scale_size (brush, scale,
-                                                   width, height);
+  GIMP_BRUSH_GET_CLASS (brush)->scale_size (brush, scale, width, height);
 }
 
 TempBuf *
