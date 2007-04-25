@@ -117,7 +117,7 @@ register_fonts_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("filter",
                                                        "filter",
                                                        "An optional regular expression used to filter the list",
-                                                       FALSE, TRUE,
+                                                       FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,

@@ -621,7 +621,7 @@ register_context_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active paint method",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -644,7 +644,7 @@ register_context_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the paint method",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -881,7 +881,7 @@ register_context_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active brush",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -904,7 +904,7 @@ register_context_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the brush",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -927,7 +927,7 @@ register_context_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active pattern",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -950,7 +950,7 @@ register_context_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the pattern",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -973,7 +973,7 @@ register_context_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active gradient",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -996,7 +996,7 @@ register_context_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the gradient",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1019,7 +1019,7 @@ register_context_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active palette",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1042,7 +1042,7 @@ register_context_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the palette",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1065,7 +1065,7 @@ register_context_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The name of the active font",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1088,7 +1088,7 @@ register_context_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The name of the font",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

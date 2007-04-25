@@ -415,7 +415,7 @@ register_unit_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("identifier",
                                                        "identifier",
                                                        "The new unit's identifier",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -434,28 +434,28 @@ register_unit_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("symbol",
                                                        "symbol",
                                                        "The new unit's symbol",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("abbreviation",
                                                        "abbreviation",
                                                        "The new unit's abbreviation",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("singular",
                                                        "singular",
                                                        "The new unit's singular form",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("plural",
                                                        "plural",
                                                        "The new unit's plural form",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -554,7 +554,7 @@ register_unit_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("identifier",
                                                            "identifier",
                                                            "The unit's textual identifier",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -645,7 +645,7 @@ register_unit_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("symbol",
                                                            "symbol",
                                                            "The unit's symbol",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -676,7 +676,7 @@ register_unit_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("abbreviation",
                                                            "abbreviation",
                                                            "The unit's abbreviation",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -707,7 +707,7 @@ register_unit_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("singular",
                                                            "singular",
                                                            "The unit's singular form",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -738,7 +738,7 @@ register_unit_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("plural",
                                                            "plural",
                                                            "The unit's plural form",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

@@ -144,21 +144,21 @@ register_gradient_select_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("gradient-callback",
                                                        "gradient callback",
                                                        "The callback PDB proc to call when gradient selection is made",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("popup-title",
                                                        "popup title",
                                                        "Title of the gradient selection dialog",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("initial-gradient",
                                                        "initial gradient",
                                                        "The name of the gradient to set as the first selected",
-                                                       FALSE, TRUE,
+                                                       FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -187,7 +187,7 @@ register_gradient_select_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("gradient-callback",
                                                        "gradient callback",
                                                        "The name of the callback registered for this pop-up",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -210,14 +210,14 @@ register_gradient_select_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("gradient-callback",
                                                        "gradient callback",
                                                        "The name of the callback registered for this pop-up",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("gradient-name",
                                                        "gradient name",
                                                        "The name of the gradient to set as selected",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

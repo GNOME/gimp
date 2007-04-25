@@ -421,7 +421,7 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-        { name => 'procedure_name', type => 'string',
+        { name => 'procedure_name', type => 'string', non_empty => 1,
           desc => 'The name of the procedure to be used for loading' },
         { name => 'extensions', type => 'string', no_success => 1,
           desc => 'comma separated list of extensions this handler
@@ -460,7 +460,7 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-        { name => 'procedure_name', type => 'string',
+        { name => 'procedure_name', type => 'string', non_empty => 1,
           desc => 'The name of the procedure to be used for loading' },
         { name => 'extensions', type => 'string', no_success => 1,
           desc => 'comma separated list of extensions this handler
@@ -497,7 +497,7 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-        { name => 'procedure_name', type => 'string',
+        { name => 'procedure_name', type => 'string', non_empty => 1,
           desc => 'The name of the procedure to be used for saving' },
         { name => 'extensions', type => 'string', no_success => 1,
           desc => 'comma separated list of extensions this handler
@@ -534,7 +534,7 @@ HELP
     &neo_pdb_misc('2004', '2.2');
 
     @inargs = (
-        { name => 'procedure_name', type => 'string',
+        { name => 'procedure_name', type => 'string', non_empty => 1,
           desc => "The name of the procedure to associate a MIME type with." },
         { name => 'mime_type', type => 'string',
           desc => "A single MIME type, like for example \"image/jpeg\"."     }
@@ -569,9 +569,9 @@ HELP
     &neo_pdb_misc('2004', '2.2');
 
     @inargs = (
-        { name => 'load_proc', type => 'string',
+        { name => 'load_proc', type => 'string', non_empty => 1,
           desc => "The name of the procedure the thumbnail loader with." },
-        { name => 'thumb_proc', type => 'string',
+        { name => 'thumb_proc', type => 'string', non_empty => 1,
           desc => "The name of the thumbnail load procedure." }
     );
     %invoke = (

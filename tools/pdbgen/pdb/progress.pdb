@@ -191,7 +191,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'progress_callback', type => 'string',
+	{ name => 'progress_callback', type => 'string', non_empty => 1,
 	  desc => 'The callback PDB proc to call',
           wrap => 1 }
     );
@@ -221,7 +221,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'progress_callback', type => 'string',
+	{ name => 'progress_callback', type => 'string', non_empty => 1,
 	  desc => 'The name of the callback registered for this progress',
           wrap => 1 }
     );
@@ -250,7 +250,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'progress_callback', type => 'string',
+	{ name => 'progress_callback', type => 'string', non_empty => 1,
 	  desc => 'The name of the callback registered for this progress' }
     );
 

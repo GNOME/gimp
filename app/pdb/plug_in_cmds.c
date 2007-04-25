@@ -281,7 +281,7 @@ register_plug_in_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("search-string",
                                                        "search string",
                                                        "If not an empty string then use this as a search pattern",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
@@ -370,14 +370,14 @@ register_plug_in_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("domain-name",
                                                        "domain name",
                                                        "The name of the textdomain (must be unique)",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("domain-path",
                                                        "domain path",
                                                        "The absolute path to the compiled message catalog (may be NULL)",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -400,14 +400,14 @@ register_plug_in_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("domain-name",
                                                        "domain name",
                                                        "The XML namespace of the plug-in's help pages",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("domain-uri",
                                                        "domain uri",
                                                        "The root URI of the plug-in's help pages",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -430,14 +430,14 @@ register_plug_in_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
                                                        "The procedure for which to install the menu path",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("menu-path",
                                                        "menu path",
                                                        "The procedure's additional menu path",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -460,14 +460,14 @@ register_plug_in_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("menu-path",
                                                        "menu path",
                                                        "The sub-menu's menu path",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("menu-name",
                                                        "menu name",
                                                        "The name of the sub-menu",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -490,7 +490,7 @@ register_plug_in_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("procedure-name",
                                                        "procedure name",
                                                        "The procedure for which to install the icon",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,

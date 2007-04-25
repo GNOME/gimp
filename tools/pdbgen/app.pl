@@ -360,12 +360,13 @@ CODE
     elsif ($pdbtype eq 'string') {
 	$no_validate = exists $arg->{no_validate} ? 'TRUE' : 'FALSE';
 	$null_ok = exists $arg->{null_ok} ? 'TRUE' : 'FALSE';
+	$non_empty = exists $arg->{non_empty} ? 'TRUE' : 'FALSE';
 	$default = exists $arg->{default} ? $arg->{default} : NULL;
 	$pspec = <<CODE;
 gimp_param_spec_string ("$name",
                         "$nick",
                         "$blurb",
-                        $no_validate, $null_ok,
+                        $no_validate, $null_ok, $non_empty,
                         $default,
                         $flags)
 CODE

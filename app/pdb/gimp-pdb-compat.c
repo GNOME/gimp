@@ -73,7 +73,7 @@ gimp_pdb_compat_param_spec (Gimp           *gimp,
 
     case GIMP_PDB_STRING:
       pspec = gimp_param_spec_string (name, name, desc,
-                                      TRUE, TRUE,
+                                      TRUE, TRUE, FALSE,
                                       NULL,
                                       G_PARAM_READWRITE);
       break;

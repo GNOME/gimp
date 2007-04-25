@@ -351,6 +351,7 @@ gimp_param_string_init (GParamSpec *pspec)
 
   sspec->no_validate = FALSE;
   sspec->null_ok     = FALSE;
+  sspec->non_empty   = FALSE;
 }
 
 static gboolean
@@ -364,10 +365,28 @@ gimp_param_string_validate (GParamSpec *pspec,
     {
       gchar *s;
 
+      if (sspec->non_empty && ! string[0])
+        {
+          if (!(value->data[1].v_uint & G_VALUE_NOCOPY_CONTENTS))
+            g_free (string);
+          else
+            value->data[1].v_uint &= ~G_VALUE_NOCOPY_CONTENTS;
+
+          value->data[0].v_pointer = g_strdup ("none");
+          return TRUE;
+        }
+
       if (! sspec->no_validate &&
           ! g_utf8_validate (string, -1, (const gchar **) &s))
         {
-          for (; *s; s++)
+          if (value->data[1].v_uint & G_VALUE_NOCOPY_CONTENTS)
+            {
+              value->data[0].v_pointer = g_strdup (string);
+              value->data[1].v_uint &= ~G_VALUE_NOCOPY_CONTENTS;
+              string = value->data[0].v_pointer;
+            }
+
+          for (s = string; *s; s++)
             if (*s < ' ')
               *s = '?';
 
@@ -376,7 +395,14 @@ gimp_param_string_validate (GParamSpec *pspec,
     }
   else if (! sspec->null_ok)
     {
+      value->data[1].v_uint &= ~G_VALUE_NOCOPY_CONTENTS;
       value->data[0].v_pointer = g_strdup ("");
+      return TRUE;
+    }
+  else if (sspec->non_empty)
+    {
+      value->data[1].v_uint &= ~G_VALUE_NOCOPY_CONTENTS;
+      value->data[0].v_pointer = g_strdup ("none");
       return TRUE;
     }
 
@@ -389,10 +415,13 @@ gimp_param_spec_string (const gchar *name,
                         const gchar *blurb,
                         gboolean     no_validate,
                         gboolean     null_ok,
+                        gboolean     non_empty,
                         const gchar *default_value,
                         GParamFlags  flags)
 {
   GimpParamSpecString *sspec;
+
+  g_return_val_if_fail (! (null_ok && non_empty), NULL);
 
   sspec = g_param_spec_internal (GIMP_TYPE_PARAM_STRING,
                                  name, nick, blurb, flags);
@@ -404,6 +433,7 @@ gimp_param_spec_string (const gchar *name,
 
       sspec->no_validate = no_validate ? TRUE : FALSE;
       sspec->null_ok     = null_ok     ? TRUE : FALSE;
+      sspec->non_empty   = non_empty   ? TRUE : FALSE;
     }
 
   return G_PARAM_SPEC (sspec);

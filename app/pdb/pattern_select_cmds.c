@@ -137,21 +137,21 @@ register_pattern_select_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("pattern-callback",
                                                        "pattern callback",
                                                        "The callback PDB proc to call when pattern selection is made",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("popup-title",
                                                        "popup title",
                                                        "Title of the pattern selection dialog",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("initial-pattern",
                                                        "initial pattern",
                                                        "The name of the pattern to set as the first selected",
-                                                       FALSE, TRUE,
+                                                       FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -174,7 +174,7 @@ register_pattern_select_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("pattern-callback",
                                                        "pattern callback",
                                                        "The name of the callback registered for this pop-up",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -197,14 +197,14 @@ register_pattern_select_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("pattern-callback",
                                                        "pattern callback",
                                                        "The name of the callback registered for this pop-up",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("pattern-name",
                                                        "pattern name",
                                                        "The name of the pattern to set as selected",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

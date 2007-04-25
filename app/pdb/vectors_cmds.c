@@ -1307,7 +1307,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "the name of the new vector object.",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -1370,7 +1370,7 @@ register_vectors_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The name of the vectors object",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1399,7 +1399,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "the new name of the path",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -2472,7 +2472,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("filename",
                                                        "filename",
                                                        "The name of the SVG file to import.",
-                                                       TRUE, FALSE,
+                                                       TRUE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2524,7 +2524,7 @@ register_vectors_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("string",
                                                        "string",
                                                        "A string that must be a complete and valid SVG document.",
-                                                       TRUE, FALSE,
+                                                       TRUE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,

@@ -232,7 +232,7 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => "The drawable to cut from" },
-        { name => 'buffer_name', type => 'string',
+        { name => 'buffer_name', type => 'string', non_empty => 1,
           desc => 'The name of the buffer to create' }
     );
     @outargs = (
@@ -244,7 +244,7 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (strlen (buffer_name) && gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
     {
        GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -277,7 +277,7 @@ HELP
     @inargs = (
 	{ name => 'drawable', type => 'drawable',
 	  desc => "The drawable to copy from" },
-        { name => 'buffer_name', type => 'string',
+        { name => 'buffer_name', type => 'string', non_empty => 1,
           desc => 'The name of the buffer to create' }
     );
     @outargs = (
@@ -289,7 +289,7 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (strlen (buffer_name) && gimp_item_is_attached (GIMP_ITEM (drawable)))
+  if (gimp_item_is_attached (GIMP_ITEM (drawable)))
     {
        GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
 
@@ -323,7 +323,7 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => "The image to copy from" },
-        { name => 'buffer_name', type => 'string',
+        { name => 'buffer_name', type => 'string', non_empty => 1,
           desc => 'The name of the buffer to create' }
     );
 
@@ -335,16 +335,11 @@ HELP
     %invoke = (
 	code => <<CODE
 {
-  if (strlen (buffer_name))
-    {
-      real_name = (gchar *) gimp_edit_named_copy_visible (image, buffer_name,
-                                                          context);
+  real_name = (gchar *) gimp_edit_named_copy_visible (image, buffer_name,
+                                                      context);
 
-      if (real_name)
-        real_name = g_strdup (real_name);
-      else
-        success = FALSE;
-    }
+  if (real_name)
+    real_name = g_strdup (real_name);
   else
     success = FALSE;
 }

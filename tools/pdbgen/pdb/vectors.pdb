@@ -1166,7 +1166,7 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'filename', type => 'string', no_validate => 1,
+        { name => 'filename', type => 'string', no_validate => 1, non_empty => 1,
           desc => 'The name of the SVG file to import.' },
         { name => 'merge', type => 'boolean',
           desc => 'Merge paths into a single vectors object.' },

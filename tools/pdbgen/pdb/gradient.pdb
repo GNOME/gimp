@@ -22,7 +22,7 @@ sub gradient_new {
     &shlomi_pdb_misc('2003', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The requested name of the new gradient' }
     );
 
@@ -34,15 +34,10 @@ sub gradient_new {
     %invoke = (
         code => <<'CODE'
 {
-  if (strlen (name))
-    {
-      GimpData *data = gimp_data_factory_data_new (gimp->gradient_factory, name);
+  GimpData *data = gimp_data_factory_data_new (gimp->gradient_factory, name);
 
-      if (data)
-        actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
-      else
-        success = FALSE;
-    }
+  if (data)
+    actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
   else
     success = FALSE;
 }
@@ -130,7 +125,7 @@ sub gradient_rename {
     @inargs = (
 	{ name => 'name', type => 'string',
 	  desc => 'The gradient name' },
-        { name => 'new_name', type => 'string',
+        { name => 'new_name', type => 'string', non_empty => 1,
           desc => 'The new name of the gradient' }
     );
 
@@ -145,7 +140,7 @@ sub gradient_rename {
   GimpGradient *gradient = (GimpGradient *)
     gimp_container_get_child_by_name (gimp->gradient_factory->container, name);
 
-  if (gradient && GIMP_DATA (gradient)->writable && strlen (new_name))
+  if (gradient && GIMP_DATA (gradient)->writable)
     {
       gimp_object_set_name (GIMP_OBJECT (gradient), new_name);
       actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (gradient)));

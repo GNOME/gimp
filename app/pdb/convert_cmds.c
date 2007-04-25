@@ -275,7 +275,7 @@ register_convert_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("palette",
                                                        "palette",
                                                        "The name of the custom palette to use, ignored unless (palette_type == GIMP_CUSTOM_PALETTE)",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

@@ -58,7 +58,7 @@ HELP
     $copyright = $author . ' & Peter Mattis';
 
     @inargs = (
-	{ name => 'filename', type => 'string', no_validate => 1,
+	{ name => 'filename', type => 'string', no_validate => 1, non_empty => 1,
 	  desc => 'The dump filename' }
     );
 
@@ -148,7 +148,7 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name  => 'procedure_name', type  => 'string',
+	{ name  => 'procedure_name', type  => 'string', non_empty => 1,
 	  desc  => 'The procedure name' }
     );
 
@@ -206,7 +206,7 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name => 'procedure_name', type  => 'string',
+	{ name => 'procedure_name', type  => 'string', non_empty => 1,
 	  desc => 'The procedure name' },
 	{ name => 'arg_num', type => 'int32',
 	  desc => 'The argument number' }
@@ -273,7 +273,7 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name => 'procedure_name', type  => 'string',
+	{ name => 'procedure_name', type  => 'string', non_empty => 1,
 	  desc => 'The procedure name' },
 	{ name => 'val_num', type => 'int32',
 	  desc => 'The return value number' }
@@ -338,7 +338,7 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name => 'identifier', type => 'string',
+	{ name => 'identifier', type => 'string', non_empty => 1,
 	  desc => 'The identifier associated with data' }
     );
 
@@ -382,7 +382,7 @@ HELP
     &nick_pdb_misc('1998');
 
     @inargs = (
-	{ name => 'identifier', type => 'string',
+	{ name => 'identifier', type => 'string', non_empty => 1,
 	  desc => 'The identifier associated with data' }
     );
 
@@ -418,7 +418,7 @@ HELP
     $date = '1997';
 
     @inargs = (
-	{ name => 'identifier', type => 'string',
+	{ name => 'identifier', type => 'string', non_empty => 1,
 	  desc => 'The identifier associated with data' },
 	{ name  => 'data', type  => 'int8array',
 	  desc  => 'A byte array containing data', wrap => 1,

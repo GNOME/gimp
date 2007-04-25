@@ -24,7 +24,7 @@ sub patterns_popup {
     &andy_pdb_misc('1998');
 
     @inargs = (
-	{ name => 'pattern_callback', type => 'string',
+	{ name => 'pattern_callback', type => 'string', non_empty => 1,
 	  desc => 'The callback PDB proc to call when pattern selection is
 		   made' },
 	{ name => 'popup_title', type => 'string',
@@ -55,7 +55,7 @@ sub patterns_close_popup {
     &andy_pdb_misc('1998');
 
     @inargs = (
-	{ name => 'pattern_callback', type => 'string',
+	{ name => 'pattern_callback', type => 'string', non_empty => 1,
 	  desc => 'The name of the callback registered for this pop-up' }
     );
 
@@ -79,7 +79,7 @@ sub patterns_set_popup {
     &andy_pdb_misc('1998');
 
     @inargs = (
-	{ name => 'pattern_callback', type => 'string',
+	{ name => 'pattern_callback', type => 'string', non_empty => 1,
 	  desc => 'The name of the callback registered for this pop-up' },
 	{ name => 'pattern_name', type => 'string',
 	  desc => 'The name of the pattern to set as selected' }

@@ -24,7 +24,7 @@ sub fonts_popup {
     &neo_pdb_misc('2003');
 
     @inargs = (
-	{ name => 'font_callback', type => 'string',
+	{ name => 'font_callback', type => 'string', non_empty => 1,
 	  desc => 'The callback PDB proc to call when font selection is made' },
 	{ name => 'popup_title', type => 'string',
 	  desc => 'Title of the font selection dialog' },
@@ -53,7 +53,7 @@ sub fonts_close_popup {
     &neo_pdb_misc('2003');
 
     @inargs = (
-	{ name => 'font_callback', type => 'string',
+	{ name => 'font_callback', type => 'string', non_empty => 1,
 	  desc => 'The name of the callback registered for this pop-up' }
     );
 
@@ -76,7 +76,7 @@ sub fonts_set_popup {
     &neo_pdb_misc('2003');
 
     @inargs = (
-	{ name => 'font_callback', type => 'string',
+	{ name => 'font_callback', type => 'string', non_empty => 1,
 	  desc => 'The name of the callback registered for this pop-up' },
 	{ name => 'font_name', type => 'string',
 	  desc => 'The name of the font to set as selected' }

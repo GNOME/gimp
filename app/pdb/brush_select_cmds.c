@@ -155,21 +155,21 @@ register_brush_select_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("brush-callback",
                                                        "brush callback",
                                                        "The callback PDB proc to call when brush selection is made",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("popup-title",
                                                        "popup title",
                                                        "Title of the brush selection dialog",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("initial-brush",
                                                        "initial brush",
                                                        "The name of the brush to set as the first selected",
-                                                       FALSE, TRUE,
+                                                       FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -211,7 +211,7 @@ register_brush_select_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("brush-callback",
                                                        "brush callback",
                                                        "The name of the callback registered for this pop-up",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -234,14 +234,14 @@ register_brush_select_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("brush-callback",
                                                        "brush callback",
                                                        "The name of the callback registered for this pop-up",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("brush-name",
                                                        "brush name",
                                                        "The name of the brush to set as selected",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,

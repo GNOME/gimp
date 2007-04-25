@@ -56,15 +56,10 @@ palette_new_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      if (strlen (name))
-        {
-          GimpData *data = gimp_data_factory_data_new (gimp->palette_factory, name);
+      GimpData *data = gimp_data_factory_data_new (gimp->palette_factory, name);
 
-          if (data)
-            actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
-          else
-            success = FALSE;
-        }
+      if (data)
+        actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
       else
         success = FALSE;
     }
@@ -140,7 +135,7 @@ palette_rename_invoker (GimpProcedure     *procedure,
       GimpPalette *palette = (GimpPalette *)
         gimp_container_get_child_by_name (gimp->palette_factory->container, name);
 
-      if (palette && GIMP_DATA (palette)->writable && strlen (new_name))
+      if (palette && GIMP_DATA (palette)->writable)
         {
           gimp_object_set_name (GIMP_OBJECT (palette), new_name);
           actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (palette)));
@@ -595,14 +590,14 @@ register_palette_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The requested name of the new palette",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("actual-name",
                                                            "actual name",
                                                            "The actual new palette name",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -625,14 +620,14 @@ register_palette_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The palette name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("copy-name",
                                                            "copy name",
                                                            "The name of the palette's copy",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -655,21 +650,21 @@ register_palette_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The palette name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("new-name",
                                                        "new name",
                                                        "The new name of the palette",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("actual-name",
                                                            "actual name",
                                                            "The actual new name of the palette",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -692,7 +687,7 @@ register_palette_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The palette name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -715,7 +710,7 @@ register_palette_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The palette name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -744,7 +739,7 @@ register_palette_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The palette name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -773,7 +768,7 @@ register_palette_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The palette name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -802,7 +797,7 @@ register_palette_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The palette name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -831,14 +826,14 @@ register_palette_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The palette name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("entry-name",
                                                        "entry name",
                                                        "The name of the entry",
-                                                       FALSE, TRUE,
+                                                       FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -874,7 +869,7 @@ register_palette_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The palette name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -903,7 +898,7 @@ register_palette_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The palette name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -939,7 +934,7 @@ register_palette_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The palette name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -975,7 +970,7 @@ register_palette_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The palette name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -988,7 +983,7 @@ register_palette_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("entry-name",
                                                            "entry name",
                                                            "The name requested",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -1011,7 +1006,7 @@ register_palette_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The palette name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1024,7 +1019,7 @@ register_palette_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("entry-name",
                                                        "entry name",
                                                        "The new name",
-                                                       FALSE, TRUE,
+                                                       FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

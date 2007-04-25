@@ -158,7 +158,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'procedure_name', type => 'string',
+	{ name => 'procedure_name', type => 'string', non_empty => 1,
 	  desc => 'The procedure for which to install the menu path' },
 	{ name => 'menu_path', type => 'string',
 	  desc => "The procedure's additional menu path" }
@@ -227,7 +227,7 @@ HELP
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'procedure_name', type => 'string', wrap => 1,
+	{ name => 'procedure_name', type => 'string', wrap => 1, non_empty => 1,
 	  desc => 'The procedure for which to install the icon' },
         { name => 'icon_type', type => 'enum GimpIconType',
           desc => 'The type of the icon' },

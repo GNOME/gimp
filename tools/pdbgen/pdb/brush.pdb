@@ -24,7 +24,7 @@ sub brush_new {
     &mitch_pdb_misc('2004', '2.2');
 
     @inargs = (
-	{ name => 'name', type => 'string',
+	{ name => 'name', type => 'string', non_empty => 1,
 	  desc => 'The requested name of the new brush' }
     );
 
@@ -36,15 +36,10 @@ sub brush_new {
     %invoke = (
         code => <<'CODE'
 {
-  if (strlen (name))
-    {
-      GimpData *data = gimp_data_factory_data_new (gimp->brush_factory, name);
+  GimpData *data = gimp_data_factory_data_new (gimp->brush_factory, name);
 
-      if (data)
-        actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
-      else
-        success = FALSE;
-    }
+  if (data)
+    actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (data)));
   else
     success = FALSE;
 }
@@ -163,7 +158,7 @@ sub brush_rename {
     @inargs = (
 	{ name => 'name', type => 'string',
 	  desc => 'The brush name' },
-        { name => 'new_name', type => 'string',
+        { name => 'new_name', type => 'string', non_empty => 1,
           desc => 'The new name of the brush' }
     );
 
@@ -178,7 +173,7 @@ sub brush_rename {
   GimpBrush *brush = (GimpBrush *)
     gimp_container_get_child_by_name (gimp->brush_factory->container, name);
 
-  if (brush && GIMP_DATA (brush)->writable && strlen (new_name))
+  if (brush && GIMP_DATA (brush)->writable)
     {
       gimp_object_set_name (GIMP_OBJECT (brush), new_name);
       actual_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (brush)));

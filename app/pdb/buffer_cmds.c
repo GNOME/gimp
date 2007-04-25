@@ -91,7 +91,7 @@ buffer_rename_invoker (GimpProcedure     *procedure,
       GimpBuffer *buffer = (GimpBuffer *)
         gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
-      if (buffer && strlen (new_name))
+      if (buffer)
         {
           gimp_object_set_name (GIMP_OBJECT (buffer), new_name);
           real_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (buffer)));
@@ -288,7 +288,7 @@ register_buffer_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("filter",
                                                        "filter",
                                                        "An optional regular expression used to filter the list",
-                                                       FALSE, TRUE,
+                                                       FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -322,21 +322,21 @@ register_buffer_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
                                                        "The buffer name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("new-name",
                                                        "new name",
                                                        "The buffer's new name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("real-name",
                                                            "real name",
                                                            "The real name given to the buffer",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -359,7 +359,7 @@ register_buffer_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
                                                        "The buffer name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -382,7 +382,7 @@ register_buffer_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
                                                        "The buffer name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -411,7 +411,7 @@ register_buffer_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
                                                        "The buffer name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -440,7 +440,7 @@ register_buffer_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
                                                        "The buffer name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -469,7 +469,7 @@ register_buffer_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("buffer-name",
                                                        "buffer name",
                                                        "The buffer name",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,

@@ -273,7 +273,7 @@ register_brushes_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("filter",
                                                        "filter",
                                                        "An optional regular expression used to filter the list",
-                                                       FALSE, TRUE,
+                                                       FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -307,7 +307,7 @@ register_brushes_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The brush name",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
@@ -392,14 +392,14 @@ register_brushes_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("name",
                                                        "name",
                                                        "The brush name (\"\" means current active brush)",
-                                                       FALSE, TRUE,
+                                                       FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("actual-name",
                                                            "actual name",
                                                            "The brush name",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,

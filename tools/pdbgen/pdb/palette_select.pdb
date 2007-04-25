@@ -24,7 +24,7 @@ sub palettes_popup {
     &mitch_pdb_misc('2002');
 
     @inargs = (
-	{ name => 'palette_callback', type => 'string',
+	{ name => 'palette_callback', type => 'string', non_empty => 1,
 	  desc => 'The callback PDB proc to call when palette selection is
 		   made' },
 	{ name => 'popup_title', type => 'string',
@@ -55,7 +55,7 @@ sub palettes_close_popup {
     &mitch_pdb_misc('2002');
 
     @inargs = (
-	{ name => 'palette_callback', type => 'string',
+	{ name => 'palette_callback', type => 'string', non_empty => 1,
 	  desc => 'The name of the callback registered for this pop-up' }
     );
 
@@ -79,7 +79,7 @@ sub palettes_set_popup {
     &mitch_pdb_misc('2002');
 
     @inargs = (
-	{ name => 'palette_callback', type => 'string',
+	{ name => 'palette_callback', type => 'string', non_empty => 1,
 	  desc => 'The name of the callback registered for this pop-up' },
 	{ name => 'palette_name', type => 'string',
 	  desc => 'The name of the palette to set as selected' },

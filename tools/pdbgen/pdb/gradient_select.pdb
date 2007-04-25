@@ -24,7 +24,7 @@ sub gradients_popup {
     &andy_pdb_misc('1998');
 
     @inargs = (
-	{ name => 'gradient_callback', type => 'string',
+	{ name => 'gradient_callback', type => 'string', non_empty => 1,
 	  desc => 'The callback PDB proc to call when gradient selection is
 		   made' },
 	{ name => 'popup_title', type => 'string',
@@ -63,7 +63,7 @@ sub gradients_close_popup {
     &andy_pdb_misc('1998');
 
     @inargs = (
-	{ name => 'gradient_callback', type => 'string',
+	{ name => 'gradient_callback', type => 'string', non_empty => 1,
 	  desc => 'The name of the callback registered for this pop-up' }
     );
 
@@ -87,7 +87,7 @@ sub gradients_set_popup {
     &andy_pdb_misc('1998');
 
     @inargs = (
-	{ name => 'gradient_callback', type => 'string',
+	{ name => 'gradient_callback', type => 'string', non_empty => 1,
 	  desc => 'The name of the callback registered for this pop-up' },
 	{ name => 'gradient_name', type => 'string',
 	  desc => 'The name of the gradient to set as selected' }

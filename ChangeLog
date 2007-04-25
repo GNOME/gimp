@@ -1,5 +1,42 @@
 2007-04-25  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpparamspecs.[ch] (struct GimpParamSpecString)
+	(gimp_param_spec_string): added "gboolean non_empty" to require
+	the string being non-empty. Changed validation accordingly.
+	Also fixed validation for static strings (we were happily
+	freeing and modifying them before).
+
+	* app/xcf/xcf.c: filenames should be non-empty.
+	* app/pdb/gimp-pdb-compat.c: compat strings shouldn't.
+
+	* tools/pdbgen/app.pl: add support for $arg->{non_empty} and
+	changed generation of calls to gimp_param_spec_string().
+
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/vectors.pdb
+	* tools/pdbgen/pdb/plug_in.pdb
+	* tools/pdbgen/pdb/gradient.pdb
+	* tools/pdbgen/pdb/palette_select.pdb
+	* tools/pdbgen/pdb/palette.pdb
+	* tools/pdbgen/pdb/fileops.pdb
+	* tools/pdbgen/pdb/progress.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb
+	* tools/pdbgen/pdb/font_select.pdb
+	* tools/pdbgen/pdb/pattern_select.pdb
+	* tools/pdbgen/pdb/unit.pdb
+	* tools/pdbgen/pdb/brush.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb
+	* tools/pdbgen/pdb/buffer.pdb: require non-empty strings for data
+	object names, procedure names, unit strings, PDB data identifiers
+	and buffer names. Removed some manual strlen() checks, all other
+	places just got better error reporting for free (proper validation
+	error instead of unspecific execution error).
+
+	* app/pdb/*_cmds.c: regenerated.
+
+2007-04-25  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/common/gif.c
 	* plug-ins/common/gifload.c
 	* plug-ins/common/psd.c

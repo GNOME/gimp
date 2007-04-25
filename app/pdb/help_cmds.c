@@ -88,14 +88,14 @@ register_help_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("help-domain",
                                                        "help domain",
                                                        "The help domain in which help_id is registered",
-                                                       FALSE, TRUE,
+                                                       FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("help-id",
                                                        "help id",
                                                        "The help page's ID",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

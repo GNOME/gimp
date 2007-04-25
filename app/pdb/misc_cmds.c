@@ -125,7 +125,7 @@ register_misc_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("version",
                                                            "version",
                                                            "GIMP version number",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

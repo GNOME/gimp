@@ -239,14 +239,14 @@ register_gimprc_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("token",
                                                        "token",
                                                        "The token to query for",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
                                    gimp_param_spec_string ("value",
                                                            "value",
                                                            "The value associated with the queried token",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -269,14 +269,14 @@ register_gimprc_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("token",
                                                        "token",
                                                        "The token to add or modify",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("value",
                                                        "value",
                                                        "The value to set the token to",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -299,7 +299,7 @@ register_gimprc_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("comment",
                                                            "comment",
                                                            "Default image comment",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -374,7 +374,7 @@ register_gimprc_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("theme-dir",
                                                            "theme dir",
                                                            "The GUI theme dir",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -397,7 +397,7 @@ register_gimprc_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("config",
                                                            "config",
                                                            "Serialized color management configuration",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -420,7 +420,7 @@ register_gimprc_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("load-inhibit",
                                                            "load inhibit",
                                                            "The list of modules",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

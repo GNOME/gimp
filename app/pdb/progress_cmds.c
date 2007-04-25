@@ -269,7 +269,7 @@ register_progress_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("message",
                                                        "message",
                                                        "Message to use in the progress dialog",
-                                                       FALSE, TRUE,
+                                                       FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -336,7 +336,7 @@ register_progress_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("message",
                                                        "message",
                                                        "Message to use in the progress dialog",
-                                                       FALSE, TRUE,
+                                                       FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -381,7 +381,7 @@ register_progress_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("progress-callback",
                                                        "progress callback",
                                                        "The callback PDB proc to call",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -404,7 +404,7 @@ register_progress_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("progress-callback",
                                                        "progress callback",
                                                        "The name of the callback registered for this progress",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -427,7 +427,7 @@ register_progress_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("progress-callback",
                                                        "progress callback",
                                                        "The name of the callback registered for this progress",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, TRUE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

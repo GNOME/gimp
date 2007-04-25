@@ -122,7 +122,7 @@ register_message_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("message",
                                                        "message",
                                                        "Message to display in the dialog",
-                                                       FALSE, FALSE,
+                                                       FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);

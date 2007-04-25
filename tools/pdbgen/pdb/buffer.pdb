@@ -57,7 +57,7 @@ sub buffer_rename {
     @inargs = (
         { name => 'buffer_name', type => 'string',
           desc => 'The buffer name' },
-        { name => 'new_name', type => 'string',
+        { name => 'new_name', type => 'string', non_empty => 1,
           desc => 'The buffer\'s new name' }
     );
 
@@ -72,7 +72,7 @@ sub buffer_rename {
   GimpBuffer *buffer = (GimpBuffer *)
     gimp_container_get_child_by_name (gimp->named_buffers, buffer_name);
 
-  if (buffer && strlen (new_name))
+  if (buffer)
     {
       gimp_object_set_name (GIMP_OBJECT (buffer), new_name);
       real_name = g_strdup (gimp_object_get_name (GIMP_OBJECT (buffer)));

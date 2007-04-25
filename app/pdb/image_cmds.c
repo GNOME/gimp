@@ -4325,7 +4325,7 @@ register_image_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("filename",
                                                            "filename",
                                                            "The filename",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -4354,7 +4354,7 @@ register_image_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("filename",
                                                        "filename",
                                                        "The new image filename",
-                                                       TRUE, FALSE,
+                                                       TRUE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
@@ -4383,7 +4383,7 @@ register_image_procs (GimpPDB *pdb)
                                    gimp_param_spec_string ("name",
                                                            "name",
                                                            "The name",
-                                                           FALSE, FALSE,
+                                                           FALSE, FALSE, FALSE,
                                                            NULL,
                                                            GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
