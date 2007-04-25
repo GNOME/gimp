@@ -162,8 +162,7 @@
 
 /* *** USER DEFINES *** */
 
-#define LOAD_PROC      "file-psd-load"
-#define PLUG_IN_BINARY "psd"
+#define LOAD_PROC "file-psd-load"
 
 /* set to TRUE if you want debugging, FALSE otherwise */
 #define PSD_DEBUG FALSE

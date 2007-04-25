@@ -1,3 +1,18 @@
+2007-04-25  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/gif.c
+	* plug-ins/common/gifload.c
+	* plug-ins/common/psd.c
+	* plug-ins/common/psd_save.c: removed...
+
+	* plug-ins/common/gif-load.c
+	* plug-ins/common/gif-save.c
+	* plug-ins/common/psd-load.c
+	* plug-ins/common/psd-save.c: ...and renamed to make sense.
+
+	* plug-ins/common/plugin-defs.pl
+	* plug-ins/common/Makefile.am: changed accordingly.
+
 2007-04-25  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/tiff-load.c

@@ -80,7 +80,7 @@
 /* *** DEFINES *** */
 
 #define SAVE_PROC      "file-psd-save"
-#define PLUG_IN_BINARY "psd_save"
+#define PLUG_IN_BINARY "psd-save"
 
 /* set to TRUE if you want debugging, FALSE otherwise */
 #define DEBUG FALSE

@@ -88,8 +88,8 @@ libexec_PROGRAMS = \
 	gbr \
 	gee \
 	gee_zoom \
-	gif \
-	gifload \
+	gif-load \
+	gif-save \
 	gih \
 	glasstile \
 	glob \
@@ -134,8 +134,8 @@ libexec_PROGRAMS = \
 	$(POPPLER) \
 	postscript \
 	procedure-browser \
-	psd \
-	psd_save \
+	psd-load \
+	psd-save \
 	$(PSP) \
 	randomize \
 	raw \
@@ -1020,10 +1020,23 @@ gee_zoom_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-gif_SOURCES = \
-	gif.c
+gif_load_SOURCES = \
+	gif-load.c
 
-gif_LDADD = \
+gif_load_LDADD = \
+	$(libgimp)		\
+	$(libgimpmath)		\
+	$(libgimpconfig)	\
+	$(libgimpcolor)		\
+	$(libgimpbase)		\
+	$(GLIB_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+gif_save_SOURCES = \
+	gif-save.c
+
+gif_save_LDADD = \
 	$(libgimpui)		\
 	$(libgimpwidgets)	\
 	$(libgimpmodule)	\
@@ -1033,19 +1046,6 @@ gif_LDADD = \
 	$(libgimpcolor)		\
 	$(libgimpbase)		\
 	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
-	$(INTLLIBS)
-
-gifload_SOURCES = \
-	gifload.c
-
-gifload_LDADD = \
-	$(libgimp)		\
-	$(libgimpmath)		\
-	$(libgimpconfig)	\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(GLIB_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
@@ -1747,10 +1747,10 @@ procedure_browser_LDADD = \
 	$(RT_LIBS)		\
 	$(INTLLIBS)
 
-psd_SOURCES = \
-	psd.c
+psd_load_SOURCES = \
+	psd-load.c
 
-psd_LDADD = \
+psd_load_LDADD = \
 	$(libgimp)		\
 	$(libgimpmath)		\
 	$(libgimpconfig)	\
@@ -1761,7 +1761,7 @@ psd_LDADD = \
 	$(INTLLIBS)
 
 psd_save_SOURCES = \
-	psd_save.c
+	psd-save.c
 
 psd_save_LDADD = \
 	$(libgimpui)		\
