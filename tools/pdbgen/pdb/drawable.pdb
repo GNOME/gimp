@@ -547,8 +547,8 @@ HELP
     );
 
     @outargs = (
-	{ name => 'offset_x', type => 'int32',
-	  desc => "x offset of drawable", void_ret => 1 },
+	{ name => 'offset_x', type => 'int32', void_ret => 1,
+	  desc => "x offset of drawable" },
 	{ name => 'offset_y', type => 'int32',
 	  desc => "y offset of drawable" }
     );

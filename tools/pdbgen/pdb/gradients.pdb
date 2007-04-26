@@ -178,9 +178,8 @@ sub gradients_get_gradient_data {
     &std_pdb_deprecated ('gimp-gradient-get-uniform-samples');
 
     @inargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The gradient name ("" means current active gradient)',
-          null_ok => '1' },
+	{ name => 'name', type => 'string', null_ok => 1,
+	  desc => 'The gradient name ("" means current active gradient)' },
 	{ name => 'sample_size', type => '1 <= int32 <= 10000',
 	  desc => 'Size of the sample to return when the gradient is changed',
 	  no_success => 1 },

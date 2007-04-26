@@ -214,7 +214,8 @@ HELP
 
     @outargs = (
 	{ name => 'arg_type', type => 'enum GimpPDBArgType (no GIMP_PDB_END)',
-	  desc => "The type of argument", void_ret => 1 },
+	  void_ret => 1,
+	  desc => "The type of argument" },
 	{ name => 'arg_name', type => 'string',
 	  desc => 'The name of the argument' },
 	{ name => 'arg_desc', type => 'string',
@@ -281,7 +282,8 @@ HELP
 
     @outargs = (
 	{ name => 'val_type', type => 'enum GimpPDBArgType (no GIMP_PDB_END)',
-	  desc => "The type of return value", void_ret => 1 },
+	  void_ret => 1,
+	  desc => "The type of return value" },
 	{ name => 'val_name', type => 'string',
 	  desc => 'The name of the return value' },
 	{ name => 'val_desc', type => 'string',
@@ -343,9 +345,8 @@ HELP
     );
 
     @outargs = (
-	{ name  => 'data', type  => 'int8array',
-	  desc  => 'A byte array containing data', wrap => 1,
-	  void_ret => 1,
+	{ name  => 'data', type  => 'int8array', wrap => 1, void_ret => 1,
+	  desc  => 'A byte array containing data',
 	  array => { name => 'bytes', type => '1 <= int32',
 		     desc => 'The number of bytes in the data' } }
     );

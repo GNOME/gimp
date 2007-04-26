@@ -148,8 +148,8 @@ HELP
     &pdb_misc;
 
     @outargs = (
-        { name => 'foreground', type => 'color',
-          desc => 'The foreground color', void_ret => 1 }
+        { name => 'foreground', type => 'color', void_ret => 1,
+          desc => 'The foreground color' }
     );
 
     %invoke = (
@@ -174,8 +174,8 @@ HELP
     &pdb_misc;
 
     @inargs = (
-        { name => 'foreground', type => 'color',
-          desc => 'The foreground color', void_ret => 1 }
+        { name => 'foreground', type => 'color', void_ret => 1,
+          desc => 'The foreground color' }
     );
 
     %invoke = (
@@ -200,8 +200,8 @@ HELP
     &pdb_misc;
 
     @outargs = (
-        { name => 'background', type => 'color',
-          desc => 'The background color', void_ret => 1 }
+        { name => 'background', type => 'color', void_ret => 1,
+          desc => 'The background color' }
     );
 
     %invoke = (
@@ -226,8 +226,8 @@ HELP
     &pdb_misc;
 
     @inargs = (
-        { name => 'background', type => 'color',
-          desc => 'The background color', void_ret => 1 }
+        { name => 'background', type => 'color', void_ret => 1,
+          desc => 'The background color' }
     );
 
     %invoke = (

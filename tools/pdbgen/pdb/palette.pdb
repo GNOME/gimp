@@ -209,7 +209,7 @@ HELP
     );
 
     @outargs = (
-        { name => 'num_colors', type => 'int32', void_ret => '1',
+        { name => 'num_colors', type => 'int32', void_ret => 1,
           desc => 'The number of colors in the palette' }
     );
 
@@ -307,14 +307,14 @@ HELP
     @inargs = (
 	{ name => 'name', type => 'string',
 	  desc => 'The palette name' },
-        { name => 'entry_name', type => 'string', null_ok => '1',
+        { name => 'entry_name', type => 'string', null_ok => 1,
           desc => 'The name of the entry' },
         { name => 'color', type => 'color',
           desc => 'The new entry\'s color color' }
     );
 
     @outargs = (
-        { name => 'entry_num', type => 'int32', void_ret => '1',
+        { name => 'entry_num', type => 'int32', void_ret => 1,
           desc => 'The index of the added entry' }
     );
 
@@ -531,7 +531,7 @@ HELP
 	  desc => 'The palette name' },
         { name => 'entry_num', type => 'int32',
           desc => 'The entry to retrieve' },
-        { name => 'entry_name', type => 'string', null_ok => '1',
+        { name => 'entry_name', type => 'string', null_ok => 1,
           desc => 'The new name' }
     );
 

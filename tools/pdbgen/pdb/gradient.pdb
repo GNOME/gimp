@@ -348,8 +348,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'color', type => 'color',
-          desc => 'The return color', void_ret => 1 },
+        { name => 'color', type => 'color', void_ret => 1,
+          desc => 'The return color' },
         { name => 'opacity', type => 'float',
           desc => 'The opacity of the endpoint' }
     );
@@ -392,8 +392,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'color', type => 'color',
-          desc => 'The return color', void_ret => 1 },
+        { name => 'color', type => 'color', void_ret => 1,
+          desc => 'The return color' },
         { name => 'opacity', type => 'float',
           desc => 'The opacity of the endpoint' }
     );
@@ -518,8 +518,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'pos', type => 'float',
-          desc => 'The return position', void_ret => 1 }
+        { name => 'pos', type => 'float', void_ret => 1,
+          desc => 'The return position' }
     );
 
     %invoke = (
@@ -559,8 +559,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'pos', type => 'float',
-          desc => 'The return position', void_ret => 1 }
+        { name => 'pos', type => 'float', void_ret => 1,
+          desc => 'The return position' }
     );
 
     %invoke = (
@@ -600,8 +600,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'pos', type => 'float',
-          desc => 'The return position', void_ret => 1 }
+        { name => 'pos', type => 'float', void_ret => 1,
+          desc => 'The return position' }
     );
 
     %invoke = (
@@ -647,8 +647,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'final_pos', type => 'float',
-          desc => 'The return position', void_ret => 1 }
+        { name => 'final_pos', type => 'float', void_ret => 1,
+          desc => 'The return position' }
     );
 
     %invoke = (
@@ -694,8 +694,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'final_pos', type => 'float',
-          desc => 'The return position', void_ret => 1 }
+        { name => 'final_pos', type => 'float', void_ret => 1,
+          desc => 'The return position' }
     );
 
     %invoke = (
@@ -741,8 +741,8 @@ HELP
     );
 
     @outargs = (
-        { name => 'final_pos', type => 'float',
-          desc => 'The return position', void_ret => 1 }
+        { name => 'final_pos', type => 'float', void_ret => 1,
+          desc => 'The return position' }
     );
 
     %invoke = (
@@ -784,8 +784,8 @@ HELP
 
     @outargs = (
         { name => 'blend_func', type => 'enum GimpGradientSegmentType',
-          desc => 'The blending function of the segment',
-          void_ret => 1 }
+          void_ret => 1,
+	  desc => 'The blending function of the segment' }
     );
 
     %invoke = (
@@ -826,8 +826,8 @@ HELP
 
     @outargs = (
         { name => 'coloring_type', type => 'enum GimpGradientSegmentColor',
-          desc => 'The coloring type of the segment',
-          void_ret => 1 }
+          void_ret => 1,
+	  desc => 'The coloring type of the segment' }
     );
 
     %invoke = (

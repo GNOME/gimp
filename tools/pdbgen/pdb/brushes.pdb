@@ -146,9 +146,8 @@ sub brushes_get_brush_data {
     &std_pdb_deprecated ('gimp-brush-get-pixels');
 
     @inargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The brush name ("" means current active brush)',
-	  null_ok => '1' }
+	{ name => 'name', type => 'string', null_ok => 1,
+	  desc => 'The brush name ("" means current active brush)' }
     );
 
     @outargs = (

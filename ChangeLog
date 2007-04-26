@@ -1,3 +1,21 @@
+2007-04-26  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/pattern.pdb
+	* tools/pdbgen/pdb/gradients.pdb
+	* tools/pdbgen/pdb/brush_select.pdb
+	* tools/pdbgen/pdb/context.pdb
+	* tools/pdbgen/pdb/gradient.pdb
+	* tools/pdbgen/pdb/palette.pdb
+	* tools/pdbgen/pdb/procedural_db.pdb
+	* tools/pdbgen/pdb/brushes.pdb
+	* tools/pdbgen/pdb/palettes.pdb
+	* tools/pdbgen/pdb/drawable.pdb
+	* tools/pdbgen/pdb/brush.pdb
+	* tools/pdbgen/pdb/gradient_select.pdb: some argument cleanup: use
+	"=> 1" instead of "=> '1'" for setting argument flags, also made
+	argument property order consistent so flags come before "desc".
+	Doesn't affect generated code.
+
 2007-04-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/gimp.c: document the image_types parameter (bug #326988).

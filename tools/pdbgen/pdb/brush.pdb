@@ -286,7 +286,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', void_ret => '1',
+	{ name => 'width', type => 'int32', void_ret => 1,
           desc => 'The brush width' },
 	{ name => 'height', type => 'int32',
           desc => 'The brush height' },
@@ -350,9 +350,8 @@ HELP
     );
 
     @outargs = (
-	{ name => 'spacing', type => '0 <= int32 <= 1000',
-	  desc => 'The brush spacing',
-	  void_ret => 1 }
+	{ name => 'spacing', type => '0 <= int32 <= 1000', void_ret => 1,
+	  desc => 'The brush spacing' }
     );
 
     %invoke = (

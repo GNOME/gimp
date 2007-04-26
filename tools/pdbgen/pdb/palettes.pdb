@@ -73,8 +73,8 @@ sub palettes_get_palette {
     &std_pdb_deprecated ('gimp-context-get-palette');
 
     @outargs = (
-	{ name => 'name', type => 'string',
-	  desc => 'The palette name', null_ok => '1' },
+	{ name => 'name', type => 'string', null_ok => 1,
+	  desc => 'The palette name' },
 	{ name => 'num_colors', type => 'int32',
 	  desc => 'The palette num_colors' }
     );

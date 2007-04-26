@@ -33,7 +33,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', void_ret => '1',
+	{ name => 'width', type => 'int32', void_ret => 1,
           desc => "The pattern width" },
 	{ name => 'height', type => 'int32',
           desc => "The pattern height" },
@@ -79,7 +79,7 @@ HELP
     );
 
     @outargs = (
-	{ name => 'width', type => 'int32', void_ret => '1',
+	{ name => 'width', type => 'int32', void_ret => 1,
           desc => "The pattern width" },
 	{ name => 'height', type => 'int32',
           desc => "The pattern height" },
