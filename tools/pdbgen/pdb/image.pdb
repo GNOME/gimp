@@ -28,7 +28,7 @@ HELP
     &neo_pdb_misc('2007', '2.4');
 
     @inargs = (
-	{ name => 'image', type => 'image', no_success => 1,
+	{ name => 'image', type => 'image', no_validate => 1,
 	  desc => 'The image to check' }
     );
 
@@ -598,7 +598,7 @@ HELP
 	{ name => 'sample_average', type => 'boolean',
 	  desc => 'Average the color of all the pixels in a specified
 		   radius' },
-	{ name => 'average_radius', type => '0 < float', no_success => 1,
+	{ name => 'average_radius', type => '0 < float', no_validate => 1,
 	  desc => 'The radius of pixels to average' }
     );
 
@@ -2110,7 +2110,7 @@ HELP
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
 	{ name => 'filename', type => 'string',
-	  desc => 'The new image filename', no_validate => 1 }
+	  desc => 'The new image filename', allow_non_utf8 => 1 }
     );
 
     %invoke = (

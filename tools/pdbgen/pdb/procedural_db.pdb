@@ -58,7 +58,8 @@ HELP
     $copyright = $author . ' & Peter Mattis';
 
     @inargs = (
-	{ name => 'filename', type => 'string', no_validate => 1, non_empty => 1,
+	{ name => 'filename', type => 'string', allow_non_utf8 => 1,
+          non_empty => 1,
 	  desc => 'The dump filename' }
     );
 
@@ -93,19 +94,19 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	{ name => 'name', type => 'string', no_validate => 1,
+	{ name => 'name', type => 'string', allow_non_utf8 => 1,
 	  desc => 'The regex for procedure name' },
-	{ name => 'blurb', type => 'string', no_validate => 1,
+	{ name => 'blurb', type => 'string', allow_non_utf8 => 1,
 	  desc => 'The regex for procedure blurb' },
-	{ name => 'help', type => 'string', no_validate => 1,
+	{ name => 'help', type => 'string', allow_non_utf8 => 1,
 	  desc => 'The regex for procedure help' },
-	{ name => 'author', type => 'string', no_validate => 1,
+	{ name => 'author', type => 'string', allow_non_utf8 => 1,
 	  desc => 'The regex for procedure author' },
-	{ name => 'copyright', type => 'string', no_validate => 1,
+	{ name => 'copyright', type => 'string', allow_non_utf8 => 1,
 	  desc => 'The regex for procedure copyright' },
-	{ name => 'date', type => 'string', no_validate => 1,
+	{ name => 'date', type => 'string', allow_non_utf8 => 1,
 	  desc => 'The regex for procedure date' },
-	{ name => 'proc_type', type => 'string', no_validate => 1,
+	{ name => 'proc_type', type => 'string', allow_non_utf8 => 1,
 	  desc => 'The regex for procedure type: { \'Internal GIMP procedure\',
 		   \'GIMP Plug-In\', \'GIMP Extension\',
 		   \'Temporary Procedure\' }' }

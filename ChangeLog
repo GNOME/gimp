@@ -1,5 +1,17 @@
 2007-04-26  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpparamspecs.[ch]: renamed GimpParamSpecString's
+	flag "no_validate" to "allow_non_utf8".
+
+	* tools/pdbgen/app.pl
+	* tools/pdbgen/pdb/*.pdb: renamed argument flag
+	"no_validate" (which turns off utf8-validation for strings) to
+	"allow_non_utf8" and renamed "no_success" (which turns off
+	argument validation alltogether) to "no_validate".
+	Doesn't affect generated code.
+
+2007-04-26  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/display.pdb (diplay_is_valid)
 	* tools/pdbgen/pdb/drawable.pdb (drawable_is_valid)
 	* tools/pdbgen/pdb/image.pdb (image_is_valid)

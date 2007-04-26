@@ -28,7 +28,7 @@ HELP
     &neo_pdb_misc('2007', '2.4');
 
     @inargs = (
-	{ name => 'drawable', type => 'drawable', no_success => 1,
+	{ name => 'drawable', type => 'drawable', no_validate => 1,
 	  desc => 'The drawable to check' }
     );
 
@@ -876,9 +876,8 @@ HELP
     @outargs = (
 	{ name => 'pixel', type => 'int8array',
 	  desc => 'The pixel value',
-	  array => { name => 'num_channels', type => 'int32',
-	  	     desc => 'The number of channels for the pixel',
-	   	     no_success => 1 } }
+	  array => { name => 'num_channels', type => 'int32', no_validate => 1,
+	  	     desc => 'The number of channels for the pixel' } }
     );
 
     %invoke = (
@@ -936,9 +935,8 @@ HELP
 	  desc => 'The y coordinate' },
 	{ name => 'pixel', type => 'int8array',
 	  desc => 'The pixel value',
-	  array => { name => 'num_channels', type => 'int32',
-	  	     desc => 'The number of channels for the pixel',
-	   	     no_success => 1 } }
+	  array => { name => 'num_channels', type => 'int32', no_validate => 1,
+	  	     desc => 'The number of channels for the pixel' } }
     );
 
     %invoke = (

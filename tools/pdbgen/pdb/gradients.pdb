@@ -181,8 +181,8 @@ sub gradients_get_gradient_data {
 	{ name => 'name', type => 'string', null_ok => 1,
 	  desc => 'The gradient name ("" means current active gradient)' },
 	{ name => 'sample_size', type => '1 <= int32 <= 10000',
-	  desc => 'Size of the sample to return when the gradient is changed',
-	  no_success => 1 },
+	  no_validate => 1,
+	  desc => 'Size of the sample to return when the gradient is changed' },
 	{ name => 'reverse', type => 'boolean',
 	  desc => 'Use the reverse gradient' }
     );

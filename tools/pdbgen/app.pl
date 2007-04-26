@@ -117,7 +117,7 @@ sub marshal_inargs {
 
 	$argc++;
 
-	if (!exists $_->{no_success}) {
+	if (!exists $_->{no_validate}) {
 	    $success = 1;
 	}
     }
@@ -197,7 +197,7 @@ sub generate_pspec {
 
     $nick =~ s/-/ /g;
 
-    if (exists $arg->{no_success}) {
+    if (exists $arg->{no_validate}) {
 	$flags .= ' | GIMP_PARAM_NO_VALIDATE';
     }
 
@@ -358,7 +358,7 @@ g_param_spec_boolean ("$name",
 CODE
     }
     elsif ($pdbtype eq 'string') {
-	$no_validate = exists $arg->{no_validate} ? 'TRUE' : 'FALSE';
+	$allow_non_utf8 = exists $arg->{allow_non_utf8} ? 'TRUE' : 'FALSE';
 	$null_ok = exists $arg->{null_ok} ? 'TRUE' : 'FALSE';
 	$non_empty = exists $arg->{non_empty} ? 'TRUE' : 'FALSE';
 	$default = exists $arg->{default} ? $arg->{default} : NULL;
@@ -366,7 +366,7 @@ CODE
 gimp_param_spec_string ("$name",
                         "$nick",
                         "$blurb",
-                        $no_validate, $null_ok, $non_empty,
+                        $allow_non_utf8, $null_ok, $non_empty,
                         $default,
                         $flags)
 CODE

@@ -349,9 +349,9 @@ gimp_param_string_init (GParamSpec *pspec)
 {
   GimpParamSpecString *sspec = GIMP_PARAM_SPEC_STRING (pspec);
 
-  sspec->no_validate = FALSE;
-  sspec->null_ok     = FALSE;
-  sspec->non_empty   = FALSE;
+  sspec->allow_non_utf8 = FALSE;
+  sspec->null_ok        = FALSE;
+  sspec->non_empty      = FALSE;
 }
 
 static gboolean
@@ -380,7 +380,7 @@ gimp_param_string_validate (GParamSpec *pspec,
           return TRUE;
         }
 
-      if (! sspec->no_validate &&
+      if (! sspec->allow_non_utf8 &&
           ! g_utf8_validate (string, -1, (const gchar **) &s))
         {
           if (value->data[1].v_uint & G_VALUE_NOCOPY_CONTENTS)
@@ -417,7 +417,7 @@ GParamSpec *
 gimp_param_spec_string (const gchar *name,
                         const gchar *nick,
                         const gchar *blurb,
-                        gboolean     no_validate,
+                        gboolean     allow_non_utf8,
                         gboolean     null_ok,
                         gboolean     non_empty,
                         const gchar *default_value,
@@ -435,9 +435,9 @@ gimp_param_spec_string (const gchar *name,
       g_free (G_PARAM_SPEC_STRING (sspec)->default_value);
       G_PARAM_SPEC_STRING (sspec)->default_value = g_strdup (default_value);
 
-      sspec->no_validate = no_validate ? TRUE : FALSE;
-      sspec->null_ok     = null_ok     ? TRUE : FALSE;
-      sspec->non_empty   = non_empty   ? TRUE : FALSE;
+      sspec->allow_non_utf8 = allow_non_utf8 ? TRUE : FALSE;
+      sspec->null_ok        = null_ok        ? TRUE : FALSE;
+      sspec->non_empty      = non_empty      ? TRUE : FALSE;
     }
 
   return G_PARAM_SPEC (sspec);

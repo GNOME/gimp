@@ -36,9 +36,9 @@ HELP
         { name => 'run_mode',
           type => 'enum GimpRunMode (no GIMP_RUN_WITH_LAST_VALS)',
           desc => 'The run mode' },
-        { name => 'filename', type => 'string', no_validate => 1,
+        { name => 'filename', type => 'string', allow_non_utf8 => 1,
           desc => 'The name of the file to load' },
-        { name => 'raw_filename', type => 'string', no_validate => 1,
+        { name => 'raw_filename', type => 'string', allow_non_utf8 => 1,
           desc => 'The name as entered by the user' }
     );
 
@@ -115,7 +115,7 @@ HELP
           desc => 'The run mode' },
         { name => 'image', type => 'image',
           desc => 'Destination image' },
-        { name => 'filename', type => 'string', no_validate => 1,
+        { name => 'filename', type => 'string', allow_non_utf8 => 1,
           desc => 'The name of the file to load' }
     );
 
@@ -170,7 +170,7 @@ HELP
           desc => 'The run mode' },
         { name => 'image', type => 'image',
           desc => 'Destination image' },
-        { name => 'filename', type => 'string', no_validate => 1,
+        { name => 'filename', type => 'string', allow_non_utf8 => 1,
           desc => 'The name of the file to load' }
     );
 
@@ -242,9 +242,9 @@ HELP
           desc => 'Input image' },
         { name => 'drawable', type => 'drawable',
           desc => 'Drawable to save' },
-        { name => 'filename', type => 'string', no_validate => 1,
+        { name => 'filename', type => 'string', allow_non_utf8 => 1,
           desc => 'The name of the file to save the image in' },
-        { name => 'raw_filename', type => 'string', no_validate => 1,
+        { name => 'raw_filename', type => 'string', allow_non_utf8 => 1,
           desc => 'The name as entered by the user' }
     );
 
@@ -315,7 +315,7 @@ HELP
     $date = '1999-2003';
 
     @inargs = (
-        { name => 'filename', type => 'string', no_validate => 1,
+        { name => 'filename', type => 'string', allow_non_utf8 => 1,
           desc => 'The name of the file that owns the thumbnail to load' }
     );
 
@@ -369,7 +369,7 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'filename', type => 'string', no_validate => 1,
+        { name => 'filename', type => 'string', allow_non_utf8 => 1,
           desc => 'The name of the file the thumbnail belongs to' },
     );
 
@@ -392,7 +392,7 @@ HELP
     &josh_pdb_misc('1997');
 
     @inargs = (
-        { name => 'extension', type => 'string', no_validate => 1,
+        { name => 'extension', type => 'string', allow_non_utf8 => 1,
           desc => 'The extension the file will have' }
     );
 
@@ -423,13 +423,13 @@ HELP
     @inargs = (
         { name => 'procedure_name', type => 'string', non_empty => 1,
           desc => 'The name of the procedure to be used for loading' },
-        { name => 'extensions', type => 'string', no_success => 1,
+        { name => 'extensions', type => 'string', no_validate => 1,
           desc => 'comma separated list of extensions this handler
                    can load (i.e. "jpg,jpeg")' },
-        { name => 'prefixes', type => 'string', no_success => 1,
+        { name => 'prefixes', type => 'string', no_validate => 1,
           desc => 'comma separated list of prefixes this handler
                    can load (i.e. "http:,ftp:")' },
-        { name => 'magics', type => 'string', no_success => 1,
+        { name => 'magics', type => 'string', no_validate => 1,
           desc => 'comma separated list of magic file information
                    this handler can load (i.e. "0,string,GIF")' }
     );
@@ -462,10 +462,10 @@ HELP
     @inargs = (
         { name => 'procedure_name', type => 'string', non_empty => 1,
           desc => 'The name of the procedure to be used for loading' },
-        { name => 'extensions', type => 'string', no_success => 1,
+        { name => 'extensions', type => 'string', no_validate => 1,
           desc => 'comma separated list of extensions this handler
                    can load (i.e. "jpg,jpeg")' },
-        { name => 'prefixes', type => 'string', no_success => 1,
+        { name => 'prefixes', type => 'string', no_validate => 1,
           desc => 'comma separated list of prefixes this handler
                    can load (i.e. "http:,ftp:")' }
     );
@@ -499,10 +499,10 @@ HELP
     @inargs = (
         { name => 'procedure_name', type => 'string', non_empty => 1,
           desc => 'The name of the procedure to be used for saving' },
-        { name => 'extensions', type => 'string', no_success => 1,
+        { name => 'extensions', type => 'string', no_validate => 1,
           desc => 'comma separated list of extensions this handler
                    can save (i.e. "jpg,jpeg")' },
-        { name => 'prefixes', type => 'string', no_success => 1,
+        { name => 'prefixes', type => 'string', no_validate => 1,
           desc => 'comma separated list of prefixes this handler
                    can save (i.e. "http:,ftp:")' }
     );

@@ -24,7 +24,7 @@ sub plugins_query {
     &andy_pdb_misc('1998');
 
     @inargs = (
-	{ name  => 'search_string', type => 'string', no_success => 1,
+	{ name  => 'search_string', type => 'string', no_validate => 1,
 	  desc  => 'If not an empty string then use this as a search pattern' }
     );
 
@@ -91,7 +91,7 @@ HELP
     @inargs = (
 	{ name => 'domain_name', type => 'string',
 	  desc => 'The name of the textdomain (must be unique)' },
-	{ name => 'domain_path', type => 'string', no_success => 1,
+	{ name => 'domain_path', type => 'string', no_validate => 1,
 	  desc => 'The absolute path to the compiled message catalog (may be
 		   NULL)' }
     );

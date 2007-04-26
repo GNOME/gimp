@@ -26,7 +26,7 @@ HELP
     &neo_pdb_misc('2007', '2.4');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors', no_success => 1,
+	{ name => 'vectors', type => 'vectors', no_validate => 1,
 	  desc => 'The vectors object to check' }
     );
 
@@ -1166,7 +1166,8 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'filename', type => 'string', no_validate => 1, non_empty => 1,
+        { name => 'filename', type => 'string', allow_non_utf8 => 1,
+          non_empty => 1,
           desc => 'The name of the SVG file to import.' },
         { name => 'merge', type => 'boolean',
           desc => 'Merge paths into a single vectors object.' },
@@ -1226,7 +1227,7 @@ HELP
     @inargs = (
         { name => 'image', type => 'image',
           desc => 'The image' },
-        { name => 'string', type => 'string', no_validate => 1,
+        { name => 'string', type => 'string', allow_non_utf8 => 1,
           desc => 'A string that must be a complete and valid SVG document.' },
         { name => 'length', type => 'int32',
           desc => 'Number of bytes in string or -1 if the string is NULL

@@ -151,9 +151,9 @@ struct _GimpParamSpecString
 {
   GParamSpecString parent_instance;
 
-  guint            no_validate : 1;
-  guint            null_ok     : 1;
-  guint            non_empty   : 1;
+  guint            allow_non_utf8 : 1;
+  guint            null_ok        : 1;
+  guint            non_empty      : 1;
 };
 
 GType        gimp_param_string_get_type (void) G_GNUC_CONST;
@@ -161,7 +161,7 @@ GType        gimp_param_string_get_type (void) G_GNUC_CONST;
 GParamSpec * gimp_param_spec_string     (const gchar *name,
                                          const gchar *nick,
                                          const gchar *blurb,
-                                         gboolean     no_validate,
+                                         gboolean     allow_non_utf8,
                                          gboolean     null_ok,
                                          gboolean     non_empty,
                                          const gchar *default_value,

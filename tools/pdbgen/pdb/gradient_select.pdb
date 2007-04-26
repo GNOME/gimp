@@ -31,7 +31,7 @@ sub gradients_popup {
 	  desc => 'Title of the gradient selection dialog' },
 	{ name => 'initial_gradient', type => 'string', null_ok => 1,
 	  desc => 'The name of the gradient to set as the first selected' },
-	{ name => 'sample_size', type => '1 <= int32 <= 10000', no_success => 1,
+	{ name => 'sample_size', type => '1 <= int32 <= 10000', no_validate => 1,
 	  desc => 'Size of the sample to return when the gradient is changed' }
     );
 
