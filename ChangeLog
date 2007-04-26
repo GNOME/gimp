@@ -1,3 +1,13 @@
+2007-04-26  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/paint-funcs.c (gaussian_blur_region)
+	* plug-ins/common/blur.c (blur)
+	* plug-ins/common/gauss.c (do_encoded_lre) (do_full_lre): reduce
+	rounding errors.
+
+	* plug-ins/common/checkerboard.c (checkerboard_dialog): layout
+	improvements.
+
 2007-04-26  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/tiff-save.c: disabled the layer offsets saving

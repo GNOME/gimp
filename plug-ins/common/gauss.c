@@ -746,7 +746,7 @@ do_encoded_lre (const gint *enc,
       gint        nb;
       gint        s1;
       gint        i;
-      gint        val   = 0;
+      gint        val   = ctotal / 2;
       gint        start = - length;
 
       rpt = &enc[col + start];
@@ -791,9 +791,9 @@ do_full_lre (const gint *src,
     {
       const gint *x1;
       const gint *x2;
-      const gint *c = &curve[0];
+      const gint *c   = &curve[0];
       gint        i;
-      gint        val;
+      gint        val = ctotal / 2;
 
       x1 = x2 = &src[col];
 
@@ -801,7 +801,7 @@ do_full_lre (const gint *src,
        * processed ONCE
        */
 
-      val = x1[0] * c[0];
+      val += x1[0] * c[0];
 
       c  += 1;
       x1 += 1;
@@ -856,7 +856,7 @@ do_full_lre (const gint *src,
           i  -= 1;
         }
 
-      *dest = val / ctotal;
+      *dest = (val + ctotal / 2) / ctotal;
       dest += dist;
 
     }
@@ -1503,30 +1503,20 @@ find_iir_constants (gdouble *n_p,
                     gdouble *bd_m,
                     gdouble  std_dev)
 {
-  gint    i;
-  gdouble x0;
-  gdouble x1;
-  gdouble x2;
-  gdouble x3;
-  gdouble x4;
-  gdouble x5;
-  gdouble x6;
-  gdouble x7;
-  gdouble div;
-
   /*  The constants used in the implemenation of a casual sequence
    *  using a 4th order approximation of the gaussian operator
    */
 
-  div = sqrt(2 * G_PI) * std_dev;
-  x0 = -1.783 / std_dev;
-  x1 = -1.723 / std_dev;
-  x2 = 0.6318 / std_dev;
-  x3 = 1.997  / std_dev;
-  x4 = 1.6803 / div;
-  x5 = 3.735 / div;
-  x6 = -0.6803 / div;
-  x7 = -0.2598 / div;
+  const gdouble div = sqrt (2 * G_PI) * std_dev;
+  const gdouble x0 = -1.783 / std_dev;
+  const gdouble x1 = -1.723 / std_dev;
+  const gdouble x2 = 0.6318 / std_dev;
+  const gdouble x3 = 1.997  / std_dev;
+  const gdouble x4 = 1.6803 / div;
+  const gdouble x5 = 3.735 / div;
+  const gdouble x6 = -0.6803 / div;
+  const gdouble x7 = -0.2598 / div;
+  gint          i;
 
   n_p [0] = x4 + x6;
   n_p [1] = (exp(x1)*(x7*sin(x3)-(x6+2*x4)*cos(x3)) +
@@ -1608,16 +1598,13 @@ make_rle_curve (gdouble   sigma,
                 gint    **p_sum,
                 gint     *p_total)
 {
-  gint    *curve;
-  gdouble  sigma2;
-  gdouble  l;
-  gint     temp;
-  gint     i, n;
-  gint     length;
-  gint    *sum;
-
-  sigma2 = 2 * sigma * sigma;
-  l = sqrt (-sigma2 * log (1.0 / 255.0));
+  const gdouble  sigma2 = 2 * sigma * sigma;
+  const gdouble  l      = sqrt (-sigma2 * log (1.0 / 255.0));
+  gint           temp;
+  gint           i, n;
+  gint           length;
+  gint          *sum;
+  gint          *curve;
 
   n = ceil (l) * 2;
   if ((n % 2) == 0)

@@ -315,7 +315,7 @@ blur (GimpDrawable *drawable)
 		      (gint) cr[col - bytes] + (gint) cr[col] +
 		      (gint) cr[col + bytes] +
 		      (gint) nr[col - bytes] + (gint) nr[col] +
-		      (gint) nr[col + bytes]) / 9;
+		      (gint) nr[col + bytes] + 4) / 9;
 	      ind = 0;
 	    }
 	  else
@@ -324,25 +324,25 @@ blur (GimpDrawable *drawable)
 	       *  otherwise we have an alpha channel,
 	       *   but this is a color channel
 	       */
-	      *d++ = ((gint)
-		      (((gdouble) (pr[col - bytes] * pr[col - ind])
-			+ (gdouble) (pr[col] * pr[col + bytes - ind])
-			+ (gdouble) (pr[col + bytes] * pr[col + 2*bytes - ind])
-			+ (gdouble) (cr[col - bytes] * cr[col - ind])
-			+ (gdouble) (cr[col] * cr[col + bytes - ind])
-			+ (gdouble) (cr[col + bytes] * cr[col + 2*bytes - ind])
-			+ (gdouble) (nr[col - bytes] * nr[col - ind])
-			+ (gdouble) (nr[col] * nr[col + bytes - ind])
-			+ (gdouble) (nr[col + bytes] * nr[col + 2*bytes - ind]))
-		       / ((gdouble) pr[col - ind]
-			  + (gdouble) pr[col + bytes - ind]
-			  + (gdouble) pr[col + 2*bytes - ind]
-			  + (gdouble) cr[col - ind]
-			  + (gdouble) cr[col + bytes - ind]
-			  + (gdouble) cr[col + 2*bytes - ind]
-			  + (gdouble) nr[col - ind]
-			  + (gdouble) nr[col + bytes - ind]
-			  + (gdouble) nr[col + 2*bytes - ind])));
+	      *d++ = ROUND(
+                           ((gdouble) (pr[col - bytes] * pr[col - ind])
+                            + (gdouble) (pr[col] * pr[col + bytes - ind])
+                            + (gdouble) (pr[col + bytes] * pr[col + 2*bytes - ind])
+                            + (gdouble) (cr[col - bytes] * cr[col - ind])
+                            + (gdouble) (cr[col] * cr[col + bytes - ind])
+                            + (gdouble) (cr[col + bytes] * cr[col + 2*bytes - ind])
+                            + (gdouble) (nr[col - bytes] * nr[col - ind])
+                            + (gdouble) (nr[col] * nr[col + bytes - ind])
+                            + (gdouble) (nr[col + bytes] * nr[col + 2*bytes - ind]))
+                           / ((gdouble) pr[col - ind]
+                              + (gdouble) pr[col + bytes - ind]
+                              + (gdouble) pr[col + 2*bytes - ind]
+                              + (gdouble) cr[col - ind]
+                              + (gdouble) cr[col + bytes - ind]
+                              + (gdouble) cr[col + 2*bytes - ind]
+                              + (gdouble) nr[col - ind]
+                              + (gdouble) nr[col + bytes - ind]
+                              + (gdouble) nr[col + 2*bytes - ind]));
 	    }
 	}
 

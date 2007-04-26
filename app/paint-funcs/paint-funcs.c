@@ -2742,7 +2742,7 @@ gaussian_blur_region (PixelRegion *srcR,
               start = (row < length) ? -row : -length;
               end = (height <= (row + length)) ? (height - row - 1) : length;
 
-              val = 0;
+              val = total / 2;
               i = start;
               b = buf + (row + i) * 2;
 
@@ -2804,7 +2804,7 @@ gaussian_blur_region (PixelRegion *srcR,
               start = (col < length) ? -col : -length;
               end = (width <= (col + length)) ? (width - col - 1) : length;
 
-              val = 0;
+              val = total / 2;
               i = start;
               b = buf + (col + i) * 2;
 

@@ -331,6 +331,7 @@ checkerboard_dialog (gint32        image_ID,
 {
   GtkWidget *dialog;
   GtkWidget *vbox;
+  GtkWidget *hbox;
   GtkWidget *preview;
   GtkWidget *toggle;
   GtkWidget *size_entry;
@@ -370,17 +371,9 @@ checkerboard_dialog (gint32        image_ID,
                             G_CALLBACK (do_checkerboard_pattern),
                             drawable);
 
-  toggle = gtk_check_button_new_with_mnemonic (_("_Psychobilly"));
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cvals.mode);
-  gtk_widget_show (toggle);
-
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &cvals.mode);
-  g_signal_connect_swapped (toggle, "toggled",
-                            G_CALLBACK (gimp_preview_invalidate),
-                            preview);
+  hbox = gtk_hbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
 
   /*  Get the image resolution and unit  */
   gimp_image_get_resolution (image_ID, &xres, &yres);
@@ -395,6 +388,8 @@ checkerboard_dialog (gint32        image_ID,
                                     GIMP_SIZE_ENTRY_UPDATE_SIZE);
   gtk_table_set_col_spacing (GTK_TABLE (size_entry), 0, 4);
   gtk_table_set_col_spacing (GTK_TABLE (size_entry), 1, 4);
+  gtk_box_pack_start (GTK_BOX (hbox), size_entry, FALSE, FALSE, 0);
+  gtk_widget_show (size_entry);
 
   /*  set the unit back to pixels, since most times we will want pixels */
   gimp_size_entry_set_unit (GIMP_SIZE_ENTRY (size_entry), GIMP_UNIT_PIXEL);
@@ -423,8 +418,17 @@ checkerboard_dialog (gint32        image_ID,
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 
-  gtk_box_pack_start (GTK_BOX (vbox), size_entry, FALSE, FALSE, 0);
-  gtk_widget_show (size_entry);
+  toggle = gtk_check_button_new_with_mnemonic (_("_Psychobilly"));
+  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), cvals.mode);
+  gtk_widget_show (toggle);
+
+  g_signal_connect (toggle, "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &cvals.mode);
+  g_signal_connect_swapped (toggle, "toggled",
+                            G_CALLBACK (gimp_preview_invalidate),
+                            preview);
 
   gtk_widget_show (dialog);
 
