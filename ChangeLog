@@ -1,3 +1,12 @@
+2007-04-26  Mukund Sivaraman  <muks@mukund.org>
+
+        * plug-ins/gfig/gfig-dobject.c: properly parse files with CRLF
+        line-endings which were created in the past in Windows. Fixes
+        a part of bug #346988.
+
+        * plug-ins/gfig/gfig.c: open files in binary mode so that the same
+        line-endings are used on all platforms.
+
 2007-04-26  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.2.15, interface_age 15.

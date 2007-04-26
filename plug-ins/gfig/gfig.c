@@ -425,7 +425,7 @@ gfig_load (const gchar *filename,
   printf ("Loading %s (%s)\n", filename, name);
 #endif /* DEBUG */
 
-  fp = fopen (filename, "r");
+  fp = fopen (filename, "rb");
   if (!fp)
     {
       g_message (_("Could not open '%s' for reading: %s"),
@@ -746,7 +746,7 @@ gfig_load_from_parasite (void)
 
   fname = gimp_temp_name ("gfigtmp");
 
-  fp = fopen (fname, "w");
+  fp = fopen (fname, "wb");
   if (!fp)
     {
       g_message (_("Error trying to open temporary file '%s' "
@@ -781,7 +781,7 @@ gfig_save_callbk (void)
 
   savename = gfig_context->current_obj->filename;
 
-  fp = fopen (savename, "w+");
+  fp = fopen (savename, "wb+");
 
   if (!fp)
     {

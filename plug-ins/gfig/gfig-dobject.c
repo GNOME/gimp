@@ -936,6 +936,10 @@ get_line (gchar *buf,
   if (slen > 0)
     buf[slen - 1] = '\0';
 
+  /* Check and remove an '\r' too from Windows */
+  if ((slen > 1) && (buf[slen - 2] == '\r'))
+    buf[slen - 2] = '\0';
+
   if (ferror (from))
     {
       g_warning (_("Error reading file"));
@@ -1080,4 +1084,3 @@ d_pnt_add_line (GfigObject *obj,
         }
     }
 }
-
