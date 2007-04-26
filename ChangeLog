@@ -1,5 +1,14 @@
 2007-04-26  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/common/tiff-save.c: disabled the layer offsets saving
+	code. This can be re-enabled in 2.6, when the load plug-in is
+	patched to support these saved offsets.
+
+	* plug-ins/common/tiff-load.c: marked the code for the above
+	with a TODO comment.
+
+2007-04-26  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/common/tiff-save.c: save the layer offsets too, to
 	fix bug #419578.
 

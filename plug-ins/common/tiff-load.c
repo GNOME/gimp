@@ -991,6 +991,12 @@ load_image (const gchar       *filename,
       g_free (channel);
       channel = NULL;
 
+
+      /* TODO: in GIMP 2.6, use a dialog to selectively enable the
+       * following code, as the save plug-in will then save layer offests
+       * as well.
+       */
+
       /* compute bounding box of all layers read so far */
       if (min_col > layer_offset_x_pixel)
         min_col = layer_offset_x_pixel;

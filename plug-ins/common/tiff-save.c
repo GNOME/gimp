@@ -634,7 +634,6 @@ save_image (const gchar *filename,
     gushort  save_unit = RESUNIT_INCH;
     GimpUnit unit;
     gfloat   factor;
-    gint     offset_x, offset_y;
 
     gimp_image_get_resolution (orig_image, &xresolution, &yresolution);
     unit = gimp_image_get_unit (orig_image);
@@ -659,10 +658,18 @@ save_image (const gchar *filename,
         TIFFSetField (tif, TIFFTAG_RESOLUTIONUNIT, save_unit);
       }
 
+/* TODO: enable in 2.6
+
+    gint     offset_x, offset_y;
+
     gimp_drawable_offsets (layer, &offset_x, &offset_y);
 
-    TIFFSetField (tif, TIFFTAG_XPOSITION, offset_x / xresolution);
-    TIFFSetField (tif, TIFFTAG_YPOSITION, offset_y / yresolution);
+    if (offset_x || offset_y)
+      {
+        TIFFSetField (tif, TIFFTAG_XPOSITION, offset_x / xresolution);
+        TIFFSetField (tif, TIFFTAG_YPOSITION, offset_y / yresolution);
+      }
+*/
   }
 
   /* The TIFF spec explicitely says ASCII for the image description. */
