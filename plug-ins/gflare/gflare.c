@@ -1249,7 +1249,7 @@ gflare_load (const gchar *filename,
 
   g_return_val_if_fail (filename != NULL, NULL);
 
-  fp = g_fopen (filename, "r");
+  fp = g_fopen (filename, "rb");
   if (!fp)
     {
       g_message (_("Failed to open GFlare file '%s': %s"),
@@ -1469,7 +1469,7 @@ gflare_save (GFlare *gflare)
       g_free (path);
     }
 
-  fp = g_fopen (gflare->filename, "w");
+  fp = g_fopen (gflare->filename, "wb");
   if (!fp)
     {
       g_message (_("Failed to write GFlare file '%s': %s"),

@@ -404,7 +404,7 @@ file_response_callback (GtkFileChooser *chooser,
               return;
             }
 
-          f = g_fopen (filename, "r");
+          f = g_fopen (filename, "rb");
 
           if (f == NULL)
             {
@@ -435,7 +435,7 @@ file_response_callback (GtkFileChooser *chooser,
         }
       else
         {
-          FILE *f = g_fopen (filename, "w");
+          FILE *f = g_fopen (filename, "wb");
 
           if (NULL == f)
             {

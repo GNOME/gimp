@@ -1706,7 +1706,7 @@ save_xjt_image (const gchar *filename,
     }
 
   /* create property file PRP */
-  l_fp_prp = g_fopen (l_prop_file, "w");
+  l_fp_prp = g_fopen (l_prop_file, "wb");
   if (l_fp_prp == NULL)
     {
       g_message (_("Could not open '%s' for writing: %s"),
@@ -3151,7 +3151,7 @@ p_load_linefile (const gchar *filename,
   l_file_buff = g_malloc0(*len +1);
 
   /* read file into buffer */
-  l_fp = g_fopen(filename, "r");
+  l_fp = g_fopen(filename, "rb");
   if(l_fp == NULL)
   {
     return(NULL);

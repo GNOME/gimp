@@ -907,5 +907,5 @@ sendmail_pipe (gchar **cmd,
       return NULL;
     }
 
-  return fdopen (fd, "w");
+  return fdopen (fd, "wb");
 }

@@ -1,3 +1,19 @@
+2007-04-27  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/imagemap/imap_preferences.c
+	* plug-ins/gflare/gflare.c
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/xjt/xjt.c
+	* plug-ins/metadata/xmp-parse.c
+	* plug-ins/flame/flame.c
+	* plug-ins/common/curve_bend.c
+	* plug-ins/common/compressor.c
+	* plug-ins/common/channel_mixer.c
+	* plug-ins/common/mail.c
+	* plug-ins/common/CML_explorer.c
+	* plug-ins/ifscompose/ifscompose.c: Open files in binary mode
+	("rb" and "wb").
+
 2007-04-26  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpparamspecs.[ch]: renamed GimpParamSpecString's

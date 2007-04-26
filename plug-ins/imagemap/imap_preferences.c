@@ -167,7 +167,7 @@ preferences_load(PreferencesData_t *data)
 
    filename = gimp_personal_rc_file ("imagemaprc");
 
-   in = g_fopen(filename, "r");
+   in = g_fopen(filename, "rb");
    g_free(filename);
    if (in) {
       while (fgets(buf, sizeof(buf), in)) {
@@ -190,7 +190,7 @@ preferences_save(PreferencesData_t *data)
 
    filename = gimp_personal_rc_file ("imagemaprc");
 
-   out = g_fopen(filename, "w");
+   out = g_fopen(filename, "wb");
    if (out) {
       fprintf(out, "# Image map plug-in resource file\n\n");
       if (data->default_map_type == NCSA)

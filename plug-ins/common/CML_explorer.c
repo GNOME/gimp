@@ -1997,7 +1997,7 @@ CML_save_to_file_response (GtkWidget *dialog,
   if (! filename)
     return;
 
-  file = g_fopen (filename, "w");
+  file = g_fopen (filename, "wb");
 
   if (! file)
     {
@@ -2170,7 +2170,7 @@ CML_load_parameter_file (const gchar *filename,
   gint       seed = 0;
   gint       old2new_function_id[] = { 3, 4, 5, 6, 7, 9, 10, 11, 1, 2 };
 
-  file = g_fopen (filename, "r");
+  file = g_fopen (filename, "rb");
 
   if (!file)
     {

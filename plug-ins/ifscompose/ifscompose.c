@@ -2370,7 +2370,7 @@ ifsfile_save_response (GtkWidget *dialog,
 
       str = ifsvals_stringify (&ifsvals, elements);
 
-      fh = g_fopen (filename, "w");
+      fh = g_fopen (filename, "wb");
       if (! fh)
         {
           gchar *message =

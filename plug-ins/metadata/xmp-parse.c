@@ -1056,7 +1056,7 @@ text_handler           (GMarkupParseContext  *markup_context,
             /*
             FILE *ttt;
 
-            ttt = fopen ("/tmp/xmp-thumb.jpg", "w");
+            ttt = fopen ("/tmp/xmp-thumb.jpg", "wb");
             fwrite (decoded, decoded_size, 1, ttt);
             fclose (ttt);
             */

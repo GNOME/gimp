@@ -405,7 +405,7 @@ save_image (const Compressor *compressor,
       {
         FILE *f;
 
-        if (!(f = g_fopen (filename, "w")))
+        if (!(f = g_fopen (filename, "wb")))
           {
             g_message (_("Could not open '%s' for writing: %s"),
                        gimp_filename_to_utf8 (filename), g_strerror (errno));
@@ -558,7 +558,7 @@ load_image (const Compressor  *compressor,
       {
         FILE *f;
 
-        if (! (f = g_fopen (tmpname, "w")))
+        if (! (f = g_fopen (tmpname, "wb")))
           {
             g_message (_("Could not open '%s' for writing: %s"),
                        gimp_filename_to_utf8 (tmpname), g_strerror (errno));

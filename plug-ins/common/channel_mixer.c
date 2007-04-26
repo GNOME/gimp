@@ -913,7 +913,7 @@ cm_load_file_response_callback (GtkWidget    *dialog,
 
       filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
 
-      fp = g_fopen (filename, "r");
+      fp = g_fopen (filename, "rb");
 
       if (fp)
         {
@@ -1047,7 +1047,7 @@ cm_save_file_response_callback (GtkWidget    *dialog,
   if (! filename)
     return;
 
-  file = g_fopen (filename, "w");
+  file = g_fopen (filename, "wb");
 
   if (! file)
     {

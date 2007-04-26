@@ -812,7 +812,7 @@ p_save_pointfile (BenderDialog *cd,
   gint j;
   FILE *l_fp;
 
-  l_fp = g_fopen(filename, "w+");
+  l_fp = g_fopen(filename, "wb+");
   if (!l_fp)
     {
       g_message (_("Could not open '%s' for writing: %s"),
@@ -864,7 +864,7 @@ p_load_pointfile (BenderDialog *cd,
   float l_fux, l_fuy, l_flx, l_fly;
   gint  l_iuy, l_ily ;
 
-  l_fp = g_fopen(filename, "r");
+  l_fp = g_fopen(filename, "rb");
   if (!l_fp)
     {
       g_message (_("Could not open '%s' for reading: %s"),

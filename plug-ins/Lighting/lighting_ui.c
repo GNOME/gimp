@@ -1173,7 +1173,7 @@ save_preset_response (GtkFileChooser *chooser,
     {
       gchar *filename = gtk_file_chooser_get_filename (chooser);
 
-      fp = g_fopen (filename, "w");
+      fp = g_fopen (filename, "wb");
 
       if (!fp)
         {
@@ -1316,7 +1316,7 @@ load_preset_response (GtkFileChooser *chooser,
     {
       gchar *filename = gtk_file_chooser_get_filename (chooser);
 
-      fp = g_fopen (filename, "r");
+      fp = g_fopen (filename, "rb");
 
       if (!fp)
         {
