@@ -28,7 +28,7 @@ HELP
     &neo_pdb_misc('2007', '2.4');
 
     @inargs = (
-	{ name => 'display', type => 'display', no_validate => 1,
+	{ name => 'display', type => 'display', no_success => 1,
 	  desc => 'The display to check' }
     );
 

@@ -42,22 +42,16 @@ display_is_valid_invoker (GimpProcedure     *procedure,
                           GimpProgress      *progress,
                           const GValueArray *args)
 {
-  gboolean success = TRUE;
   GValueArray *return_vals;
   GimpObject *display;
   gboolean valid = FALSE;
 
   display = gimp_value_get_display (&args->values[0], gimp);
 
-  if (success)
-    {
-      valid = (display != NULL);
-    }
+  valid = (display != NULL);
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_boolean (&return_vals->values[1], valid);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  g_value_set_boolean (&return_vals->values[1], valid);
 
   return return_vals;
 }
@@ -212,7 +206,7 @@ register_display_procs (GimpPDB *pdb)
                                                            "display",
                                                            "The display to check",
                                                            pdb->gimp, FALSE,
-                                                           GIMP_PARAM_READWRITE));
+                                                           GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("valid",
                                                          "valid",

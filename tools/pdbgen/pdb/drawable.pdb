@@ -28,7 +28,7 @@ HELP
     &neo_pdb_misc('2007', '2.4');
 
     @inargs = (
-	{ name => 'drawable', type => 'drawable', no_validate => 1,
+	{ name => 'drawable', type => 'drawable', no_success => 1,
 	  desc => 'The drawable to check' }
     );
 
@@ -41,7 +41,7 @@ HELP
 	code => <<'CODE'
 {
   valid = (GIMP_IS_DRAWABLE (drawable) &&
-           gimp_item_is_attached (GIMP_ITEM (drawable)));
+           ! gimp_item_is_removed (GIMP_ITEM (drawable)));
 }
 CODE
     );

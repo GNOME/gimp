@@ -26,7 +26,7 @@ HELP
     &neo_pdb_misc('2007', '2.4');
 
     @inargs = (
-	{ name => 'vectors', type => 'vectors', no_validate => 1,
+	{ name => 'vectors', type => 'vectors', no_success => 1,
 	  desc => 'The vectors object to check' }
     );
 
@@ -39,7 +39,7 @@ HELP
 	code => <<'CODE'
 {
   valid = (GIMP_IS_VECTORS (vectors) &&
-           gimp_item_is_attached (GIMP_ITEM (vectors)));
+           ! gimp_item_is_removed (GIMP_ITEM (vectors)));
 }
 CODE
     );

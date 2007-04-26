@@ -28,7 +28,7 @@ HELP
     &neo_pdb_misc('2007', '2.4');
 
     @inargs = (
-	{ name => 'image', type => 'image', no_validate => 1,
+	{ name => 'image', type => 'image', no_success => 1,
 	  desc => 'The image to check' }
     );
 

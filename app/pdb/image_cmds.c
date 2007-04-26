@@ -76,22 +76,16 @@ image_is_valid_invoker (GimpProcedure     *procedure,
                         GimpProgress      *progress,
                         const GValueArray *args)
 {
-  gboolean success = TRUE;
   GValueArray *return_vals;
   GimpImage *image;
   gboolean valid = FALSE;
 
   image = gimp_value_get_image (&args->values[0], gimp);
 
-  if (success)
-    {
-      valid = GIMP_IS_IMAGE (image);
-    }
+  valid = GIMP_IS_IMAGE (image);
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_boolean (&return_vals->values[1], valid);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  g_value_set_boolean (&return_vals->values[1], valid);
 
   return return_vals;
 }

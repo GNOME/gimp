@@ -1,5 +1,22 @@
 2007-04-26  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/display.pdb (diplay_is_valid)
+	* tools/pdbgen/pdb/drawable.pdb (drawable_is_valid)
+	* tools/pdbgen/pdb/image.pdb (image_is_valid)
+	* tools/pdbgen/pdb/vectors.pdb (vectors_is_valid): it's the
+	argument flag "no_success" which turns off validation, not
+	"no_validate" (how obvious). Also fixed drawable and vectors
+	procedures to check for !gimp_item_is_removed() instead of
+	gimp_item_is_attached() (a newly created item is unattached
+	but valid).
+
+	* app/pdb/display_cmds.c
+	* app/pdb/drawable_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/vectors_cmds.c: regenerated.
+
+2007-04-26  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/pattern.pdb
 	* tools/pdbgen/pdb/gradients.pdb
 	* tools/pdbgen/pdb/brush_select.pdb

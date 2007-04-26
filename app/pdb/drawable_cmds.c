@@ -54,23 +54,17 @@ drawable_is_valid_invoker (GimpProcedure     *procedure,
                            GimpProgress      *progress,
                            const GValueArray *args)
 {
-  gboolean success = TRUE;
   GValueArray *return_vals;
   GimpDrawable *drawable;
   gboolean valid = FALSE;
 
   drawable = gimp_value_get_drawable (&args->values[0], gimp);
 
-  if (success)
-    {
-      valid = (GIMP_IS_DRAWABLE (drawable) &&
-               gimp_item_is_attached (GIMP_ITEM (drawable)));
-    }
+  valid = (GIMP_IS_DRAWABLE (drawable) &&
+           ! gimp_item_is_removed (GIMP_ITEM (drawable)));
 
-  return_vals = gimp_procedure_get_return_values (procedure, success);
-
-  if (success)
-    g_value_set_boolean (&return_vals->values[1], valid);
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+  g_value_set_boolean (&return_vals->values[1], valid);
 
   return return_vals;
 }
@@ -1207,7 +1201,7 @@ register_drawable_procs (GimpPDB *pdb)
                                                             "drawable",
                                                             "The drawable to check",
                                                             pdb->gimp, FALSE,
-                                                            GIMP_PARAM_READWRITE));
+                                                            GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("valid",
                                                          "valid",
