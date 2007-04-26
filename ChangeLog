@@ -1,5 +1,10 @@
 2007-04-26  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/common/tiff-save.c: save the layer offsets too, to
+	fix bug #419578.
+
+2007-04-26  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/gfig/gfig-dobject.c: properly parse files with CRLF
 	line-endings which were created in the past in Windows. Fixes
 	bug #346988.
