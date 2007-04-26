@@ -7,7 +7,7 @@
 
 	* plug-ins/gfig/gfig-dobject.c: properly parse files with CRLF
 	line-endings which were created in the past in Windows. Fixes
-	bug #346988.
+	a part of bug #346988.
 
 	* plug-ins/gfig/gfig.c: open files in binary mode so that the same
 	line-endings are used on all platforms.
