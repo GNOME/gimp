@@ -1,5 +1,9 @@
 2007-04-26  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimp.c: document the image_types parameter (bug #326988).
+
+2007-04-26  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/paint-funcs.c (gaussian_blur_region)
 	* plug-ins/common/blur.c (blur)
 	* plug-ins/common/gauss.c (do_encoded_lre) (do_full_lre): reduce

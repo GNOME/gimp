@@ -517,6 +517,12 @@ gimp_quit (void)
  * this case, the given @menu_label will only be used as the
  * procedure's user-visible name in the keyboard shortcut editor.
  *
+ * @image_types is a comma separated list of image types, or actually
+ * drawable types, that this procedure can deal with. Wildcards are
+ * possible here, so you could say "RGB*" instead of "RGB, RGBA" or
+ * "*" for all image types. If the procedure doesn't need an image to
+ * run, use the empty string.
+ *
  * @type must be one of #GIMP_PLUGIN or #GIMP_EXTENSION. Note that
  * temporary procedures must be installed using
  * gimp_install_temp_proc().
