@@ -1,0 +1,1450 @@
+# Perasian Translation of gimp-libgimp.
+# Copyright (C) 2007 Sharif FarsiWeb, Inc.
+# This file is distributed under the same license as the GIMP package.
+# Meelad Zakaria <meelad@farsiweb.info>, 2007.
+# Farzad Ghanei <farzad@farsiweb.info>, 2007.
+msgid ""
+msgstr ""
+"Project-Id-Version: gimp-libgimp VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-04-17 17:36+0330\n"
+"PO-Revision-Date: 2007-04-21 16:24+0330\n"
+"Last-Translator: Meelad Zakaria <meelad@farsiweb.info>\n"
+"Language-Team: Persian\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: ../libgimp/gimpbrushmenu.c:129
+msgid "Brush Selection"
+msgstr "انتخاب قلم‌مو"
+
+#: ../libgimp/gimpbrushmenu.c:158 ../libgimp/gimppatternmenu.c:142
+msgid "_Browse..."
+msgstr "_مرور..."
+
+#: ../libgimp/gimpexport.c:215 ../libgimp/gimpexport.c:251
+#, c-format
+msgid "%s can't handle layers"
+msgstr "%s نمی‌تواند با لایه‌ها کار کند"
+
+#: ../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
+#: ../libgimp/gimpexport.c:234
+msgid "Merge Visible Layers"
+msgstr "ادغام لایه‌های مرئی"
+
+#: ../libgimp/gimpexport.c:224
+#, c-format
+msgid "%s can't handle layer offsets, size or opacity"
+msgstr "%s نمی‌تواند با اُفست، اندازه یا ماتی لایه‌ها کار کند"
+
+#: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
+#, c-format
+msgid "%s can only handle layers as animation frames"
+msgstr "%s فقط می‌تواند با لایه‌ها به عنوان فریم‌های پویانمایی کار کند"
+
+#: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:243
+msgid "Save as Animation"
+msgstr "ذخیره به صورت پویانمایی"
+
+#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:252
+#: ../libgimp/gimpexport.c:261
+msgid "Flatten Image"
+msgstr "مسطح کردن تصویر"
+
+#: ../libgimp/gimpexport.c:260
+#, c-format
+msgid "%s can't handle transparency"
+msgstr "%s نمی‌تواند با شفافیت کار کند"
+
+#: ../libgimp/gimpexport.c:269
+#, c-format
+msgid "%s can't handle layer masks"
+msgstr "%s نمی‌تواند با نقاب لایه‌ها کار کند"
+
+#: ../libgimp/gimpexport.c:270
+msgid "Apply Layer Masks"
+msgstr "اِعمال نقاب‌های لایه"
+
+#: ../libgimp/gimpexport.c:278
+#, c-format
+msgid "%s can only handle RGB images"
+msgstr "%s تنها می‌تواند با تصاویر RGB کار کند"
+
+#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:317
+#: ../libgimp/gimpexport.c:326
+msgid "Convert to RGB"
+msgstr "تبدیل به RGB"
+
+#: ../libgimp/gimpexport.c:287
+#, c-format
+msgid "%s can only handle grayscale images"
+msgstr "%s تنها می‌تواند با تصاویر بی‌رنگ کار کند"
+
+#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:317
+#: ../libgimp/gimpexport.c:338
+msgid "Convert to Grayscale"
+msgstr "تبدیل به بی‌رنگ"
+
+#: ../libgimp/gimpexport.c:296
+#, c-format
+msgid "%s can only handle indexed images"
+msgstr "%s تنها می‌تواند با تصاویر دارای رنگ نمونه‌رنگی کار کند"
+
+#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:326
+#: ../libgimp/gimpexport.c:336
+msgid ""
+"Convert to Indexed using default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"تبدیل رنگ‌ها به نمونه‌رنگی با استفاده از تنظیمات پیش‌فرض(برای تنظیم دقیق، "
+"این کار را دستی انجام دهید)"
+
+#: ../libgimp/gimpexport.c:306
+#, c-format
+msgid "%s can only handle bitmap (two color) indexed images"
+msgstr ""
+"%s تنها می‌تواند با تصاویر نقشه‌بیتی (۲ رنگ) با رنگ نمونه‌رنگی کار کند"
+
+#: ../libgimp/gimpexport.c:307
+msgid ""
+"Convert to Indexed using bitmap default settings\n"
+"(Do it manually to tune the result)"
+msgstr ""
+"تبدیل رنگ‌ها به نمونه‌رنگی با استفاده از تنظیمات پیش‌فرض نقشه‌بیتی(برای "
+"تنظیم دقیق، این کار را به صورت دستی انجام دهید)"
+
+#: ../libgimp/gimpexport.c:316
+#, c-format
+msgid "%s can only handle RGB or grayscale images"
+msgstr "%s تنها می‌تواند با تصاویر دارای رنگ RGB یا بی‌رنگ کار کند"
+
+#: ../libgimp/gimpexport.c:325
+#, c-format
+msgid "%s can only handle RGB or indexed images"
+msgstr "%s تنها می‌تواند با تصاویر دارای رنگ RGB یا نمونه‌رنگی کار کند"
+
+#: ../libgimp/gimpexport.c:335
+#, c-format
+msgid "%s can only handle grayscale or indexed images"
+msgstr "%s تنها می‌تواند با تصاویر بی‌رنگ یا دارای رنگ نمونه‌رنگی کار کند"
+
+#: ../libgimp/gimpexport.c:346
+#, c-format
+msgid "%s needs an alpha channel"
+msgstr "%s یک کانال آلفا لازم دارد"
+
+#: ../libgimp/gimpexport.c:347
+msgid "Add Alpha Channel"
+msgstr "اضافه کردن کانال آلفا"
+
+#: ../libgimp/gimpexport.c:381
+msgid "Confirm Save"
+msgstr "تأیید ذخیره‌سازی"
+
+#: ../libgimp/gimpexport.c:387
+msgid "Confirm"
+msgstr "تأیید"
+
+#: ../libgimp/gimpexport.c:454
+msgid "Export File"
+msgstr "صدور پرونده"
+
+#: ../libgimp/gimpexport.c:458
+msgid "_Ignore"
+msgstr "_نادیده گرفته شود"
+
+#: ../libgimp/gimpexport.c:460
+msgid "_Export"
+msgstr "_صادر شود"
+
+#. the headline
+#: ../libgimp/gimpexport.c:482
+#, c-format
+msgid ""
+"Your image should be exported before it can be saved as %s for the following "
+"reasons:"
+msgstr ""
+"پیش از آن که بتوانید تصویرتان را به صورت %s ذخیره کنید باید آن را صادر کنید، "
+"دلایل از این قرار است:"
+
+#. the footline
+#: ../libgimp/gimpexport.c:553
+msgid "The export conversion won't modify your original image."
+msgstr "تبدیل برای صدور تغییری در تصویر اصلی شما نخواهد داد."
+
+#: ../libgimp/gimpexport.c:653
+#, c-format
+msgid ""
+"You are about to save a layer mask as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"شما در حال ذخیره کردن نقاب لایه به صورت %s هستید.\n"
+"با این کار لایه‌های مرئی ذخیره نخواهند شد."
+
+#: ../libgimp/gimpexport.c:659
+#, c-format
+msgid ""
+"You are about to save a channel (saved selection) as %s.\n"
+"This will not save the visible layers."
+msgstr ""
+"شما در حال ذخیره کردن یک کانال (انتخاب ذخیره شده) به صورت %s هستید.\n"
+"با این کار لایه‌های مرئی ذخیره نخواهند شد."
+
+#: ../libgimp/gimpfontmenu.c:89
+msgid "Font Selection"
+msgstr "انتخاب قلم"
+
+#: ../libgimp/gimpgradientmenu.c:104
+msgid "Gradient Selection"
+msgstr "انتخاب طیف"
+
+#: ../libgimp/gimpmenu.c:406 ../libgimpwidgets/gimpintstore.c:167
+msgid "(Empty)"
+msgstr "(خالی)"
+
+#: ../libgimp/gimppalettemenu.c:91
+msgid "Palette Selection"
+msgstr "انتخاب تخته‌رنگ"
+
+#: ../libgimp/gimppatternmenu.c:113
+msgid "Pattern Selection"
+msgstr "انتخاب الگو"
+
+#: ../libgimp/gimpunitcache.c:57
+msgid "percent"
+msgstr "درصد"
+
+#: ../libgimpbase/gimpbaseenums.c:23
+msgid "Small"
+msgstr "ریز"
+
+#: ../libgimpbase/gimpbaseenums.c:24
+msgid "Medium"
+msgstr "متوسط"
+
+#: ../libgimpbase/gimpbaseenums.c:25
+msgid "Large"
+msgstr "درشت"
+
+#: ../libgimpbase/gimpbaseenums.c:57
+msgid "Light Checks"
+msgstr "چهارخانه‌های روشن"
+
+#: ../libgimpbase/gimpbaseenums.c:58
+msgid "Mid-Tone Checks"
+msgstr "چهارخانه‌های متوسط"
+
+#: ../libgimpbase/gimpbaseenums.c:59
+msgid "Dark Checks"
+msgstr "چهارخانه‌های تیره"
+
+#: ../libgimpbase/gimpbaseenums.c:60
+msgid "White Only"
+msgstr "فقط سفید"
+
+#: ../libgimpbase/gimpbaseenums.c:61
+msgid "Gray Only"
+msgstr "فقط خاکستری"
+
+#: ../libgimpbase/gimpbaseenums.c:62
+msgid "Black Only"
+msgstr "فقط سیاه"
+
+#: ../libgimpbase/gimpbaseenums.c:91
+msgid "RGB color"
+msgstr "رنگ RGB"
+
+#: ../libgimpbase/gimpbaseenums.c:92 ../libgimpbase/gimpbaseenums.c:127
+msgid "Grayscale"
+msgstr "بی‌رنگ"
+
+#: ../libgimpbase/gimpbaseenums.c:93
+msgid "Indexed color"
+msgstr "رنگ نمونه‌گیری شده"
+
+#: ../libgimpbase/gimpbaseenums.c:125
+msgid "RGB"
+msgstr "RGB"
+
+#: ../libgimpbase/gimpbaseenums.c:126
+msgid "RGB-alpha"
+msgstr "RGB-آلفا"
+
+#: ../libgimpbase/gimpbaseenums.c:128
+msgid "Grayscale-alpha"
+msgstr "ابی‌رنگ-آلفا"
+
+#: ../libgimpbase/gimpbaseenums.c:129
+msgid "Indexed"
+msgstr "نمونه‌رنگی"
+
+#: ../libgimpbase/gimpbaseenums.c:130
+msgid "Indexed-alpha"
+msgstr "نمونه‌رنگی-آلفا"
+
+#: ../libgimpbase/gimpmemsize.c:177
+#, c-format
+msgid "%d Bytes"
+msgstr "%Id بایت"
+
+#: ../libgimpbase/gimpmemsize.c:182
+#, c-format
+msgid "%.2f KB"
+msgstr "%I.2f کیلوبایت"
+
+#: ../libgimpbase/gimpmemsize.c:186
+#, c-format
+msgid "%.1f KB"
+msgstr "%I.1f کیلوبایت"
+
+#: ../libgimpbase/gimpmemsize.c:190
+#, c-format
+msgid "%d KB"
+msgstr "%Id کیلوبایت"
+
+#: ../libgimpbase/gimpmemsize.c:197
+#, c-format
+msgid "%.2f MB"
+msgstr "%I.2f مگابایت"
+
+#: ../libgimpbase/gimpmemsize.c:201
+#, c-format
+msgid "%.1f MB"
+msgstr "%I.1f مگابایت"
+
+#: ../libgimpbase/gimpmemsize.c:205
+#, c-format
+msgid "%d MB"
+msgstr "%Id مگابایت"
+
+#: ../libgimpbase/gimpmemsize.c:212
+#, c-format
+msgid "%.2f GB"
+msgstr "%I.2f گیگابایت"
+
+#: ../libgimpbase/gimpmemsize.c:216
+#, c-format
+msgid "%.1f GB"
+msgstr "%I.1f گیگابایت"
+
+#: ../libgimpbase/gimpmemsize.c:220
+#, c-format
+msgid "%d GB"
+msgstr "%Id گیگابایت"
+
+#: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
+msgid "(invalid UTF-8 string)"
+msgstr "(رشتهٔ یوتی‌اف-۸ نامعتبر)"
+
+#: ../libgimpmodule/gimpmodule.c:177
+#, c-format
+msgid "Loading module: '%s'\n"
+msgstr "در حال بار کردن پیمانه: «%s»\n"
+
+#: ../libgimpmodule/gimpmodule.c:193 ../libgimpmodule/gimpmodule.c:212
+#: ../libgimpmodule/gimpmodule.c:326 ../libgimpmodule/gimpmodule.c:354
+#: ../libgimpmodule/gimpmodule.c:478
+#, c-format
+msgid "Module '%s' load error: %s"
+msgstr "خطا در بار کردن پیمانهٔ «%s»: %s"
+
+#: ../libgimpmodule/gimpmodule.c:282
+#, c-format
+msgid "Skipping module: '%s'\n"
+msgstr "در حال گذشتن از پیمانه« «%s»\n"
+
+#: ../libgimpmodule/gimpmodule.c:422
+msgid "Module error"
+msgstr "خطای پیمانه"
+
+#: ../libgimpmodule/gimpmodule.c:423
+msgid "Loaded"
+msgstr "بار شد"
+
+#: ../libgimpmodule/gimpmodule.c:424
+msgid "Load failed"
+msgstr "بار کردن با شکست مواجه شد"
+
+#: ../libgimpmodule/gimpmodule.c:425
+msgid "Not loaded"
+msgstr "بار نشد"
+
+#: ../libgimpthumb/gimpthumb-utils.c:125
+#, c-format
+msgid ""
+"Cannot determine a valid home directory.\n"
+"Thumbnails will be stored in the folder for temporary files (%s) instead."
+msgstr ""
+"نمی‌توان یک پوشهٔ آغازهٔ معتبر تعیین کرد.\n"
+"در عوض مسطوره‌ها در پوشهٔ  پرونده‌های موقتی (%s) ذخیره خواهند شد."
+
+#: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
+#, c-format
+msgid "Failed to create thumbnail folder '%s'."
+msgstr "ایجاد پوشهٔ «‎%s» برای مسطوره‌ها با شکست مواجه شد."
+
+#: ../libgimpthumb/gimpthumbnail.c:919
+#, c-format
+msgid "Could not create thumbnail for %s: %s"
+msgstr "نمی‌توان برای %s مسطوره ایجاد کرد: %s"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:99
+msgid "_Foreground Color"
+msgstr "رنگ پی_ش‌زمینه"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:103
+msgid "_Background Color"
+msgstr "رنگ پ_س‌زمینه"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:107
+msgid "Blac_k"
+msgstr "س_یاه"
+
+#: ../libgimpwidgets/gimpcolorbutton.c:111
+msgid "_White"
+msgstr "س_فید"
+
+#: ../libgimpwidgets/gimpcolorscales.c:133
+msgid "Scales"
+msgstr "مقیاس‌ها"
+
+#: ../libgimpwidgets/gimpcolorscales.c:155
+#: ../libgimpwidgets/gimpcolorselect.c:343
+msgid "_H"
+msgstr "H (_ف)"
+
+#: ../libgimpwidgets/gimpcolorscales.c:156
+#: ../libgimpwidgets/gimpcolorselect.c:343
+msgid "_S"
+msgstr "S (_غ)"
+
+#: ../libgimpwidgets/gimpcolorscales.c:157
+#: ../libgimpwidgets/gimpcolorselect.c:343
+msgid "_V"
+msgstr "V (_ر)"
+
+#: ../libgimpwidgets/gimpcolorscales.c:158
+#: ../libgimpwidgets/gimpcolorselect.c:343
+msgid "_R"
+msgstr "R (_ق)"
+
+#: ../libgimpwidgets/gimpcolorscales.c:159
+#: ../libgimpwidgets/gimpcolorselect.c:343
+msgid "_G"
+msgstr "G (_س)"
+
+#: ../libgimpwidgets/gimpcolorscales.c:160
+#: ../libgimpwidgets/gimpcolorselect.c:343
+msgid "_B"
+msgstr "B (_ب)"
+
+#: ../libgimpwidgets/gimpcolorscales.c:161
+msgid "_A"
+msgstr "A (_الف)"
+
+#: ../libgimpwidgets/gimpcolorscales.c:165
+#: ../libgimpwidgets/gimpcolorselect.c:347
+msgid "Hue"
+msgstr "فام"
+
+#: ../libgimpwidgets/gimpcolorscales.c:166
+#: ../libgimpwidgets/gimpcolorselect.c:348 ../modules/cdisplay_proof.c:49
+#: ../modules/cdisplay_proof.c:444
+msgid "Saturation"
+msgstr "غلظت"
+
+#: ../libgimpwidgets/gimpcolorscales.c:167
+#: ../libgimpwidgets/gimpcolorselect.c:349
+msgid "Value"
+msgstr "مقدار"
+
+#: ../libgimpwidgets/gimpcolorscales.c:168
+#: ../libgimpwidgets/gimpcolorselect.c:350
+msgid "Red"
+msgstr "قرمز"
+
+#: ../libgimpwidgets/gimpcolorscales.c:169
+#: ../libgimpwidgets/gimpcolorselect.c:351
+msgid "Green"
+msgstr "سبز"
+
+#: ../libgimpwidgets/gimpcolorscales.c:170
+#: ../libgimpwidgets/gimpcolorselect.c:352
+msgid "Blue"
+msgstr "آبی"
+
+#: ../libgimpwidgets/gimpcolorscales.c:171
+#: ../libgimpwidgets/gimpcolorselect.c:353
+msgid "Alpha"
+msgstr "آلفا"
+
+#: ../libgimpwidgets/gimpcolorscales.c:243
+msgid "Hexadecimal color notation as used in HTML and CSS"
+msgstr ""
+"نمایش شانزده‌شانزدهی رنگ‌ها همان طور که در HTML و CSS استفاده می‌شود."
+
+#: ../libgimpwidgets/gimpcolorscales.c:248
+msgid "HTML _Notation:"
+msgstr "ن_مایش HTML:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:203
+msgid "Current:"
+msgstr "در حال حاضر:"
+
+#: ../libgimpwidgets/gimpcolorselection.c:225
+msgid "Old:"
+msgstr "قدیمی:"
+
+#: ../libgimpwidgets/gimpfileentry.c:351
+msgid "Select Folder"
+msgstr "انتخاب پوشه"
+
+#: ../libgimpwidgets/gimpfileentry.c:353
+msgid "Select File"
+msgstr "انتخاب پرونده"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:232
+msgid "Kilobytes"
+msgstr "کیلوبایت"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:233
+msgid "Megabytes"
+msgstr "مگابایت"
+
+#: ../libgimpwidgets/gimpmemsizeentry.c:234
+msgid "Gigabytes"
+msgstr "گیگابایت"
+
+#: ../libgimpwidgets/gimppatheditor.c:243
+msgid "Writable"
+msgstr "قابل نوشتن"
+
+#: ../libgimpwidgets/gimppatheditor.c:252
+msgid "Folder"
+msgstr "پوشه"
+
+#: ../libgimpwidgets/gimppickbutton.c:138
+msgid ""
+"Click the eyedropper, then click a color anywhere on your screen to select "
+"that color."
+msgstr ""
+"اول روی قطره‌چکان و سپس روی رنگی در هر کجای صفحهٔ نمایش کلیک کنید تا انتخاب "
+"شود."
+
+#: ../libgimpwidgets/gimppreviewarea.c:126
+msgid "Check Size"
+msgstr "اندازهٔ چهارخانه‌ها"
+
+#: ../libgimpwidgets/gimppreviewarea.c:133
+msgid "Check Style"
+msgstr "سبک چهارخانه‌ها"
+
+#. toggle button to (des)activate the instant preview
+#: ../libgimpwidgets/gimppreview.c:240
+msgid "_Preview"
+msgstr "_پیش‌نمایش"
+
+#: ../libgimpwidgets/gimpstock.c:113
+msgid "Anchor"
+msgstr "لنگر"
+
+#: ../libgimpwidgets/gimpstock.c:114
+msgid "C_enter"
+msgstr "مرک_ز"
+
+#: ../libgimpwidgets/gimpstock.c:115
+msgid "_Duplicate"
+msgstr "تک_ثیر"
+
+#: ../libgimpwidgets/gimpstock.c:116
+msgid "_Edit"
+msgstr "_ویرایش"
+
+#: ../libgimpwidgets/gimpstock.c:117
+msgid "Linked"
+msgstr "پیونددار"
+
+#: ../libgimpwidgets/gimpstock.c:118
+msgid "Paste as New"
+msgstr "چسباندن به عنوان جدید"
+
+#: ../libgimpwidgets/gimpstock.c:119
+msgid "Paste Into"
+msgstr "چسباندن در"
+
+#: ../libgimpwidgets/gimpstock.c:120
+msgid "_Reset"
+msgstr "ب_رگرداندن به مقادیر اولیه"
+
+#: ../libgimpwidgets/gimpstock.c:121
+msgid "Visible"
+msgstr "مرئی"
+
+#: ../libgimpwidgets/gimpstock.c:154 ../libgimpwidgets/gimpstock.c:158
+msgid "_Stroke"
+msgstr "_قلم‌ضربه"
+
+#: ../libgimpwidgets/gimpstock.c:170
+msgid "L_etter Spacing"
+msgstr "فا_صله‌گذاری بین حروف"
+
+#: ../libgimpwidgets/gimpstock.c:171
+msgid "L_ine Spacing"
+msgstr "فاصله‌گذاری بین _سطرها"
+
+#: ../libgimpwidgets/gimpstock.c:187
+msgid "_Resize"
+msgstr "ت_غییر اندازه"
+
+#: ../libgimpwidgets/gimpstock.c:188 ../libgimpwidgets/gimpstock.c:292
+msgid "_Scale"
+msgstr "بزر_گ‌نمایی"
+
+#: ../libgimpwidgets/gimpstock.c:271
+msgid "Crop"
+msgstr "_حاشیه‌گیری"
+
+#: ../libgimpwidgets/gimpstock.c:288
+msgid "_Transform"
+msgstr "_تبدیل"
+
+#: ../libgimpwidgets/gimpstock.c:291
+msgid "_Rotate"
+msgstr "_چرخش"
+
+#: ../libgimpwidgets/gimpstock.c:293
+msgid "_Shear"
+msgstr "_قیچی"
+
+#: ../libgimpwidgets/gimpunitmenu.c:302
+msgid "More..."
+msgstr "بیشتر..."
+
+#: ../libgimpwidgets/gimpunitmenu.c:612
+msgid "Unit Selection"
+msgstr "انتخاب واحد"
+
+#: ../libgimpwidgets/gimpunitmenu.c:655
+msgid "Unit"
+msgstr "واحد"
+
+#: ../libgimpwidgets/gimpunitmenu.c:659
+msgid "Factor"
+msgstr "عامل"
+
+#: ../libgimpwidgets/gimpwidgets.c:1001
+msgid ""
+"Use this value for random number generator seed - this allows you to repeat "
+"a given \"random\" operation"
+msgstr ""
+"از این مقدار به عنوان بذر مولد عدد تصادفی استفاده کنید. این کار این امکان را "
+"به شما می‌دهد که بتوانید یک عملیات «تصادفی» را تکرار کنید."
+
+#: ../libgimpwidgets/gimpwidgets.c:1005
+msgid "_New Seed"
+msgstr "بذر _جدید"
+
+#: ../libgimpwidgets/gimpwidgets.c:1018
+msgid "Seed random number generator with a generated random number"
+msgstr "بذرگذاری مولد عدد تصادفی، یا یک عدد تصادفی تولید شده"
+
+#: ../libgimpwidgets/gimpwidgets.c:1022
+msgid "_Randomize"
+msgstr "تصادفی کردن"
+
+#: ../modules/cdisplay_colorblind.c:57 ../modules/cdisplay_colorblind.c:545
+msgid "Protanopia (insensitivity to red)"
+msgstr "پروتانوپیا (بی‌حسی نسبت به قرمز)"
+
+#: ../modules/cdisplay_colorblind.c:59 ../modules/cdisplay_colorblind.c:547
+msgid "Deuteranopia (insensitivity to green)"
+msgstr "دوترانوپیا (بی‌حسی نسبت به سبز)"
+
+#: ../modules/cdisplay_colorblind.c:61 ../modules/cdisplay_colorblind.c:549
+msgid "Tritanopia (insensitivity to blue)"
+msgstr "تریتانوپیا (بی‌حسی نسبت به آبی)"
+
+#: ../modules/cdisplay_colorblind.c:153
+msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
+msgstr "شبیه‌سازی صافی کمبود رنگ (الگوریتم Brettel-Vienot-Mollon)"
+
+#: ../modules/cdisplay_colorblind.c:242
+msgid "Color Deficient Vision"
+msgstr "ضعف در تشخیص رنگ‌ها"
+
+#: ../modules/cdisplay_colorblind.c:540
+msgid "Color _Deficiency Type:"
+msgstr "نوع _ضعف تشخیص رنگ:"
+
+#: ../modules/cdisplay_gamma.c:105
+msgid "Gamma color display filter"
+msgstr "صافی نمایش رنگ گاما"
+
+#: ../modules/cdisplay_gamma.c:178
+msgid "Gamma"
+msgstr "گاما"
+
+#: ../modules/cdisplay_gamma.c:352
+msgid "_Gamma:"
+msgstr "_گاما:"
+
+#: ../modules/cdisplay_highcontrast.c:105
+msgid "High Contrast color display filter"
+msgstr "صافی نمایش رنگ با کنتراست بالا"
+
+#: ../modules/cdisplay_highcontrast.c:178
+msgid "Contrast"
+msgstr "کنتراست"
+
+#: ../modules/cdisplay_highcontrast.c:352
+msgid "Contrast C_ycles:"
+msgstr "_چرخه‌های کنتراست:"
+
+#: ../modules/cdisplay_proof.c:45 ../modules/cdisplay_proof.c:440
+msgid "Perceptual"
+msgstr "ادراکی"
+
+#: ../modules/cdisplay_proof.c:47 ../modules/cdisplay_proof.c:442
+msgid "Relative Colorimetric"
+msgstr "رنگ‌سنجی نسبی"
+
+#: ../modules/cdisplay_proof.c:51 ../modules/cdisplay_proof.c:446
+msgid "Absolute Colorimetric"
+msgstr "رنگ‌سنجی مطلق"
+
+#: ../modules/cdisplay_proof.c:138
+msgid "Color proof filter using ICC color profile"
+msgstr "صافی تثبیت رنگ با استفاده از مجموعه تنظیمات رنگی ICC"
+
+#: ../modules/cdisplay_proof.c:238
+msgid "Color Proof"
+msgstr "تثبیت رنگ"
+
+#: ../modules/cdisplay_proof.c:457
+msgid "_Intent:"
+msgstr "_هدف:"
+
+#: ../modules/cdisplay_proof.c:460
+msgid "Choose an ICC Color Profile"
+msgstr "یک مجموعه تنظیمات رنگی ICC انتخاب کنید"
+
+#: ../modules/cdisplay_proof.c:463
+msgid "_Profile:"
+msgstr "_مجموعه تنظیمات:"
+
+#: ../modules/cdisplay_proof.c:471
+msgid "_Black Point Compensation"
+msgstr "جبران نقطهٔ _تاریک"
+
+#: ../modules/colorsel_cmyk.c:73
+msgid "CMYK color selector"
+msgstr "انتخاب کنندهٔ رنگ CMYK"
+
+#: ../modules/colorsel_cmyk.c:130
+msgid "CMYK"
+msgstr "CMYK"
+
+#: ../modules/colorsel_cmyk.c:147
+msgid "_C"
+msgstr "C (_ف)"
+
+#: ../modules/colorsel_cmyk.c:148
+msgid "_M"
+msgstr "M (_س)"
+
+#: ../modules/colorsel_cmyk.c:149
+msgid "_Y"
+msgstr "Y (_ز)"
+
+#: ../modules/colorsel_cmyk.c:150
+msgid "_K"
+msgstr "K (_ه‍)"
+
+#: ../modules/colorsel_cmyk.c:154
+msgid "Cyan"
+msgstr "فیروزه‌ای"
+
+#: ../modules/colorsel_cmyk.c:155
+msgid "Magenta"
+msgstr "سرخابی"
+
+#: ../modules/colorsel_cmyk.c:156
+msgid "Yellow"
+msgstr "زرد"
+
+#: ../modules/colorsel_cmyk.c:157
+msgid "Black"
+msgstr "سیاه"
+
+#: ../modules/colorsel_cmyk.c:191
+msgid "Black _Pullout:"
+msgstr "_کسر سیاه:"
+
+#: ../modules/colorsel_cmyk.c:208
+msgid "The percentage of black to pull out of the colored inks."
+msgstr "درصد رنگ سیاهی که از جوهرهای رنگی کسر می‌شود."
+
+#: ../modules/colorsel_triangle.c:104
+msgid "Painter-style triangle color selector"
+msgstr "انتخاب‌گر رنگ مثلثی به سبک نقاش"
+
+#: ../modules/colorsel_triangle.c:170
+msgid "Triangle"
+msgstr "مثلثی"
+
+#: ../modules/colorsel_water.c:88
+msgid "Watercolor style color selector"
+msgstr "انتخاب‌گر رنگ به سبک آبرنگ"
+
+#: ../modules/colorsel_water.c:154
+msgid "Watercolor"
+msgstr "آبرنگ"
+
+#: ../modules/colorsel_water.c:220
+msgid "Pressure"
+msgstr "فشار"
+
+#~ msgid "Sans"
+#~ msgstr "Sans"
+
+#~ msgid "by name"
+#~ msgstr "بر مبنای نام"
+
+#~ msgid "by description"
+#~ msgstr "بر مبنای شرح"
+
+#~ msgid "by help"
+#~ msgstr "بر مبنای راهنما"
+
+#~ msgid "by author"
+#~ msgstr "بر مبنای مؤلف"
+
+#~ msgid "by copyright"
+#~ msgstr "بر مبنای کپی‌رایت"
+
+#~ msgid "by date"
+#~ msgstr "بر مبنای تاریخ"
+
+#~ msgid "by type"
+#~ msgstr "بر مبنای نوع"
+
+#~ msgid "Searching"
+#~ msgstr "در حال جستجو"
+
+#~ msgid "Searching by name"
+#~ msgstr "در حال جستجو بر مبنای نام"
+
+#~ msgid "Searching by description"
+#~ msgstr "در حال جستجو بر مبنای شرح"
+
+#~ msgid "Searching by help"
+#~ msgstr "در حال جستجو بر مبنای راهنما"
+
+#~ msgid "Searching by author"
+#~ msgstr "در حال جستجو بر مبنای مؤلف"
+
+#~ msgid "Searching by copyright"
+#~ msgstr "در حال جستجو بر مبنای کپی‌رایت"
+
+#~ msgid "Searching by date"
+#~ msgstr "در حال جستجو بر مبنای تاریخ"
+
+#~ msgid "Searching by type"
+#~ msgstr "در حال جستجو بر مبنای نوع"
+
+#~ msgid "%d procedure"
+#~ msgid_plural "%d procedures"
+#~ msgstr[0] "%Id روال"
+
+#~ msgid "No matches for your query"
+#~ msgstr "پرس و جوی شما نتیجه‌ای در بر نداشت"
+
+#~ msgid "%d procedure matches your query"
+#~ msgid_plural "%d procedures match your query"
+#~ msgstr[0] "%Id روال با پرس و جوی شما مطابقت دارد"
+
+#~ msgid "No matches"
+#~ msgstr "بدون نتیجه"
+
+#~ msgid "Parameters"
+#~ msgstr "پارامترها"
+
+#~ msgid "Return Values"
+#~ msgstr "مقادیر بازگشتی"
+
+#~ msgid "Additional Information"
+#~ msgstr "اطلاعات اضافی"
+
+#~ msgid "Author:"
+#~ msgstr "مؤلف:"
+
+#~ msgid "Date:"
+#~ msgstr "تاریخ:"
+
+#~ msgid "Copyright:"
+#~ msgstr "کپی‌رایت:"
+
+#~ msgid "_White (full opacity)"
+#~ msgstr "س_فید (کاملاً مات)"
+
+#~ msgid "_Black (full transparency)"
+#~ msgstr "_سیاه (کاملاً شفاف)"
+
+#~ msgid "Layer's _alpha channel"
+#~ msgstr "_کانال آلفای لایه"
+
+#~ msgid "_Transfer layer's alpha channel"
+#~ msgstr "انتقال کانال آلفای لایه"
+
+#~ msgid "_Selection"
+#~ msgstr "_انتخاب"
+
+#~ msgid "_Grayscale copy of layer"
+#~ msgstr "نسخهٔ _بی‌رنگ لایه"
+
+#~ msgid "C_hannel"
+#~ msgstr "_کانال"
+
+#~ msgid "FG to BG (RGB)"
+#~ msgstr "پیش‌زمینه تا پس‌زمینه (RGB)"
+
+#~ msgid "FG to BG (HSV)"
+#~ msgstr "پیش‌زمینه تا پس‌زمینه (HSV)"
+
+#~ msgid "FG to transparent"
+#~ msgstr "پیش‌زمینه به شفاف"
+
+#~ msgid "Custom gradient"
+#~ msgstr "هاشور سفارشی"
+
+#~ msgid "FG color fill"
+#~ msgstr "رنگ‌آمیزی با پیش‌زمینه"
+
+#~ msgid "BG color fill"
+#~ msgstr "رنگ‌آمیزی با پس‌زمینه"
+
+#~ msgid "Pattern fill"
+#~ msgstr "رنگ‌آمیزی با الگو"
+
+#~ msgid "Add to the current selection"
+#~ msgstr "به انتخاب فعلی اضافه شود"
+
+#~ msgid "Subtract from the current selection"
+#~ msgstr "از انتخاب فعلی کم شود"
+
+#~ msgid "Replace the current selection"
+#~ msgstr "جایگزین انتخاب فعلی شود"
+
+#~ msgid "Intersect with the current selection"
+#~ msgstr "اشتراک با انتخاب فعلی"
+
+#~ msgid "Gray"
+#~ msgstr "خاکستری"
+
+#~ msgid "Image source"
+#~ msgstr "مبدأ تصویر"
+
+#~ msgid "Pattern source"
+#~ msgstr "مبدأ الگو"
+
+#~ msgid "Lightness"
+#~ msgstr "روشنی"
+
+#~ msgid "Luminosity"
+#~ msgstr "درخشندگی"
+
+#~ msgid "Average"
+#~ msgstr "معدل"
+
+#~ msgid "Dodge"
+#~ msgstr "حرکت دادن"
+
+#~ msgid "Burn"
+#~ msgstr "سوزاندن"
+
+#~ msgid "gradient|Linear"
+#~ msgstr "خطی"
+
+#~ msgid "Bi-linear"
+#~ msgstr "دوخطی"
+
+#~ msgid "Radial"
+#~ msgstr "شعاعی"
+
+#~ msgid "Square"
+#~ msgstr "مربعی"
+
+#~ msgid "Conical (sym)"
+#~ msgstr "کانونی (متقارن)"
+
+#~ msgid "Conical (asym)"
+#~ msgstr "کانونی (نامتقارن)"
+
+#~ msgid "Shaped (angular)"
+#~ msgstr "شکل‌دار (گوشه‌دار)"
+
+#~ msgid "Shaped (spherical)"
+#~ msgstr "شکل‌دار (کُره‌ای)"
+
+#~ msgid "Shaped (dimpled)"
+#~ msgstr "شکل‌دار (گود)"
+
+#~ msgid "Spiral (cw)"
+#~ msgstr "مارپیچ (در جهت حرکت عقربه‌های ساعت)"
+
+#~ msgid "Spiral (ccw)"
+#~ msgstr "مارپیچ (خلاف جهت عقربه‌های ساعت)"
+
+#~ msgid "Intersections (dots)"
+#~ msgstr "اشتراک (نقطه‌ای)"
+
+#~ msgid "Intersections (crosshairs)"
+#~ msgstr "اشتراک (مگسک)"
+
+#~ msgid "Dashed"
+#~ msgstr "خط‌چین"
+
+#~ msgid "Double dashed"
+#~ msgstr "خط‌چین ۲ تایی"
+
+#~ msgid "Solid"
+#~ msgstr "یکدست"
+
+#~ msgid "Image file"
+#~ msgstr "پروندهٔ تصویر"
+
+#~ msgid "interpolation|None"
+#~ msgstr "هیچ‌کدام"
+
+#~ msgid "interpolation|Linear"
+#~ msgstr "خطی"
+
+#~ msgid "Cubic"
+#~ msgstr "مکعبی"
+
+#~ msgid "Constant"
+#~ msgstr "ثابت"
+
+#~ msgid "Incremental"
+#~ msgstr "افزایشی"
+
+#~ msgid "None"
+#~ msgstr "هیچ‌کدام"
+
+#~ msgid "Sawtooth wave"
+#~ msgstr "موج اره‌ای"
+
+#~ msgid "Triangular wave"
+#~ msgstr "موج مثلثی"
+
+#~ msgid "Run interactively"
+#~ msgstr "اجرا به صورت تبادلی"
+
+#~ msgid "Run non-interactively"
+#~ msgstr "اجرا به صورت غیر تبادلی"
+
+#~ msgid "Run with last used values"
+#~ msgstr "اجرا با آخرین مقادیر به کار رفته"
+
+#~ msgid "Pixels"
+#~ msgstr "نقاط"
+
+#~ msgid "Points"
+#~ msgstr "پونت"
+
+#~ msgid "Shadows"
+#~ msgstr "سایه‌ها"
+
+#~ msgid "Midtones"
+#~ msgstr "رنگسایه‌های میانی"
+
+#~ msgid "Highlights"
+#~ msgstr "نورها"
+
+#~ msgid "Forward"
+#~ msgstr "جلو"
+
+#~ msgid "Backward"
+#~ msgstr "عقب"
+
+#~ msgid "Adjust"
+#~ msgstr "تنظیم"
+
+#~ msgid "Crop to result"
+#~ msgstr "حاشیه‌گیری به نتیجه"
+
+#~ msgid "Crop with aspect"
+#~ msgstr "حاشیه‌گیری با حفظ نسبت"
+
+#~ msgid "Internal GIMP procedure"
+#~ msgstr "روال داخلی گیمپ"
+
+#~ msgid "GIMP Plug-In"
+#~ msgstr "متصل شوندهٔ گیمپ"
+
+#~ msgid "GIMP Extension"
+#~ msgstr "ضمیمهٔ گیمپ"
+
+#~ msgid "Temporary Procedure"
+#~ msgstr "روالٔ موقتی"
+
+#~ msgid "Mode of operation for color management."
+#~ msgstr "طرز کار مدیریت رنگ‌ها."
+
+#~ msgid "The color profile of your (primary) monitor."
+#~ msgstr "مجموعه تنظیمات رنگی نمایشگر (اصلی) شما."
+
+#~ msgid ""
+#~ "When enabled, GIMP will try to use the display color profile from the "
+#~ "windowing system.  The configured monitor profile is then only used as a "
+#~ "fallback."
+#~ msgstr ""
+#~ "اگر فعال شود، گیمپ سعی می‌کند که از مجموعهٔ تنظیمات رنگی نمایشگر سیستم "
+#~ "پنجره‌های سیستم‌عامل استفاده کند. از مجموعهٔ تنظیمات رنگی نمایشگر پیکربندی "
+#~ "شده، تنها به عنوان پشتیبان استفاده می‌شود. "
+
+#~ msgid "The default RGB working space color profile."
+#~ msgstr "مجموعه تنظیمات رنگی فضای کاری RGB پیش‌فرض."
+
+#~ msgid "The CMYK color profile used to convert between RGB and CMYK."
+#~ msgstr ""
+#~ "مجموعهٔ تنظیمات رنگی CMYK که برای تبدیل بین RGB و CMYK استفاده می‌شود."
+
+#~ msgid "The color profile used for simulating a printed version (softproof)."
+#~ msgstr ""
+#~ "مجموعه تنظیمات رنگی مورد استفاده برای شبیه‌سازی نسخهٔ چاپی (softproof)."
+
+#~ msgid "Sets how colors are mapped for your display."
+#~ msgstr "چگونگی نگاشت رنگ‌ها در نمایشگر شما را تنظیم می‌کند."
+
+#~ msgid ""
+#~ "Sets how colors are converted from RGB working space to the print "
+#~ "simulation device."
+#~ msgstr ""
+#~ "چگونگی تبدیل رنگ‌ها از فضای کاری RGB را به رنگ‌های مورد استفادهٔ دستگاه "
+#~ "شبیه‌سازی چاپ تنظیم می‌کند."
+
+#~ msgid "No color management"
+#~ msgstr "بدون مدیریت رنگ"
+
+#~ msgid "Color managed display"
+#~ msgstr "نمایش با رنگ مدیریت شده"
+
+#~ msgid "Print simulation"
+#~ msgstr "شبیه‌سازی چاپ"
+
+#~ msgid "intent|Saturation"
+#~ msgstr "غلظت"
+
+#~ msgid "value for token %s is not a valid UTF-8 string"
+#~ msgstr "مقدار %s یک رشتهٔ معتبر UTF-8 نیست."
+
+#~ msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
+#~ msgstr "برای مقدار بولی %s «yes» یا «no» مورد نیاز است، ولی «%s» دریافت شد"
+
+#~ msgid "invalid value '%s' for token %s"
+#~ msgstr "مقدار نامعتبر «%s» برای %s"
+
+#~ msgid "invalid value '%ld' for token %s"
+#~ msgstr "مقدار نامعتبر «%Ild» برای %s"
+
+#~ msgid "while parsing token '%s': %s"
+#~ msgstr "در هنگام تجزیهٔ «%s»: %s"
+
+#~ msgid "fatal parse error"
+#~ msgstr "خطای تجزیهٔ مهلک"
+
+#~ msgid "Cannot expand ${%s}"
+#~ msgstr "نمی‌توان ${%s} را باز کرد"
+
+#~ msgid "Could not create temporary file for '%s': %s"
+#~ msgstr "نمی‌توان برای «%s» پروندهٔ موقتی ایجاد کرد: %s"
+
+#~ msgid "Could not open '%s' for writing: %s"
+#~ msgstr "نمی‌توان «%s» را برای نوشتن باز کرد: %s"
+
+#~ msgid ""
+#~ "Error writing to temporary file for '%s': %s\n"
+#~ "The original file has not been touched."
+#~ msgstr ""
+#~ "خطا هنگام نوشتن در پروندهٔ موقتی برای «%s»: %s\n"
+#~ "پروندهٔ اصلی دست‌کاری نشده است."
+
+#~ msgid ""
+#~ "Error writing to temporary file for '%s': %s\n"
+#~ "No file has been created."
+#~ msgstr ""
+#~ "خطا هنگام نوشتن در پروندهٔ موقتی برای «%s»: %s\n"
+#~ "پرونده‌ای ایجاد نشد."
+
+#~ msgid "Error writing to '%s': %s"
+#~ msgstr "خطا هنگام نوشتن در «%s»: %s"
+
+#~ msgid "Could not create '%s': %s"
+#~ msgstr "نمی‌توان «%s» را ایجاد کرد: %s"
+
+#~ msgid "invalid UTF-8 string"
+#~ msgstr "رشتهٔ یوتی‌اف-۸ نامعتبر"
+
+#~ msgid "Error while parsing '%s' in line %d: %s"
+#~ msgstr "خطا هنگام تجزیهٔ «%s» در سطر %Id: %s"
+
+#~ msgid "_Search:"
+#~ msgstr "_جستجو:"
+
+#~ msgid "Open a file selector to browse your folders"
+#~ msgstr "برای مرور پوشه‌ها یک انتخاب کنندهٔ پرونده باز کنید"
+
+#~ msgid "Open a file selector to browse your files"
+#~ msgstr "برای مرور پرونده‌هایتان یک انتخاب کنندهٔ پرونده باز کنید"
+
+#~ msgid "Nothing selected"
+#~ msgstr "چیزی انتخاب نشده"
+
+#~ msgid "Select _All"
+#~ msgstr "انتخاب _همه"
+
+#~ msgid "Select _range:"
+#~ msgstr "انتخاب م_حدوده:"
+
+#~ msgid "Open _pages as"
+#~ msgstr "باز کردن _صفحات به صورت"
+
+#~ msgid "Page 000"
+#~ msgstr "صفحهٔ ۰۰۰"
+
+#~ msgid "Page %d"
+#~ msgstr "صفحهٔ %Id"
+
+#~ msgid "One page selected"
+#~ msgstr "یک صفحه انتخاب شد"
+
+#~ msgid "%d page selected"
+#~ msgid_plural "All %d pages selected"
+#~ msgstr[0] "هر %Id صفحه انتخاب شد"
+
+#~ msgid "This text input field is limited to %d character."
+#~ msgid_plural "This text input field is limited to %d characters."
+#~ msgstr[0] "این فیلد ورودی متنی به %Id نویسه محدود شده است."
+
+#~ msgid "pixels/%s"
+#~ msgstr "نقطه/%s"
+
+#~ msgid "Portrait"
+#~ msgstr "پرتره‌ای"
+
+#~ msgid "Landscape"
+#~ msgstr "منظره‌ای"
+
+#~ msgid "Layers"
+#~ msgstr "لایه‌ها"
+
+#~ msgid "Images"
+#~ msgstr "تصاویر"
+
+#~ msgid "Zoom in"
+#~ msgstr "زوم به داخل"
+
+#~ msgid "Zoom out"
+#~ msgstr "زوم به خارج"
+
+#~ msgid "Color management display filter using ICC color profiles"
+#~ msgstr "صافی نمایش مدیریت رنگ، با استفاده از مجموعه تنظیمات رنگی ICC"
+
+#~ msgid "Color Management"
+#~ msgstr "مدیریت رنگ‌ها"
+
+#~ msgid ""
+#~ "This filter takes its configuration from the Color Management section in "
+#~ "the Preferences dialog."
+#~ msgstr ""
+#~ "این صافی تنظیمات خود را از بخش مدیریت رنگ‌ها در محاورهٔ ترجیحات می‌گیرد."
+
+#~ msgid "Mode of operation:"
+#~ msgstr "حالت عملیات:"
+
+#~ msgid "RGB working space profile:"
+#~ msgstr "مجموعه تنظیمات فضای کاری RGB:"
+
+#~ msgid "Monitor profile:"
+#~ msgstr "مجموعه تنظیمات نمایشگر:"
+
+#~ msgid "Print simulation profile:"
+#~ msgstr "مجموعه تنظیمات شبیه‌سازی چاپ:"
+
+#~ msgid "Button 0"
+#~ msgstr "دکمهٔ ۰"
+
+#~ msgid "Button 1"
+#~ msgstr "دکمهٔ ۱"
+
+#~ msgid "Button 2"
+#~ msgstr "دکمهٔ ۲"
+
+#~ msgid "Button 3"
+#~ msgstr "دکمهٔ ۳"
+
+#~ msgid "Button 4"
+#~ msgstr "دکمهٔ ۴"
+
+#~ msgid "Button 5"
+#~ msgstr "دکمهٔ ۵"
+
+#~ msgid "Button 6"
+#~ msgstr "دکمهٔ ۶"
+
+#~ msgid "Button 7"
+#~ msgstr "دکمهٔ ۷"
+
+#~ msgid "Button 8"
+#~ msgstr "دکمهٔ ۸"
+
+#~ msgid "Button 9"
+#~ msgstr "دکمهٔ ۹"
+
+#~ msgid "Button Mouse"
+#~ msgstr "دکمهٔ موشی"
+
+#~ msgid "Button Left"
+#~ msgstr "دکمهٔ چپ"
+
+#~ msgid "Button Right"
+#~ msgstr "دکمهٔ راست"
+
+#~ msgid "Button Middle"
+#~ msgstr "دکمهٔ وسط"
+
+#~ msgid "Button Side"
+#~ msgstr "دکمهٔ کناری"
+
+#~ msgid "Button Extra"
+#~ msgstr "دکمهٔ اضافی"
+
+#~ msgid "Button Forward"
+#~ msgstr "دکمهٔ جلو"
+
+#~ msgid "Button Back"
+#~ msgstr "دکمهٔ عقب"
+
+#~ msgid "Button Task"
+#~ msgstr "تکلیف دکمه"
+
+#~ msgid "Button Wheel"
+#~ msgstr "دکمهٔ چرخی"
+
+#~ msgid "Button Gear Down"
+#~ msgstr "دکمهٔ دندهٔ سنگین‌تر"
+
+#~ msgid "Button Gear Up"
+#~ msgstr "دکمهٔ دندهٔ سبک‌تر"
+
+#~ msgid "X Move Left"
+#~ msgstr "حرکت به چپ X"
+
+#~ msgid "X Move Right"
+#~ msgstr "حرکت به راست X"
+
+#~ msgid "Y Move Away"
+#~ msgstr "دور شدن Y"
+
+#~ msgid "Y Move Near"
+#~ msgstr "نزدیک شدن Y"
+
+#~ msgid "Z Move Up"
+#~ msgstr "بالا رفتن Z"
+
+#~ msgid "Z Move Down"
+#~ msgstr "پایین رفتن Z"
+
+#~ msgid "X Axis Tilt Away"
+#~ msgstr "انحراف دوری محور X"
+
+#~ msgid "X Axis Tilt Near"
+#~ msgstr "انحراف نزدیکی محور X"
+
+#~ msgid "Y Axis Tilt Right"
+#~ msgstr "انحراف به راست محور Y"
+
+#~ msgid "Y Axis Tilt Left"
+#~ msgstr "انحراف به چپ محور Y"
+
+#~ msgid "Z Axis Turn Left"
+#~ msgstr "چرخش سمت چپ محور Z"
+
+#~ msgid "Z Axis Turn Right"
+#~ msgstr "چرخش سمت راست محور Z"
+
+#~ msgid "Horiz. Wheel Turn Back"
+#~ msgstr "گردش به عقب دکمهٔ چرخی افقی"
+
+#~ msgid "Horiz. Wheel Turn Forward"
+#~ msgstr "گردش به جلو دکمهٔ چرخی افقی"
+
+#~ msgid "Wheel Turn Left"
+#~ msgstr "چرخش به چپ دکمهٔ چرخی"
+
+#~ msgid "Wheel Turn Right"
+#~ msgstr "چرخش به راست دکمهٔ چرخی"
+
+#~ msgid "Linux input event controller"
+#~ msgstr "کنترل‌گر رویداد ورودی لینوکس"
+
+#~ msgid "Device:"
+#~ msgstr "دستگاه:"
+
+#~ msgid "The name of the device to read Linux Input events from."
+#~ msgstr "نام دستگاهی که رویدادهای ورودی لینوکس از آن خوانده می‌شود."
+
+#~ msgid "Linux Input"
+#~ msgstr "ورودی لینوکس"
+
+#~ msgid "Linux Input Events"
+#~ msgstr "رویدادهای ورودی لینوکس"
+
+#~ msgid "No device configured"
+#~ msgstr "دستگاهی پیکربندی نشده است"
+
+#~ msgid "Reading from %s"
+#~ msgstr "در حال خواندن از %s"
+
+#~ msgid "Device not available: %s"
+#~ msgstr "دستگاه موجود نیست: %s"
+
+#~ msgid "Device not available"
+#~ msgstr "دستگاه موجود نیست"
+
+#~ msgid "End of file"
+#~ msgstr "پایان پرونده"
+
+#~ msgid "MIDI event controller"
+#~ msgstr "کنترل‌گر رویداد MIDI"
+
+#~ msgid "The name of the device to read MIDI events from."
+#~ msgstr "نام دستگاهی که رویدادهای MIDI از آن خوانده می‌شود."
+
+#~ msgid "Enter 'alsa' to use the ALSA sequencer."
+#~ msgstr "برای استفاده از ترتیب‌سنج ALSA، وارد کنید «alsa»."
+
+#~ msgid "Channel:"
+#~ msgstr "کانال:"
+
+#~ msgid ""
+#~ "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
+#~ "channels."
+#~ msgstr ""
+#~ "کانال MIDI برای خواندن رویدادها. برای خواندن از تمام کانال‌های MIDI وارد "
+#~ "کنید -۱"
+
+#~ msgid "Controller %03d"
+#~ msgstr "کنترل‌گر %I03d"
+
+#~ msgid "MIDI Events"
+#~ msgstr "رویدادهای MIDI"
+
+#~ msgid "GIMP"
+#~ msgstr "گیمپ"
+
+#~ msgid "GIMP MIDI Input Controller"
+#~ msgstr "کنترلر ورودی MIDI گیمپ"
