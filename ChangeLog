@@ -1,3 +1,11 @@
+2007-04-26  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/gfig/gfig-dobject.c: properly parse files with CRLF
+	line-endings which were created in the past in Windows.
+
+	* plug-ins/gfig/gfig.c: open files in binary mode so that the same
+	line-endings are used on all platforms.
+
 2007-04-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpbrush.c (gimp_brush_scale_size): removed bogus
