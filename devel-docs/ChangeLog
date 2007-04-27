@@ -1,3 +1,7 @@
+2007-04-27  Sven Neumann  <sven@gimp.org>
+
+	* app/Makefile.am (GTKDOC_LIBS): convince the linker to do its job.
+
 2007-04-16  Sven Neumann  <sven@gimp.org>
 
 	* app/app-sections.txt
