@@ -101,8 +101,7 @@ static gint   save_image (const gchar      *filename,
                           gint32            image_ID,
                           gint32            drawable_ID);
 
-static void set_color_table (gint32, L_SUNFILEHEADER *, unsigned char *);
-
+static void   set_color_table  (gint32, L_SUNFILEHEADER *, const guchar *);
 static gint32 create_new_image (const gchar   *filename,
                                 guint          width,
                                 guint          height,
@@ -857,19 +856,20 @@ write_sun_cols (FILE            *ofp,
 static void
 set_color_table (gint32           image_ID,
 		 L_SUNFILEHEADER *sunhdr,
-		 guchar          *suncolmap)
+		 const guchar    *suncolmap)
 {
-  int ncols, j;
-  guchar ColorMap[256*3];
+  guchar ColorMap[256 * 3];
+  gint   ncols, j;
 
   ncols = sunhdr->l_ras_maplength / 3;
-  if (ncols <= 0) return;
+  if (ncols <= 0)
+    return;
 
-  for (j = 0; j < ncols; j++)
+  for (j = 0; j < MIN (ncols, 256); j++)
     {
-      ColorMap[j*3]   = suncolmap[j];
-      ColorMap[j*3+1] = suncolmap[j+ncols];
-      ColorMap[j*3+2] = suncolmap[j+2*ncols];
+      ColorMap[j * 3 + 0] = suncolmap[j];
+      ColorMap[j * 3 + 1] = suncolmap[j + ncols];
+      ColorMap[j * 3 + 2] = suncolmap[j + 2 * ncols];
     }
 
 #ifdef DEBUG
@@ -878,6 +878,7 @@ set_color_table (gint32           image_ID,
     printf ("%3d: 0x%02x 0x%02x 0x%02x\n", j,
 	    ColorMap[j*3], ColorMap[j*3+1], ColorMap[j*3+2]);
 #endif
+
   gimp_image_set_colormap (image_ID, ColorMap, ncols);
 }
 
