@@ -84,13 +84,10 @@
 
 
       (let ((floating-sel (car (gimp-edit-paste drawable1 FALSE))))
-        (gimp-floating-sel-anchor floating-sel)
-      )
+        (gimp-floating-sel-anchor floating-sel))
 
-      (let ((drawble (car (gimp-drawable-transform-flip-sample drawable1
-                             ORIENTATION-VERTICAL
-                             TRUE 0 TRUE))))
-      )
+      (let ((drawble (car (gimp-drawable-transform-flip-simple drawable1
+                             ORIENTATION-VERTICAL TRUE 0 TRUE)))))
 
 
       ;(gimp-display-new temp-img)
