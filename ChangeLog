@@ -1,5 +1,11 @@
 2007-04-27  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: use PANGO_DISABLE_DEPRECATED for pango < 1.17.
+
+	* plug-ins/common/sample_colorize.c: removed unused variable.
+
+2007-04-27  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: depend on poppler-glib >= 0.4.1.
 
 	* plug-ins/common/poppler.c: removed ifdefs to handle older

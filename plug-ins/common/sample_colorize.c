@@ -1071,8 +1071,7 @@ level_in_events (GtkWidget *widget,
 {
   GdkEventButton *bevent;
   GdkEventMotion *mevent;
-  gchar           text[20];
-  double          width, mid, tmp;
+  gdouble         width, mid, tmp;
   gint            x, distance;
   gint            i;
   gint            update = FALSE;
