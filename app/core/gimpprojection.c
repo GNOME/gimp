@@ -51,6 +51,10 @@ static gint64     gimp_projection_get_memsize           (GimpObject     *object,
                                                          gint64         *gui_size);
 
 static void       gimp_projection_pickable_flush        (GimpPickable   *pickable);
+static gboolean   gimp_projection_get_pixel_at          (GimpPickable   *pickable,
+                                                         gint            x,
+                                                         gint            y,
+                                                         guchar         *pixel);
 static guchar   * gimp_projection_get_color_at          (GimpPickable   *pickable,
                                                          gint            x,
                                                          gint            y);
@@ -158,6 +162,7 @@ gimp_projection_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_image_type = (GimpImageType   (*) (GimpPickable *pickable)) gimp_projection_get_image_type;
   iface->get_bytes      = (gint            (*) (GimpPickable *pickable)) gimp_projection_get_bytes;
   iface->get_tiles      = (TileManager   * (*) (GimpPickable *pickable)) gimp_projection_get_tiles;
+  iface->get_pixel_at   = gimp_projection_get_pixel_at;
   iface->get_color_at   = gimp_projection_get_color_at;
   iface->get_opacity_at = gimp_projection_get_opacity_at;
 }
@@ -211,28 +216,39 @@ gimp_projection_pickable_flush (GimpPickable *pickable)
   gimp_projection_flush_now (proj);
 }
 
+static gboolean
+gimp_projection_get_pixel_at (GimpPickable *pickable,
+                              gint          x,
+                              gint          y,
+                              guchar       *pixel)
+{
+  GimpProjection *proj = GIMP_PROJECTION (pickable);
+
+  if (x < 0 || y < 0 || x >= proj->image->width || y >= proj->image->height)
+    return FALSE;
+
+  read_pixel_data_1 (gimp_projection_get_tiles (proj), x, y, pixel);
+
+  return TRUE;
+}
+
 static guchar *
 gimp_projection_get_color_at (GimpPickable *pickable,
                               gint          x,
                               gint          y)
 {
   GimpProjection *proj = GIMP_PROJECTION (pickable);
-  Tile           *tile;
-  guchar         *src;
   guchar         *dest;
+  guchar          pixel[4];
 
-  if (x < 0 || y < 0 || x >= proj->image->width || y >= proj->image->height)
+  if (! gimp_projection_get_pixel_at (pickable, x, y, pixel))
     return NULL;
 
   dest = g_new (guchar, 5);
-  tile = tile_manager_get_tile (gimp_projection_get_tiles (proj),
-                                x, y, TRUE, FALSE);
-  src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-  gimp_image_get_color (proj->image, gimp_projection_get_image_type (proj),
-                        src, dest);
 
+  gimp_image_get_color (proj->image, gimp_projection_get_image_type (proj),
+                        pixel, dest);
   dest[4] = 0;
-  tile_release (tile, FALSE);
 
   return dest;
 }

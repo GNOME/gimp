@@ -1,5 +1,20 @@
 2007-04-27  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimppickable.[ch]: added get_pixel_at() method to the
+	GimpPickable interface. This gives direct access to the pixel
+	without converting it to an RGB color.
+
+	* app/core/gimpdrawable.c
+	* app/core/gimpimagemap.c
+	* app/core/gimpprojection.c: implement the new method and also use
+	it to reimplement get_color_at().
+
+	* app/core/gimpimage-crop.c (gimp_image_crop_guess_bgcolor): use
+	gimp_pickable_get_pixel_at(). Fixes auto-shrink on indexed and
+	grayscale images.
+
+2007-04-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/sunras.c (set_color_table): guard against a
 	possible stack overflow.
 

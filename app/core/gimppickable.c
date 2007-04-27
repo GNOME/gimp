@@ -129,6 +129,25 @@ gimp_pickable_get_tiles (GimpPickable *pickable)
   return NULL;
 }
 
+gboolean
+gimp_pickable_get_pixel_at (GimpPickable *pickable,
+                            gint          x,
+                            gint          y,
+                            guchar       *pixel)
+{
+  GimpPickableInterface *pickable_iface;
+
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), FALSE);
+  g_return_val_if_fail (pixel != NULL, FALSE);
+
+  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+
+  if (pickable_iface->get_pixel_at)
+    return pickable_iface->get_pixel_at (pickable, x, y, pixel);
+
+  return FALSE;
+}
+
 guchar *
 gimp_pickable_get_color_at (GimpPickable *pickable,
                             gint          x,

@@ -115,6 +115,10 @@ static void       gimp_drawable_transform          (GimpItem          *item,
                                                     GimpTransformResize     clip_result,
                                                     GimpProgress      *progress);
 
+static gboolean   gimp_drawable_get_pixel_at       (GimpPickable      *pickable,
+                                                    gint               x,
+                                                    gint               y,
+                                                    guchar            *pixel);
 static guchar   * gimp_drawable_get_color_at       (GimpPickable      *pickable,
                                                     gint               x,
                                                     gint               y);
@@ -236,6 +240,7 @@ gimp_drawable_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_image_type = (GimpImageType   (*) (GimpPickable *pickable)) gimp_drawable_type;
   iface->get_bytes      = (gint            (*) (GimpPickable *pickable)) gimp_drawable_bytes;
   iface->get_tiles      = (TileManager   * (*) (GimpPickable *pickable)) gimp_drawable_get_tiles;
+  iface->get_pixel_at   = gimp_drawable_get_pixel_at;
   iface->get_color_at   = gimp_drawable_get_color_at;
 }
 
@@ -588,36 +593,46 @@ gimp_drawable_transform (GimpItem               *item,
     }
 }
 
+static gboolean
+gimp_drawable_get_pixel_at (GimpPickable *pickable,
+                            gint          x,
+                            gint          y,
+                            guchar       *pixel)
+{
+  GimpDrawable *drawable = GIMP_DRAWABLE (pickable);
+
+  /* do not make this a g_return_if_fail() */
+  if (x < 0 || x >= GIMP_ITEM (drawable)->width ||
+      y < 0 || y >= GIMP_ITEM (drawable)->height)
+    return FALSE;
+
+  read_pixel_data_1 (gimp_drawable_get_tiles (drawable), x, y, pixel);
+
+  return TRUE;
+}
+
 static guchar *
 gimp_drawable_get_color_at (GimpPickable *pickable,
                             gint          x,
                             gint          y)
 {
   GimpDrawable *drawable = GIMP_DRAWABLE (pickable);
-  GimpImage    *image    = gimp_item_get_image (GIMP_ITEM (drawable));
-  Tile         *tile;
-  guchar       *src;
   guchar       *dest;
+  guchar        pixel[4];
 
-  /* do not make this a g_return_if_fail() */
-  if (x < 0 || x >= GIMP_ITEM (drawable)->width ||
-      y < 0 || y >= GIMP_ITEM (drawable)->height)
+  if (! gimp_drawable_get_pixel_at (pickable, x, y, pixel))
     return NULL;
 
   dest = g_new (guchar, 5);
 
-  tile = tile_manager_get_tile (gimp_drawable_get_tiles (drawable), x, y,
-                                TRUE, FALSE);
-  src = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-
-  gimp_image_get_color (image, gimp_drawable_type (drawable), src, dest);
+  gimp_image_get_color (gimp_item_get_image (GIMP_ITEM (drawable)),
+                        gimp_drawable_type (drawable),
+                        pixel, dest);
 
   if (gimp_drawable_is_indexed (drawable))
-    dest[4] = src[0];
+    dest[4] = pixel[0];
   else
     dest[4] = 0;
-
-  tile_release (tile, FALSE);
 
   return dest;
 }

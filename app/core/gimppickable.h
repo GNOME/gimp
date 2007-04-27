@@ -41,6 +41,10 @@ struct _GimpPickableInterface
   GimpImageType   (* get_image_type) (GimpPickable *pickable);
   gint            (* get_bytes)      (GimpPickable *pickable);
   TileManager   * (* get_tiles)      (GimpPickable *pickable);
+  gboolean        (* get_pixel_at)   (GimpPickable *pickable,
+                                      gint          x,
+                                      gint          y,
+                                      guchar       *pixel);
   guchar        * (* get_color_at)   (GimpPickable *pickable,
                                       gint          x,
                                       gint          y);
@@ -57,6 +61,10 @@ GimpImage     * gimp_pickable_get_image          (GimpPickable *pickable);
 GimpImageType   gimp_pickable_get_image_type     (GimpPickable *pickable);
 gint            gimp_pickable_get_bytes          (GimpPickable *pickable);
 TileManager   * gimp_pickable_get_tiles          (GimpPickable *pickable);
+gboolean        gimp_pickable_get_pixel_at       (GimpPickable *pickable,
+                                                  gint          x,
+                                                  gint          y,
+                                                  guchar       *pixel);
 guchar        * gimp_pickable_get_color_at       (GimpPickable *pickable,
                                                   gint          x,
                                                   gint          y);

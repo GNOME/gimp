@@ -429,12 +429,11 @@ gimp_image_crop_guess_bgcolor (GimpPickable *pickable,
                                gint          y1,
                                gint          y2)
 {
-  AutoCropType  retval = AUTO_CROP_NOTHING;
-  guchar       *tl     = NULL;
-  guchar       *tr     = NULL;
-  guchar       *bl     = NULL;
-  guchar       *br     = NULL;
-  gint          i;
+  guchar  tl[4];
+  guchar  tr[4];
+  guchar  bl[4];
+  guchar  br[4];
+  gint    i;
 
   for (i = 0; i < bytes; i++)
     color[i] = 0;
@@ -443,11 +442,13 @@ gimp_image_crop_guess_bgcolor (GimpPickable *pickable,
    * background-color to see if at least 2 corners are equal.
    */
 
-  if (! (tl = gimp_pickable_get_color_at (pickable, x1, y1)) ||
-      ! (tr = gimp_pickable_get_color_at (pickable, x1, y2)) ||
-      ! (bl = gimp_pickable_get_color_at (pickable, x2, y1)) ||
-      ! (br = gimp_pickable_get_color_at (pickable, x2, y2)))
-    goto done;
+  if (! gimp_pickable_get_pixel_at (pickable, x1, y1, tl) ||
+      ! gimp_pickable_get_pixel_at (pickable, x1, y2, tr) ||
+      ! gimp_pickable_get_pixel_at (pickable, x2, y1, bl) ||
+      ! gimp_pickable_get_pixel_at (pickable, x2, y2, br))
+    {
+      return AUTO_CROP_NOTHING;
+    }
 
   if (has_alpha)
     {
@@ -458,8 +459,7 @@ gimp_image_crop_guess_bgcolor (GimpPickable *pickable,
           (tr[alpha] == 0 && br[alpha] == 0) ||
           (bl[alpha] == 0 && br[alpha] == 0))
         {
-          retval = AUTO_CROP_ALPHA;
-          goto done;
+          return AUTO_CROP_ALPHA;
         }
     }
 
@@ -467,22 +467,17 @@ gimp_image_crop_guess_bgcolor (GimpPickable *pickable,
       gimp_image_crop_colors_equal (tl, bl, bytes))
     {
       memcpy (color, tl, bytes);
-      retval = AUTO_CROP_COLOR;
+      return AUTO_CROP_COLOR;
     }
-  else if (gimp_image_crop_colors_equal (br, bl, bytes) ||
+
+  if (gimp_image_crop_colors_equal (br, bl, bytes) ||
            gimp_image_crop_colors_equal (br, tr, bytes))
     {
       memcpy (color, br, bytes);
-      retval = AUTO_CROP_COLOR;
+      return AUTO_CROP_COLOR;
     }
 
-done:
-  g_free (tl);
-  g_free (tr);
-  g_free (bl);
-  g_free (br);
-
-  return retval;
+  return AUTO_CROP_NOTHING;
 }
 
 static int
