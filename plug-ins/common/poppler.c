@@ -43,14 +43,12 @@ typedef struct
 {
   GimpPageSelectorTarget target;
   gdouble                resolution;
-  gboolean               antialias;
 } PdfLoadVals;
 
 static PdfLoadVals loadvals =
 {
   GIMP_PAGE_SELECTOR_TARGET_LAYERS,
-  100.00, /* 100 dpi   */
-  TRUE    /* antialias */
+  100.00  /* 100 dpi   */
 };
 
 typedef struct
@@ -72,7 +70,6 @@ static gint32            load_image        (PopplerDocument        *doc,
                                             GimpRunMode             run_mode,
                                             GimpPageSelectorTarget  target,
                                             guint32                 resolution,
-                                            gboolean                antialias,
                                             PdfSelectedPages       *pages);
 
 static gboolean          load_dialog       (PopplerDocument        *doc,
@@ -111,20 +108,19 @@ query (void)
     { GIMP_PDB_STRING,    "filename",     "The name of the file to load"     },
     { GIMP_PDB_STRING,    "raw-filename", "The name entered"                 },
     { GIMP_PDB_INT32,     "resolution",   "Resolution to rasterize to (dpi)" },
-    { GIMP_PDB_INT32,     "antialias",    "Whether to antialias"             },
     { GIMP_PDB_INT32,     "n-pages",      "Number of pages to load (0 for all)" },
-    { GIMP_PDB_INT32ARRAY,"page",         "The pages to load"                }
+    { GIMP_PDB_INT32ARRAY,"pages",        "The pages to load"                }
   };
 
   static const GimpParamDef load_return_vals[] =
   {
-    { GIMP_PDB_IMAGE,    "image",         "Output image" }
+    { GIMP_PDB_IMAGE,     "image",        "Output image" }
   };
 
   static const GimpParamDef thumb_args[] =
   {
-    { GIMP_PDB_STRING, "filename",     "The name of the file to load"  },
-    { GIMP_PDB_INT32,  "thumb-size",   "Preferred thumbnail size"      }
+    { GIMP_PDB_STRING,    "filename",     "The name of the file to load"  },
+    { GIMP_PDB_INT32,     "thumb-size",   "Preferred thumbnail size"      }
   };
 
   static const GimpParamDef thumb_return_vals[] =
@@ -227,8 +223,7 @@ run (const gchar      *name,
 
 	case GIMP_RUN_WITH_LAST_VALS:
         case GIMP_RUN_NONINTERACTIVE:
-          /* bah! hardly any file plugins work non-interactively.
-           * why should we? */
+          /* FIXME: implement non-interactive mode */
           status = GIMP_PDB_EXECUTION_ERROR;
           break;
         }
@@ -239,7 +234,6 @@ run (const gchar      *name,
                                  run_mode,
                                  loadvals.target,
                                  loadvals.resolution,
-                                 loadvals.antialias,
                                  pages);
 
           if (image_ID != -1)
@@ -268,11 +262,11 @@ run (const gchar      *name,
         }
       else
         {
-          gdouble      width    = 0;
-          gdouble      height   = 0;
+          gdouble      width  = 0;
+          gdouble      height = 0;
           gdouble      scale;
-          gint32       image    = -1;
-          GdkPixbuf   *buf      = NULL;
+          gint32       image  = -1;
+          GdkPixbuf   *pixbuf = NULL;
 
           /* Possibly retrieve last settings */
           gimp_get_data (LOAD_PROC, &loadvals);
@@ -282,6 +276,7 @@ run (const gchar      *name,
           if (doc)
             {
               PopplerPage *page = poppler_document_get_page (doc, 0);
+
               if (page)
                 {
                   poppler_page_get_size (page, &width, &height);
@@ -289,38 +284,35 @@ run (const gchar      *name,
                   g_object_unref (page);
                 }
 
-              buf = get_thumbnail (doc, 0, param[1].data.d_int32);
+              pixbuf = get_thumbnail (doc, 0, param[1].data.d_int32);
+              g_object_unref (doc);
             }
 
-          if (buf)
+          if (pixbuf)
             {
-              image = gimp_image_new (gdk_pixbuf_get_width  (buf),
-                                      gdk_pixbuf_get_height (buf),
+              image = gimp_image_new (gdk_pixbuf_get_width  (pixbuf),
+                                      gdk_pixbuf_get_height (pixbuf),
                                       GIMP_RGB);
 
               gimp_image_undo_disable (image);
-              layer_from_pixbuf (image, "thumbnail", 0, buf, 0.0, 1.0);
+
+              layer_from_pixbuf (image, "thumbnail", 0, pixbuf, 0.0, 1.0);
+              g_object_unref (pixbuf);
+
               gimp_image_undo_enable (image);
               gimp_image_clean_all (image);
             }
 
-
-          scale = loadvals.resolution /
-                  gimp_unit_get_factor (GIMP_UNIT_POINT);
+          scale = loadvals.resolution / gimp_unit_get_factor (GIMP_UNIT_POINT);
 
           width  *= scale;
           height *= scale;
 
-          if (doc)
-            g_object_unref (doc);
-
-          if (buf)
-            g_object_unref (buf);
-
           if (image != -1)
             {
 	      *nreturn_vals = 4;
-	      values[1].type         = GIMP_PDB_IMAGE;
+
+              values[1].type         = GIMP_PDB_IMAGE;
 	      values[1].data.d_image = image;
 	      values[2].type         = GIMP_PDB_INT32;
 	      values[2].data.d_int32 = width;
@@ -332,6 +324,7 @@ run (const gchar      *name,
               status = GIMP_PDB_EXECUTION_ERROR;
             }
         }
+
     }
   else
     {
@@ -399,7 +392,6 @@ load_image (PopplerDocument        *doc,
             GimpRunMode             run_mode,
             GimpPageSelectorTarget  target,
             guint32                 resolution,
-            gboolean                antialias,
             PdfSelectedPages       *pages)
 {
   gint32   image_ID = 0;
@@ -417,10 +409,6 @@ load_image (PopplerDocument        *doc,
   scale = resolution / gimp_unit_get_factor (GIMP_UNIT_POINT);
 
   /* read the file */
-
-#if 0
-  poppler_set_antialias (antialias);
-#endif
 
   for (i = 0; i < pages->n_pages; i++)
     {
@@ -461,17 +449,7 @@ load_image (PopplerDocument        *doc,
 
       buf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8, width, height);
 
-      poppler_page_render_to_pixbuf (page, 0, 0,
-                                     width, height,
-                                     scale,
-#ifdef HAVE_POPPLER_0_4_1
-                                     0,
-#endif
-                                     buf
-#ifndef HAVE_POPPLER_0_4
-                                     , 0, 0
-#endif
-                                     );
+      poppler_page_render_to_pixbuf (page, 0, 0, width, height, scale, 0, buf);
 
       layer_from_pixbuf (image_ID, page_label, i, buf,
                          doc_progress, 1.0 / pages->n_pages);
@@ -535,11 +513,13 @@ get_thumbnail (PopplerDocument *doc,
 
   if (! pixbuf)
     {
-      double width, height, scale;
+      gdouble width;
+      gdouble height;
+      gdouble scale;
 
       poppler_page_get_size (page, &width, &height);
 
-      scale = (double) preferred_size / MAX (width, height);
+      scale = (gdouble) preferred_size / MAX (width, height);
 
       width  *= scale;
       height *= scale;
@@ -547,17 +527,8 @@ get_thumbnail (PopplerDocument *doc,
       pixbuf = gdk_pixbuf_new (GDK_COLORSPACE_RGB, FALSE, 8,
                                width, height);
 
-      poppler_page_render_to_pixbuf (page, 0, 0,
-                                     width, height,
-                                     scale,
-#ifdef HAVE_POPPLER_0_4_1
-                                     0,
-#endif
-                                     pixbuf
-#ifndef HAVE_POPPLER_0_4
-                                     ,0, 0
-#endif
-                                     );
+      poppler_page_render_to_pixbuf (page,
+                                     0, 0, width, height, scale, 0, pixbuf);
     }
 
   g_object_unref (page);
@@ -631,7 +602,6 @@ load_dialog (PopplerDocument  *doc,
   GtkWidget  *title;
   GtkWidget  *selector;
   GtkWidget  *resolution;
-  GtkWidget  *toggle;
   GtkWidget  *hbox;
 
   ThreadData  thread_data;
@@ -731,15 +701,6 @@ load_dialog (PopplerDocument  *doc,
   g_signal_connect (resolution, "x-changed",
                     G_CALLBACK (gimp_resolution_entry_update_x_in_dpi),
                     &loadvals.resolution);
-
-  /* Antialiasing */
-  toggle = gtk_check_button_new_with_mnemonic (_("A_ntialiasing"));
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), loadvals.antialias);
-  gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
-  gtk_widget_show (toggle);
-  g_signal_connect (toggle, "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &loadvals.antialias);
 
   /* Setup done; display the dialog */
   gtk_widget_show (dialog);

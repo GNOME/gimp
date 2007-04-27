@@ -51,7 +51,7 @@ m4_define([alsa_required_version], [1.0.0])
 m4_define([rsvg_required_version], [2.8.0])
 m4_define([wmf_required_version], [0.2.8])
 m4_define([pygtk_required_version], [2.10.4])
-m4_define([poppler_required_version], [0.3.1])
+m4_define([poppler_required_version], [0.4.1])
 m4_define([gnome_vfs_required_version], [2.10.0])
 m4_define([gnomeui_required_version], [2.10.0])
 m4_define([gnome_keyring_required_version], [0.4.5])
@@ -1247,18 +1247,6 @@ fi
 
 AC_SUBST(POPPLER)
 AC_SUBST(LIBPOPPLER)
-
-if test "x$have_poppler" = xyes; then
-  if $PKG_CONFIG --atleast-version=0.4 poppler-glib; then
-    AC_DEFINE(HAVE_POPPLER_0_4, 1,
-              [Define to 1 if libpoppler >= 0.4 is available])
-  fi
-
-  if $PKG_CONFIG --atleast-version=0.4.1 poppler-glib; then
-    AC_DEFINE(HAVE_POPPLER_0_4_1, 1,
-              [Define to 1 if libpoppler >= 0.4.1 is available])
-  fi
-fi
 
 
 ###############################################################################

@@ -1,5 +1,13 @@
 2007-04-27  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: depend on poppler-glib >= 0.4.1.
+
+	* plug-ins/common/poppler.c: removed ifdefs to handle older
+	versions of the poppler library. Removed "antialias" toggle from
+	the procedure API and from the GUI; it's not supported by poppler.
+
+2007-04-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/truchet.scm: fixed typo in procedure
 	name (bug #433772).
 
