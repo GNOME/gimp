@@ -1,5 +1,10 @@
 2007-04-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/sunras.c (set_color_table): guard against a
+	possible stack overflow.
+
+2007-04-27  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: use PANGO_DISABLE_DEPRECATED for pango < 1.17.
 
 	* plug-ins/common/sample_colorize.c: removed unused variable.
