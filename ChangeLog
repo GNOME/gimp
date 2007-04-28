@@ -1,3 +1,8 @@
+2007-04-28  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-pdb.c: add optional run_mode keyword argument
+	to pdb calls.
+
 2007-04-28  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpclipboard.c
