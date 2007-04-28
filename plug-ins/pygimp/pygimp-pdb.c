@@ -778,10 +778,42 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
     GimpParam *params, *ret;
     int nret;
     PyObject *t = NULL, *r;
+    GimpRunMode run_mode = GIMP_RUN_NONINTERACTIVE;
 
 #if PG_DEBUG > 0
     g_printerr("--- %s --- ", PyString_AsString(self->proc_name));
 #endif
+
+    if (kwargs) {
+        int len, pos;
+        PyObject *key, *val;
+
+        len = PyDict_Size(kwargs);
+
+        if (len == 1) {
+            pos = 0;
+            PyDict_Next(kwargs, &pos, &key, &val);
+
+            if (!PyString_Check(key)) {
+                PyErr_SetString(PyExc_TypeError,
+                                "keyword argument name is not a string");
+                return NULL;
+            }
+
+            if (strcmp(PyString_AsString(key), "run_mode") != 0) {
+                PyErr_SetString(PyExc_TypeError,
+                                "only 'run_mode' keyword argument accepted");
+                return NULL;
+            }
+
+            if (pyg_enum_get_value(GIMP_TYPE_RUN_MODE, val, &run_mode))
+                return NULL;
+        } else if (len != 0) {
+            PyErr_SetString(PyExc_TypeError,
+                            "expecting at most one keyword argument");
+            return NULL;
+        }
+    }
 
     if (self->nparams > 0 && !strcmp(self->params[0].name, "run-mode")) {
 	params = pygimp_param_from_tuple(args, self->params + 1,
@@ -791,14 +823,13 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
 	    return NULL;
 
 	params[0].type = self->params[0].type;
-	params[0].data.d_int32 = GIMP_RUN_NONINTERACTIVE;
+	params[0].data.d_int32 = run_mode;
 
 #if PG_DEBUG > 1
 	pygimp_param_print(self->nparams, params);
 #endif
 
-	ret = gimp_run_procedure2(self->name, &nret, self->nparams,
-				  params);
+	ret = gimp_run_procedure2(self->name, &nret, self->nparams, params);
     } else {
 	params = pygimp_param_from_tuple(args, self->params, self->nparams);
 
