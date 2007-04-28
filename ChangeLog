@@ -1,3 +1,9 @@
+2007-04-28  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpclipboard.c
+	* app/widgets/gimpdnd-xds.c
+	* plug-ins/helpbrowser/dialog.c: use gdk_atom_intern_static_string().
+
 2007-04-27  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimppickable.[ch]: added get_pixel_at() method to the

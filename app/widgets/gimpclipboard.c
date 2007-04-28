@@ -552,10 +552,10 @@ gimp_clipboard_wait_for_targets (Gimp *gimp,
   if (clipboard)
     {
       GtkSelectionData *data;
+      GdkAtom           atom = gdk_atom_intern_static_string ("TARGETS");
 
-      data = gtk_clipboard_wait_for_contents (clipboard,
-                                              gdk_atom_intern ("TARGETS",
-                                                               FALSE));
+      data = gtk_clipboard_wait_for_contents (clipboard, atom);
+
       if (data)
         {
           GdkAtom  *targets;
@@ -657,8 +657,8 @@ gimp_clipboard_wait_for_svg (Gimp *gimp)
 
   if (targets)
     {
-      GdkAtom svg_atom     = gdk_atom_intern ("image/svg",     FALSE);
-      GdkAtom svg_xml_atom = gdk_atom_intern ("image/svg+xml", FALSE);
+      GdkAtom svg_atom     = gdk_atom_intern_static_string ("image/svg");
+      GdkAtom svg_xml_atom = gdk_atom_intern_static_string ("image/svg+xml");
       gint    i;
 
       for (i = 0; i < n_targets; i++)

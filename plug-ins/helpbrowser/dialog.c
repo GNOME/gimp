@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * The GIMP Help Browser
+ * GIMP Help Browser
  * Copyright (C) 1999-2005 Sven Neumann <sven@gimp.org>
  *                         Michael Natterer <mitch@gimp.org>
  *
@@ -955,7 +955,8 @@ drag_data_get (GtkWidget        *widget,
   if (! current_uri)
     return;
 
-  if (selection_data->target == gdk_atom_intern ("text/uri-list", FALSE))
+  if (selection_data->target ==
+      gdk_atom_intern_static_string ("text/uri-list"))
     {
       gchar *uris[2];
 
@@ -964,7 +965,8 @@ drag_data_get (GtkWidget        *widget,
 
       gtk_selection_data_set_uris (selection_data, uris);
     }
-  else if (selection_data->target == gdk_atom_intern ("_NETSCAPE_URL", FALSE))
+  else if (selection_data->target ==
+           gdk_atom_intern_static_string ("_NETSCAPE_URL"))
     {
       gtk_selection_data_set (selection_data,
                               selection_data->target,
