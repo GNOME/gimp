@@ -1,11 +1,10 @@
 #!/bin/sh
 
 # Build zipfiles for GIMP on Win32: separate runtime and developer
-# packages, and a separate zipfile for the gif plug-in.
+# packages.
 
 ZIP=/tmp/gimp-@GIMP_VERSION@-`date +%Y%m%d`.zip
 DEVZIP=/tmp/gimp-dev-@GIMP_VERSION@-`date +%Y%m%d`.zip
-GIFZIP=/tmp/gimp-gif-@GIMP_VERSION@-`date +%Y%m%d`.zip
 
 cd @prefix@
 
@@ -16,9 +15,10 @@ bin/gimp-@GIMP_APP_VERSION@.exe
 bin/libgimp-@GIMP_API_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
 bin/libgimpbase-@GIMP_API_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
 bin/libgimpcolor-@GIMP_API_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
+bin/libgimpconfig-@GIMP_API_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
 bin/libgimpmath-@GIMP_API_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
-bin/libgimpmodule-@GIMP_API@-@LT_CURRENT_MINUS_AGE@.dll
-bin/libgimpthumb-@GIMP_API@-@LT_CURRENT_MINUS_AGE@.dll
+bin/libgimpmodule-@GIMP_API_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
+bin/libgimpthumb-@GIMP_API_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
 bin/libgimpui-@GIMP_API_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
 bin/libgimpwidgets-@GIMP_API_VERSION@-@LT_CURRENT_MINUS_AGE@.dll
 lib/gimp/@GIMP_PLUGIN_VERSION@/environ
@@ -43,6 +43,9 @@ lib/gimpbase.def
 lib/libgimpcolor-@GIMP_API_VERSION@.dll.a
 lib/gimpcolor-@GIMP_API_VERSION@.lib
 lib/gimpcolor.def
+lib/libgimpconfig-@GIMP_API_VERSION@.dll.a
+lib/gimpconfig-@GIMP_API_VERSION@.lib
+lib/gimpconfig.def
 lib/libgimpmath-@GIMP_API_VERSION@.dll.a
 lib/gimpmath-@GIMP_API_VERSION@.lib
 lib/gimpmath.def
@@ -60,7 +63,3 @@ lib/gimpwidgets.def
 include/gimp-@GIMP_API_VERSION@
 man/man1/gimptool-@GIMP_TOOL_VERSION@.1
 EOF
-
-zip -d $ZIP lib/gimp/@GIMP_PLUGIN_VERSION@/plug-ins/gif.exe
-rm $GIFZIP
-zip $GIFZIP lib/gimp/@GIMP_PLUGIN_VERSION@/plug-ins/gif.exe

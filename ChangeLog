@@ -1,3 +1,8 @@
+2007-04-28  Tor Lillqvist  <tml@novell.com>
+
+	* gimp-zip.in: Add libgimpconfig to the developer package. Remove
+	the separate gif plug-in cruft. Fix a few typos.
+
 2007-04-28  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-pdb.c: add optional run_mode keyword argument
