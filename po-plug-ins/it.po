@@ -1,13 +1,13 @@
 # This is the Italian catalog for the standard GIMP Plugins.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 1999, 2000, 2001, 2002
-# Marco Ciampa <ciampix@libero.it>, 2003, 2004
+# Marco Ciampa <ciampix@libero.it>, 2003, 2004, 2005, 2006, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-05-08 12:28+0200\n"
-"PO-Revision-Date: 2004-12-16 16:12+0100\n"
+"PO-Revision-Date: 2007-04-30 01:12+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -6875,7 +6875,7 @@ msgstr "Esp.:"
 
 #: ../plug-ins/common/spheredesigner.c:2703
 msgid "Texture Transformations"
-msgstr "Trasformazioni texture"
+msgstr "Trasformazioni trama"
 
 #: ../plug-ins/common/spheredesigner.c:2726
 msgid "Scale Y:"
@@ -8615,8 +8615,7 @@ msgstr "Crea spirale"
 
 #: ../plug-ins/gfig/gfig-dialog.c:926
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr ""
-"Crea curva di Bezier. Maiusc + tasto conclude la creazione dell'oggetto."
+msgstr "Crea curva di Bézier. Maiusc + tasto conclude la creazione dell'oggetto."
 
 #: ../plug-ins/gfig/gfig-dialog.c:930 ../plug-ins/gfig/gfig-stock.c:48
 msgid "Move an object"
@@ -8784,9 +8783,8 @@ msgid "Star Number of Points"
 msgstr "Numeri di punti stella"
 
 #: ../plug-ins/gfig/gfig-stock.c:41
-#, fuzzy
 msgid "Create bezier curve"
-msgstr "Crea cerchio"
+msgstr "Crea curva di Bézier"
 
 #: ../plug-ins/gfig/gfig.c:132
 msgid "_Gfig..."
@@ -11733,6 +11731,3 @@ msgstr "Errore: impossibile leggere il file delle proprietà XJT '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Errore: il file delle proprietà XJT '%s' è vuoto."
-
-#~ msgid "Before and After"
-#~ msgstr "Prima e dopo"

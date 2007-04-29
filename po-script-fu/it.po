@@ -1,13 +1,13 @@
 # This is the Italian catalog for The GIMP.
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 2000, 2001, 2002
-# Marco Ciampa <ciampix@libero.it>, 2003, 2004
+# Marco Ciampa <ciampix@libero.it>, 2003, 2004, 2005, 2006, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-04-09 21:56+0200\n"
-"PO-Revision-Date: 2004-12-16 17:36+0100\n"
+"POT-Creation-Date: 2007-04-30 01:04+0200\n"
+"PO-Revision-Date: 2007-04-30 01:17+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -114,22 +114,22 @@ msgstr "Avanzamento dello script"
 msgid "(none)"
 msgstr "(nessuno)"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1058
+#: ../plug-ins/script-fu/script-fu-interface.c:1061
 #: ../plug-ins/dbbrowser/gimpprocview.c:198
 msgid "Author:"
 msgstr "Autore:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1065
+#: ../plug-ins/script-fu/script-fu-interface.c:1068
 #: ../plug-ins/dbbrowser/gimpprocview.c:220
 msgid "Copyright:"
 msgstr "Copyright:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1072
+#: ../plug-ins/script-fu/script-fu-interface.c:1075
 #: ../plug-ins/dbbrowser/gimpprocview.c:209
 msgid "Date:"
 msgstr "Data:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1081
+#: ../plug-ins/script-fu/script-fu-interface.c:1084
 msgid "Image Types:"
 msgstr "Tipi di immagini:"
 
@@ -144,15 +144,15 @@ msgstr ""
 "%s\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:642
+#: ../plug-ins/script-fu/script-fu-server.c:648
 msgid "Script-Fu Server Options"
 msgstr "Opzioni server Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:670
+#: ../plug-ins/script-fu/script-fu-server.c:676
 msgid "Server Port:"
 msgstr "Porta server:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:676
+#: ../plug-ins/script-fu/script-fu-server.c:682
 msgid "Server Logfile:"
 msgstr "File di log server:"
 
@@ -299,7 +299,6 @@ msgstr "<Image>/Script-Fu/Alfa a logotipo"
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "<Toolbox>/Xtns/Script-Fu/Logos"
@@ -348,7 +347,7 @@ msgstr "Impostazioni predefinite Bumpmap"
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:2
 msgid "Font"
@@ -387,7 +386,7 @@ msgstr "Carattere"
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:3
 msgid "Font size (pixels)"
@@ -458,7 +457,7 @@ msgstr "Raggio sfocatura ombra"
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:5
 msgid "Text"
@@ -672,7 +671,7 @@ msgid "_Hrule..."
 msgstr "Riga _orizzontale..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:6
 msgid "Radius"
 msgstr "Raggio"
@@ -1158,12 +1157,10 @@ msgid "_Clothify..."
 msgstr "_Drappeggia..."
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
-msgid ""
-"Darken only\n"
-"(Better, but only for images with alot of white)"
+msgid "Darken only\\n(Better, but only for images with alot of white)"
 msgstr ""
 "Solo scuri\n"
-"(migliore ma solo per immagini con molto bianco)"
+"(migliore, ma solo per immagini con molto bianco)"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
@@ -2237,7 +2234,7 @@ msgid "Square"
 msgstr "Quadrato"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:29
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
 msgid "Start angle"
 msgstr "Angolo partenza"
 
@@ -2321,17 +2318,17 @@ msgstr "Frequenza di esecuzione"
 msgid "_Particle Trace..."
 msgstr "Traccia di _particella..."
 
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:1
 msgid "Antialias"
 msgstr "Antialias"
 
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
 msgid "Fill angle"
 msgstr "Angolo di riempimento"
 
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:9
-msgid "Text Circle..."
-msgstr "Cerchio di testo..."
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
+msgid "Text C_ircle..."
+msgstr "Cerch_io di testo..."
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
 msgid "Ending blend"
@@ -2512,12 +2509,3 @@ msgstr "Opacità illuminazione"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Effetto _xach..."
-
-#~ msgid "Buffer amount (% height of text)"
-#~ msgstr "Dimensione buffer (% altezza del testo)"
-
-#~ msgid "_ASCII to Image..."
-#~ msgstr "Da _ASCII a immagine..."
-
-#~ msgid "_ASCII to Layer..."
-#~ msgstr "Da _ASCII a livello..."
