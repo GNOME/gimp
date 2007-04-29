@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3.17\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-26 00:32+0200\n"
+"POT-Creation-Date: 2007-04-29 13:21+0200\n"
 "PO-Revision-Date: 2007-04-18 11:35+0200\n"
 "Last-Translator: Yannig MARCHEGAY <yannig@marchegay.org>\n"
 "Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
@@ -798,7 +798,7 @@ msgstr ""
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1371
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:772
-#: ../app/pdb/image_cmds.c:2005 ../app/widgets/gimpdnd-xds.c:97
+#: ../app/pdb/image_cmds.c:1999 ../app/widgets/gimpdnd-xds.c:97
 msgid "Untitled"
 msgstr "Sens nom"
 
@@ -1815,7 +1815,7 @@ msgid "Saving canceled"
 msgstr ""
 
 #: ../app/actions/file-commands.c:255 ../app/dialogs/file-save-dialog.c:538
-#: ../app/widgets/gimpdnd-xds.c:174
+#: ../app/widgets/gimpdnd-xds.c:177
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -3899,7 +3899,7 @@ msgid "New Path Options"
 msgstr ""
 
 #: ../app/actions/vectors-commands.c:297 ../app/pdb/paths_cmds.c:612
-#: ../app/pdb/vectors_cmds.c:1121
+#: ../app/pdb/vectors_cmds.c:1115
 msgid "Path to Selection"
 msgstr ""
 
@@ -5256,7 +5256,7 @@ msgstr ""
 msgid "Import paths"
 msgstr ""
 
-#: ../app/core/core-enums.c:886 ../app/pdb/drawable_cmds.c:797
+#: ../app/core/core-enums.c:886 ../app/pdb/drawable_cmds.c:791
 msgid "Plug-In"
 msgstr ""
 
@@ -8463,7 +8463,7 @@ msgid ""
 "s). This value is out of range."
 msgstr ""
 
-#: ../app/pdb/image_cmds.c:2071
+#: ../app/pdb/image_cmds.c:2065
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -11064,24 +11064,24 @@ msgstr ""
 msgid "Background: %d, %d, %d"
 msgstr ""
 
-#: ../app/widgets/gimpdnd-xds.c:191
+#: ../app/widgets/gimpdnd-xds.c:194
 msgid "The given filename does not have any known file extension."
 msgstr ""
 
-#: ../app/widgets/gimpdnd-xds.c:209
+#: ../app/widgets/gimpdnd-xds.c:212
 msgid "File Exists"
 msgstr "Lo fichièr existís"
 
-#: ../app/widgets/gimpdnd-xds.c:214
+#: ../app/widgets/gimpdnd-xds.c:217
 msgid "_Replace"
 msgstr "_Remplaçar"
 
-#: ../app/widgets/gimpdnd-xds.c:225
+#: ../app/widgets/gimpdnd-xds.c:228
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr ""
 
-#: ../app/widgets/gimpdnd-xds.c:230
+#: ../app/widgets/gimpdnd-xds.c:233
 msgid "Do you want to replace it with the image you are saving?"
 msgstr ""
 

@@ -66,8 +66,8 @@ plug-ins/common/gauss.c
 plug-ins/common/gbr.c
 plug-ins/common/gee.c
 plug-ins/common/gee_zoom.c
-plug-ins/common/gif.c
-plug-ins/common/gifload.c
+plug-ins/common/gif-load.c
+plug-ins/common/gif-save.c
 plug-ins/common/gih.c
 plug-ins/common/gih.c
 plug-ins/common/glasstile.c
@@ -112,8 +112,8 @@ plug-ins/common/polar.c
 plug-ins/common/poppler.c
 plug-ins/common/postscript.c
 plug-ins/common/procedure-browser.c
-plug-ins/common/psd.c
-plug-ins/common/psd_save.c
+plug-ins/common/psd-load.c
+plug-ins/common/psd-save.c
 plug-ins/common/psp.c
 plug-ins/common/randomize.c
 plug-ins/common/raw.c

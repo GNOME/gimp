@@ -1,3 +1,7 @@
+2007-04-29  Christophe Merlet  <redfox@redfoxcenter.org>
+
+	* configure.in: Added "oc" (Occitan) to ALL_LINGUAS.
+
 2007-04-28  Tor Lillqvist  <tml@novell.com>
 
 	* gimp-zip.in: Add libgimpconfig to the developer package. Remove

@@ -1,3 +1,9 @@
+2007-04-29  Christophe Merlet  <redfox@redfoxcenter.org>
+
+	* oc.po: Added Occitan translation from
+	Yannig MARCHEGAY <yannig@marchegay.org>.
+	* POTFILES.in: Updated for {gif|psd}-{load|save}.c
+
 2007-04-25  Mukund Sivaraman  <muks@mukund.org>
 
         * POTFILES.in: split TIFF load and save functionality into
