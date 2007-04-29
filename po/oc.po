@@ -1,14 +1,14 @@
 # French translation for The GIMP.
-# Copyright (C) 1998-2006 Free Software Foundation, Inc.
+# Copyright (C) 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
 # Yannig MARCHEGAY (Kokoyaya)  <yannig@marchegay.org>, 2007.
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: fr\n"
+"Project-Id-Version: gimp 2.2.15\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-26 00:36+0200\n"
+"POT-Creation-Date: 2007-04-29 15:18+0200\n"
 "PO-Revision-Date: 2007-04-18 11:35+0200\n"
 "Last-Translator: Yannig MARCHEGAY <yannig@marchegay.org>\n"
 "Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
@@ -3672,8 +3672,9 @@ msgid ""
 msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:347
+#, fuzzy
 msgid "Save changed keyboard shortcuts when the GIMP exits."
-msgstr ""
+msgstr "Acorchis de clavièr"
 
 #: ../app/config/gimprc-blurbs.h:350
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
@@ -5428,8 +5429,9 @@ msgid "Contributions by"
 msgstr ""
 
 #: ../app/dialogs/about-dialog.c:153
+#, fuzzy
 msgid "About The GIMP"
-msgstr ""
+msgstr "_A prepaus"
 
 #: ../app/dialogs/channel-options-dialog.c:138
 msgid "Channel Name:"
@@ -6697,8 +6699,9 @@ msgid "pixels/%a"
 msgstr ""
 
 #: ../app/dialogs/quit-dialog.c:84
+#, fuzzy
 msgid "Quit The GIMP"
-msgstr ""
+msgstr "_A prepaus"
 
 #: ../app/dialogs/quit-dialog.c:126
 msgid "If you quit GIMP now, these changes will be lost."
@@ -7256,7 +7259,7 @@ msgstr ""
 #: ../app/display/gimpdisplayshell-scale.c:578
 #, fuzzy
 msgid "Zoom Ratio:"
-msgstr "Reduire el zoom"
+msgstr "Agrandir lo zoom"
 
 #: ../app/display/gimpdisplayshell-scale.c:605
 msgid "Zoom:"
@@ -7562,8 +7565,9 @@ msgid "File Operations"
 msgstr "Opcions dels espleches"
 
 #: ../app/pdb/internal_procs.c:122
+#, fuzzy
 msgid "Floating selections"
-msgstr ""
+msgstr "A_pondre a la seleccion"
 
 #: ../app/pdb/internal_procs.c:125
 #, fuzzy
@@ -8256,8 +8260,9 @@ msgid "Crop: "
 msgstr "Rosegar"
 
 #: ../app/tools/gimpcroptool.c:1010
+#, fuzzy
 msgid "Crop & Resize Information"
-msgstr ""
+msgstr "Transformacion"
 
 #: ../app/tools/gimpcroptool.c:1029
 msgid "Origin X:"
@@ -8277,8 +8282,9 @@ msgid "From selection"
 msgstr "Seleccion"
 
 #: ../app/tools/gimpcroptool.c:1090
+#, fuzzy
 msgid "Auto shrink"
-msgstr ""
+msgstr "A_pondre a la seleccion"
 
 #: ../app/tools/gimpcurvestool.c:142
 msgid "Adjust color curves"
@@ -8790,8 +8796,9 @@ msgid "_Perspective"
 msgstr ""
 
 #: ../app/tools/gimpperspectivetool.c:140
+#, fuzzy
 msgid "Perspective Transform Information"
-msgstr ""
+msgstr "Transformacion"
 
 #: ../app/tools/gimpperspectivetool.c:149
 msgid "Matrix:"
@@ -8860,8 +8867,9 @@ msgid "_Rotate"
 msgstr ""
 
 #: ../app/tools/gimprotatetool.c:158
+#, fuzzy
 msgid "Rotation Information"
-msgstr ""
+msgstr "Transformacion"
 
 #: ../app/tools/gimprotatetool.c:185
 #, fuzzy
@@ -8949,8 +8957,9 @@ msgid "Select transparent areas"
 msgstr ""
 
 #: ../app/tools/gimpselectionoptions.c:488
+#, fuzzy
 msgid "Auto shrink selection"
-msgstr ""
+msgstr "A_pondre a la seleccion"
 
 #: ../app/tools/gimpsheartool.c:98
 msgid "Shear"
@@ -8965,8 +8974,9 @@ msgid "S_hear"
 msgstr ""
 
 #: ../app/tools/gimpsheartool.c:157
+#, fuzzy
 msgid "Shearing Information"
-msgstr ""
+msgstr "Transformacion"
 
 #: ../app/tools/gimpsheartool.c:167
 msgid "Shear magnitude X:"
@@ -10623,11 +10633,43 @@ msgstr ""
 #~ msgid "Select _All"
 #~ msgstr "_Tot seleccionar"
 
+#, fuzzy
+#~ msgid "Open an image file"
+#~ msgstr "Dubrir una imatge"
+
+#, fuzzy
+#~ msgid "Save this image"
+#~ msgstr "Suprimir l'imatge"
+
 #~ msgid "_Background Color"
 #~ msgstr "Color de _fons"
 
 #~ msgid "Select everything"
 #~ msgstr "Tot seleccionar"
+
+#, fuzzy
+#~ msgid "Zoom 16:1"
+#~ msgstr "Agrandir lo zoom"
+
+#, fuzzy
+#~ msgid "Zoom 8:1"
+#~ msgstr "Agrandir lo zoom"
+
+#, fuzzy
+#~ msgid "Zoom 4:1"
+#~ msgstr "Agrandir lo zoom"
+
+#, fuzzy
+#~ msgid "Zoom 1:2"
+#~ msgstr "Agrandir lo zoom"
+
+#, fuzzy
+#~ msgid "Zoom 1:4"
+#~ msgstr "Agrandir lo zoom"
+
+#, fuzzy
+#~ msgid "Zoom 1:16"
+#~ msgstr "Agrandir lo zoom"
 
 #~ msgid "Erase"
 #~ msgstr "Suprimir"
@@ -10659,6 +10701,14 @@ msgstr ""
 #~ msgid "Distribute"
 #~ msgstr "Dividir"
 
+#, fuzzy
+#~ msgid "X:"
+#~ msgstr "_X :"
+
+#, fuzzy
+#~ msgid "Y:"
+#~ msgstr "_Y :"
+
 #~ msgid "_Angle:"
 #~ msgstr "_Angle :"
 
@@ -10671,12 +10721,6 @@ msgstr ""
 #~ msgid "Description:"
 #~ msgstr "Descripcion :"
 
-#~ msgid "1:1"
-#~ msgstr "1:1"
-
-#~ msgid "Set"
-#~ msgstr "Definir"
-
 #~ msgid "keyboard label|Space"
 #~ msgstr "Espaci"
 
@@ -10685,3 +10729,9 @@ msgstr ""
 
 #~ msgid "Pixel"
 #~ msgstr "Pixel"
+
+#~ msgid "1:1"
+#~ msgstr "1:1"
+
+#~ msgid "Set"
+#~ msgstr "Definir"
