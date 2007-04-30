@@ -1,3 +1,9 @@
+2007-04-30  Michael Natterer  <mitch@gimp.org>
+
+	* themes/Default/gtkrc: set GtkButton::focus-line-width to 1 and
+	GtkButton::focus-padding to 0, just like in the Small theme (it
+	was always meant to be that way, stupid copy'n'paste...)
+
 2007-04-29  Christophe Merlet  <redfox@redfoxcenter.org>
 
 	* configure.in: Added "oc" (Occitan) to ALL_LINGUAS.
