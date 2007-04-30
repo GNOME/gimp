@@ -54,11 +54,9 @@
 /*  local function protypes  */
 
 static GimpBuffer * gimp_edit_extract         (GimpImage            *image,
-                                               GimpDrawable         *drawable,
+                                               GimpPickable         *pickable,
                                                GimpContext          *context,
                                                gboolean              cut_pixels);
-static GimpBuffer * gimp_edit_extract_visible (GimpImage            *image,
-                                               GimpContext          *context);
 static GimpBuffer * gimp_edit_make_buffer     (Gimp                 *gimp,
                                                TileManager          *tiles);
 static gboolean     gimp_edit_fill_internal   (GimpImage            *image,
@@ -84,7 +82,8 @@ gimp_edit_cut (GimpImage    *image,
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  buffer = gimp_edit_extract (image, drawable, context, TRUE);
+  buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
+                              context, TRUE);
 
   if (buffer)
     {
@@ -109,7 +108,8 @@ gimp_edit_copy (GimpImage    *image,
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  buffer = gimp_edit_extract (image, drawable, context, FALSE);
+  buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
+                              context, FALSE);
 
   if (buffer)
     {
@@ -131,7 +131,8 @@ gimp_edit_copy_visible (GimpImage   *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  buffer = gimp_edit_extract_visible (image, context);
+  buffer = gimp_edit_extract (image, GIMP_PICKABLE (image->projection),
+                              context, FALSE);
 
   if (buffer)
     {
@@ -343,7 +344,8 @@ gimp_edit_named_cut (GimpImage    *image,
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  buffer = gimp_edit_extract (image, drawable, context, TRUE);
+  buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
+                              context, TRUE);
 
   if (buffer)
     {
@@ -371,7 +373,8 @@ gimp_edit_named_copy (GimpImage    *image,
   g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  buffer = gimp_edit_extract (image, drawable, context, FALSE);
+  buffer = gimp_edit_extract (image, GIMP_PICKABLE (drawable),
+                              context, FALSE);
 
   if (buffer)
     {
@@ -396,7 +399,8 @@ gimp_edit_named_copy_visible (GimpImage   *image,
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  buffer = gimp_edit_extract_visible (image, context);
+  buffer = gimp_edit_extract (image, GIMP_PICKABLE (image->projection),
+                              context, FALSE);
 
   if (buffer)
     {
@@ -526,7 +530,7 @@ gimp_edit_fade (GimpImage   *image,
 
 static GimpBuffer *
 gimp_edit_extract (GimpImage    *image,
-                   GimpDrawable *drawable,
+                   GimpPickable *pickable,
                    GimpContext  *context,
                    gboolean      cut_pixels)
 {
@@ -536,56 +540,11 @@ gimp_edit_extract (GimpImage    *image,
     gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_EDIT_CUT, _("Cut"));
 
   /*  Cut/copy the mask portion from the image  */
-  tiles = gimp_selection_extract (gimp_image_get_mask (image),
-                                  drawable, context, cut_pixels, FALSE, FALSE);
+  tiles = gimp_selection_extract (gimp_image_get_mask (image), pickable,
+                                  context, cut_pixels, FALSE, FALSE);
 
   if (cut_pixels)
     gimp_image_undo_group_end (image);
-
-  return gimp_edit_make_buffer (image->gimp, tiles);
-}
-
-static GimpBuffer *
-gimp_edit_extract_visible (GimpImage   *image,
-                           GimpContext *context)
-{
-  GimpPickable *pickable;
-  TileManager  *tiles;
-  PixelRegion   srcPR, destPR;
-  gint          x1, y1, x2, y2;
-
-  gimp_channel_bounds (gimp_image_get_mask (image), &x1, &y1, &x2, &y2);
-
-  if ((x1 == x2) || (y1 == y2))
-    {
-      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
-                    _("Unable to cut or copy because the "
-                      "selected region is empty."));
-      return NULL;
-    }
-
-  pickable = GIMP_PICKABLE (image->projection);
-
-  gimp_pickable_flush (pickable);
-
-  tiles = tile_manager_new (x2 - x1, y2 - y1,
-                            gimp_pickable_get_bytes (pickable));
-  tile_manager_set_offsets (tiles, x1, y1);
-
-  pixel_region_init (&srcPR, gimp_pickable_get_tiles (pickable),
-                     x1, y1,
-                     x2 - x1, y2 - y1,
-                     FALSE);
-  pixel_region_init (&destPR, tiles,
-                     0, 0,
-                     x2 - x1, y2 - y1,
-                     TRUE);
-
-  /*  use EEKy no-COW copying because sharing tiles with the projection
-   *  is buggy as hell, probably because tile_invalidate() doesn't
-   *  do what it should  --mitch
-   */
-  copy_region_nocow (&srcPR, &destPR);
 
   return gimp_edit_make_buffer (image->gimp, tiles);
 }

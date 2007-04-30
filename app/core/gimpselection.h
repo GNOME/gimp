@@ -57,7 +57,7 @@ void          gimp_selection_load       (GimpChannel  *selection,
 GimpChannel * gimp_selection_save       (GimpChannel  *selection);
 
 TileManager * gimp_selection_extract    (GimpChannel  *selection,
-                                         GimpDrawable *drawable,
+                                         GimpPickable *pickable,
                                          GimpContext  *context,
                                          gboolean      cut_image,
                                          gboolean      keep_indexed,

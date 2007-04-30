@@ -1,5 +1,17 @@
 2007-04-30  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpselection.[ch] (gimp_selection_extract): changed
+	"drawable" parameter to "pickable" and added some special casing
+	for the GIMP_IS_DRAWABLE(pickable) case in the implementation.
+
+	* app/core/gimpdrawable-transform.c: changed accordingly.
+
+	* app/core/gimp-edit.c: ditto. Removed utility function
+	gimp_edit_extract_visible() and simply use gimp_edit_extract() for
+	"copy visible", passing image->projection. Fixes bug #434102.
+
+2007-04-30  Michael Natterer  <mitch@gimp.org>
+
 	* themes/Default/gtkrc: set GtkButton::focus-line-width to 1 and
 	GtkButton::focus-padding to 0, just like in the Small theme (it
 	was always meant to be that way, stupid copy'n'paste...)

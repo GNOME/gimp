@@ -778,7 +778,8 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
       if (gimp_drawable_mask_intersect (drawable, &x, &y, &w, &h))
         {
           tiles = gimp_selection_extract (gimp_image_get_mask (image),
-                                          drawable, context, TRUE, FALSE, TRUE);
+                                          GIMP_PICKABLE (drawable),
+                                          context, TRUE, FALSE, TRUE);
 
           *new_layer = TRUE;
         }
@@ -792,10 +793,12 @@ gimp_drawable_transform_cut (GimpDrawable *drawable,
     {
       if (GIMP_IS_LAYER (drawable))
         tiles = gimp_selection_extract (gimp_image_get_mask (image),
-                                        drawable, context, FALSE, TRUE, TRUE);
+                                        GIMP_PICKABLE (drawable),
+                                        context, FALSE, TRUE, TRUE);
       else
         tiles = gimp_selection_extract (gimp_image_get_mask (image),
-                                        drawable, context, FALSE, TRUE, FALSE);
+                                        GIMP_PICKABLE (drawable),
+                                        context, FALSE, TRUE, FALSE);
 
       *new_layer = FALSE;
     }

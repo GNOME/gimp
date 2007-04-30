@@ -38,6 +38,7 @@
 #include "gimplayer.h"
 #include "gimplayermask.h"
 #include "gimplayer-floating-sel.h"
+#include "gimppickable.h"
 #include "gimpselection.h"
 
 #include "gimp-intl.h"
@@ -598,7 +599,7 @@ gimp_selection_save (GimpChannel *selection)
 
 TileManager *
 gimp_selection_extract (GimpChannel  *selection,
-                        GimpDrawable *drawable,
+                        GimpPickable *pickable,
                         GimpContext  *context,
                         gboolean      cut_image,
                         gboolean      keep_indexed,
@@ -606,8 +607,9 @@ gimp_selection_extract (GimpChannel  *selection,
 {
   GimpImage         *image;
   TileManager       *tiles;
-  PixelRegion        srcPR, destPR, maskPR;
+  PixelRegion        srcPR, destPR;
   guchar             bg_color[MAX_CHANNELS];
+  const guchar      *colormap;
   GimpImageBaseType  base_type = GIMP_RGB;
   gint               bytes     = 0;
   gint               x1, y1, x2, y2;
@@ -615,11 +617,12 @@ gimp_selection_extract (GimpChannel  *selection,
   gint               off_x, off_y;
 
   g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
-  g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
-  g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (drawable)), NULL);
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
+  if (GIMP_IS_ITEM (pickable))
+    g_return_val_if_fail (gimp_item_is_attached (GIMP_ITEM (pickable)), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  image = gimp_item_get_image (GIMP_ITEM (selection));
+  image = gimp_pickable_get_image (pickable);
 
   /*  If there are no bounds, then just extract the entire image
    *  This may not be the correct behavior, but after getting rid
@@ -627,7 +630,13 @@ gimp_selection_extract (GimpChannel  *selection,
    *  a small layer and expect it to work, even though there is no
    *  actual selection mask
    */
-  non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
+  if (GIMP_IS_DRAWABLE (pickable))
+    non_empty = gimp_drawable_mask_bounds (GIMP_DRAWABLE (pickable),
+                                           &x1, &y1, &x2, &y2);
+  else
+    non_empty = gimp_channel_bounds (GIMP_CHANNEL (selection),
+                                     &x1, &y1, &x2, &y2);
+
   if (non_empty && ((x1 == x2) || (y1 == y2)))
     {
       gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
@@ -643,28 +652,28 @@ gimp_selection_extract (GimpChannel  *selection,
     add_alpha = TRUE;
 
   /*  How many bytes in the temp buffer?  */
-  switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)))
+  switch (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_pickable_get_image_type (pickable)))
     {
     case GIMP_RGB:
-      bytes = add_alpha ? 4 : drawable->bytes;
+      bytes = add_alpha ? 4 : gimp_pickable_get_bytes (pickable);
       base_type = GIMP_RGB;
       break;
 
     case GIMP_GRAY:
-      bytes = add_alpha ? 2 : drawable->bytes;
+      bytes = add_alpha ? 2 : gimp_pickable_get_bytes (pickable);
       base_type = GIMP_GRAY;
       break;
 
     case GIMP_INDEXED:
       if (keep_indexed)
         {
-          bytes = add_alpha ? 2 : drawable->bytes;
+          bytes = add_alpha ? 2 : gimp_pickable_get_bytes (pickable);
           base_type = GIMP_GRAY;
         }
       else
         {
           bytes = (add_alpha ||
-                   gimp_drawable_has_alpha (drawable)) ? 4 : 3;
+                   GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_pickable_get_image_type (pickable))) ? 4 : 3;
           base_type = GIMP_INDEXED;
         }
       break;
@@ -674,23 +683,35 @@ gimp_selection_extract (GimpChannel  *selection,
       break;
     }
 
-  gimp_image_get_background (image, context, gimp_drawable_type (drawable),
+  gimp_image_get_background (image, context, gimp_pickable_get_bytes (pickable),
                              bg_color);
 
   /*  If a cut was specified, and the selection mask is not empty,
    *  push an undo
    */
-  if (cut_image && non_empty)
-    gimp_drawable_push_undo (drawable, NULL, x1, y1, x2, y2, NULL, FALSE);
+  if (GIMP_IS_DRAWABLE (pickable))
+    {
+      if (cut_image && non_empty)
+        gimp_drawable_push_undo (GIMP_DRAWABLE (pickable), NULL,
+                                 x1, y1, x2, y2, NULL, FALSE);
 
-  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
+      gimp_item_offsets (GIMP_ITEM (pickable), &off_x, &off_y);
+      colormap = gimp_drawable_get_colormap (GIMP_DRAWABLE (pickable));
+    }
+  else
+    {
+      off_x = off_y = 0;
+      colormap = NULL;
+    }
+
+  gimp_pickable_flush (pickable);
 
   /*  Allocate the temp buffer  */
   tiles = tile_manager_new (x2 - x1, y2 - y1, bytes);
   tile_manager_set_offsets (tiles, x1 + off_x, y1 + off_y);
 
   /* configure the pixel regions  */
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
+  pixel_region_init (&srcPR, gimp_pickable_get_tiles (pickable),
                      x1, y1,
                      x2 - x1, y2 - y1,
                      cut_image);
@@ -701,58 +722,68 @@ gimp_selection_extract (GimpChannel  *selection,
 
   if (non_empty) /*  If there is a selection, extract from it  */
     {
+      PixelRegion maskPR;
+
       pixel_region_init (&maskPR,
                          gimp_drawable_get_tiles (GIMP_DRAWABLE (selection)),
                          (x1 + off_x), (y1 + off_y), (x2 - x1), (y2 - y1),
                          FALSE);
 
       extract_from_region (&srcPR, &destPR, &maskPR,
-                           gimp_drawable_get_colormap (drawable),
-                           bg_color, base_type, cut_image);
+                           colormap, bg_color, base_type, cut_image);
 
-      if (cut_image)
+      if (GIMP_IS_DRAWABLE (pickable) && cut_image)
         {
           /*  Clear the region  */
           gimp_channel_clear (selection, NULL, TRUE);
 
           /*  Update the region  */
-          gimp_drawable_update (drawable, x1, y1, (x2 - x1), (y2 - y1));
+          gimp_drawable_update (GIMP_DRAWABLE (pickable),
+                                x1, y1, (x2 - x1), (y2 - y1));
         }
     }
   else /*  Otherwise, get the entire active layer  */
     {
-      /*  If the layer is indexed...we need to extract pixels  */
       if (base_type == GIMP_INDEXED && !keep_indexed)
-        extract_from_region (&srcPR, &destPR, NULL,
-                             gimp_drawable_get_colormap (drawable),
-                             bg_color, base_type, FALSE);
-      /*  If the layer doesn't have an alpha channel, add one  */
+        {
+          /*  If the layer is indexed...we need to extract pixels  */
+          extract_from_region (&srcPR, &destPR, NULL,
+                               colormap, bg_color, base_type, FALSE);
+        }
       else if (bytes > srcPR.bytes)
-        add_alpha_region (&srcPR, &destPR);
-      /*  Otherwise, do a straight copy  */
+        {
+          /*  If the layer doesn't have an alpha channel, add one  */
+          add_alpha_region (&srcPR, &destPR);
+        }
       else
-        copy_region (&srcPR, &destPR);
+        {
+          /*  Otherwise, do a straight copy  */
+          if (! GIMP_IS_DRAWABLE (pickable))
+            copy_region_nocow (&srcPR, &destPR);
+          else
+            copy_region (&srcPR, &destPR);
+        }
 
       /*  If we're cutting, remove either the layer (or floating selection),
        *  the layer mask, or the channel
        */
-      if (cut_image)
+      if (GIMP_IS_DRAWABLE (pickable) && cut_image)
         {
-          if (GIMP_IS_LAYER (drawable))
+          if (GIMP_IS_LAYER (pickable))
             {
-              if (gimp_layer_is_floating_sel (GIMP_LAYER (drawable)))
-                floating_sel_remove (GIMP_LAYER (drawable));
+              if (gimp_layer_is_floating_sel (GIMP_LAYER (pickable)))
+                floating_sel_remove (GIMP_LAYER (pickable));
               else
-                gimp_image_remove_layer (image, GIMP_LAYER (drawable));
+                gimp_image_remove_layer (image, GIMP_LAYER (pickable));
             }
-          else if (GIMP_IS_LAYER_MASK (drawable))
+          else if (GIMP_IS_LAYER_MASK (pickable))
             {
-              gimp_layer_apply_mask (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (drawable)),
+              gimp_layer_apply_mask (gimp_layer_mask_get_layer (GIMP_LAYER_MASK (pickable)),
                                      GIMP_MASK_DISCARD, TRUE);
             }
-          else if (GIMP_IS_CHANNEL (drawable))
+          else if (GIMP_IS_CHANNEL (pickable))
             {
-              gimp_image_remove_channel (image, GIMP_CHANNEL (drawable));
+              gimp_image_remove_channel (image, GIMP_CHANNEL (pickable));
             }
         }
     }
@@ -796,7 +827,7 @@ gimp_selection_float (GimpChannel  *selection,
                                _("Float Selection"));
 
   /*  Cut or copy the selected region  */
-  tiles = gimp_selection_extract (selection, drawable, context,
+  tiles = gimp_selection_extract (selection, GIMP_PICKABLE (drawable), context,
                                   cut_image, FALSE, TRUE);
 
   /*  Clear the selection as if we had cut the pixels  */
