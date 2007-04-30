@@ -66,7 +66,7 @@ GTKDOC_LIBS = \
 	-u $(SYMPREFIX)internal_procs_init 		\
 	-u $(SYMPREFIX)gimp_coords_mix	   		\
 	-u $(SYMPREFIX)gimp_plug_in_manager_restore	\
-	$(top_builddir)/app/app_procs.o					     \
+	$(top_builddir)/app/app.o					     \
         $(top_builddir)/app/batch.o					     \
         $(top_builddir)/app/errors.o					     \
         $(top_builddir)/app/sanity.o					     \

@@ -27,7 +27,7 @@
       </para>
     </partintro>
 
-    <xi:include href="xml/app_procs.xml" />
+    <xi:include href="xml/app.xml" />
     <xi:include href="xml/batch.xml" />
     <xi:include href="xml/errors.xml" />
     <xi:include href="xml/sanity.xml" />

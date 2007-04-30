@@ -6758,7 +6758,7 @@ GTK_VWRAP_BOX_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>app_procs</FILE>
+<FILE>app</FILE>
 app_libs_init
 app_abort
 app_exit
