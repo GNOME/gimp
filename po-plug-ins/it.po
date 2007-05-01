@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-05-08 12:28+0200\n"
-"PO-Revision-Date: 2007-04-30 01:12+0200\n"
+"PO-Revision-Date: 2007-05-01 04:25+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -4663,7 +4663,7 @@ msgstr "Progressiva"
 
 #: ../plug-ins/common/jpeg.c:2086
 msgid "Force baseline JPEG"
-msgstr "Forza la linea base JPEG"
+msgstr "Forza JPEG tipo base"
 
 #: ../plug-ins/common/jpeg.c:2102
 msgid "Save EXIF data"
@@ -4671,7 +4671,7 @@ msgstr "Salva dati EXIF"
 
 #: ../plug-ins/common/jpeg.c:2119
 msgid "Save thumbnail"
-msgstr "Salva miniature"
+msgstr "Salva miniatura"
 
 #. Subsampling
 #: ../plug-ins/common/jpeg.c:2136
