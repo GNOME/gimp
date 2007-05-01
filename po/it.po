@@ -28,8 +28,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-20 19:02+0200\n"
-"PO-Revision-Date: 2007-04-20 19:52+0200\n"
+"POT-Creation-Date: 2007-05-01 13:06+0200\n"
+"PO-Revision-Date: 2007-05-01 13:06+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -688,7 +688,7 @@ msgstr "Nuovo colore del canale"
 msgid "%s Channel Copy"
 msgstr "%s copia canale"
 
-#: ../app/actions/channels-commands.c:308 ../app/core/gimpselection.c:560
+#: ../app/actions/channels-commands.c:308 ../app/core/gimpselection.c:561
 #: ../app/pdb/selection_cmds.c:423 ../app/pdb/selection_cmds.c:486
 msgid "Channel to Selection"
 msgstr "Canale a selezione"
@@ -853,7 +853,7 @@ msgstr ""
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1371
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:772
-#: ../app/pdb/image_cmds.c:2005 ../app/widgets/gimpdnd-xds.c:97
+#: ../app/pdb/image_cmds.c:1999 ../app/widgets/gimpdnd-xds.c:97
 msgid "Untitled"
 msgstr "Immagine"
 
@@ -1528,7 +1528,8 @@ msgstr "S_fuma..."
 
 #: ../app/actions/edit-actions.c:103
 msgid "Modify paint mode and opacity of the last pixel manipulation"
-msgstr "Modifica modalità di disegno e opacità dell'ultima elaborazione sui pixel"
+msgstr ""
+"Modifica modalità di disegno e opacità dell'ultima elaborazione sui pixel"
 
 #: ../app/actions/edit-actions.c:108
 msgid "Cu_t"
@@ -1859,7 +1860,8 @@ msgstr "Salva _una copia..."
 
 #: ../app/actions/file-actions.c:127
 msgid "Save this image with a different name, but keep its current name"
-msgstr "Salva quest'immagine con un nome differente ma mantieni il suo nome corrente"
+msgstr ""
+"Salva quest'immagine con un nome differente ma mantieni il suo nome corrente"
 
 #: ../app/actions/file-actions.c:132
 msgid "Save and Close..."
@@ -1874,7 +1876,7 @@ msgid "Saving canceled"
 msgstr "Salvataggio annullato"
 
 #: ../app/actions/file-commands.c:255 ../app/dialogs/file-save-dialog.c:538
-#: ../app/widgets/gimpdnd-xds.c:174
+#: ../app/widgets/gimpdnd-xds.c:177
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -2768,7 +2770,7 @@ msgstr "Disponi il livello testo lungo il tracciato corrente"
 
 #: ../app/actions/layers-actions.c:164
 msgid "Layer B_oundary Size..."
-msgstr "Dimensione margine del livell_o..."
+msgstr "Dimensione margini del livell_o..."
 
 #: ../app/actions/layers-actions.c:165
 msgid "Adjust the layer dimensions"
@@ -2991,7 +2993,7 @@ msgstr "Crea un nuovo livello"
 
 #: ../app/actions/layers-commands.c:531
 msgid "Set Layer Boundary Size"
-msgstr "Configura contorno del livello"
+msgstr "Imposta dimensione margini del livello"
 
 #: ../app/actions/layers-commands.c:572 ../app/core/gimplayer.c:248
 msgid "Scale Layer"
@@ -3467,7 +3469,7 @@ msgstr "Delinea _selezione"
 msgid "Stroke the selection with last used values"
 msgstr "Delinea selezione con gli ultimi valori utilizzati"
 
-#: ../app/actions/select-commands.c:138 ../app/core/gimpselection.c:168
+#: ../app/actions/select-commands.c:138 ../app/core/gimpselection.c:169
 msgid "Feather Selection"
 msgstr "Selezione sfumata"
 
@@ -3475,7 +3477,7 @@ msgstr "Selezione sfumata"
 msgid "Feather selection by"
 msgstr "Selezione sfumata di"
 
-#: ../app/actions/select-commands.c:173 ../app/core/gimpselection.c:175
+#: ../app/actions/select-commands.c:173 ../app/core/gimpselection.c:176
 msgid "Shrink Selection"
 msgstr "Riduci la selezione"
 
@@ -3487,7 +3489,7 @@ msgstr "Riduci la selezione di"
 msgid "_Shrink from image border"
 msgstr "_Riduci dal bordo immagine"
 
-#: ../app/actions/select-commands.c:207 ../app/core/gimpselection.c:174
+#: ../app/actions/select-commands.c:207 ../app/core/gimpselection.c:175
 msgid "Grow Selection"
 msgstr "Allarga la selezione"
 
@@ -3495,7 +3497,7 @@ msgstr "Allarga la selezione"
 msgid "Grow selection by"
 msgstr "Allarga la selezione di"
 
-#: ../app/actions/select-commands.c:231 ../app/core/gimpselection.c:173
+#: ../app/actions/select-commands.c:231 ../app/core/gimpselection.c:174
 msgid "Border Selection"
 msgstr "Selezione bordo"
 
@@ -3519,7 +3521,7 @@ msgstr "B_locca la selezione sui bordi dell'immagine"
 msgid "There is no active layer or channel to stroke to."
 msgstr "Non c'è un livello o un canale attivo su cui delineare."
 
-#: ../app/actions/select-commands.c:313 ../app/core/gimpselection.c:152
+#: ../app/actions/select-commands.c:313 ../app/core/gimpselection.c:153
 msgid "Stroke Selection"
 msgstr "Delinea selezione"
 
@@ -3599,7 +3601,7 @@ msgstr "Apri"
 msgid "Load text from file"
 msgstr "Carica testo dal file"
 
-#: ../app/actions/text-editor-actions.c:50 ../app/core/gimp-edit.c:426
+#: ../app/actions/text-editor-actions.c:50 ../app/core/gimp-edit.c:430
 msgid "Clear"
 msgstr "Cancella"
 
@@ -3634,7 +3636,7 @@ msgstr "Apri file di testo (UTF-8)"
 #: ../app/core/gimppalette-load.c:76 ../app/core/gimppalette-load.c:271
 #: ../app/core/gimppalette-load.c:315 ../app/core/gimppalette-load.c:369
 #: ../app/core/gimppattern-load.c:76 ../app/tools/gimpimagemaptool.c:585
-#: ../app/xcf/xcf.c:319
+#: ../app/xcf/xcf.c:323
 #, c-format
 msgid "Could not open '%s' for reading: %s"
 msgstr "Impossibile aprire \"%s\" in lettura: %s"
@@ -3980,7 +3982,7 @@ msgid "New Path Options"
 msgstr "Nuove opzioni tracciato"
 
 #: ../app/actions/vectors-commands.c:297 ../app/pdb/paths_cmds.c:612
-#: ../app/pdb/vectors_cmds.c:1121
+#: ../app/pdb/vectors_cmds.c:1115
 msgid "Path to Selection"
 msgstr "Tracciato a selezione"
 
@@ -4084,7 +4086,7 @@ msgstr "Mostra il bordo della selezione"
 
 #: ../app/actions/view-actions.c:146
 msgid "Show _Layer Boundary"
-msgstr "Limiti del _livello"
+msgstr "Margini del _livello"
 
 #: ../app/actions/view-actions.c:147
 msgid "Draw a border around the active layer"
@@ -4300,7 +4302,8 @@ msgstr "Come nelle _preferenze"
 
 #: ../app/actions/view-actions.c:380
 msgid "Reset padding color to what's configured in preferences"
-msgstr "Reimposta il colore di riempimento al valore configurato nelle preferenze"
+msgstr ""
+"Reimposta il colore di riempimento al valore configurato nelle preferenze"
 
 #: ../app/actions/view-actions.c:567
 #, c-format
@@ -4488,7 +4491,7 @@ msgstr ""
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:145
 #: ../app/core/gimppalette-save.c:56 ../app/gui/themes.c:239
 #: ../app/tools/gimpimagemaptool.c:584 ../app/vectors/gimpvectors-export.c:83
-#: ../app/xcf/xcf.c:397
+#: ../app/xcf/xcf.c:401
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Non è possibile aprire \"%s\" in scrittura: %s"
@@ -4871,8 +4874,8 @@ msgid ""
 "When enabled, the layer boundary is visible by default. This can also be "
 "toggled with the \"View->Show Layer Boundary\" command."
 msgstr ""
-"Se abilitata, il contorno del livello è visibile. Questo comportamento può "
-"essere modificato anche con il comando \"Visualizza->Barra dei menu\"."
+"Se abilitata, i margini del livello sono visibili. Questo comportamento può "
+"essere modificato anche con il comando \"Visualizza->Margini del livello\"."
 
 #: ../app/config/gimprc-blurbs.h:318
 msgid ""
@@ -5445,11 +5448,11 @@ msgstr "Àncora selezione fluttuante"
 msgid "Remove floating selection"
 msgstr "Rimuovi selezione fluttuante"
 
-#: ../app/core/core-enums.c:878 ../app/core/gimp-edit.c:254
+#: ../app/core/core-enums.c:878 ../app/core/gimp-edit.c:255
 msgid "Paste"
 msgstr "Incolla"
 
-#: ../app/core/core-enums.c:879 ../app/core/gimp-edit.c:536
+#: ../app/core/core-enums.c:879 ../app/core/gimp-edit.c:540
 msgid "Cut"
 msgstr "Taglia"
 
@@ -5480,7 +5483,7 @@ msgstr "Rimuovi parasite"
 msgid "Import paths"
 msgstr "Importa tracciati"
 
-#: ../app/core/core-enums.c:886 ../app/pdb/drawable_cmds.c:797
+#: ../app/core/core-enums.c:886 ../app/pdb/drawable_cmds.c:791
 msgid "Plug-In"
 msgstr "Plug-in"
 
@@ -5628,36 +5631,31 @@ msgstr "Converti in spazio colore RGB"
 msgid "Deleting \"%s\" failed: %s"
 msgstr "La cancellazione di \"%s\" è fallita: %s"
 
-#: ../app/core/gimp-edit.c:182 ../app/core/gimp-edit.c:316
+#: ../app/core/gimp-edit.c:183 ../app/core/gimp-edit.c:317
 msgid "Pasted Layer"
 msgstr "Livello incollato"
 
-#: ../app/core/gimp-edit.c:445
+#: ../app/core/gimp-edit.c:449
 msgid "Fill with Foreground Color"
 msgstr "Riempi con il colore del primo piano"
 
-#: ../app/core/gimp-edit.c:449
+#: ../app/core/gimp-edit.c:453
 msgid "Fill with Background Color"
 msgstr "Riempi con il colore dello sfondo"
 
-#: ../app/core/gimp-edit.c:453
+#: ../app/core/gimp-edit.c:457
 msgid "Fill with White"
 msgstr "Riempi con il bianco"
 
-#: ../app/core/gimp-edit.c:457
+#: ../app/core/gimp-edit.c:461
 msgid "Fill with Transparency"
 msgstr "Riempi con la trasparenza"
 
-#: ../app/core/gimp-edit.c:461
+#: ../app/core/gimp-edit.c:465
 msgid "Fill with Pattern"
 msgstr "Riempi con il motivo"
 
-#: ../app/core/gimp-edit.c:562 ../app/core/gimpselection.c:634
-msgid "Unable to cut or copy because the selected region is empty."
-msgstr ""
-"Non è possibile a tagliare o copiare perché la regione selezionata è vuota."
-
-#: ../app/core/gimp-edit.c:597
+#: ../app/core/gimp-edit.c:556
 msgid "Global Buffer"
 msgstr "Buffer globale"
 
@@ -5919,7 +5917,7 @@ msgstr "Rifletti canale"
 msgid "Rotate Channel"
 msgstr "Ruota canale"
 
-#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:826
+#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:829
 msgid "Transform Channel"
 msgstr "Trasforma canale"
 
@@ -5971,7 +5969,7 @@ msgstr "Imposta il colore del canale"
 msgid "Set Channel Opacity"
 msgstr "Imposta opacità canale"
 
-#: ../app/core/gimpchannel.c:1707 ../app/core/gimpselection.c:528
+#: ../app/core/gimpchannel.c:1707 ../app/core/gimpselection.c:529
 msgid "Selection Mask"
 msgstr "Maschera di selezione"
 
@@ -6069,11 +6067,11 @@ msgstr "Inverti"
 msgid "command|Rotate"
 msgstr "Ruota"
 
-#: ../app/core/gimpdrawable-transform.c:824 ../app/core/gimplayer.c:252
+#: ../app/core/gimpdrawable-transform.c:827 ../app/core/gimplayer.c:252
 msgid "Transform Layer"
 msgstr "Trasforma livello"
 
-#: ../app/core/gimpdrawable-transform.c:839
+#: ../app/core/gimpdrawable-transform.c:842
 msgid "Transformation"
 msgstr "Trasformazione"
 
@@ -6699,40 +6697,45 @@ msgstr ""
 msgid "Please wait"
 msgstr "Attendere"
 
-#: ../app/core/gimpselection.c:151 ../app/tools/gimpeditselectiontool.c:190
+#: ../app/core/gimpselection.c:152 ../app/tools/gimpeditselectiontool.c:190
 msgid "Move Selection"
 msgstr "Sposta selezione"
 
-#: ../app/core/gimpselection.c:169
+#: ../app/core/gimpselection.c:170
 msgid "Sharpen Selection"
 msgstr "Assottiglia la selezione"
 
-#: ../app/core/gimpselection.c:170
+#: ../app/core/gimpselection.c:171
 msgid "Select None"
 msgstr "Seleziona nulla"
 
-#: ../app/core/gimpselection.c:171
+#: ../app/core/gimpselection.c:172
 msgid "Select All"
 msgstr "Seleziona tutto"
 
-#: ../app/core/gimpselection.c:172
+#: ../app/core/gimpselection.c:173
 msgid "Invert Selection"
 msgstr "Inverti selezione"
 
-#: ../app/core/gimpselection.c:275
+#: ../app/core/gimpselection.c:276
 msgid "There is no selection to stroke."
 msgstr "Nessuna selezione da disegnare."
 
-#: ../app/core/gimpselection.c:789
+#: ../app/core/gimpselection.c:643
+msgid "Unable to cut or copy because the selected region is empty."
+msgstr ""
+"Non è possibile a tagliare o copiare perché la regione selezionata è vuota."
+
+#: ../app/core/gimpselection.c:820
 msgid "Cannot float selection because the selected region is empty."
 msgstr ""
 "Non è possibile la selezione fluttuante perché la regione selezionata è vuota"
 
-#: ../app/core/gimpselection.c:796
+#: ../app/core/gimpselection.c:827
 msgid "Float Selection"
 msgstr "Selezione fluttuante"
 
-#: ../app/core/gimpselection.c:813
+#: ../app/core/gimpselection.c:844
 msgid "Floated Layer"
 msgstr "Livello fluttuante"
 
@@ -7037,19 +7040,19 @@ msgstr "_Fondi"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:90
 msgid "Final, Merged Layer should be:"
-msgstr "Infine, il livello fuso dovrebbe essere:"
+msgstr "Il livello finale, fuso dovrebbe essere:"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:94
 msgid "Expanded as necessary"
-msgstr "Espandi se necessario"
+msgstr "Espanso se necessario"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:97
 msgid "Clipped to image"
-msgstr "Legato all'immagine"
+msgstr "Ritagliato all'immagine"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:100
 msgid "Clipped to bottom layer"
-msgstr "Legato al livello inferiore"
+msgstr "Ritagliato al livello inferiore"
 
 #: ../app/dialogs/image-merge-layers-dialog.c:108
 msgid "_Discard invisible layers"
@@ -8729,7 +8732,7 @@ msgstr "Trasformazione 2D"
 msgid "2D Transforming"
 msgstr "Trasformazione 2D in corso"
 
-#: ../app/pdb/edit_cmds.c:634 ../app/tools/gimpblendtool.c:223
+#: ../app/pdb/edit_cmds.c:629 ../app/tools/gimpblendtool.c:223
 msgid "Blending"
 msgstr "Sfumatura in corso"
 
@@ -8827,7 +8830,7 @@ msgstr ""
 "La procedura \"%s\" è stata chiamata con il valore \"%s\" l'argomento \"%s"
 "\" (#%d, tipo %s). Questo valore è fuori limite."
 
-#: ../app/pdb/image_cmds.c:2071
+#: ../app/pdb/image_cmds.c:2065
 msgid ""
 "Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
@@ -8873,23 +8876,23 @@ msgstr ""
 "La morte del plugin potrebbe aver condizionato lo stato interno di GIMP. "
 "Dovreste salvare le immagini e riavviare il programma per maggior sicurezza."
 
-#: ../app/plug-in/gimppluginmanager-restore.c:215
+#: ../app/plug-in/gimppluginmanager-restore.c:222
 msgid "Searching Plug-Ins"
 msgstr "Ricerca plug-in"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:264
+#: ../app/plug-in/gimppluginmanager-restore.c:271
 msgid "Resource configuration"
 msgstr "Configurazione risorse"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:300
+#: ../app/plug-in/gimppluginmanager-restore.c:307
 msgid "Querying new Plug-ins"
 msgstr "Interrogazione nuovi plug-in"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:350
+#: ../app/plug-in/gimppluginmanager-restore.c:357
 msgid "Initializing Plug-ins"
 msgstr "Inizializzazione plug-in"
 
-#: ../app/plug-in/gimppluginmanager-restore.c:422
+#: ../app/plug-in/gimppluginmanager-restore.c:429
 msgid "Starting Extensions"
 msgstr "Avvio estensioni"
 
@@ -10507,7 +10510,7 @@ msgstr "Margini sfumati"
 
 #: ../app/tools/gimpselectionoptions.c:379
 msgid "Show interactive boundary"
-msgstr "Mostra contorno interattivo"
+msgstr "Mostra margini interattivi"
 
 #: ../app/tools/gimpselectionoptions.c:403
 msgid "Select transparent areas"
@@ -11502,24 +11505,24 @@ msgstr "Primo piano: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "Sfondo: %d, %d, %d"
 
-#: ../app/widgets/gimpdnd-xds.c:191
+#: ../app/widgets/gimpdnd-xds.c:194
 msgid "The given filename does not have any known file extension."
 msgstr "Il nome file dato non possiede una forma di estensione conosciuta."
 
-#: ../app/widgets/gimpdnd-xds.c:209
+#: ../app/widgets/gimpdnd-xds.c:212
 msgid "File Exists"
 msgstr "Il file esiste"
 
-#: ../app/widgets/gimpdnd-xds.c:214
+#: ../app/widgets/gimpdnd-xds.c:217
 msgid "_Replace"
 msgstr "_Rimpiazza"
 
-#: ../app/widgets/gimpdnd-xds.c:225
+#: ../app/widgets/gimpdnd-xds.c:228
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "Un file di nome '%s' esiste già."
 
-#: ../app/widgets/gimpdnd-xds.c:230
+#: ../app/widgets/gimpdnd-xds.c:233
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "Volete rimpiazzarlo con l'immagine che stavate salvando?"
 
@@ -12311,7 +12314,7 @@ msgstr "Stringa UTF-8 non valida nel file XCF"
 
 #: ../app/xcf/xcf-save.c:165 ../app/xcf/xcf-save.c:177
 #: ../app/xcf/xcf-save.c:189 ../app/xcf/xcf-save.c:201
-#: ../app/xcf/xcf-save.c:227 ../app/xcf/xcf.c:386
+#: ../app/xcf/xcf-save.c:227 ../app/xcf/xcf.c:390
 #, c-format
 msgid "Error saving XCF file: %s"
 msgstr "Errore durante il salvataggio del file XCF: %s"
@@ -12326,21 +12329,21 @@ msgstr "Errore durante la scrittura del file XCF: %s"
 msgid "Could not seek in XCF file: %s"
 msgstr "Impossibile posizionarsi sul file XCF: %s"
 
-#: ../app/xcf/xcf.c:96 ../app/xcf/xcf.c:162
+#: ../app/xcf/xcf.c:96 ../app/xcf/xcf.c:164
 msgid "GIMP XCF image"
 msgstr "Immagine GIMP XCF"
 
-#: ../app/xcf/xcf.c:263
+#: ../app/xcf/xcf.c:267
 #, c-format
 msgid "Opening '%s'"
 msgstr "Apertura di \"%s\""
 
-#: ../app/xcf/xcf.c:305
+#: ../app/xcf/xcf.c:309
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "Errore XCF: riscontrata versione file XCF %d non supportata"
 
-#: ../app/xcf/xcf.c:371
+#: ../app/xcf/xcf.c:375
 #, c-format
 msgid "Saving '%s'"
 msgstr "Salvataggio di \"%s\""
