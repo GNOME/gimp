@@ -1,5 +1,10 @@
 2007-05-02  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/poppler.c (load_dialog): set a size request on
+	the GimpPageSelector widget.
+
+2007-05-02  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpperspectiveclonetool.c
 	(gimp_perspective_clone_tool_cursor_update): if we are in adjust
 	mode, skip the GimpBrushClass when chaining up. Fixes bug #354933.

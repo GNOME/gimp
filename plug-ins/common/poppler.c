@@ -643,10 +643,14 @@ load_dialog (PopplerDocument  *doc,
 
   /* Page Selector */
   selector = gimp_page_selector_new ();
+  gtk_widget_set_size_request (selector, 380, 360);
   gtk_box_pack_start (GTK_BOX (vbox), selector, TRUE, TRUE, 0);
+  gtk_widget_show (selector);
+
   n_pages = poppler_document_get_n_pages (doc);
   gimp_page_selector_set_n_pages (GIMP_PAGE_SELECTOR (selector), n_pages);
-  gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (selector), loadvals.target);
+  gimp_page_selector_set_target (GIMP_PAGE_SELECTOR (selector),
+                                 loadvals.target);
 
   for (i = 0; i < n_pages; i++)
     {
@@ -669,8 +673,6 @@ load_dialog (PopplerDocument  *doc,
   g_signal_connect_swapped (selector, "activate",
                             G_CALLBACK (gtk_window_activate_default),
                             dialog);
-
-  gtk_widget_show (selector);
 
   thread_data.document          = doc;
   thread_data.selector          = GIMP_PAGE_SELECTOR (selector);
