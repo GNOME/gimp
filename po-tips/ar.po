@@ -1,143 +1,146 @@
+# translation of gimp-tips.HEAD.ar.po to Arabic
 # Arabic translations for PACKAGE package.
 # Copyright (C) 2006 THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# Automatically generated, 2006.
 #
+# Automatically generated, 2006.
+# Khaled Hosny <khaledhosny@eglug.org>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: Gimp Tips Arabic\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-02-22 19:02+0000\n"
-"PO-Revision-Date: 2007-04-15 14:41+0100\n"
-"Last-Translator: Djihed Afifi <djihed@gmail.com>\n"
+"POT-Creation-Date: 2007-04-18 10:45+0100\n"
+"PO-Revision-Date: 2007-05-01 03:08+0300\n"
+"Last-Translator: Khaled Hosny <khaledhosny@eglug.org>\n"
 "Language-Team: Arabic <doc@arabeyes.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=6; plural=n == 0 ? 0 : n == 1 ? 1 : n == 2 ? 2 : n >= 3 && n <= 10 ? 3 : n >= 11 && n <= 99 ? 4 : 5;\n"
+"Plural-Forms: nplurals=4; plural=n==1 ? 0 : n==2 ? 1 : n>=3 && n<=10 ? 2 : 3\n"
 "X-Poedit-Language: Arabic\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr ""
+msgstr "<big>مرحباً في برنامج جنو لمعالجة الصور!</big>"
 
 #: ../data/tips/gimp-tips.xml.in.h:2
 msgid "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking with the eyedropper tool sets the background color instead of the foreground color."
-msgstr ""
+msgstr "<tt>Ctrl</tt>+نقرة على أداة ملء الدلو سيستبدل اللون الأمامي بلون الخلفية. بشكل مشابه، <tt>Ctrl</tt>+نقرة على أداة القطارة سيقتبس لون الخلفية بدلاً من اللون الأمامي."
 
 #: ../data/tips/gimp-tips.xml.in.h:3
 msgid "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer mask's preview in the Layers dialog toggles viewing the mask directly."
-msgstr ""
+msgstr "<tt>Ctrl</tt>+نقرة على معاينة قناع الطبقة في جدول الطبقات سيقلب تأثير قناع الطبقة. <tt>Alt</tt>+نقرة على معاينة قناع الطبقة في جدول الطبقات سيقلب طريقة عرض القناع مباشرة."
 
 #: ../data/tips/gimp-tips.xml.in.h:4
 msgid "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 degree angles."
-msgstr ""
+msgstr "<tt>Ctrl</tt>+سحب الفأرة على أداة التدوير سيضبط الدوران على 15 درجة."
 
 #: ../data/tips/gimp-tips.xml.in.h:5
 msgid "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers but that one. <tt>Shift</tt>-click again to show all layers."
-msgstr ""
+msgstr "<tt>Shift</tt>+نقرة على رمز العين في جدول الطبقات سيخفي جميع الطبقات باستثناء المحددة. <tt>Shift</tt>+نقرة عليها مجدداً سيظهر جميع الطبقات."
 
 #: ../data/tips/gimp-tips.xml.in.h:6
 msgid "A floating selection must be anchored to a new layer or to the last active layer before doing other operations on the image. Click on the &quot;New Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or use the menus to do the same."
-msgstr ""
+msgstr "التحديد العائم يجب أن يكون مربوطاً بطبقة جديدة أو بآخر طبقة نشطة قبل القيام  بعمليات أخرى على الصورة. انقر على زر &quot;طبقة جديدة&quot; أو زر &quot;طبقة مربوطة&quot; في جدول الطبقات أو استخدم القوائم لفعل الشيء نفسه."
 
 #: ../data/tips/gimp-tips.xml.in.h:7
 msgid "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences dialog, you can reassign shortcut keys. Do so by bringing up the menu, selecting a menu item, and pressing the desired key combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when you exit GIMP. You should probably disable &quot;Dynamic Keyboard Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning shortcuts."
-msgstr ""
+msgstr "بعد أن تقوم بتفعيل &quot;اختصارات لوحة المفاتيح الديناميكية&quot; في جدول التفضيلات، يمكنك إعادة تعيين مفاتيح الاختصارات، وذلك عن طريق استحضار القائمة واختيار عنصر منها، والضغط على مزيج أحرف الاختصار المطلوب. إذا كان &quot;حفظ اختصارات لوحة المفاتيح&quot; مفعلاً، سيتم حفظ هذه الاختصارات عند خروجك من جمب. يُستحسن أن تعطل &quot;اختصارات لوحة المفاتيح الديناميكية&quot; بعد ذلك، لتفادي تعيين/إعداة تعيين الاختصارات بشكل غير مقصود."
 
 #: ../data/tips/gimp-tips.xml.in.h:8
 msgid "Click and drag on a ruler to place a guide on an image. All dragged selections will snap to the guides. You can remove guides by dragging them off the image with the Move tool."
-msgstr ""
+msgstr "انقر واسحب الفأرة على مسطرة لوضع دليل على صورة. كل التحديدات المسحوبة سوف تنتزع الأدلة. يمكنك إزالة الأدلة من خلال سحبها خارج الصورة باستخدام أداة التحريك."
 
 #: ../data/tips/gimp-tips.xml.in.h:9
 msgid "GIMP allows you to undo most changes to the image, so feel free to experiment."
-msgstr ""
+msgstr "يسمح لك جمب بالتراجع عن معظم التغييرات التي أجريت على الصورة، لذا خذ حريتك بالتجارب."
 
 #: ../data/tips/gimp-tips.xml.in.h:10
 msgid "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image will be saved compressed. Of course loading compressed images works too."
-msgstr ""
+msgstr "يدعم جمب ضغط gzip الفوري. فقط أضف <tt>.gz</tt> (أو <tt>.bz2</tt> إن كان bzip2 موجوداً لديك) إلى نهاية اسم الملف وسوف تُحفظ صورتك بشكل مضغوط. بالطبع، فتح صور مضغوطة سيعمل أيضاً."
 
 #: ../data/tips/gimp-tips.xml.in.h:11
 msgid "GIMP uses layers to let you organize your image. Think of them as a stack of slides or filters, such that looking through them you see a composite of their contents."
-msgstr ""
+msgstr "يستخدم جمب الطبقات لتمكينك من تنظيم صورتك. يمكنك اعتبارها ككدسة من الشرائح أو المصفيات، حيث يمكنك رؤية مكونات محتويات الصورة عند النظر إلى الطبقات."
 
 #: ../data/tips/gimp-tips.xml.in.h:12
 msgid "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this layer doesn't have an alpha-channel. You can add an alpha-channel using Layer→Transparency→Add Alpha Channel."
-msgstr ""
+msgstr "إن كان اسم طبقة في جدول الطبقات معروضاً بالخط <b>المعشق</b> (الثخين)، هذه الطبقة لا تملك قناة-ألفا. يمكنك إضافة قناة-ألفا باستخدام الطبقات←الشفافية←أضف قناة ألفا."
 
 #: ../data/tips/gimp-tips.xml.in.h:13
 msgid "If some of your scanned photos do not look colorful enough, you can easily improve their tonal range with the &quot;Auto&quot; button in the Levels tool (Colors→Levels). If there are any color casts, you can correct them with the Curves tool (Colors→Curves)."
-msgstr ""
+msgstr "إن كانت إحدى صورك الممسوحة ضوئياً لا تظهر ألوانها بشكل جيد، يمكنك بسهولة تحسين مجالها التناغمي عن طريق الزر &quot;آلي&quot; في أداة المستويات (الألوان←المستويات). إن كان هناك أي سقط في الألوان، يمكنك تصحيحه باستخدام أداة الانحناءات (الألوان←الانحناءات)."
 
 #: ../data/tips/gimp-tips.xml.in.h:14
 msgid "If you stroke a path (Edit→Stroke Path), the paint tools can be used with their current settings. You can use the Paintbrush in gradient mode or even the Eraser or the Smudge tool."
-msgstr ""
+msgstr "إن كنت تريد تخطيط مسار (تحرير←تخطيط مسار)، يمكن استخدام أدوات التلوين مع إعداداتها الحالية. يمكنك استخدام فرشاة التلوين في نمط التدلاج أو حتى الممحاة أو أداة التلطيخ."
 
 #: ../data/tips/gimp-tips.xml.in.h:15
 msgid "If your screen is too cluttered, you can press <tt>Tab</tt> in an image window to toggle the visibility of the toolbox and other dialogs."
-msgstr ""
+msgstr "إن كانت شاشتك مزدحمة جداً، يمكنك ضغط <tt>Tab</tt> في نافذة صورة للتبديل بين إظهار صندوق الأدوات وبقية الجداول."
 
 #: ../data/tips/gimp-tips.xml.in.h:16
 msgid "Most plug-ins work on the current layer of the current image. In some cases, you will have to merge all layers (Image→Flatten Image) if you want the plug-in to work on the whole image."
-msgstr ""
+msgstr "معظم الإضافات تعمل على الطبقة الحالية في الصورة الحالية. في بعض الحالات، عليك أن تدمج جميع الطبقات (صورة←تسطيح الصورة) لتطبيق الإضافة على الصورة بكاملها."
 
 #: ../data/tips/gimp-tips.xml.in.h:17
 msgid "Not all effects can be applied to all kinds of images. This is indicated by a grayed-out menu-entry. You may need to change the image mode to RGB (Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha Channel) or flatten it (Image→Flatten Image)."
-msgstr ""
+msgstr "ليس كل التأثيرات يمكن تطبيقها على جميع أنواع الصور. هذا يُعرف إن كان عنصر القائمة رمادي اللون. قد تحتاج إلى تغيير نمط الصورة إلى RGB (صورة←نمط←RGB)، إضافة قناة-ألفا (الطبقة←الشفافية←إضافة قناة ألفا) أو تسطيح الصورة (صورة←تسطيح الصورة)."
 
 #: ../data/tips/gimp-tips.xml.in.h:18
 msgid "Pressing and holding the <tt>Shift</tt> key before making a selection allows you to add to the current selection instead of replacing it. Using <tt>Ctrl</tt> before making a selection subtracts from the current one."
-msgstr ""
+msgstr "الضغط باستمرار على مفتاح <tt>Shift</tt> قبل عمل تحديد سيسمح لك بالإضافة إلى التحديد الحالي بدلاً من استبداله. الضغط على <tt>Ctrl</tt> قبل عمل التحديد سيحذف تلك الأجزاء من التحديد."
 
 #: ../data/tips/gimp-tips.xml.in.h:19
 msgid "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an ellipse select. To place a circle precisely, drag horizontal and vertical guides tangent to the circle you want to select, place your cursor at the intersection of the guides, and the resulting selection will just touch the guides."
-msgstr ""
+msgstr "لإنشاء تحديد دائري، اضغط باستمرار على <tt>Shift</tt> أثناء القيام بتحديد ذي شكل بيضاوي. لوضع دائرة بدقة، اسحب أدلة خطوط المماس الأفقية والعمودية للدائرة التي تريد تحديدها، ضع مؤشرك على نقطة التقاء الدليلين، والتحديد الناتج سيلمس الدليلين بالكاد."
 
 #: ../data/tips/gimp-tips.xml.in.h:20
 msgid "When you save an image to work on it again later, try using XCF, GIMP's native file format (use the file extension <tt>.xcf</tt>). This preserves the layers and every aspect of your work-in-progress. Once a project is completed, you can save it as JPEG, PNG, GIF, ..."
-msgstr ""
+msgstr "عندما تحفظ صورة للعمل عليها لاحقاً، جرب استخدام XCF، صيغة ملفات صور جمب (امتداد الملف هو <tt>.xcf</tt>). هذا سوف يحفظ الطبقات وكل مظهر من مظاهر عملك المتقدم. عندما تكمل المشروع، يمكنك حفظه بصيغة JPEG أو PNG أو GIF ..."
 
 #: ../data/tips/gimp-tips.xml.in.h:21
 msgid "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes the window move, your window manager uses the <tt>Alt</tt> key already."
-msgstr ""
+msgstr "يمكنك تعديل أو تحريك التحديد باستخدام <tt>Alt</tt>+سحب الفأرة. إن جعل هذا النافذة تتحرك، فهو يعني أن مدير نوافذك يستخدم الزر <tt>Alt</tt> مسبقاً."
 
 #: ../data/tips/gimp-tips.xml.in.h:22
 msgid "You can create and edit complex selections using the Path tool. The Paths dialog allows you to work on multiple paths and to convert them to selections."
-msgstr ""
+msgstr "يمكنك إنشاء وتحرير تحديدات معقدة باستخدام أداة المسار. جدول المسارات يسمح لك بالعمل على مسارات متعددة وتحويلها إلى تحديدات."
 
 #: ../data/tips/gimp-tips.xml.in.h:23
 msgid "You can drag a layer from the Layers dialog and drop it onto the toolbox. This will create a new image containing only that layer."
-msgstr ""
+msgstr "يمكنك سحب طبقة من جدول الطبقات ووضعها في صندوق الأدوات. هذا سينشئ صورة جديدة تحوي فقط هذه الطبقة."
 
 #: ../data/tips/gimp-tips.xml.in.h:24
 msgid "You can drag and drop many things in GIMP. For example, dragging a color from the toolbox or from a color palette and dropping it into an image will fill the current selection with that color."
-msgstr ""
+msgstr "يمكنك سحب وإفلات أشياء كثيرة في جمب. كمثال، سحب لون من صندوق الأدوات أو من لوحة الألوان ووضعه داخل صورة سوف يملأ التحديد الحالي بهذا اللون."
 
 #: ../data/tips/gimp-tips.xml.in.h:25
 msgid "You can draw simple squares or circles using Edit→Stroke Selection. It strokes the edge of your current selection. More complex shapes can be drawn using the Path tool or with Filters→Render→Gfig."
-msgstr ""
+msgstr "يمكنك رسم مربعات أو دوائر بسيطة باستخدام تحرير←تخطيط التحديد. إنه يشدد أطراف تحديدك الحالي. يمكن رسم أشكال أكثر تعقيداً باستخدام أداة المسار أو من خلال المصفيات←تصيير←Gfig."
 
 #: ../data/tips/gimp-tips.xml.in.h:26
 msgid "You can get context-sensitive help for most of the GIMP's features by pressing the F1 key at any time. This also works inside the menus."
-msgstr ""
+msgstr "يمكنك الحصول على مساعدة المحتوى-الحساس لمعظم ميزات جمب بالضغط على الزر F1 في أي وقت. هذا سيعمل أيضاً داخل القوائم."
 
 #: ../data/tips/gimp-tips.xml.in.h:27
 msgid "You can perform many layer operations by right-clicking on the text label of a layer in the Layers dialog."
-msgstr ""
+msgstr "يمكنك عمل عدة عمليات للطبقة بالنقر بالزر الأيمن للفأرة على نص اسم الطبقة في جدول الطبقات."
 
 #: ../data/tips/gimp-tips.xml.in.h:28
 msgid "You can save a selection to a channel (Select→Save to Channel) and then modify this channel with any paint tools. Using the buttons in the Channels dialog, you can toggle the visibility of this new channel or convert it to a selection."
-msgstr ""
+msgstr "يمكنك حفظ تحديد إلى قناة (تحديد←حفظ إلى قناة) ثم تعديل هذه القناة بأي أداة تلوين. باستخدام الأزرار في جدول القنوات، يمكنك تبديل بين إظهار هذه القناة الجديدة أو إعادتها إلى تحديد."
 
 #: ../data/tips/gimp-tips.xml.in.h:29
 msgid "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an image (if your window manager doesn't trap those keys...)."
-msgstr "يمكنك استعمال <tt>Ctrl</tt>-<tt>Tab</tt> للتحول بين كل طبقات الصورة (اذا لم يقم مدير النوافذ باخذها...)"
+msgstr "يمكنك استعمال <tt>Ctrl</tt>+<tt>Tab</tt> للتحول بين كل طبقات الصورة (إذا لم يقم مدير النوافذ بحجز هذه المفاتيح...)."
 
 #: ../data/tips/gimp-tips.xml.in.h:30
-msgid "You can use the middle mouse button to pan around the image (or optionally hold <tt>Spacebar</tt> while you move the mouse.)"
-msgstr ""
+msgid "You can use the middle mouse button to pan around the image (or optionally hold <tt>Spacebar</tt> while you move the mouse)."
+msgstr "يمكنك استخدام زر الفأرة الأوسط لتحريك الصورة (أو اضغط باستمرار زر <tt>المسافة</tt> أثناء تحريكك للفأرة)."
 
 #: ../data/tips/gimp-tips.xml.in.h:31
 msgid "You can use the paint tools to change the selection. Click on the &quot;Quick Mask&quot; button at the bottom left of an image window. Change your selection by painting in the image and click on the button again to convert it back to a normal selection."
-msgstr ""
+msgstr "يمكنك استخدام أدوات التلوين لتغيير التحديد. انقر على زر &quot;قناع سريع&quot; في الجزء السفلي الأيسر من نافذة الصورة. قم بتغيير التحديد بالتلوين داخل الصورة وانقر على الزر مجدداً لإعادة تحويله إلى تحديد عادي."
 
