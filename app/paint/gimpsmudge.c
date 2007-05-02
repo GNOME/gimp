@@ -182,22 +182,22 @@ gimp_smudge_start (GimpPaintCore    *paint_core,
    */
   if (x != area->x || y != area->y || w != area->width || h != area->height)
     {
-      guchar *fill;
+      guchar fill[4];
 
-      fill = gimp_pickable_get_color_at (GIMP_PICKABLE (drawable),
-                                         CLAMP ((gint) paint_core->cur_coords.x,
-                                                0, gimp_item_width (GIMP_ITEM (drawable)) - 1),
-                                         CLAMP ((gint) paint_core->cur_coords.y,
-                                                0, gimp_item_height (GIMP_ITEM (drawable)) - 1));
-
-      g_return_val_if_fail (fill != NULL, FALSE);
+      gimp_pickable_get_pixel_at (GIMP_PICKABLE (drawable),
+                                  CLAMP ((gint) paint_core->cur_coords.x,
+                                         0,
+                                         gimp_item_width (GIMP_ITEM (drawable)) - 1),
+                                  CLAMP ((gint) paint_core->cur_coords.y,
+                                         0,
+                                         gimp_item_height (GIMP_ITEM (drawable)) - 1),
+                                  fill);
 
       pixel_region_init_data (&srcPR, smudge->accum_data,
                               bytes, bytes * w,
                               0, 0, w, h);
 
       color_region (&srcPR, fill);
-      g_free (fill);
     }
 
   pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),

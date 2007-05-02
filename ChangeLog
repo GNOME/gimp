@@ -1,5 +1,13 @@
 2007-05-02  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimpsmudge.c (gimp_smudge_start)
+
+	* app/paint/gimpconvolve.c (gimp_convolve_motion): use
+	gimp_pickable_get_pixel_at() to get the color to use with
+	color_region(). Fixes Smudge and Convolve tools on grayscale images.
+
+2007-05-02  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpparamspecs.c (gimp_param_string_validate): the GLib
 	version that has string validation fixed is 2.12.12.
 

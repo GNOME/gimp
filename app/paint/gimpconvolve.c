@@ -307,16 +307,18 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
       PixelRegion  ovrsz2PR;
       guchar      *ovrsz1_data = NULL;
       guchar      *ovrsz2_data = NULL;
-      guchar      *fillcolor;
+      guchar       fill[4];
       gint         bytes;
       gint         rowstride;
 
-      fillcolor = gimp_pickable_get_color_at
-        (GIMP_PICKABLE (drawable),
-         CLAMP ((gint) paint_core->cur_coords.x,
-                0, gimp_item_width  (GIMP_ITEM (drawable)) - 1),
-         CLAMP ((gint) paint_core->cur_coords.y,
-                0, gimp_item_height (GIMP_ITEM (drawable)) - 1));
+      gimp_pickable_get_pixel_at (GIMP_PICKABLE (drawable),
+                                  CLAMP ((gint) paint_core->cur_coords.x,
+                                         0,
+                                         gimp_item_width  (GIMP_ITEM (drawable)) - 1),
+                                  CLAMP ((gint) paint_core->cur_coords.y,
+                                         0,
+                                         gimp_item_height (GIMP_ITEM (drawable)) - 1),
+                                  fill);
 
       marginx *= (marginx < 0) ? -1 : 0;
       marginy *= (marginy < 0) ? -1 : 0;
@@ -324,6 +326,9 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
       bytes     = (gimp_drawable_has_alpha (drawable) ?
                    srcPR.bytes : srcPR.bytes + 1);
       rowstride = (area->width + marginx) * bytes;
+
+      if (! gimp_drawable_has_alpha (drawable))
+        fill[bytes - 1] = OPAQUE_OPACITY;
 
       ovrsz1_data = g_malloc ((area->height + marginy) * rowstride);
       ovrsz2_data = g_malloc ((area->height + marginy) * rowstride);
@@ -340,7 +345,7 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
                               area->width  + marginx,
                               area->height + marginy);
 
-      color_region (&ovrsz1PR, fillcolor);
+      color_region (&ovrsz1PR, fill);
 
       pixel_region_init_data (&ovrsz1PR, ovrsz1_data,
                               bytes, rowstride,
@@ -376,7 +381,6 @@ gimp_convolve_motion (GimpPaintCore    *paint_core,
 
       g_free (ovrsz1_data);
       g_free (ovrsz2_data);
-      g_free (fillcolor);
     }
 
   gimp_brush_core_replace_canvas (brush_core, drawable,
