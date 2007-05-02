@@ -1,3 +1,7 @@
+2007-05-02  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-manager.c: cosmetics.
+
 2007-04-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpselection.[ch] (gimp_selection_extract): changed

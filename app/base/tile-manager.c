@@ -723,18 +723,17 @@ read_pixel_data (TileManager *tm,
                  guchar      *buffer,
                  guint        stride)
 {
-  Tile   *t;
-  guchar *s, *d;
-  guint   x, y;
-  guint   rows, cols;
-  guint   srcstride;
+  guint x, y;
 
   for (y = y1; y <= y2; y += TILE_HEIGHT - (y % TILE_HEIGHT))
     for (x = x1; x <= x2; x += TILE_WIDTH - (x % TILE_WIDTH))
       {
-        t = tile_manager_get_tile (tm, x, y, TRUE, FALSE);
-        s = tile_data_pointer (t, x % TILE_WIDTH, y % TILE_HEIGHT);
-        d = buffer + stride * (y - y1) + tm->bpp * (x - x1);
+        Tile         *t = tile_manager_get_tile (tm, x, y, TRUE, FALSE);
+        const guchar *s = tile_data_pointer (t,
+                                             x % TILE_WIDTH, y % TILE_HEIGHT);
+        guchar       *d = buffer + stride * (y - y1) + tm->bpp * (x - x1);
+        guint         rows, cols;
+        guint         srcstride;
 
         rows = tile_eheight (t) - y % TILE_HEIGHT;
         if (rows > (y2 - y + 1))
@@ -746,9 +745,10 @@ read_pixel_data (TileManager *tm,
 
         srcstride = tile_ewidth (t) * tile_bpp (t);
 
-        while (rows --)
+        while (rows--)
           {
             memcpy (d, s, cols * tm->bpp);
+
             s += srcstride;
             d += stride;
           }
@@ -766,19 +766,18 @@ write_pixel_data (TileManager  *tm,
                   const guchar *buffer,
                   guint         stride)
 {
-  Tile         *t;
-  const guchar *s;
-  guchar       *d;
-  guint         x, y;
-  guint         rows, cols;
-  guint         dststride;
+  guint x, y;
 
   for (y = y1; y <= y2; y += TILE_HEIGHT - (y % TILE_HEIGHT))
     for (x = x1; x <= x2; x += TILE_WIDTH - (x % TILE_WIDTH))
       {
-        t = tile_manager_get_tile (tm, x, y, TRUE, TRUE);
-        s = buffer + stride * (y - y1) + tm->bpp * (x - x1);
-        d = tile_data_pointer (t, x % TILE_WIDTH, y % TILE_HEIGHT);
+        Tile         *t = tile_manager_get_tile (tm, x, y, TRUE, TRUE);
+        const guchar *s = buffer + stride * (y - y1) + tm->bpp * (x - x1);
+        guchar       *d = tile_data_pointer (t,
+                                             x % TILE_WIDTH, y % TILE_HEIGHT);
+        guint         rows, cols;
+        guint         dststride;
+
         rows = tile_eheight (t) - y % TILE_HEIGHT;
         if (rows > (y2 - y + 1))
           rows = y2 - y + 1;
@@ -789,9 +788,10 @@ write_pixel_data (TileManager  *tm,
 
         dststride = tile_ewidth (t) * tile_bpp (t);
 
-        while (rows --)
+        while (rows--)
           {
             memcpy (d, s, cols * tm->bpp);
+
             s += stride;
             d += dststride;
           }
