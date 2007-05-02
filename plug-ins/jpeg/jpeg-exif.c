@@ -102,10 +102,14 @@ jpeg_apply_exif_data_to_image (const gchar  *filename,
   /*
    * Unfortunately libexif may return a non-null exif_data even if the file
    * contains no exif data.  We check for validity by making sure it
-   * has an ExifVersion tag.
+   * has suitable tags for the EXIF or GPS or Interoperability IFDs.
   */
-  if (! exif_content_get_entry (exif_data->ifd[EXIF_IFD_EXIF],
-                                EXIF_TAG_EXIF_VERSION))
+  if ((! exif_content_get_entry (exif_data->ifd[EXIF_IFD_EXIF],
+                                EXIF_TAG_EXIF_VERSION)) &&
+      (! exif_content_get_entry (exif_data->ifd[EXIF_IFD_GPS],
+                                EXIF_TAG_GPS_VERSION_ID)) &&
+      (! exif_content_get_entry (exif_data->ifd[EXIF_IFD_INTEROPERABILITY],
+                                EXIF_TAG_INTEROPERABILITY_VERSION)))
     return;
 
   gimp_metadata_store_exif (image_ID, exif_data);
