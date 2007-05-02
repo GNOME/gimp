@@ -28,6 +28,7 @@
 #include "core-types.h"
 
 #include "gimpobject.h"
+#include "gimpimage.h"
 #include "gimppickable.h"
 
 
@@ -148,21 +149,28 @@ gimp_pickable_get_pixel_at (GimpPickable *pickable,
   return FALSE;
 }
 
-guchar *
+gboolean
 gimp_pickable_get_color_at (GimpPickable *pickable,
                             gint          x,
-                            gint          y)
+                            gint          y,
+                            GimpRGB      *color)
 {
-  GimpPickableInterface *pickable_iface;
+  guchar pixel[4];
+  guchar col[4];
 
-  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), NULL);
+  g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), FALSE);
+  g_return_val_if_fail (color != NULL, FALSE);
 
-  pickable_iface = GIMP_PICKABLE_GET_INTERFACE (pickable);
+  if (! gimp_pickable_get_pixel_at (pickable, x, y, pixel))
+    return FALSE;
 
-  if (pickable_iface->get_color_at)
-    return pickable_iface->get_color_at (pickable, x, y);
+  gimp_image_get_color (gimp_pickable_get_image (pickable),
+                        gimp_pickable_get_image_type (pickable),
+                        pixel, col);
 
-  return NULL;
+  gimp_rgba_set_uchar (color, col[0], col[1], col[2], col[3]);
+
+  return TRUE;
 }
 
 gint
@@ -191,33 +199,38 @@ gimp_pickable_pick_color (GimpPickable *pickable,
                           GimpRGB      *color,
                           gint         *color_index)
 {
-  guchar *col;
+  GimpImage     *image;
+  GimpImageType  type;
+  guchar         pixel[4];
+  guchar         col[4];
 
   g_return_val_if_fail (GIMP_IS_PICKABLE (pickable), FALSE);
 
-  if (! (col = gimp_pickable_get_color_at (pickable, x, y)))
+  if (! gimp_pickable_get_pixel_at (pickable, x, y, pixel))
     return FALSE;
+
+  image = gimp_pickable_get_image (pickable);
+  type  = gimp_pickable_get_image_type (pickable);
 
   if (sample_average)
     {
-      gint    i, j;
-      gint    count        = 0;
-      gint    color_avg[4] = { 0, 0, 0, 0 };
-      guchar *tmp_col;
-      gint    radius       = (gint) average_radius;
+      gint count        = 0;
+      gint color_avg[4] = { 0, 0, 0, 0 };
+      gint radius       = (gint) average_radius;
+      gint i, j;
 
       for (i = x - radius; i <= x + radius; i++)
         for (j = y - radius; j <= y + radius; j++)
-          if ((tmp_col = gimp_pickable_get_color_at (pickable, i, j)))
+          if (gimp_pickable_get_pixel_at (pickable, i, j, pixel))
             {
               count++;
 
-              color_avg[RED_PIX]   += tmp_col[RED_PIX];
-              color_avg[GREEN_PIX] += tmp_col[GREEN_PIX];
-              color_avg[BLUE_PIX]  += tmp_col[BLUE_PIX];
-              color_avg[ALPHA_PIX] += tmp_col[ALPHA_PIX];
+              gimp_image_get_color (image, type, pixel, col);
 
-              g_free (tmp_col);
+              color_avg[RED_PIX]   += col[RED_PIX];
+              color_avg[GREEN_PIX] += col[GREEN_PIX];
+              color_avg[BLUE_PIX]  += col[BLUE_PIX];
+              color_avg[ALPHA_PIX] += col[ALPHA_PIX];
             }
 
       col[RED_PIX]   = (guchar) (color_avg[RED_PIX]   / count);
@@ -225,18 +238,25 @@ gimp_pickable_pick_color (GimpPickable *pickable,
       col[BLUE_PIX]  = (guchar) (color_avg[BLUE_PIX]  / count);
       col[ALPHA_PIX] = (guchar) (color_avg[ALPHA_PIX] / count);
     }
+  else
+    {
+      gimp_image_get_color (image, type, pixel, col);
+    }
 
-  if (color)
-    gimp_rgba_set_uchar (color,
-                         col[RED_PIX],
-                         col[GREEN_PIX],
-                         col[BLUE_PIX],
-                         col[ALPHA_PIX]);
+
+  gimp_rgba_set_uchar (color,
+                       col[RED_PIX],
+                       col[GREEN_PIX],
+                       col[BLUE_PIX],
+                       col[ALPHA_PIX]);
 
   if (color_index)
-    *color_index = sample_average ? -1 : col[4];
-
-  g_free (col);
+    {
+      if (GIMP_IMAGE_TYPE_IS_INDEXED (type) && ! sample_average)
+        *color_index = pixel[0];
+      else
+        *color_index = -1;
+    }
 
   return TRUE;
 }

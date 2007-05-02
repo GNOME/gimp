@@ -1,3 +1,18 @@
+2007-05-02  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimppickable.[ch]: removed get_color_at() from the
+	GimpPickable interface. Implement the same functionality using
+	get_pixel_at() but with a saner API.
+
+	* app/core/gimpdrawable.c
+	* app/core/gimpprojection.c
+	* app/core/gimpimagemap.c: removed get_color_at() implementations.
+
+	* app/tools/gimpbycolorselecttool.c: adapt to API change of
+	gimp_pickable_get_color_at().
+
+	* app/tools/gimprectangleselecttool.c: added missing include.
+
 2007-05-02  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/svg.c: Make size loading work properly with

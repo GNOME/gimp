@@ -45,6 +45,7 @@
 #include "display/gimpdisplayshell-transform.h"
 #include "display/gimpdisplayshell-appearance.h"
 
+#include "gimpeditselectiontool.h"
 #include "gimpselectiontool.h"
 #include "gimpselectionoptions.h"
 #include "gimprectangletool.h"

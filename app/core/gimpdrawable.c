@@ -119,10 +119,6 @@ static gboolean   gimp_drawable_get_pixel_at       (GimpPickable      *pickable,
                                                     gint               x,
                                                     gint               y,
                                                     guchar            *pixel);
-static guchar   * gimp_drawable_get_color_at       (GimpPickable      *pickable,
-                                                    gint               x,
-                                                    gint               y);
-
 static void       gimp_drawable_real_update        (GimpDrawable      *drawable,
                                                     gint               x,
                                                     gint               y,
@@ -241,7 +237,6 @@ gimp_drawable_pickable_iface_init (GimpPickableInterface *iface)
   iface->get_bytes      = (gint            (*) (GimpPickable *pickable)) gimp_drawable_bytes;
   iface->get_tiles      = (TileManager   * (*) (GimpPickable *pickable)) gimp_drawable_get_tiles;
   iface->get_pixel_at   = gimp_drawable_get_pixel_at;
-  iface->get_color_at   = gimp_drawable_get_color_at;
 }
 
 static void
@@ -609,32 +604,6 @@ gimp_drawable_get_pixel_at (GimpPickable *pickable,
   read_pixel_data_1 (gimp_drawable_get_tiles (drawable), x, y, pixel);
 
   return TRUE;
-}
-
-static guchar *
-gimp_drawable_get_color_at (GimpPickable *pickable,
-                            gint          x,
-                            gint          y)
-{
-  GimpDrawable *drawable = GIMP_DRAWABLE (pickable);
-  guchar       *dest;
-  guchar        pixel[4];
-
-  if (! gimp_drawable_get_pixel_at (pickable, x, y, pixel))
-    return NULL;
-
-  dest = g_new (guchar, 5);
-
-  gimp_image_get_color (gimp_item_get_image (GIMP_ITEM (drawable)),
-                        gimp_drawable_type (drawable),
-                        pixel, dest);
-
-  if (gimp_drawable_is_indexed (drawable))
-    dest[4] = pixel[0];
-  else
-    dest[4] = 0;
-
-  return dest;
 }
 
 static void

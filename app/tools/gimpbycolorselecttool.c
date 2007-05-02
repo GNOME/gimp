@@ -97,6 +97,7 @@ gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
   GimpSelectionOptions  *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   GimpDrawable          *drawable;
   GimpPickable          *pickable;
+  GimpRGB                color;
   guchar                *col;
   gint                   x, y;
 
@@ -123,23 +124,14 @@ gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
 
   gimp_pickable_flush (pickable);
 
-  col = gimp_pickable_get_color_at (pickable, x, y);
-
-  if (col)
-    {
-      GimpRGB color;
-
-      gimp_rgba_set_uchar (&color, col[0], col[1], col[2], col[3]);
-      g_free (col);
-
-      return gimp_image_contiguous_region_by_color (display->image, drawable,
-                                                    options->sample_merged,
-                                                    options->antialias,
-                                                    options->threshold,
-                                                    options->select_transparent,
-                                                    options->select_criterion,
-                                                    &color);
-    }
-
-  return NULL;
+  if (gimp_pickable_get_color_at (pickable, x, y, &color))
+    return gimp_image_contiguous_region_by_color (display->image, drawable,
+                                                  options->sample_merged,
+                                                  options->antialias,
+                                                  options->threshold,
+                                                  options->select_transparent,
+                                                  options->select_criterion,
+                                                  &color);
+  else
+    return NULL;
 }
