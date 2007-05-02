@@ -497,6 +497,7 @@ gimp_perspective_clone_tool_cursor_update (GimpTool        *tool,
 {
   GimpPerspectiveCloneTool    *clone_tool = GIMP_PERSPECTIVE_CLONE_TOOL (tool);
   GimpPerspectiveCloneOptions *options;
+  GimpToolClass               *tool_class;
   GimpCursorType               cursor     = GIMP_CURSOR_MOUSE;
   GimpCursorModifier           modifier   = GIMP_CURSOR_MODIFIER_NONE;
 
@@ -557,7 +558,16 @@ gimp_perspective_clone_tool_cursor_update (GimpTool        *tool,
   gimp_tool_control_set_cursor          (tool->control, cursor);
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
-  GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+  /*  If we are in adjust mode, skip the GimpBrushClass when chaining up.
+   *  This ensures that the cursor will be set regardless of
+   *  GimpBrushTool::show_cursor (see bug #354933).
+   */
+  if (options->clone_mode == GIMP_PERSPECTIVE_CLONE_MODE_ADJUST)
+    tool_class = GIMP_TOOL_CLASS (g_type_class_peek_parent (parent_class));
+  else
+    tool_class = GIMP_TOOL_CLASS (parent_class);
+
+  tool_class->cursor_update (tool, coords, state, display);
 }
 
 static void
