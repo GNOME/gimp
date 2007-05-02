@@ -1,3 +1,8 @@
+2007-05-02  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpparamspecs.c (gimp_param_string_validate): the GLib
+	version that has string validation fixed is 2.12.12.
+
 2007-05-02  Martin Nordholts  <martinn@svn.gnome.org>
 
 	When adjusting a rectangle it feels unintuitive that the center of
