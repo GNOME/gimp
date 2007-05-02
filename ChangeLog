@@ -1,3 +1,28 @@
+2007-05-02  Martin Nordholts  <martinn@svn.gnome.org>
+
+	When adjusting a rectangle it feels unintuitive that the center of
+	the rectangle when Ctrl is used lands on the corner that was used
+	to resize the rectangle. This commit changes the center of the
+	rectangle when Ctrl is used on a already-created rectangle to the
+	center of the rectangle when the user starts adjusting the size.
+
+	* app/tools/gimprectangletool.c (struct
+	_GimpRectangleToolPrivate): Added center_[xy]_on_fixed_center
+	members that keeps track on where the center of the rectangle
+	should be when the Ctrl modifier is used.
+
+	* app/tools/gimprectangletool.c: Added convenience function
+	gimp_rectangle_tool_get_fixed_center_coords.
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_button_press): Sets the
+	center_[xy]_on_fixed_center members depending on whether the button
+	press modifies an existing rectangle or creates a new one.
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_active_modifier_key): Adjusted to accomodate to
+	above mentioned changes.
+
 2007-05-02  Sven Neumann  <sven@gimp.org>
 
 	* app/base/tile-manager.c: cosmetics.
