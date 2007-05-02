@@ -1,3 +1,9 @@
+2007-05-02  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scheme-wrapper.c (ts_get_error_msg): applied
+	patch from Eric Lamarque that fixes Script-Fu server output
+	(bug #431623).
+
 2007-05-02  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/jpeg/jpeg-exif.c: Check if any other IFDs exist before

@@ -248,15 +248,10 @@ ts_get_error_msg (void)
 const gchar *
 ts_get_success_msg (void)
 {
-#if 0  /* ~~~~~ */
-  if (sc.vptr->is_string (repl_return_val))
-    return sc.vptr->string_value (repl_return_val);
+  if (sc.vptr->is_string(sc.value)) {
+    return sc.vptr->string_value(sc.value);
+  }
   else
-#else
-  if (sc.linebuff[0])
-    return sc.linebuff;
-  else
-#endif
     return "Success";
 }
 
