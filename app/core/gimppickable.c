@@ -233,10 +233,10 @@ gimp_pickable_pick_color (GimpPickable *pickable,
               color_avg[ALPHA_PIX] += col[ALPHA_PIX];
             }
 
-      col[RED_PIX]   = (guchar) (color_avg[RED_PIX]   / count);
-      col[GREEN_PIX] = (guchar) (color_avg[GREEN_PIX] / count);
-      col[BLUE_PIX]  = (guchar) (color_avg[BLUE_PIX]  / count);
-      col[ALPHA_PIX] = (guchar) (color_avg[ALPHA_PIX] / count);
+      col[RED_PIX]   = (guchar) ((color_avg[RED_PIX]   + count / 2) / count);
+      col[GREEN_PIX] = (guchar) ((color_avg[GREEN_PIX] + count / 2) / count);
+      col[BLUE_PIX]  = (guchar) ((color_avg[BLUE_PIX]  + count / 2) / count);
+      col[ALPHA_PIX] = (guchar) ((color_avg[ALPHA_PIX] + count / 2) / count);
     }
   else
     {

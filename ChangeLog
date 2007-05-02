@@ -1,5 +1,10 @@
 2007-05-02  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimppickable.c (gimp_pickable_pick_color): reduce
+	rounding errors.
+
+2007-05-02  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimppickable.[ch]: removed get_color_at() from the
 	GimpPickable interface. Implement the same functionality using
 	get_pixel_at() but with a saner API.
