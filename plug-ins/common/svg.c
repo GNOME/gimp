@@ -470,41 +470,6 @@ load_rsvg_pixbuf (const gchar  *filename,
 
 static GtkWidget *size_label = NULL;
 
-/*  This is the callback used from load_rsvg_size().  */
-static void
-load_get_size_callback (gint     *width,
-                        gint     *height,
-                        gpointer  data)
-{
-  SvgLoadVals *vals = data;
-
-  if (*width < 1 || *height < 1)
-    {
-      *width  = SVG_DEFAULT_SIZE;
-      *height = SVG_DEFAULT_SIZE;
-
-      if (size_label)
-        gtk_label_set_text (GTK_LABEL (size_label),
-                            _("SVG file does not\nspecify a size!"));
-    }
-  else
-    {
-      if (size_label)
-        {
-          gchar *text = g_strdup_printf (_("%d × %d"), *width, *height);
-
-          gtk_label_set_text (GTK_LABEL (size_label), text);
-          g_free (text);
-        }
-    }
-
-  vals->width  = *width;
-  vals->height = *height;
-
-  /*  cancel loading  */
-  vals->resolution = 0.0;
-}
-
 /*  This function retrieves the pixel size from an SVG file. Parsing
  *  stops after the first chunk that provided the parser with enough
  *  information to determine the size. This is usally the opening
@@ -519,6 +484,7 @@ load_rsvg_size (const gchar  *filename,
   GIOChannel *io;
   GIOStatus   status  = G_IO_STATUS_NORMAL;
   gboolean    success = TRUE;
+  gboolean    done    = FALSE;
 
   io = g_io_channel_new_file (filename, "r", error);
   if (!io)
@@ -528,12 +494,14 @@ load_rsvg_size (const gchar  *filename,
 
   handle = load_rsvg_handle_new (vals->resolution, vals->resolution);
 
-  rsvg_handle_set_size_callback (handle, load_get_size_callback, vals, NULL);
+  vals->width  = SVG_DEFAULT_SIZE;
+  vals->height = SVG_DEFAULT_SIZE;
 
-  while (success && status != G_IO_STATUS_EOF && vals->resolution > 0.0)
+  while (success && status != G_IO_STATUS_EOF && (! done))
     {
-      gchar  buf[1024];
-      gsize  len;
+      gchar                 buf[1024];
+      gsize                 len;
+      RsvgDimensionData     dim = { 0, 0, 0.0, 0.0 };
 
       status = g_io_channel_read_chars (io, buf, sizeof (buf), &len, error);
 
@@ -548,11 +516,36 @@ load_rsvg_size (const gchar  *filename,
         case G_IO_STATUS_NORMAL:
           success = rsvg_handle_write (handle,
                                        (const guchar *) buf, len, error);
+          rsvg_handle_get_dimensions (handle, &dim);
+
+          if (dim.width > 0 && dim.height > 0)
+            {
+              vals->width  = dim.width;
+              vals->height = dim.height;
+
+              done = TRUE;
+            }
           break;
         case G_IO_STATUS_AGAIN:
           break;
         }
     }
+
+    if (size_label)
+      {
+        if (done)
+          {
+            gchar *text = g_strdup_printf (_("%d × %d"),
+                                           vals->width, vals->height);
+            gtk_label_set_text (GTK_LABEL (size_label), text);
+            g_free (text);
+          }
+        else
+          {
+            gtk_label_set_text (GTK_LABEL (size_label),
+                                _("SVG file does not\nspecify a size!"));
+          }
+      }
 
   g_io_channel_unref (io);
   rsvg_handle_free (handle);
