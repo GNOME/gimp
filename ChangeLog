@@ -1,5 +1,31 @@
 2007-05-03  Sven Neumann  <sven@gimp.org>
 
+	Handle the core part of bug #434274:
+
+	* app/core/gimpchannel.c (gimp_channel_real_boundary): return
+	FALSE for an empty channel.
+
+	* app/core/gimpitem.[ch]: added a progress parameter to
+	gimp_item_stroke.
+
+	* app/core/gimpchannel.c (gimp_channel_stroke)
+	* app/core/gimpselection.c (gimp_selection_stroke): pass progress
+	to gimp_message().
+
+	* app/actions/vectors-commands.c
+	* app/actions/select-commands.c
+	* app/dialogs/stroke-dialog.c
+	* app/vectors/gimpvectors.c
+	* tools/pdbgen/pdb/edit.pdb
+	* tools/pdbgen/pdb/paths.pdb: changed accordingly.
+
+	* app/pdb/edit_cmds.c
+	* app/pdb/paths_cmds.c: regenerated.
+
+	* app/core/gimplayermaskundo.c: added a missing cast.
+
+2007-05-03  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcolorframe.c (gimp_color_frame_update): hide the
 	Index label if the color index is -1 (happens with sample_average).
 

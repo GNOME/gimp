@@ -120,7 +120,8 @@ static void       gimp_channel_transform     (GimpItem         *item,
                                               GimpProgress     *progress);
 static gboolean   gimp_channel_stroke        (GimpItem         *item,
                                               GimpDrawable     *drawable,
-                                              GimpStrokeDesc   *stroke_desc);
+                                              GimpStrokeDesc   *stroke_desc,
+                                              GimpProgress     *progress);
 
 static void gimp_channel_invalidate_boundary   (GimpDrawable       *drawable);
 static void gimp_channel_get_active_components (const GimpDrawable *drawable,
@@ -670,7 +671,8 @@ gimp_channel_transform (GimpItem               *item,
 static gboolean
 gimp_channel_stroke (GimpItem       *item,
                      GimpDrawable   *drawable,
-                     GimpStrokeDesc *stroke_desc)
+                     GimpStrokeDesc *stroke_desc,
+                     GimpProgress   *progress)
 
 {
   GimpChannel    *channel = GIMP_CHANNEL (item);
@@ -685,7 +687,7 @@ gimp_channel_stroke (GimpItem       *item,
                                &n_segs_in, &n_segs_out,
                                0, 0, 0, 0))
     {
-      gimp_message (gimp_item_get_image (item)->gimp, NULL,
+      gimp_message (gimp_item_get_image (item)->gimp, G_OBJECT (progress),
                     GIMP_MESSAGE_WARNING,
                     _("Cannot stroke empty channel."));
       return FALSE;
@@ -861,16 +863,14 @@ gimp_channel_real_boundary (GimpChannel     *channel,
                             gint             x2,
                             gint             y2)
 {
-  gint        x3, y3, x4, y4;
-  PixelRegion bPR;
+  gint         x3, y3, x4, y4;
+  PixelRegion  bPR;
 
   if (! channel->boundary_known)
     {
       /* free the out of date boundary segments */
-      if (channel->segs_in)
-        g_free (channel->segs_in);
-      if (channel->segs_out)
-        g_free (channel->segs_out);
+      g_free (channel->segs_in);
+      g_free (channel->segs_out);
 
       if (gimp_channel_bounds (channel, &x3, &y3, &x4, &y4))
         {
@@ -920,7 +920,7 @@ gimp_channel_real_boundary (GimpChannel     *channel,
   *num_segs_in  = channel->num_segs_in;
   *num_segs_out = channel->num_segs_out;
 
-  return TRUE;
+  return (! channel->empty);
 }
 
 static gboolean

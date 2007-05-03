@@ -670,7 +670,7 @@ edit_stroke_invoker (GimpProcedure     *procedure,
           g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
 
           success = gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
-                                      drawable, context, desc, TRUE);
+                                      drawable, context, desc, TRUE, progress);
 
           g_object_unref (desc);
         }
@@ -704,7 +704,7 @@ edit_stroke_vectors_invoker (GimpProcedure     *procedure,
           g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
 
           success = gimp_item_stroke (GIMP_ITEM (vectors),
-                                      drawable, context, desc, TRUE);
+                                      drawable, context, desc, TRUE, progress);
 
           g_object_unref (desc);
         }

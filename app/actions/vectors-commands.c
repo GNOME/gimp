@@ -404,7 +404,7 @@ vectors_stroke_last_vals_cmd_callback (GtkAction *action,
   else
     desc = gimp_stroke_desc_new (image->gimp, context);
 
-  gimp_item_stroke (GIMP_ITEM (vectors), drawable, context, desc, FALSE);
+  gimp_item_stroke (GIMP_ITEM (vectors), drawable, context, desc, FALSE, NULL);
 
   g_object_unref (desc);
 

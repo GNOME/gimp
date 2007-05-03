@@ -347,7 +347,7 @@ select_stroke_last_vals_cmd_callback (GtkAction *action,
     desc = gimp_stroke_desc_new (image->gimp, context);
 
   gimp_item_stroke (GIMP_ITEM (gimp_image_get_mask (image)),
-                    drawable, context, desc, FALSE);
+                    drawable, context, desc, FALSE, NULL);
 
   g_object_unref (desc);
 

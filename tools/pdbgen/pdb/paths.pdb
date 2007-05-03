@@ -273,7 +273,7 @@ sub path_stroke_current {
       g_object_set (desc, "method", GIMP_STROKE_METHOD_PAINT_CORE, NULL);
 
       success = gimp_item_stroke (GIMP_ITEM (vectors),
-                                  drawable, context, desc, TRUE);
+                                  drawable, context, desc, TRUE, progress);
 
       g_object_unref (desc);
     }

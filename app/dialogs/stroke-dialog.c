@@ -299,7 +299,7 @@ stroke_dialog_response (GtkWidget  *widget,
                                 saved_desc,
                                 (GDestroyNotify) g_object_unref);
 
-        gimp_item_stroke (item, drawable, context, desc, FALSE);
+        gimp_item_stroke (item, drawable, context, desc, FALSE, NULL);
         gimp_image_flush (image);
       }
       /* fallthrough */
