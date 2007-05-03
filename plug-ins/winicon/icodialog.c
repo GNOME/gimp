@@ -103,9 +103,9 @@ ico_dialog_new (IcoSaveInfo *info)
   warning = g_object_new (GIMP_TYPE_HINT_BOX,
                           "stock-id", GIMP_STOCK_WARNING,
                           "hint",
-                          _("Large icons and compression (PNG) are not "
-                            "supported by all programs. Older applications "
-                            "may not open this file correctly."),
+                          _("Large icons and compression are not supported "
+                            "by all programs. Older applications may not "
+                            "open this file correctly."),
                           NULL);
   gtk_box_pack_end (GTK_BOX (main_vbox), warning, FALSE, FALSE, 0);
   /* don't show the warning here */
