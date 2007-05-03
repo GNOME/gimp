@@ -1,5 +1,9 @@
 2007-05-03  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/paint-funcs.c (convolve_region): minor cleanup.
+
+2007-05-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/despeckle.c: applied patch from Geert Jordaens
 	plus some minor cleanups. Fixes bug #433251.
 

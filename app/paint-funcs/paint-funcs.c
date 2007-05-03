@@ -2386,8 +2386,8 @@ convolve_region (PixelRegion         *srcR,
 {
   /*  Convolve the src image using the convolution matrix, writing to dest  */
   /*  Convolve is not tile-enabled--use accordingly  */
-  guchar       *src, *s_row, *s;
-  guchar       *dest, *d;
+  const guchar *src;
+  guchar       *dest;
   const gfloat *m;
   gdouble       total[4];
   gint          b, bytes;
@@ -2455,9 +2455,9 @@ convolve_region (PixelRegion         *srcR,
 
   for (y = margin; y < srcR->h - margin; y++)
     {
-      s_row = src;
-      s = s_row + srcR->rowstride*margin;
-      d = dest;
+      const guchar *s_row = src;
+      const guchar *s     = s_row + srcR->rowstride * margin;
+      guchar       *d     = dest;
 
       /* handle the first margin pixels... */
       b = bytes * margin;
@@ -2465,7 +2465,7 @@ convolve_region (PixelRegion         *srcR,
         *d++ = *s++;
 
       /* now, handle the center pixels */
-      x = srcR->w - margin*2;
+      x = srcR->w - margin * 2;
 
       if (alpha_weighting)
         while (x--)
@@ -2582,7 +2582,7 @@ convolve_region (PixelRegion         *srcR,
       dest += destR->rowstride;
     }
 
-  src += srcR->rowstride*margin;
+  src += srcR->rowstride * margin;
 
   /* copy the last (margin) scanlines of the src image... */
   for (i = 0; i < margin; i++)
