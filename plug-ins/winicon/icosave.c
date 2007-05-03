@@ -206,7 +206,7 @@ ico_save_init (gint32 image_ID, IcoSaveInfo *info)
           info->default_depths [i] = 32;
         }
 
-      // vista icons
+      /* vista icons */
       if (gimp_drawable_width (layers[i]) > 255
           || gimp_drawable_height (layers[i]) > 255 )
         {
@@ -245,16 +245,16 @@ ico_save_dialog (gint32          image_ID,
   /* Scale the thing to approximately fit its content, but not too large ... */
   gtk_window_set_default_size (GTK_WINDOW (dialog),
                                -1,
-                               120 + (info->num_icons > 4 ?
+                               200 + (info->num_icons > 4 ?
                                       500 : info->num_icons * 120));
 
   gtk_widget_show (dialog);
+
   response = gimp_dialog_run (GIMP_DIALOG (dialog));
+
   gtk_widget_destroy (dialog);
-  if (response == GTK_RESPONSE_OK)
-    return TRUE;
-  else
-    return FALSE;
+
+  return (response == GTK_RESPONSE_OK);
 }
 
 static void
@@ -1094,5 +1094,6 @@ ico_save_image (const gchar *filename,
 
   ico_save_info_free (&info);
   fclose (fp);
+
   return GIMP_PDB_SUCCESS;
 }

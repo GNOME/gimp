@@ -1,3 +1,10 @@
+2007-05-03  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/winicon/icosave.c
+	* plug-ins/winicon/icodialog.c: show a warning when the user is
+	about to create a file using newer features of the icon file format.
+	Loosely based on a patch from Aurimas Juška. Fixes bug #409467.
+
 2007-05-02  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimppickable.c (gimp_pickable_pick_color): reduce

@@ -33,38 +33,23 @@
 
 #include "libgimp/stdplugins-intl.h"
 
-static void   ico_bpp_changed (GtkWidget *combo,
-                               GObject   *hbox);
-static void   ico_toggle_compress (GtkWidget *checkbox,
-                                   GObject   *hbox);
-
-
-
-static GtkWidget *
-ico_preview_new (gint32 layer)
-{
-  GtkWidget *image;
-  GdkPixbuf *pixbuf;
-  gint       width  = gimp_drawable_width (layer);
-  gint       height = gimp_drawable_height (layer);
-
-  pixbuf = gimp_drawable_get_thumbnail (layer,
-                                        MIN (width, 128), MIN (height, 128),
-                                        GIMP_PIXBUF_SMALL_CHECKS);
-  image = gtk_image_new_from_pixbuf (pixbuf);
-  g_object_unref (pixbuf);
-
-  return image;
-}
+static void   ico_dialog_bpp_changed     (GtkWidget   *combo,
+                                          GObject     *hbox);
+static void   ico_dialog_toggle_compress (GtkWidget   *checkbox,
+                                          GObject     *hbox);
+static void   ico_dialog_check_compat    (GtkWidget   *dialog,
+                                          IcoSaveInfo *info);
 
 
 GtkWidget *
 ico_dialog_new (IcoSaveInfo *info)
 {
   GtkWidget *dialog;
+  GtkWidget *main_vbox;
   GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *scrolledwindow;
+  GtkWidget *warning;
 
   dialog = gimp_dialog_new (_("Save as Windows Icon"), "winicon",
                             NULL, 0,
@@ -92,10 +77,14 @@ ico_dialog_new (IcoSaveInfo *info)
 
   g_object_set_data (G_OBJECT (dialog), "save_info", info);
 
-  frame = gimp_frame_new (_("Icon Details"));
-  gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
                       TRUE, TRUE, 0);
+  gtk_widget_show (main_vbox);
+
+  frame = gimp_frame_new (_("Icon Details"));
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   scrolledwindow = gtk_scrolled_window_new (NULL, NULL);
@@ -104,14 +93,43 @@ ico_dialog_new (IcoSaveInfo *info)
   gtk_container_add (GTK_CONTAINER (frame), scrolledwindow);
   gtk_widget_show (scrolledwindow);
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   g_object_set_data (G_OBJECT (dialog), "icons_vbox", vbox);
   gtk_scrolled_window_add_with_viewport (GTK_SCROLLED_WINDOW (scrolledwindow),
                                          vbox);
   gtk_widget_show (vbox);
 
+  warning = g_object_new (GIMP_TYPE_HINT_BOX,
+                          "stock-id", GIMP_STOCK_WARNING,
+                          "hint",
+                          _("Large icons and compression (PNG) are not "
+                            "supported by all programs. Older applications "
+                            "may not open this file correctly."),
+                          NULL);
+  gtk_box_pack_end (GTK_BOX (main_vbox), warning, FALSE, FALSE, 0);
+  /* don't show the warning here */
+
+  g_object_set_data (G_OBJECT (dialog), "warning", warning);
+
   return dialog;
+}
+
+static GtkWidget *
+ico_preview_new (gint32 layer)
+{
+  GtkWidget *image;
+  GdkPixbuf *pixbuf;
+  gint       width  = gimp_drawable_width (layer);
+  gint       height = gimp_drawable_height (layer);
+
+  pixbuf = gimp_drawable_get_thumbnail (layer,
+                                        MIN (width, 128), MIN (height, 128),
+                                        GIMP_PIXBUF_SMALL_CHECKS);
+  image = gtk_image_new_from_pixbuf (pixbuf);
+  g_object_unref (pixbuf);
+
+  return image;
 }
 
 /* This function creates and returns an hbox for an icon,
@@ -167,7 +185,7 @@ ico_create_icon_hbox (GtkWidget   *icon_preview,
                                  info->depths[layer_num]);
 
   g_signal_connect (combo, "changed",
-                    G_CALLBACK (ico_bpp_changed),
+                    G_CALLBACK (ico_dialog_bpp_changed),
                     hbox);
 
   g_object_set_data (G_OBJECT (hbox), "icon_menu", combo);
@@ -179,7 +197,7 @@ ico_create_icon_hbox (GtkWidget   *icon_preview,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (checkbox),
                                 info->compress[layer_num]);
   g_signal_connect (checkbox, "toggled",
-                    G_CALLBACK (ico_toggle_compress), hbox);
+                    G_CALLBACK (ico_dialog_toggle_compress), hbox);
   gtk_box_pack_start (GTK_BOX (vbox), checkbox, FALSE, FALSE, 0);
   gtk_widget_show (checkbox);
 
@@ -419,11 +437,13 @@ ico_dialog_add_icon (GtkWidget *dialog,
   g_object_set_data (G_OBJECT (dialog), key, hbox);
 
   ico_dialog_update_icon_preview (dialog, layer, info->depths[layer_num]);
+
+  ico_dialog_check_compat (dialog, info);
 }
 
 static void
-ico_bpp_changed (GtkWidget *combo,
-                 GObject   *hbox)
+ico_dialog_bpp_changed (GtkWidget *combo,
+                        GObject   *hbox)
 {
   GtkWidget   *dialog;
   gint32       layer;
@@ -431,9 +451,7 @@ ico_bpp_changed (GtkWidget *combo,
   gint         bpp;
   IcoSaveInfo *info;
 
-
   dialog = gtk_widget_get_toplevel (combo);
-
 
   gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), &bpp);
 
@@ -450,8 +468,8 @@ ico_bpp_changed (GtkWidget *combo,
 }
 
 static void
-ico_toggle_compress (GtkWidget *checkbox,
-                     GObject   *hbox)
+ico_dialog_toggle_compress (GtkWidget *checkbox,
+                            GObject   *hbox)
 {
   GtkWidget   *dialog;
   gint         layer_num;
@@ -466,4 +484,33 @@ ico_toggle_compress (GtkWidget *checkbox,
   /* Update vector entry for later when we're actually saving */
   info->compress[layer_num] =
     gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (checkbox));
+
+  ico_dialog_check_compat (dialog, info);
+}
+
+static void
+ico_dialog_check_compat (GtkWidget   *dialog,
+                         IcoSaveInfo *info)
+{
+  GtkWidget *warning;
+  gboolean   warn = FALSE;
+  gint       i;
+
+  for (i = 0; i < info->num_icons; i++)
+    {
+      if (gimp_drawable_width (info->layers[i]) > 255
+          || gimp_drawable_height (info->layers[i]) > 255
+          || info->compress[i])
+        {
+          warn = TRUE;
+          break;
+        }
+    }
+
+  warning = g_object_get_data (G_OBJECT (dialog), "warning");
+
+  if (warn)
+    gtk_widget_show (warning);
+  else
+    gtk_widget_hide (warning);
 }
