@@ -2399,7 +2399,8 @@ convolve_region (PixelRegion         *srcR,
   gint          x, y;
   gint          offset;
   gdouble       matrixsum = 0.0;
-  gdouble       weighted_divisor, mult_alpha;
+  gdouble       weighted_divisor;
+  gdouble       mult_alpha;
 
   /*  If the mode is NEGATIVE_CONVOL, the offset should be 128  */
   if (mode == GIMP_NEGATIVE_CONVOL)
@@ -2427,12 +2428,12 @@ convolve_region (PixelRegion         *srcR,
   if (alpha_weighting)
     {
       m = matrix;
-      i = size;
 
-      while (i --)
+      i = size;
+      while (i--)
         {
           j = size;
-          while (j --)
+          while (j--)
             matrixsum += *m++;
         }
 
@@ -2461,7 +2462,7 @@ convolve_region (PixelRegion         *srcR,
 
       /* handle the first margin pixels... */
       b = bytes * margin;
-      while (b --)
+      while (b--)
         *d++ = *s++;
 
       /* now, handle the center pixels */
@@ -2473,16 +2474,16 @@ convolve_region (PixelRegion         *srcR,
             s = s_row;
 
             m = matrix;
-            total [0] = total [1] = total [2] = total [3] = 0;
+            total[0] = total[1] = total[2] = total[3] = 0;
             weighted_divisor = 0.0;
 
             i = size;
-            while (i --)
+            while (i--)
               {
                 j = size;
-                while (j --)
+                while (j--)
                   {
-                    alpha = s [a_byte];
+                    alpha = s[a_byte];
 
                     if (alpha && *m)
                       {
@@ -2490,16 +2491,16 @@ convolve_region (PixelRegion         *srcR,
                         weighted_divisor += mult_alpha;
 
                         for (b = 0; b < a_byte; b++)
-                          total [b] += mult_alpha * *s++;
+                          total[b] += mult_alpha * *s++;
 
-                        total [a_byte] += *m * *s++;
+                        total[a_byte] += *m * *s++;
                       }
                     else
                       {
                         s += bytes;
                       }
 
-                    m ++;
+                    m++;
                   }
 
                 s += wraparound;
@@ -2510,20 +2511,20 @@ convolve_region (PixelRegion         *srcR,
 
             for (b = 0; b < bytes; b++)
               {
-                total [b] /= divisor;
+                total[b] /= divisor;
 
                 if (b != a_byte)
-                  total [b] = total [b] * matrixsum / weighted_divisor;
+                  total[b] = total[b] * matrixsum / weighted_divisor;
 
-                total [b] += offset;
+                total[b] += offset;
 
-                if (total [b] < 0.0 && mode != GIMP_NORMAL_CONVOL)
-                  total [b] = - total [b];
+                if (total[b] < 0.0 && mode != GIMP_NORMAL_CONVOL)
+                  total[b] = - total[b];
 
-                if (total [b] < 0)
+                if (total[b] < 0)
                   *d++ = 0;
                 else
-                  *d++ = (total [b] > 255.0) ? 255 : (guchar) ROUND (total [b]);
+                  *d++ = (total[b] > 255.0) ? 255 : (guchar) ROUND (total[b]);
               }
 
             s_row += bytes;
@@ -2534,21 +2535,21 @@ convolve_region (PixelRegion         *srcR,
             s = s_row;
 
             m = matrix;
-            total [0] = total [1] = total [2] = total [3] = 0;
+            total[0] = total[1] = total[2] = total[3] = 0;
 
             i = size;
-            while (i --)
+            while (i--)
               {
                 j = size;
-                while (j --)
+                while (j--)
                   {
                     if (*m)
                       for (b = 0; b < bytes; b++)
-                        total [b] += *m * *s++;
+                        total[b] += *m * *s++;
                     else
                       s += bytes;
 
-                    m ++;
+                    m++;
                   }
 
                 s += wraparound;
@@ -2556,15 +2557,15 @@ convolve_region (PixelRegion         *srcR,
 
             for (b = 0; b < bytes; b++)
               {
-                total [b] = total [b] / divisor + offset;
+                total[b] = total[b] / divisor + offset;
 
-                if (total [b] < 0.0 && mode != GIMP_NORMAL_CONVOL)
-                  total [b] = - total [b];
+                if (total[b] < 0.0 && mode != GIMP_NORMAL_CONVOL)
+                  total[b] = - total[b];
 
-                if (total [b] < 0.0)
+                if (total[b] < 0.0)
                   *d++ = 0.0;
                 else
-                  *d++ = (total [b] > 255.0) ? 255 : (guchar) ROUND (total [b]);
+                  *d++ = (total[b] > 255.0) ? 255 : (guchar) ROUND (total[b]);
               }
 
             s_row += bytes;
@@ -2574,7 +2575,7 @@ convolve_region (PixelRegion         *srcR,
       s = s_row + (srcR->rowstride + bytes) * margin;
       b = bytes * margin;
 
-      while (b --)
+      while (b--)
         *d++ = *s++;
 
       /* set the memory pointers */
@@ -2694,7 +2695,8 @@ gaussian_blur_region (PixelRegion *srcR,
   gint    val;
   gint    length;
   gint    alpha;
-  gint    initial_p, initial_m;
+  gint    initial_p;
+  gint    initial_m;
 
   if (radius_x == 0.0 && radius_y == 0.0)
     return;
@@ -4017,7 +4019,7 @@ swap_region (PixelRegion *src,
       gint    pixels = src->w * src->bytes;
       gint    h      = src->h;
 
-      while (h --)
+      while (h--)
         {
           swap_pixels (s, d, pixels);
 
