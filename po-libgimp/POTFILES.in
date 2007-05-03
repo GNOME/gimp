@@ -50,7 +50,6 @@ libgimpwidgets/gimppreviewarea.c
 libgimpwidgets/gimppreview.c
 libgimpwidgets/gimppropwidgets.c
 libgimpwidgets/gimpquerybox.c
-libgimpwidgets/gimpresolutionentry.c
 libgimpwidgets/gimpstock.c
 libgimpwidgets/gimpunitmenu.c
 libgimpwidgets/gimpwidgets.c

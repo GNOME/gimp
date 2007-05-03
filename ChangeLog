@@ -1,3 +1,7 @@
+2007-05-04  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpwidgets.def: removed resolution entry symbols.
+
 2007-05-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* libgimpwidgets/gimpresolutionentry.[ch]: removed
