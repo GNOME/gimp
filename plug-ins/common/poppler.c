@@ -88,6 +88,176 @@ static gint32            layer_from_pixbuf (gint32                  image,
                                             gdouble                 progress_start,
                                             gdouble                 progress_scale);
 
+/**
+ ** the following was formerly part of
+ ** gimpresolutionentry.h and gimpresolutionentry.c,
+ ** moved here because this is the only thing that uses
+ ** it, and it is undesirable to maintain all that api.
+ ** Most unused functions have been removed.
+ **/
+#define GIMP_TYPE_RESOLUTION_ENTRY            (gimp_resolution_entry_get_type ())
+#define GIMP_RESOLUTION_ENTRY(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_RESOLUTION_ENTRY, GimpResolutionEntry))
+#define GIMP_RESOLUTION_ENTRY_CLASS(klass)    (G_TYPE_CHECK_CLASS_CAST ((klass), GIMP_TYPE_RESOLUTION_ENTRY, GimpResolutionEntryClass))
+#define GIMP_IS_RESOLUTION_ENTRY(obj)         (G_TYPE_CHECK_INSTANCE_TYPE (obj, GIMP_TYPE_RESOLUTION_ENTRY))
+#define GIMP_IS_RESOLUTION_ENTRY_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_RESOLUTION_ENTRY))
+#define GIMP_RESOLUTION_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_RESOLUTION_ENTRY, GimpResolutionEntryClass))
+
+
+typedef struct _GimpResolutionEntryClass  GimpResolutionEntryClass;
+
+typedef struct _GimpResolutionEntryField  GimpResolutionEntryField;
+
+struct _GimpResolutionEntryField
+{
+  GimpResolutionEntry      *gre;
+  GimpResolutionEntryField *corresponding;
+
+  gboolean       size;
+
+  GtkWidget     *label;
+
+  guint          changed_signal;
+
+  GtkObject     *adjustment;
+  GtkWidget     *spinbutton;
+
+  gdouble        phy_size;
+
+  gdouble        value;
+  gdouble        min_value;
+  gdouble        max_value;
+
+  gint           stop_recursion;
+};
+
+
+struct _GimpResolutionEntry
+{
+  GtkTable   parent_instance;
+
+
+  GimpUnit                  size_unit;
+  GimpUnit                  unit;
+  gboolean                  independent;
+
+  GtkWidget                *unitmenu;
+  GtkWidget                *chainbutton;
+
+  GimpResolutionEntryField  width;
+  GimpResolutionEntryField  height;
+  GimpResolutionEntryField  x;
+  GimpResolutionEntryField  y;
+
+};
+
+struct _GimpResolutionEntryClass
+{
+  GtkTableClass  parent_class;
+
+  void (* value_changed)  (GimpResolutionEntry *gse);
+  void (* refval_changed) (GimpResolutionEntry *gse);
+  void (* unit_changed)   (GimpResolutionEntry *gse);
+
+  /* Padding for future expansion */
+  void (* _gimp_reserved1) (void);
+  void (* _gimp_reserved2) (void);
+  void (* _gimp_reserved3) (void);
+  void (* _gimp_reserved4) (void);
+};
+
+
+/* For information look into the C source or the html documentation */
+
+GType       gimp_resolution_entry_get_type (void) G_GNUC_CONST;
+
+GtkWidget * gimp_resolution_entry_new          (const gchar   *width_label,
+                                                gdouble        width,
+                                                const gchar   *height_label,
+                                                gdouble        height,
+                                                GimpUnit       size_unit,
+                                                const gchar   *x_label,
+                                                gdouble        initial_x,
+                                                const gchar   *y_label,
+                                                gdouble        initial_y,
+                                                GimpUnit       intial_unit,
+                                                gboolean       independent,
+                                                gint           spinbutton_width);
+
+GtkWidget * gimp_resolution_entry_attach_label (GimpResolutionEntry *gre,
+                                                const gchar         *text,
+                                                gint                 row,
+                                                gint                 column,
+                                                gfloat               alignment);
+
+gdouble gimp_resolution_entry_get_x_in_dpi     (GimpResolutionEntry *gre);
+
+gdouble gimp_resolution_entry_get_y_in_dpi     (GimpResolutionEntry *gre);
+
+
+/* signal callback convenience functions */
+void        gimp_resolution_entry_update_x_in_dpi (GimpResolutionEntry *gre,
+                                                   gpointer             data);
+
+void        gimp_resolution_entry_update_y_in_dpi (GimpResolutionEntry *gre,
+                                                   gpointer             data);
+
+#define SIZE_MAX_VALUE 500000.0
+
+#define GIMP_RESOLUTION_ENTRY_DIGITS(unit) \
+  (MIN (gimp_unit_get_digits (unit), 5) + 1)
+
+
+enum
+{
+  WIDTH_CHANGED,
+  HEIGHT_CHANGED,
+  X_CHANGED,
+  Y_CHANGED,
+  UNIT_CHANGED,
+  LAST_SIGNAL
+};
+
+static void   gimp_resolution_entry_class_init      (GimpResolutionEntryClass *class);
+static void   gimp_resolution_entry_init            (GimpResolutionEntry      *gre);
+
+static void   gimp_resolution_entry_finalize        (GObject            *object);
+
+static void   gimp_resolution_entry_update_value    (GimpResolutionEntryField *gref,
+                                                     gdouble              value);
+static void   gimp_resolution_entry_value_callback  (GtkWidget           *widget,
+                                                     gpointer             data);
+static void   gimp_resolution_entry_update_unit     (GimpResolutionEntry *gre,
+                                                     GimpUnit             unit);
+static void   gimp_resolution_entry_unit_callback   (GtkWidget           *widget,
+                                                     GimpResolutionEntry *gre);
+
+static void   gimp_resolution_entry_field_init (GimpResolutionEntry      *gre,
+                                                GimpResolutionEntryField *gref,
+                                                GimpResolutionEntryField *corresponding,
+                                                guint                     changed_signal,
+                                                gdouble                   initial_val,
+                                                GimpUnit                  initial_unit,
+                                                gboolean                  size,
+                                                gint                      spinbutton_width);
+
+
+static void gimp_resolution_entry_field_set_boundaries
+                                           (GimpResolutionEntryField *gref,
+                                            gdouble                   lower,
+                                            gdouble                   upper);
+
+static void gimp_resolution_entry_field_set_value
+                                           (GimpResolutionEntryField *gref,
+                                            gdouble                   value);
+
+static void  gimp_resolution_entry_format_label (GimpResolutionEntry *gre,
+                                                 GtkWidget           *label,
+                                                 gdouble              size);
+
+/**
+ ** end of gimpresolutionentry stuff
+ ** the actual code can be found at the end of this file
+ **/
 const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */
@@ -732,4 +902,690 @@ load_dialog (PopplerDocument  *doc,
   g_thread_join (thread);
 
   return run;
+}
+
+
+/**
+ ** code for GimpResolutionEntry widget, formerly in libgimpwidgets
+ **/static guint gimp_resolution_entry_signals[LAST_SIGNAL] = { 0 };
+
+static GtkTableClass *parent_class = NULL;
+
+
+GType
+gimp_resolution_entry_get_type (void)
+{
+  static GType gre_type = 0;
+
+  if (! gre_type)
+    {
+      const GTypeInfo gre_info =
+      {
+        sizeof (GimpResolutionEntryClass),
+        (GBaseInitFunc) NULL,
+        (GBaseFinalizeFunc) NULL,
+        (GClassInitFunc) gimp_resolution_entry_class_init,
+        NULL,                /* class_finalize */
+        NULL,                /* class_data     */
+        sizeof (GimpResolutionEntry),
+        0,              /* n_preallocs    */
+        (GInstanceInitFunc) gimp_resolution_entry_init,
+      };
+
+      gre_type = g_type_register_static (GTK_TYPE_TABLE,
+                                         "GimpResolutionEntry",
+                                         &gre_info, 0);
+    }
+
+  return gre_type;
+}
+
+static void
+gimp_resolution_entry_class_init (GimpResolutionEntryClass *klass)
+{
+  GObjectClass *object_class;
+
+  object_class = G_OBJECT_CLASS (klass);
+
+  parent_class = g_type_class_peek_parent (klass);
+
+  gimp_resolution_entry_signals[HEIGHT_CHANGED] =
+    g_signal_new ("height-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpResolutionEntryClass, value_changed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  gimp_resolution_entry_signals[WIDTH_CHANGED] =
+    g_signal_new ("width-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpResolutionEntryClass, value_changed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  gimp_resolution_entry_signals[X_CHANGED] =
+    g_signal_new ("x-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpResolutionEntryClass, value_changed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  gimp_resolution_entry_signals[Y_CHANGED] =
+    g_signal_new ("y-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpResolutionEntryClass, refval_changed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  gimp_resolution_entry_signals[UNIT_CHANGED] =
+    g_signal_new ("unit-changed",
+                  G_TYPE_FROM_CLASS (klass),
+                  G_SIGNAL_RUN_FIRST,
+                  G_STRUCT_OFFSET (GimpResolutionEntryClass, unit_changed),
+                  NULL, NULL,
+                  g_cclosure_marshal_VOID__VOID,
+                  G_TYPE_NONE, 0);
+
+  object_class->finalize = gimp_resolution_entry_finalize;
+
+  klass->value_changed   = NULL;
+  klass->refval_changed  = NULL;
+  klass->unit_changed    = NULL;
+}
+
+static void
+gimp_resolution_entry_init (GimpResolutionEntry *gre)
+{
+  gre->unitmenu     = NULL;
+  gre->unit         = GIMP_UNIT_INCH;
+  gre->independent  = FALSE;
+
+  gtk_table_set_col_spacings (GTK_TABLE (gre), 4);
+  gtk_table_set_row_spacings (GTK_TABLE (gre), 2);
+}
+
+static void
+gimp_resolution_entry_finalize (GObject *object)
+{
+  GimpResolutionEntry *gre;
+
+  g_return_if_fail (GIMP_IS_RESOLUTION_ENTRY (object));
+
+  gre = GIMP_RESOLUTION_ENTRY (object);
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
+}
+
+static void
+gimp_resolution_entry_field_init (GimpResolutionEntry      *gre,
+                                  GimpResolutionEntryField *gref,
+                                  GimpResolutionEntryField *corresponding,
+                                  guint                     changed_signal,
+                                  gdouble                   initial_val,
+                                  GimpUnit                  initial_unit,
+                                  gboolean                  size,
+                                  gint                      spinbutton_width)
+{
+  gint digits;
+
+  g_return_if_fail (GIMP_IS_RESOLUTION_ENTRY (gre));
+
+  gref->gre               = gre;
+  gref->corresponding     = corresponding;
+  gref->changed_signal    = gimp_resolution_entry_signals[changed_signal];
+
+  if (size)
+    {
+      gref->value         = initial_val /
+                            gimp_unit_get_factor (initial_unit) *
+                            corresponding->value *
+                            gimp_unit_get_factor (gre->unit);
+
+      gref->phy_size      = initial_val /
+                            gimp_unit_get_factor (initial_unit);
+    }
+  else
+    gref->value           = initial_val;
+
+  gref->min_value         = GIMP_MIN_RESOLUTION;
+  gref->max_value         = GIMP_MAX_RESOLUTION;
+  gref->adjustment        = NULL;
+
+  gref->stop_recursion    = 0;
+
+  gref->size              = size;
+
+  if (size)
+    {
+      gref->label = g_object_new (GTK_TYPE_LABEL,
+                                  "xalign", 0.0,
+                                  "yalign", 0.5,
+                                  NULL);
+      gimp_label_set_attributes (GTK_LABEL (gref->label),
+                                 PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                                 -1);
+
+      gimp_resolution_entry_format_label (gre, gref->label, gref->phy_size);
+    }
+
+  digits = size ? 0 : GIMP_RESOLUTION_ENTRY_DIGITS (initial_unit);
+
+  gref->spinbutton = gimp_spin_button_new (&gref->adjustment,
+                                            gref->value,
+                                            gref->min_value,
+                                            gref->max_value,
+                                            1.0, 10.0, 0.0,
+                                            1.0,
+                                            digits);
+
+
+  if (spinbutton_width > 0)
+    {
+      if (spinbutton_width < 17)
+        gtk_entry_set_width_chars (GTK_ENTRY (gref->spinbutton),
+                                   spinbutton_width);
+      else
+        gtk_widget_set_size_request (gref->spinbutton,
+                                     spinbutton_width, -1);
+    }
+}
+
+/**
+ * gimp_resolution_entry_new:
+ * @width_label:       Optional label for the width control.
+ * @width:             Width of the item, specified in terms of @size_unit.
+ * @height_label:      Optional label for the height control.
+ * @height:            Height of the item, specified in terms of @size_unit.
+ * @size_unit:         Unit used to specify the width and height.
+ * @x_label:           Optional label for the X resolution entry.
+ * @initial_x:         The initial X resolution.
+ * @y_label:           Optional label for the Y resolution entry.  Ignored if
+ *                     @independent is %FALSE.
+ * @initial_y:         The initial Y resolution.  Ignored if @independent is
+ *                     %FALSE.
+ * @initial_unit:      The initial unit.
+ * @independent:       Whether the X and Y resolutions can be different values.
+ * @spinbutton_width:  The minimal horizontal size of the #GtkSpinButton s.
+ *
+ * Creates a new #GimpResolutionEntry widget.
+ *
+ * The #GimpResolutionEntry is derived from #GtkTable and will have
+ * an empty border of one cell width on each side plus an empty column left
+ * of the #GimpUnitMenu to allow the caller to add labels or other widgets.
+ *
+ * A #GimpChainButton is displayed if independent is set to %TRUE.
+ *
+ * Returns: A pointer to the new #GimpResolutionEntry widget.
+ *
+ * Since: GIMP 2.4
+ **/
+GtkWidget *
+gimp_resolution_entry_new (const gchar *width_label,
+                           gdouble      width,
+                           const gchar *height_label,
+                           gdouble      height,
+                           GimpUnit     size_unit,
+                           const gchar *x_label,
+                           gdouble      initial_x,
+                           const gchar *y_label,
+                           gdouble      initial_y,
+                           GimpUnit     initial_unit,
+                           gboolean     independent,
+                           gint         spinbutton_width)
+{
+  GimpResolutionEntry *gre;
+
+  gre = g_object_new (GIMP_TYPE_RESOLUTION_ENTRY, NULL);
+
+  gre->unit        = initial_unit;
+  gre->independent = independent;
+
+  gtk_table_resize (GTK_TABLE (gre),
+                    independent ? 5 : 4,
+                    4);
+
+  gimp_resolution_entry_field_init (gre, &gre->x,
+                                    &gre->width,
+                                    X_CHANGED,
+                                    initial_x, initial_unit,
+                                    FALSE,
+                                    spinbutton_width);
+
+  gtk_table_attach_defaults (GTK_TABLE (gre), gre->x.spinbutton,
+                             1, 2,
+                             3, 4);
+
+  g_signal_connect (gre->x.adjustment, "value-changed",
+                    G_CALLBACK (gimp_resolution_entry_value_callback),
+                    &gre->x);
+
+  gtk_widget_show (gre->x.spinbutton);
+
+  if (independent)
+    {
+      gre->chainbutton = gimp_chain_button_new (GIMP_CHAIN_RIGHT);
+
+      gtk_table_attach (GTK_TABLE (gre), gre->chainbutton,
+                        2, 3,
+                        3, 5,
+                        GTK_SHRINK, GTK_SHRINK | GTK_FILL,
+                        0, 0);
+
+      gtk_widget_show (gre->chainbutton);
+
+      gimp_resolution_entry_field_init (gre, &gre->y,
+                                        &gre->height,
+                                        Y_CHANGED,
+                                        initial_y, initial_unit,
+                                        FALSE,
+                                        spinbutton_width);
+
+      gtk_table_attach_defaults (GTK_TABLE (gre), gre->y.spinbutton,
+                                 1, 2,
+                                 4, 5);
+
+      g_signal_connect (gre->y.adjustment, "value-changed",
+                        G_CALLBACK (gimp_resolution_entry_value_callback),
+                        &gre->y);
+
+      gtk_widget_show (gre->y.spinbutton);
+    }
+
+  gre->unitmenu = gimp_unit_menu_new (_("pixels/%s"), initial_unit,
+                                      FALSE, FALSE,
+                                      TRUE);
+  gtk_table_attach (GTK_TABLE (gre), gre->unitmenu,
+                    3, 4,
+                    independent ? 4 : 3, independent ? 5 : 4,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  g_signal_connect (gre->unitmenu, "unit-changed",
+                    G_CALLBACK (gimp_resolution_entry_unit_callback),
+                    gre);
+  gtk_widget_show (gre->unitmenu);
+
+  gimp_resolution_entry_field_init (gre, &gre->width,
+                                    &gre->x,
+                                    WIDTH_CHANGED,
+                                    width, size_unit,
+                                    TRUE,
+                                    spinbutton_width);
+
+  gtk_table_attach_defaults (GTK_TABLE (gre), gre->width.spinbutton,
+                             1, 2,
+                             1, 2);
+
+  gtk_table_attach_defaults (GTK_TABLE (gre), gre->width.label,
+                             3, 4,
+                             1, 2);
+
+  g_signal_connect (gre->width.adjustment, "value-changed",
+                    G_CALLBACK (gimp_resolution_entry_value_callback),
+                    &gre->width);
+
+  gtk_widget_show (gre->width.spinbutton);
+  gtk_widget_show (gre->width.label);
+
+  gimp_resolution_entry_field_init (gre, &gre->height,
+                                    independent ? &gre->y : &gre->x,
+                                    HEIGHT_CHANGED,
+                                    height, size_unit,
+                                    TRUE,
+                                    spinbutton_width);
+
+  gtk_table_attach_defaults (GTK_TABLE (gre), gre->height.spinbutton,
+                             1, 2,
+                             2, 3);
+
+  gtk_table_attach_defaults (GTK_TABLE (gre), gre->height.label,
+                             3, 4,
+                             2, 3);
+
+  g_signal_connect (gre->height.adjustment, "value-changed",
+                    G_CALLBACK (gimp_resolution_entry_value_callback),
+                    &gre->height);
+
+  gtk_widget_show (gre->height.spinbutton);
+  gtk_widget_show (gre->height.label);
+
+  if (width_label)
+    gimp_resolution_entry_attach_label (gre, width_label,  1, 0, 0.0);
+
+  if (height_label)
+    gimp_resolution_entry_attach_label (gre, height_label, 2, 0, 0.0);
+
+  if (x_label)
+    gimp_resolution_entry_attach_label (gre, x_label,      3, 0, 0.0);
+
+  if (independent && y_label)
+    gimp_resolution_entry_attach_label (gre, y_label,      4, 0, 0.0);
+
+  return GTK_WIDGET (gre);
+}
+
+/**
+ * gimp_resolution_entry_attach_label:
+ * @gre:       The #GimpResolutionEntry you want to add a label to.
+ * @text:      The text of the label.
+ * @row:       The row where the label will be attached.
+ * @column:    The column where the label will be attached.
+ * @alignment: The horizontal alignment of the label.
+ *
+ * Attaches a #GtkLabel to the #GimpResolutionEntry (which is a #GtkTable).
+ *
+ * Returns: A pointer to the new #GtkLabel widget.
+ *
+ * Since: GIMP 2.4
+ **/
+GtkWidget *
+gimp_resolution_entry_attach_label (GimpResolutionEntry *gre,
+                                    const gchar         *text,
+                                    gint                 row,
+                                    gint                 column,
+                                    gfloat               alignment)
+{
+  GtkWidget *label;
+
+  g_return_val_if_fail (GIMP_IS_RESOLUTION_ENTRY (gre), NULL);
+  g_return_val_if_fail (text != NULL, NULL);
+
+  label = gtk_label_new_with_mnemonic (text);
+
+  if (column == 0)
+    {
+      GtkTableChild *child;
+      GList         *list;
+
+      for (list = GTK_TABLE (gre)->children; list; list = g_list_next (list))
+        {
+          child = list->data;
+
+          if (child->left_attach == 1 && child->top_attach == row)
+            {
+              gtk_label_set_mnemonic_widget (GTK_LABEL (label),
+                                             child->widget);
+              break;
+            }
+        }
+    }
+
+  gtk_misc_set_alignment (GTK_MISC (label), alignment, 0.5);
+
+  gtk_table_attach (GTK_TABLE (gre), label, column, column+1, row, row+1,
+                    GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+  gtk_widget_show (label);
+
+  return label;
+}
+
+static void
+gimp_resolution_entry_field_set_boundaries (GimpResolutionEntryField *gref,
+                                            gdouble                   lower,
+                                            gdouble                   upper)
+{
+  g_return_if_fail (lower <= upper);
+
+  gref->min_value        = lower;
+  gref->max_value        = upper;
+
+  GTK_ADJUSTMENT (gref->adjustment)->lower = gref->min_value;
+  GTK_ADJUSTMENT (gref->adjustment)->upper = gref->max_value;
+
+  if (gref->value > upper || gref->value < lower)
+    gimp_resolution_entry_field_set_value (gref, gref->value);
+}
+
+/**
+ * gimp_resolution_entry_get_x_in_dpi;
+ * @gre:   The #GimpResolutionEntry you want to know the resolution of.
+ *
+ * Returns the X resolution of the #GimpResolutionEntry in pixels per inch.
+ *
+ * SeeAlso: gimp_resolution_get_x
+ *
+ * Since: GIMP 2.4
+ **/
+
+gdouble
+gimp_resolution_entry_get_x_in_dpi (GimpResolutionEntry *gre)
+{
+  g_return_val_if_fail (GIMP_IS_RESOLUTION_ENTRY (gre), 0);
+
+  return gre->x.value / gimp_unit_get_factor (gre->unit);
+}
+
+/**
+ * gimp_resolution_entry_get_y_in_dpi;
+ * @gre:   The #GimpResolutionEntry you want to know the resolution of.
+ *
+ * Returns the Y resolution of the #GimpResolutionEntry in pixels per inch.
+ *
+ * SeeAlso: gimp_resolution_get_y
+ *
+ * Since: GIMP 2.4
+ **/
+
+gdouble
+gimp_resolution_entry_get_y_in_dpi (GimpResolutionEntry *gre)
+{
+  g_return_val_if_fail (GIMP_IS_RESOLUTION_ENTRY (gre), 0);
+
+  return gre->y.value / gimp_unit_get_factor (gre->unit);
+}
+
+
+static void
+gimp_resolution_entry_update_value (GimpResolutionEntryField *gref,
+                                    gdouble                   value)
+{
+  if (gref->stop_recursion > 0)
+    return;
+
+  gref->value = value;
+
+  gref->stop_recursion++;
+
+  if (gref->gre->independent &&
+      !gref->size &&
+      gimp_chain_button_get_active (GIMP_CHAIN_BUTTON (gref->gre->chainbutton)))
+    {
+      gimp_resolution_entry_update_value (&gref->gre->x, value);
+      gimp_resolution_entry_update_value (&gref->gre->y, value);
+    }
+
+  if (gref->size)
+    gimp_resolution_entry_update_value (gref->corresponding,
+                                        gref->value /
+                                          gref->phy_size /
+                                          gimp_unit_get_factor (gref->gre->unit));
+  else
+    {
+      gdouble factor = gimp_unit_get_factor (gref->gre->unit);
+
+      if (gref->gre->independent)
+        gimp_resolution_entry_update_value (gref->corresponding,
+                                            gref->value *
+                                              gref->corresponding->phy_size *
+                                              factor);
+      else
+        {
+          gimp_resolution_entry_update_value (&gref->gre->width,
+                                              gref->value *
+                                                gref->gre->width.phy_size *
+                                                factor);
+
+          gimp_resolution_entry_update_value (&gref->gre->height,
+                                                gref->value *
+                                                gref->gre->height.phy_size *
+                                                factor);
+        }
+    }
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (gref->adjustment), value);
+
+  gref->stop_recursion--;
+
+  g_signal_emit (gref->gre, gref->changed_signal, 0);
+}
+
+static void
+gimp_resolution_entry_field_set_value (GimpResolutionEntryField *gref,
+                                       gdouble                   value)
+{
+  value = CLAMP (value, gref->min_value, gref->max_value);
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (gref->adjustment), value);
+  gimp_resolution_entry_update_value (gref, value);
+}
+
+static void
+gimp_resolution_entry_value_callback (GtkWidget *widget,
+                                  gpointer   data)
+{
+  GimpResolutionEntryField *gref;
+  gdouble             new_value;
+
+  gref = (GimpResolutionEntryField *) data;
+
+  new_value = GTK_ADJUSTMENT (widget)->value;
+
+  if (gref->value != new_value)
+    gimp_resolution_entry_update_value (gref, new_value);
+}
+
+static void
+gimp_resolution_entry_update_unit (GimpResolutionEntry *gre,
+                                   GimpUnit             unit)
+{
+  GimpUnit  old_unit;
+  gint      digits;
+  gdouble   factor;
+
+  old_unit  = gre->unit;
+  gre->unit = unit;
+
+  digits = (gimp_unit_get_digits (GIMP_UNIT_INCH) -
+            gimp_unit_get_digits (unit));
+
+  gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gre->x.spinbutton),
+                              MAX (3 + digits, 3));
+
+
+  factor = gimp_unit_get_factor (old_unit) / gimp_unit_get_factor (unit);
+
+  gre->x.min_value *= factor;
+  gre->x.max_value *= factor;
+  gre->x.value     *= factor;
+
+  gtk_adjustment_set_value (GTK_ADJUSTMENT (gre->x.adjustment),
+                            gre->x.value);
+
+
+  if (gre->independent)
+    {
+      gtk_spin_button_set_digits (GTK_SPIN_BUTTON (gre->y.spinbutton),
+                                  MAX (3 + digits, 3));
+
+      gre->y.min_value *= factor;
+      gre->y.max_value *= factor;
+      gre->y.value     *= factor;
+
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (gre->y.adjustment),
+                                gre->y.value);
+    }
+
+
+  gimp_resolution_entry_format_label (gre,
+                                      gre->width.label, gre->width.phy_size);
+  gimp_resolution_entry_format_label (gre,
+                                      gre->height.label, gre->height.phy_size);
+
+  g_signal_emit (gre, gimp_resolution_entry_signals[UNIT_CHANGED], 0);
+}
+
+static void
+gimp_resolution_entry_unit_callback (GtkWidget           *widget,
+                                     GimpResolutionEntry *gre)
+{
+  GimpUnit new_unit;
+
+  new_unit = gimp_unit_menu_get_unit (GIMP_UNIT_MENU (widget));
+
+  if (gre->unit != new_unit)
+    gimp_resolution_entry_update_unit (gre, new_unit);
+}
+
+/**
+ * gimp_resolution_entry_update_x_in_dpi:
+ * @gre: the #GimpResolutionEntry
+ * @data: a pointer to a gdouble
+ *
+ * Convenience function to set a double to the X resolution, suitable
+ * for use as a signal callback.
+ *
+ * Since: GIMP 2.4
+ */
+
+void
+gimp_resolution_entry_update_x_in_dpi (GimpResolutionEntry *gre,
+                                       gpointer             data)
+{
+  gdouble *val;
+
+  g_return_if_fail (gre  != NULL);
+  g_return_if_fail (data != NULL);
+  g_return_if_fail (GIMP_IS_RESOLUTION_ENTRY (gre));
+
+  val = (gdouble *) data;
+
+  *val = gimp_resolution_entry_get_x_in_dpi (gre);
+}
+
+/**
+ * gimp_resolution_entry_update_y_in_dpi:
+ * @gre: the #GimpResolutionEntry
+ * @data: a pointer to a gdouble
+ *
+ * Convenience function to set a double to the Y resolution, suitable
+ * for use as a signal callback.
+ *
+ * Since: GIMP 2.4
+ */
+
+void
+gimp_resolution_entry_update_y_in_dpi (GimpResolutionEntry *gre,
+                                       gpointer             data)
+{
+  gdouble *val;
+
+  g_return_if_fail (gre  != NULL);
+  g_return_if_fail (data != NULL);
+  g_return_if_fail (GIMP_IS_RESOLUTION_ENTRY (gre));
+
+  val = (gdouble *) data;
+
+  *val = gimp_resolution_entry_get_y_in_dpi (gre);
+}
+
+static void
+gimp_resolution_entry_format_label (GimpResolutionEntry *gre,
+                                    GtkWidget           *label,
+                                    gdouble              size)
+{
+  gchar *format = g_strdup_printf ("%%.%df %%s",
+                                   gimp_unit_get_digits (gre->unit));
+  gchar *text = g_strdup_printf (format,
+                                 size * gimp_unit_get_factor (gre->unit),
+                                 gimp_unit_get_plural (gre->unit));
+  g_free (format);
+
+  gtk_label_set_text (GTK_LABEL (label), text);
+  g_free (text);
 }

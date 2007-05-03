@@ -144,8 +144,6 @@ libgimpwidgets_2_0_la_sources = \
 	gimpquerybox.h		\
 	gimpratioentry.c	\
 	gimpratioentry.h	\
-	gimpresolutionentry.c   \
-	gimpresolutionentry.h   \
 	gimpscrolledpreview.c	\
 	gimpscrolledpreview.h	\
 	gimpsizeentry.c		\
@@ -217,7 +215,6 @@ libgimpwidgetsinclude_HEADERS = \
 	gimppropwidgets.h	\
 	gimpquerybox.h		\
 	gimpratioentry.h	\
-	gimpresolutionentry.h   \
 	gimpscrolledpreview.h	\
 	gimpsizeentry.h		\
 	gimpstock.h		\

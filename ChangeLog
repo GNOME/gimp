@@ -1,3 +1,16 @@
+2007-05-03  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
+
+	* libgimpwidgets/gimpresolutionentry.[ch]: removed
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/Makefile.am: changed accordingly
+
+	* plug-ins/pygimp/gimpui.defs: resolution entry api removed
+
+	* plug-ins/common/poppler.c: resolution entry code added
+	here, with unused api removed.
+
+	Addresses (maybe fixes) bug #351281.
+	
 2007-05-03  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c (convolve_region): minor cleanup.

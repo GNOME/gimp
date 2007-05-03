@@ -64,7 +64,6 @@
 #include <libgimpwidgets/gimppropwidgets.h>
 #include <libgimpwidgets/gimpquerybox.h>
 #include <libgimpwidgets/gimpratioentry.h>
-#include <libgimpwidgets/gimpresolutionentry.h>
 #include <libgimpwidgets/gimpscrolledpreview.h>
 #include <libgimpwidgets/gimpsizeentry.h>
 #include <libgimpwidgets/gimpstock.h>
