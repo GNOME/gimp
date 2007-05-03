@@ -1,5 +1,10 @@
 2007-05-03  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcolorframe.c (gimp_color_frame_update): hide the
+	Index label if the color index is -1 (happens with sample_average).
+
+2007-05-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/winicon/icosave.c
 	* plug-ins/winicon/icodialog.c: show a warning when the user is
 	about to create a file using newer features of the icon file format.

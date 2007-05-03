@@ -420,10 +420,16 @@ gimp_color_frame_update (GimpColorFrame *frame)
       switch (GIMP_IMAGE_TYPE_BASE_TYPE (frame->sample_type))
         {
         case GIMP_INDEXED:
-          names[4]  = _("Index:");
+          names[4] = _("Index:");
 
           if (frame->sample_valid)
-            values[4] = g_strdup_printf ("%d", frame->color_index);
+            {
+              /* color_index will be -1 for an averaged sample */
+              if (frame->color_index < 0)
+                names[4] = NULL;
+              else
+                values[4] = g_strdup_printf ("%d", frame->color_index);
+            }
           /* fallthrough */
 
         case GIMP_RGB:
