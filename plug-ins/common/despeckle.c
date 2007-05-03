@@ -50,8 +50,10 @@
 #define white_level      (despeckle_vals[3])    /* White level */
 #define update_toggle    (despeckle_vals[4])    /* Update the preview? */
 
-#define VALUE_SWAP(a,b)   { register  gdouble t = (a); (a) = (b); (b) = t; }
-#define POINTER_SWAP(a,b) { register  guchar *t = (a); (a) = (b); (b) = t; }
+#define VALUE_SWAP(a,b)   \
+  { register gdouble t = (a); (a) = (b); (b) = t; }
+#define POINTER_SWAP(a,b) \
+  { register const guchar *t = (a); (a) = (b); (b) = t; }
 
 
 
@@ -84,7 +86,7 @@ static void      dialog_recursive_callback (GtkWidget     *widget,
 
 static void      preview_update            (GtkWidget     *preview);
 
-static gint      quick_median_select       (guchar       **p,
+static gint      quick_median_select       (const guchar **p,
                                             guchar        *i,
                                             gint           n);
 static inline guchar  pixel_luminance      (const guchar  *p,
@@ -139,8 +141,8 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable", "Input drawable" },
     { GIMP_PDB_INT32,    "radius",   "Filter box radius (default = 3)" },
     { GIMP_PDB_INT32,    "type",     "Filter type (0 = median, 1 = adaptive, 2 = recursive-median, 3 = recursive-adaptive)" },
-    { GIMP_PDB_INT32,    "black",    "Black level (0 to 255)" },
-    { GIMP_PDB_INT32,    "white",    "White level (0 to 255)" }
+    { GIMP_PDB_INT32,    "black",    "Black level (-1 to 255)" },
+    { GIMP_PDB_INT32,    "white",    "White level (0 to 256)" }
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
@@ -372,6 +374,7 @@ despeckle (void)
 }
 
 
+
 /*
  * 'despeckle_dialog()' - Popup a dialog window for the filter box size...
  */
@@ -475,7 +478,7 @@ despeckle_dialog (void)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                               _("_Black level:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              black_level, 0, 255, 1, 8, 0,
+                              black_level, -1, 255, 1, 8, 0,
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value-changed",
@@ -491,7 +494,7 @@ despeckle_dialog (void)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 2,
                               _("_White level:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              white_level, 0, 255, 1, 8, 0,
+                              white_level, 0, 256, 1, 8, 0,
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value-changed",
@@ -591,79 +594,84 @@ despeckle_median (guchar   *src,
                   gint      radius,
                   gboolean  preview)
 {
-  guchar **buf;
-  guchar  *ibuf;
-  guchar  *pixel;
-  guint    progress;
-  guint    max_progress;
-  gint     x, y;
-  gint     u, v;
-  gint     diameter;
-  gint     box;
+  const guchar **buf;
+  guchar        *ibuf;
+  guint          progress;
+  guint          max_progress;
+  gint           x, y;
+  gint           u, v;
+  gint           diameter;
+  gint           box;
+  gint           pos;
 
   progress     = 0;
   max_progress = width * height;
 
   diameter = (2 * radius) + 1;
   box      = SQR (diameter);
-  buf      = g_new (guchar *, box);
+  buf      = g_new (const guchar *, box);
   ibuf     = g_new (guchar, box);
 
   if (! preview)
     gimp_progress_init(_("Despeckle"));
 
+
   for (y = 0; y < height; y++)
     {
-      gint off  = y * width * bpp;
       gint ymin = MAX (0, y - radius);
-      gint ymax = MIN (height, y + radius);
+      gint ymax = MIN (height - 1, y + radius);
 
-      for (x = 0; x < width; x++, off += bpp)
+      for (x = 0; x < width; x++)
         {
           gint xmin    = MAX (0, x - radius);
-          gint xmax    = MIN (width, x + radius);
+          gint xmax    = MIN (width - 1, x + radius);
           gint hist0   = 0;
           gint hist255 = 0;
-          gint count   = 0;
+          gint med     = -1;
 
-          for (v = ymin; v < ymax; v++)
+          for (v = ymin; v <= ymax; v++)
             {
-              gint off2 = v * width * bpp;
-
-              for (u = xmin, off2 += xmin * bpp; u < xmax; u++, off2 += bpp)
+              for (u = xmin; u <= xmax; u++)
                 {
-                  guchar value = pixel_luminance (src + off2, bpp);
+                  gint value;
 
-                  if (value < black_level)
+                  pos = (u + (v * width)) * bpp;
+                  value = pixel_luminance (src + pos, bpp);
+
+                  if (value > black_level && value < white_level)
                     {
-                      hist0++;
-                    }
-                  else if (value > white_level)
-                    {
-                      hist255++;
+                      med++;
+                      buf[med]  = src + pos;
+                      ibuf[med] = value;
                     }
                   else
                     {
-                      buf[count]  = src + off2;
-                      ibuf[count] = value;
-                      count++;
+                      if (value <= black_level)
+                        hist0++;
+
+                      if (value >= white_level)
+                        hist255++;
                     }
                 }
-            }
+             }
 
-          if (count < 2)
-            {
-              pixel_copy (dst + off, src + off, bpp);
-            }
-          else
-            {
-              pixel = buf[quick_median_select (buf, ibuf, count)];
+           pos = (x + (y * width)) * bpp;
 
-              if (filter_type & FILTER_RECURSIVE)
-                pixel_copy (src + off, pixel, bpp);
+           if (med < 1)
+             {
+               pixel_copy (dst + pos, src + pos, bpp);
+             }
+           else
+             {
+               const guchar *pixel;
 
-              pixel_copy (dst + off, pixel, bpp);
-            }
+               pixel = buf[quick_median_select (buf, ibuf, med + 1)];
+
+                if (filter_type & FILTER_RECURSIVE)
+                  pixel_copy (src + pos, pixel, bpp);
+
+               pixel_copy (dst + pos, pixel, bpp);
+             }
 
           /*
            * Check the histogram and adjust the diameter accordingly...
@@ -706,9 +714,9 @@ despeckle_median (guchar   *src,
  * value for the pointer to RGB.
  */
 static gint
-quick_median_select (guchar **p,
-                     guchar  *i,
-                     gint     n)
+quick_median_select (const guchar **p,
+                     guchar        *i,
+                     gint           n)
 {
   gint low    = 0;
   gint high   = n - 1;
@@ -784,6 +792,7 @@ quick_median_select (guchar **p,
       /* Re-set active partition */
       if (hh <= median)
         low = ll;
+
       if (hh >= median)
         high = hh - 1;
     }

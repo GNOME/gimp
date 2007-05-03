@@ -1,5 +1,10 @@
 2007-05-03  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/despeckle.c: applied patch from Geert Jordaens
+	plus some minor cleanups. Fixes bug #433251.
+
+2007-05-03  Sven Neumann  <sven@gimp.org>
+
 	Handle the core part of bug #434274:
 
 	* app/core/gimpchannel.c (gimp_channel_real_boundary): return
