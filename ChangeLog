@@ -1,5 +1,10 @@
 2007-05-04  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/script-fu-set-cmap.scm: added missing
+	ellipsis to menu label and corrected menu location.
+
+2007-05-04  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/autocrop.c (autocrop): crop the image, even if
 	the layer is fully opaque. Fixes bug #413906.
 

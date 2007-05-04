@@ -51,7 +51,7 @@
 )
 
 (script-fu-register "script-fu-set-cmap"
-    _"Se_t Colormap"
+    _"Se_t Colormap..."
     _"Change the colormap of an image to the colors in a specified palette."
     "Kevin Cozens <kcozens@interlog.com>"
     "Kevin Cozens"
@@ -62,5 +62,4 @@
     SF-PALETTE  _"Palette"  "Default"
 )
 
-(script-fu-menu-register "script-fu-set-cmap"
-                         "<Image>/Colors/Map")
+(script-fu-menu-register "script-fu-set-cmap" "<Image>/Colors/Map/Colormap")
