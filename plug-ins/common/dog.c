@@ -197,6 +197,7 @@ run (const gchar      *name,
           /*  Make sure all the arguments are there!  */
           if (nparams != 7)
             status = GIMP_PDB_CALLING_ERROR;
+
           if (status == GIMP_PDB_SUCCESS)
             {
               dogvals.inner     = param[3].data.d_float;
@@ -219,7 +220,9 @@ run (const gchar      *name,
         }
     }
   else
-    status = GIMP_PDB_CALLING_ERROR;
+    {
+      status = GIMP_PDB_CALLING_ERROR;
+    }
 
   if (status == GIMP_PDB_SUCCESS)
     {
@@ -229,12 +232,14 @@ run (const gchar      *name,
         {
           gimp_progress_init (_("DoG Edge Detect"));
 
-
           /*  run the Difference of Gaussians  */
           gimp_image_undo_group_start (image_ID);
+
           dog (image_ID, drawable, dogvals.inner, dogvals.outer, TRUE);
 
           gimp_image_undo_group_end (image_ID);
+
+          gimp_progress_update (1.0);
 
           /*  Store data  */
           if (run_mode == GIMP_RUN_INTERACTIVE)
@@ -764,7 +769,7 @@ gauss_rle (GimpDrawable *drawable,
         {
           progress += height;
 
-          if ((col % 20) == 0)
+          if ((col % 32) == 0)
             gimp_progress_update (0.5 * (pass + (progress / max_progress)));
         }
     }
@@ -833,7 +838,7 @@ gauss_rle (GimpDrawable *drawable,
         {
           progress += width;
 
-          if ((row % 20) == 0)
+          if ((row % 32) == 0)
             gimp_progress_update (0.5 * (pass + (progress / max_progress)));
         }
     }
