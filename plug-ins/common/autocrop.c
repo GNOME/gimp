@@ -49,6 +49,7 @@ static gint      guess_bgcolor (GimpPixelRgn *pr,
                                 gint          width,
                                 gint          height,
                                 gint          bytes,
+                                gboolean      has_alpha,
                                 guchar       *color);
 
 static void      autocrop      (GimpDrawable *drawable,
@@ -204,7 +205,9 @@ autocrop (GimpDrawable *drawable,
   /* First, let's figure out what exactly to crop. */
   buffer = g_malloc ((width > height ? width : height) * bytes);
 
-  guess_bgcolor (&srcPR, width, height, bytes, color);
+  guess_bgcolor (&srcPR, width, height, bytes,
+                 gimp_drawable_has_alpha (drawable->drawable_id),
+                 color);
 
   /* Check how many of the top lines are uniform. */
   abort = FALSE;
@@ -237,7 +240,8 @@ autocrop (GimpDrawable *drawable,
         abort = !colors_equal (color, buffer + i * bytes, bytes);
     }
 
-  y2 += 1; /* to make y2 - y1 == height */
+  y2++; /* to make y2 - y1 == height */
+
 
   /* The coordinates are now the first rows which DON'T match
    * the color. Crop instead to one row larger:
@@ -274,7 +278,7 @@ autocrop (GimpDrawable *drawable,
         abort = !colors_equal (color, buffer + i * bytes, bytes);
     }
 
-  x2 += 1; /* to make x2 - x1 == width */
+  x2++; /* to make x2 - x1 == width */
 
   /* The coordinates are now the first columns which DON'T match
    * the color. Crop instead to one column larger:
@@ -334,6 +338,7 @@ guess_bgcolor (GimpPixelRgn *pr,
                gint          width,
                gint          height,
                gint          bytes,
+               gboolean      has_alpha,
                guchar       *color)
 {
   guchar tl[4], tr[4], bl[4], br[4];
@@ -343,10 +348,23 @@ guess_bgcolor (GimpPixelRgn *pr,
   gimp_pixel_rgn_get_pixel (pr, bl, 0, height - 1);
   gimp_pixel_rgn_get_pixel (pr, br, width - 1, height - 1);
 
+  /* First check if there's transparency to crop. */
+  if (has_alpha)
+    {
+      gint alpha = bytes - 1;
+
+      if ((tl[alpha] == 0 && tr[alpha] == 0) ||
+          (tl[alpha] == 0 && bl[alpha] == 0) ||
+          (tr[alpha] == 0 && br[alpha] == 0) ||
+          (bl[alpha] == 0 && br[alpha] == 0))
+        {
+          return 2;
+        }
+    }
+
   /* Algorithm pinched from pnmcrop.
    * To guess the background, first see if 3 corners are equal.
-   * Then if two are equal.
-   * Otherwise average the colors.
+   * Then if two are equal. Otherwise average the colors.
    */
 
   if (colors_equal (tr, bl, bytes) && colors_equal (tr, br, bytes))
@@ -388,9 +406,8 @@ guess_bgcolor (GimpPixelRgn *pr,
   else
     {
       while (bytes--)
-        {
-          color[bytes] = (tl[bytes] + tr[bytes] + bl[bytes] + br[bytes]) / 4;
-        }
+        color[bytes] = (tl[bytes] + tr[bytes] + bl[bytes] + br[bytes]) / 4;
+
       return 0;
     }
 }

@@ -305,9 +305,10 @@ gimp_image_crop_auto_shrink (GimpImage *image,
 
   gimp_set_busy (image->gimp);
 
-  /* You should always keep in mind that crop->tx2 and crop->ty2 are the NOT the
-     coordinates of the bottomright corner of the area to be cropped. They point
-     at the pixel located one to the right and one to the bottom.
+  /* You should always keep in mind that crop->tx2 and crop->ty2 are
+     the NOT the coordinates of the bottomright corner of the area to
+     be cropped. They point at the pixel located one to the right and
+     one to the bottom.
    */
 
   if (active_drawable_only)
@@ -471,7 +472,7 @@ gimp_image_crop_guess_bgcolor (GimpPickable *pickable,
     }
 
   if (gimp_image_crop_colors_equal (br, bl, bytes) ||
-           gimp_image_crop_colors_equal (br, tr, bytes))
+      gimp_image_crop_colors_equal (br, tr, bytes))
     {
       memcpy (color, br, bytes);
       return AUTO_CROP_COLOR;
