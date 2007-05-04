@@ -390,12 +390,9 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
 {
   GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
 
-  /*  we can handle only one-liners  */
-  if (strchr (message, '\n'))
-    return FALSE;
-
   gimp_statusbar_push_temp (statusbar,
-                            gimp_get_message_stock_id (severity), "%s", message);
+                            gimp_get_message_stock_id (severity),
+                            "%s", message);
 
   return TRUE;
 }
@@ -422,7 +419,7 @@ gimp_statusbar_update (GimpStatusbar *statusbar)
         {
           guint context_id = gimp_statusbar_get_context_id (statusbar,
                                                             "progress");
- 
+
           if (context_id != msg->context_id)
             return;
         }

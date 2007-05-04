@@ -1,5 +1,11 @@
 2007-05-04  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpstatusbar.c (gimp_statusbar_progress_message):
+	removed code that guards us from multiline messages. This happens
+	later in gimp_statusbar_vprintf() anyway.
+
+2007-05-04  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/poppler.c: removed unused functionality from the
 	resolution entry widget.
 
