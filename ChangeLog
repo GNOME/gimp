@@ -1,5 +1,9 @@
 2007-05-04  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/maze/maze.c: reduced the number of progress updates.
+
+2007-05-04  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/common/edge.c: reduced the number of progress updates.
 
 2007-05-04  Mukund Sivaraman  <muks@mukund.org>

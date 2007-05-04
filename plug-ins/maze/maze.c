@@ -308,7 +308,8 @@ maze (GimpDrawable * drawable)
   GimpPixelRgn dest_rgn;
   guint        mw, mh;
   gint         deadx, deady;
-  guint        progress, max_progress;
+  guint        cur_progress, max_progress;
+  gdouble      per_progress;
   gint         x1, y1, x2, y2, x, y;
   gint         dx, dy, xx, yy;
   gint         maz_x, maz_xx, maz_row, maz_yy;
@@ -438,8 +439,9 @@ maze (GimpDrawable * drawable)
   gimp_pixel_rgn_init (&dest_rgn, drawable, x1, y1, (x2 - x1), (y2 - y1),
                        TRUE, TRUE);
 
-  progress = 0;
-  max_progress = (x2 - x1) * (y2 - y1);
+  cur_progress = 0;
+  per_progress = 0.0;
+  max_progress = (x2 - x1) * (y2 - y1) / 100;
 
   /* Get the foreground and background colors */
   get_colors (drawable, fg, bg);
@@ -496,9 +498,14 @@ maze (GimpDrawable * drawable)
             }
         }
 
-      progress += dest_rgn.w * dest_rgn.h;
-      gimp_progress_update ((double) progress / (double) max_progress);
-      /* Indicate progress in drawing. */
+      cur_progress += dest_rgn.w * dest_rgn.h;
+
+      if (cur_progress > max_progress)
+        {
+          cur_progress = cur_progress - max_progress;
+          per_progress = per_progress + 0.01;
+          gimp_progress_update (per_progress);
+        }
     }
 
   gimp_drawable_flush (drawable);
