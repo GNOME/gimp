@@ -51,10 +51,9 @@ static void   gimp_temp_progress_run (const gchar      *name,
 
 /*  private variables  */
 
-static GHashTable   * gimp_progress_ht      = NULL;
-
-static gdouble        gimp_progress_current = 0.0;
-static const gdouble  gimp_progress_step    = (1.0 / 300.0);
+static GHashTable    * gimp_progress_ht      = NULL;
+static gdouble         gimp_progress_current = 0.0;
+static const gdouble   gimp_progress_step    = (1.0 / 256.0);
 
 
 /*  public functions  */
@@ -335,8 +334,23 @@ gimp_progress_update (gdouble percentage)
     {
       changed =
         (fabs (gimp_progress_current - percentage) > gimp_progress_step);
+
+#ifdef GIMP_UNSTABLE
+      if (! changed)
+        {
+          static gboolean warned = FALSE;
+
+          if (! warned)
+            {
+              g_printerr ("%s is updating the progress too often\n",
+                          g_get_prgname ());
+              warned = TRUE;
+            }
+        }
+#endif
     }
 
+  /*  Suppress the update if the change was only marginal.  */
   if (! changed)
     return TRUE;
 
