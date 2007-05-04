@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-03 11:38+0200\n"
-"PO-Revision-Date: 2007-05-03 14:57+0200\n"
+"POT-Creation-Date: 2007-05-04 11:35+0200\n"
+"PO-Revision-Date: 2007-05-04 11:35+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -357,7 +357,7 @@ msgstr "_Fraktály"
 #: ../plug-ins/common/xbm.c:1002 ../plug-ins/common/xwd.c:565
 #: ../plug-ins/fits/fits.c:454 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/gfli/gfli.c:715
-#: ../plug-ins/ifscompose/ifscompose.c:2377 ../plug-ins/jpeg/jpeg-save.c:268
+#: ../plug-ins/ifscompose/ifscompose.c:2376 ../plug-ins/jpeg/jpeg-save.c:268
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:270
 #: ../plug-ins/winicon/icosave.c:1020 ../plug-ins/xjt/xjt.c:1278
 #: ../plug-ins/xjt/xjt.c:1712
@@ -391,7 +391,7 @@ msgstr "Zapsat parametry fraktálu"
 #: ../plug-ins/common/lcms.c:655 ../plug-ins/common/mng.c:1121
 #: ../plug-ins/common/pat.c:317 ../plug-ins/common/pcx.c:309
 #: ../plug-ins/common/pix.c:329 ../plug-ins/common/png.c:707
-#: ../plug-ins/common/pnm.c:482 ../plug-ins/common/poppler.c:361
+#: ../plug-ins/common/pnm.c:482 ../plug-ins/common/poppler.c:500
 #: ../plug-ins/common/postscript.c:1021 ../plug-ins/common/postscript.c:3002
 #: ../plug-ins/common/psd-load.c:1898 ../plug-ins/common/psp.c:1460
 #: ../plug-ins/common/raw.c:243 ../plug-ins/common/raw.c:645
@@ -1142,7 +1142,7 @@ msgstr "Špatná barevná mapa"
 #: ../plug-ins/common/gif-load.c:314 ../plug-ins/common/gih.c:654
 #: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:314
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:714
-#: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:406
+#: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:545
 #: ../plug-ins/common/postscript.c:1027 ../plug-ins/common/psd-load.c:1903
 #: ../plug-ins/common/raw.c:650 ../plug-ins/common/sunras.c:432
 #: ../plug-ins/common/tga.c:419 ../plug-ins/common/tiff-load.c:523
@@ -3339,42 +3339,42 @@ msgstr "Desktop odkaz"
 msgid "Error loading desktop file '%s': %s"
 msgstr "Chyba načítání desktop souboru '%s': %s"
 
-#: ../plug-ins/common/despeckle.c:147
+#: ../plug-ins/common/despeckle.c:149
 msgid "Remove speckle noise from the image"
 msgstr "Odstranit šum z obrázku"
 
-#: ../plug-ins/common/despeckle.c:153
+#: ../plug-ins/common/despeckle.c:155
 msgid "Des_peckle..."
 msgstr "_Vyčistit..."
 
-#: ../plug-ins/common/despeckle.c:393 ../plug-ins/common/despeckle.c:613
+#: ../plug-ins/common/despeckle.c:396 ../plug-ins/common/despeckle.c:616
 msgid "Despeckle"
 msgstr "Vyčištění"
 
-#: ../plug-ins/common/despeckle.c:422
+#: ../plug-ins/common/despeckle.c:425
 msgid "Median"
 msgstr "Medián"
 
-#: ../plug-ins/common/despeckle.c:430
+#: ../plug-ins/common/despeckle.c:433
 msgid "_Adaptive"
 msgstr "_Adaptivní"
 
-#: ../plug-ins/common/despeckle.c:440
+#: ../plug-ins/common/despeckle.c:443
 msgid "R_ecursive"
 msgstr "_Rekurzivní"
 
-#: ../plug-ins/common/despeckle.c:461 ../plug-ins/common/neon.c:730
+#: ../plug-ins/common/despeckle.c:464 ../plug-ins/common/neon.c:730
 #: ../plug-ins/common/nlfilt.c:1090 ../plug-ins/common/nova.c:366
 #: ../plug-ins/common/unsharp.c:681 ../plug-ins/common/whirlpinch.c:587
 #: ../plug-ins/gflare/gflare.c:2684 ../plug-ins/imagemap/imap_circle.c:278
 msgid "_Radius:"
 msgstr "_Poloměr:"
 
-#: ../plug-ins/common/despeckle.c:477
+#: ../plug-ins/common/despeckle.c:480
 msgid "_Black level:"
 msgstr "Úro_veň černé:"
 
-#: ../plug-ins/common/despeckle.c:493
+#: ../plug-ins/common/despeckle.c:496
 msgid "_White level:"
 msgstr "Úroveň _bílé:"
 
@@ -6214,40 +6214,45 @@ msgstr ""
 "Bez zaškrtnutí bude obrázek kruhově mapován na obdélník. Při zaškrtnutí bude "
 "obrázek mapován na kruh."
 
-#: ../plug-ins/common/poppler.c:143
+#: ../plug-ins/common/poppler.c:282
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
-#: ../plug-ins/common/poppler.c:440
+#: ../plug-ins/common/poppler.c:579
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/poppler.c:442 ../plug-ins/common/postscript.c:1109
+#: ../plug-ins/common/poppler.c:581 ../plug-ins/common/postscript.c:1109
 #, c-format
 msgid "%s-pages"
 msgstr "%s-strany"
 
-#: ../plug-ins/common/poppler.c:620
+#: ../plug-ins/common/poppler.c:759
 msgid "Import from PDF"
 msgstr "Importovat z PDF"
 
-#: ../plug-ins/common/poppler.c:625 ../plug-ins/common/postscript.c:3057
+#: ../plug-ins/common/poppler.c:764 ../plug-ins/common/postscript.c:3057
 #: ../plug-ins/common/tiff-load.c:401
 msgid "_Import"
 msgstr "_Importovat"
 
-#: ../plug-ins/common/poppler.c:689
+#: ../plug-ins/common/poppler.c:828
 msgid "_Width (pixels):"
 msgstr "_Šířka (pixelů):"
 
-#: ../plug-ins/common/poppler.c:690
+#: ../plug-ins/common/poppler.c:829
 msgid "_Height (pixels):"
 msgstr "_Výška (pixelů):"
 
-#: ../plug-ins/common/poppler.c:693 ../plug-ins/common/poppler.c:694
+#: ../plug-ins/common/poppler.c:831
 msgid "_Resolution:"
 msgstr "_Rozlišení:"
+
+#: ../plug-ins/common/poppler.c:1105
+#, c-format
+msgid "pixels/%s"
+msgstr "pixely/%s"
 
 #: ../plug-ins/common/postscript.c:597 ../plug-ins/common/postscript.c:689
 msgid "PostScript document"
@@ -10431,38 +10436,38 @@ msgstr "Poddělení:"
 msgid "Spot radius:"
 msgstr "Poloměr tečky:"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1303
+#: ../plug-ins/ifscompose/ifscompose.c:1302
 #, c-format
 msgid "Rendering IFS (%d/%d)"
 msgstr "Počítá se IFS (%d/%d)"
 
-#: ../plug-ins/ifscompose/ifscompose.c:1469
+#: ../plug-ins/ifscompose/ifscompose.c:1468
 #, c-format
 msgid "Transformation %s"
 msgstr "Transformace %s"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2382
+#: ../plug-ins/ifscompose/ifscompose.c:2381
 #: ../plug-ins/metadata/interface.c:556 ../plug-ins/metadata/interface.c:566
 msgid "Save failed"
 msgstr "Ukládání selhalo"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2463
-#: ../plug-ins/ifscompose/ifscompose.c:2476
+#: ../plug-ins/ifscompose/ifscompose.c:2462
+#: ../plug-ins/ifscompose/ifscompose.c:2475
 #: ../plug-ins/metadata/interface.c:462 ../plug-ins/metadata/interface.c:472
 #: ../plug-ins/metadata/interface.c:546
 msgid "Open failed"
 msgstr "Otevření selhalo"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2471
+#: ../plug-ins/ifscompose/ifscompose.c:2470
 #, c-format
 msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Soubor '%s' zřejmě není soubor IFS fraktálu."
 
-#: ../plug-ins/ifscompose/ifscompose.c:2511
+#: ../plug-ins/ifscompose/ifscompose.c:2510
 msgid "Save as IFS Fractal file"
 msgstr "Uložit jako soubor IFS fraktálu"
 
-#: ../plug-ins/ifscompose/ifscompose.c:2548
+#: ../plug-ins/ifscompose/ifscompose.c:2547
 msgid "Open IFS Fractal file"
 msgstr "Otevřít soubor IFS fraktálu"
 
@@ -11937,8 +11942,8 @@ msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
 msgstr ""
-"Velké ikony a komprese nejsou všemi programy podporovány. "
-"Starší aplikace nemusí být schopné tento soubor správně otevřít."
+"Velké ikony a komprese nejsou všemi programy podporovány. Starší aplikace "
+"nemusí být schopné tento soubor správně otevřít."
 
 #: ../plug-ins/winicon/icodialog.c:178
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
