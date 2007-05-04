@@ -502,8 +502,11 @@ filter (GimpDrawable *drawable)
             }
           pixels_set (x, y, &pixel);
         }
-      gimp_progress_update ((gdouble) (y-selection.y1) / selection.height);
+      if ((y % (selection.height / 100)) == 0)
+        gimp_progress_update ((gdouble) (y-selection.y1) / selection.height);
     }
+
+  gimp_progress_update (1.0);
 
   pixels_store ();
 
