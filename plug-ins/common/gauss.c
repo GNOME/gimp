@@ -856,7 +856,7 @@ do_full_lre (const gint *src,
           i  -= 1;
         }
 
-      *dest = (val + ctotal / 2) / ctotal;
+      *dest = val / ctotal;
       dest += dist;
 
     }
@@ -893,7 +893,6 @@ gauss_iir (GimpDrawable *drawable,
   gdouble       std_dev;
   gboolean      direct;
   gint          progress_step;
-
 
   direct = (preview_buffer == NULL);
 
@@ -932,7 +931,8 @@ gauss_iir (GimpDrawable *drawable,
        * can slow down the processing significantly for very
        * large images
        */
-      progress_step = width / 100;
+      progress_step = width / 16;
+
       if (progress_step < 5)
         progress_step = 5;
 
@@ -1001,6 +1001,7 @@ gauss_iir (GimpDrawable *drawable,
               gimp_pixel_rgn_set_col(&dest_rgn, dest, col + x1, y1, height);
 
               progress += height * vert;
+
               if ((col % progress_step) == 0)
                 gimp_progress_update (progress / max_progress);
             }
@@ -1036,7 +1037,7 @@ gauss_iir (GimpDrawable *drawable,
        * can slow down the processing significantly for very
        * large images
        */
-      progress_step = height / 100;
+      progress_step = height / 16;
 
       if (progress_step < 5)
         progress_step = 5;
@@ -1212,7 +1213,7 @@ gauss_rle (GimpDrawable *drawable,
       /* Insure that we do not have too many progress updates for
        * images with a lot of rows or columns
        */
-      progress_step = width / 150;
+      progress_step = width / 16;
 
       if (progress_step < 5)
         progress_step = 5;
@@ -1262,6 +1263,7 @@ gauss_rle (GimpDrawable *drawable,
               gimp_pixel_rgn_set_col (&dest_rgn, dest, col + x1, y1, height);
 
               progress += height * vert;
+
               if ((col % progress_step) == 0)
                 gimp_progress_update (progress / max_progress);
             }
@@ -1299,7 +1301,8 @@ gauss_rle (GimpDrawable *drawable,
       /* Insure that we do not have too many progress updates for
        * images with a lot of rows or columns
        */
-      progress_step = height / 150;
+      progress_step = height / 16;
+
       if (progress_step < 5) {
         progress_step = 5;
       }
@@ -1373,6 +1376,7 @@ gauss_rle (GimpDrawable *drawable,
               gimp_pixel_rgn_set_row (&dest_rgn, dest, x1, row + y1, width);
 
               progress += width * horz;
+
               if ((row % progress_step) == 0)
                 gimp_progress_update (progress / max_progress);
             }
