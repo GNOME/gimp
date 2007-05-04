@@ -68,25 +68,14 @@ gimp_plug_in_cleanup_undo_group_start (GimpPlugIn *plug_in,
   proc_frame = gimp_plug_in_get_proc_frame (plug_in);
   cleanup    = gimp_plug_in_cleanup_get_image (proc_frame, image);
 
-  g_printerr ("\n%s: procedure %s starts undo group on "
-              "image with group count %d\n",
-              G_STRFUNC, GIMP_OBJECT (proc_frame->procedure)->name,
-              image->group_count);
-
   if (! cleanup)
     {
-      g_printerr ("%s: creating new cleanup entry => SUCCESS\n", G_STRFUNC);
-
       cleanup = g_new0 (GimpPlugInCleanupImage, 1);
 
       cleanup->image            = image;
       cleanup->undo_group_count = image->group_count;
 
       proc_frame->cleanups = g_list_prepend (proc_frame->cleanups, cleanup);
-    }
-  else
-    {
-      g_printerr ("%s: using existing cleanup entry => SUCCESS\n", G_STRFUNC);
     }
 
   return TRUE;
@@ -105,29 +94,13 @@ gimp_plug_in_cleanup_undo_group_end (GimpPlugIn *plug_in,
   proc_frame = gimp_plug_in_get_proc_frame (plug_in);
   cleanup    = gimp_plug_in_cleanup_get_image (proc_frame, image);
 
-  g_printerr ("\n%s: procedure %s ends undo group on "
-              "image with group count %d\n",
-              G_STRFUNC, GIMP_OBJECT (proc_frame->procedure)->name,
-              image->group_count);
-
   if (! cleanup)
-    {
-      g_printerr ("%s: no cleanup entry found => FAILURE\n", G_STRFUNC);
-      return FALSE;
-    }
+    return FALSE;
 
   if (cleanup->undo_group_count == image->group_count - 1)
     {
-      g_printerr ("%s: group count balanced, deleting cleanup entry => SUCCESS\n",
-                  G_STRFUNC);
-
       proc_frame->cleanups = g_list_remove (proc_frame->cleanups, cleanup);
       g_free (cleanup);
-    }
-  else
-    {
-      g_printerr ("%s: undo groups still open, keeping cleanup entry => SUCCESS\n",
-                  G_STRFUNC);
     }
 
   return TRUE;
@@ -153,9 +126,6 @@ gimp_plug_in_cleanup (GimpPlugIn          *plug_in,
 
       if (image->pushing_undo_group == GIMP_UNDO_GROUP_NONE)
         continue;
-
-      g_printerr ("\n%s: checking image with group count %d\n",
-                  G_STRFUNC, image->group_count);
 
       if (cleanup->undo_group_count != image->group_count)
         {
