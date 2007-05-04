@@ -1,5 +1,10 @@
 2007-05-04  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/autocrop.c (autocrop): crop the image, even if
+	the layer is fully opaque. Fixes bug #413906.
+
+2007-05-04  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/autocrop.c (guess_bgcolor): special case fully
 	transparent regions, just as we do in app/core/gimpimage-crop.c.
 	Fixes bug #357554.
