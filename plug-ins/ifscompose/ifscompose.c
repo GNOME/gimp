@@ -1294,10 +1294,9 @@ ifs_compose (GimpDrawable *drawable)
   gimp_context_get_background (&color);
   gimp_rgb_get_uchar (&color, &rc, &gc, &bc);
 
- 
   for (band_no = 0, band_y = 0; band_no < num_bands; band_no++)
     {
-      GimpPixelRgn  dest_rgn; 
+      GimpPixelRgn  dest_rgn;
       gpointer      pr;
 
       gimp_progress_init_printf (_("Rendering IFS (%d/%d)"),

@@ -872,7 +872,7 @@ ifs_render (AffElement     **elements,
             guchar          *nhits,
             gboolean         preview)
 {
-  gint     i, k;
+  gint     i, k, n;
   gdouble  x, y;
   gdouble  r, g, b;
   gint     ri, gi, bi;
@@ -883,9 +883,8 @@ ifs_render (AffElement     **elements,
   gdouble *fprob;
   gint     subdivide;
   guchar  *brush = NULL;
-  gint     brush_size = 1;
+  gint     brush_size   = 1;
   gdouble  brush_offset = 0.0;
-  gint     next_progress = 0 ;
 
   if (preview)
     subdivide = 1;
@@ -937,14 +936,14 @@ ifs_render (AffElement     **elements,
   x = y = 0;
   r = g = b = 0;
 
+  /* n is used to limit the number of progress updates */
+  n = nsteps / 32;
+
   /* now run the iteration */
   for (i = 0; i < nsteps; i++)
     {
-      if (!preview && (i > next_progress))
-        {
-          next_progress = i + nsteps / 32 + 100;
-          gimp_progress_update ((gdouble) i / (gdouble) nsteps);
-        }
+      if (!preview && ((i % n) == 0))
+        gimp_progress_update ((gdouble) i / (gdouble) nsteps);
 
       p0 = g_random_int ();
       k = 0;
