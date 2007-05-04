@@ -390,6 +390,10 @@ gimp_statusbar_progress_message (GimpProgress        *progress,
 {
   GimpStatusbar *statusbar = GIMP_STATUSBAR (progress);
 
+  /*  we can handle only one-liners  */
+  if (strchr (message, '\n'))
+    return FALSE;
+
   gimp_statusbar_push_temp (statusbar,
                             gimp_get_message_stock_id (severity),
                             "%s", message);
