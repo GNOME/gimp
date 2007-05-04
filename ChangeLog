@@ -1,5 +1,9 @@
 2007-05-04  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/tips-dialog.c: make the tips label selectable.
+
+2007-05-04  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/contactsheet.scm: added missing
 	ellipsis to menu label and fixed default fonts.
 

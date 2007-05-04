@@ -159,11 +159,14 @@ tips_dialog_create (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox2), welcome_label, FALSE, FALSE, 0);
 
   thetip_label = gtk_label_new (NULL);
+  gtk_label_set_selectable (GTK_LABEL (thetip_label), TRUE);
   gtk_label_set_justify (GTK_LABEL (thetip_label), GTK_JUSTIFY_LEFT);
   gtk_label_set_line_wrap (GTK_LABEL (thetip_label), TRUE);
   gtk_misc_set_alignment (GTK_MISC (thetip_label), 0.5, 0.5);
   gtk_box_pack_start (GTK_BOX (vbox2), thetip_label, TRUE, TRUE, 0);
   gtk_widget_show (thetip_label);
+
+  gtk_container_set_focus_chain (GTK_CONTAINER (vbox2), NULL);
 
   vbox2 = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
@@ -216,6 +219,8 @@ tips_dialog_create (Gimp *gimp)
   gtk_widget_set_sensitive (button, (tips_count > 1));
   gtk_container_add (GTK_CONTAINER (bbox), button);
   gtk_widget_show (button);
+
+  gtk_widget_grab_focus (button);
 
   g_signal_connect (button, "clicked",
                     G_CALLBACK (tips_show_next),
