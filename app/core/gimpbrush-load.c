@@ -54,7 +54,7 @@
 
 
 /* stuff from abr2gbr Copyright (C) 2001 Marco Lamberto <lm@sunnyspot.org>  */
-/* the above is gpl  see http://the.sunnyspot.org/gimp/  */
+/* the above is GPL  see http://the.sunnyspot.org/gimp/  */
 
 typedef struct _AbrHeader               AbrHeader;
 typedef struct _AbrBrushHeader          AbrBrushHeader;
@@ -87,12 +87,14 @@ struct _AbrSampledBrushHeader
 /*  local function prototypes  */
 
 static GimpBrush * gimp_brush_load_abr_brush (FILE         *file,
+                                              AbrHeader    *abr_hdr,
                                               gint          index,
                                               const gchar  *filename,
                                               GError      **error);
 static gchar       abr_read_char             (FILE         *file);
 static gint16      abr_read_short            (FILE         *file);
 static gint32      abr_read_long             (FILE         *file);
+static gchar     * abr_v2_read_brush_name    (FILE         *file);
 
 
 /*  public functions  */
@@ -402,7 +404,7 @@ gimp_brush_load_abr (const gchar  *filename,
 
   /* g_print("version: %d  count: %d\n", abr_hdr.version, abr_hdr.count); */
 
-  if (abr_hdr.version > 1)
+  if (abr_hdr.version > 2)
     {
       g_set_error (error, GIMP_DATA_ERROR, GIMP_DATA_ERROR_READ,
                    _("Fatal parse error in brush file '%s': "
@@ -417,7 +419,8 @@ gimp_brush_load_abr (const gchar  *filename,
         {
           GimpBrush *brush;
 
-          brush = gimp_brush_load_abr_brush (file, i, filename, error);
+          brush = gimp_brush_load_abr_brush (file, &abr_hdr, i,
+                                             filename, error);
 
           if (! brush)
             {
@@ -441,6 +444,7 @@ gimp_brush_load_abr (const gchar  *filename,
 
 static GimpBrush *
 gimp_brush_load_abr_brush (FILE         *file,
+                           AbrHeader    *abr_hdr,
                            gint          index,
                            const gchar  *filename,
                            GError      **error)
@@ -479,16 +483,21 @@ gimp_brush_load_abr_brush (FILE         *file,
         gint                   size;
         guchar                *mask;
         gint                   i;
-        gchar                 *name;
+        gchar                 *name = NULL;
         gchar                 *tmp;
         gshort                 compress;
 
-        abr_sampled_brush_hdr.misc         = abr_read_long (file);
-        abr_sampled_brush_hdr.spacing      = abr_read_short (file);
+        abr_sampled_brush_hdr.misc    = abr_read_long (file);
+        abr_sampled_brush_hdr.spacing = abr_read_short (file);
+
+        if (abr_hdr->version == 2)
+          name = abr_v2_read_brush_name (file);
+
         abr_sampled_brush_hdr.antialiasing = abr_read_char (file);
 
         for (i = 0; i < 4; i++)
           abr_sampled_brush_hdr.bounds[i] = abr_read_short (file);
+
         for (i = 0; i < 4; i++)
           abr_sampled_brush_hdr.bounds_long[i] = abr_read_long (file);
 
@@ -512,9 +521,12 @@ gimp_brush_load_abr_brush (FILE         *file,
             return NULL;
           }
 
-        tmp = g_filename_display_basename (filename);
-        name = g_strdup_printf ("%s-%03d", tmp, index);
-        g_free (tmp);
+        if (! name)
+          {
+            tmp = g_filename_display_basename (filename);
+            name = g_strdup_printf ("%s-%03d", tmp, index);
+            g_free (tmp);
+          }
 
         brush = g_object_new (GIMP_TYPE_BRUSH,
                               "name",      name,
@@ -529,8 +541,7 @@ gimp_brush_load_abr_brush (FILE         *file,
         brush->x_axis.y = 0.0;
         brush->y_axis.x = 0.0;
         brush->y_axis.y = height / 2.0;
-        brush->mask     = temp_buf_new (width, height,
-                                        1, 0, 0, NULL);
+        brush->mask     = temp_buf_new (width, height, 1, 0, 0, NULL);
 
         mask = temp_buf_data (brush->mask);
         size = width * height * bytes;
@@ -555,6 +566,7 @@ gimp_brush_load_abr_brush (FILE         *file,
 
             /* read compressed size foreach scanline */
             cscanline_len = g_new0 (gshort, height);
+
             for (i = 0; i < height; i++)
               cscanline_len[i] = abr_read_short (file);
 
@@ -565,6 +577,7 @@ gimp_brush_load_abr_brush (FILE         *file,
                   {
                     n = abr_read_char (file);
                     j++;
+
                     if (n >= 128)       /* force sign */
                       n -= 256;
 
@@ -578,6 +591,7 @@ gimp_brush_load_abr_brush (FILE         *file,
                         n = -n + 1;
                         ch = abr_read_char (file);
                         j++;
+
                         for (c = 0; c < n; c++, mask++)
                           *mask = ch;
                       }
@@ -629,4 +643,36 @@ abr_read_long (FILE *file)
   fread (&val, sizeof (val), 1, file);
 
   return GINT32_FROM_BE (val);
+}
+
+static gchar *
+abr_v2_read_brush_name (FILE *file)
+{
+  gchar *name_ucs2;
+  gchar *name_utf8;
+  gint   len;
+  gint   i;
+
+  /* two-bytes characters encoded (UCS-2)
+   *  format:
+   *   long : number of characters in string
+   *   data : zero terminated UCS-2 string
+   */
+
+  len = 2 * abr_read_long (file);
+  if (len <= 0)
+    return NULL;
+
+  name_ucs2 = g_new (gchar, len);
+
+  for (i = 0; i < len; i++)
+    name_ucs2[i] =  abr_read_char (file);
+
+  name_utf8 = g_convert (name_ucs2, len,
+                         "UTF-8", "UCS-2BE",
+                         NULL, NULL, NULL);
+
+  g_free(name_ucs2);
+
+  return name_utf8;
 }
