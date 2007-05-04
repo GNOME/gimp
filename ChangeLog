@@ -1,5 +1,8 @@
 2007-05-04  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/contactsheet.scm: added missing
+	ellipsis to menu label and fixed default fonts.
+
 	* plug-ins/script-fu/scripts/script-fu-set-cmap.scm: added missing
 	ellipsis to menu label and corrected menu location.
 

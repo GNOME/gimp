@@ -1,3 +1,7 @@
+2007-05-04  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added missing script.
+
 2007-04-29  Christophe Merlet  <redfox@redfoxcenter.org>
 
 	* oc.po: Added Occitan translation from

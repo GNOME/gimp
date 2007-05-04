@@ -83,6 +83,7 @@ plug-ins/script-fu/scripts/rendermap.scm
 plug-ins/script-fu/scripts/reverse-layers.scm
 plug-ins/script-fu/scripts/ripply-anim.scm
 plug-ins/script-fu/scripts/round-corners.scm
+plug-ins/script-fu/scripts/script-fu-set-cmap.scm
 plug-ins/script-fu/scripts/select-to-brush.scm
 plug-ins/script-fu/scripts/select-to-image.scm
 plug-ins/script-fu/scripts/select-to-pattern.scm

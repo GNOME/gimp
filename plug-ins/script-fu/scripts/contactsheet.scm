@@ -112,7 +112,7 @@
     )
   )
 
-  ;This routine should preserve the aspect ration of the original image
+  ;This routine should preserve the aspect ratio of the original image
   (define (make-thumbnail-size img thumb-w thumb-h)
     (gimp-image-scale new-img thumb-w thumb-h)
   )
@@ -272,7 +272,7 @@
 )
 
 (script-fu-register "script-fu-contactsheet"
-    _"Contact Sheet"
+    _"_Contact Sheet..."
     _"Create a series of images containing thumbnail sized versions of all of the images in a specified directory."
     "Kevin Cozens <kcozens@interlog.com>"
     "Kevin Cozens"
@@ -283,11 +283,10 @@
                                      "800 x 600"
                                      "1024 x 768"
                                      "1280 x 1024")
-    SF-FONT    _"Title font"       "Helvetica Bold Italic"
-    SF-FONT    _"Legend font"      "Helvetica Bold"
+    SF-FONT    _"Title font"       "Sans Bold Italic"
+    SF-FONT    _"Legend font"      "Sans Bold"
     SF-COLOR   _"Text color"       "white"
     SF-COLOR   _"Background color" "black"
 )
 
-(script-fu-menu-register "script-fu-contactsheet"
-                         "<Toolbox>/Xtns/Utils")
+(script-fu-menu-register "script-fu-contactsheet" "<Toolbox>/Xtns/Utils")
