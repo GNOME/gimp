@@ -1,3 +1,8 @@
+2007-05-04  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/common/psd-load.c: Fixed bogus argument in call to
+	gimp_progress_update().
+
 2007-05-04  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.def: removed resolution entry symbols.

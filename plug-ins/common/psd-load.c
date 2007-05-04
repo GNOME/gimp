@@ -2420,7 +2420,7 @@ load_image (const gchar *name)
             }
           else
             {
-              gimp_progress_update (10);
+              gimp_progress_update (1.0);
 
               cmykbuf = g_malloc (PSDheader.imgdatalen);
               xfread_interlaced (fd, cmykbuf, PSDheader.imgdatalen,
