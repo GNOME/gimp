@@ -1,5 +1,10 @@
 2007-05-04  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/common/fractaltrace.c: whoops. fixed progress when
+	selections exist.
+
+2007-05-04  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/common/fractaltrace.c: reduced the number of progress
 	updates.
 
