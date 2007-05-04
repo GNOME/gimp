@@ -339,8 +339,11 @@ gimp_progress_update (gdouble percentage)
       if (! changed)
         {
           static gboolean warned = FALSE;
+          static gint     count  = 0;
 
-          if (! warned)
+          count++;
+
+          if (count > 3 && ! warned)
             {
               g_printerr ("%s is updating the progress too often\n",
                           g_get_prgname ());
