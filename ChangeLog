@@ -1,3 +1,12 @@
+2007-05-05  Mukund Sivaraman  <muks@mukund.org>
+
+	* app/base/gimplut.c
+	* app/base/gimplut.h
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c: Fixed the value channel color
+	correction in the curves and levels tools to only modify the
+	value channel and not the hues. Fixes bug #331782.
+
 2007-05-05  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpdrawtool.c (gimp_draw_tool_draw_boundary): fixed

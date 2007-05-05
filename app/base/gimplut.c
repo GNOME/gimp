@@ -187,6 +187,198 @@ gimp_lut_process (GimpLut     *lut,
 }
 
 void
+gimp_lut_process_value (GimpLut     *lut,
+                        PixelRegion *srcPR,
+                        PixelRegion *destPR)
+{
+  const guchar *src;
+  guchar       *dest;
+  guchar       *lut0 = NULL, *lut1 = NULL, *lut2 = NULL, *lut3 = NULL;
+  guint         h, width, src_r_i, dest_r_i;
+
+  if (lut->nchannels > 0)
+    lut0 = lut->luts[0];
+  if (lut->nchannels > 1)
+    lut1 = lut->luts[1];
+  if (lut->nchannels > 2)
+    lut2 = lut->luts[2];
+  if (lut->nchannels > 3)
+    lut3 = lut->luts[3];
+
+  h        = srcPR->h;
+  src      = srcPR->data;
+  dest     = destPR->data;
+  width    = srcPR->w;
+  src_r_i  = srcPR->rowstride  - (srcPR->bytes  * srcPR->w);
+  dest_r_i = destPR->rowstride - (destPR->bytes * srcPR->w);
+
+  if (src_r_i == 0 && dest_r_i == 0)
+    {
+      width *= h;
+      h = 1;
+    }
+
+  while (h--)
+    {
+      switch (lut->nchannels)
+        {
+        case 1:
+          while (width--)
+            {
+              *dest = lut0[*src];
+              src++;
+              dest++;
+            }
+          break;
+
+        case 2:
+          while (width--)
+            {
+              dest[0] = lut0[src[0]];
+              dest[1] = lut1[src[1]];
+              src  += 2;
+              dest += 2;
+            }
+          break;
+
+        case 3:
+          while (width--)
+            {
+              gint r, g, b;
+              gint value, value2, min;
+              gint delta;
+
+              r = src[0];
+              g = src[1];
+              b = src[2];
+
+              if (r > g)
+                {
+                  value = MAX (r, b);
+                  min = MIN (g, b);
+                }
+              else
+                {
+                  value = MAX (g, b);
+                  min = MIN (r, b);
+                }
+
+              delta = value - min;
+              if ((value == 0) || (delta == 0))
+                {
+                  r = lut0[value];
+                  g = lut0[value];
+                  b = lut0[value];
+                }
+              else
+                {
+                  value2 = value / 2;
+
+                  if (r == value)
+                    {
+                      r = lut0[r];
+                      b = ((r * b) + value2) / value;
+                      g = ((r * g) + value2) / value;
+                    }
+                  else if (g == value)
+                    {
+                      g = lut0[g];
+                      r = ((g * r) + value2) / value;
+                      b = ((g * b) + value2) / value;
+                    }
+                  else
+                    {
+                      b = lut0[b];
+                      g = ((b * g) + value2) / value;
+                      r = ((b * r) + value2) / value;
+                    }
+                }
+
+              dest[0] = r;
+              dest[1] = g;
+              dest[2] = b;
+
+              src  += 3;
+              dest += 3;
+            }
+          break;
+
+        case 4:
+          while (width--)
+            {
+              gint r, g, b;
+              gint value, value2, min;
+              gint delta;
+
+              r = src[0];
+              g = src[1];
+              b = src[2];
+
+              if (r > g)
+                {
+                  value = MAX (r, b);
+                  min = MIN (g, b);
+                }
+              else
+                {
+                  value = MAX (g, b);
+                  min = MIN (r, b);
+                }
+
+              delta = value - min;
+              if ((value == 0) || (delta == 0))
+                {
+                  r = lut0[value];
+                  g = lut0[value];
+                  b = lut0[value];
+                }
+              else
+                {
+                  value2 = value / 2;
+
+                  if (r == value)
+                    {
+                      r = lut0[r];
+                      b = ((r * b) + value2) / value;
+                      g = ((r * g) + value2) / value;
+                    }
+                  else if (g == value)
+                    {
+                      g = lut0[g];
+                      r = ((g * r) + value2) / value;
+                      b = ((g * b) + value2) / value;
+                    }
+                  else
+                    {
+                      b = lut0[b];
+                      g = ((b * g) + value2) / value;
+                      r = ((b * r) + value2) / value;
+                    }
+                }
+
+              dest[0] = r;
+              dest[1] = g;
+              dest[2] = b;
+
+              dest[3] = lut3[src[3]];
+
+              src  += 4;
+              dest += 4;
+            }
+          break;
+
+        default:
+          g_warning ("gimplut: Error: nchannels = %d\n", lut->nchannels);
+          break;
+        }
+
+      width = srcPR->w;
+      src  += src_r_i;
+      dest += dest_r_i;
+    }
+}
+
+void
 gimp_lut_process_inline (GimpLut     *lut,
                          PixelRegion *srcPR)
 {

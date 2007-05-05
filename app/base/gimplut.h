@@ -62,6 +62,10 @@ void      gimp_lut_process        (GimpLut     *lut,
                                    PixelRegion *srcPR,
                                    PixelRegion *destPR);
 
+void      gimp_lut_process_value  (GimpLut     *lut,
+                                   PixelRegion *srcPR,
+                                   PixelRegion *destPR);
+
 /* gimp_lut_process_inline is like gimp_lut_process except it uses a
  * single PixelRegion as both the source and destination
  */
