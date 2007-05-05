@@ -2283,7 +2283,7 @@ register_image_procs (GimpPDB *pdb)
                                                          "image",
                                                          "The image to check",
                                                          pdb->gimp, FALSE,
-                                                         GIMP_PARAM_READWRITE));
+                                                         GIMP_PARAM_READWRITE | GIMP_PARAM_NO_VALIDATE));
   gimp_procedure_add_return_value (procedure,
                                    g_param_spec_boolean ("valid",
                                                          "valid",

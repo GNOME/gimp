@@ -208,7 +208,7 @@ gimp_param_spec_image_id ("$name",
                           "$nick",
                           "$blurb",
                           pdb->gimp, $none_ok,
-                          GIMP_PARAM_READWRITE)
+                          $flags)
 CODE
     }
     elsif ($pdbtype eq 'drawable') {

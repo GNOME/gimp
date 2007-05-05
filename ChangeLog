@@ -1,3 +1,10 @@
+2007-05-05  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/app.pl (generate_pspec): use $flags and not a
+	literal GIMP_PARAM_READWRITE for the image paramspec's flags.
+
+	* app/pdb/image_cmds.c: regenerated.
+
 2007-05-05  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c (convolve_region): instead of just
