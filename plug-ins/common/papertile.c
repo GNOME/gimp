@@ -137,11 +137,12 @@ params_load_from_gimp (void)
     {
       p.params.tile_size  = p.drawable->width / p.params.division_x;
       if (0 < p.params.tile_size)
-	{
-	  p.params.division_y = p.drawable->height / p.params.tile_size;
-	}
+        {
+          p.params.division_y = p.drawable->height / p.params.tile_size;
+        }
     }
-  if (p.params.tile_size <= 0 ||
+
+  if (p.params.tile_size  <= 0 ||
       p.params.division_x <= 0 ||
       p.params.division_y <= 0)
     {
@@ -149,12 +150,14 @@ params_load_from_gimp (void)
       p.params.division_x = p.drawable->width / p.params.tile_size;
       p.params.division_y = p.drawable->height / p.params.tile_size;
     }
+
   if (!p.drawable_has_alpha)
     {
       if (p.params.background_type == BACKGROUND_TYPE_TRANSPARENT)
-	{
-	  p.params.background_type = BACKGROUND_TYPE_INVERTED;
-	}
+        {
+          p.params.background_type = BACKGROUND_TYPE_INVERTED;
+        }
+
       gimp_rgb_set_alpha (&p.params.background_color, 1.0);
     }
 }
@@ -179,26 +182,26 @@ tile_size_adj_changed (GtkAdjustment *adj)
       p.params.division_x = p.drawable->width  / p.params.tile_size;
       p.params.division_y = p.drawable->height / p.params.tile_size;
       gtk_adjustment_set_value (GTK_ADJUSTMENT (w.division_x_adj),
-				p.params.division_x);
+                                p.params.division_x);
       gtk_adjustment_set_value (GTK_ADJUSTMENT (w.division_y_adj),
-				p.params.division_y);
-  }
+                                p.params.division_y);
+    }
 }
 
 static void
 division_x_adj_changed (GtkAdjustment *adj)
 {
-  if (p.params.division_x != (gint)adj->value)
+  if (p.params.division_x != (gint) adj->value)
     {
       p.params.division_x = adj->value;
       p.params.tile_size  = p.drawable->width  / p.params.division_x;
       p.params.division_y =
-	p.drawable->height * p.params.division_x / p.drawable->width;
+        p.drawable->height * p.params.division_x / p.drawable->width;
       gtk_adjustment_set_value (GTK_ADJUSTMENT (w.tile_size_adj),
-				p.params.tile_size);
+                                p.params.tile_size);
       gtk_adjustment_set_value (GTK_ADJUSTMENT (w.division_y_adj),
-				p.params.division_y);
-  }
+                                p.params.division_y);
+    }
 }
 
 static void
@@ -209,12 +212,12 @@ division_y_adj_changed (GtkAdjustment *adj)
       p.params.division_y = adj->value;
       p.params.tile_size  = p.drawable->height / p.params.division_y;
       p.params.division_x =
-	p.drawable->width * p.params.division_y / p.drawable->height;
+        p.drawable->width * p.params.division_y / p.drawable->height;
       gtk_adjustment_set_value (GTK_ADJUSTMENT (w.tile_size_adj),
-				p.params.tile_size);
+                                p.params.tile_size);
       gtk_adjustment_set_value (GTK_ADJUSTMENT (w.division_x_adj),
-				p.params.division_x);
-  }
+                                p.params.division_x);
+    }
 }
 
 static void
@@ -233,12 +236,12 @@ open_dialog (void)
 
   dialog = gimp_dialog_new (_("Paper Tile"), PLUG_IN_BINARY,
                             NULL, 0,
-			    gimp_standard_help_func, PLUG_IN_PROC,
+                            gimp_standard_help_func, PLUG_IN_PROC,
 
-			    GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
-			    GTK_STOCK_OK,     GTK_RESPONSE_OK,
+                            GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                            GTK_STOCK_OK,     GTK_RESPONSE_OK,
 
-			    NULL);
+                            NULL);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
                                            GTK_RESPONSE_OK,
@@ -268,47 +271,47 @@ open_dialog (void)
   gtk_widget_show (table);
 
   button = gimp_spin_button_new (&w.division_x_adj, p.params.division_x,
-				 1.0, p.drawable->width, 1.0, 5.0, 0, 1, 0);
+                                 1.0, p.drawable->width, 1.0, 5.0, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_X:"), 0.0, 0.5,
-			     button, 1, TRUE);
+                             _("_X:"), 0.0, 0.5,
+                             button, 1, TRUE);
   g_signal_connect (w.division_x_adj, "value-changed",
                     G_CALLBACK (division_x_adj_changed),
                     NULL);
 
   button = gimp_spin_button_new (&w.division_y_adj, p.params.division_y,
-				 1.0, p.drawable->width, 1.0, 5.0, 0, 1, 0);
+                                 1.0, p.drawable->width, 1.0, 5.0, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-			     _("_Y:"), 0.0, 0.5,
-			     button, 1, TRUE);
+                             _("_Y:"), 0.0, 0.5,
+                             button, 1, TRUE);
   g_signal_connect (w.division_y_adj, "value-changed",
                     G_CALLBACK (division_y_adj_changed),
                     NULL);
 
   button = gimp_spin_button_new (&w.tile_size_adj, p.params.tile_size,
-				 1.0, MAX (p.drawable->width,
-					   p.drawable->height),
-				 1.0, 5.0, 0, 1, 0);
+                                 1.0, MAX (p.drawable->width,
+                                           p.drawable->height),
+                                 1.0, 5.0, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-			     _("_Size:"), 0.0, 0.5,
-			     button, 1, TRUE);
+                             _("_Size:"), 0.0, 0.5,
+                             button, 1, TRUE);
   g_signal_connect (w.tile_size_adj, "value-changed",
                     G_CALLBACK (tile_size_adj_changed),
                     NULL);
 
   frame = gimp_int_radio_group_new (TRUE, _("Fractional Pixels"),
-				    G_CALLBACK (gimp_radio_button_update),
-				    &p.params.fractional_type,
-				    p.params.fractional_type,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &p.params.fractional_type,
+                                    p.params.fractional_type,
 
-				    _("_Background"),
-				    FRACTIONAL_TYPE_BACKGROUND, NULL,
-				    _("_Ignore"),
-				    FRACTIONAL_TYPE_IGNORE, NULL,
-				    _("_Force"),
-				    FRACTIONAL_TYPE_FORCE, NULL,
+                                    _("_Background"),
+                                    FRACTIONAL_TYPE_BACKGROUND, NULL,
+                                    _("_Ignore"),
+                                    FRACTIONAL_TYPE_IGNORE, NULL,
+                                    _("_Force"),
+                                    FRACTIONAL_TYPE_FORCE, NULL,
 
-				    NULL);
+                                    NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -338,17 +341,17 @@ open_dialog (void)
   gtk_widget_show (table);
 
   button = gimp_spin_button_new (&adjustment, p.params.move_max_rate,
-				 0.0, 100.0, 1.0, 10.0, 0, 1, 0);
+                                 0.0, 100.0, 1.0, 10.0, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-			     _("_Max (%):"), 0.0, 0.5,
-			     button, 1, TRUE);
+                             _("_Max (%):"), 0.0, 0.5,
+                             button, 1, TRUE);
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (gimp_double_adjustment_update),
                     &p.params.move_max_rate);
 
   button = gtk_check_button_new_with_mnemonic (_("_Wrap around"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-				p.params.wrap_around);
+                                p.params.wrap_around);
   gtk_table_attach_defaults (GTK_TABLE (table), button, 0, 2, 1, 2);
   gtk_widget_show (button);
 
@@ -357,38 +360,38 @@ open_dialog (void)
                     &p.params.wrap_around);
 
   frame = gimp_int_radio_group_new (TRUE, _("Background Type"),
-				    G_CALLBACK (gimp_radio_button_update),
-				    &p.params.background_type,
-				    p.params.background_type,
+                                    G_CALLBACK (gimp_radio_button_update),
+                                    &p.params.background_type,
+                                    p.params.background_type,
 
-				    _("_Transparent"),
-				    BACKGROUND_TYPE_TRANSPARENT, NULL,
-				    _("I_nverted image"),
-				    BACKGROUND_TYPE_INVERTED, NULL,
-				    _("Im_age"),
-				    BACKGROUND_TYPE_IMAGE, NULL,
-				    _("Fo_reground color"),
-				    BACKGROUND_TYPE_FOREGROUND, NULL,
-				    _("Bac_kground color"),
-				    BACKGROUND_TYPE_BACKGROUND, NULL,
-				    _("S_elect here:"),
-				    BACKGROUND_TYPE_COLOR, &button,
+                                    _("_Transparent"),
+                                    BACKGROUND_TYPE_TRANSPARENT, NULL,
+                                    _("I_nverted image"),
+                                    BACKGROUND_TYPE_INVERTED, NULL,
+                                    _("Im_age"),
+                                    BACKGROUND_TYPE_IMAGE, NULL,
+                                    _("Fo_reground color"),
+                                    BACKGROUND_TYPE_FOREGROUND, NULL,
+                                    _("Bac_kground color"),
+                                    BACKGROUND_TYPE_BACKGROUND, NULL,
+                                    _("S_elect here:"),
+                                    BACKGROUND_TYPE_COLOR, &button,
 
-				    NULL);
+                                    NULL);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
   color_button = gimp_color_button_new (_("Background Color"), 100, 16,
-					&p.params.background_color,
-					p.drawable_has_alpha ?
-					GIMP_COLOR_AREA_SMALL_CHECKS :
-					GIMP_COLOR_AREA_FLAT);
+                                        &p.params.background_color,
+                                        p.drawable_has_alpha ?
+                                        GIMP_COLOR_AREA_SMALL_CHECKS :
+                                        GIMP_COLOR_AREA_FLAT);
   gtk_box_pack_start (GTK_BOX (GTK_BIN (frame)->child),
                       color_button, TRUE, TRUE, 0);
   gtk_widget_show (color_button);
 
   gtk_widget_set_sensitive (color_button,
-			    p.params.background_type == BACKGROUND_TYPE_COLOR);
+                            p.params.background_type == BACKGROUND_TYPE_COLOR);
   g_object_set_data (G_OBJECT (button), "set_sensitive", color_button);
 
   g_signal_connect (color_button, "color-changed",
@@ -418,7 +421,7 @@ typedef struct _Tile
 
 static gint
 tile_compare (const void *x,
-	      const void *y)
+              const void *y)
 {
   return ((Tile *) x)->z - ((Tile *) y)->z;
 }
@@ -431,8 +434,8 @@ drand (void)
 
 static inline void
 random_move (gint *x,
-	     gint *y,
-	     gint  max)
+             gint *y,
+             gint  max)
 {
   gdouble angle  = drand () * G_PI;
   gdouble radius = drand () * (gdouble) max;
@@ -442,7 +445,7 @@ random_move (gint *x,
 
 static void
 overlap_RGB (guchar       *base,
-	     const guchar *top)
+             const guchar *top)
 {
   base[0] = top[0];
   base[1] = top[1];
@@ -451,7 +454,7 @@ overlap_RGB (guchar       *base,
 
 static void
 overlap_RGBA (guchar       *base,
-	      const guchar *top)
+              const guchar *top)
 {
   gdouble R1 = (gdouble) base[0] / 255.0;
   gdouble G1 = (gdouble) base[1] / 255.0;
@@ -462,14 +465,17 @@ overlap_RGBA (guchar       *base,
   gdouble B2 = (gdouble)  top[2] / 255.0;
   gdouble A2 = (gdouble)  top[3] / 255.0;
   gdouble A3 = A2 + A1 * (1.0 - A2);
-  if(0.0 < A3)
+
+  if (0.0 < A3)
     {
       gdouble R3 = (R1 * A1 * (1.0 - A2) + R2 * A2) / A3;
       gdouble G3 = (G1 * A1 * (1.0 - A2) + G2 * A2) / A3;
       gdouble B3 = (B1 * A1 * (1.0 - A2) + B2 * A2) / A3;
+
       R3 = CLAMP (R3, 0.0, 1.0);
       G3 = CLAMP (G3, 0.0, 1.0);
       B3 = CLAMP (B3, 0.0, 1.0);
+
       base[0] = (guchar) (R3 * 255.0);
       base[1] = (guchar) (G3 * 255.0);
       base[2] = (guchar) (B3 * 255.0);
@@ -520,21 +526,21 @@ filter (void)
 
   /* INITIALIZE */
   gimp_pixel_rgn_init (&src, p.drawable, 0, 0,
-		       p.drawable->width, p.drawable->height, FALSE, FALSE);
+                       p.drawable->width, p.drawable->height, FALSE, FALSE);
   gimp_pixel_rgn_init (&dst, p.drawable, 0, 0,
-		       p.drawable->width, p.drawable->height, TRUE, TRUE);
+                       p.drawable->width, p.drawable->height, TRUE, TRUE);
   pixels = g_new (guchar,
-		  p.drawable->bpp * p.drawable->width * p.drawable->height);
+                  p.drawable->bpp * p.drawable->width * p.drawable->height);
   buffer = g_new (guchar,
-		  p.drawable->bpp * p.params.tile_size * p.params.tile_size);
+                  p.drawable->bpp * p.params.tile_size * p.params.tile_size);
 
   overlap = p.drawable_has_alpha ? overlap_RGBA : overlap_RGB;
 
   gimp_progress_init (_("Paper Tile"));
 
   gimp_drawable_mask_bounds (p.drawable->drawable_id,
-			     &p.selection.x0, &p.selection.y0,
-			     &p.selection.x1, &p.selection.y1);
+                             &p.selection.x0, &p.selection.y0,
+                             &p.selection.x1, &p.selection.y1);
   p.selection.width  = p.selection.x1 - p.selection.x0;
   p.selection.height = p.selection.y1 - p.selection.y0;
 
@@ -548,96 +554,104 @@ filter (void)
       if (0 < p.drawable->width  % p.params.tile_size) division_x++;
       if (0 < p.drawable->height % p.params.tile_size) division_y++;
       if (p.params.centering)
-	{
-	  if (1 < p.drawable->width % p.params.tile_size)
-	    {
-	      division_x++;
-	      offset_x =
-		(p.drawable->width % p.params.tile_size) / 2 -
-		p.params.tile_size;
-	    }
-	  else
-	    {
-	      offset_x = 0;
-	    }
-	  if (1 < p.drawable->height % p.params.tile_size)
-	    {
-	      division_y++;
-	      offset_y =
-		(p.drawable->height % p.params.tile_size) / 2 -
-		p.params.tile_size;
-	    }
-	  else
-	    {
-	      offset_y = 0;
-	    }
-	}
+        {
+          if (1 < p.drawable->width % p.params.tile_size)
+            {
+              division_x++;
+              offset_x =
+                (p.drawable->width % p.params.tile_size) / 2 -
+                p.params.tile_size;
+            }
+          else
+            {
+              offset_x = 0;
+            }
+
+          if (1 < p.drawable->height % p.params.tile_size)
+            {
+              division_y++;
+              offset_y =
+                (p.drawable->height % p.params.tile_size) / 2 -
+                p.params.tile_size;
+            }
+          else
+            {
+              offset_y = 0;
+            }
+        }
       else
-	{
-	  offset_x = 0;
-	  offset_y = 0;
-	}
+        {
+          offset_x = 0;
+          offset_y = 0;
+        }
     }
   else
     {
       if (p.params.centering)
-	{
-	  offset_x = (p.drawable->width  % p.params.tile_size) / 2;
-	  offset_y = (p.drawable->height % p.params.tile_size) / 2;
-	}
+        {
+          offset_x = (p.drawable->width  % p.params.tile_size) / 2;
+          offset_y = (p.drawable->height % p.params.tile_size) / 2;
+        }
       else
-	{
-	  offset_x = 0;
-	  offset_y = 0;
-	}
+        {
+          offset_x = 0;
+          offset_y = 0;
+        }
     }
+
   move_max_pixels = p.params.move_max_rate * p.params.tile_size / 100.0;
   numof_tiles = division_x * division_y;
   t = tiles = g_new(Tile, numof_tiles);
+
   for (y = 0; y < division_y; y++)
     {
       gint srcy = offset_y + p.params.tile_size * y;
+
       for (x = 0; x < division_x; x++, t++)
-	{
-	  gint srcx = offset_x + p.params.tile_size * x;
-	  if (srcx < 0)
-	    {
-	      t->x     = 0;
-	      t->width = srcx + p.params.tile_size;
-	    }
-	  else if (srcx + p.params.tile_size < p.drawable->width)
-	    {
-	      t->x     = srcx;
-	      t->width = p.params.tile_size;
-	    }
-	  else
-	    {
-	      t->x     = srcx;
-	      t->width = p.drawable->width - srcx;
-	    }
-	  if (srcy < 0)
-	    {
-	      t->y      = 0;
-	      t->height = srcy + p.params.tile_size;
-	    }
-	  else if (srcy + p.params.tile_size < p.drawable->height)
-	    {
-	      t->y      = srcy;
-	      t->height = p.params.tile_size;
-	    }
-	  else
-	    {
-	      t->y      = srcy;
-	      t->height = p.drawable->height - srcy;
-	    }
-	  t->z = g_rand_int (gr);
-	  random_move (&t->move_x, &t->move_y, move_max_pixels);
-	}
+        {
+          gint srcx = offset_x + p.params.tile_size * x;
+
+          if (srcx < 0)
+            {
+              t->x     = 0;
+              t->width = srcx + p.params.tile_size;
+            }
+          else if (srcx + p.params.tile_size < p.drawable->width)
+            {
+              t->x     = srcx;
+              t->width = p.params.tile_size;
+            }
+          else
+            {
+              t->x     = srcx;
+              t->width = p.drawable->width - srcx;
+            }
+
+          if (srcy < 0)
+            {
+              t->y      = 0;
+              t->height = srcy + p.params.tile_size;
+            }
+          else if (srcy + p.params.tile_size < p.drawable->height)
+            {
+              t->y      = srcy;
+              t->height = p.params.tile_size;
+            }
+          else
+            {
+              t->y      = srcy;
+              t->height = p.drawable->height - srcy;
+            }
+
+          t->z = g_rand_int (gr);
+          random_move (&t->move_x, &t->move_y, move_max_pixels);
+        }
     }
+
   qsort (tiles, numof_tiles, sizeof *tiles, tile_compare);
 
   gimp_pixel_rgn_get_rect (&src, pixels, 0, 0, p.drawable->width,
-			   p.drawable->height);
+                           p.drawable->height);
 
   if (p.params.fractional_type == FRACTIONAL_TYPE_IGNORE)
     {
@@ -653,6 +667,7 @@ filter (void)
       clear_width  = p.drawable->width;
       clear_height = p.drawable->height;
     }
+
   clear_x1 = clear_x0 + clear_width;
   clear_y1 = clear_y0 + clear_height;
 
@@ -660,29 +675,29 @@ filter (void)
     {
     case BACKGROUND_TYPE_TRANSPARENT:
       for (y = clear_y0; y < clear_y1; y++)
-	{
-	  for (x = clear_x0; x < clear_x1; x++)
-	    {
-	      dindex = p.drawable->bpp * (p.drawable->width * y + x);
-	      for (i = 0; i < p.drawable->bpp; i++)
-		{
-		  pixels[dindex+i] = 0;
-		}
-	    }
-	}
+        {
+          for (x = clear_x0; x < clear_x1; x++)
+            {
+              dindex = p.drawable->bpp * (p.drawable->width * y + x);
+              for (i = 0; i < p.drawable->bpp; i++)
+                {
+                  pixels[dindex+i] = 0;
+                }
+            }
+        }
       break;
 
     case BACKGROUND_TYPE_INVERTED:
       for (y = clear_y0; y < clear_y1; y++)
-	{
-	  for (x = clear_x0; x < clear_x1; x++)
-	    {
-	      dindex = p.drawable->bpp * (p.drawable->width * y + x);
-	      pixels[dindex+0] = 255 - pixels[dindex+0];
-	      pixels[dindex+1] = 255 - pixels[dindex+1];
-	      pixels[dindex+2] = 255 - pixels[dindex+2];
-	    }
-	}
+        {
+          for (x = clear_x0; x < clear_x1; x++)
+            {
+              dindex = p.drawable->bpp * (p.drawable->width * y + x);
+              pixels[dindex+0] = 255 - pixels[dindex+0];
+              pixels[dindex+1] = 255 - pixels[dindex+1];
+              pixels[dindex+2] = 255 - pixels[dindex+2];
+            }
+        }
       break;
 
     case BACKGROUND_TYPE_IMAGE:
@@ -693,16 +708,16 @@ filter (void)
       gimp_rgb_get_uchar (&color, &pixel[0], &pixel[1], &pixel[2]);
       pixel[3] = 255;
       for (y = clear_y0; y < clear_y1; y++)
-	{
-	  for (x = clear_x0; x < clear_x1; x++)
-	    {
-	      dindex = p.drawable->bpp * (p.drawable->width * y + x);
-	      for (i = 0; i < p.drawable->bpp; i++)
-		{
-		  pixels[dindex+i] = pixel[i];
-		}
-	    }
-	}
+        {
+          for (x = clear_x0; x < clear_x1; x++)
+            {
+              dindex = p.drawable->bpp * (p.drawable->width * y + x);
+              for (i = 0; i < p.drawable->bpp; i++)
+                {
+                  pixels[dindex+i] = pixel[i];
+                }
+            }
+        }
       break;
 
     case BACKGROUND_TYPE_BACKGROUND:
@@ -710,32 +725,32 @@ filter (void)
       gimp_rgb_get_uchar (&color, &pixel[0], &pixel[1], &pixel[2]);
       pixel[3] = 255;
       for (y = clear_y0; y < clear_y1; y++)
-	{
-	  for (x = clear_x0; x < clear_x1; x++)
-	    {
-	      dindex = p.drawable->bpp * (p.drawable->width * y + x);
-	      for(i = 0; i < p.drawable->bpp; i++)
-		{
-		  pixels[dindex+i] = pixel[i];
-		}
-	    }
-	}
+        {
+          for (x = clear_x0; x < clear_x1; x++)
+            {
+              dindex = p.drawable->bpp * (p.drawable->width * y + x);
+              for(i = 0; i < p.drawable->bpp; i++)
+                {
+                  pixels[dindex+i] = pixel[i];
+                }
+            }
+        }
       break;
 
     case BACKGROUND_TYPE_COLOR:
       gimp_rgba_get_uchar (&p.params.background_color,
-			   pixel, pixel + 1, pixel + 2, pixel + 3);
+                           pixel, pixel + 1, pixel + 2, pixel + 3);
       for (y = clear_y0; y < clear_y1; y++)
-	{
-	  for (x = clear_x0; x < clear_x1; x++)
-	    {
-	      dindex = p.drawable->bpp * (p.drawable->width * y + x);
-	      for(i = 0; i < p.drawable->bpp; i++)
-		{
-		  pixels[dindex+i] = pixel[i];
-		}
-	    }
-	}
+        {
+          for (x = clear_x0; x < clear_x1; x++)
+            {
+              dindex = p.drawable->bpp * (p.drawable->width * y + x);
+              for(i = 0; i < p.drawable->bpp; i++)
+                {
+                  pixels[dindex+i] = pixel[i];
+                }
+            }
+        }
       break;
     }
 
@@ -748,39 +763,39 @@ filter (void)
       gimp_pixel_rgn_get_rect (&src, buffer, t->x, t->y, t->width, t->height);
 
       for (y = 0; y < t->height; y++)
-	{
-	  py = y0 + y;
-	  for (x = 0; x < t->width; x++)
-	    {
-	      px = x0 + x;
-	      sindex = p.drawable->bpp * (t->width * y + x);
-	      if (0 <= px && px < p.drawable->width &&
-		  0 <= py && py < p.drawable->height)
-		{
-		  dindex = p.drawable->bpp * (p.drawable->width * py + px);
-		  overlap(&pixels[dindex], &buffer[sindex]);
-		}
-	      else if (p.params.wrap_around)
-		{
-		  px = (px + p.drawable->width)  % p.drawable->width;
-		  py = (py + p.drawable->height) % p.drawable->height;
-		  dindex = p.drawable->bpp * (p.drawable->width * py + px);
-		  overlap(&pixels[dindex], &buffer[sindex]);
-		}
-	    }
-	}
+        {
+          py = y0 + y;
+          for (x = 0; x < t->width; x++)
+            {
+              px = x0 + x;
+              sindex = p.drawable->bpp * (t->width * y + x);
+              if (0 <= px && px < p.drawable->width &&
+                  0 <= py && py < p.drawable->height)
+                {
+                  dindex = p.drawable->bpp * (p.drawable->width * py + px);
+                  overlap(&pixels[dindex], &buffer[sindex]);
+                }
+              else if (p.params.wrap_around)
+                {
+                  px = (px + p.drawable->width)  % p.drawable->width;
+                  py = (py + p.drawable->height) % p.drawable->height;
+                  dindex = p.drawable->bpp * (p.drawable->width * py + px);
+                  overlap(&pixels[dindex], &buffer[sindex]);
+                }
+            }
+        }
 
       gimp_progress_update ((gdouble) i / (gdouble) numof_tiles);
     }
 
   gimp_pixel_rgn_set_rect (&dst, pixels, 0, 0, p.drawable->width,
-			   p.drawable->height);
+                           p.drawable->height);
 
   gimp_drawable_flush (p.drawable);
   gimp_drawable_merge_shadow (p.drawable->drawable_id, TRUE);
   gimp_drawable_update (p.drawable->drawable_id,
                         p.selection.x0, p.selection.y0,
-			p.selection.width, p.selection.height);
+                        p.selection.width, p.selection.height);
 
   g_rand_free (gr);
   g_free (buffer);
@@ -811,77 +826,76 @@ plugin_query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
-			  N_("Cut image into paper tiles, and slide them"),
-			  "This plug-in cuts an image into paper tiles and "
+                          N_("Cut image into paper tiles, and slide them"),
+                          "This plug-in cuts an image into paper tiles and "
                           "slides each paper tile.",
-			  "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
-			  "Copyright (c)1997-1999 Hirotsuna Mizuno",
-			  _("September 31, 1999"),
-			  N_("_Paper Tile..."),
-			  "RGB*",
-			  GIMP_PLUGIN,
-			  G_N_ELEMENTS (args), 0,
-			  args, NULL);
+                          "Hirotsuna Mizuno <s1041150@u-aizu.ac.jp>",
+                          "Copyright (c)1997-1999 Hirotsuna Mizuno",
+                          _("September 31, 1999"),
+                          N_("_Paper Tile..."),
+                          "RGB*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
 
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Filters/Map");
 }
 
 static void
 plugin_run (const gchar      *name,
-	    gint              numof_params,
-	    const GimpParam  *params,
-	    gint             *numof_return_vals,
-	    GimpParam       **return_vals)
+            gint              numof_params,
+            const GimpParam  *params,
+            gint             *numof_return_vals,
+            GimpParam       **return_vals)
 {
-  GimpPDBStatusType status;
+  GimpPDBStatusType status = GIMP_PDB_SUCCESS;
 
   INIT_I18N ();
 
-  status = GIMP_PDB_SUCCESS;
-  p.run  = FALSE;
-  p.run_mode = params[0].data.d_int32;
-  p.image    = params[1].data.d_image;
-  p.drawable = gimp_drawable_get(params[2].data.d_drawable);
+  p.run                = FALSE;
+  p.run_mode           = params[0].data.d_int32;
+  p.image              = params[1].data.d_image;
+  p.drawable           = gimp_drawable_get(params[2].data.d_drawable);
   p.drawable_has_alpha = gimp_drawable_has_alpha(p.drawable->drawable_id);
 
   if (gimp_drawable_is_rgb (p.drawable->drawable_id))
     {
       switch (p.run_mode)
-	{
-	case GIMP_RUN_INTERACTIVE:
-	  params_load_from_gimp ();
-	  open_dialog ();
-	  break;
+        {
+        case GIMP_RUN_INTERACTIVE:
+          params_load_from_gimp ();
+          open_dialog ();
+          break;
 
-	case GIMP_RUN_NONINTERACTIVE:
-	  if (numof_params == 11)
-	    {
-	      p.params.tile_size        = params[3].data.d_int32;
-	      p.params.division_x       = p.drawable->width  / p.params.tile_size;
-	      p.params.division_y       = p.drawable->height / p.params.tile_size;
-	      p.params.move_max_rate    = params[4].data.d_float;
-	      p.params.fractional_type  = (FractionalType)params[5].data.d_int32;
-	      p.params.wrap_around      = params[6].data.d_int32;
-	      p.params.centering        = params[7].data.d_int32;
-	      p.params.background_type  = (BackgroundType)params[8].data.d_int32;
-	      p.params.background_color = params[9].data.d_color;
+        case GIMP_RUN_NONINTERACTIVE:
+          if (numof_params == 11)
+            {
+              p.params.tile_size        = params[3].data.d_int32;
+              p.params.division_x       = p.drawable->width  / p.params.tile_size;
+              p.params.division_y       = p.drawable->height / p.params.tile_size;
+              p.params.move_max_rate    = params[4].data.d_float;
+              p.params.fractional_type  = (FractionalType)params[5].data.d_int32;
+              p.params.wrap_around      = params[6].data.d_int32;
+              p.params.centering        = params[7].data.d_int32;
+              p.params.background_type  = (BackgroundType)params[8].data.d_int32;
+              p.params.background_color = params[9].data.d_color;
 
-	      /*  FIXME:  this used to be the alpha value
-				          params[10].data.d_int32
-	       */
-	      p.run = TRUE;
-	    }
-	  else
-	    {
-	      status = GIMP_PDB_CALLING_ERROR;
-	    }
-	  break;
+              /*  FIXME:  this used to be the alpha value
+                                          params[10].data.d_int32
+               */
+              p.run = TRUE;
+            }
+          else
+            {
+              status = GIMP_PDB_CALLING_ERROR;
+            }
+          break;
 
-	case GIMP_RUN_WITH_LAST_VALS:
-	  params_load_from_gimp ();
-	  p.run = TRUE;
-	  break;
-	}
+        case GIMP_RUN_WITH_LAST_VALS:
+          params_load_from_gimp ();
+          p.run = TRUE;
+          break;
+        }
     }
   else
     {

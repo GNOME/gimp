@@ -1,3 +1,7 @@
+2007-05-05  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/papertile.c: whitespace cleanup, tabs -> spaces.
+
 2007-05-05  Roozbeh Pournader  <roozbeh@farsiweb.info>
 
 	* configure.in: Added 'fa' (Persian) to ALL_LINGUAS.
