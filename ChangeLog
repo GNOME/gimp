@@ -1,3 +1,13 @@
+2007-05-05  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/paint-funcs.c (convolve_region): instead of just
+	copying the border pixels, convolute the full region and extend
+	the borders.
+
+	* app/paint/gimpconvolve.[ch]: removed broken code that used to
+	deal with the image borders. Fixes bug #434279. Also reduced the
+	matrix sizes to 3x3 as only the inner 3x3 values were nonzero.
+
 2007-05-05  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/papertile.c: whitespace cleanup, tabs -> spaces.

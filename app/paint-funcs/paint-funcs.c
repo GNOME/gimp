@@ -2386,21 +2386,18 @@ convolve_region (PixelRegion         *srcR,
 {
   /*  Convolve the src image using the convolution matrix, writing to dest  */
   /*  Convolve is not tile-enabled--use accordingly  */
-  const guchar *src;
-  guchar       *dest;
-  const gfloat *m;
-  gdouble       total[4];
-  gint          b, bytes;
-  gint          alpha, a_byte;
-  gint          length;
-  gint          wraparound;
-  gint          margin;      /*  margin imposed by size of conv. matrix  */
-  gint          i, j;
+  const guchar *src       = srcR->data;
+  guchar       *dest      = destR->data;
+  const gint    bytes     = srcR->bytes;
+  const gint    a_byte    = bytes - 1;
+  const gint    rowstride = srcR->rowstride;
+  const gint    margin    = size / 2;
+  const gint    x1        = srcR->x;
+  const gint    y1        = srcR->y;
+  const gint    x2        = srcR->x + srcR->w - 1;
+  const gint    y2        = srcR->y + srcR->h - 1;
   gint          x, y;
   gint          offset;
-  gdouble       matrixsum = 0.0;
-  gdouble       weighted_divisor;
-  gdouble       mult_alpha;
 
   /*  If the mode is NEGATIVE_CONVOL, the offset should be 128  */
   if (mode == GIMP_NEGATIVE_CONVOL)
@@ -2413,183 +2410,100 @@ convolve_region (PixelRegion         *srcR,
       offset = 0;
     }
 
-  /*  check for the boundary cases  */
-  if (srcR->w < (size - 1) || srcR->h < (size - 1))
-    return;
-
-  /*  Initialize some values  */
-  bytes = srcR->bytes;
-  a_byte = bytes - 1;
-  length = bytes * srcR->w;
-  margin = size / 2;
-  src = srcR->data;
-  dest = destR->data;
-
-  if (alpha_weighting)
+  for (y = 0; y < destR->h; y++)
     {
-      m = matrix;
-
-      i = size;
-      while (i--)
-        {
-          j = size;
-          while (j--)
-            matrixsum += *m++;
-        }
-
-      if (matrixsum == 0.0)
-        matrixsum = 1.0;
-    }
-
-  /*  calculate the source wraparound value  */
-  wraparound = srcR->rowstride - size * bytes;
-
-  /* copy the first (size / 2) scanlines of the src image... */
-  for (i = 0; i < margin; i++)
-    {
-      memcpy (dest, src, length);
-      src += srcR->rowstride;
-      dest += destR->rowstride;
-    }
-
-  src = srcR->data;
-
-  for (y = margin; y < srcR->h - margin; y++)
-    {
-      const guchar *s_row = src;
-      const guchar *s     = s_row + srcR->rowstride * margin;
-      guchar       *d     = dest;
-
-      /* handle the first margin pixels... */
-      b = bytes * margin;
-      while (b--)
-        *d++ = *s++;
-
-      /* now, handle the center pixels */
-      x = srcR->w - margin * 2;
+      guchar *d = dest;
 
       if (alpha_weighting)
-        while (x--)
-          {
-            s = s_row;
+        {
+          for (x = 0; x < destR->w; x++)
+            {
+              const gfloat *m                = matrix;
+              gdouble       total[4]         = { 0.0, 0.0, 0.0, 0.0 };
+              gdouble       weighted_divisor = 0.0;
+              gint          i, j, b;
 
-            m = matrix;
-            total[0] = total[1] = total[2] = total[3] = 0;
-            weighted_divisor = 0.0;
+              for (j = y - margin; j <= y + margin; j++)
+                {
+                  for (i = x - margin; i <= x + margin; i++, m++)
+                    {
+                      gint          xx = CLAMP (i, x1, x2);
+                      gint          yy = CLAMP (j, y1, y2);
+                      const guchar *s  = src + yy * rowstride + xx * bytes;
+                      const guchar  a  = s[a_byte];
 
-            i = size;
-            while (i--)
-              {
-                j = size;
-                while (j--)
-                  {
-                    alpha = s[a_byte];
+                      if (a)
+                        {
+                          gdouble mult_alpha = *m * a;
 
-                    if (alpha && *m)
-                      {
-                        mult_alpha = *m * alpha;
-                        weighted_divisor += mult_alpha;
+                          weighted_divisor += mult_alpha;
 
-                        for (b = 0; b < a_byte; b++)
-                          total[b] += mult_alpha * *s++;
+                          for (b = 0; b < a_byte; b++)
+                            total[b] += mult_alpha * s[b];
 
-                        total[a_byte] += *m * *s++;
-                      }
-                    else
-                      {
-                        s += bytes;
-                      }
+                          total[a_byte] += mult_alpha;
+                        }
+                    }
+                }
 
-                    m++;
-                  }
+              if (weighted_divisor == 0.0)
+                weighted_divisor = divisor;
 
-                s += wraparound;
-              }
+              for (b = 0; b < a_byte; b++)
+                total[b] /= weighted_divisor;
 
-            if (weighted_divisor == 0.0)
-              weighted_divisor = 1.0;
+              total[a_byte] /= divisor;
 
-            for (b = 0; b < bytes; b++)
-              {
-                total[b] /= divisor;
+              for (b = 0; b < bytes; b++)
+                {
+                  total[b] += offset;
 
-                if (b != a_byte)
-                  total[b] = total[b] * matrixsum / weighted_divisor;
+                  if (mode != GIMP_NORMAL_CONVOL && total[b] < 0.0)
+                    total[b] = - total[b];
 
-                total[b] += offset;
-
-                if (total[b] < 0.0 && mode != GIMP_NORMAL_CONVOL)
-                  total[b] = - total[b];
-
-                if (total[b] < 0)
-                  *d++ = 0;
-                else
-                  *d++ = (total[b] > 255.0) ? 255 : (guchar) ROUND (total[b]);
-              }
-
-            s_row += bytes;
-          }
+                  if (total[b] < 0.0)
+                    *d++ = 0;
+                  else
+                    *d++ = (total[b] > 255.0) ? 255 : (guchar) ROUND (total[b]);
+                }
+            }
+        }
       else
-        while (x--)
-          {
-            s = s_row;
+        {
+          for (x = 0; x < destR->w; x++)
+            {
+              const gfloat *m        = matrix;
+              gdouble       total[4] = { 0.0, 0.0, 0.0, 0.0 };
+              gint          i, j, b;
 
-            m = matrix;
-            total[0] = total[1] = total[2] = total[3] = 0;
+              for (j = y - margin; j <= y + margin; j++)
+                {
+                  for (i = x - margin; i <= x + margin; i++, m++)
+                    {
+                      gint          xx = CLAMP (i, x1, x2);
+                      gint          yy = CLAMP (j, y1, y2);
+                      const guchar *s  = src + yy * rowstride + xx * bytes;
 
-            i = size;
-            while (i--)
-              {
-                j = size;
-                while (j--)
-                  {
-                    if (*m)
                       for (b = 0; b < bytes; b++)
-                        total[b] += *m * *s++;
-                    else
-                      s += bytes;
+                        total[b] += *m * s[b];
+                    }
+                }
 
-                    m++;
-                  }
+              for (b = 0; b < bytes; b++)
+                {
+                  total[b] = total[b] / divisor + offset;
 
-                s += wraparound;
-              }
+                  if (mode != GIMP_NORMAL_CONVOL && total[b] < 0.0)
+                    total[b] = - total[b];
 
-            for (b = 0; b < bytes; b++)
-              {
-                total[b] = total[b] / divisor + offset;
+                  if (total[b] < 0.0)
+                    *d++ = 0.0;
+                  else
+                    *d++ = (total[b] > 255.0) ? 255 : (guchar) ROUND (total[b]);
+                }
+            }
+        }
 
-                if (total[b] < 0.0 && mode != GIMP_NORMAL_CONVOL)
-                  total[b] = - total[b];
-
-                if (total[b] < 0.0)
-                  *d++ = 0.0;
-                else
-                  *d++ = (total[b] > 255.0) ? 255 : (guchar) ROUND (total[b]);
-              }
-
-            s_row += bytes;
-          }
-
-      /* handle the last pixel... */
-      s = s_row + (srcR->rowstride + bytes) * margin;
-      b = bytes * margin;
-
-      while (b--)
-        *d++ = *s++;
-
-      /* set the memory pointers */
-      src += srcR->rowstride;
-      dest += destR->rowstride;
-    }
-
-  src += srcR->rowstride * margin;
-
-  /* copy the last (margin) scanlines of the src image... */
-  for (i = 0; i < margin; i++)
-    {
-      memcpy (dest, src, length);
-      src += srcR->rowstride;
       dest += destR->rowstride;
     }
 }
@@ -4880,7 +4794,6 @@ combine_regions_replace (PixelRegion     *src1,
 
       for (h = 0; h < src1->h; h++)
         {
-
           /*  Now, apply the paint mode  */
           apply_layer_mode_replace (s1, s2, d, m, src1->x, src1->y + h,
                                     opacity, src1->w,
