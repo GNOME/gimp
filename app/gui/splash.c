@@ -206,6 +206,7 @@ splash_create (gboolean be_verbose)
 
   /*  add a progress bar  */
   splash->progress = gtk_progress_bar_new ();
+  gtk_widget_set_size_request (splash->progress, 1, 12);
   gtk_box_pack_end (GTK_BOX (vbox), splash->progress, FALSE, FALSE, 0);
   gtk_widget_show (splash->progress);
 

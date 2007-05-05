@@ -1,5 +1,9 @@
 2007-05-05  Mukund Sivaraman  <muks@mukund.org>
 
+	* app/gui/splash.c: make the splash progress bar lean and mean.
+
+2007-05-05  Mukund Sivaraman  <muks@mukund.org>
+
 	* app/base/gimplut.c
 	* app/base/gimplut.h
 	* app/tools/gimpcurvestool.c
