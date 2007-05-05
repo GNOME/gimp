@@ -1,3 +1,10 @@
+2007-05-05  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpdrawtool.c (gimp_draw_tool_draw_boundary): fixed
+	off-by-one (too large) drawing of boundaries by copying the resp.
+	code and its obscure comment from gimpdisplayshell-selection.c
+	Fixes bug #416432.
+
 2007-05-04  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/tips-dialog.c: make the tips label selectable.

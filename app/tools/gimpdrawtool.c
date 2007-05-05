@@ -1464,6 +1464,24 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
           gdk_points[0].x = CLAMP (x, -1, xmax);
           gdk_points[0].y = CLAMP (y, -1, ymax);
 
+          /*  If this segment is a closing segment && the segments lie inside
+           *  the region, OR if this is an opening segment and the segments
+           *  lie outside the region...
+           *  we need to transform it by one display pixel
+           */
+          if (! bound_segs[i].open)
+            {
+              /*  If it is vertical  */
+              if (bound_segs[i].x1 == bound_segs[i].x2)
+                {
+                  gdk_points[0].x -= 1;
+                }
+              else
+                {
+                  gdk_points[0].y -= 1;
+                }
+            }
+
           n_gdk_points++;
         }
 
@@ -1477,6 +1495,26 @@ gimp_draw_tool_draw_boundary (GimpDrawTool   *draw_tool,
 
       gdk_points[n_gdk_points].x = CLAMP (x, -1, xmax);
       gdk_points[n_gdk_points].y = CLAMP (y, -1, ymax);
+
+      /*  If this segment is a closing segment && the segments lie inside
+       *  the region, OR if this is an opening segment and the segments
+       *  lie outside the region...
+       *  we need to transform it by one display pixel
+       */
+      if (! bound_segs[i].open)
+        {
+          /*  If it is vertical  */
+          if (bound_segs[i].x1 == bound_segs[i].x2)
+            {
+              gdk_points[n_gdk_points    ].x -= 1;
+              gdk_points[n_gdk_points - 1].x -= 1;
+            }
+          else
+            {
+              gdk_points[n_gdk_points    ].y -= 1;
+              gdk_points[n_gdk_points - 1].y -= 1;
+            }
+        }
 
       n_gdk_points++;
     }
