@@ -1,3 +1,8 @@
+2007-05-05  Roozbeh Pournader  <roozbeh@farsiweb.info>
+
+	* fa.po: Added Persian translation by Meelad Zakaria and
+	  Farzad Ghanei.
+
 2007-05-04  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: removed gimpresolutionentry.c.

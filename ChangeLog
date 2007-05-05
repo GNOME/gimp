@@ -1,3 +1,7 @@
+2007-05-05  Roozbeh Pournader  <roozbeh@farsiweb.info>
+
+	* configure.in: Added 'fa' (Persian) to ALL_LINGUAS.
+
 2007-05-05  Sven Neumann  <sven@gimp.org>
 
 	* app/base/gimplut.[ch]
