@@ -1,3 +1,10 @@
+2007-05-05  Sven Neumann  <sven@gimp.org>
+
+	* app/base/gimplut.[ch]
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimplevelstool.c: reverted the changes done for bug
+	#331782. See the bug report for an explanation.
+
 2007-05-05  Mukund Sivaraman  <muks@mukund.org>
 
 	* app/gui/splash.c: reverted the progress bar size change.
@@ -8,8 +15,7 @@
 
 2007-05-05  Mukund Sivaraman  <muks@mukund.org>
 
-	* app/base/gimplut.c
-	* app/base/gimplut.h
+	* app/base/gimplut.[ch]
 	* app/tools/gimpcurvestool.c
 	* app/tools/gimplevelstool.c: Fixed the value channel color
 	correction in the curves and levels tools to only modify the
