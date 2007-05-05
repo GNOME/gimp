@@ -1,6 +1,11 @@
 ## Process this file with automake to produce Makefile.in
 
+if ENABLE_GTK_DOC_APP
+app = app
+endif
+
 SUBDIRS = \
+	tools		\
 	libgimpbase	\
 	libgimpcolor	\
 	libgimpconfig	\
@@ -9,13 +14,12 @@ SUBDIRS = \
 	libgimpthumb	\
 	libgimpwidgets	\
 	libgimp		\
-	tools
+	$(app)
 
 EXTRA_DIST = \
 	ChangeLog		\
 	README			\
 	README.gtkdoc		\
-	app			\
 	debug-plug-ins.txt	\
 	gbr.txt			\
 	ggr.txt  		\
@@ -34,6 +38,10 @@ EXTRA_DIST = \
 #
 if ENABLE_GTK_DOC
 dist-check-gtk-doc:
+if ENABLE_GTK_DOC_APP
+	@echo "*** gtk-doc-app must be disabled in order to make dist"
+	@false
+endif
 else
 dist-check-gtk-doc:
 	@echo "*** gtk-doc must be enabled in order to make dist"

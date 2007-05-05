@@ -1688,6 +1688,9 @@ dnl NOTE: We need to use a separate automake conditional for this
 dnl       to make this work with the tarballs.
 AM_CONDITIONAL(ENABLE_GTK_DOC, test x$enable_gtk_doc = xyes)
 
+AC_ARG_ENABLE(gtk-doc-app, [  --enable-gtk-doc-app    build developer documentation for app (default=no)], , enable_gtk_doc_app=no)
+AM_CONDITIONAL(ENABLE_GTK_DOC_APP, test x$enable_gtk_doc_app = xyes)
+
 
 #########################################
 # Allow to configure the gimp environment

@@ -49,9 +49,6 @@ HTML_IMAGES=
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE)
 content_files =
 
-# Other files to distribute
-extra_files =
-
 # CFLAGS and LDFLAGS for compiling scan program. Only needed
 # if $(DOC_MODULE).types is non-empty.
 
@@ -113,4 +110,11 @@ GTKDOC_LIBS = \
 include $(top_srcdir)/gtk-doc.make
 
 # Other files to distribute
-EXTRA_DIST += version.in
+EXTRA_DIST += \
+	$(DOC_MODULE).types	\
+	version.in
+
+
+# Override dist-hook as we don't want to distribute generated files
+dist-hook:
+	@true

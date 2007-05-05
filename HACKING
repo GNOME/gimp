@@ -91,7 +91,7 @@ The interesting modules and the suggested stable branches to use are:
     * gimp
     * glib        (glib-2-12)
     * atk         (gnome-2-16)
-    * pango       (pango-1-14)
+    * pango       (pango-1-16)
     * gtk+        (gtk-2-10)
     * libart_lgpl
     * gtkhtml2
