@@ -1,5 +1,10 @@
 2007-05-06  Sven Neumann  <sven@gimp.org>
 
+	* po-*/Makefile.in.in: include po/Makefile.in.in and override
+	@GETTEXT_PACKAGE@ instead of keeping five copies.
+
+2007-05-06  Sven Neumann  <sven@gimp.org>
+
 	* HACKING: suggest to use pango-1-16.
 
 	* configure.in: added --enable-gtk-doc-app option and an automake
