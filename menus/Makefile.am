@@ -65,7 +65,7 @@ if HAVE_XMLLINT
 	@cd $(srcdir); \
 	for menu in $(menudata_DATA); do \
 	   $(XMLLINT) --noout --valid $$menu || \
-	   ( echo "* $$menu INVALID *"; exit 1; ) ; \
+	   ( echo "*** $$menu INVALID ***"; exit 1; ) ; \
 	done
 endif
 

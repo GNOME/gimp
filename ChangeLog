@@ -1,5 +1,15 @@
 2007-05-06  Sven Neumann  <sven@gimp.org>
 
+	* tools/defcheck.py: improved path handling. Allow to pass the
+	source directory on the command-line.
+
+	* Makefile.am (check-defs): pass $(top_srcdir) to defcheck.py.
+	(validate-authors): validate authors.xml in the srcdir.
+
+	* menus/Makefile.am (validate): changed output for consistency.
+
+2007-05-06  Sven Neumann  <sven@gimp.org>
+
 	* Makefile.am (DISTCHECK_CONFIGURE_FLAGS): --enable-gtk-doc
 	(EXTRA_DIST): added mkinstalldirs, the po-* Makefiles need it.
 	(check-defs): use tools/defcheck.py from $(top_srcdir).

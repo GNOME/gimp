@@ -89,13 +89,14 @@ gimpinstall-@GIMP_TOOL_VERSION@:
 	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall-@GIMP_TOOL_VERSION@
 
 check-defs:
-	@$(PYTHON) $(top_srcdir)/tools/defcheck.py || \
-	  ( echo "* .def files inconsistent *"; exit 1; )
+	@$(PYTHON) $(top_srcdir)/tools/defcheck.py $(top_srcdir) || \
+	  ( echo "*** .def files inconsistent ***"; exit 1; )
 
 validate-authors:
 if HAVE_XMLLINT
-	@$(XMLLINT) --noout --valid authors.xml || \
-	  ( echo "* authors.xml INVALID *"; exit 1; )
+	@cd $(srcdir); \
+	$(XMLLINT) --noout --valid authors.xml || \
+	  ( echo "*** authors.xml INVALID ***"; exit 1; )
 endif
 
 all-local: AUTHORS

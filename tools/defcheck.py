@@ -19,15 +19,20 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
 
 
-This is a hack to check the consistency of the .def files compared to the
-resp. libraries.
+This is a hack to check the consistency of the .def files compared to
+the respective libraries.
 
-Invoke in the top level of the gimp source after compiling the GIMP.
-Needs the tool "nm" to work.
+Invoke in the top level of the gimp source tree after compiling GIMP.
+If srcdir != builddir, run it in the build directory and pass the name
+of the source directory on the command-line.
+
+Needs the tool "nm" to work
 
 """
 
 import sys, commands
+
+from os import path
 
 def_files = (
    "libgimpbase/gimpbase.def",
@@ -43,16 +48,27 @@ def_files = (
 
 have_errors = 0
 
-for df in def_files:
-   directory, rest = df.split ("/")
-   basename, extension = rest.split (".")
-   libname = directory + "/.libs/lib" + basename + "-*.so"
+srcdir = None
+if len(sys.argv) > 1:
+   srcdir = sys.argv[1]
+   if not path.exists(srcdir):
+      print "Directory '%s' does not exist" % srcdir
+      sys.exit (-1)
 
+for df in def_files:
+   directory, name = path.split (df)
+   basename, extension = name.split (".")
+   libname = path.join(directory, ".libs", "lib" + basename + "-*.so")
+
+   filename = df
+   if srcdir:
+      filename = path.join(srcdir, df)
    try:
-      defsymbols = file (df).read ().split ()[1:]
+      defsymbols = file (filename).read ().split ()[1:]
    except IOError, message:
       print message
-      print "You need to run this script from the toplevel source directory."
+      if not srcdir:
+         print "You should run this script from the toplevel source directory."
       sys.exit (-1)
 
    doublesymbols = []
@@ -80,7 +96,7 @@ for df in def_files:
 
    if unsortindex >= 0 or missing_defs or missing_nms or doublesymbols:
       print
-      print "Problem found in", df
+      print "Problem found in", filename
 
       if missing_defs:
          print "  the following symbols are in the library,"
