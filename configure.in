@@ -66,7 +66,7 @@ AC_INIT([GIMP], [gimp_version],
 
 AC_CONFIG_SRCDIR([app/core/gimp.c])
 
-AM_INIT_AUTOMAKE(no-define)
+AM_INIT_AUTOMAKE(no-define dist-bzip2)
 AM_CONFIG_HEADER(config.h)
 
 GIMP_MAJOR_VERSION=gimp_major_version

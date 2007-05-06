@@ -1,5 +1,9 @@
 2007-05-06  Sven Neumann  <sven@gimp.org>
 
+	* configure.in (AM_INIT_AUTOMAKE): pass dist-bzip2 to automake.
+
+2007-05-06  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/Makefile.am (DISTCLEANFILES): clean gimpversion.h.
 
 	* plug-ins/metadata/Makefile.am (CLEANFILES): clean testbase64.
