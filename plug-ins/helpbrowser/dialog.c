@@ -195,7 +195,7 @@ browser_dialog_open (void)
   GtkCellRenderer *cell;
   GdkPixbuf       *pixbuf;
   gchar           *eek_png_path;
-  DialogData       data = { 640, 560, 240 };
+  DialogData       data = { 720, 560, 240 };
 
   gimp_ui_init ("helpbrowser", TRUE);
 
