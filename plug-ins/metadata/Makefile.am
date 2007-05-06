@@ -69,7 +69,10 @@ LDADD = \
 TESTS = testbase64$(EXEEXT)
 
 EXTRA_PROGRAMS = testbase64
+
 testbase64_SOURCES = \
 	base64.h	\
 	base64.c	\
 	testbase64.c	
+
+CLEANFILES = $(EXTRA_PROGRAMS)

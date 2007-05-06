@@ -1,5 +1,16 @@
 2007-05-06  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/Makefile.am (DISTCLEANFILES): clean gimpversion.h.
+
+	* plug-ins/metadata/Makefile.am (CLEANFILES): clean testbase64.
+
+	* po/Makefile.in.in (mostlyclean): clean .intltool-merge-cachemake
+
+	* tools/pdbgen/Makefile.am: use DISTCLEANFILES instead of
+	MAINTAINERCLEANFILES.
+
+2007-05-06  Sven Neumann  <sven@gimp.org>
+
 	* tools/defcheck.py: improved path handling. Allow to pass the
 	source directory on the command-line.
 

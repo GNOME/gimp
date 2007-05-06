@@ -98,7 +98,7 @@ stamp_files = \
 	stamp-enum-code		\
 	stamp-enum-code-py
 
-MAINTAINERCLEANFILES = $(stamp_files)
+DISTCLEANFILES = $(stamp_files)
 
 $(srcdir)/enums.pl: stamp-enums
 	@:

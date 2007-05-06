@@ -196,3 +196,6 @@ $(srcdir)/gimpbaseenums.c: $(srcdir)/gimpbaseenums.h $(GIMP_MKENUMS)
 		$(srcdir)/gimpbaseenums.h > xgen-bec \
 	&& cp xgen-bec $(@F) \
 	&& rm -f xgen-bec
+
+
+DISTCLEANFILES = gimpversion.h
