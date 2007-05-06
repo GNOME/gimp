@@ -1,3 +1,9 @@
+2007-05-06  Sven Neumann  <sven@gimp.org>
+
+	* Makefile.am (DISTCHECK_CONFIGURE_FLAGS): --enable-gtk-doc
+	(EXTRA_DIST): added mkinstalldirs, the po-* Makefiles need it.
+	(check-defs): use tools/defcheck.py from $(top_srcdir).
+
 2007-05-06  Simon Budig  <simon@gimp.org>
 
 	* tools/pdbgen/pdb/edit.pdb: make gimp-edit-paste-as-new not fail

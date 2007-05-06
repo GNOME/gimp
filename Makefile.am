@@ -73,10 +73,11 @@ EXTRA_DIST = \
 	intltool-extract.in	\
 	intltool-merge.in	\
 	intltool-update.in	\
-	makefile.msc
+	makefile.msc		\
+	mkinstalldirs
 
 
-DISTCHECK_CONFIGURE_FLAGS = --enable-gimp-console
+DISTCHECK_CONFIGURE_FLAGS = --enable-gtk-doc
 
 DISTCLEANFILES = \
 	intltool-extract	\
@@ -88,7 +89,7 @@ gimpinstall-@GIMP_TOOL_VERSION@:
 	$(LN_S) $(srcdir)/install-sh $(srcdir)/gimpinstall-@GIMP_TOOL_VERSION@
 
 check-defs:
-	@$(PYTHON) tools/defcheck.py || \
+	@$(PYTHON) $(top_srcdir)/tools/defcheck.py || \
 	  ( echo "* .def files inconsistent *"; exit 1; )
 
 validate-authors:
