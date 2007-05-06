@@ -1,3 +1,9 @@
+2007-05-06  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* gimptool-2.0.in: define datarootdir before datadir (bug #436386).
+
 2007-04-29  Christophe Merlet  <redfox@redfoxcenter.org>
 
 	* configure.in: Added "oc" (Occitan) to ALL_LINGUAS.
