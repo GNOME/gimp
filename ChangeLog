@@ -1,5 +1,9 @@
 2007-05-06  Sven Neumann  <sven@gimp.org>
 
+	* po-*/Makefile.in.in: reverted last change, it didn't work.
+
+2007-05-06  Sven Neumann  <sven@gimp.org>
+
 	* po-*/Makefile.in.in: include po/Makefile.in.in and override
 	@GETTEXT_PACKAGE@ instead of keeping five copies.
 
