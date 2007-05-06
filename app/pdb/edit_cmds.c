@@ -199,7 +199,9 @@ edit_paste_as_new_invoker (GimpProcedure     *procedure,
         success = FALSE;
     }
   else
-    success = FALSE;
+    {
+      image = NULL;
+    }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);
 
@@ -846,7 +848,7 @@ register_edit_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-edit-paste-as-new",
                                      "Paste buffer to a new image.",
-                                     "This procedure pastes a copy of the internal GIMP edit buffer to a new image. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. This procedure returns the new image.",
+                                     "This procedure pastes a copy of the internal GIMP edit buffer to a new image. The GIMP edit buffer will be empty unless a call was previously made to either 'gimp-edit-cut' or 'gimp-edit-copy'. This procedure returns the new image or -1 if the edit buffer was empty.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "2005",

@@ -89,13 +89,13 @@ static const LinuxInputEvent rel_events[] =
 {
   { REL_X,      "x-move-left",                   N_("X Move Left")               },
   { REL_X,      "x-move-right",                  N_("X Move Right")              },
-  { REL_Y,      "y-move-away",                   N_("Y Move Away")               },
-  { REL_Y,      "y-move-near",                   N_("Y Move Near")               },
+  { REL_Y,      "y-move-forward",                N_("Y Move Forward")            },
+  { REL_Y,      "y-move-back",                   N_("Y Move Back")               },
   { REL_Z,      "z-move-up",                     N_("Z Move Up")                 },
   { REL_Z,      "z-move-down",                   N_("Z Move Down")               },
 #ifdef REL_RX
-  { REL_RX,     "x-axis-tilt-away",              N_("X Axis Tilt Away")          },
-  { REL_RX,     "x-axis-tilt-near",              N_("X Axis Tilt Near")          },
+  { REL_RX,     "x-axis-tilt-forward",           N_("X Axis Tilt Forward")       },
+  { REL_RX,     "x-axis-tilt-back",              N_("X Axis Tilt Back")          },
   { REL_RY,     "y-axis-tilt-right",             N_("Y Axis Tilt Right")         },
   { REL_RY,     "y-axis-tilt-left",              N_("Y Axis Tilt Left")          },
   { REL_RZ,     "z-axis-turn-left",              N_("Z Axis Turn Left")          },

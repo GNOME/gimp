@@ -21,35 +21,41 @@
 
 (define (script-fu-paste-as-brush name filename spacing)
 
-  (let* (
-        (brush-image (car (gimp-edit-paste-as-new)))
-        (brush-draw (car (gimp-image-get-active-drawable brush-image)))
-        (type (car (gimp-drawable-type brush-draw)))
-        (path (string-append gimp-directory
-                             "/brushes/"
-                             filename
-                             (number->string brush-image)
-                             ".gbr"))
+  (let* ((brush-image (car (gimp-edit-paste-as-new)))
+         (brush-draw 0)
+         (type 0)
+         (path 0))
 
+    (if (= TRUE (car (gimp-image-is-valid brush-image)))
+      (begin
+        (set! brush-draw (car (gimp-image-get-active-drawable brush-image)))
+        (set! type (car (gimp-drawable-type brush-draw)))
+        (set! path (string-append gimp-directory
+                                  "/brushes/"
+                                  filename
+                                  (number->string brush-image)
+                                  ".gbr"))
+       
+        (if (= type GRAYA-IMAGE)
+            (begin
+                (gimp-context-push)
+                (gimp-context-set-background '(255 255 255))
+                (set! brush-draw (car (gimp-image-flatten brush-image)))
+                (gimp-context-pop)
+            )
         )
-
-    (if (= type GRAYA-IMAGE)
-        (begin
-            (gimp-context-push)
-            (gimp-context-set-background '(255 255 255))
-            (set! brush-draw (car (gimp-image-flatten brush-image)))
-            (gimp-context-pop)
-        )
+       
+        (file-gbr-save RUN-NONINTERACTIVE
+                       brush-image brush-draw path path
+                       spacing name)
+       
+        (gimp-image-delete brush-image)
+       
+        (gimp-brushes-refresh)
+        (gimp-context-set-brush name)
+      )
+      (gimp-message _"There is no image data in the clipboard to paste.")
     )
-
-    (file-gbr-save RUN-NONINTERACTIVE
-                   brush-image brush-draw path path
-                   spacing name)
-
-    (gimp-image-delete brush-image)
-
-    (gimp-brushes-refresh)
-    (gimp-context-set-brush name)
   )
 )
 

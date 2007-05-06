@@ -187,7 +187,7 @@ gimp_edit_paste (gint32   drawable_ID,
  * This procedure pastes a copy of the internal GIMP edit buffer to a
  * new image. The GIMP edit buffer will be empty unless a call was
  * previously made to either gimp_edit_cut() or gimp_edit_copy(). This
- * procedure returns the new image.
+ * procedure returns the new image or -1 if the edit buffer was empty.
  *
  * Returns: The new image.
  *
