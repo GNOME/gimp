@@ -20,7 +20,7 @@
 import math
 from gimpfu import *
 
-def sphere(radius, light, shadow, bg_colour, sphere_colour):
+def sphere(radius, light, shadow, foo, bg_colour, sphere_colour):
     if radius < 1:
         radius = 1
 
@@ -90,8 +90,8 @@ def sphere(radius, light, shadow, bg_colour, sphere_colour):
 
 register(
     "python-fu-sphere",
-    "Simple spheres with drop shadows",
-    "Simple spheres with drop shadows (based on script-fu version)",
+    "Simple sphere with drop shadow",
+    "Simple sphere with drop shadow",
     "James Henstridge",
     "James Henstridge",
     "1997-1999",
@@ -101,6 +101,7 @@ register(
         (PF_INT, "radius", "Radius for sphere", 100),
         (PF_SLIDER, "light", "Light angle", 45, (0,360,1)),
         (PF_TOGGLE, "shadow", "Shadow?", 1),
+        (PF_RADIO, "foo", "Test", "foo", (("Foo", "foo"), ("Bar", "bar"))),
         (PF_COLOR, "bg-color", "Background", (255,255,255)),
         (PF_COLOR, "sphere-color", "Sphere", (255,0,0))
     ],

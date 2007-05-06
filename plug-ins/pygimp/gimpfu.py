@@ -475,19 +475,15 @@ def _interact(proc_name, start_params):
         def get_value(self):
             return self.get_active()
 
-    class RadioEntry(gtk.Frame):
+    class RadioEntry(gtk.VBox):
         def __init__(self, default=0, items=((_("Yes"), 1), (_("No"), 0))):
-            gtk.Frame.__init__(self)
-
-            box = gtk.VBox(False, 6)
-            self.add(box)
-            box.show()
+            gtk.VBox.__init__(self, homogeneous=False, spacing=2)
 
             button = None
 
             for (label, value) in items:
                 button = gtk.RadioButton(button, label)
-                box.pack_start(button)
+                self.pack_start(button)
                 button.show()
 
                 button.connect("toggled", self.changed, value)
