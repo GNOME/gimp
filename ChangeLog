@@ -1,5 +1,9 @@
 2007-05-06  Sven Neumann  <sven@gimp.org>
 
+	* gimptool-2.0.in: define datarootdir before datadir (bug #436386).
+
+2007-05-06  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: require libexif >= 0.6.0.
 
 	* plug-ins/jpeg/gimpexif.[ch]: removed gimp_exif_entry_get_value()
