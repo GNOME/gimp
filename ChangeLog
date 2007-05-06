@@ -1,5 +1,11 @@
 2007-05-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/jpeg/jpeg-exif.c (jpeg_apply_exif_data_to_image): only
+	check for EXIF_TAG_GPS_VERSION_ID if it's defined (see bug #377917).
+	This tag was added in libexif 0.6.13.
+
+2007-05-06  Sven Neumann  <sven@gimp.org>
+
 	* configure.in (AM_INIT_AUTOMAKE): pass dist-bzip2 to automake.
 
 2007-05-06  Sven Neumann  <sven@gimp.org>
