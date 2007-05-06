@@ -58,6 +58,10 @@ JpegSaveVals  jsvals;
 gint32        orig_image_ID_global;
 gint32        drawable_ID_global;
 
+#ifdef HAVE_EXIF
+ExifData     *exif_data = NULL;
+#endif
+
 const GimpPlugInInfo PLUG_IN_INFO =
 {
   NULL,  /* init_proc  */

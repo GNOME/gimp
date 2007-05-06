@@ -25,22 +25,18 @@
 #define EXIF_HEADER_SIZE 8
 
 
-void          gimp_metadata_store_exif    (gint32        image_ID,
-                                           ExifData     *exif_data);
+void          gimp_metadata_store_exif    (gint32       image_ID,
+                                           ExifData    *exif_data);
 
-ExifData *    gimp_metadata_generate_exif (gint32        image_ID);
+ExifData *    gimp_metadata_generate_exif (gint32       image_ID);
 
-const gchar * gimp_exif_content_get_value (ExifContent  *content,
-                                           ExifTag       tag,
-                                           gchar        *value,
-                                           gint          maxlen);
+const gchar * gimp_exif_content_get_value (ExifContent *content,
+                                           ExifTag      tag,
+                                           gchar       *value,
+                                           gint         maxlen);
 
-const gchar * gimp_exif_entry_get_value   (ExifEntry    *entry,
-                                           gchar        *value,
-                                           guint         maxlen);
-
-void          gimp_exif_data_remove_entry (ExifData     *exif_data,
-                                           ExifIfd       ifd,
-                                           ExifTag       tag);
+void          gimp_exif_data_remove_entry (ExifData    *exif_data,
+                                           ExifIfd      ifd,
+                                           ExifTag      tag);
 
 #endif /* HAVE_EXIF */

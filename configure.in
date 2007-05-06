@@ -58,6 +58,7 @@ m4_define([gnome_keyring_required_version], [0.4.5])
 m4_define([libcurl_required_version], [7.15.1])
 m4_define([dbus_glib_required_version], [0.70])
 m4_define([libhal_required_version], [0.5.7])
+m4_define([exif_required_version], [0.6.0])
 
 
 AC_INIT([GIMP], [gimp_version],
@@ -1105,20 +1106,9 @@ have_libexif=no
 AC_ARG_WITH(libexif,  [  --without-libexif       build without EXIF support])
 if test x$with_libexif != xno && test -z "$LIBEXIF" && test -n "$LIBJPEG"; then
   have_libexif=yes
-  PKG_CHECK_MODULES(EXIF, libexif,
+  PKG_CHECK_MODULES(EXIF, libexif >= exif_required_version,
     AC_DEFINE(HAVE_EXIF, 1, [Define to 1 if libexif is available]),
     have_libexif="no (libexif not found)")
-  AC_MSG_CHECKING([if libexif is version 0.6.0 or newer])
-  if $PKG_CONFIG --atleast-version=0.6.0 libexif; then
-    have_exif_0_6=yes
-  else
-    have_exif_0_6=no
-  fi
-  AC_MSG_RESULT($have_exif_0_6)
-  if test x$have_exif_0_6 == xyes; then
-    AC_DEFINE(HAVE_EXIF_0_6, 1,
-              [Define to 1 if libexif is at least version 0.6.0])
-  fi
 fi
 
 AC_SUBST(EXIF_CFLAGS)

@@ -87,9 +87,9 @@ void
 jpeg_apply_exif_data_to_image (const gchar  *filename,
                                const gint32  image_ID)
 {
-  ExifData     *exif_data     = NULL;
-  ExifEntry    *entry;
-  gint          byte_order;
+  ExifData  *exif_data = NULL;
+  ExifEntry *entry;
+  gint       byte_order;
 
   exif_data = jpeg_exif_data_new_from_file (filename, NULL);
   if (!exif_data)
@@ -132,8 +132,8 @@ jpeg_apply_exif_data_to_image (const gchar  *filename,
 
 
 void
-jpeg_setup_exif_for_save (ExifData      *exif_data,
-                          const gint32   image_ID)
+jpeg_setup_exif_for_save (ExifData     *exif_data,
+                          const gint32  image_ID)
 {
   ExifRational  r;
   gdouble       xres, yres;

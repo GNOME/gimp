@@ -1,5 +1,17 @@
 2007-05-06  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: require libexif >= 0.6.0.
+
+	* plug-ins/jpeg/gimpexif.[ch]: removed gimp_exif_entry_get_value()
+	which was needed to work with libexif < 0.6.0.
+
+	* plug-ins/jpeg/jpeg.c: declare the global ExifData here instead
+	of in gimpexif.c.
+
+	* plug-ins/jpeg/jpeg-exif.c: cosmetics.
+
+2007-05-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/jpeg/jpeg-exif.c (jpeg_apply_exif_data_to_image): only
 	check for EXIF_TAG_GPS_VERSION_ID if it's defined (see bug #377917).
 	This tag was added in libexif 0.6.13.

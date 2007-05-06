@@ -34,7 +34,6 @@
 
 #include "gimpexif.h"
 
-ExifData *exif_data;
 
 /*
  * gimp_metadata_store_exif:
@@ -85,7 +84,7 @@ void gimp_metadata_store_exif    (gint32    image_ID,
  * returns: The reconstructed exif data, or NULL if none exists.
  */
 ExifData *
-gimp_metadata_generate_exif (gint32    image_ID)
+gimp_metadata_generate_exif (gint32 image_ID)
 {
   ExifData     *exif_data;
   GimpParasite *parasite   = gimp_image_parasite_find (image_ID,
@@ -102,7 +101,6 @@ gimp_metadata_generate_exif (gint32    image_ID)
   return NULL;
 }
 
-
 /*
  * gimp_exif_content_get_value:
  * @content:   ExifContent block from which to get value
@@ -117,43 +115,17 @@ gimp_metadata_generate_exif (gint32    image_ID)
  * @value must be pre-allocated.
  */
 const gchar *
-gimp_exif_content_get_value (ExifContent  *content,
-                             ExifTag       tag,
-                             gchar        *value,
-                             gint          maxlen)
+gimp_exif_content_get_value (ExifContent *content,
+                             ExifTag      tag,
+                             gchar       *value,
+                             gint         maxlen)
 {
   ExifEntry *entry = exif_content_get_entry (content, tag);
 
   if (entry)
-    return gimp_exif_entry_get_value (entry, value, maxlen);
+    return exif_entry_get_value (entry, value, maxlen);
   else
     return NULL;
-}
-
-
-/*
- * gimp_exif_entry_get_value:
- * @content:   ExifEntry from which to get value
- * @value:     Place to put the result
- * @maxlen:    Maximum size of returned string
- *
- * This function is a wrapper around the libexif function
- * exif_entry_get_value(), necessary to deal with an incompatible
- * API change.  It looks up the value of the specifed entry,
- * returning the result as a human-readable string.  Note that
- * @value must be pre-allocated.
- */
-const gchar *
-gimp_exif_entry_get_value (ExifEntry *entry,
-                           gchar     *value,
-                           guint      maxlen)
-{
-#ifdef HAVE_EXIF_0_6
-  return exif_entry_get_value (entry, value, maxlen);
-#else
-  strncpy (value, exif_entry_get_value (entry), maxlen);
-  return value;
-#endif /* HAVE_EXIF_0_6 */
 }
 
 /*
@@ -167,9 +139,9 @@ gimp_exif_entry_get_value (ExifEntry *entry,
  * exists, the function returns without doing anything.
  */
 void
-gimp_exif_data_remove_entry (ExifData  *exif_data,
-                             ExifIfd    ifd,
-                             ExifTag    tag)
+gimp_exif_data_remove_entry (ExifData *exif_data,
+                             ExifIfd   ifd,
+                             ExifTag   tag)
 {
   ExifEntry  *entry = exif_content_get_entry (exif_data->ifd[ifd],
                                               tag);
