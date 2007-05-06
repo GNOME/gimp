@@ -63,6 +63,15 @@
 #endif
 
 
+#define GIMP_HELP_BROWSER_DIALOG_DATA  "gimp-help-browser-dialog"
+
+typedef struct
+{
+  gint32  width;
+  gint32  height;
+  gint32  paned_position;
+} DialogData;
+
 enum
 {
   HISTORY_TITLE,
@@ -71,85 +80,92 @@ enum
 
 /*  local function prototypes  */
 
-static GtkUIManager * ui_manager_new (GtkWidget        *window);
-static void       browser_dialog_404 (HtmlDocument     *doc,
-                                      const gchar      *uri,
-                                      const gchar      *message);
+static GtkUIManager * ui_manager_new (GtkWidget         *window);
+static void       browser_dialog_404 (HtmlDocument      *doc,
+                                      const gchar       *uri,
+                                      const gchar       *message);
 
-static void       back_callback      (GtkAction        *action,
-                                      gpointer          data);
-static void       forward_callback   (GtkAction        *action,
-                                      gpointer          data);
-static void       index_callback     (GtkAction        *action,
-                                      gpointer          data);
-static void       zoom_in_callback   (GtkAction        *action,
-                                      gpointer          data);
-static void       zoom_out_callback  (GtkAction        *action,
-                                      gpointer          data);
-static void       close_callback     (GtkAction        *action,
-                                      gpointer          data);
-static void       online_callback    (GtkAction        *action,
-                                      gpointer          data);
+static void       back_callback      (GtkAction         *action,
+                                      gpointer           data);
+static void       forward_callback   (GtkAction         *action,
+                                      gpointer           data);
+static void       index_callback     (GtkAction         *action,
+                                      gpointer           data);
+static void       zoom_in_callback   (GtkAction         *action,
+                                      gpointer           data);
+static void       zoom_out_callback  (GtkAction         *action,
+                                      gpointer           data);
+static void       close_callback     (GtkAction         *action,
+                                      gpointer           data);
+static void       online_callback    (GtkAction         *action,
+                                      gpointer           data);
 
 static void       update_toolbar     (void);
 
-static void       combo_changed      (GtkWidget        *widget,
-                                      gpointer          data);
+static void       combo_changed      (GtkWidget         *widget,
+                                      gpointer           data);
 
-static void       drag_begin         (GtkWidget        *widget,
-                                      GdkDragContext   *context,
-                                      gpointer          data);
-static void       drag_data_get      (GtkWidget        *widget,
-                                      GdkDragContext   *context,
-                                      GtkSelectionData *selection_data,
-                                      guint             info,
-                                      guint             time,
-                                      gpointer          data);
-static void       view_realize       (GtkWidget        *widget);
-static void       view_unrealize     (GtkWidget        *widget);
-static gboolean   view_popup_menu    (GtkWidget        *widget,
-                                      GdkEventButton   *event);
-static gboolean   view_button_press  (GtkWidget        *widget,
-                                      GdkEventButton   *event);
+static void       drag_begin         (GtkWidget         *widget,
+                                      GdkDragContext    *context,
+                                      gpointer           data);
+static void       drag_data_get      (GtkWidget         *widget,
+                                      GdkDragContext    *context,
+                                      GtkSelectionData  *selection_data,
+                                      guint              info,
+                                      guint              time,
+                                      gpointer           data);
 
-static void       title_changed      (HtmlDocument     *doc,
-                                      const gchar      *new_title,
-                                      gpointer          data);
-static void       link_clicked       (HtmlDocument     *doc,
-                                      const gchar      *uri,
-                                      gpointer          data);
-static gboolean   request_url        (HtmlDocument     *doc,
-                                      const gchar      *uri,
+static void       row_activated      (GtkTreeView       *tree_view,
+                                      GtkTreePath       *path,
+                                      GtkTreeViewColumn *column);
+static void       dialog_unmap       (GtkWidget         *window,
+                                      GtkWidget         *paned);
+
+static void       view_realize       (GtkWidget         *widget);
+static void       view_unrealize     (GtkWidget         *widget);
+static gboolean   view_popup_menu    (GtkWidget         *widget,
+                                      GdkEventButton    *event);
+static gboolean   view_button_press  (GtkWidget         *widget,
+                                      GdkEventButton    *event);
+
+static void       title_changed      (HtmlDocument      *doc,
+                                      const gchar       *new_title,
+                                      gpointer           data);
+static void       link_clicked       (HtmlDocument      *doc,
+                                      const gchar       *uri,
+                                      gpointer           data);
+static gboolean   request_url        (HtmlDocument      *doc,
+                                      const gchar       *uri,
                                       HtmlStream       *stream,
-                                      GError          **error);
-static gboolean   io_handler         (GIOChannel       *io,
-                                      GIOCondition      condition,
-                                      gpointer          data);
-static void       load_remote_page   (const gchar      *uri);
+                                      GError            **error);
+static gboolean   io_handler         (GIOChannel        *io,
+                                      GIOCondition       condition,
+                                      gpointer           data);
+static void       load_remote_page   (const gchar       *uri);
 
-static void       history_add        (GtkComboBox      *combo,
-                                      const gchar      *uri,
-                                      const gchar      *title);
+static void       history_add        (GtkComboBox       *combo,
+                                      const gchar       *uri,
+                                      const gchar       *title);
 
-static gboolean   has_case_prefix    (const gchar      *haystack,
-                                      const gchar      *needle);
+static gboolean   has_case_prefix    (const gchar       *haystack,
+                                      const gchar       *needle);
 
-static gchar    * filename_from_uri  (const gchar      *uri);
+static gchar    * filename_from_uri  (const gchar       *uri);
 
 
 /*  private variables  */
 
-static const gchar  *eek_png_tag  = "<h1>Eeek!</h1>";
+static const gchar   *eek_png_tag  = "<h1>Eeek!</h1>";
 
-static Queue        *queue        = NULL;
-static gchar        *current_uri  = NULL;
+static Queue         *queue        = NULL;
+static gchar         *current_uri  = NULL;
 
-static GtkWidget    *html         = NULL;
-static GtkWidget    *tree_view    = NULL;
-static GtkUIManager *ui_manager   = NULL;
-static GtkWidget    *button_prev  = NULL;
-static GtkWidget    *button_next  = NULL;
-static GdkCursor    *busy_cursor  = NULL;
+static GtkWidget     *html         = NULL;
+static GtkWidget     *tree_view    = NULL;
+static GtkUIManager  *ui_manager   = NULL;
+static GtkWidget     *button_prev  = NULL;
+static GtkWidget     *button_next  = NULL;
+static GdkCursor     *busy_cursor  = NULL;
 
 static GtkTargetEntry help_dnd_target_table[] =
 {
@@ -159,37 +175,6 @@ static GtkTargetEntry help_dnd_target_table[] =
 
 
 /*  public functions  */
-
-static void
-row_activated (GtkTreeView       *tree_view,
-               GtkTreePath       *path,
-               GtkTreeViewColumn *column)
-{
-  GtkTreeModel   *model = gtk_tree_view_get_model (tree_view);
-  GtkTreeIter     iter;
-  GimpHelpDomain *domain;
-  GimpHelpLocale *locale;
-  GimpHelpItem   *item;
-  gchar          *uri;
-
-  gtk_tree_model_get_iter (model, &iter, path);
-
-  gtk_tree_model_get (model, &iter,
-                      0, &item,
-                      -1);
-
-  domain = g_object_get_data (G_OBJECT (model), "domain");
-  locale = g_object_get_data (G_OBJECT (model), "locale");
-
-  uri = g_strconcat (domain->help_uri,  "/",
-                     locale->locale_id, "/",
-                     item->ref,
-                     NULL);
-
-  browser_dialog_load (uri, TRUE);
-
-  g_free (uri);
-}
 
 void
 browser_dialog_open (void)
@@ -210,8 +195,11 @@ browser_dialog_open (void)
   GtkCellRenderer *cell;
   GdkPixbuf       *pixbuf;
   gchar           *eek_png_path;
+  DialogData       data = { 640, 560, 240 };
 
   gimp_ui_init ("helpbrowser", TRUE);
+
+  gimp_get_data (GIMP_HELP_BROWSER_DIALOG_DATA, &data);
 
   eek_png_path = g_build_filename (gimp_data_directory (),
                                    "themes", "Default", "images",
@@ -227,7 +215,7 @@ browser_dialog_open (void)
   gtk_window_set_title (GTK_WINDOW (window), _("GIMP Help Browser"));
   gtk_window_set_role (GTK_WINDOW (window), "helpbrowser");
 
-  gtk_window_set_default_size (GTK_WINDOW (window), 420, 500);
+  gtk_window_set_default_size (GTK_WINDOW (window), data.width, data.height);
 
   g_signal_connect (window, "destroy",
                     G_CALLBACK (gtk_main_quit),
@@ -278,8 +266,7 @@ browser_dialog_open (void)
   gimp_throbber_set_image (GIMP_THROBBER (button),
                            gtk_image_new_from_pixbuf (pixbuf));
 
-
-
+  /*  the horizontal paned  */
   paned = gtk_hpaned_new ();
   gtk_box_pack_start (GTK_BOX (vbox), paned, TRUE, TRUE, 0);
   gtk_widget_show (paned);
@@ -288,6 +275,7 @@ browser_dialog_open (void)
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_paned_add1 (GTK_PANED (paned), scroll);
+  gtk_paned_set_position (GTK_PANED (paned), data.paned_position);
   gtk_widget_show (scroll);
 
   tree_view = gtk_tree_view_new ();
@@ -350,7 +338,6 @@ browser_dialog_open (void)
                                   "text", HISTORY_TITLE,
                                   NULL);
 
-  gtk_widget_set_size_request (GTK_WIDGET (combo), 320, -1);
   gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
   gtk_widget_show (combo);
 
@@ -362,7 +349,7 @@ browser_dialog_open (void)
   html  = html_view_new ();
   queue = queue_new ();
 
-  gtk_widget_set_size_request (html, -1, 200);
+  gtk_widget_set_size_request (html, 300, 200);
 
   scroll =
     gtk_scrolled_window_new (gtk_layout_get_hadjustment (GTK_LAYOUT (html)),
@@ -403,6 +390,10 @@ browser_dialog_open (void)
                     NULL);
 
   gtk_widget_grab_focus (html);
+
+  g_signal_connect (window, "unmap",
+                    G_CALLBACK (dialog_unmap),
+                    paned);
 
   gtk_widget_show (window);
 }
@@ -612,8 +603,6 @@ browser_dialog_make_index (GimpHelpDomain *domain,
 {
   GtkTreeStore *store;
   GList        *list;
-
-  g_printerr ("%s\n", G_STRFUNC);
 
   if (! locale->toplevel_items)
     {
@@ -972,6 +961,56 @@ drag_data_get (GtkWidget        *widget,
                               selection_data->target,
                               8, (guchar *) current_uri, strlen (current_uri));
     }
+}
+
+static void
+row_activated (GtkTreeView       *tree_view,
+               GtkTreePath       *path,
+               GtkTreeViewColumn *column)
+{
+  GtkTreeModel   *model = gtk_tree_view_get_model (tree_view);
+  GtkTreeIter     iter;
+  GimpHelpDomain *domain;
+  GimpHelpLocale *locale;
+  GimpHelpItem   *item;
+  gchar          *uri;
+
+  gtk_tree_model_get_iter (model, &iter, path);
+
+  gtk_tree_model_get (model, &iter,
+                      0, &item,
+                      -1);
+
+  domain = g_object_get_data (G_OBJECT (model), "domain");
+  locale = g_object_get_data (G_OBJECT (model), "locale");
+
+  uri = g_strconcat (domain->help_uri,  "/",
+                     locale->locale_id, "/",
+                     item->ref,
+                     NULL);
+
+  browser_dialog_load (uri, TRUE);
+
+  g_free (uri);
+}
+
+static void
+dialog_unmap (GtkWidget *window,
+              GtkWidget *paned)
+{
+  DialogData  data;
+  gint        width;
+  gint        height;
+
+  gtk_window_get_size (GTK_WINDOW (window), &width, &height);
+
+  data.width          = width;
+  data.height         = height;
+  data.paned_position = gtk_paned_get_position (GTK_PANED (paned));
+
+  gimp_set_data (GIMP_HELP_BROWSER_DIALOG_DATA, &data, sizeof (data));
+
+  gtk_main_quit ();
 }
 
 static void

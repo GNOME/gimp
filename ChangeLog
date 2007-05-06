@@ -1,5 +1,11 @@
 2007-05-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/helpbrowser/dialog.c: start with a reasonable size and
+	paned position and remember the window size and paned position at
+	least within a GIMP session.
+
+2007-05-06  Sven Neumann  <sven@gimp.org>
+
 	* gimptool-2.0.in: define datarootdir before datadir (bug #436386).
 
 2007-05-06  Sven Neumann  <sven@gimp.org>
