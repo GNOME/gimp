@@ -471,11 +471,33 @@ get_mapping (GimpRGB *src_col1,
           b = src2[rgb];  bs = dst2[rgb];
 
           if (b == a)
-            b = a + 1;
-          for (i = 0; i < 256; i++)
             {
-              gint j = ((i - a) * (bs - as)) / (b - a) + as;
-              colormap[rgb][i] = CLAMP0255(j);
+              /*  For this channel, both source color values are the same.  */
+
+              /*  Map everything below to the start of the destination range. */
+              for (i = 0; i < a; i++)
+                {
+                  colormap[rgb][i] = as;
+                }
+
+              /*  Map source color to the middle of the destination range. */
+              colormap[rgb][a] = (as + bs) / 2;
+
+              /*  Map everything above to the end of the destination range. */
+              for (i = a + 1; i < 256; i++)
+                {
+                  colormap[rgb][i] = bs;
+                }
+            }
+          else
+            {
+              /*  Map color ranges.  */
+              for (i = 0; i < 256; i++)
+                {
+                  gint j = ((i - a) * (bs - as)) / (b - a) + as;
+
+                  colormap[rgb][i] = CLAMP0255(j);
+                }
             }
         }
       break;
@@ -499,9 +521,6 @@ static void
 color_mapping (GimpDrawable *drawable)
 
 {
-  if (gimp_rgb_distance (&plvals.colors[0], &plvals.colors[1]) < 0.0001)
-    return;
-
   if (!gimp_drawable_is_rgb (drawable->drawable_id))
     {
       g_message (_("Cannot operate on gray or indexed color images."));

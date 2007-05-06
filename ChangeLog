@@ -1,5 +1,10 @@
 2007-05-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/mapcolor.c: try to do something reasonable for
+	the empty source range (bug #436145).
+
+2007-05-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/helpbrowser/dialog.c: start with a reasonable size and
 	paned position and remember the window size and paned position at
 	least within a GIMP session.
