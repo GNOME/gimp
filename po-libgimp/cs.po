@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-06 15:23+0200\n"
-"PO-Revision-Date: 2007-04-06 15:23+0200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2007-05-06 12:52+0200\n"
+"PO-Revision-Date: 2007-05-06 12:54+0200\n"
+"Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -111,8 +111,7 @@ msgstr ""
 #: ../libgimp/gimpexport.c:308
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr ""
-"Modul %s umí zpracovat pouze bitmapové (dvoubarevné) indexované obrázky"
+msgstr "Modul %s umí zpracovat pouze bitmapové (dvoubarevné) indexované obrázky"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -1027,15 +1026,15 @@ msgstr "Výběr adresáře"
 msgid "Select File"
 msgstr "Výběr souboru"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:202
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Kilobytes"
 msgstr "Kilobajtů"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:203
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Megabytes"
 msgstr "Megabajtů"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libgimpwidgets/gimpmemsizeentry.c:206
 msgid "Gigabytes"
 msgstr "Gigabajtů"
 
@@ -1116,11 +1115,6 @@ msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Toto pole pro vstup textu je omezeno na %d znak."
 msgstr[1] "Toto pole pro vstup textu je omezeno na %d znaky."
 msgstr[2] "Toto pole pro vstup textu je omezeno na %d znaků."
-
-#: ../libgimpwidgets/gimpresolutionentry.c:382
-#, c-format
-msgid "pixels/%s"
-msgstr "pixelů/%s"
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -1354,8 +1348,7 @@ msgstr "Správa barev"
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
-msgstr ""
-"Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
+msgstr "Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
 
 #: ../modules/cdisplay_lcms.c:302
 msgid "Mode of operation:"
@@ -1568,14 +1561,12 @@ msgid "X Move Right"
 msgstr "X vpravo"
 
 #: ../modules/controller_linux_input.c:92
-#: ../modules/controller_dx_dinput.c:478
-msgid "Y Move Away"
-msgstr "Y posun pryč"
+msgid "Y Move Forward"
+msgstr "Posun vpřed podle osy Y"
 
 #: ../modules/controller_linux_input.c:93
-#: ../modules/controller_dx_dinput.c:481
-msgid "Y Move Near"
-msgstr "Y posun blízko"
+msgid "Y Move Back"
+msgstr "Posun vzad podle osy Y"
 
 #: ../modules/controller_linux_input.c:94
 #: ../modules/controller_dx_dinput.c:487
@@ -1588,14 +1579,12 @@ msgid "Z Move Down"
 msgstr "Z dolů"
 
 #: ../modules/controller_linux_input.c:97
-#: ../modules/controller_dx_dinput.c:496
-msgid "X Axis Tilt Away"
-msgstr "X odklonění"
+msgid "X Axis Tilt Forward"
+msgstr "Naklonění vpřed podle osy X"
 
 #: ../modules/controller_linux_input.c:98
-#: ../modules/controller_dx_dinput.c:499
-msgid "X Axis Tilt Near"
-msgstr "X přiklonění"
+msgid "X Axis Tilt Back"
+msgstr "Naklonění vzad podle osy X"
 
 #: ../modules/controller_linux_input.c:99
 #: ../modules/controller_dx_dinput.c:505
@@ -1716,6 +1705,22 @@ msgstr "Stisknutí tlačítka %d"
 msgid "Button %d Release"
 msgstr "Uvolnění tlačítka %d"
 
+#: ../modules/controller_dx_dinput.c:478
+msgid "Y Move Away"
+msgstr "Y posun pryč"
+
+#: ../modules/controller_dx_dinput.c:481
+msgid "Y Move Near"
+msgstr "Y posun blízko"
+
+#: ../modules/controller_dx_dinput.c:496
+msgid "X Axis Tilt Away"
+msgstr "X odklonění"
+
+#: ../modules/controller_dx_dinput.c:499
+msgid "X Axis Tilt Near"
+msgstr "X přiklonění"
+
 #: ../modules/controller_dx_dinput.c:528
 #, c-format
 msgid "Slider %d Increase"
@@ -1799,3 +1804,4 @@ msgstr "GIMP"
 #: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr "Gimpí ovladač vstupu MIDI"
+
