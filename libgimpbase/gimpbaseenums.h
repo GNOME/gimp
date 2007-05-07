@@ -128,8 +128,8 @@ GType gimp_clone_type_get_type (void) G_GNUC_CONST;
 
 typedef enum
 {
-  GIMP_IMAGE_CLONE,   /*< desc="Image source"   >*/
-  GIMP_PATTERN_CLONE  /*< desc="Pattern source" >*/
+  GIMP_IMAGE_CLONE,   /*< desc="Image"   >*/
+  GIMP_PATTERN_CLONE  /*< desc="Pattern" >*/
 } GimpCloneType;
 
 

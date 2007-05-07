@@ -260,8 +260,8 @@ gimp_clone_type_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_IMAGE_CLONE, N_("Image source"), NULL },
-    { GIMP_PATTERN_CLONE, N_("Pattern source"), NULL },
+    { GIMP_IMAGE_CLONE, N_("Image"), NULL },
+    { GIMP_PATTERN_CLONE, N_("Pattern"), NULL },
     { 0, NULL, NULL }
   };
 

@@ -1,5 +1,9 @@
 2007-05-07  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpbaseenums.[ch] (GimpCloneType): changed strings.
+
+2007-05-07  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpbrushtool.[ch] (gimp_brush_tool_draw): moved
 	brush drawing code to the new function gimp_brush_tool_draw_brush().
 
