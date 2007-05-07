@@ -1,3 +1,10 @@
+2007-05-07  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/fits/fitsrw.c
+	* plug-ins/fits/fits.c: applied modified patch from Peter
+	Kirchgessner. Fixes creation of the last data record and makes
+	handling of float values independent of the locale (bug #351656).
+
 2007-05-06  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/gimpfu.py: don't add the radiobuttons into a

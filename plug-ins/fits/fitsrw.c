@@ -1,7 +1,7 @@
 /******************************************************************************/
 /*                      Peter Kirchgessner                                    */
-/*                      e-mail: pkirchg@aol.com                               */
-/*                      WWW   : http://members.aol.com/pkirchg                */
+/*                      e-mail: peter@kirchgessner.net                        */
+/*                      WWW   : http://www.kirchgessner.net                   */
 /******************************************************************************/
 /*  #BEG-HDR                                                                  */
 /*                                                                            */
@@ -37,11 +37,12 @@
 /*                                                                            */
 /*  Author        : P. Kirchgessner                                           */
 /*  Date of Gen.  : 12-Apr-97                                                 */
-/*  Last modified : 20-Dec-97                                                 */
-/*  Version       : 0.11                                                      */
+/*  Last modified : 25-Aug-06                                                 */
+/*  Version       : 0.12                                                      */
 /*  Compiler Opt. :                                                           */
 /*  Changes       :                                                           */
 /*  #MOD-0001, nn, 20-Dec-97, Initialize some variables                       */
+/*  #MOD-0002, pk, 16-Aug-06, Fix problems with internationalization          */
 /*                                                                            */
 /*  #END-HDR                                                                  */
 /******************************************************************************/
@@ -55,16 +56,16 @@
 /*                                                                            */
 /******************************************************************************/
 
-#define                                    VERSIO  0.11
+#define                                    VERSIO  0.12
 
 /******************************************************************************/
 /* FITS reading/writing library                                               */
 /* Copyright (C) 1997 Peter Kirchgessner                                      */
-/* (email: pkirchg@aol.com, WWW: http://members.aol.com/pkirchg)              */
+/* (email: peter@kirchgessner.net, WWW: http://www.kirchgessner.net)          */
 /* The library was developed for a FITS-plug-in to GIMP, the GNU Image        */
-/* Manipulation Program. But it is completely independant to that. If someone */
-/* finds it useful for other purposes, try to keep it independant from your   */
-/* application.                                                               */
+/* Manipulation Program. But it is completely independant to that (beside use */
+/* of glib). If someone finds it useful for other purposes, try to keep it    */
+/* independant from your application.                                         */
 /******************************************************************************/
 /*                                                                            */
 /* This program is free software; you can redistribute it and/or modify       */
@@ -86,7 +87,9 @@
 
 #include <stdlib.h>
 #include <string.h>
+#include <errno.h>
 
+#include <glib.h>
 #include <glib/gstdio.h>
 
 #include "fitsrw.h"
@@ -166,7 +169,8 @@ static int fits_ieee64_motorola = 0;
 
 #define FITS_WRITE_DOUBLECARD(fp,key,value) \
 {char card[81], dbl[21], *istr; \
- sprintf (dbl, "%20f", (double)value); istr = strstr (dbl, "e"); \
+ g_ascii_formatd (dbl, sizeof(dbl), "%f", (gdouble)value); \
+ istr = strstr (dbl, "e"); \
  if (istr) *istr = 'E'; \
  sprintf (card, "%-8.8s= %20.20s%50s", key, dbl, " "); \
  fwrite (card, 1, 80, fp); }
@@ -183,6 +187,72 @@ static int fits_ieee64_motorola = 0;
  sprintf (card, "%-80.80s", value); \
  fwrite (card, 1, 80, fp); }
 
+
+/* Macro to convert a double value to a string using '.' as decimal point */
+#define FDTOSTR(buf,val) g_ascii_dtostr (buf, sizeof(buf), (gdouble)(val))
+
+
+/*****************************************************************************/
+/* #BEG-PAR                                                                  */
+/*                                                                           */
+/* Function  : fits_scanfdouble - (local) scan a string for a double value   */
+/*                                                                           */
+/* Parameters:                                                               */
+/* const char *buf  [I] : the string to scan                                 */
+/* double *value    [O] : where to write the double value to                 */
+/*                                                                           */
+/* Scan a string for a double value represented in "C" locale.               */
+/* On success 1 is returned. On failure 0 is returned.                       */
+/*                                                                           */
+/* #END-PAR                                                                  */
+/*****************************************************************************/
+
+static int fits_scanfdouble (const char *buf, double *value)
+{
+ int retval = 0;
+ gchar *bufcopy = g_strdup (buf);
+
+ /* We should use g_ascii_strtod. This also allows scanning of hexadecimal */
+ /* values like 0x02. But we want the behaviour of sscanf ("0x02","%lf",...*/
+ /* that gives 0.0 in this case. So check the string if we have a hex-value*/
+
+ if ( bufcopy )
+ {
+   gchar *bufptr = bufcopy;
+
+   /* Remove leading white space */
+   g_strchug (bufcopy);
+
+   /* Skip leading sign character */
+   if ( (*bufptr == '-') || (*bufptr == '+') )
+     bufptr++;
+
+   /* Start of hex value ? Take this as 0.0 */
+   if ( (bufptr[0] == '0') && (g_ascii_toupper (bufptr[1]) == 'X') )
+   {
+     *value = 0.0;
+     retval = 1;
+   }
+   else
+   {
+     if ( *bufptr == '.' ) /* leading decimal point ? Skip it */
+       bufptr++;
+
+     if (g_ascii_isdigit (*bufptr)) /* Expect the complete string is decimal */
+     {
+       gchar *endptr;
+       gdouble gvalue = g_ascii_strtod (bufcopy, &endptr);
+       if ( errno == 0 )
+       {
+         *value = gvalue;
+         retval = 1;
+       }
+     }
+   }
+   g_free (bufcopy);
+ }
+ return retval;
+}
 
 /*****************************************************************************/
 /* #BEG-PAR                                                                  */
@@ -689,6 +759,7 @@ int fits_add_card (FITS_HDU_LIST *hdulist, char *card)
 void fits_print_header (FITS_HDU_LIST *hdr)
 
 {int k;
+ char buf[G_ASCII_DTOSTR_BUF_SIZE];
 
  if (hdr->used.simple)
    printf ("Content of SIMPLE-header:\n");
@@ -699,8 +770,8 @@ void fits_print_header (FITS_HDU_LIST *hdr)
  printf ("data_size     : %ld\n", hdr->data_size);
  printf ("used data_size: %ld\n", hdr->udata_size);
  printf ("bytes p.pixel : %d\n", hdr->bpp);
- printf ("pixmin        : %f\n", hdr->pixmin);
- printf ("pixmax        : %f\n", hdr->pixmax);
+ printf ("pixmin        : %s\n", FDTOSTR (buf, hdr->pixmin));
+ printf ("pixmax        : %s\n", FDTOSTR (buf, hdr->pixmax));
 
  printf ("naxis         : %d\n", hdr->naxis);
  for (k = 1; k <= hdr->naxis; k++)
@@ -714,11 +785,11 @@ void fits_print_header (FITS_HDU_LIST *hdr)
    printf ("blank         : not used\n");
 
  if (hdr->used.datamin)
-   printf ("datamin       : %f\n", hdr->datamin);
+   printf ("datamin       : %s\n", FDTOSTR (buf, hdr->datamin));
  else
    printf ("datamin       : not used\n");
  if (hdr->used.datamax)
-   printf ("datamax       : %f\n", hdr->datamax);
+   printf ("datamax       : %s\n", FDTOSTR (buf, hdr->datamax));
  else
    printf ("datamax       : not used\n");
 
@@ -732,11 +803,11 @@ void fits_print_header (FITS_HDU_LIST *hdr)
    printf ("pcount        : not used\n");
 
  if (hdr->used.bscale)
-   printf ("bscale        : %f\n", hdr->bscale);
+   printf ("bscale        : %s\n", FDTOSTR (buf, hdr->bscale));
  else
    printf ("bscale        : not used\n");
  if (hdr->used.bzero)
-   printf ("bzero         : %f\n", hdr->bzero);
+   printf ("bzero         : %s\n", FDTOSTR (buf, hdr->bzero));
  else
    printf ("bzero         : not used\n");
 }
@@ -931,6 +1002,7 @@ int fits_write_header (FITS_FILE *ff, FITS_HDU_LIST *hdulist)
    while (k++ < FITS_RECORD_SIZE)
      putc (' ', ff->fp);
  }
+
 
  return (ferror (ff->fp) ? -1 : 0);
 }
@@ -1422,6 +1494,7 @@ FITS_DATA *fits_decode_card (const char *card, FITS_DATA_TYPES data_type)
  double l_double;
  char l_card[FITS_CARD_SIZE+1], msg[256];
  char *cp, *dst, *end;
+ int ErrCount = 0;
 
  if (card == NULL) return (NULL);
 
@@ -1433,6 +1506,7 @@ FITS_DATA *fits_decode_card (const char *card, FITS_DATA_TYPES data_type)
    sprintf (msg, "fits_decode_card (warning): Missing value indicator\
  '= ' for %8.8s", l_card);
    fits_set_error (msg);
+   ErrCount++;
  }
 
  switch (data_type)
@@ -1443,52 +1517,91 @@ FITS_DATA *fits_decode_card (const char *card, FITS_DATA_TYPES data_type)
 
    case typ_bitpix16:
      if (sscanf (l_card+10, "%ld", &l_long) != 1)
-       FITS_RETURN ("fits_decode_card: error decoding typ_bitpix16", NULL);
+     {
+       fits_set_error ("fits_decode_card: error decoding typ_bitpix16");
+       ErrCount++;
+       break;
+     }
      data.bitpix16 = (FITS_BITPIX16)l_long;
      break;
 
    case typ_bitpix32:
      if (sscanf (l_card+10, "%ld", &l_long) != 1)
-       FITS_RETURN ("fits_decode_card: error decoding typ_bitpix32", NULL);
+     {
+       fits_set_error ("fits_decode_card: error decoding typ_bitpix32");
+       ErrCount++;
+       break;
+     }
      data.bitpix32 = (FITS_BITPIX32)l_long;
      break;
 
    case typ_bitpixm32:
-     if (sscanf (l_card+10, "%lf", &l_double) != 1)
-       FITS_RETURN ("fits_decode_card: error decoding typ_bitpixm32", NULL);
+     if (fits_scanfdouble (l_card+10, &l_double) != 1)
+     {
+       fits_set_error ("fits_decode_card: error decoding typ_bitpixm32");
+       ErrCount++;
+       break;
+     }
      data.bitpixm32 = (FITS_BITPIXM32)l_double;
      break;
 
    case typ_bitpixm64:
-     if (sscanf (l_card+10, "%lf", &l_double) != 1)
-       FITS_RETURN ("fits_decode_card: error decoding typ_bitpixm64", NULL);
+     if (fits_scanfdouble (l_card+10, &l_double) != 1)
+     {
+       fits_set_error ("fits_decode_card: error decoding typ_bitpixm64");
+       ErrCount++;
+       break;
+     }
      data.bitpixm64 = (FITS_BITPIXM64)l_double;
      break;
 
    case typ_fbool:
      cp = l_card+10;
      while (*cp == ' ') cp++;
-     if (*cp == 'T') data.fbool = 1;
-     else if (*cp == 'F') data.fbool = 0;
-     else FITS_RETURN ("fits_decode_card: error decoding typ_fbool", NULL);
+     if (*cp == 'T')
+     {
+       data.fbool = 1;
+     }
+     else if (*cp == 'F')
+     {
+       data.fbool = 0;
+     }
+     else
+     {
+       fits_set_error ("fits_decode_card: error decoding typ_fbool");
+       ErrCount++;
+       break;
+     }
      break;
 
    case typ_flong:
      if (sscanf (l_card+10, "%ld", &l_long) != 1)
-       FITS_RETURN ("fits_decode_card: error decoding typ_flong", NULL);
+     {
+       fits_set_error ("fits_decode_card: error decoding typ_flong");
+       ErrCount++;
+       break;
+     }
      data.flong = (FITS_BITPIX32)l_long;
      break;
 
    case typ_fdouble:
-     if (sscanf (l_card+10, "%lf", &l_double) != 1)
-       FITS_RETURN ("fits_decode_card: error decoding typ_fdouble", NULL);
+     if (fits_scanfdouble (l_card+10, &l_double) != 1)
+     {
+       fits_set_error ("fits_decode_card: error decoding typ_fdouble");
+       ErrCount++;
+       break;
+     }
      data.fdouble = (FITS_BITPIXM32)l_double;
      break;
 
    case typ_fstring:
      cp = l_card+10;
      if (*cp != '\'')
-       FITS_RETURN ("fits_decode_card: missing \' decoding typ_fstring", NULL);
+     {
+       fits_set_error ("fits_decode_card: missing \' decoding typ_fstring");
+       ErrCount++;
+       break;
+     }
 
      dst = data.fstring;
      cp++;
@@ -1511,7 +1624,8 @@ FITS_DATA *fits_decode_card (const char *card, FITS_DATA_TYPES data_type)
      *dst = '\0';
      break;
  }
- return (&data);
+
+ return ((ErrCount == 0) ? &data : NULL);
 }
 
 
