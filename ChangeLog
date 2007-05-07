@@ -1,5 +1,13 @@
 2007-05-07  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpbrushtool.[ch] (gimp_brush_tool_draw): moved
+	brush drawing code to the new function gimp_brush_tool_draw_brush().
+
+	* app/tools/gimpsourcetool.c: (gimp_source_tool_draw): draw the
+	brush outline at the source position (bug #435545).
+
+2007-05-07  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/blur.c (blur_prepare_row): clamp to the first
 	row, not the second. Also update the progress less often.
 

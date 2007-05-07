@@ -49,7 +49,11 @@ struct _GimpBrushToolClass
 };
 
 
-GType   gimp_brush_tool_get_type (void) G_GNUC_CONST;
+GType   gimp_brush_tool_get_type   (void) G_GNUC_CONST;
+
+void    gimp_brush_tool_draw_brush (GimpBrushTool *brush_tool,
+                                    gdouble        x,
+                                    gdouble        y);
 
 
 #endif  /*  __GIMP_BRUSH_TOOL_H__  */

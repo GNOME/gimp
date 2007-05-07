@@ -352,21 +352,25 @@ gimp_source_tool_oper_update (GimpTool        *tool,
 static void
 gimp_source_tool_draw (GimpDrawTool *draw_tool)
 {
-  GimpTool          *tool        = GIMP_TOOL (draw_tool);
   GimpSourceTool    *source_tool = GIMP_SOURCE_TOOL (draw_tool);
-  GimpSourceCore    *source      = GIMP_SOURCE_CORE (GIMP_PAINT_TOOL (tool)->core);
   GimpSourceOptions *options     = GIMP_SOURCE_TOOL_GET_OPTIONS (draw_tool);
+  GimpSourceCore    *source;
+
+  source = GIMP_SOURCE_CORE (GIMP_PAINT_TOOL (draw_tool)->core);
 
   if (options->use_source && source->src_drawable && source_tool->src_display)
     {
-      GimpDisplay *tmp_display;
-      gint         off_x;
-      gint         off_y;
+      GimpDisplay   *tmp_display = draw_tool->display;
+      gint           off_x;
+      gint           off_y;
+
+      draw_tool->display = source_tool->src_display;
 
       gimp_item_offsets (GIMP_ITEM (source->src_drawable), &off_x, &off_y);
 
-      tmp_display = draw_tool->display;
-      draw_tool->display = source_tool->src_display;
+      gimp_brush_tool_draw_brush (GIMP_BRUSH_TOOL (source_tool),
+                                  source_tool->src_x + off_x,
+                                  source_tool->src_y + off_y);
 
       gimp_draw_tool_draw_handle (draw_tool,
                                   GIMP_HANDLE_CROSS,
