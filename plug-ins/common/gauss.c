@@ -592,40 +592,47 @@ multiply_alpha (guchar *buf,
                 gint    width,
                 gint    bytes)
 {
-  gint    i, j;
-  gdouble alpha;
+  gint i, j;
 
-  for (i = 0; i < width * bytes; i += bytes)
+  for (i = 0; i < width; i++, buf += bytes)
     {
-      alpha = buf[i + bytes - 1] * (1.0 / 255.0);
+      gdouble alpha = buf[bytes - 1] * (1.0 / 255.0);
+
       for (j = 0; j < bytes - 1; j++)
-        buf[i + j] *= alpha;
+        buf[j] = ROUND (buf[j] * alpha);
     }
 }
 
-/* Convert from premultiplied to separated alpha, on a single scan
-   line. */
+/* Convert from premultiplied to separated alpha, on a single scan line. */
 static void
 separate_alpha (guchar *buf,
                 gint    width,
                 gint    bytes)
 {
-  gint   i, j;
-  guchar alpha;
-  gdouble recip_alpha;
-  gint    new_val;
+  gint i, j;
 
-  for (i = 0; i < width * bytes; i += bytes)
+  for (i = 0; i < width; i++, buf += bytes)
     {
-      alpha = buf[i + bytes - 1];
-      if (alpha != 0 && alpha != 255)
+      guchar alpha = buf[bytes - 1];
+
+      switch (alpha)
         {
-          recip_alpha = 255.0 / alpha;
-          for (j = 0; j < bytes - 1; j++)
-            {
-              new_val = buf[i + j] * recip_alpha;
-              buf[i + j] = MIN (255, new_val);
-            }
+        case 0:
+        case 255:
+          break;
+
+        default:
+          {
+            gdouble recip_alpha = 255.0 / alpha;
+
+            for (j = 0; j < bytes - 1; j++)
+              {
+                gint new_val = ROUND (buf[j] * recip_alpha);
+
+                buf[j] = MIN (255, new_val);
+              }
+          }
+          break;
         }
     }
 }
