@@ -218,17 +218,18 @@ blur_prepare_row (GimpPixelRgn *pixel_rgn,
 {
   gint b;
 
-  y = CLAMP (y, 1, pixel_rgn->h - 1);
+  y = CLAMP (y, 0, pixel_rgn->h - 1);
+
   gimp_pixel_rgn_get_row (pixel_rgn, data, x, y, w);
 
   /*
    *  Fill in edge pixels
    */
   for (b = 0; b < pixel_rgn->bpp; b++)
-    {
-      data[-(gint)pixel_rgn->bpp + b] = data[b];
-      data[w * pixel_rgn->bpp + b] = data[(w - 1) * pixel_rgn->bpp + b];
-    }
+    data[-(gint)pixel_rgn->bpp + b] = data[b];
+
+  for (b = 0; b < pixel_rgn->bpp; b++)
+    data[w * pixel_rgn->bpp + b] = data[(w - 1) * pixel_rgn->bpp + b];
 }
 
 /*********************************
@@ -242,7 +243,7 @@ blur_prepare_row (GimpPixelRgn *pixel_rgn,
 static void
 blur (GimpDrawable *drawable)
 {
-  GimpPixelRgn  srcPR, destPR, destPR2, *sp, *dp, *tp;
+  GimpPixelRgn  srcPR, destPR;
   gint          width, height;
   gint          bytes;
   guchar       *dest, *d;
@@ -277,10 +278,6 @@ blur (GimpDrawable *drawable)
    */
   gimp_pixel_rgn_init (&srcPR, drawable, 0, 0, width, height, FALSE, FALSE);
   gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
-  gimp_pixel_rgn_init (&destPR2, drawable, 0, 0, width, height, TRUE, TRUE);
-  sp = &srcPR;
-  dp = &destPR;
-  tp = NULL;
 
   pr = prev_row + bytes;
   cr = cur_row + bytes;
@@ -289,15 +286,16 @@ blur (GimpDrawable *drawable)
   /*
    *  prepare the first row and previous row
    */
-  blur_prepare_row (sp, pr, x1, y1 - 1, (x2 - x1));
-  blur_prepare_row (sp, cr, x1, y1, (x2 - x1));
+  blur_prepare_row (&srcPR, pr, x1, y1 - 1, (x2 - x1));
+  blur_prepare_row (&srcPR, cr, x1, y1, (x2 - x1));
+
   /*
    *  loop through the rows, applying the selected convolution
    */
   for (row = y1; row < y2; row++)
     {
       /*  prepare the next row  */
-      blur_prepare_row (sp, nr, x1, row + 1, (x2 - x1));
+      blur_prepare_row (&srcPR, nr, x1, row + 1, (x2 - x1));
 
       d = dest;
       ind = 0;
@@ -350,7 +348,7 @@ blur (GimpDrawable *drawable)
        *  Save the modified row, shuffle the row pointers, and every
        *  so often, update the progress meter.
        */
-      gimp_pixel_rgn_set_row (dp, dest, x1, row, (x2 - x1));
+      gimp_pixel_rgn_set_row (&destPR, dest, x1, row, (x2 - x1));
 
       tmp = pr;
       pr = cr;
