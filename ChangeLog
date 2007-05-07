@@ -1,7 +1,7 @@
 2007-05-07  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/blur.c (blur_prepare_row): clamp to the first
-	row, not the second.
+	row, not the second. Also update the progress less often.
 
 2007-05-07  Sven Neumann  <sven@gimp.org>
 

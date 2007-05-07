@@ -68,11 +68,6 @@
  *
  ********************************/
 
-/*
- *  progress meter update frequency
- */
-#define PROG_UPDATE_TIME ((row % 10) == 0)
-
 #define PLUG_IN_PROC "plug-in-blur"
 
 /*********************************
@@ -355,7 +350,7 @@ blur (GimpDrawable *drawable)
       cr = nr;
       nr = tmp;
 
-      if (PROG_UPDATE_TIME)
+      if ((row % 32) == 0)
 	gimp_progress_update ((gdouble) row / (gdouble) (y2 - y1));
     }
 
