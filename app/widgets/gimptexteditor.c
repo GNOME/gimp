@@ -140,10 +140,11 @@ gimp_text_editor_new (const gchar     *title,
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
 
   editor = g_object_new (GIMP_TYPE_TEXT_EDITOR,
-                         "title",     title,
-                         "role",      "gimp-text-editor",
-                         "help-func", gimp_standard_help_func,
-                         "help-id",   GIMP_HELP_TEXT_EDITOR_DIALOG,
+                         "title",         title,
+                         "role",          "gimp-text-editor",
+                         "transient-for", parent,
+                         "help-func",     gimp_standard_help_func,
+                         "help-id",       GIMP_HELP_TEXT_EDITOR_DIALOG,
                          NULL);
 
   gtk_dialog_add_button (GTK_DIALOG (editor),
@@ -152,9 +153,6 @@ gimp_text_editor_new (const gchar     *title,
   g_signal_connect (editor, "response",
                     G_CALLBACK (gtk_widget_destroy),
                     NULL);
-
-  if (parent)
-    gtk_window_set_transient_for (GTK_WINDOW (editor), parent);
 
   editor->ui_manager = gimp_menu_factory_manager_new (menu_factory,
                                                       "<TextEditor>",

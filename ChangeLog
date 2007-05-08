@@ -1,3 +1,8 @@
+2007-05-08  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimptexteditor.c: use GtkWindow::transient-for just
+	for the fun of using another GTK+ 2.10 feature.
+
 2007-05-07  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/gimpbaseenums.[ch] (GimpCloneType): changed strings.
