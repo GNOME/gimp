@@ -138,11 +138,12 @@ gen_property (GString            *buffer,
                                   schema->prefix, property->name);
           ns_prefix = schema->prefix;
         }
-      for (i = 2; value_array[i] != NULL; i += 2)
-        g_string_append_printf (buffer, "   <%s:%s>%s</%s:%s>\n",
-                                ns_prefix, value_array[i],
-                                value_array[i + 1],
-                                ns_prefix, value_array[i]);
+      if (value_array[0] && value_array[1])
+        for (i = 2; value_array[i] != NULL; i += 2)
+          g_string_append_printf (buffer, "   <%s:%s>%s</%s:%s>\n",
+                                  ns_prefix, value_array[i],
+                                  value_array[i + 1],
+                                  ns_prefix, value_array[i]);
       g_string_append_printf (buffer, "  </%s:%s>\n",
                               schema->prefix, property->name);
       break;

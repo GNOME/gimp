@@ -1,3 +1,8 @@
+2007-05-08  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/metadata/xmp-encode.c (gen_property): quick workaround
+	for bug #436077.  A better solution will follow later.
+
 2007-05-08  Karine Delvare  <edhel@gimp.org>
 
 	* plug-ins/common/flarefx.c: use the new preview transform function, 
