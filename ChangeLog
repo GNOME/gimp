@@ -1,5 +1,10 @@
 2007-05-08  Karine Delvare  <edhel@gimp.org>
 
+	* plug-ins/common/flarefx.c: use the new preview transform function, 
+	see bug #356716.
+
+2007-05-08  Karine Delvare  <edhel@gimp.org>
+
 	* plug-ins/common/papertile.c: Replace tile size with width & height,
 	without changing the plug-in interface (bug #87092).
 

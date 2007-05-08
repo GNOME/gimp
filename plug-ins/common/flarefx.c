@@ -362,6 +362,7 @@ FlareFX (GimpDrawable *drawable,
   gint          x1, y1, x2, y2;
   gint          matt;
   gfloat        hyp;
+  gdouble       zoom = 0.0;
 
   bytes  = drawable->bpp;
   if (preview)
@@ -369,10 +370,13 @@ FlareFX (GimpDrawable *drawable,
       src = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
                                           &width, &height, &bytes);
 
-      xs = (gdouble)fvals.posx * width  / drawable->width;
-      ys = (gdouble)fvals.posy * height / drawable->height;
+      zoom = gimp_zoom_preview_get_factor (GIMP_ZOOM_PREVIEW (preview));
 
-      x1 = y1 = 0;
+      gimp_preview_transform (preview,
+                              fvals.posx, fvals.posy, &xs, &ys);
+
+      x1 = 0;
+      y1 = 0;
       x2 = width;
       y2 = height;
       dest = g_new (guchar, bytes * width * height);
@@ -390,7 +394,10 @@ FlareFX (GimpDrawable *drawable,
       gimp_pixel_rgn_init (&destPR, drawable, 0, 0, width, height, TRUE, TRUE);
     }
 
-  matt = width;
+  if (preview)
+    matt = width * zoom;
+  else
+    matt = width;
 
   cur_row = g_new (guchar, (x2 - x1) * bytes);
 
@@ -887,15 +894,9 @@ flare_center_coords_update (GimpSizeEntry *coords,
 static void
 flare_center_cursor_update (FlareCenter *center)
 {
-  gint width, height;
-
-  gimp_preview_get_size (center->preview, &width, &height);
-
-  center->curx = fvals.posx * width  / center->drawable->width;
-  center->cury = fvals.posy * height / center->drawable->height;
-
-  center->curx = CLAMP (center->curx, 0, width - 1);
-  center->cury = CLAMP (center->cury, 0, height - 1);
+  gimp_preview_transform (center->preview,
+                          fvals.posx, fvals.posy,
+                          &center->curx, &center->cury);
 }
 
 /*
@@ -936,9 +937,7 @@ flare_center_preview_events (GtkWidget   *widget,
                              GdkEvent    *event,
                              FlareCenter *center)
 {
-  gint width, height;
-
-  gimp_preview_get_size (center->preview, &width, &height);
+  gint tx, ty;
 
   switch (event->type)
     {
@@ -947,26 +946,33 @@ flare_center_preview_events (GtkWidget   *widget,
         break;
 
     case GDK_BUTTON_PRESS:
-      gtk_widget_get_pointer (widget, &center->curx, &center->cury);
+      {
+        GdkEventButton *bevent = (GdkEventButton *) event;
 
-      flare_center_cursor_draw (center);
+        if (bevent->button == 1)
+          {
+            gimp_preview_untransform (center->preview,
+                                      bevent->x, bevent->y,
+                                      &tx, &ty);
 
-      g_signal_handlers_block_by_func (center->coords,
-                                       flare_center_coords_update,
-                                       center);
+            flare_center_cursor_draw (center);
 
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (center->coords), 0,
-                                  center->curx * center->drawable->width /
-                                  width);
-      gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (center->coords), 1,
-                                  center->cury * center->drawable->height /
-                                  height);
+            g_signal_handlers_block_by_func (center->coords,
+                                             flare_center_coords_update,
+                                             center);
 
-      g_signal_handlers_unblock_by_func (center->coords,
-                                         flare_center_coords_update,
-                                         center);
+            gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (center->coords),
+                                        0, tx);
+            gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (center->coords),
+                                        1, ty);
 
-      flare_center_coords_update (GIMP_SIZE_ENTRY (center->coords), center);
+            g_signal_handlers_unblock_by_func (center->coords,
+                                               flare_center_coords_update,
+                                               center);
+
+            flare_center_coords_update (GIMP_SIZE_ENTRY (center->coords), center);
+          }
+      }
       break;
 
     default:
