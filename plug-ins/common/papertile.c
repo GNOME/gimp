@@ -61,7 +61,8 @@ typedef enum
 typedef struct _PluginParams PluginParams;
 struct _PluginParams
 {
-  gint32          tile_size;
+  gint32          tile_width;
+  gint32          tile_height;
   gint32          division_x;
   gint32          division_y;
   gdouble         move_max_rate;
@@ -99,7 +100,8 @@ static struct
 } p =
 {
   {
-    1,                          /* tile_size             */
+    1,                          /* tile_width            */
+    1,                          /* tile_height           */
     16,                         /* division_x            */
     16,                         /* division_y            */
     25.0,                       /* move_max_rate         */
@@ -135,20 +137,22 @@ params_load_from_gimp (void)
 
   if (0 < p.params.division_x)
     {
-      p.params.tile_size  = p.drawable->width / p.params.division_x;
-      if (0 < p.params.tile_size)
+      p.params.tile_width  = p.drawable->width / p.params.division_x;
+      if (0 < p.params.tile_width)
         {
-          p.params.division_y = p.drawable->height / p.params.tile_size;
+          p.params.division_y = p.drawable->height / p.params.tile_height;
         }
     }
 
-  if (p.params.tile_size  <= 0 ||
+  if (p.params.tile_width <= 0 ||
+      p.params.tile_height <= 0 ||
       p.params.division_x <= 0 ||
       p.params.division_y <= 0)
     {
-      p.params.tile_size  = MIN (p.drawable->width, p.drawable->height);
-      p.params.division_x = p.drawable->width / p.params.tile_size;
-      p.params.division_y = p.drawable->height / p.params.tile_size;
+      p.params.tile_width = p.drawable->width;
+      p.params.tile_height = p.drawable->height;
+      p.params.division_x = p.drawable->width / p.params.tile_width;
+      p.params.division_y = p.drawable->height / p.params.tile_height;
     }
 
   if (!p.drawable_has_alpha)
@@ -168,21 +172,31 @@ params_load_from_gimp (void)
 
 static struct
 {
-  GtkObject *tile_size_adj;
+  GtkObject *tile_width_adj;
+  GtkObject *tile_height_adj;
   GtkObject *division_x_adj;
   GtkObject *division_y_adj;
 } w;
 
 static void
-tile_size_adj_changed (GtkAdjustment *adj)
+tile_width_adj_changed (GtkAdjustment *adj)
 {
-  if (p.params.tile_size != (gint)adj->value)
+  if (p.params.tile_width != (gint)adj->value)
     {
-      p.params.tile_size  = adj->value;
-      p.params.division_x = p.drawable->width  / p.params.tile_size;
-      p.params.division_y = p.drawable->height / p.params.tile_size;
+      p.params.tile_width  = adj->value;
+      p.params.division_x = p.drawable->width  / p.params.tile_width;
       gtk_adjustment_set_value (GTK_ADJUSTMENT (w.division_x_adj),
                                 p.params.division_x);
+    }
+}
+
+static void
+tile_height_adj_changed (GtkAdjustment *adj)
+{
+  if (p.params.tile_height != (gint)adj->value)
+    {
+      p.params.tile_height  = adj->value;
+      p.params.division_y = p.drawable->height / p.params.tile_height;
       gtk_adjustment_set_value (GTK_ADJUSTMENT (w.division_y_adj),
                                 p.params.division_y);
     }
@@ -194,13 +208,9 @@ division_x_adj_changed (GtkAdjustment *adj)
   if (p.params.division_x != (gint) adj->value)
     {
       p.params.division_x = adj->value;
-      p.params.tile_size  = p.drawable->width  / p.params.division_x;
-      p.params.division_y =
-        p.drawable->height * p.params.division_x / p.drawable->width;
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (w.tile_size_adj),
-                                p.params.tile_size);
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (w.division_y_adj),
-                                p.params.division_y);
+      p.params.tile_width  = p.drawable->width  / p.params.division_x;
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (w.tile_width_adj),
+                                p.params.tile_width);
     }
 }
 
@@ -210,13 +220,9 @@ division_y_adj_changed (GtkAdjustment *adj)
   if (p.params.division_y != (gint)adj->value)
     {
       p.params.division_y = adj->value;
-      p.params.tile_size  = p.drawable->height / p.params.division_y;
-      p.params.division_x =
-        p.drawable->width * p.params.division_y / p.drawable->height;
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (w.tile_size_adj),
-                                p.params.tile_size);
-      gtk_adjustment_set_value (GTK_ADJUSTMENT (w.division_x_adj),
-                                p.params.division_x);
+      p.params.tile_height  = p.drawable->height / p.params.division_y;
+      gtk_adjustment_set_value (GTK_ADJUSTMENT (w.tile_height_adj),
+                                p.params.tile_height);
     }
 }
 
@@ -264,7 +270,7 @@ open_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  table = gtk_table_new (3, 2, FALSE);
+  table = gtk_table_new (4, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
@@ -288,15 +294,26 @@ open_dialog (void)
                     G_CALLBACK (division_y_adj_changed),
                     NULL);
 
-  button = gimp_spin_button_new (&w.tile_size_adj, p.params.tile_size,
+  button = gimp_spin_button_new (&w.tile_width_adj, p.params.tile_width,
                                  1.0, MAX (p.drawable->width,
                                            p.drawable->height),
                                  1.0, 5.0, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
-                             _("_Size:"), 0.0, 0.5,
+                             _("_Width:"), 0.0, 0.5,
                              button, 1, TRUE);
-  g_signal_connect (w.tile_size_adj, "value-changed",
-                    G_CALLBACK (tile_size_adj_changed),
+  g_signal_connect (w.tile_width_adj, "value-changed",
+                    G_CALLBACK (tile_width_adj_changed),
+                    NULL);
+
+  button = gimp_spin_button_new (&w.tile_height_adj, p.params.tile_height,
+                                 1.0, MAX (p.drawable->width,
+                                 p.drawable->height),
+                                 1.0, 5.0, 0, 1, 0);
+  gimp_table_attach_aligned (GTK_TABLE (table), 0, 3,
+                             _("_Height:"), 0.0, 0.5,
+                             button, 1, TRUE);
+  g_signal_connect (w.tile_height_adj, "value-changed",
+                    G_CALLBACK (tile_height_adj_changed),
                     NULL);
 
   frame = gimp_int_radio_group_new (TRUE, _("Fractional Pixels"),
@@ -532,7 +549,7 @@ filter (void)
   pixels = g_new (guchar,
                   p.drawable->bpp * p.drawable->width * p.drawable->height);
   buffer = g_new (guchar,
-                  p.drawable->bpp * p.params.tile_size * p.params.tile_size);
+                  p.drawable->bpp * p.params.tile_width * p.params.tile_height);
 
   overlap = p.drawable_has_alpha ? overlap_RGBA : overlap_RGB;
 
@@ -551,28 +568,28 @@ filter (void)
   division_y = p.params.division_y;
   if (p.params.fractional_type == FRACTIONAL_TYPE_FORCE)
     {
-      if (0 < p.drawable->width  % p.params.tile_size) division_x++;
-      if (0 < p.drawable->height % p.params.tile_size) division_y++;
+      if (0 < p.drawable->width  % p.params.tile_width) division_x++;
+      if (0 < p.drawable->height % p.params.tile_height) division_y++;
       if (p.params.centering)
         {
-          if (1 < p.drawable->width % p.params.tile_size)
+          if (1 < p.drawable->width % p.params.tile_width)
             {
               division_x++;
               offset_x =
-                (p.drawable->width % p.params.tile_size) / 2 -
-                p.params.tile_size;
+                (p.drawable->width % p.params.tile_width) / 2 -
+                p.params.tile_width;
             }
           else
             {
               offset_x = 0;
             }
 
-          if (1 < p.drawable->height % p.params.tile_size)
+          if (1 < p.drawable->height % p.params.tile_height)
             {
               division_y++;
               offset_y =
-                (p.drawable->height % p.params.tile_size) / 2 -
-                p.params.tile_size;
+                (p.drawable->height % p.params.tile_height) / 2 -
+                p.params.tile_height;
             }
           else
             {
@@ -589,8 +606,8 @@ filter (void)
     {
       if (p.params.centering)
         {
-          offset_x = (p.drawable->width  % p.params.tile_size) / 2;
-          offset_y = (p.drawable->height % p.params.tile_size) / 2;
+          offset_x = (p.drawable->width  % p.params.tile_width) / 2;
+          offset_y = (p.drawable->height % p.params.tile_height) / 2;
         }
       else
         {
@@ -599,27 +616,27 @@ filter (void)
         }
     }
 
-  move_max_pixels = p.params.move_max_rate * p.params.tile_size / 100.0;
+  move_max_pixels = p.params.move_max_rate * p.params.tile_width / 100.0;
   numof_tiles = division_x * division_y;
   t = tiles = g_new(Tile, numof_tiles);
 
   for (y = 0; y < division_y; y++)
     {
-      gint srcy = offset_y + p.params.tile_size * y;
+      gint srcy = offset_y + p.params.tile_height * y;
 
       for (x = 0; x < division_x; x++, t++)
         {
-          gint srcx = offset_x + p.params.tile_size * x;
+          gint srcx = offset_x + p.params.tile_width * x;
 
           if (srcx < 0)
             {
               t->x     = 0;
-              t->width = srcx + p.params.tile_size;
+              t->width = srcx + p.params.tile_width;
             }
-          else if (srcx + p.params.tile_size < p.drawable->width)
+          else if (srcx + p.params.tile_width < p.drawable->width)
             {
               t->x     = srcx;
-              t->width = p.params.tile_size;
+              t->width = p.params.tile_width;
             }
           else
             {
@@ -630,12 +647,12 @@ filter (void)
           if (srcy < 0)
             {
               t->y      = 0;
-              t->height = srcy + p.params.tile_size;
+              t->height = srcy + p.params.tile_height;
             }
-          else if (srcy + p.params.tile_size < p.drawable->height)
+          else if (srcy + p.params.tile_height < p.drawable->height)
             {
               t->y      = srcy;
-              t->height = p.params.tile_size;
+              t->height = p.params.tile_height;
             }
           else
             {
@@ -657,8 +674,8 @@ filter (void)
     {
       clear_x0     = offset_x;
       clear_y0     = offset_y;
-      clear_width  = p.params.tile_size * division_x;
-      clear_height = p.params.tile_size * division_y;
+      clear_width  = p.params.tile_width * division_x;
+      clear_height = p.params.tile_height * division_y;
     }
   else
     {
@@ -870,9 +887,10 @@ plugin_run (const gchar      *name,
         case GIMP_RUN_NONINTERACTIVE:
           if (numof_params == 11)
             {
-              p.params.tile_size        = params[3].data.d_int32;
-              p.params.division_x       = p.drawable->width  / p.params.tile_size;
-              p.params.division_y       = p.drawable->height / p.params.tile_size;
+              p.params.tile_width       = params[3].data.d_int32;
+              p.params.tile_height      = params[3].data.d_int32;
+              p.params.division_x       = p.drawable->width  / p.params.tile_width;
+              p.params.division_y       = p.drawable->height / p.params.tile_height;
               p.params.move_max_rate    = params[4].data.d_float;
               p.params.fractional_type  = (FractionalType)params[5].data.d_int32;
               p.params.wrap_around      = params[6].data.d_int32;
