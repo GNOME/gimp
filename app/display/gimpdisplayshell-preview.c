@@ -505,21 +505,30 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
       x1 = 0;
     }
   else if (x1 > gdk_pixbuf_get_width (row))
-    return;
-  if (x2 < 0)
-    return;
-  else if (x2 > gdk_pixbuf_get_width (row))
-    x2 = gdk_pixbuf_get_width (row);
+    {
+      return;
+    }
 
+  if (x2 < 0)
+    {
+      return;
+    }
+  else if (x2 > gdk_pixbuf_get_width (row))
+    {
+      x2 = gdk_pixbuf_get_width (row);
+    }
 
   dx = x2 - x1;
+
+  if (! dx)
+    return;
 
   switch (gimp_drawable_type (texture))
     {
     case GIMP_INDEXED_IMAGE:
       cmap = gimp_drawable_cmap (texture);
 
-      while (dx --)
+      while (dx--)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
@@ -537,7 +546,7 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
     case GIMP_INDEXEDA_IMAGE:
       cmap = gimp_drawable_cmap (texture);
 
-      while (dx --)
+      while (dx--)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
@@ -554,7 +563,7 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
       break;
 
     case GIMP_GRAY_IMAGE:
-      while (dx --)
+      while (dx--)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
@@ -568,7 +577,7 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
       break;
 
     case GIMP_GRAYA_IMAGE:
-      while (dx --)
+      while (dx--)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
 
@@ -584,7 +593,7 @@ gimp_display_shell_draw_tri_row (GimpDrawable *texture,
 
     case GIMP_RGB_IMAGE:
     case GIMP_RGBA_IMAGE:
-      while (dx --)
+      while (dx--)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pptr);
 
@@ -667,22 +676,33 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
       x1 = 0;
     }
   else if (x1 > gdk_pixbuf_get_width (row))
-    return;
+    {
+      return;
+    }
+
   if (x2 < 0)
-    return;
+    {
+      return;
+    }
   else if (x2 > gdk_pixbuf_get_width (row))
-    x2 = gdk_pixbuf_get_width (row);
+    {
+      x2 = gdk_pixbuf_get_width (row);
+    }
+
+  dx = x2 - x1;
+
+  if (! dx)
+    return;
 
   mu = u + mask_offx;
   mv = v + mask_offy;
-  dx = x2 - x1;
 
   switch (gimp_drawable_type (texture))
     {
     case GIMP_INDEXED_IMAGE:
       cmap = gimp_drawable_cmap (texture);
 
-      while (dx --)
+      while (dx--)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, pptr + alpha);
@@ -704,7 +724,7 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
     case GIMP_INDEXEDA_IMAGE:
       cmap = gimp_drawable_cmap (texture);
 
-      while (dx --)
+      while (dx--)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
@@ -724,7 +744,7 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
       break;
 
     case GIMP_GRAY_IMAGE:
-      while (dx --)
+      while (dx--)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, pptr + alpha);
@@ -742,7 +762,7 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
       break;
 
     case GIMP_GRAYA_IMAGE:
-      while (dx --)
+      while (dx--)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pixel);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
@@ -760,7 +780,7 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
       break;
 
     case GIMP_RGB_IMAGE:
-      while (dx --)
+      while (dx--)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pptr);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, pptr + alpha);
@@ -774,7 +794,7 @@ gimp_display_shell_draw_tri_row_mask (GimpDrawable *texture,
       break;
 
     case GIMP_RGBA_IMAGE:
-      while (dx --)
+      while (dx--)
         {
           read_pixel_data_1 (tiles, (gint) u, (gint) v, pptr);
           read_pixel_data_1 (masktiles, (gint) mu, (gint) mv, &maskval);
