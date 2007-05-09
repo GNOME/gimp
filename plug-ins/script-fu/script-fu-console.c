@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <errno.h>
+#include <string.h>
 
 #include <glib/gstdio.h>
 
@@ -469,8 +470,17 @@ script_fu_browse_response (GtkWidget        *widget,
 
   text = g_string_append_c (text, ')');
 
+  gtk_window_set_focus (GTK_WINDOW (console->dialog), console->cc);
+
   gtk_entry_set_text (GTK_ENTRY (console->cc), text->str);
+  gtk_editable_set_position (GTK_EDITABLE (console->cc),
+                             g_utf8_pointer_to_offset (text->str,
+                                                       text->str +
+                                                       strlen (proc_name) + 2));
+
   g_string_free (text, TRUE);
+
+  gtk_window_present (GTK_WINDOW (console->dialog));
 
   g_free (proc_name);
   g_free (proc_blurb);

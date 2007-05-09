@@ -1,5 +1,11 @@
 2007-05-09  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-console.c (script_fu_browse_response):
+	focus the console entry, set the cursor position to the first
+	parameter and present the console window.
+
+2007-05-09  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-preview.c
 	(gimp_display_shell_draw_tri_row)
 	(gimp_display_shell_draw_tri_row_mask): don't call gdk_draw_pixbuf()
