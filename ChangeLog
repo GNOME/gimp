@@ -1,3 +1,10 @@
+2007-05-09  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-preview.c
+	(gimp_display_shell_draw_tri_row)
+	(gimp_display_shell_draw_tri_row_mask): don't call gdk_draw_pixbuf()
+	with a zero width. Fixes bug #349483.
+
 2007-05-08  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/metadata/xmp-encode.c (gen_property): quick workaround
