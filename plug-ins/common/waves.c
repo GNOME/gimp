@@ -80,6 +80,8 @@ static void     wave          (guchar    *src,
                                gint       height,
                                gint       bpp,
                                gboolean   has_alpha,
+                               gdouble    cen_x,
+                               gdouble    cen_y,
                                gdouble    amplitude,
                                gdouble    wavelength,
                                gdouble    phase,
@@ -212,6 +214,7 @@ waves (GimpDrawable *drawable)
   gimp_pixel_rgn_get_rect (&srcPr, src, 0, 0, width, height);
 
   wave (src, dst, width, height, bpp, has_alpha,
+        width / 2.0, height / 2.0,
         wvals.amplitude, wvals.wavelength, wvals.phase,
         wvals.type == MODE_SMEAR, wvals.reflective, TRUE);
   gimp_pixel_rgn_set_rect (&dstPr, dst, 0, 0, width, height);
@@ -357,15 +360,25 @@ waves_preview (GimpDrawable *drawable,
   guchar *src, *dest;
   gint    width, height;
   gint    bpp;
+  gdouble zoom;
+  gint    xc, yc;
 
   src = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
                                       &width, &height, &bpp);
+
+  zoom = gimp_zoom_preview_get_factor (GIMP_ZOOM_PREVIEW (preview));
+
+  gimp_preview_transform (preview,
+                          drawable->width / 2.0, drawable->height / 2.0,
+                          &xc, &yc);
+
   dest = g_new (guchar, width * height * bpp);
 
   wave (src, dest, width, height, bpp,
         bpp == 2 || bpp == 4,
-        wvals.amplitude * width / drawable->width,
-        wvals.wavelength * height / drawable->height,
+        (gdouble) xc, (gdouble) yc,
+        wvals.amplitude * width / drawable->width * zoom,
+        wvals.wavelength * height / drawable->height * zoom,
         wvals.phase, wvals.type == MODE_SMEAR, wvals.reflective, FALSE);
 
   gimp_preview_draw_buffer (preview, dest, width * bpp);
@@ -397,6 +410,8 @@ wave (guchar  *src,
       gint     height,
       gint     bypp,
       gboolean has_alpha,
+      gdouble  cen_x,
+      gdouble  cen_y,
       gdouble  amplitude,
       gdouble  wavelength,
       gdouble  phase,
@@ -412,7 +427,6 @@ wave (guchar  *src,
   gint    prog_interval = 0;
   gint    x1_in, y1_in, x2_in, y2_in;
 
-  gdouble cen_x, cen_y;       /* Center of wave */
   gdouble xhsiz, yhsiz;       /* Half size of selection */
   gdouble radius, radius2;    /* Radius and radius^2 */
   gdouble amnt, d;
@@ -437,10 +451,6 @@ wave (guchar  *src,
   x1 = y1 = 0;
   x2 = width;
   y2 = height;
-
-  /* Center of selection */
-  cen_x = (double) (x2 - 1 + x1) / 2.0;
-  cen_y = (double) (y2 - 1 + y1) / 2.0;
 
   /* Compute wave radii (semiaxes) */
   xhsiz = (double) (x2 - x1) / 2.0;
