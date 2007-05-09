@@ -822,7 +822,8 @@ save_image (const gchar *filename,
             }
         }
 
-      gimp_progress_update ((gdouble) row / (gdouble) rows);
+      if ((row % 32) == 0)
+        gimp_progress_update ((gdouble) row / (gdouble) rows);
     }
 
   TIFFFlushData (tif);

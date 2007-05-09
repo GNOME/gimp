@@ -1097,7 +1097,8 @@ load_rgba (TIFF         *tif,
                                channel[0].pixels + row * imageWidth * 4,
                                0, imageLength -row -1, imageWidth, 1);
 
-      gimp_progress_update ((gdouble) row / (gdouble) imageLength);
+      if ((row % 32) == 0)
+        gimp_progress_update ((gdouble) row / (gdouble) imageLength);
     }
 }
 

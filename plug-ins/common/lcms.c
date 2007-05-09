@@ -477,16 +477,16 @@ lcms_icc_apply (GimpColorConfig *config,
 
   src_profile = lcms_image_get_profile (config, image);
 
-  if (! src_profile && ! dest_profile)
-    return GIMP_PDB_SUCCESS;
-
   if (src_profile && ! lcms_icc_profile_is_rgb (src_profile))
     {
-      g_warning ("Attached color profile is not for RGB color space.");
+      g_printerr ("lcms: attached color profile is not for RGB color space.");
 
       cmsCloseProfile (src_profile);
       src_profile = NULL;
     }
+
+  if (! src_profile && ! dest_profile)
+    return GIMP_PDB_SUCCESS;
 
   if (! src_profile)
     src_profile = cmsCreate_sRGBProfile ();
@@ -828,7 +828,7 @@ lcms_drawable_transform (GimpDrawable  *drawable,
 
       done += rgn.h * rgn.w;
 
-      if (count++ % 16 == 0)
+      if (count++ % 32 == 0)
         gimp_progress_update (progress_start +
                               (gdouble) done /
                               (drawable->width * drawable->height) * range);
