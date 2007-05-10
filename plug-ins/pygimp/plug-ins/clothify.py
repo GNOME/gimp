@@ -63,11 +63,13 @@ register(
         "_Clothify...",
         "RGB*, GRAY*",
         [
-                (PF_INT, "x-blur", "X blur", 9),
-                (PF_INT, "y-blur", "Y blur", 9),
-                (PF_INT, "azimuth", "Azimuth", 135),
-                (PF_INT, "elevation", "Elevation", 45),
-                (PF_INT, "depth", "Depth", 3)
+            (PF_IMAGE, "image", "Input image", None),
+            (PF_DRAWABLE, "drawable", "Input drawable", None),
+            (PF_INT, "x-blur", "X blur", 9),
+            (PF_INT, "y-blur", "Y blur", 9),
+            (PF_INT, "azimuth", "Azimuth", 135),
+            (PF_INT, "elevation", "Elevation", 45),
+            (PF_INT, "depth", "Depth", 3)
         ],
         [],
         clothify, menu="<Image>/Filters/Artistic")

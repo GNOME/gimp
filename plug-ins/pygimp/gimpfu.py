@@ -29,9 +29,7 @@ will also make sure that the displays are flushed on completion if the plug-in
 was run interactively.
 
 When registering the plug-in, you do not need to worry about specifying
-the run_type parameter.  And if the plug-in is an image plug-in (the menu
-path starts with <Image>/), the image and drawable parameters are also
-automatically added.
+the run_type parameter.
 
 A typical gimpfu plug-in would look like this:
   from gimpfu import *
@@ -47,7 +45,11 @@ A typical gimpfu plug-in would look like this:
               "year",
               "My plug-in",
               "*",
-              [(PF_STRING, "arg", "The argument", "default-value")],
+              [
+                  (PF_IMAGE, "image", "Input image"),
+                  (PF_DRAWABLE, "drawable", "Input drawable"),
+                  (PF_STRING, "arg", "The argument", "default-value")
+              ],
               [],
               plugin_func, menu="<Image>/Somewhere")
   main()
@@ -70,6 +72,7 @@ are installed.
 
 import string as _string
 import gimp
+import gimpcolor
 from gimpenums import *
 pdb = gimp.pdb
 
@@ -77,8 +80,8 @@ import gettext
 t = gettext.translation('gimp20-python', gimp.locale_directory, fallback=True)
 _ = t.ugettext
 
-class error(RuntimeError):pass
-class CancelError(RuntimeError):pass
+class error(RuntimeError): pass
+class CancelError(RuntimeError): pass
 
 PF_INT8        = PDB_INT8
 PF_INT16       = PDB_INT16
@@ -135,7 +138,7 @@ _type_mapping = {
     #PF_INT32ARRAY  : PDB_INT32ARRAY,
     #PF_FLOATARRAY  : PDB_FLOATARRAY,
     #PF_STRINGARRAY : PDB_STRINGARRAY,
-    PF_COLOUR      : PDB_COLOR,
+    PF_COLOR       : PDB_COLOR,
     PF_REGION      : PDB_REGION,
     PF_IMAGE       : PDB_IMAGE,
     PF_LAYER       : PDB_LAYER,
@@ -159,11 +162,46 @@ _type_mapping = {
     PF_DIRNAME     : PDB_STRING,
 }
 
+_obj_mapping = {
+    PF_INT8        : int,
+    PF_INT16       : int,
+    PF_INT32       : int,
+    PF_FLOAT       : float,
+    PF_STRING      : str,
+    #PF_INT8ARRAY   : list,
+    #PF_INT16ARRAY  : list,
+    #PF_INT32ARRAY  : list,
+    #PF_FLOATARRAY  : list,
+    #PF_STRINGARRAY : list,
+    PF_COLOR       : gimpcolor.RGB,
+    PF_REGION      : int,
+    PF_IMAGE       : gimp.Image,
+    PF_LAYER       : gimp.Layer,
+    PF_CHANNEL     : gimp.Channel,
+    PF_DRAWABLE    : gimp.Drawable,
+    PF_VECTORS     : gimp.Vectors,
+
+    PF_TOGGLE      : bool,
+    PF_SLIDER      : float,
+    PF_SPINNER     : int,
+
+    PF_FONT        : str,
+    PF_FILE        : str,
+    PF_BRUSH       : str,
+    PF_PATTERN     : str,
+    PF_GRADIENT    : str,
+    PF_RADIO       : str,
+    PF_TEXT        : str,
+    PF_PALETTE     : str,
+    PF_FILENAME    : str,
+    PF_DIRNAME     : str,
+}
+
 _registered_plugins_ = {}
 
 def register(proc_name, blurb, help, author, copyright, date, label,
-                 imagetypes, params, results, function,
-                 menu=None, domain=None, on_query=None, on_run=None):
+             imagetypes, params, results, function,
+             menu=None, domain=None, on_query=None, on_run=None):
     '''This is called to register a new plug-in.'''
 
     # First perform some sanity checks on the data
@@ -202,30 +240,44 @@ def register(proc_name, blurb, help, author, copyright, date, label,
 
     plugin_type = PLUGIN
 
-    if not proc_name[:7] == 'python-' and \
-       not proc_name[:7] == 'python_' and \
-       not proc_name[:10] == 'extension-' and \
-       not proc_name[:10] == 'extension_' and \
-       not proc_name[:8] == 'plug-in-' and \
-       not proc_name[:8] == 'plug_in_' and \
-       not proc_name[:5] == 'file-' and \
-       not proc_name[:5] == 'file_':
+    if (not proc_name[:7] == 'python-' and
+        not proc_name[:7] == 'python_' and
+        not proc_name[:10] == 'extension-' and
+        not proc_name[:10] == 'extension_' and
+        not proc_name[:8] == 'plug-in-' and
+        not proc_name[:8] == 'plug_in_' and
+        not proc_name[:5] == 'file-' and
+        not proc_name[:5] == 'file_'):
            proc_name = 'python-fu-' + proc_name
 
     # if menu is not given, derive it from label
+    need_compat_params = False
     if menu is None and label:
-        fields = _string.split(label, '/')
+        fields = label.split('/')
         if fields:
             label = fields.pop()
-            menu = _string.join(fields, '/')
+            menu = '/'.join(fields)
+            need_compat_params = True
+
+        if need_compat_params and plugin_type == PLUGIN:
+            file_params = [(PDB_STRING, "filename", "The name of the file", ""),
+                           (PDB_STRING, "raw-filename", "The name of the file", "")]
+
+            if menu is None:
+                pass
+            elif menu[:6] == '<Load>':
+                params[0:0] = file_params
+            elif menu[:7] == '<Image>' or menu[:6] == '<Save>':
+                params.insert(0, (PDB_IMAGE, "image", "Input image", None))
+                params.insert(1, (PDB_DRAWABLE, "drawable", "Input drawable", None))
+                if menu[:6] == '<Save>':
+                    params[2:2] = file_params
 
     _registered_plugins_[proc_name] = (blurb, help, author, copyright,
                                        date, label, imagetypes,
                                        plugin_type, params, results,
-                                       function, menu, domain, on_query, on_run)
-
-file_params = [(PDB_STRING, "filename", "The name of the file"),
-               (PDB_STRING, "raw-filename", "The name of the file")]
+                                       function, menu, domain,
+                                       on_query, on_run)
 
 def _query():
     for plugin in _registered_plugins_.keys():
@@ -241,19 +293,6 @@ def _query():
         # add the run mode argument ...
         params.insert(0, (PDB_INT32, "run-mode",
                                      "Interactive, Non-Interactive"))
-
-        if plugin_type == PLUGIN:
-            if menu is None:
-                pass
-            elif menu[:6] == '<Load>':
-                params[1:1] = file_params
-            elif menu[:7] == '<Image>' or menu[:6] == '<Save>':
-                params.insert(1, (PDB_IMAGE, "image",
-                                  "The image to work on"))
-                params.insert(2, (PDB_DRAWABLE, "drawable",
-                                  "The drawable to work on"))
-                if menu[:6] == '<Save>':
-                    params[3:3] = file_params
 
         results = make_params(results)
 
@@ -302,7 +341,10 @@ def _interact(proc_name, start_params):
 
     def run_script(run_params):
         params = start_params + tuple(run_params)
+        _set_defaults(proc_name, params)
         return apply(function, params)
+
+    params = params[len(start_params):]
 
     # short circuit for no parameters ...
     if len(params) == 0:
@@ -316,6 +358,7 @@ def _interact(proc_name, start_params):
 #    import pango
 
     defaults = _get_defaults(proc_name)
+    defaults = defaults[len(start_params):]
 
     class EntryValueError(Exception):
         pass
@@ -540,7 +583,7 @@ def _interact(proc_name, start_params):
             #PF_INT32ARRAY  : ArrayEntry,
             #PF_FLOATARRAY  : ArrayEntry,
             #PF_STRINGARRAY : ArrayEntry,
-            PF_COLOUR      : gimpui.ColorSelector,
+            PF_COLOR       : gimpui.ColorSelector,
             PF_REGION      : IntEntry,  # should handle differently ...
             PF_IMAGE       : gimpui.ImageSelector,
             PF_LAYER       : gimpui.LayerSelector,
@@ -613,7 +656,6 @@ def _interact(proc_name, start_params):
             except EntryValueError:
                 warning_dialog(dialog, _("Invalid input for '%s'") % wid.desc)
             else:
-                _set_defaults(proc_name, params)
                 try:
                     dialog.res = run_script(params)
                 except Exception:
@@ -691,36 +733,42 @@ def _interact(proc_name, start_params):
 
 def _run(proc_name, params):
     run_mode = params[0]
-    plugin_type = _registered_plugins_[proc_name][7]
     func = _registered_plugins_[proc_name][10]
-    menu = _registered_plugins_[proc_name][11]
 
-    if plugin_type == PLUGIN and menu[:7] == '<Image>':
-        end = 3
-        start_params = params[1:end]
-        extra_params = params[end:]
-    elif plugin_type == PLUGIN and menu[:6] == '<Save>':
-        end = 5
-        start_params = params[1:end]
-        extra_params = params[end:]
+    if run_mode == RUN_NONINTERACTIVE:
+        return apply(func, params[1:])
+
+    script_params = _registered_plugins_[proc_name][8] 
+
+    min_args = 1
+    if len(params) > 1:
+        for i in range(1, len(params)):
+            param_type = _obj_mapping[script_params[i - 1][0]]
+            if not isinstance(params[i], param_type):
+                break
+
+        min_args = i
+
+    if len(script_params) > min_args:
+        start_params = params[:min_args + 1]
+
+        if run_mode == RUN_WITH_LAST_VALS:
+            default_params = _get_defaults(proc_name)
+            params = start_params + default_params[min_args:]
+        else:
+            params = start_params
     else:
-        start_params = ()
-        extra_params = params[1:]
+       run_mode = RUN_NONINTERACTIVE
 
     if run_mode == RUN_INTERACTIVE:
         try:
-            res = _interact(proc_name, start_params)
+            res = _interact(proc_name, params[1:])
         except CancelError:
             return
     else:
-        if run_mode == RUN_WITH_LAST_VALS:
-            extra_params = _get_defaults(proc_name)
+        res = apply(func, params[1:])
 
-        params = start_params + tuple(extra_params)
-        res = apply(func, params)
-
-    if run_mode != RUN_NONINTERACTIVE:
-        gimp.displays_flush()
+    gimp.displays_flush()
 
     return res
 

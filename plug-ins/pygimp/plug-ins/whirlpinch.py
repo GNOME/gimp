@@ -206,9 +206,11 @@ register(
         "_Whirl and Pinch...",
         "RGB*, GRAY*",
         [
-                (PF_SLIDER, "whirl", "Whirl angle", 90, (-360, 360, 1)),
-                (PF_FLOAT, "pinch", "Pinch amount", 0),
-                (PF_FLOAT, "radius", "radius", 1)
+            (PF_IMAGE, "image", "Input image", None),
+            (PF_DRAWABLE, "drawable", "Input drawable", None),
+            (PF_SLIDER, "whirl", "Whirl angle", 90, (-360, 360, 1)),
+            (PF_FLOAT, "pinch", "Pinch amount", 0),
+            (PF_FLOAT, "radius", "radius", 1)
         ],
         [],
         whirl_pinch, menu="<Image>/Filters/Distorts")

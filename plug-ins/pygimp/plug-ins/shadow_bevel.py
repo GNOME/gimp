@@ -66,6 +66,8 @@ register(
     N_("_Drop Shadow and Bevel..."),
     "RGBA, GRAYA",
     [
+        (PF_IMAGE, "image", "Input image", None),
+        (PF_DRAWABLE, "drawable", "Input drawable", None),
         (PF_SLIDER, "blur",   _("_Shadow blur"), 6, (1, 30, 1)),
         (PF_BOOL,   "bevel",  _("_Bevel"),       True),
         (PF_BOOL,   "shadow", _("_Drop shadow"), True),

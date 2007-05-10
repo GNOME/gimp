@@ -189,6 +189,10 @@ register(
     N_("Colored XHTML"),
     "RGB",
     [
+        (PF_IMAGE, "image", "Input image", None),
+        (PF_DRAWABLE, "drawable", "Input drawable", None),
+        (PF_STRING, "filename", "The name of the file", None),
+        (PF_STRING, "raw-filename", "The name of the file", None),
         (PF_RADIO, "source", _("Character _source"), 0,
                    ((_("Source code"), CHARS_SOURCE),
                     (_("Text file"),   CHARS_FILE),

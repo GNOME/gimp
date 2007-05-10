@@ -56,6 +56,8 @@ register(
     N_("_Fog..."),
     "RGB*, GRAY*",
     [
+        (PF_IMAGE, "image",       "Input image", None),
+        (PF_DRAWABLE, "drawable", "Input drawable", None),
         (PF_STRING, "name",       _("_Layer name"), _("Clouds")),
         (PF_COLOUR, "colour",     _("_Fog color"),  (240, 180, 70)),
         (PF_SLIDER, "turbulence", _("_Turbulence"), 1.0, (0, 10, 0.1)),

@@ -1,5 +1,23 @@
 2007-05-10  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/gimpfu.py: remove parameter definition special
+	casing that was based on menu and plugin types. Instead expect the
+	script to specify all its parameters in its register call, and hide
+	the UI elements for the parameters we are already passed in
+	interactive mode. For compatibilty, this is only turned on when you
+	specify the "menu" named argument in the register call, or if you pass
+	an empty label. This should fix bug #104639.
+
+	* plug-ins/pygimp/plug-ins/clothify.py
+	* plug-ins/pygimp/plug-ins/colorxhtml.py
+	* plug-ins/pygimp/plug-ins/foggify.py
+	* plug-ins/pygimp/plug-ins/py-slice.py
+	* plug-ins/pygimp/plug-ins/shadow_bevel.py
+	* plug-ins/pygimp/plug-ins/whirlpinch.py: update to register image and
+	drawable parameters explicitly.
+
+2007-05-10  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/pygimp-image.c: bind gimp_image_resize_to_layers.
 
 2007-05-10  Sven Neumann  <sven@gimp.org>

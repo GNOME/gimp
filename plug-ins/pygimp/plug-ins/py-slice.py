@@ -427,6 +427,8 @@ register(
     _("_Slice..."),
     "*",
     [
+        (PF_IMAGE, "image", "Input image", None),
+        (PF_DRAWABLE, "drawable", "Input drawable", None),
         (PF_DIRNAME, "save-path",     _("Path for HTML export"), os.getcwd()),
         (PF_STRING, "html-filename",  _("Filename for export"),  "slice.html"),
         (PF_STRING, "image-basename", _("Image name prefix"),    "slice"),
