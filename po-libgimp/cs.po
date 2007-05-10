@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-06 12:52+0200\n"
-"PO-Revision-Date: 2007-05-06 12:54+0200\n"
+"POT-Creation-Date: 2007-05-09 16:09+0200\n"
+"PO-Revision-Date: 2007-05-09 19:27+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -468,12 +468,12 @@ msgid "Black only"
 msgstr "Jen černá"
 
 #: ../libgimpbase/gimpbaseenums.c:263
-msgid "Image source"
-msgstr "Zdroj obrázku"
+msgid "Image"
+msgstr "Obrázek"
 
 #: ../libgimpbase/gimpbaseenums.c:264
-msgid "Pattern source"
-msgstr "Zdroj vzorku"
+msgid "Pattern"
+msgstr "Vzorek"
 
 #: ../libgimpbase/gimpbaseenums.c:293
 msgid "Lightness"
