@@ -340,6 +340,20 @@ img_resize(PyGimpImage *self, PyObject *args, PyObject *kwargs)
 }
 
 static PyObject *
+img_resize_to_layers(PyGimpImage *self)
+{
+    if (!gimp_image_resize_to_layers(self->ID)) {
+	PyErr_Format(pygimp_error, "could not resize to layers on image "
+	                           "(ID %d)",
+		     self->ID);
+	return NULL;
+    }
+
+    Py_INCREF(Py_None);
+    return Py_None;
+}
+
+static PyObject *
 img_scale(PyGimpImage *self, PyObject *args, PyObject *kwargs)
 {
     int new_width, new_height;
@@ -742,6 +756,7 @@ static PyMethodDef img_methods[] = {
     {"remove_channel",	(PyCFunction)img_remove_channel,	METH_VARARGS},
     {"remove_layer",	(PyCFunction)img_remove_layer,	METH_VARARGS},
     {"resize",	(PyCFunction)img_resize,	METH_VARARGS | METH_KEYWORDS},
+    {"resize_to_layers",	(PyCFunction)img_resize_to_layers,	METH_NOARGS},
     {"get_component_active",	(PyCFunction)img_get_component_active,	METH_VARARGS},
     {"get_component_visible",	(PyCFunction)img_get_component_visible,	METH_VARARGS},
     {"set_component_active",	(PyCFunction)img_set_component_active,	METH_VARARGS},
