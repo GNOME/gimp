@@ -1,3 +1,7 @@
+2007-05-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/flame/rect.c: reduced the number of progress updates.
+
 2007-05-09  Karine Delvare  <edhel@gimp.org>
 
 	* plug-ins/common/waves.c: use the new preview transform function, 

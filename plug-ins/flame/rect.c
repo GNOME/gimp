@@ -210,7 +210,7 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
 #else
 	    /* monochrome if you don't have any cmaps */
 	    cmap[j][k] = cp.white_level;
-#endif	
+#endif
 	 }
 	 cmap[j][3] = cp.white_level;
       }
@@ -222,7 +222,7 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
 
 	scale = pow(2.0, cp.zoom);
 	sample_density = cp.sample_density * scale * scale;
-	
+
 	ppux = cp.pixels_per_unit * scale;
 	ppuy = field ? (ppux / 2.0) : ppux;
 	switch (field) {
@@ -253,7 +253,7 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
 	   sub_batch < batch_size;
 	   sub_batch += SUB_BATCH_SIZE) {
 
-	if (progress&&!(sbc++&7))
+	if (progress && !(sbc++ & 32))
 	  (*progress)(0.5*sub_batch/(double)batch_size);
 
 	 /* generate a sub_batch_size worth of samples */
@@ -261,8 +261,7 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
 	 points[0][1] = random_uniform11();
 	 points[0][2] = random_uniform01();
 	 iterate(&cp, SUB_BATCH_SIZE, FUSE, points);
-	
-	
+
 	 /* merge them into buckets, looking up colors */
 	 for (j = 0; j < SUB_BATCH_SIZE; j++) {
 	    int k, color_index;
@@ -279,7 +278,7 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
 	       color_index = CMAP_SIZE-1;
 	    b = buckets +
 	       (int) (width * (p[0] - bounds[0]) * size[0]) +
-		  width * (int) (height * (p[1] - bounds[1]) * size[1]);	
+		  width * (int) (height * (p[1] - bounds[1]) * size[1]);
 	    for (k = 0; k < 4; k++)
 	       bump_no_overflow(b[0][k], cmap[color_index][k], short);
 	 }
@@ -305,7 +304,7 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
 	       c[3] = (double) b[0][3];
 	       if (0.0 == c[3])
 		 continue;
-	
+
 	       ls = (k1 * log(1.0 + c[3] * k2))/c[3];
 	       c[0] *= ls;
 	       c[1] *= ls;
@@ -328,7 +327,7 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
       double g = 1.0 / spec->cps[0].gamma;
       y = 0;
       for (j = 0; j < image_height; j++) {
-	 if (progress && !(j&15))
+	 if (progress && !(j & 32))
 	   (*progress)(0.5+0.5*j/(double)image_height);
 	 x = 0;
 	 for (i = 0; i < image_width; i++) {
@@ -339,7 +338,7 @@ void render_rectangle(spec, out, out_width, field, nchan, progress)
 	       for (jj = 0; jj < filter_width; jj++) {
 		  double k = filter[ii + jj * filter_width];
 		  abucket *a = accumulate + x + ii + (y + jj) * width;
-		
+
 		  t[0] += k * a[0][0];
 		  t[1] += k * a[0][1];
 		  t[2] += k * a[0][2];
