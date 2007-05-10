@@ -91,6 +91,7 @@ void
 menu_shapes_selected(gint count)
 {
   gboolean sensitive = (count > 0);
+
   set_sensitive ("/MainMenu/EditMenu/Cut", sensitive);
   set_sensitive ("/MainMenu/EditMenu/Copy", sensitive);
   set_sensitive ("/MainMenu/EditMenu/Clear", sensitive);
@@ -98,45 +99,35 @@ menu_shapes_selected(gint count)
   set_sensitive ("/MainMenu/EditMenu/DeselectAll", sensitive);
 }
 
-#ifdef _NOT_READY_YET_
 static void
 command_list_changed(Command_t *command, gpointer data)
 {
-   gchar *scratch;
-   GtkWidget *icon;
+  GtkAction *action;
+  gchar     *label;
 
-   /* Set undo entry */
-   if (_menu.undo)
-      gtk_widget_destroy(_menu.undo);
-   scratch = g_strdup_printf (_("_Undo %s"),
-                              command && command->name ? command->name : "");
-   _menu.undo = insert_item_with_label(_menu.edit_menu, 1, scratch,
-				       menu_command, &_menu.cmd_undo);
-   g_free (scratch);
-   add_accelerator(_menu.undo, 'Z', GDK_CONTROL_MASK);
-   gtk_widget_set_sensitive(_menu.undo, (command != NULL));
+  action = gtk_ui_manager_get_action (ui_manager, "/MainMenu/EditMenu/Undo");
 
-   icon = gtk_image_new_from_stock(GTK_STOCK_UNDO, GTK_ICON_SIZE_MENU);
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_menu.undo), icon);
-   gtk_widget_show(icon);
+  label = g_strdup_printf (_("_Undo %s"),
+                           command && command->name ? command->name : "");
 
-   /* Set redo entry */
-   command = command_list_get_redo_command();
-   if (_menu.redo)
-      gtk_widget_destroy(_menu.redo);
-   scratch = g_strdup_printf (_("_Redo %s"),
-                              command && command->name ? command->name : "");
-   _menu.redo = insert_item_with_label(_menu.edit_menu, 2, scratch,
-				       menu_command, &_menu.cmd_redo);
-   g_free (scratch);
-   add_accelerator(_menu.redo, 'Z', GDK_SHIFT_MASK|GDK_CONTROL_MASK);
-   gtk_widget_set_sensitive(_menu.redo, (command != NULL));
+  g_object_set (action,
+                "label",     label,
+                "sensitive", command != NULL,
+                NULL);
+  g_free (label);
 
-   icon = gtk_image_new_from_stock(GTK_STOCK_REDO, GTK_ICON_SIZE_MENU);
-   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(_menu.redo), icon);
-   gtk_widget_show(icon);
+  command = command_list_get_redo_command();
+
+  action = gtk_ui_manager_get_action (ui_manager, "/MainMenu/EditMenu/Redo");
+
+  label = g_strdup_printf (_("_Redo %s"),
+                           command && command->name ? command->name : "");
+  g_object_set (action,
+                "label",     label,
+                "sensitive", command != NULL,
+                NULL);
+  g_free (label);
 }
-#endif
 
 static void
 paste_buffer_added(Object_t *obj, gpointer data)
@@ -163,8 +154,8 @@ static const GtkActionEntry entries[] = {
   { "Quit", GTK_STOCK_QUIT, NULL, NULL, NULL, do_quit},
 
   { "EditMenu", NULL, N_("_Edit") },
-  { "Undo", GTK_STOCK_UNDO, NULL, NULL, N_("Undo"), NULL},
-  { "Redo", GTK_STOCK_REDO, NULL, NULL, N_("Redo"), NULL},
+  { "Undo", GTK_STOCK_UNDO, NULL, NULL, N_("Undo"), do_undo},
+  { "Redo", GTK_STOCK_REDO, NULL, NULL, N_("Redo"), do_redo},
   { "Cut", GTK_STOCK_CUT, NULL, NULL, N_("Cut"), do_cut},
   { "Copy", GTK_STOCK_COPY, NULL, NULL, N_("Copy"), do_copy},
   { "Paste", GTK_STOCK_PASTE, NULL, NULL, N_("Paste"), do_paste},
@@ -257,6 +248,8 @@ static const gchar ui_description[] =
 "      <menuitem action='Quit'/>"
 "    </menu>"
 "    <menu action='EditMenu'>"
+"      <menuitem action='Undo'/>"
+"      <menuitem action='Redo'/>"
 "      <menuitem action='Cut'/>"
 "      <menuitem action='Copy'/>"
 "      <menuitem action='Paste'/>"
@@ -441,6 +434,10 @@ make_menu(GtkWidget *main_vbox, GtkWidget *window)
   menu_shapes_selected (0);
 
   menu_set_zoom_sensitivity (1);
+
+  command_list_add_update_cb (command_list_changed, NULL);
+
+  command_list_changed (NULL, NULL);
 
   return &_menu;
 }

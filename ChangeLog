@@ -1,3 +1,10 @@
+2007-05-10  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/imagemap/imap_main.[ch]
+	* plug-ins/imagemap/imap_menu.c
+	* plug-ins/imagemap/imap_command.c: finished port of Undo and Redo
+	menus to GtkAction. Closes bug #138841.
+
 2007-05-10  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpfu.py: remove parameter definition special

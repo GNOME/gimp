@@ -209,8 +209,7 @@ command_list_set_undo_level(gint level)
 Command_t*
 command_list_get_redo_command(void)
 {
-   return (_command_list.redo) ? (Command_t*) _command_list.redo->data :
-      NULL;
+   return (_command_list.redo) ? (Command_t*) _command_list.redo->data : NULL;
 }
 
 void

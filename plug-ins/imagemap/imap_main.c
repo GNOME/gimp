@@ -18,7 +18,6 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
- *
  */
 
 #include "config.h"
@@ -720,8 +719,7 @@ do_quit(void)
    check_if_changed(really_quit, NULL);
 }
 
-#ifdef _NOT_READY_YET_
-static void
+void
 do_undo(void)
 {
    preview_freeze();
@@ -731,7 +729,7 @@ do_undo(void)
    preview_thaw();
 }
 
-static void
+void
 do_redo(void)
 {
    preview_freeze();
@@ -740,7 +738,6 @@ do_redo(void)
    selection_thaw(_selection);
    preview_thaw();
 }
-#endif
 
 void
 save(void)

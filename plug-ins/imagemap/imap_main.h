@@ -91,17 +91,22 @@ void preview_thaw(void);
 void show_url(void);
 void hide_url(void);
 
-void            set_preview_color          (GtkRadioAction *action, GtkRadioAction *current,
-                                               gpointer user_data);
-void            set_zoom_factor            (GtkRadioAction *action, GtkRadioAction *current,
-                                               gpointer user_data);
-void            set_func                   (GtkRadioAction *action, GtkRadioAction *current,
-                                               gpointer user_data);
+void            set_preview_color          (GtkRadioAction *action,
+                                            GtkRadioAction *current,
+                                            gpointer        user_data);
+void            set_zoom_factor            (GtkRadioAction *action,
+                                            GtkRadioAction *current,
+                                            gpointer        user_data);
+void            set_func                   (GtkRadioAction *action,
+                                            GtkRadioAction *current,
+                                            gpointer        user_data);
 void            do_edit_selected_shape     (void);
 void            do_zoom_in                 (void);
 void            do_zoom_out                (void);
 void            do_close                   (void);
 void            do_quit                    (void);
+void            do_undo                    (void);
+void            do_redo                    (void);
 void            do_cut                     (void);
 void            do_copy                    (void);
 void            do_paste                   (void);
