@@ -24,6 +24,8 @@ libappfile_a_SOURCES = \
 	gimprecentitem.c	\
 	gimprecentitem.h	\
 	gimprecentlist.c	\
-	gimprecentlist.h
+	gimprecentlist.h	\
+	xdg-user-dir.c		\
+	xdg-user-dir.h
 
 EXTRA_DIST = makefile.msc

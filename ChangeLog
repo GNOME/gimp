@@ -1,5 +1,11 @@
 2007-05-11  Sven Neumann  <sven@gimp.org>
 
+	* app/file/Makefile.am
+	* app/file/xdg-user-dir.[ch]: added a slightly modified copy of
+	xdg-user-dirs-lockup.c from freedesktop.org.
+
+2007-05-11  Sven Neumann  <sven@gimp.org>
+
 	* app/main.c (gimp_dbus_open): don't attempt the conversion if the
 	argument is already an URI.
 
