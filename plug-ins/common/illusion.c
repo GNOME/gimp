@@ -283,18 +283,22 @@ illusion_preview (GimpPreview  *preview,
   gint      width;
   gint      height;
   gint      bpp;
-  gdouble   center_x;
-  gdouble   center_y;
+  gint      center_x;
+  gint      center_y;
 
   gint      x, y, b;
   gint      xx = 0;
   gint      yy = 0;
-  gdouble   scale, radius, cx, cy, angle, offset;
+  gdouble   scale, radius, cx, cy, angle, offset, zoom;
 
   preview_cache = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
                                                 &width, &height, &bpp);
-  center_x      = (gdouble)width  / 2.0;
-  center_y      = (gdouble)height / 2.0;
+
+  zoom = gimp_zoom_preview_get_factor (GIMP_ZOOM_PREVIEW (preview));
+
+  gimp_preview_transform (preview,
+                          drawable->width / 2.0, drawable->height / 2.0,
+                          &center_x, &center_y);
 
   pixels     = g_new (guchar *, height);
   destpixels = g_new (guchar, height * width * bpp);
@@ -307,7 +311,7 @@ illusion_preview (GimpPreview  *preview,
               width * bpp);
     }
 
-  scale  = sqrt (width * width + height * height) / 2;
+  scale  = sqrt (width * width * zoom * zoom + height * height * zoom * zoom) / 2;
   offset = (gint) (scale / 2);
 
   for (y = 0; y < height; y++)

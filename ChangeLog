@@ -1,3 +1,8 @@
+2007-05-11  Karine Delvare  <edhel@gimp.org>
+
+	* plug-ins/common/illusion.c: use the new preview transform function, 
+	see bug #356716.
+
 2007-05-11  Sven Neumann  <sven@gimp.org>
 
 	* app/file/Makefile.am
