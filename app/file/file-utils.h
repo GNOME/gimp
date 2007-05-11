@@ -25,28 +25,22 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 
-gchar               * file_utils_filename_to_uri        (Gimp          *gimp,
-                                                         const gchar   *filename,
-                                                         GError       **error);
-gchar               * file_utils_any_to_uri             (Gimp          *gimp,
-                                                         const gchar   *filename_or_uri,
-                                                         GError       **error);
-gchar               * file_utils_filename_from_uri      (const gchar   *uri);
+gchar     * file_utils_filename_to_uri      (Gimp          *gimp,
+                                             const gchar   *filename,
+                                             GError       **error);
+gchar     * file_utils_any_to_uri           (Gimp          *gimp,
+                                             const gchar   *filename_or_uri,
+                                             GError       **error);
+gchar     * file_utils_filename_from_uri    (const gchar   *uri);
 
-gchar               * file_utils_uri_to_utf8_filename   (const gchar   *uri);
+gchar     * file_utils_uri_to_utf8_filename (const gchar   *uri);
 
-gchar               * file_utils_uri_display_basename   (const gchar   *uri);
-gchar               * file_utils_uri_display_name       (const gchar   *uri);
+gchar     * file_utils_uri_display_basename (const gchar   *uri);
+gchar     * file_utils_uri_display_name     (const gchar   *uri);
 
-GimpPlugInProcedure * file_utils_find_proc              (GSList        *procs,
-                                                         const gchar   *filename,
-                                                         GError       **error);
-GimpPlugInProcedure * file_utils_find_proc_by_extension (GSList        *procs,
-                                                         const gchar   *uri);
-
-GdkPixbuf           * file_utils_load_thumbnail         (const gchar   *filename);
-gboolean              file_utils_save_thumbnail         (GimpImage     *image,
-                                                         const gchar   *filename);
+GdkPixbuf * file_utils_load_thumbnail       (const gchar   *filename);
+gboolean    file_utils_save_thumbnail       (GimpImage     *image,
+                                             const gchar   *filename);
 
 
 #endif /* __FILE_UTILS_H__ */

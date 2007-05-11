@@ -37,6 +37,7 @@
 #include "core/gimpimage.h"
 #include "core/gimplayer.h"
 #include "file/file-open.h"
+#include "file/file-procedure.h"
 #include "file/file-save.h"
 #include "file/file-utils.h"
 #include "plug-in/gimppluginmanager-file.h"
@@ -67,7 +68,7 @@ file_load_invoker (GimpProcedure     *procedure,
     return gimp_procedure_get_return_values (procedure, FALSE);
 
   file_proc =
-    file_utils_find_proc (gimp->plug_in_manager->load_procs, uri, NULL);
+    file_procedure_find (gimp->plug_in_manager->load_procs, uri, NULL);
 
   g_free (uri);
 
@@ -235,7 +236,7 @@ file_save_invoker (GimpProcedure     *procedure,
     return gimp_procedure_get_return_values (procedure, FALSE);
 
   file_proc =
-    file_utils_find_proc (gimp->plug_in_manager->save_procs, uri, NULL);
+    file_procedure_find (gimp->plug_in_manager->save_procs, uri, NULL);
 
   g_free (uri);
 

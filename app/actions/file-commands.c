@@ -37,6 +37,7 @@
 #include "plug-in/gimppluginmanager.h"
 
 #include "file/file-open.h"
+#include "file/file-procedure.h"
 #include "file/file-save.h"
 #include "file/file-utils.h"
 
@@ -211,8 +212,8 @@ file_save_cmd_callback (GtkAction *action,
 
           if (uri && ! save_proc)
             save_proc =
-              file_utils_find_proc (image->gimp->plug_in_manager->save_procs,
-                                    uri, NULL);
+              file_procedure_find (image->gimp->plug_in_manager->save_procs,
+                                   uri, NULL);
 
           if (uri && save_proc)
             {

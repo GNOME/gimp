@@ -43,6 +43,7 @@
 #include "core/gimpunit.h"
 #include "core/gimp-utils.h"
 
+#include "file/file-procedure.h"
 #include "file/file-utils.h"
 
 #include "plug-in/gimppluginmanager.h"
@@ -371,7 +372,7 @@ gimp_image_prop_view_label_set_filetype (GtkWidget *label,
 
       if (filename)
         {
-          proc = file_utils_find_proc (manager->load_procs, filename, NULL);
+          proc = file_procedure_find (manager->load_procs, filename, NULL);
           g_free (filename);
         }
     }

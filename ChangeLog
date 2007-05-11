@@ -1,3 +1,20 @@
+2007-05-11  Sven Neumann  <sven@gimp.org>
+
+	* app/file/Makefile.am
+	* app/file/file-procedure.[ch]
+	* app/file/file-utils.[ch]: split functions dealing with file
+	procedures into their own file and renamed them.
+
+	* app/file/file-open.c
+	* app/dialogs/file-save-dialog.c
+	* app/actions/file-commands.c
+	* app/widgets/gimpthumbbox.c
+	* app/widgets/gimpdnd-xds.c
+	* app/widgets/gimpimagepropview.c
+	* tools/pdbgen/pdb/fileops.pdb: changed accordingly
+
+        * app/pdb/fileops_cmds.c: regenerated.
+
 2007-05-11  Karine Delvare  <edhel@gimp.org>
 
 	* plug-ins/common/illusion.c: use the new preview transform function, 
