@@ -717,7 +717,6 @@ gimp_dbus_open (const gchar **filenames,
             {
               const gchar *filename = filenames[i];
               gchar       *uri;
-              gboolean     retval; /* ignored */
 
               if (strstr (filename, "://"))
                 {
@@ -746,6 +745,8 @@ gimp_dbus_open (const gchar **filenames,
 
               if (uri)
                 {
+                  gboolean retval; /* ignored */
+
                   success = dbus_g_proxy_call (proxy, method, &error,
                                                G_TYPE_STRING, uri,
                                                G_TYPE_INVALID,
