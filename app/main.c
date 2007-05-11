@@ -717,24 +717,31 @@ gimp_dbus_open (const gchar **filenames,
             {
               const gchar *filename = filenames[i];
               gchar       *uri;
-              gboolean     retval;  /* ignored */
+              gboolean     retval; /* ignored */
 
-              if (! g_path_is_absolute (filename))
+              if (strstr (filename, "://"))
                 {
-                  gchar *absolute;
-
-                  if (! cwd)
-                    cwd = g_get_current_dir ();
-
-                  absolute = g_build_filename (cwd, filename, NULL);
-
-                  uri = g_filename_to_uri (absolute, NULL, &error);
-
-                  g_free (absolute);
+                  uri = g_strdup (filename);
                 }
               else
                 {
-                  uri = g_filename_to_uri (filename, NULL, &error);
+                  if (! g_path_is_absolute (filename))
+                    {
+                      gchar *absolute;
+
+                      if (! cwd)
+                        cwd = g_get_current_dir ();
+
+                      absolute = g_build_filename (cwd, filename, NULL);
+
+                      uri = g_filename_to_uri (absolute, NULL, &error);
+
+                      g_free (absolute);
+                    }
+                  else
+                    {
+                      uri = g_filename_to_uri (filename, NULL, &error);
+                    }
                 }
 
               if (uri)
@@ -748,9 +755,7 @@ gimp_dbus_open (const gchar **filenames,
                 }
               else
                 {
-                  g_printerr ("conversion to uri failed for '%s': %s\n",
-                              gimp_filename_to_utf8 (filename),
-                              error->message);
+                  g_printerr ("conversion to uri failed: %s\n", error->message);
                   g_clear_error (&error);
                 }
             }

@@ -1,5 +1,10 @@
 2007-05-11  Sven Neumann  <sven@gimp.org>
 
+	* app/main.c (gimp_dbus_open): don't attempt the conversion if the
+	argument is already an URI.
+
+2007-05-11  Sven Neumann  <sven@gimp.org>
+
 	* app/main.c (gimp_dbus_open): convert filenames to absolute file
 	URIs before passing them to dbus_g_proxy_call().
 
