@@ -346,7 +346,7 @@ main (int    argc,
     {
       if (error)
         {
-	  gimp_open_console_window ();
+          gimp_open_console_window ();
           g_print ("%s\n", error->message);
           g_error_free (error);
         }
@@ -710,18 +710,52 @@ gimp_dbus_open (const gchar **filenames,
       if (filenames)
         {
           const gchar *method = as_new ? "OpenAsNew" : "Open";
+          gchar       *cwd    = NULL;
           gint         i;
 
           for (i = 0, success = TRUE; filenames[i] && success; i++)
             {
-              gboolean retval;  /* ignored */
+              const gchar *filename = filenames[i];
+              gchar       *uri;
+              gboolean     retval;  /* ignored */
 
-              success = dbus_g_proxy_call (proxy, method, &error,
-                                           G_TYPE_STRING, filenames[i],
-                                           G_TYPE_INVALID,
-                                           G_TYPE_BOOLEAN, &retval,
-                                           G_TYPE_INVALID);
+              if (! g_path_is_absolute (filename))
+                {
+                  gchar *absolute;
+
+                  if (! cwd)
+                    cwd = g_get_current_dir ();
+
+                  absolute = g_build_filename (cwd, filename, NULL);
+
+                  uri = g_filename_to_uri (absolute, NULL, &error);
+
+                  g_free (absolute);
+                }
+              else
+                {
+                  uri = g_filename_to_uri (filename, NULL, &error);
+                }
+
+              if (uri)
+                {
+                  success = dbus_g_proxy_call (proxy, method, &error,
+                                               G_TYPE_STRING, uri,
+                                               G_TYPE_INVALID,
+                                               G_TYPE_BOOLEAN, &retval,
+                                               G_TYPE_INVALID);
+                  g_free (uri);
+                }
+              else
+                {
+                  g_printerr ("conversion to uri failed for '%s': %s\n",
+                              gimp_filename_to_utf8 (filename),
+                              error->message);
+                  g_clear_error (&error);
+                }
             }
+
+          g_free (cwd);
         }
       else
         {
