@@ -16,7 +16,10 @@
 	user folders. Added Win32 specific code and use xdg_user_dir_lookup()
 	on other platforms.
 
-	* libgimpbase/gimpbase.def: regenerated.
+	* libgimp/gimpenums.c.tail
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* libgimpbase/gimpbase.def: updated.
 
 2007-05-11  Sven Neumann  <sven@gimp.org>
 

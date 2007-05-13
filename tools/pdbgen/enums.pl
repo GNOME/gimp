@@ -348,6 +348,22 @@ package Gimp::CodeGen::enums;
 		       GIMP_PROGRESS_COMMAND_PULSE => '4',
 		       GIMP_PROGRESS_COMMAND_GET_WINDOW => '5' }
 	},
+    GimpUserDirectory =>
+	{ contig => 1,
+	  header => 'libgimpbase/gimpbaseenums.h',
+	  symbols => [ qw(GIMP_USER_DIRECTORY_DESKTOP
+			  GIMP_USER_DIRECTORY_DOCUMENTS
+			  GIMP_USER_DIRECTORY_MUSIC
+			  GIMP_USER_DIRECTORY_PICTURES
+			  GIMP_USER_DIRECTORY_TEMPLATES
+			  GIMP_USER_DIRECTORY_VIDEOS) ],
+	  mapping => { GIMP_USER_DIRECTORY_DESKTOP => '0',
+		       GIMP_USER_DIRECTORY_DOCUMENTS => '1',
+		       GIMP_USER_DIRECTORY_MUSIC => '2',
+		       GIMP_USER_DIRECTORY_PICTURES => '3',
+		       GIMP_USER_DIRECTORY_TEMPLATES => '4',
+		       GIMP_USER_DIRECTORY_VIDEOS => '5' }
+	},
     GimpVectorsStrokeType =>
 	{ contig => 1,
 	  header => 'libgimpbase/gimpbaseenums.h',
