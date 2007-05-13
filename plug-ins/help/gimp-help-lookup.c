@@ -24,10 +24,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <glib.h>
+#include <glib-object.h>
 
-#include "libgimpbase/gimpversion.h"
-#include "libgimpbase/gimpenv.h"
+#include "libgimpbase/gimpbase.h"
 
 #include "gimphelp.h"
 

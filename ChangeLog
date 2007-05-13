@@ -1,5 +1,9 @@
 2007-05-13  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/help/gimp-help-lookup.c: include libgimpbase/gimpbase.h.
+
+2007-05-13  Sven Neumann  <sven@gimp.org>
+
 	* app/file/Makefile.am
 	* app/file/xdg-user-dir.c[ch]: removed here ...
 
