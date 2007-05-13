@@ -75,7 +75,7 @@ GIMP_TYPE_STACK_TRACE_MODE
 GIMP_TYPE_TRANSFER_MODE
 GIMP_TYPE_TRANSFORM_DIRECTION
 GIMP_TYPE_TRANSFORM_RESIZE
-GIMP_USER_DIRECTORY_TYPE
+GIMP_TYPE_USER_DIRECTORY
 GIMP_TYPE_VECTORS_STROKE_TYPE
 gimp_add_mask_type_get_type
 gimp_blend_mode_get_type
@@ -107,7 +107,7 @@ gimp_stack_trace_mode_get_type
 gimp_transfer_mode_get_type
 gimp_transform_direction_get_type
 gimp_transform_resize_get_type
-gimp_user_directory_type_get_type
+gimp_user_directory_get_type
 gimp_vectors_stroke_type_get_type
 </SECTION>
 
