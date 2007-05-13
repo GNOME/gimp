@@ -1,3 +1,14 @@
+2007-05-13  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/libgimpbase-sections.txt: added gimp_user_directory().
+
+	* libgimpbase/tmpl/gimpbaseenums.sgml
+	* libgimpbase/tmpl/gimpenv.sgml: regenerated.
+
+	* app/app-sections.txt
+	* app/app.types
+	* app/app-docs.sgml: some updates; still a lot left to be done...
+
 2007-04-30  Michael Natterer  <mitch@gimp.org>
 
 	* app/Makefile.am

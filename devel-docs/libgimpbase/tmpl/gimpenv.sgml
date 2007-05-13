@@ -34,15 +34,6 @@ configuration files.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_personal_rc_file ##### -->
-<para>
-
-</para>
-
-@basename: 
-@Returns: 
-
-
 <!-- ##### FUNCTION gimp_data_directory ##### -->
 <para>
 
@@ -72,6 +63,24 @@ configuration files.
 
 </para>
 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_user_directory ##### -->
+<para>
+
+</para>
+
+@type: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_personal_rc_file ##### -->
+<para>
+
+</para>
+
+@basename: 
 @Returns: 
 
 

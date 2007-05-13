@@ -5186,6 +5186,27 @@ GIMP_CURSOR_VIEW_GET_CLASS
 </SECTION>
 
 <SECTION>
+<FILE>gimpdbusservice</FILE>
+<TITLE>GimpDBusService</TITLE>
+GIMP_DBUS_SERVICE_NAME
+GIMP_DBUS_SERVICE_PATH
+GIMP_DBUS_SERVICE_INTERFACE
+GimpDBusService
+gimp_dbus_service_new
+gimp_dbus_service_open
+gimp_dbus_service_open_as_new
+gimp_dbus_service_activate
+<SUBSECTION Standard>
+GIMP_DBUS_SERVICE
+GIMP_IS_DBUS_SERVICE
+GIMP_TYPE_DBUS_SERVICE
+gimp_dbus_service_get_type
+GIMP_DBUS_SERVICE_CLASS
+GIMP_IS_DBUS_SERVICE_CLASS
+GIMP_DBUS_SERVICE_GET_CLASS
+</SECTION>
+
+<SECTION>
 <FILE>gimpdeviceinfo</FILE>
 GIMP_DEVICE_INFO_CONTEXT_MASK
 <TITLE>GimpDeviceInfo</TITLE>
@@ -7815,6 +7836,14 @@ file_open_with_display
 file_open_with_proc_and_display
 file_open_layers
 file_open_thumbnail
+file_open_from_command_line
+</SECTION>
+
+<SECTION>
+<FILE>file-procedure</FILE>
+file_procedure_find
+file_procedure_find_by_prefix
+file_procedure_find_by_extension
 </SECTION>
 
 <SECTION>
@@ -7825,12 +7854,11 @@ file_save
 <SECTION>
 <FILE>file-utils</FILE>
 file_utils_filename_to_uri
+file_utils_any_to_uri
 file_utils_filename_from_uri
 file_utils_uri_to_utf8_filename
 file_utils_uri_display_basename
 file_utils_uri_display_name
-file_utils_find_proc
-file_utils_find_proc_by_extension
 file_utils_load_thumbnail
 file_utils_save_thumbnail
 </SECTION>

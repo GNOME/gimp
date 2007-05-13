@@ -318,6 +318,7 @@
 
     <xi:include href="xml/file-open.xml" />
     <xi:include href="xml/file-save.xml" />
+    <xi:include href="xml/file-procedure.xml" />
     <xi:include href="xml/file-utils.xml" />
     <xi:include href="xml/gimprecentitem.xml" />
     <xi:include href="xml/gimprecentlist.xml" />
@@ -525,6 +526,7 @@
 
     <chapter id="app-display-utils">
       <title>Misc. Widgets &amp; Utilities</title>
+      <xi:include href="xml/gimpdbusservice.xml" />
       <xi:include href="xml/gimpnavigationeditor.xml" />
       <xi:include href="xml/gimpstatusbar.xml" />
     </chapter>
