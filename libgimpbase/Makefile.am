@@ -114,7 +114,9 @@ libgimpbase_sources = \
 	gimputils.h            	\
 	gimpwin32-io.h		\
 	gimpwire.c		\
-	gimpwire.h
+	gimpwire.h		\
+	xdg-user-dir.c		\
+	xdg-user-dir.h
 
 libgimpbase_built_sources = \
 	gimpbaseenums.c

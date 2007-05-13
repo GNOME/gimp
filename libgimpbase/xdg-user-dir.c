@@ -1,5 +1,5 @@
-/* GIMP - The GNU Image Manipulation Program
- * Copyright (C) 1995 Spencer Kimball and Peter Mattis
+/* LIBGIMP - The GIMP Library
+ * Copyright (C) 1995-1997 Peter Mattis and Spencer Kimball
  *
  * This code is a slightly modified copy of xdg-user-dir-lockup.c
  * as written by Alexander Larsson.
@@ -54,7 +54,7 @@
  * Return value: a newly allocated absolute pathname or %NULL
  **/
 gchar *
-xdg_user_dir_lookup (const gchar *type)
+_xdg_user_dir_lookup (const gchar *type)
 {
   FILE        *file;
   const gchar *home_dir;

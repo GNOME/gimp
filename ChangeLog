@@ -1,3 +1,19 @@
+2007-05-13  Sven Neumann  <sven@gimp.org>
+
+	* app/file/Makefile.am
+	* app/file/xdg-user-dir.c[ch]: removed here ...
+
+	* libgimpbase/Makefile.am
+	* libgimpbase/xdg-user-dir.[ch]: ... and moved to libgimpbase.
+
+	* libgimpbase/gimpbaseenums.[ch]: added GimpUserDirectory enum.
+
+	* libgimpbase/gimpenv.[ch]: added new function to identify special
+	user folders. Added Win32 specific code and use xdg_user_dir_lookup()
+	on other platforms.
+
+	* libgimpbase/gimpbase.def: regenerated.
+
 2007-05-11  Sven Neumann  <sven@gimp.org>
 
 	* app/file/Makefile.am

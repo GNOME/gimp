@@ -449,6 +449,21 @@ typedef enum
 } GimpProgressCommand;
 
 
+#define GIMP_TYPE_USER_DIRECTORY (gimp_user_directory_get_type ())
+
+GType gimp_user_directory_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_USER_DIRECTORY_DESKTOP,
+  GIMP_USER_DIRECTORY_DOCUMENTS,
+  GIMP_USER_DIRECTORY_MUSIC,
+  GIMP_USER_DIRECTORY_PICTURES,
+  GIMP_USER_DIRECTORY_TEMPLATES,
+  GIMP_USER_DIRECTORY_VIDEOS
+} GimpUserDirectory;
+
+
 #define GIMP_TYPE_VECTORS_STROKE_TYPE (gimp_vectors_stroke_type_get_type ())
 
 GType gimp_vectors_stroke_type_get_type (void) G_GNUC_CONST;
