@@ -82,7 +82,7 @@ _xdg_user_dir_lookup (const gchar *type)
       filename = g_build_filename (config_home, "user-dirs.dirs", NULL);
     }
 
-  file = g_fopen (filename, "rb");
+  file = g_fopen (filename, "r");
 
   g_free (filename);
 
@@ -103,9 +103,11 @@ _xdg_user_dir_lookup (const gchar *type)
       if (strncmp (p, "XDG_", 4) != 0)
 	continue;
       p += 4;
+
       if (strncmp (p, type, strlen (type)) != 0)
 	continue;
       p += strlen (type);
+
       if (strncmp (p, "_DIR", 4) != 0)
 	continue;
       p += 4;

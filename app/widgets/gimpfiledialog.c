@@ -25,6 +25,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "widgets-types.h"
@@ -252,6 +253,7 @@ gimp_file_dialog_new (Gimp                 *gimp,
   GSList         *file_procs;
   const gchar    *automatic;
   const gchar    *automatic_help_id;
+  gchar          *pictures;
   gboolean        local_only;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
@@ -328,6 +330,15 @@ gimp_file_dialog_new (Gimp                 *gimp,
                         dialog);
 
       g_object_set_data (G_OBJECT (dialog), "gimp-dialog-help-button", button);
+    }
+
+  pictures = gimp_user_directory (GIMP_USER_DIRECTORY_PICTURES);
+
+  if (pictures)
+    {
+      gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
+                                            pictures, NULL);
+      g_free (pictures);
     }
 
   gimp_file_dialog_add_preview (dialog, gimp);
