@@ -51,6 +51,50 @@ static gchar * file_utils_unescape_uri (const gchar  *escaped,
                                         gboolean      ascii_must_not_be_escaped);
 
 
+gboolean
+file_utils_filename_is_uri (const gchar  *filename,
+                            GError      **error)
+{
+  g_return_val_if_fail (filename != NULL, FALSE);
+  g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
+
+  if (strstr (filename, "://"))
+    {
+      gchar *scheme;
+      gchar *canon;
+
+      scheme = g_strndup (filename, (strstr (filename, "://") - filename));
+      canon  = g_strdup (scheme);
+
+      g_strcanon (canon, G_CSET_A_2_Z G_CSET_a_2_z G_CSET_DIGITS "+-.", '-');
+
+      if (strcmp (scheme, canon) || ! g_ascii_isgraph (canon[0]))
+        {
+          g_set_error (error, G_FILE_ERROR, 0,
+                       _("'%s:' is not a valid URI scheme"), scheme);
+
+          g_free (scheme);
+          g_free (canon);
+
+          return FALSE;
+        }
+
+      g_free (scheme);
+      g_free (canon);
+
+      if (! g_utf8_validate (filename, -1, NULL))
+        {
+          g_set_error (error, G_CONVERT_ERROR, G_CONVERT_ERROR_ILLEGAL_SEQUENCE,
+                       _("Invalid character sequence in URI"));
+          return FALSE;
+        }
+
+      return TRUE;
+    }
+
+  return FALSE;
+}
+
 gchar *
 file_utils_filename_to_uri (Gimp         *gimp,
                             const gchar  *filename,
@@ -78,29 +122,13 @@ file_utils_filename_to_uri (Gimp         *gimp,
           return NULL;
         }
     }
-  else if (strstr (filename, "://"))
+  else if (file_utils_filename_is_uri (filename, error))
     {
-      gchar *scheme;
-      gchar *canon;
-
-      scheme = g_strndup (filename, (strstr (filename, "://") - filename));
-      canon  = g_strdup (scheme);
-
-      g_strcanon (canon, G_CSET_A_2_Z G_CSET_a_2_z G_CSET_DIGITS "+-.", '-');
-
-      if (! strcmp (scheme, canon) && g_ascii_isgraph (canon[0]))
-        {
-          g_set_error (error, G_FILE_ERROR, 0,
-                       _("URI scheme '%s:' is not supported"), scheme);
-
-          g_free (scheme);
-          g_free (canon);
-
-          return NULL;
-        }
-
-      g_free (scheme);
-      g_free (canon);
+      return g_strdup (filename);
+    }
+  else if (error)
+    {
+      return NULL;
     }
 
   if (! g_path_is_absolute (filename))

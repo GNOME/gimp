@@ -1,3 +1,11 @@
+2007-05-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/file/file-utils.[ch] (file_utils_filename_is_uri): new function,
+	fixed and factored out of file_utils_filename_to_uri().
+
+	* app/main.c (gimp_dbus_open): use it here instead of a simple
+	strstr(filename, "://").
+
 2007-05-14  Tor Lillqvist  <tml@novell.com>
 
 	* libgimpbase/gimpenv.c: Undef DATADIR before including <shlobj.h>

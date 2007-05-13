@@ -718,11 +718,11 @@ gimp_dbus_open (const gchar **filenames,
               const gchar *filename = filenames[i];
               gchar       *uri;
 
-              if (strstr (filename, "://"))
+              if (file_utils_filename_is_uri (filename, &error))
                 {
                   uri = g_strdup (filename);
                 }
-              else
+              else if (! error)
                 {
                   if (! g_path_is_absolute (filename))
                     {

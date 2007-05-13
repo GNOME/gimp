@@ -25,6 +25,8 @@
 #include <gdk-pixbuf/gdk-pixbuf.h>
 
 
+gboolean    file_utils_filename_is_uri      (const gchar   *filename,
+                                             GError       **error);
 gchar     * file_utils_filename_to_uri      (Gimp          *gimp,
                                              const gchar   *filename,
                                              GError       **error);
