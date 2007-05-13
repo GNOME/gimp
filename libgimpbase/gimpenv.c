@@ -45,8 +45,8 @@
 
 #ifdef G_OS_WIN32
 #define STRICT
-#define WIN32_LEAN_AND_MEAN     /* without it DATADIR in objidl.h will collide */
-#include <windows.h>            /* For GetModuleFileName */
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
 #include <io.h>
 #ifndef S_IWUSR
 # define S_IWUSR _S_IWRITE
@@ -65,9 +65,7 @@
 #define getegid() 0
 #endif
 
-#ifdef G_OS_WIN32
-#include <shlobj.h>
-#else
+#ifndef G_OS_WIN32
 #include "xdg-user-dir.h"
 #endif
 
@@ -406,6 +404,21 @@ gimp_sysconf_directory (void)
 }
 
 #ifdef G_OS_WIN32
+
+#undef DATADIR			/* Collision otherwise */
+
+#include <shlobj.h>
+
+#ifndef CSIDL_MYDOCUMENTS
+#define CSIDL_MYDOCUMENTS 0x000C
+#endif
+#ifndef CSIDL_MYMUSIC
+#define CSIDL_MYMUSIC 0x000D
+#endif
+#ifndef CSIDL_MYVIDEO
+#define CSIDL_MYVIDEO 0x000E
+#endif
+
 static gchar *
 get_special_folder (int csidl)
 {

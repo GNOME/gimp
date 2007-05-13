@@ -1,3 +1,13 @@
+2007-05-14  Tor Lillqvist  <tml@novell.com>
+
+	* libgimpbase/gimpenv.c: Undef DATADIR before including <shlobj.h>
+	to avoid collision with DATADIR enum in objidl.h. Define
+	CSIDL_MYDOCUMENTS, CSIDL_MYMUSIC and CSIDL_MYVIDEO in case missing
+	from shlobj.h.
+
+	* libgimpbase/Makefile.am: Link with -lole32 on Win32 for
+	CoTaskMemFree().
+
 2007-05-13  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_new): add a

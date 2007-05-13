@@ -5,6 +5,7 @@ no_undefined = -no-undefined
 endif
 
 if OS_WIN32
+ole32_lib = -lole32
 gimpbase_def = gimpbase.def
 libgimpbase_export_symbols = -export-symbols gimpbase.def
 
@@ -152,7 +153,7 @@ libgimpbase_2_0_la_LDFLAGS = \
 
 libgimpbase_2_0_la_DEPENDENCIES = $(gimpbase_def)
 
-libgimpbase_2_0_la_LIBADD = $(GLIB_LIBS)
+libgimpbase_2_0_la_LIBADD = $(GLIB_LIBS) $(ole32_lib)
 
 
 install-data-local: install-ms-lib install-libtool-import-lib
