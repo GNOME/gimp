@@ -111,6 +111,7 @@ EXPORTS
 	gimp_unit_new
 	gimp_unit_set_deletion_flag
 	gimp_user_directory
+	gimp_user_directory_get_type
 	gimp_utf8_strtrim
 	gimp_vectors_stroke_type_get_type
 	gimp_wire_clear_error
