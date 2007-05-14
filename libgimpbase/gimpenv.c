@@ -42,7 +42,6 @@
 #include "gimpversion.h"
 #include "gimpreloc.h"
 
-
 #ifdef G_OS_WIN32
 #define STRICT
 #define WIN32_LEAN_AND_MEAN
@@ -66,7 +65,13 @@
 #endif
 
 #ifndef G_OS_WIN32
+#ifndef HAVE_CARBON
 #include "xdg-user-dir.h"
+#endif
+#endif
+
+#ifdef HAVE_CARBON
+#include "CoreServices/CoreServices.h"
 #endif
 
 
@@ -444,6 +449,45 @@ get_special_folder (int csidl)
 }
 #endif
 
+#ifdef HAVE_CARBON
+static gchar *
+find_folder (OSType type)
+{
+  gchar *filename = NULL;
+  FSRef  found;
+
+  if (FSFindFolder (kUserDomain, type, kDontCreateFolder, &found) == noErr)
+    {
+      CFURLRef url = CFURLCreateFromFSRef (kCFAllocatorSystemDefault, &found);
+
+      if (url)
+	{
+	  CFStringRef path = CFURLCopyFileSystemPath (url, kCFURLPOSIXPathStyle);
+
+	  if (path)
+	    {
+	      filename = g_strdup (CFStringGetCStringPtr (path, kCFStringEncodingUTF8));
+
+	      if (! filename)
+		{
+		  filename = g_new0 (gchar, CFStringGetLength (path) * 3 + 1);
+
+		  CFStringGetCString (path, filename,
+				      CFStringGetLength (path) * 3 + 1,
+				      kCFStringEncodingUTF8);
+		}
+
+	      CFRelease (path);
+	    }
+
+	  CFRelease (url);
+	}
+    }
+
+  return filename;
+}
+#endif
+
 /**
  * gimp_user_directory:
  * @type: the type of user directory to retrieve
@@ -482,6 +526,25 @@ gimp_user_directory (GimpUserDirectory type)
 
     case GIMP_USER_DIRECTORY_VIDEOS:
       return get_special_folder (CSIDL_MYVIDEO);
+
+#elif HAVE_CARBON
+    case GIMP_USER_DIRECTORY_DESKTOP:
+      return find_folder (kDesktopFolderType);
+
+    case GIMP_USER_DIRECTORY_DOCUMENTS:
+      return find_folder (kDocumentsFolderType);
+
+    case GIMP_USER_DIRECTORY_MUSIC:
+      return find_folder (kMusicDocumentsFolderType);
+
+    case GIMP_USER_DIRECTORY_PICTURES:
+      return find_folder (kPictureDocumentsFolderType);
+
+    case GIMP_USER_DIRECTORY_TEMPLATES:
+      return NULL;
+
+    case GIMP_USER_DIRECTORY_VIDEOS:
+      return find_folder (kMovieDocumentsFolderType);
 
 #else
     case GIMP_USER_DIRECTORY_DESKTOP:

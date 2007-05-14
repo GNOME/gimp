@@ -149,7 +149,8 @@ libgimpbaseinclude_HEADERS = \
 libgimpbase_2_0_la_LDFLAGS = \
 	-version-info $(LT_VERSION_INFO)	\
 	$(no_undefined) 			\
-	$(libgimpbase_export_symbols)
+	$(libgimpbase_export_symbols)		\
+	$(CARBON_LDFLAGS)
 
 libgimpbase_2_0_la_DEPENDENCIES = $(gimpbase_def)
 

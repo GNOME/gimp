@@ -1641,6 +1641,24 @@ AC_MSG_RESULT($mac_twain_ok)
 AM_CONDITIONAL(HAVE_MAC_TWAIN, test x$mac_twain_ok = xyes)
 
 
+#############################################################
+# Check for Mac OS X Carbon framework (can't build on Darwin)
+#############################################################
+
+carbon_ok=no
+AC_MSG_CHECKING([checking for Mac OS X Carbon support])
+AC_TRY_CPP([
+#include <Carbon/Carbon.h>
+#include <CoreServices/CoreServices.h>
+], carbon_ok=yes)
+AC_MSG_RESULT($carbon_ok)
+if test "x$carbon_ok" = "xyes"; then
+  AC_DEFINE(HAVE_CARBON, 1, [define to 1 if Carbon is available])
+  CARBON_LDFLAGS="-framework Carbon"
+  AC_SUBST(CARBON_LDFLAGS)
+fi
+
+
 ##########################################################
 # Determine where to install the desktop & mime info files
 ##########################################################

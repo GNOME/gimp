@@ -1,3 +1,14 @@
+2007-05-14  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: added check for OSX' Carbon framework.
+
+	* libgimpbase/Makefile.am (libgimpbase_2_0_la_LDFLAGS): add
+	$(CARBON_LDFLAGS)
+
+	* libgimpbase/gimpenv.c (gimp_user_directory): add Carbon version.
+
+	(find_folder): new Crabon-only utility function.
+
 2007-05-14  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-transform.c: fixed gtk-doc comment.
