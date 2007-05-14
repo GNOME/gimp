@@ -1394,6 +1394,36 @@ pygimp_get_progname(PyObject *self)
 }
 
 static PyObject *
+pygimp_user_directory(PyObject *self, PyObject *args, PyObject *kwargs)
+{
+    GimpUserDirectory type;
+    char *user_dir;
+    PyObject *py_type, *ret;
+
+    static char *kwlist[] = { "type", NULL };
+
+    if (!PyArg_ParseTupleAndKeywords(args, kwargs,
+                                     "O:user_directory", kwlist,
+                                     &py_type))
+        return NULL;
+
+    if (pyg_enum_get_value(GIMP_TYPE_USER_DIRECTORY, py_type, &type))
+        return NULL;
+
+    user_dir = gimp_user_directory(type);
+
+    if (user_dir) {
+        ret = PyString_FromString(user_dir);
+        g_free(user_dir);
+    } else {
+        Py_INCREF(Py_None);
+	ret = Py_None;
+    }
+
+    return ret;
+}
+
+static PyObject *
 pygimp_fonts_refresh(PyObject *self)
 {
     if (!gimp_fonts_refresh()) {
@@ -1725,6 +1755,7 @@ static struct PyMethodDef gimp_methods[] = {
     {"display_name", (PyCFunction)pygimp_display_name,  METH_NOARGS},
     {"monitor_number", (PyCFunction)pygimp_monitor_number,      METH_NOARGS},
     {"get_progname", (PyCFunction)pygimp_get_progname,  METH_NOARGS},
+    {"user_directory", (PyCFunction)pygimp_user_directory, METH_VARARGS | METH_KEYWORDS},
     {"fonts_refresh", (PyCFunction)pygimp_fonts_refresh,        METH_NOARGS},
     {"fonts_get_list", (PyCFunction)pygimp_fonts_get_list,      METH_VARARGS | METH_KEYWORDS},
     {"checks_get_shades", (PyCFunction)pygimp_checks_get_shades, METH_VARARGS | METH_KEYWORDS},
