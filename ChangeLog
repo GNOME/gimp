@@ -1,5 +1,12 @@
 2007-05-14  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpbase/gimpenv.c: #include <CoreServices/CoreServices.h>,
+	not "...".
+
+2007-05-14  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/gimpenv.c: 
+
 	* configure.in: added check for OSX' Carbon framework.
 
 	* libgimpbase/Makefile.am (libgimpbase_2_0_la_LDFLAGS): add

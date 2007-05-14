@@ -71,7 +71,7 @@
 #endif
 
 #ifdef HAVE_CARBON
-#include "CoreServices/CoreServices.h"
+#include <CoreServices/CoreServices.h>
 #endif
 
 
