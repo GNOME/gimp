@@ -100,8 +100,9 @@ file_utils_filename_to_uri (Gimp         *gimp,
                             const gchar  *filename,
                             GError      **error)
 {
-  gchar *absolute;
-  gchar *uri;
+  GError *temp_error = NULL;
+  gchar  *absolute;
+  gchar  *uri;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
   g_return_val_if_fail (filename != NULL, NULL);
@@ -122,12 +123,14 @@ file_utils_filename_to_uri (Gimp         *gimp,
           return NULL;
         }
     }
-  else if (file_utils_filename_is_uri (filename, error))
+  else if (file_utils_filename_is_uri (filename, &temp_error))
     {
       return g_strdup (filename);
     }
-  else if (error)
+  else if (temp_error)
     {
+      g_propagate_error (error, temp_error);
+
       return NULL;
     }
 

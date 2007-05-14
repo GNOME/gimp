@@ -1,5 +1,10 @@
 2007-05-14  Michael Natterer  <mitch@gimp.org>
 
+	* app/file/file-utils.c (file_utils_filename_to_uri): fix check on
+	the GError returned by file_utils_filename_is_uri().
+
+2007-05-14  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpbase/gimpenv.c: #include <CoreServices/CoreServices.h>,
 	not "...".
 
