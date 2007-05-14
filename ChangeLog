@@ -1,3 +1,7 @@
+2007-05-14  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-transform.c: fixed gtk-doc comment.
+
 2007-05-14  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/gimpmodule.c: add binding for gimp_user_directory().

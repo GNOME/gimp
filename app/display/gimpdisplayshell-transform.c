@@ -371,12 +371,12 @@ gimp_display_shell_transform_coords (GimpDisplayShell *shell,
 
 /**
  * gimp_display_shell_transform_segments:
- * @shell:        a #GimpDisplayShell
- * @src_segs:     array of segments in image coordinates
- * @dest_segs:    returns the corresponding segments in display coordinates
- * @n_coords:     number of segments
- * @use_offsets:  if %TRUE, the source coordinates are in the coordinate
- *                system of the active drawable instead of the image
+ * @shell:       a #GimpDisplayShell
+ * @src_segs:    array of segments in image coordinates
+ * @dest_segs:   returns the corresponding segments in display coordinates
+ * @n_segs:      number of segments
+ * @use_offsets: if %TRUE, the source coordinates are in the coordinate
+ *               system of the active drawable instead of the image
  *
  * Transforms from image coordinates to display coordinates, so that
  * objects can be rendered at the correct points on the display.

@@ -37,6 +37,7 @@ IGNORE_HFILES = \
 	gimp-composite-vis.h		\
 	gimp-composite-x86.h		\
 	gimp-intl.h			\
+	gimpdbusservice-glue.h		\
 	gimpimage-convert-data.h	\
 	gimpimage-convert-fsdither.h	\
 	gimphelp-ids.h			\
@@ -44,7 +45,7 @@ IGNORE_HFILES = \
 	paint-funcs-generic.h
 
 # Images to copy into HTML directory
-HTML_IMAGES=
+HTML_IMAGES =
 
 # Extra SGML files that are included by $(DOC_MAIN_SGML_FILE)
 content_files =

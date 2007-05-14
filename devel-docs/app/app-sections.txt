@@ -151,6 +151,7 @@ gimp_contexts_clear
 <TITLE>Gimp-gui</TITLE>
 GimpGui
 gimp_gui_init
+gimp_gui_ungrab
 gimp_threads_enter
 gimp_threads_leave
 gimp_set_busy
@@ -193,6 +194,7 @@ gimp_edit_named_copy
 gimp_edit_named_copy_visible
 gimp_edit_clear
 gimp_edit_fill
+gimp_edit_fade
 </SECTION>
 
 <SECTION>
@@ -1138,6 +1140,7 @@ gimp_image_get_layer_by_name
 gimp_image_get_channel_by_name
 gimp_image_get_vectors_by_name
 gimp_image_add_layer
+gimp_image_add_layers
 gimp_image_remove_layer
 gimp_image_raise_layer
 gimp_image_lower_layer
@@ -2304,6 +2307,9 @@ gimp_display_shell_scale_by_values
 gimp_display_shell_scale_shrink_wrap
 gimp_display_shell_scale_resize
 gimp_display_shell_scale_dialog
+gimp_display_shell_scale_can_revert
+gimp_display_shell_scale_changed
+gimp_display_shell_scale_revert
 </SECTION>
 
 <SECTION>
@@ -2339,6 +2345,10 @@ gimp_display_shell_title_update
 <SECTION>
 <FILE>gimpdisplayshell-transform</FILE>
 <TITLE>GimpDisplayShell-transform</TITLE>
+gimp_display_shell_transform_coordinate
+gimp_display_shell_untransform_coordinate
+gimp_display_shell_transform_points
+gimp_display_shell_transform_segments
 gimp_display_shell_transform_coords
 gimp_display_shell_transform_xy
 gimp_display_shell_untransform_xy
@@ -3398,9 +3408,11 @@ GimpDrawTool
 gimp_draw_tool_start
 gimp_draw_tool_stop
 gimp_draw_tool_is_active
+gimp_draw_tool_is_drawn
 gimp_draw_tool_pause
 gimp_draw_tool_resume
 gimp_draw_tool_calc_distance
+gimp_draw_tool_calc_distance_square
 gimp_draw_tool_in_radius
 gimp_draw_tool_draw_line
 gimp_draw_tool_draw_dashed_line
@@ -4780,6 +4792,9 @@ GIMP_COLOR_EDITOR_GET_CLASS
 <TITLE>GimpColormapEditor</TITLE>
 GimpColormapEditor
 gimp_colormap_editor_new
+gimp_colormap_editor_get_index
+gimp_colormap_editor_set_index
+gimp_colormap_editor_max_index
 <SUBSECTION Standard>
 GimpColormapEditorClass
 GIMP_COLORMAP_EDITOR
@@ -5174,6 +5189,7 @@ gimp_cursor_view_new
 gimp_cursor_view_set_sample_merged
 gimp_cursor_view_get_sample_merged
 gimp_cursor_view_update_cursor
+gimp_cursor_view_clear_cursor
 <SUBSECTION Standard>
 GimpCursorViewClass
 GIMP_CURSOR_VIEW
@@ -5263,6 +5279,7 @@ gimp_dialog_factory_add_dialog
 gimp_dialog_factory_add_foreign
 gimp_dialog_factory_remove_dialog
 gimp_dialog_factory_show_toolbox
+gimp_dialog_factory_hide_dialog
 gimp_dialog_factories_session_save
 gimp_dialog_factories_session_restore
 gimp_dialog_factories_session_clear
@@ -5455,6 +5472,7 @@ GIMP_EDITOR_GET_CLASS
 GimpErrorConsole
 gimp_error_console_new
 gimp_error_console_add
+error_console_select_all_cmd_callback
 error_console_save_cmd_callback
 <SUBSECTION Standard>
 GimpErrorConsoleClass
@@ -6793,6 +6811,7 @@ batch_run
 
 <SECTION>
 <FILE>errors</FILE>
+errors_init
 gimp_terminate
 </SECTION>
 
@@ -6993,6 +7012,7 @@ pixel_regions_process_stop
 
 <SECTION>
 <FILE>pixel-surround</FILE>
+PixelSurround
 pixel_surround_new
 pixel_surround_lock
 pixel_surround_release
@@ -7853,6 +7873,7 @@ file_save
 
 <SECTION>
 <FILE>file-utils</FILE>
+file_utils_filename_is_uri
 file_utils_filename_to_uri
 file_utils_any_to_uri
 file_utils_filename_from_uri
@@ -7974,6 +7995,7 @@ dialogs_vectors_list_view_new
 dialogs_brush_editor_get
 dialogs_gradient_editor_get
 dialogs_palette_editor_get
+dialogs_palette_import_get
 </SECTION>
 
 <SECTION>
@@ -8050,6 +8072,7 @@ gui_libs_init
 gui_init
 gui_post_init
 gui_abort
+gui_message
 </SECTION>
 
 <SECTION>
@@ -8715,6 +8738,7 @@ gimp_text_outline_get_type
 GimpEditSelectionTool
 gimp_edit_selection_tool_start
 gimp_edit_selection_tool_key_press
+gimp_edit_selection_tool_translate
 <SUBSECTION Standard>
 GimpEditSelectionToolClass
 GIMP_EDIT_SELECTION_TOOL
@@ -9472,6 +9496,7 @@ ENABLE_DEBUG_MENU
 debug_mem_profile_cmd_callback
 debug_dump_menus_cmd_callback
 debug_dump_managers_cmd_callback
+debug_dump_attached_data_cmd_callback
 </SECTION>
 
 <SECTION>
@@ -9530,9 +9555,6 @@ drawable_visible_cmd_callback
 
 <SECTION>
 <FILE>edit-commands</FILE>
-edit_undo_cmd_callback
-edit_redo_cmd_callback
-edit_undo_clear_cmd_callback
 edit_cut_cmd_callback
 edit_copy_cmd_callback
 edit_copy_visible_cmd_callback
@@ -9545,6 +9567,12 @@ edit_named_copy_visible_cmd_callback
 edit_named_paste_cmd_callback
 edit_clear_cmd_callback
 edit_fill_cmd_callback
+edit_undo_cmd_callback
+edit_redo_cmd_callback
+edit_strong_redo_cmd_callback
+edit_strong_undo_cmd_callback
+edit_undo_clear_cmd_callback
+edit_fade_cmd_callback
 </SECTION>
 
 <SECTION>
