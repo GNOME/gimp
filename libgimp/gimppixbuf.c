@@ -276,7 +276,7 @@ gimp_layer_new_from_pixbuf (gint32                image_ID,
         {
           done += rgn.h * rgn.w;
 
-          if (count++ % 16 == 0)
+          if (count++ % 32 == 0)
             gimp_progress_update (progress_start +
                                   (gdouble) done / (width * height) * range);
         }

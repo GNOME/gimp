@@ -130,7 +130,7 @@ static char dversio[] = "v1.17  19-Sep-2004";
 /* Load info */
 typedef struct
 {
-  guint resolution;        /* resolution (dpi) at which to run ghostscript */ 
+  guint resolution;        /* resolution (dpi) at which to run ghostscript */
   guint width, height;     /* desired size (ghostscript may ignore this) */
   gint  use_bbox;          /* 0: use width/height, 1: try to use BoundingBox */
   gchar pages[STR_LENGTH]; /* Pages to load (eg.: 1,3,5-7) */
@@ -156,7 +156,7 @@ static PSLoadVals plvals =
 */
 GtkWidget      *ps_width_spinbutton;
 GtkWidget      *ps_height_spinbutton;
-    
+
 /* Save info  */
 typedef struct
 {
@@ -278,7 +278,7 @@ static gboolean  load_dialog                (const gchar *filename,
                                              gboolean     loadPDF);
 static void      load_pages_entry_callback  (GtkWidget   *widget,
                                              gpointer     data);
-                                                
+
 static gboolean  resolution_change_callback (GtkAdjustment *adjustment,
                                              gpointer   data);
 
@@ -3063,6 +3063,8 @@ load_dialog (const gchar *filename,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), main_vbox,
@@ -3108,19 +3110,19 @@ load_dialog (const gchar *filename,
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
                              _("Resolution:"), 0.0, 0.5,
                              spinbutton, 1, FALSE);
-          
+
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (resolution_change_callback),
                     &plvals.resolution);
-          
+
   g_signal_connect (adj, "value-changed",
                     G_CALLBACK (gimp_int_adjustment_update),
                     &plvals.resolution);
 
 
-          
+
   ps_width_spinbutton = gimp_spin_button_new (&adj, plvals.width,
-                                              1, GIMP_MAX_IMAGE_SIZE, 
+                                              1, GIMP_MAX_IMAGE_SIZE,
                                               1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
                              _("_Width:"), 0.0, 0.5,
@@ -3130,7 +3132,7 @@ load_dialog (const gchar *filename,
                     &plvals.width);
 
   ps_height_spinbutton = gimp_spin_button_new (&adj, plvals.height,
-                                               1, GIMP_MAX_IMAGE_SIZE, 
+                                               1, GIMP_MAX_IMAGE_SIZE,
                                                1, 10, 0, 1, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 2,
                              _("_Height:"), 0.0, 0.5,
@@ -3524,20 +3526,20 @@ resolution_change_callback (GtkAdjustment *adjustment,
 
   if (*old_resolution)
     {
-      ratio = (gdouble) adjustment->value / *old_resolution; 
-    } 
+      ratio = (gdouble) adjustment->value / *old_resolution;
+    }
   else
     {
       ratio = 1;
     }
   gtk_spin_button_set_value (GTK_SPIN_BUTTON (ps_width_spinbutton),
                              GTK_SPIN_BUTTON (ps_width_spinbutton)->
-                                 adjustment->value * ratio);  
+                                 adjustment->value * ratio);
 
   gtk_spin_button_set_value (GTK_SPIN_BUTTON (ps_height_spinbutton),
                              GTK_SPIN_BUTTON (ps_height_spinbutton)->
-                                 adjustment->value * ratio); 
-                                   
+                                 adjustment->value * ratio);
+
   return TRUE;
 
 }

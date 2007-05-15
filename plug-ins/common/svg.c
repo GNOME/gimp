@@ -706,6 +706,8 @@ load_dialog (const gchar *filename)
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
+  gimp_window_set_transient (GTK_WINDOW (dialog));
+
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), hbox,

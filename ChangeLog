@@ -1,3 +1,14 @@
+2007-05-15  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/svg.c
+	* plug-ins/common/tiff-load.c
+	* plug-ins/common/postscript.c
+	* plug-ins/common/poppler.c: added missing calls to
+	gimp_window_set_transient().
+
+	* libgimp/gimppixbuf.c (gimp_layer_new_from_pixbuf): reduced
+	number of progress updates.
+
 2007-05-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/file/file-utils.c (file_utils_filename_to_uri): fix check on
