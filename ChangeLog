@@ -1,3 +1,9 @@
+2007-05-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/paint/gimpheal.c (gimp_heal_motion): convert the source
+	region to the dest region's type, not the other way around
+	(using the wrong if() condition when doing so). Fixes bug #390938.
+
 2007-05-15  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scheme-wrapper.c (marshall_proc_db_call): Allow
@@ -41,8 +47,6 @@
 	not "...".
 
 2007-05-14  Michael Natterer  <mitch@gimp.org>
-
-	* libgimpbase/gimpenv.c: 
 
 	* configure.in: added check for OSX' Carbon framework.
 

@@ -414,6 +414,26 @@ gimp_heal_motion (GimpSourceCore   *source_core,
   /* reinitialize srcPR */
   pixel_region_init_temp_buf (srcPR, src, 0, 0, src->width, src->height);
 
+  if (GIMP_IMAGE_TYPE_WITH_ALPHA (src_type) !=
+      gimp_drawable_type_with_alpha (drawable))
+    {
+      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
+      TempBuf   *temp2;
+      gboolean   new_buf;
+
+      temp2 = gimp_image_transform_temp_buf (image,
+                                             gimp_drawable_type_with_alpha (drawable),
+                                             src, &new_buf);
+
+      if (new_buf)
+        temp_buf_free (src);
+
+      src = temp2;
+
+      /* reinitialize srcPR */
+      pixel_region_init_temp_buf (srcPR, src, 0, 0, src->width, src->height);
+    }
+
   /* FIXME: the area under the cursor and the source area should be x% larger
    * than the brush size.  Otherwise the brush must be a lot bigger than the
    * area to heal to get good results.  Having the user pick such a large brush
@@ -447,22 +467,6 @@ gimp_heal_motion (GimpSourceCore   *source_core,
     copy_region (&origPR, &tempPR);
   else
     add_alpha_region (&origPR, &tempPR);
-
-  if (tempPR.bytes != srcPR->bytes)
-    {
-      GimpImage *image = gimp_item_get_image (GIMP_ITEM (drawable));
-      TempBuf   *temp2;
-      gboolean   new_buf;
-
-      temp2 = gimp_image_transform_temp_buf (image,
-                                             gimp_drawable_type (drawable),
-                                             temp, &new_buf);
-
-      if (new_buf)
-        temp_buf_free (temp);
-
-      temp = temp2;
-    }
 
   /* reinitialize tempPR */
   pixel_region_init_temp_buf (&tempPR, temp, 0, 0, temp->width, temp->height);
