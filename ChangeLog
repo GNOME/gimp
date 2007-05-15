@@ -1,3 +1,9 @@
+2007-05-15  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scheme-wrapper.c (marshall_proc_db_call): Allow
+	any number type in a vector to be passed in PDB call as an INT*ARRAY.
+	Updated error messages accordingly. Fixes bug #435640.
+
 2007-05-15  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/helpbrowser/dialog.c (browser_dialog_open): don't show

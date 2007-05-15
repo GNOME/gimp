@@ -852,10 +852,10 @@ g_printerr ("      string arg is '%s'\n", args[i].data.d_string);
                   pointer v_element = sc->vptr->vector_elem (vector, j);
 
                   /* FIXME: Check values in vector stay within range for each type. */
-                  if (!sc->vptr->is_integer (v_element))
+                  if (!sc->vptr->is_number (v_element))
                     {
                       g_snprintf (error_str, sizeof (error_str),
-                                  "Item %d in vector is not INT32 (argument %d for function %s)\n",
+                                  "Item %d in vector is not a number (argument %d for function %s)\n",
                                   j+1, i+1, proc_name);
                       return my_err (error_str, vector);
                     }
@@ -903,10 +903,10 @@ if (count > 0)
                 {
                   pointer v_element = sc->vptr->vector_elem (vector, j);
 
-                  if (!sc->vptr->is_integer (v_element))
+                  if (!sc->vptr->is_number (v_element))
                     {
                       g_snprintf (error_str, sizeof (error_str),
-                                  "Item %d in vector is not INT16 (argument %d for function %s)\n",
+                                  "Item %d in vector is not a number (argument %d for function %s)\n",
                                   j+1, i+1, proc_name);
                       return my_err (error_str, vector);
                     }
@@ -954,10 +954,10 @@ if (count > 0)
                 {
                   pointer v_element = sc->vptr->vector_elem (vector, j);
 
-                  if (!sc->vptr->is_integer (v_element))
+                  if (!sc->vptr->is_number (v_element))
                     {
                       g_snprintf (error_str, sizeof (error_str),
-                                  "Item %d in vector is not INT8 (argument %d for function %s)\n",
+                                  "Item %d in vector is not a number (argument %d for function %s)\n",
                                   j+1, i+1, proc_name);
                       return my_err (error_str, vector);
                     }
@@ -1008,7 +1008,7 @@ if (count > 0)
                   if (!sc->vptr->is_number (v_element))
                     {
                       g_snprintf (error_str, sizeof (error_str),
-                                  "Item %d in vector is not FLOAT (argument %d for function %s)\n",
+                                  "Item %d in vector is not a number (argument %d for function %s)\n",
                                   j+1, i+1, proc_name);
                       return my_err (error_str, vector);
                     }
@@ -1059,7 +1059,7 @@ if (count > 0)
                   if (!sc->vptr->is_string (v_element))
                     {
                       g_snprintf (error_str, sizeof (error_str),
-                                  "Item %d in vector is not STRING (argument %d for function %s)\n",
+                                  "Item %d in vector is not a string (argument %d for function %s)\n",
                                   j+1, i+1, proc_name);
                       return my_err (error_str, vector);
                     }
