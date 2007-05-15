@@ -1,3 +1,9 @@
+2007-05-16  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpthumbbox.[ch]: combined the two progress bars
+	(when loading multiple thumbnails) into a single one using a
+	GimpSubProgress.
+
 2007-05-15  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/jpeg/jpeg-save.c

@@ -41,7 +41,6 @@ struct _GimpThumbBox
   GtkWidget     *preview;
   GtkWidget     *filename;
   GtkWidget     *info;
-  GtkWidget     *thumb_progress;
 
   gboolean       progress_active;
   GtkWidget     *progress;
