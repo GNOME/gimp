@@ -456,7 +456,7 @@ load_image (const gchar *filename,
       gimp_pixel_rgn_set_rect (&pixel_rgn, padded_buf ? padded_buf : buf,
                                0, start, drawable->width, scanlines);
 
-      if (! preview)
+      if (! preview && (cinfo.output_scanline % 32) == 0)
         gimp_progress_update ((gdouble) cinfo.output_scanline /
                               (gdouble) cinfo.output_height);
     }

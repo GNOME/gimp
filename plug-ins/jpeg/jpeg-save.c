@@ -612,7 +612,7 @@ save_image (const gchar *filename,
       src += rowstride;
       jpeg_write_scanlines (&cinfo, (JSAMPARRAY) &temp, 1);
 
-      if ((cinfo.next_scanline % 16) == 0)
+      if ((cinfo.next_scanline % 32) == 0)
         gimp_progress_update ((gdouble) cinfo.next_scanline /
                               (gdouble) cinfo.image_height);
     }

@@ -1,5 +1,10 @@
 2007-05-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/jpeg/jpeg-save.c
+	* plug-ins/jpeg/jpeg-load.c: reduced number of progress updates.
+
+2007-05-15  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu.c (script_fu_extension_init):
 	renamed "Utils" to "Utilities".
 
