@@ -394,8 +394,6 @@ browser_dialog_open (void)
   g_signal_connect (window, "unmap",
                     G_CALLBACK (dialog_unmap),
                     paned);
-
-  gtk_widget_show (window);
 }
 
 static gboolean

@@ -1,5 +1,12 @@
 2007-05-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/helpbrowser/dialog.c (browser_dialog_open): don't show
+	the window yet. The user might not have the help pages installed.
+
+	* plug-ins/helpbrowser/wilber-reading.png: use the new style Wilber.
+
+2007-05-15  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/wmf.c
 	* plug-ins/fits/fits.c
 	* plug-ins/sel2path/sel2path.c
