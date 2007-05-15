@@ -1,3 +1,9 @@
+2007-05-15  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scripts/contactsheet.scm: Use 'img' and not
+	'new-img' in make-thumbnail-size routine. Moved menu entry from
+	Xtns/Utils to Xtns/Utilities. See bug #132532.
+
 2007-05-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/paint/gimpheal.c (gimp_heal_motion): convert the source
