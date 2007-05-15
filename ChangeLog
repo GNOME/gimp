@@ -1,3 +1,8 @@
+2007-05-15  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu.c (script_fu_extension_init):
+	renamed "Utils" to "Utilities".
+
 2007-05-15  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/contactsheet.scm: Use 'img' and not
