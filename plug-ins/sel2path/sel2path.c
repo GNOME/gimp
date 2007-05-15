@@ -313,6 +313,8 @@ sel2path_dialog (SELVALS *sels)
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
+  gimp_window_set_transient (GTK_WINDOW (dlg));
+
   g_signal_connect (dlg, "response",
                     G_CALLBACK (sel2path_response),
                     NULL);

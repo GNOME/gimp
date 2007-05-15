@@ -1,5 +1,13 @@
 2007-05-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/wmf.c
+	* plug-ins/fits/fits.c
+	* plug-ins/sel2path/sel2path.c
+	* plug-ins/xjt/xjt.c: added missing calls to
+	gimp_window_set_transient().
+
+2007-05-15  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/svg.c
 	* plug-ins/common/tiff-load.c
 	* plug-ins/common/postscript.c
