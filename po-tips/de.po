@@ -2,21 +2,22 @@
 # This is the German locale definition for the GIMP tips.
 # Copyright (C) 2002, 2006 Free Software Foundation, Inc.
 # Sven Neumann <sven@gimp.org>, 2004-2007.
-# Hendrik Brandt <heb@gnome-de.org>, 2006.
+# Hendrik Brandt <heb@gnome-de.org>, 2006, 2007.
+# Sven Neumann <sven@gimp.org>, 2007.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-18 11:42+0200\n"
-"PO-Revision-Date: 2007-04-18 11:50+0200\n"
-"Last-Translator: Sven Neumann <sven@gimp.org>\n"
-"Language-Team: German <gnome-de@gnome.org>\n"
+"POT-Creation-Date: 2007-05-15 16:32+0200\n"
+"PO-Revision-Date: 2007-05-15 17:17+0200\n"
+"Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
+"Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
@@ -30,9 +31,9 @@ msgid ""
 "color."
 msgstr ""
 "Wird beim Anwenden des Farbeimers die <tt>Strg</tt>-Taste gedrückt, so wird "
-"statt der Vordergrund- die Hintergrundfarbe verwendet.  Auch die Farbpipette "
-"setzt die Hintergrund- statt der Vordergrundfarbe, wird die <tt>Strg</tt>-"
-"Taste gedrückt."
+"statt der Vordergrund- die Hintergrundfarbe verwendet. Auch die Farbpipette "
+"setzt die Hintergrund- statt der Vordergrundfarbe, wenn die <tt>Strg</tt>-"
+"Taste gedrückt wird."
 
 #: ../data/tips/gimp-tips.xml.in.h:3
 msgid ""
@@ -57,10 +58,10 @@ msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
 msgstr ""
-"Im Ebenendialog werden durch Mausklick auf das Augensymbol bei gedrückter "
-"<tt>Umschalt</tt>-Taste alle anderen Ebenen unsichtbar gemacht. Ein weiterer "
-"Klick bei gedrückter <tt>Umschalt</tt>-Taste lässt alle Ebenen wieder "
-"sichtbar werden."
+"Im Ebenendialog werden durch das Anklicken des Augensymbols bei gedrückter "
+"<tt>Umschalt</tt>-Taste alle anderen Ebenen ausgeblendet. Ein weiterer "
+"Klick bei gedrückter <tt>Umschalt</tt>-Taste blendet alle Ebenen wieder "
+"ein."
 
 #: ../data/tips/gimp-tips.xml.in.h:6
 msgid ""
@@ -72,7 +73,7 @@ msgstr ""
 "Eine schwebende Auswahl muss mit einer neuen Ebene oder der zuletzt aktiven "
 "Ebene verankert werden, bevor Sie andere Funktionen auf das Bild anwenden "
 "können. Klicken Sie dazu auf die Schaltfläche »Neue Ebene« oder »Ebene "
-"verankern« im Ebenendialog, oder verwenden Sie dafür die Menüs."
+"verankern« im Ebenendialog oder den Menüs."
 
 #: ../data/tips/gimp-tips.xml.in.h:7
 msgid ""
@@ -83,7 +84,16 @@ msgid ""
 "you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
 "Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
 "shortcuts."
-msgstr "Nachdem Sie in den Einstellungen »Dynamische Tastenkürzel« aktiviert haben, können Sie einfach Tastenkürzel zuweisen oder verändern. Wählen Sie dazu mit dem Mauspfeil den entsprechende Menüeintrag aus und drücken Sie anschließend die neue neue Tastenkombination. Wenn »Tastenkürzel speichern« aktiviert ist, werden die von Ihnen definierten Tastenkürzel gespeichert, wenn Sie GIMP beenden. Eventuell sollten Sie »Dynamische Tastenkürzel« danach wieder ausschalten, um ein unbeabsichtigtes Ändern der Tastaturbelegung zu verhindern."
+msgstr ""
+"Nachdem Sie in den Einstellungen »Dynamische Tastenkürzel« aktiviert haben, "
+"können Sie Tastenkürzel einfach zuweisen oder verändern. Wählen Sie dazu mit "
+"dem Mauspfeil den entsprechenden Menüeintrag aus und drücken Sie anschließend "
+"die neue Tastenkombination. Wenn »Tastenkürzel speichern« aktiviert "
+"ist, werden die von Ihnen definierten Tastenkürzel auch über das Beenden von GIMP "
+"hinaus gespeichert. "
+"Eventuell sollten Sie »Dynamische Tastenkürzel« danach wieder "
+"ausschalten, um ein unbeabsichtigtes Ändern der Tastaturbelegung zu "
+"verhindern."
 
 #: ../data/tips/gimp-tips.xml.in.h:8
 msgid ""
@@ -91,9 +101,9 @@ msgid ""
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr ""
-"Durch Anklicken der Lineale am Rande des Bildes können Hilfslinien auf das "
-"Bild gezogen und dort platziert werden. Alle von Ihnen verschobenen "
-"Auswahlen werden entlang dieser Hilfslinien einrasten. Sie können "
+"Durch Anklicken des Lineals am Bildrand können Hilfslinien auf das "
+"Bild gezogen und dort platziert werden. Beim Anlegen und Verschieben von "
+"Auswahlen werden diese entlang dieser Hilfslinien einrasten. Sie können "
 "Hilfslinien wieder entfernen, indem Sie diese mit dem Verschiebenwerkzeug "
 "über die Bildgrenzen hinaus verschieben."
 
@@ -124,8 +134,8 @@ msgid ""
 "their contents."
 msgstr ""
 "GIMP benutzt Ebenen um Ihre Bilder zu verwalten. Diese können Sie sich als "
-"ein Stapel von Folien oder Filtern vorstellen. Sieht man durch diese Folien "
-"hindurch, so entsteht das Bild durch Überlagerung ihrer Inhalte."
+"einen Stapel von Folien vorstellen. Sieht man durch diese hindurch, so entsteht "
+"das Bild durch Überlagerung der Inhalte."
 
 #: ../data/tips/gimp-tips.xml.in.h:12
 msgid ""
@@ -148,7 +158,7 @@ msgstr ""
 "Wenn einige Ihrer eingescannten Fotos nicht farbenfroh genug aussehen, "
 "können Sie einfach den Farbumfang mit der Schaltfläche »Automatisch« des "
 "Farbwertewerkzeugs verbessern (Farben→Farbwerte). Falls es irgendwelche "
-"Farbstiche gibt, können Sie diese mit dem Farbkurvenwerkzeug korrigiert "
+"Farbstiche gibt, können diese mit dem Farbkurvenwerkzeug korrigiert "
 "werden (Farben→Farbkurven)."
 
 #: ../data/tips/gimp-tips.xml.in.h:14
@@ -158,8 +168,8 @@ msgid ""
 "the Eraser or the Smudge tool."
 msgstr ""
 "Wenn Sie einen Pfad nachziehen (Bearbeiten→Pfad nachziehen …), kann das "
-"Malwerkzeug mit den aktuellen Einstellungen benutzt werden. Sie können z.B. "
-"der Sprühpistole im Farbverlaufsmodus oder auch den Radierer oder das "
+"Malwerkzeug mit den aktuellen Einstellungen benutzt werden. Sie können so z.B. "
+"die Sprühpistole im Farbverlaufsmodus oder auch den Radierer oder das "
 "Verwischenwerkzeug verwenden."
 
 #: ../data/tips/gimp-tips.xml.in.h:15
@@ -167,7 +177,7 @@ msgid ""
 "If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
 "window to toggle the visibility of the toolbox and other dialogs."
 msgstr ""
-"Wenn Ihre Arbeitsfläche zu unaufgeräumt ist, können Sie durch Drücken "
+"Wenn Ihre Arbeitsfläche zu unaufgeräumt ist, können Sie durch Drücken der"
 "<tt>Tabulator</tt>-Taste in einem Bildfenster den Werkzeugkasten oder andere "
 "Dialoge anzeigen oder ausblenden."
 
@@ -339,3 +349,4 @@ msgstr ""
 "Bildfensters. Ändern Sie nun die Auswahl indem Sie innerhalb des Bildes "
 "malen und klicken Sie anschließend die Schaltfläche erneut an, um alles "
 "wieder in eine normale Auswahl umzuwandeln."
+
