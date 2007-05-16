@@ -598,8 +598,8 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
 
           gimp_progress_set_value (progress, 0.0);
 
-          while (g_main_context_pending (NULL))
-            g_main_context_iteration (NULL, FALSE);
+          while (gtk_events_pending ())
+            gtk_main_iteration ();
 
           gimp_thumb_box_create_thumbnail (box,
                                            list->data,
@@ -619,8 +619,8 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
 
       gimp_progress_set_value (progress, 0.0);
 
-      while (g_main_context_pending (NULL))
-        g_main_context_iteration (NULL, FALSE);
+      while (gtk_events_pending ())
+        gtk_main_iteration ();
     }
 
   if (box->uris)

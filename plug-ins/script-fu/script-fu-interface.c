@@ -161,8 +161,8 @@ script_fu_interface_report_cc (const gchar *command)
         }
     }
 
-  while (g_main_context_pending (NULL))
-    g_main_context_iteration (NULL, TRUE);
+  while (gtk_events_pending ())
+    gtk_main_iteration ();
 }
 
 void
