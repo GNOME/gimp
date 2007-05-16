@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp CVS\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-11 23:13+0000\n"
-"PO-Revision-Date: 2007-03-11 23:14-0000\n"
+"POT-Creation-Date: 2007-05-16 08:08+0100\n"
+"PO-Revision-Date: 2007-05-16 08:08-0000\n"
 "Last-Translator: David Lodge <dave@cirt.net>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -472,12 +472,12 @@ msgid "Black only"
 msgstr "Black only"
 
 #: ../libgimpbase/gimpbaseenums.c:263
-msgid "Image source"
-msgstr "Image source"
+msgid "Image"
+msgstr "Image"
 
 #: ../libgimpbase/gimpbaseenums.c:264
-msgid "Pattern source"
-msgstr "Pattern source"
+msgid "Pattern"
+msgstr "Pattern"
 
 #: ../libgimpbase/gimpbaseenums.c:293
 msgid "Lightness"
@@ -675,12 +675,12 @@ msgid "Highlights"
 msgstr "Highlights"
 
 #: ../libgimpbase/gimpbaseenums.c:744
-msgid "Forward"
-msgstr "Forward"
+msgid "Normal (Forward)"
+msgstr "Normal (Forward)"
 
 #: ../libgimpbase/gimpbaseenums.c:745
-msgid "Backward"
-msgstr "Backward"
+msgid "Corrective (Backward)"
+msgstr "Corrective (Backward)"
 
 #: ../libgimpbase/gimpbaseenums.c:775
 msgid "Adjust"
@@ -1022,15 +1022,15 @@ msgstr "Select Folder"
 msgid "Select File"
 msgstr "Select File"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:202
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Kilobytes"
 msgstr "Kilobytes"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:203
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Megabytes"
 msgstr "Megabytes"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libgimpwidgets/gimpmemsizeentry.c:206
 msgid "Gigabytes"
 msgstr "Gigabytes"
 
@@ -1105,11 +1105,6 @@ msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "This text input field is limited to %d character."
 msgstr[1] "This text input field is limited to %d characters."
-
-#: ../libgimpwidgets/gimpresolutionentry.c:382
-#, c-format
-msgid "pixels/%s"
-msgstr "pixels/%s"
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -1552,14 +1547,12 @@ msgid "X Move Right"
 msgstr "X Move Right"
 
 #: ../modules/controller_linux_input.c:92
-#: ../modules/controller_dx_dinput.c:478
-msgid "Y Move Away"
-msgstr "Y Move Away"
+msgid "Y Move Forward"
+msgstr "Y Move Forward"
 
 #: ../modules/controller_linux_input.c:93
-#: ../modules/controller_dx_dinput.c:481
-msgid "Y Move Near"
-msgstr "Y Move Near"
+msgid "Y Move Back"
+msgstr "Y Move Back"
 
 #: ../modules/controller_linux_input.c:94
 #: ../modules/controller_dx_dinput.c:487
@@ -1572,14 +1565,12 @@ msgid "Z Move Down"
 msgstr "Z Move Down"
 
 #: ../modules/controller_linux_input.c:97
-#: ../modules/controller_dx_dinput.c:496
-msgid "X Axis Tilt Away"
-msgstr "X Axis Tilt Away"
+msgid "X Axis Tilt Forward"
+msgstr "X Axis Tilt Forward"
 
 #: ../modules/controller_linux_input.c:98
-#: ../modules/controller_dx_dinput.c:499
-msgid "X Axis Tilt Near"
-msgstr "X Axis Tilt Near"
+msgid "X Axis Tilt Back"
+msgstr "X Axis Tilt Back"
 
 #: ../modules/controller_linux_input.c:99
 #: ../modules/controller_dx_dinput.c:505
@@ -1706,6 +1697,22 @@ msgstr "Button %d Press"
 msgid "Button %d Release"
 msgstr "Button %d Release"
 
+#: ../modules/controller_dx_dinput.c:478
+msgid "Y Move Away"
+msgstr "Y Move Away"
+
+#: ../modules/controller_dx_dinput.c:481
+msgid "Y Move Near"
+msgstr "Y Move Near"
+
+#: ../modules/controller_dx_dinput.c:496
+msgid "X Axis Tilt Away"
+msgstr "X Axis Tilt Away"
+
+#: ../modules/controller_dx_dinput.c:499
+msgid "X Axis Tilt Near"
+msgstr "X Axis Tilt Near"
+
 #: ../modules/controller_dx_dinput.c:528
 #, c-format
 msgid "Slider %d Increase"
@@ -1786,6 +1793,14 @@ msgstr "GIMP"
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMP MIDI Input Controller"
 
+#~ msgid "Image source"
+#~ msgstr "Image source"
+#~ msgid "Pattern source"
+#~ msgstr "Pattern source"
+#~ msgid "Backward"
+#~ msgstr "Backward"
+#~ msgid "pixels/%s"
+#~ msgstr "pixels/%s"
 #~ msgid "Ask"
 #~ msgstr "Ask"
 #~ msgid "Use embedded profile"
