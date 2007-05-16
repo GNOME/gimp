@@ -239,7 +239,12 @@ gimp_thumb_box_progress_set_value (GimpProgress *progress,
 {
   GimpThumbBox *box = GIMP_THUMB_BOX (progress);
 
-  gtk_progress_bar_set_fraction (GTK_PROGRESS_BAR (box->progress), percentage);
+  if (box->progress_active)
+    {
+      GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
+
+      gtk_progress_bar_set_fraction (bar, percentage);
+    }
 }
 
 static gdouble
@@ -570,7 +575,9 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
     {
       gchar *str;
 
-      progress = gimp_sub_progress_new (progress);
+      gimp_progress_start (GIMP_PROGRESS (box), "", TRUE);
+
+      progress = gimp_sub_progress_new (GIMP_PROGRESS (box));
 
       gimp_sub_progress_set_step (GIMP_SUB_PROGRESS (progress), 0, n_uris);
 
@@ -623,7 +630,12 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
  canceled:
 
   if (n_uris > 1)
-    g_object_unref (progress);
+    {
+      g_object_unref (progress);
+
+      gimp_progress_end (GIMP_PROGRESS (box));
+      gtk_progress_bar_set_text (GTK_PROGRESS_BAR (box->progress), "");
+    }
 
   if (box->uris)
     {
