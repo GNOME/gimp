@@ -124,10 +124,11 @@ gimp_brush_tool_constructor (GType                  type,
                              guint                  n_params,
                              GObjectConstructParam *params)
 {
-  GObject       *object;
-  GimpTool      *tool;
-  GimpPaintTool *paint_tool;
-  GimpBrushTool *brush_tool;
+  GObject           *object;
+  GimpTool          *tool;
+  GimpPaintTool     *paint_tool;
+  GimpBrushTool     *brush_tool;
+  GimpDisplayConfig *display_config;
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
@@ -137,17 +138,15 @@ gimp_brush_tool_constructor (GType                  type,
 
   g_assert (GIMP_IS_BRUSH_CORE (paint_tool->core));
 
-  brush_tool->show_cursor =
-    GIMP_DISPLAY_CONFIG (tool->tool_info->gimp->config)->show_paint_tool_cursor;
-  brush_tool->draw_brush =
-    GIMP_DISPLAY_CONFIG (tool->tool_info->gimp->config)->show_brush_outline;
+  display_config = GIMP_DISPLAY_CONFIG (tool->tool_info->gimp->config);
 
-  g_signal_connect_object (tool->tool_info->gimp->config,
-                           "notify::show-paint-tool-cursor",
+  brush_tool->show_cursor = display_config->show_paint_tool_cursor;
+  brush_tool->draw_brush  = display_config->show_brush_outline;
+
+  g_signal_connect_object (display_config, "notify::show-paint-tool-cursor",
                            G_CALLBACK (gimp_brush_tool_notify_brush),
                            brush_tool, 0);
-  g_signal_connect_object (tool->tool_info->gimp->config,
-                           "notify::show-brush-outline",
+  g_signal_connect_object (display_config, "notify::show-brush-outline",
                            G_CALLBACK (gimp_brush_tool_notify_brush),
                            brush_tool, 0);
 
