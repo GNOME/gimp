@@ -328,6 +328,14 @@ tile_invalidate (Tile        **tile_ptr,
   if (! tile->valid)
     return;
 
+  if (tile_num == tm->cached_num)
+    {
+      tile_release (tm->cached_tile, FALSE);
+
+      tm->cached_tile = NULL;
+      tm->cached_num  = -1;
+    }
+
   if (G_UNLIKELY (tile->share_count > 1))
     {
       /* This tile is shared.  Replace it with a new, invalid tile. */
@@ -815,7 +823,7 @@ read_pixel_data_1 (TileManager *tm,
            if (tm->cached_tile)
              tile_release (tm->cached_tile, FALSE);
 
-           tm->cached_num = num;
+           tm->cached_num  = num;
            tm->cached_tile = tile_manager_get (tm, num, TRUE, FALSE);
         }
 
