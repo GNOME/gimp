@@ -949,7 +949,7 @@ msgstr "_Farben"
 
 #: ../app/actions/dialogs-actions.c:125 ../app/dialogs/dialogs.c:209
 msgid "FG/BG Color"
-msgstr "VG/HG Farbe"
+msgstr "VG/HG-Farbe"
 
 #: ../app/actions/dialogs-actions.c:130
 msgid "_Brushes"
@@ -1333,7 +1333,7 @@ msgstr "Das Invertieren funktioniert mit indizierten Ebenen nicht."
 
 #: ../app/actions/drawable-commands.c:147
 msgid "White Balance operates only on RGB color layers."
-msgstr "Der Weißabgleich funktioniert nur bei RGB Ebenen."
+msgstr "Der Weißabgleich funktioniert nur bei RGB-Ebenen."
 
 #: ../app/actions/edit-actions.c:63
 msgid "_Edit"
@@ -2277,9 +2277,8 @@ msgid "_Crop Image"
 msgstr "Bild _zuschneiden"
 
 #: ../app/actions/image-actions.c:109
-#, fuzzy
 msgid "Crop the image to the extents of the selection"
-msgstr "Das Bild auf die Auswählgröße zurecht schneiden"
+msgstr "Das Bild auf die Auswählgröße zurechtschneiden"
 
 #: ../app/actions/image-actions.c:114
 msgid "_Duplicate"
@@ -4522,7 +4521,7 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:262
 msgid "Let GIMP try to restore your last saved session on each startup."
 msgstr ""
-"Wenn diese Option ausgewählt ist, versucht GIMP bei jedem Start die letzte "
+"Wenn diese Option ausgewählt ist, versucht GIMP bei jedem Start, die letzte "
 "Sitzung wieder herzustellen."
 
 #: ../app/config/gimprc-blurbs.h:265
@@ -5569,7 +5568,7 @@ msgid ""
 msgstr ""
 "Schwerwiegender Fehler beim Lesen der Pinseldatei »%s«: Nicht unterstützte "
 "Farbtiefe %d\n"
-"GIMP Pinsel müssen in GRAUSTUFE oder RGB vorliegen."
+"GIMP-Pinsel müssen in GRAUSTUFE oder RGB vorliegen."
 
 #: ../app/core/gimpbrush-load.c:408
 #, c-format
@@ -5595,8 +5594,8 @@ msgstr "Zwischenablage"
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
 msgstr ""
-"Schwerwiegender Fehler beim Lesen der Pinseldatei »%s«: Datei ist keine GIMP "
-"Pinsel Datei"
+"Schwerwiegender Fehler beim Lesen der Pinseldatei »%s«: Datei ist keine "
+"GIMP-Pinseldatei"
 
 # CHECK
 #: ../app/core/gimpbrushgenerated-load.c:104
@@ -5604,8 +5603,8 @@ msgstr ""
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
 msgstr ""
-"Schwerwiegender Fehler beim Lesen der Pinseldatei »%s«: Unbekannte GIMP "
-"Pinsel Version"
+"Schwerwiegender Fehler beim Lesen der Pinseldatei »%s«: Unbekannte "
+"GIMP-Pinsel-Version"
 
 # CHECK
 #: ../app/core/gimpbrushgenerated-load.c:150
@@ -5613,8 +5612,8 @@ msgstr ""
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr ""
-"Schwerwiegender Fehler beim Lesen der Pinseldatei »%s«: Unbekannte GIMP "
-"Pinsel Version"
+"Schwerwiegender Fehler beim Lesen der Pinseldatei »%s«: Unbekannte "
+"GIMP-Pinsel-Version"
 
 #: ../app/core/gimpbrushgenerated-load.c:226
 #, fuzzy, c-format
@@ -6622,7 +6621,7 @@ msgstr "Prozent"
 
 #: ../app/dialogs/about-dialog.c:121
 msgid "Visit the GIMP website"
-msgstr "Besuchen Sie die GIMP Webseite"
+msgstr "Besuchen Sie die GIMP-Webseite"
 
 #. Translators: insert your names here,
 #. * separated by newline
@@ -6639,7 +6638,7 @@ msgstr ""
 
 #: ../app/dialogs/about-dialog.c:527
 msgid "GIMP is brought to you by"
-msgstr "GIMP wurde Euch gebracht von"
+msgstr "GIMP wurde Ihnen gebracht von"
 
 #: ../app/dialogs/about-dialog.c:601
 msgid "This is an unstable development release."
@@ -6711,7 +6710,7 @@ msgstr "Grauwert bestimmen nach:"
 #: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:154
 #: ../app/gui/gui-message.c:146
 msgid "GIMP Message"
-msgstr "GIMP Meldung"
+msgstr "GIMP-Meldung"
 
 #: ../app/dialogs/dialogs.c:133
 msgid "Devices"
@@ -7481,7 +7480,7 @@ msgstr "Voreingestellte _Interpolationsart:"
 #. Global Brush, Pattern, ...
 #: ../app/dialogs/preferences-dialog.c:1809
 msgid "Paint Options Shared Between Tools"
-msgstr "Maleinstellungen werden von Werkzeuge gemeinsam benutzt."
+msgstr "Maleinstellungen werden von Werkzeugen gemeinsam benutzt."
 
 #: ../app/dialogs/preferences-dialog.c:1822
 msgid "Move Tool"
@@ -7621,7 +7620,7 @@ msgstr "Derzeitiges Format"
 
 #: ../app/dialogs/preferences-dialog.c:2069
 msgid "Default format"
-msgstr "Vorgabe Format"
+msgstr "Vorgabe-Format"
 
 #: ../app/dialogs/preferences-dialog.c:2070
 msgid "Show zoom percentage"
@@ -8078,7 +8077,7 @@ msgstr "<b>Die Datei mit GIMP-Tipps konnte nicht interpretiert werden!</b>"
 
 #: ../app/dialogs/tips-dialog.c:130
 msgid "GIMP Tip of the Day"
-msgstr "GIMP Tipp des Tages"
+msgstr "GIMP-Tipp des Tages"
 
 #: ../app/dialogs/tips-dialog.c:182
 msgid "Show tip next time GIMP starts"
@@ -8398,7 +8397,7 @@ msgstr "Unbekannter Dateityp"
 
 #: ../app/gui/splash.c:114
 msgid "GIMP Startup"
-msgstr "GIMP Start"
+msgstr "GIMP-Start"
 
 #: ../app/gui/themes.c:231 ../app/plug-in/gimppluginmanager.c:485
 #, c-format
@@ -8508,7 +8507,7 @@ msgstr "K_ombinieren"
 
 #: ../app/pdb/color_cmds.c:102 ../app/tools/gimpbrightnesscontrasttool.c:100
 msgid "Brightness-Contrast"
-msgstr "Helligkeit-Kontrast"
+msgstr "Helligkeit/Kontrast"
 
 #: ../app/pdb/color_cmds.c:249 ../app/tools/gimpposterizetool.c:77
 msgid "Posterize"
@@ -8529,7 +8528,7 @@ msgstr "Einfärben"
 
 #: ../app/pdb/color_cmds.c:773 ../app/tools/gimphuesaturationtool.c:113
 msgid "Hue-Saturation"
-msgstr "Farbton-Sättigung"
+msgstr "Farbton/Sättigung"
 
 #: ../app/pdb/color_cmds.c:827 ../app/tools/gimpthresholdtool.c:82
 msgid "Threshold"
@@ -9005,7 +9004,7 @@ msgstr "Helligkeit und Kontrast anpassen"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:102
 msgid "B_rightness-Contrast..."
-msgstr "_Helligkeit-Kontrast"
+msgstr "_Helligkeit/Kontrast …"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:122
 msgid "Adjust Brightness and Contrast"
@@ -9013,7 +9012,7 @@ msgstr "Helligkeit und Kontrast anpassen"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:167
 msgid "Brightness-Contrast does not operate on indexed layers."
-msgstr "Helligkeit-Kontrast funktioniert nicht bei indizierten Ebenen."
+msgstr "Helligkeit/Kontrast funktioniert nicht bei indizierten Ebenen."
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:283
 msgid "_Brightness:"
@@ -9151,7 +9150,7 @@ msgstr "Farbabgleich anpassen"
 #: ../app/tools/gimpcolorbalancetool.c:159
 #, fuzzy
 msgid "Color Balance operates only on RGB color layers."
-msgstr "Der Farbabgleich funktioniert nur bei RGB Ebenen."
+msgstr "Der Farbabgleich funktioniert nur bei RGB-Ebenen."
 
 #: ../app/tools/gimpcolorbalancetool.c:242
 msgid "Select Range to Adjust"
@@ -9199,7 +9198,7 @@ msgstr "Das Bild einfärben"
 
 #: ../app/tools/gimpcolorizetool.c:156
 msgid "Colorize operates only on RGB color layers."
-msgstr "Nur RGB Ebenen können eingefärbt werden."
+msgstr "Nur RGB-Ebenen können eingefärbt werden."
 
 #: ../app/tools/gimpcolorizetool.c:196
 msgid "Select Color"
@@ -9716,7 +9715,7 @@ msgstr "Farbton / Helligkeit / Sättigung anpassen"
 
 #: ../app/tools/gimphuesaturationtool.c:178
 msgid "Hue-Saturation operates only on RGB color layers."
-msgstr "Farbton-Sättigung funktioniert nur bei RGB Ebenen."
+msgstr "Farbton/Sättigung funktioniert nur bei RGB-Ebenen."
 
 #: ../app/tools/gimphuesaturationtool.c:234
 msgid "M_aster"
@@ -10515,7 +10514,7 @@ msgstr "Te_xt"
 
 #: ../app/tools/gimptexttool.c:758
 msgid "GIMP Text Editor"
-msgstr "GIMP Text Editor"
+msgstr "GIMP-Texteditor"
 
 #: ../app/tools/gimptexttool.c:869 ../app/tools/gimptexttool.c:872
 msgid "Confirm Text Editing"
@@ -11645,7 +11644,7 @@ msgstr "Der Hilfe-Browser konnte nicht gefunden werden"
 msgid ""
 "The GIMP help browser plug-in appears to be missing from your installation."
 msgstr ""
-"Das Hilfe-Browser Plugin scheint in Ihrer GIMP Installation nicht vorhanden "
+"Das Hilfe-Browser-Plugin scheint in Ihrer GIMP-Installation nicht vorhanden "
 "zu sein."
 
 #: ../app/widgets/gimphelp.c:229
@@ -11654,7 +11653,7 @@ msgstr "Der Hilfe-Browser startet nicht"
 
 #: ../app/widgets/gimphelp.c:230
 msgid "Could not start the GIMP help browser plug-in."
-msgstr "Der GIMP Hilfe-Browser konnte nicht gestartet werden."
+msgstr "Der GIMP-Hilfe-Browser konnte nicht gestartet werden."
 
 #: ../app/widgets/gimphelp.c:256
 msgid "Use _web browser instead"
@@ -12168,7 +12167,7 @@ msgstr "Ausgefallen"
 
 #: ../app/widgets/widgets-enums.c:199
 msgid "GIMP help browser"
-msgstr "GIMP Hilfe-Browser"
+msgstr "GIMP-Hilfe-Browser"
 
 #: ../app/widgets/widgets-enums.c:200
 msgid "Web browser"
@@ -12216,7 +12215,7 @@ msgstr "Normales Fenster"
 
 #: ../app/widgets/widgets-enums.c:297
 msgid "Utility window"
-msgstr "Werkzeug Fenster"
+msgstr "Werkzeugfenster"
 
 #: ../app/widgets/widgets-enums.c:298
 msgid "Keep above"
@@ -12228,13 +12227,13 @@ msgid ""
 "did not save indexed colormaps correctly.\n"
 "Substituting grayscale map."
 msgstr ""
-"XCF Warnung: Version 0 des XCF-Dateiformats\n"
+"XCF-Warnung: Version 0 des XCF-Dateiformats\n"
 "hat indizierte Farbpaletten falsch gespeichert.\n"
 "Farben wurden durch Graustufen ersetzt."
 
 #: ../app/xcf/xcf-read.c:107
 msgid "Invalid UTF-8 string in XCF file"
-msgstr "Ungültiger UTF-8 Text in XCF Datei"
+msgstr "Ungültiger UTF-8-Text in XCF-Datei"
 
 #: ../app/xcf/xcf-save.c:164 ../app/xcf/xcf-save.c:176
 #: ../app/xcf/xcf-save.c:188 ../app/xcf/xcf-save.c:200
@@ -12255,7 +12254,7 @@ msgstr "Fehler beim Spulen in XCF-Datei: %s"
 
 #: ../app/xcf/xcf.c:96 ../app/xcf/xcf.c:162
 msgid "GIMP XCF image"
-msgstr "GIMP XCF Bild"
+msgstr "GIMP-XCF-Bild"
 
 #: ../app/xcf/xcf.c:263
 #, fuzzy, c-format
@@ -12265,7 +12264,7 @@ msgstr "»%s« konnte nicht geöffnet werden: %s"
 #: ../app/xcf/xcf.c:305
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "XCF Fehler: nicht unterstützte XCF-Dateiversion %d aufgetreten"
+msgstr "XCF-Fehler: nicht unterstützte XCF-Dateiversion %d aufgetreten"
 
 #: ../app/xcf/xcf.c:371
 #, fuzzy, c-format
@@ -12294,7 +12293,7 @@ msgstr ""
 
 #: ../tools/gimp-remote.c:99
 msgid "Start GIMP without showing the startup window"
-msgstr "GIMP starten ohne das Startfenster anzuzeigen"
+msgstr "GIMP starten, ohne das Startfenster anzuzeigen"
 
 #: ../tools/gimp-remote.c:205
 msgid "Could not connect to GIMP."

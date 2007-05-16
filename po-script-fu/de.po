@@ -1885,7 +1885,7 @@ msgstr "Alle Hilfslinien _entfernen"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 msgid "BG opacity"
-msgstr "HG Deckkraft"
+msgstr "HG-Deckkraft"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
 msgid "Create a graph of the Hue, Saturation, and Value distributions"
@@ -1893,7 +1893,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
 msgid "Draw _HSV Graph..."
-msgstr "_HSV Analyse-Grafik …"
+msgstr "_HSV-Analyse-Grafik …"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:4
 msgid "End X"
@@ -1905,7 +1905,7 @@ msgstr "Ende Y"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:6
 msgid "From top-left to bottom-right"
-msgstr "Von Links-Oben nach Rechts-Unten"
+msgstr "Von links oben nach rechts unten"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:7
 msgid "Graph scale"
@@ -2773,7 +2773,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:6
 msgid "Web Title Header..."
-msgstr "Web-Seiten-Ü_berschrift …"
+msgstr "Webseiten-Ü_berschrift …"
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:3
 msgid "Create an image filled with a Truchet pattern"
@@ -2893,7 +2893,7 @@ msgstr "_Grundlegende Konzepte"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
 msgid "_Developer Web Site"
-msgstr "_Entwicklunger-Internet-Seite"
+msgstr "_Entwickler-Internetseite"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
 msgid "_Main Web Site"

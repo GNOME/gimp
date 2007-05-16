@@ -497,7 +497,7 @@ msgstr "Linear"
 
 #: ../libgimpbase/gimpbaseenums.c:389
 msgid "Bi-linear"
-msgstr "Bi-Linear"
+msgstr "Bi-linear"
 
 #: ../libgimpbase/gimpbaseenums.c:390
 msgid "Radial"
@@ -569,7 +569,7 @@ msgstr "Bildgröße"
 
 #: ../libgimpbase/gimpbaseenums.c:493
 msgid "RGB color"
-msgstr "RGB Farben"
+msgstr "RGB-Farben"
 
 #: ../libgimpbase/gimpbaseenums.c:494 ../libgimpbase/gimpbaseenums.c:529
 msgid "Grayscale"
@@ -758,7 +758,7 @@ msgstr "%d GB"
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
 #: ../modules/cdisplay_lcms.c:259
 msgid "(invalid UTF-8 string)"
-msgstr "(Ungültiger UTF-8 Text)"
+msgstr "(Ungültiger UTF-8-Text)"
 
 #: ../libgimpconfig/gimpcolorconfig.c:40
 msgid "Mode of operation for color management."
@@ -774,7 +774,7 @@ msgid ""
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Wenn diese Option ausgewählt ist, wird GIMP versuchen, dass "
+"Wenn diese Option ausgewählt ist, wird GIMP versuchen, das "
 "Bildschirmfarbprofil des Fenstersystems zu verwenden. Das konfigurierte "
 "Monitorprofil wird dann nur als Ausweichlösung verwendet."
 
@@ -803,7 +803,7 @@ msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
 msgstr ""
-"Legt fest, wie Farben vom RGB Farbraum zum simulierten Drucker verändert "
+"Legt fest, wie Farben vom RGB-Farbraum zum simulierten Drucker verändert "
 "werden."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
@@ -911,7 +911,7 @@ msgstr "»%s« konnte nicht angelegt werden: %s"
 
 #: ../libgimpconfig/gimpscanner.c:255
 msgid "invalid UTF-8 string"
-msgstr "ungültiger UTF-8 Text"
+msgstr "ungültiger UTF-8-Text"
 
 #: ../libgimpconfig/gimpscanner.c:606
 #, c-format
@@ -927,7 +927,7 @@ msgstr "Fehler beim Laden von Modul '%s': %s"
 
 #: ../libgimpmodule/gimpmodule.c:375
 msgid "Module error"
-msgstr "Modul Fehler"
+msgstr "Modul-Fehler"
 
 #: ../libgimpmodule/gimpmodule.c:376
 msgid "Loaded"
@@ -1091,11 +1091,11 @@ msgstr ""
 
 #: ../libgimpwidgets/gimppreviewarea.c:94
 msgid "Check Size"
-msgstr "Schachbrett Größe"
+msgstr "Schachbrettgröße"
 
 #: ../libgimpwidgets/gimppreviewarea.c:101
 msgid "Check Style"
-msgstr "Schachbrett Muster"
+msgstr "Schachbrettmuster"
 
 #. toggle button to (des)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:265
@@ -1207,7 +1207,7 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Benutze diesen Wert für den Zufallsgenerator - dies ermöglicht es \"zufällige"
+"Benutze diesen Wert für den Zufallsgenerator - dies ermöglicht es, \"zufällige"
 "\" Funktionen zu wiederholen"
 
 #: ../libgimpwidgets/gimpwidgets.c:1009
@@ -1293,7 +1293,7 @@ msgstr "Tritanopia (Blauschwäche)"
 #: ../modules/cdisplay_colorblind.c:200
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr ""
-"Farbenblindheit Anzeigenfarbfilter (Algorithmus von Brettel-Vienot-Mollon)"
+"Farbenblindheit-Simulation (Algorithmus von Brettel-Vienot-Mollon)"
 
 #: ../modules/cdisplay_colorblind.c:290
 msgid "Color Deficient Vision"
@@ -1305,7 +1305,7 @@ msgstr "Art der _Sehschwäche:"
 
 #: ../modules/cdisplay_gamma.c:91
 msgid "Gamma color display filter"
-msgstr "Gamma Anzeigenfarbfilter"
+msgstr "Gamma-Anzeigenfarbfilter"
 
 #: ../modules/cdisplay_gamma.c:160
 msgid "Gamma"
@@ -1340,8 +1340,8 @@ msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
-"Dieser Filter entnimmt seine Konfiguration aus dem Abschnitt Farbverwaltung "
-"im Einstellungsdialog."
+"Dieser Filter entnimmt seine Konfiguration dem Abschnitt "
+"»Farbverwaltung« im Einstellungsdialog."
 
 #: ../modules/cdisplay_lcms.c:302
 msgid "Mode of operation:"
@@ -1361,11 +1361,11 @@ msgstr "Drucksimulationsprofil:"
 
 #: ../modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
-msgstr "Farb Andruck Filter mittels ICC Farbprofilen"
+msgstr "Farbandruck-Filter mittels ICC-Farbprofilen"
 
 #: ../modules/cdisplay_proof.c:179
 msgid "Color Proof"
-msgstr "Farb Andruck"
+msgstr "Farbandruck"
 
 #: ../modules/cdisplay_proof.c:306
 msgid "_Intent:"
@@ -1385,7 +1385,7 @@ msgstr "Schwarzpunkt-Abgleich"
 
 #: ../modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
-msgstr "CMYK Farbmischer"
+msgstr "CMYK-Farbmischer"
 
 #: ../modules/colorsel_cmyk.c:130
 msgid "CMYK"
@@ -1446,7 +1446,7 @@ msgstr "Dreieck"
 
 #: ../modules/colorsel_water.c:84
 msgid "Watercolor style color selector"
-msgstr "Wasserfarben Farbmischer"
+msgstr "Wasserfarben-Farbmischer"
 
 #: ../modules/colorsel_water.c:150
 msgid "Watercolor"
@@ -1564,7 +1564,7 @@ msgstr "Gerät:"
 #: ../modules/controller_linux_input.c:223
 msgid "The name of the device to read Linux Input events from."
 msgstr ""
-"Der Name des Gerätes von welchem Linux-Eingabeereignisse ausgelesen werden."
+"Der Name des Gerätes, von welchem Linux-Eingabeereignisse ausgelesen werden."
 
 #: ../modules/controller_linux_input.c:227
 msgid "Linux Input"
@@ -1601,7 +1601,7 @@ msgstr "MIDI-Ereignissteuerung"
 
 #: ../modules/controller_midi.c:237
 msgid "The name of the device to read MIDI events from."
-msgstr "Der Name des Gerätes von welchem MIDI-Ereignisse ausgelesen werden."
+msgstr "Der Name des Gerätes, von welchem MIDI-Ereignisse ausgelesen werden."
 
 #: ../modules/controller_midi.c:240
 msgid "Enter 'alsa' to use the ALSA sequencer."
@@ -1616,8 +1616,8 @@ msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
 msgstr ""
-"Der MIDI-Kanal von dem Ereignisse ausgelesen werden. Setzen Sie den Wert auf "
-"-1 um aus allen MIDI-Kanälen zu lesen."
+"Der MIDI-Kanal, von dem Ereignisse ausgelesen werden. Setzen Sie den Wert auf "
+"-1, um aus allen MIDI-Kanälen zu lesen."
 
 #: ../modules/controller_midi.c:260
 msgid "MIDI"
@@ -1644,7 +1644,7 @@ msgstr "MIDI-Ereignis"
 
 #: ../modules/controller_midi.c:458
 msgid "GIMP MIDI controller"
-msgstr "GIMP MIDI-Steuerung"
+msgstr "MIDI-Steuerung"
 
 #~ msgid "Ask"
 #~ msgstr "Nachfragen"

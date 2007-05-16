@@ -78,7 +78,7 @@ msgstr "XMIN:"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:720
 msgid "Change the first (minimal) x-coordinate delimitation"
-msgstr "Erste (minimal) x-Koordinate der Abgrenzung ändern"
+msgstr "Erste (minimale) x-Koordinate der Abgrenzung ändern"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:728
 msgid "XMAX:"
@@ -86,7 +86,7 @@ msgstr "XMAX:"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:731
 msgid "Change the second (maximal) x-coordinate delimitation"
-msgstr "Zweite (maximal) x-Koordinate der Abgrenzung ändern"
+msgstr "Zweite (maximale) x-Koordinate der Abgrenzung ändern"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:739
 msgid "YMIN:"
@@ -113,7 +113,7 @@ msgid ""
 "Change the iteration value. The higher it is, the more details will be "
 "calculated, which will take more time"
 msgstr ""
-"Iterationswert ändern. Je höher er ist desto detaillierter wird berechnet, "
+"Iterationswert ändern. Je höher er ist, desto detaillierter wird berechnet, "
 "was jedoch mehr Zeit benötigt"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:773
@@ -125,7 +125,7 @@ msgid ""
 "Change the CX value (changes aspect of fractal, active with every fractal "
 "but Mandelbrot and Sierpinski)"
 msgstr ""
-"CX Wert ändern (verändert den Aspekt des Fraktals, bei allen Fraktalen außer "
+"CX-Wert ändern (verändert den Aspekt des Fraktals, bei allen Fraktalen außer "
 "Mandelbrot und Sierpinski)"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:785
@@ -459,7 +459,7 @@ msgstr "Fraktal wird berechnet"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:252
 msgid "_Fractal Explorer..."
-msgstr "_Fraktal Explorer …"
+msgstr "_Fraktal-Explorer …"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:382
 msgid "Rendering fractal"
@@ -1717,7 +1717,7 @@ msgid ""
 "(this is the reason why image on drawable is different from preview), and "
 "(2) all mutation rates equal to zero."
 msgstr ""
-"Die gleiche Anfangszahl erzeugt das gleiche Bild wenn 1. die Breiten \n"
+"Die gleiche Anfangszahl erzeugt das gleiche Bild, wenn 1. die Breiten \n"
 "der Bilder gleich sind (deswegen ist das endgültige Bild anders als \n"
 "die Vorschau) und 2. alle Mutationsraten gleich Null sind."
 
@@ -2019,7 +2019,7 @@ msgstr "Animation abspielen:"
 
 #: ../plug-ins/common/animationplay.c:734
 msgid "Tried to display an invalid layer."
-msgstr "Es wurde versucht eine ungültige Ebene anzuzeigen."
+msgstr "Es wurde versucht, eine ungültige Ebene anzuzeigen."
 
 #: ../plug-ins/common/animationplay.c:1254
 #, c-format
@@ -2144,7 +2144,7 @@ msgstr "_HSV strecken"
 
 #: ../plug-ins/common/autostretch_hsv.c:117
 msgid "Auto-Stretching HSV"
-msgstr "Automatische HSV Farbraumspreizung"
+msgstr "Automatische HSV-Farbraumspreizung"
 
 #: ../plug-ins/common/autostretch_hsv.c:193
 msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
@@ -3965,7 +3965,7 @@ msgstr "_Filterpaket …"
 
 #: ../plug-ins/common/fp.c:375
 msgid "FP can only be used on RGB images."
-msgstr "FP kann nur mit RGB Bildern verwendet werden."
+msgstr "FP kann nur mit RGB-Bildern verwendet werden."
 
 #: ../plug-ins/common/fp.c:385
 msgid "FP can only be run interactively."
@@ -4102,9 +4102,7 @@ msgstr "Fraktal"
 #. Settings
 #: ../plug-ins/common/fractaltrace.c:727
 msgid "Outside Type"
-msgstr ""
-"Tausche eine Farbe gegen eine andere aus; optional können sie einen\n"
-"Schwellwert für die Umsetzung von einer Schattierung in eine Andere setzen"
+msgstr "An den Rändern"
 
 #: ../plug-ins/common/fractaltrace.c:732
 msgid "_Warp"
@@ -4181,7 +4179,7 @@ msgstr "_RLE"
 
 #: ../plug-ins/common/gbr.c:152 ../plug-ins/common/gbr.c:173
 msgid "GIMP brush"
-msgstr "GIMP Pinsel"
+msgstr "GIMP-Pinsel"
 
 #: ../plug-ins/common/gbr.c:388 ../plug-ins/common/gbr.c:400
 msgid "Unsupported brush format"
@@ -4204,7 +4202,7 @@ msgstr "Unbenannt"
 
 #: ../plug-ins/common/gbr.c:607
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "GIMP Pinsel sind entweder Graustufen oder RGBA Bilder"
+msgstr "GIMP-Pinsel sind entweder Graustufen- oder RGBA-Bilder"
 
 #: ../plug-ins/common/gbr.c:704
 msgid "Save as Brush"
@@ -4230,7 +4228,7 @@ msgstr "Gee Schleim"
 
 #: ../plug-ins/common/gee.c:168 ../plug-ins/common/gee_zoom.c:192
 msgid "Thank You for Choosing GIMP"
-msgstr "Vielen Danke, dass Sie GIMP verwenden"
+msgstr "Vielen Dank, dass Sie GIMP verwenden"
 
 #: ../plug-ins/common/gee.c:175
 #, c-format
@@ -4274,7 +4272,7 @@ msgstr "Pause eingefügt, um unnötige Prozessorbelastung zu verhindern."
 
 #: ../plug-ins/common/gif.c:1183
 msgid "GIF Warning"
-msgstr "GIF Warnung"
+msgstr "GIF-Warnung"
 
 #: ../plug-ins/common/gif.c:1207
 msgid ""
@@ -4300,7 +4298,7 @@ msgstr "Als GIF speichern"
 #. regular gif parameter settings
 #: ../plug-ins/common/gif.c:1273
 msgid "GIF Options"
-msgstr "GIF Einstellungen"
+msgstr "GIF-Einstellungen"
 
 #: ../plug-ins/common/gif.c:1279
 msgid "I_nterlace"
@@ -4308,7 +4306,7 @@ msgstr "I_nterlace"
 
 #: ../plug-ins/common/gif.c:1295
 msgid "_GIF comment:"
-msgstr "_GIF Kommentar:"
+msgstr "_GIF-Kommentar:"
 
 #. additional animated gif parameter settings
 #: ../plug-ins/common/gif.c:1352
@@ -4321,7 +4319,7 @@ msgstr "_Unendliche Schleife"
 
 #: ../plug-ins/common/gif.c:1371
 msgid "_Delay between frames where unspecified:"
-msgstr "_Pause zwischen Einzelbildern wenn nicht angegeben:"
+msgstr "_Pause zwischen Einzelbildern, wenn nicht angegeben:"
 
 #: ../plug-ins/common/gif.c:1386 ../plug-ins/common/mng.c:1542
 msgid "milliseconds"
@@ -4329,7 +4327,7 @@ msgstr "Millisekunden"
 
 #: ../plug-ins/common/gif.c:1396
 msgid "_Frame disposal where unspecified:"
-msgstr "Einzelbildübergang wenn nicht angegeben:"
+msgstr "Einzelbildübergang, wenn nicht angegeben:"
 
 #: ../plug-ins/common/gif.c:1400
 msgid "I don't care"
@@ -4354,16 +4352,16 @@ msgstr "_Den oben eingegebenen Übergang für alle Einzelbilder verwenden"
 
 #: ../plug-ins/common/gif.c:2599
 msgid "Error writing output file."
-msgstr "Fehler beim schreiben der Ziel Datei."
+msgstr "Fehler beim Schreiben der Zieldatei."
 
 #: ../plug-ins/common/gif.c:2669
 #, c-format
 msgid "The default comment is limited to %d characters."
-msgstr "Der Standard-Kommentar ist auf %d Zeichen beschränkt."
+msgstr "Der Standardkommentar ist auf %d Zeichen beschränkt."
 
 #: ../plug-ins/common/gifload.c:325
 msgid "This is not a GIF file"
-msgstr "Dies ist keine GIF Datei"
+msgstr "Dies ist keine GIF-Datei"
 
 #: ../plug-ins/common/gifload.c:364
 msgid "Non-square pixels.  Image might look squashed."
@@ -4402,7 +4400,7 @@ msgstr ""
 
 #: ../plug-ins/common/gih.c:207 ../plug-ins/common/gih.c:228
 msgid "GIMP brush (animated)"
-msgstr "GIMP Pinsel (animiert)"
+msgstr "GIMP-Pinsel (animiert)"
 
 #: ../plug-ins/common/gih.c:321
 #, c-format
@@ -4411,11 +4409,11 @@ msgstr "Ebene %s hat keinen Alpha-Kanal, ignoriert"
 
 #: ../plug-ins/common/gih.c:492
 msgid "Error in GIMP brush pipe file."
-msgstr "Fehler in der GIMP Pinselanimation"
+msgstr "Fehler in der GIMP-Pinselanimation"
 
 #: ../plug-ins/common/gih.c:558
 msgid "GIMP brush file appears to be corrupted."
-msgstr "GIMP Pinseldatei scheint nicht vollständig zu sein."
+msgstr "GIMP-Pinseldatei scheint nicht vollständig zu sein."
 
 #: ../plug-ins/common/gih.c:703
 msgid "Couldn't load one brush in the pipe, giving up."
@@ -4902,7 +4900,7 @@ msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
 msgstr ""
-"Klicken und ziehen Sie in der Vorschau um die auf das Bild anzuwendenden "
+"Klicken und ziehen Sie in der Vorschau, um die auf das Bild anzuwendenden "
 "Verformungen zu bestimmen."
 
 #: ../plug-ins/common/jigsaw.c:356
@@ -4956,7 +4954,7 @@ msgstr "Um wie viel die Intensität am Rand der Teile angehoben werden soll"
 #. frame for primitive radio buttons
 #: ../plug-ins/common/jigsaw.c:2540
 msgid "Jigsaw Style"
-msgstr "Puzzle Stil"
+msgstr "Puzzle-Stil"
 
 #: ../plug-ins/common/jigsaw.c:2544
 msgid "_Square"
@@ -4977,7 +4975,7 @@ msgstr "Jedes Teil hat runde Kanten"
 #: ../plug-ins/common/laplace.c:75
 #, fuzzy
 msgid "High-resolution edge detection"
-msgstr "Sobel Kanten-Erkennung"
+msgstr "Sobel-Kantenerkennung"
 
 #: ../plug-ins/common/laplace.c:85
 msgid "_Laplace"
@@ -5190,7 +5188,7 @@ msgstr "_Maximales RGB …"
 
 #: ../plug-ins/common/max_rgb.c:134
 msgid "Can only operate on RGB drawables."
-msgstr "Kann nur mit RGB Bildern arbeiten."
+msgstr "Kann nur mit RGB-Bildern arbeiten."
 
 #: ../plug-ins/common/max_rgb.c:234
 msgid "Max RGB"
@@ -5343,11 +5341,11 @@ msgstr "Wählen Sie eine hohe Kompression für kleine Dateigrößen."
 
 #: ../plug-ins/common/mng.c:1479
 msgid "JPEG compression quality:"
-msgstr "JPEG Kompressionsqualität:"
+msgstr "JPEG-Kompressionsqualität:"
 
 #: ../plug-ins/common/mng.c:1496
 msgid "JPEG smoothing factor:"
-msgstr "JPEG Glättung:"
+msgstr "JPEG-Glättung:"
 
 #: ../plug-ins/common/mng.c:1506
 msgid "Animated MNG Options"
@@ -5479,15 +5477,15 @@ msgstr "Linie"
 
 #: ../plug-ins/common/newsprint.c:145
 msgid "Diamond"
-msgstr "Diamant"
+msgstr "Karo"
 
 #: ../plug-ins/common/newsprint.c:153
 msgid "PS Square (Euclidean Dot)"
-msgstr "PS Quadrat (Euklidischer Punkt)"
+msgstr "PS-Quadrat (Euklidischer Punkt)"
 
 #: ../plug-ins/common/newsprint.c:162
 msgid "PS Diamond"
-msgstr "PS Diamant"
+msgstr "PS-Karo"
 
 #: ../plug-ins/common/newsprint.c:334
 msgid "_Grey"
@@ -5594,11 +5592,11 @@ msgstr ""
 
 #: ../plug-ins/common/nlfilt.c:126
 msgid "_NL Filter..."
-msgstr "_NL Filter …"
+msgstr "_NL-Filter …"
 
 #: ../plug-ins/common/nlfilt.c:955 ../plug-ins/common/nlfilt.c:1018
 msgid "NL Filter"
-msgstr "NL Filter"
+msgstr "NL-Filter"
 
 #: ../plug-ins/common/nlfilt.c:1046
 msgid "Filter"
@@ -5642,7 +5640,7 @@ msgstr "_Korreliertes Rauschen"
 
 #: ../plug-ins/common/noisify.c:496
 msgid "_Independent RGB"
-msgstr "_Unabhängige RGB Kanäle"
+msgstr "_Unabhängige RGB-Kanäle"
 
 #: ../plug-ins/common/noisify.c:520 ../plug-ins/common/noisify.c:524
 msgid "_Gray:"
@@ -5914,10 +5912,10 @@ msgid "Searching by name"
 msgstr "Suchen nach Namen"
 
 #: ../plug-ins/common/plugin-browser.c:386
-#, fuzzy, c-format
+#, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
-msgstr[0] "%d Plugins"
+msgstr[0] "%d Plugin"
 msgstr[1] "%d Plugins"
 
 #: ../plug-ins/common/plugin-browser.c:395
@@ -7250,7 +7248,7 @@ msgstr "Leuchtstärke-_Schwellwert:"
 
 #: ../plug-ins/common/sparkle.c:379
 msgid "Adjust the luminosity threshold"
-msgstr "Leuchtstärke Schwellwert anpassen"
+msgstr "Leuchtstärke-Schwellwert anpassen"
 
 #: ../plug-ins/common/sparkle.c:389
 msgid "F_lare intensity:"
@@ -7880,9 +7878,10 @@ msgstr "Spiegeln"
 msgid "A_ll tiles"
 msgstr "A_lle Kacheln"
 
+# abwechselnd
 #: ../plug-ins/common/tileit.c:476
 msgid "Al_ternate tiles"
-msgstr "Al_ternative Kacheln"
+msgstr "Al_ternierend"
 
 #: ../plug-ins/common/tileit.c:490
 msgid "_Explicit tile"
@@ -8294,7 +8293,7 @@ msgstr "Verlagerungs-Map:"
 #. Displacement Type
 #: ../plug-ins/common/warp.c:461
 msgid "On edges:"
-msgstr "An den Ränder:"
+msgstr "An den Rändern:"
 
 #: ../plug-ins/common/warp.c:472
 msgid "Wrap"
@@ -8352,7 +8351,7 @@ msgstr "Verlaufsskalierung:"
 
 #: ../plug-ins/common/warp.c:663
 msgid "Gradient map selection menu"
-msgstr "Verlauf-Map Auswahl-Menü"
+msgstr "Auswahlmenü für Verlaufskarte"
 
 #: ../plug-ins/common/warp.c:673
 msgid "Vector mag:"
@@ -8365,7 +8364,7 @@ msgstr "Winkel:"
 
 #: ../plug-ins/common/warp.c:711
 msgid "Fixed-direction-vector map selection menu"
-msgstr "Auswahl-Menu für Vektor-Map mit konstanter Richtung"
+msgstr "Auswahlmenü für Vektor-Map mit konstanter Richtung"
 
 #. make sure layer is visible
 #: ../plug-ins/common/warp.c:1181
@@ -8731,7 +8730,7 @@ msgstr "Fehler beim Speichern eines indizierten oder Graustufenbildes"
 
 #: ../plug-ins/common/xwd.c:2244
 msgid "Error during writing rgb image"
-msgstr "Fehler während dem Speichern eines RGB-BIldes"
+msgstr "Fehler während des Speicherns eines RGB-BIldes"
 
 #: ../plug-ins/common/zealouscrop.c:85
 msgid "Autocrop unused space from edges and middle"
@@ -8739,7 +8738,7 @@ msgstr ""
 
 #: ../plug-ins/common/zealouscrop.c:90
 msgid "_Zealous Crop"
-msgstr "_Fanatisch Zuschneiden) …"
+msgstr "_Fanatisch Zuschneiden"
 
 #: ../plug-ins/common/zealouscrop.c:138
 msgid "Zealous cropping"
@@ -8808,7 +8807,7 @@ msgstr "Flammen werden gezeichnet"
 
 #: ../plug-ins/flame/flame.c:318
 msgid "Flame works only on RGB drawables."
-msgstr "Flammen kann nur mit RGB Bildern arbeiten"
+msgstr "Flammen kann nur mit RGB-Bildern arbeiten"
 
 #: ../plug-ins/flame/flame.c:401
 #, c-format
@@ -9367,7 +9366,7 @@ msgstr "_Drehung:"
 
 #: ../plug-ins/gflare/gflare.c:2713
 msgid "_Hue rotation:"
-msgstr "_Farbton Rotation:"
+msgstr "_Farbton-Rotation:"
 
 #: ../plug-ins/gflare/gflare.c:2725
 msgid "Vector _angle:"
@@ -9504,7 +9503,7 @@ msgstr "Rotation:"
 #: ../plug-ins/gflare/gflare.c:3548 ../plug-ins/gflare/gflare.c:3654
 #: ../plug-ins/gflare/gflare.c:3791
 msgid "Hue rotation:"
-msgstr "Farbton Rotation:"
+msgstr "Farbton-Rotation:"
 
 #: ../plug-ins/gflare/gflare.c:3562
 msgid "G_low"
@@ -10556,9 +10555,9 @@ msgid ""
 "create the most common image map type - image collection of \"thumbnails\", "
 "suitable for navigation bars."
 msgstr ""
-"Hilfslinien sind vordefinierte Rechtecke, die das Bild bedecken. Sie\n"
-"definieren sie über deren Breite, Höhe und Abstand voneinander.\n"
-"Dadurch können Sie schnell den typischsten Image-Map-Typ erstellen:\n"
+"Hilfslinien sind vordefinierte Rechtecke, die das Bild bedecken. Sie "
+"definieren sie über deren Breite, Höhe und Abstand voneinander. "
+"Dadurch können Sie schnell den typischsten Image-Map-Typ erstellen: "
 "Eine Bildansammlung von Vorschaubildern, praktisch für Navigationsleisten."
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:172
@@ -10701,7 +10700,7 @@ msgstr "E-_Mail"
 #: ../plug-ins/imagemap/imap_edit_area_info.c:253
 msgid "_URL to activate when this area is clicked: (required)"
 msgstr ""
-"_URL die aktiviert wird, wenn in dieser Fläche geklickt wird (benötigt):"
+"_URL, die aktiviert wird, wenn in dieser Fläche geklickt wird (benötigt):"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:255
 msgid "Select HTML file"
@@ -10738,12 +10737,12 @@ msgstr "_JavaScript"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:451
 msgid "Area Settings"
-msgstr "Bereich Einstellungen"
+msgstr "Bereich-Einstellungen"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:493
 #, c-format
 msgid "Area #%d Settings"
-msgstr "Bereich #%d Einstellungen"
+msgstr "Einstellungen für Bereich %d"
 
 #: ../plug-ins/imagemap/imap_file.c:48 ../plug-ins/imagemap/imap_menu.c:93
 msgid "Error opening file"
@@ -10909,7 +10908,7 @@ msgstr "Allgemein"
 
 #: ../plug-ins/imagemap/imap_preferences.c:354
 msgid "Default Map Type"
-msgstr "Standard Map-Typ"
+msgstr "Standard-Map-Typ"
 
 #: ../plug-ins/imagemap/imap_preferences.c:373
 msgid "_Prompt for area info"
@@ -11058,7 +11057,7 @@ msgstr "Orientierung _beibehalten"
 
 #: ../plug-ins/jpeg/jpeg-load.c:232
 msgid "JPEG preview"
-msgstr "JPEG Vorschau"
+msgstr "JPEG-Vorschau"
 
 #: ../plug-ins/jpeg/jpeg-load.c:609 ../plug-ins/winicon/icoload.c:524
 #, c-format
@@ -11092,7 +11091,7 @@ msgstr "JPEG-Qualitätseinstellungen"
 
 #: ../plug-ins/jpeg/jpeg-save.c:769
 msgid "Enable preview to obtain the file size."
-msgstr "Vorschau aktivieren um die Dateigröße zu ermitteln."
+msgstr "Vorschau aktivieren, um die Dateigröße zu ermitteln."
 
 #: ../plug-ins/jpeg/jpeg-save.c:780
 msgid "Show _preview in image window"
@@ -11124,11 +11123,11 @@ msgstr "Progressiv"
 
 #: ../plug-ins/jpeg/jpeg-save.c:890
 msgid "Force baseline JPEG"
-msgstr "Baseline JPEG erzwingen"
+msgstr "Baseline-JPEG erzwingen"
 
 #: ../plug-ins/jpeg/jpeg-save.c:905
 msgid "Save EXIF data"
-msgstr "EXIF Daten speichern"
+msgstr "EXIF-Daten speichern"
 
 #: ../plug-ins/jpeg/jpeg-save.c:921
 msgid "Save thumbnail"
@@ -11137,7 +11136,7 @@ msgstr "Vorschau speichern"
 #. XMP metadata
 #: ../plug-ins/jpeg/jpeg-save.c:937
 msgid "Save XMP data"
-msgstr "XMP Daten speichern"
+msgstr "XMP-Daten speichern"
 
 #. Subsampling
 #: ../plug-ins/jpeg/jpeg-save.c:950
@@ -11171,7 +11170,7 @@ msgstr "JPEG-Bild"
 
 #: ../plug-ins/jpeg/jpeg.c:287
 msgid "Export Preview"
-msgstr "Export Vorschau"
+msgstr "Export-Vorschau"
 
 #: ../plug-ins/jpeg/jpeg.c:574
 msgid "EXIF data will be ignored."
@@ -11525,11 +11524,11 @@ msgstr "Graumodus"
 #. Gray: Operation-Mode: two radio buttons
 #: ../plug-ins/rcm/rcm_dialog.c:523
 msgid "Treat as this"
-msgstr "Behandle als dies"
+msgstr "Behandle wie diese"
 
 #: ../plug-ins/rcm/rcm_dialog.c:535
 msgid "Change to this"
-msgstr "Ändere in dies"
+msgstr "Ändere in diese"
 
 #. * Gray: What is gray? *
 #: ../plug-ins/rcm/rcm_dialog.c:548
