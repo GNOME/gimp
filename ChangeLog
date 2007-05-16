@@ -1,3 +1,13 @@
+2007-05-17  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/common/tiff-save.c: save the paths in the TIFF.
+	Please test interoperability with other programs.
+
+	* plug-ins/common/tiff-load.c: fix coordinate reading for
+	negative coordinates.
+
+	* app/config/gimpguiconfig.c: Show color swatches by default.
+
 2007-05-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpthumbbox.c

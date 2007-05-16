@@ -1231,11 +1231,9 @@ load_paths (TIFF *tif, gint image)
                           val32 = (guint32 *) (bytes + rec + 2 + j * 4);
                           coord = GUINT32_FROM_BE (*val32);
 
-                          f = (double) ((coord >> 24) & 0x7F) +
+                          f = (double) ((gchar) ((coord >> 24) & 0xFF)) +
                                  (double) (coord & 0x00FFFFFF) /
                                  (double) 0xFFFFFF;
-                          if (coord & 0x80000000)
-                            f *= -1;
 
                           /* coords are stored with vertical component
                            * first, gimp expects the horizontal component

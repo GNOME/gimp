@@ -87,6 +87,8 @@ static void   run       (const gchar      *name,
 
 static gboolean  image_is_monochrome (gint32 image);
 
+static gboolean  save_paths             (TIFF         *tif,
+                                         gint32        image);
 static gboolean  save_image             (const gchar  *filename,
                                          gint32        image,
                                          gint32        drawable,
@@ -415,6 +417,144 @@ image_is_monochrome (gint32 image)
   return monochrome;
 }
 
+
+static void
+double_to_psd_fixed (gdouble value, gchar *target)
+{
+  gdouble in, frac;
+  gint    i, f;
+
+  frac = modf (value, &in);
+  if (frac < 0)
+    {
+      in -= 1;
+      frac += 1;
+    }
+
+  i = (gint) CLAMP (in, -16, 15);
+  f = CLAMP ((gint) (frac * 0xFFFFFF), 0, 0xFFFFFF);
+
+  target[0] = i & 0xFF;
+  target[1] = (f >> 16) & 0xFF;
+  target[2] = (f >>  8) & 0xFF;
+  target[3] = f & 0xFF;
+}
+
+
+static gboolean
+save_paths (TIFF   *tif,
+            gint32  image)
+{
+  gint id = 2000; /* Photoshop paths have IDs >= 2000 */
+  gint num_vectors, *vectors, v;
+  gint num_strokes, *strokes, s;
+  gdouble width, height;
+  GString *ps_tag;
+
+  width = gimp_image_width (image);
+  height = gimp_image_height (image);
+  vectors = gimp_image_get_vectors (image, &num_vectors);
+
+  if (num_vectors <= 0)
+    return FALSE;
+
+  ps_tag = g_string_new ("");
+
+  /* Only up to 1000 paths supported */
+  for (v = 0; v < MIN (num_vectors, 1000); v++)
+    {
+      GString *data;
+      gchar   *name, *nameend;
+      gint     len, lenpos;
+      gchar    pointrecord[26] = { 0, };
+
+      data = g_string_new ("8BIM");
+      g_string_append_c (data, id / 256);
+      g_string_append_c (data, id % 256);
+
+      name = gimp_vectors_get_name (vectors[v]);
+      len = g_utf8_strlen (name, 255); /* max. 255 chars in a pascal string */
+      nameend = g_utf8_offset_to_pointer (name, len);
+      g_string_append_c (data, nameend - name);
+      g_string_append_len (data, name, nameend - name);
+      if (data->len % 1)  /* padding to even size */
+        g_string_append_c (data, 0);
+      g_free (name);
+
+      lenpos = data->len;
+      g_string_append_len (data, "\0\0\0\0", 4); /* will be filled in later */
+      len = data->len; /* to calculate the data size later */
+
+      pointrecord[1] = 6;  /* fill rule record */
+      g_string_append_len (data, pointrecord, 26);
+
+      strokes = gimp_vectors_get_strokes (vectors[v], &num_strokes);
+
+      for (s = 0; s < num_strokes; s++)
+        {
+          GimpVectorsStrokeType type;
+          gdouble  *points;
+          gint      num_points;
+          gboolean  closed;
+          gint      p = 0;
+
+          type = gimp_vectors_stroke_get_points (vectors[v], strokes[s],
+                                                 &num_points, &points, &closed);
+
+          if (type != GIMP_VECTORS_STROKE_TYPE_BEZIER ||
+              num_points > 65535 ||
+              num_points % 6)
+            {
+              g_printerr ("tiff-save: unsupported stroke type: "
+                          "%d (%d points)\n", type, num_points);
+              continue;
+            }
+
+          bzero (pointrecord, 26);
+          pointrecord[1] = closed ? 0 : 3;
+          pointrecord[2] = (num_points / 6) / 256;
+          pointrecord[3] = (num_points / 6) % 256;
+          g_string_append_len (data, pointrecord, 26);
+
+          for (p = 0; p < num_points; p += 6)
+            {
+              pointrecord[1] = closed ? 2 : 5;
+
+              double_to_psd_fixed (points[p+1] / height, pointrecord + 2);
+              double_to_psd_fixed (points[p+0] / width,  pointrecord + 6);
+              double_to_psd_fixed (points[p+3] / height, pointrecord + 10);
+              double_to_psd_fixed (points[p+2] / width,  pointrecord + 14);
+              double_to_psd_fixed (points[p+5] / height, pointrecord + 18);
+              double_to_psd_fixed (points[p+4] / width,  pointrecord + 22);
+
+              g_string_append_len (data, pointrecord, 26);
+            }
+        }
+
+      g_free (strokes);
+
+      /* fix up the length */
+
+      len = data->len - len;
+      data->str[lenpos + 0] = (len & 0xFF000000) >> 24;
+      data->str[lenpos + 1] = (len & 0x00FF0000) >> 16;
+      data->str[lenpos + 2] = (len & 0x0000FF00) >>  8;
+      data->str[lenpos + 3] = (len & 0x000000FF) >>  0;
+
+      g_string_append_len (ps_tag, data->str, data->len);
+      g_string_free (data, TRUE);
+      id ++;
+    }
+
+  TIFFSetField (tif, TIFFTAG_PHOTOSHOP, ps_tag->len, ps_tag->str);
+  g_string_free (ps_tag, TRUE);
+
+  g_free (vectors);
+
+  return TRUE;
+}
+
+
 /*
 ** pnmtotiff.c - converts a portable anymap to a Tagged Image File
 **
@@ -726,6 +866,9 @@ save_image (const gchar *filename,
       }
   }
 #endif
+
+  /* save path data */
+  save_paths (tif, orig_image);
 
   if (!is_bw && drawable_type == GIMP_INDEXED_IMAGE)
     TIFFSetField (tif, TIFFTAG_COLORMAP, red, grn, blu);
