@@ -176,6 +176,9 @@ gimp_file_dialog_progress_start (GimpProgress *progress,
                                 message, cancelable);
   gtk_widget_show (dialog->progress);
 
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
+                                     GTK_RESPONSE_CANCEL, cancelable);
+
   return retval;
 }
 
@@ -378,10 +381,8 @@ gimp_file_dialog_set_sensitive (GimpFileDialog *dialog,
 
   g_list_free (children);
 
-  if (sensitive)
-    gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
-                                       GTK_RESPONSE_CANCEL, sensitive);
-
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
+                                     GTK_RESPONSE_CANCEL, sensitive);
   gtk_dialog_set_response_sensitive (GTK_DIALOG (dialog),
                                      GTK_RESPONSE_OK, sensitive);
 

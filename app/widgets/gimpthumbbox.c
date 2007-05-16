@@ -199,10 +199,17 @@ gimp_thumb_box_progress_start (GimpProgress *progress,
   if (! box->progress_active)
     {
       GtkProgressBar *bar = GTK_PROGRESS_BAR (box->progress);
+      GtkWidget      *toplevel;
 
       gtk_progress_bar_set_fraction (bar, 0.0);
 
       box->progress_active = TRUE;
+
+      toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));
+
+      if (GIMP_IS_FILE_DIALOG (toplevel))
+        gtk_dialog_set_response_sensitive (GTK_DIALOG (toplevel),
+                                           GTK_RESPONSE_CANCEL, cancelable);
 
       return progress;
     }

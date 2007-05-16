@@ -1,5 +1,16 @@
 2007-05-16  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_sensitive):
+	apply sensitivity state to the Cancel button as well.
+	(gimp_file_dialog_progress_start): make the Cancel button sensitive
+	if the progress is cancelable.
+
+	* app/widgets/gimpthumbbox.c (gimp_thumb_box_progress_start): if
+	embedded in a GimpFileDialog, make its Cancel button sensitive if
+	the progress is cancelable
+
+2007-05-16  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpthumbbox.[ch]: combined the two progress bars
 	(when loading multiple thumbnails) into a single one using a
 	GimpSubProgress.
