@@ -1,3 +1,8 @@
+2007-05-16  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-interface.c (script_fu_interface):
+	readded (better) code to deal with full menu paths.
+
 2007-05-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpbrushtool.c (gimp_brush_tool_constructor): add a

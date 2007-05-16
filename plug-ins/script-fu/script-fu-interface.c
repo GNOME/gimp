@@ -215,6 +215,16 @@ script_fu_interface (SFScript *script,
   /* strip mnemonics from the menupath */
   sf_interface->title = gimp_strip_uline (gettext (script->menu_path));
 
+  /* if this looks like a full menu path, use only the last part */
+  if (sf_interface->title[0] == '<' &&
+      (tmp = strrchr (sf_interface->title, '/')) && tmp[1])
+    {
+      tmp = g_strdup (tmp + 1);
+
+      g_free (sf_interface->title);
+      sf_interface->title = tmp;
+    }
+
   /* cut off ellipsis */
   tmp = (strstr (sf_interface->title, "..."));
   if (! tmp)
