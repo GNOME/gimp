@@ -1,7 +1,7 @@
 2007-05-16  Sven Neumann  <sven@gimp.org>
 
-	* app/base/tile-manager.c (tile_invalidate): if the invalided tile
-	is the cached tile, release the cached tile. Fixes bug #438802.
+	* app/base/tile-manager.c (tile_invalidate): if the invalidated
+	tile is the cached tile, release the cached tile. Fixes bug #438802.
 
 2007-05-16  Sven Neumann  <sven@gimp.org>
 
