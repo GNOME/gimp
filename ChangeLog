@@ -1,5 +1,10 @@
 2007-05-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/mblur.c: applied patch from Jörg Gittinger that
+	improves the quality of the Motion Blur filter (bug #380435).
+
+2007-05-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-interface.c (script_fu_interface):
 	removed code that used to deal with full menu paths. All our
 	scripts use script-fu-menu-register now.
