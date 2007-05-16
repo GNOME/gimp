@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-16 17:52+0200\n"
-"PO-Revision-Date: 2007-05-16 17:49+0200\n"
+"POT-Creation-Date: 2007-05-16 18:20+0200\n"
+"PO-Revision-Date: 2007-05-16 18:25+0200\n"
 "Last-Translator: Hendrik Richter <hendrikr@gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -194,7 +194,7 @@ msgid "_Test"
 msgstr "_Test"
 
 #: ../plug-ins/script-fu/script-fu.c:316
-msgid "_Utils"
+msgid "_Utilities"
 msgstr "_Werkzeuge"
 
 #: ../plug-ins/script-fu/script-fu.c:318
@@ -1344,12 +1344,6 @@ msgstr ""
 msgid "Effect size (pixels)"
 msgstr "Effektgröße (Pixel)"
 
-#: ../plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "This procedure is deprecated! use \\'gimp-edit-copy-visible\\' instead."
-msgstr ""
-"Diese Prozedur ist veraltet! Bitte verwenden Sie statt dessen \\'gimp-edit-"
-"copy-visible\\'."
-
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "Background image"
 msgstr "Hintergrundbild"
@@ -2400,12 +2394,6 @@ msgid "Round the corners of the current selection"
 msgstr "Die Ecken der aktuellen Auswahl abrunden"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
-msgid ""
-"Round the corners of the current selection (deprecated, use Rounded "
-"Rectangle)"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/selection-round.scm.h:6
 msgid "Rounded R_ectangle..."
 msgstr "A_bgerundetes Rechteck …"
 
@@ -2982,15 +2970,3 @@ msgstr "Glanzlichtdeckkraft"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-Effekt …"
-
-#~ msgid "<Toolbox>/Xtns/Languages/Script-Fu"
-#~ msgstr "<Toolbox>/Xtns/Sprachen/Skript-Fu"
-
-#~ msgid "Burn-In: Need two layers in total!"
-#~ msgstr "»Einbrennen« benötigt mindestens zwei Ebenen."
-
-#~ msgid "Render _Image..."
-#~ msgstr "_Bild berechnen …"
-
-#~ msgid "_Divisions..."
-#~ msgstr "_Teiler …"

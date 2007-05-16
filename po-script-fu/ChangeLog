@@ -1,3 +1,9 @@
+2007-05-16  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed copy-visible.scm.
+
+	* de.po: fixed incorrect translation.
+
 2007-05-16  Hendrik Brandt  <heb@gnome-de.org>
 
 	* de.po: Updated German translation.

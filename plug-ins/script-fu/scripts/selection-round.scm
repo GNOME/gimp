@@ -167,7 +167,7 @@
 
 (script-fu-register "script-fu-selection-round"
   ""
-  _"Round the corners of the current selection (deprecated, use Rounded Rectangle)"
+  "Round the corners of the current selection (deprecated, use Rounded Rectangle)"
   "Sven Neumann"              ; authors
   "Sven Neumann"              ; copyright
   "1998/02/06"
