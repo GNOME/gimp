@@ -1,3 +1,9 @@
+2007-05-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/preferences-dialog.c: also remove the border around
+	the notebook pages and add 12 px spacing between the page and its
+	title instead.
+
 2007-05-17  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdockseparator.c: removed period from tooltip.

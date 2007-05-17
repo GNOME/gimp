@@ -737,7 +737,6 @@ prefs_notebook_append_page (Gimp          *gimp,
   gimp_help_set_help_data (event_box, NULL, help_id);
 
   vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
   gtk_container_add (GTK_CONTAINER (event_box), vbox);
   gtk_widget_show (vbox);
 
@@ -1383,7 +1382,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   gtk_container_add (GTK_CONTAINER (frame), tv);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
