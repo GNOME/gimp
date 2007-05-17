@@ -1114,6 +1114,7 @@ load_paths (TIFF *tif, gint image)
   guint16 *val16;
 
   gint width, height;
+  gint path_index;
 
   width = gimp_image_width (image);
   height = gimp_image_height (image);
@@ -1133,6 +1134,8 @@ load_paths (TIFF *tif, gint image)
 
   if (!TIFFGetField (tif, TIFFTAG_PHOTOSHOP, &n_bytes, &bytes))
     return;
+
+  path_index = 0;
 
   pos = 0;
 
@@ -1183,7 +1186,8 @@ load_paths (TIFF *tif, gint image)
           gboolean closed = FALSE;
 
           vectors = gimp_vectors_new (image, name);
-          gimp_image_add_vectors (image, vectors, -1);
+          gimp_image_add_vectors (image, vectors, path_index);
+          path_index++;
 
           while (rec < pos + len)
             {

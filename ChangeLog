@@ -1,5 +1,9 @@
 2007-05-17  Simon Budig  <simon@gimp.org>
 
+	* plug-ins/common/tiff-load.c: Fix the order of the imported paths.
+
+2007-05-17  Simon Budig  <simon@gimp.org>
+
 	* plug-ins/common/tiff-save.c: save the paths in the TIFF.
 	Please test interoperability with other programs.
 
