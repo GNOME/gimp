@@ -171,6 +171,7 @@ gimp_dockbook_init (GimpDockbook *dockbook)
 
   gtk_notebook_popup_enable (GTK_NOTEBOOK (dockbook));
   gtk_notebook_set_scrollable (GTK_NOTEBOOK (dockbook), TRUE);
+  gtk_notebook_set_show_border (GTK_NOTEBOOK (dockbook), FALSE);
 
   gtk_drag_dest_set (GTK_WIDGET (dockbook),
                      GTK_DEST_DEFAULT_ALL,

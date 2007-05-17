@@ -427,7 +427,7 @@ static void
 gimp_dockable_style_set (GtkWidget *widget,
                          GtkStyle  *prev_style)
 {
-  GimpDockable *dockable;
+  GimpDockable *dockable = GIMP_DOCKABLE (widget);
   gint          content_border;
 
   gtk_widget_style_get (widget,
@@ -435,8 +435,6 @@ gimp_dockable_style_set (GtkWidget *widget,
                         NULL);
 
   gtk_container_set_border_width (GTK_CONTAINER (widget), content_border);
-
-  dockable = GIMP_DOCKABLE (widget);
 
   if (dockable->title_layout)
     {
@@ -479,19 +477,9 @@ gimp_dockable_expose_event (GtkWidget      *widget,
 {
   if (GTK_WIDGET_DRAWABLE (widget))
     {
-      GimpDockable *dockable  = GIMP_DOCKABLE (widget);
+      GimpDockable *dockable = GIMP_DOCKABLE (widget);
       GdkRectangle  title_area;
       GdkRectangle  expose_area;
-
-      if (! gtk_notebook_get_show_tabs (GTK_NOTEBOOK (dockable->dockbook)))
-        gtk_paint_extension (widget->style, widget->window,
-                             widget->state, GTK_SHADOW_OUT,
-                             &event->area, widget, "tab",
-                             widget->allocation.x,
-                             widget->allocation.y,
-                             widget->allocation.width,
-                             widget->allocation.height,
-                             GTK_POS_BOTTOM);
 
       gimp_dockable_get_title_area (dockable, &title_area);
 

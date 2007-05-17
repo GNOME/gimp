@@ -1,3 +1,10 @@
+2007-05-17  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpdockbook.c (gimp_dockbook_init): unset show-border.
+
+	* app/widgets/gimpdockable.c (gimp_dockable_expose_event): don't
+	paint the extension; reduces visual clutter.
+
 2007-05-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/preferences-dialog.c: also remove the border around
