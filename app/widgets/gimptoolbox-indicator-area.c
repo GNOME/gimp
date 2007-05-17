@@ -41,9 +41,9 @@
 #include "gimp-intl.h"
 
 
-#define CELL_SIZE        26  /*  The size of the previews                  */
-#define GRAD_CELL_WIDTH  54  /*  The width of the gradient preview         */
-#define GRAD_CELL_HEIGHT 14  /*  The height of the gradient preview        */
+#define CELL_SIZE        24  /*  The size of the previews                  */
+#define GRAD_CELL_WIDTH  52  /*  The width of the gradient preview         */
+#define GRAD_CELL_HEIGHT 12  /*  The height of the gradient preview        */
 #define CELL_SPACING      2  /*  How much between brush and pattern cells  */
 
 
@@ -138,7 +138,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
   brush_view =
     gimp_view_new_full_by_types (context,
                                  GIMP_TYPE_VIEW, GIMP_TYPE_BRUSH,
-                                 CELL_SIZE, CELL_SIZE, 0,
+                                 CELL_SIZE, CELL_SIZE, 1,
                                  FALSE, TRUE, TRUE);
   gimp_view_set_viewable (GIMP_VIEW (brush_view),
                           GIMP_VIEWABLE (gimp_context_get_brush (context)));
@@ -169,7 +169,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
   pattern_view =
     gimp_view_new_full_by_types (context,
                                  GIMP_TYPE_VIEW, GIMP_TYPE_PATTERN,
-                                 CELL_SIZE, CELL_SIZE, 0,
+                                 CELL_SIZE, CELL_SIZE, 1,
                                  FALSE, TRUE, TRUE);
   gimp_view_set_viewable (GIMP_VIEW (pattern_view),
                           GIMP_VIEWABLE (gimp_context_get_pattern (context)));
@@ -201,7 +201,7 @@ gimp_toolbox_indicator_area_create (GimpToolbox *toolbox)
   gradient_view =
     gimp_view_new_full_by_types (context,
                                  GIMP_TYPE_VIEW, GIMP_TYPE_GRADIENT,
-                                 GRAD_CELL_WIDTH, GRAD_CELL_HEIGHT, 0,
+                                 GRAD_CELL_WIDTH, GRAD_CELL_HEIGHT, 1,
                                  FALSE, TRUE, TRUE);
   gimp_view_set_viewable (GIMP_VIEW (gradient_view),
                           GIMP_VIEWABLE (gimp_context_get_gradient (context)));

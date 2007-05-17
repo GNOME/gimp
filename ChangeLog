@@ -1,3 +1,10 @@
+2007-05-17  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/preferences-dialog.c
+	* app/widgets/gimptoolbox.c: removed frames to reduce visual clutter.
+
+	* app/widgets/gimptoolbox-indicator-area.c: draw with borders.
+
 2007-05-17  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/tiff-load.c: Fix the order of the imported paths.

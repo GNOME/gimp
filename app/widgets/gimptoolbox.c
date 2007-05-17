@@ -195,7 +195,7 @@ gimp_toolbox_constructor (GType                  type,
 
   main_vbox = GIMP_DOCK (toolbox)->main_vbox;
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 2);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
   gtk_box_reorder_child (GTK_BOX (main_vbox), vbox, 0);
   gtk_widget_show (vbox);
@@ -348,7 +348,7 @@ gimp_toolbox_size_allocate (GtkWidget     *widget,
            list;
            list = list->next)
         {
-          tool_info = (GimpToolInfo *) list->data;
+          tool_info = list->data;
 
           if (tool_info->visible)
             n_tools++;
@@ -671,17 +671,11 @@ static GtkWidget *
 toolbox_create_color_area (GimpToolbox *toolbox,
                            GimpContext *context)
 {
-  GtkWidget *frame;
   GtkWidget *alignment;
   GtkWidget *col_area;
 
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-
   alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (alignment), 3);
-  gtk_container_add (GTK_CONTAINER (frame), alignment);
-  gtk_widget_show (alignment);
+  gtk_container_set_border_width (GTK_CONTAINER (alignment), 2);
 
   gimp_help_set_help_data (alignment, NULL, GIMP_HELP_TOOLBOX_COLOR_AREA);
 
@@ -694,24 +688,18 @@ toolbox_create_color_area (GimpToolbox *toolbox,
                  "squares reset colors.  The arrows swap colors. Click "
                  "to open the color selection dialog."), NULL);
 
-  return frame;
+  return alignment;
 }
 
 static GtkWidget *
 toolbox_create_foo_area (GimpToolbox *toolbox,
                          GimpContext *context)
 {
-  GtkWidget *frame;
   GtkWidget *alignment;
   GtkWidget *foo_area;
 
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-
   alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (alignment), 3);
-  gtk_container_add (GTK_CONTAINER (frame), alignment);
-  gtk_widget_show (alignment);
+  gtk_container_set_border_width (GTK_CONTAINER (alignment), 2);
 
   gimp_help_set_help_data (alignment, NULL, GIMP_HELP_TOOLBOX_INDICATOR_AREA);
 
@@ -719,24 +707,18 @@ toolbox_create_foo_area (GimpToolbox *toolbox,
   gtk_container_add (GTK_CONTAINER (alignment), foo_area);
   gtk_widget_show (foo_area);
 
-  return frame;
+  return alignment;
 }
 
 static GtkWidget *
 toolbox_create_image_area (GimpToolbox *toolbox,
                            GimpContext *context)
 {
-  GtkWidget *frame;
   GtkWidget *alignment;
   GtkWidget *image_area;
 
-  frame = gtk_frame_new (NULL);
-  gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_OUT);
-
   alignment = gtk_alignment_new (0.5, 0.5, 0.0, 0.0);
-  gtk_container_set_border_width (GTK_CONTAINER (alignment), 3);
-  gtk_container_add (GTK_CONTAINER (frame), alignment);
-  gtk_widget_show (alignment);
+  gtk_container_set_border_width (GTK_CONTAINER (alignment), 2);
 
   gimp_help_set_help_data (alignment, NULL, GIMP_HELP_TOOLBOX_IMAGE_AREA);
 
@@ -744,7 +726,7 @@ toolbox_create_image_area (GimpToolbox *toolbox,
   gtk_container_add (GTK_CONTAINER (alignment), image_area);
   gtk_widget_show (image_area);
 
-  return frame;
+  return alignment;
 }
 
 static void
