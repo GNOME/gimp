@@ -381,6 +381,22 @@ tiff_error (const gchar *module,
   g_logv (G_LOG_DOMAIN, G_LOG_LEVEL_MESSAGE, fmt, ap);
 }
 
+/* returns a pointer into the TIFF */
+static const gchar *
+tiff_get_page_name (TIFF *tif)
+{
+  static gchar *name;
+
+  if (TIFFGetField (tif, TIFFTAG_PAGENAME, &name) &&
+      g_utf8_validate (name, -1, NULL))
+    {
+      return name;
+    }
+
+  return NULL;
+}
+
+
 static gboolean
 load_dialog (TIFF              *tif,
              TiffSelectedPages *pages)
@@ -423,18 +439,11 @@ load_dialog (TIFF              *tif,
 
   for (i = 0; i < pages->n_pages; i++)
     {
-      gchar *name;
-
-      if (! TIFFGetField (tif, TIFFTAG_PAGENAME, &name) ||
-          ! g_utf8_validate (name, -1, NULL))
-        {
-          name = NULL;
-        }
+      const gchar *name = tiff_get_page_name (tif);
 
       if (name)
-        gimp_page_selector_set_page_label (GIMP_PAGE_SELECTOR (selector), i, name);
-
-      g_free (name);
+        gimp_page_selector_set_page_label (GIMP_PAGE_SELECTOR (selector),
+                                           i, name);
 
       TIFFReadDirectory (tif);
     }
@@ -507,7 +516,7 @@ load_image (const gchar       *filename,
   GimpParasite *parasite;
   guint16       tmp;
 
-  gchar        *name;
+  const gchar  *name;
 
   GList        *images_list = NULL, *images_list_temp;
   gint          li;
@@ -883,11 +892,7 @@ load_image (const gchar       *filename,
       channel = g_new0 (channel_data, extra + 1);
 
       /* try and use layer name from tiff file */
-      if (! TIFFGetField (tif, TIFFTAG_PAGENAME, &name) ||
-          ! g_utf8_validate (name, -1, NULL))
-        {
-          name = NULL;
-        }
+      name = tiff_get_page_name (tif);
 
       if (name)
         {
@@ -897,6 +902,8 @@ load_image (const gchar       *filename,
         }
       else
         {
+          gchar *name;
+
           if (ilayer == 0)
             name = g_strdup (_("Background"));
           else

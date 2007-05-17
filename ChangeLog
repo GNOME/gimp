@@ -1,5 +1,10 @@
 2007-05-17  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/tiff-load.c: split code to get the page name
+	into a utility function.
+
+2007-05-17  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpdockbook.c (gimp_dockbook_init): unset show-border.
 
 	* app/widgets/gimpdockable.c (gimp_dockable_expose_event): don't
