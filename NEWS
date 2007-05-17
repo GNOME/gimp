@@ -12,6 +12,7 @@ Bugs fixed in GIMP 2.2.15
 - guard against a possible stack overflow in the Sunras loader (bug #433902)
 - fixed definition of datarootdir in gimptool-2.0 (bug #436386)
 - fixed Perspective tool crash on Mac OS X (bug #349483)
+- added new localizations: Occitan and Persian
 
 
 Bugs fixed in GIMP 2.2.14
