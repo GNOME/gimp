@@ -6,6 +6,7 @@
 
 	* plug-ins/common/tiff-save.c: save the paths in the TIFF.
 	Please test interoperability with other programs.
+	Fixes bug #131982.
 
 	* plug-ins/common/tiff-load.c: fix coordinate reading for
 	negative coordinates.
