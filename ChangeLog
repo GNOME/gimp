@@ -1,5 +1,7 @@
 2007-05-17  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdockseparator.c: removed period from tooltip.
+
 	* app/dialogs/preferences-dialog.c
 	* app/widgets/gimptoolbox.c: removed frames to reduce visual clutter.
 

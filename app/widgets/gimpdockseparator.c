@@ -41,7 +41,7 @@
 #define DEFAULT_HEIGHT 6
 #define LABEL_PADDING  4
 
-#define HELP_TEXT      _("You can drop dockable dialogs here.")
+#define HELP_TEXT      _("You can drop dockable dialogs here")
 
 
 static void     gimp_dock_separator_style_set     (GtkWidget      *widget,
