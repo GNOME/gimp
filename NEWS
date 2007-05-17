@@ -7,6 +7,22 @@ This is the development branch of GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
+Changes in GIMP 2.3.17
+======================
+
+- improved import of multi-page TIFF files
+- reduced rounding errors in Blur routines (core and plug-ins)
+- further improved parameter checks in the PDB
+- added support for loading .abr v2 Photoshop brushes
+- improved border behavior of the Blur tool
+- show the brush outline at the Clone tool's source position
+- added libgimpbase API to retrieve the user's Pictures folder
+- add a shortcut to the user's Pictures folder to the file-chooser dialog
+- improved the quality of the Motion Blur filter
+- save paths in TIFF files
+- lots of bug fixes and some code cleanup
+
+
 Changes in GIMP 2.3.16
 ======================
 
