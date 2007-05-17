@@ -1506,7 +1506,7 @@ static gunichar inchar(scheme *sc) {
   port *pt;
  again:
   pt=sc->inport->_object._port;
-  if(pt->kind&port_file && pt->rep.stdio.file == stdin)
+  if(pt->kind&port_file)
   {
     if (sc->bc_flag)
     {
@@ -1539,15 +1539,8 @@ static void backchar(scheme *sc, gunichar c) {
   charlen = g_unichar_to_utf8(c, NULL);
   pt=sc->inport->_object._port;
   if(pt->kind&port_file) {
-    if (pt->rep.stdio.file == stdin)
-    {
       sc->backchar = c;
       sc->bc_flag = 1;
-    }
-    else {
-      if (ftell(pt->rep.stdio.file) >= (long)charlen)
-         fseek(pt->rep.stdio.file, 0L-(long)charlen, SEEK_CUR);
-    }
   } else {
     if(pt->rep.string.curr!=pt->rep.string.start) {
       if(pt->rep.string.curr-pt->rep.string.start >= charlen)
