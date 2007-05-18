@@ -1298,6 +1298,7 @@ prefs_dialog_new (Gimp       *gimp,
 
   GtkSizeGroup      *size_group = NULL;
   GtkWidget         *frame;
+  GtkWidget         *ebox;
   GtkWidget         *notebook;
   GtkWidget         *vbox;
   GtkWidget         *vbox2;
@@ -1382,25 +1383,30 @@ prefs_dialog_new (Gimp       *gimp,
 
   gtk_container_add (GTK_CONTAINER (frame), tv);
 
-  vbox = gtk_vbox_new (FALSE, 6);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
+  ebox = gtk_event_box_new ();
+  gtk_widget_set_state (ebox, GTK_STATE_SELECTED);
+  gtk_box_pack_start (GTK_BOX (vbox), ebox, FALSE, TRUE, 0);
+  gtk_widget_show (ebox);
+
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
+  gtk_container_add (GTK_CONTAINER (ebox), hbox);
   gtk_widget_show (hbox);
 
   label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gimp_label_set_attributes (GTK_LABEL (label),
                              PANGO_ATTR_SCALE,  PANGO_SCALE_LARGE,
                              PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
                              -1);
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 6);
   gtk_widget_show (label);
 
   image = gtk_image_new ();
-  gtk_box_pack_end (GTK_BOX (hbox), image, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (hbox), image, FALSE, FALSE, 6);
   gtk_widget_show (image);
 
   /* The main preferences notebook */
