@@ -185,15 +185,16 @@ static void      run   (const gchar      *name,
 			gint             *nreturn_vals,
 			GimpParam       **return_vals);
 
-static GdkNativeWindow   select_window (GdkScreen  *screen);
-static gint32            create_image  (GdkPixbuf  *pixbuf,
-                                        GdkRegion  *shape);
+static GdkNativeWindow   select_window (GdkScreen    *screen);
+static gint32            create_image  (GdkPixbuf    *pixbuf,
+                                        GdkRegion    *shape,
+                                        const gchar  *name);
 
-static gint32     shoot                (GdkScreen  *screen);
-static gboolean   shoot_dialog         (GdkScreen **screen);
-static void       shoot_delay          (gint32      delay);
-static gboolean   shoot_delay_callback (gpointer    data);
-static gboolean   shoot_quit_timeout   (gpointer    data);
+static gint32     shoot                (GdkScreen    *screen);
+static gboolean   shoot_dialog         (GdkScreen   **screen);
+static void       shoot_delay          (gint32        delay);
+static gboolean   shoot_delay_callback (gpointer      data);
+static gboolean   shoot_quit_timeout   (gpointer      data);
 
 
 /* Global Variables */
@@ -242,7 +243,7 @@ query (void)
 			  "Sven Neumann <sven@gimp.org>, "
                           "Henrik Brix Andersen <brix@gimp.org>",
 			  "1998 - 2007",
-			  "v0.9.9 (2007/02/15)",
+			  "v1.0 (2007/05)",
 			  N_("_Screenshot..."),
 			  NULL,
 			  GIMP_PLUGIN,
@@ -635,6 +636,59 @@ select_window (GdkScreen *screen)
 #endif
 }
 
+static gchar *
+window_get_utf8_property (GdkDisplay      *display,
+                          GdkNativeWindow  window,
+                          const gchar     *name)
+{
+  gchar   *retval = NULL;
+
+#if defined(GDK_WINDOWING_X11)
+  Atom     utf8_string;
+  Atom     type   = None;
+  guchar  *val    = NULL;
+  gulong   nitems = 0;
+  gulong   after  = 0;
+  gint     format = 0;
+
+  utf8_string = gdk_x11_get_xatom_by_name_for_display (display, "UTF8_STRING");
+
+  XGetWindowProperty (GDK_DISPLAY_XDISPLAY (display), window,
+                      gdk_x11_get_xatom_by_name_for_display (display, name),
+                      0, G_MAXLONG, False, utf8_string,
+                      &type, &format, &nitems, &after, &val);
+
+  if (type != utf8_string || format != 8 || nitems == 0)
+    {
+      if (val)
+        XFree (val);
+      return NULL;
+    }
+
+  if (g_utf8_validate ((const gchar *) val, nitems, NULL))
+    retval = g_strndup ((const gchar *) val, nitems);
+
+  XFree (val);
+
+#endif
+  return retval;
+}
+
+static gchar *
+window_get_title (GdkDisplay      *display,
+                  GdkNativeWindow  window)
+{
+#if defined(GDK_WINDOWING_X11)
+#ifdef HAVE_X11_XMU_WINUTIL_H
+  window = XmuClientWindow (GDK_DISPLAY_XDISPLAY (display), window);
+#endif
+
+  return window_get_utf8_property (display, window, "_NET_WM_NAME");
+#else
+  return NULL;
+#endif
+}
+
 static GdkRegion *
 window_get_shape (GdkScreen       *screen,
                   GdkNativeWindow  window)
@@ -642,12 +696,12 @@ window_get_shape (GdkScreen       *screen,
   GdkRegion  *shape = NULL;
 
 #if defined(GDK_WINDOWING_X11) && defined(HAVE_X11_EXTENSIONS_SHAPE_H)
-  Display    *x_dpy = GDK_SCREEN_XDISPLAY (screen);
   XRectangle *rects;
   gint        rect_count;
   gint        rect_order;
 
-  rects = XShapeGetRectangles (x_dpy, window, ShapeBounding,
+  rects = XShapeGetRectangles (GDK_SCREEN_XDISPLAY (screen), window,
+                               ShapeBounding,
                                &rect_count, &rect_order);
 
   if (rects)
@@ -702,8 +756,9 @@ image_select_shape (gint32     image,
 /* Create a GimpImage from a GdkPixbuf */
 
 static gint32
-create_image (GdkPixbuf *pixbuf,
-              GdkRegion *shape)
+create_image (GdkPixbuf   *pixbuf,
+              GdkRegion   *shape,
+              const gchar *name)
 {
   gint32     image;
   gint32     layer;
@@ -736,7 +791,9 @@ create_image (GdkPixbuf *pixbuf,
       g_free (comment);
     }
 
-  layer = gimp_layer_new_from_pixbuf (image, _("Screenshot"), pixbuf,
+  layer = gimp_layer_new_from_pixbuf (image,
+                                      name ? name : _("Screenshot"),
+                                      pixbuf,
                                       100, GIMP_NORMAL_MODE, 0.0, 1.0);
   gimp_image_add_layer (image, layer, 0);
 
@@ -753,16 +810,19 @@ create_image (GdkPixbuf *pixbuf,
   return image;
 }
 
+
 /* The main Screenshot function */
 
 static gint32
 shoot (GdkScreen *screen)
 {
+  GdkDisplay   *display;
   GdkWindow    *window;
   GdkPixbuf    *screenshot;
   GdkRegion    *shape = NULL;
   GdkRectangle  rect;
   GdkRectangle  screen_rect;
+  gchar        *name  = NULL;
   gint32        image;
   gint          screen_x;
   gint          screen_y;
@@ -772,11 +832,12 @@ shoot (GdkScreen *screen)
   if (screen == NULL)
     screen = gdk_screen_get_default ();
 
+  display = gdk_screen_get_display (screen);
+
   screen_rect.x      = 0;
   screen_rect.y      = 0;
   screen_rect.width  = gdk_screen_get_width (screen);
   screen_rect.height = gdk_screen_get_height (screen);
-
 
   if (shootvals.shoot_type == SHOOT_REGION)
     {
@@ -793,8 +854,6 @@ shoot (GdkScreen *screen)
         }
       else
         {
-          GdkDisplay *display = gdk_screen_get_display (screen);
-
           window = gdk_window_foreign_new_for_display (display,
                                                        shootvals.window_id);
         }
@@ -818,16 +877,15 @@ shoot (GdkScreen *screen)
   window = gdk_screen_get_root_window (screen);
   gdk_window_get_origin (window, &screen_x, &screen_y);
 
-  screenshot = gdk_pixbuf_get_from_drawable (NULL, window,
-                                             NULL,
+  screenshot = gdk_pixbuf_get_from_drawable (NULL, window, NULL,
                                              rect.x - screen_x,
                                              rect.y - screen_y,
                                              0, 0, rect.width, rect.height);
 
-  gdk_display_beep (gdk_screen_get_display (screen));
+  gdk_display_beep (display);
   gdk_flush ();
 
-  if (!screenshot)
+  if (! screenshot)
     {
       g_message (_("There was an error taking the screenshot."));
       return -1;
@@ -835,18 +893,22 @@ shoot (GdkScreen *screen)
 
   if (shootvals.shoot_type == SHOOT_WINDOW)
     {
+      name = window_get_title (display, shootvals.window_id);
+
       shape = window_get_shape (screen, shootvals.window_id);
 
       if (shape)
         gdk_region_offset (shape, x - rect.x, y - rect.y);
     }
 
-  image = create_image (screenshot, shape);
+  image = create_image (screenshot, shape, name);
 
   g_object_unref (screenshot);
 
   if (shape)
     gdk_region_destroy (shape);
+
+  g_free (name);
 
   return image;
 }
