@@ -1,5 +1,11 @@
 2007-05-18  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpwidgets/gimpintstore.c (gimp_int_store_add_empty): if we
+	free the iter with gtk_tree_iter_free() we must also allocate it
+	with gtk_tree_iter_copy() or gslice will explode.
+
+2007-05-18  Michael Natterer  <mitch@gimp.org>
+
 	* app/dialogs/preferences-dialog.c (prefs_dialog_new): made the
 	page header look like a selected list element.
 

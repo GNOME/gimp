@@ -229,15 +229,17 @@ gimp_int_store_row_inserted (GtkTreeModel *model,
 static void
 gimp_int_store_add_empty (GimpIntStore *store)
 {
+  GtkTreeIter iter;
+
   g_return_if_fail (store->empty_iter == NULL);
 
-  store->empty_iter = g_new0 (GtkTreeIter, 1);
-
-  gtk_list_store_prepend (GTK_LIST_STORE (store), store->empty_iter);
-  gtk_list_store_set (GTK_LIST_STORE (store), store->empty_iter,
+  gtk_list_store_prepend (GTK_LIST_STORE (store), &iter);
+  gtk_list_store_set (GTK_LIST_STORE (store), &iter,
                       GIMP_INT_STORE_VALUE, -1,
                       GIMP_INT_STORE_LABEL, (_("(Empty)")),
                       -1);
+
+  store->empty_iter = gtk_tree_iter_copy (&iter);
 }
 
 /**
