@@ -1,3 +1,7 @@
+2007-05-18  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/preferences-dialog.c: tweaked the page header.
+
 2007-05-18  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpintstore.c (gimp_int_store_add_empty): if we
