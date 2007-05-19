@@ -29,7 +29,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-05-19 14:18+0200\n"
-"PO-Revision-Date: 2007-05-19 14:21+0200\n"
+"PO-Revision-Date: 2007-05-19 14:28+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -8678,7 +8678,7 @@ msgstr "Combina maschere"
 
 #: ../app/pdb/color_cmds.c:102 ../app/tools/gimpbrightnesscontrasttool.c:102
 msgid "Brightness-Contrast"
-msgstr "Luminosità-Contrasto"
+msgstr "Luminosità-contrasto"
 
 #: ../app/pdb/color_cmds.c:249 ../app/tools/gimpposterizetool.c:77
 msgid "Posterize"
