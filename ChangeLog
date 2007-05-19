@@ -1,3 +1,8 @@
+2007-05-19  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimagefile.c (gimp_imagefile_get_desc_string): make
+	sure the description contains no empty lines.
+
 2007-05-18  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/screenshot.c: try to use the window name as

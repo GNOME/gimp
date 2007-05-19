@@ -571,34 +571,42 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
         if (thumbnail->image_state == GIMP_THUMB_STATE_REMOTE)
           {
             g_string_append (str, _("Remote File"));
-            g_string_append_c (str, '\n');
           }
 
         if (thumbnail->image_filesize > 0)
           {
             gchar *size = gimp_memsize_to_string (thumbnail->image_filesize);
 
+            if (str->len > 0)
+              g_string_append_c (str, '\n');
+
             g_string_append (str, size);
             g_free (size);
-
-            g_string_append_c (str, '\n');
           }
 
         switch (thumbnail->thumb_state)
           {
           case GIMP_THUMB_STATE_NOT_FOUND:
+            if (str->len > 0)
+              g_string_append_c (str, '\n');
             g_string_append (str, _("Click to create preview"));
             break;
 
           case GIMP_THUMB_STATE_EXISTS:
+            if (str->len > 0)
+              g_string_append_c (str, '\n');
             g_string_append (str, _("Loading preview..."));
             break;
 
           case GIMP_THUMB_STATE_OLD:
+            if (str->len > 0)
+              g_string_append_c (str, '\n');
             g_string_append (str, _("Preview is out of date"));
             break;
 
           case GIMP_THUMB_STATE_FAILED:
+            if (str->len > 0)
+              g_string_append_c (str, '\n');
             g_string_append (str, _("Cannot create preview"));
             break;
 
@@ -606,28 +614,39 @@ gimp_imagefile_get_desc_string (GimpImagefile *imagefile)
             {
               if (thumbnail->image_state == GIMP_THUMB_STATE_REMOTE)
                 {
+                  if (str->len > 0)
+                    g_string_append_c (str, '\n');
+
                   g_string_append (str, _("(Preview may be out of date)"));
-                  g_string_append_c (str, '\n');
                 }
 
               if (thumbnail->image_width > 0 && thumbnail->image_height > 0)
                 {
+                  if (str->len > 0)
+                    g_string_append_c (str, '\n');
+
                   g_string_append_printf (str,
                                           ngettext ("%d × %d pixel",
                                                     "%d × %d pixels",
                                                     thumbnail->image_height),
                                           thumbnail->image_width,
                                           thumbnail->image_height);
-                  g_string_append_c (str, '\n');
                 }
 
               if (thumbnail->image_type)
-                g_string_append (str, gettext (thumbnail->image_type));
+                {
+                  if (str->len > 0)
+                    g_string_append_c (str, '\n');
+
+                  g_string_append (str, gettext (thumbnail->image_type));
+                }
 
               if (thumbnail->image_num_layers > 0)
                 {
                   if (thumbnail->image_type)
                     g_string_append_len (str, ", ", 2);
+                  else if (str->len > 0)
+                    g_string_append_c (str, '\n');
 
                   g_string_append_printf (str,
                                           ngettext ("%d layer",
