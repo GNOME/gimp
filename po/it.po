@@ -29,7 +29,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-05-19 14:18+0200\n"
-"PO-Revision-Date: 2007-05-19 14:28+0200\n"
+"PO-Revision-Date: 2007-05-19 14:31+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp@erlug.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -9173,7 +9173,7 @@ msgstr "Strumento luminosità/contrasto: regola luminosità e contrasto"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:104
 msgid "B_rightness-Contrast..."
-msgstr "Luminosità-Cont_rasto..."
+msgstr "Luminosità-cont_rasto..."
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:124
 msgid "Adjust Brightness and Contrast"
