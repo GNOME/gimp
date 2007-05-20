@@ -1,3 +1,7 @@
+2007-05-20  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/common/tiff-save.c: correctly pad the path name.
+
 2007-05-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/jpeg/jpeg-load.c: moved duplicated code to a utility

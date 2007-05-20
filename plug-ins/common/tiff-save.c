@@ -477,7 +477,7 @@ save_paths (TIFF   *tif,
       nameend = g_utf8_offset_to_pointer (name, len);
       g_string_append_c (data, nameend - name);
       g_string_append_len (data, name, nameend - name);
-      if (data->len % 1)  /* padding to even size */
+      if (data->len % 2)  /* padding to even size */
         g_string_append_c (data, 0);
       g_free (name);
 
