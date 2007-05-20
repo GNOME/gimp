@@ -139,7 +139,7 @@ gimp_container_combo_box_view_iface_init (GimpContainerViewInterface *iface)
   iface->clear_items   = gimp_container_combo_box_clear_items;
   iface->set_view_size = gimp_container_combo_box_set_view_size;
 
-  iface->insert_data_free = (GDestroyNotify) g_free;
+  iface->insert_data_free = (GDestroyNotify) gtk_tree_iter_free;
 }
 
 static void
@@ -351,23 +351,21 @@ gimp_container_combo_box_insert_item (GimpContainerView *view,
                                       gint               index)
 {
   GtkTreeModel *model = gtk_combo_box_get_model (GTK_COMBO_BOX (view));
-  GtkTreeIter  *iter;
-
-  iter = g_new0 (GtkTreeIter, 1);
+  GtkTreeIter   iter;
 
   if (index == -1)
-    gtk_list_store_append (GTK_LIST_STORE (model), iter);
+    gtk_list_store_append (GTK_LIST_STORE (model), &iter);
   else
-    gtk_list_store_insert (GTK_LIST_STORE (model), iter, index);
+    gtk_list_store_insert (GTK_LIST_STORE (model), &iter, index);
 
   /*  GimpContainerViews don't select items by default  */
   if (gtk_tree_model_iter_n_children (model, NULL) == 1)
     gtk_combo_box_set_active (GTK_COMBO_BOX (view), -1);
 
   gimp_container_combo_box_set (GIMP_CONTAINER_COMBO_BOX (view),
-                                iter, viewable);
+                                &iter, viewable);
 
-  return (gpointer) iter;
+  return gtk_tree_iter_copy (&iter);
 }
 
 static void

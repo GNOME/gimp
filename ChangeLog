@@ -1,3 +1,10 @@
+2007-05-20  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcontainercombobox.c
+	* app/widgets/gimpcontainerentry.c
+	* app/widgets/gimpcontainertreeview.c: manage GtkTreeIters with
+	gtk_tree_iter_copy/gtk_tree_iter_free instead of g_new/g_free.
+
 2007-05-19  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimagefile.c (gimp_imagefile_get_desc_string): make

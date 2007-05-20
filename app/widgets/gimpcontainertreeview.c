@@ -148,7 +148,7 @@ gimp_container_tree_view_view_iface_init (GimpContainerViewInterface *iface)
   iface->clear_items   = gimp_container_tree_view_clear_items;
   iface->set_view_size = gimp_container_tree_view_set_view_size;
 
-  iface->insert_data_free = (GDestroyNotify) g_free;
+  iface->insert_data_free = (GDestroyNotify) gtk_tree_iter_free;
 }
 
 static void
@@ -513,18 +513,16 @@ gimp_container_tree_view_insert_item (GimpContainerView *view,
                                       gint               index)
 {
   GimpContainerTreeView *tree_view = GIMP_CONTAINER_TREE_VIEW (view);
-  GtkTreeIter           *iter;
-
-  iter = g_new0 (GtkTreeIter, 1);
+  GtkTreeIter            iter;
 
   if (index == -1)
-    gtk_list_store_append (GTK_LIST_STORE (tree_view->model), iter);
+    gtk_list_store_append (GTK_LIST_STORE (tree_view->model), &iter);
   else
-    gtk_list_store_insert (GTK_LIST_STORE (tree_view->model), iter, index);
+    gtk_list_store_insert (GTK_LIST_STORE (tree_view->model), &iter, index);
 
-  gimp_container_tree_view_set (tree_view, iter, viewable);
+  gimp_container_tree_view_set (tree_view, &iter, viewable);
 
-  return (gpointer) iter;
+  return gtk_tree_iter_copy (&iter);
 }
 
 static void
