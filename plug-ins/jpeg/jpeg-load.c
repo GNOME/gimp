@@ -40,9 +40,15 @@
 #include "jpeg-icc.h"
 #include "jpeg-load.h"
 
+
+static void  jpeg_load_resolution (gint32                         image_ID,
+                                   struct jpeg_decompress_struct *cinfo);
+
+
 gint32 volatile  image_ID_global;
 GimpDrawable    *drawable_global;
 gint32           layer_ID_global;
+
 
 gint32
 load_image (const gchar *filename,
@@ -224,6 +230,8 @@ load_image (const gchar *filename,
       image_ID = gimp_image_new (cinfo.output_width, cinfo.output_height,
                                  image_type);
       gimp_image_set_filename (image_ID, filename);
+
+      jpeg_load_resolution (image_ID, &cinfo);
     }
 
   if (preview)
@@ -245,48 +253,6 @@ load_image (const gchar *filename,
   drawable_global = drawable = gimp_drawable_get (layer_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
                        drawable->width, drawable->height, TRUE, FALSE);
-
-  /* Step 5.1: if the file had resolution information, set it on the image */
-  if (!preview && cinfo.saw_JFIF_marker)
-    {
-      gdouble xresolution;
-      gdouble yresolution;
-      gdouble asymmetry;
-
-      xresolution = cinfo.X_density;
-      yresolution = cinfo.Y_density;
-
-      switch (cinfo.density_unit)
-        {
-        case 0: /* unknown -> set the aspect ratio but use the default
-                *  image resolution
-                */
-          if (cinfo.Y_density != 0)
-            asymmetry = xresolution / yresolution;
-          else
-            asymmetry = 1.0;
-
-          gimp_image_get_resolution (image_ID, &xresolution, &yresolution);
-          xresolution *= asymmetry;
-          break;
-
-        case 1: /* dots per inch */
-          break;
-
-        case 2: /* dots per cm */
-          xresolution *= 2.54;
-          yresolution *= 2.54;
-          gimp_image_set_unit (image_ID, GIMP_UNIT_MM);
-          break;
-
-        default:
-          g_message ("Unknown density unit %d, assuming dots per inch.",
-                     cinfo.density_unit);
-          break;
-        }
-
-      gimp_image_set_resolution (image_ID, xresolution, yresolution);
-    }
 
   /* Step 5.2: check for metadata (comments, markers containing EXIF or XMP) */
   for (marker = cinfo.marker_list; marker; marker = marker->next)
@@ -519,6 +485,48 @@ load_image (const gchar *filename,
   return image_ID;
 }
 
+static void
+jpeg_load_resolution (gint32                         image_ID,
+                      struct jpeg_decompress_struct *cinfo)
+{
+  if (cinfo->saw_JFIF_marker)
+    {
+      gdouble xresolution = cinfo->X_density;
+      gdouble yresolution = cinfo->Y_density;
+      gdouble asymmetry   = 1.0;
+
+      switch (cinfo->density_unit)
+        {
+        case 0: /* unknown -> set the aspect ratio but use the default
+                 *  image resolution
+                 */
+          if (cinfo->Y_density != 0)
+            asymmetry = xresolution / yresolution;
+
+          gimp_image_get_resolution (image_ID, &xresolution, &yresolution);
+          xresolution *= asymmetry;
+          break;
+
+        case 1: /* dots per inch */
+          break;
+
+        case 2: /* dots per cm */
+          xresolution *= 2.54;
+          yresolution *= 2.54;
+          gimp_image_set_unit (image_ID, GIMP_UNIT_MM);
+          break;
+
+        default:
+          g_message ("Unknown density unit %d, assuming dots per inch.",
+                     cinfo->density_unit);
+          break;
+        }
+
+      gimp_image_set_resolution (image_ID, xresolution, yresolution);
+    }
+}
+
+
 #ifdef HAVE_EXIF
 
 typedef struct
@@ -738,6 +746,8 @@ load_thumbnail_image (const gchar *filename,
                              image_type);
   gimp_image_set_filename (image_ID, filename);
 
+  jpeg_load_resolution (image_ID, &cinfo);
+
   layer_ID = gimp_layer_new (image_ID, _("Background"),
                              cinfo.output_width,
                              cinfo.output_height,
@@ -746,48 +756,6 @@ load_thumbnail_image (const gchar *filename,
   drawable_global = drawable = gimp_drawable_get (layer_ID);
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
                        drawable->width, drawable->height, TRUE, FALSE);
-
-  /* Step 5.1: if the file had resolution information, set it on the image */
-  if (cinfo.saw_JFIF_marker)
-    {
-      gdouble xresolution;
-      gdouble yresolution;
-      gdouble asymmetry;
-
-      xresolution = cinfo.X_density;
-      yresolution = cinfo.Y_density;
-
-      switch (cinfo.density_unit)
-        {
-        case 0: /* unknown -> set the aspect ratio but use the default
-                 *  image resolution
-                 */
-          if (cinfo.Y_density != 0)
-            asymmetry = xresolution / yresolution;
-          else
-            asymmetry = 1.0;
-
-          gimp_image_get_resolution (image_ID, &xresolution, &yresolution);
-          xresolution *= asymmetry;
-          break;
-
-        case 1: /* dots per inch */
-          break;
-
-        case 2: /* dots per cm */
-          xresolution *= 2.54;
-          yresolution *= 2.54;
-          gimp_image_set_unit (image_ID, GIMP_UNIT_MM);
-          break;
-
-        default:
-          g_message ("Unknown density unit %d, assuming dots per inch.",
-                     cinfo.density_unit);
-          break;
-        }
-
-      gimp_image_set_resolution (image_ID, xresolution, yresolution);
-    }
 
   /* Step 6: while (scan lines remain to be read) */
   /*           jpeg_read_scanlines(...); */
