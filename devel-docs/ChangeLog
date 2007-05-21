@@ -1,7 +1,7 @@
 2007-05-21  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am: do nothing unless configured with
-	--enable-gtk-doc-app.
+	--enable-gtk-doc-app. Removed dist-hook override.
 
 2007-05-14  Sven Neumann  <sven@gimp.org>
 

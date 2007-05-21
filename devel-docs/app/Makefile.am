@@ -1,7 +1,5 @@
 ## Process this file with automake to produce Makefile.in
 
-if ENABLE_GTK_DOC_APP
-
 # The name of the module.
 DOC_MODULE = app
 
@@ -110,15 +108,20 @@ GTKDOC_LIBS = \
         $(INTLLIBS)
 
 
+if ENABLE_GTK_DOC_APP
+
 include $(top_srcdir)/gtk-doc.make
+
+else
+
+EXTRA_DIST = \
+	$(DOC_MODULE)-docs.sgml		\
+	$(DOC_MODULE)-overrides.txt	\
+	$(DOC_MODULE)-sections.txt
+
+endif
 
 # Other files to distribute
 EXTRA_DIST += \
 	$(DOC_MODULE).types	\
 	version.in
-
-endif
-
-# Override dist-hook as we don't want to distribute generated files
-dist-hook:
-	@true

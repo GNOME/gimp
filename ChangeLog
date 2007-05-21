@@ -1,5 +1,9 @@
 2007-05-21  Sven Neumann  <sven@gimp.org>
 
+	* autogen.sh: also look for automake-1.10.
+
+2007-05-21  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp.c (gimp_message): documentation.
 
 	* app/actions/documents-commands.c
