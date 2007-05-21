@@ -1,3 +1,8 @@
+2007-05-21  Jakub Steiner <jimmac@ximian.com>
+
+	* plug-ins/helpbrowser/wilber-reading.{svg,png}: the "joy of gimp"
+		book
+
 2007-05-21  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite.h: formatting.
