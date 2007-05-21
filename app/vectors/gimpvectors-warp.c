@@ -92,34 +92,33 @@ gimp_stroke_warp_point (const GimpStroke *stroke,
                         GimpCoords       *point_warped,
                         gdouble           y_offset)
 {
-  GimpCoords *point_zero;
-  GimpCoords *point_minus;
-  GimpCoords *point_plus;
-  gdouble     slope;
-  gdouble     dx, dy, nx, ny, len;
+  GimpCoords point_zero  = { 0, };
+  GimpCoords point_minus = { 0, };
+  GimpCoords point_plus  = { 0, };
+  gdouble    slope;
+  gdouble    dx, dy, nx, ny, len;
 
-  point_zero  = (GimpCoords*) g_new0 (GimpCoords, 1);
-  point_minus = (GimpCoords*) g_new0 (GimpCoords, 1);
-  point_plus  = (GimpCoords*) g_new0 (GimpCoords, 1);
-
-  if (! gimp_stroke_get_point_at_dist (stroke, x, EPSILON, point_zero,  &slope))
+  if (! gimp_stroke_get_point_at_dist (stroke, x, EPSILON,
+                                       &point_zero, &slope))
     {
       point_warped->x = 0;
       point_warped->y = 0;
       return;
     }
 
-  point_warped->x = point_zero->x;
-  point_warped->y = point_zero->y;
+  point_warped->x = point_zero.x;
+  point_warped->y = point_zero.y;
 
-  if (!  gimp_stroke_get_point_at_dist (stroke, x - DX, EPSILON, point_minus, &slope))
+  if (! gimp_stroke_get_point_at_dist (stroke, x - DX, EPSILON,
+                                       &point_minus, &slope))
     return;
 
-  if (! gimp_stroke_get_point_at_dist (stroke, x + DX, EPSILON, point_plus,  &slope))
+  if (! gimp_stroke_get_point_at_dist (stroke, x + DX, EPSILON,
+                                       &point_plus, &slope))
     return;
 
-  dx = point_plus->x - point_minus->x;
-  dy = point_plus->y - point_minus->y;
+  dx = point_plus.x - point_minus.x;
+  dy = point_plus.y - point_minus.y;
 
   len = hypot (dx, dy);
 
@@ -129,8 +128,8 @@ gimp_stroke_warp_point (const GimpStroke *stroke,
   nx = - dy / len;
   ny =   dx / len;
 
-  point_warped->x = point_zero->x + nx * (y - y_offset);
-  point_warped->y = point_zero->y + ny * (y - y_offset);
+  point_warped->x = point_zero.x + nx * (y - y_offset);
+  point_warped->y = point_zero.y + ny * (y - y_offset);
 }
 
 static void
