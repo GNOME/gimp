@@ -1,7 +1,13 @@
+2007-05-21  Sven Neumann  <sven@gimp.org>
+
+	* app/pdb/gimpprocedure.c (gimp_procedure_validate_args): pass the
+	GimpProgress to gimp_message().
+
+	* plug-ins/common/bumpmap.c: reduced number of progress updates.
+
 2007-05-21  Jakub Steiner <jimmac@ximian.com>
 
-	* plug-ins/helpbrowser/wilber-reading.{svg,png}: the "joy of gimp"
-		book
+	* plug-ins/helpbrowser/wilber-reading.{svg,png}: new icon.
 
 2007-05-21  Sven Neumann  <sven@gimp.org>
 

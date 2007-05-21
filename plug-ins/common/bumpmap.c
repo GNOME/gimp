@@ -557,9 +557,7 @@ bumpmap (void)
   bumpmap_convert_row (bm_row2, bm_width, bm_bpp, bm_has_alpha, params.lut);
   bumpmap_convert_row (bm_row3, bm_width, bm_bpp, bm_has_alpha, params.lut);
 
-  progress = 0;
-
-  for (y = sel_y1; y < sel_y2; y++)
+  for (y = sel_y1, progress = 0; y < sel_y2; y++, progress++)
     {
       row_in_bumpmap = (y >= - bmvals.yofs && y < - bmvals.yofs + bm_height);
 
@@ -595,7 +593,8 @@ bumpmap (void)
                                params.lut);
         }
 
-      gimp_progress_update ((double) ++progress / sel_height);
+      if ((progress % 16) == 0)
+        gimp_progress_update ((gdouble) progress / sel_height);
     }
 
   /* Done */

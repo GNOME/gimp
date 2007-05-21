@@ -64,6 +64,7 @@ static void    gimp_procedure_real_execute_async  (GimpProcedure  *procedure,
 static void          gimp_procedure_free_strings  (GimpProcedure  *procedure);
 static gboolean      gimp_procedure_validate_args (GimpProcedure  *procedure,
                                                    Gimp           *gimp,
+                                                   GimpProgress   *progress,
                                                    GParamSpec    **param_specs,
                                                    gint            n_param_specs,
                                                    GValueArray    *args,
@@ -312,7 +313,7 @@ gimp_procedure_execute (GimpProcedure *procedure,
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (args != NULL, NULL);
 
-  if (! gimp_procedure_validate_args (procedure, gimp,
+  if (! gimp_procedure_validate_args (procedure, gimp, progress,
                                       procedure->args, procedure->num_args,
                                       args, FALSE))
     {
@@ -356,7 +357,7 @@ gimp_procedure_execute_async (GimpProcedure *procedure,
   g_return_if_fail (args != NULL);
   g_return_if_fail (display == NULL || GIMP_IS_OBJECT (display));
 
-  if (gimp_procedure_validate_args (procedure, gimp,
+  if (gimp_procedure_validate_args (procedure, gimp, progress,
                                     procedure->args, procedure->num_args,
                                     args, FALSE))
     {
@@ -490,6 +491,7 @@ gimp_procedure_free_strings (GimpProcedure *procedure)
 static gboolean
 gimp_procedure_validate_args (GimpProcedure  *procedure,
                               Gimp           *gimp,
+                              GimpProgress   *progress,
                               GParamSpec    **param_specs,
                               gint            n_param_specs,
                               GValueArray    *args,
@@ -508,7 +510,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
         {
           if (return_vals)
             {
-              gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+              gimp_message (gimp, G_OBJECT (progress),
+                            GIMP_MESSAGE_ERROR,
                             _("Procedure '%s' returned a wrong value type "
                               "for return value '%s' (#%d). "
                               "Expected %s, got %s."),
@@ -519,7 +522,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
             }
           else
             {
-              gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+              gimp_message (gimp, G_OBJECT (progress),
+                            GIMP_MESSAGE_ERROR,
                             _("Procedure '%s' has been called with a "
                               "wrong value type for argument '%s' (#%d). "
                               "Expected %s, got %s."),
@@ -550,7 +554,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                 {
                   if (return_vals)
                     {
-                      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                      gimp_message (gimp, G_OBJECT (progress),
+                                    GIMP_MESSAGE_ERROR,
                                     _("Procedure '%s' returned an "
                                       "invalid ID for argument '%s'. "
                                       "Most likely a plug-in is trying "
@@ -561,7 +566,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                     }
                   else
                     {
-                      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                      gimp_message (gimp, G_OBJECT (progress),
+                                    GIMP_MESSAGE_ERROR,
                                     _("Procedure '%s' has been called with an "
                                       "invalid ID for argument '%s'. "
                                       "Most likely a plug-in is trying "
@@ -576,7 +582,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                 {
                   if (return_vals)
                     {
-                      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                      gimp_message (gimp, G_OBJECT (progress),
+                                    GIMP_MESSAGE_ERROR,
                                     _("Procedure '%s' returned an "
                                       "invalid ID for argument '%s'. "
                                       "Most likely a plug-in is trying "
@@ -587,7 +594,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                     }
                   else
                     {
-                      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                      gimp_message (gimp, G_OBJECT (progress),
+                                    GIMP_MESSAGE_ERROR,
                                     _("Procedure '%s' has been called with an "
                                       "invalid ID for argument '%s'. "
                                       "Most likely a plug-in is trying "
@@ -601,7 +609,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                 {
                   if (return_vals)
                     {
-                      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                      gimp_message (gimp, G_OBJECT (progress),
+                                    GIMP_MESSAGE_ERROR,
                                     _("Procedure '%s' returned "
                                       "'%s' as return value '%s' "
                                       "(#%d, type %s). "
@@ -613,7 +622,8 @@ gimp_procedure_validate_args (GimpProcedure  *procedure,
                     }
                   else
                     {
-                      gimp_message (gimp, NULL, GIMP_MESSAGE_ERROR,
+                      gimp_message (gimp, G_OBJECT (progress),
+                                    GIMP_MESSAGE_ERROR,
                                     _("Procedure '%s' has been called with "
                                       "value '%s' for argument '%s' "
                                       "(#%d, type %s). "
