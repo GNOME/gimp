@@ -1,5 +1,9 @@
 2007-05-21  Sven Neumann  <sven@gimp.org>
 
+	* app/composite/gimp-composite.h: formatting.
+
+2007-05-21  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/about-dialog.c: use 'program-name' instead of 'name'
 	when compiling against GTK+ >= 2.11.0 (see bug #345822). Also set
 	the title explicitely (see bug #418434).

@@ -123,16 +123,16 @@ extern struct GimpCompositeOperationEffects gimp_composite_operation_effects[];
  */
 typedef struct
 {
-  guchar *A;             /* Source A    */
-  guchar *B;             /* Source B    */
-  guchar *D;             /* Destination */
-  const guchar *M;             /* Mask        */
-  gulong  n_pixels;
+  guchar          *A;             /* Source A    */
+  guchar          *B;             /* Source B    */
+  guchar          *D;             /* Destination */
+  const guchar    *M;             /* Mask        */
+  gulong           n_pixels;
 
-  GimpPixelFormat pixelformat_A;
-  GimpPixelFormat pixelformat_B;
-  GimpPixelFormat pixelformat_D;
-  GimpPixelFormat pixelformat_M;
+  GimpPixelFormat  pixelformat_A;
+  GimpPixelFormat  pixelformat_B;
+  GimpPixelFormat  pixelformat_D;
+  GimpPixelFormat  pixelformat_M;
 
   struct { gint opacity; gchar affect;   } replace;
   struct { gint scale;                   } scale;
