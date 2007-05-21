@@ -5,14 +5,14 @@ themedatadir = $(gimpdatadir)/themes/Default/images/preferences
 PREFS_IMAGES = \
 	color-management-22.png		\
 	color-management.png		\
-	controllers-22.png			\
+	controllers-22.png		\
 	controllers.png			\
 	default-comment.png		\
 	default-grid-22.png		\
 	default-grid.png		\
 	display-22.png			\
 	display.png			\
-	environment-22.png			\
+	environment-22.png		\
 	environment.png			\
 	folders-brushes-22.png		\
 	folders-brushes.png		\
@@ -39,9 +39,9 @@ PREFS_IMAGES = \
 	folders-tools-22.png		\
 	folders-22.png			\
 	folders.png			\
-	help-system-22.png			\
+	help-system-22.png		\
 	help-system.png			\
-	image-title-22.png			\
+	image-title-22.png		\
 	image-title.png			\
 	image-windows-22.png		\
 	image-windows.png		\
@@ -49,7 +49,7 @@ PREFS_IMAGES = \
 	input-devices.png		\
 	interface-22.png		\
 	interface.png			\
-	new-image-22.png			\
+	new-image-22.png		\
 	new-image.png			\
 	session-22.png			\
 	session.png			\

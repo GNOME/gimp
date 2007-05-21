@@ -1,5 +1,9 @@
 2007-05-21  Sven Neumann  <sven@gimp.org>
 
+	* themes/Default/images/preferences/Makefile.am: formatting.
+
+2007-05-21  Sven Neumann  <sven@gimp.org>
+
 	* autogen.sh: also look for automake-1.10.
 
 2007-05-21  Sven Neumann  <sven@gimp.org>
