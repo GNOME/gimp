@@ -52,6 +52,8 @@
 #define DEFAULT_IMAGE_HEIGHT  300
 #endif
 
+#define DEFAULT_RESOLUTION    72.0
+
 
 enum
 {
@@ -121,12 +123,12 @@ gimp_template_class_init (GimpTemplateClass *klass)
   GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_XRESOLUTION,
                                        "xresolution",
                                        N_("The horizontal image resolution."),
-                                       72.0,
+                                       DEFAULT_RESOLUTION,
                                        GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_RESOLUTION (object_class, PROP_YRESOLUTION,
                                        "yresolution",
                                        N_("The vertical image resolution."),
-                                       72.0,
+                                       DEFAULT_RESOLUTION,
                                        GIMP_PARAM_STATIC_STRINGS);
   GIMP_CONFIG_INSTALL_PROP_UNIT (object_class, PROP_RESOLUTION_UNIT,
                                  "resolution-unit",

@@ -1,3 +1,7 @@
+2007-05-21  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimptemplate.c: use a #define for the default resolution.
+
 2007-05-20  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/tiff-save.c: correctly pad the path name.
