@@ -154,7 +154,7 @@ gimp_toolbox_drop_uri_list (GtkWidget *widget,
         {
           gchar *filename = file_utils_uri_display_name (uri);
 
-          gimp_message (context->gimp, NULL, GIMP_MESSAGE_ERROR,
+          gimp_message (context->gimp, G_OBJECT (widget), GIMP_MESSAGE_ERROR,
                         _("Opening '%s' failed:\n\n%s"),
                         filename, error->message);
 

@@ -1,5 +1,13 @@
 2007-05-21  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp.c (gimp_message): documentation.
+
+	* app/actions/documents-commands.c
+	* app/widgets/gimplayertreeview.c
+	* app/widgets/gimptoolbox-dnd.c: pass parent widgets to gimp_message().
+
+2007-05-21  Sven Neumann  <sven@gimp.org>
+
 	* app/pdb/gimpprocedure.c (gimp_procedure_validate_args): pass the
 	GimpProgress to gimp_message().
 

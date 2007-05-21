@@ -994,6 +994,17 @@ gimp_get_tool_info (Gimp        *gimp,
   return (GimpToolInfo *) info;
 }
 
+/**
+ * gimp_message:
+ * @gimp:     a pointer to the %Gimp object
+ * @handler:  either a %GimpProgress or a %GtkWidget pointer
+ * @severity: severity of the message
+ * @format:   printf-like format string
+ * @...:      arguments to use with @format
+ *
+ * Present a message to the user. How exactly the message is displayed
+ * depends on the @severity, the @handler object and user preferences.
+ **/
 void
 gimp_message (Gimp                *gimp,
               GObject             *handler,
@@ -1010,6 +1021,16 @@ gimp_message (Gimp                *gimp,
   va_end (args);
 }
 
+/**
+ * gimp_message_valist:
+ * @gimp:     a pointer to the %Gimp object
+ * @handler:  either a %GimpProgress or a %GtkWidget pointer
+ * @severity: severity of the message
+ * @format:   printf-like format string
+ * @args:     arguments to use with @format
+ *
+ * See documentation for gimp_message().
+ **/
 void
 gimp_message_valist (Gimp                *gimp,
                      GObject             *handler,
