@@ -1,5 +1,11 @@
 2007-05-21  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/about-dialog.c: use 'program-name' instead of 'name'
+	when compiling against GTK+ >= 2.11.0 (see bug #345822). Also set
+	the title explicitely (see bug #418434).
+
+2007-05-21  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimptemplate.c: use a #define for the default resolution.
 
 2007-05-20  Simon Budig  <simon@gimp.org>
