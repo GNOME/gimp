@@ -1,5 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
+if ENABLE_GTK_DOC_APP
+
 # The name of the module.
 DOC_MODULE = app
 
@@ -115,6 +117,7 @@ EXTRA_DIST += \
 	$(DOC_MODULE).types	\
 	version.in
 
+endif
 
 # Override dist-hook as we don't want to distribute generated files
 dist-hook:
