@@ -1,3 +1,7 @@
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-manager-private.h: formatting.
+
 2007-05-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/data-commands.c
