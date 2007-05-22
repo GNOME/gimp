@@ -151,7 +151,7 @@ gimp_config_writer_new_file (const gchar  *filename,
         }
     }
 
-  writer = g_new0 (GimpConfigWriter, 1);
+  writer = g_slice_new0 (GimpConfigWriter);
 
   writer->fd       = fd;
   writer->filename = g_strdup (filename);
@@ -182,7 +182,7 @@ gimp_config_writer_new_fd (gint fd)
 
   g_return_val_if_fail (fd > 0, NULL);
 
-  writer = g_new0 (GimpConfigWriter, 1);
+  writer = g_slice_new0 (GimpConfigWriter);
 
   writer->fd     = fd;
   writer->buffer = g_string_new (NULL);
@@ -205,7 +205,7 @@ gimp_config_writer_new_string (GString *string)
 
   g_return_val_if_fail (string != NULL, NULL);
 
-  writer = g_new0 (GimpConfigWriter, 1);
+  writer = g_slice_new0 (GimpConfigWriter);
 
   writer->buffer = string;
 
@@ -544,7 +544,7 @@ gimp_config_writer_finish (GimpConfigWriter  *writer,
       success = TRUE;
     }
 
-  g_free (writer);
+  g_slice_free (GimpConfigWriter, writer);
 
   return success;
 }

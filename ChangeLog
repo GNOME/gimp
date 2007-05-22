@@ -1,3 +1,8 @@
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimpconfig/gimpconfigwriter.c: use GSlice for the
+	GimpConfigWriter struct.
+
 2007-05-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/main.c (gimp_dbus_open): initialize "uri" to NULL.
