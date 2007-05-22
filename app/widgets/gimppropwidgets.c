@@ -465,12 +465,18 @@ typedef struct
   const gchar *fixed_aspect_property;
 } AspectData;
 
+static void
+aspect_data_free (AspectData *data)
+{
+  g_slice_free (AspectData, data);
+}
+
+
 static void  gimp_prop_ratio_entry_notify   (GObject    *config,
                                              GParamSpec *param_spec,
                                              GtkEntry   *entry);
 static void  gimp_prop_aspect_ratio_changed (GtkWidget  *widget,
                                              AspectData *data);
-
 
 /**
  * gimp_prop_aspect_ratio_new:
@@ -497,7 +503,7 @@ gimp_prop_aspect_ratio_new (GObject     *config,
                 denominator_property, &denominator,
                 NULL);
 
-  aspect_data = g_new0 (AspectData, 1);
+  aspect_data = g_slice_new (AspectData);
 
   aspect_data->config                = config;
   aspect_data->numerator_property    = numerator_property;
@@ -507,8 +513,9 @@ gimp_prop_aspect_ratio_new (GObject     *config,
   entry = gimp_ratio_entry_new ();
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 7);
 
-  g_object_set_data (G_OBJECT (entry),
-                     "gimp-ratio-entry-aspect-data", aspect_data);
+  g_object_set_data_full (G_OBJECT (entry),
+                          "gimp-ratio-entry-aspect-data", aspect_data,
+                          (GDestroyNotify) aspect_data_free);
 
   gimp_ratio_entry_set_fraction (GIMP_RATIO_ENTRY (entry),
                                  numerator, denominator);

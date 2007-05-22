@@ -1,5 +1,10 @@
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimppropwidgets.c (gimp_prop_aspect_ratio_new):
+	use GSlice and plugged a memleak.
+
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimphelp.c
 	* app/widgets/gimpuimanager.c
 	* app/widgets/gimpview-popup.c
