@@ -19,14 +19,6 @@
 #ifndef __TILE_MANAGER_H__
 #define __TILE_MANAGER_H__
 
-struct _PixelDataHandle
-{
-  guchar *data;
-  gint    width;
-  gint    height;
-  gint    stride;
-  gint    bpp;
-};
 
 /* Creates a new tile manager with the specified width for the
  *  toplevel. The toplevel size is used to compute the number of
@@ -123,16 +115,6 @@ void          tile_manager_get_tile_coordinates (TileManager *tm,
 void          tile_manager_map_over_tile        (TileManager *tm,
                                                  Tile        *tile,
                                                  Tile        *srctile);
-
-PixelDataHandle * request_pixel_data (TileManager *tm,
-                                      gint         x1,
-                                      gint         y1,
-                                      gint         x2,
-                                      gint         y2,
-                                      gboolean     wantread,
-                                      gboolean     wantwrite);
-
-void              release_pixel_data (PixelDataHandle *pdh);
 
 void              read_pixel_data    (TileManager  *tm,
                                       gint          x1,

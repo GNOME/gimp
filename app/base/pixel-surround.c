@@ -132,7 +132,7 @@ pixel_surround_new (TileManager  *tiles,
 
   g_return_val_if_fail (tiles != NULL, NULL);
 
-  surround = g_new0 (PixelSurround, 1);
+  surround = g_slice_new0 (PixelSurround);
 
   surround->mgr       = tiles;
   surround->bpp       = tile_manager_bpp (tiles);
@@ -278,5 +278,6 @@ pixel_surround_destroy (PixelSurround *surround)
 
   g_free (surround->buf);
   g_free (surround->bg);
-  g_free (surround);
+
+  g_slice_free (PixelSurround, surround);
 }

@@ -284,7 +284,7 @@ pixel_regions_register (gint num_regions,
   if (num_regions < 1)
     return NULL;
 
-  PRI = g_new0 (PixelRegionIterator, 1);
+  PRI = g_slice_new0 (PixelRegionIterator);
   PRI->dirty_tiles = 1;
 
   va_start (ap, num_regions);
@@ -298,7 +298,7 @@ pixel_regions_register (gint num_regions,
 
       PR = va_arg (ap, PixelRegion *);
 
-      PRH = g_new0 (PixelRegionHolder, 1);
+      PRH = g_slice_new0 (PixelRegionHolder);
       PRH->PR = PR;
 
       if (PR != NULL)
@@ -407,10 +407,11 @@ pixel_regions_process_stop (PixelRegionIterator *PRI)
   if (PRI->pixel_regions)
     {
       for (list = PRI->pixel_regions; list; list = g_slist_next (list))
-        g_free (list->data);
+        g_slice_free (PixelRegionHolder, list->data);
 
       g_slist_free (PRI->pixel_regions);
-      g_free (PRI);
+
+      g_slice_free (PixelRegionIterator, PRI);
     }
 }
 
@@ -519,10 +520,10 @@ pixel_regions_configure (PixelRegionIterator *PRI)
       if (PRI->pixel_regions)
         {
           for (list = PRI->pixel_regions; list; list = g_slist_next (list))
-            g_free (list->data);
+            g_slice_free (PixelRegionHolder, list->data);
 
           g_slist_free (PRI->pixel_regions);
-          g_free (PRI);
+          g_slice_free (PixelRegionIterator, PRI);
         }
 
       return NULL;

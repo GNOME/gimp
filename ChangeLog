@@ -1,5 +1,15 @@
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-manager.[ch]
+	* app/base/tile-manager-private.h: removed unused code.
+
+	* app/base/pixel-surround.c
+	* app/base/pixel-region.c: allocate structs using GSlice.
+
+	* app/base/tile.c: allocate TileLink and TileRowHint using GSlice.
+
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpclipboard.c
 	* app/widgets/gimpcontainerview.c
 	* app/widgets/gimpdialogfactory.c: allocate structs using GSlice.
