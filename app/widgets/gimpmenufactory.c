@@ -81,12 +81,13 @@ gimp_menu_factory_finalize (GObject *object)
 
           g_free (ui_entry->ui_path);
           g_free (ui_entry->basename);
-          g_free (ui_entry);
+
+          g_slice_free (GimpUIManagerUIEntry, ui_entry);
         }
 
       g_list_free (entry->managed_uis);
 
-      g_free (entry);
+      g_slice_free (GimpMenuFactoryEntry, entry);
     }
 
   g_list_free (factory->registered_menus);
@@ -127,7 +128,7 @@ gimp_menu_factory_manager_register (GimpMenuFactory *factory,
   g_return_if_fail (identifier != NULL);
   g_return_if_fail (first_group != NULL);
 
-  entry = g_new0 (GimpMenuFactoryEntry, 1);
+  entry = g_slice_new0 (GimpMenuFactoryEntry);
 
   entry->identifier = g_strdup (identifier);
 
@@ -156,7 +157,7 @@ gimp_menu_factory_manager_register (GimpMenuFactory *factory,
       ui_basename = va_arg (args, const gchar *);
       setup_func  = va_arg (args, GimpUIManagerSetupFunc);
 
-      ui_entry = g_new0 (GimpUIManagerUIEntry, 1);
+      ui_entry = g_slice_new0 (GimpUIManagerUIEntry);
 
       ui_entry->ui_path    = g_strdup (ui_path);
       ui_entry->basename   = g_strdup (ui_basename);

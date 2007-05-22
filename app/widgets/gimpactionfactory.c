@@ -71,7 +71,8 @@ gimp_action_factory_finalize (GObject *object)
       g_free (entry->identifier);
       g_free (entry->label);
       g_free (entry->stock_id);
-      g_free (entry);
+
+      g_slice_free (GimpActionFactoryEntry, entry);
     }
 
   g_list_free (factory->registered_groups);
@@ -112,7 +113,7 @@ gimp_action_factory_group_register (GimpActionFactory         *factory,
   g_return_if_fail (setup_func != NULL);
   g_return_if_fail (update_func != NULL);
 
-  entry = g_new0 (GimpActionFactoryEntry, 1);
+  entry = g_slice_new0 (GimpActionFactoryEntry);
 
   entry->identifier  = g_strdup (identifier);
   entry->label       = g_strdup (label);
