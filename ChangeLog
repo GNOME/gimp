@@ -1,5 +1,9 @@
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpactionview.c: use GSlice to allocate struct.
+
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontrollers.c
 	* app/widgets/gimpdevices.c
 	* app/widgets/gimpdevicestatus.c

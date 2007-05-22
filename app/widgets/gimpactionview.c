@@ -500,7 +500,8 @@ gimp_action_view_conflict_response (GtkWidget   *dialog,
     }
 
   g_free (confirm_data->accel_path);
-  g_free (confirm_data);
+
+  g_slice_free (ConfirmData, confirm_data);
 }
 
 static void
@@ -528,7 +529,7 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
 
   accel_string = gimp_get_accel_string (accel_key, accel_mask);
 
-  confirm_data = g_new0 (ConfirmData, 1);
+  confirm_data = g_slice_new (ConfirmData);
 
   confirm_data->manager    = view->manager;
   confirm_data->accel_path = g_strdup (accel_path);
