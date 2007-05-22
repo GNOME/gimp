@@ -86,7 +86,7 @@ gimp_controllers_init (Gimp *gimp)
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (gimp_controller_manager_get (gimp) == NULL);
 
-  manager = g_new0 (GimpControllerManager, 1);
+  manager = g_slice_new0 (GimpControllerManager);
 
   g_object_set_data_full (G_OBJECT (gimp),
                           GIMP_CONTROLLER_MANAGER_DATA_KEY, manager,
@@ -287,7 +287,7 @@ gimp_controller_manager_free (GimpControllerManager *manager)
   g_object_unref (manager->controllers);
   g_object_unref (manager->ui_manager);
 
-  g_free (manager);
+  g_slice_free (GimpControllerManager, manager);
 }
 
 static void

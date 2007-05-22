@@ -93,7 +93,7 @@ gimp_devices_init (Gimp                   *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (gimp_device_manager_get (gimp) == NULL);
 
-  manager = g_new0 (GimpDeviceManager, 1);
+  manager = g_slice_new0 (GimpDeviceManager);
 
   g_object_set_data_full (G_OBJECT (gimp),
                           GIMP_DEVICE_MANAGER_DATA_KEY, manager,
@@ -409,7 +409,7 @@ gimp_device_manager_free (GimpDeviceManager *manager)
   if (manager->device_info_list)
     g_object_unref (manager->device_info_list);
 
-  g_free (manager);
+  g_slice_free (GimpDeviceManager, manager);
 }
 
 static void

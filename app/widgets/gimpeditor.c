@@ -540,19 +540,22 @@ gimp_editor_add_stock_box (GimpEditor  *editor,
   return first_button;
 }
 
-typedef struct _ExtendedAction ExtendedAction;
 
-struct _ExtendedAction
+typedef struct
 {
   GdkModifierType  mod_mask;
   GtkAction       *action;
-};
+} ExtendedAction;
 
 static void
-gimp_editor_button_extended_actions_free (GList *list)
+gimp_editor_button_extended_actions_free (GList *actions)
 {
-  g_list_foreach (list, (GFunc) g_free, NULL);
-  g_list_free (list);
+  GList *list;
+
+  for (list = actions; list; list = list->next)
+    g_slice_free (ExtendedAction, list->data);
+
+  g_list_free (actions);
 }
 
 static void
@@ -654,7 +657,7 @@ gimp_editor_add_action_button (GimpEditor  *editor,
 
       if (action && mod_mask)
         {
-          ExtendedAction *ext = g_new0 (ExtendedAction, 1);
+          ExtendedAction *ext = g_slice_new (ExtendedAction);
 
           ext->mod_mask = mod_mask;
           ext->action   = action;

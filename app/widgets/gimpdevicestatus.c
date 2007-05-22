@@ -209,7 +209,8 @@ gimp_device_status_destroy (GtkObject *object)
           g_signal_handlers_disconnect_by_func (entry->device_info,
                                                 gimp_device_status_update_entry,
                                                 entry);
-          g_free (entry);
+
+          g_slice_free (GimpDeviceStatusEntry, entry);
         }
 
       g_list_free (status->devices);
@@ -234,7 +235,7 @@ gimp_device_status_device_add (GimpContainer    *devices,
   if (! device_info->device)
     return;
 
-  entry = g_new0 (GimpDeviceStatusEntry, 1);
+  entry = g_slice_new0 (GimpDeviceStatusEntry);
 
   status->devices = g_list_prepend (status->devices, entry);
 
@@ -385,7 +386,8 @@ gimp_device_status_device_remove (GimpContainer    *devices,
           g_signal_handlers_disconnect_by_func (entry->device_info,
                                                 gimp_device_status_update_entry,
                                                 entry);
-          g_free (entry);
+
+          g_slice_free (GimpDeviceStatusEntry, entry);
 
           return;
         }
