@@ -472,9 +472,7 @@ gimp_module_info_new (guint32      abi_version,
                       const gchar *copyright,
                       const gchar *date)
 {
-  GimpModuleInfo *info;
-
-  info = g_new0 (GimpModuleInfo, 1);
+  GimpModuleInfo *info = g_slice_new0 (GimpModuleInfo);
 
   info->abi_version = abi_version;
   info->purpose     = g_strdup (purpose);
@@ -524,5 +522,5 @@ gimp_module_info_free (GimpModuleInfo *info)
   g_free (info->copyright);
   g_free (info->date);
 
-  g_free (info);
+  g_slice_free (GimpModuleInfo, info);
 }

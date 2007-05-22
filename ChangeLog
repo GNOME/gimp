@@ -1,3 +1,9 @@
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/gimpprotocol.c: allocate structs using GSlice.
+
+	* libgimpmodule/gimpmodule.c: allocate GimpModuleInfo using GSlice.
+
 2007-05-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/plug-in/plug-in-params.c (plug_in_args_to_params): free

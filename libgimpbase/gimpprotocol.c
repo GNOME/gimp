@@ -471,7 +471,7 @@ _gp_config_read (GIOChannel      *channel,
                  GimpWireMessage *msg,
                  gpointer         user_data)
 {
-  GPConfig *config = g_new0 (GPConfig, 1);
+  GPConfig *config = g_slice_new0 (GPConfig);
 
   if (! _gimp_wire_read_int32 (channel,
                                &config->version, 1, user_data))
@@ -549,7 +549,7 @@ _gp_config_read (GIOChannel      *channel,
   g_free (config->app_name);
   g_free (config->wm_class);
   g_free (config->display_name);
-  g_free (config);
+  g_slice_free (GPConfig, config);
 }
 
 static void
@@ -643,7 +643,7 @@ _gp_config_destroy (GimpWireMessage *msg)
   g_free (config->app_name);
   g_free (config->wm_class);
   g_free (config->display_name);
-  g_free (config);
+  g_slice_free (GPConfig, config);
 }
 
 /*  tile_req  */
@@ -653,7 +653,7 @@ _gp_tile_req_read (GIOChannel      *channel,
                    GimpWireMessage *msg,
                    gpointer         user_data)
 {
-  GPTileReq *tile_req = g_new0 (GPTileReq, 1);
+  GPTileReq *tile_req = g_slice_new0 (GPTileReq);
 
   if (! _gimp_wire_read_int32 (channel,
                                (guint32 *) &tile_req->drawable_ID, 1,
@@ -670,7 +670,7 @@ _gp_tile_req_read (GIOChannel      *channel,
   return;
 
  cleanup:
-  g_free (tile_req);
+  g_slice_free (GPTileReq, tile_req);
 }
 
 static void
@@ -695,7 +695,7 @@ _gp_tile_req_write (GIOChannel      *channel,
 static void
 _gp_tile_req_destroy (GimpWireMessage *msg)
 {
-  g_free (msg->data);
+  g_slice_free (GPTileReq, msg->data);
 }
 
 /*  tile_ack  */
@@ -726,7 +726,7 @@ _gp_tile_data_read (GIOChannel      *channel,
                     GimpWireMessage *msg,
                     gpointer         user_data)
 {
-  GPTileData *tile_data = g_new0 (GPTileData, 1);
+  GPTileData *tile_data = g_slice_new0 (GPTileData);
 
   if (! _gimp_wire_read_int32 (channel,
                                (guint32 *) &tile_data->drawable_ID, 1,
@@ -768,7 +768,7 @@ _gp_tile_data_read (GIOChannel      *channel,
 
  cleanup:
   g_free (tile_data->data);
-  g_free (tile_data);
+  g_slice_free (GPTileData, tile_data);
 }
 
 static void
@@ -818,7 +818,7 @@ _gp_tile_data_destroy (GimpWireMessage *msg)
   GPTileData *tile_data = msg->data;
 
   g_free (tile_data->data);
-  g_free (tile_data);
+  g_slice_free (GPTileData, tile_data);
 }
 
 /*  proc_run  */
@@ -828,7 +828,7 @@ _gp_proc_run_read (GIOChannel      *channel,
                    GimpWireMessage *msg,
                    gpointer         user_data)
 {
-  GPProcRun *proc_run = g_new0 (GPProcRun, 1);
+  GPProcRun *proc_run = g_slice_new0 (GPProcRun);
 
   if (! _gimp_wire_read_string (channel, &proc_run->name, 1, user_data))
     goto cleanup;
@@ -841,7 +841,7 @@ _gp_proc_run_read (GIOChannel      *channel,
   return;
 
  cleanup:
-  g_free (proc_run);
+  g_slice_free (GPProcRun, proc_run);
 }
 
 static void
@@ -865,7 +865,7 @@ _gp_proc_run_destroy (GimpWireMessage *msg)
   gp_params_destroy (proc_run->params, proc_run->nparams);
 
   g_free (proc_run->name);
-  g_free (proc_run);
+  g_slice_free (GPProcRun, proc_run);
 }
 
 /*  proc_return  */
@@ -875,7 +875,7 @@ _gp_proc_return_read (GIOChannel      *channel,
                       GimpWireMessage *msg,
                       gpointer         user_data)
 {
-  GPProcReturn *proc_return = g_new0 (GPProcReturn, 1);
+  GPProcReturn *proc_return = g_slice_new0 (GPProcReturn);
 
   if (! _gimp_wire_read_string (channel, &proc_return->name, 1, user_data))
     goto cleanup;
@@ -888,7 +888,7 @@ _gp_proc_return_read (GIOChannel      *channel,
   return;
 
  cleanup:
-  g_free (proc_return);
+  g_slice_free (GPProcReturn, proc_return);
 }
 
 static void
@@ -913,7 +913,7 @@ _gp_proc_return_destroy (GimpWireMessage *msg)
   gp_params_destroy (proc_return->params, proc_return->nparams);
 
   g_free (proc_return->name);
-  g_free (proc_return);
+  g_slice_free (GPProcReturn, proc_return);
 }
 
 /*  temp_proc_run  */
@@ -971,7 +971,7 @@ _gp_proc_install_read (GIOChannel      *channel,
                        GimpWireMessage *msg,
                        gpointer         user_data)
 {
-  GPProcInstall *proc_install = g_new0 (GPProcInstall, 1);
+  GPProcInstall *proc_install = g_slice_new0 (GPProcInstall);
   gint           i;
 
   if (! _gimp_wire_read_string (channel,
@@ -1086,7 +1086,7 @@ _gp_proc_install_read (GIOChannel      *channel,
       g_free (proc_install->return_vals);
     }
 
-  g_free (proc_install);
+  g_slice_free (GPProcInstall, proc_install);
 }
 
 static void
@@ -1194,7 +1194,7 @@ _gp_proc_install_destroy (GimpWireMessage *msg)
 
   g_free (proc_install->params);
   g_free (proc_install->return_vals);
-  g_free (proc_install);
+  g_slice_free (GPProcInstall, proc_install);
 }
 
 /*  proc_uninstall  */
@@ -1204,7 +1204,7 @@ _gp_proc_uninstall_read (GIOChannel      *channel,
                          GimpWireMessage *msg,
                          gpointer         user_data)
 {
-  GPProcUninstall *proc_uninstall = g_new0 (GPProcUninstall, 1);
+  GPProcUninstall *proc_uninstall = g_slice_new0 (GPProcUninstall);
 
   if (! _gimp_wire_read_string (channel, &proc_uninstall->name, 1, user_data))
     goto cleanup;
@@ -1213,7 +1213,7 @@ _gp_proc_uninstall_read (GIOChannel      *channel,
   return;
 
  cleanup:
-  g_free (proc_uninstall);
+  g_slice_free (GPProcUninstall, proc_uninstall);
 }
 
 static void
@@ -1233,7 +1233,7 @@ _gp_proc_uninstall_destroy (GimpWireMessage *msg)
   GPProcUninstall *proc_uninstall = msg->data;
 
   g_free (proc_uninstall->name);
-  g_free (proc_uninstall);
+  g_slice_free (GPProcUninstall, proc_uninstall);
 }
 
 /*  extension_ack  */
