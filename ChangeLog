@@ -1,5 +1,10 @@
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpsizeentry.c
+	* libgimpwidgets/gimpquerybox.c: allocate structs using GSlice.
+
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimpconfig/gimpconfigwriter.c: use GSlice for the
 	GimpConfigWriter struct.
 

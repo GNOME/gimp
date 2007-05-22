@@ -153,7 +153,11 @@ gimp_size_entry_finalize (GObject *object)
 
   if (gse->fields)
     {
-      g_slist_foreach (gse->fields, (GFunc) g_free, NULL);
+      GSList *list;
+
+      for (list = gse->fields; list; list = list->next)
+        g_slice_free (GimpSizeEntryField, list->data);
+
       g_slist_free (gse->fields);
       gse->fields = NULL;
     }
@@ -252,10 +256,9 @@ gimp_size_entry_new (gint                       number_of_fields,
 
   for (i = 0; i < number_of_fields; i++)
     {
-      GimpSizeEntryField *gsef;
+      GimpSizeEntryField *gsef = g_slice_new0 (GimpSizeEntryField);
       gint                digits;
 
-      gsef = g_new0 (GimpSizeEntryField, 1);
       gse->fields = g_slist_append (gse->fields, gsef);
 
       gsef->gse               = gse;
@@ -375,7 +378,7 @@ gimp_size_entry_add_field  (GimpSizeEntry *gse,
       g_return_if_fail (GTK_IS_SPIN_BUTTON (refval_spinbutton));
     }
 
-  gsef = g_new0 (GimpSizeEntryField, 1);
+  gsef = g_slice_new0 (GimpSizeEntryField);
 
   gse->fields = g_slist_prepend (gse->fields, gsef);
   gse->number_of_fields++;

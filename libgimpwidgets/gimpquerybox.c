@@ -70,6 +70,7 @@ static QueryBox * create_query_box             (const gchar   *title,
                                                 gpointer       callback_data);
 
 static void       query_box_disconnect         (QueryBox      *query_box);
+static void       query_box_destroy            (QueryBox      *query_box);
 
 static void       string_query_box_response    (GtkWidget     *widget,
                                                 gint           response_id,
@@ -118,7 +119,7 @@ create_query_box (const gchar   *title,
   g_return_val_if_fail (object == NULL || G_IS_OBJECT (object), NULL);
   g_return_val_if_fail (object == NULL || signal != NULL, NULL);
 
-  query_box = g_new0 (QueryBox, 1);
+  query_box = g_slice_new0 (QueryBox);
 
   query_box->qbox = gimp_dialog_new (title, "gimp-query-box",
                                      parent, 0,
@@ -548,6 +549,16 @@ query_box_disconnect (QueryBox *query_box)
 }
 
 static void
+query_box_destroy (QueryBox *query_box)
+{
+  /*  Destroy the box  */
+  if (query_box->qbox)
+    gtk_widget_destroy (query_box->qbox);
+
+  g_slice_free (QueryBox, query_box);
+}
+
+static void
 string_query_box_response (GtkWidget *widget,
                            gint       response_id,
                            QueryBox  *query_box)
@@ -565,11 +576,7 @@ string_query_box_response (GtkWidget *widget,
                                                        string,
                                                        query_box->callback_data);
 
-  /*  Destroy the box  */
-  if (query_box->qbox)
-    gtk_widget_destroy (query_box->qbox);
-
-  g_free (query_box);
+  query_box_destroy (query_box);
 }
 
 static void
@@ -590,11 +597,7 @@ int_query_box_response (GtkWidget *widget,
                                                     value,
                                                     query_box->callback_data);
 
-  /*  Destroy the box  */
-  if (query_box->qbox)
-    gtk_widget_destroy (query_box->qbox);
-
-  g_free (query_box);
+  query_box_destroy (query_box);
 }
 
 static void
@@ -615,11 +618,7 @@ double_query_box_response (GtkWidget *widget,
                                                        value,
                                                        query_box->callback_data);
 
-  /*  Destroy the box  */
-  if (query_box->qbox)
-    gtk_widget_destroy (query_box->qbox);
-
-  g_free (query_box);
+  query_box_destroy (query_box);
 }
 
 static void
@@ -643,11 +642,7 @@ size_query_box_response (GtkWidget *widget,
                                                      unit,
                                                      query_box->callback_data);
 
-  /*  Destroy the box  */
-  if (query_box->qbox)
-    gtk_widget_destroy (query_box->qbox);
-
-  g_free (query_box);
+  query_box_destroy (query_box);
 }
 
 static void
@@ -663,21 +658,12 @@ boolean_query_box_response (GtkWidget *widget,
                                                        GTK_RESPONSE_OK),
                                                       query_box->callback_data);
 
-  /*  Destroy the box  */
-  if (query_box->qbox)
-    gtk_widget_destroy (query_box->qbox);
-
-  g_free (query_box);
+  query_box_destroy (query_box);
 }
 
 static void
 query_box_cancel_callback (QueryBox *query_box)
 {
   query_box_disconnect (query_box);
-
-  /*  Destroy the box  */
-  if (query_box->qbox)
-    gtk_widget_destroy (query_box->qbox);
-
-  g_free (query_box);
+  query_box_destroy (query_box);
 }
