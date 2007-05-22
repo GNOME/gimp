@@ -250,7 +250,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
   guchar    *mask;
   guchar    *buf;
   gint       x, y;
-  gboolean   scale = FALSE;
+  gboolean   scaled = FALSE;
 
   mask_buf   = brush->mask;
   pixmap_buf = brush->pixmap;
@@ -277,7 +277,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
           mask_width  = mask_buf->width;
           mask_height = mask_buf->height;
 
-          scale = TRUE;
+          scaled = TRUE;
         }
     }
 
@@ -315,7 +315,7 @@ gimp_brush_get_new_preview (GimpViewable *viewable,
         }
     }
 
-  if (scale)
+  if (scaled)
     {
       temp_buf_free (mask_buf);
 

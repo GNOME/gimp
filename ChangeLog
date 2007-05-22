@@ -1,3 +1,11 @@
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpbrush.c (gimp_brush_get_new_preview): plugged a
+	memory leak caused by one variable shadowing another.
+
+	* app/vectors/gimpvectors-import.c (gimp_vectors_import): free the
+	SvgPath structs.
+
 2007-05-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/vectors/gimpvectors-warp.c (gimp_stroke_warp_point): don't

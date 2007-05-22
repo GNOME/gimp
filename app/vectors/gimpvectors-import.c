@@ -56,13 +56,15 @@
 
 typedef struct
 {
-  GQueue    *stack;
-  GimpImage *image;
-  gboolean   scale;
-  gint       svg_depth;
+  GQueue       *stack;
+  GimpImage    *image;
+  gboolean      scale;
+  gint          svg_depth;
 } SvgParser;
 
+
 typedef struct _SvgHandler SvgHandler;
+
 struct _SvgHandler
 {
   const gchar  *name;
@@ -80,6 +82,7 @@ struct _SvgHandler
   GList        *paths;
   GimpMatrix3  *transform;
 };
+
 
 typedef struct
 {
@@ -356,14 +359,18 @@ gimp_vectors_import (GimpImage    *image,
           SvgPath *path = paths->data;
           GList   *list;
 
+          g_free (path->id);
+
           for (list = path->strokes; list; list = list->next)
             g_object_unref (list->data);
 
-          g_free (path->id);
           g_list_free (path->strokes);
+
+          g_free (path);
         }
 
       g_list_free (base->paths);
+
       g_free (base->transform);
       g_free (base);
     }
