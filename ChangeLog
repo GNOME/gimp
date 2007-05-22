@@ -1,5 +1,11 @@
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-interface.c: use GSlice to allocate
+	structs.
+
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpdrawable.c
 	* libgimp/gimppixelfetcher.c
 	* libgimp/gimpprogress.c

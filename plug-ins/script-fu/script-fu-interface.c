@@ -209,7 +209,8 @@ script_fu_interface (SFScript *script,
       gtk_initted = TRUE;
     }
 
-  sf_interface = g_new0 (SFInterface, 1);
+  sf_interface = g_slice_new0 (SFInterface);
+
   sf_interface->widgets = g_new0 (GtkWidget *, script->num_args);
 
   /* strip mnemonics from the menupath */
@@ -631,7 +632,7 @@ script_fu_interface_quit (SFScript *script)
   g_free (sf_interface->widgets);
   g_free (sf_interface->last_command);
 
-  g_free (sf_interface);
+  g_slice_free (SFInterface, sf_interface);
   sf_interface = NULL;
 
   /*

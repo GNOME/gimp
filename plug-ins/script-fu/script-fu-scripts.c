@@ -157,7 +157,7 @@ script_fu_add_script (scheme *sc, pointer a)
   }
 
   /*  Create a new script  */
-  script = g_new0 (SFScript, 1);
+  script = g_slice_new0 (SFScript);
 
   /*  Find the script name  */
   val = sc->vptr->string_value (sc->vptr->pair_car (a));
@@ -646,7 +646,7 @@ script_fu_add_menu (scheme *sc, pointer a)
   }
 
   /*  Create a new list of menus  */
-  menu = g_new0 (SFMenu, 1);
+  menu = g_slice_new0 (SFMenu);
 
   menu->script = script;
 
@@ -740,7 +740,7 @@ script_fu_install_menu (SFMenu *menu)
   gimp_plugin_menu_register (menu->script->name, menu->menu_path);
 
   g_free (menu->menu_path);
-  g_free (menu);
+  g_slice_free (SFMenu, menu);
 }
 
 /*
@@ -754,11 +754,7 @@ script_fu_remove_script (gpointer  foo G_GNUC_UNUSED,
   GList *list;
 
   for (list = scripts; list; list = g_list_next (list))
-    {
-      SFScript *script = list->data;
-
-      script_fu_free_script (script);
-    }
+    script_fu_free_script (list->data);
 
   g_list_free (scripts);
 
@@ -1149,7 +1145,7 @@ script_fu_free_script (SFScript *script)
   g_free (script->arg_types);
   g_free (script->arg_values);
 
-  g_free (script);
+  g_slice_free (SFScript, script);
 }
 
 static gint
