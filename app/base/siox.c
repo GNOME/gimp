@@ -639,7 +639,7 @@ find_max_blob (TileManager *mask,
 
               if (val && (val != FIND_BLOB_VISITED))
                 {
-                  struct blob *b = g_new (struct blob, 1);
+                  struct blob *b = g_slice_new (struct blob);
 
                   b->seedx    = region.x + col;
                   b->seedy    = pos_y;
@@ -668,7 +668,8 @@ find_max_blob (TileManager *mask,
       depth_first_search (mask, x, y, x + width, y + height, b,
                           (b->mustkeep || (b->size * size_factor >= maxsize)) ?
                           FIND_BLOB_FINAL : 0);
-      g_free (b);
+
+      g_slice_free (struct blob, b);
     }
 
   g_slist_free (list);
@@ -756,7 +757,7 @@ siox_init (TileManager  *pixels,
   g_return_val_if_fail (x >= 0, NULL);
   g_return_val_if_fail (y >= 0, NULL);
 
-  state = g_new0 (SioxState, 1);
+  state = g_slice_new (SioxState);
 
   state->pixels   = pixels;
   state->colormap = colormap;
@@ -1390,7 +1391,8 @@ siox_done (SioxState *state)
   g_free (state->fgsig);
   g_free (state->bgsig);
   g_hash_table_destroy (state->cache);
-  g_free (state);
+
+  g_slice_free (SioxState, state);
 
 #ifdef SIOX_DEBUG
   g_printerr ("siox.c: siox_done()\n");

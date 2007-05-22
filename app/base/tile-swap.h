@@ -20,30 +20,14 @@
 #define __TILE_SWAP_H__
 
 
-typedef enum
-{
-  SWAP_IN = 1,
-  SWAP_OUT,
-  SWAP_DELETE
-} SwapCommand;
-
-
-typedef gint (* SwapFunc) (gint         fd,
-                           Tile        *tile,
-                           SwapCommand  cmd,
-                           gpointer     user_data);
-
-
 void     tile_swap_init     (const gchar *path);
 void     tile_swap_exit     (void);
-gint     tile_swap_add      (gchar       *filename,
-                             SwapFunc     swap_func,
-                             gpointer     user_data);
-void     tile_swap_remove   (gint         swap_num);
+
+gboolean tile_swap_test     (void);
+
 void     tile_swap_in       (Tile        *tile);
 void     tile_swap_out      (Tile        *tile);
 void     tile_swap_delete   (Tile        *tile);
-gboolean tile_swap_test     (void);
 
 
 #endif /* __TILE_SWAP_H__ */

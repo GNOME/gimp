@@ -110,13 +110,6 @@ static gboolean        xcf_load_vectors       (XcfInfo      *info,
 static gboolean        xcf_load_vector        (XcfInfo      *info,
                                                GimpImage    *image);
 
-#ifdef SWAP_FROM_FILE
-static gboolean        xcf_swap_func          (gint          fd,
-                                               Tile         *tile,
-                                               gint          cmd,
-                                               gpointer      user_data);
-#endif
-
 
 #define xcf_progress_update(info) G_STMT_START  \
   {                                             \
@@ -1328,26 +1321,8 @@ static gboolean
 xcf_load_tile (XcfInfo *info,
                Tile    *tile)
 {
-#ifdef SWAP_FROM_FILE
-
-  if (!info->swap_num)
-    {
-      info->ref_count = g_new (int, 1);
-      info->swap_num = tile_swap_add (info->filename,
-                                      xcf_swap_func,
-                                      info->ref_count);
-    }
-
-  tile->swap_num = info->swap_num;
-  tile->swap_offset = info->cp;
-  *info->ref_count += 1;
-
-#else
-
   info->cp += xcf_read_int8 (info->fp, tile_data_pointer(tile, 0, 0),
                              tile_size (tile));
-
-#endif
 
   return TRUE;
 }
@@ -1807,64 +1782,3 @@ xcf_load_vector (XcfInfo   *info,
 
   return TRUE;
 }
-
-#ifdef SWAP_FROM_FILE
-
-static gboolean
-xcf_swap_func (gint      fd,
-               Tile     *tile,
-               gint      cmd,
-               gpointer  user_data)
-{
-  gint  bytes;
-  gint  err;
-  gint  nleft;
-  gint *ref_count;
-
-  switch (cmd)
-    {
-    case SWAP_IN:
-      LARGE_SEEK (fd, tile->swap_offset, SEEK_SET);
-
-      bytes = tile_size (tile);
-      tile_alloc (tile);
-
-      nleft = bytes;
-      while (nleft > 0)
-        {
-          do {
-            err = read (fd, tile->data + bytes - nleft, nleft);
-          } while ((err == -1) && ((errno == EAGAIN) || (errno == EINTR)));
-
-          if (err <= 0)
-            {
-              g_message ("unable to read tile data from XCF file: "
-                         "%d ( %d ) bytes read", err, nleft);
-              return FALSE;
-            }
-
-          nleft -= err;
-        }
-      break;
-
-    case SWAP_OUT:
-    case SWAP_DELETE:
-    case SWAP_COMPRESS:
-      ref_count = user_data;
-      *ref_count -= 1;
-      if (*ref_count == 0)
-        {
-          tile_swap_remove (tile->swap_num);
-          g_free (ref_count);
-        }
-
-      tile->swap_num = 1;
-      tile->swap_offset = -1;
-
-      return TRUE;
-    }
-
-  return FALSE;
-}
-
-#endif

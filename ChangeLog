@@ -1,5 +1,13 @@
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
+	* app/base/siox.c: allocate structs using GSlice.
+
+	* app/base/tile-swap.[ch]
+	* app/xcf/xcf-load.c: removed dead code that used to deal with
+	swapping from XCF files. Simplified swap file code quite a bit.
+
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimparea.[ch]
 	* app/core/gimpprojection.c
 	* app/display/gimpdisplay.c: use GSlice to allocate GimpArea and
