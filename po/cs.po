@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-14 17:05+0200\n"
-"PO-Revision-Date: 2007-05-14 17:06+0200\n"
+"POT-Creation-Date: 2007-05-22 16:42+0200\n"
+"PO-Revision-Date: 2007-05-22 16:44+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -88,101 +88,101 @@ msgstr "Nebyl specifikován dávkový interpretr, používá se výchozí '%s'.\
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
 msgstr "Dávkový interpretr '%s' není k dispozici. Dávkový režim zakázán."
 
-#: ../app/main.c:148 ../tools/gimp-remote.c:79
+#: ../app/main.c:150 ../tools/gimp-remote.c:79
 msgid "Show version information and exit"
 msgstr "Informace o verzi a skončit"
 
-#: ../app/main.c:153
+#: ../app/main.c:155
 msgid "Show license information and exit"
 msgstr "Zobrazit informace o verzi a skončit"
 
-#: ../app/main.c:158
+#: ../app/main.c:160
 msgid "Be more verbose"
 msgstr "Být podrobnější"
 
-#: ../app/main.c:163
+#: ../app/main.c:165
 msgid "Start a new GIMP instance"
 msgstr "Spustit novou instanci GIMPu"
 
-#: ../app/main.c:168
+#: ../app/main.c:170
 msgid "Open images as new"
 msgstr "Otevřít obrázky jako nové"
 
-#: ../app/main.c:173
+#: ../app/main.c:175
 msgid "Run without a user interface"
 msgstr "Spustit bez uživatelského rozhraní"
 
-#: ../app/main.c:178
+#: ../app/main.c:180
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Nenačítat stopy, přechody, vzorky, ..."
 
-#: ../app/main.c:183
+#: ../app/main.c:185
 msgid "Do not load any fonts"
 msgstr "Nenačítat žádná písma"
 
-#: ../app/main.c:188
+#: ../app/main.c:190
 msgid "Do not show a startup window"
 msgstr "Nezobrazovat okno při spouštění"
 
-#: ../app/main.c:193
+#: ../app/main.c:195
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "Nepoužívat sdílenou paměť mezi GIMPem a zásuvnými moduly"
 
-#: ../app/main.c:198
+#: ../app/main.c:200
 msgid "Do not use special CPU acceleration functions"
 msgstr "Nepoužívat speciální funkce akcelerace CPU"
 
-#: ../app/main.c:203
+#: ../app/main.c:205
 msgid "Use an alternate sessionrc file"
 msgstr "Používat alternativní soubor sessionrc"
 
-#: ../app/main.c:208
+#: ../app/main.c:210
 msgid "Use an alternate user gimprc file"
 msgstr "Používat alternativní soubor gimprc uživatele"
 
-#: ../app/main.c:213
+#: ../app/main.c:215
 msgid "Use an alternate system gimprc file"
 msgstr "Používat alternativní soubor gimprc systému"
 
-#: ../app/main.c:218
+#: ../app/main.c:220
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Dávkový příkaz, který spustit (může být použito vícekrát)"
 
-#: ../app/main.c:223
+#: ../app/main.c:225
 msgid "The procedure to process batch commands with"
 msgstr "Procedura, kterou zpracovávat dávkové příkazy"
 
-#: ../app/main.c:228
+#: ../app/main.c:230
 msgid "Send messages to console instead of using a dialog"
 msgstr "Posílat zprávy na konzolu místo používání dialogu"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:234
+#: ../app/main.c:236
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Režim kompatibility s PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:240
+#: ../app/main.c:242
 msgid "Debug in case of a crash (never|query|always)"
 msgstr "Ladění při pádu (never|query|always)"
 
-#: ../app/main.c:245
+#: ../app/main.c:247
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Povolit nefatální ladicí obsluhu signálů"
 
-#: ../app/main.c:250
+#: ../app/main.c:252
 msgid "Make all warnings fatal"
 msgstr "Považovat všechna varování za fatální"
 
-#: ../app/main.c:255
+#: ../app/main.c:257
 msgid "Output a gimprc file with default settings"
 msgstr "Vypsat soubor gimprc s implicitním nastavením"
 
-#: ../app/main.c:338
+#: ../app/main.c:340
 msgid "[FILE|URI...]"
 msgstr "[SOUBOR|URI...]"
 
-#: ../app/main.c:356
+#: ../app/main.c:358
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
@@ -190,25 +190,25 @@ msgstr ""
 "GIMP nemohl inicializovat grafické uživatelské rozhraní.\n"
 "Přesvědčte se, že máte správně nastaveno zobrazovací prostředí."
 
-#: ../app/main.c:434
+#: ../app/main.c:436
 msgid "GIMP output. Type any character to close this window."
 msgstr "Výstup GIMPu. Pro zavření okna napište libovolný znak."
 
-#: ../app/main.c:435
+#: ../app/main.c:437
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(Pro zavření tohoto okna napište libovolný znak)\n"
 
-#: ../app/main.c:452
+#: ../app/main.c:454
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Výstup GIMPu. Okno můžete minimalizovat, ale nezavírejte ho."
 
-#: ../app/main.c:554 ../tools/gimp-remote.c:323
+#: ../app/main.c:556 ../tools/gimp-remote.c:323
 #, c-format
 msgid "%s version %s"
 msgstr "%s verze %s"
 
-#: ../app/main.c:779
+#: ../app/main.c:781
 msgid "Another GIMP instance is already running."
 msgstr "Již běží jiná instance GIMPu."
 
@@ -246,7 +246,7 @@ msgstr "Editor stop"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:102 ../app/core/gimp.c:818
-#: ../app/dialogs/dialogs.c:148 ../app/dialogs/preferences-dialog.c:2587
+#: ../app/dialogs/dialogs.c:148 ../app/dialogs/preferences-dialog.c:2583
 msgid "Brushes"
 msgstr "Stopy"
 
@@ -289,7 +289,7 @@ msgstr "Dokovatelné"
 
 #. Document History
 #: ../app/actions/actions.c:132 ../app/dialogs/dialogs.c:162
-#: ../app/dialogs/preferences-dialog.c:1510
+#: ../app/dialogs/preferences-dialog.c:1506
 msgid "Document History"
 msgstr "Historie dokumentů"
 
@@ -311,7 +311,7 @@ msgstr "Soubor"
 
 #. initialize the list of gimp fonts
 #: ../app/actions/actions.c:147 ../app/core/gimp.c:834
-#: ../app/dialogs/dialogs.c:156 ../app/dialogs/preferences-dialog.c:2603
+#: ../app/dialogs/dialogs.c:156 ../app/dialogs/preferences-dialog.c:2599
 msgid "Fonts"
 msgstr "Písma"
 
@@ -322,7 +322,7 @@ msgstr "Editor přechodů"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:153 ../app/core/gimp.c:830
-#: ../app/dialogs/dialogs.c:152 ../app/dialogs/preferences-dialog.c:2599
+#: ../app/dialogs/dialogs.c:152 ../app/dialogs/preferences-dialog.c:2595
 msgid "Gradients"
 msgstr "Přechody"
 
@@ -352,17 +352,17 @@ msgstr "Editor palety"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:171 ../app/core/gimp.c:826
-#: ../app/dialogs/dialogs.c:154 ../app/dialogs/preferences-dialog.c:2595
+#: ../app/dialogs/dialogs.c:154 ../app/dialogs/preferences-dialog.c:2591
 msgid "Palettes"
 msgstr "Palety"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:174 ../app/core/gimp.c:822
-#: ../app/dialogs/dialogs.c:150 ../app/dialogs/preferences-dialog.c:2591
+#: ../app/dialogs/dialogs.c:150 ../app/dialogs/preferences-dialog.c:2587
 msgid "Patterns"
 msgstr "Vzorky"
 
-#: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2607
+#: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2603
 msgid "Plug-Ins"
 msgstr "Zásuvné moduly"
 
@@ -390,7 +390,7 @@ msgid "Text Editor"
 msgstr "Textový editor"
 
 #: ../app/actions/actions.c:195 ../app/dialogs/dialogs.c:129
-#: ../app/dialogs/preferences-dialog.c:1753 ../app/gui/gui.c:438
+#: ../app/dialogs/preferences-dialog.c:1749 ../app/gui/gui.c:438
 msgid "Tool Options"
 msgstr "Volby nástrojů"
 
@@ -731,12 +731,12 @@ msgid "_Tool"
 msgstr "_Nástroj"
 
 #: ../app/actions/context-actions.c:51
-#: ../app/dialogs/preferences-dialog.c:1813
+#: ../app/dialogs/preferences-dialog.c:1809
 msgid "_Brush"
 msgstr "_Stopa"
 
 #: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:98
-#: ../app/dialogs/preferences-dialog.c:1816
+#: ../app/dialogs/preferences-dialog.c:1812
 msgid "_Pattern"
 msgstr "_Vzorek"
 
@@ -746,7 +746,7 @@ msgstr "_Paleta"
 
 #: ../app/actions/context-actions.c:54
 #: ../app/dialogs/palette-import-dialog.c:218
-#: ../app/dialogs/preferences-dialog.c:1819
+#: ../app/dialogs/preferences-dialog.c:1815
 msgid "_Gradient"
 msgstr "_Přechod"
 
@@ -809,14 +809,14 @@ msgstr "_Sloučený vzorek"
 msgid "Sample Merged"
 msgstr "Sloučený vzorek"
 
-#: ../app/actions/data-commands.c:105 ../app/actions/documents-commands.c:320
+#: ../app/actions/data-commands.c:105 ../app/actions/documents-commands.c:321
 #: ../app/actions/file-commands.c:170 ../app/dialogs/file-open-dialog.c:203
 #: ../app/dialogs/file-open-dialog.c:249
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:449
 #: ../app/widgets/gimplayertreeview.c:763 ../app/widgets/gimptoolbox-dnd.c:158
-#: ../app/widgets/gimptoolbox.c:912
+#: ../app/widgets/gimptoolbox.c:894
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1117,7 +1117,7 @@ msgstr "Zobrazit tip dne"
 msgid "_About"
 msgstr "O _aplikaci"
 
-#: ../app/actions/dialogs-actions.c:243
+#: ../app/actions/dialogs-actions.c:243 ../app/dialogs/about-dialog.c:114
 msgid "About GIMP"
 msgstr "O GIMPu"
 
@@ -2548,7 +2548,7 @@ msgstr "Velikost obrázku"
 
 #. Scaling
 #: ../app/actions/image-commands.c:632 ../app/actions/layers-commands.c:1051
-#: ../app/dialogs/preferences-dialog.c:1798
+#: ../app/dialogs/preferences-dialog.c:1794
 #: ../app/pdb/drawable_transform_cmds.c:670
 #: ../app/pdb/drawable_transform_cmds.c:745
 #: ../app/pdb/transform_tools_cmds.c:283 ../app/tools/gimpscaletool.c:107
@@ -5081,7 +5081,7 @@ msgid "White"
 msgstr "Bílá"
 
 #. Transparency
-#: ../app/core/core-enums.c:250 ../app/dialogs/preferences-dialog.c:2184
+#: ../app/core/core-enums.c:250 ../app/dialogs/preferences-dialog.c:2180
 msgid "Transparency"
 msgstr "Průhlednost"
 
@@ -5173,11 +5173,11 @@ msgstr "Kruh"
 msgid "Diamond"
 msgstr "Kosočtverec"
 
-#: ../app/core/core-enums.c:472 ../app/dialogs/preferences-dialog.c:2216
+#: ../app/core/core-enums.c:472 ../app/dialogs/preferences-dialog.c:2212
 msgid "Horizontal"
 msgstr "Vodorovně"
 
-#: ../app/core/core-enums.c:473 ../app/dialogs/preferences-dialog.c:2218
+#: ../app/core/core-enums.c:473 ../app/dialogs/preferences-dialog.c:2214
 msgid "Vertical"
 msgstr "Svisle"
 
@@ -5659,7 +5659,7 @@ msgid "Documents"
 msgstr "Dokumenty"
 
 #. initialize the module list
-#: ../app/core/gimp.c:847 ../app/dialogs/preferences-dialog.c:2615
+#: ../app/core/gimp.c:847 ../app/dialogs/preferences-dialog.c:2611
 msgid "Modules"
 msgstr "Moduly"
 
@@ -6321,7 +6321,7 @@ msgstr "Cesta je již vespod."
 msgid "Lower Path to Bottom"
 msgstr "Snížit cestu dolů"
 
-#: ../app/core/gimpimagefile.c:552 ../app/dialogs/preferences-dialog.c:1643
+#: ../app/core/gimpimagefile.c:552 ../app/dialogs/preferences-dialog.c:1639
 msgid "Folder"
 msgstr "Adresář"
 
@@ -6333,28 +6333,28 @@ msgstr "Speciální soubor"
 msgid "Remote File"
 msgstr "Vzdálený soubor"
 
-#: ../app/core/gimpimagefile.c:590
+#: ../app/core/gimpimagefile.c:592
 msgid "Click to create preview"
 msgstr "Vytvořte náhled kliknutím"
 
-#: ../app/core/gimpimagefile.c:594
+#: ../app/core/gimpimagefile.c:598
 msgid "Loading preview..."
 msgstr "Načítám náhled..."
 
-#: ../app/core/gimpimagefile.c:598
+#: ../app/core/gimpimagefile.c:604
 msgid "Preview is out of date"
 msgstr "Náhled je zastaralý"
 
-#: ../app/core/gimpimagefile.c:602
+#: ../app/core/gimpimagefile.c:610
 msgid "Cannot create preview"
 msgstr "Nelze vytvořit náhled"
 
-#: ../app/core/gimpimagefile.c:609
+#: ../app/core/gimpimagefile.c:620
 msgid "(Preview may be out of date)"
 msgstr "(Náhled je možnázastaralý)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:616 ../app/widgets/gimpimagepropview.c:431
+#: ../app/core/gimpimagefile.c:629 ../app/widgets/gimpimagepropview.c:431
 #: ../app/widgets/gimpsizebox.c:440 ../app/widgets/gimptemplateeditor.c:564
 #, c-format
 msgid "%d × %d pixel"
@@ -6363,7 +6363,7 @@ msgstr[0] "%d × %d pixel"
 msgstr[1] "%d × %d pixely"
 msgstr[2] "%d × %d pixelů"
 
-#: ../app/core/gimpimagefile.c:633 ../app/display/gimpdisplayshell-title.c:318
+#: ../app/core/gimpimagefile.c:652 ../app/display/gimpdisplayshell-title.c:318
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -6371,7 +6371,7 @@ msgstr[0] "%d vrstva"
 msgstr[1] "%d vrstvy"
 msgstr[2] "%d vrstev"
 
-#: ../app/core/gimpimagefile.c:680
+#: ../app/core/gimpimagefile.c:699
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nemohu otevřít miniaturu '%s': %s"
@@ -6638,19 +6638,19 @@ msgstr ""
 "Převést ostré spojení na kosé spojení, pokud by špička dosahovalá dál než "
 "limit-ostrosti * šířka-čáry od skutečného bodu spojení."
 
-#: ../app/core/gimptemplate.c:116
+#: ../app/core/gimptemplate.c:118
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr "Jednotka používaná pro zobrazování souřadnic mimo režim bod na bod."
 
-#: ../app/core/gimptemplate.c:123
+#: ../app/core/gimptemplate.c:125
 msgid "The horizontal image resolution."
 msgstr "Vodorovné rozlišení obrázku."
 
-#: ../app/core/gimptemplate.c:128
+#: ../app/core/gimptemplate.c:130
 msgid "The vertical image resolution."
 msgstr "Svislé rozlišení obrázku."
 
-#: ../app/core/gimptemplate.c:410 ../app/widgets/widgets-enums.c:24
+#: ../app/core/gimptemplate.c:412 ../app/widgets/widgets-enums.c:24
 msgid "Background"
 msgstr "Pozadí"
 
@@ -6707,14 +6707,14 @@ msgstr "procent"
 msgid "plural|percent"
 msgstr "procent"
 
-#: ../app/dialogs/about-dialog.c:122
+#: ../app/dialogs/about-dialog.c:127
 msgid "Visit the GIMP website"
 msgstr "Navštivte web GIMPu"
 
 #. Translators: insert your names here,
 #. * separated by newline
 #.
-#: ../app/dialogs/about-dialog.c:129
+#: ../app/dialogs/about-dialog.c:134
 msgid "translator-credits"
 msgstr ""
 "Stanislav Brabec\n"
@@ -6722,11 +6722,11 @@ msgstr ""
 "Miloslav Trmač\n"
 "Jakub Friedl"
 
-#: ../app/dialogs/about-dialog.c:528
+#: ../app/dialogs/about-dialog.c:533
 msgid "GIMP is brought to you by"
 msgstr "GIMP pro vás napsali"
 
-#: ../app/dialogs/about-dialog.c:602
+#: ../app/dialogs/about-dialog.c:607
 msgid "This is an unstable development release."
 msgstr "Toto je nestabilní vývojové vydání."
 
@@ -6952,7 +6952,7 @@ msgid "Create a New Image"
 msgstr "Vytvoření nového obrázku"
 
 #: ../app/dialogs/image-new-dialog.c:144
-#: ../app/dialogs/preferences-dialog.c:1894
+#: ../app/dialogs/preferences-dialog.c:1890
 msgid "_Template:"
 msgstr "_Šablona:"
 
@@ -7032,7 +7032,7 @@ msgstr ""
 "klávesové zkratky nebo ji vymažte stisknutím Backspace."
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:89
-#: ../app/dialogs/preferences-dialog.c:1566
+#: ../app/dialogs/preferences-dialog.c:1562
 msgid "_Save keyboard shortcuts on exit"
 msgstr "_Uložit klávesové zkratky při ukončení"
 
@@ -7324,47 +7324,47 @@ msgstr ""
 "Vaše nastavení nástrojů bude vráceno na implicitní hodnoty, až příště "
 "spustíte GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:1202
+#: ../app/dialogs/preferences-dialog.c:1201
 msgid "Show _menubar"
 msgstr "Zobrazovat lištu s _menu"
 
-#: ../app/dialogs/preferences-dialog.c:1205
+#: ../app/dialogs/preferences-dialog.c:1204
 msgid "Show _rulers"
 msgstr "Zobrazovat p_ravítka"
 
-#: ../app/dialogs/preferences-dialog.c:1208
+#: ../app/dialogs/preferences-dialog.c:1207
 msgid "Show scroll_bars"
 msgstr "Zobrazovat _posuvné lišty"
 
-#: ../app/dialogs/preferences-dialog.c:1211
+#: ../app/dialogs/preferences-dialog.c:1210
 msgid "Show s_tatusbar"
 msgstr "Zobrazovat s_tavovou lištu"
 
-#: ../app/dialogs/preferences-dialog.c:1219
+#: ../app/dialogs/preferences-dialog.c:1218
 msgid "Show s_election"
 msgstr "Zobrazovat _výběr"
 
-#: ../app/dialogs/preferences-dialog.c:1222
+#: ../app/dialogs/preferences-dialog.c:1221
 msgid "Show _layer boundary"
 msgstr "Zobrazovat _hranici vrstvy"
 
-#: ../app/dialogs/preferences-dialog.c:1225
+#: ../app/dialogs/preferences-dialog.c:1224
 msgid "Show _guides"
 msgstr "Zobrazovat _vodítka"
 
-#: ../app/dialogs/preferences-dialog.c:1228
+#: ../app/dialogs/preferences-dialog.c:1227
 msgid "Show gri_d"
 msgstr "Zobrazovat _mřížku"
 
-#: ../app/dialogs/preferences-dialog.c:1234
+#: ../app/dialogs/preferences-dialog.c:1233
 msgid "Canvas _padding mode:"
 msgstr "Režim _doplňování plátna:"
 
-#: ../app/dialogs/preferences-dialog.c:1239
+#: ../app/dialogs/preferences-dialog.c:1238
 msgid "Custom p_adding color:"
 msgstr "Vlastní _barva doplňování:"
 
-#: ../app/dialogs/preferences-dialog.c:1240
+#: ../app/dialogs/preferences-dialog.c:1239
 msgid "Select Custom Canvas Padding Color"
 msgstr "Nastavit vlastní barvu doplnění plátna"
 
@@ -7372,648 +7372,648 @@ msgstr "Nastavit vlastní barvu doplnění plátna"
 msgid "Preferences"
 msgstr "Předvolby"
 
-#: ../app/dialogs/preferences-dialog.c:1444
-#: ../app/dialogs/preferences-dialog.c:2623
+#: ../app/dialogs/preferences-dialog.c:1440
+#: ../app/dialogs/preferences-dialog.c:2619
 msgid "Environment"
 msgstr "Prostředí"
 
-#: ../app/dialogs/preferences-dialog.c:1458
+#: ../app/dialogs/preferences-dialog.c:1454
 msgid "Resource Consumption"
 msgstr "Spotřeba zdrojů"
 
-#: ../app/dialogs/preferences-dialog.c:1468
+#: ../app/dialogs/preferences-dialog.c:1464
 msgid "Minimal number of _undo levels:"
 msgstr "Minimální počet _úrovní zpětných úprav:"
 
-#: ../app/dialogs/preferences-dialog.c:1471
+#: ../app/dialogs/preferences-dialog.c:1467
 msgid "Maximum undo _memory:"
 msgstr "Maximální _paměť vracení:"
 
-#: ../app/dialogs/preferences-dialog.c:1474
+#: ../app/dialogs/preferences-dialog.c:1470
 msgid "Tile cache _size:"
 msgstr "_Velikost vyrovnávací paměti dlaždic:"
 
-#: ../app/dialogs/preferences-dialog.c:1477
+#: ../app/dialogs/preferences-dialog.c:1473
 msgid "Maximum _new image size:"
 msgstr "Maximální velikost _nového obrázku:"
 
-#: ../app/dialogs/preferences-dialog.c:1482
+#: ../app/dialogs/preferences-dialog.c:1478
 msgid "Number of _processors to use:"
 msgstr "Počet užívaných _procesorů:"
 
 #. Image Thumbnails
-#: ../app/dialogs/preferences-dialog.c:1487
+#: ../app/dialogs/preferences-dialog.c:1483
 msgid "Image Thumbnails"
 msgstr "Miniatury obrázků"
 
-#: ../app/dialogs/preferences-dialog.c:1492
+#: ../app/dialogs/preferences-dialog.c:1488
 msgid "Size of _thumbnails:"
 msgstr "_Velikost miniatur:"
 
-#: ../app/dialogs/preferences-dialog.c:1496
+#: ../app/dialogs/preferences-dialog.c:1492
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Maximální _velikost souboru pro náhledy:"
 
 #. File Saving
-#: ../app/dialogs/preferences-dialog.c:1500
+#: ../app/dialogs/preferences-dialog.c:1496
 msgid "Saving Images"
 msgstr "Ukládání obrázků"
 
-#: ../app/dialogs/preferences-dialog.c:1503
+#: ../app/dialogs/preferences-dialog.c:1499
 msgid "Confirm closing of unsa_ved images"
 msgstr "Potvrzovat zavření _neuložených obrázků"
 
-#: ../app/dialogs/preferences-dialog.c:1513
+#: ../app/dialogs/preferences-dialog.c:1509
 msgid "Save document _history on exit"
 msgstr "Ukládat _historii dokumentů při skončení"
 
-#: ../app/dialogs/preferences-dialog.c:1522
+#: ../app/dialogs/preferences-dialog.c:1518
 msgid "User Interface"
 msgstr "Uživatelské rozhraní"
 
-#: ../app/dialogs/preferences-dialog.c:1525
+#: ../app/dialogs/preferences-dialog.c:1521
 msgid "Interface"
 msgstr "Rozhraní"
 
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1532
+#: ../app/dialogs/preferences-dialog.c:1528
 msgid "Previews"
 msgstr "Náhledy"
 
-#: ../app/dialogs/preferences-dialog.c:1535
+#: ../app/dialogs/preferences-dialog.c:1531
 msgid "_Enable layer & channel previews"
 msgstr "_Povolit náhledy vrstev a kanálů"
 
-#: ../app/dialogs/preferences-dialog.c:1541
+#: ../app/dialogs/preferences-dialog.c:1537
 msgid "_Default layer & channel preview size:"
 msgstr "Implicitní _velikost náhledu vrstev a kanálů:"
 
-#: ../app/dialogs/preferences-dialog.c:1544
+#: ../app/dialogs/preferences-dialog.c:1540
 msgid "Na_vigation preview size:"
 msgstr "Velikost _navigačního náhledu:"
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1548
+#: ../app/dialogs/preferences-dialog.c:1544
 msgid "Keyboard Shortcuts"
 msgstr "Klávesové zkratky"
 
-#: ../app/dialogs/preferences-dialog.c:1552
+#: ../app/dialogs/preferences-dialog.c:1548
 msgid "Show menu _mnemonics (access keys)"
 msgstr "Zobrazovat _mnemoniky menu (klávesové zkratky)"
 
-#: ../app/dialogs/preferences-dialog.c:1555
+#: ../app/dialogs/preferences-dialog.c:1551
 msgid "_Use dynamic keyboard shortcuts"
 msgstr "Používat dynamické _klávesové zkratky"
 
-#: ../app/dialogs/preferences-dialog.c:1559
+#: ../app/dialogs/preferences-dialog.c:1555
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Nastavit _klávesové zkratky..."
 
-#: ../app/dialogs/preferences-dialog.c:1570
+#: ../app/dialogs/preferences-dialog.c:1566
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Uložit klávesové zkratky _okamžitě"
 
-#: ../app/dialogs/preferences-dialog.c:1577
+#: ../app/dialogs/preferences-dialog.c:1573
 msgid "_Reset Saved Keyboard Shortcuts to Default Values"
 msgstr "Obnovit uložené klávesové zkratky na _implicitní hodnoty"
 
-#: ../app/dialogs/preferences-dialog.c:1587
+#: ../app/dialogs/preferences-dialog.c:1583
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "Odstranit _všechny klávesové zkratky"
 
-#: ../app/dialogs/preferences-dialog.c:1599
-#: ../app/dialogs/preferences-dialog.c:1638
+#: ../app/dialogs/preferences-dialog.c:1595
+#: ../app/dialogs/preferences-dialog.c:1634
 msgid "Theme"
 msgstr "Téma"
 
-#: ../app/dialogs/preferences-dialog.c:1608
+#: ../app/dialogs/preferences-dialog.c:1604
 msgid "Select Theme"
 msgstr "Zvolte téma"
 
-#: ../app/dialogs/preferences-dialog.c:1690
+#: ../app/dialogs/preferences-dialog.c:1686
 msgid "Reload C_urrent Theme"
 msgstr "Znovu načíst _aktuální téma"
 
-#: ../app/dialogs/preferences-dialog.c:1702
+#: ../app/dialogs/preferences-dialog.c:1698
 msgid "Help System"
 msgstr "Systém nápovědy"
 
 #. General
-#: ../app/dialogs/preferences-dialog.c:1714
-#: ../app/dialogs/preferences-dialog.c:1765
-#: ../app/dialogs/preferences-dialog.c:1952
+#: ../app/dialogs/preferences-dialog.c:1710
+#: ../app/dialogs/preferences-dialog.c:1761
+#: ../app/dialogs/preferences-dialog.c:1948
 #: ../app/widgets/gimpcontrollereditor.c:188
 msgid "General"
 msgstr "Všeobecné"
 
-#: ../app/dialogs/preferences-dialog.c:1717
+#: ../app/dialogs/preferences-dialog.c:1713
 msgid "Show _tooltips"
 msgstr "Zobrazovat _tipy nástrojů"
 
-#: ../app/dialogs/preferences-dialog.c:1720
+#: ../app/dialogs/preferences-dialog.c:1716
 msgid "Show help _buttons"
 msgstr "Zobrazovat _tlačítka nápovědy"
 
-#: ../app/dialogs/preferences-dialog.c:1723
+#: ../app/dialogs/preferences-dialog.c:1719
 msgid "Show tips on _startup"
 msgstr "Zobrazovat tipy při _spuštění"
 
 #. Help Browser
-#: ../app/dialogs/preferences-dialog.c:1727
+#: ../app/dialogs/preferences-dialog.c:1723
 msgid "Help Browser"
 msgstr "Prohlížeč nápovědy"
 
-#: ../app/dialogs/preferences-dialog.c:1731
+#: ../app/dialogs/preferences-dialog.c:1727
 msgid "H_elp browser to use:"
 msgstr "_Používaný prohlížeč nápovědy:"
 
-#: ../app/dialogs/preferences-dialog.c:1736
+#: ../app/dialogs/preferences-dialog.c:1732
 msgid "Web Browser"
 msgstr "WWW prohlížeč"
 
-#: ../app/dialogs/preferences-dialog.c:1740
+#: ../app/dialogs/preferences-dialog.c:1736
 msgid "_Web browser to use:"
 msgstr "Používaný _WWW prohlížeč:"
 
-#: ../app/dialogs/preferences-dialog.c:1768
+#: ../app/dialogs/preferences-dialog.c:1764
 msgid "_Save tool options on exit"
 msgstr "_Ukládat volby nástrojů při skončení"
 
-#: ../app/dialogs/preferences-dialog.c:1772
+#: ../app/dialogs/preferences-dialog.c:1768
 msgid "Save Tool Options _Now"
 msgstr "Uložit volby nástrojů _teď"
 
-#: ../app/dialogs/preferences-dialog.c:1779
+#: ../app/dialogs/preferences-dialog.c:1775
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "_Obnovit uložené volby nástrojů na implicitní hodnoty"
 
 #. Snapping Distance
-#: ../app/dialogs/preferences-dialog.c:1789
+#: ../app/dialogs/preferences-dialog.c:1785
 msgid "Guide & Grid Snapping"
 msgstr "Přichytávání k vodítkům a mřížce"
 
-#: ../app/dialogs/preferences-dialog.c:1794
+#: ../app/dialogs/preferences-dialog.c:1790
 msgid "_Snap distance:"
 msgstr "Vzdálenost _přichytávání:"
 
-#: ../app/dialogs/preferences-dialog.c:1802
+#: ../app/dialogs/preferences-dialog.c:1798
 msgid "Default _interpolation:"
 msgstr "Implicitní _interpolace:"
 
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1809
+#: ../app/dialogs/preferences-dialog.c:1805
 msgid "Paint Options Shared Between Tools"
 msgstr "Volby kreslení sdílené mezi nástroji"
 
-#: ../app/dialogs/preferences-dialog.c:1822
+#: ../app/dialogs/preferences-dialog.c:1818
 msgid "Move Tool"
 msgstr "Nástroj přesunu"
 
-#: ../app/dialogs/preferences-dialog.c:1826
+#: ../app/dialogs/preferences-dialog.c:1822
 msgid "Set layer or path as active"
 msgstr "Nastavit vrstvu či cestu jako aktivní"
 
-#: ../app/dialogs/preferences-dialog.c:1839
+#: ../app/dialogs/preferences-dialog.c:1835
 msgid "Toolbox"
 msgstr "Nástroje"
 
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1851
-#: ../app/dialogs/preferences-dialog.c:2025
+#: ../app/dialogs/preferences-dialog.c:1847
+#: ../app/dialogs/preferences-dialog.c:2021
 #: ../app/widgets/gimpgrideditor.c:196
 msgid "Appearance"
 msgstr "Zobrazování"
 
-#: ../app/dialogs/preferences-dialog.c:1855
+#: ../app/dialogs/preferences-dialog.c:1851
 msgid "Show _foreground & background color"
 msgstr "Zobrazovat barvu _popředí a pozadí"
 
-#: ../app/dialogs/preferences-dialog.c:1859
+#: ../app/dialogs/preferences-dialog.c:1855
 msgid "Show active _brush, pattern & gradient"
 msgstr "Zobrazovat aktivní _stopu, vzorek a přechod"
 
-#: ../app/dialogs/preferences-dialog.c:1863
+#: ../app/dialogs/preferences-dialog.c:1859
 msgid "Show active _image"
 msgstr "Zobrazovat aktivní _obrázek"
 
-#: ../app/dialogs/preferences-dialog.c:1876
+#: ../app/dialogs/preferences-dialog.c:1872
 msgid "Default New Image"
 msgstr "Implicitní nový obrázek"
 
-#: ../app/dialogs/preferences-dialog.c:1879
+#: ../app/dialogs/preferences-dialog.c:1875
 msgid "Default Image"
 msgstr "Implicitní obrázek"
 
-#: ../app/dialogs/preferences-dialog.c:1916
+#: ../app/dialogs/preferences-dialog.c:1912
 msgid "Default Image Grid"
 msgstr "Implicitní mřížka obrázku"
 
-#: ../app/dialogs/preferences-dialog.c:1919
+#: ../app/dialogs/preferences-dialog.c:1915
 msgid "Default Grid"
 msgstr "Implicitní mřížka"
 
-#: ../app/dialogs/preferences-dialog.c:1940
+#: ../app/dialogs/preferences-dialog.c:1936
 msgid "Image Windows"
 msgstr "Okna obrázku"
 
-#: ../app/dialogs/preferences-dialog.c:1955
+#: ../app/dialogs/preferences-dialog.c:1951
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Používat implicitně \"_Bod na bod\""
 
-#: ../app/dialogs/preferences-dialog.c:1961
+#: ../app/dialogs/preferences-dialog.c:1957
 msgid "Marching _ants speed:"
 msgstr "_Rychlost běhu čar:"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:1965
+#: ../app/dialogs/preferences-dialog.c:1961
 msgid "Zoom & Resize Behavior"
 msgstr "Chování přibližování a změny velikosti"
 
-#: ../app/dialogs/preferences-dialog.c:1969
+#: ../app/dialogs/preferences-dialog.c:1965
 msgid "Resize window on _zoom"
 msgstr "Měnit velikost okna dle _přiblížení"
 
-#: ../app/dialogs/preferences-dialog.c:1972
+#: ../app/dialogs/preferences-dialog.c:1968
 msgid "Resize window on image _size change"
 msgstr "Měnit velikost okna dle změny veliko_sti obrázku"
 
-#: ../app/dialogs/preferences-dialog.c:1978
+#: ../app/dialogs/preferences-dialog.c:1974
 msgid "Fit to window"
 msgstr "Přizpůsobit velikosti okna"
 
-#: ../app/dialogs/preferences-dialog.c:1980
+#: ../app/dialogs/preferences-dialog.c:1976
 msgid "Initial zoom _ratio:"
 msgstr "_Počáteční přiblížení:"
 
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:1984
+#: ../app/dialogs/preferences-dialog.c:1980
 msgid "Space Bar"
 msgstr "Mezerník"
 
-#: ../app/dialogs/preferences-dialog.c:1990
+#: ../app/dialogs/preferences-dialog.c:1986
 msgid "_While space bar is pressed:"
 msgstr "_Při stisknutí mezerníku:"
 
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:1994
+#: ../app/dialogs/preferences-dialog.c:1990
 msgid "Mouse Pointers"
 msgstr "Kurzory myši"
 
-#: ../app/dialogs/preferences-dialog.c:1998
+#: ../app/dialogs/preferences-dialog.c:1994
 msgid "Show _brush outline"
 msgstr "Zobrazovat obrys _stopy"
 
-#: ../app/dialogs/preferences-dialog.c:2001
+#: ../app/dialogs/preferences-dialog.c:1997
 msgid "Show pointer for paint _tools"
 msgstr "Zobrazovat kurzor kreslicího _nástroje"
 
-#: ../app/dialogs/preferences-dialog.c:2007
+#: ../app/dialogs/preferences-dialog.c:2003
 msgid "Pointer _mode:"
 msgstr "_Režim kurzoru:"
 
-#: ../app/dialogs/preferences-dialog.c:2010
+#: ../app/dialogs/preferences-dialog.c:2006
 msgid "Pointer re_ndering:"
 msgstr "_Vykreslování kurzoru:"
 
-#: ../app/dialogs/preferences-dialog.c:2022
+#: ../app/dialogs/preferences-dialog.c:2018
 msgid "Image Window Appearance"
 msgstr "Vzhled okna obrázku"
 
-#: ../app/dialogs/preferences-dialog.c:2033
+#: ../app/dialogs/preferences-dialog.c:2029
 msgid "Default Appearance in Normal Mode"
 msgstr "Implicitní vzhled v normálním režimu"
 
-#: ../app/dialogs/preferences-dialog.c:2038
+#: ../app/dialogs/preferences-dialog.c:2034
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Implicitní vzhled v režimu přes celou obrazovku"
 
-#: ../app/dialogs/preferences-dialog.c:2047
+#: ../app/dialogs/preferences-dialog.c:2043
 msgid "Image Title & Statusbar Format"
 msgstr "Formát titulku a stavové lišty obrázku"
 
-#: ../app/dialogs/preferences-dialog.c:2050
+#: ../app/dialogs/preferences-dialog.c:2046
 msgid "Title & Status"
 msgstr "Titulek a stav"
 
-#: ../app/dialogs/preferences-dialog.c:2068
+#: ../app/dialogs/preferences-dialog.c:2064
 msgid "Current format"
 msgstr "Aktuální formát"
 
-#: ../app/dialogs/preferences-dialog.c:2069
+#: ../app/dialogs/preferences-dialog.c:2065
 msgid "Default format"
 msgstr "Implicitní formát"
 
-#: ../app/dialogs/preferences-dialog.c:2070
+#: ../app/dialogs/preferences-dialog.c:2066
 msgid "Show zoom percentage"
 msgstr "Zobrazovat procento přiblížení"
 
-#: ../app/dialogs/preferences-dialog.c:2071
+#: ../app/dialogs/preferences-dialog.c:2067
 msgid "Show zoom ratio"
 msgstr "Zobrazovat poměr přiblížení"
 
-#: ../app/dialogs/preferences-dialog.c:2072
+#: ../app/dialogs/preferences-dialog.c:2068
 msgid "Show image size"
 msgstr "Zobrazovat velikost obrázku"
 
-#: ../app/dialogs/preferences-dialog.c:2085
+#: ../app/dialogs/preferences-dialog.c:2081
 msgid "Image Title Format"
 msgstr "Formát titulku obrázku"
 
-#: ../app/dialogs/preferences-dialog.c:2087
+#: ../app/dialogs/preferences-dialog.c:2083
 msgid "Image Statusbar Format"
 msgstr "Formát stavové lišty obrázku"
 
-#: ../app/dialogs/preferences-dialog.c:2172
+#: ../app/dialogs/preferences-dialog.c:2168
 msgid "Display"
 msgstr "Zobrazování"
 
-#: ../app/dialogs/preferences-dialog.c:2188
+#: ../app/dialogs/preferences-dialog.c:2184
 msgid "_Check style:"
 msgstr "_Styl šachovnice::"
 
-#: ../app/dialogs/preferences-dialog.c:2191
+#: ../app/dialogs/preferences-dialog.c:2187
 msgid "Check _size:"
 msgstr "Veliko_st polí šachovnice:"
 
-#: ../app/dialogs/preferences-dialog.c:2194
+#: ../app/dialogs/preferences-dialog.c:2190
 msgid "Monitor Resolution"
 msgstr "Rozlišení monitoru"
 
-#: ../app/dialogs/preferences-dialog.c:2198
+#: ../app/dialogs/preferences-dialog.c:2194
 #: ../app/widgets/gimpcursorview.c:124 ../app/widgets/gimpgrideditor.c:261
 #: ../app/widgets/gimpgrideditor.c:293
 msgid "Pixels"
 msgstr "Pixelů"
 
-#: ../app/dialogs/preferences-dialog.c:2220
+#: ../app/dialogs/preferences-dialog.c:2216
 #: ../app/widgets/gimpimagepropview.c:459
 msgid "ppi"
 msgstr "ppi"
 
-#: ../app/dialogs/preferences-dialog.c:2236
+#: ../app/dialogs/preferences-dialog.c:2232
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "_Detekovat automaticky (nyní %d × %d ppi)"
 
-#: ../app/dialogs/preferences-dialog.c:2256
+#: ../app/dialogs/preferences-dialog.c:2252
 msgid "_Enter manually"
 msgstr "_Zadat ručně"
 
-#: ../app/dialogs/preferences-dialog.c:2271
+#: ../app/dialogs/preferences-dialog.c:2267
 msgid "C_alibrate..."
 msgstr "_Kalibrovat..."
 
-#: ../app/dialogs/preferences-dialog.c:2293
+#: ../app/dialogs/preferences-dialog.c:2289
 msgid "Color Management"
 msgstr "Správa barev"
 
-#: ../app/dialogs/preferences-dialog.c:2313
+#: ../app/dialogs/preferences-dialog.c:2309
 msgid "_RGB profile:"
 msgstr "Profil _RGB:"
 
-#: ../app/dialogs/preferences-dialog.c:2314
+#: ../app/dialogs/preferences-dialog.c:2310
 msgid "Select RGB Color Profile"
 msgstr "Zvolte profil barev RGB"
 
-#: ../app/dialogs/preferences-dialog.c:2315
+#: ../app/dialogs/preferences-dialog.c:2311
 msgid "_CMYK profile:"
 msgstr "Profil _CMYK:"
 
-#: ../app/dialogs/preferences-dialog.c:2316
+#: ../app/dialogs/preferences-dialog.c:2312
 msgid "Select CMYK Color Profile"
 msgstr "Zvolte profil barev CMYK"
 
-#: ../app/dialogs/preferences-dialog.c:2317
+#: ../app/dialogs/preferences-dialog.c:2313
 msgid "_Monitor profile:"
 msgstr "Profil _monitoru:"
 
-#: ../app/dialogs/preferences-dialog.c:2318
+#: ../app/dialogs/preferences-dialog.c:2314
 msgid "Select Monitor Color Profile"
 msgstr "Zvolte profil barev monitoru"
 
-#: ../app/dialogs/preferences-dialog.c:2319
+#: ../app/dialogs/preferences-dialog.c:2315
 msgid "_Print simulation profile:"
 msgstr "Profil simulace _tisku:"
 
-#: ../app/dialogs/preferences-dialog.c:2320
+#: ../app/dialogs/preferences-dialog.c:2316
 msgid "Select Printer Color Profile"
 msgstr "Zvolte profil barev tiskárny"
 
-#: ../app/dialogs/preferences-dialog.c:2329
+#: ../app/dialogs/preferences-dialog.c:2325
 msgid "_Mode of operation:"
 msgstr "_Režim práce:"
 
-#: ../app/dialogs/preferences-dialog.c:2355
+#: ../app/dialogs/preferences-dialog.c:2351
 msgid "_Try to obtain the monitor profile from the X server"
 msgstr "_Zkusit získat profil monitoru z X serveru"
 
-#: ../app/dialogs/preferences-dialog.c:2366
+#: ../app/dialogs/preferences-dialog.c:2362
 msgid "_Display rendering intent:"
 msgstr "_Zobrazovat úmysl vykreslování:"
 
-#: ../app/dialogs/preferences-dialog.c:2374
+#: ../app/dialogs/preferences-dialog.c:2370
 msgid "_Softproof rendering intent:"
 msgstr "_Softproof úmysl vykreslování:"
 
-#: ../app/dialogs/preferences-dialog.c:2384
+#: ../app/dialogs/preferences-dialog.c:2380
 msgid "File Open behaviour:"
 msgstr "Chování při otvírání souborů:"
 
-#: ../app/dialogs/preferences-dialog.c:2394
+#: ../app/dialogs/preferences-dialog.c:2390
 msgid "Input Devices"
 msgstr "Vstupní zařízení"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2404
+#: ../app/dialogs/preferences-dialog.c:2400
 msgid "Extended Input Devices"
 msgstr "Rozšířená vstupní zařízení"
 
-#: ../app/dialogs/preferences-dialog.c:2408
+#: ../app/dialogs/preferences-dialog.c:2404
 msgid "Configure E_xtended Input Devices..."
 msgstr "Nastavit _rozšířená vstupní zařízení..."
 
-#: ../app/dialogs/preferences-dialog.c:2415
+#: ../app/dialogs/preferences-dialog.c:2411
 msgid "_Save input device settings on exit"
 msgstr "_Uložit nastavení vstupních zařízení při skončení"
 
-#: ../app/dialogs/preferences-dialog.c:2419
+#: ../app/dialogs/preferences-dialog.c:2415
 msgid "Save Input Device Settings _Now"
 msgstr "Uložit nastavení vstupních zařízení _nyní"
 
-#: ../app/dialogs/preferences-dialog.c:2426
+#: ../app/dialogs/preferences-dialog.c:2422
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_Obnovit uložené nastavení vstupních zařízení na implicitní hodnoty"
 
-#: ../app/dialogs/preferences-dialog.c:2441
+#: ../app/dialogs/preferences-dialog.c:2437
 msgid "Additional Input Controllers"
 msgstr "Další vstupní ovladače"
 
-#: ../app/dialogs/preferences-dialog.c:2444
+#: ../app/dialogs/preferences-dialog.c:2440
 msgid "Input Controllers"
 msgstr "Vstupní ovladače"
 
-#: ../app/dialogs/preferences-dialog.c:2460
+#: ../app/dialogs/preferences-dialog.c:2456
 msgid "Window Management"
 msgstr "Správa oken"
 
-#: ../app/dialogs/preferences-dialog.c:2469
+#: ../app/dialogs/preferences-dialog.c:2465
 msgid "Window Manager Hints"
 msgstr "Nápovědy správce oken"
 
-#: ../app/dialogs/preferences-dialog.c:2475
+#: ../app/dialogs/preferences-dialog.c:2471
 msgid "Hint for the _toolbox:"
 msgstr "Nápověda pro _nástroje:"
 
-#: ../app/dialogs/preferences-dialog.c:2479
+#: ../app/dialogs/preferences-dialog.c:2475
 msgid "Hint for other _docks:"
 msgstr "Nápověda pro ostatní _doky:"
 
-#: ../app/dialogs/preferences-dialog.c:2484
+#: ../app/dialogs/preferences-dialog.c:2480
 msgid "Toolbox and other docks are transient to the active image window"
 msgstr "Nástroje a ostatní doky jsou tranzientní k aktivnímu oknu obrázku"
 
-#: ../app/dialogs/preferences-dialog.c:2489
+#: ../app/dialogs/preferences-dialog.c:2485
 msgid "Focus"
 msgstr "Aktivace"
 
-#: ../app/dialogs/preferences-dialog.c:2493
+#: ../app/dialogs/preferences-dialog.c:2489
 msgid "Activate the _focused image"
 msgstr "Aktivovat obrázek podle _okna"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2497
+#: ../app/dialogs/preferences-dialog.c:2493
 msgid "Window Positions"
 msgstr "Polohy oken"
 
-#: ../app/dialogs/preferences-dialog.c:2500
+#: ../app/dialogs/preferences-dialog.c:2496
 msgid "_Save window positions on exit"
 msgstr "Ukládat polohy oken při _skončení"
 
-#: ../app/dialogs/preferences-dialog.c:2504
+#: ../app/dialogs/preferences-dialog.c:2500
 msgid "Save Window Positions _Now"
 msgstr "Uložit polohy oken _okamžitě"
 
-#: ../app/dialogs/preferences-dialog.c:2511
+#: ../app/dialogs/preferences-dialog.c:2507
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Obnovit uložené polohy oken na implicitní hodnoty"
 
-#: ../app/dialogs/preferences-dialog.c:2526
+#: ../app/dialogs/preferences-dialog.c:2522
 msgid "Folders"
 msgstr "Adresáře"
 
-#: ../app/dialogs/preferences-dialog.c:2546
+#: ../app/dialogs/preferences-dialog.c:2542
 msgid "Temporary folder:"
 msgstr "Dočasný adresář:"
 
-#: ../app/dialogs/preferences-dialog.c:2547
+#: ../app/dialogs/preferences-dialog.c:2543
 msgid "Select Folder for Temporary Files"
 msgstr "Vyberte adresář pro dočasné soubory"
 
-#: ../app/dialogs/preferences-dialog.c:2551
+#: ../app/dialogs/preferences-dialog.c:2547
 msgid "Swap folder:"
 msgstr "Odkládací adresář:"
 
-#: ../app/dialogs/preferences-dialog.c:2552
+#: ../app/dialogs/preferences-dialog.c:2548
 msgid "Select Swap Folder"
 msgstr "Zvolte odkládací adresář"
 
-#: ../app/dialogs/preferences-dialog.c:2587
+#: ../app/dialogs/preferences-dialog.c:2583
 msgid "Brush Folders"
 msgstr "Adresáře se stopami"
 
-#: ../app/dialogs/preferences-dialog.c:2589
+#: ../app/dialogs/preferences-dialog.c:2585
 msgid "Select Brush Folders"
 msgstr "Zvolte adresář stop"
 
-#: ../app/dialogs/preferences-dialog.c:2591
+#: ../app/dialogs/preferences-dialog.c:2587
 msgid "Pattern Folders"
 msgstr "Adresáře se vzorky"
 
-#: ../app/dialogs/preferences-dialog.c:2593
+#: ../app/dialogs/preferences-dialog.c:2589
 msgid "Select Pattern Folders"
 msgstr "Zvolte adresář vzorků"
 
-#: ../app/dialogs/preferences-dialog.c:2595
+#: ../app/dialogs/preferences-dialog.c:2591
 msgid "Palette Folders"
 msgstr "Adresáře s paletami"
 
-#: ../app/dialogs/preferences-dialog.c:2597
+#: ../app/dialogs/preferences-dialog.c:2593
 msgid "Select Palette Folders"
 msgstr "Zvolte adresář palet"
 
-#: ../app/dialogs/preferences-dialog.c:2599
+#: ../app/dialogs/preferences-dialog.c:2595
 msgid "Gradient Folders"
 msgstr "Adresáře s přechody"
 
-#: ../app/dialogs/preferences-dialog.c:2601
+#: ../app/dialogs/preferences-dialog.c:2597
 msgid "Select Gradient Folders"
 msgstr "Zvolte adresář přechodů"
 
-#: ../app/dialogs/preferences-dialog.c:2603
+#: ../app/dialogs/preferences-dialog.c:2599
 msgid "Font Folders"
 msgstr "Adresáře písem"
 
-#: ../app/dialogs/preferences-dialog.c:2605
+#: ../app/dialogs/preferences-dialog.c:2601
 msgid "Select Font Folders"
 msgstr "Zvolte adresáře písem"
 
-#: ../app/dialogs/preferences-dialog.c:2607
+#: ../app/dialogs/preferences-dialog.c:2603
 msgid "Plug-In Folders"
 msgstr "Adresáře se zásuvnými moduly"
 
-#: ../app/dialogs/preferences-dialog.c:2609
+#: ../app/dialogs/preferences-dialog.c:2605
 msgid "Select Plug-In Folders"
 msgstr "Zvolte adresář zásuvných modulů"
 
-#: ../app/dialogs/preferences-dialog.c:2611
+#: ../app/dialogs/preferences-dialog.c:2607
 msgid "Scripts"
 msgstr "Skripty"
 
-#: ../app/dialogs/preferences-dialog.c:2611
+#: ../app/dialogs/preferences-dialog.c:2607
 msgid "Script-Fu Folders"
 msgstr "Adresáře Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2613
+#: ../app/dialogs/preferences-dialog.c:2609
 msgid "Select Script-Fu Folders"
 msgstr "Zvolte adresáře Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2615
+#: ../app/dialogs/preferences-dialog.c:2611
 msgid "Module Folders"
 msgstr "Adresáře s moduly"
 
-#: ../app/dialogs/preferences-dialog.c:2617
+#: ../app/dialogs/preferences-dialog.c:2613
 msgid "Select Module Folders"
 msgstr "Zvolte adresář modulů"
 
-#: ../app/dialogs/preferences-dialog.c:2619
+#: ../app/dialogs/preferences-dialog.c:2615
 msgid "Interpreters"
 msgstr "Interpretry"
 
-#: ../app/dialogs/preferences-dialog.c:2619
+#: ../app/dialogs/preferences-dialog.c:2615
 msgid "Interpreter Folders"
 msgstr "Adresáře interpretrů"
 
-#: ../app/dialogs/preferences-dialog.c:2621
+#: ../app/dialogs/preferences-dialog.c:2617
 msgid "Select Interpreter Folders"
 msgstr "Zvolte adresáře interpretrů"
 
-#: ../app/dialogs/preferences-dialog.c:2623
+#: ../app/dialogs/preferences-dialog.c:2619
 msgid "Environment Folders"
 msgstr "Adresáře s prostředím"
 
-#: ../app/dialogs/preferences-dialog.c:2625
+#: ../app/dialogs/preferences-dialog.c:2621
 msgid "Select Environment Folders"
 msgstr "Zvolte adresáře prostředí"
 
-#: ../app/dialogs/preferences-dialog.c:2627
+#: ../app/dialogs/preferences-dialog.c:2623
 msgid "Themes"
 msgstr "Témata"
 
-#: ../app/dialogs/preferences-dialog.c:2627
+#: ../app/dialogs/preferences-dialog.c:2623
 msgid "Theme Folders"
 msgstr "Adresáře s tématy"
 
-#: ../app/dialogs/preferences-dialog.c:2629
+#: ../app/dialogs/preferences-dialog.c:2625
 msgid "Select Theme Folders"
 msgstr "Zvolte adresář témat"
 
@@ -8470,7 +8470,7 @@ msgstr "Modul %s  nemohl uložit obrázek"
 msgid "'%s:' is not a valid URI scheme"
 msgstr "'%s:' není platné schéma URI"
 
-#: ../app/file/file-utils.c:88 ../app/file/file-utils.c:121
+#: ../app/file/file-utils.c:88 ../app/file/file-utils.c:122
 msgid "Invalid character sequence in URI"
 msgstr "Neplatná posloupnost znaků v URI"
 
@@ -8641,7 +8641,7 @@ msgstr ""
 "Chyba volání PDB pro proceduru '%s':\n"
 "Nesouhlasí typ argumentu #%d (očekávám %s, dostal jsem %s)"
 
-#: ../app/pdb/gimpprocedure.c:512
+#: ../app/pdb/gimpprocedure.c:515
 #, c-format
 msgid ""
 "Procedure '%s' returned a wrong value type for return value '%s' (#%d). "
@@ -8650,7 +8650,7 @@ msgstr ""
 "Procedura '%s' vrátila špatný typ návratové hodnoty '%s' (#%d). Očekáváno %"
 "s, obdrženo %s."
 
-#: ../app/pdb/gimpprocedure.c:523
+#: ../app/pdb/gimpprocedure.c:527
 #, c-format
 msgid ""
 "Procedure '%s' has been called with a wrong value type for argument '%s' (#%"
@@ -8659,7 +8659,7 @@ msgstr ""
 "Procedura'%s' byla zavolána s nesprávným typem hodnoty argumentu '%s' (#%d). "
 "Očekáváno %s, obdrženo %s."
 
-#: ../app/pdb/gimpprocedure.c:554
+#: ../app/pdb/gimpprocedure.c:559
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -8668,7 +8668,7 @@ msgstr ""
 "Procedura'%s' vrátila neplatné ID argumentu '%s'. Zásuvný modul se "
 "pravděpodobně snaží pracovat s neexistující vrstvou."
 
-#: ../app/pdb/gimpprocedure.c:565
+#: ../app/pdb/gimpprocedure.c:571
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -8677,7 +8677,7 @@ msgstr ""
 "Procedura'%s' byla zavolána s neplatným ID argumentu '%s'. Zásuvný modul se "
 "pravděpodobně snaží pracovat s neexistující vrstvou."
 
-#: ../app/pdb/gimpprocedure.c:580
+#: ../app/pdb/gimpprocedure.c:587
 #, c-format
 msgid ""
 "Procedure '%s' returned an invalid ID for argument '%s'. Most likely a plug-"
@@ -8686,7 +8686,7 @@ msgstr ""
 "Procedura'%s' vrátila neplatné ID argumentu '%s'. Zásuvný modul se "
 "pravděpodobně snaží pracovat s neexistujícím obrázkem. "
 
-#: ../app/pdb/gimpprocedure.c:591
+#: ../app/pdb/gimpprocedure.c:599
 #, c-format
 msgid ""
 "Procedure '%s' has been called with an invalid ID for argument '%s'. Most "
@@ -8695,7 +8695,7 @@ msgstr ""
 "Procedura'%s' byla zavolána s neplatným ID argumentu '%s'. Zásuvný modul se "
 "pravděpodobně snaží pracovat s neexistujícím obrázkem. "
 
-#: ../app/pdb/gimpprocedure.c:605
+#: ../app/pdb/gimpprocedure.c:614
 #, c-format
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
@@ -8704,7 +8704,7 @@ msgstr ""
 "Procedura '%s' vrátila '%s' jako návratovou hodnotu '%s' (#%d, typ %s). Tato "
 "hodnota je mimo rozsah."
 
-#: ../app/pdb/gimpprocedure.c:617
+#: ../app/pdb/gimpprocedure.c:627
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %"
@@ -10843,24 +10843,24 @@ msgstr "Transformovat cestu"
 msgid "Error while writing '%s': %s"
 msgstr "Chyba při zápisu '%s': %s"
 
-#: ../app/vectors/gimpvectors-import.c:293
+#: ../app/vectors/gimpvectors-import.c:296
 msgid "Import Paths"
 msgstr "Importovat cesty"
 
-#: ../app/vectors/gimpvectors-import.c:304
+#: ../app/vectors/gimpvectors-import.c:307
 msgid "Imported Path"
 msgstr "Importovaná cesta"
 
-#: ../app/vectors/gimpvectors-import.c:333
+#: ../app/vectors/gimpvectors-import.c:336
 #, c-format
 msgid "No paths found in '%s'"
 msgstr "V '%s' nebyla nalezena žádná cesta"
 
-#: ../app/vectors/gimpvectors-import.c:336
+#: ../app/vectors/gimpvectors-import.c:339
 msgid "No paths found in the buffer"
 msgstr "V bufferu nebyla nalezena žádná cesta"
 
-#: ../app/vectors/gimpvectors-import.c:346
+#: ../app/vectors/gimpvectors-import.c:349
 #, c-format
 msgid "Failed to import paths from '%s': %s"
 msgstr "Nemohu importovat cesty z '%s': %s"
@@ -11394,8 +11394,8 @@ msgid "Configure this tab"
 msgstr "Nastavit tuto kartu"
 
 #: ../app/widgets/gimpdockseparator.c:44
-msgid "You can drop dockable dialogs here."
-msgstr "Sem můžete upustit ukotvitelné dialogy."
+msgid "You can drop dockable dialogs here"
+msgstr "Sem můžete upustit dokovatelné dialogy."
 
 #: ../app/widgets/gimperrordialog.c:151
 msgid "Too many error messages!"
@@ -11410,23 +11410,23 @@ msgstr "Zprávy jsou přesměrovány na stderr."
 msgid "%s Message"
 msgstr "Zpráva %s"
 
-#: ../app/widgets/gimpfiledialog.c:269
+#: ../app/widgets/gimpfiledialog.c:272
 msgid "Automatically Detected"
 msgstr "Automaticky detekováno"
 
-#: ../app/widgets/gimpfiledialog.c:279
+#: ../app/widgets/gimpfiledialog.c:282
 msgid "By Extension"
 msgstr "Podle přípony"
 
-#: ../app/widgets/gimpfiledialog.c:534
+#: ../app/widgets/gimpfiledialog.c:535
 msgid "All files"
 msgstr "Všechny soubory"
 
-#: ../app/widgets/gimpfiledialog.c:539
+#: ../app/widgets/gimpfiledialog.c:540
 msgid "All images"
 msgstr "Všechny obrázky"
 
-#: ../app/widgets/gimpfiledialog.c:668
+#: ../app/widgets/gimpfiledialog.c:669
 #, c-format
 msgid "Select File _Type (%s)"
 msgstr "Zvolte _typ souboru (%s)"
@@ -11850,7 +11850,7 @@ msgstr "%d ppi, %s"
 msgid "_Use selected font"
 msgstr "_Použít vybrané písmo"
 
-#: ../app/widgets/gimpthumbbox.c:321
+#: ../app/widgets/gimpthumbbox.c:329
 #, c-format
 msgid ""
 "Click to update preview\n"
@@ -11859,20 +11859,20 @@ msgstr ""
 "Aktualizujte náhled kliknutím\n"
 "Podržíte-li přitom %s%.0s, vynutíte aktualizaci, i když je náhled aktuální"
 
-#: ../app/widgets/gimpthumbbox.c:339
+#: ../app/widgets/gimpthumbbox.c:347
 msgid "Pr_eview"
 msgstr "_Náhled"
 
-#: ../app/widgets/gimpthumbbox.c:394 ../app/widgets/gimpthumbbox.c:469
+#: ../app/widgets/gimpthumbbox.c:402 ../app/widgets/gimpthumbbox.c:466
 msgid "No selection"
 msgstr "Žádný výběr"
 
-#: ../app/widgets/gimpthumbbox.c:597 ../app/widgets/gimpthumbbox.c:621
+#: ../app/widgets/gimpthumbbox.c:595 ../app/widgets/gimpthumbbox.c:616
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Miniatura %d z %d"
 
-#: ../app/widgets/gimpthumbbox.c:732 ../app/widgets/gimpthumbbox.c:742
+#: ../app/widgets/gimpthumbbox.c:729 ../app/widgets/gimpthumbbox.c:739
 msgid "Creating preview..."
 msgstr "Vytvářím náhled..."
 
@@ -11921,7 +11921,7 @@ msgstr ""
 "Aktivní přechod.\n"
 "Dialog přechodů otevřete klepnutím."
 
-#: ../app/widgets/gimptoolbox.c:693
+#: ../app/widgets/gimptoolbox.c:687
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Click to open the color selection dialog."
