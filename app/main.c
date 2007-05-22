@@ -55,6 +55,8 @@
 
 #include "core/gimp.h"
 
+#include "file/file-utils.h"
+
 #include "widgets/gimpdbusservice.h"
 
 #include "about.h"
@@ -716,7 +718,7 @@ gimp_dbus_open (const gchar **filenames,
           for (i = 0, success = TRUE; filenames[i] && success; i++)
             {
               const gchar *filename = filenames[i];
-              gchar       *uri;
+              gchar       *uri      = NULL;
 
               if (file_utils_filename_is_uri (filename, &error))
                 {
