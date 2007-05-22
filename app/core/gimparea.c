@@ -34,9 +34,7 @@ gimp_area_new (gint x1,
                gint x2,
                gint y2)
 {
-  GimpArea *area;
-
-  area = g_new (GimpArea, 1);
+  GimpArea *area = g_slice_new (GimpArea);
 
   area->x1 = x1;
   area->y1 = y1;
@@ -45,6 +43,13 @@ gimp_area_new (gint x1,
 
   return area;
 }
+
+void
+gimp_area_free (GimpArea *area)
+{
+  g_slice_free (GimpArea, area);
+}
+
 
 /*
  *  As far as I can tell, this function takes a GimpArea and unifies it with
@@ -81,7 +86,7 @@ gimp_area_list_process (GSList   *list,
           area->x2 = MAX (area->x2, ga2->x2);
           area->y2 = MAX (area->y2, ga2->y2);
 
-          g_free (ga2);
+          g_slice_free (GimpArea, ga2);
         }
     }
 
@@ -91,14 +96,13 @@ gimp_area_list_process (GSList   *list,
   return new_list;
 }
 
-GSList *
-gimp_area_list_free (GSList *list)
+void
+gimp_area_list_free (GSList *areas)
 {
-  if (list)
-    {
-      g_slist_foreach (list, (GFunc) g_free, NULL);
-      g_slist_free (list);
-    }
+  GSList *list;
 
-  return NULL;
+  for (list = areas; list; list = list->next)
+    gimp_area_free (list->data);
+
+  g_slist_free (list);
 }

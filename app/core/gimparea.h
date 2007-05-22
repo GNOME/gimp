@@ -30,10 +30,11 @@ GimpArea * gimp_area_new          (gint      x1,
                                    gint      y1,
                                    gint      x2,
                                    gint      y2);
+void       gimp_area_free         (GimpArea *area);
 
 GSList   * gimp_area_list_process (GSList   *list,
                                    GimpArea *area);
-GSList   * gimp_area_list_free    (GSList   *list);
+void       gimp_area_list_free    (GSList   *list);
 
 
 #endif /*  __GIMP_AREA_H__  */

@@ -455,26 +455,28 @@ gimp_projection_flush_whenever (GimpProjection *proj,
         }
 
       /*  Free the update lists  */
-      proj->update_areas = gimp_area_list_free (proj->update_areas);
+      gimp_area_list_free (proj->update_areas);
+      proj->update_areas = NULL;
     }
 }
 
 static void
 gimp_projection_idle_render_init (GimpProjection *proj)
 {
-  GSList   *list;
-  GimpArea *area;
+  GSList *list;
 
-  /* We need to merge the IdleRender's and the GimpProjection's update_areas list
-   * to keep track of which of the updates have been flushed and hence need
-   * to be drawn.
+  /* We need to merge the IdleRender's and the GimpProjection's update_areas
+   * list to keep track of which of the updates have been flushed and hence
+   * need to be drawn.
    */
   for (list = proj->update_areas; list; list = g_slist_next (list))
     {
-      area = g_memdup (list->data, sizeof (GimpArea));
+      GimpArea *area = list->data;
 
       proj->idle_render.update_areas =
-        gimp_area_list_process (proj->idle_render.update_areas, area);
+        gimp_area_list_process (proj->idle_render.update_areas,
+                                gimp_area_new (area->x1, area->y1,
+                                               area->x2, area->y2));
     }
 
   /* If an idlerender was already running, merge the remainder of its
@@ -483,7 +485,7 @@ gimp_projection_idle_render_init (GimpProjection *proj)
    */
   if (proj->idle_render.idle_id)
     {
-      area =
+      GimpArea *area =
         gimp_area_new (proj->idle_render.base_x,
                        proj->idle_render.y,
                        proj->idle_render.base_x + proj->idle_render.width,
@@ -581,7 +583,7 @@ gimp_projection_idle_render_next_area (GimpProjection *proj)
   if (! proj->idle_render.update_areas)
     return FALSE;
 
-  area = (GimpArea *) proj->idle_render.update_areas->data;
+  area = proj->idle_render.update_areas->data;
 
   proj->idle_render.update_areas =
     g_slist_remove (proj->idle_render.update_areas, area);
@@ -591,7 +593,7 @@ gimp_projection_idle_render_next_area (GimpProjection *proj)
   proj->idle_render.width  = area->x2 - area->x1;
   proj->idle_render.height = area->y2 - area->y1;
 
-  g_free (area);
+  gimp_area_free (area);
 
   return TRUE;
 }

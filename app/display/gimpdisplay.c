@@ -384,7 +384,8 @@ gimp_display_delete (GimpDisplay *display)
     tool_manager_focus_display_active (display->image->gimp, NULL);
 
   /*  free the update area lists  */
-  display->update_areas = gimp_area_list_free (display->update_areas);
+  gimp_area_list_free (display->update_areas);
+  display->update_areas = NULL;
 
   if (display->shell)
     {
@@ -524,8 +525,8 @@ gimp_display_flush_whenever (GimpDisplay *display,
                                        (area->y2 - area->y1));
             }
         }
-
-      display->update_areas = gimp_area_list_free (display->update_areas);
+      gimp_area_list_free (display->update_areas);
+      display->update_areas = NULL;
     }
 
   gimp_display_shell_flush (GIMP_DISPLAY_SHELL (display->shell), now);

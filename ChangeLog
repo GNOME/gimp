@@ -1,5 +1,12 @@
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimparea.[ch]
+	* app/core/gimpprojection.c
+	* app/display/gimpdisplay.c: use GSlice to allocate GimpArea and
+	sanitize the API.
+
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-manager.[ch]
 	* app/base/tile-manager-private.h: removed unused code.
 
