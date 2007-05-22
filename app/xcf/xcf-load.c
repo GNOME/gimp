@@ -1488,9 +1488,12 @@ static GimpParasite *
 xcf_load_parasite (XcfInfo *info)
 {
   GimpParasite *p;
+  gchar        *name;
 
-  p = g_new (GimpParasite, 1);
-  info->cp += xcf_read_string (info->fp, &p->name, 1);
+  info->cp += xcf_read_string (info->fp, &name, 1);
+  p = gimp_parasite_new (name, 0, 0, NULL);
+  g_free (name);
+
   info->cp += xcf_read_int32 (info->fp, &p->flags, 1);
   info->cp += xcf_read_int32 (info->fp, &p->size, 1);
   p->data = g_new (gchar, p->size);

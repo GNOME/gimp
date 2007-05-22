@@ -1,3 +1,16 @@
+2007-05-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/tile.[ch]: changed tile_init() to tile_new() and return
+	a GSlice-allocated Tile structure.
+
+	(tile_destroy): free it using GSLice.
+
+	* app/base/tile-manager.c: use tile_new() instead of g_new plus
+	tile_init(). Also allocate TileManager itself using GSlice.
+
+	* app/xcf/xcf-load.c (xcf_load_parasite): allocate parasites using
+	gimp_parasite_new().
+
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gtkvwrapbox.c

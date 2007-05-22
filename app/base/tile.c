@@ -104,10 +104,11 @@ tile_set_rowhint (Tile        *tile,
 #endif
 }
 
-void
-tile_init (Tile *tile,
-           gint  bpp)
+Tile *
+tile_new (gint bpp)
 {
+  Tile *tile = g_slice_new (Tile);
+
   tile->ref_count   = 0;
   tile->write_count = 0;
   tile->share_count = 0;
@@ -128,6 +129,8 @@ tile_init (Tile *tile,
 #ifdef TILE_PROFILING
   tile_count++;
 #endif
+
+  return tile;
 }
 
 void
@@ -269,7 +272,7 @@ tile_destroy (Tile *tile)
   if (tile->listhead)
     tile_cache_flush (tile);
 
-  g_free (tile);
+  g_slice_free (Tile, tile);
 
 #ifdef TILE_PROFILING
   tile_count--;

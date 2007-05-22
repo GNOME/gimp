@@ -55,7 +55,7 @@ tile_manager_new (gint width,
   g_return_val_if_fail (width > 0 && height > 0, NULL);
   g_return_val_if_fail (bpp > 0 && bpp <= 4, NULL);
 
-  tm = g_new0 (TileManager, 1);
+  tm = g_slice_new0 (TileManager);
 
   tm->ref_count  = 1;
   tm->width      = width;
@@ -101,7 +101,7 @@ tile_manager_unref (TileManager *tm)
           g_free (tm->tiles);
         }
 
-      g_free (tm);
+      g_slice_free (TileManager, tm);
     }
 }
 
@@ -164,9 +164,8 @@ tile_manager_get (TileManager *tm,
         {
           for (j = 0; j < ncols; j++, k++)
             {
-              Tile *new = g_new (Tile, 1);
+              Tile *new = tile_new (tm->bpp);
 
-              tile_init (new, tm->bpp);
               tile_attach (new, tm, k);
 
               if (j == (ncols - 1))
@@ -200,9 +199,7 @@ tile_manager_get (TileManager *tm,
           if ((*tile_ptr)->share_count > 1)
             {
               /* Copy-on-write required */
-              Tile *new = g_new (Tile, 1);
-
-              tile_init (new, (*tile_ptr)->bpp);
+              Tile *new = tile_new ((*tile_ptr)->bpp);
 
               new->ewidth  = (*tile_ptr)->ewidth;
               new->eheight = (*tile_ptr)->eheight;
@@ -339,11 +336,9 @@ tile_invalidate (Tile        **tile_ptr,
   if (G_UNLIKELY (tile->share_count > 1))
     {
       /* This tile is shared.  Replace it with a new, invalid tile. */
-      Tile *new = g_new (Tile, 1);
+      Tile *new = tile_new (tile->bpp);
 
       g_print ("invalidating shared tile (executing buggy code!!!)\n");
-
-      tile_init (new, tile->bpp);
 
       new->ewidth  = tile->ewidth;
       new->eheight = tile->eheight;
@@ -438,12 +433,11 @@ tile_manager_map (TileManager *tm,
         {
           for (j = 0; j < ncols; j++, k++)
             {
-              Tile *new = g_new (Tile, 1);
+              Tile *new = tile_new (tm->bpp);
 
 #ifdef DEBUG_TILE_MANAGER
               g_printerr (",");
 #endif
-              tile_init (new, tm->bpp);
               tile_attach (new, tm, k);
 
               if (j == (ncols - 1))
