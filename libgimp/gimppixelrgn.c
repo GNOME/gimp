@@ -671,17 +671,14 @@ gimp_pixel_rgns_register2 (gint           nrgns,
   g_return_val_if_fail (nrgns > 0, NULL);
   g_return_val_if_fail (prs != NULL, NULL);
 
-  pri = g_new0 (GimpPixelRgnIterator, 1);
+  pri = g_slice_new0 (GimpPixelRgnIterator);
 
   found = FALSE;
   while (nrgns --)
     {
-      GimpPixelRgnHolder *prh;
-      GimpPixelRgn       *pr;
+      GimpPixelRgn       *pr  = prs[nrgns];
+      GimpPixelRgnHolder *prh = g_slice_new0 (GimpPixelRgnHolder);
 
-      pr = prs[nrgns];
-
-      prh = g_new0 (GimpPixelRgnHolder, 1);
       prh->pr = pr;
 
       if (pr != NULL)
@@ -724,13 +721,12 @@ gimp_pixel_rgns_register (gint nrgns,
                           ...)
 {
   GimpPixelRgn **prs;
-  gpointer       pri;
   gint           n;
   va_list        ap;
 
   g_return_val_if_fail (nrgns > 0, NULL);
 
-  prs = g_new (GimpPixelRgn *, nrgns);
+  prs = g_newa (GimpPixelRgn *, nrgns);
 
   va_start (ap, nrgns);
 
@@ -739,11 +735,7 @@ gimp_pixel_rgns_register (gint nrgns,
 
   va_end (ap);
 
-  pri = gimp_pixel_rgns_register2 (nrgns, prs);
-
-  g_free (prs);
-
-  return pri;
+  return gimp_pixel_rgns_register2 (nrgns, prs);
 }
 
 /**
@@ -905,10 +897,10 @@ gimp_pixel_rgns_configure (GimpPixelRgnIterator *pri)
     {
       /*  free the pixel regions list  */
       for (list = pri->pixel_regions; list; list = list->next)
-        g_free (list->data);
+        g_slice_free (GimpPixelRgnHolder, list->data);
 
       g_slist_free (pri->pixel_regions);
-      g_free (pri);
+      g_slice_free (GimpPixelRgnIterator, pri);
 
       return NULL;
     }

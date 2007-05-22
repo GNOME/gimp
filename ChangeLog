@@ -1,5 +1,13 @@
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpdrawable.c
+	* libgimp/gimppixelfetcher.c
+	* libgimp/gimpprogress.c
+	* libgimp/gimppixelrgn.c
+	* libgimp/gimpregioniterator.c: allocate structs using GSlice.
+
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpbrushmenu.c
 	* libgimp/gimpgradientmenu.c
 	* libgimp/gimpfontmenu.c

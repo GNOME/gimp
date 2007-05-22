@@ -3,12 +3,6 @@
  *
  * gimppixelfetcher.c
  *
- * FIXME: fix the following comment:
- * Contains all kinds of miscellaneous routines factored out from different
- * plug-ins. They stay here until their API has crystalized a bit and we can
- * put them into the file where they belong (Maurits Rijk
- * <lpeek.mrijk@consunet.nl> if you want to blame someone for this mess)
- *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -83,7 +77,7 @@ gimp_pixel_fetcher_new (GimpDrawable *drawable,
 
   g_return_val_if_fail (width > 0 && height > 0 && bpp > 0, NULL);
 
-  pf = g_new0 (GimpPixelFetcher, 1);
+  pf = g_slice_new0 (GimpPixelFetcher);
 
   gimp_drawable_mask_bounds (drawable->drawable_id,
                              &pf->sel_x1, &pf->sel_y1,
@@ -123,7 +117,7 @@ gimp_pixel_fetcher_destroy (GimpPixelFetcher *pf)
   if (pf->tile)
     gimp_tile_unref (pf->tile, pf->tile_dirty);
 
-  g_free (pf);
+  g_slice_free (GimpPixelFetcher, pf);
 }
 
 /**

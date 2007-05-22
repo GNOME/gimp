@@ -3,12 +3,6 @@
  *
  * gimpregioniterator.c
  *
- * FIXME: fix the following comment:
- * Contains all kinds of miscellaneous routines factored out from different
- * plug-ins. They stay here until their API has crystalized a bit and we can
- * put them into the file where they belong (Maurits Rijk
- * <lpeek.mrijk@consunet.nl> if you want to blame someone for this mess)
- *
  * This library is free software; you can redistribute it and/or
  * modify it under the terms of the GNU Lesser General Public
  * License as published by the Free Software Foundation; either
@@ -38,7 +32,10 @@
 struct _GimpRgnIterator
 {
   GimpDrawable *drawable;
-  gint          x1, y1, x2, y2;
+  gint          x1;
+  gint          y1;
+  gint          x2;
+  gint          y2;
 };
 
 
@@ -64,7 +61,8 @@ static void  gimp_rgn_render_region        (const GimpPixelRgn *srcPR,
  * @unused:   ignored
  *
  * Creates a new #GimpRgnIterator for @drawable. The #GimpRunMode
- * parameter is ignored.
+ * parameter is ignored. Use gimp_rgn_iterator_free() to free thsi
+ * iterator.
  *
  * Return value: a newly allocated #GimpRgnIterator.
  **/
@@ -72,7 +70,11 @@ GimpRgnIterator *
 gimp_rgn_iterator_new (GimpDrawable *drawable,
                        GimpRunMode   unused)
 {
-  GimpRgnIterator *iter = g_new (GimpRgnIterator, 1);
+  GimpRgnIterator *iter;
+
+  g_return_val_if_fail (drawable != NULL, NULL);
+
+  iter = g_slice_new (GimpRgnIterator);
 
   iter->drawable = drawable;
 
@@ -92,7 +94,9 @@ gimp_rgn_iterator_new (GimpDrawable *drawable,
 void
 gimp_rgn_iterator_free (GimpRgnIterator *iter)
 {
-  g_free (iter);
+  g_return_if_fail (iter != NULL);
+
+  g_slice_free (GimpRgnIterator, iter);
 }
 
 void
@@ -101,6 +105,8 @@ gimp_rgn_iterator_src (GimpRgnIterator *iter,
                        gpointer         data)
 {
   GimpPixelRgn srcPR;
+
+  g_return_if_fail (iter != NULL);
 
   gimp_pixel_rgn_init (&srcPR, iter->drawable,
                        iter->x1, iter->y1,
@@ -120,6 +126,8 @@ gimp_rgn_iterator_src_dest (GimpRgnIterator    *iter,
   gpointer      pr;
   gint          total_area;
   gint          area_so_far;
+
+  g_return_if_fail (iter != NULL);
 
   x1 = iter->x1;
   y1 = iter->y1;
@@ -178,6 +186,8 @@ gimp_rgn_iterator_dest (GimpRgnIterator *iter,
 {
   GimpPixelRgn destPR;
 
+  g_return_if_fail (iter != NULL);
+
   gimp_pixel_rgn_init (&destPR, iter->drawable,
                        iter->x1, iter->y1,
                        iter->x2 - iter->x1, iter->y2 - iter->y1,
@@ -205,6 +215,8 @@ gimp_rgn_iterate1 (GimpDrawable *drawable,
   gint          total_area;
   gint          area_so_far;
   gint          progress_skip;
+
+  g_return_if_fail (drawable != NULL);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 
@@ -259,6 +271,8 @@ gimp_rgn_iterate2 (GimpDrawable *drawable,
   gint          total_area;
   gint          area_so_far;
   gint          progress_skip;
+
+  g_return_if_fail (drawable != NULL);
 
   gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
 

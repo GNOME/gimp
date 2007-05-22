@@ -30,23 +30,23 @@
 #include "gimp.h"
 
 
-typedef struct _GimpProgressData GimpProgressData;
-
-struct _GimpProgressData
+typedef struct
 {
   gchar              *progress_callback;
   GimpProgressVtable  vtable;
   gpointer            data;
-};
+} GimpProgressData;
 
 
 /*  local function prototypes  */
 
-static void   gimp_temp_progress_run (const gchar      *name,
-                                      gint              nparams,
-                                      const GimpParam  *param,
-                                      gint             *nreturn_vals,
-                                      GimpParam       **return_vals);
+static void   gimp_progress_data_free (GimpProgressData *data);
+
+static void   gimp_temp_progress_run  (const gchar      *name,
+                                       gint              nparams,
+                                       const GimpParam  *param,
+                                       gint             *nreturn_vals,
+                                       GimpParam       **return_vals);
 
 
 /*  private variables  */
@@ -153,10 +153,14 @@ gimp_progress_install_vtable (const GimpProgressVtable *vtable,
 
       /* Now add to hash table so we can find it again */
       if (! gimp_progress_ht)
-        gimp_progress_ht = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                                  g_free, g_free);
+        {
+          gimp_progress_ht =
+            g_hash_table_new_full (g_str_hash, g_str_equal,
+                                   g_free,
+                                   (GDestroyNotify) gimp_progress_data_free);
+        }
 
-      progress_data = g_new0 (GimpProgressData, 1);
+      progress_data = g_slice_new0 (GimpProgressData);
 
       progress_data->progress_callback = progress_callback;
       progress_data->vtable.start      = vtable->start;
@@ -364,6 +368,12 @@ gimp_progress_update (gdouble percentage)
 
 
 /*  private functions  */
+
+static void
+gimp_progress_data_free (GimpProgressData *data)
+{
+  g_slice_free (GimpProgressData, data);
+}
 
 static void
 gimp_temp_progress_run (const gchar      *name,

@@ -62,7 +62,7 @@ gimp_drawable_get (gint32 drawable_ID)
 
   g_return_val_if_fail (width > 0 && height > 0 && bpp > 0, NULL);
 
-  drawable = g_new0 (GimpDrawable, 1);
+  drawable = g_slice_new0 (GimpDrawable);
 
   drawable->drawable_id  = drawable_ID;
   drawable->width        = width;
@@ -93,10 +93,11 @@ gimp_drawable_detach (GimpDrawable *drawable)
 
   if (drawable->tiles)
     g_free (drawable->tiles);
+
   if (drawable->shadow_tiles)
     g_free (drawable->shadow_tiles);
 
-  g_free (drawable);
+  g_slice_free (GimpDrawable, drawable);
 }
 
 /**
