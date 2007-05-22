@@ -212,7 +212,7 @@ gimp_palette_load (const gchar  *filename,
                        gimp_filename_to_utf8 (filename), linenum);
 
           /* don't call gimp_palette_add_entry here, it's rather inefficient */
-          entry = g_new0 (GimpPaletteEntry, 1);
+          entry = g_slice_new0 (GimpPaletteEntry);
 
           gimp_rgba_set_uchar (&entry->color,
                                (guchar) r,

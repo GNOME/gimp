@@ -127,7 +127,7 @@ gimp_palette_import_store_colors (GHashTable *table,
 
       count_color_entries++;
 
-      new_color = g_new (ImgColors, 1);
+      new_color = g_slice_new (ImgColors);
 
       new_color->count = 1;
       new_color->r_adj = 0;
@@ -229,6 +229,7 @@ gimp_palette_import_make_palette (GHashTable  *table,
 {
   GimpPalette *palette = GIMP_PALETTE (gimp_palette_new (palette_name));
   GSList      *list    = NULL;
+  GSList      *iter;
 
   if (! table)
     return palette;
@@ -249,7 +250,8 @@ gimp_palette_import_make_palette (GHashTable  *table,
    */
   g_hash_table_destroy (table);
 
-  g_slist_foreach (list, (GFunc) g_free, NULL);
+  for (iter = list; iter; iter = iter->next)
+    g_slice_free (ImgColors, iter->data);
 
   g_slist_free (list);
 

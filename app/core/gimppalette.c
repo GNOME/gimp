@@ -327,7 +327,7 @@ gimp_palette_add_entry (GimpPalette   *palette,
   g_return_val_if_fail (GIMP_IS_PALETTE (palette), NULL);
   g_return_val_if_fail (color != NULL, NULL);
 
-  entry = g_new0 (GimpPaletteEntry, 1);
+  entry = g_slice_new0 (GimpPaletteEntry);
 
   entry->color = *color;
   entry->name  = g_strdup (name ? name : _("Untitled"));
@@ -493,7 +493,8 @@ gimp_palette_entry_free (GimpPaletteEntry *entry)
   g_return_if_fail (entry != NULL);
 
   g_free (entry->name);
-  g_free (entry);
+
+  g_slice_free (GimpPaletteEntry, entry);
 }
 
 static gint64

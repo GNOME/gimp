@@ -1,5 +1,12 @@
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimppalette-import.c
+	* app/core/gimppalette-load.c
+	* app/core/gimppalette.c: use GSlice for palette entries and
+	temporary structs.
+
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
 	* app/base/siox.c: allocate structs using GSlice.
 
 	* app/base/tile-swap.[ch]
