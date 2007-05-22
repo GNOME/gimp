@@ -59,7 +59,7 @@ gimp_plug_in_manager_data_free (GimpPlugInManager *manager)
 
           g_free (data->identifier);
           g_free (data->data);
-          g_free (data);
+          g_slice_free (GimpPlugInData, data);
         }
 
       g_list_free (manager->data_list);
@@ -69,9 +69,9 @@ gimp_plug_in_manager_data_free (GimpPlugInManager *manager)
 
 void
 gimp_plug_in_manager_set_data (GimpPlugInManager *manager,
-                               const gchar  *identifier,
-                               gint32        bytes,
-                               const guint8 *data)
+                               const gchar       *identifier,
+                               gint32             bytes,
+                               const guint8      *data)
 {
   GimpPlugInData *plug_in_data;
   GList          *list;
@@ -92,7 +92,7 @@ gimp_plug_in_manager_set_data (GimpPlugInManager *manager,
   /* If there isn't already data with the specified identifier, create one */
   if (list == NULL)
     {
-      plug_in_data = g_new0 (GimpPlugInData, 1);
+      plug_in_data = g_slice_new0 (GimpPlugInData);
       plug_in_data->identifier = g_strdup (identifier);
 
       manager->data_list = g_list_prepend (manager->data_list, plug_in_data);

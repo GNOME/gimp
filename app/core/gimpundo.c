@@ -404,7 +404,7 @@ gimp_undo_idle_free (GimpUndoIdle *idle)
   if (idle->context)
     g_object_unref (idle->context);
 
-  g_free (idle);
+  g_slice_free (GimpUndoIdle, idle);
 }
 
 void
@@ -424,7 +424,7 @@ gimp_undo_create_preview (GimpUndo    *undo,
     }
   else
     {
-      GimpUndoIdle *idle = g_new0 (GimpUndoIdle, 1);
+      GimpUndoIdle *idle = g_slice_new0 (GimpUndoIdle);
 
       idle->undo = undo;
 

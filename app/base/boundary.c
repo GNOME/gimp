@@ -346,7 +346,7 @@ boundary_simplify (BoundSeg *sorted_segs,
 static Boundary *
 boundary_new (PixelRegion *PR)
 {
-  Boundary *boundary = g_new0 (Boundary, 1);
+  Boundary *boundary = g_slice_new0 (Boundary);
 
   if (PR)
     {
@@ -389,7 +389,7 @@ boundary_free (Boundary *boundary,
   g_free (boundary->empty_segs_c);
   g_free (boundary->empty_segs_l);
 
-  g_free (boundary);
+  g_slice_free (Boundary, boundary);
 
   return segs;
 }

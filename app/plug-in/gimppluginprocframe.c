@@ -48,7 +48,7 @@ gimp_plug_in_proc_frame_new (GimpContext         *context,
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (procedure), NULL);
 
-  proc_frame = g_new0 (GimpPlugInProcFrame, 1);
+  proc_frame = g_slice_new0 (GimpPlugInProcFrame);
 
   proc_frame->ref_count = 1;
 
@@ -151,7 +151,7 @@ gimp_plug_in_proc_frame_unref (GimpPlugInProcFrame *proc_frame,
   if (proc_frame->ref_count < 1)
     {
       gimp_plug_in_proc_frame_dispose (proc_frame, plug_in);
-      g_free (proc_frame);
+      g_slice_free (GimpPlugInProcFrame, proc_frame);
     }
 }
 

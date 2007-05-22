@@ -35,8 +35,8 @@ gimp_anchor_get_type (void)
 
   if (!anchor_type)
     anchor_type = g_boxed_type_register_static ("GimpAnchor",
-                                         (GBoxedCopyFunc) gimp_anchor_copy,
-                                         (GBoxedFreeFunc) gimp_anchor_free);
+                                                (GBoxedCopyFunc) gimp_anchor_copy,
+                                                (GBoxedFreeFunc) gimp_anchor_free);
 
   return anchor_type;
 }
@@ -45,7 +45,7 @@ GimpAnchor *
 gimp_anchor_new (GimpAnchorType    type,
                  const GimpCoords *position)
 {
-  GimpAnchor *anchor = g_new0 (GimpAnchor, 1);
+  GimpAnchor *anchor = g_slice_new0 (GimpAnchor);
 
   anchor->type = type;
 
@@ -58,11 +58,21 @@ gimp_anchor_new (GimpAnchorType    type,
 GimpAnchor *
 gimp_anchor_copy (const GimpAnchor *anchor)
 {
-  return g_memdup (anchor, sizeof (GimpAnchor));
+  GimpAnchor *new;
+
+  g_return_val_if_fail (anchor != NULL, NULL);
+
+  new = g_slice_new (GimpAnchor);
+
+  *new = *anchor;
+
+  return new;
 }
 
 void
 gimp_anchor_free (GimpAnchor *anchor)
 {
-  g_free (anchor);
+  g_return_if_fail (anchor != NULL);
+
+  g_slice_free (GimpAnchor, anchor);
 }

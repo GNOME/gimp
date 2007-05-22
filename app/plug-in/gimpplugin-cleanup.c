@@ -70,7 +70,7 @@ gimp_plug_in_cleanup_undo_group_start (GimpPlugIn *plug_in,
 
   if (! cleanup)
     {
-      cleanup = g_new0 (GimpPlugInCleanupImage, 1);
+      cleanup = g_slice_new0 (GimpPlugInCleanupImage);
 
       cleanup->image            = image;
       cleanup->undo_group_count = image->group_count;
@@ -100,7 +100,7 @@ gimp_plug_in_cleanup_undo_group_end (GimpPlugIn *plug_in,
   if (cleanup->undo_group_count == image->group_count - 1)
     {
       proc_frame->cleanups = g_list_remove (proc_frame->cleanups, cleanup);
-      g_free (cleanup);
+      g_slice_free (GimpPlugInCleanupImage, cleanup);
     }
 
   return TRUE;
@@ -143,7 +143,7 @@ gimp_plug_in_cleanup (GimpPlugIn          *plug_in,
             }
         }
 
-      g_free (cleanup);
+      g_slice_free (GimpPlugInCleanupImage, cleanup);
     }
 
   g_list_free (proc_frame->cleanups);

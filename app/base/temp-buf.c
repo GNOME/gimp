@@ -52,7 +52,7 @@ temp_buf_new (gint          width,
   g_return_val_if_fail (width > 0 && height > 0, NULL);
   g_return_val_if_fail (bytes > 0, NULL);
 
-  temp = g_new (TempBuf, 1);
+  temp = g_slice_new (TempBuf);
 
   temp->width  = width;
   temp->height = height;
@@ -352,7 +352,7 @@ temp_buf_free (TempBuf *temp_buf)
   if (temp_buf->data)
     g_free (temp_buf->data);
 
-  g_free (temp_buf);
+  g_slice_free (TempBuf, temp_buf);
 }
 
 guchar *

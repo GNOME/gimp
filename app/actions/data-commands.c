@@ -220,7 +220,7 @@ data_delete_cmd_callback (GtkAction *action,
       GimpDataDeleteData *delete_data;
       GtkWidget          *dialog;
 
-      delete_data = g_new0 (GimpDataDeleteData, 1);
+      delete_data = g_slice_new0 (GimpDataDeleteData);
 
       delete_data->view = view;
       delete_data->data = data;
@@ -326,5 +326,5 @@ data_delete_confirm_response (GtkWidget          *dialog,
         }
     }
 
-  g_free (delete_data);
+  g_slice_free (GimpDataDeleteData, delete_data);
 }

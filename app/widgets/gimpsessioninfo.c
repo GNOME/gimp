@@ -142,7 +142,7 @@ gimp_session_info_aux_new (const gchar *name,
   g_return_val_if_fail (name != NULL, NULL);
   g_return_val_if_fail (value != NULL, NULL);
 
-  aux = g_new0 (GimpSessionInfoAux, 1);
+  aux = g_slice_new0 (GimpSessionInfoAux);
 
   aux->name  = g_strdup (name);
   aux->value = g_strdup (value);
@@ -157,7 +157,7 @@ gimp_session_info_aux_free (GimpSessionInfoAux *aux)
 
   g_free (aux->name);
   g_free (aux->value);
-  g_free (aux);
+  g_slice_free (GimpSessionInfoAux, aux);
 }
 
 GList *
@@ -1217,7 +1217,7 @@ session_info_aux_deserialize (GScanner  *scanner,
 
         case G_TOKEN_IDENTIFIER:
           {
-            aux_info = g_new0 (GimpSessionInfoAux, 1);
+            aux_info = g_slice_new0 (GimpSessionInfoAux);
 
             aux_info->name = g_strdup (scanner->value.v_identifier);
 

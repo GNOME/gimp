@@ -1,3 +1,24 @@
+2007-05-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/data-commands.c
+	* app/base/boundary.c
+	* app/base/gimphistogram.c
+	* app/base/gimplut.c
+	* app/base/temp-buf.c
+	* app/core/gimpcontainer.c
+	* app/core/gimpgradient.c
+	* app/core/gimpparamspecs.c
+	* app/core/gimpundo.c
+	* app/plug-in/gimpplugin-cleanup.c
+	* app/plug-in/gimppluginmanager-data.c
+	* app/plug-in/gimppluginmanager-help-domain.c
+	* app/plug-in/gimppluginmanager-locale-domain.c
+	* app/plug-in/gimppluginmanager-menu-branch.c
+	* app/plug-in/gimppluginprocframe.c
+	* app/vectors/gimpanchor.c
+	* app/widgets/gimpsessioninfo.c: use GSlice instead of g_new/g_free
+	for structs of fixed size.
+
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpprogressbox.c (gimp_progress_box_progress_start)

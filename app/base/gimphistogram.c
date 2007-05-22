@@ -66,7 +66,7 @@ static void  gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 GimpHistogram *
 gimp_histogram_new (void)
 {
-  GimpHistogram *histogram = g_new0 (GimpHistogram, 1);
+  GimpHistogram *histogram = g_slice_new0 (GimpHistogram);
 
 #ifdef ENABLE_MP
   g_static_mutex_init (&histogram->mutex);
@@ -81,7 +81,7 @@ gimp_histogram_free (GimpHistogram *histogram)
   g_return_if_fail (histogram != NULL);
 
   gimp_histogram_free_values (histogram);
-  g_free (histogram);
+  g_slice_free (GimpHistogram, histogram);
 }
 
 void

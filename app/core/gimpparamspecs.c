@@ -1829,7 +1829,7 @@ gimp_array_new (const guint8 *data,
   g_return_val_if_fail ((data == NULL && length == 0) ||
                         (data != NULL && length  > 0), NULL);
 
-  array = g_new0 (GimpArray, 1);
+  array = g_slice_new0 (GimpArray);
 
   array->data        = static_data ? (guint8 *) data : g_memdup (data, length);
   array->length      = length;
@@ -1855,7 +1855,7 @@ gimp_array_free (GimpArray *array)
       if (! array->static_data)
         g_free (array->data);
 
-      g_free (array);
+      g_slice_free (GimpArray, array);
     }
 }
 
@@ -2544,7 +2544,7 @@ gimp_string_array_new (const gchar **data,
   g_return_val_if_fail ((data == NULL && length == 0) ||
                         (data != NULL && length  > 0), NULL);
 
-  array = g_new0 (GimpArray, 1);
+  array = g_slice_new0 (GimpArray);
 
   if (! static_data)
     {
@@ -2593,7 +2593,7 @@ gimp_string_array_free (GimpArray *array)
           g_free (array->data);
         }
 
-      g_free (array);
+      g_slice_free (GimpArray, array);
     }
 }
 

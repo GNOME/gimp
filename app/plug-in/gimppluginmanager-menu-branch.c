@@ -44,7 +44,7 @@ gimp_plug_in_manager_menu_branch_exit (GimpPlugInManager *manager)
       g_free (branch->prog_name);
       g_free (branch->menu_path);
       g_free (branch->menu_label);
-      g_free (branch);
+      g_slice_free (GimpPlugInMenuBranch, branch);
     }
 
   g_slist_free (manager->menu_branches);
@@ -64,7 +64,7 @@ gimp_plug_in_manager_add_menu_branch (GimpPlugInManager *manager,
   g_return_if_fail (menu_path != NULL);
   g_return_if_fail (menu_label != NULL);
 
-  branch = g_new (GimpPlugInMenuBranch, 1);
+  branch = g_slice_new (GimpPlugInMenuBranch);
 
   branch->prog_name  = g_strdup (prog_name);
   branch->menu_path  = g_strdup (menu_path);

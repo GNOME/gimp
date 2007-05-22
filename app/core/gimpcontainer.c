@@ -865,7 +865,7 @@ gimp_container_add_handler (GimpContainer *container,
     g_return_val_if_fail (g_signal_lookup (signame,
                                            container->children_type), 0);
 
-  handler = g_new0 (GimpContainerHandler, 1);
+  handler = g_slice_new0 (GimpContainerHandler);
 
   /*  create a unique key for this handler  */
   key = g_strdup_printf ("%s-%d", signame, handler_id++);
@@ -939,5 +939,5 @@ gimp_container_remove_handler (GimpContainer *container,
   container->handlers = g_list_remove (container->handlers, handler);
 
   g_free (handler->signame);
-  g_free (handler);
+  g_slice_free (GimpContainerHandler, handler);
 }

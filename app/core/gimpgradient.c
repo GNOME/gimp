@@ -592,7 +592,7 @@ gimp_gradient_segment_new (void)
 {
   GimpGradientSegment *seg;
 
-  seg = g_new (GimpGradientSegment, 1);
+  seg = g_slice_new (GimpGradientSegment);
 
   seg->left   = 0.0;
   seg->middle = 0.5;
@@ -618,22 +618,15 @@ gimp_gradient_segment_free (GimpGradientSegment *seg)
 {
   g_return_if_fail (seg != NULL);
 
-  g_free (seg);
+  g_slice_free (GimpGradientSegment, seg);
 }
 
 void
 gimp_gradient_segments_free (GimpGradientSegment *seg)
 {
-  GimpGradientSegment *tmp;
-
   g_return_if_fail (seg != NULL);
 
-  while (seg)
-    {
-      tmp = seg->next;
-      gimp_gradient_segment_free (seg);
-      seg = tmp;
-    }
+  g_slice_free_chain (GimpGradientSegment, seg, next);
 }
 
 GimpGradientSegment *

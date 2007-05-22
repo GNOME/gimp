@@ -59,7 +59,7 @@ gimp_plug_in_manager_locale_domain_exit (GimpPlugInManager *manager)
       g_free (domain->prog_name);
       g_free (domain->domain_name);
       g_free (domain->domain_path);
-      g_free (domain);
+      g_slice_free (GimpPlugInLocaleDomain, domain);
     }
 
   g_slist_free (manager->locale_domains);
@@ -78,7 +78,7 @@ gimp_plug_in_manager_add_locale_domain (GimpPlugInManager *manager,
   g_return_if_fail (prog_name != NULL);
   g_return_if_fail (domain_name != NULL);
 
-  domain = g_new (GimpPlugInLocaleDomain, 1);
+  domain = g_slice_new (GimpPlugInLocaleDomain);
 
   domain->prog_name   = g_strdup (prog_name);
   domain->domain_name = g_strdup (domain_name);

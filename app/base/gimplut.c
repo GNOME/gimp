@@ -33,7 +33,7 @@ gimp_lut_new (void)
 {
   GimpLut *lut;
 
-  lut = g_new (GimpLut, 1);
+  lut = g_slice_new (GimpLut);
 
   lut->luts      = NULL;
   lut->nchannels = 0;
@@ -50,7 +50,7 @@ gimp_lut_free (GimpLut *lut)
     g_free (lut->luts[i]);
 
   g_free (lut->luts);
-  g_free (lut);
+  g_slice_free (GimpLut, lut);
 }
 
 void

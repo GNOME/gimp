@@ -54,7 +54,7 @@ gimp_plug_in_manager_help_domain_exit (GimpPlugInManager *manager)
       g_free (domain->prog_name);
       g_free (domain->domain_name);
       g_free (domain->domain_uri);
-      g_free (domain);
+      g_slice_free (GimpPlugInHelpDomain, domain);
     }
 
   g_slist_free (manager->help_domains);
@@ -73,7 +73,7 @@ gimp_plug_in_manager_add_help_domain (GimpPlugInManager *manager,
   g_return_if_fail (prog_name != NULL);
   g_return_if_fail (domain_name != NULL);
 
-  domain = g_new (GimpPlugInHelpDomain, 1);
+  domain = g_slice_new (GimpPlugInHelpDomain);
 
   domain->prog_name   = g_strdup (prog_name);
   domain->domain_name = g_strdup (domain_name);
