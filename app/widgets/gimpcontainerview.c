@@ -257,7 +257,7 @@ gimp_container_view_private_finalize (GimpContainerViewPrivate *private)
       private->hash_table = NULL;
     }
 
-  g_free (private);
+  g_slice_free (GimpContainerViewPrivate, private);
 }
 
 static GimpContainerViewPrivate *
@@ -280,7 +280,7 @@ gimp_container_view_get_private (GimpContainerView *view)
 
       view_iface = GIMP_CONTAINER_VIEW_GET_INTERFACE (view);
 
-      private = g_new0 (GimpContainerViewPrivate, 1);
+      private = g_slice_new0 (GimpContainerViewPrivate);
 
       private->view_border_width = 1;
 

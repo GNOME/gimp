@@ -1,5 +1,11 @@
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpclipboard.c
+	* app/widgets/gimpcontainerview.c
+	* app/widgets/gimpdialogfactory.c: allocate structs using GSlice.
+
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimpconfig/gimpscanner.c
 	* libgimpwidgets/gimpwidgets.c: allocate structs using GSlice.
 

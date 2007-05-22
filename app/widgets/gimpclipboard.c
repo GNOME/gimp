@@ -87,7 +87,7 @@ gimp_clipboard_init (Gimp *gimp)
 
   g_return_if_fail (gimp_clip == NULL);
 
-  gimp_clip = g_new0 (GimpClipboard, 1);
+  gimp_clip = g_slice_new0 (GimpClipboard);
 
   g_object_set_data_full (G_OBJECT (gimp), GIMP_CLIPBOARD_KEY,
                           gimp_clip, (GDestroyNotify) gimp_clipboard_free);
@@ -137,8 +137,8 @@ gimp_clipboard_init (Gimp *gimp)
                   const gchar *mime_type = *type;
 
                   if (gimp->be_verbose)
-                    g_print ("clipboard: writable pixbuf format: %s\n",
-                             mime_type);
+                    g_printerr ("clipboard: writable pixbuf format: %s\n",
+                                mime_type);
 
                   gimp_clip->target_entries[i].target = g_strdup (mime_type);
                   gimp_clip->target_entries[i].flags  = 0;
@@ -537,7 +537,7 @@ gimp_clipboard_free (GimpClipboard *gimp_clip)
 
   g_free (gimp_clip->svg_target_entries);
 
-  g_free (gimp_clip);
+  g_slice_free (GimpClipboard, gimp_clip);
 }
 
 static GdkAtom *

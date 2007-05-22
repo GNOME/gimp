@@ -195,7 +195,8 @@ gimp_dialog_factory_finalize (GObject *object)
       g_free (entry->blurb);
       g_free (entry->stock_id);
       g_free (entry->help_id);
-      g_free (entry);
+
+      g_slice_free (GimpDialogFactoryEntry, entry);
     }
 
   if (factory->registered_dialogs)
@@ -301,7 +302,7 @@ gimp_dialog_factory_register_entry (GimpDialogFactory *factory,
   g_return_if_fail (GIMP_IS_DIALOG_FACTORY (factory));
   g_return_if_fail (identifier != NULL);
 
-  entry = g_new0 (GimpDialogFactoryEntry, 1);
+  entry = g_slice_new0 (GimpDialogFactoryEntry);
 
   entry->identifier       = g_strdup (identifier);
   entry->name             = g_strdup (name);
