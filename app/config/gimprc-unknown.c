@@ -112,7 +112,7 @@ gimp_rc_add_unknown_token (GimpConfig  *config,
   if (!value)
     return;
 
-  token = g_new (GimpConfigToken, 1);
+  token = g_slice_new (GimpConfigToken);
   token->key   = g_strdup (key);
   token->value = g_strdup (value);
 
@@ -127,7 +127,7 @@ gimp_rc_add_unknown_token (GimpConfig  *config,
       g_object_set_data_full (G_OBJECT (config),
                               GIMP_RC_UNKNOWN_TOKENS,
                               unknown_tokens,
-             (GDestroyNotify) gimp_rc_destroy_unknown_tokens);
+                              (GDestroyNotify) gimp_rc_destroy_unknown_tokens);
     }
 }
 
@@ -146,19 +146,18 @@ const gchar *
 gimp_rc_lookup_unknown_token (GimpConfig  *config,
                               const gchar *key)
 {
-  GimpConfigToken *token;
   GSList          *unknown_tokens;
   GSList          *list;
 
   g_return_val_if_fail (GIMP_IS_CONFIG (config), NULL);
   g_return_val_if_fail (key != NULL, NULL);
 
-  unknown_tokens = (GSList *) g_object_get_data (G_OBJECT (config),
-                                                 GIMP_RC_UNKNOWN_TOKENS);
+  unknown_tokens = g_object_get_data (G_OBJECT (config),
+                                      GIMP_RC_UNKNOWN_TOKENS);
 
   for (list = unknown_tokens; list; list = g_slist_next (list))
     {
-      token = (GimpConfigToken *) list->data;
+      GimpConfigToken *token = list->data;
 
       if (strcmp (token->key, key) == 0)
         return token->value;
@@ -181,19 +180,18 @@ gimp_rc_foreach_unknown_token (GimpConfig            *config,
                                GimpConfigForeachFunc  func,
                                gpointer               user_data)
 {
-  GimpConfigToken *token;
-  GSList          *unknown_tokens;
-  GSList          *list;
+  GSList *unknown_tokens;
+  GSList *list;
 
   g_return_if_fail (GIMP_IS_CONFIG (config));
   g_return_if_fail (func != NULL);
 
-  unknown_tokens = (GSList *) g_object_get_data (G_OBJECT (config),
-                                                 GIMP_RC_UNKNOWN_TOKENS);
+  unknown_tokens = g_object_get_data (G_OBJECT (config),
+                                      GIMP_RC_UNKNOWN_TOKENS);
 
   for (list = unknown_tokens; list; list = g_slist_next (list))
     {
-      token = (GimpConfigToken *) list->data;
+      GimpConfigToken *token = list->data;
 
       func (token->key, token->value, user_data);
     }
@@ -202,16 +200,15 @@ gimp_rc_foreach_unknown_token (GimpConfig            *config,
 static void
 gimp_rc_destroy_unknown_tokens (GSList *unknown_tokens)
 {
-  GimpConfigToken *token;
-  GSList          *list;
+  GSList *list;
 
   for (list = unknown_tokens; list; list = g_slist_next (list))
     {
-      token = (GimpConfigToken *) list->data;
+      GimpConfigToken *token = list->data;
 
       g_free (token->key);
       g_free (token->value);
-      g_free (token);
+      g_slice_free (GimpConfigToken, token);
     }
 
   g_slist_free (unknown_tokens);

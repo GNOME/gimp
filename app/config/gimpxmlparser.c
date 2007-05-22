@@ -59,7 +59,7 @@ gimp_xml_parser_new (const GMarkupParser *markup_parser,
 
   g_return_val_if_fail (markup_parser != NULL, NULL);
 
-  parser = g_new (GimpXmlParser, 1);
+  parser = g_slice_new (GimpXmlParser);
 
   parser->context = g_markup_parse_context_new (markup_parser,
                                                 0, user_data, NULL);
@@ -297,7 +297,7 @@ gimp_xml_parser_free (GimpXmlParser *parser)
   g_return_if_fail (parser != NULL);
 
   g_markup_parse_context_free (parser->context);
-  g_free (parser);
+  g_slice_free (GimpXmlParser, parser);
 }
 
 
