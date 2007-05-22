@@ -175,8 +175,6 @@ tile_swap_init (const gchar *path)
   gimp_swap_file->cur_position  = 0;
   gimp_swap_file->fd            = -1;
 
-  g_printerr ("%s\n", gimp_swap_file->filename);
-
   g_free (basename);
   g_free (dirname);
 }

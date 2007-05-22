@@ -113,6 +113,12 @@ typedef struct
 } classresult;
 
 
+static void
+siox_cache_entry_free (gpointer entry)
+{
+  g_slice_free (classresult, entry);
+}
+
 /* Progressbar update callback */
 static inline void
 siox_progress_update (SioxProgressFunc  progress_callback,
@@ -772,8 +778,10 @@ siox_init (TileManager  *pixels,
   state->bgsiglen = 0;
   state->fgsiglen = 0;
   state->bpp      = tile_manager_bpp (pixels);
-  state->cache    = g_hash_table_new_full (g_direct_hash,
-                                           NULL, NULL, g_free);
+
+  state->cache = g_hash_table_new_full (g_direct_hash,
+                                        NULL, NULL,
+                                        (GDestroyNotify) siox_cache_entry_free);
 
   cpercep_init ();
 
@@ -1155,7 +1163,7 @@ siox_foreground_extract (SioxState          *state,
 #ifdef SIOX_DEBUG
               ++miss;
 #endif
-              cr = g_new0 (classresult, 1);
+              cr = g_slice_new0 (classresult);
               calc_lab (s, state->bpp, state->colormap, &labpixel);
 
               minbg = euklid (&labpixel, state->bgsig + 0);
