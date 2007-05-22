@@ -1064,8 +1064,14 @@ typedef struct
 } GimpCoordinatesData;
 
 static void
+gimp_coordinates_data_free (GimpCoordinatesData *data)
+{
+  g_slice_free (GimpCoordinatesData, data);
+}
+
+static void
 gimp_coordinates_callback (GtkWidget           *widget,
-                           GimpCoordinatesData *gcd)
+                           GimpCoordinatesData *data)
 {
   gdouble new_x;
   gdouble new_y;
@@ -1073,64 +1079,64 @@ gimp_coordinates_callback (GtkWidget           *widget,
   new_x = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
   new_y = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
 
-  if (gimp_chain_button_get_active (gcd->chainbutton))
+  if (gimp_chain_button_get_active (data->chainbutton))
     {
-      if (gcd->chain_constrains_ratio)
+      if (data->chain_constrains_ratio)
         {
-          if ((gcd->orig_x != 0) && (gcd->orig_y != 0))
+          if ((data->orig_x != 0) && (data->orig_y != 0))
             {
-              if (ROUND (new_x) != ROUND (gcd->last_x))
+              if (ROUND (new_x) != ROUND (data->last_x))
                 {
-                  gcd->last_x = new_x;
-                  new_y = (new_x * gcd->orig_y) / gcd->orig_x;
+                  data->last_x = new_x;
+                  new_y = (new_x * data->orig_y) / data->orig_x;
 
 /*                   g_signal_stop_emission_by_name (widget, "value-changed"); */
                   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1,
                                               new_y);
-                  gcd->last_y
+                  data->last_y
                     = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
                 }
-              else if (ROUND (new_y) != ROUND (gcd->last_y))
+              else if (ROUND (new_y) != ROUND (data->last_y))
                 {
-                  gcd->last_y = new_y;
-                  new_x = (new_y * gcd->orig_x) / gcd->orig_y;
+                  data->last_y = new_y;
+                  new_x = (new_y * data->orig_x) / data->orig_y;
 
 /*                   g_signal_stop_emission_by_name (widget, "value-changed"); */
                   gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0,
                                               new_x);
-                  gcd->last_x
+                  data->last_x
                     = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
                 }
             }
         }
       else
         {
-          if (new_x != gcd->last_x)
+          if (new_x != data->last_x)
             {
               new_y = new_x;
 
 /*               g_signal_stop_emission_by_name (widget, "value-changed"); */
               gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 1, new_x);
-              gcd->last_y = gcd->last_x
+              data->last_y = data->last_x
                 = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 1);
             }
-          else if (new_y != gcd->last_y)
+          else if (new_y != data->last_y)
             {
               new_x = new_y;
 
 /*               g_signal_stop_emission_by_name (widget, "value-changed"); */
               gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (widget), 0, new_y);
-              gcd->last_x = gcd->last_y
+              data->last_x = data->last_y
                 = gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (widget), 0);
             }
         }
     }
   else
     {
-      if (new_x != gcd->last_x)
-        gcd->last_x = new_x;
-      if (new_y != gcd->last_y)
-        gcd->last_y = new_y;
+      if (new_x != data->last_x)
+        data->last_x = new_x;
+      if (new_y != data->last_y)
+        data->last_y = new_y;
     }
 }
 
@@ -1199,11 +1205,11 @@ gimp_coordinates_new (GimpUnit         unit,
                       gdouble          ysize_0,   /* % */
                       gdouble          ysize_100  /* % */)
 {
-  GimpCoordinatesData *gcd;
-  GtkObject *adjustment;
-  GtkWidget *spinbutton;
-  GtkWidget *sizeentry;
-  GtkWidget *chainbutton;
+  GimpCoordinatesData *data;
+  GtkObject           *adjustment;
+  GtkWidget           *spinbutton;
+  GtkWidget           *sizeentry;
+  GtkWidget           *chainbutton;
 
   spinbutton = gimp_spin_button_new (&adjustment, 1, 0, 1, 1, 10, 1, 1, 2);
 
@@ -1263,21 +1269,22 @@ gimp_coordinates_new (GimpUnit         unit,
                     GTK_SHRINK | GTK_FILL, GTK_EXPAND | GTK_FILL, 0, 0);
   gtk_widget_show (chainbutton);
 
-  gcd = g_new (GimpCoordinatesData, 1);
-  gcd->chainbutton            = GIMP_CHAIN_BUTTON (chainbutton);
-  gcd->chain_constrains_ratio = chain_constrains_ratio;
-  gcd->orig_x                 = x;
-  gcd->orig_y                 = y;
-  gcd->last_x                 = x;
-  gcd->last_y                 = y;
+  data = g_slice_new (GimpCoordinatesData);
+
+  data->chainbutton            = GIMP_CHAIN_BUTTON (chainbutton);
+  data->chain_constrains_ratio = chain_constrains_ratio;
+  data->orig_x                 = x;
+  data->orig_y                 = y;
+  data->last_x                 = x;
+  data->last_y                 = y;
 
   g_signal_connect_swapped (sizeentry, "destroy",
-                            G_CALLBACK (g_free),
-                            gcd);
+                            G_CALLBACK (gimp_coordinates_data_free),
+                            data);
 
   g_signal_connect (sizeentry, "value-changed",
                     G_CALLBACK (gimp_coordinates_callback),
-                    gcd);
+                    data);
 
   g_object_set_data (G_OBJECT (sizeentry), "chainbutton", chainbutton);
 

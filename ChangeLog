@@ -1,3 +1,8 @@
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
+	* libgimpconfig/gimpscanner.c
+	* libgimpwidgets/gimpwidgets.c: allocate structs using GSlice.
+
 2007-05-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpmagnifyoptions.[ch]: remove "threshold" from

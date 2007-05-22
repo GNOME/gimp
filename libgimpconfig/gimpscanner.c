@@ -142,7 +142,7 @@ gimp_scanner_new (const gchar  *name,
 
   scanner = g_scanner_new (NULL);
 
-  data = g_new0 (GimpScannerData, 1);
+  data = g_slice_new0 (GimpScannerData);
 
   data->name  = g_strdup (name);
   data->file  = file;
@@ -180,7 +180,7 @@ gimp_scanner_destroy (GScanner *scanner)
     g_mapped_file_free (data->file);
 
   g_free (data->name);
-  g_free (data);
+  g_slice_free (GimpScannerData, data);
 
   g_scanner_destroy (scanner);
 }
