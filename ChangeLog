@@ -1,5 +1,10 @@
 2007-05-22  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpmagnifyoptions.[ch]: remove "threshold" from
+	the options struct and added compat code in get_property().
+
+2007-05-22  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimprc-unknown.c
 	* app/config/gimpxmlparser.c: allocate structs using GSlice.
 

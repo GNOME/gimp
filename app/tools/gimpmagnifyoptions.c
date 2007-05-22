@@ -43,7 +43,7 @@ enum
   PROP_0,
   PROP_AUTO_RESIZE,
   PROP_ZOOM_TYPE,
-  PROP_THRESHOLD
+  PROP_THRESHOLD /* kept for config file compatibility only */
 };
 
 
@@ -80,11 +80,13 @@ gimp_magnify_options_class_init (GimpMagnifyOptionsClass *klass)
                                     "auto-resize", NULL,
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_ENUM (object_class, PROP_ZOOM_TYPE,
                                  "zoom-type", NULL,
                                  GIMP_TYPE_ZOOM_TYPE,
                                  GIMP_ZOOM_IN,
                                  GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_DOUBLE (object_class, PROP_THRESHOLD,
                                    "threshold", NULL,
                                    1.0, 15.0, 8.0,
@@ -113,8 +115,9 @@ gimp_magnify_options_set_property (GObject      *object,
       options->zoom_type = g_value_get_enum (value);
       break;
     case PROP_THRESHOLD:
-      options->threshold = g_value_get_double (value);
+      /* compat */
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -138,8 +141,9 @@ gimp_magnify_options_get_property (GObject    *object,
       g_value_set_enum (value, options->zoom_type);
       break;
     case PROP_THRESHOLD:
-      g_value_set_double (value, options->threshold);
+      g_value_set_double (value, 8.0); /* compat */
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;

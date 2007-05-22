@@ -40,7 +40,6 @@ struct _GimpMagnifyOptions
 
   gboolean          auto_resize;
   GimpZoomType      zoom_type;
-  gdouble           threshold;
 };
 
 
