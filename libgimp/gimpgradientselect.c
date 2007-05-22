@@ -24,9 +24,7 @@
 #include "gimp.h"
 
 
-typedef struct _GimpGradientData GimpGradientData;
-
-struct _GimpGradientData
+typedef struct
 {
   gchar                   *gradient_callback;
   guint                    idle_id;
@@ -36,10 +34,12 @@ struct _GimpGradientData
   GimpRunGradientCallback  callback;
   gboolean                 closing;
   gpointer                 data;
-};
+} GimpGradientData;
 
 
 /*  local function prototypes  */
+
+static void      gimp_gradient_data_free     (GimpGradientData  *data);
 
 static void      gimp_temp_gradient_run      (const gchar       *name,
                                               gint               nparams,
@@ -96,11 +96,14 @@ gimp_gradient_select_new (const gchar             *title,
 
       /* Now add to hash table so we can find it again */
       if (! gimp_gradient_select_ht)
-        gimp_gradient_select_ht = g_hash_table_new_full (g_str_hash,
-                                                         g_str_equal,
-                                                         g_free, g_free);
+        {
+          gimp_gradient_select_ht =
+            g_hash_table_new_full (g_str_hash, g_str_equal,
+                                   g_free,
+                                   (GDestroyNotify) gimp_gradient_data_free);
+        }
 
-      gradient_data = g_new0 (GimpGradientData, 1);
+      gradient_data = g_slice_new0 (GimpGradientData);
 
       gradient_data->gradient_callback = gradient_callback;
       gradient_data->callback          = callback;
@@ -151,6 +154,12 @@ gimp_gradient_select_destroy (const gchar *gradient_callback)
 
 
 /*  private functions  */
+
+static void
+gimp_gradient_data_free (GimpGradientData *data)
+{
+  g_slice_free (GimpGradientData, data);
+}
 
 static void
 gimp_temp_gradient_run (const gchar      *name,

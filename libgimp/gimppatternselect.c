@@ -24,9 +24,7 @@
 #include "gimp.h"
 
 
-typedef struct _GimpPatternData  GimpPatternData;
-
-struct _GimpPatternData
+typedef struct
 {
   gchar                  *pattern_callback;
   guint                   idle_id;
@@ -38,10 +36,12 @@ struct _GimpPatternData
   GimpRunPatternCallback  callback;
   gboolean                closing;
   gpointer                data;
-};
+} GimpPatternData;
 
 
 /*  local function prototypes  */
+
+static void      gimp_pattern_data_free     (GimpPatternData  *data);
 
 static void      gimp_temp_pattern_run      (const gchar      *name,
                                              gint              nparams,
@@ -99,10 +99,14 @@ gimp_pattern_select_new (const gchar            *title,
 
       /* Now add to hash table so we can find it again */
       if (! gimp_pattern_select_ht)
-        gimp_pattern_select_ht = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                                        g_free, g_free);
+        {
+          gimp_pattern_select_ht =
+            g_hash_table_new_full (g_str_hash, g_str_equal,
+                                   g_free,
+                                   (GDestroyNotify) gimp_pattern_data_free);
+        }
 
-      pattern_data = g_new0 (GimpPatternData, 1);
+      pattern_data = g_slice_new0 (GimpPatternData);
 
       pattern_data->pattern_callback = pattern_callback;
       pattern_data->callback         = callback;
@@ -153,6 +157,12 @@ gimp_pattern_select_destroy (const gchar *pattern_callback)
 
 
 /*  private functions  */
+
+static void
+gimp_pattern_data_free (GimpPatternData *data)
+{
+  g_slice_free (GimpPatternData, data);
+}
 
 static void
 gimp_temp_pattern_run (const gchar      *name,

@@ -24,9 +24,7 @@
 #include "gimp.h"
 
 
-typedef struct _GimpPaletteData GimpPaletteData;
-
-struct _GimpPaletteData
+typedef struct
 {
   gchar                  *palette_callback;
   guint                   idle_id;
@@ -35,10 +33,12 @@ struct _GimpPaletteData
   GimpRunPaletteCallback  callback;
   gboolean                closing;
   gpointer                data;
-};
+} GimpPaletteData;
 
 
 /*  local function prototypes  */
+
+static void      gimp_palette_data_free     (GimpPaletteData  *data);
 
 static void      gimp_temp_palette_run      (const gchar      *name,
                                              gint              nparams,
@@ -92,10 +92,14 @@ gimp_palette_select_new (const gchar            *title,
 
       /* Now add to hash table so we can find it again */
       if (! gimp_palette_select_ht)
-        gimp_palette_select_ht = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                                        g_free, g_free);
+        {
+          gimp_palette_select_ht =
+            g_hash_table_new_full (g_str_hash, g_str_equal,
+                                   g_free,
+                                   (GDestroyNotify) gimp_palette_data_free);
+        }
 
-      palette_data = g_new0 (GimpPaletteData, 1);
+      palette_data = g_slice_new0 (GimpPaletteData);
 
       palette_data->palette_callback = palette_callback;
       palette_data->callback      = callback;
@@ -144,6 +148,12 @@ gimp_palette_select_destroy (const gchar *palette_callback)
 
 
 /*  private functions  */
+
+static void
+gimp_palette_data_free (GimpPaletteData *data)
+{
+  g_slice_free (GimpPaletteData, data);
+}
 
 static void
 gimp_temp_palette_run (const gchar      *name,

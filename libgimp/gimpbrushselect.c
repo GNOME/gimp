@@ -24,9 +24,7 @@
 #include "gimp.h"
 
 
-typedef struct _GimpBrushData GimpBrushData;
-
-struct _GimpBrushData
+typedef struct
 {
   gchar                *brush_callback;
   guint                 idle_id;
@@ -40,10 +38,12 @@ struct _GimpBrushData
   GimpRunBrushCallback  callback;
   gboolean              closing;
   gpointer              data;
-};
+} GimpBrushData;
 
 
 /*  local function prototypes  */
+
+static void      gimp_brush_data_free     (GimpBrushData    *data);
 
 static void      gimp_temp_brush_run      (const gchar      *name,
                                            gint              nparams,
@@ -107,10 +107,14 @@ gimp_brush_select_new (const gchar          *title,
 
       /* Now add to hash table so we can find it again */
       if (! gimp_brush_select_ht)
-        gimp_brush_select_ht = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                                      g_free, g_free);
+        {
+          gimp_brush_select_ht =
+            g_hash_table_new_full (g_str_hash, g_str_equal,
+                                   g_free,
+                                   (GDestroyNotify) gimp_brush_data_free);
+        }
 
-      brush_data = g_new0 (GimpBrushData, 1);
+      brush_data = g_slice_new0 (GimpBrushData);
 
       brush_data->brush_callback = brush_callback;
       brush_data->callback       = callback;
@@ -159,6 +163,12 @@ gimp_brush_select_destroy (const gchar *brush_callback)
 
 
 /*  private functions  */
+
+static void
+gimp_brush_data_free (GimpBrushData *data)
+{
+  g_slice_free (GimpBrushData, data);
+}
 
 static void
 gimp_temp_brush_run (const gchar      *name,

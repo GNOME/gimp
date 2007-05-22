@@ -1,5 +1,13 @@
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpbrushselect.c
+	* libgimp/gimpgradientselect.c
+	* libgimp/gimpfontselect.c
+	* libgimp/gimppatternselect.c
+	* libgimp/gimppaletteselect.c: allocate structs using GSlice.
+
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpprotocol.c: allocate structs using GSlice.
 
 	* libgimpmodule/gimpmodule.c: allocate GimpModuleInfo using GSlice.

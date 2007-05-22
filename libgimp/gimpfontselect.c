@@ -24,9 +24,7 @@
 #include "gimp.h"
 
 
-typedef struct _GimpFontData GimpFontData;
-
-struct _GimpFontData
+typedef struct
 {
   gchar               *font_callback;
   guint                idle_id;
@@ -34,10 +32,12 @@ struct _GimpFontData
   GimpRunFontCallback  callback;
   gboolean             closing;
   gpointer             data;
-};
+} GimpFontData;
 
 
 /*  local function prototypes  */
+
+static void      gimp_font_data_free     (GimpFontData     *data);
 
 static void      gimp_temp_font_run      (const gchar      *name,
                                           gint              nparams,
@@ -90,10 +90,14 @@ gimp_font_select_new (const gchar         *title,
 
       /* Now add to hash table so we can find it again */
       if (! gimp_font_select_ht)
-        gimp_font_select_ht = g_hash_table_new_full (g_str_hash, g_str_equal,
-                                                     g_free, g_free);
+        {
+          gimp_font_select_ht =
+            g_hash_table_new_full (g_str_hash, g_str_equal,
+                                   g_free,
+                                   (GDestroyNotify) gimp_font_data_free);
+        }
 
-      font_data = g_new0 (GimpFontData, 1);
+      font_data = g_slice_new0 (GimpFontData);
 
       font_data->font_callback = font_callback;
       font_data->callback      = callback;
@@ -141,6 +145,12 @@ gimp_font_select_destroy (const gchar *font_callback)
 
 
 /*  private functions  */
+
+static void
+gimp_font_data_free (GimpFontData *data)
+{
+  g_slice_free (GimpFontData, data);
+}
 
 static void
 gimp_temp_font_run (const gchar      *name,
