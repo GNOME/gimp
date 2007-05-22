@@ -267,7 +267,7 @@ gimp_ui_manager_finalize (GObject *object)
       if (entry->widget)
         g_object_unref (entry->widget);
 
-      g_free (entry);
+      g_slice_free (GimpUIManagerUIEntry, entry);
     }
 
   g_list_free (manager->registered_uis);
@@ -539,7 +539,7 @@ gimp_ui_manager_ui_register (GimpUIManager          *manager,
   g_return_if_fail (basename != NULL);
   g_return_if_fail (gimp_ui_manager_entry_get (manager, ui_path) == NULL);
 
-  entry = g_new0 (GimpUIManagerUIEntry, 1);
+  entry = g_slice_new0 (GimpUIManagerUIEntry);
 
   entry->ui_path    = g_strdup (ui_path);
   entry->basename   = g_strdup (basename);
@@ -550,11 +550,18 @@ gimp_ui_manager_ui_register (GimpUIManager          *manager,
   manager->registered_uis = g_list_prepend (manager->registered_uis, entry);
 }
 
+
 typedef struct
 {
   guint x;
   guint y;
 } MenuPos;
+
+static void
+menu_pos_free (MenuPos *pos)
+{
+  g_slice_free (MenuPos, pos);
+}
 
 void
 gimp_ui_manager_ui_popup (GimpUIManager        *manager,
@@ -613,8 +620,9 @@ gimp_ui_manager_ui_popup (GimpUIManager        *manager,
 
   if (! menu_pos)
     {
-      menu_pos = g_new0 (MenuPos, 1);
-      g_object_set_data_full (G_OBJECT (widget), "menu-pos", menu_pos, g_free);
+      menu_pos = g_slice_new0 (MenuPos);
+      g_object_set_data_full (G_OBJECT (widget), "menu-pos", menu_pos,
+                              (GDestroyNotify) menu_pos_free);
     }
 
   menu_pos->x = x;

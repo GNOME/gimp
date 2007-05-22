@@ -591,7 +591,8 @@ gtk_wrap_box_pack_wrapped (GtkWrapBox *wbox,
   g_return_if_fail (GTK_IS_WIDGET (child));
   g_return_if_fail (child->parent == NULL);
 
-  child_info = g_new (GtkWrapBoxChild, 1);
+  child_info = g_slice_new (GtkWrapBoxChild);
+
   child_info->widget = child;
   child_info->hexpand = hexpand ? TRUE : FALSE;
   child_info->hfill = hfill ? TRUE : FALSE;
@@ -852,20 +853,20 @@ gtk_wrap_box_remove (GtkContainer *container,
       if (child->widget == widget)
         {
           gboolean was_visible;
-        
+
           was_visible = GTK_WIDGET_VISIBLE (widget);
           gtk_widget_unparent (widget);
-        
+
           if (last)
             last->next = child->next;
           else
             wbox->children = child->next;
-          g_free (child);
+          g_slice_free (GtkWrapBoxChild, child);
           wbox->n_children--;
-        
+
           if (was_visible)
             gtk_widget_queue_resize (GTK_WIDGET (container));
-        
+
           break;
         }
 

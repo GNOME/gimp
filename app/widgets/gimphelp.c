@@ -66,7 +66,7 @@ struct _GimpIdleHelp
 
 /*  local function prototypes  */
 
-static gint      gimp_idle_help          (gpointer       data);
+static gint      gimp_idle_help          (GimpIdleHelp  *idle_help);
 
 static gboolean  gimp_help_browser       (Gimp          *gimp);
 static void      gimp_help_browser_error (Gimp          *gimp,
@@ -97,7 +97,7 @@ gimp_help_show (Gimp        *gimp,
 
   if (config->use_help)
     {
-      GimpIdleHelp *idle_help = g_new0 (GimpIdleHelp, 1);
+      GimpIdleHelp *idle_help = g_slice_new0 (GimpIdleHelp);
 
       idle_help->gimp = gimp;
 
@@ -109,7 +109,7 @@ gimp_help_show (Gimp        *gimp,
       if (help_id && strlen (help_id))
         idle_help->help_id = g_strdup (help_id);
 
-      g_idle_add (gimp_idle_help, idle_help);
+      g_idle_add ((GSourceFunc) gimp_idle_help, idle_help);
 
       if (gimp->be_verbose)
         g_print ("HELP: request for help-id '%s' from help-domain '%s'\n",
@@ -122,9 +122,8 @@ gimp_help_show (Gimp        *gimp,
 /*  private functions  */
 
 static gboolean
-gimp_idle_help (gpointer data)
+gimp_idle_help (GimpIdleHelp *idle_help)
 {
-  GimpIdleHelp  *idle_help      = data;
   GimpGuiConfig *config         = GIMP_GUI_CONFIG (idle_help->gimp->config);
   const gchar   *procedure_name = NULL;
 
@@ -157,7 +156,8 @@ gimp_idle_help (gpointer data)
   g_free (idle_help->help_domain);
   g_free (idle_help->help_locales);
   g_free (idle_help->help_id);
-  g_free (idle_help);
+
+  g_slice_free (GimpIdleHelp, idle_help);
 
   return FALSE;
 }

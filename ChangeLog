@@ -1,3 +1,10 @@
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphelp.c
+	* app/widgets/gimpuimanager.c
+	* app/widgets/gimpview-popup.c
+	* app/widgets/gtkwrapbox.c: use GSlice to allocate structs.
+
 2007-05-22  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/tile.[ch]: changed tile_init() to tile_new() and return

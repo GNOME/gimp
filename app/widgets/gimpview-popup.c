@@ -100,7 +100,7 @@ gimp_view_popup_show (GtkWidget      *widget,
                                       &popup_height))
     return FALSE;
 
-  popup = g_new0 (GimpViewPopup, 1);
+  popup = g_slice_new0 (GimpViewPopup);
 
   popup->widget       = widget;
   popup->context      = context;
@@ -164,7 +164,7 @@ gimp_view_popup_hide (GimpViewPopup *popup)
 
   gtk_grab_remove (popup->widget);
 
-  g_free (popup);
+  g_slice_free (GimpViewPopup, popup);
 }
 
 static gboolean
