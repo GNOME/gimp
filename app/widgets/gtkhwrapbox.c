@@ -197,7 +197,7 @@ gtk_hwrap_box_size_request (GtkWidget      *widget,
     if (GTK_WIDGET_VISIBLE (child->widget))
       {
         GtkRequisition child_requisition;
-        
+
         gtk_widget_size_request (child->widget, &child_requisition);
 
         this->max_child_width = MAX (this->max_child_width, child_requisition.width);
@@ -383,9 +383,9 @@ layout_row (GtkWrapBox    *wbox,
       else
         {
           GtkRequisition child_requisition;
-        
+
           get_child_requisition (wbox, child->widget, &child_requisition);
-        
+
           if (child_requisition.height >= area->height)
             child_allocation.height = area->height;
           else
@@ -398,14 +398,14 @@ layout_row (GtkWrapBox    *wbox,
               else if (wbox->line_justify == GTK_JUSTIFY_BOTTOM)
                 child_allocation.y += area->height - child_requisition.height;
             }
-        
+
           if (have_expand_children)
             {
               child_allocation.width = child_requisition.width;
               if (child->hexpand || wbox->justify == GTK_JUSTIFY_FILL)
                 {
                   guint space;
-                
+
                   n_expand_children--;
                   space = extra * n_expand_children;
                   space = width - space;
@@ -443,7 +443,7 @@ struct _Line
   GSList  *children;
   guint16  min_size;
   guint    expand : 1;
-  Line     *next;
+  Line    *next;
 };
 
 static void
@@ -470,7 +470,7 @@ layout_rows (GtkWrapBox    *wbox,
   children_per_line = g_slist_length (slist);
   while (slist)
     {
-      Line *line = g_new (Line, 1);
+      Line *line = g_slice_new (Line);
 
       line->children = slist;
       line->min_size = min_height;
@@ -554,7 +554,7 @@ layout_rows (GtkWrapBox    *wbox,
         {
           GtkAllocation row_allocation;
           Line *next_line = line->next;
-        
+
           row_allocation.x = area->x;
           row_allocation.width = area->width;
           if (wbox->homogeneous)
@@ -562,13 +562,13 @@ layout_rows (GtkWrapBox    *wbox,
           else
             {
               row_allocation.height = line->min_size;
-        
+
               if (line->expand)
                 row_allocation.height += extra;
             }
-        
+
           row_allocation.y = y;
-        
+
           y += row_allocation.height + wbox->vspacing;
           layout_row (wbox,
                       &row_allocation,
@@ -577,9 +577,10 @@ layout_rows (GtkWrapBox    *wbox,
                       line->expand);
 
           g_slist_free (line->children);
-          g_free (line);
           line = next_line;
         }
+
+      g_slice_free_chain (Line, line_list, next);
     }
 }
 

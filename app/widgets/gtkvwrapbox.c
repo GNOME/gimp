@@ -197,7 +197,7 @@ gtk_vwrap_box_size_request (GtkWidget      *widget,
     if (GTK_WIDGET_VISIBLE (child->widget))
       {
         GtkRequisition child_requisition;
-        
+
         gtk_widget_size_request (child->widget, &child_requisition);
 
         this->max_child_height = MAX (this->max_child_height, child_requisition.height);
@@ -383,9 +383,9 @@ layout_col (GtkWrapBox    *wbox,
       else
         {
           GtkRequisition child_requisition;
-        
+
           get_child_requisition (wbox, child->widget, &child_requisition);
-        
+
           if (child_requisition.width >= area->width)
             child_allocation.width = area->width;
           else
@@ -398,14 +398,14 @@ layout_col (GtkWrapBox    *wbox,
               else if (wbox->line_justify == GTK_JUSTIFY_BOTTOM)
                 child_allocation.x += area->width - child_requisition.width;
             }
-        
+
           if (have_expand_children)
             {
               child_allocation.height = child_requisition.height;
               if (child->vexpand || wbox->justify == GTK_JUSTIFY_FILL)
                 {
                   guint space;
-                
+
                   n_expand_children--;
                   space = extra * n_expand_children;
                   space = height - space;
@@ -470,7 +470,7 @@ layout_cols (GtkWrapBox    *wbox,
   children_per_line = g_slist_length (slist);
   while (slist)
     {
-      Line *line = g_new (Line, 1);
+      Line *line = g_slice_new (Line);
 
       line->children = slist;
       line->min_size = min_width;
@@ -554,7 +554,7 @@ layout_cols (GtkWrapBox    *wbox,
         {
           GtkAllocation col_allocation;
           Line *next_line = line->next;
-        
+
           col_allocation.y = area->y;
           col_allocation.height = area->height;
           if (wbox->homogeneous)
@@ -562,13 +562,13 @@ layout_cols (GtkWrapBox    *wbox,
           else
             {
               col_allocation.width = line->min_size;
-        
+
               if (line->expand)
                 col_allocation.width += extra;
             }
-        
+
           col_allocation.x = x;
-        
+
           x += col_allocation.width + wbox->hspacing;
           layout_col (wbox,
                       &col_allocation,
@@ -577,9 +577,10 @@ layout_cols (GtkWrapBox    *wbox,
                       line->expand);
 
           g_slist_free (line->children);
-          g_free (line);
           line = next_line;
         }
+
+      g_slice_free_chain (Line, line_list, next);
     }
 }
 

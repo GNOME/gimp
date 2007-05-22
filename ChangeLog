@@ -1,5 +1,10 @@
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gtkvwrapbox.c
+	* app/widgets/gtkhwrapbox.c: use GSlice to allocate structs.
+
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-scripts.c
 	* plug-ins/script-fu/script-fu-interface.c: use GSlice to allocate
 	structs.
