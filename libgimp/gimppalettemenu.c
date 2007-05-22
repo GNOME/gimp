@@ -31,19 +31,18 @@
 #include "gimppalettemenu.h"
 
 
-typedef struct _CompatCallbackData CompatCallbackData;
-
-struct _CompatCallbackData
+typedef struct
 {
   GimpRunPaletteCallback callback;
   gpointer               data;
-};
+} CompatCallbackData;
 
 
-static void compat_callback (GimpPaletteSelectButton *palette_button,
-                             const gchar             *palette_name,
-                             gboolean                 dialog_closing,
-                             gpointer                 data);
+static void compat_callback           (GimpPaletteSelectButton *palette_button,
+                                       const gchar             *palette_name,
+                                       gboolean                 dialog_closing,
+                                       CompatCallbackData      *data);
+static void compat_callback_data_free (CompatCallbackData      *data);
 
 
 /**
@@ -74,13 +73,15 @@ gimp_palette_select_widget_new (const gchar            *title,
 
   palette_button = gimp_palette_select_button_new (title, palette_name);
 
-  compat_data = g_new (CompatCallbackData, 1);
+  compat_data = g_slice_new (CompatCallbackData);
+
   compat_data->callback = callback;
-  compat_data->data = data;
+  compat_data->data     = data;
 
   g_signal_connect_data (palette_button, "palette-set",
                          G_CALLBACK (compat_callback),
-                         compat_data, (GClosureNotify) g_free, 0);
+                         compat_data,
+                         (GClosureNotify) compat_callback_data_free, 0);
 
   return palette_button;
 }
@@ -122,13 +123,18 @@ gimp_palette_select_widget_set (GtkWidget   *widget,
                                           palette_name);
 }
 
+
 static void
 compat_callback (GimpPaletteSelectButton *palette_button,
                  const gchar             *palette_name,
                  gboolean                 dialog_closing,
-                 gpointer                 data)
+                 CompatCallbackData      *data)
 {
-  CompatCallbackData *compat_data = data;
+  data->callback (palette_name, dialog_closing, data->data);
+}
 
-  compat_data->callback (palette_name, dialog_closing, compat_data->data);
+static void
+compat_callback_data_free (CompatCallbackData *data)
+{
+  g_slice_free (CompatCallbackData, data);
 }

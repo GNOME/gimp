@@ -30,22 +30,23 @@
 #undef GIMP_DISABLE_DEPRECATED
 #include "gimppatternmenu.h"
 
-typedef struct _CompatCallbackData CompatCallbackData;
 
-struct _CompatCallbackData
+typedef struct
 {
   GimpRunPatternCallback callback;
   gpointer               data;
-};
+} CompatCallbackData;
 
-static void compat_callback (GimpPatternSelectButton *pattern_button,
-                             const gchar             *pattern_name,
-                             gint                     width,
-                             gint                     height,
-                             gint                     bytes,
-                             const guchar            *mask_data,
-                             gboolean                 dialog_closing,
-                             gpointer                 data);
+
+static void compat_callback           (GimpPatternSelectButton *pattern_button,
+                                       const gchar             *pattern_name,
+                                       gint                     width,
+                                       gint                     height,
+                                       gint                     bytes,
+                                       const guchar            *mask_data,
+                                       gboolean                 dialog_closing,
+                                       CompatCallbackData      *data);
+static void compat_callback_data_free (CompatCallbackData      *data);
 
 
 /**
@@ -74,13 +75,15 @@ gimp_pattern_select_widget_new (const gchar            *title,
 
   pattern_button = gimp_pattern_select_button_new (title, pattern_name);
 
-  compat_data = g_new (CompatCallbackData, 1);
+  compat_data = g_slice_new (CompatCallbackData);
+
   compat_data->callback = callback;
-  compat_data->data = data;
+  compat_data->data     = data;
 
   g_signal_connect_data (pattern_button, "pattern-set",
                          G_CALLBACK (compat_callback),
-                         compat_data, (GClosureNotify) g_free, 0);
+                         compat_data,
+                         (GClosureNotify) compat_callback_data_free, 0);
 
   return pattern_button;
 }
@@ -118,6 +121,7 @@ gimp_pattern_select_widget_set (GtkWidget   *widget,
                                           pattern_name);
 }
 
+
 static void
 compat_callback (GimpPatternSelectButton *pattern_button,
                  const gchar             *pattern_name,
@@ -126,10 +130,14 @@ compat_callback (GimpPatternSelectButton *pattern_button,
                  gint                     bpp,
                  const guchar            *mask_data,
                  gboolean                 dialog_closing,
-                 gpointer                 data)
+                 CompatCallbackData      *data)
 {
-  CompatCallbackData *compat_data = data;
+  data->callback (pattern_name, width, height, bpp, mask_data,
+                  dialog_closing, data->data);
+}
 
-  compat_data->callback (pattern_name, width, height, bpp, mask_data,
-                         dialog_closing, compat_data->data);
+static void
+compat_callback_data_free (CompatCallbackData *data)
+{
+  g_slice_free (CompatCallbackData, data);
 }

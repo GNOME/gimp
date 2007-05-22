@@ -31,21 +31,20 @@
 #include "gimpgradientmenu.h"
 
 
-typedef struct _CompatCallbackData CompatCallbackData;
-
-struct _CompatCallbackData
+typedef struct
 {
   GimpRunGradientCallback callback;
   gpointer                data;
-};
+} CompatCallbackData;
 
 
-static void compat_callback (GimpGradientSelectButton *gradient_button,
-                             const gchar              *gradient_name,
-                             gint                      width,
-                             const gdouble            *grad_data,
-                             gboolean                  dialog_closing,
-                             gpointer                  data);
+static void compat_callback           (GimpGradientSelectButton *gradient_button,
+                                       const gchar              *gradient_name,
+                                       gint                      width,
+                                       const gdouble            *grad_data,
+                                       gboolean                  dialog_closing,
+                                       CompatCallbackData       *data);
+static void compat_callback_data_free (CompatCallbackData       *data);
 
 
 /**
@@ -76,13 +75,15 @@ gimp_gradient_select_widget_new (const gchar             *title,
 
   gradient_button = gimp_gradient_select_button_new (title, gradient_name);
 
-  compat_data = g_new (CompatCallbackData, 1);
+  compat_data = g_slice_new (CompatCallbackData);
+
   compat_data->callback = callback;
-  compat_data->data = data;
+  compat_data->data     = data;
 
   g_signal_connect_data (gradient_button, "gradient-set",
                          G_CALLBACK (compat_callback),
-                         compat_data, (GClosureNotify) g_free, 0);
+                         compat_data,
+                         (GClosureNotify) compat_callback_data_free, 0);
 
   return gradient_button;
 }
@@ -120,16 +121,20 @@ gimp_gradient_select_widget_set (GtkWidget   *widget,
                                             gradient_name);
 }
 
+
 static void
 compat_callback (GimpGradientSelectButton *gradient_button,
                  const gchar              *gradient_name,
                  gint                      width,
                  const gdouble            *grad_data,
                  gboolean                  dialog_closing,
-                 gpointer                  data)
+                 CompatCallbackData       *data)
 {
-  CompatCallbackData *compat_data = data;
+  data->callback (gradient_name, width, grad_data, dialog_closing, data->data);
+}
 
-  compat_data->callback (gradient_name, width, grad_data, dialog_closing,
-                         compat_data->data);
+static void
+compat_callback_data_free (CompatCallbackData *data)
+{
+  g_slice_free (CompatCallbackData, data);
 }

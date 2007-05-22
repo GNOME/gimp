@@ -31,19 +31,18 @@
 #include "gimpfontmenu.h"
 
 
-typedef struct _CompatCallbackData CompatCallbackData;
-
-struct _CompatCallbackData
+typedef struct
 {
   GimpRunFontCallback callback;
   gpointer            data;
-};
+} CompatCallbackData;
 
 
-static void compat_callback (GimpFontSelectButton *font_button,
-                             const gchar          *font_name,
-                             gboolean              dialog_closing,
-                             gpointer              data);
+static void compat_callback           (GimpFontSelectButton *font_button,
+                                       const gchar          *font_name,
+                                       gboolean              dialog_closing,
+                                       CompatCallbackData   *data);
+static void compat_callback_data_free (CompatCallbackData   *data);
 
 
 /**
@@ -72,13 +71,15 @@ gimp_font_select_widget_new (const gchar         *title,
 
   font_button = gimp_font_select_button_new (title, font_name);
 
-  compat_data = g_new (CompatCallbackData, 1);
+  compat_data = g_slice_new (CompatCallbackData);
+
   compat_data->callback = callback;
-  compat_data->data = data;
+  compat_data->data     = data;
 
   g_signal_connect_data (font_button, "font-set",
                          G_CALLBACK (compat_callback),
-                         compat_data, (GClosureNotify) g_free, 0);
+                         compat_data,
+                         (GClosureNotify) compat_callback_data_free, 0);
 
   return font_button;
 }
@@ -116,13 +117,18 @@ gimp_font_select_widget_set (GtkWidget   *widget,
                                     font_name);
 }
 
+
 static void
 compat_callback (GimpFontSelectButton *font_button,
                  const gchar          *font_name,
                  gboolean              dialog_closing,
-                 gpointer              data)
+                 CompatCallbackData   *data)
 {
-  CompatCallbackData *compat_data = data;
+  data->callback (font_name, dialog_closing, data->data);
+}
 
-  compat_data->callback (font_name, dialog_closing, compat_data->data);
+static void
+compat_callback_data_free (CompatCallbackData *data)
+{
+  g_slice_free (CompatCallbackData, data);
 }

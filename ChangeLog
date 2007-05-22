@@ -1,5 +1,13 @@
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimpbrushmenu.c
+	* libgimp/gimpgradientmenu.c
+	* libgimp/gimpfontmenu.c
+	* libgimp/gimppatternmenu.c
+	* libgimp/gimppalettemenu.c: allocate structs using GSlice.
+
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimpbrushselect.c
 	* libgimp/gimpgradientselect.c
 	* libgimp/gimpfontselect.c

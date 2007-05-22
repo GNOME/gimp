@@ -31,24 +31,24 @@
 #include "gimpbrushmenu.h"
 
 
-typedef struct _CompatCallbackData CompatCallbackData;
-
-struct _CompatCallbackData
+typedef struct
 {
   GimpRunBrushCallback callback;
   gpointer             data;
-};
+} CompatCallbackData;
 
-static void compat_callback (GimpBrushSelectButton *brush_button,
-                             const gchar           *brush_name,
-                             gdouble                opacity,
-                             gint                   spacing,
-                             GimpLayerModeEffects   paint_mode,
-                             gint                   width,
-                             gint                   height,
-                             const guchar          *mask_data,
-                             gboolean               dialog_closing,
-                             gpointer               data);
+
+static void compat_callback           (GimpBrushSelectButton *brush_button,
+                                       const gchar           *brush_name,
+                                       gdouble                opacity,
+                                       gint                   spacing,
+                                       GimpLayerModeEffects   paint_mode,
+                                       gint                   width,
+                                       gint                   height,
+                                       const guchar          *mask_data,
+                                       gboolean               dialog_closing,
+                                       CompatCallbackData    *data);
+static void compat_callback_data_free (CompatCallbackData    *data);
 
 
 /**
@@ -84,13 +84,15 @@ gimp_brush_select_widget_new (const gchar          *title,
   brush_button = gimp_brush_select_button_new (title, brush_name,
                                                opacity, spacing, paint_mode);
 
-  compat_data = g_new (CompatCallbackData, 1);
+  compat_data = g_slice_new (CompatCallbackData);
+
   compat_data->callback = callback;
-  compat_data->data = data;
+  compat_data->data     = data;
 
   g_signal_connect_data (brush_button, "brush-set",
                          G_CALLBACK (compat_callback),
-                         compat_data, (GClosureNotify) g_free, 0);
+                         compat_data,
+                         (GClosureNotify) compat_callback_data_free, 0);
 
   return brush_button;
 }
@@ -145,11 +147,14 @@ compat_callback (GimpBrushSelectButton *brush_button,
                  gint                   height,
                  const guchar          *mask_data,
                  gboolean               dialog_closing,
-                 gpointer               data)
+                 CompatCallbackData    *data)
 {
-  CompatCallbackData *compat_data = data;
+  data->callback (brush_name, opacity, spacing, paint_mode,
+                  width, height, mask_data, dialog_closing, data->data);
+}
 
-  compat_data->callback (brush_name, opacity, spacing, paint_mode,
-                         width, height, mask_data,
-                         dialog_closing, compat_data->data);
+static void
+compat_callback_data_free (CompatCallbackData *data)
+{
+  g_slice_free (CompatCallbackData, data);
 }
