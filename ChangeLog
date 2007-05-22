@@ -1,5 +1,10 @@
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpprogressbox.c (gimp_progress_box_progress_start)
+	(gimp_progress_box_progress_set_text): process updates.
+
+2007-05-22  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpbrush.c (gimp_brush_get_new_preview): plugged a
 	memory leak caused by one variable shadowing another.
 

@@ -109,6 +109,9 @@ gimp_progress_box_progress_start (GimpProgress *progress,
       box->active     = TRUE;
       box->cancelable = cancelable;
 
+      if (GTK_WIDGET_DRAWABLE (box->progress))
+        gdk_window_process_updates (box->progress->window, TRUE);
+
       return progress;
     }
 
@@ -149,6 +152,9 @@ gimp_progress_box_progress_set_text (GimpProgress *progress,
   if (box->active)
     {
       gtk_label_set_text (GTK_LABEL (box->label), message);
+
+      if (GTK_WIDGET_DRAWABLE (box->progress))
+        gdk_window_process_updates (box->progress->window, TRUE);
     }
 }
 
