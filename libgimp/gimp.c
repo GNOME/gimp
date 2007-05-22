@@ -959,7 +959,10 @@ gimp_run_procedure2 (const gchar     *name,
   proc_return = msg.data;
 
   *n_return_vals = proc_return->nparams;
-  return_vals = (GimpParam *) proc_return->params;
+  return_vals    = (GimpParam *) proc_return->params;
+
+  proc_return->nparams = 0;
+  proc_return->params  = NULL;
 
   switch (return_vals[0].data.d_status)
     {
@@ -975,8 +978,7 @@ gimp_run_procedure2 (const gchar     *name,
       break;
     }
 
-  g_free (proc_return->name);
-  g_free (proc_return);
+  gimp_wire_destroy (&msg);
 
   return return_vals;
 }

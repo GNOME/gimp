@@ -1,3 +1,11 @@
+2007-05-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/plug-in-params.c (plug_in_args_to_params): free
+	parasites using gimp_parasite_free()
+
+	* libgimp/gimp.c (gimp_run_procedure2): free wire messages using
+	gimp_wire_destroy().
+
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpsizeentry.c

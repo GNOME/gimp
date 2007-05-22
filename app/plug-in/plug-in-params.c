@@ -396,7 +396,14 @@ plug_in_args_to_params (GValueArray *args,
                 params[i].data.d_parasite.data  = parasite->data;
 
                 if (full_copy)
-                  g_free (parasite);
+                  {
+                    parasite->name  = NULL;
+                    parasite->flags = 0;
+                    parasite->size  = 0;
+                    parasite->data  = NULL;
+
+                    gimp_parasite_free (parasite);
+                  }
               }
             else
               {
