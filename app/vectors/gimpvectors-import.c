@@ -266,7 +266,7 @@ gimp_vectors_import (GimpImage    *image,
   parser.svg_depth = 0;
 
   /*  the base of the stack, defines the size of the view-port  */
-  base = g_new0 (SvgHandler, 1);
+  base = g_slice_new0 (SvgHandler);
   base->name   = "image";
   base->width  = image->width;
   base->height = image->height;
@@ -366,13 +366,13 @@ gimp_vectors_import (GimpImage    *image,
 
           g_list_free (path->strokes);
 
-          g_free (path);
+          g_slice_free (SvgPath, path);
         }
 
       g_list_free (base->paths);
 
-      g_free (base->transform);
-      g_free (base);
+      g_slice_free (GimpMatrix3, base->transform);
+      g_slice_free (SvgHandler, base);
     }
 
   g_queue_free (parser.stack);
@@ -393,7 +393,7 @@ svg_parser_start_element (GMarkupParseContext  *context,
   SvgHandler *base;
   gint        i = 0;
 
-  handler = g_new0 (SvgHandler, 1);
+  handler = g_slice_new0 (SvgHandler);
   base    = g_queue_peek_head (parser->stack);
 
   /* if the element is not rendered, always use the generic handler */
@@ -451,14 +451,14 @@ svg_parser_end_element (GMarkupParseContext  *context,
                                        handler->transform);
             }
 
-          g_free (handler->transform);
+          g_slice_free (GimpMatrix3, handler->transform);
         }
 
       base = g_queue_peek_head (parser->stack);
       base->paths = g_list_concat (base->paths, handler->paths);
     }
 
-  g_free (handler);
+  g_slice_free (SvgHandler, handler);
 }
 
 static void
@@ -475,7 +475,7 @@ svg_handler_svg_start (SvgHandler   *handler,
   gdouble      w = handler->width;
   gdouble      h = handler->height;
 
-  matrix = g_new (GimpMatrix3, 1);
+  matrix = g_slice_new (GimpMatrix3);
   gimp_matrix3_identity (matrix);
 
   while (*names)
@@ -595,7 +595,7 @@ svg_handler_path_start (SvgHandler   *handler,
                         const gchar **values,
                         SvgParser    *parser)
 {
-  SvgPath *path = g_new0 (SvgPath, 1);
+  SvgPath *path = g_slice_new0 (SvgPath);
 
   while (*names)
     {
@@ -635,7 +635,7 @@ svg_handler_rect_start (SvgHandler   *handler,
                         const gchar **values,
                         SvgParser    *parser)
 {
-  SvgPath    *path   = g_new0 (SvgPath, 1);
+  SvgPath    *path   = g_slice_new0 (SvgPath);
   gdouble     x      = 0.0;
   gdouble     y      = 0.0;
   gdouble     width  = 0.0;
@@ -790,7 +790,7 @@ svg_handler_ellipse_start (SvgHandler   *handler,
                            const gchar **values,
                            SvgParser    *parser)
 {
-  SvgPath    *path   = g_new0 (SvgPath, 1);
+  SvgPath    *path   = g_slice_new0 (SvgPath);
   GimpCoords  center = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
   gdouble     rx     = 0.0;
   gdouble     ry     = 0.0;
@@ -869,7 +869,7 @@ svg_handler_line_start (SvgHandler   *handler,
                         const gchar **values,
                         SvgParser    *parser)
 {
-  SvgPath    *path  = g_new0 (SvgPath, 1);
+  SvgPath    *path  = g_slice_new0 (SvgPath);
   GimpCoords  start = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
   GimpCoords  end   = { 0.0, 0.0, 1.0, 0.5, 0.5, 0.5 };
   GimpStroke *stroke;
@@ -934,7 +934,7 @@ svg_handler_poly_start (SvgHandler   *handler,
                         const gchar **values,
                         SvgParser    *parser)
 {
-  SvgPath *path   = g_new0 (SvgPath, 1);
+  SvgPath *path   = g_slice_new0 (SvgPath);
   GString *points = NULL;
 
   while (*names)

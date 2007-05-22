@@ -1,3 +1,7 @@
+2007-05-22  Michael Natterer  <mitch@gimp.org>
+
+	* app/vectors/gimpvectors-import.c: allocate structs using GSlice.
+
 2007-05-22  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpactionview.c: use GSlice to allocate struct.
