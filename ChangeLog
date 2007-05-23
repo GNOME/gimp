@@ -1,5 +1,20 @@
 2007-05-23  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimppaintoptions.c
+	* app/tools/gimpcolorbalancetool.c
+	* app/tools/gimpcolorizetool.c
+	* app/tools/gimpcurvestool.c
+	* app/tools/gimpforegroundselecttool.c
+	* app/tools/gimphuesaturationtool.c
+	* app/tools/gimpiscissorstool.c
+	* app/tools/gimplevelstool.c
+	* app/tools/gimprectangleoptions.c
+	* app/tools/gimprectangletool.c
+	* app/tools/gimpthresholdtool.c
+	* app/tools/tool_manager.c: allocate structs using GSlice.
+
+2007-05-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/imagemap/imap_cmd_move_sash.c (sash_move): applied
 	patch from Kevin Hurewitz that fixes resizing an area while being
 	zoomed in (bug #439222).

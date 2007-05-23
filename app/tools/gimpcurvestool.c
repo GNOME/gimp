@@ -194,7 +194,7 @@ gimp_curves_tool_init (GimpCurvesTool *tool)
 {
   gint i;
 
-  tool->curves  = g_new0 (Curves, 1);
+  tool->curves  = g_slice_new0 (Curves);
   tool->lut     = gimp_lut_new ();
   tool->channel = GIMP_HISTOGRAM_VALUE;
 
@@ -212,26 +212,21 @@ gimp_curves_tool_finalize (GObject *object)
 {
   GimpCurvesTool *tool = GIMP_CURVES_TOOL (object);
 
-  if (tool->curves)
-    {
-      g_free (tool->curves);
-      tool->curves = NULL;
-    }
-  if (tool->lut)
-    {
-      gimp_lut_free (tool->lut);
-      tool->lut = NULL;
-    }
+  g_slice_free (Curves, tool->curves);
+  gimp_lut_free (tool->lut);
+
   if (tool->hist)
     {
       gimp_histogram_free (tool->hist);
       tool->hist = NULL;
     }
+
   if (tool->cursor_layout)
     {
       g_object_unref (tool->cursor_layout);
       tool->cursor_layout = NULL;
     }
+
   if (tool->xpos_layout)
     {
       g_object_unref (tool->xpos_layout);

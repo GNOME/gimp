@@ -212,7 +212,7 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
 static void
 gimp_rectangle_options_private_finalize (GimpRectangleOptionsPrivate *private)
 {
-  g_free (private);
+  g_slice_free (GimpRectangleOptionsPrivate, private);
 }
 
 GimpRectangleOptionsPrivate *
@@ -231,7 +231,7 @@ gimp_rectangle_options_get_private (GimpRectangleOptions *options)
 
   if (! private)
     {
-      private = g_new0 (GimpRectangleOptionsPrivate, 1);
+      private = g_slice_new0 (GimpRectangleOptionsPrivate);
 
       g_object_set_qdata_full (G_OBJECT (options), private_key, private,
                                (GDestroyNotify) gimp_rectangle_options_private_finalize);

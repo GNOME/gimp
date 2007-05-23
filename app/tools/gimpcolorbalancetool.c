@@ -118,7 +118,7 @@ gimp_color_balance_tool_class_init (GimpColorBalanceToolClass *klass)
 static void
 gimp_color_balance_tool_init (GimpColorBalanceTool *cb_tool)
 {
-  cb_tool->color_balance = g_new0 (ColorBalance, 1);
+  cb_tool->color_balance = g_slice_new0 (ColorBalance);
   cb_tool->transfer_mode = GIMP_MIDTONES;
 
   color_balance_init (cb_tool->color_balance);
@@ -129,11 +129,7 @@ gimp_color_balance_tool_finalize (GObject *object)
 {
   GimpColorBalanceTool *cb_tool = GIMP_COLOR_BALANCE_TOOL (object);
 
-  if (cb_tool->color_balance)
-    {
-      g_free (cb_tool->color_balance);
-      cb_tool->color_balance = NULL;
-    }
+  g_slice_free (ColorBalance, cb_tool->color_balance);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

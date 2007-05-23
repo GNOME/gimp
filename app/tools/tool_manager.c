@@ -75,7 +75,7 @@ tool_manager_init (Gimp *gimp)
 
   g_return_if_fail (GIMP_IS_GIMP (gimp));
 
-  tool_manager = g_new0 (GimpToolManager, 1);
+  tool_manager = g_slice_new0 (GimpToolManager);
 
   tool_manager->active_tool            = NULL;
   tool_manager->tool_stack             = NULL;
@@ -119,7 +119,7 @@ tool_manager_exit (Gimp *gimp)
   if (tool_manager->active_tool)
     g_object_unref (tool_manager->active_tool);
 
-  g_free (tool_manager);
+  g_slice_free (GimpToolManager, tool_manager);
 }
 
 GimpTool *

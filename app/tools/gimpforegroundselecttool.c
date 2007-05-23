@@ -260,7 +260,7 @@ gimp_foreground_select_tool_control (GimpTool       *tool,
             FgSelectStroke *stroke = list->data;
 
             g_free (stroke->points);
-            g_free (stroke);
+            g_slice_free (FgSelectStroke, stroke);
           }
 
         g_list_free (fg_select->strokes);
@@ -798,7 +798,7 @@ gimp_foreground_select_tool_push_stroke (GimpForegroundSelectTool    *fg_select,
 
   g_return_if_fail (fg_select->stroke != NULL);
 
-  stroke = g_new (FgSelectStroke, 1);
+  stroke = g_slice_new (FgSelectStroke);
 
   stroke->background = options->background;
   stroke->width      = ROUND ((gdouble) options->stroke_width / shell->scale_y);

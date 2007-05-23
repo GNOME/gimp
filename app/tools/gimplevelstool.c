@@ -192,7 +192,7 @@ static void
 gimp_levels_tool_init (GimpLevelsTool *tool)
 {
   tool->lut           = gimp_lut_new ();
-  tool->levels        = g_new0 (Levels, 1);
+  tool->levels        = g_slice_new0 (Levels);
   tool->hist          = NULL;
   tool->channel       = GIMP_HISTOGRAM_VALUE;
   tool->active_picker = NULL;
@@ -205,16 +205,9 @@ gimp_levels_tool_finalize (GObject *object)
 {
   GimpLevelsTool *tool = GIMP_LEVELS_TOOL (object);
 
-  if (tool->lut)
-    {
-      gimp_lut_free (tool->lut);
-      tool->lut = NULL;
-    }
-  if (tool->levels)
-    {
-      g_free (tool->levels);
-      tool->levels = NULL;
-    }
+  gimp_lut_free (tool->lut);
+  g_slice_free (Levels, tool->levels);
+
   if (tool->hist)
     {
       gimp_histogram_free (tool->hist);

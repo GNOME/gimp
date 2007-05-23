@@ -138,7 +138,7 @@ gimp_hue_saturation_tool_class_init (GimpHueSaturationToolClass *klass)
 static void
 gimp_hue_saturation_tool_init (GimpHueSaturationTool *hs_tool)
 {
-  hs_tool->hue_saturation = g_new0 (HueSaturation, 1);
+  hs_tool->hue_saturation = g_slice_new0 (HueSaturation);
   hs_tool->hue_partition  = GIMP_ALL_HUES;
 
   hue_saturation_init (hs_tool->hue_saturation);
@@ -149,11 +149,7 @@ gimp_hue_saturation_tool_finalize (GObject *object)
 {
   GimpHueSaturationTool *hs_tool = GIMP_HUE_SATURATION_TOOL (object);
 
-  if (hs_tool->hue_saturation)
-    {
-      g_free (hs_tool->hue_saturation);
-      hs_tool->hue_saturation = NULL;
-    }
+  g_slice_free (HueSaturation, hs_tool->hue_saturation);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

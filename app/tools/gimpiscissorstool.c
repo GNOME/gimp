@@ -497,7 +497,6 @@ iscissors_convert (GimpIscissorsTool *iscissors,
   GimpVector2          *points;
   guint                 n_points;
   GSList               *list;
-  ICurve               *icurve;
   gint                  i;
   gint                  index;
 
@@ -508,8 +507,10 @@ iscissors_convert (GimpIscissorsTool *iscissors,
   index = g_slist_length (list);
   while (index)
     {
+      ICurve *icurve;
+
       index--;
-      icurve = (ICurve *) g_slist_nth_data (list, index);
+      icurve = g_slist_nth_data (list, index);
 
       n_points = icurve->points->len;
       points   = g_new (GimpVector2, n_points);
@@ -548,7 +549,6 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
 {
   GimpIscissorsTool    *iscissors = GIMP_ISCISSORS_TOOL (tool);
   GimpSelectionOptions *options   = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
-  ICurve               *curve;
 
   /* Make sure X didn't skip the button release event -- as it's known
    * to do
@@ -585,7 +585,7 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
               /*  Determine if we're connecting to the first point  */
               if (iscissors->curves)
                 {
-                  curve = (ICurve *) iscissors->curves->data;
+                  ICurve *curve = iscissors->curves->data;
 
                   if (gimp_draw_tool_on_handle (GIMP_DRAW_TOOL (tool), display,
                                                 iscissors->x, iscissors->y,
@@ -605,7 +605,7 @@ gimp_iscissors_tool_button_release (GimpTool              *tool,
               if (iscissors->ix != iscissors->x ||
                   iscissors->iy != iscissors->y)
                 {
-                  curve = g_new (ICurve, 1);
+                  ICurve *curve = g_slice_new (ICurve);
 
                   curve->x1 = iscissors->ix;
                   curve->y1 = iscissors->iy;
@@ -728,7 +728,6 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
   GimpTool          *tool      = GIMP_TOOL (draw_tool);
   GimpIscissorsTool *iscissors = GIMP_ISCISSORS_TOOL (draw_tool);
   GimpDisplay       *display;
-  ICurve            *curve;
   GSList            *list;
 
   display = tool->display;
@@ -764,7 +763,7 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
             iscissors->iy != iscissors->livewire->y1 ||
             iscissors->y  != iscissors->livewire->y2)))
         {
-          curve = g_new (ICurve, 1);
+          ICurve *curve = g_slice_new (ICurve);
 
           curve->x1 = iscissors->ix;
           curve->y1 = iscissors->iy;
@@ -784,7 +783,6 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
 
           iscissors->livewire = curve;
           calculate_curve (tool, curve);
-          curve = NULL;
         }
 
       /*  plot the curve  */
@@ -809,7 +807,7 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
       /*  Go through the list of icurves, and render each one...  */
       for (list = iscissors->curves; list; list = g_slist_next (list))
         {
-          curve = (ICurve *) list->data;
+          ICurve *curve = list->data;
 
           if (iscissors->draw & DRAW_ACTIVE_CURVE)
             {
@@ -1152,15 +1150,14 @@ gimp_iscissors_tool_reset (GimpIscissorsTool *iscissors)
 static void
 iscissors_free_icurves (GSList *list)
 {
-  ICurve * curve;
-
   while (list)
     {
-      curve = (ICurve *) list->data;
+      ICurve *curve = list->data;
+
       if (curve->points)
         g_ptr_array_free (curve->points, TRUE);
 
-      g_free (curve);
+      g_slice_free (ICurve, curve);
       list = g_slist_next (list);
     }
 }
@@ -1321,7 +1318,7 @@ clicked_on_curve (GimpIscissorsTool *iscissors,
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (iscissors));
 
       /*  Create the new curve  */
-      new_curve = g_new (ICurve, 1);
+      new_curve = g_slice_new (ICurve);
 
       new_curve->x2 = curve->x2;
       new_curve->y2 = curve->y2;

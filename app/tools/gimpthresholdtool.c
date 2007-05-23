@@ -108,7 +108,7 @@ gimp_threshold_tool_class_init (GimpThresholdToolClass *klass)
 static void
 gimp_threshold_tool_init (GimpThresholdTool *t_tool)
 {
-  t_tool->threshold = g_new0 (Threshold, 1);
+  t_tool->threshold = g_slice_new0 (Threshold);
   t_tool->hist      = NULL;
 
   t_tool->threshold->low_threshold  = 127;
@@ -120,11 +120,7 @@ gimp_threshold_tool_finalize (GObject *object)
 {
   GimpThresholdTool *t_tool = GIMP_THRESHOLD_TOOL (object);
 
-  if (t_tool->threshold)
-    {
-      g_free (t_tool->threshold);
-      t_tool->threshold = NULL;
-    }
+  g_slice_free (Threshold, t_tool->threshold);
 
   if (t_tool->hist)
     {

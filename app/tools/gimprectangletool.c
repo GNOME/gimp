@@ -251,7 +251,7 @@ gimp_rectangle_tool_iface_base_init (GimpRectangleToolInterface *iface)
 static void
 gimp_rectangle_tool_private_finalize (GimpRectangleToolPrivate *private)
 {
-  g_free (private);
+  g_slice_free (GimpRectangleToolPrivate, private);
 }
 
 static GimpRectangleToolPrivate *
@@ -268,7 +268,7 @@ gimp_rectangle_tool_get_private (GimpRectangleTool *tool)
 
   if (! private)
     {
-      private = g_new0 (GimpRectangleToolPrivate, 1);
+      private = g_slice_new0 (GimpRectangleToolPrivate);
 
       g_object_set_qdata_full (G_OBJECT (tool), private_key, private,
                                (GDestroyNotify)

@@ -259,10 +259,10 @@ gimp_paint_options_init (GimpPaintOptions *options)
 {
   options->application_mode_save = DEFAULT_APPLICATION_MODE;
 
-  options->pressure_options = g_new0 (GimpPressureOptions, 1);
-  options->fade_options     = g_new0 (GimpFadeOptions,     1);
-  options->gradient_options = g_new0 (GimpGradientOptions, 1);
-  options->jitter_options   = g_new0 (GimpJitterOptions,   1);
+  options->pressure_options = g_slice_new0 (GimpPressureOptions);
+  options->fade_options     = g_slice_new0 (GimpFadeOptions);
+  options->gradient_options = g_slice_new0 (GimpGradientOptions);
+  options->jitter_options   = g_slice_new0 (GimpJitterOptions);
 }
 
 static void
@@ -273,10 +273,10 @@ gimp_paint_options_finalize (GObject *object)
   if (options->paint_info)
     g_object_unref (options->paint_info);
 
-  g_free (options->pressure_options);
-  g_free (options->fade_options);
-  g_free (options->gradient_options);
-  g_free (options->jitter_options);
+  g_slice_free (GimpPressureOptions, options->pressure_options);
+  g_slice_free (GimpFadeOptions,     options->fade_options);
+  g_slice_free (GimpGradientOptions, options->gradient_options);
+  g_slice_free (GimpJitterOptions,   options->jitter_options);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }

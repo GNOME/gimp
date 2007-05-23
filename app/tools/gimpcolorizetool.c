@@ -116,7 +116,7 @@ gimp_colorize_tool_class_init (GimpColorizeToolClass *klass)
 static void
 gimp_colorize_tool_init (GimpColorizeTool *col_tool)
 {
-  col_tool->colorize = g_new0 (Colorize, 1);
+  col_tool->colorize = g_slice_new0 (Colorize);
 
   colorize_init (col_tool->colorize);
 }
@@ -126,11 +126,7 @@ gimp_colorize_tool_finalize (GObject *object)
 {
   GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (object);
 
-  if (col_tool->colorize)
-    {
-      g_free (col_tool->colorize);
-      col_tool->colorize = NULL;
-    }
+  g_slice_free (Colorize, col_tool->colorize);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
