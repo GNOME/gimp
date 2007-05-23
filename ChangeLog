@@ -1,3 +1,8 @@
+2007-05-23  Tor Lillqvist  <tml@novell.com>
+
+	* plug-ins/common/tiff-save.c (save_paths): Use memset() instead
+	of bzero().
+
 2007-05-23  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-user-install.c

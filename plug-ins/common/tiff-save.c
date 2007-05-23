@@ -510,7 +510,7 @@ save_paths (TIFF   *tif,
               continue;
             }
 
-          bzero (pointrecord, 26);
+          memset (pointrecord, 0, 26);
           pointrecord[1] = closed ? 0 : 3;
           pointrecord[2] = (num_points / 6) / 256;
           pointrecord[3] = (num_points / 6) % 256;
