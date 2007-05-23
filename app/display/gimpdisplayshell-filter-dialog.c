@@ -39,15 +39,13 @@
 #include "gimp-intl.h"
 
 
-typedef struct _ColorDisplayDialog ColorDisplayDialog;
-
-struct _ColorDisplayDialog
+typedef struct
 {
   GimpDisplayShell      *shell;
   GtkWidget             *dialog;
 
   GimpColorDisplayStack *old_stack;
-};
+} ColorDisplayDialog;
 
 
 /*  local function prototypes  */
@@ -55,6 +53,8 @@ struct _ColorDisplayDialog
 static void gimp_display_shell_filter_dialog_response (GtkWidget          *widget,
                                                        gint                response_id,
                                                        ColorDisplayDialog *cdd);
+
+static void gimp_display_shell_filter_dialog_free     (ColorDisplayDialog *cdd);
 
 
 /*  public functions  */
@@ -70,7 +70,7 @@ gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
 
   image = shell->display->image;
 
-  cdd = g_new0 (ColorDisplayDialog, 1);
+  cdd = g_slice_new0 (ColorDisplayDialog);
 
   cdd->shell  = shell;
   cdd->dialog = gimp_viewable_dialog_new (GIMP_VIEWABLE (image),
@@ -95,7 +95,8 @@ gimp_display_shell_filter_dialog_new (GimpDisplayShell *shell)
 
   gtk_window_set_destroy_with_parent (GTK_WINDOW (cdd->dialog), TRUE);
 
-  g_object_weak_ref (G_OBJECT (cdd->dialog), (GWeakNotify) g_free, cdd);
+  g_object_weak_ref (G_OBJECT (cdd->dialog),
+                     (GWeakNotify) gimp_display_shell_filter_dialog_free, cdd);
 
   g_signal_connect (cdd->dialog, "response",
                     G_CALLBACK (gimp_display_shell_filter_dialog_response),
@@ -136,4 +137,10 @@ gimp_display_shell_filter_dialog_response (GtkWidget          *widget,
     gimp_display_shell_filter_set (cdd->shell, cdd->old_stack);
 
   gtk_widget_destroy (GTK_WIDGET (cdd->dialog));
+}
+
+static void
+gimp_display_shell_filter_dialog_free (ColorDisplayDialog *cdd)
+{
+  g_slice_free (ColorDisplayDialog, cdd);
 }

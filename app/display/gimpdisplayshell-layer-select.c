@@ -39,9 +39,7 @@
 #include "gimp-intl.h"
 
 
-typedef struct _LayerSelect LayerSelect;
-
-struct _LayerSelect
+typedef struct
 {
   GtkWidget *shell;
   GtkWidget *view;
@@ -49,7 +47,7 @@ struct _LayerSelect
 
   GimpImage *image;
   GimpLayer *orig_layer;
-};
+} LayerSelect;
 
 
 /*  local function prototypes  */
@@ -112,7 +110,7 @@ layer_select_new (GimpImage *image,
   GtkWidget   *hbox;
   GtkWidget   *alignment;
 
-  layer_select = g_new0 (LayerSelect, 1);
+  layer_select = g_slice_new0 (LayerSelect);
 
   layer_select->image      = image;
   layer_select->orig_layer = layer;
@@ -183,7 +181,7 @@ layer_select_destroy (LayerSelect *layer_select,
       gimp_image_flush (layer_select->image);
     }
 
-  g_free (layer_select);
+  g_slice_free (LayerSelect, layer_select);
 }
 
 static void

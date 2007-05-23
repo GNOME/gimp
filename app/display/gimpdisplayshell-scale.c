@@ -52,16 +52,14 @@
 #define SCALE_EQUALS(a,b) (fabs ((a) - (b)) < SCALE_EPSILON)
 
 
-typedef struct _ScaleDialogData ScaleDialogData;
-
-struct _ScaleDialogData
+typedef struct
 {
   GimpDisplayShell *shell;
   GimpZoomModel    *model;
   GtkObject        *scale_adj;
   GtkObject        *num_adj;
   GtkObject        *denom_adj;
-};
+} ScaleDialogData;
 
 
 /*  local function prototypes  */
@@ -69,7 +67,9 @@ struct _ScaleDialogData
 static void gimp_display_shell_scale_dialog_response (GtkWidget        *widget,
                                                       gint              response_id,
                                                       ScaleDialogData  *dialog);
-static void update_zoom_values                       (GtkAdjustment    *adj,
+static void gimp_display_shell_scale_dialog_free     (ScaleDialogData  *dialog);
+
+static void    update_zoom_values                    (GtkAdjustment    *adj,
                                                       ScaleDialogData  *dialog);
 static gdouble img2real                              (GimpDisplayShell *shell,
                                                       gboolean          xdir,
@@ -599,7 +599,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
 
   image = shell->display->image;
 
-  data = g_new (ScaleDialogData, 1);
+  data = g_slice_new (ScaleDialogData);
 
   data->shell = shell;
   data->model = g_object_new (GIMP_TYPE_ZOOM_MODEL,
@@ -627,7 +627,7 @@ gimp_display_shell_scale_dialog (GimpDisplayShell *shell)
                                            -1);
 
   g_object_weak_ref (G_OBJECT (shell->scale_dialog),
-                     (GWeakNotify) g_free, data);
+                     (GWeakNotify) gimp_display_shell_scale_dialog_free, data);
   g_object_weak_ref (G_OBJECT (shell->scale_dialog),
                      (GWeakNotify) g_object_unref, data->model);
 
@@ -731,6 +731,11 @@ gimp_display_shell_scale_dialog_response (GtkWidget       *widget,
   gtk_widget_destroy (dialog->shell->scale_dialog);
 }
 
+static void
+gimp_display_shell_scale_dialog_free (ScaleDialogData *dialog)
+{
+  g_slice_free (ScaleDialogData, dialog);
+}
 
 static void
 update_zoom_values (GtkAdjustment   *adj,

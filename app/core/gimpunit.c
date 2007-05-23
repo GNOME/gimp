@@ -47,6 +47,7 @@ typedef struct
   gchar    *plural;
 } GimpUnitDef;
 
+
 /*  these are the built-in units
  */
 static const GimpUnitDef gimp_unit_defs[GIMP_UNIT_END] =
@@ -105,9 +106,7 @@ _gimp_unit_new (Gimp        *gimp,
                 const gchar *singular,
                 const gchar *plural)
 {
-  GimpUnitDef *user_unit;
-
-  user_unit = g_new0 (GimpUnitDef, 1);
+  GimpUnitDef *user_unit = g_slice_new0 (GimpUnitDef);
 
   user_unit->delete_on_exit = TRUE;
   user_unit->factor         = factor;
@@ -282,7 +281,7 @@ gimp_user_units_free (Gimp *gimp)
       g_free (user_unit->singular);
       g_free (user_unit->plural);
 
-      g_free (user_unit);
+      g_slice_free (GimpUnitDef, user_unit);
     }
 
   g_list_free (gimp->user_units);

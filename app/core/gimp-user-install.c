@@ -130,7 +130,7 @@ static gboolean  user_install_migrate_files      (GimpUserInstall  *install);
 GimpUserInstall *
 gimp_user_install_new (gboolean verbose)
 {
-  GimpUserInstall *install = g_new0 (GimpUserInstall, 1);
+  GimpUserInstall *install = g_slice_new0 (GimpUserInstall);
   gchar           *dir;
   gchar           *version;
   gboolean         migrate;
@@ -223,7 +223,8 @@ gimp_user_install_free (GimpUserInstall *install)
   g_return_if_fail (install != NULL);
 
   g_free (install->old_dir);
-  g_free (install);
+
+  g_slice_free (GimpUserInstall, install);
 }
 
 void

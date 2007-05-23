@@ -45,9 +45,11 @@ typedef struct
   GtkWidget      *progress;
   GdkGC          *gc;
   PangoLayout    *upper;
-  gint            upper_x, upper_y;
+  gint            upper_x;
+  gint            upper_y;
   PangoLayout    *lower;
-  gint            lower_x, lower_y;
+  gint            lower_x;
+  gint            lower_y;
 #ifdef STARTUP_TIMER
   GTimer         *timer;
   gdouble         last_time;
@@ -106,7 +108,7 @@ splash_create (gboolean be_verbose)
   if (! pixbuf)
     return;
 
-  splash = g_new0 (GimpSplash, 1);
+  splash = g_slice_new0 (GimpSplash);
 
   splash->window =
     g_object_new (GTK_TYPE_WINDOW,
@@ -234,7 +236,7 @@ splash_destroy (void)
   g_free (splash->text2);
 #endif
 
-  g_free (splash);
+  g_slice_free (GimpSplash, splash);
   splash = NULL;
 }
 

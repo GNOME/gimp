@@ -1,5 +1,18 @@
 2007-05-23  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp-user-install.c
+	* app/core/gimpgradient-load.c
+	* app/core/gimpsamplepoint.c
+	* app/core/gimpscanconvert.c
+	* app/core/gimpunit.c
+	* app/display/gimpdisplayshell-filter-dialog.c
+	* app/display/gimpdisplayshell-layer-select.c
+	* app/display/gimpdisplayshell-scale.c
+	* app/file/gimprecentitem.c
+	* app/gui/splash.c: allocate structs using GSlice.
+
+2007-05-23  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/tips-parser.c
 	* app/display/gimpdisplayshell-autoscroll.c
 	* app/display/gimpdisplayshell-selection.c
@@ -9,7 +22,7 @@
 	* app/plug-in/gimpinterpreterdb.c
 	* app/plug-in/gimpplugindebug.c
 	* app/plug-in/gimppluginshm.c
-	* app/text/gimptextundo.c: allocate structs using GSlice
+	* app/text/gimptextundo.c: allocate structs using GSlice.
 
 	* app/widgets/gimpselectiondata.c (gimp_selection_data_set_color):
 	stack allocate tempory data.

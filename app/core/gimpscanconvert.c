@@ -104,9 +104,7 @@ static void   gimp_scan_convert_compose_callback (gpointer            user_data,
 GimpScanConvert *
 gimp_scan_convert_new (void)
 {
-  GimpScanConvert *sc;
-
-  sc = g_new0 (GimpScanConvert, 1);
+  GimpScanConvert *sc = g_slice_new0 (GimpScanConvert);
 
   sc->ratio_xy = 1.0;
 
@@ -126,10 +124,11 @@ gimp_scan_convert_free (GimpScanConvert *sc)
 
   if (sc->vpath)
     art_free (sc->vpath);
+
   if (sc->svp)
     art_svp_free (sc->svp);
 
-  g_free (sc);
+  g_slice_free (GimpScanConvert, sc);
 }
 
 /**

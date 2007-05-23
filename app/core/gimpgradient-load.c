@@ -315,16 +315,12 @@ gimp_gradient_load_svg (const gchar  *filename,
                         GError      **error)
 {
   GimpXmlParser *xml_parser;
-  SvgParser      parser;
+  SvgParser      parser = { NULL, };
   gboolean       success;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (g_path_is_absolute (filename), NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
-
-  parser.gradient  = NULL;
-  parser.gradients = NULL;
-  parser.stops     = NULL;
 
   xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
 
@@ -357,7 +353,11 @@ gimp_gradient_load_svg (const gchar  *filename,
 
   if (parser.stops)
     {
-      g_list_foreach (parser.stops, (GFunc) g_free, NULL);
+      GList *list;
+
+      for (list = parser.stops; list; list = list->next)
+        g_slice_free (SvgStop, list->data);
+
       g_list_free (parser.stops);
     }
 
@@ -540,7 +540,7 @@ static SvgStop *
 svg_parse_gradient_stop (const gchar **names,
                          const gchar **values)
 {
-  SvgStop *stop = g_new0 (SvgStop, 1);
+  SvgStop *stop = g_slice_new0 (SvgStop);
 
   gimp_rgb_set_alpha (&stop->color, 1.0);
 

@@ -51,7 +51,7 @@ gimp_recent_item_new (void)
 {
   GimpRecentItem *item;
 
-  item = g_new (GimpRecentItem, 1);
+  item = g_slice_new (GimpRecentItem);
 
   item->groups       = NULL;
   item->private_data = FALSE;
@@ -79,7 +79,7 @@ gimp_recent_item_free (GimpRecentItem *item)
       item->groups = NULL;
     }
 
-  g_free (item);
+  g_slice_free (GimpRecentItem, item);
 }
 
 GimpRecentItem *

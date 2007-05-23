@@ -43,7 +43,7 @@ gimp_sample_point_new (guint32 sample_point_ID)
 {
   GimpSamplePoint *sample_point;
 
-  sample_point = g_new0 (GimpSamplePoint, 1);
+  sample_point = g_slice_new0 (GimpSamplePoint);
 
   sample_point->ref_count       = 1;
   sample_point->sample_point_ID = sample_point_ID;
@@ -71,5 +71,5 @@ gimp_sample_point_unref (GimpSamplePoint *sample_point)
   sample_point->ref_count--;
 
   if (sample_point->ref_count < 1)
-    g_free (sample_point);
+    g_slice_free (GimpSamplePoint, sample_point);
 }
