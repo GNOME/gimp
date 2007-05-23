@@ -86,8 +86,8 @@ sash_move(GtkWidget *widget, GdkEventMotion *event, gpointer data)
    Object_t *obj = command->obj;
    gint x, y, dx, dy;
 
-   x = (gint) event->x;
-   y = (gint) event->y;
+   x = get_real_coord((gint) event->x);
+   y = get_real_coord((gint) event->y);
 
    if (x < 0)
       x = 0;
@@ -98,9 +98,6 @@ sash_move(GtkWidget *widget, GdkEventMotion *event, gpointer data)
       y = 0;
    if (y > command->image_height)
       y = command->image_height;
-
-   x = get_real_coord(x);
-   y = get_real_coord(y);
 
    dx = x - command->x;
    dy = y - command->y;
