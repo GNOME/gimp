@@ -84,7 +84,7 @@ struct _GimpIscissorsTool
   ICurve         *curve1;       /*  1st curve connected to current point  */
   ICurve         *curve2;       /*  2nd curve connected to current point  */
 
-  GSList         *curves;       /*  the list of curves                    */
+  GQueue         *curves;       /*  the list of curves                    */
 
   gboolean        first_point;  /*  is this the first point?              */
   gboolean        connected;    /*  is the region closed?                 */

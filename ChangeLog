@@ -1,5 +1,9 @@
 2007-05-23  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpiscissorstool.[ch]: use a GQueue to store the points.
+
+2007-05-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/help/gimphelpitem.c
 	* plug-ins/help/gimphelplocale.c
 	* plug-ins/help/help.c
