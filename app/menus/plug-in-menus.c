@@ -65,7 +65,7 @@ static void    plug_in_menus_add_proc             (GimpUIManager       *manager,
                                                    const gchar         *ui_path,
                                                    GimpPlugInProcedure *proc,
                                                    const gchar         *menu_path);
-static void       plug_in_menus_tree_insert       (GTree               *entries,
+static void    plug_in_menus_tree_insert          (GTree               *entries,
                                                    const gchar     *    path,
                                                    PlugInMenuEntry     *entry);
 static gboolean   plug_in_menus_tree_traverse     (gpointer             key,
@@ -76,6 +76,7 @@ static gchar * plug_in_menus_build_path           (GimpUIManager       *manager,
                                                    guint                merge_id,
                                                    const gchar         *menu_path,
                                                    gboolean             for_menu);
+static void    plug_in_menu_entry_free            (PlugInMenuEntry     *entry);
 
 
 /*  public functions  */
@@ -116,7 +117,8 @@ plug_in_menus_setup (GimpUIManager *manager,
     }
 
   menu_entries = g_tree_new_full ((GCompareDataFunc) strcmp, NULL,
-                                  g_free, g_free);
+                                  g_free,
+                                  (GDestroyNotify) plug_in_menu_entry_free);
 
   for (list = plug_in_manager->plug_in_procedures;
        list;
@@ -140,7 +142,7 @@ plug_in_menus_setup (GimpUIManager *manager,
             {
               if (g_str_has_prefix (path->data, manager->name))
                 {
-                  PlugInMenuEntry *entry = g_new0 (PlugInMenuEntry, 1);
+                  PlugInMenuEntry *entry = g_slice_new0 (PlugInMenuEntry);
                   const gchar     *progname;
                   const gchar     *locale_domain;
 
@@ -563,4 +565,10 @@ plug_in_menus_build_path (GimpUIManager *manager,
     }
 
   return action_path;
+}
+
+static void
+plug_in_menu_entry_free (PlugInMenuEntry *entry)
+{
+  g_slice_free (PlugInMenuEntry, entry);
 }

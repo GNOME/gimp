@@ -93,7 +93,7 @@ gimp_plug_in_shm_new (void)
    *  we'll fall back on sending the data over the pipe.
    */
 
-  GimpPlugInShm *shm = g_new0 (GimpPlugInShm, 1);
+  GimpPlugInShm *shm = g_slice_new0 (GimpPlugInShm);
 
   shm->shm_ID = -1;
 
@@ -231,7 +231,7 @@ gimp_plug_in_shm_new (void)
 
   if (shm->shm_ID == -1)
     {
-      g_free (shm);
+      g_slice_free (GimpPlugInShm, shm);
       shm = NULL;
     }
 
@@ -275,7 +275,7 @@ gimp_plug_in_shm_free (GimpPlugInShm *shm)
 
     }
 
-  g_free (shm);
+  g_slice_free (GimpPlugInShm, shm);
 }
 
 gint

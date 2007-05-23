@@ -70,7 +70,7 @@ gimp_display_shell_autoscroll_start (GimpDisplayShell *shell,
   if (shell->scroll_info)
     return;
 
-  info = g_new0 (ScrollInfo, 1);
+  info = g_slice_new0 (ScrollInfo);
 
   info->mevent     = mevent;
   info->device     = mevent->device;
@@ -101,7 +101,7 @@ gimp_display_shell_autoscroll_stop (GimpDisplayShell *shell)
       info->timeout_id = 0;
     }
 
-  g_free (info);
+  g_slice_free (ScrollInfo, info);
   shell->scroll_info = NULL;
 }
 
@@ -167,7 +167,7 @@ gimp_display_shell_autoscroll_timeout (gpointer data)
     }
   else
     {
-      g_free (info);
+      g_slice_free (ScrollInfo, info);
       shell->scroll_info = NULL;
 
       return FALSE;

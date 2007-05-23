@@ -63,7 +63,7 @@ static void     gimp_environ_table_clear_vars     (GimpEnvironTable      *enviro
 static void     gimp_environ_table_clear_internal (GimpEnvironTable      *environ_table);
 static void     gimp_environ_table_clear_envp     (GimpEnvironTable      *environ_table);
 
-static void     gimp_environ_table_free_value     (gpointer               value);
+static void     gimp_environ_table_free_value     (GimpEnvironValue      *val);
 
 
 G_DEFINE_TYPE (GimpEnvironTable, gimp_environ_table, G_TYPE_OBJECT)
@@ -148,7 +148,8 @@ gimp_environ_table_load (GimpEnvironTable *environ_table,
   environ_table->vars =
     g_hash_table_new_full (gimp_environ_table_str_hash,
                            gimp_environ_table_str_equal,
-                           g_free, gimp_environ_table_free_value);
+                           g_free,
+                           (GDestroyNotify) gimp_environ_table_free_value);
 
   gimp_datafiles_read_directories (env_path,
                                    G_FILE_TEST_EXISTS,
@@ -173,8 +174,9 @@ gimp_environ_table_add (GimpEnvironTable *environ_table,
       g_hash_table_new_full (g_str_hash, g_str_equal,
                              g_free, gimp_environ_table_free_value);
 
-  val = g_new (GimpEnvironValue, 1);
-  val->value = g_strdup (value);
+  val = g_slice_new (GimpEnvironValue);
+
+  val->value     = g_strdup (value);
   val->separator = g_strdup (separator);
 
   g_hash_table_insert (environ_table->internal, g_strdup (name), val);
@@ -301,7 +303,7 @@ gimp_environ_table_load_env_file (const GimpDatafileData *file_data,
 
       if (! g_hash_table_lookup (environ_table->vars, name))
         {
-          val = g_new (GimpEnvironValue, 1);
+          val = g_slice_new (GimpEnvironValue);
 
           val->value     = gimp_config_path_expand (value, FALSE, NULL);
           val->separator = g_strdup (separator);
@@ -447,11 +449,10 @@ gimp_environ_table_clear_envp (GimpEnvironTable *environ_table)
 }
 
 static void
-gimp_environ_table_free_value (gpointer value)
+gimp_environ_table_free_value (GimpEnvironValue *val)
 {
-  GimpEnvironValue *val = value;
-
   g_free (val->value);
   g_free (val->separator);
-  g_free (val);
+
+  g_slice_free (GimpEnvironValue, val);
 }

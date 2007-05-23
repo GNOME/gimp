@@ -69,7 +69,7 @@ gimp_plug_in_debug_new (void)
       return NULL;
     }
 
-  debug = g_new (GimpPlugInDebug, 1);
+  debug = g_slice_new (GimpPlugInDebug);
 
   debug->args  = args;
 
@@ -102,7 +102,7 @@ gimp_plug_in_debug_free (GimpPlugInDebug *debug)
   if (debug->args)
     g_strfreev (debug->args);
 
-  g_free (debug);
+  g_slice_free (GimpPlugInDebug, debug);
 }
 
 gchar **

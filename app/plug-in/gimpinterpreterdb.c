@@ -246,7 +246,9 @@ gimp_interpreter_db_add_program (GimpInterpreterDB      *db,
                                  const GimpDatafileData *file_data,
                                  gchar                  *buffer)
 {
-  gchar *name, *program, *p;
+  gchar *name;
+  gchar *program;
+  gchar *p;
 
   p = strchr (buffer, '=');
   if (! p)
@@ -328,29 +330,28 @@ static gboolean
 gimp_interpreter_db_add_extension (GimpInterpreterDB  *db,
                                    gchar             **tokens)
 {
-  gchar *name, *extension, *program;
-
-  name      = tokens[0];
-  extension = tokens[3];
-  program   = tokens[5];
+  const gchar *name      = tokens[0];
+  const gchar *extension = tokens[3];
+  const gchar *program   = tokens[5];
 
   if (! g_hash_table_lookup (db->extension_names, name))
     {
+      gchar *prog;
+
       if (extension[0] == '\0' || extension[0] == '/')
         return FALSE;
 
-      program = g_strdup (program);
+      prog = g_strdup (program);
 
-      g_hash_table_insert (db->extensions, g_strdup (extension), program);
-
-      g_hash_table_insert (db->extension_names, g_strdup (name), program);
+      g_hash_table_insert (db->extensions, g_strdup (extension), prog);
+      g_hash_table_insert (db->extension_names, g_strdup (name), prog);
     }
 
   return TRUE;
 }
 
 static gboolean
-scanarg (gchar *s)
+scanarg (const gchar *s)
 {
   gchar c;
 
@@ -374,7 +375,9 @@ scanarg (gchar *s)
 static guint
 unquote (gchar *from)
 {
-  gchar c, *s = from, *p = from;
+  gchar *s = from;
+  gchar *p = from;
+  gchar  c;
 
   while ((c = *s++) != '\0')
     {
@@ -420,7 +423,9 @@ gimp_interpreter_db_add_magic (GimpInterpreterDB  *db,
             return FALSE;
         }
       else
-        offset = 0;
+        {
+          offset = 0;
+        }
 
       if (! scanarg (magic))
         return FALSE;
@@ -438,7 +443,7 @@ gimp_interpreter_db_add_magic (GimpInterpreterDB  *db,
       else if (unquote (mask) != size)
         return FALSE;
 
-      interp_magic = g_new (GimpInterpreterMagic, 1);
+      interp_magic = g_slice_new (GimpInterpreterMagic);
 
       interp_magic->offset  = offset;
       interp_magic->magic   = g_memdup (magic, size);
@@ -470,7 +475,8 @@ gimp_interpreter_db_clear_magics (GimpInterpreterDB *db)
       g_free (magic->magic);
       g_free (magic->mask);
       g_free (magic->program);
-      g_free (magic);
+
+      g_slice_free (GimpInterpreterMagic, magic);
 
       last = list;
       list = list->next;
@@ -531,16 +537,15 @@ resolve_program (gpointer key,
 static void
 gimp_interpreter_db_resolve_programs (GimpInterpreterDB *db)
 {
-  GSList               *list;
-  gchar                *program;
-  GimpInterpreterMagic *magic;
-  GHashTable           *extensions;
+  GSList     *list;
+  GHashTable *extensions;
 
   list = db->magics;
 
-  while (list)
+  for (list = db->magics; list; list = list->next)
     {
-      magic = list->data;
+      GimpInterpreterMagic *magic = list->data;
+      const gchar          *program;
 
       program = g_hash_table_lookup (db->programs, magic->program);
 
@@ -549,8 +554,6 @@ gimp_interpreter_db_resolve_programs (GimpInterpreterDB *db)
           g_free (magic->program);
           magic->program = g_strdup (program);
         }
-
-      list = list->next;
     }
 
   extensions = db->extensions;
@@ -620,7 +623,9 @@ resolve_sh_bang (GimpInterpreterDB  *db,
                  gssize              len,
                  gchar             **interp_arg)
 {
-  gchar *cp, *name, *program;
+  gchar *cp;
+  gchar *name;
+  gchar *program;
 
   cp = strchr (buffer, '\n');
   if (! cp)

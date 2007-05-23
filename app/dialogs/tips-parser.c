@@ -50,8 +50,7 @@ typedef enum
   TIPS_LOCALE_MISMATCH
 } TipsParserLocaleState;
 
-typedef struct _TipsParser TipsParser;
-struct _TipsParser
+typedef struct
 {
   TipsParserState        state;
   TipsParserState        last_known_state;
@@ -60,10 +59,9 @@ struct _TipsParser
   gint                   markup_depth;
   gint                   unknown_depth;
   GString               *value;
-
   GimpTip               *current_tip;
   GList                 *tips;
-};
+} TipsParser;
 
 
 static void  tips_parser_start_element (GMarkupParseContext  *context,
@@ -114,7 +112,7 @@ gimp_tip_new  (const gchar *format,
 
   g_return_val_if_fail (format != NULL, NULL);
 
-  tip = g_new0 (GimpTip, 1);
+  tip = g_slice_new0 (GimpTip);
 
   va_start (args, format);
 
@@ -151,7 +149,8 @@ gimp_tip_free (GimpTip *tip)
 
   g_free (tip->welcome);
   g_free (tip->thetip);
-  g_free (tip);
+
+  g_slice_free (GimpTip, tip);
 }
 
 /**
@@ -173,15 +172,14 @@ gimp_tips_from_file (const gchar  *filename,
                      GError      **error)
 {
   GimpXmlParser *xml_parser;
-  TipsParser    *parser;
+  TipsParser     parser = { 0, };
   const gchar   *tips_locale;
-  GList         *tips = NULL;
+  GList         *tips   = NULL;
 
   g_return_val_if_fail (filename != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  parser = g_new0 (TipsParser, 1);
-  parser->value = g_string_new (NULL);
+  parser.value = g_string_new (NULL);
 
   /* This is a special string to specify the language identifier to
      look for in the gimp-tips.xml file. Please translate the C in it
@@ -195,22 +193,23 @@ gimp_tips_from_file (const gchar  *filename,
       tips_locale += strlen ("tips-locale:");
 
       if (*tips_locale && *tips_locale != 'C')
-        parser->locale = tips_locale;
+        parser.locale = tips_locale;
     }
   else
-    g_warning ("Wrong translation for 'tips-locale:', fix the translation!");
+    {
+      g_warning ("Wrong translation for 'tips-locale:', fix the translation!");
+    }
 
-  xml_parser = gimp_xml_parser_new (&markup_parser, parser);
+  xml_parser = gimp_xml_parser_new (&markup_parser, &parser);
 
   gimp_xml_parser_parse_file (xml_parser, filename, error);
 
   gimp_xml_parser_free (xml_parser);
 
-  tips = g_list_reverse (parser->tips);
+  tips = g_list_reverse (parser.tips);
 
-  gimp_tip_free (parser->current_tip);
-  g_string_free (parser->value, TRUE);
-  g_free (parser);
+  gimp_tip_free (parser.current_tip);
+  g_string_free (parser.value, TRUE);
 
   return tips;
 }
@@ -234,7 +233,7 @@ tips_parser_start_element (GMarkupParseContext *context,
                            gpointer             user_data,
                            GError             **error)
 {
-  TipsParser *parser = (TipsParser *) user_data;
+  TipsParser *parser = user_data;
 
   switch (parser->state)
     {
@@ -249,7 +248,7 @@ tips_parser_start_element (GMarkupParseContext *context,
       if (strcmp (element_name, "tip") == 0)
         {
           parser->state = TIPS_IN_TIP;
-          parser->current_tip = g_new0 (GimpTip, 1);
+          parser->current_tip = g_slice_new0 (GimpTip);
         }
       else
         tips_parser_start_unknown (parser);
@@ -292,7 +291,7 @@ tips_parser_end_element (GMarkupParseContext *context,
                          gpointer             user_data,
                          GError             **error)
 {
-  TipsParser *parser = (TipsParser *) user_data;
+  TipsParser *parser = user_data;
 
   switch (parser->state)
     {
@@ -345,7 +344,7 @@ tips_parser_characters (GMarkupParseContext *context,
                         gpointer             user_data,
                         GError             **error)
 {
-  TipsParser *parser = (TipsParser *) user_data;
+  TipsParser *parser = user_data;
 
   switch (parser->state)
     {
@@ -360,10 +359,14 @@ tips_parser_characters (GMarkupParseContext *context,
             {
               if (text[i] != ' ' &&
                   text[i] != '\t' && text[i] != '\n' && text[i] != '\r')
-                g_string_append_c (parser->value, text[i]);
+                {
+                  g_string_append_c (parser->value, text[i]);
+                }
               else if (parser->value->len > 0 &&
                        parser->value->str[parser->value->len - 1] != ' ')
-                g_string_append_c (parser->value, ' ');
+                {
+                  g_string_append_c (parser->value, ' ');
+                }
             }
         }
       break;

@@ -291,13 +291,11 @@ void
 gimp_selection_data_set_color (GtkSelectionData *selection,
                                const GimpRGB    *color)
 {
-  guint16 *vals;
+  guint16  vals[4];
   guchar   r, g, b, a;
 
   g_return_if_fail (selection != NULL);
   g_return_if_fail (color != NULL);
-
-  vals = g_new (guint16, 4);
 
   gimp_rgba_get_uchar (color, &r, &g, &b, &a);
 
@@ -307,9 +305,7 @@ gimp_selection_data_set_color (GtkSelectionData *selection,
   vals[3] = a + (a << 8);
 
   gtk_selection_data_set (selection, selection->target,
-                          16, (guchar *) vals, 8);
-
-  g_free (vals);
+                          16, (const guchar *) vals, 8);
 }
 
 gboolean

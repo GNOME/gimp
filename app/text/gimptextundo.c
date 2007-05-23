@@ -119,7 +119,7 @@ gimp_text_undo_constructor (GType                  type,
         {
           g_assert (text_undo->pspec->owner_type == GIMP_TYPE_TEXT);
 
-          text_undo->value = g_new0 (GValue, 1);
+          text_undo->value = g_slice_new0 (GValue);
 
           g_value_init (text_undo->value, text_undo->pspec->value_type);
           g_object_get_property (G_OBJECT (layer->text),
@@ -218,7 +218,7 @@ gimp_text_undo_pop (GimpUndo            *undo,
 
           g_return_if_fail (layer->text != NULL);
 
-          value = g_new0 (GValue, 1);
+          value = g_slice_new0 (GValue);
           g_value_init (value, text_undo->pspec->value_type);
 
           g_object_get_property (G_OBJECT (layer->text),
@@ -228,7 +228,7 @@ gimp_text_undo_pop (GimpUndo            *undo,
                                  text_undo->pspec->name, text_undo->value);
 
           g_value_unset (text_undo->value);
-          g_free (text_undo->value);
+          g_slice_free (GValue, text_undo->value);
 
           text_undo->value = value;
         }
@@ -290,7 +290,7 @@ gimp_text_undo_free (GimpUndo     *undo,
   if (text_undo->pspec)
     {
       g_value_unset (text_undo->value);
-      g_free (text_undo->value);
+      g_slice_free (GValue, text_undo->value);
 
       text_undo->value = NULL;
       text_undo->pspec = NULL;
