@@ -537,7 +537,7 @@ gimp_statusbar_push_valist (GimpStatusbar *statusbar,
         }
     }
 
-  msg = g_new0 (GimpStatusbarMsg, 1);
+  msg = g_slice_new0 (GimpStatusbarMsg);
 
   msg->context_id = context_id;
   msg->text       = message;
@@ -686,7 +686,7 @@ gimp_statusbar_replace_valist (GimpStatusbar *statusbar,
   g_return_if_fail (context != NULL);
   g_return_if_fail (format != NULL);
 
-  message =  gimp_statusbar_vprintf (format, args);
+  message = gimp_statusbar_vprintf (format, args);
 
   context_id = gimp_statusbar_get_context_id (statusbar, context);
 
@@ -706,7 +706,7 @@ gimp_statusbar_replace_valist (GimpStatusbar *statusbar,
         }
     }
 
-  msg = g_new0 (GimpStatusbarMsg, 1);
+  msg = g_slice_new0 (GimpStatusbarMsg);
 
   msg->context_id = context_id;
   msg->text       = message;
@@ -807,7 +807,7 @@ gimp_statusbar_push_temp_valist (GimpStatusbar *statusbar,
         }
     }
 
-  msg = g_new0 (GimpStatusbarMsg, 1);
+  msg = g_slice_new (GimpStatusbarMsg);
 
   msg->context_id = statusbar->temp_context_id;
   msg->stock_id   = g_strdup (stock_id);
@@ -1112,7 +1112,8 @@ gimp_statusbar_msg_free (GimpStatusbarMsg *msg)
 {
   g_free (msg->stock_id);
   g_free (msg->text);
-  g_free (msg);
+
+  g_slice_free (GimpStatusbarMsg, msg);
 }
 
 static gchar *

@@ -2,6 +2,8 @@
 
 	* app/dialogs/tips-parser.c
 	* app/display/gimpdisplayshell-autoscroll.c
+	* app/display/gimpdisplayshell-selection.c
+	* app/display/gimpstatusbar.c
 	* app/menus/plug-in-menus.c
 	* app/plug-in/gimpenvirontable.c
 	* app/plug-in/gimpinterpreterdb.c

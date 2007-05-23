@@ -112,7 +112,7 @@ gimp_display_shell_selection_init (GimpDisplayShell *shell)
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (shell->selection == NULL);
 
-  selection = g_new0 (Selection, 1);
+  selection = g_slice_new0 (Selection);
 
   selection->shell        = shell;
   selection->visible      = TRUE;
@@ -152,7 +152,7 @@ gimp_display_shell_selection_free (GimpDisplayShell *shell)
 
       selection_free_segs (selection);
 
-      g_free (selection);
+      g_slice_free (Selection, selection);
 
       shell->selection = NULL;
     }
