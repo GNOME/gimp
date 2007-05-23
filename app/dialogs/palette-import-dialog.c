@@ -58,9 +58,7 @@ typedef enum
 } ImportType;
 
 
-typedef struct _ImportDialog ImportDialog;
-
-struct _ImportDialog
+typedef struct
 {
   GtkWidget     *dialog;
 
@@ -88,7 +86,7 @@ struct _ImportDialog
 
   GtkWidget     *preview;
   GtkWidget     *no_colors_label;
-};
+} ImportDialog;
 
 
 static void   palette_import_free                 (ImportDialog   *dialog);
@@ -149,7 +147,7 @@ palette_import_dialog_new (GimpContext *context)
 
   gradient = gimp_context_get_gradient (context);
 
-  dialog = g_new0 (ImportDialog, 1);
+  dialog = g_slice_new0 (ImportDialog);
 
   dialog->import_type = GRADIENT_IMPORT;
   dialog->context     = gimp_context_new (context->gimp, "Palette Import",
@@ -437,7 +435,7 @@ palette_import_free (ImportDialog *dialog)
 
   g_object_unref (dialog->context);
 
-  g_free (dialog);
+  g_slice_free (ImportDialog, dialog);
 }
 
 

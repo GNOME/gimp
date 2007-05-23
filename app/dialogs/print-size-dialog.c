@@ -41,9 +41,7 @@
 #define SB_WIDTH       8
 
 
-typedef struct _PrintSizeDialog PrintSizeDialog;
-
-struct _PrintSizeDialog
+typedef struct
 {
   GimpImage              *image;
   GimpSizeEntry          *size_entry;
@@ -53,7 +51,7 @@ struct _PrintSizeDialog
   gdouble                 yres;
   GimpResolutionCallback  callback;
   gpointer                user_data;
-};
+} PrintSizeDialog;
 
 
 static void   print_size_dialog_response (GtkWidget       *dialog,
@@ -71,6 +69,7 @@ static void   print_size_dialog_set_size           (PrintSizeDialog *private,
 static void   print_size_dialog_set_resolution     (PrintSizeDialog *private,
                                                     gdouble          xres,
                                                     gdouble          yres);
+static void   print_size_dialog_free               (PrintSizeDialog *private);
 
 
 GtkWidget *
@@ -115,9 +114,10 @@ print_size_dialog_new (GimpImage              *image,
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  private = g_new0 (PrintSizeDialog, 1);
+  private = g_slice_new0 (PrintSizeDialog);
 
-  g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_free, private);
+  g_object_weak_ref (G_OBJECT (dialog),
+                     (GWeakNotify) print_size_dialog_free, private);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (print_size_dialog_response),
@@ -427,4 +427,10 @@ print_size_dialog_set_resolution (PrintSizeDialog *private,
   g_signal_handlers_unblock_by_func (private->size_entry,
                                      print_size_dialog_size_changed,
                                      private);
+}
+
+static void
+print_size_dialog_free (PrintSizeDialog *private)
+{
+  g_slice_free (PrintSizeDialog, private);
 }

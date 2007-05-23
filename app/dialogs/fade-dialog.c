@@ -42,9 +42,7 @@
 #include "gimp-intl.h"
 
 
-typedef struct _FadeDialog FadeDialog;
-
-struct _FadeDialog
+typedef struct
 {
   GimpImage            *image;
   GimpDrawable         *drawable;
@@ -53,7 +51,7 @@ struct _FadeDialog
   gboolean              applied;
   GimpLayerModeEffects  orig_paint_mode;
   gdouble               orig_opacity;
-};
+} FadeDialog;
 
 
 static void   fade_dialog_response        (GtkWidget  *dialog,
@@ -61,6 +59,7 @@ static void   fade_dialog_response        (GtkWidget  *dialog,
                                            FadeDialog *private);
 
 static void   fade_dialog_context_changed (FadeDialog *private);
+static void   fade_dialog_free            (FadeDialog *private);
 
 
 /*  public functions  */
@@ -93,7 +92,7 @@ fade_dialog_new (GimpImage *image,
   item      = GIMP_ITEM_UNDO (undo)->item;
   drawable  = GIMP_DRAWABLE (item);
 
-  private = g_new0 (FadeDialog, 1);
+  private = g_slice_new0 (FadeDialog);
 
   private->image           = image;
   private->drawable        = drawable;
@@ -133,7 +132,8 @@ fade_dialog_new (GimpImage *image,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_free, private);
+  g_object_weak_ref (G_OBJECT (dialog),
+                     (GWeakNotify) fade_dialog_free, private);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (fade_dialog_response),
@@ -206,4 +206,10 @@ fade_dialog_context_changed (FadeDialog *private)
       private->applied = TRUE;
       gimp_image_flush (private->image);
     }
+}
+
+static void
+fade_dialog_free (FadeDialog *private)
+{
+  g_slice_free (FadeDialog, private);
 }

@@ -31,7 +31,8 @@
 #include "gimp-intl.h"
 
 
-/*  public functions  */
+static void  vectors_export_dialog_free (VectorsExportDialog *dialog);
+
 
 VectorsExportDialog *
 vectors_export_dialog_new (GimpImage *image,
@@ -45,7 +46,7 @@ vectors_export_dialog_new (GimpImage *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
 
-  dialog = g_new0 (VectorsExportDialog, 1);
+  dialog = g_slice_new0 (VectorsExportDialog);
 
   dialog->image       = image;
   dialog->active_only = active_only;
@@ -76,7 +77,7 @@ vectors_export_dialog_new (GimpImage *image,
   gtk_file_chooser_set_do_overwrite_confirmation (chooser, TRUE);
 
   g_object_weak_ref (G_OBJECT (dialog->dialog),
-                     (GWeakNotify) g_free, dialog);
+                     (GWeakNotify) vectors_export_dialog_free, dialog);
 
   g_signal_connect_object (image, "disconnect",
                            G_CALLBACK (gtk_widget_destroy),
@@ -98,4 +99,10 @@ vectors_export_dialog_new (GimpImage *image,
                     &dialog->active_only);
 
   return dialog;
+}
+
+static void
+vectors_export_dialog_free (VectorsExportDialog *dialog)
+{
+  g_slice_free (VectorsExportDialog, dialog);
 }

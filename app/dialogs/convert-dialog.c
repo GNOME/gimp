@@ -71,6 +71,7 @@ static gboolean    convert_dialog_palette_filter  (const GimpObject *object,
 static void        convert_dialog_palette_changed (GimpContext      *context,
                                                    GimpPalette      *palette,
                                                    IndexedDialog    *dialog);
+static void        convert_dialog_free            (IndexedDialog    *dialog);
 
 
 /*  defaults  */
@@ -109,7 +110,7 @@ convert_dialog_new (GimpImage    *image,
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), NULL);
 
-  dialog = g_new0 (IndexedDialog, 1);
+  dialog = g_slice_new0 (IndexedDialog);
 
   dialog->image        = image;
   dialog->progress     = progress;
@@ -147,7 +148,7 @@ convert_dialog_new (GimpImage    *image,
   gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
 
   g_object_weak_ref (G_OBJECT (dialog->dialog),
-                     (GWeakNotify) g_free, dialog);
+                     (GWeakNotify) convert_dialog_free, dialog);
 
   g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (convert_dialog_response),
@@ -405,4 +406,10 @@ convert_dialog_palette_changed (GimpContext   *context,
     {
       dialog->custom_palette = palette;
     }
+}
+
+static void
+convert_dialog_free (IndexedDialog *dialog)
+{
+  g_slice_free (IndexedDialog, dialog);
 }

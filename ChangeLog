@@ -1,5 +1,27 @@
 2007-05-23  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/channel-options-dialog.c
+	* app/dialogs/convert-dialog.c
+	* app/dialogs/desaturate-dialog.c
+	* app/dialogs/fade-dialog.c
+	* app/dialogs/image-merge-layers-dialog.c
+	* app/dialogs/image-new-dialog.c
+	* app/dialogs/image-scale-dialog.c
+	* app/dialogs/layer-add-mask-dialog.c
+	* app/dialogs/layer-options-dialog.c
+	* app/dialogs/module-dialog.c
+	* app/dialogs/offset-dialog.c
+	* app/dialogs/palette-import-dialog.c
+	* app/dialogs/print-size-dialog.c
+	* app/dialogs/resize-dialog.c
+	* app/dialogs/scale-dialog.c
+	* app/dialogs/template-options-dialog.c
+	* app/dialogs/vectors-export-dialog.c
+	* app/dialogs/vectors-import-dialog.c
+	* app/dialogs/vectors-options-dialog.c: allocate structs using GSlice.
+
+2007-05-23  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpiscissorstool.[ch]: use a GQueue to store the points.
 
 2007-05-23  Sven Neumann  <sven@gimp.org>

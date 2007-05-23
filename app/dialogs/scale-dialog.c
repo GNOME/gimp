@@ -41,9 +41,7 @@
 #define RESPONSE_RESET 1
 
 
-typedef struct _ScaleDialog ScaleDialog;
-
-struct _ScaleDialog
+typedef struct
 {
   GimpViewable          *viewable;
   GimpUnit               unit;
@@ -52,13 +50,14 @@ struct _ScaleDialog
   GtkWidget             *combo;
   GimpScaleCallback      callback;
   gpointer               user_data;
-};
+} ScaleDialog;
 
 
 static void   scale_dialog_response (GtkWidget   *dialog,
                                      gint         response_id,
                                      ScaleDialog *private);
 static void   scale_dialog_reset    (ScaleDialog *private);
+static void   scale_dialog_free     (ScaleDialog *private);
 
 
 GtkWidget *
@@ -133,9 +132,10 @@ scale_dialog_new (GimpViewable          *viewable,
 
   gtk_window_set_resizable (GTK_WINDOW (dialog), FALSE);
 
-  private = g_new0 (ScaleDialog, 1);
+  private = g_slice_new0 (ScaleDialog);
 
-  g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_free, private);
+  g_object_weak_ref (G_OBJECT (dialog),
+                     (GWeakNotify) scale_dialog_free, private);
 
   private->viewable      = viewable;
   private->interpolation = interpolation;
@@ -308,4 +308,10 @@ scale_dialog_reset (ScaleDialog *private)
 
   gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (private->combo),
                                  private->interpolation);
+}
+
+static void
+scale_dialog_free (ScaleDialog *private)
+{
+  g_slice_free (ScaleDialog, private);
 }

@@ -64,8 +64,8 @@ typedef struct
 
 /*  local function prototypes  */
 
-static void   image_new_free             (ImageNewDialog *dialog);
-static void   image_new_response         (GtkWidget      *widget,
+static void   image_new_dialog_free      (ImageNewDialog *dialog);
+static void   image_new_dialog_response  (GtkWidget      *widget,
                                           gint            response_id,
                                           ImageNewDialog *dialog);
 static void   image_new_template_changed (GimpContext    *context,
@@ -87,7 +87,7 @@ image_new_dialog_new (GimpContext *context)
 
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  dialog = g_new0 (ImageNewDialog, 1);
+  dialog = g_slice_new0 (ImageNewDialog);
 
   dialog->context  = gimp_context_new (context->gimp, "image-new-dialog",
                                        context);
@@ -108,10 +108,10 @@ image_new_dialog_new (GimpContext *context)
 
   g_object_set_data_full (G_OBJECT (dialog->dialog),
                           "gimp-image-new-dialog", dialog,
-                          (GDestroyNotify) image_new_free);
+                          (GDestroyNotify) image_new_dialog_free);
 
   g_signal_connect (dialog->dialog, "response",
-                    G_CALLBACK (image_new_response),
+                    G_CALLBACK (image_new_dialog_response),
                     dialog);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
@@ -197,17 +197,18 @@ image_new_dialog_set (GtkWidget    *widget,
 /*  private functions  */
 
 static void
-image_new_free (ImageNewDialog *dialog)
+image_new_dialog_free (ImageNewDialog *dialog)
 {
   g_object_unref (dialog->context);
   g_object_unref (dialog->template);
-  g_free (dialog);
+
+  g_slice_free (ImageNewDialog, dialog);
 }
 
 static void
-image_new_response (GtkWidget      *widget,
-                    gint            response_id,
-                    ImageNewDialog *dialog)
+image_new_dialog_response (GtkWidget      *widget,
+                           gint            response_id,
+                           ImageNewDialog *dialog)
 {
   switch (response_id)
     {

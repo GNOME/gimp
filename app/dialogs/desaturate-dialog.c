@@ -35,7 +35,8 @@
 #include "gimp-intl.h"
 
 
-/*  public functions  */
+static void  desaturate_dialog_free (DesaturateDialog *dialog);
+
 
 DesaturateDialog *
 desaturate_dialog_new (GimpDrawable       *drawable,
@@ -52,7 +53,7 @@ desaturate_dialog_new (GimpDrawable       *drawable,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
 
-  dialog = g_new0 (DesaturateDialog, 1);
+  dialog = g_slice_new0 (DesaturateDialog);
 
   dialog->drawable = drawable;
   dialog->mode     = mode;
@@ -84,7 +85,7 @@ desaturate_dialog_new (GimpDrawable       *drawable,
   gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
 
   g_object_weak_ref (G_OBJECT (dialog->dialog),
-                     (GWeakNotify) g_free, dialog);
+                     (GWeakNotify) desaturate_dialog_free, dialog);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -104,4 +105,10 @@ desaturate_dialog_new (GimpDrawable       *drawable,
   gtk_widget_show (frame);
 
   return dialog;
+}
+
+static void
+desaturate_dialog_free (DesaturateDialog *dialog)
+{
+  g_slice_free (DesaturateDialog, dialog);
 }

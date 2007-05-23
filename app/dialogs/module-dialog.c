@@ -39,8 +39,8 @@
 #include "gimp-intl.h"
 
 
-#define RESPONSE_REFRESH 1
-#define NUM_INFO_LINES           9
+#define RESPONSE_REFRESH  1
+#define NUM_INFO_LINES    9
 
 enum
 {
@@ -50,9 +50,7 @@ enum
   NUM_COLUMNS
 };
 
-typedef struct _ModuleDialog ModuleDialog;
-
-struct _ModuleDialog
+typedef struct
 {
   Gimp         *gimp;
 
@@ -63,7 +61,7 @@ struct _ModuleDialog
   GtkWidget    *label[NUM_INFO_LINES];
   GtkWidget    *button;
   GtkWidget    *button_label;
-};
+} ModuleDialog;
 
 
 /*  local function prototypes  */
@@ -113,7 +111,7 @@ module_dialog_new (Gimp *gimp)
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
-  dialog = g_new0 (ModuleDialog, 1);
+  dialog = g_slice_new0 (ModuleDialog);
 
   dialog->gimp = gimp;
 
@@ -261,7 +259,7 @@ dialog_destroy_callback (GtkWidget    *widget,
                                         dialog_info_update,
                                         dialog);
 
-  g_free (dialog);
+  g_slice_free (ModuleDialog, dialog);
 }
 
 static void

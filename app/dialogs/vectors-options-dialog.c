@@ -38,7 +38,8 @@
 #include "gimp-intl.h"
 
 
-/*  public functions  */
+static void  vectors_options_dialog_free (VectorsOptionsDialog *dialog);
+
 
 VectorsOptionsDialog *
 vectors_options_dialog_new (GimpImage   *image,
@@ -68,7 +69,7 @@ vectors_options_dialog_new (GimpImage   *image,
   g_return_val_if_fail (desc != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
 
-  options = g_new0 (VectorsOptionsDialog, 1);
+  options = g_slice_new0 (VectorsOptionsDialog);
 
   options->image  = image;
   options->vectors = vectors;
@@ -96,8 +97,7 @@ vectors_options_dialog_new (GimpImage   *image,
                                            -1);
 
   g_object_weak_ref (G_OBJECT (options->dialog),
-                     (GWeakNotify) g_free,
-                     options);
+                     (GWeakNotify) vectors_options_dialog_free, options);
 
   hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
@@ -124,4 +124,10 @@ vectors_options_dialog_new (GimpImage   *image,
   gtk_entry_set_text (GTK_ENTRY (options->name_entry), vectors_name);
 
   return options;
+}
+
+static void
+vectors_options_dialog_free (VectorsOptionsDialog *dialog)
+{
+  g_slice_free (VectorsOptionsDialog, dialog);
 }

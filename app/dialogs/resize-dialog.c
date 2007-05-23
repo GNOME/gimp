@@ -43,9 +43,7 @@
 #define SB_WIDTH       8
 
 
-typedef struct _ResizeDialog ResizeDialog;
-
-struct _ResizeDialog
+typedef struct
 {
   GimpViewable       *viewable;
   gint                old_width;
@@ -57,13 +55,14 @@ struct _ResizeDialog
   GimpItemSet         layer_set;
   GimpResizeCallback  callback;
   gpointer            user_data;
-};
+} ResizeDialog;
 
 
 static void   resize_dialog_response (GtkWidget    *dialog,
                                       gint          response_id,
                                       ResizeDialog *private);
 static void   resize_dialog_reset    (ResizeDialog *private);
+static void   resize_dialog_free     (ResizeDialog *private);
 
 static void   size_notify            (GimpSizeBox  *box,
                                       GParamSpec   *pspec,
@@ -154,9 +153,10 @@ resize_dialog_new (GimpViewable       *viewable,
                                            GTK_RESPONSE_CANCEL,
                                            -1);
 
-  private = g_new0 (ResizeDialog, 1);
+  private = g_slice_new0 (ResizeDialog);
 
-  g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_free, private);
+  g_object_weak_ref (G_OBJECT (dialog),
+                     (GWeakNotify) resize_dialog_free, private);
 
   private->viewable   = viewable;
   private->old_width  = width;
@@ -366,6 +366,12 @@ resize_dialog_reset (ResizeDialog *private)
   g_object_set (private->box,
                 "keep-aspect", TRUE,
                 NULL);
+}
+
+static void
+resize_dialog_free (ResizeDialog *private)
+{
+  g_slice_free (ResizeDialog, private);
 }
 
 static void

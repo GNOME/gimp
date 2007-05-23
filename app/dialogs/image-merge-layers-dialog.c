@@ -35,7 +35,8 @@
 #include "gimp-intl.h"
 
 
-/*  public functions  */
+static void  image_merge_layers_dialog_free (ImageMergeLayersDialog *dialog);
+
 
 ImageMergeLayersDialog *
 image_merge_layers_dialog_new (GimpImage     *image,
@@ -52,7 +53,7 @@ image_merge_layers_dialog_new (GimpImage     *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  dialog = g_new0 (ImageMergeLayersDialog, 1);
+  dialog = g_slice_new0 (ImageMergeLayersDialog);
 
   dialog->image      = image;
   dialog->context    = context;
@@ -75,7 +76,7 @@ image_merge_layers_dialog_new (GimpImage     *image,
   gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
 
   g_object_weak_ref (G_OBJECT (dialog->dialog),
-                     (GWeakNotify) g_free, dialog);
+                     (GWeakNotify) image_merge_layers_dialog_free, dialog);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
                                            GTK_RESPONSE_OK,
@@ -117,4 +118,10 @@ image_merge_layers_dialog_new (GimpImage     *image,
 
 
   return dialog;
+}
+
+static void
+image_merge_layers_dialog_free (ImageMergeLayersDialog *dialog)
+{
+  g_slice_free (ImageMergeLayersDialog, dialog);
 }

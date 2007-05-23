@@ -47,6 +47,7 @@ static gboolean   layer_add_mask_dialog_channel_selected (GimpContainerView  *vi
                                                           GimpViewable       *viewable,
                                                           gpointer            insert_data,
                                                           LayerAddMaskDialog *dialog);
+static void       layer_add_mask_dialog_free             (LayerAddMaskDialog *dialog);
 
 
 /*  public functions  */
@@ -69,7 +70,7 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
 
-  dialog = g_new0 (LayerAddMaskDialog, 1);
+  dialog = g_slice_new0 (LayerAddMaskDialog);
 
   dialog->layer         = layer;
   dialog->add_mask_type = add_mask_type;
@@ -92,7 +93,7 @@ layer_add_mask_dialog_new (GimpLayer       *layer,
   gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
 
   g_object_weak_ref (G_OBJECT (dialog->dialog),
-                     (GWeakNotify) g_free, dialog);
+                     (GWeakNotify) layer_add_mask_dialog_free, dialog);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog->dialog),
                                            GTK_RESPONSE_OK,
@@ -160,4 +161,10 @@ layer_add_mask_dialog_channel_selected (GimpContainerView  *view,
   dialog->channel = GIMP_CHANNEL (viewable);
 
   return TRUE;
+}
+
+static void
+layer_add_mask_dialog_free (LayerAddMaskDialog *dialog)
+{
+  g_slice_free (LayerAddMaskDialog, dialog);
 }

@@ -39,10 +39,11 @@
 
 /*  local function prototypes  */
 
-static void   channel_options_opacity_update (GtkAdjustment   *adjustment,
-                                              gpointer         data);
-static void   channel_options_color_changed  (GimpColorButton *button,
-                                              gpointer         data);
+static void channel_options_opacity_update (GtkAdjustment        *adjustment,
+                                            gpointer              data);
+static void channel_options_color_changed  (GimpColorButton      *button,
+                                            gpointer              data);
+static void channel_options_dialog_free    (ChannelOptionsDialog *options);
 
 
 /*  public functions  */
@@ -83,7 +84,7 @@ channel_options_dialog_new (GimpImage     *image,
   g_return_val_if_fail (color_label != NULL, NULL);
   g_return_val_if_fail (opacity_label != NULL, NULL);
 
-  options = g_new0 (ChannelOptionsDialog, 1);
+  options = g_slice_new0 (ChannelOptionsDialog);
 
   options->image   = image;
   options->context = context;
@@ -113,7 +114,7 @@ channel_options_dialog_new (GimpImage     *image,
                               NULL);
 
   g_object_weak_ref (G_OBJECT (options->dialog),
-                     (GWeakNotify) g_free,
+                     (GWeakNotify) channel_options_dialog_free,
                      options);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (options->dialog),
@@ -203,4 +204,10 @@ channel_options_color_changed (GimpColorButton *button,
 
   gimp_color_button_get_color (button, &color);
   gtk_adjustment_set_value (adj, color.a * 100.0);
+}
+
+static void
+channel_options_dialog_free (ChannelOptionsDialog *options)
+{
+  g_slice_free (ChannelOptionsDialog, options);
 }

@@ -31,7 +31,8 @@
 #include "gimp-intl.h"
 
 
-/*  public functions  */
+static void  vectors_import_dialog_free (VectorsImportDialog *dialog);
+
 
 VectorsImportDialog *
 vectors_import_dialog_new (GimpImage *image,
@@ -47,7 +48,7 @@ vectors_import_dialog_new (GimpImage *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
 
-  dialog = g_new0 (VectorsImportDialog, 1);
+  dialog = g_slice_new0 (VectorsImportDialog);
 
   dialog->image         = image;
   dialog->merge_vectors = merge_vectors;
@@ -77,7 +78,7 @@ vectors_import_dialog_new (GimpImage *image,
                                    GTK_RESPONSE_OK);
 
   g_object_weak_ref (G_OBJECT (dialog->dialog),
-                     (GWeakNotify) g_free, dialog);
+                     (GWeakNotify) vectors_import_dialog_free, dialog);
 
   g_signal_connect_object (image, "disconnect",
                            G_CALLBACK (gtk_widget_destroy),
@@ -126,4 +127,10 @@ vectors_import_dialog_new (GimpImage *image,
                     &dialog->scale_vectors);
 
   return dialog;
+}
+
+static void
+vectors_import_dialog_free (VectorsImportDialog *dialog)
+{
+  g_slice_free (VectorsImportDialog, dialog);
 }

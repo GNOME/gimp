@@ -43,9 +43,7 @@
 #include "gimp-intl.h"
 
 
-typedef struct _ImageScaleDialog ImageScaleDialog;
-
-struct _ImageScaleDialog
+typedef struct
 {
   GtkWidget             *dialog;
 
@@ -61,7 +59,8 @@ struct _ImageScaleDialog
 
   GimpScaleCallback      callback;
   gpointer               user_data;
-};
+} ImageScaleDialog;
+
 
 static void        image_scale_callback (GtkWidget             *widget,
                                          GimpViewable          *viewable,
@@ -73,6 +72,8 @@ static void        image_scale_callback (GtkWidget             *widget,
                                          gdouble                yresolution,
                                          GimpUnit               resolution_unit,
                                          gpointer               data);
+
+static void        image_scale_dialog_free      (ImageScaleDialog *dialog);
 
 static GtkWidget * image_scale_confirm_dialog   (ImageScaleDialog *dialog);
 static void        image_scale_confirm_large    (ImageScaleDialog *dialog,
@@ -101,7 +102,7 @@ image_scale_dialog_new (GimpImage             *image,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (callback != NULL, NULL);
 
-  dialog = g_new0 (ImageScaleDialog, 1);
+  dialog = g_slice_new0 (ImageScaleDialog);
 
   dialog->image  = image;
   dialog->dialog = scale_dialog_new (GIMP_VIEWABLE (image), context,
@@ -115,7 +116,8 @@ image_scale_dialog_new (GimpImage             *image,
                                      image_scale_callback,
                                      dialog);
 
-  g_object_weak_ref (G_OBJECT (dialog->dialog), (GWeakNotify) g_free, dialog);
+  g_object_weak_ref (G_OBJECT (dialog->dialog),
+                     (GWeakNotify) image_scale_dialog_free, dialog);
 
   dialog->callback  = callback;
   dialog->user_data = user_data;
@@ -185,6 +187,12 @@ image_scale_callback (GtkWidget             *widget,
                          "scale-dialog-unit", GINT_TO_POINTER (unit));
       break;
     }
+}
+
+static void
+image_scale_dialog_free (ImageScaleDialog *dialog)
+{
+  g_slice_free (ImageScaleDialog, dialog);
 }
 
 static GtkWidget *

@@ -39,7 +39,8 @@
 #include "gimp-intl.h"
 
 
-/*  public functions */
+static void  template_options_dialog_free (TemplateOptionsDialog *dialog);
+
 
 TemplateOptionsDialog *
 template_options_dialog_new (GimpTemplate *template,
@@ -64,7 +65,7 @@ template_options_dialog_new (GimpTemplate *template,
   g_return_val_if_fail (desc != NULL, NULL);
   g_return_val_if_fail (help_id != NULL, NULL);
 
-  options = g_new0 (TemplateOptionsDialog, 1);
+  options = g_slice_new0 (TemplateOptionsDialog);
 
   options->gimp     = context->gimp;
   options->template = template;
@@ -99,7 +100,7 @@ template_options_dialog_new (GimpTemplate *template,
                                            -1);
 
   g_object_weak_ref (G_OBJECT (options->dialog),
-                     (GWeakNotify) g_free, options);
+                     (GWeakNotify) template_options_dialog_free, options);
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
@@ -113,4 +114,10 @@ template_options_dialog_new (GimpTemplate *template,
   g_object_unref (template);
 
   return options;
+}
+
+static void
+template_options_dialog_free (TemplateOptionsDialog *dialog)
+{
+  g_slice_free (TemplateOptionsDialog, dialog);
 }

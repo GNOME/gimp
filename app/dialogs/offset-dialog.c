@@ -47,9 +47,7 @@
 #define FILL_MASK    (GIMP_OFFSET_BACKGROUND | GIMP_OFFSET_TRANSPARENT)
 
 
-typedef struct _OffsetDialog OffsetDialog;
-
-struct _OffsetDialog
+typedef struct
 {
   GimpContext    *context;
 
@@ -59,7 +57,7 @@ struct _OffsetDialog
   GimpOffsetType  fill_type;
 
   GimpImage      *image;
-};
+} OffsetDialog;
 
 
 /*  local function prototypes  */
@@ -69,6 +67,7 @@ static void  offset_response            (GtkWidget    *widget,
                                          OffsetDialog *dialog);
 static void  offset_halfheight_callback (GtkWidget    *widget,
                                          OffsetDialog *dialog);
+static void  offset_dialog_free         (OffsetDialog *dialog);
 
 
 /*  public functions  */
@@ -94,7 +93,7 @@ offset_dialog_new (GimpDrawable *drawable,
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
   g_return_val_if_fail (GTK_IS_WIDGET (parent), NULL);
 
-  dialog = g_new0 (OffsetDialog, 1);
+  dialog = g_slice_new0 (OffsetDialog);
 
   dialog->context   = context;
   dialog->fill_type = gimp_drawable_has_alpha (drawable) | WRAP_AROUND;
@@ -133,7 +132,7 @@ offset_dialog_new (GimpDrawable *drawable,
   gtk_window_set_resizable (GTK_WINDOW (dialog->dialog), FALSE);
 
   g_object_weak_ref (G_OBJECT (dialog->dialog),
-                     (GWeakNotify) g_free, dialog);
+                     (GWeakNotify) offset_dialog_free, dialog);
 
   g_signal_connect (dialog->dialog, "response",
                     G_CALLBACK (offset_response),
@@ -292,4 +291,10 @@ offset_halfheight_callback (GtkWidget    *widget,
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se),
                                   1, item->height / 2);
    }
+}
+
+static void
+offset_dialog_free (OffsetDialog *dialog)
+{
+  g_slice_free (OffsetDialog, dialog);
 }
