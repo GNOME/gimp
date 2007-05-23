@@ -1,3 +1,8 @@
+2007-05-23  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/image-commands.c
+	* app/actions/templates-commands.c: allocate structs using GSlice.
+
 2007-05-23  Tor Lillqvist  <tml@novell.com>
 
 	* plug-ins/common/tiff-save.c (save_paths): Use memset() instead

@@ -65,13 +65,11 @@
 #include "gimp-intl.h"
 
 
-typedef struct _ImageResizeOptions ImageResizeOptions;
-
-struct _ImageResizeOptions
+typedef struct
 {
-  GimpContext  *context;
-  GimpDisplay  *display;
-};
+  GimpContext *context;
+  GimpDisplay *display;
+} ImageResizeOptions;
 
 
 /*  local function prototypes  */
@@ -85,12 +83,15 @@ static void   image_resize_callback        (GtkWidget              *dialog,
                                             gint                    offset_y,
                                             GimpItemSet             layer_set,
                                             gpointer                data);
+static void   image_resize_options_free    (ImageResizeOptions     *options);
+
 static void   image_print_size_callback    (GtkWidget              *dialog,
                                             GimpImage              *image,
                                             gdouble                 xresolution,
                                             gdouble                 yresolution,
                                             GimpUnit                resolution_unit,
                                             gpointer                data);
+
 static void   image_scale_callback         (GtkWidget              *dialog,
                                             GimpViewable           *viewable,
                                             gint                    width,
@@ -233,7 +234,7 @@ image_resize_cmd_callback (GtkAction *action,
   return_if_no_widget (widget, data);
   return_if_no_display (display, data);
 
-  options = g_new0 (ImageResizeOptions, 1);
+  options = g_slice_new (ImageResizeOptions);
 
   options->display = display;
   options->context = action_data_get_context (data);
@@ -254,7 +255,8 @@ image_resize_cmd_callback (GtkAction *action,
                            G_CALLBACK (gtk_widget_destroy),
                            dialog, G_CONNECT_SWAPPED);
 
-  g_object_weak_ref (G_OBJECT (dialog), (GWeakNotify) g_free, options);
+  g_object_weak_ref (G_OBJECT (dialog),
+                     (GWeakNotify) image_resize_options_free, options);
 
   gtk_widget_show (dialog);
 }
@@ -563,6 +565,12 @@ image_resize_callback (GtkWidget    *dialog,
       g_warning ("Resize Error: "
                  "Both width and height must be greater than zero.");
     }
+}
+
+static void
+image_resize_options_free (ImageResizeOptions *options)
+{
+  g_slice_free (ImageResizeOptions, options);
 }
 
 static void
