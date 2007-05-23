@@ -243,9 +243,7 @@ load_help (const gchar *procedure,
            const gchar *help_locales,
            const gchar *help_id)
 {
-  IdleHelp *idle_help;
-
-  idle_help = g_new0 (IdleHelp, 1);
+  IdleHelp *idle_help = g_slice_new (IdleHelp);
 
   idle_help->procedure    = g_strdup (procedure);
   idle_help->help_domain  = g_strdup (help_domain);
@@ -304,7 +302,8 @@ load_help_idle (gpointer data)
   g_free (idle_help->help_domain);
   g_free (idle_help->help_locales);
   g_free (idle_help->help_id);
-  g_free (idle_help);
+
+  g_slice_free (IdleHelp, idle_help);
 
   return FALSE;
 }

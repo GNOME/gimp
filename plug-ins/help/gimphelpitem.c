@@ -49,7 +49,7 @@ gimp_help_item_new (const gchar *ref,
                     const gchar *title,
                     const gchar *parent)
 {
-  GimpHelpItem *item = g_new0 (GimpHelpItem, 1);
+  GimpHelpItem *item = g_slice_new0 (GimpHelpItem);
 
   item->ref    = g_strdup (ref);
   item->title  = g_strdup (title);
@@ -67,5 +67,5 @@ gimp_help_item_free (GimpHelpItem *item)
 
   g_list_free (item->children);
 
-  g_free (item);
+  g_slice_free (GimpHelpItem, item);
 }

@@ -52,7 +52,7 @@ static void   locale_set_error (GError      **error,
 GimpHelpLocale *
 gimp_help_locale_new (const gchar *locale_id)
 {
-  GimpHelpLocale *locale = g_new0 (GimpHelpLocale, 1);
+  GimpHelpLocale *locale = g_slice_new0 (GimpHelpLocale);
 
   locale->locale_id = g_strdup (locale_id);
 
@@ -70,7 +70,7 @@ gimp_help_locale_free (GimpHelpLocale *locale)
 
   g_list_free (locale->toplevel_items);
 
-  g_free (locale);
+  g_slice_free (GimpHelpLocale, locale);
 }
 
 const gchar *
@@ -159,8 +159,8 @@ gimp_help_locale_parse (GimpHelpLocale  *locale,
                         GError         **error)
 {
   GMarkupParseContext *context;
-  LocaleParser        *parser;
   GIOChannel          *io;
+  LocaleParser         parser = { NULL, };
   gboolean             success;
 
   g_return_val_if_fail (locale != NULL, FALSE);
@@ -195,24 +195,21 @@ gimp_help_locale_parse (GimpHelpLocale  *locale,
       return FALSE;
     }
 
-  parser = g_new0 (LocaleParser, 1);
+  parser.filename     = filename;
+  parser.value        = g_string_new (NULL);
+  parser.locale       = locale;
+  parser.help_domain  = help_domain;
+  parser.id_attr_name = g_strdup ("id");
 
-  parser->filename     = filename;
-  parser->value        = g_string_new (NULL);
-  parser->locale       = locale;
-  parser->help_domain  = help_domain;
-  parser->id_attr_name = g_strdup ("id");
-
-  context = g_markup_parse_context_new (&markup_parser, 0, parser, NULL);
+  context = g_markup_parse_context_new (&markup_parser, 0, &parser, NULL);
 
   success = locale_parser_parse (context, io, error);
 
   g_markup_parse_context_free (context);
   g_io_channel_unref (io);
 
-  g_string_free (parser->value, TRUE);
-  g_free (parser->id_attr_name);
-  g_free (parser);
+  g_string_free (parser.value, TRUE);
+  g_free (parser.id_attr_name);
 
   if (! success)
     locale_set_error (error, _("Parse error in '%s':\n%s"), filename);

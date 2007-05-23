@@ -58,7 +58,7 @@ gimp_help_domain_new (const gchar *domain_name,
                       const gchar *domain_uri,
                       const gchar *domain_root)
 {
-  GimpHelpDomain *domain = g_new0 (GimpHelpDomain, 1);
+  GimpHelpDomain *domain = g_slice_new0 (GimpHelpDomain);
 
   domain->help_domain = g_strdup (domain_name);
   domain->help_uri    = g_strdup (domain_uri);
@@ -85,7 +85,8 @@ gimp_help_domain_free (GimpHelpDomain *domain)
   g_free (domain->help_domain);
   g_free (domain->help_uri);
   g_free (domain->help_root);
-  g_free (domain);
+
+  g_slice_free (GimpHelpDomain, domain);
 }
 
 GimpHelpLocale *
