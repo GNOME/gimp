@@ -1,5 +1,15 @@
 2007-05-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpsessioninfo.[ch]: removed more code and cleaned
+	up the API.
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpsessioninfodock.[ch]: added the removed code here.
+
+	* app/widgets/gimpdialogfactory.c: changed accordingly.
+
+2007-05-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpsessioninfo.[ch]: removed lots of code...
 
 	* app/widgets/Makefile.am

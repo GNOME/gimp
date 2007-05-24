@@ -46,20 +46,20 @@ struct _GimpSessionInfo
 };
 
 
-GimpSessionInfo *
-           gimp_session_info_new           (void);
-void       gimp_session_info_free          (GimpSessionInfo         *info);
+GimpSessionInfo * gimp_session_info_new           (void);
+void              gimp_session_info_free          (GimpSessionInfo   *info);
 
-void       gimp_session_info_save          (GimpSessionInfo         *info,
-                                            const gchar             *factory_name,
-                                            GimpConfigWriter        *writer);
-GTokenType gimp_session_info_deserialize   (GScanner                *scanner,
-                                            gint                     old_scope);
-void       gimp_session_info_restore       (GimpSessionInfo         *info,
-                                            GimpDialogFactory       *factory);
+void              gimp_session_info_serialize     (GimpConfigWriter  *writer,
+                                                   GimpSessionInfo   *info,
+                                                   const gchar       *factory_name);
+GTokenType        gimp_session_info_deserialize   (GScanner          *scanner,
+                                                   gint               scope);
 
-void       gimp_session_info_set_geometry  (GimpSessionInfo         *info);
-void       gimp_session_info_get_geometry  (GimpSessionInfo         *info);
+void              gimp_session_info_restore       (GimpSessionInfo   *info,
+                                                   GimpDialogFactory *factory);
+
+void              gimp_session_info_set_geometry  (GimpSessionInfo   *info);
+void              gimp_session_info_get_geometry  (GimpSessionInfo   *info);
 
 
 #endif  /* __GIMP_SESSION_INFO_H__ */

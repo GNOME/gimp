@@ -29,17 +29,12 @@
 
 #include "widgets-types.h"
 
-#include "gimpcontainerview.h"
-#include "gimpcontainerview-utils.h"
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
-#include "gimpdockable.h"
-#include "gimpdockbook.h"
-#include "gimpdocked.h"
 #include "gimpsessioninfo.h"
 #include "gimpsessioninfoaux.h"
 #include "gimpsessioninfobook.h"
-#include "gimpsessioninfodockable.h"
+#include "gimpsessioninfodock.h"
 
 
 enum
@@ -48,20 +43,10 @@ enum
   SESSION_INFO_SIZE,
   SESSION_INFO_OPEN,
   SESSION_INFO_AUX,
-
-  SESSION_INFO_DOCK,
-
-  SESSION_INFO_BOOK
+  SESSION_INFO_DOCK
 };
 
 #define DEFAULT_SCREEN  -1
-
-
-/*  local function prototypes  */
-
-static GTokenType  session_info_dock_deserialize (GScanner        *scanner,
-                                                  gint             scope,
-                                                  GimpSessionInfo *info);
 
 
 /*  public functions  */
@@ -95,9 +80,9 @@ gimp_session_info_free (GimpSessionInfo *info)
 }
 
 void
-gimp_session_info_save (GimpSessionInfo  *info,
-                        const gchar      *factory_name,
-                        GimpConfigWriter *writer)
+gimp_session_info_serialize (GimpConfigWriter *writer,
+                             GimpSessionInfo  *info,
+                             const gchar      *factory_name)
 {
   const gchar *dialog_name;
 
@@ -143,17 +128,7 @@ gimp_session_info_save (GimpSessionInfo  *info,
       gimp_session_info_aux_serialize (writer, info->widget);
 
       if (! info->toplevel_entry)
-        {
-          GimpDock *dock = GIMP_DOCK (info->widget);
-          GList    *books;
-
-          gimp_config_writer_open (writer, "dock");
-
-          for (books = dock->dockbooks; books; books = g_list_next (books))
-            gimp_session_info_book_serialize (writer, books->data);
-
-          gimp_config_writer_close (writer);
-        }
+        gimp_session_info_dock_serialize (writer, GIMP_DOCK (info->widget));
     }
 
   gimp_config_writer_close (writer);  /* session-info */
@@ -265,7 +240,8 @@ gimp_session_info_deserialize (GScanner *scanner,
                 goto error;
 
               g_scanner_set_scope (scanner, scope + 1);
-              token = session_info_dock_deserialize (scanner, scope + 1, info);
+              token = gimp_session_info_dock_deserialize (scanner, scope + 1,
+                                                          info);
 
               if (token == G_TOKEN_LEFT_PAREN)
                 g_scanner_set_scope (scanner, scope);
@@ -314,31 +290,6 @@ gimp_session_info_deserialize (GScanner *scanner,
   return token;
 }
 
-static void
-gimp_session_info_paned_size_allocate (GtkWidget     *paned,
-                                       GtkAllocation *allocation,
-                                       gpointer       data)
-{
-  g_signal_handlers_disconnect_by_func (paned,
-                                        gimp_session_info_paned_size_allocate,
-                                        data);
-
-  gtk_paned_set_position (GTK_PANED (paned), GPOINTER_TO_INT (data));
-}
-
-static void
-gimp_session_info_paned_map (GtkWidget *paned,
-                             gpointer   data)
-{
-  g_signal_handlers_disconnect_by_func (paned,
-                                        gimp_session_info_paned_map,
-                                        data);
-
-  g_signal_connect_after (paned, "size-allocate",
-                          G_CALLBACK (gimp_session_info_paned_size_allocate),
-                          data);
-}
-
 void
 gimp_session_info_restore (GimpSessionInfo   *info,
                            GimpDialogFactory *factory)
@@ -375,38 +326,7 @@ gimp_session_info_restore (GimpSessionInfo   *info,
     }
   else
     {
-      GimpDock *dock;
-      GList    *books;
-
-      dock = GIMP_DOCK (gimp_dialog_factory_dock_new (factory, screen));
-
-      if (dock && info->aux_info)
-        gimp_session_info_set_aux_info (GTK_WIDGET (dock), info->aux_info);
-
-      for (books = info->books; books; books = g_list_next (books))
-        gimp_session_info_book_restore (books->data, dock);
-
-      for (books = info->books; books; books = g_list_next (books))
-        {
-          GimpSessionInfoBook *book_info = books->data;
-          GtkWidget           *dockbook  = book_info->widget;
-
-          if (GTK_IS_VPANED (dockbook->parent))
-            {
-              GtkPaned *paned = GTK_PANED (dockbook->parent);
-
-              if (dockbook == paned->child2)
-                g_signal_connect_after (paned, "map",
-                                        G_CALLBACK (gimp_session_info_paned_map),
-                                        GINT_TO_POINTER (book_info->position));
-            }
-        }
-
-      g_list_foreach (info->books, (GFunc) gimp_session_info_book_free, NULL);
-      g_list_free (info->books);
-      info->books = NULL;
-
-      gtk_widget_show (GTK_WIDGET (dock));
+      gimp_session_info_dock_restore (info, factory, screen);
     }
 
   g_list_foreach (info->aux_info, (GFunc) gimp_session_info_aux_free, NULL);
@@ -569,67 +489,4 @@ gimp_session_info_get_geometry (GimpSessionInfo *info)
       if (screen != gdk_display_get_default_screen (display))
         info->screen = gdk_screen_get_number (screen);
     }
-}
-
-
-/*  private functions  */
-
-static GTokenType
-session_info_dock_deserialize (GScanner        *scanner,
-                               gint             scope,
-                               GimpSessionInfo *info)
-{
-  GTokenType token;
-
-  g_return_val_if_fail (scanner != NULL, G_TOKEN_LEFT_PAREN);
-  g_return_val_if_fail (info != NULL, G_TOKEN_LEFT_PAREN);
-
-  g_scanner_scope_add_symbol (scanner, scope, "book",
-                              GINT_TO_POINTER (SESSION_INFO_BOOK));
-
-  token = G_TOKEN_LEFT_PAREN;
-
-  while (g_scanner_peek_next_token (scanner) == token)
-    {
-      token = g_scanner_get_next_token (scanner);
-
-      switch (token)
-        {
-        case G_TOKEN_LEFT_PAREN:
-          token = G_TOKEN_SYMBOL;
-          break;
-
-        case G_TOKEN_SYMBOL:
-          switch (GPOINTER_TO_INT (scanner->value.v_symbol))
-            {
-            case SESSION_INFO_BOOK:
-              g_scanner_set_scope (scanner, scope + 1);
-              token = gimp_session_info_book_deserialize (scanner, scope + 1,
-                                                          info);
-
-              if (token == G_TOKEN_LEFT_PAREN)
-                g_scanner_set_scope (scanner, scope);
-              else
-                return token;
-
-              break;
-
-            default:
-              return token;
-            }
-          token = G_TOKEN_RIGHT_PAREN;
-          break;
-
-        case G_TOKEN_RIGHT_PAREN:
-          token = G_TOKEN_LEFT_PAREN;
-          break;
-
-        default:
-          break;
-        }
-    }
-
-  g_scanner_scope_remove_symbol (scanner, scope, "book");
-
-  return token;
 }

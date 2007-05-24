@@ -232,6 +232,8 @@ libappwidgets_a_sources = \
 	gimpsessioninfoaux.h		\
 	gimpsessioninfobook.c		\
 	gimpsessioninfobook.h		\
+	gimpsessioninfodock.c		\
+	gimpsessioninfodock.h		\
 	gimpsessioninfodockable.c	\
 	gimpsessioninfodockable.h	\
 	gimpsizebox.c			\

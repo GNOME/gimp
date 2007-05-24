@@ -1278,7 +1278,7 @@ gimp_dialog_factories_save_foreach (gconstpointer      key,
           (info->toplevel_entry && ! info->toplevel_entry->session_managed))
         continue;
 
-      gimp_session_info_save (info, GIMP_OBJECT (factory)->name, writer);
+      gimp_session_info_serialize (writer, info, GIMP_OBJECT (factory)->name);
     }
 }
 
