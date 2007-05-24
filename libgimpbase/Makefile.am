@@ -95,6 +95,8 @@ libgimpbase_sources = \
 	gimpdatafiles.h		\
 	gimpenv.c		\
 	gimpenv.h		\
+	gimphost-iface.c	\
+	gimphost-iface.h	\
 	gimpmemsize.c		\
 	gimpmemsize.h		\
 	gimpparasite.c		\

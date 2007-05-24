@@ -20,6 +20,8 @@ Changes in GIMP 2.3.17
 - add a shortcut to the user's Pictures folder to the file-chooser dialog
 - improved the quality of the Motion Blur filter
 - save paths in TIFF files
+- let the Screenshot plug-in name the new layer after the window
+- use memory slices to reduce memory fragmentation
 - lots of bug fixes and some code cleanup
 
 

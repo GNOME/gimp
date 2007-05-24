@@ -33,6 +33,7 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+typedef struct _GimpHost         GimpHost;
 typedef struct _GimpParasite     GimpParasite;
 typedef struct _GimpDatafileData GimpDatafileData;
 typedef struct _GimpEnumDesc     GimpEnumDesc;
