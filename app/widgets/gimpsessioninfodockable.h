@@ -35,17 +35,17 @@ struct _GimpSessionInfoDockable
 
 
 GimpSessionInfoDockable *
-            gimp_session_info_dockable_new  (void);
-void        gimp_session_info_dockable_free (GimpSessionInfoDockable *dockable);
+               gimp_session_info_dockable_new         (void);
+void           gimp_session_info_dockable_free        (GimpSessionInfoDockable *info);
 
-void        gimp_session_info_dockable_serialize   (GimpConfigWriter    *writer,
-                                                    GimpDockable        *dockable);
-GTokenType  gimp_session_info_dockable_deserialize (GScanner            *scanner,
-                                                    gint                 scope,
-                                                    GimpSessionInfoBook *book);
+void           gimp_session_info_dockable_serialize   (GimpConfigWriter        *writer,
+                                                       GimpDockable            *dockable);
+GTokenType     gimp_session_info_dockable_deserialize (GScanner                *scanner,
+                                                       gint                     scope,
+                                                       GimpSessionInfoBook     *book);
 
-GimpDockable * gimp_session_info_dockable_restore (GimpSessionInfoDockable *info,
-                                                   GimpDock                *dock);
+GimpDockable * gimp_session_info_dockable_restore     (GimpSessionInfoDockable *info,
+                                                       GimpDock                *dock);
 
 
 #endif  /* __GIMP_SESSION_INFO_DOCKABLE_H__ */

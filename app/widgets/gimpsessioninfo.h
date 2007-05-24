@@ -25,41 +25,43 @@
 
 struct _GimpSessionInfo
 {
-  gint       x;
-  gint       y;
-  gint       width;
-  gint       height;
-  gboolean   open;   /*  only valid while restoring and saving the session  */
-  gint       screen; /*  only valid while restoring and saving the session  */
+  gint                    x;
+  gint                    y;
+  gint                    width;
+  gint                    height;
+
+  /*  only valid while restoring and saving the session  */
+  gboolean                open;
+  gint                    screen;
 
   /*  dialog specific list of GimpSessionInfoAux  */
-  GList     *aux_info;
+  GList                  *aux_info;
 
-  GtkWidget *widget;
+  GtkWidget              *widget;
 
   /*  only one of these is valid  */
   GimpDialogFactoryEntry *toplevel_entry;
   GimpDialogFactoryEntry *dockable_entry;
 
   /*  list of GimpSessionInfoBook  */
-  GList     *books;
+  GList                  *books;
 };
 
 
-GimpSessionInfo * gimp_session_info_new           (void);
-void              gimp_session_info_free          (GimpSessionInfo   *info);
+GimpSessionInfo * gimp_session_info_new          (void);
+void              gimp_session_info_free         (GimpSessionInfo   *info);
 
-void              gimp_session_info_serialize     (GimpConfigWriter  *writer,
-                                                   GimpSessionInfo   *info,
-                                                   const gchar       *factory_name);
-GTokenType        gimp_session_info_deserialize   (GScanner          *scanner,
-                                                   gint               scope);
+void              gimp_session_info_serialize    (GimpConfigWriter  *writer,
+                                                  GimpSessionInfo   *info,
+                                                  const gchar       *factory_name);
+GTokenType        gimp_session_info_deserialize  (GScanner          *scanner,
+                                                  gint               scope);
 
-void              gimp_session_info_restore       (GimpSessionInfo   *info,
-                                                   GimpDialogFactory *factory);
+void              gimp_session_info_restore      (GimpSessionInfo   *info,
+                                                  GimpDialogFactory *factory);
 
-void              gimp_session_info_set_geometry  (GimpSessionInfo   *info);
-void              gimp_session_info_get_geometry  (GimpSessionInfo   *info);
+void              gimp_session_info_set_geometry (GimpSessionInfo   *info);
+void              gimp_session_info_get_geometry (GimpSessionInfo   *info);
 
 
 #endif  /* __GIMP_SESSION_INFO_H__ */

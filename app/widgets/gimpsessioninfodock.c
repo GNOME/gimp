@@ -160,7 +160,7 @@ gimp_session_info_dock_restore (GimpSessionInfo   *info,
   dock = GIMP_DOCK (gimp_dialog_factory_dock_new (factory, screen));
 
   if (dock && info->aux_info)
-    gimp_session_info_set_aux_info (GTK_WIDGET (dock), info->aux_info);
+    gimp_session_info_aux_set_list (GTK_WIDGET (dock), info->aux_info);
 
   for (books = info->books; books; books = g_list_next (books))
     gimp_session_info_book_restore (books->data, dock);

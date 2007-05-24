@@ -1,3 +1,11 @@
+2007-05-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpsessioninfo.[ch]
+	* app/widgets/gimpsessioninfoaux.[ch]
+	* app/widgets/gimpsessioninfobook.[ch]
+	* app/widgets/gimpsessioninfodock.c
+	* app/widgets/gimpsessioninfodockable.[ch]: cleanup.
+
 2007-05-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/pygimp/pygimp-display.c: added an ID attribute and a

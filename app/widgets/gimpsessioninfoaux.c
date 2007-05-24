@@ -210,7 +210,7 @@ gimp_session_info_aux_serialize (GimpConfigWriter *writer,
   g_return_if_fail (writer != NULL);
   g_return_if_fail (GTK_IS_WIDGET (widget));
 
-  aux_info = gimp_session_info_get_aux_info (widget);
+  aux_info = gimp_session_info_aux_get_list (widget);
 
   if (aux_info)
     {
@@ -292,19 +292,19 @@ gimp_session_info_aux_deserialize (GScanner  *scanner,
 }
 
 void
-gimp_session_info_set_aux_info (GtkWidget *dialog,
-                                GList     *aux_info)
+gimp_session_info_aux_set_list (GtkWidget *dialog,
+                                GList     *aux_list)
 {
   /* FIXME: make the aux-info stuff generic */
 
   if (GIMP_IS_DOCK (dialog))
-    gimp_dock_set_aux_info (GIMP_DOCK (dialog), aux_info);
+    gimp_dock_set_aux_info (GIMP_DOCK (dialog), aux_list);
   else if (GIMP_IS_DOCKABLE (dialog))
-    gimp_dockable_set_aux_info (GIMP_DOCKABLE (dialog), aux_info);
+    gimp_dockable_set_aux_info (GIMP_DOCKABLE (dialog), aux_list);
 }
 
 GList *
-gimp_session_info_get_aux_info (GtkWidget *dialog)
+gimp_session_info_aux_get_list (GtkWidget *dialog)
 {
   /* FIXME: make the aux-info stuff generic */
 

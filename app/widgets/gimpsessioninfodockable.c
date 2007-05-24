@@ -54,21 +54,20 @@ gimp_session_info_dockable_new (void)
 }
 
 void
-gimp_session_info_dockable_free (GimpSessionInfoDockable *dockable)
+gimp_session_info_dockable_free (GimpSessionInfoDockable *info)
 {
-  g_return_if_fail (dockable != NULL);
+  g_return_if_fail (info != NULL);
 
-  if (dockable->identifier)
-    g_free (dockable->identifier);
+  if (info->identifier)
+    g_free (info->identifier);
 
-  if (dockable->aux_info)
+  if (info->aux_info)
     {
-      g_list_foreach (dockable->aux_info, (GFunc) gimp_session_info_aux_free,
-                      NULL);
-      g_list_free (dockable->aux_info);
+      g_list_foreach (info->aux_info, (GFunc) gimp_session_info_aux_free, NULL);
+      g_list_free (info->aux_info);
     }
 
-  g_slice_free (GimpSessionInfoDockable, dockable);
+  g_slice_free (GimpSessionInfoDockable, info);
 }
 
 void
@@ -257,7 +256,7 @@ gimp_session_info_dockable_restore (GimpSessionInfoDockable *info,
       gimp_dockable_set_tab_style (GIMP_DOCKABLE (dockable), info->tab_style);
 
       if (info->aux_info)
-        gimp_session_info_set_aux_info (dockable, info->aux_info);
+        gimp_session_info_aux_set_list (dockable, info->aux_info);
     }
 
   return GIMP_DOCKABLE (dockable);

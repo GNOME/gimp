@@ -31,24 +31,24 @@ struct _GimpSessionInfoAux
 
 
 GimpSessionInfoAux *
-            gimp_session_info_aux_new            (const gchar         *name,
-                                                  const gchar         *value);
-void        gimp_session_info_aux_free           (GimpSessionInfoAux  *aux);
+             gimp_session_info_aux_new            (const gchar         *name,
+                                                   const gchar         *value);
+void         gimp_session_info_aux_free           (GimpSessionInfoAux  *aux);
 
-GList *     gimp_session_info_aux_new_from_props (GObject             *object,
-                                                  ...) G_GNUC_NULL_TERMINATED;
-void        gimp_session_info_aux_set_props      (GObject             *object,
-                                                  GList               *aux,
-                                                  ...) G_GNUC_NULL_TERMINATED;
+GList      * gimp_session_info_aux_new_from_props (GObject             *object,
+                                                   ...) G_GNUC_NULL_TERMINATED;
+void         gimp_session_info_aux_set_props      (GObject             *object,
+                                                   GList               *aux,
+                                                   ...) G_GNUC_NULL_TERMINATED;
 
-void        gimp_session_info_aux_serialize      (GimpConfigWriter    *writer,
-                                                  GtkWidget           *widget);
-GTokenType  gimp_session_info_aux_deserialize    (GScanner            *scanner,
-                                                  GList              **aux_list);
+void         gimp_session_info_aux_serialize      (GimpConfigWriter    *writer,
+                                                   GtkWidget           *widget);
+GTokenType   gimp_session_info_aux_deserialize    (GScanner            *scanner,
+                                                   GList              **aux_list);
 
-void        gimp_session_info_set_aux_info       (GtkWidget           *dialog,
-                                                  GList               *aux_info);
-GList     * gimp_session_info_get_aux_info       (GtkWidget           *dialog);
+void         gimp_session_info_aux_set_list       (GtkWidget           *dialog,
+                                                   GList               *aux_info);
+GList      * gimp_session_info_aux_get_list       (GtkWidget           *dialog);
 
 
 #endif  /* __GIMP_SESSION_INFO_AUX_H__ */

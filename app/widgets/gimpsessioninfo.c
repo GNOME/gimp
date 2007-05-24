@@ -322,7 +322,7 @@ gimp_session_info_restore (GimpSessionInfo   *info,
                                         TRUE);
 
       if (dialog && info->aux_info)
-        gimp_session_info_set_aux_info (dialog, info->aux_info);
+        gimp_session_info_aux_set_list (dialog, info->aux_info);
     }
   else
     {

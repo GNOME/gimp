@@ -52,18 +52,18 @@ gimp_session_info_book_new (void)
 }
 
 void
-gimp_session_info_book_free (GimpSessionInfoBook *book)
+gimp_session_info_book_free (GimpSessionInfoBook *info)
 {
-  g_return_if_fail (book != NULL);
+  g_return_if_fail (info != NULL);
 
-  if (book->dockables)
+  if (info->dockables)
     {
-      g_list_foreach (book->dockables, (GFunc) gimp_session_info_dockable_free,
+      g_list_foreach (info->dockables, (GFunc) gimp_session_info_dockable_free,
                       NULL);
-      g_list_free (book->dockables);
+      g_list_free (info->dockables);
     }
 
-  g_slice_free (GimpSessionInfoBook, book);
+  g_slice_free (GimpSessionInfoBook, info);
 }
 
 void
