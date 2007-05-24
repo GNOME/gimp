@@ -23,9 +23,45 @@
 
 #include "pygimp.h"
 
+static PyObject *
+disp_delete(PyGimpDisplay *self)
+{
+    return PyBool_FromLong(gimp_display_delete(self->ID));
+}
+
 static PyMethodDef disp_methods[] = {
-    {NULL,		NULL}		/* sentinel */
+    {"delete",	(PyCFunction)disp_delete,	METH_NOARGS},
+    {NULL,	NULL}		/* sentinel */
 };
+
+static PyObject *
+disp_get_ID(PyGimpDisplay *self, void *closure)
+{
+    return PyInt_FromLong(self->ID);
+}
+
+static PyGetSetDef disp_getsets[] = {
+    { "ID", (getter)disp_get_ID, (setter)0 },
+    { NULL, (getter)0, (setter)0 }
+};
+
+/* ---------- */
+
+
+PyObject *
+pygimp_display_new(gint32 ID)
+{
+    PyGimpDisplay *self;
+
+    self = PyObject_NEW(PyGimpDisplay, &PyGimpDisplay_Type);
+
+    if (self == NULL)
+	return NULL;
+
+    self->ID = ID;
+
+    return (PyObject *)self;
+}
 
 static void
 disp_dealloc(PyGimpDisplay *self)
@@ -95,7 +131,7 @@ PyTypeObject PyGimpDisplay_Type = {
     (iternextfunc)0,			/* tp_iternext */
     disp_methods,			/* tp_methods */
     0,					/* tp_members */
-    0,					/* tp_getset */
+    disp_getsets,			/* tp_getset */
     (PyTypeObject *)0,			/* tp_base */
     (PyObject *)0,			/* tp_dict */
     0,					/* tp_descr_get */
@@ -105,18 +141,3 @@ PyTypeObject PyGimpDisplay_Type = {
     (allocfunc)0,			/* tp_alloc */
     (newfunc)0,				/* tp_new */
 };
-
-PyObject *
-pygimp_display_new(gint32 ID)
-{
-    PyGimpDisplay *self;
-	
-    self = PyObject_NEW(PyGimpDisplay, &PyGimpDisplay_Type);
-
-    if (self == NULL)
-	return NULL;
-
-    self->ID = ID;
-
-    return (PyObject *)self;
-}

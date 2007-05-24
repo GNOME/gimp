@@ -1,3 +1,12 @@
+2007-05-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/pygimp/pygimp-display.c: added an ID attribute and a
+	delete method to the Gimp.Display object.
+
+	* plug-ins/pygimp/gimpshelf.py (_display_id): use the ID attribute.
+
+	* plug-ins/pygimp/gimpfu.py: enabled support for PF_DISPLAY.
+
 2007-05-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpsessioninfo.[ch]: removed more code and cleaned

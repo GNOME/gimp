@@ -49,7 +49,7 @@ def _drawable_id(obj):
     return gimp._id2drawable, (obj.ID,)
 
 def _display_id(obj):
-    return gimp._id2display, int(obj)
+    return gimp._id2display, (obj.ID,)
 
 def _vectors_id(obj):
     return gimp._id2vectors, int(obj.ID)
