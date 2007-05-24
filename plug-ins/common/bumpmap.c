@@ -6,7 +6,6 @@
  * Copyright (C) 1997-2000 Jens Lautenbacher <jtl@gimp.org>
  * Copyright (C) 2000 Sven Neumann <sven@gimp.org>
  *
- *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -22,82 +21,10 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-
 /* This plug-in uses the algorithm described by John Schlag, "Fast
  * Embossing Effects on Raster Image Data" in Graphics Gems IV (ISBN
  * 0-12-336155-9).  It takes a grayscale image to be applied as a
  * bump-map to another image, producing a nice embossing effect.
- */
-
-/* Version 3.0-pre1-ac2:
- *
- * - waterlevel/ambient restricted to 0-255
- * - correctly initialize bumpmap_offsets
- */
-
-/* Version 3.0-pre1-ac1:
- *
- * - Now able not to tile the bumpmap - this is the default.
- * - Added new PDB call plug_in_bumpmap_tiled.
- * - Added scrollbars for preview.
- * - Fixed slider feedback for bumpmap offset and set initial offsets
- *   from drawable offsets.
- * - Make it work as intended from the very beginning...
- */
-
-/* Version 2.04:
- *
- * - The preview is now scrollable via draging with button 1 in the
- * preview area. Thanks to Quartic for helping with gdk event handling.
- *
- * - The bumpmap's offset can alternatively be adjusted by dragging with
- * button 3 in the preview area.
- */
-
-/* Version 2.03:
- *
- * - Now transparency in the bumpmap drawable is handled as specified
- * by the waterlevel parameter.  Thanks to Jens for suggesting it!
- *
- * - New cool ambient lighting method.  Thanks to Jens Lautenbacher
- * for creating it!  Something useful actually came out of those IRC
- * sessions ;-)
- *
- * - Added proper rounding wherever it seemed appropriate.  This fixes
- * some minor artifacts in the output.
- */
-
-
-/* Version 2.02:
- *
- * - Fixed a stupid bug in the preview code (offsets were not wrapped
- * correctly in some situations).  Thanks to Jens Lautenbacher for
- * reporting it!
- */
-
-
-/* Version 2.01:
- *
- * - For the preview, vertical scrolling and setting the vertical
- * bumpmap offset are now *much* faster.  Instead of calling
- * gimp_pixel_rgn_get_row() a lot of times, I now use an adapted
- * version of gimp_pixel_rgn_get_rect().
- */
-
-
-/* Version 2.00:
- *
- * - Rewrote from the 0.54 version (well, from the 0.99.9
- * distribution, actually...).  New in this release are the correct
- * handling of all image depths, sizes, and offsets.  Also the
- * different map types, the compensation and map inversion options
- * were added.  The preview widget is new, too.
- */
-
-
-/* TODO:
- *
- * - Speed-ups
  */
 
 #include "config.h"
@@ -195,14 +122,14 @@ static void run   (const gchar      *name,
 
 static void bumpmap             (void);
 static void bumpmap_init_params (bumpmap_params_t *params);
-static void bumpmap_row         (guchar           *src_row,
+static void bumpmap_row         (const guchar     *src_row,
                                  guchar           *dest_row,
                                  gint              width,
                                  gint              bpp,
                                  gboolean          has_alpha,
-                                 guchar           *bm_row1,
-                                 guchar           *bm_row2,
-                                 guchar           *bm_row3,
+                                 const guchar     *bm_row1,
+                                 const guchar     *bm_row2,
+                                 const guchar     *bm_row3,
                                  gint              bm_width,
                                  gint              bm_xofs,
                                  gboolean          tiled,
@@ -212,7 +139,7 @@ static void bumpmap_convert_row (guchar           *row,
                                  gint              width,
                                  gint              bpp,
                                  gboolean          has_alpha,
-                                 guchar           *lut);
+                                 const guchar     *lut);
 
 static gboolean bumpmap_dialog             (void);
 static void     dialog_new_bumpmap         (gboolean       init_offsets);
@@ -617,20 +544,17 @@ bumpmap (void)
 static void
 bumpmap_init_params (bumpmap_params_t *params)
 {
-  gdouble azimuth;
-  gdouble elevation;
-  gint    lz, nz;
-  gint    i;
-  gdouble n;
-
   /* Convert to radians */
-  azimuth   = G_PI * bmvals.azimuth / 180.0;
-  elevation = G_PI * bmvals.elevation / 180.0;
+  const gdouble azimuth   = G_PI * bmvals.azimuth / 180.0;
+  const gdouble elevation = G_PI * bmvals.elevation / 180.0;
+
+  gint lz, nz;
+  gint i;
 
   /* Calculate the light vector */
-  params->lx = cos(azimuth) * cos(elevation) * 255.0;
-  params->ly = sin(azimuth) * cos(elevation) * 255.0;
-  lz         = sin(elevation) * 255.0;
+  params->lx = cos (azimuth) * cos (elevation) * 255.0;
+  params->ly = sin (azimuth) * cos (elevation) * 255.0;
+  lz         = sin (elevation) * 255.0;
 
   /* Calculate constant Z component of surface normal */
   nz           = (6 * 255) / bmvals.depth;
@@ -646,6 +570,8 @@ bumpmap_init_params (bumpmap_params_t *params)
   /* Create look-up table for map type */
   for (i = 0; i < 256; i++)
     {
+      gdouble n;
+
       switch (bmvals.type)
         {
         case SPHERICAL:
@@ -671,24 +597,21 @@ bumpmap_init_params (bumpmap_params_t *params)
 }
 
 static void
-bumpmap_row (guchar           *src,
+bumpmap_row (const guchar     *src,
              guchar           *dest,
              gint              width,
              gint              bpp,
              gboolean          has_alpha,
-             guchar           *bm_row1,
-             guchar           *bm_row2,
-             guchar           *bm_row3,
+             const guchar     *bm_row1,
+             const guchar     *bm_row2,
+             const guchar     *bm_row3,
              gint              bm_width,
              gint              bm_xofs,
              gboolean          tiled,
              gboolean          row_in_bumpmap,
              bumpmap_params_t *params)
 {
-  gint xofs1, xofs2, xofs3;
-  gint shade;
-  gint ndotl;
-  gint nx, ny;
+  gint xofs1, xofs2;
   gint x, k;
   gint pbpp;
   gint result;
@@ -704,6 +627,10 @@ bumpmap_row (guchar           *src,
 
   for (x = 0; x < width; x++)
     {
+      gint xofs3;
+      gint shade;
+      gint nx, ny;
+
       /* Calculate surface normal from bump map */
 
       if (tiled || (row_in_bumpmap &&
@@ -719,29 +646,34 @@ bumpmap_row (guchar           *src,
               xofs1 = CLAMP (xofs2 - 1, 0, bm_width - 1);
               xofs3 = CLAMP (xofs2 + 1, 0, bm_width - 1);
             }
+
           nx = (bm_row1[xofs1] + bm_row2[xofs1] + bm_row3[xofs1] -
                 bm_row1[xofs3] - bm_row2[xofs3] - bm_row3[xofs3]);
           ny = (bm_row3[xofs1] + bm_row3[xofs2] + bm_row3[xofs3] -
                 bm_row1[xofs1] - bm_row1[xofs2] - bm_row1[xofs3]);
         }
-       else
-         {
-           nx = ny = 0;
-         }
+      else
+        {
+          nx = ny = 0;
+        }
 
       /* Shade */
 
       if ((nx == 0) && (ny == 0))
-        shade = params->background;
+        {
+          shade = params->background;
+        }
       else
         {
-          ndotl = nx * params->lx + ny * params->ly + params->nzlz;
+          gint ndotl = nx * params->lx + ny * params->ly + params->nzlz;
 
           if (ndotl < 0)
-            shade = params->compensation * bmvals.ambient;
+            {
+              shade = params->compensation * bmvals.ambient;
+            }
           else
             {
-              shade = ndotl / sqrt(nx * nx + ny * ny + params->nz2);
+              shade = ndotl / sqrt (nx * nx + ny * ny + params->nz2);
 
               shade = shade + MAX(0, (255 * params->compensation - shade)) *
                 bmvals.ambient / 255;
@@ -751,14 +683,18 @@ bumpmap_row (guchar           *src,
       /* Paint */
 
       if (bmvals.compensate)
-        for (k = pbpp; k; k--)
-          {
-            result  = (*src++ * shade) / (params->compensation * 255);
-            *dest++ = MIN(255, result);
-          }
+        {
+          for (k = pbpp; k; k--)
+            {
+              result  = (*src++ * shade) / (params->compensation * 255);
+              *dest++ = MIN(255, result);
+            }
+        }
       else
-        for (k = pbpp; k; k--)
-          *dest++ = *src++ * shade / 255;
+        {
+          for (k = pbpp; k; k--)
+            *dest++ = *src++ * shade / 255;
+        }
 
       if (has_alpha)
         *dest++ = *src++;
@@ -771,15 +707,13 @@ bumpmap_row (guchar           *src,
 }
 
 static void
-bumpmap_convert_row (guchar   *row,
-                     gint      width,
-                     gint      bpp,
-                     gboolean  has_alpha,
-                     guchar   *lut)
+bumpmap_convert_row (guchar       *row,
+                     gint          width,
+                     gint          bpp,
+                     gboolean      has_alpha,
+                     const guchar *lut)
 {
-  guchar *p;
-
-  p = row;
+  guchar *p = row;
 
   has_alpha = has_alpha ? 1 : 0;
 
@@ -1232,7 +1166,6 @@ static void
 dialog_update_preview (GimpPreview *preview)
 {
   guchar *dest_row;
-
   gint    y;
   gint    x1, y1;
   gint    width, height;
@@ -1306,11 +1239,11 @@ dialog_update_preview (GimpPreview *preview)
 
 static void
 dialog_get_rows (GimpPixelRgn  *pr,
-                 guchar    **rows,
-                 gint        x,
-                 gint        y,
-                 gint        width,
-                 gint        height)
+                 guchar       **rows,
+                 gint           x,
+                 gint           y,
+                 gint           width,
+                 gint           height)
 {
   /* This is shamelessly ripped off from gimp_pixel_rgn_get_rect().
    * Its function is exactly the same, but it can fetch an image
@@ -1318,19 +1251,15 @@ dialog_get_rows (GimpPixelRgn  *pr,
    * rows instead of one big linear region.
    */
 
-  GimpTile  *tile;
-  guchar *src, *dest;
-  gint    xstart, ystart;
-  gint    xend, yend;
-  gint    xboundary;
-  gint    yboundary;
-  gint    xstep, ystep;
-  gint    b, bpp;
-  gint    tx, ty;
-  gint    tile_width, tile_height;
-
-  tile_width  = gimp_tile_width();
-  tile_height = gimp_tile_height();
+  gint xstart, ystart;
+  gint xend, yend;
+  gint xboundary;
+  gint yboundary;
+  gint xstep, ystep;
+  gint b, bpp;
+  gint tx, ty;
+  gint tile_width  = gimp_tile_width();
+  gint tile_height = gimp_tile_height();
 
   bpp = pr->bpp;
 
@@ -1346,6 +1275,8 @@ dialog_get_rows (GimpPixelRgn  *pr,
 
       while (x < xend)
         {
+          GimpTile *tile;
+
           tile = gimp_drawable_get_tile2 (pr->drawable, pr->shadow, x, y);
           gimp_tile_ref (tile);
 
@@ -1358,8 +1289,11 @@ dialog_get_rows (GimpPixelRgn  *pr,
 
           for (ty = y; ty < yboundary; ty++)
             {
-              src  = tile->data + tile->bpp * (tile->ewidth *
-                                               (ty % tile_height) +
+              const guchar *src;
+              guchar       *dest;
+
+              src = tile->data + tile->bpp * (tile->ewidth *
+                                              (ty % tile_height) +
                                                (x % tile_width));
               dest = rows[ty - ystart] + bpp * (x - xstart);
 
@@ -1382,10 +1316,8 @@ dialog_fill_src_rows (gint start,
                       gint how_many,
                       gint yofs)
 {
-  gint    x;
-  gint    y;
-  guchar *sp;
-  guchar *p;
+  gint x;
+  gint y;
 
   dialog_get_rows (&bmint.src_rgn,
                    bmint.src_rows + start,
@@ -1398,8 +1330,8 @@ dialog_fill_src_rows (gint start,
 
   for (y = start; y < (start + how_many); y++)
     {
-      sp = bmint.src_rows[y] + img_bpp * sel_width - 1;
-      p  = bmint.src_rows[y] + 4 * sel_width - 1;
+      const guchar *sp = bmint.src_rows[y] + img_bpp * sel_width - 1;
+      guchar       *p  = bmint.src_rows[y] + 4 * sel_width - 1;
 
       for (x = 0; x < sel_width; x++)
         {

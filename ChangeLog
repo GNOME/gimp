@@ -1,3 +1,7 @@
+2007-05-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/bumpmap.c: formatting, added const qualifiers.
+
 2007-05-23  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/channel-options-dialog.c
