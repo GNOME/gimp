@@ -1,3 +1,22 @@
+2007-05-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpsessioninfo.[ch]: removed lots of code...
+
+	* app/widgets/Makefile.am
+	* app/widgets/gimpsessioninfoaux.[ch]
+	* app/widgets/gimpsessioninfobook.[ch]
+	* app/widgets/gimpsessioninfodockable.[ch]: ...and added it here.
+	Also allocate all structs using GSLice.
+
+	* app/widgets/gimpcoloreditor.c
+	* app/widgets/gimpcursorview.c
+	* app/widgets/gimpdataeditor.c
+	* app/widgets/gimpdialogfactory.c
+	* app/widgets/gimpdocked.c
+	* app/widgets/gimphistogrameditor.c
+	* app/widgets/gimpmenudock.c
+	* app/widgets/gimppaletteeditor.c: changed accordingly.
+
 2007-05-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/bumpmap.c: formatting, added const qualifiers.

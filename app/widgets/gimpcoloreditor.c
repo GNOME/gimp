@@ -40,7 +40,7 @@
 #include "gimpdocked.h"
 #include "gimpfgbgeditor.h"
 #include "gimpfgbgview.h"
-#include "gimpsessioninfo.h"
+#include "gimpsessioninfoaux.h"
 
 #include "gimp-intl.h"
 

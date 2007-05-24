@@ -31,7 +31,7 @@
 #include "core/gimpmarshal.h"
 
 #include "gimpdocked.h"
-#include "gimpsessioninfo.h"
+#include "gimpsessioninfoaux.h"
 
 
 enum

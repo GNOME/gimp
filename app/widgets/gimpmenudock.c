@@ -42,7 +42,7 @@
 #include "gimpdockbook.h"
 #include "gimphelp-ids.h"
 #include "gimpmenudock.h"
-#include "gimpsessioninfo.h"
+#include "gimpsessioninfoaux.h"
 
 #include "gimp-intl.h"
 

@@ -37,7 +37,7 @@
 #include "gimphistogrambox.h"
 #include "gimphistogrameditor.h"
 #include "gimphistogramview.h"
-#include "gimpsessioninfo.h"
+#include "gimpsessioninfoaux.h"
 #include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"

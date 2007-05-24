@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * gimpsessioninfo.h
- * Copyright (C) 2001-2003 Michael Natterer <mitch@gimp.org>
+ * Copyright (C) 2001-2007 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -45,48 +45,10 @@ struct _GimpSessionInfo
   GList     *books;
 };
 
-struct _GimpSessionInfoBook
-{
-  gint       position;
-  gint       current_page;
 
-  GtkWidget *widget;
-
-  /*  list of GimpSessionInfoDockable  */
-  GList     *dockables;
-};
-
-struct _GimpSessionInfoDockable
-{
-  gchar        *identifier;
-  GimpTabStyle  tab_style;
-  gint          view_size;
-
-  /*  dialog specific list of GimpSessionInfoAux  */
-  GList        *aux_info;
-};
-
-struct _GimpSessionInfoAux
-{
-  gchar *name;
-  gchar *value;
-};
-
-
+GimpSessionInfo *
+           gimp_session_info_new           (void);
 void       gimp_session_info_free          (GimpSessionInfo         *info);
-void       gimp_session_info_book_free     (GimpSessionInfoBook     *book);
-void       gimp_session_info_dockable_free (GimpSessionInfoDockable *dockable);
-
-GimpSessionInfoAux *
-           gimp_session_info_aux_new       (const gchar             *name,
-                                            const gchar             *value);
-void       gimp_session_info_aux_free      (GimpSessionInfoAux      *aux);
-
-GList *    gimp_session_info_aux_new_from_props (GObject            *object,
-                                                 ...) G_GNUC_NULL_TERMINATED;
-void       gimp_session_info_aux_set_props      (GObject            *object,
-                                                 GList              *aux,
-                                                 ...) G_GNUC_NULL_TERMINATED;
 
 void       gimp_session_info_save          (GimpSessionInfo         *info,
                                             const gchar             *factory_name,
@@ -100,4 +62,4 @@ void       gimp_session_info_set_geometry  (GimpSessionInfo         *info);
 void       gimp_session_info_get_geometry  (GimpSessionInfo         *info);
 
 
-#endif  /*  __GIMP_SESSION_INFO_H__  */
+#endif  /* __GIMP_SESSION_INFO_H__ */

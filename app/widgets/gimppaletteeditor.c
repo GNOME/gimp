@@ -40,7 +40,7 @@
 #include "gimphelp-ids.h"
 #include "gimppaletteeditor.h"
 #include "gimppaletteview.h"
-#include "gimpsessioninfo.h"
+#include "gimpsessioninfoaux.h"
 #include "gimpuimanager.h"
 #include "gimpviewrendererpalette.h"
 #include "gimpwidgets-utils.h"

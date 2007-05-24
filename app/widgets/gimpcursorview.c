@@ -41,7 +41,7 @@
 #include "gimpcursorview.h"
 #include "gimpdocked.h"
 #include "gimpmenufactory.h"
-#include "gimpsessioninfo.h"
+#include "gimpsessioninfoaux.h"
 
 #include "gimp-intl.h"
 

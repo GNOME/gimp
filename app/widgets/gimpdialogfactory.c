@@ -799,7 +799,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
       if (! list) /*  didn't find a session info  */
         {
-          info = g_new0 (GimpSessionInfo, 1);
+          info = gimp_session_info_new ();
 
           info->widget = dialog;
 
@@ -858,7 +858,7 @@ gimp_dialog_factory_add_dialog (GimpDialogFactory *factory,
 
       if (! list) /*  didn't find a session info  */
         {
-          info = g_new0 (GimpSessionInfo, 1);
+          info = gimp_session_info_new ();
 
           info->widget = dialog;
 
@@ -995,7 +995,7 @@ gimp_dialog_factory_remove_dialog (GimpDialogFactory *factory,
               factory->session_infos = g_list_remove (factory->session_infos,
                                                       session_info);
 
-              g_free (session_info);
+              gimp_session_info_free (session_info);
             }
 
           break;

@@ -39,7 +39,7 @@
 #include "gimpdataeditor.h"
 #include "gimpdocked.h"
 #include "gimpmenufactory.h"
-#include "gimpsessioninfo.h"
+#include "gimpsessioninfoaux.h"
 #include "gimpuimanager.h"
 
 #include "gimp-intl.h"
