@@ -35,7 +35,7 @@ gimp_composite_sse2_test (int iterations, int n_pixels)
 
   if (gimp_composite_sse2_init () == 0)
     {
-      g_print ("gimp_composite_sse2: Instruction set is not available.\n");
+      g_print ("\ngimp_composite_sse2: Instruction set is not available.\n");
       return EXIT_SUCCESS;
     }
 
