@@ -1,5 +1,17 @@
 2007-05-25  Kevin Cozens  <kcozens@cvs.gnome.org>
 
+	* plug-ins/script-fu/Makefile.am: Missed commit of this file.
+
+	* plug-ins/script-fu/scheme-wrapper.h:
+	* plug-ins/script-fu/scheme-wrapper.c (ts_output_string): Updated
+	to expect a 'const char *' and an int but no file pointer.
+
+	* plug-ins/script-fu/tinyscheme/scheme.c:
+	* plug-ins/script-fu/tinyscheme/scheme.h: Changes due to use of
+	'const char *' for ts_output_routine.
+
+2007-05-25  Kevin Cozens  <kcozens@cvs.gnome.org>
+
 	This is the first part of fixing bugs #438997 and #440674. 
 
 	* plug-ins/script-fu/scheme-wrapper.c: Removed ts_output_routine

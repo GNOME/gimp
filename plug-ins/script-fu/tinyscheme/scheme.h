@@ -115,7 +115,7 @@ typedef struct num {
 } num;
 
 #if !STANDALONE
-SCHEME_EXPORT void (*ts_output_routine) (char *, int);
+SCHEME_EXPORT void (*ts_output_routine) (const char *, int);
 #endif
 
 SCHEME_EXPORT scheme *scheme_init_new();

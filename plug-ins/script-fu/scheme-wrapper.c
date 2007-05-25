@@ -254,11 +254,11 @@ ts_get_success_msg (void)
 }
 
 void
-ts_output_string (FILE *fp, char *string, int len)
+ts_output_string (const char *string, int len)
 {
   g_return_if_fail (len >= 0);
 
-  if (len > 0 && ts_console_mode && fp == stdout)
+  if (len > 0 && ts_console_mode)
   {
     /* len is the number of UTF-8 characters; we need the number of bytes */
     len = g_utf8_offset_to_pointer (string, len) - string;

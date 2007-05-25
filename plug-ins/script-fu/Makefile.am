@@ -18,6 +18,7 @@ WINSOCK_LIBS = -lws2_32
 endif
 
 AM_CFLAGS = \
+	-DSTANDALONE=0     \
 	-DUSE_INTERFACE=1  \
 	-DUSE_STRLWR=0     \
 	-I$(top_srcdir)    \

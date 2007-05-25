@@ -384,7 +384,7 @@ scheme *scheme_init_new(void);
 #if !STANDALONE
 void scheme_call(scheme *sc, pointer func, pointer args);
 
-void (*ts_output_routine) (char *, int) = NULL;
+void (*ts_output_routine) (const char *, int) = NULL;
 #endif
 
 #define num_ivalue(n)       (n.is_fixnum?(n).value.ivalue:(long)(n).value.rvalue)
@@ -1577,7 +1577,7 @@ static void putchars(scheme *sc, const char *chars, int char_cnt) {
       /* If output is still directed to stdout (the default) it should be    */
       /* safe to redirect it to the routine pointed to by ts_output_routine. */
       if (pt->rep.stdio.file == stdout && ts_output_routine != NULL)
-           (*ts_output_routine) ((char *)chars, char_cnt);
+           (*ts_output_routine) (chars, char_cnt);
       else {
         fwrite(chars,1,char_cnt,pt->rep.stdio.file);
         fflush(pt->rep.stdio.file);
