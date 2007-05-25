@@ -33,8 +33,9 @@ plug-ins or scripts and install them if they are distributed in one
 source file.
 .PP
 \fIgimptool\-2.0\fP can also be used by programs that need to know what
-libraries and include-paths \fIGIMP\fP was compiled with. This is
-especially useful in Makefiles.
+libraries and include-paths \fIGIMP\fP was compiled with. \fIgimptool\-2.0\fP
+uses \fIpkg-config\fP for this task. For use in Makefiles, it is recommended
+that you use \fIpkg-config\fP directly instead of calling \fIgimptool\-2.0\fP.
 
 
 .SH OPTIONS
@@ -169,14 +170,14 @@ Print the linker flags that are necessary to link a \fIGIMP\fP plug-in.
 .TP 8
 .B \-\-libs-noui
 Print the linker flags that are necessary to link a \fIGIMP\fP plug-in, for
-plug-ins that do not require the GTK libs.
+plug-ins that do not require the GTK+ libraries.
 .TP 8
 .B  \-\-cflags
 Print the compiler flags that are necessary to compile a \fIGIMP\fP plug-in.
 .TP 8
 .B \-\-clags-noui
 Print the compiler flags that are necessary to compile a \fIGIMP\fP plug-in
-for plug-ins that do not require the GTK libs.
+for plug-ins that do not require the GTK+ libraries.
 .TP 8
 .B  \-\-prefix=PREFIX
 If specified, use PREFIX instead of the installation prefix that \fIGIMP\fP
@@ -212,8 +213,8 @@ for passing extra libs that may be needed in the build process. For example,
 LIBS=-lintl .
 .TP 8
 .B PKG_CONFIG
-to get the location of the pkg-config program used to determine details
-about your glib, pango and gtk+ installation.
+to get the location of the \fIpkg-config\fP program that is used to determine
+details about your glib, pango, gtk+ and gimp installation.
 
 
 .SH SEE ALSO

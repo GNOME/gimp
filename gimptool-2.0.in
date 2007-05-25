@@ -96,17 +96,11 @@ if test x${PKG_CONFIG+set} != xset ; then
   PKG_CONFIG=pkg-config
 fi
 
-if $PKG_CONFIG --atleast-pkgconfig-version 0.7 ; then
-  gtk_cflags=`$PKG_CONFIG --cflags gtk+-2.0`
-  gtk_libs=`$PKG_CONFIG --libs gtk+-2.0`
-  glib_cflags=`$PKG_CONFIG --cflags glib-2.0`
-  glib_libs=`$PKG_CONFIG --libs glib-2.0`
+if $PKG_CONFIG --atleast-pkgconfig-version 0.7; then
+  :
 else
-  echo "*** pkg-config not found or too old; using paths from gimp compilation." 1>&2
-  gtk_cflags='@GTK_CFLAGS@'
-  gtk_libs='@GTK_LIBS@'
-  glib_cflags='@GLIB_CFLAGS@'
-  glib_libs='@GLIB_LIBS@'
+  echo "*** pkg-config is required but wasn't found or is too old ***" 1>&2
+  exit 1
 fi
 
 if test x${INSTALL+set} != xset ; then
@@ -184,37 +178,23 @@ while test $# -gt 0; do
       echo $dirname
       exit 0
       ;;
-    --cflags | --cflags-noui | --cflags-nogimpui)
-      case $1 in
-        --cflags | --cflags-nogimpui)
-          my_gtk_cflags=$gtk_cflags ;;
-        --cflags-noui)
-          my_gtk_cflags=$glib_cflags ;;
-      esac
-      includes=-I@includedir@/gimp-@GIMP_API_VERSION@
-      echo $includes $my_gtk_cflags
+    --cflags)
+      $PKG_CONFIG --cflags gimpui-2.0
       ;;
-    --libs | --libs-nogimpui)
-      my_gtk_libs=
-      libdirs=-L@libdir@
-      for i in $gtk_libs ; do
-        if test $i != -L@libdir@ ; then
-          if test -z "$my_gtk_libs" ; then
-            my_gtk_libs="$i"
-          else
-            my_gtk_libs="$my_gtk_libs $i"
-          fi
-        fi
-      done
-      case $1 in
-        --libs)
-          echo $libdirs -lgimpui-@GIMP_API_VERSION@ -lgimpwidgets-@GIMP_API_VERSION@ -lgimpmodule-@GIMP_API_VERSION@ -lgimp-@GIMP_API_VERSION@ -lgimpmath-@GIMP_API_VERSION@  -lgimpconfig-@GIMP_API_VERSION@ -lgimpcolor-@GIMP_API_VERSION@ -lgimpbase-@GIMP_API_VERSION@ $my_gtk_libs $rt_libs ;;
-        --libs-nogimpui)
-          echo $libdirs -lgimp-@GIMP_API_VERSION@ -lgimpmath-@GIMP_API_VERSION@  -lgimpconfig-@GIMP_API_VERSION@ -lgimpcolor-@GIMP_API_VERSION@ -lgimpbase-@GIMP_API_VERSION@ $my_gtk_libs $rt_libs ;;
-      esac
+    --cflags-noui)
+      $PKG_CONFIG --cflags gimp-2.0
+      ;;
+    --cflags-nogimpui)
+      $PKG_CONFIG --cflags gimp-2.0 gtk+-2.0
+      ;;
+    --libs)
+      $PKG_CONFIG --libs gimpui-2.0
       ;;
     --libs-noui)
-      echo -L@libdir@ -lgimp-@GIMP_API_VERSION@ -lgimpcolor-@GIMP_API_VERSION@ -lgimpmath-@GIMP_API_VERSION@ -lgimpbase-@GIMP_API_VERSION@ $glib_libs $rt_libs
+      $PKG_CONFIG --libs gimp-2.0
+      ;;
+    --libs-nogimpui)
+      $PKG_CONFIG --libs gimp-2.0 gtk+-2.0
       ;;
     --install-bin | --install-admin-bin \
     | --install-bin-strip | --install-admin-bin-strip \

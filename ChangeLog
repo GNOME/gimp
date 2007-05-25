@@ -1,5 +1,13 @@
 2007-05-25  Sven Neumann  <sven@gimp.org>
 
+	* gimptool-2.0.in: require pkg-config and use it to determine
+	cflags and libs.
+
+	* docs/gimptool.1.in: document that pkg-config is used and
+	recommend to use pkg-config directly.
+
+2007-05-25  Sven Neumann  <sven@gimp.org>
+
 	* gimptool-2.0.in: synced --libs output with the pkg-config files.
 
 2007-05-25  Sven Neumann  <sven@gimp.org>
