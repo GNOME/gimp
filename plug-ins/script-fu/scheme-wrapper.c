@@ -49,8 +49,6 @@
 
 static int   ts_console_mode;
 
-SCHEME_EXPORT void *ts_output_routine;
-
 #undef cons
 
 struct

@@ -114,6 +114,10 @@ typedef struct num {
      } value;
 } num;
 
+#if !STANDALONE
+SCHEME_EXPORT void (*ts_output_routine) (char *, int);
+#endif
+
 SCHEME_EXPORT scheme *scheme_init_new();
 SCHEME_EXPORT scheme *scheme_init_new_custom_alloc(func_alloc malloc, func_dealloc free);
 SCHEME_EXPORT int scheme_init(scheme *sc);

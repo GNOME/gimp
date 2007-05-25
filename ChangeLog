@@ -1,3 +1,15 @@
+2007-05-25  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	This is the first part of fixing bugs #438997 and #440674. 
+
+	* plug-ins/script-fu/scheme-wrapper.c: Removed ts_output_routine
+	declaration from here...
+
+	* plug-ins/script-fu/tinyscheme/scheme.h: and added it here.
+
+	* plug-ins/script-fu/tinyscheme/scheme.c (putchars): Updated to be
+	smarter about where it's output needs to be sent.
+
 2007-05-25  Sven Neumann  <sven@gimp.org>
 
 	* app/composite/gimp-composite-mmx.c
