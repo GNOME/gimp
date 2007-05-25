@@ -1,3 +1,13 @@
+2007-05-25  Sven Neumann  <sven@gimp.org>
+
+	* app/composite/gimp-composite-sse-test.c
+	* app/composite/gimp-composite-test.c
+	* app/composite/gimp-composite-sse2-test.c
+	* app/composite/gimp-composite-altivec-test.c
+	* app/composite/gimp-composite-3dnow-test.c
+	* app/composite/gimp-composite-mmx-test.c
+	* app/composite/gimp-composite-vis-test.c: minor code cleanup.
+
 2007-05-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpsessioninfoaux.[ch]

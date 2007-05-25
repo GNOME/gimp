@@ -1,10 +1,7 @@
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <sys/time.h>
 
 #include <glib-object.h>
 
@@ -36,12 +33,13 @@ gimp_composite_sse2_test (int iterations, int n_pixels)
   gimp_va8_t *va8D2;
   int i;
 
-  printf("\nRunning gimp_composite_sse2 tests...\n");
   if (gimp_composite_sse2_init () == 0)
     {
-      printf("gimp_composite_sse2: Instruction set is not available.\n");
-      return (0);
+      g_print ("gimp_composite_sse2: Instruction set is not available.\n");
+      return EXIT_SUCCESS;
     }
+
+  g_print ("\nRunning gimp_composite_sse2 tests...\n");
 
   rgba8A =  gimp_composite_regression_random_rgba8(n_pixels+1);
   rgba8B =  gimp_composite_regression_random_rgba8(n_pixels+1);
@@ -71,8 +69,8 @@ gimp_composite_sse2_test (int iterations, int n_pixels)
   ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_addition_rgba8_rgba8_rgba8_sse2, &special_ctx);
   if (gimp_composite_regression_compare_contexts ("addition", &generic_ctx, &special_ctx))
     {
-      printf("addition_rgba8_rgba8_rgba8 failed\n");
-      return (1);
+      g_print ("addition_rgba8_rgba8_rgba8 failed\n");
+      return EXIT_FAILURE;
     }
   gimp_composite_regression_timer_report ("addition_rgba8_rgba8_rgba8", ft0, ft1);
 
@@ -82,8 +80,8 @@ gimp_composite_sse2_test (int iterations, int n_pixels)
   ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_darken_rgba8_rgba8_rgba8_sse2, &special_ctx);
   if (gimp_composite_regression_compare_contexts ("darken", &generic_ctx, &special_ctx))
     {
-      printf("darken_rgba8_rgba8_rgba8 failed\n");
-      return (1);
+      g_print ("darken_rgba8_rgba8_rgba8 failed\n");
+      return EXIT_FAILURE;
     }
   gimp_composite_regression_timer_report ("darken_rgba8_rgba8_rgba8", ft0, ft1);
 
@@ -93,8 +91,8 @@ gimp_composite_sse2_test (int iterations, int n_pixels)
   ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_difference_rgba8_rgba8_rgba8_sse2, &special_ctx);
   if (gimp_composite_regression_compare_contexts ("difference", &generic_ctx, &special_ctx))
     {
-      printf("difference_rgba8_rgba8_rgba8 failed\n");
-      return (1);
+      g_print ("difference_rgba8_rgba8_rgba8 failed\n");
+      return EXIT_FAILURE;
     }
   gimp_composite_regression_timer_report ("difference_rgba8_rgba8_rgba8", ft0, ft1);
 
@@ -104,8 +102,8 @@ gimp_composite_sse2_test (int iterations, int n_pixels)
   ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_grain_extract_rgba8_rgba8_rgba8_sse2, &special_ctx);
   if (gimp_composite_regression_compare_contexts ("grain_extract", &generic_ctx, &special_ctx))
     {
-      printf("grain_extract_rgba8_rgba8_rgba8 failed\n");
-      return (1);
+      g_print ("grain_extract_rgba8_rgba8_rgba8 failed\n");
+      return EXIT_FAILURE;
     }
   gimp_composite_regression_timer_report ("grain_extract_rgba8_rgba8_rgba8", ft0, ft1);
 
@@ -115,8 +113,8 @@ gimp_composite_sse2_test (int iterations, int n_pixels)
   ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_lighten_rgba8_rgba8_rgba8_sse2, &special_ctx);
   if (gimp_composite_regression_compare_contexts ("lighten", &generic_ctx, &special_ctx))
     {
-      printf("lighten_rgba8_rgba8_rgba8 failed\n");
-      return (1);
+      g_print ("lighten_rgba8_rgba8_rgba8 failed\n");
+      return EXIT_FAILURE;
     }
   gimp_composite_regression_timer_report ("lighten_rgba8_rgba8_rgba8", ft0, ft1);
 
@@ -126,8 +124,8 @@ gimp_composite_sse2_test (int iterations, int n_pixels)
   ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_subtract_rgba8_rgba8_rgba8_sse2, &special_ctx);
   if (gimp_composite_regression_compare_contexts ("subtract", &generic_ctx, &special_ctx))
     {
-      printf("subtract_rgba8_rgba8_rgba8 failed\n");
-      return (1);
+      g_print ("subtract_rgba8_rgba8_rgba8 failed\n");
+      return EXIT_FAILURE;
     }
   gimp_composite_regression_timer_report ("subtract_rgba8_rgba8_rgba8", ft0, ft1);
 
@@ -137,12 +135,12 @@ gimp_composite_sse2_test (int iterations, int n_pixels)
   ft1 = gimp_composite_regression_time_function (iterations, gimp_composite_swap_rgba8_rgba8_rgba8_sse2, &special_ctx);
   if (gimp_composite_regression_compare_contexts ("swap", &generic_ctx, &special_ctx))
     {
-      printf("swap_rgba8_rgba8_rgba8 failed\n");
-      return (1);
+      g_print ("swap_rgba8_rgba8_rgba8 failed\n");
+      return EXIT_FAILURE;
     }
   gimp_composite_regression_timer_report ("swap_rgba8_rgba8_rgba8", ft0, ft1);
 #endif
-  return (0);
+  return EXIT_SUCCESS;
 }
 
 int
@@ -173,8 +171,8 @@ main (int argc, char *argv[])
         }
       else
         {
-          printf("Usage: gimp-composites-*-test [-i|--iterations n] [-n|--n-pixels n]");
-          exit(1);
+          g_print ("Usage: gimp-composites-*-test [-i|--iterations n] [-n|--n-pixels n]");
+          return EXIT_FAILURE;
         }
     }
 

@@ -1,10 +1,7 @@
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <sys/time.h>
 
 #include <glib-object.h>
 
@@ -36,12 +33,13 @@ gimp_composite_3dnow_test (int iterations, int n_pixels)
   gimp_va8_t *va8D2;
   int i;
 
-  printf("\nRunning gimp_composite_3dnow tests...\n");
   if (gimp_composite_3dnow_init () == 0)
     {
-      printf("gimp_composite_3dnow: Instruction set is not available.\n");
-      return (0);
+      g_print ("gimp_composite_3dnow: Instruction set is not available.\n");
+      return EXIT_SUCCESS;
     }
+
+  g_print ("\nRunning gimp_composite_3dnow tests...\n");
 
   rgba8A =  gimp_composite_regression_random_rgba8(n_pixels+1);
   rgba8B =  gimp_composite_regression_random_rgba8(n_pixels+1);
@@ -65,7 +63,7 @@ gimp_composite_3dnow_test (int iterations, int n_pixels)
     }
 
 #endif
-  return (0);
+  return EXIT_SUCCESS;
 }
 
 int
@@ -96,8 +94,8 @@ main (int argc, char *argv[])
         }
       else
         {
-          printf("Usage: gimp-composites-*-test [-i|--iterations n] [-n|--n-pixels n]");
-          exit(1);
+          g_print ("Usage: gimp-composites-*-test [-i|--iterations n] [-n|--n-pixels n]");
+          return EXIT_FAILURE;
         }
     }
 

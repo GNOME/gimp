@@ -1,10 +1,7 @@
 #include "config.h"
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <sys/time.h>
 
 #include <glib-object.h>
 
@@ -69,7 +66,7 @@ gimp_composite_regression(int iterations, int n_pixels)
     va8M[i].a = i;
   }
 
-  return (0);
+  return EXIT_SUCCESS;
 }
 
 int
@@ -83,5 +80,5 @@ main(int argc, char *argv[])
   iterations = 1;
   n_pixels = 256*256;
 
-  return (gimp_composite_regression(iterations, n_pixels));
+  return gimp_composite_regression (iterations, n_pixels);
 }
