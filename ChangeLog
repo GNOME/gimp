@@ -1,5 +1,11 @@
 2007-05-25  Sven Neumann  <sven@gimp.org>
 
+	* app/composite/gimp-composite-mmx.c
+	* app/composite/gimp-composite-sse2.c
+	* app/composite/gimp-composite-regression.c: minor code cleanup.
+
+2007-05-25  Sven Neumann  <sven@gimp.org>
+
 	* app/composite/gimp-composite-sse-test.c
 	* app/composite/gimp-composite-test.c
 	* app/composite/gimp-composite-sse2-test.c

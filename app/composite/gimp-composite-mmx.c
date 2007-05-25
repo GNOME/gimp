@@ -28,8 +28,6 @@
 
 #include "config.h"
 
-#include <stdio.h>
-
 #include <glib-object.h>
 
 #include "base/base-types.h"
@@ -50,13 +48,13 @@ static void
 debug_display_mmx(void)
 {
 #define mask32(x) ((x)& (unsigned long long) 0xFFFFFFFF)
-#define print64(reg) { unsigned long long reg; asm("movq %%" #reg ",%0" : "=m" (reg)); printf(#reg"=%08llx %08llx", mask32(reg>>32), mask32(reg)); }
-  printf("--------------------------------------------\n");
-  print64(mm0); printf("  "); print64(mm1); printf("\n");
-  print64(mm2); printf("  "); print64(mm3); printf("\n");
-  print64(mm4); printf("  "); print64(mm5); printf("\n");
-  print64(mm6); printf("  "); print64(mm7); printf("\n");
-  printf("--------------------------------------------\n");
+#define print64(reg) { unsigned long long reg; asm("movq %%" #reg ",%0" : "=m" (reg)); g_print(#reg"=%08llx %08llx", mask32(reg>>32), mask32(reg)); }
+  g_print("--------------------------------------------\n");
+  print64(mm0); g_print("  "); print64(mm1); g_print("\n");
+  print64(mm2); g_print("  "); print64(mm3); g_print("\n");
+  print64(mm4); g_print("  "); print64(mm5); g_print("\n");
+  print64(mm6); g_print("  "); print64(mm7); g_print("\n");
+  g_print("--------------------------------------------\n");
 }
 #endif
 
