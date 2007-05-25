@@ -8,10 +8,13 @@ released as GIMP version 2.4.
 
 Bugs fixed in GIMP 2.2.15
 =========================
+
 - fixed parsing of GFig files with CRLF line endings (bug #346988)
 - guard against a possible stack overflow in the Sunras loader (bug #433902)
 - fixed definition of datarootdir in gimptool-2.0 (bug #436386)
 - fixed Perspective tool crash on Mac OS X (bug #349483)
+- fixed area resizing in the Image Map plug-in (bug #439222)
+- added missing library in gimptool-2.0 --libs output
 - added new localizations: Occitan and Persian
 
 
