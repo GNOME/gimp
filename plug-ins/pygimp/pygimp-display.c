@@ -46,6 +46,11 @@ pygimp_display_new(gint32 ID)
 {
     PyGimpDisplay *self;
 
+    if (ID == -1) {
+        Py_INCREF(Py_None);
+        return Py_None;
+    }
+
     self = PyObject_NEW(PyGimpDisplay, &PyGimpDisplay_Type);
 
     if (self == NULL)
