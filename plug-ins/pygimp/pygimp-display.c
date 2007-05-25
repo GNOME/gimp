@@ -23,14 +23,7 @@
 
 #include "pygimp.h"
 
-static PyObject *
-disp_delete(PyGimpDisplay *self)
-{
-    return PyBool_FromLong(gimp_display_delete(self->ID));
-}
-
 static PyMethodDef disp_methods[] = {
-    {"delete",	(PyCFunction)disp_delete,	METH_NOARGS},
     {NULL,	NULL}		/* sentinel */
 };
 

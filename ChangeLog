@@ -1,3 +1,8 @@
+2007-05-24  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/pygimp-display.c: remove the delete method, PyGimp
+	objects are supposed to be deleted via gimp.delete()
+
 2007-05-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpsessioninfo.[ch]
