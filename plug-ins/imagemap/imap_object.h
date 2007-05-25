@@ -93,6 +93,7 @@ void object_edit(Object_t *obj, gboolean add);
 void object_select(Object_t *obj);
 void object_unselect(Object_t *obj);
 void object_move(Object_t *obj, gint dx, gint dy);
+void object_move_sash(Object_t *obj, gint dx, gint dy);
 void object_remove(Object_t *obj);
 void object_lock(Object_t *obj);
 void object_unlock(Object_t *obj);
@@ -200,6 +201,7 @@ void object_list_move_selected_up(ObjectList_t *list);
 void object_list_move_selected_down(ObjectList_t *list);
 void object_list_move_to_front(ObjectList_t *list);
 void object_list_send_to_back(ObjectList_t *list);
+void object_list_move_sash_selected(ObjectList_t *list, gint dx, gint dy);
 
 void object_list_write_csim(ObjectList_t *list, gpointer param,
 			    OutputFunc_t output);

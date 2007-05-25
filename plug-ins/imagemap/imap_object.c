@@ -295,6 +295,28 @@ object_move(Object_t *obj, gint dx, gint dy)
 }
 
 void
+object_move_sash(Object_t *obj, gint dx, gint dy)
+{
+   gint x, y, width, height;
+   obj->class->get_dimensions(obj, &x, &y, &width, &height);
+   if (dx == 0)
+      x += (width / 2);
+   else
+      x += width;
+	  
+   if (dy == 0)
+      y += (height / 2);
+   else
+      y += height;
+	  
+   MoveSashFunc_t sash_func = obj->class->near_sash(obj, x, y);
+   if (sash_func) {
+      sash_func(obj, dx, dy);
+      object_emit_geometry_signal(obj);
+   }
+}
+
+void
 object_remove(Object_t *obj)
 {
    object_list_remove(obj->list, obj);
@@ -924,6 +946,17 @@ object_list_send_to_back(ObjectList_t *list)
 	 object_list_remove_link(list, p);
 	 object_list_prepend(list, obj);
       }
+   }
+}
+
+void
+object_list_move_sash_selected(ObjectList_t *list, gint dx, gint dy)
+{
+   GList *p;
+   for (p = list->list; p; p = p->next) {
+      Object_t *obj = (Object_t*) p->data;
+      if (obj->selected)
+	 object_move_sash(obj, dx, dy);
    }
 }
 

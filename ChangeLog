@@ -1,3 +1,9 @@
+2007-05-25  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/imagemap/imap_main.c
+	* plug-ins/imagemap/imap_object.[ch]: applied patch from Kevin
+	Hurewitz that adds keyboard control for resizing an area (bug #439226).
+
 2007-05-24  Manish Singh  <yosh@gimp.org>
 
 	* plug-ins/pygimp/pygimp-display.c (pygimp_display_new): return None
