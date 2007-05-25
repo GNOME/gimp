@@ -207,10 +207,11 @@ gimp_parasite_new (const gchar    *name,
   if (!name)
     return NULL;
 
-  parasite = g_new (GimpParasite, 1);
+  parasite = g_slice_new (GimpParasite);
   parasite->name  = g_strdup (name);
   parasite->flags = (flags & 0xFF);
   parasite->size  = size;
+
   if (size)
     parasite->data = g_memdup (data, size);
   else
@@ -227,10 +228,11 @@ gimp_parasite_free (GimpParasite *parasite)
 
   if (parasite->name)
     g_free (parasite->name);
+
   if (parasite->data)
     g_free (parasite->data);
 
-  g_free (parasite);
+  g_slice_free (GimpParasite, parasite);
 }
 
 gboolean

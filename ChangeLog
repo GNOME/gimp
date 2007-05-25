@@ -1,5 +1,9 @@
 2007-05-25  Sven Neumann  <sven@gimp.org>
 
+	* libgimpbase/gimpparasite.c: allocate parasites using GSlice.
+
+2007-05-25  Sven Neumann  <sven@gimp.org>
+
 	* gimptool-2.0.in: require pkg-config and use it to determine
 	cflags and libs.
 
