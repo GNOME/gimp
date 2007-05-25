@@ -51,7 +51,8 @@
 
 typedef struct
 {
-  guchar       *src_buffer; /* preview pixels */
+  gint          preview_drawable; /* preview pixels */
+  gdouble       preview_scale;
   GimpPixelRgn  src_rgn; /* image pixels */
   guchar       *buffer[LENS_PIXEL_ACCESS_REGIONS];
   gint          width;
@@ -400,28 +401,52 @@ lens_pixel_access_get_rect (LensPixelAccess *pa,
                             gint             width,
                             gint             height)
 {
-  gint    i, j;
-  guchar *row;
-  gint    rowstride;
-  gint    rowbytes;
+  gint          i;
+  guchar       *row;
+  guchar       *data;
+  gint          rowstride;
+  gint          rowbytes;
+  gint          src_x, src_y;
+  gint          src_width, src_height;
+  gint          data_width;
+  gint          data_height;
+  gint          data_bpp;
 
-  g_assert (pa->src_buffer);
   g_assert (x + width <= pa->image_width);
   g_assert (y + height <= pa->image_height);
 
-  rowstride = pa->image_width * pa->depth;
-  rowbytes = width * pa->depth;
-  row = pa->src_buffer + (rowstride * y + x * pa->depth);
+  memset (buffer, 0, width * height * pa->depth);
+
+  src_x = x / pa->preview_scale;
+  src_y = y / pa->preview_scale;
+  src_width = width / pa->preview_scale;
+  if (src_width <= 0)
+    src_width = 1;
+  src_height = height / pa->preview_scale;
+  if (src_height <= 0)
+    src_height = 1;
+  data_width = width;
+  data_height = height;
+  data_bpp = pa->depth;
+  data = gimp_drawable_get_sub_thumbnail_data (pa->preview_drawable,
+                                               src_x, src_y,
+                                               src_width, src_height,
+                                               &data_width,
+                                               &data_height,
+                                               &data_bpp);
+
+  rowstride = data_width * data_bpp;
+  rowbytes = width * data_bpp;
+  row = data;
 
   for ( i = 0; i < height; i++ )
     {
-      for ( j = 0; j < width; j++ )
-        {
-          memcpy (buffer, row, rowbytes);
-        }
+      memcpy (buffer, row, rowbytes);
       buffer += rowbytes;
       row += rowstride;
     }
+
+  g_free (data);
 }
 
 static LensPixelAccess *
@@ -431,7 +456,7 @@ lens_pixel_access_new (GimpDrawable *drawable)
   gint             i;
   gint             buffer_size;
 
-  pa->src_buffer = NULL;
+  pa->preview_drawable = -1;
   pa->width = LENS_PIXEL_ACCESS_WIDTH;
   pa->height = LENS_PIXEL_ACCESS_HEIGHT;
   pa->depth = drawable->bpp;
@@ -471,21 +496,25 @@ lens_pixel_access_new (GimpDrawable *drawable)
 }
 
 static LensPixelAccess *
-lens_pixel_access_new_for_preview (guchar *buffer,
-                                   gint width,
-                                   gint height,
-                                   gint depth)
+lens_pixel_access_new_for_preview (gint         drawable,
+                                   gint         width,
+                                   gint         height,
+                                   gdouble      factor)
 {
   LensPixelAccess *pa = g_new (LensPixelAccess, 1);
   gint             i;
   gint             buffer_size;
 
-  pa->src_buffer = buffer;
-  pa->width = LENS_PIXEL_ACCESS_WIDTH;
-  pa->height = LENS_PIXEL_ACCESS_HEIGHT;
-  pa->depth = depth;
-  pa->image_width = width;
-  pa->image_height = height;
+  pa->preview_drawable = drawable;
+  pa->preview_scale = (gdouble) (width * factor) /
+      gimp_drawable_width (drawable);
+  pa->width = MIN (LENS_PIXEL_ACCESS_WIDTH,
+                   gimp_drawable_width (drawable) * pa->preview_scale);
+  pa->height = MIN (LENS_PIXEL_ACCESS_HEIGHT,
+                    gimp_drawable_height (drawable) * pa->preview_scale);
+  pa->depth = gimp_drawable_bpp (drawable);
+  pa->image_width = gimp_drawable_width (drawable) * pa->preview_scale;
+  pa->image_height = gimp_drawable_height (drawable) * pa->preview_scale;
 
   buffer_size = pa->height * pa->width * pa->depth;
   pa->buffer[0] = (guchar*) g_malloc (buffer_size);
@@ -595,7 +624,7 @@ lens_pixel_access_do_edge (LensPixelAccess *pa,
 #if GATHERING_STATS
       pa->pixels_loaded_from_image += line_width;
 #endif
-      if (pa->src_buffer)
+      if (pa->preview_drawable != -1)
         lens_pixel_access_get_rect (pa, line, line_start, y, line_width, 1);
       else
         gimp_pixel_rgn_get_row (&pa->src_rgn, line, line_start, y, line_width);
@@ -649,7 +678,7 @@ lens_pixel_access_reposition (LensPixelAccess *pa,
 #if GATHERING_STATS
       pa->pixels_loaded_from_image += pa->width * pa->height;
 #endif
-      if ( pa->src_buffer )
+      if ( pa->preview_drawable != -1 )
         lens_pixel_access_get_rect (pa, pa->buffer[0],
                                     new_xstart, new_ystart,
                                     pa->width, pa->height);
@@ -825,23 +854,33 @@ static void
 lens_correction_preview (GimpDrawable *drawable,
                          GimpPreview  *preview)
 {
-  guchar          *src, *dest;
+  guchar          *dest;
+  gint             x, y;
   gint             width, height;
+  gint             image_width, image_height;
   gint             bpp;
   LensPixelAccess *pa;
+  gdouble          zoom_factor;
+  gdouble          zoom_scale;
 
-  src = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
-                                      &width, &height, &bpp);
-  lens_setup_calc (width, height);
-  dest = g_new (guchar, width * height * bpp);
-  pa = lens_pixel_access_new_for_preview (src, width, height, bpp);
-  lens_calc_rect (pa, dest, 0, 0, width, height, bpp, width*bpp, 1);
+  zoom_factor = gimp_zoom_preview_get_factor (GIMP_ZOOM_PREVIEW (preview));
+  dest = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
+                                       &width, &height, &bpp);
+  image_width = width * zoom_factor;
+  image_height = height * zoom_factor;
+  zoom_scale = (gdouble)(width * zoom_factor) / drawable->width;
+  lens_setup_calc (image_width, image_height);
+  pa = lens_pixel_access_new_for_preview (drawable->drawable_id,
+                                          width, height,
+                                          zoom_factor);
+  gimp_preview_untransform (GIMP_PREVIEW (preview), 0, 0, &x, &y);
+  lens_calc_rect (pa, dest, x * zoom_scale, y * zoom_scale,
+                  width, height, bpp, width*bpp, 1);
 
   gimp_preview_draw_buffer (preview, dest, width * bpp);
 
   lens_pixel_access_delete (pa);
   g_free (dest);
-  g_free (src);
 }
 
 /* UI callback functions */
