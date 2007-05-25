@@ -32,9 +32,9 @@
 #include "gimpdialogfactory.h"
 #include "gimpdock.h"
 #include "gimpsessioninfo.h"
-#include "gimpsessioninfoaux.h"
-#include "gimpsessioninfobook.h"
-#include "gimpsessioninfodock.h"
+#include "gimpsessioninfo-aux.h"
+#include "gimpsessioninfo-book.h"
+#include "gimpsessioninfo-dock.h"
 
 
 enum

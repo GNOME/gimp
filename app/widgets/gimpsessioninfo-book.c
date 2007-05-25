@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * gimpsessioninfobook.c
+ * gimpsessioninfo-book.c
  * Copyright (C) 2001-2007 Michael Natterer <mitch@gimp.org>
  *
  * This program is free software; you can redistribute it and/or modify
@@ -31,8 +31,8 @@
 #include "gimpdock.h"
 #include "gimpdockbook.h"
 #include "gimpsessioninfo.h"
-#include "gimpsessioninfobook.h"
-#include "gimpsessioninfodockable.h"
+#include "gimpsessioninfo-book.h"
+#include "gimpsessioninfo-dockable.h"
 
 
 enum

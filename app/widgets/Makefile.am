@@ -228,14 +228,14 @@ libappwidgets_a_sources = \
 	gimpselectioneditor.h		\
 	gimpsessioninfo.c		\
 	gimpsessioninfo.h		\
-	gimpsessioninfoaux.c		\
-	gimpsessioninfoaux.h		\
-	gimpsessioninfobook.c		\
-	gimpsessioninfobook.h		\
-	gimpsessioninfodock.c		\
-	gimpsessioninfodock.h		\
-	gimpsessioninfodockable.c	\
-	gimpsessioninfodockable.h	\
+	gimpsessioninfo-aux.c		\
+	gimpsessioninfo-aux.h		\
+	gimpsessioninfo-book.c		\
+	gimpsessioninfo-book.h		\
+	gimpsessioninfo-dock.c		\
+	gimpsessioninfo-dock.h		\
+	gimpsessioninfo-dockable.c	\
+	gimpsessioninfo-dockable.h	\
 	gimpsizebox.c			\
 	gimpsizebox.h			\
 	gimpstringaction.c		\
