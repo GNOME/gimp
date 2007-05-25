@@ -32,10 +32,6 @@
 
 #include "script-fu-intl.h"
 
-
-static void   script_fu_text_console_interface (void);
-
-
 void
 script_fu_text_console_run (const gchar      *name,
                             gint              nparams,
@@ -50,66 +46,11 @@ script_fu_text_console_run (const gchar      *name,
   ts_print_welcome ();
 
   /*  Run the interface  */
-  script_fu_text_console_interface ();
+  ts_interpret_stdin();
 
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_SUCCESS;
 
   *nreturn_vals = 1;
   *return_vals  = values;
-}
-
-static gboolean
-read_command (GString *command)
-{
-  gint next;
-  gint level = 0;
-
-  g_string_truncate (command, 0);
-
-  while ((next = fgetc (stdin)) != EOF)
-    {
-      guchar c = (guchar) next;
-
-      switch (c)
-        {
-        case '\n':
-          if (level == 0)
-            return TRUE;
-          c = ' ';
-          break;
-
-        case '(':
-          level++;
-          break;
-
-        case ')':
-          level--;
-          break;
-
-        default:
-          break;
-        }
-
-      g_string_append_c (command, c);
-    }
-
-  if (errno)
-    g_printerr ("error reading from stdin: %s\n", g_strerror (errno));
-
-  return FALSE;
-}
-
-static void
-script_fu_text_console_interface (void)
-{
-  GString *command = g_string_new (NULL);
-
-  while (read_command (command))
-    {
-      if (command->len > 0)
-        ts_interpret_string (command->str);
-    }
-
-  g_string_free (command, TRUE);
 }

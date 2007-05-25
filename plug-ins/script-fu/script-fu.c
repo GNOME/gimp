@@ -230,6 +230,7 @@ script_fu_run (const gchar      *name,
        *  The script-fu text console for interactive Scheme development
        */
 
+      ts_output_routine = NULL;
       script_fu_text_console_run (name, nparams, param,
                                   nreturn_vals, return_vals);
     }

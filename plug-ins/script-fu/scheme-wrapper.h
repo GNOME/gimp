@@ -36,6 +36,8 @@ void          tinyscheme_deinit    (void);
 
 void          ts_output_string     (const char *string, int len);
 
+void          ts_interpret_stdin   (void);
+
 /* if the return value is 0, success. error otherwise. */
 gint          ts_interpret_string  (const gchar *);
 

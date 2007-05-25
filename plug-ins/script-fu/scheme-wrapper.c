@@ -217,6 +217,12 @@ ts_print_welcome (void)
   fprintf (ts_output, "Copyright (c) Dimitrios Souflis\n");
 }
 
+void
+ts_interpret_stdin (void)
+{
+  scheme_load_file(&sc, stdin);
+}
+
 gint
 ts_interpret_string (const gchar *expr)
 {

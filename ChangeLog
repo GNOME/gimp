@@ -1,3 +1,12 @@
+2007-05-25  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/script-fu-text-console.c
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/scheme-wrapper.c
+	* plug-ins/script-fu/scheme-wrapper.h: Applied patch from Eric
+	Lamarque that makes use of TinyScheme's interactive mode for 
+	the text console in Script-Fu. Fixes bug #440674.
+
 2007-05-25  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/lens.c: applied patch from Aurimas Juška that
@@ -11,7 +20,7 @@
 	* plug-ins/script-fu/scheme-wrapper.c (ts_output_string): Updated
 	to expect a 'const char *' and an int but no file pointer.
 
-	* plug-ins/script-fu/tinyscheme/scheme.c:
+	* plug-ins/script-fu/tinyscheme/scheme.c
 	* plug-ins/script-fu/tinyscheme/scheme.h: Changes due to use of
 	'const char *' for ts_output_routine.
 
