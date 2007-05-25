@@ -208,9 +208,9 @@ while test $# -gt 0; do
       done
       case $1 in
         --libs)
-          echo $libdirs -lgimpui-@GIMP_API_VERSION@ -lgimpwidgets-@GIMP_API_VERSION@ -lgimp-@GIMP_API_VERSION@ -lgimpcolor-@GIMP_API_VERSION@ -lgimpmath-@GIMP_API_VERSION@ -lgimpbase-@GIMP_API_VERSION@ $my_gtk_libs $rt_libs ;;
+          echo $libdirs -lgimpui-@GIMP_API_VERSION@ -lgimpwidgets-@GIMP_API_VERSION@ -lgimpmodule-@GIMP_API_VERSION@ -lgimp-@GIMP_API_VERSION@ -lgimpmath-@GIMP_API_VERSION@  -lgimpconfig-@GIMP_API_VERSION@ -lgimpcolor-@GIMP_API_VERSION@ -lgimpbase-@GIMP_API_VERSION@ $my_gtk_libs $rt_libs ;;
         --libs-nogimpui)
-          echo $libdirs -lgimp-@GIMP_API_VERSION@ -lgimpcolor-@GIMP_API_VERSION@ -lgimpmath-@GIMP_API_VERSION@ -lgimpbase-@GIMP_API_VERSION@ $my_gtk_libs $rt_libs ;;
+          echo $libdirs -lgimp-@GIMP_API_VERSION@ -lgimpmath-@GIMP_API_VERSION@  -lgimpconfig-@GIMP_API_VERSION@ -lgimpcolor-@GIMP_API_VERSION@ -lgimpbase-@GIMP_API_VERSION@ $my_gtk_libs $rt_libs ;;
       esac
       ;;
     --libs-noui)
