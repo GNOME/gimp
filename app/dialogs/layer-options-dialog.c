@@ -100,7 +100,7 @@ layer_options_dialog_new (GimpImage    *image,
                               NULL);
 
   g_object_weak_ref (G_OBJECT (options->dialog),
-                     (GWeakNotify) g_free, options);
+                     (GWeakNotify) layer_options_dialog_free, options);
 
   gtk_dialog_set_alternative_button_order (GTK_DIALOG (options->dialog),
                                            GTK_RESPONSE_OK,

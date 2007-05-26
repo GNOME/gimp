@@ -1,3 +1,8 @@
+2007-05-26  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/layer-options-dialog.c: do not only declare
+	layer_options_dialog_free(), but do actually use it.
+
 2007-05-25  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/script-fu-text-console.c
