@@ -1,3 +1,7 @@
+2007-05-26  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.2.15 release.
+
 2007-05-25  Sven Neumann  <sven@gimp.org>
 
 	* gimptool-2.0.in: include -lgimpmodule-2.0 in the --libs output.
