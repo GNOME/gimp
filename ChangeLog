@@ -1,5 +1,11 @@
 2007-05-26  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpwidgets.c (gimp_coordinates_new): update the
+	original width and height when the chain-button is changed to the
+	active state.
+
+2007-05-26  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpsizebox.c (GimpSizeBoxPrivate): removed unused
 	struct member.
 
