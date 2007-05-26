@@ -621,7 +621,8 @@ gimp_param_rgb_values_cmp (GParamSpec   *pspec,
     }
   else
     {
-      guint32 int1, int2;
+      guint32 int1 = 0;
+      guint32 int2 = 0;
 
       if (GIMP_PARAM_SPEC_RGB (pspec)->has_alpha)
         {

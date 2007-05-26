@@ -1,5 +1,12 @@
 2007-05-26  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpcolor/gimprgb.c (gimp_param_rgb_values_cmp): fully
+	initialize all bytes of "int1" and "int2" so we don't produce
+	wrong color compare results (and shut up valgrind).
+	Fixes bug #353696.
+
+2007-05-26  Michael Natterer  <mitch@gimp.org>
+
 	* app/config/gimpdisplayconfig.c (gimp_display_config_class_init):
 	also initialize alpha of xor-color's default value to stop
 	valgrind from complaining about uninitialized memory.
