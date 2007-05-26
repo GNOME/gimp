@@ -1,3 +1,8 @@
+2007-05-26  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpsizebox.c (GimpSizeBoxPrivate): removed unused
+	struct member.
+
 2007-05-26  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpcolor/gimprgb.c (gimp_param_rgb_values_cmp): fully

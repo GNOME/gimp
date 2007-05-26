@@ -64,7 +64,6 @@ struct _GimpSizeBoxPrivate
   GimpChainButton *size_chain;
   GtkWidget       *pixel_label;
   GtkWidget       *res_label;
-  gdouble          aspect;
 };
 
 
@@ -211,7 +210,6 @@ gimp_size_box_constructor (GType                  type,
 
   priv->size_entry = GIMP_SIZE_ENTRY (entry);
   priv->size_chain = GIMP_COORDINATES_CHAINBUTTON (GIMP_SIZE_ENTRY (entry));
-  priv->aspect     = (gdouble) box->width / (gdouble) box->height;
 
   /*
    * let gimp_prop_coordinates_callback know how to interpret the chainbutton
