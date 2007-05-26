@@ -101,7 +101,7 @@ gimp_display_config_class_init (GimpDisplayConfigClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
   GimpRGB       color;
 
-  gimp_rgb_set_uchar (&color, 0x80, 0xff, 0x80);
+  gimp_rgba_set_uchar (&color, 0x80, 0xff, 0x80, 0xff);
 
   object_class->finalize     = gimp_display_config_finalize;
   object_class->set_property = gimp_display_config_set_property;

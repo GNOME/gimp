@@ -1,3 +1,9 @@
+2007-05-26  Michael Natterer  <mitch@gimp.org>
+
+	* app/config/gimpdisplayconfig.c (gimp_display_config_class_init):
+	also initialize alpha of xor-color's default value to stop
+	valgrind from complaining about uninitialized memory.
+
 2007-05-26  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/layer-options-dialog.c: do not only declare
