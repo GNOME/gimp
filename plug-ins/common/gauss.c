@@ -746,7 +746,7 @@ do_encoded_lre (const gint *enc,
 {
   gint col;
 
-  for (col = 0; col < width; col++)
+  for (col = 0; col < width; col++, dest += dist)
     {
       const gint *rpt;
       const gint *pix;
@@ -777,9 +777,8 @@ do_encoded_lre (const gint *enc,
 
       val += pix[0] * (csum[length] - s1);
 
-      *dest = val / ctotal;
-
-      dest += dist;
+      val = val / ctotal;
+      *dest = CLAMP (val, 0, 255);
     }
 }
 
@@ -794,7 +793,7 @@ do_full_lre (const gint *src,
 {
   gint col;
 
-  for (col = 0; col < width; col++)
+  for (col = 0; col < width; col++, dest += dist)
     {
       const gint *x1;
       const gint *x2;
@@ -863,9 +862,8 @@ do_full_lre (const gint *src,
           i  -= 1;
         }
 
-      *dest = val / ctotal;
-      dest += dist;
-
+      val = val / ctotal;
+      *dest = CLAMP (val, 0, 255);
     }
 }
 
