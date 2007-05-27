@@ -72,7 +72,7 @@ floating_sel_attach (GimpLayer    *layer,
     }
 
   /*  set the drawable and allocate a backing store  */
-  gimp_layer_set_lock_alpha (layer, FALSE, FALSE);
+  gimp_layer_set_lock_alpha (layer, TRUE, FALSE);
   layer->fs.drawable      = drawable;
   layer->fs.backing_store = tile_manager_new (GIMP_ITEM (layer)->width,
                                               GIMP_ITEM (layer)->height,
@@ -232,7 +232,9 @@ floating_sel_to_layer (GimpLayer *layer)
   /*  Set pointers  */
   layer->fs.drawable   = NULL;
   image->floating_sel = NULL;
+
   gimp_item_set_visible (GIMP_ITEM (layer), TRUE, TRUE);
+  gimp_layer_set_lock_alpha (layer, FALSE, TRUE);
 
   gimp_image_undo_group_end (image);
 
