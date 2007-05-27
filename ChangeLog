@@ -1,3 +1,7 @@
+2007-05-27  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.3.17 development release.
+
 2007-05-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimp-utils.[ch] (gimp_container_get_neighbor_of_active):

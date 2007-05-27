@@ -569,7 +569,7 @@
 # The toolbox-color-area property has no description.  Possible values are
 # yes and no.
 # 
-# (toolbox-color-area no)
+# (toolbox-color-area yes)
 
 # The toolbox-foo-area property has no description.  Possible values are yes
 # and no.

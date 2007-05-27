@@ -22,7 +22,8 @@ Changes in GIMP 2.3.17
 - save paths in TIFF files
 - let the Screenshot plug-in name the new layer after the window
 - use memory slices to reduce memory fragmentation
-- lots of bug fixes and some code cleanup
+- some code cleanup
+- lots of bug fixes
 
 
 Changes in GIMP 2.3.16
