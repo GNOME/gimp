@@ -1,5 +1,9 @@
 2007-05-28  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/gauss.c: clamping at 255 is good enough.
+
+2007-05-28  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/gauss.c: clamp to [0;255]. Fixes bug #441681.
 
 2007-05-27  Sven Neumann  <sven@gimp.org>

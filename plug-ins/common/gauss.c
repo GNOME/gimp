@@ -778,7 +778,7 @@ do_encoded_lre (const gint *enc,
       val += pix[0] * (csum[length] - s1);
 
       val = val / ctotal;
-      *dest = CLAMP (val, 0, 255);
+      *dest = MIN (val, 255);
     }
 }
 
@@ -863,7 +863,7 @@ do_full_lre (const gint *src,
         }
 
       val = val / ctotal;
-      *dest = CLAMP (val, 0, 255);
+      *dest = MIN (val, 255);
     }
 }
 
