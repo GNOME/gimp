@@ -52,6 +52,8 @@
 
 #include "gimp.h"
 #include "gimp-utils.h"
+#include "gimpcontainer.h"
+#include "gimpcontext.h"
 #include "gimpparamspecs.h"
 
 
@@ -507,4 +509,33 @@ gimp_get_temp_filename (Gimp        *gimp,
   g_free (basename);
 
   return filename;
+}
+
+GimpObject *
+gimp_container_get_neighbor_of_active (GimpContainer *container,
+                                       GimpContext   *context,
+                                       GimpObject    *active)
+{
+  g_return_val_if_fail (GIMP_IS_CONTAINER (container), NULL);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), NULL);
+  g_return_val_if_fail (GIMP_IS_OBJECT (active), NULL);
+
+  if (active == gimp_context_get_by_type (context, container->children_type))
+    {
+      gint index = gimp_container_get_child_index (container, active);
+
+      if (index != -1)
+        {
+          GimpObject *new;
+
+          new = gimp_container_get_child_by_index (container, index + 1);
+
+          if (! new && index > 0)
+            new = gimp_container_get_child_by_index (container, index - 1);
+
+          return new;
+        }
+    }
+
+  return NULL;
 }

@@ -22,6 +22,10 @@
 
 #include "widgets-types.h"
 
+#include "core/gimp-utils.h"
+#include "core/gimpcontainer.h"
+#include "core/gimpcontext.h"
+
 #include "gimpcontainereditor.h"
 #include "gimpcontainerview.h"
 #include "gimpcontainerview-utils.h"
@@ -52,4 +56,37 @@ gimp_container_view_get_by_dockable (GimpDockable *dockable)
     }
 
   return NULL;
+}
+
+void
+gimp_container_view_remove_active (GimpContainerView *view)
+{
+  GimpContext   *context;
+  GimpContainer *container;
+
+  g_return_if_fail (GIMP_IS_CONTAINER_VIEW (view));
+
+  context   = gimp_container_view_get_context (view);
+  container = gimp_container_view_get_container (view);
+
+  if (context && container)
+    {
+      GimpObject *active;
+
+      active = gimp_context_get_by_type (context, container->children_type);
+
+      if (active)
+        {
+          GimpObject *new;
+
+          new = gimp_container_get_neighbor_of_active (container, context,
+                                                       active);
+
+          if (new)
+            gimp_context_set_by_type (context, container->children_type,
+                                      new);
+
+          gimp_container_remove (container, active);
+        }
+    }
 }

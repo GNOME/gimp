@@ -28,6 +28,7 @@
 #include "config/gimpcoreconfig.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimptemplate.h"
@@ -51,6 +52,7 @@
 
 typedef struct
 {
+  GimpContext   *context;
   GimpContainer *container;
   GimpTemplate  *template;
 } TemplateDeleteData;
@@ -211,6 +213,7 @@ templates_delete_cmd_callback (GtkAction *action,
       TemplateDeleteData *delete_data = g_slice_new (TemplateDeleteData);
       GtkWidget          *dialog;
 
+      delete_data->context   = context;
       delete_data->container = container;
       delete_data->template  = template;
 
@@ -293,9 +296,20 @@ templates_delete_response (GtkWidget          *dialog,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
+      GimpObject *new_active;
+
+      new_active = gimp_container_get_neighbor_of_active (delete_data->container,
+                                                          delete_data->context,
+                                                          GIMP_OBJECT (delete_data->template));
+
       if (gimp_container_have (delete_data->container,
                                GIMP_OBJECT (delete_data->template)))
         {
+          if (new_active)
+            gimp_context_set_by_type (delete_data->context,
+                                      delete_data->container->children_type,
+                                      new_active);
+
           gimp_container_remove (delete_data->container,
                                  GIMP_OBJECT (delete_data->template));
         }

@@ -30,6 +30,7 @@
 
 #include "widgets/gimpbufferview.h"
 #include "widgets/gimpcontainerview.h"
+#include "widgets/gimpcontainerview-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -101,19 +102,8 @@ buffers_delete_cmd_callback (GtkAction *action,
                              gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContainer       *container;
-  GimpContext         *context;
-  GimpBuffer          *buffer;
 
-  container = gimp_container_view_get_container (editor->view);
-  context   = gimp_container_view_get_context (editor->view);
-
-  buffer = gimp_context_get_buffer (context);
-
-  if (buffer && gimp_container_have (container, GIMP_OBJECT (buffer)))
-    {
-      gimp_container_remove (container, GIMP_OBJECT (buffer));
-    }
+  gimp_container_view_remove_active (editor->view);
 }
 
 

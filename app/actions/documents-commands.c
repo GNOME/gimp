@@ -40,6 +40,7 @@
 
 #include "widgets/gimpclipboard.h"
 #include "widgets/gimpcontainerview.h"
+#include "widgets/gimpcontainerview-utils.h"
 #include "widgets/gimpdocumentview.h"
 #include "widgets/gimpmessagebox.h"
 #include "widgets/gimpmessagedialog.h"
@@ -169,19 +170,8 @@ documents_remove_cmd_callback (GtkAction *action,
                                gpointer   data)
 {
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
-  GimpContext         *context;
-  GimpContainer       *container;
-  GimpImagefile       *imagefile;
 
-  context   = gimp_container_view_get_context (editor->view);
-  container = gimp_container_view_get_container (editor->view);
-
-  imagefile = gimp_context_get_imagefile (context);
-
-  if (imagefile && gimp_container_have (container, GIMP_OBJECT (imagefile)))
-    {
-      gimp_container_remove (container, GIMP_OBJECT (imagefile));
-    }
+  gimp_container_view_remove_active (editor->view);
 }
 
 void

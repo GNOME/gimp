@@ -25,6 +25,7 @@
 #include "actions-types.h"
 
 #include "core/gimp.h"
+#include "core/gimp-utils.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
 #include "core/gimpdata.h"
@@ -53,6 +54,7 @@ typedef struct _GimpDataDeleteData GimpDataDeleteData;
 
 struct _GimpDataDeleteData
 {
+  GimpContext         *context;
   GimpDataFactoryView *view;
   GimpData            *data;
 };
@@ -222,8 +224,9 @@ data_delete_cmd_callback (GtkAction *action,
 
       delete_data = g_slice_new0 (GimpDataDeleteData);
 
-      delete_data->view = view;
-      delete_data->data = data;
+      delete_data->context = context;
+      delete_data->view    = view;
+      delete_data->data    = data;
 
       dialog = gimp_message_dialog_new (_("Delete Object"), GIMP_STOCK_QUESTION,
                                         GTK_WIDGET (view), 0,
@@ -313,17 +316,27 @@ data_delete_confirm_response (GtkWidget          *dialog,
 
   if (response_id == GTK_RESPONSE_OK)
     {
-      GError *error = NULL;
+      GimpDataFactory *factory    = delete_data->view->factory;
+      GimpData        *data       = delete_data->data;
+      GimpObject      *new_active;
+      GError          *error      = NULL;
 
-      if (! gimp_data_factory_data_delete (delete_data->view->factory,
-                                           delete_data->data,
-                                           TRUE, &error))
+      new_active = gimp_container_get_neighbor_of_active (factory->container,
+                                                          delete_data->context,
+                                                          GIMP_OBJECT (data));
+
+      if (! gimp_data_factory_data_delete (factory, data, TRUE, &error))
         {
-          gimp_message (delete_data->view->factory->gimp,
+          gimp_message (factory->gimp,
                         G_OBJECT (delete_data->view), GIMP_MESSAGE_ERROR,
                         "%s", error->message);
           g_clear_error (&error);
         }
+
+      if (new_active)
+        gimp_context_set_by_type (delete_data->context,
+                                  factory->container->children_type,
+                                  new_active);
     }
 
   g_slice_free (GimpDataDeleteData, delete_data);

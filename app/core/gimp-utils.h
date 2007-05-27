@@ -63,5 +63,9 @@ void         gimp_value_array_truncate             (GValueArray     *args,
 gchar      * gimp_get_temp_filename                (Gimp            *gimp,
                                                     const gchar     *extension);
 
+GimpObject * gimp_container_get_neighbor_of_active (GimpContainer   *container,
+                                                    GimpContext     *context,
+                                                    GimpObject      *active);
+
 
 #endif /* __APP_GIMP_UTILS_H__ */

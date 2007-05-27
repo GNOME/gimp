@@ -23,7 +23,9 @@
 #define __GIMP_CONTAINER_VIEW_UTILS_H__
 
 
-GimpContainerView * gimp_container_view_get_by_dockable (GimpDockable *dockable);
+GimpContainerView * gimp_container_view_get_by_dockable (GimpDockable      *dockable);
+
+void                gimp_container_view_remove_active   (GimpContainerView *view);
 
 
 #endif  /*  __GIMP_CONTAINER_VIEW_UTILS_H__  */

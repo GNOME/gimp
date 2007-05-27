@@ -1,3 +1,20 @@
+2007-05-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimp-utils.[ch] (gimp_container_get_neighbor_of_active):
+	new utility function which returns the neighbor of a container's
+	active item.
+
+	* app/widgets/gimpcontainerview-utils.[ch]
+	(gimp_container_view_remove_active): remove a container view's
+	active item, using above function to select its neighbor.
+
+	* app/actions/data-commands.c
+	* app/actions/buffers-commands.c
+	* app/actions/documents-commands.c
+	* app/actions/templates-commands.c: use above functions to select
+	reasonable items when deleting from a list (instead of always
+	jumping to the first item).
+
 2007-05-26  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpwidgets.c (gimp_coordinates_new): update the
