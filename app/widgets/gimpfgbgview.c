@@ -58,7 +58,7 @@ static gboolean gimp_fg_bg_view_expose       (GtkWidget      *widget,
                                               GdkEventExpose *eevent);
 
 
-G_DEFINE_TYPE (GimpFgBgView, gimp_fg_bg_view, GTK_TYPE_DRAWING_AREA)
+G_DEFINE_TYPE (GimpFgBgView, gimp_fg_bg_view, GTK_TYPE_WIDGET)
 
 #define parent_class gimp_fg_bg_view_parent_class
 
@@ -87,6 +87,8 @@ gimp_fg_bg_view_class_init (GimpFgBgViewClass *klass)
 static void
 gimp_fg_bg_view_init (GimpFgBgView *view)
 {
+  GTK_WIDGET_SET_FLAGS (view, GTK_NO_WINDOW);
+
   view->context = NULL;
 }
 
@@ -103,6 +105,7 @@ gimp_fg_bg_view_set_property (GObject      *object,
     case PROP_CONTEXT:
       gimp_fg_bg_view_set_context (view, g_value_get_object (value));
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -122,6 +125,7 @@ gimp_fg_bg_view_get_property (GObject    *object,
     case PROP_CONTEXT:
       g_value_set_object (value, view->context);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
@@ -203,6 +207,7 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
                         GdkEventExpose *eevent)
 {
   GimpFgBgView *view = GIMP_FG_BG_VIEW (widget);
+  gint          x, y;
   gint          width, height;
   gint          rect_w, rect_h;
   GimpRGB       color;
@@ -210,6 +215,8 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
   if (! GTK_WIDGET_DRAWABLE (widget))
     return FALSE;
 
+  x      = widget->allocation.x;
+  y      = widget->allocation.y;
   width  = widget->allocation.width;
   height = widget->allocation.height;
 
@@ -224,7 +231,8 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
       gimp_fg_bg_view_draw_rect (view,
                                  widget->window,
                                  widget->style->fg_gc[0],
-                                 width - rect_w + 1, height - rect_h + 1,
+                                 x + width  - rect_w + 1,
+                                 y + height - rect_h + 1,
                                  rect_w - 2, rect_h - 2,
                                  &color);
     }
@@ -232,7 +240,7 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
   gtk_paint_shadow (widget->style, widget->window, GTK_STATE_NORMAL,
                     GTK_SHADOW_IN,
                     NULL, widget, NULL,
-                    width - rect_w, height - rect_h, rect_w, rect_h);
+                    x + width - rect_w, y + height - rect_h, rect_w, rect_h);
 
   /*  draw the foreground area  */
 
@@ -242,7 +250,7 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
       gimp_fg_bg_view_draw_rect (view,
                                  widget->window,
                                  widget->style->fg_gc[0],
-                                 1, 1,
+                                 x + 1, y + 1,
                                  rect_w - 2, rect_h - 2,
                                  &color);
     }
@@ -250,7 +258,7 @@ gimp_fg_bg_view_expose (GtkWidget      *widget,
   gtk_paint_shadow (widget->style, widget->window, GTK_STATE_NORMAL,
                     GTK_SHADOW_OUT,
                     NULL, widget, NULL,
-                    0, 0, rect_w, rect_h);
+                    x, y, rect_w, rect_h);
 
   return TRUE;
 }

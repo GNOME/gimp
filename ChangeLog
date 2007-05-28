@@ -1,5 +1,11 @@
 2007-05-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/widgets/gimpfgbgview.[ch]: derive from GtkWidget instead of
+	GtkDrawingArea so we save a GdkWindow and render on the correct
+	background color also for inactive notebook tabs.
+
+2007-05-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimplayer-floating-sel.c (floating_sel_attach): set
 	"Lock Alpha" to TRUE again on floating selections.
 

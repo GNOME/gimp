@@ -38,17 +38,17 @@ typedef struct _GimpFgBgViewClass GimpFgBgViewClass;
 
 struct _GimpFgBgView
 {
-  GtkDrawingArea   parent_instance;
+  GtkWidget    parent_instance;
 
-  GimpContext     *context;
+  GimpContext *context;
 
-  guchar          *render_buf;
-  gint             render_buf_size;
+  guchar      *render_buf;
+  gint         render_buf_size;
 };
 
 struct _GimpFgBgViewClass
 {
-  GtkDrawingAreaClass  parent_class;
+  GtkWidgetClass  parent_class;
 };
 
 
