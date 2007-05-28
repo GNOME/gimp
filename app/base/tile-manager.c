@@ -209,9 +209,11 @@ tile_manager_get (TileManager *tm,
               new->data    = g_new (guchar, new->size);
 
               if ((*tile_ptr)->rowhint)
-                new->rowhint = g_memdup ((*tile_ptr)->rowhint,
-                                             new->eheight *
-                                             sizeof (TileRowHint));
+                {
+                  tile_sanitize_rowhints (new);
+                  memcpy (new->rowhint, (*tile_ptr)->rowhint,
+                          new->eheight * sizeof (TileRowHint));
+                }
 
               if ((*tile_ptr)->data)
                 {

@@ -1,5 +1,11 @@
 2007-05-28  Michael Natterer  <mitch@gimp.org>
 
+	* app/base/tile-manager.c (tile_manager_get): allocate
+	tile->rowhint using tile_sanitize_rowhints() (which uses GSlice)
+	instead of g_memdup(). Fixes bug #441878.
+
+2007-05-28  Michael Natterer  <mitch@gimp.org>
+
 	Don't leave the user without progress bar just because the
 	display's statusbar is invisible:
 
