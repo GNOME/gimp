@@ -44,7 +44,9 @@ static char gimpui_doc[] =
 "This module provides interfaces to allow you to write gimp plugins"
 ;
 
-DL_EXPORT(void)
+void init_gimpui(void);
+
+PyMODINIT_FUNC
 init_gimpui(void)
 {
     PyObject *m, *d;

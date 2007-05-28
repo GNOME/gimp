@@ -806,7 +806,7 @@ pf_call(PyGimpPDBFunction *self, PyObject *args, PyObject *kwargs)
                 return NULL;
             }
 
-            if (pyg_enum_get_value(GIMP_TYPE_RUN_MODE, val, &run_mode))
+            if (pyg_enum_get_value(GIMP_TYPE_RUN_MODE, val, (gpointer)&run_mode))
                 return NULL;
         } else if (len != 0) {
             PyErr_SetString(PyExc_TypeError,

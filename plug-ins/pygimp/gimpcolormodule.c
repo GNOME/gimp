@@ -129,11 +129,10 @@ pygimp_rgb_list_names(PyObject *self)
 	if (!color)
 	    goto bail;
 
-	if (PyDict_SetItemString(dict, names[i], color) < 0)
-	    {
-	      Py_DECREF(color);
-	      goto bail;
-	    }
+	if (PyDict_SetItemString(dict, names[i], color) < 0) {
+	    Py_DECREF(color);
+	    goto bail;
+	}
 
 	Py_DECREF(color);
     }
@@ -366,11 +365,12 @@ static char gimpcolor_doc[] =
 "This module provides interfaces to allow you to write gimp plugins"
 ;
 
+void initgimpcolor(void);
+
 PyMODINIT_FUNC
 initgimpcolor(void)
 {
     PyObject *m, *d;
-    PyObject *i;
 
     pygimp_init_pygobject();
 
@@ -399,9 +399,9 @@ initgimpcolor(void)
 		       PyFloat_FromDouble(GIMP_RGB_LUMINANCE_BLUE));
 
     /* for other modules */
-    PyDict_SetItemString(d, "_PyGimpColor_API",
-			 i=PyCObject_FromVoidPtr(&pygimpcolor_api_functions, NULL));
-    Py_DECREF(i);
+    PyModule_AddObject(m, "_PyGimpColor_API",
+                       PyCObject_FromVoidPtr(&pygimpcolor_api_functions, NULL));
+
     /* Check for errors */
     if (PyErr_Occurred())
 	Py_FatalError("can't initialize module gimpcolor");

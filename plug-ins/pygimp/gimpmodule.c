@@ -799,6 +799,7 @@ static PyObject *
 pygimp_context_push(PyObject *self)
 {
     gimp_context_push();
+    Py_INCREF(Py_None);
     return Py_None;
 }
 
@@ -806,6 +807,7 @@ static PyObject *
 pygimp_context_pop(PyObject *self)
 {
     gimp_context_pop();
+    Py_INCREF(Py_None);
     return Py_None;
 }
 
@@ -1407,7 +1409,7 @@ pygimp_user_directory(PyObject *self, PyObject *args, PyObject *kwargs)
                                      &py_type))
         return NULL;
 
-    if (pyg_enum_get_value(GIMP_TYPE_USER_DIRECTORY, py_type, &type))
+    if (pyg_enum_get_value(GIMP_TYPE_USER_DIRECTORY, py_type, (gpointer)&type))
         return NULL;
 
     user_dir = gimp_user_directory(type);
@@ -1791,11 +1793,12 @@ static char gimp_module_documentation[] =
 "This module provides interfaces to allow you to write gimp plugins"
 ;
 
-DL_EXPORT(void)
+void initgimp(void);
+
+PyMODINIT_FUNC
 initgimp(void)
 {
-    PyObject *m, *d;
-    PyObject *i;
+    PyObject *m;
 
     PyGimpPDB_Type.ob_type = &PyType_Type;
     PyGimpPDB_Type.tp_alloc = PyType_GenericAlloc;
@@ -1888,48 +1891,65 @@ initgimp(void)
                        NULL, PYTHON_API_VERSION);
 
     /* Add some symbolic constants to the module */
-    d = PyModule_GetDict(m);
     pygimp_error = PyErr_NewException("gimp.error", PyExc_RuntimeError, NULL);
-    PyDict_SetItemString(d, "error", pygimp_error);
+    PyModule_AddObject(m, "error", pygimp_error);
 
-    PyDict_SetItemString(d, "pdb", pygimp_pdb_new());
+    PyModule_AddObject(m, "pdb", pygimp_pdb_new());
 
     /* export the types used in gimpmodule */
-    PyDict_SetItemString(d, "Image", (PyObject *)&PyGimpImage_Type);
-    PyDict_SetItemString(d, "Drawable", (PyObject *)&PyGimpDrawable_Type);
-    PyDict_SetItemString(d, "Layer", (PyObject *)&PyGimpLayer_Type);
-    PyDict_SetItemString(d, "Channel", (PyObject *)&PyGimpChannel_Type);
-    PyDict_SetItemString(d, "Display", (PyObject *)&PyGimpDisplay_Type);
-    PyDict_SetItemString(d, "Tile", (PyObject *)&PyGimpTile_Type);
-    PyDict_SetItemString(d, "PixelRgn", (PyObject *)&PyGimpPixelRgn_Type);
-    PyDict_SetItemString(d, "Parasite", (PyObject *)&PyGimpParasite_Type);
-    PyDict_SetItemString(d, "VectorsBezierStroke", (PyObject *)&PyGimpVectorsBezierStroke_Type);
-    PyDict_SetItemString(d, "Vectors", (PyObject *)&PyGimpVectors_Type);
+    Py_INCREF(&PyGimpImage_Type);
+    PyModule_AddObject(m, "Image", (PyObject *)&PyGimpImage_Type);
+
+    Py_INCREF(&PyGimpDrawable_Type);
+    PyModule_AddObject(m, "Drawable", (PyObject *)&PyGimpDrawable_Type);
+
+    Py_INCREF(&PyGimpLayer_Type);
+    PyModule_AddObject(m, "Layer", (PyObject *)&PyGimpLayer_Type);
+
+    Py_INCREF(&PyGimpChannel_Type);
+    PyModule_AddObject(m, "Channel", (PyObject *)&PyGimpChannel_Type);
+
+    Py_INCREF(&PyGimpDisplay_Type);
+    PyModule_AddObject(m, "Display", (PyObject *)&PyGimpDisplay_Type);
+
+    Py_INCREF(&PyGimpTile_Type);
+    PyModule_AddObject(m, "Tile", (PyObject *)&PyGimpTile_Type);
+
+    Py_INCREF(&PyGimpPixelRgn_Type);
+    PyModule_AddObject(m, "PixelRgn", (PyObject *)&PyGimpPixelRgn_Type);
+
+    Py_INCREF(&PyGimpParasite_Type);
+    PyModule_AddObject(m, "Parasite", (PyObject *)&PyGimpParasite_Type);
+
+    Py_INCREF(&PyGimpVectorsBezierStroke_Type);
+    PyModule_AddObject(m, "VectorsBezierStroke", (PyObject *)&PyGimpVectorsBezierStroke_Type);
+
+    Py_INCREF(&PyGimpVectors_Type);
+    PyModule_AddObject(m, "Vectors", (PyObject *)&PyGimpVectors_Type);
 
     /* for other modules */
     pygimp_api_functions.pygimp_error = pygimp_error;
-    PyDict_SetItemString(d, "_PyGimp_API",
-                         i=PyCObject_FromVoidPtr(&pygimp_api_functions, NULL));
-    Py_DECREF(i);
 
-    PyDict_SetItemString(d, "version",
-                         i=Py_BuildValue("(iii)",
-                                         gimp_major_version,
-                                         gimp_minor_version,
-                                         gimp_micro_version));
-    Py_DECREF(i);
+    PyModule_AddObject(m, "_PyGimp_API",
+                       PyCObject_FromVoidPtr(&pygimp_api_functions, NULL));
+
+    PyModule_AddObject(m, "version",
+                       Py_BuildValue("(iii)",
+                                     gimp_major_version,
+                                     gimp_minor_version,
+                                     gimp_micro_version));
 
     /* Some environment constants */
-    PyDict_SetItemString(d, "directory",
-                         PyString_FromString(gimp_directory()));
-    PyDict_SetItemString(d, "data_directory",
-                         PyString_FromString(gimp_data_directory()));
-    PyDict_SetItemString(d, "locale_directory",
-                         PyString_FromString(gimp_locale_directory()));
-    PyDict_SetItemString(d, "sysconf_directory",
-                         PyString_FromString(gimp_sysconf_directory()));
-    PyDict_SetItemString(d, "plug_in_directory",
-                         PyString_FromString(gimp_plug_in_directory()));
+    PyModule_AddObject(m, "directory",
+                       PyString_FromString(gimp_directory()));
+    PyModule_AddObject(m, "data_directory",
+                       PyString_FromString(gimp_data_directory()));
+    PyModule_AddObject(m, "locale_directory",
+                       PyString_FromString(gimp_locale_directory()));
+    PyModule_AddObject(m, "sysconf_directory",
+                       PyString_FromString(gimp_sysconf_directory()));
+    PyModule_AddObject(m, "plug_in_directory",
+                       PyString_FromString(gimp_plug_in_directory()));
 
     /* Check for errors */
     if (PyErr_Occurred())

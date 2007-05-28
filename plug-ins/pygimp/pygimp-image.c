@@ -926,7 +926,7 @@ img_get_colormap(PyGimpImage *self, void *closure)
 	return NULL;
     }
 	
-    ret = PyString_FromStringAndSize(cmap, n_colours * 3);
+    ret = PyString_FromStringAndSize((char *)cmap, n_colours * 3);
     g_free(cmap);
 
     return ret;
@@ -945,7 +945,7 @@ img_set_colormap(PyGimpImage *self, PyObject *value, void *closure)
 	return -1;
     }
 
-    if (!gimp_image_set_colormap(self->ID, PyString_AsString(value),
+    if (!gimp_image_set_colormap(self->ID, (guchar *)PyString_AsString(value),
                                  PyString_Size(value) / 3)) {
 	PyErr_Format(pygimp_error, "could not set colormap on image (ID %d)",
 		     self->ID);

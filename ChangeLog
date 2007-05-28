@@ -1,3 +1,15 @@
+2007-05-28  Manish Singh  <yosh@gimp.org>
+
+        * plug-ins/pygimp/gimpcolormodule.c
+        * plug-ins/pygimp/gimpenumsmodule.c
+        * plug-ins/pygimp/gimpmodule.c
+        * plug-ins/pygimp/gimpthumbmodule.c
+        * plug-ins/pygimp/gimpuimodule.c
+        * plug-ins/pygimp/pygimp-drawable.c
+        * plug-ins/pygimp/pygimp-image.c
+        * plug-ins/pygimp/pygimp-pdb.c
+        * plug-ins/pygimp/pygimp-tile.c: cleanups.
+
 2007-05-28  Michael Natterer  <mitch@gimp.org>
 
 	* app/base/tile-manager.c (tile_manager_get): allocate

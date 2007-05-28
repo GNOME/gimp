@@ -42,7 +42,9 @@ static char gimpthumb_doc[] =
 "This module provides interfaces to allow you to write gimp plugins"
 ;
 
-DL_EXPORT(void)
+void initgimpthumb(void);
+
+PyMODINIT_FUNC
 initgimpthumb(void)
 {
     PyObject *m, *d;

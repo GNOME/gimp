@@ -99,7 +99,9 @@ static char gimpenums_doc[] =
 "This module provides interfaces to allow you to write gimp plugins"
 ;
 
-DL_EXPORT(void)
+void init_gimpenums(void);
+
+PyMODINIT_FUNC
 init_gimpenums(void)
 {
     PyObject *m;

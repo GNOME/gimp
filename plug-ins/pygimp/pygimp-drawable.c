@@ -382,7 +382,7 @@ drw_set_pixel(PyGimpDrawable *self, PyObject *args)
 	is_string = TRUE;
 
 	num_channels = PyString_Size(seq);
-	pixel = PyString_AsString(seq);
+	pixel = (guint8 *)PyString_AsString(seq);
     }
 
     error = !gimp_drawable_set_pixel(self->ID, x, y, num_channels, pixel);
