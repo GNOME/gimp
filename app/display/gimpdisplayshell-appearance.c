@@ -41,6 +41,7 @@
 #include "gimpdisplayshell-appearance.h"
 #include "gimpdisplayshell-callbacks.h"
 #include "gimpdisplayshell-selection.h"
+#include "gimpstatusbar.h"
 
 
 #define GET_OPTIONS(shell) \
@@ -234,10 +235,7 @@ gimp_display_shell_set_show_statusbar (GimpDisplayShell *shell,
 
   g_object_set (options, "show-statusbar", show, NULL);
 
-  if (show)
-    gtk_widget_show (shell->statusbar);
-  else
-    gtk_widget_hide (shell->statusbar);
+  gimp_statusbar_set_visible (GIMP_STATUSBAR (shell->statusbar), show);
 
   SET_ACTIVE (shell->menubar_manager, "view-show-statusbar", show);
 

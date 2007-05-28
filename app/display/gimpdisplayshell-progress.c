@@ -117,7 +117,7 @@ gimp_display_shell_progress_message (GimpProgress        *progress,
 
     case GIMP_MESSAGE_WARNING:
       /* warning messages go to the statusbar, if it's visible */
-      if (! GTK_WIDGET_VISIBLE (shell->statusbar))
+      if (! gimp_statusbar_get_visible (GIMP_STATUSBAR (shell->statusbar)))
         break;
       /* else fallthrough */
 

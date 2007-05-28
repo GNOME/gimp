@@ -61,6 +61,7 @@ struct _GimpStatusbar
   GtkWidget        *progressbar;
   GtkWidget        *cancel_button;
   gboolean          progress_active;
+  gboolean          progress_shown;
 };
 
 struct _GimpStatusbarClass
@@ -71,6 +72,10 @@ struct _GimpStatusbarClass
 
 GType       gimp_statusbar_get_type         (void) G_GNUC_CONST;
 GtkWidget * gimp_statusbar_new              (GimpDisplayShell    *shell);
+
+gboolean    gimp_statusbar_get_visible      (GimpStatusbar       *statusbar);
+void        gimp_statusbar_set_visible      (GimpStatusbar       *statusbar,
+                                             gboolean             visible);
 
 void        gimp_statusbar_push             (GimpStatusbar       *statusbar,
                                              const gchar         *context,

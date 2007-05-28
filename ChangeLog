@@ -1,5 +1,22 @@
 2007-05-28  Michael Natterer  <mitch@gimp.org>
 
+	Don't leave the user without progress bar just because the
+	display's statusbar is invisible:
+
+	* app/display/gimpstatusbar.[ch]: if the statusbar is invisible
+	when a progress wants to be shown, temporarily show it, recording
+	the fact in the new boolean "progress_shown" member. Added new API
+	gimp_statusbar_get/set_visible() which is aware of the new
+	temporary visibility state.
+
+	* app/display/gimpdisplayshell-appearance.c
+	(gimp_display_shell_set_show_statusbar)
+	* app/display/gimpdisplayshell-progress.c
+	(gimp_display_shell_progress_message): use the new API instead of
+	showing/hiding the widget directly.
+
+2007-05-28  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpfgbgview.[ch]: derive from GtkWidget instead of
 	GtkDrawingArea so we save a GdkWindow and render on the correct
 	background color also for inactive notebook tabs.
