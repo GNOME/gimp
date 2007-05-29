@@ -1,5 +1,9 @@
 2007-05-29  Sven Neumann  <sven@gimp.org>
 
+	* app/base/base-types.h: removed unused typedef.
+
+2007-05-29  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpdrawtool.c: use GSlice to allocate the transform
 	matrix.
 

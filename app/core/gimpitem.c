@@ -1117,10 +1117,10 @@ gimp_item_parasite_attach (GimpItem           *item,
   g_return_if_fail (GIMP_IS_ITEM (item));
   g_return_if_fail (parasite != NULL);
 
-  /*  make a temp copy of the struct because
+  /*  make a temporary copy of the GimpParasite struct because
    *  gimp_parasite_shift_parent() changes it
    */
-  memcpy (&copy, parasite, sizeof (GimpParasite));
+  copy = *parasite;
 
   if (gimp_item_is_attached (item))
     {

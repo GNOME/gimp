@@ -2311,10 +2311,10 @@ gimp_image_parasite_attach (GimpImage          *image,
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (parasite != NULL);
 
-  /*  make a temp copy of the struct because
+  /*  make a temporary copy of the GimpParasite struct because
    *  gimp_parasite_shift_parent() changes it
    */
-  memcpy (&copy, parasite, sizeof (GimpParasite));
+  copy = *parasite;
 
   /* only set the dirty bit manually if we can be saved and the new
      parasite differs from the current one and we aren't undoable */
