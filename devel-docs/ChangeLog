@@ -1,3 +1,8 @@
+2007-05-29  Sven Neumann  <sven@gimp.org>
+
+	* app/app-sections.txt
+	* app/app-docs.sgml: minor updates.
+
 2007-05-21  Sven Neumann  <sven@gimp.org>
 
 	* app/Makefile.am: do nothing unless configured with

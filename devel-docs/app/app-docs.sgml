@@ -879,6 +879,10 @@
       <xi:include href="xml/gimppixbuf.xml" />
       <xi:include href="xml/gimpselectiondata.xml" />
       <xi:include href="xml/gimpsessioninfo.xml" />
+      <xi:include href="xml/gimpsessioninfo-aux.xml" />
+      <xi:include href="xml/gimpsessioninfo-book.xml" />
+      <xi:include href="xml/gimpsessioninfo-dock.xml" />
+      <xi:include href="xml/gimpsessioninfo-dockable.xml" />
       <xi:include href="xml/gimphelp.xml" />
       <xi:include href="xml/gimpwidgets-utils.xml" />
     </chapter>
