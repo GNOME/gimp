@@ -566,7 +566,8 @@ svg_handler_group_start (SvgHandler   *handler,
 
           if (parse_svg_transform (*values, &matrix))
             {
-              handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+              handler->transform = g_slice_new (GimpMatrix3);
+              memcpy (handler->transform, &matrix, sizeof (GimpMatrix3));
 
 #ifdef DEBUG_VECTORS_IMPORT
               g_printerr ("transform %s: %g %g %g   %g %g %g   %g %g %g\n",
@@ -617,7 +618,10 @@ svg_handler_path_start (SvgHandler   *handler,
               GimpMatrix3  matrix;
 
               if (parse_svg_transform (*values, &matrix))
-                handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+                {
+                  handler->transform = g_slice_new (GimpMatrix3);
+                  memcpy (handler->transform, &matrix, sizeof (GimpMatrix3));
+                }
             }
           break;
         }
@@ -697,7 +701,10 @@ svg_handler_rect_start (SvgHandler   *handler,
               GimpMatrix3  matrix;
 
               if (parse_svg_transform (*values, &matrix))
-                handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+                {
+                  handler->transform = g_slice_new (GimpMatrix3);
+                  memcpy (handler->transform, &matrix, sizeof (GimpMatrix3));
+                }
             }
           break;
         }
@@ -845,7 +852,10 @@ svg_handler_ellipse_start (SvgHandler   *handler,
               GimpMatrix3  matrix;
 
               if (parse_svg_transform (*values, &matrix))
-                handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+                {
+                  handler->transform = g_slice_new (GimpMatrix3);
+                  memcpy (handler->transform, &matrix, sizeof (GimpMatrix3));
+                }
             }
           break;
         }
@@ -911,7 +921,10 @@ svg_handler_line_start (SvgHandler   *handler,
               GimpMatrix3  matrix;
 
               if (parse_svg_transform (*values, &matrix))
-                handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+                {
+                  handler->transform = g_slice_new (GimpMatrix3);
+                  memcpy (handler->transform, &matrix, sizeof (GimpMatrix3));
+                }
             }
           break;
         }
@@ -997,7 +1010,10 @@ svg_handler_poly_start (SvgHandler   *handler,
               GimpMatrix3  matrix;
 
               if (parse_svg_transform (*values, &matrix))
-                handler->transform = g_memdup (&matrix, sizeof (GimpMatrix3));
+                {
+                  handler->transform = g_slice_new (GimpMatrix3);
+                  memcpy (handler->transform, &matrix, sizeof (GimpMatrix3));
+                }
             }
           break;
         }

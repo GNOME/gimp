@@ -1,5 +1,10 @@
 2007-05-29  Sven Neumann  <sven@gimp.org>
 
+	* app/vectors/gimpvectors-import.c: don't memdup gslice-allocated
+	memory.
+
+2007-05-29  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage.c (gimp_image_parasite_attach)
 	* app/core/gimpitem.c (gimp_item_parasite_attach): allocate the
 	temporary GimpParasite copy on the stack.
