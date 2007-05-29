@@ -1,3 +1,9 @@
+2007-05-29  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage.c (gimp_image_parasite_attach)
+	* app/core/gimpitem.c (gimp_item_parasite_attach): allocate the
+	temporary GimpParasite copy on the stack.
+
 2007-05-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptoolbox-dnd.c (gimp_toolbox_drop_drawable): set

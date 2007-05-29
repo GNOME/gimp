@@ -2295,7 +2295,7 @@ gimp_image_parasite_list (const GimpImage *image,
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
   *count = gimp_parasite_list_length (image->parasites);
-  cur = list = g_new (gchar*, *count);
+  cur = list = g_new (gchar *, *count);
 
   gimp_parasite_list_foreach (image->parasites, (GHFunc) list_func, &cur);
 
@@ -2306,7 +2306,7 @@ void
 gimp_image_parasite_attach (GimpImage          *image,
                             const GimpParasite *parasite)
 {
-  GimpParasite *copy;
+  GimpParasite  copy;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
   g_return_if_fail (parasite != NULL);
@@ -2314,14 +2314,14 @@ gimp_image_parasite_attach (GimpImage          *image,
   /*  make a temp copy of the struct because
    *  gimp_parasite_shift_parent() changes it
    */
-  copy = g_memdup (parasite, sizeof (GimpParasite));
+  memcpy (&copy, parasite, sizeof (GimpParasite));
 
   /* only set the dirty bit manually if we can be saved and the new
      parasite differs from the current one and we aren't undoable */
-  if (gimp_parasite_is_undoable (copy))
+  if (gimp_parasite_is_undoable (&copy))
     gimp_image_undo_push_image_parasite (image,
                                          _("Attach Parasite to Image"),
-                                         copy);
+                                         &copy);
 
   /*  We used to push an cantundo on te stack here. This made the undo stack
       unusable (NULL on the stack) and prevented people from undoing after a
@@ -2330,15 +2330,13 @@ gimp_image_parasite_attach (GimpImage          *image,
       undoable but does not block the undo system.   --Sven
    */
 
-  gimp_parasite_list_add (image->parasites, copy);
+  gimp_parasite_list_add (image->parasites, &copy);
 
-  if (gimp_parasite_has_flag (copy, GIMP_PARASITE_ATTACH_PARENT))
+  if (gimp_parasite_has_flag (&copy, GIMP_PARASITE_ATTACH_PARENT))
     {
-      gimp_parasite_shift_parent (copy);
-      gimp_parasite_attach (image->gimp, copy);
+      gimp_parasite_shift_parent (&copy);
+      gimp_parasite_attach (image->gimp, &copy);
     }
-
-  g_free (copy);
 
   g_signal_emit (image, gimp_image_signals[PARASITE_ATTACHED], 0,
                  parasite->name);
