@@ -210,7 +210,8 @@ tile_manager_get (TileManager *tm,
 
               if ((*tile_ptr)->rowhint)
                 {
-                  tile_sanitize_rowhints (new);
+                  tile_allocate_rowhints (new);
+
                   memcpy (new->rowhint, (*tile_ptr)->rowhint,
                           new->eheight * sizeof (TileRowHint));
                 }

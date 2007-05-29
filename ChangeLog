@@ -1,3 +1,11 @@
+2007-05-29  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile.[ch]: renamed tile_sanitize_rowhints() to
+	tile_allocate_rowhints().
+	
+	* app/base/tile-manager.c
+	* app/paint-funcs/paint-funcs.c: changed accordingly.
+
 2007-05-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimptoolbox-dnd.c (gimp_toolbox_drop_drawable): also

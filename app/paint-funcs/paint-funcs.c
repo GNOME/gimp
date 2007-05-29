@@ -162,7 +162,7 @@ update_tile_rowhints (Tile *tile,
   g_assert (tile != NULL);
 #endif
 
-  tile_sanitize_rowhints (tile);
+  tile_allocate_rowhints (tile);
 
   bpp = tile_bpp (tile);
   ewidth = tile_ewidth (tile);

@@ -61,7 +61,7 @@ static void tile_destroy (Tile *tile);
 
 
 void
-tile_sanitize_rowhints (Tile *tile)
+tile_allocate_rowhints (Tile *tile)
 {
   if (! tile->rowhint)
     tile->rowhint = g_slice_alloc0 (sizeof (TileRowHint) * TILE_HEIGHT);
