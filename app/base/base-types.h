@@ -72,7 +72,6 @@ typedef struct _TempBuf             TempBuf;
 typedef struct _Tile                Tile;
 typedef struct _TileManager         TileManager;
 
-typedef struct _PixelDataHandle     PixelDataHandle;
 
 /*  functions  */
 
