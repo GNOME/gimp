@@ -298,18 +298,21 @@ void
 object_move_sash(Object_t *obj, gint dx, gint dy)
 {
    gint x, y, width, height;
+   MoveSashFunc_t sash_func;
+
    obj->class->get_dimensions(obj, &x, &y, &width, &height);
    if (dx == 0)
       x += (width / 2);
    else
       x += width;
-	  
+
    if (dy == 0)
       y += (height / 2);
    else
       y += height;
-	  
-   MoveSashFunc_t sash_func = obj->class->near_sash(obj, x, y);
+
+   sash_func = obj->class->near_sash(obj, x, y);
+
    if (sash_func) {
       sash_func(obj, dx, dy);
       object_emit_geometry_signal(obj);
@@ -489,7 +492,7 @@ object_on_button_press(GtkWidget *widget, GdkEventButton *event, gpointer data)
       if (event->button == 1) {
 	 factory = ((ObjectFactory_t*(*)(guint)) data)(event->state);
 	 obj = object_factory_create_object(factory, x, y);
-	
+
 	 gdk_gc_set_function(preferences->normal_gc, GDK_XOR);
 
 	 g_signal_connect(widget, "motion-notify-event",

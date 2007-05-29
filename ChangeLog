@@ -1,3 +1,7 @@
+2007-05-29  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/imagemap/imap_object.c: Use C89 declarations.
+
 2007-05-29  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-dnd.c
