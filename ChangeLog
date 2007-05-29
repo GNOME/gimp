@@ -1,5 +1,10 @@
 2007-05-29  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpdrawtool.c: use GSlice to allocate the transform
+	matrix.
+
+2007-05-29  Sven Neumann  <sven@gimp.org>
+
 	* app/vectors/gimpvectors-import.c: don't memdup gslice-allocated
 	memory.
 

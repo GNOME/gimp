@@ -118,7 +118,7 @@ gimp_draw_tool_finalize (GObject *object)
 
   if (draw_tool->transform)
     {
-      g_free (draw_tool->transform);
+      g_slice_free (GimpMatrix3, draw_tool->transform);
       draw_tool->transform = NULL;
     }
 
@@ -346,12 +346,15 @@ gimp_draw_tool_set_transform (GimpDrawTool *draw_tool,
 
   if (draw_tool->transform)
     {
-      g_free (draw_tool->transform);
+      g_slice_free (GimpMatrix3, draw_tool->transform);
       draw_tool->transform = NULL;
     }
 
   if (transform)
-    draw_tool->transform = g_memdup (transform, sizeof (GimpMatrix3));
+    {
+      draw_tool->transform = g_slice_new (GimpMatrix3);
+      memcpy (draw_tool->transform, transform, sizeof (GimpMatrix3));
+    }
 
   gimp_draw_tool_resume (draw_tool);
 }
