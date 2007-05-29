@@ -239,7 +239,7 @@ static FILE * ps_open          (const gchar       *filename,
                                 gint              *lly,
                                 gint              *urx,
                                 gint              *ury,
-                                gint              *is_epsf,
+                                gboolean          *is_epsf,
                                 gint              *ChildPid);
 
 static void   ps_close         (FILE              *ifp,
@@ -555,8 +555,8 @@ query (void)
     { GIMP_PDB_INT32,  "check-bbox", "0: Use width/height, 1: Use BoundingBox" },
     { GIMP_PDB_STRING, "pages",      "Pages to load (e.g.: 1,3,5-7)"           },
     { GIMP_PDB_INT32,  "coloring",   "4: b/w, 5: grey, 6: colour image, 7: automatic" },
-    { GIMP_PDB_INT32,  "TextAlphaBits",     "1, 2, or 4" },
-    { GIMP_PDB_INT32,  "GraphicsAlphaBits", "1, 2, or 4" }
+    { GIMP_PDB_INT32,  "text-alpha-bits",    "1, 2, or 4" },
+    { GIMP_PDB_INT32,  "graphic-alpha-bits", "1, 2, or 4" }
   };
 
   static const GimpParamDef thumb_args[] =
@@ -721,10 +721,10 @@ ps_set_save_size (PSSaveVals *vals,
   GimpUnit unit;
 
   gimp_image_get_resolution (image_ID, &xres, &yres);
+
   if ((xres < 1e-5) || (yres < 1e-5))
-    {
-      xres = yres = 72.0;
-    }
+    xres = yres = 72.0;
+
   /* Calculate size of image in inches */
   width  = gimp_image_width (image_ID);
   height = gimp_image_height (image_ID);
@@ -995,15 +995,15 @@ run (const gchar      *name,
 static gint32
 load_image (const gchar *filename)
 {
-  gint32  image_ID = 0;
-  gint32 *image_list, *nl;
-  guint   page_count;
-  gint    ChildPid;
-  FILE   *ifp;
-  char   *temp;
-  int     llx, lly, urx, ury;
-  int     k, n_images, max_images, max_pagenum;
-  int     is_epsf;
+  gint32    image_ID = 0;
+  gint32   *image_list, *nl;
+  guint     page_count;
+  gint      ChildPid;
+  FILE     *ifp;
+  gchar    *temp;
+  gint      llx, lly, urx, ury;
+  gint      k, n_images, max_images, max_pagenum;
+  gboolean  is_epsf;
 
 #ifdef PS_DEBUG
   g_print ("load_image:\n resolution = %d\n", plvals.resolution);
@@ -1485,23 +1485,26 @@ ps_open (const gchar      *filename,
          gint             *lly,
          gint             *urx,
          gint             *ury,
-         gint             *is_epsf,
+         gboolean         *is_epsf,
          gint             *ChildPidPtr)
 {
-  const gchar *gs;
-  gchar *driver;
-  GPtrArray *cmdA;
-  gchar **pcmdA;
-  FILE *fd_popen = NULL;
-  FILE *eps_file;
-  int width, height, resolution;
-  int x0, y0, x1, y1;
-  int offx = 0, offy = 0;
-  int is_pdf, maybe_epsf = 0;
-  GError *Gerr = NULL;
-  GSpawnFlags Gflags;
+  const gchar  *gs;
+  const gchar  *driver;
+  GPtrArray    *cmdA;
+  gchar       **pcmdA;
+  FILE         *fd_popen = NULL;
+  FILE         *eps_file;
+  gint          width, height;
+  gint          resolution;
+  gint          x0, y0, x1, y1;
+  gint          offx = 0;
+  gint          offy = 0;
+  gboolean      is_pdf;
+  gboolean      maybe_epsf = FALSE;
+  GError       *error = NULL;
+  GSpawnFlags   flags;
 #ifndef USE_REAL_OUTPUTFILE
-  gint ChildStdout;
+  gint          ChildStdout;
 #endif
 
   *ChildPidPtr = 0;
@@ -1513,16 +1516,16 @@ ps_open (const gchar      *filename,
   *ury = height - 1;
 
   /* Check if the file is a PDF. For PDF, we cant set geometry */
-  is_pdf = 0;
+  is_pdf = FALSE;
 
   /* Check if it is a EPS-file */
-  *is_epsf = 0;
+  *is_epsf = FALSE;
 
   eps_file = g_fopen (filename, "rb");
 
   if (eps_file != NULL)
     {
-      char hdr[512];
+      gchar hdr[512];
 
       fread (hdr, 1, sizeof(hdr), eps_file);
       is_pdf = (strncmp (hdr, "%PDF", 4) == 0);
@@ -1583,14 +1586,21 @@ ps_open (const gchar      *filename,
         }
     }
 
-  if (loadopt->pnm_type == 4)
-    driver = "pbmraw";
-  else if (loadopt->pnm_type == 5)
-    driver = "pgmraw";
-  else if (loadopt->pnm_type == 7)
-    driver = "pnmraw";
-  else
-    driver = "ppmraw";
+  switch (loadopt->pnm_type)
+    {
+    case 4:
+      driver = "pbmraw";
+      break;
+    case 5:
+      driver = "pgmraw";
+      break;
+    case 7:
+      driver = "pnmraw";
+      break;
+    default:
+      driver = "ppmraw";
+      break;
+    }
 
 #ifdef USE_REAL_OUTPUTFILE
   /* For instance, the Win32 port of ghostscript doesn't work correctly when
@@ -1685,21 +1695,24 @@ ps_open (const gchar      *filename,
 
   /* Start the command */
 #ifndef USE_REAL_OUTPUTFILE
-  Gflags = G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD;
+  flags = G_SPAWN_SEARCH_PATH | G_SPAWN_DO_NOT_REAP_CHILD;
 
   if ( !g_spawn_async_with_pipes (NULL,         /* working dir */
                                   pcmdA,        /* command array */
                                   NULL,         /* environment */
-                                  Gflags,       /* Flags */
+                                  flags,        /* Flags */
                                   NULL, NULL,   /* Child setup and userdata */
                                   ChildPidPtr,
                                   NULL,         /* stdin */
                                   &ChildStdout,
                                   NULL,         /* stderr */
-                                  &Gerr) )
+                                  &error) )
     {
-      g_message (_("Error starting Ghostscript. Make sure that Ghostscript is installed and - if necessary - use the environment variable GS_PROG to tell GIMP about its location.\n(%s)"), Gerr->message);
-      g_error_free (Gerr);
+      g_message (_("Error starting Ghostscript. Make sure that Ghostscript "
+                   "is installed and - if necessary - use the environment "
+                   "variable GS_PROG to tell GIMP about its location.\n(%s)"),
+                 error->message);
+      g_error_free (error);
 
       *ChildPidPtr = 0;
 
@@ -1716,20 +1729,23 @@ ps_open (const gchar      *filename,
 #else
 
   /* Use a real outputfile. Wait until ghostscript has finished */
-  Gflags = G_SPAWN_SEARCH_PATH;
+  flags = G_SPAWN_SEARCH_PATH;
 
   if ( !g_spawn_sync (NULL,       /* working dir */
                       pcmdA,      /* command array */
                       NULL,       /* environment */
-                      Gflags,     /* Flags */
+                      flags,      /* Flags */
                       NULL, NULL, /* Child setup and userdata */
                       NULL,       /* stdout */
                       NULL,       /* stderr */
                       NULL,       /* exit code */
-                      &Gerr) )
+                      &error) )
     {
-      g_message (_("Error starting Ghostscript. Make sure that Ghostscript is installed and - if necessary - use the environment variable GS_PROG to tell GIMP about its location.\n(%s)"), Gerr->message);
-      g_error_free (Gerr);
+      g_message (_("Error starting Ghostscript. Make sure that Ghostscript "
+                   "is installed and - if necessary - use the environment "
+                   "variable GS_PROG to tell GIMP about its location.\n(%s)"),
+                 error->message);
+      g_error_free (error);
 
       g_unlink (pnmfile);
 
@@ -1811,8 +1827,8 @@ read_pnmraw_type (FILE *ifp,
                   gint *maxval)
 {
   register int frst, scnd, thrd;
-  gint pnmtype;
-  char line[1024];
+  gint  pnmtype;
+  gchar line[1024];
 
   /* GhostScript may write some informational messages infront of the header. */
   /* We are just looking at a Px\n in the input stream. */
@@ -1984,8 +2000,8 @@ load_ps (const gchar *filename,
       imagetype = GIMP_INDEXED;
       nread = (width+7)/8;
       bpp = 1;
-      bitline = (guchar *)g_malloc (nread);
-      byteline = (guchar *)g_malloc (nread*8);
+      bitline = g_new (guchar, nread);
+      byteline = g_new (guchar, nread * 8);
 
       /* Get an array for mapping 8 bits in a byte to 8 bytes */
       temp = bit2byte;
@@ -1998,14 +2014,14 @@ load_ps (const gchar *filename,
       imagetype = GIMP_GRAY;
       nread = width;
       bpp = 1;
-      byteline = (unsigned char *)g_malloc (nread);
+      byteline = g_new (guchar, nread);
     }
   else if (pnmtype == 6)  /* Portable Pixmap */
     {
       imagetype = GIMP_RGB;
       nread = width * 3;
       bpp = 3;
-      byteline = (guchar *)g_malloc (nread);
+      byteline = g_new (guchar, nread);
     }
   else
     return -1;
@@ -2021,46 +2037,47 @@ load_ps (const gchar *filename,
   total_scan_lines = scan_lines = 0;
 
   if (pnmtype == 4)   /* Read bitimage ? Must be mapped to indexed */
-    {static unsigned char BWColorMap[2*3] = { 255, 255, 255, 0, 0, 0 };
+    {
+      const guchar BWColorMap[2*3] = { 255, 255, 255, 0, 0, 0 };
 
-    gimp_image_set_colormap (image_ID, BWColorMap, 2);
+      gimp_image_set_colormap (image_ID, BWColorMap, 2);
 
-    for (i = 0; i < height; i++)
-      {
-        e = (fread (bitline, 1, nread, ifp) != nread);
-        if (total_scan_lines >= image_height) continue;
-        err |= e;
-        if (err) break;
+      for (i = 0; i < height; i++)
+        {
+          e = (fread (bitline, 1, nread, ifp) != nread);
+          if (total_scan_lines >= image_height) continue;
+          err |= e;
+          if (err) break;
 
-        j = width;      /* Map 1 byte of bitimage to 8 bytes of indexed image */
-        temp = bitline;
-        byteptr = byteline;
-        while (j >= 8)
-          {
-            memcpy (byteptr, bit2byte + *(temp++)*8, 8);
-            byteptr += 8;
-            j -= 8;
-          }
-        if (j > 0)
-          memcpy (byteptr, bit2byte + *temp*8, j);
+          j = width;   /* Map 1 byte of bitimage to 8 bytes of indexed image */
+          temp = bitline;
+          byteptr = byteline;
+          while (j >= 8)
+            {
+              memcpy (byteptr, bit2byte + *(temp++)*8, 8);
+              byteptr += 8;
+              j -= 8;
+            }
+          if (j > 0)
+            memcpy (byteptr, bit2byte + *temp*8, j);
 
-        memcpy (dest, byteline+skip_left, image_width);
-        dest += image_width;
-        scan_lines++;
-        total_scan_lines++;
+          memcpy (dest, byteline+skip_left, image_width);
+          dest += image_width;
+          scan_lines++;
+          total_scan_lines++;
 
-        if ((i % 20) == 0)
-          gimp_progress_update ((double)(i+1) / (double)image_height);
+          if ((i % 20) == 0)
+            gimp_progress_update ((double)(i+1) / (double)image_height);
 
-        if ((scan_lines == tile_height) || ((i+1) == image_height))
-          {
-            gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
-                                     image_width, scan_lines);
-            scan_lines = 0;
-            dest = data;
-          }
-        if (err) break;
-      }
+          if ((scan_lines == tile_height) || ((i+1) == image_height))
+            {
+              gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i-scan_lines+1,
+                                       image_width, scan_lines);
+              scan_lines = 0;
+              dest = data;
+            }
+          if (err) break;
+        }
     }
   else   /* Read gray/rgb-image */
     {
@@ -2091,8 +2108,8 @@ load_ps (const gchar *filename,
     }
 
   g_free (data);
-  if (byteline) g_free (byteline);
-  if (bitline) g_free (bitline);
+  g_free (byteline);
+  g_free (bitline);
 
   if (err)
     g_message ("EOF encountered on reading");
@@ -2370,8 +2387,9 @@ save_ps_preview (FILE   *ofp,
     }
   else
     {
-      f1 = (double)psvals.preview_size / (double)drawable->width;
-      f2 = (double)psvals.preview_size / (double)drawable->height;
+      f1 = (double) psvals.preview_size / (double) drawable->width;
+      f2 = (double) psvals.preview_size / (double) drawable->height;
+
       if (f1 < f2)
         {
           width = psvals.preview_size;
@@ -2388,9 +2406,9 @@ save_ps_preview (FILE   *ofp,
 
   nbsl = (width+7)/8;  /* Number of bytes per scanline in bitmap */
 
-  grey = (guchar *)g_malloc (width);
-  bw = (guchar *)g_malloc (nbsl);
-  src_row = (guchar *)g_malloc (drawable->width * drawable->bpp);
+  grey = g_new (guchar, width);
+  bw = g_new (guchar, nbsl);
+  src_row = g_new (guchar, drawable->width * drawable->bpp);
 
   fprintf (ofp, "%%%%BeginPreview: %d %d 1 %d\n", width, height,
            ((nbsl*2+nchar_pl-1)/nchar_pl)*height);
@@ -2400,8 +2418,8 @@ save_ps_preview (FILE   *ofp,
 
   cmap = NULL;     /* Check if we need a colour table */
   if (gimp_drawable_type (drawable_ID) == GIMP_INDEXED_IMAGE)
-    cmap = (guchar *)
-      gimp_image_get_colormap (gimp_drawable_get_image (drawable_ID), &ncols);
+    cmap = gimp_image_get_colormap (gimp_drawable_get_image (drawable_ID),
+                                    &ncols);
 
   for (y = 0; y < height; y++)
     {
@@ -2877,7 +2895,7 @@ save_rgb (FILE   *ofp,
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, width, height, FALSE, FALSE);
 
   /* allocate a buffer for retrieving information from the pixel region  */
-  src = data = (guchar *)g_malloc (tile_height * width * drawable->bpp);
+  src = data = g_new (guchar, tile_height * width * drawable->bpp);
 
   /* Set up transformation in PostScript */
   save_ps_setup (ofp, drawable_ID, width, height, 3*8);
@@ -2905,14 +2923,14 @@ save_rgb (FILE   *ofp,
     fprintf (ofp, "true 3\n");
 
     /* Allocate buffer for packbits data. Worst case: Less than 1% increase */
-    packb = (guchar *)g_malloc ((width * 105)/100+2);
-    plane = (guchar *)g_malloc (width);
+    packb = g_new (guchar, (width * 105) / 100 + 2);
+    plane = g_new (guchar, width);
   }
   ps_begin_data (ofp);
   fprintf (ofp, "colorimage\n");
 
 #define GET_RGB_TILE(begin) \
-  {int scan_lines; \
+  { int scan_lines;                                                     \
     scan_lines = (i+tile_height-1 < height) ? tile_height : (height-i); \
     gimp_pixel_rgn_get_rect (&pixel_rgn, begin, 0, i, width, scan_lines); \
     src = begin; }
@@ -2962,13 +2980,10 @@ save_rgb (FILE   *ofp,
 
   ps_end_data (ofp);
   fprintf (ofp, "showpage\n");
+
   g_free (data);
-
-  if (packb)
-    g_free (packb);
-
-  if (plane)
-    g_free (plane);
+  g_free (packb);
+  g_free (plane);
 
   gimp_drawable_detach (drawable);
 
@@ -2987,13 +3002,25 @@ save_rgb (FILE   *ofp,
 static gint32
 count_ps_pages (const gchar *filename)
 {
-  FILE   *psfile         = NULL;
-  gchar  *curr_line      = NULL;
+  FILE   *psfile;
+  gchar  *extension;
+  gchar   buf[1024];
   gint32  num_pages      = 0;
   gint32  showpage_count = 0;
 
-  if (strncmp (g_ascii_strup (filename + (strlen (filename) - 3), 3), "EPS", 3) == 0)
-    return 1;
+  extension = strrchr (filename, '.');
+  if (extension)
+    {
+      extension = g_ascii_strdown (extension + 1, -1);
+
+      if (strcmp (extension, "eps") == 0)
+        {
+          g_free (extension);
+          return 1;
+        }
+
+      g_free (extension);
+    }
 
   psfile = g_fopen (filename, "r");
 
@@ -3004,22 +3031,19 @@ count_ps_pages (const gchar *filename)
       return 0;
     }
 
-  curr_line = g_malloc0 (1024 * sizeof (gchar));
-
   while (num_pages == 0 && !feof (psfile))
     {
-      fgets (curr_line, 1023, psfile);
+      fgets (buf, sizeof (buf), psfile);
 
-      if (strncmp (curr_line + 2, "Pages:", 6) == 0)
-        sscanf (curr_line + strlen ("%%Pages:"), "%d", &num_pages);
-      else if (strncmp (curr_line, "showpage", 8) == 0)
+      if (strncmp (buf + 2, "Pages:", 6) == 0)
+        sscanf (buf + strlen ("%%Pages:"), "%d", &num_pages);
+      else if (strncmp (buf, "showpage", 8) == 0)
         showpage_count++;
     }
 
   if (feof (psfile) && num_pages < 1 && showpage_count > 0)
     num_pages = showpage_count;
 
-  g_free (curr_line);
   fclose (psfile);
 
   return num_pages;
@@ -3490,13 +3514,12 @@ save_unit_toggle_update (GtkWidget *widget,
 {
   if (GTK_TOGGLE_BUTTON (widget)->active)
     {
-      SaveDialogVals *vals;
-      gdouble factor;
-      gdouble value;
-      gint    unit_mm;
-      gint    i;
+      SaveDialogVals *vals = (SaveDialogVals *) data;
+      gdouble         factor;
+      gdouble         value;
+      gint            unit_mm;
+      gint            i;
 
-      vals    = (SaveDialogVals *) data;
       unit_mm = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (widget),
                                                     "gimp-item-data"));
 
@@ -3521,17 +3544,14 @@ static gboolean
 resolution_change_callback (GtkAdjustment *adjustment,
                             gpointer       data)
 {
-  guint    *old_resolution = (guint *) data;
-  gdouble ratio;
+  guint   *old_resolution = (guint *) data;
+  gdouble  ratio;
 
   if (*old_resolution)
-    {
-      ratio = (gdouble) adjustment->value / *old_resolution;
-    }
+    ratio = (gdouble) adjustment->value / *old_resolution;
   else
-    {
-      ratio = 1;
-    }
+    ratio = 1.0;
+
   gtk_spin_button_set_value (GTK_SPIN_BUTTON (ps_width_spinbutton),
                              GTK_SPIN_BUTTON (ps_width_spinbutton)->
                                  adjustment->value * ratio);
