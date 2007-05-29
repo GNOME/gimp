@@ -222,6 +222,8 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
   gimp_item_offsets (GIMP_ITEM (new_layer), &off_x, &off_y);
   gimp_item_translate (GIMP_ITEM (new_layer), -off_x, -off_y, FALSE);
   gimp_item_set_visible (GIMP_ITEM (new_layer), TRUE, FALSE);
+  gimp_layer_set_mode (new_layer, GIMP_NORMAL_MODE, FALSE);
+  gimp_layer_set_opacity (new_layer, GIMP_OPACITY_OPAQUE, FALSE);
 
   gimp_image_add_layer (new_image, new_layer, 0);
 

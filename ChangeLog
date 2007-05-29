@@ -1,3 +1,8 @@
+2007-05-29  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimptoolbox-dnd.c (gimp_toolbox_drop_drawable): also
+	set the mode of the new layer to NORMAL and its opacity to OPAQUE.
+
 2007-05-29  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/imagemap/imap_object.c: Use C89 declarations.
