@@ -126,6 +126,8 @@ gimp_get_default_context
 gimp_set_user_context
 gimp_get_user_context
 gimp_set_global_buffer
+gimp_message
+gimp_message_valist
 <SUBSECTION Standard>
 GimpClass
 GIMP
@@ -159,7 +161,7 @@ gimp_set_busy_until_idle
 gimp_unset_busy
 gimp_new_progress
 gimp_free_progress
-gimp_message
+gimp_show_message
 gimp_help
 gimp_get_display_by_ID
 gimp_get_display_ID
@@ -591,6 +593,7 @@ GIMP_CONTEXT_GET_CLASS
 <TITLE>GimpArea</TITLE>
 GimpArea
 gimp_area_new
+gimp_area_free
 gimp_area_list_process
 gimp_area_list_free
 </SECTION>
@@ -5213,6 +5216,7 @@ gimp_dbus_service_open
 gimp_dbus_service_open_as_new
 gimp_dbus_service_activate
 <SUBSECTION Standard>
+GimpDBusServiceClass
 GIMP_DBUS_SERVICE
 GIMP_IS_DBUS_SERVICE
 GIMP_TYPE_DBUS_SERVICE
@@ -7139,8 +7143,10 @@ write_pixel_data_1
 
 <SECTION>
 <FILE>tile-private</FILE>
-TileLink
 Tile
+TileLink
+LARGE_SEEK
+LARGE_TRUNCATE
 </SECTION>
 
 <SECTION>
@@ -7157,14 +7163,7 @@ tile_swap_test
 <FILE>tile</FILE>
 TILE_WIDTH
 TILE_HEIGHT
-TileRowHint
-TILEROWHINT_BROKEN
-TILEROWHINT_OPAQUE
-TILEROWHINT_TRANSPARENT
-TILEROWHINT_MIXED
-TILEROWHINT_OUTOFRANGE
-TILEROWHINT_UNDEFINED
-TILEROWHINT_UNKNOWN
+tile_new
 tile_lock
 tile_release
 tile_alloc
@@ -7174,12 +7173,21 @@ tile_eheight
 tile_bpp
 tile_is_valid
 tile_mark_valid
+tile_attach
+tile_detach
 tile_get_rowhint
 tile_set_rowhint
 tile_allocate_rowhints
 tile_data_pointer
-tile_attach
-tile_detach
+tile_global_refcount
+TileRowHint
+TILEROWHINT_BROKEN
+TILEROWHINT_OPAQUE
+TILEROWHINT_TRANSPARENT
+TILEROWHINT_MIXED
+TILEROWHINT_OUTOFRANGE
+TILEROWHINT_UNDEFINED
+TILEROWHINT_UNKNOWN
 </SECTION>
 
 <SECTION>
@@ -9625,9 +9633,11 @@ fonts_refresh_cmd_callback
 <SECTION>
 <FILE>gradient-editor-commands</FILE>
 gradient_editor_left_color_cmd_callback
+gradient_editor_left_color_type_cmd_callback
 gradient_editor_load_left_cmd_callback
 gradient_editor_save_left_cmd_callback
 gradient_editor_right_color_cmd_callback
+gradient_editor_right_color_type_cmd_callback
 gradient_editor_load_right_cmd_callback
 gradient_editor_save_right_cmd_callback
 gradient_editor_blending_func_cmd_callback
@@ -9695,6 +9705,8 @@ layers_anchor_cmd_callback
 layers_merge_down_cmd_callback
 layers_delete_cmd_callback
 layers_text_discard_cmd_callback
+layers_text_along_vectors_cmd_callback
+layers_text_to_vectors_cmd_callback
 layers_resize_cmd_callback
 layers_resize_to_image_cmd_callback
 layers_scale_cmd_callback
@@ -9845,6 +9857,7 @@ view_zoom_fit_in_cmd_callback
 view_zoom_fit_to_cmd_callback
 view_zoom_cmd_callback
 view_zoom_other_cmd_callback
+view_zoom_revert_cmd_callback
 view_shrink_wrap_cmd_callback
 view_dot_for_dot_cmd_callback
 view_scroll_horizontal_cmd_callback
