@@ -235,9 +235,12 @@ gfig_load_style (Style *style,
 
       style_text[nitems] = g_strdup (load_buf2);
       nitems++;
+
+      if (nitems >= 100)
+        break;
     }
 
-  if (feof (fp))
+  if (feof (fp) || (nitems >= 100))
     {
       g_message ("Error reading style data");
       return TRUE;

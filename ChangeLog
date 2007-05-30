@@ -1,5 +1,10 @@
 2007-05-30  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/gfig/gfig-style.c: Check and handle case where number of
+	style items read can overflow the buffer.
+
+2007-05-30  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/gfig/gfig-style.c: Replaced use of g_new()+strcpy() with
 	g_strdup().
 
