@@ -1560,7 +1560,7 @@ decompose_dialog (void)
   gtk_widget_destroy (dialog);
 
   if (run)
-    strcpy (decovals.extract_type, extract[extract_idx].type);
+    strncpy (decovals.extract_type, extract[extract_idx].type, 31);
 
   return run;
 }
