@@ -19,6 +19,7 @@
 #include "config.h"
 
 #include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpmath/gimpmath.h"
