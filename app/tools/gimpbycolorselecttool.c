@@ -98,7 +98,6 @@ gimp_by_color_select_tool_get_mask (GimpRegionSelectTool *region_select,
   GimpDrawable          *drawable;
   GimpPickable          *pickable;
   GimpRGB                color;
-  guchar                *col;
   gint                   x, y;
 
   drawable = gimp_image_active_drawable (display->image);

@@ -172,7 +172,8 @@ gimp_environ_table_add (GimpEnvironTable *environ_table,
   if (! environ_table->internal)
     environ_table->internal =
       g_hash_table_new_full (g_str_hash, g_str_equal,
-                             g_free, gimp_environ_table_free_value);
+                             g_free,
+                             (GDestroyNotify) gimp_environ_table_free_value);
 
   val = g_slice_new (GimpEnvironValue);
 
