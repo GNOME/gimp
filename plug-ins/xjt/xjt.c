@@ -2443,8 +2443,7 @@ p_scann_token(gchar        *scan_ptr,
            if (*l_ptr == '\"')
            {
              l_ptr++;
-             param->string_val = g_malloc(strlen(l_string_buff) +1);
-             strcpy(param->string_val, l_string_buff);
+             param->string_val = g_strdup (l_string_buff);
              if(xjt_debug) printf("%s", param->string_val);
           }
            else

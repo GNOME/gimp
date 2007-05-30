@@ -1,5 +1,10 @@
 2007-05-30  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/xjt/xjt.c: Replaced use of g_malloc()+strcpy() with
+	g_strdup().
+
+2007-05-30  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/common/gqbist.c: Use strncpy() instead of strcpy() to
 	avoid buffer overflows.
 
