@@ -1,5 +1,10 @@
 2007-05-30  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/common/decompose.c: Replaced hardcoded constant with
+	sizeof array.
+
+2007-05-30  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/common/gtm.c: Replaced g_malloc()+sprintf() with more
 	safe g_strdup_printf().
 
