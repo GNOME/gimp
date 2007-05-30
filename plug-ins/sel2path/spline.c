@@ -43,6 +43,7 @@ new_spline (void)
     = END_POINT (spline)
     = coord;
   SPLINE_DEGREE (spline) = -1;
+  SPLINE_LINEARITY (spline) = 0;
 
   return spline;
 }
