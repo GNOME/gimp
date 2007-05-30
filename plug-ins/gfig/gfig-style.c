@@ -196,13 +196,15 @@ gfig_read_parameter_gimp_rgb (gchar  **text,
     }
 }
 
+#define MAX_STYLE_TEXT_ENTRIES 100
+
 gboolean
 gfig_load_style (Style *style,
                  FILE  *fp)
 {
   gulong  offset;
   gchar   load_buf2[MAX_LOAD_LINE];
-  gchar  *style_text[100];
+  gchar  *style_text[MAX_STYLE_TEXT_ENTRIES];
   gint    nitems = 0;
   gint    value;
   gint    k;
@@ -236,11 +238,11 @@ gfig_load_style (Style *style,
       style_text[nitems] = g_strdup (load_buf2);
       nitems++;
 
-      if (nitems >= 100)
+      if (nitems >= MAX_STYLE_TEXT_ENTRIES)
         break;
     }
 
-  if (feof (fp) || (nitems >= 100))
+  if (feof (fp) || (nitems >= MAX_STYLE_TEXT_ENTRIES))
     {
       g_message ("Error reading style data");
       return TRUE;
