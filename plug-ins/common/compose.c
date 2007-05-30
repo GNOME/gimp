@@ -481,7 +481,7 @@ run (const gchar      *name,
           gint nret;
 
           nret = sscanf (gimp_parasite_data (parasite),
-                         "source=%d type=%s %d %d %d %d",
+                         "source=%d type=%31s %d %d %d %d",
                          &composevals.source_layer_ID,
                          composevals.compose_type,
                          &composevals.inputs[0].comp.ID,
