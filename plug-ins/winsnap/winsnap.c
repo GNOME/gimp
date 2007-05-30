@@ -165,8 +165,8 @@ const GimpPlugInInfo PLUG_IN_INFO =
  * a readable string.  Store in the provided
  * buffer.
  */
-void
-formatWindowsError(char *buffer)
+static void
+formatWindowsError(char *buffer, int buf_size)
 {
   LPVOID lpMsgBuf;
 
@@ -178,7 +178,7 @@ formatWindowsError(char *buffer)
 		(LPTSTR) &lpMsgBuf, 0, NULL );
 
   /* Copy to the buffer */
-  strcpy(buffer, lpMsgBuf);
+  strncpy(buffer, lpMsgBuf, buf_size - 1);
 
   LocalFree(lpMsgBuf);
 }
@@ -223,7 +223,7 @@ primDoWindowCapture(HDC hdcWindow, HDC hdcCompat, RECT rect)
 			     DIB_RGB_COLORS,
 			     &capBytes, NULL, 0);
   if (!hbmCopy) {
-    formatWindowsError(buffer);
+    formatWindowsError(buffer, sizeof buffer);
     g_error("Error creating DIB section: %s", buffer);
   return NULL;
   }
@@ -231,7 +231,7 @@ primDoWindowCapture(HDC hdcWindow, HDC hdcCompat, RECT rect)
   /* Select the bitmap into the compatible DC. */
   oldObject = SelectObject(hdcCompat, hbmCopy);
   if (!oldObject) {
-    formatWindowsError(buffer);
+    formatWindowsError(buffer, sizeof buffer);
     g_error("Error selecting object: %s", buffer);
     return NULL;
   }
@@ -243,7 +243,7 @@ primDoWindowCapture(HDC hdcWindow, HDC hdcCompat, RECT rect)
 	      width, height,
 	      hdcWindow, 0,0,
 	      SRCCOPY)) {
-    formatWindowsError(buffer);
+    formatWindowsError(buffer, sizeof buffer);
     g_error("Error copying bitmap: %s", buffer);
     return NULL;
   }
@@ -291,7 +291,7 @@ doCapture(HWND selectedHwnd)
     capRegion = CreateRectRgn(rect.left, rect.top,
 			      rect.right, rect.bottom);
     if (!capRegion) {
-      formatWindowsError(buffer);
+      formatWindowsError(buffer, sizeof buffer);
       g_error("Error creating region: %s", buffer);
       return FALSE;
     }
@@ -314,13 +314,13 @@ doCapture(HWND selectedHwnd)
   }
 
   if (!hdcSrc) {
-    formatWindowsError(buffer);
+    formatWindowsError(buffer, sizeof buffer);
     g_error("Error getting device context: %s", buffer);
     return FALSE;
   }
   hdcCompat = CreateCompatibleDC(hdcSrc);
   if (!hdcCompat) {
-    formatWindowsError(buffer);
+    formatWindowsError(buffer, sizeof buffer);
     g_error("Error getting compat device context: %s", buffer);
     return FALSE;
   }
@@ -672,7 +672,7 @@ InitApplication(HINSTANCE hInstance)
 
   /* Log error */
   if (!retValue) {
-    formatWindowsError(buffer);
+    formatWindowsError(buffer, sizeof buffer);
     g_error("Error registering class: %s", buffer);
     return retValue;
   }
