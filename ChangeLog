@@ -1,5 +1,10 @@
 2007-05-30  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/gfig/gfig-style.c: Replaced use of g_new()+strcpy() with
+	g_strdup().
+
+2007-05-30  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/winsnap/winsnap.c: Use strncpy() instead of strcpy() to
 	avoid buffer overflows.
 

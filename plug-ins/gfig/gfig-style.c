@@ -233,8 +233,7 @@ gfig_load_style (Style *style,
       if (!strcmp (load_buf2, "</Style>") || feof (fp))
         break;
 
-      style_text[nitems] = g_new (gchar, MAX_LOAD_LINE);
-      strcpy (style_text[nitems], load_buf2);
+      style_text[nitems] = g_strdup (load_buf2);
       nitems++;
     }
 
@@ -770,4 +769,3 @@ gfig_context_get_current_style (void)
   else
     return &gfig_context->default_style;
 }
-
