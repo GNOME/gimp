@@ -1,5 +1,9 @@
 2007-05-30  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/sel2path/fit.c: Initialize spline.linearity before use.
+
+2007-05-30  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/sel2path/spline.c: Initialize spline.linearity before use.
 
 2007-05-30  Mukund Sivaraman  <muks@mukund.org>

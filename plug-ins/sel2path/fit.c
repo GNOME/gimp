@@ -1321,6 +1321,7 @@ fit_one_spline (curve_type curve)
 
   START_POINT (spline) = CURVE_POINT (curve, 0);
   END_POINT (spline) = LAST_CURVE_POINT (curve);
+  SPLINE_LINEARITY (spline) = 0;
   start_vector = make_vector (START_POINT (spline));
   end_vector = make_vector (END_POINT (spline));
 
