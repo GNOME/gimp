@@ -117,6 +117,8 @@ do_file_save_as_dialog (void)
 
   if (! dialog)
     {
+      gchar *filename;
+
       dialog =
         gtk_file_chooser_dialog_new (_("Save Image Map"),
                                      NULL,
@@ -142,6 +144,18 @@ do_file_save_as_dialog (void)
       g_signal_connect (dialog, "response",
                         G_CALLBACK (save_cb),
                         dialog);
+
+      /*  Suggest a filename based on the image name.
+       *  The image name is in UTF-8 encoding.
+       */
+      filename = g_strconcat (get_image_name(), ".map", NULL);
+
+      if (filename)
+        {
+          gtk_file_chooser_set_current_name (GTK_FILE_CHOOSER (dialog),
+                                             filename);
+          g_free (filename);
+        }
     }
 
   gtk_window_present (GTK_WINDOW (dialog));

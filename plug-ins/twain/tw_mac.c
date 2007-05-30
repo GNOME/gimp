@@ -155,7 +155,7 @@ void twainQuitApplication ()
 
 /* main bits */
 
-// mojo from http://lists.wxwidgets.org/archive/wxPython-mac/msg00117.html
+/* http://lists.wxwidgets.org/archive/wxPython-mac/msg00117.html */
 extern OSErr CPSSetProcessName (ProcessSerialNumber *psn, char *processname);
 extern OSErr CPSEnableForegroundOperation( ProcessSerialNumber *psn, UInt32 _arg2, UInt32 _arg3, UInt32 _arg4, UInt32 _arg5);
 

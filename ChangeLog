@@ -1,3 +1,11 @@
+2007-05-30  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/imagemap/imap_file.c (do_file_save_as_dialog): set a
+	filename based on the image name. Based on a patch from Kevin
+	Hurewitz (bug #317916).
+
+	* plug-ins/twain/tw_mac.c: don't use C++ style comments.
+
 2007-05-29  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/postscript.c: minor code cleanup.
