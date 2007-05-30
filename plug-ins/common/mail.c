@@ -812,12 +812,12 @@ create_headers (FILE *mailpipe)
 
   if (strlen (mail_info.comment) > 0)
     {
-      fprintf (mailpipe, mail_info.comment);
+      fprintf (mailpipe, "%s", mail_info.comment);
       fprintf (mailpipe, "\n\n");
     }
 
   if (mesg_body)
-    fprintf (mailpipe, mesg_body);
+    fprintf (mailpipe, "%s", mesg_body);
 
   fprintf (mailpipe, "\n\n");
 

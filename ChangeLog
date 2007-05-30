@@ -1,5 +1,10 @@
 2007-05-30  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/common/mail.c: Added format strings to dangerous
+	fprintf() calls without them which directly print variable data.
+
+2007-05-30  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/gfig/gfig-style.c: Use a macro for size of style text
 	entries array.
 
