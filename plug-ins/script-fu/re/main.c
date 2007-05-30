@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include "regex.h"
-
+#include "split.h"
 #include "main.ih"
 
 char *progname;
@@ -17,8 +17,6 @@ int eopts = 0;
 regoff_t startoff = 0;
 regoff_t endoff = 0;
 
-
-extern int split();
 extern void regprint();
 
 /*
@@ -82,7 +80,7 @@ char *argv[];
 			eprint(err), len, sizeof(erbuf), erbuf);
 		exit(status);
 	}
-	regprint(&re, stdout);	
+	regprint(&re, stdout);
 
 	if (optind >= argc) {
 		regfree(&re);

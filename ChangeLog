@@ -1,5 +1,13 @@
 2007-05-30  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/script-fu/re/split.c
+	* plug-ins/script-fu/re/split.h
+	* plug-ins/script-fu/re/main.c
+	* plug-ins/script-fu/re/Makefile.am: Created a header file (split.h)
+	and added a prototype for split().
+
+2007-05-30  Mukund Sivaraman  <muks@mukund.org>
+
 	* app/tools/gimpdrawtool.c: Added missing include.
 
 	* app/tools/gimpbycolorselecttool.c: Removed unused variable.

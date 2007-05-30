@@ -23,6 +23,7 @@ libre_a_SOURCES = \
 	regexec.c	\
 	regfree.c	\
 	split.c		\
+	split.h		\
 	utils.h
 
 #engine.c and engine.ih are listed below rather than above since the
