@@ -247,7 +247,6 @@ run (const gchar      *name,
           const gchar *filename = param[0].data.d_string;
           gint         width    = 0;
           gint         height   = 0;
-          gint32       image_ID;
 
           image_ID = load_thumbnail_image (filename, &width, &height);
 
