@@ -254,22 +254,23 @@ save_image (const gchar  *filename,
   buffer = g_new (guchar, drawable->bpp);
   buf2   = g_new (guchar, drawable->bpp);
 
-  width  = g_malloc (2);
-  height = g_malloc (2);
-  sprintf (width, " ");
-  sprintf (height, " ");
+  width = height = NULL;
 
   if (strcmp (gtmvals.clwidth, "") != 0)
     {
-      width = g_malloc (strlen (gtmvals.clwidth) + 11);
-      sprintf (width," WIDTH=\"%s\"", gtmvals.clwidth);
+      width = g_strdup_printf (" WIDTH=\"%s\"", gtmvals.clwidth);
     }
 
   if (strcmp (gtmvals.clheight, "") != 0)
     {
-      height = g_malloc (strlen (gtmvals.clheight) + 13);
-      sprintf (height, " HEIGHT=\"%s\" ", gtmvals.clheight);
+      height = g_strdup_printf (" HEIGHT=\"%s\" ", gtmvals.clheight);
     }
+  
+  if (! width)
+    width = g_strdup (" ");
+  
+  if (! height)
+    height = g_strdup (" ");
 
   /* Initialize array to hold ROWSPAN and COLSPAN cell allocation table */
 
