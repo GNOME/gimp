@@ -659,26 +659,26 @@ static void
 gtm_caption_callback (GtkWidget *widget,
 		      gpointer   data)
 {
-  strcpy (gtmvals.captiontxt, gtk_entry_get_text (GTK_ENTRY (widget)));
+  strncpy (gtmvals.captiontxt, gtk_entry_get_text (GTK_ENTRY (widget)), 255);
 }
 
 static void
 gtm_cellcontent_callback (GtkWidget *widget,
 			  gpointer   data)
 {
-  strcpy (gtmvals.cellcontent, gtk_entry_get_text (GTK_ENTRY (widget)));
+  strncpy (gtmvals.cellcontent, gtk_entry_get_text (GTK_ENTRY (widget)), 255);
 }
 
 static void
 gtm_clwidth_callback (GtkWidget *widget,
 		      gpointer   data)
 {
-  strcpy (gtmvals.clwidth, gtk_entry_get_text (GTK_ENTRY (widget)));
+  strncpy (gtmvals.clwidth, gtk_entry_get_text (GTK_ENTRY (widget)), 255);
 }
 
 static void
 gtm_clheight_callback (GtkWidget *widget,
 		       gpointer   data)
 {
-  strcpy (gtmvals.clheight, gtk_entry_get_text (GTK_ENTRY (widget)));
+  strncpy (gtmvals.clheight, gtk_entry_get_text (GTK_ENTRY (widget)), 255);
 }
