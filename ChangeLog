@@ -1,5 +1,10 @@
 2007-05-30  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/common/channel_mixer.c: Specify maximum field width in
+	fscanf() to avoid buffer overflows.
+
+2007-05-30  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/gfig/gfig-style.c: Check and handle case where number of
 	style items read can overflow the buffer.
 
