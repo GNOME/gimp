@@ -1309,7 +1309,7 @@ load_preset_response (GtkFileChooser *chooser,
   gchar          buffer1[G_ASCII_DTOSTR_BUF_SIZE];
   gchar          buffer2[G_ASCII_DTOSTR_BUF_SIZE];
   gchar          buffer3[G_ASCII_DTOSTR_BUF_SIZE];
-  gchar          type_label[20];
+  gchar          type_label[21];
   gchar         *endptr;
 
   if (response_id == GTK_RESPONSE_OK)
@@ -1335,7 +1335,7 @@ load_preset_response (GtkFileChooser *chooser,
             {
               source = &mapvals.lightsource[k];
 
-              fscanf (fp, " Type: %s", type_label);
+              fscanf (fp, " Type: %20s", type_label);
 
               if (!strcmp (type_label, "Point"))
                 source->type = POINT_LIGHT;

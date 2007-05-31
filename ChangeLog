@@ -1,5 +1,11 @@
 2007-05-31  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/Lighting/lighting_ui.c
+	* plug-ins/FractalExplorer/Dialogs.c: Specify maximum field width in
+	fscanf() to avoid buffer overflows.
+
+2007-05-31  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/gfig/gfig.c: Specify maximum field width in sscanf() to
 	avoid buffer overflows.
 
