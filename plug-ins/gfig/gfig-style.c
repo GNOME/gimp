@@ -213,7 +213,7 @@ gfig_load_style (Style *style,
   offset = ftell (fp);
 
   get_line (load_buf2, MAX_LOAD_LINE, fp, 0);
-  if (1 != sscanf (load_buf2, "<Style %s>", name))
+  if (1 != sscanf (load_buf2, "<Style %99s>", name))
     {
       /* no style data, copy default style and fail silently */
       gfig_style_copy (style, &gfig_context->default_style, "default style");
