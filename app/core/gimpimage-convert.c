@@ -516,13 +516,6 @@ typedef struct
 
 } box, *boxptr;
 
-typedef struct
-{
-  long ncolors;
-  long dither;
-} Options;
-
-
 
 static void zero_histogram_gray     (CFHistogram   histogram);
 static void zero_histogram_rgb      (CFHistogram   histogram);
@@ -591,8 +584,8 @@ make_remap_table (const unsigned char  old_palette[],
   int used = 0;
 
   memset(temppal, 0, 256 * 3);
-  memset(tempuse, 0, 256 * sizeof(unsigned long));
-  memset(transmap, 255, 256 * sizeof(unsigned long));
+  memset(tempuse, 0, 256 * sizeof (unsigned long));
+  memset(transmap, 255, 256 * sizeof (unsigned long));
 
   /* First pass - only collect entries which are marked as
      being used at all in index_used_count. */
@@ -640,14 +633,16 @@ make_remap_table (const unsigned char  old_palette[],
 
   /* Third pass - rank all used indicies to the beginning of the
      palette. */
-  palentries = g_malloc(used * sizeof(palentryStruct));
+  palentries = g_new (palentryStruct, used);
+
   for (i = 0; i < used; i++)
     {
       palentries[i].initial_index = i;
       palentries[i].used_count    = tempuse[i];
     }
-  qsort(palentries, used, sizeof(palentryStruct),
-        &mapping_compare);
+
+  qsort (palentries, used, sizeof (palentryStruct), &mapping_compare);
+
   for (i = 0; i < *num_entries; i++)
     {
       if (index_used_count[i])
@@ -1107,7 +1102,7 @@ static void
 zero_histogram_rgb (CFHistogram histogram)
 {
   memset (histogram, 0,
-          HIST_R_ELEMS * HIST_G_ELEMS * HIST_B_ELEMS * sizeof(ColorFreq));
+          HIST_R_ELEMS * HIST_G_ELEMS * HIST_B_ELEMS * sizeof (ColorFreq));
 }
 
 
@@ -2229,7 +2224,7 @@ select_colors_gray (QuantizeObj *quantobj,
   int i;
 
   /* Allocate workspace for box list */
-  boxlist = (boxptr) g_malloc ( desired * sizeof(box) );
+  boxlist = g_new (box, desired);
 
   /* Initialize one box containing whole space */
   numboxes = 1;
@@ -2258,7 +2253,7 @@ select_colors_rgb (QuantizeObj *quantobj,
   int i;
 
   /* Allocate workspace for box list */
-  boxlist = (boxptr) g_malloc ( desired * sizeof(box) );
+  boxlist = g_new (box, desired);
 
   /* Initialize one box containing whole space */
   numboxes = 1;
@@ -3457,24 +3452,24 @@ median_cut_pass2_nodestruct_dither_rgb (QuantizeObj *quantobj,
  * to Aaron Giles for this idea.
  */
 
-static int *
+static gint *
 init_error_limit (const int error_freedom)
 /* Allocate and fill in the error_limiter table */
 {
-  int *table;
-  int in, out;
+  gint *table;
+  gint  in, out;
 
   /* #define STEPSIZE 16 */
   /* #define STEPSIZE 200 */
 
-  table = g_malloc (sizeof (int) * (255 * 2 + 1));
+  table = g_new (gint, 255 * 2 + 1);
   table += 255;                 /* so we can index -255 ... +255 */
 
   if (error_freedom == 0)
     {
       /* Coarse function, much bleeding. */
 
-      const int STEPSIZE = 190;
+      const gint STEPSIZE = 190;
 
       for (in = 0; in < STEPSIZE; in++)
         {
@@ -3486,13 +3481,14 @@ init_error_limit (const int error_freedom)
           table[in] = STEPSIZE;
           table[-in] = -STEPSIZE;
         }
+
       return (table);
     }
   else
     {
       /* Smooth function, bleeding more constrained */
 
-      const int STEPSIZE = 24;
+      const gint STEPSIZE = 24;
 
       /* Map errors 1:1 up to +- STEPSIZE */
       out = 0;
@@ -3582,10 +3578,9 @@ median_cut_pass2_fs_dither_gray (QuantizeObj *quantobj,
 
   src_buf  = g_malloc (width * src_bytes);
   dest_buf = g_malloc (width * dest_bytes);
-  next_row = g_malloc (sizeof (gint) * (width + 2));
-  prev_row = g_malloc (sizeof (gint) * (width + 2));
 
-  memset (prev_row, 0, (width + 2) * sizeof (int));
+  next_row = g_new (gint, width + 2);
+  prev_row = g_new0 (gint, width + 2);
 
   fs_err1 = floyd_steinberg_error1 + 511;
   fs_err2 = floyd_steinberg_error2 + 511;
@@ -3752,7 +3747,7 @@ median_cut_pass2_rgb_init (QuantizeObj *quantobj)
   zero_histogram_rgb (quantobj->histogram);
 
   /* Mark all indices as currently unused */
-  memset (quantobj->index_used_count, 0, 256 * sizeof(unsigned long));
+  memset (quantobj->index_used_count, 0, 256 * sizeof (unsigned long));
 
   /* Make a version of our discovered colourmap in linear space */
   for (i=0; i<quantobj->actual_number_of_colors; i++)
@@ -3861,18 +3856,15 @@ median_cut_pass2_fs_dither_rgb (QuantizeObj *quantobj,
       global_bmin = MIN(global_bmin, quantobj->clin[index].blue);
     }
 
-  src_buf = g_malloc (width * src_bytes);
+  src_buf  = g_malloc (width * src_bytes);
   dest_buf = g_malloc (width * dest_bytes);
-  red_n_row = g_malloc (sizeof (int) * (width + 2));
-  red_p_row = g_malloc (sizeof (int) * (width + 2));
-  grn_n_row = g_malloc (sizeof (int) * (width + 2));
-  grn_p_row = g_malloc (sizeof (int) * (width + 2));
-  blu_n_row = g_malloc (sizeof (int) * (width + 2));
-  blu_p_row = g_malloc (sizeof (int) * (width + 2));
 
-  memset (red_p_row, 0, (width + 2) * sizeof (int));
-  memset (grn_p_row, 0, (width + 2) * sizeof (int));
-  memset (blu_p_row, 0, (width + 2) * sizeof (int));
+  red_n_row = g_new (gint, width + 2);
+  red_p_row = g_new0 (gint, width + 2);
+  grn_n_row = g_new (gint, width + 2);
+  grn_p_row = g_new0 (gint, width + 2);
+  blu_n_row = g_new (gint, width + 2);
+  blu_p_row = g_new0 (gint, width + 2);
 
   fs_err1 = floyd_steinberg_error1 + 511;
   fs_err2 = floyd_steinberg_error2 + 511;
@@ -4196,18 +4188,16 @@ initialize_median_cut (GimpImageBaseType       type,
                        gboolean                want_alpha_dither,
                        GimpProgress           *progress)
 {
-  QuantizeObj * quantobj;
+  QuantizeObj *quantobj;
 
   /* Initialize the data structures */
-  quantobj = g_malloc (sizeof (QuantizeObj));
+  quantobj = g_new (QuantizeObj, 1);
 
   if (type == GIMP_GRAY && palette_type == GIMP_MAKE_PALETTE)
-    quantobj->histogram = g_malloc (sizeof (ColorFreq) * 256);
+    quantobj->histogram = g_new (ColorFreq, 256);
   else
-    quantobj->histogram = g_malloc (sizeof (ColorFreq) *
-                                    HIST_R_ELEMS *
-                                    HIST_G_ELEMS *
-                                    HIST_B_ELEMS);
+    quantobj->histogram = g_new (ColorFreq,
+                                 HIST_R_ELEMS * HIST_G_ELEMS * HIST_B_ELEMS);
 
   quantobj->desired_number_of_colors = num_colors;
   quantobj->want_alpha_dither        = want_alpha_dither;

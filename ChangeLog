@@ -1,5 +1,9 @@
 2007-05-31  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-convert.c: minor code cleanup.
+
+2007-05-31  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/helpbrowser/queue.c:  allocate structs using GSlice.
 
 2007-05-31  Mukund Sivaraman  <muks@mukund.org>
