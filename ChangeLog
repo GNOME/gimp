@@ -1,5 +1,10 @@
 2007-05-31  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/common/spheredesigner.c: Don't write to an uninitialized
+	pointer (end).
+
+2007-05-31  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/gfig/gfig-style.c: Specify maximum field width in
 	sscanf() to avoid buffer overflows.
 

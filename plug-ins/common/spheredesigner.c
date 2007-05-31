@@ -1997,7 +1997,8 @@ static void
 loadit (const gchar * fn)
 {
   FILE    *f;
-  gchar   *end;
+  gchar    endbuf[21 * (G_ASCII_DTOSTR_BUF_SIZE + 1)];
+  gchar   *end = endbuf;
   gchar    line[1024];
   gint     i;
   texture *t;
