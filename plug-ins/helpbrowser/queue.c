@@ -46,7 +46,7 @@ typedef struct
 static Item *
 item_new (const gchar *uri)
 {
-  Item *item = g_new0 (Item, 1);
+  Item *item = g_slice_new0 (Item);
 
   item->uri = g_strdup (uri);
 
@@ -59,14 +59,14 @@ item_free (Item *item)
   g_free (item->uri);
   g_free (item->title);
 
-  g_free (item);
+  g_slice_free (Item, item);
 }
 
 
 Queue *
 queue_new (void)
 {
-  return g_new0 (Queue, 1);
+  return g_slice_new0 (Queue);
 }
 
 void
@@ -81,7 +81,7 @@ queue_free (Queue *h)
       g_list_free (h->queue);
     }
 
-  g_free (h);
+  g_slice_free (Queue, h);
 }
 
 void
