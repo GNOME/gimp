@@ -44,7 +44,7 @@ static void
 test_run (GtkWidget *area,
           gboolean   visible)
 {
-  guchar       *buf;
+  guchar        buf[WIDTH * HEIGHT * 8];
   gint          i, j;
   gint          offset, offset2, offset3;
   gint          num_iters = NUM_ITERS;
@@ -62,8 +62,6 @@ test_run (GtkWidget *area,
   g_print ("\nPerformance tests for GimpPreviewArea (%s, %d iterations):\n\n",
            visible ? "visible" : "hidden", num_iters);
 
-  buf = g_malloc (WIDTH * HEIGHT * 8);
-
   val = 0;
   for (j = 0; j < WIDTH * HEIGHT * 8; j++)
     {
@@ -71,7 +69,7 @@ test_run (GtkWidget *area,
       buf[j] = val;
     }
 
-  gimp_preview_area_set_cmap (GIMP_PREVIEW_AREA (area), buf, 256);
+  gimp_preview_area_set_colormap (GIMP_PREVIEW_AREA (area), buf, 256);
 
   /* Let's warm up the cache, and also wait for the window manager
      to settle. */
@@ -205,8 +203,6 @@ test_run (GtkWidget *area,
            num_iters / total_time,
            num_iters * (WIDTH * HEIGHT * 1e-6) / total_time);
   g_print ("\n");
-
-  g_free (buf);
 }
 
 static void

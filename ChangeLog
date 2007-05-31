@@ -1,5 +1,12 @@
 2007-05-31  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/Makefile.am: build test-preview-area to avoid bit
+	rot.
+
+	* libgimpwidgets/test-preview-area.c: fixed compilation.
+
+2007-05-31  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-convert.c: unified progress strings.
 
 2007-05-31  Sven Neumann  <sven@gimp.org>

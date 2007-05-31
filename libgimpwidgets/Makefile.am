@@ -300,10 +300,10 @@ $(srcdir)/gimp-wilber-pixbufs.h: $(WILBER_IMAGES) Makefile.am
 
 
 #
-# test programs, not to be built by default and never installed
+# test programs, not installed
 #
 
-EXTRA_PROGRAMS = test-preview-area
+noinst_PROGRAMS = test-preview-area
 
 test_preview_area_SOURCES = test-preview-area.c 
 
