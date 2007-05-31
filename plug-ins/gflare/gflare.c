@@ -1340,7 +1340,7 @@ static void
 gflare_read_double (gdouble    *dblvar,
                     GFlareFile *gf)
 {
-  gchar buf[30];
+  gchar buf[31];
 
   if (gf->error)
     return;
@@ -1362,7 +1362,7 @@ gflare_read_gradient_name (GradientName  name,
 
   /* FIXME: this is buggy */
 
-  if (fscanf (gf->fp, "%s", tmp) == 1)
+  if (fscanf (gf->fp, "%1023s", tmp) == 1)
     {
       /* @GRADIENT_NAME */
       gradient_name_decode (dec, tmp);
@@ -1382,7 +1382,7 @@ gflare_read_shape (GFlareShape *shape,
   if (gf->error)
     return;
 
-  if (fscanf (gf->fp, "%s", tmp) == 1)
+  if (fscanf (gf->fp, "%1023s", tmp) == 1)
     {
       for (i = 0; i < GF_NUM_SHAPES; i++)
         if (strcmp (tmp, gflare_shapes[i]) == 0)
@@ -1404,7 +1404,7 @@ gflare_read_mode (GFlareMode *mode,
   if (gf->error)
     return;
 
-  if (fscanf (gf->fp, "%s", tmp) == 1)
+  if (fscanf (gf->fp, "%1023s", tmp) == 1)
     {
       for (i = 0; i < GF_NUM_MODES; i++)
         if (strcmp (tmp, gflare_modes[i]) == 0)
