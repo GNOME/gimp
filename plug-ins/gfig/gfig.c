@@ -603,11 +603,11 @@ load_options (GFigObj *gfig,
     {
       /* Get option name */
 #ifdef DEBUG
-      printf ("num = %d\n", sscanf (load_buf, "%s %s", str_buf, opt_buf));
+      printf ("num = %d\n", sscanf (load_buf, "%255s %255s", str_buf, opt_buf));
 
       printf ("option %s val %s\n", str_buf, opt_buf);
 #else
-      sscanf (load_buf, "%s %s", str_buf, opt_buf);
+      sscanf (load_buf, "%255s %255s", str_buf, opt_buf);
 #endif /* DEBUG */
 
       if (!strcmp (str_buf, "GridSpacing:"))
