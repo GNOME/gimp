@@ -851,7 +851,9 @@ gimp_perspective_clone_tool_mode_notify (GObject                  *config,
       perspective_clone->transform_inv = perspective_clone_tool->transform;
       gimp_matrix3_invert (&perspective_clone->transform_inv);
 
+#if 0
       /* print the matrix */
+
       g_printerr ("%f\t",   (perspective_clone_tool->transform).coeff[0][0]);
       g_printerr ("%f\t",   (perspective_clone_tool->transform).coeff[0][1]);
       g_printerr ("%f\n",   (perspective_clone_tool->transform).coeff[0][2]);
@@ -861,6 +863,7 @@ gimp_perspective_clone_tool_mode_notify (GObject                  *config,
       g_printerr ("%f\t",   (perspective_clone_tool->transform).coeff[2][0]);
       g_printerr ("%f\t",   (perspective_clone_tool->transform).coeff[2][1]);
       g_printerr ("%f\n\n", (perspective_clone_tool->transform).coeff[2][2]);
+#endif
     }
   else
     {
