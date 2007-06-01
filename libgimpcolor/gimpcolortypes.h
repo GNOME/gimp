@@ -25,6 +25,8 @@ G_BEGIN_DECLS
 /* For information look into the C source or the html documentation */
 
 
+typedef struct _GimpColorManaged GimpColorManaged;  /* dummy typedef */
+
 /*  usually we don't keep the structure definitions in the types file
  *  but GimpRGB appears in too many header files...
  */

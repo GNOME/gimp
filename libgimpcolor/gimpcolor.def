@@ -16,6 +16,9 @@ EXPORTS
 	gimp_cmyka_get_uchar
 	gimp_cmyka_set
 	gimp_cmyka_set_uchar
+	gimp_color_managed_get_icc_profile
+	gimp_color_managed_interface_get_type
+	gimp_color_managed_profile_changed
 	gimp_hsl_get_type
 	gimp_hsl_to_rgb
 	gimp_hsl_to_rgb_int

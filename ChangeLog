@@ -1,5 +1,15 @@
 2007-06-01  Sven Neumann  <sven@gimp.org>
 
+	* libgimpcolor/Makefile.am
+	* libgimpcolor/gimpcolor.h
+	* libgimpcolor/gimpcolortypes.h
+	* libgimpcolor/gimpcolormanaged.[ch]: added an interface that will
+	be used to implement the missing bits of color management.
+
+	* libgimpcolor/gimpcolor.def: updated.
+
+2007-06-01  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/Makefile.am: changed back to using EXTRA_PROGRAMS.
 
 2007-05-31  Sven Neumann  <sven@gimp.org>
