@@ -1,3 +1,4 @@
+# translation of cs.po to Czech
 # Stanislav Brabec <utx@penguin.cz>, 1998-2001.
 # Michal Bukovjan <bukm@centrum.cz>, 2002,2003.
 # Miloslav Trmac <mitr@volny.cz>, 2003 - 2005.
@@ -10,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-24 15:12+0200\n"
-"PO-Revision-Date: 2007-05-24 16:43+0200\n"
-"Last-Translator: \n"
-"Language-Team:  <cs@li.org>\n"
+"POT-Creation-Date: 2007-06-01 11:35+0200\n"
+"PO-Revision-Date: 2007-06-01 12:05+0200\n"
+"Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -658,9 +659,9 @@ msgid "New Channel Color"
 msgstr "Barva nového kanálu"
 
 #: ../app/actions/channels-commands.c:243
-#: ../app/display/gimpdisplayshell-dnd.c:497
+#: ../app/display/gimpdisplayshell-dnd.c:498
 #: ../app/widgets/gimpchanneltreeview.c:247
-#: ../app/widgets/gimplayertreeview.c:806 ../app/widgets/gimptoolbox-dnd.c:307
+#: ../app/widgets/gimplayertreeview.c:806 ../app/widgets/gimptoolbox-dnd.c:312
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Kopie kanálu %s"
@@ -808,12 +809,12 @@ msgstr "_Sloučený vzorek"
 msgid "Sample Merged"
 msgstr "Sloučený vzorek"
 
-#: ../app/actions/data-commands.c:105 ../app/actions/documents-commands.c:321
+#: ../app/actions/data-commands.c:107 ../app/actions/documents-commands.c:311
 #: ../app/actions/file-commands.c:170 ../app/dialogs/file-open-dialog.c:203
 #: ../app/dialogs/file-open-dialog.c:249
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
-#: ../app/display/gimpdisplayshell-dnd.c:449
+#: ../app/display/gimpdisplayshell-dnd.c:450
 #: ../app/widgets/gimplayertreeview.c:763 ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:894
 #, c-format
@@ -826,7 +827,7 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/actions/data-commands.c:131
+#: ../app/actions/data-commands.c:133
 #: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1371
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:770
@@ -834,16 +835,16 @@ msgstr ""
 msgid "Untitled"
 msgstr "Bez názvu"
 
-#: ../app/actions/data-commands.c:228
+#: ../app/actions/data-commands.c:231
 msgid "Delete Object"
 msgstr "Odstranit objekt"
 
-#: ../app/actions/data-commands.c:251
+#: ../app/actions/data-commands.c:254
 #, c-format
 msgid "Delete '%s'?"
 msgstr "Smazat '%s'?"
 
-#: ../app/actions/data-commands.c:254
+#: ../app/actions/data-commands.c:257
 #, c-format
 msgid "Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Jste si jisti, že chcete odstranit '%s' ze seznamu a smazat z disku?"
@@ -1312,15 +1313,15 @@ msgstr "Odstranit visící p_oložky"
 msgid "Remove dangling entries"
 msgstr "Odstranit visící položky"
 
-#: ../app/actions/documents-commands.c:197
+#: ../app/actions/documents-commands.c:187
 msgid "Clear Document History"
 msgstr "Vymazat historii dokumentů"
 
-#: ../app/actions/documents-commands.c:220
+#: ../app/actions/documents-commands.c:210
 msgid "Remove all entries from the document history?"
 msgstr "Odstranit všechny položky z historie dokumentů?"
 
-#: ../app/actions/documents-commands.c:224
+#: ../app/actions/documents-commands.c:214
 msgid ""
 "Clearing the document history will permanently remove all currently listed "
 "entries."
@@ -3535,24 +3536,24 @@ msgstr "_Odstranit šablonu"
 msgid "Delete the selected template"
 msgstr "Odstranit vybranou šablonu"
 
-#: ../app/actions/templates-commands.c:119
+#: ../app/actions/templates-commands.c:121
 msgid "New Template"
 msgstr "Nová šablona"
 
-#: ../app/actions/templates-commands.c:122
+#: ../app/actions/templates-commands.c:124
 msgid "Create a New Template"
 msgstr "Vytvořit novou šablonu"
 
-#: ../app/actions/templates-commands.c:181
-#: ../app/actions/templates-commands.c:184
+#: ../app/actions/templates-commands.c:183
+#: ../app/actions/templates-commands.c:186
 msgid "Edit Template"
 msgstr "Upravit šablonu"
 
-#: ../app/actions/templates-commands.c:218
+#: ../app/actions/templates-commands.c:221
 msgid "Delete Template"
 msgstr "Odstranit šablonu"
 
-#: ../app/actions/templates-commands.c:244
+#: ../app/actions/templates-commands.c:247
 #, c-format
 msgid "Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr "Jste si jisti, že chcete odstranit šablonu '%s' ze seznamu a z disku?"
@@ -6088,29 +6089,29 @@ msgstr "Změnit položku mapy barev"
 msgid "Add Color to Colormap"
 msgstr "Přidat barvu do mapy barev"
 
-#: ../app/core/gimpimage-convert.c:793
+#: ../app/core/gimpimage-convert.c:788
 msgid "Cannot convert image: palette is empty."
 msgstr "Nemohu převést obrázek: paleta je prázdná."
 
-#: ../app/core/gimpimage-convert.c:807
+#: ../app/core/gimpimage-convert.c:802
 msgid "Convert Image to RGB"
 msgstr "Převést obrázek na RGB"
 
-#: ../app/core/gimpimage-convert.c:811
+#: ../app/core/gimpimage-convert.c:806
 msgid "Convert Image to Grayscale"
 msgstr "Převést obrázek na odstíny šedi"
 
-#: ../app/core/gimpimage-convert.c:815
+#: ../app/core/gimpimage-convert.c:810
 msgid "Convert Image to Indexed"
 msgstr "Převést obrázek na indexovaný"
 
-#: ../app/core/gimpimage-convert.c:897
-msgid "Converting to indexed (stage 2)"
-msgstr "Převádím na indexovaný (krok 2)"
+#: ../app/core/gimpimage-convert.c:892
+msgid "Converting to indexed colors (stage 2)"
+msgstr "Převádím do indexovaných barev (krok 2)"
 
-#: ../app/core/gimpimage-convert.c:942
-msgid "Converting to indexed (stage 3)"
-msgstr "Převádím na indexovaný (krok 3)"
+#: ../app/core/gimpimage-convert.c:937
+msgid "Converting to indexed colors (stage 3)"
+msgstr "Převádím do indexovaných barev (krok 3)"
 
 #: ../app/core/gimpimage-crop.c:126
 msgid "command|Crop Image"
@@ -6209,119 +6210,119 @@ msgstr "Změna jednotky obrázku"
 msgid "Attach Parasite to Image"
 msgstr "Připojit parazita k obrázku"
 
-#: ../app/core/gimpimage.c:2361
+#: ../app/core/gimpimage.c:2359
 msgid "Remove Parasite from Image"
 msgstr "Odstranění parazita z obrázku"
 
-#: ../app/core/gimpimage.c:2816
+#: ../app/core/gimpimage.c:2814
 msgid "Add Layer"
 msgstr "Přidat vrstvu"
 
-#: ../app/core/gimpimage.c:2881 ../app/core/gimpimage.c:2894
+#: ../app/core/gimpimage.c:2879 ../app/core/gimpimage.c:2892
 msgid "Remove Layer"
 msgstr "Odstranit vrstvu"
 
-#: ../app/core/gimpimage.c:3033
+#: ../app/core/gimpimage.c:3031
 msgid "Layer cannot be raised higher."
 msgstr "Vrstva nemůže být ještě výš."
 
-#: ../app/core/gimpimage.c:3038
+#: ../app/core/gimpimage.c:3036
 msgid "Raise Layer"
 msgstr "Vrstvu výš"
 
-#: ../app/core/gimpimage.c:3055
+#: ../app/core/gimpimage.c:3053
 msgid "Layer cannot be lowered more."
 msgstr "Vrstva nemůže být ještě níž."
 
-#: ../app/core/gimpimage.c:3060
+#: ../app/core/gimpimage.c:3058
 msgid "Lower Layer"
 msgstr "Vrstvu níž"
 
-#: ../app/core/gimpimage.c:3071
+#: ../app/core/gimpimage.c:3069
 msgid "Raise Layer to Top"
 msgstr "Vrstvu nahoru"
 
-#: ../app/core/gimpimage.c:3086
+#: ../app/core/gimpimage.c:3084
 msgid "Lower Layer to Bottom"
 msgstr "Vrstvu dospod"
 
-#: ../app/core/gimpimage.c:3159
+#: ../app/core/gimpimage.c:3157
 msgid "Add Channel"
 msgstr "Přidat kanál"
 
-#: ../app/core/gimpimage.c:3204 ../app/core/gimpimage.c:3215
+#: ../app/core/gimpimage.c:3202 ../app/core/gimpimage.c:3213
 msgid "Remove Channel"
 msgstr "Odstranit kanál"
 
-#: ../app/core/gimpimage.c:3262
+#: ../app/core/gimpimage.c:3260
 msgid "Channel cannot be raised higher."
 msgstr "Kanál nemůže být ještě výš."
 
-#: ../app/core/gimpimage.c:3267
+#: ../app/core/gimpimage.c:3265
 msgid "Raise Channel"
 msgstr "Kanál výš"
 
-#: ../app/core/gimpimage.c:3284
+#: ../app/core/gimpimage.c:3282
 msgid "Channel is already on top."
 msgstr "Kanál je již nahoře."
 
-#: ../app/core/gimpimage.c:3289
+#: ../app/core/gimpimage.c:3287
 msgid "Raise Channel to Top"
 msgstr "Kanál nahoru"
 
-#: ../app/core/gimpimage.c:3306
+#: ../app/core/gimpimage.c:3304
 msgid "Channel cannot be lowered more."
 msgstr "Kanál nemůže být ještě níž."
 
-#: ../app/core/gimpimage.c:3311
+#: ../app/core/gimpimage.c:3309
 msgid "Lower Channel"
 msgstr "Kanál níž"
 
-#: ../app/core/gimpimage.c:3331
+#: ../app/core/gimpimage.c:3329
 msgid "Channel is already on the bottom."
 msgstr "Kanál je již vespod."
 
-#: ../app/core/gimpimage.c:3336
+#: ../app/core/gimpimage.c:3334
 msgid "Lower Channel to Bottom"
 msgstr "Kanál dospod"
 
-#: ../app/core/gimpimage.c:3411
+#: ../app/core/gimpimage.c:3409
 msgid "Add Path"
 msgstr "Přidat cestu"
 
-#: ../app/core/gimpimage.c:3457
+#: ../app/core/gimpimage.c:3455
 msgid "Remove Path"
 msgstr "Odstranit cestu"
 
-#: ../app/core/gimpimage.c:3501
+#: ../app/core/gimpimage.c:3499
 msgid "Path cannot be raised higher."
 msgstr "Cesta nemůže být ještě výš."
 
-#: ../app/core/gimpimage.c:3506
+#: ../app/core/gimpimage.c:3504
 msgid "Raise Path"
 msgstr "Zvýšit cestu"
 
-#: ../app/core/gimpimage.c:3523
+#: ../app/core/gimpimage.c:3521
 msgid "Path is already on top."
 msgstr "Cesta je již nahoře."
 
-#: ../app/core/gimpimage.c:3528
+#: ../app/core/gimpimage.c:3526
 msgid "Raise Path to Top"
 msgstr "Zvýšit cestu nahoru"
 
-#: ../app/core/gimpimage.c:3545
+#: ../app/core/gimpimage.c:3543
 msgid "Path cannot be lowered more."
 msgstr "Cesta nemůže být ještě níž."
 
-#: ../app/core/gimpimage.c:3550
+#: ../app/core/gimpimage.c:3548
 msgid "Lower Path"
 msgstr "Snížit cestu"
 
-#: ../app/core/gimpimage.c:3570
+#: ../app/core/gimpimage.c:3568
 msgid "Path is already on the bottom."
 msgstr "Cesta je již vespod."
 
-#: ../app/core/gimpimage.c:3575
+#: ../app/core/gimpimage.c:3573
 msgid "Lower Path to Bottom"
 msgstr "Snížit cestu dolů"
 
@@ -6359,7 +6360,7 @@ msgstr "(Náhled je možnázastaralý)"
 
 #. pixel size
 #: ../app/core/gimpimagefile.c:629 ../app/widgets/gimpimagepropview.c:431
-#: ../app/widgets/gimpsizebox.c:440 ../app/widgets/gimptemplateeditor.c:564
+#: ../app/widgets/gimpsizebox.c:438 ../app/widgets/gimptemplateeditor.c:564
 #, c-format
 msgid "%d × %d pixel"
 msgid_plural "%d × %d pixels"
@@ -6388,7 +6389,7 @@ msgstr "Připojení parazita"
 msgid "Attach Parasite to Item"
 msgstr "Připojení parazita k položce"
 
-#: ../app/core/gimpitem.c:1189 ../app/core/gimpitem.c:1196
+#: ../app/core/gimpitem.c:1187 ../app/core/gimpitem.c:1194
 msgid "Remove Parasite from Item"
 msgstr "Odstranění parazita z položky"
 
@@ -8026,28 +8027,28 @@ msgid "Print Size"
 msgstr "Velikost tisku"
 
 #. the image size labels
-#: ../app/dialogs/print-size-dialog.c:165 ../app/widgets/gimpsizebox.c:203
+#: ../app/dialogs/print-size-dialog.c:165 ../app/widgets/gimpsizebox.c:202
 #: ../app/widgets/gimptemplateeditor.c:161
 msgid "_Width:"
 msgstr "_Šířka:"
 
-#: ../app/dialogs/print-size-dialog.c:172 ../app/widgets/gimpsizebox.c:207
+#: ../app/dialogs/print-size-dialog.c:172 ../app/widgets/gimpsizebox.c:206
 #: ../app/widgets/gimptemplateeditor.c:168
 msgid "H_eight:"
 msgstr "_Výška:"
 
 #. the resolution labels
-#: ../app/dialogs/print-size-dialog.c:220 ../app/widgets/gimpsizebox.c:266
+#: ../app/dialogs/print-size-dialog.c:220 ../app/widgets/gimpsizebox.c:264
 #: ../app/widgets/gimptemplateeditor.c:288
 msgid "_X resolution:"
 msgstr "Rozlišení _X:"
 
-#: ../app/dialogs/print-size-dialog.c:227 ../app/widgets/gimpsizebox.c:269
+#: ../app/dialogs/print-size-dialog.c:227 ../app/widgets/gimpsizebox.c:267
 #: ../app/widgets/gimptemplateeditor.c:295
 msgid "_Y resolution:"
 msgstr "Rozlišení _Y:"
 
-#: ../app/dialogs/print-size-dialog.c:238 ../app/widgets/gimpsizebox.c:262
+#: ../app/dialogs/print-size-dialog.c:238 ../app/widgets/gimpsizebox.c:260
 #: ../app/widgets/gimptemplateeditor.c:308
 #, c-format
 msgid "pixels/%a"
@@ -8352,22 +8353,22 @@ msgstr[2] ""
 "ztraceny."
 
 #: ../app/display/gimpdisplayshell-dnd.c:200
-#: ../app/display/gimpdisplayshell-dnd.c:500
-#: ../app/display/gimpdisplayshell-dnd.c:553
+#: ../app/display/gimpdisplayshell-dnd.c:501
+#: ../app/display/gimpdisplayshell-dnd.c:554
 msgid "Drop New Layer"
 msgstr "Pustit novou vrstvu"
 
-#: ../app/display/gimpdisplayshell-dnd.c:246
+#: ../app/display/gimpdisplayshell-dnd.c:247
 msgid "Drop New Path"
 msgstr "Pustit novou cestu"
 
-#: ../app/display/gimpdisplayshell-dnd.c:439
+#: ../app/display/gimpdisplayshell-dnd.c:440
 #: ../app/widgets/gimplayertreeview.c:752
 msgid "Drop layers"
 msgstr "Pustit vrstvy"
 
-#: ../app/display/gimpdisplayshell-dnd.c:541
-#: ../app/widgets/gimplayertreeview.c:834 ../app/widgets/gimptoolbox-dnd.c:355
+#: ../app/display/gimpdisplayshell-dnd.c:542
+#: ../app/widgets/gimplayertreeview.c:834 ../app/widgets/gimptoolbox-dnd.c:360
 msgid "Dropped Buffer"
 msgstr "Odstraněný buffer"
 
@@ -8433,11 +8434,11 @@ msgstr "(čistý)"
 msgid "(none)"
 msgstr "(žádný)"
 
-#: ../app/display/gimpstatusbar.c:222
+#: ../app/display/gimpstatusbar.c:223
 msgid "Cancel"
 msgstr "Zrušit"
 
-#: ../app/display/gimpstatusbar.c:470
+#: ../app/display/gimpstatusbar.c:483
 msgid "Other..."
 msgstr "_Jiné..."
 
@@ -8725,12 +8726,12 @@ msgstr "Rozlišení obrázku je mimo rozsah, používám místo něj implicitní
 msgid "Free Select"
 msgstr "Volný výběr"
 
-#: ../app/plug-in/gimpenvirontable.c:281
+#: ../app/plug-in/gimpenvirontable.c:282
 #, c-format
 msgid "Empty variable name in environment file %s"
 msgstr "Prázdný název proměnné v souboru prostředí %s"
 
-#: ../app/plug-in/gimpenvirontable.c:299
+#: ../app/plug-in/gimpenvirontable.c:300
 #, c-format
 msgid "Illegal variable name in environment file %s: %s"
 msgstr "Neplatný název proměnné v souboru prostředí %s: %s"
@@ -11769,12 +11770,12 @@ msgstr ""
 msgid "Invalid UTF-8"
 msgstr "Neplatné UTF-8"
 
-#: ../app/widgets/gimpsizebox.c:466
+#: ../app/widgets/gimpsizebox.c:464
 #, c-format
 msgid "%d × %d ppi"
 msgstr "%d × %d ppi"
 
-#: ../app/widgets/gimpsizebox.c:468
+#: ../app/widgets/gimpsizebox.c:466
 #, c-format
 msgid "%d ppi"
 msgstr "%d ppi"
