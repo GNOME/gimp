@@ -522,6 +522,13 @@ gui_exit_callback (Gimp     *gimp,
   if (TRUE /* gui_config->save_controllers */)
     gimp_controllers_save (gimp);
 
+  g_signal_handlers_disconnect_by_func (gimp->displays,
+                                        gui_display_remove,
+                                        NULL);
+  g_signal_handlers_disconnect_by_func (gimp_get_user_context (gimp),
+                                        gui_display_changed,
+                                        gimp);
+
   gimp_displays_delete (gimp);
 
   gimp_tools_save (gimp, gui_config->save_tool_options, FALSE);
@@ -546,10 +553,6 @@ gui_exit_after_callback (Gimp     *gimp,
 
   g_object_unref (image_ui_manager);
   image_ui_manager = NULL;
-
-  g_signal_handlers_disconnect_by_func (gimp->displays,
-                                        G_CALLBACK (gui_display_remove),
-                                        NULL);
 
   session_exit (gimp);
   menus_exit (gimp);

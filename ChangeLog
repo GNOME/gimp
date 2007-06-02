@@ -1,5 +1,12 @@
 2007-06-02  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/gui.c (gui_exit_callback): disconnect the
+	gui_display_remove() and gui_display_changed() callbacks before
+	deleting the displays, not after (it makes no sense to update the
+	GUI while exiting).
+
+2007-06-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell-dnd.c
 	* app/widgets/gimpitemtreeview.c
 	* app/widgets/gimpchanneltreeview.c: set the "linked" property of
