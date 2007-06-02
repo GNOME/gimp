@@ -171,10 +171,10 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
                             GimpViewable *viewable,
                             gpointer      data)
 {
-  GimpContext       *context = GIMP_CONTEXT (data);
-  GimpDrawable      *drawable;
-  GimpItem          *item;
-  GimpImage         *image;
+  GimpContext       *context  = GIMP_CONTEXT (data);
+  GimpDrawable      *drawable = GIMP_DRAWABLE (viewable);
+  GimpItem          *item     = GIMP_ITEM (viewable);
+  GimpImage         *image    = gimp_item_get_image (item);
   GimpImage         *new_image;
   GimpLayer         *new_layer;
   GType              new_type;
@@ -185,10 +185,6 @@ gimp_toolbox_drop_drawable (GtkWidget    *widget,
 
   if (context->gimp->busy)
     return;
-
-  drawable = GIMP_DRAWABLE (viewable);
-  item     = GIMP_ITEM (viewable);
-  image    = gimp_item_get_image (item);
 
   width  = gimp_item_width  (item);
   height = gimp_item_height (item);

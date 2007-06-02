@@ -1,3 +1,13 @@
+2007-06-02  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-dnd.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimpchanneltreeview.c: set the "linked" property of
+	newly dropped items to FALSE.
+
+	* app/widgets/gimptoolbox-dnd.c (gimp_toolbox_drop_drawable):
+	stylistic cleanup.
+
 2007-06-01  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpperspectiveclonetool.c: commented out debug output.

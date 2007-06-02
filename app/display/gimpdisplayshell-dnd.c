@@ -208,6 +208,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
 
       gimp_item_translate (new_item, off_x, off_y, FALSE);
       gimp_item_set_visible (new_item, TRUE, FALSE);
+      gimp_item_set_linked (new_item, FALSE, FALSE);
 
       gimp_image_add_layer (image, new_layer, -1);
 
