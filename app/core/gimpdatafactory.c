@@ -721,7 +721,8 @@ gimp_data_factory_load_data (const GimpDatafileData *file_data,
 
             g_list_free (data_list);
           }
-        else
+
+        if (G_UNLIKELY (error))
           {
             gimp_message (factory->gimp, NULL, GIMP_MESSAGE_ERROR,
                           _("Failed to load data:\n\n%s"), error->message);

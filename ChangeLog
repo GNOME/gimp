@@ -1,5 +1,12 @@
 2007-06-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpdatafactory.c (gimp_data_factory_load_data): check
+	for errors even if the loader_func returned something so we
+	display errors from partially loaded files which contain multiple
+	data items.
+
+2007-06-03  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimpcolorscale.c: let mouse button 1 jump to the
 	clicked position directly (just as mouse button 2 does). Feels
 	much more intuitive because the result of the operation is visible
