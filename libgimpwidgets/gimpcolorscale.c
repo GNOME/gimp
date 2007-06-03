@@ -40,6 +40,10 @@ static void     gimp_color_scale_size_allocate  (GtkWidget       *widget,
                                                  GtkAllocation   *allocation);
 static void     gimp_color_scale_state_changed  (GtkWidget       *widget,
                                                  GtkStateType     previous_state);
+static gboolean gimp_color_scale_button_press   (GtkWidget       *widget,
+                                                 GdkEventButton  *event);
+static gboolean gimp_color_scale_button_release (GtkWidget       *widget,
+                                                 GdkEventButton  *event);
 static gboolean gimp_color_scale_expose         (GtkWidget       *widget,
                                                  GdkEventExpose  *event);
 
@@ -59,11 +63,13 @@ gimp_color_scale_class_init (GimpColorScaleClass *klass)
   GtkObjectClass *object_class = GTK_OBJECT_CLASS (klass);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
 
-  object_class->destroy = gimp_color_scale_destroy;
+  object_class->destroy              = gimp_color_scale_destroy;
 
-  widget_class->size_allocate = gimp_color_scale_size_allocate;
-  widget_class->state_changed = gimp_color_scale_state_changed;
-  widget_class->expose_event  = gimp_color_scale_expose;
+  widget_class->size_allocate        = gimp_color_scale_size_allocate;
+  widget_class->state_changed        = gimp_color_scale_state_changed;
+  widget_class->button_press_event   = gimp_color_scale_button_press;
+  widget_class->button_release_event = gimp_color_scale_button_release;
+  widget_class->expose_event         = gimp_color_scale_expose;
 }
 
 static void
@@ -176,6 +182,52 @@ gimp_color_scale_state_changed (GtkWidget    *widget,
 
   if (GTK_WIDGET_CLASS (parent_class)->state_changed)
     GTK_WIDGET_CLASS (parent_class)->state_changed (widget, previous_state);
+}
+
+static gboolean
+gimp_color_scale_button_press (GtkWidget      *widget,
+                               GdkEventButton *event)
+{
+  if (event->button == 1)
+    {
+      GdkEventButton *my_event;
+      gboolean        retval;
+
+      my_event = (GdkEventButton *) gdk_event_copy ((GdkEvent *) event);
+      my_event->button = 2;
+
+      retval = GTK_WIDGET_CLASS (parent_class)->button_press_event (widget,
+                                                                    my_event);
+
+      gdk_event_free ((GdkEvent *) my_event);
+
+      return retval;
+    }
+
+  return GTK_WIDGET_CLASS (parent_class)->button_press_event (widget, event);
+}
+
+static gboolean
+gimp_color_scale_button_release (GtkWidget      *widget,
+                                 GdkEventButton *event)
+{
+  if (event->button == 1)
+    {
+      GdkEventButton *my_event;
+      gboolean        retval;
+
+      my_event = (GdkEventButton *) gdk_event_copy ((GdkEvent *) event);
+      my_event->button = 2;
+
+      retval = GTK_WIDGET_CLASS (parent_class)->button_release_event (widget,
+                                                                      my_event);
+
+      gdk_event_free ((GdkEvent *) my_event);
+
+      return retval;
+    }
+
+  return GTK_WIDGET_CLASS (parent_class)->button_release_event (widget, event);
 }
 
 static gboolean

@@ -1,3 +1,10 @@
+2007-06-03  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpcolorscale.c: let mouse button 1 jump to the
+	clicked position directly (just as mouse button 2 does). Feels
+	much more intuitive because the result of the operation is visible
+	before and color scales have no scroll arrows either.
+
 2007-06-02  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/gui.c (gui_exit_callback): disconnect the
