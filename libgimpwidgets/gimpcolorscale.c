@@ -307,7 +307,7 @@ gimp_color_scale_expose (GtkWidget      *widget,
       gtk_paint_box (widget->style, widget->window,
                      sensitive ? GTK_STATE_ACTIVE : GTK_STATE_INSENSITIVE,
                      GTK_SHADOW_IN,
-                     &area, widget, "trough",
+                     &area, widget, NULL,
                      x, y, w, h);
 
       gdk_gc_set_clip_rectangle (widget->style->black_gc, &area);

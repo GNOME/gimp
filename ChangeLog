@@ -1,5 +1,10 @@
 2007-06-04  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolorscale.c (gimp_color_scale_expose): pass
+	NULL as detail to gtk_paint_box().
+
+2007-06-04  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/image-actions.c (image_actions)
 	* app/actions/layers-actions.c (layers_actions): renamed menu
 	entries as suggested in bug #443384.
