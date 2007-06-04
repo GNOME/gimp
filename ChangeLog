@@ -1,5 +1,11 @@
 2007-06-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimpmagnifyoptions.c: remove compat property
+	"threshold" because the parser now silently skips unknown
+	properties.
+
+2007-06-04  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimpbrush-load.c: applied patch from Eric Lamarque
 	which adds support for ABR v6 brushes. Did some minor cleanups in
 	the patch, reordered functions and generally fixed error handling
