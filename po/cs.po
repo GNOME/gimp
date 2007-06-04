@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-01 11:35+0200\n"
-"PO-Revision-Date: 2007-06-01 12:05+0200\n"
+"POT-Creation-Date: 2007-06-04 16:58+0200\n"
+"PO-Revision-Date: 2007-06-04 17:01+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -646,7 +646,7 @@ msgstr "_Krytí vyplňování:"
 #: ../app/actions/channels-commands.c:117
 #: ../app/actions/channels-commands.c:159
 #: ../app/actions/channels-commands.c:163
-#: ../app/widgets/gimpchanneltreeview.c:314
+#: ../app/widgets/gimpchanneltreeview.c:316
 msgid "New Channel"
 msgstr "Nový kanál"
 
@@ -659,9 +659,9 @@ msgid "New Channel Color"
 msgstr "Barva nového kanálu"
 
 #: ../app/actions/channels-commands.c:243
-#: ../app/display/gimpdisplayshell-dnd.c:498
-#: ../app/widgets/gimpchanneltreeview.c:247
-#: ../app/widgets/gimplayertreeview.c:806 ../app/widgets/gimptoolbox-dnd.c:312
+#: ../app/display/gimpdisplayshell-dnd.c:499
+#: ../app/widgets/gimpchanneltreeview.c:249
+#: ../app/widgets/gimplayertreeview.c:806 ../app/widgets/gimptoolbox-dnd.c:308
 #, c-format
 msgid "%s Channel Copy"
 msgstr "Kopie kanálu %s"
@@ -814,7 +814,7 @@ msgstr "Sloučený vzorek"
 #: ../app/dialogs/file-open-dialog.c:249
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
-#: ../app/display/gimpdisplayshell-dnd.c:450
+#: ../app/display/gimpdisplayshell-dnd.c:451
 #: ../app/widgets/gimplayertreeview.c:763 ../app/widgets/gimptoolbox-dnd.c:158
 #: ../app/widgets/gimptoolbox.c:894
 #, c-format
@@ -2421,9 +2421,9 @@ msgstr "_Velikost obrázku..."
 msgid "Change the size of the image content"
 msgstr "Změnit velikost obsahu obrázku"
 
-#: ../app/actions/image-actions.c:108
-msgid "_Crop Image"
-msgstr "_Ořezat obrázek"
+#: ../app/actions/image-actions.c:108 ../app/actions/layers-actions.c:182
+msgid "_Crop to Selection"
+msgstr "_Ořezat podle výběru"
 
 #: ../app/actions/image-actions.c:109
 msgid "Crop the image to the extents of the selection"
@@ -2762,10 +2762,6 @@ msgstr "Změnit _velikost vrstvy..."
 #: ../app/actions/layers-actions.c:177
 msgid "Change the size of the layer content"
 msgstr "Změnit velikost obsahu vrstvy"
-
-#: ../app/actions/layers-actions.c:182
-msgid "_Crop Layer"
-msgstr "_Ořezat vrstvu"
 
 #: ../app/actions/layers-actions.c:183
 msgid "Crop the layer to the extents of the selection"
@@ -3595,8 +3591,8 @@ msgid "Open Text File (UTF-8)"
 msgstr "Otevřít textový soubor (UTF-8)"
 
 #: ../app/actions/text-editor-commands.c:144
-#: ../app/config/gimpconfig-file.c:59 ../app/core/gimpbrush-load.c:117
-#: ../app/core/gimpbrush-load.c:397 ../app/core/gimpbrushgenerated-load.c:73
+#: ../app/config/gimpconfig-file.c:59 ../app/core/gimpbrush-load.c:140
+#: ../app/core/gimpbrush-load.c:420 ../app/core/gimpbrushgenerated-load.c:73
 #: ../app/core/gimpbrushpipe-load.c:81 ../app/core/gimpgradient-load.c:62
 #: ../app/core/gimppalette-load.c:76 ../app/core/gimppalette-load.c:271
 #: ../app/core/gimppalette-load.c:315 ../app/core/gimppalette-load.c:369
@@ -5006,13 +5002,13 @@ msgstr ""
 "obsahuje '%s', bude nahrazeno URL, jinak bude URL připojeno k příkazu, "
 "oddělené mezerou."
 
-#: ../app/config/gimprc-deserialize.c:135 ../app/core/gimp-modules.c:134
+#: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:134
 #: ../app/core/gimp-units.c:164 ../app/gui/session.c:160
 #: ../app/plug-in/plug-in-rc.c:213
 msgid "fatal parse error"
 msgstr "fatální chyba zpracování"
 
-#: ../app/config/gimprc-deserialize.c:163
+#: ../app/config/gimprc-deserialize.c:164
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "hodnota pro prvek %s není platný řetězec v kódování UTF-8"
@@ -5668,55 +5664,56 @@ msgstr "Dokumenty"
 msgid "Modules"
 msgstr "Moduly"
 
-#: ../app/core/gimpbrush-load.c:154
+#: ../app/core/gimpbrush-load.c:177
 #, c-format
 msgid "Could not read %d bytes from '%s': %s"
 msgstr "Nemohu načíst %d bajtů ze '%s': %s"
 
-#: ../app/core/gimpbrush-load.c:174
+#: ../app/core/gimpbrush-load.c:197
 #, c-format
 msgid "Fatal parse error in brush file '%s': Width = 0."
 msgstr "Fatální chyba zpracování souboru stopy '%s': Šířka = 0."
 
-#: ../app/core/gimpbrush-load.c:183
+#: ../app/core/gimpbrush-load.c:206
 #, c-format
 msgid "Fatal parse error in brush file '%s': Height = 0."
 msgstr "Fatální chyba zpracování souboru stopy '%s': Výška = 0."
 
-#: ../app/core/gimpbrush-load.c:192
+#: ../app/core/gimpbrush-load.c:215
 #, c-format
 msgid "Fatal parse error in brush file '%s': Bytes = 0."
 msgstr "Fatální chyba zpracování souboru stopy '%s': Bajtů = 0."
 
-#: ../app/core/gimpbrush-load.c:216
+#: ../app/core/gimpbrush-load.c:239
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
 msgstr "Fatální chyba zpracování souboru stopy '%s': Neznámá hloubka %d."
 
-#: ../app/core/gimpbrush-load.c:229
+#: ../app/core/gimpbrush-load.c:252
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown version %d."
 msgstr "Fatální chyba zpracování souboru stopy '%s': Neznámá verze %d."
 
-#: ../app/core/gimpbrush-load.c:245 ../app/core/gimpbrush-load.c:365
+#: ../app/core/gimpbrush-load.c:268 ../app/core/gimpbrush-load.c:388
+#: ../app/core/gimpbrush-load.c:720
 #, c-format
 msgid "Fatal parse error in brush file '%s': File appears truncated."
 msgstr "Fatální chyba zpracování souboru stopy '%s': Soubor je zřejmě useknut."
 
-#: ../app/core/gimpbrush-load.c:253 ../app/core/gimpbrushgenerated-load.c:128
+#: ../app/core/gimpbrush-load.c:276 ../app/core/gimpbrushgenerated-load.c:128
 #: ../app/core/gimpbrushpipe-load.c:97
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Neplatný řetězec v kódování UTF-8 v souboru se stopou '%s'."
 
-#: ../app/core/gimpbrush-load.c:260 ../app/core/gimpitem.c:505
+#: ../app/core/gimpbrush-load.c:283 ../app/core/gimpitem.c:505
 #: ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
 #: ../app/tools/gimpvectortool.c:296
 msgid "Unnamed"
 msgstr "Beze jména"
 
-#: ../app/core/gimpbrush-load.c:354
+#: ../app/core/gimpbrush-load.c:377
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
@@ -5725,17 +5722,17 @@ msgstr ""
 "Fatální chyba zpracování souboru stopy '%s': Nepodporovaná hloubka stopy %d\n"
 "Stopy GIMPu musí být GRAY nebo RGBA."
 
-#: ../app/core/gimpbrush-load.c:410
+#: ../app/core/gimpbrush-load.c:448
 #, c-format
 msgid "Fatal parse error in brush file '%s': unable to decode abr format version %d."
 msgstr ""
 "Fatální chyba zpracování souboru stopy '%s': nemohu dekédovat verzi %d "
 "formátu abr."
 
-#: ../app/core/gimpbrush-load.c:428
+#: ../app/core/gimpbrush-load.c:615
 #, c-format
-msgid "Fatal parse error in brush file '%s'"
-msgstr "Fatální chyba zpracování souboru stopy '%s'"
+msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
+msgstr "Fatální chyba zpracování souboru stopy '%s': Široké stopy nejsou podporovány."
 
 #: ../app/core/gimpbrushclipboard.c:181 ../app/core/gimppatternclipboard.c:181
 #: ../app/widgets/gimpclipboard.c:296
@@ -5927,7 +5924,7 @@ msgstr "%s kopie"
 msgid "You don't have a writable data folder configured."
 msgstr "Nemáte nastaven zapisovatelný datový adresář."
 
-#: ../app/core/gimpdatafactory.c:727
+#: ../app/core/gimpdatafactory.c:728
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -8353,22 +8350,22 @@ msgstr[2] ""
 "ztraceny."
 
 #: ../app/display/gimpdisplayshell-dnd.c:200
-#: ../app/display/gimpdisplayshell-dnd.c:501
-#: ../app/display/gimpdisplayshell-dnd.c:554
+#: ../app/display/gimpdisplayshell-dnd.c:502
+#: ../app/display/gimpdisplayshell-dnd.c:555
 msgid "Drop New Layer"
 msgstr "Pustit novou vrstvu"
 
-#: ../app/display/gimpdisplayshell-dnd.c:247
+#: ../app/display/gimpdisplayshell-dnd.c:248
 msgid "Drop New Path"
 msgstr "Pustit novou cestu"
 
-#: ../app/display/gimpdisplayshell-dnd.c:440
+#: ../app/display/gimpdisplayshell-dnd.c:441
 #: ../app/widgets/gimplayertreeview.c:752
 msgid "Drop layers"
 msgstr "Pustit vrstvy"
 
-#: ../app/display/gimpdisplayshell-dnd.c:542
-#: ../app/widgets/gimplayertreeview.c:834 ../app/widgets/gimptoolbox-dnd.c:360
+#: ../app/display/gimpdisplayshell-dnd.c:543
+#: ../app/widgets/gimplayertreeview.c:834 ../app/widgets/gimptoolbox-dnd.c:356
 msgid "Dropped Buffer"
 msgstr "Odstraněný buffer"
 
@@ -9120,7 +9117,7 @@ msgstr "Vyplnit průhledné oblasti"
 
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160 ../app/tools/gimphealtool.c:99
-#: ../app/tools/gimpperspectiveclonetool.c:906
+#: ../app/tools/gimpperspectiveclonetool.c:909
 #: ../app/tools/gimpselectionoptions.c:409
 msgid "Sample merged"
 msgstr "Sloučený vzorek"
@@ -9175,12 +9172,12 @@ msgid "Click to set a new clone source"
 msgstr "Klikněte pro nastavení zdroje klonování"
 
 #: ../app/tools/gimpclonetool.c:109
-#: ../app/tools/gimpperspectiveclonetool.c:901
+#: ../app/tools/gimpperspectiveclonetool.c:904
 msgid "Source"
 msgstr "Zdroj"
 
 #: ../app/tools/gimpclonetool.c:128 ../app/tools/gimphealtool.c:111
-#: ../app/tools/gimpperspectiveclonetool.c:920
+#: ../app/tools/gimpperspectiveclonetool.c:923
 msgid "Alignment:"
 msgstr "Zarovnání"
 
@@ -9509,7 +9506,7 @@ msgid "Type  (%s)"
 msgstr "Typ  (%s)"
 
 #: ../app/tools/gimpdodgeburntool.c:214
-#: ../app/tools/gimpperspectiveclonetool.c:893
+#: ../app/tools/gimpperspectiveclonetool.c:896
 msgid "Mode"
 msgstr "Režim"
 
@@ -9956,12 +9953,12 @@ msgstr "Výstupní úrovně"
 msgid "Adjust levels automatically"
 msgstr "Automaticky upravit úrovně"
 
-#: ../app/tools/gimpmagnifyoptions.c:179
+#: ../app/tools/gimpmagnifyoptions.c:167
 msgid "Auto-resize window"
 msgstr "Automaticky měnit velikost okna"
 
 #. tool toggle
-#: ../app/tools/gimpmagnifyoptions.c:184 ../app/tools/gimpmoveoptions.c:184
+#: ../app/tools/gimpmagnifyoptions.c:172 ../app/tools/gimpmoveoptions.c:184
 #, c-format
 msgid "Tool Toggle  (%s)"
 msgstr "Přepínač nástrojů  (%s)"
@@ -10949,7 +10946,7 @@ msgstr "(Nic)"
 msgid "Reorder Channel"
 msgstr "Přerovnat kanál"
 
-#: ../app/widgets/gimpchanneltreeview.c:319
+#: ../app/widgets/gimpchanneltreeview.c:321
 msgid "Empty Channel"
 msgstr "Prázdný kanál"
 
@@ -11697,11 +11694,11 @@ msgstr "%g × %g %s"
 msgid "colors"
 msgstr "barev"
 
-#: ../app/widgets/gimpitemtreeview.c:972
+#: ../app/widgets/gimpitemtreeview.c:974
 msgid "Set Item Exclusive Visible"
 msgstr "Nastavit položku exkluzivně viditelnou"
 
-#: ../app/widgets/gimpitemtreeview.c:980
+#: ../app/widgets/gimpitemtreeview.c:982
 msgid "Set Item Exclusive Linked"
 msgstr "Nastavit položku exkluzivně viditelnou"
 
