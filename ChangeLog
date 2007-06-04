@@ -1,3 +1,9 @@
+2007-06-04  Sven Neumann  <sven@gimp.org>
+
+	* app/actions/image-actions.c (image_actions)
+	* app/actions/layers-actions.c (layers_actions): renamed menu
+	entries as suggested in bug #443384.
+
 2007-06-04  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimpmagnifyoptions.c: remove compat property

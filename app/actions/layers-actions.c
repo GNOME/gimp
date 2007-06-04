@@ -179,7 +179,7 @@ static const GimpActionEntry layers_actions[] =
     GIMP_HELP_LAYER_SCALE },
 
   { "layers-crop", GIMP_STOCK_TOOL_CROP,
-    N_("_Crop Layer"), NULL,
+    N_("_Crop to Selection"), NULL,
     N_("Crop the layer to the extents of the selection"),
     G_CALLBACK (layers_crop_cmd_callback),
     GIMP_HELP_LAYER_CROP },

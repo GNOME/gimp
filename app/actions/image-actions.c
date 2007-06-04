@@ -105,7 +105,7 @@ static const GimpActionEntry image_actions[] =
     GIMP_HELP_IMAGE_SCALE },
 
   { "image-crop", GIMP_STOCK_TOOL_CROP,
-    N_("_Crop Image"), NULL,
+    N_("_Crop to Selection"), NULL,
     N_("Crop the image to the extents of the selection"),
     G_CALLBACK (image_crop_cmd_callback),
     GIMP_HELP_IMAGE_CROP },
