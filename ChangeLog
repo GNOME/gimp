@@ -1,3 +1,8 @@
+2007-06-03  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scripts/round-corners.scm: Removed spurious
+	call to 'gimp-image-undo-disable'. From a patch by Saul Goode.
+
 2007-06-03  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdatafactory.c (gimp_data_factory_load_data): check

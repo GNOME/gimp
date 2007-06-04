@@ -64,8 +64,6 @@
       (gimp-image-undo-group-start image)
   )
 
-  (gimp-image-undo-disable image)
-
   ; add an alpha channel to the image
   (gimp-layer-add-alpha pic-layer)
 
