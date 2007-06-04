@@ -179,6 +179,7 @@ gimp_rc_set_property (GObject      *object,
         rc->system_gimprc = g_build_filename (gimp_sysconf_directory (),
                                               "gimprc", NULL);
       break;
+
     case PROP_USER_GIMPRC:
       g_free (rc->user_gimprc);
 

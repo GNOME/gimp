@@ -86,8 +86,9 @@ gimp_rc_deserialize (GimpConfig *config,
     {
       next = g_scanner_peek_next_token (scanner);
 
-      if (next != token &&
-          ! (token == G_TOKEN_SYMBOL && next == G_TOKEN_IDENTIFIER))
+      if (G_UNLIKELY (next != token &&
+                      ! (token == G_TOKEN_SYMBOL &&
+                         next  == G_TOKEN_IDENTIFIER)))
         {
           break;
         }

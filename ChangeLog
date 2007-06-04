@@ -1,3 +1,13 @@
+2007-06-04  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpconfig/gimpconfig-deserialize.c: be forward-compatible by
+	skipping unknown object properties.
+
+	* app/config/gimprc-deserialize.c: synced code with
+	libgimpconfig (same stuff should look the same).
+
+	* app/config/gimprc.c: whitespace.
+
 2007-06-03  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/round-corners.scm: Removed spurious
