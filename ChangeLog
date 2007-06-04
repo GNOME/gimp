@@ -1,3 +1,8 @@
+2007-06-04  Mukund Sivaraman  <muks@mukund.org>
+
+	* app/vectors/gimpvectors-export.c: Added format string to dangerous
+	fprintf() call without it, which directly print variable data.
+
 2007-06-04  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolorscale.c (gimp_color_scale_expose): pass

@@ -87,7 +87,7 @@ gimp_vectors_export_file (const GimpImage    *image,
 
   str = gimp_vectors_export (image, vectors);
 
-  fprintf (file, str->str);
+  fprintf (file, "%s", str->str);
 
   g_string_free (str, TRUE);
 
