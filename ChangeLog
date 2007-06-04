@@ -1,3 +1,8 @@
+2007-06-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/distress-selection.scm: applied patch
+	from Saul Goode that enables Distress Selection for grayscale images.
+
 2007-06-04  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpwidgets/gimpcolorscale.c (gimp_color_scale_expose):
