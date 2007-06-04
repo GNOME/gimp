@@ -1,5 +1,12 @@
 2007-06-04  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpbrush-load.c: applied patch from Eric Lamarque
+	which adds support for ABR v6 brushes. Did some minor cleanups in
+	the patch, reordered functions and generally fixed error handling
+	of the ABR parsers. Fixes bug #377016.
+
+2007-06-04  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpconfig/gimpconfig-deserialize.c: be forward-compatible by
 	skipping unknown object properties.
 
