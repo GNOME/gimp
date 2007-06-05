@@ -1158,7 +1158,7 @@ load_paths (TIFF *tif, gint image)
       name = bytes + pos + 1;
       if (len >= 3 &&
           name[0] == '\xEF' && name[1] == '\xBB' && name[2] == '\xBF' &&
-          g_utf8_validate (name, len - 3, NULL))
+          g_utf8_validate (name, len, NULL))
         {
           name = g_strndup (name + 3, len - 3);
         }
