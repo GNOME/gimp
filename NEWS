@@ -7,6 +7,15 @@ This is the development branch of GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
+Changes in GIMP 2.3.18
+======================
+
+- temporarily show the hidden image statusbar while the progress is active
+- added support for loading .abr v6 Photoshop brushes
+- improved usability of color scales
+- bug fixes and code cleanup
+
+
 Changes in GIMP 2.3.17
 ======================
 
