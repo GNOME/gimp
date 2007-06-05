@@ -136,7 +136,7 @@ static void       link_clicked       (HtmlDocument      *doc,
                                       gpointer           data);
 static gboolean   request_url        (HtmlDocument      *doc,
                                       const gchar       *uri,
-                                      HtmlStream       *stream,
+                                      HtmlStream        *stream,
                                       GError            **error);
 static gboolean   io_handler         (GIOChannel        *io,
                                       GIOCondition       condition,
@@ -155,17 +155,18 @@ static gchar    * filename_from_uri  (const gchar       *uri);
 
 /*  private variables  */
 
-static const gchar   *eek_png_tag  = "<h1>Eeek!</h1>";
+static const gchar   *eek_png_tag    = "<h1>Eeek!</h1>";
 
-static Queue         *queue        = NULL;
-static gchar         *current_uri  = NULL;
+static Queue         *queue          = NULL;
+static gchar         *current_uri    = NULL;
+static GHashTable    *uri_hash_table = NULL;
 
-static GtkWidget     *html         = NULL;
-static GtkWidget     *tree_view    = NULL;
-static GtkUIManager  *ui_manager   = NULL;
-static GtkWidget     *button_prev  = NULL;
-static GtkWidget     *button_next  = NULL;
-static GdkCursor     *busy_cursor  = NULL;
+static GtkWidget     *html           = NULL;
+static GtkWidget     *tree_view      = NULL;
+static GtkUIManager  *ui_manager     = NULL;
+static GtkWidget     *button_prev    = NULL;
+static GtkWidget     *button_next    = NULL;
+static GdkCursor     *busy_cursor    = NULL;
 
 static GtkTargetEntry help_dnd_target_table[] =
 {
@@ -462,6 +463,33 @@ browser_dialog_load (const gchar *uri,
       anchor = NULL;
     }
 
+  if (uri_hash_table)
+    {
+      GtkTreeIter *iter;
+
+      iter = g_hash_table_lookup (uri_hash_table, new_uri);
+
+      if (iter)
+        {
+          GtkTreeSelection *selection;
+          GtkTreeModel     *model;
+          GtkTreePath      *path;
+
+          selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view));
+          model     = gtk_tree_view_get_model (GTK_TREE_VIEW (tree_view));
+
+          path = gtk_tree_model_get_path (model, iter);
+
+          gtk_tree_view_expand_to_path (GTK_TREE_VIEW (tree_view), path);
+          gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (tree_view), path,
+                                        NULL, FALSE, 0.0, 0.0);
+
+          gtk_tree_path_free (path);
+
+          gtk_tree_selection_select_iter (selection, iter);
+        }
+    }
+
   if (! has_case_prefix (abs, "file:/"))
     {
       load_remote_page (uri);
@@ -571,12 +599,15 @@ help_item_compare (gconstpointer a,
 }
 
 static void
-add_child (GtkTreeStore *store,
-           GtkTreeIter  *parent,
-           GimpHelpItem *item)
+add_child (GtkTreeStore   *store,
+           GimpHelpDomain *domain,
+           GimpHelpLocale *locale,
+           GtkTreeIter    *parent,
+           GimpHelpItem   *item)
 {
   GtkTreeIter  iter;
   GList       *list;
+  gchar       *uri;
 
   gtk_tree_store_append (store, &iter, parent);
 
@@ -585,13 +616,22 @@ add_child (GtkTreeStore *store,
                       1, item->title,
                       -1);
 
+  uri = g_strconcat (domain->help_uri,  "/",
+                     locale->locale_id, "/",
+                     item->ref,
+                     NULL);
+
+  g_hash_table_insert (uri_hash_table,
+                       uri,
+                       gtk_tree_iter_copy (&iter));
+
   item->children = g_list_sort (item->children, help_item_compare);
 
   for (list = item->children; list; list = g_list_next (list))
     {
       GimpHelpItem *item = list->data;
 
-      add_child (store, &iter, item);
+      add_child (store, domain, locale, &iter, item);
     }
 }
 
@@ -619,11 +659,16 @@ browser_dialog_make_index (GimpHelpDomain *domain,
   g_object_set_data (G_OBJECT (store), "domain", domain);
   g_object_set_data (G_OBJECT (store), "locale", locale);
 
+  uri_hash_table = g_hash_table_new_full (g_str_hash,
+                                          g_str_equal,
+                                          (GDestroyNotify) g_free,
+                                          (GDestroyNotify) gtk_tree_iter_free);
+
   for (list = locale->toplevel_items; list; list = g_list_next (list))
     {
       GimpHelpItem *item = list->data;
 
-      add_child (store, NULL, item);
+      add_child (store, domain, locale, NULL, item);
     }
 
   gtk_tree_view_set_model (GTK_TREE_VIEW (tree_view),
