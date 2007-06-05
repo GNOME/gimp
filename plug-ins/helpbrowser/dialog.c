@@ -168,7 +168,7 @@ static GtkWidget     *button_prev    = NULL;
 static GtkWidget     *button_next    = NULL;
 static GdkCursor     *busy_cursor    = NULL;
 
-static GtkTargetEntry help_dnd_target_table[] =
+static const GtkTargetEntry help_dnd_target_table[] =
 {
   { "text/uri-list", 0, 0 },
   { "_NETSCAPE_URL", 0, 0 }
