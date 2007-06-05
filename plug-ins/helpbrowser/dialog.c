@@ -667,17 +667,21 @@ browser_dialog_goto_index (const gchar *ref)
       GtkTreeSelection *selection;
       GtkTreeModel     *model;
       GtkTreePath      *path;
+      GtkTreePath      *scroll_path;
 
       selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view));
       model     = gtk_tree_view_get_model (GTK_TREE_VIEW (tree_view));
 
       path = gtk_tree_model_get_path (model, iter);
+      scroll_path = gtk_tree_path_copy (path);
 
+      gtk_tree_path_up (path);
       gtk_tree_view_expand_to_path (GTK_TREE_VIEW (tree_view), path);
-      gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (tree_view), path,
+      gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (tree_view), scroll_path,
                                     NULL, FALSE, 0.0, 0.0);
 
       gtk_tree_path_free (path);
+      gtk_tree_path_free (scroll_path);
 
       gtk_tree_selection_select_iter (selection, iter);
     }

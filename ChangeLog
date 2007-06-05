@@ -1,3 +1,8 @@
+2007-06-05  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/helpbrowser/dialog.c (browser_dialog_goto_index): don't
+	expand the row we are going to, only its parent node.
+
 2007-06-05  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/tiff-load.c
