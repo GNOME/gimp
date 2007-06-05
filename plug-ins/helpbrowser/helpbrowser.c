@@ -239,6 +239,7 @@ temp_proc_run (const gchar      *name,
             {
               browser_dialog_load (full_uri, TRUE);
               browser_dialog_make_index (domain, locale);
+              browser_dialog_goto_index (full_uri);
 
               g_free (full_uri);
             }

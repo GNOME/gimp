@@ -27,11 +27,12 @@
 
 
 void   browser_dialog_open       (void);
-void   browser_dialog_load       (const gchar *ref,
-                                  gboolean     add_to_queue);
+void   browser_dialog_load       (const gchar    *ref,
+                                  gboolean        add_to_queue);
 
 void   browser_dialog_make_index (GimpHelpDomain *domain,
                                   GimpHelpLocale *locale);
+void   browser_dialog_goto_index (const gchar    *ref);
 
 
 #endif /* ! __DIALOG_H__ */

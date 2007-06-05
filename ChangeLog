@@ -1,5 +1,14 @@
 2007-06-05  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/helpbrowser/dialog.[ch] (browser_dialog_goto_index):
+	new function which takes an uri and selects its item from the
+	index tree.
+
+	* plug-ins/helpbrowser/helpbrowser.c (temp_proc_run): use it to
+	select the right tree item when invoked from gimp.
+
+2007-06-05  Michael Natterer  <mitch@gimp.org>
+
 	* plug-ins/helpbrowser/dialog.c: keep a reverse mapping
 	uri -> GtkTreeIter around and use it to select the currently
 	displayed help page in the index tree.

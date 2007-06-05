@@ -464,31 +464,7 @@ browser_dialog_load (const gchar *uri,
     }
 
   if (uri_hash_table)
-    {
-      GtkTreeIter *iter;
-
-      iter = g_hash_table_lookup (uri_hash_table, new_uri);
-
-      if (iter)
-        {
-          GtkTreeSelection *selection;
-          GtkTreeModel     *model;
-          GtkTreePath      *path;
-
-          selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view));
-          model     = gtk_tree_view_get_model (GTK_TREE_VIEW (tree_view));
-
-          path = gtk_tree_model_get_path (model, iter);
-
-          gtk_tree_view_expand_to_path (GTK_TREE_VIEW (tree_view), path);
-          gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (tree_view), path,
-                                        NULL, FALSE, 0.0, 0.0);
-
-          gtk_tree_path_free (path);
-
-          gtk_tree_selection_select_iter (selection, iter);
-        }
-    }
+    browser_dialog_goto_index (new_uri);
 
   if (! has_case_prefix (abs, "file:/"))
     {
@@ -659,6 +635,9 @@ browser_dialog_make_index (GimpHelpDomain *domain,
   g_object_set_data (G_OBJECT (store), "domain", domain);
   g_object_set_data (G_OBJECT (store), "locale", locale);
 
+  if (uri_hash_table)
+    g_hash_table_unref (uri_hash_table);
+
   uri_hash_table = g_hash_table_new_full (g_str_hash,
                                           g_str_equal,
                                           (GDestroyNotify) g_free,
@@ -674,6 +653,34 @@ browser_dialog_make_index (GimpHelpDomain *domain,
   gtk_tree_view_set_model (GTK_TREE_VIEW (tree_view),
                            GTK_TREE_MODEL (store));
   g_object_unref (store);
+}
+
+void
+browser_dialog_goto_index (const gchar *ref)
+{
+  GtkTreeIter *iter;
+
+  iter = g_hash_table_lookup (uri_hash_table, ref);
+
+  if (iter)
+    {
+      GtkTreeSelection *selection;
+      GtkTreeModel     *model;
+      GtkTreePath      *path;
+
+      selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (tree_view));
+      model     = gtk_tree_view_get_model (GTK_TREE_VIEW (tree_view));
+
+      path = gtk_tree_model_get_path (model, iter);
+
+      gtk_tree_view_expand_to_path (GTK_TREE_VIEW (tree_view), path);
+      gtk_tree_view_scroll_to_cell (GTK_TREE_VIEW (tree_view), path,
+                                    NULL, FALSE, 0.0, 0.0);
+
+      gtk_tree_path_free (path);
+
+      gtk_tree_selection_select_iter (selection, iter);
+    }
 }
 
 
