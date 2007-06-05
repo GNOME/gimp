@@ -465,18 +465,46 @@ save_paths (TIFF   *tif,
     {
       GString *data;
       gchar   *name, *nameend;
-      gint     len, lenpos;
+      gsize    len;
+      gint     lenpos;
       gchar    pointrecord[26] = { 0, };
+      gchar   *tmpname;
+      GError  *err = NULL;
 
       data = g_string_new ("8BIM");
       g_string_append_c (data, id / 256);
       g_string_append_c (data, id % 256);
 
+      /*
+       * - use iso8859-1 if possible
+       * - otherwise use UTF-8, prepended with \xef\xbb\xbf (Byte-Order-Mark)
+       */
       name = gimp_vectors_get_name (vectors[v]);
-      len = g_utf8_strlen (name, 255); /* max. 255 chars in a pascal string */
-      nameend = g_utf8_offset_to_pointer (name, len);
-      g_string_append_c (data, nameend - name);
-      g_string_append_len (data, name, nameend - name);
+      tmpname = g_convert (name, -1, "iso8859-1", "utf-8", NULL, &len, &err);
+
+      if (tmpname && err == NULL)
+        {
+          g_string_append_c (data, MIN (len, 255));
+          g_string_append_len (data, tmpname, MIN (len, 255));
+          g_free (tmpname);
+        }
+      else
+        {
+          /* conversion failed, we fall back to UTF-8 */
+          len = g_utf8_strlen (name, 255 - 3);  /* need three marker-bytes */
+
+          nameend = g_utf8_offset_to_pointer (name, len);
+          len = nameend - name; /* in bytes */
+          g_assert (len + 3 <= 255);
+
+          g_string_append_c (data, len + 3);
+          g_string_append_len (data, "\xEF\xBB\xBF", 3); /* Unicode 0xfeff */
+          g_string_append_len (data, name, len);
+
+          if (tmpname)
+            g_free (tmpname);
+        }
+
       if (data->len % 2)  /* padding to even size */
         g_string_append_c (data, 0);
       g_free (name);

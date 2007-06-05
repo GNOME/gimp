@@ -1115,7 +1115,7 @@ static void
 load_paths (TIFF *tif, gint image)
 {
   guint16 id;
-  guint32 len, n_bytes, pos;
+  gsize  len, n_bytes, pos;
   gchar *bytes, *name;
   guint32 *val32;
   guint16 *val16;
@@ -1125,19 +1125,6 @@ load_paths (TIFF *tif, gint image)
 
   width = gimp_image_width (image);
   height = gimp_image_height (image);
-
-#if 0
-  /* TIFFTAG_CLIPPATH seems to be basically unused */
-
-  if (TIFFGetField (tif, TIFFTAG_CLIPPATH, &n_bytes, &bytes) &&
-      TIFFGetField (tif, TIFFTAG_XCLIPPATHUNITS, &xclipunits) &&
-      TIFFGetField (tif, TIFFTAG_YCLIPPATHUNITS, &yclipunits))
-    {
-      /* Tiff clipping path */
-
-      g_printerr ("Tiff clipping path, %d - %d\n", xclipunits, yclipunits);
-    }
-#endif
 
   if (!TIFFGetField (tif, TIFFTAG_PHOTOSHOP, &n_bytes, &bytes))
     return;
@@ -1163,9 +1150,26 @@ load_paths (TIFF *tif, gint image)
       if (n_bytes - pos < len + 1)
         break;   /* block not big enough */
 
-      name = g_strndup (bytes + pos + 1, len);
-      if (!g_utf8_validate (name, -1, NULL))
-        name = g_strdup ("imported path");
+      /*
+       * do we have the UTF-marker? is it valid UTF-8?
+       * if so, we assume an utf-8 encoded name, otherwise we
+       * assume iso8859-1
+       */
+      name = bytes + pos + 1;
+      if (len >= 3 &&
+          name[0] == '\xEF' && name[1] == '\xBB' && name[2] == '\xBF' &&
+          g_utf8_validate (name, len - 3, NULL))
+        {
+          name = g_strndup (name + 3, len - 3);
+        }
+      else
+        {
+          name = g_convert (name, len, "utf-8", "iso8859-1", NULL, NULL, NULL);
+        }
+
+      if (!name)
+        name = g_strdup ("(imported path)");
+
       pos += len + 1;
 
       if (pos % 2)  /* padding */
