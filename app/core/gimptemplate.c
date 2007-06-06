@@ -293,12 +293,15 @@ gimp_template_notify (GObject    *object,
 
   channels = ((template->image_type == GIMP_RGB ? 3 : 1)     /* color      */ +
               (template->fill_type == GIMP_TRANSPARENT_FILL) /* alpha      */ +
-              1                                              /* selection  */ +
-              (template->image_type == GIMP_RGB ? 4 : 2)     /* projection */);
+              1                                              /* selection  */);
 
   template->initial_size = ((guint64) channels        *
                             (guint64) template->width *
                             (guint64) template->height);
+
+  template->initial_size +=
+    gimp_projection_estimate_memsize (template->image_type,
+                                      template->width, template->height);
 
   if (! strcmp (pspec->name, "stock-id"))
     gimp_viewable_invalidate_preview (GIMP_VIEWABLE (object));

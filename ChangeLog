@@ -1,5 +1,12 @@
 2007-06-06  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpprojection.[ch]: added function that estimates the
+	memory requirements for an image projection.
+
+	* app/core/gimptemplate.c (gimp_template_notify): use it.
+
+2007-06-06  Sven Neumann  <sven@gimp.org>
+
 	* docs/papers: removed this directory and its contents. The papers
 	we used to keep here are only of historical value.
 

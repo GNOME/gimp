@@ -203,6 +203,26 @@ gimp_projection_get_memsize (GimpObject *object,
                                                                   gui_size);
 }
 
+/**
+ * gimp_projection_estimate_memsize:
+ * @type:   the image base type
+ * @width:  image width
+ * @height: image height
+ *
+ * Calculates a rough estimate of the memory that is required for the
+ * projection of an image with the given @width and @height.
+ *
+ * Return value: a rough estimate of the memory requirements.
+ **/
+gint64
+gimp_projection_estimate_memsize (GimpImageBaseType type,
+                                  gint              width,
+                                  gint              height)
+{
+  return 4 * (gint64) width * (gint64) height;
+}
+
+
 static void
 gimp_projection_pickable_flush (GimpPickable *pickable)
 {

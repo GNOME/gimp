@@ -77,19 +77,23 @@ struct _GimpProjectionClass
 };
 
 
-GType            gimp_projection_get_type       (void) G_GNUC_CONST;
+GType            gimp_projection_get_type         (void) G_GNUC_CONST;
 
-GimpProjection * gimp_projection_new            (GimpImage            *image);
+GimpProjection * gimp_projection_new              (GimpImage            *image);
 
-TileManager    * gimp_projection_get_tiles      (GimpProjection       *proj);
-GimpImage      * gimp_projection_get_image      (const GimpProjection *proj);
-GimpImageType    gimp_projection_get_image_type (const GimpProjection *proj);
-gint             gimp_projection_get_bytes      (const GimpProjection *proj);
-gdouble          gimp_projection_get_opacity    (const GimpProjection *proj);
+TileManager    * gimp_projection_get_tiles        (GimpProjection       *proj);
+GimpImage      * gimp_projection_get_image        (const GimpProjection *proj);
+GimpImageType    gimp_projection_get_image_type   (const GimpProjection *proj);
+gint             gimp_projection_get_bytes        (const GimpProjection *proj);
+gdouble          gimp_projection_get_opacity      (const GimpProjection *proj);
 
-void             gimp_projection_flush          (GimpProjection       *proj);
-void             gimp_projection_flush_now      (GimpProjection       *proj);
-void             gimp_projection_finish_draw    (GimpProjection       *proj);
+void             gimp_projection_flush            (GimpProjection       *proj);
+void             gimp_projection_flush_now        (GimpProjection       *proj);
+void             gimp_projection_finish_draw      (GimpProjection       *proj);
+
+gint64           gimp_projection_estimate_memsize (GimpImageBaseType     type,
+                                                   gint                  width,
+                                                   gint                  height);
 
 
 #endif /*  __GIMP_PROJECTION_H__  */
