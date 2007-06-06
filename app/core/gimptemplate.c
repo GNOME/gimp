@@ -34,6 +34,7 @@
 #include "gimpcontext.h"
 #include "gimpimage.h"
 #include "gimplayer.h"
+#include "gimpprojection.h"
 #include "gimptemplate.h"
 
 #include "gimp-intl.h"
