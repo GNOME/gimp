@@ -201,6 +201,7 @@ gimp_projection_finalize (GObject *object)
         tile_manager_unref (proj->pyramid[level]);
         proj->pyramid[level] = NULL;
       }
+
   proj->top_level = PYRAMID_BASE_LEVEL;
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -336,7 +337,9 @@ gimp_projection_get_tiles_at_level (GimpProjection *proj,
   if (base_level          == NULL                             ||
       proj->image->width  != tile_manager_width  (base_level) ||
       proj->image->height != tile_manager_height (base_level))
-    gimp_projection_alloc_levels (proj);
+    {
+      gimp_projection_alloc_levels (proj);
+    }
 
   g_return_val_if_fail (level >= PYRAMID_BASE_LEVEL &&
                         level <= proj->top_level,
@@ -385,7 +388,8 @@ gimp_projection_level_size_from_scale (GimpProjection *proj,
  * @proj:   pointer to a GimpProjection
  * @scalex: scale to use
  *
- * Return value: Returns the level (base level = 0) that should be used for scale @scalex.
+ * Return value: Returns the level (base level = 0) that should be used
+ *               for scale @scalex.
  **/
 gint
 gimp_projection_scale_to_level (GimpProjection *proj,
@@ -500,13 +504,13 @@ gimp_projection_alloc_levels (GimpProjection *proj)
 
   if (proj->pyramid[PYRAMID_BASE_LEVEL])
     {
-      gint current_width  = tile_manager_width  (proj->pyramid[PYRAMID_BASE_LEVEL]);
-      gint current_height = tile_manager_height (proj->pyramid[PYRAMID_BASE_LEVEL]);
+      gint width  = tile_manager_width  (proj->pyramid[PYRAMID_BASE_LEVEL]);
+      gint height = tile_manager_height (proj->pyramid[PYRAMID_BASE_LEVEL]);
 
-      if (proj_type           != proj->type    ||
-          proj_bytes          != proj->bytes   ||
-          proj->image->width  != current_width ||
-          proj->image->height != current_height)
+      if (proj_type           != proj->type  ||
+          proj_bytes          != proj->bytes ||
+          proj->image->width  != width       ||
+          proj->image->height != height)
         {
           gint level;
 
@@ -532,14 +536,15 @@ gimp_projection_alloc_levels (GimpProjection *proj)
           gint level_width  = proj->image->width  / (1 << level);
           gint level_height = proj->image->height / (1 << level);
 
+          if (level_width  == 0 || level_height == 0)
+            break;
+
           /* There is no use having levels that have the same number of
            * tiles as the parent level.
            */
           if (level        != PYRAMID_BASE_LEVEL &&
               level_width  <= TILE_WIDTH  / 2    &&
-              level_height <= TILE_HEIGHT / 2    ||
-              level_width  == 0                  ||
-              level_height == 0)
+              level_height <= TILE_HEIGHT / 2)
             break;
 
           proj->top_level      = level;
@@ -802,12 +807,11 @@ gimp_projection_invalidate (GimpProjection *proj,
     {
       gint c                   = (1 << level);
 
-      /* Tile invalidation must propagate all the way up in the pyramid, so keep
-       * width and height > 0.
+      /* Tile invalidation must propagate all the way up in the pyramid,
+       * so keep width and height > 0.
        */
       gint invalidation_width  = MAX (w / c, 1);
       gint invalidation_height = MAX (h / c, 1);
-
 
       tm = gimp_projection_get_tiles_at_level (proj, level);
 
@@ -829,6 +833,7 @@ gimp_projection_validate_tile (TileManager *tm,
 
   /*  Find the coordinates of this tile  */
   tile_manager_get_tile_coordinates (tm, tile, &x, &y);
+
   w = tile_ewidth  (tile);
   h = tile_eheight (tile);
 
@@ -862,13 +867,13 @@ gimp_projection_write_quarter (Tile *dest,
 
       for (x = 0; x < source_ewidth / 2; x++)
         {
-          int i;
+          gint i;
+
           for (i = 0; i < bpp; i++)
             dst[i] = (src[i] +
                       src[i + bpp] +
                       src[i + source_ewidth * bpp] +
                       src[i + source_ewidth * bpp + bpp]) / 4;
-
 
           dst += bpp;
           src += bpp * 2;
@@ -942,4 +947,3 @@ gimp_projection_image_flush (GimpImage      *image,
 {
   gimp_projection_flush (proj);
 }
-
