@@ -1,3 +1,7 @@
+2007-06-07  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/tips-dialog.c: converted to a GimpDialog.
+
 2007-06-06  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpprojection.[ch]: minor API cleanup. Use horizontal

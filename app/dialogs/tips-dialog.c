@@ -37,15 +37,17 @@
 #include "gimp-intl.h"
 
 
-static GtkWidget * tips_button_new     (const gchar *label,
-                                        gboolean     back);
-static void        tips_set_labels     (GimpTip     *tip);
-static void        tips_dialog_destroy (GtkWidget   *widget,
-                                        gpointer     data);
-static void        tips_show_previous  (GtkWidget   *widget,
-                                        gpointer     data);
-static void        tips_show_next      (GtkWidget   *widget,
-                                        gpointer     data);
+enum
+{
+  RESPONSE_PREVIOUS = 1,
+  RESPONSE_NEXT     = 2
+};
+
+static void  tips_set_labels      (GimpTip   *tip);
+static void  tips_dialog_response (GtkWidget *dialog,
+                                   gint       response);
+static void  tips_dialog_destroy  (GtkWidget *widget,
+                                   gpointer   data);
 
 
 static GtkWidget *tips_dialog   = NULL;
@@ -53,7 +55,6 @@ static GtkWidget *welcome_label = NULL;
 static GtkWidget *thetip_label  = NULL;
 static GList     *tips          = NULL;
 static GList     *current_tip   = NULL;
-static gint       tips_count    = 0;
 
 
 GtkWidget *
@@ -63,9 +64,9 @@ tips_dialog_create (Gimp *gimp)
   GtkWidget     *vbox;
   GtkWidget     *vbox2;
   GtkWidget     *hbox;
-  GtkWidget     *bbox;
   GtkWidget     *button;
   GtkWidget     *image;
+  gint           tips_count;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
 
@@ -123,28 +124,52 @@ tips_dialog_create (Gimp *gimp)
   if (tips_dialog)
     return tips_dialog;
 
-  tips_dialog = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-  gtk_window_set_type_hint (GTK_WINDOW (tips_dialog),
-                            GDK_WINDOW_TYPE_HINT_DIALOG);
-  gtk_window_set_role (GTK_WINDOW (tips_dialog), "gimp-tip-of-the-day");
-  gtk_window_set_title (GTK_WINDOW (tips_dialog), _("GIMP Tip of the Day"));
-  gtk_window_set_position (GTK_WINDOW (tips_dialog), GTK_WIN_POS_CENTER);
-  gtk_window_set_resizable (GTK_WINDOW (tips_dialog), TRUE);
+  tips_dialog = gimp_dialog_new (_("GIMP Tip of the Day"),
+                                 "gimp-tip-of-the-day",
+                                 NULL, 0, NULL, NULL,
+                                 NULL);
 
-  g_signal_connect (tips_dialog, "delete-event",
-                    G_CALLBACK (gtk_widget_destroy),
+  button = gtk_dialog_add_button (GTK_DIALOG (tips_dialog),
+                                  _("_Previous Tip"), RESPONSE_PREVIOUS);
+  gtk_button_set_image (GTK_BUTTON (button),
+                        gtk_image_new_from_stock (GTK_STOCK_GO_BACK,
+                                                  GTK_ICON_SIZE_BUTTON));
+
+  button = gtk_dialog_add_button (GTK_DIALOG (tips_dialog),
+                                  _("_Next Tip"), RESPONSE_NEXT);
+  gtk_button_set_image (GTK_BUTTON (button),
+                        gtk_image_new_from_stock (GTK_STOCK_GO_FORWARD,
+                                                  GTK_ICON_SIZE_BUTTON));
+
+  button = gtk_dialog_add_button (GTK_DIALOG (tips_dialog),
+                                  GTK_STOCK_CLOSE, GTK_RESPONSE_CLOSE);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (tips_dialog),
+                                           GTK_RESPONSE_CLOSE,
+                                           RESPONSE_PREVIOUS,
+                                           RESPONSE_NEXT,
+                                           -1);
+
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (tips_dialog),
+                                     RESPONSE_NEXT, tips_count > 1);
+  gtk_dialog_set_response_sensitive (GTK_DIALOG (tips_dialog),
+                                     RESPONSE_PREVIOUS, tips_count > 1);
+
+  g_signal_connect (tips_dialog, "response",
+                    G_CALLBACK (tips_dialog_response),
                     NULL);
-
   g_signal_connect (tips_dialog, "destroy",
                     G_CALLBACK (tips_dialog_destroy),
                     config);
 
-  vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (tips_dialog), vbox);
+  vbox = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 12);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (tips_dialog)->vbox),
+                      vbox, TRUE, TRUE, 0);
   gtk_widget_show (vbox);
 
   hbox = gtk_hbox_new (FALSE, 6);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
+  gtk_container_set_border_width (GTK_CONTAINER (hbox), 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_show (hbox);
 
@@ -176,58 +201,10 @@ tips_dialog_create (Gimp *gimp)
   gtk_box_pack_start (GTK_BOX (vbox2), image, TRUE, FALSE, 0);
   gtk_widget_show (image);
 
-  hbox = gtk_hbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (hbox), 12);
-  gtk_box_pack_end (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
   button = gimp_prop_check_button_new (G_OBJECT (config), "show-tips",
                                        _("Show tip next time GIMP starts"));
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
-
-  bbox = gtk_hbutton_box_new ();
-  gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
-  gtk_widget_show (bbox);
-
-  button = gtk_button_new_from_stock (GTK_STOCK_CLOSE);
-  GTK_WIDGET_SET_FLAGS (button, GTK_CAN_DEFAULT);
-  gtk_window_set_default (GTK_WINDOW (tips_dialog), button);
-  gtk_container_add (GTK_CONTAINER (bbox), button);
-  gtk_widget_show (button);
-
-  g_signal_connect_swapped (button, "clicked",
-                            G_CALLBACK (gtk_widget_destroy),
-                            tips_dialog);
-
-  bbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_END);
-  gtk_box_set_spacing (GTK_BOX (bbox), 6);
-  gtk_box_pack_end (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
-  gtk_widget_show (bbox);
-
-  button = tips_button_new (_("_Previous Tip"), TRUE);
-  gtk_widget_set_sensitive (button, (tips_count > 1));
-  gtk_container_add (GTK_CONTAINER (bbox), button);
-  gtk_widget_show (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (tips_show_previous),
-                    NULL);
-
-  button = tips_button_new (_("_Next Tip"), FALSE);
-  gtk_widget_set_sensitive (button, (tips_count > 1));
-  gtk_container_add (GTK_CONTAINER (bbox), button);
-  gtk_widget_show (button);
-
-  gtk_widget_grab_focus (button);
-
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (tips_show_next),
-                    NULL);
-
-  gimp_help_connect (tips_dialog, gimp_standard_help_func,
-                     GIMP_HELP_TIPS_DIALOG, NULL);
 
   tips_set_labels (current_tip->data);
 
@@ -250,46 +227,26 @@ tips_dialog_destroy (GtkWidget *widget,
   tips = NULL;
 }
 
-
-static GtkWidget *
-tips_button_new (const gchar *text,
-                 gboolean     back)
+static void
+tips_dialog_response (GtkWidget *dialog,
+                      gint       response)
 {
-  GtkWidget *button;
-  GtkWidget *label;
-  GtkWidget *image;
-  GtkWidget *hbox;
+  switch (response)
+    {
+    case RESPONSE_PREVIOUS:
+      current_tip = current_tip->prev ? current_tip->prev : g_list_last (tips);
+      tips_set_labels (current_tip->data);
+      break;
 
-  hbox = gtk_hbox_new (FALSE, 2);
+    case RESPONSE_NEXT:
+      current_tip = current_tip->next ? current_tip->next : tips;
+      tips_set_labels (current_tip->data);
+      break;
 
-  label = gtk_label_new_with_mnemonic (text);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
-
-  if (back)
-    gtk_box_pack_end (GTK_BOX (hbox), label, TRUE, TRUE, 0);
-  else
-    gtk_box_pack_start (GTK_BOX (hbox), label, TRUE, TRUE, 0);
-
-  gtk_widget_show (label);
-
-  image = gtk_image_new_from_stock (back ?
-                                    GTK_STOCK_GO_BACK : GTK_STOCK_GO_FORWARD,
-                                    GTK_ICON_SIZE_BUTTON);
-
-  if (back)
-    gtk_box_pack_start (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-  else
-    gtk_box_pack_end (GTK_BOX (hbox), image, FALSE, FALSE, 0);
-
-  gtk_widget_show (image);
-
-  button = gtk_button_new ();
-  gtk_container_add (GTK_CONTAINER (button), hbox);
-  gtk_widget_show (hbox);
-
-  GTK_WIDGET_UNSET_FLAGS (button, GTK_RECEIVES_DEFAULT);
-
-  return button;
+    default:
+      gtk_widget_destroy (dialog);
+      break;
+    }
 }
 
 static void
@@ -304,22 +261,4 @@ tips_set_labels (GimpTip *tip)
 
   gtk_label_set_markup (GTK_LABEL (welcome_label), tip->welcome);
   gtk_label_set_markup (GTK_LABEL (thetip_label), tip->thetip);
-}
-
-static void
-tips_show_previous (GtkWidget *widget,
-                    gpointer  data)
-{
-  current_tip = current_tip->prev ? current_tip->prev : g_list_last (tips);
-
-  tips_set_labels (current_tip->data);
-}
-
-static void
-tips_show_next (GtkWidget *widget,
-                gpointer   data)
-{
-  current_tip = current_tip->next ? current_tip->next : tips;
-
-  tips_set_labels (current_tip->data);
 }
