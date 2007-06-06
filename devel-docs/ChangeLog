@@ -1,3 +1,11 @@
+2007-06-06  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/libgimpcolor-sections.txt
+	* libgimpcolor/libgimpcolor-docs.sgml: added documentation for the
+	GimpColorManaged interface.
+
+	* libgimpcolor/tmpl/gimpcolormanaged.sgml: new file.
+
 2007-05-29  Sven Neumann  <sven@gimp.org>
 
 	* app/app-sections.txt

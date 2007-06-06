@@ -17,6 +17,7 @@
     <xi:include href="xml/gimphsv.xml" />
     <xi:include href="xml/gimpcmyk.xml" />
     <xi:include href="xml/gimpcolorspace.xml" />
+    <xi:include href="xml/gimpcolormanaged.xml" />
     <xi:include href="xml/gimpadaptivesupersample.xml" />
     <xi:include href="xml/gimpbilinear.xml" />
   </part>
