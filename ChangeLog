@@ -1,5 +1,13 @@
 2007-06-06  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpprojection.[ch]: minor API cleanup. Use horizontal
+	and vertical scale to determine the pyramid level to use.
+
+	* app/display/gimpdisplayshell-draw.c
+	* app/display/gimpdisplayshell-render.c: follow the API change.
+
+2007-06-06  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpprojection.c: cosmetics.
 
 2007-06-06  Martin Nordholts  <martinn@svn.gnome.org>

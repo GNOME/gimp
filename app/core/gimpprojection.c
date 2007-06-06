@@ -349,57 +349,27 @@ gimp_projection_get_tiles_at_level (GimpProjection *proj,
 }
 
 /**
- * gimp_projection_level_size_from_scale:
- * @proj:   pointer to a GimpProjection
- * @scalex: scale to use
- * @level:  where to store level used
- * @width:  where to store width of level
- * @height: where to store height of level
+ * gimp_projection_get_level:
+ * @proj:    pointer to a GimpProjection
+ * @scale_x: horizontal scale factor
+ * @scale_y: vertical scale factor
  *
- * Calculates what level and the width and height of that level that should be
- * used for scale @scalex.
- **/
-void
-gimp_projection_level_size_from_scale (GimpProjection *proj,
-                                       gdouble         scalex,
-                                       gint           *level,
-                                       gint           *width,
-                                       gint           *height)
-{
-  TileManager *src_tiles;
-
-  g_return_if_fail (GIMP_IS_PROJECTION (proj) &&
-                    level &&
-                    width &&
-                    height);
-
-  /* We must make sure the pyramid is up to date. */
-  gimp_projection_alloc_levels (proj);
-
-  *level = gimp_projection_scale_to_level (proj, scalex);
-  src_tiles = gimp_projection_get_tiles_at_level (proj, *level);
-
-  *width  = tile_manager_width  (src_tiles);
-  *height = tile_manager_height (src_tiles);
-}
-
-/**
- * gimp_projection_scale_to_level:
- * @proj:   pointer to a GimpProjection
- * @scalex: scale to use
- *
- * Return value: Returns the level (base level = 0) that should be used
- *               for scale @scalex.
+ * Return value: the pyramid level to use for a given display scale factor.
  **/
 gint
-gimp_projection_scale_to_level (GimpProjection *proj,
-                                gdouble         scalex)
+gimp_projection_get_level (GimpProjection *proj,
+                           gdouble         scale_x,
+                           gdouble         scale_y)
 {
+  gdouble scale;
+  gint    level;
+
   g_return_val_if_fail (GIMP_IS_PROJECTION (proj), PYRAMID_BASE_LEVEL);
 
-  return CLAMP ((gint) -(log (scalex) / log(2)),
-                PYRAMID_BASE_LEVEL,
-                proj->top_level);
+  scale = MAX (scale_x, scale_y);
+  level = -(log (scale) / G_LN2);
+
+  return CLAMP (level, PYRAMID_BASE_LEVEL, proj->top_level);
 }
 
 GimpImage *

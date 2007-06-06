@@ -831,12 +831,16 @@ render_image_init_info_full (RenderInfo       *info,
                              gint              h,
                              GimpProjection   *projection)
 {
-  gint level      = gimp_projection_scale_to_level (projection, shell->scale_x);
+  gint level;
+
+  level = gimp_projection_get_level (projection,
+                                     shell->scale_x, shell->scale_y);
+
   info->shell     = shell;
   info->dest_bpp  = 3;
   info->dest_bpl  = info->dest_bpp * GIMP_RENDER_BUF_WIDTH;
-  info->scalex     = shell->scale_x * (1 << level);
-  info->scaley     = shell->scale_y * (1 << level);
+  info->scalex    = shell->scale_x * (1 << level);
+  info->scaley    = shell->scale_y * (1 << level);
 
   render_image_init_info (info, shell, x, y,
                           gimp_projection_get_tiles_at_level (projection,
