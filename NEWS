@@ -13,6 +13,7 @@ Changes in GIMP 2.3.18
 - temporarily show the hidden image statusbar while the progress is active
 - added support for loading .abr v6 Photoshop brushes
 - improved usability of color scales
+- improved display quality of zoomed-out image view
 - bug fixes and code cleanup
 
 

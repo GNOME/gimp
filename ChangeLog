@@ -4,18 +4,20 @@
 
 2007-06-06  Martin Nordholts  <martinn@svn.gnome.org>
 
-	Implemented an image pyramid for the GimpProjection. An image pyramid
-	caches a projection at several sizes, causing the rendering code not to
-	have to swap in all tiles of a (potentially) large image; it can use
-	small versions of the projection if the user is zoomed out.
+	Implemented an image pyramid for the GimpProjection. An image
+	pyramid caches a projection at several sizes, causing the
+	rendering code not to have to swap in all tiles of a (potentially)
+	large image; it can use small versions of the projection if the
+	user is zoomed out.
 
-	The image pyramid also imroves visual quality, especially at zoom levels
-	where there is a pyramid level that matches perfectly (i.e. at e.g. 50%,
-	25%, and 12.5% zoom). A step on the right track for bug #76096.
+	The image pyramid also imroves visual quality, especially at zoom
+	levels where there is a pyramid level that matches perfectly (i.e.
+	at e.g. 50%, 25%, and 12.5% zoom). A step on the right track for
+	bug #76096.
 
 	* app/core/gimpprojection.[ch]: Adjusted to make use of an image
-	pyramid. GimpProjection now keeps an array of TileManager:s, one per
-	pyramid level. Renamed _alloc_tiles to _alloc_levels.
+	pyramid. GimpProjection now keeps an array of TileManager:s, one
+	per pyramid level. Renamed _alloc_tiles to _alloc_levels.
 
 	* app/display/gimpdisplayshell-draw.c: (gimp_display_shell_draw_area):
 	Use the right GimpProjection level when drawing
@@ -25,8 +27,8 @@
 
 	* app/base/tile-manager.[ch]: Extended API a bit, nothing complicated.
 
-	* app/base/tile-manager-private.h (struct _TileManager): Keep a pointer
-	to the level below for use in an image pyramid.
+	* app/base/tile-manager-private.h (struct _TileManager): Keep a
+	pointer to the level below for use in an image pyramid.
 
 2007-06-06  Sven Neumann  <sven@gimp.org>
 
