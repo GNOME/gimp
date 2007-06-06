@@ -1,5 +1,10 @@
 2007-06-06  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/scale-funcs.c (scale_region): always use
+	scale_region_lanczos() for LANCZOS interpolation. Fixes bug #443640.
+
+2007-06-06  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpprojection.c (gimp_projection_estimate_memsize):
 	the projection is 2 bytes per pixel for grayscale images.
 

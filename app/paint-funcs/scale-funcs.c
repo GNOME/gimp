@@ -198,18 +198,20 @@ expand_line (gdouble               *dest,
              GimpInterpolationType  interp)
 {
   const gdouble *s;
-  const gdouble  ratio = (gdouble) old_width / (gdouble) width; /* ie reverse scaling_factor */
+  /* reverse scaling_factor */
+  const gdouble  ratio = (gdouble) old_width / (gdouble) width;
   gint           x, b;
   gint           src_col;
   gdouble        frac;
 
   /* we can overflow src's boundaries, so we expect our caller to have
-  allocated extra space for us to do so safely (see scale_region ()) */
+   * allocated extra space for us to do so safely (see scale_region ())
+   */
 
   switch (interp)
     {
-      /* -0.5 is because cubic() interpolates a position between 2nd and 3rd data points
-       * we are assigning to 2nd in dest, hence mean shift of +0.5
+      /* -0.5 is because cubic() interpolates a position between 2nd and 3rd
+       * data points we are assigning to 2nd in dest, hence mean shift of +0.5
        * +1, -1 ensures we dont (int) a negative; first src col only.
        */
     case GIMP_INTERPOLATION_CUBIC:
@@ -234,7 +236,8 @@ expand_line (gdouble               *dest,
 
       break;
 
-      /* -0.5 corrects the drift from averaging between adjacent points and assigning to dest[b]
+      /* -0.5 corrects the drift from averaging between adjacent points and
+       * assigning to dest[b]
        * +1, -1 ensures we dont (int) a negative; first src col only.
        */
     case GIMP_INTERPOLATION_LINEAR:
@@ -420,33 +423,38 @@ scale_region (PixelRegion           *srcPR,
   gdouble *src[4];
   guchar  *src_tmp;
   guchar  *dest;
-  gdouble *row, *accum;
+  gdouble *row;
+  gdouble *accum;
   gint     bytes, b;
   gint     width, height;
   gint     orig_width, orig_height;
   gdouble  y_ratio;
   gint     i;
   gint     old_y = -4;
-  gint     new_y;
   gint     x, y;
 
-  if (interpolation == GIMP_INTERPOLATION_NONE)
+  switch (interpolation)
     {
+    case GIMP_INTERPOLATION_NONE:
       scale_region_no_resample (srcPR, destPR);
       return;
-    }
 
-  orig_width = srcPR->w;
-  orig_height = srcPR->h;
+    case GIMP_INTERPOLATION_LINEAR:
+    case GIMP_INTERPOLATION_CUBIC:
+      break;
 
-  width = destPR->w;
-  height = destPR->h;
-
-  if (interpolation == GIMP_INTERPOLATION_LANCZOS && orig_height <= height)
-    {
+    case GIMP_INTERPOLATION_LANCZOS:
       scale_region_lanczos (srcPR, destPR, progress_callback, progress_data);
       return;
     }
+
+  /* the following code is only run for linear and cubic interpolation */
+
+  orig_width  = srcPR->w;
+  orig_height = srcPR->h;
+
+  width  = destPR->w;
+  height = destPR->h;
 
 #if 0
   g_printerr ("scale_region: (%d x %d) -> (%d x %d)\n",
@@ -483,6 +491,7 @@ scale_region (PixelRegion           *srcPR,
       if (height < orig_height)
         {
           const gdouble inv_ratio = 1.0 / y_ratio;
+          gint          new_y;
           gint          max;
           gdouble       frac;
 
@@ -491,13 +500,13 @@ scale_region (PixelRegion           *srcPR,
                             src_tmp,
                             interpolation);
 
-          new_y = (int) (y * y_ratio);
+          new_y = (gint) (y * y_ratio);
           frac = 1.0 - (y * y_ratio - new_y);
 
           for (x = 0; x < width * bytes; x++)
             accum[x] = src[3][x] * frac;
 
-          max = (int) ((y + 1) * y_ratio) - new_y - 1;
+          max = (gint) ((y + 1) * y_ratio) - new_y - 1;
 
           get_scaled_row (&src[0], ++new_y, width, srcPR, row,
                           src_tmp,
@@ -524,7 +533,7 @@ scale_region (PixelRegion           *srcPR,
         }
       else if (height > orig_height)
         {
-          new_y = floor (y * y_ratio - 0.5);
+          gint new_y = floor (y * y_ratio - 0.5);
 
           while (old_y <= new_y)
             {
