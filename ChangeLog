@@ -1,5 +1,9 @@
 2007-06-06  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-preview.c (gimp_image_get_new_preview): cleanup.
+
+2007-06-06  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/scale-funcs.c (scale_region): always use
 	scale_region_lanczos() for LANCZOS interpolation. Fixes bug #443640.
 

@@ -152,22 +152,14 @@ gimp_image_get_new_preview (GimpViewable *viewable,
                             gint          height)
 {
   GimpImage   *image;
-  GimpLayer   *layer;
   GimpLayer   *floating_sel;
-  PixelRegion  src1PR, src2PR, maskPR;
-  PixelRegion *mask;
   TempBuf     *comp;
-  TempBuf     *layer_buf;
-  TempBuf     *mask_buf;
   GList       *list;
   GSList      *reverse_list = NULL;
   gdouble      ratio;
-  gint         x, y, w, h;
-  gint         x1, y1, x2, y2;
   gint         bytes;
   gboolean     construct_flag;
   gboolean     visible_components[MAX_CHANNELS] = { TRUE, TRUE, TRUE, TRUE };
-  gint         off_x, off_y;
 
   image = GIMP_IMAGE (viewable);
 
@@ -201,7 +193,7 @@ gimp_image_get_new_preview (GimpViewable *viewable,
        list;
        list = g_list_next (list))
     {
-      layer = (GimpLayer *) list->data;
+      GimpLayer *layer = list->data;
 
       /*  only add layers that are visible to the list  */
       if (gimp_item_get_visible (GIMP_ITEM (layer)))
@@ -230,11 +222,17 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 
   for (; reverse_list; reverse_list = g_slist_next (reverse_list))
     {
-      gint     src_x, src_y;
-      gint     src_width, src_height;
-      gboolean use_sub_preview = FALSE;
-
-      layer = (GimpLayer *) reverse_list->data;
+      GimpLayer   *layer = list->data;
+      PixelRegion  src1PR, src2PR, maskPR;
+      PixelRegion *mask;
+      TempBuf     *layer_buf;
+      TempBuf     *mask_buf;
+      gint         x, y, w, h;
+      gint         x1, y1, x2, y2;
+      gint         src_x, src_y;
+      gint         src_width, src_height;
+      gint         off_x, off_y;
+      gboolean     use_sub_preview = FALSE;
 
       gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
 
