@@ -2301,7 +2301,7 @@ register_image_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-image-list",
                                      "Returns the list of images currently open.",
-                                     "This procedure returns the list of images currently open in the GIMP.",
+                                     "This procedure returns the list of images currently open in GIMP.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",

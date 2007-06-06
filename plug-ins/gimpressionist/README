@@ -12,7 +12,7 @@
 --- Introduction
 
 The GIMPressionist is a plug-in for the GNU Image Manipulation Program,
-a.k.a. the GIMP. It can be used to create natural looking painting effects
+a.k.a. GIMP. It can be used to create natural looking painting effects
 and similar. It can also be run in a primitive "standalone" mode. 
 
 The current version is still a bit shaky, and is to be considered beta
@@ -41,13 +41,13 @@ subdirectories 'Brushes', 'Paper' and 'Presets' will be created during
 "make install", and a few files will be added; As a minimum,
 'defaultbrush.pgm' and 'defaultpaper.pgm' under their respective
 directories. These are vanilla .PGM files, which could be edited (and
-created) with any decent program - like the GIMP! :-) 
+created) with any decent program - like GIMP! :-) 
 
 
 --- Standalone
 
 As of version 0.99 and later, the GIMPressionist can also be run
-separately from the GIMP. This is primarily intended for debugging
+separately from GIMP. This is primarily intended for debugging
 purposes, though, as it still needs GIMP libraries to compile. In your
 shell, type: 
 	gimpressionist somefile.ppm
@@ -62,10 +62,10 @@ If you "Cancel", nothing will be done to the file.
 --- File Formats
 
 The "normal" brushes are simply grayscale PGM files, which can be created
-with almost any program, including xv and of course The GIMP. A number of
+with almost any program, including xv and of course GIMP. A number of
 brushes is included, so I guess a more in-depth explaination is not
 necessary. And, for those who might want to try it, GIMPressionist can
-also read GBR files, which is the GIMP's native brush format. (You still
+also read GBR files, which is GIMP's native brush format. (You still
 need to copy them to the GIMPressionist's brush-directory, though. This
 will probably be fixed sometimes.)
 

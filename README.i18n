@@ -158,7 +158,7 @@ this one may not necessarily fit.
 
  Gimp is a complex application which has a bunch of scripts and
  plug-ins that all want to be internationalized. Therefore there is
- not one catalog but many. For a full translation of the GIMP's UI,
+ not one catalog but many. For a full translation of GIMP's UI,
  you will have to add translations for the following catalogs:
 
    po/gimp20.po                       --  the core

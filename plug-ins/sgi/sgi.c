@@ -1,5 +1,5 @@
 /*
- *   SGI image file plug-in for the GIMP.
+ *   SGI image file plug-in for GIMP.
  *
  *   Copyright 1997-1998 Michael Sweet (mike@easysw.com)
  *

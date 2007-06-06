@@ -1,8 +1,8 @@
-/* Deinterlace 1.00 - image processing plug-in for the Gimp
+/* Deinterlace 1.00 - image processing plug-in for GIMP
  *
  * Copyright (C) 1997 Andrew Kieschnick (andrewk@mail.utexas.edu)
  *
- * Original deinterlace for the Gimp 0.54 API by Federico Mena Quintero
+ * Original deinterlace for GIMP 0.54 API by Federico Mena Quintero
  *
  * Copyright (C) 1996 Federico Mena Quintero
  *

@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* Neon filter for the GIMP for BIPS
+/* Neon filter for GIMP for BIPS
  *  -Spencer Kimball
  *
  * This filter works in a manner similar to the "edge"

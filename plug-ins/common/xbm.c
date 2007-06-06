@@ -1,7 +1,7 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * X10 and X11 bitmap (XBM) loading and saving file filter for the GIMP.
+ * X10 and X11 bitmap (XBM) loading and saving file filter for GIMP.
  * XBM code Copyright (C) 1998 Gordon Matzigkeit
  *
  * The XBM reading and writing code was written from scratch by Gordon

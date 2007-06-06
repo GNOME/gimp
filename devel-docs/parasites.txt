@@ -116,7 +116,7 @@ Global data follows no strict rules.
 
 "gamma" (IMAGE, PERSISTENT)
 	The original gamma this image was created/saved. For JPEG; this is
-        always one, for PNG it's usually taken from the image data. The gimp
+        always one, for PNG it's usually taken from the image data. GIMP
         might use and modify this. The format is an ascii string with the
         gamma exponent as a flotingpoint value.
 

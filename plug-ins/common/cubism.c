@@ -1,4 +1,4 @@
-/* Cubism --- image filter plug-in for The Gimp image manipulation program
+/* Cubism --- image filter plug-in for GIMP
  * Copyright (C) 1996 Spencer Kimball, Tracy Scott
  *
  * This program is free software; you can redistribute it and/or modify
@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  *
  * You can contact me at quartic@polloux.fciencias.unam.mx
- * You can contact the original The Gimp authors at gimp@xcf.berkeley.edu
+ * You can contact the original GIMP authors at gimp@xcf.berkeley.edu
  * Speedups by Elliot Lee
  */
 

@@ -58,8 +58,7 @@ _gimp_unit_get_number_of_units (void)
  *
  * Returns the number of built-in units.
  *
- * This procedure returns the number of defined units built-in to the
- * GIMP.
+ * This procedure returns the number of defined units built-in to GIMP.
  *
  * Returns: The number of built-in units.
  */

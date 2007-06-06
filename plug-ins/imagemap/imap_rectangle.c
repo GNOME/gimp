@@ -1,5 +1,5 @@
 /*
- * This is a plug-in for the GIMP.
+ * This is a plug-in for GIMP.
  *
  * Generates clickable image maps.
  *

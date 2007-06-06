@@ -508,7 +508,7 @@ load_image (const gchar *filename)
   /* close the file */
   fclose (DICOM);
 
-  /* Tell the GIMP to display the image. */
+  /* Tell GIMP to display the image. */
   gimp_drawable_flush (drawable);
 
   return image_ID;

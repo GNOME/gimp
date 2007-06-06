@@ -1,5 +1,5 @@
 /* GIMP - The GNU Image Manipulation Program
- * Red Eye Plug-in for the GIMP.
+ * Red Eye Plug-in for GIMP.
  *
  * Copyright (C) 2004  Robert Merkel <robert.merkel@benambra.org>
  * Copyright (C) 2006  Andreas Røsdal <andrearo@stud.ntnu.no>

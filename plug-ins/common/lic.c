@@ -1,8 +1,8 @@
-/* LIC 0.14 -- image filter plug-in for The Gimp program
+/* LIC 0.14 -- image filter plug-in for GIMP
  * Copyright (C) 1996 Tom Bech
  *
  * E-mail: tomb@gimp.org
- * You can contact the original The Gimp authors at gimp@xcf.berkeley.edu
+ * You can contact the original GIMP authors at gimp@xcf.berkeley.edu
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

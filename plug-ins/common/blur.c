@@ -1,5 +1,5 @@
 /****************************************************************************
- * This is a plugin for the GIMP v 0.99.8 or later.  Documentation is
+ * This is a plugin for GIMP v 0.99.8 or later.  Documentation is
  * available at http://www.rru.com/~meo/gimp/ .
  *
  * Copyright (C) 1997-98 Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/
@@ -107,7 +107,7 @@ MAIN ()
  *
  *  query() - query_proc
  *
- *      called by the GIMP to learn about this plug-in
+ *      called by GIMP to learn about this plug-in
  *
  ********************************/
 

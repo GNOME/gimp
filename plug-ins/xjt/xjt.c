@@ -1,6 +1,6 @@
 /* xjt.c
  *
- * XJT (JPEG-TAR fileformat) loading and saving file filter for the GIMP
+ * XJT (JPEG-TAR fileformat) loading and saving file filter for GIMP
  *  -hof (Wolfgang Hofer)
  *
  * This filter requires UNIX tar and the "jpeglib" Library to run.

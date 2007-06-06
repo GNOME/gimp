@@ -1,4 +1,4 @@
-/* Created with The GIMP */
+/* Created with GIMP */
 #define cursor_mouse_width 32
 #define cursor_mouse_height 32
 #define cursor_mouse_x_hot 3

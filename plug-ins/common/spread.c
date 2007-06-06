@@ -1,4 +1,4 @@
-/* Spread --- image filter plug-in for The Gimp image manipulation program
+/* Spread --- image filter plug-in for GIMP
  * Copyright (C) 1997 Brian Degenhardt and Federico Mena Quintero
  *
  * This program is free software; you can redistribute it and/or modify

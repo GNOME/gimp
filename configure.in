@@ -112,7 +112,7 @@ dnl Makefiles and conditionally defined here as a preprocessor symbol
 dnl and automake conditional.
 if test "x$GIMP_UNSTABLE" = "xyes"; then
   AC_DEFINE(GIMP_UNSTABLE, 1,
-            [Define to 1 if this is an unstable version of the GIMP])
+            [Define to 1 if this is an unstable version of GIMP])
 fi
 AM_CONDITIONAL(GIMP_UNSTABLE, test "x$GIMP_UNSTABLE" = "xyes")
 

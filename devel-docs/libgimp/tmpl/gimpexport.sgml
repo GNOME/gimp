@@ -7,7 +7,7 @@ Export an image before it is saved.
 <!-- ##### SECTION Long_Description ##### -->
 <para>
 This function should be called by all save_plugins unless they are
-able to save all image formats the GIMP knows about. It takes care
+able to save all image formats GIMP knows about. It takes care
 of asking the user if she wishes to export the image to a format the
 save_plugin can handle. It then performs the necessary conversions
 (e.g. Flatten) on a copy of the image so that the image can be saved 

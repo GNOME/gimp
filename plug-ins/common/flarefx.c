@@ -1,5 +1,5 @@
 /*
- * This is the FlareFX plug-in for the GIMP 0.99
+ * This is the FlareFX plug-in for GIMP 0.99
  * Version 1.05
  *
  * Copyright (C) 1997-1998 Karl-Johan Andersson (t96kja@student.tdb.uu.se)

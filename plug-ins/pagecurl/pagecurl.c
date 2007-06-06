@@ -1,9 +1,9 @@
-/* Page Curl 0.9 --- image filter plug-in for The Gimp
+/* Page Curl 0.9 --- image filter plug-in for GIMP
  * Copyright (C) 1996 Federico Mena Quintero
  * Ported to Gimp 1.0 1998 by Simon Budig <Simon.Budig@unix-ag.org>
  *
  * You can contact me at quartic@polloux.fciencias.unam.mx
- * You can contact the original The Gimp authors at gimp@xcf.berkeley.edu
+ * You can contact the original GIMP authors at gimp@xcf.berkeley.edu
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

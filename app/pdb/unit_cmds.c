@@ -384,7 +384,7 @@ register_unit_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-unit-get-number-of-built-in-units",
                                      "Returns the number of built-in units.",
-                                     "This procedure returns the number of defined units built-in to the GIMP.",
+                                     "This procedure returns the number of defined units built-in to GIMP.",
                                      "Michael Natterer <mitch@gimp.org>",
                                      "Michael Natterer",
                                      "1999",

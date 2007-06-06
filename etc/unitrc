@@ -3,7 +3,7 @@
 # modify this list with the unit editor. You are not
 # supposed to edit it manually, but of course you can do.
 # This file will be entirely rewritten every time
-# you quit the gimp.
+# you quit GIMP.
 
 (unit-info "centimeters"
    (factor 2.540000)

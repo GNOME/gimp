@@ -107,7 +107,7 @@ xcf_init (Gimp *gimp)
                                      "Saves file in the .xcf file format",
                                      "The XCF file format has been designed "
                                      "specifically for loading and saving "
-                                     "tiled and layered images in the GIMP. "
+                                     "tiled and layered images in GIMP. "
                                      "This procedure will save the specified "
                                      "image in the xcf file format.",
                                      "Spencer Kimball & Peter Mattis",
@@ -176,7 +176,7 @@ xcf_init (Gimp *gimp)
                                      "Loads file saved in the .xcf file format",
                                      "The XCF file format has been designed "
                                      "specifically for loading and saving "
-                                     "tiled and layered images in the GIMP. "
+                                     "tiled and layered images in GIMP. "
                                      "This procedure will load the specified "
                                      "file.",
                                      "Spencer Kimball & Peter Mattis",

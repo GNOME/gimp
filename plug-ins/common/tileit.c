@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for the GIMP.
+ * This is a plug-in for GIMP.
  *
  * Tileit - This plugin take an image and makes repeated copies of it.
  *

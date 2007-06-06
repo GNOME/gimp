@@ -1,5 +1,5 @@
 /* $Id$
- * This is a plug-in for the GIMP.
+ * This is a plug-in for GIMP.
  * It draws mazes...
  *
  * Implemented as a GIMP 0.99 Plugin by

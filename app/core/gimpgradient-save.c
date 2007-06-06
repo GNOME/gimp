@@ -148,8 +148,8 @@ gimp_gradient_save_pov (GimpGradient  *gradient,
     }
   else
     {
-      fprintf (file, "/* color_map file created by the GIMP */\n");
-      fprintf (file, "/* http://www.gimp.org/               */\n");
+      fprintf (file, "/* color_map file created by GIMP */\n");
+      fprintf (file, "/* http://www.gimp.org/           */\n");
 
       fprintf (file, "color_map {\n");
 

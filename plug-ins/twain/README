@@ -86,7 +86,7 @@ If you find that you are unable to capture data from you datasource (the plug-in
 crashes or the image is wrong), please capture data using the following steps:
 
 1) Copy gtwain.exe to your plug-ins directory as "dtwain.exe".
-2) Run The GIMP.
+2) Run GIMP.
 3) Choose Xtns->TWAIN Acquire (Dump)...
 4) Choose the datasource settings that are causing problems.
 5) Choose a *SMALL* sample image.

@@ -1,4 +1,4 @@
-/* Ripple --- image filter plug-in for The Gimp image manipulation program
+/* Ripple --- image filter plug-in for GIMP
  * Copyright (C) 1997 Brian Degenhardt
  *
  * This program is free software; you can redistribute it and/or modify
@@ -18,7 +18,7 @@
  * Please direct all comments, questions, bug reports  etc to Brian Degenhardt
  * bdegenha@ucsd.edu
  *
- * You can contact the original The Gimp authors at gimp@xcf.berkeley.edu
+ * You can contact the original GIMP authors at gimp@xcf.berkeley.edu
  */
 
 #include "config.h"

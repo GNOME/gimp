@@ -1,4 +1,4 @@
-;; text-circle.scm -- a script for The GIMP
+;; text-circle.scm -- a script for GIMP
 ;; Author: Shuji Narazaki <narazaki@gimp.org>
 ;; Time-stamp: <1998/11/25 13:26:51 narazaki@gimp.org>
 ;; Version 2.5

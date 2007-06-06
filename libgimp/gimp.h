@@ -89,7 +89,7 @@ struct _GimpPlugInInfo
   /* called when the gimp application exits */
   GimpQuitProc  quit_proc;
 
-  /* called by the gimp so that the plug-in can inform the
+  /* called by gimp so that the plug-in can inform the
    *  gimp of what it does. (ie. installing a procedure database
    *  procedure).
    */

@@ -1,5 +1,4 @@
-/* Autostretch HSV 0.10 --- image filter plug-in for The Gimp image
- * manipulation program
+/* Autostretch HSV 0.10 --- image filter plug-in for GIMP
  *
  * Copyright (C) 1997 Scott Goehring
  * Copyright (C) 1996 Federico Mena Quintero

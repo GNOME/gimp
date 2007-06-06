@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* IWarp  a plug-in for the GIMP
+/* IWarp  a plug-in for GIMP
    Version 0.1
 
    IWarp is a gimp plug-in for interactive image warping. To apply the

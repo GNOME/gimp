@@ -23,7 +23,7 @@ A #GTypeModule subclass which implements module loading using #GModule.
 <!-- ##### STRUCT GimpModule ##### -->
 <para>
 #GimpModule is a generic mechanism to dynamically load modules into
-the GIMP.  It is a #GTypeModule subclass, implementing module loading
+GIMP.  It is a #GTypeModule subclass, implementing module loading
 using #GModule.  #GimpModule does not know which functionality is
 implemented by the modules, it just provides a framework to get
 arbitrary #GType implementations loaded from disk.

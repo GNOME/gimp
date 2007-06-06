@@ -647,7 +647,7 @@ xjpg_load_channel (const char   *filename,
    * warnings occurred (test whether jerr.num_warnings is nonzero).
    */
 
-  /* Tell the GIMP to display the image.
+  /* Tell GIMP to display the image.
    */
   /* gimp_drawable_flush (l_drawable); */
 

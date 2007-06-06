@@ -85,7 +85,7 @@
 )
 
 
-; Register the function with the GIMP:
+; Register the function with GIMP:
 
 (script-fu-register
   "script-fu-camo-pattern"

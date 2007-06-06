@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for the GIMP.
+ * This is a plug-in for GIMP.
  *
  * Generates images containing vector type drawings.
  *
@@ -592,7 +592,7 @@ gfig_style_copy (Style       *style1,
 
 /*
  * gfig_style_apply() applies the settings from the specified style to
- * the Gimp core.  It does not change any widgets, and does not cause
+ * the GIMP core.  It does not change any widgets, and does not cause
  * a repaint.
  */
 void

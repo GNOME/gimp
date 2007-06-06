@@ -1,5 +1,5 @@
 /****************************************************************************
- * This is a plugin for the GIMP v 1.0 or later.  Documentation is
+ * This is a plugin for GIMP v 1.0 or later.  Documentation is
  * available at http://www.rru.com/~meo/gimp/ .
  *
  * Copyright (C) 1997-8 Miles O'Neal  <meo@rru.com>  http://www.rru.com/~meo/
@@ -178,7 +178,7 @@ MAIN ()
  *
  *  query() - query_proc
  *
- *      called by the GIMP to learn about this plug-in
+ *      called by GIMP to learn about this plug-in
  *
  ********************************/
 
@@ -267,7 +267,7 @@ query (void)
  *
  *  run() - main routine
  *
- *  This handles the main interaction with the GIMP itself,
+ *  This handles the main interaction with GIMP itself,
  *  and invokes the routine that actually does the work.
  *
  ********************************/
@@ -412,7 +412,7 @@ run (const gchar      *name,
     }
   /*
    *  DONE!
-   *  Set the status where the GIMP can see it, and let go
+   *  Set the status where GIMP can see it, and let go
    *  of the drawable.
    */
   g_rand_free (gr);

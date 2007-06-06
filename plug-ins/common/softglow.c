@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* Softglow filter for the GIMP for BIPS
+/* Softglow filter for GIMP for BIPS
  *  -Spencer Kimball
  *
  * This filter screens a desaturated, sigmoidally transferred

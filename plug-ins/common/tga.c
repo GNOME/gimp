@@ -2,7 +2,7 @@
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
  * $Id$
- * TrueVision Targa loading and saving file filter for the Gimp.
+ * TrueVision Targa loading and saving file filter for GIMP.
  * Targa code Copyright (C) 1997 Raphael FRANCOIS and Gordon Matzigkeit
  *
  * The Targa reading and writing code was written from scratch by

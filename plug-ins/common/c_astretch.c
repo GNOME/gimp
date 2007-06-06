@@ -1,10 +1,9 @@
-/* Contrast Autostretch 1.06 --- image filter plug-in for The Gimp image
- * manipulation program
+/* Contrast Autostretch 1.06 --- image filter plug-in for GIMP
  *
  * Copyright (C) 1996 Federico Mena Quintero
  *
  * You can contact me at quartic@polloux.fciencias.unam.mx
- * You can contact the original The Gimp authors at gimp@xcf.berkeley.edu
+ * You can contact the original GIMP authors at gimp@xcf.berkeley.edu
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by

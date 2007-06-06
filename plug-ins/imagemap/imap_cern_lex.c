@@ -537,7 +537,7 @@ char *cern_text;
 #line 1 "imap_cern.l"
 #line 2 "imap_cern.l"
 /*
- * This is a plug-in for the GIMP.
+ * This is a plug-in for GIMP.
  *
  * Generates clickable image maps.
  *

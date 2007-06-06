@@ -1,5 +1,5 @@
 /*
- * This is a plugin for the GIMP.
+ * This is a plugin for GIMP.
  *
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  * Copyright (C) 1996 Torsten Martinsen

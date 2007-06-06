@@ -1,4 +1,4 @@
-/* MapObject 1.2.0 -- image filter plug-in for The Gimp program
+/* MapObject 1.2.0 -- image filter plug-in for GIMP
  *
  * Copyright (C) 1996-98 Tom Bech
  * Copyright (C) 1996-98 Federico Mena Quintero

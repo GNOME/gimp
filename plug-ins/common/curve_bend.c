@@ -1,4 +1,4 @@
-/* curve_bend plugin for the GIMP */
+/* curve_bend plugin for GIMP */
 
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
@@ -3177,7 +3177,7 @@ p_main_bend (BenderDialog *cd,
    l_tmp_layer_id = gimp_layer_copy(original_drawable->drawable_id);
    /* set layer invisible and dummyname and
     * add at top of the image while working
-    * (for the case of undo the gimp must know,
+    * (for the case of undo GIMP must know,
     *  that the layer was part of the image)
     */
    gimp_image_add_layer (l_image_id, l_tmp_layer_id, 0);

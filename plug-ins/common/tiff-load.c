@@ -1,4 +1,4 @@
-/* tiff loading for the GIMP
+/* tiff loading for GIMP
  *  -Peter Mattis
  *
  * The TIFF loading code has been completely revamped by Nick Lamb

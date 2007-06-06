@@ -507,7 +507,7 @@ char *ncsa_text;
 #line 1 "imap_ncsa.l"
 #line 2 "imap_ncsa.l"
 /*
- * This is a plug-in for the GIMP.
+ * This is a plug-in for GIMP.
  *
  * Generates clickable image maps.
  *

@@ -3,7 +3,7 @@
 ;
 ; Creates an image with the text "Hello, World!"
 ; This was the first TinyScheme based script ever created and run for the
-; 2.x version of the GIMP.
+; 2.x version of GIMP.
 
 ; GIMP - The GNU Image Manipulation Program
 ; Copyright (C) 1995 Spencer Kimball and Peter Mattis

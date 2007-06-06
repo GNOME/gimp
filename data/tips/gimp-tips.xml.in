@@ -3,7 +3,7 @@
 
 <gimp-tips>
 
-<!-- This is a list of tips for the GIMP.  Every time the GIMP is          -->
+<!-- This is a list of tips for GIMP.  Every time GIMP is                  -->
 <!-- started, one tip will be selected from this file and will be          -->
 <!-- displayed in the "Tip of the day" dialog.                             -->
 <!--                                                                       -->
@@ -37,7 +37,7 @@
 
   <tip level="beginner">
     <_thetip>
-      You can get context-sensitive help for most of the GIMP's features by
+      You can get context-sensitive help for most of GIMP's features by
       pressing the F1 key at any time.  This also works inside the menus.
     </_thetip>
   </tip>

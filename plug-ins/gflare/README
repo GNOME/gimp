@@ -6,7 +6,7 @@
 
 ==========================================================================
 
-  GFlare is a plug-in for the GIMP.  The name "GFlare" is short for
+  GFlare is a plug-in for GIMP.  The name "GFlare" is short for
 "Gradient Flare".  It renders lense flare effect using custom
 gradients.  The basic idea is suggested by Marcelo Malheiros,
 originally based on a 3DStudio MAX plug-in called LenZFX:
@@ -24,7 +24,7 @@ INSTALL:
 3) Add new entry to ~/.gimp/gimprc as
      (gflare-path "${gimp_dir}/gflares:${gimp_data_dir}/gflares")
 
-3) Run the GIMP. The menu path is <Image>/Filters/Effects/GFlare.
+3) Run GIMP. The menu path is <Image>/Filters/Effects/GFlare.
 
 
 HOW TO USE IT:

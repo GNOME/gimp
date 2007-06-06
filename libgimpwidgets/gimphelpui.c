@@ -345,7 +345,7 @@ gimp_help_callback (GtkWidget          *widget,
  *  some widget holding a grab before starting the query because strange
  *  things happen if (1) the help browser pops up while the query has
  *  grabbed the pointer or (2) the query grabs the pointer while some
- *  other part of the gimp has grabbed it (e.g. a tool, eek)
+ *  other part of GIMP has grabbed it (e.g. a tool, eek)
  */
 
 static gboolean

@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for the GIMP.
+ * This is a plug-in for GIMP.
  *
  * Copyright (C) 1999 Andy Thomas  alt@picnic.demon.co.uk
  *

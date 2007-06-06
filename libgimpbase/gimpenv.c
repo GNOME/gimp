@@ -624,13 +624,13 @@ gimp_personal_rc_file (const gchar *basename)
 /**
  * gimp_gtkrc:
  *
- * Returns the name of the GIMP's application-specific gtkrc file.
+ * Returns the name of GIMP's application-specific gtkrc file.
  *
  * The returned string is owned by GIMP and must not be modified or
  * freed. The returned string is in the encoding used for filenames by
  * the system, which isn't necessarily UTF-8 (never is on Windows).
  *
- * Returns: The name of the GIMP's application-specific gtkrc file.
+ * Returns: The name of GIMP's application-specific gtkrc file.
  **/
 const gchar *
 gimp_gtkrc (void)

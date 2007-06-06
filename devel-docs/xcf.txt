@@ -13,53 +13,53 @@ as published by the Free Software Foundation, either version
      T H I S    I S    A    D R A F T    O N L Y !
      ---------------------------------------------
 
-This is the native image file format of the GIMP. Beware that
+This is the native image file format of GIMP. Beware that
 CinePaint's native file format is called XCF too. While the latter is
 derived from the format described here, the two formats differ in many
 details and are not mutually compatible.
 
 The XCF format is designed to store the entire part of the state of
-the Gimp that is specific to one image (i.e., not the cut buffer, tool
+GIMP that is specific to one image (i.e., not the cut buffer, tool
 options, key bindings, etc.) and is not undo data.  This makes the
 full collection of data stored in an XCF file rather heterogeneous and
-tied to the internals of the Gimp. Use of the format by third-party
+tied to the internals of GIMP. Use of the format by third-party
 software is recommended only as a way to get data into and out of the
 Gimp for which it would be impossible or inconvenient to use a more
 standard interchange format.
 
 Authors of third-party XCF-creating software in particular should take
 care to write files that are as indistinguishable as possible from
-ones saved by the Gimp. The Gimp developers take care to make each
-version of the Gimp able to read XCF files produced by older versions,
+ones saved by GIMP. The GIMP developers take care to make each
+version of GIMP able to read XCF files produced by older versions,
 but they make no special efforts to allow reading of files created by
-other software that attempt to extrapolate from the Gimp source.
+other software that attempt to extrapolate from the GIMP source.
 
 The name
 --------
 
-The name XCF honors the Gimp's origin at the eXperimental Computing
+The name XCF honors GIMP's origin at the eXperimental Computing
 Facility of the University of California at Berkeley.
 
 Status of this document
 -----------------------
 
 This specification is an unofficial condensation and extrapolation of
-the XCF-writing and -reading code in version 2.2.11 of the Gimp. As of
+the XCF-writing and -reading code in version 2.2.11 of GIMP. As of
 this writing, it has not been approved or proofread by any Gimp
 developer, though it has been written with the intention of
-contributing it to the Gimp project for use as official documentation.
+contributing it to the GIMP project for use as official documentation.
 
 Some of the normative statements made below are enforced by the XCF
-reader in the Gimp; others are just the author's informed guess about
+reader in GIMP; others are just the author's informed guess about
 "best practices" that would be likely to maximize interoperability
-with future versions of the Gimp.
+with future versions of GIMP.
 
 
 1. BASIC DATA MODEL
 ===================
 
 It is recommended that a software developer who wants to take full
-advantage of the XCF format be deeply familiar with the Gimp at least
+advantage of the XCF format be deeply familiar with GIMP at least
 as a user. The following high-level overview is meant to help those
 non-users who just need to extract pixel data from an XCF file get up
 to speed.
@@ -78,7 +78,7 @@ layer has a color which is specified in one of three ways:
 
   RGB: Three intensity values for red, green, and blue additive color
      components, each on a scale from 0 to 255. The exact color space
-     is not specified. The Gimp displays image data directly on PC
+     is not specified. GIMP displays image data directly on PC
      display hardware without any software correction, so in most
      cases the intensity values should be considered nonlinear samples
      that map to physical light intensities using a power function
@@ -87,7 +87,7 @@ layer has a color which is specified in one of three ways:
      also has the property of making each 1/255th step about equally
      perceptible to the human eye when the monitor is correctly
      adjusted).
-     Beware, however, that the Gimp's compositing algorithms (as
+     Beware, however, that GIMP's compositing algorithms (as
      described in Section 8 below) implicitly treat the intensities
      as _linear_ samples. The XCF file format currently has no support
      for storing the intended gamma of the samples.
@@ -109,7 +109,7 @@ opacity of the pixel on a linear scale from 0 (denoting an alpha of
 0.0, or completely transparent) to 255 (denoting an alpha of 1.0, or
 completely opaque). The color values do not use "premultiplied alpha"
 storage. The color information for pixels with alpha 0 _may_ be
-meaningful; the Gimp preserves it when parts of a layer are erased and
+meaningful; GIMP preserves it when parts of a layer are erased and
 provides (obscure) ways of recovering it in its user interface.
 
 The bottommost layer _only_ in an image may not contain alpha
@@ -118,10 +118,10 @@ of 255. (Even if the bottommost layer does not cover the entire
 canvas, it is the only layer that can be without an explicit alpha
 channel).
 
-In images that use the indexed color model, the Gimp does not support
+In images that use the indexed color model, GIMP does not support
 partial transparency and interprets alpha values from 0 to 127 as
 fully transparent and values from 128 to 255 as fully opaque. This
-behavior _may_ change in future versions of the Gimp.
+behavior _may_ change in future versions of GIMP.
 
 Layers have certain other properties such as a visibility flag, a
 global opacity (which is multiplied with individual pixel alphas) and
@@ -137,7 +137,7 @@ directly when the final image is displayed or exported to layer-less
 formats.
 
 A channel can be edited as if it was a grayscale layer with the same
-dimensions as the canvas. When it is shown in the Gimp editor UI
+dimensions as the canvas. When it is shown in the GIMP editor UI
 together with other layers, it is used as if it was the _inverse_
 alpha channel of a layer with the same color information in all
 pixels; this color can be stored in the XCF file as a property of the
@@ -218,7 +218,7 @@ which have the following general format
   byte[n]  ...  Payload - interpretation depends on the type
 
 The authoritative source for property type numbers is the file
-app/xcf/xcf-private.h in the Gimp sources.
+app/xcf/xcf-private.h in the GIMP sources.
 
 The number of properties in a property list is not stored explicitly;
 the last property in the list is identified by having type 0; it must
@@ -226,12 +226,12 @@ have length 0.
 
 XCF readers must skip and ignore property records of unrecognized
 type, and the length word is there to support such skipping. However,
-the Gimp's own XCF reader will _ignore_ the length word of most
+GIMP's own XCF reader will _ignore_ the length word of most
 properties that it _does_ recognize, and instead reads the amount of
 payload it knows this property to have. This means that a property
 record is not itself extensible: one cannot piggyback extra data onto
 an existing property record by increasing its length. Also, some
-historical versions of the Gimp actually stored the wrong length for
+historical versions of GIMP actually stored the wrong length for
 some properties, so there are XCF files with misleading property
 length information in circulation. For maximal compatibility, an XCF
 reader should endeavor to know the native lengths of as many
@@ -239,7 +239,7 @@ properties as possible and fall back to the length word only for truly
 unknown property types.
 
 There is not supposed to be more than one instance of each property in
-a property list, but some versions of the Gimp will erroneously emit
+a property list, but some versions of GIMP will erroneously emit
 duplicate properties. An XCF reader that meets a duplicated property
 should let the contents of the later instance take precedence, except
 for properties that contain lists of subitems, in which the lists
@@ -259,7 +259,7 @@ names which will be ignored by other plug-ins. In contrast, only the
 Gimp itself should define new property types.
 
 A list of known parasites and their data formats can be found in the
-file devel-doc/parasites.txt of the Gimp source tree.
+file devel-doc/parasites.txt of the GIMP source tree.
 
 
 3. THE MASTER IMAGE STRUCTURE
@@ -297,12 +297,12 @@ understands features not described in this specification. On the other
 hand, optional extra information that can be safely ignored will not
 cause the version to increase.
 
-The Gimp's XCF writer dynamically selects the lowest version that will
+GIMP's XCF writer dynamically selects the lowest version that will
 allow the image to be represented. Third-party XCF writers should do
 likewise.
 
 Version numbers from v100 upwards have been used by CinePaint, which
-originated as a 16-bit fork of the Gimp. That format is not described
+originated as a 16-bit fork of GIMP. That format is not described
 by this specification.
 
 Image properties
@@ -341,7 +341,7 @@ PROP_COLORMAP (essential)
   version-0 indexed image.
   
   Beware that the payload length of the PROP_COLORMAP in particular
-  cannot be trusted: some historic releases of the Gimp erroneously
+  cannot be trusted: some historic releases of GIMP erroneously
   wrote n+4 instead of 3n+4 into the length word (but still actually
   followed it by 3n+4 bytes of payload).
 
@@ -394,7 +394,7 @@ PROP_RESOLUTION (not editing state, but not _really_ essential either)
   the viewer's monitor is. Similarly, photographs commonly do not have
   a well-defined target size and are intended to be scaled to fit the
   available space instead. Therefore readers should not interpret the
-  information in this property too rigidly; the Gimp writes it to XCF
+  information in this property too rigidly; GIMP writes it to XCF
   files unconditionally, even if the user has not explicitly chosen a
   resolution.
   
@@ -508,7 +508,7 @@ PROP_VECTORS
   
   Appears unless all paths can be stored in the PROP_PATHS format.
 
-  The Gimp's XCF reader checks that the total size of all path
+  GIMP's XCF reader checks that the total size of all path
   specifications in the property precisely equals the length word, so
   it is safe for a reader to use the length word to skip the property
   without parsing the individual parasites. (Note that this is _not_
@@ -589,7 +589,7 @@ PROP_MODE (essential)
   unit32  m   The layer mode; one of
                  0: Normal
                  1: Dissolve (random dithering to discrete alpha)
-                 2: (Behind: not selectable in the Gimp UI)
+                 2: (Behind: not selectable in the GIMP UI)
                  3: Multiply
                  4: Screen
                  5: Overlay
@@ -613,7 +613,7 @@ PROP_MODE (essential)
   When reading old XCF files that lack this property, assume m=0.
   The effects of the various layer modes is defined in Section 8, below.
 
-  Beware that the Gimp ignores all other layer modes than Normal and
+  Beware that GIMP ignores all other layer modes than Normal and
   Dissolve for the bottommost visible layer of the image; if m>=3 has
   been specified for this layer it will interpreted as m==0 for
   display and flattening purposes. This effect happens for one layer
@@ -768,16 +768,16 @@ pointed to from a layer or channel structure.
 
 The width, height, and bpp values are for consistency checking; their
 correct values can always be inferred from the context, and are
-checked when the Gimp reads the XCF file.
+checked when GIMP reads the XCF file.
 
 Levels
 ------
 
 For some unknown historical reason, the hierarchy structure contains
 an extra indirection to a series of "level" structures, described
-below. Only the first level structure is used by the Gimp's XCF
+below. Only the first level structure is used by GIMP's XCF
 reader, except that the reader checks that a terminating zero for the
-level-pointer list can be found. The Gimp's XCF writer creates a
+level-pointer list can be found. GIMP's XCF writer creates a
 series of dummy level structures (with no tile pointers), each
 declaring a height and width half of the previous one (rounded down),
 until the height and with are both less than 64. Thus, for a layer of
@@ -828,7 +828,7 @@ individual tiles are not stored explicitly in the XCF file, but must
 be computed by the reader.
 
 The tiles that are pointed to by a single level structure must be
-contiguous in the XCF file, because the Gimp's XCF reader uses the
+contiguous in the XCF file, because GIMP's XCF reader uses the
 difference between two subsequent tile pointers to judge the amount of
 memory it needs to allocate for internal data structures.
 
@@ -895,7 +895,7 @@ boundary between streams.
 The RLE encoding allows "degenerate" encodings in which the original
 data stream may double in size (or grow to arbitrarily large sizes if
 (128,0,0) operations are inserted). Such encodings must be avoided, as
-the Gimp's XCF reader expects that the size of an encoded tile is
+GIMP's XCF reader expects that the size of an encoded tile is
 never more than 24 KB, which is only 1.5 times the unencoded size of a
 64x64 RGBA tile.
 
@@ -972,7 +972,7 @@ PROP_TATTOO (internal Gimp state)
   the tattoos for bookkeeping get confused.
 
   An XCF file must either provide tattoo values for all its elements
-  or for none of them. The Gimp will invent fresh tattoos when it
+  or for none of them. GIMP will invent fresh tattoos when it
   reads in tattoo-less elements, but it does not attempt to keep them
   different from ones specified explicitly in the file. 
 
@@ -992,7 +992,7 @@ PROP_PARASITES
   directly encoded; the list ends when the total length of the
   parasite data read equals the property payload length.
 
-  The Gimp's XCF reader checks that the combined size of all parasites
+  GIMP's XCF reader checks that the combined size of all parasites
   in the property precisely equals the length word, so it is safe for
   a reader to use the length word to skip the property without parsing
   the individual parasites.
@@ -1002,7 +1002,7 @@ PROP_PARASITES
   with byte ordering.
 
   There can only be one parasite with a given name attached to
-  each element of the image. Some versions of the Gimp will
+  each element of the image. Some versions of GIMP will
   erroneously write some parasites twice in the same property list;
   XCF readers must be prepared to gracefully ignore all but the
   last instance of a parasite name in each property list.
@@ -1011,7 +1011,7 @@ PROP_PARASITES
 9. COMPOSITING AND LAYER MODES
 ===============================
 
-This section describes the "flattening" process that the Gimp applies
+This section describes the "flattening" process that GIMP applies
 when a multi-layer image is displayed in the editor or exported to
 other image file formats. It is present for reference only; an XCF
 consumer may well elect to do something different with pixel data from
@@ -1034,10 +1034,10 @@ mentioned.
 
 Any practical implementation of the computations specified below may
 suffer rounding errors; this specification do not detail how these are
-to be handled. The Gimp itself rounds values to an integral number of
+to be handled. GIMP itself rounds values to an integral number of
 255ths at many points in the computation. This specification does not
 specify exactly which these points are, and authors of XCF renderers
-that aim to reproduce the effects of the Gimp's flattening down to the
+that aim to reproduce the effects of GIMP's flattening down to the
 least significant bits are referred to studying its source code.
 
 In the description below, the variable letter "a" is used for alpha
@@ -1048,7 +1048,7 @@ color information for a pixel; depending on the color mode of the
 image that is either an (r,g,b) triple, a y, or a c.
 
 The flattening process works independently for each pixel in the
-canvas area. The description of some layer modes in the Gimp manual
+canvas area. The description of some layer modes in the GIMP manual
 may give the impression that they involve filters that let pixels
 influence neighbor pixels, but that is not true.
 

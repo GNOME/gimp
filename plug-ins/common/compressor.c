@@ -20,7 +20,7 @@
 /* Minor changes to support file magic */
 /* 4 Oct 1997 -- Risacher */
 
-/* compressor plug-in for the gimp       */
+/* compressor plug-in for GIMP           */
 /* based on gz.c which in turn is        */
 /* loosley based on url.c by             */
 /* Josh MacDonald, jmacd@cs.berkeley.edu */
@@ -28,7 +28,7 @@
 /* and, very loosely on hrz.c by */
 /* Albert Cahalan <acahalan at cs.uml.edu> */
 
-/* This is reads and writes compressed image files for the Gimp
+/* This is reads and writes compressed image files for GIMP
  *
  * You need to have gzip or bzip2 installed for it to work.
  *

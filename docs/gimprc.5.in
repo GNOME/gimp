@@ -6,7 +6,7 @@ gimprc \- gimp configuration file
 .SH DESCRIPTION
 The
 .B gimprc
-file is a configuration file read by the GIMP when it starts up.  There
+file is a configuration file read by GIMP when it starts up.  There
 are two of these: one system-wide one stored in
 @gimpsysconfdir@/gimprc and a per-user \fB$HOME\fP/@gimpdir@/gimprc
 which may override system settings.

@@ -1,4 +1,4 @@
-/* Warp  --- image filter plug-in for The Gimp image manipulation program
+/* Warp  --- image filter plug-in for GIMP
  * Copyright (C) 1997 John P. Beale
  * Much of the 'warp' is from the Displace plug-in: 1996 Stephen Robert Norris
  * Much of the 'displace' code taken in turn  from the pinch plug-in
@@ -20,7 +20,7 @@
  *
  * You can contact me (the warp author) at beale@best.com
  * Please send me any patches or enhancements to this code.
- * You can contact the original The Gimp authors at gimp@xcf.berkeley.edu
+ * You can contact the original GIMP authors at gimp@xcf.berkeley.edu
  *
  * --------------------------------------------------------------------
  * Warp Program structure: after running the user interface and setting the

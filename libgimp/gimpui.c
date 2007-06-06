@@ -60,7 +60,7 @@ static gboolean gimp_ui_initialized = FALSE;
  * image rendering subsystem (GdkRGB) to follow the GIMP main program's
  * colormap allocation/installation policy.
  *
- * The GIMP's colormap policy can be determinded by the user with the
+ * GIMP's colormap policy can be determinded by the user with the
  * gimprc variables @min_colors and @install_cmap.
  **/
 void

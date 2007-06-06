@@ -105,7 +105,7 @@
 #line 1 "imap_cern.y"
 
 /*
- * This is a plug-in for the GIMP.
+ * This is a plug-in for GIMP.
  *
  * Generates clickable image maps.
  *

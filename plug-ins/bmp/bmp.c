@@ -4,7 +4,7 @@
 /* Gimp. It loads and saves images in windows(TM) */
 /* bitmap format.                                 */
 /* Some Parts that deal with the interaction with */
-/* the Gimp are taken from the GIF plugin by      */
+/* GIMP are taken from the GIF plugin by          */
 /* Peter Mattis & Spencer Kimball and from the    */
 /* PCX plugin by Francisco Bustamante.            */
 /*                                                */

@@ -1,5 +1,5 @@
 ;
-;  burn-in-anim.scm V2.1  -  script-fu for the GIMP 1.1 and higher
+;  burn-in-anim.scm V2.1  -  script-fu for GIMP 1.1 and higher
 ;
 ;  Copyright (C) 9/2000  Roland Berger
 ;  roland@fuchur.leute.server.de

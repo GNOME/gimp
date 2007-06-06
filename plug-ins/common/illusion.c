@@ -1,5 +1,5 @@
 /*
- * illusion.c  -- This is a plug-in for the GIMP 1.0
+ * illusion.c  -- This is a plug-in for GIMP 1.0
  *
  * Copyright (C) 1997  Hirotsuna Mizuno
  *                     s1041150@u-aizu.ac.jp

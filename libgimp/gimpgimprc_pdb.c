@@ -32,7 +32,7 @@
  * Queries the gimprc file parser for information on a specified token.
  *
  * This procedure is used to locate additional information contained in
- * the gimprc file considered extraneous to the operation of the GIMP.
+ * the gimprc file considered extraneous to the operation of GIMP.
  * Plug-ins that need configuration information can expect it will be
  * stored in the user gimprc file and can use this procedure to
  * retrieve it. This query procedure will return the value associated
@@ -72,7 +72,7 @@ gimp_gimprc_query (const gchar *token)
  *
  * This procedure is used to add or change additional information in
  * the gimprc file that is considered extraneous to the operation of
- * the GIMP. Plug-ins that need configuration information can use this
+ * GIMP. Plug-ins that need configuration information can use this
  * function to store it, and gimp_gimprc_query() to retrieve it. This
  * will accept _only_ string values in UTF-8 encoding.
  *

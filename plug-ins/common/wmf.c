@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* WMF loading file filter for the GIMP
+/* WMF loading file filter for GIMP
  * -Dom Lachowicz <cinamod@hotmail.com> 2003
  * -Francis James Franklin <fjf@alinameridon.com>
  */
@@ -998,7 +998,7 @@ load_image (const gchar *filename)
 
   gimp_progress_update (1.0);
 
-  /* Tell the GIMP to display the image.
+  /* Tell GIMP to display the image.
    */
   gimp_image_add_layer (image, layer, 0);
   gimp_drawable_flush (drawable);

@@ -15,7 +15,7 @@ all its layers, channels, parasites and guides.
 Installation:
 -------------
    
-   The XJT Plugin is Part of the gimp (since 1.1.x development release)
+   The XJT Plugin is Part of GIMP (since 1.1.x development release)
    and should be built and installed by the gimp installation.
        
 Change Log: (see also revision history in the source files)

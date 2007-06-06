@@ -1,4 +1,4 @@
-/* threshold_alpha.c -- This is a plug-in for the GIMP (1.0's API)
+/* threshold_alpha.c -- This is a plug-in for GIMP (1.0's API)
  * Author: Shuji Narazaki <narazaki@InetQ.or.jp>
  * Time-stamp: <2000-01-09 13:25:30 yasuhiro>
  * Version: 0.13A (the 'A' is for Adam who hacked in greyscale

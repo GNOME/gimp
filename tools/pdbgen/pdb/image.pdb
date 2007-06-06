@@ -50,7 +50,7 @@ sub image_list {
     $blurb = 'Returns the list of images currently open.';
 
     $help = <<'HELP';
-This procedure returns the list of images currently open in the GIMP.
+This procedure returns the list of images currently open in GIMP.
 HELP
 
     &std_pdb_misc;

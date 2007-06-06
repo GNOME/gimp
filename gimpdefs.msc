@@ -3,13 +3,13 @@
 
 GIMP_VER = 2.0
 
-# The name of the directory in your %HOME% where the GIMP's personal settings
+# The name of the directory in your %HOME% where GIMP's personal settings
 # and stuff is saved.
 GIMPDIR = _gimp$(GIMP_VER)
 
 # Build app/* as DLLs; don't define this, it doesn't work yet.
 #DLLGIMP = 1 
 
-# This one doesn't work either withot patching Pango and The Gimp
+# This one doesn't work either withot patching Pango and GIMP
 # Tries to not depend on ft2
 #PANGO_WIN32_EXTENDED = 1

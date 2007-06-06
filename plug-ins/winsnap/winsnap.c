@@ -1121,7 +1121,7 @@ flipRedAndBlueBytes(int width, int height)
  * sendBMPToGIMP
  *
  * Take the captured data and send it across
- * to the GIMP.
+ * to GIMP.
  */
 static void
 sendBMPToGimp(HBITMAP hBMP, HDC hDC, RECT rect)

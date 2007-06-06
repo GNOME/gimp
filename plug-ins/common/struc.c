@@ -1,5 +1,5 @@
 /*
- * This is the Struc plug-in for the GIMP 0.99
+ * This is the Struc plug-in for GIMP 0.99
  * Version 1.01
  *
  * Copyright (C) 1997 Karl-Johan Andersson (t96kja@student.tdb.uu.se)

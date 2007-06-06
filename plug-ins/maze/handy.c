@@ -1,5 +1,5 @@
 /* $Id$
- * These routines are useful for working with the GIMP and need not be
+ * These routines are useful for working with GIMP and need not be
  * specific to plug-in-maze.
  *
  * Kevin Turner <acapnotic@users.sourceforge.net>

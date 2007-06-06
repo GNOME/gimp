@@ -1,5 +1,5 @@
 /*
- * wind 1.1.0 - a plug-in for the GIMP
+ * wind 1.1.0 - a plug-in for GIMP
  *
  * Copyright (C) Nigel Wetten
  *

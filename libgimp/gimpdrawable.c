@@ -330,7 +330,7 @@ gimp_drawable_get_sub_thumbnail_data (gint32  drawable_ID,
  * @data: a pointer to the data attached with the #GimpParasite.
  *
  * Convenience function that creates a parasite and attaches it
- * to the GIMP.
+ * to GIMP.
  *
  * Return value: TRUE on successful creation and attachment of
  * the new parasite.

@@ -1,4 +1,4 @@
-/* vpropagate.c -- This is a plug-in for the GIMP (1.0's API)
+/* vpropagate.c -- This is a plug-in for GIMP (1.0's API)
  * Author: Shuji Narazaki <narazaki@InetQ.or.jp>
  * Time-stamp: <2000-01-09 15:50:46 yasuhiro>
  * Version: 0.89a

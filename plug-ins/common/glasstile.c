@@ -1,5 +1,5 @@
 /*
- * This is the Glass Tile plug-in for the GIMP 1.2
+ * This is the Glass Tile plug-in for GIMP 1.2
  * Version 1.02
  *
  * Copyright (C) 1997 Karl-Johan Andersson (t96kja@student.tdb.uu.se)

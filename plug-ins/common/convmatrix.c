@@ -1,4 +1,4 @@
-/* Convolution Matrix plug-in for the GIMP -- Version 0.1
+/* Convolution Matrix plug-in for GIMP -- Version 0.1
  * Copyright (C) 1997 Lauri Alanko <la@iki.fi>
  *
  *

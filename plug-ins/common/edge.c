@@ -1,4 +1,4 @@
-/* edge filter for the GIMP
+/* edge filter for GIMP
  *  -Peter Mattis
  *
  * This filter performs edge detection on the input image.

@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for the GIMP.
+ * This is a plug-in for GIMP.
  *
  * Plugin to convert a selection to a path.
  *

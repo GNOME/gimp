@@ -1,4 +1,4 @@
-/* This is a plugin for the GIMP.
+/* This is a plugin for GIMP.
  *
  * Copyright (C) 1997 Jochen Friedrich
  * Parts Copyright (C) 1995 Gert Doering

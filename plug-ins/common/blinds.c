@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for the GIMP.
+ * This is a plug-in for GIMP.
  *
  * Blinds plug-in. Distort an image as though it was stuck to
  * window blinds and the blinds where opened/closed.

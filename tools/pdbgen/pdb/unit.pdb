@@ -42,7 +42,7 @@ sub unit_get_number_of_built_in_units {
     $blurb = 'Returns the number of built-in units.';
 
     $help = <<'HELP';
-This procedure returns the number of defined units built-in to the GIMP.
+This procedure returns the number of defined units built-in to GIMP.
 HELP
 
     &mitch_pdb_misc('1999');

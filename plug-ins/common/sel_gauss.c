@@ -1,4 +1,4 @@
-/* Selective gaussian blur filter for the GIMP, version 0.1
+/* Selective gaussian blur filter for GIMP, version 0.1
  * Adapted from the original gaussian blur filter by Spencer Kimball and
  * Peter Mattis.
  *

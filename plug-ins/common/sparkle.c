@@ -1,4 +1,4 @@
-/* Sparkle --- image filter plug-in for The Gimp image manipulation program
+/* Sparkle --- image filter plug-in for GIMP
  * Copyright (C) 1996 by John Beale;  ported to Gimp by Michael J. Hammel;
  *
  * It has been optimized a little, bugfixed and modified by Martin Weber

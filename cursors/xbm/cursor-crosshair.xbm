@@ -1,4 +1,4 @@
-/* Created with The GIMP */
+/* Created with GIMP */
 #define cursor_crosshair_width 32
 #define cursor_crosshair_height 32
 #define cursor_crosshair_x_hot 15

@@ -1,7 +1,7 @@
 /*
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * This is a plug-in for the GIMP.
+ * This is a plug-in for GIMP.
  *
  * Plugin to convert a selection to a path.
  *
@@ -467,7 +467,7 @@ do_points (spline_list_array_type in_splines,
 
       gimp_vectors_stroke_close (vectors, stroke);
 
-      /* transform to the GIMPs coordinate system, taking the selections
+      /* transform to GIMPs coordinate system, taking the selections
        * bounding box into account  */
       gimp_vectors_stroke_scale (vectors, stroke, 1.0, -1.0);
       gimp_vectors_stroke_translate (vectors, stroke,

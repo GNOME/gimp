@@ -361,7 +361,7 @@ load_image (const gchar *file,
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0, drawable->width,
                        drawable->height, TRUE, FALSE);
 
-  /* Read the image in and give it to the GIMP a line at a time */
+  /* Read the image in and give it to GIMP a line at a time */
   buffer = g_new (guchar, width * 4);
   line   = g_new (guchar, (width + 1) * 4);
 
@@ -611,7 +611,7 @@ save_image (const gchar *file,
   buffer = g_new (guchar, drawable->width*4);
   line = g_new (guchar, (drawable->width+1) * 4);
 
-  /* Get the image from the GIMP one line at a time and write it out */
+  /* Get the image from GIMP one line at a time and write it out */
   for (i = 0; i < drawable->height; ++i)
     {
       gimp_pixel_rgn_get_rect (&pixel_rgn, line, 0, i, drawable->width, 1);

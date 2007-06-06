@@ -1,5 +1,5 @@
 /*
- * jigsaw - a plug-in for the GIMP
+ * jigsaw - a plug-in for GIMP
  *
  * Copyright (C) Nigel Wetten
  *

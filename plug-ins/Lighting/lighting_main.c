@@ -1,4 +1,4 @@
-/* Lighting Effects 0.2.2 -- image filter plug-in for The Gimp program
+/* Lighting Effects 0.2.2 -- image filter plug-in for GIMP
  *
  * Copyright (C) 1996-98 Tom Bech
  * Copyright (C) 1996-98 Federico Mena Quintero

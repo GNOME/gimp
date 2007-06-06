@@ -165,7 +165,7 @@ static const gchar man_page_header[] =
 ".SH DESCRIPTION\n"
 "The\n"
 ".B gimprc\n"
-"file is a configuration file read by the GIMP when it starts up.  There\n"
+"file is a configuration file read by GIMP when it starts up.  There\n"
 "are two of these: one system-wide one stored in\n"
 "@gimpsysconfdir@/gimprc and a per-user \\fB$HOME\\fP/@gimpdir@/gimprc\n"
 "which may override system settings.\n"

@@ -16,7 +16,7 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-/* Cartoon filter for the GIMP for BIPS
+/* Cartoon filter for GIMP for BIPS
  *  -Spencer Kimball
  *
  * This filter propagates dark values in an image based on

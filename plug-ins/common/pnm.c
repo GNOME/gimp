@@ -584,7 +584,7 @@ load_image (const gchar *filename)
   /* close the file */
   close (fd);
 
-  /* Tell the GIMP to display the image.
+  /* Tell GIMP to display the image.
    */
   gimp_drawable_flush (drawable);
 

@@ -926,7 +926,7 @@ gimp_read_expect_msg (GimpWireMessage *msg,
  * This function calls a GIMP procedure and returns its return values.
  * To get more information about the available procedures and the
  * parameters they expect, please have a look at the Procedure Browser
- * as found in the Xtns menu in the GIMP's toolbox.
+ * as found in the Xtns menu in GIMP's toolbox.
  *
  * As soon as you don't need the return values any longer, you should
  * free them using gimp_destroy_params().

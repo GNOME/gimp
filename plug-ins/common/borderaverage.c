@@ -1,4 +1,4 @@
-/* borderaverage 0.01 - image processing plug-in for the Gimp.
+/* borderaverage 0.01 - image processing plug-in for GIMP.
  *
  * Copyright (C) 1998 Philipp Klaus (webmaster@access.ch)
  *

@@ -1,5 +1,5 @@
 /*
- * This is a plugin for the GIMP.
+ * This is a plugin for GIMP.
  *
  * Copyright (C) 1997 Xavier Bouchoux
  *

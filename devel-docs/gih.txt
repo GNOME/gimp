@@ -11,7 +11,7 @@ Each dimension is indexed when the pipe is used in painting by some
 parameter, eg an incremental counter, a random value, pointing device 
 pen pressure,tilt or velocity , etc.
 
-An idea for how to implement editing of image pipes (with the GIMP) is
+An idea for how to implement editing of image pipes (with GIMP) is
 that each layer of the edited image representing the pipe is divided
 conceptually (and visualized by guides) into equal-sized elements,
 each element containing one pixmap brush. The typical cases are only

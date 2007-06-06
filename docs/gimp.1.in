@@ -205,12 +205,12 @@ config settings.
 \fB$HOME\fP/@gimpdir@/menurc - user's set of keybindings.
 
 \fB$HOME\fP/@gimpdir@/parasiterc - Stores all persistent GIMP
-parasites. This file will be rewritten every time you quit the GIMP.
+parasites. This file will be rewritten every time you quit GIMP.
 
 \fB$HOME\fP/@gimpdir@/sessionrc - This file takes session-specific
 info (that is info, you want to keep between two GIMP sessions). You
 are not supposed to edit it manually, but of course you can do. This
-file will be entirely rewritten every time you quit the GIMP. If this
+file will be entirely rewritten every time you quit GIMP. If this
 file isn't found, defaults are used.
 
 \fB$HOME\fP/@gimpdir@/templaterc - Image templates are kept in this
@@ -220,13 +220,13 @@ this file isn't found, defaults are used.
 @gimpsysconfdir@/unitrc - default user unit database. It contains the
 unit definitions for centimeters, meters, feet, yards, typographic
 points and typographic picas and is placed in users home directories
-the first time the GIMP is ran. If this file isn't found, defaults are
+the first time GIMP is ran. If this file isn't found, defaults are
 used.
 
 \fB$HOME\fP/@gimpdir@/unitrc - This file contains your user unit
 database. You can modify this list with the unit editor. You are not
 supposed to edit it manually, but of course you can do.  This file
-will be entirely rewritten every time you quit the GIMP.
+will be entirely rewritten every time you quit GIMP.
 
 \fB$HOME\fP/@gimpdir@/plug-ins - location of user installed plug-ins.
 

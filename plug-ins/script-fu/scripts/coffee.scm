@@ -74,7 +74,7 @@
   )
 )
 
-; Register the function with the GIMP:
+; Register the function with GIMP:
 
 (script-fu-register "script-fu-coffee-stain"
   _"_Coffee Stain..."

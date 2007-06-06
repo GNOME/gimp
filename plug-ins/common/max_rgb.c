@@ -1,4 +1,4 @@
-/* max_rgb.c -- This is a plug-in for the GIMP
+/* max_rgb.c -- This is a plug-in for GIMP
  * Author: Shuji Narazaki <narazaki@InetQ.or.jp>
  * Time-stamp: <2000-02-08 16:26:24 yasuhiro>
  * Version: 0.35

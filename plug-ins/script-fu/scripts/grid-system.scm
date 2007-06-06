@@ -1,7 +1,7 @@
 ;;; grid-system.scm -*-scheme-*-
 ;;; Time-stamp: <1998/01/20 23:22:02 narazaki@InetQ.or.jp>
 ;;; This file is a part of:
-;;;   The GIMP (Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis)
+;;;   GIMP (Copyright (C) 1995-1997 Spencer Kimball and Peter Mattis)
 ;;; Author: Shuji Narazaki (narazaki@InetQ.or.jp)
 ;;; Version 0.6
 

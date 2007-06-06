@@ -500,7 +500,7 @@ ReadImage (FILE     *fd,
       return -1;
     }
 
-  /* Make a new image in the gimp */
+  /* Make a new image in GIMP */
 
   switch (bpp)
     {

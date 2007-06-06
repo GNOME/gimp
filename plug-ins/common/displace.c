@@ -1,4 +1,4 @@
-/* Displace --- image filter plug-in for The Gimp image manipulation program
+/* Displace --- image filter plug-in for GIMP
  * Copyright (C) 1996 Stephen Robert Norris
  * Much of the code taken from the pinch plug-in by 1996 Federico Mena Quintero
  *
@@ -18,7 +18,7 @@
  *
  * You can contact me at srn@flibble.cs.su.oz.au.
  * Please send me any patches or enhancements to this code.
- * You can contact the original The Gimp authors at gimp@xcf.berkeley.edu
+ * You can contact the original GIMP authors at gimp@xcf.berkeley.edu
  *
  * Extensive modifications to the dialog box, parameters, and some
  * legibility stuff in displace() by Federico Mena Quintero ---

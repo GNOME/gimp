@@ -49,7 +49,7 @@
  *   tile width and is multiply of pixel width, and acts onto it.
  */
 
-/* pixelize filter written for the GIMP
+/* pixelize filter written for GIMP
  *  -Tracy Scott
  *
  * This filter acts as a low pass filter on the color components of

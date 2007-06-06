@@ -145,7 +145,7 @@ gimp_image_get_thumbnail_data (gint32  image_ID,
  * @data: a pointer to the data attached with the #GimpParasite.
  *
  * Convenience function that creates a parasite and attaches it
- * to the GIMP.
+ * to GIMP.
  *
  * Return value: TRUE on successful creation and attachment of
  * the new parasite.

@@ -1,5 +1,5 @@
 /****************************************************************************
- * This is a plugin for the GIMP v 2.0 or later.
+ * This is a plugin for GIMP v 2.0 or later.
  *
  * Copyright (C) 2002 Martin Guldahl <mguldahl@xmission.com>
  * Based on GTK code from:

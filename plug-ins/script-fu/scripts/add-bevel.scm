@@ -37,7 +37,7 @@
 ; 1.01: now works on offset layers.
 ; 1.02: has crop-pixel-border option to trim one pixel off each edge of the
 ;       bevelled image.  Bumpmapping leaves edge pixels unchanged, which
-;       looks bad.  Oddly, this is not apparant in the GIMP - you have to
+;       looks bad.  Oddly, this is not apparant in GIMP - you have to
 ;       save the image and load it into another viewer.  First noticed in
 ;       Nutscrape.
 ;       Changed path (removed "filters/").

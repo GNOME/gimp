@@ -66,8 +66,7 @@ gimp_image_is_valid (gint32 image_ID)
  *
  * Returns the list of images currently open.
  *
- * This procedure returns the list of images currently open in the
- * GIMP.
+ * This procedure returns the list of images currently open in GIMP.
  *
  * Returns: The list of images currently open.
  */

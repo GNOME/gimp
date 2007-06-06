@@ -5,9 +5,9 @@ GIMP on unix:
   2. You may want to install other third party libraries or programs that
      are needed for some of the available plugins: TIFF, PNG, JPEG, MPEG,
      perl, etc.
-  3. Configure the GIMP by running the `configure' script.
-  4. Build the GIMP by running `make'.
-  5. Install the GIMP by running `make install'.
+  3. Configure GIMP by running the `configure' script.
+  4. Build GIMP by running `make'.
+  5. Install GIMP by running `make install'.
   6. Optionally install the separate gimp-data-extras package.
 
 Please make sure you don't have any old GTK, jpeg, etc. libraries lying
@@ -16,16 +16,16 @@ ones.
 
 Generic instructions for configuring and compiling auto-configured
 packages are included below. Here is an illustration of commands that
-might be used to build and install the GIMP. The actual configuration,
+might be used to build and install GIMP. The actual configuration,
 compilation and installation output is not shown.
 
   % tar xvfz gimp-1.1.0.tar.gz   # unpack the sources
   % cd gimp-1.1.0                # change to the toplevel directory
   % ./configure                  # run the `configure' script
-  % make                         # build the GIMP
-  % make install                 # install the GIMP
+  % make                         # build GIMP
+  % make install                 # install GIMP
 
-The `configure' script examines your system, and adapts the GIMP to
+The `configure' script examines your system, and adapts GIMP to
 run on it. The script has many options, some of which are described in
 the generic instructions included at the end of this file. All of the
 options can be listed using the command `./configure --help'. There
@@ -41,7 +41,7 @@ recognizes. These are:
 
   2. --enable-debug and --disable-debug. This option causes the build
      process to compile with debugging enabled. If debugging is
-     disabled, the GIMP will instead be compiled with optimizations turned
+     disabled, GIMP will instead be compiled with optimizations turned
      on. The default is for debugging to be disabled. NOTE: This
      option is intended primarily as a convenience for developers.
 
@@ -51,7 +51,7 @@ recognizes. These are:
      is intended primarily as a convenience for developers.
 
   4. --enable-gimpdir=DIR. This option changes the default directory
-     the gimp uses to search for its configuration files from ~/.gimp (the
+     GIMP uses to search for its configuration files from ~/.gimp (the
      directory .gimp in the users home directory) to DIR.
   
   5. --enable-perl and --disable-perl. The perl extension does not build
