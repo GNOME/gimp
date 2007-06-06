@@ -151,17 +151,15 @@ gimp_image_get_new_preview (GimpViewable *viewable,
                             gint          width,
                             gint          height)
 {
-  GimpImage   *image;
-  GimpLayer   *floating_sel;
+  GimpImage   *image          = GIMP_IMAGE (viewable);
+  GimpLayer   *floating_sel   = NULL;
   TempBuf     *comp;
   GList       *list;
-  GSList      *reverse_list = NULL;
+  GSList      *reverse_list   = NULL;
   gdouble      ratio;
   gint         bytes;
-  gboolean     construct_flag;
+  gboolean     construct_flag = FALSE;
   gboolean     visible_components[MAX_CHANNELS] = { TRUE, TRUE, TRUE, TRUE };
-
-  image = GIMP_IMAGE (viewable);
 
   if (! image->gimp->config->layer_previews)
     return NULL;
@@ -186,8 +184,6 @@ gimp_image_get_new_preview (GimpViewable *viewable,
   /*  The construction buffer  */
   comp = temp_buf_new (width, height, bytes, 0, 0, NULL);
   temp_buf_data_clear (comp);
-
-  floating_sel = NULL;
 
   for (list = GIMP_LIST (image->layers)->list;
        list;
@@ -218,11 +214,9 @@ gimp_image_get_new_preview (GimpViewable *viewable,
         }
     }
 
-  construct_flag = FALSE;
-
   for (; reverse_list; reverse_list = g_slist_next (reverse_list))
     {
-      GimpLayer   *layer = list->data;
+      GimpLayer   *layer = reverse_list->data;
       PixelRegion  src1PR, src2PR, maskPR;
       PixelRegion *mask;
       TempBuf     *layer_buf;
