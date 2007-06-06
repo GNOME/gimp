@@ -831,19 +831,22 @@ render_image_init_info_full (RenderInfo       *info,
                              gint              h,
                              GimpProjection   *projection)
 {
-  info->shell      = shell;
-  info->w          = w;
-  info->h          = h;
-  info->scalex     = shell->scale_x;
-  info->scaley     = shell->scale_y;
-  info->dest_bpp   = 3;
-  info->dest_bpl   = info->dest_bpp * GIMP_RENDER_BUF_WIDTH;
-  info->dest_width = info->dest_bpp * info->w;
+  gint level      = gimp_projection_scale_to_level (projection, shell->scale_x);
+  info->shell     = shell;
+  info->dest_bpp  = 3;
+  info->dest_bpl  = info->dest_bpp * GIMP_RENDER_BUF_WIDTH;
+  info->scalex     = shell->scale_x * (1 << level);
+  info->scaley     = shell->scale_y * (1 << level);
 
   render_image_init_info (info, shell, x, y,
-                          gimp_projection_get_tiles (projection));
-
-  info->scale      = render_image_accelerate_scaling (w, info->x, info->scalex);
+                          gimp_projection_get_tiles_at_level (projection,
+                                                              level));
+  info->w = w;
+  info->h = h;
+  info->dest_width = info->dest_bpp * info->w;
+  info->scale      = render_image_accelerate_scaling (info->w,
+                                                      info->x,
+                                                      info->scalex);
 
   if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_projection_get_image_type (projection)))
     {

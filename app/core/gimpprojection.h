@@ -45,6 +45,9 @@ struct _GimpProjectionIdleRender
 #define GIMP_IS_PROJECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PROJECTION))
 #define GIMP_PROJECTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PROJECTION, GimpProjectionClass))
 
+#define PYRAMID_MAX_LEVELS              10
+#define PYRAMID_BASE_LEVEL              0
+
 
 typedef struct _GimpProjectionClass GimpProjectionClass;
 
@@ -56,7 +59,10 @@ struct _GimpProjection
 
   GimpImageType             type;
   gint                      bytes;
-  TileManager              *tiles;
+
+  /* An image pyramid. Level n + 1 has half the width and height of level n. */
+  TileManager              *pyramid[PYRAMID_MAX_LEVELS];
+  gint                      top_level;
 
   GSList                   *update_areas;
   GimpProjectionIdleRender  idle_render;
@@ -82,6 +88,20 @@ GType            gimp_projection_get_type         (void) G_GNUC_CONST;
 GimpProjection * gimp_projection_new              (GimpImage            *image);
 
 TileManager    * gimp_projection_get_tiles        (GimpProjection       *proj);
+
+TileManager    * gimp_projection_get_tiles_at_level
+                                                  (GimpProjection       *proj,
+                                                   gint                  level);
+void             gimp_projection_level_size_from_scale
+                                                  (GimpProjection       *proj,
+                                                   gdouble               scalex,
+                                                   gint                 *level,
+                                                   gint                 *width,
+                                                   gint                 *height);
+
+gint             gimp_projection_scale_to_level   (GimpProjection       *proj,
+                                                   gdouble               scalex);
+
 GimpImage      * gimp_projection_get_image        (const GimpProjection *proj);
 GimpImageType    gimp_projection_get_image_type   (const GimpProjection *proj);
 gint             gimp_projection_get_bytes        (const GimpProjection *proj);

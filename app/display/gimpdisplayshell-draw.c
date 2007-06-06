@@ -30,6 +30,7 @@
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
 #include "core/gimplist.h"
+#include "core/gimpprojection.h"
 #include "core/gimpsamplepoint.h"
 
 #include "vectors/gimpstroke.h"
@@ -504,16 +505,28 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
                               gint              w,
                               gint              h)
 {
-  gint sx, sy;
-  gint sw, sh;
+  GimpProjection *proj = shell->display->image->projection;
+  gint            level_used;
+  gint            width_of_level;
+  gint            height_of_level;
+  gint            sx, sy;
+  gint            sw, sh;
 
-  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell) &&
+                    GIMP_IS_PROJECTION (proj));
+
+  gimp_projection_level_size_from_scale (proj,
+                                         shell->scale_x,
+                                         &level_used,
+                                         &width_of_level,
+                                         &height_of_level);
 
   /*  the image's size in display coordinates  */
   sx = shell->disp_xoffset - shell->offset_x;
   sy = shell->disp_yoffset - shell->offset_y;
-  sw = SCALEX (shell, shell->display->image->width);
-  sh = SCALEY (shell, shell->display->image->height);
+  /* SCALE[XY] with pyramid level taken into account. */
+  sw = PROJ_ROUND (width_of_level  * (shell->scale_x * (1 << level_used)));
+  sh = PROJ_ROUND (height_of_level * (shell->scale_y * (1 << level_used)));
 
   /*  check if the passed in area intersects with
    *  both the display and the image

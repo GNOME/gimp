@@ -57,13 +57,14 @@ tile_manager_new (gint width,
 
   tm = g_slice_new0 (TileManager);
 
-  tm->ref_count  = 1;
-  tm->width      = width;
-  tm->height     = height;
-  tm->bpp        = bpp;
-  tm->ntile_rows = (height + TILE_HEIGHT - 1) / TILE_HEIGHT;
-  tm->ntile_cols = (width  + TILE_WIDTH  - 1) / TILE_WIDTH;
-  tm->cached_num = -1;
+  tm->ref_count   = 1;
+  tm->width       = width;
+  tm->height      = height;
+  tm->bpp         = bpp;
+  tm->ntile_rows  = (height + TILE_HEIGHT - 1) / TILE_HEIGHT;
+  tm->ntile_cols  = (width  + TILE_WIDTH  - 1) / TILE_WIDTH;
+  tm->cached_num  = -1;
+  tm->level_below = NULL;
 
   return tm;
 }
@@ -249,6 +250,22 @@ tile_manager_get (TileManager *tm,
     }
 
   return *tile_ptr;
+}
+
+Tile *
+tile_manager_get_at (TileManager *tm,
+                     gint         tile_col,
+                     gint         tile_row,
+                     gint         wantread,
+                     gint         wantwrite)
+{
+  g_return_val_if_fail (tm != NULL, NULL);
+
+  if (tile_col < 0 || tile_col >= tm->ntile_cols ||
+      tile_row < 0 || tile_row >= tm->ntile_rows)
+    return NULL;
+
+  return tile_manager_get(tm, tile_row * tm->ntile_cols + tile_col, wantread, wantwrite);
 }
 
 void
@@ -492,6 +509,26 @@ tile_manager_map (TileManager *tm,
 }
 
 void
+tile_manager_invalidate_area (TileManager *tm,
+                              gint         x,
+                              gint         y,
+                              gint         w,
+                              gint         h)
+{
+  gint  i;
+  gint  j;
+
+  for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
+    for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
+      {
+        Tile *tile = tile_manager_get_tile (tm, j, i, FALSE, FALSE);
+
+        if (tile != NULL)
+          tile_invalidate_tile (&tile, tm, j, i);
+      }
+}
+
+void
 tile_manager_set_user_data (TileManager *tm,
                             gpointer     user_data)
 {
@@ -530,6 +567,39 @@ tile_manager_bpp (const TileManager *tm)
   g_return_val_if_fail (tm != NULL, 0);
 
   return tm->bpp;
+}
+
+gint
+tile_manager_tiles_per_col (const TileManager *tm)
+{
+  g_return_val_if_fail (tm != NULL, 0);
+
+  return tm->ntile_cols;
+}
+
+gint
+tile_manager_tiles_per_row (const TileManager *tm)
+{
+  g_return_val_if_fail (tm != NULL, 0);
+
+  return tm->ntile_rows;
+}
+
+TileManager *
+tile_manager_get_level_below (const TileManager *tm)
+{
+  g_return_val_if_fail (tm != NULL, NULL);
+
+  return tm->level_below;
+}
+
+void
+tile_manager_set_level_below (TileManager *tm,
+                              TileManager *level_below)
+{
+  g_return_if_fail (tm != NULL);
+
+  tm->level_below = level_below;
 }
 
 void
@@ -620,6 +690,23 @@ tile_manager_get_tile_coordinates (TileManager *tm,
 
   *x = TILE_WIDTH * (tl->tile_num % tm->ntile_cols);
   *y = TILE_HEIGHT * (tl->tile_num / tm->ntile_cols);
+}
+
+void
+tile_manager_get_tile_col_row (TileManager *tm,
+                               Tile        *tile,
+                               gint        *tile_col,
+                               gint        *tile_row)
+{
+  gint tile_x;
+  gint tile_y;
+
+  g_return_if_fail (tm && tile && tile_col && tile_row);
+
+  tile_manager_get_tile_coordinates (tm, tile, &tile_x, &tile_y);
+
+  *tile_col = tile_x / TILE_WIDTH;
+  *tile_row = tile_y / TILE_HEIGHT;
 }
 
 void
