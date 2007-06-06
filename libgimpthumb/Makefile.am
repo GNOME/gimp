@@ -1,6 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
+libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -82,6 +83,13 @@ libgimpthumb_2_0_la_LDFLAGS = \
 	$(libgimpthumb_export_symbols)
 
 libgimpthumb_2_0_la_LIBADD = $(libgimpmath) $(GDK_PIXBUF_LIBS)
+
+
+noinst_PROGRAMS = gimp-thumbnail-list
+
+gimp_thumbnail_list_SURCES = gimp-thumbnail-list.c
+
+gimp_thumbnail_list_LDADD = $(libgimpthumb)
 
 
 install-data-local: install-ms-lib install-libtool-import-lib

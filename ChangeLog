@@ -1,3 +1,12 @@
+2007-06-06  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpthumb/Makefile.am
+	* libgimpthumb/gimp-thumbnail-list.c: added my small thumbnail
+	lister before it bit-rots. It prints the filenames of thumbnails
+	which match certain criteria. Use the output for further
+	processing (e.g. deleting). Doesn't technically belong here but
+	can't be added to tools/ because it depends on libgimpthumb.
+
 2007-06-06  Mukund Sivaraman  <muks@mukund.org>
 
 	Changed "The GIMP" to "GIMP" everywhere, where it's used as a name.
