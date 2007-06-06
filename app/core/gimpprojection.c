@@ -219,7 +219,21 @@ gimp_projection_estimate_memsize (GimpImageBaseType type,
                                   gint              width,
                                   gint              height)
 {
-  return 4 * (gint64) width * (gint64) height;
+  gint64 bytes = 0;
+
+  switch (type)
+    {
+    case GIMP_RGB:
+    case GIMP_INDEXED:
+      bytes = 4;
+      break;
+
+    case GIMP_GRAY:
+      bytes = 2;
+      break;
+    }
+
+  return bytes * (gint64) width * (gint64) height;
 }
 
 
