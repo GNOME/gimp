@@ -7,6 +7,11 @@
 	processing (e.g. deleting). Doesn't technically belong here but
 	can't be added to tools/ because it depends on libgimpthumb.
 
+2007-06-06  Sven Neumann  <sven@gimp.org>
+
+	* papers/script-fu/script-fu.tex: reverted the change here. This
+	document only has historical value and must not be changed.
+
 2007-06-06  Mukund Sivaraman  <muks@mukund.org>
 
 	Changed "The GIMP" to "GIMP" everywhere, where it's used as a name.
