@@ -1,5 +1,14 @@
 2007-06-07  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/Makefile.am: bail out with an error if xsltproc is
+	missing and authors.h needs to be regenerated.
+
+	* libgimpwidgets/Makefile.am: let gimpwidgets-private.lo, not the
+	C file, depend on gimp-wilber-pixbufs.h. From the patch attached to
+	bug #444960.
+
+2007-06-07  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/tips-dialog.c: converted to a GimpDialog.
 
 2007-06-06  Sven Neumann  <sven@gimp.org>

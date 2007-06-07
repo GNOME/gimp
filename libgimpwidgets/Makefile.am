@@ -259,7 +259,7 @@ EXTRA_DIST = \
 	$(WILBER_IMAGES)
 
 
-gimpwidgets-private.c: gimp-wilber-pixbufs.h
+gimpwidgets-private.lo: gimp-wilber-pixbufs.h
 
 
 #
