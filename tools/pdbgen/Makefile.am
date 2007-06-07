@@ -125,7 +125,7 @@ stamp-groups: Makefile.am
 
 stamp-pdbgen: $(pdbgen_deps) $(pdb_scripts) $(pdb_sources) Makefile.am
 	rootme=`pwd`; \
-	destdir=`cd $(top_srcdir) && pwd`; export destdir; \
+	destdir=`cd $(top_builddir) && pwd`; export destdir; \
 	cd $(srcdir) && \
 	   PDBGEN_BACKUP=$(PDBGEN_BACKUP) PDBGEN_GROUPS=$(PDBGEN_GROUPS) \
 	   $(PERL) pdbgen.pl app lib \
@@ -133,7 +133,7 @@ stamp-pdbgen: $(pdbgen_deps) $(pdb_scripts) $(pdb_sources) Makefile.am
 
 stamp-enum-code: $(srcdir)/enumcode.pl $(enum_deps)
 	rootme=`pwd`; \
-	destdir=`cd $(top_srcdir) && pwd`; export destdir; \
+	destdir=`cd $(top_builddir) && pwd`; export destdir; \
 	cd $(srcdir) && \
 	  PDBGEN_BACKUP=$(PDBGEN_BACKUP) \
 	  $(PERL) enumcode.pl \

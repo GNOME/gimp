@@ -76,7 +76,7 @@ EXTRA_DIST = makefile.msc
 gen_sources = xgen-bec
 CLEANFILES = $(gen_sources)
 
-$(srcdir)/base-enums.c: $(srcdir)/base-enums.h $(GIMP_MKENUMS)
+base-enums.c: $(srcdir)/base-enums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"base-enums.h\"\n#include \"gimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \

@@ -195,7 +195,7 @@ EXTRA_DIST = makefile.msc
 gen_sources = xgen-tec
 CLEANFILES = $(gen_sources)
 
-$(srcdir)/tools-enums.c: $(srcdir)/tools-enums.h $(GIMP_MKENUMS)
+tools-enums.c: $(srcdir)/tools-enums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"core/core-enums.h\"\n#include \"tools-enums.h\"\n#include \"gimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \

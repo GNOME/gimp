@@ -319,18 +319,18 @@ EXTRA_DIST = \
 gen_sources = xgen-gmh xgen-gmc xgen-cec
 CLEANFILES = $(gen_sources)
 
-$(srcdir)/gimpmarshal.h: $(srcdir)/gimpmarshal.list
+gimpmarshal.h: $(srcdir)/gimpmarshal.list
 	$(GLIB_GENMARSHAL) --prefix=gimp_marshal $(srcdir)/gimpmarshal.list --header >> xgen-gmh \
 	&& (cmp -s xgen-gmh $(@F) || cp xgen-gmh $(@F)) \
 	&& rm -f xgen-gmh xgen-gmh~
 
-$(srcdir)/gimpmarshal.c: $(srcdir)/gimpmarshal.h
+gimpmarshal.c: gimpmarshal.h
 	echo "#include \"gimpmarshal.h\"" >> xgen-gmc \
 	&& $(GLIB_GENMARSHAL) --prefix=gimp_marshal $(srcdir)/gimpmarshal.list --body >> xgen-gmc \
 	&& cp xgen-gmc $(@F) \
 	&& rm -f xgen-gmc xgen-gmc~
 
-$(srcdir)/core-enums.c: $(srcdir)/core-enums.h $(GIMP_MKENUMS)
+core-enums.c: $(srcdir)/core-enums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"core-enums.h\"\n#include \"gimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \

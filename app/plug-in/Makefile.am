@@ -83,7 +83,7 @@ EXTRA_DIST = makefile.msc
 gen_sources = xgen-bec
 CLEANFILES = $(EXTRA_PROGRAMS) $(gen_sources)
 
-$(srcdir)/plug-in-enums.c: $(srcdir)/plug-in-enums.h $(GIMP_MKENUMS)
+plug-in-enums.c: $(srcdir)/plug-in-enums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"plug-in-enums.h\"\n#include \"gimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \

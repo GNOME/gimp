@@ -345,7 +345,7 @@ gimpdbusservice-glue.h: $(srcdir)/dbus-service.xml
 	$(DBUS_BINDING_TOOL) --mode=glib-server --prefix=gimp $< > $(@F)
 
 
-$(srcdir)/widgets-enums.c: $(srcdir)/widgets-enums.h $(GIMP_MKENUMS)
+widgets-enums.c: $(srcdir)/widgets-enums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <gtk/gtk.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"widgets-enums.h\"\n#include \"gimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \

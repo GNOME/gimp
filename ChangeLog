@@ -1,5 +1,22 @@
 2007-06-07  Sven Neumann  <sven@gimp.org>
 
+	* app/text/Makefile.am
+	* app/core/Makefile.am
+	* app/tools/Makefile.am
+	* app/display/Makefile.am
+	* app/widgets/Makefile.am
+	* app/base/Makefile.am
+	* app/paint/Makefile.am
+	* app/plug-in/Makefile.am
+	* libgimp/Makefile.am
+	* libgimpthumb/Makefile.am
+	* tools/pdbgen/Makefile.am
+	* libgimpwidgets/Makefile.am: applied the remaining parts of the
+	patch from Daniel Richard G. to fix out-of-source-tree builds
+	(bug #444960).
+
+2007-06-07  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpprojection.c (gimp_projection_get_level):
 	reimplemented without using a logarithm.
 

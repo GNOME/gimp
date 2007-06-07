@@ -104,7 +104,7 @@ uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
 gen_sources = xgen-tec
 CLEANFILES = $(gen_sources)
 
-$(srcdir)/gimpthumb-enums.c: $(srcdir)/gimpthumb-enums.h $(GIMP_MKENUMS)
+gimpthumb-enums.c: $(srcdir)/gimpthumb-enums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"gimpthumb-enums.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \

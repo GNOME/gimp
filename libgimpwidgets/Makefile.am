@@ -269,7 +269,7 @@ gimpwidgets-private.lo: gimp-wilber-pixbufs.h
 gen_sources = xgen-wec xgen-wmh xgen-wmc gimp-wilber-pixbufs.h
 CLEANFILES = $(gen_sources)
 
-$(srcdir)/gimpwidgetsenums.c: $(srcdir)/gimpwidgetsenums.h $(GIMP_MKENUMS)
+gimpwidgetsenums.c: $(srcdir)/gimpwidgetsenums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"gimpwidgetsenums.h\"\n#include \"libgimp/libgimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
@@ -283,19 +283,19 @@ $(srcdir)/gimpwidgetsenums.c: $(srcdir)/gimpwidgetsenums.h $(GIMP_MKENUMS)
 	&& cp xgen-wec $(@F) \
 	&& rm -f xgen-wec
 
-$(srcdir)/gimpwidgetsmarshal.h: $(srcdir)/gimpwidgetsmarshal.list
+gimpwidgetsmarshal.h: $(srcdir)/gimpwidgetsmarshal.list
 	$(GLIB_GENMARSHAL) --prefix=_gimp_widgets_marshal $(srcdir)/gimpwidgetsmarshal.list --header >> xgen-wmh \
 	&& (cmp -s xgen-wmh $(@F) || cp xgen-wmh $(@F)) \
 	&& rm -f xgen-wmh xgen-wmh~
 
-$(srcdir)/gimpwidgetsmarshal.c: $(srcdir)/gimpwidgetsmarshal.h
+gimpwidgetsmarshal.c: gimpwidgetsmarshal.h
 	echo "#include \"gimpwidgetsmarshal.h\"" >> xgen-wmc \
 	&& $(GLIB_GENMARSHAL) --prefix=_gimp_widgets_marshal $(srcdir)/gimpwidgetsmarshal.list --body >> xgen-wmc \
 	&& cp xgen-wmc $(@F) \
 	&& rm -f xgen-wmc xgen-wmc~
 
 
-$(srcdir)/gimp-wilber-pixbufs.h: $(WILBER_IMAGES) Makefile.am
+gimp-wilber-pixbufs.h: $(WILBER_IMAGES) Makefile.am
 	$(GDK_PIXBUF_CSOURCE) --raw --build-list $(WILBER_VARIABLES) > $(@F)
 
 

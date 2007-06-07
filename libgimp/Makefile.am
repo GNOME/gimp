@@ -385,7 +385,7 @@ uninstall-local: uninstall-ms-lib uninstall-libtool-import-lib
 gen_sources = xgen-cec xgen-umh xgen-umc
 CLEANFILES = $(gen_sources)
 
-$(srcdir)/gimpenums.c: $(srcdir)/gimpenums.h $(srcdir)/gimpenums.c.tail $(GIMP_MKENUMS)
+gimpenums.c: $(srcdir)/gimpenums.h $(srcdir)/gimpenums.c.tail $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"gimpenums.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
@@ -400,12 +400,12 @@ $(srcdir)/gimpenums.c: $(srcdir)/gimpenums.h $(srcdir)/gimpenums.c.tail $(GIMP_M
 	&& cp xgen-cec $(@F) \
 	&& rm -f xgen-cec
 
-$(srcdir)/gimpuimarshal.h: $(srcdir)/gimpuimarshal.list
+gimpuimarshal.h: $(srcdir)/gimpuimarshal.list
 	$(GLIB_GENMARSHAL) --prefix=_gimpui_marshal $(srcdir)/gimpuimarshal.list --header >> xgen-umh \
 	&& (cmp -s xgen-umh $(@F) || cp xgen-umh $(@F)) \
 	&& rm -f xgen-umh xgen-umh~
 
-$(srcdir)/gimpuimarshal.c: $(srcdir)/gimpuimarshal.h
+gimpuimarshal.c: gimpuimarshal.h
 	echo "#include \"gimpuimarshal.h\"" >> xgen-umc \
 	&& $(GLIB_GENMARSHAL) --prefix=_gimpui_marshal $(srcdir)/gimpuimarshal.list --body >> xgen-umc \
 	&& cp xgen-umc $(@F) \

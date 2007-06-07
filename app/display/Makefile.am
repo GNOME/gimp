@@ -91,7 +91,7 @@ EXTRA_DIST = makefile.msc
 gen_sources = xgen-dec
 CLEANFILES = $(gen_sources)
 
-$(srcdir)/display-enums.c: $(srcdir)/display-enums.h $(GIMP_MKENUMS)
+display-enums.c: $(srcdir)/display-enums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"display-enums.h\"\n#include\"gimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \

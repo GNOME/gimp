@@ -92,7 +92,7 @@ EXTRA_DIST = makefile.msc
 gen_sources = xgen-pec
 CLEANFILES = $(gen_sources)
 
-$(srcdir)/paint-enums.c: $(srcdir)/paint-enums.h $(GIMP_MKENUMS)
+paint-enums.c: $(srcdir)/paint-enums.h $(GIMP_MKENUMS)
 	$(GIMP_MKENUMS) \
 		--fhead "#include \"config.h\"\n#include <glib-object.h>\n#include \"libgimpbase/gimpbase.h\"\n#include \"paint-enums.h\"\n#include \"gimp-intl.h\"" \
 		--fprod "\n/* enumerations from \"@filename@\" */" \
