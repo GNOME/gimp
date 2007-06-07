@@ -33,6 +33,8 @@
 #define GIMP_VIEWABLE_MAX_BUTTON_SIZE    64
 #define GIMP_VIEWABLE_MAX_MENU_SIZE      48
 
+#define GIMP_VIEWABLE_PRIORITY_IDLE    (G_PRIORITY_LOW + 100)
+
 
 #define GIMP_TYPE_VIEWABLE            (gimp_viewable_get_type ())
 #define GIMP_VIEWABLE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_VIEWABLE, GimpViewable))

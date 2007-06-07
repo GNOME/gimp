@@ -1,3 +1,13 @@
+2007-06-08  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpviewable.h: #define GIMP_VIEWABLE_PRIORITY_IDLE,
+	which is even lower than G_PRIORITY_LOW.
+
+	* app/core/gimpundo.c
+	* app/widgets/gimpviewrenderer.c: create previews with
+	GIMP_VIEWABLE_PRIORITY_IDLE so that they are run after the
+	projection has been invalidated.
+
 2007-06-07  Sven Neumann  <sven@gimp.org>
 
 	* app/base/tile-manager.c: formatting.
