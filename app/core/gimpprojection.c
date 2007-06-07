@@ -906,31 +906,26 @@ static void
 gimp_projection_validate_pyramid_tile (TileManager *tm,
                                        Tile        *tile)
 {
+  TileManager *level_below = tile_manager_get_level_below (tm);
   gint         tile_col;
   gint         tile_row;
-  gint         i;
-  gint         j;
-  TileManager *level_below  = tile_manager_get_level_below (tm);
-  Tile        *source[2][2] = { { NULL, NULL },
-                                { NULL, NULL } };
+  gint         i, j;
 
   tile_manager_get_tile_col_row (tm, tile, &tile_col, &tile_row);
 
   for (i = 0; i < 2; i++)
     for (j = 0; j < 2; j++)
-        source[i][j] = tile_manager_get_at (level_below,
+      {
+        Tile *source = tile_manager_get_at (level_below,
                                             tile_col * 2 + i,
                                             tile_row * 2 + j,
-                                            TRUE,
-                                            FALSE);
-  for (i = 0; i < 2; i++)
-    for (j = 0; j < 2; j++)
-      if (source[i][j])
-        {
-          gimp_projection_write_quarter (tile, source[i][j], i, j);
-
-          tile_release (source[i][j], FALSE);
-        }
+                                            TRUE, FALSE);
+        if (source)
+          {
+            gimp_projection_write_quarter (tile, source, i, j);
+            tile_release (source, FALSE);
+          }
+      }
 }
 
 /*  image callbacks  */

@@ -1,5 +1,10 @@
 2007-06-07  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpprojection.c (gimp_projection_validate_pyramid_tile):
+	folded into a single loop.
+
+2007-06-07  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpprojection.c (gimp_projection_write_quarter):
 	weight the pixels by their alpha value.
 
