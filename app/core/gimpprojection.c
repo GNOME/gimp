@@ -59,7 +59,9 @@ static gint       gimp_projection_get_opacity_at        (GimpPickable   *pickabl
                                                          gint            x,
                                                          gint            y);
 
-static void       gimp_projection_alloc_levels          (GimpProjection *proj);
+static gint       gimp_projection_alloc_levels          (GimpProjection *proj,
+                                                         gint            top_level);
+static void       gimp_projection_release_levels        (GimpProjection *proj);
 static void       gimp_projection_add_update_area       (GimpProjection *proj,
                                                          gint            x,
                                                          gint            y,
@@ -326,22 +328,11 @@ TileManager *
 gimp_projection_get_tiles_at_level (GimpProjection *proj,
                                     gint            level)
 {
-  TileManager *base_level;
-
   g_return_val_if_fail (GIMP_IS_PROJECTION (proj), NULL);
 
-  base_level = proj->pyramid[PYRAMID_BASE_LEVEL];
+  level = gimp_projection_alloc_levels (proj, level);
 
-  if (base_level          == NULL                             ||
-      proj->image->width  != tile_manager_width  (base_level) ||
-      proj->image->height != tile_manager_height (base_level))
-    {
-      gimp_projection_alloc_levels (proj);
-    }
-
-  g_return_val_if_fail (level >= PYRAMID_BASE_LEVEL &&
-                        level <= proj->top_level,
-                        NULL);
+  g_return_val_if_fail (proj->pyramid[level] != NULL, NULL);
 
   return proj->pyramid[level];
 }
@@ -351,6 +342,10 @@ gimp_projection_get_tiles_at_level (GimpProjection *proj,
  * @proj:    pointer to a GimpProjection
  * @scale_x: horizontal scale factor
  * @scale_y: vertical scale factor
+ *
+ * This function returns a theoritical optimal pyramid level for a given
+ * scale factor. Depending on the size of the image, a smaller level may
+ * be used later.
  *
  * Return value: the pyramid level to use for a given display scale factor.
  **/
@@ -367,7 +362,7 @@ gimp_projection_get_level (GimpProjection *proj,
 
   scale = MAX (scale_x, scale_y);
 
-  for (level = PYRAMID_BASE_LEVEL; level < proj->top_level; level++)
+  for (level = PYRAMID_BASE_LEVEL; level < PYRAMID_MAX_LEVELS; level++)
     {
       next /= 2;
 
@@ -449,104 +444,102 @@ gimp_projection_finish_draw (GimpProjection *proj)
 
 /*  private functions  */
 
-static void
-gimp_projection_alloc_levels (GimpProjection *proj)
+/* This function make sure that levels are allocated up to the level
+ * it returns. The return value may be smaller than the level that
+ * was actually requested.
+ */
+static gint
+gimp_projection_alloc_levels (GimpProjection *proj,
+                              gint            top_level)
 {
-  GimpImageType proj_type  = 0;
-  gint          proj_bytes = 0;
+  gint level;
 
-  g_return_if_fail (GIMP_IS_PROJECTION (proj));
-
-  /*  Find the number of bytes required for the projection.
-   *  This includes the intensity channels and an alpha channel
-   *  if one doesn't exist.
-   */
-  switch (gimp_image_base_type (proj->image))
-    {
-    case GIMP_RGB:
-    case GIMP_INDEXED:
-      proj_bytes = 4;
-      proj_type  = GIMP_RGBA_IMAGE;
-      break;
-
-    case GIMP_GRAY:
-      proj_bytes = 2;
-      proj_type  = GIMP_GRAYA_IMAGE;
-      break;
-
-    default:
-      g_assert_not_reached ();
-    }
-
-  if (proj->pyramid[PYRAMID_BASE_LEVEL])
-    {
-      gint width  = tile_manager_width  (proj->pyramid[PYRAMID_BASE_LEVEL]);
-      gint height = tile_manager_height (proj->pyramid[PYRAMID_BASE_LEVEL]);
-
-      if (proj_type           != proj->type  ||
-          proj_bytes          != proj->bytes ||
-          proj->image->width  != width       ||
-          proj->image->height != height)
-        {
-          gint level;
-
-          for (level = 0; level <= proj->top_level; level++)
-            {
-              tile_manager_unref (proj->pyramid[level]);
-              proj->pyramid[level] = NULL;
-            }
-
-          proj->top_level = 0;
-        }
-    }
+  top_level = MIN (top_level, PYRAMID_MAX_LEVELS - 1);
 
   if (! proj->pyramid[PYRAMID_BASE_LEVEL])
     {
-      gint level;
+      gint width  = proj->image->width;
+      gint height = proj->image->height;
 
-      proj->type  = proj_type;
-      proj->bytes = proj_bytes;
-
-      for (level = 0; level < PYRAMID_MAX_LEVELS; level++)
+      /*  Find the number of bytes required for the projection.
+       *  This includes the intensity channels and an alpha channel
+       *  if one doesn't exist.
+       */
+      switch (gimp_image_base_type (proj->image))
         {
-          gint level_width  = proj->image->width  / (1 << level);
-          gint level_height = proj->image->height / (1 << level);
+        case GIMP_RGB:
+        case GIMP_INDEXED:
+          proj->type  = GIMP_RGBA_IMAGE;
+          proj->bytes = 4;
+          break;
 
-          if (level_width  == 0 || level_height == 0)
-            break;
+        case GIMP_GRAY:
+          proj->type  = GIMP_GRAYA_IMAGE;
+          proj->bytes = 2;
+          break;
 
-          /* There is no use having levels that have the same number of
-           * tiles as the parent level.
-           */
-          if (level        != PYRAMID_BASE_LEVEL &&
-              level_width  <= TILE_WIDTH  / 2    &&
-              level_height <= TILE_HEIGHT / 2)
-            break;
-
-          proj->top_level      = level;
-          proj->pyramid[level] = tile_manager_new (level_width,
-                                                   level_height,
-                                                   proj->bytes);
-
-          tile_manager_set_user_data (proj->pyramid[level], proj);
-
-          if (level == PYRAMID_BASE_LEVEL)
-            {
-              /* Validate tiles by building from the layers of the image. */
-              tile_manager_set_validate_proc (proj->pyramid[level],
-                                              gimp_projection_validate_tile);
-            }
-          else
-            {
-              /* Use the level below to validate tiles. */
-              tile_manager_set_validate_proc (proj->pyramid[level],
-                                              gimp_projection_validate_pyramid_tile);
-
-              tile_manager_set_level_below (proj->pyramid[level],
-                                            proj->pyramid[level - 1]);
-            }
+        default:
+          g_assert_not_reached ();
         }
+
+      proj->pyramid[PYRAMID_BASE_LEVEL] = tile_manager_new (width, height,
+                                                            proj->bytes);
+
+      tile_manager_set_user_data (proj->pyramid[PYRAMID_BASE_LEVEL], proj);
+
+      /* Validate tiles by building from the layers of the image. */
+      tile_manager_set_validate_proc (proj->pyramid[PYRAMID_BASE_LEVEL],
+                                      gimp_projection_validate_tile);
+
+      proj->top_level = PYRAMID_BASE_LEVEL;
     }
+
+  if (top_level <= proj->top_level)
+    return top_level;
+
+  for (level = proj->top_level + 1; level <= top_level; level++)
+    {
+      gint width  = proj->image->width  / (1 << level);
+      gint height = proj->image->height / (1 << level);
+
+      if (width == 0 || height == 0)
+        return proj->top_level;
+
+      /* There is no use having levels that have the same number of
+       * tiles as the parent level.
+       */
+      if (width <= TILE_WIDTH / 2 && height <= TILE_HEIGHT / 2)
+        return proj->top_level;
+
+      proj->top_level      = level;
+      proj->pyramid[level] = tile_manager_new (width, height, proj->bytes);
+
+      tile_manager_set_user_data (proj->pyramid[level], proj);
+
+      /* Use the level below to validate tiles. */
+      tile_manager_set_validate_proc (proj->pyramid[level],
+                                      gimp_projection_validate_pyramid_tile);
+
+      tile_manager_set_level_below (proj->pyramid[level],
+                                    proj->pyramid[level - 1]);
+    }
+
+  return proj->top_level;
+}
+
+static void
+gimp_projection_release_levels (GimpProjection *proj)
+{
+  gint level;
+
+  for (level = 0; level <= proj->top_level; level++)
+    if (proj->pyramid[level])
+      {
+        tile_manager_unref (proj->pyramid[level]);
+        proj->pyramid[level] = NULL;
+      }
+
+  proj->top_level = 0;
 }
 
 static void
@@ -814,42 +807,47 @@ gimp_projection_validate_tile (TileManager *tm,
 
 static void
 gimp_projection_write_quarter (Tile *dest,
-                               Tile *source,
+                               Tile *src,
                                gint  i,
                                gint  j)
 {
-  const guchar *source_data    = tile_data_pointer (source, 0, 0);
-  guchar       *dest_data      = tile_data_pointer (dest,   0, 0);
-
-  gint          source_ewidth  = tile_ewidth  (source);
-  gint          source_eheight = tile_eheight (source);
-  gint          dest_ewidth    = tile_ewidth  (dest);
-  gint          bpp            = tile_bpp     (dest);
+  const guchar *src_data    = tile_data_pointer (src, 0, 0);
+  guchar       *dest_data   = tile_data_pointer (dest, 0, 0);
+  const gint    src_ewidth  = tile_ewidth  (src);
+  const gint    src_eheight = tile_eheight (src);
+  const gint    dest_ewidth = tile_ewidth  (dest);
+  const gint    bpp         = tile_bpp     (dest);
   gint          y;
 
   /* Adjust dest pointer to the right quadrant. */
   dest_data += i * bpp * (TILE_WIDTH / 2) +
                j * bpp * dest_ewidth * (TILE_HEIGHT / 2);
 
-  for (y = 0; y < source_eheight / 2; y++)
+  for (y = 0; y < src_eheight / 2; y++)
     {
+      const guchar *src0 = src_data;
+      const guchar *src1 = src_data + bpp;
+      const guchar *src2 = src0 + bpp * src_ewidth;
+      const guchar *src3 = src1 + bpp * src_ewidth;
+      guchar       *dst  = dest_data;
       gint          x;
-      guchar       *dst = dest_data + y * dest_ewidth * bpp;
-      const guchar *src = source_data + y * 2 * source_ewidth * bpp;
 
-      for (x = 0; x < source_ewidth / 2; x++)
+      for (x = 0; x < src_ewidth / 2; x++)
         {
           gint i;
 
           for (i = 0; i < bpp; i++)
-            dst[i] = (src[i] +
-                      src[i + bpp] +
-                      src[i + source_ewidth * bpp] +
-                      src[i + source_ewidth * bpp + bpp]) / 4;
+            dst[i] = (src0[i] + src1[i] + src2[i] + src3[i]) / 4;
 
           dst += bpp;
-          src += bpp * 2;
+          src0 += bpp * 2;
+          src1 += bpp * 2;
+          src2 += bpp * 2;
+          src3 += bpp * 2;
         }
+
+      dest_data += dest_ewidth * bpp;
+      src_data += src_ewidth * bpp * 2;
     }
 }
 
@@ -901,7 +899,7 @@ static void
 gimp_projection_image_size_changed (GimpImage      *image,
                                     GimpProjection *proj)
 {
-  gimp_projection_alloc_levels (proj);
+  gimp_projection_release_levels (proj);
   gimp_projection_add_update_area (proj, 0, 0, image->width, image->height);
 }
 
@@ -909,7 +907,7 @@ static void
 gimp_projection_image_mode_changed (GimpImage      *image,
                                     GimpProjection *proj)
 {
-  gimp_projection_alloc_levels (proj);
+  gimp_projection_release_levels (proj);
   gimp_projection_add_update_area (proj, 0, 0, image->width, image->height);
 }
 

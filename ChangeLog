@@ -1,5 +1,11 @@
 2007-06-07  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpprojection.c: lazily allocate the tile managers of
+	the image pyramid.	
+	(gimp_projection_write_quarter): minor optimization.
+
+2007-06-07  Sven Neumann  <sven@gimp.org>
+
 	* app/text/Makefile.am
 	* app/core/Makefile.am
 	* app/tools/Makefile.am
