@@ -20,8 +20,6 @@
 
 #include <glib-object.h>
 
-#include "libgimpmath/gimpmath.h"
-
 #include "core-types.h"
 
 #include "base/tile.h"
@@ -362,14 +360,22 @@ gimp_projection_get_level (GimpProjection *proj,
                            gdouble         scale_y)
 {
   gdouble scale;
+  gdouble next = 1.0;
   gint    level;
 
   g_return_val_if_fail (GIMP_IS_PROJECTION (proj), PYRAMID_BASE_LEVEL);
 
   scale = MAX (scale_x, scale_y);
-  level = -(log (scale) / G_LN2);
 
-  return CLAMP (level, PYRAMID_BASE_LEVEL, proj->top_level);
+  for (level = PYRAMID_BASE_LEVEL; level < proj->top_level; level++)
+    {
+      next /= 2;
+
+      if (next < scale)
+        break;
+    }
+
+  return level;
 }
 
 GimpImage *
@@ -752,15 +758,11 @@ gimp_projection_paint_area (GimpProjection *proj,
   y1 = CLAMP (y,     0, proj->image->height);
   x2 = CLAMP (x + w, 0, proj->image->width);
   y2 = CLAMP (y + h, 0, proj->image->height);
-  x = x1;
-  y = y1;
-  w = (x2 - x1);
-  h = (y2 - y1);
 
-  gimp_projection_invalidate (proj, x, y, w, h);
+  gimp_projection_invalidate (proj, x1, y1, x2 - x1, y2 - y1);
 
   g_signal_emit (proj, projection_signals[UPDATE], 0,
-                 now, x, y, w, h);
+                 now, x1, y1, x2 - x1, y2 - y1);
 }
 
 static void

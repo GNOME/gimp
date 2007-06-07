@@ -1,5 +1,10 @@
 2007-06-07  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpprojection.c (gimp_projection_get_level):
+	reimplemented without using a logarithm.
+
+2007-06-07  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/Makefile.am
 	* menus/Makefile.am: when calling xsltproc, use the stylesheet from
 	$(srcdir). From the patch attached to bug #444960.
