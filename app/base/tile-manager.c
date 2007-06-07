@@ -265,7 +265,9 @@ tile_manager_get_at (TileManager *tm,
       tile_row < 0 || tile_row >= tm->ntile_rows)
     return NULL;
 
-  return tile_manager_get(tm, tile_row * tm->ntile_cols + tile_col, wantread, wantwrite);
+  return tile_manager_get (tm,
+                           tile_row * tm->ntile_cols + tile_col,
+                           wantread, wantwrite);
 }
 
 void

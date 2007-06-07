@@ -1,3 +1,7 @@
+2007-06-07  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-manager.c: formatting.
+
 2007-06-07  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: display better error message if PyGTK is too old.
