@@ -834,12 +834,53 @@ gimp_projection_write_quarter (Tile *dest,
 
       for (x = 0; x < src_ewidth / 2; x++)
         {
-          gint i;
+          gint a;
 
-          for (i = 0; i < bpp; i++)
-            dst[i] = (src0[i] + src1[i] + src2[i] + src3[i]) / 4;
+          switch (bpp)
+            {
+            case 2:
+              a = src0[1] + src1[1] + src2[1] + src3[1];
+              if (a)
+                {
+                  dst[0] = ((src0[0] * src0[1] +
+                             src1[0] * src1[1] +
+                             src2[0] * src2[1] +
+                             src3[0] * src3[1]) / a);
+                  dst[1] = a / 4;
+                }
+              else
+                {
+                  dst[0] = dst[1] = 0;
+                }
+              break;
+
+            case 4:
+              a = src0[3] + src1[3] + src2[3] + src3[3];
+              if (a)
+                {
+                  dst[0] = ((src0[0] * src0[3] +
+                             src1[0] * src1[3] +
+                             src2[0] * src2[3] +
+                             src3[0] * src3[3]) / a);
+                  dst[1] = ((src0[1] * src0[3] +
+                             src1[1] * src1[3] +
+                             src2[1] * src2[3] +
+                             src3[1] * src3[3]) / a);
+                  dst[2] = ((src0[2] * src0[3] +
+                             src1[2] * src1[3] +
+                             src2[2] * src2[3] +
+                             src3[2] * src3[3]) / a);
+                  dst[3] = a / 4;
+                }
+              else
+                {
+                  dst[0] = dst[1] = dst[2] = dst[3] = 0;
+                }
+              break;
+            }
 
           dst += bpp;
+
           src0 += bpp * 2;
           src1 += bpp * 2;
           src2 += bpp * 2;

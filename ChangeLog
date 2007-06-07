@@ -1,5 +1,10 @@
 2007-06-07  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpprojection.c (gimp_projection_write_quarter):
+	weight the pixels by their alpha value.
+
+2007-06-07  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage.[ch]: removed the boolean from the GimpImage
 	struct that used to track whether the preview was valid.
 	(gimp_image_invalidate_preview): just set the preview to NULL.
