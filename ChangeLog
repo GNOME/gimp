@@ -1,5 +1,11 @@
 2007-06-07  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/Makefile.am
+	* menus/Makefile.am: when calling xsltproc, use the stylesheet from
+	$(srcdir). From the patch attached to bug #444960.
+
+2007-06-07  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/Makefile.am: bail out with an error if xsltproc is
 	missing and authors.h needs to be regenerated.
 

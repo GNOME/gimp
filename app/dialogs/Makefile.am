@@ -101,9 +101,9 @@ EXTRA_DIST = \
 
 $(srcdir)/about-dialog.c: authors.h
 
-authors.h: $(top_srcdir)/authors.xml authors.xsl
+authors.h: $(top_srcdir)/authors.xml $(srcdir)/authors.xsl
 if HAVE_XSLTPROC
-	$(XSLTPROC) authors.xsl $< > $(@) || rm -f $(@)
+	$(XSLTPROC) $(srcdir)/authors.xsl $< > $(@) || rm -f $(@)
 else
-	@( echo "*** xsltproc is required to regenerate $(@) ***"; exit 1; )
+	@echo "*** xsltproc is required to regenerate $(@) ***"; exit 1;
 endif
