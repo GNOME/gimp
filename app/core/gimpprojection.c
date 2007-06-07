@@ -832,14 +832,13 @@ gimp_projection_write_quarter (Tile *dest,
       guchar       *dst  = dest_data;
       gint          x;
 
-      for (x = 0; x < src_ewidth / 2; x++)
+      switch (bpp)
         {
-          gint a;
-
-          switch (bpp)
+        case 2:
+          for (x = 0; x < src_ewidth / 2; x++)
             {
-            case 2:
-              a = src0[1] + src1[1] + src2[1] + src3[1];
+              gint a = src0[1] + src1[1] + src2[1] + src3[1];
+
               if (a)
                 {
                   dst[0] = ((src0[0] * src0[1] +
@@ -852,10 +851,21 @@ gimp_projection_write_quarter (Tile *dest,
                 {
                   dst[0] = dst[1] = 0;
                 }
-              break;
 
-            case 4:
-              a = src0[3] + src1[3] + src2[3] + src3[3];
+              dst += 2;
+
+              src0 += 4;
+              src1 += 4;
+              src2 += 4;
+              src3 += 4;
+            }
+          break;
+
+        case 4:
+          for (x = 0; x < src_ewidth / 2; x++)
+            {
+              gint a = src0[3] + src1[3] + src2[3] + src3[3];
+
               if (a)
                 {
                   dst[0] = ((src0[0] * src0[3] +
@@ -876,15 +886,15 @@ gimp_projection_write_quarter (Tile *dest,
                 {
                   dst[0] = dst[1] = dst[2] = dst[3] = 0;
                 }
-              break;
+
+              dst += 4;
+
+              src0 += 8;
+              src1 += 8;
+              src2 += 8;
+              src3 += 8;
             }
-
-          dst += bpp;
-
-          src0 += bpp * 2;
-          src1 += bpp * 2;
-          src2 += bpp * 2;
-          src3 += bpp * 2;
+          break;
         }
 
       dest_data += dest_ewidth * bpp;
