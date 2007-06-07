@@ -20,25 +20,20 @@
 
 #include <glib-object.h>
 
-#include "libgimpbase/gimpbase.h"
-#include "libgimpmath/gimpmath.h"
-
 #include "core-types.h"
 
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
+#include "base/tile-manager.h"
 
-#include "paint-funcs/paint-funcs.h"
+#include "paint-funcs/scale-funcs.h"
 
 #include "config/gimpcoreconfig.h"
 
 #include "gimp.h"
-#include "gimpdrawable-preview.h"
 #include "gimpimage.h"
 #include "gimpimage-preview.h"
-#include "gimplayer.h"
-#include "gimplayermask.h"
-#include "gimplist.h"
+#include "gimpprojection.h"
 
 
 void
@@ -119,29 +114,23 @@ gimp_image_get_preview (GimpViewable *viewable,
   if (! image->gimp->config->layer_previews)
     return NULL;
 
-  if (image->comp_preview_valid            &&
-      image->comp_preview->width  == width &&
-      image->comp_preview->height == height)
+  if (image->preview                  &&
+      image->preview->width  == width &&
+      image->preview->height == height)
     {
       /*  The easy way  */
-      return image->comp_preview;
+      return image->preview;
     }
   else
     {
       /*  The hard way  */
-      if (image->comp_preview)
-        temp_buf_free (image->comp_preview);
+      if (image->preview)
+        temp_buf_free (image->preview);
 
-      /*  Actually construct the composite preview from the layer previews!
-       *  This might seem ridiculous, but it's actually the best way, given
-       *  a number of unsavory alternatives.
-       */
-      image->comp_preview = gimp_image_get_new_preview (viewable, context,
+      image->preview = gimp_image_get_new_preview (viewable, context,
                                                         width, height);
 
-      image->comp_preview_valid = TRUE;
-
-      return image->comp_preview;
+      return image->preview;
     }
 }
 
@@ -151,229 +140,45 @@ gimp_image_get_new_preview (GimpViewable *viewable,
                             gint          width,
                             gint          height)
 {
-  GimpImage   *image          = GIMP_IMAGE (viewable);
-  GimpLayer   *floating_sel   = NULL;
-  TempBuf     *comp;
-  GList       *list;
-  GSList      *reverse_list   = NULL;
-  gdouble      ratio;
+  GimpImage   *image = GIMP_IMAGE (viewable);
+  TileManager *tiles;
+  TempBuf     *preview;
+  PixelRegion  srcPR;
+  PixelRegion  destPR;
+  gdouble      scale_x;
+  gdouble      scale_y;
+  gint         level;
   gint         bytes;
-  gboolean     construct_flag = FALSE;
-  gboolean     visible_components[MAX_CHANNELS] = { TRUE, TRUE, TRUE, TRUE };
+  gint         subsample;
 
   if (! image->gimp->config->layer_previews)
     return NULL;
 
-  ratio = (gdouble) width / (gdouble) image->width;
+  scale_x = (gdouble) width  / (gdouble) image->width;
+  scale_y = (gdouble) height / (gdouble) image->height;
 
-  switch (gimp_image_base_type (image))
-    {
-    case GIMP_RGB:
-    case GIMP_INDEXED:
-      bytes = 4;
-      break;
-    case GIMP_GRAY:
-      bytes = 2;
-      break;
-    default:
-      bytes = 0;
-      g_assert_not_reached ();
-      break;
-    }
+  level = gimp_projection_get_level (image->projection, scale_x, scale_y);
+  tiles = gimp_projection_get_tiles_at_level (image->projection, level);
 
-  /*  The construction buffer  */
-  comp = temp_buf_new (width, height, bytes, 0, 0, NULL);
-  temp_buf_data_clear (comp);
+  pixel_region_init (&srcPR, tiles,
+                     0, 0,
+                     tile_manager_width (tiles), tile_manager_height (tiles),
+                     FALSE);
 
-  for (list = GIMP_LIST (image->layers)->list;
-       list;
-       list = g_list_next (list))
-    {
-      GimpLayer *layer = list->data;
+  bytes = gimp_projection_get_bytes (image->projection);
 
-      /*  only add layers that are visible to the list  */
-      if (gimp_item_get_visible (GIMP_ITEM (layer)))
-        {
-          /*  floating selections are added right above the layer
-           *  they are attached to
-           */
-          if (gimp_layer_is_floating_sel (layer))
-            {
-              floating_sel = layer;
-            }
-          else
-            {
-              if (floating_sel &&
-                  floating_sel->fs.drawable == GIMP_DRAWABLE (layer))
-                {
-                  reverse_list = g_slist_prepend (reverse_list, floating_sel);
-                }
+  preview = temp_buf_new (width, height, bytes, 0, 0, NULL);
 
-              reverse_list = g_slist_prepend (reverse_list, layer);
-            }
-        }
-    }
+  pixel_region_init_temp_buf (&destPR, preview, 0, 0, width, height);
 
-  for (; reverse_list; reverse_list = g_slist_next (reverse_list))
-    {
-      GimpLayer   *layer = reverse_list->data;
-      PixelRegion  src1PR, src2PR, maskPR;
-      PixelRegion *mask;
-      TempBuf     *layer_buf;
-      TempBuf     *mask_buf;
-      gint         x, y, w, h;
-      gint         x1, y1, x2, y2;
-      gint         src_x, src_y;
-      gint         src_width, src_height;
-      gint         off_x, off_y;
-      gboolean     use_sub_preview = FALSE;
+  /*  calculate 'acceptable' subsample  */
+  subsample = 1;
 
-      gimp_item_offsets (GIMP_ITEM (layer), &off_x, &off_y);
+  while ((width  * (subsample + 1) * 2 < srcPR.w) &&
+         (height * (subsample + 1) * 2 < srcPR.h))
+    subsample += 1;
 
-      if (! gimp_rectangle_intersect (0, 0,
-                                      gimp_item_width  (GIMP_ITEM (layer)),
-                                      gimp_item_height (GIMP_ITEM (layer)),
-                                      -off_x, -off_y,
-                                      image->width, image->height,
-                                      &src_x, &src_y,
-                                      &src_width, &src_height))
-        {
-          continue;
-        }
+  subsample_region (&srcPR, &destPR, subsample);
 
-      x = (gint) RINT (ratio * off_x);
-      y = (gint) RINT (ratio * off_y);
-      w = (gint) RINT (ratio * gimp_item_width  (GIMP_ITEM (layer)));
-      h = (gint) RINT (ratio * gimp_item_height (GIMP_ITEM (layer)));
-
-      if (w < 1 || h < 1)
-        continue;
-
-      if ((w * h) > (width * height * 4))
-        use_sub_preview = TRUE;
-
-      x1 = CLAMP (x, 0, width);
-      y1 = CLAMP (y, 0, height);
-      x2 = CLAMP (x + w, 0, width);
-      y2 = CLAMP (y + h, 0, height);
-
-      if (x2 == x1 || y2 == y1)
-        continue;
-
-      pixel_region_init_temp_buf (&src1PR, comp,
-                                  x1, y1, x2 - x1, y2 - y1);
-
-      if (use_sub_preview)
-        {
-          layer_buf = gimp_drawable_get_sub_preview (GIMP_DRAWABLE (layer),
-                                                     src_x, src_y,
-                                                     src_width, src_height,
-                                                     (x2 - x1),
-                                                     (y2 - y1));
-
-          g_assert (layer_buf);
-          g_assert (layer_buf->bytes <= comp->bytes);
-
-          pixel_region_init_temp_buf (&src2PR, layer_buf,
-                                      0, 0, src1PR.w, src1PR.h);
-        }
-      else
-        {
-          layer_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer),
-                                                 context, w, h);
-
-          g_assert (layer_buf);
-          g_assert (layer_buf->bytes <= comp->bytes);
-
-          pixel_region_init_temp_buf (&src2PR, layer_buf,
-                                      x1 - x, y1 - y, src1PR.w, src1PR.h);
-        }
-
-      if (layer->mask && layer->mask->apply_mask)
-        {
-          if (use_sub_preview)
-            {
-              mask_buf =
-                gimp_drawable_get_sub_preview (GIMP_DRAWABLE (layer->mask),
-                                               src_x, src_y,
-                                               src_width, src_height,
-                                               x2 - x1,
-                                               y2 - y1);
-
-              pixel_region_init_temp_buf (&maskPR, mask_buf,
-                                          0, 0, src1PR.w, maskPR.h);
-            }
-          else
-            {
-              mask_buf = gimp_viewable_get_preview (GIMP_VIEWABLE (layer->mask),
-                                                    context, w, h);
-
-              pixel_region_init_temp_buf (&maskPR, mask_buf,
-                                          x1 - x, y1 - y, src1PR.w, maskPR.h);
-            }
-
-          mask = &maskPR;
-        }
-      else
-        {
-          mask_buf = NULL;
-          mask     = NULL;
-        }
-
-      /*  Based on the type of the layer, project the layer onto the
-       *   composite preview...
-       *  Indexed images are actually already converted to RGB and RGBA,
-       *   so just project them as if they were type "intensity"
-       *  Send in all TRUE for visible since that info doesn't matter
-       *   for previews
-       */
-      if (gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-        {
-          if (! construct_flag)
-            initial_region (&src2PR, &src1PR,
-                            mask, NULL,
-                            layer->opacity * 255.999,
-                            layer->mode,
-                            visible_components,
-                            INITIAL_INTENSITY_ALPHA);
-          else
-            combine_regions (&src1PR, &src2PR, &src1PR,
-                             mask, NULL,
-                             layer->opacity * 255.999,
-                             layer->mode,
-                             visible_components,
-                             COMBINE_INTEN_A_INTEN_A);
-        }
-      else
-        {
-          if (! construct_flag)
-            initial_region (&src2PR, &src1PR,
-                            mask, NULL,
-                            layer->opacity * 255.999,
-                            layer->mode,
-                            visible_components,
-                            INITIAL_INTENSITY);
-          else
-            combine_regions (&src1PR, &src2PR, &src1PR,
-                             mask, NULL,
-                             layer->opacity * 255.999,
-                             layer->mode,
-                             visible_components,
-                             COMBINE_INTEN_A_INTEN);
-        }
-
-      if (use_sub_preview)
-        {
-          temp_buf_free (layer_buf);
-
-          if (mask_buf)
-            temp_buf_free (mask_buf);
-        }
-
-      construct_flag = TRUE;
-    }
-
-  g_slist_free (reverse_list);
-
-  return comp;
+  return preview;
 }

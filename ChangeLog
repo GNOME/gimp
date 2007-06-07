@@ -1,5 +1,15 @@
 2007-06-07  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage.[ch]: removed the boolean from the GimpImage
+	struct that used to track whether the preview was valid.
+	(gimp_image_invalidate_preview): just set the preview to NULL.
+
+	* app/core/gimpimage-preview.c (gimp_image_get_new_preview):
+	construct the preview from the projection instead of compositing
+	the drawable previews.
+
+2007-06-07  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpprojection.c: lazily allocate the tile managers of
 	the image pyramid.	
 	(gimp_projection_write_quarter): minor optimization.

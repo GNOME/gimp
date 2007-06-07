@@ -653,8 +653,7 @@ gimp_image_init (GimpImage *image)
   image->group_count           = 0;
   image->pushing_undo_group    = GIMP_UNDO_GROUP_NONE;
 
-  image->comp_preview          = NULL;
-  image->comp_preview_valid    = FALSE;
+  image->preview               = NULL;
 
   image->flush_accum.alpha_changed = FALSE;
   image->flush_accum.mask_changed  = FALSE;
@@ -889,10 +888,10 @@ gimp_image_finalize (GObject *object)
       image->selection_mask = NULL;
     }
 
-  if (image->comp_preview)
+  if (image->preview)
     {
-      temp_buf_free (image->comp_preview);
-      image->comp_preview = NULL;
+      temp_buf_free (image->preview);
+      image->preview = NULL;
     }
 
   if (image->parasites)
@@ -1006,8 +1005,8 @@ gimp_image_get_memsize (GimpObject *object,
   memsize += gimp_object_get_memsize (GIMP_OBJECT (image->redo_stack),
                                       gui_size);
 
-  if (image->comp_preview)
-    *gui_size += temp_buf_get_memsize (image->comp_preview);
+  if (image->preview)
+    *gui_size += temp_buf_get_memsize (image->preview);
 
   return memsize + GIMP_OBJECT_CLASS (parent_class)->get_memsize (object,
                                                                   gui_size);
@@ -1034,12 +1033,10 @@ gimp_image_invalidate_preview (GimpViewable *viewable)
   if (GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview)
     GIMP_VIEWABLE_CLASS (parent_class)->invalidate_preview (viewable);
 
-  image->comp_preview_valid = FALSE;
-
-  if (image->comp_preview)
+  if (image->preview)
     {
-      temp_buf_free (image->comp_preview);
-      image->comp_preview = NULL;
+      temp_buf_free (image->preview);
+      image->preview = NULL;
     }
 }
 

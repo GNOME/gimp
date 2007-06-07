@@ -167,9 +167,8 @@ struct _GimpImage
   gint               group_count;           /*  nested undo groups           */
   GimpUndoType       pushing_undo_group;    /*  undo group status flag       */
 
-  /*  Composite preview  */
-  TempBuf           *comp_preview;          /*  the composite preview        */
-  gboolean           comp_preview_valid;    /*  preview valid-1/channel      */
+  /*  Preview  */
+  TempBuf           *preview;               /*  the projection preview       */
 
   /*  Signal emmision accumulator  */
   GimpImageFlushAccumulator  flush_accum;
