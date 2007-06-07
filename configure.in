@@ -1558,7 +1558,7 @@ if test "x$enable_python" != xno; then
   enable_python="yes"
   dnl check for Python
   AM_PATH_PYTHON(2.3.5,,
-    [AC_MSG_ERROR([pycheck_error([Python 2.3.5 or better], [it])])])
+    [AC_MSG_ERROR([pycheck_error([Python 2.3.5 or newer], [it])])])
   AM_CHECK_PYTHON_HEADERS(,
     [AC_MSG_ERROR([pycheck_error([Python headers], [them])])])
 
@@ -1581,7 +1581,7 @@ if test "x$enable_python" != xno; then
 
   dnl check for PyGTK
   PKG_CHECK_MODULES(PYGTK, pygtk-2.0 >= pygtk_required_version,,
-    [AC_MSG_ERROR([pycheck_error([PyGTK], [it])])])
+    [AC_MSG_ERROR([pycheck_error([PyGTK pygtk_required_version or newer], [it])])])
 
   AC_PATH_PROG(PYGTK_CODEGEN, pygtk-codegen-2.0, no)
   if test "x$PYGTK_CODEGEN" = xno; then
