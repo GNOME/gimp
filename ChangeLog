@@ -1,3 +1,9 @@
+2007-06-08  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme.h: Applied patch from Daniel
+	Richard G. that defines SCHEME_EXPORT as extern for non-Windows
+	systems. Fixes bug #444964.
+
 2007-06-08  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpprojection.c (gimp_projection_alloc_levels): use

@@ -17,7 +17,7 @@
 # ifndef USE_STRLWR
 #   define USE_STRLWR 1
 # endif
-# define SCHEME_EXPORT
+# define SCHEME_EXPORT extern
 #else
 # define USE_STRLWR 0
 # ifdef _SCHEME_SOURCE
