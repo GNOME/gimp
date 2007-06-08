@@ -2,6 +2,7 @@
 
 	* app/core/gimpprojection.c (gimp_projection_alloc_levels): use
 	a bit shift instead of a shift and a division.
+	(gimp_projection_invalidate): same change here.
 
 2007-06-08  Sven Neumann  <sven@gimp.org>
 

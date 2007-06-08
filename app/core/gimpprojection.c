@@ -79,10 +79,10 @@ static void       gimp_projection_paint_area            (GimpProjection *proj,
                                                          gint            w,
                                                          gint            h);
 static void       gimp_projection_invalidate            (GimpProjection *proj,
-                                                         gint            x,
-                                                         gint            y,
-                                                         gint            w,
-                                                         gint            h);
+                                                         guint           x,
+                                                         guint           y,
+                                                         guint           w,
+                                                         guint           h);
 static void       gimp_projection_validate_tile         (TileManager    *tm,
                                                          Tile           *tile);
 static void       gimp_projection_write_quarter         (Tile           *dest,
@@ -744,13 +744,11 @@ gimp_projection_paint_area (GimpProjection *proj,
                             gint            w,
                             gint            h)
 {
-  gint x1, y1, x2, y2;
-
   /*  Bounds check  */
-  x1 = CLAMP (x,     0, proj->image->width);
-  y1 = CLAMP (y,     0, proj->image->height);
-  x2 = CLAMP (x + w, 0, proj->image->width);
-  y2 = CLAMP (y + h, 0, proj->image->height);
+  gint x1 = CLAMP (x,     0, proj->image->width);
+  gint y1 = CLAMP (y,     0, proj->image->height);
+  gint x2 = CLAMP (x + w, 0, proj->image->width);
+  gint y2 = CLAMP (y + h, 0, proj->image->height);
 
   gimp_projection_invalidate (proj, x1, y1, x2 - x1, y2 - y1);
 
@@ -760,31 +758,25 @@ gimp_projection_paint_area (GimpProjection *proj,
 
 static void
 gimp_projection_invalidate (GimpProjection *proj,
-                            gint            x,
-                            gint            y,
-                            gint            w,
-                            gint            h)
+                            guint           x,
+                            guint           y,
+                            guint           w,
+                            guint           h)
 {
-  TileManager *tm;
-  gint         level;
+  gint level;
 
   for (level = 0; level <= proj->top_level; level++)
     {
-      gint c                   = (1 << level);
+      TileManager *tm = gimp_projection_get_tiles_at_level (proj, level);
 
       /* Tile invalidation must propagate all the way up in the pyramid,
        * so keep width and height > 0.
        */
-      gint invalidation_width  = MAX (w / c, 1);
-      gint invalidation_height = MAX (h / c, 1);
-
-      tm = gimp_projection_get_tiles_at_level (proj, level);
-
       tile_manager_invalidate_area (tm,
-                                    x / c,
-                                    y / c,
-                                    invalidation_width,
-                                    invalidation_height);
+                                    x >> level,
+                                    y >> level,
+                                    MAX (w >> level, 1),
+                                    MAX (h >> level, 1));
     }
 }
 
