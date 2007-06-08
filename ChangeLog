@@ -1,5 +1,10 @@
 2007-06-08  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpprojection.c (gimp_projection_alloc_levels): use
+	a bit shift instead of a shift and a division.
+
+2007-06-08  Sven Neumann  <sven@gimp.org>
+
 	Applied parts of a patch from Daniel Richard G. (bug #445374):
 
 	* themes/Default/images/Makefile.am

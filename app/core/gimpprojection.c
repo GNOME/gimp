@@ -499,8 +499,8 @@ gimp_projection_alloc_levels (GimpProjection *proj,
 
   for (level = proj->top_level + 1; level <= top_level; level++)
     {
-      gint width  = proj->image->width  / (1 << level);
-      gint height = proj->image->height / (1 << level);
+      gint width  = (guint) proj->image->width  >> level;
+      gint height = (guint) proj->image->height >> level;
 
       if (width == 0 || height == 0)
         return proj->top_level;
