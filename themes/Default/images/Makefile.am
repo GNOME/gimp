@@ -372,8 +372,8 @@ stock-icons.list: $(STOCK_IMAGES) Makefile.am
 	    echo "  $(srcdir)/$$image" >> $@; \
 	  done )
 
-$(srcdir)/gimp-core-pixbufs.h: $(CORE_IMAGES) Makefile.am
+gimp-core-pixbufs.h: $(CORE_IMAGES) Makefile.am
 	$(GDK_PIXBUF_CSOURCE) --raw --build-list $(CORE_VARIABLES) > $(@F)
 
-$(srcdir)/gimp-stock-pixbufs.h: stock-icons.list
-	$(GDK_PIXBUF_CSOURCE) --raw --build-list `cat stock-icons.list` > $(@F)
+gimp-stock-pixbufs.h: stock-icons.list
+	$(GDK_PIXBUF_CSOURCE) --raw --build-list `cat $<` > $(@F)

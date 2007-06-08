@@ -62,9 +62,8 @@ endif
 
 validate: $(menudata_DATA)
 if HAVE_XMLLINT
-	@cd $(srcdir); \
-	for menu in $(menudata_DATA); do \
-	   $(XMLLINT) --noout --valid $$menu || \
+	@for menu in $^; do \
+	   $(XMLLINT) --noout --path $(srcdir) --valid $$menu || \
 	   ( echo "*** $$menu INVALID ***"; exit 1; ) ; \
 	done
 endif

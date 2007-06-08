@@ -1,5 +1,13 @@
 2007-06-08  Sven Neumann  <sven@gimp.org>
 
+	Applied parts of a patch from Daniel Richard G. (bug #445374):
+
+	* themes/Default/images/Makefile.am
+	* data/tips/Makefile.am
+	* menus/Makefile.am: more srcdir/builddir tweaks.
+	
+2007-06-08  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpviewable.h: #define GIMP_VIEWABLE_PRIORITY_IDLE,
 	which is even lower than G_PRIORITY_LOW.
 

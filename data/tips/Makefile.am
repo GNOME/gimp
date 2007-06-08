@@ -23,8 +23,7 @@ gimp-tips.xml: gimp-tips.xml.in $(wildcard $(top_srcdir)/po-tips/*.po)
 
 validate: gimp-tips.xml
 if HAVE_XMLLINT
-	@cd $(srcdir); \
-	$(XMLLINT) --noout --valid gimp-tips.xml || \
+	@$(XMLLINT) --noout --path $(srcdir) --valid $< || \
 	  ( echo "* gimp-tips.xml INVALID *"; exit 1; )
 endif
 
