@@ -1,5 +1,18 @@
 2007-06-09  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-resize.[ch]: added
+	gimp_image_resize_to_selection().
+
+	* app/actions/image-actions.c
+	* app/actions/image-commands.[ch]
+	* app/widgets/gimphelp-ids.h
+	* menus/image-menu.xml.in: added an action and a menu item for it.
+	Fixes bug #335672.
+
+	* plug-ins/common/align_layers.c: resolved a conflicting mnemonic.
+
+2007-06-09  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpselection.c (gimp_selection_extract): fixed
 	parameter passed to gimp_image_get_background(). Fixes bug #445719.
 

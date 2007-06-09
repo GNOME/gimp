@@ -20,26 +20,29 @@
 #define __GIMP_IMAGE_RESIZE_H__
 
 
-void   gimp_image_resize             (GimpImage    *image,
-                                      GimpContext  *context,
-                                      gint          new_width,
-                                      gint          new_height,
-                                      gint          offset_x,
-                                      gint          offset_y,
-                                      GimpProgress *progress);
+void   gimp_image_resize              (GimpImage    *image,
+                                       GimpContext  *context,
+                                       gint          new_width,
+                                       gint          new_height,
+                                       gint          offset_x,
+                                       gint          offset_y,
+                                       GimpProgress *progress);
 
-void   gimp_image_resize_with_layers (GimpImage    *image,
-                                      GimpContext  *context,
-                                      gint          new_width,
-                                      gint          new_height,
-                                      gint          offset_x,
-                                      gint          offset_y,
-                                      GimpItemSet   layer_set,
-                                      GimpProgress *progress);
+void   gimp_image_resize_with_layers  (GimpImage    *image,
+                                       GimpContext  *context,
+                                       gint          new_width,
+                                       gint          new_height,
+                                       gint          offset_x,
+                                       gint          offset_y,
+                                       GimpItemSet   layer_set,
+                                       GimpProgress *progress);
 
-void   gimp_image_resize_to_layers   (GimpImage    *image,
-                                      GimpContext  *context,
-                                      GimpProgress *progress);
+void   gimp_image_resize_to_layers    (GimpImage    *image,
+                                       GimpContext  *context,
+                                       GimpProgress *progress);
+void   gimp_image_resize_to_selection (GimpImage    *image,
+                                       GimpContext  *context,
+                                       GimpProgress *progress);
 
 
 #endif /* __GIMP_IMAGE_RESIZE_H__ */

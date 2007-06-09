@@ -300,11 +300,13 @@
       <placeholder name="Resize">
         <menuitem action="image-resize" />
         <menuitem action="image-resize-to-layers" />
+        <menuitem action="image-resize-to-selection" />
         <menuitem action="image-print-size" />
       </placeholder>
       <placeholder name="Scale">
         <menuitem action="image-scale" />
       </placeholder>
+      <separator />
       <placeholder name="Crop">
         <menuitem action="image-crop" />
       </placeholder>

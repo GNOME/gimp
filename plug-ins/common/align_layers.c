@@ -130,7 +130,7 @@ query (void)
                           "Shuji Narazaki <narazaki@InetQ.or.jp>",
                           "Shuji Narazaki",
                           "1997",
-                          N_("Align _Visible Layers..."),
+                          N_("Align Visi_ble Layers..."),
                           "RGB*,GRAY*,INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,

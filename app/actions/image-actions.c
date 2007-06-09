@@ -92,6 +92,12 @@ static const GimpActionEntry image_actions[] =
     G_CALLBACK (image_resize_to_layers_cmd_callback),
     GIMP_HELP_IMAGE_RESIZE_TO_LAYERS },
 
+  { "image-resize-to-selection", NULL,
+    N_("F_it Canvas to Selection"), NULL,
+    N_("Resize the image to the extents of the selection"),
+    G_CALLBACK (image_resize_to_selection_cmd_callback),
+    GIMP_HELP_IMAGE_RESIZE_TO_SELECTION },
+
   { "image-print-size", GIMP_STOCK_PRINT_RESOLUTION,
     N_("_Print Size..."), NULL,
     N_("Adjust the print resolution"),
@@ -276,16 +282,17 @@ image_actions_update (GimpActionGroup *group,
   SET_SENSITIVE ("image-rotate-180",      image);
   SET_SENSITIVE ("image-rotate-270",      image);
 
-  SET_SENSITIVE ("image-resize",           image);
-  SET_SENSITIVE ("image-resize-to-layers", image);
-  SET_SENSITIVE ("image-print-size",       image);
-  SET_SENSITIVE ("image-scale",            image);
-  SET_SENSITIVE ("image-crop",             image && sel);
-  SET_SENSITIVE ("image-duplicate",        image);
-  SET_SENSITIVE ("image-merge-layers",     image && !fs && !aux && lp);
-  SET_SENSITIVE ("image-flatten",          image && !fs && !aux && lp);
-  SET_SENSITIVE ("image-configure-grid",   image);
-  SET_SENSITIVE ("image-properties",       image);
+  SET_SENSITIVE ("image-resize",              image);
+  SET_SENSITIVE ("image-resize-to-layers",    image);
+  SET_SENSITIVE ("image-resize-to-selection", image && sel);
+  SET_SENSITIVE ("image-print-size",          image);
+  SET_SENSITIVE ("image-scale",               image);
+  SET_SENSITIVE ("image-crop",                image && sel);
+  SET_SENSITIVE ("image-duplicate",           image);
+  SET_SENSITIVE ("image-merge-layers",        image && !fs && !aux && lp);
+  SET_SENSITIVE ("image-flatten",             image && !fs && !aux && lp);
+  SET_SENSITIVE ("image-configure-grid",      image);
+  SET_SENSITIVE ("image-properties",          image);
 
 #undef SET_SENSITIVE
 }

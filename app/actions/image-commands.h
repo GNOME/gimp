@@ -20,34 +20,36 @@
 #define __IMAGE_COMMANDS_H__
 
 
-void   image_new_cmd_callback              (GtkAction *action,
-                                            gpointer   data);
-void   image_new_from_image_cmd_callback   (GtkAction *action,
-                                            gpointer   data);
+void   image_new_cmd_callback                 (GtkAction *action,
+                                               gpointer   data);
+void   image_new_from_image_cmd_callback      (GtkAction *action,
+                                               gpointer   data);
 
-void   image_convert_cmd_callback          (GtkAction *action,
-                                            GtkAction *current,
-                                            gpointer   data);
+void   image_convert_cmd_callback             (GtkAction *action,
+                                               GtkAction *current,
+                                               gpointer   data);
 
-void   image_resize_cmd_callback           (GtkAction *action,
-                                            gpointer   data);
-void   image_resize_to_layers_cmd_callback (GtkAction *action,
-                                            gpointer   data);
-void   image_print_size_cmd_callback       (GtkAction *action,
-                                            gpointer   data);
-void   image_scale_cmd_callback            (GtkAction *action,
-                                            gpointer   data);
-void   image_flip_cmd_callback             (GtkAction *action,
-                                            gint       value,
-                                            gpointer   data);
-void   image_rotate_cmd_callback           (GtkAction *action,
-                                            gint       value,
-                                            gpointer   data);
-void   image_crop_cmd_callback             (GtkAction *action,
-                                            gpointer   data);
+void   image_resize_cmd_callback              (GtkAction *action,
+                                               gpointer   data);
+void   image_resize_to_layers_cmd_callback    (GtkAction *action,
+                                               gpointer   data);
+void   image_resize_to_selection_cmd_callback (GtkAction *action,
+                                               gpointer   data);
+void   image_print_size_cmd_callback          (GtkAction *action,
+                                               gpointer   data);
+void   image_scale_cmd_callback               (GtkAction *action,
+                                               gpointer   data);
+void   image_flip_cmd_callback                (GtkAction *action,
+                                               gint       value,
+                                               gpointer   data);
+void   image_rotate_cmd_callback              (GtkAction *action,
+                                               gint       value,
+                                               gpointer   data);
+void   image_crop_cmd_callback                (GtkAction *action,
+                                               gpointer   data);
 
-void   image_duplicate_cmd_callback        (GtkAction *action,
-                                            gpointer   data);
+void   image_duplicate_cmd_callback           (GtkAction *action,
+                                               gpointer   data);
 
 void   image_merge_layers_cmd_callback     (GtkAction *action,
                                             gpointer   data);
