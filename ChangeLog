@@ -1,3 +1,8 @@
+2007-06-09  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpselection.c (gimp_selection_extract): fixed
+	parameter passed to gimp_image_get_background(). Fixes bug #445719.
+
 2007-06-08  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme.h: Applied patch from Daniel

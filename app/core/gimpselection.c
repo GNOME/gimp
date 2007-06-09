@@ -686,7 +686,8 @@ gimp_selection_extract (GimpChannel  *selection,
       break;
     }
 
-  gimp_image_get_background (image, context, gimp_pickable_get_bytes (pickable),
+  gimp_image_get_background (image, context,
+                             gimp_pickable_get_image_type (pickable),
                              bg_color);
 
   /*  If a cut was specified, and the selection mask is not empty,
