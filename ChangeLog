@@ -1,3 +1,12 @@
+2007-06-11  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version to 2.2.16, interface_age 16.
+
+	Merged from trunk:
+
+	* app/widgets/gimpviewrenderer.c (gimp_view_renderer_init):
+	initialize width and height to zero. Fixes bug #446005.
+
 2007-05-26  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.2.15 release.
