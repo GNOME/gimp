@@ -1,3 +1,7 @@
+2007-06-11  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.3.18 development release.
+
 2007-06-11  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* plug-ins/common/raw.c (run): if load_image fails, return

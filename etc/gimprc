@@ -224,9 +224,8 @@
 # 
 # (layer-preview-size medium)
 
-# Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can
-# not create thumbnails if layer previews are disabled.  Possible values are
-# none, normal and large.
+# Sets the size of the thumbnail shown in the Open dialog.  Possible values
+# are none, normal and large.
 # 
 # (thumbnail-size normal)
 

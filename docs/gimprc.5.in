@@ -285,8 +285,7 @@ extra-large, huge, enormous and gigantic.
 .TP
 (thumbnail-size normal)
 
-Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can
-not create thumbnails if layer previews are disabled.  Possible values are
+Sets the size of the thumbnail shown in the Open dialog.  Possible values are
 none, normal and large.
 
 .TP
