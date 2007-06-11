@@ -1,5 +1,15 @@
 2007-06-11  Sven Neumann  <sven@gimp.org>
 
+	Applied patch from Zbigniew Chyla that further improves the
+	boundary_sort() performance (bug #388538):
+
+	* base/boundary.c (cmp_xy): use "y" coordinate as more significant
+	one, i.e. compare (ay, ax) to (by, bx), not (ax, ay) to (bx, by).
+
+	* configure.in: bumped version to 2.3.19.
+	
+2007-06-11  Sven Neumann  <sven@gimp.org>
+
 	* Made 2.3.18 development release.
 
 2007-06-11  Michael Schumacher  <schumaml@cvs.gnome.org>

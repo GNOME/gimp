@@ -729,13 +729,13 @@ generate_boundary (PixelRegion  *PR,
 static gint
 cmp_xy(gint ax, gint ay, gint bx, gint by)
 {
-  if (ax < bx) {
-    return -1;
-  } else if (ax > bx) {
-    return 1;
-  } else if (ay < by) {
+  if (ay < by) {
     return -1;
   } else if (ay > by) {
+    return 1;
+  } else if (ax < bx) {
+    return -1;
+  } else if (ax > bx) {
     return 1;
   } else {
     return 0;
