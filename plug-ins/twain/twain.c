@@ -381,7 +381,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  GimpRunMode run_mode;
+  GimpRunMode run_mode = param[0].data.d_int32
 
   /* Initialize the return values
    * Always return at least the status to the caller.
@@ -401,9 +401,6 @@ run (const gchar      *name,
     values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
     return;
   }
-
-  /* Get the runmode from the in-parameters */
-  run_mode = param[0].data.d_int32;
 
   /* Set up the rest of the return parameters */
   values[1].type = GIMP_PDB_INT32;

@@ -1,5 +1,8 @@
 2007-06-11  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/twain/twain.c (run): moved run_mode initialisation up a
+	few lines.
+
 	* app/tools/gimpscaletool.c: removed unused variable.
 
 2007-06-11  Mukund Sivaraman  <muks@mukund.org>
