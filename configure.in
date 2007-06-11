@@ -58,7 +58,7 @@ m4_define([gnome_keyring_required_version], [0.4.5])
 m4_define([libcurl_required_version], [7.15.1])
 m4_define([dbus_glib_required_version], [0.70])
 m4_define([libhal_required_version], [0.5.7])
-m4_define([exif_required_version], [0.6.0])
+m4_define([exif_required_version], [0.6.15])
 
 
 AC_INIT([GIMP], [gimp_version],
