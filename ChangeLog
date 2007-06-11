@@ -1,3 +1,25 @@
+2007-06-11  Sven Neumann  <sven@gimp.org>
+
+	Applied the second patch from Zbigniew Chyla. Improves
+	boundary_sort() performance by reducing its time complexity from
+	O(n*n) to ~O(n*log n) (bug #388538).
+
+	* app/base/boundary.c (boundary_sort): prepare two arrays of
+	pointers to segments, each sorted by different pair of
+	coordinates ((x1,y1) and (x2,y2)); use new find_segment(),
+	passing both arrays to it.
+	(find_segment): new implementation that employs binary search to
+	find matching segment, using sorted arrays prepared by
+	boundary_sort().
+
+2007-06-11  Sven Neumann  <sven@gimp.org>
+
+	Applied patch from Zbigniew Chyla from bug #388538:
+
+	* app/base/boundary.c (boundary_sort): simplified a bit by
+	replacing "while" with "for" loop, now we don't search from the
+	beginning of the array in each iteration.
+
 2007-06-09  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage-resize.[ch]: added

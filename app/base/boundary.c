@@ -18,6 +18,7 @@
 
 #include "config.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 #include <glib-object.h>
@@ -101,10 +102,31 @@ static Boundary * generate_boundary  (PixelRegion     *PR,
                                       gint             y2,
                                       guchar           threshold);
 
-static gint       find_segment       (const BoundSeg  *segs,
-                                      gint             num_segs,
-                                      gint             x,
-                                      gint             y);
+static gint       cmp_xy              (gint ax,
+                                       gint ay,
+                                       gint bx,
+                                       gint by);
+
+static gint       cmp_segptr_xy1_addr (const BoundSeg **seg_ptr_a,
+                                       const BoundSeg **seg_ptr_b);
+static gint       cmp_segptr_xy2_addr (const BoundSeg **seg_ptr_a,
+                                       const BoundSeg **seg_ptr_b);
+
+static gint       cmp_segptr_xy1      (const BoundSeg **seg_ptr_a,
+                                       const BoundSeg **seg_ptr_b);
+static gint       cmp_segptr_xy2      (const BoundSeg **seg_ptr_a,
+                                       const BoundSeg **seg_ptr_b);
+
+static const BoundSeg * find_segment  (const BoundSeg **segs_by_xy1,
+                                       const BoundSeg **segs_by_xy2,
+                                       gint             num_segs,
+                                       gint             x,
+                                       gint             y);
+
+static const BoundSeg * find_segment_with_func (const BoundSeg **segs,
+                                                gint             num_segs,
+                                                const BoundSeg  *search_seg,
+                                                GCompareFunc     cmp_func);
 
 static void       simplify_subdivide (const BoundSeg  *segs,
                                       gint             start_idx,
@@ -176,12 +198,10 @@ boundary_sort (const BoundSeg *segs,
                gint           *num_groups)
 {
   Boundary *boundary;
-  gint      i;
+  const BoundSeg **segs_ptrs_by_xy1, **segs_ptrs_by_xy2;
   gint      index;
   gint      x, y;
   gint      startx, starty;
-  gboolean  empty;
-  BoundSeg *new_segs;
 
   g_return_val_if_fail ((segs == NULL && num_segs == 0) ||
                         (segs != NULL && num_segs >  0), NULL);
@@ -192,75 +212,81 @@ boundary_sort (const BoundSeg *segs,
   if (num_segs == 0)
     return NULL;
 
-  for (i = 0; i < num_segs; i++)
-    ((BoundSeg *) segs)[i].visited = FALSE;
+  /* prepare arrays with BoundSeg pointers sorted by xy1 and xy2 accordingly */
+  segs_ptrs_by_xy1 = g_new (const BoundSeg *, num_segs);
+  segs_ptrs_by_xy2 = g_new (const BoundSeg *, num_segs);
+
+  for (index = 0; index < num_segs; index++)
+    {
+      segs_ptrs_by_xy1[index] = segs + index;
+      segs_ptrs_by_xy2[index] = segs + index;
+    }
+
+  qsort (segs_ptrs_by_xy1, num_segs, sizeof (BoundSeg *),
+         (GCompareFunc) cmp_segptr_xy1_addr);
+  qsort (segs_ptrs_by_xy2, num_segs, sizeof (BoundSeg *),
+         (GCompareFunc) cmp_segptr_xy2_addr);
+
+  for (index = 0; index < num_segs; index++)
+    ((BoundSeg *) segs)[index].visited = FALSE;
 
   boundary = boundary_new (NULL);
 
-  index    = 0;
-  new_segs = NULL;
-  empty    = FALSE;
-
-  while (! empty)
+  for (index = 0; index < num_segs; index++)
     {
-      empty = TRUE;
+      const BoundSeg *cur_seg;
 
-      /*  find the index of a non-visited segment to start a group  */
-      for (i = 0; i < num_segs; i++)
-        if (segs[i].visited == FALSE)
-          {
-            index = i;
-            empty = FALSE;
-            i = num_segs;
-          }
+      if (segs[index].visited)
+        continue;
 
-      if (! empty)
+      boundary_add_seg (boundary,
+                        segs[index].x1, segs[index].y1,
+                        segs[index].x2, segs[index].y2,
+                        segs[index].open);
+
+      ((BoundSeg *) segs)[index].visited = TRUE;
+
+      startx = segs[index].x1;
+      starty = segs[index].y1;
+      x = segs[index].x2;
+      y = segs[index].y2;
+
+      while ((cur_seg = find_segment (segs_ptrs_by_xy1, segs_ptrs_by_xy2,
+                                      num_segs, x, y)) != NULL)
         {
-          boundary_add_seg (boundary,
-                            segs[index].x1, segs[index].y1,
-                            segs[index].x2, segs[index].y2,
-                            segs[index].open);
-
-          ((BoundSeg *) segs)[index].visited = TRUE;
-
-          startx = segs[index].x1;
-          starty = segs[index].y1;
-          x = segs[index].x2;
-          y = segs[index].y2;
-
-          while ((index = find_segment (segs, num_segs, x, y)) != -1)
+          /*  make sure ordering is correct  */
+          if (x == cur_seg->x1 && y == cur_seg->y1)
             {
-              /*  make sure ordering is correct  */
-              if (x == segs[index].x1 && y == segs[index].y1)
-                {
-                  boundary_add_seg (boundary,
-                                    segs[index].x1, segs[index].y1,
-                                    segs[index].x2, segs[index].y2,
-                                    segs[index].open);
-                  x = segs[index].x2;
-                  y = segs[index].y2;
-                }
-              else
-                {
-                  boundary_add_seg (boundary,
-                                    segs[index].x2, segs[index].y2,
-                                    segs[index].x1, segs[index].y1,
-                                    segs[index].open);
-                  x = segs[index].x1;
-                  y = segs[index].y1;
-                }
-
-              ((BoundSeg *) segs)[index].visited = TRUE;
+              boundary_add_seg (boundary,
+                                cur_seg->x1, cur_seg->y1,
+                                cur_seg->x2, cur_seg->y2,
+                                cur_seg->open);
+              x = cur_seg->x2;
+              y = cur_seg->y2;
+            }
+          else
+            {
+              boundary_add_seg (boundary,
+                                cur_seg->x2, cur_seg->y2,
+                                cur_seg->x1, cur_seg->y1,
+                                cur_seg->open);
+              x = cur_seg->x1;
+              y = cur_seg->y1;
             }
 
-          if (G_UNLIKELY (x != startx || y != starty))
-            g_warning ("sort_boundary(): Unconnected boundary group!");
-
-          /*  Mark the end of a group  */
-          *num_groups = *num_groups + 1;
-          boundary_add_seg (boundary, -1, -1, -1, -1, 0);
+          ((BoundSeg *) cur_seg)->visited = TRUE;
         }
-    }
+
+      if (G_UNLIKELY (x != startx || y != starty))
+        g_warning ("sort_boundary(): Unconnected boundary group!");
+
+      /*  Mark the end of a group  */
+      *num_groups = *num_groups + 1;
+      boundary_add_seg (boundary, -1, -1, -1, -1, 0);
+  }
+
+  g_free (segs_ptrs_by_xy1);
+  g_free (segs_ptrs_by_xy2);
 
   return boundary_free (boundary, FALSE);
 }
@@ -676,11 +702,13 @@ generate_boundary (PixelRegion  *PR,
           make_horiz_segs (boundary,
                            boundary->empty_segs_c [i],
                            boundary->empty_segs_c [i+1],
-                           scanline, boundary->empty_segs_l, num_empty_l, 1);
+                           scanline,
+                           boundary->empty_segs_l, num_empty_l, 1);
           make_horiz_segs (boundary,
                            boundary->empty_segs_c [i],
                            boundary->empty_segs_c [i+1],
-                           scanline + 1, boundary->empty_segs_n, num_empty_n, 0);
+                           scanline + 1,
+                           boundary->empty_segs_n, num_empty_n, 0);
         }
 
       /*  get the next scanline of empty segments, swap others  */
@@ -698,21 +726,158 @@ generate_boundary (PixelRegion  *PR,
 /*  sorting utility functions  */
 
 static gint
-find_segment (const BoundSeg *segs,
-              gint            num_segs,
-              gint            x,
-              gint            y)
+cmp_xy(gint ax, gint ay, gint bx, gint by)
 {
-  gint index;
-
-  for (index = 0; index < num_segs; index++)
-    if (((segs[index].x1 == x && segs[index].y1 == y) ||
-         (segs[index].x2 == x && segs[index].y2 == y)) &&
-        segs[index].visited == FALSE)
-      return index;
-
-  return -1;
+  if (ax < bx) {
+    return -1;
+  } else if (ax > bx) {
+    return 1;
+  } else if (ay < by) {
+    return -1;
+  } else if (ay > by) {
+    return 1;
+  } else {
+    return 0;
+  }
 }
+
+
+/*
+ * Compares (x1, y1) pairs in specified segments, using their addresses if
+ * (x1, y1) pairs are equal.
+ */
+static gint
+cmp_segptr_xy1_addr (const BoundSeg **seg_ptr_a,
+                     const BoundSeg **seg_ptr_b)
+{
+  const BoundSeg *seg_a = *seg_ptr_a;
+  const BoundSeg *seg_b = *seg_ptr_b;
+
+  gint result = cmp_xy (seg_a->x1, seg_a->y1, seg_b->x1, seg_b->y1);
+
+  if (result == 0)
+    {
+      if (seg_a < seg_b)
+        result = -1;
+      else if (seg_a > seg_b)
+        result = 1;
+    }
+
+  return result;
+}
+
+/*
+ * Compares (x2, y2) pairs in specified segments, using their addresses if
+ * (x2, y2) pairs are equal.
+ */
+static gint
+cmp_segptr_xy2_addr (const BoundSeg **seg_ptr_a,
+                     const BoundSeg **seg_ptr_b)
+{
+  const BoundSeg *seg_a = *seg_ptr_a;
+  const BoundSeg *seg_b = *seg_ptr_b;
+
+  gint result = cmp_xy (seg_a->x2, seg_a->y2, seg_b->x2, seg_b->y2);
+
+  if (result == 0)
+    {
+      if (seg_a < seg_b)
+        result = -1;
+      else if (seg_a > seg_b)
+        result = 1;
+    }
+
+  return result;
+}
+
+
+/*
+ * Compares (x1, y1) pairs in specified segments.
+ */
+static gint
+cmp_segptr_xy1 (const BoundSeg **seg_ptr_a, const BoundSeg **seg_ptr_b)
+{
+  const BoundSeg *seg_a = *seg_ptr_a, *seg_b = *seg_ptr_b;
+
+  return cmp_xy(seg_a->x1, seg_a->y1, seg_b->x1, seg_b->y1);
+}
+
+/*
+ * Compares (x2, y2) pairs in specified segments.
+ */
+static gint
+cmp_segptr_xy2 (const BoundSeg **seg_ptr_a,
+                const BoundSeg **seg_ptr_b)
+{
+  const BoundSeg *seg_a = *seg_ptr_a;
+  const BoundSeg *seg_b = *seg_ptr_b;
+
+  return cmp_xy (seg_a->x2, seg_a->y2, seg_b->x2, seg_b->y2);
+}
+
+
+static const BoundSeg *
+find_segment (const BoundSeg **segs_by_xy1,
+              const BoundSeg **segs_by_xy2,
+              gint             num_segs,
+              gint             x,
+              gint             y)
+{
+  const BoundSeg *segptr_xy1;
+  const BoundSeg *segptr_xy2;
+  BoundSeg        search_seg;
+
+  search_seg.x1 = search_seg.x2 = x;
+  search_seg.y1 = search_seg.y2 = y;
+
+  segptr_xy1 = find_segment_with_func (segs_by_xy1, num_segs, &search_seg,
+                                       (GCompareFunc) cmp_segptr_xy1);
+  segptr_xy2 = find_segment_with_func (segs_by_xy2, num_segs, &search_seg,
+                                       (GCompareFunc) cmp_segptr_xy2);
+
+  /* return segment with smaller address */
+  if (segptr_xy1 != NULL && segptr_xy2 != NULL)
+    return MIN(segptr_xy1, segptr_xy2);
+  else if (segptr_xy1 != NULL)
+    return segptr_xy1;
+  else if (segptr_xy2 != NULL)
+    return segptr_xy2;
+
+  return NULL;
+}
+
+
+static const BoundSeg *
+find_segment_with_func (const BoundSeg **segs,
+                        gint             num_segs,
+                        const BoundSeg  *search_seg,
+                        GCompareFunc     cmp_func)
+{
+  const BoundSeg **seg;
+  const BoundSeg *found_seg = NULL;
+
+  seg = bsearch (&search_seg, segs, num_segs, sizeof (BoundSeg *), cmp_func);
+
+  if (seg != NULL)
+    {
+      /* find first matching segment */
+      while (seg > segs && cmp_func (seg - 1, &search_seg) == 0)
+        seg--;
+
+      /* find first non-visited segment */
+      while (seg != segs + num_segs && cmp_func (seg, &search_seg) == 0)
+        if (!(*seg)->visited)
+          {
+            found_seg = *seg;
+            break;
+          }
+        else
+          seg++;
+    }
+
+    return found_seg;
+}
+
 
 /*  simplifying utility functions  */
 
@@ -727,12 +892,9 @@ simplify_subdivide (const BoundSeg *segs,
   gint    i, dx, dy;
   gdouble realdist;
 
-  /* g_printerr ("subdiv %d - %d\n", start_idx, end_idx); */
-
   if (end_idx - start_idx < 2)
     {
       *ret_points = g_array_append_val (*ret_points, start_idx);
-      /* g_printerr ("                               %d\n", start_idx); */
       return;
     }
 
@@ -763,8 +925,6 @@ simplify_subdivide (const BoundSeg *segs,
       dx = segs[end_idx].x1 - segs[start_idx].x1;
       dy = segs[end_idx].y1 - segs[start_idx].y1;
 
-      /* g_printerr ("dx: %d, dy: %d\n", dx, dy); */
-
       for (i = start_idx + 1; i < end_idx; i++)
         {
           /* this is not really the euclidic distance, but is
@@ -788,14 +948,10 @@ simplify_subdivide (const BoundSeg *segs,
       realdist = ((gdouble) maxdist) / sqrt ((gdouble) (SQR (dx) + SQR (dy)));
     }
 
-  /* g_printerr ("Index %d, x: %d, y: %d, distance: %.4f\n", maxdist_idx,
-              segs[maxdist_idx].x1, segs[maxdist_idx].y1, realdist); */
-
   /* threshold is chosen to catch 45 degree stairs */
   if (realdist <= 1.0)
     {
       *ret_points = g_array_append_val (*ret_points, start_idx);
-      /* g_printerr ("                               %d\n", start_idx); */
       return;
     }
 
