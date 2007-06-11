@@ -1,3 +1,7 @@
+2007-06-11  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpscaletool.c: removed unused variable.
+
 2007-06-11  Mukund Sivaraman  <muks@mukund.org>
 
 	* configure.in: bumped required libexif version to 0.6.15. This

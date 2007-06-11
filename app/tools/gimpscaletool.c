@@ -255,7 +255,6 @@ gimp_scale_tool_motion (GimpTransformTool *tr_tool,
   if (options->constrain)
     {
       /*  FIXME: improve this  */
-      gdouble w = tr_tool->trans_info[X1] - tr_tool->trans_info[X0];
       gdouble h = tr_tool->trans_info[Y1] - tr_tool->trans_info[Y0];
 
       switch (tr_tool->function)
