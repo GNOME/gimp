@@ -2,7 +2,7 @@
 
 	* configure.in: bumped required libexif version to 0.6.15. This
 	seems to fix #358117 for the various test images that were reported
-	in it, and its duplicates. This version is in Debian unstable and
+	in it, and its duplicates. This version is in Debian testing and
 	Fedora 7.
 
 2007-06-11  Sven Neumann  <sven@gimp.org>
