@@ -197,11 +197,12 @@ boundary_sort (const BoundSeg *segs,
                gint            num_segs,
                gint           *num_groups)
 {
-  Boundary *boundary;
-  const BoundSeg **segs_ptrs_by_xy1, **segs_ptrs_by_xy2;
-  gint      index;
-  gint      x, y;
-  gint      startx, starty;
+  Boundary        *boundary;
+  const BoundSeg **segs_ptrs_by_xy1;
+  const BoundSeg **segs_ptrs_by_xy2;
+  gint             index;
+  gint             x, y;
+  gint             startx, starty;
 
   g_return_val_if_fail ((segs == NULL && num_segs == 0) ||
                         (segs != NULL && num_segs >  0), NULL);
