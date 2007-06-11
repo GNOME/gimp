@@ -128,8 +128,8 @@ gimp_view_renderer_init (GimpViewRenderer *renderer)
   renderer->viewable_type = G_TYPE_NONE;
   renderer->viewable      = NULL;
 
-  renderer->width         = 8;
-  renderer->height        = 8;
+  renderer->width         = 0;
+  renderer->height        = 0;
   renderer->border_width  = 0;
   renderer->dot_for_dot   = TRUE;
   renderer->is_popup      = FALSE;
@@ -951,21 +951,24 @@ gimp_view_render_to_buffer (TempBuf    *temp_buf,
                             gint        dest_rowstride,
                             gint        dest_bytes)
 {
-  guchar   *src, *s;
-  guchar   *cb;
-  guchar   *pad_buf;
-  gint      a;
-  gint      i, j, b;
-  gint      x1, y1, x2, y2;
-  gint      rowstride;
-  gboolean  color;
-  gboolean  has_alpha;
-  gboolean  render_composite;
-  gint      red_component;
-  gint      green_component;
-  gint      blue_component;
-  gint      alpha_component;
-  gint      offset;
+  const guchar *src, *s;
+  guchar       *cb;
+  guchar       *pad_buf;
+  gint          a;
+  gint          i, j, b;
+  gint          x1, y1, x2, y2;
+  gint          rowstride;
+  gboolean      color;
+  gboolean      has_alpha;
+  gboolean      render_composite;
+  gint          red_component;
+  gint          green_component;
+  gint          blue_component;
+  gint          alpha_component;
+  gint          offset;
+
+  g_return_if_fail (temp_buf != NULL);
+  g_return_if_fail (dest_buffer != NULL);
 
   /*  Here are the different cases this functions handles correctly:
    *  1)  Offset temp_buf which does not necessarily cover full image area

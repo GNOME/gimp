@@ -1,5 +1,10 @@
 2007-06-11  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpviewrenderer.c (gimp_view_renderer_init):
+	initialize width and height to zero. Fixes bug #446005.
+
+2007-06-11  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-preview.c: don't disable image previews when
 	layer previews are disabled. We do not any longer create the image
 	preview from the layer previews.
