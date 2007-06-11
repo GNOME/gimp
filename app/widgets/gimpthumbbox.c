@@ -554,8 +554,7 @@ gimp_thumb_box_create_thumbnails (GimpThumbBox *box,
   gint            n_uris;
   gint            i;
 
-  if (gimp->config->thumbnail_size == GIMP_THUMBNAIL_SIZE_NONE ||
-      ! gimp->config->layer_previews)
+  if (gimp->config->thumbnail_size == GIMP_THUMBNAIL_SIZE_NONE)
     return;
 
   toplevel = gtk_widget_get_toplevel (GTK_WIDGET (box));

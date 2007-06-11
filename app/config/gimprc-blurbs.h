@@ -376,8 +376,7 @@ N_("Sets the folder for temporary storage. Files will appear here " \
 "Sets the theme search path."
 
 #define THUMBNAIL_SIZE_BLURB \
-N_("Sets the size of the thumbnail shown in the Open dialog. Note that " \
-   "GIMP can not create thumbnails if layer previews are disabled.")
+N_("Sets the size of the thumbnail shown in the Open dialog.")
 
 #define THUMBNAIL_FILESIZE_LIMIT_BLURB \
 N_("The thumbnail in the Open dialog will be automatically updated " \

@@ -1552,14 +1552,8 @@ image_thumbnail_invoker (GimpProcedure     *procedure,
       else
         width  = MAX (1, (height * dwidth) / dheight);
 
-      if (image->gimp->config->layer_previews)
-        buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (image), context,
-                                             width, height);
-      else
-        buf = gimp_viewable_get_dummy_preview (GIMP_VIEWABLE (image),
-                                               width, height,
-                                               gimp_image_has_alpha (image) ?
-                                               4 : 3);
+      buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (image), context,
+                                           width, height);
 
       if (buf)
         {

@@ -222,9 +222,6 @@ gimp_imagefile_create_thumbnail (GimpImagefile *imagefile,
   g_return_if_fail (GIMP_IS_CONTEXT (context));
   g_return_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress));
 
-  if (! imagefile->gimp->config->layer_previews)
-    return;
-
   if (size < 1)
     return;
 
@@ -315,9 +312,6 @@ gimp_imagefile_create_thumbnail_weak (GimpImagefile *imagefile,
   const gchar   *uri;
 
   g_return_if_fail (GIMP_IS_IMAGEFILE (imagefile));
-
-  if (! imagefile->gimp->config->layer_previews)
-    return;
 
   if (size < 1)
     return;

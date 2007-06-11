@@ -44,11 +44,8 @@ gimp_item_get_preview_size (GimpViewable *viewable,
                             gint         *width,
                             gint         *height)
 {
-  GimpItem  *item;
-  GimpImage *image;
-
-  item   = GIMP_ITEM (viewable);
-  image = gimp_item_get_image (item);
+  GimpItem  *item  = GIMP_ITEM (viewable);
+  GimpImage *image = gimp_item_get_image (item);
 
   if (image && ! image->gimp->config->layer_previews && ! is_popup)
     {
@@ -91,11 +88,8 @@ gimp_item_get_popup_size (GimpViewable *viewable,
                           gint         *popup_width,
                           gint         *popup_height)
 {
-  GimpItem  *item;
-  GimpImage *image;
-
-  item   = GIMP_ITEM (viewable);
-  image = gimp_item_get_image (item);
+  GimpItem  *item  = GIMP_ITEM (viewable);
+  GimpImage *image = gimp_item_get_image (item);
 
   if (image && ! image->gimp->config->layer_previews)
     return FALSE;

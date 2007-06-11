@@ -28,9 +28,6 @@
 
 #include "paint-funcs/scale-funcs.h"
 
-#include "config/gimpcoreconfig.h"
-
-#include "gimp.h"
 #include "gimpimage.h"
 #include "gimpimage-preview.h"
 #include "gimpprojection.h"
@@ -45,13 +42,6 @@ gimp_image_get_preview_size (GimpViewable *viewable,
                              gint         *height)
 {
   GimpImage *image = GIMP_IMAGE (viewable);
-
-  if (! image->gimp->config->layer_previews && ! is_popup)
-    {
-      *width  = size;
-      *height = size;
-      return;
-    }
 
   gimp_viewable_calc_preview_size (image->width,
                                    image->height,
@@ -74,9 +64,6 @@ gimp_image_get_popup_size (GimpViewable *viewable,
                            gint         *popup_height)
 {
   GimpImage *image = GIMP_IMAGE (viewable);
-
-  if (! image->gimp->config->layer_previews)
-    return FALSE;
 
   if (image->width > width || image->height > height)
     {
@@ -110,9 +97,6 @@ gimp_image_get_preview (GimpViewable *viewable,
                         gint          height)
 {
   GimpImage *image = GIMP_IMAGE (viewable);
-
-  if (! image->gimp->config->layer_previews)
-    return NULL;
 
   if (image->preview                  &&
       image->preview->width  == width &&
@@ -150,9 +134,6 @@ gimp_image_get_new_preview (GimpViewable *viewable,
   gint         level;
   gint         bytes;
   gint         subsample;
-
-  if (! image->gimp->config->layer_previews)
-    return NULL;
 
   scale_x = (gdouble) width  / (gdouble) image->width;
   scale_y = (gdouble) height / (gdouble) image->height;

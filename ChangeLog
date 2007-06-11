@@ -1,5 +1,23 @@
 2007-06-11  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-preview.c: don't disable image previews when
+	layer previews are disabled. We do not any longer create the image
+	preview from the layer previews.
+
+	* app/core/gimpimagefile.c
+	* app/widgets/gimpthumbbox.c
+	* tools/pdbgen/pdb/image.pdb: thumbnail rendering is not any
+	longer disabled if layer previews are turned off.
+
+	* app/config/gimprc-blurbs.h (THUMBNAIL_SIZE_BLURB): removed note
+	that has become invalid by the change above.
+
+	* app/core/gimpitem-preview.c: cosmetics.
+
+	* app/pdb/image_cmds.c: regenerated.
+
+2007-06-11  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/twain/twain.c (run): moved run_mode initialisation up a
 	few lines.
 
