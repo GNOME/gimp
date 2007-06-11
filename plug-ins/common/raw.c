@@ -277,7 +277,7 @@ run (const gchar      *name,
             }
           else
             {
-              status = GIMP_PDB_CALLING_ERROR;
+              status = GIMP_PDB_EXECUTION_ERROR;
             }
         }
     }

@@ -381,7 +381,7 @@ run (const gchar      *name,
      gint             *nreturn_vals,
      GimpParam       **return_vals)
 {
-  GimpRunMode run_mode = param[0].data.d_int32
+  GimpRunMode run_mode = param[0].data.d_int32;
 
   /* Initialize the return values
    * Always return at least the status to the caller.

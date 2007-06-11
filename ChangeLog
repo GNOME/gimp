@@ -1,3 +1,10 @@
+2007-06-11  Michael Schumacher  <schumaml@cvs.gnome.org>
+
+	* plug-ins/common/raw.c (run): if load_image fails, return
+	GIMP_PDB_EXECUTION_ERROR 
+
+	* plug-ins/twain/twain.c (run): added missing ;
+
 2007-06-11  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpviewrenderer.c (gimp_view_renderer_init):
