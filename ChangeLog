@@ -5,7 +5,7 @@
 	contains the EXIF header.
 
 	* plug-ins/jpeg/jpeg-exif.c (jpeg_apply_exif_data_to_image):
-	removed the tests that were checking for the presense of some EXIF
+	removed the tests that were checking for the presence of some EXIF
 	tags such as the EXIF version before deciding if the data should
 	be processed or not (bug #446809).
 
