@@ -372,66 +372,68 @@ static gchar * modename[] =
 };
 
 
-static void   unpack_pb_channel            (FILE    *fd,
-                                            guchar  *dst,
-                                            gint32   unpackedlen,
-                                            guint32 *offset);
-static void   decode                       (long     clen,
-                                            long     uclen,
-                                            guchar  *src,
-                                            guchar  *dst,
-                                            int      step);
-static void   packbitsdecode               (long    *clenp,
-                                            long     uclen,
-                                            guchar  *src,
-                                            guchar  *dst,
-                                            int      step);
-static void   cmyk2rgb                     (guchar  *src,
-                                            guchar  *destp,
-                                            long     width,
-                                            long     height,
-                                            int      alpha);
-static void   cmykp2rgb                    (guchar  *src,
-                                            guchar  *destp,
-                                            long     width,
-                                            long     height,
-                                            int      alpha);
-static void   bitmap2gray                  (guchar  *src,
-                                            guchar  *dest,
-                                            long     w,
-                                            long     h);
-static guchar getguchar                    (FILE    *fd,
-                                            gchar   *why);
-static gint16 getgint16                    (FILE    *fd,
-                                            gchar   *why);
-static gint32  getgint32                     (FILE    *fd,
-                                            gchar   *why);
-static void   xfread                       (FILE    *fd,
-                                            void    *buf,
-                                            long     len,
-                                            gchar   *why);
-static void   xfread_interlaced            (FILE    *fd,
-                                            guchar  *buf,
-                                            long     len,
-                                            gchar   *why,
-                                            gint     step);
-static void   read_whole_file              (FILE    *fd);
-static void   reshuffle_cmap               (guchar  *map256);
-static gchar *getpascalstring              (FILE    *fd,
-                                            gchar   *why);
-static gchar *getstring                    (size_t   n,
-                                            FILE    *fd,
-                                            gchar   *why);
-static void   throwchunk                   (size_t   n,
-                                            FILE    *fd,
-                                            gchar   *why);
-static void   dumpchunk                    (size_t   n,
-                                            FILE    *fd,
-                                            gchar   *why);
-static void   seek_to_and_unpack_pixeldata (FILE    *fd,
-                                            gint     layeri,
-                                            gint     channeli);
-static void   validate_aux_channel_name    (gint     aux_index);
+static void   unpack_pb_channel            (FILE        *fd,
+                                            guchar      *dst,
+                                            gint32       unpackedlen,
+                                            guint32     *offset);
+static void   decode                       (long         clen,
+                                            long         uclen,
+                                            const guchar *src,
+                                            guchar       *dst,
+                                            int           step);
+static void   packbitsdecode               (long         *clenp,
+                                            long          uclen,
+                                            const guchar *src,
+                                            guchar       *dst,
+                                            int           step);
+static void   cmyk2rgb                     (const guchar *src,
+                                            guchar       *destp,
+                                            long          width,
+                                            long          height,
+                                            int           alpha);
+static void   cmykp2rgb                    (const guchar *src,
+                                            guchar       *destp,
+                                            long          width,
+                                            long          height,
+                                            int           alpha);
+static void   bitmap2gray                  (const guchar *src,
+                                            guchar       *dest,
+                                            long          w,
+                                            long          h);
+static guchar getguchar                    (FILE         *fd,
+                                            const gchar  *why);
+static gint16 getgint16                    (FILE         *fd,
+                                            const gchar  *why);
+static gint32 getgint32                    (FILE         *fd,
+                                            const gchar  *why);
+static void   xfread                       (FILE         *fd,
+                                            void         *buf,
+                                            long          len,
+                                            const gchar  *why);
+static void   xfread_interlaced            (FILE         *fd,
+                                            guchar       *buf,
+                                            long          len,
+                                            const gchar  *why,
+                                            gint          step);
+static void   read_whole_file              (FILE         *fd);
+static void   reshuffle_cmap               (guchar       *map256);
+static gchar *getpascalstring              (FILE         *fd,
+                                            const gchar  *why);
+static gchar *getunicodepascalstring       (FILE         *fd,
+                                            const gchar  *why);
+static gchar *getstring                    (size_t        n,
+                                            FILE         *fd,
+                                            const gchar  *why);
+static void   throwchunk                   (size_t        n,
+                                            FILE         *fd,
+                                            const gchar  *why);
+static void   dumpchunk                    (size_t        n,
+                                            FILE         *fd,
+                                            const gchar  *why);
+static void   seek_to_and_unpack_pixeldata (FILE         *fd,
+                                            gint          layeri,
+                                            gint          channeli);
+static void   validate_aux_channel_name    (gint          aux_index);
 
 
 
@@ -1019,6 +1021,12 @@ do_layer_record (FILE    *fd,
   guchar    flags;
   gint      i;
 
+  /* Info used for extra data blocks */
+  guchar    numpadchars;
+  guint32   xdsignature;
+  guint32   xdkey;
+  guint32   xdsize;
+
   IFDBG printf("\t\t\tLAYER RECORD (layer %d)\n", (int)layernum);
 
   layer = psd_image.layer + layernum;
@@ -1188,11 +1196,187 @@ do_layer_record (FILE    *fd,
       (*offset) += strlen (layer->name);
       IFDBG printf("\t\t\t\t\t\tLAYER NAME: '%s'\n", layer->name);
       layer->name = sanitise_string (layer->name);
+
+      /* Layer name string lengths are padded to be divisible by 4 */
+      numpadchars = 4-((1+strlen(layer->name)) % 4);
+      if (numpadchars == 4)
+        numpadchars = 0;
+
+      if (numpadchars)
+      {
+        throwchunk (numpadchars, fd, "layer record extra data block throw");
+        (*offset) += numpadchars;
+      }
     }
   else
     {
       IFDBG printf ("\t\t\t\t\t\tNULL LAYER NAME\n");
     }
+
+  /*
+    The remaining data in this layer contains any number of blocks that follow
+    this structure:
+      4 bytes for signature (always 8BIM)
+      4 bytes for a key to define kind of data
+      4 bytes for size of data to follow
+      ? bytes of data
+   */
+
+  IFDBG printf ("\t\t\t\t\tLAYER EXTRA DATA BLOCKS\n");
+
+  /* The order of these blocks sometimes varies so read all blocks. */
+  while (totaloff-(*offset) > 12)
+  {
+    guint32 topofblock = ftell (fd);
+
+    xdsignature = getgint32 (fd, "layer extra data block signature");
+    xdkey = getgint32 (fd, "layer extra data block key");
+    xdsize = getgint32 (fd, "layer extra data block size");
+
+    IFDBG
+      {
+        printf ("\t\t\t\t\t\tKEY: 0x%08x '%c%c%c%c' / Size: 0x%04x  ", xdkey,
+                ((gchar*)(&xdkey))[3], ((gchar*)(&xdkey))[2],
+                ((gchar*)(&xdkey))[1], ((gchar*)(&xdkey))[0], xdsize);
+      }
+
+    switch (xdkey)
+      {
+        /* luni: Long unicode name */
+        case 0x6c756e69:
+          if (layer->name)
+            g_free (layer->name);
+
+          layer->name = getunicodepascalstring (fd, "layer name");
+
+          if (layer->name)
+            layer->name = sanitise_string (layer->name);
+
+          IFDBG printf ("Long Layer Name: '%s'\n",layer->name);
+          break;
+
+        /* lyid: Layer id number */
+        case 0x6c796964:
+          {
+            guint32 idnum = getgint32 (fd, "layer extra data block lyid");
+            IFDBG printf ("Layer ID #%d\n",idnum);
+          }
+          break;
+
+        /* iOpa: Layer Fill (opacity?)  */
+        case 0x694f7061:
+          {
+            guchar fill = getguchar (fd, "layer extra data block fill");
+            throwchunk (xdsize-1, fd, "iOpa: Layer Fill padding throw");
+            IFDBG printf ("Layer Fill = %d (%d%%)\n", fill, (100 * fill) / 255);
+          }
+          break;
+
+        /* lclr: Layer Color */
+        case 0x6c636c72:
+          {
+            guint16 labelcolor = getgint16 (fd, "lclr: Layer Color");
+            throwchunk (xdsize-2, fd, "lclr: Layer Color padding throw");
+            IFDBG
+              {
+                printf ("Layer Color=%d ",labelcolor);
+                switch (labelcolor)
+                  {
+                    case 0:  printf ("None\n"); break;
+                    case 1:  printf ("Red\n"); break;
+                    case 2:  printf ("Orange\n"); break;
+                    case 3:  printf ("Yellow\n"); break;
+                    case 4:  printf ("Green\n"); break;
+                    case 5:  printf ("Blue\n"); break;
+                    case 6:  printf ("Violet\n"); break;
+                    case 7:  printf ("Grey\n"); break;
+                    default: printf ("Undefined\n");
+                  }
+              }
+          }
+          break;
+
+        /* lsct: Layer Set Controls Type */
+        case 0x6c736374:
+          {
+            guint32 lscttype;
+            guint32 blendsignature;
+            guint32 blendkey;
+            lscttype = getgint32 (fd, "layer extra data block lsct type");
+            IFDBG printf ("Layer Set Controls:\n\t\t\t\t\t\t\tType = 0x%08x ", lscttype);
+            switch (lscttype)
+              {
+                case 1:
+                case 2:
+                  blendsignature = getgint32 (fd, "layer extra data block lsct");
+                  blendkey = getgint32 (fd, "layer extra data block lsct");
+
+                  IFDBG
+                    {
+                      printf ("Close layer set.\n\t\t\t\t\t\t\tBlend = 0x%08x '%c%c%c%c'\n",
+                              blendkey,
+                              ((gchar*)(&blendkey))[3],
+                              ((gchar*)(&blendkey))[2],
+                              ((gchar*)(&blendkey))[1],
+                              ((gchar*)(&blendkey))[0]);
+                    }
+
+                  if (xdsize-12)
+                    throwchunk (xdsize-12, fd, "lsct: Layer Set Controls throw");
+                  break;
+
+                case 3:
+                  IFDBG printf ("Open layer set.\n");
+                  if (xdsize-4)
+                    throwchunk (xdsize-4, fd, "lsct: Layer Set Controls throw");
+                  break;
+
+                default:
+                  IFDBG printf ("Unknown\n");
+                  if (xdsize-4)
+                    throwchunk (xdsize-4, fd, "lsct: Layer Set Controls throw");
+              }
+          }
+          break;
+
+        /* lnsr:  Some sort of layer type key. */
+        case 0x6c6e7372:
+          {
+            guint32 lnsr = getgint32 (fd, "layer extra data block lnsr");
+            IFDBG
+              {
+                printf ("lnsr = 0x%08x '%c%c%c%c'\n", lnsr,
+                        ((guchar*)(&lnsr))[3], ((guchar*)(&lnsr))[2],
+                        ((guchar*)(&lnsr))[1], ((guchar*)(&lnsr))[0]);
+                switch (lnsr)
+                  {
+                    case 0x62676e64: /* 'bgnd' */
+                      printf ("\t\t\t\t\t\t\t(background?)\n");
+                      break;
+                    case 0x6c617972: /* 'layr' */
+                      printf ("\t\t\t\t\t\t\t(Layer?)\n");
+                      break;
+                    case 0x6c736574: /* 'lset' */
+                      printf ("\t\t\t\t\t\t\tNew layer set.\n");
+                      break;
+                    default:
+                      printf ("\t\t\t\t\t\t\tUnknown\n");
+                  }
+              }
+          }
+          break;
+
+        /* These 2 contain all of the settings for the different layer styles. */
+        case 0x6c724658: /* lrFX:  Layer effects settings. */
+        case 0x6c667832: /* lfx2:  More Layer effects settings. */
+
+        default:
+          IFDBG printf ( "<Undefined Block>\n" );
+          throwchunk (xdsize, fd, "layer record extra data block throw");
+      }
+    (*offset) += ftell (fd) - topofblock;
+  }
+
   /* If no layermask data - set offset and size from layer data */
   if (! layermaskdatasize)
     {
@@ -2511,11 +2695,11 @@ load_image (const gchar *name)
 }
 
 static void
-decode (long    clen,
-        long    uclen,
-        guchar *src,
-        guchar *dst,
-        int     step)
+decode (long          clen,
+        long          uclen,
+        const guchar *src,
+        guchar       *dst,
+        int           step)
 {
   gint     i, j;
   gint32   l;
@@ -2552,11 +2736,11 @@ decode (long    clen,
  * Decode a PackBits data stream.
  */
 static void
-packbitsdecode (long   *clenp,
-                long    uclen,
-                guchar *src,
-                guchar *dst,
-                int     step)
+packbitsdecode (long         *clenp,
+                long          uclen,
+                const guchar *src,
+                guchar       *dst,
+                int           step)
 {
   gint   n, b;
   gint32 clen = *clenp;
@@ -2677,11 +2861,11 @@ unpack_pb_channel (FILE    *fd,
 }
 
 static void
-cmyk2rgb (unsigned char *src,
-          unsigned char *dst,
-          long           width,
-          long           height,
-          int            alpha)
+cmyk2rgb (const guchar *src,
+          guchar       *dst,
+          long          width,
+          long          height,
+          int           alpha)
 {
   int r, g, b, k;
   int i, j;
@@ -2714,16 +2898,16 @@ cmyk2rgb (unsigned char *src,
  * Decode planar CMYK(A) to RGB(A).
  */
 static void
-cmykp2rgb (unsigned char *src,
-           unsigned char *dst,
-           long           width,
-           long           height,
-           int            alpha)
+cmykp2rgb (const guchar *src,
+           guchar       *dst,
+           long          width,
+           long          height,
+           int           alpha)
 {
-    int     r, g, b, k;
-    int     i, j;
-    long    n;
-    guchar *rp, *gp, *bp, *kp, *ap;
+    const guchar *rp, *gp, *bp, *kp, *ap;
+    int           r, g, b, k;
+    int           i, j;
+    long          n;
 
     n = width * height;
     rp = src;
@@ -2757,10 +2941,10 @@ cmykp2rgb (unsigned char *src,
 }
 
 static void
-bitmap2gray (guchar *src,
-             guchar *dest,
-             long    w,
-             long    h)
+bitmap2gray (const guchar *src,
+             guchar       *dest,
+             long          w,
+             long          h)
 {
   int i,j;
 
@@ -2770,7 +2954,7 @@ bitmap2gray (guchar *src,
 
       for(j = 0; j < w; j++)
         {
-          *dest++ = (*src&mask) ? 0 : 255;
+          *dest++ = (*src & mask) ? 0 : 255;
           mask >>= 1;
 
            if(!mask)
@@ -2785,9 +2969,9 @@ bitmap2gray (guchar *src,
 }
 
 static void
-dumpchunk (size_t  n,
-           FILE   *fd,
-           gchar  *why)
+dumpchunk (size_t       n,
+           FILE        *fd,
+           const gchar *why)
 {
   guint32 i;
 
@@ -2802,9 +2986,9 @@ dumpchunk (size_t  n,
 }
 
 static void
-throwchunk (size_t  n,
-            FILE   *fd,
-            gchar  *why)
+throwchunk (size_t       n,
+            FILE        *fd,
+            const gchar *why)
 {
 #if 0
   guchar *tmpchunk;
@@ -2828,9 +3012,9 @@ throwchunk (size_t  n,
 }
 
 static gchar *
-getstring (size_t  n,
-           FILE   *fd,
-           gchar  *why)
+getstring (size_t       n,
+           FILE        *fd,
+           const gchar *why)
 {
   gchar *tmpchunk;
 
@@ -2842,8 +3026,8 @@ getstring (size_t  n,
 }
 
 static gchar *
-getpascalstring (FILE  *fd,
-                 gchar *why)
+getpascalstring (FILE        *fd,
+                 const gchar *why)
 {
   guchar *tmpchunk;
   guchar  len;
@@ -2853,7 +3037,7 @@ getpascalstring (FILE  *fd,
   if (len == 0)
     return NULL;
 
-  tmpchunk = g_malloc(len+1);
+  tmpchunk = g_malloc (len+1);
 
   xfread(fd, tmpchunk, len, why);
   tmpchunk[len]=0;
@@ -2861,9 +3045,40 @@ getpascalstring (FILE  *fd,
   return (gchar *) tmpchunk; /* caller should free memory */
 }
 
+static gchar *
+getunicodepascalstring (FILE        *fd,
+                        const gchar *why)
+{
+  gunichar2 *tmpunichunk;
+  gchar     *tmpchunk;
+  guint32    count = 0;
+  guint32    len   = getgint32 (fd, why);
+
+  if (len == 0)
+    return NULL;
+
+  /* Looks like these are always padded to an even number. */
+  len += len % 2;
+
+  tmpunichunk = g_new (gunichar2, len + 1);
+
+  /* Slower but necessary to get correct endianness */
+  for (count=0; count < len; count++)
+    tmpunichunk[count] = getgint16 (fd, why);
+
+  tmpunichunk[len]=0;
+
+  tmpchunk = g_convert ((gchar *) tmpunichunk, len * 2, "UTF-8", "UCS-2",
+                        NULL, NULL, NULL);
+
+  g_free (tmpunichunk);
+
+  return tmpchunk; /* caller should free memory */
+}
+
 static guchar
-getguchar (FILE  *fd,
-           gchar *why)
+getguchar (FILE        *fd,
+           const gchar *why)
 {
   gint tmp;
 
@@ -2879,8 +3094,8 @@ getguchar (FILE  *fd,
 }
 
 static gint16
-getgint16 (FILE  *fd,
-           gchar *why)
+getgint16 (FILE        *fd,
+           const gchar *why)
 {
   guchar b1, b2;
 
@@ -2891,8 +3106,8 @@ getgint16 (FILE  *fd,
 }
 
 static gint32
-getgint32 (FILE  *fd,
-          gchar *why)
+getgint32 (FILE        *fd,
+           const gchar *why)
 {
   guchar s1, s2, s3, s4;
 
@@ -2908,10 +3123,10 @@ getgint32 (FILE  *fd,
 }
 
 static void
-xfread (FILE  *fd,
-        void  *buf,
-        long   len,
-        gchar *why)
+xfread (FILE        *fd,
+        void        *buf,
+        long         len,
+        const gchar *why)
 {
   if (fread (buf, len, 1, fd) == 0)
     {
@@ -2921,11 +3136,11 @@ xfread (FILE  *fd,
 }
 
 static void
-xfread_interlaced (FILE   *fd,
-                   guchar *buf,
-                   long    len,
-                   gchar  *why,
-                   gint    step)
+xfread_interlaced (FILE        *fd,
+                   guchar      *buf,
+                   long         len,
+                   const gchar *why,
+                   gint         step)
 {
   guchar *dest;
   gint    pix, pos, bpplane;
