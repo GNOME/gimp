@@ -106,15 +106,15 @@ struct _BenderValues
   guchar  curve[2][256];    /* for curve_type freehand mode   0   <= curve  <= 255 */
   gdouble points[2][17][2]; /* for curve_type smooth mode     0.0 <= points <= 1.0 */
 
-  int            curve_type;
+  gint    curve_type;
 
-  gint           smoothing;
-  gint           antialias;
-  gint           work_on_copy;
-  gdouble        rotation;
+  gint    smoothing;
+  gint    antialias;
+  gint    work_on_copy;
+  gdouble rotation;
 
-  gint32         total_steps;
-  gdouble        current_step;
+  gint32  total_steps;
+  gdouble current_step;
 };
 
 typedef struct _Curves Curves;
@@ -158,12 +158,11 @@ struct _BenderDialog
   gint32     max2[2];
   gint32     zero2[2];
 
-  gint       show_progress;
-  gint       smoothing;
-  gint       antialias;
-  gint       work_on_copy;
+  gboolean   show_progress;
+  gboolean   smoothing;
+  gboolean   antialias;
+  gboolean   work_on_copy;
   gdouble    rotation;
-
 
   gint32     preview_image_id;
   gint32     preview_layer_id1;
@@ -724,11 +723,11 @@ run (const gchar      *name,
               cd->show_progress = TRUE;
               cd->drawable = l_active_drawable;
 
-              cd->rotation      = (gdouble) param[3].data.d_float;
-              cd->smoothing     = (gint) param[4].data.d_int32;
-              cd->antialias     = (gint) param[5].data.d_int32;
-              cd->work_on_copy  = (gint) param[6].data.d_int32;
-              cd->curve_type    = (gint) param[7].data.d_int32;
+              cd->rotation      = param[3].data.d_float;
+              cd->smoothing     = param[4].data.d_int32 != 0;
+              cd->antialias     = param[5].data.d_int32 != 0;
+              cd->work_on_copy  = param[6].data.d_int32 != 0;
+              cd->curve_type    = param[7].data.d_int32 != 0;
 
               p_copy_points (cd, OUTLINE_UPPER, 0,
                              param[8].data.d_int32,
@@ -1299,6 +1298,7 @@ bender_new_dialog (GimpDrawable *drawable)
                                      0, 0.0, 360.0, 1, 45, 90,
                                      0.5, 1);
   cd->rotate_data = GTK_ADJUSTMENT (data);
+  gtk_adjustment_set_value (cd->rotate_data, cd->rotation);
   gtk_box_pack_start (GTK_BOX (hbox), spinbutton, FALSE, FALSE, 0);
   gtk_widget_show (spinbutton);
 
@@ -1765,7 +1765,7 @@ static void
 bender_rotate_adj_callback (GtkAdjustment *adjustment,
                             gpointer       client_data)
 {
-  BenderDialog *cd = (BenderDialog *) client_data;
+  BenderDialog *cd = client_data;
 
   if (adjustment->value != cd->rotation)
   {
