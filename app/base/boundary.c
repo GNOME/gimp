@@ -888,10 +888,10 @@ simplify_subdivide (const BoundSeg *segs,
                     gint            end_idx,
                     GArray        **ret_points)
 {
-  gint    maxdist_idx;
-  gint    dist, maxdist;
-  gint    i, dx, dy;
-  gdouble realdist;
+  gint maxdist_idx;
+  gint maxdist;
+  gint threshold;
+  gint i, dx, dy;
 
   if (end_idx - start_idx < 2)
     {
@@ -909,8 +909,8 @@ simplify_subdivide (const BoundSeg *segs,
       for (i = start_idx + 1; i < end_idx; i++)
         {
           /* compare the sqared distances */
-          dist = (SQR (segs[i].x1 - segs[start_idx].x1) +
-                  SQR (segs[i].y1 - segs[start_idx].y1));
+          gint dist = (SQR (segs[i].x1 - segs[start_idx].x1) +
+                       SQR (segs[i].y1 - segs[start_idx].y1));
 
           if (dist > maxdist)
             {
@@ -919,7 +919,7 @@ simplify_subdivide (const BoundSeg *segs,
             }
         }
 
-      realdist = sqrt ((gdouble) maxdist);
+      threshold = 1;
     }
   else
     {
@@ -933,11 +933,8 @@ simplify_subdivide (const BoundSeg *segs,
            * (for the real distance we'd have to divide by
            * (SQR(dx)+SQR(dy)))
            */
-          dist = (dx * (segs[start_idx].y1 - segs[i].y1) -
-                  dy * (segs[start_idx].x1 - segs[i].x1));
-
-          if (dist < 0)
-            dist *= -1;
+          gint dist = abs (dx * (segs[start_idx].y1 - segs[i].y1) -
+                           dy * (segs[start_idx].x1 - segs[i].x1));
 
           if (dist > maxdist)
             {
@@ -946,11 +943,11 @@ simplify_subdivide (const BoundSeg *segs,
             }
         }
 
-      realdist = ((gdouble) maxdist) / sqrt ((gdouble) (SQR (dx) + SQR (dy)));
+      /* threshold is chosen to catch 45 degree stairs */
+      threshold = SQR (dx) + SQR (dy);
     }
 
-  /* threshold is chosen to catch 45 degree stairs */
-  if (realdist <= 1.0)
+  if (maxdist <= threshold)
     {
       *ret_points = g_array_append_val (*ret_points, start_idx);
       return;

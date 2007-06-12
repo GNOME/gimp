@@ -1,5 +1,9 @@
 2007-06-12  Sven Neumann  <sven@gimp.org>
 
+	* app/base/boundary.c (simplify_subdivide): eliminate calls to sqrt().
+
+2007-06-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/psd-load.c: applied slightly modified patch from
 	Eric Ross that adds support for loading long layer names from the
 	extra layer data section (bug #445316).
