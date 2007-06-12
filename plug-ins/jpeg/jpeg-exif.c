@@ -99,22 +99,14 @@ jpeg_apply_exif_data_to_image (const gchar  *filename,
   if (!exif_data->data || exif_data->size == 0)
     return;
 
-  /*
-   * Unfortunately libexif may return a non-null exif_data even if the file
-   * contains no exif data.  We check for validity by making sure it
-   * has suitable tags for the EXIF or GPS or Interoperability IFDs.
-   *
-   * EXIF_TAG_GPS_VERSION_ID was added in libexif 0.6.13.
+  /* Previous versions of this code were checking for the presence of
+   * some well-known tags in the EXIF data before proceeding because
+   * libexif could return a non-null exif_data even if the file
+   * contained no EXIF data.  Now that the calling code in jpeg-load.c
+   * checks for a JPEG APP1 marker containing the EXIF header before
+   * calling this function, these tests are not necessary anymore.
+   * See also bug #446809.
    */
-  if ((! exif_content_get_entry (exif_data->ifd[EXIF_IFD_EXIF],
-                                 EXIF_TAG_EXIF_VERSION)) &&
-#ifdef EXIF_TAG_GPS_VERSION_ID
-      (! exif_content_get_entry (exif_data->ifd[EXIF_IFD_GPS],
-                                 EXIF_TAG_GPS_VERSION_ID)) &&
-#endif
-      (! exif_content_get_entry (exif_data->ifd[EXIF_IFD_INTEROPERABILITY],
-                                 EXIF_TAG_INTEROPERABILITY_VERSION)))
-    return;
 
   gimp_metadata_store_exif (image_ID, exif_data);
 

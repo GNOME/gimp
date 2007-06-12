@@ -1,3 +1,14 @@
+2007-06-12  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/jpeg/jpeg-load.c (load_image): Instead of passing any
+	file to libexif blindly, check first that some JPEG APP1 marker
+	contains the EXIF header.
+
+	* plug-ins/jpeg/jpeg-exif.c (jpeg_apply_exif_data_to_image):
+	removed the tests that were checking for the presense of some EXIF
+	tags such as the EXIF version before deciding if the data should
+	be processed or not (bug #446809).
+
 2007-06-12  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/curve_bend.c: initialize the GtkAdjustment used

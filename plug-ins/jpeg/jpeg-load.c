@@ -75,6 +75,7 @@ load_image (const gchar *filename,
   GString *local_image_comments = NULL;
   GimpParasite * volatile comment_parasite = NULL;
   jpeg_saved_marker_ptr marker;
+  gboolean found_exif = FALSE;
 
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
@@ -83,6 +84,12 @@ load_image (const gchar *filename,
   /* flag warnings, so we try to ignore corrupt EXIF data */
   if (!preview)
     {
+      /* Note: this usage of client_data and my_emit_message() may be a bit
+         redundant now that we only look for EXIF data in APP1 markers
+         instead of feeding the whole file to libexif immediately.  We also
+         depend on a slighly more robust version of libexif.  We should
+         consider removing this code in the future.  --Raphael, 2007-06-12
+      */
       cinfo.client_data = GINT_TO_POINTER (FALSE);
 
       jerr.pub.emit_message   = my_emit_message;
@@ -282,6 +289,8 @@ load_image (const gchar *filename,
           /* FIXME: handle EXIF here once we don't use libexif anymore */
           g_print ("jpeg-load: found EXIF block (%d bytes)\n",
                    (gint) (len - sizeof (JPEG_APP_HEADER_EXIF)));
+          /* FIXME: this flag is a workaround until we handle exif here */
+          found_exif = TRUE;
           /* Note: maybe split the loop to ensure that the EXIF block is */
           /*       always parsed before any XMP packet */
         }
@@ -476,7 +485,7 @@ load_image (const gchar *filename,
 
 #ifdef HAVE_EXIF
 
-      if (! GPOINTER_TO_INT (cinfo.client_data))
+      if (found_exif && ! GPOINTER_TO_INT (cinfo.client_data))
         jpeg_apply_exif_data_to_image (filename, image_ID);
 
 #endif
