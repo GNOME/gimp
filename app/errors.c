@@ -111,7 +111,6 @@ errors_init (Gimp               *gimp,
 #endif /* GIMP_UNSTABLE */
 
   the_errors_gimp   = gimp;
-
   use_debug_handler = _use_debug_handler ? TRUE : FALSE;
   stack_trace_mode  = _stack_trace_mode;
   full_prog_name    = g_strdup (_full_prog_name);
@@ -124,6 +123,12 @@ errors_init (Gimp               *gimp,
   g_log_set_handler (NULL,
                      G_LOG_LEVEL_ERROR | G_LOG_FLAG_FATAL,
                      gimp_error_log_func, gimp);
+}
+
+void
+errors_exit (void)
+{
+  the_errors_gimp = NULL;
 }
 
 void

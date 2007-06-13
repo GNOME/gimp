@@ -248,6 +248,7 @@ app_run (const gchar         *full_prog_name,
   g_main_loop_unref (loop);
 
   g_object_unref (gimp);
+  errors_exit ();
   base_exit ();
 }
 

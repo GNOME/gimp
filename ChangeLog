@@ -1,3 +1,10 @@
+2007-06-13  Sven Neumann  <sven@gimp.org>
+
+	* app/errors.[ch]: added errors_exit() and unset the Gimp
+	reference. Errors may occur after the Gimp object has been finalized.
+
+	* app/app.c (app_run): call errors_exit().
+
 2007-06-12  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/jpeg/jpeg-load.c (load_image): Instead of passing any

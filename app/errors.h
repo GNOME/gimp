@@ -28,6 +28,7 @@ void   errors_init      (Gimp               *gimp,
                          const gchar        *full_prog_name,
                          gboolean            use_debug_handler,
                          GimpStackTraceMode  stack_trace_mode);
+void   errors_exit      (void);
 
 void   gimp_fatal_error (const gchar        *format,
                          ...) G_GNUC_PRINTF (1, 2) G_GNUC_NORETURN;
