@@ -1,3 +1,8 @@
+2007-06-13  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme.c (putchars): Update "cursor"
+	after writing characters to a string buffer. Fixes bug #446884.
+
 2007-06-13  Sven Neumann  <sven@gimp.org>
 
 	* app/app.c (app_exit_after_callback): if GIMP_UNSTABLE is

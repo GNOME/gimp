@@ -1553,6 +1553,7 @@ static void backchar(scheme *sc, gunichar c) {
 
 /* len is number of UTF-8 characters in string pointed to by chars */
 static void putchars(scheme *sc, const char *chars, int char_cnt) {
+  int   free_bytes;     /* Space remaining in buffer (in bytes) */
   int   l;
   char *s;
   port *pt=sc->outport->_object._port;
@@ -1584,9 +1585,13 @@ static void putchars(scheme *sc, const char *chars, int char_cnt) {
       }
 #endif
   } else {
-    l = pt->rep.string.past_the_end - pt->rep.string.curr;
-    if (l > 0)
-       memcpy(pt->rep.string.curr, chars, min(char_cnt, l));
+    free_bytes = pt->rep.string.past_the_end - pt->rep.string.curr;
+    if (free_bytes > 0)
+    {
+       l = min(char_cnt, free_bytes);
+       memcpy(pt->rep.string.curr, chars, l);
+       pt->rep.string.curr += l;
+    }
   }
 }
 
