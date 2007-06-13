@@ -1,5 +1,11 @@
 2007-06-13  Sven Neumann  <sven@gimp.org>
 
+	* app/app.c (app_exit_after_callback): if GIMP_UNSTABLE is
+	undefined before calling exit() call tile_swap_exit(), not
+	base_exit().
+
+2007-06-13  Sven Neumann  <sven@gimp.org>
+
 	* app/base/base.c (base_exit): call tile_cache_exit() before
 	tile_swap_exit(). tile_cache_exit() may use the tile swap in
 	pathological cases.
