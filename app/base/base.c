@@ -126,8 +126,8 @@ base_exit (void)
 
   pixel_processor_exit ();
   paint_funcs_free ();
-  tile_swap_exit ();
   tile_cache_exit ();
+  tile_swap_exit ();
 
   g_signal_handlers_disconnect_by_func (base_config,
                                         base_tile_cache_size_notify,

@@ -1,5 +1,14 @@
 2007-06-13  Sven Neumann  <sven@gimp.org>
 
+	* app/base/base.c (base_exit): call tile_cache_exit() before
+	tile_swap_exit(). tile_cache_exit() may use the tile swap in
+	pathological cases.
+
+	* app/base/tile-cache.c (tile_cache_exit): warn if the tile cache
+	is not empty.
+
+2007-06-13  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-cache.c: minor cleanup.
 
 2007-06-13  Mukund Sivaraman  <muks@mukund.org>
