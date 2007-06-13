@@ -1,5 +1,10 @@
 2007-06-13  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/common/tiff-load.c: small fix to the previous commit
+	in how layers are skipped.
+
+2007-06-13  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/common/tiff-load.c: don't load any layers from a TIFF
 	directory which don't match the mode of the first image in the TIFF
 	directory.

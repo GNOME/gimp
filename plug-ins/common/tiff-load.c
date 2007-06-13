@@ -491,7 +491,7 @@ load_image (const gchar       *filename,
   gboolean      alpha;
   gint          image = 0, image_type = GIMP_RGB;
   gint          layer, layer_type     = GIMP_RGB_IMAGE;
-  gint          first_layer_type      = GIMP_RGB_IMAGE;
+  gint          first_image_type      = GIMP_RGB;
   float         layer_offset_x        = 0.0;
   float         layer_offset_y        = 0.0;
   gint          layer_offset_x_pixel  = 0;
@@ -681,8 +681,8 @@ load_image (const gchar       *filename,
       if (target == GIMP_PAGE_SELECTOR_TARGET_LAYERS)
         {
           if (li == 0)
-            first_layer_type = layer_type;
-          else if (layer_type != first_layer_type)
+            first_image_type = image_type;
+          else if (image_type != first_image_type)
             continue;
         }
 
