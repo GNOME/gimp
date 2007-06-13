@@ -1,3 +1,9 @@
+2007-06-13  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/common/tiff-load.c: don't load any layers from a TIFF
+	directory which don't match the mode of the first image in the TIFF
+	directory.
+
 2007-06-13  Sven Neumann  <sven@gimp.org>
 
 	* app/errors.[ch]: added errors_exit() and unset the Gimp
