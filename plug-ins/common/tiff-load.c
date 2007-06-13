@@ -703,7 +703,7 @@ load_image (const gchar       *filename,
               gimp_image_set_filename (image, fname);
               g_free (fname);
 
-              images_list = g_list_append (images_list, GINT_TO_POINTER (image));
+              images_list = g_list_prepend (images_list, GINT_TO_POINTER (image));
             }
           else if (pages->o_pages == pages->n_pages)
             {
