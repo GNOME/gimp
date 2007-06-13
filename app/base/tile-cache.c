@@ -45,13 +45,13 @@ typedef struct _TileList
   Tile *last;
 } TileList;
 
-static gulong   max_tile_size   = TILE_WIDTH * TILE_HEIGHT * 4;
-static gulong   cur_cache_size  = 0;
-static gulong   max_cache_size  = 0;
-static gulong   cur_cache_dirty = 0;
-static TileList clean_list      = { NULL, NULL };
-static TileList dirty_list      = { NULL, NULL };
-static guint    idle_swapper    = 0;
+static const gulong  max_tile_size   = TILE_WIDTH * TILE_HEIGHT * 4;
+static gulong        cur_cache_size  = 0;
+static gulong        max_cache_size  = 0;
+static gulong        cur_cache_dirty = 0;
+static TileList      clean_list      = { NULL, NULL };
+static TileList      dirty_list      = { NULL, NULL };
+static guint         idle_swapper    = 0;
 
 
 #ifdef ENABLE_MP
@@ -112,7 +112,7 @@ tile_cache_insert (Tile *tile)
    *  it was the most recently accessed tile.
    */
 
-  list = (TileList *) tile->listhead;
+  list = tile->listhead;
 
   newlist = ((tile->dirty || tile->swap_offset == -1) ?
              &dirty_list : &clean_list);
@@ -172,11 +172,6 @@ tile_cache_insert (Tile *tile)
 
   newlist->last = tile;
 
-  /* gosgood@idt.net 1999-12-04                                  */
-  /* bytes on cur_cache_dirty miscounted in CVS 1.12:            */
-  /* Invariant: test for selecting dirty list should be the same */
-  /* as counting files dirty.                                    */
-
   if (tile->dirty || (tile->swap_offset == -1))
     {
       cur_cache_dirty += tile->size;
@@ -205,15 +200,29 @@ tile_cache_flush (Tile *tile)
   CACHE_UNLOCK;
 }
 
+void
+tile_cache_set_size (gulong cache_size)
+{
+  CACHE_LOCK;
+
+  max_cache_size = cache_size;
+
+  while (cur_cache_size > max_cache_size)
+    {
+      if (! tile_cache_zorch_next ())
+        break;
+    }
+
+  CACHE_UNLOCK;
+}
+
 static void
 tile_cache_flush_internal (Tile *tile)
 {
-  TileList *list;
+  TileList *list = tile->listhead;
 
   /* Find where the tile is in the cache.
    */
-
-  list = (TileList *) tile->listhead;
 
   if (list)
     {
@@ -235,24 +244,6 @@ tile_cache_flush_internal (Tile *tile)
       tile->listhead = NULL;
     }
 }
-
-
-void
-tile_cache_set_size (gulong cache_size)
-{
-  CACHE_LOCK;
-
-  max_cache_size = cache_size;
-
-  while (cur_cache_size > max_cache_size)
-    {
-      if (! tile_cache_zorch_next ())
-        break;
-    }
-
-  CACHE_UNLOCK;
-}
-
 
 static gboolean
 tile_cache_zorch_next (void)

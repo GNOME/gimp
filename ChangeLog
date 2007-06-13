@@ -1,3 +1,7 @@
+2007-06-13  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-cache.c: minor cleanup.
+
 2007-06-13  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/tiff-load.c: small fix to the previous commit
