@@ -1,7 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
 libgimpmath = $(top_builddir)/libgimpmath/libgimpmath-$(GIMP_API_VERSION).la
-libgimpthumb = $(top_builddir)/libgimpthumb/libgimpthumb-$(GIMP_API_VERSION).la
 
 if PLATFORM_WIN32
 no_undefined = -no-undefined
@@ -89,7 +88,7 @@ noinst_PROGRAMS = gimp-thumbnail-list
 
 gimp_thumbnail_list_SURCES = gimp-thumbnail-list.c
 
-gimp_thumbnail_list_LDADD = $(libgimpthumb)
+gimp_thumbnail_list_LDADD = libgimpthumb-$(GIMP_API_VERSION).la
 
 
 install-data-local: install-ms-lib install-libtool-import-lib
