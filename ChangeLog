@@ -1,3 +1,8 @@
+2007-06-14  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdatafactory.c
+	(gimp_data_factory_refresh_cache_remove): micro optimization.
+
 2007-06-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpdatafactory.c (gimp_data_factory_data_foreach):

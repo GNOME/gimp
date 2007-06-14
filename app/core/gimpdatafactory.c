@@ -202,7 +202,11 @@ gimp_data_factory_refresh_cache_remove (gpointer key,
                                         gpointer value,
                                         gpointer user_data)
 {
-  g_list_foreach (value, (GFunc) g_object_unref, NULL);
+  GList *list;
+
+  for (list = value; list; list = list->next)
+    g_object_unref (list->data);
+
   g_list_free (value);
 
   return TRUE;
