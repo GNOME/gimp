@@ -71,7 +71,7 @@
 
 
 #ifdef DEBUG
-#define TRC(x) printf x
+#define TRC(x) g_printerr x
 #else
 #define TRC(x)
 #endif
@@ -120,6 +120,8 @@ enum
 
 
 /*  local function prototypes  */
+
+static void     gimp_color_managed_iface_init    (GimpColorManagedInterface *iface);
 
 static GObject *gimp_image_constructor           (GType           type,
                                                   guint           n_params,
@@ -183,6 +185,9 @@ static void     gimp_image_channel_name_changed  (GimpChannel    *channel,
 static void     gimp_image_channel_color_changed (GimpChannel    *channel,
                                                   GimpImage      *image);
 
+const guint8 *  gimp_image_get_icc_profile       (GimpColorManaged *managed,
+                                                  gsize            *len);
+
 
 static const gint valid_combinations[][MAX_CHANNELS + 1] =
 {
@@ -201,7 +206,9 @@ static const gint valid_combinations[][MAX_CHANNELS + 1] =
 };
 
 
-G_DEFINE_TYPE (GimpImage, gimp_image, GIMP_TYPE_VIEWABLE)
+G_DEFINE_TYPE_WITH_CODE (GimpImage, gimp_image, GIMP_TYPE_VIEWABLE,
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
+                                                gimp_color_managed_iface_init))
 
 #define parent_class gimp_image_parent_class
 
@@ -542,6 +549,12 @@ gimp_image_class_init (GimpImageClass *klass)
                                                       G_PARAM_CONSTRUCT));
 
   gimp_image_color_hash_init ();
+}
+
+static void
+gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
+{
+  iface->get_icc_profile = gimp_image_get_icc_profile;
 }
 
 static void
@@ -2313,20 +2326,20 @@ gimp_image_parasite_attach (GimpImage          *image,
    */
   copy = *parasite;
 
-  /* only set the dirty bit manually if we can be saved and the new
-     parasite differs from the current one and we aren't undoable */
+  /*  only set the dirty bit manually if we can be saved and the new
+   *  parasite differs from the current one and we aren't undoable
+   */
   if (gimp_parasite_is_undoable (&copy))
     gimp_image_undo_push_image_parasite (image,
                                          _("Attach Parasite to Image"),
                                          &copy);
 
   /*  We used to push an cantundo on te stack here. This made the undo stack
-      unusable (NULL on the stack) and prevented people from undoing after a
-      save (since most save plug-ins attach an undoable comment parasite).
-      Now we simply attach the parasite without pushing an undo. That way it's
-      undoable but does not block the undo system.   --Sven
+   *  unusable (NULL on the stack) and prevented people from undoing after a
+   *  save (since most save plug-ins attach an undoable comment parasite).
+   *  Now we simply attach the parasite without pushing an undo. That way
+   *  it's undoable but does not block the undo system.   --Sven
    */
-
   gimp_parasite_list_add (image->parasites, &copy);
 
   if (gimp_parasite_has_flag (&copy, GIMP_PARASITE_ATTACH_PARENT))
@@ -2337,6 +2350,9 @@ gimp_image_parasite_attach (GimpImage          *image,
 
   g_signal_emit (image, gimp_image_signals[PARASITE_ATTACHED], 0,
                  parasite->name);
+
+  if (strcmp (parasite->name, "icc-profile") == 0)
+    gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
 }
 
 void
@@ -2360,6 +2376,9 @@ gimp_image_parasite_detach (GimpImage   *image,
 
   g_signal_emit (image, gimp_image_signals[PARASITE_DETACHED], 0,
                  name);
+
+  if (strcmp (name, "icc-profile") == 0)
+    gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
 }
 
 
@@ -3735,4 +3754,22 @@ gimp_image_invalidate_channel_previews (GimpImage *image)
   gimp_container_foreach (image->channels,
                           (GFunc) gimp_viewable_invalidate_preview,
                           NULL);
+}
+
+const guint8 *
+gimp_image_get_icc_profile (GimpColorManaged *managed,
+                            gsize            *len)
+{
+  const GimpParasite *parasite;
+
+  parasite = gimp_image_parasite_find (GIMP_IMAGE (managed), "icc-profile");
+
+  if (parasite)
+    {
+      *len = gimp_parasite_data_size (parasite);
+
+      return gimp_parasite_data (parasite);
+    }
+
+  return NULL;
 }

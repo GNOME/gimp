@@ -1,5 +1,9 @@
 2007-06-14  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage.c: implement the GimpColorManaged interface.
+
+2007-06-14  Sven Neumann  <sven@gimp.org>
+
 	* libgimpthumb/Makefile.am (gimp_thumbnail_list_LDADD): fixed
 	parallel builds (bug #447402).
 
