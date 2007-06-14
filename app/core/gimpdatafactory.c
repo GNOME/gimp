@@ -241,8 +241,6 @@ gimp_data_factory_data_foreach (GimpDataFactory *factory,
 
   list = GIMP_LIST (factory->container);
 
-  gimp_container_freeze (factory->container);
-
   if (list->list)
     {
       if (GIMP_DATA (list->list->data)->internal)
@@ -263,13 +261,10 @@ gimp_data_factory_data_foreach (GimpDataFactory *factory,
         }
       else
         {
-          /*  otherwise delete everything  */
           while (list->list)
             callback (factory, list->list->data, context);
         }
     }
-
-  gimp_container_thaw (factory->container);
 }
 
 static void
@@ -331,6 +326,8 @@ gimp_data_factory_data_reload (GimpDataFactory *factory)
 
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
+  gimp_container_freeze (factory->container);
+
   cache = g_hash_table_new (g_str_hash, g_str_equal);
 
   gimp_data_factory_data_foreach (factory,
@@ -350,6 +347,8 @@ gimp_data_factory_data_reload (GimpDataFactory *factory)
   g_hash_table_foreach_remove (cache,
                                gimp_data_factory_refresh_cache_remove, NULL);
   g_hash_table_destroy (cache);
+
+  gimp_container_thaw (factory->container);
 }
 
 void
@@ -382,8 +381,6 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
   if (! writable_dir)
     return;
 
-  gimp_container_freeze (factory->container);
-
   for (list = GIMP_LIST (factory->container)->list;
        list;
        list = g_list_next (list))
@@ -413,8 +410,6 @@ gimp_data_factory_data_save (GimpDataFactory *factory)
         }
     }
 
-  gimp_container_thaw (factory->container);
-
   g_free (writable_dir);
 }
 
@@ -431,7 +426,11 @@ gimp_data_factory_data_free (GimpDataFactory *factory)
 {
   g_return_if_fail (GIMP_IS_DATA_FACTORY (factory));
 
+  gimp_container_freeze (factory->container);
+
   gimp_data_factory_data_foreach (factory, gimp_data_factory_remove_cb, NULL);
+
+  gimp_container_thaw (factory->container);
 }
 
 GimpData *

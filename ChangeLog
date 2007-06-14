@@ -1,3 +1,16 @@
+2007-06-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpdatafactory.c (gimp_data_factory_data_foreach):
+	remove calls to container_freeze() and container_thaw()
+
+	(gimp_data_factory_data_reload)
+	(gimp_data_factory_data_free): add them here instead.
+
+	(gimp_data_factory_data_save): remove freeze/thaw calls here
+	without any replacement. The list doesn't change by saving its
+	items. Fixes insanely long quit time when there are many data
+	objects.
+
 2007-06-14  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage.c: implement the GimpColorManaged interface.
