@@ -1,5 +1,4 @@
-# translation of gimp-tips.HEAD.po to Polish
-# Copyright (C) 2002-2005, 2007 Free Software Foundation, Inc.
+# Copyright (C) 2002-2007 Free Software Foundation, Inc.
 # -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 # Aktualną wersję tego pliku możesz odnaleźć w repozytorium cvs.gnomepl.org
 # (:pserver:anonymous@cvs.gnomepl.org:/home/cvs, puste hasło)
@@ -16,17 +15,18 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-26 20:46+0200\n"
-"PO-Revision-Date: 2007-05-21 08:35+0100\n"
+"POT-Creation-Date: 2007-06-14 22:26+0200\n"
+"PO-Revision-Date: 2007-06-13 14:15+0200\n"
 "Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
-"Language-Team: Polish <translators@gnomepl.org>\n"
+"Language-Team: Polish <gnome-l10n@lists.aviary.pl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr "<big>Witaj w programie GIMP - GNU Image Manipulation Program!</big>"
+msgstr "<big>Witamy w programie GIMP - GNU Image Manipulation Program!</big>"
 
 #: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
@@ -108,8 +108,8 @@ msgstr ""
 "Aby umieścić na obrazie prowadnicę, należy kliknąć linijkę i przeciągnąć ją "
 "w wybrane miejsce obrazu. Przy wszystkich operacjach wykonywanych z użyciem "
 "myszki wskaźnik będzie przyciągany do prowadnic. Aby usunąć prowadnicę, "
-"wystarczy wybrać narzędzie przesuwania, a następnie przeciągnąć prowadnicę "
-"poza obraz."
+"wystarczy, a następnie przeciągnąć prowadnicę narzędziem \"Przesunięcie"
+"\"poza obraz."
 
 #: ../data/tips/gimp-tips.xml.in.h:9
 msgid ""
@@ -160,9 +160,9 @@ msgid ""
 msgstr ""
 "Jeśli zeskanowane zdjęcia są mało kolorowe, można poprawić ich kolorystykę "
 "korzystając z narzędzia \"Poziomy...\" (\"Warstwa&gt;Kolory&gt;Poziomy..."
-"\"), klikająć przycisk \"Automatycznie\". Występowanie zniekształceń kolorów "
-"(ang. color cast) można skorygować za pomocą narzędzia \"Krzywe"
-"\" (\"Warstwa&gt;Kolory&gt;Krzywe...\")."
+"\"), klikająć przycisk \"Automatycznie\". Zniekształcenia kolorów (ang. "
+"color cast) można skorygować za pomocą narzędzia \"Krzywe\" (\"Warstwa&gt;"
+"Kolory&gt;Krzywe...\")."
 
 #: ../data/tips/gimp-tips.xml.in.h:14
 msgid ""
@@ -170,7 +170,7 @@ msgid ""
 "their current settings. You can use the Paintbrush in gradient mode or even "
 "the Eraser or the Smudge tool."
 msgstr ""
-"Podczas rysowania wzdłuż ścieżki (\"Edycja&gt;_Rysuj wzdłuż ścieżki...\") "
+"Podczas rysowania wzdłuż ścieżki (\"Edycja&gt;Rysuj wzdłuż ścieżki...\") "
 "możliwe jest użycie dowolnego narzędzia rysowania z jego bieżącymi "
 "ustawieniami. Można więc pociągnąć ścieżkę \"pędzlem\" w trybie gradientu, "
 "\"gumką\" lub \"rozsmarowywaniem\"."
@@ -181,8 +181,8 @@ msgid ""
 "window to toggle the visibility of the toolbox and other dialogs."
 msgstr ""
 "Jeśli na ekranie jest zbyt mało miejsca, można ukryć część okien "
-"przyciskając  klawisz <tt>Tab</tt>. Każde przyciśnięcie spowoduje ukrycie "
-"lub wyświetlenie okien dialogowych lub narzędziówki."
+"przyciskając klawisz <tt>Tab</tt>. Każde przyciśnięcie spowoduje ukrycie/"
+"wyświetlenie okien dialogowych lub narzędziówki."
 
 #: ../data/tips/gimp-tips.xml.in.h:16
 msgid ""
@@ -202,10 +202,10 @@ msgid ""
 "Channel) or flatten it (Image→Flatten Image)."
 msgstr ""
 "Nie wszystkie efekty mogą być wykorzystywane na obrazach dowolnych typów. "
-"Efekty, których nie można użyć na bieżącym obrazie, są wyszarzone w menu. "
-"Aby ich użyć, należy zmienić tryb obrazu na RGB (\"Obraz&gt;Tryb&gt;RGB\"), "
-"dodać kanał alfa (\"Warstwa&gt;Przezroczystość&gt;Dodaj kanał alfa\") lub "
-"też spłaszczyć obraz (\"Obraz&gt;Spłaszcz obraz\")."
+"Efekty, których nie można użyć na bieżącym obrazie, są w menu szare. Aby ich "
+"użyć, należy zmienić tryb obrazu na RGB (\"Obraz&gt;Tryb&gt;RGB\"), dodać "
+"kanał alfa (\"Warstwa&gt;Przezroczystość&gt;Dodaj kanał alfa\") lub "
+"spłaszczyć obraz (\"Obraz&gt;Spłaszcz obraz\")."
 
 #: ../data/tips/gimp-tips.xml.in.h:18
 msgid ""
@@ -253,7 +253,7 @@ msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
 "the window move, your window manager uses the <tt>Alt</tt> key already."
 msgstr ""
-"Możesz ustawić lub przesunąć zaznaczenie, przeciągając je z klawiszem "
+"Można ustawiać lub przesuwać zaznaczenie, przeciągając je z klawiszem "
 "<tt>Alt</tt>. Jeśli to powoduje przesunięcie okna, spróbuj użyć jednocześnie "
 "klawiszy <tt>Shift+Alt</tt>."
 
@@ -291,18 +291,18 @@ msgid ""
 "strokes the edge of your current selection. More complex shapes can be drawn "
 "using the Path tool or with Filters→Render→Gfig."
 msgstr ""
-"\"Edycja -&gt; Ry_suj wzdłuż zaznaczenia...\" pozwala na rysowanie bieżącym "
+"\"Edycja -&gt; Rysuj wzdłuż zaznaczenia...\" pozwala na rysowanie bieżącym "
 "pędzlem krzywych wzdłuż krawędzi zaznaczenia. Bardziej złożone figury "
 "uzyskasz, używając opcji \"Filtry -&gt; Renderowanie -&gt; Gfigury\" lub "
 "narzędzia \"Ścieżki\"."
 
 #: ../data/tips/gimp-tips.xml.in.h:26
 msgid ""
-"You can get context-sensitive help for most of the GIMP's features by "
-"pressing the F1 key at any time. This also works inside the menus."
+"You can get context-sensitive help for most of GIMP's features by pressing "
+"the F1 key at any time. This also works inside the menus."
 msgstr ""
-"Na temat wielu narzędzi i efektów programu GIMP dostępna jest pomoc. "
-"Uzyskasz ją, naciskając klawisz F1. Dostępna jest ona również w menu. "
+"Pomoc do wielu narzędzi i efektów programu GIMP, dostępna jest po "
+"naciśnięciu klawisza F1. Dostępna jest ona również w menu. "
 
 #: ../data/tips/gimp-tips.xml.in.h:27
 msgid ""
@@ -319,7 +319,7 @@ msgid ""
 "dialog, you can toggle the visibility of this new channel or convert it to a "
 "selection."
 msgstr ""
-"Możesz zapisać zaznaczenie do kanału (Zaznaczenie&gt;Zapisz do kanału) i "
+"Można zapisywać zaznaczenie do kanału (Zaznaczenie&gt;Zapisz do kanału) i "
 "modyfikować je dowolnym narzędziem malarskim. Przyciskami w oknie \"Kanały\" "
 "możesz ustawić widoczność kanału lub przekonwertować go na zaznaczenie."
 
@@ -336,9 +336,8 @@ msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
 "hold <tt>Spacebar</tt> while you move the mouse)."
 msgstr ""
-"Jeśli obraz jest większy od okna, do przewijania go możesz użyć środkowego "
-"przycisku myszy (lub przytrzymaj <tt>Spację</tt> kiedy będziesz przesuwał "
-"myszkę) ."
+"Jeśli obraz jest większy od okna, do przewijania myszką obrazu, można użyć "
+"środkowego przycisku (lub przytrzymując <tt>Spację</tt>)."
 
 # TODO
 #: ../data/tips/gimp-tips.xml.in.h:31
