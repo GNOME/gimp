@@ -1,3 +1,8 @@
+2007-06-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/view-actions.c (view_actions_update): make sure all
+	view actions are insensitive when there is no view.
+
 2007-06-15  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/gfig/gfig-dobject.c: prepend instead of appending to

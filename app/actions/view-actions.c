@@ -601,13 +601,27 @@ view_actions_update (GimpActionGroup *group,
   SET_ACTIVE    ("view-show-selection",      display && options->show_selection);
   SET_SENSITIVE ("view-show-layer-boundary", display);
   SET_ACTIVE    ("view-show-layer-boundary", display && options->show_layer_boundary);
+  SET_SENSITIVE ("view-show-guides",         display);
   SET_ACTIVE    ("view-show-guides",         display && options->show_guides);
+  SET_SENSITIVE ("view-show-grid",           display);
   SET_ACTIVE    ("view-show-grid",           display && options->show_grid);
+  SET_SENSITIVE ("view-show-sample-points",  display);
   SET_ACTIVE    ("view-show-sample-points",  display && options->show_sample_points);
+
+  SET_SENSITIVE ("view-snap-to-guides",      display);
   SET_ACTIVE    ("view-snap-to-guides",      display && shell->snap_to_guides);
+  SET_SENSITIVE ("view-snap-to-grid",        display);
   SET_ACTIVE    ("view-snap-to-grid",        display && shell->snap_to_grid);
+  SET_SENSITIVE ("view-snap-to-canvas",      display);
   SET_ACTIVE    ("view-snap-to-canvas",      display && shell->snap_to_canvas);
+  SET_SENSITIVE ("view-snap-to-vectors",     display);
   SET_ACTIVE    ("view-snap-to-vectors",     display && shell->snap_to_vectors);
+
+  SET_SENSITIVE ("view-padding-color-theme",       display);
+  SET_SENSITIVE ("view-padding-color-light-check", display);
+  SET_SENSITIVE ("view-padding-color-dark-check",  display);
+  SET_SENSITIVE ("view-padding-color-custom",      display);
+  SET_SENSITIVE ("view-padding-color-prefs",       display);
 
   if (display)
     {
