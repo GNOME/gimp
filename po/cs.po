@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-04 16:58+0200\n"
-"PO-Revision-Date: 2007-06-04 17:01+0200\n"
+"POT-Creation-Date: 2007-06-15 23:23+0200\n"
+"PO-Revision-Date: 2007-06-15 23:34+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -65,7 +65,7 @@ msgstr ""
 "pokud se tak nestalo, napište o ni Free Software Foundation,Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 
-#: ../app/app.c:208
+#: ../app/app.c:209
 #, c-format
 msgid ""
 "Unable to open a test swap file.\n"
@@ -421,7 +421,7 @@ msgstr "Menu Stopy"
 
 #: ../app/actions/brushes-actions.c:47
 msgid "_Open Brush as Image"
-msgstr "_Otevřít stopu jako obrázek"
+msgstr "Otevřít stopu jako obrázek"
 
 #: ../app/actions/brushes-actions.c:48
 msgid "Open brush as image"
@@ -429,7 +429,7 @@ msgstr "Otevřít stopu jako obrázek"
 
 #: ../app/actions/brushes-actions.c:53
 msgid "_New Brush"
-msgstr "_Nová stopa"
+msgstr "Nová stopa"
 
 #: ../app/actions/brushes-actions.c:54
 msgid "New brush"
@@ -828,10 +828,10 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:133
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1371
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1381
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:770
-#: ../app/pdb/image_cmds.c:1999 ../app/widgets/gimpdnd-xds.c:98
+#: ../app/pdb/image_cmds.c:1993 ../app/widgets/gimpdnd-xds.c:98
 msgid "Untitled"
 msgstr "Bez názvu"
 
@@ -1385,7 +1385,7 @@ msgstr "_Viditelné"
 msgid "Toggle visibility"
 msgstr "Přepnout viditelnost"
 
-#: ../app/actions/drawable-actions.c:95 ../app/actions/image-actions.c:165
+#: ../app/actions/drawable-actions.c:95 ../app/actions/image-actions.c:171
 msgid "Flip _Horizontally"
 msgstr "Překlopit _vodorovně"
 
@@ -1393,7 +1393,7 @@ msgstr "Překlopit _vodorovně"
 msgid "Flip horizontally"
 msgstr "Překlopit vodorovně"
 
-#: ../app/actions/drawable-actions.c:101 ../app/actions/image-actions.c:171
+#: ../app/actions/drawable-actions.c:101 ../app/actions/image-actions.c:177
 msgid "Flip _Vertically"
 msgstr "Překlopit _svisle"
 
@@ -1401,7 +1401,7 @@ msgstr "Překlopit _svisle"
 msgid "Flip vertically"
 msgstr "Překlopit svisle"
 
-#: ../app/actions/drawable-actions.c:110 ../app/actions/image-actions.c:180
+#: ../app/actions/drawable-actions.c:110 ../app/actions/image-actions.c:186
 msgid "Rotate 90° _clockwise"
 msgstr "Rotovat o 90° _doprava"
 
@@ -1409,7 +1409,7 @@ msgstr "Rotovat o 90° _doprava"
 msgid "Rotate 90 degrees to the right"
 msgstr "Rotovat o 90 stupňů doprava"
 
-#: ../app/actions/drawable-actions.c:116 ../app/actions/image-actions.c:186
+#: ../app/actions/drawable-actions.c:116 ../app/actions/image-actions.c:192
 msgid "Rotate _180°"
 msgstr "Rotovat o _180 stupňů"
 
@@ -1417,7 +1417,7 @@ msgstr "Rotovat o _180 stupňů"
 msgid "Turn upside-down"
 msgstr "Otočit vzhůru nohama"
 
-#: ../app/actions/drawable-actions.c:122 ../app/actions/image-actions.c:192
+#: ../app/actions/drawable-actions.c:122 ../app/actions/image-actions.c:198
 msgid "Rotate 90° counter-clock_wise"
 msgstr "Rotovat o 90° do_leva"
 
@@ -2052,7 +2052,7 @@ msgid "(Varies)"
 msgstr "(Mění se)"
 
 #: ../app/actions/gradient-editor-actions.c:347
-#: ../app/actions/image-actions.c:147
+#: ../app/actions/image-actions.c:153
 msgid "_RGB"
 msgstr "_RGB"
 
@@ -2406,106 +2406,114 @@ msgid "Resize the image to enclose all layers"
 msgstr "Změnit velikost obrázku tak, aby obsáhl všechny vrstvy"
 
 #: ../app/actions/image-actions.c:96
+msgid "F_it Canvas to Selection"
+msgstr "Př_izpůsobit plátno výběru"
+
+#: ../app/actions/image-actions.c:97
+msgid "Resize the image to the extents of the selection"
+msgstr "Změnit velikost obrázku podle rozsahu výběru"
+
+#: ../app/actions/image-actions.c:102
 msgid "_Print Size..."
 msgstr "_Velikost tisku..."
 
-#: ../app/actions/image-actions.c:97
+#: ../app/actions/image-actions.c:103
 msgid "Adjust the print resolution"
 msgstr "Upravit rozlišení tisku"
 
-#: ../app/actions/image-actions.c:102
+#: ../app/actions/image-actions.c:108
 msgid "_Scale Image..."
 msgstr "_Velikost obrázku..."
 
-#: ../app/actions/image-actions.c:103
+#: ../app/actions/image-actions.c:109
 msgid "Change the size of the image content"
 msgstr "Změnit velikost obsahu obrázku"
 
-#: ../app/actions/image-actions.c:108 ../app/actions/layers-actions.c:182
+#: ../app/actions/image-actions.c:114 ../app/actions/layers-actions.c:182
 msgid "_Crop to Selection"
 msgstr "_Ořezat podle výběru"
 
-#: ../app/actions/image-actions.c:109
+#: ../app/actions/image-actions.c:115
 msgid "Crop the image to the extents of the selection"
 msgstr "Oříznout obrázek podle výběru"
 
-#: ../app/actions/image-actions.c:114
+#: ../app/actions/image-actions.c:120
 msgid "_Duplicate"
 msgstr "_Duplikovat"
 
-#: ../app/actions/image-actions.c:115
+#: ../app/actions/image-actions.c:121
 msgid "Create a duplicate of this image"
 msgstr "Vytvořit kopii obrázku"
 
-#: ../app/actions/image-actions.c:120
+#: ../app/actions/image-actions.c:126
 msgid "Merge Visible _Layers..."
 msgstr "Sloučit _viditelné vrstvy..."
 
-#: ../app/actions/image-actions.c:121 ../app/actions/layers-actions.c:135
+#: ../app/actions/image-actions.c:127 ../app/actions/layers-actions.c:135
 msgid "Merge all visible layers into one layer"
 msgstr "Sloučit všechny viditelné vrstvy do jedné"
 
-#: ../app/actions/image-actions.c:126 ../app/actions/layers-actions.c:140
+#: ../app/actions/image-actions.c:132 ../app/actions/layers-actions.c:140
 msgid "_Flatten Image"
 msgstr "Z_ploštit obrázek"
 
-#: ../app/actions/image-actions.c:127 ../app/actions/layers-actions.c:141
+#: ../app/actions/image-actions.c:133 ../app/actions/layers-actions.c:141
 msgid "Merge all layers into one and remove transparency"
 msgstr "Sloučit všechny vrstvy do jedné a odstranit průhlednost"
 
-#: ../app/actions/image-actions.c:132
+#: ../app/actions/image-actions.c:138
 msgid "Configure G_rid..."
 msgstr "_Nastavit mřížku..."
 
-#: ../app/actions/image-actions.c:133
+#: ../app/actions/image-actions.c:139
 msgid "Configure the grid for this image"
 msgstr "Nastavit mřížku tohoto obrázku"
 
-#: ../app/actions/image-actions.c:138
+#: ../app/actions/image-actions.c:144
 msgid "Image Pr_operties"
 msgstr "_Vlastnosti obrázku"
 
-#: ../app/actions/image-actions.c:139
+#: ../app/actions/image-actions.c:145
 msgid "Display information about this image"
 msgstr "Zobrazit informace o tomto obrázku"
 
-#: ../app/actions/image-actions.c:148
+#: ../app/actions/image-actions.c:154
 msgid "Convert the image to the RGB colorspace"
 msgstr "Převést obrázek do barevného prostoru RGB"
 
-#: ../app/actions/image-actions.c:152
+#: ../app/actions/image-actions.c:158
 msgid "_Grayscale"
 msgstr "_Odstíny šedi"
 
-#: ../app/actions/image-actions.c:153
+#: ../app/actions/image-actions.c:159
 msgid "Convert the image to grayscale"
 msgstr "Převést obrázek do odstínů šedi"
 
-#: ../app/actions/image-actions.c:157
+#: ../app/actions/image-actions.c:163
 msgid "_Indexed..."
 msgstr "_Indexovaná..."
 
-#: ../app/actions/image-actions.c:158
+#: ../app/actions/image-actions.c:164
 msgid "Convert the image to indexed colors"
 msgstr "Převést obrázek do indexovaných barev"
 
-#: ../app/actions/image-actions.c:166
+#: ../app/actions/image-actions.c:172
 msgid "Flip image horizontally"
 msgstr "Překlopit obrázek vodorovně"
 
-#: ../app/actions/image-actions.c:172
+#: ../app/actions/image-actions.c:178
 msgid "Flip image vertically"
 msgstr "Překlopit obrázek svisle"
 
-#: ../app/actions/image-actions.c:181
+#: ../app/actions/image-actions.c:187
 msgid "Rotate the image 90 degrees to the right"
 msgstr "Rotovat obrázek o 90 stupňů doprava"
 
-#: ../app/actions/image-actions.c:187
+#: ../app/actions/image-actions.c:193
 msgid "Turn the image upside-down"
 msgstr "Převrátit obrázek vzhůru nohama"
 
-#: ../app/actions/image-actions.c:193
+#: ../app/actions/image-actions.c:199
 msgid "Rotate the image 90 degrees to the left"
 msgstr "Rotovat obrázek 90 stupňů doleva"
 
@@ -2513,41 +2521,42 @@ msgstr "Rotovat obrázek 90 stupňů doleva"
 msgid "Set Image Canvas Size"
 msgstr "Nastavení velikosti plátna obrázku"
 
-#: ../app/actions/image-commands.c:273 ../app/actions/image-commands.c:550
+#: ../app/actions/image-commands.c:273 ../app/actions/image-commands.c:294
+#: ../app/actions/image-commands.c:571
 msgid "Resizing"
 msgstr "Měním velikost..."
 
-#: ../app/actions/image-commands.c:297
+#: ../app/actions/image-commands.c:318
 msgid "Set Image Print Resolution"
 msgstr "Nastavit rozlišení tisku obrázku"
 
-#: ../app/actions/image-commands.c:353
+#: ../app/actions/image-commands.c:374
 #: ../app/pdb/drawable_transform_cmds.c:144
 #: ../app/pdb/drawable_transform_cmds.c:218
 msgid "Flipping"
 msgstr "Překlápím..."
 
-#: ../app/actions/image-commands.c:374
+#: ../app/actions/image-commands.c:395
 #: ../app/pdb/drawable_transform_cmds.c:515
 #: ../app/pdb/drawable_transform_cmds.c:593
 #: ../app/pdb/transform_tools_cmds.c:209 ../app/tools/gimprotatetool.c:114
 msgid "Rotating"
 msgstr "Rotuji..."
 
-#: ../app/actions/image-commands.c:399 ../app/actions/layers-commands.c:599
+#: ../app/actions/image-commands.c:420 ../app/actions/layers-commands.c:599
 msgid "Cannot crop because the current selection is empty."
 msgstr "Nelze oříznout, protože zvolená oblast je prázdná."
 
-#: ../app/actions/image-commands.c:592
+#: ../app/actions/image-commands.c:613
 msgid "Change Print Size"
 msgstr "Změnit velikost tisku"
 
-#: ../app/actions/image-commands.c:629 ../app/core/gimpimage-scale.c:77
+#: ../app/actions/image-commands.c:650 ../app/core/gimpimage-scale.c:77
 msgid "Scale Image"
 msgstr "Velikost obrázku"
 
 #. Scaling
-#: ../app/actions/image-commands.c:640 ../app/actions/layers-commands.c:1051
+#: ../app/actions/image-commands.c:661 ../app/actions/layers-commands.c:1051
 #: ../app/dialogs/preferences-dialog.c:1794
 #: ../app/pdb/drawable_transform_cmds.c:670
 #: ../app/pdb/drawable_transform_cmds.c:745
@@ -4268,12 +4277,12 @@ msgstr "Nastavit barvu doplnění podle předvoleb"
 msgid "Re_vert Zoom (%d%%)"
 msgstr "_Obrátit přiblížení (%d%%)"
 
-#: ../app/actions/view-actions.c:690
+#: ../app/actions/view-actions.c:704
 #, c-format
 msgid "Othe_r (%s)..."
 msgstr "_Jiné (%s) ..."
 
-#: ../app/actions/view-actions.c:699
+#: ../app/actions/view-actions.c:713
 #, c-format
 msgid "_Zoom (%s)"
 msgstr "_Přiblížení (%s)"
@@ -4912,14 +4921,10 @@ msgstr ""
 "sdílen jinými uživateli."
 
 #: ../app/config/gimprc-blurbs.h:379
-msgid ""
-"Sets the size of the thumbnail shown in the Open dialog. Note that GIMP can "
-"not create thumbnails if layer previews are disabled."
-msgstr ""
-"Nastavuje velikost miniatury zobrazované v dialogu Otevřít. Všimněte si, že "
-"GIMP nemůže vytvářet miniatury, jsou-li zakázány náhledy vrstev."
+msgid "Sets the size of the thumbnail shown in the Open dialog."
+msgstr "Nastavuje velikost náhledů v dialogu otevření souboru."
 
-#: ../app/config/gimprc-blurbs.h:383
+#: ../app/config/gimprc-blurbs.h:382
 msgid ""
 "The thumbnail in the Open dialog will be automatically updated if the file "
 "being previewed is smaller than the size set here."
@@ -4927,7 +4932,7 @@ msgstr ""
 "Miniatura v dialogu Otevřít bude automaticky aktualizována, pokud soubor, "
 "jehož miniatura se tvoří, je menší než zde nastavená velikost."
 
-#: ../app/config/gimprc-blurbs.h:387
+#: ../app/config/gimprc-blurbs.h:386
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
@@ -4939,7 +4944,7 @@ msgstr ""
 "obrázky, které by se jinak nevešly do paměti. Máte-li hodně RAM, můžete tuto "
 "hodnotu zvýšit."
 
-#: ../app/config/gimprc-blurbs.h:397
+#: ../app/config/gimprc-blurbs.h:396
 msgid ""
 "The window type hint that is set on the toolbox. This may affect how your "
 "window manager decorates and handles the toolbox window."
@@ -4947,15 +4952,15 @@ msgstr ""
 "Nápověda typu okna, která je nastavena na nástrojích. Může to mít vliv na "
 "to, jak váš správce oken dekoruje okno nástrojů a jak s ním pracuje."
 
-#: ../app/config/gimprc-blurbs.h:401
+#: ../app/config/gimprc-blurbs.h:400
 msgid "Sets the manner in which transparency is displayed in images."
 msgstr "Nastavuje způsob, kterým se v obrázcích zobrazuje průhlednost."
 
-#: ../app/config/gimprc-blurbs.h:404
+#: ../app/config/gimprc-blurbs.h:403
 msgid "Sets the size of the checkerboard used to display transparency."
 msgstr "Nastavuje velikost šachovnice používané pro zobrazení průhlednosti."
 
-#: ../app/config/gimprc-blurbs.h:407
+#: ../app/config/gimprc-blurbs.h:406
 msgid ""
 "When enabled, GIMP will not save an image if it has not been changed since "
 "it was opened."
@@ -4963,7 +4968,7 @@ msgstr ""
 "Je-li povoleno, nebude GIMP ukládat obrázek, pokud obrázek nebyl od svého "
 "otevření změněn."
 
-#: ../app/config/gimprc-blurbs.h:411
+#: ../app/config/gimprc-blurbs.h:410
 msgid ""
 "Sets the minimal number of operations that can be undone. More undo levels "
 "are kept available until the undo-size limit is reached."
@@ -4971,7 +4976,7 @@ msgstr ""
 "Nastavuje minimální počet operací, které lze vzít zpět. Více úrovní zpětných "
 "úprav se udržuje, dokud není překročen limit undo-size."
 
-#: ../app/config/gimprc-blurbs.h:415
+#: ../app/config/gimprc-blurbs.h:414
 msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
@@ -4981,15 +4986,15 @@ msgstr ""
 "zpětných úprav jednoho obrázku. Bez ohledu na toto nastavení je možné vrátit "
 "zpět alespoň tolik operací, kolik je nastaveno."
 
-#: ../app/config/gimprc-blurbs.h:420
+#: ../app/config/gimprc-blurbs.h:419
 msgid "Sets the size of the previews in the Undo History."
 msgstr "Nastavuje velikost náhledů v historii změn."
 
-#: ../app/config/gimprc-blurbs.h:423
+#: ../app/config/gimprc-blurbs.h:422
 msgid "When enabled, pressing F1 will open the help browser."
 msgstr "Je-li povoleno, stisknutí F1 otevře prohlížeč nápovědy."
 
-#: ../app/config/gimprc-blurbs.h:426
+#: ../app/config/gimprc-blurbs.h:425
 #, c-format
 msgid ""
 "Sets the external web browser to be used.  This can be an absolute path or "
@@ -5898,8 +5903,8 @@ msgstr "Maska výběru"
 msgid "Could not delete '%s': %s"
 msgstr "Nelze odstranit '%s': %s"
 
-#: ../app/core/gimpdatafactory.c:408 ../app/core/gimpdatafactory.c:566
-#: ../app/core/gimpdatafactory.c:586
+#: ../app/core/gimpdatafactory.c:409 ../app/core/gimpdatafactory.c:569
+#: ../app/core/gimpdatafactory.c:589
 #, c-format
 msgid ""
 "Failed to save data:\n"
@@ -5910,21 +5915,21 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../app/core/gimpdatafactory.c:485 ../app/core/gimpdatafactory.c:488
+#: ../app/core/gimpdatafactory.c:488 ../app/core/gimpdatafactory.c:491
 #: ../app/core/gimpitem.c:313 ../app/core/gimpitem.c:316
 msgid "copy"
 msgstr "kopie"
 
-#: ../app/core/gimpdatafactory.c:497 ../app/core/gimpitem.c:325
+#: ../app/core/gimpdatafactory.c:500 ../app/core/gimpitem.c:325
 #, c-format
 msgid "%s copy"
 msgstr "%s kopie"
 
-#: ../app/core/gimpdatafactory.c:567
+#: ../app/core/gimpdatafactory.c:570
 msgid "You don't have a writable data folder configured."
 msgstr "Nemáte nastaven zapisovatelný datový adresář."
 
-#: ../app/core/gimpdatafactory.c:728
+#: ../app/core/gimpdatafactory.c:731
 #, c-format
 msgid ""
 "Failed to load data:\n"
@@ -6114,7 +6119,7 @@ msgstr "Převádím do indexovaných barev (krok 3)"
 msgid "command|Crop Image"
 msgstr "Ořezat obrázek"
 
-#: ../app/core/gimpimage-crop.c:129 ../app/core/gimpimage-resize.c:89
+#: ../app/core/gimpimage-crop.c:129 ../app/core/gimpimage-resize.c:90
 msgid "Resize Image"
 msgstr "Změnit velikost obrázku"
 
@@ -6195,168 +6200,168 @@ msgstr "Přesunout vzorkovací bod"
 msgid "Can't undo %s"
 msgstr "Nelze vrátit %s"
 
-#: ../app/core/gimpimage.c:1441
+#: ../app/core/gimpimage.c:1451
 msgid "Change Image Resolution"
 msgstr "Změna rozlišení obrázku"
 
-#: ../app/core/gimpimage.c:1481
+#: ../app/core/gimpimage.c:1491
 msgid "Change Image Unit"
 msgstr "Změna jednotky obrázku"
 
-#: ../app/core/gimpimage.c:2323
+#: ../app/core/gimpimage.c:2334
 msgid "Attach Parasite to Image"
 msgstr "Připojit parazita k obrázku"
 
-#: ../app/core/gimpimage.c:2359
+#: ../app/core/gimpimage.c:2372
 msgid "Remove Parasite from Image"
 msgstr "Odstranění parazita z obrázku"
 
-#: ../app/core/gimpimage.c:2814
+#: ../app/core/gimpimage.c:2830
 msgid "Add Layer"
 msgstr "Přidat vrstvu"
 
-#: ../app/core/gimpimage.c:2879 ../app/core/gimpimage.c:2892
+#: ../app/core/gimpimage.c:2895 ../app/core/gimpimage.c:2908
 msgid "Remove Layer"
 msgstr "Odstranit vrstvu"
 
-#: ../app/core/gimpimage.c:3031
+#: ../app/core/gimpimage.c:3047
 msgid "Layer cannot be raised higher."
 msgstr "Vrstva nemůže být ještě výš."
 
-#: ../app/core/gimpimage.c:3036
+#: ../app/core/gimpimage.c:3052
 msgid "Raise Layer"
 msgstr "Vrstvu výš"
 
-#: ../app/core/gimpimage.c:3053
+#: ../app/core/gimpimage.c:3069
 msgid "Layer cannot be lowered more."
 msgstr "Vrstva nemůže být ještě níž."
 
-#: ../app/core/gimpimage.c:3058
+#: ../app/core/gimpimage.c:3074
 msgid "Lower Layer"
 msgstr "Vrstvu níž"
 
-#: ../app/core/gimpimage.c:3069
+#: ../app/core/gimpimage.c:3085
 msgid "Raise Layer to Top"
 msgstr "Vrstvu nahoru"
 
-#: ../app/core/gimpimage.c:3084
+#: ../app/core/gimpimage.c:3100
 msgid "Lower Layer to Bottom"
 msgstr "Vrstvu dospod"
 
-#: ../app/core/gimpimage.c:3157
+#: ../app/core/gimpimage.c:3173
 msgid "Add Channel"
 msgstr "Přidat kanál"
 
-#: ../app/core/gimpimage.c:3202 ../app/core/gimpimage.c:3213
+#: ../app/core/gimpimage.c:3218 ../app/core/gimpimage.c:3229
 msgid "Remove Channel"
 msgstr "Odstranit kanál"
 
-#: ../app/core/gimpimage.c:3260
+#: ../app/core/gimpimage.c:3276
 msgid "Channel cannot be raised higher."
 msgstr "Kanál nemůže být ještě výš."
 
-#: ../app/core/gimpimage.c:3265
+#: ../app/core/gimpimage.c:3281
 msgid "Raise Channel"
 msgstr "Kanál výš"
 
-#: ../app/core/gimpimage.c:3282
+#: ../app/core/gimpimage.c:3298
 msgid "Channel is already on top."
 msgstr "Kanál je již nahoře."
 
-#: ../app/core/gimpimage.c:3287
+#: ../app/core/gimpimage.c:3303
 msgid "Raise Channel to Top"
 msgstr "Kanál nahoru"
 
-#: ../app/core/gimpimage.c:3304
+#: ../app/core/gimpimage.c:3320
 msgid "Channel cannot be lowered more."
 msgstr "Kanál nemůže být ještě níž."
 
-#: ../app/core/gimpimage.c:3309
+#: ../app/core/gimpimage.c:3325
 msgid "Lower Channel"
 msgstr "Kanál níž"
 
-#: ../app/core/gimpimage.c:3329
+#: ../app/core/gimpimage.c:3345
 msgid "Channel is already on the bottom."
 msgstr "Kanál je již vespod."
 
-#: ../app/core/gimpimage.c:3334
+#: ../app/core/gimpimage.c:3350
 msgid "Lower Channel to Bottom"
 msgstr "Kanál dospod"
 
-#: ../app/core/gimpimage.c:3409
+#: ../app/core/gimpimage.c:3425
 msgid "Add Path"
 msgstr "Přidat cestu"
 
-#: ../app/core/gimpimage.c:3455
+#: ../app/core/gimpimage.c:3471
 msgid "Remove Path"
 msgstr "Odstranit cestu"
 
-#: ../app/core/gimpimage.c:3499
+#: ../app/core/gimpimage.c:3515
 msgid "Path cannot be raised higher."
 msgstr "Cesta nemůže být ještě výš."
 
-#: ../app/core/gimpimage.c:3504
+#: ../app/core/gimpimage.c:3520
 msgid "Raise Path"
 msgstr "Zvýšit cestu"
 
-#: ../app/core/gimpimage.c:3521
+#: ../app/core/gimpimage.c:3537
 msgid "Path is already on top."
 msgstr "Cesta je již nahoře."
 
-#: ../app/core/gimpimage.c:3526
+#: ../app/core/gimpimage.c:3542
 msgid "Raise Path to Top"
 msgstr "Zvýšit cestu nahoru"
 
-#: ../app/core/gimpimage.c:3543
+#: ../app/core/gimpimage.c:3559
 msgid "Path cannot be lowered more."
 msgstr "Cesta nemůže být ještě níž."
 
-#: ../app/core/gimpimage.c:3548
+#: ../app/core/gimpimage.c:3564
 msgid "Lower Path"
 msgstr "Snížit cestu"
 
-#: ../app/core/gimpimage.c:3568
+#: ../app/core/gimpimage.c:3584
 msgid "Path is already on the bottom."
 msgstr "Cesta je již vespod."
 
-#: ../app/core/gimpimage.c:3573
+#: ../app/core/gimpimage.c:3589
 msgid "Lower Path to Bottom"
 msgstr "Snížit cestu dolů"
 
-#: ../app/core/gimpimagefile.c:552 ../app/dialogs/preferences-dialog.c:1639
+#: ../app/core/gimpimagefile.c:546 ../app/dialogs/preferences-dialog.c:1639
 msgid "Folder"
 msgstr "Adresář"
 
-#: ../app/core/gimpimagefile.c:557
+#: ../app/core/gimpimagefile.c:551
 msgid "Special File"
 msgstr "Speciální soubor"
 
-#: ../app/core/gimpimagefile.c:573
+#: ../app/core/gimpimagefile.c:567
 msgid "Remote File"
 msgstr "Vzdálený soubor"
 
-#: ../app/core/gimpimagefile.c:592
+#: ../app/core/gimpimagefile.c:586
 msgid "Click to create preview"
 msgstr "Vytvořte náhled kliknutím"
 
-#: ../app/core/gimpimagefile.c:598
+#: ../app/core/gimpimagefile.c:592
 msgid "Loading preview..."
 msgstr "Načítám náhled..."
 
-#: ../app/core/gimpimagefile.c:604
+#: ../app/core/gimpimagefile.c:598
 msgid "Preview is out of date"
 msgstr "Náhled je zastaralý"
 
-#: ../app/core/gimpimagefile.c:610
+#: ../app/core/gimpimagefile.c:604
 msgid "Cannot create preview"
 msgstr "Nelze vytvořit náhled"
 
-#: ../app/core/gimpimagefile.c:620
+#: ../app/core/gimpimagefile.c:614
 msgid "(Preview may be out of date)"
 msgstr "(Náhled je možnázastaralý)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:629 ../app/widgets/gimpimagepropview.c:431
+#: ../app/core/gimpimagefile.c:623 ../app/widgets/gimpimagepropview.c:431
 #: ../app/widgets/gimpsizebox.c:438 ../app/widgets/gimptemplateeditor.c:564
 #, c-format
 msgid "%d × %d pixel"
@@ -6365,7 +6370,7 @@ msgstr[0] "%d × %d pixel"
 msgstr[1] "%d × %d pixely"
 msgstr[2] "%d × %d pixelů"
 
-#: ../app/core/gimpimagefile.c:652 ../app/display/gimpdisplayshell-title.c:318
+#: ../app/core/gimpimagefile.c:646 ../app/display/gimpdisplayshell-title.c:318
 #, c-format
 msgid "%d layer"
 msgid_plural "%d layers"
@@ -6373,7 +6378,7 @@ msgstr[0] "%d vrstva"
 msgstr[1] "%d vrstvy"
 msgstr[2] "%d vrstev"
 
-#: ../app/core/gimpimagefile.c:699
+#: ../app/core/gimpimagefile.c:693
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Nemohu otevřít miniaturu '%s': %s"
@@ -6620,15 +6625,15 @@ msgstr "Není žádný výběr k vytažení."
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Nemohu vyříznout nebo kopírovat, protože zvolená oblast je prázdná."
 
-#: ../app/core/gimpselection.c:823
+#: ../app/core/gimpselection.c:824
 msgid "Cannot float selection because the selected region is empty."
 msgstr "Nemohu udělat výběr plovoucí, protože vybraná oblast je prázdná."
 
-#: ../app/core/gimpselection.c:830
+#: ../app/core/gimpselection.c:831
 msgid "Float Selection"
 msgstr "Plovoucí výběr"
 
-#: ../app/core/gimpselection.c:847
+#: ../app/core/gimpselection.c:848
 msgid "Floated Layer"
 msgstr "Plovoucí vrstva"
 
@@ -6640,19 +6645,19 @@ msgstr ""
 "Převést ostré spojení na kosé spojení, pokud by špička dosahovalá dál než "
 "limit-ostrosti * šířka-čáry od skutečného bodu spojení."
 
-#: ../app/core/gimptemplate.c:118
+#: ../app/core/gimptemplate.c:119
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr "Jednotka používaná pro zobrazování souřadnic mimo režim bod na bod."
 
-#: ../app/core/gimptemplate.c:125
+#: ../app/core/gimptemplate.c:126
 msgid "The horizontal image resolution."
 msgstr "Vodorovné rozlišení obrázku."
 
-#: ../app/core/gimptemplate.c:130
+#: ../app/core/gimptemplate.c:131
 msgid "The vertical image resolution."
 msgstr "Svislé rozlišení obrázku."
 
-#: ../app/core/gimptemplate.c:412 ../app/widgets/widgets-enums.c:24
+#: ../app/core/gimptemplate.c:416 ../app/widgets/widgets-enums.c:24
 msgid "Background"
 msgstr "Pozadí"
 
@@ -8137,34 +8142,34 @@ msgstr "Vyberte styl vykreslení"
 msgid "Paint tool:"
 msgstr "Kreslicí nástroj:"
 
-#: ../app/dialogs/tips-dialog.c:89
+#: ../app/dialogs/tips-dialog.c:90
 msgid "Your GIMP tips file appears to be missing!"
 msgstr "Váš soubor s tipy GIMPu zřejmě chybí!"
 
-#: ../app/dialogs/tips-dialog.c:91
+#: ../app/dialogs/tips-dialog.c:92
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
 msgstr "Měl existovat soubor s názvem '%s'. Zkontrolujte prosím svou instalaci."
 
-#: ../app/dialogs/tips-dialog.c:97
+#: ../app/dialogs/tips-dialog.c:98
 msgid "The GIMP tips file could not be parsed!"
 msgstr "Soubor s tipy GIMPu nebylo možné zpracovat!"
 
-#: ../app/dialogs/tips-dialog.c:130
+#: ../app/dialogs/tips-dialog.c:127
 msgid "GIMP Tip of the Day"
 msgstr "GIMP: Tip dne"
 
-#: ../app/dialogs/tips-dialog.c:185
-msgid "Show tip next time GIMP starts"
-msgstr "Zobrazit tip při příštím spuštění GIMPu"
-
-#: ../app/dialogs/tips-dialog.c:209
+#: ../app/dialogs/tips-dialog.c:133
 msgid "_Previous Tip"
 msgstr "_Předchozí tip"
 
-#: ../app/dialogs/tips-dialog.c:218
+#: ../app/dialogs/tips-dialog.c:139
 msgid "_Next Tip"
 msgstr "_Další tip"
+
+#: ../app/dialogs/tips-dialog.c:205
+msgid "Show tip next time GIMP starts"
+msgstr "Zobrazit tip při příštím spuštění GIMPu"
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
@@ -8715,7 +8720,7 @@ msgstr ""
 "Procedura'%s' byla zavolána s s hodnotou '%s' argumentu '%s' (#%d, typ %s). "
 "Tato hodnota je mimo rozsah."
 
-#: ../app/pdb/image_cmds.c:2065
+#: ../app/pdb/image_cmds.c:2059
 msgid "Image resolution is out of bounds, using the default resolution instead."
 msgstr "Rozlišení obrázku je mimo rozsah, používám místo něj implicitní rozlišení."
 
@@ -11869,12 +11874,12 @@ msgstr "_Náhled"
 msgid "No selection"
 msgstr "Žádný výběr"
 
-#: ../app/widgets/gimpthumbbox.c:595 ../app/widgets/gimpthumbbox.c:616
+#: ../app/widgets/gimpthumbbox.c:594 ../app/widgets/gimpthumbbox.c:615
 #, c-format
 msgid "Thumbnail %d of %d"
 msgstr "Miniatura %d z %d"
 
-#: ../app/widgets/gimpthumbbox.c:729 ../app/widgets/gimpthumbbox.c:739
+#: ../app/widgets/gimpthumbbox.c:728 ../app/widgets/gimpthumbbox.c:738
 msgid "Creating preview..."
 msgstr "Vytvářím náhled..."
 
