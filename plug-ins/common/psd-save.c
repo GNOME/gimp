@@ -142,26 +142,49 @@ static void   run                  (const gchar      *name,
                                     gint             *nreturn_vals,
                                     GimpParam       **return_vals);
 
-static void   psd_lmode_layer      (gint32 idLayer, gchar* psdMode);
-static void   reshuffle_cmap_write (guchar *mapGimp);
-static void   save_header          (FILE *fd, gint32 image_id);
-static void   save_color_mode_data (FILE *fd, gint32 image_id);
-static void   save_resources       (FILE *fd, gint32 image_id);
-static void   save_layer_and_mask  (FILE *fd, gint32 image_id);
-static void   save_data            (FILE *fd, gint32 image_id);
-static gint   save_image           (const gchar *filename, gint32 image_id);
-static void   xfwrite              (FILE *fd, void *buf, long len, gchar *why);
-static void   write_pascalstring   (FILE *fd, char *val, gint padding,
-                                    gchar *why);
-static void   write_string         (FILE *fd, char *val, gchar *why);
-static void   write_gchar          (FILE *fd, guchar val, gchar *why);
-static void   write_gint16         (FILE *fd, gint16 val, gchar *why);
-static void   write_gint32         (FILE *fd, gint32 val, gchar *why);
-static void   write_datablock_luni (FILE *fd, char *val, gchar *why);
+static void   psd_lmode_layer      (gint32         idLayer,
+                                    gchar         *psdMode);
+static void   reshuffle_cmap_write (guchar        *mapGimp);
+static void   save_header          (FILE          *fd,
+                                    gint32         image_id);
+static void   save_color_mode_data (FILE          *fd,
+                                    gint32         image_id);
+static void   save_resources       (FILE          *fd,
+                                    gint32         image_id);
+static void   save_layer_and_mask  (FILE          *fd,
+                                    gint32         image_id);
+static void   save_data            (FILE          *fd,
+                                    gint32         image_id);
+static gint   save_image           (const gchar   *filename,
+                                    gint32         image_id);
+static void   xfwrite              (FILE          *fd,
+                                    gconstpointer  buf,
+                                    glong          len,
+                                    const gchar   *why);
+static void   write_pascalstring   (FILE          *fd,
+                                    const gchar   *val,
+                                    gint           padding,
+                                    const gchar   *why);
+static void   write_string         (FILE          *fd,
+                                    const gchar   *val,
+                                    const gchar   *why);
+static void   write_gchar          (FILE          *fd,
+                                    guchar         val,
+                                    const gchar   *why);
+static void   write_gint16         (FILE          *fd,
+                                    gint16         val,
+                                    const gchar   *why);
+static void   write_gint32         (FILE          *fd,
+                                    gint32         val,
+                                    const gchar   *why);
+static void   write_datablock_luni (FILE          *fd,
+                                    const gchar   *val,
+                                    const gchar   *why);
 
-static void   write_pixel_data     (FILE *fd, gint32 drawableID,
-                                    glong *ChanLenPosition,
-                                    gint32 rowlenOffset);
+static void   write_pixel_data     (FILE          *fd,
+                                    gint32         drawableID,
+                                    glong         *ChanLenPosition,
+                                    gint32         rowlenOffset);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -272,7 +295,8 @@ run (const gchar      *name,
 }
 
 static void
-psd_lmode_layer (gint32 idLayer, gchar *psdMode)
+psd_lmode_layer (gint32  idLayer,
+                 gchar  *psdMode)
 {
   switch (gimp_layer_get_mode (idLayer))
     {
@@ -341,7 +365,9 @@ psd_lmode_layer (gint32 idLayer, gchar *psdMode)
 
 
 static void
-write_string (FILE *fd, char *val, gchar *why)
+write_string (FILE        *fd,
+              const gchar *val,
+              const gchar *why)
 {
   write_gchar (fd, strlen (val), why);
   xfwrite (fd, val, strlen (val), why);
@@ -349,14 +375,17 @@ write_string (FILE *fd, char *val, gchar *why)
 
 
 static void
-write_pascalstring (FILE *fd, char *val, gint padding, gchar *why)
+write_pascalstring (FILE        *fd,
+                    const gchar *val,
+                    gint         padding,
+                    const gchar *why)
 {
-  unsigned char len;
-  gint i;
+  guchar len;
+  gint   i;
 
   /* Calculate string length to write and limit it to 255 */
 
-  len = (strlen (val) > 255) ? 255 : (unsigned char) strlen (val);
+  len = (strlen (val) > 255) ? 255 : (guchar) strlen (val);
 
   /* Perform actual writing */
 
@@ -382,7 +411,10 @@ write_pascalstring (FILE *fd, char *val, gint padding, gchar *why)
 
 
 static void
-xfwrite (FILE *fd, void *buf, long len, gchar *why)
+xfwrite (FILE          *fd,
+         gconstpointer  buf,
+         glong          len,
+         const gchar   *why)
 {
   if (fwrite (buf, len, 1, fd) == 0)
     {
@@ -392,13 +424,13 @@ xfwrite (FILE *fd, void *buf, long len, gchar *why)
 }
 
 
-
-
 static void
-write_gchar (FILE *fd, guchar val, gchar *why)
+write_gchar (FILE        *fd,
+             guchar       val,
+             const gchar *why)
 {
-  unsigned char b[2];
-  glong         pos;
+  guchar b[2];
+  glong  pos;
 
   b[0] = val;
   b[1] = 0;
@@ -413,12 +445,12 @@ write_gchar (FILE *fd, guchar val, gchar *why)
 }
 
 
-
-
 static void
-write_gint16 (FILE *fd, gint16 val, gchar *why)
+write_gint16 (FILE        *fd,
+              gint16       val,
+              const gchar *why)
 {
-  unsigned char b[2];
+  guchar b[2];
   /*  b[0] = val & 255;
       b[1] = (val >> 8) & 255;*/
 
@@ -436,9 +468,11 @@ write_gint16 (FILE *fd, gint16 val, gchar *why)
 
 
 static void
-write_gint32 (FILE *fd, gint32 val, gchar *why)
+write_gint32 (FILE        *fd,
+              gint32       val,
+              const gchar *why)
 {
-  unsigned char b[4];
+  guchar b[4];
 
   b[3] = val & 255;
   b[2] = (val >> 8) & 255;
@@ -454,53 +488,57 @@ write_gint32 (FILE *fd, gint32 val, gchar *why)
 
 
 static void
-write_datablock_luni (FILE *fd, char *val, gchar *why)
+write_datablock_luni (FILE        *fd,
+                      const gchar *val,
+                      const gchar *why)
 {
   if (val)
-  {
-    guint32 count;
-    guint32 xdBlockSize;
-    gsize   numbytes;
-    gchar  *luniName;
-
-    luniName = g_convert_with_fallback (val, -1, "UCS-2", "UTF-8",
-                                        NULL, NULL, &numbytes, NULL);
-
-    if (luniName)
     {
-      unsigned char len = (numbytes > 510) ? 255 : numbytes/2;
+      guint32 count;
+      guint32 xdBlockSize;
+      gsize   numbytes;
+      gchar  *luniName;
 
-      /* Only pad to even num of chars */
-      if( len % 2 )
-        xdBlockSize = len + 1;
-      else
-        xdBlockSize = len;
+      luniName = g_convert_with_fallback (val, -1, "UCS-2", "UTF-8",
+                                          NULL, NULL, &numbytes, NULL);
 
-      /* 2 bytes / char + 4 bytes for pascal num chars */
-      xdBlockSize = (xdBlockSize * 2) + 4;
+      if (luniName)
+        {
+          guchar len = (numbytes > 510) ? 255 : numbytes / 2;
 
-      xfwrite (fd, "8BIMluni", 8, "luni xdb signature");
-      write_gint32 (fd, xdBlockSize, "luni xdb size");
-      write_gint32 (fd, len, "luni xdb pascal string");
+          /* Only pad to even num of chars */
+          if( len % 2 )
+            xdBlockSize = len + 1;
+          else
+            xdBlockSize = len;
 
-      for (count = 0; count < len * 2; count += 2)
-        write_gint16 (fd, luniName[count], "luni xdb pascal string");
+          /* 2 bytes / char + 4 bytes for pascal num chars */
+          xdBlockSize = (xdBlockSize * 2) + 4;
 
-      /* Pad to an even number of chars */
-      if (len % 2)
-        write_gint16 (fd, 0x0000, "luni xdb pascal string padding");
+          xfwrite (fd, "8BIMluni", 8, "luni xdb signature");
+          write_gint32 (fd, xdBlockSize, "luni xdb size");
+          write_gint32 (fd, len, "luni xdb pascal string");
+
+          for (count = 0; count < len * 2; count += 2)
+            write_gint16 (fd, luniName[count], "luni xdb pascal string");
+
+          /* Pad to an even number of chars */
+          if (len % 2)
+            write_gint16 (fd, 0x0000, "luni xdb pascal string padding");
+        }
     }
-  }
 }
 
 
 static gint32
-pack_pb_line (guchar *start, gint32 length, gint32 stride,
-               guchar *dest_ptr)
+pack_pb_line (guchar *start,
+              gint32  length,
+              gint32  stride,
+              guchar *dest_ptr)
 {
-  gint i,j;
-  gint32 remaining;
-  remaining = length;
+  gint32  remaining = length;
+  gint    i, j;
+
   length = 0;
   while (remaining > 0)
     {
@@ -577,7 +615,9 @@ gimpBaseTypeToPsdMode (GimpImageBaseType gimpBaseType)
 
 
 static gint
-nChansLayer (gint gimpBaseType, gint hasAlpha, gint hasMask)
+nChansLayer (gint gimpBaseType,
+             gint hasAlpha,
+             gint hasMask)
 {
   gint incAlpha = 0;
   gint incMask = 0;
@@ -603,7 +643,7 @@ static void
 reshuffle_cmap_write (guchar *mapGimp)
 {
   guchar *mapPSD;
-  gint i;
+  gint    i;
 
   mapPSD = g_malloc (768);
 
@@ -624,7 +664,8 @@ reshuffle_cmap_write (guchar *mapGimp)
 
 
 static void
-save_header (FILE *fd, gint32 image_id)
+save_header (FILE   *fd,
+             gint32  image_id)
 {
   IFDBG printf (" Function: save_header\n");
   IFDBG printf ("\tRows: %d\n", PSDImageData.image_height);
@@ -649,11 +690,12 @@ save_header (FILE *fd, gint32 image_id)
 
 
 static void
-save_color_mode_data (FILE *fd, gint32 image_id)
+save_color_mode_data (FILE   *fd,
+                      gint32  image_id)
 {
   guchar *cmap;
   guchar *cmap_modified;
-  gint     i;
+  gint    i;
   gint32  nColors;
 
   IFDBG printf (" Function: save_color_mode_data\n");
@@ -707,9 +749,10 @@ save_color_mode_data (FILE *fd, gint32 image_id)
 
 
 static void
-save_resources (FILE *fd, gint32 image_id)
+save_resources (FILE   *fd,
+                gint32  image_id)
 {
-  gint i;
+  gint       i;
   gchar     *fileName;            /* Image file name */
   gint32     idActLayer;          /* Id of the active layer */
   guint      nActiveLayer = 0;    /* Number of the active layer */
@@ -948,7 +991,8 @@ get_compress_channel_data (guchar  *channel_data,
 
 
 static void
-save_layer_and_mask (FILE *fd, gint32 image_id)
+save_layer_and_mask (FILE   *fd,
+                     gint32  image_id)
 {
   gint     i,j;
   gint     idChannel;
@@ -1164,8 +1208,10 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
 
 
 static void
-write_pixel_data (FILE *fd, gint32 drawableID, glong *ChanLenPosition,
-                  gint32 ltable_offset)
+write_pixel_data (FILE   *fd,
+                  gint32  drawableID,
+                  glong  *ChanLenPosition,
+                  gint32  ltable_offset)
 {
   GimpPixelRgn region;      /* Image region */
   guchar *data;             /* Temporary copy of pixel data */
@@ -1348,7 +1394,8 @@ write_pixel_data (FILE *fd, gint32 drawableID, glong *ChanLenPosition,
 
 
 static void
-save_data (FILE *fd, gint32 image_id)
+save_data (FILE   *fd,
+           gint32  image_id)
 {
   gint ChanCount;
   gint i, j;
@@ -1426,7 +1473,8 @@ save_data (FILE *fd, gint32 image_id)
 
 
 static void
-get_image_data (FILE *fd, gint32 image_id)
+get_image_data (FILE   *fd,
+                gint32  image_id)
 {
   IFDBG printf (" Function: get_image_data\n");
 

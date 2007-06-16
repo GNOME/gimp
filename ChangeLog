@@ -1,5 +1,9 @@
 2007-06-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/psd-save.c: coding style improvements.
+
+2007-06-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/psd-save.c: applied patch from Eric Ross that
 	changes the PSD save plug-in to save an extra data block with the
 	layer names in UCS-2 encoding (bug #447267).
