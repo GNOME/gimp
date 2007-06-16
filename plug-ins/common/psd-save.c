@@ -157,6 +157,7 @@ static void   write_string         (FILE *fd, char *val, gchar *why);
 static void   write_gchar          (FILE *fd, guchar val, gchar *why);
 static void   write_gint16         (FILE *fd, gint16 val, gchar *why);
 static void   write_gint32         (FILE *fd, gint32 val, gchar *why);
+static void   write_datablock_luni (FILE *fd, char *val, gchar *why);
 
 static void   write_pixel_data     (FILE *fd, gint32 drawableID,
                                     glong *ChanLenPosition,
@@ -449,6 +450,47 @@ write_gint32 (FILE *fd, gint32 val, gchar *why)
       IFDBG printf (" Function: write_gint32: Error while writing '%s'\n", why);
       gimp_quit ();
     }
+}
+
+
+static void
+write_datablock_luni (FILE *fd, char *val, gchar *why)
+{
+  if (val)
+  {
+    guint32 count;
+    guint32 xdBlockSize;
+    gsize   numbytes;
+    gchar  *luniName;
+
+    luniName = g_convert_with_fallback (val, -1, "UCS-2", "UTF-8",
+                                        NULL, NULL, &numbytes, NULL);
+
+    if (luniName)
+    {
+      unsigned char len = (numbytes > 510) ? 255 : numbytes/2;
+
+      /* Only pad to even num of chars */
+      if( len % 2 )
+        xdBlockSize = len + 1;
+      else
+        xdBlockSize = len;
+
+      /* 2 bytes / char + 4 bytes for pascal num chars */
+      xdBlockSize = (xdBlockSize * 2) + 4;
+
+      xfwrite (fd, "8BIMluni", 8, "luni xdb signature");
+      write_gint32 (fd, xdBlockSize, "luni xdb size");
+      write_gint32 (fd, len, "luni xdb pascal string");
+
+      for (count = 0; count < len * 2; count += 2)
+        write_gint16 (fd, luniName[count], "luni xdb pascal string");
+
+      /* Pad to an even number of chars */
+      if (len % 2)
+        write_gint16 (fd, 0x0000, "luni xdb pascal string padding");
+    }
+  }
 }
 
 
@@ -1071,6 +1113,8 @@ save_layer_and_mask (FILE *fd, gint32 image_id)
       layerName = gimp_drawable_get_name (PSDImageData.lLayers[i]);
       write_pascalstring (fd, layerName, 4, "layer name");
       IFDBG printf ("\t\tLayer name: %s\n", layerName);
+
+      write_datablock_luni(fd, layerName, "luni extra data block");
 
       /* Write real length for: Extra data */
 
