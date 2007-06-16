@@ -1,5 +1,11 @@
 2007-06-16  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpprojection.c (gimp_projection_get_level): take the
+	image size into account and return the level that is actually used.
+	Fixes bug #448185.
+
+2007-06-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/psd-save.c: coding style improvements.
 
 2007-06-16  Sven Neumann  <sven@gimp.org>

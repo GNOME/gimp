@@ -343,9 +343,7 @@ gimp_projection_get_tiles_at_level (GimpProjection *proj,
  * @scale_x: horizontal scale factor
  * @scale_y: vertical scale factor
  *
- * This function returns a theoritical optimal pyramid level for a given
- * scale factor. Depending on the size of the image, a smaller level may
- * be used later.
+ * This function returns the optimal pyramid level for a given scale factor.
  *
  * Return value: the pyramid level to use for a given display scale factor.
  **/
@@ -355,7 +353,9 @@ gimp_projection_get_level (GimpProjection *proj,
                            gdouble         scale_y)
 {
   gdouble scale;
-  gdouble next = 1.0;
+  gdouble next   = 1.0;
+  guint   width  = proj->image->width  >> 1;
+  guint   height = proj->image->height >> 1;
   gint    level;
 
   g_return_val_if_fail (GIMP_IS_PROJECTION (proj), PYRAMID_BASE_LEVEL);
@@ -364,6 +364,15 @@ gimp_projection_get_level (GimpProjection *proj,
 
   for (level = PYRAMID_BASE_LEVEL; level < PYRAMID_MAX_LEVELS; level++)
     {
+      width  >>= 1;
+      height >>= 1;
+
+      if (width == 0 || height == 0)
+        break;
+
+      if (width <= TILE_WIDTH && height <= TILE_HEIGHT)
+        break;
+
       next /= 2;
 
       if (next < scale)
