@@ -1,3 +1,9 @@
+2007-06-18  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/oilify.c: applied patch from Daniel Richard G.
+	which adds a new PDB entry with more options and improves speed
+	and quality of the algorithm (bug #347075).
+
 2007-06-16  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpprojection.c (gimp_projection_get_level): take the
