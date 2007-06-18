@@ -1085,7 +1085,7 @@ do_layer_record (FILE    *fd,
   if (strncmp(sig, "8BIM", 4)!=0)
     {
       IFDBG printf("\t\t\t(layer blend signature '%c%c%c%c' is incorrect: quitting)\n", sig[0], sig[1], sig[2], sig[3]);
-      g_message ("Error: layer blend signature is incorrect. :-(");
+      g_message ("Error: layer blend signature is incorrect");
       gimp_quit();
     }
 
@@ -1475,19 +1475,25 @@ seek_to_and_unpack_pixeldata (FILE *fd,
                               gint  layeri,
                               gint  channeli)
 {
-  int         width, height;
+  gint        width, height;
   guchar     *tmpline;
   gint        compression;
-  guint32     offset = 0;
+  guint32     offset  = 0;
   PSDchannel *channel = &psd_image.layer[layeri].channel[channeli];
 
-  fsetpos(fd, &channel->fpos);
+  fsetpos (fd, &channel->fpos);
 
-  compression = getgint16(fd, "layer channel compression type");
-  offset+=2;
+  compression = getgint16 (fd, "layer channel compression type");
+  offset += 2;
 
   width  = channel->width;
   height = channel->height;
+
+  if (width > G_MAXINT16 || height > G_MAXINT16)
+    {
+      g_message ("Error: Invalid channel dimensions");
+      gimp_quit ();
+    }
 
   IFDBG
     {
@@ -1560,7 +1566,7 @@ seek_to_and_unpack_pixeldata (FILE *fd,
 
     default: /* *unknown* */
       IFDBG {printf("\nEEP!\n");fflush(stdout);}
-      g_message ("*** Unknown compression type in channel.");
+      g_message ("Error: Unknown compression type in channel");
       gimp_quit();
     }
 
@@ -2280,7 +2286,7 @@ load_image (const gchar *name)
               break;
 
             default:
-              g_message ("Error: Sorry, can't deal with a layered image of this type.\n");
+              g_message ("Error: Can't deal with a layered image of this type");
               gimp_quit();
             }
 
@@ -2783,7 +2789,7 @@ packbitsdecode (long         *clenp,
 
   if (uclen > 0)
     {
-      printf ("PSD: unexpected EOF while reading image data\n");
+      g_message ("Unexpected end of file while reading image data");
       gimp_quit ();
     }
 
@@ -3086,7 +3092,7 @@ getguchar (FILE        *fd,
 
   if (tmp == EOF)
     {
-      printf ("PSD: unexpected EOF while reading '%s' chunk\n", why);
+      g_message ("Unexpected end of file while reading '%s' chunk", why);
       gimp_quit ();
     }
 
@@ -3130,7 +3136,7 @@ xfread (FILE        *fd,
 {
   if (fread (buf, len, 1, fd) == 0)
     {
-      printf ("PSD: unexpected EOF while reading '%s' chunk\n", why);
+      g_message ("Unexpected end of file while reading '%s' chunk", why);
       gimp_quit();
     }
 }
@@ -3235,7 +3241,8 @@ read_whole_file (FILE *fd)
       }
     if (PSDheader.version != 1)
       {
-        g_message (_("The PSD file has bad version number '%d', not 1"), PSDheader.version);
+        g_message (_("The PSD file has bad version number '%d', not 1"),
+                   PSDheader.version);
         gimp_quit ();
       }
     w = PSDheader.mode;

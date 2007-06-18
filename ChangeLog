@@ -1,5 +1,14 @@
 2007-06-18  Sven Neumann  <sven@gimp.org>
 
+	* app/file/file-open.c (file_open_from_command_line): use
+	gimp_message() for error handling.
+
+	* plug-ins/common/psd-load.c (seek_to_and_unpack_pixeldata): check
+	channel dimensions to avoid potential integer overflow. Some minor
+	cleanups to error messages.
+
+2007-06-18  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/animationplay.c: applied modified patch from
 	Paul Seidel that adds controls for the playback speed (bug #338380).
 
