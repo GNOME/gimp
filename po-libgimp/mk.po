@@ -1,4 +1,4 @@
-# translation of mk.po to Macedonian
+# translation of gimp-libgimp.HEAD.po to Blagoj
 # Macedonian translation of gimp-libgimp
 # Courtesy of mkde team (http://mkde.sourceforge.net/) -- 2004.
 #
@@ -10,24 +10,34 @@
 # Vladimir Stefanov <vladoboss@mt.net.mk>, 2005, 2006.
 # Vladimir Stefanov <vladoboss@gmail.com>, 2006.
 # Jovan Naumovski <jovan@lugola.net>, 2006.
+# Blagoj <kapsarovb@on.net.mk>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: mk\n"
+"Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-08-28 19:54+0200\n"
-"PO-Revision-Date: 2006-08-29 13:10+0200\n"
-"Last-Translator: Jovan Naumovski <jovan@lugola.net>\n"
-"Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
+"POT-Creation-Date: 2007-05-08 03:37+0100\n"
+"PO-Revision-Date: 2007-06-16 01:18+0200\n"
+"Last-Translator: Blagoj <kapsarovb@on.net.mk>\n"
+"Language-Team: Blagoj <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural= n==1 || n%10==1 ? 0 : 1\n"
-"X-Generator: KBabel 1.11.2\n"
+"X-Generator: KBabel 1.11.4\n"
+
+#: ../libgimp/gimpbrushselectbutton.c:170
+msgid "Brush Selection"
+msgstr "Избор на _четки"
+
+#: ../libgimp/gimpbrushselectbutton.c:911
+#: ../libgimp/gimppatternselectbutton.c:712
+msgid "_Browse..."
+msgstr "_Пребарај..."
 
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
-msgid "%s can't handle layers"
-msgstr "%s Не може да ракува со нивоата"
+msgid "%s plug-in can't handle layers"
+msgstr "%s додатокот неможе да ги сработи слоевите"
 
 #: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
@@ -36,13 +46,13 @@ msgstr "Спој ги видливите слоеви"
 
 #: ../libgimp/gimpexport.c:226
 #, c-format
-msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s Не може да ракува со офсетот на нивото, големината или затемнетоста"
+msgid "%s plug-in can't handle layer offsets, size or opacity"
+msgstr "%s додатокот неможе да го сработи израмнувањето, големината и провидноста на слоевите"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
-msgid "%s can only handle layers as animation frames"
-msgstr "%s може да ракува со слоевите само како со анимациони оквири"
+msgid "%s plug-in can only handle layers as animation frames"
+msgstr "%s додатокот може да ги сработи слоевите само како слајдови од анимација"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
@@ -55,13 +65,13 @@ msgstr "Израмнета слика"
 
 #: ../libgimp/gimpexport.c:262
 #, c-format
-msgid "%s can't handle transparency"
-msgstr "%s не може да ракува со провидноста"
+msgid "%s plug-in can't handle transparency"
+msgstr "%s додатокот неможе да работи со провидноста"
 
 #: ../libgimp/gimpexport.c:271
 #, c-format
-msgid "%s can't handle layer masks"
-msgstr "%s не може да работи со маски на слоевите"
+msgid "%s plug-in can't handle layer masks"
+msgstr "%s додатокот не може да работи со маски на слоевите"
 
 #: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
@@ -69,8 +79,8 @@ msgstr "Примени маска на нивото"
 
 #: ../libgimp/gimpexport.c:280
 #, c-format
-msgid "%s can only handle RGB images"
-msgstr "%s може да ракува само со RGB слики"
+msgid "%s plug-in can only handle RGB images"
+msgstr "%s додатокот може да работи само со RGB слики"
 
 #: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
@@ -79,8 +89,8 @@ msgstr "Префрли во RGB"
 
 #: ../libgimp/gimpexport.c:289
 #, c-format
-msgid "%s can only handle grayscale images"
-msgstr "%s може да ракува само со сиво нијансирани слики"
+msgid "%s plug-in can only handle grayscale images"
+msgstr "%s додатокот може да работи само со сиво нијансирани слики"
 
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
@@ -89,8 +99,8 @@ msgstr "Префрли во сиво нијансирано"
 
 #: ../libgimp/gimpexport.c:298
 #, c-format
-msgid "%s can only handle indexed images"
-msgstr "%s може да ракува само со индексирани слики"
+msgid "%s plug-in can only handle indexed images"
+msgstr "%s додатокот може да ракува само со индексирани слики"
 
 #: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
 #: ../libgimp/gimpexport.c:338
@@ -103,8 +113,8 @@ msgstr ""
 
 #: ../libgimp/gimpexport.c:308
 #, c-format
-msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s може да работи само со bitmap (две бои) индексирани слики"
+msgid "%s plug-in can only handle bitmap (two color) indexed images"
+msgstr "%s додатокот може да работи со индексирани слики (во две бои)"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -116,23 +126,23 @@ msgstr ""
 
 #: ../libgimp/gimpexport.c:318
 #, c-format
-msgid "%s can only handle RGB or grayscale images"
-msgstr "%s можа да ракува само со RGB или сиво нијансирани слики"
+msgid "%s plug-in can only handle RGB or grayscale images"
+msgstr "%s додатокот може да работи со RGB или сиво нијансирани слики"
 
 #: ../libgimp/gimpexport.c:327
 #, c-format
-msgid "%s can only handle RGB or indexed images"
-msgstr "%s може да ракува само со RGB или индексирани слики"
+msgid "%s plug-in  can only handle RGB or indexed images"
+msgstr "%s додатокот може да работи само со RGB или индексирани слики"
 
 #: ../libgimp/gimpexport.c:337
 #, c-format
-msgid "%s can only handle grayscale or indexed images"
-msgstr "%s може да ракува само со сиво нијансирани или индексирани слики"
+msgid "%s plug-in can only handle grayscale or indexed images"
+msgstr "%s додатокот може да работи само со сиво нијансирани или индексирани слики"
 
 #: ../libgimp/gimpexport.c:348
 #, c-format
-msgid "%s needs an alpha channel"
-msgstr "%s му треба алфа канал"
+msgid "%s plug-in needs an alpha channel"
+msgstr "%s додатокот зависи од вредноста на невидливоста (alpha)"
 
 #: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
@@ -199,9 +209,21 @@ msgstr "Избор на фонт"
 msgid "Sans"
 msgstr "Санс"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
+#: ../libgimp/gimpgradientselectbutton.c:148
+msgid "Gradient Selection"
+msgstr "Избор на нијансирање"
+
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
 msgid "(Empty)"
 msgstr "(Празно)"
+
+#: ../libgimp/gimppaletteselectbutton.c:130
+msgid "Palette Selection"
+msgstr "Избор на палета"
+
+#: ../libgimp/gimppatternselectbutton.c:156
+msgid "Pattern Selection"
+msgstr "Избор на парче-повторувања"
 
 #: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
@@ -388,15 +410,15 @@ msgstr "Замени ја тековната селекција"
 msgid "Intersect with the current selection"
 msgstr "Пресек со тековната селекција"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Red"
 msgstr "Црвена"
 
-#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Green"
 msgstr "Зелена"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Blue"
 msgstr "Сина"
 
@@ -408,7 +430,7 @@ msgstr "Сива"
 msgid "Indexed"
 msgstr "Индексирано"
 
-#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "Alpha"
 msgstr "Алфа"
 
@@ -449,12 +471,12 @@ msgid "Black only"
 msgstr "Само црно"
 
 #: ../libgimpbase/gimpbaseenums.c:263
-msgid "Image source"
-msgstr "Извор на сликата"
+msgid "Image"
+msgstr "Слика"
 
 #: ../libgimpbase/gimpbaseenums.c:264
-msgid "Pattern source"
-msgstr "Извор на шаблон"
+msgid "Pattern"
+msgstr "Парче-повторувања"
 
 #: ../libgimpbase/gimpbaseenums.c:293
 msgid "Lightness"
@@ -488,7 +510,7 @@ msgstr "Билинеарно"
 msgid "Radial"
 msgstr "Радијално"
 
-#: ../libgimpbase/gimpbaseenums.c:391
+#: ../libgimpbase/gimpbaseenums.c:391 ../libgimpwidgets/gimpwidgetsenums.c:24
 msgid "Square"
 msgstr "Квадрат"
 
@@ -593,8 +615,8 @@ msgid "Cubic"
 msgstr "Кубен"
 
 #: ../libgimpbase/gimpbaseenums.c:565
-msgid "Lanczos"
-msgstr "Ланчош"
+msgid "Sinc (Lanczos3)"
+msgstr "Рамни (Lanczos3)"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -604,7 +626,7 @@ msgstr "Константно"
 msgid "Incremental"
 msgstr "Инкрементално"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:256
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:267
 msgid "None"
 msgstr "Ништо"
 
@@ -649,26 +671,42 @@ msgid "Highlights"
 msgstr "Нагласено"
 
 #: ../libgimpbase/gimpbaseenums.c:744
-msgid "Forward"
-msgstr "Напред"
+msgid "Normal (Forward)"
+msgstr "Нормализирај (Напред)"
 
 #: ../libgimpbase/gimpbaseenums.c:745
-msgid "Backward"
-msgstr "Назад"
+msgid "Corrective (Backward)"
+msgstr "Исправи (Назад)"
 
-#: ../libgimpbase/gimpbaseenums.c:848
+#: ../libgimpbase/gimpbaseenums.c:775
+msgid "Adjust"
+msgstr "Помести"
+
+#: ../libgimpbase/gimpbaseenums.c:776
+msgid "Clip"
+msgstr "Држач"
+
+#: ../libgimpbase/gimpbaseenums.c:777
+msgid "Crop to result"
+msgstr "Исечи до резултатот"
+
+#: ../libgimpbase/gimpbaseenums.c:778
+msgid "Crop with aspect"
+msgstr "Исечи од око"
+
+#: ../libgimpbase/gimpbaseenums.c:881
 msgid "Internal GIMP procedure"
 msgstr "Внатрешна GIMP процедура"
 
-#: ../libgimpbase/gimpbaseenums.c:849
+#: ../libgimpbase/gimpbaseenums.c:882
 msgid "GIMP Plug-In"
 msgstr "GIMP додаток"
 
-#: ../libgimpbase/gimpbaseenums.c:850
+#: ../libgimpbase/gimpbaseenums.c:883
 msgid "GIMP Extension"
 msgstr "GIMP проширување"
 
-#: ../libgimpbase/gimpbaseenums.c:851
+#: ../libgimpbase/gimpbaseenums.c:884
 msgid "Temporary Procedure"
 msgstr "Привремена процедура"
 
@@ -727,7 +765,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:248
+#: ../modules/cdisplay_lcms.c:259
 msgid "(invalid UTF-8 string)"
 msgstr "(неисправна UTF-8 нишка)"
 
@@ -741,17 +779,17 @@ msgstr "Профил на бои на вашиот (примарен) монит
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid ""
-"When enabled, the GIMP will try to use the display color profile from the "
-"windowing system. The configured monitor profile is then only used as a "
+"When enabled, GIMP will try to use the display color profile from the "
+"windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
 "Кога е овозможено, GIMP ќе проба да го користи профилот за приказ на бои од "
-"системот за прозорци. Конфигурираниот профил на мониторот тогаш се користи "
-"како отстапница."
+"системот за прозорци. Конфигурираниот профил на боја од мониторот тогаш се користи "
+"како резерва."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
-msgid "The default RGB workspace color profile."
-msgstr "Стандарден RGB профил на бои за работната површина."
+msgid "The default RGB working space color profile."
+msgstr "Основен RGB профил на бои за работна површина."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The CMYK color profile used to convert between RGB and CMYK."
@@ -766,10 +804,10 @@ msgid "Sets how colors are mapped for your display."
 msgstr "Подесува како се боите мапирани за вашиот приказ."
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
-msgid "Sets how colors are converted from workspace to the print simulation device."
-msgstr ""
-"Подесува како боите се префрлени од работната површина до уредот за "
-"симулирање на печатењето."
+msgid ""
+"Sets how colors are converted from RGB working space to the print simulation "
+"device."
+msgstr "Подесува како боите се претворени од RGB работна површина до уредот за симулирање печат."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -801,53 +839,41 @@ msgstr "Заситеност"
 msgid "Absolute colorimetric"
 msgstr "Апсолутно колориметриски"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:88
-msgid "Ask"
-msgstr "Прашај"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:89
-msgid "Use embedded profile"
-msgstr "Користи вграден профил"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:90
-msgid "Convert to RGB workspace"
-msgstr "Префрли во RGB"
-
-#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#: ../libgimpconfig/gimpconfig-deserialize.c:96
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "вредноста за изразот %s не е исправен UTF-8 збор"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:426
+#: ../libgimpconfig/gimpconfig-deserialize.c:427
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "очекуваниот одговор од типот „да“ или „не“ за логичкиот израз  %s, добиен ' %"
 "s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:500
+#: ../libgimpconfig/gimpconfig-deserialize.c:501
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "неисправна вредност „%s“ за  %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:515
+#: ../libgimpconfig/gimpconfig-deserialize.c:516
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "неисправна вредност „%ld“ за изразот %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:584
+#: ../libgimpconfig/gimpconfig-deserialize.c:585
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "при обработка на изразот „%s“: %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:453
-#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpconfig-iface.c:454
+#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
 msgid "fatal parse error"
 msgstr "фатална грешка при раздвојувањето"
 
-#: ../libgimpconfig/gimpconfig-path.c:376
+#: ../libgimpconfig/gimpconfig-path.c:377
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "Не можам да го раширам ${%s}"
@@ -899,26 +925,26 @@ msgstr "Неправилен UTF-8 збор"
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "Грешка при обработката на „%s“ во %d. редот: %s"
 
-#: ../libgimpmodule/gimpmodule.c:152 ../libgimpmodule/gimpmodule.c:170
-#: ../libgimpmodule/gimpmodule.c:279 ../libgimpmodule/gimpmodule.c:306
-#: ../libgimpmodule/gimpmodule.c:417
+#: ../libgimpmodule/gimpmodule.c:153 ../libgimpmodule/gimpmodule.c:171
+#: ../libgimpmodule/gimpmodule.c:280 ../libgimpmodule/gimpmodule.c:307
+#: ../libgimpmodule/gimpmodule.c:418
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "Грешка при вчитувањето на модулот '%s': %s"
 
-#: ../libgimpmodule/gimpmodule.c:374
+#: ../libgimpmodule/gimpmodule.c:375
 msgid "Module error"
 msgstr "Грешка на модулот"
 
-#: ../libgimpmodule/gimpmodule.c:375
+#: ../libgimpmodule/gimpmodule.c:376
 msgid "Loaded"
 msgstr "Вчитан"
 
-#: ../libgimpmodule/gimpmodule.c:376
+#: ../libgimpmodule/gimpmodule.c:377
 msgid "Load failed"
 msgstr "Неуспешно вчитување"
 
-#: ../libgimpmodule/gimpmodule.c:377
+#: ../libgimpmodule/gimpmodule.c:378
 msgid "Not loaded"
 msgstr "Не е вчитано"
 
@@ -937,7 +963,11 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Неуспешно креирање на директориумот со сликички '%s'."
 
-#: ../libgimpthumb/gimpthumbnail.c:889
+#: ../libgimpthumb/gimpthumbnail.c:498
+msgid "Thumbnail contains no Thumb::URI tag"
+msgstr "Сликичката не содржи Thumb::URl запис"
+
+#: ../libgimpthumb/gimpthumbnail.c:898
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Не можев да создадам смален приказ за %s: %s"
@@ -966,15 +996,15 @@ msgstr "Б_ела"
 msgid "Scales"
 msgstr "Размери"
 
-#: ../libgimpwidgets/gimpcolorselection.c:187
+#: ../libgimpwidgets/gimpcolorselection.c:210
 msgid "Current:"
 msgstr "Тековно:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:209
+#: ../libgimpwidgets/gimpcolorselection.c:232
 msgid "Old:"
 msgstr "Старо:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:263
+#: ../libgimpwidgets/gimpcolorselection.c:286
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
@@ -982,7 +1012,7 @@ msgstr ""
 "Хексадецимално обележување на боја како што се користи во HTML и CSS.  Овој "
 "запис исто така прифаќа и CSS имиња на бои."
 
-#: ../libgimpwidgets/gimpcolorselection.c:269
+#: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
 msgstr "HTML _обележување:"
 
@@ -1002,15 +1032,15 @@ msgstr "Одберете директориум"
 msgid "Select File"
 msgstr "Изберете датотека"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:202
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Kilobytes"
 msgstr "Килобајти"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:203
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Megabytes"
 msgstr "Мегабајти"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libgimpwidgets/gimpmemsizeentry.c:206
 msgid "Gigabytes"
 msgstr "Гигабајти"
 
@@ -1080,22 +1110,17 @@ msgid "Check Style"
 msgstr "Провери стил"
 
 #. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:265
+#: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "Пре_глед"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1869
+#: ../libgimpwidgets/gimppropwidgets.c:1901
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Ова поле за внесување на текст е ограничено на %d карактер."
 msgstr[1] "Ова поле за внесување на текст е ограничено на %d карактери."
 msgstr[2] "Ова поле за внесување на текст е ограничено на %d карактери."
-
-#: ../libgimpwidgets/gimpresolutionentry.c:382
-#, c-format
-msgid "pixels/%s"
-msgstr "пиксели/%s"
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -1147,29 +1172,29 @@ msgstr "Размак на _редовите"
 
 #: ../libgimpwidgets/gimpstock.c:190
 msgid "_Resize"
-msgstr "_Промени големина"
+msgstr "_Смени големина"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:302
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:319
 msgid "_Scale"
-msgstr "_Скалирај"
+msgstr "_Смени пропорционално"
 
-#: ../libgimpwidgets/gimpstock.c:280
-msgid "Crop"
-msgstr "Исечи"
+#: ../libgimpwidgets/gimpstock.c:295
+msgid "Cr_op"
+msgstr "Исе_чи"
 
-#: ../libgimpwidgets/gimpstock.c:298
+#: ../libgimpwidgets/gimpstock.c:314
 msgid "_Transform"
 msgstr "_Трансформирај"
 
-#: ../libgimpwidgets/gimpstock.c:301
+#: ../libgimpwidgets/gimpstock.c:318
 msgid "_Rotate"
 msgstr "_Ротирај"
 
-#: ../libgimpwidgets/gimpstock.c:303
+#: ../libgimpwidgets/gimpstock.c:320
 msgid "_Shear"
 msgstr "_Дели"
 
-#: ../libgimpwidgets/gimpunitmenu.c:267
+#: ../libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
 msgstr "Уште..."
 
@@ -1177,11 +1202,11 @@ msgstr "Уште..."
 msgid "Unit Selection"
 msgstr "Избор на единица"
 
-#: ../libgimpwidgets/gimpunitmenu.c:625
+#: ../libgimpwidgets/gimpunitmenu.c:626
 msgid "Unit"
 msgstr "Единица"
 
-#: ../libgimpwidgets/gimpunitmenu.c:629
+#: ../libgimpwidgets/gimpunitmenu.c:630
 msgid "Factor"
 msgstr "Фактор"
 
@@ -1190,8 +1215,8 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Употребете ја оваа вредност за семе за случајно генериран број - ова "
-"Ви овозможува да ја повторувате зададената \"случајна\" операција"
+"Употребете ја оваа вредност за семе за случајно генериран број - ова Ви "
+"овозможува да ја повторувате зададената \"случајна\" операција"
 
 #: ../libgimpwidgets/gimpwidgets.c:1009
 msgid "_New Seed"
@@ -1205,59 +1230,67 @@ msgstr "Семе на случајно генерираниот број со г
 msgid "_Randomize"
 msgstr "_Случајно"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:25
+msgid "Portrait"
+msgstr "Портрет"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:26
+msgid "Landscape"
+msgstr "Пејсаж"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "_H"
 msgstr "_H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "Hue"
 msgstr "Нијанса"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "_S"
 msgstr "_S"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "Saturation"
 msgstr "Заситеност"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "_V"
 msgstr "_V"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "Value"
 msgstr "Вредност"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "_R"
 msgstr "_R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "_G"
 msgstr "_G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "_B"
 msgstr "_B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "_A"
 msgstr "_A"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpwidgets/gimpwidgetsenums.c:157
 msgid "Layers"
 msgstr "Слоеви"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpwidgets/gimpwidgetsenums.c:158
 msgid "Images"
 msgstr "Слики"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:186
+#: ../libgimpwidgets/gimpwidgetsenums.c:217
 msgid "Zoom in"
 msgstr "Зголеми"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:187
+#: ../libgimpwidgets/gimpwidgetsenums.c:218
 msgid "Zoom out"
 msgstr "Намали"
 
@@ -1277,11 +1310,11 @@ msgstr "Тиранопиа (неосетливост на сино)"
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "Филтер за симулирање на оскудност (Brettel-Vienot-Mollon алгоритам)"
 
-#: ../modules/cdisplay_colorblind.c:290
+#: ../modules/cdisplay_colorblind.c:292
 msgid "Color Deficient Vision"
 msgstr "Поглед со оскудни бои"
 
-#: ../modules/cdisplay_colorblind.c:503
+#: ../modules/cdisplay_colorblind.c:507
 msgid "Color _deficiency type:"
 msgstr "Тип на _оштетеност на бојата:"
 
@@ -1293,7 +1326,7 @@ msgstr "Екрански филтер на гама боја"
 msgid "Gamma"
 msgstr "Гама"
 
-#: ../modules/cdisplay_gamma.c:251
+#: ../modules/cdisplay_gamma.c:253
 msgid "_Gamma:"
 msgstr "_Гама:"
 
@@ -1305,19 +1338,19 @@ msgstr "Екрански филтер на боја со висок контра
 msgid "Contrast"
 msgstr "Контраст"
 
-#: ../modules/cdisplay_highcontrast.c:251
+#: ../modules/cdisplay_highcontrast.c:253
 msgid "Contrast c_ycles:"
 msgstr "_Циклуси на контрастот:"
 
-#: ../modules/cdisplay_lcms.c:107
+#: ../modules/cdisplay_lcms.c:116
 msgid "Color management display filter using ICC color profiles"
 msgstr "Филтер на управувањето на бои која користи ICC профили на боја"
 
-#: ../modules/cdisplay_lcms.c:175
+#: ../modules/cdisplay_lcms.c:184
 msgid "Color Management"
 msgstr "Управување со бои"
 
-#: ../modules/cdisplay_lcms.c:290
+#: ../modules/cdisplay_lcms.c:288
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1325,19 +1358,19 @@ msgstr ""
 "Овој филтер ги зема конфигурациите од секцијата за управување со бои во "
 "дијалогот за преференции."
 
-#: ../modules/cdisplay_lcms.c:313
+#: ../modules/cdisplay_lcms.c:302
 msgid "Mode of operation:"
 msgstr "Режим на операции:"
 
-#: ../modules/cdisplay_lcms.c:324
-msgid "RGB workspace profile:"
-msgstr "RGB профил на работна површина:"
+#: ../modules/cdisplay_lcms.c:309
+msgid "RGB working space profile:"
+msgstr "Простор со RGB профил  на бои :"
 
-#: ../modules/cdisplay_lcms.c:334
+#: ../modules/cdisplay_lcms.c:316
 msgid "Monitor profile:"
 msgstr "Профил на мониторот:"
 
-#: ../modules/cdisplay_lcms.c:344
+#: ../modules/cdisplay_lcms.c:323
 msgid "Print simulation profile:"
 msgstr "Профил на симулирање на печатење:"
 
@@ -1349,19 +1382,19 @@ msgstr "Филтер на пробата во боји која користи I
 msgid "Color Proof"
 msgstr "Проба во боја"
 
-#: ../modules/cdisplay_proof.c:304
+#: ../modules/cdisplay_proof.c:306
 msgid "_Intent:"
 msgstr "_Намера:"
 
-#: ../modules/cdisplay_proof.c:308
+#: ../modules/cdisplay_proof.c:310
 msgid "Choose an ICC Color Profile"
 msgstr "Изберете ICC профил на боја"
 
-#: ../modules/cdisplay_proof.c:311
+#: ../modules/cdisplay_proof.c:313
 msgid "_Profile:"
 msgstr "_Профил:"
 
-#: ../modules/cdisplay_proof.c:316
+#: ../modules/cdisplay_proof.c:318
 msgid "_Black Point Compensation"
 msgstr "Замена за _црну точка"
 
@@ -1437,161 +1470,311 @@ msgstr "Водена боја"
 msgid "Pressure"
 msgstr "Притисок"
 
-#: ../modules/controller_linux_input.c:56
+#: ../modules/controller_linux_input.c:58
 msgid "Button 0"
 msgstr "Копче 0"
 
-#: ../modules/controller_linux_input.c:57
+#: ../modules/controller_linux_input.c:59
 msgid "Button 1"
 msgstr "Копче 1"
 
-#: ../modules/controller_linux_input.c:58
+#: ../modules/controller_linux_input.c:60
 msgid "Button 2"
 msgstr "Копче 2"
 
-#: ../modules/controller_linux_input.c:59
+#: ../modules/controller_linux_input.c:61
 msgid "Button 3"
 msgstr "Копче 3"
 
-#: ../modules/controller_linux_input.c:60
+#: ../modules/controller_linux_input.c:62
 msgid "Button 4"
 msgstr "Копче 4"
 
-#: ../modules/controller_linux_input.c:61
+#: ../modules/controller_linux_input.c:63
 msgid "Button 5"
 msgstr "Копче 5"
 
-#: ../modules/controller_linux_input.c:62
+#: ../modules/controller_linux_input.c:64
 msgid "Button 6"
 msgstr "Копче 6"
 
-#: ../modules/controller_linux_input.c:63
+#: ../modules/controller_linux_input.c:65
 msgid "Button 7"
 msgstr "Копче 7"
 
-#: ../modules/controller_linux_input.c:64
+#: ../modules/controller_linux_input.c:66
 msgid "Button 8"
 msgstr "Копче 8"
 
-#: ../modules/controller_linux_input.c:65
+#: ../modules/controller_linux_input.c:67
 msgid "Button 9"
 msgstr "Копче 9"
 
-#: ../modules/controller_linux_input.c:66
+#: ../modules/controller_linux_input.c:68
 msgid "Button Mouse"
 msgstr "Копче на глушецот"
 
-#: ../modules/controller_linux_input.c:67
+#: ../modules/controller_linux_input.c:69
 msgid "Button Left"
 msgstr "Лево копче"
 
-#: ../modules/controller_linux_input.c:68
+#: ../modules/controller_linux_input.c:70
 msgid "Button Right"
 msgstr "Десно копче"
 
-#: ../modules/controller_linux_input.c:69
+#: ../modules/controller_linux_input.c:71
 msgid "Button Middle"
 msgstr "Средно копче"
 
-#: ../modules/controller_linux_input.c:70
+#: ../modules/controller_linux_input.c:72
 msgid "Button Side"
 msgstr "Странично копче"
 
-#: ../modules/controller_linux_input.c:71
+#: ../modules/controller_linux_input.c:73
 msgid "Button Extra"
 msgstr "Екстра копче"
 
-#: ../modules/controller_linux_input.c:72
-#: ../modules/controller_linux_input.c:73
+#: ../modules/controller_linux_input.c:74
 msgid "Button Forward"
 msgstr "Копче за напред"
 
 #: ../modules/controller_linux_input.c:75
+msgid "Button Back"
+msgstr "Копче назад"
+
+#: ../modules/controller_linux_input.c:76
+msgid "Button Task"
+msgstr "Копче задача"
+
+#: ../modules/controller_linux_input.c:78
 msgid "Button Wheel"
 msgstr "Тркалце"
 
-#: ../modules/controller_linux_input.c:78
+#: ../modules/controller_linux_input.c:81
 msgid "Button Gear Down"
 msgstr "Копче запчаник надоле"
 
-#: ../modules/controller_linux_input.c:81
+#: ../modules/controller_linux_input.c:84
 msgid "Button Gear Up"
 msgstr "Копче запчаник нагоре"
 
-#: ../modules/controller_linux_input.c:87
-msgid "Wheel Turn Left"
-msgstr "Вртење на тркалцето кон лево"
+#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_dx_dinput.c:469
+msgid "X Move Left"
+msgstr "Помести по X лево"
 
-#: ../modules/controller_linux_input.c:88
-msgid "Wheel Turn Right"
-msgstr "Вртење на тркалцето кон десно"
+#: ../modules/controller_linux_input.c:91
+#: ../modules/controller_dx_dinput.c:472
+msgid "X Move Right"
+msgstr "Помести по X десно"
 
-#: ../modules/controller_linux_input.c:89
+#: ../modules/controller_linux_input.c:92
+msgid "Y Move Forward"
+msgstr "Помести по Y напред"
+
+#: ../modules/controller_linux_input.c:93
+msgid "Y Move Back"
+msgstr "Помести по Y назад"
+
+#: ../modules/controller_linux_input.c:94
+#: ../modules/controller_dx_dinput.c:487
+msgid "Z Move Up"
+msgstr "Помести нагоре по Z"
+
+#: ../modules/controller_linux_input.c:95
+#: ../modules/controller_dx_dinput.c:490
+msgid "Z Move Down"
+msgstr "Помести надоле по Z"
+
+#: ../modules/controller_linux_input.c:97
+msgid "X Axis Tilt Forward"
+msgstr "По X оска турни напред"
+
+#: ../modules/controller_linux_input.c:98
+msgid "X Axis Tilt Back"
+msgstr "По X оска турни назад"
+
+#: ../modules/controller_linux_input.c:99
+#: ../modules/controller_dx_dinput.c:505
+msgid "Y Axis Tilt Right"
+msgstr "По Y оска турни десно"
+
+#: ../modules/controller_linux_input.c:100
+#: ../modules/controller_dx_dinput.c:508
+msgid "Y Axis Tilt Left"
+msgstr "По Y оска турни лево"
+
+#: ../modules/controller_linux_input.c:101
+#: ../modules/controller_dx_dinput.c:514
+msgid "Z Axis Turn Left"
+msgstr "По Z оска турни лево"
+
+#: ../modules/controller_linux_input.c:102
+#: ../modules/controller_dx_dinput.c:517
+msgid "Z Axis Turn Right"
+msgstr "По Z оска турни десно"
+
+#: ../modules/controller_linux_input.c:104
+msgid "Horiz. Wheel Turn Back"
+msgstr "Хоризонтално со тркалцето турни назад"
+
+#: ../modules/controller_linux_input.c:105
+msgid "Horiz. Wheel Turn Forward"
+msgstr "Хоризонтално со тркалцето турни напред"
+
+#: ../modules/controller_linux_input.c:106
 msgid "Dial Turn Left"
 msgstr "Бирај заврти налево"
 
-#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_linux_input.c:107
 msgid "Dial Turn Right"
 msgstr "Бирај заврти надесно"
 
-#: ../modules/controller_linux_input.c:154
+#: ../modules/controller_linux_input.c:108
+msgid "Wheel Turn Left"
+msgstr "Вртење на тркалцето кон лево"
+
+#: ../modules/controller_linux_input.c:109
+msgid "Wheel Turn Right"
+msgstr "Вртење на тркалцето кон десно"
+
+#: ../modules/controller_linux_input.c:179
 msgid "Linux input event controller"
 msgstr "Линукс контролер за влезни настани"
 
-#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:246
+#: ../modules/controller_linux_input.c:249
+#: ../modules/controller_dx_dinput.c:227 ../modules/controller_midi.c:245
 msgid "Device:"
 msgstr "Уред:"
 
-#: ../modules/controller_linux_input.c:223
+#: ../modules/controller_linux_input.c:250
 msgid "The name of the device to read Linux Input events from."
 msgstr "Името на уредот од кој Линукс ќе ги чита влезните настани."
 
-#: ../modules/controller_linux_input.c:227
+#: ../modules/controller_linux_input.c:261
 msgid "Linux Input"
 msgstr "Линукс влез"
 
-#: ../modules/controller_linux_input.c:351
+#: ../modules/controller_linux_input.c:539
 msgid "Linux Input Events"
 msgstr "Линукс влезни настани"
 
-#: ../modules/controller_linux_input.c:372 ../modules/controller_midi.c:482
+#: ../modules/controller_linux_input.c:551
+#: ../modules/controller_dx_dinput.c:1122 ../modules/controller_midi.c:533
+msgid "No device configured"
+msgstr "Нема конфигуриран уред"
+
+#: ../modules/controller_linux_input.c:577 ../modules/controller_midi.c:482
 #: ../modules/controller_midi.c:508
 #, c-format
 msgid "Reading from %s"
 msgstr "Читам од %s"
 
-#: ../modules/controller_linux_input.c:388
-#: ../modules/controller_linux_input.c:431 ../modules/controller_midi.c:464
+#: ../modules/controller_linux_input.c:595
+#: ../modules/controller_linux_input.c:649 ../modules/controller_midi.c:464
 #: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
 #, c-format
 msgid "Device not available: %s"
 msgstr "Уредот не е достапен: %s"
 
-#: ../modules/controller_linux_input.c:396 ../modules/controller_midi.c:533
-msgid "No device configured"
-msgstr "Нема конфигуриран уред"
+#: ../modules/controller_linux_input.c:614
+#: ../modules/controller_dx_dinput.c:1147
+msgid "Device not available"
+msgstr "Уредот не е достапен: %s "
 
-#: ../modules/controller_linux_input.c:440 ../modules/controller_midi.c:605
+#: ../modules/controller_linux_input.c:658 ../modules/controller_midi.c:605
 msgid "End of file"
 msgstr "Крај на датотеката"
 
-#: ../modules/controller_midi.c:168
+#: ../modules/controller_dx_dinput.c:157
+msgid "DirectX DirectInput event controller"
+msgstr "DirectX Директен внес за контрола на акција"
+
+#: ../modules/controller_dx_dinput.c:228
+msgid "The device to read DirectInput events from."
+msgstr "Уредот да може да прочита од директениот внес за акции"
+
+#: ../modules/controller_dx_dinput.c:237
+msgid "DirectX DirectInput"
+msgstr "DirectX директен внес"
+
+#: ../modules/controller_dx_dinput.c:446
+#, c-format
+msgid "Button %d"
+msgstr "Копче %d"
+
+#: ../modules/controller_dx_dinput.c:449
+#, c-format
+msgid "Button %d Press"
+msgstr "Копче %d стисни"
+
+#: ../modules/controller_dx_dinput.c:452
+#, c-format
+msgid "Button %d Release"
+msgstr "Копче %d пушти"
+
+#: ../modules/controller_dx_dinput.c:478
+msgid "Y Move Away"
+msgstr "По Y поместување далеку"
+
+#: ../modules/controller_dx_dinput.c:481
+msgid "Y Move Near"
+msgstr "По Y поместување блиску"
+
+#: ../modules/controller_dx_dinput.c:496
+msgid "X Axis Tilt Away"
+msgstr "По X оска турни далеку"
+
+#: ../modules/controller_dx_dinput.c:499
+msgid "X Axis Tilt Near"
+msgstr "По X оска турни блиску"
+
+#: ../modules/controller_dx_dinput.c:528
+#, c-format
+msgid "Slider %d Increase"
+msgstr "Зголеми %d лизгач"
+
+#: ../modules/controller_dx_dinput.c:531
+#, c-format
+msgid "Slider %d Decrease"
+msgstr "Намали %d лизгач"
+
+#: ../modules/controller_dx_dinput.c:541
+#, c-format
+msgid "POV %d X View"
+msgstr "ТНГ %d X Видик"
+
+#: ../modules/controller_dx_dinput.c:544
+#, c-format
+msgid "POV %d Y View"
+msgstr "ТНГ %d Y Видик "
+
+#: ../modules/controller_dx_dinput.c:547
+#, c-format
+msgid "POV %d Return"
+msgstr "ТНГ %d Врати"
+
+#: ../modules/controller_dx_dinput.c:1111
+msgid "DirectInput Events"
+msgstr "Акции од директниот внес"
+
+#: ../modules/controller_midi.c:167
 msgid "MIDI event controller"
-msgstr "MIDI контролер на настани"
+msgstr "MIDI контролер на акција"
 
-#: ../modules/controller_midi.c:237
+#: ../modules/controller_midi.c:236
 msgid "The name of the device to read MIDI events from."
-msgstr "Името на уредот од кој MIDI ќе ги чита настаните."
+msgstr "Името на уредот од кој MIDI ќе ги чита акциите."
 
-#: ../modules/controller_midi.c:240
+#: ../modules/controller_midi.c:239
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Внесете 'alsa' за да го користите ALSA секвенцерот."
 
-#: ../modules/controller_midi.c:255
+#: ../modules/controller_midi.c:254
 msgid "Channel:"
 msgstr "Канал:"
 
-#: ../modules/controller_midi.c:256
+#: ../modules/controller_midi.c:255
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
@@ -1599,7 +1782,7 @@ msgstr ""
 "MIDI канал од кој ќе се читаат настаните. Поставете на -1 за да читате од "
 "сите MIDI канали."
 
-#: ../modules/controller_midi.c:260
+#: ../modules/controller_midi.c:259
 msgid "MIDI"
 msgstr "MIDI"
 
@@ -1621,4 +1804,12 @@ msgstr "Контролер %03d"
 #: ../modules/controller_midi.c:436
 msgid "MIDI Events"
 msgstr "MIDI настани"
+
+#: ../modules/controller_midi.c:454
+msgid "GIMP"
+msgstr "Гимп"
+
+#: ../modules/controller_midi.c:456
+msgid "GIMP MIDI Input Controller"
+msgstr "Гимп MIDI контролер на настани"
 
