@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-25 15:13+0200\n"
-"PO-Revision-Date: 2007-03-25 15:15+0200\n"
+"POT-Creation-Date: 2007-06-18 22:09+0200\n"
+"PO-Revision-Date: 2007-06-18 22:11+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -471,12 +471,12 @@ msgid "Black only"
 msgstr "Solo neri"
 
 #: ../libgimpbase/gimpbaseenums.c:263
-msgid "Image source"
-msgstr "Sorgente immagine"
+msgid "Image"
+msgstr "Immagine"
 
 #: ../libgimpbase/gimpbaseenums.c:264
-msgid "Pattern source"
-msgstr "Sorgente motivo"
+msgid "Pattern"
+msgstr "Motivo"
 
 #: ../libgimpbase/gimpbaseenums.c:293
 msgid "Lightness"
@@ -839,29 +839,29 @@ msgstr "Saturazione"
 msgid "Absolute colorimetric"
 msgstr "Colorimetrico assoluto"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:96
+#: ../libgimpconfig/gimpconfig-deserialize.c:97
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "il valore per il token %s non è una stringa UTF-8 valida"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:427
+#: ../libgimpconfig/gimpconfig-deserialize.c:436
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "per un token booleano %s era previsto \"yes\" o \"no\" ma è arrivato \"%s\""
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:501
+#: ../libgimpconfig/gimpconfig-deserialize.c:510
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "valore \"%s\" non valido per il token %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:516
+#: ../libgimpconfig/gimpconfig-deserialize.c:525
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "valore non valido \"%ld\" per il token %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:585
+#: ../libgimpconfig/gimpconfig-deserialize.c:594
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "durante l'analisi del token \"%s\": %s"
@@ -1031,15 +1031,15 @@ msgstr "Seleziona cartella"
 msgid "Select File"
 msgstr "Seleziona file"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:202
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Kilobytes"
 msgstr "Kilobyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:203
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Megabytes"
 msgstr "Megabyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libgimpwidgets/gimpmemsizeentry.c:206
 msgid "Gigabytes"
 msgstr "Gigabyte"
 
@@ -1122,11 +1122,6 @@ msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Questo campo di immissione testo è limitato a %d carattere."
 msgstr[1] "Questo campo di immissione testo è limitato a %d caratteri."
-
-#: ../libgimpwidgets/gimpresolutionentry.c:382
-#, c-format
-msgid "pixels/%s"
-msgstr "pixel/%s"
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -1577,14 +1572,12 @@ msgid "X Move Right"
 msgstr "A destra Spostamento X"
 
 #: ../modules/controller_linux_input.c:92
-#: ../modules/controller_dx_dinput.c:478
-msgid "Y Move Away"
-msgstr "Allontanamento in Y"
+msgid "Y Move Forward"
+msgstr "Spostamento in avanti in Y"
 
 #: ../modules/controller_linux_input.c:93
-#: ../modules/controller_dx_dinput.c:481
-msgid "Y Move Near"
-msgstr "Avvicinamento in Y"
+msgid "Y Move Back"
+msgstr "Spostamento indietro in Y"
 
 #: ../modules/controller_linux_input.c:94
 #: ../modules/controller_dx_dinput.c:487
@@ -1597,14 +1590,12 @@ msgid "Z Move Down"
 msgstr "In basso spostamento Z"
 
 #: ../modules/controller_linux_input.c:97
-#: ../modules/controller_dx_dinput.c:496
-msgid "X Axis Tilt Away"
-msgstr "Inclinazione asse X lontana"
+msgid "X Axis Tilt Forward"
+msgstr "Inclinazione asse X in avanti"
 
 #: ../modules/controller_linux_input.c:98
-#: ../modules/controller_dx_dinput.c:499
-msgid "X Axis Tilt Near"
-msgstr "Inclinazione asse X vicina"
+msgid "X Axis Tilt Back"
+msgstr "Inclinazione asse X indietro"
 
 #: ../modules/controller_linux_input.c:99
 #: ../modules/controller_dx_dinput.c:505
@@ -1724,6 +1715,22 @@ msgstr "Pressione pulsante %d"
 #, c-format
 msgid "Button %d Release"
 msgstr "Rilascio pulsante %d"
+
+#: ../modules/controller_dx_dinput.c:478
+msgid "Y Move Away"
+msgstr "Allontanamento in Y"
+
+#: ../modules/controller_dx_dinput.c:481
+msgid "Y Move Near"
+msgstr "Avvicinamento in Y"
+
+#: ../modules/controller_dx_dinput.c:496
+msgid "X Axis Tilt Away"
+msgstr "Inclinazione asse X lontana"
+
+#: ../modules/controller_dx_dinput.c:499
+msgid "X Axis Tilt Near"
+msgstr "Inclinazione asse X vicina"
 
 #: ../modules/controller_dx_dinput.c:528
 #, c-format
