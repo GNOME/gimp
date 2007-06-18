@@ -772,7 +772,7 @@ gimp_iscissors_tool_draw (GimpDrawTool *draw_tool)
               if (iscissors->livewire->points)
                 g_ptr_array_free (iscissors->livewire->points, TRUE);
 
-              g_free (iscissors->livewire);
+              g_slice_free (ICurve, iscissors->livewire);
 
               iscissors->livewire = NULL;
             }
@@ -895,6 +895,7 @@ iscissors_draw_curve (GimpDrawTool *draw_tool,
     }
 
   gimp_draw_tool_draw_lines (draw_tool, points, len, FALSE, FALSE);
+
   g_free (points);
 }
 

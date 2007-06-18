@@ -1,5 +1,10 @@
 2007-06-18  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpiscissorstool.c (gimp_iscissors_tool_draw): free
+	live-wire Curve segment using g_slice_free().
+
+2007-06-18  Sven Neumann  <sven@gimp.org>
+
 	* app/file/file-open.c (file_open_from_command_line): use
 	gimp_message() for error handling.
 
