@@ -62,36 +62,40 @@ static void        run   (const gchar      *name,
                           gint             *nreturn_vals,
                           GimpParam       **return_vals);
 
-static void        do_playback         (void);
+static void        do_playback               (void);
 
-static void        window_destroy      (GtkWidget       *widget);
-static void        play_callback       (GtkToggleAction *action);
-static void        step_callback       (GtkAction       *action);
-static void        rewind_callback     (GtkAction       *action);
-static gboolean    repaint_sda         (GtkWidget       *darea,
-                                        GdkEventExpose  *event,
-                                        gpointer         data);
-static gboolean    repaint_da          (GtkWidget       *darea,
-                                        GdkEventExpose  *event,
-                                        gpointer         data);
+static void        window_destroy            (GtkWidget       *widget);
+static void        play_callback             (GtkToggleAction *action);
+static void        step_callback             (GtkAction       *action);
+static void        rewind_callback           (GtkAction       *action);
+static void        speed_up_callback         (GtkAction       *action);
+static void        speed_down_callback       (GtkAction       *action);
+static void        speed_reset_callback      (GtkAction       *action);
+static gboolean    repaint_sda               (GtkWidget       *darea,
+                                              GdkEventExpose  *event,
+                                              gpointer         data);
+static gboolean    repaint_da                (GtkWidget       *darea,
+                                              GdkEventExpose  *event,
+                                              gpointer         data);
 
-static void        render_frame        (gint32           whichframe);
-static void        show_frame          (void);
-static void        total_alpha_preview (guchar          *ptr);
-static void        init_preview        (void);
+static void        render_frame              (gint32           whichframe);
+static void        show_frame                (void);
+static void        total_alpha_preview       (guchar          *ptr);
+static void        init_preview              (void);
+static void        update_statusbar          (void);
 
 
 /* tag util functions*/
-static gint        parse_ms_tag        (const gchar     *str);
-static DisposeType parse_disposal_tag  (const gchar     *str);
-static DisposeType get_frame_disposal  (guint            whichframe);
-static guint32     get_frame_duration  (guint            whichframe);
-static gboolean    is_disposal_tag     (const gchar     *str,
-                                        DisposeType     *disposal,
-                                        gint            *taglength);
-static gboolean    is_ms_tag           (const gchar     *str,
-                                        gint            *duration,
-                                        gint            *taglength);
+static gint        parse_ms_tag              (const gchar     *str);
+static DisposeType parse_disposal_tag        (const gchar     *str);
+static DisposeType get_frame_disposal        (guint            whichframe);
+static guint32     get_frame_duration        (guint            whichframe);
+static gboolean    is_disposal_tag           (const gchar     *str,
+                                              DisposeType     *disposal,
+                                              gint            *taglength);
+static gboolean    is_ms_tag                 (const gchar     *str,
+                                              gint            *duration,
+                                              gint            *taglength);
 
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -125,6 +129,8 @@ static guint              timer   = 0;
 static GimpImageBaseType  imagetype;
 static guchar            *palette;
 static gint               ncolours;
+static gdouble             duration_factor = 1.0;
+
 
 /* for shaping */
 typedef struct
@@ -136,6 +142,8 @@ static gchar     *shape_preview_mask = NULL;
 static GtkWidget *shape_window       = NULL;
 static GdkWindow *root_win           = NULL;
 static gboolean   detached           = FALSE;
+static GtkWidget *statusbar          = NULL;
+static guint      message_context_id = 0;
 
 
 MAIN ()
@@ -450,6 +458,21 @@ ui_manager_new (GtkWidget *window)
       "quit", GTK_STOCK_QUIT,
       NULL, "<control>Q", NULL,
       G_CALLBACK (close_callback)
+    },
+    {
+      "speed-up", NULL,
+      N_("Faster"), "<control>L", N_("Increase the speed of the animation"),
+      G_CALLBACK (speed_up_callback)
+    },
+    {
+      "speed-down", NULL,
+      N_("Slower"), "<control>J", N_("Decrease the speed of the animation"),
+      G_CALLBACK (speed_down_callback)
+    },
+    {
+      "speed-reset", NULL,
+      N_("Reset speed"), "<control>K", N_("Reset the speed of the animation"),
+      G_CALLBACK (speed_reset_callback)
     }
   };
 
@@ -516,6 +539,10 @@ ui_manager_new (GtkWidget *window)
                                      "    <menuitem action=\"step\" />"
                                      "    <menuitem action=\"rewind\" />"
                                      "    <separator />"
+                                     "    <menuitem action=\"speed-down\" />"
+                                     "    <menuitem action=\"speed-up\" />"
+                                     "    <menuitem action=\"speed-reset\" />"
+                                     "    <separator />"
                                      "    <menuitem action=\"detach\" />"
                                      "    <menuitem action=\"close\" />"
                                      "  </popup>"
@@ -540,6 +567,7 @@ build_dialog (GimpImageBaseType  basetype,
   GtkWidget   *vbox;
   GtkWidget   *abox;
   GtkToolItem *item;
+  GtkAction   *action;
   GdkCursor   *cursor;
   gchar       *name;
 
@@ -601,10 +629,13 @@ build_dialog (GimpImageBaseType  basetype,
   gtk_box_pack_start (GTK_BOX (vbox), progress, FALSE, FALSE, 0);
   gtk_widget_show (progress);
 
+  statusbar = gtk_statusbar_new ();
+  gtk_box_pack_start (GTK_BOX (vbox), statusbar, FALSE, FALSE, 0);
+  gtk_widget_show (statusbar);
+  update_statusbar ();
+
   if (total_frames < 2)
     {
-      GtkAction *action;
-
       action = gtk_ui_manager_get_action (ui_manager,
                                           "/ui/anim-play-toolbar/play");
       gtk_action_set_sensitive (action, FALSE);
@@ -617,6 +648,10 @@ build_dialog (GimpImageBaseType  basetype,
                                           "/ui/anim-play-toolbar/rewind");
       gtk_action_set_sensitive (action, FALSE);
     }
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/anim-play-popup/speed-reset");
+  gtk_action_set_sensitive (action, FALSE);
 
   gtk_widget_show (window);
 
@@ -1340,12 +1375,13 @@ window_destroy (GtkWidget *widget)
   gtk_main_quit ();
 }
 
+
 static gint
 advance_frame_callback (gpointer data)
 {
   remove_timer();
 
-  timer = g_timeout_add (get_frame_duration ((frame_number + 1) % total_frames),
+  timer = g_timeout_add (get_frame_duration ((frame_number + 1) % total_frames) * duration_factor,
                          advance_frame_callback, NULL);
 
   do_step ();
@@ -1353,6 +1389,7 @@ advance_frame_callback (gpointer data)
 
   return FALSE;
 }
+
 
 static void
 play_callback (GtkToggleAction *action)
@@ -1363,7 +1400,7 @@ play_callback (GtkToggleAction *action)
   playing = gtk_toggle_action_get_active (action);
 
   if (playing)
-    timer = g_timeout_add (get_frame_duration (frame_number),
+    timer = g_timeout_add (get_frame_duration (frame_number) * duration_factor,
                            advance_frame_callback, NULL);
 
   g_object_set (action,
@@ -1390,6 +1427,88 @@ rewind_callback (GtkAction *action)
   frame_number = 0;
   render_frame (frame_number);
   show_frame ();
+}
+
+static void
+speed_up_callback (GtkAction *action)
+{
+  if (duration_factor > 0.125)
+    duration_factor /= 2.0;
+
+  gtk_action_set_sensitive (action, duration_factor > 0.125);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/anim-play-popup/speed-reset");
+  gtk_action_set_sensitive (action, duration_factor != 1.0);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/anim-play-popup/speed-down");
+  gtk_action_set_sensitive (action, TRUE);
+
+  update_statusbar ();
+}
+
+static void
+speed_down_callback (GtkAction *action)
+{
+  if (duration_factor < 8.0)
+    duration_factor *= 2.0;
+
+  gtk_action_set_sensitive (action, duration_factor < 8.0);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/anim-play-popup/speed-reset");
+  gtk_action_set_sensitive (action, duration_factor != 1.0);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/anim-play-popup/speed-up");
+  gtk_action_set_sensitive (action, TRUE);
+
+  update_statusbar ();
+}
+
+static void
+speed_reset_callback (GtkAction *action)
+{
+  duration_factor = 1.0;
+
+  gtk_action_set_sensitive (action, FALSE);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/anim-play-popup/speed-down");
+  gtk_action_set_sensitive (action, TRUE);
+
+  action = gtk_ui_manager_get_action (ui_manager,
+                                      "/anim-play-popup/speed-up");
+  gtk_action_set_sensitive (action, TRUE);
+
+  update_statusbar ();
+}
+
+static void
+update_statusbar (void)
+{
+  gchar *status_message;
+
+  if (message_context_id == 0)
+    {
+      message_context_id =
+        gtk_statusbar_get_context_id (GTK_STATUSBAR (statusbar),
+                                      "speed-playback");
+    }
+  else
+    {
+      gtk_statusbar_pop (GTK_STATUSBAR (statusbar),
+                         message_context_id);
+    }
+
+  status_message = g_strdup_printf  (_("Playback speed: %d %%"),
+                                     (gint) ROUND (100.0 / duration_factor));
+
+  gtk_statusbar_push (GTK_STATUSBAR (statusbar),
+                      message_context_id, status_message);
+
+  g_free (status_message);
 }
 
 /* tag util. */
