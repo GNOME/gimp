@@ -1,3 +1,10 @@
+2007-06-18  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/common/psd.c (seek_to_and_unpack_pixeldata): check
+	channel dimensions to avoid potential integer overflow.
+
 2007-06-11  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.2.16, interface_age 16.

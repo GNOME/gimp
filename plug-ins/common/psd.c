@@ -1199,8 +1199,14 @@ seek_to_and_unpack_pixeldata(FILE* fd, gint layeri, gint channeli)
   compression = getgshort(fd, "layer channel compression type");
   offset+=2;
 
-  width = channel->width;
+  width  = channel->width;
   height = channel->height;
+
+  if (width > G_MAXINT16 || height > G_MAXINT16)
+    {
+      g_message ("Error: Invalid channel dimensions");
+      gimp_quit ();
+    }
 
   IFDBG
     {
