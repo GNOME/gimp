@@ -164,7 +164,7 @@ gimp_rect_select_options_gui (GimpToolOptions *tool_options)
       gimp_prop_scale_entry_new (config, "corner-radius",
                                  GTK_TABLE (table), 0, 0,
                                  _("Radius:"),
-                                 0.0, 100.0, 1,
+                                 1.0, 10.0, 1,
                                  FALSE, 0.0, 0.0);
   }
 

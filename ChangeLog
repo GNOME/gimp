@@ -1,3 +1,9 @@
+2007-06-19  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangleselectoptions.c
+	(gimp_rect_select_options_gui): set proper step and page
+	increments in the scale entry for the corner radius.
+
 2007-06-18  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpiscissorstool.c (gimp_iscissors_tool_draw): free
