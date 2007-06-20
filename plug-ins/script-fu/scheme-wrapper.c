@@ -51,10 +51,10 @@ static int   ts_console_mode;
 
 #undef cons
 
-struct
-named_constant {
-    const char *name;
-    int value;
+struct named_constant
+{
+  const gchar *name;
+  gint         value;
 };
 
 struct named_constant const script_constants[] =
@@ -68,6 +68,13 @@ struct named_constant const script_constants[] =
   /* Useful misc stuff */
   { "TRUE",           TRUE  },
   { "FALSE",          FALSE },
+
+  /* Builtin units */
+  { "UNIT-PIXEL",     GIMP_UNIT_PIXEL },
+  { "UNIT-INCH",      GIMP_UNIT_INCH  },
+  { "UNIT-MM",        GIMP_UNIT_MM    },
+  { "UNIT-POINT",     GIMP_UNIT_POINT },
+  { "UNIT-PICA",      GIMP_UNIT_PICA  },
 
   /* Script-Fu types */
   { "SF-IMAGE",       SF_IMAGE      },
@@ -220,15 +227,15 @@ ts_print_welcome (void)
 void
 ts_interpret_stdin (void)
 {
-  scheme_load_file(&sc, stdin);
+  scheme_load_file (&sc, stdin);
 }
 
 gint
 ts_interpret_string (const gchar *expr)
 {
-  port *pt=sc.outport->_object._port;
+  port *pt = sc.outport->_object._port;
 
-  memset(sc.linebuff, '\0', LINESIZE);
+  memset (sc.linebuff, '\0', LINESIZE);
   pt->rep.string.curr = sc.linebuff;
   /* Somewhere 'past_the_end' gets altered so it needs to be reset ~~~~~ */
   pt->rep.string.past_the_end = &sc.linebuff[LINESIZE-1];
@@ -372,32 +379,31 @@ init_constants (void)
   const gchar **enum_type_names;
   gint          n_enum_type_names;
   gint          i;
-  GimpUnit      unit;
   pointer       symbol;
 
   symbol = sc.vptr->mk_symbol (&sc, "gimp-directory");
   sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                sc.vptr->mk_string (&sc, gimp_directory () ));
+                          sc.vptr->mk_string (&sc, gimp_directory ()));
   sc.vptr->setimmutable(symbol);
 
   symbol = sc.vptr->mk_symbol (&sc, "gimp-data-directory");
   sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                sc.vptr->mk_string (&sc, gimp_data_directory () ));
+                          sc.vptr->mk_string (&sc, gimp_data_directory ()));
   sc.vptr->setimmutable(symbol);
 
   symbol = sc.vptr->mk_symbol (&sc, "gimp-plug-in-directory");
   sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                sc.vptr->mk_string (&sc, gimp_plug_in_directory () ));
+                          sc.vptr->mk_string (&sc, gimp_plug_in_directory ()));
   sc.vptr->setimmutable(symbol);
 
   symbol = sc.vptr->mk_symbol (&sc, "gimp-locale-directory");
   sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                sc.vptr->mk_string (&sc, gimp_locale_directory () ));
+                          sc.vptr->mk_string (&sc, gimp_locale_directory ()));
   sc.vptr->setimmutable(symbol);
 
   symbol = sc.vptr->mk_symbol (&sc, "gimp-sysconf-directory");
   sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                sc.vptr->mk_string (&sc, gimp_sysconf_directory () ));
+                          sc.vptr->mk_string (&sc, gimp_sysconf_directory ()));
   sc.vptr->setimmutable(symbol);
 
   enum_type_names = gimp_enums_get_type_names (&n_enum_type_names);
@@ -430,62 +436,44 @@ init_constants (void)
       g_type_class_unref (enum_class);
     }
 
-  for (unit = GIMP_UNIT_PIXEL;
-       unit < gimp_unit_get_number_of_built_in_units ();
-       unit++)
-    {
-      gchar *tmp;
-      gchar *scheme_name;
-
-      /* FIXME: gimp_unit_get_singular() returns a translated string */
-      tmp = g_ascii_strup (gimp_unit_get_singular (unit), -1);
-      scheme_name = g_strconcat ("UNIT-", tmp, NULL);
-      g_free (tmp);
-
-      symbol = sc.vptr->mk_symbol (&sc, scheme_name);
-      sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-            sc.vptr->mk_integer (&sc, unit));
-      sc.vptr->setimmutable(symbol);
-
-      g_free (scheme_name);
-    }
-
   /* Constants used in the register block of scripts */
   for (i = 0; script_constants[i].name != NULL; ++i)
     {
       symbol = sc.vptr->mk_symbol (&sc, script_constants[i].name);
       sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                    sc.vptr->mk_integer (&sc, script_constants[i].value));
+                              sc.vptr->mk_integer (&sc,
+                                                   script_constants[i].value));
       sc.vptr->setimmutable(symbol);
     }
 
   /* Define string constant for use in building paths to files/directories */
   symbol = sc.vptr->mk_symbol (&sc, "DIR-SEPARATOR");
   sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                sc.vptr->mk_string (&sc, G_DIR_SEPARATOR_S));
+                          sc.vptr->mk_string (&sc, G_DIR_SEPARATOR_S));
   sc.vptr->setimmutable(symbol);
 
   /* These constants are deprecated and will be removed at a later date. */
   symbol = sc.vptr->mk_symbol (&sc, "gimp-dir");
   sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                sc.vptr->mk_string (&sc, gimp_directory () ));
+                          sc.vptr->mk_string (&sc, gimp_directory () ));
   sc.vptr->setimmutable(symbol);
 
   symbol = sc.vptr->mk_symbol (&sc, "gimp-data-dir");
   sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                sc.vptr->mk_string (&sc, gimp_data_directory () ));
+                          sc.vptr->mk_string (&sc, gimp_data_directory () ));
   sc.vptr->setimmutable(symbol);
 
   symbol = sc.vptr->mk_symbol (&sc, "gimp-plugin-dir");
   sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                sc.vptr->mk_string (&sc, gimp_plug_in_directory () ));
+                          sc.vptr->mk_string (&sc, gimp_plug_in_directory () ));
   sc.vptr->setimmutable(symbol);
 
   for (i = 0; old_constants[i].name != NULL; ++i)
     {
       symbol = sc.vptr->mk_symbol (&sc, old_constants[i].name);
       sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                    sc.vptr->mk_integer (&sc, old_constants[i].value));
+                              sc.vptr->mk_integer (&sc,
+                                                   old_constants[i].value));
       sc.vptr->setimmutable(symbol);
     }
 }
@@ -512,29 +500,32 @@ init_procedures (void)
 #if USE_DL
   symbol = sc.vptr->mk_symbol (&sc,"load-extension");
   sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                  sc.vptr->mk_foreign_func (&sc, scm_load_ext));
+                          sc.vptr->mk_foreign_func (&sc, scm_load_ext));
   sc.vptr->setimmutable(symbol);
 #endif
 
   symbol = sc.vptr->mk_symbol (&sc, "script-fu-register");
   sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                  sc.vptr->mk_foreign_func (&sc, script_fu_register_call));
+                          sc.vptr->mk_foreign_func (&sc,
+                                                    script_fu_register_call));
   sc.vptr->setimmutable(symbol);
 
   symbol = sc.vptr->mk_symbol (&sc, "script-fu-menu-register");
   sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                  sc.vptr->mk_foreign_func (&sc, script_fu_menu_register_call));
+                          sc.vptr->mk_foreign_func (&sc,
+                                                    script_fu_menu_register_call));
   sc.vptr->setimmutable(symbol);
 
   symbol = sc.vptr->mk_symbol (&sc, "script-fu-quit");
   sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                  sc.vptr->mk_foreign_func (&sc, script_fu_quit_call));
+                          sc.vptr->mk_foreign_func (&sc, script_fu_quit_call));
   sc.vptr->setimmutable(symbol);
 
   /*  register the database execution procedure  */
   symbol = sc.vptr->mk_symbol (&sc, "gimp-proc-db-call");
   sc.vptr->scheme_define (&sc, sc.global_env, symbol,
-                  sc.vptr->mk_foreign_func (&sc, marshall_proc_db_call));
+                          sc.vptr->mk_foreign_func (&sc,
+                                                    marshall_proc_db_call));
   sc.vptr->setimmutable(symbol);
 
   gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", ".*",
@@ -558,15 +549,15 @@ init_procedures (void)
          /* The Scheme statement was suggested by Simon Budig  */
          if (nparams == 0)
            {
-             buff = g_strdup_printf (
-                      " (define (%s) (gimp-proc-db-call \"%s\"))",
-                      proc_list[i], proc_list[i]);
+             buff = g_strdup_printf (" (define (%s)"
+                                     " (gimp-proc-db-call \"%s\"))",
+                                     proc_list[i], proc_list[i]);
            }
          else
            {
-             buff = g_strdup_printf (
-                      " (define %s (lambda x (apply gimp-proc-db-call (cons \"%s\" x))))",
-                      proc_list[i], proc_list[i]);
+             buff = g_strdup_printf (" (define %s (lambda x"
+                                     " (apply gimp-proc-db-call (cons \"%s\" x))))",
+                                     proc_list[i], proc_list[i]);
            }
 
          /*  Execute the 'define'  */
@@ -580,6 +571,7 @@ init_procedures (void)
          g_free (proc_author);
          g_free (proc_copyright);
          g_free (proc_date);
+
          gimp_destroy_paramdefs (params, nparams);
          gimp_destroy_paramdefs (return_vals, nreturn_vals);
       }

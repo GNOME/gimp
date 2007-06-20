@@ -1,5 +1,12 @@
 2007-06-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scheme-wrapper.c (init_constants): hardcode
+	the built-in units. Dynamically constructing the constants using
+	gimp_unit_get_singular() doesn't work because it returns a
+	translated string.
+
+2007-06-20  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-console.c (script_fu_cc_key_function):
 	applied patch from Eric Lamarque with some minor modifications.
 	Fixes the remaining aspect of bug #438997.
