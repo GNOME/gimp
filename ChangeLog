@@ -1,5 +1,10 @@
 2007-06-20  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/animationplay.c: applied patch from Paul Seidel
+	with further improvements to the playback speed control (bug #338380).
+
+2007-06-20  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-pyramid.c (tile_pyramid_write_quarter): added missing
 	implementations for 1 and 3 bytes per pixel.
 
