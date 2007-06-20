@@ -1,11 +1,16 @@
 2007-06-20  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-pyramid.c (tile_pyramid_write_quarter): added missing
+	implementations for 1 and 3 bytes per pixel.
+
+2007-06-20  Sven Neumann  <sven@gimp.org>
+
 	* app/base/Makefile.am
 	* app/base/base-types.h
 	* app/base/tile-pyramid.[ch]: image pyramid code split out of
 	GimpProjection.
 
-	* app/core/gimpprojection.[ch]: use TilePyramid.
+	* app/core/gimpprojection.[ch]: use the new TilePyramid.
 
 2007-06-20  Sven Neumann  <sven@gimp.org>
 

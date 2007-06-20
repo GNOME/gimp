@@ -328,7 +328,17 @@ tile_pyramid_write_quarter (Tile *dest,
       switch (bpp)
         {
         case 1:
-          g_warning ("not yet implemented");
+          for (x = 0; x < src_ewidth / 2; x++)
+            {
+              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0]) / 4;
+
+              dst += 1;
+
+              src0 += 2;
+              src1 += 2;
+              src2 += 2;
+              src3 += 2;
+            }
           break;
 
         case 2:
@@ -359,7 +369,19 @@ tile_pyramid_write_quarter (Tile *dest,
           break;
 
         case 3:
-          g_warning ("not yet implemented");
+          for (x = 0; x < src_ewidth / 2; x++)
+            {
+              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0]) / 4;
+              dst[1] = (src0[1] + src1[1] + src2[1] + src3[1]) / 4;
+              dst[2] = (src0[2] + src1[2] + src2[2] + src3[2]) / 4;
+
+              dst += 3;
+
+              src0 += 6;
+              src1 += 6;
+              src2 += 6;
+              src3 += 6;
+            }
           break;
 
         case 4:
