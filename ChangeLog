@@ -1,5 +1,12 @@
 2007-06-20  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile.[ch]: removed unused function tile_mark_valid().
+
+	* app/base/tile-manager.[ch]: removed unused public API and cleaned
+	up internals used for invalidating tiles.
+
+2007-06-20  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-private.h (struct _Tile): removed unused field
 	swap_num.
 

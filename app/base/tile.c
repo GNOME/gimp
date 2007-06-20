@@ -309,12 +309,6 @@ tile_is_valid (Tile *tile)
 }
 
 void
-tile_mark_valid (Tile *tile)
-{
-  tile->valid = TRUE;
-}
-
-void
 tile_attach (Tile *tile,
              void *tm,
              gint  tile_num)

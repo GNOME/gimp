@@ -71,8 +71,6 @@ gint          tile_bpp               (Tile        *tile);
 
 gboolean      tile_is_valid          (Tile        *tile);
 
-void          tile_mark_valid        (Tile        *tile);
-
 TileRowHint   tile_get_rowhint       (Tile        *tile,
                                       gint         yoff);
 void          tile_set_rowhint       (Tile        *tile,

@@ -287,62 +287,11 @@ tile_manager_validate (TileManager *tm,
 #endif
 }
 
-void
-tile_manager_invalidate_tiles (TileManager *tm,
-                               Tile        *toplevel_tile)
+static void
+tile_manager_invalidate_tile (TileManager  *tm,
+                              gint          tile_num)
 {
-  gdouble x, y;
-  gint    row, col;
-
-  g_return_if_fail (tm != NULL);
-  g_return_if_fail (toplevel_tile != NULL);
-
-  col = toplevel_tile->tlink->tile_num % tm->ntile_cols;
-  row = toplevel_tile->tlink->tile_num / tm->ntile_cols;
-
-  x = (col * TILE_WIDTH  + toplevel_tile->ewidth  / 2.0) / (gdouble) tm->width;
-  y = (row * TILE_HEIGHT + toplevel_tile->eheight / 2.0) / (gdouble) tm->height;
-
-  if (tm->tiles)
-    {
-      gint num;
-
-      col = x * tm->width / TILE_WIDTH;
-      row = y * tm->height / TILE_HEIGHT;
-
-      num = row * tm->ntile_cols + col;
-
-      tile_invalidate (&tm->tiles[num], tm, num);
-    }
-}
-
-void
-tile_invalidate_tile (Tile        **tile_ptr,
-                      TileManager  *tm,
-                      gint          xpixel,
-                      gint          ypixel)
-{
-  gint num;
-
-  g_return_if_fail (tile_ptr != NULL);
-  g_return_if_fail (tm != NULL);
-
-  num = tile_manager_get_tile_num (tm, xpixel, ypixel);
-  if (num < 0)
-    return;
-
-  tile_invalidate (tile_ptr, tm, num);
-}
-
-void
-tile_invalidate (Tile        **tile_ptr,
-                 TileManager  *tm,
-                 gint          tile_num)
-{
-  Tile *tile = *tile_ptr;
-
-  g_return_if_fail (tile_ptr != NULL);
-  g_return_if_fail (tm != NULL);
+  Tile *tile = tm->tiles[tile_num];
 
   if (! tile->valid)
     return;
@@ -369,7 +318,7 @@ tile_invalidate (Tile        **tile_ptr,
       tile_detach (tile, tm, tile_num);
 
       tile_attach (new, tm, tile_num);
-      tile = *tile_ptr = new;
+      tile = new;
     }
 
   if (tile->listhead)
@@ -390,6 +339,19 @@ tile_invalidate (Tile        **tile_ptr,
        */
       tile_swap_delete (tile);
     }
+}
+
+static void
+tile_manager_invalidate_pixel (TileManager  *tm,
+                               gint          xpixel,
+                               gint          ypixel)
+{
+  gint num = tile_manager_get_tile_num (tm, xpixel, ypixel);
+
+  if (num < 0)
+    return;
+
+  tile_manager_invalidate_tile (tm, num);
 }
 
 void
@@ -523,10 +485,7 @@ tile_manager_invalidate_area (TileManager *tm,
   for (i = y; i < (y + h); i += (TILE_HEIGHT - (i % TILE_HEIGHT)))
     for (j = x; j < (x + w); j += (TILE_WIDTH - (j % TILE_WIDTH)))
       {
-        Tile *tile = tile_manager_get_tile (tm, j, i, FALSE, FALSE);
-
-        if (tile != NULL)
-          tile_invalidate_tile (&tile, tm, j, i);
+        tile_manager_invalidate_pixel (tm, j, i);
       }
 }
 
