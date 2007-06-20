@@ -1,5 +1,13 @@
 2007-06-20  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-private.h (struct _Tile): removed unused field
+	swap_num.
+
+	* app/base/tile.c (tile_new): initialise most of the Tile struct
+	in the allocator.
+
+2007-06-20  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scheme-wrapper.c (init_constants): hardcode
 	the built-in units. Dynamically constructing the constants using
 	gimp_unit_get_singular() doesn't work because it returns a

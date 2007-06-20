@@ -110,24 +110,12 @@ tile_set_rowhint (Tile        *tile,
 Tile *
 tile_new (gint bpp)
 {
-  Tile *tile = g_slice_new (Tile);
+  Tile *tile = g_slice_new0 (Tile);
 
-  tile->ref_count   = 0;
-  tile->write_count = 0;
-  tile->share_count = 0;
-  tile->dirty       = FALSE;
-  tile->valid       = FALSE;
-  tile->data        = NULL;
   tile->ewidth      = TILE_WIDTH;
   tile->eheight     = TILE_HEIGHT;
   tile->bpp         = bpp;
-  tile->swap_num    = 1;
   tile->swap_offset = -1;
-  tile->tlink       = NULL;
-  tile->next        = NULL;
-  tile->prev        = NULL;
-  tile->listhead    = NULL;
-  tile->rowhint     = NULL;
 
 #ifdef TILE_PROFILING
   tile_count++;

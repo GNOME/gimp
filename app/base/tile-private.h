@@ -79,10 +79,6 @@ struct _Tile
                          *  case the tile data is on disk.
                          */
 
-  gint    swap_num;     /* the index into the file table of the file to be used
-                         * for swapping. swap_num 1 is always the global
-                         * swap file.
-                         */
   gint64  swap_offset;  /* the offset within the swap file of the tile data.
                          * if the tile data is in memory this will be set
                          * to -1.
