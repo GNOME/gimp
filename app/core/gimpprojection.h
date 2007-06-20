@@ -45,8 +45,6 @@ struct _GimpProjectionIdleRender
 #define GIMP_IS_PROJECTION_CLASS(klass) (G_TYPE_CHECK_CLASS_TYPE ((klass), GIMP_TYPE_PROJECTION))
 #define GIMP_PROJECTION_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_PROJECTION, GimpProjectionClass))
 
-#define PYRAMID_MAX_LEVELS              10
-#define PYRAMID_BASE_LEVEL              0
 
 
 typedef struct _GimpProjectionClass GimpProjectionClass;
@@ -57,12 +55,7 @@ struct _GimpProjection
 
   GimpImage                *image;
 
-  GimpImageType             type;
-  gint                      bytes;
-
-  /* An image pyramid. Level n + 1 has half the width and height of level n. */
-  TileManager              *pyramid[PYRAMID_MAX_LEVELS];
-  gint                      top_level;
+  TilePyramid              *pyramid;
 
   GSList                   *update_areas;
   GimpProjectionIdleRender  idle_render;

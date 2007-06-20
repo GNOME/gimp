@@ -1,5 +1,14 @@
 2007-06-20  Sven Neumann  <sven@gimp.org>
 
+	* app/base/Makefile.am
+	* app/base/base-types.h
+	* app/base/tile-pyramid.[ch]: image pyramid code split out of
+	GimpProjection.
+
+	* app/core/gimpprojection.[ch]: use TilePyramid.
+
+2007-06-20  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile.[ch]: removed unused function tile_mark_valid().
 
 	* app/base/tile-manager.[ch]: removed unused public API and cleaned
