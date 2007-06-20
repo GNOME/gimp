@@ -575,27 +575,34 @@ script_fu_cc_key_function (GtkWidget        *widget,
 
       list = g_list_nth (console->history,
                          (g_list_length (console->history) - 1));
+
       if (list->data)
         g_free (list->data);
+
       list->data = g_strdup (gtk_entry_get_text (GTK_ENTRY (console->cc)));
 
       gtk_text_buffer_get_end_iter (console->console, &cursor);
 
+      gtk_text_buffer_insert (console->console, &cursor, "\n", 1);
       gtk_text_buffer_insert_with_tags_by_name (console->console, &cursor,
-                                                "\n> ", -1,
+                                                "> ", 2,
                                                 "strong",
                                                 NULL);
 
       gtk_text_buffer_insert (console->console, &cursor,
                               gtk_entry_get_text (GTK_ENTRY (console->cc)), -1);
-
-      gtk_text_buffer_insert (console->console, &cursor, "\n", -1);
+      gtk_text_buffer_insert (console->console, &cursor, "\n", 1);
 
       script_fu_console_scroll_end (console->text_view);
 
       gtk_entry_set_text (GTK_ENTRY (console->cc), "");
 
-      ts_interpret_string ((char *) list->data);
+      if (ts_interpret_string (list->data) != 0)
+        gtk_text_buffer_insert_with_tags_by_name (console->console, &cursor,
+                                                  ts_get_error_msg (), -1,
+                                                  "emphasis",
+                                                  NULL);
+
       gimp_displays_flush ();
 
       console->history = g_list_append (console->history, NULL);
