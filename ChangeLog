@@ -1,3 +1,8 @@
+2007-06-20  Tor Lillqvist  <tml@novell.com>
+
+	* app/plug-in/gimpplugin.c: In GLib 2.13 pipe() is no longer
+	defined as a macro in gwin32.h. Define it here in that case.
+
 2007-06-19  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimprectangleselectoptions.c
