@@ -359,8 +359,8 @@ tile_pyramid_alloc_levels (TilePyramid *pyramid,
       tile_manager_set_validate_proc (pyramid->tiles[level],
                                       tile_pyramid_validate_tile);
 
-      tile_manager_set_level_below (pyramid->tiles[level],
-                                    pyramid->tiles[level - 1]);
+      tile_manager_set_user_data (pyramid->tiles[level],
+                                  pyramid->tiles[level - 1]);
     }
 
   return pyramid->top_level;
@@ -370,7 +370,7 @@ static void
 tile_pyramid_validate_tile (TileManager *tm,
                             Tile        *tile)
 {
-  TileManager *level_below = tile_manager_get_level_below (tm);
+  TileManager *level_below = tile_manager_get_user_data (tm);
   gint         tile_col;
   gint         tile_row;
   gint         i, j;

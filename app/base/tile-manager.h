@@ -96,9 +96,6 @@ gint          tile_manager_height            (const TileManager *tm);
 gint          tile_manager_bpp               (const TileManager *tm);
 gint          tile_manager_tiles_per_col     (const TileManager *tm);
 gint          tile_manager_tiles_per_row     (const TileManager *tm);
-TileManager  *tile_manager_get_level_below   (const TileManager *tm);
-void          tile_manager_set_level_below   (TileManager       *tm,
-                                              TileManager       *level_below);
 
 void          tile_manager_get_offsets       (const TileManager *tm,
                                               gint              *x,

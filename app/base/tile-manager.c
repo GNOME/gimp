@@ -64,7 +64,6 @@ tile_manager_new (gint width,
   tm->ntile_rows  = (height + TILE_HEIGHT - 1) / TILE_HEIGHT;
   tm->ntile_cols  = (width  + TILE_WIDTH  - 1) / TILE_WIDTH;
   tm->cached_num  = -1;
-  tm->level_below = NULL;
 
   return tm;
 }
@@ -544,23 +543,6 @@ tile_manager_tiles_per_row (const TileManager *tm)
   g_return_val_if_fail (tm != NULL, 0);
 
   return tm->ntile_rows;
-}
-
-TileManager *
-tile_manager_get_level_below (const TileManager *tm)
-{
-  g_return_val_if_fail (tm != NULL, NULL);
-
-  return tm->level_below;
-}
-
-void
-tile_manager_set_level_below (TileManager *tm,
-                              TileManager *level_below)
-{
-  g_return_if_fail (tm != NULL);
-
-  tm->level_below = level_below;
 }
 
 void

@@ -40,10 +40,6 @@ struct _TileManager
   gint               cached_num;    /*  number of cached tile                */
   Tile              *cached_tile;   /*  the actual cached tile               */
 
-  TileManager       *level_below;   /*  The TileManager containing the level
-                                     *  below in an image pyramid.
-                                     */
-
   gpointer           user_data;     /*  hook for hanging data off of         */
 };
 

@@ -1,5 +1,14 @@
 2007-06-21  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-manager.[ch]
+	* app/base/tile-manager-private.h: removed "level_below" from the
+	TileManager struct.
+	
+	* app/base/tile-pyramid.c: use the TileManager's user_data to
+	store a pointer to the lower level.
+
+2007-06-21  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-manager.[ch]: use gboolean for boolean parameters.
 
 	* app/base/tile-pyramid.c (tile_pyramid_get_memsize): pass TRUE
