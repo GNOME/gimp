@@ -34,13 +34,12 @@ struct _TileManager
   gint               ntile_cols;    /*  the number of tiles in each columns  */
 
   Tile             **tiles;         /*  the tiles for this level             */
-  TileValidateProc   validate_proc; /*  this proc is called when an attempt
-                                     *  to get an invalid tile is made.
-                                     */
+  TileValidateProc   validate_proc; /*  this proc is called when an attempt  *
+                                     *  to get an invalid tile is made       */
+  gpointer           user_data;     /*  data to pass to the validate_proc    */
+
   gint               cached_num;    /*  number of cached tile                */
   Tile              *cached_tile;   /*  the actual cached tile               */
-
-  gpointer           user_data;     /*  hook for hanging data off of         */
 };
 
 

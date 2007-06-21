@@ -1,5 +1,18 @@
 2007-06-21  Sven Neumann  <sven@gimp.org>
 
+	* app/base/base-types.h
+	* app/base/tile-manager.[ch]
+	* app/base/tile-manager-private.h: removed accessors for user_data.
+	Instead pass the user_data when setting the validation proc.
+
+	* app/base/tile-pyramid.c
+	* app/core/gimpchannel.c
+	* app/core/gimpprojection.c
+	* app/core/gimpselection.c
+	* app/tools/gimpiscissorstool.c: changed accordingly.
+
+2007-06-21  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-manager.[ch]
 	* app/base/tile-manager-private.h: removed "level_below" from the
 	TileManager struct.

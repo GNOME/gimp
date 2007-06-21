@@ -44,7 +44,8 @@ void          tile_manager_unref             (TileManager *tm);
  *  allocated, but not initialized.
  */
 void          tile_manager_set_validate_proc (TileManager      *tm,
-                                              TileValidateProc  proc);
+                                              TileValidateProc  proc,
+                                              gpointer          user_data);
 
 /* Get a specified tile from a tile manager.
  */
@@ -86,10 +87,6 @@ void          tile_manager_invalidate_area   (TileManager       *tm,
                                               gint               y,
                                               gint               w,
                                               gint               h);
-
-void          tile_manager_set_user_data     (TileManager       *tm,
-                                              gpointer           user_data);
-gpointer      tile_manager_get_user_data     (const TileManager *tm);
 
 gint          tile_manager_width             (const TileManager *tm);
 gint          tile_manager_height            (const TileManager *tm);

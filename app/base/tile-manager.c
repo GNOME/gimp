@@ -107,11 +107,13 @@ tile_manager_unref (TileManager *tm)
 
 void
 tile_manager_set_validate_proc (TileManager      *tm,
-                                TileValidateProc  proc)
+                                TileValidateProc  proc,
+                                gpointer          user_data)
 {
   g_return_if_fail (tm != NULL);
 
   tm->validate_proc = proc;
+  tm->user_data     = user_data;
 }
 
 Tile *
@@ -279,7 +281,7 @@ tile_manager_validate (TileManager *tm,
   tile->valid = TRUE;
 
   if (tm->validate_proc)
-    (* tm->validate_proc) (tm, tile);
+    (* tm->validate_proc) (tm, tile, tm->user_data);
 
 #ifdef DEBUG_TILE_MANAGER
   g_printerr ("%c", tm->user_data ? 'V' : 'v');
@@ -488,25 +490,8 @@ tile_manager_invalidate_area (TileManager *tm,
       }
 }
 
-void
-tile_manager_set_user_data (TileManager *tm,
-                            gpointer     user_data)
-{
-  g_return_if_fail (tm != NULL);
-
-  tm->user_data = user_data;
-}
-
-gpointer
-tile_manager_get_user_data (const TileManager *tm)
-{
-  g_return_val_if_fail (tm != NULL, NULL);
-
-  return tm->user_data;
-}
-
 gint
-tile_manager_width  (const TileManager *tm)
+tile_manager_width (const TileManager *tm)
 {
   g_return_val_if_fail (tm != NULL, 0);
 

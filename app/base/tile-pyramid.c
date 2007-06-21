@@ -44,7 +44,8 @@ struct _TilePyramid
 static gint  tile_pyramid_alloc_levels  (TilePyramid *pyramid,
                                          gint         top_level);
 static void  tile_pyramid_validate_tile (TileManager *tm,
-                                         Tile        *tile);
+                                         Tile        *tile,
+                                         TileManager *tm_below);
 static void  tile_pyramid_write_quarter (Tile        *dest,
                                          Tile        *src,
                                          gint         i,
@@ -242,9 +243,9 @@ tile_pyramid_invalidate_area (TilePyramid *pyramid,
  * tile_pyramid_set_validate_proc:
  * @pyramid:   a #TilePyramid
  * @proc:      a function to validate the bottom level tiles
- * @user_data: data to attach to the bottom level tile manager
+ * @user_data: data to pass to the validation @proc
  *
- * Sets a validation proc and user data on the bottom-most tile manager.
+ * Sets a validation procedure on the bottom-most tile manager.
  **/
 void
 tile_pyramid_set_validate_proc (TilePyramid      *pyramid,
@@ -253,8 +254,7 @@ tile_pyramid_set_validate_proc (TilePyramid      *pyramid,
 {
   g_return_if_fail (pyramid != NULL);
 
-  tile_manager_set_validate_proc (pyramid->tiles[0], proc);
-  tile_manager_set_user_data (pyramid->tiles[0], user_data);
+  tile_manager_set_validate_proc (pyramid->tiles[0], proc, user_data);
 }
 
 /**
@@ -353,14 +353,10 @@ tile_pyramid_alloc_levels (TilePyramid *pyramid,
       pyramid->top_level    = level;
       pyramid->tiles[level] = tile_manager_new (width, height, pyramid->bytes);
 
-      tile_manager_set_user_data (pyramid->tiles[level], pyramid);
-
       /* Use the level below to validate tiles. */
       tile_manager_set_validate_proc (pyramid->tiles[level],
-                                      tile_pyramid_validate_tile);
-
-      tile_manager_set_user_data (pyramid->tiles[level],
-                                  pyramid->tiles[level - 1]);
+                                      (TileValidateProc) tile_pyramid_validate_tile,
+                                      pyramid->tiles[level - 1]);
     }
 
   return pyramid->top_level;
@@ -368,19 +364,19 @@ tile_pyramid_alloc_levels (TilePyramid *pyramid,
 
 static void
 tile_pyramid_validate_tile (TileManager *tm,
-                            Tile        *tile)
+                            Tile        *tile,
+                            TileManager *tm_below)
 {
-  TileManager *level_below = tile_manager_get_user_data (tm);
-  gint         tile_col;
-  gint         tile_row;
-  gint         i, j;
+  gint  tile_col;
+  gint  tile_row;
+  gint  i, j;
 
   tile_manager_get_tile_col_row (tm, tile, &tile_col, &tile_row);
 
   for (i = 0; i < 2; i++)
     for (j = 0; j < 2; j++)
       {
-        Tile *source = tile_manager_get_at (level_below,
+        Tile *source = tile_manager_get_at (tm_below,
                                             tile_col * 2 + i,
                                             tile_row * 2 + j,
                                             TRUE, FALSE);

@@ -82,7 +82,8 @@ static void       gimp_projection_invalidate            (GimpProjection *proj,
                                                          guint           w,
                                                          guint           h);
 static void       gimp_projection_validate_tile         (TileManager    *tm,
-                                                         Tile           *tile);
+                                                         Tile           *tile,
+                                                         GimpProjection *proj);
 static void       gimp_projection_image_update          (GimpImage      *image,
                                                          gint            x,
                                                          gint            y,
@@ -311,7 +312,8 @@ gimp_projection_get_tiles_at_level (GimpProjection *proj,
                                         proj->image->height);
 
       tile_pyramid_set_validate_proc (proj->pyramid,
-                                      gimp_projection_validate_tile, proj);
+                                      (TileValidateProc) gimp_projection_validate_tile,
+                                      proj);
     }
 
   return tile_pyramid_get_tiles (proj->pyramid, level);
@@ -644,11 +646,11 @@ gimp_projection_invalidate (GimpProjection *proj,
 }
 
 static void
-gimp_projection_validate_tile (TileManager *tm,
-                               Tile        *tile)
+gimp_projection_validate_tile (TileManager    *tm,
+                               Tile           *tile,
+                               GimpProjection *proj)
 {
-  GimpProjection *proj = tile_manager_get_user_data (tm);
-  gint            x, y;
+  gint x, y;
 
   /*  Find the coordinates of this tile  */
   tile_manager_get_tile_coordinates (tm, tile, &x, &y);

@@ -1706,11 +1706,11 @@ find_optimal_path (TileManager *gradient_map,
 /* Called to fill in a newly referenced tile in the gradient map */
 static void
 gradmap_tile_validate (TileManager *tm,
-                       Tile        *tile)
+                       Tile        *tile,
+                       GimpImage   *image)
 {
   static gboolean first_gradient = TRUE;
 
-  GimpImage    *image = tile_manager_get_user_data (tm);
   GimpPickable *pickable;
   Tile         *srctile;
   PixelRegion   srcPR, destPR;
@@ -1846,8 +1846,10 @@ gradient_map_new (GimpImage *image)
 
   tm = tile_manager_new (image->width, image->height,
                          sizeof (guint8) * COST_WIDTH);
-  tile_manager_set_user_data (tm, image);
-  tile_manager_set_validate_proc (tm, gradmap_tile_validate);
+
+  tile_manager_set_validate_proc (tm,
+                                  (TileValidateProc) gradmap_tile_validate,
+                                  image);
 
   return tm;
 }

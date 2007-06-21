@@ -207,7 +207,7 @@ static void       gimp_channel_real_shrink   (GimpChannel      *channel,
                                               gboolean          edge_lock,
                                               gboolean          push_undo);
 
-static void       gimp_channel_validate      (TileManager      *tm,
+static void       gimp_channel_validate_tile (TileManager      *tm,
                                               Tile             *tile);
 
 
@@ -1461,8 +1461,8 @@ gimp_channel_real_shrink (GimpChannel *channel,
 }
 
 static void
-gimp_channel_validate (TileManager *tm,
-                       Tile        *tile)
+gimp_channel_validate_tile (TileManager *tm,
+                            Tile        *tile)
 {
   /*  Set the contents of the tile to empty  */
   memset (tile_data_pointer (tile, 0, 0),
@@ -1707,7 +1707,8 @@ gimp_channel_new_mask (GimpImage *image,
                                   _("Selection Mask"), NULL);
 
   tile_manager_set_validate_proc (GIMP_DRAWABLE (new_channel)->tiles,
-                                  gimp_channel_validate);
+                                  (TileValidateProc) gimp_channel_validate_tile,
+                                  NULL);
 
   return new_channel;
 }
