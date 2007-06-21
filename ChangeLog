@@ -1,3 +1,8 @@
+2007-06-21  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/autocrop.c (autocrop): fixed an issue with the
+	fix for bug #413906.
+
 2007-06-20  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/animationplay.c: applied patch from Paul Seidel

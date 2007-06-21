@@ -294,10 +294,12 @@ autocrop (GimpDrawable *drawable,
   g_free (buffer);
   gimp_drawable_detach (drawable);
 
-  if (layer_only &&
-      (x2 - x1 != width || y2 - y1 != height))
+  if (layer_only)
     {
-      gimp_layer_resize (layer_id, x2 - x1, y2 - y1, -x1, -y1);
+      if (x2 - x1 != width || y2 - y1 != height)
+        {
+          gimp_layer_resize (layer_id, x2 - x1, y2 - y1, -x1, -y1);
+        }
     }
   else
     {
