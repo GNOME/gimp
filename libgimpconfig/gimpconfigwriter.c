@@ -75,7 +75,8 @@ gimp_config_writer_flush (GimpConfigWriter *writer)
 {
   if (write (writer->fd, writer->buffer->str, writer->buffer->len) < 0)
     g_set_error (&writer->error, GIMP_CONFIG_ERROR, GIMP_CONFIG_ERROR_WRITE,
-                 g_strerror (errno));
+                 _("Error writing to '%s': %s"),
+                 gimp_filename_to_utf8 (writer->filename), g_strerror (errno));
 
   g_string_truncate (writer->buffer, 0);
 }
@@ -546,6 +547,12 @@ gimp_config_writer_finish (GimpConfigWriter  *writer,
 
   g_slice_free (GimpConfigWriter, writer);
 
+  if (writer->error)
+    {
+      g_propagate_error (error, writer->error);
+      return FALSE;
+    }
+
   return success;
 }
 
@@ -654,7 +661,7 @@ gimp_config_writer_close_file (GimpConfigWriter  *writer,
       if (writer->tmpname)
         g_unlink (writer->tmpname);
 
-      return TRUE;
+      return FALSE;
     }
 
   if (close (writer->fd) != 0)

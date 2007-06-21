@@ -1,5 +1,12 @@
 2007-06-21  Sven Neumann  <sven@gimp.org>
 
+	* libgimpconfig/gimpconfigwriter.c (gimp_config_writer_finish):
+	if an error occured while writing the file, propagate the error
+	and return FALSE.
+	(gimp_config_writer_flush): improved error message.
+
+2007-06-21  Sven Neumann  <sven@gimp.org>
+
 	* app/base/base-types.h
 	* app/base/tile-manager.[ch]
 	* app/base/tile-manager-private.h: removed accessors for user_data.
