@@ -1118,7 +1118,6 @@ gimp_image_real_colormap_changed (GimpImage *image,
       gimp_image_update (image, 0, 0, image->width, image->height);
 
       gimp_image_invalidate_layer_previews (image);
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
     }
 }
 
@@ -1136,6 +1135,8 @@ gimp_image_real_flush (GimpImage *image)
       gimp_image_mask_changed (image);
       image->flush_accum.mask_changed = FALSE;
     }
+
+  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
 }
 
 static void
@@ -1169,7 +1170,6 @@ gimp_image_drawable_update (GimpDrawable *drawable,
       y += offset_y;
 
       gimp_image_update (image, x, y, width, height);
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
     }
 }
 
@@ -1186,7 +1186,6 @@ gimp_image_drawable_visibility (GimpItem  *item,
                      offset_x, offset_y,
                      gimp_item_width (item),
                      gimp_item_height (item));
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
 }
 
 static void
@@ -1681,7 +1680,6 @@ gimp_image_set_component_visible (GimpImage       *image,
                      channel);
 
       gimp_image_update (image, 0, 0, image->width, image->height);
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
     }
 }
 
@@ -3139,7 +3137,6 @@ gimp_image_position_layer (GimpImage   *image,
                          off_x, off_y,
                          gimp_item_width  (GIMP_ITEM (layer)),
                          gimp_item_height (GIMP_ITEM (layer)));
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
     }
 
   return TRUE;
@@ -3391,7 +3388,6 @@ gimp_image_position_channel (GimpImage   *image,
                          off_x, off_y,
                          gimp_item_width  (GIMP_ITEM (channel)),
                          gimp_item_height (GIMP_ITEM (channel)));
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
     }
 
   return TRUE;

@@ -546,9 +546,16 @@ file_open_sanitize_image (GimpImage *image,
   /* set the image to clean  */
   gimp_image_clean_all (image);
 
+  /* make sure the entire projection is properly constructed, because
+   * load plug-ins are not required to call gimp_drawable_update() or
+   * anything.
+   */
+  gimp_image_update (image, 0, 0, image->width, image->height);
+  gimp_image_flush (image);
+
+  /* same for drawable previews */
   gimp_image_invalidate_layer_previews (image);
   gimp_image_invalidate_channel_previews (image);
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
 }
 
 static void

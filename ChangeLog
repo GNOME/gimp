@@ -1,3 +1,22 @@
+2007-06-21  Michael Natterer  <mitch@gimp.org>
+
+	Part one of fix for bug #449141 (fixes the projection but still
+	leaves some image previews unupdated).
+
+	* app/core/gimpimage.c (lots of functions)
+	* app/paint/gimppaintcore.c (gimp_paint_core_finish)
+	* app/file/file-open.c (file_open_sanitize_image): removed calls
+	to gimp_viewable_invalidate_preview(image).
+
+	* app/file/file-open.c (file_open_sanitize_image): update and
+	flush the entire image instead. Load plug-ins are not required to
+	call gimp_drawable_update() or anything else to make sure the
+	projection is up-to-date.
+
+	* app/core/gimpimage.c (gimp_image_real_flush): inavlidate the
+	image preview here because we now create it from the projection.
+	(this is still not the entirely correct place though).
+
 2007-06-21  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpcurvestool.c: introduced local variables in an

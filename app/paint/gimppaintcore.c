@@ -438,11 +438,10 @@ gimp_paint_core_finish (GimpPaintCore *core,
       core->saved_proj_tiles = NULL;
     }
 
-  /*  invalidate the previews -- have to do it here, because
+  /*  invalidate the drawable preview -- have to do it here, because
    *  it is not done during the actual painting.
    */
   gimp_viewable_invalidate_preview (GIMP_VIEWABLE (drawable));
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
 }
 
 static void
