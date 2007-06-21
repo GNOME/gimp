@@ -7122,9 +7122,6 @@ tile_manager_get
 tile_manager_map_tile
 tile_manager_map
 tile_manager_validate
-tile_invalidate
-tile_invalidate_tile
-tile_manager_invalidate_tiles
 tile_manager_set_user_data
 tile_manager_get_user_data
 tile_manager_width
@@ -7142,11 +7139,18 @@ write_pixel_data_1
 </SECTION>
 
 <SECTION>
-<FILE>tile-private</FILE>
-Tile
-TileLink
-LARGE_SEEK
-LARGE_TRUNCATE
+<FILE>tile-pyramid</FILE>
+TilePyramid
+tile_pyramid_new
+tile_pyramid_destroy
+tile_pyramid_get_level
+tile_pyramid_get_tiles
+tile_pyramid_invalidate_area
+tile_pyramid_set_validate_proc
+tile_pyramid_get_width
+tile_pyramid_get_height
+tile_pyramid_get_bpp
+tile_pyramid_get_memsize
 </SECTION>
 
 <SECTION>
@@ -7172,7 +7176,6 @@ tile_ewidth
 tile_eheight
 tile_bpp
 tile_is_valid
-tile_mark_valid
 tile_attach
 tile_detach
 tile_get_rowhint
@@ -7188,6 +7191,14 @@ TILEROWHINT_MIXED
 TILEROWHINT_OUTOFRANGE
 TILEROWHINT_UNDEFINED
 TILEROWHINT_UNKNOWN
+</SECTION>
+
+<SECTION>
+<FILE>tile-private</FILE>
+Tile
+TileLink
+LARGE_SEEK
+LARGE_TRUNCATE
 </SECTION>
 
 <SECTION>

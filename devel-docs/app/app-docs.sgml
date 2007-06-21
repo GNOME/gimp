@@ -95,6 +95,7 @@
       <xi:include href="xml/tile-manager.xml" />
       <xi:include href="xml/tile-manager-crop.xml" />
       <xi:include href="xml/tile-manager-private.xml" />
+      <xi:include href="xml/tile-pyramid.xml" />
     </chapter>
    </part>
 
