@@ -60,8 +60,6 @@ static gint       gimp_projection_get_opacity_at        (GimpPickable   *pickabl
                                                          gint            x,
                                                          gint            y);
 
-static TilePyramid * gimp_projection_create_pyramid     (GimpProjection *proj);
-
 static void       gimp_projection_add_update_area       (GimpProjection *proj,
                                                          gint            x,
                                                          gint            y,
@@ -307,7 +305,14 @@ gimp_projection_get_tiles_at_level (GimpProjection *proj,
   g_return_val_if_fail (GIMP_IS_PROJECTION (proj), NULL);
 
   if (! proj->pyramid)
-    proj->pyramid = gimp_projection_create_pyramid (proj);
+    {
+      proj->pyramid = tile_pyramid_new (gimp_projection_get_image_type (proj),
+                                        proj->image->width,
+                                        proj->image->height);
+
+      tile_pyramid_set_validate_proc (proj->pyramid,
+                                      gimp_projection_validate_tile, proj);
+    }
 
   return tile_pyramid_get_tiles (proj->pyramid, level);
 }
@@ -412,21 +417,6 @@ gimp_projection_finish_draw (GimpProjection *proj)
 
 
 /*  private functions  */
-
-
-static TilePyramid *
-gimp_projection_create_pyramid (GimpProjection *proj)
-{
-  TilePyramid *pyramid;
-
-  pyramid = tile_pyramid_new (gimp_projection_get_image_type (proj),
-                              proj->image->width,
-                              proj->image->height);
-
-  tile_pyramid_set_validate_proc (pyramid, gimp_projection_validate_tile, proj);
-
-  return pyramid;
-}
 
 static void
 gimp_projection_add_update_area (GimpProjection *proj,

@@ -51,21 +51,21 @@ void          tile_manager_set_validate_proc (TileManager      *tm,
 Tile        * tile_manager_get_tile          (TileManager *tm,
                                               gint         xpixel,
                                               gint         ypixel,
-                                              gint         wantread,
-                                              gint         wantwrite);
+                                              gboolean     wantread,
+                                              gboolean     wantwrite);
 
 /* Get a specified tile from a tile manager.
  */
 Tile        * tile_manager_get               (TileManager *tm,
                                               gint         tile_num,
-                                              gint         wantread,
-                                              gint         wantwrite);
+                                              gboolean     wantread,
+                                              gboolean     wantwrite);
 
 Tile        * tile_manager_get_at            (TileManager *tm,
                                               gint         tile_col,
                                               gint         tile_row,
-                                              gint         wantread,
-                                              gint         wantwrite);
+                                              gboolean     wantread,
+                                              gboolean     wantwrite);
 
 void          tile_manager_map_tile          (TileManager *tm,
                                               gint         xpixel,

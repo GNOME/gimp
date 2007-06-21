@@ -120,7 +120,7 @@ static gboolean       write_err_msg    = TRUE;
 
 #ifdef G_OS_WIN32
 static gint
-gimp_win32_large_truncate (int    fd,
+gimp_win32_large_truncate (gint   fd,
                            gint64 size)
 {
   if (LARGE_SEEK (fd, size, SEEK_SET) == size &&

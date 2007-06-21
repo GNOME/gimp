@@ -314,7 +314,7 @@ tile_pyramid_get_memsize (const TilePyramid *pyramid)
   g_return_val_if_fail (pyramid != NULL, 0);
 
   for (level = 0; level <= pyramid->top_level; level++)
-    memsize += tile_manager_get_memsize (pyramid->tiles[level], FALSE);
+    memsize += tile_manager_get_memsize (pyramid->tiles[level], TRUE);
 
   return memsize;
 }

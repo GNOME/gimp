@@ -159,7 +159,7 @@ tile_lock (Tile *tile)
   if (! tile->valid)
     {
       /* an invalid tile should never be shared, so this should work */
-      tile_manager_validate ((TileManager *) tile->tlink->tm, tile);
+      tile_manager_validate (tile->tlink->tm, tile);
     }
 }
 
@@ -318,7 +318,7 @@ tile_attach (Tile *tile,
   if ((tile->share_count > 0) && (! tile->valid))
     {
       /* trying to share invalid tiles is problematic, not to mention silly */
-      tile_manager_validate ((TileManager *) tile->tlink->tm, tile);
+      tile_manager_validate (tile->tlink->tm, tile);
     }
 
   tile->share_count++;

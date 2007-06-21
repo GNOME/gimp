@@ -1,3 +1,16 @@
+2007-06-21  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-manager.[ch]: use gboolean for boolean parameters.
+
+	* app/base/tile-pyramid.c (tile_pyramid_get_memsize): pass TRUE
+	for sparse to tile_manager_get_memsize().
+
+	* app/base/tile.c
+	* app/base/tile-swap.c: minor cleanups.
+
+	* app/core/gimpprojection.c (gimp_projection_get_tiles_at_level):
+	inline the creation of the TilePyramid.
+
 2007-06-21  Michael Natterer  <mitch@gimp.org>
 
 	Make sure the image preview is only invalidated for visible
@@ -26,7 +39,7 @@
 	call gimp_drawable_update() or anything else to make sure the
 	projection is up-to-date.
 
-	* app/core/gimpimage.c (gimp_image_real_flush): inavlidate the
+	* app/core/gimpimage.c (gimp_image_real_flush): invalidate the
 	image preview here because we now create it from the projection.
 	(this is still not the entirely correct place though).
 

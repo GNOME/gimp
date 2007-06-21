@@ -119,8 +119,8 @@ Tile *
 tile_manager_get_tile (TileManager *tm,
                        gint         xpixel,
                        gint         ypixel,
-                       gint         wantread,
-                       gint         wantwrite)
+                       gboolean     wantread,
+                       gboolean     wantwrite)
 {
   g_return_val_if_fail (tm != NULL, NULL);
 
@@ -132,8 +132,8 @@ tile_manager_get_tile (TileManager *tm,
 Tile *
 tile_manager_get (TileManager *tm,
                   gint         tile_num,
-                  gint         wantread,
-                  gint         wantwrite)
+                  gboolean     wantread,
+                  gboolean     wantwrite)
 {
   Tile **tiles;
   Tile **tile_ptr;
@@ -184,7 +184,7 @@ tile_manager_get (TileManager *tm,
 
   tile_ptr = &tm->tiles[tile_num];
 
-  if (G_UNLIKELY (wantwrite && !wantread))
+  if (G_UNLIKELY (wantwrite && ! wantread))
     g_warning ("WRITE-ONLY TILE... UNTESTED!");
 
 #ifdef DEBUG_TILE_MANAGER
@@ -256,8 +256,8 @@ Tile *
 tile_manager_get_at (TileManager *tm,
                      gint         tile_col,
                      gint         tile_row,
-                     gint         wantread,
-                     gint         wantwrite)
+                     gboolean     wantread,
+                     gboolean     wantwrite)
 {
   g_return_val_if_fail (tm != NULL, NULL);
 
@@ -590,18 +590,16 @@ gint64
 tile_manager_get_memsize (const TileManager *tm,
                           gboolean           sparse)
 {
-  gint64 memsize;
+  /*  the tile manager itself  */
+  gint64 memsize = sizeof (TileManager);
 
   g_return_val_if_fail (tm != NULL, 0);
-
-  /*  the tile manager itself  */
-  memsize = sizeof (TileManager);
 
   /*  the array of tiles  */
   memsize += (gint64) tm->ntile_rows * tm->ntile_cols * (sizeof (Tile) +
                                                          sizeof (gpointer));
 
-  /*  the memory allocated for the tiles   */
+  /*  the memory allocated for the tiles  */
   if (sparse)
     {
       if (tm->tiles)
