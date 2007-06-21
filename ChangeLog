@@ -1,5 +1,10 @@
 2007-06-21  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpcurvestool.c: introduced local variables in an
+	attempt to make the code a little more readable.
+
+2007-06-21  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/scale-dialog.c: use the term "layer masks".
 
 2007-06-20  Sven Neumann  <sven@gimp.org>
