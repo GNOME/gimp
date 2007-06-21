@@ -50,7 +50,25 @@ static void  tile_pyramid_write_quarter (Tile        *dest,
                                          gint         i,
                                          gint         j);
 
-
+/**
+ * tile_pyramid_new:
+ * @type:   type of pixel data stored in the pyramid
+ * @width:  bottom level width
+ * @height: bottom level height
+ *
+ * Creates a new #TilePyramid, managing a set of tile-managers where
+ * each level is a sized-down version of the level below.
+ *
+ * This only works correctly if you set a validate procedure using
+ * tile_pyramid_set_validate_proc() and invalidate areas. With some
+ * small changes, it could be made to work for non-validating tile
+ * managers also. But currently only the projection uses it.
+ *
+ * Only the bottom-most tile-manager is allocated at this point. Upper
+ * levels are created only if they are requested.
+ *
+ * Return value: a newly allocate #TilePyramid
+ **/
 TilePyramid *
 tile_pyramid_new (GimpImageType  type,
                   gint           width,
@@ -96,6 +114,13 @@ tile_pyramid_new (GimpImageType  type,
   return pyramid;
 }
 
+/**
+ * tile_pyramid_destroy:
+ * @pyramid: a #TilePyramid
+ *
+ * Destroys resources allocated for @pyramid and unrefs all contained
+ * tile-managers.
+ **/
 void
 tile_pyramid_destroy (TilePyramid *pyramid)
 {
@@ -109,6 +134,17 @@ tile_pyramid_destroy (TilePyramid *pyramid)
   g_slice_free (TilePyramid, pyramid);
 }
 
+/**
+ * tile_pyramid_get_level:
+ * @width:  width of the bottom level
+ * @height: height of the bottom level
+ * @scale:  zoom ratio
+ *
+ * Calculates the optimal level to request from a #TilePyramid in order
+ * to display at a certain @scale.
+ *
+ * Return value: the level to use for @scale
+ **/
 gint
 tile_pyramid_get_level (gint     width,
                         gint     height,
@@ -139,6 +175,15 @@ tile_pyramid_get_level (gint     width,
   return level;
 }
 
+/**
+ * tile_pyramid_get_tiles:
+ * @pyramid: a #TilePyramid
+ * @level:   level, typically obtained using tile_pyramid_get_level()
+ *
+ * Gives access to the #TileManager at @level of the @pyramid.
+ *
+ * Return value: pointer to a #TileManager
+ **/
 TileManager *
 tile_pyramid_get_tiles (TilePyramid *pyramid,
                         gint         level)
@@ -152,16 +197,31 @@ tile_pyramid_get_tiles (TilePyramid *pyramid,
   return pyramid->tiles[level];
 }
 
+/**
+ * tile_pyramid_invalidate_area:
+ * @pyramid: a #TilePyramid
+ * @x:
+ * @y:
+ * @width:
+ * @height:
+ *
+ * Invalidates the tiles in the given area on all levels.
+ **/
 void
 tile_pyramid_invalidate_area (TilePyramid *pyramid,
                               gint               x,
                               gint               y,
-                              gint               w,
-                              gint               h)
+                              gint               width,
+                              gint               height)
 {
   gint level;
 
   g_return_if_fail (pyramid != NULL);
+  g_return_if_fail (x >= 0 && y >= 0);
+  g_return_if_fail (width >= 0 && height >= 0);
+
+  if (width == 0 || height == 0)
+    return;
 
   for (level = 0; level <= pyramid->top_level; level++)
     {
@@ -169,13 +229,23 @@ tile_pyramid_invalidate_area (TilePyramid *pyramid,
        * so keep width and height > 0.
        */
       tile_manager_invalidate_area (pyramid->tiles[level],
-                                    x >> level,
-                                    y >> level,
-                                    MAX (w >> level, 1),
-                                    MAX (h >> level, 1));
+                                    x, y, MAX (width, 1), MAX (height, 1));
+
+      x      >>= 1;
+      y      >>= 1;
+      width  >>= 1;
+      height >>= 1;
     }
 }
 
+/**
+ * tile_pyramid_set_validate_proc:
+ * @pyramid:   a #TilePyramid
+ * @proc:      a function to validate the bottom level tiles
+ * @user_data: data to attach to the bottom level tile manager
+ *
+ * Sets a validation proc and user data on the bottom-most tile manager.
+ **/
 void
 tile_pyramid_set_validate_proc (TilePyramid      *pyramid,
                                 TileValidateProc  proc,
@@ -187,6 +257,12 @@ tile_pyramid_set_validate_proc (TilePyramid      *pyramid,
   tile_manager_set_user_data (pyramid->tiles[0], user_data);
 }
 
+/**
+ * tile_pyramid_get_width:
+ * @pyramid: a #TilePyramid
+ *
+ * Return value: the width of the pyramid's bottom level
+ **/
 gint
 tile_pyramid_get_width (const TilePyramid *pyramid)
 {
@@ -195,6 +271,12 @@ tile_pyramid_get_width (const TilePyramid *pyramid)
   return pyramid->width;
 }
 
+/**
+ * tile_pyramid_get_height:
+ * @pyramid: a #TilePyramid
+ *
+ * Return value: the height of the pyramid's bottom level
+ **/
 gint
 tile_pyramid_get_height (const TilePyramid *pyramid)
 {
@@ -203,6 +285,12 @@ tile_pyramid_get_height (const TilePyramid *pyramid)
   return pyramid->height;
 }
 
+/**
+ * tile_pyramid_get_bpp:
+ * @pyramid: a #TilePyramid
+ *
+ * Return value: the number of bytes per pixel stored in the @pyramid
+ **/
 gint
 tile_pyramid_get_bpp (const TilePyramid *pyramid)
 {
@@ -211,6 +299,12 @@ tile_pyramid_get_bpp (const TilePyramid *pyramid)
   return pyramid->bytes;
 }
 
+/**
+ * tile_pyramid_get_memsize:
+ * @pyramid:   a #TilePyramid
+ *
+ * Return value: size of memory allocated for the @pyramid
+ **/
 gint64
 tile_pyramid_get_memsize (const TilePyramid *pyramid)
 {

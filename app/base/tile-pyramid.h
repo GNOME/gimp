@@ -35,8 +35,8 @@ TileManager * tile_pyramid_get_tiles         (TilePyramid       *pyramid,
 void          tile_pyramid_invalidate_area   (TilePyramid       *pyramid,
                                               gint               x,
                                               gint               y,
-                                              gint               w,
-                                              gint               h);
+                                              gint               width,
+                                              gint               height);
 
 void          tile_pyramid_set_validate_proc (TilePyramid       *pyramid,
                                               TileValidateProc   proc,
