@@ -70,6 +70,12 @@ struct _RenderInfo
   gint              dest_width;
 };
 
+static void gimp_display_shell_setup_render_info_scale
+                                              (RenderInfo       *info,
+                                               GimpDisplayShell *shell,
+                                               TileManager      *src_tiles,
+                                               gdouble           scale_x,
+                                               gdouble           scale_y);
 
 static void   render_setup_notify (gpointer    config,
                                    GParamSpec *param_spec,
@@ -155,18 +161,6 @@ static void     render_image_gray_a             (RenderInfo       *info);
 static void     render_image_indexed            (RenderInfo       *info);
 static void     render_image_indexed_a          (RenderInfo       *info);
 
-static void     render_image_init_info_full     (RenderInfo       *info,
-                                                 GimpDisplayShell *shell,
-                                                 gint              x,
-                                                 gint              y,
-                                                 gint              w,
-                                                 gint              h,
-                                                 GimpProjection   *projection);
-static void     render_image_init_info          (RenderInfo       *info,
-                                                 GimpDisplayShell *shell,
-                                                 gint              x,
-                                                 gint              y,
-                                                 TileManager      *tiles);
 static const guint  * render_image_init_alpha         (gint        mult);
 
 static const guchar * render_image_accelerate_scaling (gint        width,
@@ -219,13 +213,51 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   projection = shell->display->image->projection;
 
-  render_image_init_info_full (&info, shell, x, y, w, h, projection);
+  /* Initialize RenderInfo with values that doesn't change during the call of
+   * this function.
+   */
+  info.shell      = shell;
 
-  type = gimp_projection_get_image_type (projection);
+  info.x          = x + shell->offset_x;
+  info.y          = y + shell->offset_y;
+  info.w          = w;
+  info.h          = h;
+
+  info.dest_bpp   = 3;
+  info.dest_bpl   = info.dest_bpp * GIMP_RENDER_BUF_WIDTH;
+  info.dest_width = info.dest_bpp * info.w;
+
+  if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_projection_get_image_type (projection)))
+    {
+      gdouble opacity = gimp_projection_get_opacity (projection);
+
+      info.alpha = render_image_init_alpha (opacity * 255.999);
+    }
+
+  /* Setup RenderInfo for rendering a GimpProjection level. */
+  {
+    TileManager *src_tiles;
+    gint         level;
+
+
+    level = gimp_projection_get_level (projection,
+                                       shell->scale_x,
+                                       shell->scale_y);
+
+    src_tiles = gimp_projection_get_tiles_at_level (projection, level);
+
+    gimp_display_shell_setup_render_info_scale (&info,
+                                                shell,
+                                                src_tiles,
+                                                shell->scale_x * (1 << level),
+                                                shell->scale_y * (1 << level));
+  }
 
   /* Currently, only RGBA and GRAYA projection types are used - the rest
    * are in case of future need.  -- austin, 28th Nov 1998.
    */
+  type = gimp_projection_get_image_type (projection);
+
   if (G_UNLIKELY (type != GIMP_RGBA_IMAGE && type != GIMP_GRAYA_IMAGE))
     g_warning ("using untested projection type %d", type);
 
@@ -246,8 +278,16 @@ gimp_display_shell_render (GimpDisplayShell *shell,
     }
   else if (shell->mask)
     {
-      render_image_init_info (&info, shell, x, y,
-                              gimp_drawable_get_tiles (shell->mask));
+      TileManager *src_tiles = gimp_drawable_get_tiles (shell->mask);
+
+      /* The mask does not (yet) have an image pyramid, use the base scale of
+       * the shell.
+       */
+      gimp_display_shell_setup_render_info_scale (&info,
+                                                  shell,
+                                                  src_tiles,
+                                                  shell->scale_x,
+                                                  shell->scale_y);
 
       gimp_display_shell_render_mask (shell, &info);
     }
@@ -823,56 +863,28 @@ render_image_rgb_a (RenderInfo *info)
 }
 
 static void
-render_image_init_info_full (RenderInfo       *info,
-                             GimpDisplayShell *shell,
-                             gint              x,
-                             gint              y,
-                             gint              w,
-                             gint              h,
-                             GimpProjection   *projection)
+gimp_display_shell_setup_render_info_scale (RenderInfo       *info,
+                                            GimpDisplayShell *shell,
+                                            TileManager      *src_tiles,
+                                            gdouble           scale_x,
+                                            gdouble           scale_y)
 {
-  gint level;
+  info->src_tiles = src_tiles;
 
-  level = gimp_projection_get_level (projection,
-                                     shell->scale_x, shell->scale_y);
+  /* We must reset info->dest because this member is modified in render
+   * functions.
+   */
+  info->dest      = shell->render_buf;
 
-  info->shell     = shell;
-  info->dest_bpp  = 3;
-  info->dest_bpl  = info->dest_bpp * GIMP_RENDER_BUF_WIDTH;
-  info->scalex    = shell->scale_x * (1 << level);
-  info->scaley    = shell->scale_y * (1 << level);
+  info->scalex    = scale_x;
+  info->scaley    = scale_y;
 
-  render_image_init_info (info, shell, x, y,
-                          gimp_projection_get_tiles_at_level (projection,
-                                                              level));
-  info->w = w;
-  info->h = h;
-  info->dest_width = info->dest_bpp * info->w;
-  info->scale      = render_image_accelerate_scaling (info->w,
-                                                      info->x,
-                                                      info->scalex);
-
-  if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_projection_get_image_type (projection)))
-    {
-      gdouble opacity = gimp_projection_get_opacity (projection);
-
-      info->alpha = render_image_init_alpha (opacity * 255.999);
-    }
-}
-
-static void
-render_image_init_info (RenderInfo       *info,
-                        GimpDisplayShell *shell,
-                        gint              x,
-                        gint              y,
-                        TileManager      *tiles)
-{
-  info->src_tiles = tiles;
-  info->x         = x + shell->offset_x;
-  info->y         = y + shell->offset_y;
   info->src_x     = (gdouble) info->x / info->scalex;
   info->src_y     = (gdouble) info->y / info->scaley;
-  info->dest      = shell->render_buf;
+
+  info->scale     = render_image_accelerate_scaling (info->w,
+                                                     info->x,
+                                                     info->scalex);
 }
 
 static const guint *

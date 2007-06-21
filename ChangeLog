@@ -1,3 +1,10 @@
+2007-06-21  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/display/gimpdisplayshell-render.c (gimp_display_shell_render):
+	Refactored the two helper functions render_image_init_info(_full)?
+	and always use the shell base scale for the shell->mask. Fixes
+	bug #448417.
+
 2007-06-21  Sven Neumann  <sven@gimp.org>
 
 	* libgimpconfig/gimpconfigwriter.c (gimp_config_writer_finish):
