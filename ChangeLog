@@ -1,3 +1,7 @@
+2007-06-21  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/scale-dialog.c: use the term "layer masks".
+
 2007-06-20  Sven Neumann  <sven@gimp.org>
 
 	* app/base/tile-pyramid.[ch]: documentation.

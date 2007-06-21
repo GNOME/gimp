@@ -206,7 +206,7 @@ scale_dialog_new (GimpViewable          *viewable,
                                  _("Indexed color layers are always scaled "
                                    "without interpolation. The chosen "
                                    "interpolation type will affect channels "
-                                   "and masks only."));
+                                   "and layer masks only."));
 
       gtk_container_set_border_width (GTK_CONTAINER (box), 0);
       gtk_box_pack_start (GTK_BOX (vbox), box, FALSE, FALSE, 0);
