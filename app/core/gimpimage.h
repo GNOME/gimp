@@ -82,6 +82,7 @@ struct _GimpImageFlushAccumulator
 {
   gboolean alpha_changed;
   gboolean mask_changed;
+  gboolean preview_invalidated;
 };
 
 

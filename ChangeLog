@@ -1,5 +1,18 @@
 2007-06-21  Michael Natterer  <mitch@gimp.org>
 
+	Make sure the image preview is only invalidated for visible
+	image changes (as it was before the change below).
+
+	* app/core/gimpimage.h (struct GimpImageFlushAccumulator): added
+	member "gboolean preview_invalidated".
+
+	* app/core/gimpimage.c (gimp_image_update): set it to TRUE here.
+
+	(gimp_image_real_flush): inavlidate the preview only if
+	flush_accum.preview_invalidated is TRUE.
+
+2007-06-21  Michael Natterer  <mitch@gimp.org>
+
 	Part one of fix for bug #449141 (fixes the projection but still
 	leaves some image previews unupdated).
 

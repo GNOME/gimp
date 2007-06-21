@@ -668,8 +668,9 @@ gimp_image_init (GimpImage *image)
 
   image->preview               = NULL;
 
-  image->flush_accum.alpha_changed = FALSE;
-  image->flush_accum.mask_changed  = FALSE;
+  image->flush_accum.alpha_changed       = FALSE;
+  image->flush_accum.mask_changed        = FALSE;
+  image->flush_accum.preview_invalidated = FALSE;
 }
 
 static GObject *
@@ -1136,7 +1137,11 @@ gimp_image_real_flush (GimpImage *image)
       image->flush_accum.mask_changed = FALSE;
     }
 
-  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
+  if (image->flush_accum.preview_invalidated)
+    {
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
+      image->flush_accum.preview_invalidated = FALSE;
+    }
 }
 
 static void
@@ -1726,6 +1731,8 @@ gimp_image_update (GimpImage *image,
 
   g_signal_emit (image, gimp_image_signals[UPDATE], 0,
                  x, y, width, height);
+
+  image->flush_accum.preview_invalidated = TRUE;
 }
 
 void
