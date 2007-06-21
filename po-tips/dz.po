@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-05 03:36+0000\n"
-"PO-Revision-Date: 2007-03-27 16:31+0530\n"
-"Last-Translator: sonam pelden <sonaa_peldn@yahoo.com>\n"
+"POT-Creation-Date: 2007-06-07 03:44+0100\n"
+"PO-Revision-Date: 2007-06-19 12:48+0530\n"
+"Last-Translator: yumkee lhamo <yumkeyl08@hotmail.com>\n"
 "Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -118,8 +118,8 @@ msgid "You can draw simple squares or circles using Edit→Stroke Selection. It 
 msgstr "ཁྱོད་ཀྱིས་གྲུ་བཞི་ཡང་ན་ སྒོར་ཐིག་འཇམ་སམ་ཚུ་ ཞུན་དག་→སི་ཊོག་ སེལ་འཐུ་ དེ་ལག་ལེན་འཐབ་པའི་ཐོག་ལས་འབྲི་ཚུགས། གོ་བཀའ་བའི་དབྱིབས་ཧེང་བཀལ་ འགྲུལ་ལམ་ལག་ཆས་ ཡང་ན་  ཚགས་མ་→ལྷག་སྟོན་འབད་ནི་→ཇི་ཕིག་དེ་གི་ཐོག་ལསའབྲི་ཚུགས།"
 
 #: ../data/tips/gimp-tips.xml.in.h:26
-msgid "You can get context-sensitive help for most of the GIMP's features by pressing the F1 key at any time. This also works inside the menus."
-msgstr "དུས་ཚོད་ནམ་རང་འབད་རུང་ ཨེཕ་༡་ལྡེ་མིག་དེ་ཨེབ་པའི་ཐོག་ལས་ ཇི་ཨའི་ཨེམ་པི་གི་ཁྱད་རྣམ་ཚུ་མང་ཤོས་ཀྱི་དོན་ལུ་ ཁྱོད་ཀྱིས་ སྐབས་དོན་-ཚོར་ཅན་གྲོགས་རམ་འཐོབ་ཚུགས། འདི་གིས་དཀར་ཆག་ནང་ལུ་ཡང་ལཱ་འབད་བཏུབ་ཨིན།"
+msgid "You can get context-sensitive help for most of GIMP's features by pressing the F1 key at any time. This also works inside the menus."
+msgstr "ཁྱོད་ཀྱིས་སྐབས་དོན་- ཚོར་ཅན་གྲོགས་རམ་འདི་ དུས་ཚོད་ནམ་རང་འབད་རུང་ ཨེཕ་༡་ལྡེ་མིག་དེ་ཨེབ་པའི་ཐོག་ལས་ ཇི་ཨའི་ཨེམ་པི་གི་ཁྱད་རྣམ་ཚུ་མང་ཤོས་ཀྱི་དོན་ལུ་ འཐོབ་ཚུགས། འདི་གིས་དཀར་ཆག་ནང་ལུ་ཡང་ལཱ་འབད་བཏུབ་ཨིན།"
 
 #: ../data/tips/gimp-tips.xml.in.h:27
 msgid "You can perform many layer operations by right-clicking on the text label of a layer in the Layers dialog."
@@ -134,8 +134,8 @@ msgid "You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an 
 msgstr "ཁྱོད་ཀྱིས་ བང་རིམ་ཆ་མཉམ་བརྒྱུད་དེ་གཟུགས་བརྙན་ནང་ལུ་ བསྐྱར་འཁོར་འབད་ནིའི་དོན་ལུ་ <tt>གདམ་ལྡེ</tt>-<tt>མཆོང་ལྡེ་</tt>དེ་ལག་ལེན་འཐབ་ཚུགས་(ཁྱོད་རའི་སྒོ་སྒྲིག་འཛིན་སྐྱོང་པ་དེ་གིས་ ལྡེ་མིག་དེ་ཚུ་དམ་བཟུང་མ་འབད་བ་ཅིན་...)"
 
 #: ../data/tips/gimp-tips.xml.in.h:30
-msgid "You can use the middle mouse button to pan around the image (or optionally hold <tt>Spacebar</tt> while you move the mouse.)"
-msgstr "གཟུགས་བརྙན་གྱི་མཐའ་སྐོར་ཏེ་པཱན་འབད་ནིའི་དོན་ལུ་  ཁྱོད་ཀྱིས་བར་ན་གི་མའུསུ་ཨེབ་རྟ་(ཡང་ན་གདམ་ཁ་ཅན་གྱི་ཐོག་ལས་ <tt>བར་སྟོང་ཕྲ་རིང་</tt> འཆང་ནི་དང་  དེ་ཡང་ཁྱོད་ཀྱིས་མཱའུསི་སྤོ་བཤུད་འབདཝ་ད་ཨིན་) དེ་ལག་ལེན་འཐབ།"
+msgid "You can use the middle mouse button to pan around the image (or optionally hold <tt>Spacebar</tt> while you move the mouse)."
+msgstr "གཟུགས་བརྙན་གྱི་མཐའ་སྐོར་ཏེ་པཱན་འབད་ནིའི་དོན་ལུ་  ཁྱོད་ཀྱིས་བར་ན་གི་མའུསུ་ཨེབ་རྟ་འདི་ལག་ལེན་འཐབ་ཆོག་(ཡང་ན་གདམ་ཁ་ཅན་གྱི་ཐོག་ལས་ <tt>བར་སྟོང་ཕྲ་རིང་</tt> འདི་ཁྱོད་ཀྱིས་མཱའུསི་སྤོ་བཤུད་འབད་བའི་སྐབས་འཆང་་)།"
 
 #: ../data/tips/gimp-tips.xml.in.h:31
 msgid "You can use the paint tools to change the selection. Click on the &quot;Quick Mask&quot; button at the bottom left of an image window. Change your selection by painting in the image and click on the button again to convert it back to a normal selection."

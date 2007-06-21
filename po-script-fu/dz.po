@@ -7,9 +7,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp_script_fu.head.pot\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-26 03:46+0100\n"
-"PO-Revision-Date: 2007-03-27 15:54+0530\n"
-"Last-Translator: sonam pelden <sonaa_peldn@yahoo.com>\n"
+"POT-Creation-Date: 2007-06-02 03:39+0100\n"
+"PO-Revision-Date: 2007-06-19 12:36+0530\n"
+"Last-Translator: yumkee lhamo <yumkeyl08@hotmail.com>\n"
 "Language-Team: Dzongkha <pgeyleg@dit.gov.bt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -19,37 +19,37 @@ msgstr ""
 "X-Poedit-Country: Bhutan\n"
 "X-Poedit-SourceCharset: CHARSET\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:143
-#: ../plug-ins/script-fu/script-fu-console.c:210
+#: ../plug-ins/script-fu/script-fu-console.c:144
+#: ../plug-ins/script-fu/script-fu-console.c:213
 msgid "Script-Fu Console"
 msgstr "ཨིསི་ཀིརིཔིཊི་ཕུ་མ་སྒྲོམ།"
 
-#: ../plug-ins/script-fu/script-fu-console.c:206
+#: ../plug-ins/script-fu/script-fu-console.c:209
 msgid "Welcome to TinyScheme"
 msgstr "འཆར་ལས་ཕྲ་བ་ལུ་ བྱོན་པ་ལེགས་སོ། "
 
-#: ../plug-ins/script-fu/script-fu-console.c:212
+#: ../plug-ins/script-fu/script-fu-console.c:215
 msgid "Interactive Scheme Development"
 msgstr "ཕན་ཚུན་འབྲེལ་ལྡན་འཆར་ལས་གོང་འཕེལ། "
 
-#: ../plug-ins/script-fu/script-fu-console.c:248
+#: ../plug-ins/script-fu/script-fu-console.c:251
 msgid "_Browse..."
 msgstr "བརྡ་འཚོལ...(_B)"
 
-#: ../plug-ins/script-fu/script-fu-console.c:310
+#: ../plug-ins/script-fu/script-fu-console.c:313
 msgid "Save Script-Fu Console Output"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་མ་སྒྲོམ་ ཨའུཊི་པུཊི་སྲུངས་བཞག "
 
-#: ../plug-ins/script-fu/script-fu-console.c:357
+#: ../plug-ins/script-fu/script-fu-console.c:360
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "'%s' འདི་འབྲི་ནིའི་དོན་ལུ་ ཁ་ཕྱེ་མ་ཚུགས།: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:386
+#: ../plug-ins/script-fu/script-fu-console.c:389
 msgid "Script-Fu Procedure Browser"
 msgstr "ཨིསི་ཀིརིཔིཊི-ཕུ་བྱ་སྒོའི་ལམ་ལུགས་ཀྱི་བརའུ་ཟར།"
 
-#: ../plug-ins/script-fu/script-fu-console.c:711
+#: ../plug-ins/script-fu/script-fu-console.c:723
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "ཨིསི་ཀིརིཔིཊི-ཕུ་ བརྟག་ཞིབ་ཐབས་ལམ་འདི་གིས་ ཕན་ཚུན་འབྲེལ་ལྡན་མ་ཡིན་པའི་ལས་བཀོལ་རྐྱངམ་ཅིག་འབད་བཅུགཔ་ཨིན།"
 
@@ -62,57 +62,51 @@ msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་གིས་ ཚར�
 msgid "You are already running the \"%s\" script."
 msgstr "ཁྱོད་ཀྱིས་ ཧེ་མ་ལས་ \"%s\" ཡིག་ཚུགས་འདི་གཡོག་བཀོལ་བའི་བསྒང་ཨིན་པས།"
 
-#. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:216
-#: ../plug-ins/script-fu/script-fu-interface.c:219
-msgid "/Script-Fu/"
-msgstr "/ཨིསི་ཀིརིཔིཊི-ཕུ།/"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:237
+#: ../plug-ins/script-fu/script-fu-interface.c:238
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ།: %s"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:299
+#: ../plug-ins/script-fu/script-fu-interface.c:300
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:347
+#: ../plug-ins/script-fu/script-fu-interface.c:348
 msgid "Script-Fu Color Selection"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་ ཚོས་གཞི་སེལ་འཐུ།"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:459
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu File Selection"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་གི་ཡིག་སྣོད་སེལ་འཐུ།"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:463
 msgid "Script-Fu Folder Selection"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་གི་ཡིག་སྣོད་སེལ་འཐུ།"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:474
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Font Selection"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་གི་ཡིག་གཟུགས་སེལ་འཐུ།"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:482
+#: ../plug-ins/script-fu/script-fu-interface.c:483
 msgid "Script-Fu Palette Selection"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་གི་པེ་ལེཊི་སེལ་འཐུ།"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:491
+#: ../plug-ins/script-fu/script-fu-interface.c:492
 msgid "Script-Fu Pattern Selection"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་ གི་ དཔེ་རིས་སེལ་འཐུ།"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:500
+#: ../plug-ins/script-fu/script-fu-interface.c:501
 msgid "Script-Fu Gradient Selection"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་གི་ སྟེགས་རིས་སེལ་འཐུ།"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:509
+#: ../plug-ins/script-fu/script-fu-interface.c:510
 msgid "Script-Fu Brush Selection"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་གི་ པྱིར་སེལ་འཐུ།"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:661
+#: ../plug-ins/script-fu/script-fu-scripts.c:664
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -157,115 +151,115 @@ msgstr "ཐག་རིང་གི་ ཨིསི་ཀིརིཔིཊི�
 msgid "_Start Server..."
 msgstr "སར་བར་འགོ་བཙུགས...(_S)"
 
-#: ../plug-ins/script-fu/script-fu.c:300
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_GIMP Online"
 msgstr "ཇི་ཨའི་ཨེམ་པི་ གློག་ཐོག་ལམ་ཐོག་ལུ།(_G)"
 
-#: ../plug-ins/script-fu/script-fu.c:301
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
 msgstr "ལག་ལེན་པའི་ལག་ཐོག(_U)"
 
-#: ../plug-ins/script-fu/script-fu.c:304
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ།(_S)"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Buttons"
 msgstr "ཨེབ་རྟ་ཚུ།(_B)"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:309
 msgid "_Logos"
 msgstr "ལས་རྟགས་ཚུ།(_L)"
 
-#: ../plug-ins/script-fu/script-fu.c:310
+#: ../plug-ins/script-fu/script-fu.c:311
 msgid "_Misc"
 msgstr "སྣ་ཚོགས།(_M)"
 
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Patterns"
 msgstr "དཔེ་གཞི་ཚུ།(_P)"
 
-#: ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "བརྟག་ཞིབ།(_T)"
 
-#: ../plug-ins/script-fu/script-fu.c:316
-msgid "_Utils"
-msgstr "ཡུ་ཊི་ཨའི་ཨེལ་ཨེསི།(_U)"
+#: ../plug-ins/script-fu/script-fu.c:317
+msgid "_Utilities"
+msgstr "སྤྱོད་ཆསཚུ་ (_U)"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Web Page Themes"
 msgstr "ཝེབ་ཤོག་ལེབ་ཀྱི་བརྗོད་དོན་ཚུ།(_W)"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Alien Glow"
 msgstr "ཨེ་ལིན་དམར་མདངས།(_A)"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Beveled Pattern"
 msgstr "སེར་ཁ་བཟོ་བཟོཝ་བའི་དཔེ་གཞི།(_B)"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: ../plug-ins/script-fu/script-fu.c:325
 msgid "_Classic.Gimp.Org"
 msgstr "སྔོན་སྲོལ་ཇི་ཨའེ་ཨེམ་པི་ལས་སྡེ།(_O)"
 
-#: ../plug-ins/script-fu/script-fu.c:327
+#: ../plug-ins/script-fu/script-fu.c:328
 msgid "Alpha to _Logo"
 msgstr "ཨཱལ་ཕ་ལས་ལས་རྟགས་ཚུན།(_L)"
 
-#: ../plug-ins/script-fu/script-fu.c:329
+#: ../plug-ins/script-fu/script-fu.c:330
 msgid "An_imation"
 msgstr "བསྒུལ་བཟོ།(_i)"
 
-#: ../plug-ins/script-fu/script-fu.c:331
+#: ../plug-ins/script-fu/script-fu.c:332
 msgid "_Animators"
 msgstr "བསྒུལ་བཟོ་བ་པོ།(_A)"
 
-#: ../plug-ins/script-fu/script-fu.c:333
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Artistic"
 msgstr "མཛེས་ཆ་ཅན།(_A)"
 
-#: ../plug-ins/script-fu/script-fu.c:335
+#: ../plug-ins/script-fu/script-fu.c:336
 msgid "_Blur"
 msgstr "རབ་རིབ། (_B)"
 
-#: ../plug-ins/script-fu/script-fu.c:337
+#: ../plug-ins/script-fu/script-fu.c:338
 msgid "_Decor"
 msgstr "མཛེས་བཀོད།(_D)"
 
-#: ../plug-ins/script-fu/script-fu.c:339
+#: ../plug-ins/script-fu/script-fu.c:340
 msgid "_Effects"
 msgstr "ནུས་པ་ཚུ། (_E)"
 
-#: ../plug-ins/script-fu/script-fu.c:341
+#: ../plug-ins/script-fu/script-fu.c:342
 msgid "En_hance"
 msgstr "གོང་སྤེལ།(_h)"
 
-#: ../plug-ins/script-fu/script-fu.c:343
+#: ../plug-ins/script-fu/script-fu.c:344
 msgid "_Light and Shadow"
 msgstr "འོད་དང་གྱིབ་མ། (_L)"
 
-#: ../plug-ins/script-fu/script-fu.c:345
+#: ../plug-ins/script-fu/script-fu.c:346
 msgid "S_hadow"
 msgstr "གྱིབ་མ།(_h)"
 
-#: ../plug-ins/script-fu/script-fu.c:347
+#: ../plug-ins/script-fu/script-fu.c:348
 msgid "_Render"
 msgstr "ལྷག་སྟོན་འབད་ནི།(_R)"
 
-#: ../plug-ins/script-fu/script-fu.c:349
+#: ../plug-ins/script-fu/script-fu.c:350
 msgid "_Alchemy"
 msgstr "ཨེལ་ཀེ་མི།(_A)"
 
-#: ../plug-ins/script-fu/script-fu.c:352
+#: ../plug-ins/script-fu/script-fu.c:353
 msgid "Re-read all available Script-Fu scripts"
 msgstr "འཐོམ་ཆོག་ཆོག་ཡོད་པའི་ ཨིསི་ཀིརིཔིཊི་-ཕུ་ ཨིསི་ཀིརིཔིཊིསི་ཆ་མཉམ་རང་ ལོག་ལྷག"
 
-#: ../plug-ins/script-fu/script-fu.c:357
+#: ../plug-ins/script-fu/script-fu.c:358
 msgid "_Refresh Scripts"
 msgstr "ཡིག་ཚུགས་ཚུ་ཡང་སེལ་འབད།(_R)"
 
-#: ../plug-ins/script-fu/script-fu.c:380
+#: ../plug-ins/script-fu/script-fu.c:381
 msgid "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  Please close all Script-Fu windows and try again."
 msgstr "ཨིསི་ཀིརིཔིཊི་-ཕུ་ ཌའི་ལོག་སྒྲོམ་འདི་ཁ་ཕྱེ་ཡོདཔ་ད་ ཁྱོད་ཀྱིས་ \"Refresh Scripts\" འདི་ ལག་ལེན་འཐབ་མི་ཚུགསཔ་ཨིན། ཁྱོད་ཀྱིས་ ཨིསི་ཀིརིཔིཊི་-ཕུ་ཝིན་ཌོསི་ཆ་མཉམ་རང་ཁ་བསྡམས་ཏེ་ ལོག་སྟེ་རང་འབད་རྩོལ་བསྐྱེད་གནང་།"
 
@@ -1280,10 +1274,6 @@ msgstr "སྣང་བརྙན་ཚུ་དང་ སྣང་ཚུལ་�
 msgid "Effect size (pixels)"
 msgstr "ནུས་པ་ཚད་དང་ལྡན་པ།(པིག་སེལསི་)"
 
-#: ../plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "This procedure is deprecated! use 'gimp-edit-copy-visible' instead."
-msgstr "འ་ནི་བྱ་སྒོའི་ལམ་ལུགས་འདི་ ངོས་ལེན་མེདཔ་ཨིནམ་ལས་! ཚབ་ལུ་'gimp_edit_copy_visible'ལག་ལེན་འཐབ།"
-
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "Background image"
 msgstr "གཟུགས་བརྙན་གྱི་རྒྱབ་གཞི།"
@@ -2073,6 +2063,11 @@ msgstr "པྱིར་གསརཔ...(_B)"
 msgid "Paste the clipboard contents into a new brush"
 msgstr "པྱིར་གསརཔ་ནང་ན་ལུ་ འཛིན་པང་ནང་དོན་ཚུ་ སྦྱར།"
 
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
+msgid "There is no image data in the clipboard to paste."
+msgstr "སྦྱར་ནིའི་དོན་ལུ་འཛིན་པང་ནང་ན་གཟུགས་བརྙན་གནས་སྡུད་་མིན་འདུག"
+
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
 msgid "New _Pattern..."
 msgstr "དཔེ་རིས་གསརཔ...(_P)"
@@ -2259,6 +2254,18 @@ msgstr "གདམ་ཁ་དང་འཁྲིལ་ཏེ་ གཟུགས�
 msgid "_Round Corners..."
 msgstr "སྒྱིད་ཁུག་སྒོར་སྒོརམ་ཚུ...(_R)"
 
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr "གཟུགས་བརྙན་གྱི་ཚོས་གཞི་ས་ཁྲ་འདི་ གསལ་བཀོད་འབད་ཡོད་མི་པི་ལེཊི་ནང་གི་ཚོས་གཞི་ལུ་བསྒྱུར་བཅོས་འབད།"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
+msgid "Palette"
+msgstr "པེ་ལེཊི་"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
+msgid "Se_t Colormap..."
+msgstr "ཚོས་གཞི་ས་ཁྲ་གཞི་སྒྲིག་འབད་་་"
+
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Convert a selection to a brush"
 msgstr "སེལ་འཐུ་འདི་ པྱིར་ལུ་གཞི་བསྒྱུར་འབད། "
@@ -2297,10 +2304,6 @@ msgid "Round the corners of the current selection"
 msgstr "ད་ལྟོ་སེལ་འཐུའི་སྒྱིད་ཁུག་ཚུ་ མཐའ་བསྐོར་ཏེ།"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
-msgid "Round the corners of the current selection (deprecated, use Rounded Rectangle)"
-msgstr "ད་ལྟོའི་སེལ་འཐུ་གི་སྒྱིད་ཁུག་ཚུ་པད་སྐོར་བསྒྱིར་་(ངོས་ལེན་མེདཔ་ པད་སྐོར་བསྒྱིར་ཡོད་པའི་གྲུ་བཞི་ནར་མོ་ལག་ལེན་འཐབ) །"
-
-#: ../plug-ins/script-fu/scripts/selection-round.scm.h:6
 msgid "Rounded R_ectangle..."
 msgstr "གྲུ་བཞི་ནར་མོ་སྒོར་སྒོརམ་བཟོ་བཟོཝ...(_e)"
 
@@ -2861,6 +2864,18 @@ msgstr "དྭངས་སྒྲིབ་འདི་གཙོ་རྟགས་
 msgid "_Xach-Effect..."
 msgstr "ཨེགསི་ཨེ་སི་ཨེཆ་-གི་ནུས་པ...(_X)"
 
+#~ msgid "/Script-Fu/"
+#~ msgstr "/ཨིསི་ཀིརིཔིཊི-ཕུ།/"
+#~ msgid "This procedure is deprecated! use 'gimp-edit-copy-visible' instead."
+#~ msgstr ""
+#~ "འ་ནི་བྱ་སྒོའི་ལམ་ལུགས་འདི་ ངོས་ལེན་མེདཔ་ཨིནམ་ལས་! ཚབ་ལུ་'gimp_edit_copy_visible'ལག་ལེན་"
+#~ "འཐབ།"
+#~ msgid ""
+#~ "Round the corners of the current selection (deprecated, use Rounded "
+#~ "Rectangle)"
+#~ msgstr ""
+#~ "ད་ལྟོའི་སེལ་འཐུ་གི་སྒྱིད་ཁུག་ཚུ་པད་སྐོར་བསྒྱིར་་(ངོས་ལེན་མེདཔ་ པད་སྐོར་བསྒྱིར་ཡོད་པའི་གྲུ་བཞི་ནར་མོ་ལག་"
+#~ "ལེན་འཐབ) །"
 #~ msgid ""
 #~ "Copyright (c) Dimitrios Souflis\n"
 #~ "\n"
