@@ -1213,7 +1213,7 @@ newsprint_dialog (GimpDrawable *drawable)
   gtk_widget_show (hbox);
 
   vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_box_pack_end (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -1229,11 +1229,11 @@ newsprint_dialog (GimpDrawable *drawable)
   gtk_widget_show (hbox);
 
   vbox = gtk_vbox_new (FALSE, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 4);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_box_pack_start (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (hbox), vbox);
   gtk_widget_show (vbox);
 

@@ -1,5 +1,9 @@
 2007-06-22  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/newsprint.c (newsprint_dialog): corrected spacing.
+
+2007-06-22  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/align_layers.c: set the minimum grid size to 1.
 	Fixes bug #450001.
 
