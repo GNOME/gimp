@@ -323,6 +323,18 @@ gimp_projection_construct_channels (GimpProjection *proj,
   g_list_free (reverse_list);
 }
 
+/**
+ * gimp_projection_initialize:
+ * @proj: A #GimpProjection.
+ * @x:
+ * @y:
+ * @w:
+ * @h:
+ *
+ * This function determines whether a visible layer with combine mode Normal
+ * provides complete coverage over the specified area.  If not, the projection
+ * is initialized to transparent black.
+ */
 static void
 gimp_projection_initialize (GimpProjection *proj,
                             gint            x,
@@ -334,11 +346,6 @@ gimp_projection_initialize (GimpProjection *proj,
   GList    *list;
   gboolean  coverage = FALSE;
 
-  /*  this function determines whether a visible layer
-   *  provides complete coverage over the image.  If not,
-   *  the projection is initialized to transparent
-   */
-
   for (list = GIMP_LIST (proj->image->layers)->list;
        list;
        list = g_list_next (list))
@@ -348,11 +355,12 @@ gimp_projection_initialize (GimpProjection *proj,
 
       gimp_item_offsets (item, &off_x, &off_y);
 
-      if (gimp_item_get_visible (item)                     &&
-          ! gimp_drawable_has_alpha (GIMP_DRAWABLE (item)) &&
-          (off_x <= x)                                     &&
-          (off_y <= y)                                     &&
-          (off_x + gimp_item_width  (item) >= x + w)       &&
+      if (gimp_item_get_visible (item)                                  &&
+          ! gimp_drawable_has_alpha (GIMP_DRAWABLE (item))              &&
+          gimp_layer_get_mode (GIMP_LAYER (item)) == GIMP_NORMAL_MODE   &&
+          (off_x <= x)                                                  &&
+          (off_y <= y)                                                  &&
+          (off_x + gimp_item_width  (item) >= x + w)                    &&
           (off_y + gimp_item_height (item) >= y + h))
         {
           coverage = TRUE;
