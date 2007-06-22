@@ -830,8 +830,8 @@ gimp_restore (Gimp               *gimp,
   status_callback (NULL, _("Gradients"), 0.4);
   gimp_data_factory_data_init (gimp->gradient_factory, gimp->no_data);
 
-  /*  initialize the list of gimp fonts  */
-  status_callback (NULL, _("Fonts"), 0.5);
+  /*  initialize the list of fonts  */
+  status_callback (NULL, _("Fonts (this may take a while)"), 0.5);
   if (! gimp->no_fonts)
     gimp_fonts_load (gimp);
 
