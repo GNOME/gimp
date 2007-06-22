@@ -9,9 +9,9 @@
 
 2007-06-22  Martin Nordholts  <martinn@svn.gnome.org>
 
-	* app/core/gimpprojection-construct.c (gimp_projection_initialize): Only
-	consider layers with combine mode Normal when testing if any layer
-	covers the entire specified area. Fixes bug #440154.
+	* app/core/gimpprojection-construct.c (gimp_projection_initialize):
+	Only consider layers with combine mode Normal when testing if any
+	layer covers the entire specified area. Fixes bug #440154.
 
 2007-06-22  Sven Neumann  <sven@gimp.org>
 
