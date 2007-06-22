@@ -1,3 +1,8 @@
+2007-06-22  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/align_layers.c: set the minimum grid size to 1.
+	Fixes bug #450001.
+
 2007-06-22  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/core/gimpprojection-construct.c (gimp_projection_initialize): Only
