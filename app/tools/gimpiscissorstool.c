@@ -1761,24 +1761,27 @@ gradmap_tile_validate (TileManager *tm,
                           MIN (dw, sw),
                           0, 0, MIN (dw, sw), MIN (dh, sh));
 
+
   /* XXX tile edges? */
 
   /*  Blur the source to get rid of noise  */
-  destPR.rowstride = TILE_WIDTH * 4;
-  destPR.data      = maxgrad_conv0;
+  pixel_region_init_data (&destPR, maxgrad_conv0, 4, TILE_WIDTH * 4,
+                          0, 0, srcPR.w, srcPR.h);
   convolve_region (&srcPR, &destPR, blur_32, 3, 32, GIMP_NORMAL_CONVOL, FALSE);
 
-  /*  Set the "src" temp buf up as the new source Pixel Region  */
-  srcPR.rowstride = destPR.rowstride;
-  srcPR.data      = destPR.data;
+  /*  Use the blurred region as the new source pixel region  */
+  pixel_region_init_data (&srcPR, maxgrad_conv0, 4, TILE_WIDTH * 4,
+                          0, 0, srcPR.w, srcPR.h);
 
   /*  Get the horizontal derivative  */
-  destPR.data = maxgrad_conv1;
+  pixel_region_init_data (&destPR, maxgrad_conv1, 4, TILE_WIDTH * 4,
+                          0, 0, srcPR.w, srcPR.h);
   convolve_region (&srcPR, &destPR, horz_deriv, 3, 1, GIMP_NEGATIVE_CONVOL,
                    FALSE);
 
   /*  Get the vertical derivative  */
-  destPR.data = maxgrad_conv2;
+  pixel_region_init_data (&destPR, maxgrad_conv2, 4, TILE_WIDTH * 4,
+                          0, 0, srcPR.w, srcPR.h);
   convolve_region (&srcPR, &destPR, vert_deriv, 3, 1, GIMP_NEGATIVE_CONVOL,
                    FALSE);
 
@@ -1829,7 +1832,7 @@ gradmap_tile_validate (TileManager *tm,
 
               /* Scale the direction from between 0 and 254,
                *  corresponding to -PI/2, PI/2 255 is reserved for
-               *  directionless pixels */
+               *  d9irectionless pixels */
               gradmap[j * COST_WIDTH + 1] =
                 (guint8) (254 * (direction + G_PI_2) / G_PI);
             }

@@ -1,5 +1,10 @@
 2007-06-25  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpiscissorstool.c (gradmap_tile_validate): initialize
+	the destination pixel region properly. Fixes bug #450291.
+
+2007-06-25  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpiscissorstool.c (gradmap_tile_validate)
 	(find_max_gradient) minor code cleanup.
 
