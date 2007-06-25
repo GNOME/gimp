@@ -47,8 +47,7 @@ endif
 libgimpcolorincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpcolor
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"LibGimpColor\"	\
-	@GTHREAD_CFLAGS@
+	-DG_LOG_DOMAIN=\"LibGimpColor\"
 
 INCLUDES = \
 	-I$(top_srcdir)	\

@@ -1,5 +1,14 @@
 2007-06-25  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: removed extra check for gthread and fold it into
+	the GLIB and GTK checks.
+
+	* */Makefile.am: changed accordingly.
+
+	* app/main.c (main): always call g_thread_init().
+
+2007-06-25  Sven Neumann  <sven@gimp.org>
+
 	* libgimpbase/gimpwire.c: if the wire protocol is used without
 	prior initialization, abort with g_error() instead of crashing.
 

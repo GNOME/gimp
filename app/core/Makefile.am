@@ -2,8 +2,7 @@
 
 AM_CPPFLAGS = \
 	-DGIMP_APP_VERSION=\"$(GIMP_APP_VERSION)\"	\
-	-DG_LOG_DOMAIN=\"Gimp-Core\"			\
-	@GTHREAD_CFLAGS@
+	-DG_LOG_DOMAIN=\"Gimp-Core\"
 
 INCLUDES = \
 	-I$(top_builddir)	\
@@ -12,6 +11,7 @@ INCLUDES = \
 	-I$(top_srcdir)/app	\
 	$(GDK_PIXBUF_CFLAGS)	\
 	$(LIBART_CFLAGS)	\
+	$(GLIB_CFLAGS)		\
 	-I$(includedir)
 
 noinst_LIBRARIES = libappcore.a

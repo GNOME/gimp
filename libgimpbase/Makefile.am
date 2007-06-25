@@ -51,17 +51,16 @@ AM_CPPFLAGS = \
 	-DGIMP_DATA_VERSION=\"$(GIMP_DATA_VERSION)\"		\
 	-DGIMP_SYSCONF_VERSION=\"$(GIMP_SYSCONF_VERSION)\"	\
 	-DGIMP_PLUGIN_VERSION=\"$(GIMP_PLUGIN_VERSION)\"	\
-	-DG_LOG_DOMAIN=\"LibGimpBase\"		\
-	@BINRELOC_CFLAGS@			\
-	@GTHREAD_CFLAGS@
+	-DG_LOG_DOMAIN=\"LibGimpBase\"
 
 AM_CCASFLAGS = \
 	-I$(top_builddir)	\
 	-I$(top_srcdir)
 
 INCLUDES = \
-	-I$(top_srcdir)	\
-	$(GLIB_CFLAGS)	\
+	-I$(top_srcdir)		\
+	$(GLIB_CFLAGS)		\
+	$(BINRELOC_CFLAGS)	\
 	-I$(includedir)
 
 EXTRA_DIST = \

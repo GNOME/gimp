@@ -40,16 +40,15 @@ libappconfig_a_SOURCES = \
 	gimpxmlparser.h
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Config\"	\
-	@GTHREAD_CFLAGS@
+	-DG_LOG_DOMAIN=\"Gimp-Config\"
 
 INCLUDES = \
 	-I$(top_builddir)	\
 	-I$(top_srcdir)		\
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
-	$(GLIB_CFLAGS)		\
 	$(GDK_PIXBUF_CFLAGS)	\
+	$(GLIB_CFLAGS)		\
 	-I$(includedir)
 
 

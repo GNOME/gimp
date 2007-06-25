@@ -65,8 +65,7 @@ libappinternal_procs_a_SOURCES = \
 	vectors_cmds.c
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-PDB\"	\
-	@GTHREAD_CFLAGS@
+	-DG_LOG_DOMAIN=\"Gimp-PDB\"
 
 INCLUDES = \
 	-I$(top_builddir)	\
@@ -74,6 +73,7 @@ INCLUDES = \
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
 	$(GDK_PIXBUF_CFLAGS)	\
+	$(GLIB_CFLAGS)		\
 	-I$(includedir)
 
 EXTRA_DIST = makefile.msc

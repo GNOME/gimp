@@ -71,8 +71,7 @@ libappdisplay_a_SOURCES = \
 	$(libappdisplay_a_sources)
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Display\"	\
-	@GTHREAD_CFLAGS@
+	-DG_LOG_DOMAIN=\"Gimp-Display\"
 
 INCLUDES = \
 	-I$(top_builddir)	\

@@ -82,8 +82,7 @@ endif
 
 AM_CPPFLAGS = \
 	-DG_LOG_DOMAIN=\"Gimp\"		\
-	-DGIMP_APP_GLUE_COMPILATION	\
-	@GTHREAD_CFLAGS@
+	-DGIMP_APP_GLUE_COMPILATION
 
 INCLUDES = \
 	-I$(top_srcdir)		\
@@ -133,7 +132,6 @@ gimp_2_3_LDADD = \
 	$(FONTCONFIG_LIBS)		\
 	$(FREETYPE_LIBS)		\
 	$(DBUS_GLIB_LIBS)		\
-	$(GTHREAD_LIBS)			\
 	$(RT_LIBS)			\
 	$(INTLLIBS)			\
 	$(GIMPICONRC)
@@ -176,7 +174,7 @@ gimp_console_2_3_LDADD = \
 	$(PANGOFT2_LIBS)		\
 	$(FONTCONFIG_LIBS)		\
 	$(FREETYPE_LIBS)		\
-	$(GTHREAD_LIBS)			\
+	$(GLIB_LIBS)			\
 	$(RT_LIBS)			\
 	$(INTLLIBS)			\
 	$(GIMPICONRC)

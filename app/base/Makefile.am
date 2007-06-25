@@ -56,8 +56,7 @@ libappbase_a_SOURCES = \
 	tile-swap.h
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Base\"	\
-	@GTHREAD_CFLAGS@
+	-DG_LOG_DOMAIN=\"Gimp-Base\"
 
 INCLUDES = \
 	-I$(top_builddir)	\

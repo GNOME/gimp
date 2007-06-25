@@ -19,8 +19,7 @@ INCLUDES = \
 	-I$(includedir)
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Paint-Funcs\"	\
-	@GTHREAD_CFLAGS@
+	-DG_LOG_DOMAIN=\"Gimp-Paint-Funcs\"
 
 AM_CCASFLAGS = \
 	-I$(top_builddir)	\

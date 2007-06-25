@@ -18,8 +18,7 @@ libappxcf_a_SOURCES = \
 	xcf-write.h
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-XCF\"	\
-	@GTHREAD_CFLAGS@
+	-DG_LOG_DOMAIN=\"Gimp-XCF\"
 
 INCLUDES = \
 	-I$(top_builddir)	\
@@ -27,6 +26,7 @@ INCLUDES = \
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
 	$(GDK_PIXBUF_CFLAGS)	\
+	$(GLIB_CFLAGS)		\
 	-I$(includedir)
 
 EXTRA_DIST = makefile.msc

@@ -7122,8 +7122,6 @@ tile_manager_get
 tile_manager_map_tile
 tile_manager_map
 tile_manager_validate
-tile_manager_set_user_data
-tile_manager_get_user_data
 tile_manager_width
 tile_manager_height
 tile_manager_bpp

@@ -42,12 +42,12 @@ endif
 libgimpthumbincludedir = $(includedir)/gimp-$(GIMP_API_VERSION)/libgimpthumb
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"LibGimpThumb\"	\
-	@GTHREAD_CFLAGS@
+	-DG_LOG_DOMAIN=\"LibGimpThumb\"
 
 INCLUDES = \
 	-I$(top_srcdir)		\
 	$(GDK_PIXBUF_CFLAGS)	\
+	$(GLIB_CFLAGS)		\
 	-I$(includedir)
 
 EXTRA_DIST = \

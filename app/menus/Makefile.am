@@ -26,8 +26,7 @@ EXTRA_DIST = \
 	makefile.msc
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Menus\"	\
-	@GTHREAD_CFLAGS@
+	-DG_LOG_DOMAIN=\"Gimp-Menus\"
 
 INCLUDES = \
 	-I$(top_builddir)	\

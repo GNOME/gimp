@@ -3,8 +3,7 @@
 noinst_LIBRARIES = libappfile.a
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-File\"	\
-	@GTHREAD_CFLAGS@
+	-DG_LOG_DOMAIN=\"Gimp-File\"
 
 INCLUDES = \
 	-I$(top_builddir)	\
@@ -12,6 +11,7 @@ INCLUDES = \
 	-I$(top_builddir)/app	\
 	-I$(top_srcdir)/app	\
 	$(GDK_PIXBUF_CFLAGS)	\
+	$(GLIB_CFLAGS)		\
 	-I$(includedir)
 
 libappfile_a_SOURCES = \

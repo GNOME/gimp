@@ -175,8 +175,7 @@ libapptools_a_SOURCES = $(libapptools_a_built_sources) $(libapptools_a_sources)
 
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Tools\"	\
-	@GTHREAD_CFLAGS@
+	-DG_LOG_DOMAIN=\"Gimp-Tools\"
 
 INCLUDES = \
 	-I$(top_builddir)	\

@@ -1,8 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Vectors\"	\
-	@GTHREAD_CFLAGS@
+	-DG_LOG_DOMAIN=\"Gimp-Vectors\"
 
 INCLUDES = \
 	-I$(top_builddir)	\
@@ -11,6 +10,7 @@ INCLUDES = \
 	-I$(top_srcdir)/app	\
 	$(GDK_PIXBUF_CFLAGS)	\
 	$(LIBART_CFLAGS)	\
+	$(GLIB_CFLAGS)		\
 	-I$(includedir)
 
 noinst_LIBRARIES = libappvectors.a

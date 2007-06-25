@@ -159,8 +159,7 @@ EXTRA_DIST = \
 	makefile.msc
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-Actions\"	\
-	@GTHREAD_CFLAGS@
+	-DG_LOG_DOMAIN=\"Gimp-Actions\"
 
 INCLUDES = \
 	-I$(top_builddir)	\

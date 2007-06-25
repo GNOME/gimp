@@ -285,10 +285,7 @@ main (int    argc,
   gchar          *basename;
   gint            i;
 
-#ifdef ENABLE_MP
-  if (! g_thread_supported ())
-    g_thread_init (NULL);
-#endif
+  g_thread_init (NULL);
 
 #ifdef GIMP_UNSTABLE
   gimp_open_console_window ();
