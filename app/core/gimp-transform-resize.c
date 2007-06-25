@@ -36,25 +36,22 @@
 #else
 #error "no FINITE() implementation available?!"
 #endif
-
+#define EPSILON  0.00000001
 #define MIN4(a,b,c,d) MIN(MIN((a),(b)),MIN((c),(d)))
 #define MAX4(a,b,c,d) MAX(MAX((a),(b)),MAX((c),(d)))
 
 
 typedef struct
 {
-  gint      x, y;
+  gdouble  x, y;
 } Point;
 
 typedef struct
 {
-  gint      xmin, xmax;
-  gint      ymin, ymax;
-  gdouble   m, b;  /* y = mx + b */
-  gboolean  top, right;
-} Edge;
-
-
+  Point   a, b, c, d;
+  gdouble area;
+  gdouble aspect;
+} Rectangle;
 
 static void  gimp_transform_resize_adjust (gdouble  dx1,
                                            gdouble  dy1,
@@ -82,7 +79,45 @@ static void  gimp_transform_resize_crop   (gdouble  dx1,
                                            gint    *x2,
                                            gint    *y2);
 
+static void      add_rectangle   (Point      points[4],
+                                  Rectangle *r,
+                                  Point      a,
+                                  Point      b,
+                                  Point      c,
+                                  Point      d);
+static gboolean  intersect       (Point      a,
+                                  Point      b,
+                                  Point      c,
+                                  Point      d,
+                                  Point     *i);
+static gboolean  intersect_x     (Point      a,
+                                  Point      b,
+                                  Point      c,
+                                  Point     *i);
+static gboolean  intersect_y     (Point      a,
+                                  Point      b,
+                                  Point      c,
+                                  Point     *i);
+static gboolean  in_poly         (Point      points[4],
+                                  Point      p);
+static gboolean  point_on_border (Point      points[4],
+                                  Point      p);
 
+static void      find_two_point_rectangle            (Rectangle *r,
+                                                      Point      points[4],
+                                                      gint       p);
+static void      find_three_point_rectangle_corner   (Rectangle *r,
+                                                      Point      points[4],
+                                                      gint       p);
+static void      find_three_point_rectangle          (Rectangle *r,
+                                                      Point      points[4],
+                                                      gint       p);
+static void      find_three_point_rectangle_triangle (Rectangle *r,
+                                                      Point      points[4],
+                                                      gint       p);
+static void      find_maximum_aspect_rectangle       (Rectangle *r,
+                                                      Point      points[4],
+                                                      gint       p);
 /*
  * This function wants to be passed the inverse transformation matrix!!
  */
@@ -180,84 +215,6 @@ gimp_transform_resize_adjust (gdouble  dx1,
 }
 
 static void
-edge_init (Edge        *edge,
-           const Point *p,
-           const Point *q)
-{
-  gdouble den;
-
-  edge->xmin  = MIN ((p->x), (q->x));
-  edge->xmax  = MAX ((p->x), (q->x));
-
-  edge->ymin  = MIN ((p->y), (q->y));
-  edge->ymax  = MAX ((p->y), (q->y));
-
-  edge->top   = p->x > q->x;
-  edge->right = p->y > q->y;
-
-  den = q->x - p->x;
-
-  if (den == 0)
-    den = 0.001;
-
-  edge->m = ((gdouble) q->y - p->y) / den;
-  edge->b = p->y - edge->m * p->x;
-}
-
-static const Edge *
-find_edge (const Edge *edges,
-           gint        x,
-           gboolean    top)
-{
-  const Edge *emax = edges;
-  const Edge *e = edges;
-  gint        i;
-
-  for (i = 0; i < 4; i++)
-    {
-      if ((e->xmin == x) && (e->xmax != e->xmin) &&
-          ((e->top && top) || (!e->top && !top)))
-        emax = e;
-
-      e++;
-    }
-
-  return emax;
-}
-
-/* find largest pixel completely inside;
- * look through all edges for intersection
- */
-static gint
-intersect_x (const Edge *edges,
-             gint        y)
-{
-  gdouble x0 = 0;
-  gdouble x1 = 0;
-  gint    i;
-
-  for (i = 0; i < 4; i++)
-    if (edges[i].right && edges[i].ymin <= y && edges[i].ymax >= y)
-      {
-        x0 = (y + 0.5 - edges[i].b) / edges[i].m;
-        x1 = (y - 0.5 - edges[i].b) / edges[i].m;
-      }
-
-  return (gint) floor (MIN (x0, x1));
-}
-
-static gint
-intersect_y (const Edge *edge,
-             gint        xi)
-{
-  gdouble yfirst = edge->m * (xi - 0.5) + edge->b;
-  gdouble ylast  = edge->m * (xi + 0.5) + edge->b;
-
-  return (gint) (edge->top ?
-                 ceil (MAX (yfirst, ylast)) : floor (MIN (yfirst, ylast)));
-}
-
-static void
 gimp_transform_resize_crop (gdouble  dx1,
                             gdouble  dy1,
                             gdouble  dx2,
@@ -272,24 +229,11 @@ gimp_transform_resize_crop (gdouble  dx1,
                             gint    *x2,
                             gint    *y2)
 {
-  Point        points[4];
-  gint         ax, ay;
-  int          min;
-  gint         tx, ty;
-
-  Edge         edges[4];
-  const Point *a;
-  const Point *b;
-  const Edge  *top;
-  const Edge  *bottom;
-  gint         cxmin, cymin;
-  gint         cxmax, cymax;
-  Point       *xint;
-
-  gint         ymin, ymax;
-  gint         maxarea = 0;
-  gint         xi;
-  gint         i;
+  Point     points[4];
+  Rectangle r;
+  gint      ax, ay, tx, ty;
+  gint      i, j;
+  gint      min;
 
   /*  fill in the points array  */
   points[0].x = floor (dx1);
@@ -310,6 +254,7 @@ gimp_transform_resize_crop (gdouble  dx1,
     {
       if (points[i].x < ax)
         ax = points[i].x;
+
       if (points[i].y < ay)
         ay = points[i].y;
     }
@@ -319,6 +264,8 @@ gimp_transform_resize_crop (gdouble  dx1,
       points[i].x += (-ax) * 2;
       points[i].y += (-ay) * 2;
     }
+
+
 
   /* find the convex hull using Jarvis's March as the points are passed
    * in different orders due to gimp_matrix3_transform_point()
@@ -342,9 +289,8 @@ gimp_transform_resize_crop (gdouble  dx1,
 
   for (i = 1; i < 4; i++)
     {
-      gdouble theta, theta_m = 2 * G_PI;
-      gdouble theta_v = 0;
-      gint    j;
+      gdouble theta, theta_m = 2.0 * G_PI;
+      gdouble theta_v        = 0;
 
       min = 3;
 
@@ -352,6 +298,7 @@ gimp_transform_resize_crop (gdouble  dx1,
         {
           gdouble sy = points[j].y - points[i - 1].y;
           gdouble sx = points[j].x - points[i - 1].x;
+
           theta = atan2 (sy, sx);
 
           if ((theta < theta_m) &&
@@ -376,125 +323,461 @@ gimp_transform_resize_crop (gdouble  dx1,
 
   /* reverse the order of points */
 
-  tx = points[0].x; ty = points[0].y;
-  points[0].x = points[3].x; points[0].y = points[3].y;
-  points[3].x = tx; points[3].y = ty;
+  tx = points[0].x;
+  ty = points[0].y;
 
-  tx = points[1].x; ty = points[1].y;
-  points[1].x = points[2].x; points[1].y = points[2].y;
-  points[2].x = tx; points[2].y = ty;
+  points[0].x = points[3].x;
+  points[0].y = points[3].y;
+  points[3].x = tx;
+  points[3].y = ty;
 
+  tx = points[1].x;
+  ty = points[1].y;
 
-  /* now, find the largest rectangle using the method described in
-   * "Computing the Largest Inscribed Isothetic Rectangle" by
-   * D. Hsu, J. Snoeyink, et al.
-   */
+  points[1].x = points[2].x;
+  points[1].y = points[2].y;
+  points[2].x = tx;
+  points[2].y = ty;
 
-  /*  first create an array of edges  */
+  r.a.x = r.a.y = r.b.x = r.b.y = r.c.x = r.c.x = r.d.x = r.d.x = r.area = 0;
+  r.aspect = aspect;
 
-  cxmin = cxmax = points[3].x;
-  cymin = cymax = points[3].y;
-
-  for (i = 0, a = points + 3, b = points; i < 4; i++, a = b, b++)
+  if (aspect != 0)
     {
-      if (G_UNLIKELY (i == 0))
+      for (i = 0; i < 4; i++)
+        find_maximum_aspect_rectangle (&r, points, i);
+    }
+  else
+    {
+      for (i = 0; i < 4; i++)
         {
-          cxmin = cxmax = a->x;
-          cymin = cymax = a->y;
+          find_three_point_rectangle          (&r, points, i);
+          find_three_point_rectangle_corner   (&r, points, i);
+          find_two_point_rectangle            (&r, points, i);
+          find_three_point_rectangle_triangle (&r, points, i);
         }
-      else
-        {
-          if (a->x < cxmin)
-            cxmin = a->x;
-
-          if (a->x > cxmax)
-              cxmax = a->x;
-
-          if (a->y < cymin)
-            cymin = a->y;
-
-          if (a->y > cymax)
-            cymax = a->y;
-        }
-
-      edge_init (edges + i, a, b);
     }
 
-  xint = g_new (Point, cymax);
-
-  for (i = 0; i < cymax; i++)
-    {
-      xint[i].x = intersect_x (edges, i);
-      xint[i].y = i;
-    }
-
-  top    = find_edge (edges, cxmin, TRUE);
-  bottom = find_edge (edges, cxmin, FALSE);
-
-  for (xi = cxmin; xi < cxmax; xi++)
-    {
-      gint ylo, yhi;
-
-      ymin = intersect_y (top, xi);
-      ymax = intersect_y (bottom, xi);
-
-      for (ylo = ymax; ylo > ymin; ylo--)
-        {
-          for (yhi = ymin; yhi < ymax; yhi++)
-            {
-              if (yhi > ylo)
-                {
-                  gint xlo, xhi;
-                  gint xright;
-                  gint height, width, fixed_width;
-                  gint area;
-
-                  xlo = xint[ylo].x;
-                  xhi = xint[yhi].x;
-
-                  xright = MIN (xlo, xhi);
-
-                  height = yhi - ylo;
-                  width = xright - xi;
-
-                  if (aspect != 0)
-                    {
-                      fixed_width = (gint) ceil ((gdouble) height * aspect);
-
-                      if (fixed_width <= width)
-                        width = fixed_width;
-                      else
-                        width = 0;
-                    }
-
-                  area = width * height;
-
-                  if (area > maxarea)
-                    {
-                      maxarea = area;
-
-                      *x1 = xi;
-                      *y1 = ylo;
-                      *x2 = xi + width;
-                      *y2 = ylo + height;
-                    }
-                }
-            }
-        }
-
-      if (xi == top->xmax)
-        top = find_edge (edges, xi, TRUE);
-
-      if (xi == bottom->xmax)
-        bottom = find_edge (edges, xi, FALSE);
-    }
-
-  g_free (xint);
-
-  /* translate back the vertices */
+  *x1 = floor(r.a.x + 0.5);
+  *y1 = floor(r.a.y + 0.5);
+  *x2 = ceil(r.c.x - 0.5);
+  *y2 = ceil(r.c.y - 0.5);
 
   *x1 = *x1 - ((-ax) * 2);
   *y1 = *y1 - ((-ay) * 2);
   *x2 = *x2 - ((-ax) * 2);
   *y2 = *y2 - ((-ay) * 2);
+
+}
+
+static void
+find_three_point_rectangle (Rectangle *r,
+                            Point      points[4],
+                            gint       p)
+{
+  Point a = points[p       % 4];  /* 0 1 2 3 */
+  Point b = points[(p + 1) % 4];  /* 1 2 3 0 */
+  Point c = points[(p + 2) % 4];  /* 2 3 0 2 */
+  Point d = points[(p + 3) % 4];  /* 3 0 1 1 */
+  Point i1;     /* intersection point */
+  Point i2;     /* intersection point */
+  Point i3;     /* intersection point */
+
+  if (intersect_x (b, c,  a,  &i1) &&
+      intersect_y (c, d,  i1, &i2) &&
+      intersect_x (d, a,  i2, &i3))
+    add_rectangle (points, r, i3, i3, i1, i1);
+
+  if (intersect_y (b, c,  a,  &i1) &&
+      intersect_x (c, d,  i1, &i2) &&
+      intersect_y (a, i1, i2, &i3))
+    add_rectangle (points, r, i3, i3, i1, i2);
+
+  if (intersect_x (c, d,  a,  &i1) &&
+      intersect_y (b, c,  i1, &i2) &&
+      intersect_x (a, i1, i2, &i3))
+    add_rectangle (points, r, i3, i3, i1, i2);
+
+  if ( intersect_y (c, d,  a,  &i1) &&
+       intersect_x (b, c,  i1, &i2) &&
+       intersect_y (a, i1, i2, &i3))
+    add_rectangle (points, r, i3, i3, i1, i2);
+}
+
+static void
+find_three_point_rectangle_corner (Rectangle *r,
+                                   Point      points[4],
+                                   gint       p)
+{
+  Point a = points[p       % 4];  /* 0 1 2 3 */
+  Point b = points[(p + 1) % 4];  /* 1 2 3 0 */
+  Point c = points[(p + 2) % 4];  /* 2 3 0 2 */
+  Point d = points[(p + 3) % 4];  /* 3 0 1 1 */
+  Point i1;     /* intersection point */
+  Point i2;     /* intersection point */
+
+  if (intersect_x (b, c, a , &i1) &&
+      intersect_y (c, d, i1, &i2))
+    add_rectangle (points, r, a, a, i1, i2);
+
+  if (intersect_y (b, c, a , &i1) &&
+      intersect_x (c, d, i1, &i2))
+    add_rectangle (points, r, a, a, i1, i2);
+
+  if (intersect_x (c, d, a , &i1) &&
+      intersect_y (b, c, i1, &i2))
+    add_rectangle (points, r, a, a, i1, i2);
+
+  if (intersect_y (c, d, a , &i1) &&
+      intersect_x (b, c, i1, &i2))
+    add_rectangle (points, r, a, a, i1, i2);
+}
+
+static void
+find_two_point_rectangle (Rectangle *r,
+                          Point      points[4],
+                          gint       p)
+{
+  Point a = points[ p      % 4];  /* 0 1 2 3 */
+  Point b = points[(p + 1) % 4];  /* 1 2 3 0 */
+  Point c = points[(p + 2) % 4];  /* 2 3 0 2 */
+  Point d = points[(p + 3) % 4];  /* 2 3 0 2 */
+  Point i1;     /* intersection point */
+  Point i2;     /* intersection point */
+  Point mid;    /* Mid point */
+
+  add_rectangle (points, r, a, a, c, c);
+  add_rectangle (points, r, b, b, d, d);
+
+  if (intersect_x (c, b, a, &i1) &&
+      intersect_y (c, b, a, &i2))
+    {
+      mid.x = ( i1.x + i2.x ) / 2.0;
+      mid.y = ( i1.y + i2.y ) / 2.0;
+
+      add_rectangle (points, r, a, a, mid, mid);
+    }
+}
+
+static void
+find_three_point_rectangle_triangle (Rectangle *r,
+                                     Point      points[4],
+                                     gint       p)
+{
+  Point a = points[p % 4];          /* 0 1 2 3 */
+  Point b = points[(p + 1) % 4];    /* 1 2 3 0 */
+  Point c = points[(p + 2) % 4];    /* 2 3 0 2 */
+  Point d = points[(p + 3) % 4];    /* 3 0 1 1 */
+  Point i1;                         /* intersection point */
+  Point i2;                         /* intersection point */
+  Point mid;
+
+  mid.x = (a.x + b.x) / 2.0;
+  mid.y = (a.y + b.y) / 2.0;
+
+  if (intersect_x (b, c, mid, &i1) &&
+      intersect_y (a, d, mid, &i2))
+    add_rectangle (points, r, mid, mid, i1, i2);
+
+  if (intersect_y (b, c, mid, &i1) &&
+      intersect_x (a, d, mid, &i2))
+    add_rectangle (points, r, mid, mid, i1, i2);
+
+  if (intersect_x (a, d, mid, &i1) &&
+      intersect_y (b, c, mid, &i2))
+    add_rectangle (points, r, mid, mid, i1, i2);
+
+  if (intersect_y (a, d, mid, &i1) &&
+      intersect_x (b, c, mid, &i2))
+    add_rectangle (points, r, mid, mid, i1, i2);
+}
+
+static void
+find_maximum_aspect_rectangle (Rectangle *r,
+                               Point      points[4],
+                               gint       p)
+{
+  Point a = points[ p      % 4];  /* 0 1 2 3 */
+  Point b = points[(p + 1) % 4];  /* 1 2 3 0 */
+  Point c = points[(p + 2) % 4];  /* 2 3 0 2 */
+  Point d = points[(p + 3) % 4];  /* 2 3 0 2 */
+  Point i1;     /* intersection point */
+  Point i2;     /* intersection point */
+  Point i3;     /* intersection point */
+
+  if (intersect_x (b, c, a, &i1))
+    {
+      i2.x = i1.x + 1.0 * r->aspect;
+      i2.y = i1.y + 1.0;
+
+      if (intersect (d, a, i1, i2, &i3))
+        add_rectangle (points, r, i1, i3, i1, i3);
+
+      if (intersect (a, b, i1, i2, &i3))
+        add_rectangle (points, r, i1, i3, i1, i3);
+
+      if (intersect (c, d, i1, i2, &i3))
+        add_rectangle (points, r, i1, i3, i1, i3);
+    }
+
+  if (intersect_x (b, c, a, &i1))
+    {
+      i2.x = i1.x - 1.0 * r->aspect;
+      i2.y = i1.y + 1.0;
+
+      if (intersect (d, a, i1, i2, &i3))
+        add_rectangle (points, r, i1, i3, i1, i3);
+
+      if (intersect (a, b, i1, i2, &i3))
+        add_rectangle (points, r, i1, i3, i1, i3);
+
+      if (intersect (c, d, i1, i2, &i3))
+        add_rectangle (points, r, i1, i3, i1, i3);
+    }
+
+  if (intersect_x (c, d, a,  &i1))
+    {
+      i2.x = i1.x + 1.0 * r->aspect;
+      i2.y = i1.y + 1.0;
+
+      if (intersect (d, a, i1, i2, &i3))
+        add_rectangle (points, r, i1, i3, i1, i3);
+
+      if (intersect (a, b, i1, i2, &i3))
+        add_rectangle (points, r, i1, i3, i1, i3);
+
+      if (intersect (b, c, i1, i2, &i3))
+        add_rectangle (points, r, i1, i3, i1, i3);
+    }
+
+  if (intersect_x (c, d, a,  &i1))
+    {
+      i2.x = i1.x - 1.0 * r->aspect;
+      i2.y = i1.y + 1.0;
+
+      if (intersect (d, a, i1, i2, &i3))
+        add_rectangle (points, r, i1, i3, i1, i3);
+
+      if (intersect (a, b, i1, i2, &i3))
+        add_rectangle (points, r, i1, i3, i1, i3);
+
+      if (intersect (b, c, i1, i2, &i3))
+        add_rectangle (points, r, i1, i3, i1, i3);
+    }
+}
+
+static gboolean
+in_poly (Point points[4],
+         Point p)
+{
+  Point p1, p2;
+  gint  counter = 0;
+  gint  i;
+
+  p1 = points[0];
+
+  for (i = 1; i <= 4; i++)
+    {
+      p2 = points[i % 4];
+
+      if (p.y > MIN (p1.y, p2.y))
+        {
+          if (p.y <= MAX (p1.y, p2.y))
+            {
+              if (p.x <= MAX (p1.x, p2.x))
+                {
+                  if (p1.y != p2.y)
+                    {
+                      gdouble xinters = ((p.y - p1.y) * (p2.x - p1.x) /
+                                         (p2.y - p1.y) + p1.x);
+
+                      if (p1.x == p2.x || p.x <= xinters)
+                        counter++;
+                    }
+                }
+            }
+        }
+
+      p1 = p2;
+    }
+
+  /* border check */
+  if (point_on_border (points, p))
+    return TRUE;
+
+  return (counter % 2 != 0);
+}
+
+static gboolean
+point_on_border (Point points[4],
+                 Point p)
+{
+  gint i;
+
+  for (i = 0; i <= 4; i++)
+    {
+      Point   a  = points[i % 4];
+      Point   b  = points[(i + 1) % 4];
+      gdouble a1 = (b.y - a.y);
+      gdouble b1 = (a.x - b.x);
+      gdouble c1 = a1 * a.x + b1 * a.y;
+      gdouble c2 = a1 * p.x + b1 * p.y;
+
+      if (ABS (c1 - c2) < EPSILON &&
+          MIN (a.x, b.x) <= p.x   &&
+          MAX (a.x, b.x) >= p.x   &&
+          MIN (a.y, b.y) <= p.y   &&
+          MAX (a.y, b.y) >= p.y)
+        return TRUE;
+    }
+
+  return FALSE;
+}
+
+static gboolean
+intersect (Point  a,
+           Point  b,
+           Point  c,
+           Point  d,
+           Point *i)
+{
+  gdouble a1  = (b.y - a.y);
+  gdouble b1  = (a.x - b.x);
+  gdouble c1  = a1 * a.x + b1 * a.y;
+
+  gdouble a2  = (d.y - c.y);
+  gdouble b2  = (c.x - d.x);
+  gdouble c2  = a2 * c.x + b2 * c.y;
+  gdouble det = a1*b2 - a2*b1;
+
+  if (det == 0)
+    return FALSE;
+
+  i->x = (b2*c1 - b1*c2) / det;
+  i->y = (a1*c2 - a2*c1) / det;
+
+  return TRUE;
+}
+
+static gboolean
+intersect_x (Point  a,
+             Point  b,
+             Point  c,
+             Point *i)
+{
+  gdouble a1, b1, c1;
+  gdouble a2, b2, c2;
+  gdouble det;
+  Point   d = c;
+
+  d.y += 1;
+  a1 = (b.y - a.y);
+  b1 = (a.x - b.x);
+  c1 = a1 * a.x + b1 * a.y;
+
+  a2 = (d.y - c.y);
+  b2 = (c.x - d.x);
+  c2 = a2 * c.x + b2 * c.y;
+  det = a1*b2 - a2*b1;
+
+  if (det == 0)
+    return FALSE;
+
+  i->x = (b2*c1 - b1*c2) / det;
+  i->y = (a1*c2 - a2*c1) / det;
+
+  return TRUE;
+}
+
+static gboolean
+intersect_y (Point  a,
+             Point  b,
+             Point  c,
+             Point *i)
+{
+  gdouble a1, b1, c1, a2, b2, c2;
+  gdouble det;
+  Point   d = c;
+
+  d.x += 1;
+
+  a1 = (b.y - a.y);
+  b1 = (a.x - b.x);
+  c1 = a1 * a.x + b1 * a.y;
+
+  a2 = (d.y - c.y);
+  b2 = (c.x - d.x);
+  c2 = a2 * c.x + b2 * c.y;
+  det = a1*b2 - a2*b1;
+
+  if (det == 0)
+    return FALSE;
+
+  i->x = (b2*c1 - b1*c2) / det;
+  i->y = (a1*c2 - a2*c1) / det;
+
+  return TRUE;
+}
+
+static void
+add_rectangle (Point      points[4],
+               Rectangle *r,
+               Point      a,
+               Point      b,
+               Point      c,
+               Point      d)
+{
+  gdouble width;
+  gdouble height;
+  gdouble minx, maxx;
+  gdouble miny, maxy;
+  gint    i;
+
+  minx = MIN4(a.x,b.x,c.x,d.x);
+  maxx = MAX4(a.x,b.x,c.x,d.x);
+  miny = MIN4(a.y,b.y,c.y,d.y);
+  maxy = MAX4(a.y,b.y,c.y,d.y);
+
+  a.x = minx;
+  a.y = miny;
+
+  b.x = maxx;
+  b.y = miny;
+
+  c.x = maxx;
+  c.y = maxy;
+
+  d.x = minx;
+  d.y = maxy;
+
+  width  =  maxx - minx;
+  height =  maxy - miny;
+
+  for ( i = 0 ; i < 4 ; i++)
+    {
+      if (in_poly(points, a) &&
+          in_poly(points, b) &&
+          in_poly(points, c) &&
+          in_poly(points, d))
+        {
+          gdouble area = width * height;
+
+          if (r->area <= area)
+            {
+              r->a.x = a.x;
+              r->a.y = a.y;
+
+              r->b.x = b.x;
+              r->b.y = b.y;
+
+              r->c.x = c.x;
+              r->c.y = c.y;
+
+              r->d.x = d.x;
+              r->d.y = d.y;
+
+              r->area = area;
+            }
+        }
+    }
 }

@@ -1,5 +1,11 @@
 2007-06-25  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp-transform-resize.c: applied patch from Geert
+	Jordaens that reimplements the algorithm to determine the largest
+	rectangle. Fixes bug #412473.
+
+2007-06-25  Sven Neumann  <sven@gimp.org>
+
 	* configure.in: removed extra check for gthread and fold it into
 	the GLIB and GTK checks.
 
