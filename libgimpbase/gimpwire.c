@@ -103,7 +103,7 @@ gimp_wire_read (GIOChannel *channel,
     {
       if (!(* wire_read_func) (channel, buf, count, user_data))
         {
-          g_warning ("%s: wire_read: error", g_get_prgname ());
+          g_warning ("%s: gimp_wire_read: error", g_get_prgname ());
           wire_error_val = TRUE;
           return FALSE;
         }
@@ -130,13 +130,13 @@ gimp_wire_read (GIOChannel *channel,
             {
               if (error)
                 {
-                  g_warning ("%s: wire_read(): error: %s",
+                  g_warning ("%s: gimp_wire_read(): error: %s",
                              g_get_prgname (), error->message);
                   g_error_free (error);
                 }
               else
                 {
-                  g_warning ("%s: wire_read(): error",
+                  g_warning ("%s: gimp_wire_read(): error",
                              g_get_prgname ());
                 }
 
@@ -146,7 +146,8 @@ gimp_wire_read (GIOChannel *channel,
 
           if (G_UNLIKELY (bytes == 0))
             {
-              g_warning ("%s: wire_read(): unexpected EOF", g_get_prgname ());
+              g_warning ("%s: gimp_wire_read(): unexpected EOF",
+                         g_get_prgname ());
               wire_error_val = TRUE;
               return FALSE;
             }
@@ -171,7 +172,7 @@ gimp_wire_write (GIOChannel   *channel,
     {
       if (!(* wire_write_func) (channel, (guint8 *) buf, count, user_data))
         {
-          g_warning ("%s: wire_write: error", g_get_prgname ());
+          g_warning ("%s: gimp_wire_write: error", g_get_prgname ());
           wire_error_val = TRUE;
           return FALSE;
         }
@@ -198,13 +199,13 @@ gimp_wire_write (GIOChannel   *channel,
             {
               if (error)
                 {
-                  g_warning ("%s: wire_write(): error: %s",
+                  g_warning ("%s: gimp_wire_write(): error: %s",
                              g_get_prgname (), error->message);
                   g_error_free (error);
                 }
               else
                 {
-                  g_warning ("%s: wire_write(): error",
+                  g_warning ("%s: gimp_wire_write(): error",
                              g_get_prgname ());
                 }
 
@@ -249,6 +250,9 @@ gimp_wire_read_msg (GIOChannel      *channel,
 {
   GimpWireHandler *handler;
 
+  if (G_UNLIKELY (! wire_ht))
+    g_error ("gimp_wire_read_msg: the wire protocol has not been initialized");
+
   if (wire_error_val)
     return !wire_error_val;
 
@@ -256,8 +260,10 @@ gimp_wire_read_msg (GIOChannel      *channel,
     return FALSE;
 
   handler = g_hash_table_lookup (wire_ht, &msg->type);
-  if (! handler)
-    g_error ("could not find handler for message: %d", msg->type);
+
+  if (G_UNLIKELY (! handler))
+    g_error ("gimp_wire_read_msg: could not find handler for message: %d",
+             msg->type);
 
   (* handler->read_func) (channel, msg, user_data);
 
@@ -271,12 +277,17 @@ gimp_wire_write_msg (GIOChannel      *channel,
 {
   GimpWireHandler *handler;
 
+  if (G_UNLIKELY (! wire_ht))
+    g_error ("gimp_wire_write_msg: the wire protocol has not been initialized");
+
   if (wire_error_val)
     return !wire_error_val;
 
   handler = g_hash_table_lookup (wire_ht, &msg->type);
-  if (! handler)
-    g_error ("could not find handler for message: %d", msg->type);
+
+  if (G_UNLIKELY (! handler))
+    g_error ("gimp_wire_write_msg: could not find handler for message: %d",
+             msg->type);
 
   if (! _gimp_wire_write_int32 (channel, &msg->type, 1, user_data))
     return FALSE;
@@ -291,9 +302,14 @@ gimp_wire_destroy (GimpWireMessage *msg)
 {
   GimpWireHandler *handler;
 
+  if (G_UNLIKELY (! wire_ht))
+    g_error ("gimp_wire_destroy: the wire protocol has not been initialized");
+
   handler = g_hash_table_lookup (wire_ht, &msg->type);
-  if (!handler)
-    g_error ("could not find handler for message: %d\n", msg->type);
+
+  if (G_UNLIKELY (! handler))
+    g_error ("gimp_wire_destroy: could not find handler for message: %d\n",
+             msg->type);
 
   (* handler->destroy_func) (msg);
 }
