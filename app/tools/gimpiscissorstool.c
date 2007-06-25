@@ -1874,13 +1874,12 @@ find_max_gradient (GimpIscissorsTool *iscissors,
   gint         endx, endy;
   gint         sx, sy, cx, cy;
   gint         x1, y1, x2, y2;
-  void        *pr;
-  guint8      *gradient;
-  gfloat       g, max_gradient;
+  gpointer     pr;
+  gfloat       max_gradient;
 
   /* Initialise the gradient map tile manager for this image if we
    * don't already have one. */
-  if (!iscissors->gradient_map)
+  if (! iscissors->gradient_map)
     iscissors->gradient_map = gradient_map_new (image);
 
   radius = GRADIENT_SEARCH >> 1;
@@ -1911,17 +1910,23 @@ find_max_gradient (GimpIscissorsTool *iscissors,
     {
       endx = srcPR.x + srcPR.w;
       endy = srcPR.y + srcPR.h;
+
       for (i = srcPR.y; i < endy; i++)
         {
-          gradient = srcPR.data + srcPR.rowstride * (i - srcPR.y);
+          const guint8 *gradient = srcPR.data + srcPR.rowstride * (i - srcPR.y);
+
           for (j = srcPR.x; j < endx; j++)
             {
-              g = *gradient;
+              gfloat g = *gradient;
+
               gradient += COST_WIDTH;
+
               g *= distance_weights [(i-y1) * GRADIENT_SEARCH + (j-x1)];
+
               if (g > max_gradient)
                 {
                   max_gradient = g;
+
                   *x = j;
                   *y = i;
                 }
