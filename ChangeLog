@@ -1,3 +1,8 @@
+2007-06-25  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpiscissorstool.c (gradmap_tile_validate): minor
+	code cleanup.
+
 2007-06-22  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/newsprint.c (newsprint_dialog): corrected spacing.

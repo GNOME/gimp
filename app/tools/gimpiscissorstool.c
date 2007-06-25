@@ -1713,17 +1713,16 @@ gradmap_tile_validate (TileManager *tm,
 
   GimpPickable *pickable;
   Tile         *srctile;
-  PixelRegion   srcPR, destPR;
+  PixelRegion   srcPR;
+  PixelRegion   destPR;
   gint          x, y;
   gint          dw, dh;
   gint          sw, sh;
   gint          i, j;
   gint          b;
   gfloat        gradient;
-  guint8       *gradmap;
   guint8       *tiledata;
-  guint8       *datah, *datav;
-  gint8         hmax, vmax;
+  guint8       *gradmap;
 
   if (first_gradient)
     {
@@ -1733,12 +1732,13 @@ gradmap_tile_validate (TileManager *tm,
       for (i = 0; i < GRADIENT_SEARCH; i++)
         for (j = 0; j < GRADIENT_SEARCH; j++)
           distance_weights[i * GRADIENT_SEARCH + j] =
-            1.0 / (1 + sqrt (SQR(i - radius) + SQR(j - radius)));
+            1.0 / (1 + sqrt (SQR (i - radius) + SQR (j - radius)));
 
       first_gradient = FALSE;
     }
 
   tile_manager_get_tile_coordinates (tm, tile, &x, &y);
+
   dw = tile_ewidth (tile);
   dh = tile_eheight (tile);
 
@@ -1749,7 +1749,7 @@ gradmap_tile_validate (TileManager *tm,
   /* get corresponding tile in the image */
   srctile = tile_manager_get_tile (gimp_pickable_get_tiles (pickable),
                                    x, y, TRUE, FALSE);
-  if (!srctile)
+  if (! srctile)
     return;
 
   sw = tile_ewidth (srctile);
@@ -1784,32 +1784,38 @@ gradmap_tile_validate (TileManager *tm,
 
   /* calculate overall gradient */
   tiledata = tile_data_pointer (tile, 0, 0);
+
   for (i = 0; i < srcPR.h; i++)
     {
-      datah = maxgrad_conv1 + srcPR.rowstride*i;
-      datav = maxgrad_conv2 + srcPR.rowstride*i;
+      const guint8 *datah = maxgrad_conv1 + srcPR.rowstride * i;
+      const guint8 *datav = maxgrad_conv2 + srcPR.rowstride * i;
+
       gradmap = tiledata + tile_ewidth (tile) * COST_WIDTH * i;
 
       for (j = 0; j < srcPR.w; j++)
         {
-          hmax = datah[0] - 128;
-          vmax = datav[0] - 128;
+          gint8 hmax = datah[0] - 128;
+          gint8 vmax = datav[0] - 128;
+
           for (b = 1; b < srcPR.bytes; b++)
             {
-              if (abs (datah[b] - 128) > abs (hmax)) hmax = datah[b] - 128;
-              if (abs (datav[b] - 128) > abs (vmax)) vmax = datav[b] - 128;
+              if (abs (datah[b] - 128) > abs (hmax))
+                hmax = datah[b] - 128;
+
+              if (abs (datav[b] - 128) > abs (vmax))
+                vmax = datav[b] - 128;
             }
 
           if (i == 0 || j == 0 || i == srcPR.h-1 || j == srcPR.w-1)
-          {
-              gradmap[j*COST_WIDTH] = 0;
-              gradmap[j*COST_WIDTH + 1] = 255;
+            {
+              gradmap[j * COST_WIDTH + 0] = 0;
+              gradmap[j * COST_WIDTH + 1] = 255;
               goto contin;
-          }
+            }
 
-          /* 1 byte absolute magitude first */
-          gradient = sqrt(SQR(hmax) + SQR(vmax));
-          gradmap[j*COST_WIDTH] = gradient * 255 / MAX_GRADIENT;
+          /* 1 byte absolute magnitude first */
+          gradient = sqrt (SQR (hmax) + SQR (vmax));
+          gradmap[j * COST_WIDTH] = gradient * 255 / MAX_GRADIENT;
 
           /* then 1 byte direction */
           if (gradient > MIN_GRADIENT)
@@ -1819,16 +1825,18 @@ gradmap_tile_validate (TileManager *tm,
               if (!hmax)
                 direction = (vmax > 0) ? G_PI_2 : -G_PI_2;
               else
-                direction = atan ((double) vmax / (double) hmax);
+                direction = atan ((gdouble) vmax / (gdouble) hmax);
 
               /* Scale the direction from between 0 and 254,
                *  corresponding to -PI/2, PI/2 255 is reserved for
                *  directionless pixels */
-              gradmap[j*COST_WIDTH + 1] =
+              gradmap[j * COST_WIDTH + 1] =
                 (guint8) (254 * (direction + G_PI_2) / G_PI);
             }
           else
-            gradmap[j*COST_WIDTH + 1] = 255; /* reserved for weak gradient */
+            {
+              gradmap[j * COST_WIDTH + 1] = 255; /* reserved for weak gradient */
+            }
 
         contin:
           datah += srcPR.bytes;
