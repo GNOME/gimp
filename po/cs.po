@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-15 23:23+0200\n"
-"PO-Revision-Date: 2007-06-15 23:34+0200\n"
+"POT-Creation-Date: 2007-06-25 14:40+0200\n"
+"PO-Revision-Date: 2007-06-25 16:02+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -309,9 +309,8 @@ msgstr "Chybová konzola"
 msgid "File"
 msgstr "Soubor"
 
-#. initialize the list of gimp fonts
-#: ../app/actions/actions.c:147 ../app/core/gimp.c:834
-#: ../app/dialogs/dialogs.c:156 ../app/dialogs/preferences-dialog.c:2599
+#: ../app/actions/actions.c:147 ../app/dialogs/dialogs.c:156
+#: ../app/dialogs/preferences-dialog.c:2599
 msgid "Fonts"
 msgstr "Písma"
 
@@ -828,7 +827,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:133
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1381
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1385
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:770
 #: ../app/pdb/image_cmds.c:1993 ../app/widgets/gimpdnd-xds.c:98
@@ -5659,6 +5658,11 @@ msgstr "Hledám datové soubory"
 msgid "Parasites"
 msgstr "Parazity"
 
+#. initialize the list of fonts
+#: ../app/core/gimp.c:834
+msgid "Fonts (this may take a while)"
+msgstr "Písma (může to chvíli trvat)"
+
 #. initialize the document history
 #: ../app/core/gimp.c:839
 msgid "Documents"
@@ -6200,131 +6204,131 @@ msgstr "Přesunout vzorkovací bod"
 msgid "Can't undo %s"
 msgstr "Nelze vrátit %s"
 
-#: ../app/core/gimpimage.c:1451
+#: ../app/core/gimpimage.c:1455
 msgid "Change Image Resolution"
 msgstr "Změna rozlišení obrázku"
 
-#: ../app/core/gimpimage.c:1491
+#: ../app/core/gimpimage.c:1495
 msgid "Change Image Unit"
 msgstr "Změna jednotky obrázku"
 
-#: ../app/core/gimpimage.c:2334
+#: ../app/core/gimpimage.c:2339
 msgid "Attach Parasite to Image"
 msgstr "Připojit parazita k obrázku"
 
-#: ../app/core/gimpimage.c:2372
+#: ../app/core/gimpimage.c:2377
 msgid "Remove Parasite from Image"
 msgstr "Odstranění parazita z obrázku"
 
-#: ../app/core/gimpimage.c:2830
+#: ../app/core/gimpimage.c:2835
 msgid "Add Layer"
 msgstr "Přidat vrstvu"
 
-#: ../app/core/gimpimage.c:2895 ../app/core/gimpimage.c:2908
+#: ../app/core/gimpimage.c:2900 ../app/core/gimpimage.c:2913
 msgid "Remove Layer"
 msgstr "Odstranit vrstvu"
 
-#: ../app/core/gimpimage.c:3047
+#: ../app/core/gimpimage.c:3052
 msgid "Layer cannot be raised higher."
 msgstr "Vrstva nemůže být ještě výš."
 
-#: ../app/core/gimpimage.c:3052
+#: ../app/core/gimpimage.c:3057
 msgid "Raise Layer"
 msgstr "Vrstvu výš"
 
-#: ../app/core/gimpimage.c:3069
+#: ../app/core/gimpimage.c:3074
 msgid "Layer cannot be lowered more."
 msgstr "Vrstva nemůže být ještě níž."
 
-#: ../app/core/gimpimage.c:3074
+#: ../app/core/gimpimage.c:3079
 msgid "Lower Layer"
 msgstr "Vrstvu níž"
 
-#: ../app/core/gimpimage.c:3085
+#: ../app/core/gimpimage.c:3090
 msgid "Raise Layer to Top"
 msgstr "Vrstvu nahoru"
 
-#: ../app/core/gimpimage.c:3100
+#: ../app/core/gimpimage.c:3105
 msgid "Lower Layer to Bottom"
 msgstr "Vrstvu dospod"
 
-#: ../app/core/gimpimage.c:3173
+#: ../app/core/gimpimage.c:3177
 msgid "Add Channel"
 msgstr "Přidat kanál"
 
-#: ../app/core/gimpimage.c:3218 ../app/core/gimpimage.c:3229
+#: ../app/core/gimpimage.c:3222 ../app/core/gimpimage.c:3233
 msgid "Remove Channel"
 msgstr "Odstranit kanál"
 
-#: ../app/core/gimpimage.c:3276
+#: ../app/core/gimpimage.c:3280
 msgid "Channel cannot be raised higher."
 msgstr "Kanál nemůže být ještě výš."
 
-#: ../app/core/gimpimage.c:3281
+#: ../app/core/gimpimage.c:3285
 msgid "Raise Channel"
 msgstr "Kanál výš"
 
-#: ../app/core/gimpimage.c:3298
+#: ../app/core/gimpimage.c:3302
 msgid "Channel is already on top."
 msgstr "Kanál je již nahoře."
 
-#: ../app/core/gimpimage.c:3303
+#: ../app/core/gimpimage.c:3307
 msgid "Raise Channel to Top"
 msgstr "Kanál nahoru"
 
-#: ../app/core/gimpimage.c:3320
+#: ../app/core/gimpimage.c:3324
 msgid "Channel cannot be lowered more."
 msgstr "Kanál nemůže být ještě níž."
 
-#: ../app/core/gimpimage.c:3325
+#: ../app/core/gimpimage.c:3329
 msgid "Lower Channel"
 msgstr "Kanál níž"
 
-#: ../app/core/gimpimage.c:3345
+#: ../app/core/gimpimage.c:3349
 msgid "Channel is already on the bottom."
 msgstr "Kanál je již vespod."
 
-#: ../app/core/gimpimage.c:3350
+#: ../app/core/gimpimage.c:3354
 msgid "Lower Channel to Bottom"
 msgstr "Kanál dospod"
 
-#: ../app/core/gimpimage.c:3425
+#: ../app/core/gimpimage.c:3428
 msgid "Add Path"
 msgstr "Přidat cestu"
 
-#: ../app/core/gimpimage.c:3471
+#: ../app/core/gimpimage.c:3474
 msgid "Remove Path"
 msgstr "Odstranit cestu"
 
-#: ../app/core/gimpimage.c:3515
+#: ../app/core/gimpimage.c:3518
 msgid "Path cannot be raised higher."
 msgstr "Cesta nemůže být ještě výš."
 
-#: ../app/core/gimpimage.c:3520
+#: ../app/core/gimpimage.c:3523
 msgid "Raise Path"
 msgstr "Zvýšit cestu"
 
-#: ../app/core/gimpimage.c:3537
+#: ../app/core/gimpimage.c:3540
 msgid "Path is already on top."
 msgstr "Cesta je již nahoře."
 
-#: ../app/core/gimpimage.c:3542
+#: ../app/core/gimpimage.c:3545
 msgid "Raise Path to Top"
 msgstr "Zvýšit cestu nahoru"
 
-#: ../app/core/gimpimage.c:3559
+#: ../app/core/gimpimage.c:3562
 msgid "Path cannot be lowered more."
 msgstr "Cesta nemůže být ještě níž."
 
-#: ../app/core/gimpimage.c:3564
+#: ../app/core/gimpimage.c:3567
 msgid "Lower Path"
 msgstr "Snížit cestu"
 
-#: ../app/core/gimpimage.c:3584
+#: ../app/core/gimpimage.c:3587
 msgid "Path is already on the bottom."
 msgstr "Cesta je již vespod."
 
-#: ../app/core/gimpimage.c:3589
+#: ../app/core/gimpimage.c:3592
 msgid "Lower Path to Bottom"
 msgstr "Snížit cestu dolů"
 
@@ -8129,7 +8133,7 @@ msgstr "_Interpolace:"
 #: ../app/dialogs/scale-dialog.c:206
 msgid ""
 "Indexed color layers are always scaled without interpolation. The chosen "
-"interpolation type will affect channels and masks only."
+"interpolation type will affect channels and layer masks only."
 msgstr ""
 "Vrstvy s indexovanými barvami jsou vždy škálovány bez interpolace. Zvolený "
 "typ interpolace bude mít vliv jen na škálování kanálů a masek."
@@ -8462,7 +8466,7 @@ msgstr "Modul %s nemohl otevřít obrázek"
 msgid "Image doesn't contain any layers"
 msgstr "Obrázek neobsahuje žádné vrstvy"
 
-#: ../app/file/file-open.c:509
+#: ../app/file/file-open.c:510
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Otevírání '%s' selhalo: %s"
@@ -8748,7 +8752,7 @@ msgstr "V souboru interpretru %s se odkazuje na špatný interpretr: %s"
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Špatný řetězec binárního formátu v souboru interpretru %s"
 
-#: ../app/plug-in/gimpplugin.c:625
+#: ../app/plug-in/gimpplugin.c:630
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -9458,11 +9462,11 @@ msgstr "Všechny kanály"
 msgid "Curve Type"
 msgstr "Typ křivky"
 
-#: ../app/tools/gimpcurvestool.c:757 ../app/tools/gimplevelstool.c:659
+#: ../app/tools/gimpcurvestool.c:758 ../app/tools/gimplevelstool.c:659
 msgid "not a GIMP Levels file"
 msgstr "není soubor úrovní GIMPu"
 
-#: ../app/tools/gimpcurvestool.c:771 ../app/tools/gimplevelstool.c:698
+#: ../app/tools/gimpcurvestool.c:772 ../app/tools/gimplevelstool.c:698
 msgid "parse error"
 msgstr "chyba zpracování"
 
@@ -9871,32 +9875,32 @@ msgstr "Výběr nůžkami: Výběr tvarů pomocí inteligentního hledání hran
 msgid "Intelligent _Scissors"
 msgstr "_Inteligentní nůžky"
 
-#: ../app/tools/gimpiscissorstool.c:918 ../app/tools/gimpmeasuretool.c:602
+#: ../app/tools/gimpiscissorstool.c:919 ../app/tools/gimpmeasuretool.c:602
 msgid "Click-Drag to move this point"
 msgstr "Klikněte a táhněte pro přesun tohoto bodu"
 
-#: ../app/tools/gimpiscissorstool.c:920 ../app/tools/gimpiscissorstool.c:985
+#: ../app/tools/gimpiscissorstool.c:921 ../app/tools/gimpiscissorstool.c:986
 #, c-format
 msgid "%s: disable auto-snap"
 msgstr "%s: zakázat automatické chytání"
 
-#: ../app/tools/gimpiscissorstool.c:937
+#: ../app/tools/gimpiscissorstool.c:938
 msgid "Click to close the curve"
 msgstr "Klikněte pro uzavření křivky"
 
-#: ../app/tools/gimpiscissorstool.c:943
+#: ../app/tools/gimpiscissorstool.c:944
 msgid "Click to add a point on this segment"
 msgstr "Klikněte pro přidání bodu do tohoto segmentu"
 
-#: ../app/tools/gimpiscissorstool.c:957
+#: ../app/tools/gimpiscissorstool.c:958
 msgid "Click or press Enter to convert to a selection"
 msgstr "Klikněte nebo stiskněte Enter pro převod na výběr"
 
-#: ../app/tools/gimpiscissorstool.c:967
+#: ../app/tools/gimpiscissorstool.c:968
 msgid "Press Enter to convert to a selection"
 msgstr "Stiskněte Enter pro převod na výběr"
 
-#: ../app/tools/gimpiscissorstool.c:982
+#: ../app/tools/gimpiscissorstool.c:983
 msgid "Click or Click-Drag to add a point"
 msgstr "Klikněte nebo klikněte a táhněte pro přidání bodu"
 
