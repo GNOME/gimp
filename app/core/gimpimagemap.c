@@ -520,7 +520,7 @@ gimp_image_map_do (GimpImageMap *image_map)
         {
           image_map->idle_id = 0;
 
-          gimp_image_flush (image);
+          g_signal_emit (image_map, image_map_signals[FLUSH], 0);
 
           return FALSE;
         }

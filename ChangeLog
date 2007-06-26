@@ -1,3 +1,16 @@
+2007-06-27  Michael Natterer  <mitch@gimp.org>
+
+	Removed useless image flushing which caused the image preview to
+	be updated needlessly:
+
+	* app/core/gimpimagemap.c (gimp_image_map_do): don't flush the
+	image when the idle rendering is completed, emit our own "flush"
+	signal instead just as for the incremental display updates.
+
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_notify_preview):
+	when switching off the preview don't flush the image, only flush
+	projection and display.
+
 2007-06-26  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/image-properties-dialog.c

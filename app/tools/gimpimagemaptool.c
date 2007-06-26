@@ -542,7 +542,8 @@ gimp_image_map_tool_notify_preview (GObject          *config,
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
 
-          gimp_image_flush (tool->display->image);
+          gimp_image_map_tool_flush (image_map_tool->image_map,
+                                     image_map_tool);
         }
     }
 }
