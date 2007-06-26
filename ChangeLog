@@ -1,5 +1,10 @@
 2007-06-26  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpimageprofileview.c (gimp_image_profile_view_query):
+	use the name if the description is empty.
+
+2007-06-26  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimplevelstool.c: unset the active color picker when
 	the dialog is unmapped. Fixes bug #451272.
 

@@ -131,6 +131,7 @@ static gboolean
 gimp_image_profile_view_query (GimpImageProfileView *view)
 {
   GimpImage   *image;
+  gchar       *name  = NULL;
   gchar       *desc  = NULL;
   gchar       *info  = NULL;
   GError      *error = NULL;
@@ -144,15 +145,22 @@ gimp_image_profile_view_query (GimpImageProfileView *view)
   if (plug_in_icc_profile_info (image,
                                 gimp_get_user_context (image->gimp),
                                 NULL,
-                                NULL, &desc, &info,
+                                &name, &desc, &info,
                                 &error))
     {
-      if (desc)
+      if (desc || name)
         {
+          const gchar *title;
+
+          if (desc && strlen (desc))
+            title = desc;
+          else
+            title = name;
+
           gtk_text_buffer_insert_with_tags_by_name (view->buffer, &iter,
-                                                    desc, -1,
+                                                    title, -1,
                                                     "strong", NULL);
-          gtk_text_buffer_insert (view->buffer, &iter, "\n", 1);
+          gtk_text_buffer_insert (view->buffer, &iter, "\n\n", -1);
         }
 
       if (info)
@@ -166,6 +174,7 @@ gimp_image_profile_view_query (GimpImageProfileView *view)
       g_error_free (error);
     }
 
+  g_free (name);
   g_free (desc);
   g_free (info);
 
