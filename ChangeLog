@@ -1,3 +1,9 @@
+2007-06-26  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpimagepropview.c
+	(gimp_image_prop_view_label_set_filename): set the full name as
+	tooltip.
+
 2007-06-25  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-transform-resize.c: applied patch from Geert
