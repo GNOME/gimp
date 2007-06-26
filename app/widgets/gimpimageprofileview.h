@@ -40,12 +40,7 @@ struct _GimpImageProfileView
 {
   GimpImageParasiteView  parent_instance;
 
-  GtkWidget             *table;
-  GtkWidget             *name_label;
-  GtkWidget             *desc_label;
-  GtkWidget             *info_label;
-
-  GtkWidget             *message;
+  GtkTextBuffer         *buffer;
 
   guint                  idle_id;
 };

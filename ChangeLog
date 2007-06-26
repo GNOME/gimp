@@ -1,5 +1,12 @@
 2007-06-26  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/image-properties-dialog.c
+	* app/widgets/gimpimageprofileview.[ch]: show comment and color
+	profile in text views instead of using labels. Deals much better
+	with longer texts.
+
+2007-06-26  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpimagepropview.c
 	(gimp_image_prop_view_label_set_filename): set the full name as
 	tooltip.

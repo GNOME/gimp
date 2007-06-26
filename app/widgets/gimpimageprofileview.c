@@ -40,13 +40,9 @@
 #include "gimp-intl.h"
 
 
-static void        gimp_image_profile_view_dispose   (GObject     *object);
+static void  gimp_image_profile_view_dispose (GObject               *object);
 
-static GtkWidget * gimp_image_profile_view_add_label (GtkTable    *table,
-                                                      gint         row,
-                                                      const gchar *text);
-
-static void        gimp_image_profile_view_update    (GimpImageParasiteView *view);
+static void  gimp_image_profile_view_update  (GimpImageParasiteView *view);
 
 
 G_DEFINE_TYPE (GimpImageProfileView,
@@ -71,28 +67,31 @@ gimp_image_profile_view_class_init (GimpImageProfileViewClass *klass)
 static void
 gimp_image_profile_view_init (GimpImageProfileView *view)
 {
-  gint row = 0;
+  GtkWidget *scrolled_window;
+  GtkWidget *text_view;
 
-  view->table = gtk_table_new (3, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (view->table), 6);
-  gtk_table_set_row_spacings (GTK_TABLE (view->table), 6);
-  gtk_container_add (GTK_CONTAINER (view), view->table);
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_container_set_border_width (GTK_CONTAINER (scrolled_window), 2);
+  gtk_container_add (GTK_CONTAINER (view), scrolled_window);
+  gtk_widget_show (scrolled_window);
 
-  view->name_label =
-    gimp_image_profile_view_add_label (GTK_TABLE (view->table), row++,
-                                       _("Name:"));
-  view->desc_label =
-    gimp_image_profile_view_add_label (GTK_TABLE (view->table), row++,
-                                       _("Description:"));
-  view->info_label =
-    gimp_image_profile_view_add_label (GTK_TABLE (view->table), row++,
-                                       _("Info:"));
+  text_view = gtk_text_view_new ();
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
+  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
+  gtk_widget_show (text_view);
 
-  view->message = g_object_new (GTK_TYPE_LABEL,
-                                "xalign", 0.5,
-                                "yalign", 0.5,
-                                NULL);
-  gtk_container_add (GTK_CONTAINER (view), view->message);
+  view->buffer = gtk_text_view_get_buffer (GTK_TEXT_VIEW (text_view));
+
+  gtk_text_buffer_create_tag (view->buffer, "strong",
+                              "weight", PANGO_WEIGHT_BOLD,
+                              "scale",  PANGO_SCALE_LARGE,
+                              NULL);
+  gtk_text_buffer_create_tag (view->buffer, "emphasis",
+                              "style",  PANGO_STYLE_OBLIQUE,
+                              NULL);
 
   view->idle_id = 0;
 }
@@ -128,70 +127,45 @@ gimp_image_profile_view_new (GimpImage *image)
 
 /*  private functions  */
 
-static GtkWidget *
-gimp_image_profile_view_add_label (GtkTable    *table,
-                                   gint         row,
-                                   const gchar *text)
-{
-  GtkWidget *label;
-  GtkWidget *desc;
-
-  desc = g_object_new (GTK_TYPE_LABEL,
-                       "label",  text,
-                       "xalign", 1.0,
-                       "yalign", 0.0,
-                       NULL);
-  gimp_label_set_attributes (GTK_LABEL (desc),
-                             PANGO_ATTR_WEIGHT, PANGO_WEIGHT_BOLD,
-                             -1);
-  gtk_table_attach (table, desc,
-                    0, 1, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (desc);
-
-  label = g_object_new (GTK_TYPE_LABEL,
-                        "xalign",     0.0,
-                        "yalign",     0.0,
-                        "selectable", TRUE,
-                        NULL);
-  gtk_table_attach (table, label,
-                    1, 2, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
-  gtk_widget_show (label);
-
-  return label;
-}
-
 static gboolean
 gimp_image_profile_view_query (GimpImageProfileView *view)
 {
-  GimpImage *image;
-  gchar     *name  = NULL;
-  gchar     *desc  = NULL;
-  gchar     *info  = NULL;
-  GError    *error = NULL;
+  GimpImage   *image;
+  gchar       *desc  = NULL;
+  gchar       *info  = NULL;
+  GError      *error = NULL;
+  GtkTextIter  iter;
+
+  gtk_text_buffer_set_text (view->buffer, "", 0);
+  gtk_text_buffer_get_start_iter (view->buffer, &iter);
 
   image = gimp_image_parasite_view_get_image (GIMP_IMAGE_PARASITE_VIEW (view));
 
   if (plug_in_icc_profile_info (image,
                                 gimp_get_user_context (image->gimp),
                                 NULL,
-                                &name, &desc, &info,
+                                NULL, &desc, &info,
                                 &error))
     {
-      gtk_label_set_text (GTK_LABEL (view->message), NULL);
-      gtk_widget_hide (view->message);
+      if (desc)
+        {
+          gtk_text_buffer_insert_with_tags_by_name (view->buffer, &iter,
+                                                    desc, -1,
+                                                    "strong", NULL);
+          gtk_text_buffer_insert (view->buffer, &iter, "\n", 1);
+        }
 
-      gtk_label_set_text (GTK_LABEL (view->name_label), name);
-      gtk_label_set_text (GTK_LABEL (view->desc_label), desc);
-      gtk_label_set_text (GTK_LABEL (view->info_label), info);
-      gtk_widget_show (view->table);
+      if (info)
+        gtk_text_buffer_insert (view->buffer, &iter, info, -1);
     }
   else
     {
-      gtk_label_set_text (GTK_LABEL (view->message), error->message);
+      gtk_text_buffer_insert_with_tags_by_name (view->buffer, &iter,
+                                                error->message, -1,
+                                                "emphasis", NULL);
       g_error_free (error);
     }
 
-  g_free (name);
   g_free (desc);
   g_free (info);
 
@@ -202,14 +176,13 @@ static void
 gimp_image_profile_view_update (GimpImageParasiteView *view)
 {
   GimpImageProfileView *profile_view = GIMP_IMAGE_PROFILE_VIEW (view);
+  GtkTextIter           iter;
 
-  gtk_label_set_text (GTK_LABEL (profile_view->name_label), NULL);
-  gtk_label_set_text (GTK_LABEL (profile_view->desc_label), NULL);
-  gtk_label_set_text (GTK_LABEL (profile_view->info_label), NULL);
-  gtk_widget_hide (profile_view->table);
-
-  gtk_label_set_text (GTK_LABEL (profile_view->message), _("Querying..."));
-  gtk_widget_show (profile_view->message);
+  gtk_text_buffer_set_text (profile_view->buffer, "", 0);
+  gtk_text_buffer_get_start_iter (profile_view->buffer, &iter);
+  gtk_text_buffer_insert_with_tags_by_name (profile_view->buffer, &iter,
+                                            _("Querying..."), -1,
+                                            "emphasis", NULL);
 
   if (profile_view->idle_id)
     g_source_remove (profile_view->idle_id);
