@@ -47,6 +47,7 @@ static void      gimp_image_dock_display_changed  (GimpContext       *context,
                                                    GimpObject        *display,
                                                    GimpImageDock     *dock);
 static void      gimp_image_dock_image_flush      (GimpImage         *image,
+                                                   gboolean           invalidate_preview,
                                                    GimpImageDock     *dock);
 
 static void      gimp_image_dock_notify_transient (GimpConfig        *config,
@@ -167,6 +168,7 @@ gimp_image_dock_display_changed (GimpContext   *context,
 
 static void
 gimp_image_dock_image_flush (GimpImage     *image,
+                             gboolean       invalidate_preview,
                              GimpImageDock *dock)
 {
   if (image == gimp_context_get_image (GIMP_DOCK (dock)->context))

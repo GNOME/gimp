@@ -1,3 +1,25 @@
+2007-06-26  Michael Natterer  <mitch@gimp.org>
+
+	Invalidate the image preview after the projection is
+	completely constructed. Fixes bug #449141.
+
+	* app/core/gimpmarshal.list: add VOID:BOOLEAN
+
+	* app/core/gimpimage.[ch]: add boolean parameter
+	invalidate_preview to the "flush" signal.
+
+	* app/core/gimpprojection.[ch]: add boolean member
+	invalidate_preview to the GimpProjection struct. Set it to TRUE if
+	it was TRUE in the image's "flush" signal. When the projection is
+	completely constructed after a flush, invalidate the image's
+	preview.
+
+	* app/display/gimpdisplay-handlers.c
+	* app/widgets/gimpitemtreeview.c
+	* app/widgets/gimpimagedock.c
+	* app/widgets/gimpimageeditor.c: changed callback signatures
+	accordingly.
+
 2007-06-26  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpimageprofileview.c (gimp_image_profile_view_query):

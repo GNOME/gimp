@@ -75,6 +75,7 @@ static void   gimp_item_tree_view_real_set_image    (GimpItemTreeView  *view,
                                                      GimpImage         *image);
 
 static void   gimp_item_tree_view_image_flush       (GimpImage         *image,
+                                                     gboolean           invalidate_preview,
                                                      GimpItemTreeView  *view);
 
 static void   gimp_item_tree_view_set_container     (GimpContainerView *view,
@@ -505,6 +506,7 @@ gimp_item_tree_view_real_set_image (GimpItemTreeView *view,
 
 static void
 gimp_item_tree_view_image_flush (GimpImage        *image,
+                                 gboolean          invalidate_preview,
                                  GimpItemTreeView *view)
 {
   gimp_ui_manager_update (GIMP_EDITOR (view)->ui_manager, view);

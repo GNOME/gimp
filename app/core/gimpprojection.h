@@ -61,6 +61,7 @@ struct _GimpProjection
   GimpProjectionIdleRender  idle_render;
 
   gboolean                  construct_flag;
+  gboolean                  invalidate_preview;
 };
 
 struct _GimpProjectionClass

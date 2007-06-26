@@ -45,6 +45,7 @@ static void   gimp_display_update_handler (GimpProjection *projection,
                                            gint            h,
                                            GimpDisplay    *display);
 static void   gimp_display_flush_handler  (GimpImage      *image,
+                                           gboolean        invalidate_preview,
                                            GimpDisplay    *display);
 static void   gimp_display_saved_handler  (GimpImage      *image,
                                            const gchar    *uri,
@@ -137,6 +138,7 @@ gimp_display_update_handler (GimpProjection *projection,
 
 static void
 gimp_display_flush_handler (GimpImage   *image,
+                            gboolean     invalidate_preview,
                             GimpDisplay *display)
 {
   gimp_display_flush (display);

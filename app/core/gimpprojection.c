@@ -95,6 +95,7 @@ static void       gimp_projection_image_size_changed    (GimpImage      *image,
 static void       gimp_projection_image_mode_changed    (GimpImage      *image,
                                                          GimpProjection *proj);
 static void       gimp_projection_image_flush           (GimpImage      *image,
+                                                         gboolean        invalidate_preview,
                                                          GimpProjection *proj);
 
 
@@ -474,6 +475,15 @@ gimp_projection_flush_whenever (GimpProjection *proj,
       gimp_area_list_free (proj->update_areas);
       proj->update_areas = NULL;
     }
+  else if (! now && proj->invalidate_preview)
+    {
+      /* invalidate the preview here since it is constructed from
+       * the projection
+       */
+      proj->invalidate_preview = FALSE;
+
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (proj->image));
+    }
 }
 
 static void
@@ -581,6 +591,16 @@ gimp_projection_idle_render_callback (gpointer data)
             {
               /* FINISHED */
               proj->idle_render.idle_id = 0;
+
+              if (proj->invalidate_preview)
+                {
+                  /* invalidate the preview here since it is constructed from
+                   * the projection
+                   */
+                  proj->invalidate_preview = FALSE;
+
+                  gimp_viewable_invalidate_preview (GIMP_VIEWABLE (proj->image));
+                }
 
               return FALSE;
             }
@@ -701,7 +721,11 @@ gimp_projection_image_mode_changed (GimpImage      *image,
 
 static void
 gimp_projection_image_flush (GimpImage      *image,
+                             gboolean        invalidate_preview,
                              GimpProjection *proj)
 {
+  if (invalidate_preview)
+    proj->invalidate_preview = TRUE;
+
   gimp_projection_flush (proj);
 }

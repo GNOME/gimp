@@ -38,6 +38,7 @@ static void   gimp_image_editor_destroy        (GtkObject        *object);
 static void   gimp_image_editor_real_set_image (GimpImageEditor  *editor,
                                                 GimpImage        *image);
 static void   gimp_image_editor_image_flush    (GimpImage        *image,
+                                                gboolean          invalidate_preview,
                                                 GimpImageEditor  *editor);
 
 
@@ -161,6 +162,7 @@ gimp_image_editor_get_image (GimpImageEditor *editor)
 
 static void
 gimp_image_editor_image_flush (GimpImage       *image,
+                               gboolean         invalidate_preview,
                                GimpImageEditor *editor)
 {
   if (GIMP_EDITOR (editor)->ui_manager)

@@ -227,7 +227,8 @@ struct _GimpImageClass
                                          GimpUndoEvent         event,
                                          GimpUndo             *undo);
 
-  void (* flush)                        (GimpImage            *image);
+  void (* flush)                        (GimpImage            *image,
+                                         gboolean              invalidate_preview);
 };
 
 

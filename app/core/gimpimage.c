@@ -150,7 +150,8 @@ static gchar  * gimp_image_get_description       (GimpViewable   *viewable,
                                                   gchar         **tooltip);
 static void     gimp_image_real_colormap_changed (GimpImage      *image,
                                                   gint            color_index);
-static void     gimp_image_real_flush            (GimpImage      *image);
+static void     gimp_image_real_flush            (GimpImage      *image,
+                                                  gboolean        invalidate_preview);
 
 static void     gimp_image_mask_update           (GimpDrawable   *drawable,
                                                   gint            x,
@@ -472,8 +473,9 @@ gimp_image_class_init (GimpImageClass *klass)
                   G_SIGNAL_RUN_FIRST,
                   G_STRUCT_OFFSET (GimpImageClass, flush),
                   NULL, NULL,
-                  gimp_marshal_VOID__VOID,
-                  G_TYPE_NONE, 0);
+                  gimp_marshal_VOID__BOOLEAN,
+                  G_TYPE_NONE, 1,
+                  G_TYPE_BOOLEAN);
 
   object_class->constructor           = gimp_image_constructor;
   object_class->set_property          = gimp_image_set_property;
@@ -1123,7 +1125,8 @@ gimp_image_real_colormap_changed (GimpImage *image,
 }
 
 static void
-gimp_image_real_flush (GimpImage *image)
+gimp_image_real_flush (GimpImage *image,
+                       gboolean   invalidate_preview)
 {
   if (image->flush_accum.alpha_changed)
     {
@@ -1139,7 +1142,9 @@ gimp_image_real_flush (GimpImage *image)
 
   if (image->flush_accum.preview_invalidated)
     {
-      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image));
+      /*  don't invalidate the preview here, the projection does this when
+       *  it is completely constructed.
+       */
       image->flush_accum.preview_invalidated = FALSE;
     }
 }
@@ -1977,7 +1982,8 @@ gimp_image_flush (GimpImage *image)
 {
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  g_signal_emit (image, gimp_image_signals[FLUSH], 0);
+  g_signal_emit (image, gimp_image_signals[FLUSH], 0,
+                 image->flush_accum.preview_invalidated);
 }
 
 
