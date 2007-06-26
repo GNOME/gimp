@@ -490,7 +490,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
           gimp_image_flush (tool->display->image);
         }
 
-      tool->display    = NULL;
+      tool->display  = NULL;
       tool->drawable = NULL;
       break;
 
@@ -510,7 +510,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
           gimp_image_flush (tool->display->image);
         }
 
-      tool->display    = NULL;
+      tool->display  = NULL;
       tool->drawable = NULL;
       break;
     }

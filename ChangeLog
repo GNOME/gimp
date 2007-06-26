@@ -1,5 +1,12 @@
 2007-06-26  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimplevelstool.c: unset the active color picker when
+	the dialog is unmapped. Fixes bug #451272.
+
+	* app/tools/gimpimagemaptool.c: formatting.
+
+2007-06-26  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/image-properties-dialog.c
 	* app/widgets/gimpimageprofileview.[ch]: show comment and color
 	profile in text views instead of using labels. Deals much better
