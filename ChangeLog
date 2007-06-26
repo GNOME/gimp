@@ -1,3 +1,8 @@
+2007-06-26  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/image-properties-dialog.c
+	* app/widgets/gimpimageprofileview.c: added margins to text views.
+
 2007-06-26  Michael Natterer  <mitch@gimp.org>
 
 	Invalidate the image preview after the projection is

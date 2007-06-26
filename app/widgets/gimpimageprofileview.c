@@ -80,6 +80,9 @@ gimp_image_profile_view_init (GimpImageProfileView *view)
 
   text_view = gtk_text_view_new ();
   gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
+  gtk_text_view_set_pixels_above_lines (GTK_TEXT_VIEW (text_view), 6);
+  gtk_text_view_set_left_margin (GTK_TEXT_VIEW (text_view), 6);
+  gtk_text_view_set_right_margin (GTK_TEXT_VIEW (text_view), 6);
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
 
@@ -160,7 +163,7 @@ gimp_image_profile_view_query (GimpImageProfileView *view)
           gtk_text_buffer_insert_with_tags_by_name (view->buffer, &iter,
                                                     title, -1,
                                                     "strong", NULL);
-          gtk_text_buffer_insert (view->buffer, &iter, "\n\n", -1);
+          gtk_text_buffer_insert (view->buffer, &iter, "\n", 1);
         }
 
       if (info)
