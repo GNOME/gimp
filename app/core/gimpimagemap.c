@@ -414,17 +414,18 @@ gimp_image_map_clear (GimpImageMap *image_map)
   /*  restore the original image  */
   if (image_map->undo_tiles)
     {
-      PixelRegion srcPR, destPR;
-      gint        offset_x = image_map->undo_offset_x;
-      gint        offset_y = image_map->undo_offset_y;
-      gint        width    = tile_manager_width (image_map->undo_tiles);
-      gint        height   = tile_manager_height (image_map->undo_tiles);
+      PixelRegion srcPR;
+      PixelRegion destPR;
+      gint        x      = image_map->undo_offset_x;
+      gint        y      = image_map->undo_offset_y;
+      gint        width  = tile_manager_width (image_map->undo_tiles);
+      gint        height = tile_manager_height (image_map->undo_tiles);
 
       /*  Copy from the drawable to the tiles  */
       pixel_region_init (&srcPR, image_map->undo_tiles,
                          0, 0, width, height, FALSE);
       pixel_region_init (&destPR, gimp_drawable_get_tiles (image_map->drawable),
-                         offset_x, offset_y, width, height, TRUE);
+                         x, y, width, height, TRUE);
 
       /* if the user has changed the image depth get out quickly */
       if (destPR.bytes != srcPR.bytes)
@@ -433,11 +434,20 @@ gimp_image_map_clear (GimpImageMap *image_map)
         }
       else
         {
+          GimpImage *image;
+          gint       off_x, off_y;
+
           copy_region (&srcPR, &destPR);
 
-          /*  Update the area  */
-          gimp_drawable_update (image_map->drawable,
-                                offset_x, offset_y, width, height);
+          image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
+
+          gimp_item_offsets (GIMP_ITEM (image_map->drawable), &off_x, &off_y);
+
+          /*  Update the image -- It is important to call gimp_image_update()
+           *  instead of gimp_drawable_update() because we don't want the
+           *  drawable preview to be constantly invalidated
+           */
+          gimp_image_update (image, x + off_x, y + off_y, width, height);
         }
 
       /*  Free the undo_tiles tile manager  */
@@ -464,6 +474,7 @@ static gboolean
 gimp_image_map_do (GimpImageMap *image_map)
 {
   GimpImage *image;
+  gint       off_x, off_y;
   gint       i;
 
   if (! gimp_item_is_attached (GIMP_ITEM (image_map->drawable)))
@@ -474,6 +485,8 @@ gimp_image_map_do (GimpImageMap *image_map)
     }
 
   image = gimp_item_get_image (GIMP_ITEM (image_map->drawable));
+
+  gimp_item_offsets (GIMP_ITEM (image_map->drawable), &off_x, &off_y);
 
   /*  Process up to 16 tiles in one go. This reduces the overhead
    *  caused by updating the display while the imagemap is being
@@ -512,7 +525,11 @@ gimp_image_map_do (GimpImageMap *image_map)
                                   NULL,
                                   x, y);
 
-      gimp_drawable_update (image_map->drawable, x, y, w, h);
+      /*  Update the image -- It is important to call gimp_image_update()
+       *  instead of gimp_drawable_update() because we don't want the
+       *  drawable preview to be constantly invalidated
+       */
+      gimp_image_update (image, x + off_x, y + off_y, w, h);
 
       image_map->PRI = pixel_regions_process (image_map->PRI);
 

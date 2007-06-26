@@ -788,10 +788,12 @@ gimp_paint_core_paste (GimpPaintCore            *core,
   GimpImage   *image;
   PixelRegion  srcPR;
   TileManager *alt = NULL;
-  gint         offx;
-  gint         offy;
+  gint         off_x;
+  gint         off_y;
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
   /*  set undo blocks  */
   gimp_paint_core_validate_undo_tiles (core, drawable,
@@ -803,10 +805,6 @@ gimp_paint_core_paste (GimpPaintCore            *core,
   if (core->use_saved_proj)
     {
       GimpPickable *pickable = GIMP_PICKABLE (image->projection);
-      gint          off_x;
-      gint          off_y;
-
-      gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
       gimp_paint_core_validate_saved_proj_tiles (core, pickable,
                                                  core->canvas_buf->x + off_x,
@@ -868,12 +866,11 @@ gimp_paint_core_paste (GimpPaintCore            *core,
 
   /*  Update the image -- It is important to call gimp_image_update()
    *  instead of gimp_drawable_update() because we don't want the
-   *  drawable and image previews to be constantly invalidated
+   *  drawable preview to be constantly invalidated
    */
-  gimp_item_offsets (GIMP_ITEM (drawable), &offx, &offy);
   gimp_image_update (image,
-                     core->canvas_buf->x + offx,
-                     core->canvas_buf->y + offy,
+                     core->canvas_buf->x + off_x,
+                     core->canvas_buf->y + off_y,
                      core->canvas_buf->width,
                      core->canvas_buf->height);
 }
@@ -896,8 +893,8 @@ gimp_paint_core_replace (GimpPaintCore            *core,
 {
   GimpImage   *image;
   PixelRegion  srcPR;
-  gint         offx;
-  gint         offy;
+  gint         off_x;
+  gint         off_y;
 
   if (! gimp_drawable_has_alpha (drawable))
     {
@@ -909,6 +906,8 @@ gimp_paint_core_replace (GimpPaintCore            *core,
     }
 
   image = gimp_item_get_image (GIMP_ITEM (drawable));
+
+  gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
   /*  set undo blocks  */
   gimp_paint_core_validate_undo_tiles (core, drawable,
@@ -970,12 +969,11 @@ gimp_paint_core_replace (GimpPaintCore            *core,
 
   /*  Update the image -- It is important to call gimp_image_update()
    *  instead of gimp_drawable_update() because we don't want the
-   *  drawable and image previews to be constantly invalidated
+   *  drawable preview to be constantly invalidated
    */
-  gimp_item_offsets (GIMP_ITEM (drawable), &offx, &offy);
   gimp_image_update (image,
-                     core->canvas_buf->x + offx,
-                     core->canvas_buf->y + offy,
+                     core->canvas_buf->x + off_x,
+                     core->canvas_buf->y + off_y,
                      core->canvas_buf->width,
                      core->canvas_buf->height);
 }

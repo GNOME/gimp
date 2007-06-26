@@ -487,6 +487,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
 
+          gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image_map_tool->drawable));
           gimp_image_flush (tool->display->image);
         }
 
@@ -507,6 +508,7 @@ gimp_image_map_tool_response (GtkWidget        *widget,
 
           gimp_tool_control_set_preserve (tool->control, FALSE);
 
+          gimp_viewable_invalidate_preview (GIMP_VIEWABLE (image_map_tool->drawable));
           gimp_image_flush (tool->display->image);
         }
 

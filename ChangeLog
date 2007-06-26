@@ -1,5 +1,17 @@
 2007-06-27  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimpimagemap.c (gimp_image_map_clear)
+	(gimp_image_map_do): update the image, not the drawable so we
+	avoid constantly invalidating the drawable preview.
+
+	* app/tools/gimpimagemaptool.c (gimp_image_map_tool_response):
+	invalidate the drawable preview here.
+
+	* app/paint/gimppaintcore.c (gimp_paint_core_paste)
+	(gimp_paint_core_replace): clean up drawable offset handling code.
+
+2007-06-27  Michael Natterer  <mitch@gimp.org>
+
 	Removed useless image flushing which caused the image preview to
 	be updated needlessly:
 
