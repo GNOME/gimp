@@ -77,10 +77,6 @@ static void        gimp_image_prop_view_get_property (GObject           *object,
 static GtkWidget * gimp_image_prop_view_add_label    (GtkTable          *table,
                                                       gint               row,
                                                       const gchar       *text);
-static GtkWidget * gimp_image_prop_view_add_label_with_tooltip
-                                                     (GtkTable          *table,
-                                                      gint               row,
-                                                      const gchar       *text);
 static void        gimp_image_prop_view_undo_event   (GimpImage         *image,
                                                       GimpUndoEvent      event,
                                                       GimpUndo          *undo,
@@ -136,7 +132,10 @@ gimp_image_prop_view_init (GimpImagePropView *view)
   gtk_table_set_row_spacing (GTK_TABLE (view), row++, 12);
 
   view->filename_label =
-    gimp_image_prop_view_add_label_with_tooltip (table, row++, _("File Name:"));
+    gimp_image_prop_view_add_label (table, row++, _("File Name:"));
+
+  gtk_label_set_ellipsize (GTK_LABEL (view->filename_label),
+                           PANGO_ELLIPSIZE_MIDDLE);
 
   view->filesize_label =
     gimp_image_prop_view_add_label (table, row++, _("File Size:"));
@@ -272,14 +271,12 @@ gimp_image_prop_view_new (GimpImage *image)
 /*  private functions  */
 
 static GtkWidget *
-gimp_image_prop_view_add_label_full (GtkTable    *table,
-                                     gint         row,
-                                     const gchar *text,
-                                     gboolean     tooltip)
+gimp_image_prop_view_add_label (GtkTable    *table,
+                                gint         row,
+                                const gchar *text)
 {
   GtkWidget *label;
   GtkWidget *desc;
-  GtkWidget *ebox;
 
   desc = g_object_new (GTK_TYPE_LABEL,
                        "label",  text,
@@ -293,45 +290,18 @@ gimp_image_prop_view_add_label_full (GtkTable    *table,
                     0, 1, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (desc);
 
-  if (tooltip)
-    {
-      ebox = gtk_event_box_new ();
-      gtk_table_attach (table, ebox,
-                        1, 2, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
-      gtk_widget_show (ebox);
-    }
-
   label = g_object_new (GTK_TYPE_LABEL,
                         "xalign",     0.0,
                         "yalign",     0.5,
                         "selectable", TRUE,
                         NULL);
 
-  if (tooltip)
-    gtk_container_add (GTK_CONTAINER (ebox), label);
-  else
-    gtk_table_attach (table, label,
-                      1, 2, row, row + 1, GTK_FILL, GTK_FILL, 0, 0);
+  gtk_table_attach (table, label,
+                    1, 2, row, row + 1, GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
 
   gtk_widget_show (label);
 
   return label;
-}
-
-static GtkWidget *
-gimp_image_prop_view_add_label (GtkTable    *table,
-                                gint         row,
-                                const gchar *text)
-{
-  return gimp_image_prop_view_add_label_full (table, row, text, FALSE);
-}
-
-static GtkWidget *
-gimp_image_prop_view_add_label_with_tooltip (GtkTable    *table,
-                                             gint         row,
-                                             const gchar *text)
-{
-  return gimp_image_prop_view_add_label_full (table, row, text, TRUE);
 }
 
 static void
@@ -352,14 +322,9 @@ gimp_image_prop_view_label_set_filename (GtkWidget *label,
 
   if (uri)
     {
-      gchar *name;
+      gchar *name = file_utils_uri_display_name (uri);
 
-      name = file_utils_uri_display_basename (uri);
       gtk_label_set_text (GTK_LABEL (label), name);
-      g_free (name);
-
-      name = file_utils_uri_display_name (uri);
-      gimp_help_set_help_data (gtk_widget_get_parent (label), name, NULL);
       g_free (name);
     }
   else

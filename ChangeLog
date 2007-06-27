@@ -1,5 +1,11 @@
 2007-06-27  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpimagepropview.c: show the full filename instead
+	of the basename and ellipsize it. The tooltip was too hard to
+	discover.
+
+2007-06-27  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/Makefile.am
 	* app/widgets/widgets-types.h
 	* app/widgets/gimpimagecommenteditor.[ch]: new widget derived from
