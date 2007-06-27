@@ -41,7 +41,7 @@ struct _GimpImageCommentEditor
   GimpImageParasiteView  parent_instance;
 
   GtkTextBuffer         *buffer;
-  gboolean               recursing;
+  gboolean               recoursing;
 };
 
 struct _GimpImageCommentEditorClass

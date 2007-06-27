@@ -46,7 +46,6 @@ static void       gimp_color_panel_dialog_update   (GimpColorDialog    *dialog,
                                                     GimpColorDialogState state,
                                                     GimpColorPanel     *panel);
 
-
 G_DEFINE_TYPE (GimpColorPanel, gimp_color_panel, GIMP_TYPE_COLOR_BUTTON)
 
 #define parent_class gimp_color_panel_parent_class
@@ -75,6 +74,7 @@ gimp_color_panel_init (GimpColorPanel *panel)
 {
   panel->context      = NULL;
   panel->color_dialog = NULL;
+  panel->recoursing   = FALSE;
 }
 
 static void
@@ -163,7 +163,7 @@ gimp_color_panel_clicked (GtkButton *button)
                                GTK_WIDGET (button),
                                NULL, NULL,
                                (const GimpRGB *) &color,
-                               FALSE,
+                               TRUE,
                                gimp_color_button_has_alpha (GIMP_COLOR_BUTTON (button)));
 
       g_signal_connect (panel->color_dialog, "destroy",
@@ -216,11 +216,11 @@ gimp_color_panel_color_changed (GimpColorButton *button)
   GimpColorPanel *panel = GIMP_COLOR_PANEL (button);
   GimpRGB         color;
 
-  if (panel->color_dialog)
+  if (panel->color_dialog && ! panel->recoursing)
     {
       gimp_color_button_get_color (GIMP_COLOR_BUTTON (button), &color);
       gimp_color_dialog_set_color (GIMP_COLOR_DIALOG (panel->color_dialog),
-                                   &color);
+				   &color);
     }
 }
 
@@ -246,13 +246,15 @@ gimp_color_panel_dialog_update (GimpColorDialog      *dialog,
   switch (state)
     {
     case GIMP_COLOR_DIALOG_UPDATE:
+      panel->recoursing = TRUE;
+      gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
+      panel->recoursing = FALSE;
       break;
 
     case GIMP_COLOR_DIALOG_OK:
-      gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
-      /* Fallthrough */
-
     case GIMP_COLOR_DIALOG_CANCEL:
+      gimp_color_button_set_color (GIMP_COLOR_BUTTON (panel), color);
       gtk_widget_hide (panel->color_dialog);
+      break;
     }
 }

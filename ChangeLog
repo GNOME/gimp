@@ -1,5 +1,13 @@
 2007-06-27  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpimagecommenteditor.[ch]: fixed spelling error.
+
+	* app/widgets/gimpcolorpanel.[ch]: applied slightly modified patch
+	from Tor Lillqvist that changes the ColorPanel to provide live
+	updates (bug #451568).
+
+2007-06-27  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontrollerlist.c (gimp_controller_list_init):
 	use GTK_STOCK_PROPERTIES instead of GTK_STOCK_EDIT.
 

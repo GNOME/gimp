@@ -63,6 +63,8 @@ gimp_image_comment_editor_init (GimpImageCommentEditor *editor)
   GtkWidget *scrolled_window;
   GtkWidget *text_view;
 
+  editor->recoursing = FALSE;
+
   scrolled_window = gtk_scrolled_window_new (NULL, NULL);
 
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
@@ -114,7 +116,7 @@ gimp_image_comment_editor_update (GimpImageParasiteView *view)
   GimpImageCommentEditor *editor = GIMP_IMAGE_COMMENT_EDITOR (view);
   const GimpParasite     *parasite;
 
-  if (editor->recursing)
+  if (editor->recoursing)
     return;
 
   g_signal_handlers_block_by_func (editor->buffer,
@@ -168,7 +170,7 @@ gimp_image_comment_editor_buffer_changed (GtkTextBuffer          *buffer,
 
   len = text ? strlen (text) : 0;
 
-  editor->recursing = TRUE;
+  editor->recoursing = TRUE;
 
   if (len > 0)
     {
@@ -186,7 +188,7 @@ gimp_image_comment_editor_buffer_changed (GtkTextBuffer          *buffer,
       gimp_image_parasite_detach (image, GIMP_IMAGE_COMMENT_PARASITE);
     }
 
-  editor->recursing = FALSE;
+  editor->recoursing = FALSE;
 
   g_free (text);
 }
