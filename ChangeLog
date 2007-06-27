@@ -1,5 +1,10 @@
 2007-06-27  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/image-actions.c: as suggested by the HIG, use
+	Alt-Return as default shortcut for the Image Properties dialog.
+
+2007-06-27  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpimagepropview.c: show the full filename instead
 	of the basename and ellipsize it. The tooltip was too hard to
 	discover.
