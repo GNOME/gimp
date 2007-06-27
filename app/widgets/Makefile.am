@@ -169,6 +169,8 @@ libappwidgets_a_sources = \
 	gimphistogramview.h		\
 	gimpimagedock.c			\
 	gimpimagedock.h			\
+	gimpimagecommenteditor.c	\
+	gimpimagecommenteditor.h	\
 	gimpimageeditor.c		\
 	gimpimageeditor.h		\
 	gimpimageparasiteview.c		\

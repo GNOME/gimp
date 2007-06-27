@@ -1,5 +1,15 @@
 2007-06-27  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/Makefile.am
+	* app/widgets/widgets-types.h
+	* app/widgets/gimpimagecommenteditor.[ch]: new widget derived from
+	GimpImageParasiteView. Basically the code that used to live in
+	image-properties-dialog.c.
+
+	* app/dialogs/image-properties-dialog.c: use the comment editor.
+
+2007-06-27  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/image-properties-dialog.c: allow to edit the comment.
 
 	* app/widgets/gimpimageprofileview.c: enable line wrapping.
