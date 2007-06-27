@@ -23,16 +23,15 @@
 #include <string.h>
 #include <stdio.h>
 
-#include <gtk/gtk.h>
 #include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
-#include "interface.h"
 #include "metadata.h"
 #include "xmp-encode.h"
+
 /* FIXME: uncomment when these are working
+#include "interface.h"
 #include "exif-decode.h"
 #include "exif-encode.h"
 #include "iptc-decode.h"
@@ -45,12 +44,13 @@
 
 
 /* prototypes of local functions */
-static void      query           (void);
-static void      run             (const gchar      *name,
-				  gint              nparams,
-				  const GimpParam  *param,
-				  gint             *nreturn_vals,
-				  GimpParam       **return_vals);
+static void      query (void);
+static void      run   (const gchar      *name,
+                        gint              nparams,
+                        const GimpParam  *param,
+                        gint             *nreturn_vals,
+                        GimpParam       **return_vals);
+
 
 /* local variables */
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -67,12 +67,14 @@ MAIN ()
 static void
 query (void)
 {
+/* FIXME: uncomment when these are working
   static const GimpParamDef editor_args[] =
   {
     { GIMP_PDB_INT32,       "run-mode",  "Interactive, non-interactive" },
     { GIMP_PDB_IMAGE,       "image",     "Input image"                  },
     { GIMP_PDB_DRAWABLE,    "drawable",  "Input drawable (unused)"      }
   };
+*/
 
   static const GimpParamDef decode_xmp_args[] =
   {
@@ -179,6 +181,7 @@ query (void)
     { GIMP_PDB_INT32,       "overwrite", "Overwrite existing file: { FALSE (0), TRUE (1) }" }
   };
 
+/* FIXME: uncomment when these are working
   gimp_install_procedure (EDITOR_PROC,
 			  N_("View and edit metadata (EXIF, IPTC, XMP)"),
                           "View and edit metadata information attached to the "
@@ -197,8 +200,7 @@ query (void)
 
   gimp_plugin_menu_register (EDITOR_PROC, "<Image>/File/Info");
   gimp_plugin_icon_register (EDITOR_PROC, GIMP_ICON_TYPE_STOCK_ID,
-                             (const guint8 *) GTK_STOCK_PROPERTIES);
-  /* FIXME: The GNOME HIG recommends using the accel Alt+Return for this */
+ */
 
   gimp_install_procedure (DECODE_XMP_PROC,
 			  "Decode an XMP packet",
@@ -423,19 +425,7 @@ run (const gchar      *name,
     }
 
   /* Now check what we are supposed to do */
-  if (! strcmp (name, EDITOR_PROC))
-    {
-      GimpRunMode run_mode;
-
-      run_mode = param[0].data.d_int32;
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        {
-          /* Hello, user! */
-          if (! metadata_dialog (image_ID, xmp_model))
-            status = GIMP_PDB_CANCEL;
-        }
-    }
-  else if (! strcmp (name, DECODE_XMP_PROC))
+  if (! strcmp (name, DECODE_XMP_PROC))
     {
       const gchar *buffer;
       GError      *error = NULL;
@@ -516,6 +506,22 @@ run (const gchar      *name,
     {
       /* FIXME: this is easy to implement, but the first thing to do is */
       /* to improve the code of export_dialog_response() in interface.c */
+      g_warning ("Not implemented yet\n");
+      status = GIMP_PDB_EXECUTION_ERROR;
+    }
+  else if (! strcmp (name, EDITOR_PROC))
+    {
+      /* FIXME: uncomment when these are working
+      GimpRunMode run_mode;
+
+      run_mode = param[0].data.d_int32;
+      if (run_mode == GIMP_RUN_INTERACTIVE)
+        {
+          if (! metadata_dialog (image_ID, xmp_model))
+            status = GIMP_PDB_CANCEL;
+        }
+
+       */
       g_warning ("Not implemented yet\n");
       status = GIMP_PDB_EXECUTION_ERROR;
     }

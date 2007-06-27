@@ -20,8 +20,6 @@ libexec_PROGRAMS = metadata
 metadata_SOURCES = \
 	metadata.c	\
 	metadata.h	\
-	interface.h	\
-	interface.c	\
 	base64.h	\
 	base64.c	\
 	xmp-model.h	\
@@ -32,6 +30,8 @@ metadata_SOURCES = \
 	xmp-encode.c	\
 	xmp-schemas.h	\
 	xmp-schemas.c	
+#	interface.h	\
+#	interface.c	\
 #	exif-decode.h	\
 #	exif-decode.c	\
 #	exif-encode.h	\
@@ -54,14 +54,12 @@ INCLUDES = \
 	-I$(includedir)
 
 LDADD = \
-	$(libgimpui)		\
-	$(libgimpwidgets)	\
-	$(libgimp)		\
-	$(libgimpcolor)		\
-	$(libgimpbase)		\
-	$(libgimpmath)		\
-	$(GTK_LIBS)		\
-	$(RT_LIBS)		\
+	$(libgimp)	\
+	$(libgimpcolor)	\
+	$(libgimpbase)	\
+	$(libgimpmath)	\
+	$(GTK_LIBS)	\
+	$(RT_LIBS)	\
 	$(INTLLIBS)
 
 # test program, not built by default

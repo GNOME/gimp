@@ -24,8 +24,8 @@
 #include <string.h>
 
 #include <gtk/gtk.h>
+
 #include <libgimp/gimp.h>
-#include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 

@@ -1,5 +1,15 @@
 2007-06-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/metadata/xmp-encode.c
+	* plug-ins/metadata/xmp-model.c: don't include gimpui.h.
+
+	* plug-ins/metadata/Makefile.am: don't build interface.c, don't
+	link with libgimpui and libgimpwidgets.
+
+	* plug-ins/metadata/metadata.c: don't register the metadata editor.
+
+2007-06-27  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpimagecommenteditor.[ch]: fixed spelling error.
 
 	* app/widgets/gimpcolorpanel.[ch]: applied slightly modified patch
