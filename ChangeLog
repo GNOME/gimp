@@ -1,5 +1,11 @@
 2007-06-27  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/image-properties-dialog.c: allow to edit the comment.
+
+	* app/widgets/gimpimageprofileview.c: enable line wrapping.
+
+2007-06-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/tile.c (tile): call gimp_drawable_update() on
 	the destination drawable.
 

@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -41,9 +43,11 @@
 #include "gimp-intl.h"
 
 
-static GtkWidget * image_comment_view_new    (GimpImage     *image);
-static void        image_comment_view_update (GtkWidget     *page,
-                                              GtkTextBuffer *buffer);
+static GtkWidget * image_comment_view_new       (GimpImage             *image);
+static void        image_comment_view_update    (GimpImageParasiteView *view,
+                                                 GtkTextBuffer         *buffer);
+static void        image_comment_buffer_changed (GtkTextBuffer         *buffer,
+                                                 GimpImageParasiteView *view);
 
 
 /*  public functions  */
@@ -99,6 +103,7 @@ image_properties_dialog_new (GimpImage   *image,
   view = image_comment_view_new (image);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
                             view, gtk_label_new (_("Comment")));
+  gtk_widget_show (view);
 
   gtk_notebook_set_current_page (GTK_NOTEBOOK (notebook), 0);
 
@@ -124,10 +129,14 @@ image_comment_view_new (GimpImage *image)
   gtk_widget_show (scrolled_window);
 
   text_view = gtk_text_view_new ();
+
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), TRUE);
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
+
   gtk_text_view_set_pixels_above_lines (GTK_TEXT_VIEW (text_view), 6);
   gtk_text_view_set_left_margin (GTK_TEXT_VIEW (text_view), 6);
   gtk_text_view_set_right_margin (GTK_TEXT_VIEW (text_view), 6);
-  gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
+
   gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
   gtk_widget_show (text_view);
 
@@ -137,17 +146,24 @@ image_comment_view_new (GimpImage *image)
                     G_CALLBACK (image_comment_view_update),
                     buffer);
 
-  image_comment_view_update (view, buffer);
+  g_signal_connect (buffer, "changed",
+                    G_CALLBACK (image_comment_buffer_changed),
+                    view);
+
+  image_comment_view_update (GIMP_IMAGE_PARASITE_VIEW (view), buffer);
 
   return view;
 }
 
 static void
-image_comment_view_update (GtkWidget     *page,
-                           GtkTextBuffer *buffer)
+image_comment_view_update (GimpImageParasiteView *view,
+                           GtkTextBuffer         *buffer)
 {
-  GimpImageParasiteView *view = GIMP_IMAGE_PARASITE_VIEW (page);
-  const GimpParasite    *parasite;
+  GimpImage          *image = gimp_image_parasite_view_get_image (view);
+  const GimpParasite *parasite;
+
+  g_signal_handlers_block_by_func (buffer,
+                                   image_comment_buffer_changed, image);
 
   parasite = gimp_image_parasite_view_get_parasite (view);
 
@@ -166,12 +182,53 @@ image_comment_view_update (GtkWidget     *page,
 
       gtk_text_buffer_set_text (buffer, text, -1);
       g_free (text);
-
-      gtk_widget_show (page);
     }
   else
     {
-      gtk_widget_hide (page);
       gtk_text_buffer_set_text (buffer, "", 0);
     }
+
+  g_signal_handlers_unblock_by_func (buffer,
+                                     image_comment_buffer_changed, image);
+}
+
+static void
+image_comment_buffer_changed (GtkTextBuffer         *buffer,
+                              GimpImageParasiteView *view)
+{
+  GimpImage   *image = gimp_image_parasite_view_get_image (view);
+  gchar       *text;
+  gint         len;
+  GtkTextIter  start;
+  GtkTextIter  end;
+
+  g_signal_handlers_block_by_func (view,
+                                   image_comment_view_update, buffer);
+
+  gtk_text_buffer_get_bounds (buffer, &start, &end);
+
+  text = gtk_text_buffer_get_text (buffer, &start, &end, FALSE);
+
+  len = text ? strlen (text) : 0;
+
+  if (len > 0)
+    {
+      GimpParasite *parasite;
+
+      parasite = gimp_parasite_new ("gimp-comment",
+                                    GIMP_PARASITE_PERSISTENT,
+                                    len + 1, text);
+
+      gimp_image_parasite_attach (image, parasite);
+      gimp_parasite_free (parasite);
+    }
+  else
+    {
+      gimp_image_parasite_detach (image, "gimp-comment");
+    }
+
+  g_free (text);
+
+  g_signal_handlers_unblock_by_func (view,
+                                     image_comment_view_update, buffer);
 }
