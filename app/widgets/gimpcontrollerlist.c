@@ -286,7 +286,7 @@ gimp_controller_list_init (GimpControllerList *list)
 
   list->edit_button =
     gimp_editor_add_button (GIMP_EDITOR (list->dest),
-                            GTK_STOCK_EDIT,
+                            GTK_STOCK_PROPERTIES,
                             _("Configure the selected controller"),
                             NULL,
                             G_CALLBACK (gimp_controller_list_edit_clicked),

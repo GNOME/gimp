@@ -1,5 +1,10 @@
 2007-06-27  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontrollerlist.c (gimp_controller_list_init):
+	use GTK_STOCK_PROPERTIES instead of GTK_STOCK_EDIT.
+
+2007-06-27  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/image-actions.c: as suggested by the HIG, use
 	Alt-Return as default shortcut for the Image Properties dialog.
 
