@@ -1095,7 +1095,7 @@ load_rgba (TIFF         *tif,
                        0, 0, imageWidth, imageLength, TRUE, FALSE);
 
   buffer = g_new (uint32, imageWidth * imageLength);
-  channel[0].pixels = (guchar*) buffer;
+  channel[0].pixels = (guchar *) buffer;
 
   if (!TIFFReadRGBAImage (tif, imageWidth, imageLength, buffer, 0))
     g_message ("Unsupported layout, no RGBA loader");
