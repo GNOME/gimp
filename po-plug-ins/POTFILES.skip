@@ -1,0 +1,5 @@
+plug-ins/imagemap/imap_cern_parse.c
+plug-ins/imagemap/imap_csim_parse.c
+plug-ins/imagemap/imap_ncsa_parse.c
+plug-ins/imagemap/y.tab.c
+plug-ins/metadata/interface.c

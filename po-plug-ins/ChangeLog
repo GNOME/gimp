@@ -1,3 +1,8 @@
+2007-06-27  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.skip: skip plug-ins/metadata/interface.c and files in
+	plug-ins/imagemap which are generated from bison.
+
 2007-06-18  Marco Ciampa  <ciampix@libero.it>
 
 	* it.po: italian update.
