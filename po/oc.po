@@ -1,4 +1,4 @@
-# French translation for The GIMP.
+# Occitan translation for The GIMP.
 # Copyright (C) 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
@@ -9,13 +9,13 @@ msgstr ""
 "Project-Id-Version: gimp 2.3.17\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-29 13:21+0200\n"
-"PO-Revision-Date: 2007-04-18 11:35+0200\n"
+"PO-Revision-Date: 2007-06-28 21:44+0200\n"
 "Last-Translator: Yannig MARCHEGAY <yannig@marchegay.org>\n"
 "Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);"
 
 #: ../app/about.h:24
 msgid "GIMP"
@@ -84,9 +84,8 @@ msgid "Start a new GIMP instance"
 msgstr ""
 
 #: ../app/main.c:168
-#, fuzzy
 msgid "Open images as new"
-msgstr "Dubrir una imatge"
+msgstr ""
 
 #: ../app/main.c:173
 msgid "Run without a user interface"
@@ -1062,9 +1061,8 @@ msgid "_Keyboard Shortcuts"
 msgstr ""
 
 #: ../app/actions/dialogs-actions.c:225
-#, fuzzy
 msgid "Open the keyboard shortcuts editor"
-msgstr "Acorchis de clavièr"
+msgstr ""
 
 #: ../app/actions/dialogs-actions.c:230
 msgid "_Module Manager"
@@ -1087,9 +1085,8 @@ msgid "_About"
 msgstr "_A prepaus"
 
 #: ../app/actions/dialogs-actions.c:243
-#, fuzzy
 msgid "About GIMP"
-msgstr "_A prepaus"
+msgstr "_A prepaus de GIMP"
 
 #: ../app/actions/dock-actions.c:43
 msgid "M_ove to Screen"
@@ -1725,9 +1722,8 @@ msgid "_Open..."
 msgstr "_Dubrir..."
 
 #: ../app/actions/file-actions.c:70
-#, fuzzy
 msgid "Open an image file"
-msgstr "Dubrir una imatge"
+msgstr "Dobrir un fichièr imatge"
 
 #: ../app/actions/file-actions.c:75
 msgid "Op_en as Layers..."
@@ -1739,7 +1735,7 @@ msgstr ""
 
 #: ../app/actions/file-actions.c:81
 msgid "Open _Location..."
-msgstr "Dubrir un _emplaçament"
+msgstr "Dobrir un _emplaçament"
 
 #: ../app/actions/file-actions.c:82
 msgid "Open an image file from a specified location"
@@ -1782,9 +1778,8 @@ msgid "_Save"
 msgstr "_Enregistrar"
 
 #: ../app/actions/file-actions.c:115
-#, fuzzy
 msgid "Save this image"
-msgstr "Suprimir l'imatge"
+msgstr "Enregistrar l'imatge"
 
 #: ../app/actions/file-actions.c:120
 msgid "Save _As..."
@@ -1796,7 +1791,7 @@ msgstr ""
 
 #: ../app/actions/file-actions.c:126
 msgid "Save a Cop_y..."
-msgstr ""
+msgstr "Enregistrar una còp_ia..."
 
 #: ../app/actions/file-actions.c:127
 msgid "Save this image with a different name, but keep its current name"
@@ -1829,7 +1824,7 @@ msgstr "Enregistrar l'imatge"
 
 #: ../app/actions/file-commands.c:291
 msgid "Save a Copy of the Image"
-msgstr ""
+msgstr "Enregistrar una còpia de l'imatge"
 
 #: ../app/actions/file-commands.c:311
 msgid "Create New Template"
@@ -1864,7 +1859,7 @@ msgstr ""
 
 #: ../app/actions/file-commands.c:463 ../app/dialogs/file-open-dialog.c:75
 msgid "Open Image"
-msgstr "Dubrir una imatge"
+msgstr "Dobrir una imatge"
 
 #: ../app/actions/file-commands.c:538
 msgid "(Unnamed Template)"
@@ -3474,7 +3469,7 @@ msgstr ""
 
 #: ../app/actions/templates-actions.c:64
 msgid "_Edit Template..."
-msgstr ""
+msgstr "_Modificar lo modèl..."
 
 #: ../app/actions/templates-actions.c:65
 msgid "Edit the selected template"
@@ -3499,7 +3494,7 @@ msgstr ""
 #: ../app/actions/templates-commands.c:184
 #: ../app/actions/templates-commands.c:187
 msgid "Edit Template"
-msgstr ""
+msgstr "Modificar lo modèl"
 
 #: ../app/actions/templates-commands.c:223
 msgid "Delete Template"
@@ -3513,7 +3508,7 @@ msgstr ""
 
 #: ../app/actions/text-editor-actions.c:44
 msgid "Open"
-msgstr "Dubrir"
+msgstr "Dobrir"
 
 #: ../app/actions/text-editor-actions.c:45
 msgid "Load text from file"
@@ -3611,7 +3606,7 @@ msgstr ""
 #: ../app/actions/tool-options-commands.c:245
 #: ../app/actions/tool-options-commands.c:262
 msgid "Saved Options"
-msgstr ""
+msgstr "Opcions enregistradas"
 
 #: ../app/actions/tool-options-commands.c:138
 msgid "Rename Saved Tool Options"
@@ -3930,7 +3925,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:81
 msgid "_Close"
-msgstr "_Barrar"
+msgstr "_Tampar"
 
 #: ../app/actions/view-actions.c:82
 msgid "Close this image window"
@@ -4066,7 +4061,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:202
 msgid "Show _Menubar"
-msgstr "Mostrar la _barra de menut"
+msgstr "Visualizar la _barra de menut"
 
 #: ../app/actions/view-actions.c:203
 msgid "Show this window's menubar"
@@ -4109,27 +4104,24 @@ msgid "1_6:1  (1600%)"
 msgstr "1_6:1  (1600 %)"
 
 #: ../app/actions/view-actions.c:293
-#, fuzzy
 msgid "Zoom 16:1"
-msgstr "Agrandir lo zoom"
+msgstr ""
 
 #: ../app/actions/view-actions.c:298
 msgid "_8:1  (800%)"
 msgstr "_8:1  (800 %)"
 
 #: ../app/actions/view-actions.c:299
-#, fuzzy
 msgid "Zoom 8:1"
-msgstr "Agrandir lo zoom"
+msgstr ""
 
 #: ../app/actions/view-actions.c:304
 msgid "_4:1  (400%)"
 msgstr "_4:1  (400 %)"
 
 #: ../app/actions/view-actions.c:305
-#, fuzzy
 msgid "Zoom 4:1"
-msgstr "Agrandir lo zoom"
+msgstr ""
 
 #: ../app/actions/view-actions.c:310
 msgid "_2:1  (200%)"
@@ -4148,36 +4140,32 @@ msgid "1:_2  (50%)"
 msgstr "1:_2  (50 %)"
 
 #: ../app/actions/view-actions.c:323
-#, fuzzy
 msgid "Zoom 1:2"
-msgstr "Agrandir lo zoom"
+msgstr ""
 
 #: ../app/actions/view-actions.c:328
 msgid "1:_4  (25%)"
 msgstr "1:_4  (25 %)"
 
 #: ../app/actions/view-actions.c:329
-#, fuzzy
 msgid "Zoom 1:4"
-msgstr "Agrandir lo zoom"
+msgstr ""
 
 #: ../app/actions/view-actions.c:334
 msgid "1:_8  (12.5%)"
-msgstr ""
+msgstr "1:_8  (12.5\\%)"
 
 #: ../app/actions/view-actions.c:335
-#, fuzzy
 msgid "Zoom 1:8"
-msgstr "Agrandir lo zoom"
+msgstr ""
 
 #: ../app/actions/view-actions.c:340
 msgid "1:1_6  (6.25%)"
-msgstr ""
+msgstr "1:1_6  (6,25\\%)"
 
 #: ../app/actions/view-actions.c:341
-#, fuzzy
 msgid "Zoom 1:16"
-msgstr "Agrandir lo zoom"
+msgstr ""
 
 #: ../app/actions/view-actions.c:346
 msgid "Othe_r..."
@@ -6189,16 +6177,12 @@ msgstr ""
 #: ../app/widgets/gimpsizebox.c:440 ../app/widgets/gimptemplateeditor.c:564
 #, c-format
 msgid "%d × %d pixel"
-msgid_plural "%d × %d pixels"
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
 
 #: ../app/core/gimpimagefile.c:633 ../app/display/gimpdisplayshell-title.c:318
 #, c-format
 msgid "%d layer"
-msgid_plural "%d layers"
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
 
 #: ../app/core/gimpimagefile.c:680
 #, c-format
@@ -6605,7 +6589,7 @@ msgstr ""
 #: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:168
 #: ../app/gui/gui-message.c:146
 msgid "GIMP Message"
-msgstr ""
+msgstr "Messatge GIMP"
 
 #: ../app/dialogs/dialogs.c:133
 msgid "Devices"
@@ -6682,7 +6666,7 @@ msgstr ""
 
 #: ../app/dialogs/file-open-location-dialog.c:72
 msgid "Open Location"
-msgstr "Dubrir un emplaçament"
+msgstr "Dobrir un emplaçament"
 
 #: ../app/dialogs/file-open-location-dialog.c:110
 msgid "Enter location (URI):"
@@ -7843,7 +7827,7 @@ msgstr ""
 
 #: ../app/dialogs/quit-dialog.c:106
 msgid "Quit GIMP"
-msgstr ""
+msgstr "Sortir de GIMP"
 
 #: ../app/dialogs/quit-dialog.c:106
 msgid "Close All Images"
@@ -7860,9 +7844,7 @@ msgstr ""
 #: ../app/dialogs/quit-dialog.c:216
 #, c-format
 msgid "There is one image with unsaved changes:"
-msgid_plural "There are %d images with unsaved changes:"
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
 
 #: ../app/dialogs/quit-dialog.c:238
 msgid "_Discard Changes"
@@ -8075,7 +8057,7 @@ msgstr ""
 #: ../app/display/gimpdisplayshell-close.c:202
 #, c-format
 msgid "Close %s"
-msgstr "Barrar %s"
+msgstr "Tampar %s"
 
 #: ../app/display/gimpdisplayshell-close.c:137
 msgid "Do_n't Save"
@@ -8089,29 +8071,23 @@ msgstr ""
 #: ../app/display/gimpdisplayshell-close.c:232
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
-msgid_plural ""
 "If you don't save the image, changes from the last %d hours will be lost."
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
 
 #: ../app/display/gimpdisplayshell-close.c:242
 #, c-format
 msgid ""
 "If you don't save the image, changes from the last hour and %d minute will "
 "be lost."
-msgid_plural ""
 "If you don't save the image, changes from the last hour and %d minutes will "
 "be lost."
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
 
 #: ../app/display/gimpdisplayshell-close.c:253
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
-msgid_plural ""
 "If you don't save the image, changes from the last %d minutes will be lost."
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
 
 #: ../app/display/gimpdisplayshell-dnd.c:200
 #: ../app/display/gimpdisplayshell-dnd.c:500
@@ -8274,7 +8250,7 @@ msgstr ""
 
 #: ../app/paint/gimperaser.c:62 ../app/tools/gimperasertool.c:66
 msgid "Eraser"
-msgstr ""
+msgstr "Goma"
 
 #: ../app/paint/gimpheal.c:87 ../app/tools/gimphealtool.c:53
 msgid "Heal"
@@ -9277,7 +9253,7 @@ msgstr ""
 
 #: ../app/tools/gimperasertool.c:68
 msgid "_Eraser"
-msgstr ""
+msgstr "_Goma"
 
 #: ../app/tools/gimperasertool.c:97
 msgid "Click to erase"
@@ -9943,9 +9919,8 @@ msgid "command|Perspective"
 msgstr ""
 
 #: ../app/tools/gimpperspectivetool.c:98
-#, fuzzy
 msgid "Perspective transformation"
-msgstr "Transformacion"
+msgstr ""
 
 #: ../app/tools/gimpperspectivetool.c:113
 msgid "Transformation Matrix"
@@ -9988,14 +9963,12 @@ msgid "Highlight"
 msgstr ""
 
 #: ../app/tools/gimprectangleoptions.c:550
-#, fuzzy
 msgid "X:"
-msgstr "_X :"
+msgstr "X\\:"
 
 #: ../app/tools/gimprectangleoptions.c:558
-#, fuzzy
 msgid "Y:"
-msgstr "_Y :"
+msgstr "Y\\:"
 
 #: ../app/tools/gimprectangleoptions.c:569
 #: ../app/tools/gimprectangleoptions.c:583
@@ -10004,9 +9977,8 @@ msgstr ""
 
 #. Auto Shrink
 #: ../app/tools/gimprectangleoptions.c:599
-#, fuzzy
 msgid "Auto Shrink Selection"
-msgstr "A_pondre a la seleccion"
+msgstr ""
 
 #: ../app/tools/gimprectangleoptions.c:607
 msgid "Shrink merged"
@@ -10030,7 +10002,7 @@ msgstr ""
 
 #: ../app/tools/gimprectangletool.c:1007 ../app/tools/gimprectangletool.c:1652
 msgid "Rectangle: "
-msgstr ""
+msgstr "Rectangle\\: "
 
 #: ../app/tools/gimpregionselecttool.c:162
 msgid "Move the mouse to change threshold"
@@ -10249,7 +10221,7 @@ msgstr "Tè_xt"
 
 #: ../app/tools/gimptexttool.c:753
 msgid "GIMP Text Editor"
-msgstr ""
+msgstr "Editor de tèxt de GIMP"
 
 #: ../app/tools/gimptexttool.c:864 ../app/tools/gimptexttool.c:867
 msgid "Confirm Text Editing"
@@ -10311,7 +10283,7 @@ msgstr "Ulhada :"
 #: ../app/tools/gimptransformoptions.c:374
 #, c-format
 msgid "15 degrees  (%s)"
-msgstr ""
+msgstr "15 grases  (%s)"
 
 #: ../app/tools/gimptransformoptions.c:378
 #, c-format
@@ -11091,21 +11063,19 @@ msgstr ""
 
 #: ../app/widgets/gimpdock.c:293
 msgid "Close all Tabs"
-msgstr "Barrar totes los onglets"
+msgstr "Tampar totes los onglets"
 
 #: ../app/widgets/gimpdock.c:303
 msgid "Close all tabs?"
-msgstr "Barrar totes los onglets ?"
+msgstr "Tampar totes los onglets ?"
 
 #: ../app/widgets/gimpdock.c:306
 #, c-format
 msgid ""
 "This window has %d tab open. Closing the window will also close all its tabs."
-msgid_plural ""
 "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
-msgstr[0] ""
-msgstr[1] ""
+msgstr ""
 
 #: ../app/widgets/gimpdockable.c:166
 msgid "Configure this tab"
@@ -11134,7 +11104,7 @@ msgstr ""
 
 #: ../app/widgets/gimpfiledialog.c:277
 msgid "By Extension"
-msgstr ""
+msgstr "Per extension"
 
 #: ../app/widgets/gimpfiledialog.c:523
 msgid "All files"
@@ -11405,7 +11375,7 @@ msgstr ""
 #: ../app/widgets/gimpimagepropview.c:455
 #, c-format
 msgid "%g × %g %s"
-msgstr ""
+msgstr "%g × %g %s"
 
 #: ../app/widgets/gimpimagepropview.c:475
 msgid "colors"
