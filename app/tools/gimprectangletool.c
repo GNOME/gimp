@@ -70,16 +70,33 @@ typedef struct _GimpRectangleToolPrivate GimpRectangleToolPrivate;
 
 struct _GimpRectangleToolPrivate
 {
+  /* The following members are "constants", that is, variables that are setup
+   * during gimp_rectangle_tool_button_press and then only read.
+   */
+
   gint                    pressx;     /*  x where button pressed         */
   gint                    pressy;     /*  y where button pressed         */
 
-  gint                    x1, y1;     /*  upper left hand coordinate     */
-  gint                    x2, y2;     /*  lower right hand coords        */
+                                      /* Holds the coordinate that should be
+                                       * used as the "other side" when modifier
+                                       * keys are released.
+                                       */
+  gint                    other_side_x;
+  gint                    other_side_y;
 
                                       /* Holds the coordinate used as center
                                          when fixed_center is used. */
   gint                    center_x_on_fixed_center;
   gint                    center_y_on_fixed_center;
+
+
+  /* The rest of the members are internal state variables, that is, variables
+   * that might change during the manipulation session of the rectangle. Make
+   * sure these variables are in consistent states.
+   */
+
+  gint                    x1, y1;     /*  upper left hand coordinate     */
+  gint                    x2, y2;     /*  lower right hand coords        */
 
   guint                   function;   /*  moving or resizing             */
 
@@ -155,6 +172,18 @@ static GtkAnchorType gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *p
                                                      gint                     *w,
                                                      gint                     *h);
 static void     gimp_rectangle_tool_set_highlight   (GimpRectangleTool *rectangle);
+
+static void gimp_rectangle_tool_get_other_side      (GimpRectangleTool  *rectangle_tool,
+                                                     const gchar       **other_x,
+                                                     const gchar       **other_y);
+static void gimp_rectangle_tool_get_other_side_coord
+                                                    (GimpRectangleTool  *rectangle_tool,
+                                                     gint               *other_side_x,
+                                                     gint               *other_side_y);
+static void gimp_rectangle_tool_set_other_side_coord
+                                                    (GimpRectangleTool  *rectangle_tool,
+                                                     gint                other_side_x,
+                                                     gint                other_side_y);
 
 
 static guint gimp_rectangle_tool_signals[LAST_SIGNAL] = { 0 };
@@ -626,6 +655,28 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
       private->center_y_on_fixed_center = options_private->center_y;
     }
 
+  /* When the user toggles modifier keys, we want to keep track of what
+   * coordinates the "other side" should have. If we are creating a rectangle,
+   * use the current mouse coordinates as the coordinate of the "other side",
+   * otherwise use the immidiate "other side" for that.
+   */
+  if (private->function == RECT_CREATING)
+    {
+      private->other_side_x = private->pressx;
+      private->other_side_y = private->pressy;
+    }
+  else
+    {
+      gint other_side_x = 0;
+      gint other_side_y = 0;
+
+      gimp_rectangle_tool_get_other_side_coord (rectangle,
+                                                &other_side_x,
+                                                &other_side_y);
+      private->other_side_x = other_side_x;
+      private->other_side_y = other_side_y;
+    }
+
   gimp_tool_control_activate (tool->control);
 
   gimp_draw_tool_resume (draw_tool);
@@ -1064,10 +1115,12 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
   GimpRectangleTool           *rectangle;
   GimpRectangleOptions        *options;
   GimpRectangleOptionsPrivate *options_private;
+  GimpRectangleToolPrivate    *private;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
   rectangle       = GIMP_RECTANGLE_TOOL (tool);
+  private         = gimp_rectangle_tool_get_private (rectangle);
   options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
   options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
 
@@ -1080,6 +1133,25 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
 
   if (key == GDK_CONTROL_MASK)
     {
+      /* If we are leaving fixed_center mode we want to set the "other side"
+       * where it should be. Don't do anything if we came here by a mouse-click
+       * though, since then the user has confirmed the shape and we don't want
+       * to modify it afterwards.
+       */
+      if (options_private->fixed_center &&
+          (state & GDK_BUTTON1_MASK))
+        {
+          gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+          gimp_rectangle_tool_set_other_side_coord (rectangle,
+                                                    private->other_side_x,
+                                                    private->other_side_y);
+
+          gimp_rectangle_tool_configure (rectangle);
+
+          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+        }
+
       g_object_set (options,
                     "fixed-center", ! options_private->fixed_center,
                     NULL);
@@ -2203,4 +2275,115 @@ gimp_rectangle_tool_set_highlight (GimpRectangleTool *rectangle)
     {
       gimp_display_shell_set_highlight (shell, NULL);
     }
+}
+
+/**
+ * gimp_rectangle_tool_get_other_side:
+ * @rectangle_tool: A #GimpRectangleTool.
+ * @other_x:        Pointer to where to set the other-x string.
+ * @other_y:        Pointer to where to set the other-y string.
+ *
+ * Calculates what property variables that hold the coordinates of the opposite
+ * side (either the opposite corner or literally the opposite side), based on
+ * the current function. The opposite of a corner needs two coordinates, the
+ * opposite of a side only needs one.
+ */
+static void
+gimp_rectangle_tool_get_other_side (GimpRectangleTool *rectangle_tool,
+                                    const gchar      **other_x,
+                                    const gchar      **other_y)
+{
+  GimpRectangleToolPrivate *private;
+
+  g_return_if_fail (other_x != NULL &&
+                    other_y != NULL);
+
+  private = gimp_rectangle_tool_get_private (GIMP_RECTANGLE_TOOL (rectangle_tool));
+
+  switch (private->function)
+    {
+    case RECT_RESIZING_UPPER_RIGHT:
+    case RECT_RESIZING_LOWER_RIGHT:
+    case RECT_RESIZING_RIGHT:
+      *other_x = "x1";
+      break;
+
+    case RECT_RESIZING_UPPER_LEFT:
+    case RECT_RESIZING_LOWER_LEFT:
+    case RECT_RESIZING_LEFT:
+      *other_x = "x2";
+      break;
+
+    case RECT_RESIZING_TOP:
+    case RECT_RESIZING_BOTTOM:
+    default:
+      *other_x = NULL;
+      break;
+    }
+
+  switch (private->function)
+    {
+    case RECT_RESIZING_LOWER_RIGHT:
+    case RECT_RESIZING_LOWER_LEFT:
+    case RECT_RESIZING_BOTTOM:
+      *other_y = "y1";
+      break;
+
+    case RECT_RESIZING_UPPER_RIGHT:
+    case RECT_RESIZING_UPPER_LEFT:
+    case RECT_RESIZING_TOP:
+      *other_y = "y2";
+      break;
+
+    case RECT_RESIZING_LEFT:
+    case RECT_RESIZING_RIGHT:
+    default:
+      *other_y = NULL;
+      break;
+    }
+}
+
+static void
+gimp_rectangle_tool_get_other_side_coord (GimpRectangleTool *rectangle_tool,
+                                          gint              *other_side_x,
+                                          gint              *other_side_y)
+{
+  const gchar *other_x = NULL;
+  const gchar *other_y = NULL;
+
+  g_return_if_fail (other_side_x != NULL &&
+                    other_side_y != NULL);
+
+  gimp_rectangle_tool_get_other_side (GIMP_RECTANGLE_TOOL (rectangle_tool),
+                                      &other_x,
+                                      &other_y);
+  if (other_x)
+    g_object_get (rectangle_tool,
+                  other_x, other_side_x,
+                  NULL);
+  if (other_y)
+    g_object_get (rectangle_tool,
+                  other_y, other_side_y,
+                  NULL);
+}
+
+static void
+gimp_rectangle_tool_set_other_side_coord (GimpRectangleTool *rectangle_tool,
+                                          gint               other_side_x,
+                                          gint               other_side_y)
+{
+  const gchar *other_x = NULL;
+  const gchar *other_y = NULL;
+
+  gimp_rectangle_tool_get_other_side (GIMP_RECTANGLE_TOOL (rectangle_tool),
+                                      &other_x,
+                                      &other_y);
+  if (other_x)
+    g_object_set (rectangle_tool,
+                  other_x, other_side_x,
+                  NULL);
+  if (other_y)
+    g_object_set (rectangle_tool,
+                  other_y, other_side_y,
+                  NULL);
 }

@@ -1,3 +1,17 @@
+2007-06-29  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Made GimpRectangleTools remember where the "other side" is when
+	fixed-center is turned on, and reset the "other side" to that position
+	when fixed-center is turned off again. Fixes bug 398183.
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_button_press): Remember "other side".
+	(gimp_rectangle_tool_active_modifier_key): When fixed-center is turned
+	off, reset "other side".
+	(gimp_rectangle_tool_get_other_side)
+	(gimp_rectangle_tool_get_other_side_coord)
+	(gimp_rectangle_tool_set_other_side_coord): New functions.
+
 2007-06-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/metadata/xmp-encode.c
