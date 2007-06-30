@@ -1,8 +1,23 @@
+2007-06-30  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Started taking GimpRectangleTool towards the new specification.
+	The side handles now have the same width and height as the
+	corresponding corner handles, and the size of the side handles do
+	not span across the whole rectangle. Side handles also have a
+	limited mimimum size, just as corner handles.
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_oper_update,
+	gimp_rectangle_tool_draw, gimp_rectangle_tool_configure,
+	gimp_rectangle_tool_get_anchor): Changed accordingly.
+
+	* app/tools/gimpdrawtool.c (gimp_draw_tool_draw_corner): Changed
+	accordingly.
+
 2007-06-29  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Made GimpRectangleTools remember where the "other side" is when
 	fixed-center is turned on, and reset the "other side" to that position
-	when fixed-center is turned off again. Fixes bug 398183.
+	when fixed-center is turned off again. Fixes bug #398183.
 
 	* app/tools/gimprectangletool.c
 	(gimp_rectangle_tool_button_press): Remember "other side".

@@ -36,6 +36,7 @@ typedef enum
 typedef enum
 {
   RECT_INACTIVE,
+  RECT_DEAD,
   RECT_CREATING,
   RECT_MOVING,
   RECT_RESIZING_UPPER_LEFT,

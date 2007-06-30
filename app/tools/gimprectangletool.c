@@ -112,6 +112,15 @@ struct _GimpRectangleToolPrivate
   gint                    handle_w;   /*  handle width                   */
   gint                    handle_h;   /*  handle height                  */
 
+                                      /*  Top and bottom side handle
+                                       *  width.
+                                       */
+  gint                    top_and_bottom_handle_w;
+                                      /*  Left and right side handle
+                                       *  height.
+                                       */
+  gint                    left_and_right_handle_h;
+
   gint                    saved_x1;   /*  for saving in case action      */
   gint                    saved_y1;   /*  is canceled                    */
   gint                    saved_x2;
@@ -168,9 +177,7 @@ static void gimp_rectangle_tool_constrain           (GimpRectangleTool *rectangl
 
 static void     gimp_rectangle_tool_auto_shrink     (GimpRectangleTool *rectangle);
 
-static GtkAnchorType gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private,
-                                                     gint                     *w,
-                                                     gint                     *h);
+static GtkAnchorType gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private);
 static void     gimp_rectangle_tool_set_highlight   (GimpRectangleTool *rectangle);
 
 static void gimp_rectangle_tool_get_other_side      (GimpRectangleTool  *rectangle_tool,
@@ -1435,9 +1442,11 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
   if (coords->x > private->x1 && coords->x < private->x2 &&
       coords->y > private->y1 && coords->y < private->y2)
     {
-      GimpDisplayShell *shell    = GIMP_DISPLAY_SHELL (tool->display->shell);
-      gdouble           handle_w = private->handle_w / shell->scale_x;
-      gdouble           handle_h = private->handle_h / shell->scale_y;
+      GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (tool->display->shell);
+      gint              w     = private->x2 - private->x1;
+      gint              h     = private->y2 - private->y1;
+      gint              tw    = w * shell->scale_x;
+      gint              th    = h * shell->scale_y;
 
       if (gimp_draw_tool_on_handle (draw_tool, display,
                                     coords->x, coords->y,
@@ -1479,25 +1488,65 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
         {
           function = RECT_RESIZING_LOWER_LEFT;
         }
-      else if ((fabs (coords->x - private->x1) < (handle_w * 2) / 3))
+      else if (gimp_draw_tool_on_handle (draw_tool, display,
+                                         coords->x, coords->y,
+                                         GIMP_HANDLE_SQUARE,
+                                         private->x1, private->y1 + h / 2,
+                                         private->handle_w, private->left_and_right_handle_h,
+                                         GTK_ANCHOR_WEST,
+                                         FALSE))
         {
           function = RECT_RESIZING_LEFT;
         }
-      else if ((fabs (coords->x - private->x2) < (handle_w * 2) / 3))
+      else if (gimp_draw_tool_on_handle (draw_tool, display,
+                                         coords->x, coords->y,
+                                         GIMP_HANDLE_SQUARE,
+                                         private->x2, private->y1 + h / 2,
+                                         private->handle_w, private->left_and_right_handle_h,
+                                         GTK_ANCHOR_EAST,
+                                         FALSE))
         {
           function = RECT_RESIZING_RIGHT;
         }
-      else if ((fabs (coords->y - private->y1) < (handle_h * 2) / 3))
+      else if (gimp_draw_tool_on_handle (draw_tool, display,
+                                         coords->x, coords->y,
+                                         GIMP_HANDLE_SQUARE,
+                                         private->x1 + w / 2, private->y1,
+                                         private->top_and_bottom_handle_w, private->handle_h,
+                                         GTK_ANCHOR_NORTH,
+                                         FALSE))
         {
           function = RECT_RESIZING_TOP;
         }
-      else if ((fabs (coords->y - private->y2) < (handle_h * 2) / 3))
+      else if (gimp_draw_tool_on_handle (draw_tool, display,
+                                         coords->x, coords->y,
+                                         GIMP_HANDLE_SQUARE,
+                                         private->x1 + w / 2, private->y2,
+                                         private->top_and_bottom_handle_w, private->handle_h,
+                                         GTK_ANCHOR_SOUTH,
+                                         FALSE))
         {
           function = RECT_RESIZING_BOTTOM;
         }
-      else
+      else if (gimp_draw_tool_on_handle (draw_tool, display,
+                                         coords->x, coords->y,
+                                         GIMP_HANDLE_SQUARE,
+                                         private->x1 + w / 2,
+                                         private->y1 + h / 2,
+                                         tw - private->handle_w * 2,
+                                         th - private->handle_h * 2,
+                                         GTK_ANCHOR_CENTER,
+                                         FALSE))
         {
           function = RECT_MOVING;
+        }
+      else
+        {
+          /* FIXME: This is currently the only measure done to make this area
+           * dead. In the final code the concrete rectangle tools will have to
+           * be written to handle this state.
+           */
+          function = RECT_DEAD;
         }
     }
   else
@@ -1597,6 +1646,7 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
         break;
       /* else fallthrough */
 
+    case RECT_DEAD:
     case RECT_CREATING:
       gimp_draw_tool_draw_corner (draw_tool, FALSE,
                                   private->x1, private->y1,
@@ -1620,19 +1670,36 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
                                   GTK_ANCHOR_SOUTH_EAST, FALSE);
       break;
 
-    default:
-      {
-        GtkAnchorType anchor;
-        gint          w, h;
+    case RECT_RESIZING_TOP:
+    case RECT_RESIZING_BOTTOM:
+      gimp_draw_tool_draw_corner (draw_tool,
+                                  !gimp_tool_control_is_active (tool->control),
+                                  private->x1, private->y1,
+                                  private->x2, private->y2,
+                                  private->top_and_bottom_handle_w, private->handle_h,
+                                  gimp_rectangle_tool_get_anchor (private),
+                                  FALSE);
+      break;
 
-        anchor = gimp_rectangle_tool_get_anchor (private, &w, &h);
-        gimp_draw_tool_draw_corner (draw_tool,
-                                    ! gimp_tool_control_is_active (tool->control),
-                                    private->x1, private->y1,
-                                    private->x2, private->y2,
-                                    w, h,
-                                    anchor, FALSE);
-      }
+    case RECT_RESIZING_LEFT:
+    case RECT_RESIZING_RIGHT:
+      gimp_draw_tool_draw_corner (draw_tool,
+                                  !gimp_tool_control_is_active (tool->control),
+                                  private->x1, private->y1,
+                                  private->x2, private->y2,
+                                  private->handle_w, private->left_and_right_handle_h,
+                                  gimp_rectangle_tool_get_anchor (private),
+                                  FALSE);
+      break;
+
+    default:
+      gimp_draw_tool_draw_corner (draw_tool,
+                                  !gimp_tool_control_is_active (tool->control),
+                                  private->x1, private->y1,
+                                  private->x2, private->y2,
+                                  private->handle_w, private->handle_h,
+                                  gimp_rectangle_tool_get_anchor (private),
+                                  FALSE);
       break;
     }
 
@@ -1720,6 +1787,7 @@ gimp_rectangle_tool_configure (GimpRectangleTool *rectangle)
   GimpDisplayShell         *shell;
   gint                      dx1, dx2;
   gint                      dy1, dy2;
+  gint                      tw,  th;
 
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
   options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
@@ -1740,11 +1808,22 @@ gimp_rectangle_tool_configure (GimpRectangleTool *rectangle)
                                    &dx2, &dy2,
                                    FALSE);
 
-  private->handle_w = (dx2 - dx1) / 3;
-  private->handle_h = (dy2 - dy1) / 3;
+  tw = dx2 - dx1;
+  th = dy2 - dy1;
+
+  private->handle_w = tw / 4;
+  private->handle_h = th / 4;
 
   private->handle_w = CLAMP (private->handle_w, MIN_HANDLE_SIZE, HANDLE_SIZE);
   private->handle_h = CLAMP (private->handle_h, MIN_HANDLE_SIZE, HANDLE_SIZE);
+
+  private->top_and_bottom_handle_w = tw - 3 * private->handle_w;
+  private->left_and_right_handle_h = th - 3 * private->handle_h;
+
+  private->top_and_bottom_handle_w =
+    CLAMP (private->top_and_bottom_handle_w, MIN_HANDLE_SIZE, G_MAXINT);
+  private->left_and_right_handle_h =
+    CLAMP (private->left_and_right_handle_h, MIN_HANDLE_SIZE, G_MAXINT);
 }
 
 static void
@@ -2205,13 +2284,8 @@ gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rectangle)
 }
 
 static GtkAnchorType
-gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private,
-                                gint                     *w,
-                                gint                     *h)
+gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private)
 {
-  *w = private->handle_w;
-  *h = private->handle_h;
-
   switch (private->function)
     {
     case RECT_RESIZING_UPPER_LEFT:
@@ -2227,19 +2301,15 @@ gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private,
       return GTK_ANCHOR_SOUTH_EAST;
 
     case RECT_RESIZING_LEFT:
-      *w = (*w * 2) / 3;
       return GTK_ANCHOR_WEST;
 
     case RECT_RESIZING_RIGHT:
-      *w = (*w * 2) / 3;
       return GTK_ANCHOR_EAST;
 
     case RECT_RESIZING_TOP:
-      *h = (*h * 2) / 3;
       return GTK_ANCHOR_NORTH;
 
     case RECT_RESIZING_BOTTOM:
-      *h = (*h * 2) / 3;
       return GTK_ANCHOR_SOUTH;
 
     default:
