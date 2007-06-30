@@ -2,12 +2,13 @@
 # Copyright (C) 1999 Free Software Foundation, Inc.
 # Daniele Medri <madrid@linux.it>, 1999-2002
 # Marco Ciampa <ciampix@libero.it>, 2003-2007
+# Alessandro Falappa <alessandro@falappa.net>, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-18 22:11+0200\n"
-"PO-Revision-Date: 2007-06-18 22:18+0200\n"
+"POT-Creation-Date: 2007-06-30 22:39+0200\n"
+"PO-Revision-Date: 2007-06-30 22:40+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: tp@lists.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -244,8 +245,8 @@ msgstr "Coseno"
 #: ../plug-ins/FractalExplorer/Dialogs.c:1040
 #: ../plug-ins/FractalExplorer/Dialogs.c:1081
 #: ../plug-ins/Lighting/lighting_ui.c:416
-#: ../plug-ins/common/CML_explorer.c:166 ../plug-ins/common/align_layers.c:421
-#: ../plug-ins/common/align_layers.c:452 ../plug-ins/common/postscript.c:3228
+#: ../plug-ins/common/CML_explorer.c:166 ../plug-ins/common/align_layers.c:422
+#: ../plug-ins/common/align_layers.c:453 ../plug-ins/common/postscript.c:3228
 #: ../plug-ins/common/postscript.c:3240 ../plug-ins/common/psp.c:418
 #: ../plug-ins/fits/fits.c:1026
 msgid "None"
@@ -1192,7 +1193,7 @@ msgstr "Profondità di colore (in bit) non supportata o non valida."
 #: ../plug-ins/common/psd-load.c:2516 ../plug-ins/common/raw.c:691
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:918
 #: ../plug-ins/common/tga.c:931 ../plug-ins/common/tiff-load.c:917
-#: ../plug-ins/common/tile.c:265 ../plug-ins/common/xbm.c:866
+#: ../plug-ins/common/tile.c:266 ../plug-ins/common/xbm.c:866
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:511
 #: ../plug-ins/gfig/gfig-dialog.c:1284
 #: ../plug-ins/gimpressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:254
@@ -1849,161 +1850,160 @@ msgstr "Allinea livelli visi_bili..."
 msgid "There are not enough layers to align."
 msgstr "Non ci sono abbastanza livelli da allineare."
 
-#: ../plug-ins/common/align_layers.c:397
+#: ../plug-ins/common/align_layers.c:398
 msgid "Align Visible Layers"
 msgstr "Allinea livelli visibili"
 
-#: ../plug-ins/common/align_layers.c:422 ../plug-ins/common/align_layers.c:453
+#: ../plug-ins/common/align_layers.c:423 ../plug-ins/common/align_layers.c:454
 msgid "Collect"
 msgstr "Seleziona"
 
-#: ../plug-ins/common/align_layers.c:423
+#: ../plug-ins/common/align_layers.c:424
 msgid "Fill (left to right)"
 msgstr "Riempi (sinistra destra)"
 
-#: ../plug-ins/common/align_layers.c:424
+#: ../plug-ins/common/align_layers.c:425
 msgid "Fill (right to left)"
 msgstr "Riempi (destra sinistra)"
 
-#: ../plug-ins/common/align_layers.c:425 ../plug-ins/common/align_layers.c:456
+#: ../plug-ins/common/align_layers.c:426 ../plug-ins/common/align_layers.c:457
 msgid "Snap to grid"
 msgstr "Griglia magnetica"
 
-#: ../plug-ins/common/align_layers.c:434
+#: ../plug-ins/common/align_layers.c:435
 msgid "_Horizontal style:"
 msgstr "Stile _orizzontale:"
 
-#: ../plug-ins/common/align_layers.c:438
+#: ../plug-ins/common/align_layers.c:439
 msgid "Left edge"
 msgstr "Bordo sinistro"
 
-#: ../plug-ins/common/align_layers.c:439 ../plug-ins/common/align_layers.c:469
+#: ../plug-ins/common/align_layers.c:440 ../plug-ins/common/align_layers.c:470
 #: ../plug-ins/gflare/gflare.c:2639
 msgid "Center"
 msgstr "Centro"
 
-#: ../plug-ins/common/align_layers.c:440
+#: ../plug-ins/common/align_layers.c:441
 msgid "Right edge"
 msgstr "Bordo destro"
 
-#: ../plug-ins/common/align_layers.c:449
+#: ../plug-ins/common/align_layers.c:450
 msgid "Ho_rizontal base:"
 msgstr "Base o_rizzontale:"
 
-#: ../plug-ins/common/align_layers.c:454
+#: ../plug-ins/common/align_layers.c:455
 msgid "Fill (top to bottom)"
 msgstr "Riempi (alto basso)"
 
-#: ../plug-ins/common/align_layers.c:455
+#: ../plug-ins/common/align_layers.c:456
 msgid "Fill (bottom to top)"
 msgstr "Riempi (basso alto)"
 
-#: ../plug-ins/common/align_layers.c:465
+#: ../plug-ins/common/align_layers.c:466
 msgid "_Vertical style:"
 msgstr "Stile _verticale:"
 
-#: ../plug-ins/common/align_layers.c:468
+#: ../plug-ins/common/align_layers.c:469
 msgid "Top edge"
 msgstr "Bordo superiore"
 
-#: ../plug-ins/common/align_layers.c:470
+#: ../plug-ins/common/align_layers.c:471
 msgid "Bottom edge"
 msgstr "Bordo inferiore"
 
-#: ../plug-ins/common/align_layers.c:479
+#: ../plug-ins/common/align_layers.c:480
 msgid "Ver_tical base:"
 msgstr "Base ver_ticale:"
 
-#: ../plug-ins/common/align_layers.c:483
+#: ../plug-ins/common/align_layers.c:484
 msgid "_Grid size:"
 msgstr "Dimensione _griglia:"
 
-#: ../plug-ins/common/align_layers.c:492
+#: ../plug-ins/common/align_layers.c:493
 msgid "_Ignore the bottom layer even if visible"
 msgstr "_Ignora il livello inferiore anche se visibile"
 
-#: ../plug-ins/common/align_layers.c:502
+#: ../plug-ins/common/align_layers.c:503
 msgid "_Use the (invisible) bottom layer as the base"
 msgstr "_Usa il livello inferiore (invisibile) come base"
 
-#: ../plug-ins/common/animationplay.c:162
+#: ../plug-ins/common/animationplay.c:163
 msgid "Preview a GIMP layer-based animation"
 msgstr "Anteprima di un'animazione basata sui livelli di GIMP"
 
-#: ../plug-ins/common/animationplay.c:167
+#: ../plug-ins/common/animationplay.c:168
 msgid "_Playback..."
 msgstr "_Esecuzione..."
 
-#: ../plug-ins/common/animationplay.c:442
+#: ../plug-ins/common/animationplay.c:443
 msgid "_Step"
 msgstr "Pa_sso"
 
-#: ../plug-ins/common/animationplay.c:442
+#: ../plug-ins/common/animationplay.c:443
 msgid "Step to next frame"
 msgstr "Esegui passo di un frame"
 
-#: ../plug-ins/common/animationplay.c:446
+#: ../plug-ins/common/animationplay.c:447
 msgid "Rewind the animation"
 msgstr "Riavvolgi l'animazione"
 
-#: ../plug-ins/common/animationplay.c:464
+#: ../plug-ins/common/animationplay.c:465
 msgid "Faster"
 msgstr "Più veloce"
 
-#: ../plug-ins/common/animationplay.c:464
+#: ../plug-ins/common/animationplay.c:465
 msgid "Increase the speed of the animation"
 msgstr "Aumenta la velocità dell'animazione"
 
-#: ../plug-ins/common/animationplay.c:469
+#: ../plug-ins/common/animationplay.c:470
 msgid "Slower"
 msgstr "Più lenta"
 
-#: ../plug-ins/common/animationplay.c:469
+#: ../plug-ins/common/animationplay.c:470
 msgid "Decrease the speed of the animation"
 msgstr "Diminuisce la velocità dell'animazione"
 
-#: ../plug-ins/common/animationplay.c:474
+#: ../plug-ins/common/animationplay.c:475
 msgid "Reset speed"
 msgstr "Reimposta la velocità"
 
-#: ../plug-ins/common/animationplay.c:474
+#: ../plug-ins/common/animationplay.c:475
 msgid "Reset the speed of the animation"
 msgstr "Reimposta la velocità dell'animazione"
 
-#: ../plug-ins/common/animationplay.c:482
-#: ../plug-ins/common/animationplay.c:1407
+#: ../plug-ins/common/animationplay.c:483
+#: ../plug-ins/common/animationplay.c:1445
 msgid "Start playback"
 msgstr "Inizia l'esecuzione"
 
-#: ../plug-ins/common/animationplay.c:486
+#: ../plug-ins/common/animationplay.c:487
 msgid "Detach"
 msgstr "Stacca"
 
-#: ../plug-ins/common/animationplay.c:487
+#: ../plug-ins/common/animationplay.c:488
 msgid "Detach the animation from the dialog window"
 msgstr "Stacca l'animazione dalla finestra di dialogo"
 
-#: ../plug-ins/common/animationplay.c:576
+#: ../plug-ins/common/animationplay.c:581
 msgid "Animation Playback:"
 msgstr "Esecuzione animazione:"
 
-#: ../plug-ins/common/animationplay.c:769
+#: ../plug-ins/common/animationplay.c:664
+msgid "Playback speed"
+msgstr "Velocità di esecuzione"
+
+#: ../plug-ins/common/animationplay.c:802
 msgid "Tried to display an invalid layer."
 msgstr "Tentativo di visualizzazione di un livello non valido."
 
-#: ../plug-ins/common/animationplay.c:1289
+#: ../plug-ins/common/animationplay.c:1322
 #, c-format
 msgid "Frame %d of %d"
 msgstr "Fotogramma %d di %d"
 
-#: ../plug-ins/common/animationplay.c:1407
+#: ../plug-ins/common/animationplay.c:1445
 msgid "Stop playback"
 msgstr "Blocca l'esecuzione"
-
-#: ../plug-ins/common/animationplay.c:1505
-#, c-format
-msgid "Playback speed: %d %%"
-msgstr "Velocità di esecuzione: %d %%"
 
 #: ../plug-ins/common/animoptimize.c:133
 msgid "Modify image to reduce size when saved as GIF animation"
@@ -2719,7 +2719,7 @@ msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
 msgstr ""
-"È possibile eseguire solo il comando 'Ricomponi' se l'immagine attiva era "
+"È possibile eseguire il comando 'Ricomponi' solo se l'immagine attiva era "
 "stata originariamente prodotta da 'Scomponi'."
 
 #: ../plug-ins/common/compose.c:499
@@ -3443,7 +3443,7 @@ msgstr "Destriscia"
 #: ../plug-ins/common/destripe.c:472 ../plug-ins/common/gtm.c:584
 #: ../plug-ins/common/papertile.c:302 ../plug-ins/common/postscript.c:3152
 #: ../plug-ins/common/postscript.c:3361 ../plug-ins/common/raw.c:1035
-#: ../plug-ins/common/smooth_palette.c:436 ../plug-ins/common/tile.c:423
+#: ../plug-ins/common/smooth_palette.c:436 ../plug-ins/common/tile.c:424
 #: ../plug-ins/imagemap/imap_cmd_guides.c:165
 #: ../plug-ins/imagemap/imap_rectangle.c:403
 #: ../plug-ins/print/print-page-layout.c:239
@@ -3719,7 +3719,7 @@ msgstr "Incisione"
 #: ../plug-ins/common/gtm.c:600 ../plug-ins/common/papertile.c:313
 #: ../plug-ins/common/postscript.c:3162 ../plug-ins/common/postscript.c:3370
 #: ../plug-ins/common/raw.c:1048 ../plug-ins/common/smooth_palette.c:441
-#: ../plug-ins/common/tile.c:427 ../plug-ins/imagemap/imap_cmd_guides.c:175
+#: ../plug-ins/common/tile.c:428 ../plug-ins/imagemap/imap_cmd_guides.c:175
 #: ../plug-ins/imagemap/imap_rectangle.c:410
 #: ../plug-ins/print/print-page-layout.c:241
 msgid "_Height:"
@@ -7052,25 +7052,25 @@ msgstr "La finestra specificata non è stata trovata"
 
 #: ../plug-ins/common/screenshot.c:890
 msgid "There was an error taking the screenshot."
-msgstr "Si è verificato un errore durante la foto della schermata."
+msgstr "Si è verificato un errore durante la cattura della schermata."
 
 #: ../plug-ins/common/screenshot.c:978
 msgid "S_nap"
-msgstr "Scat_ta"
+msgstr "Cat_tura"
 
 #: ../plug-ins/common/screenshot.c:1008
 msgid "After the delay, the screenshot is taken."
-msgstr "Dopo il ritardo verrà fotografata la schermata."
+msgstr "Dopo il ritardo verrà catturata la schermata."
 
 #: ../plug-ins/common/screenshot.c:1010
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
-"Dopo il ritardo, usare il mouse per selezionare la regione da fotografare."
+"Dopo il ritardo, usare il mouse per selezionare la regione da catturare."
 
 #: ../plug-ins/common/screenshot.c:1013
 msgid "At the end of the delay, click in a window to snap it."
-msgstr "Alla fine del ritardo, fare clic in una finestra per fotografarla."
+msgstr "Alla fine del ritardo, fare clic in una finestra per catturarla."
 
 #. Area
 #: ../plug-ins/common/screenshot.c:1019
@@ -7079,7 +7079,7 @@ msgstr "Area"
 
 #: ../plug-ins/common/screenshot.c:1030
 msgid "Take a screenshot of a single _window"
-msgstr "Cattura una schermata di una _finestra singola"
+msgstr "Cattura l'immagine di una _finestra singola"
 
 #: ../plug-ins/common/screenshot.c:1051
 msgid "Include window _decoration"
@@ -8033,15 +8033,15 @@ msgstr "Pias_trella..."
 msgid "Tiling"
 msgstr "Affiancatura"
 
-#: ../plug-ins/common/tile.c:393
+#: ../plug-ins/common/tile.c:394
 msgid "Tile"
 msgstr "Piastrella"
 
-#: ../plug-ins/common/tile.c:414
+#: ../plug-ins/common/tile.c:415
 msgid "Tile to New Size"
 msgstr "Affianca sino alla nuova dimensione"
 
-#: ../plug-ins/common/tile.c:436
+#: ../plug-ins/common/tile.c:437
 msgid "C_reate new image"
 msgstr "C_rea nuova immagine"
 
@@ -11621,14 +11621,6 @@ msgstr "_Importa XMP..."
 msgid "_Export XMP..."
 msgstr "_Esporta XMP..."
 
-#: ../plug-ins/metadata/metadata.c:183
-msgid "View and edit metadata (EXIF, IPTC, XMP)"
-msgstr "Mostra e modifica i metadati (EXIF, IPTC, XMP)"
-
-#: ../plug-ins/metadata/metadata.c:192
-msgid "Propert_ies"
-msgstr "Propr_ietà"
-
 #: ../plug-ins/metadata/xmp-parse.c:240
 msgid "Error: No XMP packet found"
 msgstr "Errore: nessun pacchetto XMP trovato"
@@ -12060,7 +12052,9 @@ msgstr "Dettagli icona"
 msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
-msgstr "Le icone grandi e la compressione non sono supportate da tutti i programmi. Le applicazioni datate potrebbero non aprire questo file correttamente."
+msgstr ""
+"Le icone grandi e la compressione non sono supportate da tutti i programmi. "
+"Le applicazioni datate potrebbero non aprire questo file correttamente."
 
 #: ../plug-ins/winicon/icodialog.c:178
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
