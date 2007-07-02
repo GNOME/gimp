@@ -1,3 +1,8 @@
+2007-07-02  Tor Lillqvist  <tml@novell.com>
+
+	* configure.in: Fix bug in saving/restoring LDFLAGS around the
+	DirextX DirectInput tests.
+
 2007-06-30  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Started taking GimpRectangleTool towards the new specification.

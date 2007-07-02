@@ -1415,7 +1415,7 @@ if test x"$os_win32" = xyes; then
   esac
 
   dinput_save_CPPFLAGS="$CPPFLAGS"
-  dinput_save_LDFLAGS="$CPPFLAGS"
+  dinput_save_LDFLAGS="$LDFLAGS"
   if test "x$with_directx_sdk" != x; then
     CPPFLAGS="-I $with_directx_sdk/Include $CPPFLAGS"
     LDFLAGS="-L$with_directx_sdk/Lib/x86 $LDFLAGS"
