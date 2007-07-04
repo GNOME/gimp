@@ -25,6 +25,7 @@
 
 #define BRUSH_CORE_SUBSAMPLE        4
 #define BRUSH_CORE_SOLID_SUBSAMPLE  2
+#define BRUSH_CORE_JITTER_LUTSIZE   360
 
 #define PRESSURE_SCALE              1.5
 
@@ -71,6 +72,8 @@ struct _GimpBrushCore
   gboolean       cache_invalid;
 
   gdouble        jitter;
+  gdouble        jitter_lut_x[BRUSH_CORE_JITTER_LUTSIZE];
+  gdouble        jitter_lut_y[BRUSH_CORE_JITTER_LUTSIZE];
 
   GRand         *rand;
 

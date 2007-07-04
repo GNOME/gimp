@@ -190,6 +190,14 @@ gimp_brush_core_init (GimpBrushCore *core)
   core->last_scale_pixmap_width  = 0;
   core->last_scale_pixmap_height = 0;
 
+  for (i = 0; i < BRUSH_CORE_JITTER_LUTSIZE - 1; ++i)
+    {
+      core->jitter_lut_y[i] = cos (gimp_deg_to_rad (i * 360 /
+                                                    BRUSH_CORE_JITTER_LUTSIZE));
+      core->jitter_lut_x[i] = sin (gimp_deg_to_rad (i * 360 /
+                                                    BRUSH_CORE_JITTER_LUTSIZE));
+    }
+
   g_assert (BRUSH_CORE_SUBSAMPLE == KERNEL_SUBSAMPLE);
 
   for (i = 0; i < KERNEL_SUBSAMPLE + 1; i++)
@@ -544,6 +552,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
 
       x = (gint) floor (paint_core->last_coords.x + t0 * delta_vec.x);
       y = (gint) floor (paint_core->last_coords.y + t0 * delta_vec.y);
+
       if (t0 < 0.0 && !( x == (gint) floor (paint_core->last_coords.x) &&
                          y == (gint) floor (paint_core->last_coords.y) ))
         {
@@ -565,6 +574,7 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
 
       x = (gint) floor (paint_core->last_coords.x + tn * delta_vec.x);
       y = (gint) floor (paint_core->last_coords.y + tn * delta_vec.y);
+
       if (tn > 1.0 && !( x == (gint) floor (paint_core->cur_coords.x) &&
                          y == (gint) floor (paint_core->cur_coords.y)))
         {
@@ -618,21 +628,20 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
 
       if (core->jitter > 0.0)
         {
-          gdouble jitter_x;
-          gdouble jitter_y;
+          gdouble jitter_dist;
+          gint32  jitter_angle;
 
-          jitter_x = g_rand_double_range (core->rand,
-                                          -core->jitter, core->jitter);
-          jitter_y = g_rand_double_range (core->rand,
-                                          -core->jitter, core->jitter);
+          jitter_dist  = g_rand_double_range (core->rand, 0, core->jitter);
+          jitter_angle = g_rand_int_range (core->rand,
+                                           0, BRUSH_CORE_JITTER_LUTSIZE);
 
           paint_core->cur_coords.x +=
             (core->brush->x_axis.x + core->brush->y_axis.x) *
-            jitter_x * core->scale;
+            jitter_dist * core->jitter_lut_x[jitter_angle] * core->scale;
 
           paint_core->cur_coords.y +=
             (core->brush->y_axis.y + core->brush->x_axis.y) *
-            jitter_y * core->scale;
+            jitter_dist * core->jitter_lut_y[jitter_angle] * core->scale;
         }
 
       paint_core->distance   = initial       + t * dist;

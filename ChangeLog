@@ -1,3 +1,8 @@
+2007-07-04  Sven Neumann  <sven@gimp.org>
+
+	* app/paint/gimpbrushcore.[ch]: applied patch from Jens Persson
+	that adds a LUT to apply the jitter in polar coordinates (bug #434532).
+
 2007-07-02  Tor Lillqvist  <tml@novell.com>
 
 	* configure.in: Fix bug in saving/restoring LDFLAGS around the
