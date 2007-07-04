@@ -429,6 +429,38 @@ load_image (const gchar *filename)
 	     *4 + sunhdr.l_ras_maplength, SEEK_SET);
     }
 
+  if (sunhdr.l_ras_width <= 0)
+    {
+      g_message (_("'%s':\nNo image width specified"),
+                 gimp_filename_to_utf8 (filename));
+      fclose (ifp);
+      return (-1);
+    }
+
+  if (sunhdr.l_ras_width > GIMP_MAX_IMAGE_SIZE)
+    {
+      g_message (_("'%s':\nImage width is larger than GIMP can handle"),
+                 gimp_filename_to_utf8 (filename));
+      fclose (ifp);
+      return (-1);
+    }
+
+  if (sunhdr.l_ras_height <= 0)
+    {
+      g_message (_("'%s':\nNo image height specified"),
+                 gimp_filename_to_utf8 (filename));
+      fclose (ifp);
+      return (-1);
+    }
+
+  if (sunhdr.l_ras_height > GIMP_MAX_IMAGE_SIZE)
+    {
+      g_message (_("'%s':\nImage height is larger than GIMP can handle"),
+                 gimp_filename_to_utf8 (filename));
+      fclose (ifp);
+      return (-1);
+    }
+
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 

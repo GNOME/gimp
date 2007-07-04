@@ -536,6 +536,8 @@ load_image (const gchar *filename)
   pnminfo->xres = g_ascii_isdigit(*buf) ? atoi (buf) : 0;
   CHECK_FOR_ERROR (pnminfo->xres <= 0, pnminfo->jmpbuf,
                    _("Invalid X resolution."));
+  CHECK_FOR_ERROR (pnminfo->xres > GIMP_MAX_IMAGE_SIZE, pnminfo->jmpbuf,
+                   _("Image width is larger than GIMP can handle."));
 
   pnmscanner_gettoken (scan, buf, BUFLEN);
   CHECK_FOR_ERROR (pnmscanner_eof (scan), pnminfo->jmpbuf,
@@ -543,6 +545,8 @@ load_image (const gchar *filename)
   pnminfo->yres = g_ascii_isdigit (*buf) ? atoi (buf) : 0;
   CHECK_FOR_ERROR (pnminfo->yres <= 0, pnminfo->jmpbuf,
                    _("Invalid Y resolution."));
+  CHECK_FOR_ERROR (pnminfo->yres > GIMP_MAX_IMAGE_SIZE, pnminfo->jmpbuf,
+                   _("Image height is larger than GIMP can handle."));
 
   if (pnminfo->np != 0)         /* pbm's don't have a maxval field */
     {
@@ -603,6 +607,7 @@ pnm_load_ascii (PNMScanner   *scan,
   gchar   buf[BUFLEN];
 
   np = (info->np) ? (info->np) : 1;
+  /* No overflow as long as gimp_tile_height() < 2730 = 2^(31 - 18) / 3 */
   data = g_new (guchar, gimp_tile_height () * info->xres * np);
 
   /* Buffer reads to increase performance */
