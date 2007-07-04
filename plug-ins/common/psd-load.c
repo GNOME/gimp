@@ -415,7 +415,8 @@ static void   xfread_interlaced            (FILE         *fd,
                                             long          len,
                                             const gchar  *why,
                                             gint          step);
-static void   read_whole_file              (FILE         *fd);
+static void   read_whole_file              (FILE         *fd,
+                                            const gchar  *name);
 static void   reshuffle_cmap               (guchar       *map256);
 static gchar *getpascalstring              (FILE         *fd,
                                             const gchar  *why);
@@ -2093,7 +2094,7 @@ load_image (const gchar *name)
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (name));
 
-  read_whole_file (fd);
+  read_whole_file (fd, name);
 
   if (psd_image.num_layers > 0) /* PS3-style */
     {
@@ -3171,7 +3172,7 @@ xfread_interlaced (FILE        *fd,
 }
 
 static void
-read_whole_file (FILE *fd)
+read_whole_file (FILE *fd, const gchar *filename)
 {
     guint16 w;
     glong   pos;
@@ -3181,12 +3182,32 @@ read_whole_file (FILE *fd)
     xfread (fd, &PSDheader.signature, 4, "signature");
     PSDheader.version  = getgint16 (fd, "version");
     xfread (fd, &dummy, 6, "reserved");
+
     PSDheader.channels = getgint16 (fd, "channels");
+
+    /* Photoshop CS (version 8) supports a maximum of 56 channels */
+
+    if (PSDheader.channels > 56)
+      {
+        g_error ("'%s' has more channels than GIMP can handle.",
+                 gimp_filename_to_utf8 (filename));
+      }
+
     PSDheader.rows     = getgint32 (fd, "rows");
     PSDheader.columns  = getgint32 (fd, "columns");
+
+    /* Photoshop CS (version 8) supports 300000 x 300000, but this
+       is currently larger than GIMP_MAX_IMAGE_SIZE */
+
+    if ((PSDheader.rows > GIMP_MAX_IMAGE_SIZE) ||
+        (PSDheader.columns > GIMP_MAX_IMAGE_SIZE))
+      {
+        g_error ("'%s' has a larger image size than GIMP can handle.",
+                 gimp_filename_to_utf8 (filename));
+      }
+
     PSDheader.bpp      = getgint16 (fd, "depth");
     PSDheader.mode     = getgint16 (fd, "mode");
-
 
     psd_image.num_layers       = 0;
     psd_image.type             = PSDheader.mode;
