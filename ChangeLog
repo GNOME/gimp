@@ -1,5 +1,12 @@
 2007-07-04  Sven Neumann  <sven@gimp.org>
 
+	Merged from trunk (libgimpconfig/gimpconfig-deserialize.c):
+
+	* app/config/gimpconfig-deserialize.c: be forward-compatible by
+        skipping unknown object properties.
+
+2007-07-04  Sven Neumann  <sven@gimp.org>
+
 	* app/xcf/xcf-load.c (xcf_load_image): fixed the change that was
 	applied to deal with bug #316207. Fixes bug #443097.
 

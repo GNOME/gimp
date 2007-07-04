@@ -85,6 +85,7 @@ static GTokenType  gimp_config_deserialize_value_array (GValue     *value,
 static GTokenType  gimp_config_deserialize_any         (GValue     *value,
                                                         GParamSpec *prop_spec,
                                                         GScanner   *scanner);
+static GTokenType  gimp_config_skip_unknown_property   (GScanner   *scanner);
 
 static inline gboolean  scanner_string_utf8_valid (GScanner    *scanner,
                                                    const gchar *token_name);
@@ -132,15 +133,15 @@ gimp_config_deserialize_properties (GimpConfig *config,
   guint          i;
   guint          scope_id;
   guint          old_scope_id;
-  GTokenType	 token;
-  GTokenType	 next;
+  GTokenType     token;
+  GTokenType     next;
 
   g_return_val_if_fail (GIMP_IS_CONFIG (config), FALSE);
 
   klass = G_OBJECT_GET_CLASS (config);
   property_specs = g_object_class_list_properties (klass, &n_property_specs);
 
-  if (!property_specs)
+  if (! property_specs)
     return TRUE;
 
   scope_id = g_type_qname (G_TYPE_FROM_INSTANCE (config));
@@ -167,9 +168,9 @@ gimp_config_deserialize_properties (GimpConfig *config,
     {
       next = g_scanner_peek_next_token (scanner);
 
-      if (next != token &&
-          ! (store_unknown_tokens &&
-             token == G_TOKEN_SYMBOL && next == G_TOKEN_IDENTIFIER))
+      if (G_UNLIKELY (next != token &&
+                      ! (token == G_TOKEN_SYMBOL &&
+                         next  == G_TOKEN_IDENTIFIER)))
         {
           break;
         }
@@ -183,7 +184,10 @@ gimp_config_deserialize_properties (GimpConfig *config,
           break;
 
         case G_TOKEN_IDENTIFIER:
-          token = gimp_config_deserialize_unknown (config, scanner);
+          if (store_unknown_tokens)
+            token = gimp_config_deserialize_unknown (config, scanner);
+          else
+            token = gimp_config_skip_unknown_property (scanner);
           break;
 
         case G_TOKEN_SYMBOL:
@@ -789,4 +793,38 @@ gimp_config_deserialize_any (GValue     *value,
   g_value_unset (&src);
 
   return G_TOKEN_RIGHT_PAREN;
+}
+
+static GTokenType
+gimp_config_skip_unknown_property (GScanner *scanner)
+{
+  gint open_paren = 0;
+
+  while (TRUE)
+    {
+      GTokenType token = g_scanner_peek_next_token (scanner);
+
+      switch (token)
+        {
+        case G_TOKEN_LEFT_PAREN:
+          open_paren++;
+          g_scanner_get_next_token (scanner);
+          break;
+
+        case G_TOKEN_RIGHT_PAREN:
+          if (open_paren == 0)
+            return token;
+
+          open_paren--;
+          g_scanner_get_next_token (scanner);
+          break;
+
+        case G_TOKEN_EOF:
+          return token;
+
+        default:
+          g_scanner_get_next_token (scanner);
+          break;
+        }
+    }
 }
