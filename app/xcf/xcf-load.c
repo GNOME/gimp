@@ -121,6 +121,7 @@ xcf_load_image (Gimp    *gimp,
 {
   GimpImage    *gimage;
   GimpLayer    *layer;
+  GimpLayer    *last_layer = NULL;
   GimpChannel  *channel;
   GimpParasite *parasite;
   guint32       saved_pos;
@@ -196,10 +197,12 @@ xcf_load_image (Gimp    *gimp,
           /*  GIMP 2.2 wants an alpha channel for layers above the
            *  background layer
            */
-          if (position > 0)
-            gimp_layer_add_alpha (layer);
+          if (last_layer)
+            gimp_layer_add_alpha (last_layer);
 
           gimp_image_add_layer (gimage, layer, position);
+
+          last_layer = layer;
         }
 
       /* restore the saved position so we'll be ready to
