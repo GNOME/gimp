@@ -1,3 +1,8 @@
+2007-07-04  Mukund Sivaraman  <muks@mukund.org>
+
+	* plug-ins/common/dicom.c: validate size values read from files
+	before using them to allocate memory.
+
 2007-07-04  Sven Neumann  <sven@gimp.org>
 
 	* app/paint/gimpbrushcore.[ch]: applied patch from Jens Persson

@@ -49,7 +49,7 @@
 /* Declare local data types */
 typedef struct _DicomInfo
 {
-  gint       width, height;	 /* The size of the image                  */
+  guint      width, height;	 /* The size of the image                  */
   gint       maxval;		 /* For 16 and 24 bit image files, the max
 				    value which we need to normalize to    */
   gint       samples_per_pixel;  /* Number of image planes (0 for pbm)     */
@@ -281,8 +281,8 @@ load_image (const gchar *filename)
   FILE           *DICOM;
   gchar           buf[500];    /* buffer for random things like scanning */
   DicomInfo      *dicominfo;
-  gint            width             = 0;
-  gint            height            = 0;
+  guint           width             = 0;
+  guint           height            = 0;
   gint            samples_per_pixel = 0;
   gint            bpp               = 0;
   guint8         *pix_buf           = NULL;
@@ -410,6 +410,15 @@ load_image (const gchar *filename)
       if (tag == 0xFFFEE000)
 	continue;
 
+      /* Even for pixel data, we don't handle very large element
+         lengths */
+
+      if (element_length >= (G_MAXUINT - 6))
+        {
+          g_error ("'%s' seems to have an incorrect value field length.",
+                     gimp_filename_to_utf8 (filename));
+        }
+
       /* Read contents. Allocate a bit more to make room for casts to int
        below. */
       value = g_new0 (guint8, element_length + 4);
@@ -468,6 +477,12 @@ load_image (const gchar *filename)
         {
           g_free (value);
         }
+    }
+
+  if ((width > GIMP_MAX_IMAGE_SIZE) || (height > GIMP_MAX_IMAGE_SIZE))
+    {
+      g_error ("'%s' has a larger image size than GIMP can handle.",
+                 gimp_filename_to_utf8 (filename));
     }
 
   dicominfo->width  = width;
