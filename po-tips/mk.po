@@ -1,22 +1,22 @@
-# translation of mk.po to Macedonian
-# translation of gimp-tips.HEAD.mk.po to Macedonian
+# translation of gimp-tips.HEAD.po to Blagoj
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+#
 # Vladimir Stefanov <vladoboss@mt.net.mk>, 2005.
 # Арангел Ангов <ufo@linux.net.mk>, 2005.
-#
+# Blagoj <kapsarovb@on.net.mk>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: mk\n"
+"Project-Id-Version: gimp-tips.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-06-10 18:11+0200\n"
-"PO-Revision-Date: 2005-08-12 01:50+0200\n"
-"Last-Translator: Арангел Ангов <ufo@linux.net.mk>\n"
-"Language-Team: Macedonian <ossm-members@hedona.on.net.mk>\n"
+"POT-Creation-Date: 2007-06-07 03:44+0100\n"
+"PO-Revision-Date: 2007-07-04 18:55+0200\n"
+"Last-Translator: Blagoj <kapsarovb@on.net.mk>\n"
+"Language-Team: Blagoj <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
@@ -24,27 +24,26 @@ msgstr "<big>Добродојдовте во ГНУ програмата за м
 
 #: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
-"<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles "
-"viewing the mask directly."
+"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
+"color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
+"with the eyedropper tool sets the background color instead of the foreground "
+"color."
 msgstr ""
-"<tt>Alt</tt>-клик на прегледот на маската на слојот во дијалогот за слоеви "
-"префрла директно на гледање на маската."
+"<tt>Ctrl</tt>- и клик со алатката Пополнување со боја, ќе може да ја користите бојата "
+"на позадината наместо бојата на предниот план. Со пипетата кога избирате боја, избирате "
+"од позадината не од бојата на предниот план. "
 
 #: ../data/tips/gimp-tips.xml.in.h:3
 msgid ""
-"<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
-"the effect of the layer mask."
+"<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
+"toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
+"mask's preview in the Layers dialog toggles viewing the mask directly."
 msgstr ""
-"<tt>Ctrl</tt>-клик на прегледот на маската на слојот во дијалогот за слоеви "
-"го префрла ефектот на маската на слојот."
+"<tt>Ctrl</tt>- и клик на прегледот на маската на слојот, во дијалогот за слоеви "
+"го префрла ефектот на маската на слојот. <tt>Alt</tt> и клик на прегледот на "
+"маската на слојот во дијалојот за слоеви го менува видикот директно на маската."
 
 #: ../data/tips/gimp-tips.xml.in.h:4
-msgid ""
-"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
-"color instead of the foreground color."
-msgstr "<tt>Ctrl</tt>-клик со алатката Пополнување со боја за да ја користите бојата на позадината наместо бојата на предниот план."
-
-#: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
@@ -52,237 +51,288 @@ msgstr ""
 "<tt>Ctrl</tt>-повлечи со алатката за Ротација ќе ја задржи ротацијата на 15 "
 "аголни степени."
 
-#: ../data/tips/gimp-tips.xml.in.h:6
+#: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
 msgstr ""
-"<tt>Shift</tt>-клик на иконата со око во дијалогот за слоеви ќе ги сокрие сите "
-"слоеви освен тој. <tt>Shift</tt>-кликни повторно за да се прикажат сите слоеви."
+"<tt>Shift</tt>-клик на иконата со око во дијалогот за слоеви ќе ги сокрие "
+"сите слоеви освен тој. <tt>Shift</tt>-кликни повторно за да се прикажат сите "
+"слоеви."
 
-#: ../data/tips/gimp-tips.xml.in.h:7
+#: ../data/tips/gimp-tips.xml.in.h:6
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
 "Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
 "use the menus to do the same."
 msgstr ""
-"Пловечката селекција мора да биде всидрена во нов слој или на последниот активен слој пред да направите други операции на сликата. Кликнете на "
-"&quot;Нов слој&quot; или на копчето &quot;Всидри слој&quot; во дијалогот за слоеви, или користете ги менијата за да го направите истото."
+"Пловечката селекција мора да биде всидрена во нов слој или на последниот "
+"активен слој пред да направите други операции на сликата. Кликнете на &quot;"
+"Нов слој&quot; или на копчето &quot;Всидри слој&quot; во дијалогот за "
+"слоеви, или користете ги менијата за да го направите истото."
 
-#: ../data/tips/gimp-tips.xml.in.h:8
+#: ../data/tips/gimp-tips.xml.in.h:7
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
 "selecting a menu item, and pressing the desired key combination. If &quot;"
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP."
-msgstr "Одкога ќе ги овозможите &quot;Динамичните кратенки на тастатурата&quot; во дијалогот за Параметри, можете повторно да ги примените копчињата за кратенки. Ќе го направите тоа со подигање на менито, избирање на ставка од менито, и притискање на посакуваната комбинација од копчиња. Ако е овозоможено &quot;Зачувај ги кратенките на тастатурата&quout;, поврзувањето на копчињата се зачувани кога ќе го напуштите ГИМП."
+"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
+"shortcuts."
+msgstr ""
+"Одкога ќе ги овозможите &quot;Динамичните кратенки на тастатурата&quot; во "
+"дијалогот за Параметри, можете повторно да ги примените копчињата за "
+"кратенки. Ќе го направите тоа со кликање на менито, избирање на ставка од "
+"менито, притискање на посакуваната комбинација од копчиња. Ако е "
+"овозоможено &quot;Зачувај ги кратенките на тастатурата&quout;, поврзувањето "
+"на копчињата се зачувани кога ќе го напуштите ГИМП-от."
 
-#: ../data/tips/gimp-tips.xml.in.h:9
+#: ../data/tips/gimp-tips.xml.in.h:8
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
-msgstr "Кликнете и повлечете врз лињерот за да поставите водич на сликата. Сите повлечени селекции ќе се држат во водичите. Можете да ги отстраните водичите повлекувајќи ги надвор од сликата со алатката Премести."
+msgstr ""
+"Кликнете и повлечете врз лињерот за да поставите водич на сликата. Сите "
+"повлечени селекции ќе се држат во водичите. Можете да ги отстраните водичите "
+"повлекувајќи ги надвор од сликата со алатката Премести."
 
-#: ../data/tips/gimp-tips.xml.in.h:10
+#: ../data/tips/gimp-tips.xml.in.h:9
 msgid ""
 "GIMP allows you to undo most changes to the image, so feel free to "
 "experiment."
 msgstr ""
-"ГИМП ви овозможува да ги вратите назад повеќето промени на сликата, "
-"па можете слободно да експериментирате."
+"ГИМП ви овозможува да ги вратите назад повеќето промени на сликата, па "
+"можете слободно да експериментирате."
 
-#: ../data/tips/gimp-tips.xml.in.h:11
+#: ../data/tips/gimp-tips.xml.in.h:10
 msgid ""
 "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
-"ГИМП овозможува gzip компресија во од. Само додадете <tt>.gz</tt> "
-"(или <tt>.bz2</tt>, ако имате инсталирано bzip2) кон името на датотеката и вашата слика ќе биде зачувана компресирана. Се разбира дека работи и вчитување на компресирани слики."
+"ГИМП овозможува gzip компресија во од. Само додадете <tt>.gz</tt> (или <tt>."
+"bz2</tt>, ако имате инсталирано bzip2) кон името на датотеката и вашата "
+"слика ќе биде зачувана компресирана. Се разбира дека работи и вчитување на "
+"компресирани слики."
 
-#: ../data/tips/gimp-tips.xml.in.h:12
+#: ../data/tips/gimp-tips.xml.in.h:11
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
-msgstr "ГИМП користи слоеви за да ви овозможи да ја организирате сликата. Мислете на нив како за пластови на слајдови или филтери, такви кои кога гледате низ нив ја гледате мешавината на нивниот состав."
+msgstr ""
+"ГИМП користи слоеви за да ви овозможи да ја организирате сликата. Мислете на "
+"нив како за пластови на слајдови или филтери, такви кои кога гледате низ нив "
+"ја гледате мешавината на нивниот состав."
 
-#: ../data/tips/gimp-tips.xml.in.h:13
+#: ../data/tips/gimp-tips.xml.in.h:12
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
-"Layer-&gt;Transparency-&gt;Add Alpha Channel."
+"Layer→Transparency→Add Alpha Channel."
 msgstr ""
-"Ако е прикажано името на слојот во дијалогот за слоеви со <b>јаки</b> букви, тој "
-"слој нема алфа-канал. Можете да додадете алфа-канал со користење на Слој-&quote;Провидност-&quote;Додај алфа канал."
+"Ако е прикажано името на слојот во дијалогот за слоеви со <b>задебелени</b> букви, "
+"тој слој нема алфа-канал. Можете да додадете алфа-канал со користење на Слој-"
+"&quote;Провидност-&quote;Додај алфа канал."
 
-#: ../data/tips/gimp-tips.xml.in.h:14
+#: ../data/tips/gimp-tips.xml.in.h:13
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
-"tool (Layer-&gt;Colors-&gt;Levels). If there are any color casts, you can "
-"correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
+"tool (Colors→Levels). If there are any color casts, you can correct them "
+"with the Curves tool (Colors→Curves)."
 msgstr ""
-"Ако некои од вашите скенирани фотографии не изгледаат доволно колоритни, можете "
-"лесно да го поправите нивниот опсег на тонови со &quot;Авто&quot; копчето во алатката Слоеви (Слој-&gt;Бои-&gt;Слоеви). Ако има било какво растопување на бои, "
-"можете да ги поправите со алатката Криви (Слој-&gt;Бои-&gt;Криви)."
+"Ако некои од вашите скенирани фотографии немаат доволно боја, "
+"можете лесно да го поправите нивниот тоналитет на бои со &quot;Авто&quot; "
+"копчето во алатката Слоеви (Слој-&gt;Бои-&gt;Слоеви). Ако има било какво "
+"претопување на некои бои, можете да ги поправите со алатката Криви (Слој-&gt;Бои-"
+"&gt;Криви)."
+
+#: ../data/tips/gimp-tips.xml.in.h:14
+msgid ""
+"If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
+"their current settings. You can use the Paintbrush in gradient mode or even "
+"the Eraser or the Smudge tool."
+msgstr ""
+"Ако исцртате патека (Уреди-&gt;Исцртај патека), можат да се користат "
+"алатките за цртање со нивните тековни поставки. Можете да ја користите "
+"Четката за цртање во режим на нијансирање или дури и Бришачот или алатката за "
+"флеки."
 
 #: ../data/tips/gimp-tips.xml.in.h:15
 msgid ""
-"If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
-"with their current settings. You can use the Paintbrush in gradient mode or "
-"even the Eraser or the Smudge tool."
-msgstr "Ако исцртате патека (Уреди-&gt;Исцртај патека), можат да се користат алатките за цртање со нивните тековни поставки. Можете да ја користите Четката за цртање во режим на прелив или дури и Бришачот или алатката за флеки."
+"If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
+"window to toggle the visibility of the toolbox and other dialogs."
+msgstr ""
+"Ако вашиот екран е пренатрупан, можете да го притиснете копчето <tt>Tab</tt> "
+"во прозорецот на сликата служи да ги скрие/прикаже "
+"алатниците или другите дијалози."
 
 #: ../data/tips/gimp-tips.xml.in.h:16
 msgid ""
-"If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
-"in an image window to hide or show the toolbox and other dialogs."
+"Most plug-ins work on the current layer of the current image. In some cases, "
+"you will have to merge all layers (Image→Flatten Image) if you want the plug-"
+"in to work on the whole image."
 msgstr ""
-"Ако вашиот екран е пренатрупан, можете да го притиснете копчето <tt>Tab</tt> "
-"повеќе пати во прозорецот на сликата за да ги скриете или прикажете алатниците или другите дијалози."
+"Повеќето додатоци работат на тековниот слој од тековната слика. Во некои "
+"случаи, ќе морате да ги слепите сите слоеви(Слика-&gt;Израмни слика) ако "
+"сакате додатокот да работи на целата слика."
 
 #: ../data/tips/gimp-tips.xml.in.h:17
 msgid ""
-"Most plug-ins work on the current layer of the current image. In some cases, "
-"you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
-"plug-in to work on the whole image."
+"Not all effects can be applied to all kinds of images. This is indicated by "
+"a grayed-out menu-entry. You may need to change the image mode to RGB "
+"(Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha "
+"Channel) or flatten it (Image→Flatten Image)."
 msgstr ""
-"Повеќето додатоци работат на тековниот слој од тековната слика. Во некои случаи, "
-"ќе морате да ги споите сите слоеви(Слика-&gt;Израмни слика) ако сакате додатокот да работи на целата слика."
+"Не можат сите ефекти да се применат на сите видови слики. Ова е означено од "
+"сивиот нанос во менито. Можеби ќе морате да го промените режимот на сликата "
+"во RGB (Слика-&gt;Режим-&gt;RGB), да додадете алфа-канал (Слој-&gt;Додај "
+"Алфа канал) или да ја израмните (Слика-&gt;Израмни слика)."
 
 #: ../data/tips/gimp-tips.xml.in.h:18
-msgid ""
-"Not all effects can be applied to all kinds of images. This is indicated by "
-"a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layer-&gt;Transparency-&gt;Add "
-"Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
-msgstr ""
-"Не можат сите ефекти да се применат на сите видови слики. Ова е означено "
-"од сивиот внес во менито. Можеби ќе морате да го промените режимот на "
-"сликата во RGB (Слика-&gt;Режим-&gt;RGB), да додадете алфа-канал (Слој-&gt;Додај Алфа канал) или да ја израмните (Слика-&gt;Израмни слика)."
-
-#: ../data/tips/gimp-tips.xml.in.h:19
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
 "tt> before making a selection subtracts from the current one."
-msgstr "Со притискање и држење на копчето <tt>Shift</tt> пред да направите селекција, ви овозможува да додадете во тековната селекција наместо да ја замените. Со користење на <tt>Ctrl</tt> пред да направите селекција, одзема од тековната селекција."
+msgstr ""
+"Со притискање и држење на копчето <tt>Shift</tt> пред да направите "
+"селекција, ви овозможува да додадете во тековната селекција наместо да ја "
+"замените. Со користење на <tt>Ctrl</tt> пред да направите селекција, одзема "
+"од тековната селекција."
 
-#: ../data/tips/gimp-tips.xml.in.h:20
+#: ../data/tips/gimp-tips.xml.in.h:19
 msgid ""
 "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
 "ellipse select. To place a circle precisely, drag horizontal and vertical "
 "guides tangent to the circle you want to select, place your cursor at the "
 "intersection of the guides, and the resulting selection will just touch the "
 "guides."
-msgstr "За да направите кружна селекција, држете го <tt>Shift</tt> додека правите елипсеста селекција. За да го сместите точно кругот, повлечете хоризонтални и вертикални тангентни водичи до кругот кој сакате да го изберете, сместете го курсорот на пресекот од водичите, и добиената селекција само ќе се смести во водичите."
+msgstr ""
+"За да направите кружна селекција, држете го <tt>Shift</tt> додека правите "
+"елипсеста селекција. За да го сместите точно кругот, повлечете хоризонтални "
+"и вертикални тангентни водичи до кругот кој сакате да го изберете, сместете "
+"го курсорот на пресекот од водичите, и добиената селекција само ќе се смести "
+"во водичите."
 
-#: ../data/tips/gimp-tips.xml.in.h:21
-msgid ""
-"When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
-"click will draw a straight line from your last drawing point to your current "
-"cursor position. If you also press <tt>Ctrl</tt>, the line will be "
-"constrained to 15 degree angles."
-msgstr "Ако користите алатки за цртање (Четка за цртање, Спреј или Пенкало), <tt>Shift</tt>-клик ќе исцрта права линија од вашата последна точка на цртање до тековната позиција на курсорот. Ако со тоа го притиснете и <tt>Ctrl</tt>, линијата ќе биде поместена за 15 агловни степени."
-
-#: ../data/tips/gimp-tips.xml.in.h:22
+#: ../data/tips/gimp-tips.xml.in.h:20
 msgid ""
 "When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
 "the layers and every aspect of your work-in-progress. Once a project is "
 "completed, you can save it as JPEG, PNG, GIF, ..."
-msgstr "Кога ја снимате сликата за да работите подоцна повторно на неа, пробајте да користите XCF, изворен датотечен формат на ГИМП (користи ја наставката <tt>.xcf</tt>. Ова ги зачувува слоевите и секој аспект од вашата работа. Кога проектот е завршен, можете да го снимите како JPEG, PNG, GIF, ..."
+msgstr ""
+"Кога ја снимате сликата за да работите подоцна повторно на неа, пробајте да "
+"користите XCF, изворен датотечен формат на ГИМП (користи ја наставката <tt>."
+"xcf</tt>. Ова ги зачувува слоевите и секој аспект од вашата работа. Кога "
+"проектот е завршен, можете да го снимите како JPEG, PNG, GIF, ..."
 
-#: ../data/tips/gimp-tips.xml.in.h:23
+#: ../data/tips/gimp-tips.xml.in.h:21
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
-"the window move, your window manager uses the <tt>Alt</tt> key already. Try "
-"pressing <tt>Shift</tt> at the same time."
-msgstr "Можете да ја прилагодите или поместите селекцијата со користење на <tt>Alt</tt>-повлечи. Ако ова прави да се поместува прозорецот, вашиот управувач со прозорци веќе го користи копчето <tt>Alt</tt>. Пробајте со притискање на <tt>Shift</tt> во исто време."
+"the window move, your window manager uses the <tt>Alt</tt> key already."
+msgstr ""
+"Можете да ја прилагодите или поместите селекцијата со користење на <tt>Alt</"
+"tt>-повлечи. Ако ова прави да се поместува прозорецот, акцијата веќе го "
+"користи копчето <tt>Alt</tt>."
 
-#: ../data/tips/gimp-tips.xml.in.h:24
-msgid ""
-"You can adjust the selection range for fuzzy select by clicking and dragging "
-"left and right."
-msgstr "Можете да го подесите опсегот на селекцијата за нејасна селекција со кликнување и влечење налево и надесно."
-
-#: ../data/tips/gimp-tips.xml.in.h:25
+#: ../data/tips/gimp-tips.xml.in.h:22
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
-msgstr "Можете да создавате и уредувате комплексни селекции со користење на алатката Патека. Дијалогот за патеки ви овозможува да работите на повеќе патеки и да ги префрлате во селекциите."
+msgstr ""
+"Можете да создавате и уредувате комплексни селекции со користење на алатката "
+"Патека. Дијалогот за патеки ви овозможува да работите на повеќе патеки и да "
+"ги префрлате во селекциите."
 
-#: ../data/tips/gimp-tips.xml.in.h:26
+#: ../data/tips/gimp-tips.xml.in.h:23
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
 msgstr ""
-"Можете да го повлечете слојот од дијалогот Слоеви и да го испуштите во алатникот. "
-"Ова ќе создаде нова слика која ќе го содржи само тој слој."
+"Можете да го повлечете слојот од дијалогот Слоеви и да го испуштите во "
+"алатникот. Ова ќе создаде нова слика која ќе го содржи само тој слој."
 
-#: ../data/tips/gimp-tips.xml.in.h:27
+#: ../data/tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
-"fill the current image or selection with that color."
-msgstr "Можете да влечете и испуштате многу работи во ГИМП. На пример, со влечење на боја од алатникот или од палетата на бои и со испуштање врз сликата, ќе ја пополни тековната слика или селекција со таа боја."
+"fill the current selection with that color."
+msgstr ""
+"Можете да влечете и испуштате многу работи во ГИМП. На пример, со влечење на "
+"боја од алатникот или од палетата на бои и со испуштање врз сликата, ќе ја "
+"исполни активната слика или селекција со избраната боја."
 
-#: ../data/tips/gimp-tips.xml.in.h:28
+#: ../data/tips/gimp-tips.xml.in.h:25
 msgid ""
-"You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
+"You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
-"using the Path tool or with Filters-&gt;Render-&gt;Gfig."
-msgstr "Можете да цртате едноставни квадрати или кругови со користење на Уреди-&gt;Исцртај селекција. Тоа го исцртува работ на вашата тековна селекција. По комплексни облици можат да се цртат со користење на алатката Патека или со Филтери-&gt;Исцртај-&gt;Gfig."
+"using the Path tool or with Filters→Render→Gfig."
+msgstr ""
+"Можете да цртате едноставни квадрати или кругови со користење на Уреди-&gt;"
+"Исцртај селекција. Тоа го исцртува работ на вашата тековна селекција. По "
+"комплексни форми можат да се цртат со користење на алатката Патека или со "
+"Филтри-&gt;Исцртај-&gt;Gfig."
 
-#: ../data/tips/gimp-tips.xml.in.h:29
+#: ../data/tips/gimp-tips.xml.in.h:26
 msgid ""
-"You can get context-sensitive help for most of the GIMP's features by "
-"pressing the F1 key at any time. This also works inside the menus."
-msgstr "Можете да добиете помош според содржината за повеќето можности на ГИМП со притискање на F1 копчето во било кое време. Ова исто така работи и внатре во менијата."
+"You can get context-sensitive help for most of GIMP's features by pressing "
+"the F1 key at any time. This also works inside the menus."
+msgstr ""
+"Можете да добиете помош при тековна работа за поевеќето елементи на ГИМП со "
+"притискање на F1 копчето во било кое време. Ова исто така работи и внатре во "
+"менијата."
 
-#: ../data/tips/gimp-tips.xml.in.h:30
+#: ../data/tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
-msgstr "Можете да извршите многу операции врз слоевите со десен клик на текстот на слојот во дијалогот Слоеви."
+msgstr ""
+"Можете да извршите многу операции врз слоевите со десен клик на текстот на "
+"слојот во дијалогот Слоеви."
 
-#: ../data/tips/gimp-tips.xml.in.h:31
+#: ../data/tips/gimp-tips.xml.in.h:28
 msgid ""
-"You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
-"are making a selection in order to constrain it to a square or a circle, or "
-"to have it centered on its starting point."
-msgstr "Можете да ги притискате или отпуштите <tt>Shift</tt> и <tt>Ctrl</tt> копчињата додека правите селекција за да ја сместите во квадрат или круг, или за да ја центрирате на нејзината почетна точка."
-
-#: ../data/tips/gimp-tips.xml.in.h:32
-msgid ""
-"You can save a selection to a channel (Select-&gt;Save to Channel) and then "
+"You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
 "dialog, you can toggle the visibility of this new channel or convert it to a "
 "selection."
-msgstr "Можете да ја зачувате селекцијата во канал (Избери-&gt;Зачувај во канал) и потоа да го промените овој канал со било која алатка за цртање. Со користење на копчињата во дијалогот Канали, можете да ја префрлате видливоста на овој нов канал или да го претворите во селекција."
+msgstr ""
+"Можете да ја зачувате селекцијата во канал (Избери-&gt;Зачувај во канал) и "
+"потоа да го промените овој канал со било која алатка за цртање. Со користење "
+"на копчињата во дијалогот Канали, можете да ја префрлате видливоста на овој "
+"нов канал или да го претворите во селекција."
 
-#: ../data/tips/gimp-tips.xml.in.h:33
+#: ../data/tips/gimp-tips.xml.in.h:29
 msgid ""
-"You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
+"You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
-msgstr "Можете да користите <tt>Alt</tt>-<tt>Tab</tt> за да кружите низ сите слоеви во сликата 9ако вашиот управувач со прозорци не ги резервирал тие копчиња...)."
+msgstr ""
+"Можете да користите <tt>Ctrl</tt>-<tt>Tab</tt> за да кружите низ сите слоеви "
+"во сликата (ако вашиот управувач, веќе не ги резервирал со прозорци тие "
+"копчиња...)."
 
-#: ../data/tips/gimp-tips.xml.in.h:34
+#: ../data/tips/gimp-tips.xml.in.h:30
 msgid ""
-"You can use the middle mouse button to pan around the image, if it's larger "
-"than its display window."
-msgstr "Можете ка го користите средното копче од глушецот да одите околу сликата, ако е поголема од нејзиниот прозорец за приказ."
+"You can use the middle mouse button to pan around the image (or optionally "
+"hold <tt>Spacebar</tt> while you move the mouse)."
+msgstr ""
+"Можете ка го користите средното копче од глушецот да се движите околу сликата "
+"(или по можност држете притиснато <tt>Space</tt> додека го движите глушецот)"
 
-#: ../data/tips/gimp-tips.xml.in.h:35
+#: ../data/tips/gimp-tips.xml.in.h:31
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
 "selection by painting in the image and click on the button again to convert "
 "it back to a normal selection."
-msgstr "Можете да ги користите алатките за цртање за да ја смените селекцијата. Кликнете на копчето &quot;Брза маска&quot; лево доле во прозорецот на сликата. Изменете ја вашата селекција со цртање врз сликата и кликнете на тоа копче повторно за да ја префрлите во нормална селекција."
+msgstr ""
+"Можете да ги користите алатките за цртање за да ја смените селекцијата. "
+"Кликнете на копчето &quot;Брза маска&quot; лево доле во прозорецот на "
+"сликата. Изменете ја вашата селекција со цртање врз сликата и кликнете на "
+"тоа копче повторно за да ја префрлите во нормална селекција."
 
