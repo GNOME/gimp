@@ -1651,32 +1651,37 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
       gimp_draw_tool_draw_corner (draw_tool, FALSE,
                                   private->x1, private->y1,
                                   private->x2, private->y2,
-                                  private->handle_w, private->handle_h,
+                                  private->handle_w,
+                                  private->handle_h,
                                   GTK_ANCHOR_NORTH_WEST, FALSE);
       gimp_draw_tool_draw_corner (draw_tool, FALSE,
                                   private->x1, private->y1,
                                   private->x2, private->y2,
-                                  private->handle_w, private->handle_h,
+                                  private->handle_w,
+                                  private->handle_h,
                                   GTK_ANCHOR_NORTH_EAST, FALSE);
       gimp_draw_tool_draw_corner (draw_tool, FALSE,
                                   private->x1, private->y1,
                                   private->x2, private->y2,
-                                  private->handle_w, private->handle_h,
+                                  private->handle_w,
+                                  private->handle_h,
                                   GTK_ANCHOR_SOUTH_WEST, FALSE);
       gimp_draw_tool_draw_corner (draw_tool, FALSE,
                                   private->x1, private->y1,
                                   private->x2, private->y2,
-                                  private->handle_w, private->handle_h,
+                                  private->handle_w,
+                                  private->handle_h,
                                   GTK_ANCHOR_SOUTH_EAST, FALSE);
       break;
 
     case RECT_RESIZING_TOP:
     case RECT_RESIZING_BOTTOM:
       gimp_draw_tool_draw_corner (draw_tool,
-                                  !gimp_tool_control_is_active (tool->control),
+                                  ! gimp_tool_control_is_active (tool->control),
                                   private->x1, private->y1,
                                   private->x2, private->y2,
-                                  private->top_and_bottom_handle_w, private->handle_h,
+                                  private->top_and_bottom_handle_w,
+                                  private->handle_h,
                                   gimp_rectangle_tool_get_anchor (private),
                                   FALSE);
       break;
@@ -1684,20 +1689,22 @@ gimp_rectangle_tool_draw (GimpDrawTool *draw_tool)
     case RECT_RESIZING_LEFT:
     case RECT_RESIZING_RIGHT:
       gimp_draw_tool_draw_corner (draw_tool,
-                                  !gimp_tool_control_is_active (tool->control),
+                                  ! gimp_tool_control_is_active (tool->control),
                                   private->x1, private->y1,
                                   private->x2, private->y2,
-                                  private->handle_w, private->left_and_right_handle_h,
+                                  private->handle_w,
+                                  private->left_and_right_handle_h,
                                   gimp_rectangle_tool_get_anchor (private),
                                   FALSE);
       break;
 
     default:
       gimp_draw_tool_draw_corner (draw_tool,
-                                  !gimp_tool_control_is_active (tool->control),
+                                  ! gimp_tool_control_is_active (tool->control),
                                   private->x1, private->y1,
                                   private->x2, private->y2,
-                                  private->handle_w, private->handle_h,
+                                  private->handle_w,
+                                  private->handle_h,
                                   gimp_rectangle_tool_get_anchor (private),
                                   FALSE);
       break;
