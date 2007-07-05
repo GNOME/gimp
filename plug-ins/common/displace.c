@@ -100,7 +100,7 @@ static void      displace_radio_update   (GtkWidget     *widget,
                                           gpointer       data);
 
 static void      displace_set_labels     (void);
-static void      displace_get_label_size (void);
+static gint      displace_get_label_size (void);
 
 static gboolean  displace_map_constrain    (gint32     image_id,
                                             gint32     drawable_id,
@@ -138,7 +138,6 @@ static DisplaceVals dvals =
 static GtkWidget   *preview        = NULL;
 static GtkWidget   *toggle_x       = NULL;
 static GtkWidget   *toggle_y       = NULL;
-static gint         label_maxwidth = 0;
 
 static const gchar *mtext[][2] =
 {
@@ -492,7 +491,6 @@ displace_dialog (GimpDrawable *drawable)
   g_signal_connect_swapped (black, "toggled",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
-  displace_get_label_size ();
   displace_set_labels ();
 
   gtk_widget_show (table);
@@ -823,31 +821,36 @@ displace_radio_update (GtkWidget *widget,
 static void
 displace_set_labels (void)
 {
+  /* get the max. possible size of both check-buttons */
+  gint label_maxwidth = displace_get_label_size();
+
   gtk_button_set_label (GTK_BUTTON (toggle_x),
                         gettext (mtext[0][dvals.mode]));
   gtk_button_set_label (GTK_BUTTON (toggle_y),
                         gettext (mtext[1][dvals.mode]));
 
+  /* "displace_get_label_size()" must be called before */
   gtk_widget_set_size_request (toggle_x, label_maxwidth, -1);
   gtk_widget_set_size_request (toggle_y, label_maxwidth, -1);
 }
 
-static void
+static gint
 displace_get_label_size (void)
 {
-  gint  i, j;
+  static gint  label_maxwidth = 0;
+         gint  i, j;
 
-  label_maxwidth = 0;
-
-  for (i = 0; i < 2; i++)
-    for (j = 0; j < 2; j++)
-      {
-        GtkRequisition  requisition;
-
-        gtk_button_set_label (GTK_BUTTON (toggle_x), gettext (mtext[i][j]));
-        gtk_widget_size_request (toggle_x, &requisition);
-
-        if (requisition.width > label_maxwidth)
-          label_maxwidth = requisition.width;
-      }
+  if (!label_maxwidth)
+    for (i = 0; i < 2; i++)
+      for (j = 0; j < 2; j++)
+        {
+          GtkRequisition  requisition;
+  
+          gtk_button_set_label (GTK_BUTTON (toggle_x), gettext (mtext[i][j]));
+          gtk_widget_size_request (toggle_x, &requisition);
+  
+          if (requisition.width > label_maxwidth)
+            label_maxwidth = requisition.width;
+        }
+  return label_maxwidth;
 }
