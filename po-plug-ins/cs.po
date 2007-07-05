@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-05 16:32+0200\n"
-"PO-Revision-Date: 2007-07-05 16:33+0200\n"
+"POT-Creation-Date: 2007-07-05 17:16+0200\n"
+"PO-Revision-Date: 2007-07-05 17:16+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -96,7 +96,8 @@ msgid "Iterations:"
 msgstr "Iterace:"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:773
-msgid "The higher the number of iterations, the more details will be calculated"
+msgid ""
+"The higher the number of iterations, the more details will be calculated"
 msgstr "Čím více iterací, tím více detailů v obraze."
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:781
@@ -291,7 +292,8 @@ msgstr "Inverze"
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
-msgstr "Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
+msgstr ""
+"Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
 
 #. Greenmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1032
@@ -506,7 +508,8 @@ msgstr "P_růhledné pozadí"
 
 #: ../plug-ins/Lighting/lighting_ui.c:312
 msgid "Make destination image transparent where bump height is zero"
-msgstr "Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
+msgstr ""
+"Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
 
 #: ../plug-ins/Lighting/lighting_ui.c:315
 msgid "Cre_ate new image"
@@ -1946,7 +1949,7 @@ msgstr "Rychleji"
 
 #: ../plug-ins/common/animationplay.c:465
 msgid "Increase the speed of the animation"
-msgstr ""
+msgstr "Zvýšit rychlost animace"
 
 #: ../plug-ins/common/animationplay.c:470
 msgid "Slower"
@@ -1954,7 +1957,7 @@ msgstr "Pomaleji"
 
 #: ../plug-ins/common/animationplay.c:470
 msgid "Decrease the speed of the animation"
-msgstr ""
+msgstr "Snížit rychlost animace"
 
 #: ../plug-ins/common/animationplay.c:475
 #, fuzzy
@@ -1984,9 +1987,8 @@ msgid "Animation Playback:"
 msgstr "Přehrání animace:"
 
 #: ../plug-ins/common/animationplay.c:664
-#, fuzzy
 msgid "Playback speed"
-msgstr "_Přehrávání..."
+msgstr "Rychlost přehrávání"
 
 #: ../plug-ins/common/animationplay.c:802
 msgid "Tried to display an invalid layer."
@@ -2272,7 +2274,8 @@ msgstr "Posun _X:"
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
-msgstr "Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
+msgstr ""
+"Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
 
 #: ../plug-ins/common/bumpmap.c:944 ../plug-ins/common/postscript.c:3388
 msgid "_Y offset:"
@@ -2716,7 +2719,8 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:499
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr "Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
+msgstr ""
+"Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
 
 #: ../plug-ins/common/compose.c:532
 #, c-format
@@ -4275,7 +4279,8 @@ msgstr ""
 "nebyl uložen."
 
 #: ../plug-ins/common/gif-save.c:958
-msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid ""
+"Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Nemohu ukládat barevné obrázky RGB. Nejdříve jej převeďte na indexovaný nebo "
 "do šedí."
@@ -4864,7 +4869,8 @@ msgstr "Interaktivní deformace"
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
-msgstr "Kliknutím a táhnutím myši v náhledů definujte požadovanou deformaci obrázku."
+msgstr ""
+"Kliknutím a táhnutím myši v náhledů definujte požadovanou deformaci obrázku."
 
 #: ../plug-ins/common/jigsaw.c:356
 msgid "Add a jigsaw-puzzle pattern to the image"
@@ -4988,7 +4994,8 @@ msgid "Default RGB working space"
 msgstr "Výchozí pracovní prostor RGB"
 
 #: ../plug-ins/common/lcms.c:626
-msgid "Data attached as 'icc-profile' does not appear to be an ICC color profile"
+msgid ""
+"Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr "Data připojená jako 'icc-profile' zřejmě nejsou barevným profilem ICC"
 
 #: ../plug-ins/common/lcms.c:693
@@ -5336,7 +5343,8 @@ msgstr "Ú_hel:"
 #. * transparency & just use the full palette
 #: ../plug-ins/common/mng.c:499 ../plug-ins/common/png.c:1729
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr "Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
+msgstr ""
+"Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
 
 #: ../plug-ins/common/mng.c:1319
 msgid "Save as MNG"
@@ -6185,7 +6193,7 @@ msgstr "Neplatné rozlišení X."
 
 #: ../plug-ins/common/pnm.c:540
 msgid "Image width is larger than GIMP can handle."
-msgstr ""
+msgstr "Šířka obrázku je větší, než GIMP dokáže zpracovat"
 
 #: ../plug-ins/common/pnm.c:547
 msgid "Invalid Y resolution."
@@ -6193,7 +6201,7 @@ msgstr "Neplatné rozlišení Y."
 
 #: ../plug-ins/common/pnm.c:549
 msgid "Image height is larger than GIMP can handle."
-msgstr ""
+msgstr "Výška obrázku je větší, než GIMP dokáže zpracovat"
 
 #: ../plug-ins/common/pnm.c:561
 msgid "Invalid maximum value."
@@ -6549,7 +6557,8 @@ msgstr "Nelze zpracovat PSD soubor s více než %d kanály"
 
 #: ../plug-ins/common/psd-load.c:2452
 msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
-msgstr "Nelze zpracovat PSD soubory v barevném prostoru CMYK s více než 5 kanály"
+msgstr ""
+"Nelze zpracovat PSD soubory v barevném prostoru CMYK s více než 5 kanály"
 
 #: ../plug-ins/common/psd-load.c:2467
 #, c-format
@@ -7043,12 +7052,15 @@ msgid "After the delay, the screenshot is taken."
 msgstr "Po prodlevě je vytvořen snímek obrazovky."
 
 #: ../plug-ins/common/screenshot.c:1010
-msgid "After the delay, drag your mouse to select the region for the screenshot."
-msgstr "Po uplynytí časové prodlevy vyberte oblast snímku obrazovky táhnutím myší."
+msgid ""
+"After the delay, drag your mouse to select the region for the screenshot."
+msgstr ""
+"Po uplynytí časové prodlevy vyberte oblast snímku obrazovky táhnutím myší."
 
 #: ../plug-ins/common/screenshot.c:1013
 msgid "At the end of the delay, click in a window to snap it."
-msgstr "Po uplynutí časové prodlevy klikněte do okna, jehož snímek chcete vytvořit."
+msgstr ""
+"Po uplynutí časové prodlevy klikněte do okna, jehož snímek chcete vytvořit."
 
 #. Area
 #: ../plug-ins/common/screenshot.c:1019
@@ -7770,6 +7782,8 @@ msgid ""
 "'%s':\n"
 "Image width is larger than GIMP can handle"
 msgstr ""
+"'%s':\n"
+"Šířka obrázku je větší, než GIMP dokáže zpracovat"
 
 #: ../plug-ins/common/sunras.c:450 ../plug-ins/common/xbm.c:824
 #: ../plug-ins/common/xwd.c:492
@@ -7788,6 +7802,8 @@ msgid ""
 "'%s':\n"
 "Image height is larger than GIMP can handle"
 msgstr ""
+"'%s':\n"
+"Výška obrázku je větší, než GIMP dokáže  zpracovat"
 
 #: ../plug-ins/common/sunras.c:496
 msgid "This image depth is not supported"
@@ -7884,7 +7900,8 @@ msgid "Import _paths"
 msgstr "Importovat _cesty"
 
 #: ../plug-ins/common/svg.c:911
-msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
+msgid ""
+"Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importovat elementy cesty z SVG, aby mohly být použity s nástrojem GIMPu pro "
 "cesty"
@@ -8137,7 +8154,8 @@ msgid "ID"
 msgstr "ID"
 
 #: ../plug-ins/common/uniteditor.c:96
-msgid "This string will be used to identify a unit in GIMP's configuration files."
+msgid ""
+"This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Tento řetězec bude použit pouze k identifikaci jednotky v konfiguračním "
 "souboru GIMPu."
@@ -8314,7 +8332,8 @@ msgstr "_Body"
 
 #: ../plug-ins/common/video.c:1806
 msgid "Simulate distortion produced by a fuzzy or low-res monitor"
-msgstr "Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
+msgstr ""
+"Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
 
 #: ../plug-ins/common/video.c:1813
 msgid "Vi_deo..."
@@ -9297,7 +9316,8 @@ msgstr "Kopírovat"
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
-msgstr "Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
+msgstr ""
+"Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
 
 #: ../plug-ins/gfig/gfig-dialog.c:1302
 msgid "Background:"
@@ -9422,7 +9442,8 @@ msgid "_Gfig..."
 msgstr "_Gfig..."
 
 #: ../plug-ins/gfig/gfig.c:731
-msgid "Error trying to save figure as a parasite: can't attach parasite to drawable."
+msgid ""
+"Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Chyba při pokusu uložit obrázek jako parazita: nemohu připojit parazita k "
 "drawable."
@@ -9862,7 +9883,8 @@ msgid "Shadow depth:"
 msgstr "Hloubka stínu:"
 
 #: ../plug-ins/gimpressionist/general.c:244
-msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid ""
+"The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Hloubka vrženého stínu, tj. jak daleko od objektu budou"
 
 #: ../plug-ins/gimpressionist/general.c:249
@@ -10240,11 +10262,13 @@ msgid "Size:"
 msgstr "Velikost:"
 
 #: ../plug-ins/gimpressionist/size.c:142
-msgid "Let the value (brightness) of the region determine the size of the stroke"
+msgid ""
+"Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Nechť hodnota (jas) oblasti určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:146
-msgid "The distance from the center of the image determines the size of the stroke"
+msgid ""
+"The distance from the center of the image determines the size of the stroke"
 msgstr "Vzdálenost od středu obrázku určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:150
@@ -12149,4 +12173,3 @@ msgstr "Chyba: Nemohu načíst soubor XJT vlastností '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Chyba: Soubor XJT vlastností '%s' je prázdný."
-
