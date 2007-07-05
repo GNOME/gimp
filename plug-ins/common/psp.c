@@ -1146,9 +1146,9 @@ read_layer_block (FILE     *f,
       width = saved_image_rect[2] - saved_image_rect[0];
       height = saved_image_rect[3] - saved_image_rect[1];
 
-      /* FIXME: checking for G_MAXINT16 is too restrictive */
-      if ((width <= 0) || (width > G_MAXINT16)
-          || (height <= 0) || (height > G_MAXINT16))
+      if ((width < 0) || (width > GIMP_MAX_IMAGE_SIZE)       /* w <= 2^18 */
+          || (height < 0) || (height > GIMP_MAX_IMAGE_SIZE)  /* h <= 2^18 */
+          || ((width / 256) * (height / 256) >= 8192))       /* w * h < 2^29 */
         {
           g_message ("Invalid layer dimensions: %dx%d", width, height);
           fclose (f);

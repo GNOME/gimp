@@ -1,11 +1,17 @@
 2007-07-05  Raphaël Quinet  <raphael@gimp.org>
 
+	* plug-ins/common/psp.c (read_layer_block): allow layer dimensions
+	larger than 32768 while still checking for integer overflows.
+
+2007-07-04  Raphaël Quinet  <raphael@gimp.org>
+
 	* plug-ins/common/pnm.c (load_image)
 	* plug-ins/common/psp.c (read_layer_block)
 	* plug-ins/common/sunras.c (load_image)
 	* plug-ins/common/xbm.c (load_image)
 	* plug-ins/common/xwd.c (load_image): validate size values read
-	from files before using them to allocate memory (bug #451379).
+	from files before using them to allocate memory (bug #451379,
+	thanks to Sean Larsson of iDefense Labs).
 
 2007-07-04  Mukund Sivaraman  <muks@mukund.org>
 
