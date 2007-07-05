@@ -1143,6 +1143,16 @@ read_layer_block (FILE     *f,
       width = saved_image_rect[2] - saved_image_rect[0];
       height = saved_image_rect[3] - saved_image_rect[1];
 
+      if ((width < 0) || (width > GIMP_MAX_IMAGE_SIZE)       /* w <= 2^18 */
+          || (height < 0) || (height > GIMP_MAX_IMAGE_SIZE)  /* h <= 2^18 */
+          || ((width / 256) * (height / 256) >= 8192))       /* w * h < 2^29 */
+        {
+          g_message ("Invalid layer dimensions: %dx%d", width, height);
+          fclose (f);
+          gimp_image_delete (image_ID);
+          return -1;
+        }
+
       IFDBG(2) g_message
 	("layer: %s %dx%d (%dx%d) @%d,%d opacity %d blend_mode %s "
 	 "%d bitmaps %d channels",

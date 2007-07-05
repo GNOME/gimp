@@ -1,3 +1,18 @@
+2007-07-05  Raphaël Quinet  <raphael@gimp.org>
+
+	Merged several patches from trunk (written by Mukund Sivaraman and
+	myself):
+	
+	* plug-ins/common/dicom.c
+	* plug-ins/common/pnm.c
+	* plug-ins/common/psd.c
+	* plug-ins/common/psp.c
+	* plug-ins/common/sunras.c
+	* plug-ins/common/xbm.c
+	* plug-ins/common/xwd.c: validate size values read from files
+	before using them to allocate memory.  Fixes bug #451379, brought
+	to our attention by Sean Larsson of iDefense Labs.
+
 2007-07-04  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk (libgimpconfig/gimpconfig-deserialize.c):

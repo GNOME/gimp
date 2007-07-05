@@ -396,7 +396,7 @@ static glong getglong(FILE *fd, gchar *why);
 static void xfread(FILE *fd, void *buf, long len, gchar *why);
 static void xfread_interlaced(FILE *fd, guchar *buf, long len, gchar *why,
 			      gint step);
-static void read_whole_file(FILE *fd);
+static void read_whole_file(FILE *fd, const gchar *name);
 static void reshuffle_cmap(guchar *map256);
 static gchar* getpascalstring(FILE *fd, gchar *why);
 static gchar* getstring(size_t n, FILE * fd, gchar *why);
@@ -1793,7 +1793,7 @@ load_image (const gchar *name)
   gimp_progress_init (name_buf);
   g_free (name_buf);
 
-  read_whole_file (fd);
+  read_whole_file (fd, name);
 
   if (psd_image.num_layers > 0) /* PS3-style */
     {
@@ -2773,7 +2773,7 @@ xfread_interlaced(FILE* fd, guchar* buf, long len, gchar *why, gint step)
 }
 
 static void
-read_whole_file(FILE * fd)
+read_whole_file(FILE * fd, const gchar *filename)
 {
     guint16 w;
     gint32 pos;
@@ -2783,9 +2783,30 @@ read_whole_file(FILE * fd)
     xfread(fd, &PSDheader.signature, 4, "signature");
     PSDheader.version = getgshort(fd, "version");
     xfread(fd, &dummy, 6, "reserved");
+
     PSDheader.channels = getgshort(fd, "channels");
+
+    /* Photoshop CS (version 8) supports a maximum of 56 channels */
+
+    if (PSDheader.channels > 56)
+      {
+        g_error ("'%s' has more channels than GIMP can handle.",
+                 gimp_filename_to_utf8 (filename));
+      }
+
     PSDheader.rows = getglong(fd, "rows");
     PSDheader.columns = getglong(fd, "columns");
+
+    /* Photoshop CS (version 8) supports 300000 x 300000, but this
+       is currently larger than GIMP_MAX_IMAGE_SIZE */
+
+    if ((PSDheader.rows > GIMP_MAX_IMAGE_SIZE) ||
+        (PSDheader.columns > GIMP_MAX_IMAGE_SIZE))
+      {
+        g_error ("'%s' has a larger image size than GIMP can handle.",
+                 gimp_filename_to_utf8 (filename));
+      }
+
     PSDheader.bpp = getgshort(fd, "depth");
     PSDheader.mode = getgshort(fd, "mode");
 
