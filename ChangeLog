@@ -1,3 +1,7 @@
+2007-07-05  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/psp.c: some cleanup to the error handling.
+
 2007-07-05  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/common/psd-load.c (do_layer_record): check for invalid
