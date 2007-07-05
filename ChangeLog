@@ -1,5 +1,11 @@
 2007-07-05  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimperrordialog.c (gimp_error_dialog_add): don't
+	count the number of repeated messages when the error messages are
+	being redirected to stderr already.
+
+2007-07-05  Sven Neumann  <sven@gimp.org>
+
 	* app/xcf/xcf-read.c (xcf_read_int32) (xcf_read_int8): return the
 	number of bytes that have been read from the file.
 

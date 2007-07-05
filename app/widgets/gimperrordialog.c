@@ -150,15 +150,12 @@ gimp_error_dialog_add (GimpErrorDialog *dialog,
       stock_id = GIMP_STOCK_WILBER_EEK;
       domain   = _("Too many error messages!");
       message  = _("Messages are redirected to stderr.");
-    }
 
-  /*  yes, these lines are repeated here for a reason  */
-  if (dialog->last_box     &&
-      dialog->last_domain  && strcmp (dialog->last_domain,  domain)  == 0 &&
-      dialog->last_message && strcmp (dialog->last_message, message) == 0)
-    {
-      if (gimp_message_box_repeat (GIMP_MESSAGE_BOX (dialog->last_box)))
-        return;
+      if (dialog->last_domain  && strcmp (dialog->last_domain,  domain)  == 0 &&
+          dialog->last_message && strcmp (dialog->last_message, message) == 0)
+        {
+          return;
+        }
     }
 
   box = g_object_new (GIMP_TYPE_MESSAGE_BOX,
