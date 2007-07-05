@@ -1056,6 +1056,13 @@ do_layer_record (FILE    *fd,
   IFDBG printf("\t\t\t\tNumber of channels: %d\n",
                (int)layer->num_channels);
 
+  if ((layer->num_channels < 0) || (layer->num_channels > 56))
+    {
+      g_message ("Error: invalid number of channels in layer %d: %d",
+                 layernum, layer->num_channels);
+      gimp_quit();
+    }
+
   if (layer->num_channels)
     {
       layer->channel = g_new(PSDchannel, layer->num_channels);

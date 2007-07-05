@@ -333,6 +333,23 @@ load_image (const gchar *filename)
   width = qtohs (pcx_header.x2) - offset_x + 1;
   height = qtohs (pcx_header.y2) - offset_y + 1;
 
+  if ((width < 0) || (width > GIMP_MAX_IMAGE_SIZE))
+    {
+      g_message (_("Unsupported or invalid image width: %d"), width);
+      return -1;
+    }
+  if ((height < 0) || (height > GIMP_MAX_IMAGE_SIZE))
+    {
+      g_message (_("Unsupported or invalid image height: %d"), height);
+      return -1;
+    }
+  if (qtohs (pcx_header.bytesperline) <= 0)
+    {
+      g_message (_("Invalid number of bytes per line: %hd"),
+                 qtohs (pcx_header.bytesperline));
+      return -1;
+    }
+
   if (pcx_header.planes == 3 && pcx_header.bpp == 8)
     {
       image= gimp_image_new (width, height, GIMP_RGB);
