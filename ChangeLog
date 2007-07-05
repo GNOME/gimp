@@ -1,8 +1,17 @@
+2007-07-05  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk:
+
+	* app/xcf/xcf-read.c (xcf_read_int32) (xcf_read_int8): return the
+        number of bytes that have been read from the file.
+
+        * app/xcf/xcf-load.c (xcf_load_prop): return FALSE when reading fails.
+
 2007-07-05  Raphaël Quinet  <raphael@gimp.org>
 
 	Merged several patches from trunk (written by Mukund Sivaraman and
 	myself):
-	
+
 	* plug-ins/common/dicom.c
 	* plug-ins/common/pnm.c
 	* plug-ins/common/psd.c
@@ -128,13 +137,13 @@
 
 2007-03-26  Michael Schumacher  <schumaml@cvs.gnome.org>
 
-	* plug-ins/common/compressor.c (save_image, load_image): 
+	* plug-ins/common/compressor.c (save_image, load_image):
 	Changed previous patch to be consistent with the other code in
 	this file.
 
 2007-03-26  Michael Schumacher  <schumaml@cvs.gnome.org>
 
-	* plug-ins/common/compressor.c (save_image, load_image): 
+	* plug-ins/common/compressor.c (save_image, load_image):
 	Check if the files to be read or written and the temporary files
 	have been opened. Otherwise, bail out safely instead of causing a
 	crash. Fixes bug #422444 for the stable branch.
@@ -165,7 +174,7 @@
 	Merged from trunk:
 
         * gimpui.pc.in (Libs): added gimpmodule-2.0. Fixes bug #356394.
-	
+
 2007-02-03  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/psd_save.c: Backported fixes from bug #335130 to
@@ -318,14 +327,14 @@
 	* plug-ins/common/depthmerge.c (dialogDepthMap2ChangedCallback):
 	change "depthMap1Drawable" to "depthMap2Drawable" to fix
 	typo introduced in version committed on 2004-04-21.
-	Should fix bug #355219.	
+	Should fix bug #355219.
 
 2006-09-08  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merged from HEAD branch, with some hackery:
 
-	* app/text/gimptextlayout-render.c (gimp_text_layout_render_glyphs): 
-	handle tabs correctly, as instructed by behdad.  Fixes bug #353132.	
+	* app/text/gimptextlayout-render.c (gimp_text_layout_render_glyphs):
+	handle tabs correctly, as instructed by behdad.  Fixes bug #353132.
 
 2006-08-29  Sven Neumann  <sven@gimp.org>
 
@@ -487,7 +496,7 @@
 2006-07-06  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.2.12 release.
-	
+
 2006-07-06  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
@@ -574,7 +583,7 @@
 2006-5-22  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merge from Head:
-	
+
 	* libgimpwidgets/gimpwidgets.c (gimp_coordinates_callback): use
 	ROUND() to prevent incorrect chainbutton logic.  Fixes bug #336259.
 
@@ -591,7 +600,7 @@
 2006-5-19  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merge from Head:
-	
+
 	* app/dialogs/file-save-dialog.c: make sure dialog has not been
 	destroyed when setting sensitive; fixes bug #322978.
 
@@ -855,7 +864,7 @@
 
 	* plug-ins/script-fu/siod/slib.c: added a fix for the script-fu
 	crash in chinese (and maybe other) locales. Applied to both
-	branches. Fixes bug #163212. 
+	branches. Fixes bug #163212.
 
 2005-12-11  Michael Natterer  <mitch@gimp.org>
 
@@ -1275,7 +1284,7 @@
 
 	* plug-ins/common/newsprint.c: remove "optimization" that interacts
 	badly with preview; fixes bug #161573.
-	
+
 2005-06-21  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	Merged from HEAD branch:
@@ -1287,7 +1296,7 @@
 
 	Merged from HEAD branch:
 
-	* app/core/gimpimagefile.c (gimp_imagefile_load_thumb): 
+	* app/core/gimpimagefile.c (gimp_imagefile_load_thumb):
 	* app/widgets/gimpthumbbox.c (gimp_thumb_box_auto_thumbnail):
 	don't display a preview and don't attempt to create one if the
 	image file does not exist any longer (bug #307672).
@@ -1322,7 +1331,7 @@
 2005-06-04  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
-	
+
 	* app/tools/gimpmagnifytool.c (gimp_magnify_tool_button_release):
 	fix calculation of zoom offsets in the case that dot-for-dot mode
 	is not enabled (bug #306476).
@@ -1345,7 +1354,7 @@
 2005-05-31  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
-	
+
 	* app/widgets/gimpenumwidgets.c
 	(gimp_enum_stock_box_set_child_padding): don't leak the return
 	value of gtk_container_get_children (bug #305994, spotted by Ted
@@ -1765,7 +1774,7 @@
 
 	Merged from HEAD branch:
 
-	* app/display/gimpstatusbar.c (gimp_statusbar_push_coords) 
+	* app/display/gimpstatusbar.c (gimp_statusbar_push_coords)
 	(gimp_statusbar_set_cursor): use RINT() instead of ROUND() to get
 	proper rounding of negative values. Fixes bug #171497.
 
@@ -1829,7 +1838,7 @@
 
 	* libgimpwidgets/gimpcolorscales.c (gimp_color_scales_update_scales):
 	Block callback when updating hex entry, fixes bug #169882.
-	
+
 2005-03-20  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
 	* app/core/gimpimage-convert.c: applied patch from Adam
@@ -1920,10 +1929,10 @@
 
 2005-03-06  Bill Skaggs  <weskaggs@primate.ucdavis.edu>
 
-	* app/display/gimpdisplayshell-callbacks.c: applied patch from 
+	* app/display/gimpdisplayshell-callbacks.c: applied patch from
 	Robert Ögren to improve autoscrolling with tablets in Windows,
 	see bug #167960.
-	
+
 2005-03-05  Sven Neumann  <sven@gimp.org>
 
 	Fix for bug #169274, merged from HEAD:
@@ -2181,7 +2190,7 @@
 
 	* app/file/file-utils.[ch]: added new utility function
 	file_utils_filename_from_uri().
-	
+
 	* app/file/file-open.c (file_open_image)
 	* app/file/file-save.c (file_save_as):
 	* app/file/file-utils.c (file_utils_find_proc)
@@ -2218,9 +2227,9 @@
 	Merged from HEAD branch:
 
 	* libgimp/gimpdrawablepreview.c: set preview bounds correctly
-	when previewed drawable extends beyond image edges, 
+	when previewed drawable extends beyond image edges,
 	fixes bug #165372.
-	
+
 2005-01-27  Manish Singh  <yosh@gimp.org>
 
 	* README: update ancient IRC info.
@@ -2229,8 +2238,8 @@
 
 	Merged from HEAD branch:
 
-	* app/tools/gimpcroptool.c (crop_aspect_changed): don't 
-	accept aspect ratios that make image less than 1 byte high, 
+	* app/tools/gimpcroptool.c (crop_aspect_changed): don't
+	accept aspect ratios that make image less than 1 byte high,
 	fixes bug #164827.
 
 2005-01-23  Sven Neumann  <sven@gimp.org>
@@ -2349,7 +2358,7 @@
 
 	* plug-ins/common/bumpmap.c: make sure bumpmap_init_params()
 	is called when necessary, fixes bug #162285.
-	
+
 2005-01-18  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD branch:
@@ -2368,23 +2377,23 @@
 
 	* libgimpwidgets/gimpwidgets.c (gimp_coordinates_callback):
 	Make sure last_x and last_y are set to values that match
-	those returned by gimp_size_entry_get_refval(), 
+	those returned by gimp_size_entry_get_refval(),
 	fixes bug #163951.
-	
+
 2005-01-18  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	Merged from HEAD branch:
 
 	* app/dialogs/info-dialog.c: disconnect callbacks to prevent crash
 	when destroying dialog, fixes bug #163617.
-	
+
 2005-01-17  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	Merged from HEAD branch:
 
 	* plug-ins/xjt/xjt.c: use gimp_temp_name instead of trying to
 	create temp dir at loc of file, fixes bug #164116.
-	
+
 2005-01-16  Sven Neumann  <sven@gimp.org>
 
 	Merged from HEAD branch:
@@ -2444,7 +2453,7 @@
 	* plug-ins/Lighting/lighting_shade.c: remove artifacts
 	when light strikes underside of bumpmapped surface;
 	should fix bug #163877 (merged from HEAD)
-	
+
 2005-01-13  Michael Natterer  <mitch@gimp.org>
 
 	Merged from HEAD branch:
@@ -2717,7 +2726,7 @@
 	* app/widgets/gimpsizebox.c: give correct arguments to
 	gimp_coordinates_new().  Fixes problem described in
 	comment 6 of bug #162387.
-	
+
 2004-12-30  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.2.2.
@@ -2758,7 +2767,7 @@
 	* app/paint/gimpbrushcore.c (gimp_brush_core_subsample_mask):
 	don't set array outside its bounds.  Should fix bug #161323.
 	Credit to Robert Ögren for figuring out what was wrong.
-	
+
 2004-12-27  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/colortoalpha.c: if possible, use
@@ -2825,7 +2834,7 @@
 	* app/display/gimpdisplayshell-dnd.c
 	* app/widgets/gimplayertreeview.c
 	* app/widgets/gimptoolbox-dnd.c: replace % with space
-	in file name before showing error message, 
+	in file name before showing error message,
 	fixes bug #162147.
 
 	* app/core/gimp-gui.c
@@ -2836,7 +2845,7 @@
 
 	* gimp/app/widgets/gimpsizebox.c: fix incorrect Update
 	Policy for size entry as pointed out by mitch.
-	
+
 2004-12-23  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* plug-ins/common/cartoon.c
@@ -2864,7 +2873,7 @@
 
 	* plug-ins/common/sel_gauss.c: give it a tile cache (didn't
 	have one).  Still very slow but a little better.
-	
+
 2004-12-24  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/despeckle.c (despeckle_median): don't call
@@ -2877,13 +2886,13 @@
 
 	* plug-ins/common/mblur.c: set up tile cache before
 	creating dialog -- major speedup in preview.
-	
+
 2004-12-23  Bill Skaggs <weskaggs@primate.ucdavis.edu>
 
 	* gimp/app/widgets/gimpsizebox.c: use gimp_coordinates_new()
 	instead of duplicating a lot of code.  Fixes bug #161756.
-	
-	* gimp/app/widgets/gimppropwidgets.c: small change in 
+
+	* gimp/app/widgets/gimppropwidgets.c: small change in
 	chainbutton handling to make above work.
 
 2004-12-23  Sven Neumann  <sven@gimp.org>
@@ -2927,7 +2936,7 @@
 
 	* Makefile.am
 	* NEWS.pre-2.2: moved old NEWS here.
-	
+
 2004-12-21  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/unsharp.c (blur_line): fixed the degenerate case
