@@ -6,6 +6,13 @@ here. New features are being added in the HEAD branch that will be
 released as GIMP version 2.4.
 
 
+Bugs fixed in GIMP 2.2.16
+=========================
+
+- guard against integer overflows in several file plug-ins (bug #451379)
+- fixed handling of background alpha channel in XCF files (bug #443097)
+- fixed crash when previewing some animated brushes (bug #446005)
+
 Bugs fixed in GIMP 2.2.15
 =========================
 
