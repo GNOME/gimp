@@ -297,7 +297,7 @@ xcf_load_image_props (XcfInfo   *info,
 
   while (TRUE)
     {
-      if (!xcf_load_prop (info, &prop_type, &prop_size))
+      if (! xcf_load_prop (info, &prop_type, &prop_size))
         return FALSE;
 
       switch (prop_type)
@@ -381,8 +381,10 @@ xcf_load_image_props (XcfInfo   *info,
             nguides = prop_size / (4 + 1);
             for (i = 0; i < nguides; i++)
               {
-                info->cp += xcf_read_int32 (info->fp, (guint32 *) &position, 1);
-                info->cp += xcf_read_int8 (info->fp, (guint8 *) &orientation, 1);
+                info->cp += xcf_read_int32 (info->fp,
+                                            (guint32 *) &position, 1);
+                info->cp += xcf_read_int8 (info->fp,
+                                           (guint8 *) &orientation, 1);
 
                 /*  skip -1 guides from old XCFs  */
                 if (position < 0)
@@ -617,7 +619,7 @@ xcf_load_layer_props (XcfInfo   *info,
 
   while (TRUE)
     {
-      if (!xcf_load_prop (info, &prop_type, &prop_size))
+      if (! xcf_load_prop (info, &prop_type, &prop_size))
         return FALSE;
 
       switch (prop_type)
@@ -715,6 +717,7 @@ xcf_load_layer_props (XcfInfo   *info,
                 gimp_item_parasite_attach (GIMP_ITEM (layer), p);
                 gimp_parasite_free (p);
               }
+
             if (info->cp - base != prop_size)
               gimp_message (info->gimp, G_OBJECT (info->progress),
                             GIMP_MESSAGE_WARNING,
@@ -763,7 +766,7 @@ xcf_load_channel_props (XcfInfo      *info,
 
   while (TRUE)
     {
-      if (!xcf_load_prop (info, &prop_type, &prop_size))
+      if (! xcf_load_prop (info, &prop_type, &prop_size))
         return FALSE;
 
       switch (prop_type)
@@ -857,6 +860,7 @@ xcf_load_channel_props (XcfInfo      *info,
                 gimp_item_parasite_attach (GIMP_ITEM (*channel), p);
                 gimp_parasite_free (p);
               }
+
             if (info->cp - base != prop_size)
               gimp_message (info->gimp, G_OBJECT (info->progress),
                             GIMP_MESSAGE_WARNING,
@@ -896,8 +900,16 @@ xcf_load_prop (XcfInfo  *info,
                PropType *prop_type,
                guint32  *prop_size)
 {
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) prop_type, 1);
-  info->cp += xcf_read_int32 (info->fp, (guint32 *) prop_size, 1);
+  if (G_UNLIKELY (xcf_read_int32 (info->fp, (guint32 *) prop_type, 1) != 4))
+    return FALSE;
+
+  info->cp += 4;
+
+  if (G_UNLIKELY (xcf_read_int32 (info->fp, (guint32 *) prop_size, 1) != 4))
+    return FALSE;
+
+  info->cp += 4;
+
   return TRUE;
 }
 

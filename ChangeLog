@@ -1,5 +1,12 @@
 2007-07-05  Sven Neumann  <sven@gimp.org>
 
+	* app/xcf/xcf-read.c (xcf_read_int32) (xcf_read_int8): return the
+	number of bytes that have been read from the file.
+
+	* app/xcf/xcf-load.c (xcf_load_prop): return FALSE when reading fails.
+
+2007-07-05  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb.pl (arg_parse): allow the use of constants when
 	specifying limits for a PDB type.
 
