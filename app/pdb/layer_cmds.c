@@ -23,6 +23,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
+
 #include "pdb-types.h"
 #include "gimppdb.h"
 #include "gimpprocedure.h"
@@ -855,13 +857,13 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("width",
                                                       "width",
                                                       "The layer width",
-                                                      1, G_MAXINT32, 1,
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("height",
                                                       "height",
                                                       "The layer height",
-                                                      1, G_MAXINT32, 1,
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("type",
@@ -1012,13 +1014,13 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("new-width",
                                                       "new width",
                                                       "New layer width",
-                                                      1, G_MAXINT32, 1,
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("new-height",
                                                       "new height",
                                                       "New layer height",
-                                                      1, G_MAXINT32, 1,
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("local-origin",
@@ -1052,13 +1054,13 @@ register_layer_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("new-width",
                                                       "new width",
                                                       "New layer width",
-                                                      1, G_MAXINT32, 1,
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("new-height",
                                                       "new height",
                                                       "New layer height",
-                                                      1, G_MAXINT32, 1,
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("offx",

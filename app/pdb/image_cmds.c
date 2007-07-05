@@ -2331,13 +2331,13 @@ register_image_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("width",
                                                       "width",
                                                       "The width of the image",
-                                                      1, G_MAXINT32, 1,
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("height",
                                                       "height",
                                                       "The height of the image",
-                                                      1, G_MAXINT32, 1,
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("type",
@@ -2535,13 +2535,13 @@ register_image_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("new-width",
                                                       "new width",
                                                       "New image width",
-                                                      1, G_MAXINT32, 1,
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("new-height",
                                                       "new height",
                                                       "New image height",
-                                                      1, G_MAXINT32, 1,
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("offx",
@@ -2603,13 +2603,13 @@ register_image_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("new-width",
                                                       "new width",
                                                       "New image width",
-                                                      1, G_MAXINT32, 1,
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("new-height",
                                                       "new height",
                                                       "New image height",
-                                                      1, G_MAXINT32, 1,
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
@@ -2637,13 +2637,13 @@ register_image_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("new-width",
                                                       "new width",
                                                       "New image width: (0 < new_width <= width)",
-                                                      1, G_MAXINT32, 1,
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("new-height",
                                                       "new height",
                                                       "New image height: (0 < new_height <= height)",
-                                                      1, G_MAXINT32, 1,
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("offx",

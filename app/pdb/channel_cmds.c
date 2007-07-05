@@ -23,6 +23,7 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
@@ -358,13 +359,13 @@ register_channel_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("width",
                                                       "width",
                                                       "The channel width",
-                                                      1, G_MAXINT32, 1,
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("height",
                                                       "height",
                                                       "The channel height",
-                                                      1, G_MAXINT32, 1,
+                                                      1, GIMP_MAX_IMAGE_SIZE, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_string ("name",

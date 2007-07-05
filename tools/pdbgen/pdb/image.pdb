@@ -97,9 +97,9 @@ HELP
     &std_pdb_misc;
 
     @inargs = (
-	{ name => 'width', type => '1 <= int32',
+	{ name => 'width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'The width of the image' },
-	{ name => 'height', type => '1 <= int32',
+	{ name => 'height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'The height of the image' },
 	{ name => 'type', type => 'enum GimpImageBaseType',
 	  desc => 'The type of image' }
@@ -204,9 +204,9 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-	{ name => 'new_width', type => '1 <= int32',
+	{ name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'New image width' },
-	{ name => 'new_height', type => '1 <= int32',
+	{ name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'New image height' },
 	{ name => 'offx', type => 'int32',
 	  desc => 'x offset between upper left corner of old and
@@ -272,9 +272,9 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-	{ name => 'new_width', type => '1 <= int32',
+	{ name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'New image width' },
-	{ name => 'new_height', type => '1 <= int32',
+	{ name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'New image height' }
     );
 
@@ -306,9 +306,9 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image' },
-	{ name => 'new_width', type => '1 <= int32',
+	{ name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'New image width: (0 < new_width <= width)' },
-	{ name => 'new_height', type => '1 <= int32',
+	{ name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'New image height: (0 < new_height <= height)' },
 	{ name => 'offx', type => '0 <= int32',
 	  desc => 'x offset: (0 <= offx <= (width - new_width))' },

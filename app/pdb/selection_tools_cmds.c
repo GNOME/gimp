@@ -23,6 +23,7 @@
 
 #include <glib-object.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpcolor/gimpcolor.h"
 
 #include "pdb-types.h"
@@ -978,13 +979,13 @@ register_selection_tools_procs (GimpPDB *pdb)
                                g_param_spec_double ("corner-radius-x",
                                                     "corner radius x",
                                                     "The corner radius in X direction",
-                                                    0, G_MAXDOUBLE, 0,
+                                                    0, GIMP_MAX_IMAGE_SIZE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_double ("corner-radius-y",
                                                     "corner radius y",
                                                     "The corner radius in Y direction",
-                                                    0, G_MAXDOUBLE, 0,
+                                                    0, GIMP_MAX_IMAGE_SIZE, 0,
                                                     GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                g_param_spec_enum ("operation",

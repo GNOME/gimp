@@ -1,5 +1,22 @@
 2007-07-05  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb.pl (arg_parse): allow the use of constants when
+	specifying limits for a PDB type.
+
+	* tools/pdbgen/pdb/channel.pdb
+	* tools/pdbgen/pdb/image.pdb
+	* tools/pdbgen/pdb/layer.pdb: use GIMP_MAX_IMAGE_SIZE as limit for
+	image and drawable sizes.
+
+	* tools/pdbgen/pdb/selection_tools.pdb: added missing include.
+
+	* app/pdb/channel_cmds.c
+	* app/pdb/image_cmds.c
+	* app/pdb/layer_cmds.c
+	* app/pdb/selection_tools_cmds.c: regenerated.
+
+2007-07-05  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpdrawtool.c (gimp_draw_tool_draw_corner): changed
 	the highlighting of the side handles to follow changes in the
 	specification.

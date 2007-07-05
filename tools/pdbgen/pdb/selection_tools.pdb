@@ -528,7 +528,9 @@ CODE
 }
 
 
-@headers = qw("core/gimpchannel-select.h" "gimp-intl.h");
+@headers = qw("libgimpbase/gimpbase.h"
+              "core/gimpchannel-select.h"
+              "gimp-intl.h");
 
 @procs = qw(by_color_select by_color_select_full
             ellipse_select

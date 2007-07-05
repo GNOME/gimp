@@ -240,9 +240,9 @@ sub arg_parse {
 	push @retvals, $1 if $1;
 	return @retvals;
     }
-    elsif ($arg =~ /^(?:([+-.\d][^\s]*) \s* (<=|<))?
+    elsif ($arg =~ /^(?:([+-.\dA-Z_][^\s]*) \s* (<=|<))?
 		     \s* (\w+) \s*
-		     (?:(<=|<) \s* ([+-.\d][^\s]*))?
+		     (?:(<=|<) \s* ([+-.\dA-Z_][^\s]*))?
 		   /x) {
 	return ($3, $1, $2 ? $premap{$2} : $2, $5, $4 ? $postmap{$4} : $4);
     }

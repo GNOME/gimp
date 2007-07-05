@@ -33,9 +33,9 @@ HELP
     @inargs = (
 	{ name => 'image', type => 'image',
 	  desc => 'The image to which to add the layer' },
-	{ name => 'width', type => '1 <= int32',
+	{ name => 'width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'The layer width' },
-	{ name => 'height', type => '1 <= int32',
+	{ name => 'height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'The layer height' },
 	{ name => 'type', type => 'enum GimpImageType',
 	  desc => 'The layer type' },
@@ -233,9 +233,9 @@ HELP
     @inargs = (
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
-	{ name => 'new_width', type => '1 <= int32',
+	{ name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'New layer width' },
-	{ name => 'new_height', type => '1 <= int32',
+	{ name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'New layer height' },
 	{ name => 'local_origin', type => 'boolean',
 	  desc => 'Use a local origin (as opposed to the image origin)' }
@@ -270,9 +270,9 @@ HELP
     @inargs = (
 	{ name => 'layer', type => 'layer',
 	  desc => 'The layer' },
-	{ name => 'new_width', type => '1 <= int32',
+	{ name => 'new_width', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'New layer width' },
-	{ name => 'new_height', type => '1 <= int32',
+	{ name => 'new_height', type => '1 <= int32 <= GIMP_MAX_IMAGE_SIZE',
 	  desc => 'New layer height' },
 	{ name => 'offx', type => 'int32',
 	  desc => 'x offset between upper left corner of old and
@@ -914,7 +914,8 @@ CODE
 }
 
 
-@headers = qw("config/gimpcoreconfig.h"
+@headers = qw("libgimpbase/gimpbase.h"
+              "config/gimpcoreconfig.h"
               "core/gimp.h"
               "core/gimpimage-undo.h"
               "core/gimpitem-linked.h"
