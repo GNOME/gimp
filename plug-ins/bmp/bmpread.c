@@ -390,6 +390,9 @@ ReadBMP (const gchar *name)
 			Grey,
 			masks);
 
+  if (image_ID < 0)
+    return -1;
+
   if (Bitmap_Head.biXPels > 0 && Bitmap_Head.biYPels > 0)
     {
       /* Fixed up from scott@asofyet's changes last year, njl195 */
@@ -482,10 +485,20 @@ ReadImage (FILE     *fd,
       break;
 
     default:
-      g_message (_("Unrecognized or invalid BMP compression format."));
+      g_message (_("Unsupported or invalid bitdepth."));
       return -1;
     }
 
+  if ((width < 0) || (width > GIMP_MAX_IMAGE_SIZE))
+    {
+      g_message (_("Unsupported or invalid image width: %d"), width);
+      return -1;
+    }
+  if ((height < 0) || (height > GIMP_MAX_IMAGE_SIZE))
+    {
+      g_message (_("Unsupported or invalid image height: %d"), height);
+      return -1;
+    }
   image = gimp_image_new (width, height, base_type);
   layer = gimp_layer_new (image, _("Background"),
                           width, height,

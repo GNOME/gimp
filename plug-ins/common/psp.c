@@ -479,7 +479,6 @@ read_block_header (FILE    *f,
       || (major < 4 && fread (total_len, 4, 1, f) < 1))
     {
       g_message ("Error reading block header");
-      fclose (f);
       return -1;
     }
   if (memcmp (buf, "~BK\0", 4) != 0)
@@ -488,8 +487,6 @@ read_block_header (FILE    *f,
 	g_message ("Invalid block header at %ld", header_start);
       else
 	g_message ("Invalid block header");
-
-      fclose (f);
       return -1;
     }
 
@@ -524,7 +521,6 @@ read_general_image_attribute_block (FILE     *f,
   if (init_len < 38 || total_len < 38)
     {
       g_message ("Invalid general image attribute chunk size");
-      fclose (f);
       return -1;
     }
 
@@ -544,7 +540,6 @@ read_general_image_attribute_block (FILE     *f,
       || fread (&ia->layer_count, 2, 1, f) < 1)
     {
       g_message ("Error reading general image attribute block");
-      fclose (f);
       return -1;
     }
   ia->width = GUINT32_FROM_LE (ia->width);
@@ -559,7 +554,6 @@ read_general_image_attribute_block (FILE     *f,
   if (ia->compression > PSP_COMP_LZ77)
     {
       g_message ("Unknown compression type %d", ia->compression);
-      fclose (f);
       return -1;
     }
 
@@ -567,7 +561,6 @@ read_general_image_attribute_block (FILE     *f,
   if (ia->depth != 24)
     {
       g_message ("Unsupported bit depth %d", ia->depth);
-      fclose (f);
       return -1;
     }
 
@@ -618,15 +611,11 @@ read_creator_block (FILE     *f,
 	  || fread (&length, 4, 1, f) < 1)
 	{
 	  g_message ("Error reading creator keyword chunk");
-	  fclose (f);
-	  gimp_image_delete (image_ID);
 	  return -1;
 	}
       if (memcmp (buf, "~FL\0", 4) != 0)
 	{
 	  g_message ("Invalid keyword chunk header");
-	  fclose (f);
-	  gimp_image_delete (image_ID);
 	  return -1;
 	}
       keyword = GUINT16_FROM_LE (keyword);
@@ -641,8 +630,6 @@ read_creator_block (FILE     *f,
 	  if (fread (string, length, 1, f) < 1)
 	    {
 	      g_message ("Error reading creator keyword data");
-	      fclose (f);
-	      gimp_image_delete (image_ID);
 	      return -1;
 	    }
 	  switch (keyword)
@@ -666,8 +653,6 @@ read_creator_block (FILE     *f,
 	  if (fread (&dword, 4, 1, f) < 1)
 	    {
 	      g_message ("Error reading creator keyword data");
-	      fclose (f);
-	      gimp_image_delete (image_ID);
 	      return -1;
 	    }
 	  switch (keyword)
@@ -685,7 +670,6 @@ read_creator_block (FILE     *f,
 	default:
 	  if (try_fseek (f, length, SEEK_CUR) < 0)
 	    {
-	      gimp_image_delete (image_ID);
 	      return -1;
 	    }
 	  break;
@@ -971,7 +955,6 @@ read_channel_data (FILE       *f,
       if (inflateInit (&zstream) != Z_OK)
 	{
 	  g_message ("zlib error");
-	  fclose (f);
 	  return -1;
 	}
       if (bytespp == 1)
@@ -986,7 +969,6 @@ read_channel_data (FILE       *f,
 	{
 	  g_message ("zlib error");
 	  inflateEnd (&zstream);
-	  fclose (f);
 	  return -1;
 	}
       inflateEnd (&zstream);
@@ -1019,7 +1001,7 @@ read_layer_block (FILE     *f,
   long block_start, sub_block_start, channel_start;
   gint sub_id;
   guint32 sub_init_len, sub_total_len;
-  gchar *name;
+  gchar *name = NULL;
   guint16 namelen;
   guchar type, opacity, blend_mode, visibility, transparency_protected;
   guchar link_group_id, mask_linked, mask_disabled;
@@ -1044,16 +1026,12 @@ read_layer_block (FILE     *f,
       /* Read the layer sub-block header */
       sub_id = read_block_header (f, &sub_init_len, &sub_total_len);
       if (sub_id == -1)
-	{
-	  gimp_image_delete (image_ID);
-	  return -1;
-	}
+        return -1;
+
       if (sub_id != PSP_LAYER_BLOCK)
 	{
 	  g_message ("Invalid layer sub-block %s, should be LAYER",
 		     block_name (sub_id));
-	  fclose (f);
-	  gimp_image_delete (image_ID);
 	  return -1;
 	}
 
@@ -1084,10 +1062,10 @@ read_layer_block (FILE     *f,
 	      || fread (&channel_count, 2, 1, f) < 1)
 	    {
 	      g_message ("Error reading layer information chunk");
-	      fclose (f);
-	      gimp_image_delete (image_ID);
+              g_free (name);
 	      return -1;
 	    }
+
 	  name[namelen] = 0;
 	  type = PSP_LAYER_NORMAL; /* ??? */
 	}
@@ -1095,6 +1073,7 @@ read_layer_block (FILE     *f,
 	{
 	  name = g_malloc (257);
 	  name[256] = 0;
+
 	  if (fread (name, 256, 1, f) < 1
 	      || fread (&type, 1, 1, f) < 1
 	      || fread (&image_rect, 16, 1, f) < 1
@@ -1114,8 +1093,6 @@ read_layer_block (FILE     *f,
 	    {
 	      g_message ("Error reading layer information chunk");
 	      g_free (name);
-	      fclose (f);
-	      gimp_image_delete (image_ID);
 	      return -1;
 	    }
 	}
@@ -1148,8 +1125,6 @@ read_layer_block (FILE     *f,
           || ((width / 256) * (height / 256) >= 8192))       /* w * h < 2^29 */
         {
           g_message ("Invalid layer dimensions: %dx%d", width, height);
-          fclose (f);
-          gimp_image_delete (image_ID);
           return -1;
         }
 
@@ -1201,8 +1176,6 @@ read_layer_block (FILE     *f,
       if (layer_ID == -1)
 	{
 	  g_message ("Error creating layer");
-	  fclose (f);
-	  gimp_image_delete (image_ID);
 	  return -1;
 	}
 
@@ -1222,16 +1195,17 @@ read_layer_block (FILE     *f,
       if (major < 4)
 	if (try_fseek (f, sub_block_start + sub_init_len, SEEK_SET) < 0)
 	  {
-	    gimp_image_delete (image_ID);
 	    return -1;
 	  }
 
       pixel = g_malloc0 (height * width * bytespp);
       if (null_layer)
-	pixels = NULL;
+        {
+          pixels = NULL;
+        }
       else
 	{
-	  pixels = g_new(guchar *, height);
+	  pixels = g_new (guchar *, height);
 	  for (i = 0; i < height; i++)
 	    pixels[i] = pixel + width * bytespp * i;
 	}
@@ -1257,8 +1231,6 @@ read_layer_block (FILE     *f,
 	    {
 	      g_message ("Invalid layer sub-block %s, should be CHANNEL",
 			 block_name (sub_id));
-	      fclose (f);
-	      gimp_image_delete (image_ID);
 	      return -1;
 	    }
 
@@ -1273,8 +1245,6 @@ read_layer_block (FILE     *f,
 	      || fread (&channel_type, 2, 1, f) < 1)
 	    {
 	      g_message ("Error reading channel information chunk");
-	      fclose (f);
-	      gimp_image_delete (image_ID);
 	      return -1;
 	    }
 
@@ -1287,8 +1257,6 @@ read_layer_block (FILE     *f,
 	    {
 	      g_message ("Invalid bitmap type %d in channel information chunk",
 			 bitmap_type);
-	      fclose (f);
-	      gimp_image_delete (image_ID);
 	      return -1;
 	    }
 
@@ -1296,8 +1264,6 @@ read_layer_block (FILE     *f,
 	    {
 	      g_message ("Invalid channel type %d in channel information chunk",
 			 channel_type);
-	      fclose (f);
-	      gimp_image_delete (image_ID);
 	      return -1;
 	    }
 
@@ -1315,7 +1281,6 @@ read_layer_block (FILE     *f,
 	  if (major < 4)
 	    if (try_fseek (f, channel_start + channel_init_len, SEEK_SET) < 0)
 	      {
-		gimp_image_delete (image_ID);
 		return -1;
 	      }
 
@@ -1323,13 +1288,11 @@ read_layer_block (FILE     *f,
 	    if (read_channel_data (f, ia, pixels, bytespp,
 				   offset, drawable, compressed_len) == -1)
 	      {
-		gimp_image_delete (image_ID);
 		return -1;
 	      }
 
 	  if (try_fseek (f, channel_start + channel_total_len, SEEK_SET) < 0)
 	    {
-	      gimp_image_delete (image_ID);
 	      return -1;
 	    }
 	}
@@ -1342,9 +1305,9 @@ read_layer_block (FILE     *f,
       g_free (pixels);
       g_free (pixel);
     }
+
   if (try_fseek (f, block_start + total_len, SEEK_SET) < 0)
     {
-      gimp_image_delete (image_ID);
       return -1;
     }
 
@@ -1378,10 +1341,9 @@ read_tube_block (FILE     *f,
       || fread (&selection_mode, 4, 1, f) < 1)
     {
       g_message ("Error reading tube data chunk");
-      fclose (f);
-      gimp_image_delete (image_ID);
       return -1;
     }
+
   name[513] = 0;
   version = GUINT16_FROM_LE (version);
   params.step = GUINT32_FROM_LE (step_size);
@@ -1475,18 +1437,18 @@ load_image (const gchar *filename)
       || fread (&minor, 2, 1, f) < 1)
     {
       g_message ("Error reading file header");
-      fclose (f);
-      return -1;
+      goto error;
     }
+
   if (memcmp (buf, "Paint Shop Pro Image File\n\032\0\0\0\0\0", 32) != 0)
     {
       g_message ("Incorrect file signature");
-      fclose (f);
-      return -1;
+      goto error;
     }
 
   major = GUINT16_FROM_LE (major);
   minor = GUINT16_FROM_LE (minor);
+
   /* I only have the documentation for file format version 3.0,
    * but PSP 6 writes version 4.0. Let's hope it's backwards compatible.
    * Earlier versions probably don't have all the fields I expect
@@ -1497,8 +1459,7 @@ load_image (const gchar *filename)
       g_message ("Unsupported PSP file format version "
 		 "%d.%d, only knows 3.0 (and later?)",
 		 major, minor);
-      fclose (f);
-      return -1;
+      goto error;
     }
   else if (major == 3)
     ; /* OK */
@@ -1511,8 +1472,7 @@ load_image (const gchar *filename)
     {
       g_message ("Unsupported PSP file format version %d.%d",
 		 major, minor);
-      fclose (f);
-      return -1;
+      goto error;
     }
 
   /* Read all the blocks */
@@ -1530,12 +1490,13 @@ load_image (const gchar *filename)
 	  if (block_number != 0)
 	    {
 	      g_message ("Duplicate General Image Attributes block");
-	      fclose (f);
-	      return -1;
+              goto error;
 	    }
 	  if (read_general_image_attribute_block (f, block_init_len,
 						  block_total_len, &ia) == -1)
-	    return -1;
+            {
+              goto error;
+            }
 
 	  IFDBG(2) g_message ("%d dpi %dx%d %s",
 			      (int) ia.resolution,
@@ -1545,7 +1506,9 @@ load_image (const gchar *filename)
 	  image_ID = gimp_image_new (ia.width, ia.height,
 				     ia.greyscale ? GIMP_GRAY : GIMP_RGB);
 	  if (image_ID == -1)
-	    return -1;
+            {
+              goto error;
+            }
 
 	  gimp_image_set_filename (image_ID, filename);
 
@@ -1556,15 +1519,14 @@ load_image (const gchar *filename)
 	  if (block_number == 0)
 	    {
 	      g_message ("Missing General Image Attributes block");
-	      fclose (f);
-	      gimp_image_delete (image_ID);
-	      return -1;
+              goto error;
 	    }
+
 	  switch (id)
 	    {
 	    case PSP_CREATOR_BLOCK:
 	      if (read_creator_block (f, image_ID, block_total_len, &ia) == -1)
-		return -1;
+                goto error;
 	      break;
 
 	    case PSP_COLOR_BLOCK:
@@ -1572,7 +1534,7 @@ load_image (const gchar *filename)
 
 	    case PSP_LAYER_START_BLOCK:
 	      if (read_layer_block (f, image_ID, block_total_len, &ia) == -1)
-		return -1;
+		goto error;
 	      break;
 
 	    case PSP_SELECTION_BLOCK:
@@ -1589,7 +1551,7 @@ load_image (const gchar *filename)
 
 	    case PSP_TUBE_BLOCK:
 	      if (read_tube_block (f, image_ID, block_total_len, &ia) == -1)
-		return -1;
+		goto error;
 	      break;
 
 	    case PSP_LAYER_BLOCK:
@@ -1610,17 +1572,17 @@ load_image (const gchar *filename)
 	break;
 
       if (try_fseek (f, block_start + block_total_len, SEEK_SET) < 0)
-	{
-	  gimp_image_delete (image_ID);
-	  return -1;
-	}
+        goto error;
+
       block_number++;
     }
 
   if (id == -1)
     {
+    error:
       fclose (f);
-      gimp_image_delete (image_ID);
+      if (image_ID != -1)
+        gimp_image_delete (image_ID);
       return -1;
     }
 
