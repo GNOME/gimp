@@ -482,7 +482,6 @@ read_block_header (FILE    *f,
       || (major < 4 && fread (total_len, 4, 1, f) < 1))
     {
       g_message ("Error reading block header");
-      fclose (f);
       return -1;
     }
   if (memcmp (buf, "~BK\0", 4) != 0)
@@ -491,8 +490,6 @@ read_block_header (FILE    *f,
 	g_message ("Invalid block header at %ld", header_start);
       else
 	g_message ("Invalid block header");
-
-      fclose (f);
       return -1;
     }
 
@@ -527,7 +524,6 @@ read_general_image_attribute_block (FILE     *f,
   if (init_len < 38 || total_len < 38)
     {
       g_message ("Invalid general image attribute chunk size");
-      fclose (f);
       return -1;
     }
 
@@ -547,7 +543,6 @@ read_general_image_attribute_block (FILE     *f,
       || fread (&ia->layer_count, 2, 1, f) < 1)
     {
       g_message ("Error reading general image attribute block");
-      fclose (f);
       return -1;
     }
   ia->width = GUINT32_FROM_LE (ia->width);
@@ -562,7 +557,6 @@ read_general_image_attribute_block (FILE     *f,
   if (ia->compression > PSP_COMP_LZ77)
     {
       g_message ("Unknown compression type %d", ia->compression);
-      fclose (f);
       return -1;
     }
 
@@ -570,7 +564,6 @@ read_general_image_attribute_block (FILE     *f,
   if (ia->depth != 24)
     {
       g_message ("Unsupported bit depth %d", ia->depth);
-      fclose (f);
       return -1;
     }
 
@@ -965,7 +958,6 @@ read_channel_data (FILE       *f,
       if (inflateInit (&zstream) != Z_OK)
 	{
 	  g_message ("zlib error");
-	  fclose (f);
 	  return -1;
 	}
       if (bytespp == 1)
@@ -980,7 +972,6 @@ read_channel_data (FILE       *f,
 	{
 	  g_message ("zlib error");
 	  inflateEnd (&zstream);
-	  fclose (f);
 	  return -1;
 	}
       inflateEnd (&zstream);
@@ -1449,15 +1440,13 @@ load_image (const gchar *filename)
       || fread (&minor, 2, 1, f) < 1)
     {
       g_message ("Error reading file header");
-      fclose (f);
-      return -1;
+      goto error;
     }
 
   if (memcmp (buf, "Paint Shop Pro Image File\n\032\0\0\0\0\0", 32) != 0)
     {
       g_message ("Incorrect file signature");
-      fclose (f);
-      return -1;
+      goto error;
     }
 
   major = GUINT16_FROM_LE (major);
@@ -1473,8 +1462,7 @@ load_image (const gchar *filename)
       g_message ("Unsupported PSP file format version "
 		 "%d.%d, only knows 3.0 (and later?)",
 		 major, minor);
-      fclose (f);
-      return -1;
+      goto error;
     }
   else if (major == 3)
     ; /* OK */
@@ -1487,8 +1475,7 @@ load_image (const gchar *filename)
     {
       g_message ("Unsupported PSP file format version %d.%d",
 		 major, minor);
-      fclose (f);
-      return -1;
+      goto error;
     }
 
   /* Read all the blocks */
@@ -1506,12 +1493,13 @@ load_image (const gchar *filename)
 	  if (block_number != 0)
 	    {
 	      g_message ("Duplicate General Image Attributes block");
-	      fclose (f);
-	      return -1;
+              goto error;
 	    }
 	  if (read_general_image_attribute_block (f, block_init_len,
 						  block_total_len, &ia) == -1)
-	    return -1;
+            {
+              goto error;
+            }
 
 	  IFDBG(2) g_message ("%d dpi %dx%d %s",
 			      (int) ia.resolution,
@@ -1522,8 +1510,7 @@ load_image (const gchar *filename)
 				     ia.greyscale ? GIMP_GRAY : GIMP_RGB);
 	  if (image_ID == -1)
             {
-              fclose (f);
-              return -1;
+              goto error;
             }
 
 	  gimp_image_set_filename (image_ID, filename);
@@ -1597,7 +1584,8 @@ load_image (const gchar *filename)
     {
     error:
       fclose (f);
-      gimp_image_delete (image_ID);
+      if (image_ID != -1)
+        gimp_image_delete (image_ID);
       return -1;
     }
 
