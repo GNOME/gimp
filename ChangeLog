@@ -1,5 +1,12 @@
 2007-07-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/channel_mixer.c: minor layout tweak.
+
+	* libgimpwidgets/gimppreviewarea.c (gimp_preview_area_set_colormap):
+	clear the colormap to all zeros before setting the new colors.
+
+2007-07-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/psd-load.c 
 	* plug-ins/common/psd-save.c: use UTF-16 encoding instead of UCS-2
 	for layer names (bug #445316).

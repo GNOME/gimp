@@ -1638,7 +1638,9 @@ gimp_preview_area_set_colormap (GimpPreviewArea *area,
 
   if (num_colors > 0)
     {
-      if (! area->colormap)
+      if (area->colormap)
+        memset (area->colormap, 0, 3 * 256);
+      else
         area->colormap = g_new0 (guchar, 3 * 256);
 
       memcpy (area->colormap, colormap, 3 * num_colors);

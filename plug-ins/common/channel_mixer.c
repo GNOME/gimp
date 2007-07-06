@@ -440,6 +440,7 @@ cm_dialog (CmParamsType *mix,
 {
   GtkWidget *dialog;
   GtkWidget *main_vbox;
+  GtkWidget *vbox;
   GtkWidget *frame;
   GtkWidget *hbox;
   GtkWidget *button;
@@ -625,12 +626,16 @@ cm_dialog (CmParamsType *mix,
                     G_CALLBACK (cm_blue_scale_callback),
                     mix);
 
+  vbox = gtk_vbox_new (6, FALSE);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
+  gtk_widget_show (vbox);
+
   /*  The monochrome toggle  */
   mix->monochrome_toggle =
     gtk_check_button_new_with_mnemonic (_("_Monochrome"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (mix->monochrome_toggle),
                                 mix->monochrome);
-  gtk_box_pack_start (GTK_BOX (main_vbox), mix->monochrome_toggle,
+  gtk_box_pack_start (GTK_BOX (vbox), mix->monochrome_toggle,
                       FALSE, FALSE, 0);
   gtk_widget_show (mix->monochrome_toggle);
 
@@ -644,7 +649,7 @@ cm_dialog (CmParamsType *mix,
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
                                 (mix->preserve_luminosity_toggle),
                                 mix->preserve_luminosity);
-  gtk_box_pack_start (GTK_BOX (main_vbox), mix->preserve_luminosity_toggle,
+  gtk_box_pack_start (GTK_BOX (vbox), mix->preserve_luminosity_toggle,
                       FALSE, FALSE, 0);
   gtk_widget_show (mix->preserve_luminosity_toggle);
 
