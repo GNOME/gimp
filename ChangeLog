@@ -1,5 +1,10 @@
 2007-07-06  Mukund Sivaraman  <muks@mukund.org>
 
+	* plug-ins/common/sunras.c: validate size values read from files
+	before using them to allocate memory.
+
+2007-07-06  Mukund Sivaraman  <muks@mukund.org>
+
 	* plug-ins/common/psd-load.c: validate size values read from files
 	before using them to allocate memory.
 

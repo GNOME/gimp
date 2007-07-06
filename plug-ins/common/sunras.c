@@ -398,6 +398,11 @@ load_image (const gchar *filename)
       return (-1);
     }
 
+  if ((sunhdr.l_ras_maplength < 0) || (sunhdr.l_ras_maplength > (256 * 3)))
+    {
+      g_error ("Map lengths greater than 256 entries are unsupported by GIMP.");
+    }
+
   /* Is there a RGB colourmap ? */
   if ((sunhdr.l_ras_maptype == 1) && (sunhdr.l_ras_maplength > 0))
     {
