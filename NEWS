@@ -9,8 +9,11 @@ released as GIMP version 2.4.
 Bugs fixed in GIMP 2.2.16
 =========================
 
+- improved input value validation in several file plug-ins (bug #453973)
+- improved handling of corrupt or invalid XCF files
 - guard against integer overflows in several file plug-ins (bug #451379)
 - fixed handling of background alpha channel in XCF files (bug #443097)
+- improved forward compatibility of the config parser
 - fixed crash when previewing some animated brushes (bug #446005)
 
 
