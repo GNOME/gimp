@@ -1,3 +1,10 @@
+2007-07-06  Sven Neumann  <sven@gimp.org>
+
+	Merged from trunk (patch written by Mukund):
+
+	* plug-ins/common/psd.c: validate size values read from files
+	before using them to allocate memory.
+
 2007-07-05  Raphaël Quinet  <raphael@gimp.org>
 
 	Merged several patches from trunk (written by Sven and myself):
