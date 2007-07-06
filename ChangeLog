@@ -1,3 +1,11 @@
+2007-07-06  Sven Neumann  <sven@gimp.org>
+
+	* app/xcf/xcf-load.c (xcf_load_image): marked two error messages
+	as translatable strings.
+
+	* libgimpbase/gimputils.c (gimp_any_to_utf8): insert a blank
+	before the text that marks the string as invalid.
+
 2007-07-06  Mukund Sivaraman  <muks@mukund.org>
 
 	* plug-ins/common/sunras.c: validate size values read from files

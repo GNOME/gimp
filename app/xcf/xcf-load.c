@@ -271,8 +271,8 @@ xcf_load_image (Gimp    *gimp,
     goto hard_error;
 
   gimp_message (gimp, G_OBJECT (info->progress), GIMP_MESSAGE_WARNING,
-                "XCF: This file is corrupt!  I have loaded as much\n"
-                "of it as I can, but it is incomplete.");
+                _("This XCF file is corrupt!  I have loaded as much "
+                  "of it as I can, but it is incomplete."));
 
   gimp_image_undo_enable (image);
 
@@ -280,8 +280,8 @@ xcf_load_image (Gimp    *gimp,
 
  hard_error:
   gimp_message (gimp, G_OBJECT (info->progress), GIMP_MESSAGE_ERROR,
-                "XCF: This file is corrupt!  I could not even\n"
-                "salvage any partial image data from it.");
+                _("This XCF file is corrupt!  I could not even "
+                  "salvage any partial image data from it."));
 
   g_object_unref (image);
 
@@ -363,7 +363,7 @@ xcf_load_image_props (XcfInfo   *info,
               {
                 gimp_message (info->gimp, G_OBJECT (info->progress),
                               GIMP_MESSAGE_ERROR,
-                              "unknown compression type: %d",
+                              "Unknown compression type: %d",
                               (int) compression);
                 return FALSE;
               }
@@ -403,7 +403,7 @@ xcf_load_image_props (XcfInfo   *info,
                   default:
                     gimp_message (info->gimp, G_OBJECT (info->progress),
                                   GIMP_MESSAGE_WARNING,
-                                  "guide orientation out of range in XCF file");
+                                  "Guide orientation out of range in XCF file");
                     continue;
                   }
               }

@@ -167,7 +167,7 @@ gimp_any_to_utf8 (const gchar  *str,
           gchar *tmp;
 
           tmp = g_strndup (str, start_invalid - str);
-          utf8 = g_strconcat (tmp, _("(invalid UTF-8 string)"), NULL);
+          utf8 = g_strconcat (tmp, " ", _("(invalid UTF-8 string)"), NULL);
           g_free (tmp);
         }
       else
@@ -394,7 +394,8 @@ gimp_enum_get_desc (GEnumClass *enum_class,
 
   g_return_val_if_fail (G_IS_ENUM_CLASS (enum_class), NULL);
 
-  value_desc = gimp_enum_get_value_descriptions (G_TYPE_FROM_CLASS (enum_class));
+  value_desc =
+    gimp_enum_get_value_descriptions (G_TYPE_FROM_CLASS (enum_class));
 
   if (value_desc)
     {
@@ -557,7 +558,8 @@ gimp_flags_get_first_desc (GFlagsClass *flags_class,
 
   g_return_val_if_fail (G_IS_FLAGS_CLASS (flags_class), NULL);
 
-  value_desc = gimp_flags_get_value_descriptions (G_TYPE_FROM_CLASS (flags_class));
+  value_desc =
+    gimp_flags_get_value_descriptions (G_TYPE_FROM_CLASS (flags_class));
 
   if (value_desc)
     {
