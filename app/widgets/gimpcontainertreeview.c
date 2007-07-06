@@ -537,17 +537,15 @@ gimp_container_tree_view_remove_item (GimpContainerView *view,
     {
       gtk_list_store_remove (GTK_LIST_STORE (tree_view->model), iter);
 
-#ifdef __GNUC__
-#warning FIXME: remove this hack as soon as bug #149906 is fixed
-#endif
-      /*  if the store is empty after this remove, clear out renderers
+      /*  If the store is empty after this remove, clear out renderers
        *  from all cells so they don't keep refing the viewables
+       *  (see bug #149906).
        */
       if (! gtk_tree_model_iter_n_children (tree_view->model, NULL))
         {
           GList *list;
 
-          for (list = tree_view->renderer_cells; list; list = g_list_next (list))
+          for (list = tree_view->renderer_cells; list; list = list->next)
             g_object_set (list->data, "renderer", NULL, NULL);
         }
     }
@@ -691,17 +689,14 @@ gimp_container_tree_view_clear_items (GimpContainerView *view)
 
   gtk_list_store_clear (GTK_LIST_STORE (tree_view->model));
 
-#ifdef __GNUC__
-#warning FIXME: remove this hack as soon as bug #149906 is fixed
-#endif
-  /*  clear out renderers from all cells so they don't keep refing the
-   *  viewables
+  /*  Clear out renderers from all cells so they don't keep refing the
+   *  viewables (see bug #149906).
    */
   if (! gtk_tree_model_iter_n_children (tree_view->model, NULL))
     {
       GList *list;
 
-      for (list = tree_view->renderer_cells; list; list = g_list_next (list))
+      for (list = tree_view->renderer_cells; list; list = list->next)
         g_object_set (list->data, "renderer", NULL, NULL);
     }
 
@@ -779,8 +774,6 @@ gimp_container_tree_view_name_canceled (GtkCellRendererText   *cell,
 {
   GtkTreeIter iter;
 
-  g_print ("editing canceled\n");
-
   if (gtk_tree_selection_get_selected (tree_view->selection, NULL, &iter))
     {
       GimpViewRenderer *renderer;
@@ -791,8 +784,6 @@ gimp_container_tree_view_name_canceled (GtkCellRendererText   *cell,
                           -1);
 
       name = gimp_viewable_get_description (renderer->viewable, NULL);
-
-      g_print ("restoring '%s'\n", name);
 
       gtk_list_store_set (GTK_LIST_STORE (tree_view->model), &iter,
                           tree_view->model_column_name, name,

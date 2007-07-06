@@ -1,5 +1,13 @@
 2007-07-06  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcontainertreeview.c
+	(gimp_container_tree_view_name_canceled): removed debug output.
+	(gimp_container_tree_view_clear_items)
+	(gimp_container_tree_view_remove_item): removed warning; the bug
+	this warning referred to has been closed as WONTFIX.
+
+2007-07-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/psd-load.c (do_layer_record): applied part of a
 	patch from John Marshall that fixes handling of the short layer
 	name (bug #445316).
