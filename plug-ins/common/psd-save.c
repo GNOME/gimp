@@ -494,17 +494,16 @@ write_datablock_luni (FILE        *fd,
 {
   if (val)
     {
-      guint32 count;
-      guint32 xdBlockSize;
-      gsize   numbytes;
-      gchar  *luniName;
+      guint32    count;
+      guint32    xdBlockSize;
+      glong      numchars;
+      gunichar2 *luniName;
 
-      luniName = g_convert_with_fallback (val, -1, "UCS-2", "UTF-8",
-                                          NULL, NULL, &numbytes, NULL);
+      luniName = g_utf8_to_utf16 (val, -1, NULL, &numchars, NULL);
 
       if (luniName)
         {
-          guchar len = (numbytes > 510) ? 255 : numbytes / 2;
+          guchar len = MIN (numchars, 255);
 
           /* Only pad to even num of chars */
           if( len % 2 )
@@ -519,7 +518,7 @@ write_datablock_luni (FILE        *fd,
           write_gint32 (fd, xdBlockSize, "luni xdb size");
           write_gint32 (fd, len, "luni xdb pascal string");
 
-          for (count = 0; count < len * 2; count += 2)
+          for (count = 0; count < len; count++)
             write_gint16 (fd, luniName[count], "luni xdb pascal string");
 
           /* Pad to an even number of chars */

@@ -3100,13 +3100,12 @@ getunicodepascalstring (FILE        *fd,
   tmpunichunk = g_new (gunichar2, len + 1);
 
   /* Slower but necessary to get correct endianness */
-  for (count=0; count < len; count++)
+  for (count = 0; count < len; count++)
     tmpunichunk[count] = getgint16 (fd, why);
 
-  tmpunichunk[len]=0;
+  tmpunichunk[len] = 0;
 
-  tmpchunk = g_convert ((gchar *) tmpunichunk, len * 2, "UTF-8", "UCS-2",
-                        NULL, NULL, NULL);
+  tmpchunk = g_utf16_to_utf8 (tmpunichunk, len, NULL, NULL, NULL);
 
   g_free (tmpunichunk);
 

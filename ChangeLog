@@ -1,5 +1,11 @@
 2007-07-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/psd-load.c 
+	* plug-ins/common/psd-save.c: use UTF-16 encoding instead of UCS-2
+	for layer names (bug #445316).
+
+2007-07-06  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontainertreeview.c
 	(gimp_container_tree_view_name_canceled): removed debug output.
 	(gimp_container_tree_view_clear_items)
