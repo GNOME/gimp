@@ -1,5 +1,11 @@
 2007-07-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/psd-load.c (do_layer_record): applied part of a
+	patch from John Marshall that fixes handling of the short layer
+	name (bug #445316).
+
+2007-07-06  Sven Neumann  <sven@gimp.org>
+
 	* app/xcf/xcf-load.c (xcf_load_image): marked two error messages
 	as translatable strings.
 

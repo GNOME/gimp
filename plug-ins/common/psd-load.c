@@ -1225,7 +1225,6 @@ do_layer_record (FILE    *fd,
     {
       (*offset) += strlen (layer->name);
       IFDBG printf("\t\t\t\t\t\tLAYER NAME: '%s'\n", layer->name);
-      layer->name = sanitise_string (layer->name);
 
       /* Layer name string lengths are padded to be divisible by 4 */
       numpadchars = 4-((1+strlen(layer->name)) % 4);
@@ -1233,10 +1232,12 @@ do_layer_record (FILE    *fd,
         numpadchars = 0;
 
       if (numpadchars)
-      {
-        throwchunk (numpadchars, fd, "layer record extra data block throw");
-        (*offset) += numpadchars;
-      }
+        {
+          throwchunk (numpadchars, fd, "layer record extra data block throw");
+          (*offset) += numpadchars;
+        }
+
+      layer->name = sanitise_string (layer->name);
     }
   else
     {
