@@ -1,5 +1,9 @@
 2007-07-06  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.2.16 release.
+
+2007-07-06  Sven Neumann  <sven@gimp.org>
+
 	Merged from trunk (patches written by Mukund):
 
 	* plug-ins/common/psd.c
