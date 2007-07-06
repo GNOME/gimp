@@ -1,8 +1,9 @@
 2007-07-06  Sven Neumann  <sven@gimp.org>
 
-	Merged from trunk (patch written by Mukund):
+	Merged from trunk (patches written by Mukund):
 
-	* plug-ins/common/psd.c: validate size values read from files
+	* plug-ins/common/psd.c
+	* plug-ins/common/sunras.c: validate size values read from files
 	before using them to allocate memory.
 
 2007-07-05  Raphaël Quinet  <raphael@gimp.org>
