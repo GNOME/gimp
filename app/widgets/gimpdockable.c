@@ -1005,12 +1005,23 @@ gimp_dockable_show_menu (GimpDockable *dockable)
         gtk_ui_manager_get_widget (GTK_UI_MANAGER (dialog_ui_manager),
                                    dialog_ui_path);
 
+      if (! child_menu_widget)
+        {
+          g_warning ("%s: UI manager '%s' has now widget at path '%s'",
+                     G_STRFUNC, dialog_ui_manager->name, dialog_ui_path);
+          return FALSE;
+        }
+
       child_menu_action =
         gtk_ui_manager_get_action (GTK_UI_MANAGER (dialog_ui_manager),
                                    dialog_ui_path);
 
-      if (! child_menu_widget || ! child_menu_action)
-        return FALSE;
+      if (! child_menu_action)
+        {
+          g_warning ("%s: UI manager '%s' has no action at path '%s'",
+                     G_STRFUNC, dialog_ui_manager->name, dialog_ui_path);
+          return FALSE;
+        }
 
       g_object_get (child_menu_action,
                     "label", &label,

@@ -1,3 +1,11 @@
+2007-07-08  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/select-actions.c (select_actions): renamed action
+	"selection-editor-popup" to "selection-popup". Fixes bug #454364.
+
+	* app/widgets/gimpdockable.c (gimp_dockable_show_menu): warn when
+	above bug happens instead of failing silently.
+
 2007-07-06  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/channel_mixer.c: minor layout tweak.
