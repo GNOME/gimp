@@ -349,6 +349,8 @@ run (const gchar      *name,
 
 #endif /* HAVE_EXIF */
 
+      load_defaults();  /* erase default parameters if defaults are recorded */
+
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:

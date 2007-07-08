@@ -1,3 +1,10 @@
+2007-07-08  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/jpeg/jpeg.c
+	* plug-ins/jpeg/jpeg-save.[ch]: applied patch from Etienne which
+	adds configurable default parameters similar to the PNG save plug-in.
+	Addresses bug #63610.
+
 2007-07-08  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/select-actions.c (select_actions): renamed action
