@@ -1,6 +1,6 @@
-# translation of es.po to Spanish
+# translation of gimp-libgimp.HEAD.po to Spanish
 # Spanish translation for gimp-libgimp 1.3.X.
-# Copyright © 1998-2000,2003, 2006 Free Software Foundation, Inc.
+# Copyright © 1998-2000,2003, 2006, 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 # Rodrigo Sancho Senosiain <ruy_ikari@bigfoot.com>
 #
@@ -9,22 +9,22 @@
 # Francisco Vila <francisco.vila@hispalinux.es>, 2005, 2006, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: pan2\n"
+"Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-19 01:58+0100\n"
-"PO-Revision-Date: 2007-02-15 12:07+0100\n"
-"Last-Translator: Francisco Vila Doncel <francisco.vila@hispalinux.es>\n"
+"POT-Creation-Date: 2007-05-08 03:37+0100\n"
+"PO-Revision-Date: 2007-07-06 12:17+0200\n"
+"Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: gettext po mode for emacs\n"
+"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../libgimp/gimpbrushselectbutton.c:170
 msgid "Brush Selection"
-msgstr "_Selección de pincel"
+msgstr "Selección de pincel"
 
 #: ../libgimp/gimpbrushselectbutton.c:911
 #: ../libgimp/gimppatternselectbutton.c:712
@@ -32,9 +32,9 @@ msgid "_Browse..."
 msgstr "E_xaminar..."
 
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can't handle layers"
-msgstr "%s no puede manejar capas"
+msgstr "El complemento %s no puede manejar capas"
 
 #: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
@@ -42,14 +42,14 @@ msgid "Merge Visible Layers"
 msgstr "Combinar las capas visibles"
 
 #: ../libgimp/gimpexport.c:226
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "%s no puede manejar desplazamientos de capas, tamaño u opacidad"
+msgstr "El complemento %s no puede manejar desplazamientos de capas, tamaño ni opacidad"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "%s sólo puede manejar capas como fotogramas de animación"
+msgstr "El complemento %s sólo puede manejar capas como fotogramas de animación"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
@@ -61,23 +61,23 @@ msgid "Flatten Image"
 msgstr "Aplanar imagen"
 
 #: ../libgimp/gimpexport.c:262
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can't handle transparency"
-msgstr "%s no puede manejar transparencia"
+msgstr "El complemento %s no puede manejar transparencia"
 
 #: ../libgimp/gimpexport.c:271
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can't handle layer masks"
-msgstr "%s no puede manejar máscaras de capas"
+msgstr "El complemento %s no puede manejar máscaras de capa"
 
 #: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
 msgstr "Aplicar las máscaras de capa"
 
 #: ../libgimp/gimpexport.c:280
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr "%s sólo puede manejar imágenes RGB"
+msgstr "El complemento %s sólo puede manejar imágenes RGB"
 
 #: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
@@ -85,9 +85,9 @@ msgid "Convert to RGB"
 msgstr "Convertir a RGB"
 
 #: ../libgimp/gimpexport.c:289
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "%s sólo puede manejar imágenes en tonos de gris"
+msgstr "El complemento %s sólo puede manejar imágenes en tonos de gris"
 
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
@@ -95,9 +95,9 @@ msgid "Convert to Grayscale"
 msgstr "Convertir a tonos de gris"
 
 #: ../libgimp/gimpexport.c:298
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can only handle indexed images"
-msgstr "%s sólo puede manejar imágenes indexadas"
+msgstr "El complemento %s sólo puede manejar imágenes indexadas"
 
 #: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
 #: ../libgimp/gimpexport.c:338
@@ -109,10 +109,9 @@ msgstr ""
 "(Hágalo manualmente para afinar el resultado)"
 
 #: ../libgimp/gimpexport.c:308
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr ""
-"%s sólo puede manejar imágenes de mapas de bits (de dos colores) indexados"
+msgstr "El complemento %s sólo puede manejar imágenes de mapas de bits indexados (de dos colores)"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -123,24 +122,24 @@ msgstr ""
 "(Hágalo manualmente para afinar el resultado)"
 
 #: ../libgimp/gimpexport.c:318
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "%s sólo puede manejar imágenes RGB o tonos de gris"
+msgstr "El complemento %s sólo puede manejar imágenes RGB o de tonos de gris"
 
 #: ../libgimp/gimpexport.c:327
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
-msgstr "%s sólo puede manejar imágenes RGB o indexadas"
+msgstr "El complemento %s sólo puede manejar imágenes RGB o indexadas"
 
 #: ../libgimp/gimpexport.c:337
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "%s sólo puede manejar imágenes indexadas o tonos de gris"
+msgstr "El complemento %s sólo puede manejar imágenes indexadas o de tonos de gris"
 
 #: ../libgimp/gimpexport.c:348
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in needs an alpha channel"
-msgstr "%s necesita un canal alfa"
+msgstr "El complemento %s necesita un canal alfa"
 
 #: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
@@ -467,12 +466,12 @@ msgid "Black only"
 msgstr "Sólo negro"
 
 #: ../libgimpbase/gimpbaseenums.c:263
-msgid "Image source"
-msgstr "Imagen origen"
+msgid "Image"
+msgstr "Imagen"
 
 #: ../libgimpbase/gimpbaseenums.c:264
-msgid "Pattern source"
-msgstr "Patrón origen"
+msgid "Pattern"
+msgstr "Patrón"
 
 #: ../libgimpbase/gimpbaseenums.c:293
 msgid "Lightness"
@@ -614,9 +613,8 @@ msgid "Cubic"
 msgstr "Cúbica"
 
 #: ../libgimpbase/gimpbaseenums.c:565
-#, fuzzy
 msgid "Sinc (Lanczos3)"
-msgstr "Lanczos"
+msgstr "Sinc (Lanczos3)"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -672,12 +670,12 @@ msgid "Highlights"
 msgstr "Puntos de luz"
 
 #: ../libgimpbase/gimpbaseenums.c:744
-msgid "Forward"
-msgstr "Hacia adelante"
+msgid "Normal (Forward)"
+msgstr "Normal (hacia adelante)"
 
 #: ../libgimpbase/gimpbaseenums.c:745
-msgid "Backward"
-msgstr "Hacia atrás"
+msgid "Corrective (Backward)"
+msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:775
 msgid "Adjust"
@@ -1032,15 +1030,15 @@ msgstr "Seleccione carpeta"
 msgid "Select File"
 msgstr "Seleccione archivo"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:202
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Kilobytes"
 msgstr "Kilobytes"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:203
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Megabytes"
 msgstr "Megabytes"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libgimpwidgets/gimpmemsizeentry.c:206
 msgid "Gigabytes"
 msgstr "Gigabytes"
 
@@ -1120,12 +1118,6 @@ msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Este campo de introducción de texto está limitado a %d carácter."
 msgstr[1] "Este campo de introducción de texto está limitado a %d caracteres."
-
-# Debe ir en minúsculas por las reglas de estilo
-#: ../libgimpwidgets/gimpresolutionentry.c:382
-#, c-format
-msgid "pixels/%s"
-msgstr "píxeles/%s"
 
 # Esto NO es anchura (serrador)
 #: ../libgimpwidgets/gimpstock.c:113
@@ -1354,8 +1346,7 @@ msgstr "C_iclos de contraste:"
 
 #: ../modules/cdisplay_lcms.c:116
 msgid "Color management display filter using ICC color profiles"
-msgstr ""
-"Filtro de gestión del color de la pantalla que utiliza perfiles de color ICC"
+msgstr "Filtro de gestión del color de la pantalla que utiliza perfiles de color ICC"
 
 #: ../modules/cdisplay_lcms.c:184
 msgid "Color Management"
@@ -1573,22 +1564,20 @@ msgstr "Botón rueda arriba"
 #: ../modules/controller_linux_input.c:90
 #: ../modules/controller_dx_dinput.c:469
 msgid "X Move Left"
-msgstr "Mover a la izquierda en X"
+msgstr "Moverse a la izquierda en X"
 
 #: ../modules/controller_linux_input.c:91
 #: ../modules/controller_dx_dinput.c:472
 msgid "X Move Right"
-msgstr "Mover a la derecha en X"
+msgstr "Moverse a la derecha en X"
 
 #: ../modules/controller_linux_input.c:92
-#: ../modules/controller_dx_dinput.c:478
-msgid "Y Move Away"
-msgstr "Alejar en Y"
+msgid "Y Move Forward"
+msgstr "Moverse adelante en Y"
 
 #: ../modules/controller_linux_input.c:93
-#: ../modules/controller_dx_dinput.c:481
-msgid "Y Move Near"
-msgstr "Acercar en Y"
+msgid "Y Move Back"
+msgstr "Moverse atrás en Y"
 
 #: ../modules/controller_linux_input.c:94
 #: ../modules/controller_dx_dinput.c:487
@@ -1601,14 +1590,12 @@ msgid "Z Move Down"
 msgstr "Bajar en Z"
 
 #: ../modules/controller_linux_input.c:97
-#: ../modules/controller_dx_dinput.c:496
-msgid "X Axis Tilt Away"
-msgstr "Bascular en el eje X para alejar"
+msgid "X Axis Tilt Forward"
+msgstr "Bascular en el eje X hacia adelante"
 
 #: ../modules/controller_linux_input.c:98
-#: ../modules/controller_dx_dinput.c:499
-msgid "X Axis Tilt Near"
-msgstr "Bascular en el eje X para acercar"
+msgid "X Axis Tilt Back"
+msgstr "Bascular en el eje X hacia atrás"
 
 #: ../modules/controller_linux_input.c:99
 #: ../modules/controller_dx_dinput.c:505
@@ -1665,8 +1652,7 @@ msgstr "Dispositivo:"
 
 #: ../modules/controller_linux_input.c:250
 msgid "The name of the device to read Linux Input events from."
-msgstr ""
-"Nombre del dispositivo desde el que leer los eventos de entrada de Linux."
+msgstr "Nombre del dispositivo desde el que leer los eventos de entrada de Linux."
 
 #: ../modules/controller_linux_input.c:261
 msgid "Linux Input"
@@ -1704,34 +1690,47 @@ msgid "End of file"
 msgstr "Fin del archivo"
 
 #: ../modules/controller_dx_dinput.c:157
-#, fuzzy
 msgid "DirectX DirectInput event controller"
-msgstr "Controlador de eventos de entrada de Linux"
+msgstr "Controlador de eventos DirectX de DirectInput"
 
 #: ../modules/controller_dx_dinput.c:228
-#, fuzzy
 msgid "The device to read DirectInput events from."
-msgstr ""
-"Nombre del dispositivo desde el que leer los eventos de entrada de Linux."
+msgstr "Nombre del dispositivo desde el que leer los eventos DirectInput"
 
 #: ../modules/controller_dx_dinput.c:237
 msgid "DirectX DirectInput"
 msgstr ""
 
 #: ../modules/controller_dx_dinput.c:446
-#, fuzzy, c-format
+#, c-format
 msgid "Button %d"
-msgstr "Botón 0"
+msgstr "Botón %d"
 
 #: ../modules/controller_dx_dinput.c:449
-#, fuzzy, c-format
+#, c-format
 msgid "Button %d Press"
-msgstr "Botón lateral"
+msgstr "Pulsar botón %d"
 
 #: ../modules/controller_dx_dinput.c:452
-#, fuzzy, c-format
+#, c-format
 msgid "Button %d Release"
-msgstr "Botón central"
+msgstr "Soltar botón %d"
+
+#: ../modules/controller_dx_dinput.c:478
+msgid "Y Move Away"
+msgstr "Alejar en Y"
+
+#: ../modules/controller_dx_dinput.c:481
+msgid "Y Move Near"
+msgstr "Acercar en Y"
+
+#: ../modules/controller_dx_dinput.c:496
+msgid "X Axis Tilt Away"
+msgstr "Bascular en el eje X para alejar"
+
+#: ../modules/controller_dx_dinput.c:499
+msgid "X Axis Tilt Near"
+msgstr "Bascular en el eje X para acercar"
 
 #: ../modules/controller_dx_dinput.c:528
 #, c-format
@@ -1759,9 +1758,8 @@ msgid "POV %d Return"
 msgstr ""
 
 #: ../modules/controller_dx_dinput.c:1111
-#, fuzzy
 msgid "DirectInput Events"
-msgstr "Eventos de entrada de Linux"
+msgstr "Eventos de DirectInput"
 
 #: ../modules/controller_midi.c:167
 msgid "MIDI event controller"
@@ -1819,3 +1817,4 @@ msgstr "GIMP"
 #: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr "Controlador de entrada MIDI del GIMP"
+
