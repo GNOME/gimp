@@ -1133,9 +1133,20 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
 
   if (key == GDK_SHIFT_MASK)
     {
+      /* Here we want to handle manualy when to update the rectangle, so we
+       * don't want gimp_rectangle_tool_options_notify to do anything.
+       */
+      g_signal_handlers_block_by_func (options,
+                                       gimp_rectangle_tool_options_notify,
+                                       rectangle);
+
       g_object_set (options,
                     "fixed-aspect", ! options_private->fixed_aspect,
                     NULL);
+
+      g_signal_handlers_unblock_by_func (options,
+                                         gimp_rectangle_tool_options_notify,
+                                         rectangle);
     }
 
   if (key == GDK_CONTROL_MASK)
