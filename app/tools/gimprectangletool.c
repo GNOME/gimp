@@ -232,10 +232,6 @@ static void gimp_rectangle_tool_update_with_coord   (GimpRectangleTool       *re
                                                      gint                    new_x,
                                                      gint                    new_y);
 
-static void gimp_rectangle_tool_update_and_redraw   (GimpRectangleTool      *rectangle_tool,
-                                                     gint                    cursor_x,
-                                                     gint                    cursor_y);
-
 static void gimp_rectangle_tool_get_constraints     (GimpRectangleTool      *rectangle_tool,
                                                      gint                   *min_x,
                                                      gint                   *min_y,
