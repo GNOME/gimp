@@ -61,6 +61,26 @@ enum
 
 #define SQRT5   2.236067977
 
+typedef enum
+{
+  CLAMPED_NONE   = 0,
+  CLAMPED_LEFT   = (1 << 0),
+  CLAMPED_RIGHT  = (1 << 1),
+  CLAMPED_TOP    = (1 << 2),
+  CLAMPED_BOTTOM = (1 << 3)
+} ClampedSide;
+
+typedef enum
+{
+  SIDE_TO_RESIZE_NONE                         = 0,
+  SIDE_TO_RESIZE_LEFT                         = (1 << 0),
+  SIDE_TO_RESIZE_RIGHT                        = (1 << 1),
+  SIDE_TO_RESIZE_TOP                          = (1 << 2),
+  SIDE_TO_RESIZE_BOTTOM                       = (1 << 3),
+  SIDE_TO_RESIZE_LEFT_AND_RIGHT_SYMMETRICALLY = (1 << 4),
+  SIDE_TO_RESIZE_TOP_AND_BOTTOM_SYMMETRICALLY = (1 << 5)
+} SideToResize;
+
 
 #define GIMP_RECTANGLE_TOOL_GET_PRIVATE(obj) \
   (gimp_rectangle_tool_get_private (GIMP_RECTANGLE_TOOL (obj)))
@@ -74,21 +94,21 @@ struct _GimpRectangleToolPrivate
    * during gimp_rectangle_tool_button_press and then only read.
    */
 
-  gint                    pressx;     /*  x where button pressed         */
-  gint                    pressy;     /*  y where button pressed         */
+  /* Holds coordinate where button was pressed when rectangle adjustment was
+   * initiated.
+   */
+  gint                    pressx;
+  gint                    pressy;
 
-                                      /* Holds the coordinate that should be
-                                       * used as the "other side" when modifier
-                                       * keys are released.
-                                       */
+  /* Holds the coordinate that should be used as the "other side" when
+   * fixed-center is turned off.
+   */
   gint                    other_side_x;
   gint                    other_side_y;
 
-                                      /* Holds the coordinate used as center
-                                         when fixed_center is used. */
+  /* Holds the coordinate to be used as center when fixed-center is used. */
   gint                    center_x_on_fixed_center;
   gint                    center_y_on_fixed_center;
-
 
   /* The rest of the members are internal state variables, that is, variables
    * that might change during the manipulation session of the rectangle. Make
@@ -101,10 +121,6 @@ struct _GimpRectangleToolPrivate
   guint                   function;   /*  moving or resizing             */
 
   GimpRectangleConstraint constraint; /* how to constrain rectangle     */
-
-  /* Internal state */
-  gint                    startx;     /*  starting x coord               */
-  gint                    starty;     /*  starting y coord               */
 
   gint                    lastx;      /*  previous x coord               */
   gint                    lasty;      /*  previous y coord               */
@@ -156,24 +172,9 @@ static void     gimp_rectangle_tool_options_notify  (GimpRectangleOptions *optio
                                                      GParamSpec         *pspec,
                                                      GimpRectangleTool  *rectangle);
 
-static void     gimp_rectangle_tool_check_function  (GimpRectangleTool *rectangle,
-                                                     gint              *x1,
-                                                     gint              *y1,
-                                                     gint              *x2,
-                                                     gint              *y2);
-
-static void gimp_rectangle_tool_get_fixed_center_coords
-                                                    (GimpRectangleTool *rectangle,
-                                                     gint              *centerx,
-                                                     gint              *centery);
+static void     gimp_rectangle_tool_check_function  (GimpRectangleTool *rectangle);
 
 static void gimp_rectangle_tool_rectangle_changed   (GimpRectangleTool *rectangle);
-
-static void gimp_rectangle_tool_constrain           (GimpRectangleTool *rectangle,
-                                                     gint               *x1,
-                                                     gint               *y1,
-                                                     gint               *x2,
-                                                     gint               *y2);
 
 static void     gimp_rectangle_tool_auto_shrink     (GimpRectangleTool *rectangle);
 
@@ -191,6 +192,59 @@ static void gimp_rectangle_tool_set_other_side_coord
                                                     (GimpRectangleTool  *rectangle_tool,
                                                      gint                other_side_x,
                                                      gint                other_side_y);
+
+static void gimp_rectangle_tool_apply_coord         (GimpRectangleTool      *rectangle_tool,
+                                                     gint                    coord_x,
+                                                     gint                    coord_y);
+
+static void gimp_rectangle_tool_clamp               (GimpRectangleTool      *rectangle_tool,
+                                                     ClampedSide            *clamped_sides,
+                                                     GimpRectangleConstraint constraint,
+                                                     gboolean                symmetrically);
+static void gimp_rectangle_tool_clamp_width         (GimpRectangleTool      *rectangle_tool,
+                                                     ClampedSide            *clamped_sides,
+                                                     GimpRectangleConstraint constraint,
+                                                     gboolean                symmetrically);
+static void gimp_rectangle_tool_clamp_height        (GimpRectangleTool      *rectangle_tool,
+                                                     ClampedSide            *clamped_sides,
+                                                     GimpRectangleConstraint constraint,
+                                                     gboolean                symmetrically);
+
+static void gimp_rectangle_tool_keep_inside         (GimpRectangleTool      *rectangle_tool,
+                                                     GimpRectangleConstraint constraint);
+static void gimp_rectangle_tool_keep_inside_horizontally
+                                                    (GimpRectangleTool      *rectangle_tool,
+                                                     GimpRectangleConstraint constraint);
+static void gimp_rectangle_tool_keep_inside_vertically
+                                                    (GimpRectangleTool      *rectangle_tool,
+                                                     GimpRectangleConstraint constraint);
+
+static void gimp_rectangle_tool_apply_fixed_width   (GimpRectangleTool      *rectangle_tool,
+                                                     GimpRectangleConstraint constraint);
+static void gimp_rectangle_tool_apply_fixed_height  (GimpRectangleTool      *rectangle_tool,
+                                                     GimpRectangleConstraint constraint);
+
+static void gimp_rectangle_tool_apply_aspect        (GimpRectangleTool      *rectangle_tool,
+                                                     gdouble                 aspect,
+                                                     gint                    clamped_sides);
+
+static void gimp_rectangle_tool_update_with_coord   (GimpRectangleTool       *rectangle_tool,
+                                                     gint                    new_x,
+                                                     gint                    new_y);
+
+static void gimp_rectangle_tool_update_and_redraw   (GimpRectangleTool      *rectangle_tool,
+                                                     gint                    cursor_x,
+                                                     gint                    cursor_y);
+
+static void gimp_rectangle_tool_get_constraints     (GimpRectangleTool      *rectangle_tool,
+                                                     gint                   *min_x,
+                                                     gint                   *min_y,
+                                                     gint                   *max_x,
+                                                     gint                   *max_y,
+                                                     GimpRectangleConstraint constraint);
+
+static void gimp_rectangle_tool_handle_general_clamping
+                                                    (GimpRectangleTool      *rectangle_tool);
 
 
 static guint gimp_rectangle_tool_signals[LAST_SIGNAL] = { 0 };
@@ -642,8 +696,6 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
   private->pressx = x;
   private->pressy = y;
 
-  private->startx = x;
-  private->starty = y;
   private->lastx  = x;
   private->lasty  = y;
 
@@ -743,10 +795,15 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
       break;
     }
 
+  /* We must update this. */
+  private->center_x_on_fixed_center = (private->x1 + private->x2) / 2;
+  private->center_y_on_fixed_center = (private->y1 + private->y2) / 2;
+
   gimp_tool_control_set_snap_offsets (tool->control, 0, 0, 0, 0);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
+
 
 void
 gimp_rectangle_tool_motion (GimpTool        *tool,
@@ -759,11 +816,9 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   GimpRectangleToolPrivate    *private;
   GimpRectangleOptions        *options;
   GimpRectangleOptionsPrivate *options_private;
-  gint                         x1, y1, x2, y2;
-  gint                         curx, cury;
+  gint                         current_x;
+  gint                         current_y;
   gint                         snap_x, snap_y;
-  gint                         inc_x, inc_y;
-  gboolean                     created_now = FALSE;
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
@@ -778,303 +833,29 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   if (private->function == RECT_EXECUTING)
     return;
 
-  curx = ROUND (coords->x);
-  cury = ROUND (coords->y);
+  current_x = ROUND (coords->x);
+  current_y = ROUND (coords->y);
 
+  /* Handle snapping. */
   gimp_tool_control_get_snap_offsets (tool->control,
                                       &snap_x, &snap_y, NULL, NULL);
-  curx += snap_x;
-  cury += snap_y;
+  current_x += snap_x;
+  current_y += snap_y;
 
   /*  If there have been no changes... return  */
-  if (private->lastx == curx && private->lasty == cury)
+  if (private->lastx == current_x && private->lasty == current_y)
     return;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
 
-  inc_x = curx - private->startx;
-  inc_y = cury - private->starty;
-
-  x1 = private->x1;
-  y1 = private->y1;
-  x2 = private->x2;
-  y2 = private->y2;
-
-  switch (private->function)
-    {
-    case RECT_INACTIVE:
-      g_warning ("function is RECT_INACTIVE while mouse is moving");
-      break;
-
-    case RECT_CREATING:
-      break;
-
-    case RECT_RESIZING_UPPER_LEFT:
-    case RECT_RESIZING_LOWER_LEFT:
-    case RECT_RESIZING_LEFT:
-      x1 = private->x1 + inc_x;
-      if (options_private->fixed_width)
-        x2 = x1 + options_private->width;
-      else if (options_private->fixed_center)
-        x2 = x1 + 2 * (options_private->center_x - x1);
-      break;
-
-    case RECT_RESIZING_UPPER_RIGHT:
-    case RECT_RESIZING_LOWER_RIGHT:
-    case RECT_RESIZING_RIGHT:
-      x2 = private->x2 + inc_x;
-      if (options_private->fixed_width)
-        x1 = x2 - options_private->width;
-      else if (options_private->fixed_center)
-        x1 = x2 - 2 * (x2 - options_private->center_x);
-      break;
-
-    case RECT_RESIZING_BOTTOM:
-    case RECT_RESIZING_TOP:
-      x1 = private->x1;
-      x2 = private->x2;
-      break;
-
-    case RECT_MOVING:
-      x1 = private->x1 + inc_x;
-      x2 = private->x2 + inc_x;
-      break;
-    }
-
-  switch (private->function)
-    {
-    case RECT_CREATING:
-      break;
-
-    case RECT_RESIZING_UPPER_LEFT:
-    case RECT_RESIZING_UPPER_RIGHT:
-    case RECT_RESIZING_TOP:
-      y1 = private->y1 + inc_y;
-      if (options_private->fixed_height)
-        y2 = y1 + options_private->height;
-      else if (options_private->fixed_center)
-        y2 = y1 + 2 * (options_private->center_y - y1);
-      break;
-
-    case RECT_RESIZING_LOWER_LEFT:
-    case RECT_RESIZING_LOWER_RIGHT:
-    case RECT_RESIZING_BOTTOM:
-      y2 = private->y2 + inc_y;
-      if (options_private->fixed_height)
-        y1 = y2 - options_private->height;
-      else if (options_private->fixed_center)
-        y1 = y2 - 2 * (y2 - options_private->center_y);
-      break;
-
-    case RECT_RESIZING_RIGHT:
-    case RECT_RESIZING_LEFT:
-      y1 = private->y1;
-      y2 = private->y2;
-      break;
-
-    case RECT_MOVING:
-      y1 = private->y1 + inc_y;
-      y2 = private->y2 + inc_y;
-      break;
-    }
-
-  if (options_private->fixed_aspect)
-    {
-      gdouble aspect;
-
-      aspect = CLAMP (options_private->aspect_numerator /
-                      options_private->aspect_denominator,
-                      1.0 / display->image->height,
-                      display->image->width);
-
-      switch (private->function)
-        {
-        case RECT_RESIZING_UPPER_LEFT:
-          /* The same basically happens for each corner, just with a
-           * different fixed corner. To keep within aspect ratio and
-           * at the same time keep the cursor on one edge if not the
-           * corner itself: - calculate the two positions of the
-           * corner in question on the base of the current mouse
-           * cursor position and the fixed corner opposite the one
-           * selected.  - decide on which egde we are inside the
-           * rectangle dimension - if we are on the inside of the
-           * vertical edge then we use the x position of the cursor,
-           * otherwise we are on the inside (or close enough) of the
-           * horizontal edge and then we use the y position of the
-           * cursor for the base of our new corner.
-           */
-          x1 = private->x2 - (private->y2 - cury) * aspect + 0.5;
-          y1 = private->y2 - (private->x2 - curx) / aspect + 0.5;
-          if ((y1 < cury) && (cury < y2))
-            x1 = curx;
-          else
-            y1 = cury;
-          if (options_private->fixed_center)
-            {
-              x2 = x1 + 2 * (options_private->center_x - x1);
-              y2 = y1 + 2 * (options_private->center_y - y1);
-            }
-          break;
-
-        case RECT_RESIZING_UPPER_RIGHT:
-          x2 = private->x1 + (private->y2 - cury) * aspect + 0.5;
-          y1 = private->y2 - (curx - private->x1) / aspect + 0.5;
-          if ((y1 < cury) && (cury < y2))
-            x2 = curx;
-          else
-            y1 = cury;
-          if (options_private->fixed_center)
-            {
-              x1 = x2 - 2 * (x2 - options_private->center_x);
-              y2 = y1 + 2 * (options_private->center_y - y1);
-            }
-          break;
-
-        case RECT_RESIZING_LOWER_LEFT:
-          x1 = private->x2 - (cury - private->y1) * aspect + 0.5;
-          y2 = private->y1 + (private->x2 - curx) / aspect + 0.5;
-          if ((y1 < cury) && (cury < y2))
-            x1 = curx;
-          else
-            y2 = cury;
-          if (options_private->fixed_center)
-            {
-              x2 = x1 + 2 * (options_private->center_x - x1);
-              y1 = y2 - 2 * (y2 - options_private->center_y);
-            }
-          break;
-
-        case RECT_RESIZING_LOWER_RIGHT:
-          x2 = private->x1 + (cury - private->y1) * aspect + 0.5;
-          y2 = private->y1 + (curx - private->x1) / aspect + 0.5;
-          if ((y1 < cury) && (cury < y2))
-            x2 = curx;
-          else
-            y2 = cury;
-          if (options_private->fixed_center)
-            {
-              x1 = x2 - 2 * (x2 - options_private->center_x);
-              y1 = y2 - 2 * (y2 - options_private->center_y);
-            }
-          break;
-
-        case RECT_RESIZING_TOP:
-          x2 = private->x1 + (private->y2 - y1) * aspect + 0.5;
-          if (options_private->fixed_center)
-            x1 = x2 - 2 * (x2 - options_private->center_x);
-          break;
-
-        case RECT_RESIZING_LEFT:
-          /* When resizing the left hand delimiter then the aspect
-           * dictates the height of the result, any inc_y is redundant
-           * and not relevant to the result
-           */
-          y2 = private->y1 + (private->x2 - x1) / aspect + 0.5;
-          if (options_private->fixed_center)
-            y1 = y2 - 2 * (y2 - options_private->center_y);
-          break;
-
-        case RECT_RESIZING_BOTTOM:
-          x2 = private->x1 + (y2 - private->y1) * aspect + 0.5;
-          if (options_private->fixed_center)
-            x1 = x2 - 2 * (x2 - options_private->center_x);
-          break;
-
-        case RECT_RESIZING_RIGHT:
-          /* When resizing the right hand delimiter then the aspect
-           * dictates the height of the result, any inc_y is redundant
-           * and not relevant to the result
-           */
-          y2 = private->y1 + (x2 - private->x1) / aspect + 0.5;
-          if (options_private->fixed_center)
-            y1 = y2 - 2 * (y2 - options_private->center_y);
-          break;
-
-        default:
-          break;
-        }
-    }
-
-  private->lastx = curx;
-  private->lasty = cury;
-
-  /* Check to see whether the new rectangle obeys the boundary
-   * constraints, if any, and constrain it.
-   */
-
-  gimp_rectangle_tool_constrain (rectangle, &x1, &y1, &x2, &y2);
-
-
-  /* set startx, starty according to function, to keep rect on cursor */
-  switch (private->function)
-    {
-    case RECT_RESIZING_UPPER_LEFT:
-      private->startx = x1;
-      private->starty = y1;
-      break;
-
-    case RECT_RESIZING_UPPER_RIGHT:
-      private->startx = x2;
-      private->starty = y1;
-      break;
-
-    case RECT_RESIZING_LOWER_LEFT:
-      private->startx = x1;
-      private->starty = y2;
-      break;
-
-    case RECT_RESIZING_LOWER_RIGHT:
-      private->startx = x2;
-      private->starty = y2;
-      break;
-
-    case RECT_RESIZING_TOP:
-      private->startx = curx;
-      private->starty = y1;
-      break;
-
-    case RECT_RESIZING_LEFT:
-      private->startx = x1;
-      private->starty = cury;
-      break;
-
-    case RECT_RESIZING_BOTTOM:
-      private->startx = curx;
-      private->starty = y2;
-
-      break;
-
-    case RECT_RESIZING_RIGHT:
-      private->startx = x2;
-      private->starty = cury;
-      break;
-
-    case RECT_MOVING:
-      private->startx = curx;
-      private->starty = cury;
-      break;
-
-    default:
-      break;
-    }
-
-  /* fix function if user has "flipped" the rectangle */
-  if (! created_now)
-    gimp_rectangle_tool_check_function (rectangle, &x1, &y1, &x2, &y2);
-
-  /*  make sure that the coords are in bounds  */
-  g_object_set (rectangle,
-                "x1", MIN (x1, x2),
-                "y1", MIN (y1, y2),
-                "x2", MAX (x1, x2),
-                "y2", MAX (y1, y2),
-                NULL);
+  /* This is the core rectangle shape updating function: */
+  gimp_rectangle_tool_update_with_coord (rectangle,
+                                         current_x,
+                                         current_y);
 
   /*  recalculate the coordinates for rectangle_draw based on the new values  */
   gimp_rectangle_tool_configure (rectangle);
-
-  gimp_rectangle_tool_update_options (rectangle, display);
 
   if (private->function != RECT_MOVING &&
       private->function != RECT_EXECUTING)
@@ -1094,31 +875,58 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
   if (private->function == RECT_CREATING)
     {
       GimpRectangleFunction function = RECT_CREATING;
+      gint                  dx = current_x - private->lastx;
+      gint                  dy = current_y - private->lasty;
 
-      if (inc_x < 0 && inc_y < 0)
-        function = RECT_RESIZING_UPPER_LEFT;
-      else if (inc_x < 0 && inc_y > 0)
-        function = RECT_RESIZING_LOWER_LEFT;
-      else if (inc_x > 0 && inc_y < 0)
-        function = RECT_RESIZING_UPPER_RIGHT;
-      else if (inc_x > 0 && inc_y > 0)
-        function = RECT_RESIZING_LOWER_RIGHT;
-
-      created_now = TRUE;
+      /* When the user starts to move the cursor, set the current function to
+       * one of the corner-grabbed functions, depending on in what direction
+       * the user starts dragging the rectangle.
+       */
+      if (dx < 0)
+        {
+          function = dy < 0 ?
+            RECT_RESIZING_UPPER_LEFT :
+            RECT_RESIZING_LOWER_LEFT;
+        }
+      else if (dx > 0)
+        {
+          function = dy < 0 ?
+            RECT_RESIZING_UPPER_RIGHT :
+            RECT_RESIZING_LOWER_RIGHT;
+        }
+      else if (dy < 0)
+        {
+          function = dx < 0 ?
+            RECT_RESIZING_UPPER_LEFT :
+            RECT_RESIZING_UPPER_RIGHT;
+        }
+      else if (dy > 0)
+        {
+          function = dx < 0 ?
+            RECT_RESIZING_LOWER_LEFT :
+            RECT_RESIZING_LOWER_RIGHT;
+        }
 
       gimp_rectangle_tool_set_function (rectangle, function);
     }
+
+  gimp_rectangle_tool_update_options (rectangle, display);
+
+  private->lastx = current_x;
+  private->lasty = current_y;
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
 void
+
 gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
                                          GdkModifierType  key,
                                          gboolean         press,
                                          GdkModifierType  state,
                                          GimpDisplay     *display)
 {
+  GimpDrawTool                *draw_tool;
   GimpRectangleTool           *rectangle;
   GimpRectangleOptions        *options;
   GimpRectangleOptionsPrivate *options_private;
@@ -1126,10 +934,13 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
 
   g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (tool));
 
+  draw_tool       = GIMP_DRAW_TOOL (tool);
   rectangle       = GIMP_RECTANGLE_TOOL (tool);
   private         = gimp_rectangle_tool_get_private (rectangle);
   options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
   options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+
+  gimp_draw_tool_pause (draw_tool);
 
   if (key == GDK_SHIFT_MASK)
     {
@@ -1147,28 +958,24 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
       g_signal_handlers_unblock_by_func (options,
                                          gimp_rectangle_tool_options_notify,
                                          rectangle);
+
+      /* Only change the shape if the mouse is still down (i.e. the user is
+       * still editing the rectangle.
+       */
+      if (state & GDK_BUTTON1_MASK)
+        {
+          gimp_rectangle_tool_update_with_coord (rectangle,
+                                                 private->lastx,
+                                                 private->lasty);
+
+          gimp_rectangle_tool_configure (rectangle);
+
+          gimp_rectangle_tool_rectangle_changed (rectangle);
+        }
     }
 
   if (key == GDK_CONTROL_MASK)
     {
-      /* If we are leaving fixed_center mode we want to set the "other side"
-       * where it should be. Don't do anything if we came here by a mouse-click
-       * though, since then the user has confirmed the shape and we don't want
-       * to modify it afterwards.
-       */
-      if (options_private->fixed_center &&
-          (state & GDK_BUTTON1_MASK))
-        {
-          gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
-          gimp_rectangle_tool_set_other_side_coord (rectangle,
-                                                    private->other_side_x,
-                                                    private->other_side_y);
-
-          gimp_rectangle_tool_configure (rectangle);
-
-          gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
-        }
 
       g_object_set (options,
                     "fixed-center", ! options_private->fixed_center,
@@ -1176,18 +983,39 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
 
       if (options_private->fixed_center)
         {
-          gint center_x, center_y;
-
-          gimp_rectangle_tool_get_fixed_center_coords (rectangle,
-                                                       &center_x,
-                                                       &center_y);
-
           g_object_set (options,
-                        "center-x", (gdouble) center_x,
-                        "center-y", (gdouble) center_y,
+                        "center-x", (gdouble) private->center_x_on_fixed_center,
+                        "center-y", (gdouble) private->center_y_on_fixed_center,
                         NULL);
+
+          gimp_rectangle_tool_update_with_coord (rectangle,
+                                                 private->lastx,
+                                                 private->lasty);
+
+          gimp_rectangle_tool_configure (rectangle);
+
+
+          gimp_rectangle_tool_rectangle_changed (rectangle);
+
         }
+      else if (state & GDK_BUTTON1_MASK)
+        {
+          /* If we are leaving fixed_center mode we want to set the "other side"
+           * where it should be. Don't do anything if we came here by a mouse-click
+           * though, since then the user has confirmed the shape and we don't want
+           * to modify it afterwards.
+           */
+          gimp_rectangle_tool_set_other_side_coord (rectangle,
+                                                    private->other_side_x,
+                                                    private->other_side_y);
+
+          gimp_rectangle_tool_rectangle_changed (rectangle);
+
+        }
+
     }
+
+  gimp_draw_tool_resume (draw_tool);
 }
 
 static void swap_ints (gint *i,
@@ -1200,29 +1028,13 @@ static void swap_ints (gint *i,
   *j = tmp;
 }
 
-static void
-gimp_rectangle_tool_get_fixed_center_coords (GimpRectangleTool *rectangle,
-                                             gint              *centerx,
-                                             gint              *centery)
-{
-  GimpRectangleToolPrivate *private;
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
-
-  *centerx = private->center_x_on_fixed_center;
-  *centery = private->center_y_on_fixed_center;
-}
-
 /* gimp_rectangle_tool_check_function() is needed to deal with
  * situations where the user drags a corner or edge across one of the
  * existing edges, thereby changing its function.  Ugh.
  */
 static void
-gimp_rectangle_tool_check_function (GimpRectangleTool *rectangle,
-                                    gint              *x1,
-                                    gint              *y1,
-                                    gint              *x2,
-                                    gint              *y2)
+gimp_rectangle_tool_check_function (GimpRectangleTool *rectangle)
+
 {
   GimpRectangleToolPrivate *private;
   GimpRectangleFunction     function;
@@ -1231,9 +1043,9 @@ gimp_rectangle_tool_check_function (GimpRectangleTool *rectangle,
 
   function = private->function;
 
-  if (*x2 < *x1)
+  if (private->x2 < private->x1)
     {
-      swap_ints (x1, x2);
+      swap_ints (&private->x1, &private->x2);
       switch (function)
         {
           case RECT_RESIZING_UPPER_LEFT:
@@ -1260,9 +1072,9 @@ gimp_rectangle_tool_check_function (GimpRectangleTool *rectangle,
         }
     }
 
-  if (*y2 < *y1)
+  if (private->y2 < private->y1)
     {
-      swap_ints (y1, y2);
+      swap_ints (&private->y1, &private->y2);
       switch (function)
         {
           case RECT_RESIZING_UPPER_LEFT:
@@ -1289,8 +1101,6 @@ gimp_rectangle_tool_check_function (GimpRectangleTool *rectangle,
     }
 
   gimp_rectangle_tool_set_function (rectangle, function);
-
-#undef SWAP
 }
 
 gboolean
@@ -1302,12 +1112,8 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
   GimpRectangleToolPrivate *private;
   gint                      dx = 0;
   gint                      dy = 0;
-  gint                      inc_x1 = 0;
-  gint                      inc_y1 = 0;
-  gint                      inc_x2 = 0;
-  gint                      inc_y2 = 0;
-  gint                      x1, y1;
-  gint                      x2, y2;
+  gint                      new_x = 0;
+  gint                      new_y = 0;
 
   g_return_val_if_fail (GIMP_IS_RECTANGLE_TOOL (tool), FALSE);
 
@@ -1354,63 +1160,77 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
       dy *= ARROW_VELOCITY;
     }
 
+  gimp_tool_control_set_snap_offsets (GIMP_TOOL (rectangle)->control,
+                                      0, 0, 0, 0);
+
   /*  Resize the rectangle if the mouse is over a handle, otherwise move it  */
   switch (private->function)
     {
+    case RECT_MOVING:
     case RECT_RESIZING_UPPER_LEFT:
-      inc_x1 = dx;
-      inc_y1 = dy;
+      new_x = private->x1 + dx;
+      new_y = private->y1 + dy;
+      private->lastx = new_x;
+      private->lasty = new_y;
       break;
     case RECT_RESIZING_UPPER_RIGHT:
-      inc_x2 = dx;
-      inc_y1 = dy;
+      new_x = private->x2 + dx;
+      new_y = private->y1 + dy;
+      private->lastx = new_x;
+      private->lasty = new_y;
       break;
     case RECT_RESIZING_LOWER_LEFT:
-      inc_x1 = dx;
-      inc_y2 = dy;
+      new_x = private->x1 + dx;
+      new_y = private->y2 + dy;
+      private->lastx = new_x;
+      private->lasty = new_y;
       break;
     case RECT_RESIZING_LOWER_RIGHT:
-      inc_x2 = dx;
-      inc_y2 = dy;
+      new_x = private->x2 + dx;
+      new_y = private->y2 + dy;
+      private->lastx = new_x;
+      private->lasty = new_y;
       break;
     case RECT_RESIZING_LEFT:
-      inc_x1 = dx;
+      new_x = private->x1 + dx;
+      private->lastx = new_x;
       break;
     case RECT_RESIZING_RIGHT:
-      inc_x2 = dx;
+      new_x = private->x2 + dx;
+      private->lastx = new_x;
       break;
     case RECT_RESIZING_TOP:
-      inc_y1 = dy;
+      new_y = private->y1 + dy;
+      private->lasty = new_y;
       break;
     case RECT_RESIZING_BOTTOM:
-      inc_y2 = dy;
+      new_y = private->y2 + dy;
+      private->lasty = new_y;
       break;
 
     default:
-      inc_x1 = inc_x2 = dx;
-      inc_y1 = inc_y2 = dy;
-      break;
+      return TRUE;
     }
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  x1 = private->x1 + inc_x1;
-  y1 = private->y1 + inc_y1;
-  x2 = private->x2 + inc_x2;
-  y2 = private->y2 + inc_y2;
+  gimp_rectangle_tool_update_with_coord (rectangle,
+                                         new_x,
+                                         new_y);
 
-  gimp_rectangle_tool_check_function (rectangle, &x1, &y1, &x2, &y2);
+  private->center_x_on_fixed_center = (private->x1 + private->x2) / 2;
+  private->center_y_on_fixed_center = (private->y1 + private->y2) / 2;
 
-  g_object_set (rectangle,
-                "x1", x1,
-                "y1", y1,
-                "x2", x2,
-                "y2", y2,
-                NULL);
+/*   g_object_set (rectangle, */
+/*                 "x1", private->x1, */
+/*                 "y1", private->y1, */
+/*                 "x2", private->x2, */
+/*                 "y2", private->y2, */
+/*                 NULL); */
 
   gimp_rectangle_tool_configure (rectangle);
 
-  gimp_rectangle_tool_update_options (rectangle, display);
+  gimp_rectangle_tool_update_options (rectangle, tool->display);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 
@@ -1992,39 +1812,48 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
                   "height", height,
                   NULL);
 
-  g_signal_handlers_unblock_by_func (options,
-                                     gimp_rectangle_tool_options_notify,
-                                     rectangle);
-
   g_object_set (options,
                 "center-x", center_x,
                 "center-y", center_y,
                 NULL);
+
+  g_signal_handlers_unblock_by_func (options,
+                                     gimp_rectangle_tool_options_notify,
+                                     rectangle);
+
 }
 
 static void
 gimp_rectangle_tool_synthesize_motion (GimpRectangleTool *rectangle,
                                        gint               function,
-                                       gint               startx,
-                                       gint               starty,
-                                       GimpCoords        *coords)
+                                       gint               new_x,
+                                       gint               new_y)
 {
   GimpRectangleToolPrivate *private;
   GimpRectangleFunction     old_function;
 
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
 
-  private->startx = startx;
-  private->starty = starty;
-
   old_function = private->function;
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (rectangle));
 
   gimp_rectangle_tool_set_function (rectangle, function);
-  gimp_rectangle_tool_motion (GIMP_TOOL (rectangle),
-                              coords, 0, 0, GIMP_TOOL (rectangle)->display);
+
+  gimp_rectangle_tool_update_with_coord (rectangle,
+                                         new_x,
+                                         new_y);
+
+  /* We must update this. */
+  private->center_x_on_fixed_center = (private->x1 + private->x2) / 2;
+  private->center_y_on_fixed_center = (private->y1 + private->y2) / 2;
+
+  gimp_rectangle_tool_update_options (rectangle,
+                                      GIMP_TOOL (rectangle)->display);
+
   gimp_rectangle_tool_set_function (rectangle, old_function);
+
+  gimp_rectangle_tool_configure (rectangle);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (rectangle));
 
@@ -2042,6 +1871,7 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
   private         = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
   options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
 
+
   if (! strcmp (pspec->name, "guide"))
     {
       gimp_draw_tool_pause (GIMP_DRAW_TOOL (rectangle));
@@ -2058,55 +1888,69 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
 
   if (! strcmp (pspec->name, "x0"))
     {
-      GimpCoords coords;
-
-      coords.x = options_private->x0;
-      coords.y = private->y1;
-
-      gimp_rectangle_tool_synthesize_motion (rectangle,
-                                             RECT_RESIZING_LEFT,
-                                             private->x1,
-                                             private->y1,
-                                             &coords);
+      if (private->x1 != options_private->x0)
+        gimp_rectangle_tool_synthesize_motion (rectangle,
+                                               RECT_MOVING,
+                                               options_private->x0,
+                                               private->y1);
     }
   else if (! strcmp (pspec->name, "y0"))
     {
-      GimpCoords coords;
-
-      coords.x = private->x1;
-      coords.y = options_private->y0;
-
-      gimp_rectangle_tool_synthesize_motion (rectangle,
-                                             RECT_RESIZING_TOP,
-                                             private->x1,
-                                             private->y1,
-                                             &coords);
+      if (private->y1 != options_private->y0)
+        gimp_rectangle_tool_synthesize_motion (rectangle,
+                                               RECT_MOVING,
+                                               private->x1,
+                                               options_private->y0);
     }
   else if (! strcmp (pspec->name, "width"))
     {
-      GimpCoords coords;
+      /* Calculate x2, y2 that will create a rectangle of given width, for the
+       * current options.
+       */
+      gint x2;
 
-      coords.x = private->x1 + options_private->width;
-      coords.y = private->y2;
+      if (private->x2 - private->x1 != options_private->width)
+        {
+          if (options_private->fixed_center)
+            {
+              x2 = private->center_x_on_fixed_center +
+                options_private->width / 2;
+            }
+          else
+            {
+              x2 = private->x1 + options_private->width;
+            }
 
-      gimp_rectangle_tool_synthesize_motion (rectangle,
-                                             RECT_RESIZING_RIGHT,
-                                             private->x2,
-                                             private->y2,
-                                             &coords);
+          gimp_rectangle_tool_synthesize_motion (rectangle,
+                                                 RECT_RESIZING_RIGHT,
+                                                 x2,
+                                                 private->y2);
+        }
     }
   else if (! strcmp (pspec->name, "height"))
     {
-      GimpCoords coords;
+      /* Calculate x2, y2 that will create a rectangle of given height, for the
+       * current options.
+       */
+      gint y2;
 
-      coords.x = private->x2;
-      coords.y = private->y1 + options_private->height;
+      if (private->y2 - private->y1 != options_private->height)
+        {
+          if (options_private->fixed_center)
+            {
+              y2 = private->center_y_on_fixed_center +
+                options_private->height / 2;
+            }
+          else
+            {
+              y2 = private->y1 + options_private->height;
+            }
 
-      gimp_rectangle_tool_synthesize_motion (rectangle,
-                                             RECT_RESIZING_BOTTOM,
-                                             private->x2,
-                                             private->y2,
-                                             &coords);
+          gimp_rectangle_tool_synthesize_motion (rectangle,
+                                                 RECT_RESIZING_BOTTOM,
+                                                 private->x2,
+                                                 y2);
+        }
     }
   else if (! strcmp (pspec->name, "fixed-aspect")     ||
            ! strcmp (pspec->name, "aspect-numerator") ||
@@ -2114,20 +1958,10 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
     {
       if (options_private->fixed_aspect)
         {
-          GimpCoords coords;
-          gdouble    aspect;
-
-          aspect = (options_private->aspect_numerator /
-                    options_private->aspect_denominator);
-
-          coords.x = private->x2;
-          coords.y = private->y1 + (private->x2 - private->x1) / aspect;
-
           gimp_rectangle_tool_synthesize_motion (rectangle,
-                                                 RECT_RESIZING_BOTTOM,
+                                                 RECT_RESIZING_LOWER_RIGHT,
                                                  private->x2,
-                                                 private->y2,
-                                                 &coords);
+                                                 private->y2);
         }
     }
   else if (! strcmp (pspec->name, "highlight"))
@@ -2173,74 +2007,6 @@ gimp_rectangle_tool_rectangle_changed (GimpRectangleTool *rectangle)
 {
   g_signal_emit (rectangle,
                  gimp_rectangle_tool_signals[RECTANGLE_CHANGED], 0);
-}
-
-/*
- * check whether the coordinates extend outside the bounds of the image
- * or active drawable, if it is constrained not to.  If it does, clamp
- * the corners to the constraints.
- */
-void
-gimp_rectangle_tool_constrain (GimpRectangleTool *rectangle,
-                               gint              *x1,
-                               gint              *y1,
-                               gint              *x2,
-                               gint              *y2)
-{
-  GimpTool                 *tool = GIMP_TOOL (rectangle);
-  GimpRectangleToolPrivate *private;
-  GimpRectangleConstraint   constraint;
-  GimpImage                *image;
-  gint                      min_x, min_y;
-  gint                      max_x, max_y;
-
-  private    = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
-  constraint = gimp_rectangle_tool_get_constraint (rectangle);
-  image      = tool->display->image;
-
-  switch (constraint)
-    {
-    case GIMP_RECTANGLE_CONSTRAIN_NONE:
-      return ;
-
-    case GIMP_RECTANGLE_CONSTRAIN_IMAGE:
-      min_x = 0;
-      min_y = 0;
-      max_x = image->width;
-      max_y = image->height;
-      break;
-
-    case GIMP_RECTANGLE_CONSTRAIN_DRAWABLE:
-      {
-        GimpItem *item = GIMP_ITEM (tool->drawable);
-
-        gimp_item_offsets (item, &min_x, &min_y);
-        max_x = min_x + gimp_item_width (item);
-        max_y = min_y + gimp_item_height (item);
-      }
-      break;
-
-    default:
-      g_warning ("Invalid rectangle constraint.\n");
-      return;
-    }
-
-  if (*x1 < min_x)
-    {
-      *x1 = min_x;
-    }
-  if (*x2 > max_x)
-    {
-      *x2 = max_x;
-    }
-  if (*y1 < min_y)
-    {
-      *y1 = min_y;
-    }
-  if (*y2 > max_y)
-    {
-      *y2 = max_y;
-    }
 }
 
 static void
@@ -2383,9 +2149,6 @@ gimp_rectangle_tool_get_other_side (GimpRectangleTool *rectangle_tool,
 {
   GimpRectangleToolPrivate *private;
 
-  g_return_if_fail (other_x != NULL &&
-                    other_y != NULL);
-
   private = gimp_rectangle_tool_get_private (GIMP_RECTANGLE_TOOL (rectangle_tool));
 
   switch (private->function)
@@ -2439,9 +2202,6 @@ gimp_rectangle_tool_get_other_side_coord (GimpRectangleTool *rectangle_tool,
   const gchar *other_x = NULL;
   const gchar *other_y = NULL;
 
-  g_return_if_fail (other_side_x != NULL &&
-                    other_side_y != NULL);
-
   gimp_rectangle_tool_get_other_side (GIMP_RECTANGLE_TOOL (rectangle_tool),
                                       &other_x,
                                       &other_y);
@@ -2474,4 +2234,1023 @@ gimp_rectangle_tool_set_other_side_coord (GimpRectangleTool *rectangle_tool,
     g_object_set (rectangle_tool,
                   other_y, other_side_y,
                   NULL);
+}
+
+/**
+ * gimp_rectangle_tool_apply_coord:
+ * @param:     A #GimpRectangleTool.
+ * @coord_x:   X of coord.
+ * @coord_y:   Y of coord.
+ *
+ * Adjust the rectangle to the new position specified by passed coordinate,
+ * taking fixed_center into account, which means it expands the rectagle around
+ * the center point.
+ */
+static void
+gimp_rectangle_tool_apply_coord (GimpRectangleTool *rectangle_tool,
+                                 gint               coord_x,
+                                 gint               coord_y)
+{
+  GimpRectangleToolPrivate    *private;
+  GimpRectangleOptions        *options;
+  GimpRectangleOptionsPrivate *options_private;
+
+  private         = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle_tool);
+  options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rectangle_tool);
+  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+
+  if (private->function == RECT_INACTIVE)
+    g_warning ("function is RECT_INACTIVE while mouse is moving");
+
+  if (private->function == RECT_MOVING)
+    {
+      /* Preserve width and height while moving the grab-point to where the
+       * cursor is.
+       */
+      gint w = private->x2 - private->x1;
+      gint h = private->y2 - private->y1;
+
+      private->x1 = coord_x;
+      private->y1 = coord_y;
+
+      private->x2 = private->x1 + w;
+      private->y2 = private->y1 + h;
+
+      /* We are done already. */
+      return;
+    }
+
+  switch (private->function)
+    {
+    case RECT_RESIZING_UPPER_LEFT:
+    case RECT_RESIZING_LOWER_LEFT:
+    case RECT_RESIZING_LEFT:
+      private->x1 = coord_x;
+
+      if (options_private->fixed_center)
+        private->x2 = 2 * private->center_x_on_fixed_center - private->x1;
+
+      break;
+
+    case RECT_RESIZING_UPPER_RIGHT:
+    case RECT_RESIZING_LOWER_RIGHT:
+    case RECT_RESIZING_RIGHT:
+      private->x2 = coord_x;
+
+      if (options_private->fixed_center)
+        private->x1 = 2 * private->center_x_on_fixed_center - private->x2;
+
+      break;
+    }
+
+  switch (private->function)
+    {
+    case RECT_RESIZING_UPPER_LEFT:
+    case RECT_RESIZING_UPPER_RIGHT:
+    case RECT_RESIZING_TOP:
+      private->y1 = coord_y;
+
+      if (options_private->fixed_center)
+        private->y2 = 2 * private->center_y_on_fixed_center - private->y1;
+
+      break;
+
+    case RECT_RESIZING_LOWER_LEFT:
+    case RECT_RESIZING_LOWER_RIGHT:
+    case RECT_RESIZING_BOTTOM:
+      private->y2 = coord_y;
+
+      if (options_private->fixed_center)
+        private->y1 = 2 * private->center_y_on_fixed_center - private->y2;
+
+      break;
+    }
+}
+
+/**
+ * gimp_rectangle_tool_clamp_width:
+ * @rectangle_tool: A #GimpRectangleTool.
+ * @clamped_sides:  Where to put contrainment information.
+ * @constraint:     Constraint to use.
+ * @symmetrically:  Whether or not to clamp symmetrically.
+ *
+ * Clamps rectangle inside specified bounds, providing information of where
+ * clamping was done. Can also clamp symmetrically.
+ */
+static void
+gimp_rectangle_tool_clamp (GimpRectangleTool       *rectangle_tool,
+                           ClampedSide             *clamped_sides,
+                           GimpRectangleConstraint  constraint,
+                           gboolean                 symmetrically)
+{
+  gimp_rectangle_tool_clamp_width (rectangle_tool,
+                                   clamped_sides,
+                                   constraint,
+                                   symmetrically);
+
+  gimp_rectangle_tool_clamp_height (rectangle_tool,
+                                    clamped_sides,
+                                    constraint,
+                                    symmetrically);
+}
+
+/**
+ * gimp_rectangle_tool_clamp_width:
+ * @rectangle_tool: A #GimpRectangleTool.
+ * @clamped_sides:  Where to put contrainment information.
+ * @constraint:     Constraint to use.
+ * @symmetrically:  Whether or not to clamp symmetrically.
+ *
+ * Clamps height of rectangle. Set symmetrically to true when using for
+ * fixed_center:ed rectangles, since that will clamp symmetrically which is just
+ * what is needed.
+ *
+ * When this function constrains, it puts what it constrains in
+ * @constraint. This information is essential when an aspect ratio is to be
+ * applied.
+ */
+static void
+gimp_rectangle_tool_clamp_width (GimpRectangleTool       *rectangle_tool,
+                                 ClampedSide             *clamped_sides,
+                                 GimpRectangleConstraint  constraint,
+                                 gboolean                 symmetrically)
+{
+  GimpRectangleToolPrivate *private;
+  gint                      min_x;
+  gint                      max_x;
+
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle_tool);
+
+  gimp_rectangle_tool_get_constraints (rectangle_tool,
+                                       &min_x,
+                                       NULL,
+                                       &max_x,
+                                       NULL,
+                                       constraint);
+  if (private->x1 < min_x)
+    {
+      gint dx = min_x - private->x1;
+
+      private->x1 += dx;
+
+      if (symmetrically)
+        {
+          private->x2 -= dx;
+
+          if (private->x2 < min_x)
+            private->x1 = private->x2 = min_x;
+        }
+
+      if (clamped_sides != NULL)
+        *clamped_sides |= CLAMPED_LEFT;
+    }
+
+  if (private->x2 > max_x)
+    {
+      gint dx = max_x - private->x2;
+
+      private->x2 += dx;
+
+      if (symmetrically)
+        {
+          private->x1 -= dx;
+
+          if (private->x1 > max_x)
+            private->x1 = max_x;
+        }
+
+      if (clamped_sides != NULL)
+        *clamped_sides |= CLAMPED_RIGHT;
+    }
+}
+
+/**
+ * gimp_rectangle_tool_clamp_height:
+ * @rectangle_tool: A #GimpRectangleTool.
+ * @clamped_sides:  Where to put contrainment information.
+ * @constraint:     Constraint to use.
+ * @symmetrically:  Whether or not to clamp symmetrically.
+ *
+ * Clamps height of rectangle. Set symmetrically to true when using for
+ * fixed_center:ed rectangles, since that will clamp symmetrically which is just
+ * what is needed.
+ *
+ * When this function constrains, it puts what it constrains in
+ * @constraint. This information is essential when an aspect ratio is to be
+ * applied.
+ */
+static void
+gimp_rectangle_tool_clamp_height (GimpRectangleTool       *rectangle_tool,
+                                  ClampedSide             *clamped_sides,
+                                  GimpRectangleConstraint  constraint,
+                                  gboolean                 symmetrically)
+{
+  GimpRectangleToolPrivate *private;
+  gint                      min_y;
+  gint                      max_y;
+
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle_tool);
+
+  gimp_rectangle_tool_get_constraints (rectangle_tool,
+                                             NULL,
+                                             &min_y,
+                                             NULL,
+                                             &max_y,
+                                             constraint);
+  if (private->y1 < min_y)
+    {
+      gint dy = min_y - private->y1;
+
+      private->y1 += dy;
+
+      if (symmetrically)
+        {
+          private->y2 -= dy;
+
+          if (private->y2 < min_y)
+            private->y1 = private->y2 = min_y;
+        }
+
+      if (clamped_sides != NULL)
+        *clamped_sides |= CLAMPED_TOP;
+    }
+
+  if (private->y2 > max_y)
+    {
+      gint dy = max_y - private->y2;
+
+      private->y2 += dy;
+
+      if (symmetrically)
+        {
+          private->y1 -= dy;
+
+          if (private->y1 > max_y)
+            private->y1 = private->y2 = max_y;
+        }
+
+      if (clamped_sides != NULL)
+        *clamped_sides |= CLAMPED_BOTTOM;
+    }
+}
+
+/**
+ * gimp_rectangle_tool_keep_inside:
+ * @rectangle_tool: A #GimpRectangleTool.
+ *
+ * If the rectangle is outside of the canvas, move it into it. If the rectangle is
+ * larger than the canvas in any direction, make it fill the canvas in that direction.
+ */
+static void
+gimp_rectangle_tool_keep_inside (GimpRectangleTool      *rectangle_tool,
+                                 GimpRectangleConstraint constraint)
+{
+  gimp_rectangle_tool_keep_inside_horizontally (rectangle_tool,
+                                                constraint);
+
+  gimp_rectangle_tool_keep_inside_vertically (rectangle_tool,
+                                              constraint);
+}
+
+/**
+ * gimp_rectangle_tool_keep_inside_horizontally:
+ * @rectangle_tool: A #GimpRectangleTool.
+ * @constraint:     Constraint to use.
+ *
+ * If the rectangle is outside of the given constraint horizontally, move it
+ * inside. If it is too big to fit inside, make it just as big as the width
+ * limit.
+ */
+static void
+gimp_rectangle_tool_keep_inside_horizontally (GimpRectangleTool      *rectangle_tool,
+                                              GimpRectangleConstraint constraint)
+{
+  GimpRectangleToolPrivate    *private;
+  gint                         min_x;
+  gint                         max_x;
+
+  gimp_rectangle_tool_get_constraints (rectangle_tool,
+                                             &min_x,
+                                             NULL,
+                                             &max_x,
+                                             NULL,
+                                             constraint);
+
+  private         = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle_tool);
+
+  if (max_x - min_x < private->x2 - private->x1)
+    {
+      private->x1 = min_x;
+      private->x2 = max_x;
+    }
+  else
+    {
+      if (private->x1 < min_x)
+        {
+          gint dx = min_x - private->x1;
+
+          private->x1 += dx;
+          private->x2 += dx;
+        }
+      if (private->x2 > max_x)
+        {
+          gint dx = max_x - private->x2;
+
+          private->x1 += dx;
+          private->x2 += dx;
+        }
+    }
+}
+
+/**
+ * gimp_rectangle_tool_keep_inside_vertically:
+ * @rectangle_tool: A #GimpRectangleTool.
+ * @constraint:     Constraint to use.
+ *
+ * If the rectangle is outside of the given constraint vertically, move it
+ * inside. If it is too big to fit inside, make it just as big as the width
+ * limit.
+ */
+static void
+gimp_rectangle_tool_keep_inside_vertically (GimpRectangleTool      *rectangle_tool,
+                                            GimpRectangleConstraint constraint)
+{
+  GimpRectangleToolPrivate    *private;
+  gint                         min_y;
+  gint                         max_y;
+
+  gimp_rectangle_tool_get_constraints (rectangle_tool,
+                                             NULL,
+                                             &min_y,
+                                             NULL,
+                                             &max_y,
+                                             constraint);
+
+  private         = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle_tool);
+
+  if (max_y - min_y < private->y2 - private->y1)
+    {
+      private->y1 = min_y;
+      private->y2 = max_y;
+    }
+  else
+    {
+      if (private->y1 < min_y)
+        {
+          gint dy = min_y - private->y1;
+
+          private->y1 += dy;
+          private->y2 += dy;
+        }
+      if (private->y2 > max_y)
+        {
+          gint dy = max_y - private->y2;
+
+          private->y1 += dy;
+          private->y2 += dy;
+        }
+    }
+}
+
+/**
+ * gimp_rectangle_tool_apply_fixed_width:
+ * @rectangle_tool: A #GimpRectangleTool.
+ * @constraint:     Constraint to use.
+ *
+ * Makes the rectangle have a fixed_width, following the constrainment rules
+ * of fixed widths as well. Please refer to the rectangle tools spec.
+ */
+static void
+gimp_rectangle_tool_apply_fixed_width (GimpRectangleTool      *rectangle_tool,
+                                       GimpRectangleConstraint constraint)
+{
+  GimpRectangleToolPrivate    *private;
+  GimpRectangleOptions        *options;
+  GimpRectangleOptionsPrivate *options_private;
+
+  private         = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle_tool);
+  options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rectangle_tool);
+  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+
+  switch (private->function)
+    {
+    case RECT_RESIZING_LOWER_LEFT:
+    case RECT_RESIZING_UPPER_LEFT:
+    case RECT_RESIZING_LEFT:
+
+      /* We always want to center around fixed_center here, since we want the
+       * anchor point to be directly on the opposite side.
+       */
+      private->x1 = private->center_x_on_fixed_center -
+                    options_private->width / 2;
+      private->x2 = private->x1 + options_private->width;
+
+      break;
+
+    case RECT_RESIZING_LOWER_RIGHT:
+    case RECT_RESIZING_UPPER_RIGHT:
+    case RECT_RESIZING_RIGHT:
+
+      /* We always want to center around fixed_center here, since we want the
+       * anchor point to be directly on the opposite side.
+       */
+      private->x1 = private->center_x_on_fixed_center -
+                    options_private->width / 2;
+      private->x2 = private->x1 + options_private->width;
+
+      break;
+    }
+
+  /* Width shall be kept even after constraints, so we move the
+   * rectangle sideways rather than adjusting a side.
+   */
+  gimp_rectangle_tool_keep_inside_horizontally (rectangle_tool,
+                                                constraint);
+}
+
+/**
+ * gimp_rectangle_tool_apply_fixed_height:
+ * @rectangle_tool: A #GimpRectangleTool.
+ * @constraint:     Constraint to use.
+ *
+ * Makes the rectangle have a fixed_height, following the constrainment rules
+ * of fixed heights as well. Please refer to the rectangle tools spec.
+ */
+static void
+gimp_rectangle_tool_apply_fixed_height (GimpRectangleTool      *rectangle_tool,
+                                        GimpRectangleConstraint constraint)
+
+{
+  GimpRectangleToolPrivate    *private;
+  GimpRectangleOptions        *options;
+  GimpRectangleOptionsPrivate *options_private;
+
+  private         = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle_tool);
+  options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rectangle_tool);
+  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+
+  switch (private->function)
+    {
+    case RECT_RESIZING_UPPER_LEFT:
+    case RECT_RESIZING_UPPER_RIGHT:
+    case RECT_RESIZING_TOP:
+
+      /* We always want to center around fixed_center here, since we want the
+       * anchor point to be directly on the opposite side.
+       */
+      private->y1 = private->center_y_on_fixed_center -
+                    options_private->height / 2;
+      private->y2 = private->y1 + options_private->height;
+
+      break;
+
+    case RECT_RESIZING_LOWER_LEFT:
+    case RECT_RESIZING_LOWER_RIGHT:
+    case RECT_RESIZING_BOTTOM:
+
+      /* We always want to center around fixed_center here, since we want the
+       * anchor point to be directly on the opposite side.
+       */
+      private->y1 = private->center_y_on_fixed_center -
+                    options_private->height / 2;
+      private->y2 = private->y1 + options_private->height;
+
+      break;
+    }
+
+  /* Width shall be kept even after constraints, so we move the
+   * rectangle sideways rather than adjusting a side.
+   */
+  gimp_rectangle_tool_keep_inside_vertically (rectangle_tool,
+                                              constraint);
+}
+
+/**
+ * gimp_rectangle_tool_apply_aspect:
+ * @rectangle_tool: A #GimpRectangleTool.
+ * @aspect:         The desired aspect.
+ * @clamped_sides:  Bitfield of sides that have been clamped.
+ *
+ * Adjust the rectangle to the desired aspect.
+ *
+ * Sometimes, a side must not be moved outwards, for example if a the RIGHT side
+ * has been clamped previously, we must not move the RIGHT side to the right,
+ * since that would violate the constraint again. The clamped_sides bitfield
+ * keeps track of sides that have previously been clamped.
+ *
+ * If fixed_center is used, the function adjusts the aspect by symmetrically
+ * adjusting the left and right, or top and bottom side.
+ */
+static void
+gimp_rectangle_tool_apply_aspect (GimpRectangleTool *rectangle_tool,
+                                  gdouble            aspect,
+                                  gint               clamped_sides)
+{
+  GimpRectangleToolPrivate    *private;
+  GimpRectangleOptions        *options;
+  GimpRectangleOptionsPrivate *options_private;
+  gint                         current_w;
+  gint                         current_h;
+  gdouble                      current_aspect;
+  SideToResize                 side_to_resize = SIDE_TO_RESIZE_NONE;
+
+  private         = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle_tool);
+  options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rectangle_tool);
+  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+
+  current_w = private->x2 - private->x1;
+  current_h = private->y2 - private->y1;
+
+  current_aspect = current_w / (gdouble) current_h;
+
+  /* Do we have to do anything? */
+  if (current_aspect == aspect)
+    {
+      return;
+    }
+
+  if (options_private->fixed_center)
+    {
+      /* We may only adjust the sides symmetrically to get desired aspect. */
+      if (current_aspect > aspect)
+        {
+          /* We prefer to use top and bottom (since that will make the cursor
+           * remain on the rectangle edge), unless that is what the user has
+           * grabbed.
+           */
+          switch (private->function)
+            {
+            case RECT_RESIZING_LEFT:
+            case RECT_RESIZING_RIGHT:
+            case RECT_RESIZING_UPPER_LEFT:
+            case RECT_RESIZING_UPPER_RIGHT:
+            case RECT_RESIZING_LOWER_LEFT:
+            case RECT_RESIZING_LOWER_RIGHT:
+              if (!(clamped_sides & CLAMPED_TOP) &&
+                  !(clamped_sides & CLAMPED_BOTTOM))
+                {
+                  side_to_resize = SIDE_TO_RESIZE_TOP_AND_BOTTOM_SYMMETRICALLY;
+                }
+              else
+                {
+                  side_to_resize = SIDE_TO_RESIZE_LEFT_AND_RIGHT_SYMMETRICALLY;
+                }
+              break;
+
+            case RECT_RESIZING_TOP:
+            case RECT_RESIZING_BOTTOM:
+            default:
+              side_to_resize = SIDE_TO_RESIZE_LEFT_AND_RIGHT_SYMMETRICALLY;
+              break;
+            }
+        }
+      else /* (current_aspect < aspect) */
+        {
+          /* We prefer to use left and right (since that will make the cursor
+           * remain on the rectangle edge), unless that is what the user has
+           * grabbed.
+           */
+          switch (private->function)
+            {
+            case RECT_RESIZING_TOP:
+            case RECT_RESIZING_BOTTOM:
+            case RECT_RESIZING_UPPER_LEFT:
+            case RECT_RESIZING_UPPER_RIGHT:
+            case RECT_RESIZING_LOWER_LEFT:
+            case RECT_RESIZING_LOWER_RIGHT:
+              if (!(clamped_sides & CLAMPED_LEFT) &&
+                  !(clamped_sides & CLAMPED_RIGHT))
+                {
+                  side_to_resize = SIDE_TO_RESIZE_LEFT_AND_RIGHT_SYMMETRICALLY;
+                }
+              else
+                {
+                  side_to_resize = SIDE_TO_RESIZE_TOP_AND_BOTTOM_SYMMETRICALLY;
+                }
+              break;
+
+            case RECT_RESIZING_LEFT:
+            case RECT_RESIZING_RIGHT:
+            default:
+              side_to_resize = SIDE_TO_RESIZE_TOP_AND_BOTTOM_SYMMETRICALLY;
+              break;
+            }
+        }
+    }
+  else if (current_aspect > aspect)
+    {
+      /* We can safely pick LEFT or RIGHT, since using those sides will make the
+       * rectangle smaller, so we don't need to check for clamped_sides. We may
+       * only use TOP and BOTTOM if not those sides have been clamped, since
+       * using them will make the rectangle bigger.
+       */
+      switch (private->function)
+        {
+        case RECT_RESIZING_UPPER_LEFT:
+          if (!(clamped_sides & CLAMPED_TOP))
+            side_to_resize = SIDE_TO_RESIZE_TOP;
+          else
+            side_to_resize = SIDE_TO_RESIZE_LEFT;
+          break;
+
+        case RECT_RESIZING_UPPER_RIGHT:
+          if (!(clamped_sides & CLAMPED_TOP))
+            side_to_resize = SIDE_TO_RESIZE_TOP;
+          else
+            side_to_resize = SIDE_TO_RESIZE_RIGHT;
+          break;
+
+        case RECT_RESIZING_LOWER_LEFT:
+          if (!(clamped_sides & CLAMPED_BOTTOM))
+            side_to_resize = SIDE_TO_RESIZE_BOTTOM;
+          else
+            side_to_resize = SIDE_TO_RESIZE_LEFT;
+          break;
+
+        case RECT_RESIZING_LOWER_RIGHT:
+          if (!(clamped_sides & CLAMPED_BOTTOM))
+            side_to_resize = SIDE_TO_RESIZE_BOTTOM;
+          else
+            side_to_resize = SIDE_TO_RESIZE_RIGHT;
+          break;
+
+        case RECT_RESIZING_LEFT:
+          if (!(clamped_sides & CLAMPED_TOP) && !(clamped_sides & CLAMPED_BOTTOM))
+            side_to_resize = SIDE_TO_RESIZE_TOP_AND_BOTTOM_SYMMETRICALLY;
+          else
+            side_to_resize = SIDE_TO_RESIZE_LEFT;
+          break;
+
+        case RECT_RESIZING_RIGHT:
+          if (!(clamped_sides & CLAMPED_TOP) && !(clamped_sides & CLAMPED_BOTTOM))
+            side_to_resize = SIDE_TO_RESIZE_TOP_AND_BOTTOM_SYMMETRICALLY;
+          else
+            side_to_resize = SIDE_TO_RESIZE_RIGHT;
+          break;
+
+        case RECT_RESIZING_BOTTOM:
+        case RECT_RESIZING_TOP:
+          side_to_resize = SIDE_TO_RESIZE_LEFT_AND_RIGHT_SYMMETRICALLY;
+          break;
+
+        case RECT_MOVING:
+        default:
+          if (!(clamped_sides & CLAMPED_BOTTOM))
+            side_to_resize = SIDE_TO_RESIZE_BOTTOM;
+          else if (!(clamped_sides & CLAMPED_RIGHT))
+            side_to_resize = SIDE_TO_RESIZE_RIGHT;
+          else if (!(clamped_sides & CLAMPED_TOP))
+            side_to_resize = SIDE_TO_RESIZE_TOP;
+          else if (!(clamped_sides & CLAMPED_LEFT))
+            side_to_resize = SIDE_TO_RESIZE_LEFT;
+          break;
+        }
+    }
+  else /* (current_aspect < aspect) */
+    {
+      /* We can safely pick TOP or BOTTOM, since using those sides will make the
+       * rectangle smaller, so we don't need to check for clamped_sides. We may
+       * only use LEFT and RIGHT if not those sides have been clamped, since
+       * using them will make the rectangle bigger.
+       */
+      switch (private->function)
+        {
+        case RECT_RESIZING_UPPER_LEFT:
+          if (!(clamped_sides & CLAMPED_LEFT))
+            side_to_resize = SIDE_TO_RESIZE_LEFT;
+          else
+            side_to_resize = SIDE_TO_RESIZE_TOP;
+          break;
+
+        case RECT_RESIZING_UPPER_RIGHT:
+          if (!(clamped_sides & CLAMPED_RIGHT))
+            side_to_resize = SIDE_TO_RESIZE_RIGHT;
+          else
+            side_to_resize = SIDE_TO_RESIZE_TOP;
+          break;
+
+        case RECT_RESIZING_LOWER_LEFT:
+          if (!(clamped_sides & CLAMPED_LEFT))
+            side_to_resize = SIDE_TO_RESIZE_LEFT;
+          else
+            side_to_resize = SIDE_TO_RESIZE_BOTTOM;
+          break;
+
+        case RECT_RESIZING_LOWER_RIGHT:
+          if (!(clamped_sides & CLAMPED_RIGHT))
+            side_to_resize = SIDE_TO_RESIZE_RIGHT;
+          else
+            side_to_resize = SIDE_TO_RESIZE_BOTTOM;
+          break;
+
+        case RECT_RESIZING_TOP:
+          if (!(clamped_sides & CLAMPED_LEFT) && !(clamped_sides & CLAMPED_RIGHT))
+            side_to_resize = SIDE_TO_RESIZE_LEFT_AND_RIGHT_SYMMETRICALLY;
+          else
+            side_to_resize = SIDE_TO_RESIZE_TOP;
+          break;
+
+        case RECT_RESIZING_BOTTOM:
+          if (!(clamped_sides & CLAMPED_LEFT) && !(clamped_sides & CLAMPED_RIGHT))
+            side_to_resize = SIDE_TO_RESIZE_LEFT_AND_RIGHT_SYMMETRICALLY;
+          else
+            side_to_resize = SIDE_TO_RESIZE_BOTTOM;
+          break;
+
+        case RECT_RESIZING_LEFT:
+        case RECT_RESIZING_RIGHT:
+          side_to_resize = SIDE_TO_RESIZE_TOP_AND_BOTTOM_SYMMETRICALLY;
+          break;
+
+        case RECT_MOVING:
+        default:
+          if (!(clamped_sides & CLAMPED_BOTTOM))
+            side_to_resize = SIDE_TO_RESIZE_BOTTOM;
+          else if (!(clamped_sides & CLAMPED_RIGHT))
+            side_to_resize = SIDE_TO_RESIZE_RIGHT;
+          else if (!(clamped_sides & CLAMPED_TOP))
+            side_to_resize = SIDE_TO_RESIZE_TOP;
+          else if (!(clamped_sides & CLAMPED_LEFT))
+            side_to_resize = SIDE_TO_RESIZE_LEFT;
+          break;
+        }
+    }
+
+  /* We now know what side(s) we should resize, so now we just solve the
+   * aspect equation for that side(s).
+   */
+  switch (side_to_resize)
+    {
+    case SIDE_TO_RESIZE_NONE:
+      return;
+
+    case SIDE_TO_RESIZE_LEFT:
+      private->x1 = private->x2 - aspect * current_h;
+      break;
+
+    case SIDE_TO_RESIZE_RIGHT:
+      private->x2 = private->x1 + aspect * current_h;
+      break;
+
+    case SIDE_TO_RESIZE_TOP:
+      private->y1 = private->y2 - current_w / aspect;
+      break;
+
+    case SIDE_TO_RESIZE_BOTTOM:
+      private->y2 = private->y1 + current_w / aspect;
+      break;
+
+    case SIDE_TO_RESIZE_TOP_AND_BOTTOM_SYMMETRICALLY:
+      {
+        gint correct_h = current_w / aspect;
+
+        private->y1 = private->center_y_on_fixed_center - correct_h / 2;
+        private->y2 = private->y1 + correct_h;
+      }
+      break;
+
+    case SIDE_TO_RESIZE_LEFT_AND_RIGHT_SYMMETRICALLY:
+      {
+        gint correct_w = current_h * aspect;
+
+        private->x1 = private->center_x_on_fixed_center - correct_w / 2;
+        private->x2 = private->x1 + correct_w;
+      }
+      break;
+    }
+}
+
+/**
+ * gimp_rectangle_tool_update_with_coord:
+ * @rectangle_tool: A #GimpRectangleTool.
+ * @new_x:          New X-coordinate in the context of the current function.
+ * @new_y:          New Y-coordinate in the context of the current function.
+ *
+ * The core rectangle adjustment function. It updates the rectangle for the
+ * passed cursor coordinate, taking current function and tool options into
+ * account.  It also updates the current private->function if necessary.
+ */
+static void
+gimp_rectangle_tool_update_with_coord (GimpRectangleTool *rectangle_tool,
+                                       gint               new_x,
+                                       gint               new_y)
+{
+  GimpTool                    *tool;
+  GimpRectangleToolPrivate    *private;
+  GimpRectangleOptions        *options;
+  GimpRectangleOptionsPrivate *options_private;
+  GimpRectangleConstraint      constraint_to_use;
+
+  tool            = GIMP_TOOL (rectangle_tool);
+  private         = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle_tool);
+  options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rectangle_tool);
+  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+
+  /* Move the corner or edge the user currently has grabbed. */
+  gimp_rectangle_tool_apply_coord (rectangle_tool,
+                                   new_x,
+                                   new_y);
+
+  /* Update private->function. The function changes if the user "flips" the
+   * rectangle.
+   */
+  gimp_rectangle_tool_check_function (rectangle_tool);
+
+  /* E.g. the crop tool will set up clamping always to be used, and this
+   * function handles that.
+   */
+  gimp_rectangle_tool_handle_general_clamping (rectangle_tool);
+
+  /* Calculate what constraint to use when needed. */
+  constraint_to_use = gimp_rectangle_tool_get_constraint (rectangle_tool);
+  if (constraint_to_use == GIMP_RECTANGLE_CONSTRAIN_NONE)
+    constraint_to_use = GIMP_RECTANGLE_CONSTRAIN_IMAGE;
+
+  /* fixed_aspect and fixed_width/height are mutually exclusive. */
+  if (options_private->fixed_aspect)
+    {
+      gdouble aspect;
+
+      aspect = CLAMP (options_private->aspect_numerator /
+                      options_private->aspect_denominator,
+                      1.0 / tool->display->image->height,
+                      tool->display->image->width);
+
+      if (private->function != RECT_MOVING)
+        {
+          ClampedSide clamped_sides = CLAMPED_NONE;
+
+          gimp_rectangle_tool_apply_aspect (rectangle_tool,
+                                            aspect,
+                                            clamped_sides);
+
+          /* After we have applied aspect, we might have taken the rectangle
+           * outside of constraint, so clamp and apply aspect again. We will get
+           * the right result this time, since 'clamped_sides' will be setup
+           * correctly now.
+           */
+          gimp_rectangle_tool_clamp (rectangle_tool,
+                                     &clamped_sides,
+                                     constraint_to_use,
+                                     options_private->fixed_center);
+
+          gimp_rectangle_tool_apply_aspect (rectangle_tool,
+                                            aspect,
+                                            clamped_sides);
+        }
+      else
+        {
+          gimp_rectangle_tool_apply_aspect (rectangle_tool,
+                                            aspect,
+                                            CLAMPED_NONE);
+
+          /* When fixed ratio is used, we always want the rectangle inside the
+           * canvas.
+           */
+          gimp_rectangle_tool_keep_inside (rectangle_tool,
+                                           constraint_to_use);
+        }
+    }
+  else /* !options_private->fixed_aspect */
+    {
+      if (options_private->fixed_width)
+        {
+          gimp_rectangle_tool_apply_fixed_width (rectangle_tool,
+                                                 constraint_to_use);
+        }
+      if (options_private->fixed_height)
+        {
+          gimp_rectangle_tool_apply_fixed_height (rectangle_tool,
+                                                  constraint_to_use);
+        }
+    }
+}
+
+/**
+ * gimp_rectangle_tool_get_constraints:
+ * @rectangle_tool: A #GimpRectagnelTool.
+ * @min_x:
+ * @min_y:
+ * @max_x:
+ * @max_y:          Pointers of where to put constraints. NULL allowed.
+ * @constraint:     Wether to return image or layer constraints.
+ *
+ * Calculates constraint coordinates for image or layer.
+ */
+static void
+gimp_rectangle_tool_get_constraints (GimpRectangleTool       *rectangle_tool,
+                                     gint                    *min_x,
+                                     gint                    *min_y,
+                                     gint                    *max_x,
+                                     gint                    *max_y,
+                                     GimpRectangleConstraint  constraint)
+{
+  GimpTool                    *tool;
+  gint                         min_x_dummy;
+  gint                         min_y_dummy;
+  gint                         max_x_dummy;
+  gint                         max_y_dummy;
+
+  if (min_x == NULL)
+    min_x = &min_x_dummy;
+  if (min_y == NULL)
+    min_y = &min_y_dummy;
+  if (max_x == NULL)
+    max_x = &max_x_dummy;
+  if (max_y == NULL)
+    max_y = &max_y_dummy;
+
+  tool = GIMP_TOOL (rectangle_tool);
+
+  switch (constraint)
+    {
+    case GIMP_RECTANGLE_CONSTRAIN_IMAGE:
+      *min_x = 0;
+      *min_y = 0;
+      *max_x = tool->display->image->width;
+      *max_y = tool->display->image->height;
+      break;
+
+    case GIMP_RECTANGLE_CONSTRAIN_DRAWABLE:
+      {
+        GimpItem *item = GIMP_ITEM (tool->drawable);
+
+        gimp_item_offsets (item, min_x, min_y);
+        *max_x = *min_x + gimp_item_width (item);
+        *max_y = *min_y + gimp_item_height (item);
+      }
+      break;
+
+    default:
+      g_warning ("Invalid rectangle constraint.\n");
+      return;
+    }
+}
+
+/**
+ * gimp_rectangle_tool_handle_general_clamping:
+ * @rectangle_tool: A #GimpRectangleTool.
+ *
+ * Make sure that contraints are applied to the rectangle, either by manually
+ * doing it, or by looking at the rectangle tool options and concluding it will
+ * be done later.
+ */
+static void
+gimp_rectangle_tool_handle_general_clamping (GimpRectangleTool *rectangle_tool)
+{
+  GimpRectangleToolPrivate    *private;
+  GimpRectangleOptions        *options;
+  GimpRectangleOptionsPrivate *options_private;
+  GimpRectangleConstraint      constraint;
+
+  private         = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle_tool);
+  options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rectangle_tool);
+  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
+
+  constraint = gimp_rectangle_tool_get_constraint (rectangle_tool);
+
+  /* fixed_aspect takes care of clamping by it self, so just return in case that
+   * is in use. Also return if no constraints should be enforced.
+   */
+  if (options_private->fixed_aspect ||
+      (constraint != GIMP_RECTANGLE_CONSTRAIN_IMAGE &&
+       constraint != GIMP_RECTANGLE_CONSTRAIN_DRAWABLE))
+    return;
+
+  /* fixed_width and fixed_height takes care of clamping if they are turned on,
+   * so we only need to care if they are not on.
+   */
+  if (!options_private->fixed_width)
+    {
+      /* Never clamp a moved rect; it causes the rectangle to get "consumed". */
+      if (private->function == RECT_MOVING)
+        {
+          gimp_rectangle_tool_keep_inside_horizontally (rectangle_tool,
+                                                        constraint);
+        }
+      else
+        {
+          gimp_rectangle_tool_clamp_width (rectangle_tool,
+                                           NULL,
+                                           constraint,
+                                           options_private->fixed_center);
+        }
+    }
+
+  if (!options_private->fixed_height)
+    {
+      /* Never clamp a moved rect; it causes the rectangle to get "consumed". */
+      if (private->function == RECT_MOVING)
+        {
+          gimp_rectangle_tool_keep_inside_vertically (rectangle_tool,
+                                                      constraint);
+        }
+      else
+        {
+          gimp_rectangle_tool_clamp_height (rectangle_tool,
+                                            NULL,
+                                            constraint,
+                                            options_private->fixed_center);
+        }
+    }
 }

@@ -1,5 +1,36 @@
 2007-07-08  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Completely rewrote logic in gimp_rectangle_tool_motion, in effect
+	also fixing bug #353936 and bug #398188. The general strategy now
+	is to have specialized functions doing one thing, and one thing
+	only.
+
+	The patch also makes adjusting the rectangle through the keyboard
+	and through the rectangle tool options follow tool options.
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_motion):
+	Completely refactored.
+
+	(gimp_rectangle_tool_active_modifier_key):
+	(gimp_rectangle_tool_update_options): Submit to tool options.
+
+	(gimp_rectangle_tool_apply_coord)
+	(gimp_rectangle_tool_clamp)
+	(gimp_rectangle_tool_clamp_width)
+	(gimp_rectangle_tool_clamp_height)
+	(gimp_rectangle_tool_keep_inside)
+	(gimp_rectangle_tool_keep_inside_horizontally)
+	(gimp_rectangle_tool_keep_inside_vertically)
+	(gimp_rectangle_tool_apply_fixed_width)
+	(gimp_rectangle_tool_apply_fixed_height)
+	(gimp_rectangle_tool_apply_aspect)
+	(gimp_rectangle_tool_update_with_coord)
+	(gimp_rectangle_tool_get_constraints)
+	(gimp_rectangle_tool_handle_general_clamping): The new specialized
+	functions.
+
+2007-07-08  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangletool.c
 	(gimp_rectangle_tool_active_modifier_key): Block
 	gimp_rectangle_tool_options_notify when changing fixed-aspect
