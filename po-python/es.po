@@ -1,23 +1,25 @@
+# translation of gimp-python.HEAD.po to Spanish
 # Spanish translation for gimp-python.
+# Copyright © 1998-2000,2003, 2006, 2007 Free Software Foundation, Inc.
+# This file is distributed under the same license as the gimp package.
+#
+# Oscar Cebellán Ramos <cebaman@bigfoot.com>
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
-# Francisco Vila <francisco.vila@hispalinux.es>, 2006.
-# Copyright © 1998-2000,2003, 2006 Free Software Foundation, Inc.
-# This file is distributed under the same license as the gimp package.
-# Oscar Cebellán Ramos <cebaman@bigfoot.com>
+# Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-python-2-4\n"
+"Project-Id-Version: gimp-python.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-11-30 10:56+0100\n"
-"PO-Revision-Date: 2006-11-29 13:35+0100\n"
+"POT-Creation-Date: 2007-03-09 03:35+0000\n"
+"PO-Revision-Date: 2007-07-06 13:11+0200\n"
 "Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "\n"
-"X-Generator: gettext po mode for emacs\n"
+"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/pygimp/gimpfu.py:335
@@ -72,8 +74,8 @@ msgid "Colored XHTML"
 msgstr "XHTML coloreado"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
-msgid "Character source"
-msgstr "Fuente del carácter"
+msgid "Character _source"
+msgstr "_Fuente del carácter"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
 msgid "Source code"
@@ -88,16 +90,16 @@ msgid "Entry box"
 msgstr "Caja de entrada"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
-msgid "File to read or characters to use"
-msgstr "Archivo que leer o caracteres que usar"
+msgid "_File to read or characters to use"
+msgstr "_Archivo a leer o caracteres a usar"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
-msgid "Font size in pixels"
-msgstr "Tamaño de la tipografía en píxeles"
+msgid "Fo_nt size in pixels"
+msgstr "Ta_maño de la tipografía en píxeles"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
-msgid "Write a separate CSS file"
-msgstr "Escribir un archivo CSS separado"
+msgid "_Write a separate CSS file"
+msgstr "E_scribir un archivo CSS separado"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
@@ -142,24 +144,24 @@ msgid "_Fog..."
 msgstr "_Niebla..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:59
-msgid "Layer name"
-msgstr "Nombre de la capa"
+msgid "_Layer name"
+msgstr "Nombre de la _capa"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:59
 msgid "Clouds"
 msgstr "Nubes"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:60
-msgid "Fog color"
-msgstr "Color de la niebla"
+msgid "_Fog color"
+msgstr "Color de la nie_bla"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:61
-msgid "Turbulence"
-msgstr "Turbulencia"
+msgid "_Turbulence"
+msgstr "_Turbulencia"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:62
-msgid "Opacity"
-msgstr "Opacidad"
+msgid "Op_acity"
+msgstr "Op_acidad"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
 msgid "Offset the colors in a palette"
@@ -177,8 +179,8 @@ msgid "Palette"
 msgstr "Paleta"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
-msgid "Offset"
-msgstr "Desplazamiento"
+msgid "Off_set"
+msgstr "De_splazamiento"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
 msgid "Sort the colors in a palette"
@@ -189,8 +191,8 @@ msgid "_Sort Palette..."
 msgstr "_Ordenar paleta..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-msgid "Color model"
-msgstr "Modelo de color"
+msgid "Color _model"
+msgstr "_Modelo de color"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
 msgid "RGB"
@@ -201,12 +203,12 @@ msgid "HSV"
 msgstr "HSV"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-msgid "Channel to sort"
-msgstr "Canal que ordenar"
+msgid "Channel to _sort"
+msgstr "Canal que _ordenar"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
 msgid "Red or Hue"
-msgstr "Rojo o Tono"
+msgstr "Rojo o tono"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
 msgid "Green or Saturation"
@@ -217,8 +219,8 @@ msgid "Blue or Value"
 msgstr "Azul o valor"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
-msgid "Ascending"
-msgstr "Ascendente"
+msgid "_Ascending"
+msgstr "_Ascendente"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
@@ -295,21 +297,22 @@ msgid "_Drop Shadow and Bevel..."
 msgstr "_Sombra arrojada y bisel..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
-msgid "Shadow blur"
-msgstr "Difuminado de la sombra"
+msgid "_Shadow blur"
+msgstr "Difuminado de la _sombra"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
-msgid "Bevel"
-msgstr "Bisel"
+msgid "_Bevel"
+msgstr "_Bisel"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
-msgid "Drop shadow"
-msgstr "Sombra arrojada"
+msgid "_Drop shadow"
+msgstr "Sombra a_rrojada"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
-msgid "Drop shadow X displacement"
-msgstr "Desplazamiento X de la sombra arrojada"
+msgid "Drop shadow _X displacement"
+msgstr "Desplazamiento _X de la sombra arrojada"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
-msgid "Drop shadow Y displacement"
-msgstr "Desplazamiento Y de la sombra arrojada"
+msgid "Drop shadow _Y displacement"
+msgstr "Desplazamiento _Y de la sombra arrojada"
+
