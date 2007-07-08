@@ -1,22 +1,22 @@
 # translation of gimp-tips.HEAD.po to Spanish
-# Copyright © 2003 Free Software Foundation, Inc.
+# Copyright © 2003, 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp 1.3.X package.
-# Francisco Javier F. Serrador <serrador@arrakis.es>, 2003.
+#
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
-# Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005.
-# Fancisco Vila Doncel <francisco.vila@hispalinux.es>, 2006.
+# Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2003, 2004, 2005.
+# Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: es\n"
+"Project-Id-Version: gimp-tips.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-19 01:57+0100\n"
-"PO-Revision-Date: 2007-02-15 11:44+0100\n"
-"Last-Translator: Fancisco Vila Doncel <francisco.vila@hispalinux.es>\n"
+"POT-Creation-Date: 2007-06-07 03:44+0100\n"
+"PO-Revision-Date: 2007-07-06 11:55+0200\n"
+"Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.2\n"
+"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
@@ -30,7 +30,7 @@ msgid ""
 "with the eyedropper tool sets the background color instead of the foreground "
 "color."
 msgstr ""
-"Presione <tt>Ctrl</tt> y pulse con la herramienta de «Cubo de Relleno» para "
+"Presione <tt>Ctrl</tt> y pulse con la herramienta de «Cubo de relleno» para "
 "que ésta utilice el color de fondo en lugar del color de frente. De forma "
 "similar, presione <tt>Ctrl</tt> y pulse con la herramienta «Cuentagotas» "
 "para establecer el color de fondo en lugar del color de frente."
@@ -285,8 +285,8 @@ msgstr ""
 
 #: ../data/tips/gimp-tips.xml.in.h:26
 msgid ""
-"You can get context-sensitive help for most of the GIMP's features by "
-"pressing the F1 key at any time. This also works inside the menus."
+"You can get context-sensitive help for most of GIMP's features by pressing "
+"the F1 key at any time. This also works inside the menus."
 msgstr ""
 "Puede obtener ayuda sensible al contexto para la mayoría de las "
 "características de GIMP pulsando la tecla F1 en cualquier momento. Esto "
@@ -324,11 +324,11 @@ msgstr ""
 #: ../data/tips/gimp-tips.xml.in.h:30
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
-"hold <tt>Spacebar</tt> while you move the mouse.)"
+"hold <tt>Spacebar</tt> while you move the mouse)."
 msgstr ""
-"Puede usar el botón central del ratón para ir moverse por la imagen "
-"(opcionalmente, mantenga pulsada la <tt>barra especiadora</tt> mientras "
-"mueve el ratón."
+"Puede usar el botón central del ratón para moverse por la imagen "
+"(opcionalmente, mantenga pulsada la <tt>barra espaciadora</tt> mientras "
+"mueve el ratón)."
 
 #: ../data/tips/gimp-tips.xml.in.h:31
 msgid ""
@@ -343,36 +343,3 @@ msgstr ""
 "imagen y pulse otra vez sobre el botón para convertirla de nuevo en una "
 "selección normal."
 
-#~ msgid ""
-#~ "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog "
-#~ "toggles viewing the mask directly."
-#~ msgstr ""
-#~ "Presionando <tt>Alt</tt> y pulsando sobre la vista previa de la máscara "
-#~ "en el diálogo de capas activa la vista de la máscara directamente."
-
-#~ msgid ""
-#~ "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</"
-#~ "tt>-click will draw a straight line from your last drawing point to your "
-#~ "current cursor position. If you also press <tt>Ctrl</tt>, the line will "
-#~ "be constrained to 15 degree angles."
-#~ msgstr ""
-#~ "Cuando está utilizando una herramienta de dibujo (Pincel, Aerógrafo o "
-#~ "Lápiz) presionar <tt>Mayús.</tt>y pulsar dibujará una línea recta desde "
-#~ "su último punto de dibujo hasta la posición actual del cursor. Si también "
-#~ "presiona <tt>Ctrl</tt> la línea se limitará a ángulos de 15 grados."
-
-#~ msgid ""
-#~ "You can adjust the selection range for fuzzy select by clicking and "
-#~ "dragging left and right."
-#~ msgstr ""
-#~ "Puede ajustar el rango de selección de la selección difusa pulsando y "
-#~ "arrastrando de izquierda a derecha."
-
-#~ msgid ""
-#~ "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while "
-#~ "you are making a selection in order to constrain it to a square or a "
-#~ "circle, or to have it centered on its starting point."
-#~ msgstr ""
-#~ "Puede pulsar o soltar las teclas <tt>Mayús.</tt> y <tt>Ctrl</tt> mientras "
-#~ "está haciendo una selección para limitarla a un cuadrado o círculo "
-#~ "perfecto, o para tenerla centrada sobre su punto de inicio."
