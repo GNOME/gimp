@@ -1,3 +1,10 @@
+2007-07-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/jpeg/jpeg.c (run): when the save procedure is being
+	called with GIMP_RUN_WITH_LAST_VALS and the image doesn't have the
+	"jpeg-save-options" parasite set, show the dialog to give the user
+	control over the JPEG encoding parameters.
+
 2007-07-08  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Completely rewrote logic in gimp_rectangle_tool_motion, in effect
