@@ -2183,6 +2183,24 @@ gimp_prop_file_chooser_button_new_with_dialog (GObject     *config,
   return gimp_prop_file_chooser_button_setup (button, config, param_spec);
 }
 
+/* this evil hack is here to work around bug #327243 */
+static gboolean
+gimp_prop_file_chooser_button_connect_idle (GObject *button)
+{
+  GObject *config = g_object_get_data (button,
+                                       "gimp-prop-file-chooser-connect");
+
+  if (config)
+    {
+      g_signal_connect (button, "selection-changed",
+                        G_CALLBACK (gimp_prop_file_chooser_button_callback),
+                        config);
+      g_object_set_data (button, "gimp-prop-file-chooser-connect", NULL);
+    }
+
+  return FALSE;
+}
+
 static GtkWidget *
 gimp_prop_file_chooser_button_setup (GtkWidget  *button,
                                      GObject    *config,
@@ -2219,9 +2237,20 @@ gimp_prop_file_chooser_button_setup (GtkWidget  *button,
 
   set_param_spec (G_OBJECT (button), widget, param_spec);
 
-  g_signal_connect (button, "selection-changed",
-                    G_CALLBACK (gimp_prop_file_chooser_button_callback),
-                    config);
+  /* this evil hack is here to work around bug #327243 */
+  {
+    GSource  *source = g_idle_source_new ();
+
+    g_object_set_data (G_OBJECT (button),
+                       "gimp-prop-file-chooser-connect", config);
+
+    g_source_set_priority (source, G_PRIORITY_LOW);
+    g_source_set_closure (source,
+                          g_cclosure_new_object (G_CALLBACK (gimp_prop_file_chooser_button_connect_idle),
+                                                 G_OBJECT (button)));
+    g_source_attach (source, NULL);
+    g_source_unref (source);
+  }
 
   connect_notify (config, param_spec->name,
                   G_CALLBACK (gimp_prop_file_chooser_button_notify),

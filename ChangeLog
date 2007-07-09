@@ -1,5 +1,11 @@
 2007-07-09  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppropwidgets.c
+	(gimp_prop_file_chooser_button_setup): added evil hack to work
+	around bug #327243 in GtkFileChooserButton.
+
+2007-07-09  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/jpeg/jpeg.c (run): when the save procedure is being
 	called with GIMP_RUN_WITH_LAST_VALS and the image doesn't have the
 	"jpeg-save-options" parasite set, show the dialog to give the user
