@@ -329,27 +329,7 @@ run (const gchar      *name,
 
 #endif /* HAVE_EXIF */
 
-      jsvals.quality        = DEFAULT_QUALITY;
-      jsvals.smoothing      = DEFAULT_SMOOTHING;
-      jsvals.optimize       = DEFAULT_OPTIMIZE;
-      jsvals.progressive    = DEFAULT_PROGRESSIVE;
-      jsvals.baseline       = DEFAULT_BASELINE;
-      jsvals.subsmp         = DEFAULT_SUBSMP;
-      jsvals.restart        = DEFAULT_RESTART;
-      jsvals.dct            = DEFAULT_DCT;
-      jsvals.preview        = DEFAULT_PREVIEW;
-      jsvals.save_exif      = DEFAULT_EXIF;
-      jsvals.save_thumbnail = DEFAULT_THUMBNAIL;
-      jsvals.save_xmp       = DEFAULT_XMP;
-
-#ifdef HAVE_EXIF
-
-      if (exif_data && (exif_data->data))
-        jsvals.save_thumbnail = TRUE;
-
-#endif /* HAVE_EXIF */
-
-      load_defaults();  /* erase default parameters if defaults are recorded */
+      load_save_defaults ();
 
       switch (run_mode)
         {

@@ -47,7 +47,25 @@
 #include "jpeg-icc.h"
 #include "jpeg-save.h"
 
+
+#define SCALE_WIDTH         125
+
+/* See bugs #63610 and #61088 for a discussion about the quality settings */
+#define DEFAULT_QUALITY     85.0
+#define DEFAULT_SMOOTHING   0.0
+#define DEFAULT_OPTIMIZE    TRUE
+#define DEFAULT_PROGRESSIVE FALSE
+#define DEFAULT_BASELINE    TRUE
+#define DEFAULT_SUBSMP      0
+#define DEFAULT_RESTART     0
+#define DEFAULT_DCT         0
+#define DEFAULT_PREVIEW     FALSE
+#define DEFAULT_EXIF        TRUE
+#define DEFAULT_THUMBNAIL   FALSE
+#define DEFAULT_XMP         TRUE
+
 #define JPEG_DEFAULTS_PARASITE  "jpeg-save-defaults"
+
 
 typedef struct
 {
@@ -111,12 +129,12 @@ static GtkWidget *restart_markers_label = NULL;
 static GtkWidget *preview_size          = NULL;
 static gboolean  *abort_me              = NULL;
 
-static void save_dialog_response (GtkWidget *widget,
-                                  gint       response_id,
-                                  gpointer   data);
+static void   save_dialog_response (GtkWidget   *widget,
+                                    gint         response_id,
+                                    gpointer     data);
 
-static void      load_gui_defaults (JpegSaveGui *pg);
-static void      save_defaults(void);
+static void   load_gui_defaults    (JpegSaveGui *pg);
+static void   save_defaults        (void);
 
 
 /*
@@ -245,7 +263,7 @@ save_image (const gchar *filename,
 #ifdef HAVE_EXIF
   guchar   *thumbnail_buffer        = NULL;
   gint      thumbnail_buffer_length = 0;
-  ExifData  *exif_data_tmp          = NULL;
+  ExifData *exif_data_tmp           = NULL;
 #endif
 
   drawable = gimp_drawable_get (drawable_ID);
@@ -731,7 +749,7 @@ destroy_preview (void)
 gboolean
 save_dialog (void)
 {
-  JpegSaveGui   pg;
+  JpegSaveGui    pg;
   GtkWidget     *dialog;
   GtkWidget     *vbox;
   GtkObject     *entry;
@@ -1112,8 +1130,8 @@ save_dialog_response (GtkWidget *widget,
                       gpointer   data)
 {
   JpegSaveGui *pg = data;
-  GtkTextIter start_iter;
-  GtkTextIter end_iter;
+  GtkTextIter  start_iter;
+  GtkTextIter  end_iter;
 
   switch (response_id)
     {
@@ -1122,6 +1140,7 @@ save_dialog_response (GtkWidget *widget,
       image_comment = gtk_text_buffer_get_text (pg->text_buffer,
                                                 &start_iter, &end_iter, FALSE);
       pg->run = TRUE;
+      /* fallthrough */
 
     default:
       gtk_widget_destroy (widget);
@@ -1129,18 +1148,36 @@ save_dialog_response (GtkWidget *widget,
     }
 }
 
-gboolean
-load_defaults (void)
+void
+load_save_defaults (void)
 {
   GimpParasite *parasite;
   gchar        *def_str;
-  JpegSaveVals   tmpvals;
+  JpegSaveVals  tmpvals;
   gint          num_fields;
+
+  jsvals.quality        = DEFAULT_QUALITY;
+  jsvals.smoothing      = DEFAULT_SMOOTHING;
+  jsvals.optimize       = DEFAULT_OPTIMIZE;
+  jsvals.progressive    = DEFAULT_PROGRESSIVE;
+  jsvals.baseline       = DEFAULT_BASELINE;
+  jsvals.subsmp         = DEFAULT_SUBSMP;
+  jsvals.restart        = DEFAULT_RESTART;
+  jsvals.dct            = DEFAULT_DCT;
+  jsvals.preview        = DEFAULT_PREVIEW;
+  jsvals.save_exif      = DEFAULT_EXIF;
+  jsvals.save_thumbnail = DEFAULT_THUMBNAIL;
+  jsvals.save_xmp       = DEFAULT_XMP;
+
+#ifdef HAVE_EXIF
+  if (exif_data && (exif_data->data))
+    jsvals.save_thumbnail = TRUE;
+#endif /* HAVE_EXIF */
 
   parasite = gimp_parasite_find (JPEG_DEFAULTS_PARASITE);
 
   if (! parasite)
-    return FALSE;
+    return;
 
   def_str = g_strndup (gimp_parasite_data (parasite),
                        gimp_parasite_data_size (parasite));
@@ -1162,13 +1199,7 @@ load_defaults (void)
                        &tmpvals.save_xmp);
 
   if (num_fields == 12)
-    {
-      memcpy (&jsvals, &tmpvals, sizeof (tmpvals));
-      return TRUE;
-    }
-
-
-  return FALSE;
+    memcpy (&jsvals, &tmpvals, sizeof (tmpvals));
 }
 
 static void
@@ -1203,12 +1234,9 @@ save_defaults (void)
 static void
 load_gui_defaults (JpegSaveGui *pg)
 {
-GtkAdjustment *restart_markers;
-  if (! load_defaults ())
-    {
-      g_message (_("Could not load JPEG defaults"));
-      return;
-    }
+  GtkAdjustment *restart_markers;
+
+  load_save_defaults ();
 
 #define SET_ACTIVE_BTTN(field) \
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pg->field), jsvals.field)
@@ -1227,8 +1255,9 @@ GtkAdjustment *restart_markers;
 
 /*spin button stuff*/
   g_signal_handler_block (pg->use_restart_markers, pg->handler_id_restart);
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pg->use_restart_markers), jsvals.restart);
-  restart_markers = (GtkAdjustment *) pg->scale_data;
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (pg->use_restart_markers),
+                                jsvals.restart);
+  restart_markers = GTK_ADJUSTMENT (pg->scale_data);
   gtk_adjustment_set_value (restart_markers, jsvals.restart);
   g_signal_handler_unblock (pg->use_restart_markers, pg->handler_id_restart);
 
