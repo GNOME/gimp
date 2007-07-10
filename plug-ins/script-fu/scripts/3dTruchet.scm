@@ -107,7 +107,7 @@
 
       (gimp-edit-blend temp-draw FG-BG-RGB-MODE NORMAL-MODE
                        GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
-                       supersample 3 .2 TRUE
+                       supersample 3 0.2 TRUE
                        size size (* size 2) (/ size 2))
 
       (center-ellipse temp-img size (* size 2)  outer-radius outer-radius
@@ -124,7 +124,7 @@
 
       (gimp-edit-blend temp-draw2 FG-BG-RGB-MODE NORMAL-MODE
                        GRADIENT-SHAPEBURST-ANGULAR 100 0 REPEAT-NONE FALSE
-                       supersample 3 .2 TRUE
+                       supersample 3 0.2 TRUE
                        size size (* size 2) (* size 2))
 
       (gimp-selection-none temp-img)
