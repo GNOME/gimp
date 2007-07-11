@@ -1,5 +1,12 @@
 2007-07-11  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/lcms.c: clarify which procedures work with RGB
+	profiles and which accept profiles for other colorspaces.
+	Calculate MD5 checksums of the profile data excluding the header
+	and skip attempts to convert between identical profiles (bug #456017).
+
+2007-07-11  Sven Neumann  <sven@gimp.org>
+
 	* data/brushes/Calligraphic-Brush-*.vbr
 	* data/brushes/Circle-*.vbr
 	* data/brushes/Diagonal-Star-*.vbr: restored spacing values. Closes

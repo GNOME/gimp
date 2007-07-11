@@ -1,6 +1,9 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
+ * Color management plug-in based on littleCMS
+ * Copyright (C) 2006, 2007  Sven Neumann <sven@gimp.org>
+ *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
@@ -99,7 +102,8 @@ static GimpPDBStatusType  lcms_icc_file_info (const gchar      *filename,
                                               gchar           **info);
 
 static cmsHPROFILE  lcms_image_get_profile       (GimpColorConfig *config,
-                                                  gint32           image);
+                                                  gint32           image,
+                                                  guchar          *checksum);
 static gboolean     lcms_image_set_profile       (gint32           image,
                                                   const gchar     *filename);
 static void         lcms_image_transform_rgb     (gint32           image,
@@ -113,8 +117,10 @@ static void         lcms_drawable_transform      (GimpDrawable    *drawable,
                                                   cmsHTRANSFORM    transform,
                                                   gdouble          progress_start,
                                                   gdouble          progress_end);
+static void         lcms_sRGB_checksum           (guchar          *digest);
 
-static cmsHPROFILE  lcms_config_get_profile      (GimpColorConfig *config);
+static cmsHPROFILE  lcms_config_get_profile      (GimpColorConfig *config,
+                                                  guchar          *checksum);
 
 static gboolean     lcms_icc_apply_dialog        (gint32           image,
                                                   cmsHPROFILE      src_profile,
@@ -175,11 +181,11 @@ query (void)
   gimp_install_procedure (PLUG_IN_PROC_SET,
                           "Set ICC color profile on the image",
                           "This procedure sets an ICC color profile on an "
-                          "image using the 'icc-profile' parasite.  It does "
+                          "image using the 'icc-profile' parasite. It does "
                           "not do any color conversion.",
                           "Sven Neumann",
                           "Sven Neumann",
-                          "2006",
+                          "2006, 2007",
                           N_("Set color profile"),
                           "RGB*, INDEXED*",
                           GIMP_PLUGIN,
@@ -190,12 +196,12 @@ query (void)
                           "Set the default RGB color profile on the image",
                           "This procedure sets the user-configured RGB "
                           "profile on an image using the 'icc-profile' "
-                          "parasite.  If no RGB profile is configured, sRGB "
-                          "is assumed and the parasite is unset.  This "
+                          "parasite. If no RGB profile is configured, sRGB "
+                          "is assumed and the parasite is unset. This "
                           "procedure does not do any color conversion.",
                           "Sven Neumann",
                           "Sven Neumann",
-                          "2006",
+                          "2006, 2007",
                           N_("Set default RGB profile"),
                           "RGB*, INDEXED*",
                           GIMP_PLUGIN,
@@ -206,12 +212,13 @@ query (void)
                           "Apply a color profile on the image",
                           "This procedure transform from the image's color "
                           "profile (or the default RGB profile if none is "
-                          "set) to the given ICC color profile.  The profile "
+                          "set) to the given ICC color profile. Only RGB "
+                          "color profiles are accepted. The profile "
                           "is then set on the image using the 'icc-profile' "
                           "parasite.",
                           "Sven Neumann",
                           "Sven Neumann",
-                          "2006",
+                          "2006, 2007",
                           N_("Apply color profile"),
                           "RGB*, INDEXED*",
                           GIMP_PLUGIN,
@@ -229,7 +236,7 @@ query (void)
                           "is unset.",
                           "Sven Neumann",
                           "Sven Neumann",
-                          "2006",
+                          "2006, 2007",
                           N_("Apply default RGB profile"),
                           "RGB*, INDEXED*",
                           GIMP_PLUGIN,
@@ -238,12 +245,12 @@ query (void)
 
   gimp_install_procedure (PLUG_IN_PROC_INFO,
                           "Retrieve information about an image's color profile",
-                          "This procedure returns information about the "
-                          "color profile attached to an image.  If no profile "
-                          "is attached, sRGB is assumed.",
+                          "This procedure returns information about the RGB "
+                          "color profile attached to an image. If no RGB "
+                          "color profile is attached, sRGB is assumed.",
                           "Sven Neumann",
                           "Sven Neumann",
-                          "2006",
+                          "2006, 2007",
                           N_("Color Profile Information"),
                           "*",
                           GIMP_PLUGIN,
@@ -257,7 +264,7 @@ query (void)
                           "color profile on disk.",
                           "Sven Neumann",
                           "Sven Neumann",
-                          "2006",
+                          "2006, 2007",
                           N_("Color Profile Information"),
                           "*",
                           GIMP_PLUGIN,
@@ -446,6 +453,8 @@ lcms_icc_apply (GimpColorConfig *config,
   GimpPDBStatusType status       = GIMP_PDB_SUCCESS;
   cmsHPROFILE       src_profile  = NULL;
   cmsHPROFILE       dest_profile = NULL;
+  guchar            src_md5[16];
+  guchar            dest_md5[16];
 
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (image != -1, GIMP_PDB_CALLING_ERROR);
@@ -475,11 +484,12 @@ lcms_icc_apply (GimpColorConfig *config,
         }
     }
 
-  src_profile = lcms_image_get_profile (config, image);
+  src_profile = lcms_image_get_profile (config, image, src_md5);
 
   if (src_profile && ! lcms_icc_profile_is_rgb (src_profile))
     {
-      g_printerr ("lcms: attached color profile is not for RGB color space\n");
+      g_printerr ("lcms: attached color profile is not for RGB color space "
+                  "skipping\n");
 
       cmsCloseProfile (src_profile);
       src_profile = NULL;
@@ -489,10 +499,24 @@ lcms_icc_apply (GimpColorConfig *config,
     return GIMP_PDB_SUCCESS;
 
   if (! src_profile)
-    src_profile = cmsCreate_sRGBProfile ();
+    {
+      src_profile = cmsCreate_sRGBProfile ();
+      lcms_sRGB_checksum (src_md5);
+    }
 
   if (! dest_profile)
-    dest_profile = cmsCreate_sRGBProfile ();
+    {
+      dest_profile = cmsCreate_sRGBProfile ();
+      lcms_sRGB_checksum (dest_md5);
+    }
+
+  if (memcmp (src_md5, dest_md5, 16) == 0)
+    {
+      cmsCloseProfile (src_profile);
+      cmsCloseProfile (dest_profile);
+
+      return GIMP_PDB_SUCCESS;
+    }
 
   if (run_mode == GIMP_RUN_INTERACTIVE &&
       ! lcms_icc_apply_dialog (image, src_profile, dest_profile, dont_ask))
@@ -559,7 +583,16 @@ lcms_icc_info (GimpColorConfig *config,
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (image != -1, GIMP_PDB_CALLING_ERROR);
 
-  profile = lcms_image_get_profile (config, image);
+  profile = lcms_image_get_profile (config, image, NULL);
+
+  if (profile && ! lcms_icc_profile_is_rgb (profile))
+    {
+      g_printerr ("lcms: attached color profile is not for RGB color space "
+                  "skipping\n");
+
+      cmsCloseProfile (profile);
+      profile = NULL;
+    }
 
   if (profile)
     {
@@ -604,9 +637,42 @@ lcms_icc_file_info (const gchar  *filename,
   return GIMP_PDB_SUCCESS;
 }
 
+static void
+lcms_sRGB_checksum (guchar *digest)
+{
+  digest[0]  = 0xcb;
+  digest[1]  = 0x63;
+  digest[2]  = 0x14;
+  digest[3]  = 0x56;
+  digest[4]  = 0xd4;
+  digest[5]  = 0x0a;
+  digest[6]  = 0x01;
+  digest[7]  = 0x62;
+  digest[8]  = 0xa0;
+  digest[9]  = 0xdb;
+  digest[10] = 0xe6;
+  digest[11] = 0x32;
+  digest[12] = 0x8b;
+  digest[13] = 0xea;
+  digest[14] = 0x1a;
+  digest[15] = 0x89;
+}
+
+static void
+lcms_calculate_checksum (const gchar *data,
+                         gsize        len,
+                         guchar      *digest)
+{
+  if (digest)
+    gimp_md5_get_digest (data + sizeof (icHeader),
+                         len - sizeof (icHeader),
+                         digest);
+}
+
 static cmsHPROFILE
 lcms_image_get_profile (GimpColorConfig *config,
-                        gint32           image)
+                        gint32           image,
+                        guchar          *checksum)
 {
   GimpParasite *parasite;
   cmsHPROFILE   profile = NULL;
@@ -622,13 +688,23 @@ lcms_image_get_profile (GimpColorConfig *config,
 
       /* FIXME: we leak the parasite, the data is used by the profile */
 
-      if (! profile)
-        g_message (_("Data attached as 'icc-profile' does not appear to "
-                     "be an ICC color profile"));
+      if (profile)
+        {
+          lcms_calculate_checksum (gimp_parasite_data (parasite),
+                                   gimp_parasite_data_size (parasite),
+                                   checksum);
+        }
+      else
+        {
+          gimp_parasite_free (parasite);
+
+          g_message (_("Data attached as 'icc-profile' does not appear to "
+                       "be an ICC color profile"));
+        }
     }
   else
     {
-      profile = lcms_config_get_profile (config);
+      profile = lcms_config_get_profile (config, checksum);
     }
 
   return profile;
@@ -665,28 +741,18 @@ lcms_image_set_profile (gint32       image,
 
       if (profile)
         {
-          gboolean rgb = lcms_icc_profile_is_rgb (profile);
+          GimpParasite *parasite;
 
           cmsCloseProfile (profile);
 
-          if (rgb)
-            {
-              GimpParasite *parasite;
+          parasite = gimp_parasite_new ("icc-profile", GIMP_PARASITE_PERSISTENT,
+                                        g_mapped_file_get_length (file),
+                                        g_mapped_file_get_contents (file));
 
-              parasite =
-                gimp_parasite_new ("icc-profile", GIMP_PARASITE_PERSISTENT,
-                                   g_mapped_file_get_length (file),
-                                   g_mapped_file_get_contents (file));
-              gimp_image_parasite_attach (image, parasite);
-              gimp_parasite_free (parasite);
+          gimp_image_parasite_attach (image, parasite);
+          gimp_parasite_free (parasite);
 
-              success = TRUE;
-            }
-          else
-            {
-              g_message (_("Color profile '%s' is not for RGB color space."),
-                         gimp_filename_to_utf8 (filename));
-            }
+          success = TRUE;
         }
       else
         {
@@ -842,15 +908,50 @@ lcms_drawable_transform (GimpDrawable  *drawable,
 }
 
 static cmsHPROFILE
-lcms_config_get_profile (GimpColorConfig *config)
+lcms_config_get_profile (GimpColorConfig *config,
+                         guchar          *checksum)
 {
   if (config->rgb_profile)
     {
-      cmsHPROFILE  profile = cmsOpenProfileFromFile (config->rgb_profile, "r");
+      cmsHPROFILE  profile;
+      GMappedFile *file;
+      gchar       *data;
+      gsize        len;
+      GError      *error = NULL;
 
-      if (! profile)
-        g_message (_("Could not open ICC profile from '%s'"),
-                   gimp_filename_to_utf8 (config->rgb_profile));
+      file = g_mapped_file_new (config->rgb_profile, FALSE, &error);
+
+      if (! file)
+        {
+          g_message (_("Could not open '%s' for reading: %s"),
+                     gimp_filename_to_utf8 (config->rgb_profile),
+                     error->message);
+          g_error_free (error);
+
+          return NULL;
+        }
+
+      len = g_mapped_file_get_length (file);
+
+      data = g_memdup (g_mapped_file_get_contents (file), len);
+
+      g_mapped_file_free (file);
+
+      profile = cmsOpenProfileFromMem (data, len);
+
+      /* FIXME: we leak the data, it is used by the profile */
+
+      if (profile)
+        {
+          lcms_calculate_checksum (data, len, checksum);
+        }
+      else
+        {
+          g_free (data);
+
+          g_message (_("Could not load ICC profile from '%s'"),
+                     gimp_filename_to_utf8 (config->rgb_profile));
+        }
 
       return profile;
     }
@@ -930,7 +1031,6 @@ lcms_icc_profile_dest_label_new (cmsHPROFILE  profile)
 
   return label;
 }
-
 
 static gboolean
 lcms_icc_apply_dialog (gint32       image,
