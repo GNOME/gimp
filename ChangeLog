@@ -1,3 +1,13 @@
+2007-07-11  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/chrome-it.scm
+	* plug-ins/script-fu/scripts/perspective-shadow.scm
+	* plug-ins/script-fu/scripts/selection-round.scm
+	* plug-ins/script-fu/scripts/sota-chrome-logo.scm
+	* plug-ins/script-fu/scripts/swirltile.scm
+	* plug-ins/script-fu/scripts/waves-anim.scm: added leading zero to
+	floating point numbers.
+
 2007-07-11  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c: Removed bitfieldized values from

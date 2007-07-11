@@ -189,8 +189,8 @@
   SF-IMAGE       "Image"                        0
   SF-DRAWABLE    "Drawable"                     0
   SF-ADJUSTMENT _"Angle"                        '(45 0 180 1 10 1 0)
-  SF-ADJUSTMENT _"Relative distance of horizon" '(5 0 24 .1 1 1 1)
-  SF-ADJUSTMENT _"Relative length of shadow"    '(1 0 24 .1 1 1 1)
+  SF-ADJUSTMENT _"Relative distance of horizon" '(5 0 24 0.1 1 1 1)
+  SF-ADJUSTMENT _"Relative length of shadow"    '(1 0 24 0.1 1 1 1)
   SF-ADJUSTMENT _"Blur radius"                  '(3 0 1024 1 10 0 0)
   SF-COLOR      _"Color"                        '(0 0 0)
   SF-ADJUSTMENT _"Opacity"                      '(80 0 100 1 10 0 0)

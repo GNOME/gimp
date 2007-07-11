@@ -208,7 +208,7 @@
   ""
   SF-ADJUSTMENT _"Chrome saturation"  '(-80 -100 100 1 10 0 0)
   SF-ADJUSTMENT _"Chrome lightness"   '(-47 -100 100 1 10 0 0)
-  SF-ADJUSTMENT _"Chrome factor"      '(.75 0 1 .1 .01 2 0)
+  SF-ADJUSTMENT _"Chrome factor"      '(.75 0 1 0.1 0.01 2 0)
   SF-STRING     _"Text"               "GIMP"
   SF-ADJUSTMENT _"Font size (pixels)" '(150 2 1000 1 10 0 1)
   SF-FONT       _"Font"               "RoostHeavy"

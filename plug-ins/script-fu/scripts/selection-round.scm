@@ -174,7 +174,7 @@
   "*"
   SF-IMAGE       "Image"      0
   SF-DRAWABLE    "Drawable"   0
-  SF-ADJUSTMENT  "Relative radius" '(1 0 128 .1 1 1 1)
+  SF-ADJUSTMENT  "Relative radius" '(1 0 128 0.1 1 1 1)
 )
 
 (script-fu-menu-register "script-fu-selection-rounded-rectangle"

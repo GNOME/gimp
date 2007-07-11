@@ -61,7 +61,7 @@
   SF-ADJUSTMENT _"Height"           '(256 0 1024 1 10 0 1)
   SF-ADJUSTMENT _"Width"            '(256 0 1024 1 10 0 1)
   SF-ADJUSTMENT _"Whirl amount"     '(320 0 360 1 10 0 0)
-  SF-ADJUSTMENT _"Roughness"        '(.5 0 1 .1 .01 2 1)
+  SF-ADJUSTMENT _"Roughness"        '(0.5 0 1 0.1 0.01 2 1)
   SF-COLOR      _"Background color" "white"
 )
 
