@@ -56,7 +56,7 @@ enum
 /*  speed of key movement  */
 #define ARROW_VELOCITY   25
 
-#define HANDLE_SIZE      50
+#define MAX_HANDLE_SIZE  50
 #define MIN_HANDLE_SIZE   6
 
 #define SQRT5   2.236067977
@@ -72,13 +72,13 @@ typedef enum
 
 typedef enum
 {
-  SIDE_TO_RESIZE_NONE                         = 0,
-  SIDE_TO_RESIZE_LEFT                         = (1 << 0),
-  SIDE_TO_RESIZE_RIGHT                        = (1 << 1),
-  SIDE_TO_RESIZE_TOP                          = (1 << 2),
-  SIDE_TO_RESIZE_BOTTOM                       = (1 << 3),
-  SIDE_TO_RESIZE_LEFT_AND_RIGHT_SYMMETRICALLY = (1 << 4),
-  SIDE_TO_RESIZE_TOP_AND_BOTTOM_SYMMETRICALLY = (1 << 5)
+  SIDE_TO_RESIZE_NONE,
+  SIDE_TO_RESIZE_LEFT,
+  SIDE_TO_RESIZE_RIGHT,
+  SIDE_TO_RESIZE_TOP,
+  SIDE_TO_RESIZE_BOTTOM,
+  SIDE_TO_RESIZE_LEFT_AND_RIGHT_SYMMETRICALLY,
+  SIDE_TO_RESIZE_TOP_AND_BOTTOM_SYMMETRICALLY,
 } SideToResize;
 
 
@@ -1648,8 +1648,10 @@ gimp_rectangle_tool_configure (GimpRectangleTool *rectangle)
   private->handle_w = tw / 4;
   private->handle_h = th / 4;
 
-  private->handle_w = CLAMP (private->handle_w, MIN_HANDLE_SIZE, HANDLE_SIZE);
-  private->handle_h = CLAMP (private->handle_h, MIN_HANDLE_SIZE, HANDLE_SIZE);
+  private->handle_w =
+    CLAMP (private->handle_w, MIN_HANDLE_SIZE, MAX_HANDLE_SIZE);
+  private->handle_h =
+    CLAMP (private->handle_h, MIN_HANDLE_SIZE, MAX_HANDLE_SIZE);
 
   private->top_and_bottom_handle_w = tw - 3 * private->handle_w;
   private->left_and_right_handle_h = th - 3 * private->handle_h;
