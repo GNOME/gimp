@@ -489,7 +489,7 @@ lcms_icc_apply (GimpColorConfig *config,
   if (src_profile && ! lcms_icc_profile_is_rgb (src_profile))
     {
       g_printerr ("lcms: attached color profile is not for RGB color space "
-                  "skipping\n");
+                  "(skipping)\n");
 
       cmsCloseProfile (src_profile);
       src_profile = NULL;
@@ -588,7 +588,7 @@ lcms_icc_info (GimpColorConfig *config,
   if (profile && ! lcms_icc_profile_is_rgb (profile))
     {
       g_printerr ("lcms: attached color profile is not for RGB color space "
-                  "skipping\n");
+                  "(skipping)\n");
 
       cmsCloseProfile (profile);
       profile = NULL;
