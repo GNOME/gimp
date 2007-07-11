@@ -512,8 +512,18 @@ lcms_icc_apply (GimpColorConfig *config,
 
   if (memcmp (src_md5, dest_md5, 16) == 0)
     {
+      gchar *src_desc  = lcms_icc_profile_get_desc (src_profile);
+      gchar *dest_desc = lcms_icc_profile_get_desc (dest_profile);
+
       cmsCloseProfile (src_profile);
       cmsCloseProfile (dest_profile);
+
+      g_printerr ("skipping conversion because profiles seem to be equal:\n");
+      g_printerr (" %s\n", src_desc);
+      g_printerr (" %s\n", dest_desc);
+
+      g_free (src_desc);
+      g_free (dest_desc);
 
       return GIMP_PDB_SUCCESS;
     }
