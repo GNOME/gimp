@@ -1,5 +1,9 @@
 2007-07-12  Sven Neumann  <sven@gimp.org>
 
+	* authors.xml: added two more contributors.
+
+2007-07-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/psd-load.c: don't divide by zero when loading a
 	layer or mask with zero width or height. Fixes bug #456042.
 
