@@ -1,5 +1,13 @@
 2007-07-12  Sven Neumann  <sven@gimp.org>
 
+	Work around Pango appending " Not-Rotated" to font names:
+
+	* app/text/gimptext.c (gimp_text_set_property)
+	* app/text/gimpfontlist.c (gimp_font_list_add_font): strip
+	" Not-Rotated" from the font name.
+
+2007-07-12  Sven Neumann  <sven@gimp.org>
+
 	* authors.xml: added two more contributors.
 
 2007-07-12  Sven Neumann  <sven@gimp.org>

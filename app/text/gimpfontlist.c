@@ -149,17 +149,26 @@ gimp_font_list_add_font (GimpFontList         *list,
 {
   GimpFont *font;
   gchar    *name;
+  gsize     len;
 
   if (! desc)
     return;
 
   name = font_desc_to_string (desc);
 
-  if (! g_utf8_validate (name, -1, NULL))
+  len = strlen (name);
+
+  if (! g_utf8_validate (name, len, NULL))
     {
       g_free (name);
       return;
     }
+
+#ifdef __GNUC__
+#warning remove this as soon as we depend on Pango 1.6.5
+#endif
+  if (g_str_has_suffix (name, " Not-Rotated"))
+    name[len - strlen (" Not-Rotated")] = '\0';
 
   font = g_object_new (GIMP_TYPE_FONT,
                        "name",          name,
