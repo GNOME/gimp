@@ -1053,7 +1053,7 @@ do_layer_record (FILE    *fd,
       g_error ("Input file has a larger layer size than GIMP can handle.");
     }
 
-  if (layer->width > (G_MAXUINT / layer->height))
+  if (layer->height && layer->width > (G_MAXUINT / layer->height))
     {
       g_error ("Input file has a larger layer size than GIMP can handle.");
     }
@@ -1184,7 +1184,7 @@ do_layer_record (FILE    *fd,
         g_error ("Input file has a larger layer mask size than GIMP can handle.");
       }
 
-    if (layer->lm_width > (G_MAXUINT / layer->lm_height))
+    if (layer->lm_height && layer->lm_width > (G_MAXUINT / layer->lm_height))
       {
         g_error ("Input file has a larger layer mask size than GIMP can handle.");
       }
@@ -3235,7 +3235,7 @@ read_whole_file (FILE *fd, const gchar *filename)
                  gimp_filename_to_utf8 (filename));
       }
 
-    if (PSDheader.columns > (G_MAXUINT / PSDheader.rows))
+    if (PSDheader.rows && PSDheader.columns > (G_MAXUINT / PSDheader.rows))
       {
         g_error ("'%s' has a larger image size than GIMP can handle.",
                  gimp_filename_to_utf8 (filename));
