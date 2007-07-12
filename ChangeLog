@@ -1,3 +1,12 @@
+2007-07-12  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: bumped version to 2.2.17, interface_age 17.
+
+	Merged from trunk:
+
+	* plug-ins/common/psd.c: don't divide by zero when loading a layer
+	or mask with zero width or height. Fixes bug #456042.
+
 2007-07-06  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.2.16 release.
