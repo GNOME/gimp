@@ -1005,6 +1005,8 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
                                                     private->other_side_x,
                                                     private->other_side_y);
 
+          gimp_rectangle_tool_configure (rectangle);
+
           gimp_rectangle_tool_rectangle_changed (rectangle);
 
         }
