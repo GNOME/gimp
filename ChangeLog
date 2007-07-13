@@ -1,6 +1,12 @@
 2007-07-13  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_button_release): Don't execute selection if a
+	dead area is clicked.
+
+2007-07-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c
 	(gimp_rectangle_tool_active_modifier_key): Update handle sizes and
 	highlight area also when Ctrl is released.
 

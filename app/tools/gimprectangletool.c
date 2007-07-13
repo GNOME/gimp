@@ -783,6 +783,11 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
       break;
 
     case GIMP_BUTTON_RELEASE_CLICK:
+
+      /* When a dead area is clicked, don't execute. */
+      if (private->function == RECT_DEAD)
+        break;
+
       if (gimp_rectangle_tool_execute (rectangle))
         gimp_rectangle_tool_halt (rectangle);
       break;
