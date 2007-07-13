@@ -1,3 +1,10 @@
+2007-07-13  Raphaël Quinet  <raphael@gimp.org>
+
+	Merged from trunk:
+
+	* plug-ins/common/psd.c (load_image): safeguard to avoid
+	crashes while loading corrupt PSD images.  Fixes bug #327444.
+
 2007-07-12  Sven Neumann  <sven@gimp.org>
 
 	Merged from trunk:
