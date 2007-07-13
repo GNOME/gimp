@@ -1,3 +1,8 @@
+2007-07-13  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/common/psd-load.c (load_image): safeguard to avoid
+	crashes while loading corrupt PSD images.  Fixes bug #327444.
+
 2007-07-13  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/psd-load.c: use g_printerr() for debug output.

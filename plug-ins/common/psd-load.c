@@ -2639,7 +2639,9 @@ load_image (const gchar *name)
             {
               gimp_progress_update (1.0);
 
-              xfread_interlaced (fd, dest, PSDheader.imgdatalen,
+              xfread_interlaced (fd, dest, MIN (PSDheader.imgdatalen,
+                                                step * PSDheader.columns
+                                                * PSDheader.rows),
                                  "raw image data", step);
             }
           else
@@ -2647,7 +2649,9 @@ load_image (const gchar *name)
               gimp_progress_update (1.0);
 
               cmykbuf = g_malloc (PSDheader.imgdatalen);
-              xfread_interlaced (fd, cmykbuf, PSDheader.imgdatalen,
+              xfread_interlaced (fd, cmykbuf, MIN (PSDheader.imgdatalen,
+                                                   step * PSDheader.columns
+                                                   * PSDheader.rows),
                                  "raw cmyk image data", step);
 
               cmykp2rgb (cmykbuf, dest,
