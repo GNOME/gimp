@@ -1,5 +1,17 @@
 2007-07-14  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Made the rectangle tool handles not resize during rectangle
+	manipulation, as outlined in the spec, by separating highlight
+	updating and handle size updating calls.
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_configure):
+	Renamed to
+	(gimp_rectangle_tool_update_handle_sizes): and moved
+	gimp_rectangle_tool_set_highlight out of it. These two are now
+	called independantly.
+
+2007-07-14  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_clamp_width)
 	(gimp_rectangle_tool_clamp_height): Fixed crash when creating a
 	rectangle with constraints outside of canvas bounds.
@@ -112,7 +124,7 @@
 	Completely refactored.
 
 	(gimp_rectangle_tool_active_modifier_key):
-	(gimp_rectangle_tool_update_options): Submit to tool options.
+	(gimp_rectangle_tool_synthesize_motion): Submit to tool options.
 
 	(gimp_rectangle_tool_apply_coord)
 	(gimp_rectangle_tool_clamp)

@@ -122,7 +122,6 @@ void        gimp_rectangle_tool_cursor_update       (GimpTool                *to
 void        gimp_rectangle_tool_draw                (GimpDrawTool            *draw);
 gboolean    gimp_rectangle_tool_execute             (GimpRectangleTool       *rect_tool);
 void        gimp_rectangle_tool_cancel              (GimpRectangleTool       *rect_tool);
-void        gimp_rectangle_tool_configure           (GimpRectangleTool       *rectangle);
 void        gimp_rectangle_tool_set_constraint      (GimpRectangleTool       *rectangle,
                                                      GimpRectangleConstraint  constraint);
 GimpRectangleFunction gimp_rectangle_tool_get_function (GimpRectangleTool    *rectangle);

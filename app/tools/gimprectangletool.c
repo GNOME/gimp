@@ -178,8 +178,12 @@ static void gimp_rectangle_tool_rectangle_changed   (GimpRectangleTool *rectangl
 
 static void     gimp_rectangle_tool_auto_shrink     (GimpRectangleTool *rectangle);
 
+
 static GtkAnchorType gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private);
-static void     gimp_rectangle_tool_set_highlight   (GimpRectangleTool *rectangle);
+
+static void gimp_rectangle_tool_set_highlight       (GimpRectangleTool  *rectangle);
+
+static void gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool  *rectangle);
 
 static void gimp_rectangle_tool_get_other_side      (GimpRectangleTool  *rectangle_tool,
                                                      const gchar       **other_x,
@@ -535,7 +539,7 @@ gimp_rectangle_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_RESUME:
-      gimp_rectangle_tool_configure (rectangle);
+      gimp_rectangle_tool_set_highlight (rectangle);
       break;
 
     case GIMP_TOOL_ACTION_HALT:
@@ -588,6 +592,8 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
                     "x2", x,
                     "y2", y,
                     NULL);
+
+      gimp_rectangle_tool_update_handle_sizes (rectangle);
 
       gimp_rectangle_tool_start (rectangle, display);
     }
@@ -802,6 +808,8 @@ gimp_rectangle_tool_button_release (GimpTool              *tool,
 
   gimp_tool_control_set_snap_offsets (tool->control, 0, 0, 0, 0);
 
+  gimp_rectangle_tool_update_handle_sizes (rectangle);
+
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
 }
 
@@ -855,8 +863,8 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
                                          current_x,
                                          current_y);
 
-  /*  recalculate the coordinates for rectangle_draw based on the new values  */
-  gimp_rectangle_tool_configure (rectangle);
+  /* Update the highlight. */
+  gimp_rectangle_tool_set_highlight (rectangle);
 
   if (private->function != RECT_MOVING &&
       private->function != RECT_EXECUTING)
@@ -969,7 +977,7 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
                                                  private->lastx,
                                                  private->lasty);
 
-          gimp_rectangle_tool_configure (rectangle);
+          gimp_rectangle_tool_set_highlight (rectangle);
 
           gimp_rectangle_tool_rectangle_changed (rectangle);
         }
@@ -993,8 +1001,7 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
                                                  private->lastx,
                                                  private->lasty);
 
-          gimp_rectangle_tool_configure (rectangle);
-
+          gimp_rectangle_tool_set_highlight (rectangle);
 
           gimp_rectangle_tool_rectangle_changed (rectangle);
 
@@ -1010,12 +1017,10 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
                                                     private->other_side_x,
                                                     private->other_side_y);
 
-          gimp_rectangle_tool_configure (rectangle);
+          gimp_rectangle_tool_set_highlight (rectangle);
 
           gimp_rectangle_tool_rectangle_changed (rectangle);
-
         }
-
     }
 
   gimp_draw_tool_resume (draw_tool);
@@ -1224,14 +1229,8 @@ gimp_rectangle_tool_key_press (GimpTool    *tool,
   private->center_x_on_fixed_center = (private->x1 + private->x2) / 2;
   private->center_y_on_fixed_center = (private->y1 + private->y2) / 2;
 
-/*   g_object_set (rectangle, */
-/*                 "x1", private->x1, */
-/*                 "y1", private->y1, */
-/*                 "x2", private->x2, */
-/*                 "y2", private->y2, */
-/*                 NULL); */
-
-  gimp_rectangle_tool_configure (rectangle);
+  gimp_rectangle_tool_set_highlight (rectangle);
+  gimp_rectangle_tool_update_handle_sizes (rectangle);
 
   gimp_rectangle_tool_update_options (rectangle, tool->display);
 
@@ -1620,7 +1619,7 @@ gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
 }
 
 void
-gimp_rectangle_tool_configure (GimpRectangleTool *rectangle)
+gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool *rectangle)
 {
   GimpTool                 *tool = GIMP_TOOL (rectangle);
   GimpRectangleToolPrivate *private;
@@ -1636,8 +1635,6 @@ gimp_rectangle_tool_configure (GimpRectangleTool *rectangle)
   if (! tool->display)
     return;
 
-  gimp_rectangle_tool_set_highlight (rectangle);
-
   shell = GIMP_DISPLAY_SHELL (tool->display->shell);
 
   gimp_display_shell_transform_xy (shell,
@@ -1648,7 +1645,6 @@ gimp_rectangle_tool_configure (GimpRectangleTool *rectangle)
                                    private->x2, private->y2,
                                    &dx2, &dy2,
                                    FALSE);
-
   tw = dx2 - dx1;
   th = dy2 - dy1;
 
@@ -1680,7 +1676,9 @@ gimp_rectangle_tool_start (GimpRectangleTool *rectangle,
     GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (gimp_tool_get_options (tool));
 
   tool->display = display;
-  gimp_rectangle_tool_configure (rectangle);
+
+  gimp_rectangle_tool_set_highlight (rectangle);
+  gimp_rectangle_tool_update_handle_sizes (rectangle);
 
   /* initialize the statusbar display */
   gimp_tool_push_status_coords (tool, tool->display,
@@ -1754,7 +1752,7 @@ gimp_rectangle_tool_execute (GimpRectangleTool *rectangle)
                                private->x2 - private->x1,
                                private->y2 - private->y1);
 
-      gimp_rectangle_tool_configure (rectangle);
+      gimp_rectangle_tool_set_highlight (rectangle);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (rectangle));
     }
@@ -1858,7 +1856,8 @@ gimp_rectangle_tool_synthesize_motion (GimpRectangleTool *rectangle,
 
   gimp_rectangle_tool_set_function (rectangle, old_function);
 
-  gimp_rectangle_tool_configure (rectangle);
+  gimp_rectangle_tool_set_highlight (rectangle);
+  gimp_rectangle_tool_update_handle_sizes (rectangle);
 
   gimp_draw_tool_resume (GIMP_DRAW_TOOL (rectangle));
 
@@ -2066,7 +2065,7 @@ gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rectangle)
                     "y2", offset_y + shrunk_y2,
                     NULL);
 
-      gimp_rectangle_tool_configure (rectangle);
+      gimp_rectangle_tool_set_highlight (rectangle);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (rectangle));
     }
