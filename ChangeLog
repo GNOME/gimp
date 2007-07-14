@@ -1,5 +1,11 @@
 2007-07-14  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_control):
+	Also update rectangle handle sizes when canvas zoom is
+	changed. (Forgot that in previous commit.)
+
+2007-07-14  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Made the rectangle tool handles not resize during rectangle
 	manipulation, as outlined in the spec, by separating highlight
 	updating and handle size updating calls.

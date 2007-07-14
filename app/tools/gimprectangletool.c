@@ -540,6 +540,7 @@ gimp_rectangle_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_RESUME:
       gimp_rectangle_tool_set_highlight (rectangle);
+      gimp_rectangle_tool_update_handle_sizes (rectangle);
       break;
 
     case GIMP_TOOL_ACTION_HALT:
@@ -1618,7 +1619,7 @@ gimp_rectangle_tool_draw_guides (GimpDrawTool *draw_tool)
     }
 }
 
-void
+static void
 gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool *rectangle)
 {
   GimpTool                 *tool = GIMP_TOOL (rectangle);
