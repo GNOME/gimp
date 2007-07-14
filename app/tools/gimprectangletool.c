@@ -2399,12 +2399,10 @@ gimp_rectangle_tool_clamp_width (GimpRectangleTool       *rectangle_tool,
       private->x1 += dx;
 
       if (symmetrically)
-        {
-          private->x2 -= dx;
+        private->x2 -= dx;
 
-          if (private->x2 < min_x)
-            private->x1 = private->x2 = min_x;
-        }
+      if (private->x2 < min_x)
+        private->x2 = min_x;
 
       if (clamped_sides != NULL)
         *clamped_sides |= CLAMPED_LEFT;
@@ -2417,12 +2415,10 @@ gimp_rectangle_tool_clamp_width (GimpRectangleTool       *rectangle_tool,
       private->x2 += dx;
 
       if (symmetrically)
-        {
-          private->x1 -= dx;
+        private->x1 -= dx;
 
-          if (private->x1 > max_x)
-            private->x1 = max_x;
-        }
+      if (private->x1 > max_x)
+        private->x1 = max_x;
 
       if (clamped_sides != NULL)
         *clamped_sides |= CLAMPED_RIGHT;
@@ -2469,12 +2465,10 @@ gimp_rectangle_tool_clamp_height (GimpRectangleTool       *rectangle_tool,
       private->y1 += dy;
 
       if (symmetrically)
-        {
-          private->y2 -= dy;
+        private->y2 -= dy;
 
-          if (private->y2 < min_y)
-            private->y1 = private->y2 = min_y;
-        }
+      if (private->y2 < min_y)
+        private->y2 = min_y;
 
       if (clamped_sides != NULL)
         *clamped_sides |= CLAMPED_TOP;
@@ -2487,12 +2481,10 @@ gimp_rectangle_tool_clamp_height (GimpRectangleTool       *rectangle_tool,
       private->y2 += dy;
 
       if (symmetrically)
-        {
-          private->y1 -= dy;
+        private->y1 -= dy;
 
-          if (private->y1 > max_y)
-            private->y1 = private->y2 = max_y;
-        }
+      if (private->y1 > max_y)
+        private->y1 = max_y;
 
       if (clamped_sides != NULL)
         *clamped_sides |= CLAMPED_BOTTOM;

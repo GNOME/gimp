@@ -1,3 +1,9 @@
+2007-07-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_clamp_width)
+	(gimp_rectangle_tool_clamp_height): Fixed crash when creating a
+	rectangle with constraints outside of canvas bounds.
+
 2007-07-13  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c
