@@ -2109,10 +2109,18 @@ gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *private)
 static void
 gimp_rectangle_tool_set_highlight (GimpRectangleTool *rectangle)
 {
-  GimpTool             *tool      = GIMP_TOOL (rectangle);
-  GimpRectangleOptions *options   = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
-  GimpDisplayShell     *shell     = GIMP_DISPLAY_SHELL (tool->display->shell);
+  GimpTool             *tool;
+  GimpRectangleOptions *options;
+  GimpDisplayShell     *shell;
   gboolean              highlight = FALSE;
+
+  tool = GIMP_TOOL (rectangle);
+
+  if (tool->display == NULL)
+    return;
+
+  options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
+  shell   = GIMP_DISPLAY_SHELL (tool->display->shell);
 
   g_object_get (options, "highlight", &highlight, NULL);
 
