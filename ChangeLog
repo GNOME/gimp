@@ -1,9 +1,9 @@
 2007-07-14  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c
-	(gimp_rectangle_tool_set_highlight): Check agains tool->display,
-	this check was lost when this function was moved out of
-	gimp_rectangle_tool_configure.
+	(gimp_rectangle_tool_set_highlight): Check against
+	tool->display == NULL, this check was lost when this function
+	was moved out of gimp_rectangle_tool_configure.
 
 2007-07-14  Martin Nordholts  <martinn@svn.gnome.org>
 
