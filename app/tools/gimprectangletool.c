@@ -115,30 +115,41 @@ struct _GimpRectangleToolPrivate
    * sure these variables are in consistent states.
    */
 
-  gint                    x1, y1;     /*  upper left hand coordinate     */
-  gint                    x2, y2;     /*  lower right hand coords        */
 
-  guint                   function;   /*  moving or resizing             */
+  /* Coordinates of upper left and lower right rectangle corners. */
+  gint                    x1, y1;
+  gint                    x2, y2;
 
-  GimpRectangleConstraint constraint; /* how to constrain rectangle     */
+  /* What modification state the rectangle is in. What corner are we resizing,
+   * or are we moving the rectangle? etc.
+   */
+  guint                   function;
 
-  gint                    lastx;      /*  previous x coord               */
-  gint                    lasty;      /*  previous y coord               */
+  /* How to constrain the rectangle. */
+  GimpRectangleConstraint constraint;
 
-  gint                    handle_w;   /*  handle width                   */
-  gint                    handle_h;   /*  handle height                  */
+  /* Previous coordinate applied to the rectangle. */
+  gint                    lastx;
+  gint                    lasty;
 
-                                      /*  Top and bottom side handle
-                                       *  width.
-                                       */
+  /* Width and height of corner handles. */
+  gint                    handle_w;
+  gint                    handle_h;
+
+  /* Width and height of side handles. */
   gint                    top_and_bottom_handle_w;
-                                      /*  Left and right side handle
-                                       *  height.
-                                       */
   gint                    left_and_right_handle_h;
 
-  gint                    saved_x1;   /*  for saving in case action      */
-  gint                    saved_y1;   /*  is canceled                    */
+  /* For what scale the handle sizes is calculated. We must cache this so that
+   * we can differentiate between when the tool is resumed because of zoom level
+   * just has changed or because the highlight has just been updated.
+   */
+  gdouble                 scale_x_used_for_handle_size_calculations;
+  gdouble                 scale_y_used_for_handle_size_calculations;
+
+  /* For saving in case of cancelation. */
+  gint                    saved_x1;
+  gint                    saved_y1;
   gint                    saved_x2;
   gint                    saved_y2;
   gdouble                 saved_center_x;
@@ -146,7 +157,8 @@ struct _GimpRectangleToolPrivate
 
   gint                    suppress_updates;
 
-  GimpRectangleGuide      guide; /* synced with options->guide, only exists for drawing */
+  /* Synced with options->guide, only exists for drawing. */
+  GimpRectangleGuide      guide;
 };
 
 
@@ -184,6 +196,9 @@ static GtkAnchorType gimp_rectangle_tool_get_anchor (GimpRectangleToolPrivate *p
 static void gimp_rectangle_tool_set_highlight       (GimpRectangleTool  *rectangle);
 
 static void gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool  *rectangle);
+
+static gboolean gimp_rectangle_tool_scale_has_changed
+                                                    (GimpRectangleTool  *rectangle_tool);
 
 static void gimp_rectangle_tool_get_other_side      (GimpRectangleTool  *rectangle_tool,
                                                      const gchar       **other_x,
@@ -540,7 +555,14 @@ gimp_rectangle_tool_control (GimpTool       *tool,
 
     case GIMP_TOOL_ACTION_RESUME:
       gimp_rectangle_tool_set_highlight (rectangle);
-      gimp_rectangle_tool_update_handle_sizes (rectangle);
+
+      /* When highlightning is on, the shell gets paused/unpaused which means we
+       * will get here, but we only want to recalculate handle sizes when the
+       * zoom has changed.
+       */
+      if (gimp_rectangle_tool_scale_has_changed (rectangle))
+        gimp_rectangle_tool_update_handle_sizes (rectangle);
+
       break;
 
     case GIMP_TOOL_ACTION_HALT:
@@ -594,8 +616,6 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
                     "y2", y,
                     NULL);
 
-      gimp_rectangle_tool_update_handle_sizes (rectangle);
-
       gimp_rectangle_tool_start (rectangle, display);
     }
 
@@ -622,6 +642,8 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
                     "x2", x,
                     "y2", y,
                     NULL);
+
+      gimp_rectangle_tool_update_handle_sizes (rectangle);
 
       gimp_tool_control_set_snap_offsets (tool->control, 0, 0, 0, 0);
       break;
@@ -1664,6 +1686,32 @@ gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool *rectangle)
     CLAMP (private->top_and_bottom_handle_w, MIN_HANDLE_SIZE, G_MAXINT);
   private->left_and_right_handle_h =
     CLAMP (private->left_and_right_handle_h, MIN_HANDLE_SIZE, G_MAXINT);
+
+  private->scale_x_used_for_handle_size_calculations = shell->scale_x;
+  private->scale_y_used_for_handle_size_calculations = shell->scale_y;
+}
+
+/**
+ * gimp_rectangle_tool_scale_has_changed:
+ * rectangle_tool: A #GimpRectangleTool.
+ *
+ * Returns true if the scale that was used to calculate handle sizes is not the
+ * same as the current shell scale.
+ */
+static gboolean
+gimp_rectangle_tool_scale_has_changed (GimpRectangleTool *rectangle_tool)
+{
+  GimpTool                 *tool    = GIMP_TOOL (rectangle_tool);
+  GimpRectangleToolPrivate *private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
+  GimpDisplayShell         *shell;
+
+  if (tool->display == NULL)
+    return TRUE;
+
+  shell = GIMP_DISPLAY_SHELL (tool->display->shell);
+
+  return shell->scale_x != private->scale_x_used_for_handle_size_calculations ||
+         shell->scale_y != private->scale_y_used_for_handle_size_calculations;
 }
 
 static void
@@ -3133,7 +3181,7 @@ gimp_rectangle_tool_update_with_coord (GimpRectangleTool *rectangle_tool,
 
 /**
  * gimp_rectangle_tool_get_constraints:
- * @rectangle_tool: A #GimpRectagnelTool.
+ * @rectangle_tool: A #GimpRectangleTool.
  * @min_x:
  * @min_y:
  * @max_x:

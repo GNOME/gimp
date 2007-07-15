@@ -1,3 +1,16 @@
+2007-07-15  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c (struct
+	_GimpRectangleToolPrivate): Added members to keep track of for
+	what shell scale the handle sizes were calculated. This is
+	necessary so that in
+	(gimp_rectangle_tool_control): we only update the handle sizes
+	when the zoom level has changed. We must test this, because the
+	tool is also paused/resumed when highlightning is on, and we don't
+	want to update handle sizes just because highlightning happends to
+	be on.
+	(gimp_rectangle_tool_scale_has_changed): Added helper function.
+
 2007-07-14  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c
