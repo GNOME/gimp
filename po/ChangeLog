@@ -1,6 +1,6 @@
 2007-07-15  Stéphane Raimbault  <stephane.raimbault@gmail.com>
 
-	* fr.po: Updated French translation (many fixes) and #428564.
+	* fr.po: Updated French translation (many fixes) and Debian #428564 = pgo #456996.
 
 2007-07-08  Jorge Gonzalez <jorgegonz@svn.gnome.org>
 
