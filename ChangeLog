@@ -1,3 +1,8 @@
+2007-07-16  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/png.c: only register one save MIME handler.
+	Fixes bug #457045.
+
 2007-07-15  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c (struct

@@ -285,14 +285,12 @@ query (void)
                           G_N_ELEMENTS (save_args), 0,
                           save_args, NULL);
 
-  gimp_register_file_handler_mime (SAVE_PROC, "image/png");
-
   gimp_install_procedure (SAVE2_PROC,
                           "Saves files in PNG file format",
                           "This plug-in saves Portable Network Graphics "
                           "(PNG) files. "
                           "This procedure adds 2 extra parameters to "
-                          "file_png_save that allows to control whether "
+                          "file-png-save that allows to control whether "
                           "image comments are saved and whether transparent "
                           "pixels are saved or nullified.",
                           "Michael Sweet <mike@easysw.com>, "
@@ -306,8 +304,6 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (save_args2), 0,
                           save_args2, NULL);
-
-  gimp_register_file_handler_mime (SAVE2_PROC, "image/png");
 
   gimp_install_procedure (SAVE_DEFAULTS_PROC,
                           "Saves files in PNG file format",
