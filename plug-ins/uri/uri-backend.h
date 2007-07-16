@@ -26,6 +26,9 @@ gboolean      uri_backend_init               (const gchar  *plugin_name,
                                               GError      **error);
 void          uri_backend_shutdown           (void);
 
+const gchar * uri_backend_get_load_help      (void);
+const gchar * uri_backend_get_save_help      (void);
+
 const gchar * uri_backend_get_load_protocols (void);
 const gchar * uri_backend_get_save_protocols (void);
 

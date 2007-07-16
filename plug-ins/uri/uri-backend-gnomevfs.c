@@ -119,6 +119,18 @@ uri_backend_shutdown (void)
 }
 
 const gchar *
+uri_backend_get_load_help (void)
+{
+  return "Loads a file using the GnomeVFS library";
+}
+
+const gchar *
+uri_backend_get_save_help (void)
+{
+  return "Saves a file using the GnomeVFS library";
+}
+
+const gchar *
 uri_backend_get_load_protocols (void)
 {
   if (! supported_protocols)

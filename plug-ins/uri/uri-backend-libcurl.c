@@ -84,6 +84,20 @@ uri_backend_shutdown (void)
 
 
 const gchar *
+uri_backend_get_load_help (void)
+{
+  return "Loads a file using the libcurl file transfer library";
+}
+
+
+const gchar *
+uri_backend_get_save_help (void)
+{
+  return NULL;
+}
+
+
+const gchar *
 uri_backend_get_load_protocols (void)
 {
   return supported_protocols;

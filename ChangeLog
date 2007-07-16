@@ -1,5 +1,15 @@
 2007-07-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/uri/uri.c
+	* plug-ins/uri/uri-backend.h: get the procedure help strings from
+	the backend abstraction.
+
+	* plug-ins/uri/uri-backend-gnomevfs.c
+	* plug-ins/uri/uri-backend-libcurl.c
+	* plug-ins/uri/uri-backend-wget.c: provide help strings.
+
+2007-07-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/png.c: only register one save MIME handler.
 	Fixes bug #457045.
 

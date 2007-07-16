@@ -58,6 +58,18 @@ uri_backend_shutdown (void)
 }
 
 const gchar *
+uri_backend_get_load_help (void)
+{
+  return "Loads a file using GNU Wget";
+}
+
+const gchar *
+uri_backend_get_save_help (void)
+{
+  return NULL;
+}
+
+const gchar *
 uri_backend_get_load_protocols (void)
 {
   return "http:,https:,ftp:";

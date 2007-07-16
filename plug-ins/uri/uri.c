@@ -110,7 +110,7 @@ query (void)
     {
       gimp_install_procedure (LOAD_PROC,
                               "loads files given an URI",
-                              "You need to have GNU Wget or GnomeVFS installed.",
+                              uri_backend_get_load_help (),
                               "Spencer Kimball & Peter Mattis",
                               "Spencer Kimball & Peter Mattis",
                               "1995-1997",
@@ -131,7 +131,7 @@ query (void)
     {
       gimp_install_procedure (SAVE_PROC,
                               "saves files given an URI",
-                              "You need to have GNU Wget or GnomeVFS installed.",
+                              uri_backend_get_save_help (),
                               "Michael Natterer",
                               "Michael Natterer",
                               "2005",
