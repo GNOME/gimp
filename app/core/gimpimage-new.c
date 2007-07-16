@@ -24,6 +24,8 @@
 
 #include "core-types.h"
 
+#include "config/gimpcoreconfig.h"
+
 #include "gimp.h"
 #include "gimpimage.h"
 #include "gimpimage-new.h"
@@ -44,10 +46,16 @@ gimp_image_new_get_last_template (Gimp      *gimp,
   template = gimp_template_new ("image new values");
 
   if (image)
-    gimp_template_set_from_image (template, image);
+    {
+      gimp_config_sync (G_OBJECT (gimp->config->default_image),
+                        G_OBJECT (template), 0);
+      gimp_template_set_from_image (template, image);
+    }
   else
-    gimp_config_sync (G_OBJECT (gimp->image_new_last_template),
-                      G_OBJECT (template), 0);
+    {
+      gimp_config_sync (G_OBJECT (gimp->image_new_last_template),
+                        G_OBJECT (template), 0);
+    }
 
   return template;
 }

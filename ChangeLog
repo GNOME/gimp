@@ -1,5 +1,10 @@
 2007-07-16  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-new.c (gimp_image_new_get_last_template): sync
+	with the default template. Fixes bug #457286.
+
+2007-07-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/uri/uri.c
 	* plug-ins/uri/uri-backend.h: get the procedure help strings from
 	the backend abstraction.
