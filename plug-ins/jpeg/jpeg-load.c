@@ -318,6 +318,8 @@ load_image (const gchar *filename,
 
           g_string_free (comment_buffer, TRUE);
         }
+
+#ifdef HAVE_EXIF
       /* if we found any EXIF block, then attach the metadata to the image */
       if (exif_data)
         {
@@ -326,6 +328,7 @@ load_image (const gchar *filename,
           exif_data_unref (exif_data);
           exif_data = NULL;
         }
+#endif
 
       /* Step 5.2: check for XMP metadata in APP1 markers (after EXIF) */
       for (marker = cinfo.marker_list; marker; marker = marker->next)
@@ -491,8 +494,10 @@ load_image (const gchar *filename,
     gimp_drawable_detach (drawable);
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
+#ifdef HAVE_EXIF
   if (orientation > 0)
     jpeg_exif_rotate (image_ID, orientation);
+#endif
 
   return image_ID;
 }
