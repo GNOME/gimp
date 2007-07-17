@@ -82,18 +82,8 @@ load_image (const gchar *filename,
   cinfo.err = jpeg_std_error (&jerr.pub);
   jerr.pub.error_exit = my_error_exit;
 
-  /* flag warnings, so we try to ignore corrupt EXIF data */
   if (!preview)
     {
-      /* Note: this usage of client_data and my_emit_message() may be a bit
-         redundant now that we only look for EXIF data in APP1 markers
-         instead of feeding the whole file to libexif immediately.  We also
-         depend on a slighly more robust version of libexif.  We should
-         consider removing this code in the future.  --Raphael, 2007-06-12
-      */
-      cinfo.client_data = GINT_TO_POINTER (FALSE);
-
-      jerr.pub.emit_message   = my_emit_message;
       jerr.pub.output_message = my_output_message;
     }
 
@@ -650,10 +640,6 @@ load_thumbnail_image (const gchar *filename,
 
   cinfo.err = jpeg_std_error (&jerr.pub);
   jerr.pub.error_exit = my_error_exit;
-
-  cinfo.client_data = GINT_TO_POINTER (FALSE);
-
-  jerr.pub.emit_message   = my_emit_message;
   jerr.pub.output_message = my_output_message;
 
   gimp_progress_init_printf (_("Opening thumbnail for '%s'"),
@@ -873,10 +859,6 @@ load_thumbnail_image (const gchar *filename,
    */
   cinfo.err = jpeg_std_error (&jerr.pub);
   jerr.pub.error_exit = my_error_exit;
-
-  cinfo.client_data = GINT_TO_POINTER (FALSE);
-
-  jerr.pub.emit_message   = my_emit_message;
   jerr.pub.output_message = my_output_message;
 
   if ((infile = g_fopen (filename, "rb")) == NULL)

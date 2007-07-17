@@ -518,18 +518,6 @@ my_error_exit (j_common_ptr cinfo)
   longjmp (myerr->setjmp_buffer, 1);
 }
 
-void
-my_emit_message (j_common_ptr cinfo,
-                 int          msg_level)
-{
-  if (msg_level == -1)
-    {
-      /*  disable loading of EXIF data  */
-      cinfo->client_data = GINT_TO_POINTER (TRUE);
-
-      (*cinfo->err->output_message) (cinfo);
-    }
-}
 
 void
 my_output_message (j_common_ptr cinfo)
@@ -537,18 +525,5 @@ my_output_message (j_common_ptr cinfo)
   gchar  buffer[JMSG_LENGTH_MAX + 1];
 
   (*cinfo->err->format_message)(cinfo, buffer);
-
-  if (GPOINTER_TO_INT (cinfo->client_data))
-    {
-      gchar *msg = g_strconcat (buffer,
-                                "\n\n",
-                                _("EXIF data will be ignored."),
-                                NULL);
-      g_message (msg);
-      g_free (msg);
-    }
-  else
-    {
-      g_message (buffer);
-    }
+  g_message (buffer);
 }
