@@ -393,6 +393,7 @@ gimp_colormap_editor_set_index (GimpColormapEditor *editor,
                                 GimpRGB            *color)
 {
   GimpImage *image;
+  gint       size;
 
   g_return_val_if_fail (GIMP_IS_COLORMAP_EDITOR (editor), FALSE);
 
@@ -401,7 +402,12 @@ gimp_colormap_editor_set_index (GimpColormapEditor *editor,
   if (! HAVE_COLORMAP (image))
     return FALSE;
 
-  index = CLAMP (index, 0, gimp_image_get_colormap_size (image) - 1);
+  size = gimp_image_get_colormap_size (image);
+
+  if (size < 1)
+    return FALSE;
+
+  index = CLAMP (index, 0, size - 1);
 
   if (index != editor->col_index)
     {
@@ -473,17 +479,14 @@ gimp_colormap_editor_draw (GimpColormapEditor *editor)
       xn = yn = ceil (sqrt (ncol));
     }
 
-  yn     = ((ncol + xn - 1) / xn);
+  yn = ((ncol + xn - 1) / xn);
 
   /* We used to render just multiples of "cellsize" here, but the
    *  colormap as dockable looks better if it always fills the
    *  available allocation->width (which should always be larger than
-   *  "xn * cellsize"). Defensively, we use MAX(width,xn*cellsize)
+   *  "xn * cellsize"). Defensively, we use MAX (width, xn * cellsize)
    *  below   --Mitch
-   *
-
-   width  = xn * cellsize;
-   height = yn * cellsize; */
+   */
 
   editor->xn       = xn;
   editor->yn       = yn;
@@ -533,24 +536,29 @@ gimp_colormap_editor_draw_cell (GimpColormapEditor *editor,
   guchar    *row      = g_alloca (cellsize * 3);
   gint       x, y, k;
 
+  if (! editor->xn)
+    return;
+
   x = (col % editor->xn) * cellsize;
   y = (col / editor->xn) * cellsize;
 
   if (col == editor->col_index)
     {
-      for(k = 0; k < cellsize; k++)
+      for (k = 0; k < cellsize; k++)
         row[k*3] = row[k*3+1] = row[k*3+2] = (k & 1) * 255;
+
       gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row, x, y, cellsize);
 
       if (!(cellsize & 1))
         for (k = 0; k < cellsize; k++)
           row[k*3] = row[k*3+1] = row[k*3+2] = ((x+y+1) & 1) * 255;
+
       gtk_preview_draw_row (GTK_PREVIEW (editor->preview), row,
                             x, y+cellsize-1, cellsize);
 
-      row[0]=row[1]=row[2]=255;
-      row[cellsize*3-3] = row[cellsize*3-2] = row[cellsize*3-1]
-        = 255 * (cellsize & 1);
+      row[0] = row[1] = row[2] = 255;
+      row[cellsize*3-3] = row[cellsize*3-2] = row[cellsize*3-1] = 255 * (cellsize & 1);
+
       for (k = 1; k < cellsize - 1; k++)
         {
           row[k*3]   = image->cmap[col * 3];
@@ -648,7 +656,8 @@ gimp_colormap_editor_update_entries (GimpColormapEditor *editor)
 {
   GimpImage *image = GIMP_IMAGE_EDITOR (editor)->image;
 
-  if (! HAVE_COLORMAP (image))
+  if (! HAVE_COLORMAP (image) ||
+      ! gimp_image_get_colormap_size (image))
     {
       gtk_widget_set_sensitive (editor->index_spinbutton, FALSE);
       gtk_widget_set_sensitive (editor->color_entry, FALSE);

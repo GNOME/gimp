@@ -1,3 +1,8 @@
+2007-07-17  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcolormapeditor.c: gracefully deal with empty
+	colormaps.
+
 2007-07-17  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/jpeg/jpeg-exif.c (jpeg_setup_exif_for_save): include
