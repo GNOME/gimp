@@ -119,6 +119,7 @@ gimp_paint_register (Gimp        *gimp,
   g_return_if_fail (GIMP_IS_GIMP (gimp));
   g_return_if_fail (g_type_is_a (paint_type, GIMP_TYPE_PAINT_CORE));
   g_return_if_fail (g_type_is_a (paint_options_type, GIMP_TYPE_PAINT_OPTIONS));
+  g_return_if_fail (identifier != NULL);
   g_return_if_fail (blurb != NULL);
 
   paint_info = gimp_paint_info_new (gimp,

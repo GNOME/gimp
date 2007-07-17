@@ -1,5 +1,17 @@
 2007-07-17  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimptoolinfo.c (gimp_tool_info_new): use the tool-info
+	identifier as the name of the tool-options object.
+
+	* app/paint/gimppaintoptions.c (gimp_paint_options_new): use the
+	paint-info identifier as the name of the paint-options object.
+
+	* app/paint/gimp-paint.c (gimp_paint_register): added parameter check.
+
+	* app/tools/gimp-tools.c (gimp_tools_init): formatting.
+
+2007-07-17  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimppluginprocedure.c
 	(gimp_plug_in_procedure_set_file_proc): plugged tiny memory leak.
 

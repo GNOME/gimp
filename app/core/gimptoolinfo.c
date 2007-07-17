@@ -264,6 +264,7 @@ gimp_tool_info_new (Gimp                *gimp,
     {
       tool_info->tool_options = g_object_new (tool_info->tool_options_type,
                                               "gimp", gimp,
+                                              "name", identifier,
                                               NULL);
     }
 

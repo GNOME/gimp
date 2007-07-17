@@ -199,7 +199,8 @@ gimp_tools_init (Gimp *gimp)
 
   default_order = g_list_reverse (default_order);
 
-  g_object_set_data (G_OBJECT (gimp), "gimp-tools-default-order", default_order);
+  g_object_set_data (G_OBJECT (gimp),
+                     "gimp-tools-default-order", default_order);
 }
 
 void

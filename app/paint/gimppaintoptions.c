@@ -107,8 +107,7 @@ static void   gimp_paint_options_notify       (GObject      *object,
                                                GParamSpec   *pspec);
 
 
-G_DEFINE_TYPE (GimpPaintOptions, gimp_paint_options,
-               GIMP_TYPE_TOOL_OPTIONS)
+G_DEFINE_TYPE (GimpPaintOptions, gimp_paint_options, GIMP_TYPE_TOOL_OPTIONS)
 
 #define parent_class gimp_paint_options_parent_class
 
@@ -545,6 +544,7 @@ gimp_paint_options_new (GimpPaintInfo *paint_info)
 
   options = g_object_new (paint_info->paint_options_type,
                           "gimp",       paint_info->gimp,
+                          "name",       GIMP_OBJECT (paint_info)->name,
                           "paint-info", paint_info,
                           NULL);
 
