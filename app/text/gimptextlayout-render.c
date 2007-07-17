@@ -198,8 +198,8 @@ gimp_text_layout_render_trafo (GimpTextLayout *layout,
 {
   GimpText *text = layout->text;
 
-  trafo->xx = text->transformation.coeff[0][0] * 65536.0;
+  trafo->xx = text->transformation.coeff[0][0] * 65536.0 / layout->yres * layout->xres;
   trafo->xy = text->transformation.coeff[0][1] * 65536.0;
-  trafo->yx = text->transformation.coeff[1][0] * 65536.0;
+  trafo->yx = text->transformation.coeff[1][0] * 65536.0 / layout->yres * layout->xres;
   trafo->yy = text->transformation.coeff[1][1] * 65536.0;
 }

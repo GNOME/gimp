@@ -125,6 +125,8 @@ gimp_text_layout_new (GimpText  *text,
   layout = g_object_new (GIMP_TYPE_TEXT_LAYOUT, NULL);
   layout->text   = g_object_ref (text);
   layout->layout = pango_layout_new (context);
+  layout->xres = xres;
+  layout->yres = yres;
 
   g_object_unref (context);
 
@@ -257,6 +259,9 @@ gimp_text_layout_position (GimpTextLayout *layout)
   layout->extents.height = 0;
 
   pango_layout_get_pixel_extents (layout->layout, &ink, &logical);
+
+  ink.width = ceil ((gdouble) ink.width * layout->xres / layout->yres);
+  logical.width = ceil ((gdouble) logical.width * layout->xres / layout->yres);
 
 #ifdef VERBOSE
   g_print ("ink rect: %d x %d @ %d, %d\n",

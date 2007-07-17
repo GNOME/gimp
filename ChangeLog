@@ -1,3 +1,9 @@
+2007-07-17  Simon Budig  <simon@gimp.org>
+
+	* app/text/gimptext-private.h
+	* app/text/gimptextlayout.c
+	* app/text/gimptextlayout-render.c: Fix text rendering for xres != yres.
+
 2007-07-17  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpmenudock.c (gimp_menu_dock_new): unref the context.

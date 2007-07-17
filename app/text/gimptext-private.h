@@ -32,6 +32,8 @@ struct _GimpTextLayout
   GObject         object;
 
   GimpText       *text;
+  gdouble         xres;
+  gdouble         yres;
   PangoLayout    *layout;
   PangoRectangle  extents;
 };
