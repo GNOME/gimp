@@ -1,5 +1,9 @@
 2007-07-17  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpmenudock.c (gimp_menu_dock_new): unref the context.
+
+2007-07-17  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimptoolinfo.c (gimp_tool_info_new): use the tool-info
 	identifier as the name of the tool-options object.
 

@@ -388,6 +388,7 @@ gimp_menu_dock_new (GimpDialogFactory *dialog_factory,
                             "context",        context,
                             "dialog-factory", dialog_factory,
                             NULL);
+  g_object_unref (context);
 
   menu_dock->image_container   = image_container;
   menu_dock->display_container = display_container;
