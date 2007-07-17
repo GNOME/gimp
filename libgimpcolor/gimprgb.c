@@ -211,8 +211,9 @@ gimp_rgb_max (const GimpRGB *rgb)
   g_return_val_if_fail (rgb != NULL, 0.0);
 
   if (rgb->r > rgb->g)
-     return (rgb->r > rgb->b) ? rgb->r : rgb->b;
-  return (rgb->g > rgb->b) ? rgb->g : rgb->b;
+    return (rgb->r > rgb->b) ? rgb->r : rgb->b;
+  else
+    return (rgb->g > rgb->b) ? rgb->g : rgb->b;
 }
 
 gdouble
@@ -221,8 +222,9 @@ gimp_rgb_min (const GimpRGB *rgb)
   g_return_val_if_fail (rgb != NULL, 0.0);
 
   if (rgb->r < rgb->g)
-     return (rgb->r < rgb->b) ? rgb->r : rgb->b;
-  return (rgb->g < rgb->b) ? rgb->g : rgb->b;
+    return (rgb->r < rgb->b) ? rgb->r : rgb->b;
+  else
+    return (rgb->g < rgb->b) ? rgb->g : rgb->b;
 }
 
 void

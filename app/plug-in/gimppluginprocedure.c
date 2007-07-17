@@ -824,12 +824,13 @@ extensions_parse (gchar *extensions)
 {
   GSList *list = NULL;
 
-  /* EXTENSIONS can be NULL.  Avoid calling strtok if it is.  */
+  /*  extensions can be NULL.  Avoid calling strtok if it is.  */
   if (extensions)
     {
       gchar *extension;
       gchar *next_token;
 
+      /*  work on a copy  */
       extensions = g_strdup (extensions);
 
       next_token = extensions;
@@ -857,29 +858,56 @@ gimp_plug_in_procedure_set_file_proc (GimpPlugInProcedure *proc,
 
   proc->file_proc = TRUE;
 
+  /*  extensions  */
+
   if (proc->extensions != extensions)
     {
       if (proc->extensions)
         g_free (proc->extensions);
+
       proc->extensions = g_strdup (extensions);
     }
 
+  if (proc->extensions_list)
+    {
+      g_slist_foreach (proc->extensions_list, (GFunc) g_free, NULL);
+      g_slist_free (proc->extensions_list);
+    }
+
   proc->extensions_list = extensions_parse (proc->extensions);
+
+  /*  prefixes  */
 
   if (proc->prefixes != prefixes)
     {
       if (proc->prefixes)
         g_free (proc->prefixes);
+
       proc->prefixes = g_strdup (prefixes);
     }
 
+  if (proc->prefixes_list)
+    {
+      g_slist_foreach (proc->prefixes_list, (GFunc) g_free, NULL);
+      g_slist_free (proc->prefixes_list);
+    }
+
   proc->prefixes_list = extensions_parse (proc->prefixes);
+
+  /*  magics  */
 
   if (proc->magics != magics)
     {
       if (proc->magics)
         g_free (proc->magics);
+
       proc->magics = g_strdup (magics);
+    }
+
+  if (proc->magics_list)
+    {
+      g_slist_foreach (proc->magics_list, (GFunc) g_free, NULL);
+      g_slist_free (proc->magics_list);
     }
 
   proc->magics_list = extensions_parse (proc->magics);

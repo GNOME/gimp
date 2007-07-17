@@ -1,5 +1,12 @@
 2007-07-17  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/gimppluginprocedure.c
+	(gimp_plug_in_procedure_set_file_proc): plugged tiny memory leak.
+
+	* libgimpcolor/gimprgb.c (gimp_rgb_min) (gimp_rgb_max): formatting.
+
+2007-07-17  Sven Neumann  <sven@gimp.org>
+
 	* libgimpconfig/gimpconfigwriter.c (gimp_config_writer_finish):
 	don't free the writer struct too early.
 
