@@ -100,18 +100,29 @@ scale_region_no_resample (PixelRegion *srcPR,
   /*  the data pointers...  */
   x_src_offsets = g_new (gint, width * bytes);
   y_src_offsets = g_new (gint, height);
+
   src  = g_new (guchar, orig_width * bytes);
   dest = g_new (guchar, width * bytes);
 
   /*  pre-calc the scale tables  */
   offset = x_src_offsets;
   for (x = 0; x < width; x++)
-    for (b = 0; b < bytes; b++)
-      *offset++ = b + bytes * ((x * orig_width + orig_width / 2) / width);
+    {
+      /*  need to use 64 bit integers here to avoid an overflow  */
+      gint o = ((gint64) x *
+                (gint64) orig_width + orig_width / 2) / (gint64) width;
+
+      for (b = 0; b < bytes; b++)
+        *offset++ = o * bytes + b;
+    }
 
   offset = y_src_offsets;
   for (y = 0; y < height; y++)
-    *offset++ = (y * orig_height + orig_height / 2) / height;
+    {
+      /*  need to use 64 bit integers here to avoid an overflow  */
+      *offset++ = (((gint64) y * (gint64) orig_height + orig_height / 2) /
+                   (gint64) height);
+    }
 
   /*  do the scaling  */
   row_bytes = width * bytes;

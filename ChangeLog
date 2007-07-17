@@ -1,5 +1,10 @@
 2007-07-17  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/scale-funcs.c (scale_region_no_resample): use
+	64 bit integers to avoid an overflow. Fixes bug #457209.
+
+2007-07-17  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcolormapeditor.c: gracefully deal with empty
 	colormaps.
 
