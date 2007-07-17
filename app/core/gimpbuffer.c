@@ -26,10 +26,10 @@
 
 #include "base/pixel-region.h"
 #include "base/tile-manager.h"
+#include "base/tile-manager-preview.h"
 #include "base/temp-buf.h"
 
 #include "paint-funcs/paint-funcs.h"
-#include "paint-funcs/scale-funcs.h"
 
 #include "gimpbuffer.h"
 
@@ -200,52 +200,9 @@ gimp_buffer_get_new_preview (GimpViewable *viewable,
                              gint          width,
                              gint          height)
 {
-  GimpBuffer  *buffer = GIMP_BUFFER (viewable);
-  TempBuf     *temp_buf;
-  gint         buffer_width;
-  gint         buffer_height;
-  PixelRegion  srcPR;
-  PixelRegion  destPR;
-  gint         bytes;
+  GimpBuffer *buffer = GIMP_BUFFER (viewable);
 
-  buffer_width  = tile_manager_width (buffer->tiles);
-  buffer_height = tile_manager_height (buffer->tiles);
-
-  bytes = tile_manager_bpp (buffer->tiles);
-
-  pixel_region_init (&srcPR, buffer->tiles,
-                     0, 0,
-                     buffer_width,
-                     buffer_height,
-                     FALSE);
-
-  if (buffer_height > height || buffer_width > width)
-    temp_buf = temp_buf_new (width, height, bytes, 0, 0, NULL);
-  else
-    temp_buf = temp_buf_new (buffer_width, buffer_height, bytes, 0, 0, NULL);
-
-  pixel_region_init_temp_buf (&destPR, temp_buf,
-                              0, 0, temp_buf->width, temp_buf->height);
-
-  if (buffer_height > height || buffer_width > width)
-    {
-      gint subsample;
-
-      /*  calculate 'acceptable' subsample  */
-      subsample = 1;
-
-      while ((width  * (subsample + 1) * 2 < buffer_width) &&
-             (height * (subsample + 1) * 2 < buffer_height))
-        subsample += 1;
-
-      subsample_region (&srcPR, &destPR, subsample);
-    }
-  else
-    {
-      copy_region (&srcPR, &destPR);
-    }
-
-  return temp_buf;
+  return tile_manager_get_preview (buffer->tiles, width, height);
 }
 
 static gchar *

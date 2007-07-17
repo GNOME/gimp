@@ -22,11 +22,8 @@
 
 #include "core-types.h"
 
-#include "base/pixel-region.h"
 #include "base/temp-buf.h"
-#include "base/tile-manager.h"
-
-#include "paint-funcs/scale-funcs.h"
+#include "base/tile-manager-preview.h"
 
 #include "gimpimage.h"
 #include "gimpimage-preview.h"
@@ -126,14 +123,9 @@ gimp_image_get_new_preview (GimpViewable *viewable,
 {
   GimpImage   *image = GIMP_IMAGE (viewable);
   TileManager *tiles;
-  TempBuf     *preview;
-  PixelRegion  srcPR;
-  PixelRegion  destPR;
   gdouble      scale_x;
   gdouble      scale_y;
   gint         level;
-  gint         bytes;
-  gint         subsample;
 
   scale_x = (gdouble) width  / (gdouble) image->width;
   scale_y = (gdouble) height / (gdouble) image->height;
@@ -141,25 +133,5 @@ gimp_image_get_new_preview (GimpViewable *viewable,
   level = gimp_projection_get_level (image->projection, scale_x, scale_y);
   tiles = gimp_projection_get_tiles_at_level (image->projection, level);
 
-  pixel_region_init (&srcPR, tiles,
-                     0, 0,
-                     tile_manager_width (tiles), tile_manager_height (tiles),
-                     FALSE);
-
-  bytes = gimp_projection_get_bytes (image->projection);
-
-  preview = temp_buf_new (width, height, bytes, 0, 0, NULL);
-
-  pixel_region_init_temp_buf (&destPR, preview, 0, 0, width, height);
-
-  /*  calculate 'acceptable' subsample  */
-  subsample = 1;
-
-  while ((width  * (subsample + 1) * 2 < srcPR.w) &&
-         (height * (subsample + 1) * 2 < srcPR.h))
-    subsample += 1;
-
-  subsample_region (&srcPR, &destPR, subsample);
-
-  return preview;
+  return tile_manager_get_preview (tiles, width, height);
 }

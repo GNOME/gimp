@@ -1,5 +1,15 @@
 2007-07-17  Sven Neumann  <sven@gimp.org>
 
+	* app/base/Makefile.am
+	* app/base/tile-manager-preview.[ch]: added new file that holds code
+	to create a preview from a tile manager.
+
+	* app/core/gimpbuffer.c
+	* app/core/gimpimage-preview.c: use the new function instead of
+	duplicating this code.
+
+2007-07-17  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/scale-funcs.c (scale_region_no_resample): use
 	64 bit integers to avoid an overflow. Fixes bug #457209.
 
