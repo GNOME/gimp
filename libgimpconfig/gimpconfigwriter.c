@@ -545,13 +545,13 @@ gimp_config_writer_finish (GimpConfigWriter  *writer,
       success = TRUE;
     }
 
-  g_slice_free (GimpConfigWriter, writer);
-
   if (writer->error)
     {
       g_propagate_error (error, writer->error);
-      return FALSE;
+      success = FALSE;
     }
+
+  g_slice_free (GimpConfigWriter, writer);
 
   return success;
 }
