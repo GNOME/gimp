@@ -20,9 +20,16 @@
 #define __TILE_MANAGER_PREVIEW_H__
 
 
-TempBuf * tile_manager_get_preview (TileManager *tiles,
-                                    gint         width,
-                                    gint         height);
+TempBuf * tile_manager_get_preview     (TileManager *tiles,
+                                        gint         width,
+                                        gint         height);
+TempBuf * tile_manager_get_sub_preview (TileManager *tiles,
+                                        gint         src_x,
+                                        gint         src_y,
+                                        gint         src_width,
+                                        gint         src_height,
+                                        gint         dest_width,
+                                        gint         dest_height);
 
 
 #endif  /* __TILE_MANAGER_PREVIEW_H__ */

@@ -30,33 +30,83 @@
 #include "tile-manager-preview.h"
 
 
+static TempBuf * tile_manager_create_preview (TileManager *tiles,
+                                              gint         src_x,
+                                              gint         src_y,
+                                              gint         src_width,
+                                              gint         src_height,
+                                              gint         dest_width,
+                                              gint         dest_height);
+
+
 TempBuf *
 tile_manager_get_preview (TileManager *tiles,
                           gint         width,
                           gint         height)
 {
-  TempBuf     *preview;
-  PixelRegion  srcPR;
-  PixelRegion  destPR;
-  gint         subsample;
-
   g_return_val_if_fail (tiles != NULL, NULL);
   g_return_val_if_fail (width > 0 && height > 0, NULL);
 
-  pixel_region_init (&srcPR, tiles,
-                     0, 0,
-                     tile_manager_width (tiles), tile_manager_height (tiles),
-                     FALSE);
+  return tile_manager_create_preview (tiles,
+                                      0, 0,
+                                      tile_manager_width (tiles),
+                                      tile_manager_height (tiles),
+                                      width, height);
+}
 
-  preview = temp_buf_new (width, height, tile_manager_bpp (tiles), 0, 0, NULL);
+TempBuf *
+tile_manager_get_sub_preview (TileManager *tiles,
+                              gint         src_x,
+                              gint         src_y,
+                              gint         src_width,
+                              gint         src_height,
+                              gint         dest_width,
+                              gint         dest_height)
+{
+  g_return_val_if_fail (tiles != NULL, NULL);
 
-  pixel_region_init_temp_buf (&destPR, preview, 0, 0, width, height);
+  g_return_val_if_fail (src_x >= 0 &&
+                        src_x < tile_manager_width (tiles), NULL);
+  g_return_val_if_fail (src_y >= 0 &&
+                        src_y < tile_manager_height (tiles), NULL);
+
+  g_return_val_if_fail (src_width > 0 &&
+                        src_x + src_width <= tile_manager_width (tiles), NULL);
+  g_return_val_if_fail (src_height > 0 &&
+                        src_y + src_height <= tile_manager_height (tiles),
+                        NULL);
+
+  g_return_val_if_fail (dest_width > 0 && dest_height > 0, NULL);
+
+  return tile_manager_create_preview (tiles,
+                                      src_x, src_y, src_width, src_height,
+                                      dest_width, dest_height);
+}
+
+static TempBuf *
+tile_manager_create_preview (TileManager *tiles,
+                             gint         src_x,
+                             gint         src_y,
+                             gint         src_width,
+                             gint         src_height,
+                             gint         dest_width,
+                             gint         dest_height)
+{
+  TempBuf     *preview;
+  PixelRegion  srcPR;
+  PixelRegion  destPR;
+  gint         subsample = 1;
+
+  preview = temp_buf_new (dest_width, dest_height,
+                          tile_manager_bpp (tiles), 0, 0, NULL);
+
+  pixel_region_init (&srcPR, tiles, src_x, src_y, src_width, src_height, FALSE);
+
+  pixel_region_init_temp_buf (&destPR, preview, 0, 0, dest_width, dest_height);
 
   /*  calculate 'acceptable' subsample  */
-  subsample = 1;
-
-  while ((width  * (subsample + 1) * 2 < srcPR.w) &&
-         (height * (subsample + 1) * 2 < srcPR.h))
+  while ((dest_width  * (subsample + 1) * 2 < src_width) &&
+         (dest_height * (subsample + 1) * 2 < src_height))
     subsample += 1;
 
   subsample_region (&srcPR, &destPR, subsample);

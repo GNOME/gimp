@@ -1,3 +1,11 @@
+2007-07-17  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-manager-preview.[ch]: added
+	tile_manager_get_sub_preview().
+
+	* app/core/gimpdrawable-preview.c: use the new function except for
+	indexed drawables.
+
 2007-07-17  Raphaël Quinet  <raphael@gimp.org>
 
 	Reorganized the way JPEG comments and metadata are loaded.

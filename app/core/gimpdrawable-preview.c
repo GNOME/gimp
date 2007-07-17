@@ -28,6 +28,7 @@
 
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
+#include "base/tile-manager-preview.h"
 
 #include "paint-funcs/scale-funcs.h"
 
@@ -44,14 +45,22 @@
 
 /*  local function prototypes  */
 
-static TempBuf * gimp_drawable_preview_private (GimpDrawable  *drawable,
-                                                gint           width,
-                                                gint           height);
-static void      gimp_drawable_preview_scale   (GimpImageType  type,
-                                                const guchar  *cmap,
-                                                PixelRegion   *srcPR,
-                                                PixelRegion   *destPR,
-                                                gint           subsample);
+static TempBuf * gimp_drawable_preview_private (GimpDrawable *drawable,
+                                                gint          width,
+                                                gint          height);
+static TempBuf * gimp_drawable_indexed_preview (GimpDrawable *drawable,
+                                                const guchar *cmap,
+                                                gint          src_x,
+                                                gint          src_y,
+                                                gint          src_width,
+                                                gint          src_height,
+                                                gint          dest_width,
+                                                gint          dest_height);
+
+static void      subsample_indexed_region      (PixelRegion  *srcPR,
+                                                PixelRegion  *destPR,
+                                                const guchar *cmap,
+                                                gint          subsample);
 
 
 /*  public functions  */
@@ -129,11 +138,6 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
 {
   GimpItem    *item;
   GimpImage   *image;
-  TempBuf     *preview_buf;
-  PixelRegion  srcPR;
-  PixelRegion  destPR;
-  gint         bytes;
-  gint         subsample;
 
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
   g_return_val_if_fail (src_x >= 0, NULL);
@@ -153,37 +157,15 @@ gimp_drawable_get_sub_preview (GimpDrawable *drawable,
   if (! image->gimp->config->layer_previews)
     return NULL;
 
-  bytes = gimp_drawable_preview_bytes (drawable);
+  if (GIMP_IMAGE_TYPE_BASE_TYPE (gimp_drawable_type (drawable)) == GIMP_INDEXED)
+    return gimp_drawable_indexed_preview (drawable,
+                                          gimp_image_get_colormap (image),
+                                          src_x, src_y, src_width, src_height,
+                                          dest_width, dest_height);
 
-  /*  calculate 'acceptable' subsample  */
-  subsample = 1;
-
-  while ((dest_width  * (subsample + 1) * 2 < src_width) &&
-         (dest_height * (subsample + 1) * 2 < src_width))
-    subsample += 1;
-
-  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
-                     src_x, src_y, src_width, src_height,
-                     FALSE);
-
-  preview_buf = temp_buf_new (dest_width, dest_height, bytes, 0, 0, NULL);
-
-  pixel_region_init_temp_buf (&destPR, preview_buf,
-                              0, 0, dest_width, dest_height);
-
-  if (GIMP_IS_LAYER (drawable))
-    {
-      gimp_drawable_preview_scale (gimp_drawable_type (drawable),
-                                   gimp_image_get_colormap (image),
-                                   &srcPR, &destPR,
-                                   subsample);
-    }
-  else if (GIMP_IS_CHANNEL (drawable))
-    {
-      subsample_region (&srcPR, &destPR, subsample);
-    }
-
-  return preview_buf;
+  return tile_manager_get_sub_preview (gimp_drawable_get_tiles (drawable),
+                                       src_x, src_y, src_width, src_height,
+                                       dest_width, dest_height);
 }
 
 
@@ -220,12 +202,46 @@ gimp_drawable_preview_private (GimpDrawable *drawable,
   return ret_buf;
 }
 
+static TempBuf *
+gimp_drawable_indexed_preview (GimpDrawable *drawable,
+                               const guchar *cmap,
+                               gint          src_x,
+                               gint          src_y,
+                               gint          src_width,
+                               gint          src_height,
+                               gint          dest_width,
+                               gint          dest_height)
+{
+  TempBuf     *preview_buf;
+  PixelRegion  srcPR;
+  PixelRegion  destPR;
+  gint         bytes     = gimp_drawable_preview_bytes (drawable);
+  gint         subsample = 1;
+
+  /*  calculate 'acceptable' subsample  */
+  while ((dest_width  * (subsample + 1) * 2 < src_width) &&
+         (dest_height * (subsample + 1) * 2 < src_width))
+    subsample += 1;
+
+  pixel_region_init (&srcPR, gimp_drawable_get_tiles (drawable),
+                     src_x, src_y, src_width, src_height,
+                     FALSE);
+
+  preview_buf = temp_buf_new (dest_width, dest_height, bytes, 0, 0, NULL);
+
+  pixel_region_init_temp_buf (&destPR, preview_buf,
+                              0, 0, dest_width, dest_height);
+
+  subsample_indexed_region (&srcPR, &destPR, cmap, subsample);
+
+  return preview_buf;
+}
+
 static void
-gimp_drawable_preview_scale (GimpImageType  type,
-                             const guchar  *cmap,
-                             PixelRegion   *srcPR,
-                             PixelRegion   *destPR,
-                             gint           subsample)
+subsample_indexed_region (PixelRegion  *srcPR,
+                          PixelRegion  *destPR,
+                          const guchar *cmap,
+                          gint          subsample)
 {
 #define EPSILON 0.000001
   guchar  *src,  *s;
@@ -245,7 +261,7 @@ gimp_drawable_preview_scale (GimpImageType  type,
   gboolean advance_dest;
   gboolean has_alpha;
 
-  g_return_if_fail (! GIMP_IMAGE_TYPE_IS_INDEXED (type) || cmap != NULL);
+  g_return_if_fail (cmap != NULL);
 
   orig_width  = srcPR->w / subsample;
   orig_height = srcPR->h / subsample;
@@ -256,7 +272,7 @@ gimp_drawable_preview_scale (GimpImageType  type,
   bytes     = destPR->bytes;
   destwidth = destPR->rowstride;
 
-  has_alpha = GIMP_IMAGE_TYPE_HAS_ALPHA (type);
+  has_alpha = pixel_region_has_alpha (srcPR);
 
   /*  the data pointers...  */
   src  = g_new (guchar, orig_width * bytes);
@@ -333,51 +349,28 @@ gimp_drawable_preview_scale (GimpImageType  type,
       j  = width;
       while (j)
         {
+          gint index = *s * 3;
+
           tot_frac = x_frac[frac++] * y_frac;
 
-          /*  If indexed, transform the color to RGB  */
-          if (GIMP_IMAGE_TYPE_IS_INDEXED (type))
+          /*  transform the color to RGB  */
+          if (has_alpha)
             {
-              gint index = *s * 3;
-
-              if (has_alpha)
-                {
-                  if (s[ALPHA_I_PIX] & 0x80)
-                    {
-                      r[RED_PIX]   += cmap[index++] * tot_frac;
-                      r[GREEN_PIX] += cmap[index++] * tot_frac;
-                      r[BLUE_PIX]  += cmap[index++] * tot_frac;
-                      r[ALPHA_PIX] += tot_frac;
-                    }
-                  /* else the pixel contributes nothing and needs
-                   * not to be added
-                   */
-                }
-              else
+              if (s[ALPHA_I_PIX] & 0x80)
                 {
                   r[RED_PIX]   += cmap[index++] * tot_frac;
                   r[GREEN_PIX] += cmap[index++] * tot_frac;
                   r[BLUE_PIX]  += cmap[index++] * tot_frac;
+                  r[ALPHA_PIX] += tot_frac;
                 }
+              /* else the pixel contributes nothing and needs not to be added
+               */
             }
           else
             {
-              if (has_alpha)
-                {
-                  /* premultiply */
-
-                  gdouble local_frac = tot_frac * (gdouble) s[bytes - 1] / 255.0;
-
-                  for (b = 0; b < (bytes - 1); b++)
-                    r[b] += s[b] * local_frac;
-
-                  r[bytes - 1] += local_frac;
-                }
-              else
-                {
-                  for (b = 0; b < bytes; b++)
-                    r[b] += s[b] * tot_frac;
-                }
+              r[RED_PIX]   += cmap[index++] * tot_frac;
+              r[GREEN_PIX] += cmap[index++] * tot_frac;
+              r[BLUE_PIX]  += cmap[index++] * tot_frac;
             }
 
           /*  increment the destination  */
