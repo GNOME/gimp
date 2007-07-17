@@ -411,6 +411,12 @@ gimp_finalize (GObject *object)
       gimp->session_name = NULL;
     }
 
+  if (gimp->context_list)
+    {
+      g_list_free (gimp->context_list);
+      gimp->context_list = NULL;
+    }
+
   gimp_units_exit (gimp);
 
   G_OBJECT_CLASS (parent_class)->finalize (object);

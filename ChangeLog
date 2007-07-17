@@ -1,3 +1,10 @@
+2007-07-17  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp.c (gimp_finalize): free the context list.
+
+	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):
+	removed unused vbox.
+
 2007-07-17  Simon Budig  <simon@gimp.org>
 
 	* app/text/gimptext-private.h

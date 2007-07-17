@@ -474,7 +474,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
   GObject   *config = G_OBJECT (tool_options);
   GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
-  GtkWidget *vbox2;
   GtkWidget *button;
   GtkWidget *combo;
   GtkWidget *table;
@@ -486,8 +485,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gint       row = 0;
 
   private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (tool_options);
-
-  vbox2 = gtk_vbox_new (FALSE, 0);
 
   /* Fixed Center */
   button = gimp_prop_check_button_new (config, "fixed-center",
