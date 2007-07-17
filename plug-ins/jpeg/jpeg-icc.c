@@ -139,18 +139,6 @@ jpeg_icc_write_profile (j_compress_ptr  cinfo,
 
 
 /*
- * Prepare for reading an ICC profile
- */
-
-void
-jpeg_icc_setup_read_profile (j_decompress_ptr cinfo)
-{
-  /* Tell the library to keep any APP2 data it may find */
-  jpeg_save_markers(cinfo, ICC_MARKER, 0xFFFF);
-}
-
-
-/*
  * Handy subroutine to test whether a saved marker is an ICC profile marker.
  */
 

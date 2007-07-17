@@ -22,7 +22,7 @@
 #define PLUG_IN_BINARY  "jpeg"
 
 /* headers used in some APPn markers */
-#define JPEG_APP_HEADER_EXIF "Exif"
+#define JPEG_APP_HEADER_EXIF "Exif\0\0"
 #define JPEG_APP_HEADER_XMP  "http://ns.adobe.com/xap/1.0/"
 
 typedef struct my_error_mgr
@@ -71,11 +71,12 @@ gint32    load_thumbnail_image          (const gchar   *filename,
 ExifData * jpeg_exif_data_new_from_file (const gchar   *filename,
                                          GError       **error);
 
-void      jpeg_apply_exif_data_to_image (const gchar   *filename,
-                                         const gint32   image_ID);
+gint      jpeg_exif_get_orientation     (ExifData      *exif_data);
 
 void      jpeg_setup_exif_for_save      (ExifData      *exif_data,
                                          const gint32   image_ID);
 
+void      jpeg_exif_rotate              (gint32         image_ID,
+                                         gint           orientation);
 #endif /* HAVE_EXIF */
 

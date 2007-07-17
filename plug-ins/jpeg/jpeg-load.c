@@ -36,13 +36,16 @@
 
 #include "libgimp/stdplugins-intl.h"
 
+#include "gimpexif.h"
+
 #include "jpeg.h"
 #include "jpeg-icc.h"
 #include "jpeg-load.h"
 
 
-static void  jpeg_load_resolution (gint32                         image_ID,
-                                   struct jpeg_decompress_struct *cinfo);
+static void  jpeg_load_resolution  (gint32                         image_ID,
+                                    struct jpeg_decompress_struct *cinfo);
+static void  jpeg_sanitize_comment (gchar *comment);
 
 
 gint32 volatile  image_ID_global;
@@ -72,10 +75,8 @@ load_image (const gchar *filename,
   gint     tile_height;
   gint     scanlines;
   gint     i, start, end;
-  GString *local_image_comments = NULL;
-  GimpParasite * volatile comment_parasite = NULL;
   jpeg_saved_marker_ptr marker;
-  gboolean found_exif = FALSE;
+  gint     orientation = 0;
 
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
@@ -140,13 +141,11 @@ load_image (const gchar *filename,
       /* - step 2.1: tell the lib to save the comments */
       jpeg_save_markers (&cinfo, JPEG_COM, 0xffff);
 
-      /* - step 2.2: tell the lib to save APP1 markers
-       *   (may contain EXIF or XMP)
-       */
+      /* - step 2.2: tell the lib to save APP1 data (EXIF or XMP) */
       jpeg_save_markers (&cinfo, JPEG_APP0 + 1, 0xffff);
 
-      /* - step 2.3: tell the lib to keep any APP2 data it may find */
-      jpeg_icc_setup_read_profile (&cinfo);
+      /* - step 2.3: tell the lib to save APP2 data (ICC profiles) */
+      jpeg_save_markers (&cinfo, JPEG_APP0 + 2, 0xffff);
     }
 
   /* Step 3: read file parameters with jpeg_read_header() */
@@ -261,98 +260,120 @@ load_image (const gchar *filename,
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
                        drawable->width, drawable->height, TRUE, FALSE);
 
-  /* Step 5.2: check for metadata (comments, markers containing EXIF or XMP) */
-  for (marker = cinfo.marker_list; marker; marker = marker->next)
+  if (! preview)
     {
-      const gchar *data = (const gchar *) marker->data;
-      gsize        len  = marker->data_length;
+      GString  *comment_buffer = NULL;
+#ifdef HAVE_EXIF
+      ExifData *exif_data = NULL;
+#endif
 
-      if (marker->marker == JPEG_COM)
+      /* Step 5.1: check for comments, or EXIF metadata in APP1 markers */
+      for (marker = cinfo.marker_list; marker; marker = marker->next)
         {
-          g_print ("jpeg-load: found image comment (%d bytes)\n",
-                   marker->data_length);
+          const gchar *data = (const gchar *) marker->data;
+          gsize        len  = marker->data_length;
 
-          if (!local_image_comments)
+          if (marker->marker == JPEG_COM)
             {
-              local_image_comments = g_string_new_len (data, len);
+              g_print ("jpeg-load: found image comment (%d bytes)\n",
+                       marker->data_length);
+
+              if (! comment_buffer)
+                {
+                  comment_buffer = g_string_new_len (data, len);
+                }
+              else
+                {
+                  /* concatenate multiple comments, separate them with LF */
+                  g_string_append_c (comment_buffer, '\n');
+                  g_string_append_len (comment_buffer, data, len);
+                }
             }
-          else
+          else if ((marker->marker == JPEG_APP0 + 1)
+                   && (len > sizeof (JPEG_APP_HEADER_EXIF) + 8)
+                   && ! strcmp (JPEG_APP_HEADER_EXIF, data))
             {
-              g_string_append_c (local_image_comments, '\n');
-              g_string_append_len (local_image_comments, data, len);
+              g_print ("jpeg-load: found EXIF block (%d bytes)\n",
+                       (gint) (len - sizeof (JPEG_APP_HEADER_EXIF)));
+#ifdef HAVE_EXIF
+              if (! exif_data)
+                exif_data = exif_data_new ();
+              /* if there are multiple blocks, their data will be merged */
+              exif_data_load_data (exif_data, (unsigned char *) data, len);
+#endif
             }
         }
-      else if ((marker->marker == JPEG_APP0 + 1)
-               && (len > 13)
-               && ! strcmp (JPEG_APP_HEADER_EXIF, data))
+      /* if we found any comments, then make a parasite for them */
+      if (comment_buffer && comment_buffer->len)
         {
-          /* FIXME: handle EXIF here once we don't use libexif anymore */
-          g_print ("jpeg-load: found EXIF block (%d bytes)\n",
-                   (gint) (len - sizeof (JPEG_APP_HEADER_EXIF)));
-          /* FIXME: this flag is a workaround until we handle exif here */
-          found_exif = TRUE;
-          /* Note: maybe split the loop to ensure that the EXIF block is */
-          /*       always parsed before any XMP packet */
+          GimpParasite *parasite;
+
+          jpeg_sanitize_comment (comment_buffer->str);
+          parasite = gimp_parasite_new ("gimp-comment",
+                                        GIMP_PARASITE_PERSISTENT,
+                                        strlen (comment_buffer->str) + 1,
+                                        comment_buffer->str);
+          gimp_image_parasite_attach (image_ID, parasite);
+          gimp_parasite_free (parasite);
+
+          g_string_free (comment_buffer, TRUE);
         }
-      else if ((marker->marker == JPEG_APP0 + 1)
-               && (len > 37)
-               && ! strcmp (JPEG_APP_HEADER_XMP, data))
+      /* if we found any EXIF block, then attach the metadata to the image */
+      if (exif_data)
         {
-          GimpParam *return_vals;
-          gint       nreturn_vals;
-          gchar     *xmp_packet;
+          gimp_metadata_store_exif (image_ID, exif_data);
+          orientation = jpeg_exif_get_orientation (exif_data);
+          exif_data_unref (exif_data);
+          exif_data = NULL;
+        }
 
-          g_print ("jpeg-load: found XMP packet (%d bytes)\n",
-                   (gint) (len - sizeof (JPEG_APP_HEADER_XMP)));
+      /* Step 5.2: check for XMP metadata in APP1 markers (after EXIF) */
+      for (marker = cinfo.marker_list; marker; marker = marker->next)
+        {
+          const gchar *data = (const gchar *) marker->data;
+          gsize        len  = marker->data_length;
 
-          xmp_packet = g_strndup (data + sizeof (JPEG_APP_HEADER_XMP),
-                                  len - sizeof (JPEG_APP_HEADER_XMP));
-
-          /* FIXME: running this through the PDB is not very efficient */
-          return_vals = gimp_run_procedure ("plug-in-metadata-decode-xmp",
-                                            &nreturn_vals,
-                                            GIMP_PDB_IMAGE, image_ID,
-                                            GIMP_PDB_STRING, xmp_packet,
-                                            GIMP_PDB_END);
-
-          if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS)
+          if ((marker->marker == JPEG_APP0 + 1)
+              && (len > sizeof (JPEG_APP_HEADER_XMP) + 20)
+              && ! strcmp (JPEG_APP_HEADER_XMP, data))
             {
-              g_warning ("JPEG - unable to decode XMP metadata packet");
+              GimpParam *return_vals;
+              gint       nreturn_vals;
+              gchar     *xmp_packet;
+
+              g_print ("jpeg-load: found XMP packet (%d bytes)\n",
+                       (gint) (len - sizeof (JPEG_APP_HEADER_XMP)));
+
+              xmp_packet = g_strndup (data + sizeof (JPEG_APP_HEADER_XMP),
+                                      len - sizeof (JPEG_APP_HEADER_XMP));
+
+              /* FIXME: running this through the PDB is not very efficient */
+              return_vals = gimp_run_procedure ("plug-in-metadata-decode-xmp",
+                                                &nreturn_vals,
+                                                GIMP_PDB_IMAGE, image_ID,
+                                                GIMP_PDB_STRING, xmp_packet,
+                                                GIMP_PDB_END);
+
+              if (return_vals[0].data.d_status != GIMP_PDB_SUCCESS)
+                {
+                  g_warning ("JPEG - unable to decode XMP metadata packet");
+                }
+
+              gimp_destroy_params (return_vals, nreturn_vals);
+              g_free (xmp_packet);
             }
-
-          gimp_destroy_params (return_vals, nreturn_vals);
-          g_free (xmp_packet);
         }
-    }
 
-  /* Step 5.3: check for an embedded ICC profile */
-  if (!preview && jpeg_icc_read_profile (&cinfo, &profile, &profile_size))
-    {
-      GimpParasite *parasite = gimp_parasite_new ("icc-profile",
-                                                  0, profile_size, profile);
-      gimp_image_parasite_attach (image_ID, parasite);
-      gimp_parasite_free (parasite);
-
-      g_free (profile);
-    }
-
-  if (!preview)
-    {
-      /* if we had any comments then make a parasite for them */
-      if (local_image_comments && local_image_comments->len)
+      /* Step 5.3: check for an embedded ICC profile in APP2 markers */
+      if (jpeg_icc_read_profile (&cinfo, &profile, &profile_size))
         {
-          gchar *comment = local_image_comments->str;
+          GimpParasite *parasite = gimp_parasite_new ("icc-profile",
+                                                      0,
+                                                      profile_size, profile);
+          gimp_image_parasite_attach (image_ID, parasite);
+          gimp_parasite_free (parasite);
 
-          g_string_free (local_image_comments, FALSE);
-
-          local_image_comments = NULL;
-
-          if (g_utf8_validate (comment, -1, NULL))
-            comment_parasite = gimp_parasite_new ("gimp-comment",
-                                                  GIMP_PARASITE_PERSISTENT,
-                                                  strlen (comment) + 1,
-                                                  comment);
-          g_free (comment);
+          g_free (profile);
         }
 
       /* Do not attach the "jpeg-save-options" parasite to the image
@@ -470,26 +491,8 @@ load_image (const gchar *filename,
     gimp_drawable_detach (drawable);
   gimp_image_add_layer (image_ID, layer_ID, 0);
 
-  /* pw - Last of all, attach the parasites (couldn't do it earlier -
-     there was no image. */
-
-  if (!preview)
-    {
-      if (comment_parasite)
-        {
-          gimp_image_parasite_attach (image_ID, comment_parasite);
-          gimp_parasite_free (comment_parasite);
-
-          comment_parasite = NULL;
-        }
-
-#ifdef HAVE_EXIF
-
-      if (found_exif && ! GPOINTER_TO_INT (cinfo.client_data))
-        jpeg_apply_exif_data_to_image (filename, image_ID);
-
-#endif
-    }
+  if (orientation > 0)
+    jpeg_exif_rotate (image_ID, orientation);
 
   return image_ID;
 }
@@ -532,6 +535,31 @@ jpeg_load_resolution (gint32                         image_ID,
         }
 
       gimp_image_set_resolution (image_ID, xresolution, yresolution);
+    }
+}
+
+
+/*
+ * A number of JPEG files have comments written in a local character set
+ * instead of UTF-8.  Some of these files may have been saved by older
+ * versions of GIMP.  It is not possible to reliably detect the character
+ * set used, but it is better to keep all characters in the ASCII range
+ * and replace the non-ASCII characters instead of discarding the whole
+ * comment.  This is especially useful if the comment contains only a few
+ * non-ASCII characters such as a copyright sign, a soft hyphen, etc.
+ */
+static void
+jpeg_sanitize_comment (gchar *comment)
+{
+  if (! g_utf8_validate (comment, -1, NULL))
+    {
+      gchar *c;
+
+      for (c = comment; *c; c++)
+        {
+          if (*c > 126 || (*c < 32 && *c != '\t' && *c != '\n' && *c != '\r'))
+            *c = '?';
+        }
     }
 }
 

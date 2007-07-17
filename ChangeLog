@@ -1,3 +1,24 @@
+2007-07-17  Raphaël Quinet  <raphael@gimp.org>
+
+	Reorganized the way JPEG comments and metadata are loaded.
+	
+	* plug-ins/jpeg/jpeg-load.c (load_image): sanitize comments
+	containing invalid UTF-8 instead of discarding them.  If there is
+	more than one EXIF block in a file, merge all of them instead of
+	keeping only the block that contains a thumbnail image (see also
+	bug #446809 and bug #358117).  Process XMP after EXIF.
+
+	* plug-ins/jpeg/jpeg.h: include two null characters as part of the
+	EXIF header.
+
+	* plug-ins/jpeg/jpeg-exif.c: added jpeg_exif_get_orientation(),
+	removed jpeg_apply_exif_data_to_image() because this is now done
+	directly in jpeg-load.c.
+
+	* plug-ins/jpeg/jpeg-icc.c
+	* plug-ins/jpeg/jpeg-icc.h: removed jpeg_icc_setup_read_profile()
+	because jpeg_save_markers() is used directly in jpeg-load.c.
+
 2007-07-17  Sven Neumann  <sven@gimp.org>
 
 	* app/base/Makefile.am

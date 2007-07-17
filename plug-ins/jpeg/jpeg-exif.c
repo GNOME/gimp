@@ -53,8 +53,6 @@
 #define JPEG_EXIF_ROTATE_PARASITE  "exif-orientation-rotate"
 
 
-static void      jpeg_exif_rotate       (gint32 image_ID,
-                                         gint   orientation);
 static gboolean  jpeg_exif_rotate_query (gint32 image_ID);
 
 
@@ -83,32 +81,12 @@ jpeg_exif_data_new_from_file (const gchar  *filename,
   return data;
 }
 
-void
-jpeg_apply_exif_data_to_image (const gchar  *filename,
-                               const gint32  image_ID)
+
+gint
+jpeg_exif_get_orientation (ExifData *exif_data)
 {
-  ExifData  *exif_data = NULL;
   ExifEntry *entry;
   gint       byte_order;
-
-  exif_data = jpeg_exif_data_new_from_file (filename, NULL);
-  if (!exif_data)
-    return;
-
-  /* return if there is no thumbnail, to work around bug #358117 */
-  if (!exif_data->data || exif_data->size == 0)
-    return;
-
-  /* Previous versions of this code were checking for the presence of
-   * some well-known tags in the EXIF data before proceeding because
-   * libexif could return a non-null exif_data even if the file
-   * contained no EXIF data.  Now that the calling code in jpeg-load.c
-   * checks for a JPEG APP1 marker containing the EXIF header before
-   * calling this function, these tests are not necessary anymore.
-   * See also bug #446809.
-   */
-
-  gimp_metadata_store_exif (image_ID, exif_data);
 
   byte_order = exif_data_get_byte_order (exif_data);
 
@@ -116,10 +94,9 @@ jpeg_apply_exif_data_to_image (const gchar  *filename,
   if ((entry = exif_content_get_entry (exif_data->ifd[EXIF_IFD_0],
                                        EXIF_TAG_ORIENTATION)))
     {
-      jpeg_exif_rotate (image_ID, exif_get_short (entry->data, byte_order));
+      return exif_get_short (entry->data, byte_order);
     }
-
-  exif_data_unref (exif_data);
+  return 0;
 }
 
 
@@ -220,7 +197,7 @@ jpeg_setup_exif_for_save (ExifData     *exif_data,
 }
 
 
-static void
+void
 jpeg_exif_rotate (gint32 image_ID,
                   gint   orientation)
 {

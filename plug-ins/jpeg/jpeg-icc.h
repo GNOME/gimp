@@ -28,23 +28,12 @@ void jpeg_icc_write_profile (j_compress_ptr  cinfo,
  * Reading a JPEG file that may contain an ICC profile requires two steps:
  *
  * 1. After jpeg_create_decompress() but before jpeg_read_header(),
- *    call jpeg_icc_setup_read_profile().  This routine tells the IJG
- *    library to save in memory any APP2 markers it may find in the
- *    file.
+ *    ask the IJG library to save in memory any APP2 markers it may find
+ *    in the file.
  *
  * 2. After jpeg_read_header(), call jpeg_icc_read_profile() to find
  *    out whether there was a profile and obtain it if so.
- */
-
-
-/*
- * Prepare for reading an ICC profile
- */
-
-void jpeg_icc_setup_read_profile (j_decompress_ptr cinfo);
-
-
-/*
+ *
  * See if there was an ICC profile in the JPEG file being read;
  * if so, reassemble and return the profile data.
  *
