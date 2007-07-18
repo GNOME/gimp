@@ -45,13 +45,15 @@ subsample_region (PixelRegion *srcPR,
   const gdouble  y_ratio     = (gdouble) orig_height / (gdouble) height;
   const gint     bytes       = destPR->bytes;
   const gint     destwidth   = destPR->rowstride;
+  const gboolean has_alpha   = pixel_region_has_alpha (srcPR);
   guchar        *src,  *s;
   guchar        *dest, *d;
   gdouble       *row,  *r;
   gint           src_row, src_col;
   gdouble        x_sum, y_sum;
   gdouble        x_last, y_last;
-  gdouble       *x_frac, y_frac, tot_frac;
+  gdouble       *x_frac, y_frac;
+  gdouble        tot_frac;
   gint           i, j;
   gint           b;
   gint           frac;
@@ -136,8 +138,22 @@ subsample_region (PixelRegion *srcPR,
         {
           tot_frac = x_frac[frac++] * y_frac;
 
-          for (b = 0; b < bytes; b++)
-            r[b] += s[b] * tot_frac;
+          if (has_alpha)
+            {
+              /* premultiply */
+
+              gdouble local_frac = tot_frac * (gdouble) s[bytes - 1] / 255.0;
+
+              for (b = 0; b < (bytes - 1); b++)
+                r[b] += s[b] * local_frac;
+
+              r[bytes - 1] += local_frac;
+            }
+          else
+            {
+              for (b = 0; b < bytes; b++)
+                r[b] += s[b] * tot_frac;
+            }
 
           /*  increment the destination  */
           if (x_sum + x_ratio <= (src_col + 1 + EPSILON))
@@ -166,10 +182,33 @@ subsample_region (PixelRegion *srcPR,
           j = width;
           while (j--)
             {
-              b = bytes;
+              if (has_alpha)
+                {
+                  /* unpremultiply */
 
-              while (b--)
-                *d++ = (guchar) (*r++ * tot_frac + 0.5);
+                  gdouble alpha = r[bytes - 1];
+
+                  if (alpha > EPSILON)
+                    {
+                      for (b = 0; b < (bytes - 1); b++)
+                        d[b] = (guchar) ((r[b] / alpha) + 0.5);
+
+                      d[bytes - 1] = (guchar) ((alpha * tot_frac * 255.0) + 0.5);
+                    }
+                  else
+                    {
+                      for (b = 0; b < bytes; b++)
+                        d[b] = 0;
+                    }
+                }
+              else
+                {
+                  for (b = 0; b < bytes; b++)
+                    d[b] = (guchar) ((r[b] * tot_frac) + 0.5);
+                }
+
+              r += bytes;
+              d += bytes;
             }
 
           dest += destwidth;
@@ -202,43 +241,33 @@ subsample_indexed_region (PixelRegion  *srcPR,
                           const guchar *cmap,
                           gint          subsample)
 {
-  guchar  *src,  *s;
-  guchar  *dest, *d;
-  gdouble *row,  *r;
-  gint     destwidth;
-  gint     src_row, src_col;
-  gint     bytes, b;
-  gint     width, height;
-  gint     orig_width, orig_height;
-  gdouble  x_rat, y_rat;
-  gdouble  x_cum, y_cum;
-  gdouble  x_last, y_last;
-  gdouble *x_frac, y_frac, tot_frac;
-  gint     i, j;
-  gint     frac;
-  gboolean advance_dest;
-  gboolean has_alpha;
+  const gint     width       = destPR->w;
+  const gint     height      = destPR->h;
+  const gint     orig_width  = srcPR->w / subsample;
+  const gint     orig_height = srcPR->h / subsample;
+  const gdouble  x_ratio     = (gdouble) orig_width / (gdouble) width;
+  const gdouble  y_ratio     = (gdouble) orig_height / (gdouble) height;
+  const gint     bytes       = destPR->bytes;
+  const gint     destwidth   = destPR->rowstride;
+  const gboolean has_alpha   = pixel_region_has_alpha (srcPR);
+  guchar        *src,  *s;
+  guchar        *dest, *d;
+  gdouble       *row,  *r;
+  gint           src_row, src_col;
+  gdouble        x_sum, y_sum;
+  gdouble        x_last, y_last;
+  gdouble       *x_frac, y_frac;
+  gdouble        tot_frac;
+  gint           i, j;
+  gint           b;
+  gint           frac;
+  gint           advance_dest;
 
   g_return_if_fail (cmap != NULL);
-
-  orig_width  = srcPR->w / subsample;
-  orig_height = srcPR->h / subsample;
-  width       = destPR->w;
-  height      = destPR->h;
-
-  /*  Some calculations...  */
-  bytes     = destPR->bytes;
-  destwidth = destPR->rowstride;
-
-  has_alpha = pixel_region_has_alpha (srcPR);
 
   /*  the data pointers...  */
   src  = g_new (guchar, orig_width * bytes);
   dest = destPR->data;
-
-  /*  find the ratios of old x to new x and old y to new y  */
-  x_rat = (gdouble) orig_width  / (gdouble) width;
-  y_rat = (gdouble) orig_height / (gdouble) height;
 
   /*  allocate an array to help with the calculations  */
   row    = g_new0 (gdouble, width * bytes);
@@ -246,15 +275,15 @@ subsample_indexed_region (PixelRegion  *srcPR,
 
   /*  initialize the pre-calculated pixel fraction array  */
   src_col = 0;
-  x_cum   = (gdouble) src_col;
-  x_last  = x_cum;
+  x_sum   = (gdouble) src_col;
+  x_last  = x_sum;
 
   for (i = 0; i < width + orig_width; i++)
     {
-      if (x_cum + x_rat <= (src_col + 1 + EPSILON))
+      if (x_sum + x_ratio <= (src_col + 1 + EPSILON))
         {
-          x_cum += x_rat;
-          x_frac[i] = x_cum - x_last;
+          x_sum += x_ratio;
+          x_frac[i] = x_sum - x_last;
         }
       else
         {
@@ -267,8 +296,8 @@ subsample_indexed_region (PixelRegion  *srcPR,
 
   /*  counters...  */
   src_row = 0;
-  y_cum   = (gdouble) src_row;
-  y_last  = y_cum;
+  y_sum   = (gdouble) src_row;
+  y_last  = y_sum;
 
   pixel_region_get_row (srcPR,
                         srcPR->x,
@@ -281,13 +310,13 @@ subsample_indexed_region (PixelRegion  *srcPR,
   for (i = 0; i < height; )
     {
       src_col = 0;
-      x_cum   = (gdouble) src_col;
+      x_sum   = (gdouble) src_col;
 
       /* determine the fraction of the src pixel we are using for y */
-      if (y_cum + y_rat <= (src_row + 1 + EPSILON))
+      if (y_sum + y_ratio <= (src_row + 1 + EPSILON))
         {
-          y_cum += y_rat;
-          y_frac = y_cum - y_last;
+          y_sum += y_ratio;
+          y_frac = y_sum - y_last;
           advance_dest = TRUE;
         }
       else
@@ -332,10 +361,10 @@ subsample_indexed_region (PixelRegion  *srcPR,
             }
 
           /*  increment the destination  */
-          if (x_cum + x_rat <= (src_col + 1 + EPSILON))
+          if (x_sum + x_ratio <= (src_col + 1 + EPSILON))
             {
               r += bytes;
-              x_cum += x_rat;
+              x_sum += x_ratio;
               j--;
             }
           /* increment the source */
@@ -348,7 +377,7 @@ subsample_indexed_region (PixelRegion  *srcPR,
 
       if (advance_dest)
         {
-          tot_frac = 1.0 / (x_rat * y_rat);
+          tot_frac = 1.0 / (x_ratio * y_ratio);
 
           /*  copy "row" to "dest"  */
           d = dest;

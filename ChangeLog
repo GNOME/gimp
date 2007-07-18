@@ -1,5 +1,9 @@
 2007-07-17  Sven Neumann  <sven@gimp.org>
 
+	* app/paint-funcs/sample-funcs.c: unified subsampling code.
+
+2007-07-17  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/Makefile.am
 	* app/paint-funcs/scale-funcs.[ch]
 	* app/paint-funcs/sample-funcs.[ch]: moved subsample_region() to
