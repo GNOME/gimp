@@ -57,7 +57,7 @@ subsample_region (PixelRegion *srcPR,
   gint           i, j;
   gint           b;
   gint           frac;
-  gint           advance_dest;
+  gboolean       advance_dest;
 
 #if 0
   g_printerr ("subsample_region: (%d x %d) -> (%d x %d)\n",
@@ -261,7 +261,7 @@ subsample_indexed_region (PixelRegion  *srcPR,
   gint           i, j;
   gint           b;
   gint           frac;
-  gint           advance_dest;
+  gboolean       advance_dest;
 
   g_return_if_fail (cmap != NULL);
 
