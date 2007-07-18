@@ -22,7 +22,7 @@
 
 #include "base-types.h"
 
-#include "paint-funcs/scale-funcs.h"
+#include "paint-funcs/sample-funcs.h"
 
 #include "pixel-region.h"
 #include "temp-buf.h"

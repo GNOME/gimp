@@ -1,3 +1,13 @@
+2007-07-17  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/Makefile.am
+	* app/paint-funcs/scale-funcs.[ch]
+	* app/paint-funcs/sample-funcs.[ch]: moved subsample_region() to
+	new file and also moved subsample_indexed_region() there.
+
+	* app/base/tile-manager-preview.c
+	* app/core/gimpdrawable-preview.c: changed accordingly.
+
 2007-07-17  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/jpeg/jpeg.c
