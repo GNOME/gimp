@@ -88,13 +88,13 @@ GType           gimp_procedure_get_type           (void) G_GNUC_CONST;
 GimpProcedure * gimp_procedure_new                (GimpMarshalFunc   marshal_func);
 
 void            gimp_procedure_set_strings        (GimpProcedure    *procedure,
-                                                   gchar            *original_name,
-                                                   gchar            *blurb,
-                                                   gchar            *help,
-                                                   gchar            *author,
-                                                   gchar            *copyright,
-                                                   gchar            *date,
-                                                   gchar            *deprecated);
+                                                   const gchar      *original_name,
+                                                   const gchar      *blurb,
+                                                   const gchar      *help,
+                                                   const gchar      *author,
+                                                   const gchar      *copyright,
+                                                   const gchar      *date,
+                                                   const gchar      *deprecated);
 void            gimp_procedure_set_static_strings (GimpProcedure    *procedure,
                                                    gchar            *original_name,
                                                    gchar            *blurb,

@@ -1,3 +1,8 @@
+2007-07-18  Sven Neumann  <sven@gimp.org>
+
+	* app/pdb/gimpprocedure.[ch] (gimp_procedure_set_strings): added
+	const qualifiers.
+
 2007-07-17  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/sample-funcs.c: unified subsampling code.
