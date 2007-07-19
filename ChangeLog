@@ -1,3 +1,10 @@
+2007-07-20  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/faxg3/faxg3.c (query): changed the magic string to
+	"Research" starting at offset 4 (this also matches the longer
+	string "PC Research, Inc" starting at offset 1).  Addresses a part
+	of bug #445559.
+
 2007-07-19  Sven Neumann  <sven@gimp.org>
 
 	Applied patch from Stefan attached to bug #387604:

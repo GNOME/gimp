@@ -110,7 +110,7 @@ void query (void)
   gimp_register_magic_load_handler (LOAD_PROC,
 				    "g3",
 				    "",
-				    "0,short,0x0001,0,short,0x0014");
+				    "4,string,Research");
 }
 
 static void
