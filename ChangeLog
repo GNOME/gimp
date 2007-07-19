@@ -1,3 +1,7 @@
+2007-07-19  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpcolortool.c (gimp_color_tool_draw): chain up.
+
 2007-07-18  Sven Neumann  <sven@gimp.org>
 
 	* app/pdb/gimpprocedure.[ch] (gimp_procedure_set_strings): added

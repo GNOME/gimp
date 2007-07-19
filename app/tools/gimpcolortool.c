@@ -551,41 +551,43 @@ gimp_color_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpColorTool *color_tool = GIMP_COLOR_TOOL (draw_tool);
 
-  if (! color_tool->enabled)
-    return;
-
-  if (color_tool->moving_sample_point)
+  if (color_tool->enabled)
     {
-      if (color_tool->sample_point_x != -1 &&
-          color_tool->sample_point_y != -1)
+      if (color_tool->moving_sample_point)
         {
-          gimp_draw_tool_draw_line (draw_tool,
-                                    0, color_tool->sample_point_y + 0.5,
-                                    draw_tool->display->image->width,
-                                    color_tool->sample_point_y + 0.5,
-                                    FALSE);
-          gimp_draw_tool_draw_line (draw_tool,
-                                    color_tool->sample_point_x + 0.5, 0,
-                                    color_tool->sample_point_x + 0.5,
-                                    draw_tool->display->image->height,
-                                    FALSE);
+          if (color_tool->sample_point_x != -1 &&
+              color_tool->sample_point_y != -1)
+            {
+              gimp_draw_tool_draw_line (draw_tool,
+                                        0, color_tool->sample_point_y + 0.5,
+                                        draw_tool->display->image->width,
+                                        color_tool->sample_point_y + 0.5,
+                                        FALSE);
+              gimp_draw_tool_draw_line (draw_tool,
+                                        color_tool->sample_point_x + 0.5, 0,
+                                        color_tool->sample_point_x + 0.5,
+                                        draw_tool->display->image->height,
+                                        FALSE);
+            }
+        }
+      else
+        {
+          if (color_tool->options->sample_average)
+            {
+              gdouble radius = color_tool->options->average_radius;
+
+              gimp_draw_tool_draw_rectangle (draw_tool,
+                                             FALSE,
+                                             color_tool->center_x - radius,
+                                             color_tool->center_y - radius,
+                                             2 * radius + 1,
+                                             2 * radius + 1,
+                                             TRUE);
+            }
         }
     }
-  else
-    {
-      if (color_tool->options->sample_average)
-        {
-          gdouble radius = color_tool->options->average_radius;
 
-          gimp_draw_tool_draw_rectangle (draw_tool,
-                                         FALSE,
-                                         color_tool->center_x - radius,
-                                         color_tool->center_y - radius,
-                                         2 * radius + 1,
-                                         2 * radius + 1,
-                                         TRUE);
-        }
-    }
+  GIMP_DRAW_TOOL_CLASS (parent_class)->draw (draw_tool);
 }
 
 static gboolean
