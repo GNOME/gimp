@@ -150,7 +150,7 @@ gimp_blend_tool_initialize (GimpTool     *tool,
                             GimpDisplay  *display,
                             GError      **error)
 {
-  GimpDrawable *drawable = gimp_image_active_drawable (display->image);
+  GimpDrawable *drawable = gimp_image_get_active_drawable (display->image);
 
   if (! GIMP_TOOL_CLASS (parent_class)->initialize (tool, display, error))
     {
@@ -215,6 +215,7 @@ gimp_blend_tool_button_release (GimpTool              *tool,
       ((blend_tool->start_x != blend_tool->end_x) ||
        (blend_tool->start_y != blend_tool->end_y)))
     {
+      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
       GimpProgress *progress;
       gint          off_x;
       gint          off_y;
@@ -222,10 +223,9 @@ gimp_blend_tool_button_release (GimpTool              *tool,
       progress = gimp_progress_start (GIMP_PROGRESS (display),
                                       _("Blending"), FALSE);
 
-      gimp_item_offsets (GIMP_ITEM (gimp_image_active_drawable (image)),
-                         &off_x, &off_y);
+      gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
 
-      gimp_drawable_blend (gimp_image_active_drawable (image),
+      gimp_drawable_blend (drawable,
                            context,
                            GIMP_CUSTOM_MODE,
                            gimp_context_get_paint_mode (context),
@@ -335,7 +335,7 @@ gimp_blend_tool_cursor_update (GimpTool        *tool,
                                GdkModifierType  state,
                                GimpDisplay     *display)
 {
-  switch (gimp_drawable_type (gimp_image_active_drawable (display->image)))
+  switch (gimp_drawable_type (gimp_image_get_active_drawable (display->image)))
     {
     case GIMP_INDEXED_IMAGE:
     case GIMP_INDEXEDA_IMAGE:

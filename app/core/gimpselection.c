@@ -353,7 +353,7 @@ gimp_selection_boundary (GimpChannel     *channel,
 
       return TRUE;
     }
-  else if ((drawable = gimp_image_active_drawable (image)) &&
+  else if ((drawable = gimp_image_get_active_drawable (image)) &&
            GIMP_IS_CHANNEL (drawable))
     {
       /*  Otherwise, return the boundary...if a channel is active  */

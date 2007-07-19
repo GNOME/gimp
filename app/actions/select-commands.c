@@ -121,7 +121,7 @@ select_float_cmd_callback (GtkAction *action,
   return_if_no_image (image, data);
 
   gimp_selection_float (gimp_image_get_mask (image),
-                        gimp_image_active_drawable (image),
+                        gimp_image_get_active_drawable (image),
                         action_data_get_context (data),
                         TRUE, 0, 0);
   gimp_image_flush (image);
@@ -299,7 +299,7 @@ select_stroke_cmd_callback (GtkAction *action,
   return_if_no_image (image, data);
   return_if_no_widget (widget, data);
 
-  drawable = gimp_image_active_drawable (image);
+  drawable = gimp_image_get_active_drawable (image);
 
   if (! drawable)
     {
@@ -330,7 +330,7 @@ select_stroke_last_vals_cmd_callback (GtkAction *action,
   return_if_no_context (context, data);
   return_if_no_widget (widget, data);
 
-  drawable = gimp_image_active_drawable (image);
+  drawable = gimp_image_get_active_drawable (image);
 
   if (! drawable)
     {

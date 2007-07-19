@@ -269,7 +269,7 @@ gimp_text_tool_button_press (GimpTool        *tool,
   text_tool->x1 = coords->x;
   text_tool->y1 = coords->y;
 
-  drawable = gimp_image_active_drawable (display->image);
+  drawable = gimp_image_get_active_drawable (display->image);
 
   gimp_text_tool_set_drawable (text_tool, drawable, FALSE);
 

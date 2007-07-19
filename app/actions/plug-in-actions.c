@@ -225,7 +225,7 @@ plug_in_actions_update (GimpActionGroup *group,
 
   if (image)
     {
-      GimpDrawable *drawable = gimp_image_active_drawable (image);
+      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
       if (drawable)
         type = gimp_drawable_type (drawable);

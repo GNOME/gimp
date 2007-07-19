@@ -434,7 +434,7 @@ plug_in_collect_display_args (GtkAction    *action,
           if (args->n_values > n_args &&
               GIMP_IS_PARAM_SPEC_DRAWABLE_ID (pspecs[n_args]))
             {
-              GimpDrawable *drawable = gimp_image_active_drawable (image);
+              GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
               if (drawable)
                 {

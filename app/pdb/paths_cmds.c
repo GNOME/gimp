@@ -316,7 +316,7 @@ path_stroke_current_invoker (GimpProcedure     *procedure,
   if (success)
     {
       GimpVectors  *vectors  = gimp_image_get_active_vectors (image);
-      GimpDrawable *drawable = gimp_image_active_drawable (image);
+      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
       if (vectors && drawable)
         {

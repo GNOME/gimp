@@ -137,9 +137,7 @@ gimp_colorize_tool_initialize (GimpTool     *tool,
                                GError      **error)
 {
   GimpColorizeTool *col_tool = GIMP_COLORIZE_TOOL (tool);
-  GimpDrawable     *drawable;
-
-  drawable = gimp_image_active_drawable (display->image);
+  GimpDrawable     *drawable = gimp_image_get_active_drawable (display->image);
 
   if (! drawable)
     return FALSE;

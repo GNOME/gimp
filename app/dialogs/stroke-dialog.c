@@ -271,10 +271,8 @@ stroke_dialog_response (GtkWidget  *widget,
 
     case GTK_RESPONSE_OK:
       {
-        GimpDrawable   *drawable;
+        GimpDrawable   *drawable = gimp_image_get_active_drawable (image);
         GimpStrokeDesc *saved_desc;
-
-        drawable = gimp_image_active_drawable (image);
 
         if (! drawable)
           {

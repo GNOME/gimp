@@ -148,7 +148,7 @@ buffers_paste (GimpBufferView *view,
 
       if (image)
         {
-          gimp_edit_paste (image, gimp_image_active_drawable (image),
+          gimp_edit_paste (image, gimp_image_get_active_drawable (image),
                            buffer, paste_into, x, y, width, height);
 
           gimp_image_flush (image);

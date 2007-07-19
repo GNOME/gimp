@@ -608,11 +608,12 @@ gimp_foreground_select_tool_select (GimpFreeSelectTool *free_sel,
 {
   GimpForegroundSelectTool    *fg_select;
   GimpForegroundSelectOptions *options;
-  GimpImage                   *image    = display->image;
-  GimpDrawable                *drawable = gimp_image_active_drawable (image);
+  GimpImage                   *image = display->image;
+  GimpDrawable                *drawable;
   GimpScanConvert             *scan_convert;
   GimpChannel                 *mask;
 
+  drawable  = gimp_image_get_active_drawable (image);
   fg_select = GIMP_FOREGROUND_SELECT_TOOL (free_sel);
   options   = GIMP_FOREGROUND_SELECT_TOOL_GET_OPTIONS (free_sel);
 

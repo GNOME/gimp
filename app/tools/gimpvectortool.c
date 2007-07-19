@@ -1893,7 +1893,7 @@ gimp_vector_tool_stroke_vectors (GimpVectorTool *vector_tool,
 
   image = gimp_item_get_image (GIMP_ITEM (vector_tool->vectors));
 
-  active_drawable = gimp_image_active_drawable (image);
+  active_drawable = gimp_image_get_active_drawable (image);
 
   if (! active_drawable)
     {

@@ -850,7 +850,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                                                   display);
                   }
                 else if ((active_tool->drawable !=
-                          gimp_image_active_drawable (image)) &&
+                          gimp_image_get_active_drawable (image)) &&
                          ! gimp_tool_control_get_preserve (active_tool->control))
                   {
                     /*  create a new one, deleting the current

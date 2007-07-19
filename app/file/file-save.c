@@ -94,7 +94,7 @@ file_save (GimpImage           *image,
   g_return_val_if_fail (error == NULL || *error == NULL,
                         GIMP_PDB_CALLING_ERROR);
 
-  drawable = gimp_image_active_drawable (image);
+  drawable = gimp_image_get_active_drawable (image);
 
   if (! drawable)
     return GIMP_PDB_EXECUTION_ERROR;

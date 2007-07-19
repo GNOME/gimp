@@ -1,5 +1,14 @@
 2007-07-19  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage.[ch]: renamed gimp_image_active_drawable() to
+	gimp_image_get_active_drawable().
+
+	* app/[lots of files]
+	* tools/pdbgen/pdb/paths.pdb
+	* tools/pdbgen/pdb/image.pdb: changed accordingly.
+
+2007-07-19  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpcolortool.c (gimp_color_tool_draw): chain up.
 
 2007-07-18  Sven Neumann  <sven@gimp.org>

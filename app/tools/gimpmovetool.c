@@ -323,7 +323,9 @@ gimp_move_tool_button_press (GimpTool        *tool,
 
     case GIMP_TRANSFORM_TYPE_LAYER:
       {
-        GimpDrawable *drawable = gimp_image_active_drawable (display->image);
+        GimpDrawable *drawable;
+
+        drawable = gimp_image_get_active_drawable (display->image);
 
         if (GIMP_IS_LAYER_MASK (drawable))
           gimp_edit_selection_tool_start (tool, display, coords,
@@ -704,7 +706,7 @@ gimp_move_tool_cursor_update (GimpTool        *tool,
     }
   else if (options->move_current)
     {
-      if (! gimp_image_active_drawable (display->image))
+      if (! gimp_image_get_active_drawable (display->image))
         modifier = GIMP_CURSOR_MODIFIER_BAD;
     }
   else

@@ -214,8 +214,9 @@ gimp_region_select_tool_button_release (GimpTool              *tool,
             }
           else
             {
-              GimpDrawable *drawable =
-                gimp_image_active_drawable (display->image);
+              GimpDrawable *drawable;
+
+              drawable = gimp_image_get_active_drawable (display->image);
 
               gimp_item_offsets (GIMP_ITEM (drawable), &off_x, &off_y);
             }
@@ -349,7 +350,7 @@ gimp_region_select_tool_calculate (GimpRegionSelectTool *region_sel,
   BoundSeg             *bsegs;
   PixelRegion           maskPR;
 
-  drawable = gimp_image_active_drawable (display->image);
+  drawable = gimp_image_get_active_drawable (display->image);
 
   gimp_display_shell_set_override_cursor (shell, GDK_WATCH);
 

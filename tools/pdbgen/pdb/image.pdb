@@ -1425,7 +1425,7 @@ HELP
     %invoke = (
 	code => <<'CODE'
 {
-  drawable = gimp_image_active_drawable (image);
+  drawable = gimp_image_get_active_drawable (image);
 }
 CODE
     );

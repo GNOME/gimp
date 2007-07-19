@@ -107,7 +107,7 @@ gimp_display_shell_transform_xy (GimpDisplayShell *shell,
     {
       GimpItem *item;
 
-      item = GIMP_ITEM (gimp_image_active_drawable (shell->display->image));
+      item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 
@@ -162,7 +162,7 @@ gimp_display_shell_untransform_xy (GimpDisplayShell *shell,
     {
       GimpItem *item;
 
-      item = GIMP_ITEM (gimp_image_active_drawable (shell->display->image));
+      item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 
@@ -210,7 +210,7 @@ gimp_display_shell_transform_xy_f  (GimpDisplayShell *shell,
     {
       GimpItem *item;
 
-      item = GIMP_ITEM (gimp_image_active_drawable (shell->display->image));
+      item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 
@@ -257,7 +257,7 @@ gimp_display_shell_untransform_xy_f (GimpDisplayShell *shell,
     {
       GimpItem *item;
 
-      item = GIMP_ITEM (gimp_image_active_drawable (shell->display->image));
+      item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 
@@ -294,7 +294,7 @@ gimp_display_shell_transform_points (GimpDisplayShell *shell,
     {
       GimpItem *item;
 
-      item = GIMP_ITEM (gimp_image_active_drawable (shell->display->image));
+      item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 
@@ -346,7 +346,7 @@ gimp_display_shell_transform_coords (GimpDisplayShell *shell,
     {
       GimpItem *item;
 
-      item = GIMP_ITEM (gimp_image_active_drawable (shell->display->image));
+      item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 
@@ -398,7 +398,7 @@ gimp_display_shell_transform_segments (GimpDisplayShell *shell,
     {
       GimpItem *item;
 
-      item = GIMP_ITEM (gimp_image_active_drawable (shell->display->image));
+      item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 

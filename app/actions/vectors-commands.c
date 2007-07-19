@@ -355,7 +355,7 @@ vectors_stroke_cmd_callback (GtkAction *action,
   return_if_no_vectors (image, vectors, data);
   return_if_no_widget (widget, data);
 
-  drawable = gimp_image_active_drawable (image);
+  drawable = gimp_image_get_active_drawable (image);
 
   if (! drawable)
     {
@@ -387,7 +387,7 @@ vectors_stroke_last_vals_cmd_callback (GtkAction *action,
   return_if_no_context (context, data);
   return_if_no_widget (widget, data);
 
-  drawable = gimp_image_active_drawable (image);
+  drawable = gimp_image_get_active_drawable (image);
 
   if (! drawable)
     {

@@ -439,7 +439,7 @@ edit_paste (GimpDisplay *display,
                                                    &x, &y, &width, &height);
 
           if (gimp_edit_paste (display->image,
-                               gimp_image_active_drawable (display->image),
+                               gimp_image_get_active_drawable (display->image),
                                buffer, paste_into, x, y, width, height))
             {
               gimp_image_flush (display->image);
@@ -461,10 +461,8 @@ cut_named_buffer_callback (GtkWidget   *widget,
                            const gchar *name,
                            gpointer     data)
 {
-  GimpImage    *image = GIMP_IMAGE (data);
-  GimpDrawable *drawable;
-
-  drawable = gimp_image_active_drawable (image);
+  GimpImage    *image    = GIMP_IMAGE (data);
+  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
   if (! drawable)
     {
@@ -488,10 +486,8 @@ copy_named_buffer_callback (GtkWidget   *widget,
                             const gchar *name,
                             gpointer     data)
 {
-  GimpImage    *image = GIMP_IMAGE (data);
-  GimpDrawable *drawable;
-
-  drawable = gimp_image_active_drawable (image);
+  GimpImage    *image    = GIMP_IMAGE (data);
+  GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
   if (! drawable)
     {

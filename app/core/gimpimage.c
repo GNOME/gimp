@@ -2509,7 +2509,7 @@ gimp_image_get_vectors (const GimpImage *image)
 }
 
 GimpDrawable *
-gimp_image_active_drawable (const GimpImage *image)
+gimp_image_get_active_drawable (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
 
@@ -3711,7 +3711,7 @@ gimp_image_coords_in_active_pickable (GimpImage        *image,
     }
   else
     {
-      GimpDrawable *drawable = gimp_image_active_drawable (image);
+      GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
       if (drawable)
         {

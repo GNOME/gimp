@@ -193,7 +193,7 @@ file_save_cmd_callback (GtkAction *action,
 
   save_mode = (GimpSaveMode) value;
 
-  if (! gimp_image_active_drawable (image))
+  if (! gimp_image_get_active_drawable (image))
     return;
 
   switch (save_mode)

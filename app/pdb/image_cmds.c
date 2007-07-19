@@ -611,7 +611,7 @@ image_get_active_drawable_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      drawable = gimp_image_active_drawable (image);
+      drawable = gimp_image_get_active_drawable (image);
     }
 
   return_vals = gimp_procedure_get_return_values (procedure, success);

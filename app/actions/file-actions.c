@@ -226,7 +226,7 @@ file_actions_update (GimpActionGroup *group,
   GimpDrawable *drawable = NULL;
 
   if (image)
-    drawable = gimp_image_active_drawable (image);
+    drawable = gimp_image_get_active_drawable (image);
 
 #define SET_SENSITIVE(action,condition) \
         gimp_action_group_set_action_sensitive (group, action, (condition) != 0)

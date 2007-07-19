@@ -218,7 +218,7 @@ gimp_perspective_clone_tool_initialize (GimpTool     *tool,
 
       /*  Set the pointer to the active display  */
       tool->display  = display;
-      tool->drawable = gimp_image_active_drawable (display->image);
+      tool->drawable = gimp_image_get_active_drawable (display->image);
 
       /*  Find the transform bounds initializing */
       gimp_perspective_clone_tool_bounds (perspective_clone_tool, display);

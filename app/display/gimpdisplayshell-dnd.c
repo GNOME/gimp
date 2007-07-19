@@ -304,7 +304,7 @@ gimp_display_shell_bucket_fill (GimpDisplayShell   *shell,
   if (image->gimp->busy)
     return;
 
-  drawable = gimp_image_active_drawable (image);
+  drawable = gimp_image_get_active_drawable (image);
 
   if (! drawable)
     return;
@@ -389,7 +389,7 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
 
   /* FIXME: popup a menu for selecting "Paste Into" */
 
-  gimp_edit_paste (image, gimp_image_active_drawable (image),
+  gimp_edit_paste (image, gimp_image_get_active_drawable (image),
                    buffer, FALSE,
                    x, y, width, height);
 

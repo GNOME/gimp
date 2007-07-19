@@ -224,10 +224,8 @@ gimp_levels_tool_initialize (GimpTool     *tool,
                              GimpDisplay  *display,
                              GError      **error)
 {
-  GimpLevelsTool *l_tool = GIMP_LEVELS_TOOL (tool);
-  GimpDrawable   *drawable;
-
-  drawable = gimp_image_active_drawable (display->image);
+  GimpLevelsTool *l_tool   = GIMP_LEVELS_TOOL (tool);
+  GimpDrawable   *drawable = gimp_image_get_active_drawable (display->image);
 
   if (! drawable)
     return FALSE;

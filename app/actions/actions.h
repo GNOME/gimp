@@ -81,7 +81,7 @@ GimpObject  * action_select_object    (GimpActionSelectType  select_type,
 
 #define return_if_no_drawable(image,drawable,data) \
   return_if_no_image (image,data); \
-  drawable = gimp_image_active_drawable (image); \
+  drawable = gimp_image_get_active_drawable (image); \
   if (! drawable) \
     return
 

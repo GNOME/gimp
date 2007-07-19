@@ -68,7 +68,7 @@ floating_sel_attach (GimpLayer    *layer,
        *  to the drawable
        */
       if (drawable == (GimpDrawable *) floating_sel)
-        drawable = gimp_image_active_drawable (image);
+        drawable = gimp_image_get_active_drawable (image);
     }
 
   /*  set the drawable and allocate a backing store  */

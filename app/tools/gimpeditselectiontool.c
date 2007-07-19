@@ -175,7 +175,7 @@ gimp_edit_selection_tool_start (GimpTool          *parent_tool,
   if (edit_select->edit_mode == GIMP_TRANSLATE_MODE_VECTORS)
     active_item = GIMP_ITEM (gimp_image_get_active_vectors (display->image));
   else
-    active_item = GIMP_ITEM (gimp_image_active_drawable (display->image));
+    active_item = GIMP_ITEM (gimp_image_get_active_drawable (display->image));
 
   switch (edit_select->edit_mode)
     {
@@ -424,7 +424,7 @@ gimp_edit_selection_tool_button_release (GimpTool              *tool,
   if (edit_select->edit_mode == GIMP_TRANSLATE_MODE_VECTORS)
     active_item = GIMP_ITEM (gimp_image_get_active_vectors (display->image));
   else
-    active_item = GIMP_ITEM (gimp_image_active_drawable (display->image));
+    active_item = GIMP_ITEM (gimp_image_get_active_drawable (display->image));
 
   gimp_edit_selection_tool_calc_coords (edit_select,
                                         coords->x,
@@ -538,7 +538,7 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
   if (edit_select->edit_mode == GIMP_TRANSLATE_MODE_VECTORS)
     active_item = GIMP_ITEM (gimp_image_get_active_vectors (display->image));
   else
-    active_item = GIMP_ITEM (gimp_image_active_drawable (display->image));
+    active_item = GIMP_ITEM (gimp_image_get_active_drawable (display->image));
 
   gimp_item_offsets (active_item, &off_x, &off_y);
 
@@ -640,7 +640,8 @@ gimp_edit_selection_tool_motion (GimpTool        *tool,
 
             edit_select->edit_mode = GIMP_TRANSLATE_MODE_FLOATING_SEL;
 
-            active_item = GIMP_ITEM (gimp_image_active_drawable (display->image));
+            active_item =
+              GIMP_ITEM (gimp_image_get_active_drawable (display->image));
 
             /* fall through */
 
@@ -679,7 +680,7 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
   if (edit_select->edit_mode == GIMP_TRANSLATE_MODE_VECTORS)
     active_item = GIMP_ITEM (gimp_image_get_active_vectors (display->image));
   else
-    active_item = GIMP_ITEM (gimp_image_active_drawable (display->image));
+    active_item = GIMP_ITEM (gimp_image_get_active_drawable (display->image));
 
   switch (edit_select->edit_mode)
     {
@@ -1066,7 +1067,7 @@ gimp_edit_selection_tool_translate (GimpTool          *tool,
           break;
 
         case GIMP_TRANSFORM_TYPE_LAYER:
-          item = GIMP_ITEM (gimp_image_active_drawable (display->image));
+          item = GIMP_ITEM (gimp_image_get_active_drawable (display->image));
 
           if (item)
             {

@@ -206,9 +206,7 @@ gimp_paint_tool_control (GimpTool       *tool,
                          GimpDisplay    *display)
 {
   GimpPaintTool *paint_tool = GIMP_PAINT_TOOL (tool);
-  GimpDrawable  *drawable;
-
-  drawable = gimp_image_active_drawable (display->image);
+  GimpDrawable  *drawable   = gimp_image_get_active_drawable (display->image);
 
   switch (action)
     {
@@ -285,7 +283,7 @@ gimp_paint_tool_button_press (GimpTool        *tool,
       return;
     }
 
-  drawable = gimp_image_active_drawable (display->image);
+  drawable = gimp_image_get_active_drawable (display->image);
 
   curr_coords = *coords;
 
@@ -396,7 +394,7 @@ gimp_paint_tool_button_release (GimpTool              *tool,
       return;
     }
 
-  drawable = gimp_image_active_drawable (display->image);
+  drawable = gimp_image_get_active_drawable (display->image);
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
@@ -441,7 +439,7 @@ gimp_paint_tool_motion (GimpTool        *tool,
       return;
     }
 
-  drawable = gimp_image_active_drawable (display->image);
+  drawable = gimp_image_get_active_drawable (display->image);
 
   core->cur_coords = *coords;
 
@@ -560,7 +558,7 @@ gimp_paint_tool_oper_update (GimpTool        *tool,
       tool->display = display;
     }
 
-  drawable = gimp_image_active_drawable (display->image);
+  drawable = gimp_image_get_active_drawable (display->image);
 
   if (drawable && proximity)
     {

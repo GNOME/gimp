@@ -273,7 +273,7 @@ gimp_selection_view_button_press (GtkWidget           *widget,
 
   options = GIMP_SELECTION_OPTIONS (tool_info->tool_options);
 
-  drawable = gimp_image_active_drawable (image_editor->image);
+  drawable = gimp_image_get_active_drawable (image_editor->image);
 
   if (! drawable)
     return TRUE;
@@ -343,7 +343,7 @@ gimp_selection_editor_drop_color (GtkWidget     *widget,
 
   options = GIMP_SELECTION_OPTIONS (tool_info->tool_options);
 
-  drawable = gimp_image_active_drawable (editor->image);
+  drawable = gimp_image_get_active_drawable (editor->image);
 
   if (! drawable)
     return;

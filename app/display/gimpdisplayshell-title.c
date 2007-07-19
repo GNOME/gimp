@@ -321,7 +321,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
             case 'n': /* active drawable name */
               {
-                GimpDrawable *drawable = gimp_image_active_drawable (image);
+                GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
                 if (drawable)
                   i += print (title, title_len, i, "%s",
@@ -333,7 +333,7 @@ gimp_display_shell_format_title (GimpDisplayShell *shell,
 
             case 'P': /* active drawable PDB id */
               {
-                GimpDrawable *drawable = gimp_image_active_drawable (image);
+                GimpDrawable *drawable = gimp_image_get_active_drawable (image);
 
                 if (drawable)
                   i += print (title, title_len, i, "%d",

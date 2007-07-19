@@ -248,14 +248,13 @@ offset_response (GtkWidget    *widget,
 {
   if (response_id == GTK_RESPONSE_OK)
     {
-      GimpImage    *image;
-      GimpDrawable *drawable;
-      gint          offset_x;
-      gint          offset_y;
+      GimpImage *image = dialog->image;
 
-      if ((image = dialog->image) != NULL)
+      if (image)
         {
-          drawable = gimp_image_active_drawable (image);
+          GimpDrawable *drawable = gimp_image_get_active_drawable (image);
+          gint          offset_x;
+          gint          offset_y;
 
           offset_x =
             RINT (gimp_size_entry_get_refval (GIMP_SIZE_ENTRY (dialog->off_se),
@@ -280,11 +279,11 @@ static void
 offset_halfheight_callback (GtkWidget    *widget,
                             OffsetDialog *dialog)
 {
-  GimpImage    *image = dialog->image;
+  GimpImage *image = dialog->image;
 
   if (image)
     {
-      GimpItem *item = GIMP_ITEM (gimp_image_active_drawable (image));
+      GimpItem *item = GIMP_ITEM (gimp_image_get_active_drawable (image));
 
       gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (dialog->off_se),
                                   0, item->width / 2);

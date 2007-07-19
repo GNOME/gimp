@@ -125,7 +125,7 @@ gimp_bucket_fill_tool_button_release (GimpTool              *tool,
       gimp_image_coords_in_active_pickable (display->image, coords,
                                             options->sample_merged, TRUE))
     {
-      GimpDrawable *drawable = gimp_image_active_drawable (display->image);
+      GimpDrawable *drawable = gimp_image_get_active_drawable (display->image);
       GimpContext  *context  = GIMP_CONTEXT (options);
       gint          x, y;
 

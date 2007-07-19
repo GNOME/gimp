@@ -304,7 +304,7 @@ gimp_image_map_tool_initialize (GimpTool     *tool,
       gtk_widget_show (vbox);
     }
 
-  drawable = gimp_image_active_drawable (display->image);
+  drawable = gimp_image_get_active_drawable (display->image);
 
   gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (image_map_tool->shell),
                                      GIMP_VIEWABLE (drawable),

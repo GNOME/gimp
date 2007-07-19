@@ -261,7 +261,7 @@ edit_actions_update (GimpActionGroup *group,
       GimpUndo *undo;
       GimpUndo *redo;
 
-      drawable = gimp_image_active_drawable (image);
+      drawable = gimp_image_get_active_drawable (image);
 
       undo_enabled = gimp_image_undo_is_enabled (image);
 

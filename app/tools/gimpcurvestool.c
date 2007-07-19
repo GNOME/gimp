@@ -241,10 +241,8 @@ gimp_curves_tool_initialize (GimpTool     *tool,
                              GimpDisplay  *display,
                              GError      **error)
 {
-  GimpCurvesTool *c_tool = GIMP_CURVES_TOOL (tool);
-  GimpDrawable   *drawable;
-
-  drawable = gimp_image_active_drawable (display->image);
+  GimpCurvesTool *c_tool   = GIMP_CURVES_TOOL (tool);
+  GimpDrawable   *drawable = gimp_image_get_active_drawable (display->image);
 
   if (! drawable)
     return FALSE;
@@ -303,9 +301,6 @@ gimp_curves_tool_button_release (GimpTool              *tool,
                                  GimpDisplay           *display)
 {
   GimpCurvesTool *c_tool = GIMP_CURVES_TOOL (tool);
-  GimpDrawable   *drawable;
-
-  drawable = gimp_image_active_drawable (display->image);
 
   if (state & GDK_SHIFT_MASK)
     {

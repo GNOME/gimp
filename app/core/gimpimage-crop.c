@@ -313,7 +313,7 @@ gimp_image_crop_auto_shrink (GimpImage *image,
 
   if (active_drawable_only)
     {
-      active_drawable = gimp_image_active_drawable (image);
+      active_drawable = gimp_image_get_active_drawable (image);
 
       if (! active_drawable)
         goto FINISH;

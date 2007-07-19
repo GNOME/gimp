@@ -51,7 +51,7 @@ gimp_image_pick_color (GimpImage     *image,
   if (! sample_merged)
     {
       if (! drawable)
-        drawable = gimp_image_active_drawable (image);
+        drawable = gimp_image_get_active_drawable (image);
 
       if (! drawable)
         return FALSE;

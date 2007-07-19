@@ -97,7 +97,7 @@ gimp_fuzzy_select_tool_get_mask (GimpRegionSelectTool *region_select,
   GimpDrawable         *drawable;
   gint                  x, y;
 
-  drawable = gimp_image_active_drawable (display->image);
+  drawable = gimp_image_get_active_drawable (display->image);
 
   x = region_select->x;
   y = region_select->y;

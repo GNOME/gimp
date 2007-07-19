@@ -334,7 +334,7 @@ gimp_transform_tool_initialize (GimpTool     *tool,
 
       /*  Set the pointer to the active display  */
       tool->display  = display;
-      tool->drawable = gimp_image_active_drawable (display->image);
+      tool->drawable = gimp_image_get_active_drawable (display->image);
 
       /*  Initialize the transform tool dialog */
       if (! tr_tool->dialog)
@@ -1156,18 +1156,18 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
   switch (options->type)
     {
     case GIMP_TRANSFORM_TYPE_LAYER:
-      active_item = (GimpItem *) gimp_image_active_drawable (display->image);
+      active_item = GIMP_ITEM (gimp_image_get_active_drawable (display->image));
       message = _("There is no layer to transform.");
       break;
 
     case GIMP_TRANSFORM_TYPE_SELECTION:
-      active_item = (GimpItem *) gimp_image_get_mask (display->image);
+      active_item = GIMP_ITEM (gimp_image_get_mask (display->image));
       /* cannot happen, so don't translate this message */
       message = "There is no selection to transform.";
       break;
 
     case GIMP_TRANSFORM_TYPE_PATH:
-      active_item = (GimpItem *) gimp_image_get_active_vectors (display->image);
+      active_item = GIMP_ITEM (gimp_image_get_active_vectors (display->image));
       message = _("There is no path to transform.");
       break;
     }
@@ -1209,7 +1209,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
    *  selection pointer, so that the original source can be repeatedly
    *  modified.
    */
-  tool->drawable = gimp_image_active_drawable (display->image);
+  tool->drawable = gimp_image_get_active_drawable (display->image);
 
   switch (options->type)
     {
@@ -1277,7 +1277,7 @@ gimp_transform_tool_doit (GimpTransformTool *tr_tool,
   /*  Make a note of the new current drawable (since we may have
    *  a floating selection, etc now.
    */
-  tool->drawable = gimp_image_active_drawable (display->image);
+  tool->drawable = gimp_image_get_active_drawable (display->image);
 
   gimp_image_undo_push (display->image, GIMP_TYPE_TRANSFORM_TOOL_UNDO,
                         GIMP_UNDO_TRANSFORM, NULL,
@@ -1484,9 +1484,11 @@ gimp_transform_tool_bounds (GimpTransformTool *tr_tool,
         {
         case GIMP_TRANSFORM_TYPE_LAYER:
           {
-            GimpDrawable *drawable = gimp_image_active_drawable (display->image);
+            GimpDrawable *drawable;
             gint          offset_x;
             gint          offset_y;
+
+            drawable = gimp_image_get_active_drawable (display->image);
 
             gimp_item_offsets (GIMP_ITEM (drawable), &offset_x, &offset_y);
 
@@ -1702,8 +1704,10 @@ gimp_transform_tool_prepare (GimpTransformTool *tr_tool,
 
   if (tr_tool->dialog)
     {
+      GimpDrawable *drawable = gimp_image_get_active_drawable (display->image);
+
       gimp_viewable_dialog_set_viewable (GIMP_VIEWABLE_DIALOG (tr_tool->dialog),
-                                         GIMP_VIEWABLE (gimp_image_active_drawable (display->image)),
+                                         GIMP_VIEWABLE (drawable),
                                          GIMP_CONTEXT (options));
 
       gtk_widget_set_sensitive (tr_tool->dialog, TRUE);

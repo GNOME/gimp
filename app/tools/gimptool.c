@@ -285,7 +285,7 @@ gimp_tool_real_button_press (GimpTool        *tool,
                              GimpDisplay     *display)
 {
   tool->display  = display;
-  tool->drawable = gimp_image_active_drawable (display->image);
+  tool->drawable = gimp_image_get_active_drawable (display->image);
 
   gimp_tool_control_activate (tool->control);
 }
