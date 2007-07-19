@@ -24,9 +24,11 @@ typedef struct
   GimpUnit           unit;
   gboolean           show_info_header;
   GtkPrintOperation *operation;
-  GtkWidget         *layout_preview_image;
   gdouble            xres;
   gdouble            yres;
+  gdouble            offset_x;
+  gdouble            offset_y;
+  gboolean           use_full_page;
   GtkPageOrientation orientation;
 } PrintData;
 

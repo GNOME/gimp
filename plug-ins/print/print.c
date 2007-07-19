@@ -156,14 +156,30 @@ print_image (gint32    image_ID,
   GtkPrintOperation *operation = gtk_print_operation_new ();
   GError            *error     = NULL;
   PrintData         *data;
+  GimpDrawable      *drawable;
+  GimpExportReturn   export;
+
+  /* export the image */
+  export = gimp_export_image (&image_ID, &drawable_ID, NULL,
+                              GIMP_EXPORT_CAN_HANDLE_RGB   |
+                              GIMP_EXPORT_CAN_HANDLE_ALPHA |
+                              GIMP_EXPORT_NEEDS_ALPHA);
+
+  if (export == GIMP_EXPORT_CANCEL)
+    return FALSE;
+
+  drawable = gimp_drawable_get (drawable_ID);
 
   data = g_new0 (PrintData, 1);
 
-  data->num_pages   = 1;
-  data->image_id    = image_ID;
-  data->drawable_id = drawable_ID;
-  data->operation   = operation;
-  data->unit        = gimp_get_default_unit ();
+  data->num_pages     = 1;
+  data->image_id      = image_ID;
+  data->drawable_id   = drawable_ID;
+  data->operation     = operation;
+  data->unit          = gimp_get_default_unit ();
+  data->offset_x      = 0;
+  data->offset_y      = 0;
+  data->use_full_page = FALSE;
   gimp_image_get_resolution (data->image_id, &data->xres, &data->yres);
 
   load_print_settings (data);
@@ -217,6 +233,9 @@ print_image (gint32    image_ID,
 
   g_object_unref (operation);
 
+  gimp_drawable_detach (drawable);
+  gimp_image_delete (image_ID);
+
   if (error)
     {
       GtkWidget *dialog;
@@ -247,6 +266,7 @@ begin_print (GtkPrintOperation *operation,
   data->num_pages = 1;
 
   gtk_print_operation_set_n_pages (operation, data->num_pages);
+  gtk_print_operation_set_use_full_page (operation, data->use_full_page);
 
   gimp_progress_init (_("Printing"));
 }

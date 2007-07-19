@@ -1,5 +1,17 @@
 2007-07-19  Sven Neumann  <sven@gimp.org>
 
+	Applied patch from Stefan attached to bug #387604:
+
+	* plug-ins/print/Makefile.am
+	* plug-ins/print/print-preview.[ch]: new files implementing a
+	print preview similar to GimpOffsetArea.
+
+	* plug-ins/print/print.[ch]
+	* plug-ins/print/print-page-layout.c
+	* plug-ins/print/print-settings.c: adds GUI to adjust the offsets.
+
+2007-07-19  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage.[ch]: renamed gimp_image_active_drawable() to
 	gimp_image_get_active_drawable().
 
