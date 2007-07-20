@@ -1,7 +1,7 @@
 2007-07-20  Sven Neumann  <sven@gimp.org>
 
 	* app/text/gimptext.c (gimp_text_set_property): don't call strlen
-	on a NULL font name. Fixes bug #.
+	on a NULL font name. Fixes bug #457673.
 
 2007-07-13  Sven Neumann  <sven@gimp.org>
 
