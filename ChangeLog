@@ -1,3 +1,11 @@
+2007-07-20  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/common/tga.c (ReadImage): added support for reading
+	indexed TGA images with transparency information in the colormap.
+	These images are now promoted to RGBA.  Fixes bug #445559.
+	(save_image): save INDEXEDA images correctly instead of saving
+	uninitialized tile data to the file.
+
 2007-07-20  Sven Neumann  <sven@gimp.org>
 
 	Applied another patch from Stefan Röllin:

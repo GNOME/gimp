@@ -1,7 +1,6 @@
 /* GIMP - The GNU Image Manipulation Program
  * Copyright (C) 1995 Spencer Kimball and Peter Mattis
  *
- * $Id$
  * TrueVision Targa loading and saving file filter for GIMP.
  * Targa code Copyright (C) 1997 Raphael FRANCOIS and Gordon Matzigkeit
  *
@@ -31,6 +30,11 @@
  */
 
 /*
+ * Modified 2007-07-20, Raphaël Quinet <raphael@gimp.org>:
+ *   - Workaround for loading indexed images with full alpha channel.
+ *   - Bug fix: save_image() was saving uninitialized tile data for
+ *     indexed images with alpha.
+ *
  * Modified August-November 2000, Nick Lamb <njl195@zepler.org.uk>
  *   - Clean-up more code, avoid structure implementation dependency,
  *   - Load more types of images reliably, reject others firmly
@@ -56,12 +60,17 @@
  *
  *
  * TODO:
+ *   - Handle TGA images with version 2 extensions (image comment,
+ *     resolution, date, ...).
  *   - GIMP stores the indexed alpha channel as a separate byte,
  *     one for each pixel.  The TGA file format spec requires that the
  *     alpha channel be stored as part of the colormap, not with each
  *     individual pixel.  This means that we have no good way of
  *     saving and loading INDEXEDA images that use alpha channel values
- *     other than 0 and 255.  Find a workaround.
+ *     other than 0 and 255.  Workaround implemented for loading by
+ *     promoting the image to RGBA, but saving indexed TGA images with
+ *     full alpha information in the coloramp is not supported yet (only
+ *     one fully transparent color is allowed in INDEXEDA mode).
  */
 
 /* Set these for debugging. */
@@ -225,7 +234,7 @@ query (void)
                           "FIXME: write help for tga_load",
                           "Raphael FRANCOIS, Gordon Matzigkeit",
                           "Raphael FRANCOIS, Gordon Matzigkeit",
-                          "1997",
+                          "1997,2000,2007",
                           N_("TarGA image"),
                           NULL,
                           GIMP_PLUGIN,
@@ -244,7 +253,7 @@ query (void)
                           "FIXME: write help for tga_save",
                           "Raphael FRANCOIS, Gordon Matzigkeit",
                           "Raphael FRANCOIS, Gordon Matzigkeit",
-                          "1997",
+                          "1997,2000",
                           N_("TarGA image"),
                           "RGB*, GRAY*, INDEXED*",
                           GIMP_PLUGIN,
@@ -430,8 +439,8 @@ load_image (const gchar *filename)
       {
         /* Check the signature. */
 
-        offset= footer[0] + (footer[1] * 256) + (footer[2] * 65536)
-                          + (footer[3] * 16777216);
+        offset = footer[0] + (footer[1] * 256L) + (footer[2] * 65536L)
+                           + (footer[3] * 16777216L);
 
         if (offset != 0)
           {
@@ -514,52 +523,58 @@ load_image (const gchar *filename)
       case TGA_TYPE_MAPPED:
         if (info.bpp != 8)
           {
-            g_message ("Unhandled sub-format in '%s'",
-                       gimp_filename_to_utf8 (filename));
+            g_message ("Unhandled sub-format in '%s' (type = %u, bpp = %u)",
+                       gimp_filename_to_utf8 (filename),
+                       info.imageType, info.bpp);
             return -1;
           }
         break;
       case TGA_TYPE_COLOR:
         if (info.bpp != 15 && info.bpp != 16 && info.bpp != 24
-                     && info.bpp != 32)
+            && info.bpp != 32)
           {
-            g_message ("Unhandled sub-format in '%s'",
-                       gimp_filename_to_utf8 (filename));
+            g_message ("Unhandled sub-format in '%s' (type = %u, bpp = %u)",
+                       gimp_filename_to_utf8 (filename),
+                       info.imageType, info.bpp);
             return -1;
           }
         break;
       case TGA_TYPE_GRAY:
-        if (info.bpp != 8 && (info.alphaBits != 8 || (info.bpp != 16 && info.bpp != 15)))
+        if (info.bpp != 8
+            && (info.alphaBits != 8 || (info.bpp != 16 && info.bpp != 15)))
           {
-            g_message ("Unhandled sub-format in '%s'",
-                       gimp_filename_to_utf8 (filename));
+            g_message ("Unhandled sub-format in '%s' (type = %u, bpp = %u)",
+                       gimp_filename_to_utf8 (filename),
+                       info.imageType, info.bpp);
             return -1;
           }
         break;
 
       default:
-        g_message ("Unknown image type for '%s'",
-                   gimp_filename_to_utf8 (filename));
+        g_message ("Unknown image type %u for '%s'",
+                   info.imageType, gimp_filename_to_utf8 (filename));
         return -1;
     }
 
   /* Plausible but unhandled formats */
-  if (info.bytes * 8 != info.bpp && !(info.bytes == 2 && info.bpp == 15))
+  if (info.bytes * 8 != info.bpp && info.bpp != 15)
     {
-      g_message ("No support yet for TGA with these parameters");
+      g_message ("Unhandled sub-format in '%s' (type = %u, bpp = %u)",
+                 gimp_filename_to_utf8 (filename),
+                 info.imageType, info.bpp);
       return -1;
     }
 
   /* Check that we have a color map only when we need it. */
   if (info.imageType == TGA_TYPE_MAPPED && info.colorMapType != 1)
     {
-      g_message ("Indexed image has invalid color map type %d",
+      g_message ("Indexed image has invalid color map type %u",
                  info.colorMapType);
       return -1;
     }
   else if (info.imageType != TGA_TYPE_MAPPED && info.colorMapType != 0)
     {
-      g_message ("Non-indexed image has invalid color map type %d",
+      g_message ("Non-indexed image has invalid color map type %u",
                  info.colorMapType);
       return -1;
     }
@@ -597,7 +612,7 @@ rle_write (FILE   *fp,
             {
               putc (128 + repeat, fp);
               fwrite (from, bytes, 1, fp);
-              from = buffer+ bytes; /* point to first different pixel */
+              from = buffer + bytes; /* point to first different pixel */
               repeat = 0;
               direct = 0;
             }
@@ -627,7 +642,7 @@ rle_write (FILE   *fp,
         {
           putc (255, fp);
           fwrite (from, bytes, 1, fp);
-          from = buffer+ bytes;
+          from = buffer + bytes;
           direct = 0;
           repeat = 0;
         }
@@ -741,11 +756,11 @@ flip_line (guchar   *buffer,
    unless someone actually provides an existence proof */
 
 static void
-upsample (guchar *dest,
-          guchar *src,
-          guint   width,
-          guint   bytes,
-          guint8  alphaBits)
+upsample (guchar       *dest,
+          const guchar *src,
+          guint         width,
+          guint         bytes,
+          guint         alpha)
 {
   guint x;
 
@@ -760,13 +775,13 @@ upsample (guchar *dest,
       dest[2] =  ((src[0] << 3) & 0xf8);
       dest[2] += (dest[2] >> 5);
 
-      switch (alphaBits)
+      if (alpha)
         {
-        case 1:
-          dest[3] = (src[1] & 0x80)? 0: 255;
+          dest[3] = (src[1] & 0x80) ? 0 : 255;
           dest += 4;
-          break;
-        default:
+        }
+      else
+        {
           dest += 3;
         }
 
@@ -775,11 +790,11 @@ upsample (guchar *dest,
 }
 
 static void
-bgr2rgb (guchar *dest,
-         guchar *src,
-         guint   width,
-         guint   bytes,
-         guint   alpha)
+bgr2rgb (guchar       *dest,
+         const guchar *src,
+         guint         width,
+         guint         bytes,
+         guint         alpha)
 {
   guint x;
 
@@ -809,11 +824,46 @@ bgr2rgb (guchar *dest,
 }
 
 static void
+apply_colormap (guchar       *dest,
+                const guchar *src,
+                guint         width,
+                const guchar *cmap,
+                gboolean      alpha)
+{
+  guint x;
+
+  if (alpha)
+    {
+      for (x = 0; x < width; x++)
+        {
+          *(dest++) = cmap[*src * 4];
+          *(dest++) = cmap[*src * 4 + 1];
+          *(dest++) = cmap[*src * 4 + 2];
+          *(dest++) = cmap[*src * 4 + 3];
+
+          src++;
+        }
+    }
+  else
+    {
+      for (x = 0; x < width; x++)
+        {
+          *(dest++) = cmap[*src * 3];
+          *(dest++) = cmap[*src * 3 + 1];
+          *(dest++) = cmap[*src * 3 + 2];
+
+          src++;
+        }
+    }
+}
+
+static void
 read_line (FILE         *fp,
            guchar       *row,
            guchar       *buffer,
            tga_info     *info,
-           GimpDrawable *drawable)
+           GimpDrawable *drawable,
+           const guchar *convert_cmap)
 {
   if (info->imageCompression == TGA_COMP_RLE)
     {
@@ -837,8 +887,13 @@ read_line (FILE         *fp,
         }
       else
         {
-          bgr2rgb (row, buffer,info->width, info->bytes,info->alphaBits);
+          bgr2rgb (row, buffer, info->width, info->bytes, info->alphaBits);
         }
+    }
+  else if (convert_cmap)
+    {
+      apply_colormap (row, buffer, info->width, convert_cmap,
+                      (info->colorMapSize > 24));
     }
   else
     {
@@ -851,8 +906,8 @@ ReadImage (FILE        *fp,
            tga_info    *info,
            const gchar *filename)
 {
-  static gint32 image_ID;
-  gint32        layer_ID;
+  static gint32      image_ID;
+  gint32             layer_ID;
 
   GimpPixelRgn       pixel_rgn;
   GimpDrawable      *drawable;
@@ -861,20 +916,39 @@ ReadImage (FILE        *fp,
   GimpImageBaseType  itype = 0;
   gint               i, y;
 
-  gint max_tileheight, tileheight;
+  gint               max_tileheight, tileheight;
 
-  guint  cmap_bytes;
-  guchar tga_cmap[4 * 256], gimp_cmap[3 * 256];
+  guint              cmap_bytes = 0;
+  guchar            *tga_cmap = NULL;
+  guchar            *gimp_cmap = NULL;
+  guchar            *convert_cmap = NULL;
 
   switch (info->imageType)
     {
     case TGA_TYPE_MAPPED:
-      itype = GIMP_INDEXED;
+      cmap_bytes = (info->colorMapSize + 7 ) / 8;
+      tga_cmap = g_new (guchar, info->colorMapLength * cmap_bytes);
 
-      if (info->alphaBits)
-        dtype = GIMP_INDEXEDA_IMAGE;
+      if (info->colorMapSize > 24)
+        {
+          /* indexed + full alpha => promoted to RGBA */
+          itype = GIMP_RGB;
+          dtype = GIMP_RGBA_IMAGE;
+          convert_cmap = g_new (guchar, info->colorMapLength * 4);
+        }
+      else if (info->colorMapLength > 256)
+        {
+          /* more than 256 colormap entries => promoted to RGB */
+          itype = GIMP_RGB;
+          dtype = GIMP_RGB_IMAGE;
+          convert_cmap = g_new (guchar, info->colorMapLength * 3);
+        }
       else
-        dtype = GIMP_INDEXED_IMAGE;
+        {
+          itype = GIMP_INDEXED;
+          dtype = GIMP_INDEXED_IMAGE;
+          gimp_cmap = g_new (guchar, info->colorMapLength * 3);
+        }
       break;
 
     case TGA_TYPE_GRAY:
@@ -898,20 +972,44 @@ ReadImage (FILE        *fp,
 
   /* Handle colormap */
 
-  if (info->colorMapType == 1)
+  if (info->imageType == TGA_TYPE_MAPPED)
     {
-      cmap_bytes= (info->colorMapSize + 7 ) / 8;
       if (cmap_bytes <= 4 &&
           fread (tga_cmap, info->colorMapLength * cmap_bytes, 1, fp) == 1)
         {
-          if (info->colorMapSize == 32)
-            bgr2rgb (gimp_cmap, tga_cmap, info->colorMapLength, cmap_bytes, 1);
-          else if (info->colorMapSize == 24)
-            bgr2rgb (gimp_cmap, tga_cmap, info->colorMapLength, cmap_bytes, 0);
-          else if (info->colorMapSize == 16 || info->colorMapSize == 15)
-            upsample (gimp_cmap, tga_cmap,
-                      info->colorMapLength, cmap_bytes, info->alphaBits);
-
+          if (convert_cmap)
+            {
+              if (info->colorMapSize == 32)
+                bgr2rgb (convert_cmap, tga_cmap,
+                         info->colorMapLength, cmap_bytes, 1);
+              else if (info->colorMapSize == 24)
+                bgr2rgb (convert_cmap, tga_cmap,
+                         info->colorMapLength, cmap_bytes, 0);
+              else if (info->colorMapSize == 16 || info->colorMapSize == 15)
+                upsample (convert_cmap, tga_cmap,
+                          info->colorMapLength, cmap_bytes, info->alphaBits);
+              else
+                {
+                  g_message ("Unsupported colormap depth: %u",
+                             info->colorMapSize);
+                  return -1;
+                }
+            }
+          else
+            {
+              if (info->colorMapSize == 24)
+                bgr2rgb (gimp_cmap, tga_cmap,
+                         info->colorMapLength, cmap_bytes, 0);
+              else if (info->colorMapSize == 16 || info->colorMapSize == 15)
+                upsample (gimp_cmap, tga_cmap,
+                          info->colorMapLength, cmap_bytes, info->alphaBits);
+              else
+                {
+                  g_message ("Unsupported colormap depth: %u",
+                             info->colorMapSize);
+                  return -1;
+                }
+            }
         }
       else
         {
@@ -924,8 +1022,8 @@ ReadImage (FILE        *fp,
   image_ID = gimp_image_new (info->width, info->height, itype);
   gimp_image_set_filename (image_ID, filename);
 
-  if (info->colorMapType == 1)
-    gimp_image_set_colormap(image_ID, gimp_cmap, info->colorMapLength);
+  if (gimp_cmap)
+    gimp_image_set_colormap (image_ID, gimp_cmap, info->colorMapLength);
 
   layer_ID = gimp_layer_new (image_ID,
                              _("Background"),
@@ -939,7 +1037,7 @@ ReadImage (FILE        *fp,
 
   /* Prepare the pixel region. */
   gimp_pixel_rgn_init (&pixel_rgn, drawable, 0, 0,
-                        info->width, info->height, TRUE, FALSE);
+                       info->width, info->height, TRUE, FALSE);
 
   /* Allocate the data. */
   max_tileheight = gimp_tile_height ();
@@ -951,19 +1049,20 @@ ReadImage (FILE        *fp,
       for (i = 0; i < info->height; i += tileheight)
         {
           tileheight = i ? max_tileheight : (info->height % max_tileheight);
-          if (tileheight == 0) tileheight= max_tileheight;
+          if (tileheight == 0)
+            tileheight = max_tileheight;
 
-          for (y= 1; y <= tileheight; ++y)
+          for (y = 1; y <= tileheight; ++y)
             {
-              row= data + (info->width * drawable->bpp * (tileheight - y));
-              read_line(fp, row, buffer, info, drawable);
+              row = data + (info->width * drawable->bpp * (tileheight - y));
+              read_line (fp, row, buffer, info, drawable, convert_cmap);
             }
 
-            gimp_progress_update ((double) (i + tileheight) /
-                                  (double) info->height);
-            gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0,
-                                     info->height - i - tileheight,
-                                     info->width, tileheight);
+          gimp_progress_update ((double) (i + tileheight) /
+                                (double) info->height);
+          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0,
+                                   info->height - i - tileheight,
+                                   info->width, tileheight);
         }
     }
   else
@@ -972,21 +1071,25 @@ ReadImage (FILE        *fp,
         {
           tileheight = MIN (max_tileheight, info->height - i);
 
-          for (y= 0; y < tileheight; ++y)
+          for (y = 0; y < tileheight; ++y)
             {
               row= data + (info->width * drawable->bpp * y);
-              read_line(fp, row, buffer, info, drawable);
+              read_line (fp, row, buffer, info, drawable, convert_cmap);
             }
 
-            gimp_progress_update ((double) (i + tileheight) /
-                                  (double) info->height);
-            gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i,
-                                     info->width, tileheight);
+          gimp_progress_update ((double) (i + tileheight) /
+                                (double) info->height);
+          gimp_pixel_rgn_set_rect (&pixel_rgn, data, 0, i,
+                                   info->width, tileheight);
         }
     }
 
   g_free (data);
   g_free (buffer);
+
+  g_free (convert_cmap);
+  g_free (gimp_cmap);
+  g_free (tga_cmap);
 
   gimp_drawable_flush (drawable);
   gimp_drawable_detach (drawable);
@@ -1037,16 +1140,27 @@ save_image (const gchar *filename,
 
   header[0] = 0; /* No image identifier / description */
 
-  if (dtype == GIMP_INDEXED_IMAGE || dtype == GIMP_INDEXEDA_IMAGE)
+  if (dtype == GIMP_INDEXED_IMAGE)
     {
       gimp_cmap = gimp_image_get_colormap (image_ID, &num_colors);
 
       header[1] = 1; /* cmap type */
       header[2] = (tsvals.rle) ? 9 : 1;
-      header[3] = header[4]= 0; /* no offset */
+      header[3] = header[4] = 0; /* no offset */
       header[5] = num_colors % 256;
       header[6] = num_colors / 256;
       header[7] = 24; /* cmap size / bits */
+    }
+  else if (dtype == GIMP_INDEXEDA_IMAGE)
+    {
+      gimp_cmap = gimp_image_get_colormap (image_ID, &num_colors);
+
+      header[1] = 1; /* cmap type */
+      header[2] = (tsvals.rle) ? 9 : 1;
+      header[3] = header[4] = 0; /* no offset */
+      header[5] = (num_colors + 1) % 256;
+      header[6] = (num_colors + 1) / 256;
+      header[7] = 32; /* cmap size / bits */
     }
   else
     {
@@ -1105,15 +1219,30 @@ save_image (const gchar *filename,
   /* write header to front of file */
   fwrite (header, sizeof (header), 1, fp);
 
-  if (dtype == GIMP_INDEXED_IMAGE || dtype == GIMP_INDEXEDA_IMAGE)
+  if (dtype == GIMP_INDEXED_IMAGE)
     {
       /* write out palette */
-      for (i= 0; i < num_colors; ++i)
+      for (i = 0; i < num_colors; ++i)
         {
           fputc (gimp_cmap[(i * 3) + 2], fp);
           fputc (gimp_cmap[(i * 3) + 1], fp);
           fputc (gimp_cmap[(i * 3) + 0], fp);
         }
+    }
+  else if (dtype == GIMP_INDEXEDA_IMAGE)
+    {
+      /* write out palette */
+      for (i = 0; i < num_colors; ++i)
+        {
+          fputc (gimp_cmap[(i * 3) + 2], fp);
+          fputc (gimp_cmap[(i * 3) + 1], fp);
+          fputc (gimp_cmap[(i * 3) + 0], fp);
+          fputc (255, fp);
+        }
+      fputc (0, fp);
+      fputc (0, fp);
+      fputc (0, fp);
+      fputc (0, fp);
     }
 
   gimp_tile_cache_ntiles ((width / gimp_tile_width ()) + 1);
@@ -1145,7 +1274,12 @@ save_image (const gchar *filename,
       else if (dtype == GIMP_INDEXEDA_IMAGE)
         {
           for (i = 0; i < width; ++i)
-            data[i]= pixels[i*2];
+            {
+              if (pixels[i * 2 + 1] > 127)
+                data[i] = pixels[i * 2];
+              else
+                data[i] = num_colors;
+            }
         }
       else
         {
