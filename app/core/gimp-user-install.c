@@ -367,8 +367,8 @@ user_install_mkdir_with_parents (GimpUserInstall *install,
 
 static gboolean
 user_install_dir_copy (GimpUserInstall *install,
-                       const gchar *source,
-                       const gchar *base)
+                       const gchar     *source,
+                       const gchar     *base)
 {
   GDir        *source_dir = NULL;
   GDir        *dest_dir   = NULL;

@@ -35,6 +35,7 @@
 
 #include "menus-types.h"
 
+#include "config/gimpconfig-file.h"
 #include "config/gimpguiconfig.h"
 
 #include "core/gimp.h"
@@ -410,14 +411,20 @@ menus_clear (Gimp    *gimp,
              GError **error)
 {
   gchar    *filename;
+  gchar    *source;
   gboolean  success = TRUE;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (error == NULL || *error == NULL, FALSE);
 
   filename = gimp_personal_rc_file ("menurc");
+  source = g_build_filename (gimp_sysconf_directory (), "menurc", NULL);
 
-  if (g_unlink (filename) != 0 && errno != ENOENT)
+  if (gimp_config_file_copy (source, filename, NULL))
+    {
+      menurc_deleted = TRUE;
+    }
+  else if (g_unlink (filename) != 0 && errno != ENOENT)
     {
       g_set_error (error, 0, 0, _("Deleting \"%s\" failed: %s"),
                    gimp_filename_to_utf8 (filename), g_strerror (errno));
@@ -428,6 +435,7 @@ menus_clear (Gimp    *gimp,
       menurc_deleted = TRUE;
     }
 
+  g_free (source);
   g_free (filename);
 
   return success;

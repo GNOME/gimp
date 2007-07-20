@@ -1570,8 +1570,7 @@ prefs_dialog_new (Gimp       *gimp,
                     gimp);
 
   button2 = prefs_button_add (GIMP_STOCK_RESET,
-                              _("_Reset Saved Keyboard Shortcuts to "
-                                "Default Values"),
+                              _("_Reset Keyboard Shortcuts to Default Values"),
                               GTK_BOX (vbox2));
   g_signal_connect (button2, "clicked",
                     G_CALLBACK (prefs_menus_clear_callback),

@@ -1,5 +1,14 @@
 2007-07-20  Sven Neumann  <sven@gimp.org>
 
+	* app/menus/menus.c (menus_clear): overwrite the menurc with the
+	systemwide default. Only if that fails, delete the menurc file.
+
+	* app/dialogs/preferences-dialog.c: string change.
+
+	* app/core/gimp-user-install.c: formatting.
+
+2007-07-20  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpoffsetarea.c
 	* plug-ins/print/print-preview.c: set a cursor to indicate that
 	the area is interactive.
