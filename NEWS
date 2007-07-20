@@ -19,6 +19,7 @@ Changes in GIMP 2.3.19
 - made JPEG save parameters user-configurable
 - avoid color conversions between identical ICC color profiles
 - improved Print plug-in
+- improved loading and saving of indexed TGA images
 - bug fixes and code cleanup
 
 
