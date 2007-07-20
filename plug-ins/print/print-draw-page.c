@@ -62,8 +62,6 @@ draw_page_cairo (GtkPrintContext *context,
   gint              y;
   gdouble           scale_x;
   gdouble           scale_y;
-  gdouble           x0 = 0;
-  gdouble           y0 = 0;
   guchar           *pixels;
   cairo_surface_t  *surface;
 
@@ -105,10 +103,7 @@ draw_page_cairo (GtkPrintContext *context,
     }
 #endif
 
-  x0 = (cr_width - scale_x * width) / 2;
-  y0 = (cr_height - scale_y * height) / 2;
-
-  cairo_translate (cr, x0, y0);
+  cairo_translate (cr, data->offset_x / cr_dpi_x * 72.0, data->offset_y / cr_dpi_y * 72.0);
   cairo_scale (cr, scale_x, scale_y);
 
   gimp_pixel_rgn_init (&region, drawable, 0, 0, width, height, FALSE, FALSE);

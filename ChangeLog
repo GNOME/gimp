@@ -1,5 +1,11 @@
 2007-07-20  Sven Neumann  <sven@gimp.org>
 
+	Applied patch from Stefan Röllin attached to bug #387604:
+
+	* plug-ins/print/print-draw-page.c: take offsets into account.
+
+2007-07-20  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-quick-mask.[ch]: remember whether a channel
 	was active before quick mask was activated. Fixes bug #134371.
 
