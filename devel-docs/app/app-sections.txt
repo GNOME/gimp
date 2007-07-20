@@ -1122,7 +1122,7 @@ gimp_image_get_tattoo_state
 gimp_image_get_layers
 gimp_image_get_channels
 gimp_image_get_vectors
-gimp_image_active_drawable
+gimp_image_get_active_drawable
 gimp_image_get_active_layer
 gimp_image_get_active_channel
 gimp_image_get_active_vectors
@@ -3955,7 +3955,6 @@ gimp_rectangle_tool_cursor_update
 gimp_rectangle_tool_draw
 gimp_rectangle_tool_execute
 gimp_rectangle_tool_cancel
-gimp_rectangle_tool_configure
 gimp_rectangle_tool_set_constraint
 gimp_rectangle_tool_get_function
 gimp_rectangle_tool_set_function
@@ -7102,16 +7101,6 @@ tile_cache_flush
 </SECTION>
 
 <SECTION>
-<FILE>tile-manager-crop</FILE>
-tile_manager_crop
-</SECTION>
-
-<SECTION>
-<FILE>tile-manager-private</FILE>
-TileManager
-</SECTION>
-
-<SECTION>
 <FILE>tile-manager</FILE>
 tile_manager_new
 tile_manager_ref
@@ -7134,6 +7123,22 @@ read_pixel_data
 write_pixel_data
 read_pixel_data_1
 write_pixel_data_1
+</SECTION>
+
+<SECTION>
+<FILE>tile-manager-crop</FILE>
+tile_manager_crop
+</SECTION>
+
+<SECTION>
+<FILE>tile-manager-preview</FILE>
+tile_manager_get_preview
+tile_manager_get_sub_preview
+</SECTION>
+
+<SECTION>
+<FILE>tile-manager-private</FILE>
+TileManager
 </SECTION>
 
 <SECTION>
@@ -8353,7 +8358,6 @@ multiply_alpha_region
 separate_alpha_region
 gaussian_blur_region
 border_region
-subsample_region
 shapeburst_region
 thin_region
 fatten_region
@@ -8379,6 +8383,12 @@ LANCZOS_SAMPLES
 LANCZOS_WIDTH2
 scale_region
 create_lanczos_lookup
+</SECTION>
+
+<SECTION>
+<FILE>sample-funcs</FILE>
+subsample_region
+subsample_indexed_region
 </SECTION>
 
 <SECTION>

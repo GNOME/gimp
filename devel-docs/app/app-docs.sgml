@@ -40,6 +40,7 @@
     <xi:include href="xml/paint-funcs-types.xml" />
     <xi:include href="xml/paint-funcs.xml" />
     <xi:include href="xml/scale-funcs.xml" />
+    <xi:include href="xml/sample-funcs.xml" />
   </part>
 
   <part id="app-composite-part">
@@ -94,6 +95,7 @@
       <xi:include href="xml/tile-cache.xml" />
       <xi:include href="xml/tile-manager.xml" />
       <xi:include href="xml/tile-manager-crop.xml" />
+      <xi:include href="xml/tile-manager-preview.xml" />
       <xi:include href="xml/tile-manager-private.xml" />
       <xi:include href="xml/tile-pyramid.xml" />
     </chapter>

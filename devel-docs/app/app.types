@@ -149,6 +149,7 @@ gimp_histogram_editor_get_type
 gimp_histogram_options_get_type
 gimp_histogram_view_get_type
 gimp_hue_saturation_tool_get_type
+gimp_image_comment_editor_get_type
 gimp_image_dock_get_type
 gimp_image_editor_get_type
 gimp_image_get_type
