@@ -1,5 +1,10 @@
 2007-07-20  Sven Neumann  <sven@gimp.org>
 
+	* app/text/gimptext.c (gimp_text_set_property): don't call strlen
+	on a NULL font name.
+
+2007-07-20  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimprectangletool.c: fixed a gtk-doc comment.
 
 2007-07-20  Sven Neumann  <sven@gimp.org>

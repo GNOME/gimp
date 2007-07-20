@@ -364,13 +364,22 @@ gimp_text_set_property (GObject      *object,
     case PROP_FONT:
       {
         const gchar *font = g_value_get_string (value);
-        gsize        len  = strlen (font);
-
-        if (g_str_has_suffix (font, " Not-Rotated"))
-          len -= strlen ( " Not-Rotated");
 
         g_free (text->font);
-        text->font = g_strndup (font, len);
+
+        if (font)
+          {
+            gsize len = strlen (font);
+
+            if (g_str_has_suffix (font, " Not-Rotated"))
+              len -= strlen ( " Not-Rotated");
+
+            text->font = g_strndup (font, len);
+          }
+        else
+          {
+            text->font = NULL;
+          }
       }
       break;
     case PROP_FONT_SIZE:
