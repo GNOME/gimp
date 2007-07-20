@@ -37,29 +37,44 @@
 #include "gimp-intl.h"
 
 
+#define CHANNEL_WAS_ACTIVE (0x2)
+
+
 /*  public functions  */
 
 void
 gimp_image_set_quick_mask_state (GimpImage *image,
-                                 gboolean   quick_mask_state)
+                                 gboolean   active)
 {
   GimpChannel *selection;
   GimpChannel *mask;
+  gboolean     channel_was_active;
 
   g_return_if_fail (GIMP_IS_IMAGE (image));
 
-  if (quick_mask_state == image->quick_mask_state)
+  if (active == gimp_image_get_quick_mask_state (image))
     return;
 
-  /*  set image->quick_mask_state early so we can return early when
-   *  being called recursively
+  /*  Keep track of the state so that we can make the right drawable
+   *  active again when deactiviting quick mask (see bug #134371).
    */
-  image->quick_mask_state = quick_mask_state ? TRUE : FALSE;
+  if (image->quick_mask_state)
+    channel_was_active = (image->quick_mask_state & CHANNEL_WAS_ACTIVE) != 0;
+  else
+    channel_was_active = gimp_image_get_active_channel (image) != NULL;
+
+  /*  Set image->quick_mask_state early so we can return early when
+   *  being called recursively.
+   */
+  image->quick_mask_state = (active
+                             ? TRUE | (channel_was_active ?
+                                       CHANNEL_WAS_ACTIVE : 0)
+                             : FALSE);
 
   selection = gimp_image_get_mask (image);
   mask      = gimp_image_get_quick_mask (image);
 
-  if (quick_mask_state)
+  if (active)
     {
       if (! mask)
         {
@@ -125,6 +140,9 @@ gimp_image_set_quick_mask_state (GimpImage *image,
           gimp_selection_load (gimp_image_get_mask (image), mask);
           gimp_image_remove_channel (image, mask);
 
+          if (! channel_was_active)
+            gimp_image_unset_active_channel (image);
+
           gimp_image_undo_group_end (image);
         }
     }
@@ -137,7 +155,7 @@ gimp_image_get_quick_mask_state (const GimpImage *image)
 {
   g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
 
-  return image->quick_mask_state;
+  return (image->quick_mask_state != 0);
 }
 
 void

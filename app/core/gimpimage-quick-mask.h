@@ -27,7 +27,7 @@
 
 
 void          gimp_image_set_quick_mask_state (GimpImage       *image,
-                                               gboolean         quick_mask_state);
+                                               gboolean         active);
 gboolean      gimp_image_get_quick_mask_state (const GimpImage *image);
 
 void          gimp_image_set_quick_mask_color (GimpImage       *image,

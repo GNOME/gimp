@@ -1,3 +1,8 @@
+2007-07-20  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage-quick-mask.[ch]: remember whether a channel
+	was active before quick mask was activated. Fixes bug #134371.
+
 2007-07-20  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/faxg3/faxg3.c (query): changed the magic string to
