@@ -1031,10 +1031,11 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
         }
       else if (state & GDK_BUTTON1_MASK)
         {
-          /* If we are leaving fixed_center mode we want to set the "other side"
-           * where it should be. Don't do anything if we came here by a mouse-click
-           * though, since then the user has confirmed the shape and we don't want
-           * to modify it afterwards.
+          /* If we are leaving fixed_center mode we want to set the
+           * "other side" where it should be. Don't do anything if we
+           * came here by a mouse-click though, since then the user
+           * has confirmed the shape and we don't want to modify it
+           * afterwards.
            */
           gimp_rectangle_tool_set_other_side_coord (rectangle,
                                                     private->other_side_x,
@@ -1693,10 +1694,10 @@ gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool *rectangle)
 
 /**
  * gimp_rectangle_tool_scale_has_changed:
- * rectangle_tool: A #GimpRectangleTool.
+ * @rectangle_tool: A #GimpRectangleTool.
  *
- * Returns true if the scale that was used to calculate handle sizes is not the
- * same as the current shell scale.
+ * Returns %TRUE if the scale that was used to calculate handle sizes
+ * is not the same as the current shell scale.
  */
 static gboolean
 gimp_rectangle_tool_scale_has_changed (GimpRectangleTool *rectangle_tool)

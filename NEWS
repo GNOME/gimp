@@ -7,6 +7,21 @@ This is the development branch of GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
+Changes in GIMP 2.3.19
+======================
+
+- support long layer names in PSD files
+- improved EXIF handling in the JPEG file plug-in
+- added control for the playback speed in the Animation Playback plug-in
+- avoid needless image preview invalidation
+- allow to edit the image comment in the Image Properties dialog
+- further improved rectangle tools
+- made JPEG save parameters user-configurable
+- avoid color conversions between identical ICC color profiles
+- improved Print plug-in
+- bug fixes and code cleanup
+
+
 Changes in GIMP 2.3.18
 ======================
 
