@@ -1,5 +1,11 @@
 2007-07-20  Sven Neumann  <sven@gimp.org>
 
+	Applied another patch from Stefan Röllin:
+
+	* plug-ins/print/print-page-layout.c: align buttons.
+
+2007-07-20  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimptext.c (gimp_text_set_property): don't call strlen
 	on a NULL font name.
 

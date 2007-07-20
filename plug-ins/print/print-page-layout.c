@@ -47,8 +47,12 @@ typedef struct
 static void        run_page_setup_dialog              (GtkWidget     *widget,
                                                        PrintData     *data);
 
-static GtkWidget * print_size_frame                   (PrintData     *data);
-static GtkWidget * print_offset_frame                 (PrintData     *data);
+static GtkWidget * print_size_frame                   (PrintData     *data,
+                                                       GtkSizeGroup *label_group,
+                                                       GtkSizeGroup *entry_group);
+static GtkWidget * print_offset_frame                 (PrintData     *data,
+                                                       GtkSizeGroup *label_group,
+                                                       GtkSizeGroup *entry_group);
 
 static void        print_size_info_size_changed       (GtkWidget     *widget);
 static void        print_size_info_resolution_changed (GtkWidget     *widget);
@@ -86,6 +90,8 @@ print_page_layout_gui (PrintData *data)
   GtkWidget    *label;
   GtkWidget    *frame;
   GtkPageSetup *setup;
+  GtkSizeGroup *label_group;
+  GtkSizeGroup *entry_group;
 
   memset (&info, 0, sizeof (PrintSizeInfo));
 
@@ -151,19 +157,26 @@ print_page_layout_gui (PrintData *data)
   gtk_box_pack_start (GTK_BOX (hbox), info.area_label, FALSE, FALSE, 0);
   gtk_widget_show (info.area_label);
 
+  label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+  entry_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
   /* size entry area for the image's print size */
 
-  frame = print_size_frame (data);
+  frame = print_size_frame (data, label_group, entry_group);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 12);
   gtk_widget_show (frame);
 
   /* offset entry area for the image's offset position */
 
-  frame = print_offset_frame (data);
+  frame = print_offset_frame (data, label_group, entry_group);
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
+  g_object_unref (label_group);
+  g_object_unref (entry_group);
+
   button = gtk_check_button_new_with_mnemonic (_("Ignore Page _Margins"));
+
   data->use_full_page = FALSE;
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -225,7 +238,9 @@ run_page_setup_dialog (GtkWidget *widget,
 
 
 static GtkWidget *
-print_size_frame (PrintData *data)
+print_size_frame (PrintData *data,
+                  GtkSizeGroup *label_group,
+                  GtkSizeGroup *entry_group)
 {
   GtkWidget    *entry;
   GtkWidget    *height;
@@ -234,8 +249,6 @@ print_size_frame (PrintData *data)
   GtkWidget    *chain;
   GtkWidget    *frame;
   GtkWidget    *label;
-  GtkSizeGroup *label_group;
-  GtkSizeGroup *entry_group;
   GtkObject    *adj;
   gdouble       image_width;
   gdouble       image_height;
@@ -250,9 +263,6 @@ print_size_frame (PrintData *data)
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
-
-  label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-  entry_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /*  the print size entry  */
 
@@ -279,7 +289,6 @@ print_size_frame (PrintData *data)
   gtk_widget_show (height);
 
   gtk_size_group_add_widget (entry_group, height);
-  g_object_unref (entry_group);
 
   gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
                                 _("_Width:"), 0, 0, 0.0);
@@ -287,7 +296,6 @@ print_size_frame (PrintData *data)
                                         _("_Height:"), 1, 0, 0.0);
 
   gtk_size_group_add_widget (label_group, label);
-  g_object_unref (label_group);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0,
                                   data->xres, FALSE);
@@ -368,7 +376,9 @@ print_size_frame (PrintData *data)
 }
 
 static GtkWidget *
-print_offset_frame (PrintData *data)
+print_offset_frame (PrintData *data,
+                    GtkSizeGroup *label_group,
+                    GtkSizeGroup *entry_group)
 {
   GtkWidget    *entry;
   GtkWidget    *height;
@@ -378,8 +388,6 @@ print_offset_frame (PrintData *data)
   GtkWidget    *hbuttonbox;
   GtkWidget    *frame;
   GtkWidget    *label;
-  GtkSizeGroup *label_group;
-  GtkSizeGroup *entry_group;
   GtkObject    *adj;
 
   frame = gimp_frame_new (_("Image Offset"));
@@ -387,9 +395,6 @@ print_offset_frame (PrintData *data)
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
-
-  label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
-  entry_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /*  the offset entry  */
 
@@ -416,7 +421,6 @@ print_offset_frame (PrintData *data)
   gtk_widget_show (height);
 
   gtk_size_group_add_widget (entry_group, height);
-  g_object_unref (entry_group);
 
   label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
                                         _("_X:"), 0, 0, 0.0);
@@ -425,7 +429,6 @@ print_offset_frame (PrintData *data)
   label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
                                         _("_Y:"), 1, 0, 0.0);
   gtk_size_group_add_widget (label_group, label);
-  g_object_unref (label_group);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0,
                                   72.0, FALSE);
