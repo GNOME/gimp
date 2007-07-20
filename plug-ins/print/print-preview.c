@@ -36,6 +36,10 @@ enum
 
 static void      gimp_print_preview_finalize         (GObject          *object);
 
+static void      gimp_print_preview_size_allocate    (GtkWidget        *widget,
+                                                      GtkAllocation    *allocation,
+                                                      GimpPrintPreview *preview);
+static void      gimp_print_preview_realize          (GtkWidget        *widget);
 static gboolean  gimp_print_preview_event            (GtkWidget        *widget,
                                                       GdkEvent         *event,
                                                       GimpPrintPreview *preview);
@@ -45,10 +49,6 @@ static gboolean  gimp_print_preview_expose_event     (GtkWidget        *widget,
                                                       GimpPrintPreview *preview);
 
 static gdouble   gimp_print_preview_get_scale        (GimpPrintPreview *preview);
-
-static void      gimp_print_preview_size_allocate    (GtkWidget        *widget,
-                                                      GtkAllocation    *allocation,
-                                                      GimpPrintPreview *preview);
 
 static void      gimp_print_preview_get_page_margins (GimpPrintPreview *preview,
                                                       gdouble          *left_margin,
@@ -107,9 +107,7 @@ marshal_VOID__DOUBLE_DOUBLE (GClosure     *closure,
 static void
 gimp_print_preview_class_init (GimpPrintPreviewClass *klass)
 {
-  GObjectClass *gobject_class;
-
-  gobject_class = (GObjectClass*) klass;
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   gimp_print_preview_signals[OFFSETS_CHANGED] =
     g_signal_new ("offsets-changed",
@@ -122,9 +120,9 @@ gimp_print_preview_class_init (GimpPrintPreviewClass *klass)
                   G_TYPE_DOUBLE,
                   G_TYPE_DOUBLE);
 
-  gobject_class->finalize = gimp_print_preview_finalize;
+  object_class->finalize = gimp_print_preview_finalize;
 
-  klass->offsets_changed  = NULL;
+  klass->offsets_changed = NULL;
 }
 
 static void
@@ -144,8 +142,20 @@ gimp_print_preview_init (GimpPrintPreview *preview)
   gtk_container_add (GTK_CONTAINER (preview), preview->area);
   gtk_widget_show (preview->area);
 
-  gtk_widget_set_events (GTK_WIDGET (preview->area),
-                         GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
+  gtk_widget_add_events (GTK_WIDGET (preview->area), GDK_BUTTON_PRESS_MASK);
+
+  g_signal_connect (preview->area, "size-allocate",
+                    G_CALLBACK (gimp_print_preview_size_allocate),
+                    preview);
+  g_signal_connect (preview->area, "realize",
+                    G_CALLBACK (gimp_print_preview_realize),
+                    NULL);
+  g_signal_connect (preview->area, "event",
+                    G_CALLBACK (gimp_print_preview_event),
+                    preview);
+  g_signal_connect (preview->area, "expose-event",
+                    G_CALLBACK (gimp_print_preview_expose_event),
+                    preview);
 }
 
 
@@ -187,6 +197,8 @@ gimp_print_preview_new (GtkPageSetup *page,
 
   preview = g_object_new (GIMP_TYPE_PRINT_PREVIEW, NULL);
 
+  preview->drawable_id = drawable_id;
+
   if (page != NULL)
     preview->page = gtk_page_setup_copy (page);
   else
@@ -197,22 +209,8 @@ gimp_print_preview_new (GtkPageSetup *page,
 
   gtk_aspect_frame_set (GTK_ASPECT_FRAME (preview), 0.5, 0.5, ratio, FALSE);
 
-  g_signal_connect (preview->area, "event",
-                    G_CALLBACK (gimp_print_preview_event),
-                    preview);
-
-  g_signal_connect (preview->area, "expose-event",
-                    G_CALLBACK (gimp_print_preview_expose_event),
-                    preview);
-
-  g_signal_connect (preview->area, "size-allocate",
-                    G_CALLBACK (gimp_print_preview_size_allocate),
-                    preview);
-
   gtk_widget_set_size_request (preview->area,
                                DRAWING_AREA_SIZE, DRAWING_AREA_SIZE);
-
-  preview->drawable_id = drawable_id;
 
   return GTK_WIDGET (preview);
 }
@@ -297,8 +295,8 @@ gimp_print_preview_set_image_offsets (GimpPrintPreview *preview,
  * @offset_x_max: the maximum X offset allowed
  * @offset_y_max: the maximum Y offset allowed
  *
- * Sets the maximum offsets of the image/drawable displayed by the #GimpPrintPreview.
- * It does not emit the "offsets-changed" signal.
+ * Sets the maximum offsets of the image/drawable displayed by the
+ * #GimpPrintPreview.  It does not emit the "offsets-changed" signal.
  **/
 void
 gimp_print_preview_set_image_offsets_max (GimpPrintPreview *preview,
@@ -328,6 +326,17 @@ gimp_print_preview_set_use_full_page (GimpPrintPreview *preview,
   preview->use_full_page = full_page;
 
   gtk_widget_queue_draw (GTK_WIDGET (preview->area));
+}
+
+static void
+gimp_print_preview_realize (GtkWidget *widget)
+{
+  GdkCursor *cursor;
+
+  cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
+                                       GDK_FLEUR);
+  gdk_window_set_cursor (widget->window, cursor);
+  gdk_cursor_unref (cursor);
 }
 
 static gboolean
@@ -403,8 +412,6 @@ gimp_print_preview_expose_event (GtkWidget        *widget,
   gdouble  top_margin;
   gdouble  bottom_margin;
   gdouble  scale;
-  gdouble  scale_x;
-  gdouble  scale_y;
   cairo_t *cr;
 
   paper_width = gtk_page_setup_get_paper_width (preview->page,
@@ -444,7 +451,7 @@ gimp_print_preview_expose_event (GtkWidget        *widget,
                    left_margin + preview->image_offset_x,
                    top_margin  + preview->image_offset_y);
 
-  if (preview->pixbuf == NULL)
+  if (preview->pixbuf == NULL && gimp_drawable_is_valid (preview->drawable_id))
     {
       gint width  = MIN (widget->allocation.width, 1024);
       gint height = MIN (widget->allocation.height, 1024);
@@ -454,24 +461,27 @@ gimp_print_preview_expose_event (GtkWidget        *widget,
                                                      GIMP_PIXBUF_KEEP_ALPHA);
     }
 
-  scale_x = ((gdouble) gimp_drawable_width (preview->drawable_id) /
-             gdk_pixbuf_get_width (preview->pixbuf));
-  scale_y = ((gdouble) gimp_drawable_height (preview->drawable_id) /
-             gdk_pixbuf_get_height (preview->pixbuf));
+  if (preview->pixbuf != NULL && gimp_drawable_is_valid (preview->drawable_id))
+    {
+      gdouble scale_x = ((gdouble) gimp_drawable_width (preview->drawable_id) /
+                         gdk_pixbuf_get_width (preview->pixbuf));
+      gdouble scale_y = ((gdouble) gimp_drawable_height (preview->drawable_id) /
+                         gdk_pixbuf_get_height (preview->pixbuf));
 
-  if (scale_x < scale_y)
-    scale_x = scale_y;
-  else
-    scale_y = scale_x;
+      if (scale_x < scale_y)
+        scale_x = scale_y;
+      else
+        scale_y = scale_x;
 
-  scale_x = scale_x * 72.0 / preview->image_xres;
-  scale_y = scale_y * 72.0 / preview->image_yres;
+      scale_x = scale_x * 72.0 / preview->image_xres;
+      scale_y = scale_y * 72.0 / preview->image_yres;
 
-  cairo_scale (cr, scale_x, scale_y);
+      cairo_scale (cr, scale_x, scale_y);
 
-  gdk_cairo_set_source_pixbuf (cr, preview->pixbuf, 0, 0);
+      gdk_cairo_set_source_pixbuf (cr, preview->pixbuf, 0, 0);
+    }
+
   cairo_paint (cr);
-
   cairo_destroy (cr);
 
   return FALSE;

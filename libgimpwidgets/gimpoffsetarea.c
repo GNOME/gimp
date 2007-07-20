@@ -41,6 +41,8 @@ enum
 
 
 static void      gimp_offset_area_resize        (GimpOffsetArea *area);
+
+static void      gimp_offset_area_realize       (GtkWidget      *widget);
 static void      gimp_offset_area_size_allocate (GtkWidget      *widget,
                                                  GtkAllocation  *allocation);
 static gboolean  gimp_offset_area_event         (GtkWidget      *widget,
@@ -72,9 +74,10 @@ gimp_offset_area_class_init (GimpOffsetAreaClass *klass)
                   G_TYPE_INT,
                   G_TYPE_INT);
 
+  widget_class->size_allocate = gimp_offset_area_size_allocate;
+  widget_class->realize       = gimp_offset_area_realize;
   widget_class->event         = gimp_offset_area_event;
   widget_class->expose_event  = gimp_offset_area_expose_event;
-  widget_class->size_allocate = gimp_offset_area_size_allocate;
 }
 
 static void
@@ -89,8 +92,7 @@ gimp_offset_area_init (GimpOffsetArea *area)
   area->display_ratio_x = 1.0;
   area->display_ratio_y = 1.0;
 
-  gtk_widget_add_events (GTK_WIDGET (area),
-                         GDK_EXPOSURE_MASK | GDK_BUTTON_PRESS_MASK);
+  gtk_widget_add_events (GTK_WIDGET (area), GDK_BUTTON_PRESS_MASK);
 }
 
 /**
@@ -306,6 +308,19 @@ gimp_offset_area_size_allocate (GtkWidget     *widget,
                                   copy, (GDestroyNotify) g_object_unref);
         }
     }
+}
+
+static void
+gimp_offset_area_realize (GtkWidget *widget)
+{
+  GdkCursor *cursor;
+
+  GTK_WIDGET_CLASS (parent_class)->realize (widget);
+
+  cursor = gdk_cursor_new_for_display (gtk_widget_get_display (widget),
+                                       GDK_FLEUR);
+  gdk_window_set_cursor (widget->window, cursor);
+  gdk_cursor_unref (cursor);
 }
 
 static gboolean

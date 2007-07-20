@@ -101,7 +101,7 @@ print_page_layout_gui (PrintData *data)
   gtk_box_set_spacing (GTK_BOX(main_hbox), 12);
   gtk_widget_show (main_hbox);
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
@@ -163,7 +163,7 @@ print_page_layout_gui (PrintData *data)
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  button = gtk_check_button_new_with_label (_("Ignore Page Margins"));
+  button = gtk_check_button_new_with_mnemonic (_("Ignore Page _Margins"));
   data->use_full_page = FALSE;
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
@@ -325,11 +325,11 @@ print_size_frame (PrintData *data)
   gtk_size_group_add_widget (entry_group, height);
 
   label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
-                                        _("_X resolution:"), 0, 0, 0.0);
+                                        _("X resolution:"), 0, 0, 0.0);
   gtk_size_group_add_widget (label_group, label);
 
   label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
-                                        _("_Y resolution:"), 1, 0, 0.0);
+                                        _("Y resolution:"), 1, 0, 0.0);
   gtk_size_group_add_widget (label_group, label);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (entry), 0,
@@ -419,11 +419,11 @@ print_offset_frame (PrintData *data)
   g_object_unref (entry_group);
 
   label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
-                                        _("X:"), 0, 0, 0.0);
+                                        _("_X:"), 0, 0, 0.0);
   gtk_size_group_add_widget (label_group, label);
 
   label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
-                                        _("Y:"), 1, 0, 0.0);
+                                        _("_Y:"), 1, 0, 0.0);
   gtk_size_group_add_widget (label_group, label);
   g_object_unref (label_group);
 
@@ -439,7 +439,7 @@ print_offset_frame (PrintData *data)
                     G_CALLBACK (print_size_info_offset_changed),
                     NULL);
 
-  hbox = gtk_hbox_new (FALSE, 0);
+  hbox = gtk_hbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
@@ -448,18 +448,18 @@ print_offset_frame (PrintData *data)
   gtk_widget_show (label);
 
   hbuttonbox = gtk_hbutton_box_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), hbuttonbox, FALSE, FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (hbox), hbuttonbox, FALSE, FALSE, 0);
   gtk_button_box_set_layout (GTK_BUTTON_BOX(hbuttonbox), GTK_BUTTONBOX_START);
   gtk_widget_show (hbuttonbox);
 
-  button = gtk_button_new_with_mnemonic (_("Horizontally"));
+  button = gtk_button_new_with_mnemonic (_("H_orizontally"));
   gtk_container_add (GTK_CONTAINER (hbuttonbox), button);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (print_size_info_center_clicked),
                     GINT_TO_POINTER (1));
   gtk_widget_show (button);
 
-  button = gtk_button_new_with_mnemonic (_("Vertically"));
+  button = gtk_button_new_with_mnemonic (_("_Vertically"));
   gtk_container_add (GTK_CONTAINER (hbuttonbox), button);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (print_size_info_center_clicked),

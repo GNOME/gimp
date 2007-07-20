@@ -1,5 +1,13 @@
 2007-07-20  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpoffsetarea.c
+	* plug-ins/print/print-preview.c: set a cursor to indicate that
+	the area is interactive.
+
+	* plug-ins/print/print-page-layout.c: minor dialog tweaks.
+
+2007-07-20  Sven Neumann  <sven@gimp.org>
+
 	Applied patch from Stefan Röllin attached to bug #387604:
 
 	* plug-ins/print/print-draw-page.c: take offsets into account.
