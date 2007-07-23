@@ -82,8 +82,8 @@ static PrintSizeInfo  info;
 GtkWidget *
 print_page_layout_gui (PrintData *data)
 {
-  GtkWidget    *main_vbox;
   GtkWidget    *main_hbox;
+  GtkWidget    *main_vbox;
   GtkWidget    *hbox;
   GtkWidget    *vbox;
   GtkWidget    *button;
@@ -99,16 +99,16 @@ print_page_layout_gui (PrintData *data)
   info.image_width  = gimp_image_width (data->image_id);
   info.image_height = gimp_image_height (data->image_id);
 
-  main_vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_vbox), 12);
-
-  main_hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (main_vbox), main_hbox, TRUE, TRUE, 0);
-  gtk_box_set_spacing (GTK_BOX(main_hbox), 12);
+  main_hbox = gtk_hbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
   gtk_widget_show (main_hbox);
 
+  main_vbox = gtk_vbox_new (FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (main_hbox), main_vbox, FALSE, FALSE, 0);
+  gtk_widget_show (main_vbox);
+
   vbox = gtk_vbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (main_hbox), vbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
   hbox = gtk_hbox_new (FALSE, 0);
@@ -122,20 +122,6 @@ print_page_layout_gui (PrintData *data)
                     G_CALLBACK (run_page_setup_dialog),
                     data);
   gtk_widget_show (button);
-
-#if 0
-  /* Commented out until the header becomes a little more configurable
-   * and we can provide a user interface to include/exclude information.
-   */
-  button = gtk_check_button_new_with_label ("Print image header");
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
-                                data->show_info_header);
-  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (button), "toggled",
-                    G_CALLBACK (gimp_toggle_button_update),
-                    &data->show_info_header);
-  gtk_widget_show (button);
-#endif
 
   /* label for the printable area */
 
@@ -160,16 +146,30 @@ print_page_layout_gui (PrintData *data)
   label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
   entry_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
+#if 0
+  /* Commented out until the header becomes a little more configurable
+   * and we can provide a user interface to include/exclude information.
+   */
+  button = gtk_check_button_new_with_label ("Print image header");
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button),
+                                data->show_info_header);
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  g_signal_connect (G_OBJECT (button), "toggled",
+                    G_CALLBACK (gimp_toggle_button_update),
+                    &data->show_info_header);
+  gtk_widget_show (button);
+#endif
+
   /* size entry area for the image's print size */
 
   frame = print_size_frame (data, label_group, entry_group);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 12);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   /* offset entry area for the image's offset position */
 
   frame = print_offset_frame (data, label_group, entry_group);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
   g_object_unref (label_group);
@@ -179,7 +179,7 @@ print_page_layout_gui (PrintData *data)
 
   data->use_full_page = FALSE;
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   g_signal_connect (button, "toggled",
                     G_CALLBACK (print_size_info_use_full_page_toggled),
                     NULL);
@@ -188,8 +188,7 @@ print_page_layout_gui (PrintData *data)
   setup = gtk_print_operation_get_default_page_setup (data->operation);
 
   info.preview = gimp_print_preview_new (setup, data->drawable_id);
-  gtk_box_pack_start (GTK_BOX (main_hbox),
-                      info.preview, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (main_hbox), info.preview, TRUE, TRUE, 0);
   gtk_widget_show (info.preview);
 
   g_signal_connect (info.preview, "offsets-changed",
@@ -198,7 +197,7 @@ print_page_layout_gui (PrintData *data)
 
   print_size_info_set_page_setup (&info);
 
-  return main_vbox;
+  return main_hbox;
 }
 
 static void
@@ -385,7 +384,7 @@ print_offset_frame (PrintData *data,
   GtkWidget    *button;
   GtkWidget    *vbox;
   GtkWidget    *hbox;
-  GtkWidget    *hbuttonbox;
+  GtkWidget    *bbox;
   GtkWidget    *frame;
   GtkWidget    *label;
   GtkObject    *adj;
@@ -447,23 +446,25 @@ print_offset_frame (PrintData *data,
   gtk_widget_show (hbox);
 
   label = gtk_label_new (_("Center:"));
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_size_group_add_widget (label_group, label);
   gtk_widget_show (label);
 
-  hbuttonbox = gtk_hbutton_box_new ();
-  gtk_box_pack_start (GTK_BOX (hbox), hbuttonbox, FALSE, FALSE, 0);
-  gtk_button_box_set_layout (GTK_BUTTON_BOX(hbuttonbox), GTK_BUTTONBOX_START);
-  gtk_widget_show (hbuttonbox);
+  bbox = gtk_hbutton_box_new ();
+  gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_START);
+  gtk_box_pack_start (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
+  gtk_widget_show (bbox);
 
   button = gtk_button_new_with_mnemonic (_("H_orizontally"));
-  gtk_container_add (GTK_CONTAINER (hbuttonbox), button);
+  gtk_container_add (GTK_CONTAINER (bbox), button);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (print_size_info_center_clicked),
                     GINT_TO_POINTER (1));
   gtk_widget_show (button);
 
   button = gtk_button_new_with_mnemonic (_("_Vertically"));
-  gtk_container_add (GTK_CONTAINER (hbuttonbox), button);
+  gtk_container_add (GTK_CONTAINER (bbox), button);
   g_signal_connect (button, "clicked",
                     G_CALLBACK (print_size_info_center_clicked),
                     GINT_TO_POINTER (2));
