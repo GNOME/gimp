@@ -1,5 +1,11 @@
 2007-07-23  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print.c: don't add an alpha channel.
+
+	* plug-ins/print/print-draw-page.c: always use CAIRO_FORMAT_RGB24.
+
+2007-07-23  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpprojection-construct.c: minor code cleanup.
 
 2007-07-23  Sven Neumann  <sven@gimp.org>
