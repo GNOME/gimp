@@ -18,17 +18,17 @@
 
 typedef struct
 {
-  gint               num_pages;
-  gint32             drawable_id;
-  gint32             image_id;
-  GimpUnit           unit;
-  gboolean           show_info_header;
-  GtkPrintOperation *operation;
-  gdouble            xres;
-  gdouble            yres;
-  gdouble            offset_x;
-  gdouble            offset_y;
-  gboolean           use_full_page;
-  GtkPageOrientation orientation;
+  gint                num_pages;
+  gint32              drawable_id;
+  GimpUnit            unit;
+  gboolean            show_info_header;
+  gdouble             xres;
+  gdouble             yres;
+  GimpUnit            image_unit;
+  gdouble             offset_x;
+  gdouble             offset_y;
+  gboolean            use_full_page;
+  GtkPrintOperation  *operation;
+  GtkPageOrientation  orientation;
 } PrintData;
 

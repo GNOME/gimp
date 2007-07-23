@@ -153,10 +153,10 @@ print_image (gint32    image_ID,
              gint32    drawable_ID,
              gboolean  interactive)
 {
-  GtkPrintOperation *operation = gtk_print_operation_new ();
-  GError            *error     = NULL;
-  PrintData         *data;
-  GimpDrawable      *drawable;
+  GtkPrintOperation *operation     = gtk_print_operation_new ();
+  GError            *error         = NULL;
+  gint32             orig_image_ID = image_ID;
+  PrintData          data;
   GimpExportReturn   export;
 
   /* export the image */
@@ -167,31 +167,28 @@ print_image (gint32    image_ID,
   if (export == GIMP_EXPORT_CANCEL)
     return FALSE;
 
-  drawable = gimp_drawable_get (drawable_ID);
+  data.num_pages     = 1;
+  data.drawable_id   = drawable_ID;
+  data.unit          = gimp_get_default_unit ();
+  data.image_unit    = gimp_image_get_unit (image_ID);
+  data.offset_x      = 0;
+  data.offset_y      = 0;
+  data.use_full_page = FALSE;
+  data.operation     = operation;
 
-  data = g_new0 (PrintData, 1);
+  gimp_image_get_resolution (image_ID, &data.xres, &data.yres);
 
-  data->num_pages     = 1;
-  data->image_id      = image_ID;
-  data->drawable_id   = drawable_ID;
-  data->operation     = operation;
-  data->unit          = gimp_get_default_unit ();
-  data->offset_x      = 0;
-  data->offset_y      = 0;
-  data->use_full_page = FALSE;
-  gimp_image_get_resolution (data->image_id, &data->xres, &data->yres);
-
-  load_print_settings (data);
+  load_print_settings (&data, orig_image_ID);
 
   g_signal_connect (operation, "begin-print",
                     G_CALLBACK (begin_print),
-                    data);
+                    &data);
   g_signal_connect (operation, "draw-page",
                     G_CALLBACK (draw_page),
-                    data);
+                    &data);
   g_signal_connect (operation, "end-print",
                     G_CALLBACK (end_print),
-                    data);
+                    &data);
 
   if (interactive)
     {
@@ -199,7 +196,7 @@ print_image (gint32    image_ID,
 
       g_signal_connect (operation, "create-custom-widget",
                         G_CALLBACK (create_custom_widget),
-                        data);
+                        &data);
 
       gtk_print_operation_set_custom_tab_label (operation, _("Image"));
 
@@ -215,7 +212,7 @@ print_image (gint32    image_ID,
         {
         case GTK_PRINT_OPERATION_RESULT_APPLY:
         case GTK_PRINT_OPERATION_RESULT_IN_PROGRESS:
-          save_print_settings (data);
+          save_print_settings (&data, orig_image_ID);
           break;
 
         case GTK_PRINT_OPERATION_RESULT_ERROR:
@@ -231,8 +228,6 @@ print_image (gint32    image_ID,
     }
 
   g_object_unref (operation);
-
-  gimp_drawable_detach (drawable);
 
   if (export == GIMP_EXPORT_EXPORT)
     gimp_image_delete (image_ID);

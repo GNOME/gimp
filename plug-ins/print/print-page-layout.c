@@ -96,8 +96,8 @@ print_page_layout_gui (PrintData *data)
   memset (&info, 0, sizeof (PrintSizeInfo));
 
   info.data         = data;
-  info.image_width  = gimp_image_width (data->image_id);
-  info.image_height = gimp_image_height (data->image_id);
+  info.image_width  = gimp_drawable_width (data->drawable_id);
+  info.image_height = gimp_drawable_height (data->drawable_id);
 
   main_hbox = gtk_hbox_new (FALSE, 12);
   gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
@@ -310,7 +310,7 @@ print_size_frame (PrintData *data,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  entry = gimp_size_entry_new (1, gimp_image_get_unit (data->image_id),
+  entry = gimp_size_entry_new (1, data->image_unit,
                                _("pixels/%a"),
                                FALSE, FALSE, FALSE, SB_WIDTH,
                                GIMP_SIZE_ENTRY_UPDATE_RESOLUTION);
