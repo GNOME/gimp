@@ -1,3 +1,8 @@
+2007-07-23  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpactiongroup.[ch]: added convenience function
+	gimp_action_group_activate_action().
+
 2007-07-20  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/common/tga.c (ReadImage): added support for reading

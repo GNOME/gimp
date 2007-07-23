@@ -633,6 +633,27 @@ gimp_action_group_add_plug_in_actions (GimpActionGroup             *group,
 }
 
 void
+gimp_action_group_activate_action (GimpActionGroup *group,
+                                   const gchar     *action_name)
+{
+  GtkAction *action;
+
+  g_return_if_fail (GIMP_IS_ACTION_GROUP (group));
+  g_return_if_fail (action_name != NULL);
+
+  action = gtk_action_group_get_action (GTK_ACTION_GROUP (group), action_name);
+
+  if (! action)
+    {
+      g_warning ("%s: Unable to activate action which doesn't exist: %s",
+                 G_STRFUNC, action_name);
+      return;
+    }
+
+  gtk_action_activate (action);
+}
+
+void
 gimp_action_group_set_action_visible (GimpActionGroup *group,
                                       const gchar     *action_name,
                                       gboolean         visible)

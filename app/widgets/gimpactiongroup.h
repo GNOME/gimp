@@ -171,6 +171,9 @@ void   gimp_action_group_add_plug_in_actions  (GimpActionGroup             *grou
                                                guint                        n_entries,
                                                GCallback                    callback);
 
+void   gimp_action_group_activate_action      (GimpActionGroup     *group,
+                                               const gchar         *action_name);
+
 void   gimp_action_group_set_action_visible   (GimpActionGroup     *group,
                                                const gchar         *action_name,
                                                gboolean             visible);
