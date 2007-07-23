@@ -217,10 +217,13 @@ gimp_projection_construct_layers (GimpProjection *proj,
       /*  If we're showing the layer mask instead of the layer...  */
       if (layer->mask && layer->mask->show_mask)
         {
+          GimpDrawable *drawable = GIMP_DRAWABLE (layer->mask);
+
           pixel_region_init (&src2PR,
-                             gimp_drawable_get_tiles (GIMP_DRAWABLE (layer->mask)),
-                             (x1 - off_x), (y1 - off_y),
-                             (x2 - x1), (y2 - y1), FALSE);
+                             gimp_drawable_get_tiles (drawable),
+                             x1 - off_x, y1 - off_y,
+                             x2 - x1,    y2 - y1,
+                             FALSE);
 
           copy_gray_to_region (&src2PR, &src1PR);
         }
@@ -231,15 +234,19 @@ gimp_projection_construct_layers (GimpProjection *proj,
 
           pixel_region_init (&src2PR,
                              gimp_drawable_get_tiles (GIMP_DRAWABLE (layer)),
-                             (x1 - off_x), (y1 - off_y),
-                             (x2 - x1), (y2 - y1), FALSE);
+                             x1 - off_x, y1 - off_y,
+                             x2 - x1,    y2 - y1,
+                             FALSE);
 
           if (layer->mask && layer->mask->apply_mask)
             {
+              GimpDrawable *drawable = GIMP_DRAWABLE (layer->mask);
+
               pixel_region_init (&maskPR,
-                                 gimp_drawable_get_tiles (GIMP_DRAWABLE (layer->mask)),
-                                 (x1 - off_x), (y1 - off_y),
-                                 (x2 - x1), (y2 - y1), FALSE);
+                                 gimp_drawable_get_tiles (drawable),
+                                 x1 - off_x, y1 - off_y,
+                                 x2 - x1,    y2 - y1,
+                                 FALSE);
               mask = &maskPR;
             }
 
@@ -368,7 +375,7 @@ gimp_projection_initialize (GimpProjection *proj,
         }
     }
 
-  if (!coverage)
+  if (! coverage)
     {
       PixelRegion PR;
       guchar      clear[4] = { 0, 0, 0, 0 };
@@ -407,18 +414,22 @@ project_intensity_alpha (GimpProjection *proj,
                          PixelRegion    *dest,
                          PixelRegion    *mask)
 {
-  if (! proj->construct_flag)
-    initial_region (src, dest, mask, NULL,
-                    layer->opacity * 255.999,
-                    layer->mode,
-                    proj->image->visible,
-                    INITIAL_INTENSITY_ALPHA);
+  if (proj->construct_flag)
+    {
+      combine_regions (dest, src, dest, mask, NULL,
+                       layer->opacity * 255.999,
+                       layer->mode,
+                       proj->image->visible,
+                       COMBINE_INTEN_A_INTEN_A);
+    }
   else
-    combine_regions (dest, src, dest, mask, NULL,
-                     layer->opacity * 255.999,
-                     layer->mode,
-                     proj->image->visible,
-                     COMBINE_INTEN_A_INTEN_A);
+    {
+      initial_region (src, dest, mask, NULL,
+                      layer->opacity * 255.999,
+                      layer->mode,
+                      proj->image->visible,
+                      INITIAL_INTENSITY_ALPHA);
+    }
 }
 
 static void
@@ -430,18 +441,22 @@ project_indexed (GimpProjection *proj,
 {
   g_return_if_fail (proj->image->cmap != NULL);
 
-  if (! proj->construct_flag)
-    initial_region (src, dest, mask, proj->image->cmap,
-                    layer->opacity * 255.999,
-                    layer->mode,
-                    proj->image->visible,
-                    INITIAL_INDEXED);
+  if (proj->construct_flag)
+    {
+      combine_regions (dest, src, dest, mask, proj->image->cmap,
+                       layer->opacity * 255.999,
+                       layer->mode,
+                       proj->image->visible,
+                       COMBINE_INTEN_A_INDEXED);
+    }
   else
-    combine_regions (dest, src, dest, mask, proj->image->cmap,
-                     layer->opacity * 255.999,
-                     layer->mode,
-                     proj->image->visible,
-                     COMBINE_INTEN_A_INDEXED);
+    {
+      initial_region (src, dest, mask, proj->image->cmap,
+                      layer->opacity * 255.999,
+                      layer->mode,
+                      proj->image->visible,
+                      INITIAL_INDEXED);
+    }
 }
 
 static void
@@ -453,18 +468,22 @@ project_indexed_alpha (GimpProjection *proj,
 {
   g_return_if_fail (proj->image->cmap != NULL);
 
-  if (! proj->construct_flag)
-    initial_region (src, dest, mask, proj->image->cmap,
-                    layer->opacity * 255.999,
-                    layer->mode,
-                    proj->image->visible,
-                    INITIAL_INDEXED_ALPHA);
+  if (proj->construct_flag)
+    {
+      combine_regions (dest, src, dest, mask, proj->image->cmap,
+                       layer->opacity * 255.999,
+                       layer->mode,
+                       proj->image->visible,
+                       COMBINE_INTEN_A_INDEXED_A);
+    }
   else
-    combine_regions (dest, src, dest, mask, proj->image->cmap,
-                     layer->opacity * 255.999,
-                     layer->mode,
-                     proj->image->visible,
-                     COMBINE_INTEN_A_INDEXED_A);
+    {
+      initial_region (src, dest, mask, proj->image->cmap,
+                      layer->opacity * 255.999,
+                      layer->mode,
+                      proj->image->visible,
+                      INITIAL_INDEXED_ALPHA);
+    }
 }
 
 static void
@@ -473,33 +492,30 @@ project_channel (GimpProjection *proj,
                  PixelRegion    *src,
                  PixelRegion    *src2)
 {
-  guchar  col[3];
-  guchar  opacity;
-  gint    type;
+  guchar col[3];
+  guchar opacity;
 
   gimp_rgba_get_uchar (&channel->color,
                        &col[0], &col[1], &col[2], &opacity);
 
-  if (! proj->construct_flag)
+  if (proj->construct_flag)
     {
-      type = (channel->show_masked) ?
-        INITIAL_CHANNEL_MASK : INITIAL_CHANNEL_SELECTION;
-
-      initial_region (src2, src, NULL, col,
-                      opacity,
-                      GIMP_NORMAL_MODE,
-                      NULL,
-                      type);
-    }
-  else
-    {
-      type = (channel->show_masked) ?
-        COMBINE_INTEN_A_CHANNEL_MASK : COMBINE_INTEN_A_CHANNEL_SELECTION;
-
       combine_regions (src, src2, src, NULL, col,
                        opacity,
                        GIMP_NORMAL_MODE,
                        NULL,
-                       type);
+                       (channel->show_masked ?
+                        COMBINE_INTEN_A_CHANNEL_MASK :
+                        COMBINE_INTEN_A_CHANNEL_SELECTION));
+    }
+  else
+    {
+      initial_region (src2, src, NULL, col,
+                      opacity,
+                      GIMP_NORMAL_MODE,
+                      NULL,
+                      (channel->show_masked ?
+                       INITIAL_CHANNEL_MASK :
+                       INITIAL_CHANNEL_SELECTION));
     }
 }
