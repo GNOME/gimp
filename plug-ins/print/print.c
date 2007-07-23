@@ -234,7 +234,9 @@ print_image (gint32    image_ID,
   g_object_unref (operation);
 
   gimp_drawable_detach (drawable);
-  gimp_image_delete (image_ID);
+
+  if (export == GIMP_EXPORT_EXPORT)
+    gimp_image_delete (image_ID);
 
   if (error)
     {

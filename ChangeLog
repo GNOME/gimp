@@ -1,5 +1,8 @@
 2007-07-23  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print.c (print_image): only delete the image if
+	gimp_export_image() actually created a new one.
+
 	* plug-ins/print/print-page-layout.c: some more dialog layout tweaks.
 
 2007-07-23  Sven Neumann  <sven@gimp.org>
