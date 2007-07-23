@@ -95,13 +95,13 @@ servers are:
 The look of GIMP's interface can be customized like any other GTK app
 by editing the ~/.gtkrc-2.0 file or by using "themes" (ready-made
 customizations).  For downloadable themes and further details, see
-http://gtk.themes.org.  Additionally, GIMP reads ~/.gimp-2.2/gtkrc so
+http://gtk.themes.org.  Additionally, GIMP reads ~/.gimp-2.3/gtkrc so
 you can have settings that only apply to GIMP.
 
 Included is a set of keybindings similar to those in Adobe Photoshop.
 You can find them in the ps-menurc file.  To use them, copy this file
-to ~/.gimp-2.2/menurc. You can also manually change the keybindings to
-any of your choice by editing ~/.gimp-2.2/menurc.
+to ~/.gimp-2.3/menurc. You can also manually change the keybindings to
+any of your choice by editing ~/.gimp-2.3/menurc.
 
 
 Have fun,
