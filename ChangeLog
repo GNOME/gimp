@@ -1,5 +1,9 @@
 2007-07-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print.c: set a print job name.
+
+2007-07-24  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print.c: if we created an export image, delete
 	it as soon as possible so it isn't left behind if the user kills
 	the plug-in later because of printer problems.

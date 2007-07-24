@@ -42,27 +42,28 @@ static void        run   (const gchar       *name,
                           gint              *nreturn_vals,
                           GimpParam        **return_vals);
 
-static gboolean    print_image          (gint32             image_ID,
-                                         gint32             drawable_ID,
-                                         gboolean           interactive);
+static gboolean    print_image              (gint32             image_ID,
+                                             gint32             drawable_ID,
+                                             gboolean           interactive);
 
-static void        begin_print          (GtkPrintOperation *operation,
-                                         GtkPrintContext   *context,
-                                         PrintData         *data);
+static void        print_operation_set_name (GtkPrintOperation *operation,
+                                             gint               image_ID);
 
-static void        end_print            (GtkPrintOperation *operation,
-                                         GtkPrintContext   *context,
-                                         PrintData         *data);
+static void        begin_print              (GtkPrintOperation *operation,
+                                             GtkPrintContext   *context,
+                                             PrintData         *data);
+static void        end_print                (GtkPrintOperation *operation,
+                                             GtkPrintContext   *context,
+                                             PrintData         *data);
+static void        draw_page                (GtkPrintOperation *print,
+                                             GtkPrintContext   *context,
+                                             gint               page_nr,
+                                             PrintData         *data);
+static void        status_changed           (GtkPrintOperation *operation,
+                                             gint32            *image_ID);
 
-static void        draw_page            (GtkPrintOperation *print,
-                                         GtkPrintContext   *context,
-                                         gint               page_nr,
-                                         PrintData         *data);
-static void        status_changed       (GtkPrintOperation *operation,
-                                         gint32            *image_ID);
-
-static GtkWidget * create_custom_widget (GtkPrintOperation *operation,
-                                         PrintData         *data);
+static GtkWidget * create_custom_widget     (GtkPrintOperation *operation,
+                                             PrintData         *data);
 
 
 
@@ -154,7 +155,7 @@ print_image (gint32    image_ID,
              gint32    drawable_ID,
              gboolean  interactive)
 {
-  GtkPrintOperation *operation     = gtk_print_operation_new ();
+  GtkPrintOperation *operation;
   GError            *error         = NULL;
   gint32             orig_image_ID = image_ID;
   PrintData          data;
@@ -167,6 +168,10 @@ print_image (gint32    image_ID,
 
   if (export == GIMP_EXPORT_CANCEL)
     return FALSE;
+
+  operation = gtk_print_operation_new ();
+
+  print_operation_set_name (operation, orig_image_ID);
 
   /* fill in the PrintData struct */
   data.num_pages     = 1;
@@ -261,6 +266,25 @@ print_image (gint32    image_ID,
     }
 
   return TRUE;
+}
+
+static void
+print_operation_set_name (GtkPrintOperation *operation,
+                          gint               image_ID)
+{
+  gchar *filename;
+  gchar *basename;
+  gchar *jobname;
+
+  filename = gimp_image_get_filename (image_ID);
+  basename = filename ? g_filename_display_basename (filename) : _("Untitled");
+  jobname = g_strdup_printf ("%s - %s", g_get_application_name (), basename);
+
+  gtk_print_operation_set_job_name (operation, jobname);
+
+  g_free (jobname);
+  g_free (basename);
+  g_free (filename);
 }
 
 static void
