@@ -434,8 +434,8 @@ print_offset_frame (PrintData *data,
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 1,
                                   72.0, FALSE);
 
-  gimp_size_entry_set_value (GIMP_SIZE_ENTRY (entry), 0, 0);
-  gimp_size_entry_set_value (GIMP_SIZE_ENTRY (entry), 1, 0);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 0, data->offset_x);
+  gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (entry), 1, data->offset_y);
 
   g_signal_connect (info.offset_entry, "value-changed",
                     G_CALLBACK (print_size_info_offset_changed),

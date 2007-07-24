@@ -1,5 +1,10 @@
 2007-07-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print-page-layout.c: applied patch from Stefan
+	Röllin to restore image offsets (bug #387604).
+
+2007-07-24  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print-draw-page.c (create_surface_from_rgba):
 	use integer arithmetic to do the compositing.
 
