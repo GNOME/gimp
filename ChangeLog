@@ -1,5 +1,9 @@
 2007-07-24  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.3.19 development release.
+
+2007-07-24  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print-page-layout.c: string changes.
 
 2007-07-24  Sven Neumann  <sven@gimp.org>
@@ -197,7 +201,7 @@
 2007-07-17  Raphaël Quinet  <raphael@gimp.org>
 
 	Reorganized the way JPEG comments and metadata are loaded.
-	
+
 	* plug-ins/jpeg/jpeg-load.c (load_image): sanitize comments
 	containing invalid UTF-8 instead of discarding them.  If there is
 	more than one EXIF block in a file, merge all of them instead of
@@ -502,7 +506,7 @@
 
 2007-07-06  Sven Neumann  <sven@gimp.org>
 
-	* plug-ins/common/psd-load.c 
+	* plug-ins/common/psd-load.c
 	* plug-ins/common/psd-save.c: use UTF-16 encoding instead of UCS-2
 	for layer names (bug #445316).
 
@@ -881,7 +885,7 @@
 	* app/base/tile-manager.[ch]
 	* app/base/tile-manager-private.h: removed "level_below" from the
 	TileManager struct.
-	
+
 	* app/base/tile-pyramid.c: use the TileManager's user_data to
 	store a pointer to the lower level.
 
@@ -1165,7 +1169,7 @@
 	one, i.e. compare (ay, ax) to (by, bx), not (ax, ay) to (bx, by).
 
 	* configure.in: bumped version to 2.3.19.
-	
+
 2007-06-11  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.3.18 development release.
@@ -1173,7 +1177,7 @@
 2007-06-11  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* plug-ins/common/raw.c (run): if load_image fails, return
-	GIMP_PDB_EXECUTION_ERROR 
+	GIMP_PDB_EXECUTION_ERROR
 
 	* plug-ins/twain/twain.c (run): added missing ;
 
@@ -1273,7 +1277,7 @@
 	* themes/Default/images/Makefile.am
 	* data/tips/Makefile.am
 	* menus/Makefile.am: more srcdir/builddir tweaks.
-	
+
 2007-06-08  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpviewable.h: #define GIMP_VIEWABLE_PRIORITY_IDLE,
@@ -1315,7 +1319,7 @@
 2007-06-07  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpprojection.c: lazily allocate the tile managers of
-	the image pyramid.	
+	the image pyramid.
 	(gimp_projection_write_quarter): minor optimization.
 
 2007-06-07  Sven Neumann  <sven@gimp.org>
@@ -1767,7 +1771,7 @@
 
 	* app/base/tile.[ch]: renamed tile_sanitize_rowhints() to
 	tile_allocate_rowhints().
-	
+
 	* app/base/tile-manager.c
 	* app/paint-funcs/paint-funcs.c: changed accordingly.
 
@@ -1903,7 +1907,7 @@
 	* plug-ins/script-fu/script-fu.c
 	* plug-ins/script-fu/scheme-wrapper.c
 	* plug-ins/script-fu/scheme-wrapper.h: Applied patch from Eric
-	Lamarque that makes use of TinyScheme's interactive mode for 
+	Lamarque that makes use of TinyScheme's interactive mode for
 	the text console in Script-Fu. Fixes bug #440674.
 
 2007-05-25  Sven Neumann  <sven@gimp.org>
@@ -1925,7 +1929,7 @@
 
 2007-05-25  Kevin Cozens  <kcozens@cvs.gnome.org>
 
-	This is the first part of fixing bugs #438997 and #440674. 
+	This is the first part of fixing bugs #438997 and #440674.
 
 	* plug-ins/script-fu/scheme-wrapper.c: Removed ts_output_routine
 	declaration from here...
@@ -2694,7 +2698,7 @@
 
 2007-05-11  Karine Delvare  <edhel@gimp.org>
 
-	* plug-ins/common/illusion.c: use the new preview transform function, 
+	* plug-ins/common/illusion.c: use the new preview transform function,
 	see bug #356716.
 
 2007-05-11  Sven Neumann  <sven@gimp.org>
@@ -2748,7 +2752,7 @@
 
 2007-05-09  Karine Delvare  <edhel@gimp.org>
 
-	* plug-ins/common/waves.c: use the new preview transform function, 
+	* plug-ins/common/waves.c: use the new preview transform function,
 	see bug #356716.
 
 2007-05-09  Sven Neumann  <sven@gimp.org>
@@ -2782,7 +2786,7 @@
 
 2007-05-08  Karine Delvare  <edhel@gimp.org>
 
-	* plug-ins/common/flarefx.c: use the new preview transform function, 
+	* plug-ins/common/flarefx.c: use the new preview transform function,
 	see bug #356716.
 
 2007-05-08  Karine Delvare  <edhel@gimp.org>
@@ -2926,7 +2930,7 @@
 
 	* configure.in: added --enable-gtk-doc-app option and an automake
 	conditional for it.
-	
+
 	* devel-docs/Makefile.am: build the app directory conditionally.
 
 	* devel-docs/app/Makefile.am: override disthook since we don't
@@ -3097,7 +3101,7 @@
 	here, with unused api removed.
 
 	Addresses (maybe fixes) bug #351281.
-	
+
 2007-05-03  Sven Neumann  <sven@gimp.org>
 
 	* app/paint-funcs/paint-funcs.c (convolve_region): minor cleanup.

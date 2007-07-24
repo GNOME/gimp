@@ -1,3 +1,7 @@
+2007-07-24  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed plug-ins/metadata/interface.c.
+
 2007-07-08  Jorge Gonzalez <jorgegonz@svn.gnome.org>
 
         * es.po: Updated Spanish translation by Francisco Vila.

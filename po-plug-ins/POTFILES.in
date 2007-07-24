@@ -250,7 +250,6 @@ plug-ins/maze/algorithms.c
 plug-ins/maze/maze.c
 plug-ins/maze/maze.h
 plug-ins/maze/maze_face.c
-plug-ins/metadata/interface.c
 plug-ins/metadata/metadata.c
 plug-ins/metadata/xmp-parse.c
 plug-ins/pagecurl/pagecurl.c
