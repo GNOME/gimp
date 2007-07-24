@@ -1,5 +1,9 @@
 2007-07-24  Sven Neumann  <sven@gimp.org>
 
+	* authors.xml: added Stefan Röllin.
+
+	* AUTHORS: regenerated.
+
 	* plug-ins/print/print-page-layout.c: applied patch from Stefan
 	Röllin to restore image offsets (bug #387604).
 
