@@ -1,3 +1,9 @@
+2007-07-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/print.c: if we created an export image, delete
+	it as soon as possible so it isn't left behind if the user kills
+	the plug-in later because of printer problems.
+
 2007-07-23  Mukund Sivaraman  <muks@mukund.org>
 
 	* README: Use ~/.gimp-2.3 instead of ~/.gimp-2.2.
