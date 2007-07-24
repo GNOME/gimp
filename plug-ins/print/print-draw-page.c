@@ -29,6 +29,9 @@
 
 #define EPSILON 0.0001
 
+#define INT_MULT(a,b,t)  ((t) = (a) * (b) + 0x80, ((((t) >> 8) + (t)) >> 8))
+#define INT_BLEND(a,b,alpha,tmp)  (INT_MULT((a) - (b), alpha, tmp) + (b))
+
 
 static cairo_surface_t * create_surface_from_rgb  (guchar          *pixels,
                                                    gint             width,
@@ -180,13 +183,13 @@ create_surface_from_rgba (guchar *pixels,
 
       if (a != 255)
         {
-          gdouble alpha = a / 255.0;
+          guint32 tmp;
 
           /* composite on a white background */
 
-          r = (guint) (alpha * r + 255 - a) & 0xFF;
-          g = (guint) (alpha * g + 255 - a) & 0xFF;
-          b = (guint) (alpha * b + 255 - a) & 0xFF;
+          r = INT_BLEND (r, 255, a, tmp);
+          g = INT_BLEND (g, 255, a, tmp);
+          b = INT_BLEND (b, 255, a, tmp);
         }
 
       cairo_data[i] = 0xFF000000 | (r << 16) | (g << 8) | b;
