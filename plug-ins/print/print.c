@@ -272,19 +272,13 @@ static void
 print_operation_set_name (GtkPrintOperation *operation,
                           gint               image_ID)
 {
-  gchar *filename;
-  gchar *basename;
-  gchar *jobname;
-
-  filename = gimp_image_get_filename (image_ID);
-  basename = filename ? g_filename_display_basename (filename) : _("Untitled");
-  jobname = g_strdup_printf ("%s - %s", g_get_application_name (), basename);
+  gchar *name    = gimp_image_get_name (image_ID);
+  gchar *jobname = g_strdup_printf ("%s - %s", g_get_application_name (), name);
 
   gtk_print_operation_set_job_name (operation, jobname);
 
   g_free (jobname);
-  g_free (basename);
-  g_free (filename);
+  g_free (name);
 }
 
 static void
