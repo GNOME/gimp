@@ -332,11 +332,11 @@ print_size_frame (PrintData *data,
   gtk_size_group_add_widget (entry_group, height);
 
   label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
-                                        _("X resolution:"), 0, 0, 0.0);
+                                        _("_X resolution:"), 0, 0, 0.0);
   gtk_size_group_add_widget (label_group, label);
 
   label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
-                                        _("Y resolution:"), 1, 0, 0.0);
+                                        _("_Y resolution:"), 1, 0, 0.0);
   gtk_size_group_add_widget (label_group, label);
 
   gimp_size_entry_set_refval_boundaries (GIMP_SIZE_ENTRY (entry), 0,
@@ -389,7 +389,7 @@ print_offset_frame (PrintData *data,
   GtkWidget    *label;
   GtkObject    *adj;
 
-  frame = gimp_frame_new (_("Image Offset"));
+  frame = gimp_frame_new (_("Image Offsets"));
 
   vbox = gtk_vbox_new (FALSE, 12);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
@@ -422,11 +422,11 @@ print_offset_frame (PrintData *data,
   gtk_size_group_add_widget (entry_group, height);
 
   label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
-                                        _("_X:"), 0, 0, 0.0);
+                                        _("_Left:"), 0, 0, 0.0);
   gtk_size_group_add_widget (label_group, label);
 
   label = gimp_size_entry_attach_label (GIMP_SIZE_ENTRY (entry),
-                                        _("_Y:"), 1, 0, 0.0);
+                                        _("_Top:"), 1, 0, 0.0);
   gtk_size_group_add_widget (label_group, label);
 
   gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (entry), 0,
