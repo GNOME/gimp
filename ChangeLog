@@ -1,5 +1,10 @@
 2007-07-24  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/imagemap/imap_main.c (main_set_title): use
+	g_filename_display_basename() instead of g_path_get_basename().
+
+2007-07-24  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print.c: set a print job name.
 
 2007-07-24  Sven Neumann  <sven@gimp.org>

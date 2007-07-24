@@ -516,7 +516,7 @@ main_set_title(const char *filename)
    char *title, *p;
 
    g_strreplace(&_filename, filename);
-   p = (filename) ? g_path_get_basename(filename) : _("<Untitled>");
+   p = (filename) ? g_filename_display_basename (filename) : _("<Untitled>");
    title = g_strdup_printf("%s - Image Map", p);
    if (filename)
      g_free (p);
