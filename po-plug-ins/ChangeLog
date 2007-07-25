@@ -1,3 +1,7 @@
+2007-07-26  Žygimantas Beručka  <zygis@gnome.org>
+
+	* lt.po: Updated Lithuanian translation.
+
 2007-07-24  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: removed plug-ins/metadata/interface.c.
