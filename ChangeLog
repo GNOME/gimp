@@ -1,5 +1,8 @@
 2007-07-25  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print.c: removed drawable parameter which was
+	ignored anyway.
+
 	* plug-ins/print/print-draw-page.c (draw_page_cairo): reverted
 	last change. Instead reimplemented the drawing to fetch the pixels
 	directly into the cairo image surface.

@@ -43,7 +43,6 @@ static void        run   (const gchar       *name,
                           GimpParam        **return_vals);
 
 static gboolean    print_image              (gint32             image_ID,
-                                             gint32             drawable_ID,
                                              gboolean           interactive);
 
 static void        print_operation_set_name (GtkPrintOperation *operation,
@@ -81,8 +80,7 @@ query (void)
   static const GimpParamDef print_args[] =
   {
     { GIMP_PDB_INT32,    "run-mode", "Interactive, non-interactive" },
-    { GIMP_PDB_IMAGE,    "image",    "Input image"                  },
-    { GIMP_PDB_DRAWABLE, "drawable", "Drawable to print"            }
+    { GIMP_PDB_IMAGE,    "image",    "Image to print"               }
   };
 
   gimp_install_procedure (PRINT_PROC_NAME,
@@ -90,7 +88,7 @@ query (void)
                           "Print the image using the GTK+ Print API.",
                           "Bill Skaggs  <weskaggs@primate.ucdavis.edu>",
                           "Bill Skaggs  <weskaggs@primate.ucdavis.edu>",
-                          "2006",
+                          "2006, 2007",
                           N_("_Print..."),
                           "*",
                           GIMP_PLUGIN,
@@ -133,8 +131,7 @@ run (const gchar      *name,
     {
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
-      if (! print_image (image_ID, drawable_ID,
-                         run_mode == GIMP_RUN_INTERACTIVE))
+      if (! print_image (image_ID, run_mode == GIMP_RUN_INTERACTIVE))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -149,12 +146,12 @@ run (const gchar      *name,
 
 static gboolean
 print_image (gint32    image_ID,
-             gint32    drawable_ID,
              gboolean  interactive)
 {
   GtkPrintOperation *operation;
   GError            *error         = NULL;
   gint32             orig_image_ID = image_ID;
+  gint32             drawable_ID   = gimp_image_get_active_drawable (image_ID);
   PrintData          data;
   GimpExportReturn   export;
 
