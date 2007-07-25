@@ -131,8 +131,7 @@ run (const gchar      *name,
 
   if (strcmp (name, PRINT_PROC_NAME) == 0)
     {
-      if (run_mode == GIMP_RUN_INTERACTIVE)
-        gimp_ui_init (PLUG_IN_BINARY, FALSE);
+      gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
       if (! print_image (image_ID, drawable_ID,
                          run_mode == GIMP_RUN_INTERACTIVE))

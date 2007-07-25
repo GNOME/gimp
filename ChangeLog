@@ -1,5 +1,10 @@
 2007-07-25  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print.c (run): always call gimp_ui_init(), we need
+	funtionality from GTK+, even if called non-interactively.
+
+2007-07-25  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/progress.pdb: added new procedure gimp-progress-end.
 
 	* app/pdb/progress_cmds.c
