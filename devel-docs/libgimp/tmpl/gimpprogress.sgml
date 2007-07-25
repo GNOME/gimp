@@ -92,21 +92,11 @@ Functions for embedding the progress bar into a plug-in's GUI.
 @Returns: 
 
 
-<!-- ##### FUNCTION gimp_progress_uninstall ##### -->
+<!-- ##### FUNCTION gimp_progress_end ##### -->
 <para>
 
 </para>
 
-@progress_callback: 
-@Returns: 
-
-
-<!-- ##### FUNCTION gimp_progress_cancel ##### -->
-<para>
-
-</para>
-
-@progress_callback: 
 @Returns: 
 
 
@@ -174,6 +164,24 @@ Functions for embedding the progress bar into a plug-in's GUI.
 @text_callback: 
 @value_callback: 
 @user_data: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_progress_uninstall ##### -->
+<para>
+
+</para>
+
+@progress_callback: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_progress_cancel ##### -->
+<para>
+
+</para>
+
+@progress_callback: 
 @Returns: 
 
 

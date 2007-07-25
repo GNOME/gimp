@@ -787,8 +787,7 @@ gimp_progress_update
 gimp_progress_pulse
 gimp_progress_set_text
 gimp_progress_set_text_printf
-gimp_progress_uninstall
-gimp_progress_cancel
+gimp_progress_end
 gimp_progress_get_window_handle
 GimpProgressStartCallback
 GimpProgressEndCallback
@@ -796,6 +795,8 @@ GimpProgressTextCallback
 GimpProgressValueCallback
 gimp_progress_install_vtable
 gimp_progress_install
+gimp_progress_uninstall
+gimp_progress_cancel
 </SECTION>
 
 <SECTION>

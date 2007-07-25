@@ -1,3 +1,8 @@
+2007-07-25  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt
+	* libgimp/tmpl/gimpprogress.sgml: updated for gimp_progress_end().
+
 2007-07-20  Sven Neumann  <sven@gimp.org>
 
 	* app/app-sections.txt
