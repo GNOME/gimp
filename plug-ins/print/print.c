@@ -86,7 +86,7 @@ query (void)
   gimp_install_procedure (PRINT_PROC_NAME,
                           N_("Print the image"),
                           "Print the image using the GTK+ Print API.",
-                          "Bill Skaggs  <weskaggs@primate.ucdavis.edu>",
+                          "Bill Skaggs, Sven Neumann, Stefan Röllin",
                           "Bill Skaggs  <weskaggs@primate.ucdavis.edu>",
                           "2006, 2007",
                           N_("_Print..."),
@@ -230,7 +230,8 @@ print_image (gint32    image_ID,
       dialog = gtk_message_dialog_new (NULL, 0,
                                        GTK_MESSAGE_ERROR,
                                        GTK_BUTTONS_OK,
-                                       _("An error occurred while trying to print:"));
+                                       _("An error occurred "
+                                         "while trying to print:"));
 
       gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
                                                 error->message);
@@ -249,12 +250,10 @@ static void
 print_operation_set_name (GtkPrintOperation *operation,
                           gint               image_ID)
 {
-  gchar *name    = gimp_image_get_name (image_ID);
-  gchar *jobname = g_strdup_printf ("%s - %s", g_get_application_name (), name);
+  gchar *name = gimp_image_get_name (image_ID);
 
-  gtk_print_operation_set_job_name (operation, jobname);
+  gtk_print_operation_set_job_name (operation, name);
 
-  g_free (jobname);
   g_free (name);
 }
 
@@ -263,8 +262,6 @@ begin_print (GtkPrintOperation *operation,
              GtkPrintContext   *context,
              PrintData         *data)
 {
-  data->num_pages = 1;
-
   gtk_print_operation_set_n_pages (operation, data->num_pages);
   gtk_print_operation_set_use_full_page (operation, data->use_full_page);
 
