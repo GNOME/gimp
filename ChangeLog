@@ -1,3 +1,8 @@
+2007-07-25  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/print.c: delete the export image from the
+	"end-print" handler.
+
 2007-07-25  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimptool.c (gimp_tool_set_active_modifier_state):
