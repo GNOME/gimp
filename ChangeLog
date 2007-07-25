@@ -1,5 +1,11 @@
 2007-07-25  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print-draw-page.c (draw_page_cairo): push a group
+	around the image surface fills. This seems to get rid of the white
+	stripes in the output.
+
+2007-07-25  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print.c (run): always call gimp_ui_init(), we need
 	funtionality from GTK+, even if called non-interactively.
 

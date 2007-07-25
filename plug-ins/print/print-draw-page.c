@@ -104,6 +104,8 @@ draw_page_cairo (GtkPrintContext *context,
 
   pixels = g_new (guchar, MIN (height, tile_height) * 4 * width);
 
+  cairo_push_group (cr);
+
   for (y = 0; y < height; y += tile_height)
     {
       gint h = MIN (tile_height, height - y);
@@ -121,7 +123,6 @@ draw_page_cairo (GtkPrintContext *context,
         }
 
       cairo_set_source_surface (cr, surface, 0, y);
-
       cairo_rectangle (cr, 0, y, width, h);
       cairo_fill (cr);
 
@@ -129,6 +130,10 @@ draw_page_cairo (GtkPrintContext *context,
 
       gimp_progress_update ((gdouble) (y + h) / (gdouble) height);
     }
+
+  cairo_pop_group_to_source (cr);
+  cairo_rectangle (cr, 0, 0, width, height);
+  cairo_fill (cr);
 
   g_free (pixels);
 
