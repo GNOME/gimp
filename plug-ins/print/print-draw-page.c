@@ -33,17 +33,15 @@
 #define INT_BLEND(a,b,alpha,tmp)  (INT_MULT((a) - (b), alpha, tmp) + (b))
 
 
-static cairo_surface_t * create_surface_from_rgb  (guchar          *pixels,
-                                                   gint             width,
-                                                   gint             height);
-static cairo_surface_t * create_surface_from_rgba (guchar          *pixels,
-                                                   gint             width,
-                                                   gint             height);
+static void  convert_from_rgb  (guchar          *pixels,
+                                gint             width);
+static void  convert_from_rgba (guchar          *pixels,
+                                gint             width);
 
 #if 0
-static void              draw_info_header         (GtkPrintContext *context,
-                                                   cairo_t         *cr,
-                                                   PrintData       *data);
+static void  draw_info_header  (GtkPrintContext *context,
+                                cairo_t         *cr,
+                                PrintData       *data);
 #endif
 
 
@@ -51,26 +49,26 @@ gboolean
 draw_page_cairo (GtkPrintContext *context,
                  PrintData       *data)
 {
-  const gint        tile_height = gimp_tile_height ();
-  GimpDrawable     *drawable;
-  GimpPixelRgn      region;
-  cairo_t          *cr;
-  cairo_surface_t  *surface     = NULL;
-  guchar           *pixels;
-  gdouble           cr_width;
-  gdouble           cr_height;
-  gdouble           cr_dpi_x;
-  gdouble           cr_dpi_y;
-  gint              width;
-  gint              height;
-  gint              y;
-  gdouble           scale_x;
-  gdouble           scale_y;
+  GimpDrawable    *drawable = gimp_drawable_get (data->drawable_id);
+  GimpPixelRgn     region;
+  cairo_t         *cr;
+  cairo_surface_t *surface;
+  guchar          *pixels;
+  gdouble          cr_width;
+  gdouble          cr_height;
+  gdouble          cr_dpi_x;
+  gdouble          cr_dpi_y;
+  gint             width;
+  gint             height;
+  gint             stride;
+  gint             y;
+  gdouble          scale_x;
+  gdouble          scale_y;
 
-  drawable = gimp_drawable_get (data->drawable_id);
+  width  = drawable->width;
+  height = drawable->height;
 
-  width     = drawable->width;
-  height    = drawable->height;
+  gimp_tile_cache_ntiles (width / gimp_tile_width () + 1);
 
   cr = gtk_print_context_get_cairo_context (context);
 
@@ -102,59 +100,50 @@ draw_page_cairo (GtkPrintContext *context,
 
   gimp_pixel_rgn_init (&region, drawable, 0, 0, width, height, FALSE, FALSE);
 
-  pixels = g_new (guchar, MIN (height, tile_height) * 4 * width);
+  surface = cairo_image_surface_create (CAIRO_FORMAT_RGB24, width, height);
 
-  cairo_push_group (cr);
+  pixels = cairo_image_surface_get_data (surface);
+  stride = cairo_image_surface_get_stride (surface);
 
-  for (y = 0; y < height; y += tile_height)
+  for (y = 0; y < height; y++, pixels += stride)
     {
-      gint h = MIN (tile_height, height - y);
-
-      gimp_pixel_rgn_get_rect (&region, pixels, 0, y, width, h);
+      gimp_pixel_rgn_get_row (&region, pixels, 0, y, width);
 
       switch (drawable->bpp)
         {
         case 3:
-          surface = create_surface_from_rgb (pixels, width, h);
+          convert_from_rgb (pixels, width);
           break;
         case 4:
-          surface = create_surface_from_rgba (pixels, width, h);
+          convert_from_rgba (pixels, width);
           break;
         }
 
-      cairo_set_source_surface (cr, surface, 0, y);
-      cairo_rectangle (cr, 0, y, width, h);
-      cairo_fill (cr);
-
-      cairo_surface_destroy (surface);
-
-      gimp_progress_update ((gdouble) (y + h) / (gdouble) height);
+      if (y % 16 == 0)
+        gimp_progress_update ((gdouble) y / (gdouble) height);
     }
 
-  cairo_pop_group_to_source (cr);
+  cairo_set_source_surface (cr, surface, 0, 0);
   cairo_rectangle (cr, 0, 0, width, height);
   cairo_fill (cr);
+  cairo_surface_destroy (surface);
 
-  g_free (pixels);
+  gimp_progress_update (1.0);
 
   gimp_drawable_detach (drawable);
 
   return TRUE;
 }
 
-static cairo_surface_t *
-create_surface_from_rgb (guchar *pixels,
-                         gint    width,
-                         gint    height)
+static void
+convert_from_rgb (guchar *pixels,
+                  gint    width)
 {
-  guint32      *cairo_data = (guint32 *) pixels;
-  const guchar *p;
-  gsize         len;
-  gint          i;
+  guint32 *cairo_data = (guint32 *) pixels;
+  guchar  *p;
+  gint     i;
 
-  len = width * height;
-
-  for (i = len - 1, p = pixels + 3 * len - 1; i >= 0; i--)
+  for (i = width - 1, p = pixels + 3 * width - 1; i >= 0; i--)
     {
       guint32 b = *p--;
       guint32 g = *p--;
@@ -162,24 +151,17 @@ create_surface_from_rgb (guchar *pixels,
 
       cairo_data[i] = 0xFF000000 | (r << 16) | (g << 8) | b;
     }
-
-  return cairo_image_surface_create_for_data (pixels, CAIRO_FORMAT_RGB24,
-                                              width, height, 4 * width);
 }
 
-static cairo_surface_t *
-create_surface_from_rgba (guchar *pixels,
-                          gint    width,
-                          gint    height)
+static void
+convert_from_rgba (guchar *pixels,
+                   gint    width)
 {
-  guint32      *cairo_data = (guint32 *) pixels;
-  const guchar *p;
-  gsize         len;
-  gsize         i;
+  guint32 *cairo_data = (guint32 *) pixels;
+  guchar  *p;
+  gint     i;
 
-  len = width * height;
-
-  for (i = 0, p = pixels; i < len; i++)
+  for (i = 0, p = pixels; i < width; i++)
     {
       guint32 r = *p++;
       guint32 g = *p++;
@@ -199,9 +181,6 @@ create_surface_from_rgba (guchar *pixels,
 
       cairo_data[i] = 0xFF000000 | (r << 16) | (g << 8) | b;
     }
-
-  return cairo_image_surface_create_for_data (pixels, CAIRO_FORMAT_RGB24,
-                                              width, height, 4 * width);
 }
 
 #if 0
