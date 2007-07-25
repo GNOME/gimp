@@ -9,14 +9,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP (libgimp) HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-06 22:12+0200\n"
-"PO-Revision-Date: 2007-03-06 22:19+0200\n"
+"POT-Creation-Date: 2007-07-26 00:02+0300\n"
+"PO-Revision-Date: 2007-05-29 00:14+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
+"100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../libgimp/gimpbrushselectbutton.c:170
 msgid "Brush Selection"
@@ -40,7 +41,8 @@ msgstr "Sujungti matomus sluoksnius"
 #: ../libgimp/gimpexport.c:226
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "Įskiepis %s negali suprasti sluoksnio poslinkių, dydžio ar nepermatomumo"
+msgstr ""
+"Įskiepis %s negali suprasti sluoksnio poslinkių, dydžio ar nepermatomumo"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
@@ -83,7 +85,8 @@ msgstr "Konvertuoti į RGB"
 #: ../libgimp/gimpexport.c:289
 #, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "Įskiepis %s gali suprasti tik pilkumo atspalvių (grayscale) paveikslėlius"
+msgstr ""
+"Įskiepis %s gali suprasti tik pilkumo atspalvių (grayscale) paveikslėlius"
 
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
@@ -108,7 +111,8 @@ msgstr ""
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr ""
-"Įskiepis %s gali suprasti tik bitmap (dviejų spalvų) indeksuotus paveikslėlius"
+"Įskiepis %s gali suprasti tik bitmap (dviejų spalvų) indeksuotus "
+"paveikslėlius"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -122,7 +126,8 @@ msgstr ""
 #, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr ""
-"Įskiepis %s gali suprasti tik RGB arba pilkumo atspalvių (grayscale) paveikslėlius"
+"Įskiepis %s gali suprasti tik RGB arba pilkumo atspalvių (grayscale) "
+"paveikslėlius"
 
 #: ../libgimp/gimpexport.c:327
 #, c-format
@@ -133,7 +138,8 @@ msgstr "Įskiepis %s gali suprasti tik RGB arba indeksuotus paveikslėlius"
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr ""
-"Įskiepis %s gali apdoroti tik pilkumo atspalvių arba indeksuotus paveikslėlius"
+"Įskiepis %s gali apdoroti tik pilkumo atspalvių arba indeksuotus "
+"paveikslėlius"
 
 #: ../libgimp/gimpexport.c:348
 #, c-format
@@ -467,12 +473,12 @@ msgid "Black only"
 msgstr "Tik juoda"
 
 #: ../libgimpbase/gimpbaseenums.c:263
-msgid "Image source"
-msgstr "Paveikslėlio šaltinis"
+msgid "Image"
+msgstr "Paveikslėlis"
 
 #: ../libgimpbase/gimpbaseenums.c:264
-msgid "Pattern source"
-msgstr "Rašto šaltinis"
+msgid "Pattern"
+msgstr "Raštas"
 
 #: ../libgimpbase/gimpbaseenums.c:293
 msgid "Lightness"
@@ -667,12 +673,12 @@ msgid "Highlights"
 msgstr "Šviesios spalvos"
 
 #: ../libgimpbase/gimpbaseenums.c:744
-msgid "Forward"
-msgstr "Į priekį"
+msgid "Normal (Forward)"
+msgstr "Normalus (pirmyn)"
 
 #: ../libgimpbase/gimpbaseenums.c:745
-msgid "Backward"
-msgstr "Atgal"
+msgid "Corrective (Backward)"
+msgstr "Korekcinis (atgal)"
 
 #: ../libgimpbase/gimpbaseenums.c:775
 msgid "Adjust"
@@ -684,7 +690,7 @@ msgstr "Apkarpyti"
 
 #: ../libgimpbase/gimpbaseenums.c:777
 msgid "Crop to result"
-msgstr "Apkarpytu iki rezultato"
+msgstr "Apkarpyti iki rezultato"
 
 #: ../libgimpbase/gimpbaseenums.c:778
 msgid "Crop with aspect"
@@ -835,28 +841,28 @@ msgstr "Sodrumas"
 msgid "Absolute colorimetric"
 msgstr "Absoliutinis kolorimetrinis"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:96
+#: ../libgimpconfig/gimpconfig-deserialize.c:97
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "žymės %s reikšmė nėra UTF-8 eilutė"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:427
+#: ../libgimpconfig/gimpconfig-deserialize.c:436
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "tikėtasi „yes“ arba „no“ loginei žymei %s, gauta „%s“"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:501
+#: ../libgimpconfig/gimpconfig-deserialize.c:510
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "nekorektiška „%s“ reikšmė %s žymei"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:516
+#: ../libgimpconfig/gimpconfig-deserialize.c:525
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "nekorektiška „%ld“ reikšmė %s žymei"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:585
+#: ../libgimpconfig/gimpconfig-deserialize.c:594
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "apdorojant žymę „%s“: %s"
@@ -872,17 +878,23 @@ msgstr "kritinė skaitymo klaida"
 msgid "Cannot expand ${%s}"
 msgstr "Negalima išplėsti ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:135
+#: ../libgimpconfig/gimpconfigwriter.c:78
+#: ../libgimpconfig/gimpconfigwriter.c:693
+#, c-format
+msgid "Error writing to '%s': %s"
+msgstr "Klaida rašant į „%s“: %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:136
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Nepavyko sukurti laikinos rinkmenos „%s“: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:148
+#: ../libgimpconfig/gimpconfigwriter.c:149
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nepavyko atverti „%s“ rašymui: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:667
+#: ../libgimpconfig/gimpconfigwriter.c:674
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -891,7 +903,7 @@ msgstr ""
 "Klaida rašant į laikinąją rinkmeną „%s“: %s\n"
 "Originali rinkmena buvo nepaliesta."
 
-#: ../libgimpconfig/gimpconfigwriter.c:675
+#: ../libgimpconfig/gimpconfigwriter.c:682
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -900,12 +912,7 @@ msgstr ""
 "Klaida rašant į laikinąją rinkmeną „%s“: %s\n"
 "Jokia rinkmena nebuvo sukurta."
 
-#: ../libgimpconfig/gimpconfigwriter.c:686
-#, c-format
-msgid "Error writing to '%s': %s"
-msgstr "Klaida rašant į „%s“: %s"
-
-#: ../libgimpconfig/gimpconfigwriter.c:704
+#: ../libgimpconfig/gimpconfigwriter.c:711
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Nepavyko sukurti „%s“: %s"
@@ -1025,15 +1032,15 @@ msgstr "Pasirinkite aplanką"
 msgid "Select File"
 msgstr "Pasirinkite rinkmeną"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:202
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Kilobytes"
 msgstr "Kilobaitai"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:203
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Megabytes"
 msgstr "Megabaitai"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libgimpwidgets/gimpmemsizeentry.c:206
 msgid "Gigabytes"
 msgstr "Gigabaitai"
 
@@ -1114,11 +1121,6 @@ msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Šis įvesties laukelis yra apribotas iki %d simbolio."
 msgstr[1] "Šis įvesties laukelis yra apribotas iki %d simbolių."
 msgstr[2] "Šis įvesties laukelis yra apribotas iki %d simbolių."
-
-#: ../libgimpwidgets/gimpresolutionentry.c:382
-#, c-format
-msgid "pixels/%s"
-msgstr "taškelių/%s"
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -1343,7 +1345,7 @@ msgstr "Kontrasto c_iklai:"
 
 #: ../modules/cdisplay_lcms.c:116
 msgid "Color management display filter using ICC color profiles"
-msgstr "Spalvų valdymo ekrano filtras naudojantis ICC spalvų profilius"
+msgstr "Spalvų valdymo ekrano filtras, naudojantis ICC spalvų profilius"
 
 #: ../modules/cdisplay_lcms.c:184
 msgid "Color Management"
@@ -1354,8 +1356,8 @@ msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
-"Šis filtras ima konfigūraciją iš Spalvų valdymo skyriaus esančio Nustatymų "
-"dialoge."
+"Šis filtras naudoja konfigūraciją nurodytą Nustatymuose, Spalvų valdymo "
+"skyriuje."
 
 #: ../modules/cdisplay_lcms.c:302
 msgid "Mode of operation:"
@@ -1399,31 +1401,31 @@ msgstr "_Juodo taško kompensavimas"
 
 #: ../modules/colorsel_cmyk.c:73
 msgid "CMYK color selector"
-msgstr "(ŽPGJ) spalvų pasirinkimas"
+msgstr "CMYK spalvų pasirinkimas"
 
 #: ../modules/colorsel_cmyk.c:130
 msgid "CMYK"
-msgstr "CMYK (ŽPGJ)"
+msgstr "CMYK"
 
 #. Cyan
 #: ../modules/colorsel_cmyk.c:148
 msgid "_C"
-msgstr "_Ž"
+msgstr "_C"
 
 #. Magenta
 #: ../modules/colorsel_cmyk.c:150
 msgid "_M"
-msgstr "_P"
+msgstr "_M"
 
 #. Yellow
 #: ../modules/colorsel_cmyk.c:152
 msgid "_Y"
-msgstr "_G"
+msgstr "_Y"
 
 #. Key (Black)
 #: ../modules/colorsel_cmyk.c:154
 msgid "_K"
-msgstr "_J"
+msgstr "_K"
 
 #: ../modules/colorsel_cmyk.c:158
 msgid "Cyan"
@@ -1568,14 +1570,12 @@ msgid "X Move Right"
 msgstr "X judesys dešinėn"
 
 #: ../modules/controller_linux_input.c:92
-#: ../modules/controller_dx_dinput.c:478
-msgid "Y Move Away"
-msgstr "Y judesys tolyn"
+msgid "Y Move Forward"
+msgstr "Y judesys pirmyn"
 
 #: ../modules/controller_linux_input.c:93
-#: ../modules/controller_dx_dinput.c:481
-msgid "Y Move Near"
-msgstr "Y judesys artyn"
+msgid "Y Move Back"
+msgstr "Y judesys atgal"
 
 #: ../modules/controller_linux_input.c:94
 #: ../modules/controller_dx_dinput.c:487
@@ -1588,14 +1588,12 @@ msgid "Z Move Down"
 msgstr "Z judesys žemyn"
 
 #: ../modules/controller_linux_input.c:97
-#: ../modules/controller_dx_dinput.c:496
-msgid "X Axis Tilt Away"
-msgstr "X ašies pasvirimas tolyn"
+msgid "X Axis Tilt Forward"
+msgstr "X ašies pasvirimas pirmyn"
 
 #: ../modules/controller_linux_input.c:98
-#: ../modules/controller_dx_dinput.c:499
-msgid "X Axis Tilt Near"
-msgstr "X ašies pasvirimas artyn"
+msgid "X Axis Tilt Back"
+msgstr "X ašies pasvirimas atgal"
 
 #: ../modules/controller_linux_input.c:99
 #: ../modules/controller_dx_dinput.c:505
@@ -1715,6 +1713,22 @@ msgstr "Mygtuko %d paspaudimas"
 #, c-format
 msgid "Button %d Release"
 msgstr "Mygtuko %d atleidimas"
+
+#: ../modules/controller_dx_dinput.c:478
+msgid "Y Move Away"
+msgstr "Y judesys tolyn"
+
+#: ../modules/controller_dx_dinput.c:481
+msgid "Y Move Near"
+msgstr "Y judesys artyn"
+
+#: ../modules/controller_dx_dinput.c:496
+msgid "X Axis Tilt Away"
+msgstr "X ašies pasvirimas tolyn"
+
+#: ../modules/controller_dx_dinput.c:499
+msgid "X Axis Tilt Near"
+msgstr "X ašies pasvirimas artyn"
 
 #: ../modules/controller_dx_dinput.c:528
 #, c-format
