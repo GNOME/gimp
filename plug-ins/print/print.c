@@ -250,7 +250,6 @@ print_show_error (const gchar *message,
 
       gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
                                                 message);
-      gimp_window_set_transient (GTK_WINDOW (dialog));
 
       gtk_dialog_run (GTK_DIALOG (dialog));
       gtk_widget_destroy (dialog);
