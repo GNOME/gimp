@@ -770,7 +770,7 @@ gimp_tool_set_active_modifier_state (GimpTool        *tool,
 
       if (! press && (tool->button_press_state & GDK_CONTROL_MASK))
         {
-          tool->button_press_state &= ~GDK_MOD1_MASK;
+          tool->button_press_state &= ~GDK_CONTROL_MASK;
         }
       else
         {

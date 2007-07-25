@@ -1,3 +1,10 @@
+2007-07-25  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimptool.c (gimp_tool_set_active_modifier_state):
+	don't have the tool release ALT when the user releases CONTROL.
+	Fixes another stuck modifier instance and other modifier
+	weirdness.
+
 2007-07-24  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped version to 2.3.20.
