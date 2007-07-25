@@ -45,6 +45,8 @@ static void        run   (const gchar       *name,
 static gboolean    print_image              (gint32             image_ID,
                                              gboolean           interactive);
 
+static void        print_show_error         (const gchar       *message,
+                                             gboolean           interactive);
 static void        print_operation_set_name (GtkPrintOperation *operation,
                                              gint               image_ID);
 
@@ -225,6 +227,19 @@ print_image (gint32    image_ID,
 
   if (error)
     {
+      print_show_error (error->message, interactive);
+      g_error_free (error);
+    }
+
+  return TRUE;
+}
+
+static void
+print_show_error (const gchar *message,
+                  gboolean     interactive)
+{
+  if (interactive)
+    {
       GtkWidget *dialog;
 
       dialog = gtk_message_dialog_new (NULL, 0,
@@ -234,16 +249,16 @@ print_image (gint32    image_ID,
                                          "while trying to print:"));
 
       gtk_message_dialog_format_secondary_text (GTK_MESSAGE_DIALOG (dialog),
-                                                error->message);
-      g_error_free (error);
-
+                                                message);
       gimp_window_set_transient (GTK_WINDOW (dialog));
 
       gtk_dialog_run (GTK_DIALOG (dialog));
       gtk_widget_destroy (dialog);
     }
-
-  return TRUE;
+  else
+    {
+      g_printerr ("Print: %s\n", message);
+    }
 }
 
 static void
