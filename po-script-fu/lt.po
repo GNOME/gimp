@@ -7,108 +7,102 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-06 23:28+0200\n"
-"PO-Revision-Date: 2007-03-06 23:31+0200\n"
+"POT-Creation-Date: 2007-07-26 00:06+0300\n"
+"PO-Revision-Date: 2007-07-26 00:12+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:143
-#: ../plug-ins/script-fu/script-fu-console.c:210
+#: ../plug-ins/script-fu/script-fu-console.c:144
+#: ../plug-ins/script-fu/script-fu-console.c:213
 msgid "Script-Fu Console"
 msgstr "Script-Fu konsolė"
 
-#: ../plug-ins/script-fu/script-fu-console.c:206
+#: ../plug-ins/script-fu/script-fu-console.c:209
 msgid "Welcome to TinyScheme"
 msgstr "Sveiki paleidę TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:212
+#: ../plug-ins/script-fu/script-fu-console.c:215
 msgid "Interactive Scheme Development"
 msgstr "Interaktyvus schemų kūrimas"
 
-#: ../plug-ins/script-fu/script-fu-console.c:248
+#: ../plug-ins/script-fu/script-fu-console.c:251
 msgid "_Browse..."
 msgstr "_Naršyti..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:310
+#: ../plug-ins/script-fu/script-fu-console.c:313
 msgid "Save Script-Fu Console Output"
 msgstr "Išsaugoti Script-Fu konsolės išvestį"
 
-#: ../plug-ins/script-fu/script-fu-console.c:357
+#: ../plug-ins/script-fu/script-fu-console.c:360
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nepavyko atverti „%s“ rašymui: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:386
+#: ../plug-ins/script-fu/script-fu-console.c:389
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu procedūrų naršyklė"
 
-#: ../plug-ins/script-fu/script-fu-console.c:711
+#: ../plug-ins/script-fu/script-fu-console.c:730
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Scrip-Fu įvertinimo režime galimas tik neinteraktyvus iškvietimas"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:179
+#: ../plug-ins/script-fu/script-fu-interface.c:191
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu negali apdoroti dviejų scenarijų tuo pačiu metu."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:181
+#: ../plug-ins/script-fu/script-fu-interface.c:193
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Jūs jau vykdote scenarijų „%s“."
 
-#. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:204
-#: ../plug-ins/script-fu/script-fu-interface.c:207
-msgid "/Script-Fu/"
-msgstr "/Script-Fu/"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:225
+#: ../plug-ins/script-fu/script-fu-interface.c:238
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:287
+#: ../plug-ins/script-fu/script-fu-interface.c:300
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:335
+#: ../plug-ins/script-fu/script-fu-interface.c:348
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu spalvos pasirinkimas"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:447
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu rinkmenų pasirinkimas"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:450
+#: ../plug-ins/script-fu/script-fu-interface.c:463
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu aplankų pasirinkimas"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu šriftų pasirinkimas"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:470
+#: ../plug-ins/script-fu/script-fu-interface.c:483
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu paletės pasirinkimas"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:479
+#: ../plug-ins/script-fu/script-fu-interface.c:492
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu raštų pasirinkimas"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:488
+#: ../plug-ins/script-fu/script-fu-interface.c:501
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu gradientų pasirinkimas"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:497
+#: ../plug-ins/script-fu/script-fu-interface.c:510
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu teptukų pasirinkimas"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:661
+#: ../plug-ins/script-fu/script-fu-scripts.c:664
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -145,11 +139,6 @@ msgstr "Interaktyvi konsolė Script-Fu kūrimui"
 msgid "Script-Fu _Console"
 msgstr "Script-Fu _konsolė"
 
-#: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:365
-msgid "<Toolbox>/Xtns/Languages/Script-Fu"
-msgstr "<Toolbox>/Xtns/Languages/Script-Fu"
-
 #: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
 msgstr "Serveris nuotoliniam Script-Fu valdymui"
@@ -158,115 +147,115 @@ msgstr "Serveris nuotoliniam Script-Fu valdymui"
 msgid "_Start Server..."
 msgstr "_Paleisti serverį..."
 
-#: ../plug-ins/script-fu/script-fu.c:300
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_GIMP Online"
 msgstr "_GIMP internete"
 
-#: ../plug-ins/script-fu/script-fu.c:301
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
 msgstr "_Naudotojo žinynas"
 
-#: ../plug-ins/script-fu/script-fu.c:304
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Buttons"
 msgstr "_Mygtukai"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:309
 msgid "_Logos"
 msgstr "_Logotipai"
 
-#: ../plug-ins/script-fu/script-fu.c:310
+#: ../plug-ins/script-fu/script-fu.c:311
 msgid "_Misc"
 msgstr "Į_vairūs"
 
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Patterns"
 msgstr "_Raštai"
 
-#: ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "_Testas"
 
-#: ../plug-ins/script-fu/script-fu.c:316
-msgid "_Utils"
+#: ../plug-ins/script-fu/script-fu.c:317
+msgid "_Utilities"
 msgstr "_Reikmenys"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Web Page Themes"
 msgstr "_Žiniatinklio svetainių temos"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Alien Glow"
 msgstr "_Ateivių švytėjimas"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Beveled Pattern"
 msgstr "_Nuožulnaus krašto raštas"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: ../plug-ins/script-fu/script-fu.c:325
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:327
+#: ../plug-ins/script-fu/script-fu.c:328
 msgid "Alpha to _Logo"
 msgstr "Alfa į _logotipą"
 
-#: ../plug-ins/script-fu/script-fu.c:329
+#: ../plug-ins/script-fu/script-fu.c:330
 msgid "An_imation"
 msgstr "An_imacija"
 
-#: ../plug-ins/script-fu/script-fu.c:331
+#: ../plug-ins/script-fu/script-fu.c:332
 msgid "_Animators"
 msgstr "_Animatoriai"
 
-#: ../plug-ins/script-fu/script-fu.c:333
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Artistic"
 msgstr "_Meniškas"
 
-#: ../plug-ins/script-fu/script-fu.c:335
+#: ../plug-ins/script-fu/script-fu.c:336
 msgid "_Blur"
 msgstr "_Išliejimas"
 
-#: ../plug-ins/script-fu/script-fu.c:337
+#: ../plug-ins/script-fu/script-fu.c:338
 msgid "_Decor"
 msgstr "_Dekoravimas"
 
-#: ../plug-ins/script-fu/script-fu.c:339
+#: ../plug-ins/script-fu/script-fu.c:340
 msgid "_Effects"
 msgstr "_Efektai"
 
-#: ../plug-ins/script-fu/script-fu.c:341
+#: ../plug-ins/script-fu/script-fu.c:342
 msgid "En_hance"
 msgstr "Pa_gerinti"
 
-#: ../plug-ins/script-fu/script-fu.c:343
+#: ../plug-ins/script-fu/script-fu.c:344
 msgid "_Light and Shadow"
 msgstr "_Šviesa ir šešėlis"
 
-#: ../plug-ins/script-fu/script-fu.c:345
+#: ../plug-ins/script-fu/script-fu.c:346
 msgid "S_hadow"
 msgstr "Š_ešėlis"
 
-#: ../plug-ins/script-fu/script-fu.c:347
+#: ../plug-ins/script-fu/script-fu.c:348
 msgid "_Render"
 msgstr "_Atvaizduoti"
 
-#: ../plug-ins/script-fu/script-fu.c:349
+#: ../plug-ins/script-fu/script-fu.c:350
 msgid "_Alchemy"
 msgstr "_Alchemija"
 
-#: ../plug-ins/script-fu/script-fu.c:352
+#: ../plug-ins/script-fu/script-fu.c:353
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Iš naujo perskaityti visus prieinamus Script-Fu scenarijus"
 
-#: ../plug-ins/script-fu/script-fu.c:357
+#: ../plug-ins/script-fu/script-fu.c:358
 msgid "_Refresh Scripts"
 msgstr "_Atnaujinti scenarijus"
 
-#: ../plug-ins/script-fu/script-fu.c:380
+#: ../plug-ins/script-fu/script-fu.c:381
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -853,6 +842,8 @@ msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
 msgstr ""
+"Sukurti tarpinius sluoksnius sujungiančius du ar daugiau sluoksnių virš fono "
+"kaip animaciją"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Intermediate frames"
@@ -886,7 +877,7 @@ msgstr "Perėjimo režimas"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
 msgid "Create a logo with blended backgrounds, highlights, and shadows"
-msgstr ""
+msgstr "Sukurti logotipą su pereinančiais fonais, paryškinimais ir šešėliais"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "Custom Gradient"
@@ -1261,7 +1252,8 @@ msgstr "Pridėti tikroviškai atrodančias kavos dėmes paveikslėliui"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid "Darken only\\n(Better, but only for images with a lot of white)"
-msgstr "Tik patamsinti\\n(Geriau, bet tik paveikslėliams, kuriuose daug baltos)"
+msgstr ""
+"Tik patamsinti\\n(Geriau, bet tik paveikslėliams, kuriuose daug baltos)"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
@@ -1317,11 +1309,6 @@ msgstr "Sukurti metalinį logotipą su atspindžiais ir perspektyvų šešėliai
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 msgid "Effect size (pixels)"
 msgstr "Efekto dydis (taškeliais)"
-
-#: ../plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "This procedure is deprecated! use \\'gimp-edit-copy-visible\\' instead."
-msgstr ""
-"Šis procedūra nebenaudojama! Vietoje jos naudokite „gimp-edit-copy-visible“."
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "Background image"
@@ -2143,6 +2130,11 @@ msgstr "Naujas _teptukas..."
 msgid "Paste the clipboard contents into a new brush"
 msgstr "Įkelti iškarpinės turinį į naują teptuką"
 
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
+msgid "There is no image data in the clipboard to paste."
+msgstr "Iškarpinėje nėra įdėtinų paveikslėlio duomenų."
+
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
 msgid "New _Pattern..."
 msgstr "Naujas _raštas..."
@@ -2268,6 +2260,14 @@ msgstr "Atvaizduoti že_mėlapį..."
 msgid "Tile"
 msgstr "Plytelė"
 
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:1
+msgid "Reverse Layer Order"
+msgstr "Atvirkščia sluoksnių tvarka"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:2
+msgid "Reverse the order of layers in the image"
+msgstr "Apsukti paveikslėlio sluoksnių tvarką"
+
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:1
 msgid "Black"
 msgstr "Juoda"
@@ -2325,6 +2325,18 @@ msgstr "Suapvalinti paveikslėlio kampus ir pageidaujant pridėti šešėlį ir 
 msgid "_Round Corners..."
 msgstr "_Apvalūs kampai..."
 
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr "Pakeisti paveikslėlio spalvų gamą į nurodytos paletės spalvas."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
+msgid "Palette"
+msgstr "Paletė"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
+msgid "Se_t Colormap..."
+msgstr "Nus_tatyti spalvų gamą..."
+
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Convert a selection to a brush"
 msgstr "Konvertuoti pasirinkimą į teptuką"
@@ -2363,14 +2375,6 @@ msgid "Round the corners of the current selection"
 msgstr "Suapvalinti esamo pasirinkimo kampus"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
-msgid ""
-"Round the corners of the current selection (deprecated, use Rounded "
-"Rectangle)"
-msgstr ""
-"Suapvalinti esamo pasirinkimo kampus (nebenaudojama, naudokite Apvalus "
-"stačiakampis)"
-
-#: ../plug-ins/script-fu/scripts/selection-round.scm.h:6
 msgid "Rounded R_ectangle..."
 msgstr "Apvalus _stačiakampis..."
 
@@ -2533,39 +2537,43 @@ msgid "Polygon: 9 sides"
 msgstr "Daugiakampis: 9 kraštinės"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+msgid "Rendering Spyro"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
 msgstr "Forma"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:26
 msgid "Solid Color"
 msgstr "Vientisa spalva"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 msgid "Spyrograph"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Square"
 msgstr "Kvadratas"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:29
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
 msgid "Start angle"
 msgstr "Pradinis kampas"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:30
 msgid "Tool"
 msgstr "Įrankis"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:31
 msgid "Triangle"
 msgstr "Trikampis"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:31
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:32
 msgid "Type"
 msgstr "Tipas"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:32
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:33
 msgid "_Spyrogimp..."
 msgstr "_Spyrogimp..."
 
