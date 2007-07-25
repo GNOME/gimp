@@ -148,6 +148,34 @@ CODE
     );
 }
 
+sub progress_end {
+    $blurb = 'Ends the progress bar for the current plug-in.';
+
+    $help = <<'HELP';
+Ends the progress display for the current plug-in. Most plug-ins don't need to call this, they just exit when the work is done. It is only valid to call this
+procedure from a plug-in.
+HELP
+
+    &neo_pdb_misc('2007', '2.4');
+
+    %invoke = (
+	code => <<'CODE'
+{
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    {
+      GimpPlugInProcFrame *proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+
+      gimp_plug_in_progress_end (plug_in, proc_frame);
+    }
+  else
+    success = FALSE;
+}
+CODE
+    );
+}
+
 sub progress_get_window_handle {
     $blurb = 'Returns the native window ID of the toplevel window this plug-in\'s progress is displayed in.';
 
@@ -275,7 +303,7 @@ CODE
               "plug-in/gimppluginmanager.h");
 
 @procs = qw(progress_init progress_update progress_pulse progress_set_text
-            progress_get_window_handle
+            progress_end progress_get_window_handle
             progress_install progress_uninstall progress_cancel);
 
 %exports = (app => [@procs], lib => [@procs]);

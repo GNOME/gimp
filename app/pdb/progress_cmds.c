@@ -144,6 +144,28 @@ progress_set_text_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
+progress_end_invoker (GimpProcedure     *procedure,
+                      Gimp              *gimp,
+                      GimpContext       *context,
+                      GimpProgress      *progress,
+                      const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpPlugIn *plug_in = gimp->plug_in_manager->current_plug_in;
+
+  if (plug_in && plug_in->open)
+    {
+      GimpPlugInProcFrame *proc_frame = gimp_plug_in_get_proc_frame (plug_in);
+
+      gimp_plug_in_progress_end (plug_in, proc_frame);
+    }
+  else
+    success = FALSE;
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
 progress_get_window_handle_invoker (GimpProcedure     *procedure,
                                     Gimp              *gimp,
                                     GimpContext       *context,
@@ -339,6 +361,22 @@ register_progress_procs (GimpPDB *pdb)
                                                        FALSE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-progress-end
+   */
+  procedure = gimp_procedure_new (progress_end_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-progress-end");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-progress-end",
+                                     "Ends the progress bar for the current plug-in.",
+                                     "Ends the progress display for the current plug-in. Most plug-ins don't need to call this, they just exit when the work is done. It is only valid to call this procedure from a plug-in.",
+                                     "Sven Neumann <sven@gimp.org>",
+                                     "Sven Neumann",
+                                     "2007",
+                                     NULL);
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

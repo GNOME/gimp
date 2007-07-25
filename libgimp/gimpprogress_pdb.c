@@ -155,6 +155,37 @@ gimp_progress_set_text (const gchar *message)
 }
 
 /**
+ * gimp_progress_end:
+ *
+ * Ends the progress bar for the current plug-in.
+ *
+ * Ends the progress display for the current plug-in. Most plug-ins
+ * don't need to call this, they just exit when the work is done. It is
+ * only valid to call this procedure from a plug-in.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_progress_end (void)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-progress-end",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_progress_get_window_handle:
  *
  * Returns the native window ID of the toplevel window this plug-in's

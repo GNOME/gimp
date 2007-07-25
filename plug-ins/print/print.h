@@ -19,6 +19,7 @@
 typedef struct
 {
   gint                num_pages;
+  gint32              image_id;
   gint32              drawable_id;
   GimpUnit            unit;
   gboolean            show_info_header;

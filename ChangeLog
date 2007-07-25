@@ -1,5 +1,19 @@
 2007-07-25  Sven Neumann  <sven@gimp.org>
 
+	* tools/pdbgen/pdb/progress.pdb: added new procedure gimp-progress-end.
+
+	* app/pdb/progress_cmds.c
+	* app/pdb/internal_procs.c
+	* libgimp/gimpprogress_pdb.[ch]: regenerated.
+
+	* plug-ins/print/print.[ch]
+	* plug-ins/print/print-settings.[ch]: end the progress and save
+	the settings from the "end-print" handler. The plug-in then
+	appears finished but keeps running in the background until it has
+	finished the print operation.
+
+2007-07-25  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/print/print.c: delete the export image from the
 	"end-print" handler.
 

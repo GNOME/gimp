@@ -16,7 +16,5 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-gboolean load_print_settings (PrintData *data,
-                              gint32     image_ID);
-void     save_print_settings (PrintData *data,
-                              gint32     image_ID);
+gboolean load_print_settings (PrintData *data);
+void     save_print_settings (PrintData *data);
