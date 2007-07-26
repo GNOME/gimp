@@ -414,6 +414,8 @@ gimp_brush_core_interpolate (GimpPaintCore    *paint_core,
   gdouble        xd, yd;
   gdouble        mag;
 
+  g_return_if_fail (GIMP_IS_BRUSH (core->brush));
+
   gimp_avoid_exact_integer (&paint_core->last_coords.x);
   gimp_avoid_exact_integer (&paint_core->last_coords.y);
   gimp_avoid_exact_integer (&paint_core->cur_coords.x);

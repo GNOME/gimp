@@ -1,5 +1,10 @@
 2007-07-26  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/gimpbrushcore.c (gimp_brush_core_interpolate): added a
+	sanity check.
+
+2007-07-26  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/Makefile.am: moved contactsheet.scm
 	to test_SCRIPTS. We should look at it again after the 2.4 release.
 
