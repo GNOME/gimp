@@ -1,5 +1,10 @@
 2007-07-26  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/xbm.c: change the default mask file suffix from
+	"_mask" to "-mask".
+
+2007-07-26  Michael Natterer  <mitch@gimp.org>
+
 	* cursors/cursor-move.png
 	* cursors/gimp-tool-cursors.xcf
 	* cursors/xbm/cursor-move.xbm

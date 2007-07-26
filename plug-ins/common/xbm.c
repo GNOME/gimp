@@ -87,7 +87,7 @@ static XBMSaveVals xsvals =
   0,			/* y_hot */
   DEFAULT_PREFIX,	/* prefix */
   FALSE,                /* write_mask */
-  "_mask"
+  "-mask"
 };
 
 
