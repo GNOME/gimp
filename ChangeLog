@@ -1,3 +1,9 @@
+2007-07-27  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/jpeg/jpeg.[ch]
+	* plug-ins/jpeg/jpeg-save.c (save_dialog): Make the "Save XMP
+	data" checkbox insensitive if there is no XMP packet to save.
+
 2007-07-26  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/jpeg/Makefile.am

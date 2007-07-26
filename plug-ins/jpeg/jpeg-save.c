@@ -575,6 +575,7 @@ save_image (const gchar *filename,
           jpeg_write_marker (&cinfo, JPEG_APP0 + 1, app_block,
                              sizeof (JPEG_APP_HEADER_XMP) + xmp_data_size);
           g_free (app_block);
+          gimp_parasite_free (parasite);
         }
     }
 
@@ -1016,9 +1017,10 @@ save_dialog (void)
                     G_CALLBACK (gimp_toggle_button_update),
                     &jsvals.save_xmp);
 
-  /* FIXME: check if XMP packet exists, disable toggle if not */
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                jsvals.save_xmp);
+                                jsvals.save_xmp && has_metadata);
+
+  gtk_widget_set_sensitive (toggle, has_metadata);
 
   /* Subsampling */
   label = gtk_label_new (_("Subsampling:"));

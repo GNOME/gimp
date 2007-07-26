@@ -58,6 +58,7 @@ gint32        display_ID;
 JpegSaveVals  jsvals;
 gint32        orig_image_ID_global;
 gint32        drawable_ID_global;
+gboolean      has_metadata;
 
 #ifdef HAVE_EXIF
 ExifData     *exif_data = NULL;
@@ -205,6 +206,7 @@ run (const gchar      *name,
 
   image_ID_global = -1;
   layer_ID_global = -1;
+  has_metadata = FALSE;
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
@@ -319,6 +321,13 @@ run (const gchar      *name,
         {
           image_comment = g_strndup (gimp_parasite_data (parasite),
                                      gimp_parasite_data_size (parasite));
+          gimp_parasite_free (parasite);
+        }
+
+      parasite = gimp_image_parasite_find (orig_image_ID, "gimp-metadata");
+      if (parasite)
+        {
+          has_metadata = TRUE;
           gimp_parasite_free (parasite);
         }
 

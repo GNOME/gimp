@@ -48,6 +48,7 @@ extern gboolean         undo_touched;
 extern gboolean         load_interactive;
 extern gint32           display_ID;
 extern gchar           *image_comment;
+extern gboolean         has_metadata;
 
 gint32    load_image                    (const gchar   *filename,
                                          GimpRunMode    runmode,
