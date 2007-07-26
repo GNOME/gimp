@@ -542,6 +542,7 @@ EXPORTS
 	gimp_procedural_db_set_data
 	gimp_procedural_db_temp_name
 	gimp_progress_cancel
+	gimp_progress_end
 	gimp_progress_get_window_handle
 	gimp_progress_init
 	gimp_progress_init_printf
