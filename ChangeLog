@@ -1,5 +1,11 @@
 2007-07-26  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-dnd.c: moved common code into new
+	utility function gimp_display_shell_dnd_flush(). Also move focus
+	the image window from this function.
+
+2007-07-26  Sven Neumann  <sven@gimp.org>
+
 	* app/paint/gimpbrushcore.c (gimp_brush_core_interpolate): added a
 	sanity check.
 

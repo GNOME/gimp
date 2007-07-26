@@ -164,6 +164,23 @@ gimp_display_shell_dnd_init (GimpDisplayShell *shell)
 
 /*  private functions  */
 
+
+static void
+gimp_display_shell_dnd_flush (GimpDisplayShell *shell,
+                              GimpImage        *image)
+{
+  if (GTK_WIDGET_DRAWABLE (shell))
+    {
+      gdk_window_focus (GTK_WIDGET (shell)->window,
+                        gtk_get_current_event_time ());
+    }
+
+  gimp_image_flush (image);
+
+  gimp_context_set_display (gimp_get_user_context (image->gimp),
+                            shell->display);
+}
+
 static void
 gimp_display_shell_drop_drawable (GtkWidget    *widget,
                                   gint          x,
@@ -214,10 +231,7 @@ gimp_display_shell_drop_drawable (GtkWidget    *widget,
 
       gimp_image_undo_group_end (image);
 
-      gimp_image_flush (image);
-
-      gimp_context_set_display (gimp_get_user_context (image->gimp),
-                                shell->display);
+      gimp_display_shell_dnd_flush (shell, image);
     }
 }
 
@@ -251,10 +265,7 @@ gimp_display_shell_drop_vectors (GtkWidget    *widget,
 
       gimp_image_undo_group_end (image);
 
-      gimp_image_flush (image);
-
-      gimp_context_set_display (gimp_get_user_context (image->gimp),
-                                shell->display);
+      gimp_display_shell_dnd_flush (shell, image);
     }
 }
 
@@ -285,18 +296,15 @@ gimp_display_shell_drop_svg (GtkWidget     *widget,
     }
   else
     {
-      gimp_image_flush (image);
-
-      gimp_context_set_display (gimp_get_user_context (image->gimp),
-                                shell->display);
+      gimp_display_shell_dnd_flush (shell, image);
     }
 }
 
 static void
-gimp_display_shell_bucket_fill (GimpDisplayShell   *shell,
-                                GimpBucketFillMode  fill_mode,
-                                const GimpRGB      *color,
-                                GimpPattern        *pattern)
+gimp_display_shell_dnd_bucket_fill (GimpDisplayShell   *shell,
+                                    GimpBucketFillMode  fill_mode,
+                                    const GimpRGB      *color,
+                                    GimpPattern        *pattern)
 {
   GimpImage    *image = shell->display->image;
   GimpDrawable *drawable;
@@ -331,10 +339,7 @@ gimp_display_shell_bucket_fill (GimpDisplayShell   *shell,
                                       color, pattern);
     }
 
-  gimp_image_flush (image);
-
-  gimp_context_set_display (gimp_get_user_context (image->gimp),
-                            shell->display);
+  gimp_display_shell_dnd_flush (shell, image);
 }
 
 static void
@@ -347,9 +352,9 @@ gimp_display_shell_drop_pattern (GtkWidget    *widget,
   D (g_print ("drop pattern on canvas\n"));
 
   if (GIMP_IS_PATTERN (viewable))
-    gimp_display_shell_bucket_fill (GIMP_DISPLAY_SHELL (data),
-                                    GIMP_PATTERN_BUCKET_FILL,
-                                    NULL, GIMP_PATTERN (viewable));
+    gimp_display_shell_dnd_bucket_fill (GIMP_DISPLAY_SHELL (data),
+                                        GIMP_PATTERN_BUCKET_FILL,
+                                        NULL, GIMP_PATTERN (viewable));
 }
 
 static void
@@ -361,9 +366,9 @@ gimp_display_shell_drop_color (GtkWidget     *widget,
 {
   D (g_print ("drop color on canvas\n"));
 
-  gimp_display_shell_bucket_fill (GIMP_DISPLAY_SHELL (data),
-                                  GIMP_FG_BUCKET_FILL,
-                                  color, NULL);
+  gimp_display_shell_dnd_bucket_fill (GIMP_DISPLAY_SHELL (data),
+                                      GIMP_FG_BUCKET_FILL,
+                                      color, NULL);
 }
 
 static void
@@ -393,10 +398,7 @@ gimp_display_shell_drop_buffer (GtkWidget    *widget,
                    buffer, FALSE,
                    x, y, width, height);
 
-  gimp_image_flush (image);
-
-  gimp_context_set_display (gimp_get_user_context (image->gimp),
-                            shell->display);
+  gimp_display_shell_dnd_flush (shell, image);
 }
 
 static void
@@ -406,14 +408,12 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
                                   GList     *uri_list,
                                   gpointer   data)
 {
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (data);
-  GimpImage        *image = shell->display->image;
-  GimpContext      *context;
+  GimpDisplayShell *shell   = GIMP_DISPLAY_SHELL (data);
+  GimpImage        *image   = shell->display->image;
+  GimpContext      *context = gimp_get_user_context (image->gimp);
   GList            *list;
 
   D (g_print ("drop uri list on canvas\n"));
-
-  context = gimp_get_user_context (image->gimp);
 
   for (list = uri_list; list; list = g_list_next (list))
     {
@@ -456,9 +456,7 @@ gimp_display_shell_drop_uri_list (GtkWidget *widget,
         }
     }
 
-  gimp_image_flush (image);
-
-  gimp_context_set_display (context, shell->display);
+  gimp_display_shell_dnd_flush (shell, image);
 }
 
 static void
@@ -514,10 +512,7 @@ gimp_display_shell_drop_component (GtkWidget       *widget,
 
       gimp_image_undo_group_end (dest_image);
 
-      gimp_image_flush (dest_image);
-
-      gimp_context_set_display (gimp_get_user_context (dest_image->gimp),
-                                shell->display);
+      gimp_display_shell_dnd_flush (shell, dest_image);
     }
 }
 
@@ -567,9 +562,6 @@ gimp_display_shell_drop_pixbuf (GtkWidget *widget,
 
       gimp_image_undo_group_end (image);
 
-      gimp_image_flush (image);
-
-      gimp_context_set_display (gimp_get_user_context (image->gimp),
-                                shell->display);
+      gimp_display_shell_dnd_flush (shell, image);
     }
 }
