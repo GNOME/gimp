@@ -40,7 +40,6 @@ scripts = \
 	clothify.scm			\
 	coffee.scm			\
 	comic-logo.scm			\
-	contactsheet.scm		\
 	coolmetal-logo.scm		\
 	copy-visible.scm		\
 	crystal-logo.scm		\
@@ -111,6 +110,7 @@ scripts = \
 	xach-effect.scm
 
 test_scripts = \
+	contactsheet.scm		\
 	test-sphere.scm			\
 	ts-helloworld.scm
 

@@ -1,3 +1,7 @@
+2007-07-26  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.skip: added contactsheet.scm.
+
 2007-07-26  Žygimantas Beručka  <zygis@gnome.org>
 
 	* lt.po: Updated Lithuanian translation.
