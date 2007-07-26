@@ -40,6 +40,7 @@
 
 #include "jpeg.h"
 #include "jpeg-icc.h"
+#include "jpeg-settings.h"
 #include "jpeg-load.h"
 
 
@@ -256,6 +257,9 @@ load_image (const gchar *filename,
 #ifdef HAVE_EXIF
       ExifData *exif_data = NULL;
 #endif
+
+      /* Step 5.0: save the original JPEG settings in a parasite */
+      jpeg_detect_original_settings (&cinfo, image_ID);
 
       /* Step 5.1: check for comments, or EXIF metadata in APP1 markers */
       for (marker = cinfo.marker_list; marker; marker = marker->next)

@@ -35,6 +35,7 @@
 #include "libgimp/stdplugins-intl.h"
 
 #include "jpeg.h"
+#include "jpeg-settings.h"
 #include "jpeg-load.h"
 #include "jpeg-save.h"
 #include "gimpexif.h"
@@ -127,7 +128,7 @@ query (void)
                           "loads files in the JPEG file format",
                           "Spencer Kimball, Peter Mattis & others",
                           "Spencer Kimball & Peter Mattis",
-                          "1995-1999",
+                          "1995-2007",
                           N_("JPEG image"),
                           NULL,
                           GIMP_PLUGIN,
@@ -165,7 +166,7 @@ query (void)
                           "saves files in the lossy, widely supported JPEG format",
                           "Spencer Kimball, Peter Mattis & others",
                           "Spencer Kimball & Peter Mattis",
-                          "1995-1999",
+                          "1995-2007",
                           N_("JPEG image"),
                           "RGB*, GRAY*",
                           GIMP_PLUGIN,
@@ -366,7 +367,7 @@ run (const gchar      *name,
                 status = GIMP_PDB_CALLING_ERROR;
               else if (jsvals.smoothing < 0.0 || jsvals.smoothing > 1.0)
                 status = GIMP_PDB_CALLING_ERROR;
-              else if (jsvals.subsmp < 0 || jsvals.subsmp > 2)
+              else if (jsvals.subsmp < 0 || jsvals.subsmp > 3)
                 status = GIMP_PDB_CALLING_ERROR;
               else if (jsvals.dct < 0 || jsvals.dct > 2)
                 status = GIMP_PDB_CALLING_ERROR;
@@ -402,12 +403,31 @@ run (const gchar      *name,
             }
           else
             {
+              gint orig_quality;
+              gint orig_subsmp;
+              gint orig_quant_tables;
+
               /* We are called with GIMP_RUN_WITH_LAST_VALS but this image
                * doesn't have a "jpeg-save-options" parasite. It's better
                * to prompt the user with a dialog now so that she has control
                * over the JPEG encoding parameters.
                */
               run_mode = GIMP_RUN_INTERACTIVE;
+              /* If this image was loaded from a JPEG file (and has not been
+               * saved yet), try to use some of the settings from the
+               * original file if they are better than the default values.
+               */
+              if (jpeg_restore_original_settings (image_ID,
+                                                  &orig_quality,
+                                                  &orig_subsmp,
+                                                  &orig_quant_tables))
+                {
+                  if (orig_quality > jsvals.quality)
+                    jsvals.quality = orig_quality;
+                  if (orig_subsmp == 2
+                      || (orig_subsmp > 0 && jsvals.subsmp == 0))
+                    jsvals.subsmp = orig_subsmp;
+                }
             }
           break;
         }

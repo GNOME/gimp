@@ -1,3 +1,29 @@
+2007-07-26  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/jpeg/Makefile.am
+	* plug-ins/jpeg/jpeg-quality.[ch]
+	* plug-ins/jpeg/jpeg-settings.[ch]: new files including functions
+	for detecting the quality setting of existing JPEG files by
+	analyzing their quantization tables, functions for storing this
+	quality and other JPEG settings in a parasite, and functions for
+	restoring these values.
+
+	* plug-ins/jpeg/jpeg-load.c (load_image): save the original JPEG
+	settings in a parasite after reading the JPEG header.
+
+	* plug-ins/jpeg/jpeg.c (run): restore the original JPEG settings
+	if they had been attached to a parasite and if they are better
+	than the defaults.
+
+	* plug-ins/jpeg/jpeg-save.c (save_image): added new type of
+	subsampling 1x2,1x1,1x1, which is useful for images with height >
+	width such as rotated images from some cameras.
+	(save_dialog): added hints about how the subsampling types can be
+	used, marked these strings as translatable.
+
+	* plug-ins/jpeg/jpegqual.c: new utility to report the quality
+	settings and sampling factors of existing JPEG files.
+
 2007-07-26  Michael Schumacher  <schumaml@cvs.gnome.org>
 
 	* libgimp/gimp.def: added missing gimp_progress_end

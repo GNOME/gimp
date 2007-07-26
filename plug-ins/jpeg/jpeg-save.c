@@ -405,6 +405,15 @@ save_image (const gchar *filename,
       cinfo.comp_info[2].h_samp_factor = 1;
       cinfo.comp_info[2].v_samp_factor = 1;
       break;
+
+    case 3:
+      cinfo.comp_info[0].h_samp_factor = 1;
+      cinfo.comp_info[0].v_samp_factor = 2;
+      cinfo.comp_info[1].h_samp_factor = 1;
+      cinfo.comp_info[1].v_samp_factor = 1;
+      cinfo.comp_info[2].h_samp_factor = 1;
+      cinfo.comp_info[2].v_samp_factor = 1;
+      break;
     }
 
   cinfo.restart_interval = 0;
@@ -1018,10 +1027,12 @@ save_dialog (void)
                     GTK_FILL, GTK_FILL, 0, 0);
   gtk_widget_show (label);
 
-  pg.subsmp = combo = gimp_int_combo_box_new ("2x2,1x1,1x1",         0,
-                                              "2x1,1x1,1x1 (4:2:2)", 1,
-                                              "1x1,1x1,1x1",         2,
-                                              NULL);
+  pg.subsmp =
+    combo = gimp_int_combo_box_new (_("1x1,1x1,1x1 (best quality)"),  2,
+                                    _("2x1,1x1,1x1 (4:2:2)"),         1,
+                                    _("1x2,1x1,1x1"),                 3,
+                                    _("2x2,1x1,1x1 (smallest file)"), 0,
+                                    NULL);
   gtk_table_attach (GTK_TABLE (table), combo, 3, 6, 2, 3,
                     GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (combo);

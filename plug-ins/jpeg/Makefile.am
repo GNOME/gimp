@@ -36,6 +36,10 @@ jpeg_SOURCES = \
 	jpeg-load.h	\
 	jpeg-save.c	\
 	jpeg-save.h	\
+	jpeg-quality.c  \
+	jpeg-quality.h  \
+	jpeg-settings.c \
+	jpeg-settings.h \
 	gimpexif.c	\
 	gimpexif.h
 
@@ -50,5 +54,19 @@ jpeg_LDADD = \
 	$(LIBJPEG)		\
 	$(GTK_LIBS)		\
 	$(EXIF_LIBS)		\
+	$(RT_LIBS)		\
+	$(INTLLIBS)
+
+
+noinst_PROGRAMS = jpegqual
+
+jpegqual_SOURCES = \
+	jpeg-quality.c  \
+	jpeg-quality.h  \
+	jpegqual.c	
+
+jpegqual_LDADD = \
+	$(LIBJPEG)		\
+	$(GTK_LIBS)		\
 	$(RT_LIBS)		\
 	$(INTLLIBS)
