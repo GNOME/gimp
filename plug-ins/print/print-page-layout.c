@@ -177,8 +177,7 @@ print_page_layout_gui (PrintData *data)
 
   button = gtk_check_button_new_with_mnemonic (_("Ignore Page _Margins"));
 
-  data->use_full_page = FALSE;
-  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), FALSE);
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (button), data->use_full_page);
   gtk_box_pack_start (GTK_BOX (main_vbox), button, FALSE, FALSE, 0);
   g_signal_connect (button, "toggled",
                     G_CALLBACK (print_size_info_use_full_page_toggled),
@@ -188,6 +187,8 @@ print_page_layout_gui (PrintData *data)
   setup = gtk_print_operation_get_default_page_setup (data->operation);
 
   info.preview = gimp_print_preview_new (setup, data->drawable_id);
+  gimp_print_preview_set_use_full_page (GIMP_PRINT_PREVIEW(info.preview),
+                                        data->use_full_page);
   gtk_box_pack_start (GTK_BOX (main_hbox), info.preview, TRUE, TRUE, 0);
   gtk_widget_show (info.preview);
 
