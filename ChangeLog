@@ -1,3 +1,12 @@
+2007-07-26  Michael Natterer  <mitch@gimp.org>
+
+	* cursors/cursor-move.png
+	* cursors/gimp-tool-cursors.xcf
+	* cursors/xbm/cursor-move.xbm
+	* cursors/xbm/cursor-move-mask.xbm: moved the move cursor two
+	pixels right and down so it has its hotspot where the small
+	crosshair has it. Reduces cursor jumping in the rectangle tool.
+
 2007-07-26  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-dnd.c: moved common code into new
