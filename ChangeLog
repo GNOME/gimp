@@ -1,3 +1,7 @@
+2007-07-26  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/print.c: call g_thread_init(), just in case...
+
 2007-07-26  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/xbm.c: change the default mask file suffix from

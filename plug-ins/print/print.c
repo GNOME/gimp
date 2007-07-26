@@ -131,6 +131,8 @@ run (const gchar      *name,
 
   if (strcmp (name, PRINT_PROC_NAME) == 0)
     {
+      g_thread_init (NULL);
+
       gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
       if (! print_image (image_ID, run_mode == GIMP_RUN_INTERACTIVE))
@@ -238,6 +240,8 @@ static void
 print_show_error (const gchar *message,
                   gboolean     interactive)
 {
+  g_printerr ("Print: %s\n", message);
+
   if (interactive)
     {
       GtkWidget *dialog;
@@ -253,10 +257,6 @@ print_show_error (const gchar *message,
 
       gtk_dialog_run (GTK_DIALOG (dialog));
       gtk_widget_destroy (dialog);
-    }
-  else
-    {
-      g_printerr ("Print: %s\n", message);
     }
 }
 
