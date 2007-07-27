@@ -24,7 +24,7 @@ gimp_remote_2_3_LDADD = \
 
 kernelgen_SOURCES = kernelgen.c
 
-test_clipboard_SURCES = test-clipboard.c
+test_clipboard_SOURCES = test-clipboard.c
 
 test_clipboard_LDADD = \
 	$(GTK_LIBS)

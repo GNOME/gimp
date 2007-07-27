@@ -1,7 +1,8 @@
 2007-07-27  Raphaël Quinet  <raphael@gimp.org>
 
+	* tools/Makefile.am (test_clipboard_SOURCES)
 	* libgimpthumb/Makefile.am (gimp_thumbnail_list_SOURCES): fixed
-	typo: SURCES -> SOURCES.
+	typos: SURCES -> SOURCES.
 
 2007-07-27  Raphaël Quinet  <raphael@gimp.org>
 
