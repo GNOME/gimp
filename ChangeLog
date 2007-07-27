@@ -1,3 +1,9 @@
+2007-07-27  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/jpeg/jpeg-quality.c (jpeg_detect_quality): simplify the
+	formula so that it returns a slightly lower estimated quality when
+	there is no exact match with the IJG quantization tables.
+
 2007-07-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-callbacks.c: factored out utility

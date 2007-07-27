@@ -112,15 +112,19 @@ jpeg_detect_quality (struct jpeg_decompress_struct *cinfo)
 
   if (cinfo->output_components > 1)
     {
+      gint sums;
+
       if (sum[0] < 64 || sum[1] < 64)
         return 0;
 
-      /* use the chrominance table having the lowest sum (best quality) */
-      if (sum[2] > 0 && sum[2] < sum[1])
-        sum[1] = sum[2];
+      /* compare with the chrominance table having the lowest sum */
+      if (sum[1] < sum[2] || sum[2] <= 0)
+        sums = sum[0] + sum[1];
+      else
+        sums = sum[0] + sum[2];
 
       q = 100;
-      while (sum[0] > std_luminance_sum[q] && sum[1] > std_chrominance_sum[q])
+      while (sums > std_luminance_sum[q] + std_chrominance_sum[q])
         q--;
 
       if (sum[0] == std_luminance_sum[q] && sum[1] == std_chrominance_sum[q])
