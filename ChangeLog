@@ -1,3 +1,16 @@
+2007-07-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c: factored out utility
+	function gimp_display_shell_update_focus() which sets the active
+	tool into the proper state after the canvas received focus.
+
+	(gimp_display_shell_canvas_tool_events): use it here instead of
+	duplicating the code 3 times.
+
+	(gimp_display_shell_ruler_button_press): use it here too so the
+	move and color tools don't do weird things in click-to-focus
+	mode (when FOCUS_IN is delivered after BUTTON_PRESS).
+
 2007-07-27  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/jpeg/jpeg.[ch]

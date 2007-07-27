@@ -78,6 +78,15 @@
 #include "gimp-intl.h"
 
 
+/* #define DEBUG_TOOL_EVENTS */
+
+#ifdef DEBUG_TOOL_EVENTS
+#define D(stmnt) stmnt
+#else
+#define D(stmnt)
+#endif
+
+
 /*  local function prototypes  */
 
 static void       gimp_display_shell_vscrollbar_update (GtkAdjustment    *adjustment,
@@ -573,6 +582,23 @@ gimp_display_shell_space_released (GimpDisplayShell *shell,
   shell->space_release_pending = FALSE;
 }
 
+static void
+gimp_display_shell_update_focus (GimpDisplayShell *shell,
+                                 GimpCoords       *image_coords,
+                                 GdkModifierType   state)
+{
+  Gimp *gimp = shell->display->image->gimp;
+
+  tool_manager_focus_display_active (gimp, shell->display);
+  tool_manager_modifier_state_active (gimp, state, shell->display);
+
+  if (image_coords)
+    tool_manager_oper_update_active (gimp,
+                                     image_coords, state,
+                                     shell->proximity,
+                                     shell->display);
+}
+
 gboolean
 gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
                                        GdkEvent         *event,
@@ -649,6 +675,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventCrossing *cevent = (GdkEventCrossing *) event;
 
+        D (g_printerr ("tool event: ENTER_NOTIFY\n"));
+
         if (cevent->mode != GDK_CROSSING_NORMAL)
           return TRUE;
 
@@ -665,6 +693,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventCrossing *cevent = (GdkEventCrossing *) event;
 
+        D (g_printerr ("tool event: LEAVE_NOTIFY\n"));
+
         if (cevent->mode != GDK_CROSSING_NORMAL)
           return TRUE;
 
@@ -679,6 +709,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       break;
 
     case GDK_PROXIMITY_IN:
+      D (g_printerr ("tool event: PROXIMITY_IN\n"));
+
       tool_manager_oper_update_active (gimp,
                                        &image_coords, state,
                                        shell->proximity,
@@ -686,6 +718,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       break;
 
     case GDK_PROXIMITY_OUT:
+      D (g_printerr ("tool event: PROXIMITY_OUT\n"));
+
       shell->proximity = FALSE;
       gimp_display_shell_clear_cursor (shell);
 
@@ -701,6 +735,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
 
         if (fevent->in)
           {
+            D (g_printerr ("tool event: FOCUS_IN\n"));
+
             GTK_WIDGET_SET_FLAGS (canvas, GTK_HAS_FOCUS);
 
             /*  press modifier keys when the canvas gets the focus
@@ -710,17 +746,13 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
              */
             if (! shell->button_press_before_focus)
               {
-                tool_manager_focus_display_active (gimp, display);
-                tool_manager_modifier_state_active (gimp, state, display);
-
-                tool_manager_oper_update_active (gimp,
-                                                 &image_coords, state,
-                                                 shell->proximity,
-                                                 display);
+                gimp_display_shell_update_focus (shell, &image_coords, state);
               }
           }
         else
           {
+            D (g_printerr ("tool event: FOCUS_OUT\n"));
+
             GTK_WIDGET_UNSET_FLAGS (canvas, GTK_HAS_FOCUS);
 
             /*  reset it here to be prepared for the next
@@ -749,18 +781,14 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GdkEventButton *bevent = (GdkEventButton *) event;
         GdkEventMask    event_mask;
 
+        D (g_printerr ("tool event: BUTTON_PRESS\n"));
+
         if (! GTK_WIDGET_HAS_FOCUS (canvas))
           {
             /*  in "click to focus" mode, the BUTTON_PRESS arrives before
              *  FOCUS_IN, so we have to update the tool's modifier state here
              */
-            tool_manager_focus_display_active (gimp, display);
-            tool_manager_modifier_state_active (gimp, state, display);
-
-            tool_manager_oper_update_active (gimp,
-                                             &image_coords, state,
-                                             shell->proximity,
-                                             display);
+            gimp_display_shell_update_focus (shell, &image_coords, state);
 
             active_tool = tool_manager_get_active (gimp);
 
@@ -895,6 +923,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventButton *bevent = (GdkEventButton *) event;
 
+        D (g_printerr ("tool event: BUTTON_RELEASE\n"));
+
         gimp_display_shell_autoscroll_stop (shell);
 
         if (gimp->busy)
@@ -930,13 +960,7 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
             /*  update the tool's modifier state because it didn't get
              *  key events while BUTTON1 was down
              */
-            tool_manager_focus_display_active (gimp, display);
-            tool_manager_modifier_state_active (gimp, state, display);
-
-            tool_manager_oper_update_active (gimp,
-                                             &image_coords, state,
-                                             shell->proximity,
-                                             display);
+            gimp_display_shell_update_focus (shell, &image_coords, state);
 
             gtk_grab_remove (canvas);
 
@@ -964,6 +988,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
         GdkEventScroll     *sevent = (GdkEventScroll *) event;
         GdkScrollDirection  direction;
         GimpController     *wheel;
+
+        D (g_printerr ("tool event: SCROLL\n"));
 
         wheel = gimp_controllers_get_wheel (gimp);
 
@@ -1065,6 +1091,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       {
         GdkEventMotion *mevent            = (GdkEventMotion *) event;
         GdkEvent       *compressed_motion = NULL;
+
+        D (g_printerr ("tool event: MOTION_NOTIFY\n"));
 
         if (gimp->busy)
           return TRUE;
@@ -1225,6 +1253,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       break;
 
     case GDK_KEY_PRESS:
+      D (g_printerr ("tool event: KEY_PRESS\n"));
+
       if (state & GDK_BUTTON1_MASK)
         {
           GdkEventKey *kevent = (GdkEventKey *) event;
@@ -1335,6 +1365,8 @@ gimp_display_shell_canvas_tool_events (GtkWidget        *canvas,
       break;
 
     case GDK_KEY_RELEASE:
+      D (g_printerr ("tool event: KEY_RELEASE\n"));
+
       if (state & GDK_BUTTON1_MASK)
         {
           GdkEventKey *kevent = (GdkEventKey *) event;
@@ -1499,6 +1531,19 @@ gimp_display_shell_ruler_button_press (GtkWidget        *widget,
 
       if (active_tool)
         {
+          if (! GTK_WIDGET_HAS_FOCUS (shell->canvas))
+            {
+              gimp_display_shell_update_focus (shell, NULL, event->state);
+
+              shell->button_press_before_focus = TRUE;
+
+              /*  we expect a FOCUS_IN event to follow, but can't rely
+               *  on it, so force one
+               */
+              gdk_window_focus (shell->canvas->window,
+                                gdk_event_get_time ((GdkEvent *) event));
+            }
+
           gdk_pointer_grab (shell->canvas->window, FALSE,
                             GDK_POINTER_MOTION_HINT_MASK |
                             GDK_BUTTON1_MOTION_MASK |
