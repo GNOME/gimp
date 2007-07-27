@@ -15,45 +15,45 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-21 10:58+0200\n"
-"PO-Revision-Date: 2007-04-21 11:02+0200\n"
+"POT-Creation-Date: 2007-07-27 23:51+0200\n"
+"PO-Revision-Date: 2007-07-27 23:30+0200\n"
 "Last-Translator: Laurent Monin <gimp@norz.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:143
-#: ../plug-ins/script-fu/script-fu-console.c:212
+#: ../plug-ins/script-fu/script-fu-console.c:144
+#: ../plug-ins/script-fu/script-fu-console.c:213
 msgid "Script-Fu Console"
 msgstr "Console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:208
+#: ../plug-ins/script-fu/script-fu-console.c:209
 msgid "Welcome to TinyScheme"
 msgstr "Bienvenue sur TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:214
+#: ../plug-ins/script-fu/script-fu-console.c:215
 msgid "Interactive Scheme Development"
 msgstr "Développement Scheme interactif"
 
-#: ../plug-ins/script-fu/script-fu-console.c:250
+#: ../plug-ins/script-fu/script-fu-console.c:251
 msgid "_Browse..."
 msgstr "_Parcourir..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:312
+#: ../plug-ins/script-fu/script-fu-console.c:313
 msgid "Save Script-Fu Console Output"
 msgstr "Enregistrer les sorties de la console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:359
+#: ../plug-ins/script-fu/script-fu-console.c:360
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossible d'ouvrir « %s » pour écrire : %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:388
+#: ../plug-ins/script-fu/script-fu-console.c:389
 msgid "Script-Fu Procedure Browser"
 msgstr "Navigateur de procédures Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:713
+#: ../plug-ins/script-fu/script-fu-console.c:730
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "Le mode d'évaluation de Script-Fu autorise uniquement un appel non-interactif"
@@ -67,53 +67,47 @@ msgstr "Script-Fu ne peut pas exécuter deux scripts à la fois."
 msgid "You are already running the \"%s\" script."
 msgstr "Vous utilisez déjà le script « %s »"
 
-#. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:216
-#: ../plug-ins/script-fu/script-fu-interface.c:219
-msgid "/Script-Fu/"
-msgstr "/Script-Fu/"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:237
+#: ../plug-ins/script-fu/script-fu-interface.c:238
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu : %s"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:299
+#: ../plug-ins/script-fu/script-fu-interface.c:300
 #, c-format
 msgid "%s:"
 msgstr "%s :"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:347
+#: ../plug-ins/script-fu/script-fu-interface.c:348
 msgid "Script-Fu Color Selection"
 msgstr "Sélection de la couleur Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:459
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu File Selection"
 msgstr "Sélection du fichier Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:463
 msgid "Script-Fu Folder Selection"
 msgstr "Sélection du répertoire du Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:474
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Font Selection"
 msgstr "Sélection de la police Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:482
+#: ../plug-ins/script-fu/script-fu-interface.c:483
 msgid "Script-Fu Palette Selection"
 msgstr "Sélection de la palette Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:491
+#: ../plug-ins/script-fu/script-fu-interface.c:492
 msgid "Script-Fu Pattern Selection"
 msgstr "Sélection du motif Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:500
+#: ../plug-ins/script-fu/script-fu-interface.c:501
 msgid "Script-Fu Gradient Selection"
 msgstr "Sélection du dégradé Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:509
+#: ../plug-ins/script-fu/script-fu-interface.c:510
 msgid "Script-Fu Brush Selection"
 msgstr "Sélection de la brosse Script-Fu"
 
@@ -162,122 +156,122 @@ msgstr "Serveur pour les opérations Script-Fu distantes"
 msgid "_Start Server..."
 msgstr "_Démarrer le serveur..."
 
-#: ../plug-ins/script-fu/script-fu.c:300
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_GIMP Online"
 msgstr "_GIMP en-ligne"
 
-#: ../plug-ins/script-fu/script-fu.c:301
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
 msgstr "_Manuel utilisateur"
 
-#: ../plug-ins/script-fu/script-fu.c:304
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Buttons"
 msgstr "_Boutons"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:309
 msgid "_Logos"
 msgstr "_Logos"
 
-#: ../plug-ins/script-fu/script-fu.c:310
+#: ../plug-ins/script-fu/script-fu.c:311
 msgid "_Misc"
 msgstr "_Divers"
 
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Patterns"
 msgstr "_Motifs"
 
-#: ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:316
-msgid "_Utils"
+#: ../plug-ins/script-fu/script-fu.c:317
+msgid "_Utilities"
 msgstr "_Utilitaires"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Web Page Themes"
 msgstr "_Thèmes de page Web"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Alien Glow"
 msgstr "Lueur _extérieure"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Beveled Pattern"
 msgstr "Motif _biseauté"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: ../plug-ins/script-fu/script-fu.c:325
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:327
+#: ../plug-ins/script-fu/script-fu.c:328
 msgid "Alpha to _Logo"
 msgstr "Alpha vers _logo"
 
-#: ../plug-ins/script-fu/script-fu.c:329
+#: ../plug-ins/script-fu/script-fu.c:330
 msgid "An_imation"
 msgstr "An_imation"
 
-#: ../plug-ins/script-fu/script-fu.c:331
+#: ../plug-ins/script-fu/script-fu.c:332
 msgid "_Animators"
 msgstr "_Animateurs"
 
-#: ../plug-ins/script-fu/script-fu.c:333
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Artistic"
 msgstr "A_rtistique"
 
-#: ../plug-ins/script-fu/script-fu.c:335
+#: ../plug-ins/script-fu/script-fu.c:336
 msgid "_Blur"
 msgstr "_Flou"
 
-#: ../plug-ins/script-fu/script-fu.c:337
+#: ../plug-ins/script-fu/script-fu.c:338
 msgid "_Decor"
 msgstr "Dé_coration"
 
-#: ../plug-ins/script-fu/script-fu.c:339
+#: ../plug-ins/script-fu/script-fu.c:340
 msgid "_Effects"
 msgstr "_Effets"
 
-#: ../plug-ins/script-fu/script-fu.c:341
+#: ../plug-ins/script-fu/script-fu.c:342
 msgid "En_hance"
 msgstr "A_mélioration"
 
-#: ../plug-ins/script-fu/script-fu.c:343
+#: ../plug-ins/script-fu/script-fu.c:344
 msgid "_Light and Shadow"
 msgstr "_Ombres et lumières"
 
-#: ../plug-ins/script-fu/script-fu.c:345
+#: ../plug-ins/script-fu/script-fu.c:346
 msgid "S_hadow"
 msgstr "_Ombre"
 
-#: ../plug-ins/script-fu/script-fu.c:347
+#: ../plug-ins/script-fu/script-fu.c:348
 msgid "_Render"
 msgstr "_Rendu"
 
-#: ../plug-ins/script-fu/script-fu.c:349
+#: ../plug-ins/script-fu/script-fu.c:350
 msgid "_Alchemy"
 msgstr "A_lchimie"
 
-#: ../plug-ins/script-fu/script-fu.c:352
+#: ../plug-ins/script-fu/script-fu.c:353
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Relire tous les scripts Script-Fu disponibles"
 
-#: ../plug-ins/script-fu/script-fu.c:357
+#: ../plug-ins/script-fu/script-fu.c:358
 msgid "_Refresh Scripts"
-msgstr "_Rafraîchir les scripts"
+msgstr "_Actualiser les scripts"
 
-#: ../plug-ins/script-fu/script-fu.c:380
+#: ../plug-ins/script-fu/script-fu.c:381
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
 msgstr ""
-"Vous ne pouvez pas utiliser « Rafraîchir les scripts » tant que la boîte de "
-"dialogue d'un Script-Fu est ouverte. S'il vous plaît fermer toutes les "
-"fenêtres de script-fu et essayez à nouveau."
+"Vous ne pouvez pas utiliser « Actualiser les scripts » tant que la boîte de "
+"dialogue d'un Script-Fu est ouverte. Fermez toutes les fenêtres de script-fu "
+"et essayez à nouveau."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -980,8 +974,8 @@ msgstr "En _flammes..."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid ""
-"Burn-In: Needs two layers in total!\n"
-"A foreground text layer with transparency and a background layer."
+"Burn-In: Needs two layers in total!\\nA foreground text layer with "
+"transparency and a background layer."
 msgstr ""
 "L'effet « en flammes » nécessite deux calques au total,\n"
 "un calque de texte avec transparence en premier plan et un calque de fond."
@@ -1276,12 +1270,10 @@ msgid "Add realistic looking coffee stains to the image"
 msgstr "Ajoute une tache de café réaliste à l'image"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
-msgid ""
-"Darken only\n"
-"(Better, but only for images with a lot of white)"
+msgid "Darken only\\n(Better, but only for images with a lot of white)"
 msgstr ""
-"Assombrir seulement\n"
-"(meilleur, mais uniquement sur les images avec beaucoup de blanc)"
+"Assombrir seulement\\n(meilleur, mais uniquement sur les images avec "
+"beaucoup de blanc)"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
@@ -1338,12 +1330,6 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 msgid "Effect size (pixels)"
 msgstr "Taille de l'effet (pixels)"
-
-#: ../plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "This procedure is deprecated! use 'gimp-edit-copy-visible' instead."
-msgstr ""
-"Cette procédure est obsolète ! Utilisez « gimp-edit-copy-visible » à la "
-"place."
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "Background image"
@@ -2180,6 +2166,11 @@ msgstr "Nouvelle _brosse..."
 msgid "Paste the clipboard contents into a new brush"
 msgstr "Copie le contenu du presse-papiers vers une nouvelle brosse"
 
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
+msgid "There is no image data in the clipboard to paste."
+msgstr "Aucune image n'est présente dans le presse-papier pour collage."
+
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
 msgid "New _Pattern..."
 msgstr "Nouveau _motif..."
@@ -2372,6 +2363,19 @@ msgstr ""
 msgid "_Round Corners..."
 msgstr "Coins a_rrondis..."
 
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr ""
+"Change la palette de couleurs d'un image aux couleurs de la palette indiquée."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
+msgid "Palette"
+msgstr "Palette"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
+msgid "Se_t Colormap..."
+msgstr "Définir la pale_tte..."
+
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Convert a selection to a brush"
 msgstr "Convertit une sélection en brosse"
@@ -2410,14 +2414,6 @@ msgid "Round the corners of the current selection"
 msgstr "Arrondit les coins de la sélection courante"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
-msgid ""
-"Round the corners of the current selection (deprecated, use Rounded "
-"Rectangle)"
-msgstr ""
-"Arrondit les coins de la sélection courante (obsolète, utilisez rectangle "
-"arrondi)"
-
-#: ../plug-ins/script-fu/scripts/selection-round.scm.h:6
 msgid "Rounded R_ectangle..."
 msgstr "Rectangle arr_ondi..."
 
@@ -3008,3 +3004,18 @@ msgstr "Opacité d'éclairage"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Effet _Xach..."
+
+#~ msgid "/Script-Fu/"
+#~ msgstr "/Script-Fu/"
+
+#~ msgid "This procedure is deprecated! use 'gimp-edit-copy-visible' instead."
+#~ msgstr ""
+#~ "Cette procédure est obsolète ! Utilisez « gimp-edit-copy-visible » à la "
+#~ "place."
+
+#~ msgid ""
+#~ "Round the corners of the current selection (deprecated, use Rounded "
+#~ "Rectangle)"
+#~ msgstr ""
+#~ "Arrondit les coins de la sélection courante (obsolète, utilisez rectangle "
+#~ "arrondi)"

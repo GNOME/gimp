@@ -20,8 +20,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-24 14:08+0100\n"
-"PO-Revision-Date: 2007-03-24 14:18+0100\n"
+"POT-Creation-Date: 2007-07-27 23:54+0200\n"
+"PO-Revision-Date: 2007-05-29 08:42+0200\n"
 "Last-Translator: Laurent Monin <gimp@norz.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -478,12 +478,12 @@ msgid "Black only"
 msgstr "Noir seulement"
 
 #: ../libgimpbase/gimpbaseenums.c:263
-msgid "Image source"
-msgstr "Image source"
+msgid "Image"
+msgstr "Image"
 
 #: ../libgimpbase/gimpbaseenums.c:264
-msgid "Pattern source"
-msgstr "Motif source"
+msgid "Pattern"
+msgstr "Motif"
 
 #: ../libgimpbase/gimpbaseenums.c:293
 msgid "Lightness"
@@ -846,30 +846,30 @@ msgstr "Saturation"
 msgid "Absolute colorimetric"
 msgstr "Colorimétrie absolue"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:96
+#: ../libgimpconfig/gimpconfig-deserialize.c:97
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr ""
 "La valeur de l'expression %s n'est pas une chaîne de caractère UTF-8 valide"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:427
+#: ../libgimpconfig/gimpconfig-deserialize.c:436
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "« oui » ou « non » attendus pour l'expression booléenne %s, « %s » reçu"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:501
+#: ../libgimpconfig/gimpconfig-deserialize.c:510
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "Valeur « %s » non valide pour l'expression %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:516
+#: ../libgimpconfig/gimpconfig-deserialize.c:525
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "Valeur « %ld » non valide pour l'expression %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:585
+#: ../libgimpconfig/gimpconfig-deserialize.c:594
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "en interprétant l'expression « %s » : %s"
@@ -885,17 +885,23 @@ msgstr "erreur fatale d'interprétation"
 msgid "Cannot expand ${%s}"
 msgstr "Impossible d'étendre ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:135
+#: ../libgimpconfig/gimpconfigwriter.c:78
+#: ../libgimpconfig/gimpconfigwriter.c:693
+#, c-format
+msgid "Error writing to '%s': %s"
+msgstr "Erreur lors de l'écriture de « %s » : %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:136
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Impossible de créer un fichier temporaire pour « %s » : %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:148
+#: ../libgimpconfig/gimpconfigwriter.c:149
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossible d'ouvrir « %s » en écriture : %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:667
+#: ../libgimpconfig/gimpconfigwriter.c:674
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -905,7 +911,7 @@ msgstr ""
 "s » : %s\n"
 "Le fichier original n'a pas été modifié."
 
-#: ../libgimpconfig/gimpconfigwriter.c:675
+#: ../libgimpconfig/gimpconfigwriter.c:682
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -914,12 +920,7 @@ msgstr ""
 "Erreur lors de l'écriture du fichier temporaire pour « %s » : %s\n"
 "Aucun fichier n'a été créé."
 
-#: ../libgimpconfig/gimpconfigwriter.c:686
-#, c-format
-msgid "Error writing to '%s': %s"
-msgstr "Erreur lors de l'écriture de « %s » : %s"
-
-#: ../libgimpconfig/gimpconfigwriter.c:704
+#: ../libgimpconfig/gimpconfigwriter.c:711
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Impossible de créer « %s » : %s"
@@ -1039,15 +1040,15 @@ msgstr "Sélectionnez un dossier"
 msgid "Select File"
 msgstr "Sélectionnez un fichier"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:202
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Kilobytes"
 msgstr "Kilooctets"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:203
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Megabytes"
 msgstr "Mégaoctets"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libgimpwidgets/gimpmemsizeentry.c:206
 msgid "Gigabytes"
 msgstr "Gigaoctets"
 
@@ -1126,11 +1127,6 @@ msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Ce champ de texte est limité à %d caractère."
 msgstr[1] "Ce champ de texte est limité à %d caractères."
-
-#: ../libgimpwidgets/gimpresolutionentry.c:382
-#, c-format
-msgid "pixels/%s"
-msgstr "pixels/%s"
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -1583,14 +1579,12 @@ msgid "X Move Right"
 msgstr "X vers la droite"
 
 #: ../modules/controller_linux_input.c:92
-#: ../modules/controller_dx_dinput.c:478
-msgid "Y Move Away"
-msgstr "Y s'éloigne"
+msgid "Y Move Forward"
+msgstr "Y vers l'avant"
 
 #: ../modules/controller_linux_input.c:93
-#: ../modules/controller_dx_dinput.c:481
-msgid "Y Move Near"
-msgstr "Y se rapproche"
+msgid "Y Move Back"
+msgstr "Y vers l'arrière"
 
 #: ../modules/controller_linux_input.c:94
 #: ../modules/controller_dx_dinput.c:487
@@ -1603,14 +1597,12 @@ msgid "Z Move Down"
 msgstr "Z descend"
 
 #: ../modules/controller_linux_input.c:97
-#: ../modules/controller_dx_dinput.c:496
-msgid "X Axis Tilt Away"
-msgstr "L'axe Y s'éloigne"
+msgid "X Axis Tilt Forward"
+msgstr "L'axe X penche vers l'avant"
 
 #: ../modules/controller_linux_input.c:98
-#: ../modules/controller_dx_dinput.c:499
-msgid "X Axis Tilt Near"
-msgstr "L'axe Y se rapproche"
+msgid "X Axis Tilt Back"
+msgstr "L'axe Y penche vers l'arrière"
 
 #: ../modules/controller_linux_input.c:99
 #: ../modules/controller_dx_dinput.c:505
@@ -1731,6 +1723,22 @@ msgstr "Pression du bouton %d"
 msgid "Button %d Release"
 msgstr "Relâchement du bouton %d"
 
+#: ../modules/controller_dx_dinput.c:478
+msgid "Y Move Away"
+msgstr "Y s'éloigne"
+
+#: ../modules/controller_dx_dinput.c:481
+msgid "Y Move Near"
+msgstr "Y se rapproche"
+
+#: ../modules/controller_dx_dinput.c:496
+msgid "X Axis Tilt Away"
+msgstr "L'axe Y s'éloigne"
+
+#: ../modules/controller_dx_dinput.c:499
+msgid "X Axis Tilt Near"
+msgstr "L'axe Y se rapproche"
+
 #: ../modules/controller_dx_dinput.c:528
 #, c-format
 msgid "Slider %d Increase"
@@ -1814,3 +1822,12 @@ msgstr "GIMP"
 #: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr "Contrôleur d'entrée GIMP MIDI"
+
+#~ msgid "Image source"
+#~ msgstr "Image source"
+
+#~ msgid "Pattern source"
+#~ msgstr "Motif source"
+
+#~ msgid "pixels/%s"
+#~ msgstr "pixels/%s"
