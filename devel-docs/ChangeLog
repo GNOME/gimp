@@ -1,3 +1,9 @@
+2007-07-27  Raphaël Quinet  <raphael@gimp.org>
+
+	* parasites.txt: document some of the parasites that have been
+	added in the last two years: gimp-metadata, jpeg-save-defaults,
+	jpeg-original-settings.
+
 2007-07-25  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt

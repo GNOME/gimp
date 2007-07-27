@@ -35,7 +35,8 @@ Global data follows no strict rules.
 "gimp-comment" (IMAGE, PERSISTENT)
         Standard GIF-style image comments.  This parasite should be
         human-readable text in UTF-8 encoding.  A trailing \0 might
-        be included and is not part of the comment.
+        be included and is not part of the comment.  Note that image
+        comments may also be present in the "gimp-metadata" parasite.
 
 "gimp-brush-name" (IMAGE, PERSISTENT)
         A string in UTF-8 encoding specifying the name of a GIMP brush.
@@ -111,6 +112,15 @@ Global data follows no strict rules.
         The ExifData structure serialized into a uchar* blob from
         libexif. This is deprecated in favor of "exif-data".
 
+"jpeg-original-settings" (IMAGE, PERSISTENT)
+	The settings found in the original JPEG image: quality (IJG),
+	color space, component subsampling and quantization tables.
+	These can be reused when saving the image in order to minimize
+	quantization losses and keep the same size/quality ratio.
+
+"jpeg-save-defaults" (GLOBAL, PERSISTENT)
+        Default save parameters used by the JPEG plug-in.
+
 "png-save-defaults" (GLOBAL, PERSISTENT)
         Default save parameters used by the PNG plug-in.
 
@@ -155,13 +165,22 @@ Global data follows no strict rules.
 
 "exif-data" (IMAGE, PERSISTENT)
         The ExifData structure serialized into a character array by
-        libexif (using exif_data_save_data).
+        libexif (using exif_data_save_data). If a "gimp-metadata"
+        parasite is present, it should take precedence over this one.
 
 "exif-orientation-rotate" (GLOBAL, PERSISTENT)
         Whether a load plug-in should automatically rotate the image
         according to the orientation specified in the EXIF data. This
         has values "yes" or "no". If the parasite is not set, the
-        plug-in should ask the user what to do.
+        plug-in should ask the user what to do. This parasite may be
+        removed in a future version (assuming always yes).
+
+"gimp-metadata" (IMAGE, PERSISTENT)
+	The metadata associated with the image, serialized as one XMP
+	packet.  This metadata includes the contents of any XMP, EXIF
+	and IPTC blocks from the original image, as well as
+	user-specified values such as image comment, copyright,
+	license, etc.
 
 "icc-profile" (IMAGE, PERSISTENT)
 	This contains an ICC profile describing the color space the
@@ -203,13 +222,13 @@ current gimp session. If you need persistant data, you basically have to
 choose between the following alternatives (also, having some standard for
 non-persistant data might be fine as well):
 
-- cook your own binary data format
+- Cook your own binary data format
   
   You can invent your own data format. This means that you will either
   loose totally (consider endian-ness or version-ness issues) or you will
   get yourself into deep trouble to get it "right" in all cases.
 
-- use character (string) data
+- Use character (string) data
 
   Obvious to perl people but less so to C programmers: just sprintf your
   data into a string (e.g. "SIZE 100x200 XRES 300 YRES 300") and store
@@ -225,7 +244,15 @@ non-persistant data might be fine as well):
   You could also use one parasite per field you store, i.e. foo-size,
   foo-offset-x, foo-offset-y etc...
 
-- use the libgimp serialize functions
+- Use the libgimpconfig serialize functions
+
+  This is a special case of the previous one, using the convenience
+  functions provided by libgimpconfig.  If you are not concerned about
+  the size of the string representation of your data, you can use
+  gimp_config_serialize_to_string() and other functions to easily
+  convert your data to/from a character string.
+
+- Obsolete: Use the libgimp serialize functions
 
   NOTE: libgimp/gserialize.[ch] has been excluded from the build since
         gimp-1.2. This decision was made since noone seemed to use it so
