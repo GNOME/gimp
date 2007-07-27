@@ -2907,4 +2907,3 @@ msgstr "हाइलाइट अस्पष्टता"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Xach-प्रभाव..."
-
