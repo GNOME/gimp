@@ -1790,4 +1790,3 @@ msgstr "गिम्प"
 #: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr "गिम्प MIDI आगत नियन्त्रक"
-
