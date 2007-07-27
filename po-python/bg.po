@@ -1,53 +1,54 @@
-# Bulgarian translation of GIMP.
-# Copyright (C) 2006, 2007 Victor Dachev <vdachev@gmail.com>
+# Bulgarian translation of gimp-python po-file.
+# Copyright (C) 2005, 2006, 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the GIMP package.
-# Victor Dachev <vdachev@gmail.com>, 2006, 2007.
+# Alexander Shopov <ash@contact.bg>, 2005.
+# Victor Dachev <vdachev@gmail.com>, 2005, 2006, 2007.
+#
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-po-python\n"
+"Project-Id-Version: gimp-libgimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-13 07:55+0300\n"
-"PO-Revision-Date: 2007-04-13 07:55+0300\n"
+"POT-Creation-Date: 2007-07-27 15:54+0300\n"
+"PO-Revision-Date: 2007-07-27 15:57+0300\n"
 "Last-Translator: Victor Dachev <vdachev@gmail.com>\n"
 "Language-Team: Bulgarian <dict@fsa-bg.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: KBabel 1.11.4\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:335
+#: ../plug-ins/pygimp/gimpfu.py:380
 msgid "Missing exception information"
 msgstr "Липсва информация за изключенията"
 
-#: ../plug-ins/pygimp/gimpfu.py:344
+#: ../plug-ins/pygimp/gimpfu.py:389
 #, python-format
 msgid "An error occured running %s"
 msgstr "Грешка при стартиране на %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:355
+#: ../plug-ins/pygimp/gimpfu.py:400
 msgid "_More Information"
 msgstr "_Още информация"
 
-#: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
-#: ../plug-ins/pygimp/gimpfu.py:479
+#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
+#: ../plug-ins/pygimp/gimpfu.py:524
 msgid "No"
 msgstr "Не"
 
-#: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
+#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
 msgid "Yes"
 msgstr "Да"
 
-#: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
 msgid "Python-Fu File Selection"
 msgstr "Избор на файл за Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:528
+#: ../plug-ins/pygimp/gimpfu.py:569
 msgid "Python-Fu Folder Selection"
 msgstr "Избор на папка за Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:618
+#: ../plug-ins/pygimp/gimpfu.py:659
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Грешен изход за „%s“"
@@ -68,37 +69,33 @@ msgstr "Запазване като оцветен XHTML"
 msgid "Colored XHTML"
 msgstr "Оцветен XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
-#, fuzzy
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
 msgid "Character _source"
-msgstr "Източник на знака"
+msgstr "_Източник на знака"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
 msgid "Source code"
 msgstr "Изходен код"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:194
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Text file"
 msgstr "Текстови файл"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Entry box"
 msgstr "Кутия за въвеждане"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
-#, fuzzy
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "_File to read or characters to use"
-msgstr "Файл за прочитане или символи за използване"
+msgstr "_Файл за прочитане или символи за използване"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
-#, fuzzy
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "Fo_nt size in pixels"
-msgstr "Размер на шрифта в пиксели"
+msgstr "Размер на _шрифта в пиксели"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
-#, fuzzy
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
 msgid "_Write a separate CSS file"
-msgstr "Записване на отделен CSS файл"
+msgstr "_Записване на отделен CSS файл"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
@@ -142,29 +139,25 @@ msgstr "Запазване като оцветен XHTML"
 msgid "_Fog..."
 msgstr "_Мъгла..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:59
-#, fuzzy
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "_Layer name"
-msgstr "Име на слоя"
+msgstr "Име на _слоя"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "Clouds"
 msgstr "Облаци"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:60
-#, fuzzy
-msgid "_Fog color"
-msgstr "Цвят на мъглата"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
-#, fuzzy
-msgid "_Turbulence"
-msgstr "Турболентност"
-
 #: ../plug-ins/pygimp/plug-ins/foggify.py:62
-#, fuzzy
+msgid "_Fog color"
+msgstr "Цвят на _мъглата"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+msgid "_Turbulence"
+msgstr "_Турболентност"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "Op_acity"
-msgstr "Плътност"
+msgstr "_Плътност"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
 msgid "Offset the colors in a palette"
@@ -182,9 +175,8 @@ msgid "Palette"
 msgstr "Палитра"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
-#, fuzzy
 msgid "Off_set"
-msgstr "Отместване"
+msgstr "От_местване"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
 msgid "Sort the colors in a palette"
@@ -195,9 +187,8 @@ msgid "_Sort Palette..."
 msgstr "_Подреждане на палитрата..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-#, fuzzy
 msgid "Color _model"
-msgstr "Цветови модел"
+msgstr "Цветови _модел"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
 msgid "RGB"
@@ -208,9 +199,8 @@ msgid "HSV"
 msgstr "ЦНС"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-#, fuzzy
 msgid "Channel to _sort"
-msgstr "Канал за подреждане"
+msgstr "Канал за _подреждане"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
 msgid "Red or Hue"
@@ -225,9 +215,8 @@ msgid "Blue or Value"
 msgstr "Синьо или Стойност"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
-#, fuzzy
 msgid "_Ascending"
-msgstr "Възходящо"
+msgstr "_Възходящо"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
@@ -257,39 +246,39 @@ msgstr "Реже изображението по водачите, създав�
 msgid "_Slice..."
 msgstr "_Нарязване..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:430
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "Path for HTML export"
 msgstr "Пътека за извеждане на HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
 msgid "Filename for export"
 msgstr "Име на файла за извличане"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
 msgid "Image name prefix"
 msgstr "Префикс на името на изображението"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
 msgid "Image format"
 msgstr "Формат на изображението"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Separate image folder"
 msgstr "Отделна папка за изображения"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Folder for image export"
 msgstr "Папка за извличане на изображения"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Space between table elements"
 msgstr "Разстояние между елементите на таблицата"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript за поставяне на показалеца и натискане"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Skip animation for table caps"
 msgstr "Пропускане на анимацията за етикети на таблица"
 
@@ -301,27 +290,22 @@ msgstr "Добавяне на падаща сянка към слой и по ж
 msgid "_Drop Shadow and Bevel..."
 msgstr "_Хвърляне на сянка и релеф..."
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
-#, fuzzy
-msgid "_Shadow blur"
-msgstr "Замъгляване на сянката"
-
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
-#, fuzzy
-msgid "_Bevel"
-msgstr "Релеф"
-
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
-#, fuzzy
-msgid "_Drop shadow"
-msgstr "Пускане на сянка"
+msgid "_Shadow blur"
+msgstr "Замъгляване на _сянката"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
-#, fuzzy
-msgid "Drop shadow _X displacement"
-msgstr "Отместване по хоризонтал на сянката"
+msgid "_Bevel"
+msgstr "_Издиране"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
-#, fuzzy
+msgid "_Drop shadow"
+msgstr "_Пускане на сянка"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+msgid "Drop shadow _X displacement"
+msgstr "Отместване по _хоризонтал на сянката"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
 msgid "Drop shadow _Y displacement"
-msgstr "Отместване по вертикал на сянката"
+msgstr "Отместване по _вертикал на сянката"
