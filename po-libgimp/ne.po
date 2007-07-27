@@ -1,223 +1,223 @@
 # translation of gimp-libgimp.HEAD.ne.po to Nepali
-# translation of gimp-gap.HEAD.ne.po to Nepali
-# translation of gimp-gap.HEAD.po to Nepali
 # This file is distributed under the same license as the PACKAGE package.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER.
+#
 # Pawan Chitrakar <pawan@mpp.org.np>, 2005.
 # Shiva Pokharel <pokharelshiva@hotmail.com>, 2005.
 # Ganesh Ghimire <gghimire@gmail.com>, 2005.
 # Shiva  Pokharel <pokharelshiva@hotmail.com>, 2005.
 # Jaydeep Bhusal <zaydeep@hotmail.com>, 2005.
 # Mahesh subedi <submanesh@hotmail.com>, 2006.
-#
+# Nabin Gautam <nabin@mpp.org.np>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD.ne\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-05-15 11:08+0200\n"
-"PO-Revision-Date: 2006-08-02 14:47+0545\n"
-"Last-Translator: Mahesh subedi <submanesh@hotmail.com>\n"
+"POT-Creation-Date: 2007-05-08 03:37+0100\n"
+"PO-Revision-Date: 2007-07-27 11:51+0545\n"
+"Last-Translator: Nabin Gautam <nabin@mpp.org.np>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.2\n"
+"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms: nplurals=2;plural=(n!=1)\n"
 
-#: ../libgimp/gimpbrushmenu.c:140
+#: ../libgimp/gimpbrushselectbutton.c:170
 msgid "Brush Selection"
 msgstr "ब्रुस चयन"
 
-#: ../libgimp/gimpbrushmenu.c:180 ../libgimp/gimppatternmenu.c:165
+#: ../libgimp/gimpbrushselectbutton.c:911
+#: ../libgimp/gimppatternselectbutton.c:712
 msgid "_Browse..."
 msgstr "ब्राउज गर्नुहोस्..."
 
-#: ../libgimp/gimpexport.c:215 ../libgimp/gimpexport.c:251
+#: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
 #, c-format
-msgid "%s can't handle layers"
-msgstr "%s तहहरू ह्यान्डल गर्न सकिँदैन"
+msgid "%s plug-in can't handle layers"
+msgstr "%s प्लगइनले तह ह्यान्डल गर्न सक्दैन"
 
-#: ../libgimp/gimpexport.c:216 ../libgimp/gimpexport.c:225
-#: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:252
+#: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
+#: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
 msgid "Merge Visible Layers"
-msgstr "दृश्यात्मक तहहरू गाभ्नुहोस्"
+msgstr "दृश्यात्मक तह गाभ्नुहोस्"
 
-#: ../libgimp/gimpexport.c:224
+#: ../libgimp/gimpexport.c:226
 #, c-format
-msgid "%s can't handle layer offsets, size or opacity"
-msgstr "%s तह अफसेटहरू, साइज वा अस्पष्टता ह्यान्डल गर्न सकिँदैन"
+msgid "%s plug-in can't handle layer offsets, size or opacity"
+msgstr "%s प्लगइनले अफसेट, साइज वा अस्पष्टता ह्यान्डल गर्न सक्दैन"
 
-#: ../libgimp/gimpexport.c:233 ../libgimp/gimpexport.c:242
+#: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
-msgid "%s can only handle layers as animation frames"
-msgstr "%s एनिमेसन फ्रेमहरूको रूपमा मात्र तहहरू ह्यान्डल गर्न सकिन्छ"
+msgid "%s plug-in can only handle layers as animation frames"
+msgstr "%s प्लगइनले एनिमेसन फ्रेमका रुपमा मात्र तहहरू ह्यान्डल गर्न सक्दछ"
 
-#: ../libgimp/gimpexport.c:234 ../libgimp/gimpexport.c:243
+#: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
-msgstr "एनिमेसनको रूपमा बचत गर्नुहोस्"
+msgstr "एनिमेसनको रुपमा बचत गर्नुहोस्"
 
-#: ../libgimp/gimpexport.c:243 ../libgimp/gimpexport.c:252
-#: ../libgimp/gimpexport.c:261
+#: ../libgimp/gimpexport.c:245 ../libgimp/gimpexport.c:254
+#: ../libgimp/gimpexport.c:263
 msgid "Flatten Image"
 msgstr "चौडा पारिएको छवि"
 
-#: ../libgimp/gimpexport.c:260
+#: ../libgimp/gimpexport.c:262
 #, c-format
-msgid "%s can't handle transparency"
-msgstr "%s पारदर्शीता ह्यान्डल गर्न सकिँदैन"
+msgid "%s plug-in can't handle transparency"
+msgstr "%s प्लगइनले पारदर्शीता ह्यान्डल गर्न सक्दैन"
 
-#: ../libgimp/gimpexport.c:269
+#: ../libgimp/gimpexport.c:271
 #, c-format
-msgid "%s can't handle layer masks"
-msgstr "%s तह मास्कहरू ह्यान्डल गर्न सकिँदैन"
+msgid "%s plug-in can't handle layer masks"
+msgstr "%s प्लगइनले तह मास्क ह्यान्डल गर्न सक्दैन"
 
-#: ../libgimp/gimpexport.c:270
+#: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
 msgstr "तह मास्क लागू गर्नुहोस्"
 
-#: ../libgimp/gimpexport.c:278
+#: ../libgimp/gimpexport.c:280
 #, c-format
-msgid "%s can only handle RGB images"
-msgstr "%s ले केबल RGC छविहरू मात्र ह्यान्डल गर्न सक्दछ"
+msgid "%s plug-in can only handle RGB images"
+msgstr "%s प्लगइनले केबल RGB छवि मात्र ह्यान्डल गर्न सक्दछ"
 
-#: ../libgimp/gimpexport.c:279 ../libgimp/gimpexport.c:317
-#: ../libgimp/gimpexport.c:326
+#: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
+#: ../libgimp/gimpexport.c:328
 msgid "Convert to RGB"
-msgstr "RGB मा रूपान्तरण गर्नुहोस्"
+msgstr "RGB मा रुपान्तरण गर्नुहोस्"
 
-#: ../libgimp/gimpexport.c:287
+#: ../libgimp/gimpexport.c:289
 #, c-format
-msgid "%s can only handle grayscale images"
-msgstr "%s ले केबल ग्रेस्केल छविहरू ह्यान्डल गर्न सक्दछ"
+msgid "%s plug-in can only handle grayscale images"
+msgstr "%s प्लगइनले ग्रेस्केल छवि मात्र ह्यान्डल गर्न सक्दछ"
 
-#: ../libgimp/gimpexport.c:288 ../libgimp/gimpexport.c:317
-#: ../libgimp/gimpexport.c:338
+#: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
+#: ../libgimp/gimpexport.c:340
 msgid "Convert to Grayscale"
-msgstr "ग्रेस्केलमा रूपान्तरण गर्नुहोस्"
+msgstr "ग्रेस्केलमा रुपान्तरण गर्नुहोस्"
 
-#: ../libgimp/gimpexport.c:296
+#: ../libgimp/gimpexport.c:298
 #, c-format
-msgid "%s can only handle indexed images"
-msgstr "%s ले केबल अनुक्रमण गरिएको छविहरू ह्यान्डल गर्न सक्दछ"
+msgid "%s plug-in can only handle indexed images"
+msgstr "%s प्लगइनले केबल अनुक्रमण गरिएको छवि मात्र ह्यान्डल गर्न सक्दछ"
 
-#: ../libgimp/gimpexport.c:297 ../libgimp/gimpexport.c:326
-#: ../libgimp/gimpexport.c:336
+#: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
+#: ../libgimp/gimpexport.c:338
 msgid ""
 "Convert to Indexed using default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"पूर्वनिर्धारित सेटिङ प्रयोग गरेर अनुक्रमण गरिएकोमा रूपान्तरण गर्नुहोस्\n"
+"पूर्वनिर्धारित सेटिङ प्रयोग गरेर अनुक्रमण गरिएकोमा रुपान्तरण गर्नुहोस्\n"
 "(परिणाम ट्युन गर्न यसलाई म्यानुअल्ली गर्नुहोस्)"
 
-#: ../libgimp/gimpexport.c:306
+#: ../libgimp/gimpexport.c:308
 #, c-format
-msgid "%s can only handle bitmap (two color) indexed images"
-msgstr "%s ले केबल बिटम्याप (दुई रङ) अनुक्रमण गरिएको छविहरू ह्यान्डल गर्न सक्दछ"
+msgid "%s plug-in can only handle bitmap (two color) indexed images"
+msgstr "%s प्लगइनले केबल बिटम्याप (दुइ रङ) अनुक्रमण गरिएका छवि मात्र ह्यान्डल गर्न सक्दछ"
 
-#: ../libgimp/gimpexport.c:307
+#: ../libgimp/gimpexport.c:309
 msgid ""
 "Convert to Indexed using bitmap default settings\n"
 "(Do it manually to tune the result)"
 msgstr ""
-"बिटम्याप पूर्वनिर्धारित सेटिङ प्रयोग गर्दे अनुक्रमण गरिएकोमा रूपान्तरण गर्नुहोस्\n"
+"बिटम्याप पूर्वनिर्धारित सेटिङ प्रयोग गर्दे अनुक्रमण गरिएकोमा रुपान्तरण गर्नुहोस्\n"
 "(परिणाम ट्युन गर्न यसलाई म्यानुअल्ली गर्नुहोस्)"
 
-#: ../libgimp/gimpexport.c:316
+#: ../libgimp/gimpexport.c:318
 #, c-format
-msgid "%s can only handle RGB or grayscale images"
-msgstr "%s ले मात्र RGB वा ग्रेस्केल छविहरू ह्यान्डल गर्न सक्दछ"
+msgid "%s plug-in can only handle RGB or grayscale images"
+msgstr "%s प्लगइनले केवल RGB वा ग्रेस्केल छवि मात्र ह्यान्डल गर्न सक्दछ"
 
-#: ../libgimp/gimpexport.c:325
+#: ../libgimp/gimpexport.c:327
 #, c-format
-msgid "%s can only handle RGB or indexed images"
-msgstr "%s ले मात्र RGB वा अनुक्रमण गरिएको छविहरू ह्यान्डल गर्न सक्दछ"
+msgid "%s plug-in  can only handle RGB or indexed images"
+msgstr "%s प्लगइनले  RGB वा अनुक्रमण गरिएका छवि मात्र ह्यान्डल गर्न सक्दछ"
 
-#: ../libgimp/gimpexport.c:335
+#: ../libgimp/gimpexport.c:337
 #, c-format
-msgid "%s can only handle grayscale or indexed images"
-msgstr "%s ले मात्र ग्रेस्केल वा अनुक्रमण गरिएको छविहरू ह्यान्डल गर्न सक्दछ"
+msgid "%s plug-in can only handle grayscale or indexed images"
+msgstr "%s प्लगइनले ग्रेस्केल वा अनुक्रमण गरिएका छवि मात्र ह्यान्डल गर्न सक्दछ"
 
-#: ../libgimp/gimpexport.c:346
+#: ../libgimp/gimpexport.c:348
 #, c-format
-msgid "%s needs an alpha channel"
-msgstr "%s लाई एउटा अल्फा च्यानल आवश्यक पर्दछ"
+msgid "%s plug-in needs an alpha channel"
+msgstr "%s प्लगइनलाई एउटा अल्फा च्यानल आवश्यक पर्दछ"
 
-#: ../libgimp/gimpexport.c:347
+#: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
 msgstr "अल्फा च्यानल थप्नुहोस्"
 
-#: ../libgimp/gimpexport.c:381
+#: ../libgimp/gimpexport.c:383
 msgid "Confirm Save"
 msgstr "बचत यकिन गर्नुहोस्"
 
-#: ../libgimp/gimpexport.c:387
+#: ../libgimp/gimpexport.c:389
 msgid "Confirm"
 msgstr "यकिन गर्नुहोस्"
 
-#: ../libgimp/gimpexport.c:462
+#: ../libgimp/gimpexport.c:464
 msgid "Export File"
 msgstr "फाइल निर्यात गर्नुहोस्"
 
-#: ../libgimp/gimpexport.c:466
+#: ../libgimp/gimpexport.c:468
 msgid "_Ignore"
 msgstr "उपेक्षा गर्नुहोस्"
 
-#: ../libgimp/gimpexport.c:468
+#: ../libgimp/gimpexport.c:470
 msgid "_Export"
 msgstr "निर्यात"
 
 #. the headline
-#: ../libgimp/gimpexport.c:497
+#: ../libgimp/gimpexport.c:499
 #, c-format
 msgid ""
 "Your image should be exported before it can be saved as %s for the following "
 "reasons:"
-msgstr "निम्न कारणहरूले गर्दा %s को रूपमा बचत हुनु अगाडि तपाईँको छवि निर्यात गरिनु पर्दछ:"
+msgstr "निम्न कारणहरूले गर्दा %s को रुपमा बचत हुनु अगाडि तपाईँको छवि निर्यात गरिनु पर्दछ:"
 
 #. the footline
-#: ../libgimp/gimpexport.c:571
+#: ../libgimp/gimpexport.c:573
 msgid "The export conversion won't modify your original image."
-msgstr "निर्यात रूपान्तरणले तपाईँको मौलिक छवि परिमार्जन गर्दैन।"
+msgstr "निर्यात रुपान्तरणले तपाईँको मौलिक छवि परिमार्जन गर्दैन।"
 
-#: ../libgimp/gimpexport.c:671
+#: ../libgimp/gimpexport.c:673
 #, c-format
 msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"तपाईँले लगभग तह मास्क %s को रूपमा बचत गर्नुभयो\n"
+"तपाईँले लगभग तह मास्क %s को रुपमा बचत गर्नुभयो\n"
 "यसले पारदर्शी तहहरू बचत गर्नेछैन।"
 
-#: ../libgimp/gimpexport.c:677
+#: ../libgimp/gimpexport.c:679
 #, c-format
 msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"तपाईँले च्यानल %s(बचत गरिएको चयन)को रूपमा गर्नुभयो।\n"
+"तपाईँले च्यानल %s(बचत गरिएको चयन)को रुपमा गर्नुभयो।\n"
 "यसले पारदर्शी तहहरू बचत गर्नेछैन।"
 
-#: ../libgimp/gimpfontselectbutton.c:126 ../libgimp/gimpfontselectbutton.c:177
+#: ../libgimp/gimpfontselectbutton.c:130
 msgid "Font Selection"
 msgstr "फन्ट चयन"
 
-#: ../libgimp/gimpfontselectbutton.c:139 ../libgimp/gimpfontselectbutton.c:178
+#: ../libgimp/gimpfontselectbutton.c:145
 msgid "Sans"
 msgstr "Sans"
 
-#: ../libgimp/gimpgradientmenu.c:115
+#: ../libgimp/gimpgradientselectbutton.c:148
 msgid "Gradient Selection"
 msgstr "ग्रेडियन्ट चयन"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
 msgid "(Empty)"
 msgstr "(खाली)"
 
-#: ../libgimp/gimppalettemenu.c:102
+#: ../libgimp/gimppaletteselectbutton.c:130
 msgid "Palette Selection"
 msgstr "रङदानी चयन"
 
-#: ../libgimp/gimppatternmenu.c:125
+#: ../libgimp/gimppatternselectbutton.c:156
 msgid "Pattern Selection"
 msgstr "रङदानी चयन"
 
@@ -404,15 +404,15 @@ msgstr "हालको चयन बदल्नुहोस्"
 msgid "Intersect with the current selection"
 msgstr "हालको चयनसँग प्रतिच्छेद"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Red"
 msgstr "रातो"
 
-#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Green"
 msgstr "हरियो"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Blue"
 msgstr "नीलो"
 
@@ -424,7 +424,7 @@ msgstr "खैरो"
 msgid "Indexed"
 msgstr "अनुक्रमण गरिएको"
 
-#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "Alpha"
 msgstr "अल्फा"
 
@@ -465,12 +465,12 @@ msgid "Black only"
 msgstr "कालो मात्र"
 
 #: ../libgimpbase/gimpbaseenums.c:263
-msgid "Image source"
-msgstr "छवि स्रोत"
+msgid "Image"
+msgstr "छवि"
 
 #: ../libgimpbase/gimpbaseenums.c:264
-msgid "Pattern source"
-msgstr "बाँन्की स्रोत"
+msgid "Pattern"
+msgstr "बाँन्की"
 
 #: ../libgimpbase/gimpbaseenums.c:293
 msgid "Lightness"
@@ -492,19 +492,19 @@ msgstr "डोर्ज"
 msgid "Burn"
 msgstr "बर्न"
 
-#: ../libgimpbase/gimpbaseenums.c:388 ../libgimpbase/gimpbaseenums.c:563
-msgid "Linear"
+#: ../libgimpbase/gimpbaseenums.c:388
+msgid "gradient|Linear"
 msgstr "रेखात्मक"
 
 #: ../libgimpbase/gimpbaseenums.c:389
 msgid "Bi-linear"
-msgstr "वि-रेखात्मक"
+msgstr "द्वि-रेखात्मक"
 
 #: ../libgimpbase/gimpbaseenums.c:390
 msgid "Radial"
 msgstr "पुन:डायल गर्नुहोस्"
 
-#: ../libgimpbase/gimpbaseenums.c:391
+#: ../libgimpbase/gimpbaseenums.c:391 ../libgimpwidgets/gimpwidgetsenums.c:24
 msgid "Square"
 msgstr "वर्ग"
 
@@ -597,16 +597,20 @@ msgid "Indexed-alpha"
 msgstr "अनुक्रमण गरिएको-अल्फा"
 
 #: ../libgimpbase/gimpbaseenums.c:562
-msgid "None (Fastest)"
-msgstr "कुनै पनि होइन (सबै भन्दा छिटो)"
+msgid "interpolation|None"
+msgstr "कुनै होइन"
+
+#: ../libgimpbase/gimpbaseenums.c:563
+msgid "interpolation|Linear"
+msgstr "रेखात्मक"
 
 #: ../libgimpbase/gimpbaseenums.c:564
 msgid "Cubic"
 msgstr "घनाकार"
 
 #: ../libgimpbase/gimpbaseenums.c:565
-msgid "Lanczos (Best)"
-msgstr "लाक्नजोस (सबै भन्दा राम्रो)"
+msgid "Sinc (Lanczos3)"
+msgstr "समक्रमण (Lanczos3)"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -616,7 +620,7 @@ msgstr "स्थिर"
 msgid "Incremental"
 msgstr "बढोत्तरीत"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:254
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:267
 msgid "None"
 msgstr "कुनै पनि होइन"
 
@@ -630,11 +634,11 @@ msgstr "त्रिकोणीय तरङ्ग"
 
 #: ../libgimpbase/gimpbaseenums.c:654
 msgid "Run interactively"
-msgstr "अन्तरक्रियात्मक रूपमा चलाउनुहोस्"
+msgstr "अन्तरक्रियात्मक रुपमा चलाउनुहोस्"
 
 #: ../libgimpbase/gimpbaseenums.c:655
 msgid "Run non-interactively"
-msgstr "अन्तरक्रियात्मक-विहिन रूपमा चलाउनुहोस्"
+msgstr "अन्तरक्रियात्मक-विहिन रुपमा चलाउनुहोस्"
 
 #: ../libgimpbase/gimpbaseenums.c:656
 msgid "Run with last used values"
@@ -661,26 +665,42 @@ msgid "Highlights"
 msgstr "हाइलाइट"
 
 #: ../libgimpbase/gimpbaseenums.c:744
-msgid "Forward"
-msgstr "अघिल्तिर"
+msgid "Normal (Forward)"
+msgstr "सामान्य (अगाडि)"
 
 #: ../libgimpbase/gimpbaseenums.c:745
-msgid "Backward"
-msgstr "पछिल्तिर"
+msgid "Corrective (Backward)"
+msgstr "सुधारात्मक (पछाडि)"
 
-#: ../libgimpbase/gimpbaseenums.c:848
+#: ../libgimpbase/gimpbaseenums.c:775
+msgid "Adjust"
+msgstr "समायोजन गर्नुहोस्"
+
+#: ../libgimpbase/gimpbaseenums.c:776
+msgid "Clip"
+msgstr "क्लिप"
+
+#: ../libgimpbase/gimpbaseenums.c:777
+msgid "Crop to result"
+msgstr "नतिजा काँटछाँट गर्नुहोस्"
+
+#: ../libgimpbase/gimpbaseenums.c:778
+msgid "Crop with aspect"
+msgstr "आकारलाई काँटछाँट गर्नुहोस्"
+
+#: ../libgimpbase/gimpbaseenums.c:881
 msgid "Internal GIMP procedure"
 msgstr "आन्तरिक गिम्प कार्यविधि"
 
-#: ../libgimpbase/gimpbaseenums.c:849
+#: ../libgimpbase/gimpbaseenums.c:882
 msgid "GIMP Plug-In"
 msgstr "गिम्प प्लगइन"
 
-#: ../libgimpbase/gimpbaseenums.c:850
+#: ../libgimpbase/gimpbaseenums.c:883
 msgid "GIMP Extension"
 msgstr "गिम्प विस्तार"
 
-#: ../libgimpbase/gimpbaseenums.c:851
+#: ../libgimpbase/gimpbaseenums.c:884
 msgid "Temporary Procedure"
 msgstr "अस्थायी कार्यविधि"
 
@@ -736,8 +756,8 @@ msgstr "%.1f GB"
 msgid "%d GB"
 msgstr "%d GB"
 
-#: ../libgimpbase/gimputils.c:169 ../libgimpbase/gimputils.c:174
-#: ../modules/cdisplay_lcms.c:246
+#: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
+#: ../modules/cdisplay_lcms.c:259
 msgid "(invalid UTF-8 string)"
 msgstr "(अवैध UTF-8 स्ट्रिङ)"
 
@@ -751,14 +771,16 @@ msgstr "तपाईँको (प्राथमिक) मोनिटरक�
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid ""
-"When enabled, the GIMP will try to use the display color profile from the "
-"windowing system. The configured monitor profile is then only used as a "
+"When enabled, GIMP will try to use the display color profile from the "
+"windowing system.  The configured monitor profile is then only used as a "
 "fallback."
-msgstr "सक्षम पारिएको बेलामा, सञ्झ्यालिय प्रणालीबाट प्रदर्शन रङ प्रोफाइल प्रयोग गर्न गिम्प प्रयास गर्नेछ। त्यस पछि कन्फिगरेसन गरिएको मोनिटर प्रोफाइल फलब्याकको रूपमा प्रयोग हुँनेछ।"
+msgstr ""
+"सक्षम पारिएको बेलामा, गिम्पले सञ्झ्याल प्रणालीबाट प्रदर्शन रङ प्रोफाइल प्रयोग गर्न"
+"प्रयास गर्नेछ ।  त्यसपछि कन्फिगरेसन गरिएको मोनिटर प्रोफाइल हुन्छ त्यसपछि मात्र फलब्याकको रुपमा प्रयोग गरिन्छ।"
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
-msgid "The default RGB workspace color profile."
-msgstr "पूर्वनिर्धारित RGB कार्यस्थान रङ प्रोफाइल"
+msgid "The default RGB working space color profile."
+msgstr "पूर्वनिर्धारित RGB कार्यस्थान रङ प्रोफाइल ।"
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The CMYK color profile used to convert between RGB and CMYK."
@@ -773,8 +795,10 @@ msgid "Sets how colors are mapped for your display."
 msgstr "तपाईँको प्रदर्शनका मानचित्रित गरिने रङहरू सेट गर्दछ।"
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
-msgid "Sets how colors are converted from workspace to the print simulation device."
-msgstr "कति रङहरू कार्यस्थान बाट मुद्रण सिमुलेशन यन्त्रमा परिवर्तन हुन्छन् सेट गर्दछ।"
+msgid ""
+"Sets how colors are converted from RGB working space to the print simulation "
+"device."
+msgstr "कसरी रङ कार्यस्थानबाट मुद्रण सिमुलेशन यन्त्रमा परिवर्तन गरिन्छन् सेट गर्दछ ।"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -788,68 +812,55 @@ msgstr "रङ व्यवस्थापन गरिएको प्रदर
 msgid "Print simulation"
 msgstr "सिमुलेशन मुद्रण गर्नुहोस्"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:56 ../modules/cdisplay_proof.c:55
+#: ../libgimpconfig/gimpcolorconfig-enums.c:56
 msgid "Perceptual"
 msgstr "बोधात्मक"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:57 ../modules/cdisplay_proof.c:56
+#: ../libgimpconfig/gimpcolorconfig-enums.c:57
 msgid "Relative colorimetric"
 msgstr "सम्बन्धित कलोरिमेर्ट्रिक"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#: ../libgimpwidgets/gimpwidgetsenums.c:93 ../modules/cdisplay_proof.c:57
-msgid "Saturation"
+msgid "intent|Saturation"
 msgstr "अतितृप्त"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:59 ../modules/cdisplay_proof.c:58
+#: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
 msgstr "निश्चित कलोरिमेर्ट्रिक"
 
-#: ../libgimpconfig/gimpcolorconfig-enums.c:88
-msgid "Ask"
-msgstr "सोध्नुहोस्"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:89
-msgid "Use embedded profile"
-msgstr "सम्मिलित प्रोफाइल प्रयोग गर्नुहोस्"
-
-#: ../libgimpconfig/gimpcolorconfig-enums.c:90
-msgid "Convert to RGB workspace"
-msgstr "RGB कार्यस्थानमा रूपान्तरण गर्नुहोस्"
-
-#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#: ../libgimpconfig/gimpconfig-deserialize.c:96
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "टोकन %s का लागि UTF-8 स्ट्रिङ वैध छैन"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:423
+#: ../libgimpconfig/gimpconfig-deserialize.c:427
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "आशा गरिएको 'हो' वा 'होइन' का लागि बुलियन टोकन %s, प्राप्त भयो '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:497
+#: ../libgimpconfig/gimpconfig-deserialize.c:501
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "अवैध मान '%s' टोकन %s का लागि"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:512
+#: ../libgimpconfig/gimpconfig-deserialize.c:516
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "अवैध मान '%ld' टोकन %s का लागि"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:581
+#: ../libgimpconfig/gimpconfig-deserialize.c:585
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "पद वर्णन गर्ने बेलाको टोकन '%s': %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:453
-#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpconfig-iface.c:454
+#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
 msgid "fatal parse error"
 msgstr "घातक पद वर्णन त्रुटि"
 
-#: ../libgimpconfig/gimpconfig-path.c:376
+#: ../libgimpconfig/gimpconfig-path.c:377
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "${%s} विस्तार गर्न सकिँदैन"
@@ -901,26 +912,26 @@ msgstr "अवैध UTF-8 स्ट्रिङ"
 msgid "Error while parsing '%s' in line %d: %s"
 msgstr "'%s' पद वर्णन गर्दा %d  लाइनमा त्रुटि: %s"
 
-#: ../libgimpmodule/gimpmodule.c:152 ../libgimpmodule/gimpmodule.c:170
-#: ../libgimpmodule/gimpmodule.c:279 ../libgimpmodule/gimpmodule.c:306
-#: ../libgimpmodule/gimpmodule.c:417
+#: ../libgimpmodule/gimpmodule.c:153 ../libgimpmodule/gimpmodule.c:171
+#: ../libgimpmodule/gimpmodule.c:280 ../libgimpmodule/gimpmodule.c:307
+#: ../libgimpmodule/gimpmodule.c:418
 #, c-format
 msgid "Module '%s' load error: %s"
 msgstr "मोड्युल '%s' लोड गर्दा त्रुटि: %s"
 
-#: ../libgimpmodule/gimpmodule.c:374
+#: ../libgimpmodule/gimpmodule.c:375
 msgid "Module error"
 msgstr "मोड्युल त्रुटि"
 
-#: ../libgimpmodule/gimpmodule.c:375
+#: ../libgimpmodule/gimpmodule.c:376
 msgid "Loaded"
 msgstr "लोड गरिएको"
 
-#: ../libgimpmodule/gimpmodule.c:376
+#: ../libgimpmodule/gimpmodule.c:377
 msgid "Load failed"
 msgstr "लोड असफल"
 
-#: ../libgimpmodule/gimpmodule.c:377
+#: ../libgimpmodule/gimpmodule.c:378
 msgid "Not loaded"
 msgstr "लोड नगरिएको"
 
@@ -938,7 +949,11 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "थम्बनेल फोल्डर '%s' सिर्जना गर्न असफल"
 
-#: ../libgimpthumb/gimpthumbnail.c:889
+#: ../libgimpthumb/gimpthumbnail.c:498
+msgid "Thumbnail contains no Thumb::URI tag"
+msgstr "थम्बनेलले थम्ब समाविष्ट गर्दैन::URI ट्याग"
+
+#: ../libgimpthumb/gimpthumbnail.c:898
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "%s का लागि थम्बनेल सिर्जना गर्न सकेन: %s"
@@ -967,39 +982,49 @@ msgstr "सेतो"
 msgid "Scales"
 msgstr "स्केलहरू"
 
-#: ../libgimpwidgets/gimpcolorselection.c:187
+#: ../libgimpwidgets/gimpcolorselection.c:210
 msgid "Current:"
 msgstr "हालको:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:209
+#: ../libgimpwidgets/gimpcolorselection.c:232
 msgid "Old:"
 msgstr "पुरानो:"
 
-#: ../libgimpwidgets/gimpcolorselection.c:263
-msgid "Hexadecimal color notation as used in HTML and CSS"
-msgstr "HTML र CSSमा प्रयोग हुने रूपमा हेक्साडेसिमल रङ नोटेसन"
+#: ../libgimpwidgets/gimpcolorselection.c:286
+msgid ""
+"Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
+"CSS color names."
+msgstr "HTML र CSS मा प्रयोग गरिए अनुरुपको हेक्साडेसिमल रङ नोटेसन ।  यो प्रविष्टिले CSS रङ नाम पनि प्रविष्ट गर्दछ ।"
 
-#: ../libgimpwidgets/gimpcolorselection.c:268
+#: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
 msgstr "HTML नोटेसन:"
 
-#: ../libgimpwidgets/gimpfileentry.c:320
+#: ../libgimpwidgets/gimpfileentry.c:174
+msgid "Open a file selector to browse your folders"
+msgstr "तपाईँको फोल्डर ब्राउज गर्न एउटा फाइल चयनकर्ता खोल्नुहोस्"
+
+#: ../libgimpwidgets/gimpfileentry.c:175
+msgid "Open a file selector to browse your files"
+msgstr "तपाईँको फाइल ब्राउज गर्न एउटा फाइल चयनकर्ता खोल्नुहोस्"
+
+#: ../libgimpwidgets/gimpfileentry.c:335
 msgid "Select Folder"
 msgstr "फाइल चयन गर्नुहोस्"
 
-#: ../libgimpwidgets/gimpfileentry.c:322
+#: ../libgimpwidgets/gimpfileentry.c:337
 msgid "Select File"
 msgstr "फाइल चयन गर्नुहोस्"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:203
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Kilobytes"
 msgstr "किलो बाइट्स"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Megabytes"
 msgstr "मेगा बाइट्स"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:205
+#: ../libgimpwidgets/gimpmemsizeentry.c:206
 msgid "Gigabytes"
 msgstr "गिगा बाइट्स"
 
@@ -1019,7 +1044,7 @@ msgstr "दायरा चयन गर्नुहोस्:"
 
 #: ../libgimpwidgets/gimppageselector.c:319
 msgid "Open _pages as"
-msgstr "यस रूपमा पृष्ठहरू खोल्नुहोस्"
+msgstr "यस रुपमा पृष्ठहरू खोल्नुहोस्"
 
 #: ../libgimpwidgets/gimppageselector.c:420
 msgid "Page 000"
@@ -1036,20 +1061,18 @@ msgid "One page selected"
 msgstr "एउटा पृष्ठ चयन गरियो"
 
 #: ../libgimpwidgets/gimppageselector.c:1183
+#: ../libgimpwidgets/gimppageselector.c:1187
 #, c-format
-msgid "All %d pages selected"
-msgstr "सबै %d पृष्ठहरू चयन गरियो"
+msgid "%d page selected"
+msgid_plural "All %d pages selected"
+msgstr[0] "%d पृष्ठ चयन गरियो"
+msgstr[1] "%d पृष्ठ चयन गरियो"
 
-#: ../libgimpwidgets/gimppageselector.c:1185
-#, c-format
-msgid "%d pages selected"
-msgstr "%d पृष्ठहरू चयन गरियो"
-
-#: ../libgimpwidgets/gimppatheditor.c:212
+#: ../libgimpwidgets/gimppatheditor.c:214
 msgid "Writable"
 msgstr "लेख्नयोग्य"
 
-#: ../libgimpwidgets/gimppatheditor.c:221
+#: ../libgimpwidgets/gimppatheditor.c:223
 msgid "Folder"
 msgstr "फोल्डर"
 
@@ -1057,7 +1080,9 @@ msgstr "फोल्डर"
 msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
-msgstr "आइड्रपरमा क्लिक गर्नुहोस्, त्यसपछि यो रङ चयन गर्न तपाईँको स्क्रिनमा कतै पनि एउटा रङमा क्लिक गर्नुहोस्।"
+msgstr ""
+"आइड्रपरमा क्लिक गर्नुहोस्, त्यसपछि यो रङ चयन गर्न तपाईँको स्क्रिनमा कतै पनि एउटा रङमा "
+"क्लिक गर्नुहोस्।"
 
 #: ../libgimpwidgets/gimppreviewarea.c:94
 msgid "Check Size"
@@ -1068,21 +1093,16 @@ msgid "Check Style"
 msgstr "शैली जाँच गर्नुहोस्"
 
 #. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:265
+#: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "पूर्वावलोकन"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1869
+#: ../libgimpwidgets/gimppropwidgets.c:1901
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "यो पाठ आगत फाँट %d क्यारेक्टरमा सिमित गरिएको छ।"
 msgstr[1] "यो पाठ आगत फाँट %d क्यारेक्टरहरूमा सिमित गरिएको छ।"
-
-#: ../libgimpwidgets/gimpresolutionentry.c:382
-#, c-format
-msgid "pixels/%s"
-msgstr "पिक्सेल/%s"
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -1106,7 +1126,7 @@ msgstr "लिङ्क गरिएको"
 
 #: ../libgimpwidgets/gimpstock.c:118
 msgid "Paste as New"
-msgstr "नयाँ रूपमा टास्नुँहोस्"
+msgstr "नयाँ रुपमा टास्नुँहोस्"
 
 #: ../libgimpwidgets/gimpstock.c:119
 msgid "Paste Into"
@@ -1136,27 +1156,27 @@ msgstr "लाइन खाली स्थान"
 msgid "_Resize"
 msgstr "रिसाइज गर्नुहोस्"
 
-#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:300
+#: ../libgimpwidgets/gimpstock.c:191 ../libgimpwidgets/gimpstock.c:319
 msgid "_Scale"
 msgstr "मापन गर्नुहोस्"
 
-#: ../libgimpwidgets/gimpstock.c:278
-msgid "Crop"
+#: ../libgimpwidgets/gimpstock.c:295
+msgid "Cr_op"
 msgstr "काटछाँट गर्नुहोस्"
 
-#: ../libgimpwidgets/gimpstock.c:296
+#: ../libgimpwidgets/gimpstock.c:314
 msgid "_Transform"
-msgstr "रूपान्तरण गर्नुहोस्"
+msgstr "रुपान्तरण गर्नुहोस्"
 
-#: ../libgimpwidgets/gimpstock.c:299
+#: ../libgimpwidgets/gimpstock.c:318
 msgid "_Rotate"
 msgstr "घुमाउनुहोस्"
 
-#: ../libgimpwidgets/gimpstock.c:301
+#: ../libgimpwidgets/gimpstock.c:320
 msgid "_Shear"
 msgstr "काट्नुहोस्"
 
-#: ../libgimpwidgets/gimpunitmenu.c:267
+#: ../libgimpwidgets/gimpunitmenu.c:266
 msgid "More..."
 msgstr "बढी..."
 
@@ -1164,87 +1184,101 @@ msgstr "बढी..."
 msgid "Unit Selection"
 msgstr "एकाइ चयन"
 
-#: ../libgimpwidgets/gimpunitmenu.c:625
+#: ../libgimpwidgets/gimpunitmenu.c:626
 msgid "Unit"
 msgstr "एकाइ"
 
-#: ../libgimpwidgets/gimpunitmenu.c:629
+#: ../libgimpwidgets/gimpunitmenu.c:630
 msgid "Factor"
 msgstr "तत्व"
 
-#: ../libgimpwidgets/gimpwidgets.c:1003
+#: ../libgimpwidgets/gimpwidgets.c:1005
 msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
-msgstr "अनियमित नम्बर उत्पन्नकर्ता सिडका लागि यो मान प्रयोग गर्नुहोस् - एउटा दिएको \"random\" सञ्चालन दोहोर्याउन यसले तपाईँलाई अनुमति दिन्छ"
+msgstr ""
+"अनियमित नम्बर उत्पन्नकर्ता सिडका लागि यो मान प्रयोग गर्नुहोस् - एउटा दिएको \"random"
+"\" सञ्चालन दोहोर्याउन यसले तपाईँलाई अनुमति दिन्छ"
 
-#: ../libgimpwidgets/gimpwidgets.c:1007
+#: ../libgimpwidgets/gimpwidgets.c:1009
 msgid "_New Seed"
 msgstr "नयाँ सिड"
 
-#: ../libgimpwidgets/gimpwidgets.c:1020
+#: ../libgimpwidgets/gimpwidgets.c:1022
 msgid "Seed random number generator with a generated random number"
 msgstr "उत्पन्न गरिएको अनियमित नम्बरसँग सिड अनियमित नम्बर जेनेरेटर"
 
-#: ../libgimpwidgets/gimpwidgets.c:1024
+#: ../libgimpwidgets/gimpwidgets.c:1026
 msgid "_Randomize"
 msgstr "अनियमित गर्नुहोस्ी"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:25
+msgid "Portrait"
+msgstr "पोर्ट्रेट"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:26
+msgid "Landscape"
+msgstr "ल्यान्डस्केप"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "_H"
 msgstr "H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "Hue"
 msgstr "ह्यु"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "_S"
 msgstr "S"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
+msgid "Saturation"
+msgstr "अतितृप्त"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "_V"
 msgstr "V"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "Value"
 msgstr "मान"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "_R"
 msgstr "R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "_G"
 msgstr "G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "_B"
 msgstr "B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "_A"
 msgstr "A"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpwidgets/gimpwidgetsenums.c:157
 msgid "Layers"
 msgstr "तहहरू"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpwidgets/gimpwidgetsenums.c:158
 msgid "Images"
 msgstr "छविहरू"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:186
+#: ../libgimpwidgets/gimpwidgetsenums.c:217
 msgid "Zoom in"
 msgstr "जुम बढाउनुहोस्"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:187
+#: ../libgimpwidgets/gimpwidgetsenums.c:218
 msgid "Zoom out"
 msgstr "जुम घटाउनुहोस्"
 
 #: ../modules/cdisplay_colorblind.c:67
-msgid "Protanopia (insensitivity to red"
-msgstr "प्रोटानोपिया (रातोमा असम्वेदनशील"
+msgid "Protanopia (insensitivity to red)"
+msgstr "प्रोटानोपिया (रातो असम्वेदनशील)"
 
 #: ../modules/cdisplay_colorblind.c:69
 msgid "Deuteranopia (insensitivity to green)"
@@ -1258,11 +1292,11 @@ msgstr "ट्रिटानोपिया (नीलोमा असम्व
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
 msgstr "रङ ह्रास सिमुलेसन फिल्टर (व्रेटटेल-भोइनेट-मोलोन अल्गोरिदम)"
 
-#: ../modules/cdisplay_colorblind.c:290
+#: ../modules/cdisplay_colorblind.c:292
 msgid "Color Deficient Vision"
 msgstr "रङ अपूर्ण दृष्टि"
 
-#: ../modules/cdisplay_colorblind.c:503
+#: ../modules/cdisplay_colorblind.c:507
 msgid "Color _deficiency type:"
 msgstr "रङ अपूर्ण प्रकार:"
 
@@ -1274,7 +1308,7 @@ msgstr "गामा रङ प्रर्दशक फिल्टर"
 msgid "Gamma"
 msgstr "गामा"
 
-#: ../modules/cdisplay_gamma.c:251
+#: ../modules/cdisplay_gamma.c:253
 msgid "_Gamma:"
 msgstr "गामा:"
 
@@ -1286,15 +1320,15 @@ msgstr "उच्च व्यतिरेक रङ प्रर्दशक �
 msgid "Contrast"
 msgstr "व्यतिरेक"
 
-#: ../modules/cdisplay_highcontrast.c:251
+#: ../modules/cdisplay_highcontrast.c:253
 msgid "Contrast c_ycles:"
 msgstr "व्यतिरेक चक्र:"
 
-#: ../modules/cdisplay_lcms.c:105
+#: ../modules/cdisplay_lcms.c:116
 msgid "Color management display filter using ICC color profiles"
 msgstr "ICC रङ प्रोफाइलहरू प्रयोग गर्दै रङ व्यवस्थापन प्रर्दशक फिल्टर"
 
-#: ../modules/cdisplay_lcms.c:173
+#: ../modules/cdisplay_lcms.c:184
 msgid "Color Management"
 msgstr "रङ व्यवस्थापन"
 
@@ -1304,43 +1338,43 @@ msgid ""
 "Preferences dialog."
 msgstr "यो फिल्टरले यसको कन्फिगरेसन प्राथमिकता संवादमा रङ व्यवस्थापन चयनबाट लिन्छ।"
 
-#: ../modules/cdisplay_lcms.c:311
+#: ../modules/cdisplay_lcms.c:302
 msgid "Mode of operation:"
 msgstr "सञ्चालन मोड:"
 
-#: ../modules/cdisplay_lcms.c:322
-msgid "RGB workspace profile:"
+#: ../modules/cdisplay_lcms.c:309
+msgid "RGB working space profile:"
 msgstr "RGB कार्यस्थान प्रोफाइल:"
 
-#: ../modules/cdisplay_lcms.c:332
+#: ../modules/cdisplay_lcms.c:316
 msgid "Monitor profile:"
 msgstr "मोनिटर प्रोफाइल:"
 
-#: ../modules/cdisplay_lcms.c:342
+#: ../modules/cdisplay_lcms.c:323
 msgid "Print simulation profile:"
 msgstr "सिमुलेसन प्रोफाइल मुद्रण गर्नुहोस्:"
 
-#: ../modules/cdisplay_proof.c:127
+#: ../modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
 msgstr "ICC रङ प्रोफाइल प्रयोग गर्दै रङ प्रमाण फिल्टर"
 
-#: ../modules/cdisplay_proof.c:221
+#: ../modules/cdisplay_proof.c:179
 msgid "Color Proof"
 msgstr "रङ प्रमाण"
 
-#: ../modules/cdisplay_proof.c:346
+#: ../modules/cdisplay_proof.c:306
 msgid "_Intent:"
 msgstr "इन्टेन्ड:"
 
-#: ../modules/cdisplay_proof.c:350
+#: ../modules/cdisplay_proof.c:310
 msgid "Choose an ICC Color Profile"
 msgstr "एउटा ICC रङ प्रोफाइल रोज्नुहोस्"
 
-#: ../modules/cdisplay_proof.c:353
+#: ../modules/cdisplay_proof.c:313
 msgid "_Profile:"
 msgstr "प्रोफाइल:"
 
-#: ../modules/cdisplay_proof.c:358
+#: ../modules/cdisplay_proof.c:318
 msgid "_Black Point Compensation"
 msgstr "कालो बिन्दु क्षतिपुर्ति"
 
@@ -1416,171 +1450,344 @@ msgstr "पानिरङ"
 msgid "Pressure"
 msgstr "दवाब"
 
-#: ../modules/controller_linux_input.c:56
+#: ../modules/controller_linux_input.c:58
 msgid "Button 0"
 msgstr "बटन ०"
 
-#: ../modules/controller_linux_input.c:57
+#: ../modules/controller_linux_input.c:59
 msgid "Button 1"
 msgstr "बटन १"
 
-#: ../modules/controller_linux_input.c:58
+#: ../modules/controller_linux_input.c:60
 msgid "Button 2"
 msgstr "बटन २"
 
-#: ../modules/controller_linux_input.c:59
+#: ../modules/controller_linux_input.c:61
 msgid "Button 3"
 msgstr "बटन ३"
 
-#: ../modules/controller_linux_input.c:60
+#: ../modules/controller_linux_input.c:62
 msgid "Button 4"
 msgstr "बटन ४"
 
-#: ../modules/controller_linux_input.c:61
+#: ../modules/controller_linux_input.c:63
 msgid "Button 5"
 msgstr "बटन ५"
 
-#: ../modules/controller_linux_input.c:62
+#: ../modules/controller_linux_input.c:64
 msgid "Button 6"
 msgstr "बटन ६"
 
-#: ../modules/controller_linux_input.c:63
+#: ../modules/controller_linux_input.c:65
 msgid "Button 7"
 msgstr "बटन ७"
 
-#: ../modules/controller_linux_input.c:64
+#: ../modules/controller_linux_input.c:66
 msgid "Button 8"
 msgstr "बटन ८"
 
-#: ../modules/controller_linux_input.c:65
+#: ../modules/controller_linux_input.c:67
 msgid "Button 9"
 msgstr "बटन ९"
 
-#: ../modules/controller_linux_input.c:66
+#: ../modules/controller_linux_input.c:68
 msgid "Button Mouse"
 msgstr "माउस बटन"
 
-#: ../modules/controller_linux_input.c:67
+#: ../modules/controller_linux_input.c:69
 msgid "Button Left"
 msgstr "बायाँ बटन"
 
-#: ../modules/controller_linux_input.c:68
+#: ../modules/controller_linux_input.c:70
 msgid "Button Right"
 msgstr "दायाँ बटन"
 
-#: ../modules/controller_linux_input.c:69
+#: ../modules/controller_linux_input.c:71
 msgid "Button Middle"
 msgstr "बिच बटन"
 
-#: ../modules/controller_linux_input.c:70
+#: ../modules/controller_linux_input.c:72
 msgid "Button Side"
 msgstr "छेउ बटन"
 
-#: ../modules/controller_linux_input.c:71
+#: ../modules/controller_linux_input.c:73
 msgid "Button Extra"
 msgstr "अतिरिक्त बटन"
 
-#: ../modules/controller_linux_input.c:72
-#: ../modules/controller_linux_input.c:73
+#: ../modules/controller_linux_input.c:74
 msgid "Button Forward"
-msgstr "फरवार्ड बटन"
+msgstr "अगाडि बटन"
 
 #: ../modules/controller_linux_input.c:75
-msgid "Button Wheel"
-msgstr "चक्का बटन"
+msgid "Button Back"
+msgstr "पछाडि फर्काउने बटन"
+
+#: ../modules/controller_linux_input.c:76
+msgid "Button Task"
+msgstr "कार्य बटन"
 
 #: ../modules/controller_linux_input.c:78
+msgid "Button Wheel"
+msgstr "घुमाउने बटन"
+
+#: ../modules/controller_linux_input.c:81
 msgid "Button Gear Down"
 msgstr "तल बटन गियर"
 
-#: ../modules/controller_linux_input.c:81
+#: ../modules/controller_linux_input.c:84
 msgid "Button Gear Up"
 msgstr "माथि बटन गियर"
 
-#: ../modules/controller_linux_input.c:87
-msgid "Wheel Turn Left"
-msgstr "बायाँ मोड्ने चक्का"
+#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_dx_dinput.c:469
+msgid "X Move Left"
+msgstr "X बायाँ सार्नुहोस्"
 
-#: ../modules/controller_linux_input.c:88
-msgid "Wheel Turn Right"
-msgstr "दायाँ मोड्ने चक्का"
+#: ../modules/controller_linux_input.c:91
+#: ../modules/controller_dx_dinput.c:472
+msgid "X Move Right"
+msgstr "X दायाँ सार्नुहोस्"
 
-#: ../modules/controller_linux_input.c:89
+#: ../modules/controller_linux_input.c:92
+msgid "Y Move Forward"
+msgstr "Y अगाडि सार्नुहोस्"
+
+#: ../modules/controller_linux_input.c:93
+msgid "Y Move Back"
+msgstr "Y पछाडि सार्नुहोस्"
+
+#: ../modules/controller_linux_input.c:94
+#: ../modules/controller_dx_dinput.c:487
+msgid "Z Move Up"
+msgstr "Z माथि सार्नुहोस्"
+
+#: ../modules/controller_linux_input.c:95
+#: ../modules/controller_dx_dinput.c:490
+msgid "Z Move Down"
+msgstr "Z तल सार्नुहोस्"
+
+#: ../modules/controller_linux_input.c:97
+msgid "X Axis Tilt Forward"
+msgstr "X अक्ष अगाडि टिल्ट गर्नुहोस्"
+
+#: ../modules/controller_linux_input.c:98
+msgid "X Axis Tilt Back"
+msgstr "X अक्ष पछाडि टिल्ट गर्नुहोस्"
+
+#: ../modules/controller_linux_input.c:99
+#: ../modules/controller_dx_dinput.c:505
+msgid "Y Axis Tilt Right"
+msgstr "Y अक्ष दायाँ टिल्ट गर्नुहोस्"
+
+#: ../modules/controller_linux_input.c:100
+#: ../modules/controller_dx_dinput.c:508
+msgid "Y Axis Tilt Left"
+msgstr "Y अक्ष बायाँ टिल्ट गर्नुहोस्"
+
+#: ../modules/controller_linux_input.c:101
+#: ../modules/controller_dx_dinput.c:514
+msgid "Z Axis Turn Left"
+msgstr "Z अक्ष बायाँ घुमाउनुहोस्"
+
+#: ../modules/controller_linux_input.c:102
+#: ../modules/controller_dx_dinput.c:517
+msgid "Z Axis Turn Right"
+msgstr "Z अक्ष दायाँ घुमाउनुहोस्"
+
+#: ../modules/controller_linux_input.c:104
+msgid "Horiz. Wheel Turn Back"
+msgstr "Horiz. चक्का पछाडि फर्काउनुहोस्"
+
+#: ../modules/controller_linux_input.c:105
+msgid "Horiz. Wheel Turn Forward"
+msgstr "Horiz. चक्का अगाडि फर्काउनुहोस्"
+
+#: ../modules/controller_linux_input.c:106
 msgid "Dial Turn Left"
 msgstr "बायाँ मोड्ने डायल"
 
-#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_linux_input.c:107
 msgid "Dial Turn Right"
 msgstr "दायाँ मोड्ने डायल"
 
-#: ../modules/controller_linux_input.c:154
+#: ../modules/controller_linux_input.c:108
+msgid "Wheel Turn Left"
+msgstr "बायाँ मोड्ने चक्का"
+
+#: ../modules/controller_linux_input.c:109
+msgid "Wheel Turn Right"
+msgstr "दायाँ मोड्ने चक्का"
+
+#: ../modules/controller_linux_input.c:179
 msgid "Linux input event controller"
 msgstr "लिनक्स आगत घटना नियन्त्रक"
 
-#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:244
+#: ../modules/controller_linux_input.c:249
+#: ../modules/controller_dx_dinput.c:227 ../modules/controller_midi.c:245
 msgid "Device:"
 msgstr "यन्त्र:"
 
-#: ../modules/controller_linux_input.c:223
+#: ../modules/controller_linux_input.c:250
 msgid "The name of the device to read Linux Input events from."
 msgstr "यसबाट लिनक्स आगत घटनाहरू पढ्ने यन्त्रको नाम"
 
-#: ../modules/controller_linux_input.c:227
+#: ../modules/controller_linux_input.c:261
 msgid "Linux Input"
 msgstr "लिनक्स आगत"
 
-#: ../modules/controller_linux_input.c:351
+#: ../modules/controller_linux_input.c:539
 msgid "Linux Input Events"
 msgstr "लिनक्स आगत घटनाहरू"
 
-#: ../modules/controller_linux_input.c:372 ../modules/controller_midi.c:480
-#: ../modules/controller_midi.c:506
+#: ../modules/controller_linux_input.c:551
+#: ../modules/controller_dx_dinput.c:1122 ../modules/controller_midi.c:533
+msgid "No device configured"
+msgstr "कुनै पनि यन्त्रहरू कन्फिगर गरिएको छैन"
+
+#: ../modules/controller_linux_input.c:577 ../modules/controller_midi.c:482
+#: ../modules/controller_midi.c:508
 #, c-format
 msgid "Reading from %s"
 msgstr "%s बाट पढ्दैछ"
 
-#: ../modules/controller_linux_input.c:388
-#: ../modules/controller_linux_input.c:431 ../modules/controller_midi.c:462
-#: ../modules/controller_midi.c:523 ../modules/controller_midi.c:594
+#: ../modules/controller_linux_input.c:595
+#: ../modules/controller_linux_input.c:649 ../modules/controller_midi.c:464
+#: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
 #, c-format
 msgid "Device not available: %s"
 msgstr "यन्त्र उपलब्ध छैन: %s"
 
-#: ../modules/controller_linux_input.c:396 ../modules/controller_midi.c:531
-msgid "No device configured"
-msgstr "कुनै पनि यन्त्रहरू कन्फिगर गरिएको छैन"
+#: ../modules/controller_linux_input.c:614
+#: ../modules/controller_dx_dinput.c:1147
+msgid "Device not available"
+msgstr "यन्त्र उपलब्ध छैन"
 
-#: ../modules/controller_linux_input.c:440 ../modules/controller_midi.c:603
+#: ../modules/controller_linux_input.c:658 ../modules/controller_midi.c:605
 msgid "End of file"
 msgstr "फाइलको अन्त्य"
 
-#: ../modules/controller_midi.c:166
+#: ../modules/controller_dx_dinput.c:157
+msgid "DirectX DirectInput event controller"
+msgstr "DirectX प्रत्यक्ष आगत घटना नियन्त्रक"
+
+#: ../modules/controller_dx_dinput.c:228
+msgid "The device to read DirectInput events from."
+msgstr "यसबाट प्रत्यक्ष आगत घटना पढ्ने यन्त्र ।"
+
+#: ../modules/controller_dx_dinput.c:237
+msgid "DirectX DirectInput"
+msgstr "DirectX प्रत्यक्ष आगत"
+
+#: ../modules/controller_dx_dinput.c:446
+#, c-format
+msgid "Button %d"
+msgstr "बटन %d"
+
+#: ../modules/controller_dx_dinput.c:449
+#, c-format
+msgid "Button %d Press"
+msgstr "बटन %d थिच्नुहोस्"
+
+#: ../modules/controller_dx_dinput.c:452
+#, c-format
+msgid "Button %d Release"
+msgstr "बटन %d छोड्नुहोस्"
+
+#: ../modules/controller_dx_dinput.c:478
+msgid "Y Move Away"
+msgstr "Y टाढा सार्नुहोस्"
+
+#: ../modules/controller_dx_dinput.c:481
+msgid "Y Move Near"
+msgstr "Y नजिक ल्याउनुहोस्"
+
+#: ../modules/controller_dx_dinput.c:496
+msgid "X Axis Tilt Away"
+msgstr "X अक्ष टाढा टिल्ट गर्नुहोस्"
+
+#: ../modules/controller_dx_dinput.c:499
+msgid "X Axis Tilt Near"
+msgstr "X अक्ष नजिक टिल्ट गर्नुहोस्"
+
+#: ../modules/controller_dx_dinput.c:528
+#, c-format
+msgid "Slider %d Increase"
+msgstr "साइडर %d बढाउनुहोस्"
+
+#: ../modules/controller_dx_dinput.c:531
+#, c-format
+msgid "Slider %d Decrease"
+msgstr "साइडर %d घटाउनुहोस्"
+
+#: ../modules/controller_dx_dinput.c:541
+#, c-format
+msgid "POV %d X View"
+msgstr "POV %d X दृश्य"
+
+#: ../modules/controller_dx_dinput.c:544
+#, c-format
+msgid "POV %d Y View"
+msgstr "POV %d Y दृश्य"
+
+#: ../modules/controller_dx_dinput.c:547
+#, c-format
+msgid "POV %d Return"
+msgstr "POV %d फर्काउनुहोस्"
+
+#: ../modules/controller_dx_dinput.c:1111
+msgid "DirectInput Events"
+msgstr "प्रत्यक्ष आगत घटना"
+
+#: ../modules/controller_midi.c:167
 msgid "MIDI event controller"
 msgstr "MIDI घटना नियन्त्रक"
 
-#: ../modules/controller_midi.c:235
+#: ../modules/controller_midi.c:236
 msgid "The name of the device to read MIDI events from."
 msgstr "MIDI घटना पढ्ने यन्त्रको नाम"
 
-#: ../modules/controller_midi.c:238
+#: ../modules/controller_midi.c:239
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "ALSA अनुक्रमक प्रयोग गर्न 'alsa' प्रविष्ट गर्नुहोस्।"
 
-#: ../modules/controller_midi.c:253
+#: ../modules/controller_midi.c:254
 msgid "Channel:"
 msgstr "च्यानल:"
 
-#: ../modules/controller_midi.c:254
+#: ../modules/controller_midi.c:255
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
 msgstr "यसबाट घटनाहरू पढ्न MIDI च्यानल। सबै MIDI च्यानलहरूबाट पढ्नका लागि -१ मा सेट गर्नुहोस्।"
 
-#: ../modules/controller_midi.c:258
+#: ../modules/controller_midi.c:259
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:434
+#: ../modules/controller_midi.c:383
+#, c-format
+msgid "Note %02x on"
+msgstr "द्रष्टब्य %02x खुला"
+
+#: ../modules/controller_midi.c:386
+#, c-format
+msgid "Note %02x off"
+msgstr "द्रष्टब्य %02x बन्द"
+
+#: ../modules/controller_midi.c:389
+#, c-format
+msgid "Controller %03d"
+msgstr "नियन्त्रक %03d"
+
+#: ../modules/controller_midi.c:436
 msgid "MIDI Events"
 msgstr "MIDI घटनाहरू"
+
+#: ../modules/controller_midi.c:454
+msgid "GIMP"
+msgstr "गिम्प"
+
+#: ../modules/controller_midi.c:456
+msgid "GIMP MIDI Input Controller"
+msgstr "गिम्प MIDI आगत नियन्त्रक"
 
