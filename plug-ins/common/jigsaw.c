@@ -437,7 +437,7 @@ jigsaw (GimpDrawable *drawable,
         GimpPreview  *preview)
 {
   GimpPixelRgn  src_pr, dest_pr;
-  guchar       *src = NULL, *buffer;
+  guchar       *buffer;
   gint          width;
   gint          height;
   gint          bytes;
@@ -445,28 +445,24 @@ jigsaw (GimpDrawable *drawable,
 
   if (preview)
     {
-      src = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
-                                          &width, &height, &bytes);
+      gimp_preview_get_size (preview, &width, &height);
+      bytes  = drawable->bpp;
+      buffer = gimp_drawable_get_thumbnail_data (drawable->drawable_id,
+						 &width, &height, &bytes);
+      buffer_size = bytes * width * height;
     }
   else
     {
       width  = drawable->width;
       height = drawable->height;
-    }
-  bytes  = drawable->bpp;
-  buffer_size = bytes * width * height;
+      bytes  = drawable->bpp;
 
-  /* setup image buffer */
-  buffer = g_new (guchar, buffer_size);
+      /* setup image buffer */
+      buffer_size = bytes * width * height;
+      buffer = g_new (guchar, buffer_size);
 
-  if (preview)
-    {
-      memcpy (buffer, src, buffer_size);
-    }
-  else
-    {
-      gimp_pixel_rgn_init (&src_pr,  drawable, 0, 0, width, height, FALSE, FALSE);
-      gimp_pixel_rgn_init (&dest_pr, drawable, 0, 0, width, height, TRUE, TRUE);
+      gimp_pixel_rgn_init (&src_pr,  drawable, 0, 0, width, height,
+			   FALSE, FALSE);
       gimp_pixel_rgn_get_rect (&src_pr, buffer, 0, 0, width, height);
     }
 
@@ -483,11 +479,13 @@ jigsaw (GimpDrawable *drawable,
   if (preview)
     {
       gimp_preview_draw_buffer (preview, buffer, width * bytes);
-      g_free (src);
     }
   else
     {
+      gimp_pixel_rgn_init (&dest_pr, drawable, 0, 0, width, height,
+			   TRUE, TRUE);
       gimp_pixel_rgn_set_rect (&dest_pr, buffer, 0, 0, width, height);
+
       gimp_drawable_flush (drawable);
       gimp_drawable_merge_shadow (drawable->drawable_id, TRUE);
       gimp_drawable_update (drawable->drawable_id, 0, 0, width, height);
@@ -2436,7 +2434,7 @@ jigsaw_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_zoom_preview_new (drawable);
+  preview = gimp_aspect_preview_new (drawable, NULL);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
