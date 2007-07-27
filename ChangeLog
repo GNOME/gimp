@@ -1,5 +1,10 @@
 2007-07-27  Raphaël Quinet  <raphael@gimp.org>
 
+	* libgimpthumb/Makefile.am (gimp_thumbnail_list_SOURCES): fixed
+	typo: SURCES -> SOURCES.
+
+2007-07-27  Raphaël Quinet  <raphael@gimp.org>
+
 	* plug-ins/jpeg/jpeg-quality.c (jpeg_detect_quality): simplify the
 	formula so that it returns a slightly lower estimated quality when
 	there is no exact match with the IJG quantization tables.

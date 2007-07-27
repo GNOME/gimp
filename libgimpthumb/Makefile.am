@@ -86,7 +86,7 @@ libgimpthumb_2_0_la_LIBADD = $(libgimpmath) $(GDK_PIXBUF_LIBS)
 
 noinst_PROGRAMS = gimp-thumbnail-list
 
-gimp_thumbnail_list_SURCES = gimp-thumbnail-list.c
+gimp_thumbnail_list_SOURCES = gimp-thumbnail-list.c
 
 gimp_thumbnail_list_LDADD = libgimpthumb-$(GIMP_API_VERSION).la
 
