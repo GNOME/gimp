@@ -12,14 +12,14 @@
 # Dadhiram Nepal <yourssymbol@gmail.com>, 2005.
 # Mahesh subedi <submanesh@hotmail.com>, 2006.
 # Nabin Gautam <nabin@mpp.org.np>, 2006.
-# Shyam krishna bal <Shyamkrishna_bal@yahoo.com>, 2007.
+# Shyam Krishna Bal <Shyamkrishna_bal@yahoo.com>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD.ne\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-21 04:20+0100\n"
 "PO-Revision-Date: 2007-07-27 19:00+0545\n"
-"Last-Translator: Shyam Krishna bal <shyamkrishna_bal@yahoo.com>\n"
+"Last-Translator: Shyam Krishna Bal <shyamkrishna_bal@yahoo.com>\n"
 "Language-Team: Nepali <info@mpp.org.np>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -8638,14 +8638,14 @@ msgstr "प्रक्रिया '%s' तर्क '%s' का लागि �
 msgid ""
 "Procedure '%s' returned '%s' as return value '%s' (#%d, type %s). This value "
 "is out of range."
-msgstr "प्रक्रिया '%s' ले फर्कने मान '%s' (#%d, प्रकार %s) को रूपमा '%s' लाई फर्कायो । यो मान दायरा भन्दा बाहिर छ ।"
+msgstr "प्रक्रिया '%s' ले फिर्ता मान '%s' को रूपमा '%s' फर्कायो (#%d, प्रकार %s) । यो मान दायरा भन्दा बाहिर छ ।"
 
 #: ../app/pdb/gimpprocedure.c:627
 #, c-format
 msgid ""
 "Procedure '%s' has been called with value '%s' for argument '%s' (#%d, type %s). This value is out of range."
 msgstr ""
-"प्रक्रिया '%s' तर्क '%s' (#%d, प्रकार %s) का लागि मान '%s' सँग आह्वान गरिन्छ । यो मान दायरा भन्दा बाहिर छ ।"
+"प्रक्रिया '%s' तर्क मान '%s' सँग '%s' तर्कका लागि आह्वान गरियो (#%d, प्रकार %s) । यो मान दायरा भन्दा बाहिर छ ।"
 
 #: ../app/pdb/image_cmds.c:2059
 msgid "Image resolution is out of bounds, using the default resolution instead."
