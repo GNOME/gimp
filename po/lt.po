@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-26 00:00+0300\n"
-"PO-Revision-Date: 2007-07-26 00:00+0300\n"
+"POT-Creation-Date: 2007-07-28 15:11+0300\n"
+"PO-Revision-Date: 2007-07-28 15:15+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -92,7 +92,7 @@ msgstr ""
 #: ../app/batch.c:93 ../app/batch.c:111
 #, c-format
 msgid "The batch interpreter '%s' is not available. Batch mode disabled."
-msgstr "Komandų interpretatorius „%s“ neprieinamas. Komandų režimas išjungtas."
+msgstr "Komandų interpretatorius „%s“ neprieinamas. Komandų veiksena išjungta."
 
 #: ../app/main.c:150 ../tools/gimp-remote.c:79
 msgid "Show version information and exit"
@@ -165,7 +165,7 @@ msgstr "Pranešimus rodyti konsolėje, o ne naudojant dialogus"
 #. don't translate the mode names (off|on|warn)
 #: ../app/main.c:236
 msgid "PDB compatibility mode (off|on|warn)"
-msgstr "PDB suderinamumo režimas (off|on|warn)"
+msgstr "PDB suderinamumo veiksena (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
 #: ../app/main.c:242
@@ -666,7 +666,7 @@ msgid "New Channel Color"
 msgstr "Nauja kanalo spalva"
 
 #: ../app/actions/channels-commands.c:243
-#: ../app/display/gimpdisplayshell-dnd.c:499
+#: ../app/display/gimpdisplayshell-dnd.c:497
 #: ../app/widgets/gimpchanneltreeview.c:249
 #: ../app/widgets/gimplayertreeview.c:806 ../app/widgets/gimptoolbox-dnd.c:308
 #, c-format
@@ -731,7 +731,7 @@ msgstr "_Nepermatomumas"
 
 #: ../app/actions/context-actions.c:49
 msgid "Paint _Mode"
-msgstr "Piešimo _režimas"
+msgstr "Piešimo _veiksena"
 
 #: ../app/actions/context-actions.c:50
 msgid "_Tool"
@@ -1514,7 +1514,7 @@ msgstr "Iš_blukinti..."
 #: ../app/actions/edit-actions.c:103
 msgid "Modify paint mode and opacity of the last pixel manipulation"
 msgstr ""
-"Keisti paskutiniojo taškelio manipuliavimo piešimo režimą ir nepermatomumą"
+"Keisti paskutiniojo taškelio manipuliavimo piešimo veikseną ir nepermatomumą"
 
 #: ../app/actions/edit-actions.c:108
 msgid "Cu_t"
@@ -2375,7 +2375,7 @@ msgstr "_Paveikslėlis"
 
 #: ../app/actions/image-actions.c:61
 msgid "_Mode"
-msgstr "_Režimas"
+msgstr "_Veiksena"
 
 #: ../app/actions/image-actions.c:62 ../app/actions/layers-actions.c:56
 msgid "_Transform"
@@ -2643,7 +2643,7 @@ msgstr "_Savybės"
 
 #: ../app/actions/layers-actions.c:59
 msgid "Layer _Mode"
-msgstr "Sluoksnio _režimas"
+msgstr "Sluoksnio _veiksena"
 
 #: ../app/actions/layers-actions.c:62
 msgid "Te_xt Tool"
@@ -5494,7 +5494,7 @@ msgstr "Perkelti sluoksnį"
 
 #: ../app/core/core-enums.c:904
 msgid "Set layer mode"
-msgstr "Nustatyti sluoksnio režimą"
+msgstr "Nustatyti sluoksnio veikseną"
 
 #: ../app/core/core-enums.c:905
 msgid "Set layer opacity"
@@ -6720,7 +6720,7 @@ msgstr ""
 #: ../app/core/gimptemplate.c:119
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
 msgstr ""
-"Vienetai naudojami koordinuoti ekranui, kai nesama „taškas į tašką“ režime."
+"Vienetai naudojami koordinuoti ekranui, kai ne „taškas į tašką“ veiksenoje."
 
 #: ../app/core/gimptemplate.c:126
 msgid "The horizontal image resolution."
@@ -6943,7 +6943,7 @@ msgstr "Iš_blukinti"
 
 #: ../app/dialogs/fade-dialog.c:157
 msgid "_Mode:"
-msgstr "_Režimas:"
+msgstr "_Veiksena:"
 
 #: ../app/dialogs/fade-dialog.c:163
 msgid "_Opacity:"
@@ -7445,7 +7445,7 @@ msgstr "Rodyti _tinklelį"
 
 #: ../app/dialogs/preferences-dialog.c:1233
 msgid "Canvas _padding mode:"
-msgstr "Piešimo erdvės užpildo režimas:"
+msgstr "Piešimo erdvės _užpildo veiksena:"
 
 #: ../app/dialogs/preferences-dialog.c:1238
 msgid "Custom p_adding color:"
@@ -7758,7 +7758,7 @@ msgstr "Rodyti žymeklį piešimo įran_kiams"
 
 #: ../app/dialogs/preferences-dialog.c:2002
 msgid "Pointer _mode:"
-msgstr "Žymeklio _režimas:"
+msgstr "Žymeklio _veiksena:"
 
 #: ../app/dialogs/preferences-dialog.c:2005
 msgid "Pointer re_ndering:"
@@ -7770,11 +7770,11 @@ msgstr "Paveikslėlio lango išvaizda"
 
 #: ../app/dialogs/preferences-dialog.c:2028
 msgid "Default Appearance in Normal Mode"
-msgstr "Numatytoji išvaizda normaliame režime"
+msgstr "Numatytoji išvaizda normalioje veiksenoje"
 
 #: ../app/dialogs/preferences-dialog.c:2033
 msgid "Default Appearance in Fullscreen Mode"
-msgstr "Numatytoji išvaizda viso ekrano režime"
+msgstr "Numatytoji išvaizda viso ekrano veiksenoje"
 
 #: ../app/dialogs/preferences-dialog.c:2042
 msgid "Image Title & Statusbar Format"
@@ -7890,7 +7890,7 @@ msgstr "Pasirinkite spausdinimo spalvų profilį"
 
 #: ../app/dialogs/preferences-dialog.c:2324
 msgid "_Mode of operation:"
-msgstr "_Veikimo režimas:"
+msgstr "_Veikimo veiksena:"
 
 #: ../app/dialogs/preferences-dialog.c:2350
 msgid "_Try to obtain the monitor profile from the X server"
@@ -8438,13 +8438,13 @@ msgstr[2] ""
 "Jeigu neišsaugosite paveikslėlio, pakeitimai, atlikti per paskutines %d "
 "minučių, bus prarasti."
 
-#: ../app/display/gimpdisplayshell-dnd.c:200
-#: ../app/display/gimpdisplayshell-dnd.c:502
-#: ../app/display/gimpdisplayshell-dnd.c:555
+#: ../app/display/gimpdisplayshell-dnd.c:217
+#: ../app/display/gimpdisplayshell-dnd.c:500
+#: ../app/display/gimpdisplayshell-dnd.c:550
 msgid "Drop New Layer"
 msgstr "Numesti naują sluoksnį"
 
-#: ../app/display/gimpdisplayshell-dnd.c:248
+#: ../app/display/gimpdisplayshell-dnd.c:262
 msgid "Drop New Path"
 msgstr "Numesti naują kontūrą"
 
@@ -8453,7 +8453,7 @@ msgstr "Numesti naują kontūrą"
 msgid "Drop layers"
 msgstr "Numesti sluoksnius"
 
-#: ../app/display/gimpdisplayshell-dnd.c:543
+#: ../app/display/gimpdisplayshell-dnd.c:538
 #: ../app/widgets/gimplayertreeview.c:834 ../app/widgets/gimptoolbox-dnd.c:356
 msgid "Dropped Buffer"
 msgstr "Numestas buferis"
@@ -9372,7 +9372,7 @@ msgstr "Skersmuo:"
 #: ../app/tools/gimpcolorpickeroptions.c:165
 #, c-format
 msgid "Pick Mode  (%s)"
-msgstr "Parinkimo režimas (%s)"
+msgstr "Parinkimo veiksena (%s)"
 
 #. the use_info_window toggle button
 #: ../app/tools/gimpcolorpickeroptions.c:174
@@ -9611,7 +9611,7 @@ msgstr "Tipas (%s)"
 #: ../app/tools/gimpdodgeburntool.c:214
 #: ../app/tools/gimpperspectiveclonetool.c:896
 msgid "Mode"
-msgstr "Režimas"
+msgstr "Veiksena"
 
 #: ../app/tools/gimpdodgeburntool.c:226
 msgid "Exposure:"
@@ -10202,7 +10202,7 @@ msgstr "_Teptukas"
 #: ../app/tools/gimpselectionoptions.c:336
 #: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:273
 msgid "Mode:"
-msgstr "Režimas:"
+msgstr "Veiksena:"
 
 #: ../app/tools/gimppaintoptions-gui.c:114
 #: ../app/widgets/gimpbrushselect.c:177 ../app/widgets/gimplayertreeview.c:288
@@ -10732,7 +10732,7 @@ msgstr "Apriboti redagavimą iki poligonų"
 
 #: ../app/tools/gimpvectoroptions.c:156
 msgid "Edit Mode"
-msgstr "Keitimo režimas"
+msgstr "Keitimo veiksena"
 
 #: ../app/tools/gimpvectoroptions.c:174
 msgid "Polygonal"
