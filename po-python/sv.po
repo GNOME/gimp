@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-28 14:35+0200\n"
-"PO-Revision-Date: 2007-07-28 17:43+0100\n"
+"PO-Revision-Date: 2007-07-28 17:48+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -242,7 +242,7 @@ msgstr "Skär"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "Skär en bild längs dess guider, skapar bilder och en HTML-tabellsnutt"
+msgstr "Skär en bild längs dess hjälplinjer, skapar bilder och en HTML-tabellsnutt"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
