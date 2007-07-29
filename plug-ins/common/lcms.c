@@ -119,7 +119,7 @@ static void         lcms_drawable_transform      (GimpDrawable    *drawable,
                                                   gdouble          progress_end);
 static void         lcms_sRGB_checksum           (guchar          *digest);
 
-static cmsHPROFILE  lcms_config_get_profile      (GimpColorConfig *config,
+static cmsHPROFILE  lcms_load_profile            (const gchar     *filename,
                                                   guchar          *checksum);
 
 static gboolean     lcms_icc_apply_dialog        (gint32           image,
@@ -464,15 +464,10 @@ lcms_icc_apply (GimpColorConfig *config,
 
   if (filename)
     {
-      dest_profile = cmsOpenProfileFromFile (filename, "r");
+      dest_profile = lcms_load_profile (filename, dest_md5);
 
       if (! dest_profile)
-        {
-          g_message (_("Could not open color profile from '%s'"),
-                     gimp_filename_to_utf8 (filename));
-
-          return GIMP_PDB_EXECUTION_ERROR;
-        }
+        return GIMP_PDB_EXECUTION_ERROR;
 
       if (! lcms_icc_profile_is_rgb (dest_profile))
         {
@@ -712,9 +707,9 @@ lcms_image_get_profile (GimpColorConfig *config,
                        "be an ICC color profile"));
         }
     }
-  else
+  else if (config->rgb_profile)
     {
-      profile = lcms_config_get_profile (config, checksum);
+      profile = lcms_load_profile (config->rgb_profile, checksum);
     }
 
   return profile;
@@ -918,55 +913,52 @@ lcms_drawable_transform (GimpDrawable  *drawable,
 }
 
 static cmsHPROFILE
-lcms_config_get_profile (GimpColorConfig *config,
-                         guchar          *checksum)
+lcms_load_profile (const gchar *filename,
+                   guchar      *checksum)
 {
-  if (config->rgb_profile)
+  cmsHPROFILE  profile;
+  GMappedFile *file;
+  gchar       *data;
+  gsize        len;
+  GError      *error = NULL;
+
+  g_return_val_if_fail (filename != NULL, NULL);
+
+  file = g_mapped_file_new (filename, FALSE, &error);
+
+  if (! file)
     {
-      cmsHPROFILE  profile;
-      GMappedFile *file;
-      gchar       *data;
-      gsize        len;
-      GError      *error = NULL;
+      g_message (_("Could not open '%s' for reading: %s"),
+                 gimp_filename_to_utf8 (filename),
+                 error->message);
+      g_error_free (error);
 
-      file = g_mapped_file_new (config->rgb_profile, FALSE, &error);
-
-      if (! file)
-        {
-          g_message (_("Could not open '%s' for reading: %s"),
-                     gimp_filename_to_utf8 (config->rgb_profile),
-                     error->message);
-          g_error_free (error);
-
-          return NULL;
-        }
-
-      len = g_mapped_file_get_length (file);
-
-      data = g_memdup (g_mapped_file_get_contents (file), len);
-
-      g_mapped_file_free (file);
-
-      profile = cmsOpenProfileFromMem (data, len);
-
-      /* FIXME: we leak the data, it is used by the profile */
-
-      if (profile)
-        {
-          lcms_calculate_checksum (data, len, checksum);
-        }
-      else
-        {
-          g_free (data);
-
-          g_message (_("Could not load ICC profile from '%s'"),
-                     gimp_filename_to_utf8 (config->rgb_profile));
-        }
-
-      return profile;
+      return NULL;
     }
 
-  return NULL;
+  len = g_mapped_file_get_length (file);
+
+  data = g_memdup (g_mapped_file_get_contents (file), len);
+
+  g_mapped_file_free (file);
+
+  profile = cmsOpenProfileFromMem (data, len);
+
+  /* FIXME: we leak the data, it is used by the profile */
+
+  if (profile)
+    {
+      lcms_calculate_checksum (data, len, checksum);
+    }
+  else
+    {
+      g_free (data);
+
+      g_message (_("Could not load ICC profile from '%s'"),
+                 gimp_filename_to_utf8 (filename));
+    }
+
+  return profile;
 }
 
 static GtkWidget *
