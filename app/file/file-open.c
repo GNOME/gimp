@@ -566,12 +566,15 @@ file_open_profile_apply_rgb (GimpImage    *image,
 {
   GError *error = NULL;
 
-  if (gimp_image_base_type (image) != GIMP_GRAY &&
-      ! plug_in_icc_profile_apply_rgb (image, context, progress,
-                                       run_mode, &error))
+  if (gimp_image_base_type (image) == GIMP_GRAY)
+    return;
+
+  if (! plug_in_icc_profile_apply_rgb (image, context, progress, run_mode,
+                                       &error))
     {
       gimp_message (image->gimp, G_OBJECT (progress),
                     GIMP_MESSAGE_WARNING, error->message);
+
       g_error_free (error);
     }
 }

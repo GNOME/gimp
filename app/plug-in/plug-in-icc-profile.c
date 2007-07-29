@@ -58,8 +58,14 @@ plug_in_icc_profile_apply_rgb (GimpImage     *image,
                                GimpRunMode    run_mode,
                                GError       **error)
 {
-  Gimp          *gimp = image->gimp;
+  Gimp          *gimp;
   GimpProcedure *procedure;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+
+  gimp = image->gimp;
 
   if (gimp_image_base_type (image) == GIMP_GRAY)
     return FALSE;
@@ -137,8 +143,14 @@ plug_in_icc_profile_info (GimpImage     *image,
                           gchar        **info,
                           GError       **error)
 {
-  Gimp          *gimp = image->gimp;
+  Gimp          *gimp;
   GimpProcedure *procedure;
+
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
+
+  gimp = image->gimp;
 
   procedure = gimp_pdb_lookup_procedure (gimp->pdb, ICC_PROFILE_INFO_PROC);
 
@@ -194,6 +206,8 @@ plug_in_icc_profile_file_info (Gimp          *gimp,
   GimpProcedure *procedure;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (GIMP_IS_CONTEXT (context), FALSE);
+  g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress), FALSE);
   g_return_val_if_fail (filename != NULL, FALSE);
 
   procedure = gimp_pdb_lookup_procedure (gimp->pdb, ICC_PROFILE_FILE_INFO_PROC);
