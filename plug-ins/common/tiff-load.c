@@ -183,14 +183,15 @@ static void      read_default  (const guchar *source,
                                 gint          extra,
                                 gint          align);
 
-static void      fill_bit2byte          (void);
+static void      fill_bit2byte (void);
 
-static void      tiff_warning           (const gchar *module,
-                                         const gchar *fmt,
-                                         va_list      ap);
-static void      tiff_error             (const gchar *module,
-                                         const gchar *fmt,
-                                         va_list      ap);
+static void      tiff_warning  (const gchar  *module,
+                                const gchar  *fmt,
+                                va_list       ap);
+static void      tiff_error    (const gchar  *module,
+                                const gchar  *fmt,
+                                va_list       ap);
+
 
 const GimpPlugInInfo PLUG_IN_INFO =
 {
