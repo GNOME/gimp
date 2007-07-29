@@ -47,6 +47,22 @@
 #include <errno.h>
 #include <string.h>
 
+#include <sys/types.h>
+#include <fcntl.h>
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#include <glib/gstdio.h>
+#ifdef G_OS_WIN32
+#include <libgimpbase/gimpwin32-io.h>
+#endif
+
+#ifndef _O_BINARY
+#define _O_BINARY 0
+#endif
+
 #include <tiffio.h>
 
 #include <libgimp/gimp.h>
@@ -260,26 +276,30 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      TIFF       *tif;
+      const gchar *filename = param[1].data.d_string;
+      TIFF        *tif;
+      gint         fd;
 
-      gimp_get_data (LOAD_PROC, &target);
+      fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
 
-      tif = TIFFOpen (param[1].data.d_string, "r");
-
-      if (! tif)
+      if (fd == -1)
         {
           g_message (_("Could not open '%s' for reading: %s"),
-                     gimp_filename_to_utf8 (param[1].data.d_string), g_strerror (errno));
+                     gimp_filename_to_utf8 (filename), g_strerror (errno));
           status = GIMP_PDB_EXECUTION_ERROR;
         }
       else
         {
+          tif = TIFFFdOpen (fd, filename, "r");
+
+          gimp_get_data (LOAD_PROC, &target);
+
           pages.n_pages = pages.o_pages = TIFFNumberOfDirectories (tif);
 
           if (pages.n_pages == 0)
             {
               g_message (_("TIFF '%s' does not contain any directories"),
-                         gimp_filename_to_utf8 (param[1].data.d_string));
+                         gimp_filename_to_utf8 (filename));
 
               status = GIMP_PDB_EXECUTION_ERROR;
             }
@@ -331,7 +351,9 @@ run (const gchar      *name,
               else
                 status = GIMP_PDB_CANCEL;
             }
+
           TIFFClose (tif);
+          close (fd);
         }
     }
   else

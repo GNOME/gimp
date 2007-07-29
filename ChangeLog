@@ -1,5 +1,11 @@
 2007-07-29  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/tiff-load.c
+	* plug-ins/common/tiff-save.c: use g_open() to open the file.
+	Should fix filename encoding problems on Win32 (bug #461449).
+
+2007-07-29  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/lcms.c: also calculate the checksum when loading
 	the RGB profile from disk (bug #456017).
 

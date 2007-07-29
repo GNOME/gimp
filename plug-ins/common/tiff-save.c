@@ -47,6 +47,22 @@
 #include <errno.h>
 #include <string.h>
 
+#include <sys/types.h>
+#include <fcntl.h>
+
+#ifdef HAVE_UNISTD_H
+#include <unistd.h>
+#endif
+
+#include <glib/gstdio.h>
+#ifdef G_OS_WIN32
+#include <libgimpbase/gimpwin32-io.h>
+#endif
+
+#ifndef _O_BINARY
+#define _O_BINARY 0
+#endif
+
 #include <tiffio.h>
 
 #include <libgimp/gimp.h>
@@ -629,6 +645,7 @@ save_image (const gchar *filename,
   GimpPixelRgn   pixel_rgn;
   gint           tile_height;
   gint           y, yend;
+  gint           fd;
   gboolean       is_bw    = FALSE;
   gboolean       invert   = TRUE;
   const guchar   bw_map[] = { 0, 0, 0, 255, 255, 255 };
@@ -647,13 +664,16 @@ save_image (const gchar *filename,
   tile_height = gimp_tile_height ();
   rowsperstrip = tile_height;
 
-  tif = TIFFOpen (filename, "w");
-  if (! tif)
+  fd = g_open (filename, O_CREAT | O_TRUNC | O_WRONLY | _O_BINARY, 0644);
+
+  if (fd == -1)
     {
       g_message (_("Could not open '%s' for writing: %s"),
                  gimp_filename_to_utf8 (filename), g_strerror (errno));
       return FALSE;
     }
+
+  tif = TIFFFdOpen (fd, filename, "w");
 
   TIFFSetWarningHandler (tiff_warning);
   TIFFSetErrorHandler (tiff_error);
@@ -999,6 +1019,7 @@ save_image (const gchar *filename,
 
   TIFFFlushData (tif);
   TIFFClose (tif);
+  close (fd);
 
   gimp_progress_update (1.0);
 
