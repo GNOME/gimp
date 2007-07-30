@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-28 12:38+0200\n"
-"PO-Revision-Date: 2007-07-30 01:13+0100\n"
+"PO-Revision-Date: 2007-07-30 09:41+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -1396,7 +1396,7 @@ msgstr "_Offset..."
 
 #: ../app/actions/drawable-actions.c:70
 msgid "Shift the pixels, optionally wrapping them at the borders"
-msgstr ""
+msgstr "Byt ut bildpunkterna, bryt dem eventuellt vid kanterna"
 
 #: ../app/actions/drawable-actions.c:78
 #: ../app/actions/vectors-actions.c:153
@@ -2807,7 +2807,7 @@ msgstr "Text län_gs slinga"
 
 #: ../app/actions/layers-actions.c:159
 msgid "Warp this layer's text along the current path"
-msgstr ""
+msgstr "Vrid lagrets text längs den aktuella slingan"
 
 #: ../app/actions/layers-actions.c:164
 msgid "Layer B_oundary Size..."
@@ -4688,9 +4688,8 @@ msgid "When enabled, GIMP will show mnemonics in menus."
 msgstr "När aktiverat visar GIMP snabbtangenter i menyer."
 
 #: ../app/config/gimprc-blurbs.h:188
-#, fuzzy
 msgid "Generally only a concern for 8-bit displays, this sets the minimum number of system colors allocated for GIMP."
-msgstr "Detta bestämmer minimalt antal systemfärger att allokera till GIMP; detta gäller endast 8-bitars displayer."
+msgstr "Detta gäller oftast bara 8-bitars displayer, detta ställer in minimalt antal systemfärger som allokeras till GIMP."
 
 #: ../app/config/gimprc-blurbs.h:198
 msgid "Sets the monitor's horizontal resolution, in dots per inch.  If set to 0, forces the X server to be queried for both horizontal and vertical resolution information."
@@ -4822,7 +4821,7 @@ msgstr "När aktiverad kan menyer ryckas loss."
 
 #: ../app/config/gimprc-blurbs.h:351
 msgid "When enabled, dock windows (the toolbox and palettes) are set to be transient to the active image window. Most window managers will keep the dock windows above the image window then, but it may also have other effects."
-msgstr ""
+msgstr "När aktiverat kommer dockningsfönster (verktygslådan och paletter) att ställas in till att vara transient till det aktivera bildfönstret. De flesta fönsterhanterare kommer då att hålla dockningsfönster ovanför bildfönstret, men det kan även ha andra effekter."
 
 #: ../app/config/gimprc-blurbs.h:357
 msgid "When enabled, you can change keyboard shortcuts for menu items by hitting a key combination while the menu item is highlighted."
@@ -4850,7 +4849,7 @@ msgstr "Miniatyrbilden i öppna-dialogen uppdateras automatiskt om filen som fö
 
 #: ../app/config/gimprc-blurbs.h:386
 msgid "When the amount of pixel data exceeds this limit, GIMP will start to swap tiles to disk.  This is a lot slower but it makes it possible to work on images that wouldn't fit into memory otherwise.  If you have a lot of RAM, you may want to set this to a higher value."
-msgstr ""
+msgstr "När mängden bildpunksdata överstiger den här gränsen kommer GIMP att börja skriva ut plattor till disk. Det här är mycket långsammare men det gör det möjligt att arbeta på bilder som annars inte skulle få plats i minnet. Om du har mycket RAM-minne kanske du vill ställa in det här till ett högre värde."
 
 #: ../app/config/gimprc-blurbs.h:396
 msgid "The window type hint that is set on the toolbox. This may affect how your window manager decorates and handles the toolbox window."
@@ -5422,9 +5421,8 @@ msgid "Path modification"
 msgstr "Ändring av slinga"
 
 #: ../app/core/core-enums.c:920
-#, fuzzy
 msgid "Reposition path"
-msgstr "Omplacera lager"
+msgstr "Omplacera slinga"
 
 #: ../app/core/core-enums.c:922
 msgid "FS rigor"
@@ -6578,9 +6576,10 @@ msgstr "Flytande markering"
 msgid "Floated Layer"
 msgstr "Flytande lager"
 
+# FIXME: Inget bra det här
 #: ../app/core/gimpstrokeoptions.c:119
 msgid "Convert a mitered join to a bevelled join if the miter would extend to a distance of more than miter-limit * line-width from the actual join point."
-msgstr ""
+msgstr "Konvertera en kantfogning till en avfasad fogning om kanten skulle överstiga avståndet miter-limit * line-width från den faktiska fogpunkten."
 
 #: ../app/core/gimptemplate.c:119
 msgid "The unit used for coordinate display when not in dot-for-dot mode."
@@ -7570,7 +7569,7 @@ msgstr "Blanksteg"
 
 #: ../app/dialogs/preferences-dialog.c:1985
 msgid "_While space bar is pressed:"
-msgstr ""
+msgstr "_När blankstegstangenten trycks ned:"
 
 #. Mouse Pointers
 #: ../app/dialogs/preferences-dialog.c:1989
@@ -7728,11 +7727,11 @@ msgstr "_Försök att hämta skärmprofilen från X-servern"
 
 #: ../app/dialogs/preferences-dialog.c:2361
 msgid "_Display rendering intent:"
-msgstr ""
+msgstr "_Visa återgivningsmetod:"
 
 #: ../app/dialogs/preferences-dialog.c:2369
 msgid "_Softproof rendering intent:"
-msgstr ""
+msgstr "_Softproof återgivningsmetod:"
 
 #: ../app/dialogs/preferences-dialog.c:2379
 msgid "File Open behaviour:"
@@ -7789,7 +7788,7 @@ msgstr "Hint för andra _dockor:"
 
 #: ../app/dialogs/preferences-dialog.c:2479
 msgid "Toolbox and other docks are transient to the active image window"
-msgstr ""
+msgstr "Verktygslåda och andra dockor är transienta till det aktiva bildfönstret"
 
 #: ../app/dialogs/preferences-dialog.c:2484
 msgid "Focus"
@@ -10167,7 +10166,7 @@ msgstr "Y:"
 #: ../app/tools/gimprectangleoptions.c:566
 #: ../app/tools/gimprectangleoptions.c:580
 msgid "Fix"
-msgstr ""
+msgstr "Fast"
 
 #. Auto Shrink
 #: ../app/tools/gimprectangleoptions.c:596
@@ -10671,11 +10670,11 @@ msgstr "Centrumlinjer"
 
 #: ../app/tools/tools-enums.c:60
 msgid "Rule of thirds"
-msgstr ""
+msgstr "Tredjedelsregeln"
 
 #: ../app/tools/tools-enums.c:61
 msgid "Golden sections"
-msgstr "Gyllene sektioner"
+msgstr "Gyllene snitt"
 
 #: ../app/tools/tools-enums.c:119
 msgid "Free select"
@@ -11888,7 +11887,7 @@ msgstr "Öppna dialogrutan för val av färgskala"
 
 #: ../app/widgets/gimpviewablebox.c:219
 msgid "Reverse"
-msgstr "Återgå"
+msgstr "Omvänd"
 
 #: ../app/widgets/gimpviewablebox.c:298
 msgid "Open the palette selection dialog"
