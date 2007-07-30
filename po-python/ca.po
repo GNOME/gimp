@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-20 08:17+0100\n"
+"POT-Creation-Date: 2007-07-30 19:52+0200\n"
 "PO-Revision-Date: 2007-03-20 08:26+0100\n"
 "Last-Translator: Quim Perez i Noguer\n"
 "Language-Team: Català <gimp@softcatala.net>\n"
@@ -21,37 +21,37 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: KBabel 1.11.2\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:335
+#: ../plug-ins/pygimp/gimpfu.py:380
 msgid "Missing exception information"
 msgstr "Falta la informació de l'excepció"
 
-#: ../plug-ins/pygimp/gimpfu.py:344
+#: ../plug-ins/pygimp/gimpfu.py:389
 #, python-format
 msgid "An error occured running %s"
 msgstr "S'ha produït un error en executar %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:355
+#: ../plug-ins/pygimp/gimpfu.py:400
 msgid "_More Information"
 msgstr "_Més informació"
 
-#: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
-#: ../plug-ins/pygimp/gimpfu.py:479
+#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
+#: ../plug-ins/pygimp/gimpfu.py:524
 msgid "No"
 msgstr "No"
 
-#: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
+#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
 msgid "Yes"
 msgstr "Sí"
 
-#: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
 msgid "Python-Fu File Selection"
 msgstr "Selecció del fitxer Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:528
+#: ../plug-ins/pygimp/gimpfu.py:569
 msgid "Python-Fu Folder Selection"
 msgstr "Selecció de la carpeta Python-Fu"
 
-#: ../plug-ins/pygimp/gimpfu.py:618
+#: ../plug-ins/pygimp/gimpfu.py:659
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "El valor d'entrada no és vàlid per a '%s'"
@@ -72,31 +72,31 @@ msgstr "Desa com a XHTML amb colors"
 msgid "Colored XHTML"
 msgstr "XHTML amb colors"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
 msgid "Character _source"
 msgstr "_Origen del caràcter"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
 msgid "Source code"
 msgstr "Codi font"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:194
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Text file"
 msgstr "Fitxer de text"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Entry box"
 msgstr "Camp d'entrada"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "_File to read or characters to use"
 msgstr "_Fitxer a llegir o caràcters a emprar"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "Fo_nt size in pixels"
 msgstr "_Mida de la lletra en píxels"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
 msgid "_Write a separate CSS file"
 msgstr "_Escriu un fitxer CSS separat"
 
@@ -142,23 +142,23 @@ msgstr "Afegeix una capa de boira"
 msgid "_Fog..."
 msgstr "_Boira..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "_Layer name"
 msgstr "_Nom de la capa"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "Clouds"
 msgstr "Núvols"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:60
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
 msgid "_Fog color"
 msgstr "Color de la _boira"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
 msgid "_Turbulence"
 msgstr "_Turbulència"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
 msgid "Op_acity"
 msgstr "Op_acitat"
 
@@ -251,39 +251,39 @@ msgstr ""
 msgid "_Slice..."
 msgstr "_Divideix..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:430
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "Path for HTML export"
 msgstr "Carpeta del fitxer HTML"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
 msgid "Filename for export"
 msgstr "Nom de fitxer a exportar"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
 msgid "Image name prefix"
 msgstr "Prefix dels noms de les imatges"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
 msgid "Image format"
 msgstr "Format de les imatges"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Separate image folder"
 msgstr "Posa les imatges en una carpeta a part"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Folder for image export"
 msgstr "Carpeta per les imatge"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Space between table elements"
 msgstr "Separació entre els elements de la taula"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript per al onmouseover i el clicked"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Skip animation for table caps"
 msgstr "Deshabilita l'animació de la taula"
 
@@ -295,22 +295,22 @@ msgstr "Afegeix una ombra a una capa i opcionalment un bisell"
 msgid "_Drop Shadow and Bevel..."
 msgstr "_Ombra i bisell..."
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 msgid "_Shadow blur"
 msgstr "_Difuminat de l'ombra"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 msgid "_Bevel"
 msgstr "_Bisell"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
 msgid "_Drop shadow"
 msgstr "_Ombra"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
 msgid "Drop shadow _X displacement"
 msgstr "Longitud _X de l'ombra"
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
 msgid "Drop shadow _Y displacement"
 msgstr "Longitud _Y de l'ombra"

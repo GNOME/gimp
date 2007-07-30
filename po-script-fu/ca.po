@@ -1,18 +1,16 @@
-# translation of ca.po to Català
 # gimp-script-fu translation to Catalan.
 # Copyright © 2000, 2001, 2003, 2004, 2005, 2006, 2007 Free Software Foundation, Inc.
-# Softcatala <linux@softcatala.org>, 2000-2001.
-# Xavier Beà <xbea a pie.xtec.es>, 2003, 2004.
-# Xavier Conde Rueda <xavi.conde@gmail.com>, 2004.
-# Quim Perez Noguer <noguer a gmail.com>, 2005, 2006.
-#
+# Softcatala <gnome@llistes.softcatala.org>, 2000-2007.
+# Quim Perez i Noguer <noguer a osona.com>, 2005-2007.
+# Xavier Conde Rueda <xavi.conde a gmail.com>, 2004-2007.
+# Jordi Jover, jordijn@softcatala.org, 2002.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: ca\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-01 23:26+0200\n"
-"PO-Revision-Date: 2007-04-28 12:03+0200\n"
+"POT-Creation-Date: 2007-07-30 19:53+0200\n"
+"PO-Revision-Date: 2007-05-08 22:24+0200\n"
 "Last-Translator: Quim Perez i Noguer\n"
 "Language-Team: Català <gimp@softcatala.net>\n"
 "MIME-Version: 1.0\n"
@@ -21,37 +19,37 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: KBabel 1.11.2\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:143
-#: ../plug-ins/script-fu/script-fu-console.c:212
+#: ../plug-ins/script-fu/script-fu-console.c:144
+#: ../plug-ins/script-fu/script-fu-console.c:213
 msgid "Script-Fu Console"
 msgstr "Consola de les funcions"
 
-#: ../plug-ins/script-fu/script-fu-console.c:208
+#: ../plug-ins/script-fu/script-fu-console.c:209
 msgid "Welcome to TinyScheme"
 msgstr "Benvinguts al TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:214
+#: ../plug-ins/script-fu/script-fu-console.c:215
 msgid "Interactive Scheme Development"
 msgstr "Consola interactiva de l'Scheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:250
+#: ../plug-ins/script-fu/script-fu-console.c:251
 msgid "_Browse..."
 msgstr "_Cerca..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:312
+#: ../plug-ins/script-fu/script-fu-console.c:313
 msgid "Save Script-Fu Console Output"
 msgstr "Desa la sortida de la consola de funcions"
 
-#: ../plug-ins/script-fu/script-fu-console.c:359
+#: ../plug-ins/script-fu/script-fu-console.c:360
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr "No s'ha pogut obrir '%s' per escriure: %s"
+msgstr "No s'ha pogut obrir «%s» per escriure: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:388
+#: ../plug-ins/script-fu/script-fu-console.c:389
 msgid "Script-Fu Procedure Browser"
 msgstr "Gestor de funcions"
 
-#: ../plug-ins/script-fu/script-fu-console.c:713
+#: ../plug-ins/script-fu/script-fu-console.c:730
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "Si s'activa l'avaluador de funcions només es permetrà la invocació no "
@@ -66,15 +64,7 @@ msgstr "Una funció no pot processar dues seqüències al mateix temps."
 msgid "You are already running the \"%s\" script."
 msgstr "Ja esteu executant la funció «%s» ."
 
-#  strip the first part of the menupath if it contains _("/Script-Fu/")
-#  strip the first part of the menupath if it contains _("/Script-Fu/")
-#. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:216
-#: ../plug-ins/script-fu/script-fu-interface.c:219
-msgid "/Script-Fu/"
-msgstr "/Funcions/"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:237
+#: ../plug-ins/script-fu/script-fu-interface.c:238
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Funció: %s"
@@ -83,40 +73,40 @@ msgstr "Funció: %s"
 #  some languages want an extra space here
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:299
+#: ../plug-ins/script-fu/script-fu-interface.c:300
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:347
+#: ../plug-ins/script-fu/script-fu-interface.c:348
 msgid "Script-Fu Color Selection"
 msgstr "Funció de selecció del color"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:459
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu File Selection"
 msgstr "Funció de selecció del fitxer"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:463
 msgid "Script-Fu Folder Selection"
 msgstr "Funció de selecció de la carpeta"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:474
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Font Selection"
 msgstr "Funció de selecció del tipus de lletra"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:482
+#: ../plug-ins/script-fu/script-fu-interface.c:483
 msgid "Script-Fu Palette Selection"
 msgstr "Funció de selecció de la paleta"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:491
+#: ../plug-ins/script-fu/script-fu-interface.c:492
 msgid "Script-Fu Pattern Selection"
 msgstr "Funció de selecció del patró"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:500
+#: ../plug-ins/script-fu/script-fu-interface.c:501
 msgid "Script-Fu Gradient Selection"
 msgstr "Funció de selecció del degradat"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:509
+#: ../plug-ins/script-fu/script-fu-interface.c:510
 msgid "Script-Fu Brush Selection"
 msgstr "Funció de selecció del pinzell"
 
@@ -165,117 +155,117 @@ msgstr "Servidor per a l'execució remota de funcions"
 msgid "_Start Server..."
 msgstr "_Inicia el servidor..."
 
-#: ../plug-ins/script-fu/script-fu.c:300
-msgid "_GIMP Online"
-msgstr "_GIMP a la xarxa "
-
 #: ../plug-ins/script-fu/script-fu.c:301
+msgid "_GIMP Online"
+msgstr "El _GIMP a la xarxa "
+
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
 msgstr "_Manual d'usuari"
 
 #  strip the first part of the menupath if it contains _("/Script-Fu/")
 #  strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu.c:304
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Buttons"
 msgstr "_Botons"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:309
 msgid "_Logos"
 msgstr "_Logotips i rètols"
 
-#: ../plug-ins/script-fu/script-fu.c:310
+#: ../plug-ins/script-fu/script-fu.c:311
 msgid "_Misc"
 msgstr "_Varis"
 
-#: ../plug-ins/script-fu/script-fu.c:312
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Patterns"
 msgstr "_Patrons"
 
-#: ../plug-ins/script-fu/script-fu.c:314
+#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:316
-msgid "_Utils"
+#: ../plug-ins/script-fu/script-fu.c:317
+msgid "_Utilities"
 msgstr "_Utilitats"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Web Page Themes"
 msgstr "_Temes de pàgina web"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Alien Glow"
 msgstr "Lluentor estil _Àlien"
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Beveled Pattern"
 msgstr "Patró amb _relleu"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: ../plug-ins/script-fu/script-fu.c:325
 msgid "_Classic.Gimp.Org"
 msgstr "_Clàssic.Gimp.org"
 
-#: ../plug-ins/script-fu/script-fu.c:327
+#: ../plug-ins/script-fu/script-fu.c:328
 msgid "Alpha to _Logo"
 msgstr "Capa transparent a _logotip"
 
-#: ../plug-ins/script-fu/script-fu.c:329
+#: ../plug-ins/script-fu/script-fu.c:330
 msgid "An_imation"
 msgstr "An_imació"
 
-#: ../plug-ins/script-fu/script-fu.c:331
+#: ../plug-ins/script-fu/script-fu.c:332
 msgid "_Animators"
 msgstr "_Animadors"
 
-#: ../plug-ins/script-fu/script-fu.c:333
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Artistic"
 msgstr "_Artístic"
 
-#: ../plug-ins/script-fu/script-fu.c:335
+#: ../plug-ins/script-fu/script-fu.c:336
 msgid "_Blur"
 msgstr "_Difumina"
 
-#: ../plug-ins/script-fu/script-fu.c:337
+#: ../plug-ins/script-fu/script-fu.c:338
 msgid "_Decor"
 msgstr "_Decora"
 
-#: ../plug-ins/script-fu/script-fu.c:339
+#: ../plug-ins/script-fu/script-fu.c:340
 msgid "_Effects"
 msgstr "_Efectes"
 
-#: ../plug-ins/script-fu/script-fu.c:341
+#: ../plug-ins/script-fu/script-fu.c:342
 msgid "En_hance"
 msgstr "_Millora"
 
-#: ../plug-ins/script-fu/script-fu.c:343
+#: ../plug-ins/script-fu/script-fu.c:344
 msgid "_Light and Shadow"
 msgstr "_Llums i ombres"
 
-#: ../plug-ins/script-fu/script-fu.c:345
+#: ../plug-ins/script-fu/script-fu.c:346
 msgid "S_hadow"
 msgstr "_Ombra"
 
-#: ../plug-ins/script-fu/script-fu.c:347
+#: ../plug-ins/script-fu/script-fu.c:348
 msgid "_Render"
 msgstr "_Compon"
 
-#: ../plug-ins/script-fu/script-fu.c:349
+#: ../plug-ins/script-fu/script-fu.c:350
 msgid "_Alchemy"
 msgstr "_Alquímia"
 
-#: ../plug-ins/script-fu/script-fu.c:352
+#: ../plug-ins/script-fu/script-fu.c:353
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Torna a carregar totes les funcions disponibles"
 
-#: ../plug-ins/script-fu/script-fu.c:357
+#: ../plug-ins/script-fu/script-fu.c:358
 msgid "_Refresh Scripts"
 msgstr "_Actualitza les funcions"
 
-#: ../plug-ins/script-fu/script-fu.c:380
+#: ../plug-ins/script-fu/script-fu.c:381
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -995,8 +985,8 @@ msgstr "Cre_ma..."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid ""
-"Burn-In: Needs two layers in total!\n"
-"A foreground text layer with transparency and a background layer."
+"Burn-In: Needs two layers in total!\\nA foreground text layer with "
+"transparency and a background layer."
 msgstr ""
 "Crema: Necessita dues capes en total.\n"
 "Una capa transparent amb el text i una capa de fons."
@@ -1292,9 +1282,7 @@ msgid "Add realistic looking coffee stains to the image"
 msgstr "Afegeix a la imatge un efecte realista de taques de cafè"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
-msgid ""
-"Darken only\n"
-"(Better, but only for images with a lot of white)"
+msgid "Darken only\\n(Better, but only for images with a lot of white)"
 msgstr ""
 "Només enfosqueix\n"
 "(Millor, però només per a imatges amb molt de blanc)"
@@ -1354,10 +1342,6 @@ msgstr "Crea un logotip metàl·lic amb reflexos i ombres"
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 msgid "Effect size (pixels)"
 msgstr "Mida de l'efecte (píxels)"
-
-#: ../plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "This procedure is deprecated! use 'gimp-edit-copy-visible' instead."
-msgstr "Aquesta funció està en desús! utilitzeu 'gimp_edit_copy_visible'."
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "Background image"
@@ -2196,6 +2180,11 @@ msgstr "Nou pin_zell..."
 msgid "Paste the clipboard contents into a new brush"
 msgstr "Enganxa el contingut del porta-retalls en un nou pinzell"
 
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
+msgid "There is no image data in the clipboard to paste."
+msgstr "No hi ha dades de cap imatge al porta-retalls per a enganxar."
+
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
 msgid "New _Pattern..."
 msgstr "Nou _patró..."
@@ -2388,6 +2377,20 @@ msgstr ""
 msgid "_Round Corners..."
 msgstr "A_rrodoneix les vores..."
 
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr ""
+"Canvia el mapa de colors d'una imatge amb els colors de la paleta "
+"especificada."
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
+msgid "Palette"
+msgstr "Paleta"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
+msgid "Se_t Colormap..."
+msgstr "_Defineix el mapa de colors..."
+
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Convert a selection to a brush"
 msgstr "Converteix la selecció en un pinzell"
@@ -2426,14 +2429,6 @@ msgid "Round the corners of the current selection"
 msgstr "Arrodoneix les vores de la selecció actual"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
-msgid ""
-"Round the corners of the current selection (deprecated, use Rounded "
-"Rectangle)"
-msgstr ""
-"Arrodoneix les vores de la selecció actual (funció en desús, empreu la "
-"funció Rectangle arrodonit)"
-
-#: ../plug-ins/script-fu/scripts/selection-round.scm.h:6
 msgid "Rounded R_ectangle..."
 msgstr "R_ectangle arrodonit..."
 
@@ -3039,3 +3034,18 @@ msgstr "Opacitat de la lluentor"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Ombra amb reflex _Xach..."
+
+#  strip the first part of the menupath if it contains _("/Script-Fu/")
+#  strip the first part of the menupath if it contains _("/Script-Fu/")
+#~ msgid "/Script-Fu/"
+#~ msgstr "/Funcions/"
+
+#~ msgid "This procedure is deprecated! use 'gimp-edit-copy-visible' instead."
+#~ msgstr "Aquesta funció està en desús! utilitzeu 'gimp_edit_copy_visible'."
+
+#~ msgid ""
+#~ "Round the corners of the current selection (deprecated, use Rounded "
+#~ "Rectangle)"
+#~ msgstr ""
+#~ "Arrodoneix les vores de la selecció actual (funció en desús, empreu la "
+#~ "funció Rectangle arrodonit)"
