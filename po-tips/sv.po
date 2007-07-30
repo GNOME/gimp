@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-28 15:19+0200\n"
-"PO-Revision-Date: 2007-07-28 15:43+0100\n"
+"PO-Revision-Date: 2007-07-30 10:49+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -30,7 +30,7 @@ msgstr "<tt>Ctrl</tt>-klick på lagermaskens förhandsgranskning i lagerdialogen
 
 #: ../data/tips/gimp-tips.xml.in.h:4
 msgid "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 degree angles."
-msgstr "<tt>Ctrl</tt>-drag med rotationsverktyget kommer att begränsa rotationen till 15-gradersvinklar."
+msgstr "<tt>Ctrl</tt> och dra med rotationsverktyget kommer att begränsa rotationen till 15-gradersvinklar."
 
 #: ../data/tips/gimp-tips.xml.in.h:5
 msgid "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers but that one. <tt>Shift</tt>-click again to show all layers."
@@ -46,7 +46,7 @@ msgstr "När du har aktiverat &quot;Dynamiska tangentbordsgenvägar&quot; i inst
 
 #: ../data/tips/gimp-tips.xml.in.h:8
 msgid "Click and drag on a ruler to place a guide on an image. All dragged selections will snap to the guides. You can remove guides by dragging them off the image with the Move tool."
-msgstr "Klicka på en linjal och drag den för att placera en hjälplinje på en bild. Alla markeringar som dras kommer att fästas vid hjälplinjerna. Du kan ta bort hjälplinjer genom att dra dem utanför bilden med flyttverktyget."
+msgstr "Klicka på en linjal och dra den för att placera en hjälplinje på en bild. Alla markeringar som dras kommer att fästas vid hjälplinjerna. Du kan ta bort hjälplinjer genom att dra dem utanför bilden med flyttverktyget."
 
 #: ../data/tips/gimp-tips.xml.in.h:9
 msgid "GIMP allows you to undo most changes to the image, so feel free to experiment."
@@ -99,7 +99,7 @@ msgstr "Prova att använda XCF, GIMP:s inbyggda filformat (använd filändelsen 
 
 #: ../data/tips/gimp-tips.xml.in.h:21
 msgid "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes the window move, your window manager uses the <tt>Alt</tt> key already."
-msgstr "Du kan justera eller flytta en markering genom att använda <tt>Alt</tt>-drag. Om detta gör att fönstret flyttar sig använder din fönsterhanterare redan <tt>Alt</tt>-tangenten."
+msgstr "Du kan justera eller flytta en markering genom att använda <tt>Alt</tt> och dra. Om detta gör att fönstret flyttar sig använder din fönsterhanterare redan <tt>Alt</tt>-tangenten."
 
 #: ../data/tips/gimp-tips.xml.in.h:22
 msgid "You can create and edit complex selections using the Path tool. The Paths dialog allows you to work on multiple paths and to convert them to selections."
