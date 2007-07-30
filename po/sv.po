@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-28 12:38+0200\n"
-"PO-Revision-Date: 2007-07-30 09:55+0100\n"
+"PO-Revision-Date: 2007-07-30 10:47+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -4180,7 +4180,7 @@ msgstr "Visa bildens färgsampelpunkter"
 
 #: ../app/actions/view-actions.c:174
 msgid "Sn_ap to Guides"
-msgstr "Snä_pp mot hjälplinjer"
+msgstr "Fäs_t mot hjälplinjer"
 
 #: ../app/actions/view-actions.c:175
 msgid "Tool operations snap to guides"
@@ -4188,7 +4188,7 @@ msgstr "Verktygsåtgärder fäster mot hjälplinjer"
 
 #: ../app/actions/view-actions.c:181
 msgid "Sna_p to Grid"
-msgstr "S_näpp mot rutnät"
+msgstr "Fäst m_ot rutnät"
 
 #: ../app/actions/view-actions.c:182
 msgid "Tool operations snap to the grid"
@@ -4196,7 +4196,7 @@ msgstr "Verktygsåtgärder fäster mot rutnätet"
 
 #: ../app/actions/view-actions.c:188
 msgid "Snap to _Canvas Edges"
-msgstr "Fäst till _ritytans kanter"
+msgstr "Fäst mot _ritytans kanter"
 
 #: ../app/actions/view-actions.c:189
 msgid "Tool operations snap to the canvas edges"
@@ -4204,7 +4204,7 @@ msgstr "Verktygsåtgärder fäster mot ritytans kanter"
 
 #: ../app/actions/view-actions.c:195
 msgid "Snap t_o Active Path"
-msgstr "Fäst till a_ktiv slinga"
+msgstr "Fäst mot a_ktiv slinga"
 
 #: ../app/actions/view-actions.c:196
 msgid "Tool operations snap to the active path"
