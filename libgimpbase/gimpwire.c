@@ -382,9 +382,6 @@ _gimp_wire_read_double (GIOChannel *channel,
   gdouble *t;
   guint8   tmp[8];
   gint     i;
-#if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
-  gint     j;
-#endif
 
   g_return_val_if_fail (count >= 0, FALSE);
 
@@ -392,6 +389,10 @@ _gimp_wire_read_double (GIOChannel *channel,
 
   for (i = 0; i < count; i++)
     {
+#if (G_BYTE_ORDER == G_LITTLE_ENDIAN)
+      gint j;
+#endif
+
       if (! _gimp_wire_read_int8 (channel, tmp, 8, user_data))
         return FALSE;
 
@@ -418,13 +419,14 @@ _gimp_wire_read_string (GIOChannel  *channel,
                         gint         count,
                         gpointer     user_data)
 {
-  guint32 tmp;
-  gint    i;
+  gint i;
 
   g_return_val_if_fail (count >= 0, FALSE);
 
   for (i = 0; i < count; i++)
     {
+      guint32 tmp;
+
       if (! _gimp_wire_read_int32 (channel, &tmp, 1, user_data))
         return FALSE;
 
@@ -465,16 +467,16 @@ _gimp_wire_write_int32 (GIOChannel    *channel,
                         gint           count,
                         gpointer       user_data)
 {
-  guint32 tmp;
-  gint    i;
-
   g_return_val_if_fail (count >= 0, FALSE);
 
   if (count > 0)
     {
+      gint i;
+
       for (i = 0; i < count; i++)
         {
-          tmp = g_htonl (data[i]);
+          guint32 tmp = g_htonl (data[i]);
+
           if (! _gimp_wire_write_int8 (channel,
                                        (const guint8 *) &tmp, 4, user_data))
             return FALSE;
@@ -490,16 +492,16 @@ _gimp_wire_write_int16 (GIOChannel    *channel,
                         gint           count,
                         gpointer       user_data)
 {
-  guint16 tmp;
-  gint    i;
-
   g_return_val_if_fail (count >= 0, FALSE);
 
   if (count > 0)
     {
+      gint i;
+
       for (i = 0; i < count; i++)
         {
-          tmp = g_htons (data[i]);
+          guint16 tmp = g_htons (data[i]);
+
           if (! _gimp_wire_write_int8 (channel,
                                        (const guint8 *) &tmp, 2, user_data))
             return FALSE;
@@ -578,13 +580,14 @@ _gimp_wire_write_string (GIOChannel  *channel,
                          gint         count,
                          gpointer     user_data)
 {
-  guint32 tmp;
-  gint    i;
+  gint i;
 
   g_return_val_if_fail (count >= 0, FALSE);
 
   for (i = 0; i < count; i++)
     {
+      guint32 tmp;
+
       if (data[i])
         tmp = strlen (data[i]) + 1;
       else

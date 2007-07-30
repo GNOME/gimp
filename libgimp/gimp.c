@@ -883,8 +883,7 @@ gimp_run_procedure (const gchar *name,
 
   va_end (args);
 
-  return_vals = gimp_run_procedure2 (name, n_return_vals,
-                                     n_params, params);
+  return_vals = gimp_run_procedure2 (name, n_return_vals, n_params, params);
 
   g_free (params);
 
