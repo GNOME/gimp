@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-28 12:38+0200\n"
-"PO-Revision-Date: 2007-07-30 09:41+0100\n"
+"PO-Revision-Date: 2007-07-30 09:55+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -2449,7 +2449,7 @@ msgstr "Justera bildens dimensioner"
 
 #: ../app/actions/image-actions.c:90
 msgid "F_it Canvas to Layers"
-msgstr "_Passa rityta till lager"
+msgstr "An_passa rityta till lager"
 
 #: ../app/actions/image-actions.c:91
 msgid "Resize the image to enclose all layers"
