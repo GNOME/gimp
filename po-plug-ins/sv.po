@@ -10,9 +10,9 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-28 14:33+0200\n"
-"PO-Revision-Date: 2007-07-28 19:36+0100\n"
+"PO-Revision-Date: 2007-07-30 08:28+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
-"Language-Team: Swedish <sv@li.org>\n"
+"Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,19 +35,16 @@ msgstr ""
 "till din %s fil."
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:638
-#, fuzzy
 msgid "Realtime preview"
-msgstr "Realtidsförhandsgranskning"
+msgstr "Förhandsgranska i realtid"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:646
-#, fuzzy
 msgid "If enabled the preview will be redrawn automatically"
-msgstr "Om du använder detta alternativ kommer förhandsgranskningen att ritas om automatiskt"
+msgstr "Om aktiverad kommer förhandsgranskningen att ritas om automatiskt"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:649
-#, fuzzy
 msgid "R_edraw preview"
-msgstr "Rita om förhandsgranskning"
+msgstr "Ri_ta om förhandsgranskning"
 
 #. Zoom Options
 #: ../plug-ins/FractalExplorer/Dialogs.c:657
@@ -471,18 +468,16 @@ msgid "'%s' is corrupt. Line %d Option section incorrect"
 msgstr "\"%s\" är trasig. Rad %d alternativsektion är felaktig"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:243
-#, fuzzy
 msgid "Render fractal art"
-msgstr "Renderar fraktal..."
+msgstr "Rendera fraktalkonst"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:248
 msgid "_Fractal Explorer..."
 msgstr "_FractalExplorer..."
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:378
-#, fuzzy
 msgid "Rendering fractal"
-msgstr "Renderar fraktal..."
+msgstr "Renderar fraktal"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:760
 #: ../plug-ins/gflare/gflare.c:3126
@@ -554,11 +549,11 @@ msgstr "Allmänna alternativ"
 
 #: ../plug-ins/Lighting/lighting_ui.c:302
 msgid "T_ransparent background"
-msgstr "_Genomskinlig bakgrund"
+msgstr "T_ransparent bakgrund"
 
 #: ../plug-ins/Lighting/lighting_ui.c:312
 msgid "Make destination image transparent where bump height is zero"
-msgstr "Gör målbilden genomskinlig där bumphöjden är noll"
+msgstr "Gör målbilden transparent där bumphöjden är noll"
 
 #: ../plug-ins/Lighting/lighting_ui.c:315
 msgid "Cre_ate new image"
@@ -760,7 +755,6 @@ msgid "Lighting preset:"
 msgstr "Förinställning för ljus:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:606
-#, fuzzy
 msgid "Material Properties"
 msgstr "Materialegenskaper"
 
@@ -921,24 +915,20 @@ msgid "Load Lighting Preset"
 msgstr "Läs in förinställning för ljus"
 
 #: ../plug-ins/MapObject/mapobject_apply.c:275
-#, fuzzy
 msgid "Map to plane"
-msgstr "Mappa till yta..."
+msgstr "Mappa till yta"
 
 #: ../plug-ins/MapObject/mapobject_apply.c:278
-#, fuzzy
 msgid "Map to sphere"
-msgstr "Mappa till sfär..."
+msgstr "Mappa till sfär"
 
 #: ../plug-ins/MapObject/mapobject_apply.c:281
-#, fuzzy
 msgid "Map to box"
-msgstr "Mappa till låda..."
+msgstr "Mappa till ruta"
 
 #: ../plug-ins/MapObject/mapobject_apply.c:284
-#, fuzzy
 msgid "Map to cylinder"
-msgstr "Mappa till cylinder..."
+msgstr "Mappa till cylinder"
 
 #: ../plug-ins/MapObject/mapobject_main.c:196
 msgid "Map the image to an object (plane, sphere, box or cylinder)"
@@ -984,11 +974,11 @@ msgstr "Objekttyp att mappa till"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:509
 msgid "Transparent background"
-msgstr "Genomskinlig bakgrund"
+msgstr "Transparent bakgrund"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:520
 msgid "Make image transparent outside object"
-msgstr "Gör bilden genomskinlig utanför objektet"
+msgstr "Gör bilden transparent utanför objektet"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:522
 msgid "Tile source image"
@@ -1340,9 +1330,8 @@ msgstr ""
 
 #: ../plug-ins/bmp/bmpwrite.c:189
 #: ../plug-ins/bmp/bmpwrite.c:211
-#, fuzzy
 msgid "Alpha channel will be ignored."
-msgstr "EXIF-data kommer att ignoreras."
+msgstr "Alfakanal kommer att ignoreras."
 
 #. And let's begin the progress
 #. init the progress meter
@@ -1475,7 +1464,7 @@ msgstr "Luminansfassk_ifte:"
 
 #: ../plug-ins/common/AlienMap2.c:183
 msgid "Alter colors in various psychedelic ways"
-msgstr ""
+msgstr "Ändra färger på olika psykedeliska sätt"
 
 #: ../plug-ins/common/AlienMap2.c:188
 #, fuzzy
@@ -1828,7 +1817,6 @@ msgid "Seed:"
 msgstr "Frö:"
 
 #: ../plug-ins/common/CML_explorer.c:1385
-#, fuzzy
 msgid "Switch to \"From seed\" With the Last Seed"
 msgstr "Växla till \"Från frö\" med det senaste fröet"
 
@@ -2023,7 +2011,7 @@ msgstr "Fyll (höger till vänster)"
 #: ../plug-ins/common/align_layers.c:426
 #: ../plug-ins/common/align_layers.c:457
 msgid "Snap to grid"
-msgstr "Fäst vid rutnät"
+msgstr "Fäst mot rutnät"
 
 #: ../plug-ins/common/align_layers.c:435
 msgid "_Horizontal style:"
@@ -2109,7 +2097,7 @@ msgstr "Snabbare"
 
 #: ../plug-ins/common/animationplay.c:465
 msgid "Increase the speed of the animation"
-msgstr ""
+msgstr "Öka hastigheten på animationen"
 
 #: ../plug-ins/common/animationplay.c:470
 msgid "Slower"
@@ -2117,7 +2105,7 @@ msgstr "Långsammare"
 
 #: ../plug-ins/common/animationplay.c:470
 msgid "Decrease the speed of the animation"
-msgstr ""
+msgstr "Sänk hastigheten på animationen"
 
 #: ../plug-ins/common/animationplay.c:475
 msgid "Reset speed"
@@ -2133,13 +2121,12 @@ msgid "Start playback"
 msgstr "Starta uppspelning"
 
 #: ../plug-ins/common/animationplay.c:487
-#, fuzzy
 msgid "Detach"
-msgstr "Djup:"
+msgstr "Koppla loss"
 
 #: ../plug-ins/common/animationplay.c:488
 msgid "Detach the animation from the dialog window"
-msgstr ""
+msgstr "Koppla loss animationen från dialogfönstret"
 
 #: ../plug-ins/common/animationplay.c:581
 msgid "Animation Playback:"
@@ -2151,7 +2138,7 @@ msgstr "Uppspelningshastighet"
 
 #: ../plug-ins/common/animationplay.c:802
 msgid "Tried to display an invalid layer."
-msgstr ""
+msgstr "Försökte visa ett ogiltigt lager."
 
 #: ../plug-ins/common/animationplay.c:1322
 #, c-format
@@ -2183,9 +2170,8 @@ msgid "Remove optimization to make editing easier"
 msgstr ""
 
 #: ../plug-ins/common/animoptimize.c:178
-#, fuzzy
 msgid "_Unoptimize"
-msgstr "_Avoptimera"
+msgstr "A_voptimera"
 
 #: ../plug-ins/common/animoptimize.c:198
 msgid "_Remove Backdrop"
@@ -2196,19 +2182,16 @@ msgid "_Find Backdrop"
 msgstr "_Hitta bakgrund"
 
 #: ../plug-ins/common/animoptimize.c:427
-#, fuzzy
 msgid "Unoptimizing animation"
-msgstr "Avoptimerar animering..."
+msgstr "Avoptimerar animering"
 
 #: ../plug-ins/common/animoptimize.c:430
-#, fuzzy
 msgid "Removing animation background"
-msgstr "Tar bort animeringens bakgrund..."
+msgstr "Tar bort animeringens bakgrund"
 
 #: ../plug-ins/common/animoptimize.c:433
-#, fuzzy
 msgid "Finding animation background"
-msgstr "Söker animeringens bakgrund..."
+msgstr "Söker animeringens bakgrund"
 
 #: ../plug-ins/common/animoptimize.c:437
 msgid "Optimizing animation"
@@ -2256,7 +2239,7 @@ msgstr "_Sätt omgivningen till bakgrundsfärgen"
 
 #: ../plug-ins/common/apply_lens.c:457
 msgid "_Make surroundings transparent"
-msgstr "_Gör omgivningen genomskinlig"
+msgstr "_Gör omgivningen transparent"
 
 #: ../plug-ins/common/apply_lens.c:474
 msgid "_Lens refraction index:"
@@ -2267,18 +2250,16 @@ msgid "Remove empty borders from the image"
 msgstr ""
 
 #: ../plug-ins/common/autocrop.c:90
-#, fuzzy
 msgid "Autocrop Imag_e"
-msgstr "_Autoklipp bilden"
+msgstr "Autobeskär bil_d"
 
 #: ../plug-ins/common/autocrop.c:99
 msgid "Remove empty borders from the layer"
 msgstr ""
 
 #: ../plug-ins/common/autocrop.c:104
-#, fuzzy
 msgid "Autocrop Lay_er"
-msgstr "_Autoklipp lager"
+msgstr "Autobeskä_r lager"
 
 #: ../plug-ins/common/autocrop.c:151
 msgid "Cropping"
@@ -2309,9 +2290,8 @@ msgid "_Blinds..."
 msgstr "_Persienner..."
 
 #: ../plug-ins/common/blinds.c:188
-#, fuzzy
 msgid "Adding blinds"
-msgstr "Lägger till persienner..."
+msgstr "Lägger till persienner"
 
 #: ../plug-ins/common/blinds.c:226
 msgid "Blinds"
@@ -2341,7 +2321,7 @@ msgstr "_Vertikal"
 #: ../plug-ins/common/fractaltrace.c:738
 #: ../plug-ins/common/papertile.c:384
 msgid "_Transparent"
-msgstr "_Genomskinlig"
+msgstr "_Transparent"
 
 #: ../plug-ins/common/blinds.c:307
 msgid "_Displacement:"
@@ -2373,9 +2353,8 @@ msgid "_Border Average..."
 msgstr "_Kantmedelvärde..."
 
 #: ../plug-ins/common/borderaverage.c:171
-#, fuzzy
 msgid "Border Average"
-msgstr "Kantmedelvärde..."
+msgstr "Kantmedelvärde"
 
 #: ../plug-ins/common/borderaverage.c:351
 msgid "Borderaverage"
@@ -2475,9 +2454,8 @@ msgid "_Stretch Contrast"
 msgstr "_Sträcker ut kontrast..."
 
 #: ../plug-ins/common/c_astretch.c:113
-#, fuzzy
 msgid "Auto-stretching contrast"
-msgstr "Sträcker ut kontrast..."
+msgstr "Sträcker automatiskt ut kontrast"
 
 #: ../plug-ins/common/c_astretch.c:152
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
@@ -2518,9 +2496,8 @@ msgid "_Percent black:"
 msgstr "_Procent svart:"
 
 #: ../plug-ins/common/ccanalyze.c:106
-#, fuzzy
 msgid "Analyze the set of colors in the image"
-msgstr "Ändra antalet färger i mappningen"
+msgstr "Analysera färguppsättningen i bilden"
 
 #: ../plug-ins/common/ccanalyze.c:112
 msgid "Colorcube A_nalysis..."
@@ -2534,9 +2511,9 @@ msgstr "Färgkubsanalys..."
 #. output results
 #: ../plug-ins/common/ccanalyze.c:384
 #: ../plug-ins/imagemap/imap_cmd_guides.c:231
-#, fuzzy, c-format
+#, c-format
 msgid "Image dimensions: %d × %d"
-msgstr "Bilddimensioner %d × %d"
+msgstr "Bilddimensioner: %d × %d"
 
 #: ../plug-ins/common/ccanalyze.c:387
 msgid "No colors"
@@ -2632,9 +2609,8 @@ msgid "_Checkerboard..."
 msgstr "_Schackrutor..."
 
 #: ../plug-ins/common/checkerboard.c:161
-#, fuzzy
 msgid "Adding checkerboard"
-msgstr "Lägger till schackrutor..."
+msgstr "Lägger till schackrutor"
 
 #: ../plug-ins/common/checkerboard.c:346
 msgid "Checkerboard"
@@ -2663,21 +2639,19 @@ msgstr "Förbättra färger"
 
 #: ../plug-ins/common/colorify.c:102
 msgid "Replace all colors with shades of a specified color"
-msgstr ""
+msgstr "Ersätt alla färger med skuggor av en angiven färg"
 
 #: ../plug-ins/common/colorify.c:108
-#, fuzzy
 msgid "Colorif_y..."
-msgstr "_Kolorerar"
+msgstr "_Färglägg..."
 
 #: ../plug-ins/common/colorify.c:169
-#, fuzzy
 msgid "Colorifying"
-msgstr "Kolorerar..."
+msgstr "Färglägger"
 
 #: ../plug-ins/common/colorify.c:255
 msgid "Colorify"
-msgstr "Kolorera"
+msgstr "Färglägg"
 
 #: ../plug-ins/common/colorify.c:289
 msgid "Custom color:"
@@ -2685,27 +2659,23 @@ msgstr "Anpassad färg:"
 
 #: ../plug-ins/common/colorify.c:294
 msgid "Colorify Custom Color"
-msgstr "Kolorera egen färg"
+msgstr "Färglägg anpassad färg"
 
 #: ../plug-ins/common/colormap-remap.c:97
-#, fuzzy
 msgid "Rearrange the colormap"
-msgstr "Roterar färgkartan..."
+msgstr "Arrangera om färgkartan"
 
 #: ../plug-ins/common/colormap-remap.c:104
-#, fuzzy
 msgid "R_earrange Colormap..."
-msgstr "Roterar färgkartan..."
+msgstr "Arrangera o_m färgkarta..."
 
 #: ../plug-ins/common/colormap-remap.c:116
-#, fuzzy
 msgid "Swap two colors in the colormap"
-msgstr "Roterar färgkartan..."
+msgstr "Byt plats på två färger i färgkartan"
 
 #: ../plug-ins/common/colormap-remap.c:123
-#, fuzzy
 msgid "_Swap Colors"
-msgstr "Sampelfärglägg"
+msgstr "_Växla färger"
 
 #: ../plug-ins/common/colormap-remap.c:288
 #: ../plug-ins/common/colormap-remap.c:299
@@ -2714,38 +2684,32 @@ msgid "Invalid remap array was passed to remap function"
 msgstr ""
 
 #: ../plug-ins/common/colormap-remap.c:334
-#, fuzzy
 msgid "Rearranging the colormap"
-msgstr "Roterar färgkartan..."
+msgstr "Arrangerar om färgkartan"
 
 #: ../plug-ins/common/colormap-remap.c:483
 msgid "Sort on Hue"
 msgstr ""
 
 #: ../plug-ins/common/colormap-remap.c:487
-#, fuzzy
 msgid "Sort on Saturation"
-msgstr "Mättnad"
+msgstr "Sortera på mättnad"
 
 #: ../plug-ins/common/colormap-remap.c:491
-#, fuzzy
 msgid "Sort on Value"
-msgstr "Returvärden"
+msgstr "Sortera på värde"
 
 #: ../plug-ins/common/colormap-remap.c:495
-#, fuzzy
 msgid "Reverse Order"
-msgstr "Omvänd ordning:"
+msgstr "Omvänd ordning"
 
 #: ../plug-ins/common/colormap-remap.c:499
-#, fuzzy
 msgid "Reset Order"
-msgstr "Omvänd ordning:"
+msgstr "Återställ ordning"
 
 #: ../plug-ins/common/colormap-remap.c:598
-#, fuzzy
 msgid "Rearrange Colormap"
-msgstr "Roterar färgkartan..."
+msgstr "Arrangera om färgkarta"
 
 #: ../plug-ins/common/colormap-remap.c:701
 msgid "Drag and drop colors to rearrange the colormap.  The numbers shown are the original indices.  Right-click for a menu with sort options."
@@ -2753,7 +2717,7 @@ msgstr ""
 
 #: ../plug-ins/common/colortoalpha.c:96
 msgid "Convert a specified color to transparency"
-msgstr ""
+msgstr "Konvertera en angiven färg till transparens"
 
 #: ../plug-ins/common/colortoalpha.c:103
 msgid "Color to _Alpha..."
@@ -2826,7 +2790,7 @@ msgstr "_Intensitet:"
 #: ../plug-ins/common/compose.c:219
 #: ../plug-ins/common/decompose.c:193
 msgid "HSL"
-msgstr "NMI"
+msgstr "HSL"
 
 #: ../plug-ins/common/compose.c:222
 msgid "_Lightness:"
@@ -3013,14 +2977,12 @@ msgid "bzip archive"
 msgstr "bzip-arkiv"
 
 #: ../plug-ins/common/compressor.c:373
-#, fuzzy
 msgid "No sensible file extension, saving as compressed XCF."
-msgstr "Ingen rimlig ändelse, sparar som packad XCF."
+msgstr "Ingen känslig filändelse, sparar som komprimerad XCF."
 
 #: ../plug-ins/common/compressor.c:536
-#, fuzzy
 msgid "No sensible file extension, attempting to load with file magic."
-msgstr "Ingen rimlig ändelse, försöker ladda med filmagi."
+msgstr "Ingen känslig filändelse, försöker läs in med filmagi."
 
 #: ../plug-ins/common/convmatrix.c:101
 msgid "Gr_ey"
@@ -3070,9 +3032,8 @@ msgid "_Convolution Matrix..."
 msgstr "_Konvolveringsmatris..."
 
 #: ../plug-ins/common/convmatrix.c:278
-#, fuzzy
 msgid "Convolution does not work on layers smaller than 3x3 pixels."
-msgstr "Konvolveringsmatris fungerar inte på lager som är mindre än tre bildpunkter."
+msgstr "Konvolvering fungerar inte på lager som är mindre än 3x3 bildpunkter."
 
 #: ../plug-ins/common/convmatrix.c:351
 msgid "Applying convolution"
@@ -3403,11 +3364,11 @@ msgstr "ljusstyrka"
 
 #: ../plug-ins/common/decompose.c:197
 msgid "Hue (HSL)"
-msgstr ""
+msgstr "Nyans (HSL)"
 
 #: ../plug-ins/common/decompose.c:198
 msgid "Saturation (HSL)"
-msgstr "Mättnad (NMI)"
+msgstr "Mättnad (HSL)"
 
 #: ../plug-ins/common/decompose.c:199
 msgid "Lightness"
@@ -3566,12 +3527,12 @@ msgstr ""
 
 #: ../plug-ins/common/deinterlace.c:102
 msgid "_Deinterlace..."
-msgstr "_Ej sammanflätning..."
+msgstr "A_vfläta..."
 
 #: ../plug-ins/common/deinterlace.c:159
 #: ../plug-ins/common/deinterlace.c:327
 msgid "Deinterlace"
-msgstr "Ej sammanflätning"
+msgstr "Avfläta"
 
 #: ../plug-ins/common/deinterlace.c:359
 msgid "Keep o_dd fields"
@@ -3625,7 +3586,7 @@ msgstr "Ska_la 2:"
 
 #: ../plug-ins/common/desktop-link.c:82
 msgid "Desktop Link"
-msgstr ""
+msgstr "Skrivbordslänk"
 
 #: ../plug-ins/common/desktop-link.c:163
 #, fuzzy, c-format
@@ -3851,7 +3812,7 @@ msgstr "_Polär"
 
 #: ../plug-ins/common/displace.c:470
 msgid "Edge Behavior"
-msgstr ""
+msgstr "Kantbeteende"
 
 #: ../plug-ins/common/displace.c:476
 #: ../plug-ins/common/edge.c:723
@@ -4022,7 +3983,7 @@ msgstr "_Begränsa linjebredd"
 
 #: ../plug-ins/common/exchange.c:124
 msgid "Swap one color with another"
-msgstr ""
+msgstr "Byt en färg med en annan"
 
 #: ../plug-ins/common/exchange.c:130
 msgid "_Color Exchange..."
@@ -4223,9 +4184,8 @@ msgstr "Mittpunkt för överstrålning"
 
 #: ../plug-ins/common/flarefx.c:793
 #: ../plug-ins/common/nova.c:484
-#, fuzzy
 msgid "Show _position"
-msgstr "Visa position"
+msgstr "Visa _position"
 
 #: ../plug-ins/common/fp.c:230
 msgid "Cyan:"
@@ -4269,9 +4229,8 @@ msgid "_Filter Pack..."
 msgstr "_Filterpack..."
 
 #: ../plug-ins/common/fp.c:376
-#, fuzzy
 msgid "FP can only be used on RGB images."
-msgstr "Kan bara arbeta med RGB ritytor."
+msgstr "FP kan endast användas på RGB-bilder."
 
 #: ../plug-ins/common/fp.c:386
 msgid "FP can only be run interactively."
@@ -4536,7 +4495,7 @@ msgstr "Beskrivning:"
 #: ../plug-ins/common/gee.c:99
 #: ../plug-ins/common/gee_zoom.c:121
 msgid "A big hello from the GIMP team!"
-msgstr ""
+msgstr "En stor hälsning från GIMP-teamet! "
 
 #: ../plug-ins/common/gee.c:104
 #: ../plug-ins/common/gee.c:160
@@ -4605,7 +4564,7 @@ msgstr "GIF: Odokumenterad komposittyp %d handhavs inte. Animeringen kanske inte
 
 #: ../plug-ins/common/gif-save.c:683
 msgid "Couldn't simply reduce colors further. Saving as opaque."
-msgstr "Kunde ej enkelt minska antalet färger mer. Sparar som ogenomskinlig."
+msgstr "Kunde inte enkelt reducera antalet färger mer. Sparar som opak."
 
 #: ../plug-ins/common/gif-save.c:899
 msgid "The GIF format only supports comments in 7bit ASCII encoding. No comment is saved."
@@ -4838,7 +4797,7 @@ msgstr ""
 
 #: ../plug-ins/common/gradmap.c:97
 msgid "_Gradient Map"
-msgstr "_Gradientkarta"
+msgstr "_Färgtoningskarta"
 
 #: ../plug-ins/common/gradmap.c:106
 msgid "Recolor the image using colors from the active palette"
@@ -4966,7 +4925,7 @@ msgstr "Pa_cka ihop TD-taggar"
 
 #: ../plug-ins/common/gtm.c:500
 msgid "Checking this tag will cause GTM to leave no whitespace between the TD tags and the cellcontent.  This is only necessary for pixel level positioning control."
-msgstr "Att välja den här taggen får GTM att inte lämna något tomrum mellan TD-taggarna och cellinnehållet. Detta är endast nödvändigt för att styra position på pixelnivå."
+msgstr "Att välja den här taggen får GTM att inte lämna något tomrum mellan TD-taggarna och cellinnehållet. Detta är endast nödvändigt för att styra position på bildpunktsnivå."
 
 #: ../plug-ins/common/gtm.c:510
 msgid "C_aption"
@@ -5298,15 +5257,15 @@ msgstr "Från färgintervall"
 
 #: ../plug-ins/common/lcms.c:205
 msgid "Set default RGB profile"
-msgstr ""
+msgstr "Ställ in standard-RGB-profil"
 
 #: ../plug-ins/common/lcms.c:222
 msgid "Apply color profile"
-msgstr ""
+msgstr "Tillämpa färgprofil"
 
 #: ../plug-ins/common/lcms.c:240
 msgid "Apply default RGB profile"
-msgstr ""
+msgstr "Tillämpa standard-RGB-profil"
 
 #: ../plug-ins/common/lcms.c:254
 #: ../plug-ins/common/lcms.c:268
@@ -5328,7 +5287,7 @@ msgstr ""
 #: ../plug-ins/common/lcms.c:551
 #, c-format
 msgid "Converting from '%s' to '%s'"
-msgstr ""
+msgstr "Konverterar från \"%s\" till \"%s\""
 
 #: ../plug-ins/common/lcms.c:619
 msgid "Default RGB working space"
@@ -5351,7 +5310,7 @@ msgstr "Kan inte läsa färgposter från \"%s\""
 #: ../plug-ins/common/lcms.c:985
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
-msgstr ""
+msgstr "Bilden \"%s\" har en inbäddad färgprofil:"
 
 #: ../plug-ins/common/lcms.c:1029
 #, fuzzy, c-format
@@ -5374,7 +5333,7 @@ msgstr "_Konvertera"
 #: ../plug-ins/common/lcms.c:1097
 #: ../plug-ins/jpeg/jpeg-exif.c:367
 msgid "_Don't ask me again"
-msgstr ""
+msgstr "_Fråga mig inte igen"
 
 #: ../plug-ins/common/lens.c:143
 msgid "Corrects lens distortion"
@@ -5387,7 +5346,7 @@ msgstr "Kantdetektion..."
 
 #: ../plug-ins/common/lens.c:813
 msgid "Lens distortion"
-msgstr ""
+msgstr "Linsdistortion"
 
 #: ../plug-ins/common/lens.c:933
 #, fuzzy
@@ -5487,7 +5446,7 @@ msgstr "M_aximimvärde:"
 
 #: ../plug-ins/common/lic.c:809
 msgid "Special effects that nobody understands"
-msgstr ""
+msgstr "Specialeffekter som ingen förstår"
 
 #: ../plug-ins/common/lic.c:814
 msgid "_Van Gogh (LIC)..."
@@ -5632,7 +5591,7 @@ msgstr "Max RGB..."
 
 #: ../plug-ins/common/max_rgb.c:134
 msgid "Can only operate on RGB drawables."
-msgstr "Kan bara arbeta med RGB ritytor."
+msgstr "Kan endast arbeta med RGB-ritytor."
 
 #: ../plug-ins/common/max_rgb.c:234
 msgid "Max RGB"
@@ -6312,7 +6271,7 @@ msgstr "\"%s\" är inte en PCX-fil"
 #: ../plug-ins/common/pcx.c:348
 #, c-format
 msgid "Invalid number of bytes per line: %hd"
-msgstr ""
+msgstr "Ogiltigt antal byte per rad: %hd"
 
 #: ../plug-ins/common/pcx.c:397
 msgid "Unusual PCX flavour, giving up"
@@ -6356,12 +6315,11 @@ msgstr ""
 
 #: ../plug-ins/common/pixelize.c:171
 msgid "_Pixelize..."
-msgstr "_Pixellerar..."
+msgstr "_Pixellera..."
 
 #: ../plug-ins/common/pixelize.c:273
-#, fuzzy
 msgid "Pixelizing"
-msgstr "Pixellerar..."
+msgstr "Pixellerar"
 
 #: ../plug-ins/common/pixelize.c:314
 msgid "Pixelize"
@@ -6379,7 +6337,7 @@ msgstr "Pixel_höjd:"
 
 #: ../plug-ins/common/plasma.c:178
 msgid "Create a random plasma texture"
-msgstr ""
+msgstr "Skapa en slumpmässig plasmatextur"
 
 #: ../plug-ins/common/plasma.c:183
 msgid "_Plasma..."
@@ -6416,19 +6374,19 @@ msgstr "Sök efter namn"
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d insticksmodul"
+msgstr[1] "%d insticksmoduler"
 
 #: ../plug-ins/common/plugin-browser.c:395
 msgid "No matches for your query"
-msgstr ""
+msgstr "Inga sökträffar för din sökning"
 
 #: ../plug-ins/common/plugin-browser.c:398
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d insticksmodul matchar din sökning"
+msgstr[1] "%d insticksmoduler matchar din sökning"
 
 #: ../plug-ins/common/plugin-browser.c:529
 msgid "No matches"
@@ -6531,7 +6489,7 @@ msgstr "Spara _kommentar"
 
 #: ../plug-ins/common/png.c:1854
 msgid "Save color _values from transparent pixels"
-msgstr "Spara färg_värden från genomskinsliga bildpunkter"
+msgstr "Spara färg_värden från transparenta bildpunkter"
 
 #: ../plug-ins/common/png.c:1868
 msgid "Co_mpression level:"
@@ -6591,7 +6549,7 @@ msgstr "PNM: felaktig X-upplösning."
 
 #: ../plug-ins/common/pnm.c:540
 msgid "Image width is larger than GIMP can handle."
-msgstr ""
+msgstr "Bildens bredd är större än vad GIMP kan hantera."
 
 #: ../plug-ins/common/pnm.c:547
 #, fuzzy
@@ -6600,7 +6558,7 @@ msgstr "PNM: felaktig Y-upplösning."
 
 #: ../plug-ins/common/pnm.c:549
 msgid "Image height is larger than GIMP can handle."
-msgstr ""
+msgstr "Bildens höjd är större än vad GIMP kan hantera."
 
 #: ../plug-ins/common/pnm.c:561
 #, fuzzy
@@ -6631,7 +6589,7 @@ msgstr "Ascii"
 
 #: ../plug-ins/common/polar.c:154
 msgid "Convert image to or from polar coordinates"
-msgstr ""
+msgstr "Konvertera bild till eller från polära koordinater"
 
 #: ../plug-ins/common/polar.c:161
 #, fuzzy
@@ -7271,9 +7229,8 @@ msgid "Edges"
 msgstr "Kanter"
 
 #: ../plug-ins/common/ripple.c:565
-#, fuzzy
 msgid "_Blank"
-msgstr "_Svart"
+msgstr "_Blank"
 
 #. Wave toggle box
 #: ../plug-ins/common/ripple.c:587
@@ -7309,9 +7266,8 @@ msgid "Sorry, channels and masks can not be rotated."
 msgstr "Tyvärr kan kanaler och masker inte roteras."
 
 #: ../plug-ins/common/rotate.c:437
-#, fuzzy
 msgid "Rotating"
-msgstr "Rotation"
+msgstr "Rotering"
 
 #: ../plug-ins/common/sample_colorize.c:298
 msgid "Colorize image using a sample image as a guide"
@@ -7326,9 +7282,8 @@ msgid "Sample Colorize"
 msgstr "Sampelfärglägg"
 
 #: ../plug-ins/common/sample_colorize.c:1318
-#, fuzzy
 msgid "Get _Sample Colors"
-msgstr "Hämta sampelfärger"
+msgstr "Hämta _sampelfärger"
 
 #. layer combo_box (Dst)
 #: ../plug-ins/common/sample_colorize.c:1347
@@ -7425,7 +7380,7 @@ msgstr "N_yans:"
 
 #: ../plug-ins/common/screenshot.c:234
 msgid "Create an image from an area of the screen"
-msgstr ""
+msgstr "Skapa en bild från ett område på skärmen"
 
 #: ../plug-ins/common/screenshot.c:247
 #, fuzzy
@@ -7454,7 +7409,7 @@ msgstr "Angett fönster kan inte hittas"
 
 #: ../plug-ins/common/screenshot.c:890
 msgid "There was an error taking the screenshot."
-msgstr ""
+msgstr "Det inträffade ett fel vid tagning av skärmbild."
 
 #: ../plug-ins/common/screenshot.c:978
 #, fuzzy
@@ -7463,7 +7418,7 @@ msgstr "Vä_xla"
 
 #: ../plug-ins/common/screenshot.c:1008
 msgid "After the delay, the screenshot is taken."
-msgstr ""
+msgstr "Skärmbilden tas efter fördröjningen."
 
 #: ../plug-ins/common/screenshot.c:1010
 msgid "After the delay, drag your mouse to select the region for the screenshot."
@@ -7481,7 +7436,7 @@ msgstr "Område:"
 
 #: ../plug-ins/common/screenshot.c:1030
 msgid "Take a screenshot of a single _window"
-msgstr ""
+msgstr "Ta en skärmbild av ett enstaka _fönster"
 
 #: ../plug-ins/common/screenshot.c:1051
 #, fuzzy
@@ -7490,7 +7445,7 @@ msgstr "Ta med fönsterkanten"
 
 #: ../plug-ins/common/screenshot.c:1067
 msgid "Take a screenshot of the entire _screen"
-msgstr ""
+msgstr "Ta en skärmbild av hela _skärmen"
 
 #: ../plug-ins/common/screenshot.c:1084
 #, fuzzy
@@ -7744,7 +7699,7 @@ msgstr "_Sökdjup:"
 
 #: ../plug-ins/common/snoise.c:178
 msgid "Create a random cloud-like texture"
-msgstr ""
+msgstr "Skapa en slumpmässig molnliknande textur"
 
 #: ../plug-ins/common/snoise.c:184
 msgid "_Solid Noise..."
@@ -7901,9 +7856,8 @@ msgid "Adjust the spike density"
 msgstr "Justera taggtäthet"
 
 #: ../plug-ins/common/sparkle.c:454
-#, fuzzy
 msgid "Tr_ansparency:"
-msgstr "Genomskinlig"
+msgstr "Tr_ansparens:"
 
 #: ../plug-ins/common/sparkle.c:457
 #, fuzzy
@@ -8047,9 +8001,8 @@ msgid "Sphere Designer"
 msgstr "Sfärdesigner"
 
 #: ../plug-ins/common/spheredesigner.c:2682
-#, fuzzy
 msgid "Properties"
-msgstr "Texturegenskaper"
+msgstr "Egenskaper"
 
 #: ../plug-ins/common/spheredesigner.c:2698
 msgid "Bump"
@@ -8088,9 +8041,8 @@ msgid "Exp.:"
 msgstr "Exp:"
 
 #: ../plug-ins/common/spheredesigner.c:2784
-#, fuzzy
 msgid "Transformations"
-msgstr "Transformation %s"
+msgstr "Transformationer"
 
 #: ../plug-ins/common/spheredesigner.c:2807
 msgid "Scale Y:"
@@ -8125,9 +8077,8 @@ msgid "Position Z:"
 msgstr "Position Z:"
 
 #: ../plug-ins/common/spheredesigner.c:2970
-#, fuzzy
 msgid "Rendering sphere"
-msgstr "Skapar sfär..."
+msgstr "Renderar sfär"
 
 #: ../plug-ins/common/spheredesigner.c:3020
 #, fuzzy
@@ -8165,11 +8116,11 @@ msgstr "Spridningsmängd"
 
 #: ../plug-ins/common/struc.c:1142
 msgid "Add a canvas texture to the image"
-msgstr ""
+msgstr "Lägg till en canvastextur till bilden"
 
 #: ../plug-ins/common/struc.c:1147
 msgid "_Apply Canvas..."
-msgstr "_Tillämpar rityta..."
+msgstr "_Tillämpa rityta..."
 
 #: ../plug-ins/common/struc.c:1228
 msgid "Applying canvas"
@@ -8320,9 +8271,9 @@ msgstr "Renderad SVG"
 
 #: ../plug-ins/common/svg.c:538
 #: ../plug-ins/common/wmf.c:338
-#, fuzzy, c-format
+#, c-format
 msgid "%d × %d"
-msgstr "%d x %d"
+msgstr "%d × %d"
 
 #: ../plug-ins/common/svg.c:546
 msgid ""
@@ -8445,7 +8396,7 @@ msgstr "TIFF-bild"
 #: ../plug-ins/common/tiff-load.c:281
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
-msgstr ""
+msgstr "TIFF \"%s\" innehåller inga kataloger"
 
 #: ../plug-ins/common/tiff-load.c:412
 msgid "Import from TIFF"
@@ -8510,7 +8461,7 @@ msgstr "CCITT Group _4-fax"
 
 #: ../plug-ins/common/tiff-save.c:1080
 msgid "Save _color values from transparent pixels"
-msgstr "Spara färg_värden från genomskinsliga bildpunkter"
+msgstr "Spara färg_värden från transparenta bildpunkter"
 
 # src/header_stuff.c:462
 #: ../plug-ins/common/tiff-save.c:1096
@@ -8682,14 +8633,12 @@ msgid "The unit's plural form."
 msgstr "Enhetens namn i pluralis."
 
 #: ../plug-ins/common/uniteditor.c:121
-#, fuzzy
 msgid "Create a new unit from scratch"
-msgstr "Skapa en ny enhet från början."
+msgstr "Skapa en ny enhet från början"
 
 #: ../plug-ins/common/uniteditor.c:127
-#, fuzzy
 msgid "Create a new unit using the currently selected unit as template"
-msgstr "Skapa en ny enhet med den markerade enheten som förlaga."
+msgstr "Skapa en ny enhet med den markerade enheten som mall"
 
 #: ../plug-ins/common/uniteditor.c:145
 msgid "Create or alter units used in GIMP"
@@ -8700,9 +8649,8 @@ msgid "_Unit Editor"
 msgstr "_Enhetsredigerare"
 
 #: ../plug-ins/common/uniteditor.c:208
-#, fuzzy
 msgid "Add a New Unit"
-msgstr "Ny enhet"
+msgstr "Lägg till en ny enhet"
 
 #: ../plug-ins/common/uniteditor.c:237
 msgid "_ID:"
@@ -8753,9 +8701,8 @@ msgid "_Unsharp Mask..."
 msgstr "_Oskarp mask..."
 
 #: ../plug-ins/common/unsharp.c:477
-#, fuzzy
 msgid "Merging"
-msgstr "Lägger ihop..."
+msgstr "Sammanfogar"
 
 #: ../plug-ins/common/unsharp.c:644
 msgid "Unsharp Mask"
@@ -8824,9 +8771,8 @@ msgid "_Rotated"
 msgstr "_Roterad"
 
 #: ../plug-ins/common/vinvert.c:90
-#, fuzzy
 msgid "Invert the brightness of each pixel"
-msgstr "Sätt utskriftens höjd"
+msgstr "Invertera ljusstyrkan för varje bildpunkt"
 
 #: ../plug-ins/common/vinvert.c:104
 msgid "_Value Invert"
@@ -8855,19 +8801,19 @@ msgstr "_Förgrund till toppar"
 
 #: ../plug-ins/common/vpropagate.c:203
 msgid "O_nly foreground"
-msgstr "_Bara förgrund"
+msgstr "_Endast förgrund"
 
 #: ../plug-ins/common/vpropagate.c:206
 msgid "Only b_ackground"
-msgstr "Bara b_akgrund"
+msgstr "Endast b_akgrund"
 
 #: ../plug-ins/common/vpropagate.c:209
 msgid "Mor_e opaque"
-msgstr "M_era ogenomskinlig"
+msgstr "M_er opak"
 
 #: ../plug-ins/common/vpropagate.c:212
 msgid "More t_ransparent"
-msgstr "Mera _genomskinlig"
+msgstr "Mer t_ransparent"
 
 #: ../plug-ins/common/vpropagate.c:235
 msgid "Propagate certain colors to neighboring pixels"
@@ -8991,9 +8937,8 @@ msgid "Black"
 msgstr "Svart"
 
 #: ../plug-ins/common/warp.c:517
-#, fuzzy
 msgid "Foreground color"
-msgstr "Fö_rgrundsfärg"
+msgstr "Förgrundsfärg"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
@@ -9030,11 +8975,11 @@ msgstr "Fler avancerade inställningar"
 
 #: ../plug-ins/common/warp.c:640
 msgid "Gradient scale:"
-msgstr "Gradientskala:"
+msgstr "Färgtoningsskala:"
 
 #: ../plug-ins/common/warp.c:663
 msgid "Gradient map selection menu"
-msgstr "Val av gradientkarta"
+msgstr "Valmeny för färgtoningskarta"
 
 #: ../plug-ins/common/warp.c:673
 msgid "Vector mag:"
@@ -9052,20 +8997,17 @@ msgstr "Val av riktningsvektorkarta"
 
 #. make sure layer is visible
 #: ../plug-ins/common/warp.c:1181
-#, fuzzy
 msgid "Smoothing X gradient"
-msgstr "Jämnar ut X-gradient..."
+msgstr "Jämnar ut X-färgtoning"
 
 #: ../plug-ins/common/warp.c:1184
-#, fuzzy
 msgid "Smoothing Y gradient"
-msgstr "Jämnar ut Y-gradient..."
+msgstr "Jämnar ut Y-färgtoning"
 
 #. calculate new X,Y Displacement image maps
 #: ../plug-ins/common/warp.c:1234
-#, fuzzy
 msgid "Finding XY gradient"
-msgstr "Hittar XY-gradient..."
+msgstr "Söker XY-färgtoning"
 
 #: ../plug-ins/common/warp.c:1256
 #, fuzzy, c-format
@@ -9439,7 +9381,7 @@ msgstr "Fel uppstod då FITS-filen öppnades"
 
 #: ../plug-ins/fits/fits.c:359
 msgid "FITS file keeps no displayable images"
-msgstr "FITS-filen har inga visningsbara bilder"
+msgstr "FITS-filen innehåller inga visningsbara bilder"
 
 #: ../plug-ins/fits/fits.c:437
 msgid "FITS save cannot handle images with alpha channels"
@@ -9485,12 +9427,12 @@ msgstr "Ritar flamma"
 
 #: ../plug-ins/flame/flame.c:318
 msgid "Flame works only on RGB drawables."
-msgstr "Flamma fungerar bara på RGB-ritytor"
+msgstr "Flamma fungerar endast på RGB-ritytor."
 
 #: ../plug-ins/flame/flame.c:401
 #, c-format
 msgid "'%s' is not a regular file"
-msgstr "\"%s\" är inte en normal fil"
+msgstr "\"%s\" är inte en vanlig fil"
 
 #: ../plug-ins/flame/flame.c:645
 msgid "Edit Flame"
@@ -9644,14 +9586,12 @@ msgid "Shape gradient"
 msgstr "Från färgtoning"
 
 #: ../plug-ins/gfig/gfig-dialog.c:419
-#, fuzzy
 msgid "Vertical gradient"
-msgstr "Ver_tikal bas:"
+msgstr "Vertikal färgtoning"
 
 #: ../plug-ins/gfig/gfig-dialog.c:420
-#, fuzzy
 msgid "Horizontal gradient"
-msgstr "Ho_risontell bas:"
+msgstr "Horisontell färgtoning"
 
 #. "show image" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:480
@@ -9660,9 +9600,8 @@ msgstr "Visa bild"
 
 #. "snap to grid" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:493
-#, fuzzy
 msgid "checkbutton|Snap to grid"
-msgstr "Fäst vid rutnät"
+msgstr "Fäst mot rutnät"
 
 #. "show grid" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:502
@@ -9732,9 +9671,8 @@ msgstr "Skapa linje"
 
 #: ../plug-ins/gfig/gfig-dialog.c:919
 #: ../plug-ins/gfig/gfig-stock.c:51
-#, fuzzy
 msgid "Create rectangle"
-msgstr "Skapa cirkel"
+msgstr "Skapa rektangel"
 
 #: ../plug-ins/gfig/gfig-dialog.c:922
 #: ../plug-ins/gfig/gfig-stock.c:42
@@ -9815,7 +9753,7 @@ msgstr "Max ångra:"
 #: ../plug-ins/gfig/gfig-dialog.c:1283
 #: ../plug-ins/gimpressionist/general.c:167
 msgid "Transparent"
-msgstr "Genomskinlig"
+msgstr "Transparent"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1285
 msgid "Foreground"
@@ -9945,9 +9883,8 @@ msgid "Star Number of Points"
 msgstr "Stjärna antal punkter"
 
 #: ../plug-ins/gfig/gfig-stock.c:41
-#, fuzzy
 msgid "Create bezier curve"
-msgstr "Skapa cirkel"
+msgstr "Skapa bezierkurva"
 
 #: ../plug-ins/gfig/gfig.c:124
 msgid "Create geometric shapes"
@@ -10072,9 +10009,8 @@ msgid "A_daptive supersampling"
 msgstr "A_daptiv supersampling"
 
 #: ../plug-ins/gflare/gflare.c:2773
-#, fuzzy
 msgid "_Max depth:"
-msgstr "Ma_x djup:"
+msgstr "_Max djup:"
 
 #: ../plug-ins/gflare/gflare.c:2783
 msgid "_Threshold"
@@ -10133,7 +10069,7 @@ msgstr "GFlare redigerare"
 
 #: ../plug-ins/gflare/gflare.c:3247
 msgid "Rescan Gradients"
-msgstr "Genomsök gradienter igen"
+msgstr "Genomsök färgskalor igen"
 
 #. Glow
 #: ../plug-ins/gflare/gflare.c:3372
@@ -10149,7 +10085,6 @@ msgstr "Opacitet:"
 #: ../plug-ins/gflare/gflare.c:3396
 #: ../plug-ins/gflare/gflare.c:3424
 #: ../plug-ins/gflare/gflare.c:3452
-#, fuzzy
 msgid "Paint mode:"
 msgstr "Målarläge:"
 
@@ -10180,21 +10115,18 @@ msgstr "Färgskalor"
 #: ../plug-ins/gflare/gflare.c:3492
 #: ../plug-ins/gflare/gflare.c:3597
 #: ../plug-ins/gflare/gflare.c:3734
-#, fuzzy
 msgid "Radial gradient:"
-msgstr "Radiell gradient:"
+msgstr "Radiell färgtoning:"
 
 #: ../plug-ins/gflare/gflare.c:3496
 #: ../plug-ins/gflare/gflare.c:3601
-#, fuzzy
 msgid "Angular gradient:"
-msgstr "Vinkelgradient:"
+msgstr "Vinkelfärgtoning:"
 
 #: ../plug-ins/gflare/gflare.c:3500
 #: ../plug-ins/gflare/gflare.c:3605
-#, fuzzy
 msgid "Angular size gradient:"
-msgstr "Vinkelstorleksgradient:"
+msgstr "Vinkelstorleksfärgtoning:"
 
 #: ../plug-ins/gflare/gflare.c:3520
 #: ../plug-ins/gflare/gflare.c:3625
@@ -10233,14 +10165,12 @@ msgid "_Rays"
 msgstr "_Strålar"
 
 #: ../plug-ins/gflare/gflare.c:3738
-#, fuzzy
 msgid "Size factor gradient:"
-msgstr "Storleksfaktorgradient:"
+msgstr "Storleksfaktorfärgtoning:"
 
 #: ../plug-ins/gflare/gflare.c:3742
-#, fuzzy
 msgid "Probability gradient:"
-msgstr "Sannolikhetsgradient:"
+msgstr "Sannolikhetsfärgtoning:"
 
 #.
 #. *    Shape Radio Button Frame
@@ -10280,7 +10210,7 @@ msgstr "Bildruta (%i)"
 
 #: ../plug-ins/gfli/gfli.c:680
 msgid "Sorry, I can save only INDEXED and GRAY images."
-msgstr "Tyvärr, kan bara spara INDEXERADE och GRÅSKALE-bilder."
+msgstr "Tyvärr, kan endast spara INDEXERADE och GRÅSKALE-bilder."
 
 #: ../plug-ins/gfli/gfli.c:811
 msgid "GFLI 1.3 - Load framestack"
@@ -10292,7 +10222,7 @@ msgstr "GFLI 1.3 - Spara bildrutor"
 
 #: ../plug-ins/gimpressionist/brush.c:230
 msgid "Can only save drawables!"
-msgstr "Kan bara spara ritytor!"
+msgstr "Kan endast spara ritytor!"
 
 #: ../plug-ins/gimpressionist/brush.c:235
 msgid "Save Brush"
@@ -10320,7 +10250,7 @@ msgstr "Proportioner:"
 
 #: ../plug-ins/gimpressionist/brush.c:586
 msgid "Specifies the aspect ratio of the brush"
-msgstr "Specifierar proportionerna för penseln"
+msgstr "Anger aspektförhållandet för penseln"
 
 #: ../plug-ins/gimpressionist/brush.c:595
 #: ../plug-ins/gimpressionist/paper.c:188
@@ -10382,7 +10312,7 @@ msgstr "Enfärgad bakgrund"
 
 #: ../plug-ins/gimpressionist/general.c:168
 msgid "Use a transparent background; Only the strokes painted will be visible"
-msgstr "Använd en genomskinlig bakgrund; endast penseldragen blir synliga"
+msgstr "Använd en transparent bakgrund; endast penseldragen blir synliga"
 
 #: ../plug-ins/gimpressionist/general.c:185
 msgid "Paint edges"
@@ -10403,7 +10333,6 @@ msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "Bestämmer om bilden skall kunna upprepas utan synliga skarvar"
 
 #: ../plug-ins/gimpressionist/general.c:204
-#, fuzzy
 msgid "Drop shadow"
 msgstr "Skuggkastning"
 
@@ -10465,9 +10394,8 @@ msgid "Painting"
 msgstr "Målar..."
 
 #: ../plug-ins/gimpressionist/gimpressionist.c:121
-#, fuzzy
 msgid "GIMPressionist"
-msgstr "_GIMPressionist..."
+msgstr "GIMPressionist"
 
 #: ../plug-ins/gimpressionist/orientation.c:74
 msgid "Or_ientation"
@@ -10569,7 +10497,7 @@ msgstr "Vektorer"
 
 #: ../plug-ins/gimpressionist/orientmap.c:549
 msgid "The vector-field. Left-click to move selected vector, Right-click to point it towards mouse, Middle-click to add a new vector."
-msgstr "Vektorfältet. Vänsterklicka för att flytta vald vektor, högerklicka för att rikta den mot pekaren, mittenklicka för att lägga till en ny vektor."
+msgstr "Vektorfältet. Vänsterklicka för att flytta vald vektor, högerklicka för att rikta den mot muspekaren, mittenklicka för att lägga till en ny vektor."
 
 #: ../plug-ins/gimpressionist/orientmap.c:572
 #: ../plug-ins/gimpressionist/sizemap.c:441
@@ -10705,9 +10633,8 @@ msgid "The strokes are evenly distributed across the image"
 msgstr "Penseldragen är jämnt fördelade över bilden"
 
 #: ../plug-ins/gimpressionist/placement.c:84
-#, fuzzy
 msgid "Centered"
-msgstr "Mittpunkt"
+msgstr "Centrerad"
 
 #: ../plug-ins/gimpressionist/placement.c:90
 msgid "Focus the brush strokes around the center of the image"
@@ -10732,25 +10659,23 @@ msgstr "Kunde inte spara PPM-fil \"%s\": %s"
 
 #: ../plug-ins/gimpressionist/presets.c:620
 msgid "Save Current"
-msgstr "Spara nuvarande"
+msgstr "Spara aktuell"
 
 #: ../plug-ins/gimpressionist/presets.c:874
-#, fuzzy
 msgid "Gimpressionist Defaults"
 msgstr "Gimpressionist standardvärden"
 
 #: ../plug-ins/gimpressionist/presets.c:995
 msgid "_Presets"
-msgstr "_Förhandsinställningar"
+msgstr "_Förinställningar"
 
 #: ../plug-ins/gimpressionist/presets.c:1010
-#, fuzzy
 msgid "Save Current..."
-msgstr "Spara nuvarande..."
+msgstr "Spara aktuell..."
 
 #: ../plug-ins/gimpressionist/presets.c:1018
 msgid "Save the current settings to the specified file"
-msgstr "Spara nuvarande inställningar till den specifierade filen"
+msgstr "Spara aktuella inställningar till den angivna filen"
 
 #: ../plug-ins/gimpressionist/presets.c:1046
 msgid "Reads the selected Preset into memory"
@@ -10830,7 +10755,7 @@ msgstr "Penselstorleken som närmast passar orginalbilden är vald"
 
 #: ../plug-ins/gimpressionist/size.c:179
 msgid "Manually specify the stroke size"
-msgstr "Specifiera penseldragens storlek manuellt"
+msgstr "Ange penseldragens storlek manuellt"
 
 #: ../plug-ins/gimpressionist/size.c:190
 msgid "Opens up the Size Map Editor"
@@ -10846,7 +10771,7 @@ msgstr "Sk-vektorer"
 
 #: ../plug-ins/gimpressionist/sizemap.c:421
 msgid "The smvector-field. Left-click to move selected smvector, Right-click to point it towards mouse, Middle-click to add a new smvector."
-msgstr "Sk-vektorfältet. Vänsterklicka för att flytta vald sk-vektor, högerklicka för att rikta den mot pekaren, mittenklicka för att lägga till en ny sk-vektor."
+msgstr "Sk-vektorfältet. Vänsterklicka för att flytta vald sk-vektor, högerklicka för att rikta den mot muspekaren, mittenklicka för att lägga till en ny sk-vektor."
 
 #: ../plug-ins/gimpressionist/sizemap.c:463
 msgid "Select previous smvector"
@@ -10916,7 +10841,6 @@ msgstr ""
 "%s"
 
 #: ../plug-ins/helpbrowser/dialog.c:216
-#, fuzzy
 msgid "GIMP Help Browser"
 msgstr "GIMP hjälpläsare"
 
@@ -11063,7 +10987,6 @@ msgid "IFS Fractal Render Options"
 msgstr "Renderingsinställningar för IFS fraktal"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1197
-#, fuzzy
 msgid "Max. memory:"
 msgstr "Max. minne:"
 
@@ -11077,9 +11000,9 @@ msgid "Spot radius:"
 msgstr "Fläckradie"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1302
-#, fuzzy, c-format
+#, c-format
 msgid "Rendering IFS (%d/%d)"
-msgstr "Renderar IFS (%d/%d)..."
+msgstr "Renderar IFS (%d/%d)"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1468
 #, c-format
@@ -11101,14 +11024,12 @@ msgid "File '%s' doesn't seem to be an IFS Fractal file."
 msgstr "Filen \"%s\" verkar inte vara en IFS fraktalfil."
 
 #: ../plug-ins/ifscompose/ifscompose.c:2510
-#, fuzzy
 msgid "Save as IFS Fractal file"
-msgstr "Spara som IFS fraktalfil"
+msgstr "Spara som IFS-fraktalfil"
 
 #: ../plug-ins/ifscompose/ifscompose.c:2547
-#, fuzzy
 msgid "Open IFS Fractal file"
-msgstr "Öppna IFS fraktalfil"
+msgstr "Öppna IFS-fraktalfil"
 
 #: ../plug-ins/imagemap/imap_about.c:43
 #, fuzzy
@@ -11116,9 +11037,8 @@ msgid "Image Map Plug-In"
 msgstr "Bildkarta insticksmodul 2.2"
 
 #: ../plug-ins/imagemap/imap_about.c:47
-#, fuzzy
 msgid "Copyright © 1999-2005 by Maurits Rijk"
-msgstr "Copyright © 1999-2004 av Maurits Rijk"
+msgstr "Copyright © 1999-2005 Maurits Rijk"
 
 #: ../plug-ins/imagemap/imap_about.c:49
 msgid "Released under the GNU General Public License"
@@ -11432,12 +11352,10 @@ msgid "Error opening file"
 msgstr "Fel vid öppnande av fil"
 
 #: ../plug-ins/imagemap/imap_file.c:68
-#, fuzzy
 msgid "Load Image Map"
 msgstr "Läs in bildkarta"
 
 #: ../plug-ins/imagemap/imap_file.c:123
-#, fuzzy
 msgid "Save Image Map"
 msgstr "Spara bildkarta"
 
@@ -11446,9 +11364,8 @@ msgid "Grid Settings"
 msgstr "Rutnätsinställningar"
 
 #: ../plug-ins/imagemap/imap_grid.c:201
-#, fuzzy
 msgid "_Snap-to grid enabled"
-msgstr "_Fäst vid rutnät aktiverat"
+msgstr "_Fäst mot rutnät aktiverat"
 
 #: ../plug-ins/imagemap/imap_grid.c:207
 msgid "Grid Visibility and Type"
@@ -11495,12 +11412,10 @@ msgid "_Preview"
 msgstr "_Förhandsgranska"
 
 #: ../plug-ins/imagemap/imap_main.c:124
-#, fuzzy
 msgid "Create a clickable imagemap"
-msgstr "Skapa ny bild"
+msgstr "Skapa en klickbar bildkarta"
 
 #: ../plug-ins/imagemap/imap_main.c:129
-#, fuzzy
 msgid "_Image Map..."
 msgstr "_Bildkarta..."
 
@@ -11560,9 +11475,8 @@ msgid "_File"
 msgstr "_Fil"
 
 #: ../plug-ins/imagemap/imap_menu.c:147
-#, fuzzy
 msgid "_Open..."
-msgstr "_Neon..."
+msgstr "_Öppna..."
 
 # data/ui/nautilus-gtranslator-view-ui.xml.h:1 src/dialogs.c:732
 # src/menus.c:276
@@ -11571,9 +11485,8 @@ msgid "Open"
 msgstr "Öppna"
 
 #: ../plug-ins/imagemap/imap_menu.c:149
-#, fuzzy
 msgid "_Save..."
-msgstr "_Vågor..."
+msgstr "_Spara..."
 
 # src/menus.c:280
 #: ../plug-ins/imagemap/imap_menu.c:149
@@ -11581,9 +11494,8 @@ msgid "Save"
 msgstr "Spara"
 
 #: ../plug-ins/imagemap/imap_menu.c:151
-#, fuzzy
 msgid "Save _As..."
-msgstr "Spara som..."
+msgstr "Spara s_om..."
 
 #: ../plug-ins/imagemap/imap_menu.c:156
 msgid "_Edit"
@@ -11600,14 +11512,12 @@ msgid "Redo"
 msgstr "Upprepa"
 
 #: ../plug-ins/imagemap/imap_menu.c:164
-#, fuzzy
 msgid "D_eselect All"
-msgstr "Avmarkera _allt"
+msgstr "Avmarkera a_llt"
 
 #: ../plug-ins/imagemap/imap_menu.c:166
-#, fuzzy
 msgid "Edit Area _Info..."
-msgstr "Redigera områdesinformation..."
+msgstr "Redigera områdes_information..."
 
 #: ../plug-ins/imagemap/imap_menu.c:167
 msgid "Edit selected area info"
@@ -11618,12 +11528,10 @@ msgid "Preferences"
 msgstr "Inställningar"
 
 #: ../plug-ins/imagemap/imap_menu.c:170
-#, fuzzy
 msgid "Move to Front"
 msgstr "Flytta fram"
 
 #: ../plug-ins/imagemap/imap_menu.c:172
-#, fuzzy
 msgid "Send to Back"
 msgstr "Flytta bak"
 
@@ -11648,9 +11556,8 @@ msgid "Zoom out"
 msgstr "Zooma ut"
 
 #: ../plug-ins/imagemap/imap_menu.c:185
-#, fuzzy
 msgid "_Zoom To"
-msgstr "Zooma till"
+msgstr "_Zooma till"
 
 #: ../plug-ins/imagemap/imap_menu.c:187
 msgid "_Mapping"
@@ -11661,9 +11568,8 @@ msgid "Edit Map Info..."
 msgstr "Redigera kartinfo..."
 
 #: ../plug-ins/imagemap/imap_menu.c:189
-#, fuzzy
 msgid "Edit Map Info"
-msgstr "Redigera kartinfo..."
+msgstr "Redigera kartinfo"
 
 #: ../plug-ins/imagemap/imap_menu.c:191
 msgid "_Tools"
@@ -11674,12 +11580,10 @@ msgid "Grid Settings..."
 msgstr "Rutnätsinställingar..."
 
 #: ../plug-ins/imagemap/imap_menu.c:194
-#, fuzzy
 msgid "Use GIMP Guides..."
 msgstr "Använd GIMP hjälplinjer..."
 
 #: ../plug-ins/imagemap/imap_menu.c:196
-#, fuzzy
 msgid "Create Guides..."
 msgstr "Skapa hjälplinjer..."
 
@@ -11692,7 +11596,6 @@ msgid "_Contents"
 msgstr "_Innehåll"
 
 #: ../plug-ins/imagemap/imap_menu.c:208
-#, fuzzy
 msgid "Area List"
 msgstr "Områdeslista"
 
@@ -11781,9 +11684,8 @@ msgid "Menu"
 msgstr "Meny"
 
 #: ../plug-ins/imagemap/imap_preferences.c:395
-#, fuzzy
 msgid "Number of _undo levels (1 - 99):"
-msgstr "Antal _ångranivåer (1 - 99):"
+msgstr "Antal _ångringsnivåer (1 - 99):"
 
 #: ../plug-ins/imagemap/imap_preferences.c:400
 msgid "Number of M_RU entries (1 - 16):"
@@ -11883,14 +11785,12 @@ msgid "View Source"
 msgstr "Visa källa"
 
 #: ../plug-ins/jpeg/jpeg-exif.c:283
-#, fuzzy
 msgid "Rotate Image?"
-msgstr "Rotera / skala"
+msgstr "Rotera bild?"
 
 #: ../plug-ins/jpeg/jpeg-exif.c:286
-#, fuzzy
 msgid "_Keep Orientation"
-msgstr "Orientering"
+msgstr "_Behåll orientering"
 
 #: ../plug-ins/jpeg/jpeg-exif.c:342
 msgid "According to the EXIF data, this image is rotated."
@@ -11906,9 +11806,9 @@ msgstr "JPEG förhandsgranska"
 
 #: ../plug-ins/jpeg/jpeg-load.c:649
 #: ../plug-ins/winicon/icoload.c:722
-#, fuzzy, c-format
+#, c-format
 msgid "Opening thumbnail for '%s'"
-msgstr "Öppnar miniatyrbild för \"%s\"..."
+msgstr "Öppnar miniatyrbild för \"%s\""
 
 #: ../plug-ins/jpeg/jpeg-save.c:190
 #, c-format
@@ -11941,9 +11841,8 @@ msgid "Enable preview to obtain the file size."
 msgstr ""
 
 #: ../plug-ins/jpeg/jpeg-save.c:850
-#, fuzzy
 msgid "Show _preview in image window"
-msgstr "_Förhandsgranska i bildfönstret"
+msgstr "Visa _förhandsgranskning i bildfönstret"
 
 #: ../plug-ins/jpeg/jpeg-save.c:891
 msgid "_Smoothing:"
@@ -11980,9 +11879,8 @@ msgstr "Spara miniatyrbild"
 
 #. XMP metadata
 #: ../plug-ins/jpeg/jpeg-save.c:1012
-#, fuzzy
 msgid "Save XMP data"
-msgstr "Spara EXIF-data"
+msgstr "Spara XMP-data"
 
 #. Subsampling
 #: ../plug-ins/jpeg/jpeg-save.c:1026
@@ -12055,9 +11953,8 @@ msgid "_Maze..."
 msgstr "_Labyrint..."
 
 #: ../plug-ins/maze/maze.c:449
-#, fuzzy
 msgid "Drawing maze"
-msgstr "Ritar labyrint..."
+msgstr "Ritar labyrint"
 
 #: ../plug-ins/maze/maze.h:22
 msgid "Maze"
@@ -12065,9 +11962,8 @@ msgstr "Labyrint"
 
 #. The maze size frame
 #: ../plug-ins/maze/maze_face.c:201
-#, fuzzy
 msgid "Maze Size"
-msgstr "Bildstorlek"
+msgstr "Labyrintstorlek"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
 #: ../plug-ins/maze/maze_face.c:218
@@ -12093,9 +11989,8 @@ msgstr "Offset (1):"
 
 #. The maze algorithm frame
 #: ../plug-ins/maze/maze_face.c:282
-#, fuzzy
 msgid "Algorithm"
-msgstr "_Algoritm:"
+msgstr "Algoritm"
 
 #: ../plug-ins/maze/maze_face.c:308
 msgid "Depth first"
@@ -12118,9 +12013,9 @@ msgid "Error: No XMP packet found"
 msgstr ""
 
 #: ../plug-ins/metadata/xmp-parse.c:255
-#, fuzzy, c-format
+#, c-format
 msgid "Error on line %d char %d: %s"
-msgstr "Fel vid öppnande av: %s"
+msgstr "Fel på rad %d, tecken %d: %s"
 
 #: ../plug-ins/metadata/xmp-parse.c:277
 #, c-format
@@ -12216,11 +12111,11 @@ msgstr "_Skugga under krusning"
 
 #: ../plug-ins/pagecurl/pagecurl.c:581
 msgid "Current gradient (reversed)"
-msgstr "Nuvarande förgtoning (omvänd)"
+msgstr "Aktuell färgtoning (omvänd)"
 
 #: ../plug-ins/pagecurl/pagecurl.c:586
 msgid "Current gradient"
-msgstr "Nuvarande färgtoning"
+msgstr "Aktuell färgtoning"
 
 #: ../plug-ins/pagecurl/pagecurl.c:591
 msgid "Foreground / background colors"
@@ -12241,7 +12136,7 @@ msgstr "Sidkrusning..."
 
 #: ../plug-ins/print/print-page-layout.c:118
 msgid "_Adjust Page Size and Orientation"
-msgstr ""
+msgstr "_Justera sidstorlek och orientering"
 
 #: ../plug-ins/print/print-page-layout.c:132
 #, fuzzy
@@ -12253,14 +12148,12 @@ msgid "Ignore Page _Margins"
 msgstr "Ignorera sid_marginaler"
 
 #: ../plug-ins/print/print-page-layout.c:336
-#, fuzzy
 msgid "_X resolution:"
-msgstr "Upplösning:"
+msgstr "_X-upplösning:"
 
 #: ../plug-ins/print/print-page-layout.c:340
-#, fuzzy
 msgid "_Y resolution:"
-msgstr "Upplösning:"
+msgstr "_Y-upplösning:"
 
 #: ../plug-ins/print/print-page-layout.c:393
 #, fuzzy
@@ -12268,28 +12161,24 @@ msgid "Image Offsets"
 msgstr "Bildtyper"
 
 #: ../plug-ins/print/print-page-layout.c:426
-#, fuzzy
 msgid "_Left:"
-msgstr "Vänster:"
+msgstr "_Vänster:"
 
 #: ../plug-ins/print/print-page-layout.c:449
 msgid "Center:"
 msgstr "Mittpunkt:"
 
 #: ../plug-ins/print/print-page-layout.c:460
-#, fuzzy
 msgid "H_orizontally"
-msgstr "Vågrätt"
+msgstr "H_orisontellt"
 
 #: ../plug-ins/print/print-page-layout.c:467
-#, fuzzy
 msgid "_Vertically"
-msgstr "Vertikalt"
+msgstr "_Vertikalt"
 
 #: ../plug-ins/print/print.c:89
-#, fuzzy
 msgid "Print the image"
-msgstr "Skriv ut till fil"
+msgstr "Skriv ut bilden"
 
 #: ../plug-ins/print/print.c:94
 msgid "_Print..."
@@ -12297,26 +12186,23 @@ msgstr "_Skriv ut..."
 
 #: ../plug-ins/print/print.c:252
 msgid "An error occurred while trying to print:"
-msgstr ""
+msgstr "Ett fel inträffade vid försök att skriva ut:"
 
 #: ../plug-ins/print/print.c:282
-#, fuzzy
 msgid "Printing"
-msgstr "Skriver ut..."
+msgstr "Skriver ut"
 
 #: ../plug-ins/rcm/rcm.c:99
 msgid "Replace a range of colors with another"
-msgstr ""
+msgstr "Ersätt ett färgintervall med ett annat"
 
 #: ../plug-ins/rcm/rcm.c:106
-#, fuzzy
 msgid "_Rotate Colors..."
-msgstr "P_olära koordinater..."
+msgstr "_Rotera färger..."
 
 #: ../plug-ins/rcm/rcm.c:140
-#, fuzzy
 msgid "Rotating the colors"
-msgstr "Roterar färgkartan..."
+msgstr "Roterar färgerna"
 
 #: ../plug-ins/rcm/rcm_dialog.c:119
 msgid "Original"
@@ -12392,9 +12278,8 @@ msgid "Degrees"
 msgstr "Grader"
 
 #: ../plug-ins/rcm/rcm_dialog.c:652
-#, fuzzy
 msgid "Rotate Colors"
-msgstr "Mättnad"
+msgstr "Rotera färger"
 
 #: ../plug-ins/rcm/rcm_dialog.c:692
 msgid "Main Options"
@@ -12421,9 +12306,8 @@ msgstr "Byt ordning på pilarna"
 
 #. printf("width = %d, height = %d\n",BITMAP_WIDTH(marked),BITMAP_HEIGHT(marked));
 #: ../plug-ins/sel2path/pxl-outline.c:84
-#, fuzzy
 msgid "Selection to Path"
-msgstr "Val till slinga..."
+msgstr "Markering till slinga"
 
 #: ../plug-ins/sel2path/sel2path.c:183
 msgid "No selection to convert"
@@ -12475,7 +12359,7 @@ msgstr "_Bildläsare/Kamera..."
 #. Initialize our progress dialog
 #: ../plug-ins/twain/twain.c:489
 msgid "Transferring data from scanner/camera"
-msgstr ""
+msgstr "Överför data från bildläsare/kamera"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:162
 #: ../plug-ins/uri/uri-backend-libcurl.c:126
@@ -12491,9 +12375,9 @@ msgid "Downloaded %s of image data"
 msgstr "Hämtade %s bilddata"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:181
-#, fuzzy, c-format
+#, c-format
 msgid "Uploading %s of image data..."
-msgstr "Kopierar IFS till bild (%d/%d)..."
+msgstr "Skickar upp %s bilddata..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:182
 #, c-format
@@ -12503,23 +12387,18 @@ msgstr "Skickade upp %s bilddata"
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:252
 #: ../plug-ins/uri/uri-backend-libcurl.c:155
 #: ../plug-ins/uri/uri-backend-wget.c:197
-#, fuzzy
 msgid "Connecting to server"
-msgstr "Inget val att konvertera"
+msgstr "Ansluter till server"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:311
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to read %s from '%s': %s"
-msgstr ""
-"Misslyckades med att skriva fil \"%s\":\n"
-"%s"
+msgstr "Misslyckades med att läsa %s från \"%s\": %s"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:360
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to write %s to '%s': %s"
-msgstr ""
-"Misslyckades med att skriva fil \"%s\":\n"
-"%s"
+msgstr "Misslyckades med att skriva %s till \"%s\": %s"
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:57
 msgid "Could not initialize libcurl"
@@ -12554,15 +12433,14 @@ msgstr[1] "(tidsgräns är %d sekunder)"
 
 #. The fourth line is either the network request or an error
 #: ../plug-ins/uri/uri-backend-wget.c:221
-#, fuzzy
 msgid "Opening URI"
-msgstr "Öppnar %s"
+msgstr "Öppnar URI"
 
 #: ../plug-ins/uri/uri-backend-wget.c:232
 #: ../plug-ins/uri/uri-backend-wget.c:265
-#, fuzzy, c-format
+#, c-format
 msgid "A network error occurred: %s"
-msgstr "ett skrivfel har uppstått"
+msgstr "Ett nätverksfel inträffade: %s"
 
 #: ../plug-ins/uri/uri-backend-wget.c:305
 #, c-format
@@ -12571,27 +12449,24 @@ msgstr "Hämtar %s bilddata"
 
 #: ../plug-ins/uri/uri-backend-wget.c:310
 msgid "Downloading unknown amount of image data"
-msgstr ""
+msgstr "Hämtar okänd mängd bilddata"
 
 #: ../plug-ins/uri/uri.c:117
 #: ../plug-ins/uri/uri.c:138
-#, fuzzy
 msgid "URI"
-msgstr "URL"
+msgstr "URI"
 
 #: ../plug-ins/winicon/icodialog.c:54
-#, fuzzy
 msgid "Save as Windows Icon"
-msgstr "Spara som GIkon"
+msgstr "Spara som Windows-ikon"
 
 #: ../plug-ins/winicon/icodialog.c:86
-#, fuzzy
 msgid "Icon Details"
 msgstr "Ikondetaljer"
 
 #: ../plug-ins/winicon/icodialog.c:106
 msgid "Large icons and compression are not supported by all programs. Older applications may not open this file correctly."
-msgstr ""
+msgstr "Stora ikoner och komprimering stöds inte av alla program. Äldre program kanske inte kan öppna den här filen korrekt."
 
 #: ../plug-ins/winicon/icodialog.c:178
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
@@ -12606,18 +12481,16 @@ msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 bpp, 1-bit alfa, 256-platspalett"
 
 #: ../plug-ins/winicon/icodialog.c:181
-#, fuzzy
 msgid "24 bpp, 1-bit alpha, no palette"
-msgstr "32 bpp, 8-bit alfa, ingen palett"
+msgstr "24 bpp, 8-bitars alfa, ingen palett"
 
 #: ../plug-ins/winicon/icodialog.c:182
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 bpp, 8-bit alfa, ingen palett"
 
 #: ../plug-ins/winicon/icodialog.c:196
-#, fuzzy
 msgid "Compressed (PNG)"
-msgstr "Komprimerad storlek: %s"
+msgstr "Komprimerad (PNG)"
 
 #. read successfully. add to image
 #: ../plug-ins/winicon/icoload.c:616
