@@ -47,6 +47,7 @@ struct _GimpPlugIn
 
   GimpPlugInCallMode   call_mode;       /*  QUERY, INIT or RUN                */
   guint                open : 1;        /*  Is the plug-in open?              */
+  guint                hup : 1;         /*  Did we receive a G_IO_HUP         */
   GPid                 pid;             /*  Plug-in's process id              */
 
   GIOChannel          *my_read;         /*  App's read and write channels     */

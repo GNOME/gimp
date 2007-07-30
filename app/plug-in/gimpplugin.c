@@ -145,6 +145,7 @@ gimp_plug_in_init (GimpPlugIn *plug_in)
 
   plug_in->call_mode          = GIMP_PLUG_IN_CALL_NONE;
   plug_in->open               = FALSE;
+  plug_in->hup                = FALSE;
   plug_in->pid                = 0;
 
   plug_in->my_read            = NULL;
@@ -428,8 +429,9 @@ gimp_plug_in_close (GimpPlugIn *plug_in,
       gint status;
 #endif
 
-      /*  Ask the filter to exit gracefully  */
-      if (kill_it)
+      /*  Ask the filter to exit gracefully,
+          but not if it is closed because of a broken pipe.  */
+      if (kill_it && ! plug_in->hup)
         {
           gp_quit_write (plug_in->my_write, plug_in);
 
@@ -616,6 +618,9 @@ gimp_plug_in_recv_message (GIOChannel   *channel,
 
   if (cond & (G_IO_ERR | G_IO_HUP))
     {
+      if (cond & G_IO_HUP)
+        plug_in->hup = TRUE;
+
       if (plug_in->open)
         gimp_plug_in_close (plug_in, TRUE);
     }

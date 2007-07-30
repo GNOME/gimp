@@ -1,5 +1,10 @@
 2007-07-30  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/gimpplugin.[ch]: don't call gp_quit_write() on a
+	plug-in with a broken pipe. Fixes bug #460878.
+
+2007-07-30  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimp.c
 	* libgimpbase/gimpwire.c: cosmetic changes.
 
