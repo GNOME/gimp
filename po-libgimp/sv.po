@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-28 10:34+0200\n"
-"PO-Revision-Date: 2007-07-28 18:45+0100\n"
+"PO-Revision-Date: 2007-07-30 10:12+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -204,9 +204,8 @@ msgid "Font Selection"
 msgstr "Typsnittsval"
 
 #: ../libgimp/gimpfontselectbutton.c:145
-#, fuzzy
 msgid "Sans"
-msgstr "Skalor"
+msgstr "Sans"
 
 #: ../libgimp/gimpgradientselectbutton.c:148
 msgid "Gradient Selection"
@@ -315,7 +314,7 @@ msgstr "Parametrar"
 
 #: ../libgimp/gimpprocview.c:156
 msgid "Return Values"
-msgstr ""
+msgstr "Svarsvärden"
 
 #: ../libgimp/gimpprocview.c:169
 msgid "Additional Information"
@@ -351,7 +350,7 @@ msgstr "Lagrets _alfakanal"
 
 #: ../libgimpbase/gimpbaseenums.c:30
 msgid "_Transfer layer's alpha channel"
-msgstr "_Överföringslagrets alfakanal"
+msgstr "_Överför lagrets alfakanal"
 
 #: ../libgimpbase/gimpbaseenums.c:31
 msgid "_Selection"
@@ -549,19 +548,19 @@ msgstr "Spiral (moturs)"
 
 #: ../libgimpbase/gimpbaseenums.c:429
 msgid "Intersections (dots)"
-msgstr ""
+msgstr "Snitt (punkter)"
 
 #: ../libgimpbase/gimpbaseenums.c:430
 msgid "Intersections (crosshairs)"
-msgstr ""
+msgstr "Snitt (korshår)"
 
 #: ../libgimpbase/gimpbaseenums.c:431
 msgid "Dashed"
-msgstr ""
+msgstr "Streckad"
 
 #: ../libgimpbase/gimpbaseenums.c:432
 msgid "Double dashed"
-msgstr ""
+msgstr "Dubbelstreckad"
 
 #: ../libgimpbase/gimpbaseenums.c:433
 msgid "Solid"
@@ -622,7 +621,7 @@ msgstr "Kubisk"
 
 #: ../libgimpbase/gimpbaseenums.c:565
 msgid "Sinc (Lanczos3)"
-msgstr ""
+msgstr "Sinc (Lanczos3)"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -691,7 +690,7 @@ msgstr "Justera"
 
 #: ../libgimpbase/gimpbaseenums.c:776
 msgid "Clip"
-msgstr ""
+msgstr "Klipp"
 
 #: ../libgimpbase/gimpbaseenums.c:777
 msgid "Crop to result"
@@ -785,7 +784,7 @@ msgstr "Färgprofilen för din (primära) skärm."
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid "When enabled, GIMP will try to use the display color profile from the windowing system.  The configured monitor profile is then only used as a fallback."
-msgstr ""
+msgstr "När aktiverad kommer GIMP att försöka använda displayfärgprofilen från fönstersystemet.  Den konfigurerade skärmprofilen kommer då endast att användas för att falla tillbaka på."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
 msgid "The default RGB working space color profile."
@@ -1598,19 +1597,19 @@ msgstr "Z-axel sväng höger"
 
 #: ../modules/controller_linux_input.c:104
 msgid "Horiz. Wheel Turn Back"
-msgstr ""
+msgstr "Horis. hjul sväng bakåt"
 
 #: ../modules/controller_linux_input.c:105
 msgid "Horiz. Wheel Turn Forward"
-msgstr ""
+msgstr "Horis. hjul sväng framåt"
 
 #: ../modules/controller_linux_input.c:106
 msgid "Dial Turn Left"
-msgstr ""
+msgstr "Snurrväljare vänster"
 
 #: ../modules/controller_linux_input.c:107
 msgid "Dial Turn Right"
-msgstr ""
+msgstr "Snurrväljare höger"
 
 #: ../modules/controller_linux_input.c:108
 msgid "Wheel Turn Left"
@@ -1622,7 +1621,7 @@ msgstr "Ratt sväng höger"
 
 #: ../modules/controller_linux_input.c:179
 msgid "Linux input event controller"
-msgstr ""
+msgstr "Inmatningshändelse för Linux-enhet"
 
 #: ../modules/controller_linux_input.c:249
 #: ../modules/controller_dx_dinput.c:227
@@ -1632,7 +1631,7 @@ msgstr "Enhet:"
 
 #: ../modules/controller_linux_input.c:250
 msgid "The name of the device to read Linux Input events from."
-msgstr ""
+msgstr "Namnet på enheten att läsa Linux-inmatningshändelser från."
 
 #: ../modules/controller_linux_input.c:261
 msgid "Linux Input"
@@ -1703,44 +1702,44 @@ msgstr "Knapp %d släppt"
 
 #: ../modules/controller_dx_dinput.c:478
 msgid "Y Move Away"
-msgstr ""
+msgstr "Y-flytta bort"
 
 #: ../modules/controller_dx_dinput.c:481
 msgid "Y Move Near"
-msgstr ""
+msgstr "Y-flytta nära"
 
 #: ../modules/controller_dx_dinput.c:496
 msgid "X Axis Tilt Away"
-msgstr ""
+msgstr "X-axel luta bort"
 
 #: ../modules/controller_dx_dinput.c:499
 msgid "X Axis Tilt Near"
-msgstr ""
+msgstr "X-axel luta nära"
 
 #: ../modules/controller_dx_dinput.c:528
 #, c-format
 msgid "Slider %d Increase"
-msgstr ""
+msgstr "Draglist %d öka"
 
 #: ../modules/controller_dx_dinput.c:531
 #, c-format
 msgid "Slider %d Decrease"
-msgstr ""
+msgstr "Draglist %d minska"
 
 #: ../modules/controller_dx_dinput.c:541
 #, c-format
 msgid "POV %d X View"
-msgstr ""
+msgstr "POV %d X-vy"
 
 #: ../modules/controller_dx_dinput.c:544
 #, c-format
 msgid "POV %d Y View"
-msgstr ""
+msgstr "POV %d Y-vy"
 
 #: ../modules/controller_dx_dinput.c:547
 #, c-format
 msgid "POV %d Return"
-msgstr ""
+msgstr "POV %d svar"
 
 #: ../modules/controller_dx_dinput.c:1111
 msgid "DirectInput Events"
