@@ -1,3 +1,7 @@
+2007-07-30  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage.c (gimp_image_drawable_update): cosmetics.
+
 2007-07-29  Sven Neumann  <sven@gimp.org>
 
 	* app/file/file-open.c

@@ -1176,10 +1176,8 @@ gimp_image_drawable_update (GimpDrawable *drawable,
       gint offset_y;
 
       gimp_item_offsets (item, &offset_x, &offset_y);
-      x += offset_x;
-      y += offset_y;
 
-      gimp_image_update (image, x, y, width, height);
+      gimp_image_update (image, x + offset_x, y + offset_y, width, height);
     }
 }
 
