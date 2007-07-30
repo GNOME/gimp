@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-28 12:38+0200\n"
-"PO-Revision-Date: 2007-07-30 10:48+0100\n"
+"PO-Revision-Date: 2007-07-30 10:59+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -2996,7 +2996,7 @@ msgstr "Välj lagret ovanför det aktuella lagret"
 
 #: ../app/actions/layers-actions.c:353
 msgid "Select _Next Layer"
-msgstr "Välj _Nästa lager"
+msgstr "Välj _nästa lager"
 
 #: ../app/actions/layers-actions.c:354
 msgid "Select the layer below the current layer"
