@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-28 12:38+0200\n"
-"PO-Revision-Date: 2007-07-30 10:47+0100\n"
+"PO-Revision-Date: 2007-07-30 10:48+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -5910,7 +5910,7 @@ msgstr "Offset rityta"
 
 #: ../app/core/gimpdrawable-stroke.c:321
 msgid "Render Stroke"
-msgstr "Rita drag"
+msgstr "Rendera penseldrag"
 
 #. Start a transform undo group
 #: ../app/core/gimpdrawable-transform.c:620
@@ -10535,7 +10535,7 @@ msgstr "Slin_gor"
 
 #: ../app/tools/gimpvectortool.c:320
 msgid "Add Stroke"
-msgstr "Lägg till drag"
+msgstr "Lägg till penseldrag"
 
 #: ../app/tools/gimpvectortool.c:338
 msgid "Add Anchor"
@@ -10563,7 +10563,7 @@ msgstr "Dra kurva"
 
 #: ../app/tools/gimpvectortool.c:484
 msgid "Connect Strokes"
-msgstr "Koppla ihop drag"
+msgstr "Koppla ihop penseldrag"
 
 #: ../app/tools/gimpvectortool.c:514
 msgid "Drag Path"
