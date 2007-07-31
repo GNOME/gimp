@@ -910,9 +910,9 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
       gint                  dx = current_x - private->lastx;
       gint                  dy = current_y - private->lasty;
 
-      /* When the user starts to move the cursor, set the current function to
-       * one of the corner-grabbed functions, depending on in what direction
-       * the user starts dragging the rectangle.
+      /* When the user starts to move the cursor, set the current
+       * function to one of the corner-grabbed functions, depending on
+       * in what direction the user starts dragging the rectangle.
        */
       if (dx < 0)
         {
@@ -1399,9 +1399,9 @@ gimp_rectangle_tool_oper_update (GimpTool        *tool,
         }
       else
         {
-          /* FIXME: This is currently the only measure done to make this area
-           * dead. In the final code the concrete rectangle tools will have to
-           * be written to handle this state.
+          /* FIXME: This is currently the only measure done to make
+           * this area dead. In the final code the concrete rectangle
+           * tools will have to be written to handle this state.
            */
           function = RECT_DEAD;
         }

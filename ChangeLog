@@ -1,5 +1,10 @@
 2007-07-31  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimprectangleselecttool.c
+	* app/tools/gimprectangletool.c: formatting.
+
+2007-07-31  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimptoolview.c (gimp_tool_view_eye_clicked): don't
 	leak the GtkTreePath.
 

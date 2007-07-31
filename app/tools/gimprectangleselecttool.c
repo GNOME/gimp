@@ -293,6 +293,7 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
 {
   GimpRectangleTool     *rectangle   = GIMP_RECTANGLE_TOOL (tool);
   GimpRectSelectTool    *rect_select = GIMP_RECT_SELECT_TOOL (tool);
+  GimpDisplayShell      *shell       = GIMP_DISPLAY_SHELL (display->shell);
   GimpRectangleFunction  function;
 
   if (tool->display && display != tool->display)
@@ -300,15 +301,14 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
 
   function = gimp_rectangle_tool_get_function (rectangle);
 
-  rect_select->saved_show_selection
-    = gimp_display_shell_get_show_selection (GIMP_DISPLAY_SHELL (display->shell));
+  rect_select->saved_show_selection =
+    gimp_display_shell_get_show_selection (shell);
 
   if (function == RECT_INACTIVE)
     {
-      GimpDisplay *old_display;
+      GimpDisplay *old_display = tool->display;
       gboolean     edit_started;
 
-      old_display = tool->display;
       tool->display = display;
       gimp_tool_control_activate (tool->control);
 
@@ -317,6 +317,7 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
 
       if (gimp_tool_control_is_active (tool->control))
         gimp_tool_control_halt (tool->control);
+
       tool->display = old_display;
 
       if (edit_started)
@@ -370,8 +371,7 @@ gimp_rect_select_tool_button_press (GimpTool        *tool,
       /* if the operation is "Replace", turn off the marching ants,
          because they are confusing */
       if (operation == GIMP_CHANNEL_OP_REPLACE)
-        gimp_display_shell_set_show_selection (GIMP_DISPLAY_SHELL (display->shell),
-                                               FALSE);
+        gimp_display_shell_set_show_selection (shell, FALSE);
     }
 
   rect_select->undo = NULL;
@@ -398,9 +398,7 @@ gimp_rect_select_tool_button_release (GimpTool              *tool,
   if (release_type == GIMP_BUTTON_RELEASE_CLICK)
     {
       GimpImage *image = tool->display->image;
-      GimpUndo  *redo;
-
-      redo = gimp_undo_stack_peek (image->redo_stack);
+      GimpUndo  *redo  = gimp_undo_stack_peek (image->redo_stack);
 
       if (redo && rect_select->redo == redo)
         {
@@ -505,13 +503,11 @@ gimp_rect_select_tool_select (GimpRectangleTool *rectangle,
   GimpTool             *tool        = GIMP_TOOL (rectangle);
   GimpRectSelectTool   *rect_select = GIMP_RECT_SELECT_TOOL (rectangle);
   GimpSelectionOptions *options     = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
-  GimpImage            *image;
+  GimpImage            *image       = tool->display->image;
   gboolean              rectangle_exists;
   GimpChannelOps        operation;
 
   gimp_tool_pop_status (tool, tool->display);
-
-  image = tool->display->image;
 
   rectangle_exists = (x <= image->width && y <= image->height &&
                       x + w >= 0 && y + h >= 0 &&
@@ -539,20 +535,24 @@ gimp_rect_select_tool_real_select (GimpRectSelectTool *rect_select,
                                    gint                w,
                                    gint                h)
 {
-  GimpTool              *tool = GIMP_TOOL (rect_select);
-  GimpSelectionOptions  *options;
+  GimpTool              *tool    = GIMP_TOOL (rect_select);
+  GimpSelectionOptions  *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   GimpRectSelectOptions *rect_select_options;
+  GimpChannel           *channel;
 
-  options             = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
   rect_select_options = GIMP_RECT_SELECT_TOOL_GET_OPTIONS (tool);
+
+  channel = gimp_image_get_mask (tool->display->image);
 
   if (rect_select_options->round_corners)
     {
-      /* To prevent elliptification of the rect, we must cap the corner radius */
-      gdouble radius = MIN (rect_select_options->corner_radius,
-                            MIN (w / 2.0, h / 2.0));
+      /* To prevent elliptification of the rectangle,
+       * we must cap the corner radius.
+       */
+      gdouble max    = MIN (w / 2.0, h / 2.0);
+      gdouble radius = MIN (rect_select_options->corner_radius, max);
 
-      gimp_channel_select_round_rect (gimp_image_get_mask (tool->display->image),
+      gimp_channel_select_round_rect (channel,
                                       x, y, w, h,
                                       radius, radius,
                                       operation,
@@ -564,7 +564,7 @@ gimp_rect_select_tool_real_select (GimpRectSelectTool *rect_select,
     }
   else
     {
-      gimp_channel_select_rectangle (gimp_image_get_mask (tool->display->image),
+      gimp_channel_select_rectangle (channel,
                                      x, y, w, h,
                                      operation,
                                      options->feather,
@@ -665,7 +665,7 @@ gimp_rect_select_tool_cancel (GimpRectangleTool *rectangle)
        * we have already "executed", and need to undo at this point,
        * unless the user has done something in the meantime
        */
-      undo = gimp_undo_stack_peek (image->undo_stack);
+      undo  = gimp_undo_stack_peek (image->undo_stack);
 
       if (undo && rect_select->undo == undo)
         {
@@ -728,7 +728,9 @@ gimp_rect_select_tool_rectangle_changed (GimpRectangleTool *rectangle)
 
       if (! rect_select->use_saved_op)
         {
-          GimpSelectionOptions *options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
+          GimpSelectionOptions *options;
+
+          options = GIMP_SELECTION_TOOL_GET_OPTIONS (tool);
 
           /* remember the operation now in case we modify the rectangle */
           rect_select->operation    = options->operation;
