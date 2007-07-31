@@ -287,4 +287,6 @@ gimp_tool_view_eye_clicked (GtkCellRendererToggle *toggle,
 
       g_object_unref (renderer);
     }
+
+  gtk_tree_path_free (path);
 }

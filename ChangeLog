@@ -1,5 +1,10 @@
 2007-07-31  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimptoolview.c (gimp_tool_view_eye_clicked): don't
+	leak the GtkTreePath.
+
+2007-07-31  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/tile.c: this plug-in doesn't need a tile cache.
 
 2007-07-30  Sven Neumann  <sven@gimp.org>
