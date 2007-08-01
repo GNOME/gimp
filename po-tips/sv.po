@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-28 15:19+0200\n"
-"PO-Revision-Date: 2007-08-01 08:28+0100\n"
+"POT-Creation-Date: 2007-08-01 07:51+0100\n"
+"PO-Revision-Date: 2007-08-01 13:57+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -22,19 +22,19 @@ msgstr "<big>Välkommen till GNU Image Manipulation Program!</big>"
 
 #: ../data/tips/gimp-tips.xml.in.h:2
 msgid "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking with the eyedropper tool sets the background color instead of the foreground color."
-msgstr "<tt>Ctrl</tt>-klicka med fyllnadsverktyget för att göra så att det använder bakgrundsbilden istället för förgrundsfärgen. På samma sätt ställer ett <tt>Ctrl</tt>-klick med pipettverktyget in bakgrundsfärgen istället för förgrundsfärgen."
+msgstr "Håll ner <tt>Ctrl</tt> och klicka med fyllnadsverktyget för att göra så att det använder bakgrundsfärgen istället för förgrundsfärgen. På samma sätt ställer ett <tt>Ctrl</tt>-klick med pipettverktyget in bakgrundsfärgen istället för förgrundsfärgen."
 
 #: ../data/tips/gimp-tips.xml.in.h:3
 msgid "<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer mask's preview in the Layers dialog toggles viewing the mask directly."
-msgstr "<tt>Ctrl</tt>-klick på lagermaskens förhandsgranskning i lagerdialogen växlar effekten av lagermasken. <tt>Alt</tt>-klick på lagermaskens förhandsgranskning i lagerdialogen växlar visning av masken direkt."
+msgstr "Håll ner <tt>Ctrl</tt> och klicka på lagermaskens förhandsgranskning i lagerdialogen växlar effekten av lagermasken. <tt>Alt</tt>-klick på lagermaskens förhandsgranskning i lagerdialogen växlar visning av masken direkt."
 
 #: ../data/tips/gimp-tips.xml.in.h:4
 msgid "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 degree angles."
-msgstr "<tt>Ctrl</tt> och dra med rotationsverktyget kommer att begränsa rotationen till 15-gradersvinklar."
+msgstr "Håll ner <tt>Ctrl</tt> och dra med rotationsverktyget begränsar rotationen till 15-gradersvinklar."
 
 #: ../data/tips/gimp-tips.xml.in.h:5
 msgid "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers but that one. <tt>Shift</tt>-click again to show all layers."
-msgstr "<tt>Skift</tt>-klicka på ögonikonen i lagerdialogen för att dölja alla lager utom det. <tt>Skift</tt>-klicka igen för att visa alla lager."
+msgstr "Håll ner <tt>Skift</tt> och klicka på ögonikonen i lagerdialogen för att dölja alla lager utom det. <tt>Skift</tt>-klicka igen för att visa alla lager."
 
 #: ../data/tips/gimp-tips.xml.in.h:6
 msgid "A floating selection must be anchored to a new layer or to the last active layer before doing other operations on the image. Click on the &quot;New Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or use the menus to do the same."
@@ -42,7 +42,7 @@ msgstr "En flytande markering måste ankras vid ett nytt lager eller i det senas
 
 #: ../data/tips/gimp-tips.xml.in.h:7
 msgid "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences dialog, you can reassign shortcut keys. Do so by bringing up the menu, selecting a menu item, and pressing the desired key combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when you exit GIMP. You should probably disable &quot;Dynamic Keyboard Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning shortcuts."
-msgstr "När du har aktiverat &quot;Dynamiska tangentbordsgenvägar&quot; i inställningsdialogen kan du konfigurera om genvägstangenter. Detta gör du genom att ta fram menyn, välja ett menyobjekt och trycka på den önskade tangentkombinationen. Om &quot;Spara tangentbordsgenvägar&quot; är aktiverad kommer tangentbindningarna att sparas när du avslutar GIMP. Du bör antagligen inaktivera &quot;Dynamiska tangentbordsgenvägar&quot; efteråt för att förhindra att  genvägar konfigureras av misstag."
+msgstr "När du har aktiverat &quot;Dynamiska tangentbordsgenvägar&quot; i inställningsdialogen kan du konfigurera om genvägstangenter. Detta gör du genom att ta fram menyn, välja ett menyobjekt och trycka på den önskade tangentkombinationen. Om &quot;Spara tangentbordsgenvägar&quot; är aktiverad kommer tangentbindningarna att sparas när du avslutar GIMP. Du bör antagligen inaktivera &quot;Dynamiska tangentbordsgenvägar&quot; efteråt för att förhindra att genvägar konfigureras av misstag."
 
 #: ../data/tips/gimp-tips.xml.in.h:8
 msgid "Click and drag on a ruler to place a guide on an image. All dragged selections will snap to the guides. You can remove guides by dragging them off the image with the Move tool."
@@ -50,7 +50,7 @@ msgstr "Klicka på en linjal och dra den för att placera en hjälplinje på en 
 
 #: ../data/tips/gimp-tips.xml.in.h:9
 msgid "GIMP allows you to undo most changes to the image, so feel free to experiment."
-msgstr "GIMP kan ångra de flesta ändringar i bilden, så experimentera gärna."
+msgstr "GIMP låter dig ångra de flesta ändringar i bilden, så experimentera gärna."
 
 #: ../data/tips/gimp-tips.xml.in.h:10
 msgid "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image will be saved compressed. Of course loading compressed images works too."
@@ -115,7 +115,7 @@ msgstr "Du kan dra och släppa många saker i GIMP. Att exempelvis dra en färg 
 
 #: ../data/tips/gimp-tips.xml.in.h:25
 msgid "You can draw simple squares or circles using Edit→Stroke Selection. It strokes the edge of your current selection. More complex shapes can be drawn using the Path tool or with Filters→Render→Gfig."
-msgstr "Du kan rita enkla fyrkanter och cirklar genom att använda Redigera→Stryk längs markering. Det ritar hörnet på din aktuella markering. Mer komplexa figurer kan ritas med slingverktyget eller Filter→Rendera→Gfig."
+msgstr "Du kan rita enkla fyrkanter och cirklar genom att använda Redigera→Stryk längs markering. Den stryker längs kanten av din aktuella markering. Mer komplexa figurer kan ritas med slingverktyget eller Filter→Rendera→Gfig."
 
 #: ../data/tips/gimp-tips.xml.in.h:26
 msgid "You can get context-sensitive help for most of GIMP's features by pressing the F1 key at any time. This also works inside the menus."
@@ -135,7 +135,7 @@ msgstr "Du kan använda <tt>Alt</tt>-<tt>tabulator</tt> för att växla mellan a
 
 #: ../data/tips/gimp-tips.xml.in.h:30
 msgid "You can use the middle mouse button to pan around the image (or optionally hold <tt>Spacebar</tt> while you move the mouse)."
-msgstr "Du kan använda den mittersta musknappen för att panorera över bilden (eller hålla ner <tt>blanksteg</tt> under tiden du flyttar musen)."
+msgstr "Du kan använda den mittenmusknappen för att panorera över bilden (eller hålla ner <tt>blankstegstangenten</tt> när du flyttar musen)."
 
 #: ../data/tips/gimp-tips.xml.in.h:31
 msgid "You can use the paint tools to change the selection. Click on the &quot;Quick Mask&quot; button at the bottom left of an image window. Change your selection by painting in the image and click on the button again to convert it back to a normal selection."
