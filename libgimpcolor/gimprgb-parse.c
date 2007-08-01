@@ -216,16 +216,13 @@ static const ColorEntry named_colors[] =
  * @name: a color name (in UTF-8 encoding)
  * @len:  the length of @name, in bytes. or -1 if @name is nul-terminated
  *
- * Attempts to parse a color name. This function accepts RGB hex
- * values or <ulink url="http://www.w3.org/TR/SVG/types.html">SVG 1.0
- * color keywords</ulink>.  The format of an RGB value in hexadecimal
- * notation is a '#' immediately followed by either three or six
- * hexadecimal characters.
+ * Attempts to parse a color name. This function accepts <ulink
+ * url="http://www.w3.org/TR/SVG/types.html">SVG 1.0 color keywords</ulink>.
  *
  * This function does not touch the alpha component of @rgb.
  *
- * Return value: %TRUE if @name was parsed successfully and @rgb has been
- *               set, %FALSE otherwise
+ * Return value: %TRUE if @name was parsed successfully and @rgb has
+ *               been set, %FALSE otherwise
  *
  * Since: GIMP 2.2
  **/
@@ -255,13 +252,13 @@ gimp_rgb_parse_name (GimpRGB     *rgb,
  * @hex: a string describing a color in hexadecimal notation
  * @len: the length of @hex, in bytes. or -1 if @hex is nul-terminated
  *
- * Attempts to parse a string describing a color in RGB value in
- * hexadecimal notation (optionally prefixed with a '#').
+ * Attempts to parse a string describing an RGB color in hexadecimal
+ * notation (optionally prefixed with a '#').
  *
  * This function does not touch the alpha component of @rgb.
  *
- * Return value: %TRUE if @hex was parsed successfully and @rgb has been
- *               set, %FALSE otherwise
+ * Return value: %TRUE if @hex was parsed successfully and @rgb has
+ *               been set, %FALSE otherwise
  *
  * Since: GIMP 2.2
  **/
@@ -291,10 +288,10 @@ gimp_rgb_parse_hex (GimpRGB     *rgb,
  * @css: a string describing a color in CSS notation
  * @len: the length of @hex, in bytes. or -1 if @hex is nul-terminated
  *
- * Attempts to parse a string describing a color in RGB value in CSS
+ * Attempts to parse a string describing an RGB color in CSS
  * notation. This can be either a numerical representation
- * (<code>rgb(255,0,0)</code> or <code>rgb(100%,0%,0%)</code>) or
- * a hexadecimal notation as parsed by gimp_rgb_parse_hex()
+ * (<code>rgb(255,0,0)</code> or <code>rgb(100%,0%,0%)</code>)
+ * or a hexadecimal notation as parsed by gimp_rgb_parse_hex()
  * (<code>##ff0000</code>) or a color name as parsed by
  * gimp_rgb_parse_name() (<code>red</code>).
  *

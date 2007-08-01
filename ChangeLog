@@ -1,3 +1,7 @@
+2007-08-01  Sven Neumann  <sven@gimp.org>
+
+	* libgimpcolor/gimprgb-parse.c: corrected documentation.
+
 2007-07-31  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimprectangleselecttool.c
