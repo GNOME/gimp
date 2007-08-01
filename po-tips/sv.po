@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-28 15:19+0200\n"
-"PO-Revision-Date: 2007-07-30 10:49+0100\n"
+"PO-Revision-Date: 2007-08-01 08:28+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -71,7 +71,7 @@ msgstr "Om en del av dina inlästa bilder inte ser ut att vara tillräckligt fä
 
 #: ../data/tips/gimp-tips.xml.in.h:14
 msgid "If you stroke a path (Edit→Stroke Path), the paint tools can be used with their current settings. You can use the Paintbrush in gradient mode or even the Eraser or the Smudge tool."
-msgstr "Om du stryker en slinga (Redigera→Stryk slinga) kan ritverktygen användas med deras aktuella inställningar. Du kan använda målarpenseln i toningsläget eller till och med suddaren eller smetverktyget."
+msgstr "Om du stryker en slinga (Redigera→Stryk slinga) kan ritverktygen användas med deras aktuella inställningar. Du kan använda målarpenseln i gradientläget eller till och med suddaren eller smetverktyget."
 
 #: ../data/tips/gimp-tips.xml.in.h:15
 msgid "If your screen is too cluttered, you can press <tt>Tab</tt> in an image window to toggle the visibility of the toolbox and other dialogs."
