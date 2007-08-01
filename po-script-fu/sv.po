@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-28 15:11+0200\n"
-"PO-Revision-Date: 2007-07-31 12:34+0100\n"
+"PO-Revision-Date: 2007-08-01 08:28+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -98,7 +98,7 @@ msgstr "Script-Fu-mönsterväljare"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:501
 msgid "Script-Fu Gradient Selection"
-msgstr "Script-Fu-färgskaleväljare"
+msgstr "Script-Fu-gradientväljare"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:510
 msgid "Script-Fu Brush Selection"
@@ -724,11 +724,11 @@ msgstr "Bredd på mellanrum"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
 msgid "Add a gradient effect, a drop shadow, and a background to the selected region (or alpha)"
-msgstr "Lägg till en färgtoningseffekt, en skuggkastning och en bakgrund till markerad region (eller alfa)"
+msgstr "Lägg till en gradienteffekt, en skuggkastning och en bakgrund till markerad region (eller alfa)"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 msgid "Create a plain text logo with a gradient effect, a drop shadow, and a background"
-msgstr "Skapa en vanlig textlogotyp med en färgtoningseffekt, en skuggkastning och en bakgrund"
+msgstr "Skapa en vanlig textlogotyp med en gradienteffekt, en skuggkastning och en bakgrund"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
@@ -865,7 +865,7 @@ msgstr "Skapa en logotyp med tonade bakgrunder, färgmarkeringar och skuggor"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "Custom Gradient"
-msgstr "Anpassad färgskala"
+msgstr "Anpassad gradient"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:8
 msgid "FG-BG-HSV"
@@ -887,7 +887,7 @@ msgstr "FG-Transparent"
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Gradient"
-msgstr "Färgskala"
+msgstr "Gradient"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:14
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:8
@@ -896,7 +896,7 @@ msgstr "Färgskala"
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:5
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:4
 msgid "Gradient reverse"
-msgstr "Omvänd färgskala"
+msgstr "Omvänd gradient"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:15
 msgid "Offset (pixels)"
@@ -1236,7 +1236,7 @@ msgstr "_Kaffefläck..."
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
 msgid "Add a comic-book effect to the selected region (or alpha) by outlining and filling with a gradient"
-msgstr "Lägg till en serietidningseffekt till markerad region (eller alfa) genom att rita ut konturer och fylla med en färgtoning"
+msgstr "Lägg till en serietidningseffekt till markerad region (eller alfa) genom att rita ut konturer och fylla med en gradient"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
@@ -1244,7 +1244,7 @@ msgstr "S_erietidning..."
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
 msgid "Create a comic-book style logo by outlining and filling with a gradient"
-msgstr "Skapa en logotyp med serietidningseffekt genom att rita ut konturer och fylla med en färgtoning"
+msgstr "Skapa en logotyp med serietidningseffekt genom att rita ut konturer och fylla med en gradient"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
 msgid "Outline color"
@@ -1650,19 +1650,19 @@ msgstr "_Tubknappsetikett..."
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid "Add gradients, patterns, shadows, and bump maps to the selected region (or alpha)"
-msgstr "Lägg till färgtoningar, mönster, skuggor och bumpmappar till markerad region (eller alfa)"
+msgstr "Lägg till gradienter, mönster, skuggor och bumpmappar till markerad region (eller alfa)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
-msgstr "Färgtoningsskala (kontur)"
+msgstr "Tona gradient (kontur)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Blend gradient (text)"
-msgstr "Färgtoningsskala (text)"
+msgstr "Tona gradient (text)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Create a logo with gradients, patterns, shadows, and bump maps"
-msgstr "Skapa en logotyp med färgtoningar, mönster, skuggor och bumpmappar"
+msgstr "Skapa en logotyp med gradienter, mönster, skuggor och bumpmappar"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Glo_ssy..."
@@ -1695,11 +1695,11 @@ msgstr "Reversera textgradient"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use pattern for outline instead of gradient"
-msgstr "Använd mönster för kontur istället för färgtoning"
+msgstr "Använd mönster för kontur istället för gradient"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:21
 msgid "Use pattern for text instead of gradient"
-msgstr "Använd mönster för text istället för färgtoning"
+msgstr "Använd mönster för text istället för gradient"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:22
 msgid "Use pattern overlay"
@@ -1741,15 +1741,15 @@ msgstr "Skapa en logotyp med en skinande utseende och avfasade kanter"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 msgid "Gradient Beve_l..."
-msgstr "Färgskale_fasning..."
+msgstr "Gradient_fasning..."
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "Create an image filled with an example of the current gradient"
-msgstr "Skapa en bild fylld med ett exempel på aktuell färgtoning"
+msgstr "Skapa en bild fylld med ett exempel på aktuell gradient"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
 msgid "Custom _Gradient..."
-msgstr "Anpassad _färgskala..."
+msgstr "Anpassad _gradient..."
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
@@ -1907,7 +1907,7 @@ msgstr "Slumptalsfrö"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:8
 msgid "Use current gradient"
-msgstr "Använd aktuell färgtoning"
+msgstr "Använd aktuell gradient"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:9
 msgid "_Lava..."
@@ -2508,7 +2508,7 @@ msgstr "Utbrottsfärg"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:3
 msgid "Create a logo using a starburst gradient"
-msgstr "Skapa en logotyp med en stjärnutbrottfärgtoning"
+msgstr "Skapa en logotyp med en stjärnutbrottsgradient"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:4
 msgid "Effect size (pixels * 30)"
@@ -2516,7 +2516,7 @@ msgstr "Effektstorlek (bildpunkter × 30)"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:5
 msgid "Fill the selected region (or alpha) with a starburst gradient and add a shadow"
-msgstr "Fyll markerad region (eller alfa) med en stjärnutbrottsfärgtoning och lägg till en skugga"
+msgstr "Fyll markerad region (eller alfa) med en stjärnutbrottsgradient och lägg till en skugga"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:8
 msgid "Starb_urst..."
