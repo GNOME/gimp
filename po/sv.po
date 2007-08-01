@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-28 12:38+0200\n"
-"PO-Revision-Date: 2007-07-30 10:59+0100\n"
+"PO-Revision-Date: 2007-08-01 08:14+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -100,7 +100,7 @@ msgstr "Kör utan ett användargränssnitt"
 
 #: ../app/main.c:180
 msgid "Do not load brushes, gradients, patterns, ..."
-msgstr "Läs inte in penslar, färgskalor, mönster, ..."
+msgstr "Läs inte in penslar, gradienter, mönster, ..."
 
 #: ../app/main.c:185
 msgid "Do not load any fonts"
@@ -311,7 +311,7 @@ msgstr "Typsnitt"
 #: ../app/dialogs/dialogs.c:219
 #: ../app/widgets/gimpgradienteditor.c:275
 msgid "Gradient Editor"
-msgstr "Färgskaleredigerare"
+msgstr "Gradientredigerare"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:153
@@ -319,7 +319,7 @@ msgstr "Färgskaleredigerare"
 #: ../app/dialogs/dialogs.c:152
 #: ../app/dialogs/preferences-dialog.c:2594
 msgid "Gradients"
-msgstr "Färgskalor"
+msgstr "Gradienter"
 
 #: ../app/actions/actions.c:156
 msgid "Help"
@@ -770,7 +770,7 @@ msgstr "_Palett"
 #: ../app/dialogs/palette-import-dialog.c:216
 #: ../app/dialogs/preferences-dialog.c:1814
 msgid "_Gradient"
-msgstr "_Färgskala"
+msgstr "_Gradient"
 
 #: ../app/actions/context-actions.c:55
 msgid "_Font"
@@ -896,11 +896,11 @@ msgstr "Öppna en dock för lager, kanaler och slingor"
 
 #: ../app/actions/dialogs-actions.c:48
 msgid "_Brushes, Patterns & Gradients"
-msgstr "_Penslar, mönster och färgskalor"
+msgstr "_Penslar, mönster och gradienter"
 
 #: ../app/actions/dialogs-actions.c:49
 msgid "Open a Brushes, Patterns & Gradients dock"
-msgstr "Öppna en docka för penslar, mönster och färgskalor"
+msgstr "Öppna en docka för penslar, mönster och gradienter"
 
 #: ../app/actions/dialogs-actions.c:54
 msgid "_Misc. Stuff"
@@ -1041,11 +1041,11 @@ msgstr "Öppna dialogrutan för mönster"
 
 #: ../app/actions/dialogs-actions.c:159
 msgid "_Gradients"
-msgstr "F_ärgskala"
+msgstr "_Gradienter"
 
 #: ../app/actions/dialogs-actions.c:160
 msgid "Open the gradients dialog"
-msgstr "Öppna dialogrutan för färgskalor"
+msgstr "Öppna dialogrutan för gradienter"
 
 #: ../app/actions/dialogs-actions.c:165
 msgid "Pal_ettes"
@@ -1973,7 +1973,7 @@ msgstr "Läs om typsnittslista"
 
 #: ../app/actions/gradient-editor-actions.c:46
 msgid "Gradient Editor Menu"
-msgstr "Färgskaleredigerarmeny"
+msgstr "Gradientredigerarmeny"
 
 #: ../app/actions/gradient-editor-actions.c:50
 msgid "Left Color Type"
@@ -2017,7 +2017,7 @@ msgstr "T_ona ändpunkternas opacitet"
 
 #: ../app/actions/gradient-editor-actions.c:125
 msgid "Edit Active Gradient"
-msgstr "Redigera aktiv färgskala"
+msgstr "Redigera aktiv gradient"
 
 #: ../app/actions/gradient-editor-actions.c:156
 msgid "_Left Neighbor's Right Endpoint"
@@ -2216,7 +2216,7 @@ msgstr "Vänstra ändpunktens färg"
 
 #: ../app/actions/gradient-editor-commands.c:88
 msgid "Gradient Segment's Left Endpoint Color"
-msgstr "Färgskalesegmentets vänstra ändpunktsfärg"
+msgstr "Gradientsegmentets vänstra ändpunktsfärg"
 
 #: ../app/actions/gradient-editor-commands.c:237
 msgid "Right Endpoint Color"
@@ -2224,7 +2224,7 @@ msgstr "Högra ändpunktens färg"
 
 #: ../app/actions/gradient-editor-commands.c:239
 msgid "Gradient Segment's Right Endpoint Color"
-msgstr "Färgskalesegmentets högra ändpunktsfärg"
+msgstr "Gradientsegmentets högra ändpunktsfärg"
 
 #: ../app/actions/gradient-editor-commands.c:453
 msgid "Replicate Segment"
@@ -2232,7 +2232,7 @@ msgstr "Replikera segment"
 
 #: ../app/actions/gradient-editor-commands.c:454
 msgid "Replicate Gradient Segment"
-msgstr "Replikera färgskalesegment"
+msgstr "Replikera gradientsegment"
 
 #: ../app/actions/gradient-editor-commands.c:458
 msgid "Replicate Selection"
@@ -2240,7 +2240,7 @@ msgstr "Replikera markering"
 
 #: ../app/actions/gradient-editor-commands.c:459
 msgid "Replicate Gradient Selection"
-msgstr "Replikera markering av färgskala"
+msgstr "Replikera markering av gradient"
 
 #: ../app/actions/gradient-editor-commands.c:472
 msgid "Replicate"
@@ -2268,7 +2268,7 @@ msgstr "Dela segment uniformt"
 
 #: ../app/actions/gradient-editor-commands.c:555
 msgid "Split Gradient Segment Uniformly"
-msgstr "Dela färgskalesegment uniformt"
+msgstr "Dela gradientsegmentet uniformt"
 
 #: ../app/actions/gradient-editor-commands.c:559
 msgid "Split Segments Uniformly"
@@ -2276,7 +2276,7 @@ msgstr "Dela segmenten uniformt"
 
 #: ../app/actions/gradient-editor-commands.c:560
 msgid "Split Gradient Segments Uniformly"
-msgstr "Dela färgskalesegmenten uniformt"
+msgstr "Dela gradientsegmenten uniformt"
 
 #: ../app/actions/gradient-editor-commands.c:573
 msgid "Split"
@@ -2300,31 +2300,31 @@ msgstr ""
 
 #: ../app/actions/gradients-actions.c:44
 msgid "Gradients Menu"
-msgstr "Färgskalemeny"
+msgstr "Gradientmeny"
 
 #: ../app/actions/gradients-actions.c:48
 msgid "_New Gradient"
-msgstr "_Ny färgskala"
+msgstr "_Ny gradient"
 
 #: ../app/actions/gradients-actions.c:49
 msgid "New gradient"
-msgstr "Ny färgskala"
+msgstr "Ny gradient"
 
 #: ../app/actions/gradients-actions.c:54
 msgid "D_uplicate Gradient"
-msgstr "_Duplicera färgskala"
+msgstr "_Duplicera gradient"
 
 #: ../app/actions/gradients-actions.c:55
 msgid "Duplicate gradient"
-msgstr "Duplicera färgskala"
+msgstr "Duplicera gradient"
 
 #: ../app/actions/gradients-actions.c:60
 msgid "Copy Gradient _Location"
-msgstr "Kopiera _plats för färgskala"
+msgstr "Kopiera _plats för gradient"
 
 #: ../app/actions/gradients-actions.c:61
 msgid "Copy gradient file location to clipboard"
-msgstr "Kopiera färgskalefilens plats till urklipp"
+msgstr "Kopiera gradientfilens plats till urklipp"
 
 #: ../app/actions/gradients-actions.c:66
 msgid "Save as _POV-Ray..."
@@ -2332,31 +2332,31 @@ msgstr "_Spara som POV-Ray..."
 
 #: ../app/actions/gradients-actions.c:67
 msgid "Save gradient as POV-Ray"
-msgstr "Spara färgskala som POV-Ray"
+msgstr "Spara gradient som POV-Ray"
 
 #: ../app/actions/gradients-actions.c:72
 msgid "_Delete Gradient"
-msgstr "_Ta bort färgskala"
+msgstr "_Ta bort gradient"
 
 #: ../app/actions/gradients-actions.c:73
 msgid "Delete gradient"
-msgstr "Ta bort färgskala"
+msgstr "Ta bort gradient"
 
 #: ../app/actions/gradients-actions.c:78
 msgid "_Refresh Gradients"
-msgstr "_Uppdatera färgskalor"
+msgstr "_Uppdatera gradienter"
 
 #: ../app/actions/gradients-actions.c:79
 msgid "Refresh gradients"
-msgstr "Uppdatera färgskalor"
+msgstr "Uppdatera gradienter"
 
 #: ../app/actions/gradients-actions.c:87
 msgid "_Edit Gradient..."
-msgstr "_Redigera färgskala..."
+msgstr "_Redigera gradient..."
 
 #: ../app/actions/gradients-actions.c:88
 msgid "Edit gradient"
-msgstr "Redigera färgskala"
+msgstr "Redigera gradient"
 
 #: ../app/actions/gradients-commands.c:66
 #, c-format
@@ -4641,7 +4641,7 @@ msgstr "Om aktiverad kommer den valda penseln att användas för alla verktyg."
 
 #: ../app/config/gimprc-blurbs.h:129
 msgid "When enabled, the selected gradient will be used for all tools."
-msgstr "Om aktiverad kommer den valda färgskalan att användas för alla verktyg."
+msgstr "Om aktiverad kommer den valda gradienten att användas för alla verktyg."
 
 #: ../app/config/gimprc-blurbs.h:132
 msgid "When enabled, the selected pattern will be used for all tools."
@@ -5939,44 +5939,44 @@ msgstr "Transformation"
 #: ../app/core/gimpgradient-load.c:168
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Read error in line %d."
-msgstr "Ödesdigert tolkningsfel i färgskalefilen \"%s\": Läsfel på rad %d."
+msgstr "Ödesdigert tolkningsfel i gradientfilen \"%s\": Läsfel på rad %d."
 
 #: ../app/core/gimpgradient-load.c:81
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Not a GIMP gradient file."
-msgstr "Ödesdigert tolkningsfel i färgskalefilen \"%s\": Inte en GIMP-färgskalefil."
+msgstr "Ödesdigert tolkningsfel i gradientfilen \"%s\": Inte en GIMP-gradientfil."
 
 #: ../app/core/gimpgradient-load.c:109
 #, c-format
 msgid "Invalid UTF-8 string in gradient file '%s'."
-msgstr "Ogiltig UTF-8-sträng i färgskalefilen \"%s\"."
+msgstr "Ogiltig UTF-8-sträng i gradientfilen \"%s\"."
 
 #: ../app/core/gimpgradient-load.c:136
 #, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt in line %d."
-msgstr "Ödesdigert tolkningsfel i färgskalefilen \"%s\": Filen är skadad på rad %d."
+msgstr "Ödesdigert tolkningsfel i gradientfilen \"%s\": Filen är skadad på rad %d."
 
 #: ../app/core/gimpgradient-load.c:218
 #: ../app/core/gimpgradient-load.c:229
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Corrupt segment %d in line %d."
-msgstr "Ödesdigert tolkningsfel i färgskalefilen \"%s\": Segment %d är skadat på rad %d."
+msgstr "Ödesdigert tolkningsfel i gradientfilen \"%s\": Segment %d är skadat på rad %d."
 
 #: ../app/core/gimpgradient-load.c:241
 #: ../app/core/gimpgradient-load.c:255
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
-msgstr "Färgskalefilen \"%s\" är skadad: Segmenten spänner inte över intervallet 0-1."
+msgstr "Gradientfilen \"%s\" är skadad: Segmenten spänner inte över intervallet 0-1."
 
 #: ../app/core/gimpgradient-load.c:334
 #, c-format
 msgid "No linear gradients found in '%s'"
-msgstr "Inga linjära färgskalor funna i \"%s\""
+msgstr "Inga linjära gradienter hittades i \"%s\""
 
 #: ../app/core/gimpgradient-load.c:344
 #, c-format
 msgid "Failed to import gradients from '%s': %s"
-msgstr "Misslyckades med att importera färgskalor från \"%s\": %s"
+msgstr "Misslyckades med att importera gradienter från \"%s\": %s"
 
 #: ../app/core/gimpgrid.c:84
 msgid "Line style used for the grid."
@@ -7507,7 +7507,7 @@ msgstr "Visa _förgrunds- och bakgrundsfärg"
 
 #: ../app/dialogs/preferences-dialog.c:1854
 msgid "Show active _brush, pattern & gradient"
-msgstr "Visa aktiva _penslar, mönster och färgskalor"
+msgstr "Visa aktiva _penslar, mönster och gradient"
 
 #: ../app/dialogs/preferences-dialog.c:1858
 msgid "Show active _image"
@@ -7861,11 +7861,11 @@ msgstr "Välj palettmappar"
 
 #: ../app/dialogs/preferences-dialog.c:2594
 msgid "Gradient Folders"
-msgstr "Färgskalemappar"
+msgstr "Gradientmappar"
 
 #: ../app/dialogs/preferences-dialog.c:2596
 msgid "Select Gradient Folders"
-msgstr "Välj färgskalemappar"
+msgstr "Välj gradientmappar"
 
 #: ../app/dialogs/preferences-dialog.c:2598
 msgid "Font Folders"
@@ -8907,7 +8907,7 @@ msgstr "Tröskelvärde:"
 
 #: ../app/tools/gimpblendtool.c:109
 msgid "Blend Tool: Fill selected area with a color gradient"
-msgstr "Toningsverktyg: Fyll markerat område med en färgtoning"
+msgstr "Toningsverktyg: Fyll markerat område med en färggradient"
 
 #: ../app/tools/gimpblendtool.c:110
 msgid "Blen_d"
@@ -10007,7 +10007,7 @@ msgstr "Skala:"
 #: ../app/tools/gimppaintoptions-gui.c:147
 #: ../app/tools/gimppaintoptions-gui.c:436
 msgid "Gradient:"
-msgstr "Färgskala:"
+msgstr "Gradient:"
 
 #: ../app/tools/gimppaintoptions-gui.c:183
 msgid "Incremental"
@@ -10058,7 +10058,7 @@ msgstr "Mängd:"
 
 #: ../app/tools/gimppaintoptions-gui.c:419
 msgid "Use color from gradient"
-msgstr "Använd färg från färgskala"
+msgstr "Använd färg från gradient"
 
 #: ../app/tools/gimppainttool.c:132
 msgid "Click to paint"
@@ -10761,11 +10761,11 @@ msgstr "Importerad slinga"
 #: ../app/vectors/gimpvectors-import.c:336
 #, c-format
 msgid "No paths found in '%s'"
-msgstr "Inga slingor funna i \"%s\""
+msgstr "Inga slingor hittades i \"%s\""
 
 #: ../app/vectors/gimpvectors-import.c:339
 msgid "No paths found in the buffer"
-msgstr "Inga slingor funna i bufferten"
+msgstr "Inga slingor hittades i bufferten"
 
 #: ../app/vectors/gimpvectors-import.c:349
 #, c-format
@@ -11824,8 +11824,8 @@ msgid ""
 "The active gradient.\n"
 "Click to open the Gradient Dialog."
 msgstr ""
-"Den aktiva färgskalan.\n"
-"Klicka för att öppna färgskaledialogen."
+"Den aktiva gradienten.\n"
+"Klicka för att öppna gradientdialogen."
 
 #: ../app/widgets/gimptoolbox.c:687
 msgid "Foreground & background colors.  The black and white squares reset colors.  The arrows swap colors. Click to open the color selection dialog."
@@ -11883,7 +11883,7 @@ msgstr "Öppna mönstervalsdialogen"
 
 #: ../app/widgets/gimpviewablebox.c:204
 msgid "Open the gradient selection dialog"
-msgstr "Öppna dialogrutan för val av färgskala"
+msgstr "Öppna dialogrutan för val av gradient"
 
 #: ../app/widgets/gimpviewablebox.c:219
 msgid "Reverse"
