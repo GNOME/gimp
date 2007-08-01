@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-28 10:34+0200\n"
-"PO-Revision-Date: 2007-07-30 10:12+0100\n"
+"PO-Revision-Date: 2007-08-01 08:14+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -378,7 +378,7 @@ msgstr "FG till transparent"
 
 #: ../libgimpbase/gimpbaseenums.c:66
 msgid "Custom gradient"
-msgstr "Egen färgskala"
+msgstr "Anpassad gradient"
 
 #: ../libgimpbase/gimpbaseenums.c:95
 msgid "FG color fill"
