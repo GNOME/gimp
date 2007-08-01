@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-python\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-28 14:35+0200\n"
-"PO-Revision-Date: 2007-07-28 17:48+0100\n"
+"PO-Revision-Date: 2007-08-01 08:25+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -19,12 +19,12 @@ msgstr ""
 
 #: ../plug-ins/pygimp/gimpfu.py:380
 msgid "Missing exception information"
-msgstr "Saknar undantagsinformation"
+msgstr "Undantagsinformation saknas"
 
 #: ../plug-ins/pygimp/gimpfu.py:389
 #, python-format
 msgid "An error occured running %s"
-msgstr "Ett fel inträffade vid körning av %s"
+msgstr "Ett fel inträffade när %s kördes"
 
 #: ../plug-ins/pygimp/gimpfu.py:400
 msgid "_More Information"
@@ -222,19 +222,19 @@ msgstr "_Stigande"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
-msgstr "Skapa en upprepande färgton med färger från paletten"
+msgstr "Skapa en upprepande gradient med färger från paletten"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
 msgid "Palette to _Repeating Gradient"
-msgstr "Palett till _upprepande färgton"
+msgstr "Palett till _upprepande gradient"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
 msgid "Create a gradient using colors from the palette"
-msgstr "Skapa en färgton med färger från paletten"
+msgstr "Skapa en gradient med färger från paletten"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
 msgid "Palette to _Gradient"
-msgstr "Palett till _färgton"
+msgstr "Palett till _gradient"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:57
 msgid "Slice"
