@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-28 14:33+0200\n"
-"PO-Revision-Date: 2007-07-30 08:28+0100\n"
+"PO-Revision-Date: 2007-08-01 08:22+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -96,9 +96,8 @@ msgid "Iterations:"
 msgstr "Iterationer:"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:773
-#, fuzzy
 msgid "The higher the number of iterations, the more details will be calculated"
-msgstr "Ändra antalet iterationer. Ju fler iterationer, desto mer detaljer kommer att beräknas, vilket tar mer tid"
+msgstr "Ju fler iterationer, desto mer detaljer kommer att beräknas"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:781
 msgid "CX:"
@@ -325,15 +324,15 @@ msgstr "Skapa en färgkarta med de alternativ du angav ovan (färgintensitet/-fu
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1145
 msgid "Apply active gradient to final image"
-msgstr "Använd aktiv färgtoning på slutgiltiga bilden"
+msgstr "Använd aktiv gradient på slutgiltiga bilden"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1157
 msgid "Create a color-map using a gradient from the gradient editor"
-msgstr "Skapa en färgkarta genom att använda en färgtoning från färgtoningsredigeraren"
+msgstr "Skapa en färgkarta genom att använda en gradient från gradientredigeraren"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1168
 msgid "FractalExplorer Gradient"
-msgstr "FractalExplorer-färgtoning"
+msgstr "FractalExplorer-gradient"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:1198
 msgid "_Fractals"
@@ -512,9 +511,8 @@ msgid "Select folder and rescan collection"
 msgstr "Välj mapp och genomsök samlingen igen"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:1083
-#, fuzzy
 msgid "Apply currently selected fractal"
-msgstr "Ta bort den just nu markerade fraktalen"
+msgstr "Tillämpa aktuell markerad fraktal"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:1095
 msgid "Delete currently selected fractal"
@@ -565,9 +563,8 @@ msgid "Create a new image when applying filter"
 msgstr "Skapa en ny bild vid tillämpning av filter"
 
 #: ../plug-ins/Lighting/lighting_ui.c:327
-#, fuzzy
 msgid "High _quality preview"
-msgstr "Hög_kvalitetsförhandsgranskning"
+msgstr "Hög_kvalitativ förhandsgranskning"
 
 #: ../plug-ins/Lighting/lighting_ui.c:337
 msgid "Enable/disable high quality preview"
@@ -1472,12 +1469,10 @@ msgid "_Alien Map..."
 msgstr "Rymdkarta_2..."
 
 #: ../plug-ins/common/AlienMap2.c:320
-#, fuzzy
 msgid "Alien Map: Transforming"
-msgstr "Rymdkarta: Transformerar..."
+msgstr "Rymdkarta: Transformering"
 
 #: ../plug-ins/common/AlienMap2.c:393
-#, fuzzy
 msgid "Alien Map"
 msgstr "Rymdkarta"
 
@@ -1658,7 +1653,7 @@ msgstr "Med slumpmässig exponent (0,1)"
 
 #: ../plug-ins/common/CML_explorer.c:205
 msgid "With gradient power (0,1)"
-msgstr "Med färgtoningsexponent (0,1)"
+msgstr "Med gradientexponent (0,1)"
 
 #: ../plug-ins/common/CML_explorer.c:206
 msgid "Multiply rand. value (0,1)"
@@ -1670,7 +1665,7 @@ msgstr "Multiplicera slumpvärde (0,2)"
 
 #: ../plug-ins/common/CML_explorer.c:208
 msgid "Multiply gradient (0,1)"
-msgstr "Multiplicera färgtoning (0,1)"
+msgstr "Multiplicera gradient (0,1)"
 
 #: ../plug-ins/common/CML_explorer.c:209
 msgid "With p and random (0,1)"
@@ -1694,7 +1689,7 @@ msgstr "Första raden i bilden"
 
 #: ../plug-ins/common/CML_explorer.c:227
 msgid "Continuous gradient"
-msgstr "Sammanhängande färgtoning"
+msgstr "Sammanhängande gradient"
 
 #: ../plug-ins/common/CML_explorer.c:228
 msgid "Continuous grad. w/o gap"
@@ -1957,9 +1952,9 @@ msgid "Warning: '%s' is an old format file."
 msgstr "Varning: \"%s\" är en fil i gammalt format."
 
 #: ../plug-ins/common/CML_explorer.c:2210
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
-msgstr "Varning: \"%s\" är en parameterfil för en nyare CML_explorer än mig."
+msgstr "Varning: \"%s\" är en parameterfil för en nyare version av CML Explorer."
 
 #: ../plug-ins/common/CML_explorer.c:2273
 msgid "Error: failed to load parameters"
@@ -2151,7 +2146,7 @@ msgstr "Stoppa uppspelning"
 
 #: ../plug-ins/common/animoptimize.c:133
 msgid "Modify image to reduce size when saved as GIF animation"
-msgstr ""
+msgstr "Ändra bilden för att reducera storleken när den sparas som GIF-animation "
 
 #: ../plug-ins/common/animoptimize.c:145
 msgid "Optimize (for _GIF)"
@@ -2159,7 +2154,7 @@ msgstr "Optimera (för _GIF)"
 
 #: ../plug-ins/common/animoptimize.c:153
 msgid "Reduce file size where combining layers is possible"
-msgstr ""
+msgstr "Reducera filstorleken där det är möjligt att kombinera lager"
 
 #: ../plug-ins/common/animoptimize.c:163
 msgid "_Optimize (Difference)"
@@ -2167,7 +2162,7 @@ msgstr "_Optimera (Skillnad)"
 
 #: ../plug-ins/common/animoptimize.c:171
 msgid "Remove optimization to make editing easier"
-msgstr ""
+msgstr "Ta bort optimering för att göra redigering enklare"
 
 #: ../plug-ins/common/animoptimize.c:178
 msgid "_Unoptimize"
@@ -2333,7 +2328,7 @@ msgstr "_Antal segment:"
 
 #: ../plug-ins/common/blur.c:125
 msgid "Simple blur, fast but not very strong"
-msgstr ""
+msgstr "Enkel oskärpa, snabb men inte så kraftig"
 
 #: ../plug-ins/common/blur.c:134
 msgid "_Blur"
@@ -2381,9 +2376,8 @@ msgid "_Bump Map..."
 msgstr "_Bumpmap..."
 
 #: ../plug-ins/common/bumpmap.c:416
-#, fuzzy
 msgid "Bump-mapping"
-msgstr "Bumpmappar..."
+msgstr "Bumpmappning"
 
 #: ../plug-ins/common/bumpmap.c:766
 msgid "Bump Map"
@@ -3495,9 +3489,8 @@ msgid "_Decompose..."
 msgstr "_Separera..."
 
 #: ../plug-ins/common/decompose.c:409
-#, fuzzy
 msgid "Decomposing"
-msgstr "Separerar..."
+msgstr "Separering"
 
 #: ../plug-ins/common/decompose.c:1460
 msgid "Decompose"
@@ -3508,14 +3501,12 @@ msgid "Extract Channels"
 msgstr "Extrahera kanaler"
 
 #: ../plug-ins/common/decompose.c:1530
-#, fuzzy
 msgid "_Decompose to layers"
-msgstr "Separera till _lager"
+msgstr "Separera till la_ger"
 
 #: ../plug-ins/common/decompose.c:1541
-#, fuzzy
 msgid "_Foreground as registration color"
-msgstr "Förgrund / bakgrundsfärger"
+msgstr "_Förgrund som registreringsfärg"
 
 #: ../plug-ins/common/decompose.c:1542
 msgid "Pixels in the foreground color will appear black in all output images.  This can be used for things like crop marks that have to show up on all channels."
@@ -3551,9 +3542,8 @@ msgid "_Depth Merge..."
 msgstr "Sammanfoga _djup..."
 
 #: ../plug-ins/common/depthmerge.c:386
-#, fuzzy
 msgid "Depth-merging"
-msgstr "Sammanfoga djup..."
+msgstr "Sammanfoga djup"
 
 #: ../plug-ins/common/depthmerge.c:643
 msgid "Depth Merge"
@@ -3589,9 +3579,9 @@ msgid "Desktop Link"
 msgstr "Skrivbordslänk"
 
 #: ../plug-ins/common/desktop-link.c:163
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading desktop file '%s': %s"
-msgstr "Fel vid öppnande av fil \"%s\""
+msgstr "Fel vid inläsning av skrivbordsfilen \"%s\": %s"
 
 #: ../plug-ins/common/despeckle.c:149
 #, fuzzy
@@ -3727,7 +3717,6 @@ msgid "Contours"
 msgstr "Konturer"
 
 #: ../plug-ins/common/diffraction.c:603
-#, fuzzy
 msgid "Sharp Edges"
 msgstr "Skarpa kanter"
 
@@ -3775,16 +3764,15 @@ msgstr ""
 
 #: ../plug-ins/common/displace.c:181
 msgid "_Displace..."
-msgstr "_Förskjuter..."
+msgstr "_Förskjut..."
 
 #: ../plug-ins/common/displace.c:292
-#, fuzzy
 msgid "Displacing"
-msgstr "Förskjuter..."
+msgstr "Förskjutning"
 
 #: ../plug-ins/common/displace.c:328
 msgid "Displace"
-msgstr "Förskjutning"
+msgstr "Förskjut"
 
 #. X options
 #: ../plug-ins/common/displace.c:364
@@ -3797,9 +3785,8 @@ msgid "_Y displacement:"
 msgstr "_Y-förskjutning:"
 
 #: ../plug-ins/common/displace.c:461
-#, fuzzy
 msgid "Displacement Mode"
-msgstr "_Placering:"
+msgstr "Förskjutningsläge"
 
 #: ../plug-ins/common/displace.c:464
 #, fuzzy
@@ -3833,9 +3820,8 @@ msgid "Edge detection with control of edge thickness"
 msgstr ""
 
 #: ../plug-ins/common/dog.c:142
-#, fuzzy
 msgid "_Difference of Gaussians..."
-msgstr "Gaussisk differens..."
+msgstr "Gaussisk _differens..."
 
 #: ../plug-ins/common/dog.c:233
 #: ../plug-ins/common/dog.c:280
@@ -3843,9 +3829,8 @@ msgid "DoG Edge Detect"
 msgstr "DoG kantidentifiering"
 
 #: ../plug-ins/common/dog.c:308
-#, fuzzy
 msgid "Smoothing Parameters"
-msgstr "Utjämningssparametrar"
+msgstr "Utjämningsparametrar"
 
 #: ../plug-ins/common/dog.c:322
 msgid "_Radius 1:"
@@ -3886,14 +3871,13 @@ msgid "Sobel"
 msgstr "Sobel"
 
 #: ../plug-ins/common/edge.c:670
-#, fuzzy
 msgid "Prewitt compass"
-msgstr "Prewitt"
+msgstr "Prewitt-kompass"
 
 #: ../plug-ins/common/edge.c:671
 #: ../plug-ins/common/sinus.c:904
 msgid "Gradient"
-msgstr "Färgskala"
+msgstr "Gradient"
 
 #: ../plug-ins/common/edge.c:672
 msgid "Roberts"
@@ -4222,7 +4206,7 @@ msgstr "Aktuell:"
 
 #: ../plug-ins/common/fp.c:325
 msgid "Interactively modify the image colors"
-msgstr ""
+msgstr "Ändra bildfärgerna interaktivt"
 
 #: ../plug-ins/common/fp.c:330
 msgid "_Filter Pack..."
@@ -4457,12 +4441,12 @@ msgstr "Penselformat stöds inte"
 #: ../plug-ins/common/gbr.c:411
 #, c-format
 msgid "Error in GIMP brush file '%s'"
-msgstr "Fel i GIMP-penselfil \"%s\""
+msgstr "Fel i GIMP-penselfilen \"%s\""
 
 #: ../plug-ins/common/gbr.c:419
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr "Ogiltig UTF-8-sträng i penselfil \"%s\"."
+msgstr "Ogiltig UTF-8-sträng i penselfilen \"%s\"."
 
 #: ../plug-ins/common/gbr.c:425
 #: ../plug-ins/common/gih.c:499
@@ -4793,11 +4777,11 @@ msgstr "G-Qbist"
 
 #: ../plug-ins/common/gradmap.c:84
 msgid "Recolor the image using colors from the active gradient"
-msgstr ""
+msgstr "Färga om bilden med färger från den aktiva gradienten"
 
 #: ../plug-ins/common/gradmap.c:97
 msgid "_Gradient Map"
-msgstr "_Färgtoningskarta"
+msgstr "_Gradientkarta"
 
 #: ../plug-ins/common/gradmap.c:106
 msgid "Recolor the image using colors from the active palette"
@@ -4809,7 +4793,7 @@ msgstr "_Palettkarta"
 
 #: ../plug-ins/common/gradmap.c:162
 msgid "Gradient Map"
-msgstr "Färgskalekarta"
+msgstr "Gradientkarta"
 
 #: ../plug-ins/common/gradmap.c:167
 msgid "Palette Map"
@@ -5405,7 +5389,7 @@ msgstr "_Härlett"
 
 #: ../plug-ins/common/lic.c:685
 msgid "_Gradient"
-msgstr "_Färgskala"
+msgstr "_Gradient"
 
 #: ../plug-ins/common/lic.c:691
 msgid "Convolve"
@@ -6247,7 +6231,7 @@ msgstr "GIMP-mönster"
 #: ../plug-ins/common/pat.c:358
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr "Ogiltig UTF-8-sträng i mönsterfil \"%s\"."
+msgstr "Ogiltig UTF-8-sträng i mönsterfilen \"%s\"."
 
 #: ../plug-ins/common/pat.c:513
 msgid "Save as Pattern"
@@ -6431,9 +6415,9 @@ msgid "PNG image"
 msgstr "PNG-bild"
 
 #: ../plug-ins/common/png.c:613
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading PNG file: %s"
-msgstr "Fel vid öppnande av fil \"%s\""
+msgstr "Fel vid inläsning av PNG-fil: %s"
 
 #: ../plug-ins/common/png.c:686
 #, c-format
@@ -6444,7 +6428,7 @@ msgstr "Fel vid läsning av \"%s\". Trasig fil?"
 #: ../plug-ins/common/png.c:814
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
-msgstr "Okänd färgmodell i PNG-fil \"%s\"."
+msgstr "Okänd färgmodell i PNG-filen \"%s\"."
 
 #: ../plug-ins/common/png.c:868
 msgid "The PNG file specifies an offset that caused the layer to be positioned outside the image."
@@ -6566,9 +6550,8 @@ msgid "Invalid maximum value."
 msgstr "PNM: felaktigt maxvärde."
 
 #: ../plug-ins/common/pnm.c:745
-#, fuzzy
 msgid "Error reading file."
-msgstr "Fel vid inläsning"
+msgstr "Fel vid läsning av fil."
 
 #: ../plug-ins/common/pnm.c:1110
 msgid "Save as PNM"
@@ -6592,19 +6575,16 @@ msgid "Convert image to or from polar coordinates"
 msgstr "Konvertera bild till eller från polära koordinater"
 
 #: ../plug-ins/common/polar.c:161
-#, fuzzy
 msgid "P_olar Coordinates..."
 msgstr "P_olära koordinater..."
 
 #: ../plug-ins/common/polar.c:349
-#, fuzzy
 msgid "Polar coordinates"
-msgstr "P_olära koordinater..."
+msgstr "Polära koordinater"
 
 #: ../plug-ins/common/polar.c:581
-#, fuzzy
 msgid "Polar Coordinates"
-msgstr "P_olära koordinater..."
+msgstr "Polära koordinater"
 
 #: ../plug-ins/common/polar.c:619
 msgid "Circle _depth in percent:"
@@ -7156,14 +7136,12 @@ msgid "Enhance contrast using the Retinex method"
 msgstr ""
 
 #: ../plug-ins/common/retinex.c:166
-#, fuzzy
 msgid "Retine_x..."
-msgstr "Retinex..."
+msgstr "Retine_x..."
 
 #: ../plug-ins/common/retinex.c:250
-#, fuzzy
 msgid "Retinex"
-msgstr "Retinex..."
+msgstr "Retinex"
 
 #: ../plug-ins/common/retinex.c:289
 msgid "Retinex Image Enhancement"
@@ -7297,11 +7275,11 @@ msgstr "Sampel:"
 
 #: ../plug-ins/common/sample_colorize.c:1373
 msgid "From reverse gradient"
-msgstr "Från omvänd färgtoning"
+msgstr "Från omvänd gradient"
 
 #: ../plug-ins/common/sample_colorize.c:1378
 msgid "From gradient"
-msgstr "Från färgtoning"
+msgstr "Från gradient"
 
 #. check button
 #: ../plug-ins/common/sample_colorize.c:1399
@@ -7430,9 +7408,8 @@ msgstr ""
 
 #. Area
 #: ../plug-ins/common/screenshot.c:1019
-#, fuzzy
 msgid "Area"
-msgstr "Område:"
+msgstr "Område"
 
 #: ../plug-ins/common/screenshot.c:1030
 msgid "Take a screenshot of a single _window"
@@ -7460,9 +7437,8 @@ msgstr "Ta bort"
 
 #. this is the unit label of a spinbutton
 #: ../plug-ins/common/screenshot.c:1121
-#, fuzzy
 msgid "seconds"
-msgstr "millisekunder"
+msgstr "sekunder"
 
 #: ../plug-ins/common/sel_gauss.c:106
 msgid "Blur neighboring pixels, but only in low-contrast areas"
@@ -7571,12 +7547,10 @@ msgid "Drawing Settings"
 msgstr "Ritinställningar"
 
 #: ../plug-ins/common/sinus.c:700
-#, fuzzy
 msgid "_X scale:"
 msgstr "_X-skala:"
 
 #: ../plug-ins/common/sinus.c:709
-#, fuzzy
 msgid "_Y scale:"
 msgstr "_Y-skala:"
 
@@ -7641,12 +7615,10 @@ msgid "Alpha Channels"
 msgstr "Alfakanaler"
 
 #: ../plug-ins/common/sinus.c:855
-#, fuzzy
 msgid "F_irst color:"
 msgstr "F_örsta färgen:"
 
 #: ../plug-ins/common/sinus.c:870
-#, fuzzy
 msgid "S_econd color:"
 msgstr "A_ndra färgen:"
 
@@ -7671,7 +7643,6 @@ msgid "_Blend"
 msgstr "_Blanda ihop"
 
 #: ../plug-ins/common/sinus.c:1049
-#, fuzzy
 msgid "Do _preview"
 msgstr "_Förhandsgranska"
 
@@ -8495,9 +8466,8 @@ msgid "Tile to New Size"
 msgstr "Plattlägg till ny storlek"
 
 #: ../plug-ins/common/tile.c:437
-#, fuzzy
 msgid "C_reate new image"
-msgstr "Skapa ny bild"
+msgstr "S_kapa ny bild"
 
 #: ../plug-ins/common/tileit.c:215
 msgid "Tile image into smaller versions of the original"
@@ -8975,11 +8945,11 @@ msgstr "Fler avancerade inställningar"
 
 #: ../plug-ins/common/warp.c:640
 msgid "Gradient scale:"
-msgstr "Färgtoningsskala:"
+msgstr "Gradientskala:"
 
 #: ../plug-ins/common/warp.c:663
 msgid "Gradient map selection menu"
-msgstr "Valmeny för färgtoningskarta"
+msgstr "Valmeny för gradientkarta"
 
 #: ../plug-ins/common/warp.c:673
 msgid "Vector mag:"
@@ -8998,16 +8968,16 @@ msgstr "Val av riktningsvektorkarta"
 #. make sure layer is visible
 #: ../plug-ins/common/warp.c:1181
 msgid "Smoothing X gradient"
-msgstr "Jämnar ut X-färgtoning"
+msgstr "Jämnar ut X-gradient"
 
 #: ../plug-ins/common/warp.c:1184
 msgid "Smoothing Y gradient"
-msgstr "Jämnar ut Y-färgtoning"
+msgstr "Jämnar ut Y-gradient"
 
 #. calculate new X,Y Displacement image maps
 #: ../plug-ins/common/warp.c:1234
 msgid "Finding XY gradient"
-msgstr "Söker XY-färgtoning"
+msgstr "Söker XY-gradient"
 
 #: ../plug-ins/common/warp.c:1256
 #, fuzzy, c-format
@@ -9301,7 +9271,7 @@ msgstr "X pixmap-bild"
 #: ../plug-ins/common/xpm.c:353
 #, c-format
 msgid "Error opening file '%s'"
-msgstr "Fel vid öppnande av fil \"%s\""
+msgstr "Fel vid öppnande av filen \"%s\""
 
 #: ../plug-ins/common/xpm.c:358
 msgid "XPM file invalid"
@@ -9527,7 +9497,7 @@ msgstr "Färg_karta:"
 
 #: ../plug-ins/flame/flame.c:1182
 msgid "Custom gradient"
-msgstr "Anpassad färgtoning"
+msgstr "Anpassad gradient"
 
 #: ../plug-ins/flame/flame.c:1208
 msgid "C_amera"
@@ -9587,11 +9557,11 @@ msgstr "Från färgtoning"
 
 #: ../plug-ins/gfig/gfig-dialog.c:419
 msgid "Vertical gradient"
-msgstr "Vertikal färgtoning"
+msgstr "Vertikal gradient"
 
 #: ../plug-ins/gfig/gfig-dialog.c:420
 msgid "Horizontal gradient"
-msgstr "Horisontell färgtoning"
+msgstr "Horisontell gradient"
 
 #. "show image" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:480
@@ -9917,23 +9887,21 @@ msgid "Produce a lense flare effect using gradients"
 msgstr ""
 
 #: ../plug-ins/gflare/gflare.c:814
-#, fuzzy
 msgid "_Gradient Flare..."
-msgstr "Gradientöverstrålning..."
+msgstr "_Gradientöverstrålning..."
 
 #.
 #. *    Dialog Shell
 #.
 #: ../plug-ins/gflare/gflare.c:953
 #: ../plug-ins/gflare/gflare.c:2287
-#, fuzzy
 msgid "Gradient Flare"
-msgstr "Gradientöverstrålning..."
+msgstr "Gradientöverstrålning"
 
 #: ../plug-ins/gflare/gflare.c:1255
 #, c-format
 msgid "Failed to open GFlare file '%s': %s"
-msgstr "Misslyckades med att öppna GFlare-fil \"%s\": %s"
+msgstr "Misslyckades med att öppna GFlare-filen \"%s\": %s"
 
 #: ../plug-ins/gflare/gflare.c:1263
 #, c-format
@@ -9959,7 +9927,7 @@ msgstr ""
 #: ../plug-ins/gflare/gflare.c:1475
 #, c-format
 msgid "Failed to write GFlare file '%s': %s"
-msgstr "Misslyckades med att skriva GFlare-fil \"%s\": %s"
+msgstr "Misslyckades med att skriva GFlare-filen \"%s\": %s"
 
 #: ../plug-ins/gflare/gflare.c:2344
 msgid "A_uto update preview"
@@ -10021,9 +9989,8 @@ msgid "S_elector"
 msgstr "V_äljare"
 
 #: ../plug-ins/gflare/gflare.c:2985
-#, fuzzy
 msgid "New Gradient Flare"
-msgstr "Gradientöverstrålning..."
+msgstr "Ny gradientöverstrålning"
 
 #: ../plug-ins/gflare/gflare.c:2988
 msgid "Enter a name for the new GFlare"
@@ -10035,9 +10002,8 @@ msgid "The name '%s' is used already!"
 msgstr "Namnet \"%s\" används redan!"
 
 #: ../plug-ins/gflare/gflare.c:3064
-#, fuzzy
 msgid "Copy Gradient Flare"
-msgstr "Gradientöverstrålning..."
+msgstr "Kopiera gradientöverstrålning"
 
 #: ../plug-ins/gflare/gflare.c:3067
 msgid "Enter a name for the copied GFlare"
@@ -10053,9 +10019,8 @@ msgid "Cannot delete!! There must be at least one GFlare."
 msgstr "Kan inte ta bort!! Det måste finnas minst en GFlare."
 
 #: ../plug-ins/gflare/gflare.c:3130
-#, fuzzy
 msgid "Delete Gradient Flare"
-msgstr "Ta bort GFlare"
+msgstr "Ta bort gradientöverstrålning"
 
 #: ../plug-ins/gflare/gflare.c:3202
 #, c-format
@@ -10069,7 +10034,7 @@ msgstr "GFlare redigerare"
 
 #: ../plug-ins/gflare/gflare.c:3247
 msgid "Rescan Gradients"
-msgstr "Genomsök färgskalor igen"
+msgstr "Genomsök gradienter igen"
 
 #. Glow
 #: ../plug-ins/gflare/gflare.c:3372
@@ -10110,23 +10075,23 @@ msgstr "_Allmänt"
 #: ../plug-ins/gflare/gflare.c:3584
 #: ../plug-ins/gflare/gflare.c:3723
 msgid "Gradients"
-msgstr "Färgskalor"
+msgstr "Gradienter"
 
 #: ../plug-ins/gflare/gflare.c:3492
 #: ../plug-ins/gflare/gflare.c:3597
 #: ../plug-ins/gflare/gflare.c:3734
 msgid "Radial gradient:"
-msgstr "Radiell färgtoning:"
+msgstr "Radiell gradient:"
 
 #: ../plug-ins/gflare/gflare.c:3496
 #: ../plug-ins/gflare/gflare.c:3601
 msgid "Angular gradient:"
-msgstr "Vinkelfärgtoning:"
+msgstr "Vinkelgradient:"
 
 #: ../plug-ins/gflare/gflare.c:3500
 #: ../plug-ins/gflare/gflare.c:3605
 msgid "Angular size gradient:"
-msgstr "Vinkelstorleksfärgtoning:"
+msgstr "Vinkelstorleksgradient:"
 
 #: ../plug-ins/gflare/gflare.c:3520
 #: ../plug-ins/gflare/gflare.c:3625
@@ -10166,11 +10131,11 @@ msgstr "_Strålar"
 
 #: ../plug-ins/gflare/gflare.c:3738
 msgid "Size factor gradient:"
-msgstr "Storleksfaktorfärgtoning:"
+msgstr "Storleksfaktorgradient:"
 
 #: ../plug-ins/gflare/gflare.c:3742
 msgid "Probability gradient:"
-msgstr "Sannolikhetsfärgtoning:"
+msgstr "Sannolikhetsgradient:"
 
 #.
 #. *    Shape Radio Button Frame
@@ -10655,7 +10620,7 @@ msgstr "Relativ täthet av penseldragen"
 #: ../plug-ins/gimpressionist/ppmtool.c:632
 #, c-format
 msgid "Failed to save PPM file '%s': %s"
-msgstr "Kunde inte spara PPM-fil \"%s\": %s"
+msgstr "Kunde inte spara PPM-filen \"%s\": %s"
 
 #: ../plug-ins/gimpressionist/presets.c:620
 msgid "Save Current"
@@ -10810,9 +10775,8 @@ msgid "Voronoi-mode makes only the smvector closest to the given point have any 
 msgstr "Voronoi-läge medför att endast den sk-vektor som är närmast en given punkt har någon påverkan"
 
 #: ../plug-ins/help/gimphelpdomain.c:178
-#, fuzzy
 msgid "The GIMP help files are not found."
-msgstr "GIMPs hjälpfiler är inte installerade."
+msgstr "GIMP:s hjälpfiler hittades inte."
 
 #: ../plug-ins/help/gimphelpdomain.c:179
 msgid "Please install the additional help package or use the online user manual at http://docs.gimp.org/."
@@ -11435,7 +11399,7 @@ msgstr "Vill du verkligen överge dina ändringar?"
 #: ../plug-ins/imagemap/imap_main.c:875
 #, c-format
 msgid "File \"%s\" saved."
-msgstr "Fil \"%s\" sparad."
+msgstr "Filen \"%s\" sparades."
 
 #: ../plug-ins/imagemap/imap_main.c:879
 msgid "Couldn't save file:"
@@ -12111,11 +12075,11 @@ msgstr "_Skugga under krusning"
 
 #: ../plug-ins/pagecurl/pagecurl.c:581
 msgid "Current gradient (reversed)"
-msgstr "Aktuell färgtoning (omvänd)"
+msgstr "Aktuell gradient (omvänd)"
 
 #: ../plug-ins/pagecurl/pagecurl.c:586
 msgid "Current gradient"
-msgstr "Aktuell färgtoning"
+msgstr "Aktuell gradient"
 
 #: ../plug-ins/pagecurl/pagecurl.c:591
 msgid "Foreground / background colors"
@@ -12421,7 +12385,7 @@ msgstr ""
 #: ../plug-ins/uri/uri-backend-wget.c:255
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
-msgstr ""
+msgstr "wget avslutades onormalt för URI:n \"%s\""
 
 #. The third line is "Connecting to..."
 #: ../plug-ins/uri/uri-backend-wget.c:192
@@ -12599,12 +12563,12 @@ msgstr "Kan inte skapa arbetskatalog \"%s\": %s"
 #: ../plug-ins/xjt/xjt.c:3222
 #, c-format
 msgid "Error: Could not read XJT property file '%s'."
-msgstr "Fel: Kan ej läsa XJT egenskapsfil \"%s\"."
+msgstr "Fel: Kan ej läsa XJT-egenskapsfilen \"%s\"."
 
 #: ../plug-ins/xjt/xjt.c:3228
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
-msgstr "Fel: XJT egenskapsfil \"%s\" är tom."
+msgstr "Fel: XJT-egenskapsfilen \"%s\" är tom."
 
 #~ msgid "About"
 #~ msgstr "Om"
