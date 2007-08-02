@@ -1,3 +1,9 @@
+2007-08-02  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/jpeg/jpegqual.c: added many options, added a list of
+	known quantization tables to make comparisons and identification
+	of JPEG files easier.
+
 2007-08-01  Sven Neumann  <sven@gimp.org>
 
 	* libgimpcolor/gimprgb-parse.c: corrected documentation.
