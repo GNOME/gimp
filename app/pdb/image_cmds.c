@@ -1552,6 +1552,8 @@ image_thumbnail_invoker (GimpProcedure     *procedure,
       else
         width  = MAX (1, (height * dwidth) / dheight);
 
+      gimp_pickable_flush (GIMP_PICKABLE (image->projection));
+
       buf = gimp_viewable_get_new_preview (GIMP_VIEWABLE (image), context,
                                            width, height);
 

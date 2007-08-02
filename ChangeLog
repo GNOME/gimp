@@ -1,5 +1,20 @@
 2007-08-02  Michael Natterer  <mitch@gimp.org>
 
+	Make sure image thumbnails that are saved or given to plugins are
+	constructed synchronously. Fixes bug #461703.
+
+	* app/core/gimpprojection.c (gimp_projection_pickable_flush):
+	invalidate the preview after constructing the projection.
+
+	* app/core/gimpimagefile.c (gimp_imagefile_save_thumb)
+	* tools/pdbgen/pdb/image.pdb (image_thumbnail): call
+	gimp_pickable_flush() on the projection so is constructed now, not
+	later.
+
+	* app/pdb/image_cmds.c: regenerated.
+
+2007-08-02  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpcroptool.c (gimp_crop_tool_cursor_update): no need
 	to set the tool cursor here, we already do that in init() and
 	never change it.

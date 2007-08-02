@@ -40,6 +40,7 @@
 #include "gimpimage.h"
 #include "gimpimagefile.h"
 #include "gimpmarshal.h"
+#include "gimppickable.h"
 #include "gimpprogress.h"
 
 #include "file/file-open.h"
@@ -777,6 +778,9 @@ gimp_imagefile_save_thumb (GimpImagefile  *imagefile,
           height = MAX (1, (size * image->height) / image->width);
         }
     }
+
+  /*  we need the projection constructed NOW, not some time later  */
+  gimp_pickable_flush (GIMP_PICKABLE (image->projection));
 
   pixbuf = gimp_viewable_get_new_pixbuf (GIMP_VIEWABLE (image),
                                          /* random context, unused */

@@ -240,6 +240,16 @@ gimp_projection_pickable_flush (GimpPickable *pickable)
 
   gimp_projection_finish_draw (proj);
   gimp_projection_flush_now (proj);
+
+  if (proj->invalidate_preview)
+    {
+      /* invalidate the preview here since it is constructed from
+       * the projection
+       */
+      proj->invalidate_preview = FALSE;
+
+      gimp_viewable_invalidate_preview (GIMP_VIEWABLE (proj->image));
+    }
 }
 
 static gboolean
