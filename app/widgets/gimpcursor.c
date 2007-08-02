@@ -660,6 +660,14 @@ gimp_cursor_new (GdkDisplay         *display,
       modifier    = GIMP_CURSOR_MODIFIER_NONE;
     }
 
+  /*  some more sanity checks
+   */
+  if (cursor_type == GIMP_CURSOR_MOVE &&
+      modifier    == GIMP_CURSOR_MODIFIER_MOVE)
+    {
+      modifier = GIMP_CURSOR_MODIFIER_NONE;
+    }
+
   /*  prepare the main cursor  */
 
   cursor_type -= GIMP_CURSOR_NONE;
@@ -667,19 +675,19 @@ gimp_cursor_new (GdkDisplay         *display,
 
   /*  prepare the tool cursor  */
 
-  if (tool_cursor >= GIMP_TOOL_CURSOR_LAST)
-    tool_cursor = GIMP_TOOL_CURSOR_NONE;
-
-  if (tool_cursor != GIMP_TOOL_CURSOR_NONE)
-    bmtool = &gimp_tool_cursors[tool_cursor];
+  if (tool_cursor > GIMP_TOOL_CURSOR_NONE &&
+      tool_cursor < GIMP_TOOL_CURSOR_LAST)
+    {
+      bmtool = &gimp_tool_cursors[tool_cursor];
+    }
 
   /*  prepare the cursor modifier  */
 
-  if (modifier >= GIMP_CURSOR_MODIFIER_LAST)
-    modifier = GIMP_CURSOR_MODIFIER_NONE;
-
-  if (modifier != GIMP_CURSOR_MODIFIER_NONE)
-    bmmodifier = &gimp_cursor_modifiers[modifier];
+  if (modifier > GIMP_CURSOR_MODIFIER_NONE &&
+      modifier < GIMP_CURSOR_MODIFIER_LAST)
+    {
+      bmmodifier = &gimp_cursor_modifiers[modifier];
+    }
 
   if (cursor_format != GIMP_CURSOR_FORMAT_BITMAP  &&
       gdk_display_supports_cursor_alpha (display) &&
@@ -769,7 +777,6 @@ gimp_cursor_new (GdkDisplay         *display,
                                            &fg, &bg,
                                            bmcursor->x_hot,
                                            bmcursor->y_hot);
-
       g_object_unref (bitmap);
       g_object_unref (mask);
     }

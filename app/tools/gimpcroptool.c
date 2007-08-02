@@ -229,7 +229,6 @@ gimp_crop_tool_cursor_update (GimpTool        *tool,
                               GimpDisplay     *display)
 {
   gimp_rectangle_tool_cursor_update (tool, coords, state, display);
-  gimp_tool_control_set_tool_cursor (tool->control, GIMP_TOOL_CURSOR_CROP);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
 }
