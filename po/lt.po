@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-28 15:11+0300\n"
+"POT-Creation-Date: 2007-08-02 14:41+0300\n"
 "PO-Revision-Date: 2007-07-28 15:15+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -836,7 +836,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:133
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1390
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1388
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:770
 #: ../app/pdb/image_cmds.c:1993 ../app/widgets/gimpdnd-xds.c:98
@@ -5983,7 +5983,8 @@ msgstr "%s kopija"
 
 #: ../app/core/gimpdatafactory.c:570
 msgid "You don't have a writable data folder configured."
-msgstr "Jūsų konfigūracijoje nenurodytas duomenų aplankas su rašymo teisėmis."
+msgstr ""
+"Konfigūracijoje nenurodytas duomenų aplankas, į kurį galima būtų rašyti."
 
 #: ../app/core/gimpdatafactory.c:731
 #, c-format
@@ -6263,131 +6264,131 @@ msgstr "Perkelti mėginio tašką"
 msgid "Can't undo %s"
 msgstr "Negalima atšaukti %s"
 
-#: ../app/core/gimpimage.c:1460
+#: ../app/core/gimpimage.c:1458
 msgid "Change Image Resolution"
 msgstr "Keisti paveikslėlio raišką"
 
-#: ../app/core/gimpimage.c:1500
+#: ../app/core/gimpimage.c:1498
 msgid "Change Image Unit"
 msgstr "Keisti paveikslėlio vienetus"
 
-#: ../app/core/gimpimage.c:2345
+#: ../app/core/gimpimage.c:2343
 msgid "Attach Parasite to Image"
 msgstr "Prie paveikslėlio prisegti parazitą"
 
-#: ../app/core/gimpimage.c:2383
+#: ../app/core/gimpimage.c:2381
 msgid "Remove Parasite from Image"
 msgstr "Pašalinti nuo paveikslėlio parazitą"
 
-#: ../app/core/gimpimage.c:2841
+#: ../app/core/gimpimage.c:2839
 msgid "Add Layer"
 msgstr "Pridėti sluoksnį"
 
-#: ../app/core/gimpimage.c:2906 ../app/core/gimpimage.c:2919
+#: ../app/core/gimpimage.c:2904 ../app/core/gimpimage.c:2917
 msgid "Remove Layer"
 msgstr "Pašalinti sluoksnį"
 
-#: ../app/core/gimpimage.c:3058
+#: ../app/core/gimpimage.c:3056
 msgid "Layer cannot be raised higher."
 msgstr "Sluoksnio aukščiau pakelti negalima."
 
-#: ../app/core/gimpimage.c:3063
+#: ../app/core/gimpimage.c:3061
 msgid "Raise Layer"
 msgstr "Pakelti sluoksnį"
 
-#: ../app/core/gimpimage.c:3080
+#: ../app/core/gimpimage.c:3078
 msgid "Layer cannot be lowered more."
 msgstr "Sluoksnio žemiau nuleisti negalima."
 
-#: ../app/core/gimpimage.c:3085
+#: ../app/core/gimpimage.c:3083
 msgid "Lower Layer"
 msgstr "Nuleisti sluoksnį"
 
-#: ../app/core/gimpimage.c:3096
+#: ../app/core/gimpimage.c:3094
 msgid "Raise Layer to Top"
 msgstr "Pakelti sluoksnį iki viršaus"
 
-#: ../app/core/gimpimage.c:3111
+#: ../app/core/gimpimage.c:3109
 msgid "Lower Layer to Bottom"
 msgstr "Nuleisti sluoksnį iki apačios"
 
-#: ../app/core/gimpimage.c:3183
+#: ../app/core/gimpimage.c:3181
 msgid "Add Channel"
 msgstr "Pridėti kanalą"
 
-#: ../app/core/gimpimage.c:3228 ../app/core/gimpimage.c:3239
+#: ../app/core/gimpimage.c:3226 ../app/core/gimpimage.c:3237
 msgid "Remove Channel"
 msgstr "Pašalinti kanalą"
 
-#: ../app/core/gimpimage.c:3286
+#: ../app/core/gimpimage.c:3284
 msgid "Channel cannot be raised higher."
 msgstr "Kanalo aukščiau pakelti negalima."
 
-#: ../app/core/gimpimage.c:3291
+#: ../app/core/gimpimage.c:3289
 msgid "Raise Channel"
 msgstr "Pakelti kanalą"
 
-#: ../app/core/gimpimage.c:3308
+#: ../app/core/gimpimage.c:3306
 msgid "Channel is already on top."
 msgstr "Sluoksnis jau viršuje."
 
-#: ../app/core/gimpimage.c:3313
+#: ../app/core/gimpimage.c:3311
 msgid "Raise Channel to Top"
 msgstr "Pakelti kanalą į viršų"
 
-#: ../app/core/gimpimage.c:3330
+#: ../app/core/gimpimage.c:3328
 msgid "Channel cannot be lowered more."
 msgstr "Kanalo žemiau nuleisti negalima."
 
-#: ../app/core/gimpimage.c:3335
+#: ../app/core/gimpimage.c:3333
 msgid "Lower Channel"
 msgstr "Nuleisti kanalą"
 
-#: ../app/core/gimpimage.c:3355
+#: ../app/core/gimpimage.c:3353
 msgid "Channel is already on the bottom."
 msgstr "Sluoksnis jau yra apačioje"
 
-#: ../app/core/gimpimage.c:3360
+#: ../app/core/gimpimage.c:3358
 msgid "Lower Channel to Bottom"
 msgstr "Nuleisti kanalą į apačią"
 
-#: ../app/core/gimpimage.c:3434
+#: ../app/core/gimpimage.c:3432
 msgid "Add Path"
 msgstr "Pridėti kontūrą"
 
-#: ../app/core/gimpimage.c:3480
+#: ../app/core/gimpimage.c:3478
 msgid "Remove Path"
 msgstr "Pašalinti kontūrą"
 
-#: ../app/core/gimpimage.c:3524
+#: ../app/core/gimpimage.c:3522
 msgid "Path cannot be raised higher."
 msgstr "Kontūro aukščiau pakelti negalima."
 
-#: ../app/core/gimpimage.c:3529
+#: ../app/core/gimpimage.c:3527
 msgid "Raise Path"
 msgstr "Pakelti kontūrą"
 
-#: ../app/core/gimpimage.c:3546
+#: ../app/core/gimpimage.c:3544
 msgid "Path is already on top."
 msgstr "Kontūras jau yra viršuje."
 
-#: ../app/core/gimpimage.c:3551
+#: ../app/core/gimpimage.c:3549
 msgid "Raise Path to Top"
 msgstr "Pakelti kontūrą iki viršaus"
 
-#: ../app/core/gimpimage.c:3568
+#: ../app/core/gimpimage.c:3566
 msgid "Path cannot be lowered more."
 msgstr "Kontūro žemiau nuleisti negalima."
 
-#: ../app/core/gimpimage.c:3573
+#: ../app/core/gimpimage.c:3571
 msgid "Lower Path"
 msgstr "Nuleisti kontūrą"
 
-#: ../app/core/gimpimage.c:3593
+#: ../app/core/gimpimage.c:3591
 msgid "Path is already on the bottom."
 msgstr "Kontūras jau yra apačioje."
 
-#: ../app/core/gimpimage.c:3598
+#: ../app/core/gimpimage.c:3596
 msgid "Lower Path to Bottom"
 msgstr "Nuleisti kontūrą iki apačios"
 
@@ -7104,7 +7105,7 @@ msgstr ""
 
 #: ../app/dialogs/image-scale-dialog.c:262
 msgid "Is this what you want to do?"
-msgstr "Ar tai ir yra ką Jūs norite padaryti?"
+msgstr "Ar tikrai norite tai atlikti?"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:50
 msgid "Configure Keyboard Shortcuts"
@@ -7392,7 +7393,7 @@ msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
-"Jūsų langų nustatymai bus atstatyti į numatytasias reikšmes, kai kitą kartą "
+"Langų nustatymai bus atstatyti į numatytasias reikšmes, kai kitą kartą "
 "paleisite GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:675
@@ -7400,8 +7401,8 @@ msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
-"Jūsų įvedimo įrenginių nustatymai bus atstatyti į numatytasias reikšmes, kai "
-"kitą kartą paleisite GIMP."
+"Įvedimo įrenginių nustatymai bus atstatyti į numatytasias reikšmes, kai kitą "
+"kartą paleisite GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:710
 msgid ""
@@ -8835,7 +8836,7 @@ msgstr ""
 msgid "Bad binary format string in interpreter file %s"
 msgstr "Interpretatoriaus rinkmenoje „%s“ yra bloga dvejetainio formato eilutė"
 
-#: ../app/plug-in/gimpplugin.c:630
+#: ../app/plug-in/gimpplugin.c:635
 #, c-format
 msgid ""
 "Plug-in crashed: \"%s\"\n"
@@ -8847,8 +8848,8 @@ msgstr ""
 "Įskiepis nulūžo: „%s“\n"
 "(%s)\n"
 "\n"
-"Lūžtantis įskiepis galėjo sudarkyti vidinę GIMP būseną. Dėl viso pikto, "
-"galite išsaugoti Jūsų paveikslėlius ir perkrauti GIMP."
+"Lūžtantis įskiepis galėjo sudarkyti vidinę GIMP būseną. Dėl viso pikto "
+"galite išsaugoti paveikslėlius ir perkrauti GIMP."
 
 #: ../app/plug-in/gimppluginmanager-restore.c:222
 msgid "Searching Plug-Ins"
@@ -8878,16 +8879,16 @@ msgstr "Įskiepių interpretatoriai"
 msgid "Plug-In Environment"
 msgstr "Įskiepių aplinka"
 
-#: ../app/plug-in/plug-in-icc-profile.c:103
-#: ../app/plug-in/plug-in-icc-profile.c:169
-#: ../app/plug-in/plug-in-icc-profile.c:224
+#: ../app/plug-in/plug-in-icc-profile.c:109
+#: ../app/plug-in/plug-in-icc-profile.c:181
+#: ../app/plug-in/plug-in-icc-profile.c:238
 #, c-format
 msgid "Error running '%s'"
 msgstr "Klaida vykdant „%s“"
 
-#: ../app/plug-in/plug-in-icc-profile.c:126
-#: ../app/plug-in/plug-in-icc-profile.c:179
-#: ../app/plug-in/plug-in-icc-profile.c:234
+#: ../app/plug-in/plug-in-icc-profile.c:132
+#: ../app/plug-in/plug-in-icc-profile.c:191
+#: ../app/plug-in/plug-in-icc-profile.c:248
 #, c-format
 msgid "Plug-In missing (%s)"
 msgstr "Nėra įskiepio (%s)"
@@ -10409,7 +10410,7 @@ msgstr "Stačiakampio pažymėjimo įrankis: pasirinkti stačiakampį regioną"
 msgid "_Rectangle Select"
 msgstr "_Stačiakampio pažymėjimas"
 
-#: ../app/tools/gimprectangletool.c:904 ../app/tools/gimprectangletool.c:1735
+#: ../app/tools/gimprectangletool.c:904 ../app/tools/gimprectangletool.c:1743
 msgid "Rectangle: "
 msgstr "Stačiakampis: "
 
@@ -10651,9 +10652,9 @@ msgid ""
 "\n"
 "You can edit the layer or create a new text layer from its text attributes."
 msgstr ""
-"Jūsų pasirinktas sluoksnis yra teksto sluoksnis, tačiau jis buvo "
-"modifikuotas kitais įrankiais. Redaguojant sluoksnį su teksto įrankiu, šie "
-"pakeitimai bus atšaukti.\n"
+"Pasirinktas sluoksnis yra teksto sluoksnis, tačiau jis buvo modifikuotas "
+"kitais įrankiais. Redaguojant sluoksnį su teksto įrankiu, šie pakeitimai bus "
+"atšaukti.\n"
 "\n"
 "Galite redaguoti sluoksnį arba sukurti naują tekstinį sluoksį iš jo "
 "tekstinių požymių."
@@ -11339,7 +11340,7 @@ msgid ""
 msgstr ""
 "Gali būti tik vienas aktyvus klaviatūros kontroleris.\n"
 "\n"
-"Jūs aktyvių kontrolerių sąraše jau turite klaviatūros kontrolerį."
+"Aktyvių kontrolerių sąraše jau turite klaviatūros kontrolerį."
 
 #: ../app/widgets/gimpcontrollerlist.c:522
 msgid ""
@@ -11349,7 +11350,7 @@ msgid ""
 msgstr ""
 "Gali būti tik vienas aktyvus ratuko kontroleris.\n"
 "\n"
-"Jūs aktyvių kontrolerių sąraše jau turite ratuko kontrolerį."
+"Aktyvių kontrolerių sąraše jau turite ratuko kontrolerį."
 
 #: ../app/widgets/gimpcontrollerlist.c:549
 msgid "Remove Controller?"
@@ -11853,8 +11854,7 @@ msgstr "Auto"
 #: ../app/widgets/gimpmenudock.c:170
 msgid ""
 "When enabled the dialog automatically follows the image you are working on."
-msgstr ""
-"Kai įjungta, dialogas automatiškai seka paveikslėlį, kuriame Jūs dirbate."
+msgstr "Kai įjungta, dialogas automatiškai seka paveikslėlį, kuriame dirbate."
 
 #: ../app/widgets/gimpmessagebox.c:437
 #, c-format
@@ -12329,7 +12329,7 @@ msgstr "Saugoma „%s“"
 
 #: ../desktop/gimp.desktop.in.in.h:1
 msgid "Create images and edit photographs"
-msgstr "Kurkite paveiklėlius ir redaguokite fotografijas"
+msgstr "Kurti paveikslėlius ir redaguoti fotografijas"
 
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Image Editor"
