@@ -50,11 +50,11 @@
 /* command-line options */
 typedef struct
 {
-  char *option;
-  char *description;
+  const gchar *option;
+  const gchar *description;
 } OptionDesc;
 
-static OptionDesc options_desc[] =
+static const OptionDesc options_desc[] =
   {
     { "-h, --help",
       "Display this help message" },
@@ -70,6 +70,7 @@ static OptionDesc options_desc[] =
       "Only print information about files with unknown tables" },
     { NULL, NULL }
   };
+
 static gboolean  option_summary      = TRUE;
 static gboolean  option_ctable       = FALSE;
 static gboolean  option_table_2cols  = FALSE;
@@ -84,16 +85,16 @@ static guint16 **ijg_chrominance_nb  = NULL; /* chrominance, not baseline */
 
 typedef struct
 {
-  int   lum_sum;
-  int   chrom_sum;
-  int   subsmp_h;
-  int   subsmp_v;
-  char *source_name;
-  char *setting_name;
-  int   ijg_qual;
+  const gint   lum_sum;
+  const gint   chrom_sum;
+  const gint   subsmp_h;
+  const gint   subsmp_v;
+  const gchar *source_name;
+  const gchar *setting_name;
+  const gint   ijg_qual;
 } QuantInfo;
 
-static QuantInfo quant_info[] =
+static const QuantInfo quant_info[] =
 {
   {    64,    64, 0, 0, "IJG JPEG Library", "quality 100", 100 },
   {    86,   115, 0, 0, "IJG JPEG Library", "quality 99", 99 },
@@ -435,6 +436,7 @@ detect_source (struct jpeg_decompress_struct *cinfo)
   chrom_sum = 0;
   for (i = 0; i < DCTSIZE2; i++)
     lum_sum += cinfo->quant_tbl_ptrs[0]->quantval[i];
+
   if (cinfo->quant_tbl_ptrs[1])
     {
       for (i = 0; i < DCTSIZE2; i++)
@@ -446,7 +448,7 @@ detect_source (struct jpeg_decompress_struct *cinfo)
   if (chrom_sum == 0)
     {
       /* grayscale */
-      for (i = 0; i < sizeof (quant_info) / sizeof (quant_info[0]); i++)
+      for (i = 0; i < G_N_ELEMENTS (quant_info); i++)
         {
           if (quant_info[i].lum_sum == lum_sum
               && (quant_info[i].subsmp_h == 0
@@ -456,14 +458,15 @@ detect_source (struct jpeg_decompress_struct *cinfo)
                   || quant_info[i].subsmp_v
                   == cinfo->comp_info[0].v_samp_factor))
             {
-              source_list = g_slist_append (source_list, quant_info + i);
+              source_list = g_slist_append (source_list,
+                                            (gpointer) (quant_info + i));
             }
         }
     }
   else
     {
       /* RGB and other color spaces */
-      for (i = 0; i < sizeof (quant_info) / sizeof (quant_info[0]); i++)
+      for (i = 0; i < G_N_ELEMENTS (quant_info); i++)
         {
           if (quant_info[i].lum_sum == lum_sum
               && quant_info[i].chrom_sum == chrom_sum
@@ -474,10 +477,12 @@ detect_source (struct jpeg_decompress_struct *cinfo)
                   || quant_info[i].subsmp_v
                   == cinfo->comp_info[0].v_samp_factor))
             {
-              source_list = g_slist_append (source_list, quant_info + i);
+              source_list = g_slist_append (source_list,
+                                            (gpointer) (quant_info + i));
             }
         }
     }
+
   return source_list;
 }
 
@@ -688,7 +693,7 @@ analyze_file (const gchar *filename)
 static void
 usage (void)
 {
-  OptionDesc *opt;
+  const OptionDesc *opt;
 
   g_print ("This program analyzes the quantization tables of the JPEG files given on the\n"
            "command line and displays their quality settings.\n"
