@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-01 19:13+0200\n"
-"PO-Revision-Date: 2007-08-01 20:06+0200\n"
+"PO-Revision-Date: 2007-08-03 20:53+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
 "Language-Team: Basque <eu@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -1376,7 +1376,7 @@ msgstr "Modua"
 
 #: ../plug-ins/common/AlienMap2.c:518
 msgid "_RGB color model"
-msgstr "_RGB kolore-eredua"
+msgstr "_GBU kolore-eredua"
 
 #: ../plug-ins/common/AlienMap2.c:519
 msgid "_HSL color model"
@@ -2589,11 +2589,11 @@ msgstr "alfara"
 #: ../plug-ins/common/compose.c:189 ../plug-ins/common/decompose.c:170
 #: ../plug-ins/common/raw.c:1002
 msgid "RGB"
-msgstr "RGB"
+msgstr "GBU"
 
 #: ../plug-ins/common/compose.c:200 ../plug-ins/common/decompose.c:178
 msgid "RGBA"
-msgstr "RGBA"
+msgstr "GBUA"
 
 #: ../plug-ins/common/compose.c:204 ../plug-ins/common/noisify.c:525
 #: ../plug-ins/common/noisify.c:540
@@ -2935,7 +2935,7 @@ msgstr "Erabili byte _1eko Run-Length-Encoding"
 #.
 #: ../plug-ins/common/csource.c:732
 msgid "Sa_ve alpha channel (RGBA/RGB)"
-msgstr "Gor_de alfa kanala (RGBA/RGB)"
+msgstr "Gor_de alfa kanala (GBUA/GBU)"
 
 #: ../plug-ins/common/csource.c:750
 msgid "Op_acity:"
@@ -3962,7 +3962,7 @@ msgstr "_Iragazki-paketea..."
 
 #: ../plug-ins/common/fp.c:376
 msgid "FP can only be used on RGB images."
-msgstr "Iragazki-paketeak RGB marrazgaietan bakarrik egin dezake lan."
+msgstr "Iragazki-paketeak GBU marrazgaietan bakarrik egin dezake lan."
 
 #: ../plug-ins/common/fp.c:386
 msgid "FP can only be run interactively."
@@ -4194,7 +4194,7 @@ msgstr "Izengabea"
 
 #: ../plug-ins/common/gbr.c:607
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr "GIMP brotxak gris-eskalakoak edo RGBA dira"
+msgstr "GIMP brotxak gris-eskalakoak edo GBUA dira"
 
 #: ../plug-ins/common/gbr.c:704
 msgid "Save as Brush"
@@ -4293,7 +4293,7 @@ msgstr ""
 #: ../plug-ins/common/gif-save.c:958
 msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
-"Ezin dira RGB irudiak GIF gisa gorde. Bihurtu irudi indexatu edo gris-"
+"Ezin dira GBU irudiak GIF gisa gorde. Bihurtu irudi indexatu edo gris-"
 "eskalara lehenik."
 
 #: ../plug-ins/common/gif-save.c:1135
@@ -5284,15 +5284,15 @@ msgstr "_Geh GBU..."
 
 #: ../plug-ins/common/max_rgb.c:134
 msgid "Can only operate on RGB drawables."
-msgstr "RGB marrazgaietan bakarrik egin daiteke lan."
+msgstr "GBU marrazgaietan bakarrik egin daiteke lan."
 
 #: ../plug-ins/common/max_rgb.c:234
 msgid "Max RGB"
-msgstr "Geh RGB"
+msgstr "Geh GBU"
 
 #: ../plug-ins/common/max_rgb.c:259
 msgid "Maximum RGB Value"
-msgstr "Gehienezko RGB balioa"
+msgstr "Gehienezko GBU balioa"
 
 #: ../plug-ins/common/max_rgb.c:291
 msgid "_Hold the maximal channels"
@@ -5652,7 +5652,7 @@ msgstr "Bereizi hona:"
 
 #: ../plug-ins/common/newsprint.c:1345
 msgid "_RGB"
-msgstr "_RGB"
+msgstr "_GBU"
 
 #: ../plug-ins/common/newsprint.c:1362
 msgid "C_MYK"
@@ -5717,7 +5717,7 @@ msgstr "Eman distortsioa koloreei ausazko kopuruekin"
 
 #: ../plug-ins/common/noisify.c:154
 msgid "_RGB Noise..."
-msgstr "_RGB zarata..."
+msgstr "_GBU zarata..."
 
 #: ../plug-ins/common/noisify.c:282
 msgid "Adding noise"
@@ -5725,7 +5725,7 @@ msgstr "Zarata gehitzen"
 
 #: ../plug-ins/common/noisify.c:448
 msgid "RGB Noise"
-msgstr "RGB zarata "
+msgstr "GBU zarata"
 
 #: ../plug-ins/common/noisify.c:481
 msgid "Co_rrelated noise"
@@ -5733,7 +5733,7 @@ msgstr "Zarata _korrelatua"
 
 #: ../plug-ins/common/noisify.c:496
 msgid "_Independent RGB"
-msgstr "RGB _independentea"
+msgstr "GBU _independentea"
 
 #: ../plug-ins/common/noisify.c:520 ../plug-ins/common/noisify.c:524
 msgid "_Gray:"
@@ -6720,7 +6720,7 @@ msgstr "GBU Alfa"
 
 #: ../plug-ins/common/raw.c:1004
 msgid "Planar RGB"
-msgstr "Planar RGB"
+msgstr "Planar GBU"
 
 #: ../plug-ins/common/raw.c:1005
 msgid "Indexed"
@@ -6768,7 +6768,7 @@ msgstr "Formatu gabeko irudia gordetzea"
 
 #: ../plug-ins/common/raw.c:1156
 msgid "RGB Save Type"
-msgstr "RGB gordetze-mota"
+msgstr "GBU gordetze-mota"
 
 #: ../plug-ins/common/raw.c:1160
 msgid "Standard (R,G,B)"
@@ -7959,7 +7959,7 @@ msgstr "Geruzak bere alfa kanala blokeatuta du."
 
 #: ../plug-ins/common/threshold_alpha.c:137
 msgid "RGBA/GRAYA drawable is not selected."
-msgstr "RGBA/GRAYA marrazgaia ez dago hautatuta."
+msgstr "GBUA/GRAYA marrazgaia ez dago hautatuta."
 
 #: ../plug-ins/common/threshold_alpha.c:165
 msgid "Coloring transparency"
@@ -8920,7 +8920,7 @@ msgstr "Errorea irudi indexatu/grisa idaztean"
 
 #: ../plug-ins/common/xwd.c:2277
 msgid "Error during writing rgb image"
-msgstr "Errorea rgb irudia idaztean"
+msgstr "Errorea GBU irudia idaztean"
 
 #: ../plug-ins/common/zealouscrop.c:85
 msgid "Autocrop unused space from edges and middle"
@@ -8997,7 +8997,7 @@ msgstr "Sugarra marrazten"
 
 #: ../plug-ins/flame/flame.c:318
 msgid "Flame works only on RGB drawables."
-msgstr "Sugarrak RGB marrazgaietan bakarrik funtzionatzen du."
+msgstr "Sugarrak GBU marrazgaietan bakarrik funtzionatzen du."
 
 #: ../plug-ins/flame/flame.c:401
 #, c-format
