@@ -1,3 +1,8 @@
+2007-08-03  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpoffsetarea.c: applied modified patch from
+	Aurimas Juška to improve handling of very small images (bug #463096).
+
 2007-08-02  Michael Natterer  <mitch@gimp.org>
 
 	Make sure image thumbnails that are saved or given to plugins are

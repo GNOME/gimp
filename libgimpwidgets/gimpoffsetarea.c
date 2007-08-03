@@ -288,7 +288,10 @@ gimp_offset_area_size_allocate (GtkWidget     *widget,
       gint       pixbuf_height;
 
       pixbuf_width  = area->display_ratio_x * area->orig_width;
+      pixbuf_width  = MAX (pixbuf_width, 1);
+
       pixbuf_height = area->display_ratio_y * area->orig_height;
+      pixbuf_height = MAX (pixbuf_height, 1);
 
       copy = g_object_get_data (G_OBJECT (area), "pixbuf-copy");
 
@@ -402,7 +405,10 @@ gimp_offset_area_expose_event (GtkWidget      *widget,
         area->offset_y + area->orig_height - area->height));
 
   w = area->display_ratio_x * area->orig_width;
+  w = MAX (w, 1);
+
   h = area->display_ratio_y * area->orig_height;
+  h = MAX (h, 1);
 
   pixbuf = g_object_get_data (G_OBJECT (widget), "pixbuf-copy");
 
