@@ -71,6 +71,7 @@ static void      script_fu_script_proc    (const gchar            *name,
 static SFScript *script_fu_find_script    (const gchar            *name);
 static void      script_fu_free_script    (SFScript               *script);
 
+static void      script_fu_menu_map       (SFScript               *script);
 static gint      script_fu_menu_compare   (gconstpointer           a,
                                            gconstpointer           b);
 
@@ -612,6 +613,8 @@ script_fu_add_script (scheme *sc, pointer a)
 
   script->args = args;
 
+  script_fu_menu_map (script);
+
   {
     const gchar *key  = gettext (script->menu_path);
     GList       *list = g_tree_lookup (script_tree, key);
@@ -631,7 +634,8 @@ script_fu_add_menu (scheme *sc, pointer a)
 
   /*  Check the length of a  */
   if (sc->vptr->list_length (sc, a) != 2)
-    return my_err (sc, "Incorrect number of arguments for script-fu-menu-register");
+    return my_err (sc,
+                   "Incorrect number of arguments for script-fu-menu-register");
 
   /*  Find the script PDB entry name  */
   name = sc->vptr->string_value (sc->vptr->pair_car (a));
@@ -1146,6 +1150,40 @@ script_fu_free_script (SFScript *script)
   g_free (script->arg_values);
 
   g_slice_free (SFScript, script);
+}
+
+static void
+script_fu_menu_map (SFScript *script)
+{
+  /*  for backward compatibility, we fiddle with some menu paths  */
+  const struct
+  {
+    const gchar *old;
+    const gchar *new;
+  } mapping[] = {
+    { "<Image>/Script-Fu/Animators", "<Image>/Filters/Animation/Animators" }
+  };
+
+  gint i;
+
+  for (i = 0; i < G_N_ELEMENTS (mapping); i++)
+    {
+      if (g_str_has_prefix (script->menu_path, mapping[i].old))
+        {
+          const gchar *suffix = script->menu_path + strlen (mapping[i].old);
+          gchar       *tmp;
+
+          if (! *suffix == '/')
+            continue;
+
+          tmp = g_strconcat (mapping[i].new, suffix, NULL);
+
+          g_free (script->menu_path);
+          script->menu_path = tmp;
+
+          break;
+        }
+    }
 }
 
 static gint
