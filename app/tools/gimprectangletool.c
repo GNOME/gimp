@@ -2014,18 +2014,6 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
                                                  y2);
         }
     }
-  else if (! strcmp (pspec->name, "fixed-aspect")     ||
-           ! strcmp (pspec->name, "aspect-numerator") ||
-           ! strcmp (pspec->name, "aspect-denominator"))
-    {
-      if (options_private->fixed_aspect)
-        {
-          gimp_rectangle_tool_synthesize_motion (rectangle,
-                                                 RECT_RESIZING_LOWER_RIGHT,
-                                                 private->x2,
-                                                 private->y2);
-        }
-    }
   else if (! strcmp (pspec->name, "highlight"))
     {
       gimp_rectangle_tool_set_highlight (rectangle);

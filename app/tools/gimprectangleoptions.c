@@ -449,24 +449,6 @@ gimp_rectangle_options_get_property (GObject      *object,
     }
 }
 
-static void
-gimp_rectangle_options_notify_aspect (GtkWidget            *widget,
-                                      GParamSpec           *param_spec,
-                                      GimpRectangleOptions *options)
-{
-  GimpRectangleOptionsPrivate *private;
-
-  private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
-
-  if (private->fixed_aspect)
-    {
-      g_object_set (options,
-                    "width",  private->height,
-                    "height", private->width,
-                    NULL);
-    }
-}
-
 GtkWidget *
 gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 {
@@ -522,10 +504,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   children = gtk_container_get_children (GTK_CONTAINER (aspect));
   gtk_widget_hide (children->data);
   g_list_free (children);
-
-  g_signal_connect (entry, "notify::aspect",
-                    G_CALLBACK (gimp_rectangle_options_notify_aspect),
-                    config);
 
   /*  Highlight  */
   button = gimp_prop_check_button_new (config, "highlight",
