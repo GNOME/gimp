@@ -96,7 +96,7 @@ msgstr "»%s« konnte nicht geöffnet werden: %s"
 #: ../app/batch.c:75
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
-msgstr ""
+msgstr "Kein Interpreter angegeben, verwende Standardinterpreter '%s'.\n"
 
 #: ../app/batch.c:93 ../app/batch.c:111
 #, c-format
@@ -528,7 +528,7 @@ msgstr "Kanalei_genschaften …"
 
 #: ../app/actions/channels-actions.c:49
 msgid "Edit the channel's name, color and opacity"
-msgstr ""
+msgstr "Name, Farbe und Deckkraft des Kanals bearbeiten"
 
 #: ../app/actions/channels-actions.c:54
 msgid "_New Channel..."
@@ -799,7 +799,7 @@ msgstr "Farben _vertauschen"
 
 #: ../app/actions/context-actions.c:72
 msgid "Exchange foreground and background colors"
-msgstr "Vordergrund & Hintergrundfarbe vertauschen"
+msgstr "Vordergrund- & Hintergrundfarbe vertauschen"
 
 #: ../app/actions/cursor-info-actions.c:40
 msgid "Pointer Information Menu"
@@ -1480,16 +1480,15 @@ msgstr "Mit _VG-Farbe füllen"
 
 #: ../app/actions/edit-actions.c:179
 msgid "Fill the selection using the foreground color"
-msgstr ""
+msgstr "Auswahl mit Vordergrundfarbe füllen"
 
 #: ../app/actions/edit-actions.c:184
 msgid "Fill with B_G Color"
 msgstr "Mit _HG-Farbe füllen"
 
 #: ../app/actions/edit-actions.c:185
-#, fuzzy
 msgid "Fill the selection using the background color"
-msgstr "Mit _Hintergrundfarbe auffüllen"
+msgstr "Auswahl mit _Hintergrundfarbe füllen"
 
 #: ../app/actions/edit-actions.c:190
 msgid "Fill with P_attern"
@@ -1497,7 +1496,7 @@ msgstr "Mit _Muster füllen"
 
 #: ../app/actions/edit-actions.c:191
 msgid "Fill the selection using the active pattern"
-msgstr ""
+msgstr "Auswahl mit aktivem Muster füllen"
 
 #: ../app/actions/edit-actions.c:270
 #, c-format
@@ -1531,7 +1530,8 @@ msgstr ""
 
 #: ../app/actions/edit-commands.c:270 ../app/actions/edit-commands.c:446
 msgid "There is no image data in the clipboard to paste."
-msgstr ""
+msgstr "Die Zwischenablage enthält keine Bilddaten, die eingefügt werden "
+"könnten."
 
 #: ../app/actions/edit-commands.c:284
 msgid "Cut Named"
@@ -1588,9 +1588,8 @@ msgid "Select all errors"
 msgstr "Alle Fehlermeldungen auswählen"
 
 #: ../app/actions/error-console-actions.c:59
-#, fuzzy
 msgid "_Save Error Log to File..."
-msgstr "Fehlerprotokoll in Datei speichern"
+msgstr "Fehlerprotokoll in Datei speichern..."
 
 #: ../app/actions/error-console-actions.c:60
 msgid "Save error log"
@@ -1660,7 +1659,7 @@ msgstr "Zurücksetzen"
 
 #: ../app/actions/file-actions.c:91
 msgid "Reload the image file from disk"
-msgstr ""
+msgstr "Bild aus Datei neu laden"
 
 #: ../app/actions/file-actions.c:96
 msgid "Close all"
@@ -2322,7 +2321,7 @@ msgstr "Bildinformationen anzeigen"
 
 #: ../app/actions/image-actions.c:148
 msgid "Convert the image to the RGB colorspace"
-msgstr "Bild in den RGB-Farbraum umwnadeln"
+msgstr "Bild in den RGB-Farbraum umwandeln"
 
 #: ../app/actions/image-actions.c:152
 msgid "_Grayscale"
@@ -4872,9 +4871,8 @@ msgid "Use custom palette"
 msgstr "Eigene Palette verwenden"
 
 #: ../app/core/core-enums.c:211
-#, fuzzy
 msgid "First item"
-msgstr "Dem Thema entsprechend"
+msgstr "Erstes Objekt"
 
 #: ../app/core/core-enums.c:213 ../app/dialogs/dialogs.c:189
 #: ../app/tools/tools-enums.c:150
@@ -4882,19 +4880,16 @@ msgid "Selection"
 msgstr "Auswahl"
 
 #: ../app/core/core-enums.c:214
-#, fuzzy
 msgid "Active layer"
-msgstr "Aktive Filter"
+msgstr "Aktive Ebene"
 
 #: ../app/core/core-enums.c:215
-#, fuzzy
 msgid "Active channel"
-msgstr "Kanal anheben"
+msgstr "Aktiver Kanal"
 
 #: ../app/core/core-enums.c:216
-#, fuzzy
 msgid "Active path"
-msgstr "Pfad anheben"
+msgstr "Aktiver Pfad"
 
 #: ../app/core/core-enums.c:247
 msgid "Foreground color"
@@ -5354,9 +5349,8 @@ msgid "EEK: can't undo"
 msgstr "EEK: kann nicht rückgängig gemacht werden"
 
 #: ../app/core/core-enums.c:1194
-#, fuzzy
 msgid "Composite"
-msgstr "_Komponenten"
+msgstr "Zusammensetzung"
 
 #: ../app/core/core-enums.c:1228
 #, fuzzy
@@ -5379,12 +5373,11 @@ msgstr ""
 
 #: ../app/core/core-enums.c:1259
 msgid "Keep embedded profile"
-msgstr ""
+msgstr "Eingebettetes Profil behalten"
 
 #: ../app/core/core-enums.c:1260
-#, fuzzy
 msgid "Convert to RGB workspace"
-msgstr "Bild in den RGB-Farbraum umwnadeln"
+msgstr "In RGB-Farbraum umwandeln"
 
 #: ../app/core/gimp-contexts.c:141 ../app/core/gimptooloptions.c:239
 #: ../app/gui/session.c:257 ../app/menus/menus.c:422
@@ -8458,9 +8451,8 @@ msgstr "Stift"
 
 #: ../app/paint/gimpperspectiveclone.c:96 ../app/paint/paint-enums.c:52
 #: ../app/tools/gimpperspectiveclonetool.c:120
-#, fuzzy
 msgid "Perspective Clone"
-msgstr "Perspektive"
+msgstr "Perspektive klonen"
 
 #: ../app/paint/gimpperspectiveclone.c:161
 #, fuzzy
@@ -8478,7 +8470,7 @@ msgstr ""
 #: ../app/paint/paint-enums.c:51
 #, fuzzy
 msgid "Modify Perspective Plane"
-msgstr "Perspektive"
+msgstr "Perspektivische Fläche ändern"
 
 #: ../app/paint/paint-enums.c:82
 msgid "Aligned"
@@ -8864,9 +8856,8 @@ msgid ""
 msgstr "Dieses Werkzeug verfügt über keine Einstellungsmöglichkeiten."
 
 #: ../app/tools/gimpairbrushtool.c:55
-#, fuzzy
 msgid "Airbrush Tool: Paint using a brush, with variable pressure"
-msgstr "Mit variablem Druck sprühen"
+msgstr "Sprühpistole: Mit einem Pinsel unter variablem Druck sprühen"
 
 #: ../app/tools/gimpairbrushtool.c:56
 msgid "_Airbrush"
@@ -8882,76 +8873,72 @@ msgid "Pressure:"
 msgstr "Druck:"
 
 #: ../app/tools/gimpaligntool.c:118 ../app/tools/gimpaligntool.c:579
-#, fuzzy
 msgid "Align"
-msgstr "Ausgerichtet"
+msgstr "Ausrichten"
 
 #: ../app/tools/gimpaligntool.c:119
 msgid "Alignment Tool: Align or arrange layers and other objects"
-msgstr ""
+msgstr "Ausrichten: Ebene oder anderes Objekt anordnen und ausrichten"
 
 #: ../app/tools/gimpaligntool.c:120
-#, fuzzy
 msgid "_Align"
-msgstr "Ausgerichtet"
+msgstr "_Ausrichten"
 
 #: ../app/tools/gimpaligntool.c:591
-#, fuzzy
 msgid "Relative to:"
-msgstr "Werkzeug anheben"
+msgstr "Relativ zu:"
 
 #: ../app/tools/gimpaligntool.c:609
 msgid "Align left edge of target"
-msgstr ""
+msgstr "An der linken Kante des Ziels ausrichten"
 
 #: ../app/tools/gimpaligntool.c:615
 msgid "Align center of target"
-msgstr ""
+msgstr "Am Zentrum des Ziels ausrichten"
 
 #: ../app/tools/gimpaligntool.c:621
 msgid "Align right edge of target"
-msgstr ""
+msgstr "An der rechten Kante des Ziels ausrichten"
 
 #: ../app/tools/gimpaligntool.c:631
 msgid "Align top edge of target"
-msgstr ""
+msgstr "An der oberen Kante des Ziels ausrichten"
 
 #: ../app/tools/gimpaligntool.c:637
 msgid "Align middle of target"
-msgstr ""
+msgstr "An der Mitte des Ziels ausrichten"
 
 #: ../app/tools/gimpaligntool.c:643
 msgid "Align bottom of target"
-msgstr ""
+msgstr "An der unteren Kante des Ziels ausrichten"
 
 #: ../app/tools/gimpaligntool.c:647
-#, fuzzy
 msgid "Distribute"
-msgstr "Ver_zerren"
+msgstr "Verteilen"
 
 #: ../app/tools/gimpaligntool.c:661
 msgid "Distribute left edges of targets"
-msgstr ""
+msgstr "Linke Kanten der Ziele verteilen"
 
 #: ../app/tools/gimpaligntool.c:668
 msgid "Distribute horizontal centers of targets"
-msgstr ""
+msgstr "Waagerechte Zentren der Ziele verteilen"
 
 #: ../app/tools/gimpaligntool.c:675
 msgid "Distribute right edges of targets"
-msgstr ""
+msgstr "Rechte Kanten der Ziele verteilen"
 
 #: ../app/tools/gimpaligntool.c:685
 msgid "Distribute top edges of targets"
-msgstr ""
+msgstr "Obere Kanten der Ziele verteilen"
 
 #: ../app/tools/gimpaligntool.c:692
 msgid "Distribute vertical centers of targets"
-msgstr ""
+msgstr "Senkrechte Zentren der Ziele verteilen"
 
 #: ../app/tools/gimpaligntool.c:698
 msgid "Distribute bottoms of targets"
-msgstr ""
+msgstr "Untere Kanten der Ziele verteilen"
 
 #: ../app/tools/gimpaligntool.c:706 ../app/tools/gimpblendoptions.c:213
 msgid "Offset:"
@@ -8980,9 +8967,8 @@ msgid "Threshold:"
 msgstr "Schwelle:"
 
 #: ../app/tools/gimpblendtool.c:107
-#, fuzzy
 msgid "Blend Tool: Fill selected area with a color gradient"
-msgstr "Mit einem Farbverlauf füllen"
+msgstr "Farbverlauf: Auswahl mit einem Farbverlauf füllen"
 
 #: ../app/tools/gimpblendtool.c:108
 msgid "Blen_d"
@@ -8998,9 +8984,8 @@ msgid "Blend: "
 msgstr "Farbverlauf: "
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:101
-#, fuzzy
 msgid "Brightness/Contrast Tool: Adjust brightness and contrast"
-msgstr "Helligkeit und Kontrast anpassen"
+msgstr "Helligkeit / Kontrast: Helligkeit und Kontrast korrigieren"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:102
 msgid "B_rightness-Contrast..."
@@ -9073,18 +9058,16 @@ msgid "Sample merged"
 msgstr "Vereinigung prüfen"
 
 #: ../app/tools/gimpbucketfilloptions.c:294
-#, fuzzy
 msgid "Fill by:"
-msgstr "_Deckkraft:"
+msgstr "Füllen nach:"
 
 #: ../app/tools/gimpbucketfilltool.c:88
 msgid "Bucket Fill"
 msgstr "Füllen"
 
 #: ../app/tools/gimpbucketfilltool.c:89
-#, fuzzy
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
-msgstr "Mit einer Farbe oder einem Muster füllen"
+msgstr "Füllen: Auswahl mit einer Farbe oder einem Muster füllen"
 
 #: ../app/tools/gimpbucketfilltool.c:90
 msgid "_Bucket Fill"
@@ -9096,7 +9079,7 @@ msgstr "Nach Farbe auswählen"
 
 #: ../app/tools/gimpbycolorselecttool.c:66
 msgid "Select by Color Tool: Select regions with similar colors"
-msgstr ""
+msgstr "Nach Farbe auswählen: Bildbereiche mit ähnlichen Farben auswählen"
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "_By Color Select"
@@ -9104,7 +9087,7 @@ msgstr "_Nach Farbe auswählen"
 
 #: ../app/tools/gimpclonetool.c:62
 msgid "Clone Tool: Selectively copy from an image or pattern, using a brush"
-msgstr ""
+msgstr "Klonen: Mit einem Pinsel ausgewählte Bildbereiche oder Muster kopieren"
 
 #: ../app/tools/gimpclonetool.c:63
 msgid "_Clone"
@@ -9137,7 +9120,7 @@ msgstr "Ausrichtung:"
 
 #: ../app/tools/gimpcolorbalancetool.c:95
 msgid "Color Balance Tool: Adjust color distribution"
-msgstr ""
+msgstr "Farbabgleich: Farbverteilung korrigieren"
 
 #: ../app/tools/gimpcolorbalancetool.c:96
 msgid "Color _Balance..."
@@ -9184,9 +9167,8 @@ msgid "Preserve _luminosity"
 msgstr "_Helligkeit erhalten"
 
 #: ../app/tools/gimpcolorizetool.c:93
-#, fuzzy
 msgid "Colorize Tool: Colorize the image"
-msgstr "Das Bild einfärben"
+msgstr "Einfärben: Bild einfärben"
 
 #: ../app/tools/gimpcolorizetool.c:94
 msgid "Colori_ze..."
@@ -9247,9 +9229,8 @@ msgid "Color Picker"
 msgstr "Farbpipette"
 
 #: ../app/tools/gimpcolorpickertool.c:100
-#, fuzzy
 msgid "Color Picker Tool: Set colors from image pixels"
-msgstr "Farben aus dem Bild wählen"
+msgstr "Farbpipette: Farben aus dem Bild aufnehmen"
 
 #: ../app/tools/gimpcolorpickertool.c:101
 msgid "C_olor Picker"
@@ -9273,16 +9254,14 @@ msgid "Add Sample Point: "
 msgstr "Prüfpunkt hinzufügen: "
 
 #: ../app/tools/gimpconvolvetool.c:73
-#, fuzzy
 msgid "Blur / Sharpen"
 msgstr "Weichzeichnen / Schärfen"
 
 #: ../app/tools/gimpconvolvetool.c:74
 msgid "Blur / Sharpen Tool: Selective blurring or unblurring using a brush"
-msgstr ""
+msgstr "Weichzeichnen / Schärfen: Mit einem Pinsel weichzeichnen und schärfen"
 
 #: ../app/tools/gimpconvolvetool.c:75
-#, fuzzy
 msgid "Bl_ur / Sharpen"
 msgstr "Weichzeichnen / Schärfen"
 
@@ -9331,12 +9310,11 @@ msgstr "Zuschneiden"
 
 #: ../app/tools/gimpcroptool.c:100
 msgid "Crop Tool: Remove edge areas from image or layer"
-msgstr ""
+msgstr "Zuschneiden: Bildbereiche von Bild oder Ebene entfernen"
 
 #: ../app/tools/gimpcroptool.c:101
-#, fuzzy
 msgid "_Crop"
-msgstr "Zuschneiden"
+msgstr "_Zuschneiden"
 
 #: ../app/tools/gimpcroptool.c:213
 #, fuzzy
@@ -9344,9 +9322,8 @@ msgid "Click or press enter to crop"
 msgstr "Anklicken oder die Eingabetaste drücken, um zuzuschneiden."
 
 #: ../app/tools/gimpcurvestool.c:149
-#, fuzzy
 msgid "Curves Tool: Adjust color curves"
-msgstr "Farbkurven anpassen"
+msgstr "Kurven: Farbkurven korrigieren"
 
 #: ../app/tools/gimpcurvestool.c:150
 msgid "_Curves..."
@@ -9354,7 +9331,7 @@ msgstr "_Kurven"
 
 #: ../app/tools/gimpcurvestool.c:176
 msgid "Adjust Color Curves"
-msgstr "Farbkurven anpassen"
+msgstr "Farbkurven korrigieren"
 
 #: ../app/tools/gimpcurvestool.c:178
 msgid "Load Curves"
@@ -9416,18 +9393,16 @@ msgid "parse error"
 msgstr "Schwerwiegender Fehler bei Syntaxanalyse"
 
 #: ../app/tools/gimpdodgeburntool.c:73
-#, fuzzy
 msgid "Dodge / Burn"
-msgstr "Abwedeln/Nachbelichten"
+msgstr "Abwedeln / Nachbelichten"
 
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
-msgstr ""
+msgstr "Abwedeln / Nachbelichten: Mit einem Pinsel aufhellen oder abdunkeln"
 
 #: ../app/tools/gimpdodgeburntool.c:75
-#, fuzzy
 msgid "Dod_ge / Burn"
-msgstr "Abwedeln/Nachbelichten"
+msgstr "Abwedeln / Nachbelichten"
 
 #: ../app/tools/gimpdodgeburntool.c:173
 #, fuzzy
@@ -9488,18 +9463,16 @@ msgid "Ellipse Select"
 msgstr "Elliptische Auswahl"
 
 #: ../app/tools/gimpellipseselecttool.c:73
-#, fuzzy
 msgid "Ellipse Select Tool: Select an elliptical region"
-msgstr "Einen elliptischen Bereich wählen"
+msgstr "Elliptische Auswahl: Einen elliptischen Bereich auswählen"
 
 #: ../app/tools/gimpellipseselecttool.c:74
 msgid "_Ellipse Select"
 msgstr "_Elliptische Auswahl"
 
 #: ../app/tools/gimperasertool.c:67
-#, fuzzy
 msgid "Eraser Tool: Erase to background or transparency using a brush"
-msgstr "Bis zum Hintergrund oder zur Transparenz löschen"
+msgstr "Radierer: Bis zum Hintergrund oder zur Transparenz löschen"
 
 #: ../app/tools/gimperasertool.c:68
 msgid "_Eraser"
@@ -9543,7 +9516,7 @@ msgstr "Spiegeln"
 #: ../app/tools/gimpfliptool.c:78
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
-msgstr ""
+msgstr "Spiegeln: Ebene, Auswahl oder Pfad horizontal oder vertikal spiegeln"
 
 #: ../app/tools/gimpfliptool.c:80
 msgid "_Flip"
@@ -9609,9 +9582,8 @@ msgid "Smoothing:"
 msgstr "Weichzeichnen:"
 
 #: ../app/tools/gimpforegroundselectoptions.c:295
-#, fuzzy
 msgid "Preview color:"
-msgstr "Vorschau:"
+msgstr "Vorschaufarbe:"
 
 #. granularity
 #: ../app/tools/gimpforegroundselectoptions.c:298
@@ -9624,7 +9596,7 @@ msgstr "Vordergrundauswahl"
 
 #: ../app/tools/gimpforegroundselecttool.c:144
 msgid "Foreground Select Tool: Select a region containing foreground objects"
-msgstr ""
+msgstr "Vordergrundauswahl: Ein Objekt im Vordergrund auswählen"
 
 #: ../app/tools/gimpforegroundselecttool.c:145
 msgid "F_oreground Select"
@@ -9648,9 +9620,8 @@ msgid "command|Foreground Select"
 msgstr "Vordergrundauswahl"
 
 #: ../app/tools/gimpfreeselecttool.c:96
-#, fuzzy
 msgid "Free Select Tool: Select a hand-drawn region"
-msgstr "Einen Bereich frei Hand wählen"
+msgstr "Freie Auswahl: Einen Bereich frei Hand auswählen"
 
 #: ../app/tools/gimpfreeselecttool.c:97
 msgid "_Free Select"
@@ -9668,6 +9639,7 @@ msgstr "Zauberstab"
 #: ../app/tools/gimpfuzzyselecttool.c:64
 msgid "Fuzzy Select Tool: Select a contiguous region on the basis of color"
 msgstr ""
+"Zauberstab: Einen zusammenhängenden Bereich ähnlicher Farben auswählen"
 
 #: ../app/tools/gimpfuzzyselecttool.c:65
 msgid "Fu_zzy Select"
@@ -9675,12 +9647,11 @@ msgstr "_Zauberstab"
 
 #: ../app/tools/gimphealtool.c:58
 msgid "Healing Tool: Heal image irregularities"
-msgstr ""
+msgstr "Heilen: Unregelmäßigkeiten im Bild heilen"
 
 #: ../app/tools/gimphealtool.c:59
-#, fuzzy
 msgid "_Heal"
-msgstr "_Hilfe"
+msgstr "_Heilen"
 
 #: ../app/tools/gimphealtool.c:81 ../app/tools/gimphealtool.c:84
 #, fuzzy
@@ -9703,7 +9674,7 @@ msgstr "Histogrammskala"
 
 #: ../app/tools/gimphuesaturationtool.c:114
 msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
-msgstr ""
+msgstr "Farbton-Sättigung: Farbton, Sättigung und Helligkeit korrigieren"
 
 #: ../app/tools/gimphuesaturationtool.c:115
 msgid "Hue-_Saturation..."
@@ -9821,7 +9792,7 @@ msgstr "Form"
 
 #: ../app/tools/gimpinktool.c:56
 msgid "Ink Tool: Calligraphy-style painting"
-msgstr ""
+msgstr "Tinte: Im kalligrafischen Stil zeichnen"
 
 #: ../app/tools/gimpinktool.c:57
 msgid "In_k"
@@ -9833,16 +9804,15 @@ msgstr "Schere"
 
 #: ../app/tools/gimpiscissorstool.c:272
 msgid "Scissors Select Tool: Select shapes using intelligent edge-fitting"
-msgstr ""
+msgstr "Magnetische Schere: Eine Form entlang der Kanten auswählen"
 
 #: ../app/tools/gimpiscissorstool.c:273
 msgid "Intelligent _Scissors"
-msgstr "Intelligente _Scheren"
+msgstr "Intelligente _Schere"
 
 #: ../app/tools/gimplevelstool.c:155
-#, fuzzy
 msgid "Levels Tool: Adjust color levels"
-msgstr "Farbwerte anpassen"
+msgstr "Werte: Farbwerte korrigieren"
 
 #: ../app/tools/gimplevelstool.c:156
 msgid "_Levels..."
@@ -9901,7 +9871,7 @@ msgstr "Werte automatisch anpassen"
 
 #: ../app/tools/gimpmagnifyoptions.c:175
 msgid "Auto-resize window"
-msgstr "Fenstergröße beim _Vergrößern und Verkleinern anpassen"
+msgstr "Fenstergröße automatisch anpassen"
 
 #. tool toggle
 #: ../app/tools/gimpmagnifyoptions.c:180 ../app/tools/gimpmoveoptions.c:184
@@ -9915,7 +9885,7 @@ msgstr "Zoom"
 
 #: ../app/tools/gimpmagnifytool.c:92
 msgid "Zoom Tool: Adjust the zoom level"
-msgstr ""
+msgstr "Zoom: Vergrößerungsstufe einstellen"
 
 #: ../app/tools/gimpmagnifytool.c:93
 #, fuzzy
@@ -9931,9 +9901,8 @@ msgid "Measure"
 msgstr "Messen"
 
 #: ../app/tools/gimpmeasuretool.c:121
-#, fuzzy
 msgid "Measure Tool: Measure distances and angles"
-msgstr "Abstände und Winkel messen"
+msgstr "Maßband: Abstände und Winkel messen"
 
 #: ../app/tools/gimpmeasuretool.c:122
 msgid "_Measure"
@@ -9957,7 +9926,6 @@ msgid "Pick a layer or guide"
 msgstr "Ebene oder Hilfslinie auswählen"
 
 #: ../app/tools/gimpmoveoptions.c:141
-#, fuzzy
 msgid "Move the active layer"
 msgstr "Aktive Ebene verschieben"
 
@@ -9970,23 +9938,20 @@ msgid "Pick a path"
 msgstr "Pfad auswählen"
 
 #: ../app/tools/gimpmoveoptions.c:150
-#, fuzzy
 msgid "Move the active path"
-msgstr "Aktiven Pfad exportieren"
+msgstr "Aktiven Pfad verschieben"
 
 #: ../app/tools/gimpmoveoptions.c:178
-#, fuzzy
 msgid "Move:"
 msgstr "Verschieben: "
 
 #: ../app/tools/gimpmovetool.c:117
-#, fuzzy
 msgid "tool|Move"
 msgstr "Verschieben"
 
 #: ../app/tools/gimpmovetool.c:118
 msgid "Move Tool: Move layers, selections, and other objects"
-msgstr ""
+msgstr "Verschieben: Ebene, Auswahl oder anderes Objekt verschieben"
 
 #: ../app/tools/gimpmovetool.c:119
 msgid "_Move"
@@ -10006,7 +9971,7 @@ msgstr "Hilfslinie hinzufügen: "
 
 #: ../app/tools/gimppaintbrushtool.c:52
 msgid "Paintbrush Tool: Paint smooth strokes using a brush"
-msgstr ""
+msgstr "Pinsel: Mit einem Pinsel weiche Striche malen"
 
 #: ../app/tools/gimppaintbrushtool.c:53
 msgid "_Paintbrush"
@@ -10028,9 +9993,8 @@ msgid "Brush:"
 msgstr "Pinsel:"
 
 #: ../app/tools/gimppaintoptions-gui.c:134
-#, fuzzy
 msgid "Scale:"
-msgstr "Skalieren"
+msgstr "Skalieren:"
 
 #: ../app/tools/gimppaintoptions-gui.c:148
 #: ../app/tools/gimppaintoptions-gui.c:437
@@ -10124,7 +10088,7 @@ msgstr "Drücken Sie »Umschalt« um eine gerade Linie zu zeichnen."
 
 #: ../app/tools/gimppenciltool.c:52
 msgid "Pencil Tool: Hard edge painting using a brush"
-msgstr ""
+msgstr "Stift: Mit einem Pinsel Striche mit harten Kanten zeichnen"
 
 #: ../app/tools/gimppenciltool.c:53
 msgid "Pe_ncil"
@@ -10135,6 +10099,8 @@ msgid ""
 "Perspective Clone Tool: Clone from an image source after applying a "
 "perspective transformation"
 msgstr ""
+"Perspektive klonen: Ein Bild nach Anwendung einer perspektivischen "
+"Transformation kopieren"
 
 #: ../app/tools/gimpperspectiveclonetool.c:123
 #, fuzzy
@@ -10147,9 +10113,9 @@ msgid "Ctrl-Click to set a clone source"
 msgstr "Strg+Klicken um eine geklonte Quelle zu setzen"
 
 #: ../app/tools/gimpperspectivetool.c:69
-#, fuzzy
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
-msgstr "Die Perspektive der Ebene oder Auswahl verändern"
+msgstr ""
+"Perspektive: Perspektive einer Ebene, Auswahl oder eines Pfades verändern"
 
 #: ../app/tools/gimpperspectivetool.c:71
 msgid "_Perspective"
@@ -10170,9 +10136,8 @@ msgid "Transformation Matrix"
 msgstr "Transformation"
 
 #: ../app/tools/gimpposterizetool.c:78
-#, fuzzy
 msgid "Posterize Tool: Reduce to a limited set of colors"
-msgstr "Posterisieren (Farbanzahl vermindern):"
+msgstr "Posterisieren: Anzahl der Farben reduzieren"
 
 #: ../app/tools/gimpposterizetool.c:79
 msgid "_Posterize..."
@@ -10196,11 +10161,11 @@ msgstr "Beim Verkleinern der Auswahl alle sichtbaren Ebenen verwenden"
 
 #: ../app/tools/gimprectangleoptions.c:509
 msgid "Auto shrink selection"
-msgstr "Automatisch verkleinern"
+msgstr "Auswahl automatisch schrumpfen"
 
 #: ../app/tools/gimprectangleoptions.c:520
 msgid "Expand from center"
-msgstr ""
+msgstr "Aus der Mitte aufziehen"
 
 #: ../app/tools/gimprectangleoptions.c:525
 msgid "Highlight"
@@ -10237,22 +10202,18 @@ msgid "Aspect"
 msgstr "Perspektive"
 
 #: ../app/tools/gimprectangleselectoptions.c:155
-#, fuzzy
 msgid "Rounded corners"
-msgstr "Mauszeiger"
+msgstr "Abgerundete Ecken"
 
 #: ../app/tools/gimprectangleselecttool.c:135
-#, fuzzy
 msgid "Rectangle Select"
 msgstr "Rechteckige Auswahl"
 
 #: ../app/tools/gimprectangleselecttool.c:136
-#, fuzzy
 msgid "Rectangle Select Tool: Select a rectangular region"
-msgstr "Einen rechteckigen Bereich wählen"
+msgstr "Rechteckige Auswahl: Einen rechteckigen Bereich auswählen"
 
 #: ../app/tools/gimprectangleselecttool.c:137
-#, fuzzy
 msgid "_Rectangle Select"
 msgstr "_Rechteckige Auswahl"
 
@@ -10270,9 +10231,8 @@ msgid "Rotate"
 msgstr "Drehen"
 
 #: ../app/tools/gimprotatetool.c:87
-#, fuzzy
 msgid "Rotate Tool: Rotate the layer, selection or path"
-msgstr "Ebene oder Auswahl drehen"
+msgstr "Drehen: Ebene, Auswahl oder Pfad drehen"
 
 #: ../app/tools/gimprotatetool.c:88
 msgid "_Rotate"
@@ -10302,9 +10262,8 @@ msgid "Scale"
 msgstr "Skalieren"
 
 #: ../app/tools/gimpscaletool.c:80
-#, fuzzy
 msgid "Scale Tool: Scale the layer, selection or path"
-msgstr "Ebene oder Auswahl skalieren"
+msgstr "Skalieren: Ebene, Auswahl oder Pfad skalieren"
 
 #: ../app/tools/gimpscaletool.c:81
 msgid "_Scale"
@@ -10347,9 +10306,8 @@ msgid "Select transparent areas"
 msgstr "Transparente Bereiche auswählen"
 
 #: ../app/tools/gimpselectionoptions.c:429
-#, fuzzy
 msgid "Select by:"
-msgstr "Auswählen"
+msgstr "Auswählen nach:"
 
 #: ../app/tools/gimpselectiontool.c:275
 #, fuzzy
@@ -10401,9 +10359,8 @@ msgid "Shear"
 msgstr "Scheren"
 
 #: ../app/tools/gimpsheartool.c:87
-#, fuzzy
 msgid "Shear Tool: Shear the layer, selection or path"
-msgstr "Ebene oder Auswahl scheren"
+msgstr "Scheren: Ebene, Auswahl oder Pfad scheren"
 
 #: ../app/tools/gimpsheartool.c:88
 msgid "S_hear"
@@ -10429,7 +10386,7 @@ msgstr "Scherneigung Y:"
 
 #: ../app/tools/gimpsmudgetool.c:55
 msgid "Smudge Tool: Smudge selectively using a brush"
-msgstr ""
+msgstr "Verschmieren: Mit einem Pinsel ausgewählte Bereiche verschmieren"
 
 #: ../app/tools/gimpsmudgetool.c:56
 msgid "_Smudge"
@@ -10506,7 +10463,7 @@ msgstr "Text an Pfad"
 
 #: ../app/tools/gimptexttool.c:144
 msgid "Text Tool: Create or edit text layers"
-msgstr ""
+msgstr "Text: Eine Ebene mit Text anlegen oder bearbeiten"
 
 #: ../app/tools/gimptexttool.c:145
 msgid "Te_xt"
@@ -10536,9 +10493,8 @@ msgstr ""
 "Attributen erstellen."
 
 #: ../app/tools/gimpthresholdtool.c:83
-#, fuzzy
 msgid "Threshold Tool: Reduce image to two colors using a threshold"
-msgstr "Das Bild mittels eines Schwellwerts auf zwei Farben reduzieren"
+msgstr "Schwellwert: Bild mittels Schwellwert auf zwei Farben reduzieren"
 
 #: ../app/tools/gimpthresholdtool.c:84
 msgid "_Threshold..."
@@ -10557,14 +10513,12 @@ msgid "Automatically adjust to optimal binarization threshold"
 msgstr ""
 
 #: ../app/tools/gimptransformoptions.c:282
-#, fuzzy
 msgid "Transform:"
-msgstr "Transformation"
+msgstr "Transformation:"
 
 #: ../app/tools/gimptransformoptions.c:288
-#, fuzzy
 msgid "Direction"
-msgstr "Beschreibung"
+msgstr "Richtung"
 
 #: ../app/tools/gimptransformoptions.c:297
 msgid "Interpolation:"
@@ -10575,9 +10529,8 @@ msgid "Supersampling"
 msgstr "Hochrechnung"
 
 #: ../app/tools/gimptransformoptions.c:316
-#, fuzzy
 msgid "Clipping:"
-msgstr "Spiegeln"
+msgstr "Beschneidung:"
 
 #: ../app/tools/gimptransformoptions.c:334
 msgid "Preview:"
@@ -10641,14 +10594,12 @@ msgid "Create Selection from Path"
 msgstr "Auswahl aus Pfad erstellen"
 
 #: ../app/tools/gimpvectortool.c:159
-#, fuzzy
 msgid "Paths Tool: Create and edit paths"
-msgstr "Pfade erstellen und bearbeiten"
+msgstr "Pfade: Pfade erstellen und bearbeiten"
 
 #: ../app/tools/gimpvectortool.c:160
-#, fuzzy
 msgid "Pat_hs"
-msgstr "Pfade"
+msgstr "_Pfade"
 
 #: ../app/tools/gimpvectortool.c:319
 msgid "Add Stroke"
@@ -10811,24 +10762,20 @@ msgid "Add to palette"
 msgstr "Zu Palette hinzufügen"
 
 #: ../app/tools/tools-enums.c:58
-#, fuzzy
 msgid "No guides"
-msgstr "_Hilfslinien anzeigen"
+msgstr "Keine Hilfslinien"
 
 #: ../app/tools/tools-enums.c:59
-#, fuzzy
 msgid "Center lines"
-msgstr "Zentriert"
+msgstr "Mittellinien"
 
 #: ../app/tools/tools-enums.c:60
-#, fuzzy
 msgid "Rule of thirds"
-msgstr "Anzahl der Pfade:"
+msgstr "Drittelregel"
 
 #: ../app/tools/tools-enums.c:61
-#, fuzzy
 msgid "Golden sections"
-msgstr "Auswahl verschieben"
+msgstr "Goldener Schnitt"
 
 #: ../app/tools/tools-enums.c:119
 msgid "Free select"
@@ -11830,7 +11777,7 @@ msgstr "Spalten:"
 
 #: ../app/widgets/gimpprofilechooserdialog.c:154
 msgid "ICC color profile (*.icc, *.icm)"
-msgstr ""
+msgstr "ICC Farbprofil (*.icc, *.icm)"
 
 #: ../app/widgets/gimpprogressdialog.c:215
 msgid "Progress"
@@ -11838,7 +11785,7 @@ msgstr "Fortschritt"
 
 #: ../app/widgets/gimppropwidgets.c:666
 msgid "1:1"
-msgstr ""
+msgstr "1:1"
 
 #: ../app/widgets/gimppropwidgets.c:673
 #, fuzzy
