@@ -1,5 +1,39 @@
 2007-08-04  Martin Nordholts  <martinn@svn.gnome.org>
 
+	Update rectangle tool options to bring it closer to the spec. The
+	major change is the use of a 'Fixed:' check box and a 'Aspect
+	ratio/Width/Height/Size' combo box. The check box is togglable
+	with Shift while rubber-banding.
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_active_modifier_key): Set other side also
+	when Shift is released.
+	(gimp_rectangle_tool_update_options): Don't supress updates of
+	tool options on fixed width/height/size
+	(gimp_rectangle_tool_apply_fixed_height)
+	(gimp_rectangle_tool_update_with_coord)
+	(gimp_rectangle_tool_handle_general_clamping): Use new tool option
+	interface and members.
+
+	* app/tools/gimprectangleoptions.[ch]
+	(gimp_rectangle_options_iface_base_init)
+	(gimp_rectangle_options_install_properties)
+	(gimp_rectangle_options_(get|set)_property): Remove and add
+	relevant properties.
+	(gimp_rectangle_options_private_finalize): Unref the new widgets
+	used in tool options.
+	(gimp_rectangle_options_fixed_rule_changed): New, update tool
+	options depending on current option state.
+	(gimp_rectangle_options_gui): Modified according to change log
+	entry summary.
+	(gimp_rectangle_options_unparent_fixed_rule_widgets): New helper.
+	(gimp_rectangle_options_fixed_rule_active): New, clients should
+	use this to find out if a certain fixed-mode is active.
+
+	* app/tools/tools-enums.[ch]: Added GimpRectangleToolFixedRule.
+
+2007-08-04  Martin Nordholts  <martinn@svn.gnome.org>
+
 	Don't apply fixed aspect on pending rectangles that are not being
 	rubber-banded, when this is changed in the rectangle tool options.
 

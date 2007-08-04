@@ -61,6 +61,19 @@ typedef enum
 } GimpRectangleConstraint;
 
 
+#define GIMP_TYPE_RECTANGLE_TOOL_FIXED_RULE (gimp_rectangle_tool_fixed_rule_get_type ())
+
+GType gimp_rectangle_tool_fixed_rule_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_RECTANGLE_TOOL_FIXED_ASPECT, /*< desc="Aspect ratio" >*/
+  GIMP_RECTANGLE_TOOL_FIXED_WIDTH,  /*< desc="Width"        >*/
+  GIMP_RECTANGLE_TOOL_FIXED_HEIGHT, /*< desc="Height"       >*/
+  GIMP_RECTANGLE_TOOL_FIXED_SIZE,   /*< desc="Size"         >*/
+} GimpRectangleToolFixedRule;
+
+
 #define GIMP_TYPE_RECT_SELECT_MODE (gimp_rect_select_mode_get_type ())
 
 GType gimp_rect_select_mode_get_type (void) G_GNUC_CONST;

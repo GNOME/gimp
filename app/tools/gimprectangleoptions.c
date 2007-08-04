@@ -36,7 +36,17 @@
 #include "gimp-intl.h"
 
 
-static void gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *rectangle_options_iface);
+static void gimp_rectangle_options_iface_base_init             (GimpRectangleOptionsInterface *rectangle_options_iface);
+
+static void gimp_rectangle_options_unparent_fixed_rule_widgets (GimpRectangleOptionsPrivate   *private);
+static void gimp_rectangle_options_fixed_rule_changed          (GtkWidget                     *combo_box,
+                                                                GimpRectangleOptionsPrivate   *private);
+
+
+/* TODO: Calculate this dynamically so that the GtkEntry:s are always
+ * left-aligned with the right edge of the check buttons.
+ */
+#define FIXED_RULE_ENTRY_OFFSET 15
 
 
 GType
@@ -120,13 +130,6 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
                                                                 G_PARAM_CONSTRUCT));
 
       g_object_interface_install_property (iface,
-                                           g_param_spec_boolean ("fixed-width",
-                                                                 NULL, NULL,
-                                                                 FALSE,
-                                                                 GIMP_CONFIG_PARAM_FLAGS |
-                                                                 GIMP_PARAM_STATIC_STRINGS));
-
-      g_object_interface_install_property (iface,
                                            g_param_spec_double ("width",
                                                                 NULL, NULL,
                                                                 0.0, GIMP_MAX_IMAGE_SIZE,
@@ -135,26 +138,12 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
                                                                 G_PARAM_CONSTRUCT));
 
       g_object_interface_install_property (iface,
-                                           g_param_spec_boolean ("fixed-height",
-                                                                 NULL, NULL,
-                                                                 FALSE,
-                                                                 GIMP_CONFIG_PARAM_FLAGS |
-                                                                 GIMP_PARAM_STATIC_STRINGS));
-
-      g_object_interface_install_property (iface,
                                            g_param_spec_double ("height",
                                                                 NULL, NULL,
                                                                 0.0, GIMP_MAX_IMAGE_SIZE,
                                                                 0.0,
                                                                 GIMP_PARAM_READWRITE |
                                                                 G_PARAM_CONSTRUCT));
-
-      g_object_interface_install_property (iface,
-                                           g_param_spec_boolean ("fixed-aspect",
-                                                                 NULL, NULL,
-                                                                 FALSE,
-                                                                 GIMP_CONFIG_PARAM_FLAGS |
-                                                                 GIMP_PARAM_STATIC_STRINGS));
 
       g_object_interface_install_property (iface,
                                            g_param_spec_double ("aspect-numerator",
@@ -178,6 +167,37 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
                                                                  FALSE,
                                                                  GIMP_CONFIG_PARAM_FLAGS |
                                                                  GIMP_PARAM_STATIC_STRINGS));
+
+      g_object_interface_install_property (iface,
+                                           g_param_spec_boolean ("fixed-rule-active",
+                                                                 NULL, NULL,
+                                                                 FALSE,
+                                                                 GIMP_CONFIG_PARAM_FLAGS |
+                                                                 GIMP_PARAM_STATIC_STRINGS));
+
+      g_object_interface_install_property (iface,
+                                           g_param_spec_enum ("fixed-rule",
+                                                              NULL, NULL,
+                                                              GIMP_TYPE_RECTANGLE_TOOL_FIXED_RULE,
+                                                              GIMP_RECTANGLE_TOOL_FIXED_ASPECT,
+                                                              GIMP_CONFIG_PARAM_FLAGS |
+                                                              GIMP_PARAM_STATIC_STRINGS));
+
+      g_object_interface_install_property (iface,
+                                           g_param_spec_double ("desired-fixed-width",
+                                                                NULL, NULL,
+                                                                0.0, GIMP_MAX_IMAGE_SIZE,
+                                                                100.0,
+                                                                GIMP_PARAM_READWRITE |
+                                                                G_PARAM_CONSTRUCT));
+
+      g_object_interface_install_property (iface,
+                                           g_param_spec_double ("desired-fixed-height",
+                                                                NULL, NULL,
+                                                                0.0, GIMP_MAX_IMAGE_SIZE,
+                                                                100.0,
+                                                                GIMP_PARAM_READWRITE |
+                                                                G_PARAM_CONSTRUCT));
 
       g_object_interface_install_property (iface,
                                            g_param_spec_double ("center-x",
@@ -212,6 +232,13 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
 static void
 gimp_rectangle_options_private_finalize (GimpRectangleOptionsPrivate *private)
 {
+  g_object_unref (private->fixed_width_entry);
+  g_object_unref (private->fixed_height_entry);
+  g_object_unref (private->fixed_aspect_entry);
+  g_object_unref (private->fixed_size_entry);
+  g_object_unref (private->size_button_box);
+  g_object_unref (private->aspect_button_box);
+
   g_slice_free (GimpRectangleOptionsPrivate, private);
 }
 
@@ -273,26 +300,29 @@ gimp_rectangle_options_install_properties (GObjectClass *klass)
                                     GIMP_RECTANGLE_OPTIONS_PROP_Y0,
                                     "y0");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_FIXED_WIDTH,
-                                    "fixed-width");
-  g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_OPTIONS_PROP_WIDTH,
                                     "width");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_FIXED_HEIGHT,
-                                    "fixed-height");
-  g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_OPTIONS_PROP_HEIGHT,
                                     "height");
-  g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_FIXED_ASPECT,
-                                    "fixed-aspect");
   g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_NUMERATOR,
                                     "aspect-numerator");
   g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR,
                                     "aspect-denominator");
+  g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE,
+                                    "fixed-rule-active");
+  g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE,
+                                    "fixed-rule");
+  g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_WIDTH,
+                                    "desired-fixed-width");
+  g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_HEIGHT,
+                                    "desired-fixed-height");
   g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER,
                                     "fixed-center");
@@ -338,20 +368,11 @@ gimp_rectangle_options_set_property (GObject      *object,
     case GIMP_RECTANGLE_OPTIONS_PROP_Y0:
       private->y0 = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_WIDTH:
-      private->fixed_width = g_value_get_boolean (value);
-      break;
     case GIMP_RECTANGLE_OPTIONS_PROP_WIDTH:
       private->width = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_HEIGHT:
-      private->fixed_height = g_value_get_boolean (value);
-      break;
     case GIMP_RECTANGLE_OPTIONS_PROP_HEIGHT:
       private->height = g_value_get_double (value);
-      break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_ASPECT:
-      private->fixed_aspect = g_value_get_boolean (value);
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_NUMERATOR:
       private->aspect_numerator = g_value_get_double (value);
@@ -361,6 +382,18 @@ gimp_rectangle_options_set_property (GObject      *object,
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER:
       private->fixed_center = g_value_get_boolean (value);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE:
+      private->fixed_rule_active = g_value_get_boolean (value);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE:
+      private->fixed_rule = g_value_get_enum (value);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_WIDTH:
+      private->desired_fixed_width = g_value_get_double (value);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_HEIGHT:
+      private->desired_fixed_height = g_value_get_double (value);
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X:
       private->center_x = g_value_get_double (value);
@@ -409,20 +442,11 @@ gimp_rectangle_options_get_property (GObject      *object,
     case GIMP_RECTANGLE_OPTIONS_PROP_Y0:
       g_value_set_double (value, private->y0);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_WIDTH:
-      g_value_set_boolean (value, private->fixed_width);
-      break;
     case GIMP_RECTANGLE_OPTIONS_PROP_WIDTH:
       g_value_set_double (value, private->width);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_HEIGHT:
-      g_value_set_boolean (value, private->fixed_height);
-      break;
     case GIMP_RECTANGLE_OPTIONS_PROP_HEIGHT:
       g_value_set_double (value, private->height);
-      break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_ASPECT:
-      g_value_set_boolean (value, private->fixed_aspect);
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_NUMERATOR:
       g_value_set_double (value, private->aspect_numerator);
@@ -432,6 +456,18 @@ gimp_rectangle_options_get_property (GObject      *object,
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER:
       g_value_set_boolean (value, private->fixed_center);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE:
+      g_value_set_boolean (value, private->fixed_rule_active);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE:
+      g_value_set_enum (value, private->fixed_rule);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_WIDTH:
+      g_value_set_double (value, private->desired_fixed_width);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_HEIGHT:
+      g_value_set_double (value, private->desired_fixed_height);
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X:
       g_value_set_double (value, private->center_x);
@@ -449,6 +485,133 @@ gimp_rectangle_options_get_property (GObject      *object,
     }
 }
 
+/**
+ * gimp_rectangle_options_unparent_fixed_rule_widgets:
+ * @table:
+ *
+ * Removes any fixed rule widgets from the tool options that are in the tool
+ * options already. Meant to be used before inserting a new widget in the fixed
+ * rule tool options area.
+ */
+static void
+gimp_rectangle_options_unparent_fixed_rule_widgets (GimpRectangleOptionsPrivate *private)
+{
+  if (gtk_widget_get_parent (private->fixed_width_entry) != NULL)
+    gtk_container_remove (GTK_CONTAINER (private->second_row_hbox),
+                          private->fixed_width_entry);
+
+  if (gtk_widget_get_parent (private->fixed_height_entry) != NULL)
+    gtk_container_remove (GTK_CONTAINER (private->second_row_hbox),
+                          private->fixed_height_entry);
+
+  if (gtk_widget_get_parent (private->fixed_aspect_entry) != NULL)
+    gtk_container_remove (GTK_CONTAINER (private->second_row_hbox),
+                          private->fixed_aspect_entry);
+
+  if (gtk_widget_get_parent (private->fixed_size_entry) != NULL)
+    gtk_container_remove (GTK_CONTAINER (private->second_row_hbox),
+                          private->fixed_size_entry);
+
+  if (gtk_widget_get_parent (private->size_button_box) != NULL)
+    gtk_container_remove (GTK_CONTAINER (private->second_row_hbox),
+                          private->size_button_box);
+
+  if (gtk_widget_get_parent (private->aspect_button_box) != NULL)
+    gtk_container_remove (GTK_CONTAINER (private->second_row_hbox),
+                          private->aspect_button_box);
+}
+
+/**
+ * gimp_rectangle_options_fixed_rule_changed:
+ * @combo_box:
+ * @private:
+ *
+ * Updates tool options widgets depending on current fixed rule state.
+ */
+static void
+gimp_rectangle_options_fixed_rule_changed (GtkWidget                   *combo_box,
+                                           GimpRectangleOptionsPrivate *private)
+{
+  gboolean width_entry_sensitive;
+  gboolean height_entry_sensitive;
+
+  /* Setup sensitivity for Width and Height entries */
+
+  width_entry_sensitive = !(private->fixed_rule_active &&
+                            (private->fixed_rule ==
+                             GIMP_RECTANGLE_TOOL_FIXED_WIDTH ||
+                             private->fixed_rule ==
+                             GIMP_RECTANGLE_TOOL_FIXED_SIZE));
+
+  height_entry_sensitive = !(private->fixed_rule_active &&
+                             (private->fixed_rule ==
+                              GIMP_RECTANGLE_TOOL_FIXED_HEIGHT ||
+                              private->fixed_rule ==
+                              GIMP_RECTANGLE_TOOL_FIXED_SIZE));
+
+  if (GTK_WIDGET_IS_SENSITIVE (private->width_entry) !=
+      width_entry_sensitive)
+    gtk_widget_set_sensitive (private->width_entry, width_entry_sensitive);
+
+  if (GTK_WIDGET_IS_SENSITIVE (private->height_entry) !=
+      height_entry_sensitive)
+    gtk_widget_set_sensitive (private->height_entry, height_entry_sensitive);
+
+
+  /* Setup current fixed rule entries */
+
+  switch (private->fixed_rule)
+    {
+    case GIMP_RECTANGLE_TOOL_FIXED_ASPECT:
+      if (gtk_widget_get_parent (private->fixed_aspect_entry) == NULL)
+        {
+          gimp_rectangle_options_unparent_fixed_rule_widgets (private);
+
+          gtk_box_pack_start_defaults (GTK_BOX (private->second_row_hbox),
+                                       private->fixed_aspect_entry);
+
+          gtk_box_pack_start (GTK_BOX (private->second_row_hbox),
+                              private->aspect_button_box,
+                              FALSE, FALSE, 0);
+        }
+      break;
+
+    case GIMP_RECTANGLE_TOOL_FIXED_WIDTH:
+      if (gtk_widget_get_parent (private->fixed_width_entry) == NULL)
+        {
+          gimp_rectangle_options_unparent_fixed_rule_widgets (private);
+
+          gtk_box_pack_start_defaults (GTK_BOX (private->second_row_hbox),
+                                       private->fixed_width_entry);
+        }
+      break;
+
+    case GIMP_RECTANGLE_TOOL_FIXED_HEIGHT:
+      if (gtk_widget_get_parent (private->fixed_height_entry) == NULL)
+        {
+          gimp_rectangle_options_unparent_fixed_rule_widgets (private);
+
+          gtk_box_pack_start_defaults (GTK_BOX (private->second_row_hbox),
+                                       private->fixed_height_entry);
+        }
+      break;
+
+    case GIMP_RECTANGLE_TOOL_FIXED_SIZE:
+      if (gtk_widget_get_parent (private->fixed_size_entry) == NULL)
+        {
+          gimp_rectangle_options_unparent_fixed_rule_widgets (private);
+
+          gtk_box_pack_start_defaults (GTK_BOX (private->second_row_hbox),
+                                       private->fixed_size_entry);
+
+          gtk_box_pack_start (GTK_BOX (private->second_row_hbox),
+                              private->size_button_box,
+                              FALSE, FALSE, 0);
+        }
+      break;
+    }
+}
+
 GtkWidget *
 gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 {
@@ -461,8 +624,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   GtkWidget *table;
   GtkWidget *entry;
   GtkWidget *hbox;
-  GtkWidget *frame;
-  GtkWidget *aspect;
   GList     *children;
   gint       row = 0;
 
@@ -474,36 +635,125 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  /* Aspect */
-  frame = gimp_frame_new (NULL);
-  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-  gtk_widget_show (frame);
+  /* Rectangle fixed-rules (e.g. aspect or width). */
+  {
+    table = gtk_table_new (2, 1, FALSE);
+    gtk_table_set_col_spacings (GTK_TABLE (table), 0);
+    gtk_table_set_row_spacings (GTK_TABLE (table), 0);
+    gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+    gtk_widget_show (table);
 
-  button = gimp_prop_check_button_new (config, "fixed-aspect",
-                                       _("Fixed aspect ratio"));
-  gtk_frame_set_label_widget (GTK_FRAME (frame), button);
-  gtk_widget_show (button);
+    /* Setup first row */
+    {
+      hbox = gtk_hbox_new (FALSE, 1);
+      gtk_table_attach (GTK_TABLE (table), hbox,
+                        0, 1, 0, 1,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (hbox);
 
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_container_add (GTK_CONTAINER (frame), hbox);
-  gtk_widget_show (hbox);
+      button = gimp_prop_check_button_new (config, "fixed-rule-active",
+                                           _("Fixed:"));
+      g_signal_connect (button, "toggled",
+                        G_CALLBACK (gimp_rectangle_options_fixed_rule_changed),
+                        private);
+      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+      gtk_widget_show (button);
 
-  entry = gimp_prop_aspect_ratio_new (config,
-                                      "aspect-numerator",
-                                      "aspect-denominator",
-                                      "fixed-aspect");
-  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
-  gtk_widget_show (entry);
+      combo = gimp_prop_enum_combo_box_new (config, "fixed-rule", 0, 0);
+      g_signal_connect (combo, "changed",
+                        G_CALLBACK (gimp_rectangle_options_fixed_rule_changed),
+                        private);
+      gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+      gtk_widget_show (combo);
+    }
 
-  aspect = gimp_prop_enum_stock_box_new (G_OBJECT (entry),
-                                         "aspect", "gimp", -1, -1);
-  gtk_box_pack_start (GTK_BOX (hbox), aspect, FALSE, FALSE, 0);
-  gtk_widget_show (aspect);
+    /* Setup second row */
+    {
+      private->entry_alignment = gtk_alignment_new (0.0, 0.0, 1.0, 1.0);
+      gtk_alignment_set_padding (GTK_ALIGNMENT (private->entry_alignment),
+                                 0, 0, FIXED_RULE_ENTRY_OFFSET, 0);
+      gtk_table_attach (GTK_TABLE (table), private->entry_alignment,
+                        0, 1, 1, 2,
+                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_widget_show (private->entry_alignment);
 
-  /* hide "square" */
-  children = gtk_container_get_children (GTK_CONTAINER (aspect));
-  gtk_widget_hide (children->data);
-  g_list_free (children);
+
+      private->second_row_hbox = gtk_hbox_new (FALSE, 0);
+      gtk_container_add (GTK_CONTAINER (private->entry_alignment),
+                         private->second_row_hbox);
+      gtk_widget_show (private->second_row_hbox);
+    }
+
+    /* Create and prepare the widgets that are on the second row dependant of
+     * current fixed-rule
+     */
+    {
+      /* Aspect ratio entry */
+      private->fixed_aspect_entry =
+        gimp_prop_aspect_ratio_new (config,
+                                    "aspect-numerator",
+                                    "aspect-denominator",
+                                    NULL);
+      g_object_ref_sink (private->fixed_aspect_entry);
+      gtk_widget_show (private->fixed_aspect_entry);
+
+      private->aspect_button_box =
+        gimp_prop_enum_stock_box_new (G_OBJECT (private->fixed_aspect_entry),
+                                      "aspect", "gimp", -1, -1);
+      g_object_ref_sink (private->aspect_button_box);
+      gtk_widget_show (private->aspect_button_box);
+
+      /* hide "square" */
+      children =
+        gtk_container_get_children (GTK_CONTAINER (private->aspect_button_box));
+      gtk_widget_hide (children->data);
+      g_list_free (children);
+
+
+      /* Fixed width entry */
+      private->fixed_width_entry =
+        gimp_prop_size_entry_new (config, "desired-fixed-width", "unit", "%a",
+                                  GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
+      g_object_ref_sink (private->fixed_width_entry);
+      gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->fixed_width_entry),
+                                      FALSE);
+      gtk_table_set_col_spacing (GTK_TABLE (private->fixed_width_entry), 1, 0);
+      gtk_widget_show (private->fixed_width_entry);
+
+
+      /* Fixed height entry */
+      private->fixed_height_entry =
+        gimp_prop_size_entry_new (config, "desired-fixed-height", "unit", "%a",
+                                  GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
+      g_object_ref_sink (private->fixed_height_entry);
+      gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->fixed_height_entry),
+                                      FALSE);
+      gtk_table_set_col_spacing (GTK_TABLE (private->fixed_height_entry), 1, 0);
+      gtk_widget_show (private->fixed_height_entry);
+
+      /* Size entry */
+      /* TODO: This should not be an aspect speciallized entry. */
+      private->fixed_size_entry =
+        gimp_prop_aspect_ratio_new (config,
+                                    "desired-fixed-width",
+                                    "desired-fixed-height",
+                                    NULL);
+      g_object_ref_sink (private->fixed_size_entry);
+      gtk_widget_show (private->fixed_size_entry);
+
+      private->size_button_box =
+        gimp_prop_enum_stock_box_new (G_OBJECT (private->fixed_size_entry),
+                                      "aspect", "gimp", -1, -1);
+      g_object_ref_sink (private->size_button_box);
+      gtk_widget_show (private->size_button_box);
+
+      /* hide "square" */
+      children =
+        gtk_container_get_children (GTK_CONTAINER (private->size_button_box));
+      gtk_widget_hide (children->data);
+      g_list_free (children);
+    }
+  }
 
   /*  Highlight  */
   button = gimp_prop_check_button_new (config, "highlight",
@@ -534,31 +784,27 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                              entry, 1, FALSE);
 
   /* Width */
-  entry = gimp_prop_size_entry_new (config, "width", "unit", "%a",
-                                    GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
-  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
+  private->width_entry = gimp_prop_size_entry_new (config,
+                                                   "width", "unit", "%a",
+                                                   GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                                   300);
+  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->width_entry),
+                                  FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
                              _("Width:"), 0.0, 0.5,
-                             entry, 1, FALSE);
-
-  button = gimp_prop_check_button_new (config, "fixed-width", _("Fix"));
-  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
-  gtk_widget_show (button);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, 2, 3, row, row + 1);
+                             private->width_entry, 1, FALSE);
   row++;
 
   /* Height */
-  entry = gimp_prop_size_entry_new (config, "height", "unit", "%a",
-                                    GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
-  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
+  private->height_entry = gimp_prop_size_entry_new (config,
+                                                    "height", "unit", "%a",
+                                                    GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                                    300);
+  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->height_entry),
+                                  FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
                              _("Height:"), 0.0, 0.5,
-                             entry, 1, FALSE);
-
-  button = gimp_prop_check_button_new (config, "fixed-height", _("Fix"));
-  gtk_toggle_button_set_mode (GTK_TOGGLE_BUTTON (button), FALSE);
-  gtk_widget_show (button);
-  gtk_table_attach_defaults (GTK_TABLE (table), button, 2, 3, row, row + 1);
+                             private->height_entry, 1, FALSE);
   row++;
 
   /*  Guide  */
@@ -583,5 +829,30 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
+
+  /* Setup initial fixed rule widgets */
+  gimp_rectangle_options_fixed_rule_changed (NULL, private);
+
   return vbox;
+}
+
+/**
+ * gimp_rectangle_options_fixed_rule_active:
+ * @rectangle_options:
+ * @fixed_rule:
+ *
+ * Return value: %TRUE if @fixed_rule is active, %FALSE otherwise.
+ */
+gboolean
+gimp_rectangle_options_fixed_rule_active (GimpRectangleOptions       *rectangle_options,
+                                          GimpRectangleToolFixedRule  fixed_rule)
+{
+  GimpRectangleOptionsPrivate *private;
+
+  g_return_val_if_fail (GIMP_IS_RECTANGLE_OPTIONS (rectangle_options), FALSE);
+
+  private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (rectangle_options);
+
+  return private->fixed_rule_active &&
+         private->fixed_rule == fixed_rule;
 }

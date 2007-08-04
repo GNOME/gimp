@@ -104,6 +104,38 @@ gimp_rectangle_constraint_get_type (void)
 }
 
 GType
+gimp_rectangle_tool_fixed_rule_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_RECTANGLE_TOOL_FIXED_ASPECT, "GIMP_RECTANGLE_TOOL_FIXED_ASPECT", "aspect" },
+    { GIMP_RECTANGLE_TOOL_FIXED_WIDTH, "GIMP_RECTANGLE_TOOL_FIXED_WIDTH", "width" },
+    { GIMP_RECTANGLE_TOOL_FIXED_HEIGHT, "GIMP_RECTANGLE_TOOL_FIXED_HEIGHT", "height" },
+    { GIMP_RECTANGLE_TOOL_FIXED_SIZE, "GIMP_RECTANGLE_TOOL_FIXED_SIZE", "size" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_RECTANGLE_TOOL_FIXED_ASPECT, N_("Aspect ratio"), NULL },
+    { GIMP_RECTANGLE_TOOL_FIXED_WIDTH, N_("Width"), NULL },
+    { GIMP_RECTANGLE_TOOL_FIXED_HEIGHT, N_("Height"), NULL },
+    { GIMP_RECTANGLE_TOOL_FIXED_SIZE, N_("Size"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpRectangleToolFixedRule", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
+GType
 gimp_rect_select_mode_get_type (void)
 {
   static const GEnumValue values[] =

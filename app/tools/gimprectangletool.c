@@ -984,7 +984,7 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
                                        rectangle);
 
       g_object_set (options,
-                    "fixed-aspect", ! options_private->fixed_aspect,
+                    "fixed-rule-active", ! options_private->fixed_rule_active,
                     NULL);
 
       g_signal_handlers_unblock_by_func (options,
@@ -996,6 +996,14 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
        */
       if (state & GDK_BUTTON1_MASK)
         {
+          if (!options_private->fixed_rule_active)
+            {
+              /* Reset anchor point */
+              gimp_rectangle_tool_set_other_side_coord (rectangle,
+                                                        private->other_side_x,
+                                                        private->other_side_y);
+            }
+
           gimp_rectangle_tool_update_with_coord (rectangle,
                                                  private->lastx,
                                                  private->lasty);
@@ -1048,6 +1056,8 @@ gimp_rectangle_tool_active_modifier_key (GimpTool        *tool,
     }
 
   gimp_draw_tool_resume (draw_tool);
+
+  gimp_rectangle_tool_update_options (rectangle, tool->display);
 }
 
 static void swap_ints (gint *i,
@@ -1835,7 +1845,6 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
 {
   GimpRectangleToolPrivate    *private;
   GimpRectangleOptions        *options;
-  GimpRectangleOptionsPrivate *options_private;
   gdouble                      x;
   gdouble                      y;
   gdouble                      width;
@@ -1844,7 +1853,6 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
 
   private         = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
   options         = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rectangle);
-  options_private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (options);
 
   x      = private->x1;
   y      = private->y1;
@@ -1863,15 +1871,13 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
                 "y0", y,
                 NULL);
 
-  if (! options_private->fixed_width)
-    g_object_set (options,
-                  "width",  width,
-                  NULL);
+  g_object_set (options,
+                "width",  width,
+                NULL);
 
-  if (! options_private->fixed_height)
-    g_object_set (options,
-                  "height", height,
-                  NULL);
+  g_object_set (options,
+                "height", height,
+                NULL);
 
   g_object_set (options,
                 "center-x", center_x,
@@ -2692,8 +2698,8 @@ gimp_rectangle_tool_apply_fixed_width (GimpRectangleTool      *rectangle_tool,
        * anchor point to be directly on the opposite side.
        */
       private->x1 = private->center_x_on_fixed_center -
-                    options_private->width / 2;
-      private->x2 = private->x1 + options_private->width;
+                    options_private->desired_fixed_width / 2;
+      private->x2 = private->x1 + options_private->desired_fixed_width;
 
       break;
 
@@ -2705,8 +2711,8 @@ gimp_rectangle_tool_apply_fixed_width (GimpRectangleTool      *rectangle_tool,
        * anchor point to be directly on the opposite side.
        */
       private->x1 = private->center_x_on_fixed_center -
-                    options_private->width / 2;
-      private->x2 = private->x1 + options_private->width;
+                    options_private->desired_fixed_width / 2;
+      private->x2 = private->x1 + options_private->desired_fixed_width;
 
       break;
     }
@@ -2749,8 +2755,8 @@ gimp_rectangle_tool_apply_fixed_height (GimpRectangleTool      *rectangle_tool,
        * anchor point to be directly on the opposite side.
        */
       private->y1 = private->center_y_on_fixed_center -
-                    options_private->height / 2;
-      private->y2 = private->y1 + options_private->height;
+                    options_private->desired_fixed_height / 2;
+      private->y2 = private->y1 + options_private->desired_fixed_height;
 
       break;
 
@@ -2762,8 +2768,8 @@ gimp_rectangle_tool_apply_fixed_height (GimpRectangleTool      *rectangle_tool,
        * anchor point to be directly on the opposite side.
        */
       private->y1 = private->center_y_on_fixed_center -
-                    options_private->height / 2;
-      private->y2 = private->y1 + options_private->height;
+                    options_private->desired_fixed_height / 2;
+      private->y2 = private->y1 + options_private->desired_fixed_height;
 
       break;
     }
@@ -3117,7 +3123,8 @@ gimp_rectangle_tool_update_with_coord (GimpRectangleTool *rectangle_tool,
     constraint_to_use = GIMP_RECTANGLE_CONSTRAIN_IMAGE;
 
   /* fixed_aspect and fixed_width/height are mutually exclusive. */
-  if (options_private->fixed_aspect)
+  if (gimp_rectangle_options_fixed_rule_active (options,
+                                                GIMP_RECTANGLE_TOOL_FIXED_ASPECT))
     {
       gdouble aspect;
 
@@ -3163,12 +3170,25 @@ gimp_rectangle_tool_update_with_coord (GimpRectangleTool *rectangle_tool,
     }
   else /* !options_private->fixed_aspect */
     {
-      if (options_private->fixed_width)
+      gboolean fixed_width;
+      gboolean fixed_height;
+      gboolean fixed_size;
+
+      fixed_width =
+        gimp_rectangle_options_fixed_rule_active (options,
+                                                  GIMP_RECTANGLE_TOOL_FIXED_WIDTH);
+      fixed_height =
+        gimp_rectangle_options_fixed_rule_active (options,
+                                                  GIMP_RECTANGLE_TOOL_FIXED_HEIGHT);
+      fixed_size =
+        gimp_rectangle_options_fixed_rule_active (options,
+                                                  GIMP_RECTANGLE_TOOL_FIXED_SIZE);
+      if (fixed_width || fixed_size)
         {
           gimp_rectangle_tool_apply_fixed_width (rectangle_tool,
                                                  constraint_to_use);
         }
-      if (options_private->fixed_height)
+      if (fixed_height || fixed_size)
         {
           gimp_rectangle_tool_apply_fixed_height (rectangle_tool,
                                                   constraint_to_use);
@@ -3262,7 +3282,8 @@ gimp_rectangle_tool_handle_general_clamping (GimpRectangleTool *rectangle_tool)
   /* fixed_aspect takes care of clamping by it self, so just return in case that
    * is in use. Also return if no constraints should be enforced.
    */
-  if (options_private->fixed_aspect ||
+  if (gimp_rectangle_options_fixed_rule_active (options,
+                                                GIMP_RECTANGLE_TOOL_FIXED_ASPECT) ||
       (constraint != GIMP_RECTANGLE_CONSTRAIN_IMAGE &&
        constraint != GIMP_RECTANGLE_CONSTRAIN_DRAWABLE))
     return;
@@ -3270,7 +3291,8 @@ gimp_rectangle_tool_handle_general_clamping (GimpRectangleTool *rectangle_tool)
   /* fixed_width and fixed_height takes care of clamping if they are turned on,
    * so we only need to care if they are not on.
    */
-  if (!options_private->fixed_width)
+  if (!gimp_rectangle_options_fixed_rule_active (options,
+                                                 GIMP_RECTANGLE_TOOL_FIXED_WIDTH))
     {
       /* Never clamp a moved rect; it causes the rectangle to get "consumed". */
       if (private->function == RECT_MOVING)
@@ -3287,7 +3309,8 @@ gimp_rectangle_tool_handle_general_clamping (GimpRectangleTool *rectangle_tool)
         }
     }
 
-  if (!options_private->fixed_height)
+  if (!gimp_rectangle_options_fixed_rule_active (options,
+                                                 GIMP_RECTANGLE_TOOL_FIXED_HEIGHT))
     {
       /* Never clamp a moved rect; it causes the rectangle to get "consumed". */
       if (private->function == RECT_MOVING)
