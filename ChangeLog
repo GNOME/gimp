@@ -1,3 +1,8 @@
+2007-08-05  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):
+	Aligned widgets.
+
 2007-08-04  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Update rectangle tool options to bring it closer to the spec. The

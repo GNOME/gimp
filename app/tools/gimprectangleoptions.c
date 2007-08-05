@@ -572,7 +572,7 @@ gimp_rectangle_options_fixed_rule_changed (GtkWidget                   *combo_bo
 
           gtk_box_pack_start (GTK_BOX (private->second_row_hbox),
                               private->aspect_button_box,
-                              FALSE, FALSE, 0);
+                              FALSE, TRUE, 0);
         }
       break;
 
@@ -606,7 +606,7 @@ gimp_rectangle_options_fixed_rule_changed (GtkWidget                   *combo_bo
 
           gtk_box_pack_start (GTK_BOX (private->second_row_hbox),
                               private->size_button_box,
-                              FALSE, FALSE, 0);
+                              FALSE, TRUE, 0);
         }
       break;
     }
@@ -640,15 +640,13 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     table = gtk_table_new (2, 1, FALSE);
     gtk_table_set_col_spacings (GTK_TABLE (table), 0);
     gtk_table_set_row_spacings (GTK_TABLE (table), 0);
-    gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
+    gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, TRUE, 0);
     gtk_widget_show (table);
 
     /* Setup first row */
     {
       hbox = gtk_hbox_new (FALSE, 1);
-      gtk_table_attach (GTK_TABLE (table), hbox,
-                        0, 1, 0, 1,
-                        GTK_SHRINK | GTK_FILL, GTK_SHRINK | GTK_FILL, 0, 0);
+      gtk_table_attach_defaults (GTK_TABLE (table), hbox, 0, 1, 0, 1);
       gtk_widget_show (hbox);
 
       button = gimp_prop_check_button_new (config, "fixed-rule-active",
@@ -656,14 +654,14 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
       g_signal_connect (button, "toggled",
                         G_CALLBACK (gimp_rectangle_options_fixed_rule_changed),
                         private);
-      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, TRUE, 0);
       gtk_widget_show (button);
 
       combo = gimp_prop_enum_combo_box_new (config, "fixed-rule", 0, 0);
       g_signal_connect (combo, "changed",
                         G_CALLBACK (gimp_rectangle_options_fixed_rule_changed),
                         private);
-      gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
       gtk_widget_show (combo);
     }
 
@@ -761,7 +759,9 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 
-  table = gtk_table_new (4, 6, FALSE);
+  /* X, Y, Width, Height table */
+
+  table = gtk_table_new (4, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
   gtk_table_set_row_spacings (GTK_TABLE (table), 3);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
@@ -809,11 +809,11 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
   /*  Guide  */
   hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, TRUE, 0);
   gtk_widget_show (hbox);
 
   combo = gimp_prop_enum_combo_box_new (config, "guide", 0, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+  gtk_box_pack_start_defaults (GTK_BOX (hbox), combo);
   gtk_widget_show (combo);
 
   /*  Auto Shrink  */
