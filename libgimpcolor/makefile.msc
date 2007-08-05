@@ -34,6 +34,7 @@ OBJECTS = \
 	gimpadaptivesupersample.obj \
 	gimpbilinear.obj \
 	gimpcmyk.obj \
+	gimpcolormanaged.obj \
 	gimpcolorspace.obj \
 	gimphsl.obj \
 	gimphsv.obj \

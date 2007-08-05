@@ -50,6 +50,7 @@ OBJECTS = \
 	gimparea.obj \
 	gimpbrush-load.obj \
 	gimpbrush.obj \
+	gimpbrush-scale.obj \
 	gimpbrushclipboard.obj \
 	gimpbrushgenerated-load.obj \
 	gimpbrushgenerated-save.obj \

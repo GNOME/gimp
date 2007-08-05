@@ -15,6 +15,7 @@ LT_RELEASE = $(PKG_VER)
 OBJECTS = \
 	paint-funcs.obj \
 	scale-funcs.obj \
+	sample-funcs.obj \
 
 mmx_sources = \
 	

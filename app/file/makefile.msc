@@ -10,6 +10,7 @@ PKG_VER = $(GIMP_VER)
 
 OBJECTS = \
 	file-open.obj \
+	file-procedure.obj \
 	file-save.obj \
 	file-utils.obj \
 	gimprecentitem.obj \

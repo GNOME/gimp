@@ -20,7 +20,6 @@ OBJECTS = \
 	base.obj \
 	base-enums.obj \
 	boundary.obj \
-	brush-scale.obj \
 	color-balance.obj \
 	colorize.obj \
 	cpercep.obj \
@@ -40,6 +39,8 @@ OBJECTS = \
 	tile-cache.obj \
 	tile-manager.obj \
 	tile-manager-crop.obj \
+	tile-manager-preview.obj \
+	tile-pyramid.obj \
 	tile-swap.obj \
 
 INCLUDES = \

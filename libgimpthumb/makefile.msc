@@ -37,6 +37,7 @@ OBJECTS = \
 	gimpthumb-error.obj \
 	gimpthumb-utils.obj \
 	gimpthumbnail.obj \
+	gimp-thumbnail-list.obj \
 
 !IFNDEF PERL
 PERL = perl

@@ -74,7 +74,7 @@ OBJECTS = \
 	gimpscrolledpreview.obj \
 	gimpstringcombobox.obj \
 	gimpquerybox.obj \
-	gimpresolutionentry.obj \
+#	gimpresolutionentry.obj \
 	gimpsizeentry.obj \
 	gimpstock.obj \
 	gimpunitmenu.obj \

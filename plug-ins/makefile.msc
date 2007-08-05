@@ -35,13 +35,13 @@ FROMPLUGINSDIR=YES		# Used to bypass other parts below
 COMMON0 = plugin_browser procedure_browser #gnomeprint
 COMMON1 = antialias AlienMap2 ccanalyze CEL channel_mixer CML_explorer align_layers animationplay animoptimize apply_lens autocrop autostretch_hsv blinds blur borderaverage bumpmap c_astretch cartoon checkerboard color_enhance colorify colormap_remap colortoalpha compose compressor convmatrix csource cubism curve_bend
 COMMON2 = decompose deinterlace depthmerge despeckle destripe dicom diffraction displace dog edge emboss engrave exchange film flarefx fp fractaltrace
-COMMON3 = gauss gbr gee gee_zoom gif gifload gih glasstile glob gqbist gradmap grid gtm guillotine header hot illusion iwarp jigsaw laplace lcms lens lic
-COMMON4 = mapcolor max_rgb mblur mosaic neon newsprint nlfilt noisify normalize nova oilify papertile pat pcx photocopy pix pixelize plasma png pnm polar postscript psd psd_save psp randomize raw redeye retinex ripple rotate
-COMMON5 = sample_colorize scatter_hsv screenshot sel_gauss semiflatten sharpen shift sinus smooth_palette snoise sobel softglow sparkle spheredesigner spread struc sunras tga threshold_alpha tiff 
+COMMON3 = gauss gbr gee gee_zoom gif_load gif_save gih glasstile glob gqbist gradmap grid gtm guillotine header hot illusion iwarp jigsaw laplace lcms lens lic
+COMMON4 = mapcolor max_rgb mblur mosaic neon newsprint nlfilt noisify normalize nova oilify papertile pat pcx photocopy pix pixelize plasma png pnm polar postscript psd_load psd_save psp randomize raw redeye retinex ripple rotate
+COMMON5 = sample_colorize scatter_hsv screenshot sel_gauss semiflatten sharpen shift sinus smooth_palette snoise sobel softglow sparkle spheredesigner spread struc sunras svg tga threshold_alpha tiff_load tiff_save
 COMMON6 = tile tileit tiler uniteditor unsharp video vinvert vpropagate warp waves webbrowser whirlpinch wind xbm xwd zealouscrop
 COMMON7 = winprint winclipboard wiredebug
 
-NOTNOW = wmf svg
+NOTNOW = wmf 
 
 # These have own subdirectories each
 SEPARATE = FractalExplorer Lighting MapObject bmp faxg3 fits flame gfig gflare gfli gimpressionist ifscompose imagemap jpeg maze metadata pagecurl rcm sel2path sgi twain winicon winsnap xjt print help helpbrowser
@@ -51,7 +51,7 @@ SEPARATE = FractalExplorer Lighting MapObject bmp faxg3 fits flame gfig gflare g
 # ..\unofficial-plug-ins directory, go there, and do "nmake -f
 # makefile.msc unofficial".
 
-UNOFFICIAL = Anamorphose DigitalSignature RGB_Displace gimp_ace guash sel_gauss magiceye psd_save user_filter
+UNOFFICIAL = Anamorphose DigitalSignature RGB_Displace gimp_ace guash sel_gauss magiceye user_filter
 
 # The main target
 
@@ -78,7 +78,7 @@ libs-clean :
 
 sub-libs:
 	cd script-fu\tinyscheme
-	nmake -nologo -f ..\..\makefile.msc GIMPTOP=..\..\.. EXTRACFLAGS="-DWIN32 -DUSE_MATH -DUSE_INTERFACE" \
+	nmake -nologo -f ..\..\makefile.msc GIMPTOP=..\..\.. EXTRACFLAGS="-DWIN32 -DUSE_MATH -DUSE_INTERFACE -DSTANDALONE=0" \
 		MODULE=tinyscheme OBJECTS="dynload.obj scheme.obj" $(TARGET)
 	cd ..\..
 	cd script-fu\re
@@ -346,6 +346,14 @@ OBJECTS = \
 	gfig-stock.obj
 !ENDIF
 
+!IFDEF EXTRA_gif_load
+OBJECTS = gif-load.obj
+!ENDIF
+
+!IFDEF EXTRA_gif_save
+OBJECTS = gif-save.obj
+!ENDIF
+
 !IFDEF EXTRA_ifscompose
 OBJECTS = \
 	ifscompose.obj \
@@ -469,7 +477,9 @@ OBJECTS = \
 	jpeg-exif.obj \
 	jpeg-icc.obj \
 	jpeg-load.obj \
+	jpeg-quality.obj \
 	jpeg-save.obj \
+	jpeg-settings.obj \
 !IFDEF EXIF
 	gimpexif.obj
 !ENDIF
@@ -538,13 +548,22 @@ EXTRACFLAGS = $(PNG_CFLAGS)
 EXTRALIBS = $(PNG_LIBS)
 !ENDIF
 
+!IFDEF EXTRA_psd_load
+OBJECTS = psd-load.obj
+!ENDIF
+
+!IFDEF EXTRA_psd_save
+OBJECTS = psd-save.obj
+!ENDIF
+
 !IFDEF EXTRA_print
 OBJECTS = \
 	print.obj \
 	print-draw-page.obj \
 	print-page-layout.obj \
+	print-preview.obj \
 	print-settings.obj
-EXTRALIBS = $(CAIRO_LIBS)
+EXTRALIBS = $(CAIRO_LIBS) $(GTHREAD_LIBS)
 !ENDIF
 
 !IFDEF EXTRA_gnomeprint
@@ -596,7 +615,7 @@ OBJECTS = \
 	script-fu-server.obj
 
 EXTRALIBS = tinyscheme\tinyscheme.lib re\re.lib ftx\ftx.lib kernel32.lib wsock32.lib
-EXTRACFLAGS = -DREGEX_MALLOC -DUSE_INTERFACE
+EXTRACFLAGS = -DREGEX_MALLOC -DUSE_INTERFACE -DSTANDALONE=0
 #HAVE_RESOURCE = YES
 !ENDIF
 
@@ -622,6 +641,16 @@ OBJECTS = \
 !IFDEF EXTRA_svg
 EXTRACFLAGS = $(RSVG_CFLAGS)
 EXTRALIBS = $(RSVG_LIBS)
+!ENDIF
+
+!IFDEF EXTRA_tiff_load
+OBJECTS = tiff-load.obj
+EXTRA_tiff=1
+!ENDIF
+
+!IFDEF EXTRA_tiff_save
+OBJECTS = tiff-save.obj
+EXTRA_tiff=1
 !ENDIF
 
 !IFDEF EXTRA_tiff

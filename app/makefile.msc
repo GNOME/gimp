@@ -63,7 +63,7 @@ PKG_LINK = \
 	$(top_builddir)/libgimpthumb/gimpthumb-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpmodule/gimpmodule-$(LT_RELEASE).lib \
 	$(top_builddir)/libgimpwidgets/gimpwidgets-$(LT_RELEASE).lib \
-	$(GLIB_LIBS) \
+	$(GLIB_LIBS) $(GTHREAD_LIBS) \
 	$(GTK2_LIBS) \
 	$(GIMP_THREAD_LIBS) \
 	$(GIMP_MP_LIBS) \

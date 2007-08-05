@@ -268,7 +268,6 @@ EXPORTS
 	gimp_histogram_get_value
 	gimp_histogram_n_channels
 	gimp_histogram_new
-	gimp_image_active_drawable
 	gimp_image_add_channel
 	gimp_image_add_colormap_entry
 	gimp_image_add_hguide
@@ -646,12 +645,10 @@ EXPORTS
 	tile_manager_get_offsets
 	tile_manager_get_tile
 	tile_manager_get_tile_coordinates
-	tile_manager_get_user_data
 	tile_manager_height
 	tile_manager_new
 	tile_manager_ref
 	tile_manager_set_offsets
-	tile_manager_set_user_data
 	tile_manager_set_validate_proc
 	tile_manager_unref
 	tile_manager_width
@@ -692,10 +689,8 @@ gimp_progress_start
 gimp_stroke_desc_new
 gimp_view_size_get_type
 levels_stretch
-file_utils_find_proc_by_extension
 gimp_templates_migrate
 file_utils_filename_from_uri
-file_utils_find_proc
 gimp_drawable_get_sub_preview
 gimp_drawable_preview_bytes
 gimp_edit_copy_visible
@@ -898,3 +893,22 @@ file_open_from_command_line
 gimp_color_pick_mode_get_type
 gimp_undo_get_age
 gimp_undo_reset_age
+
+file_procedure_find
+file_procedure_find_by_extension
+gimp_container_get_neighbor_of_active
+gimp_image_resize_to_selection
+gimp_param_display_id_get_type
+gimp_projection_get_level
+gimp_projection_get_tiles_at_level
+gimp_projection_get_type
+gimp_sub_progress_get_type
+gimp_sub_progress_new
+gimp_sub_progress_set_step
+gimp_value_set_display
+tile_swap_exit
+
+gimp_image_parasite_attach
+gimp_image_parasite_detach
+
+gimp_image_get_active_drawable

@@ -35,7 +35,6 @@ OBJECTS = \
 	gimpbrushfactoryview.obj \
 	gimpbrushselect.obj \
 	gimpbufferview.obj \
-	gimpcellrendereraccel.obj \
 	gimpcellrendererdashes.obj \
 	gimpcellrendererviewable.obj \
 	gimpchanneltreeview.obj \
@@ -100,6 +99,7 @@ OBJECTS = \
 	gimphistogrambox.obj \
 	gimphistogrameditor.obj \
 	gimphistogramview.obj \
+	gimpimagecommenteditor.obj \
 	gimpimagedock.obj \
 	gimpimageeditor.obj \
 	gimpimageparasiteview.obj \
@@ -130,6 +130,10 @@ OBJECTS = \
 	gimpselectiondata.obj \
 	gimpselectioneditor.obj \
 	gimpsessioninfo.obj \
+	gimpsessioninfo-aux.obj \
+	gimpsessioninfo-book.obj \
+	gimpsessioninfo-dock.obj \
+	gimpsessioninfo-dockable.obj \
 	gimpsizebox.obj \
 	gimpstringaction.obj \
 	gimpstrokeeditor.obj \

@@ -6,6 +6,8 @@ GIMP_VER = 2.0
 # The name of the directory in your %HOME% where GIMP's personal settings
 # and stuff is saved.
 GIMPDIR = _gimp$(GIMP_VER)
+# don't interfer with stable version
+GIMPDIR = _gimp-2.3.x
 
 # Build app/* as DLLs; don't define this, it doesn't work yet.
 #DLLGIMP = 1 

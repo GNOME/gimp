@@ -33,6 +33,7 @@ OBJECTS = \
 	gimppluginmanager-locale-domain.obj \
 	gimppluginmanager-menu-branch.obj \
 	gimppluginmanager-query.obj \
+	gimppluginmanager-restore.obj \
 	gimpplugin-message.obj \
 	gimppluginprocedure.obj \
 	gimppluginprocframe.obj \
