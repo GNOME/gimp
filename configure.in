@@ -1392,7 +1392,11 @@ AC_ARG_WITH(linux-input, [  --without-linux-input   don't build linux input even
 
 have_linux_input=no
 if test "x$with_linux_input" != "xno"; then
-  AC_CHECK_HEADER(linux/input.h, have_linux_input=yes)
+  AC_CHECK_HEADER(linux/input.h,
+	AC_CHECK_DECL(KEY_OK,
+		have_linux_input=yes,
+		have_linux_input="no (needs Linux 2.6)",
+		includes=[linux/input.h]))
 fi
 
 AM_CONDITIONAL(HAVE_LINUX_INPUT, test $have_linux_input = yes)

@@ -1,3 +1,8 @@
+2007-08-05  Sven Neumann  <sven@gimp.org>
+
+	* configure.in: don't build linux-input controller module if
+	KEY_OK is undefined (bug #463729).
+
 2007-08-05  Hans Breuer  <hans@breuer.org>
 
 	* **/makefile.msc app/gimpcore.def : updated msvc build
