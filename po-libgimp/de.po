@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-03 12:19+0100\n"
+"POT-Creation-Date: 2007-08-04 21:44+0200\n"
 "PO-Revision-Date: 2007-01-03 12:19+0100\n"
 "Last-Translator: Sven Neumann <sven@gimp.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -26,14 +26,14 @@ msgstr ""
 msgid "Brush Selection"
 msgstr "Pinselauswahl"
 
-#: ../libgimp/gimpbrushselectbutton.c:899
+#: ../libgimp/gimpbrushselectbutton.c:911
 #: ../libgimp/gimppatternselectbutton.c:712
 msgid "_Browse..."
 msgstr "_Durchsuchen..."
 
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
-#, c-format
-msgid "%s can't handle layers"
+#, fuzzy, c-format
+msgid "%s plug-in can't handle layers"
 msgstr "%s kennt keine Ebenen"
 
 #: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
@@ -42,14 +42,14 @@ msgid "Merge Visible Layers"
 msgstr "Sichtbare Ebenen vereinen"
 
 #: ../libgimp/gimpexport.c:226
-#, c-format
-msgid "%s can't handle layer offsets, size or opacity"
+#, fuzzy, c-format
+msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr "%s kennt keine Ebeneneigenschaften wie Versatz, Größe und Transparenz"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
-#, c-format
-msgid "%s can only handle layers as animation frames"
-msgstr "%s kann Ebenen nur als Animation abspeichern"
+#, fuzzy, c-format
+msgid "%s plug-in can only handle layers as animation frames"
+msgstr "%s kann Ebenen nur als Animation speichern"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
@@ -61,13 +61,13 @@ msgid "Flatten Image"
 msgstr "Bild zusammenfügen"
 
 #: ../libgimp/gimpexport.c:262
-#, c-format
-msgid "%s can't handle transparency"
+#, fuzzy, c-format
+msgid "%s plug-in can't handle transparency"
 msgstr "%s kennt keine Transparenz"
 
 #: ../libgimp/gimpexport.c:271
-#, c-format
-msgid "%s can't handle layer masks"
+#, fuzzy, c-format
+msgid "%s plug-in can't handle layer masks"
 msgstr "%s kennt keine Ebenenmasken"
 
 #: ../libgimp/gimpexport.c:272
@@ -75,8 +75,8 @@ msgid "Apply Layer Masks"
 msgstr "Ebenenmasken anwenden"
 
 #: ../libgimp/gimpexport.c:280
-#, c-format
-msgid "%s can only handle RGB images"
+#, fuzzy, c-format
+msgid "%s plug-in can only handle RGB images"
 msgstr "%s kennt nur RGB"
 
 #: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
@@ -85,8 +85,8 @@ msgid "Convert to RGB"
 msgstr "In RGB umwandeln"
 
 #: ../libgimp/gimpexport.c:289
-#, c-format
-msgid "%s can only handle grayscale images"
+#, fuzzy, c-format
+msgid "%s plug-in can only handle grayscale images"
 msgstr "%s kennt nur Graustufen"
 
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
@@ -95,8 +95,8 @@ msgid "Convert to Grayscale"
 msgstr "In Graustufen umwandeln"
 
 #: ../libgimp/gimpexport.c:298
-#, c-format
-msgid "%s can only handle indexed images"
+#, fuzzy, c-format
+msgid "%s plug-in can only handle indexed images"
 msgstr "%s kennt nur indizierte Paletten"
 
 #: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
@@ -109,8 +109,8 @@ msgstr ""
 "(Für bessere Resultate, diesen Schritt manuell durchführen)"
 
 #: ../libgimp/gimpexport.c:308
-#, c-format
-msgid "%s can only handle bitmap (two color) indexed images"
+#, fuzzy, c-format
+msgid "%s plug-in can only handle bitmap (two color) indexed images"
 msgstr "%s kennt nur Bitmaps (indizierte Palette mit 2 Farben)"
 
 #: ../libgimp/gimpexport.c:309
@@ -122,23 +122,23 @@ msgstr ""
 "(Für bessere Resultate, diesen Schritt manuell durchführen)"
 
 #: ../libgimp/gimpexport.c:318
-#, c-format
-msgid "%s can only handle RGB or grayscale images"
+#, fuzzy, c-format
+msgid "%s plug-in can only handle RGB or grayscale images"
 msgstr "%s kennt nur RGB und Graustufen"
 
 #: ../libgimp/gimpexport.c:327
-#, c-format
-msgid "%s can only handle RGB or indexed images"
+#, fuzzy, c-format
+msgid "%s plug-in  can only handle RGB or indexed images"
 msgstr "%s kennt nur RGB und indizierte Paletten"
 
 #: ../libgimp/gimpexport.c:337
-#, c-format
-msgid "%s can only handle grayscale or indexed images"
+#, fuzzy, c-format
+msgid "%s plug-in can only handle grayscale or indexed images"
 msgstr "%s kennt nur Graustufen und indizierte Paletten"
 
 #: ../libgimp/gimpexport.c:348
-#, c-format
-msgid "%s needs an alpha channel"
+#, fuzzy, c-format
+msgid "%s plug-in needs an alpha channel"
 msgstr "%s benötigt einen Alphakanal"
 
 #: ../libgimp/gimpexport.c:349
@@ -147,7 +147,7 @@ msgstr "Alphakanal hinzufügen"
 
 #: ../libgimp/gimpexport.c:383
 msgid "Confirm Save"
-msgstr "Sichern bestätigen"
+msgstr "Speichern bestätigen"
 
 #: ../libgimp/gimpexport.c:389
 msgid "Confirm"
@@ -184,8 +184,8 @@ msgid ""
 "You are about to save a layer mask as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Sie sichern eine Ebenenmaske als %s.\n"
-"Die sichtbaren Ebenen werden dabei nicht gesichert."
+"Sie speichern eine Ebenenmaske als %s.\n"
+"Die sichtbaren Ebenen werden dabei nicht gespeichert."
 
 #: ../libgimp/gimpexport.c:679
 #, c-format
@@ -193,8 +193,8 @@ msgid ""
 "You are about to save a channel (saved selection) as %s.\n"
 "This will not save the visible layers."
 msgstr ""
-"Sie sichern einen Kanal (gesicherte Selektion) als %s.\n"
-"Die sichtbaren Ebenen werden dabei nicht gesichert."
+"Sie speichern einen Kanal (gespeicherte Auswahl) als %s.\n"
+"Die sichtbaren Ebenen werden dabei nicht gespeichert."
 
 #: ../libgimp/gimpfontselectbutton.c:130
 msgid "Font Selection"
@@ -208,7 +208,7 @@ msgstr "Sans"
 msgid "Gradient Selection"
 msgstr "Farbverlaufsauswahl"
 
-#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:131
+#: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
 msgid "(Empty)"
 msgstr "(Leer)"
 
@@ -403,15 +403,15 @@ msgstr "Auswahl ersetzen"
 msgid "Intersect with the current selection"
 msgstr "Auswahlschnittmenge bilden"
 
-#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpbase/gimpbaseenums.c:162 ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "Red"
 msgstr "Rot"
 
-#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpbase/gimpbaseenums.c:163 ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "Green"
 msgstr "Grün"
 
-#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpbase/gimpbaseenums.c:164 ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "Blue"
 msgstr "Blau"
 
@@ -423,7 +423,7 @@ msgstr "Grau"
 msgid "Indexed"
 msgstr "Indiziert"
 
-#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpbase/gimpbaseenums.c:167 ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "Alpha"
 msgstr "Deckkraft"
 
@@ -464,12 +464,12 @@ msgid "Black only"
 msgstr "Nur Schwarz"
 
 #: ../libgimpbase/gimpbaseenums.c:263
-msgid "Image source"
-msgstr "Bildquelle"
+msgid "Image"
+msgstr "Bild"
 
 #: ../libgimpbase/gimpbaseenums.c:264
-msgid "Pattern source"
-msgstr "Musterquelle"
+msgid "Pattern"
+msgstr "Muster"
 
 #: ../libgimpbase/gimpbaseenums.c:293
 msgid "Lightness"
@@ -503,7 +503,7 @@ msgstr "Bi-linear"
 msgid "Radial"
 msgstr "Kreisförmig"
 
-#: ../libgimpbase/gimpbaseenums.c:391
+#: ../libgimpbase/gimpbaseenums.c:391 ../libgimpwidgets/gimpwidgetsenums.c:24
 msgid "Square"
 msgstr "Quadratisch"
 
@@ -608,7 +608,8 @@ msgid "Cubic"
 msgstr "Kubisch"
 
 #: ../libgimpbase/gimpbaseenums.c:565
-msgid "Lanczos"
+#, fuzzy
+msgid "Sinc (Lanczos3)"
 msgstr "Lanczos"
 
 #: ../libgimpbase/gimpbaseenums.c:593
@@ -664,28 +665,28 @@ msgid "Highlights"
 msgstr "Glanzlichter"
 
 #: ../libgimpbase/gimpbaseenums.c:744
-msgid "Forward"
-msgstr "Vorwärts"
+msgid "Normal (Forward)"
+msgstr "Normal (Vorwärts)"
 
 #: ../libgimpbase/gimpbaseenums.c:745
-msgid "Backward"
-msgstr "Rückwärts"
+msgid "Corrective (Backward)"
+msgstr "Korrigierend (Rückwärts)"
 
 #: ../libgimpbase/gimpbaseenums.c:775
 msgid "Adjust"
-msgstr ""
+msgstr "Anpassen"
 
 #: ../libgimpbase/gimpbaseenums.c:776
 msgid "Clip"
-msgstr ""
+msgstr "Beschneiden"
 
 #: ../libgimpbase/gimpbaseenums.c:777
 msgid "Crop to result"
-msgstr ""
+msgstr "Auf Ergebnis beschneiden"
 
 #: ../libgimpbase/gimpbaseenums.c:778
 msgid "Crop with aspect"
-msgstr ""
+msgstr "Auf Seitenverhältnis beschneiden"
 
 #: ../libgimpbase/gimpbaseenums.c:881
 msgid "Internal GIMP procedure"
@@ -834,54 +835,60 @@ msgstr "Sättigung"
 msgid "Absolute colorimetric"
 msgstr "Kolorimetrisch (absolut)"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:95
+#: ../libgimpconfig/gimpconfig-deserialize.c:97
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "Wert für Symbol %s ist keine gültige UTF-8-Zeichenkette"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:426
+#: ../libgimpconfig/gimpconfig-deserialize.c:436
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr "»yes« oder »no« für boolesches Symbol %s erwartet, »%s« erhalten"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:500
+#: ../libgimpconfig/gimpconfig-deserialize.c:510
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "ungültiger Wert »%s« für Symbol %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:515
+#: ../libgimpconfig/gimpconfig-deserialize.c:525
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "ungültiger Wert »%ld« für Symbol %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:584
+#: ../libgimpconfig/gimpconfig-deserialize.c:594
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "beim Verarbeiten von %s: %s"
 
-#: ../libgimpconfig/gimpconfig-iface.c:453
-#: ../libgimpconfig/gimpconfig-iface.c:466 ../libgimpconfig/gimpscanner.c:498
+#: ../libgimpconfig/gimpconfig-iface.c:454
+#: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
 msgid "fatal parse error"
 msgstr "Schwerwiegender Fehler bei Syntaxanalyse"
 
-#: ../libgimpconfig/gimpconfig-path.c:376
+#: ../libgimpconfig/gimpconfig-path.c:377
 #, c-format
 msgid "Cannot expand ${%s}"
 msgstr "${%s} konnte nicht expandiert werden"
 
-#: ../libgimpconfig/gimpconfigwriter.c:135
+#: ../libgimpconfig/gimpconfigwriter.c:78
+#: ../libgimpconfig/gimpconfigwriter.c:693
+#, c-format
+msgid "Error writing to '%s': %s"
+msgstr "Fehler beim Schreiben von »%s«: %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:136
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Temporärdatei für »%s« konnte nicht angelegt werden: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:148
+#: ../libgimpconfig/gimpconfigwriter.c:149
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "»%s« konnte nicht zum Schreiben geöffnet werden: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:667
+#: ../libgimpconfig/gimpconfigwriter.c:674
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -890,7 +897,7 @@ msgstr ""
 "Fehler beim Schreiben in Temporärdatei für »%s«: %s\n"
 "Die Originaldatei wurde nicht geändert."
 
-#: ../libgimpconfig/gimpconfigwriter.c:675
+#: ../libgimpconfig/gimpconfigwriter.c:682
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -899,17 +906,13 @@ msgstr ""
 "Fehler beim Schreiben in Temporärdatei für »%s«: %s\n"
 "Es wurde keine Datei angelegt."
 
-#: ../libgimpconfig/gimpconfigwriter.c:686
-#, c-format
-msgid "Error writing to '%s': %s"
-msgstr "Fehler beim Schreiben von »%s«: %s"
-
-#: ../libgimpconfig/gimpconfigwriter.c:704
+#: ../libgimpconfig/gimpconfigwriter.c:711
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "»%s« konnte nicht angelegt werden: %s"
 
 #: ../libgimpconfig/gimpscanner.c:255
+#, c-format
 msgid "invalid UTF-8 string"
 msgstr "ungültiger UTF-8-Text"
 
@@ -956,7 +959,12 @@ msgstr ""
 msgid "Failed to create thumbnail folder '%s'."
 msgstr "Fehler beim Anlegen des Verzeichnis für Vorschaubilder '%s'."
 
-#: ../libgimpthumb/gimpthumbnail.c:889
+#: ../libgimpthumb/gimpthumbnail.c:498
+#, c-format
+msgid "Thumbnail contains no Thumb::URI tag"
+msgstr ""
+
+#: ../libgimpthumb/gimpthumbnail.c:898
 #, c-format
 msgid "Could not create thumbnail for %s: %s"
 msgstr "Das Vorschaubild für %s konnte nicht erstellt werden: %s"
@@ -1007,11 +1015,11 @@ msgstr "HTML _Form:"
 
 #: ../libgimpwidgets/gimpfileentry.c:174
 msgid "Open a file selector to browse your folders"
-msgstr ""
+msgstr "Einen Dateiauswahldialog zum Browsen durch die Ordner öffnen"
 
 #: ../libgimpwidgets/gimpfileentry.c:175
 msgid "Open a file selector to browse your files"
-msgstr ""
+msgstr "Einen Dateiauswahldialog zum Browsen durch die Dateien öffnen"
 
 #: ../libgimpwidgets/gimpfileentry.c:335
 msgid "Select Folder"
@@ -1021,15 +1029,15 @@ msgstr "Verzeichnis auswählen"
 msgid "Select File"
 msgstr "Datei auswählen"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:202
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Kilobytes"
 msgstr "Kilobyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:203
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Megabytes"
 msgstr "Megabyte"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libgimpwidgets/gimpmemsizeentry.c:206
 msgid "Gigabytes"
 msgstr "Gigabyte"
 
@@ -1098,21 +1106,16 @@ msgid "Check Style"
 msgstr "Schachbrettmuster"
 
 #. toggle button to (des)activate the instant preview
-#: ../libgimpwidgets/gimppreview.c:265
+#: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "_Vorschau"
 
-#: ../libgimpwidgets/gimppropwidgets.c:1869
+#: ../libgimpwidgets/gimppropwidgets.c:1901
 #, c-format
 msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] "Dieses Texteingabefeld ist auf %d Zeichen beschränkt."
 msgstr[1] "Dieses Texteingabefeld ist auf %d Zeichen beschränkt."
-
-#: ../libgimpwidgets/gimpresolutionentry.c:382
-#, c-format
-msgid "pixels/%s"
-msgstr "Pixel/%s"
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -1144,7 +1147,7 @@ msgstr "Einfügen in Auswahl"
 
 #: ../libgimpwidgets/gimpstock.c:120
 msgid "_Reset"
-msgstr "_Rücksetzen"
+msgstr "_Zurücksetzen"
 
 #: ../libgimpwidgets/gimpstock.c:121
 msgid "Visible"
@@ -1207,8 +1210,8 @@ msgid ""
 "Use this value for random number generator seed - this allows you to repeat "
 "a given \"random\" operation"
 msgstr ""
-"Benutze diesen Wert für den Zufallsgenerator - dies ermöglicht es, \"zufällige"
-"\" Funktionen zu wiederholen"
+"Benutze diesen Wert für den Zufallsgenerator - dies ermöglicht es, "
+"\"zufällige\" Funktionen zu wiederholen"
 
 #: ../libgimpwidgets/gimpwidgets.c:1009
 msgid "_New Seed"
@@ -1222,59 +1225,67 @@ msgstr "Initialisiere den Zufallsgenerator mit einer Zufallszahl"
 msgid "_Randomize"
 msgstr "_Zufällig"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:25
+msgid "Portrait"
+msgstr "Hochformat"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:26
+msgid "Landscape"
+msgstr "Querformat"
+
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "_H"
 msgstr "_H"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:92
+#: ../libgimpwidgets/gimpwidgetsenums.c:123
 msgid "Hue"
 msgstr "Farbton"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "_S"
 msgstr "_S"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:93
+#: ../libgimpwidgets/gimpwidgetsenums.c:124
 msgid "Saturation"
 msgstr "Sättigung"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "_V"
 msgstr "_V"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:94
+#: ../libgimpwidgets/gimpwidgetsenums.c:125
 msgid "Value"
 msgstr "Wert"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:95
+#: ../libgimpwidgets/gimpwidgetsenums.c:126
 msgid "_R"
 msgstr "_R"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:96
+#: ../libgimpwidgets/gimpwidgetsenums.c:127
 msgid "_G"
 msgstr "_G"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:97
+#: ../libgimpwidgets/gimpwidgetsenums.c:128
 msgid "_B"
 msgstr "_B"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:98
+#: ../libgimpwidgets/gimpwidgetsenums.c:129
 msgid "_A"
 msgstr "_A"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:126
+#: ../libgimpwidgets/gimpwidgetsenums.c:157
 msgid "Layers"
 msgstr "Ebenen"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:127
+#: ../libgimpwidgets/gimpwidgetsenums.c:158
 msgid "Images"
 msgstr "Bilder"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:186
+#: ../libgimpwidgets/gimpwidgetsenums.c:217
 msgid "Zoom in"
 msgstr "Vergrößern"
 
-#: ../libgimpwidgets/gimpwidgetsenums.c:187
+#: ../libgimpwidgets/gimpwidgetsenums.c:218
 msgid "Zoom out"
 msgstr "Verkleinern"
 
@@ -1292,14 +1303,13 @@ msgstr "Tritanopia (Blauschwäche)"
 
 #: ../modules/cdisplay_colorblind.c:200
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
-"Farbenblindheit-Simulation (Algorithmus von Brettel-Vienot-Mollon)"
+msgstr "Farbenblindheit-Simulation (Algorithmus von Brettel-Vienot-Mollon)"
 
-#: ../modules/cdisplay_colorblind.c:290
+#: ../modules/cdisplay_colorblind.c:292
 msgid "Color Deficient Vision"
 msgstr "Farbenblindheit"
 
-#: ../modules/cdisplay_colorblind.c:505
+#: ../modules/cdisplay_colorblind.c:507
 msgid "Color _deficiency type:"
 msgstr "Art der _Sehschwäche:"
 
@@ -1340,8 +1350,8 @@ msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
-"Dieser Filter entnimmt seine Konfiguration dem Abschnitt "
-"»Farbverwaltung« im Einstellungsdialog."
+"Dieser Filter entnimmt seine Konfiguration dem Abschnitt »Farbverwaltung« im "
+"Einstellungsdialog."
 
 #: ../modules/cdisplay_lcms.c:302
 msgid "Mode of operation:"
@@ -1456,195 +1466,371 @@ msgstr "Wasserfarbe"
 msgid "Pressure"
 msgstr "Druck"
 
-#: ../modules/controller_linux_input.c:56
+#: ../modules/controller_linux_input.c:58
 msgid "Button 0"
 msgstr "Taste 0"
 
-#: ../modules/controller_linux_input.c:57
+#: ../modules/controller_linux_input.c:59
 msgid "Button 1"
 msgstr "Taste 1"
 
-#: ../modules/controller_linux_input.c:58
+#: ../modules/controller_linux_input.c:60
 msgid "Button 2"
 msgstr "Taste 2"
 
-#: ../modules/controller_linux_input.c:59
+#: ../modules/controller_linux_input.c:61
 msgid "Button 3"
 msgstr "Taste 3"
 
-#: ../modules/controller_linux_input.c:60
+#: ../modules/controller_linux_input.c:62
 msgid "Button 4"
 msgstr "Taste 4"
 
-#: ../modules/controller_linux_input.c:61
+#: ../modules/controller_linux_input.c:63
 msgid "Button 5"
 msgstr "Taste 5"
 
-#: ../modules/controller_linux_input.c:62
+#: ../modules/controller_linux_input.c:64
 msgid "Button 6"
 msgstr "Taste 6"
 
-#: ../modules/controller_linux_input.c:63
+#: ../modules/controller_linux_input.c:65
 msgid "Button 7"
 msgstr "Taste 7"
 
-#: ../modules/controller_linux_input.c:64
+#: ../modules/controller_linux_input.c:66
 msgid "Button 8"
 msgstr "Taste 8"
 
-#: ../modules/controller_linux_input.c:65
+#: ../modules/controller_linux_input.c:67
 msgid "Button 9"
 msgstr "Taste 9"
 
-#: ../modules/controller_linux_input.c:66
+#: ../modules/controller_linux_input.c:68
 msgid "Button Mouse"
 msgstr "Maustaste"
 
-#: ../modules/controller_linux_input.c:67
+#: ../modules/controller_linux_input.c:69
 msgid "Button Left"
 msgstr "Linke Taste"
 
-#: ../modules/controller_linux_input.c:68
+#: ../modules/controller_linux_input.c:70
 msgid "Button Right"
 msgstr "Rechte Taste"
 
-#: ../modules/controller_linux_input.c:69
+#: ../modules/controller_linux_input.c:71
 msgid "Button Middle"
 msgstr "Mittlere Taste"
 
-#: ../modules/controller_linux_input.c:70
+#: ../modules/controller_linux_input.c:72
 msgid "Button Side"
 msgstr "Seitliche Taste"
 
-#: ../modules/controller_linux_input.c:71
+#: ../modules/controller_linux_input.c:73
 msgid "Button Extra"
 msgstr "Extra Taste"
 
-#: ../modules/controller_linux_input.c:72
-#: ../modules/controller_linux_input.c:73
+#: ../modules/controller_linux_input.c:74
 msgid "Button Forward"
 msgstr "Vorwärts-Taste"
 
 #: ../modules/controller_linux_input.c:75
+#, fuzzy
+msgid "Button Back"
+msgstr "Taste 0"
+
+#: ../modules/controller_linux_input.c:76
+#, fuzzy
+msgid "Button Task"
+msgstr "Taste 0"
+
+#: ../modules/controller_linux_input.c:78
 msgid "Button Wheel"
 msgstr "Rad-Taste"
 
-#: ../modules/controller_linux_input.c:78
+#: ../modules/controller_linux_input.c:81
 msgid "Button Gear Down"
 msgstr "Taste Gang-runter"
 
-#: ../modules/controller_linux_input.c:81
+#: ../modules/controller_linux_input.c:84
 msgid "Button Gear Up"
 msgstr "Taste Gang-hoch"
 
-#: ../modules/controller_linux_input.c:87
-msgid "Wheel Turn Left"
-msgstr "Rad links gedreht"
+#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_dx_dinput.c:469
+msgid "X Move Left"
+msgstr ""
 
-#: ../modules/controller_linux_input.c:88
-msgid "Wheel Turn Right"
-msgstr "Rad rechts gedreht"
+#: ../modules/controller_linux_input.c:91
+#: ../modules/controller_dx_dinput.c:472
+msgid "X Move Right"
+msgstr ""
 
-#: ../modules/controller_linux_input.c:89
+#: ../modules/controller_linux_input.c:92
+#, fuzzy
+msgid "Y Move Forward"
+msgstr "Vorwärts"
+
+#: ../modules/controller_linux_input.c:93
+msgid "Y Move Back"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:94
+#: ../modules/controller_dx_dinput.c:487
+msgid "Z Move Up"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:95
+#: ../modules/controller_dx_dinput.c:490
+msgid "Z Move Down"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:97
+msgid "X Axis Tilt Forward"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:98
+msgid "X Axis Tilt Back"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:99
+#: ../modules/controller_dx_dinput.c:505
+msgid "Y Axis Tilt Right"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:100
+#: ../modules/controller_dx_dinput.c:508
+msgid "Y Axis Tilt Left"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:101
+#: ../modules/controller_dx_dinput.c:514
+#, fuzzy
+msgid "Z Axis Turn Left"
+msgstr "Nummernscheibe links gedreht"
+
+#: ../modules/controller_linux_input.c:102
+#: ../modules/controller_dx_dinput.c:517
+#, fuzzy
+msgid "Z Axis Turn Right"
+msgstr "Nummernscheibe rechts gedreht"
+
+#: ../modules/controller_linux_input.c:104
+msgid "Horiz. Wheel Turn Back"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:105
+msgid "Horiz. Wheel Turn Forward"
+msgstr ""
+
+#: ../modules/controller_linux_input.c:106
 msgid "Dial Turn Left"
 msgstr "Nummernscheibe links gedreht"
 
-#: ../modules/controller_linux_input.c:90
+#: ../modules/controller_linux_input.c:107
 msgid "Dial Turn Right"
 msgstr "Nummernscheibe rechts gedreht"
 
-#: ../modules/controller_linux_input.c:154
+#: ../modules/controller_linux_input.c:108
+msgid "Wheel Turn Left"
+msgstr "Rad links gedreht"
+
+#: ../modules/controller_linux_input.c:109
+msgid "Wheel Turn Right"
+msgstr "Rad rechts gedreht"
+
+#: ../modules/controller_linux_input.c:179
 msgid "Linux input event controller"
 msgstr "Linux-Eingabeereignissteuerung"
 
-#: ../modules/controller_linux_input.c:222 ../modules/controller_midi.c:246
+#: ../modules/controller_linux_input.c:249
+#: ../modules/controller_dx_dinput.c:227 ../modules/controller_midi.c:245
 msgid "Device:"
 msgstr "Gerät:"
 
-#: ../modules/controller_linux_input.c:223
+#: ../modules/controller_linux_input.c:250
 msgid "The name of the device to read Linux Input events from."
 msgstr ""
 "Der Name des Gerätes, von welchem Linux-Eingabeereignisse ausgelesen werden."
 
-#: ../modules/controller_linux_input.c:227
+#: ../modules/controller_linux_input.c:261
 msgid "Linux Input"
 msgstr "Linux-Eingabe"
 
-#: ../modules/controller_linux_input.c:352
+#: ../modules/controller_linux_input.c:539
 msgid "Linux Input Events"
 msgstr "Linux-Eingabeereignisse"
 
-#: ../modules/controller_linux_input.c:373 ../modules/controller_midi.c:484
-#: ../modules/controller_midi.c:510
+#: ../modules/controller_linux_input.c:551
+#: ../modules/controller_dx_dinput.c:1122 ../modules/controller_midi.c:533
+msgid "No device configured"
+msgstr "Kein Gerät eingerichtet"
+
+#: ../modules/controller_linux_input.c:577 ../modules/controller_midi.c:482
+#: ../modules/controller_midi.c:508
 #, c-format
 msgid "Reading from %s"
 msgstr "Von %s wird gelesen"
 
-#: ../modules/controller_linux_input.c:389
-#: ../modules/controller_linux_input.c:432 ../modules/controller_midi.c:466
-#: ../modules/controller_midi.c:527 ../modules/controller_midi.c:598
+#: ../modules/controller_linux_input.c:595
+#: ../modules/controller_linux_input.c:649 ../modules/controller_midi.c:464
+#: ../modules/controller_midi.c:525 ../modules/controller_midi.c:596
 #, c-format
 msgid "Device not available: %s"
 msgstr "Gerät nicht verfügbar: %s"
 
-#: ../modules/controller_linux_input.c:397 ../modules/controller_midi.c:535
-msgid "No device configured"
-msgstr "Kein Gerät eingerichtet"
+#: ../modules/controller_linux_input.c:614
+#: ../modules/controller_dx_dinput.c:1147
+msgid "Device not available"
+msgstr "Gerät nicht verfügbar"
 
-#: ../modules/controller_linux_input.c:441 ../modules/controller_midi.c:607
+#: ../modules/controller_linux_input.c:658 ../modules/controller_midi.c:605
 msgid "End of file"
 msgstr "Dateiende"
 
-#: ../modules/controller_midi.c:168
+#: ../modules/controller_dx_dinput.c:157
+#, fuzzy
+msgid "DirectX DirectInput event controller"
+msgstr "Linux-Eingabeereignissteuerung"
+
+#: ../modules/controller_dx_dinput.c:228
+#, fuzzy
+msgid "The device to read DirectInput events from."
+msgstr ""
+"Der Name des Gerätes, von welchem Linux-Eingabeereignisse ausgelesen werden."
+
+#: ../modules/controller_dx_dinput.c:237
+msgid "DirectX DirectInput"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:446
+#, fuzzy, c-format
+msgid "Button %d"
+msgstr "Taste 0"
+
+#: ../modules/controller_dx_dinput.c:449
+#, fuzzy, c-format
+msgid "Button %d Press"
+msgstr "Seitliche Taste"
+
+#: ../modules/controller_dx_dinput.c:452
+#, fuzzy, c-format
+msgid "Button %d Release"
+msgstr "Mittlere Taste"
+
+#: ../modules/controller_dx_dinput.c:478
+msgid "Y Move Away"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:481
+msgid "Y Move Near"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:496
+msgid "X Axis Tilt Away"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:499
+msgid "X Axis Tilt Near"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:528
+#, c-format
+msgid "Slider %d Increase"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:531
+#, c-format
+msgid "Slider %d Decrease"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:541
+#, c-format
+msgid "POV %d X View"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:544
+#, c-format
+msgid "POV %d Y View"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:547
+#, c-format
+msgid "POV %d Return"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:1111
+#, fuzzy
+msgid "DirectInput Events"
+msgstr "Linux-Eingabeereignisse"
+
+#: ../modules/controller_midi.c:167
 msgid "MIDI event controller"
 msgstr "MIDI-Ereignissteuerung"
 
-#: ../modules/controller_midi.c:237
+#: ../modules/controller_midi.c:236
 msgid "The name of the device to read MIDI events from."
 msgstr "Der Name des Gerätes, von welchem MIDI-Ereignisse ausgelesen werden."
 
-#: ../modules/controller_midi.c:240
+#: ../modules/controller_midi.c:239
 msgid "Enter 'alsa' to use the ALSA sequencer."
 msgstr "Geben Sie »alsa« ein, um die ALSA-Steuerung zu verwenden."
 
-#: ../modules/controller_midi.c:255
+#: ../modules/controller_midi.c:254
 msgid "Channel:"
 msgstr "Kanal:"
 
-#: ../modules/controller_midi.c:256
+#: ../modules/controller_midi.c:255
 msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
 msgstr ""
-"Der MIDI-Kanal, von dem Ereignisse ausgelesen werden. Setzen Sie den Wert auf "
-"-1, um aus allen MIDI-Kanälen zu lesen."
+"Der MIDI-Kanal, von dem Ereignisse ausgelesen werden. Setzen Sie den Wert "
+"auf -1, um aus allen MIDI-Kanälen zu lesen."
 
-#: ../modules/controller_midi.c:260
+#: ../modules/controller_midi.c:259
 msgid "MIDI"
 msgstr "MIDI"
 
-#: ../modules/controller_midi.c:384
+#: ../modules/controller_midi.c:383
 #, c-format
 msgid "Note %02x on"
 msgstr "Note %02x an"
 
-#: ../modules/controller_midi.c:387
+#: ../modules/controller_midi.c:386
 #, c-format
 msgid "Note %02x off"
 msgstr "Note %02x aus"
 
-#: ../modules/controller_midi.c:390
+#: ../modules/controller_midi.c:389
 #, c-format
 msgid "Controller %03d"
 msgstr "Kontroller %03d"
 
-#: ../modules/controller_midi.c:437
+#: ../modules/controller_midi.c:436
 msgid "MIDI Events"
 msgstr "MIDI-Ereignis"
 
-#: ../modules/controller_midi.c:458
-msgid "GIMP MIDI controller"
+#: ../modules/controller_midi.c:454
+msgid "GIMP"
+msgstr "GIMP"
+
+#: ../modules/controller_midi.c:456
+#, fuzzy
+msgid "GIMP MIDI Input Controller"
 msgstr "MIDI-Steuerung"
+
+#~ msgid "Image source"
+#~ msgstr "Bildquelle"
+
+#~ msgid "Pattern source"
+#~ msgstr "Musterquelle"
+
+#~ msgid "Backward"
+#~ msgstr "Rückwärts"
+
+#~ msgid "pixels/%s"
+#~ msgstr "Pixel/%s"
 
 #~ msgid "Ask"
 #~ msgstr "Nachfragen"

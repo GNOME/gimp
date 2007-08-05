@@ -1366,7 +1366,7 @@ msgstr "_Invertieren"
 
 #: ../app/actions/drawable-actions.c:58
 msgid "Invert the colors"
-msgstr "Farben invertieren"
+msgstr "Kehrt den Farbwert jedes Pixels um"
 
 #: ../app/actions/drawable-actions.c:63
 msgid "_White Balance"
@@ -2426,20 +2426,20 @@ msgstr "Bildabmessungen anpassen"
 
 #: ../app/actions/image-actions.c:90
 msgid "F_it Canvas to Layers"
-msgstr "Leinwand auf Ebenen anpassen"
+msgstr "Leinwandgröße an Ebenen anpassen"
 
 #: ../app/actions/image-actions.c:91
 msgid "Resize the image to enclose all layers"
-msgstr "Bildgröße so verändern, dass das Bild alle Ebenen enthält"
+msgstr "Bildgröße so verändern, dass es alle Ebenen hineinpassen"
 
 #: ../app/actions/image-actions.c:96
 msgid "F_it Canvas to Selection"
-msgstr "Größe der Zeichenfläche an Auswahl anpassen"
+msgstr "Leinwandgröße an Auswahl anpassen"
 
 #: ../app/actions/image-actions.c:97
 #, fuzzy
 msgid "Resize the image to the extents of the selection"
-msgstr "Das Bild auf die Auswählgröße zurechtschneiden"
+msgstr "Das Bild auf die Auswahlgröße zurechtschneiden"
 
 #: ../app/actions/image-actions.c:102
 msgid "_Print Size..."
@@ -2459,11 +2459,11 @@ msgstr "Größe des Bildinhaltes ändern"
 
 #: ../app/actions/image-actions.c:114 ../app/actions/layers-actions.c:182
 msgid "_Crop to Selection"
-msgstr "Auf Auswahlgröße zuschneiden"
+msgstr "Ebene auf Auswahlgröße zuschneiden"
 
 #: ../app/actions/image-actions.c:115
 msgid "Crop the image to the extents of the selection"
-msgstr "Das Bild auf die Auswählgröße zurechtschneiden"
+msgstr "Schneidet das Bild auf die Auswahlgröße zurecht"
 
 #: ../app/actions/image-actions.c:120
 msgid "_Duplicate"
@@ -2804,7 +2804,7 @@ msgstr "Größe des Ebeneninhaltes ändern"
 
 #: ../app/actions/layers-actions.c:183
 msgid "Crop the layer to the extents of the selection"
-msgstr "Die Ebene auf die Auswählgröße zurecht schneiden"
+msgstr "Die Ebene auf die Auswahlgröße zurechtschneiden"
 
 #: ../app/actions/layers-actions.c:188
 msgid "Add La_yer Mask..."
@@ -2894,7 +2894,7 @@ msgstr "Ebenenmaske von der Auswahl abziehen"
 
 #: ../app/actions/layers-actions.c:273
 msgid "Intersect the layer mask with the current selection"
-msgstr "Ebenemaske mit der Auswahl schneiden"
+msgstr "Ebenenmaske mit der Auswahl schneiden"
 
 #: ../app/actions/layers-actions.c:281
 msgid "Al_pha to Selection"
@@ -4052,7 +4052,7 @@ msgstr "Zoom zurücksetzen"
 
 #: ../app/actions/view-actions.c:100
 msgid "Restore the previous zoom level"
-msgstr "Vorherige Vergrößerngsstufe wiederherstellen"
+msgstr "Vorherige Vergrößerungsstufe wiederherstellen"
 
 #: ../app/actions/view-actions.c:105
 msgid "Na_vigation Window"
@@ -4340,7 +4340,7 @@ msgstr "Farbe des Leinwandrahmens festlegen"
 #: ../app/actions/window-actions.c:168
 #, c-format
 msgid "Screen %s"
-msgstr "Arbeitsfläche %s"
+msgstr "Bildschirm %s"
 
 #: ../app/actions/window-actions.c:170
 #, c-format
@@ -4493,7 +4493,7 @@ msgstr ""
 "Die Auslagerungsdatei konnte nicht geöffnet werden. GIMP konnte keinen "
 "weiteren Hauptspeicher beschaffen und konnte auch auch den "
 "Auslagerungsspeicher nicht nutzen. Teile ihres Bildes könnten beschädigt "
-"sein. Versuchen Sie Ihre Arbeit unter einem anderen Dateinamen zuspeichern "
+"sein. Versuchen Sie Ihre Arbeit unter einem anderen Dateinamen zu speichern "
 "und starten Sie anschließend GIMP neu. Prüfen Sie unbedingt den Ort des "
 "Auslagerungsverzeichnisses in den GIMP Einstellungen."
 
@@ -5636,7 +5636,7 @@ msgstr "Fehler"
 
 #: ../app/core/core-enums.c:1258
 msgid "Ask what to do"
-msgstr ""
+msgstr "Nachfragen"
 
 #: ../app/core/core-enums.c:1259
 msgid "Keep embedded profile"
@@ -6633,7 +6633,7 @@ msgstr "Alphakanal entfernen"
 
 #: ../app/core/gimplayer.c:1688
 msgid "Layer to Image Size"
-msgstr "Ebene auf Bildgröße"
+msgstr "Ebene auf Bildgröße skalieren"
 
 #: ../app/core/gimplayermask.c:102
 msgid "Move Layer Mask"
@@ -7163,7 +7163,7 @@ msgstr "Farbprofil"
 
 #: ../app/dialogs/image-properties-dialog.c:94
 msgid "Comment"
-msgstr "Ko_mmentar:"
+msgstr "Kommentar:"
 
 #: ../app/dialogs/image-scale-dialog.c:109
 msgid "dialog-title|Scale Image"
@@ -8493,11 +8493,11 @@ msgid "If you don't save the image, changes from the last hour will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] ""
-"Wenn Sie das Bild nicht sichern, gehen die Änderungen der letzten Stunde "
+"Wenn Sie das Bild nicht speichern, gehen die Änderungen der letzten Stunde "
 "verloren."
 msgstr[1] ""
-"Wenn Sie das Bild nicht sichern, gehen die Änderungen der letzten %d Stunden "
-"verloren."
+"Wenn Sie das Bild nicht speichern, gehen die Änderungen der letzten %d "
+"Stunden verloren."
 
 #: ../app/display/gimpdisplayshell-close.c:242
 #, c-format
@@ -8508,11 +8508,11 @@ msgid_plural ""
 "If you don't save the image, changes from the last hour and %d minutes will "
 "be lost."
 msgstr[0] ""
-"Wenn Sie das Bild nicht sichern, gehen die Änderungen der letzten Stunde und "
-"%d Minute verloren."
+"Wenn Sie das Bild nicht speichern, gehen die Änderungen der letzten Stunde "
+"und %d Minute verloren."
 msgstr[1] ""
-"Wenn Sie das Bild nicht sichern, gehen die Änderungen der letzten Stunde und "
-"%d Minuten verloren."
+"Wenn Sie das Bild nicht speichern, gehen die Änderungen der letzten Stunde "
+"und %d Minuten verloren."
 
 #: ../app/display/gimpdisplayshell-close.c:253
 #, c-format
@@ -8520,11 +8520,11 @@ msgid "If you don't save the image, changes from the last minute will be lost."
 msgid_plural ""
 "If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] ""
-"Wenn Sie das Bild nicht sichern, gehen die Änderungen der letzten Minute "
+"Wenn Sie das Bild nicht speichern, gehen die Änderungen der letzten Minute "
 "verloren."
 msgstr[1] ""
-"Wenn Sie das Bild nicht sichern, gehen die Änderungen der letzten %d Minuten "
-"verloren."
+"Wenn Sie das Bild nicht speichern, gehen die Änderungen der letzten %d "
+"Minuten verloren."
 
 #: ../app/display/gimpdisplayshell-dnd.c:217
 #: ../app/display/gimpdisplayshell-dnd.c:500
@@ -8614,7 +8614,7 @@ msgstr "Abbrechen"
 
 #: ../app/display/gimpstatusbar.c:483
 msgid "Other..."
-msgstr "Anders …"
+msgstr "Weitere…"
 
 #: ../app/file/file-open.c:127 ../app/file/file-save.c:112
 #, c-format
@@ -10197,7 +10197,7 @@ msgstr "Hilfslinie hinzufügen"
 
 #: ../app/tools/gimpmeasuretool.c:554
 msgid "Click to place vertical and horizontal guides"
-msgstr "zum Platzieren von vertikalen und hoziontalen Hilfslinien klicken"
+msgstr "zum Platzieren von vertikalen und horizontalen Hilfslinien klicken"
 
 #: ../app/tools/gimpmeasuretool.c:563
 msgid "Click to place a horizontal guide"
@@ -11876,7 +11876,7 @@ msgstr "Größe im Speicher:"
 
 #: ../app/widgets/gimpimagepropview.c:152
 msgid "Undo steps:"
-msgstr "Rückgängig machen: %s"
+msgstr "Rückgängig machen:"
 
 #: ../app/widgets/gimpimagepropview.c:155
 msgid "Redo steps:"
@@ -12480,7 +12480,7 @@ msgstr "»%s« konnte nicht gestartet werden: %s"
 #~ msgstr ""
 #~ "Legt die Abmessungen der Vorschaubilder im Bild-öffnen-Dialog fest. Bitte "
 #~ "beachten Sie, dass GIMP keine Vorschaubilder erstellen kann, wenn die "
-#~ "Ebenevorschau deaktiviert ist."
+#~ "Ebenenvorschau deaktiviert ist."
 
 # CHECK
 #~ msgid "Fatal parse error in brush file '%s'"
