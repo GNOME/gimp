@@ -1,5 +1,10 @@
 2007-08-05  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_auto_shrink):
+	Update tool options after shrinking.
+
+2007-08-05  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):
 	Aligned widgets.
 

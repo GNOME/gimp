@@ -2121,6 +2121,8 @@ gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rectangle)
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (rectangle));
     }
+
+  gimp_rectangle_tool_update_options (rectangle, tool->display);
 }
 
 static GtkAnchorType
