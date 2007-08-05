@@ -940,6 +940,27 @@ gimp_rectangle_tool_motion (GimpTool        *tool,
         }
 
       gimp_rectangle_tool_set_function (rectangle, function);
+
+      if (gimp_rectangle_options_fixed_rule_active (options,
+                                                    GIMP_RECTANGLE_TOOL_FIXED_SIZE))
+        {
+          /* For fixed size, set the function to moving immediately since the
+           * rectangle can not be resized anyway.
+           */
+
+          /* We fake a coord update to get the right size. */
+          gimp_rectangle_tool_update_with_coord (rectangle,
+                                                 current_x,
+                                                 current_y);
+
+          gimp_tool_control_set_snap_offsets (tool->control,
+                                              -(private->x2 - private->x1) / 2,
+                                              -(private->y2 - private->y1) / 2,
+                                              private->x2 - private->x1,
+                                              private->y2 - private->y1);
+
+          gimp_rectangle_tool_set_function (rectangle, RECT_MOVING);
+        }
     }
 
   gimp_rectangle_tool_update_options (rectangle, display);

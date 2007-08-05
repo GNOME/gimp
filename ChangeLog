@@ -1,5 +1,11 @@
 2007-08-05  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_motion): When
+	a new rectangle is created and Fixed: Size is used, set rectangle
+	function to RECT_MOVING.
+
+2007-08-05  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_auto_shrink):
 	Update tool options after shrinking.
 
