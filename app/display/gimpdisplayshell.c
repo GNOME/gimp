@@ -90,6 +90,8 @@ enum
 
 /*  local function prototypes  */
 
+static void     gimp_color_managed_iface_init      (GimpColorManagedInterface *iface);
+
 static void      gimp_display_shell_finalize       (GObject          *object);
 static void      gimp_display_shell_set_property   (GObject          *object,
                                                     guint             property_id,
@@ -121,10 +123,17 @@ static void      gimp_display_shell_show_tooltip   (GimpUIManager    *manager,
 static void      gimp_display_shell_hide_tooltip   (GimpUIManager    *manager,
                                                     GimpDisplayShell *shell);
 
+static const guint8 * gimp_display_shell_get_icc_profile
+                                                   (GimpColorManaged *managed,
+                                                    gsize            *len);
+
 
 G_DEFINE_TYPE_WITH_CODE (GimpDisplayShell, gimp_display_shell, GTK_TYPE_WINDOW,
                          G_IMPLEMENT_INTERFACE (GIMP_TYPE_PROGRESS,
-                                                gimp_display_shell_progress_iface_init))
+                                                gimp_display_shell_progress_iface_init)
+                         G_IMPLEMENT_INTERFACE (GIMP_TYPE_COLOR_MANAGED,
+                                                gimp_color_managed_iface_init))
+
 
 #define parent_class gimp_display_shell_parent_class
 
@@ -348,6 +357,12 @@ gimp_display_shell_init (GimpDisplayShell *shell)
 
   gimp_help_connect (GTK_WIDGET (shell), gimp_standard_help_func,
                      GIMP_HELP_IMAGE_WINDOW, NULL);
+}
+
+static void
+gimp_color_managed_iface_init (GimpColorManagedInterface *iface)
+{
+  iface->get_icc_profile = gimp_display_shell_get_icc_profile;
 }
 
 static void
@@ -594,6 +609,15 @@ gimp_display_shell_hide_tooltip (GimpUIManager    *manager,
   gimp_statusbar_pop (GIMP_STATUSBAR (shell->statusbar), "menu-tooltip");
 }
 
+static const guint8 *
+gimp_display_shell_get_icc_profile (GimpColorManaged *managed,
+                                    gsize            *len)
+{
+  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (managed);
+  GimpImage        *image = shell->display->image;
+
+  return gimp_color_managed_get_icc_profile (GIMP_COLOR_MANAGED (image), len);
+}
 
 /*  public functions  */
 
@@ -1097,6 +1121,8 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
   gimp_display_shell_connect (shell);
 
   g_signal_emit (shell, display_shell_signals[RECONNECT], 0);
+
+  gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (shell));
 
   gimp_display_shell_scale_setup (shell);
   gimp_display_shell_expose_full (shell);

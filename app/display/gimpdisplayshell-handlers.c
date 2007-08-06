@@ -20,6 +20,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
 
 #include "display-types.h"
@@ -78,6 +79,8 @@ static void   gimp_display_shell_update_sample_point_handler(GimpImage        *i
                                                              GimpSamplePoint  *sample_point,
                                                              GimpDisplayShell *shell);
 static void   gimp_display_shell_invalidate_preview_handler (GimpImage        *image,
+                                                             GimpDisplayShell *shell);
+static void   gimp_display_shell_profile_changed_handler    (GimpColorManaged *image,
                                                              GimpDisplayShell *shell);
 
 static void   gimp_display_shell_vectors_freeze_handler     (GimpVectors      *vectors,
@@ -166,6 +169,9 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     shell);
   g_signal_connect (image, "invalidate-preview",
                     G_CALLBACK (gimp_display_shell_invalidate_preview_handler),
+                    shell);
+  g_signal_connect (image, "profile-changed",
+                    G_CALLBACK (gimp_display_shell_profile_changed_handler),
                     shell);
 
   shell->vectors_freeze_handler =
@@ -316,6 +322,9 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
   gimp_container_remove_handler (image->vectors,
                                  shell->vectors_freeze_handler);
 
+  g_signal_handlers_disconnect_by_func (image,
+                                        gimp_display_shell_profile_changed_handler,
+                                        shell);
   g_signal_handlers_disconnect_by_func (image,
                                         gimp_display_shell_invalidate_preview_handler,
                                         shell);
@@ -482,6 +491,13 @@ gimp_display_shell_invalidate_preview_handler (GimpImage        *image,
                                             gimp_display_shell_idle_update_icon,
                                             shell,
                                             NULL);
+}
+
+static void
+gimp_display_shell_profile_changed_handler (GimpColorManaged *image,
+                                            GimpDisplayShell *shell)
+{
+  gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (shell));
 }
 
 static void

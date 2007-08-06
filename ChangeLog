@@ -1,3 +1,11 @@
+2007-08-06  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimage.c: added missing static qualifier.
+
+	* app/display/gimpdisplayshell.c
+	* app/display/gimpdisplayshell-handlers.c: implement the
+	GimpColorManaged interface and delegate it to GimpImage.
+
 2007-08-06  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: specify #include correctly for KEY_OK check.

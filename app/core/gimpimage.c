@@ -186,7 +186,7 @@ static void     gimp_image_channel_name_changed  (GimpChannel    *channel,
 static void     gimp_image_channel_color_changed (GimpChannel    *channel,
                                                   GimpImage      *image);
 
-const guint8 *  gimp_image_get_icc_profile       (GimpColorManaged *managed,
+static const guint8 * gimp_image_get_icc_profile (GimpColorManaged *managed,
                                                   gsize            *len);
 
 
@@ -3763,7 +3763,7 @@ gimp_image_invalidate_channel_previews (GimpImage *image)
                           NULL);
 }
 
-const guint8 *
+static const guint8 *
 gimp_image_get_icc_profile (GimpColorManaged *managed,
                             gsize            *len)
 {
