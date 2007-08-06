@@ -291,8 +291,7 @@ run (const gchar      *name,
 
   INIT_I18N ();
 
-  values[0].type          = GIMP_PDB_STATUS;
-  values[0].data.d_status = status;
+  values[0].type = GIMP_PDB_STATUS;
 
   *nreturn_vals = 1;
   *return_vals  = values;
@@ -304,16 +303,10 @@ run (const gchar      *name,
     }
 
   if (proc == NONE)
-    {
-      values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-      return;
-    }
+    goto done;
 
   if (nparams < procedures[proc].nparams)
-    {
-      values[0].data.d_status = GIMP_PDB_CALLING_ERROR;
-      return;
-    }
+    goto done;
 
   if (proc != PROC_FILE_INFO)
     config = gimp_get_color_configuration ();
@@ -391,6 +384,7 @@ run (const gchar      *name,
       break;
     }
 
+ done:
   if (config)
     g_object_unref (config);
 
