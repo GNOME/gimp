@@ -1,3 +1,8 @@
+2007-08-06  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/svg.c (load_rsvg_pixbuf): set the base URI so
+	that librsvg can resolve relative paths.
+
 2007-08-05  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: don't build linux-input controller module if

@@ -314,6 +314,7 @@ load_image (const gchar *filename)
   GError       *error = NULL;
 
   pixbuf = load_rsvg_pixbuf (filename, &load_vals, &error);
+
   if (!pixbuf)
     {
       /*  Do not rely on librsvg setting GError on failure!  */
@@ -421,6 +422,7 @@ load_rsvg_pixbuf (const gchar  *filename,
   GdkPixbuf  *pixbuf  = NULL;
   RsvgHandle *handle;
   GIOChannel *io;
+  gchar      *uri;
   GIOStatus   status  = G_IO_STATUS_NORMAL;
   gboolean    success = TRUE;
 
@@ -431,6 +433,19 @@ load_rsvg_pixbuf (const gchar  *filename,
   g_io_channel_set_encoding (io, NULL, NULL);
 
   handle = load_rsvg_handle_new (vals->resolution, vals->resolution);
+
+  /*  set the base URI so that librsvg can resolve relative paths  */
+  uri = g_filename_to_uri (filename, NULL, NULL);
+  if (uri)
+    {
+      gchar *p = strrchr (uri, '/');
+
+      if (p)
+        *p = '\0';
+
+      rsvg_handle_set_base_uri (handle, uri);
+      g_free (uri);
+    }
 
   rsvg_handle_set_size_callback (handle, load_set_size_callback, vals, NULL);
 
@@ -672,8 +687,12 @@ load_dialog (const gchar *filename)
   gboolean   run;
   GError    *error = NULL;
 
-  SvgLoadVals  vals = { SVG_DEFAULT_RESOLUTION,
-                        - SVG_PREVIEW_SIZE, - SVG_PREVIEW_SIZE };
+  SvgLoadVals  vals =
+    {
+      SVG_DEFAULT_RESOLUTION,
+      - SVG_PREVIEW_SIZE,
+      - SVG_PREVIEW_SIZE
+    };
 
   preview = load_rsvg_pixbuf (filename, &vals, &error);
 
