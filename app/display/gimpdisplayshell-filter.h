@@ -23,7 +23,8 @@
 void   gimp_display_shell_filter_set (GimpDisplayShell      *shell,
                                       GimpColorDisplayStack *stack);
 
-GimpColorDisplayStack * gimp_display_shell_filter_new (GimpColorConfig *config);
+GimpColorDisplayStack * gimp_display_shell_filter_new (GimpDisplayShell *shell,
+                                                       GimpColorConfig  *config);
 
 
 #endif /* __GIMP_DISPLAY_SHELL_FILTER_H__ */

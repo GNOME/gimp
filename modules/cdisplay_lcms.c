@@ -28,6 +28,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpmodule/gimpmodule.h"
@@ -50,7 +51,6 @@ struct _CdisplayLcms
 {
   GimpColorDisplay  parent_instance;
 
-  GimpColorConfig  *config;
   cmsHTRANSFORM     transform;
 };
 
@@ -60,25 +60,10 @@ struct _CdisplayLcmsClass
 };
 
 
-enum
-{
-  PROP_0,
-  PROP_CONFIG
-};
-
-
 static GType     cdisplay_lcms_get_type     (GTypeModule       *module);
 static void      cdisplay_lcms_class_init   (CdisplayLcmsClass *klass);
 static void      cdisplay_lcms_init         (CdisplayLcms      *lcms);
-static void      cdisplay_lcms_dispose      (GObject           *object);
-static void      cdisplay_lcms_get_property (GObject           *object,
-                                             guint              property_id,
-                                             GValue            *value,
-                                             GParamSpec        *pspec);
-static void      cdisplay_lcms_set_property (GObject           *object,
-                                             guint              property_id,
-                                             const GValue      *value,
-                                             GParamSpec        *pspec);
+static void      cdisplay_lcms_finalize     (GObject           *object);
 
 static GtkWidget * cdisplay_lcms_configure  (GimpColorDisplay  *display);
 static void        cdisplay_lcms_convert    (GimpColorDisplay  *display,
@@ -88,8 +73,6 @@ static void        cdisplay_lcms_convert    (GimpColorDisplay  *display,
                                              gint               bpp,
                                              gint               bpl);
 static void        cdisplay_lcms_changed    (GimpColorDisplay  *display);
-static void        cdisplay_lcms_set_config (CdisplayLcms      *lcms,
-                                             GimpColorConfig   *config);
 
 static cmsHPROFILE  cdisplay_lcms_get_rgb_profile     (CdisplayLcms *lcms);
 static cmsHPROFILE  cdisplay_lcms_get_display_profile (CdisplayLcms *lcms);
@@ -115,9 +98,9 @@ static const GimpModuleInfo cdisplay_lcms_info =
   GIMP_MODULE_ABI_VERSION,
   N_("Color management display filter using ICC color profiles"),
   "Sven Neumann",
-  "v0.1",
-  "(c) 2005, released under the GPL",
-  "2005"
+  "v0.2",
+  "(c) 2005 - 2007, released under the GPL",
+  "2005 - 2007"
 };
 
 static GType                  cdisplay_lcms_type = 0;
@@ -172,14 +155,7 @@ cdisplay_lcms_class_init (CdisplayLcmsClass *klass)
 
   parent_class = g_type_class_peek_parent (klass);
 
-  object_class->dispose      = cdisplay_lcms_dispose;
-  object_class->get_property = cdisplay_lcms_get_property;
-  object_class->set_property = cdisplay_lcms_set_property;
-
-  GIMP_CONFIG_INSTALL_PROP_OBJECT (object_class, PROP_CONFIG,
-                                   "config", NULL,
-                                   GIMP_TYPE_COLOR_CONFIG,
-                                   0);
+  object_class->finalize = cdisplay_lcms_finalize;
 
   display_class->name        = _("Color Management");
   display_class->help_id     = "gimp-colordisplay-lcms";
@@ -195,56 +171,21 @@ cdisplay_lcms_class_init (CdisplayLcmsClass *klass)
 static void
 cdisplay_lcms_init (CdisplayLcms *lcms)
 {
-  lcms->config    = NULL;
   lcms->transform = NULL;
 }
 
 static void
-cdisplay_lcms_dispose (GObject *object)
+cdisplay_lcms_finalize (GObject *object)
 {
   CdisplayLcms *lcms = CDISPLAY_LCMS (object);
 
-  cdisplay_lcms_set_config (lcms, NULL);
-
-  G_OBJECT_CLASS (parent_class)->dispose (object);
-}
-
-static void
-cdisplay_lcms_get_property (GObject    *object,
-                            guint       property_id,
-                            GValue     *value,
-                            GParamSpec *pspec)
-{
-  CdisplayLcms *lcms = CDISPLAY_LCMS (object);
-
-  switch (property_id)
+  if (lcms->transform)
     {
-    case PROP_CONFIG:
-      g_value_set_object (value, lcms->config);
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
+      cmsDeleteTransform (lcms->transform);
+      lcms->transform = NULL;
     }
-}
 
-static void
-cdisplay_lcms_set_property (GObject      *object,
-                            guint         property_id,
-                            const GValue *value,
-                            GParamSpec   *pspec)
-{
-  CdisplayLcms *lcms = CDISPLAY_LCMS (object);
-
-  switch (property_id)
-    {
-    case PROP_CONFIG:
-      cdisplay_lcms_set_config (lcms, g_value_get_object (value));
-      break;
-    default:
-      G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
-      break;
-    }
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -273,7 +214,7 @@ static GtkWidget *
 cdisplay_lcms_configure (GimpColorDisplay *display)
 {
   CdisplayLcms *lcms   = CDISPLAY_LCMS (display);
-  GObject      *config = G_OBJECT (lcms->config);
+  GObject      *config = G_OBJECT (gimp_color_display_get_config (display));
   GtkWidget    *vbox;
   GtkWidget    *hint;
   GtkWidget    *table;
@@ -306,7 +247,7 @@ cdisplay_lcms_configure (GimpColorDisplay *display)
   label = gtk_label_new (NULL);
   g_object_set_data (G_OBJECT (lcms), "rgb-profile", label);
   cdisplay_lcms_attach_labelled (GTK_TABLE (table), row++,
-                                 _("RGB working space profile:"),
+                                 _("Image profile:"),
                                  label, TRUE);
   cdisplay_lcms_update_profile_label (lcms, "rgb-profile");
 
@@ -356,7 +297,7 @@ static void
 cdisplay_lcms_changed (GimpColorDisplay *display)
 {
   CdisplayLcms    *lcms   = CDISPLAY_LCMS (display);
-  GimpColorConfig *config = lcms->config;
+  GimpColorConfig *config = gimp_color_display_get_config (display);
 
   cmsHPROFILE      src_profile   = NULL;
   cmsHPROFILE      dest_profile  = NULL;
@@ -378,7 +319,6 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
 
     case GIMP_COLOR_MANAGEMENT_SOFTPROOF:
       proof_profile = cdisplay_lcms_get_printer_profile (lcms);
-
       /*  fallthru  */
 
     case GIMP_COLOR_MANAGEMENT_DISPLAY:
@@ -389,18 +329,28 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
 
   if (proof_profile)
     {
-      lcms->transform = cmsCreateProofingTransform (src_profile, TYPE_RGB_8,
-                                                    (dest_profile ?
-                                                     dest_profile :
-                                                     src_profile), TYPE_RGB_8,
+      if (! src_profile)
+       src_profile = cmsCreate_sRGBProfile ();
+
+      if (! dest_profile)
+       dest_profile = cmsCreate_sRGBProfile ();
+
+      lcms->transform = cmsCreateProofingTransform (src_profile,  TYPE_RGB_8,
+                                                    dest_profile, TYPE_RGB_8,
                                                     proof_profile,
                                                     config->simulation_intent,
                                                     config->display_intent,
                                                     cmsFLAGS_SOFTPROOFING);
       cmsCloseProfile (proof_profile);
     }
-  else if (dest_profile)
+  else if (src_profile || dest_profile)
     {
+      if (! src_profile)
+       src_profile = cmsCreate_sRGBProfile ();
+
+      if (! dest_profile)
+       dest_profile = cmsCreate_sRGBProfile ();
+
       lcms->transform = cmsCreateTransform (src_profile,  TYPE_RGB_8,
                                             dest_profile, TYPE_RGB_8,
                                             config->display_intent,
@@ -410,65 +360,75 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
   if (dest_profile)
     cmsCloseProfile (dest_profile);
 
-  cmsCloseProfile (src_profile);
+  if (src_profile)
+    cmsCloseProfile (src_profile);
 }
 
-static void
-cdisplay_lcms_set_config (CdisplayLcms    *lcms,
-                          GimpColorConfig *config)
+static gboolean
+cdisplay_lcms_profile_is_rgb (cmsHPROFILE profile)
 {
-  if (config == lcms->config)
-    return;
-
-  if (lcms->config)
-    {
-      g_signal_handlers_disconnect_by_func (lcms->config,
-                                            G_CALLBACK (gimp_color_display_changed),
-                                            lcms);
-      g_object_unref (lcms->config);
-    }
-
-  lcms->config = config;
-
-  if (lcms->config)
-    {
-      g_object_ref (lcms->config);
-      g_signal_connect_swapped (lcms->config, "notify",
-                                G_CALLBACK (gimp_color_display_changed),
-                                lcms);
-    }
-
-  gimp_color_display_changed (GIMP_COLOR_DISPLAY (lcms));
+  return (cmsGetColorSpace (profile) == icSigRgbData);
 }
 
 static cmsHPROFILE
 cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
 {
-  GimpColorConfig *config  = lcms->config;
-  cmsHPROFILE      profile = NULL;
+  GimpColorConfig  *config;
+  GimpColorManaged *managed;
+  cmsHPROFILE       profile = NULL;
 
-  /*  this should be taken from the image  */
+  managed = gimp_color_display_get_managed (GIMP_COLOR_DISPLAY (lcms));
 
-  if (config->rgb_profile)
-    profile = cmsOpenProfileFromFile (config->rgb_profile, "r");
+  if (managed)
+    {
+      gsize         len;
+      const guint8 *data = gimp_color_managed_get_icc_profile (managed, &len);
 
-  return profile ? profile : cmsCreate_sRGBProfile ();
+      if (data)
+        profile = cmsOpenProfileFromMem ((gpointer) data, len);
+
+      if (! cdisplay_lcms_profile_is_rgb (profile))
+        {
+          cmsCloseProfile (profile);
+          profile = NULL;
+        }
+    }
+
+  if (! profile)
+    {
+      config = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
+
+      if (config->rgb_profile)
+        profile = cmsOpenProfileFromFile (config->rgb_profile, "r");
+    }
+
+  return profile;
 }
 
 static cmsHPROFILE
 cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
 {
-  GimpColorConfig *config = lcms->config;
+  GimpColorConfig *config;
+  cmsHPROFILE      profile = NULL;
+
+  config = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
 
 #if defined (GDK_WINDOWING_X11)
   if (config->display_profile_from_gdk)
     {
-      /*  FIXME: need to access the display's screen here  */
-      GdkScreen *screen = gdk_screen_get_default ();
-      GdkAtom    type   = GDK_NONE;
-      gint       format = 0;
-      gint       nitems = 0;
-      guchar    *data   = NULL;
+      GimpColorManaged *managed;
+      GdkScreen        *screen;
+      GdkAtom           type   = GDK_NONE;
+      gint              format = 0;
+      gint              nitems = 0;
+      guchar           *data   = NULL;
+
+      managed = gimp_color_display_get_managed (GIMP_COLOR_DISPLAY (lcms));
+
+      if (GTK_IS_WIDGET (managed))
+        screen = gtk_widget_get_screen (GTK_WIDGET (managed));
+      else
+        screen = gdk_screen_get_default ();
 
       g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
 
@@ -478,25 +438,26 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
                             0, 64 * 1024 * 1024, FALSE,
                             &type, &format, &nitems, &data) && nitems > 0)
         {
-          cmsHPROFILE  profile = cmsOpenProfileFromMem (data, nitems);
+          profile = cmsOpenProfileFromMem (data, nitems);
 
+          /* FIXME: check memory mamagement of cmsOpenProfileFromMem */
           g_free (data);
-
-          return profile;
         }
     }
 #endif
 
   if (config->display_profile)
-    return cmsOpenProfileFromFile (config->display_profile, "r");
+    profile = cmsOpenProfileFromFile (config->display_profile, "r");
 
-  return NULL;
+  return profile;
 }
 
 static cmsHPROFILE
 cdisplay_lcms_get_printer_profile (CdisplayLcms *lcms)
 {
-  GimpColorConfig *config = lcms->config;
+  GimpColorConfig *config;
+
+  config = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
 
   if (config->printer_profile)
     return cmsOpenProfileFromFile (config->printer_profile, "r");

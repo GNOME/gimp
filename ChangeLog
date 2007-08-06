@@ -1,5 +1,24 @@
 2007-08-06  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolordisplay.[ch]: added GimpColorConfig and
+	GimpColorManaged as construct-only properties.
+	Deprecated gimp_color_display_new().
+
+	* libgimpwidgets/gimpwidgets.def: updated for new symbols.
+
+	* app/widgets/gimpcolordisplayeditor.c: use g_object_new() instead
+	of gimp_color_display_new().
+
+	* modules/cdisplay_lcms.c: use the image's embedded color profile
+	for the display filter. Assume sRGB if no monitor profile is
+	configured.
+
+	* app/display/gimpdisplayshell.c: 
+	* app/display/gimpdisplayshell-filter.[ch]: pass the display as
+	color-managed object to the display filter.
+
+2007-08-06  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage.c: added missing static qualifier.
 
 	* app/display/gimpdisplayshell.c

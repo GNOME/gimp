@@ -73,8 +73,10 @@ gimp_display_shell_filter_set (GimpDisplayShell      *shell,
 }
 
 GimpColorDisplayStack *
-gimp_display_shell_filter_new (GimpColorConfig *config)
+gimp_display_shell_filter_new (GimpDisplayShell *shell,
+                               GimpColorConfig  *config)
 {
+  g_return_val_if_fail (GIMP_IS_DISPLAY_SHELL (shell), NULL);
   g_return_val_if_fail (GIMP_IS_COLOR_CONFIG (config), NULL);
 
   if (config->display_module)
@@ -87,7 +89,8 @@ gimp_display_shell_filter_new (GimpColorConfig *config)
           GimpColorDisplayStack *stack;
 
           display = g_object_new (type,
-                                  "config", config,
+                                  "color-config",  config,
+                                  "color-managed", shell,
                                   NULL);
 
           stack = gimp_color_display_stack_new ();

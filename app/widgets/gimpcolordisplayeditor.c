@@ -418,7 +418,7 @@ gimp_color_display_editor_new (GimpColorDisplayStack *stack)
 }
 
 static void
-gimp_color_display_editor_add_clicked (GtkWidget             *widget,
+gimp_color_display_editor_add_clicked (GtkWidget              *widget,
                                        GimpColorDisplayEditor *editor)
 {
   GtkTreeModel *model;
@@ -431,7 +431,7 @@ gimp_color_display_editor_add_clicked (GtkWidget             *widget,
 
       gtk_tree_model_get (model, &iter, SRC_COLUMN_TYPE, &type, -1);
 
-      display = gimp_color_display_new (type);
+      display = g_object_new (type, NULL);
 
       if (display)
         {

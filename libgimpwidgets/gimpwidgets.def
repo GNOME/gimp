@@ -39,7 +39,9 @@ EXPORTS
 	gimp_color_display_configure
 	gimp_color_display_configure_reset
 	gimp_color_display_convert
+	gimp_color_display_get_config
 	gimp_color_display_get_enabled
+	gimp_color_display_get_managed
 	gimp_color_display_get_type
 	gimp_color_display_load_state
 	gimp_color_display_new

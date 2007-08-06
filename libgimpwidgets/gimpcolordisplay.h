@@ -89,7 +89,11 @@ struct _GimpColorDisplayClass
 
 
 GType              gimp_color_display_get_type    (void) G_GNUC_CONST;
+
+#ifndef GIMP_DISABLE_DEPRECATED
 GimpColorDisplay * gimp_color_display_new         (GType             display_type);
+#endif
+
 GimpColorDisplay * gimp_color_display_clone       (GimpColorDisplay *display);
 
 void           gimp_color_display_convert         (GimpColorDisplay *display,
@@ -109,6 +113,9 @@ void           gimp_color_display_changed         (GimpColorDisplay *display);
 void           gimp_color_display_set_enabled     (GimpColorDisplay *display,
                                                    gboolean          enabled);
 gboolean       gimp_color_display_get_enabled     (GimpColorDisplay *display);
+
+GimpColorConfig  * gimp_color_display_get_config  (GimpColorDisplay *display);
+GimpColorManaged * gimp_color_display_get_managed (GimpColorDisplay *display);
 
 
 G_END_DECLS

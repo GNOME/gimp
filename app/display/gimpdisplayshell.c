@@ -1102,7 +1102,8 @@ gimp_display_shell_new (GimpDisplay     *display,
 
   color_config = display->image->gimp->config->color_management;
   gimp_display_shell_filter_set (shell,
-                                 gimp_display_shell_filter_new (color_config));
+                                 gimp_display_shell_filter_new (shell,
+                                                                color_config));
 
   gimp_display_shell_connect (shell);
 
