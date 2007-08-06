@@ -1161,7 +1161,14 @@ script_fu_menu_map (SFScript *script)
     const gchar *old;
     const gchar *new;
   } mapping[] = {
-    { "<Image>/Script-Fu/Animators", "<Image>/Filters/Animation/Animators" }
+    { "<Image>/Script-Fu/Alchemy",       "<Image>/Filters/Artistic"            },
+    { "<Image>/Script-Fu/Alpha to Logo", "<Image>/Filters/Alpha to Logo"       },
+    { "<Image>/Script-Fu/Animators",     "<Image>/Filters/Animation/Animators" },
+    { "<Image>/Script-Fu/Decor",         "<Image>/Filters/Decor"               },
+    { "<Image>/Script-Fu/Render",        "<Image>/Filters/Render"              },
+    { "<Image>/Script-Fu/Selection",     "<Image>/Select/Modify"               },
+    { "<Image>/Script-Fu/Shadow",        "<Image>/Filters/Light and Shadow/Shadow" },
+    { "<Image>/Script-Fu/Stencil Ops",   "<Image>/Filters/Decor"               }
   };
 
   gint i;
