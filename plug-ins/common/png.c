@@ -965,7 +965,7 @@ load_image (const gchar *filename,
   error_data.height = info->height;
   error_data.bpp = bpp;
   error_data.pixel_rgn = &pixel_rgn;
-  
+
   png_set_error_fn (pp, &error_data, on_read_error, NULL);
 
   for (pass = 0; pass < num_passes; pass++)
@@ -989,7 +989,7 @@ load_image (const gchar *filename,
           error_data.begin = begin;
           error_data.end = end;
           error_data.num = num;
-          
+
           png_read_rows (pp, pixels, NULL, num);
 
           gimp_pixel_rgn_set_rect (&pixel_rgn, pixel, 0, begin,
@@ -1423,7 +1423,7 @@ save_image (const gchar *filename,
 
         g_free (profile_name);
       }
-    else
+    else if (! pngvals.gama)
       {
         png_set_sRGB (pp, info, 0);
       }
