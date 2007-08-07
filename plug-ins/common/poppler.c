@@ -103,6 +103,7 @@ static gint32            layer_from_pixbuf (gint32                  image,
 #define GIMP_RESOLUTION_ENTRY_GET_CLASS(obj)  (G_TYPE_INSTANCE_GET_CLASS ((obj), GIMP_TYPE_RESOLUTION_ENTRY, GimpResolutionEntryClass))
 
 
+typedef struct _GimpResolutionEntry       GimpResolutionEntry;
 typedef struct _GimpResolutionEntryClass  GimpResolutionEntryClass;
 
 typedef struct _GimpResolutionEntryField  GimpResolutionEntryField;

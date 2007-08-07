@@ -1,5 +1,12 @@
 2007-08-07  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpwidgetstypes.h: removed leftover typedef
+	for GimpResolutionEntry.
+
+	* plug-ins/common/poppler.c: added the typedef here.
+
+2007-08-07  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/Makefile.am
 	* app/plug-in/plug-in-error.[ch]: new files defining the
 	GimpPlugIn error domain.
@@ -14,9 +21,6 @@
 
 	* modules/cdisplay_lcms.c (cdisplay_lcms_get_rgb_profile): check
 	if we actually got a profile before checking its color space.
-
-	* libgimpwidgets/gimpwidgetstypes.h: removed leftover typedef
-	for GimpResolutionEntry.
 
 2007-08-07  Sven Neumann  <sven@gimp.org>
 
