@@ -331,6 +331,14 @@ gui_free_progress (Gimp          *gimp,
 }
 
 static gboolean
+gui_pdb_dialog_present (GtkWindow *window)
+{
+  gtk_window_present (window);
+
+  return FALSE;
+}
+
+static gboolean
 gui_pdb_dialog_new (Gimp          *gimp,
                     GimpContext   *context,
                     GimpProgress  *progress,
@@ -426,6 +434,17 @@ gui_pdb_dialog_new (Gimp          *gimp,
             }
 
           gtk_widget_show (dialog);
+
+          /*  workaround for bug #360106  */
+          {
+            GSource  *source  = g_timeout_source_new (200);
+            GClosure *closure = g_cclosure_new_object (G_CALLBACK (gui_pdb_dialog_present),
+                                                       dialog);
+
+            g_source_set_closure (source, closure);
+            g_source_attach (source, NULL);
+            g_source_unref (source);
+          }
 
           return TRUE;
         }

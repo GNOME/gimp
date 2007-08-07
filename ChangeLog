@@ -1,5 +1,13 @@
 2007-08-07  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/gui-vtable.c (gui_pdb_dialog_new): as a workaround for
+	bug #360106, set a timeout that presents the dialog window.
+
+	* app/widgets/gimppdbdialog.c (gimp_pdb_dialog_set_property):
+	formatting.
+
+2007-08-07  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage.c (gimp_image_get_icc_profile): return NULL
 	if the parasite exists but it is empty.
 

@@ -244,24 +244,30 @@ gimp_pdb_dialog_set_property (GObject      *object,
     case PROP_PDB:
       dialog->pdb = GIMP_PDB (g_value_dup_object (value));
       break;
+
     case PROP_CONTEXT:
       dialog->caller_context = GIMP_CONTEXT (g_value_dup_object (value));
       break;
+
     case PROP_SELECT_TYPE:
       dialog->select_type = g_value_get_gtype (value);
       break;
+
     case PROP_INITIAL_OBJECT:
       /* don't ref, see constructor */
       dialog->initial_object = g_value_get_object (value);
       break;
+
     case PROP_CALLBACK_NAME:
       if (dialog->callback_name)
         g_free (dialog->callback_name);
       dialog->callback_name = g_value_dup_string (value);
       break;
+
     case PROP_MENU_FACTORY:
       dialog->menu_factory = (GimpMenuFactory *) g_value_dup_object (value);
       break;
+
     default:
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
