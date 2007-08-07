@@ -37,6 +37,16 @@ display color correction modules.
 
 @gimpcolordisplay: the object which received the signal.
 
+<!-- ##### ARG GimpColorDisplay:color-config ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpColorDisplay:color-managed ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG GimpColorDisplay:enabled ##### -->
 <para>
 
@@ -70,6 +80,24 @@ display color correction modules.
 
 
 <!-- ##### FUNCTION gimp_color_display_get_enabled ##### -->
+<para>
+
+</para>
+
+@display: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_color_display_get_config ##### -->
+<para>
+
+</para>
+
+@display: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_color_display_get_managed ##### -->
 <para>
 
 </para>

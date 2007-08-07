@@ -34,6 +34,7 @@
 #include "pdb/gimppdb.h"
 #include "pdb/gimpprocedure.h"
 
+#include "plug-in-error.h"
 #include "plug-in-icc-profile.h"
 
 #include "gimp-intl.h"
@@ -105,7 +106,8 @@ plug_in_icc_profile_apply_rgb (GimpImage     *image,
           break;
 
         default:
-          g_set_error (error, 0, 0,
+          g_set_error (error,
+                       GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_EXECUTION_FAILED,
                        _("Error running '%s'"), ICC_PROFILE_APPLY_RGB_PROC);
           success = FALSE;
           break;
@@ -128,7 +130,8 @@ plug_in_icc_profile_apply_rgb (GimpImage     *image,
       return success;
     }
 
-  g_set_error (error, 0, 0,
+  g_set_error (error,
+               GIMP_PLUG_IN_ERROR, GIMP_PLUG_IN_NOT_FOUND,
                _("Plug-In missing (%s)"), ICC_PROFILE_APPLY_RGB_PROC);
 
   return FALSE;

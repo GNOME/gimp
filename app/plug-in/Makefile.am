@@ -66,6 +66,8 @@ libappplug_in_a_SOURCES = \
 	gimptemporaryprocedure.c		\
 	gimptemporaryprocedure.h		\
 	\
+	plug-in-error.c 			\
+	plug-in-error.h 			\
 	plug-in-params.c			\
 	plug-in-params.h			\
 	plug-in-rc.c				\

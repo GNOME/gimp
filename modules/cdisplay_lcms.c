@@ -387,7 +387,8 @@ cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
       if (data)
         profile = cmsOpenProfileFromMem ((gpointer) data, len);
 
-      if (! cdisplay_lcms_profile_is_rgb (profile))
+      if (profile &&
+          ! cdisplay_lcms_profile_is_rgb (profile))
         {
           cmsCloseProfile (profile);
           profile = NULL;

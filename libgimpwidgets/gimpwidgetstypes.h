@@ -65,7 +65,6 @@ typedef struct _GimpPreview            GimpPreview;
 typedef struct _GimpPreviewArea        GimpPreviewArea;
 typedef struct _GimpPixmap             GimpPixmap;
 typedef struct _GimpRatioEntry         GimpRatioEntry;
-typedef struct _GimpResolutionEntry    GimpResolutionEntry;
 typedef struct _GimpScrolledPreview    GimpScrolledPreview;
 typedef struct _GimpSizeEntry          GimpSizeEntry;
 typedef struct _GimpStringComboBox     GimpStringComboBox;

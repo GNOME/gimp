@@ -41,6 +41,8 @@
 #define R_OK 4
 #endif
 
+#include "libgimpconfig/gimpconfig.h"
+
 #include "core/core-types.h"
 
 #include "config/gimpcoreconfig.h"
@@ -60,6 +62,7 @@
 
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginprocedure.h"
+#include "plug-in/plug-in-error.h"
 #include "plug-in/plug-in-icc-profile.h"
 
 
@@ -252,8 +255,10 @@ file_open_thumbnail (Gimp          *gimp,
 
           if (return_vals->n_values >= 3)
             {
-              *image_width  = MAX (0, g_value_get_int (&return_vals->values[2]));
-              *image_height = MAX (0, g_value_get_int (&return_vals->values[3]));
+              *image_width  = MAX (0,
+                                   g_value_get_int (&return_vals->values[2]));
+              *image_height = MAX (0,
+                                   g_value_get_int (&return_vals->values[3]));
             }
 
           if (image)
@@ -438,9 +443,10 @@ file_open_layers (Gimp                *gimp,
                 }
               else
                 {
-                  gchar *name = g_strdup_printf ("%s - %s", basename,
-                                                 gimp_object_get_name (GIMP_OBJECT (layer)));
+                  gchar *name;
 
+                  name = g_strdup_printf ("%s - %s", basename,
+                                          gimp_object_get_name (GIMP_OBJECT (layer)));
                   gimp_object_take_name (GIMP_OBJECT (item), name);
                 }
 
@@ -564,16 +570,38 @@ file_open_profile_apply_rgb (GimpImage    *image,
                              GimpProgress *progress,
                              GimpRunMode   run_mode)
 {
-  GError *error = NULL;
+  GimpColorConfig *config = image->gimp->config->color_management;
+  GError          *error  = NULL;
 
   if (gimp_image_base_type (image) == GIMP_GRAY)
+    return;
+
+  if (config->mode == GIMP_COLOR_MANAGEMENT_OFF)
     return;
 
   if (! plug_in_icc_profile_apply_rgb (image, context, progress, run_mode,
                                        &error))
     {
-      gimp_message (image->gimp, G_OBJECT (progress),
-                    GIMP_MESSAGE_WARNING, error->message);
+      if (error->domain == GIMP_PLUG_IN_ERROR &&
+          error->code   == GIMP_PLUG_IN_NOT_FOUND)
+        {
+          gchar *msg = g_strdup_printf ("%s\n\n%s",
+                                        error->message,
+                                        _("Color management has been disabled. "
+                                          "It can be enabled again in the "
+                                          "Preferences dialog."));
+
+          g_object_set (config, "mode", GIMP_COLOR_MANAGEMENT_OFF, NULL);
+
+          gimp_message (image->gimp, G_OBJECT (progress),
+                        GIMP_MESSAGE_WARNING, msg);
+          g_free (msg);
+        }
+      else
+        {
+          gimp_message (image->gimp, G_OBJECT (progress),
+                        GIMP_MESSAGE_ERROR, error->message);
+        }
 
       g_error_free (error);
     }
