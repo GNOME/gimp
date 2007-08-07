@@ -1,3 +1,8 @@
+2007-08-07  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/print-page-layout.c: added entries for the right
+	and bottom margins. Use the unit from the image size entry.
+
 2007-08-07  Tor Lillqvist  <tml@novell.com>
 
 	* modules/Makefile.am: Add libgimpcolor to cdisplay_libadd.
