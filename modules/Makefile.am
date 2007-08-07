@@ -55,7 +55,7 @@ lib_LTLIBRARIES = \
 modules_libadd = $(libgimpmodule) $(libgimpwidgets) $(GTK_LIBS)
 
 colorsel_libadd = $(libgimpcolor) $(modules_libadd)
-cdisplay_libadd = $(libgimpbase) $(libgimpconfig) $(modules_libadd)
+cdisplay_libadd = $(libgimpbase) $(libgimpconfig) $(libgimpcolor) $(modules_libadd)
 controller_libadd = $(modules_libadd)
 
 if HAVE_LCMS
