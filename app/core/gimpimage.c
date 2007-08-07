@@ -3773,9 +3773,14 @@ gimp_image_get_icc_profile (GimpColorManaged *managed,
 
   if (parasite)
     {
-      *len = gimp_parasite_data_size (parasite);
+      gsize data_size = gimp_parasite_data_size (parasite);
 
-      return gimp_parasite_data (parasite);
+      if (data_size > 0)
+        {
+          *len = data_size;
+
+          return gimp_parasite_data (parasite);
+        }
     }
 
   return NULL;
