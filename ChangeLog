@@ -1,5 +1,10 @@
 2007-08-07  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/png.c (save_image): in the absence of an
+	embedded color profile, write the sRGB chunk.
+
+2007-08-07  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimppalette-import.c
 	* app/core/gimppalette-load.[ch]: applied slightly modified version
 	of a patch from Nicola Archibald that adds support for importing
