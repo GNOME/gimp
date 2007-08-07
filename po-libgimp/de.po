@@ -13,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-04 21:44+0200\n"
-"PO-Revision-Date: 2007-01-03 12:19+0100\n"
-"Last-Translator: Sven Neumann <sven@gimp.org>\n"
+"POT-Creation-Date: 2007-08-07 15:09+0200\n"
+"PO-Revision-Date: 2007-08-07 15:15+0200\n"
+"Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -32,9 +32,9 @@ msgid "_Browse..."
 msgstr "_Durchsuchen..."
 
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can't handle layers"
-msgstr "%s kennt keine Ebenen"
+msgstr "Plugin »%s« kennt keine Ebenen"
 
 #: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
@@ -42,14 +42,14 @@ msgid "Merge Visible Layers"
 msgstr "Sichtbare Ebenen vereinen"
 
 #: ../libgimp/gimpexport.c:226
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "%s kennt keine Ebeneneigenschaften wie Versatz, Größe und Transparenz"
+msgstr "Plugin »%s« kennt keine Ebeneneigenschaften wie Versatz, Größe und Transparenz"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "%s kann Ebenen nur als Animation speichern"
+msgstr "Plugin »%s« kann Ebenen nur als Animation speichern"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
@@ -61,23 +61,23 @@ msgid "Flatten Image"
 msgstr "Bild zusammenfügen"
 
 #: ../libgimp/gimpexport.c:262
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can't handle transparency"
-msgstr "%s kennt keine Transparenz"
+msgstr "Plugin »%s« kennt keine Transparenz"
 
 #: ../libgimp/gimpexport.c:271
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can't handle layer masks"
-msgstr "%s kennt keine Ebenenmasken"
+msgstr "Plugin »%s« kennt keine Ebenenmasken"
 
 #: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
 msgstr "Ebenenmasken anwenden"
 
 #: ../libgimp/gimpexport.c:280
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr "%s kennt nur RGB"
+msgstr "Plugin »%s« kennt nur RGB"
 
 #: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
@@ -85,9 +85,9 @@ msgid "Convert to RGB"
 msgstr "In RGB umwandeln"
 
 #: ../libgimp/gimpexport.c:289
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr "%s kennt nur Graustufen"
+msgstr "Plugin »%s« kennt nur Graustufen"
 
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
@@ -95,9 +95,9 @@ msgid "Convert to Grayscale"
 msgstr "In Graustufen umwandeln"
 
 #: ../libgimp/gimpexport.c:298
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can only handle indexed images"
-msgstr "%s kennt nur indizierte Paletten"
+msgstr "Plugin »%s« kennt nur indizierte Paletten"
 
 #: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
 #: ../libgimp/gimpexport.c:338
@@ -109,9 +109,9 @@ msgstr ""
 "(Für bessere Resultate, diesen Schritt manuell durchführen)"
 
 #: ../libgimp/gimpexport.c:308
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr "%s kennt nur Bitmaps (indizierte Palette mit 2 Farben)"
+msgstr "Plugin »%s« kennt nur Bitmaps (indizierte Palette mit 2 Farben)"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -122,24 +122,24 @@ msgstr ""
 "(Für bessere Resultate, diesen Schritt manuell durchführen)"
 
 #: ../libgimp/gimpexport.c:318
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "%s kennt nur RGB und Graustufen"
+msgstr "Plugin »%s« kennt nur RGB und Graustufen"
 
 #: ../libgimp/gimpexport.c:327
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
-msgstr "%s kennt nur RGB und indizierte Paletten"
+msgstr "Plugin »%s« kennt nur RGB und indiziert"
 
 #: ../libgimp/gimpexport.c:337
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "%s kennt nur Graustufen und indizierte Paletten"
+msgstr "Plugin »%s« kennt nur Graustufen und indiziert"
 
 #: ../libgimp/gimpexport.c:348
-#, fuzzy, c-format
+#, c-format
 msgid "%s plug-in needs an alpha channel"
-msgstr "%s benötigt einen Alphakanal"
+msgstr "Plugin »%s« benötigt einen Alphakanal"
 
 #: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
@@ -620,7 +620,7 @@ msgstr "Konstant"
 msgid "Incremental"
 msgstr "Steigernd"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:267
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:208
 msgid "None"
 msgstr "Keine"
 
@@ -757,7 +757,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:259
+#: ../modules/cdisplay_lcms.c:200
 msgid "(invalid UTF-8 string)"
 msgstr "(Ungültiger UTF-8-Text)"
 
@@ -912,7 +912,6 @@ msgid "Could not create '%s': %s"
 msgstr "»%s« konnte nicht angelegt werden: %s"
 
 #: ../libgimpconfig/gimpscanner.c:255
-#, c-format
 msgid "invalid UTF-8 string"
 msgstr "ungültiger UTF-8-Text"
 
@@ -950,7 +949,7 @@ msgid ""
 "Cannot determine a valid home directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
-"Es konnte kein gültiger Persönlicher Ordner gefunden werden.\n"
+"Es konnte kein gültiger persönlicher Ordner gefunden werden.\n"
 "Vorschaubilder werden stattdessen in den Ordner für temporäre Dateien (%s) "
 "abgelegt."
 
@@ -960,7 +959,6 @@ msgid "Failed to create thumbnail folder '%s'."
 msgstr "Fehler beim Anlegen des Verzeichnis für Vorschaubilder '%s'."
 
 #: ../libgimpthumb/gimpthumbnail.c:498
-#, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr ""
 
@@ -1094,8 +1092,8 @@ msgid ""
 "Click the eyedropper, then click a color anywhere on your screen to select "
 "that color."
 msgstr ""
-"Klicken Sie die Pipette und dann einen beliebigen Punkt auf dem Schirm um "
-"dessen Farbe auszuwählen."
+"Klicken Sie die Pipette an und dann einen beliebigen Punkt auf dem Schirm, "
+"um dessen Farbe auszuwählen."
 
 #: ../libgimpwidgets/gimppreviewarea.c:94
 msgid "Check Size"
@@ -1337,15 +1335,15 @@ msgstr "Kontrast"
 msgid "Contrast c_ycles:"
 msgstr "Kontrast_verstärkung:"
 
-#: ../modules/cdisplay_lcms.c:116
+#: ../modules/cdisplay_lcms.c:99
 msgid "Color management display filter using ICC color profiles"
 msgstr "ICC-Farbprofilfilter für farbverwaltete Bildschirme"
 
-#: ../modules/cdisplay_lcms.c:184
+#: ../modules/cdisplay_lcms.c:160
 msgid "Color Management"
 msgstr "Farbverwaltung"
 
-#: ../modules/cdisplay_lcms.c:288
+#: ../modules/cdisplay_lcms.c:229
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1353,19 +1351,20 @@ msgstr ""
 "Dieser Filter entnimmt seine Konfiguration dem Abschnitt »Farbverwaltung« im "
 "Einstellungsdialog."
 
-#: ../modules/cdisplay_lcms.c:302
+#: ../modules/cdisplay_lcms.c:243
 msgid "Mode of operation:"
 msgstr "Arbeitsmodus:"
 
-#: ../modules/cdisplay_lcms.c:309
-msgid "RGB working space profile:"
-msgstr "RGB-Farbprofil:"
+#: ../modules/cdisplay_lcms.c:250
+#, fuzzy
+msgid "Image profile:"
+msgstr "Bildgröße"
 
-#: ../modules/cdisplay_lcms.c:316
+#: ../modules/cdisplay_lcms.c:257
 msgid "Monitor profile:"
 msgstr "Monitor-Profil:"
 
-#: ../modules/cdisplay_lcms.c:323
+#: ../modules/cdisplay_lcms.c:264
 msgid "Print simulation profile:"
 msgstr "Drucksimulationsprofil:"
 
@@ -1819,6 +1818,9 @@ msgstr "GIMP"
 #, fuzzy
 msgid "GIMP MIDI Input Controller"
 msgstr "MIDI-Steuerung"
+
+#~ msgid "RGB working space profile:"
+#~ msgstr "RGB-Farbprofil:"
 
 #~ msgid "Image source"
 #~ msgstr "Bildquelle"

@@ -16,9 +16,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-04 21:44+0200\n"
-"PO-Revision-Date: 2006-07-12 16:41+0200\n"
-"Last-Translator: Hendrik Richter <hendrikr@gnome.org>\n"
+"POT-Creation-Date: 2007-08-07 13:11+0200\n"
+"PO-Revision-Date: 2007-08-07 18:00+0200\n"
+"Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -400,7 +400,7 @@ msgstr "Fraktalparameter speichern"
 #: ../plug-ins/common/compressor.c:622 ../plug-ins/common/curve_bend.c:869
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gif-load.c:309 ../plug-ins/common/gih.c:649
-#: ../plug-ins/common/lcms.c:736 ../plug-ins/common/lcms.c:931
+#: ../plug-ins/common/lcms.c:730 ../plug-ins/common/lcms.c:925
 #: ../plug-ins/common/mng.c:1121 ../plug-ins/common/pat.c:317
 #: ../plug-ins/common/pcx.c:309 ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:703 ../plug-ins/common/pnm.c:482
@@ -408,8 +408,8 @@ msgstr "Fraktalparameter speichern"
 #: ../plug-ins/common/postscript.c:3029 ../plug-ins/common/psd-load.c:2121
 #: ../plug-ins/common/psp.c:1432 ../plug-ins/common/raw.c:243
 #: ../plug-ins/common/raw.c:645 ../plug-ins/common/spheredesigner.c:2010
-#: ../plug-ins/common/sunras.c:378 ../plug-ins/common/svg.c:320
-#: ../plug-ins/common/svg.c:683 ../plug-ins/common/tga.c:423
+#: ../plug-ins/common/sunras.c:378 ../plug-ins/common/svg.c:321
+#: ../plug-ins/common/svg.c:702 ../plug-ins/common/tga.c:423
 #: ../plug-ins/common/tiff-load.c:288 ../plug-ins/common/xbm.c:720
 #: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
 #: ../plug-ins/fits/fits.c:345 ../plug-ins/flame/flame.c:411
@@ -436,9 +436,8 @@ msgstr ""
 "Die Datei »%s« ist beschädigt. Die Option in Zeile %d ist nicht korrekt"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:243
-#, fuzzy
 msgid "Render fractal art"
-msgstr "Fraktal wird berechnet"
+msgstr "Fraktal berechnen"
 
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:248
 msgid "_Fractal Explorer..."
@@ -890,8 +889,7 @@ msgstr "Map zu Zylinder"
 
 #: ../plug-ins/MapObject/mapobject_main.c:196
 msgid "Map the image to an object (plane, sphere, box or cylinder)"
-msgstr ""
-"Das Bild auf ein Objekt abbilden (Fläche, Kugel, Quader oder Zylinder)"
+msgstr "Das Bild auf ein Objekt abbilden (Fläche, Kugel, Quader oder Zylinder)"
 
 #: ../plug-ins/MapObject/mapobject_main.c:201
 msgid "Map _Object..."
@@ -1240,8 +1238,8 @@ msgstr "Die Bitmap endet unerwartet."
 #: ../plug-ins/bmp/bmpwrite.c:187 ../plug-ins/bmp/bmpwrite.c:209
 msgid "Cannot save indexed image with transparency in BMP file format."
 msgstr ""
-"Bilder im Modus indiziert und mit Alphakanal können nicht im BMP "
-"Dateiformat gespeichert werden."
+"Bilder im Modus »indiziert« und mit Alphakanal können nicht im BMP-Dateiformat "
+"gespeichert werden."
 
 #: ../plug-ins/bmp/bmpwrite.c:189 ../plug-ins/bmp/bmpwrite.c:211
 msgid "Alpha channel will be ignored."
@@ -2170,6 +2168,7 @@ msgstr "Automatische HSV-Farbraumspreizung"
 msgid "autostretch_hsv: cmap was NULL!  Quitting...\n"
 msgstr "autostretch_hsv: cmap war NULL! Abbruch...\n"
 
+# XXX "Ein auf eine Jalousie gemaltes Bild simulieren" (!?)
 #: ../plug-ins/common/blinds.c:116
 msgid "Simulate an image painted on window blinds"
 msgstr "Simuliert ein auf eine Jalousie gemaltes Bild"
@@ -2553,6 +2552,7 @@ msgstr "Farbtabelle wird umsortiert"
 msgid "Sort on Hue"
 msgstr "Nach Farbton sortieren"
 
+# XXX "Nach Helligkeit sortieren" (!?)
 #: ../plug-ins/common/colormap-remap.c:487
 msgid "Sort on Saturation"
 msgstr "Nach Sättigung sortieren"
@@ -2565,6 +2565,7 @@ msgstr "Nach Wert sortieren"
 msgid "Reverse Order"
 msgstr "Reihenfolge umkehren"
 
+### XXX "Reihenfolge wiederherstellen" (!?)
 #: ../plug-ins/common/colormap-remap.c:499
 msgid "Reset Order"
 msgstr "Reihenfolge zurücksetzen"
@@ -3411,14 +3412,12 @@ msgid "Sca_le 2:"
 msgstr "Ska_lierung 2:"
 
 #: ../plug-ins/common/desktop-link.c:82
-#, fuzzy
 msgid "Desktop Link"
-msgstr "Streifen werden entfernt"
+msgstr "Desktop-Verknüpfung"
 
 #: ../plug-ins/common/desktop-link.c:163
-#, fuzzy, c-format
 msgid "Error loading desktop file '%s': %s"
-msgstr "Fehler beim Öffnen der Datei »%s«"
+msgstr "Fehler beim Lesen der Desktop-Datei »%s«: %s"
 
 #: ../plug-ins/common/despeckle.c:149
 msgid "Remove speckle noise from the image"
@@ -3564,7 +3563,7 @@ msgstr "_X-Verschiebung"
 
 #: ../plug-ins/common/displace.c:144
 msgid "_Pinch"
-msgstr "_Abtrennen"
+msgstr "D_rücken"
 
 #: ../plug-ins/common/displace.c:145
 msgid "_Y displacement"
@@ -3572,11 +3571,11 @@ msgstr "_Y-Verschiebung"
 
 #: ../plug-ins/common/displace.c:145
 msgid "_Whirl"
-msgstr "_Wirbel"
+msgstr "_Drehen"
 
 #: ../plug-ins/common/displace.c:171
 msgid "Displace pixels as indicated by displacement maps"
-msgstr ""
+msgstr "Pixel mittels Verschiebungskarten verschieben"
 
 #: ../plug-ins/common/displace.c:181
 msgid "_Displace..."
@@ -3600,7 +3599,6 @@ msgstr "_X-Verschiebung:"
 msgid "_Y displacement:"
 msgstr "_Y-Verschiebung:"
 
-# TODO
 #: ../plug-ins/common/displace.c:461
 msgid "Displacement Mode"
 msgstr "Verschiebungsmodus"
@@ -3617,6 +3615,7 @@ msgstr "_Polar"
 msgid "Edge Behavior"
 msgstr "Kantenverhalten"
 
+# FIXME: Konflikt mit _Vorschau
 #: ../plug-ins/common/displace.c:476 ../plug-ins/common/edge.c:723
 #: ../plug-ins/common/ripple.c:564 ../plug-ins/common/waves.c:280
 msgid "_Smear"
@@ -3780,8 +3779,8 @@ msgstr "Farben vertauschen"
 #: ../plug-ins/common/exchange.c:311
 msgid "Middle-Click Inside Preview to Pick \"From Color\""
 msgstr ""
-"Durch einen mittleren Mausklick innerhalb der Vorschau wählen Sie »Von "
-"Farbe« aus"
+"Durch einen mittleren Mausklick innerhalb der Vorschau wählen Sie "
+"»Quellfarbe« aus"
 
 #: ../plug-ins/common/exchange.c:349
 msgid "To Color"
@@ -4123,7 +4122,7 @@ msgstr "Größe der Vorschau"
 
 #: ../plug-ins/common/fractaltrace.c:116
 msgid "Transform image with the Mandelbrot Fractal"
-msgstr ""
+msgstr "Bild mit dem Mandelbrotfraktal transformieren"
 
 #: ../plug-ins/common/fractaltrace.c:121
 msgid "_Fractal Trace..."
@@ -4144,7 +4143,7 @@ msgstr "_Weiß"
 
 #: ../plug-ins/common/fractaltrace.c:749
 msgid "Mandelbrot Parameters"
-msgstr "Mandelbrot Parameter"
+msgstr "Mandelbrotparameter"
 
 #: ../plug-ins/common/fractaltrace.c:760
 msgid "X_1:"
@@ -4333,7 +4332,9 @@ msgstr ""
 #: ../plug-ins/common/gif-save.c:958
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
-msgstr "Kann keine RGB-Bilder speichern. Konvertieren Sie zu indiziert."
+msgstr
+"Kann keine RGB-Bilder speichern. "
+"Konvertieren Sie zuerst zu »indiziert« oder »Graustufen«."
 
 #: ../plug-ins/common/gif-save.c:1135
 msgid "Delay inserted to prevent evil CPU-sucking animation."
@@ -4356,7 +4357,7 @@ msgstr ""
 "das bei GIFs nicht erlaubt.\n"
 "\n"
 "Sie können jetzt diese Ebenen entweder auf den Rand\n"
-"zuschneiden, oder das Speichern abbrechen."
+"zuschneiden oder das Speichern abbrechen."
 
 #: ../plug-ins/common/gif-save.c:1233
 msgid "Save as GIF"
@@ -4378,7 +4379,7 @@ msgstr "_GIF-Kommentar:"
 #. additional animated gif parameter settings
 #: ../plug-ins/common/gif-save.c:1334
 msgid "Animated GIF Options"
-msgstr "Einstellungen für Animations-GIF's"
+msgstr "Einstellungen für Animations-GIFs"
 
 #: ../plug-ins/common/gif-save.c:1340
 msgid "_Loop forever"
@@ -4595,7 +4596,7 @@ msgid "Intersection"
 msgstr "Schnittpunkte"
 
 #. Width and Height
-#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:758
+#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:777
 #: ../plug-ins/common/wmf.c:551
 msgid "Width:"
 msgstr "Breite:"
@@ -4825,7 +4826,7 @@ msgstr "Modus _2"
 
 #: ../plug-ins/common/iwarp.c:262
 msgid "Use mouse control to warp image areas"
-msgstr ""
+msgstr "Bildbereiche mit der Maus verformen"
 
 #: ../plug-ins/common/iwarp.c:267
 msgid "_IWarp..."
@@ -5034,60 +5035,60 @@ msgstr "Voreingestelltes RGB Farbprofil anwenden"
 msgid "Color Profile Information"
 msgstr "Farbprofilinformationen"
 
-#: ../plug-ins/common/lcms.c:474
+#: ../plug-ins/common/lcms.c:468
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Farbprofil '%s' ist nicht für den RGB Farbraum geeignet"
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:546
+#: ../plug-ins/common/lcms.c:540
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Konvertiere von '%s' nach '%s'"
 
-#: ../plug-ins/common/lcms.c:614
+#: ../plug-ins/common/lcms.c:608
 msgid "Default RGB working space"
 msgstr "Voreingestellter RGB Arbeitsraum"
 
-#: ../plug-ins/common/lcms.c:706
+#: ../plug-ins/common/lcms.c:700
 msgid ""
 "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr ""
 "Die als 'icc-profile' angehängten Daten scheinen kein ICC Farbprofil zu sein."
 
-#: ../plug-ins/common/lcms.c:764
+#: ../plug-ins/common/lcms.c:758
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "»%s« scheint kein ICC Farbprofil zu sein."
 
-#: ../plug-ins/common/lcms.c:957
+#: ../plug-ins/common/lcms.c:951
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Konnte kein ICC Farbprofil aus der Datei '%s' lesen"
 
-#: ../plug-ins/common/lcms.c:977
+#: ../plug-ins/common/lcms.c:971
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "Das Bild '%s' hat ein eingebettetes Farbprofil:"
 
-#: ../plug-ins/common/lcms.c:1021
+#: ../plug-ins/common/lcms.c:1015
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Soll das Bild in den RGB Arbeitsraum (%s) konvertiert werden?"
 
-#: ../plug-ins/common/lcms.c:1052
+#: ../plug-ins/common/lcms.c:1046
 msgid "Convert to RGB working space?"
 msgstr "In den RGB Arbeitsraum konvertieren?"
 
-#: ../plug-ins/common/lcms.c:1057
+#: ../plug-ins/common/lcms.c:1051
 msgid "_Keep"
 msgstr "_Behalten"
 
-#: ../plug-ins/common/lcms.c:1062
+#: ../plug-ins/common/lcms.c:1056
 msgid "_Convert"
 msgstr "_Konvertieren"
 
-#: ../plug-ins/common/lcms.c:1089 ../plug-ins/jpeg/jpeg-exif.c:367
+#: ../plug-ins/common/lcms.c:1083 ../plug-ins/jpeg/jpeg-exif.c:367
 msgid "_Don't ask me again"
 msgstr "_Nicht erneut fragen"
 
@@ -5278,7 +5279,7 @@ msgstr "Zweite Zielfarbe"
 
 #: ../plug-ins/common/mapcolor.c:143
 msgid "Map colors sending foreground to black, background to white"
-msgstr ""
+msgstr "Vordergrundfarbe in Schwarz, Hintergrundfarbe in Weiß umwandeln"
 
 #: ../plug-ins/common/mapcolor.c:151
 msgid "Adjust _Foreground & Background"
@@ -5508,7 +5509,7 @@ msgstr "Standard-Einzelbildanzeigedauer"
 
 #: ../plug-ins/common/mng.c:1596
 msgid "MNG animation"
-msgstr "MNG Animation"
+msgstr "MNG-Animation"
 
 #: ../plug-ins/common/mosaic.c:361
 msgid "Convert the image into irregular tiles"
@@ -5591,7 +5592,6 @@ msgid "_FG/BG lighting"
 msgstr "_VG/HG Beleuchtung"
 
 #: ../plug-ins/common/mosaic.c:2687
-#, c-format
 msgid "Unable to add additional point.\n"
 msgstr "Konnte keinen Kontrollpunkt hinzufügen.\n"
 
@@ -5736,7 +5736,7 @@ msgstr "O_versample:"
 
 #: ../plug-ins/common/nlfilt.c:120
 msgid "Nonlinear swiss army knife filter"
-msgstr ""
+msgstr "Nichtlineares Schweizer-Taschenmesser-Filter"
 
 #: ../plug-ins/common/nlfilt.c:126
 msgid "_NL Filter..."
@@ -6080,11 +6080,11 @@ msgstr "T_urbulenz:"
 
 #: ../plug-ins/common/plugin-browser.c:134
 msgid "Display information about plug-ins"
-msgstr ""
+msgstr "Plugin-Informationen anzeigen"
 
 #: ../plug-ins/common/plugin-browser.c:144
 msgid "_Plug-In Browser"
-msgstr "Plugin-Browser"
+msgstr "_Plugin-Browser"
 
 #: ../plug-ins/common/plugin-browser.c:372
 msgid "Searching by name"
@@ -6454,7 +6454,7 @@ msgid "Rendering"
 msgstr "Rendere"
 
 #. Resolution
-#: ../plug-ins/common/postscript.c:3135 ../plug-ins/common/svg.c:879
+#: ../plug-ins/common/postscript.c:3135 ../plug-ins/common/svg.c:898
 #: ../plug-ins/common/wmf.c:672
 msgid "Resolution:"
 msgstr "Auflösung:"
@@ -6573,6 +6573,7 @@ msgstr "_Postscript Level 2"
 msgid "_Encapsulated PostScript"
 msgstr "_Encapsulated PostScript"
 
+# FIXME: Konflikt mit _Verwischen
 #: ../plug-ins/common/postscript.c:3465
 msgid "P_review"
 msgstr "_Vorschau"
@@ -6583,7 +6584,7 @@ msgstr "_Größe der Vorschau:"
 
 #: ../plug-ins/common/procedure-browser.c:83
 msgid "List available procedures in the PDB"
-msgstr ""
+msgstr "Verfügbare Prozeduren auflisten"
 
 #: ../plug-ins/common/procedure-browser.c:88
 msgid "Procedure _Browser"
@@ -7442,7 +7443,7 @@ msgstr "_Sobel …"
 
 #: ../plug-ins/common/sobel.c:229
 msgid "Sobel Edge Detection"
-msgstr "Sobel Kanten-Erkennung"
+msgstr "Sobel-Kantenerkennung"
 
 #: ../plug-ins/common/sobel.c:258
 msgid "Sobel _horizontally"
@@ -7926,24 +7927,24 @@ msgstr "RL kodiert"
 msgid "SVG image"
 msgstr "SVG-Bild"
 
-#: ../plug-ins/common/svg.c:322 ../plug-ins/common/svg.c:685
+#: ../plug-ins/common/svg.c:323 ../plug-ins/common/svg.c:704
 msgid "Unknown reason"
 msgstr "Unbekannte Ursache"
 
-#: ../plug-ins/common/svg.c:326
+#: ../plug-ins/common/svg.c:327
 msgid "Rendering SVG"
 msgstr "SVG wird gerendert"
 
-#: ../plug-ins/common/svg.c:338
+#: ../plug-ins/common/svg.c:339
 msgid "Rendered SVG"
 msgstr "Gerendertes SVG"
 
-#: ../plug-ins/common/svg.c:538 ../plug-ins/common/wmf.c:338
+#: ../plug-ins/common/svg.c:553 ../plug-ins/common/wmf.c:338
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: ../plug-ins/common/svg.c:546
+#: ../plug-ins/common/svg.c:561
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -7952,45 +7953,45 @@ msgstr ""
 "keine Größe an!"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: ../plug-ins/common/svg.c:692
+#: ../plug-ins/common/svg.c:711
 msgid "Render Scalable Vector Graphics"
 msgstr "Skalierbare Vektorgrafik (SVG) rendern"
 
-#: ../plug-ins/common/svg.c:764 ../plug-ins/common/wmf.c:557
+#: ../plug-ins/common/svg.c:783 ../plug-ins/common/wmf.c:557
 msgid "Height:"
 msgstr "Höhe:"
 
-#: ../plug-ins/common/svg.c:838 ../plug-ins/common/wmf.c:631
+#: ../plug-ins/common/svg.c:857 ../plug-ins/common/wmf.c:631
 msgid "_X ratio:"
 msgstr "_X-Anteil:"
 
-#: ../plug-ins/common/svg.c:860 ../plug-ins/common/wmf.c:653
+#: ../plug-ins/common/svg.c:879 ../plug-ins/common/wmf.c:653
 msgid "_Y ratio:"
 msgstr "_Y-Anteil:"
 
-#: ../plug-ins/common/svg.c:874 ../plug-ins/common/wmf.c:667
+#: ../plug-ins/common/svg.c:893 ../plug-ins/common/wmf.c:667
 msgid "Constrain aspect ratio"
 msgstr "Seitenverhältnis beschränken"
 
-#: ../plug-ins/common/svg.c:885 ../plug-ins/common/wmf.c:678
+#: ../plug-ins/common/svg.c:904 ../plug-ins/common/wmf.c:678
 #: ../plug-ins/print/print-page-layout.c:315
 #, c-format
 msgid "pixels/%a"
 msgstr "Pixel/%a"
 
 #. Path Import
-#: ../plug-ins/common/svg.c:905
+#: ../plug-ins/common/svg.c:924
 msgid "Import _paths"
 msgstr "_Pfade importieren"
 
-#: ../plug-ins/common/svg.c:911
+#: ../plug-ins/common/svg.c:930
 msgid ""
 "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Pfade aus der SVG importieren, so dass diese mit dem Pfadwerkzeug von The "
 "Gimp bearbeitet werden können"
 
-#: ../plug-ins/common/svg.c:924
+#: ../plug-ins/common/svg.c:943
 msgid "Merge imported paths"
 msgstr "Importierte Pfade zusammenfügen"
 
@@ -8321,7 +8322,7 @@ msgstr ""
 
 #: ../plug-ins/common/uniteditor.c:145
 msgid "Create or alter units used in GIMP"
-msgstr ""
+msgstr "In GIMP verwendete Einheiten erstellen oder ändern"
 
 #: ../plug-ins/common/uniteditor.c:150
 msgid "_Unit Editor"
@@ -9018,7 +9019,6 @@ msgstr "Fehler während des Speicherns eines RGB-Bildes"
 msgid "Autocrop unused space from edges and middle"
 msgstr ""
 "Leere Ränder an den Kanten und leere Streifen innerhalb des Bildes entfernen"
-
 
 #: ../plug-ins/common/zealouscrop.c:90
 msgid "_Zealous Crop"
@@ -10722,13 +10722,12 @@ msgid "Image Map Plug-In"
 msgstr ""
 
 #: ../plug-ins/imagemap/imap_about.c:47
-#, fuzzy
 msgid "Copyright © 1999-2005 by Maurits Rijk"
-msgstr "Copyright(c) 1999-2005 by Maurits Rijk"
+msgstr "Copyright © 1999-2005 Maurits Rijk"
 
 #: ../plug-ins/imagemap/imap_about.c:49
 msgid "Released under the GNU General Public License"
-msgstr "Veröffentlicht unter der GNU General Public License"
+msgstr "Veröffentlicht unter der »GNU General Public License«"
 
 #: ../plug-ins/imagemap/imap_circle.c:64
 msgid "C_ircle"
@@ -10843,7 +10842,7 @@ msgid ""
 msgstr ""
 "Hilfslinien sind vordefinierte Rechtecke, die das Bild bedecken. Sie "
 "definieren sie über deren Breite, Höhe und Abstand voneinander. Dadurch "
-"können Sie schnell den typischsten Image-Map-Typ erstellen: Eine "
+"können Sie schnell den typischsten Imagemap-Typ erstellen: Eine "
 "Bildansammlung von Vorschaubildern, praktisch für Navigationsleisten."
 
 #: ../plug-ins/imagemap/imap_cmd_guides.c:170
@@ -11099,9 +11098,8 @@ msgid "_Preview"
 msgstr "_Vorschau"
 
 #: ../plug-ins/imagemap/imap_main.c:124
-#, fuzzy
 msgid "Create a clickable imagemap"
-msgstr "Neues Bild erzeugen"
+msgstr "Eine anklickbare Imagemap erzeugen"
 
 #: ../plug-ins/imagemap/imap_main.c:129
 msgid "_Image Map..."
@@ -11710,7 +11708,6 @@ msgstr ""
 "Nahtloses Labyrinth wird kein perfektes Ergebnis liefern."
 
 #: ../plug-ins/metadata/xmp-parse.c:240
-#, c-format
 msgid "Error: No XMP packet found"
 msgstr "Fehler: Es wurde kein XMP-Paket gefunden"
 
@@ -12100,20 +12097,19 @@ msgstr "Verbindung zu Server"
 msgid "Failed to read %s from '%s': %s"
 msgstr "%s konnte nicht aus »%s« gelesen werden: %s"
 
+# XXX "%s konnte nicht nach »%s« geschrieben werden: %s"
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:360
 #, c-format
 msgid "Failed to write %s to '%s': %s"
 msgstr "%s konnte nicht nach »%s« schreiben: %s"
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:57
-#, c-format
 msgid "Could not initialize libcurl"
-msgstr ""
+msgstr "»libcurl« konnte nicht initialisiert werden."
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:160
-#, fuzzy, c-format
 msgid "Could not open output file for writing"
-msgstr "»%s« konnte nicht zum Schreiben geöffnet werden."
+msgstr "Ausgabedatei konnte nicht zum Schreiben geöffnet werden."
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:198
 #, c-format
