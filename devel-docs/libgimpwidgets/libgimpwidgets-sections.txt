@@ -901,6 +901,8 @@ gimp_color_display_new
 gimp_color_display_clone
 gimp_color_display_set_enabled
 gimp_color_display_get_enabled
+gimp_color_display_get_config
+gimp_color_display_get_managed
 gimp_color_display_convert
 gimp_color_display_load_state
 gimp_color_display_save_state
