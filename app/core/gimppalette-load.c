@@ -430,13 +430,156 @@ gimp_palette_load_psp (const gchar  *filename,
   return g_list_prepend (NULL, palette);
 }
 
+GList *
+gimp_palette_load_aco (const gchar  *filename,
+                       GError      **error)
+{
+  GimpPalette *palette;
+  gchar       *palette_name;
+  gint         fd;
+  gint         format_version;
+  gint         number_of_colors;
+  gint         i;
+  gchar        header[4];
+  gchar        color_info[10];
+  gchar        format2_preamble[4];
+  gint         status;
+
+  g_return_val_if_fail (filename != NULL, NULL);
+  g_return_val_if_fail (g_path_is_absolute (filename), NULL);
+  g_return_val_if_fail (error == NULL || *error == NULL, NULL);
+
+  fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
+  if (! fd)
+    {
+      g_set_error (error,
+                   G_FILE_ERROR, g_file_error_from_errno (errno),
+                   _("Could not open '%s' for reading: %s"),
+                   gimp_filename_to_utf8 (filename), g_strerror (errno));
+      return NULL;
+    }
+
+  palette_name = g_filename_display_basename (filename);
+  palette = GIMP_PALETTE (gimp_palette_new (palette_name));
+  g_free (palette_name);
+
+  status = read(fd, header, sizeof (header));
+
+  if (status < 0)
+    {
+      close(fd);
+
+      return g_list_prepend (NULL, palette);
+    }
+
+  format_version = header[1] + (header[0] << 8);
+  number_of_colors = header[3] + (header[2] << 8);
+
+  for (i = 0; i < number_of_colors; i++)
+  {
+      gint     color_space;
+      gint     w, x, y, z;
+      gboolean color_ok = FALSE;
+      GimpRGB  color;
+
+      read (fd, color_info, sizeof (color_info));
+
+      color_space = color_info[1] + (color_info[0] << 8);
+
+      w = (guchar) color_info[3] + ((guchar) color_info[2] << 8);
+      x = (guchar) color_info[5] + ((guchar) color_info[4] << 8);
+      y = (guchar) color_info[7] + ((guchar) color_info[6] << 8);
+      z = (guchar) color_info[9] + ((guchar) color_info[8] << 8);
+
+      if (color_space == 0) /* RGB */
+	{
+	  gdouble R = ((gdouble) w) / 65536.0;
+	  gdouble G = ((gdouble) x) / 65536.0;
+	  gdouble B = ((gdouble) y) / 65536.0;
+
+	  gimp_rgba_set (&color, R, G, B, 1.0);
+
+	  color_ok = TRUE;
+	}
+      else if (color_space == 1) /* HSV */
+	{
+	  GimpHSV hsv;
+
+	  gdouble H = ((gdouble) w) / 65536.0;
+	  gdouble S = ((gdouble) x) / 65536.0;
+	  gdouble V = ((gdouble) y) / 65536.0;
+
+	  gimp_hsva_set (&hsv, H, S, V, 1.0);
+	  gimp_hsv_to_rgb (&hsv, &color);
+
+	  color_ok = TRUE;
+	}
+      else if (color_space == 2) /* CMYK */
+	{
+	  GimpCMYK cmyk;
+
+	  gdouble C = 1.0 - (((gdouble) w) / 65536.0);
+	  gdouble M = 1.0 - (((gdouble) x) / 65536.0);
+	  gdouble Y = 1.0 - (((gdouble) y) / 65536.0);
+	  gdouble K = 1.0 - (((gdouble) z) / 65536.0);
+
+	  gimp_cmyka_set (&cmyk, C, M, Y, K, 1.0);
+	  gimp_cmyk_to_rgb (&cmyk, &color);
+
+	  color_ok = TRUE;
+	}
+      else if (color_space == 8) /* Grayscale */
+	{
+	  gdouble K = 1.0 - (((gdouble) w) / 10000.0);
+
+	  gimp_rgba_set (&color, K, K, K, 1.0);
+
+	  color_ok = TRUE;
+	}
+      else if (color_space == 9) /* Wide? CMYK */
+	{
+	  GimpCMYK cmyk;
+
+	  gdouble C = 1.0 - (((gdouble) w) / 10000.0);
+	  gdouble M = 1.0 - (((gdouble) x) / 10000.0);
+	  gdouble Y = 1.0 - (((gdouble) y) / 10000.0);
+	  gdouble K = 1.0 - (((gdouble) z) / 10000.0);
+
+	  gimp_cmyka_set (&cmyk, C, M, Y, K, 1.0);
+	  gimp_cmyk_to_rgb (&cmyk, &color);
+
+	  color_ok = TRUE;
+	}
+      else
+	{
+	  g_printerr ("Unsupported color space (%d) in ACO file %s\n",
+                      color_space, gimp_filename_to_utf8 (filename));
+	}
+
+      if (format_version == 2)
+	{
+	  gint number_of_chars;
+
+	  read (fd, format2_preamble, sizeof (format2_preamble));
+	  number_of_chars = format2_preamble[3] + (format2_preamble[2] << 8);
+	  lseek (fd, number_of_chars * 2, SEEK_SET);
+	}
+
+      if (color_ok)
+        gimp_palette_add_entry (palette, -1, NULL, &color);
+  }
+
+  close(fd);
+
+  return g_list_prepend (NULL, palette);
+}
+
 GimpPaletteFileFormat
 gimp_palette_load_detect_format (const gchar *filename)
 {
   GimpPaletteFileFormat format = GIMP_PALETTE_FILE_FORMAT_UNKNOWN;
   gint                  fd;
   gchar                 header[16];
-  struct stat           file_stat;
 
   fd = g_open (filename, O_RDONLY | _O_BINARY, 0);
   if (fd)
@@ -445,7 +588,7 @@ gimp_palette_load_detect_format (const gchar *filename)
         {
           if (g_str_has_prefix (header + 0, "RIFF") &&
               g_str_has_prefix (header + 8, "PAL data"))
-             {
+            {
               format = GIMP_PALETTE_FILE_FORMAT_RIFF_PAL;
             }
           else if (g_str_has_prefix (header, "GIMP Palette"))
@@ -458,10 +601,25 @@ gimp_palette_load_detect_format (const gchar *filename)
             }
         }
 
-      if (fstat (fd, &file_stat) >= 0)
+      if (format == GIMP_PALETTE_FILE_FORMAT_UNKNOWN)
         {
-          if (file_stat.st_size == 768)
-            format = GIMP_PALETTE_FILE_FORMAT_ACT;
+          gchar *lower_filename = g_ascii_strdown (filename, -1);
+
+          if (g_str_has_suffix (lower_filename, ".aco"))
+            format = GIMP_PALETTE_FILE_FORMAT_ACO;
+
+          g_free (lower_filename);
+        }
+
+      if (format == GIMP_PALETTE_FILE_FORMAT_UNKNOWN)
+        {
+          struct stat file_stat;
+
+          if (fstat (fd, &file_stat) >= 0)
+            {
+              if (file_stat.st_size == 768)
+                format = GIMP_PALETTE_FILE_FORMAT_ACT;
+            }
         }
 
       close (fd);
