@@ -85,15 +85,25 @@ save_print_settings (PrintData *data)
   save_print_settings_resource_file (key_file);
 
   /* image setup */
-  g_key_file_set_integer (key_file, "image-setup", "unit", data->unit);
-  g_key_file_set_double (key_file, "image-setup", "x-resolution", data->xres);
-  g_key_file_set_double (key_file, "image-setup", "y-resolution", data->yres);
-  g_key_file_set_double (key_file, "image-setup", "x-offset", data->offset_x);
-  g_key_file_set_double (key_file, "image-setup", "y-offset", data->offset_y);
-  g_key_file_set_boolean (key_file, "image-setup", "use-full-page", data->use_full_page);
-
   if (gimp_image_is_valid (data->image_id))
-    save_print_settings_as_parasite (key_file, data->image_id);
+    {
+      g_key_file_set_integer (key_file, "image-setup",
+                              "unit", data->unit);
+      g_key_file_set_double  (key_file, "image-setup",
+                              "x-resolution", data->xres);
+      g_key_file_set_double  (key_file, "image-setup",
+                              "y-resolution", data->yres);
+      g_key_file_set_double  (key_file, "image-setup",
+                              "x-offset", data->offset_x);
+      g_key_file_set_double  (key_file, "image-setup",
+                              "y-offset", data->offset_y);
+      g_key_file_set_integer (key_file, "image-setup",
+                              "center-mode", data->center);
+      g_key_file_set_boolean (key_file, "image-setup",
+                              "use-full-page", data->use_full_page);
+
+      save_print_settings_as_parasite (key_file, data->image_id);
+    }
 
   g_key_file_free (key_file);
 }
@@ -350,6 +360,12 @@ load_print_settings_from_key_file (PrintData *data,
                                               "image-setup", "x-offset", NULL);
       data->offset_y = g_key_file_get_double (key_file,
                                               "image-setup", "y-offset", NULL);
+    }
+
+  if (g_key_file_has_key (key_file, "image-setup", "center-mode", NULL))
+    {
+      data->center = g_key_file_get_integer (key_file,
+                                             "image-setup", "center-mode", NULL);
     }
 
   if (g_key_file_has_key (key_file, "image-setup", "use-full-page", NULL))

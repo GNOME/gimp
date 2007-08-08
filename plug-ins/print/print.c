@@ -179,6 +179,7 @@ print_image (gint32    image_ID,
   data.image_unit    = gimp_image_get_unit (image_ID);
   data.offset_x      = 0;
   data.offset_y      = 0;
+  data.center        = CENTER_BOTH;
   data.use_full_page = FALSE;
   data.operation     = operation;
 

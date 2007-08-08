@@ -38,8 +38,13 @@ typedef struct
   GimpSizeEntry   *size_entry;
   GimpSizeEntry   *resolution_entry;
   GimpChainButton *chain;
+  GtkWidget       *center_combo;
   GtkWidget       *area_label;
   GtkWidget       *preview;
+  GtkObject       *left_adj;
+  GtkObject       *right_adj;
+  GtkObject       *top_adj;
+  GtkObject       *bottom_adj;
 } PrintSizeInfo;
 
 enum
@@ -74,8 +79,8 @@ static void        print_size_info_preview_offset_changed
                                                       (GtkWidget     *widget,
                                                        gdouble        offset_x,
                                                        gdouble        offset_y);
-static void        print_size_info_center_clicked     (GtkWidget     *widget,
-                                                       gpointer       data);
+static void        print_size_info_center_changed     (GtkWidget     *widget);
+static void        print_size_info_center_none        (void);
 static void        print_size_info_use_full_page_toggled
                                                       (GtkWidget     *widget);
 
@@ -388,14 +393,12 @@ print_offset_frame (PrintData    *data,
 {
   GtkWidget *entry;
   GtkWidget *spinner;
-  GtkWidget *button;
   GtkWidget *vbox;
   GtkWidget *hbox;
-  GtkWidget *bbox;
   GtkWidget *table;
   GtkWidget *frame;
   GtkWidget *label;
-  GtkObject *adj;
+  GtkWidget *combo;
 
   frame = gimp_frame_new (_("Image Offsets"));
 
@@ -415,7 +418,8 @@ print_offset_frame (PrintData    *data,
   gtk_widget_show (table);
 
   /* left */
-  spinner = gimp_spin_button_new (&adj, 1, 1, 1, 1, 10, 0, 1, 2);
+  spinner = gimp_spin_button_new (&info.left_adj, 1, 1, 1, 1, 10, 0, 1, 2);
+
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (spinner), NULL);
   gtk_table_attach_defaults (GTK_TABLE (table), spinner, 1, 2, 0, 1);
@@ -429,9 +433,9 @@ print_offset_frame (PrintData    *data,
   gtk_widget_show (label);
 
   /* right */
-  spinner = gimp_spin_button_new (&adj, 1, 1, 1, 1, 10, 0, 1, 2);
+  spinner = gimp_spin_button_new (&info.right_adj, 1, 1, 1, 1, 10, 0, 1, 2);
 
-  g_signal_connect (adj, "value-changed",
+  g_signal_connect (info.right_adj, "value-changed",
                     G_CALLBACK (print_size_info_offset_max_changed),
                     GINT_TO_POINTER (LEFT));
 
@@ -447,7 +451,8 @@ print_offset_frame (PrintData    *data,
   gtk_widget_show (label);
 
   /* top */
-  spinner = gimp_spin_button_new (&adj, 1, 1, 1, 1, 10, 0, 1, 2);
+  spinner = gimp_spin_button_new (&info.top_adj, 1, 1, 1, 1, 10, 0, 1, 2);
+
   gimp_size_entry_add_field (GIMP_SIZE_ENTRY (entry),
                              GTK_SPIN_BUTTON (spinner), NULL);
   gtk_table_attach_defaults (GTK_TABLE (table), spinner, 1, 2, 1, 2);
@@ -461,9 +466,9 @@ print_offset_frame (PrintData    *data,
   gtk_widget_show (label);
 
   /* bottom */
-  spinner = gimp_spin_button_new (&adj, 1, 1, 1, 1, 10, 0, 1, 2);
+  spinner = gimp_spin_button_new (&info.bottom_adj, 1, 1, 1, 1, 10, 0, 1, 2);
 
-  g_signal_connect (adj, "value-changed",
+  g_signal_connect (info.bottom_adj, "value-changed",
                     G_CALLBACK (print_size_info_offset_max_changed),
                     GINT_TO_POINTER (TOP));
 
@@ -493,30 +498,42 @@ print_offset_frame (PrintData    *data,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new (_("Center:"));
+  label = gtk_label_new_with_mnemonic (_("C_enter:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_size_group_add_widget (label_group, label);
   gtk_widget_show (label);
 
-  bbox = gtk_hbutton_box_new ();
-  gtk_button_box_set_layout (GTK_BUTTON_BOX (bbox), GTK_BUTTONBOX_START);
-  gtk_box_pack_start (GTK_BOX (hbox), bbox, FALSE, FALSE, 0);
-  gtk_widget_show (bbox);
+  /*  if and how to center the image on the page  */
+  combo = gimp_int_combo_box_new (_("None"),         CENTER_NONE,
+                                  _("Horizontally"), CENTER_HORIZONTALLY,
+                                  _("Vertically"),   CENTER_VERTICALLY,
+                                  _("Both"),         CENTER_BOTH,
+                                  NULL);
+  gtk_box_pack_start (GTK_BOX (hbox), combo, TRUE, TRUE, 0);
+  gtk_widget_show (combo);
 
-  button = gtk_button_new_with_mnemonic (_("H_orizontally"));
-  gtk_container_add (GTK_CONTAINER (bbox), button);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (print_size_info_center_clicked),
-                    GINT_TO_POINTER (1));
-  gtk_widget_show (button);
+  gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
-  button = gtk_button_new_with_mnemonic (_("_Vertically"));
-  gtk_container_add (GTK_CONTAINER (bbox), button);
-  g_signal_connect (button, "clicked",
-                    G_CALLBACK (print_size_info_center_clicked),
-                    GINT_TO_POINTER (2));
-  gtk_widget_show (button);
+  gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
+                              data->center,
+                              G_CALLBACK (print_size_info_center_changed),
+                              NULL);
+
+  info.center_combo = combo;
+
+  g_signal_connect (info.left_adj, "value-changed",
+                    G_CALLBACK (print_size_info_center_none),
+                    NULL);
+  g_signal_connect (info.right_adj, "value-changed",
+                    G_CALLBACK (print_size_info_center_none),
+                    NULL);
+  g_signal_connect (info.top_adj, "value-changed",
+                    G_CALLBACK (print_size_info_center_none),
+                    NULL);
+  g_signal_connect (info.bottom_adj, "value-changed",
+                    G_CALLBACK (print_size_info_center_none),
+                    NULL);
 
   return frame;
 }
@@ -563,13 +580,23 @@ gimp_size_info_get_max_offsets (gdouble *offset_x_max,
 static void
 print_size_info_update_offsets (void)
 {
-  gdouble offset_x_max;
-  gdouble offset_y_max;
+  PrintData *data = info.data;
+  gdouble    offset_x_max;
+  gdouble    offset_y_max;
 
   gimp_size_info_get_max_offsets (&offset_x_max, &offset_y_max);
 
   g_signal_handlers_block_by_func (info.size_entry,
                                    print_size_info_size_changed, NULL);
+
+  g_signal_handlers_block_by_func (info.left_adj,
+                                   print_size_info_center_none, NULL);
+  g_signal_handlers_block_by_func (info.right_adj,
+                                   print_size_info_center_none, NULL);
+  g_signal_handlers_block_by_func (info.top_adj,
+                                   print_size_info_center_none, NULL);
+  g_signal_handlers_block_by_func (info.bottom_adj,
+                                   print_size_info_center_none, NULL);
 
   gimp_size_entry_set_refval_boundaries (info.size_entry, LEFT,
                                          0, offset_x_max);
@@ -580,47 +607,83 @@ print_size_info_update_offsets (void)
   gimp_size_entry_set_refval_boundaries (info.size_entry, BOTTOM,
                                          0, offset_y_max);
 
+  switch (data->center)
+    {
+    case CENTER_NONE:
+      break;
+
+    case CENTER_HORIZONTALLY:
+      data->offset_x = offset_x_max / 2.0;
+      break;
+
+    case CENTER_VERTICALLY:
+      data->offset_y = offset_y_max / 2.0;
+      break;
+
+    case CENTER_BOTH:
+      data->offset_x = offset_x_max / 2.0;
+      data->offset_y = offset_y_max / 2.0;
+      break;
+    }
+
   gimp_size_entry_set_refval (info.size_entry, LEFT,
-                              info.data->offset_x);
+                              data->offset_x);
   gimp_size_entry_set_refval (info.size_entry, RIGHT,
-                              offset_x_max - info.data->offset_x);
+                              offset_x_max - data->offset_x);
   gimp_size_entry_set_refval (info.size_entry, TOP,
                               info.data->offset_y);
   gimp_size_entry_set_refval (info.size_entry, BOTTOM,
-                              offset_y_max - info.data->offset_y);
+                              offset_y_max - data->offset_y);
+
+  g_signal_handlers_unblock_by_func (info.left_adj,
+                                     print_size_info_center_none, NULL);
+  g_signal_handlers_unblock_by_func (info.right_adj,
+                                     print_size_info_center_none, NULL);
+  g_signal_handlers_unblock_by_func (info.top_adj,
+                                     print_size_info_center_none, NULL);
+  g_signal_handlers_unblock_by_func (info.bottom_adj,
+                                     print_size_info_center_none, NULL);
 
   g_signal_handlers_unblock_by_func (info.size_entry,
                                      print_size_info_size_changed, NULL);
 }
 
 static void
-print_size_info_center_clicked (GtkWidget *widget,
-                                gpointer   data)
+print_size_info_center_changed (GtkWidget *combo)
 {
-  gdouble offset_x_max;
-  gdouble offset_y_max;
+  gint value;
 
-  gimp_size_info_get_max_offsets (&offset_x_max, &offset_y_max);
-
-  switch (GPOINTER_TO_INT (data))
+  if (gimp_int_combo_box_get_active (GIMP_INT_COMBO_BOX (combo), &value))
     {
-    case 0:
-      info.data->offset_x = offset_x_max / 2.0;
-      info.data->offset_y = offset_y_max / 2.0;
-      break;
-    case 1:
-      info.data->offset_x = offset_x_max / 2.0;
-      break;
-    case 2:
-      info.data->offset_y = offset_y_max / 2.0;
-      break;
+      info.data->center = value;
+
+      print_size_info_update_offsets ();
+
+      if (info.preview)
+        gimp_print_preview_set_image_offsets (GIMP_PRINT_PREVIEW (info.preview),
+                                              info.data->offset_x,
+                                              info.data->offset_y);
     }
+}
 
-  print_size_info_update_offsets ();
+static void
+print_size_info_center_none (void)
+{
+  info.data->center = CENTER_NONE;
 
-  gimp_print_preview_set_image_offsets (GIMP_PRINT_PREVIEW (info.preview),
-                                        info.data->offset_x,
-                                        info.data->offset_y);
+  if (info.center_combo)
+    {
+      g_signal_handlers_block_by_func (info.center_combo,
+                                       print_size_info_center_changed, NULL);
+
+      info.data->center = CENTER_NONE;
+
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (info.center_combo),
+                                     info.data->center);
+
+      g_signal_handlers_unblock_by_func (info.center_combo,
+                                         print_size_info_center_changed, NULL);
+    }
 }
 
 static void
@@ -628,10 +691,7 @@ print_size_info_preview_offset_changed (GtkWidget *widget,
                                         gdouble    offset_x,
                                         gdouble    offset_y)
 {
-  gdouble offset_x_max;
-  gdouble offset_y_max;
-
-  gimp_size_info_get_max_offsets (&offset_x_max, &offset_y_max);
+  print_size_info_center_none ();
 
   info.data->offset_x = offset_x;
   info.data->offset_y = offset_y;
@@ -670,7 +730,7 @@ static void
 print_size_info_offset_max_changed (GtkAdjustment *adj,
                                     gpointer       data)
 {
-  gint index = GPOINTER_TO_INT (data);
+  guint index = GPOINTER_TO_INT (data);
 
   g_signal_handlers_block_by_func (info.size_entry,
                                    print_size_info_size_changed, NULL);
