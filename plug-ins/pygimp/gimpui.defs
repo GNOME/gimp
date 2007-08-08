@@ -703,15 +703,6 @@
   (return-type "GType")
 )
 
-(define-function gimp_color_display_new
-  (c-name "gimp_color_display_new")
-  (is-constructor-of "GimpColorDisplay")
-  (return-type "GimpColorDisplay*")
-  (parameters
-    '("GType" "display_type")
-  )
-)
-
 (define-method clone
   (of-object "GimpColorDisplay")
   (c-name "gimp_color_display_clone")

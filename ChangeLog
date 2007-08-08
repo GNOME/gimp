@@ -1,3 +1,8 @@
+2007-08-08  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/gimpui.defs: remove reference to now deprecated
+	gimp_color_display_new() function.
+
 2007-08-08  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpnumberpairentry.[ch]: formatting. Fixed use
