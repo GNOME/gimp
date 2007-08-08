@@ -573,7 +573,20 @@ gimp_prop_aspect_ratio_changed (GtkWidget  *widget,
 /*  private utility functions  */
 /*******************************/
 
-static GQuark param_spec_quark = 0;
+static GQuark gimp_prop_widgets_param_spec_quark (void) G_GNUC_CONST;
+
+#define PARAM_SPEC_QUARK (gimp_prop_widgets_param_spec_quark ())
+
+static GQuark
+gimp_prop_widgets_param_spec_quark (void)
+{
+  static GQuark param_spec_quark = 0;
+
+  if (! param_spec_quark)
+    param_spec_quark = g_quark_from_static_string ("gimp-config-param-spec");
+
+  return param_spec_quark;
+}
 
 static void
 set_param_spec (GObject     *object,
@@ -582,10 +595,7 @@ set_param_spec (GObject     *object,
 {
   if (object)
     {
-      if (! param_spec_quark)
-        param_spec_quark = g_quark_from_static_string ("gimp-config-param-spec");
-
-      g_object_set_qdata (object, param_spec_quark, param_spec);
+      g_object_set_qdata (object, PARAM_SPEC_QUARK, param_spec);
     }
 
   if (widget)
@@ -600,10 +610,7 @@ set_param_spec (GObject     *object,
 static GParamSpec *
 get_param_spec (GObject *object)
 {
-  if (! param_spec_quark)
-    param_spec_quark = g_quark_from_static_string ("gimp-config-param-spec");
-
-  return g_object_get_qdata (object, param_spec_quark);
+  return g_object_get_qdata (object, PARAM_SPEC_QUARK);
 }
 
 static GParamSpec *

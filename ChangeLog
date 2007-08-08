@@ -1,5 +1,13 @@
 2007-08-08  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/preferences-dialog.c: added buttons to unset the
+	color profiles.
+
+	* app/widgets/gimppropwidgets.c
+	* libgimpwidgets/gimppropwidgets.c: minor cleanup.
+
+2007-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/paint-funcs/Makefile.am
 
 	* app/paint-funcs/sample-funcs.[ch]: renamed to 

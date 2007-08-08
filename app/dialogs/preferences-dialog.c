@@ -969,6 +969,82 @@ prefs_table_new (gint          rows,
   return table;
 }
 
+
+typedef struct
+{
+  GObject *config;
+  gchar   *property_name;
+} PrefsPropertyData;
+
+static PrefsPropertyData *
+prefs_property_data_new (GObject     *config,
+                         const gchar *property_name)
+{
+  PrefsPropertyData *data = g_slice_new (PrefsPropertyData);
+
+  data->config        = config;
+  data->property_name = g_strdup (property_name);
+
+  return data;
+}
+
+static void
+prefs_property_data_free (PrefsPropertyData *data)
+{
+  g_free (data->property_name);
+  g_slice_free (PrefsPropertyData, data);
+}
+
+static void
+prefs_profile_chooser_clear (PrefsPropertyData *data)
+{
+  g_object_set (data->config,
+                data->property_name, NULL,
+                NULL);
+}
+
+static GtkWidget *
+prefs_profile_chooser_button_new (Gimp        *gimp,
+                                  GObject     *config,
+                                  const gchar *label,
+                                  const gchar *property_name)
+{
+  GtkWidget         *hbox;
+  GtkWidget         *dialog;
+  GtkWidget         *chooser;
+  GtkWidget         *button;
+  GtkWidget         *image;
+  PrefsPropertyData *data;
+
+  hbox = gtk_hbox_new (FALSE, 6);
+
+  dialog = gimp_profile_chooser_dialog_new (gimp, label);
+  chooser = gimp_prop_file_chooser_button_new_with_dialog (config,
+                                                           property_name,
+                                                           dialog);
+
+  gtk_box_pack_start (GTK_BOX (hbox), chooser, TRUE, TRUE, 0);
+  gtk_widget_show (chooser);
+
+  button = gtk_button_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  image = gtk_image_new_from_stock (GTK_STOCK_CLEAR, GTK_ICON_SIZE_BUTTON);
+  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_widget_show (image);
+
+  data = prefs_property_data_new (config, property_name);
+  g_object_weak_ref (G_OBJECT (button),
+                     (GWeakNotify) prefs_property_data_free, data);
+
+  g_signal_connect_swapped (button, "clicked",
+                            G_CALLBACK (prefs_profile_chooser_clear),
+                            data);
+
+  return hbox;
+}
+
 static GtkWidget *
 prefs_button_add (const gchar *stock_id,
                   const gchar *label,
@@ -2327,14 +2403,10 @@ prefs_dialog_new (Gimp       *gimp,
 
     for (i = 0; i < G_N_ELEMENTS (profiles); i++)
       {
-        GtkWidget *chooser;
-
-        chooser = gimp_profile_chooser_dialog_new (gimp,
-                                                   gettext (profiles[i].fs_label));
-        button =
-          gimp_prop_file_chooser_button_new_with_dialog (color_config,
-                                                         profiles[i].property_name,
-                                                         chooser);
+        button = prefs_profile_chooser_button_new (gimp,
+                                                   color_config,
+                                                   gettext (profiles[i].fs_label),
+                                                   profiles[i].property_name);
 
         gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                                    gettext (profiles[i].label), 0.0, 0.5,
