@@ -210,7 +210,7 @@ print_image (gint32    image_ID,
                         G_CALLBACK (create_custom_widget),
                         &data);
 
-      gtk_print_operation_set_custom_tab_label (operation, _("Image"));
+      gtk_print_operation_set_custom_tab_label (operation, _("Image Settings"));
 
       gtk_print_operation_run (operation,
                                GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG,

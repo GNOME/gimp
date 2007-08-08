@@ -273,9 +273,9 @@ print_size_frame (PrintData *data,
   image_height = (info.image_height *
                   gimp_unit_get_factor (data->unit) / data->yres);
 
-  frame = gimp_frame_new (_("Image Size"));
+  frame = gimp_frame_new (_("Size"));
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -400,9 +400,9 @@ print_offset_frame (PrintData    *data,
   GtkWidget *label;
   GtkWidget *combo;
 
-  frame = gimp_frame_new (_("Image Offsets"));
+  frame = gimp_frame_new (_("Position"));
 
-  vbox = gtk_vbox_new (FALSE, 12);
+  vbox = gtk_vbox_new (FALSE, 6);
   gtk_container_add (GTK_CONTAINER (frame), vbox);
   gtk_widget_show (vbox);
 
@@ -413,6 +413,7 @@ print_offset_frame (PrintData    *data,
   table = gtk_table_new (4, 4, FALSE);
   gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
+  gtk_table_set_col_spacing (GTK_TABLE (table), 0, 0);
   gtk_table_set_col_spacing (GTK_TABLE (table), 1, 12);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
