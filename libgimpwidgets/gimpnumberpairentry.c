@@ -367,7 +367,7 @@ gimp_number_pair_entry_get_ratio (GimpNumberPairEntry *entry)
 {
   GimpNumberPairEntryPrivate *priv;
 
-  g_return_val_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry), 0.0);
+  g_return_val_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry), 1.0);
 
   priv = GIMP_NUMBER_PAIR_ENTRY_GET_PRIVATE (entry);
 
