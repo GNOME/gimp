@@ -1,3 +1,8 @@
+2007-08-08  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell.c (gimp_display_shell_new): fixed
+	reference count of the display filter stack.
+
 2007-08-08  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/widgets/gimppropwidgets.[ch]

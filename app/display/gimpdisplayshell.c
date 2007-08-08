@@ -628,22 +628,23 @@ gimp_display_shell_new (GimpDisplay     *display,
                         GimpMenuFactory *menu_factory,
                         GimpUIManager   *popup_manager)
 {
-  GimpDisplayShell  *shell;
-  GimpDisplayConfig *display_config;
-  GimpColorConfig   *color_config;
-  GtkWidget         *main_vbox;
-  GtkWidget         *disp_vbox;
-  GtkWidget         *upper_hbox;
-  GtkWidget         *right_vbox;
-  GtkWidget         *lower_hbox;
-  GtkWidget         *inner_table;
-  GtkWidget         *image;
-  GdkScreen         *screen;
-  GtkAction         *action;
-  gint               image_width, image_height;
-  gint               n_width, n_height;
-  gint               s_width, s_height;
-  gdouble            new_scale;
+  GimpDisplayShell      *shell;
+  GimpDisplayConfig     *display_config;
+  GimpColorDisplayStack *filter;
+  Gimp                  *gimp;
+  GtkWidget             *main_vbox;
+  GtkWidget             *disp_vbox;
+  GtkWidget             *upper_hbox;
+  GtkWidget             *right_vbox;
+  GtkWidget             *lower_hbox;
+  GtkWidget             *inner_table;
+  GtkWidget             *image;
+  GdkScreen             *screen;
+  GtkAction             *action;
+  gint                   image_width, image_height;
+  gint                   n_width, n_height;
+  gint                   s_width, s_height;
+  gdouble                new_scale;
 
   g_return_val_if_fail (GIMP_IS_DISPLAY (display), NULL);
   g_return_val_if_fail (GIMP_IS_MENU_FACTORY (menu_factory), NULL);
@@ -660,7 +661,8 @@ gimp_display_shell_new (GimpDisplay     *display,
   image_width  = display->image->width;
   image_height = display->image->height;
 
-  display_config = GIMP_DISPLAY_CONFIG (display->image->gimp->config);
+  gimp = display->image->gimp;
+  display_config = GIMP_DISPLAY_CONFIG (gimp->config);
 
   shell->dot_for_dot = display_config->default_dot_for_dot;
 
@@ -1065,15 +1067,21 @@ gimp_display_shell_new (GimpDisplay     *display,
                     GTK_EXPAND | GTK_SHRINK | GTK_FILL, 0, 0);
 
   /*  fill the right_vbox  */
-  gtk_box_pack_start (GTK_BOX (right_vbox), shell->zoom_button, FALSE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (right_vbox), shell->vsb, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (right_vbox),
+                      shell->zoom_button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (right_vbox),
+                      shell->vsb, TRUE, TRUE, 0);
 
   /*  fill the lower_hbox  */
-  gtk_box_pack_start (GTK_BOX (lower_hbox), shell->quick_mask_button, FALSE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (lower_hbox), shell->hsb, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (lower_hbox), shell->nav_ebox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (lower_hbox),
+                      shell->quick_mask_button, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (lower_hbox),
+                      shell->hsb, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (lower_hbox),
+                      shell->nav_ebox, FALSE, FALSE, 0);
 
-  gtk_box_pack_end (GTK_BOX (main_vbox), shell->statusbar, FALSE, FALSE, 0);
+  gtk_box_pack_end (GTK_BOX (main_vbox),
+                    shell->statusbar, FALSE, FALSE, 0);
 
   /*  show everything  *******************************************************/
 
@@ -1100,10 +1108,10 @@ gimp_display_shell_new (GimpDisplay     *display,
 
   gtk_widget_show (main_vbox);
 
-  color_config = display->image->gimp->config->color_management;
-  gimp_display_shell_filter_set (shell,
-                                 gimp_display_shell_filter_new (shell,
-                                                                color_config));
+  filter = gimp_display_shell_filter_new (shell,
+                                          gimp->config->color_management);
+  gimp_display_shell_filter_set (shell, filter);
+  g_object_unref (filter);
 
   gimp_display_shell_connect (shell);
 
