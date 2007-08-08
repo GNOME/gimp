@@ -685,8 +685,6 @@ lcms_image_get_profile (GimpColorConfig *config,
       profile = cmsOpenProfileFromMem ((gpointer) gimp_parasite_data (parasite),
                                        gimp_parasite_data_size (parasite));
 
-      gimp_parasite_free (parasite);
-
       if (profile)
         {
           lcms_calculate_checksum (gimp_parasite_data (parasite),
@@ -698,6 +696,8 @@ lcms_image_get_profile (GimpColorConfig *config,
           g_message (_("Data attached as 'icc-profile' does not appear to "
                        "be an ICC color profile"));
         }
+
+      gimp_parasite_free (parasite);
     }
   else if (config->rgb_profile)
     {

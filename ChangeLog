@@ -1,5 +1,10 @@
 2007-08-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/lcms.c (lcms_image_get_profile): fixed a bug
+	that I introduced earlier today.
+
+2007-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpprofilechooserdialog.[ch]: use a text view in a
 	scrolled window for the preview area.
 
