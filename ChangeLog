@@ -1,3 +1,8 @@
+2007-08-09  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/print/print-page-layout.c: fixed the behavior when
+	changing the unit.
+
 2007-08-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/print-page-layout.c

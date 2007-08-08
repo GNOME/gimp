@@ -678,6 +678,10 @@ print_size_info_center_changed (GtkWidget *combo)
 static void
 print_size_info_center_none (void)
 {
+  /* return early if we are called from a unit change */
+  if (gimp_size_entry_get_unit (info.size_entry) != info.data->unit)
+    return;
+
   info.data->center = CENTER_NONE;
 
   if (info.center_combo)
@@ -740,6 +744,10 @@ print_size_info_offset_max_changed (GtkAdjustment *adj,
                                     gpointer       data)
 {
   guint index = GPOINTER_TO_INT (data);
+
+  /* return early if we are called from a unit change */
+  if (gimp_size_entry_get_unit (info.size_entry) != info.data->unit)
+    return;
 
   g_signal_handlers_block_by_func (info.size_entry,
                                    print_size_info_size_changed, NULL);
