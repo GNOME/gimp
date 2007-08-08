@@ -1,5 +1,14 @@
 2007-08-08  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/widgets/gimppropwidgets.[ch]
+	(gimp_prop_aspect_ratio_new)
+	(gimp_prop_aspect_ratio_changed): Remove fixed_aspect_property.
+
+	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):
+	Changed accordingly.
+
+2007-08-08  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangleoptions.[ch]: Use separate
 	desired-fixed-size-width/height properties for Fixed: Size instead
 	of sharing properties with Fixed: Width/Height.

@@ -457,12 +457,15 @@ gimp_prop_view_notify (GObject      *config,
 }
 
 
+/*****************
+ *  ratio entry  *
+ *****************/
+
 typedef struct
 {
   GObject     *config;
   const gchar *numerator_property;
   const gchar *denominator_property;
-  const gchar *fixed_aspect_property;
 } AspectData;
 
 static void
@@ -483,15 +486,13 @@ static void  gimp_prop_aspect_ratio_changed (GtkWidget  *widget,
  * @config:                Object to which property is attached.
  * @numerator_property:    Name of double property for numerator.
  * @denominator_property:  Name of double property for denominator.
- * @fixed_aspect_property: Name of boolean property for fixed aspect (or %NULL).
  *
  * Return value: a #GimpRatioEntry widget
  */
 GtkWidget *
 gimp_prop_aspect_ratio_new (GObject     *config,
                             const gchar *numerator_property,
-                            const gchar *denominator_property,
-                            const gchar *fixed_aspect_property)
+                            const gchar *denominator_property)
 {
   AspectData *aspect_data;
   GtkWidget  *entry;
@@ -508,7 +509,6 @@ gimp_prop_aspect_ratio_new (GObject     *config,
   aspect_data->config                = config;
   aspect_data->numerator_property    = numerator_property;
   aspect_data->denominator_property  = denominator_property;
-  aspect_data->fixed_aspect_property = fixed_aspect_property;
 
   entry = gimp_ratio_entry_new ();
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 7);
@@ -565,7 +565,6 @@ gimp_prop_aspect_ratio_changed (GtkWidget  *widget,
   g_object_set (data->config,
                 data->numerator_property,    num,
                 data->denominator_property,  denom,
-                data->fixed_aspect_property, TRUE,
                 NULL);
 }
 

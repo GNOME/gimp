@@ -724,8 +724,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
       private->fixed_aspect_entry =
         gimp_prop_aspect_ratio_new (config,
                                     "aspect-numerator",
-                                    "aspect-denominator",
-                                    NULL);
+                                    "aspect-denominator");
       g_object_ref_sink (private->fixed_aspect_entry);
       gtk_widget_show (private->fixed_aspect_entry);
 
@@ -768,8 +767,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
       private->fixed_size_entry =
         gimp_prop_aspect_ratio_new (config,
                                     "desired-fixed-size-width",
-                                    "desired-fixed-size-height",
-                                    NULL);
+                                    "desired-fixed-size-height");
       g_object_ref_sink (private->fixed_size_entry);
       gtk_widget_show (private->fixed_size_entry);
 
