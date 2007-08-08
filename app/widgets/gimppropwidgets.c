@@ -487,7 +487,7 @@ static void  gimp_prop_aspect_ratio_changed (GtkWidget  *widget,
  * @numerator_property:    Name of double property for numerator.
  * @denominator_property:  Name of double property for denominator.
  *
- * Return value: a #GimpRatioEntry widget
+ * Return value: A #GimpNumberPairEntry widget.
  */
 GtkWidget *
 gimp_prop_aspect_ratio_new (GObject     *config,
@@ -510,15 +510,19 @@ gimp_prop_aspect_ratio_new (GObject     *config,
   aspect_data->numerator_property    = numerator_property;
   aspect_data->denominator_property  = denominator_property;
 
-  entry = gimp_ratio_entry_new ();
+  entry = gimp_number_pair_entry_new (":/",
+                                      TRUE,
+                                      0.001,
+                                      GIMP_MAX_IMAGE_SIZE);
   gtk_entry_set_width_chars (GTK_ENTRY (entry), 7);
 
   g_object_set_data_full (G_OBJECT (entry),
                           "gimp-ratio-entry-aspect-data", aspect_data,
                           (GDestroyNotify) aspect_data_free);
 
-  gimp_ratio_entry_set_fraction (GIMP_RATIO_ENTRY (entry),
-                                 numerator, denominator);
+  gimp_number_pair_entry_set_values (GIMP_NUMBER_PAIR_ENTRY (entry),
+                                     numerator,
+                                     denominator);
 
   g_signal_connect (entry, "ratio-changed",
                     G_CALLBACK (gimp_prop_aspect_ratio_changed),
@@ -550,7 +554,9 @@ gimp_prop_ratio_entry_notify (GObject    *config,
                 aspect_data->denominator_property, &denom,
                 NULL);
 
-  gimp_ratio_entry_set_fraction (GIMP_RATIO_ENTRY (entry), num, denom);
+  gimp_number_pair_entry_set_values (GIMP_NUMBER_PAIR_ENTRY (entry),
+                                     num,
+                                     denom);
 }
 
 
@@ -560,11 +566,133 @@ gimp_prop_aspect_ratio_changed (GtkWidget  *widget,
 {
   gdouble num, denom;
 
-  gimp_ratio_entry_get_fraction (GIMP_RATIO_ENTRY (widget), &num, &denom);
+  gimp_number_pair_entry_get_values (GIMP_NUMBER_PAIR_ENTRY (widget),
+                                     &num,
+                                     &denom);
 
   g_object_set (data->config,
-                data->numerator_property,    num,
-                data->denominator_property,  denom,
+                data->numerator_property,   num,
+                data->denominator_property, denom,
+                NULL);
+}
+
+
+/****************
+ * size_2d
+ ****************/
+
+typedef struct
+{
+  GObject     *config;
+  const gchar *width_property;
+  const gchar *height_property;
+} Size2dData;
+
+static void
+size_2d_data_free (Size2dData *data)
+{
+  g_slice_free (Size2dData, data);
+}
+
+
+static void  gimp_prop_size_2d_entry_notify (GObject    *config,
+                                             GParamSpec *param_spec,
+                                             GtkEntry   *entry);
+static void  gimp_prop_size_2d_size_changed (GtkWidget  *widget,
+                                             Size2dData *data);
+
+
+/**
+ * gimp_prop_size_2d_new:
+ * @config:          Object to which properties are attached.
+ * @width_property:  Name of double property for width.
+ * @height_property: Name of double property for height.
+ *
+ * Return value: A #GimpNumberPairEntry widget.
+ */
+GtkWidget * gimp_prop_size_2d_new (GObject     *config,
+                                   const gchar *width_property,
+                                   const gchar *height_property)
+{
+  Size2dData *size_2d_data;
+  GtkWidget  *entry;
+  gdouble     width;
+  gdouble     height;
+
+  g_object_get (config,
+                width_property,  &width,
+                height_property, &height,
+                NULL);
+
+  size_2d_data = g_slice_new (Size2dData);
+
+  size_2d_data->config          = config;
+  size_2d_data->width_property  = width_property;
+  size_2d_data->height_property = height_property;
+
+  entry = gimp_number_pair_entry_new ("xX*",
+                                      FALSE,
+                                      1.0,
+                                      GIMP_MAX_IMAGE_SIZE);
+  gtk_entry_set_width_chars (GTK_ENTRY (entry), 7);
+
+  g_object_set_data_full (G_OBJECT (entry),
+                          "gimp-size-2d-entry-size-2d-data", size_2d_data,
+                          (GDestroyNotify) size_2d_data_free);
+
+  gimp_number_pair_entry_set_values (GIMP_NUMBER_PAIR_ENTRY (entry),
+                                     width, height);
+
+  g_signal_connect (entry, "numbers-changed",
+                    G_CALLBACK (gimp_prop_size_2d_size_changed),
+                    size_2d_data);
+
+  connect_notify (config, width_property,
+                  G_CALLBACK (gimp_prop_size_2d_entry_notify),
+                  entry);
+  connect_notify (config, height_property,
+                  G_CALLBACK (gimp_prop_size_2d_entry_notify),
+                  entry);
+
+  return entry;
+}
+
+static void
+gimp_prop_size_2d_entry_notify (GObject    *config,
+                                GParamSpec *param_spec,
+                                GtkEntry   *entry)
+{
+  Size2dData *size_2d_data;
+  gdouble     width, height;
+
+  size_2d_data = g_object_get_data (G_OBJECT (entry),
+                                    "gimp-size-2d-entry-size-2d-data");
+
+  g_return_if_fail (size_2d_data != NULL);
+
+  g_object_get (config,
+                size_2d_data->width_property,  &width,
+                size_2d_data->height_property, &height,
+                NULL);
+
+  gimp_number_pair_entry_set_values (GIMP_NUMBER_PAIR_ENTRY (entry),
+                                     width,
+                                     height);
+}
+
+static void
+gimp_prop_size_2d_size_changed (GtkWidget  *widget,
+                                Size2dData *data)
+{
+  gdouble width, height;
+
+  gimp_number_pair_entry_get_values (GIMP_NUMBER_PAIR_ENTRY (widget),
+                                     &width,
+                                     &height);
+
+  g_object_set (data->config,
+                data->width_property,  width,
+                data->height_property, height,
                 NULL);
 }
 

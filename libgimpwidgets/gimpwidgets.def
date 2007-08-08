@@ -167,6 +167,11 @@ EXPORTS
 	gimp_memsize_entry_new
 	gimp_memsize_entry_set_value
 	gimp_menu_item_update
+	gimp_number_pair_entry_get_type
+	gimp_number_pair_entry_get_values
+	gimp_number_pair_entry_new
+	gimp_number_pair_entry_set_default_values
+	gimp_number_pair_entry_set_values
 	gimp_offset_area_get_type
 	gimp_offset_area_new
 	gimp_offset_area_set_offsets
@@ -272,14 +277,6 @@ EXPORTS
 	gimp_radio_group_new2
 	gimp_radio_group_set_active
 	gimp_random_seed_new
-	gimp_ratio_entry_get_aspect
-	gimp_ratio_entry_get_fraction
-	gimp_ratio_entry_get_ratio
-	gimp_ratio_entry_get_type
-	gimp_ratio_entry_new
-	gimp_ratio_entry_set_aspect
-	gimp_ratio_entry_set_fraction
-	gimp_ratio_entry_set_ratio
 	gimp_scale_entry_get_logarithmic
 	gimp_scale_entry_new
 	gimp_scale_entry_set_logarithmic

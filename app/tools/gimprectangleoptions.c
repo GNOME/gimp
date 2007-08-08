@@ -40,8 +40,8 @@
 
 enum
 {
-  COLUMN_NUMERATOR,
-  COLUMN_DENOMINATOR,
+  COLUMN_LEFT_NUMBER,
+  COLUMN_RIGHT_NUMBER,
   COLUMN_TEXT,
   NUM_COLUMNS
 };
@@ -57,14 +57,13 @@ static void     gimp_rectangle_options_setup_ratio_completion      (GimpRectangl
                                                                     GtkWidget                     *entry,
                                                                     GtkListStore                  *history);
 
-static gboolean gimp_ratio_entry_history_select                    (GtkEntryCompletion            *completion,
+static gboolean gimp_number_pair_entry_history_select              (GtkEntryCompletion            *completion,
                                                                     GtkTreeModel                  *model,
                                                                     GtkTreeIter                   *iter,
-                                                                    GimpRatioEntry                *entry);
+                                                                    GimpNumberPairEntry           *entry);
 
-static void     gimp_ratio_entry_history_add                       (GtkWidget    *entry,
-                                                                    GtkTreeModel *model);
-
+static void     gimp_number_pair_entry_history_add                 (GtkWidget                     *entry,
+                                                                    GtkTreeModel                  *model);
 
 
 /* TODO: Calculate this dynamically so that the GtkEntry:s are always
@@ -803,11 +802,10 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (private->fixed_height_entry);
 
       /* Size entry */
-      /* TODO: This should not be an aspect speciallized entry. */
       private->fixed_size_entry =
-        gimp_prop_aspect_ratio_new (config,
-                                    "desired-fixed-size-width",
-                                    "desired-fixed-size-height");
+        gimp_prop_size_2d_new (config,
+                               "desired-fixed-size-width",
+                               "desired-fixed-size-height");
       gimp_rectangle_options_setup_ratio_completion (GIMP_RECTANGLE_OPTIONS (tool_options),
                                                      private->fixed_size_entry,
                                                      private->size_history);
@@ -952,48 +950,48 @@ gimp_rectangle_options_setup_ratio_completion (GimpRectangleOptions *rectangle_o
   g_object_unref (completion);
 
   g_signal_connect (entry, "ratio-changed",
-                    G_CALLBACK (gimp_ratio_entry_history_add),
+                    G_CALLBACK (gimp_number_pair_entry_history_add),
                     history);
 
   g_signal_connect (completion, "match-selected",
-                    G_CALLBACK (gimp_ratio_entry_history_select),
+                    G_CALLBACK (gimp_number_pair_entry_history_select),
                     entry);
 }
 
 static gboolean
-gimp_ratio_entry_history_select (GtkEntryCompletion  *completion,
-                                 GtkTreeModel        *model,
-                                 GtkTreeIter         *iter,
-                                 GimpRatioEntry      *entry)
+gimp_number_pair_entry_history_select (GtkEntryCompletion  *completion,
+                                       GtkTreeModel        *model,
+                                       GtkTreeIter         *iter,
+                                       GimpNumberPairEntry *entry)
 {
-  gdouble numerator;
-  gdouble denominator;
+  gdouble left_number;
+  gdouble right_number;
 
   gtk_tree_model_get (model, iter,
-                      COLUMN_NUMERATOR,  &numerator,
-                      COLUMN_DENOMINATOR, &denominator,
+                      COLUMN_LEFT_NUMBER,  &left_number,
+                      COLUMN_RIGHT_NUMBER, &right_number,
                       -1);
 
-  gimp_ratio_entry_set_fraction (entry, numerator, denominator);
+  gimp_number_pair_entry_set_values (entry, left_number, right_number);
 
   return TRUE;
 }
 
 static void
-gimp_ratio_entry_history_add (GtkWidget    *entry,
-                              GtkTreeModel *model)
+gimp_number_pair_entry_history_add (GtkWidget    *entry,
+                                    GtkTreeModel *model)
 {
   GValue               value = { 0, };
   GtkTreeIter          iter;
   gboolean             iter_valid;
-  gdouble              numerator;
-  gdouble              denominator;
+  gdouble              left_number;
+  gdouble              right_number;
   const gchar         *text;
 
   text = gtk_entry_get_text (GTK_ENTRY (entry));
-  gimp_ratio_entry_get_fraction (GIMP_RATIO_ENTRY (entry),
-                                 &numerator,
-                                 &denominator);
+  gimp_number_pair_entry_get_values (GIMP_NUMBER_PAIR_ENTRY (entry),
+                                     &left_number,
+                                     &right_number);
 
   for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
        iter_valid;
@@ -1019,8 +1017,8 @@ gimp_ratio_entry_history_add (GtkWidget    *entry,
       gtk_list_store_append (GTK_LIST_STORE (model), &iter);
 
       gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-                          COLUMN_NUMERATOR,   numerator,
-                          COLUMN_DENOMINATOR, denominator,
+                          COLUMN_LEFT_NUMBER,  left_number,
+                          COLUMN_RIGHT_NUMBER, right_number,
                           COLUMN_TEXT,        text,
                           -1);
 

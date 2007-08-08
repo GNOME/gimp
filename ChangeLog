@@ -1,3 +1,32 @@
+2007-08-08  Martin Nordholts  <martinn@svn.gnome.org>
+
+	Renamed GimpRatioEntry to GimpNumberPairEntry, and generalized the
+	code a lot, so that it can be used both for 'Fixed: Aspect ratio'
+	and 'Fixed: Size'. Support is also added for having default values
+	and a 'user overrided' value mode.
+
+	* libgimpwidgets/gimpnumberpairentry.[ch]: Now contains the
+	rewrite and generalization of GimpRatioEntry.
+	(gimp_number_pair_entry_get_type)
+	(gimp_number_pair_entry_new)
+        (gimp_number_pair_entry_set_default_values)
+	(gimp_number_pair_entry_set_values)
+        (gimp_number_pair_entry_get_values): New libgimpwidget API.
+
+	* app/widgets/gimppropwidgets.[ch] (gimp_prop_size_2d_new): Added
+	new helper widget for setting up a GimpNumberPairEntry for the
+	Fixed: Size entry in the Rectangle Options.
+
+	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):
+	Use the new gimp_prop_size_2d_entry for the Fixed: Size entry.
+
+	* libgimpwidgets/gimpwidgets.def: Removed gimp_ratio_entry_* and
+	added gimp_number_pair_entry_*.
+
+	* libgimpwidgets/gimpwidgets.h * libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/Makefile.am (libgimpwidgets_2_0_la_sources)
+	(libgimpwidgetsinclude_HEADERS): Updated accordingly.
+
 2007-08-08  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/lcms.c (lcms_image_get_profile): fixed a bug

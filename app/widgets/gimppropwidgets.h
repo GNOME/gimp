@@ -64,5 +64,11 @@ GtkWidget * gimp_prop_aspect_ratio_new    (GObject     *config,
                                            const gchar *numerator_property,
                                            const gchar *denominator_property);
 
+/*  GParamDouble, GParamDouble  */
+
+GtkWidget * gimp_prop_size_2d_new         (GObject     *config,
+                                           const gchar *width_property,
+                                           const gchar *height_property);
+
 
 #endif /* __GIMP_APP_PROP_WIDGETS_H__ */

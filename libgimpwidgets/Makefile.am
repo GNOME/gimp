@@ -121,6 +121,8 @@ libgimpwidgets_2_0_la_sources = \
 	gimpintstore.h		\
 	gimpmemsizeentry.c	\
 	gimpmemsizeentry.h	\
+	gimpnumberpairentry.c	\
+	gimpnumberpairentry.h	\
 	gimpoldwidgets.c	\
 	gimpoldwidgets.h	\
 	gimpoffsetarea.c	\
@@ -141,8 +143,6 @@ libgimpwidgets_2_0_la_sources = \
 	gimppropwidgets.h	\
 	gimpquerybox.c		\
 	gimpquerybox.h		\
-	gimpratioentry.c	\
-	gimpratioentry.h	\
 	gimpscrolledpreview.c	\
 	gimpscrolledpreview.h	\
 	gimpsizeentry.c		\
@@ -203,6 +203,7 @@ libgimpwidgetsinclude_HEADERS = \
 	gimpintcombobox.h	\
 	gimpintstore.h		\
 	gimpmemsizeentry.h	\
+	gimpnumberpairentry.h	\
 	gimpoldwidgets.h	\
 	gimpoffsetarea.h	\
 	gimppageselector.h	\
@@ -213,7 +214,6 @@ libgimpwidgetsinclude_HEADERS = \
 	gimppreviewarea.h	\
 	gimppropwidgets.h	\
 	gimpquerybox.h		\
-	gimpratioentry.h	\
 	gimpscrolledpreview.h	\
 	gimpsizeentry.h		\
 	gimpstock.h		\
