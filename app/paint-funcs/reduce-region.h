@@ -16,18 +16,14 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __SAMPLE_FUNCS_H__
-#define __SAMPLE_FUNCS_H__
+#ifndef __REDUCE_REGION_H__
+#define __REDUCE_REGION_H__
 
 
-void   subsample_region         (PixelRegion  *srcPR,
-                                 PixelRegion  *destPR,
-                                 gint          subsample);
-
-void   subsample_indexed_region (PixelRegion  *srcPR,
-                                 PixelRegion  *destPR,
-                                 const guchar *cmap,
-                                 gint          subsample);
+void  reduce_region (PixelRegion      *srcPR,
+                     PixelRegion      *destPR,
+                     GimpProgressFunc  progress_callback,
+                     gpointer          progress_data);
 
 
-#endif  /*  __SAMPLE_FUNCS_H__  */
+#endif  /*  __REDUCE_REGION_H__  */

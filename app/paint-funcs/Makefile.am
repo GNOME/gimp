@@ -7,10 +7,12 @@ libapppaint_funcs_a_SOURCES = \
 	paint-funcs.c		\
 	paint-funcs.h		\
 	paint-funcs-generic.h	\
-	sample-funcs.c		\
-	sample-funcs.h		\
-	scale-funcs.c		\
-	scale-funcs.h
+	reduce-region.c		\
+	reduce-region.h		\
+	scale-region.c		\
+	scale-region.h		\
+	subsample-region.c	\
+	subsample-region.h
 
 INCLUDES = \
 	-I$(top_builddir)	\

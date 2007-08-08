@@ -1,3 +1,22 @@
+2007-08-08  Sven Neumann  <sven@gimp.org>
+
+	* app/paint-funcs/Makefile.am
+
+	* app/paint-funcs/sample-funcs.[ch]: renamed to 
+	* app/paint-funcs/subsample-region.[ch]
+
+	* app/paint-funcs/scale-funcs.[ch]: renamed to 
+	* app/paint-funcs/scale-region.[ch]
+
+	* app/paint-funcs/reduce-region.[ch]: new files based on a patch
+	from Geert Jordaens (bug #464466).
+
+	* app/base/tile-manager-preview.c
+	* app/core/gimp-transform-region.c
+	* app/core/gimpbrush-scale.c
+	* app/core/gimpdrawable-preview.c
+	* app/core/gimpdrawable.c: changed accordingly.
+
 2007-08-08  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangleoptions.c

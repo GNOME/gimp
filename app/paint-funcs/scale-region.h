@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __SCALE_FUNCS_H__
-#define __SCALE_FUNCS_H__
+#ifndef __SCALE_REGION_H__
+#define __SCALE_REGION_H__
 
 
 #define LANCZOS_SPP      (4000)    /* number of data pts per unit x in lookup table */
@@ -36,7 +36,7 @@ void     scale_region          (PixelRegion           *srcPR,
 gfloat * create_lanczos_lookup (void);
 
 
-#endif  /*  __SCALE_FUNCS_H__  */
+#endif  /*  __SCALE_REGION_H__  */
 
 /*
  * Determining LANCZOS_SPP value

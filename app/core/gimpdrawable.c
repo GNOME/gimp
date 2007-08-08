@@ -31,7 +31,7 @@
 #include "base/tile-manager.h"
 
 #include "paint-funcs/paint-funcs.h"
-#include "paint-funcs/scale-funcs.h"
+#include "paint-funcs/scale-region.h"
 
 #include "gimpchannel.h"
 #include "gimpcontext.h"

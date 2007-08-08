@@ -30,7 +30,7 @@
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
 
-#include "paint-funcs/scale-funcs.h"
+#include "paint-funcs/scale-region.h"
 
 
 /*  local function prototypes  */

@@ -26,7 +26,7 @@
 
 #include "base/pixel-region.h"
 
-#include "sample-funcs.h"
+#include "subsample-region.h"
 
 
 #define EPSILON  (0.0001)  /* arbitary small number for avoiding zero */

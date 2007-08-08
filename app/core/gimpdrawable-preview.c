@@ -30,7 +30,7 @@
 #include "base/temp-buf.h"
 #include "base/tile-manager-preview.h"
 
-#include "paint-funcs/sample-funcs.h"
+#include "paint-funcs/subsample-region.h"
 
 #include "config/gimpcoreconfig.h"
 

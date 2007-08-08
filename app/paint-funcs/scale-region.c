@@ -28,7 +28,7 @@
 
 #include "base/pixel-region.h"
 
-#include "scale-funcs.h"
+#include "scale-region.h"
 
 
 #define EPSILON          (0.0001)  /* arbitary small number for avoiding zero */
