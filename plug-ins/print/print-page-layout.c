@@ -73,6 +73,7 @@ static void        print_size_info_size_changed       (GtkWidget     *widget);
 static void        print_size_info_offset_max_changed (GtkAdjustment *adj,
                                                        gpointer       data);
 static void        print_size_info_resolution_changed (GtkWidget     *widget);
+static void        print_size_info_unit_changed       (GtkWidget     *widget);
 static void        print_size_info_preview_offset_changed
                                                       (GtkWidget     *widget,
                                                        gdouble        offset_x,
@@ -373,6 +374,9 @@ print_size_frame (PrintData *data,
 
   g_signal_connect (info.resolution_entry, "value-changed",
                     G_CALLBACK (print_size_info_resolution_changed),
+                    NULL);
+  g_signal_connect (info.size_entry, "unit-changed",
+                    G_CALLBACK (print_size_info_unit_changed),
                     NULL);
 
   return frame;
@@ -767,6 +771,14 @@ print_size_info_use_full_page_toggled (GtkWidget *widget)
 
   gimp_print_preview_set_use_full_page (GIMP_PRINT_PREVIEW(info.preview),
                                         active);
+}
+
+static void
+print_size_info_unit_changed (GtkWidget *widget)
+{
+  info.data->unit = gimp_size_entry_get_unit (GIMP_SIZE_ENTRY (widget));
+
+  print_size_info_set_page_setup (&info);
 }
 
 static void
