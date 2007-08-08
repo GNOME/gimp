@@ -1,3 +1,12 @@
+2007-08-08  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangleoptions.[ch]: Use separate
+	desired-fixed-size-width/height properties for Fixed: Size instead
+	of sharing properties with Fixed: Width/Height.
+
+	* app/tools/gimprectangletool.c: Use the two new properties for
+	Fixed: Size.
+
 2007-08-07  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/print-page-layout.c: added entries for the right

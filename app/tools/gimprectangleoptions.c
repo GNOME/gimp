@@ -200,6 +200,22 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
                                                                 G_PARAM_CONSTRUCT));
 
       g_object_interface_install_property (iface,
+                                           g_param_spec_double ("desired-fixed-size-width",
+                                                                NULL, NULL,
+                                                                0.0, GIMP_MAX_IMAGE_SIZE,
+                                                                100.0,
+                                                                GIMP_PARAM_READWRITE |
+                                                                G_PARAM_CONSTRUCT));
+
+      g_object_interface_install_property (iface,
+                                           g_param_spec_double ("desired-fixed-size-height",
+                                                                NULL, NULL,
+                                                                0.0, GIMP_MAX_IMAGE_SIZE,
+                                                                100.0,
+                                                                GIMP_PARAM_READWRITE |
+                                                                G_PARAM_CONSTRUCT));
+
+      g_object_interface_install_property (iface,
                                            g_param_spec_double ("center-x",
                                                                 NULL, NULL,
                                                                 -GIMP_MAX_IMAGE_SIZE,
@@ -324,6 +340,12 @@ gimp_rectangle_options_install_properties (GObjectClass *klass)
                                     GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_HEIGHT,
                                     "desired-fixed-height");
   g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_WIDTH,
+                                    "desired-fixed-size-width");
+  g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_HEIGHT,
+                                    "desired-fixed-size-height");
+  g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER,
                                     "fixed-center");
   g_object_class_override_property (klass,
@@ -394,6 +416,12 @@ gimp_rectangle_options_set_property (GObject      *object,
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_HEIGHT:
       private->desired_fixed_height = g_value_get_double (value);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_WIDTH:
+      private->desired_fixed_size_width = g_value_get_double (value);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_HEIGHT:
+      private->desired_fixed_size_height = g_value_get_double (value);
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X:
       private->center_x = g_value_get_double (value);
@@ -468,6 +496,12 @@ gimp_rectangle_options_get_property (GObject      *object,
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_HEIGHT:
       g_value_set_double (value, private->desired_fixed_height);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_WIDTH:
+      g_value_set_double (value, private->desired_fixed_size_width);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_HEIGHT:
+      g_value_set_double (value, private->desired_fixed_size_height);
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X:
       g_value_set_double (value, private->center_x);
@@ -733,8 +767,8 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
       /* TODO: This should not be an aspect speciallized entry. */
       private->fixed_size_entry =
         gimp_prop_aspect_ratio_new (config,
-                                    "desired-fixed-width",
-                                    "desired-fixed-height",
+                                    "desired-fixed-size-width",
+                                    "desired-fixed-size-height",
                                     NULL);
       g_object_ref_sink (private->fixed_size_entry);
       gtk_widget_show (private->fixed_size_entry);

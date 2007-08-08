@@ -33,6 +33,8 @@ typedef enum
   GIMP_RECTANGLE_OPTIONS_PROP_HEIGHT,
   GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_WIDTH,
   GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_HEIGHT,
+  GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_WIDTH,
+  GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_HEIGHT,
   GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_NUMERATOR,
   GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR,
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE,
@@ -75,8 +77,13 @@ struct _GimpRectangleOptionsPrivate
   gdouble                     width;
   gdouble                     height;
 
+  /* Width and height for Fixed: Width and Fixed: Height */
   gdouble                     desired_fixed_width;
   gdouble                     desired_fixed_height;
+
+  /* Width and height for Fixed: Size */
+  gdouble                     desired_fixed_size_width;
+  gdouble                     desired_fixed_size_height;
 
   gdouble                     aspect_numerator;
   gdouble                     aspect_denominator;
