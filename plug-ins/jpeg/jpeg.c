@@ -204,8 +204,9 @@ run (const gchar      *name,
   values[0].type          = GIMP_PDB_STATUS;
   values[0].data.d_status = GIMP_PDB_EXECUTION_ERROR;
 
-  image_ID_global = -1;
-  layer_ID_global = -1;
+  preview_image_ID = -1;
+  preview_layer_ID = -1;
+
   has_metadata = FALSE;
 
   if (strcmp (name, LOAD_PROC) == 0)
@@ -453,7 +454,7 @@ run (const gchar      *name,
             }
 
           /* prepare for the preview */
-          image_ID_global = image_ID;
+          preview_image_ID = image_ID;
           orig_image_ID_global = orig_image_ID;
           drawable_ID_global = drawable_ID;
 

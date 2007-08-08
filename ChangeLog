@@ -1,5 +1,14 @@
 2007-08-08  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/jpeg/jpeg-save.c (save_dialog): added missing call to
+	destroy_preview(). Fixes bug #464457.
+
+	* plug-ins/jpeg/jpeg-load.c
+	* plug-ins/jpeg/jpeg-save.c
+	* plug-ins/jpeg/jpeg.[ch]: renamed global variables.
+
+2007-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/preferences-dialog.c: added buttons to unset the
 	color profiles.
 

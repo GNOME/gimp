@@ -41,8 +41,8 @@ typedef struct my_error_mgr
 } *my_error_ptr;
 
 
-extern gint32 volatile  image_ID_global;
-extern gint32           layer_ID_global;
+extern gint32 volatile  preview_image_ID;
+extern gint32           preview_layer_ID;
 extern GimpDrawable    *drawable_global;
 extern gboolean         undo_touched;
 extern gboolean         load_interactive;

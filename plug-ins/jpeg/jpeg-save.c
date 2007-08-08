@@ -711,19 +711,19 @@ make_preview (void)
         {
           /* we freeze undo saving so that we can avoid sucking up
            * tile cache with our unneeded preview steps. */
-          gimp_image_undo_freeze (image_ID_global);
+          gimp_image_undo_freeze (preview_image_ID);
 
           undo_touched = TRUE;
         }
 
       save_image (tn,
-                  image_ID_global,
+                  preview_image_ID,
                   drawable_ID_global,
                   orig_image_ID_global,
                   TRUE);
 
       if (display_ID == -1)
-        display_ID = gimp_display_new (image_ID_global);
+        display_ID = gimp_display_new (preview_image_ID);
     }
   else
     {
@@ -745,14 +745,17 @@ destroy_preview (void)
       drawable_global = NULL;
     }
 
-  if (layer_ID_global != -1 && image_ID_global != -1)
+  g_printerr ("destroy_preview (%d, %d)\n", preview_image_ID, preview_layer_ID);
+
+  if (gimp_image_is_valid (preview_image_ID) &&
+      gimp_drawable_is_valid (preview_layer_ID))
     {
       /*  assuming that reference counting is working correctly,
           we do not need to delete the layer, removing it from
           the image should be sufficient  */
-      gimp_image_remove_layer (image_ID_global, layer_ID_global);
+      gimp_image_remove_layer (preview_image_ID, preview_layer_ID);
 
-      layer_ID_global = -1;
+      preview_layer_ID = -1;
     }
 }
 
@@ -1133,6 +1136,8 @@ save_dialog (void)
   pg.run = FALSE;
 
   gtk_main ();
+
+  destroy_preview ();
 
   return pg.run;
 }

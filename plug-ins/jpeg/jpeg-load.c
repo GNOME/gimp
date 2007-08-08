@@ -49,9 +49,9 @@ static void  jpeg_load_resolution  (gint32                         image_ID,
 static void  jpeg_sanitize_comment (gchar *comment);
 
 
-gint32 volatile  image_ID_global;
 GimpDrawable    *drawable_global;
-gint32           layer_ID_global;
+gint32 volatile  preview_image_ID;
+gint32           preview_layer_ID;
 
 
 gint32
@@ -115,7 +115,7 @@ load_image (const gchar *filename,
         gimp_image_delete (image_ID);
 
       if (preview)
-        destroy_preview();
+        destroy_preview ();
 
       return -1;
     }
@@ -220,7 +220,7 @@ load_image (const gchar *filename,
 
   if (preview)
     {
-      image_ID = image_ID_global;
+      image_ID = preview_image_ID;
     }
   else
     {
@@ -233,11 +233,11 @@ load_image (const gchar *filename,
 
   if (preview)
     {
-      layer_ID_global = layer_ID =
-        gimp_layer_new (image_ID, _("JPEG preview"),
-                        cinfo.output_width,
-                        cinfo.output_height,
-                        layer_type, 100, GIMP_NORMAL_MODE);
+      preview_layer_ID = gimp_layer_new (preview_image_ID, _("JPEG preview"),
+                                         cinfo.output_width,
+                                         cinfo.output_height,
+                                         layer_type, 100, GIMP_NORMAL_MODE);
+      layer_ID = preview_layer_ID;
     }
   else
     {
