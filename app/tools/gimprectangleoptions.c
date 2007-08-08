@@ -188,32 +188,32 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
                                                                 NULL, NULL,
                                                                 0.0, GIMP_MAX_IMAGE_SIZE,
                                                                 100.0,
-                                                                GIMP_PARAM_READWRITE |
-                                                                G_PARAM_CONSTRUCT));
+                                                                GIMP_CONFIG_PARAM_FLAGS |
+                                                                GIMP_PARAM_STATIC_STRINGS));
 
       g_object_interface_install_property (iface,
                                            g_param_spec_double ("desired-fixed-height",
                                                                 NULL, NULL,
                                                                 0.0, GIMP_MAX_IMAGE_SIZE,
                                                                 100.0,
-                                                                GIMP_PARAM_READWRITE |
-                                                                G_PARAM_CONSTRUCT));
+                                                                GIMP_CONFIG_PARAM_FLAGS |
+                                                                GIMP_PARAM_STATIC_STRINGS));
 
       g_object_interface_install_property (iface,
                                            g_param_spec_double ("desired-fixed-size-width",
                                                                 NULL, NULL,
                                                                 0.0, GIMP_MAX_IMAGE_SIZE,
                                                                 100.0,
-                                                                GIMP_PARAM_READWRITE |
-                                                                G_PARAM_CONSTRUCT));
+                                                                GIMP_CONFIG_PARAM_FLAGS |
+                                                                GIMP_PARAM_STATIC_STRINGS));
 
       g_object_interface_install_property (iface,
                                            g_param_spec_double ("desired-fixed-size-height",
                                                                 NULL, NULL,
                                                                 0.0, GIMP_MAX_IMAGE_SIZE,
                                                                 100.0,
-                                                                GIMP_PARAM_READWRITE |
-                                                                G_PARAM_CONSTRUCT));
+                                                                GIMP_CONFIG_PARAM_FLAGS |
+                                                                GIMP_PARAM_STATIC_STRINGS));
 
       g_object_interface_install_property (iface,
                                            g_param_spec_double ("center-x",

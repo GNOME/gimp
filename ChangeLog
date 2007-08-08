@@ -1,3 +1,9 @@
+2007-08-08  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangleoptions.c
+	(gimp_rectangle_options_iface_base_init): Serialize Fixed:
+	Width/Height/Size to config.
+
 2007-08-08  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell.c (gimp_display_shell_new): fixed
