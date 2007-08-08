@@ -1,3 +1,8 @@
+2007-08-08  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpnumberpairentry.[ch]: formatting. Fixed use
+	of instance private data, added missing parameter checks.
+
 2007-08-08  Martin Nordholts  <martinn@svn.gnome.org>
 
 	Renamed GimpRatioEntry to GimpNumberPairEntry, and generalized the
