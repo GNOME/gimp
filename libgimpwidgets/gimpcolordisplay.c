@@ -63,7 +63,7 @@ typedef struct
 static GObject  * gimp_color_display_constructor (GType                  type,
                                                   guint                  n_params,
                                                   GObjectConstructParam *params);
-static void       gimp_color_display_finalize     (GObject      *object);
+static void       gimp_color_display_dispose      (GObject      *object);
 static void       gimp_color_display_set_property (GObject      *object,
                                                    guint         property_id,
                                                    const GValue *value,
@@ -93,7 +93,7 @@ gimp_color_display_class_init (GimpColorDisplayClass *klass)
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->constructor  = gimp_color_display_constructor;
-  object_class->finalize     = gimp_color_display_finalize;
+  object_class->dispose      = gimp_color_display_dispose;
   object_class->set_property = gimp_color_display_set_property;
   object_class->get_property = gimp_color_display_get_property;
 
@@ -160,7 +160,7 @@ gimp_color_display_constructor (GType                  type,
 }
 
 static void
-gimp_color_display_finalize (GObject *object)
+gimp_color_display_dispose (GObject *object)
 {
   GimpColorDisplayPrivate *private = GIMP_COLOR_DISPLAY_GET_PRIVATE (object);
 
@@ -182,7 +182,7 @@ gimp_color_display_finalize (GObject *object)
       private->managed = NULL;
     }
 
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 static void

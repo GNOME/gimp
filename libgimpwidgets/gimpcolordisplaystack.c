@@ -43,13 +43,15 @@ enum
 };
 
 
-static void   gimp_color_display_stack_finalize        (GObject               *object);
+static void   gimp_color_display_stack_dispose         (GObject               *object);
 
 static void   gimp_color_display_stack_display_changed (GimpColorDisplay      *display,
                                                         GimpColorDisplayStack *stack);
 static void   gimp_color_display_stack_display_enabled (GimpColorDisplay      *display,
                                                         GParamSpec            *pspec,
                                                         GimpColorDisplayStack *stack);
+static void   gimp_color_display_stack_disconnect      (GimpColorDisplayStack *stack,
+                                                        GimpColorDisplay      *display);
 
 
 G_DEFINE_TYPE (GimpColorDisplayStack, gimp_color_display_stack, G_TYPE_OBJECT)
@@ -105,12 +107,12 @@ gimp_color_display_stack_class_init (GimpColorDisplayStackClass *klass)
                   GIMP_TYPE_COLOR_DISPLAY,
                   G_TYPE_INT);
 
-  object_class->finalize = gimp_color_display_stack_finalize;
+  object_class->dispose = gimp_color_display_stack_dispose;
 
-  klass->changed         = NULL;
-  klass->added           = NULL;
-  klass->removed         = NULL;
-  klass->reordered       = NULL;
+  klass->changed        = NULL;
+  klass->added          = NULL;
+  klass->removed        = NULL;
+  klass->reordered      = NULL;
 }
 
 static void
@@ -120,18 +122,27 @@ gimp_color_display_stack_init (GimpColorDisplayStack *stack)
 }
 
 static void
-gimp_color_display_stack_finalize (GObject *object)
+gimp_color_display_stack_dispose (GObject *object)
 {
   GimpColorDisplayStack *stack = GIMP_COLOR_DISPLAY_STACK (object);
 
   if (stack->filters)
     {
-      g_list_foreach (stack->filters, (GFunc) g_object_unref, NULL);
+      GList *list;
+
+      for (list = stack->filters; list; list = g_list_next (list))
+        {
+          GimpColorDisplay *display = list->data;
+
+          gimp_color_display_stack_disconnect (stack, display);
+          g_object_unref (display);
+        }
+
       g_list_free (stack->filters);
       stack->filters = NULL;
     }
 
-  G_OBJECT_CLASS (parent_class)->finalize (object);
+  G_OBJECT_CLASS (parent_class)->dispose (object);
 }
 
 GimpColorDisplayStack *
@@ -181,12 +192,12 @@ gimp_color_display_stack_add (GimpColorDisplayStack *stack,
 
   stack->filters = g_list_append (stack->filters, g_object_ref (display));
 
-  g_signal_connect_object (display, "changed",
-                           G_CALLBACK (gimp_color_display_stack_display_changed),
-                           G_OBJECT (stack), 0);
-  g_signal_connect_object (display, "notify::enabled",
-                           G_CALLBACK (gimp_color_display_stack_display_enabled),
-                           G_OBJECT (stack), 0);
+  g_signal_connect (display, "changed",
+                    G_CALLBACK (gimp_color_display_stack_display_changed),
+                    G_OBJECT (stack));
+  g_signal_connect (display, "notify::enabled",
+                    G_CALLBACK (gimp_color_display_stack_display_enabled),
+                    G_OBJECT (stack));
 
   g_signal_emit (stack, stack_signals[ADDED], 0,
                  display, g_list_length (stack->filters) - 1);
@@ -202,12 +213,7 @@ gimp_color_display_stack_remove (GimpColorDisplayStack *stack,
   g_return_if_fail (GIMP_IS_COLOR_DISPLAY (display));
   g_return_if_fail (g_list_find (stack->filters, display) != NULL);
 
-  g_signal_handlers_disconnect_by_func (display,
-                                        gimp_color_display_stack_display_changed,
-                                        stack);
-  g_signal_handlers_disconnect_by_func (display,
-                                        gimp_color_display_stack_display_enabled,
-                                        stack);
+  gimp_color_display_stack_disconnect (stack, display);
 
   stack->filters = g_list_remove (stack->filters, display);
 
@@ -305,4 +311,16 @@ gimp_color_display_stack_display_enabled (GimpColorDisplay      *display,
                                           GimpColorDisplayStack *stack)
 {
   gimp_color_display_stack_changed (stack);
+}
+
+static void
+gimp_color_display_stack_disconnect (GimpColorDisplayStack *stack,
+                                     GimpColorDisplay      *display)
+{
+  g_signal_handlers_disconnect_by_func (display,
+                                        gimp_color_display_stack_display_changed,
+                                        stack);
+  g_signal_handlers_disconnect_by_func (display,
+                                        gimp_color_display_stack_display_enabled,
+                                        stack);
 }

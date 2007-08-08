@@ -1,11 +1,21 @@
 2007-08-08  Sven Neumann  <sven@gimp.org>
 
+	* modules/cdisplay_lcms.c
+	* plug-ins/common/lcms.c: corrected memory handling.
+	cmsOpenProfileFromMem() actually copies the data.
+
+	* libgimpwidgets/gimpcolordisplay.c
+	* libgimpwidgets/gimpcolordisplaystack.c: disconnect in dispose().
+
+2007-08-08  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/jpeg/jpeg-save.c (save_dialog): added missing call to
 	destroy_preview(). Fixes bug #464457.
 
 	* plug-ins/jpeg/jpeg-load.c
 	* plug-ins/jpeg/jpeg-save.c
-	* plug-ins/jpeg/jpeg.[ch]: renamed global variables.
+	* plug-ins/jpeg/jpeg.[ch]: renamed global variables used for the
+	preview hack.
 
 2007-08-08  Sven Neumann  <sven@gimp.org>
 

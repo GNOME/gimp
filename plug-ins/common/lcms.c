@@ -685,7 +685,7 @@ lcms_image_get_profile (GimpColorConfig *config,
       profile = cmsOpenProfileFromMem ((gpointer) gimp_parasite_data (parasite),
                                        gimp_parasite_data_size (parasite));
 
-      /* FIXME: we leak the parasite, the data is used by the profile */
+      gimp_parasite_free (parasite);
 
       if (profile)
         {
@@ -695,8 +695,6 @@ lcms_image_get_profile (GimpColorConfig *config,
         }
       else
         {
-          gimp_parasite_free (parasite);
-
           g_message (_("Data attached as 'icc-profile' does not appear to "
                        "be an ICC color profile"));
         }
@@ -930,15 +928,10 @@ lcms_load_profile (const gchar *filename,
       return NULL;
     }
 
+  data = g_mapped_file_get_contents (file);
   len = g_mapped_file_get_length (file);
 
-  data = g_memdup (g_mapped_file_get_contents (file), len);
-
-  g_mapped_file_free (file);
-
   profile = cmsOpenProfileFromMem (data, len);
-
-  /* FIXME: we leak the data, it is used by the profile */
 
   if (profile)
     {
@@ -946,11 +939,11 @@ lcms_load_profile (const gchar *filename,
     }
   else
     {
-      g_free (data);
-
       g_message (_("Could not load ICC profile from '%s'"),
                  gimp_filename_to_utf8 (filename));
     }
+
+  g_mapped_file_free (file);
 
   return profile;
 }

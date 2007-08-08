@@ -440,8 +440,6 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
                             &type, &format, &nitems, &data) && nitems > 0)
         {
           profile = cmsOpenProfileFromMem (data, nitems);
-
-          /* FIXME: check memory mamagement of cmsOpenProfileFromMem */
           g_free (data);
         }
     }
