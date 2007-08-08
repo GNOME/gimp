@@ -1,5 +1,20 @@
 2007-08-08  Sven Neumann  <sven@gimp.org>
 
+	* tools/widgets.c: include number-pair-entry instead of ratio-entry.
+
+	* libgimpwidgets/images/gimp-ratio-entry.png
+	* libgimpwidgets/images/gimp-number-pair-entry.png: replaced
+	screenshots.
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/tmpl/gimpnumberpairentry.sgml
+	* libgimpwidgets/tmpl/gimpratioentry.sgml: adopt to change from
+	GimpRatioEntry to GimpNumberPairEntry.
+
+2007-08-08  Sven Neumann  <sven@gimp.org>
+
 	* app/app-sections.txt
 	* app/app-docs.sgml: adjust to renamed files in app/paint-funcs.
 

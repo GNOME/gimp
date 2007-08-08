@@ -1,0 +1,110 @@
+<!-- ##### SECTION Title ##### -->
+GimpNumberPairEntry
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION Stability_Level ##### -->
+
+
+<!-- ##### STRUCT GimpNumberPairEntry ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SIGNAL GimpNumberPairEntry::numbers-changed ##### -->
+<para>
+
+</para>
+
+@gimpnumberpairentry: the object which received the signal.
+
+<!-- ##### SIGNAL GimpNumberPairEntry::ratio-changed ##### -->
+<para>
+
+</para>
+
+@gimpnumberpairentry: the object which received the signal.
+
+<!-- ##### ARG GimpNumberPairEntry:aspect ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpNumberPairEntry:left-number ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpNumberPairEntry:ratio ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpNumberPairEntry:right-number ##### -->
+<para>
+
+</para>
+
+<!-- ##### ENUM GimpAspectType ##### -->
+<para>
+
+</para>
+
+@GIMP_ASPECT_SQUARE: 
+@GIMP_ASPECT_PORTRAIT: 
+@GIMP_ASPECT_LANDSCAPE: 
+
+<!-- ##### FUNCTION gimp_number_pair_entry_new ##### -->
+<para>
+
+</para>
+
+@separators: 
+@allow_simplification: 
+@min_valid_value: 
+@max_valid_value: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_number_pair_entry_set_default_values ##### -->
+<para>
+
+</para>
+
+@entry: 
+@left: 
+@right: 
+
+
+<!-- ##### FUNCTION gimp_number_pair_entry_set_values ##### -->
+<para>
+
+</para>
+
+@entry: 
+@left: 
+@right: 
+
+
+<!-- ##### FUNCTION gimp_number_pair_entry_get_values ##### -->
+<para>
+
+</para>
+
+@entry: 
+@left: 
+@right: 
+
+

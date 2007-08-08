@@ -6,6 +6,7 @@
 
 #undef GIMP_DISABLE_DEPRECATED
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpcolor/gimpcolor.h"
 #include "libgimpwidgets/gimpwidgets.h"
@@ -457,6 +458,25 @@ create_hint_box (void)
 }
 
 static WidgetInfo *
+create_number_pair_entry (void)
+{
+  GtkWidget *vbox;
+  GtkWidget *entry;
+  GtkWidget *align;
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
+  entry =  gimp_number_pair_entry_new (":/", TRUE, 0.001, GIMP_MAX_IMAGE_SIZE);
+  gimp_number_pair_entry_set_values (GIMP_NUMBER_PAIR_ENTRY (entry), 4, 3);
+  gtk_container_add (GTK_CONTAINER (align), entry);
+  gtk_box_pack_start_defaults (GTK_BOX (vbox), align);
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      gtk_label_new ("Number Pair Entry"), FALSE, FALSE, 0);
+
+  return new_widget_info ("gimp-number-pair-entry", vbox, SMALL);
+}
+
+static WidgetInfo *
 create_int_combo_box (void)
 {
   GtkWidget *vbox;
@@ -630,25 +650,6 @@ create_preview_area (void)
 }
 
 static WidgetInfo *
-create_ratio_entry (void)
-{
-  GtkWidget *vbox;
-  GtkWidget *entry;
-  GtkWidget *align;
-
-  vbox = gtk_vbox_new (FALSE, 6);
-  align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
-  entry =  gimp_ratio_entry_new ();
-  gimp_ratio_entry_set_fraction (GIMP_RATIO_ENTRY (entry), 4, 3);
-  gtk_container_add (GTK_CONTAINER (align), entry);
-  gtk_box_pack_start_defaults (GTK_BOX (vbox), align);
-  gtk_box_pack_start (GTK_BOX (vbox),
-                      gtk_label_new ("Ratio Entry"), FALSE, FALSE, 0);
-
-  return new_widget_info ("gimp-ratio-entry", vbox, SMALL);
-}
-
-static WidgetInfo *
 create_string_combo_box (void)
 {
   GtkWidget    *vbox;
@@ -712,12 +713,12 @@ get_all_widgets (void)
   retval = g_list_append (retval, create_hint_box ());
   retval = g_list_append (retval, create_int_combo_box ());
   retval = g_list_append (retval, create_memsize_entry ());
+  retval = g_list_append (retval, create_number_pair_entry ());
   retval = g_list_append (retval, create_offset_area ());
   retval = g_list_append (retval, create_page_selector ());
   retval = g_list_append (retval, create_path_editor ());
   retval = g_list_append (retval, create_pick_button ());
   retval = g_list_append (retval, create_preview_area ());
-  retval = g_list_append (retval, create_ratio_entry ());
   retval = g_list_append (retval, create_string_combo_box ());
   retval = g_list_append (retval, create_unit_menu ());
 
