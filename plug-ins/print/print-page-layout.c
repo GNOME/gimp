@@ -579,6 +579,32 @@ gimp_size_info_get_max_offsets (gdouble *offset_x_max,
 }
 
 static void
+print_size_info_center_none_block (void)
+{
+  g_signal_handlers_block_by_func (info.left_adj,
+                                   print_size_info_center_none, NULL);
+  g_signal_handlers_block_by_func (info.right_adj,
+                                   print_size_info_center_none, NULL);
+  g_signal_handlers_block_by_func (info.top_adj,
+                                   print_size_info_center_none, NULL);
+  g_signal_handlers_block_by_func (info.bottom_adj,
+                                   print_size_info_center_none, NULL);
+}
+
+static void
+print_size_info_center_none_unblock (void)
+{
+  g_signal_handlers_unblock_by_func (info.left_adj,
+                                     print_size_info_center_none, NULL);
+  g_signal_handlers_unblock_by_func (info.right_adj,
+                                     print_size_info_center_none, NULL);
+  g_signal_handlers_unblock_by_func (info.top_adj,
+                                     print_size_info_center_none, NULL);
+  g_signal_handlers_unblock_by_func (info.bottom_adj,
+                                     print_size_info_center_none, NULL);
+}
+
+static void
 print_size_info_update_offsets (void)
 {
   PrintData *data = info.data;
@@ -590,14 +616,7 @@ print_size_info_update_offsets (void)
   g_signal_handlers_block_by_func (info.size_entry,
                                    print_size_info_size_changed, NULL);
 
-  g_signal_handlers_block_by_func (info.left_adj,
-                                   print_size_info_center_none, NULL);
-  g_signal_handlers_block_by_func (info.right_adj,
-                                   print_size_info_center_none, NULL);
-  g_signal_handlers_block_by_func (info.top_adj,
-                                   print_size_info_center_none, NULL);
-  g_signal_handlers_block_by_func (info.bottom_adj,
-                                   print_size_info_center_none, NULL);
+  print_size_info_center_none_block ();
 
   gimp_size_entry_set_refval_boundaries (info.size_entry, LEFT,
                                          0, offset_x_max);
@@ -636,14 +655,7 @@ print_size_info_update_offsets (void)
   gimp_size_entry_set_refval (info.size_entry, BOTTOM,
                               offset_y_max - data->offset_y);
 
-  g_signal_handlers_unblock_by_func (info.left_adj,
-                                     print_size_info_center_none, NULL);
-  g_signal_handlers_unblock_by_func (info.right_adj,
-                                     print_size_info_center_none, NULL);
-  g_signal_handlers_unblock_by_func (info.top_adj,
-                                     print_size_info_center_none, NULL);
-  g_signal_handlers_unblock_by_func (info.bottom_adj,
-                                     print_size_info_center_none, NULL);
+  print_size_info_center_none_unblock ();
 
   g_signal_handlers_unblock_by_func (info.size_entry,
                                      print_size_info_size_changed, NULL);
@@ -930,6 +942,6 @@ print_size_info_set_page_setup (PrintSizeInfo *info)
   gimp_size_entry_set_refval_boundaries (info->resolution_entry, 1,
                                          y, GIMP_MAX_RESOLUTION);
 
- /* FIXME: is this still needed at all? */
+  /* FIXME: is this still needed at all? */
   data->orientation = gtk_page_setup_get_orientation (setup);
 }
