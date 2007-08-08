@@ -32,27 +32,28 @@
 #include "reduce-region.h"
 
 
-static void  reduce_pixel_region      (PixelRegion  *srcPR,
-                                       guchar       *dst,
-                                       gint          bytes);
-static void  reduce_buffer            (const guchar *src,
-                                       guchar       *dst,
-                                       gint          bytes,
-                                       gint          width,
-                                       gint          height,
-                                       gint          alpha);
-static void  reduce_row               (const guchar *src,
-                                       guchar       *dst,
-                                       gint          width,
-                                       gint          bytes,
-                                       gint          alpha);
-static void  reduce_bilinear_pr       (PixelRegion  *dstPR,
-                                       PixelRegion  *srcPR);
-static void  reduce_bilinear          (PixelRegion  *dstPR,
-                                       guchar       *src,
-                                       gint          source_w,
-                                       gint          source_h,
-                                       gint          bytes);
+static void  reduce_pixel_region (PixelRegion  *srcPR,
+                                  guchar       *dst,
+                                  gint          bytes);
+static void  reduce_buffer       (const guchar *src,
+                                  guchar       *dst,
+                                  gint          bytes,
+                                  gint          width,
+                                  gint          height,
+                                  gint          alpha);
+static void  reduce_row          (const guchar *src,
+                                  guchar       *dst,
+                                  gint          width,
+                                  gint          bytes,
+                                  gint          alpha);
+static void  reduce_bilinear_pr  (PixelRegion  *dstPR,
+                                  PixelRegion  *srcPR);
+static void  reduce_bilinear     (PixelRegion  *dstPR,
+                                  const guchar *src,
+                                  gint          source_w,
+                                  gint          source_h,
+                                  gint          bytes);
+
 
 void
 reduce_region (PixelRegion      *srcPR,
@@ -270,49 +271,51 @@ reduce_row (const guchar *src,
 
 
 static void
-reduce_bilinear (PixelRegion *dstPR,
-                 guchar *src,
-                 gint    source_w,
-                 gint    source_h,
-                 gint    bytes)
+reduce_bilinear (PixelRegion  *dstPR,
+                 const guchar *src,
+                 gint          source_w,
+                 gint          source_h,
+                 gint          bytes)
 {
+  const gdouble  scale = (gdouble) dstPR->h / (gdouble) source_h;
+
   gint     x, y, b;
   gint     x0, x1, y0, y1;
-
-  gdouble  scale;
   gdouble  xfrac, yfrac;
   gdouble  s00, s01, s10, s11;
-
   guchar   value;
   guchar  *dst;
 
-  scale =  (gdouble)dstPR->h / (gdouble)source_h;
   dst = g_new (guchar, dstPR->w * dstPR->h * bytes);
 
   for (y = 0; y < dstPR->h; y++)
     {
       yfrac = ( y / scale );
-      y0 = (gint)floor(yfrac);
-      y1 = (gint)ceil(yfrac);
+      y0 = (gint) floor (yfrac);
+      y1 = (gint) ceil (yfrac);
       yfrac =  yfrac - y0;
 
       for (x = 0; x < dstPR->w; x++)
         {
            xfrac = (x / scale);
-           x0 = (gint)floor(xfrac);
-           x1 = (gint)ceil(xfrac);
+           x0 = (gint) floor (xfrac);
+           x1 = (gint) ceil (xfrac);
            xfrac =  xfrac - x0;
 
-           for (b = 0 ; b < bytes ; b++) {
-             s00 = src[(x0 + y0 * source_w) * bytes + b];
-             s10 = src[(x1 + y0 * source_w) * bytes + b];
-             s01 = src[(x0 + y1 * source_w) * bytes + b];
-             s11 = src[(x1 + y1 * source_w) * bytes + b];
-             value =  (gint)((1 - yfrac) * ((1 - xfrac) * s00 + xfrac * s01 )
-                               +  yfrac  * ((1 - xfrac) * s10 + xfrac * s11 ));
-             dst[x*bytes+b] = value;
-           }
+           for (b = 0 ; b < bytes ; b++)
+             {
+               s00 = src[(x0 + y0 * source_w) * bytes + b];
+               s10 = src[(x1 + y0 * source_w) * bytes + b];
+               s01 = src[(x0 + y1 * source_w) * bytes + b];
+               s11 = src[(x1 + y1 * source_w) * bytes + b];
+
+               value =  (gint)((1 - yfrac) * ((1 - xfrac) * s00 + xfrac * s01)
+                                  + yfrac  * ((1 - xfrac) * s10 + xfrac * s11));
+
+               dst[x * bytes + b] = value;
+             }
         }
+
         pixel_region_set_row (dstPR, 0, y, dstPR->w, dst);
     }
 }
