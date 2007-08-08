@@ -108,9 +108,11 @@ struct _GimpRectangleOptionsPrivate
 
   GtkWidget                  *fixed_aspect_entry;
   GtkWidget                  *aspect_button_box;
+  GtkListStore               *aspect_history;
 
   GtkWidget                  *fixed_size_entry;
   GtkWidget                  *size_button_box;
+  GtkListStore               *size_history;
 
   GtkWidget                  *width_entry;
   GtkWidget                  *height_entry;

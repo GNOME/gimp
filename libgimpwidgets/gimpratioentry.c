@@ -23,8 +23,6 @@
 
 #include "config.h"
 
-#include <string.h>
-
 #include <gtk/gtk.h>
 #include <gdk/gdkkeysyms.h>
 
@@ -53,14 +51,6 @@ enum
   PROP_ASPECT
 };
 
-enum
-{
-  COLUMN_NUMERATOR,
-  COLUMN_DENOMINATOR,
-  COLUMN_TEXT,
-  NUM_COLUMNS
-};
-
 
 static void      gimp_ratio_entry_set_property   (GObject            *object,
                                                   guint               property_id,
@@ -76,15 +66,6 @@ static void      gimp_ratio_entry_format_text    (GimpRatioEntry     *entry);
 static void      gimp_ratio_entry_parse_text     (GimpRatioEntry     *entry,
                                                   const gchar        *text);
 
-static gboolean  gimp_ratio_entry_history_select (GtkEntryCompletion *completion,
-                                                  GtkTreeModel       *model,
-                                                  GtkTreeIter        *iter,
-                                                  GimpRatioEntry     *entry);
-
-static void      gimp_ratio_entry_history_add    (GimpRatioEntry     *entry,
-                                                  gdouble             numerator,
-                                                  gdouble             denominator,
-                                                  const gchar        *text);
 
 
 G_DEFINE_TYPE (GimpRatioEntry, gimp_ratio_entry, GTK_TYPE_ENTRY)
@@ -137,11 +118,6 @@ gimp_ratio_entry_class_init (GimpRatioEntryClass *klass)
                                                       GIMP_TYPE_ASPECT_TYPE,
                                                       GIMP_ASPECT_SQUARE,
                                                       GIMP_PARAM_READWRITE));
-
-
-  klass->history = gtk_list_store_new (NUM_COLUMNS,
-                                       G_TYPE_DOUBLE, G_TYPE_DOUBLE,
-                                       G_TYPE_STRING);
 }
 
 static void
@@ -215,8 +191,6 @@ gimp_ratio_entry_get_property (GObject    *object,
 static void
 gimp_ratio_entry_init (GimpRatioEntry *entry)
 {
-  GtkEntryCompletion *completion;
-
   entry->numerator   = 1;
   entry->denominator = 1;
 
@@ -228,19 +202,6 @@ gimp_ratio_entry_init (GimpRatioEntry *entry)
   g_signal_connect (entry, "key-press-event",
                     G_CALLBACK (gimp_ratio_entry_events),
                     NULL);
-
-  completion = g_object_new (GTK_TYPE_ENTRY_COMPLETION,
-                             "model",
-                             GIMP_RATIO_ENTRY_GET_CLASS (entry)->history,
-                             "inline-completion", TRUE,
-                             NULL);
-  gtk_entry_completion_set_text_column (completion, COLUMN_TEXT);
-  gtk_entry_set_completion (GTK_ENTRY (entry), completion);
-  g_object_unref (completion);
-
-  g_signal_connect (completion, "match-selected",
-                    G_CALLBACK (gimp_ratio_entry_history_select),
-                    entry);
 }
 
 /**
@@ -518,8 +479,6 @@ gimp_ratio_entry_format_text (GimpRatioEntry *entry)
   buffer = g_strdup_printf ("%g:%g", entry->numerator, entry->denominator);
 
   gtk_entry_set_text (GTK_ENTRY (entry), buffer);
-  gimp_ratio_entry_history_add (entry,
-                                entry->numerator, entry->denominator, buffer);
 
   g_free (buffer);
 }
@@ -577,68 +536,4 @@ gimp_ratio_entry_parse_text (GimpRatioEntry *entry,
   gimp_ratio_entry_format_text (entry);
 
   gtk_editable_set_position (GTK_EDITABLE (entry), -1);
-}
-
-static gboolean
-gimp_ratio_entry_history_select (GtkEntryCompletion *completion,
-                                 GtkTreeModel       *model,
-                                 GtkTreeIter        *iter,
-                                 GimpRatioEntry     *entry)
-{
-  gdouble numerator;
-  gdouble denominator;
-
-  gtk_tree_model_get (model, iter,
-                      COLUMN_NUMERATOR,   &numerator,
-                      COLUMN_DENOMINATOR, &denominator,
-                      -1);
-
-  gimp_ratio_entry_set_fraction (entry, numerator, denominator);
-
-  return TRUE;
-}
-
-static void
-gimp_ratio_entry_history_add (GimpRatioEntry *entry,
-                              gdouble         numerator,
-                              gdouble         denominator,
-                              const gchar    *text)
-{
-  GimpRatioEntryClass *klass = GIMP_RATIO_ENTRY_GET_CLASS (entry);
-  GtkTreeModel        *model = GTK_TREE_MODEL (klass->history);
-  GValue               value = { 0, };
-  GtkTreeIter          iter;
-  gboolean             iter_valid;
-
-  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
-       iter_valid;
-       iter_valid = gtk_tree_model_iter_next (model, &iter))
-    {
-      gtk_tree_model_get_value (model, &iter, COLUMN_TEXT, &value);
-
-      if (strcmp (text, g_value_get_string (&value)) == 0)
-        {
-          g_value_unset (&value);
-          break;
-        }
-
-      g_value_unset (&value);
-    }
-
-  if (iter_valid)
-    {
-      gtk_list_store_move_after (GTK_LIST_STORE (model), &iter, NULL);
-    }
-  else
-    {
-      gtk_list_store_append (GTK_LIST_STORE (model), &iter);
-
-      gtk_list_store_set (GTK_LIST_STORE (model), &iter,
-                          COLUMN_NUMERATOR,   numerator,
-                          COLUMN_DENOMINATOR, denominator,
-                          COLUMN_TEXT,        text,
-                          -1);
-
-      /* FIXME: limit the size of the history */
-    }
 }

@@ -18,6 +18,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "libgimpbase/gimpbase.h"
@@ -36,11 +38,33 @@
 #include "gimp-intl.h"
 
 
-static void gimp_rectangle_options_iface_base_init             (GimpRectangleOptionsInterface *rectangle_options_iface);
+enum
+{
+  COLUMN_NUMERATOR,
+  COLUMN_DENOMINATOR,
+  COLUMN_TEXT,
+  NUM_COLUMNS
+};
 
-static void gimp_rectangle_options_unparent_fixed_rule_widgets (GimpRectangleOptionsPrivate   *private);
-static void gimp_rectangle_options_fixed_rule_changed          (GtkWidget                     *combo_box,
-                                                                GimpRectangleOptionsPrivate   *private);
+
+static void     gimp_rectangle_options_iface_base_init             (GimpRectangleOptionsInterface *rectangle_options_iface);
+
+static void     gimp_rectangle_options_unparent_fixed_rule_widgets (GimpRectangleOptionsPrivate   *private);
+static void     gimp_rectangle_options_fixed_rule_changed          (GtkWidget                     *combo_box,
+                                                                    GimpRectangleOptionsPrivate   *private);
+
+static void     gimp_rectangle_options_setup_ratio_completion      (GimpRectangleOptions          *rectangle_options,
+                                                                    GtkWidget                     *entry,
+                                                                    GtkListStore                  *history);
+
+static gboolean gimp_ratio_entry_history_select                    (GtkEntryCompletion            *completion,
+                                                                    GtkTreeModel                  *model,
+                                                                    GtkTreeIter                   *iter,
+                                                                    GimpRatioEntry                *entry);
+
+static void     gimp_ratio_entry_history_add                       (GtkWidget    *entry,
+                                                                    GtkTreeModel *model);
+
 
 
 /* TODO: Calculate this dynamically so that the GtkEntry:s are always
@@ -255,6 +279,9 @@ gimp_rectangle_options_private_finalize (GimpRectangleOptionsPrivate *private)
   g_object_unref (private->size_button_box);
   g_object_unref (private->aspect_button_box);
 
+  g_object_unref (private->aspect_history);
+  g_object_unref (private->size_history);
+
   g_slice_free (GimpRectangleOptionsPrivate, private);
 }
 
@@ -275,6 +302,16 @@ gimp_rectangle_options_get_private (GimpRectangleOptions *options)
   if (! private)
     {
       private = g_slice_new0 (GimpRectangleOptionsPrivate);
+
+      private->aspect_history = gtk_list_store_new (NUM_COLUMNS,
+                                                    G_TYPE_DOUBLE,
+                                                    G_TYPE_DOUBLE,
+                                                    G_TYPE_STRING);
+
+      private->size_history = gtk_list_store_new (NUM_COLUMNS,
+                                                  G_TYPE_DOUBLE,
+                                                  G_TYPE_DOUBLE,
+                                                  G_TYPE_STRING);
 
       g_object_set_qdata_full (G_OBJECT (options), private_key, private,
                                (GDestroyNotify) gimp_rectangle_options_private_finalize);
@@ -726,6 +763,9 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                     "aspect-numerator",
                                     "aspect-denominator");
       g_object_ref_sink (private->fixed_aspect_entry);
+      gimp_rectangle_options_setup_ratio_completion (GIMP_RECTANGLE_OPTIONS (tool_options),
+                                                     private->fixed_aspect_entry,
+                                                     private->aspect_history);
       gtk_widget_show (private->fixed_aspect_entry);
 
       private->aspect_button_box =
@@ -768,6 +808,9 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
         gimp_prop_aspect_ratio_new (config,
                                     "desired-fixed-size-width",
                                     "desired-fixed-size-height");
+      gimp_rectangle_options_setup_ratio_completion (GIMP_RECTANGLE_OPTIONS (tool_options),
+                                                     private->fixed_size_entry,
+                                                     private->size_history);
       g_object_ref_sink (private->fixed_size_entry);
       gtk_widget_show (private->fixed_size_entry);
 
@@ -888,3 +931,100 @@ gimp_rectangle_options_fixed_rule_active (GimpRectangleOptions       *rectangle_
   return private->fixed_rule_active &&
          private->fixed_rule == fixed_rule;
 }
+
+static void
+gimp_rectangle_options_setup_ratio_completion (GimpRectangleOptions *rectangle_options,
+                                               GtkWidget            *entry,
+                                               GtkListStore         *history)
+{
+  GtkEntryCompletion *completion;
+  GimpRectangleOptionsPrivate *private;
+
+  private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (rectangle_options);
+
+  completion = g_object_new (GTK_TYPE_ENTRY_COMPLETION,
+                             "model", history,
+                             "inline-completion", TRUE,
+                             NULL);
+
+  gtk_entry_completion_set_text_column (completion, COLUMN_TEXT);
+  gtk_entry_set_completion (GTK_ENTRY (entry), completion);
+  g_object_unref (completion);
+
+  g_signal_connect (entry, "ratio-changed",
+                    G_CALLBACK (gimp_ratio_entry_history_add),
+                    history);
+
+  g_signal_connect (completion, "match-selected",
+                    G_CALLBACK (gimp_ratio_entry_history_select),
+                    entry);
+}
+
+static gboolean
+gimp_ratio_entry_history_select (GtkEntryCompletion  *completion,
+                                 GtkTreeModel        *model,
+                                 GtkTreeIter         *iter,
+                                 GimpRatioEntry      *entry)
+{
+  gdouble numerator;
+  gdouble denominator;
+
+  gtk_tree_model_get (model, iter,
+                      COLUMN_NUMERATOR,  &numerator,
+                      COLUMN_DENOMINATOR, &denominator,
+                      -1);
+
+  gimp_ratio_entry_set_fraction (entry, numerator, denominator);
+
+  return TRUE;
+}
+
+static void
+gimp_ratio_entry_history_add (GtkWidget    *entry,
+                              GtkTreeModel *model)
+{
+  GValue               value = { 0, };
+  GtkTreeIter          iter;
+  gboolean             iter_valid;
+  gdouble              numerator;
+  gdouble              denominator;
+  const gchar         *text;
+
+  text = gtk_entry_get_text (GTK_ENTRY (entry));
+  gimp_ratio_entry_get_fraction (GIMP_RATIO_ENTRY (entry),
+                                 &numerator,
+                                 &denominator);
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, &iter))
+    {
+      gtk_tree_model_get_value (model, &iter, COLUMN_TEXT, &value);
+
+      if (strcmp (text, g_value_get_string (&value)) == 0)
+        {
+          g_value_unset (&value);
+          break;
+        }
+
+      g_value_unset (&value);
+    }
+
+  if (iter_valid)
+    {
+      gtk_list_store_move_after (GTK_LIST_STORE (model), &iter, NULL);
+    }
+  else
+    {
+      gtk_list_store_append (GTK_LIST_STORE (model), &iter);
+
+      gtk_list_store_set (GTK_LIST_STORE (model), &iter,
+                          COLUMN_NUMERATOR,   numerator,
+                          COLUMN_DENOMINATOR, denominator,
+                          COLUMN_TEXT,        text,
+                          -1);
+
+      /* FIXME: limit the size of the history */
+    }
+}
+

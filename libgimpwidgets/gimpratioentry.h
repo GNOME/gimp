@@ -49,8 +49,6 @@ struct _GimpRatioEntryClass
 {
   GtkEntryClass   parent_class;
 
-  GtkListStore   *history;
-
   void (* ratio_changed) (GimpRatioEntry *entry);
 
   /* Padding for future expansion */

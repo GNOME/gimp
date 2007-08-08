@@ -1,3 +1,14 @@
+2007-08-08  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* libgimpwidgets/gimpratioentry.[ch]: Migrate entry completion
+	code and put responsability on clients to set that up when needed.
+
+	* app/tools/gimprectangleoptions.[ch]: Setup entry completion code
+	manually for the GimpRatioEntry widgets by using
+	(gimp_rectangle_options_setup_ratio_completion)
+	(gimp_ratio_entry_history_select, gimp_ratio_entry_history_add):
+	these new functions.
+
 2007-08-08  Sven Neumann  <sven@gimp.org>
 
 	* modules/cdisplay_lcms.c
