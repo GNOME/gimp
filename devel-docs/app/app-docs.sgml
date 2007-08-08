@@ -39,8 +39,8 @@
     <title>Paint Functions</title>
     <xi:include href="xml/paint-funcs-types.xml" />
     <xi:include href="xml/paint-funcs.xml" />
-    <xi:include href="xml/scale-funcs.xml" />
-    <xi:include href="xml/sample-funcs.xml" />
+    <xi:include href="xml/scale-region.xml" />
+    <xi:include href="xml/subsample-region.xml" />
   </part>
 
   <part id="app-composite-part">

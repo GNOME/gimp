@@ -1,3 +1,8 @@
+2007-08-08  Sven Neumann  <sven@gimp.org>
+
+	* app/app-sections.txt
+	* app/app-docs.sgml: adjust to renamed files in app/paint-funcs.
+
 2007-07-27  Raphaël Quinet  <raphael@gimp.org>
 
 	* parasites.txt: document some of the parasites that have been

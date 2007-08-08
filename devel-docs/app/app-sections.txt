@@ -8375,7 +8375,7 @@ combine_regions_replace
 </SECTION>
 
 <SECTION>
-<FILE>scale-funcs</FILE>
+<FILE>scale-region</FILE>
 LANCZOS_MIN
 LANCZOS_SPP
 LANCZOS_WIDTH
@@ -8386,7 +8386,7 @@ create_lanczos_lookup
 </SECTION>
 
 <SECTION>
-<FILE>sample-funcs</FILE>
+<FILE>subsample-region</FILE>
 subsample_region
 subsample_indexed_region
 </SECTION>
