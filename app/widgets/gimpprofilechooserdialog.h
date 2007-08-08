@@ -40,10 +40,7 @@ struct _GimpProfileChooserDialog
   GtkFileChooserDialog  parent_instance;
 
   Gimp                 *gimp;
-
-  GtkWidget            *preview;
-  GtkWidget            *info_label;
-
+  GtkTextBuffer        *buffer;
   guint                 idle_id;
 };
 

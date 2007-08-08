@@ -21,6 +21,8 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <gtk/gtk.h>
 
 #include "widgets-types.h"
@@ -48,6 +50,7 @@ static GObject * gimp_profile_chooser_dialog_constructor (GType                 
                                                           GObjectConstructParam    *params);
 
 static void   gimp_profile_chooser_dialog_dispose        (GObject                  *object);
+static void   gimp_profile_chooser_dialog_finalize       (GObject                  *object);
 static void   gimp_profile_chooser_dialog_set_property   (GObject                  *object,
                                                           guint                     prop_id,
                                                           const GValue             *value,
@@ -57,12 +60,9 @@ static void   gimp_profile_chooser_dialog_get_property   (GObject               
                                                           GValue                   *value,
                                                           GParamSpec               *pspec);
 
-static void   gimp_profile_chooser_dialog_style_set      (GtkWidget                *widget,
-                                                          GtkStyle                 *prev_style);
-
 static void   gimp_profile_chooser_dialog_update_preview (GimpProfileChooserDialog *dialog);
 
-static GtkWidget * gimp_profile_view_new                 (GimpProfileChooserDialog *dialog);
+static GtkWidget * gimp_profile_view_new                 (GtkTextBuffer            *buffer);
 static gboolean    gimp_profile_view_query               (GimpProfileChooserDialog *dialog);
 
 
@@ -75,15 +75,13 @@ G_DEFINE_TYPE (GimpProfileChooserDialog, gimp_profile_chooser_dialog,
 static void
 gimp_profile_chooser_dialog_class_init (GimpProfileChooserDialogClass *klass)
 {
-  GObjectClass   *object_class = G_OBJECT_CLASS (klass);
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (klass);
+  GObjectClass *object_class = G_OBJECT_CLASS (klass);
 
   object_class->constructor  = gimp_profile_chooser_dialog_constructor;
   object_class->dispose      = gimp_profile_chooser_dialog_dispose;
+  object_class->finalize     = gimp_profile_chooser_dialog_finalize;
   object_class->get_property = gimp_profile_chooser_dialog_get_property;
   object_class->set_property = gimp_profile_chooser_dialog_set_property;
-
-  widget_class->style_set    = gimp_profile_chooser_dialog_style_set;
 
   g_object_class_install_property (object_class, PROP_GIMP,
                                    g_param_spec_object ("gimp",
@@ -97,15 +95,7 @@ static void
 gimp_profile_chooser_dialog_init (GimpProfileChooserDialog *dialog)
 {
   dialog->idle_id = 0;
-
-  dialog->info_label = g_object_new (GTK_TYPE_LABEL,
-                                     "xalign", 0.0,
-                                     "yalign", 0.0,
-                                     NULL);
-
-  gtk_widget_set_size_request (dialog->info_label, 200, -1);
-
-  dialog->preview = gimp_profile_view_new (dialog);
+  dialog->buffer  = gtk_text_buffer_new (NULL);
 }
 
 static GObject *
@@ -159,7 +149,7 @@ gimp_profile_chooser_dialog_constructor (GType                  type,
   gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
 
   gtk_file_chooser_set_preview_widget (GTK_FILE_CHOOSER (dialog),
-                                       dialog->preview);
+                                       gimp_profile_view_new (dialog->buffer));
 
   g_signal_connect (dialog, "update-preview",
                     G_CALLBACK (gimp_profile_chooser_dialog_update_preview),
@@ -180,6 +170,20 @@ gimp_profile_chooser_dialog_dispose (GObject *object)
     }
 
   G_OBJECT_CLASS (parent_class)->dispose (object);
+}
+
+static void
+gimp_profile_chooser_dialog_finalize (GObject *object)
+{
+  GimpProfileChooserDialog *dialog = GIMP_PROFILE_CHOOSER_DIALOG (object);
+
+  if (dialog->buffer)
+    {
+      g_object_unref (dialog->buffer);
+      dialog->buffer = NULL;
+    }
+
+  G_OBJECT_CLASS (parent_class)->finalize (object);
 }
 
 static void
@@ -220,28 +224,6 @@ gimp_profile_chooser_dialog_get_property (GObject    *object,
     }
 }
 
-static void
-gimp_profile_chooser_dialog_style_set (GtkWidget *widget,
-                                       GtkStyle  *prev_style)
-{
-  GimpProfileChooserDialog *dialog = GIMP_PROFILE_CHOOSER_DIALOG (widget);
-  GtkWidget                *ebox;
-
-  GTK_WIDGET_CLASS (parent_class)->style_set (widget, prev_style);
-
-  gtk_widget_modify_bg (dialog->preview, GTK_STATE_NORMAL,
-                        &widget->style->base[GTK_STATE_NORMAL]);
-  gtk_widget_modify_bg (dialog->preview, GTK_STATE_INSENSITIVE,
-                        &widget->style->base[GTK_STATE_NORMAL]);
-
-  ebox = gtk_bin_get_child (GTK_BIN (widget));
-
-  gtk_widget_modify_bg (ebox, GTK_STATE_NORMAL,
-                        &widget->style->base[GTK_STATE_NORMAL]);
-  gtk_widget_modify_bg (ebox, GTK_STATE_INSENSITIVE,
-                        &widget->style->base[GTK_STATE_NORMAL]);
-}
-
 GtkWidget *
 gimp_profile_chooser_dialog_new (Gimp        *gimp,
                                  const gchar *title)
@@ -257,7 +239,7 @@ gimp_profile_chooser_dialog_new (Gimp        *gimp,
 static void
 gimp_profile_chooser_dialog_update_preview (GimpProfileChooserDialog *dialog)
 {
-  gtk_label_set_text (GTK_LABEL (dialog->info_label), "");
+  gtk_text_buffer_set_text (dialog->buffer, "", 0);
 
   if (dialog->idle_id)
     g_source_remove (dialog->idle_id);
@@ -267,26 +249,35 @@ gimp_profile_chooser_dialog_update_preview (GimpProfileChooserDialog *dialog)
 }
 
 static GtkWidget *
-gimp_profile_view_new (GimpProfileChooserDialog *dialog)
+gimp_profile_view_new (GtkTextBuffer *buffer)
 {
   GtkWidget *frame;
-  GtkWidget *ebox;
-  GtkWidget *vbox;
+  GtkWidget *scrolled_window;
+  GtkWidget *text_view;
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
 
-  ebox = gtk_event_box_new ();
-  gtk_container_add (GTK_CONTAINER (frame), ebox);
-  gtk_widget_show (ebox);
+  scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scrolled_window),
+                                  GTK_POLICY_AUTOMATIC,
+                                  GTK_POLICY_AUTOMATIC);
+  gtk_container_add (GTK_CONTAINER (frame), scrolled_window);
+  gtk_widget_show (scrolled_window);
 
-  vbox = gtk_vbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 2);
-  gtk_container_add (GTK_CONTAINER (ebox), vbox);
-  gtk_widget_show (vbox);
+  text_view = gtk_text_view_new_with_buffer (buffer);
 
-  gtk_box_pack_start (GTK_BOX (vbox), dialog->info_label, FALSE, FALSE, 0);
-  gtk_widget_show (dialog->info_label);
+  gtk_text_view_set_editable (GTK_TEXT_VIEW (text_view), FALSE);
+  gtk_text_view_set_wrap_mode (GTK_TEXT_VIEW (text_view), GTK_WRAP_WORD);
+
+  gtk_text_view_set_pixels_above_lines (GTK_TEXT_VIEW (text_view), 2);
+  gtk_text_view_set_left_margin (GTK_TEXT_VIEW (text_view), 2);
+  gtk_text_view_set_right_margin (GTK_TEXT_VIEW (text_view), 2);
+
+  gtk_container_add (GTK_CONTAINER (scrolled_window), text_view);
+  gtk_widget_show (text_view);
+
+  gtk_widget_set_size_request (scrolled_window, 200, -1);
 
   return frame;
 }
@@ -314,7 +305,19 @@ gimp_profile_view_query (GimpProfileChooserDialog *dialog)
                                          NULL, NULL, &info,
                                          NULL))
         {
-          gtk_label_set_text (GTK_LABEL (dialog->info_label), info);
+          gsize info_len = strlen (info);
+          gsize name_len = strlen (filename);
+
+          /*  lcms tends to adds the filename at the end of the info string.
+           *  Since this is redundant information here, we remove it.
+           */
+          if (info_len > name_len &&
+              strcmp (info + info_len - name_len, filename) == 0)
+            {
+              info_len -= name_len;
+            }
+
+          gtk_text_buffer_set_text (dialog->buffer, info, info_len);
           g_free (info);
         }
 

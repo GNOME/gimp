@@ -1,3 +1,8 @@
+2007-08-08  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpprofilechooserdialog.[ch]: use a text view in a
+	scrolled window for the preview area.
+
 2007-08-08  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* libgimpwidgets/gimpratioentry.[ch]: Migrate entry completion
