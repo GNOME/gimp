@@ -319,7 +319,7 @@ splash_position_layouts (GimpSplash   *splash,
       pango_layout_get_pixel_extents (splash->upper, &ink, &logical);
 
       splash->upper_x = (splash->width - logical.width) / 2;
-      splash->upper_y = splash->height - 2 * (logical.height + 6);
+      splash->upper_y = splash->height - (2 * logical.height + 6);
 
       if (area)
         splash_rectangle_union (area, &ink, splash->upper_x, splash->upper_y);
