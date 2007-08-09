@@ -2424,14 +2424,15 @@ prefs_dialog_new (Gimp       *gimp,
 
             gtk_table_attach_defaults (GTK_TABLE (table),
                                        button, 0, 2, row, row + 1);
-            row++;
             gtk_widget_show (button);
+            row++;
 #endif
 
             prefs_enum_combo_box_add (color_config,
                                       "display-rendering-intent", 0, 0,
                                       _("_Display rendering intent:"),
                                       GTK_TABLE (table), row++, NULL);
+            gtk_table_set_row_spacing (GTK_TABLE (table), row - 1, 12);
           }
 
         if (i == 3) /* printer profile */
@@ -2441,9 +2442,9 @@ prefs_dialog_new (Gimp       *gimp,
                                       _("_Softproof rendering intent:"),
                                       GTK_TABLE (table), row++, NULL);
           }
-
-        gtk_table_set_row_spacing (GTK_TABLE (table), row - 1, 12);
       }
+
+    gtk_table_set_row_spacing (GTK_TABLE (table), row - 1, 12);
 
     g_object_unref (color_config);
 
