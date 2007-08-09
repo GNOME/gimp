@@ -115,7 +115,7 @@ print_page_layout_gui (PrintData *data)
   info.image_width  = gimp_drawable_width (data->drawable_id);
   info.image_height = gimp_drawable_height (data->drawable_id);
 
-  layout = gtk_vbox_new (FALSE, 12);
+  layout = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (layout), 12);
 
   hbox = gtk_hbox_new (FALSE, 6);
