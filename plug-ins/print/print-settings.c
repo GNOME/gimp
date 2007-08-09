@@ -139,11 +139,41 @@ print_settings_key_file_from_settings (PrintData *data)
   page_setup = gtk_print_operation_get_default_page_setup (operation);
   if (page_setup)
     {
-      GtkPageOrientation orientation;
+      GtkPaperSize       *paper_size;
+      GtkPageOrientation  orientation;
+      const gchar        *name;
 
       orientation = gtk_page_setup_get_orientation (page_setup);
       g_key_file_set_integer (key_file, "page-setup", "orientation",
                               orientation);
+
+      paper_size = gtk_page_setup_get_paper_size (page_setup);
+
+      name = gtk_paper_size_get_name (paper_size);
+      if (name)
+        {
+          g_key_file_set_string (key_file, "paper-size", "name", name);
+
+          name = gtk_paper_size_get_ppd_name (paper_size);
+
+          if (name)
+            {
+              g_key_file_set_string (key_file, "paper-size", "ppd-name",
+                                     name);
+            }
+
+          if (name || gtk_paper_size_is_custom (paper_size))
+            {
+              g_key_file_set_string (key_file, "paper-size", "display-name",
+                                     gtk_paper_size_get_display_name (paper_size));
+              g_key_file_set_double (key_file, "paper-size", "width",
+                                     gtk_paper_size_get_width (paper_size,
+                                                               GTK_UNIT_POINTS));
+              g_key_file_set_double (key_file, "paper-size", "height",
+                                     gtk_paper_size_get_height (paper_size,
+                                                                GTK_UNIT_POINTS));
+            }
+        }
     }
 
 #if 0
@@ -284,12 +314,47 @@ print_settings_key_file_from_parasite (gint32 image_ID)
   return check_version (key_file);
 }
 
+static GtkPaperSize *
+load_paper_size_from_key_file (GKeyFile *key_file)
+{
+  const gchar *name;
+  const gchar *ppd_name;
+  const gchar *display_name;
+  gdouble      width;
+  gdouble      height;
+
+  name         = g_key_file_get_string (key_file, "paper-size", "name",
+                                        NULL);
+  ppd_name     = g_key_file_get_string (key_file, "paper-size", "ppd-name",
+                                        NULL);
+  display_name = g_key_file_get_string (key_file, "paper-size", "display-name",
+                                        NULL);
+  width        = g_key_file_get_double (key_file, "paper-size", "width",  NULL);
+  height       = g_key_file_get_double (key_file, "paper-size", "height", NULL);
+
+  if (ppd_name && display_name)
+    {
+      return gtk_paper_size_new_from_ppd (ppd_name,
+                                          display_name, width, height);
+    }
+
+  if (name && display_name)
+    {
+      return gtk_paper_size_new_custom (name,
+                                        display_name, width, height,
+                                        GTK_UNIT_POINTS);
+    }
+
+  return gtk_paper_size_new (name);
+}
+
 static gboolean
 load_print_settings_from_key_file (PrintData *data,
                                    GKeyFile  *key_file)
 {
   GtkPrintOperation  *operation = data->operation;
   GtkPrintSettings   *settings;
+  GtkPageSetup       *page_setup;
   gchar             **keys;
   gsize               n_keys;
   gint                i;
@@ -320,23 +385,31 @@ load_print_settings_from_key_file (PrintData *data,
 
   /* page setup parameters */
 
+  page_setup = gtk_print_operation_get_default_page_setup (operation);
+  if (! page_setup)
+    page_setup = gtk_page_setup_new ();
+
+  if (g_key_file_has_key (key_file, "paper-size", "name", NULL))
+    {
+      GtkPaperSize *paper_size = load_paper_size_from_key_file (key_file);
+
+      gtk_page_setup_set_paper_size_and_default_margins (page_setup,
+                                                         paper_size);
+    }
+
   if (g_key_file_has_key (key_file, "page-setup", "orientation", NULL))
     {
-      GtkPageSetup       *page_setup;
       GtkPageOrientation  orientation;
-
-      page_setup = gtk_print_operation_get_default_page_setup (operation);
-      if (! page_setup)
-        page_setup = gtk_page_setup_new ();
 
       orientation = g_key_file_get_integer (key_file,
                                             "page-setup", "orientation", NULL);
       gtk_page_setup_set_orientation (page_setup, orientation);
       gtk_print_settings_set_orientation (settings, orientation);
       data->orientation = orientation;
-
-      gtk_print_operation_set_default_page_setup (operation, page_setup);
     }
+
+  gtk_print_operation_set_default_page_setup (operation, page_setup);
+  g_object_unref (page_setup);
 
   if (g_key_file_has_key (key_file, "image-setup", "unit", NULL))
     {
