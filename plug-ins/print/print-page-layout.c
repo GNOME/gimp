@@ -97,6 +97,7 @@ static PrintSizeInfo  info;
 GtkWidget *
 print_page_layout_gui (PrintData *data)
 {
+  GtkWidget    *layout;
   GtkWidget    *main_hbox;
   GtkWidget    *main_vbox;
   GtkWidget    *hbox;
@@ -114,10 +115,43 @@ print_page_layout_gui (PrintData *data)
   info.image_width  = gimp_drawable_width (data->drawable_id);
   info.image_height = gimp_drawable_height (data->drawable_id);
 
+  layout = gtk_vbox_new (FALSE, 12);
+  gtk_container_set_border_width (GTK_CONTAINER (layout), 12);
+
+  hbox = gtk_hbox_new (FALSE, 6);
+  gtk_box_pack_start (GTK_BOX (layout), hbox, FALSE, FALSE, 0);
+  gtk_widget_show (hbox);
+
+  /* label for the printable area */
+
+  label = gtk_label_new (_("Printable area:"));
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  label = gtk_label_new (NULL);
+  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
+  gimp_label_set_attributes (GTK_LABEL (label),
+                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
+                             -1);
+  info.area_label = label;
+
+  gtk_box_pack_start (GTK_BOX (hbox), info.area_label, TRUE, TRUE, 0);
+  gtk_widget_show (info.area_label);
+
+  button = gtk_button_new_with_mnemonic (_("_Adjust Page Size "
+                                           "and Orientation"));
+  gtk_box_pack_end (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (run_page_setup_dialog),
+                    data);
+  gtk_widget_show (button);
+
+  /*  main hbox  */
   main_hbox = gtk_hbox_new (FALSE, 12);
-  gtk_container_set_border_width (GTK_CONTAINER (main_hbox), 12);
+  gtk_box_pack_start (GTK_BOX (layout), main_hbox, FALSE, FALSE, 0);
   gtk_widget_show (main_hbox);
 
+  /*  main vbox  */
   main_vbox = gtk_vbox_new (FALSE, 12);
   gtk_box_pack_start (GTK_BOX (main_hbox), main_vbox, FALSE, FALSE, 0);
   gtk_widget_show (main_vbox);
@@ -125,38 +159,6 @@ print_page_layout_gui (PrintData *data)
   vbox = gtk_vbox_new (FALSE, 6);
   gtk_box_pack_start (GTK_BOX (main_vbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
-
-  hbox = gtk_hbox_new (FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  button = gtk_button_new_with_mnemonic (_("_Adjust Page Size "
-                                           "and Orientation"));
-  gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
-  g_signal_connect (G_OBJECT (button), "clicked",
-                    G_CALLBACK (run_page_setup_dialog),
-                    data);
-  gtk_widget_show (button);
-
-  /* label for the printable area */
-
-  hbox = gtk_hbox_new (FALSE, 6);
-  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-  gtk_widget_show (hbox);
-
-  label = gtk_label_new (_("Printable area:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
-
-  label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.0);
-  gimp_label_set_attributes (GTK_LABEL (label),
-                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
-                             -1);
-  info.area_label = label;
-
-  gtk_box_pack_start (GTK_BOX (hbox), info.area_label, FALSE, FALSE, 0);
-  gtk_widget_show (info.area_label);
 
   label_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
   entry_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -214,7 +216,7 @@ print_page_layout_gui (PrintData *data)
 
   print_size_info_set_page_setup (&info);
 
-  return main_hbox;
+  return layout;
 }
 
 static void
