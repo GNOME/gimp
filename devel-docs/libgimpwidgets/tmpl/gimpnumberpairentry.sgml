@@ -37,12 +37,37 @@ GimpNumberPairEntry
 
 @gimpnumberpairentry: the object which received the signal.
 
+<!-- ##### ARG GimpNumberPairEntry:allow-simplification ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG GimpNumberPairEntry:aspect ##### -->
 <para>
 
 </para>
 
+<!-- ##### ARG GimpNumberPairEntry:default-left-number ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpNumberPairEntry:default-right-number ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG GimpNumberPairEntry:left-number ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpNumberPairEntry:max-valid-value ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpNumberPairEntry:min-valid-value ##### -->
 <para>
 
 </para>
@@ -53,6 +78,16 @@ GimpNumberPairEntry
 </para>
 
 <!-- ##### ARG GimpNumberPairEntry:right-number ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpNumberPairEntry:separators ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpNumberPairEntry:user-override ##### -->
 <para>
 
 </para>
@@ -88,6 +123,16 @@ GimpNumberPairEntry
 @right: 
 
 
+<!-- ##### FUNCTION gimp_number_pair_entry_get_default_values ##### -->
+<para>
+
+</para>
+
+@entry: 
+@left: 
+@right: 
+
+
 <!-- ##### FUNCTION gimp_number_pair_entry_set_values ##### -->
 <para>
 
@@ -106,5 +151,41 @@ GimpNumberPairEntry
 @entry: 
 @left: 
 @right: 
+
+
+<!-- ##### FUNCTION gimp_number_pair_entry_get_aspect ##### -->
+<para>
+
+</para>
+
+@entry: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_number_pair_entry_set_aspect ##### -->
+<para>
+
+</para>
+
+@entry: 
+@aspect: 
+
+
+<!-- ##### FUNCTION gimp_number_pair_entry_get_ratio ##### -->
+<para>
+
+</para>
+
+@entry: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_number_pair_entry_set_ratio ##### -->
+<para>
+
+</para>
+
+@entry: 
+@ratio: 
 
 

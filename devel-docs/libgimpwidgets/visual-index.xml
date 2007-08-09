@@ -43,6 +43,9 @@
   <link linkend="GimpMemsizeEntry">
     <inlinegraphic fileref="gimp-memsize-entry.png" format="PNG"></inlinegraphic>
   </link>
+  <link linkend="GimpNumberPairEntry">
+    <inlinegraphic fileref="gimp-number-pair-entry.png" format="PNG"></inlinegraphic>
+  </link>
   <link linkend="GimpOffsetArea">
     <inlinegraphic fileref="gimp-offset-area.png" format="PNG"></inlinegraphic>
   </link>
@@ -57,9 +60,6 @@
   </link>
   <link linkend="GimpPreviewArea">
     <inlinegraphic fileref="gimp-preview-area.png" format="PNG"></inlinegraphic>
-  </link>
-  <link linkend="GimpRatioEntry">
-    <inlinegraphic fileref="gimp-ratio-entry.png" format="PNG"></inlinegraphic>
   </link>
   <link linkend="GimpStringComboBox">
     <inlinegraphic fileref="gimp-string-combo-box.png" format="PNG"></inlinegraphic>

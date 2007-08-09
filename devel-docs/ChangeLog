@@ -1,3 +1,10 @@
+2007-08-09  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/visual-index.xml
+
+	* libgimpwidgets/tmpl/gimpnumberpairentry.sgml: regenerated.
+
 2007-08-08  Sven Neumann  <sven@gimp.org>
 
 	* tools/widgets.c: include number-pair-entry instead of ratio-entry.
