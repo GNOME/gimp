@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-28 10:34+0200\n"
-"PO-Revision-Date: 2007-08-01 08:14+0100\n"
+"POT-Creation-Date: 2007-08-09 21:35+0200\n"
+"PO-Revision-Date: 2007-08-09 21:35+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -632,7 +632,7 @@ msgid "Incremental"
 msgstr "Inkrementell"
 
 #: ../libgimpbase/gimpbaseenums.c:623
-#: ../modules/cdisplay_lcms.c:267
+#: ../modules/cdisplay_lcms.c:208
 msgid "None"
 msgstr "Ingen"
 
@@ -770,7 +770,7 @@ msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170
 #: ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:259
+#: ../modules/cdisplay_lcms.c:200
 msgid "(invalid UTF-8 string)"
 msgstr "(ogiltig UTF-8 sträng)"
 
@@ -912,6 +912,7 @@ msgid "Could not create '%s': %s"
 msgstr "Kunde inte skapa \"%s\": %s"
 
 #: ../libgimpconfig/gimpscanner.c:255
+#, c-format
 msgid "invalid UTF-8 string"
 msgstr "ogiltig UTF-8-sträng"
 
@@ -961,6 +962,7 @@ msgid "Failed to create thumbnail folder '%s'."
 msgstr "Kunde inte skapa miniatyrbildskatalog \"%s\"."
 
 #: ../libgimpthumb/gimpthumbnail.c:498
+#, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Miniatyrbilden innehåller ingen Thumb::URI-tagg"
 
@@ -1327,31 +1329,31 @@ msgstr "Kontrast"
 msgid "Contrast c_ycles:"
 msgstr "Kontrastc_ykler:"
 
-#: ../modules/cdisplay_lcms.c:116
+#: ../modules/cdisplay_lcms.c:99
 msgid "Color management display filter using ICC color profiles"
 msgstr "Visningsfilter för färghantering med ICC-färgprofiler"
 
-#: ../modules/cdisplay_lcms.c:184
+#: ../modules/cdisplay_lcms.c:160
 msgid "Color Management"
 msgstr "Färghantering"
 
-#: ../modules/cdisplay_lcms.c:288
+#: ../modules/cdisplay_lcms.c:229
 msgid "This filter takes its configuration from the Color Management section in the Preferences dialog."
 msgstr "Det här filtret tar sin konfiguration från sektionen Färghantering i inställningsdialogrutan."
 
-#: ../modules/cdisplay_lcms.c:302
+#: ../modules/cdisplay_lcms.c:243
 msgid "Mode of operation:"
 msgstr "Operationsläge:"
 
-#: ../modules/cdisplay_lcms.c:309
-msgid "RGB working space profile:"
-msgstr "Profil för RGB-arbetsrymd:"
+#: ../modules/cdisplay_lcms.c:250
+msgid "Image profile:"
+msgstr "Bildprofil:"
 
-#: ../modules/cdisplay_lcms.c:316
+#: ../modules/cdisplay_lcms.c:257
 msgid "Monitor profile:"
 msgstr "Skärmprofil:"
 
-#: ../modules/cdisplay_lcms.c:323
+#: ../modules/cdisplay_lcms.c:264
 msgid "Print simulation profile:"
 msgstr "Profil för utskriftssimulering:"
 
@@ -1796,6 +1798,8 @@ msgstr "GIMP"
 msgid "GIMP MIDI Input Controller"
 msgstr "MIDI-inmatningskontroller för GIMP"
 
+#~ msgid "RGB working space profile:"
+#~ msgstr "Profil för RGB-arbetsrymd:"
 #~ msgid "Pattern source"
 #~ msgstr "Mönsterkälla"
 #~ msgid "Linear"
