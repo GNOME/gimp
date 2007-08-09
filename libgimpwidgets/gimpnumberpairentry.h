@@ -61,20 +61,31 @@ struct _GimpNumberPairEntryClass
 };
 
 
-GType       gimp_number_pair_entry_get_type           (void) G_GNUC_CONST;
-GtkWidget * gimp_number_pair_entry_new                (const gchar         *separators,
-                                                       gboolean             allow_simplification,
-                                                       gdouble              min_valid_value,
-                                                       gdouble              max_valid_value);
-void        gimp_number_pair_entry_set_default_values (GimpNumberPairEntry *entry,
-                                                       gdouble              left,
-                                                       gdouble              right);
-void        gimp_number_pair_entry_set_values         (GimpNumberPairEntry *entry,
-                                                       gdouble              left,
-                                                       gdouble              right);
-void        gimp_number_pair_entry_get_values         (GimpNumberPairEntry *entry,
-                                                       gdouble             *left,
-                                                       gdouble             *right);
+GType          gimp_number_pair_entry_get_type           (void) G_GNUC_CONST;
+GtkWidget *    gimp_number_pair_entry_new                (const gchar         *separators,
+                                                          gboolean             allow_simplification,
+                                                          gdouble              min_valid_value,
+                                                          gdouble              max_valid_value);
+void           gimp_number_pair_entry_set_default_values (GimpNumberPairEntry *entry,
+                                                          gdouble              left,
+                                                          gdouble              right);
+void           gimp_number_pair_entry_get_default_values (GimpNumberPairEntry *entry,
+                                                          gdouble             *left,
+                                                          gdouble             *right);
+void           gimp_number_pair_entry_set_values         (GimpNumberPairEntry *entry,
+                                                          gdouble              left,
+                                                          gdouble              right);
+void           gimp_number_pair_entry_get_values         (GimpNumberPairEntry *entry,
+                                                          gdouble             *left,
+                                                          gdouble             *right);
+void           gimp_number_pair_entry_set_ratio          (GimpNumberPairEntry *entry,
+                                                          gdouble              ratio);
+gdouble        gimp_number_pair_entry_get_ratio          (GimpNumberPairEntry *entry);
+
+void           gimp_number_pair_entry_set_aspect         (GimpNumberPairEntry *entry,
+                                                          GimpAspectType       aspect);
+GimpAspectType gimp_number_pair_entry_get_aspect         (GimpNumberPairEntry *entry);
+
 
 
 G_END_DECLS
