@@ -39,8 +39,9 @@ struct _GimpPrintPreview
   GtkWidget      *area;
   GtkPageSetup   *page;
   GdkPixbuf      *pixbuf;
+  gboolean        dragging;
 
-  gint32          drawable_id;
+  GimpDrawable   *drawable;
 
   gdouble         image_offset_x;
   gdouble         image_offset_y;
