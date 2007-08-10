@@ -2081,6 +2081,24 @@ gimp_rectangle_tool_set_function (GimpRectangleTool     *rectangle,
     }
 }
 
+void
+gimp_rectangle_tool_get_rectangle_size (GimpRectangleTool *rectangle,
+                                        gint              *width,
+                                        gint              *height)
+{
+  GimpRectangleToolPrivate *private;
+
+  g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (rectangle));
+
+  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
+
+  if (width != NULL)
+    *width  = private->x2 - private->x1;
+
+  if (height != NULL)
+    *height = private->y2 - private->y1;
+}
+
 static void
 gimp_rectangle_tool_rectangle_changed (GimpRectangleTool *rectangle)
 {

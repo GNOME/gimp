@@ -1,5 +1,14 @@
 2007-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimpcroptool.c (gimp_crop_tool_button_release): Set
+	default 'Fixed: Aspect ratio' values to the size of the pending
+	crop rectangle. Fixes bug #355545.
+
+	* app/tools/gimprectangletool.[ch]
+	(gimp_rectangle_tool_get_rectangle_size): New helper function.
+
+2007-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/widgets/gimppropwidgets.c
 	(gimp_prop_number_pair_entry_config_notify): Fixed bug where
 	property notifications were checked againts hardcoded property
