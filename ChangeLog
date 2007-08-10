@@ -1,5 +1,14 @@
 2007-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* libgimpwidgets/gimpnumberpairentry.c
+	(gimp_number_pair_entry_parse_text): Remove code that has not with
+	parsing to do, so that clients that use this function can be more
+	flexible about what to do with parsing results.
+	(gimp_number_pair_entry_events): Handle results of parsing here
+	instead.
+
+2007-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/widgets/gimppropwidgets.[ch]: Merged gimp_prop_size_2d_* and
 	gimp_prop_aspect_ratio_* to gimp_prop_number_pair_*.
 

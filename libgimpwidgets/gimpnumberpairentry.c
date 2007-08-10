@@ -62,6 +62,13 @@ enum
   PROP_ASPECT
 };
 
+typedef enum
+{
+  PARSE_VALID,
+  PARSE_CLEAR,
+  PARSE_INVALID
+} ParseResult;
+
 typedef struct
 {
   /* The current number pair displayed in the widget. */
@@ -98,38 +105,40 @@ typedef struct
   ((GimpNumberPairEntryPrivate *) ((GimpNumberPairEntry *) (obj))->priv)
 
 
-static void      gimp_number_pair_entry_finalize          (GObject             *entry);
+static void         gimp_number_pair_entry_finalize          (GObject             *entry);
 
-static gint      gimp_number_pair_entry_valid_separator   (GimpNumberPairEntry *entry,
-                                                           gchar                canditate);
+static gint         gimp_number_pair_entry_valid_separator   (GimpNumberPairEntry *entry,
+                                                              gchar                   canditate);
 
-static void      gimp_number_pair_entry_ratio_to_fraction (gdouble              ratio,
-                                                           gdouble             *numerator,
-                                                           gdouble             *denominator);
+static void         gimp_number_pair_entry_ratio_to_fraction (gdouble              ratio,
+                                                              gdouble             *numerator,
+                                                              gdouble             *denominator);
 
-static void      gimp_number_pair_entry_set_property      (GObject             *object,
-                                                           guint                property_id,
-                                                           const GValue        *value,
-                                                           GParamSpec          *pspec);
-static void      gimp_number_pair_entry_get_property      (GObject             *object,
-                                                           guint                property_id,
-                                                           GValue              *value,
-                                                           GParamSpec          *pspec);
-static gboolean  gimp_number_pair_entry_events            (GtkWidget           *widgett,
-                                                           GdkEvent            *event);
+static void         gimp_number_pair_entry_set_property      (GObject             *object,
+                                                              guint                property_id,
+                                                              const GValue        *value,
+                                                              GParamSpec          *pspec);
+static void         gimp_number_pair_entry_get_property      (GObject             *object,
+                                                              guint                property_id,
+                                                              GValue              *value,
+                                                              GParamSpec          *pspec);
+static gboolean     gimp_number_pair_entry_events            (GtkWidget           *widgett,
+                                                              GdkEvent            *event);
 
-static void      gimp_number_pair_entry_update_text       (GimpNumberPairEntry *entry);
+static void         gimp_number_pair_entry_update_text       (GimpNumberPairEntry *entry);
 
-static void      gimp_number_pair_entry_parse_text        (GimpNumberPairEntry *entry,
-                                                           const gchar         *text);
-static gboolean  gimp_number_pair_entry_numbers_in_range  (GimpNumberPairEntry *entry,
-                                                           gdouble              left_number,
-                                                           gdouble              right_number);
+static ParseResult  gimp_number_pair_entry_parse_text        (GimpNumberPairEntry *entry,
+                                                              const gchar         *text,
+                                                              gdouble             *left_value,
+                                                              gdouble             *right_value);
+static gboolean     gimp_number_pair_entry_numbers_in_range  (GimpNumberPairEntry *entry,
+                                                              gdouble              left_number,
+                                                              gdouble              right_number);
 
-static gchar *   gimp_number_pair_entry_strdup_number_pair_string
-                                                          (GimpNumberPairEntry *entry,
-                                                           gdouble              left_number,
-                                                           gdouble              right_number);
+static gchar *      gimp_number_pair_entry_strdup_number_pair_string
+                                                             (GimpNumberPairEntry *entry,
+                                                              gdouble left_number,
+                                                              gdouble right_number);
 
 
 
@@ -652,6 +661,8 @@ gimp_number_pair_entry_set_user_override (GimpNumberPairEntry *entry,
                                                  priv->default_left_number,
                                                  priv->default_right_number);
     }
+
+  g_object_notify (G_OBJECT (entry), "user-override");
 }
 
 /**
@@ -678,8 +689,13 @@ static gboolean
 gimp_number_pair_entry_events (GtkWidget *widget,
                                GdkEvent  *event)
 {
-  GimpNumberPairEntry *entry = GIMP_NUMBER_PAIR_ENTRY (widget);
-  const gchar         *text;
+  GimpNumberPairEntry        *entry;
+  GimpNumberPairEntryPrivate *priv;
+  gboolean                    force_user_override;
+
+  entry               = GIMP_NUMBER_PAIR_ENTRY (widget);
+  priv                = GIMP_NUMBER_PAIR_ENTRY_GET_PRIVATE (entry);
+  force_user_override = FALSE;
 
   switch (event->type)
     {
@@ -689,12 +705,73 @@ gimp_number_pair_entry_events (GtkWidget *widget,
 
         if (kevent->keyval != GDK_Return)
           break;
+
+        /* If parsing was done due to widgets focus being lost, we only change
+         * to user-override mode if the values differ from the default ones. If
+         * Return was pressed however, we always switch to user-override mode.
+         */
+        force_user_override = TRUE;
       }
       /* Fall through */
 
     case GDK_FOCUS_CHANGE:
-      text = gtk_entry_get_text (GTK_ENTRY (entry));
-      gimp_number_pair_entry_parse_text (entry, text);
+      {
+        const gchar *text;
+        ParseResult  parse_result;
+        gdouble      left_value;
+        gdouble      right_value;
+
+        text = gtk_entry_get_text (GTK_ENTRY (entry));
+
+        parse_result = gimp_number_pair_entry_parse_text (entry,
+                                                          text,
+                                                          &left_value,
+                                                          &right_value);
+        switch (parse_result)
+          {
+          case PARSE_VALID:
+            {
+              gdouble default_left_value;
+              gdouble default_right_value;
+
+              gimp_number_pair_entry_get_default_values (entry,
+                                                         &default_left_value,
+                                                         &default_right_value);
+
+              if (default_left_value  != left_value  ||
+                  default_right_value != right_value ||
+                  force_user_override)
+                {
+                  gimp_number_pair_entry_set_values (entry,
+                                                     left_value,
+                                                     right_value);
+
+                  priv->user_override = TRUE;
+                  g_object_notify (G_OBJECT (entry), "user-override");
+                }
+            }
+            break;
+
+          case PARSE_CLEAR:
+
+            gimp_number_pair_entry_set_values (entry,
+                                               priv->default_left_number,
+                                               priv->default_right_number);
+
+            priv->user_override = FALSE;
+            g_object_notify (G_OBJECT (entry), "user-override");
+            break;
+
+          default:
+            break;
+          }
+
+        /* Mak sure the entry text is up to date */
+
+        gimp_number_pair_entry_update_text (entry);
+
+        gtk_editable_set_position (GTK_EDITABLE (entry), -1);
+      }
       break;
 
     default:
@@ -755,20 +832,25 @@ gimp_number_pair_entry_valid_separator (GimpNumberPairEntry *entry,
   return FALSE;
 }
 
-static void
+static ParseResult
 gimp_number_pair_entry_parse_text (GimpNumberPairEntry *entry,
-                                   const gchar         *text)
+                                   const gchar         *text,
+                                   gdouble             *left_value,
+                                   gdouble             *right_value)
 {
   GimpNumberPairEntryPrivate *priv = GIMP_NUMBER_PAIR_ENTRY_GET_PRIVATE (entry);
 
-  gdouble  new_left_number;
-  gdouble  new_right_number;
+  gdouble     new_left_number;
+  gdouble     new_right_number;
 
-  gchar    separator;
-  gchar    simplification_char;
-  gchar    dummy;
+  gchar       separator;
+  gchar       simplification_char;
+  gchar       dummy;
 
-  gint     parsed_count;
+  gint        parsed_count;
+  ParseResult parse_result;
+
+  parse_result = PARSE_INVALID;
 
   parsed_count = sscanf (text,
                          " %lf %c %lf %c %c ",
@@ -786,13 +868,8 @@ gimp_number_pair_entry_parse_text (GimpNumberPairEntry *entry,
     case EOF:
     case 0:
 
-      /* Unambigous user clear, start using defaults */
-
-      gimp_number_pair_entry_set_values (entry,
-                                         priv->default_left_number,
-                                         priv->default_right_number);
-
-      priv->user_override = FALSE;
+      /* Unambigous user clear */
+      parse_result = PARSE_CLEAR;
       break;
 
     case 3:
@@ -804,11 +881,10 @@ gimp_number_pair_entry_parse_text (GimpNumberPairEntry *entry,
                                                    new_left_number,
                                                    new_right_number))
         {
-          gimp_number_pair_entry_set_values (entry,
-                                             new_left_number,
-                                             new_right_number);
+          parse_result = PARSE_VALID;
 
-          priv->user_override = TRUE;
+          *left_value  = new_left_number;
+          *right_value = new_right_number;
         }
 
       break;
@@ -824,11 +900,12 @@ gimp_number_pair_entry_parse_text (GimpNumberPairEntry *entry,
                                                    new_left_number,
                                                    new_right_number))
         {
-          gimp_number_pair_entry_set_ratio (entry,
-                                            new_left_number /
-                                            new_right_number);
+          parse_result = PARSE_VALID;
 
-          priv->user_override = TRUE;
+          gimp_number_pair_entry_ratio_to_fraction (new_left_number /
+                                                    new_right_number,
+                                                    left_value,
+                                                    right_value);
         }
 
       break;
@@ -838,16 +915,12 @@ gimp_number_pair_entry_parse_text (GimpNumberPairEntry *entry,
     case 5:
     default:
 
-      /* Ambigous user input, reset to old values */
-
+      /* Ambigous user input */
+      parse_result = PARSE_INVALID;
       break;
     }
 
-  /* Mak sure the entry text is up to date */
-
-  gimp_number_pair_entry_update_text (entry);
-
-  gtk_editable_set_position (GTK_EDITABLE (entry), -1);
+  return parse_result;
 }
 
 static void
