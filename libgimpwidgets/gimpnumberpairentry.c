@@ -98,38 +98,38 @@ typedef struct
   ((GimpNumberPairEntryPrivate *) ((GimpNumberPairEntry *) (obj))->priv)
 
 
-static void           gimp_number_pair_entry_finalize          (GObject             *entry);
+static void      gimp_number_pair_entry_finalize          (GObject             *entry);
 
-static gint           gimp_number_pair_entry_valid_separator   (GimpNumberPairEntry *entry,
-                                                                gchar                canditate);
+static gint      gimp_number_pair_entry_valid_separator   (GimpNumberPairEntry *entry,
+                                                           gchar                canditate);
 
-static void           gimp_number_pair_entry_ratio_to_fraction (gdouble              ratio,
-                                                                gdouble             *numerator,
-                                                                gdouble             *denominator);
+static void      gimp_number_pair_entry_ratio_to_fraction (gdouble              ratio,
+                                                           gdouble             *numerator,
+                                                           gdouble             *denominator);
 
-static void           gimp_number_pair_entry_set_property      (GObject             *object,
-                                                                guint                property_id,
-                                                                const GValue        *value,
-                                                                GParamSpec          *pspec);
-static void           gimp_number_pair_entry_get_property      (GObject             *object,
-                                                                guint                property_id,
-                                                                GValue              *value,
-                                                                GParamSpec          *pspec);
-static gboolean       gimp_number_pair_entry_events            (GtkWidget           *widgett,
-                                                                GdkEvent            *event);
+static void      gimp_number_pair_entry_set_property      (GObject             *object,
+                                                           guint                property_id,
+                                                           const GValue        *value,
+                                                           GParamSpec          *pspec);
+static void      gimp_number_pair_entry_get_property      (GObject             *object,
+                                                           guint                property_id,
+                                                           GValue              *value,
+                                                           GParamSpec          *pspec);
+static gboolean  gimp_number_pair_entry_events            (GtkWidget           *widgett,
+                                                           GdkEvent            *event);
 
-static void           gimp_number_pair_entry_update_text       (GimpNumberPairEntry *entry);
+static void      gimp_number_pair_entry_update_text       (GimpNumberPairEntry *entry);
 
-static void           gimp_number_pair_entry_parse_text        (GimpNumberPairEntry *entry,
-                                                                const gchar         *text);
-static gboolean       gimp_number_pair_entry_numbers_in_range  (GimpNumberPairEntry *entry,
-                                                                gdouble              left_number,
-                                                                gdouble              right_number);
+static void      gimp_number_pair_entry_parse_text        (GimpNumberPairEntry *entry,
+                                                           const gchar         *text);
+static gboolean  gimp_number_pair_entry_numbers_in_range  (GimpNumberPairEntry *entry,
+                                                           gdouble              left_number,
+                                                           gdouble              right_number);
 
-static gchar *        gimp_number_pair_entry_strdup_number_pair_string
-                                                               (GimpNumberPairEntry *entry,
-                                                                gdouble              left_number,
-                                                                gdouble              right_number);
+static gchar *   gimp_number_pair_entry_strdup_number_pair_string
+                                                          (GimpNumberPairEntry *entry,
+                                                           gdouble              left_number,
+                                                           gdouble              right_number);
 
 
 
@@ -282,10 +282,15 @@ gimp_number_pair_entry_init (GimpNumberPairEntry *entry)
 static void
 gimp_number_pair_entry_finalize (GObject *object)
 {
-  GimpNumberPairEntryPrivate *priv = GIMP_NUMBER_PAIR_ENTRY_GET_PRIVATE (object);
+  GimpNumberPairEntryPrivate *priv;
 
-  g_free (priv->separators);
-  priv->separators = NULL;
+  priv = GIMP_NUMBER_PAIR_ENTRY_GET_PRIVATE (object);
+
+  if (priv->separators)
+    {
+      g_free (priv->separators);
+      priv->separators = NULL;
+    }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
 }
@@ -297,18 +302,19 @@ gimp_number_pair_entry_finalize (GObject *object)
  * accepts two numbers separated by a separator. Typical input example
  * with a 'x' separator: "377x233".
  *
- * The widget supports simplification of the entered ratio when the input ends
- * in '=', if "allow-simplification" is TRUE.
+ * The widget supports simplification of the entered ratio when the
+ * input ends in '=', if "allow-simplification" is TRUE.
  *
- * The "separators" property contains a string of characters valid as separators
- * when parsing input. The first separator is used when displaying the current
- * values.
+ * The "separators" property contains a string of characters valid as
+ * separators when parsing input. The first separator is used when
+ * displaying the current values.
  *
- * It is possible to specify what range of values that shall be considered as
- * valid when parsing user input, by changing "min-valid-value" and
- * "max-valid-value".
+ * It is possible to specify what range of values that shall be
+ * considered as valid when parsing user input, by changing
+ * "min-valid-value" and "max-valid-value".
  *
- * The first separator of @separators is used to display the current value.
+ * The first separator of @separators is used to display the current
+ * value.
  *
  * Return value: The new #GimpNumberPairEntry widget.
  *
@@ -619,11 +625,12 @@ gimp_number_pair_entry_get_aspect (GimpNumberPairEntry *entry)
 /**
  * gimp_number_pair_entry_set_user_override:
  * @entry:         A #GimpNumberPairEntry widget.
- * @user_override: %TRUE sets the entry in user overridden mode, %FALSE disables.
+ * @user_override: %TRUE sets the entry in user overridden mode,
+ *                 %FALSE disables.
  *
- * When the entry is not in user overridden mode, the values will change when
- * the default values are changed. When in user overridden mode, setting default
- * values will not affect the active values.
+ * When the entry is not in user overridden mode, the values will
+ * change when the default values are changed. When in user overridden
+ * mode, setting default values will not affect the active values.
  *
  * Since: GIMP 2.4
  **/

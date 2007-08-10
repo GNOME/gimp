@@ -1,3 +1,7 @@
+2007-08-10  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpnumberpairentry.c: formatting.
+
 2007-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* libgimpwidgets/gimpnumberpairentry.[ch]: Some minor cleanup, and
