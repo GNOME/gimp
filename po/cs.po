@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-10 16:50+0200\n"
-"PO-Revision-Date: 2007-08-10 17:01+0200\n"
+"POT-Creation-Date: 2007-08-10 18:42+0200\n"
+"PO-Revision-Date: 2007-08-10 19:20+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -114,7 +114,7 @@ msgstr "Spustit bez uživatelského rozhraní"
 
 #: ../app/main.c:180
 msgid "Do not load brushes, gradients, patterns, ..."
-msgstr "Nenačítat stopy, přechody, vzorky, ..."
+msgstr "Našmírovat stopy, přechody, vzorky, ..."
 
 #: ../app/main.c:185
 msgid "Do not load any fonts"
@@ -176,7 +176,7 @@ msgstr "Považovat všechna varování za fatální"
 
 #: ../app/main.c:257
 msgid "Output a gimprc file with default settings"
-msgstr "Vypsat soubor gimprc s implicitním nastavením"
+msgstr "Vytvořit soubor gimprc s výchozím nastavením"
 
 #: ../app/main.c:337
 msgid "[FILE|URI...]"
@@ -3289,7 +3289,7 @@ msgstr "Přenastavit všechny filtry"
 
 #: ../app/actions/plug-in-commands.c:281
 msgid "Do you really want to reset all filters to default values?"
-msgstr "Opravdu chcete přenastavit všechny filtry na implicitní hodnoty?"
+msgstr "Opravdu chcete přenastavit všechny filtry na výchozí hodnoty?"
 
 #: ../app/actions/quick-mask-actions.c:42
 msgid "Quick Mask Menu"
@@ -3640,7 +3640,7 @@ msgstr "Pře_nastavit volby nástrojů"
 
 #: ../app/actions/tool-options-actions.c:82
 msgid "Reset to default values"
-msgstr "Přenastavit na implicitní hodnoty"
+msgstr "Přenastavit na výchozí hodnoty"
 
 #: ../app/actions/tool-options-actions.c:87
 msgid "Reset _all Tool Options"
@@ -4482,7 +4482,7 @@ msgid ""
 "There was an error parsing your '%s' file. Default values will be used. A "
 "backup of your configuration has been created at '%s'."
 msgstr ""
-"Při zpracovávání vašeho souboru '%s' došlo k chybě. Budou použity implicitní "
+"Při zpracovávání vašeho souboru '%s' došlo k chybě. Budou použity výchozí "
 "hodnoty. Byla vytvořena záloha vaší konfigurace v '%s'."
 
 #. Not all strings defined here are used in the user interface
@@ -4559,7 +4559,7 @@ msgstr ""
 "Nástroje jako přibližný výběr a plechovka hledají oblasti algoritmem "
 "semínkového vyplňování. Semínkové vyplňování začne na původně vybraném "
 "pixelu a pokračuje ve všech směrech, dokud není rozdíl intenzity pixelu od "
-"originálu větší než zadaný limit. Tato hodnota představuje implicitní limit."
+"originálu větší než zadaný limit. Tato hodnota představuje výchozí limit."
 
 #: ../app/config/gimprc-blurbs.h:92
 msgid ""
@@ -4669,7 +4669,7 @@ msgid ""
 "used to be the default behaviour in older versions."
 msgstr ""
 "Je-li povoleno, nástroj přesunu aktivuje upravovanou vrstvu či cestu. To "
-"bylo ve starších verzích implicitní chování."
+"bylo ve starších verzích výchozí chování."
 
 #: ../app/config/gimprc-blurbs.h:212
 msgid ""
@@ -4782,7 +4782,7 @@ msgid ""
 "When enabled, the menubar is visible by default. This can also be toggled "
 "with the \"View->Show Menubar\" command."
 msgstr ""
-"Je-li povoleno, je lišta s menu implicitně viditelná. Může být také přepnuto "
+"Je-li povoleno, je lišta s nabídkou implicitně viditelná. Může být také přepnuto "
 "příkazem \"Zobrazení->Zobrazovat lištu s menu\"."
 
 #: ../app/config/gimprc-blurbs.h:298
@@ -6541,7 +6541,7 @@ msgid ""
 "default value."
 msgstr ""
 "Čtu soubor palety '%s': Neplatný počet sloupců na řádku %d. Používám "
-"implicitní hodnotu."
+"výchozí hodnotu."
 
 #. maybe we should just abort?
 #: ../app/core/gimppalette-load.c:184
@@ -7053,7 +7053,7 @@ msgstr "Přidat masku k vrstvě"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:110
 msgid "Initialize Layer Mask to:"
-msgstr "Implicitní stav masky vrstvy:"
+msgstr "Výchozí stav masky vrstvy:"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:140
 msgid "In_vert mask"
@@ -7065,12 +7065,12 @@ msgstr "Jmé_no vrstvy:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:134
-#: ../app/tools/gimpmeasuretool.c:1056 ../app/tools/gimprectangleoptions.c:877
+#: ../app/tools/gimpmeasuretool.c:1056 ../app/tools/gimprectangleoptions.c:983
 msgid "Width:"
 msgstr "Šířka:"
 
 #: ../app/dialogs/layer-options-dialog.c:140
-#: ../app/tools/gimpmeasuretool.c:1084 ../app/tools/gimprectangleoptions.c:889
+#: ../app/tools/gimpmeasuretool.c:1084 ../app/tools/gimprectangleoptions.c:995
 msgid "Height:"
 msgstr "Výška:"
 
@@ -7285,7 +7285,7 @@ msgstr "Přenastavit všechny předvolby"
 
 #: ../app/dialogs/preferences-dialog.c:280
 msgid "Do you really want to reset all preferences to default values?"
-msgstr "Opravdu chcete přenastavit všechny převolby na implicitní hodnoty?"
+msgstr "Opravdu chcete přenastavit všechny převolby na výchozí hodnoty?"
 
 #: ../app/dialogs/preferences-dialog.c:350
 msgid "You will have to restart GIMP for the following changes to take effect:"
@@ -7300,7 +7300,7 @@ msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
-"Vaše klávesové zkratky budou vráceny na implicitní hodnoty, až příště "
+"Vaše klávesové zkratky budou vráceny na výchozí hodnoty, až příště "
 "spustíte GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:577
@@ -7316,7 +7316,7 @@ msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
-"Vaše nastavení oken bude vráceno na implicitní hodnoty, až příště spustíte "
+"Vaše nastavení oken bude vráceno na výchozí hodnoty, až příště spustíte "
 "GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:675
@@ -7324,7 +7324,7 @@ msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
-"Vaše nastavení vstupních zařízení vráceno na implicitní hodnoty, až příště "
+"Vaše nastavení vstupních zařízení vráceno na výchozí hodnoty, až příště "
 "spustíte GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:710
@@ -7332,7 +7332,7 @@ msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
-"Vaše nastavení nástrojů bude vráceno na implicitní hodnoty, až příště "
+"Vaše nastavení nástrojů bude vráceno na výchozí hodnoty, až příště "
 "spustíte GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:1277
@@ -7457,7 +7457,7 @@ msgstr "_Povolit náhledy vrstev a kanálů"
 
 #: ../app/dialogs/preferences-dialog.c:1613
 msgid "_Default layer & channel preview size:"
-msgstr "Implicitní _velikost náhledu vrstev a kanálů:"
+msgstr "Výchozí _velikost náhledu vrstev a kanálů:"
 
 #: ../app/dialogs/preferences-dialog.c:1616
 msgid "Na_vigation preview size:"
@@ -7556,7 +7556,7 @@ msgstr "Uložit volby nástrojů _teď"
 
 #: ../app/dialogs/preferences-dialog.c:1850
 msgid "_Reset Saved Tool Options to Default Values"
-msgstr "_Obnovit uložené volby nástrojů na implicitní hodnoty"
+msgstr "_Obnovit uložené volby nástrojů na výchozí hodnoty"
 
 #. Snapping Distance
 #: ../app/dialogs/preferences-dialog.c:1860
@@ -7569,7 +7569,7 @@ msgstr "Vzdálenost _přichytávání:"
 
 #: ../app/dialogs/preferences-dialog.c:1873
 msgid "Default _interpolation:"
-msgstr "Implicitní _interpolace:"
+msgstr "Výchozí _interpolace:"
 
 #. Global Brush, Pattern, ...
 #: ../app/dialogs/preferences-dialog.c:1880
@@ -7609,19 +7609,19 @@ msgstr "Zobrazovat aktivní _obrázek"
 
 #: ../app/dialogs/preferences-dialog.c:1947
 msgid "Default New Image"
-msgstr "Implicitní nový obrázek"
+msgstr "Výchozí nový obrázek"
 
 #: ../app/dialogs/preferences-dialog.c:1950
 msgid "Default Image"
-msgstr "Implicitní obrázek"
+msgstr "Výchozí obrázek"
 
 #: ../app/dialogs/preferences-dialog.c:1987
 msgid "Default Image Grid"
-msgstr "Implicitní mřížka obrázku"
+msgstr "Výchozí mřížka obrázku"
 
 #: ../app/dialogs/preferences-dialog.c:1990
 msgid "Default Grid"
-msgstr "Implicitní mřížka"
+msgstr "Výchozí mřížka"
 
 #: ../app/dialogs/preferences-dialog.c:2011
 msgid "Image Windows"
@@ -7692,11 +7692,11 @@ msgstr "Vzhled okna obrázku"
 
 #: ../app/dialogs/preferences-dialog.c:2104
 msgid "Default Appearance in Normal Mode"
-msgstr "Implicitní vzhled v normálním režimu"
+msgstr "Výchozí vzhled v normálním režimu"
 
 #: ../app/dialogs/preferences-dialog.c:2109
 msgid "Default Appearance in Fullscreen Mode"
-msgstr "Implicitní vzhled v režimu přes celou obrazovku"
+msgstr "Výchozí vzhled v režimu přes celou obrazovku"
 
 #: ../app/dialogs/preferences-dialog.c:2118
 msgid "Image Title & Statusbar Format"
@@ -7712,7 +7712,7 @@ msgstr "Aktuální formát"
 
 #: ../app/dialogs/preferences-dialog.c:2140
 msgid "Default format"
-msgstr "Implicitní formát"
+msgstr "Výchozí formát"
 
 #: ../app/dialogs/preferences-dialog.c:2141
 msgid "Show zoom percentage"
@@ -7853,7 +7853,7 @@ msgstr "Uložit nastavení vstupních zařízení _nyní"
 
 #: ../app/dialogs/preferences-dialog.c:2494
 msgid "_Reset Saved Input Device Settings to Default Values"
-msgstr "_Obnovit uložené nastavení vstupních zařízení na implicitní hodnoty"
+msgstr "_Obnovit uložené nastavení vstupních zařízení na výchozí hodnoty"
 
 #: ../app/dialogs/preferences-dialog.c:2509
 msgid "Additional Input Controllers"
@@ -7906,7 +7906,7 @@ msgstr "Uložit polohy oken _okamžitě"
 
 #: ../app/dialogs/preferences-dialog.c:2579
 msgid "_Reset Saved Window Positions to Default Values"
-msgstr "_Obnovit uložené polohy oken na implicitní hodnoty"
+msgstr "_Obnovit uložené polohy oken na výchozí hodnoty"
 
 #: ../app/dialogs/preferences-dialog.c:2594
 msgid "Folders"
@@ -8732,7 +8732,7 @@ msgstr ""
 
 #: ../app/pdb/image_cmds.c:2061
 msgid "Image resolution is out of bounds, using the default resolution instead."
-msgstr "Rozlišení obrázku je mimo rozsah, používám místo něj implicitní rozlišení."
+msgstr "Rozlišení obrázku je mimo rozsah, používám místo něj výchozí rozlišení."
 
 #: ../app/pdb/selection_tools_cmds.c:211 ../app/tools/gimpfreeselecttool.c:97
 msgid "Free Select"
@@ -10255,32 +10255,32 @@ msgstr "Ú_rovně posterizace:"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Při zmenšení výběru použít všechny viditelné vrstvy"
 
-#: ../app/tools/gimprectangleoptions.c:704
+#: ../app/tools/gimprectangleoptions.c:804
 msgid "Expand from center"
 msgstr "Rozšiřovat ze středu"
 
-#: ../app/tools/gimprectangleoptions.c:723
+#: ../app/tools/gimprectangleoptions.c:823
 msgid "Fixed:"
 msgstr "Pevné:"
 
-#: ../app/tools/gimprectangleoptions.c:841
+#: ../app/tools/gimprectangleoptions.c:947
 msgid "Highlight"
 msgstr "Zvýraznění"
 
-#: ../app/tools/gimprectangleoptions.c:858
+#: ../app/tools/gimprectangleoptions.c:964
 msgid "X:"
 msgstr "X:"
 
-#: ../app/tools/gimprectangleoptions.c:866
+#: ../app/tools/gimprectangleoptions.c:972
 msgid "Y:"
 msgstr "Y:"
 
 #. Auto Shrink
-#: ../app/tools/gimprectangleoptions.c:903
+#: ../app/tools/gimprectangleoptions.c:1009
 msgid "Auto Shrink Selection"
 msgstr "Automaticky zmenšit výběr"
 
-#: ../app/tools/gimprectangleoptions.c:911
+#: ../app/tools/gimprectangleoptions.c:1017
 msgid "Shrink merged"
 msgstr "Zmenšit sloučené"
 
@@ -11000,7 +11000,7 @@ msgstr "Aktivní filtry"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:319
 msgid "Reset the selected filter to default values"
-msgstr "Přenastavit vybraný filtr na implicitní hodnoty"
+msgstr "Přenastavit vybraný filtr na výchozí hodnoty"
 
 #: ../app/widgets/gimpcolordisplayeditor.c:493
 #, c-format
