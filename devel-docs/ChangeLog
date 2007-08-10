@@ -1,5 +1,10 @@
 2007-08-10  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/Makefile.am
+	* libgimpwidgets/Makefile.am (FIXXREF_OPTIONS): added libgimpconfig.
+
+2007-08-10  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/libgimpwidgets-sections.txt: added new symbols in
 	GimpNumberPairEntry.
 
