@@ -4,26 +4,26 @@
 # Copyright (C) 2003, 2004 gimp'S COPYRIGHT HOLDER
 # Copyright (C) 2004, 2005 Miloslav Trmac <mitr@volny.cz>
 # This file is distributed under the same license as the gimp package.
+#
 # Miloslav Trmac <mitr@volny.cz>, 2003 - 2005.
 # Jakub Friedl <jfriedl@suse.cz>, 2006, 2007.
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-01-08 20:06+0100\n"
-"PO-Revision-Date: 2007-01-08 20:16+0100\n"
+"POT-Creation-Date: 2007-08-10 18:28+0200\n"
+"PO-Revision-Date: 2007-08-10 18:31+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
-"Language-Team: Czech <en@li.org>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.10.2\n"
+"X-Generator: KBabel 1.11.4\n"
 "Plural-Forms:  nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr "<big>Vítá vás GIMP: GNU program pro manipulaci s obrázky!</big>"
+msgstr "<big>Vítá vás GIMP a celá Wilberova rodina!</big>"
 
 #: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
@@ -135,8 +135,7 @@ msgid ""
 "Layer→Transparency→Add Alpha Channel."
 msgstr ""
 "Je-li název vrstvy v dialogu Vrstvy zobrazen <b>tučně</b>, nemá vrstvaalfa "
-"kanál. Alfa kanál můžete přidat pomocí Vrstva→Průhlednost→Přidat "
-"alfa kanál."
+"kanál. Alfa kanál můžete přidat pomocí Vrstva→Průhlednost→Přidat alfa kanál."
 
 #: ../data/tips/gimp-tips.xml.in.h:13
 msgid ""
@@ -156,9 +155,9 @@ msgid ""
 "their current settings. You can use the Paintbrush in gradient mode or even "
 "the Eraser or the Smudge tool."
 msgstr ""
-"Pro vykreslování cesty (Úpravy→Vykreslit cestu) mohou být použity "
-"kreslicí nástroje s jejich aktuálním nastavením. Můžete použít Štětec v "
-"režimu přechodu nebo dokonce nástroje Guma nebo Šmouha."
+"Pro vykreslování cesty (Úpravy→Vykreslit cestu) mohou být použity kreslicí "
+"nástroje s jejich aktuálním nastavením. Můžete použít Štětec v režimu "
+"přechodu nebo dokonce nástroje Guma nebo Šmouha."
 
 #: ../data/tips/gimp-tips.xml.in.h:15
 msgid ""
@@ -187,9 +186,8 @@ msgid ""
 msgstr ""
 "Některé efekty nemohou být aplikovány na všechny typy obrázků. To je "
 "indikováno zašedlou položkou menu. Možná budete muset změnit režim obrázku "
-"na RGB (Obrázek→Režim→RGB), přidat alfa kanál (Vrstva→"
-"Průhlednost→Přidat alfa kanál) nebo obrázek zploštit (Obrázek→"
-"Zploštit obrázek)."
+"na RGB (Obrázek→Režim→RGB), přidat alfa kanál (Vrstva→Průhlednost→Přidat "
+"alfa kanál) nebo obrázek zploštit (Obrázek→Zploštit obrázek)."
 
 #: ../data/tips/gimp-tips.xml.in.h:18
 msgid ""
@@ -267,17 +265,16 @@ msgid ""
 "strokes the edge of your current selection. More complex shapes can be drawn "
 "using the Path tool or with Filters→Render→Gfig."
 msgstr ""
-"Použití Úpravy→Vykreslit výběr vám umožňuje kreslit jednoduché čtverce "
-"nebo kružnice. Příkaz vykresluje obrys aktuálního výběru. Složitější tvary "
-"můžete kreslit pomocí nástroje Cesty nebo pomocí Filtry→Vyobrazení→"
-"Gfig."
+"Použití Úpravy→Vykreslit výběr vám umožňuje kreslit jednoduché čtverce nebo "
+"kružnice. Příkaz vykresluje obrys aktuálního výběru. Složitější tvary můžete "
+"kreslit pomocí nástroje Cesty nebo pomocí Filtry→Vyobrazení→Gfig."
 
 #: ../data/tips/gimp-tips.xml.in.h:26
 msgid ""
-"You can get context-sensitive help for most of the GIMP's features by "
-"pressing the F1 key at any time. This also works inside the menus."
+"You can get context-sensitive help for most of GIMP's features by pressing "
+"the F1 key at any time. This also works inside the menus."
 msgstr ""
-"Kontextově citlivou nápovědu o většině vlastností programu GIMP můžete "
+"Kontextovou nápovědu o většině vlastností programu GIMP můžete "
 "kdykoli získat stisknutím klávesy F1. Funguje to i v menu."
 
 #: ../data/tips/gimp-tips.xml.in.h:27
@@ -310,7 +307,7 @@ msgstr ""
 #: ../data/tips/gimp-tips.xml.in.h:30
 msgid ""
 "You can use the middle mouse button to pan around the image (or optionally "
-"hold <tt>Spacebar</tt> while you move the mouse.)"
+"hold <tt>Spacebar</tt> while you move the mouse)."
 msgstr ""
 "Pomocí prostředního tlačítka myši můžete posunovat obrázek v okně (můžete "
 "též stisknout mezerník)."
