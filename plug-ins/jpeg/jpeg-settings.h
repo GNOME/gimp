@@ -27,5 +27,5 @@ gboolean  jpeg_restore_original_settings (gint32    image_ID,
                                           gint     *subsmp,
                                           gint     *num_quant_tables);
 
-guint16 **jpeg_restore_original_tables   (gint32    image_ID,
+guint   **jpeg_restore_original_tables   (gint32    image_ID,
                                           gint      num_quant_tables);

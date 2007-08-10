@@ -59,6 +59,10 @@ JpegSaveVals  jsvals;
 gint32        orig_image_ID_global;
 gint32        drawable_ID_global;
 gboolean      has_metadata;
+gint          orig_quality;
+gint          orig_subsmp;
+gint          num_quant_tables;
+
 
 #ifdef HAVE_EXIF
 ExifData     *exif_data = NULL;
@@ -208,6 +212,9 @@ run (const gchar      *name,
   preview_layer_ID = -1;
 
   has_metadata = FALSE;
+  orig_quality = 0;
+  orig_subsmp = 0;
+  num_quant_tables = 0;
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
@@ -389,6 +396,11 @@ run (const gchar      *name,
           /*  Possibly retrieve data  */
           gimp_get_data (SAVE_PROC, &jsvals);
 
+          jpeg_restore_original_settings (orig_image_ID,
+                                          &orig_quality,
+                                          &orig_subsmp,
+                                          &num_quant_tables);
+
           /* load up the previously used values */
           parasite = gimp_image_parasite_find (orig_image_ID,
                                                "jpeg-save-options");
@@ -396,48 +408,42 @@ run (const gchar      *name,
             {
               const JpegSaveVals *save_vals = gimp_parasite_data (parasite);
 
-              jsvals.quality        = save_vals->quality;
-              jsvals.smoothing      = save_vals->smoothing;
-              jsvals.optimize       = save_vals->optimize;
-              jsvals.progressive    = save_vals->progressive;
-              jsvals.baseline       = save_vals->baseline;
-              jsvals.subsmp         = save_vals->subsmp;
-              jsvals.restart        = save_vals->restart;
-              jsvals.dct            = save_vals->dct;
-              jsvals.preview        = save_vals->preview;
-              jsvals.save_exif      = save_vals->save_exif;
-              jsvals.save_thumbnail = save_vals->save_thumbnail;
-              jsvals.save_xmp       = save_vals->save_xmp;
+              jsvals.quality          = save_vals->quality;
+              jsvals.smoothing        = save_vals->smoothing;
+              jsvals.optimize         = save_vals->optimize;
+              jsvals.progressive      = save_vals->progressive;
+              jsvals.baseline         = save_vals->baseline;
+              jsvals.subsmp           = save_vals->subsmp;
+              jsvals.restart          = save_vals->restart;
+              jsvals.dct              = save_vals->dct;
+              jsvals.preview          = save_vals->preview;
+              jsvals.save_exif        = save_vals->save_exif;
+              jsvals.save_thumbnail   = save_vals->save_thumbnail;
+              jsvals.save_xmp         = save_vals->save_xmp;
+              jsvals.use_quant_tables = save_vals->use_quant_tables;
 
               gimp_parasite_free (parasite);
             }
           else
             {
-              gint orig_quality;
-              gint orig_subsmp;
-              gint orig_quant_tables;
-
               /* We are called with GIMP_RUN_WITH_LAST_VALS but this image
                * doesn't have a "jpeg-save-options" parasite. It's better
                * to prompt the user with a dialog now so that she has control
                * over the JPEG encoding parameters.
                */
               run_mode = GIMP_RUN_INTERACTIVE;
-              /* If this image was loaded from a JPEG file (and has not been
-               * saved yet), try to use some of the settings from the
+              /* If this image was loaded from a JPEG file and has not been
+               * saved yet, try to use some of the settings from the
                * original file if they are better than the default values.
                */
-              if (jpeg_restore_original_settings (image_ID,
-                                                  &orig_quality,
-                                                  &orig_subsmp,
-                                                  &orig_quant_tables))
+              if (orig_quality > jsvals.quality)
                 {
-                  if (orig_quality > jsvals.quality)
-                    jsvals.quality = orig_quality;
-                  if (orig_subsmp == 2
-                      || (orig_subsmp > 0 && jsvals.subsmp == 0))
-                    jsvals.subsmp = orig_subsmp;
+                  jsvals.quality = orig_quality;
+                  jsvals.use_quant_tables = TRUE;
                 }
+              if (orig_subsmp == 2
+                  || (orig_subsmp > 0 && jsvals.subsmp == 0))
+                jsvals.subsmp = orig_subsmp;
             }
           break;
         }

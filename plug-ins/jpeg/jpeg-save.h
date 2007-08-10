@@ -30,6 +30,7 @@ typedef struct
   gboolean save_exif;
   gboolean save_thumbnail;
   gboolean save_xmp;
+  gboolean use_quant_tables;
 } JpegSaveVals;
 
 extern JpegSaveVals     jsvals;

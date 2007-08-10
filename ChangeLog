@@ -1,3 +1,17 @@
+2007-08-10  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/jpeg/jpeg.[ch]
+	* plug-ins/jpeg/jpeg-save.[ch]: in the JPEG save dialog, removed
+	the option "Force baseline JPEG" and added the new option "Use
+	custom quantization tables" to allow resaving a JPEG file with the
+	same compression settings as the original file. This is useful if
+	the quantization tables are different from those that can be
+	created by the IJG JPEG library.
+
+	* plug-ins/jpeg/jpeg-settings.[ch]: updated comments, changed the
+	return type of jpeg_restore_original_tables() because the IJG JPEG
+	library expects unsigned integers.
+
 2007-08-10  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpnumberpairentry.c: store separators as

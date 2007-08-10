@@ -22,11 +22,11 @@
 /*
  * Structure of the "jpeg-settings" parasite:
  *       1 byte  - JPEG color space (JCS_YCbCr, JCS_GRAYSCALE, JCS_CMYK, ...)
- *       1 byte  - quality (according to the IJG scale, 0..100)
+ *       1 byte  - quality (1..100 according to the IJG scale, or 0)
  *       1 byte  - number of components (0..4)
  *       1 byte  - number of quantization tables (0..4)
  *   C * 2 bytes - sampling factors for each component (1..4)
- * T * 128 bytes - quantization tables (if different from IJG tables)
+ * T * 128 bytes - quantization tables (only if different from IJG tables)
  *
  * Additional data following the quantization tables is currently
  * ignored and can be used for future extensions.
@@ -157,7 +157,7 @@ jpeg_detect_original_settings (struct jpeg_decompress_struct *cinfo,
  * and number of quantization tables) from the parasite attached to
  * @image_ID.  If the number of quantization tables is greater than
  * zero, then these tables can be retrieved from the parasite by
- * calling jpeg_get_original_tables().
+ * calling jpeg_restore_original_tables().
  *
  * Return Value: TRUE if a valid parasite was attached to the image
  */
@@ -250,14 +250,17 @@ jpeg_restore_original_settings (gint32  image_ID,
  * can be associated with a component of a JPEG image when saving it.
  *
  * An array of newly allocated tables is returned if @num_quant_tables
- * matches the number of tables saved in the parasite.  When these
- * tables are not needed anymore, the caller should free them using
- * g_free().  If no parasite exists or if it cannot be used, this
- * function returns NULL.
+ * matches the number of tables saved in the parasite.  These tables
+ * are returned as arrays of unsigned integers even if they will never
+ * use more than 16 bits (8 bits in most cases) because the IJG JPEG
+ * library expects arrays of unsigned integers.  When these tables are
+ * not needed anymore, the caller should free them using g_free().  If
+ * no parasite exists or if it cannot be used, this function returns
+ * NULL.
  *
  * Return Value: an array of quantization tables, or NULL.
  */
-guint16 **
+guint **
 jpeg_restore_original_tables (gint32    image_ID,
                               gint      num_quant_tables)
 {
@@ -266,12 +269,12 @@ jpeg_restore_original_tables (gint32    image_ID,
   glong         src_size;
   gint          num_components;
   gint          num_tables;
-  guint16     **quant_tables;
+  guint       **quant_tables;
   gint          t;
   gint          i;
 
   parasite = gimp_image_parasite_find (image_ID, "jpeg-settings");
-  if (! parasite)
+  if (parasite)
     {
       src_size = gimp_parasite_data_size (parasite);
       if (src_size >= 4)
@@ -285,14 +288,14 @@ jpeg_restore_original_tables (gint32    image_ID,
               && num_tables == num_quant_tables)
             {
               src += num_components * 2;
-              quant_tables = g_new (guint16 *, num_tables);
+              quant_tables = g_new (guint *, num_tables);
 
               for (t = 0; t < num_tables; t++)
                 {
-                  quant_tables[t] = g_new (guint16, 128);
-                  for (i = 0; i < 128; i++)
+                  quant_tables[t] = g_new (guint, 128);
+                  for (i = 0; i < 64; i++)
                     {
-                      guint16 c;
+                      guint c;
 
                       c = *src++ * 256;
                       c += *src++;

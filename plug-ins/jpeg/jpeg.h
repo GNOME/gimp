@@ -49,6 +49,9 @@ extern gboolean         load_interactive;
 extern gint32           display_ID;
 extern gchar           *image_comment;
 extern gboolean         has_metadata;
+extern gint             orig_quality;
+extern gint             orig_subsmp;
+extern gint             num_quant_tables;
 
 gint32    load_image                    (const gchar   *filename,
                                          GimpRunMode    runmode,
