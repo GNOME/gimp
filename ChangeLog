@@ -1,5 +1,10 @@
 2007-08-10  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppropwidgets.c
+	(gimp_prop_file_chooser_button_new_with_dialog): added bug number.
+
+2007-08-10  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpfiledialog.c (gimp_file_dialog_set_image): minor
 	cleanup.
 

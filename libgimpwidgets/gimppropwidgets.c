@@ -2168,7 +2168,7 @@ gimp_prop_file_chooser_button_new_with_dialog (GObject     *config,
   if (! param_spec)
     return NULL;
 
-  /* work around bug in GtkFileChooserButton */
+  /* work around bug in GtkFileChooserButton (bug #436576) */
   title = g_strdup (gtk_window_get_title (GTK_WINDOW (dialog)));
 
   button = gtk_file_chooser_button_new_with_dialog (dialog);
