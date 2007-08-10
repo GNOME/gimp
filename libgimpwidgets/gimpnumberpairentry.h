@@ -86,6 +86,11 @@ void           gimp_number_pair_entry_set_aspect         (GimpNumberPairEntry *e
                                                           GimpAspectType       aspect);
 GimpAspectType gimp_number_pair_entry_get_aspect         (GimpNumberPairEntry *entry);
 
+void           gimp_number_pair_entry_set_user_override  (GimpNumberPairEntry *entry,
+                                                          gboolean             user_override);
+gboolean       gimp_number_pair_entry_get_user_override  (GimpNumberPairEntry *entry);
+
+
 
 
 G_END_DECLS

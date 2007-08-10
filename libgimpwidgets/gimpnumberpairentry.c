@@ -98,8 +98,6 @@ typedef struct
   ((GimpNumberPairEntryPrivate *) ((GimpNumberPairEntry *) (obj))->priv)
 
 
-static void           gimp_number_pair_entry_set_user_override (GimpNumberPairEntry *entry,
-                                                                gboolean             user_override);
 static void           gimp_number_pair_entry_finalize          (GObject             *entry);
 
 static gint           gimp_number_pair_entry_valid_separator   (GimpNumberPairEntry *entry,
@@ -382,7 +380,7 @@ gimp_number_pair_entry_ratio_to_fraction (gdouble  ratio,
 
 /**
  * gimp_number_pair_entry_set_ratio:
- * @entry: A #gimpnumberpairentry widget.
+ * @entry: A #GimpNumberPairEntry widget.
  * @ratio: Ratio to set in the widget.
  *
  * Sets the numbers of the #GimpNumberPairEntry to have the desired
@@ -410,7 +408,7 @@ gimp_number_pair_entry_set_ratio (GimpNumberPairEntry *entry,
 
 /**
  * gimp_number_pair_entry_get_ratio:
- * @entry: A #gimpnumberpairentry widget.
+ * @entry: A #GimpNumberPairEntry widget.
  *
  * Retrieves the ratio of the numbers displayed by a #GimpNumberPairEntry.
  *
@@ -546,8 +544,8 @@ gimp_number_pair_entry_get_values (GimpNumberPairEntry *entry,
 
 /**
  * gimp_number_pair_entry_set_aspect:
- * @entry: A #gimpnumberpairentry widget.
- * @aspect: the new aspect
+ * @entry:  A #GimpNumberPairEntry widget.
+ * @aspect: The new aspect.
  *
  * Sets the aspect of the ratio by swapping the left_number and
  * right_number if necessary (or setting them to 1.0 in case that
@@ -587,7 +585,7 @@ gimp_number_pair_entry_set_aspect (GimpNumberPairEntry *entry,
 
 /**
  * gimp_number_pair_entry_get_aspect:
- * @entry: A #gimpnumberpairentry widget.
+ * @entry: A #GimpNumberPairEntry widget.
  *
  * Gets the aspect of the ratio displayed by a #GimpNumberPairEntry.
  *
@@ -618,11 +616,26 @@ gimp_number_pair_entry_get_aspect (GimpNumberPairEntry *entry)
     }
 }
 
-static void
+/**
+ * gimp_number_pair_entry_set_user_override:
+ * @entry:         A #GimpNumberPairEntry widget.
+ * @user_override: %TRUE sets the entry in user overridden mode, %FALSE disables.
+ *
+ * When the entry is not in user overridden mode, the values will change when
+ * the default values are changed. When in user overridden mode, setting default
+ * values will not affect the active values.
+ *
+ * Since: GIMP 2.4
+ **/
+void
 gimp_number_pair_entry_set_user_override (GimpNumberPairEntry *entry,
                                           gboolean             user_override)
 {
-  GimpNumberPairEntryPrivate *priv = GIMP_NUMBER_PAIR_ENTRY_GET_PRIVATE (entry);
+  GimpNumberPairEntryPrivate *priv;
+
+  g_return_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry));
+
+  priv = GIMP_NUMBER_PAIR_ENTRY_GET_PRIVATE (entry);
 
   priv->user_override = user_override;
 
@@ -632,6 +645,26 @@ gimp_number_pair_entry_set_user_override (GimpNumberPairEntry *entry,
                                                  priv->default_left_number,
                                                  priv->default_right_number);
     }
+}
+
+/**
+ * gimp_number_pair_entry_get_user_override:
+ * @entry: A #GimpNumberPairEntry widget.
+ *
+ * Returns: Wether or not the the widget is in user overridden mode.
+ *
+ * Since: GIMP 2.4
+ **/
+gboolean
+gimp_number_pair_entry_get_user_override (GimpNumberPairEntry *entry)
+{
+  GimpNumberPairEntryPrivate *priv;
+
+  g_return_val_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry), FALSE);
+
+  priv = GIMP_NUMBER_PAIR_ENTRY_GET_PRIVATE (entry);
+
+  return priv->user_override;
 }
 
 static gboolean
@@ -844,8 +877,8 @@ gimp_number_pair_entry_set_property (GObject      *object,
                                                  g_value_get_double (value));
       break;
     case PROP_USER_OVERRIDE:
-      gimp_number_pair_entry_set_user_override(entry,
-                                               g_value_get_boolean (value));
+      gimp_number_pair_entry_set_user_override (entry,
+                                                g_value_get_boolean (value));
       break;
     case PROP_SEPARATORS:
       g_free (priv->separators);

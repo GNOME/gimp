@@ -171,11 +171,13 @@ EXPORTS
 	gimp_number_pair_entry_get_default_values
 	gimp_number_pair_entry_get_ratio
 	gimp_number_pair_entry_get_type
+	gimp_number_pair_entry_get_user_override
 	gimp_number_pair_entry_get_values
 	gimp_number_pair_entry_new
 	gimp_number_pair_entry_set_aspect
 	gimp_number_pair_entry_set_default_values
 	gimp_number_pair_entry_set_ratio
+	gimp_number_pair_entry_set_user_override
 	gimp_number_pair_entry_set_values
 	gimp_offset_area_get_type
 	gimp_offset_area_new

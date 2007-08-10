@@ -1,3 +1,11 @@
+2007-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* libgimpwidgets/gimpnumberpairentry.[ch]: Some minor cleanup, and
+	(gimp_number_pair_entry_set_user_override)
+	(gimp_number_pair_entry_get_user_override): are now in the API.
+
+	* libgimpwidgets/gimpwidgets.def: Updated.
+
 2007-08-09  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* libgimpwidgets/gimpnumberpairentry.[ch]: Added properties for
