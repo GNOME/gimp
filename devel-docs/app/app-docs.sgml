@@ -159,6 +159,7 @@
       <xi:include href="xml/gimp-parasites.xml" />
       <xi:include href="xml/gimp-templates.xml" />
       <xi:include href="xml/gimp-units.xml" />
+      <xi:include href="xml/gimp-user-install.xml" />
     </chapter>
 
     <chapter id="app-core-context">
@@ -197,6 +198,7 @@
       <xi:include href="xml/gimpgradient-save.xml" />
       <xi:include href="xml/gimppalette.xml" />
       <xi:include href="xml/gimppalette-import.xml" />
+      <xi:include href="xml/gimppalette-load.xml" />
       <xi:include href="xml/gimppattern.xml" />
       <xi:include href="xml/gimppattern-header.xml" />
       <xi:include href="xml/gimppatternclipboard.xml" />
@@ -285,6 +287,7 @@
       <xi:include href="xml/gimppdbprogress.xml" />
       <xi:include href="xml/gimpprojection.xml" />
       <xi:include href="xml/gimpprojection-construct.xml" />
+      <xi:include href="xml/gimpsubprogress.xml" />
       <xi:include href="xml/gimptemplate.xml" />
     </chapter>
 
@@ -822,6 +825,7 @@
       <xi:include href="xml/gimpgrideditor.xml" />
       <xi:include href="xml/gimphistogrambox.xml" />
       <xi:include href="xml/gimphistogramview.xml" />
+      <xi:include href="xml/gimpimagecommenteditor.xml" />
       <xi:include href="xml/gimpimageparasiteview.xml" />
       <xi:include href="xml/gimpimageprofileview.xml" />
       <xi:include href="xml/gimpimagepropview.xml" />

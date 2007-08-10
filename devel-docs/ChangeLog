@@ -1,5 +1,10 @@
 2007-08-10  Sven Neumann  <sven@gimp.org>
 
+	* app/app-sections.txt
+	* app/app-docs.sgml: minor update.
+
+2007-08-10  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/libgimpwidgets-docs.sgml: include GimpZoomModel.
 
 2007-08-10  Sven Neumann  <sven@gimp.org>

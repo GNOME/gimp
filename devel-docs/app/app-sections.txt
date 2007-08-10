@@ -177,6 +177,16 @@ gimp_get_theme_dir
 </SECTION>
 
 <SECTION>
+<FILE>gimp-user-install</FILE>
+GimpUserInstall
+GimpUserInstallLogFunc
+gimp_user_install_new
+gimp_user_install_run
+gimp_user_install_free
+gimp_user_install_set_log_handler
+</SECTION>
+
+<SECTION>
 <FILE>gimp-documents</FILE>
 <TITLE>Gimp-documents</TITLE>
 gimp_documents_load
@@ -484,6 +494,7 @@ gimp_container_foreach
 gimp_container_get_child_by_name
 gimp_container_get_child_by_index
 gimp_container_get_child_index
+gimp_container_get_neighbor_of_active
 gimp_container_add_handler
 gimp_container_remove_handler
 gimp_container_get_name_array
@@ -967,6 +978,9 @@ gimp_gradient_new
 gimp_gradient_get_standard
 gimp_gradient_get_color_at
 gimp_gradient_get_segment_at
+gimp_gradient_has_fg_bg_segments
+gimp_gradient_flatten
+gimp_gradient_save_pov
 gimp_gradient_segment_new
 gimp_gradient_segment_get_left_pos
 gimp_gradient_segment_set_left_pos
@@ -976,8 +990,12 @@ gimp_gradient_segment_get_right_pos
 gimp_gradient_segment_set_right_pos
 gimp_gradient_segment_get_left_color
 gimp_gradient_segment_set_left_color
+gimp_gradient_segment_get_left_color_type
+gimp_gradient_segment_set_left_color_type
 gimp_gradient_segment_get_right_color
 gimp_gradient_segment_set_right_color
+gimp_gradient_segment_get_right_color_type
+gimp_gradient_segment_set_right_color_type
 gimp_gradient_segment_get_coloring_type
 gimp_gradient_segment_get_blending_function
 gimp_gradient_segment_split_midpoint
@@ -1230,6 +1248,7 @@ gimp_interpreter_db_new
 gimp_interpreter_db_load
 gimp_interpreter_db_clear
 gimp_interpreter_db_resolve
+gimp_interpreter_db_get_extensions
 <SUBSECTION Standard>
 GimpInterpreterDBClass
 GIMP_INTERPRETER_DB
@@ -1452,11 +1471,11 @@ GimpPaletteEntry
 GimpPalette
 gimp_palette_new
 gimp_palette_get_standard
-gimp_palette_load
 gimp_palette_add_entry
 gimp_palette_delete_entry
 gimp_palette_set_columns
 gimp_palette_get_columns
+gimp_palette_save
 <SUBSECTION Standard>
 GimpPaletteClass
 GIMP_PALETTE
@@ -1466,6 +1485,28 @@ gimp_palette_get_type
 GIMP_PALETTE_CLASS
 GIMP_IS_PALETTE_CLASS
 GIMP_PALETTE_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimppalette-import</FILE>
+<TITLE>GimpPalette-import</TITLE>
+gimp_palette_import_from_file
+gimp_palette_import_from_gradient
+gimp_palette_import_from_image
+gimp_palette_import_from_indexed_image
+gimp_palette_import_from_drawable
+</SECTION>
+
+<SECTION>
+<FILE>gimppalette-load</FILE>
+GIMP_PALETTE_FILE_EXTENSION
+GimpPaletteFileFormat
+gimp_palette_load
+gimp_palette_load_act
+gimp_palette_load_riff
+gimp_palette_load_psp
+gimp_palette_load_aco
+gimp_palette_load_detect_format
 </SECTION>
 
 <SECTION>
@@ -1537,22 +1578,6 @@ GIMP_PATTERN_CLIPBOARD_GET_CLASS
 </SECTION>
 
 <SECTION>
-<FILE>gimppdbprogress</FILE>
-<TITLE>GimpPdbProgress</TITLE>
-GimpPdbProgress
-gimp_pdb_progress_get_by_callback
-<SUBSECTION Standard>
-GimpPdbProgressClass
-GIMP_PDB_PROGRESS
-GIMP_IS_PDB_PROGRESS
-GIMP_TYPE_PDB_PROGRESS
-gimp_pdb_progress_get_type
-GIMP_PDB_PROGRESS_CLASS
-GIMP_IS_PDB_PROGRESS_CLASS
-GIMP_PDB_PROGRESS_GET_CLASS
-</SECTION>
-
-<SECTION>
 <FILE>gimpprogress</FILE>
 <TITLE>GimpProgress</TITLE>
 GimpProgress
@@ -1574,6 +1599,39 @@ GIMP_IS_PROGRESS
 GIMP_TYPE_PROGRESS
 gimp_progress_interface_get_type
 GIMP_PROGRESS_GET_INTERFACE
+</SECTION>
+
+<SECTION>
+<FILE>gimppdbprogress</FILE>
+<TITLE>GimpPdbProgress</TITLE>
+GimpPdbProgress
+gimp_pdb_progress_get_by_callback
+<SUBSECTION Standard>
+GimpPdbProgressClass
+GIMP_PDB_PROGRESS
+GIMP_IS_PDB_PROGRESS
+GIMP_TYPE_PDB_PROGRESS
+gimp_pdb_progress_get_type
+GIMP_PDB_PROGRESS_CLASS
+GIMP_IS_PDB_PROGRESS_CLASS
+GIMP_PDB_PROGRESS_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpsubprogress</FILE>
+<TITLE>GimpSubProgress</TITLE>
+GimpSubProgress
+gimp_sub_progress_new
+gimp_sub_progress_set_range
+gimp_sub_progress_set_step
+<SUBSECTION Standard>
+GIMP_SUB_PROGRESS
+GIMP_IS_SUB_PROGRESS
+GIMP_TYPE_SUB_PROGRESS
+gimp_sub_progress_get_type
+GIMP_SUB_PROGRESS_CLASS
+GIMP_IS_SUB_PROGRESS_CLASS
+GIMP_SUB_PROGRESS_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -1698,8 +1756,10 @@ GIMP_TOOL_INFO_GET_CLASS
 <TITLE>GimpToolOptions</TITLE>
 GimpToolOptions
 gimp_tool_options_reset
+gimp_tool_options_delete
 gimp_tool_options_serialize
 gimp_tool_options_deserialize
+gimp_tool_options_create_folder
 <SUBSECTION Standard>
 GimpToolOptionsClass
 GIMP_TOOL_OPTIONS
@@ -2333,7 +2393,9 @@ gimp_display_shell_autoscroll_stop
 <FILE>gimpdisplayshell-selection</FILE>
 <TITLE>GimpDisplayShell-selection</TITLE>
 Selection
+gimp_display_shell_selection_init
 gimp_display_shell_selection_free
+gimp_display_shell_selection_control
 gimp_display_shell_selection_set_hidden
 gimp_display_shell_selection_layer_set_hidden
 </SECTION>
@@ -2384,12 +2446,19 @@ CURSOR_FORMAT_LENGTH
 GimpStatusbar
 gimp_statusbar_new
 gimp_statusbar_push
+gimp_statusbar_push_valist
 gimp_statusbar_push_coords
 gimp_statusbar_push_length
-gimp_statusbar_replace
+gimp_statusbar_push_temp
+gimp_statusbar_push_temp_valist
 gimp_statusbar_pop
+gimp_statusbar_pop_temp
+gimp_statusbar_replace
+gimp_statusbar_replace_valist
 gimp_statusbar_update_cursor
 gimp_statusbar_clear_cursor
+gimp_statusbar_get_visible
+gimp_statusbar_set_visible
 <SUBSECTION Standard>
 GimpStatusbarClass
 GIMP_STATUSBAR
@@ -2626,6 +2695,7 @@ GIMP_PAINT_CORE_UNDO_GET_CLASS
 <FILE>gimpbrushcore</FILE>
 BRUSH_CORE_SUBSAMPLE
 BRUSH_CORE_SOLID_SUBSAMPLE
+BRUSH_CORE_JITTER_LUTSIZE
 PRESSURE_SCALE
 <TITLE>GimpBrushCore</TITLE>
 GimpBrushCore
@@ -4227,6 +4297,8 @@ gimp_tool_control_set_scroll_lock
 gimp_tool_control_get_scroll_lock
 gimp_tool_control_set_handle_empty_image
 gimp_tool_control_get_handle_empty_image
+gimp_tool_control_set_wants_click
+gimp_tool_control_get_wants_click
 gimp_tool_control_set_dirty_mask
 gimp_tool_control_get_dirty_mask
 gimp_tool_control_set_motion_mode
@@ -4529,6 +4601,7 @@ gimp_action_group_set_action_label
 gimp_action_group_set_action_color
 gimp_action_group_set_action_viewable
 gimp_action_group_set_action_hide_empty
+gimp_action_group_activate_action
 <SUBSECTION Standard>
 GimpActionGroupClass
 GIMP_ACTION_GROUP
@@ -5035,6 +5108,7 @@ gimp_container_view_item_context
 gimp_container_view_install_properties
 gimp_container_view_set_property
 gimp_container_view_get_property
+gimp_container_view_remove_active
 <SUBSECTION Standard>
 GIMP_CONTAINER_VIEW
 GIMP_IS_CONTAINER_VIEW
@@ -5743,6 +5817,7 @@ GIMP_MENU_DOCK_GET_CLASS
 <TITLE>GimpImageEditor</TITLE>
 GimpImageEditor
 GimpImageEditorClass
+gimp_image_editor_get_image
 gimp_image_editor_set_image
 <SUBSECTION Standard>
 GIMP_IMAGE_EDITOR
@@ -5782,6 +5857,7 @@ GimpNewItemFunc
 <TITLE>GimpItemTreeView</TITLE>
 GimpItemTreeView
 gimp_item_tree_view_new
+gimp_item_tree_view_get_image
 gimp_item_tree_view_set_image
 <SUBSECTION Standard>
 GimpItemTreeViewClass
@@ -5938,6 +6014,21 @@ gimp_image_prop_view_get_type
 GIMP_IMAGE_PROP_VIEW_CLASS
 GIMP_IS_IMAGE_PROP_VIEW_CLASS
 GIMP_IMAGE_PROP_VIEW_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpimagecommenteditor</FILE>
+<TITLE>GimpImageCommentEditor</TITLE>
+GimpImageCommentEditor
+gimp_image_comment_editor_new
+<SUBSECTION Standard>
+GIMP_IMAGE_COMMENT_EDITOR
+GIMP_IS_IMAGE_COMMENT_EDITOR
+GIMP_TYPE_IMAGE_COMMENT_EDITOR
+gimp_image_comment_editor_get_type
+GIMP_IMAGE_COMMENT_EDITOR_CLASS
+GIMP_IS_IMAGE_COMMENT_EDITOR_CLASS
+GIMP_IMAGE_COMMENT_EDITOR_GET_CLASS
 </SECTION>
 
 <SECTION>
@@ -6847,6 +6938,8 @@ batch_run
 <SECTION>
 <FILE>errors</FILE>
 errors_init
+errors_exit
+gimp_fatal_error
 gimp_terminate
 </SECTION>
 
@@ -7106,8 +7199,11 @@ tile_manager_new
 tile_manager_ref
 tile_manager_unref
 tile_manager_set_validate_proc
-tile_manager_get_tile
+tile_manager_invalidate_area
 tile_manager_get
+tile_manager_get_at
+tile_manager_get_tile
+tile_manager_get_tile_col_row
 tile_manager_map_tile
 tile_manager_map
 tile_manager_validate
@@ -7118,6 +7214,8 @@ tile_manager_get_offsets
 tile_manager_set_offsets
 tile_manager_get_memsize
 tile_manager_get_tile_coordinates
+tile_manager_tiles_per_col
+tile_manager_tiles_per_row
 tile_manager_map_over_tile
 read_pixel_data
 write_pixel_data
@@ -7324,6 +7422,8 @@ GIMP_TYPE_JOIN_STYLE
 GimpJoinStyle
 GIMP_TYPE_ORIENTATION_TYPE
 GimpOrientationType
+GIMP_TYPE_MESSAGE_SEVERITY
+GimpMessageSeverity
 GIMP_TYPE_ROTATION_TYPE
 GimpRotationType
 GIMP_TYPE_VIEW_SIZE
@@ -7367,6 +7467,7 @@ gimp_offset_type_get_type
 gimp_fill_type_get_type
 gimp_gravity_type_get_type
 gimp_join_style_get_type
+gimp_message_severity_get_type
 gimp_orientation_type_get_type
 gimp_rotation_type_get_type
 gimp_view_size_get_type
@@ -7552,6 +7653,7 @@ gimp_image_contiguous_region_by_color
 <TITLE>GimpImage-convert</TITLE>
 MAXNUMCOLORS
 gimp_image_convert
+gimp_image_convert_set_dither_matrix
 </SECTION>
 
 <SECTION>
@@ -7684,6 +7786,20 @@ gimp_image_snap_rectangle
 </SECTION>
 
 <SECTION>
+<FILE>gimpimage-undo</FILE>
+<TITLE>GimpImage-undo</TITLE>
+gimp_image_undo
+gimp_image_redo
+gimp_image_strong_undo
+gimp_image_strong_redo
+gimp_image_undo_free
+gimp_image_undo_group_start
+gimp_image_undo_group_end
+gimp_image_undo_push
+gimp_image_undo_get_fadeable
+</SECTION>
+
+<SECTION>
 <FILE>gimpimage-undo-push</FILE>
 <TITLE>GimpImage-undo-push</TITLE>
 gimp_image_undo_push_image_type
@@ -7731,17 +7847,6 @@ gimp_image_undo_push_cantundo
 </SECTION>
 
 <SECTION>
-<FILE>gimpimage-undo</FILE>
-<TITLE>GimpImage-undo</TITLE>
-gimp_image_undo
-gimp_image_redo
-gimp_image_undo_free
-gimp_image_undo_group_start
-gimp_image_undo_group_end
-gimp_image_undo_push
-</SECTION>
-
-<SECTION>
 <FILE>gimpitem-linked</FILE>
 <TITLE>GimpItem-linked</TITLE>
 gimp_item_linked_translate
@@ -7758,16 +7863,6 @@ gimp_item_get_popup_size
 </SECTION>
 
 <SECTION>
-<FILE>gimppalette-import</FILE>
-<TITLE>GimpPalette-import</TITLE>
-gimp_palette_import_from_file
-gimp_palette_import_from_gradient
-gimp_palette_import_from_image
-gimp_palette_import_from_indexed_image
-gimp_palette_import_from_drawable
-</SECTION>
-
-<SECTION>
 <FILE>gimppickable</FILE>
 <TITLE>GimpPickable</TITLE>
 GimpPickable
@@ -7778,6 +7873,7 @@ gimp_pickable_get_bytes
 gimp_pickable_get_tiles
 gimp_pickable_get_color_at
 gimp_pickable_get_opacity_at
+gimp_pickable_get_pixel_at
 gimp_pickable_pick_color
 gimp_pickable_flush
 <SUBSECTION Standard>
@@ -7856,6 +7952,7 @@ gimp_marshal_BOOLEAN__BOOLEAN
 gimp_marshal_BOOLEAN__ENUM_INT
 gimp_marshal_BOOLEAN__OBJECT_POINTER
 gimp_marshal_BOOLEAN__OBJECT_POINTER_STRING
+gimp_marshal_VOID__BOOLEAN
 gimp_marshal_VOID__BOOLEAN_INT_INT_INT_INT
 gimp_marshal_VOID__BOXED
 gimp_marshal_VOID__BOXED_ENUM
@@ -8312,6 +8409,7 @@ CombinationMode
 paint_funcs_setup
 paint_funcs_free
 color_pixels
+color_pixels_mask
 blend_pixels
 shade_pixels
 extract_alpha_pixels
@@ -8324,6 +8422,9 @@ apply_mask_to_alpha_channel
 combine_mask_and_alpha_channel_stipple
 combine_mask_and_alpha_channel_stroke
 copy_gray_to_inten_a_pixels
+copy_color
+copy_color_pixels
+copy_component_pixels
 initial_channel_pixels
 initial_indexed_pixels
 initial_indexed_a_pixels
@@ -8517,6 +8618,11 @@ gimp_plug_in_procedure_set_image_types
 gimp_plug_in_procedure_set_file_proc
 gimp_plug_in_procedure_set_mime_type
 gimp_plug_in_procedure_set_thumb_loader
+gimp_plug_in_procedure_get_blurb
+gimp_plug_in_procedure_get_help_domain
+gimp_plug_in_procedure_set_help_domain
+gimp_plug_in_procedure_get_locale_domain
+gimp_plug_in_procedure_set_locale_domain
 <SUBSECTION Standard>
 GimpPlugInProcedureClass
 GIMP_PLUG_IN_PROCEDURE
@@ -8828,6 +8934,7 @@ tool_manager_motion_active
 tool_manager_focus_display_active
 tool_manager_key_press_active
 tool_manager_modifier_state_active
+tool_manager_active_modifier_state_active
 tool_manager_oper_update_active
 tool_manager_cursor_update_active
 </SECTION>
@@ -9510,6 +9617,7 @@ context_brush_aspect_cmd_callback
 context_brush_hardness_cmd_callback
 context_brush_radius_cmd_callback
 context_brush_shape_cmd_callback
+context_brush_spacing_cmd_callback
 context_brush_spikes_cmd_callback
 </SECTION>
 
@@ -9835,6 +9943,8 @@ tools_color_average_radius_cmd_callback
 tools_ink_blob_size_cmd_callback
 tools_ink_blob_aspect_cmd_callback
 tools_ink_blob_angle_cmd_callback
+tools_paint_brush_scale_cmd_callback
+tools_fg_select_brush_size_cmd_callback
 tools_object_1_cmd_callback
 tools_object_2_cmd_callback
 tools_value_1_cmd_callback
@@ -9954,4 +10064,5 @@ menus_exit
 menus_restore
 menus_save
 menus_clear
+menus_remove
 </SECTION>
