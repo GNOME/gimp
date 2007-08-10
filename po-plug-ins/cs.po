@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-05 17:16+0200\n"
-"PO-Revision-Date: 2007-07-05 17:16+0200\n"
+"POT-Creation-Date: 2007-08-10 17:07+0200\n"
+"PO-Revision-Date: 2007-08-10 17:13+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -96,8 +96,7 @@ msgid "Iterations:"
 msgstr "Iterace:"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:773
-msgid ""
-"The higher the number of iterations, the more details will be calculated"
+msgid "The higher the number of iterations, the more details will be calculated"
 msgstr "Čím více iterací, tím více detailů v obraze."
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:781
@@ -231,7 +230,7 @@ msgstr "Barevná funkce"
 
 #. Redmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:991
-#: ../plug-ins/common/channel_mixer.c:536 ../plug-ins/common/decompose.c:174
+#: ../plug-ins/common/channel_mixer.c:537 ../plug-ins/common/decompose.c:174
 msgid "Red"
 msgstr "Červená"
 
@@ -247,6 +246,7 @@ msgstr "Sinus"
 msgid "Cosine"
 msgstr "Kosinus"
 
+#. if and how to center the image on the page
 #: ../plug-ins/FractalExplorer/Dialogs.c:999
 #: ../plug-ins/FractalExplorer/Dialogs.c:1040
 #: ../plug-ins/FractalExplorer/Dialogs.c:1081
@@ -254,7 +254,7 @@ msgstr "Kosinus"
 #: ../plug-ins/common/CML_explorer.c:166 ../plug-ins/common/align_layers.c:422
 #: ../plug-ins/common/align_layers.c:453 ../plug-ins/common/postscript.c:3228
 #: ../plug-ins/common/postscript.c:3240 ../plug-ins/common/psp.c:418
-#: ../plug-ins/fits/fits.c:1026
+#: ../plug-ins/fits/fits.c:1026 ../plug-ins/print/print-page-layout.c:507
 msgid "None"
 msgstr "Nic"
 
@@ -292,18 +292,17 @@ msgstr "Inverze"
 msgid ""
 "If you enable this option higher color values will be swapped with lower "
 "ones and vice versa"
-msgstr ""
-"Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
+msgstr "Povolením této volby budou vyšší barevné hodnoty prohozeny za nižší a naopak"
 
 #. Greenmode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1032
-#: ../plug-ins/common/channel_mixer.c:541 ../plug-ins/common/decompose.c:175
+#: ../plug-ins/common/channel_mixer.c:542 ../plug-ins/common/decompose.c:175
 msgid "Green"
 msgstr "Zelená"
 
 #. Bluemode radio frame
 #: ../plug-ins/FractalExplorer/Dialogs.c:1073
-#: ../plug-ins/common/channel_mixer.c:546 ../plug-ins/common/decompose.c:176
+#: ../plug-ins/common/channel_mixer.c:547 ../plug-ins/common/decompose.c:176
 msgid "Blue"
 msgstr "Modrá"
 
@@ -343,24 +342,24 @@ msgstr "_Fraktály"
 #: ../plug-ins/FractalExplorer/Dialogs.c:1546
 #: ../plug-ins/Lighting/lighting_ui.c:1180 ../plug-ins/bmp/bmpwrite.c:294
 #: ../plug-ins/common/CEL.c:568 ../plug-ins/common/CML_explorer.c:2004
-#: ../plug-ins/common/channel_mixer.c:1054 ../plug-ins/common/compressor.c:410
+#: ../plug-ins/common/channel_mixer.c:1059 ../plug-ins/common/compressor.c:410
 #: ../plug-ins/common/compressor.c:473 ../plug-ins/common/compressor.c:563
 #: ../plug-ins/common/compressor.c:632 ../plug-ins/common/curve_bend.c:817
 #: ../plug-ins/common/dicom.c:706 ../plug-ins/common/gbr.c:616
 #: ../plug-ins/common/gif-save.c:986 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
 #: ../plug-ins/common/mng.c:950 ../plug-ins/common/pat.c:447
-#: ../plug-ins/common/pcx.c:588 ../plug-ins/common/pix.c:508
-#: ../plug-ins/common/png.c:1243 ../plug-ins/common/pnm.c:936
-#: ../plug-ins/common/postscript.c:1194 ../plug-ins/common/psd-save.c:1550
+#: ../plug-ins/common/pcx.c:605 ../plug-ins/common/pix.c:508
+#: ../plug-ins/common/png.c:1239 ../plug-ins/common/pnm.c:936
+#: ../plug-ins/common/postscript.c:1194 ../plug-ins/common/psd-save.c:1549
 #: ../plug-ins/common/raw.c:528 ../plug-ins/common/raw.c:555
-#: ../plug-ins/common/spheredesigner.c:2120 ../plug-ins/common/sunras.c:538
-#: ../plug-ins/common/tga.c:1030 ../plug-ins/common/tiff-save.c:653
+#: ../plug-ins/common/spheredesigner.c:2120 ../plug-ins/common/sunras.c:543
+#: ../plug-ins/common/tga.c:1133 ../plug-ins/common/tiff-save.c:671
 #: ../plug-ins/common/xbm.c:1016 ../plug-ins/common/xwd.c:598
 #: ../plug-ins/fits/fits.c:457 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/gfli/gfli.c:715
-#: ../plug-ins/ifscompose/ifscompose.c:2376 ../plug-ins/jpeg/jpeg-save.c:268
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:270
+#: ../plug-ins/ifscompose/ifscompose.c:2376 ../plug-ins/jpeg/jpeg-save.c:317
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:282
 #: ../plug-ins/winicon/icosave.c:1020 ../plug-ins/xjt/xjt.c:1280
 #: ../plug-ins/xjt/xjt.c:1714
 #, c-format
@@ -386,27 +385,28 @@ msgstr "Zapsat parametry fraktálu"
 #: ../plug-ins/FractalExplorer/FractalExplorer.c:933
 #: ../plug-ins/Lighting/lighting_ui.c:1323 ../plug-ins/bmp/bmpread.c:149
 #: ../plug-ins/common/CEL.c:299 ../plug-ins/common/CML_explorer.c:2177
-#: ../plug-ins/common/channel_mixer.c:976 ../plug-ins/common/compressor.c:464
+#: ../plug-ins/common/channel_mixer.c:981 ../plug-ins/common/compressor.c:464
 #: ../plug-ins/common/compressor.c:622 ../plug-ins/common/curve_bend.c:869
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gif-load.c:309 ../plug-ins/common/gih.c:649
-#: ../plug-ins/common/lcms.c:655 ../plug-ins/common/mng.c:1121
-#: ../plug-ins/common/pat.c:317 ../plug-ins/common/pcx.c:309
-#: ../plug-ins/common/pix.c:329 ../plug-ins/common/png.c:707
-#: ../plug-ins/common/pnm.c:482 ../plug-ins/common/poppler.c:500
-#: ../plug-ins/common/postscript.c:1021 ../plug-ins/common/postscript.c:3029
-#: ../plug-ins/common/psd-load.c:2089 ../plug-ins/common/psp.c:1470
-#: ../plug-ins/common/raw.c:243 ../plug-ins/common/raw.c:645
-#: ../plug-ins/common/spheredesigner.c:2010 ../plug-ins/common/sunras.c:378
-#: ../plug-ins/common/svg.c:320 ../plug-ins/common/svg.c:683
-#: ../plug-ins/common/tga.c:414 ../plug-ins/common/tiff-load.c:271
-#: ../plug-ins/common/xbm.c:720 ../plug-ins/common/xwd.c:420
-#: ../plug-ins/faxg3/faxg3.c:219 ../plug-ins/fits/fits.c:345
-#: ../plug-ins/flame/flame.c:411 ../plug-ins/gfig/gfig.c:434
-#: ../plug-ins/gfli/gfli.c:429 ../plug-ins/gfli/gfli.c:464
-#: ../plug-ins/help/gimphelplocale.c:193 ../plug-ins/jpeg/jpeg-load.c:101
-#: ../plug-ins/jpeg/jpeg-load.c:851 ../plug-ins/uri/uri-backend-gnomevfs.c:259
-#: ../plug-ins/uri/uri-backend-libcurl.c:172 ../plug-ins/winicon/icoload.c:651
+#: ../plug-ins/common/lcms.c:728 ../plug-ins/common/lcms.c:923
+#: ../plug-ins/common/mng.c:1121 ../plug-ins/common/pat.c:317
+#: ../plug-ins/common/pcx.c:309 ../plug-ins/common/pix.c:329
+#: ../plug-ins/common/png.c:703 ../plug-ins/common/pnm.c:482
+#: ../plug-ins/common/poppler.c:501 ../plug-ins/common/postscript.c:1021
+#: ../plug-ins/common/postscript.c:3029 ../plug-ins/common/psd-load.c:2121
+#: ../plug-ins/common/psp.c:1432 ../plug-ins/common/raw.c:243
+#: ../plug-ins/common/raw.c:645 ../plug-ins/common/spheredesigner.c:2010
+#: ../plug-ins/common/sunras.c:378 ../plug-ins/common/svg.c:321
+#: ../plug-ins/common/svg.c:702 ../plug-ins/common/tga.c:423
+#: ../plug-ins/common/tiff-load.c:288 ../plug-ins/common/xbm.c:720
+#: ../plug-ins/common/xwd.c:420 ../plug-ins/faxg3/faxg3.c:219
+#: ../plug-ins/fits/fits.c:345 ../plug-ins/flame/flame.c:411
+#: ../plug-ins/gfig/gfig.c:434 ../plug-ins/gfli/gfli.c:429
+#: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/gimphelplocale.c:193
+#: ../plug-ins/jpeg/jpeg-load.c:93 ../plug-ins/jpeg/jpeg-load.c:870
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:271
+#: ../plug-ins/uri/uri-backend-libcurl.c:186 ../plug-ins/winicon/icoload.c:651
 #: ../plug-ins/winicon/icoload.c:728 ../plug-ins/xjt/xjt.c:2545
 #: ../plug-ins/xjt/xjt.c:2553
 #, c-format
@@ -508,8 +508,7 @@ msgstr "P_růhledné pozadí"
 
 #: ../plug-ins/Lighting/lighting_ui.c:312
 msgid "Make destination image transparent where bump height is zero"
-msgstr ""
-"Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
+msgstr "Vytvoření průhledného cílového obrázku v místech, kde je vyvýšení nulové"
 
 #: ../plug-ins/Lighting/lighting_ui.c:315
 msgid "Cre_ate new image"
@@ -605,6 +604,7 @@ msgstr "Intenzita světla"
 #: ../plug-ins/Lighting/lighting_ui.c:464
 #: ../plug-ins/MapObject/mapobject_ui.c:671
 #: ../plug-ins/MapObject/mapobject_ui.c:998
+#: ../plug-ins/print/print-page-layout.c:401
 msgid "Position"
 msgstr "Poloha"
 
@@ -1076,10 +1076,12 @@ msgid "Z scale (size)"
 msgstr "Zvětšení Z (velikost)"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1205
+#: ../plug-ins/print/print-page-layout.c:460
 msgid "_Top:"
 msgstr "Na_hoře:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1205
+#: ../plug-ins/print/print-page-layout.c:479
 msgid "_Bottom:"
 msgstr "_Dole:"
 
@@ -1088,6 +1090,7 @@ msgid "Images for the Cap Faces"
 msgstr "Obrázky pro uzavírací plošky"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1239
+#: ../plug-ins/print/print-page-layout.c:277
 msgid "Size"
 msgstr "Velikost"
 
@@ -1144,15 +1147,15 @@ msgstr "Špatná barevná mapa"
 #: ../plug-ins/common/dicom.c:301 ../plug-ins/common/gbr.c:353
 #: ../plug-ins/common/gif-load.c:314 ../plug-ins/common/gih.c:654
 #: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:314
-#: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:714
-#: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:545
-#: ../plug-ins/common/postscript.c:1027 ../plug-ins/common/psd-load.c:2094
-#: ../plug-ins/common/raw.c:650 ../plug-ins/common/sunras.c:464
-#: ../plug-ins/common/tga.c:419 ../plug-ins/common/tiff-load.c:535
+#: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:710
+#: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:546
+#: ../plug-ins/common/postscript.c:1027 ../plug-ins/common/psd-load.c:2126
+#: ../plug-ins/common/raw.c:650 ../plug-ins/common/sunras.c:469
+#: ../plug-ins/common/tga.c:428 ../plug-ins/common/tiff-load.c:558
 #: ../plug-ins/common/wmf.c:956 ../plug-ins/common/xbm.c:725
 #: ../plug-ins/common/xpm.c:343 ../plug-ins/common/xwd.c:506
 #: ../plug-ins/faxg3/faxg3.c:204 ../plug-ins/gfli/gfli.c:469
-#: ../plug-ins/jpeg/jpeg-load.c:107 ../plug-ins/sgi/sgi.c:318
+#: ../plug-ins/jpeg/jpeg-load.c:99 ../plug-ins/sgi/sgi.c:318
 #: ../plug-ins/winicon/icoload.c:645 ../plug-ins/xjt/xjt.c:3344
 #, c-format
 msgid "Opening '%s'"
@@ -1173,38 +1176,48 @@ msgstr "'%s' není platný soubor BMP"
 msgid "Error reading BMP file header from '%s'"
 msgstr "Chyba při čtení hlavičky souboru BMP z '%s'"
 
-#: ../plug-ins/bmp/bmpread.c:499
+#: ../plug-ins/bmp/bmpread.c:502
 msgid "Unrecognized or invalid BMP compression format."
 msgstr "Neznámý nebo neplatný formát komprese BMP."
 
-#: ../plug-ins/bmp/bmpread.c:541
+#: ../plug-ins/bmp/bmpread.c:544
 msgid "Unsupported or invalid bitdepth."
 msgstr "Nepodporovaná nebo neplatná bitová hloubka"
+
+#: ../plug-ins/bmp/bmpread.c:550 ../plug-ins/common/pcx.c:338
+#, c-format
+msgid "Unsupported or invalid image width: %d"
+msgstr "Nepodporovaná nebo neplatná šířka obrázku: %d"
+
+#: ../plug-ins/bmp/bmpread.c:555 ../plug-ins/common/pcx.c:343
+#, c-format
+msgid "Unsupported or invalid image height: %d"
+msgstr "Nepodporovaná nebo neplatná výška obrázku: %d"
 
 #.
 #. * Create the "background" layer to hold the image...
 #.
-#: ../plug-ins/bmp/bmpread.c:546 ../plug-ins/common/CEL.c:349
+#: ../plug-ins/bmp/bmpread.c:559 ../plug-ins/common/CEL.c:349
 #: ../plug-ins/common/CEL.c:352 ../plug-ins/common/blinds.c:277
 #: ../plug-ins/common/compose.c:924 ../plug-ins/common/decompose.c:703
 #: ../plug-ins/common/dicom.c:501 ../plug-ins/common/film.c:746
-#: ../plug-ins/common/gif-load.c:879 ../plug-ins/common/pcx.c:339
-#: ../plug-ins/common/pcx.c:345 ../plug-ins/common/pix.c:368
-#: ../plug-ins/common/png.c:835 ../plug-ins/common/pnm.c:570
-#: ../plug-ins/common/psd-load.c:2517 ../plug-ins/common/raw.c:691
-#: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:950
-#: ../plug-ins/common/tga.c:931 ../plug-ins/common/tiff-load.c:917
-#: ../plug-ins/common/tile.c:266 ../plug-ins/common/xbm.c:880
+#: ../plug-ins/common/gif-load.c:879 ../plug-ins/common/pcx.c:356
+#: ../plug-ins/common/pcx.c:362 ../plug-ins/common/pix.c:368
+#: ../plug-ins/common/png.c:831 ../plug-ins/common/pnm.c:570
+#: ../plug-ins/common/psd-load.c:2549 ../plug-ins/common/raw.c:691
+#: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:955
+#: ../plug-ins/common/tga.c:1029 ../plug-ins/common/tiff-load.c:940
+#: ../plug-ins/common/tile.c:267 ../plug-ins/common/xbm.c:880
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:511
 #: ../plug-ins/gfig/gfig-dialog.c:1284
-#: ../plug-ins/gimpressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:254
-#: ../plug-ins/jpeg/jpeg-load.c:760 ../plug-ins/sgi/sgi.c:369
+#: ../plug-ins/gimpressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:244
+#: ../plug-ins/jpeg/jpeg-load.c:783 ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1155
 msgid "Background"
 msgstr "Pozadí"
 
-#: ../plug-ins/bmp/bmpread.c:717 ../plug-ins/bmp/bmpread.c:758
-#: ../plug-ins/bmp/bmpread.c:808
+#: ../plug-ins/bmp/bmpread.c:730 ../plug-ins/bmp/bmpread.c:771
+#: ../plug-ins/bmp/bmpread.c:821
 msgid "The bitmap ends unexpectedly."
 msgstr "Bitmapa neočekávaně končí."
 
@@ -1221,14 +1234,14 @@ msgstr "Alfa kanál bude ignorován."
 #: ../plug-ins/bmp/bmpwrite.c:305 ../plug-ins/common/CEL.c:573
 #: ../plug-ins/common/gbr.c:621 ../plug-ins/common/gif-save.c:993
 #: ../plug-ins/common/gih.c:1263 ../plug-ins/common/gtm.c:245
-#: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:550
-#: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1250
+#: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:567
+#: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1246
 #: ../plug-ins/common/pnm.c:941 ../plug-ins/common/postscript.c:1199
-#: ../plug-ins/common/psd-save.c:1555 ../plug-ins/common/sunras.c:543
-#: ../plug-ins/common/tga.c:1035 ../plug-ins/common/tiff-save.c:661
+#: ../plug-ins/common/psd-save.c:1554 ../plug-ins/common/sunras.c:548
+#: ../plug-ins/common/tga.c:1138 ../plug-ins/common/tiff-save.c:681
 #: ../plug-ins/common/xbm.c:1021 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:603 ../plug-ins/fits/fits.c:462
-#: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:226
+#: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:275
 #: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:1015
 #: ../plug-ins/xjt/xjt.c:1697
 #, c-format
@@ -1243,7 +1256,7 @@ msgstr "Zapsat jako BMP"
 msgid "_Run-Length Encoded"
 msgstr "Kódované _RunLength"
 
-#: ../plug-ins/bmp/bmpwrite.c:826 ../plug-ins/jpeg/jpeg-save.c:792
+#: ../plug-ins/bmp/bmpwrite.c:826 ../plug-ins/jpeg/jpeg-save.c:865
 msgid "_Advanced Options"
 msgstr "_Pokročilá nastavení"
 
@@ -1496,7 +1509,7 @@ msgstr "Min (x-d, -), (x < 0.5)"
 msgid "Min (x-d, -), (0.5 < x)"
 msgstr "Min (x-d, -), (0.5 < x)"
 
-#: ../plug-ins/common/CML_explorer.c:200 ../plug-ins/common/sunras.c:1626
+#: ../plug-ins/common/CML_explorer.c:200 ../plug-ins/common/sunras.c:1631
 msgid "Standard"
 msgstr "Standardní"
 
@@ -1591,7 +1604,7 @@ msgstr "Sytost"
 #: ../plug-ins/common/CML_explorer.c:302 ../plug-ins/common/CML_explorer.c:310
 #: ../plug-ins/common/decompose.c:190
 #: ../plug-ins/gimpressionist/orientation.c:138
-#: ../plug-ins/gimpressionist/size.c:141 ../plug-ins/metadata/interface.c:142
+#: ../plug-ins/gimpressionist/size.c:141
 msgid "Value"
 msgstr "Hodnota"
 
@@ -1794,7 +1807,7 @@ msgid "Save CML Explorer Parameters"
 msgstr "Zapsat parametry CML badatele"
 
 #: ../plug-ins/common/CML_explorer.c:2059
-#: ../plug-ins/common/channel_mixer.c:1062
+#: ../plug-ins/common/channel_mixer.c:1067
 #, c-format
 msgid "Parameters were saved to '%s'"
 msgstr "Parametry byly uloženy do '%s'"
@@ -1960,14 +1973,12 @@ msgid "Decrease the speed of the animation"
 msgstr "Snížit rychlost animace"
 
 #: ../plug-ins/common/animationplay.c:475
-#, fuzzy
 msgid "Reset speed"
-msgstr "Obnovit pořadí"
+msgstr "Obnovit rychlost"
 
 #: ../plug-ins/common/animationplay.c:475
-#, fuzzy
 msgid "Reset the speed of the animation"
-msgstr "Přetočit animaci"
+msgstr "Obnovit rychlost animace"
 
 #: ../plug-ins/common/animationplay.c:483
 #: ../plug-ins/common/animationplay.c:1445
@@ -2274,8 +2285,7 @@ msgstr "Posun _X:"
 msgid ""
 "The offset can be adjusted by dragging the preview using the middle mouse "
 "button."
-msgstr ""
-"Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
+msgstr "Posun může být upraven přetažením náhledu pomocí prostředního tlačítka myši."
 
 #: ../plug-ins/common/bumpmap.c:944 ../plug-ins/common/postscript.c:3388
 msgid "_Y offset:"
@@ -2377,15 +2387,15 @@ msgstr "_Mixér kanálů..."
 #. param[3].data.d_int32, mix.black.red_gain,
 #. mix.black.green_gain, mix.black.blue_gain);
 #: ../plug-ins/common/channel_mixer.c:271
-#: ../plug-ins/common/channel_mixer.c:491
+#: ../plug-ins/common/channel_mixer.c:492
 msgid "Channel Mixer"
 msgstr "Mixér kanálů"
 
-#: ../plug-ins/common/channel_mixer.c:527
+#: ../plug-ins/common/channel_mixer.c:528
 msgid "O_utput channel:"
 msgstr "_Výstupní kanál:"
 
-#: ../plug-ins/common/channel_mixer.c:581 ../plug-ins/common/compose.c:190
+#: ../plug-ins/common/channel_mixer.c:582 ../plug-ins/common/compose.c:190
 #: ../plug-ins/common/compose.c:201 ../plug-ins/common/diffraction.c:501
 #: ../plug-ins/common/diffraction.c:539 ../plug-ins/common/diffraction.c:577
 #: ../plug-ins/common/exchange.c:400 ../plug-ins/common/noisify.c:530
@@ -2393,7 +2403,7 @@ msgstr "_Výstupní kanál:"
 msgid "_Red:"
 msgstr "Če_rvená:"
 
-#: ../plug-ins/common/channel_mixer.c:599 ../plug-ins/common/compose.c:191
+#: ../plug-ins/common/channel_mixer.c:600 ../plug-ins/common/compose.c:191
 #: ../plug-ins/common/compose.c:202 ../plug-ins/common/diffraction.c:510
 #: ../plug-ins/common/diffraction.c:548 ../plug-ins/common/diffraction.c:586
 #: ../plug-ins/common/exchange.c:460 ../plug-ins/common/noisify.c:531
@@ -2401,7 +2411,7 @@ msgstr "Če_rvená:"
 msgid "_Green:"
 msgstr "_Zelená:"
 
-#: ../plug-ins/common/channel_mixer.c:618 ../plug-ins/common/compose.c:192
+#: ../plug-ins/common/channel_mixer.c:619 ../plug-ins/common/compose.c:192
 #: ../plug-ins/common/compose.c:203 ../plug-ins/common/diffraction.c:519
 #: ../plug-ins/common/diffraction.c:557 ../plug-ins/common/diffraction.c:595
 #: ../plug-ins/common/exchange.c:521 ../plug-ins/common/noisify.c:532
@@ -2409,19 +2419,19 @@ msgstr "_Zelená:"
 msgid "_Blue:"
 msgstr "_Modrá:"
 
-#: ../plug-ins/common/channel_mixer.c:630
+#: ../plug-ins/common/channel_mixer.c:635
 msgid "_Monochrome"
 msgstr "_Monochromatické"
 
-#: ../plug-ins/common/channel_mixer.c:643
+#: ../plug-ins/common/channel_mixer.c:648
 msgid "Preserve _luminosity"
 msgstr "Zachovat _jas"
 
-#: ../plug-ins/common/channel_mixer.c:872
+#: ../plug-ins/common/channel_mixer.c:877
 msgid "Load Channel Mixer Settings"
 msgstr "Načíst nastavení mixéru kanálů"
 
-#: ../plug-ins/common/channel_mixer.c:999
+#: ../plug-ins/common/channel_mixer.c:1004
 msgid "Save Channel Mixer Settings"
 msgstr "Uložit nastavení mixéru kanálů"
 
@@ -2719,8 +2729,7 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:499
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
-msgstr ""
-"Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
+msgstr "Chyba při skenování parazita 'decompose-data': nalezeno příliš málo vrstev"
 
 #: ../plug-ins/common/compose.c:532
 #, c-format
@@ -2823,7 +2832,7 @@ msgstr "_Alfa:"
 msgid "E_xtend"
 msgstr "Rozšíři_t"
 
-#: ../plug-ins/common/convmatrix.c:111 ../plug-ins/common/displace.c:475
+#: ../plug-ins/common/convmatrix.c:111 ../plug-ins/common/displace.c:474
 #: ../plug-ins/common/edge.c:710 ../plug-ins/common/fractaltrace.c:736
 #: ../plug-ins/common/ripple.c:563
 msgid "_Wrap"
@@ -3432,10 +3441,10 @@ msgstr "Odstranění pruhů"
 #: ../plug-ins/common/destripe.c:472 ../plug-ins/common/gtm.c:584
 #: ../plug-ins/common/papertile.c:302 ../plug-ins/common/postscript.c:3152
 #: ../plug-ins/common/postscript.c:3361 ../plug-ins/common/raw.c:1035
-#: ../plug-ins/common/smooth_palette.c:436 ../plug-ins/common/tile.c:424
+#: ../plug-ins/common/smooth_palette.c:436 ../plug-ins/common/tile.c:431
 #: ../plug-ins/imagemap/imap_cmd_guides.c:165
 #: ../plug-ins/imagemap/imap_rectangle.c:403
-#: ../plug-ins/print/print-page-layout.c:239
+#: ../plug-ins/print/print-page-layout.c:310
 msgid "_Width:"
 msgstr "Šíř_ka:"
 
@@ -3456,7 +3465,7 @@ msgstr "Obrázek Digital Imaging and Communications in Medicine"
 msgid "'%s' is not a DICOM file."
 msgstr "'%s' není soubor DICOM."
 
-#: ../plug-ins/common/dicom.c:676 ../plug-ins/common/pcx.c:582
+#: ../plug-ins/common/dicom.c:676 ../plug-ins/common/pcx.c:599
 #: ../plug-ins/common/pnm.c:927
 msgid "Cannot save images with alpha channel."
 msgstr "Nemohu uložit obrázky s alfa kanálem."
@@ -3512,70 +3521,70 @@ msgstr "Po_larizace:"
 msgid "Other Options"
 msgstr "Další volby"
 
-#: ../plug-ins/common/displace.c:145
+#: ../plug-ins/common/displace.c:144
 msgid "_X displacement"
 msgstr "Posunutí _X"
 
-#: ../plug-ins/common/displace.c:145
+#: ../plug-ins/common/displace.c:144
 msgid "_Pinch"
 msgstr "_Zaškrcení"
 
-#: ../plug-ins/common/displace.c:146
+#: ../plug-ins/common/displace.c:145
 msgid "_Y displacement"
 msgstr "Posunutí _Y"
 
-#: ../plug-ins/common/displace.c:146
+#: ../plug-ins/common/displace.c:145
 msgid "_Whirl"
 msgstr "_Vír"
 
-#: ../plug-ins/common/displace.c:172
+#: ../plug-ins/common/displace.c:171
 msgid "Displace pixels as indicated by displacement maps"
 msgstr "Posunout pixely podle mapy posunutí"
 
-#: ../plug-ins/common/displace.c:182
+#: ../plug-ins/common/displace.c:181
 msgid "_Displace..."
 msgstr "_Vytlačit..."
 
-#: ../plug-ins/common/displace.c:293
+#: ../plug-ins/common/displace.c:292
 msgid "Displacing"
 msgstr "Posunování"
 
-#: ../plug-ins/common/displace.c:329
+#: ../plug-ins/common/displace.c:328
 msgid "Displace"
 msgstr "Vytlačení"
 
 #. X options
-#: ../plug-ins/common/displace.c:365
+#: ../plug-ins/common/displace.c:364
 msgid "_X displacement:"
 msgstr "Vytlačení _X:"
 
 #. Y Options
-#: ../plug-ins/common/displace.c:412
+#: ../plug-ins/common/displace.c:411
 msgid "_Y displacement:"
 msgstr "Vytlačení _Y:"
 
-#: ../plug-ins/common/displace.c:462
+#: ../plug-ins/common/displace.c:461
 msgid "Displacement Mode"
 msgstr "Režim posunutí"
 
-#: ../plug-ins/common/displace.c:465
+#: ../plug-ins/common/displace.c:464
 msgid "_Cartesian"
 msgstr "_Kartézské"
 
-#: ../plug-ins/common/displace.c:466
+#: ../plug-ins/common/displace.c:465
 msgid "_Polar"
 msgstr "_Polární"
 
-#: ../plug-ins/common/displace.c:471
+#: ../plug-ins/common/displace.c:470
 msgid "Edge Behavior"
 msgstr "Chování hran"
 
-#: ../plug-ins/common/displace.c:477 ../plug-ins/common/edge.c:723
+#: ../plug-ins/common/displace.c:476 ../plug-ins/common/edge.c:723
 #: ../plug-ins/common/ripple.c:564 ../plug-ins/common/waves.c:280
 msgid "_Smear"
 msgstr "_Rozmazat"
 
-#: ../plug-ins/common/displace.c:479 ../plug-ins/common/edge.c:736
+#: ../plug-ins/common/displace.c:478 ../plug-ins/common/edge.c:736
 #: ../plug-ins/common/fractaltrace.c:740 ../plug-ins/common/newsprint.c:400
 msgid "_Black"
 msgstr "Č_erná"
@@ -3708,9 +3717,9 @@ msgstr "Rytina"
 #: ../plug-ins/common/gtm.c:600 ../plug-ins/common/papertile.c:313
 #: ../plug-ins/common/postscript.c:3162 ../plug-ins/common/postscript.c:3370
 #: ../plug-ins/common/raw.c:1048 ../plug-ins/common/smooth_palette.c:441
-#: ../plug-ins/common/tile.c:428 ../plug-ins/imagemap/imap_cmd_guides.c:175
+#: ../plug-ins/common/tile.c:435 ../plug-ins/imagemap/imap_cmd_guides.c:175
 #: ../plug-ins/imagemap/imap_rectangle.c:410
-#: ../plug-ins/print/print-page-layout.c:241
+#: ../plug-ins/print/print-page-layout.c:312
 msgid "_Height:"
 msgstr "_Výška:"
 
@@ -4135,12 +4144,12 @@ msgstr "Gaussovo rozostření"
 msgid "Blur Radius"
 msgstr "Poloměr rozostření"
 
-#: ../plug-ins/common/gauss.c:520 ../plug-ins/common/jigsaw.c:2458
+#: ../plug-ins/common/gauss.c:520 ../plug-ins/common/jigsaw.c:2456
 #: ../plug-ins/common/spread.c:386
 msgid "_Horizontal:"
 msgstr "_Vodorovně"
 
-#: ../plug-ins/common/gauss.c:524 ../plug-ins/common/jigsaw.c:2475
+#: ../plug-ins/common/gauss.c:524 ../plug-ins/common/jigsaw.c:2473
 #: ../plug-ins/common/spread.c:390
 msgid "_Vertical:"
 msgstr "_Svisle:"
@@ -4279,8 +4288,7 @@ msgstr ""
 "nebyl uložen."
 
 #: ../plug-ins/common/gif-save.c:958
-msgid ""
-"Cannot save RGB color images. Convert to indexed color or grayscale first."
+msgid "Cannot save RGB color images. Convert to indexed color or grayscale first."
 msgstr ""
 "Nemohu ukládat barevné obrázky RGB. Nejdříve jej převeďte na indexovaný nebo "
 "do šedí."
@@ -4541,7 +4549,7 @@ msgid "Intersection"
 msgstr "Průnik"
 
 #. Width and Height
-#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:758
+#: ../plug-ins/common/grid.c:724 ../plug-ins/common/svg.c:777
 #: ../plug-ins/common/wmf.c:551
 msgid "Width:"
 msgstr "Šířka:"
@@ -4869,8 +4877,7 @@ msgstr "Interaktivní deformace"
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
-msgstr ""
-"Kliknutím a táhnutím myši v náhledů definujte požadovanou deformaci obrázku."
+msgstr "Kliknutím a táhnutím myši v náhledů definujte požadovanou deformaci obrázku."
 
 #: ../plug-ins/common/jigsaw.c:356
 msgid "Add a jigsaw-puzzle pattern to the image"
@@ -4884,60 +4891,60 @@ msgstr "_Skládačka..."
 msgid "Assembling jigsaw"
 msgstr "Sestavování puzzle"
 
-#: ../plug-ins/common/jigsaw.c:2418
+#: ../plug-ins/common/jigsaw.c:2416
 msgid "Jigsaw"
 msgstr "Skládačka"
 
-#: ../plug-ins/common/jigsaw.c:2446
+#: ../plug-ins/common/jigsaw.c:2444
 msgid "Number of Tiles"
 msgstr "Počet dlaždic"
 
-#: ../plug-ins/common/jigsaw.c:2461
+#: ../plug-ins/common/jigsaw.c:2459
 msgid "Number of pieces going across"
 msgstr "Počet kusů jdoucích napříč"
 
-#: ../plug-ins/common/jigsaw.c:2478
+#: ../plug-ins/common/jigsaw.c:2476
 msgid "Number of pieces going down"
 msgstr "Počet kusů jdoucích dolů"
 
-#: ../plug-ins/common/jigsaw.c:2492
+#: ../plug-ins/common/jigsaw.c:2490
 msgid "Bevel Edges"
 msgstr "Zkosené hrany"
 
-#: ../plug-ins/common/jigsaw.c:2502
+#: ../plug-ins/common/jigsaw.c:2500
 msgid "_Bevel width:"
 msgstr "Šířka _zkosení:"
 
-#: ../plug-ins/common/jigsaw.c:2506
+#: ../plug-ins/common/jigsaw.c:2504
 msgid "Degree of slope of each piece's edge"
 msgstr "Stupeň naklonění na hraně každého kusu"
 
-#: ../plug-ins/common/jigsaw.c:2519
+#: ../plug-ins/common/jigsaw.c:2517
 msgid "H_ighlight:"
 msgstr "_Odlesk:"
 
-#: ../plug-ins/common/jigsaw.c:2523
+#: ../plug-ins/common/jigsaw.c:2521
 msgid "The amount of highlighting on the edges of each piece"
 msgstr "Síla zvýraznění hran každého kusu"
 
 #. frame for primitive radio buttons
-#: ../plug-ins/common/jigsaw.c:2540
+#: ../plug-ins/common/jigsaw.c:2538
 msgid "Jigsaw Style"
 msgstr "Styl skládačky"
 
-#: ../plug-ins/common/jigsaw.c:2544
+#: ../plug-ins/common/jigsaw.c:2542
 msgid "_Square"
 msgstr "Čtver_cový"
 
-#: ../plug-ins/common/jigsaw.c:2545
+#: ../plug-ins/common/jigsaw.c:2543
 msgid "C_urved"
 msgstr "V _křivkách"
 
-#: ../plug-ins/common/jigsaw.c:2549
+#: ../plug-ins/common/jigsaw.c:2547
 msgid "Each piece has straight sides"
 msgstr "Kusy mají rovné strany"
 
-#: ../plug-ins/common/jigsaw.c:2550
+#: ../plug-ins/common/jigsaw.c:2548
 msgid "Each piece has curved sides"
 msgstr "Kusy mají zaoblené strany"
 
@@ -4953,84 +4960,78 @@ msgstr "_Laplaceův"
 msgid "Cleanup"
 msgstr "Úklid"
 
-#: ../plug-ins/common/lcms.c:183
+#: ../plug-ins/common/lcms.c:189
 msgid "Set color profile"
 msgstr "Nastavit barevný profil"
 
-#: ../plug-ins/common/lcms.c:199
+#: ../plug-ins/common/lcms.c:205
 msgid "Set default RGB profile"
 msgstr "Nastavit výchozí barevný profil"
 
-#: ../plug-ins/common/lcms.c:215
+#: ../plug-ins/common/lcms.c:222
 msgid "Apply color profile"
 msgstr "Použít barevný profil"
 
-#: ../plug-ins/common/lcms.c:233
+#: ../plug-ins/common/lcms.c:240
 msgid "Apply default RGB profile"
 msgstr "Použít výchozí RGB profil"
 
-#: ../plug-ins/common/lcms.c:247 ../plug-ins/common/lcms.c:261
+#: ../plug-ins/common/lcms.c:254 ../plug-ins/common/lcms.c:268
 msgid "Color Profile Information"
 msgstr "Informace o profilu barev"
 
-#: ../plug-ins/common/lcms.c:462
-#, c-format
-msgid "Could not open color profile from '%s'"
-msgstr "Nelze otevřít barevný profil z '%s'"
-
-#: ../plug-ins/common/lcms.c:470 ../plug-ins/common/lcms.c:687
+#: ../plug-ins/common/lcms.c:468
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Barevný profil '%s' není určen pro prostor RGB."
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:517
+#: ../plug-ins/common/lcms.c:540
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Konvertuji z '%s' do '%s'"
 
-#: ../plug-ins/common/lcms.c:576
+#: ../plug-ins/common/lcms.c:608
 msgid "Default RGB working space"
 msgstr "Výchozí pracovní prostor RGB"
 
-#: ../plug-ins/common/lcms.c:626
-msgid ""
-"Data attached as 'icc-profile' does not appear to be an ICC color profile"
+#: ../plug-ins/common/lcms.c:696
+msgid "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr "Data připojená jako 'icc-profile' zřejmě nejsou barevným profilem ICC"
 
-#: ../plug-ins/common/lcms.c:693
+#: ../plug-ins/common/lcms.c:756
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "'%s' zřejmě není barevným profilem ICC"
 
-#: ../plug-ins/common/lcms.c:852
+#: ../plug-ins/common/lcms.c:942
 #, c-format
-msgid "Could not open ICC profile from '%s'"
-msgstr "Nelze otevřít barevný ICC profil z '%s'"
+msgid "Could not load ICC profile from '%s'"
+msgstr "Nelze načíst ICC profil z '%s'"
 
-#: ../plug-ins/common/lcms.c:874
+#: ../plug-ins/common/lcms.c:964
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "Obrázek '%s' obsahuje vložený barevný profil:"
 
-#: ../plug-ins/common/lcms.c:918
+#: ../plug-ins/common/lcms.c:1008
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Převest obrázek do pracovního prostoru RGB (%s)?"
 
-#: ../plug-ins/common/lcms.c:950
+#: ../plug-ins/common/lcms.c:1039
 msgid "Convert to RGB working space?"
 msgstr "Konvertovat do pracovního prostoru RGB?"
 
-#: ../plug-ins/common/lcms.c:955
+#: ../plug-ins/common/lcms.c:1044
 msgid "_Keep"
 msgstr "_Ponechat"
 
-#: ../plug-ins/common/lcms.c:960
+#: ../plug-ins/common/lcms.c:1049
 msgid "_Convert"
 msgstr "_Konvertovat"
 
-#: ../plug-ins/common/lcms.c:987 ../plug-ins/jpeg/jpeg-exif.c:390
+#: ../plug-ins/common/lcms.c:1076 ../plug-ins/jpeg/jpeg-exif.c:367
 msgid "_Don't ask me again"
 msgstr "_Neptat se znovu"
 
@@ -5343,8 +5344,7 @@ msgstr "Ú_hel:"
 #. * transparency & just use the full palette
 #: ../plug-ins/common/mng.c:499 ../plug-ins/common/png.c:1729
 msgid "Couldn't losslessly save transparency, saving opacity instead."
-msgstr ""
-"Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
+msgstr "Nemohu uložit průhlednost beze ztrát, ukládám místo toho neprůhlednost."
 
 #: ../plug-ins/common/mng.c:1319
 msgid "Save as MNG"
@@ -5796,9 +5796,8 @@ msgstr "Velikost _masky:"
 #. * Mask-size map check button
 #.
 #: ../plug-ins/common/oilify.c:829
-#, fuzzy
 msgid "Use m_ask-size map:"
-msgstr "Použít mapu zvětšení"
+msgstr "Použít velikost masky:"
 
 #: ../plug-ins/common/oilify.c:866 ../plug-ins/common/sinus.c:922
 msgid "_Exponent:"
@@ -5808,15 +5807,13 @@ msgstr "_Exponent:"
 #. * Exponent map check button
 #.
 #: ../plug-ins/common/oilify.c:881
-#, fuzzy
 msgid "Use e_xponent map:"
-msgstr "_Exponent:"
+msgstr "Použít e_xponent:"
 
 #.
 #. * Intensity algorithm check button
 #.
 #: ../plug-ins/common/oilify.c:917
-#, fuzzy
 msgid "_Use intensity algorithm"
 msgstr "_Použít intenzitu"
 
@@ -5927,7 +5924,12 @@ msgstr "Nemohu číst hlavičku z '%s'"
 msgid "'%s' is not a PCX file"
 msgstr "'%s' není soubor PCX"
 
-#: ../plug-ins/common/pcx.c:380
+#: ../plug-ins/common/pcx.c:348
+#, c-format
+msgid "Invalid number of bytes per line: %hd"
+msgstr "Neplatný počet bajtů na řádku: %hd"
+
+#: ../plug-ins/common/pcx.c:397
 msgid "Unusual PCX flavour, giving up"
 msgstr "Neobvyklá verze PCX, vzdávám to"
 
@@ -6072,27 +6074,27 @@ msgid "Tree View"
 msgstr "Stromový pohled"
 
 #: ../plug-ins/common/png.c:261 ../plug-ins/common/png.c:282
-#: ../plug-ins/common/png.c:304 ../plug-ins/common/png.c:323
+#: ../plug-ins/common/png.c:302 ../plug-ins/common/png.c:319
 msgid "PNG image"
 msgstr "Obrázek PNG"
 
-#: ../plug-ins/common/png.c:617
+#: ../plug-ins/common/png.c:613
 #, c-format
 msgid "Error loading PNG file: %s"
 msgstr "Chyba čtení PNG souboru: %s"
 
-#: ../plug-ins/common/png.c:690
+#: ../plug-ins/common/png.c:686
 #, c-format
 msgid "Error while reading '%s'. File corrupted?"
 msgstr "Chyba při čtení '%s'. Poškozený soubor?"
 
 #. Aie! Unknown type
-#: ../plug-ins/common/png.c:818
+#: ../plug-ins/common/png.c:814
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
 msgstr "Neznámý model barev v souboru PNG '%s'."
 
-#: ../plug-ins/common/png.c:872
+#: ../plug-ins/common/png.c:868
 msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
@@ -6100,7 +6102,7 @@ msgstr ""
 "Soubor PNG určuje posunutí, které způsobilo, že vrstva je umístěna mimo "
 "obrázek."
 
-#: ../plug-ins/common/png.c:1228
+#: ../plug-ins/common/png.c:1224
 #, c-format
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Chyba při ukládání '%s'. Nemohu uložit obrázek."
@@ -6145,11 +6147,11 @@ msgstr "Uložit _hodnoty barvy průhledných pixelů"
 msgid "Co_mpression level:"
 msgstr "Úroveň ko_mprese:"
 
-#: ../plug-ins/common/png.c:1890
+#: ../plug-ins/common/png.c:1890 ../plug-ins/jpeg/jpeg-save.c:1112
 msgid "_Load Defaults"
 msgstr "_Načíst implicitní nastavení"
 
-#: ../plug-ins/common/png.c:1898
+#: ../plug-ins/common/png.c:1898 ../plug-ins/jpeg/jpeg-save.c:1121
 msgid "S_ave Defaults"
 msgstr "_Uložit implicitní nastavení"
 
@@ -6286,42 +6288,42 @@ msgstr ""
 "Bez zaškrtnutí bude obrázek kruhově mapován na obdélník. Při zaškrtnutí bude "
 "obrázek mapován na kruh."
 
-#: ../plug-ins/common/poppler.c:282
+#: ../plug-ins/common/poppler.c:283
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
-#: ../plug-ins/common/poppler.c:579
+#: ../plug-ins/common/poppler.c:580
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/poppler.c:581 ../plug-ins/common/postscript.c:1109
+#: ../plug-ins/common/poppler.c:582 ../plug-ins/common/postscript.c:1109
 #, c-format
 msgid "%s-pages"
 msgstr "%s-strany"
 
-#: ../plug-ins/common/poppler.c:759
+#: ../plug-ins/common/poppler.c:760
 msgid "Import from PDF"
 msgstr "Importovat z PDF"
 
-#: ../plug-ins/common/poppler.c:764 ../plug-ins/common/postscript.c:3081
-#: ../plug-ins/common/tiff-load.c:417
+#: ../plug-ins/common/poppler.c:765 ../plug-ins/common/postscript.c:3081
+#: ../plug-ins/common/tiff-load.c:440
 msgid "_Import"
 msgstr "_Importovat"
 
-#: ../plug-ins/common/poppler.c:830
+#: ../plug-ins/common/poppler.c:831
 msgid "_Width (pixels):"
 msgstr "_Šířka (pixelů):"
 
-#: ../plug-ins/common/poppler.c:831
+#: ../plug-ins/common/poppler.c:832
 msgid "_Height (pixels):"
 msgstr "_Výška (pixelů):"
 
-#: ../plug-ins/common/poppler.c:833
+#: ../plug-ins/common/poppler.c:834
 msgid "_Resolution:"
 msgstr "_Rozlišení:"
 
-#: ../plug-ins/common/poppler.c:1107
+#: ../plug-ins/common/poppler.c:1108
 #, c-format
 msgid "pixels/%s"
 msgstr "pixely/%s"
@@ -6360,14 +6362,14 @@ msgstr ""
 "oznámení jeho umístění GIMPu.\n"
 "(%s)"
 
-#: ../plug-ins/common/postscript.c:1911 ../plug-ins/common/tiff-load.c:919
+#: ../plug-ins/common/postscript.c:1911 ../plug-ins/common/tiff-load.c:942
 #, c-format
 msgid "Page %d"
 msgstr "Strana %d"
 
 #: ../plug-ins/common/postscript.c:2581 ../plug-ins/common/postscript.c:2714
 #: ../plug-ins/common/postscript.c:2866 ../plug-ins/common/postscript.c:2992
-#: ../plug-ins/common/sunras.c:1479 ../plug-ins/common/sunras.c:1587
+#: ../plug-ins/common/sunras.c:1484 ../plug-ins/common/sunras.c:1592
 #: ../plug-ins/fits/fits.c:831 ../plug-ins/fits/fits.c:955
 msgid "Write error occurred"
 msgstr "Došlo k chybě při zápisu"
@@ -6382,7 +6384,7 @@ msgid "Rendering"
 msgstr "Vyobrazení"
 
 #. Resolution
-#: ../plug-ins/common/postscript.c:3135 ../plug-ins/common/svg.c:879
+#: ../plug-ins/common/postscript.c:3135 ../plug-ins/common/svg.c:898
 #: ../plug-ins/common/wmf.c:672
 msgid "Resolution:"
 msgstr "Rozlišení:"
@@ -6459,7 +6461,6 @@ msgstr "Zapsat jako PostScript"
 
 #. Image Size
 #: ../plug-ins/common/postscript.c:3345
-#: ../plug-ins/print/print-page-layout.c:202
 msgid "Image Size"
 msgstr "Velikost obrázku"
 
@@ -6525,27 +6526,27 @@ msgstr "Prohlížeč procedur"
 msgid "Invalid UTF-8 string in PSD file"
 msgstr "Neplatný řetězec UTF-8 v souboru PSD"
 
-#: ../plug-ins/common/psd-load.c:621
+#: ../plug-ins/common/psd-load.c:622
 msgid "Cannot handle bitmap PSD files"
 msgstr "Nelze zpracovat bitmapové PSD soubory"
 
-#: ../plug-ins/common/psd-load.c:630
+#: ../plug-ins/common/psd-load.c:631
 msgid "Cannot handle PSD files in CMYK color"
 msgstr "Nelze zpracovat PSD soubory v barevném režimu CMYK"
 
-#: ../plug-ins/common/psd-load.c:633
+#: ../plug-ins/common/psd-load.c:634
 msgid "Cannot handle PSD files in Multichannel color"
 msgstr "Nelze zpracovat PSD soubory ve vícekanálovém režimu"
 
-#: ../plug-ins/common/psd-load.c:636
+#: ../plug-ins/common/psd-load.c:637
 msgid "Cannot handle PSD files in Duotone color"
 msgstr "Nelze zpracovat PSD soubory v duplex režimu"
 
-#: ../plug-ins/common/psd-load.c:639
+#: ../plug-ins/common/psd-load.c:640
 msgid "Cannot handle PSD files in Lab color"
 msgstr "Nezle zpracovat PSD soubory v barvách Lab"
 
-#: ../plug-ins/common/psd-load.c:642
+#: ../plug-ins/common/psd-load.c:643
 #, c-format
 msgid "Cannot handle the color mode %d of the PSD file"
 msgstr "Nelze zpracovat barevný režim %d tohoto PSD souboru"
@@ -6555,26 +6556,25 @@ msgstr "Nelze zpracovat barevný režim %d tohoto PSD souboru"
 msgid "Cannot handle PSD file with more than %d channels"
 msgstr "Nelze zpracovat PSD soubor s více než %d kanály"
 
-#: ../plug-ins/common/psd-load.c:2452
+#: ../plug-ins/common/psd-load.c:2484
 msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
-msgstr ""
-"Nelze zpracovat PSD soubory v barevném prostoru CMYK s více než 5 kanály"
+msgstr "Nelze zpracovat PSD soubory v barevném prostoru CMYK s více než 5 kanály"
 
-#: ../plug-ins/common/psd-load.c:2467
+#: ../plug-ins/common/psd-load.c:2499
 #, c-format
 msgid "Cannot handle image mode %d (%s)"
 msgstr "Nelze zpracovat obrazový režim %d (%s)"
 
-#: ../plug-ins/common/psd-load.c:2476
+#: ../plug-ins/common/psd-load.c:2508
 #, c-format
 msgid "Cannot handle %d bits per channel PSD files"
 msgstr "Nelze zpracovat PSD soubory s %d bity na kanál"
 
-#: ../plug-ins/common/psd-load.c:3260
+#: ../plug-ins/common/psd-load.c:3306
 msgid "This is not an Adobe Photoshop PSD file"
 msgstr "Toto není soubor Adobe Photoshop PSD"
 
-#: ../plug-ins/common/psd-load.c:3265
+#: ../plug-ins/common/psd-load.c:3311
 #, c-format
 msgid "The PSD file has bad version number '%d', not 1"
 msgstr "PSD soubor má špatné číslo verze '%d', nikoliv 1"
@@ -6592,11 +6592,11 @@ msgstr ""
 "Nelze uložit vrstvu v režimu '%s'. Formát souborů PSD nebo zásuvný modul pro "
 "ukládání režim nepodporuje, používám tedy normální režim."
 
-#: ../plug-ins/common/psd-save.c:609
+#: ../plug-ins/common/psd-save.c:608
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
 msgstr "Chyba: nelze převést základní obrazový typ GIMPu do PSD režimu"
 
-#: ../plug-ins/common/psd-save.c:1526
+#: ../plug-ins/common/psd-save.c:1525
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
@@ -6605,7 +6605,7 @@ msgstr ""
 "Nemohu uložit '%s'. Formát souborů psd nepodporuje obrázky, které jsou širší "
 "nebo vyšší než 30000 pixelů."
 
-#: ../plug-ins/common/psd-save.c:1538
+#: ../plug-ins/common/psd-save.c:1537
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
@@ -6699,7 +6699,7 @@ msgstr "Syrová obrazová data"
 msgid "Load Image from Raw Data"
 msgstr "Načíst obrázek ze surových dat"
 
-#: ../plug-ins/common/raw.c:992 ../plug-ins/print/print.c:189
+#: ../plug-ins/common/raw.c:992
 msgid "Image"
 msgstr "Obrázek"
 
@@ -7052,15 +7052,12 @@ msgid "After the delay, the screenshot is taken."
 msgstr "Po prodlevě je vytvořen snímek obrazovky."
 
 #: ../plug-ins/common/screenshot.c:1010
-msgid ""
-"After the delay, drag your mouse to select the region for the screenshot."
-msgstr ""
-"Po uplynytí časové prodlevy vyberte oblast snímku obrazovky táhnutím myší."
+msgid "After the delay, drag your mouse to select the region for the screenshot."
+msgstr "Po uplynytí časové prodlevy vyberte oblast snímku obrazovky táhnutím myší."
 
 #: ../plug-ins/common/screenshot.c:1013
 msgid "At the end of the delay, click in a window to snap it."
-msgstr ""
-"Po uplynutí časové prodlevy klikněte do okna, jehož snímek chcete vytvořit."
+msgstr "Po uplynutí časové prodlevy klikněte do okna, jehož snímek chcete vytvořit."
 
 #. Area
 #: ../plug-ins/common/screenshot.c:1019
@@ -7756,16 +7753,16 @@ msgstr "Nemohu otevřít soubor '%s' jako SUN-raster-soubor"
 msgid "The type of this SUN-rasterfile is not supported"
 msgstr "Tento typ SUN-raster souboru není podporován"
 
-#: ../plug-ins/common/sunras.c:419
+#: ../plug-ins/common/sunras.c:424
 #, c-format
 msgid "Could not read color entries from '%s'"
 msgstr "Nemohu číst barevné položky z '%s'"
 
-#: ../plug-ins/common/sunras.c:427
+#: ../plug-ins/common/sunras.c:432
 msgid "Type of colormap not supported"
 msgstr "Typ barevné mapy není podporován"
 
-#: ../plug-ins/common/sunras.c:434 ../plug-ins/common/xbm.c:810
+#: ../plug-ins/common/sunras.c:439 ../plug-ins/common/xbm.c:810
 #: ../plug-ins/common/xwd.c:475
 #, c-format
 msgid ""
@@ -7775,7 +7772,7 @@ msgstr ""
 "'%s':\n"
 "Nebyla zadána šířka obrázku"
 
-#: ../plug-ins/common/sunras.c:442 ../plug-ins/common/xbm.c:817
+#: ../plug-ins/common/sunras.c:447 ../plug-ins/common/xbm.c:817
 #: ../plug-ins/common/xwd.c:484
 #, c-format
 msgid ""
@@ -7785,7 +7782,7 @@ msgstr ""
 "'%s':\n"
 "Šířka obrázku je větší, než GIMP dokáže zpracovat"
 
-#: ../plug-ins/common/sunras.c:450 ../plug-ins/common/xbm.c:824
+#: ../plug-ins/common/sunras.c:455 ../plug-ins/common/xbm.c:824
 #: ../plug-ins/common/xwd.c:492
 #, c-format
 msgid ""
@@ -7795,7 +7792,7 @@ msgstr ""
 "'%s':\n"
 "Nebyla zadána výška obrázku"
 
-#: ../plug-ins/common/sunras.c:458 ../plug-ins/common/xbm.c:831
+#: ../plug-ins/common/sunras.c:463 ../plug-ins/common/xbm.c:831
 #: ../plug-ins/common/xwd.c:500
 #, c-format
 msgid ""
@@ -7805,36 +7802,36 @@ msgstr ""
 "'%s':\n"
 "Výška obrázku je větší, než GIMP dokáže  zpracovat"
 
-#: ../plug-ins/common/sunras.c:496
+#: ../plug-ins/common/sunras.c:501
 msgid "This image depth is not supported"
 msgstr "Tato hloubka obrázku není podporována"
 
-#: ../plug-ins/common/sunras.c:518
+#: ../plug-ins/common/sunras.c:523
 msgid "SUNRAS save cannot handle images with alpha channels"
 msgstr "Zápis SUNRAS neumí zpracovat obrázky s alfa kanály"
 
-#: ../plug-ins/common/sunras.c:529
+#: ../plug-ins/common/sunras.c:534
 msgid "Can't operate on unknown image types"
 msgstr "Neumí zpracovat neznámé typy obrázku"
 
-#: ../plug-ins/common/sunras.c:1057 ../plug-ins/common/sunras.c:1148
-#: ../plug-ins/common/sunras.c:1229 ../plug-ins/common/sunras.c:1324
+#: ../plug-ins/common/sunras.c:1062 ../plug-ins/common/sunras.c:1153
+#: ../plug-ins/common/sunras.c:1234 ../plug-ins/common/sunras.c:1329
 #: ../plug-ins/common/xwd.c:1332 ../plug-ins/common/xwd.c:1433
 #: ../plug-ins/common/xwd.c:1591 ../plug-ins/common/xwd.c:1791
 #: ../plug-ins/common/xwd.c:2048 ../plug-ins/fits/fits.c:678
 msgid "EOF encountered on reading"
 msgstr "Během čtení soubor skončil"
 
-#: ../plug-ins/common/sunras.c:1604
+#: ../plug-ins/common/sunras.c:1609
 msgid "Save as SUNRAS"
 msgstr "Zapsat jako SUNRAS"
 
 #. file save type
-#: ../plug-ins/common/sunras.c:1621
+#: ../plug-ins/common/sunras.c:1626
 msgid "Data Formatting"
 msgstr "Formátování dat"
 
-#: ../plug-ins/common/sunras.c:1625
+#: ../plug-ins/common/sunras.c:1630
 msgid "RunLength Encoded"
 msgstr "Kódované RunLength"
 
@@ -7842,24 +7839,24 @@ msgstr "Kódované RunLength"
 msgid "SVG image"
 msgstr "SVG obrázek"
 
-#: ../plug-ins/common/svg.c:322 ../plug-ins/common/svg.c:685
+#: ../plug-ins/common/svg.c:323 ../plug-ins/common/svg.c:704
 msgid "Unknown reason"
 msgstr "Neznámý důvod"
 
-#: ../plug-ins/common/svg.c:326
+#: ../plug-ins/common/svg.c:327
 msgid "Rendering SVG"
 msgstr "Vykresluje se SVG"
 
-#: ../plug-ins/common/svg.c:338
+#: ../plug-ins/common/svg.c:339
 msgid "Rendered SVG"
 msgstr "Vykreslené SVG"
 
-#: ../plug-ins/common/svg.c:538 ../plug-ins/common/wmf.c:338
+#: ../plug-ins/common/svg.c:553 ../plug-ins/common/wmf.c:338
 #, c-format
 msgid "%d × %d"
 msgstr "%d × %d"
 
-#: ../plug-ins/common/svg.c:546
+#: ../plug-ins/common/svg.c:561
 msgid ""
 "SVG file does not\n"
 "specify a size!"
@@ -7868,73 +7865,72 @@ msgstr ""
 "velikost!"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
-#: ../plug-ins/common/svg.c:692
+#: ../plug-ins/common/svg.c:711
 msgid "Render Scalable Vector Graphics"
 msgstr "Vykreslit Scalable Vector Graphics"
 
-#: ../plug-ins/common/svg.c:764 ../plug-ins/common/wmf.c:557
+#: ../plug-ins/common/svg.c:783 ../plug-ins/common/wmf.c:557
 msgid "Height:"
 msgstr "Výška:"
 
-#: ../plug-ins/common/svg.c:838 ../plug-ins/common/wmf.c:631
+#: ../plug-ins/common/svg.c:857 ../plug-ins/common/wmf.c:631
 msgid "_X ratio:"
 msgstr "Poměr _X:"
 
-#: ../plug-ins/common/svg.c:860 ../plug-ins/common/wmf.c:653
+#: ../plug-ins/common/svg.c:879 ../plug-ins/common/wmf.c:653
 msgid "_Y ratio:"
 msgstr "Poměr _Y:"
 
-#: ../plug-ins/common/svg.c:874 ../plug-ins/common/wmf.c:667
+#: ../plug-ins/common/svg.c:893 ../plug-ins/common/wmf.c:667
 msgid "Constrain aspect ratio"
 msgstr "Omezit poměr stran:"
 
-#: ../plug-ins/common/svg.c:885 ../plug-ins/common/wmf.c:678
-#: ../plug-ins/print/print-page-layout.c:261
+#: ../plug-ins/common/svg.c:904 ../plug-ins/common/wmf.c:678
+#: ../plug-ins/print/print-page-layout.c:331
 #, c-format
 msgid "pixels/%a"
 msgstr "pixely/%a"
 
 #. Path Import
-#: ../plug-ins/common/svg.c:905
+#: ../plug-ins/common/svg.c:924
 msgid "Import _paths"
 msgstr "Importovat _cesty"
 
-#: ../plug-ins/common/svg.c:911
-msgid ""
-"Import path elements of the SVG so they can be used with the GIMP path tool"
+#: ../plug-ins/common/svg.c:930
+msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
 msgstr ""
 "Importovat elementy cesty z SVG, aby mohly být použity s nástrojem GIMPu pro "
 "cesty"
 
-#: ../plug-ins/common/svg.c:924
+#: ../plug-ins/common/svg.c:943
 msgid "Merge imported paths"
 msgstr "Sloučit importované cesty"
 
-#: ../plug-ins/common/tga.c:229 ../plug-ins/common/tga.c:248
+#: ../plug-ins/common/tga.c:238 ../plug-ins/common/tga.c:257
 msgid "TarGA image"
 msgstr "Obrázek TarGA"
 
-#: ../plug-ins/common/tga.c:425
+#: ../plug-ins/common/tga.c:434
 #, c-format
 msgid "Cannot read footer from '%s'"
 msgstr "Nemohu číst patičku z '%s'"
 
-#: ../plug-ins/common/tga.c:441
+#: ../plug-ins/common/tga.c:450
 #, c-format
 msgid "Cannot read extension from '%s'"
 msgstr "Nemohu číst rozšíření z '%s'"
 
-#: ../plug-ins/common/tga.c:1189
+#: ../plug-ins/common/tga.c:1323
 msgid "Save as TGA"
 msgstr "Zapsat jako TGA"
 
 #. rle
-#: ../plug-ins/common/tga.c:1212
+#: ../plug-ins/common/tga.c:1346
 msgid "_RLE compression"
 msgstr "Komprese _RLE"
 
 #. origin
-#: ../plug-ins/common/tga.c:1222
+#: ../plug-ins/common/tga.c:1356
 msgid "Or_igin at bottom left"
 msgstr "Počátek dol_e vlevo"
 
@@ -7966,25 +7962,25 @@ msgstr "Práh alfy"
 msgid "Threshold:"
 msgstr "Práh:"
 
-#: ../plug-ins/common/tiff-load.c:222 ../plug-ins/common/tiff-save.c:165
-#: ../plug-ins/common/tiff-save.c:182
+#: ../plug-ins/common/tiff-load.c:239 ../plug-ins/common/tiff-save.c:181
+#: ../plug-ins/common/tiff-save.c:198
 msgid "TIFF image"
 msgstr "Obrázek TIFF"
 
-#: ../plug-ins/common/tiff-load.c:281
+#: ../plug-ins/common/tiff-load.c:302
 #, c-format
 msgid "TIFF '%s' does not contain any directories"
 msgstr "TIFF '%s' neobsahuje žádné adresáře"
 
-#: ../plug-ins/common/tiff-load.c:412
+#: ../plug-ins/common/tiff-load.c:435
 msgid "Import from TIFF"
 msgstr "Importovat z TIFF"
 
-#: ../plug-ins/common/tiff-load.c:935
+#: ../plug-ins/common/tiff-load.c:958
 msgid "TIFF Channel"
 msgstr "TIFF kanál"
 
-#: ../plug-ins/common/tiff-load.c:944
+#: ../plug-ins/common/tiff-load.c:967
 msgid ""
 "Warning:\n"
 "The image you are loading has 16 bits per channel. GIMP can only handle 8 "
@@ -7995,7 +7991,7 @@ msgstr ""
 "Obrázek, který načítáte, má 16 bitů na kanál. GIMP umí zpracovat jen 8 bitů, "
 "takže jej převede. Při tomto převodu se ztratí informace."
 
-#: ../plug-ins/common/tiff-save.c:853
+#: ../plug-ins/common/tiff-save.c:873
 msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
@@ -8003,48 +7999,48 @@ msgstr ""
 "Formát TIFF podporuje komentáře jen v sedmibitovém\n"
 "kódování ASCII. Komentář nebyl uložen."
 
-#: ../plug-ins/common/tiff-save.c:1026
+#: ../plug-ins/common/tiff-save.c:1047
 msgid "Save as TIFF"
 msgstr "Zapsat jako TIFF"
 
 #. compression
-#: ../plug-ins/common/tiff-save.c:1048
+#: ../plug-ins/common/tiff-save.c:1069
 msgid "Compression"
 msgstr "Komprese"
 
-#: ../plug-ins/common/tiff-save.c:1052
+#: ../plug-ins/common/tiff-save.c:1073
 msgid "_None"
 msgstr "_Nic"
 
-#: ../plug-ins/common/tiff-save.c:1053
+#: ../plug-ins/common/tiff-save.c:1074
 msgid "_LZW"
 msgstr "_LZW"
 
-#: ../plug-ins/common/tiff-save.c:1054
+#: ../plug-ins/common/tiff-save.c:1075
 msgid "_Pack Bits"
 msgstr "_Pakování bitů"
 
-#: ../plug-ins/common/tiff-save.c:1055
+#: ../plug-ins/common/tiff-save.c:1076
 msgid "_Deflate"
 msgstr "_Deflační"
 
-#: ../plug-ins/common/tiff-save.c:1056
+#: ../plug-ins/common/tiff-save.c:1077
 msgid "_JPEG"
 msgstr "_JPEG"
 
-#: ../plug-ins/common/tiff-save.c:1057
+#: ../plug-ins/common/tiff-save.c:1078
 msgid "CCITT Group _3 fax"
 msgstr "CCITT Group _3 fax"
 
-#: ../plug-ins/common/tiff-save.c:1058
+#: ../plug-ins/common/tiff-save.c:1079
 msgid "CCITT Group _4 fax"
 msgstr "CCITT Group _4 fax"
 
-#: ../plug-ins/common/tiff-save.c:1080
+#: ../plug-ins/common/tiff-save.c:1101
 msgid "Save _color values from transparent pixels"
 msgstr "Uložit _hodnoty barvy průhledných pixelů"
 
-#: ../plug-ins/common/tiff-save.c:1096 ../plug-ins/common/xbm.c:1227
+#: ../plug-ins/common/tiff-save.c:1117 ../plug-ins/common/xbm.c:1227
 msgid "Comment:"
 msgstr "Komentář:"
 
@@ -8057,19 +8053,19 @@ msgid "_Tile..."
 msgstr "_Dlaždicovat..."
 
 #. Set the tile cache size
-#: ../plug-ins/common/tile.c:191 ../plug-ins/common/tileit.c:320
+#: ../plug-ins/common/tile.c:190 ../plug-ins/common/tileit.c:320
 msgid "Tiling"
 msgstr "Dlaždicuji"
 
-#: ../plug-ins/common/tile.c:394
+#: ../plug-ins/common/tile.c:401
 msgid "Tile"
 msgstr "Dlaždice"
 
-#: ../plug-ins/common/tile.c:415
+#: ../plug-ins/common/tile.c:422
 msgid "Tile to New Size"
 msgstr "Dlaždice nové velikosti"
 
-#: ../plug-ins/common/tile.c:437
+#: ../plug-ins/common/tile.c:444
 msgid "C_reate new image"
 msgstr "Vytvořit _nový obrázek"
 
@@ -8154,8 +8150,7 @@ msgid "ID"
 msgstr "ID"
 
 #: ../plug-ins/common/uniteditor.c:96
-msgid ""
-"This string will be used to identify a unit in GIMP's configuration files."
+msgid "This string will be used to identify a unit in GIMP's configuration files."
 msgstr ""
 "Tento řetězec bude použit pouze k identifikaci jednotky v konfiguračním "
 "souboru GIMPu."
@@ -8332,8 +8327,7 @@ msgstr "_Body"
 
 #: ../plug-ins/common/video.c:1806
 msgid "Simulate distortion produced by a fuzzy or low-res monitor"
-msgstr ""
-"Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
+msgstr "Simulovat zkreslení rozostřeného monitoru či monitoru s nízkým rozlišením"
 
 #: ../plug-ins/common/video.c:1813
 msgid "Vi_deo..."
@@ -9316,8 +9310,7 @@ msgstr "Kopírovat"
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
-msgstr ""
-"Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
+msgstr "Typ pozadí vrstvy. Kopie způsobí zkopírování předchozí vrstvy před kreslením."
 
 #: ../plug-ins/gfig/gfig-dialog.c:1302
 msgid "Background:"
@@ -9442,8 +9435,7 @@ msgid "_Gfig..."
 msgstr "_Gfig..."
 
 #: ../plug-ins/gfig/gfig.c:731
-msgid ""
-"Error trying to save figure as a parasite: can't attach parasite to drawable."
+msgid "Error trying to save figure as a parasite: can't attach parasite to drawable."
 msgstr ""
 "Chyba při pokusu uložit obrázek jako parazita: nemohu připojit parazita k "
 "drawable."
@@ -9883,8 +9875,7 @@ msgid "Shadow depth:"
 msgstr "Hloubka stínu:"
 
 #: ../plug-ins/gimpressionist/general.c:244
-msgid ""
-"The depth of the drop shadow, i.e. how far apart from the object it should be"
+msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
 msgstr "Hloubka vrženého stínu, tj. jak daleko od objektu budou"
 
 #: ../plug-ins/gimpressionist/general.c:249
@@ -10262,13 +10253,11 @@ msgid "Size:"
 msgstr "Velikost:"
 
 #: ../plug-ins/gimpressionist/size.c:142
-msgid ""
-"Let the value (brightness) of the region determine the size of the stroke"
+msgid "Let the value (brightness) of the region determine the size of the stroke"
 msgstr "Nechť hodnota (jas) oblasti určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:146
-msgid ""
-"The distance from the center of the image determines the size of the stroke"
+msgid "The distance from the center of the image determines the size of the stroke"
 msgstr "Vzdálenost od středu obrázku určí velikost tahu"
 
 #: ../plug-ins/gimpressionist/size.c:150
@@ -10549,14 +10538,11 @@ msgid "Transformation %s"
 msgstr "Transformace %s"
 
 #: ../plug-ins/ifscompose/ifscompose.c:2381
-#: ../plug-ins/metadata/interface.c:556 ../plug-ins/metadata/interface.c:566
 msgid "Save failed"
 msgstr "Ukládání selhalo"
 
 #: ../plug-ins/ifscompose/ifscompose.c:2462
 #: ../plug-ins/ifscompose/ifscompose.c:2475
-#: ../plug-ins/metadata/interface.c:462 ../plug-ins/metadata/interface.c:472
-#: ../plug-ins/metadata/interface.c:546
 msgid "Open failed"
 msgstr "Otevření selhalo"
 
@@ -11302,7 +11288,6 @@ msgid "Default _URL:"
 msgstr "Implicitní _URL:"
 
 #: ../plug-ins/imagemap/imap_settings.c:108
-#: ../plug-ins/metadata/interface.c:301
 msgid "_Description:"
 msgstr "_Popis:"
 
@@ -11314,138 +11299,150 @@ msgstr "Formát souboru mapy"
 msgid "View Source"
 msgstr "Zobrazit zdroj"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:306
+#: ../plug-ins/jpeg/jpeg-exif.c:283
 msgid "Rotate Image?"
 msgstr "Otočit obrázek?"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:309
+#: ../plug-ins/jpeg/jpeg-exif.c:286
 msgid "_Keep Orientation"
 msgstr "_Zachovat orientaci"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:365
+#: ../plug-ins/jpeg/jpeg-exif.c:342
 msgid "According to the EXIF data, this image is rotated."
 msgstr "Podle dat EXIF je tento obrázek rotován."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:380
+#: ../plug-ins/jpeg/jpeg-exif.c:357
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Chcete, aby jej GIMP rotoval do standardní orientace?"
 
-#: ../plug-ins/jpeg/jpeg-load.c:247
+#: ../plug-ins/jpeg/jpeg-load.c:236
 msgid "JPEG preview"
 msgstr "JPEG náhled"
 
-#: ../plug-ins/jpeg/jpeg-load.c:626 ../plug-ins/winicon/icoload.c:722
+#: ../plug-ins/jpeg/jpeg-load.c:649 ../plug-ins/winicon/icoload.c:722
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "Otevírá se miniatura '%s'"
 
-#: ../plug-ins/jpeg/jpeg-save.c:141
+#: ../plug-ins/jpeg/jpeg-save.c:190
 #, c-format
 msgid "File size: %02.01f kB"
 msgstr "Velikost souboru: %02.01f kB"
 
-#: ../plug-ins/jpeg/jpeg-save.c:579
+#: ../plug-ins/jpeg/jpeg-save.c:639
 msgid "Calculating file size..."
 msgstr "Počítá se velikost souboru..."
 
-#: ../plug-ins/jpeg/jpeg-save.c:670 ../plug-ins/jpeg/jpeg-save.c:771
+#: ../plug-ins/jpeg/jpeg-save.c:730 ../plug-ins/jpeg/jpeg-save.c:844
 msgid "File size: unknown"
 msgstr "Velikost souboru: neznámá"
 
-#: ../plug-ins/jpeg/jpeg-save.c:723
+#: ../plug-ins/jpeg/jpeg-save.c:788
 msgid "Save as JPEG"
 msgstr "Zapsat jako JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:750
+#: ../plug-ins/jpeg/jpeg-save.c:823
 msgid "_Quality:"
 msgstr "_Kvalita:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:754
+#: ../plug-ins/jpeg/jpeg-save.c:827
 msgid "JPEG quality parameter"
 msgstr "Parametr kvality JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:769
+#: ../plug-ins/jpeg/jpeg-save.c:842
 msgid "Enable preview to obtain the file size."
 msgstr "Povolit náhled pro zjištění velikosti souboru."
 
-#: ../plug-ins/jpeg/jpeg-save.c:780
+#: ../plug-ins/jpeg/jpeg-save.c:853
 msgid "Show _preview in image window"
 msgstr "Zobrazit _náhled v okně obrázku"
 
-#: ../plug-ins/jpeg/jpeg-save.c:820
+#: ../plug-ins/jpeg/jpeg-save.c:894
 msgid "_Smoothing:"
 msgstr "_Vyhlazování:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:833
+#: ../plug-ins/jpeg/jpeg-save.c:907
 msgid "Frequency (rows):"
 msgstr "Frekvence (řádky):"
 
-#: ../plug-ins/jpeg/jpeg-save.c:847
+#: ../plug-ins/jpeg/jpeg-save.c:923
 msgid "Use restart markers"
 msgstr "Používat restartovací značky"
 
-#: ../plug-ins/jpeg/jpeg-save.c:863 ../plug-ins/xjt/xjt.c:877
+#: ../plug-ins/jpeg/jpeg-save.c:939 ../plug-ins/xjt/xjt.c:877
 msgid "Optimize"
 msgstr "Optimalizovat"
 
-#: ../plug-ins/jpeg/jpeg-save.c:876
+#: ../plug-ins/jpeg/jpeg-save.c:952
 msgid "Progressive"
 msgstr "Progresivní"
 
-#: ../plug-ins/jpeg/jpeg-save.c:890
+#: ../plug-ins/jpeg/jpeg-save.c:967
 msgid "Force baseline JPEG"
 msgstr "Vnutit základní JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:905
+#: ../plug-ins/jpeg/jpeg-save.c:982
 msgid "Save EXIF data"
 msgstr "Uložit data EXIF"
 
-#: ../plug-ins/jpeg/jpeg-save.c:921
+#: ../plug-ins/jpeg/jpeg-save.c:999
 msgid "Save thumbnail"
 msgstr "Uložit miniaturu"
 
 #. XMP metadata
-#: ../plug-ins/jpeg/jpeg-save.c:937
+#: ../plug-ins/jpeg/jpeg-save.c:1015
 msgid "Save XMP data"
 msgstr "Uložit data XMP"
 
 #. Subsampling
-#: ../plug-ins/jpeg/jpeg-save.c:950
+#: ../plug-ins/jpeg/jpeg-save.c:1029
 msgid "Subsampling:"
 msgstr "Podvzorkování:"
 
+#: ../plug-ins/jpeg/jpeg-save.c:1036
+msgid "1x1,1x1,1x1 (best quality)"
+msgstr "1x1,1x1,1x1 (nejlepší kvalita)"
+
+#: ../plug-ins/jpeg/jpeg-save.c:1037
+msgid "2x1,1x1,1x1 (4:2:2)"
+msgstr "2x1,1x1,1x1 (4:2:2)"
+
+#: ../plug-ins/jpeg/jpeg-save.c:1038
+msgid "1x2,1x1,1x1"
+msgstr "1x2,1x1,1x1"
+
+#: ../plug-ins/jpeg/jpeg-save.c:1039
+msgid "2x2,1x1,1x1 (smallest file)"
+msgstr "2x2,1x1,1x1 (nejmenší soubor)"
+
 #. DCT method
-#: ../plug-ins/jpeg/jpeg-save.c:973
+#: ../plug-ins/jpeg/jpeg-save.c:1054
 msgid "DCT method:"
 msgstr "Metoda DCT:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:979
+#: ../plug-ins/jpeg/jpeg-save.c:1060
 msgid "Fast Integer"
 msgstr "Rychlé celočíselné"
 
-#: ../plug-ins/jpeg/jpeg-save.c:980
+#: ../plug-ins/jpeg/jpeg-save.c:1061
 msgid "Integer"
 msgstr "Celočíselné"
 
-#: ../plug-ins/jpeg/jpeg-save.c:981
+#: ../plug-ins/jpeg/jpeg-save.c:1062
 msgid "Floating-Point"
 msgstr "V plovoucí řádové čárce"
 
-#: ../plug-ins/jpeg/jpeg-save.c:995
+#: ../plug-ins/jpeg/jpeg-save.c:1076
 msgid "Comment"
 msgstr "Komentář"
 
-#: ../plug-ins/jpeg/jpeg.c:131 ../plug-ins/jpeg/jpeg.c:169
+#: ../plug-ins/jpeg/jpeg.c:133 ../plug-ins/jpeg/jpeg.c:171
 msgid "JPEG image"
 msgstr "Obrázek JPEG"
 
-#: ../plug-ins/jpeg/jpeg.c:290
+#: ../plug-ins/jpeg/jpeg.c:294
 msgid "Export Preview"
 msgstr "Náhled exportu"
-
-#: ../plug-ins/jpeg/jpeg.c:577
-msgid "EXIF data will be ignored."
-msgstr "Data EXIF budou ignorována."
 
 #: ../plug-ins/maze/algorithms.c:289
 msgid "Constructing maze using Prim's Algorithm"
@@ -11517,92 +11514,6 @@ msgid ""
 msgstr ""
 "Velikost výběru není sudá.\n"
 "Dlaždicovatelné bludiště nebude dokonalé."
-
-#: ../plug-ins/metadata/interface.c:108
-msgid "Property"
-msgstr "Vlastnost"
-
-#: ../plug-ins/metadata/interface.c:261 ../plug-ins/metadata/interface.c:263
-msgid "Description"
-msgstr "Popis"
-
-#: ../plug-ins/metadata/interface.c:276
-msgid "Image _title:"
-msgstr "_Název obrázku:"
-
-#: ../plug-ins/metadata/interface.c:282
-msgid "_Author:"
-msgstr "_Autor:"
-
-#: ../plug-ins/metadata/interface.c:307
-msgid "Description _writer:"
-msgstr "_Autor popisu:"
-
-#: ../plug-ins/metadata/interface.c:321
-msgid "_Keywords:"
-msgstr "_Klíčová slova:"
-
-#. FIXME: add entries, cross-link with XMP model
-#: ../plug-ins/metadata/interface.c:333 ../plug-ins/metadata/interface.c:345
-#: ../plug-ins/metadata/interface.c:357 ../plug-ins/metadata/interface.c:369
-msgid "Empty"
-msgstr "Prázdné"
-
-#: ../plug-ins/metadata/interface.c:335
-msgid "Copyright"
-msgstr "Copyright"
-
-#: ../plug-ins/metadata/interface.c:347
-msgid "Origin"
-msgstr "Počátek"
-
-#: ../plug-ins/metadata/interface.c:359
-msgid "Camera 1"
-msgstr "Kamera 1"
-
-#: ../plug-ins/metadata/interface.c:371
-msgid "Camera 2"
-msgstr "Kamera 2"
-
-#: ../plug-ins/metadata/interface.c:386
-msgid "Thumbnail"
-msgstr "Miniatura"
-
-#: ../plug-ins/metadata/interface.c:405
-msgid "Advanced"
-msgstr "Pokročilé"
-
-#: ../plug-ins/metadata/interface.c:496
-msgid "Import XMP from File"
-msgstr "Importovat XMP ze souboru"
-
-#: ../plug-ins/metadata/interface.c:547
-msgid "Cannot create file"
-msgstr "Nemohu vytvořit soubor"
-
-#: ../plug-ins/metadata/interface.c:557
-msgid "Some error occurred while saving"
-msgstr "Při ukládání došlo k nějaké chybě"
-
-#: ../plug-ins/metadata/interface.c:567
-msgid "Could not close the file"
-msgstr "Nemohu zavřít soubor"
-
-#: ../plug-ins/metadata/interface.c:589
-msgid "Export XMP to File"
-msgstr "Exportovat XMP do souboru"
-
-#: ../plug-ins/metadata/interface.c:656
-msgid "Image Properties"
-msgstr "Vlastnosti obrázku"
-
-#: ../plug-ins/metadata/interface.c:660
-msgid "_Import XMP..."
-msgstr "_Importovat XMP..."
-
-#: ../plug-ins/metadata/interface.c:661
-msgid "_Export XMP..."
-msgstr "_Exportovat XMP..."
 
 #: ../plug-ins/metadata/xmp-parse.c:240
 msgid "Error: No XMP packet found"
@@ -11729,21 +11640,50 @@ msgstr "Zkroucení vrstvy"
 msgid "Page Curl"
 msgstr "Zkroucení stránky"
 
-#: ../plug-ins/print/print-page-layout.c:91
-msgid "_Adjust Page Size and Orientation"
-msgstr "_Upravit velikost stránky a orientaci"
-
-#: ../plug-ins/print/print-page-layout.c:119
+#. label for the printable area
+#: ../plug-ins/print/print-page-layout.c:127
 msgid "Printable area:"
 msgstr "Tisknutelná oblast:"
 
-#: ../plug-ins/print/print-page-layout.c:282
+#: ../plug-ins/print/print-page-layout.c:141
+msgid "_Adjust Page Size and Orientation"
+msgstr "_Upravit velikost stránky a orientaci"
+
+#: ../plug-ins/print/print-page-layout.c:195
+msgid "Ignore Page _Margins"
+msgstr "Ignorovat okraje _stránky"
+
+#: ../plug-ins/print/print-page-layout.c:352
 msgid "_X resolution:"
 msgstr "Rozlišení _X:"
 
-#: ../plug-ins/print/print-page-layout.c:284
+#: ../plug-ins/print/print-page-layout.c:356
 msgid "_Y resolution:"
 msgstr "Rozlišení _Y:"
+
+#: ../plug-ins/print/print-page-layout.c:427
+msgid "_Left:"
+msgstr "Na_levo:"
+
+#: ../plug-ins/print/print-page-layout.c:446
+msgid "_Right:"
+msgstr "Nap_ravo:"
+
+#: ../plug-ins/print/print-page-layout.c:500
+msgid "C_enter:"
+msgstr "Stř_ed:"
+
+#: ../plug-ins/print/print-page-layout.c:508
+msgid "Horizontally"
+msgstr "Vodorovně"
+
+#: ../plug-ins/print/print-page-layout.c:509
+msgid "Vertically"
+msgstr "Svisle"
+
+#: ../plug-ins/print/print-page-layout.c:510
+msgid "Both"
+msgstr "Obojí"
 
 #: ../plug-ins/print/print.c:89
 msgid "Print the image"
@@ -11753,19 +11693,17 @@ msgstr "Vytisknout obrázek"
 msgid "_Print..."
 msgstr "_Tisk..."
 
-#: ../plug-ins/print/print.c:227
+#: ../plug-ins/print/print.c:213
+msgid "Image Settings"
+msgstr "Nastavení obrázku"
+
+#: ../plug-ins/print/print.c:253
 msgid "An error occurred while trying to print:"
 msgstr "Při pokusu o tisk došlo k chybě:"
 
-#: ../plug-ins/print/print.c:251
+#: ../plug-ins/print/print.c:283
 msgid "Printing"
 msgstr "Tisk"
-
-#. display status of the print operation in the status bar
-#: ../plug-ins/print/print.c:270
-#, c-format
-msgid "Print: %s"
-msgstr "Tisk:%s"
 
 #: ../plug-ins/rcm/rcm.c:99
 msgid "Replace a range of colors with another"
@@ -11929,41 +11867,41 @@ msgstr "_Skener/Fotoaparát..."
 msgid "Transferring data from scanner/camera"
 msgstr "Přenos dat ze skeneru/fotoaparátu"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:150
-#: ../plug-ins/uri/uri-backend-libcurl.c:112
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:162
+#: ../plug-ins/uri/uri-backend-libcurl.c:126
 #, c-format
 msgid "Downloading %s of image data..."
 msgstr "Stahuji %s dat obrázku..."
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:151
-#: ../plug-ins/uri/uri-backend-libcurl.c:119
-#: ../plug-ins/uri/uri-backend-wget.c:336
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:163
+#: ../plug-ins/uri/uri-backend-libcurl.c:133
+#: ../plug-ins/uri/uri-backend-wget.c:348
 #, c-format
 msgid "Downloaded %s of image data"
 msgstr "Staženo %s dat obrázku"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:169
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:181
 #, c-format
 msgid "Uploading %s of image data..."
 msgstr "Odesílám %s dat obrázku..."
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:170
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:182
 #, c-format
 msgid "Uploaded %s of image data"
 msgstr "Odesláno %s dat obrázku"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:240
-#: ../plug-ins/uri/uri-backend-libcurl.c:141
-#: ../plug-ins/uri/uri-backend-wget.c:185
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:252
+#: ../plug-ins/uri/uri-backend-libcurl.c:155
+#: ../plug-ins/uri/uri-backend-wget.c:197
 msgid "Connecting to server"
 msgstr "Připojování k serveru"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:299
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:311
 #, c-format
 msgid "Failed to read %s from '%s': %s"
 msgstr "Nemohu číst %s z '%s': %s"
 
-#: ../plug-ins/uri/uri-backend-gnomevfs.c:348
+#: ../plug-ins/uri/uri-backend-gnomevfs.c:360
 #, c-format
 msgid "Failed to write %s to '%s': %s"
 msgstr "Nemohu zapsat %s do '%s': %s"
@@ -11972,26 +11910,26 @@ msgstr "Nemohu zapsat %s do '%s': %s"
 msgid "Could not initialize libcurl"
 msgstr "Nelze inicializovat libcurl"
 
-#: ../plug-ins/uri/uri-backend-libcurl.c:146
+#: ../plug-ins/uri/uri-backend-libcurl.c:160
 msgid "Could not open output file for writing"
 msgstr "Nelze otevřít výstupní soubor pro zápis."
 
-#: ../plug-ins/uri/uri-backend-libcurl.c:184
+#: ../plug-ins/uri/uri-backend-libcurl.c:198
 #, c-format
 msgid "Opening '%s' for reading resulted in HTTP response code: %d"
 msgstr "Otevírání '%s' ke čtení vedlo k návratovému kódu HTTP: %d"
 
-#: ../plug-ins/uri/uri-backend-wget.c:152
-#: ../plug-ins/uri/uri-backend-wget.c:172
-#: ../plug-ins/uri/uri-backend-wget.c:191
-#: ../plug-ins/uri/uri-backend-wget.c:214
-#: ../plug-ins/uri/uri-backend-wget.c:243
+#: ../plug-ins/uri/uri-backend-wget.c:164
+#: ../plug-ins/uri/uri-backend-wget.c:184
+#: ../plug-ins/uri/uri-backend-wget.c:203
+#: ../plug-ins/uri/uri-backend-wget.c:226
+#: ../plug-ins/uri/uri-backend-wget.c:255
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
 msgstr "wget skončil nenormálně na URI '%s'"
 
 #. The third line is "Connecting to..."
-#: ../plug-ins/uri/uri-backend-wget.c:180
+#: ../plug-ins/uri/uri-backend-wget.c:192
 #, c-format
 msgid "(timeout is %d second)"
 msgid_plural "(timeout is %d seconds)"
@@ -12000,22 +11938,22 @@ msgstr[1] "(časový limit jsou %d sekundy)"
 msgstr[2] "(časový limit je %d sekund)"
 
 #. The fourth line is either the network request or an error
-#: ../plug-ins/uri/uri-backend-wget.c:209
+#: ../plug-ins/uri/uri-backend-wget.c:221
 msgid "Opening URI"
 msgstr "Otvírání URI"
 
-#: ../plug-ins/uri/uri-backend-wget.c:220
-#: ../plug-ins/uri/uri-backend-wget.c:253
+#: ../plug-ins/uri/uri-backend-wget.c:232
+#: ../plug-ins/uri/uri-backend-wget.c:265
 #, c-format
 msgid "A network error occurred: %s"
 msgstr "Došlo k síťové chybě: %s"
 
-#: ../plug-ins/uri/uri-backend-wget.c:293
+#: ../plug-ins/uri/uri-backend-wget.c:305
 #, c-format
 msgid "Downloading %s of image data"
 msgstr "Stahuje se %s obrazových dat"
 
-#: ../plug-ins/uri/uri-backend-wget.c:298
+#: ../plug-ins/uri/uri-backend-wget.c:310
 msgid "Downloading unknown amount of image data"
 msgstr "Stahuje se neznámý objem obrazových dat"
 
@@ -12173,3 +12111,4 @@ msgstr "Chyba: Nemohu načíst soubor XJT vlastností '%s'."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Chyba: Soubor XJT vlastností '%s' je prázdný."
+
