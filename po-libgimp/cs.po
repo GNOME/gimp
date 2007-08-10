@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-05-09 16:09+0200\n"
-"PO-Revision-Date: 2007-05-09 19:27+0200\n"
+"POT-Creation-Date: 2007-08-10 17:05+0200\n"
+"PO-Revision-Date: 2007-08-10 17:05+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -111,7 +111,8 @@ msgstr ""
 #: ../libgimp/gimpexport.c:308
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr "Modul %s umí zpracovat pouze bitmapové (dvoubarevné) indexované obrázky"
+msgstr ""
+"Modul %s umí zpracovat pouze bitmapové (dvoubarevné) indexované obrázky"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -623,7 +624,7 @@ msgstr "Pevný"
 msgid "Incremental"
 msgstr "Postupný"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:267
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:208
 msgid "None"
 msgstr "Nic"
 
@@ -761,7 +762,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:259
+#: ../modules/cdisplay_lcms.c:200
 msgid "(invalid UTF-8 string)"
 msgstr "(neplatný řetězec v UTF-8)"
 
@@ -834,30 +835,30 @@ msgstr "Sytost"
 msgid "Absolute colorimetric"
 msgstr "Absolutní kolorimetrický"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:96
+#: ../libgimpconfig/gimpconfig-deserialize.c:97
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "hodnota pro prvek %s není platný řetězec v kódování UTF-8"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:427
+#: ../libgimpconfig/gimpconfig-deserialize.c:436
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "očekávána hodnota 'yes' nebo 'no' pro prvek typu boolean %s, obdržena "
 "hodnota '%s'"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:501
+#: ../libgimpconfig/gimpconfig-deserialize.c:510
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "neplatná hodnota '%s' pro prvek %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:516
+#: ../libgimpconfig/gimpconfig-deserialize.c:525
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "neplatná hodnota '%ld' pro prvek %s"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:585
+#: ../libgimpconfig/gimpconfig-deserialize.c:594
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "při zpracování prvku '%s': %s"
@@ -873,17 +874,23 @@ msgstr "fatální chyba zpracování"
 msgid "Cannot expand ${%s}"
 msgstr "Nemohu expandovat ${%s}"
 
-#: ../libgimpconfig/gimpconfigwriter.c:135
+#: ../libgimpconfig/gimpconfigwriter.c:78
+#: ../libgimpconfig/gimpconfigwriter.c:693
+#, c-format
+msgid "Error writing to '%s': %s"
+msgstr "Chyba při zápisu '%s': %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:136
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Nemohu vytvořit dočasný soubor pro '%s': %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:148
+#: ../libgimpconfig/gimpconfigwriter.c:149
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nelze otevřít '%s' pro zápis: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:667
+#: ../libgimpconfig/gimpconfigwriter.c:674
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -892,7 +899,7 @@ msgstr ""
 "Chyba při zápisu do dočasného souboru pro '%s': %s\n"
 "Původní soubor zůstal nedotčen."
 
-#: ../libgimpconfig/gimpconfigwriter.c:675
+#: ../libgimpconfig/gimpconfigwriter.c:682
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -901,12 +908,7 @@ msgstr ""
 "Chyba při zápisu do dočasného souboru pro '%s': %s\n"
 "Žádný soubor nebyl vytvořen."
 
-#: ../libgimpconfig/gimpconfigwriter.c:686
-#, c-format
-msgid "Error writing to '%s': %s"
-msgstr "Chyba při zápisu '%s': %s"
-
-#: ../libgimpconfig/gimpconfigwriter.c:704
+#: ../libgimpconfig/gimpconfigwriter.c:711
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Nemohu odstranit '%s': %s"
@@ -1336,33 +1338,34 @@ msgstr "Kontrast"
 msgid "Contrast c_ycles:"
 msgstr "_Cykly kontrastu:"
 
-#: ../modules/cdisplay_lcms.c:116
+#: ../modules/cdisplay_lcms.c:99
 msgid "Color management display filter using ICC color profiles"
 msgstr "Displej se správou barev používající profily barev ICC"
 
-#: ../modules/cdisplay_lcms.c:184
+#: ../modules/cdisplay_lcms.c:160
 msgid "Color Management"
 msgstr "Správa barev"
 
-#: ../modules/cdisplay_lcms.c:288
+#: ../modules/cdisplay_lcms.c:229
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
-msgstr "Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
+msgstr ""
+"Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
 
-#: ../modules/cdisplay_lcms.c:302
+#: ../modules/cdisplay_lcms.c:243
 msgid "Mode of operation:"
 msgstr "Režim práce:"
 
-#: ../modules/cdisplay_lcms.c:309
-msgid "RGB working space profile:"
-msgstr "Profil pracovního prostředí RGB:"
+#: ../modules/cdisplay_lcms.c:250
+msgid "Image profile:"
+msgstr "Profil obrázku:"
 
-#: ../modules/cdisplay_lcms.c:316
+#: ../modules/cdisplay_lcms.c:257
 msgid "Monitor profile:"
 msgstr "Profil monitoru:"
 
-#: ../modules/cdisplay_lcms.c:323
+#: ../modules/cdisplay_lcms.c:264
 msgid "Print simulation profile:"
 msgstr "Profil simulace tisku:"
 
@@ -1804,4 +1807,3 @@ msgstr "GIMP"
 #: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr "Gimpí ovladač vstupu MIDI"
-
