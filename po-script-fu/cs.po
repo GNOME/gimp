@@ -1,3 +1,4 @@
+# translation of cs.po to Czech
 # translation of cs.po to
 # Czech translation of GIMP script-fu
 # Copyright (C) 2001,2003, 2006, 2007 Free Software Foundation, Inc.
@@ -11,10 +12,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-05 09:21+0200\n"
-"PO-Revision-Date: 2007-06-05 13:28+0200\n"
-"Last-Translator: Jakub Friedl\n"
-"Language-Team:  <cs@li.org>\n"
+"POT-Creation-Date: 2007-08-10 18:33+0200\n"
+"PO-Revision-Date: 2007-08-10 18:41+0200\n"
+"Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
+"Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -51,7 +52,7 @@ msgstr "Nelze otevřít '%s' pro zápis: %s"
 msgid "Script-Fu Procedure Browser"
 msgstr "Prohlížeč procedur Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:723
+#: ../plug-ins/script-fu/script-fu-console.c:730
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "Evaluační režim Script-fu umožňuje pouze neinteraktivní spuštění"
 
@@ -108,7 +109,7 @@ msgstr "Script-Fu výběr přechodu"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu výběr stopy"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:664
+#: ../plug-ins/script-fu/script-fu-scripts.c:668
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -837,13 +838,13 @@ msgstr "Šířka"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:1
 msgid "Blend Animation needs at least three source layers"
-msgstr ""
+msgstr "Animace mísení vyžaduje nejméně tři zdrojové vrstvy"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
 msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
-msgstr ""
+msgstr "Vytvořit mezivrstvy pro animaci mísení dvou nebo více vrstev nad pozadím"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Intermediate frames"
@@ -865,7 +866,7 @@ msgstr "_Smísit..."
 msgid ""
 "Add blended backgrounds, highlights, and shadows to the selected region (or "
 "alpha)"
-msgstr ""
+msgstr "Přidat mísená pozadí, světla a stíny do vybrané oblasti (nebo alfy)"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
@@ -971,7 +972,7 @@ msgstr "Šířka koróny"
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
-msgstr ""
+msgstr "Vytvořit mezivrstvy pro animovaný 'burn-in' přechod mezi vrstvami"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout"
@@ -1053,6 +1054,8 @@ msgid ""
 "Create a logo with text raised above or carved in to the specified "
 "background image"
 msgstr ""
+"Vytvořit logo s vyvýšeným textem nebo vyrytým do zadaného "
+"obrázku pozadí"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
@@ -1076,7 +1079,7 @@ msgstr "_Křída..."
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
 msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Přidat efekt dřevořezby do vybrané oblasti (či alfy)"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "Blur amount"
@@ -1092,7 +1095,7 @@ msgstr "Velikost odštípnutí"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Create a logo resembling a chipped wood carving"
-msgstr ""
+msgstr "Vytvořit logo připomínající dřevořezbu"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Drop shadow"
@@ -1115,6 +1118,8 @@ msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
 msgstr ""
+"Do vybrané oblasti (či alfy) přidat chromový efekt pomocí zadané "
+"'stencil' ve stupních šedi"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
@@ -1652,23 +1657,23 @@ msgstr "_Malá hlavička..."
 msgid ""
 "Create an image of a Tube Button Label Header using the gimp.org webpage "
 "theme"
-msgstr ""
+msgstr "Vytvořit hlavičku nabídky podle klasického tématu gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
-msgstr ""
+msgstr "Vytvořit tlačítko nabídky první úrovně podle klasického tématu gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "Create an image of a second level Tube Button Label using the gimp.org "
 "webpage theme"
-msgstr ""
+msgstr "Vytvořit tlačítko nabídky druhé úrovně podle klasického tématu gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
 msgid ""
 "Create an image of a third level Tube Button Label using the gimp.org "
 "webpage theme"
-msgstr ""
+msgstr "Vytvořit tlačítko nabídky třetí úrovně podle klasického tématu gimp.org"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
@@ -2563,8 +2568,8 @@ msgid ""
 "Fill the selected region (or alpha) with a starburst gradient and add a "
 "shadow"
 msgstr ""
-"Vyplnit vybranou oblast (či alfu) přechodem v podobě výbuchu hvězdy "
-"a přidat stín"
+"Vyplnit vybranou oblast (či alfu) přechodem v podobě výbuchu hvězdy a přidat "
+"stín"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:8
 msgid "Starb_urst..."
