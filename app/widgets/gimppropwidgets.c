@@ -457,245 +457,149 @@ gimp_prop_view_notify (GObject      *config,
 }
 
 
-/*****************
- *  ratio entry  *
- *****************/
+/***********************
+ *  number pair entry  *
+ ***********************/
 
 typedef struct
 {
   GObject     *config;
-  const gchar *numerator_property;
-  const gchar *denominator_property;
-} AspectData;
+  const gchar *left_number_property;
+  const gchar *right_number_property;
+} GimpPropNumberPairEntryData;
 
 static void
-aspect_data_free (AspectData *data)
+gimp_prop_number_pair_entry_data_free (GimpPropNumberPairEntryData *data)
 {
-  g_slice_free (AspectData, data);
+  g_slice_free (GimpPropNumberPairEntryData, data);
 }
 
 
-static void  gimp_prop_ratio_entry_notify   (GObject    *config,
-                                             GParamSpec *param_spec,
-                                             GtkEntry   *entry);
-static void  gimp_prop_aspect_ratio_changed (GtkWidget  *widget,
-                                             AspectData *data);
+static void  gimp_prop_number_pair_entry_config_notify
+                                                         (GObject                     *config,
+                                                          GParamSpec                  *param_spec,
+                                                          GtkEntry                    *entry);
+static void  gimp_prop_number_pair_entry_number_pair_numbers_changed
+                                                         (GtkWidget                   *widget,
+                                                          GimpPropNumberPairEntryData *data);
 
 /**
- * gimp_prop_aspect_ratio_new:
- * @config:                Object to which property is attached.
- * @numerator_property:    Name of double property for numerator.
- * @denominator_property:  Name of double property for denominator.
+ * gimp_prop_number_pair_entry_new:
+ * @config:                  Object to which properties are attached.
+ * @left_number_property:    Name of double property for numerator.
+ * @right_number_property:   Name of double property for denominator.
+ * @connect_numbers_changed: %TRUE to connect to the widgets "numbers-changed"
+ *                           signal, %FALSE to not connect.
+ * @connect_numbers_changed: %TRUE to connect to the widgets "ratio-changed"
+ *                           signal, %FALSE to not connect.
+ * @separators:
+ * @allow_simplification:
+ * @min_valid_value:
+ * @max_valid_value:         What to pass to gimp_number_pair_entry_new ().
  *
  * Return value: A #GimpNumberPairEntry widget.
  */
-GtkWidget *
-gimp_prop_aspect_ratio_new (GObject     *config,
-                            const gchar *numerator_property,
-                            const gchar *denominator_property)
+GtkWidget * gimp_prop_number_pair_entry_new (GObject     *config,
+                                             const gchar *left_number_property,
+                                             const gchar *right_number_property,
+                                             gboolean     connect_numbers_changed,
+                                             gboolean     connect_ratio_changed,
+                                             const gchar *separators,
+                                             gboolean     allow_simplification,
+                                             gdouble      min_valid_value,
+                                             gdouble      max_valid_value)
 {
-  AspectData *aspect_data;
-  GtkWidget  *entry;
-  gdouble     numerator;
-  gdouble     denominator;
+  GimpPropNumberPairEntryData *data;
+  GtkWidget                   *number_pair_entry;
+  gdouble                      left_number;
+  gdouble                      right_number;
 
   g_object_get (config,
-                numerator_property,   &numerator,
-                denominator_property, &denominator,
+                left_number_property,  &left_number,
+                right_number_property, &right_number,
                 NULL);
 
-  aspect_data = g_slice_new (AspectData);
+  data = g_slice_new (GimpPropNumberPairEntryData);
 
-  aspect_data->config                = config;
-  aspect_data->numerator_property    = numerator_property;
-  aspect_data->denominator_property  = denominator_property;
+  data->config                = config;
+  data->left_number_property  = left_number_property;
+  data->right_number_property = right_number_property;
 
-  entry = gimp_number_pair_entry_new (":/",
-                                      TRUE,
-                                      0.001,
-                                      GIMP_MAX_IMAGE_SIZE);
-  gtk_entry_set_width_chars (GTK_ENTRY (entry), 7);
+  number_pair_entry = gimp_number_pair_entry_new (separators,
+                                                  allow_simplification,
+                                                  min_valid_value,
+                                                  max_valid_value);
 
-  g_object_set_data_full (G_OBJECT (entry),
-                          "gimp-ratio-entry-aspect-data", aspect_data,
-                          (GDestroyNotify) aspect_data_free);
+  gtk_entry_set_width_chars (GTK_ENTRY (number_pair_entry), 7);
 
-  gimp_number_pair_entry_set_values (GIMP_NUMBER_PAIR_ENTRY (entry),
-                                     numerator,
-                                     denominator);
+  g_object_set_data_full (G_OBJECT (number_pair_entry),
+                          "gimp-prop-number-pair-entry-data", data,
+                          (GDestroyNotify) gimp_prop_number_pair_entry_data_free);
 
-  g_signal_connect (entry, "ratio-changed",
-                    G_CALLBACK (gimp_prop_aspect_ratio_changed),
-                    aspect_data);
+  gimp_number_pair_entry_set_values (GIMP_NUMBER_PAIR_ENTRY (number_pair_entry),
+                                     left_number,
+                                     right_number);
 
-  connect_notify (config, numerator_property,
-                  G_CALLBACK (gimp_prop_ratio_entry_notify),
-                  entry);
-  connect_notify (config, denominator_property,
-                  G_CALLBACK (gimp_prop_ratio_entry_notify),
-                  entry);
+  if (connect_ratio_changed)
+    g_signal_connect (number_pair_entry, "ratio-changed",
+                      G_CALLBACK (gimp_prop_number_pair_entry_number_pair_numbers_changed),
+                      data);
 
-  return entry;
+  if (connect_numbers_changed)
+    g_signal_connect (number_pair_entry, "numbers-changed",
+                      G_CALLBACK (gimp_prop_number_pair_entry_number_pair_numbers_changed),
+                      data);
+
+  connect_notify (config, left_number_property,
+                  G_CALLBACK (gimp_prop_number_pair_entry_config_notify),
+                  number_pair_entry);
+  connect_notify (config, right_number_property,
+                  G_CALLBACK (gimp_prop_number_pair_entry_config_notify),
+                  number_pair_entry);
+
+  return number_pair_entry;
 }
 
 static void
-gimp_prop_ratio_entry_notify (GObject    *config,
-                              GParamSpec *param_spec,
-                              GtkEntry   *entry)
+gimp_prop_number_pair_entry_config_notify (GObject    *config,
+                                           GParamSpec *param_spec,
+                                           GtkEntry   *number_pair_entry)
 {
-  AspectData *aspect_data = g_object_get_data (G_OBJECT (entry),
-                                               "gimp-ratio-entry-aspect-data");
-  gdouble     num, denom;
+  GimpPropNumberPairEntryData *data;
+  gdouble                      left_number;
+  gdouble                      right_number;
 
-  g_return_if_fail (aspect_data != NULL);
+  data = g_object_get_data (G_OBJECT (number_pair_entry),
+                            "gimp-prop-number-pair-entry-data");
+
+  g_return_if_fail (data != NULL);
 
   g_object_get (config,
-                aspect_data->numerator_property,   &num,
-                aspect_data->denominator_property, &denom,
+                data->left_number_property,  &left_number,
+                data->right_number_property, &right_number,
                 NULL);
 
-  gimp_number_pair_entry_set_values (GIMP_NUMBER_PAIR_ENTRY (entry),
-                                     num,
-                                     denom);
+  gimp_number_pair_entry_set_values (GIMP_NUMBER_PAIR_ENTRY (number_pair_entry),
+                                     left_number,
+                                     right_number);
 }
 
-
 static void
-gimp_prop_aspect_ratio_changed (GtkWidget  *widget,
-                                AspectData *data)
+gimp_prop_number_pair_entry_number_pair_numbers_changed (GtkWidget                   *widget,
+                                                         GimpPropNumberPairEntryData *data)
 {
-  gdouble num, denom;
+  gdouble left_number;
+  gdouble right_number;
 
   gimp_number_pair_entry_get_values (GIMP_NUMBER_PAIR_ENTRY (widget),
-                                     &num,
-                                     &denom);
+                                     &left_number,
+                                     &right_number);
 
   g_object_set (data->config,
-                data->numerator_property,   num,
-                data->denominator_property, denom,
+                data->left_number_property,  left_number,
+                data->right_number_property, right_number,
                 NULL);
 }
-
-
-/****************
- * size_2d
- ****************/
-
-typedef struct
-{
-  GObject     *config;
-  const gchar *width_property;
-  const gchar *height_property;
-} Size2dData;
-
-static void
-size_2d_data_free (Size2dData *data)
-{
-  g_slice_free (Size2dData, data);
-}
-
-
-static void  gimp_prop_size_2d_entry_notify (GObject    *config,
-                                             GParamSpec *param_spec,
-                                             GtkEntry   *entry);
-static void  gimp_prop_size_2d_size_changed (GtkWidget  *widget,
-                                             Size2dData *data);
-
-
-/**
- * gimp_prop_size_2d_new:
- * @config:          Object to which properties are attached.
- * @width_property:  Name of double property for width.
- * @height_property: Name of double property for height.
- *
- * Return value: A #GimpNumberPairEntry widget.
- */
-GtkWidget * gimp_prop_size_2d_new (GObject     *config,
-                                   const gchar *width_property,
-                                   const gchar *height_property)
-{
-  Size2dData *size_2d_data;
-  GtkWidget  *entry;
-  gdouble     width;
-  gdouble     height;
-
-  g_object_get (config,
-                width_property,  &width,
-                height_property, &height,
-                NULL);
-
-  size_2d_data = g_slice_new (Size2dData);
-
-  size_2d_data->config          = config;
-  size_2d_data->width_property  = width_property;
-  size_2d_data->height_property = height_property;
-
-  entry = gimp_number_pair_entry_new ("xX*",
-                                      FALSE,
-                                      1.0,
-                                      GIMP_MAX_IMAGE_SIZE);
-  gtk_entry_set_width_chars (GTK_ENTRY (entry), 7);
-
-  g_object_set_data_full (G_OBJECT (entry),
-                          "gimp-size-2d-entry-size-2d-data", size_2d_data,
-                          (GDestroyNotify) size_2d_data_free);
-
-  gimp_number_pair_entry_set_values (GIMP_NUMBER_PAIR_ENTRY (entry),
-                                     width, height);
-
-  g_signal_connect (entry, "numbers-changed",
-                    G_CALLBACK (gimp_prop_size_2d_size_changed),
-                    size_2d_data);
-
-  connect_notify (config, width_property,
-                  G_CALLBACK (gimp_prop_size_2d_entry_notify),
-                  entry);
-  connect_notify (config, height_property,
-                  G_CALLBACK (gimp_prop_size_2d_entry_notify),
-                  entry);
-
-  return entry;
-}
-
-static void
-gimp_prop_size_2d_entry_notify (GObject    *config,
-                                GParamSpec *param_spec,
-                                GtkEntry   *entry)
-{
-  Size2dData *size_2d_data;
-  gdouble     width, height;
-
-  size_2d_data = g_object_get_data (G_OBJECT (entry),
-                                    "gimp-size-2d-entry-size-2d-data");
-
-  g_return_if_fail (size_2d_data != NULL);
-
-  g_object_get (config,
-                size_2d_data->width_property,  &width,
-                size_2d_data->height_property, &height,
-                NULL);
-
-  gimp_number_pair_entry_set_values (GIMP_NUMBER_PAIR_ENTRY (entry),
-                                     width,
-                                     height);
-}
-
-static void
-gimp_prop_size_2d_size_changed (GtkWidget  *widget,
-                                Size2dData *data)
-{
-  gdouble width, height;
-
-  gimp_number_pair_entry_get_values (GIMP_NUMBER_PAIR_ENTRY (widget),
-                                     &width,
-                                     &height);
-
-  g_object_set (data->config,
-                data->width_property,  width,
-                data->height_property, height,
-                NULL);
-}
-
 
 /*******************************/
 /*  private utility functions  */

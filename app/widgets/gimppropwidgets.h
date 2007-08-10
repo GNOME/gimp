@@ -58,17 +58,18 @@ GtkWidget * gimp_prop_view_new            (GObject     *config,
                                            gint         size);
 
 
-/*  GParamDouble, GParamDouble, GParamBoolean  */
-
-GtkWidget * gimp_prop_aspect_ratio_new    (GObject     *config,
-                                           const gchar *numerator_property,
-                                           const gchar *denominator_property);
-
 /*  GParamDouble, GParamDouble  */
 
-GtkWidget * gimp_prop_size_2d_new         (GObject     *config,
-                                           const gchar *width_property,
-                                           const gchar *height_property);
+GtkWidget * gimp_prop_number_pair_entry_new
+                                          (GObject     *config,
+                                           const gchar *left_number_property,
+                                           const gchar *right_number_property,
+                                           gboolean     connect_numbers_changed,
+                                           gboolean     connect_ratio_changed,
+                                           const gchar *separators,
+                                           gboolean     allow_simplification,
+                                           gdouble      min_valid_value,
+                                           gdouble      max_valid_value);
 
 
 #endif /* __GIMP_APP_PROP_WIDGETS_H__ */

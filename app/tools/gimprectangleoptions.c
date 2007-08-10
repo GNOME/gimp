@@ -758,9 +758,14 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     {
       /* Aspect ratio entry */
       private->fixed_aspect_entry =
-        gimp_prop_aspect_ratio_new (config,
-                                    "aspect-numerator",
-                                    "aspect-denominator");
+        gimp_prop_number_pair_entry_new (config,
+                                         "aspect-numerator",
+                                         "aspect-denominator",
+                                         FALSE, TRUE,
+                                         ":/",
+                                         TRUE,
+                                         0.001, GIMP_MAX_IMAGE_SIZE);
+
       g_object_ref_sink (private->fixed_aspect_entry);
       gimp_rectangle_options_setup_ratio_completion (GIMP_RECTANGLE_OPTIONS (tool_options),
                                                      private->fixed_aspect_entry,
@@ -803,9 +808,14 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
       /* Size entry */
       private->fixed_size_entry =
-        gimp_prop_size_2d_new (config,
-                               "desired-fixed-size-width",
-                               "desired-fixed-size-height");
+        gimp_prop_number_pair_entry_new (config,
+                                         "desired-fixed-size-width",
+                                         "desired-fixed-size-height",
+                                         TRUE, FALSE,
+                                         "xX*",
+                                         FALSE,
+                                         1, GIMP_MAX_IMAGE_SIZE);
+
       gimp_rectangle_options_setup_ratio_completion (GIMP_RECTANGLE_OPTIONS (tool_options),
                                                      private->fixed_size_entry,
                                                      private->size_history);

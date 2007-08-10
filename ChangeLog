@@ -1,3 +1,11 @@
+2007-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/widgets/gimppropwidgets.[ch]: Merged gimp_prop_size_2d_* and
+	gimp_prop_aspect_ratio_* to gimp_prop_number_pair_*.
+
+	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):
+	Use the merged gimp_prop_number_pair_entry_new.
+
 2007-08-10  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppropwidgets.c
