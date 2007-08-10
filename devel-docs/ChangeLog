@@ -1,7 +1,12 @@
+2007-08-10  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/libgimpwidgets-sections.txt: added new symbols in
+	GimpNumberPairEntry.
+
 2007-08-09  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt
-	* libgimpwidgets/visual-index.xml
+	* libgimpwidgets/visual-index.xml: updated for GimpNumberPairEntry.
 
 	* libgimpwidgets/tmpl/gimpnumberpairentry.sgml: regenerated.
 

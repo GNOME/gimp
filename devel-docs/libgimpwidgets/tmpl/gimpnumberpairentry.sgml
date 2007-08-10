@@ -189,3 +189,21 @@ GimpNumberPairEntry
 @ratio: 
 
 
+<!-- ##### FUNCTION gimp_number_pair_entry_get_user_override ##### -->
+<para>
+
+</para>
+
+@entry: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_number_pair_entry_set_user_override ##### -->
+<para>
+
+</para>
+
+@entry: 
+@user_override: 
+
+

@@ -499,6 +499,8 @@ gimp_number_pair_entry_get_aspect
 gimp_number_pair_entry_set_aspect
 gimp_number_pair_entry_get_ratio
 gimp_number_pair_entry_set_ratio
+gimp_number_pair_entry_get_user_override
+gimp_number_pair_entry_set_user_override
 <SUBSECTION Standard>
 GIMP_NUMBER_PAIR_ENTRY
 GIMP_IS_NUMBER_PAIR_ENTRY
