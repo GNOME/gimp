@@ -1,5 +1,13 @@
 2007-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/widgets/gimppropwidgets.c
+	(gimp_prop_number_pair_entry_config_notify): Fixed bug where
+	property notifications were checked againts hardcoded property
+	names instead of the ones configured to the
+	GimpPropNumberPairEntryData object.
+
+2007-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangleoptions.c: Added
 	"default-aspect-numerator", "default-aspect-denominator",
 	"default-fixed-size-width" and "default-fixed-size-height" as

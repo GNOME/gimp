@@ -630,8 +630,8 @@ gimp_prop_number_pair_entry_config_notify (GObject    *config,
 
   g_return_if_fail (data != NULL);
 
-  if (strcmp (param_spec->name, "left-number")  == 0 ||
-      strcmp (param_spec->name, "right-number") == 0)
+  if (strcmp (param_spec->name, data->left_number_property)  == 0 ||
+      strcmp (param_spec->name, data->right_number_property) == 0)
     {
       gdouble left_number;
       gdouble right_number;
@@ -645,8 +645,8 @@ gimp_prop_number_pair_entry_config_notify (GObject    *config,
                                          left_number,
                                          right_number);
     }
-  else if (strcmp (param_spec->name, "default-left-number")  == 0 ||
-           strcmp (param_spec->name, "default-right-number") == 0)
+  else if (strcmp (param_spec->name, data->default_left_number_property)  == 0 ||
+           strcmp (param_spec->name, data->default_right_number_property) == 0)
     {
       gdouble default_left_number;
       gdouble default_right_number;
@@ -660,7 +660,7 @@ gimp_prop_number_pair_entry_config_notify (GObject    *config,
                                                  default_left_number,
                                                  default_right_number);
     }
-  else if (strcmp (param_spec->name, "user-override")  == 0)
+  else if (strcmp (param_spec->name, data->user_override_property)  == 0)
     {
       gboolean user_override;
 
