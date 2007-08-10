@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-10 18:33+0200\n"
-"PO-Revision-Date: 2007-08-10 18:41+0200\n"
+"PO-Revision-Date: 2007-08-10 23:58+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -200,7 +200,7 @@ msgstr "Mimozemská _záře"
 
 #: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Beveled Pattern"
-msgstr "_Vtlačený vzorek"
+msgstr "_Zkosený vzorek"
 
 #: ../plug-ins/script-fu/script-fu.c:325
 msgid "_Classic.Gimp.Org"
@@ -599,7 +599,7 @@ msgstr "Nalevo"
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
 msgid "Orientation"
-msgstr "Orientace"
+msgstr "Směr"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
@@ -637,7 +637,7 @@ msgstr "Vytvořit horizontální linku se strašidelnou září určenou pro web
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
 msgid "_Hrule..."
-msgstr "_Vodorovné pravítko..."
+msgstr "_Vodorovný oddělovač..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
 msgid "Create a bullet graphic with an eerie glow for web pages"
@@ -652,7 +652,7 @@ msgstr "Poloměr"
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
 msgid "_Bullet..."
-msgstr "_Puntík..."
+msgstr "_Odrážka..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:1
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:1
