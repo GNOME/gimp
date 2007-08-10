@@ -1,5 +1,16 @@
 2007-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangleoptions.c: Added
+	"default-aspect-numerator", "default-aspect-denominator",
+	"default-fixed-size-width" and "default-fixed-size-height" as
+	non-serialized tool options, and "overridden-fixed-aspect" and
+	"overridden-fixed-size" as serialized ones.
+
+	* app/widgets/gimppropwidgets.c (gimp_prop_number_pair_entry_*):
+	Added support for the new GimpRectangleOptions.
+
+2007-08-10  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* libgimpwidgets/gimpnumberpairentry.c
 	(gimp_number_pair_entry_parse_text): Remove code that has not with
 	parsing to do, so that clients that use this function can be more

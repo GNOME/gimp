@@ -57,13 +57,15 @@ GtkWidget * gimp_prop_view_new            (GObject     *config,
                                            GimpContext *context,
                                            gint         size);
 
-
-/*  GParamDouble, GParamDouble  */
+/*  GParamDouble, GParamDouble, GParamDouble, GParamDouble, GParamBoolean  */
 
 GtkWidget * gimp_prop_number_pair_entry_new
                                           (GObject     *config,
                                            const gchar *left_number_property,
                                            const gchar *right_number_property,
+                                           const gchar *default_numerator_property,
+                                           const gchar *default_denominator_property,
+                                           const gchar *overridden_fixed_aspect_property,
                                            gboolean     connect_numbers_changed,
                                            gboolean     connect_ratio_changed,
                                            const gchar *separators,

@@ -185,6 +185,29 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
                                                                 GIMP_PARAM_STATIC_STRINGS));
 
       g_object_interface_install_property (iface,
+                                           g_param_spec_double ("default-aspect-numerator",
+                                                                NULL, NULL,
+                                                                0.001, GIMP_MAX_IMAGE_SIZE,
+                                                                1.0,
+                                                                GIMP_PARAM_READWRITE |
+                                                                G_PARAM_CONSTRUCT));
+
+      g_object_interface_install_property (iface,
+                                           g_param_spec_double ("default-aspect-denominator",
+                                                                NULL, NULL,
+                                                                0.001, GIMP_MAX_IMAGE_SIZE,
+                                                                1.0,
+                                                                GIMP_PARAM_READWRITE |
+                                                                G_PARAM_CONSTRUCT));
+
+      g_object_interface_install_property (iface,
+                                           g_param_spec_boolean ("overridden-fixed-aspect",
+                                                                 NULL, NULL,
+                                                                 FALSE,
+                                                                 GIMP_CONFIG_PARAM_FLAGS |
+                                                                 GIMP_PARAM_STATIC_STRINGS));
+
+      g_object_interface_install_property (iface,
                                            g_param_spec_boolean ("fixed-center",
                                                                  NULL, NULL,
                                                                  FALSE,
@@ -237,6 +260,29 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
                                                                 100.0,
                                                                 GIMP_CONFIG_PARAM_FLAGS |
                                                                 GIMP_PARAM_STATIC_STRINGS));
+
+      g_object_interface_install_property (iface,
+                                           g_param_spec_double ("default-fixed-size-width",
+                                                                NULL, NULL,
+                                                                0.0, GIMP_MAX_IMAGE_SIZE,
+                                                                100.0,
+                                                                GIMP_PARAM_READWRITE |
+                                                                GIMP_PARAM_STATIC_STRINGS));
+
+      g_object_interface_install_property (iface,
+                                           g_param_spec_double ("default-fixed-size-height",
+                                                                NULL, NULL,
+                                                                0.0, GIMP_MAX_IMAGE_SIZE,
+                                                                100.0,
+                                                                GIMP_PARAM_READWRITE |
+                                                                GIMP_PARAM_STATIC_STRINGS));
+
+      g_object_interface_install_property (iface,
+                                           g_param_spec_boolean ("overridden-fixed-size",
+                                                                 NULL, NULL,
+                                                                 FALSE,
+                                                                 GIMP_CONFIG_PARAM_FLAGS |
+                                                                 GIMP_PARAM_STATIC_STRINGS));
 
       g_object_interface_install_property (iface,
                                            g_param_spec_double ("center-x",
@@ -364,6 +410,15 @@ gimp_rectangle_options_install_properties (GObjectClass *klass)
                                     GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR,
                                     "aspect-denominator");
   g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_NUMERATOR,
+                                    "default-aspect-numerator");
+  g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_DENOMINATOR,
+                                    "default-aspect-denominator");
+  g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_ASPECT,
+                                    "overridden-fixed-aspect");
+  g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE,
                                     "fixed-rule-active");
   g_object_class_override_property (klass,
@@ -381,6 +436,15 @@ gimp_rectangle_options_install_properties (GObjectClass *klass)
   g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_HEIGHT,
                                     "desired-fixed-size-height");
+  g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_WIDTH,
+                                    "default-fixed-size-width");
+  g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_HEIGHT,
+                                    "default-fixed-size-height");
+  g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_SIZE,
+                                    "overridden-fixed-size");
   g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER,
                                     "fixed-center");
@@ -438,6 +502,15 @@ gimp_rectangle_options_set_property (GObject      *object,
     case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR:
       private->aspect_denominator = g_value_get_double (value);
       break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_NUMERATOR:
+      private->default_aspect_numerator = g_value_get_double (value);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_DENOMINATOR:
+      private->default_aspect_denominator = g_value_get_double (value);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_ASPECT:
+      private->overridden_fixed_aspect = g_value_get_boolean (value);
+      break;
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER:
       private->fixed_center = g_value_get_boolean (value);
       break;
@@ -458,6 +531,15 @@ gimp_rectangle_options_set_property (GObject      *object,
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_HEIGHT:
       private->desired_fixed_size_height = g_value_get_double (value);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_WIDTH:
+      private->default_fixed_size_width = g_value_get_double (value);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_HEIGHT:
+      private->default_fixed_size_height = g_value_get_double (value);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_SIZE:
+      private->overridden_fixed_size = g_value_get_boolean (value);
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X:
       private->center_x = g_value_get_double (value);
@@ -518,6 +600,15 @@ gimp_rectangle_options_get_property (GObject      *object,
     case GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR:
       g_value_set_double (value, private->aspect_denominator);
       break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_NUMERATOR:
+      g_value_set_double (value, private->default_aspect_numerator);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_DENOMINATOR:
+      g_value_set_double (value, private->default_aspect_denominator);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_ASPECT:
+      g_value_set_boolean (value, private->overridden_fixed_aspect);
+      break;
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER:
       g_value_set_boolean (value, private->fixed_center);
       break;
@@ -538,6 +629,15 @@ gimp_rectangle_options_get_property (GObject      *object,
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_HEIGHT:
       g_value_set_double (value, private->desired_fixed_size_height);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_WIDTH:
+      g_value_set_double (value, private->default_fixed_size_width);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_HEIGHT:
+      g_value_set_double (value, private->default_fixed_size_height);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_SIZE:
+      g_value_set_boolean (value, private->overridden_fixed_size);
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X:
       g_value_set_double (value, private->center_x);
@@ -761,6 +861,9 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
         gimp_prop_number_pair_entry_new (config,
                                          "aspect-numerator",
                                          "aspect-denominator",
+                                         "default-aspect-numerator",
+                                         "default-aspect-denominator",
+                                         "overridden-fixed-aspect",
                                          FALSE, TRUE,
                                          ":/",
                                          TRUE,
@@ -811,6 +914,9 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
         gimp_prop_number_pair_entry_new (config,
                                          "desired-fixed-size-width",
                                          "desired-fixed-size-height",
+                                         "default-fixed-size-width",
+                                         "default-fixed-size-height",
+                                         "overridden-fixed-size",
                                          TRUE, FALSE,
                                          "xX*",
                                          FALSE,

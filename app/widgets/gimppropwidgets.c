@@ -466,6 +466,9 @@ typedef struct
   GObject     *config;
   const gchar *left_number_property;
   const gchar *right_number_property;
+  const gchar *default_left_number_property;
+  const gchar *default_right_number_property;
+  const gchar *user_override_property;
 } GimpPropNumberPairEntryData;
 
 static void
@@ -482,16 +485,24 @@ static void  gimp_prop_number_pair_entry_config_notify
 static void  gimp_prop_number_pair_entry_number_pair_numbers_changed
                                                          (GtkWidget                   *widget,
                                                           GimpPropNumberPairEntryData *data);
+static void  gimp_prop_number_pair_entry_number_pair_user_override_changed
+                                                         (GtkWidget                   *entry,
+                                                          GParamSpec                  *param_spec,
+                                                          GimpPropNumberPairEntryData *data);
+
 
 /**
  * gimp_prop_number_pair_entry_new:
- * @config:                  Object to which properties are attached.
- * @left_number_property:    Name of double property for numerator.
- * @right_number_property:   Name of double property for denominator.
- * @connect_numbers_changed: %TRUE to connect to the widgets "numbers-changed"
- *                           signal, %FALSE to not connect.
- * @connect_numbers_changed: %TRUE to connect to the widgets "ratio-changed"
- *                           signal, %FALSE to not connect.
+ * @config:                        Object to which properties are attached.
+ * @left_number_property:          Name of double property for left number.
+ * @right_number_property:         Name of double property for right number.
+ * @default_left_number_property:  Name of double property for default left number.
+ * @default_right_number_property: Name of double property for default right number.
+ * @user_override_property:        Name of boolean property for user override mode.
+ * @connect_numbers_changed:       %TRUE to connect to the widgets "numbers-changed"
+ *                                 signal, %FALSE to not connect.
+ * @connect_numbers_changed:       %TRUE to connect to the widgets "ratio-changed"
+ *                                 signal, %FALSE to not connect.
  * @separators:
  * @allow_simplification:
  * @min_valid_value:
@@ -502,6 +513,9 @@ static void  gimp_prop_number_pair_entry_number_pair_numbers_changed
 GtkWidget * gimp_prop_number_pair_entry_new (GObject     *config,
                                              const gchar *left_number_property,
                                              const gchar *right_number_property,
+                                             const gchar *default_left_number_property,
+                                             const gchar *default_right_number_property,
+                                             const gchar *user_override_property,
                                              gboolean     connect_numbers_changed,
                                              gboolean     connect_ratio_changed,
                                              const gchar *separators,
@@ -513,32 +527,58 @@ GtkWidget * gimp_prop_number_pair_entry_new (GObject     *config,
   GtkWidget                   *number_pair_entry;
   gdouble                      left_number;
   gdouble                      right_number;
+  gdouble                      default_left_number;
+  gdouble                      default_right_number;
+  gboolean                     user_override;
 
-  g_object_get (config,
-                left_number_property,  &left_number,
-                right_number_property, &right_number,
-                NULL);
+
+  /* Setup config data */
 
   data = g_slice_new (GimpPropNumberPairEntryData);
 
-  data->config                = config;
-  data->left_number_property  = left_number_property;
-  data->right_number_property = right_number_property;
+  data->config                        = config;
+  data->left_number_property          = left_number_property;
+  data->right_number_property         = right_number_property;
+  data->default_left_number_property  = default_left_number_property;
+  data->default_right_number_property = default_right_number_property;
+  data->user_override_property        = user_override_property;
+
+
+  /* Read current values of config properties */
+
+  g_object_get (config,
+                left_number_property,          &left_number,
+                right_number_property,         &right_number,
+                default_left_number_property,  &default_left_number,
+                default_right_number_property, &default_right_number,
+                user_override_property,        &user_override,
+                NULL);
+
+
+  /* Create a GimpNumberPairEntry and setup with config property values */
 
   number_pair_entry = gimp_number_pair_entry_new (separators,
                                                   allow_simplification,
                                                   min_valid_value,
                                                   max_valid_value);
 
-  gtk_entry_set_width_chars (GTK_ENTRY (number_pair_entry), 7);
-
   g_object_set_data_full (G_OBJECT (number_pair_entry),
                           "gimp-prop-number-pair-entry-data", data,
                           (GDestroyNotify) gimp_prop_number_pair_entry_data_free);
 
-  gimp_number_pair_entry_set_values (GIMP_NUMBER_PAIR_ENTRY (number_pair_entry),
-                                     left_number,
-                                     right_number);
+  gtk_entry_set_width_chars (GTK_ENTRY (number_pair_entry), 7);
+
+  gimp_number_pair_entry_set_user_override  (GIMP_NUMBER_PAIR_ENTRY (number_pair_entry),
+                                             user_override);
+  gimp_number_pair_entry_set_values         (GIMP_NUMBER_PAIR_ENTRY (number_pair_entry),
+                                             left_number,
+                                             right_number);
+  gimp_number_pair_entry_set_default_values (GIMP_NUMBER_PAIR_ENTRY (number_pair_entry),
+                                             default_left_number,
+                                             default_right_number);
+
+
+  /* Connect to GimpNumberPairEntry signals */
 
   if (connect_ratio_changed)
     g_signal_connect (number_pair_entry, "ratio-changed",
@@ -550,12 +590,31 @@ GtkWidget * gimp_prop_number_pair_entry_new (GObject     *config,
                       G_CALLBACK (gimp_prop_number_pair_entry_number_pair_numbers_changed),
                       data);
 
+  g_signal_connect (number_pair_entry, "notify::user-override",
+                    G_CALLBACK (gimp_prop_number_pair_entry_number_pair_user_override_changed),
+                    data);
+
+
+  /* Connect to connfig object signals */
+
   connect_notify (config, left_number_property,
                   G_CALLBACK (gimp_prop_number_pair_entry_config_notify),
                   number_pair_entry);
   connect_notify (config, right_number_property,
                   G_CALLBACK (gimp_prop_number_pair_entry_config_notify),
                   number_pair_entry);
+  connect_notify (config, default_left_number_property,
+                  G_CALLBACK (gimp_prop_number_pair_entry_config_notify),
+                  number_pair_entry);
+  connect_notify (config, default_right_number_property,
+                  G_CALLBACK (gimp_prop_number_pair_entry_config_notify),
+                  number_pair_entry);
+  connect_notify (config, user_override_property,
+                  G_CALLBACK (gimp_prop_number_pair_entry_config_notify),
+                  number_pair_entry);
+
+
+  /* Done */
 
   return number_pair_entry;
 }
@@ -565,23 +624,53 @@ gimp_prop_number_pair_entry_config_notify (GObject    *config,
                                            GParamSpec *param_spec,
                                            GtkEntry   *number_pair_entry)
 {
-  GimpPropNumberPairEntryData *data;
-  gdouble                      left_number;
-  gdouble                      right_number;
-
-  data = g_object_get_data (G_OBJECT (number_pair_entry),
-                            "gimp-prop-number-pair-entry-data");
+  GimpPropNumberPairEntryData *data =
+    g_object_get_data (G_OBJECT (number_pair_entry),
+                       "gimp-prop-number-pair-entry-data");
 
   g_return_if_fail (data != NULL);
 
-  g_object_get (config,
-                data->left_number_property,  &left_number,
-                data->right_number_property, &right_number,
-                NULL);
+  if (strcmp (param_spec->name, "left-number")  == 0 ||
+      strcmp (param_spec->name, "right-number") == 0)
+    {
+      gdouble left_number;
+      gdouble right_number;
 
-  gimp_number_pair_entry_set_values (GIMP_NUMBER_PAIR_ENTRY (number_pair_entry),
-                                     left_number,
-                                     right_number);
+      g_object_get (config,
+                    data->left_number_property,  &left_number,
+                    data->right_number_property, &right_number,
+                    NULL);
+
+      gimp_number_pair_entry_set_values (GIMP_NUMBER_PAIR_ENTRY (number_pair_entry),
+                                         left_number,
+                                         right_number);
+    }
+  else if (strcmp (param_spec->name, "default-left-number")  == 0 ||
+           strcmp (param_spec->name, "default-right-number") == 0)
+    {
+      gdouble default_left_number;
+      gdouble default_right_number;
+
+      g_object_get (config,
+                    data->default_left_number_property,  &default_left_number,
+                    data->default_right_number_property, &default_right_number,
+                    NULL);
+
+      gimp_number_pair_entry_set_default_values (GIMP_NUMBER_PAIR_ENTRY (number_pair_entry),
+                                                 default_left_number,
+                                                 default_right_number);
+    }
+  else if (strcmp (param_spec->name, "user-override")  == 0)
+    {
+      gboolean user_override;
+
+      g_object_get (config,
+                    data->user_override_property, &user_override,
+                    NULL);
+
+      gimp_number_pair_entry_set_user_override (GIMP_NUMBER_PAIR_ENTRY (number_pair_entry),
+                                                user_override);
+    }
 }
 
 static void
@@ -600,6 +689,23 @@ gimp_prop_number_pair_entry_number_pair_numbers_changed (GtkWidget              
                 data->right_number_property, right_number,
                 NULL);
 }
+
+static void
+gimp_prop_number_pair_entry_number_pair_user_override_changed (GtkWidget                   *entry,
+                                                               GParamSpec                  *param_spec,
+                                                               GimpPropNumberPairEntryData *data)
+
+{
+  gboolean user_override;
+
+  user_override =
+    gimp_number_pair_entry_get_user_override (GIMP_NUMBER_PAIR_ENTRY (entry));
+
+  g_object_set (data->config,
+                data->user_override_property, user_override,
+                NULL);
+}
+
 
 /*******************************/
 /*  private utility functions  */

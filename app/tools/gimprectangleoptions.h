@@ -35,8 +35,14 @@ typedef enum
   GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_HEIGHT,
   GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_WIDTH,
   GIMP_RECTANGLE_OPTIONS_PROP_DESIRED_FIXED_SIZE_HEIGHT,
+  GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_WIDTH,
+  GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_FIXED_SIZE_HEIGHT,
+  GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_SIZE,
   GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_NUMERATOR,
   GIMP_RECTANGLE_OPTIONS_PROP_ASPECT_DENOMINATOR,
+  GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_NUMERATOR,
+  GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_DENOMINATOR,
+  GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_ASPECT,
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE,
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE,
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER,
@@ -77,16 +83,22 @@ struct _GimpRectangleOptionsPrivate
   gdouble                     width;
   gdouble                     height;
 
-  /* Width and height for Fixed: Width and Fixed: Height */
   gdouble                     desired_fixed_width;
   gdouble                     desired_fixed_height;
 
-  /* Width and height for Fixed: Size */
   gdouble                     desired_fixed_size_width;
   gdouble                     desired_fixed_size_height;
 
+  gdouble                     default_fixed_size_width;
+  gdouble                     default_fixed_size_height;
+  gboolean                    overridden_fixed_size;
+
   gdouble                     aspect_numerator;
   gdouble                     aspect_denominator;
+
+  gdouble                     default_aspect_numerator;
+  gdouble                     default_aspect_denominator;
+  gboolean                    overridden_fixed_aspect;
 
   gboolean                    fixed_rule_active;
   GimpRectangleToolFixedRule  fixed_rule;
