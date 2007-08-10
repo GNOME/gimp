@@ -24,6 +24,7 @@
 
 #include "config.h"
 
+#include <stdlib.h>
 #include <string.h>
 
 #include <gtk/gtk.h>
@@ -89,7 +90,8 @@ typedef struct
    * widget is used for aspect ratio, valid separators are typically
    * ':' and '/'.
    */
-  gchar *separators;
+  gunichar    *separators;
+  glong        num_separators;
 
   /* Whether or to not to divide the numbers with the greatest common
    * divisor when input ends in '='.
@@ -107,9 +109,8 @@ typedef struct
 
 static void         gimp_number_pair_entry_finalize          (GObject             *entry);
 
-static gint         gimp_number_pair_entry_valid_separator   (GimpNumberPairEntry *entry,
-                                                              gchar                   canditate);
-
+static gboolean     gimp_number_pair_entry_valid_separator   (GimpNumberPairEntry *entry,
+                                                              gunichar             canditate);
 static void         gimp_number_pair_entry_ratio_to_fraction (gdouble              ratio,
                                                               gdouble             *numerator,
                                                               gdouble             *denominator);
@@ -148,7 +149,9 @@ G_DEFINE_TYPE (GimpNumberPairEntry, gimp_number_pair_entry, GTK_TYPE_ENTRY)
 #define parent_class gimp_number_pair_entry_parent_class
 
 /* What the user shall end the input with when simplification is desired. */
-#define SIMPLIFICATION_CHAR        '='
+#define SIMPLIFICATION_CHAR  ((gunichar) '=')
+
+#define DEFAULT_SEPARATOR    ((gunichar) ',')
 
 
 static guint entry_signals[LAST_SIGNAL] = { 0 };
@@ -220,7 +223,7 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
                                    g_param_spec_string ("separators",
                                                         "Separators",
                                                         "A string of valid separators",
-                                                        ",",
+                                                        NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
   g_object_class_install_property (object_class, PROP_ALLOW_SIMPLIFICATION,
@@ -273,7 +276,8 @@ gimp_number_pair_entry_init (GimpNumberPairEntry *entry)
   priv->default_left_number  = 1.0;
   priv->default_right_number = 1.0;
   priv->user_override        = FALSE;
-  priv->separators           = g_strdup_printf (",");
+  priv->separators           = NULL;
+  priv->num_separators       = 0;
   priv->allow_simplification = FALSE;
   priv->min_valid_value      = G_MINDOUBLE;
   priv->max_valid_value      = G_MAXDOUBLE;
@@ -298,7 +302,8 @@ gimp_number_pair_entry_finalize (GObject *object)
   if (priv->separators)
     {
       g_free (priv->separators);
-      priv->separators = NULL;
+      priv->separators     = NULL;
+      priv->num_separators = 0;
     }
 
   G_OBJECT_CLASS (parent_class)->finalize (object);
@@ -797,11 +802,17 @@ gimp_number_pair_entry_strdup_number_pair_string (GimpNumberPairEntry *entry,
                                                   gdouble              right_number)
 {
   GimpNumberPairEntryPrivate *priv = GIMP_NUMBER_PAIR_ENTRY_GET_PRIVATE (entry);
+  gchar                       sep[8];
+  gint                        len;
 
-  return g_strdup_printf ("%g%c%g",
-                          left_number,
-                          priv->separators[0],
-                          right_number);
+  if (priv->num_separators > 0)
+    len = g_unichar_to_utf8 (priv->separators[0], sep);
+  else
+    len = g_unichar_to_utf8 (DEFAULT_SEPARATOR, sep);
+
+  sep[len] = '\0';
+
+  return g_strdup_printf ("%g%s%g", left_number, sep, right_number);
 }
 
 static void
@@ -818,16 +829,24 @@ gimp_number_pair_entry_update_text (GimpNumberPairEntry *entry)
   g_free (buffer);
 }
 
-static gint
+static gboolean
 gimp_number_pair_entry_valid_separator (GimpNumberPairEntry *entry,
-                                        gchar                candidate)
+                                        gunichar             candidate)
 {
   GimpNumberPairEntryPrivate *priv = GIMP_NUMBER_PAIR_ENTRY_GET_PRIVATE (entry);
-  const gchar                *c;
 
-  for (c = priv->separators; *c; c++)
-    if (*c == candidate)
+  if (priv->num_separators > 0)
+    {
+      gint i;
+
+      for (i = 0; i < priv->num_separators; i++)
+        if (priv->separators[i] == candidate)
+          return TRUE;
+    }
+  else if (candidate == DEFAULT_SEPARATOR)
+    {
       return TRUE;
+    }
 
   return FALSE;
 }
@@ -840,87 +859,75 @@ gimp_number_pair_entry_parse_text (GimpNumberPairEntry *entry,
 {
   GimpNumberPairEntryPrivate *priv = GIMP_NUMBER_PAIR_ENTRY_GET_PRIVATE (entry);
 
-  gdouble     new_left_number;
-  gdouble     new_right_number;
+  gdouble   new_left_number;
+  gdouble   new_right_number;
+  gboolean  simplify = FALSE;
+  gchar    *end;
 
-  gchar       separator;
-  gchar       simplification_char;
-  gchar       dummy;
+  /* try to parse a number */
+  new_left_number = strtod (text, &end);
 
-  gint        parsed_count;
-  ParseResult parse_result;
+  if (end == text)
+    return PARSE_CLEAR;
+  else
+    text = end;
 
-  parse_result = PARSE_INVALID;
+  /* skip over whitespace */
+  while (g_unichar_isspace (g_utf8_get_char (text)))
+    text = g_utf8_next_char (text);
 
-  parsed_count = sscanf (text,
-                         " %lf %c %lf %c %c ",
-                         &new_left_number,
-                         &separator,
-                         &new_right_number,
-                         &simplification_char,
-                         &dummy);
+  /* check for a valid separator */
+  if (! gimp_number_pair_entry_valid_separator (entry, g_utf8_get_char (text)))
+    return PARSE_INVALID;
+  else
+    text = g_utf8_next_char (text);
 
+  /* try to parse another number */
+  new_right_number = strtod (text, &end);
 
-  /* Analyze parsed data */
+  if (end == text)
+    return PARSE_INVALID;
+  else
+    text = end;
 
-  switch (parsed_count)
+  /* skip over whitespace */
+  while (g_unichar_isspace (g_utf8_get_char (text)))
+    text = g_utf8_next_char (text);
+
+  /* check for the simplification char */
+  if (g_utf8_get_char (text) == SIMPLIFICATION_CHAR)
     {
-    case EOF:
-    case 0:
-
-      /* Unambigous user clear */
-      parse_result = PARSE_CLEAR;
-      break;
-
-    case 3:
-
-      /* Valid user entry, enter user-override mode */
-
-      if (gimp_number_pair_entry_valid_separator (entry, separator) &&
-          gimp_number_pair_entry_numbers_in_range (entry,
-                                                   new_left_number,
-                                                   new_right_number))
-        {
-          parse_result = PARSE_VALID;
-
-          *left_value  = new_left_number;
-          *right_value = new_right_number;
-        }
-
-      break;
-
-
-    case 4:
-
-      if (priv->allow_simplification                                &&
-          gimp_number_pair_entry_valid_separator (entry, separator) &&
-          simplification_char == SIMPLIFICATION_CHAR                &&
-          new_right_number != 0.0                                   &&
-          gimp_number_pair_entry_numbers_in_range (entry,
-                                                   new_left_number,
-                                                   new_right_number))
-        {
-          parse_result = PARSE_VALID;
-
-          gimp_number_pair_entry_ratio_to_fraction (new_left_number /
-                                                    new_right_number,
-                                                    left_value,
-                                                    right_value);
-        }
-
-      break;
-
-    case 1:
-    case 2:
-    case 5:
-    default:
-
-      /* Ambigous user input */
-      parse_result = PARSE_INVALID;
-      break;
+      simplify = priv->allow_simplification;
+      text = g_utf8_next_char (text);
     }
 
-  return parse_result;
+  /* skip over whitespace */
+  while (g_unichar_isspace (g_utf8_get_char (text)))
+    text = g_utf8_next_char (text);
+
+  /* check for trailing garbage */
+  if (*text)
+    return PARSE_INVALID;
+
+  if (! gimp_number_pair_entry_numbers_in_range (entry,
+                                                 new_left_number,
+                                                 new_right_number))
+    return PARSE_INVALID;
+
+  if (simplify && new_right_number != 0.0)
+    {
+      gimp_number_pair_entry_ratio_to_fraction (new_left_number /
+                                                new_right_number,
+                                                left_value,
+                                                right_value);
+    }
+  else
+    {
+      *left_value = new_left_number;
+      *right_value = new_right_number;
+    }
+
+  return PARSE_VALID;
 }
 
 static void
@@ -962,10 +969,15 @@ gimp_number_pair_entry_set_property (GObject      *object,
       break;
     case PROP_SEPARATORS:
       g_free (priv->separators);
-      priv->separators = g_value_dup_string (value);
+      priv->num_separators = 0;
+      if (g_value_get_string (value))
+        priv->separators = g_utf8_to_ucs4 (g_value_get_string (value), -1,
+                                           NULL, &priv->num_separators, NULL);
+      else
+        priv->separators = NULL;
       break;
     case PROP_ALLOW_SIMPLIFICATION:
-      priv->user_override = g_value_get_boolean (value);
+      priv->allow_simplification = g_value_get_boolean (value);
       break;
     case PROP_MIN_VALID_VALUE:
       priv->min_valid_value = g_value_get_double (value);
@@ -1014,7 +1026,10 @@ gimp_number_pair_entry_get_property (GObject    *object,
       g_value_set_boolean (value, priv->user_override);
       break;
     case PROP_SEPARATORS:
-      g_value_set_string (value, priv->separators);
+      g_value_take_string (value,
+                           g_ucs4_to_utf8 (priv->separators,
+                                           priv->num_separators,
+                                           NULL, NULL, NULL));
       break;
     case PROP_ALLOW_SIMPLIFICATION:
       g_value_set_boolean (value, priv->allow_simplification);

@@ -1,3 +1,10 @@
+2007-08-10  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpnumberpairentry.c: store separators as
+	gunichar array. Use the default separator in case that no
+	separator is set. Rewritten gimp_number_pair_entry_parse_text()
+	to handle non-ASCII separators.
+
 2007-08-10  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpcroptool.c (gimp_crop_tool_button_release): Set
@@ -11,7 +18,7 @@
 
 	* app/widgets/gimppropwidgets.c
 	(gimp_prop_number_pair_entry_config_notify): Fixed bug where
-	property notifications were checked againts hardcoded property
+	property notifications were checked against hardcoded property
 	names instead of the ones configured to the
 	GimpPropNumberPairEntryData object.
 
