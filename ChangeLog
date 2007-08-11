@@ -1,3 +1,8 @@
+2007-08-11  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpcroptool.c (gimp_crop_tool_execute): Initialize
+	'tool' before using it.
+
 2007-08-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme-private.h: removed now

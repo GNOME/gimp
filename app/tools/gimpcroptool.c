@@ -282,11 +282,11 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
   gint                  max_x, max_y;
   gboolean              rectangle_exists;
 
-  gimp_tool_pop_status (tool, tool->display);
-
   tool              = GIMP_TOOL (rectangle);
   options           = GIMP_CROP_TOOL_GET_OPTIONS (tool);
   rectangle_options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rectangle);
+
+  gimp_tool_pop_status (tool, tool->display);
 
   image = tool->display->image;
   max_x = image->width;
