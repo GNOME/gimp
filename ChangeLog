@@ -1,3 +1,9 @@
+2007-08-11  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/jpeg/jpeg-save.c (save_dialog): use a more
+	understandable label and a tooltip for the option enabling custom
+	quantization tables.
+
 2007-08-10  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/jpeg/jpeg.[ch]

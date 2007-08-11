@@ -1038,9 +1038,16 @@ save_dialog (void)
 
   /* custom quantization tables */
   pg.use_quant_tables = toggle =
-    gtk_check_button_new_with_label (_("Use custom quantization tables"));
-  gtk_table_attach (GTK_TABLE (table), toggle, 0, 2, 5, 6, GTK_FILL, 0, 0, 0);
+    gtk_check_button_new_with_label (_("Use custom quality settings"));
+  gtk_table_attach (GTK_TABLE (table), toggle, 0, 4, 5, 6, GTK_FILL, 0, 0, 0);
   gtk_widget_show (toggle);
+
+  gimp_help_set_help_data (toggle,
+                           _("If the original image was loaded from a JPEG "
+                             "file using non-standard quality settings "
+                             "(quantization tables), enable this option to "
+                             "get almost the same quality and file size."),
+                           NULL);
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
