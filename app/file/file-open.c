@@ -62,7 +62,7 @@
 
 #include "plug-in/gimppluginmanager.h"
 #include "plug-in/gimppluginprocedure.h"
-#include "plug-in/plug-in-error.h"
+#include "plug-in/gimppluginerror.h"
 #include "plug-in/plug-in-icc-profile.h"
 
 

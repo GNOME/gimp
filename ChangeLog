@@ -1,3 +1,13 @@
+2007-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/plug-in/Makefile.am: renamed files:
+
+	* app/plug-in/plug-in-error.[ch]: old names
+	* app/plug-in/gimppluginerror.[ch]: new names
+
+	* app/plug-in/plug-in-icc-profile.c
+	* app/file/file-open.c: changed accordingly.
+
 2007-08-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/lcms.c: factored out code to a utility function.

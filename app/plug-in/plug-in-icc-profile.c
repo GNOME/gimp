@@ -34,7 +34,7 @@
 #include "pdb/gimppdb.h"
 #include "pdb/gimpprocedure.h"
 
-#include "plug-in-error.h"
+#include "gimppluginerror.h"
 #include "plug-in-icc-profile.h"
 
 #include "gimp-intl.h"

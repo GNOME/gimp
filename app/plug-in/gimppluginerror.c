@@ -20,7 +20,7 @@
 
 #include <glib-object.h>
 
-#include "plug-in-error.h"
+#include "gimppluginerror.h"
 
 
 /**

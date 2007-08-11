@@ -16,8 +16,8 @@
  * Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef __PLUG_IN_ERROR_H__
-#define __PLUG_IN_ERROR_H__
+#ifndef __GIMP_PLUG_IN_ERROR_H__
+#define __GIMP_PLUG_IN_ERROR_H__
 
 
 typedef enum
@@ -32,4 +32,4 @@ typedef enum
 GQuark  gimp_plug_in_error_quark (void) G_GNUC_CONST;
 
 
-#endif /* __PLUG_IN_ERROR_H__ */
+#endif /* __GIMP_PLUG_IN_ERROR_H__ */
