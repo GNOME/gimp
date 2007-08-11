@@ -282,6 +282,9 @@
         <menuitem action="image-convert-rgb" />
         <menuitem action="image-convert-grayscale" />
         <menuitem action="image-convert-indexed" />
+	<separator />
+	<placeholder name="Color Profile" />
+	<separator />
       </menu>
       <menu action="image-transform-menu" name="Transform">
         <placeholder name="Flip">

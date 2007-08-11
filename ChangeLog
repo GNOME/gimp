@@ -1,3 +1,11 @@
+2007-08-11  Sven Neumann  <sven@gimp.org>
+
+	* menus/image-menu.xml.in: added "<Image>/Image/Mode/Color Profile"
+	as a placeholder below the Image Mode radio items.
+
+	* plug-ins/common/lcms.c (query): register menu entries to assign
+	and apply color profiles. Dialog implementation is still missing...
+
 2007-08-11  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpcroptool.c (gimp_crop_tool_execute): Initialize

@@ -186,7 +186,7 @@ query (void)
                           "Sven Neumann",
                           "Sven Neumann",
                           "2006, 2007",
-                          N_("Set color profile"),
+                          N_("_Assign Color Profile..."),
                           "RGB*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
@@ -202,7 +202,7 @@ query (void)
                           "Sven Neumann",
                           "Sven Neumann",
                           "2006, 2007",
-                          N_("Set default RGB profile"),
+                          N_("Assign default RGB Profile"),
                           "RGB*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (base_args), 0,
@@ -219,7 +219,7 @@ query (void)
                           "Sven Neumann",
                           "Sven Neumann",
                           "2006, 2007",
-                          N_("Apply color profile"),
+                          N_("_Convert to Color Profile..."),
                           "RGB*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
@@ -237,7 +237,7 @@ query (void)
                           "Sven Neumann",
                           "Sven Neumann",
                           "2006, 2007",
-                          N_("Apply default RGB profile"),
+                          N_("Convert to default RGB Profile"),
                           "RGB*, INDEXED*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (base_args), 0,
@@ -251,7 +251,7 @@ query (void)
                           "Sven Neumann",
                           "Sven Neumann",
                           "2006, 2007",
-                          N_("Color Profile Information"),
+                          N_("Image Color Profile Information"),
                           "*",
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (image_args),
@@ -271,6 +271,11 @@ query (void)
                           G_N_ELEMENTS (file_args),
                           G_N_ELEMENTS (info_return_vals),
                           file_args, info_return_vals);
+
+  gimp_plugin_menu_register (PLUG_IN_PROC_SET,
+                             "<Image>/Image/Mode/Color Profile");
+  gimp_plugin_menu_register (PLUG_IN_PROC_APPLY,
+                             "<Image>/Image/Mode/Color Profile");
 }
 
 static void
