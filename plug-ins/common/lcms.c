@@ -107,6 +107,10 @@ static cmsHPROFILE  lcms_image_get_profile       (GimpColorConfig *config,
 static gboolean     lcms_image_set_profile       (gint32           image,
                                                   cmsHPROFILE      profile,
                                                   const gchar     *filename);
+static gboolean     lcms_image_apply             (gint32           image,
+                                                  cmsHPROFILE      src_profile,
+                                                  cmsHPROFILE      dest_profile,
+                                                  const gchar     *filename);
 static void         lcms_image_transform_rgb     (gint32           image,
                                                   cmsHPROFILE      src_profile,
                                                   cmsHPROFILE      dest_profile);
@@ -554,61 +558,11 @@ lcms_icc_apply (GimpColorConfig *config,
       status = GIMP_PDB_CANCEL;
     }
 
-  gimp_image_undo_group_start (image);
-
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! lcms_image_set_profile (image, dest_profile, filename))
-        {
-          status = GIMP_PDB_EXECUTION_ERROR;
-        }
+      if (! lcms_image_apply (image, src_profile, dest_profile, filename))
+        status = GIMP_PDB_EXECUTION_ERROR;
     }
-
-  if (status == GIMP_PDB_SUCCESS)
-    {
-      gint32  selection       = gimp_image_get_selection (image);
-      gint32  saved_selection = -1;
-      gchar  *src             = lcms_icc_profile_get_desc (src_profile);
-      gchar  *dest            = lcms_icc_profile_get_desc (dest_profile);
-
-      /* ICC color profile conversion */
-      gimp_progress_init_printf (_("Converting from '%s' to '%s'"), src, dest);
-
-      g_printerr ("lcms: converting from '%s' to '%s'\n", src, dest);
-
-      g_free (dest);
-      g_free (src);
-
-      if (! gimp_selection_is_empty (selection))
-        {
-          saved_selection = gimp_selection_save (selection);
-          gimp_selection_none (selection);
-        }
-
-      switch (gimp_image_base_type (image))
-        {
-        case GIMP_RGB:
-          lcms_image_transform_rgb (image, src_profile, dest_profile);
-          break;
-
-        case GIMP_GRAY:
-          g_warning ("colorspace conversion not implemented for "
-                     "grayscale images");
-          break;
-
-        case GIMP_INDEXED:
-          lcms_image_transform_indexed (image, src_profile, dest_profile);
-          break;
-        }
-
-      if (saved_selection != -1)
-        gimp_selection_load (saved_selection);
-
-      gimp_progress_update (1.0);
-      gimp_displays_flush ();
-    }
-
-  gimp_image_undo_group_end (image);
 
   cmsCloseProfile (src_profile);
   cmsCloseProfile (dest_profile);
@@ -817,6 +771,68 @@ lcms_image_set_profile (gint32       image,
 
       return TRUE;
     }
+}
+
+static gboolean
+lcms_image_apply (gint32       image,
+                  cmsHPROFILE  src_profile,
+                  cmsHPROFILE  dest_profile,
+                  const gchar *filename)
+{
+  gint32 selection       = gimp_image_get_selection (image);
+  gint32 saved_selection = -1;
+
+  gimp_image_undo_group_start (image);
+
+  if (! lcms_image_set_profile (image, dest_profile, filename))
+    {
+      return FALSE;
+    }
+
+  {
+    gchar  *src  = lcms_icc_profile_get_desc (src_profile);
+    gchar  *dest = lcms_icc_profile_get_desc (dest_profile);
+
+      /* ICC color profile conversion */
+      gimp_progress_init_printf (_("Converting from '%s' to '%s'"), src, dest);
+
+      g_printerr ("lcms: converting from '%s' to '%s'\n", src, dest);
+
+      g_free (dest);
+      g_free (src);
+  }
+
+  if (! gimp_selection_is_empty (selection))
+    {
+      saved_selection = gimp_selection_save (selection);
+      gimp_selection_none (selection);
+    }
+
+  switch (gimp_image_base_type (image))
+    {
+    case GIMP_RGB:
+      lcms_image_transform_rgb (image, src_profile, dest_profile);
+      break;
+
+    case GIMP_GRAY:
+      g_warning ("colorspace conversion not implemented for "
+                 "grayscale images");
+      break;
+
+    case GIMP_INDEXED:
+      lcms_image_transform_indexed (image, src_profile, dest_profile);
+      break;
+    }
+
+  if (saved_selection != -1)
+    gimp_selection_load (saved_selection);
+
+  gimp_progress_update (1.0);
+  gimp_displays_flush ();
+
+  gimp_image_undo_group_end (image);
+
+  return TRUE;
 }
 
 static void
