@@ -1,3 +1,18 @@
+2007-08-11  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/lcms.c
+	* plug-ins/common/png.c
+	* plug-ins/common/tiff-load.c
+	* plug-ins/jpeg/jpeg-load.c: made the icc-profile undoable and
+	persistent.
+	
+	* devel-docs/parasites.txt: document this.
+
+	* plug-ins/common/lcms.c: made colorspace conversion undoable.
+	
+	* app/file/file-open.c: disable undo while doing the colorspace
+	conversion on load.
+
 2007-08-11  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimpbaseenums.[ch]

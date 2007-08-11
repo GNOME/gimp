@@ -1058,7 +1058,10 @@ load_image (const gchar *filename,
       {
         GimpParasite *parasite;
 
-        parasite = gimp_parasite_new ("icc-profile", 0, proflen, profile);
+        parasite = gimp_parasite_new ("icc-profile",
+                                      GIMP_PARASITE_PERSISTENT |
+                                      GIMP_PARASITE_UNDOABLE,
+                                      proflen, profile);
 
         gimp_image_parasite_attach (image, parasite);
         gimp_parasite_free (parasite);
@@ -1070,7 +1073,9 @@ load_image (const gchar *filename,
 
             if (tmp)
               {
-                parasite = gimp_parasite_new ("icc-profile-name", 0,
+                parasite = gimp_parasite_new ("icc-profile-name",
+                                              GIMP_PARASITE_PERSISTENT |
+                                              GIMP_PARASITE_UNDOABLE,
                                               strlen (tmp), tmp);
                 gimp_image_parasite_attach (image, parasite);
                 gimp_parasite_free (parasite);

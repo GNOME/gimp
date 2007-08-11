@@ -742,7 +742,9 @@ load_image (const gchar       *filename,
        * that can handle ICC profiles. Otherwise just ignore this section. */
       if (TIFFGetField (tif, TIFFTAG_ICCPROFILE, &profile_size, &icc_profile))
         {
-          parasite = gimp_parasite_new ("icc-profile", 0,
+          parasite = gimp_parasite_new ("icc-profile",
+                                        GIMP_PARASITE_PERSISTENT |
+                                        GIMP_PARASITE_UNDOABLE,
                                         profile_size, icc_profile);
           gimp_image_parasite_attach (image, parasite);
           gimp_parasite_free (parasite);

@@ -188,7 +188,11 @@ file_open_image (Gimp                *gimp,
   g_value_array_free (return_vals);
 
   if (image)
-    file_open_handle_color_profile (image, context, progress, run_mode);
+    {
+      gimp_image_undo_disable (image);
+      file_open_handle_color_profile (image, context, progress, run_mode);
+      gimp_image_undo_enable (image);
+    }
 
   return image;
 }

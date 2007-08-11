@@ -365,7 +365,8 @@ load_image (const gchar *filename,
       if (jpeg_icc_read_profile (&cinfo, &profile, &profile_size))
         {
           GimpParasite *parasite = gimp_parasite_new ("icc-profile",
-                                                      0,
+                                                      GIMP_PARASITE_PERSISTENT |
+                                                      GIMP_PARASITE_UNDOABLE,
                                                       profile_size, profile);
           gimp_image_parasite_attach (image_ID, parasite);
           gimp_parasite_free (parasite);
