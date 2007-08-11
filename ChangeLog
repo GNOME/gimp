@@ -1,3 +1,12 @@
+2007-08-12  Sven Neumann  <sven@gimp.org>
+
+	* modules/cdisplay_lcms.c (cdisplay_lcms_get_display_profile):
+	applied patch from Yoshinori Yamakawa that adds code to get the
+	monitor profile from Win32.
+
+	* app/dialogs/preferences-dialog.c: enabled the toggle for
+	"display-profile-from-gdk" on all systems.
+
 2007-08-11  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpenumcombobox.h

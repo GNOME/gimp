@@ -26,6 +26,10 @@
 #include <lcms.h>
 #endif
 
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
 #include <gtk/gtk.h>
 
 #include "libgimpcolor/gimpcolor.h"
@@ -443,9 +447,29 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
           g_free (data);
         }
     }
+#elif defined G_OS_WIN32
+  if (config->display_profile_from_gdk)
+    {
+      HDC hdc = GetDC (NULL);
+
+      if (hdc)
+        {
+          gchar *path;
+          gint32 len = 0;
+
+          GetICMProfile (hdc, &len, NULL);
+          path = g_new (gchar, len);
+
+          if (GetICMProfile (hdc, &len, path))
+            profile = cmsOpenProfileFromFile (path, "r");
+
+          g_free (path);
+          ReleaseDC (NULL, hdc);
+        }
+    }
 #endif
 
-  if (config->display_profile)
+  if (! profile && config->display_profile)
     profile = cmsOpenProfileFromFile (config->display_profile, "r");
 
   return profile;

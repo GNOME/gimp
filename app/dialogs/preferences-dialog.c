@@ -2415,18 +2415,17 @@ prefs_dialog_new (Gimp       *gimp,
 
         if (i == 2) /* display profile */
           {
-#if defined (GDK_WINDOWING_X11)
             button =
               gimp_prop_check_button_new (color_config,
                                           "display-profile-from-gdk",
                                           _("_Try to obtain the monitor "
-                                            "profile from the X server"));
+                                            "profile from the windowing "
+                                            "system"));
 
             gtk_table_attach_defaults (GTK_TABLE (table),
                                        button, 0, 2, row, row + 1);
             gtk_widget_show (button);
             row++;
-#endif
 
             prefs_enum_combo_box_add (color_config,
                                       "display-rendering-intent", 0, 0,
