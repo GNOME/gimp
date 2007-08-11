@@ -182,14 +182,14 @@ Global data follows no strict rules.
 	user-specified values such as image comment, copyright,
 	license, etc.
 
-"icc-profile" (IMAGE, PERSISTENT)
+"icc-profile" (IMAGE, PERSISTENT | UNDOABLE)
 	This contains an ICC profile describing the color space the
 	image was produced in. TIFF images stored in PhotoShop do 
 	oftentimes contain embedded profiles. An experimental color
 	manager exists to use this parasite, and it will be used
 	for interchange between TIFF and PNG (identical profiles)
 
-"icc-profile-name" (IMAGE, PERSISTENT)
+"icc-profile-name" (IMAGE, PERSISTENT | UNDOABLE)
         The profile name is a convenient name for referring to the
         profile. It is for example used in the PNG file format.  The
         name must be stored in UTF-8 encoding. If a file format uses

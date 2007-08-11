@@ -1,5 +1,9 @@
 2007-08-11  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/lcms.c: don't open the destination profile twice.
+
+2007-08-11  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/lcms.c (lcms_icc_apply): if the image has a
 	selection, save it, unset it and restore it after the conversion.
 

@@ -105,6 +105,7 @@ static cmsHPROFILE  lcms_image_get_profile       (GimpColorConfig *config,
                                                   gint32           image,
                                                   guchar          *checksum);
 static gboolean     lcms_image_set_profile       (gint32           image,
+                                                  cmsHPROFILE      profile,
                                                   const gchar     *filename);
 static void         lcms_image_transform_rgb     (gint32           image,
                                                   cmsHPROFILE      src_profile,
@@ -455,11 +456,11 @@ lcms_icc_set (GimpColorConfig *config,
 
   if (filename)
     {
-      success = lcms_image_set_profile (image, filename);
+      success = lcms_image_set_profile (image, NULL, filename);
     }
   else
     {
-      success = lcms_image_set_profile (image, config->rgb_profile);
+      success = lcms_image_set_profile (image, NULL, config->rgb_profile);
     }
 
   gimp_image_undo_group_end (image);
@@ -557,7 +558,7 @@ lcms_icc_apply (GimpColorConfig *config,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      if (! lcms_image_set_profile (image, filename))
+      if (! lcms_image_set_profile (image, dest_profile, filename))
         {
           status = GIMP_PDB_EXECUTION_ERROR;
         }
@@ -754,16 +755,15 @@ lcms_image_get_profile (GimpColorConfig *config,
 
 static gboolean
 lcms_image_set_profile (gint32       image,
+                        cmsHPROFILE  profile,
                         const gchar *filename)
 {
-  gboolean success = FALSE;
-
   g_return_val_if_fail (image != -1, FALSE);
 
   if (filename)
     {
+      GimpParasite *parasite;
       GMappedFile  *file;
-      cmsHPROFILE   profile;
       GError       *error = NULL;
 
       file = g_mapped_file_new (filename, FALSE, &error);
@@ -778,45 +778,45 @@ lcms_image_set_profile (gint32       image,
         }
 
       /* check that this file is actually an ICC profile */
-      profile = cmsOpenProfileFromMem (g_mapped_file_get_contents (file),
-                                       g_mapped_file_get_length (file));
-
-      if (profile)
+      if (! profile)
         {
-          GimpParasite *parasite;
+          profile = cmsOpenProfileFromMem (g_mapped_file_get_contents (file),
+                                           g_mapped_file_get_length (file));
 
-          cmsCloseProfile (profile);
-
-          parasite = gimp_parasite_new ("icc-profile",
-                                        GIMP_PARASITE_PERSISTENT |
-                                        GIMP_PARASITE_UNDOABLE,
-                                        g_mapped_file_get_length (file),
-                                        g_mapped_file_get_contents (file));
-
-          gimp_image_parasite_attach (image, parasite);
-          gimp_parasite_free (parasite);
-
-          gimp_image_parasite_detach (image, "icc-profile-name");
-
-          success = TRUE;
+          if (profile)
+            {
+              cmsCloseProfile (profile);
+            }
+          else
+            {
+              g_message (_("'%s' does not appear to be an ICC color profile"),
+                         gimp_filename_to_utf8 (filename));
+              return FALSE;
+            }
         }
-      else
-        {
-          g_message (_("'%s' does not appear to be an ICC color profile"),
-                     gimp_filename_to_utf8 (filename));
-        }
+
+      parasite = gimp_parasite_new ("icc-profile",
+                                    GIMP_PARASITE_PERSISTENT |
+                                    GIMP_PARASITE_UNDOABLE,
+                                    g_mapped_file_get_length (file),
+                                    g_mapped_file_get_contents (file));
 
       g_mapped_file_free (file);
+
+      gimp_image_parasite_attach (image, parasite);
+      gimp_parasite_free (parasite);
+
+      gimp_image_parasite_detach (image, "icc-profile-name");
+
+      return TRUE;
     }
   else
     {
       gimp_image_parasite_detach (image, "icc-profile");
       gimp_image_parasite_detach (image, "icc-profile-name");
 
-      success = TRUE;
+      return TRUE;
     }
-
-  return success;
 }
 
 static void
