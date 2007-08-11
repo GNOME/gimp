@@ -565,8 +565,10 @@ lcms_icc_apply (GimpColorConfig *config,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      gchar *src  = lcms_icc_profile_get_desc (src_profile);
-      gchar *dest = lcms_icc_profile_get_desc (dest_profile);
+      gint32  selection       = gimp_image_get_selection (image);
+      gint32  saved_selection = -1;
+      gchar  *src             = lcms_icc_profile_get_desc (src_profile);
+      gchar  *dest            = lcms_icc_profile_get_desc (dest_profile);
 
       /* ICC color profile conversion */
       gimp_progress_init_printf (_("Converting from '%s' to '%s'"), src, dest);
@@ -575,6 +577,12 @@ lcms_icc_apply (GimpColorConfig *config,
 
       g_free (dest);
       g_free (src);
+
+      if (! gimp_selection_is_empty (selection))
+        {
+          saved_selection = gimp_selection_save (selection);
+          gimp_selection_none (selection);
+        }
 
       switch (gimp_image_base_type (image))
         {
@@ -591,6 +599,9 @@ lcms_icc_apply (GimpColorConfig *config,
           lcms_image_transform_indexed (image, src_profile, dest_profile);
           break;
         }
+
+      if (saved_selection != -1)
+        gimp_selection_load (saved_selection);
 
       gimp_progress_update (1.0);
       gimp_displays_flush ();
