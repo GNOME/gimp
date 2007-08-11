@@ -488,6 +488,8 @@ find_folder (OSType type)
 }
 #endif
 
+static gchar **gimp_user_directories = NULL;
+
 /**
  * gimp_user_directory:
  * @type: the type of user directory to retrieve
@@ -498,77 +500,87 @@ find_folder (OSType type)
  * Plug-ins may want to use this function to add shortcuts to such
  * folders to a file-chooser.
  *
- * Returns: a newly allocated directory name in filesystem encoding,
- *          or %NULL
+ * Returns: The path to the specified user directory, or %NULL if the
+ *          logical ID was not found.
  *
  * Since: GIMP 2.4
  **/
-gchar *
+const gchar *
 gimp_user_directory (GimpUserDirectory type)
 {
-  switch (type)
+  g_return_val_if_fail (type >= GIMP_USER_DIRECTORY_DESKTOP &&
+                        type <= GIMP_USER_DIRECTORY_VIDEOS, NULL);
+
+  if (G_UNLIKELY (gimp_user_directories == NULL))
     {
+      gimp_user_directories = g_new0 (gchar *, GIMP_USER_DIRECTORY_VIDEOS + 1);
+
 #ifdef G_OS_WIN32
-    case GIMP_USER_DIRECTORY_DESKTOP:
-      return get_special_folder (CSIDL_DESKTOPDIRECTORY);
 
-    case GIMP_USER_DIRECTORY_DOCUMENTS:
-      return get_special_folder (CSIDL_MYDOCUMENTS);
-
-    case GIMP_USER_DIRECTORY_MUSIC:
-      return get_special_folder (CSIDL_MYMUSIC);
-
-    case GIMP_USER_DIRECTORY_PICTURES:
-      return get_special_folder (CSIDL_MYPICTURES);
-
-    case GIMP_USER_DIRECTORY_TEMPLATES:
-      return get_special_folder (CSIDL_TEMPLATES);
-
-    case GIMP_USER_DIRECTORY_VIDEOS:
-      return get_special_folder (CSIDL_MYVIDEO);
+      gimp_user_directories[GIMP_USER_DIRECTORY_DESKTOP] =
+        get_special_folder (CSIDL_DESKTOPDIRECTORY);
+      gimp_user_directories[GIMP_USER_DIRECTORY_DOCUMENTS] =
+        get_special_folder (CSIDL_MYDOCUMENTS);
+      gimp_user_directories[GIMP_USER_DIRECTORY_DOWNLOAD] =
+        get_special_folder (CSIDL_DESKTOPDIRECTORY);
+      gimp_user_directories[GIMP_USER_DIRECTORY_MUSIC] =
+        get_special_folder (CSIDL_MYMUSIC);
+      gimp_user_directories[GIMP_USER_DIRECTORY_PICTURES] =
+        get_special_folder (CSIDL_MYPICTURES);
+      gimp_user_directories[GIMP_USER_DIRECTORY_PUBLIC_SHARE] =
+        get_special_folder (CSIDL_COMMON_DOCUMENTS);
+      gimp_user_directories[GIMP_USER_DIRECTORY_TEMPLATES] =
+        get_special_folder (CSIDL_TEMPLATES);
+      gimp_user_directories[GIMP_USER_DIRECTORY_VIDEOS] =
+        get_special_folder (CSIDL_MYVIDEO);
 
 #elif HAVE_CARBON
-    case GIMP_USER_DIRECTORY_DESKTOP:
-      return find_folder (kDesktopFolderType);
 
-    case GIMP_USER_DIRECTORY_DOCUMENTS:
-      return find_folder (kDocumentsFolderType);
-
-    case GIMP_USER_DIRECTORY_MUSIC:
-      return find_folder (kMusicDocumentsFolderType);
-
-    case GIMP_USER_DIRECTORY_PICTURES:
-      return find_folder (kPictureDocumentsFolderType);
-
-    case GIMP_USER_DIRECTORY_TEMPLATES:
-      return NULL;
-
-    case GIMP_USER_DIRECTORY_VIDEOS:
-      return find_folder (kMovieDocumentsFolderType);
+      gimp_user_directories[GIMP_USER_DIRECTORY_DESKTOP] =
+        find_folder (kDesktopFolderType);
+      gimp_user_directories[GIMP_USER_DIRECTORY_DOCUMENTS] =
+        find_folder (kDocumentsFolderType);
+      gimp_user_directories[GIMP_USER_DIRECTORY_DOWNLOAD] =
+        find_folder (kDesktopFolderType); /* ??? */
+      gimp_user_directories[GIMP_USER_DIRECTORY_MUSIC] =
+        find_folder (kMusicDocumentsFolderType);
+      gimp_user_directories[GIMP_USER_DIRECTORY_PICTURES] =
+        find_folder (kPictureDocumentsFolderType);
+      gimp_user_directories[GIMP_USER_DIRECTORY_PUBLIC_SHARE] = NULL;
+      gimp_user_directories[GIMP_USER_DIRECTORY_TEMPLATES] = NULL;
+      gimp_user_directories[GIMP_USER_DIRECTORY_VIDEOS] =
+        find_folder (kMovieDocumentsFolderType);
 
 #else
-    case GIMP_USER_DIRECTORY_DESKTOP:
-      return _xdg_user_dir_lookup ("DESKTOP");
 
-    case GIMP_USER_DIRECTORY_DOCUMENTS:
-      return _xdg_user_dir_lookup ("DOCUMENTS");
-
-    case GIMP_USER_DIRECTORY_MUSIC:
-      return _xdg_user_dir_lookup ("MUSIC");
-
-    case GIMP_USER_DIRECTORY_PICTURES:
-      return _xdg_user_dir_lookup ("PICTURES");
-
-    case GIMP_USER_DIRECTORY_TEMPLATES:
-      return _xdg_user_dir_lookup ("TEMPLATES");
-
-    case GIMP_USER_DIRECTORY_VIDEOS:
-      return _xdg_user_dir_lookup ("VIDEOS");
+      gimp_user_directories[GIMP_USER_DIRECTORY_DESKTOP] =
+        _xdg_user_dir_lookup ("DESKTOP");
+      gimp_user_directories[GIMP_USER_DIRECTORY_DOCUMENTS] =
+        _xdg_user_dir_lookup ("DOCUMENTS");
+      gimp_user_directories[GIMP_USER_DIRECTORY_DOWNLOAD] =
+        _xdg_user_dir_lookup ("DOWNLOAD");
+      gimp_user_directories[GIMP_USER_DIRECTORY_MUSIC] =
+        _xdg_user_dir_lookup ("MUSIC");
+      gimp_user_directories[GIMP_USER_DIRECTORY_PICTURES] =
+        _xdg_user_dir_lookup ("PICTURES");
+      gimp_user_directories[GIMP_USER_DIRECTORY_PUBLIC_SHARE] =
+        _xdg_user_dir_lookup ("PUBLICSHARE");
+      gimp_user_directories[GIMP_USER_DIRECTORY_TEMPLATES] =
+        _xdg_user_dir_lookup ("TEMPLATES");
+      gimp_user_directories[GIMP_USER_DIRECTORY_VIDEOS] =
+        _xdg_user_dir_lookup ("VIDEOS");
 
 #endif
-    default:
-      return NULL;
+
+      /* Special-case desktop for historical compatibility */
+      if (gimp_user_directories[GIMP_USER_DIRECTORY_DESKTOP] == NULL)
+        {
+          gimp_user_directories[GIMP_USER_DIRECTORY_DESKTOP] =
+            g_build_filename (g_get_home_dir (), "Desktop", NULL);
+        }
     }
+
+  return gimp_user_directories[type];
 }
 
 /**

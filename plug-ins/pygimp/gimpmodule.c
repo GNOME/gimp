@@ -1399,7 +1399,7 @@ static PyObject *
 pygimp_user_directory(PyObject *self, PyObject *args, PyObject *kwargs)
 {
     GimpUserDirectory type;
-    char *user_dir;
+    const char *user_dir;
     PyObject *py_type, *ret;
 
     static char *kwlist[] = { "type", NULL };
@@ -1416,7 +1416,6 @@ pygimp_user_directory(PyObject *self, PyObject *args, PyObject *kwargs)
 
     if (user_dir) {
         ret = PyString_FromString(user_dir);
-        g_free(user_dir);
     } else {
         Py_INCREF(Py_None);
 	ret = Py_None;

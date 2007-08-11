@@ -1,3 +1,15 @@
+2007-08-11  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/gimpbaseenums.[ch]
+	* libgimpbase/gimpenv.[ch]: changed enum GimpUserDirectory and API
+	of gimp_user_directory() so that g_get_user_special_dir() can be
+	used instead as soon as we depend on GLib 2.14.
+
+	* tools/pdbgen/enums.pl: regenerated.
+
+	* app/widgets/gimpfiledialog.c
+	* plug-ins/pygimp/gimpmodule.c: changed accordingly.
+
 2007-08-11  Sven Neumann  <sven@gimp.org>
 
 	* menus/image-menu.xml.in: added "<Image>/Image/Mode/Color Profile"

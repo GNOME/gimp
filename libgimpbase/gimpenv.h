@@ -49,7 +49,7 @@ const gchar * gimp_data_directory             (void) G_GNUC_CONST;
 const gchar * gimp_locale_directory           (void) G_GNUC_CONST;
 const gchar * gimp_sysconf_directory          (void) G_GNUC_CONST;
 const gchar * gimp_plug_in_directory          (void) G_GNUC_CONST;
-gchar       * gimp_user_directory             (GimpUserDirectory   type) G_GNUC_MALLOC;
+const gchar * gimp_user_directory             (GimpUserDirectory   type) G_GNUC_CONST;
 
 const gchar * gimp_gtkrc                      (void) G_GNUC_CONST;
 gchar       * gimp_personal_rc_file           (const gchar        *basename) G_GNUC_MALLOC;
