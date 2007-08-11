@@ -485,7 +485,7 @@ static void  gimp_prop_number_pair_entry_config_notify
 static void  gimp_prop_number_pair_entry_number_pair_numbers_changed
                                                          (GtkWidget                   *widget,
                                                           GimpPropNumberPairEntryData *data);
-static void  gimp_prop_number_pair_entry_number_pair_user_override_changed
+static void  gimp_prop_number_pair_entry_number_pair_user_override_notify
                                                          (GtkWidget                   *entry,
                                                           GParamSpec                  *param_spec,
                                                           GimpPropNumberPairEntryData *data);
@@ -591,7 +591,7 @@ GtkWidget * gimp_prop_number_pair_entry_new (GObject     *config,
                       data);
 
   g_signal_connect (number_pair_entry, "notify::user-override",
-                    G_CALLBACK (gimp_prop_number_pair_entry_number_pair_user_override_changed),
+                    G_CALLBACK (gimp_prop_number_pair_entry_number_pair_user_override_notify),
                     data);
 
 
@@ -691,19 +691,26 @@ gimp_prop_number_pair_entry_number_pair_numbers_changed (GtkWidget              
 }
 
 static void
-gimp_prop_number_pair_entry_number_pair_user_override_changed (GtkWidget                   *entry,
-                                                               GParamSpec                  *param_spec,
-                                                               GimpPropNumberPairEntryData *data)
+gimp_prop_number_pair_entry_number_pair_user_override_notify (GtkWidget                   *entry,
+                                                              GParamSpec                  *param_spec,
+                                                              GimpPropNumberPairEntryData *data)
 
 {
-  gboolean user_override;
+  gboolean old_config_user_override;
+  gboolean new_config_user_override;
 
-  user_override =
+  g_object_get (data->config,
+                data->user_override_property, &old_config_user_override,
+                NULL);
+
+  new_config_user_override =
     gimp_number_pair_entry_get_user_override (GIMP_NUMBER_PAIR_ENTRY (entry));
 
-  g_object_set (data->config,
-                data->user_override_property, user_override,
-                NULL);
+  /* Only set when property changed, to avoid deadlocks */
+  if (new_config_user_override != old_config_user_override)
+    g_object_set (data->config,
+                  data->user_override_property, new_config_user_override,
+                  NULL);
 }
 
 
