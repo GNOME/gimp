@@ -1,5 +1,10 @@
 2007-08-11  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/tinyscheme/scheme-private.h: removed now
+	unneeded _skey member from union. Part of the revert of bug #374854.
+
+2007-08-11  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimphistogramview.c (gimp_histogram_view_draw_spike):
 	pass the maximum value double and draw the histogram one pixel less
 	high. Fixes bug #465669.

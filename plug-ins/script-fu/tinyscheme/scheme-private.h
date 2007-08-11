@@ -36,7 +36,6 @@ struct cell {
   union {
     struct {
       char   *_svalue;
-      char   *_skey;
       int   _length;
     } _string;
     num _number;
