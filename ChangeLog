@@ -1,5 +1,14 @@
 2007-08-11  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_update_highlight): Renamed from
+	gimp_rectangle_tool_set_highlight
+	(gimp_rectangle_tool_button_release): Add call to
+	gimp_rectangle_tool_update_highlight to keep highlight in sync
+	when a crop rectangle is cancelled.
+
+2007-08-11  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/widgets/gimppropwidgets.c
 	(gimp_prop_number_pair_entry_number_pair_user_override_notify):
 	Only set config user override property when it changed, to avoid
