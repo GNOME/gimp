@@ -7,13 +7,14 @@
 # Hendrik Brandt <heb@gnome-de.org>, 2004-2006.
 # Hendrik Richter <hendrikr@gnome.org>, 2005.
 # Hendrik Richter <hendrikr@gnome.org>, 2006.
+# Axel Wernicke <axel.wernicke@gmail.com>, 2007.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-07 15:09+0200\n"
+"POT-Creation-Date: 2007-08-11 13:51+0200\n"
 "PO-Revision-Date: 2007-08-07 15:15+0200\n"
 "Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -44,7 +45,9 @@ msgstr "Sichtbare Ebenen vereinen"
 #: ../libgimp/gimpexport.c:226
 #, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "Plugin »%s« kennt keine Ebeneneigenschaften wie Versatz, Größe und Transparenz"
+msgstr ""
+"Plugin »%s« kennt keine Ebeneneigenschaften wie Versatz, Größe und "
+"Transparenz"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
@@ -912,6 +915,7 @@ msgid "Could not create '%s': %s"
 msgstr "»%s« konnte nicht angelegt werden: %s"
 
 #: ../libgimpconfig/gimpscanner.c:255
+#, c-format
 msgid "invalid UTF-8 string"
 msgstr "ungültiger UTF-8-Text"
 
@@ -959,8 +963,9 @@ msgid "Failed to create thumbnail folder '%s'."
 msgstr "Fehler beim Anlegen des Verzeichnis für Vorschaubilder '%s'."
 
 #: ../libgimpthumb/gimpthumbnail.c:498
+#, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
-msgstr ""
+msgstr "Die Vorschau enthält keine Thumb::URI Marke"
 
 #: ../libgimpthumb/gimpthumbnail.c:898
 #, c-format
@@ -1356,9 +1361,8 @@ msgid "Mode of operation:"
 msgstr "Arbeitsmodus:"
 
 #: ../modules/cdisplay_lcms.c:250
-#, fuzzy
 msgid "Image profile:"
-msgstr "Bildgröße"
+msgstr "Bildprofil:"
 
 #: ../modules/cdisplay_lcms.c:257
 msgid "Monitor profile:"
@@ -1534,9 +1538,8 @@ msgid "Button Forward"
 msgstr "Vorwärts-Taste"
 
 #: ../modules/controller_linux_input.c:75
-#, fuzzy
 msgid "Button Back"
-msgstr "Taste 0"
+msgstr "Zurück-Taste"
 
 #: ../modules/controller_linux_input.c:76
 #, fuzzy
@@ -1708,14 +1711,14 @@ msgid "Button %d"
 msgstr "Taste 0"
 
 #: ../modules/controller_dx_dinput.c:449
-#, fuzzy, c-format
+#, c-format
 msgid "Button %d Press"
-msgstr "Seitliche Taste"
+msgstr "Taste %d gedrückt"
 
 #: ../modules/controller_dx_dinput.c:452
-#, fuzzy, c-format
+#, c-format
 msgid "Button %d Release"
-msgstr "Mittlere Taste"
+msgstr "Taste %d losgelassen"
 
 #: ../modules/controller_dx_dinput.c:478
 msgid "Y Move Away"
