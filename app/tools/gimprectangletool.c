@@ -183,6 +183,8 @@ static void     gimp_rectangle_tool_update_options  (GimpRectangleTool *rectangl
 static void     gimp_rectangle_tool_options_notify  (GimpRectangleOptions *options,
                                                      GParamSpec         *pspec,
                                                      GimpRectangleTool  *rectangle);
+static void gimp_rectangle_tool_shell_scrolled      (GimpDisplayShell   *options,
+                                                     GimpRectangleTool  *rectangle);
 
 static void     gimp_rectangle_tool_check_function  (GimpRectangleTool *rectangle);
 
@@ -1697,9 +1699,10 @@ gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool *rectangle)
   GimpRectangleToolPrivate *private;
   GimpRectangleOptions     *options;
   GimpDisplayShell         *shell;
-  gint                      dx1, dx2;
-  gint                      dy1, dy2;
-  gint                      tw,  th;
+  gint                      visible_rectangle_width;
+  gint                      visible_rectangle_height;
+  gint                      rectangle_width;
+  gint                      rectangle_height;
 
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (tool);
   options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (tool);
@@ -1709,33 +1712,66 @@ gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool *rectangle)
 
   shell = GIMP_DISPLAY_SHELL (tool->display->shell);
 
-  gimp_display_shell_transform_xy (shell,
-                                   private->x1, private->y1,
-                                   &dx1, &dy1,
-                                   FALSE);
-  gimp_display_shell_transform_xy (shell,
-                                   private->x2, private->y2,
-                                   &dx2, &dy2,
-                                   FALSE);
-  tw = dx2 - dx1;
-  th = dy2 - dy1;
+  {
+    /* Calculate rectangles of the selection rectangle and the display shell,
+     * with origin at (0, 0) of image, and in screen coordinate scale.
+     */
+    gint    x1 =  private->x1 * shell->scale_x;
+    gint    y1 =  private->y1 * shell->scale_y;
+    gint    w1 = (private->x2 - private->x1) * shell->scale_x;
+    gint    h1 = (private->y2 - private->y1) * shell->scale_y;
 
-  private->handle_w = tw / 4;
-  private->handle_h = th / 4;
+    gint    x2 = -shell->disp_xoffset + shell->offset_x;
+    gint    y2 = -shell->disp_yoffset + shell->offset_y;
+    gint    w2 =  shell->disp_width;
+    gint    h2 =  shell->disp_height;
 
-  private->handle_w =
-    CLAMP (private->handle_w, MIN_HANDLE_SIZE, MAX_HANDLE_SIZE);
-  private->handle_h =
-    CLAMP (private->handle_h, MIN_HANDLE_SIZE, MAX_HANDLE_SIZE);
+    rectangle_width  = w1;
+    rectangle_height = h1;
 
-  private->top_and_bottom_handle_w = tw - 3 * private->handle_w;
-  private->left_and_right_handle_h = th - 3 * private->handle_h;
+    /* Handle size calculations shall be based on the visible part of the
+     * rectangle, so calculate the size for the visible rectangle by
+     * intersecting with the viewport rectangle.
+     */
+    gimp_rectangle_intersect (x1, y1,
+                              w1, h1,
+                              x2, y2,
+                              w2, h2,
+                              NULL, NULL,
+                              &visible_rectangle_width,
+                              &visible_rectangle_height);
+  }
 
-  private->top_and_bottom_handle_w =
-    CLAMP (private->top_and_bottom_handle_w, MIN_HANDLE_SIZE, G_MAXINT);
-  private->left_and_right_handle_h =
-    CLAMP (private->left_and_right_handle_h, MIN_HANDLE_SIZE, G_MAXINT);
 
+  /* Calculate and clamp corner handle size. */
+
+  private->handle_w = visible_rectangle_width  / 4;
+  private->handle_h = visible_rectangle_height / 4;
+
+  private->handle_w = CLAMP (private->handle_w,
+                             MIN_HANDLE_SIZE,
+                             MAX_HANDLE_SIZE);
+  private->handle_h = CLAMP (private->handle_h,
+                             MIN_HANDLE_SIZE,
+                             MAX_HANDLE_SIZE);
+
+
+  /* Calculate and clamp side handle size. */
+
+  private->top_and_bottom_handle_w = rectangle_width  - 3 * private->handle_w;
+  private->left_and_right_handle_h = rectangle_height - 3 * private->handle_h;
+
+  private->top_and_bottom_handle_w = CLAMP (private->top_and_bottom_handle_w,
+                                            MIN_HANDLE_SIZE,
+                                            G_MAXINT);
+  private->left_and_right_handle_h = CLAMP (private->left_and_right_handle_h,
+                                            MIN_HANDLE_SIZE,
+                                            G_MAXINT);
+
+
+  /* Keep track of when we need to calculate handle sizes because of a display
+   * shell change.
+   */
   private->scale_x_used_for_handle_size_calculations = shell->scale_x;
   private->scale_y_used_for_handle_size_calculations = shell->scale_y;
 }
@@ -1775,6 +1811,10 @@ gimp_rectangle_tool_start (GimpRectangleTool *rectangle,
 
   tool->display = display;
 
+  g_signal_connect_object (tool->display->shell, "scrolled",
+                           G_CALLBACK (gimp_rectangle_tool_shell_scrolled),
+                           rectangle, 0);
+
   gimp_rectangle_tool_update_highlight (rectangle);
   gimp_rectangle_tool_update_handle_sizes (rectangle);
 
@@ -1804,8 +1844,14 @@ gimp_rectangle_tool_halt (GimpRectangleTool *rectangle)
     GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (gimp_tool_get_options (tool));
 
   if (tool->display)
-    gimp_display_shell_set_highlight (GIMP_DISPLAY_SHELL (tool->display->shell),
-                                      NULL);
+    {
+      gimp_display_shell_set_highlight (GIMP_DISPLAY_SHELL (tool->display->shell),
+                                        NULL);
+
+      g_signal_handlers_disconnect_by_func (GIMP_DISPLAY_SHELL (tool->display->shell),
+                                            gimp_rectangle_tool_shell_scrolled,
+                                            rectangle);
+    }
 
   if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (rectangle)))
     gimp_draw_tool_stop (GIMP_DRAW_TOOL (rectangle));
@@ -2054,6 +2100,19 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
     {
       gimp_rectangle_tool_update_highlight (rectangle);
     }
+}
+
+static void
+gimp_rectangle_tool_shell_scrolled (GimpDisplayShell  *shell,
+                                    GimpRectangleTool *rectangle_tool)
+{
+  GimpDrawTool *draw_tool = GIMP_DRAW_TOOL (rectangle_tool);
+
+  gimp_draw_tool_pause (draw_tool);
+
+  gimp_rectangle_tool_update_handle_sizes (rectangle_tool);
+
+  gimp_draw_tool_resume (draw_tool);
 }
 
 GimpRectangleFunction
