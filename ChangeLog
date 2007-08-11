@@ -1,3 +1,9 @@
+2007-08-11  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimphistogramview.c (gimp_histogram_view_draw_spike):
+	pass the maximum value double and draw the histogram one pixel less
+	high. Fixes bug #465669.
+
 2007-08-11  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme.c: Commited patch from

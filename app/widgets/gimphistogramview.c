@@ -75,7 +75,7 @@ static void     gimp_histogram_view_draw_spike (GimpHistogramView    *view,
                                                 gint                  x,
                                                 gint                  i,
                                                 gint                  j,
-                                                gint                  max,
+                                                gdouble               max,
                                                 gint                  height,
                                                 gint                  border);
 
@@ -382,7 +382,7 @@ gimp_histogram_view_draw_spike (GimpHistogramView    *view,
                                 gint                  x,
                                 gint                  i,
                                 gint                  j,
-                                gint                  max,
+                                gdouble               max,
                                 gint                  height,
                                 gint                  border)
 {
@@ -404,11 +404,11 @@ gimp_histogram_view_draw_spike (GimpHistogramView    *view,
   switch (view->scale)
     {
     case GIMP_HISTOGRAM_SCALE_LINEAR:
-      y = (gint) (((height - 1) * value) / max);
+      y = (gint) (((height - 2) * value) / max);
       break;
 
     case GIMP_HISTOGRAM_SCALE_LOGARITHMIC:
-      y = (gint) (((height - 1) * log (value)) / max);
+      y = (gint) (((height - 2) * log (value)) / max);
       break;
 
     default:
