@@ -25,6 +25,7 @@
 
 #include <libgimpwidgets/gimpintcombobox.h>
 
+G_BEGIN_DECLS
 
 #define GIMP_TYPE_ENUM_COMBO_BOX            (gimp_enum_combo_box_get_type ())
 #define GIMP_ENUM_COMBO_BOX(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ENUM_COMBO_BOX, GimpEnumComboBox))
@@ -61,5 +62,6 @@ GtkWidget * gimp_enum_combo_box_new_with_model   (GimpEnumStore    *enum_store);
 void        gimp_enum_combo_box_set_stock_prefix (GimpEnumComboBox *combo_box,
                                                   const gchar      *stock_prefix);
 
+G_END_DECLS
 
 #endif  /* __GIMP_ENUM_COMBO_BOX_H__ */

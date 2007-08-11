@@ -25,6 +25,7 @@
 
 #include <libgimpwidgets/gimpintstore.h>
 
+G_BEGIN_DECLS
 
 #define GIMP_TYPE_ENUM_STORE            (gimp_enum_store_get_type ())
 #define GIMP_ENUM_STORE(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ENUM_STORE, GimpEnumStore))
@@ -70,5 +71,7 @@ GtkListStore * gimp_enum_store_new_with_values_valist (GType    enum_type,
 void           gimp_enum_store_set_stock_prefix (GimpEnumStore *store,
                                                  const gchar   *stock_prefix);
 
+
+G_END_DECLS
 
 #endif  /* __GIMP_ENUM_STORE_H__ */

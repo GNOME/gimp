@@ -23,6 +23,8 @@
 #ifndef __GIMP_PROP_WIDGETS_H__
 #define __GIMP_PROP_WIDGETS_H__
 
+G_BEGIN_DECLS
+
 
 /*  GParamBoolean  */
 
@@ -211,5 +213,7 @@ GtkWidget     * gimp_prop_stock_image_new         (GObject       *config,
                                                    const gchar   *property_name,
                                                    GtkIconSize    icon_size);
 
+
+G_END_DECLS
 
 #endif /* __GIMP_PROP_WIDGETS_H__ */

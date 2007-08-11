@@ -23,6 +23,7 @@
 #ifndef __GIMP_ENUM_WIDGETS_H__
 #define __GIMP_ENUM_WIDGETS_H__
 
+G_BEGIN_DECLS
 
 GtkWidget * gimp_enum_radio_box_new               (GType         enum_type,
                                                    GCallback     callback,
@@ -67,5 +68,6 @@ void        gimp_enum_stock_box_set_child_padding (GtkWidget    *stock_box,
                                                    gint          xpad,
                                                    gint          ypad);
 
+G_END_DECLS
 
 #endif  /* __GIMP_ENUM_WIDGETS_H__ */

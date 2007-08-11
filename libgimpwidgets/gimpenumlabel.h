@@ -25,6 +25,7 @@
 
 #include <gtk/gtklabel.h>
 
+G_BEGIN_DECLS
 
 #define GIMP_TYPE_ENUM_LABEL            (gimp_enum_label_get_type ())
 #define GIMP_ENUM_LABEL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ENUM_LABEL, GimpEnumLabel))
@@ -57,5 +58,6 @@ GtkWidget * gimp_enum_label_new              (GType          enum_type,
 void        gimp_enum_label_set_value        (GimpEnumLabel *label,
                                               gint           value);
 
+G_END_DECLS
 
 #endif  /* __GIMP_ENUM_LABEL_H__ */

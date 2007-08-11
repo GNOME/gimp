@@ -1,3 +1,12 @@
+2007-08-11  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpenumcombobox.h
+	* libgimpwidgets/gimpenumlabel.h
+	* libgimpwidgets/gimpenumstore.h
+	* libgimpwidgets/gimpenumwidgets.h
+	* libgimpwidgets/gimppropwidgets.h: added missing G_BEGIN_DECLS
+	and G_END_DECLS.
+
 2007-08-11  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/tools-actions.c
