@@ -1,3 +1,9 @@
+2007-08-11  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme.c: Commited patch from
+	Sven Neumann that reverts the optimization patch which stored
+	collation keys. See bug #374854.
+
 2007-08-11  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c
