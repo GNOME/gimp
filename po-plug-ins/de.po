@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-07 13:11+0200\n"
+"POT-Creation-Date: 2007-08-11 13:51+0200\n"
 "PO-Revision-Date: 2007-08-07 18:00+0200\n"
 "Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
@@ -254,6 +254,7 @@ msgstr "Sinus"
 msgid "Cosine"
 msgstr "Kosinus"
 
+#. if and how to center the image on the page
 #: ../plug-ins/FractalExplorer/Dialogs.c:999
 #: ../plug-ins/FractalExplorer/Dialogs.c:1040
 #: ../plug-ins/FractalExplorer/Dialogs.c:1081
@@ -261,7 +262,7 @@ msgstr "Kosinus"
 #: ../plug-ins/common/CML_explorer.c:166 ../plug-ins/common/align_layers.c:422
 #: ../plug-ins/common/align_layers.c:453 ../plug-ins/common/postscript.c:3228
 #: ../plug-ins/common/postscript.c:3240 ../plug-ins/common/psp.c:418
-#: ../plug-ins/fits/fits.c:1026
+#: ../plug-ins/fits/fits.c:1026 ../plug-ins/print/print-page-layout.c:507
 msgid "None"
 msgstr "Kein"
 
@@ -369,7 +370,7 @@ msgstr "_Fraktale"
 #: ../plug-ins/common/xbm.c:1016 ../plug-ins/common/xwd.c:598
 #: ../plug-ins/fits/fits.c:457 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/gfli/gfli.c:715
-#: ../plug-ins/ifscompose/ifscompose.c:2376 ../plug-ins/jpeg/jpeg-save.c:317
+#: ../plug-ins/ifscompose/ifscompose.c:2376 ../plug-ins/jpeg/jpeg-save.c:323
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:282
 #: ../plug-ins/winicon/icosave.c:1020 ../plug-ins/xjt/xjt.c:1280
 #: ../plug-ins/xjt/xjt.c:1714
@@ -400,11 +401,11 @@ msgstr "Fraktalparameter speichern"
 #: ../plug-ins/common/compressor.c:622 ../plug-ins/common/curve_bend.c:869
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gif-load.c:309 ../plug-ins/common/gih.c:649
-#: ../plug-ins/common/lcms.c:730 ../plug-ins/common/lcms.c:925
+#: ../plug-ins/common/lcms.c:728 ../plug-ins/common/lcms.c:923
 #: ../plug-ins/common/mng.c:1121 ../plug-ins/common/pat.c:317
 #: ../plug-ins/common/pcx.c:309 ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:703 ../plug-ins/common/pnm.c:482
-#: ../plug-ins/common/poppler.c:500 ../plug-ins/common/postscript.c:1021
+#: ../plug-ins/common/poppler.c:501 ../plug-ins/common/postscript.c:1021
 #: ../plug-ins/common/postscript.c:3029 ../plug-ins/common/psd-load.c:2121
 #: ../plug-ins/common/psp.c:1432 ../plug-ins/common/raw.c:243
 #: ../plug-ins/common/raw.c:645 ../plug-ins/common/spheredesigner.c:2010
@@ -617,6 +618,7 @@ msgstr "Lichtintensität"
 #: ../plug-ins/Lighting/lighting_ui.c:464
 #: ../plug-ins/MapObject/mapobject_ui.c:671
 #: ../plug-ins/MapObject/mapobject_ui.c:998
+#: ../plug-ins/print/print-page-layout.c:401
 msgid "Position"
 msgstr "Position"
 
@@ -1092,11 +1094,12 @@ msgid "Z scale (size)"
 msgstr "Z Skalierung (Größe)"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1205
-#: ../plug-ins/print/print-page-layout.c:430
+#: ../plug-ins/print/print-page-layout.c:460
 msgid "_Top:"
 msgstr "_Oben:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1205
+#: ../plug-ins/print/print-page-layout.c:479
 msgid "_Bottom:"
 msgstr "_Unten:"
 
@@ -1105,6 +1108,7 @@ msgid "Images for the Cap Faces"
 msgstr "Bilder für die Grundflächen"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1239
+#: ../plug-ins/print/print-page-layout.c:277
 msgid "Size"
 msgstr "Größe"
 
@@ -1162,7 +1166,7 @@ msgstr "Fehlerhafte Palette"
 #: ../plug-ins/common/gif-load.c:314 ../plug-ins/common/gih.c:654
 #: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:314
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:710
-#: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:545
+#: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:546
 #: ../plug-ins/common/postscript.c:1027 ../plug-ins/common/psd-load.c:2126
 #: ../plug-ins/common/raw.c:650 ../plug-ins/common/sunras.c:469
 #: ../plug-ins/common/tga.c:428 ../plug-ins/common/tiff-load.c:558
@@ -1238,8 +1242,8 @@ msgstr "Die Bitmap endet unerwartet."
 #: ../plug-ins/bmp/bmpwrite.c:187 ../plug-ins/bmp/bmpwrite.c:209
 msgid "Cannot save indexed image with transparency in BMP file format."
 msgstr ""
-"Bilder im Modus »indiziert« und mit Alphakanal können nicht im BMP-Dateiformat "
-"gespeichert werden."
+"Bilder im Modus »indiziert« und mit Alphakanal können nicht im BMP-"
+"Dateiformat gespeichert werden."
 
 #: ../plug-ins/bmp/bmpwrite.c:189 ../plug-ins/bmp/bmpwrite.c:211
 msgid "Alpha channel will be ignored."
@@ -1257,7 +1261,7 @@ msgstr "EXIF-Daten werden ignoriert."
 #: ../plug-ins/common/tga.c:1138 ../plug-ins/common/tiff-save.c:681
 #: ../plug-ins/common/xbm.c:1021 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:603 ../plug-ins/fits/fits.c:462
-#: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:275
+#: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:281
 #: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:1015
 #: ../plug-ins/xjt/xjt.c:1697
 #, c-format
@@ -1272,7 +1276,7 @@ msgstr "Als BMP speichern"
 msgid "_Run-Length Encoded"
 msgstr "_RL-kodiert"
 
-#: ../plug-ins/bmp/bmpwrite.c:826 ../plug-ins/jpeg/jpeg-save.c:862
+#: ../plug-ins/bmp/bmpwrite.c:826 ../plug-ins/jpeg/jpeg-save.c:891
 msgid "_Advanced Options"
 msgstr "_Erweiterte Optionen"
 
@@ -2565,7 +2569,7 @@ msgstr "Nach Wert sortieren"
 msgid "Reverse Order"
 msgstr "Reihenfolge umkehren"
 
-### XXX "Reihenfolge wiederherstellen" (!?)
+# ## XXX "Reihenfolge wiederherstellen" (!?)
 #: ../plug-ins/common/colormap-remap.c:499
 msgid "Reset Order"
 msgstr "Reihenfolge zurücksetzen"
@@ -3319,7 +3323,7 @@ msgstr "Röte-cr709f"
 
 #: ../plug-ins/common/decompose.c:294 ../plug-ins/common/decompose.c:308
 msgid "Decompose an image into separate colorspace components"
-msgstr ""
+msgstr "Zerlegt ein Bild in die einzelnen Komponenten von Farbräumen"
 
 #: ../plug-ins/common/decompose.c:300 ../plug-ins/common/decompose.c:318
 msgid "_Decompose..."
@@ -3416,6 +3420,7 @@ msgid "Desktop Link"
 msgstr "Desktop-Verknüpfung"
 
 #: ../plug-ins/common/desktop-link.c:163
+#, c-format
 msgid "Error loading desktop file '%s': %s"
 msgstr "Fehler beim Lesen der Desktop-Datei »%s«: %s"
 
@@ -3480,7 +3485,7 @@ msgstr "Streifen entfernen"
 #: ../plug-ins/common/smooth_palette.c:436 ../plug-ins/common/tile.c:431
 #: ../plug-ins/imagemap/imap_cmd_guides.c:165
 #: ../plug-ins/imagemap/imap_rectangle.c:403
-#: ../plug-ins/print/print-page-layout.c:294
+#: ../plug-ins/print/print-page-layout.c:310
 msgid "_Width:"
 msgstr "_Breite:"
 
@@ -3756,7 +3761,7 @@ msgstr "Gravur"
 #: ../plug-ins/common/raw.c:1048 ../plug-ins/common/smooth_palette.c:441
 #: ../plug-ins/common/tile.c:435 ../plug-ins/imagemap/imap_cmd_guides.c:175
 #: ../plug-ins/imagemap/imap_rectangle.c:410
-#: ../plug-ins/print/print-page-layout.c:296
+#: ../plug-ins/print/print-page-layout.c:312
 msgid "_Height:"
 msgstr "_Höhe:"
 
@@ -4332,9 +4337,9 @@ msgstr ""
 #: ../plug-ins/common/gif-save.c:958
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
-msgstr
-"Kann keine RGB-Bilder speichern. "
-"Konvertieren Sie zuerst zu »indiziert« oder »Graustufen«."
+msgstr ""
+"Kann keine RGB-Bilder speichern. Konvertieren Sie zuerst zu »indiziert« oder "
+"»Graustufen«."
 
 #: ../plug-ins/common/gif-save.c:1135
 msgid "Delay inserted to prevent evil CPU-sucking animation."
@@ -5050,45 +5055,45 @@ msgstr "Konvertiere von '%s' nach '%s'"
 msgid "Default RGB working space"
 msgstr "Voreingestellter RGB Arbeitsraum"
 
-#: ../plug-ins/common/lcms.c:700
+#: ../plug-ins/common/lcms.c:696
 msgid ""
 "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr ""
 "Die als 'icc-profile' angehängten Daten scheinen kein ICC Farbprofil zu sein."
 
-#: ../plug-ins/common/lcms.c:758
+#: ../plug-ins/common/lcms.c:756
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "»%s« scheint kein ICC Farbprofil zu sein."
 
-#: ../plug-ins/common/lcms.c:951
+#: ../plug-ins/common/lcms.c:942
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Konnte kein ICC Farbprofil aus der Datei '%s' lesen"
 
-#: ../plug-ins/common/lcms.c:971
+#: ../plug-ins/common/lcms.c:964
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "Das Bild '%s' hat ein eingebettetes Farbprofil:"
 
-#: ../plug-ins/common/lcms.c:1015
+#: ../plug-ins/common/lcms.c:1008
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Soll das Bild in den RGB Arbeitsraum (%s) konvertiert werden?"
 
-#: ../plug-ins/common/lcms.c:1046
+#: ../plug-ins/common/lcms.c:1039
 msgid "Convert to RGB working space?"
 msgstr "In den RGB Arbeitsraum konvertieren?"
 
-#: ../plug-ins/common/lcms.c:1051
+#: ../plug-ins/common/lcms.c:1044
 msgid "_Keep"
 msgstr "_Behalten"
 
-#: ../plug-ins/common/lcms.c:1056
+#: ../plug-ins/common/lcms.c:1049
 msgid "_Convert"
 msgstr "_Konvertieren"
 
-#: ../plug-ins/common/lcms.c:1083 ../plug-ins/jpeg/jpeg-exif.c:367
+#: ../plug-ins/common/lcms.c:1076 ../plug-ins/jpeg/jpeg-exif.c:367
 msgid "_Don't ask me again"
 msgstr "_Nicht erneut fragen"
 
@@ -5405,7 +5410,7 @@ msgstr "_Winkel:"
 
 #. Inform the user that we couldn't losslessly save the
 #. * transparency & just use the full palette
-#: ../plug-ins/common/mng.c:499 ../plug-ins/common/png.c:1725
+#: ../plug-ins/common/mng.c:499 ../plug-ins/common/png.c:1729
 msgid "Couldn't losslessly save transparency, saving opacity instead."
 msgstr ""
 "Transparenz konnte nicht ohne Verluste gespeichert werden, wird stattdessen "
@@ -5483,7 +5488,7 @@ msgstr "Standard-Einzelbildübergang:"
 msgid "PNG compression level:"
 msgstr "PNG Kompression:"
 
-#: ../plug-ins/common/mng.c:1462 ../plug-ins/common/png.c:1872
+#: ../plug-ins/common/mng.c:1462 ../plug-ins/common/png.c:1876
 msgid "Choose a high compression level for small file size"
 msgstr "Wählen Sie eine hohe Kompression für kleine Dateigrößen."
 
@@ -5592,6 +5597,7 @@ msgid "_FG/BG lighting"
 msgstr "_VG/HG Beleuchtung"
 
 #: ../plug-ins/common/mosaic.c:2687
+#, c-format
 msgid "Unable to add additional point.\n"
 msgstr "Konnte keinen Kontrollpunkt hinzufügen.\n"
 
@@ -6177,51 +6183,51 @@ msgstr ""
 msgid "Error while saving '%s'. Could not save image."
 msgstr "Fehler beim Speichern von »%s«. Bild wurde nicht gespeichert."
 
-#: ../plug-ins/common/png.c:1750
+#: ../plug-ins/common/png.c:1754
 msgid "Save as PNG"
 msgstr "Als PNG speichern"
 
-#: ../plug-ins/common/png.c:1781
+#: ../plug-ins/common/png.c:1785
 msgid "_Interlacing (Adam7)"
 msgstr "_Interlacing (Adam7)"
 
-#: ../plug-ins/common/png.c:1792
+#: ../plug-ins/common/png.c:1796
 msgid "Save _background color"
 msgstr "_Hintergrundfarbe speichern"
 
-#: ../plug-ins/common/png.c:1800
+#: ../plug-ins/common/png.c:1804
 msgid "Save _gamma"
 msgstr "_Gamma-Faktor speichern"
 
-#: ../plug-ins/common/png.c:1810
+#: ../plug-ins/common/png.c:1814
 msgid "Save layer o_ffset"
 msgstr "_Ebenenversatz speichern"
 
-#: ../plug-ins/common/png.c:1819
+#: ../plug-ins/common/png.c:1823
 msgid "Save _resolution"
 msgstr "_Auflösung speichern"
 
-#: ../plug-ins/common/png.c:1829
+#: ../plug-ins/common/png.c:1833
 msgid "Save creation _time"
 msgstr "_Zeit der Erstellung speichern"
 
-#: ../plug-ins/common/png.c:1838
+#: ../plug-ins/common/png.c:1842
 msgid "Save comme_nt"
 msgstr "_Kommentar speichern"
 
-#: ../plug-ins/common/png.c:1854
+#: ../plug-ins/common/png.c:1858
 msgid "Save color _values from transparent pixels"
 msgstr "Farb_werte aus Transparenz speichern"
 
-#: ../plug-ins/common/png.c:1868
+#: ../plug-ins/common/png.c:1872
 msgid "Co_mpression level:"
 msgstr "_Kompressionsgrad:"
 
-#: ../plug-ins/common/png.c:1886 ../plug-ins/jpeg/jpeg-save.c:1109
+#: ../plug-ins/common/png.c:1890 ../plug-ins/jpeg/jpeg-save.c:1153
 msgid "_Load Defaults"
 msgstr "Standardwerte _laden"
 
-#: ../plug-ins/common/png.c:1894 ../plug-ins/jpeg/jpeg-save.c:1118
+#: ../plug-ins/common/png.c:1898 ../plug-ins/jpeg/jpeg-save.c:1162
 msgid "S_ave Defaults"
 msgstr "Standardwerte _speichern"
 
@@ -6362,42 +6368,42 @@ msgstr ""
 "Wenn angeklickt, wird das Bild kreisförmig auf ein Rechteck abgebildet. Wenn "
 "nicht, wird das Bild auf einen Kreis abgebildet."
 
-#: ../plug-ins/common/poppler.c:282
+#: ../plug-ins/common/poppler.c:283
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
-#: ../plug-ins/common/poppler.c:579
+#: ../plug-ins/common/poppler.c:580
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/poppler.c:581 ../plug-ins/common/postscript.c:1109
+#: ../plug-ins/common/poppler.c:582 ../plug-ins/common/postscript.c:1109
 #, c-format
 msgid "%s-pages"
 msgstr "%s-Seiten"
 
-#: ../plug-ins/common/poppler.c:759
+#: ../plug-ins/common/poppler.c:760
 msgid "Import from PDF"
 msgstr "Aus PDF importieren"
 
-#: ../plug-ins/common/poppler.c:764 ../plug-ins/common/postscript.c:3081
+#: ../plug-ins/common/poppler.c:765 ../plug-ins/common/postscript.c:3081
 #: ../plug-ins/common/tiff-load.c:440
 msgid "_Import"
 msgstr "_Importieren"
 
-#: ../plug-ins/common/poppler.c:830
+#: ../plug-ins/common/poppler.c:831
 msgid "_Width (pixels):"
 msgstr "_Breite (Pixel):"
 
-#: ../plug-ins/common/poppler.c:831
+#: ../plug-ins/common/poppler.c:832
 msgid "_Height (pixels):"
 msgstr "_Höhe (Pixel):"
 
-#: ../plug-ins/common/poppler.c:833
+#: ../plug-ins/common/poppler.c:834
 msgid "_Resolution:"
 msgstr "A_uflösung:"
 
-#: ../plug-ins/common/poppler.c:1107
+#: ../plug-ins/common/poppler.c:1108
 #, fuzzy, c-format
 msgid "pixels/%s"
 msgstr "Pixel/%a"
@@ -6531,7 +6537,6 @@ msgstr "Als Postscript speichern"
 
 #. Image Size
 #: ../plug-ins/common/postscript.c:3345
-#: ../plug-ins/print/print-page-layout.c:261
 msgid "Image Size"
 msgstr "Bildgröße"
 
@@ -6773,7 +6778,7 @@ msgstr "Rohdaten des Bildes"
 msgid "Load Image from Raw Data"
 msgstr "Bild aus Rohdaten laden"
 
-#: ../plug-ins/common/raw.c:992 ../plug-ins/print/print.c:212
+#: ../plug-ins/common/raw.c:992
 msgid "Image"
 msgstr "Bild"
 
@@ -7126,25 +7131,24 @@ msgid "There was an error taking the screenshot."
 msgstr "Beim Erstellen des Bildschirmfotos ist ein Fehler aufgetreten."
 
 #: ../plug-ins/common/screenshot.c:978
-#, fuzzy
 msgid "S_nap"
-msgstr "_Austauschen"
+msgstr "A_uslösen"
 
 #: ../plug-ins/common/screenshot.c:1008
 msgid "After the delay, the screenshot is taken."
-msgstr ""
+msgstr "Nach der Verzögerung wird das Bildschirmfoto erstellt."
 
 #: ../plug-ins/common/screenshot.c:1010
-#, fuzzy
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
 msgstr ""
-"Wenn diese Option ausgewählt ist, können Sie mit Hilfe der Maus rechteckige "
-"Bereiche auf Ihrem Bildschirm auswählen."
+"Nach der Verzögerung, ziehen Sie mit der Maus den zu fotografierenden "
+"Bereich aus"
 
 #: ../plug-ins/common/screenshot.c:1013
 msgid "At the end of the delay, click in a window to snap it."
 msgstr ""
+"Am Ende der Verzögerung, klicken Sie in das zu fotografierende Fenster."
 
 #. Area
 #: ../plug-ins/common/screenshot.c:1019
@@ -7174,9 +7178,8 @@ msgstr "Verzögerung"
 
 #. this is the unit label of a spinbutton
 #: ../plug-ins/common/screenshot.c:1121
-#, fuzzy
 msgid "seconds"
-msgstr "Millisekunden"
+msgstr "Sekunden"
 
 #: ../plug-ins/common/sel_gauss.c:106
 msgid "Blur neighboring pixels, but only in low-contrast areas"
@@ -7463,7 +7466,7 @@ msgstr "Sobel Kanten-Erkennung"
 
 #: ../plug-ins/common/softglow.c:134
 msgid "Simulate glow by making highlights intense and fuzzy"
-msgstr ""
+msgstr "Glühen durch Intensivieren und Unschärfen der Lichter simulieren"
 
 #: ../plug-ins/common/softglow.c:139
 msgid "_Softglow..."
@@ -7871,6 +7874,8 @@ msgid ""
 "'%s':\n"
 "Image width is larger than GIMP can handle"
 msgstr ""
+"'%s':\n"
+"Das Bild ist zu breit, um mit GIMP bearbeitet zu werden"
 
 #: ../plug-ins/common/sunras.c:455 ../plug-ins/common/xbm.c:824
 #: ../plug-ins/common/xwd.c:492
@@ -7889,6 +7894,8 @@ msgid ""
 "'%s':\n"
 "Image height is larger than GIMP can handle"
 msgstr ""
+"'%s':\n"
+"Das Bild ist zu hoch, um mit GIMP bearbeitet zu werden"
 
 #: ../plug-ins/common/sunras.c:501
 msgid "This image depth is not supported"
@@ -7974,7 +7981,7 @@ msgid "Constrain aspect ratio"
 msgstr "Seitenverhältnis beschränken"
 
 #: ../plug-ins/common/svg.c:904 ../plug-ins/common/wmf.c:678
-#: ../plug-ins/print/print-page-layout.c:315
+#: ../plug-ins/print/print-page-layout.c:331
 #, c-format
 msgid "pixels/%a"
 msgstr "Pixel/%a"
@@ -8062,9 +8069,8 @@ msgid "TIFF '%s' does not contain any directories"
 msgstr ""
 
 #: ../plug-ins/common/tiff-load.c:435
-#, fuzzy
 msgid "Import from TIFF"
-msgstr "Aus PDF importieren"
+msgstr "Aus TIFF importieren"
 
 #: ../plug-ins/common/tiff-load.c:958
 msgid "TIFF Channel"
@@ -8121,11 +8127,11 @@ msgstr "_JPEG"
 
 #: ../plug-ins/common/tiff-save.c:1078
 msgid "CCITT Group _3 fax"
-msgstr ""
+msgstr "CCITT Gruppe _3 Fax"
 
 #: ../plug-ins/common/tiff-save.c:1079
 msgid "CCITT Group _4 fax"
-msgstr ""
+msgstr "CCITT Gruppe _4 Fax"
 
 #: ../plug-ins/common/tiff-save.c:1101
 msgid "Save _color values from transparent pixels"
@@ -8374,7 +8380,7 @@ msgstr "Einheiten-Editor"
 
 #: ../plug-ins/common/unsharp.c:130
 msgid "The most widely useful method for sharpening an image"
-msgstr ""
+msgstr "Die universellste Methode, um ein Bild zu schärfen"
 
 #: ../plug-ins/common/unsharp.c:140
 msgid "_Unsharp Mask..."
@@ -8687,9 +8693,8 @@ msgid "Flow step %d"
 msgstr "Flussschritt %d"
 
 #: ../plug-ins/common/waves.c:120
-#, fuzzy
 msgid "Distort the image with waves"
-msgstr "Zentriert das Bild auf dem Papier"
+msgstr "Bild mit Wellen verzerren"
 
 #: ../plug-ins/common/waves.c:125
 msgid "_Waves..."
@@ -8746,9 +8751,8 @@ msgstr ""
 "%s"
 
 #: ../plug-ins/common/whirlpinch.c:138
-#, fuzzy
 msgid "Distort an image by whirling and pinching"
-msgstr "Drehen und Drücken …"
+msgstr "Bild durch Drehen und Drücken verzerren"
 
 #: ../plug-ins/common/whirlpinch.c:149
 msgid "W_hirl and Pinch..."
@@ -9265,7 +9269,6 @@ msgstr "Bild zeigen"
 
 #. "snap to grid" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:493
-#, fuzzy
 msgid "checkbutton|Snap to grid"
 msgstr "Am Gitter ausrichten"
 
@@ -9541,7 +9544,7 @@ msgstr "Bezier-Kurve erstellen"
 
 #: ../plug-ins/gfig/gfig.c:124
 msgid "Create geometric shapes"
-msgstr ""
+msgstr "Geometrische Formen erstellen"
 
 #: ../plug-ins/gfig/gfig.c:135
 msgid "_Gfig..."
@@ -9571,7 +9574,7 @@ msgstr "Überlagern"
 
 #: ../plug-ins/gflare/gflare.c:809
 msgid "Produce a lense flare effect using gradients"
-msgstr ""
+msgstr "Erstellt einen Linsenreflexeffekt unter Verwendung von Verläufen"
 
 #: ../plug-ins/gflare/gflare.c:814
 msgid "_Gradient Flare..."
@@ -11507,7 +11510,7 @@ msgstr "Den EXIF-Daten zufolge ist das Bild gedreht."
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Soll GIMP für Sie das Bild in die Standardausrichtung drehen?"
 
-#: ../plug-ins/jpeg/jpeg-load.c:237
+#: ../plug-ins/jpeg/jpeg-load.c:236
 msgid "JPEG preview"
 msgstr "JPEG-Vorschau"
 
@@ -11516,123 +11519,130 @@ msgstr "JPEG-Vorschau"
 msgid "Opening thumbnail for '%s'"
 msgstr "Vorschau von »%s« wird geöffnet"
 
-#: ../plug-ins/jpeg/jpeg-save.c:190
+#: ../plug-ins/jpeg/jpeg-save.c:196
 #, c-format
 msgid "File size: %02.01f kB"
 msgstr "Dateigröße: %02.01f kB"
 
-#: ../plug-ins/jpeg/jpeg-save.c:639
+#: ../plug-ins/jpeg/jpeg-save.c:665
 msgid "Calculating file size..."
 msgstr "Berechne Dateigröße …"
 
-#: ../plug-ins/jpeg/jpeg-save.c:730 ../plug-ins/jpeg/jpeg-save.c:841
+#: ../plug-ins/jpeg/jpeg-save.c:756 ../plug-ins/jpeg/jpeg-save.c:870
 msgid "File size: unknown"
 msgstr "Dateigröße: unbekannt"
 
-#: ../plug-ins/jpeg/jpeg-save.c:785
+#: ../plug-ins/jpeg/jpeg-save.c:814
 msgid "Save as JPEG"
 msgstr "Als JPEG speichern"
 
-#: ../plug-ins/jpeg/jpeg-save.c:820
+#: ../plug-ins/jpeg/jpeg-save.c:849
 msgid "_Quality:"
 msgstr "_Qualität:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:824
+#: ../plug-ins/jpeg/jpeg-save.c:853
 msgid "JPEG quality parameter"
 msgstr "JPEG-Qualitätseinstellungen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:839
+#: ../plug-ins/jpeg/jpeg-save.c:868
 msgid "Enable preview to obtain the file size."
 msgstr "Vorschau aktivieren, um die Dateigröße zu ermitteln."
 
-#: ../plug-ins/jpeg/jpeg-save.c:850
+#: ../plug-ins/jpeg/jpeg-save.c:879
 msgid "Show _preview in image window"
 msgstr "_Vorschau im Bildfenster anzeigen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:891
+#: ../plug-ins/jpeg/jpeg-save.c:920
 msgid "_Smoothing:"
 msgstr "_Glättung:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:904
+#: ../plug-ins/jpeg/jpeg-save.c:933
 msgid "Frequency (rows):"
 msgstr "Frequenz (Zeilen):"
 
-#: ../plug-ins/jpeg/jpeg-save.c:920
+#: ../plug-ins/jpeg/jpeg-save.c:949
 msgid "Use restart markers"
 msgstr "Start-Markierungen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:936 ../plug-ins/xjt/xjt.c:877
+#: ../plug-ins/jpeg/jpeg-save.c:965 ../plug-ins/xjt/xjt.c:877
 msgid "Optimize"
 msgstr "Optimieren"
 
-#: ../plug-ins/jpeg/jpeg-save.c:949
+#: ../plug-ins/jpeg/jpeg-save.c:978
 msgid "Progressive"
 msgstr "Progressiv"
 
-#: ../plug-ins/jpeg/jpeg-save.c:964
-msgid "Force baseline JPEG"
-msgstr "Baseline-JPEG erzwingen"
-
-#: ../plug-ins/jpeg/jpeg-save.c:979
+#: ../plug-ins/jpeg/jpeg-save.c:993
 msgid "Save EXIF data"
 msgstr "EXIF-Daten speichern"
 
-#: ../plug-ins/jpeg/jpeg-save.c:996
+#: ../plug-ins/jpeg/jpeg-save.c:1010
 msgid "Save thumbnail"
 msgstr "Vorschau speichern"
 
 #. XMP metadata
-#: ../plug-ins/jpeg/jpeg-save.c:1012
+#: ../plug-ins/jpeg/jpeg-save.c:1026
 msgid "Save XMP data"
 msgstr "XMP-Daten speichern"
 
+#: ../plug-ins/jpeg/jpeg-save.c:1041
+msgid "Use custom quality settings"
+msgstr ""
+
+#: ../plug-ins/jpeg/jpeg-save.c:1046
+msgid ""
+"If the original image was loaded from a JPEG file using non-standard quality "
+"settings (quantization tables), enable this option to get almost the same "
+"quality and file size."
+msgstr ""
+
 #. Subsampling
-#: ../plug-ins/jpeg/jpeg-save.c:1026
+#: ../plug-ins/jpeg/jpeg-save.c:1070
 msgid "Subsampling:"
 msgstr "Zwischenschritte:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1033
+#: ../plug-ins/jpeg/jpeg-save.c:1077
 msgid "1x1,1x1,1x1 (best quality)"
 msgstr ""
 
-#: ../plug-ins/jpeg/jpeg-save.c:1034
+#: ../plug-ins/jpeg/jpeg-save.c:1078
 msgid "2x1,1x1,1x1 (4:2:2)"
 msgstr ""
 
-#: ../plug-ins/jpeg/jpeg-save.c:1035
+#: ../plug-ins/jpeg/jpeg-save.c:1079
 msgid "1x2,1x1,1x1"
 msgstr ""
 
-#: ../plug-ins/jpeg/jpeg-save.c:1036
+#: ../plug-ins/jpeg/jpeg-save.c:1080
 msgid "2x2,1x1,1x1 (smallest file)"
 msgstr ""
 
 #. DCT method
-#: ../plug-ins/jpeg/jpeg-save.c:1051
+#: ../plug-ins/jpeg/jpeg-save.c:1095
 msgid "DCT method:"
 msgstr "DCT-Methode:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1057
+#: ../plug-ins/jpeg/jpeg-save.c:1101
 msgid "Fast Integer"
 msgstr "Schnelle Ganzzahlen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1058
+#: ../plug-ins/jpeg/jpeg-save.c:1102
 msgid "Integer"
 msgstr "Ganzzahlen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1059
+#: ../plug-ins/jpeg/jpeg-save.c:1103
 msgid "Floating-Point"
 msgstr "Fließkommazahlen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1073
+#: ../plug-ins/jpeg/jpeg-save.c:1117
 msgid "Comment"
 msgstr "Kommentar"
 
-#: ../plug-ins/jpeg/jpeg.c:133 ../plug-ins/jpeg/jpeg.c:171
+#: ../plug-ins/jpeg/jpeg.c:137 ../plug-ins/jpeg/jpeg.c:175
 msgid "JPEG image"
 msgstr "JPEG-Bild"
 
-#: ../plug-ins/jpeg/jpeg.c:293
+#: ../plug-ins/jpeg/jpeg.c:301
 msgid "Export Preview"
 msgstr "Export-Vorschau"
 
@@ -11708,6 +11718,7 @@ msgstr ""
 "Nahtloses Labyrinth wird kein perfektes Ergebnis liefern."
 
 #: ../plug-ins/metadata/xmp-parse.c:240
+#, c-format
 msgid "Error: No XMP packet found"
 msgstr "Fehler: Es wurde kein XMP-Paket gefunden"
 
@@ -11835,52 +11846,54 @@ msgstr "Eingerollte Ebene"
 msgid "Page Curl"
 msgstr "Seite einrollen"
 
-#: ../plug-ins/print/print-page-layout.c:118
-msgid "_Adjust Page Size and Orientation"
-msgstr ""
-
-#: ../plug-ins/print/print-page-layout.c:132
-#, fuzzy
+#. label for the printable area
+#: ../plug-ins/print/print-page-layout.c:127
 msgid "Printable area:"
-msgstr "Drucker-Name:"
+msgstr "Druckbereich:"
 
-#: ../plug-ins/print/print-page-layout.c:178
+#: ../plug-ins/print/print-page-layout.c:141
+msgid "_Adjust Page Size and Orientation"
+msgstr "Seitengröße und Orientierung einstellen"
+
+#: ../plug-ins/print/print-page-layout.c:195
 msgid "Ignore Page _Margins"
-msgstr ""
+msgstr "Seitenränder ignorieren"
 
-#: ../plug-ins/print/print-page-layout.c:336
-#, fuzzy
+#: ../plug-ins/print/print-page-layout.c:352
 msgid "_X resolution:"
-msgstr "A_uflösung:"
+msgstr "_X Auflösung:"
 
-#: ../plug-ins/print/print-page-layout.c:340
-#, fuzzy
+#: ../plug-ins/print/print-page-layout.c:356
 msgid "_Y resolution:"
-msgstr "A_uflösung:"
+msgstr "_Y Auflösung:"
 
-#: ../plug-ins/print/print-page-layout.c:393
-#, fuzzy
-msgid "Image Offsets"
-msgstr "Bildtypen"
-
-#: ../plug-ins/print/print-page-layout.c:426
-#, fuzzy
+#: ../plug-ins/print/print-page-layout.c:427
 msgid "_Left:"
 msgstr "Links:"
 
-#: ../plug-ins/print/print-page-layout.c:449
-msgid "Center:"
+#: ../plug-ins/print/print-page-layout.c:446
+#, fuzzy
+msgid "_Right:"
+msgstr "Rechts:"
+
+#: ../plug-ins/print/print-page-layout.c:500
+#, fuzzy
+msgid "C_enter:"
 msgstr "Zentrieren:"
 
-#: ../plug-ins/print/print-page-layout.c:460
+#: ../plug-ins/print/print-page-layout.c:508
 #, fuzzy
-msgid "H_orizontally"
+msgid "Horizontally"
 msgstr "Horizontal"
 
-#: ../plug-ins/print/print-page-layout.c:467
+#: ../plug-ins/print/print-page-layout.c:509
 #, fuzzy
-msgid "_Vertically"
+msgid "Vertically"
 msgstr "Vertikal"
+
+#: ../plug-ins/print/print-page-layout.c:510
+msgid "Both"
+msgstr "Beide"
 
 #: ../plug-ins/print/print.c:89
 msgid "Print the image"
@@ -11890,18 +11903,22 @@ msgstr "Das Bild ausdrucken"
 msgid "_Print..."
 msgstr "_Drucken …"
 
-#: ../plug-ins/print/print.c:252
+#: ../plug-ins/print/print.c:213
 #, fuzzy
-msgid "An error occurred while trying to print:"
-msgstr "Beim Speichern sind mehrere Fehler aufgetreten"
+msgid "Image Settings"
+msgstr "Bildauswahl"
 
-#: ../plug-ins/print/print.c:282
+#: ../plug-ins/print/print.c:253
+msgid "An error occurred while trying to print:"
+msgstr "Beim Versuch zu Drucken ist ein Fehler aufgetreten:"
+
+#: ../plug-ins/print/print.c:283
 msgid "Printing"
 msgstr "Drucken"
 
 #: ../plug-ins/rcm/rcm.c:99
 msgid "Replace a range of colors with another"
-msgstr ""
+msgstr "Einen Bereich von Farben durch einem Anderen ersetzen"
 
 #: ../plug-ins/rcm/rcm.c:106
 msgid "_Rotate Colors..."
@@ -12104,17 +12121,19 @@ msgid "Failed to write %s to '%s': %s"
 msgstr "%s konnte nicht nach »%s« schreiben: %s"
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:57
+#, c-format
 msgid "Could not initialize libcurl"
 msgstr "»libcurl« konnte nicht initialisiert werden."
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:160
+#, c-format
 msgid "Could not open output file for writing"
 msgstr "Ausgabedatei konnte nicht zum Schreiben geöffnet werden."
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:198
 #, c-format
 msgid "Opening '%s' for reading resulted in HTTP response code: %d"
-msgstr ""
+msgstr "Öffnen von '%s' zum Lesen, führte zu HTTP Rückmeldung: %d"
 
 #: ../plug-ins/uri/uri-backend-wget.c:164
 #: ../plug-ins/uri/uri-backend-wget.c:184
@@ -12170,6 +12189,8 @@ msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
 msgstr ""
+"Große Symbole und Kompresseion wird nicht von allen Anwendungen unterstützt. "
+"Ältere Anwendungen öffenen diese Datei möglicherweise nicht korrekt."
 
 #: ../plug-ins/winicon/icodialog.c:178
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
@@ -12184,18 +12205,16 @@ msgid "8 bpp, 1-bit alpha, 256-slot palette"
 msgstr "8 bpp, 1-Bit Alpha, 256-Slot Palette"
 
 #: ../plug-ins/winicon/icodialog.c:181
-#, fuzzy
 msgid "24 bpp, 1-bit alpha, no palette"
-msgstr "32 bpp, 8-Bit Alpha, keine Palette"
+msgstr "24 bpp, 1-Bit Alpha, keine Palette"
 
 #: ../plug-ins/winicon/icodialog.c:182
 msgid "32 bpp, 8-bit alpha, no palette"
 msgstr "32 bpp, 8-Bit Alpha, keine Palette"
 
 #: ../plug-ins/winicon/icodialog.c:196
-#, fuzzy
 msgid "Compressed (PNG)"
-msgstr "Komprimierte Größe: %s"
+msgstr "Komprimiert (PNG)"
 
 #. read successfully. add to image
 #: ../plug-ins/winicon/icoload.c:616
@@ -12233,15 +12252,15 @@ msgstr "Mit Fensterrahmen"
 
 #: ../plug-ins/winsnap/winsnap.c:988
 msgid "Capture a window or desktop image"
-msgstr ""
+msgstr "Ein Fenster oder den Schreibtisch erfassen"
 
 #: ../plug-ins/winsnap/winsnap.c:993
 msgid "_Screen Shot..."
-msgstr "_Screen Shot …"
+msgstr "_Bildschirmfoto …"
 
 #: ../plug-ins/winsnap/winsnap.c:1142
 msgid "No data captured"
-msgstr "Keine Daten"
+msgstr "Keine Daten erfasst"
 
 #: ../plug-ins/xjt/xjt.c:485 ../plug-ins/xjt/xjt.c:503
 msgid "GIMP compressed XJT image"
@@ -12307,6 +12326,13 @@ msgstr "Fehler: XJT-Eigenschaften-Datei »%s« konnte nicht gelesen werden."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fehler: Die XJT Eigenschaften-Datei »%s« ist leer."
+
+#~ msgid "Force baseline JPEG"
+#~ msgstr "Baseline-JPEG erzwingen"
+
+#, fuzzy
+#~ msgid "Image Offsets"
+#~ msgstr "Bildtypen"
 
 #~ msgid "XMIN:"
 #~ msgstr "XMIN:"
@@ -12702,9 +12728,6 @@ msgstr "Fehler: Die XJT Eigenschaften-Datei »%s« ist leer."
 
 #~ msgid "Center the image vertically on the paper"
 #~ msgstr "Zentriert das Bild vertikal auf dem Papier"
-
-#~ msgid "Both"
-#~ msgstr "Beide"
 
 #~ msgid "Center the image horizontally on the paper"
 #~ msgstr "Zentriert das Bild horizontal auf dem Papier"
