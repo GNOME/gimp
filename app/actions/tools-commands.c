@@ -372,66 +372,6 @@ tools_fg_select_brush_size_cmd_callback (GtkAction *action,
 }
 
 void
-tools_rectangle_toggle_fixed_aspect (GtkAction *action,
-                                     gpointer   data)
-{
-  GimpContext  *context;
-  GimpToolInfo *tool_info;
-  return_if_no_context (context, data);
-
-  tool_info = gimp_context_get_tool (context);
-
-  if (tool_info)
-    {
-      GimpToolOptions *options = tool_info->tool_options;
-
-      if (GIMP_IS_RECTANGLE_OPTIONS (options))
-        {
-          GimpRectangleOptions *rectangle_options = GIMP_RECTANGLE_OPTIONS (options);
-          gboolean              fixed_aspect;
-
-          g_object_get (rectangle_options,
-                        "fixed-aspect", &fixed_aspect,
-                        NULL);
-
-          g_object_set (rectangle_options,
-                        "fixed-aspect", ! fixed_aspect,
-                        NULL);
-        }
-    }
-}
-
-void
-tools_rectangle_toggle_fixed_center (GtkAction *action,
-                                     gpointer   data)
-{
-  GimpContext  *context;
-  GimpToolInfo *tool_info;
-  return_if_no_context (context, data);
-
-  tool_info = gimp_context_get_tool (context);
-
-  if (tool_info)
-    {
-      GimpToolOptions *options = tool_info->tool_options;
-
-      if (GIMP_IS_RECTANGLE_OPTIONS (options))
-        {
-          GimpRectangleOptions *rectangle_options = GIMP_RECTANGLE_OPTIONS (options);
-          gboolean              fixed_center;
-
-          g_object_get (rectangle_options,
-                        "fixed-center", &fixed_center,
-                        NULL);
-
-          g_object_set (rectangle_options,
-                        "fixed-center", ! fixed_center,
-                        NULL);
-        }
-    }
-}
-
-void
 tools_value_1_cmd_callback (GtkAction *action,
                             gint       value,
                             gpointer   data)

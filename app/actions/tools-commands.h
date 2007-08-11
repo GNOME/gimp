@@ -60,11 +60,6 @@ void   tools_fg_select_brush_size_cmd_callback (GtkAction   *action,
                                                 gint         value,
                                                 gpointer     data);
 
-void   tools_rectangle_toggle_fixed_aspect     (GtkAction   *action,
-                                                gpointer     data);
-void   tools_rectangle_toggle_fixed_center     (GtkAction   *action,
-                                                gpointer     data);
-
 void   tools_value_1_cmd_callback              (GtkAction   *action,
                                                 gint         value,
                                                 gpointer     data);
