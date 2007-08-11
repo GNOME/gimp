@@ -1,5 +1,9 @@
 2007-08-11  Michael Natterer  <mitch@gimp.org>
 
+	* app/vectors/gimpstroke-new.[ch]: formatting.
+
+2007-08-11  Michael Natterer  <mitch@gimp.org>
+
 	* app/plug-in/Makefile.am: renamed files:
 
 	* app/plug-in/plug-in-error.[ch]: old names

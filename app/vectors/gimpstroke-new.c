@@ -25,8 +25,6 @@
 
 #include "vectors-types.h"
 
-#include "core/gimpcoords.h"
-
 #include "gimpstroke-new.h"
 #include "gimpbezierstroke.h"
 
@@ -39,12 +37,12 @@ gimp_stroke_new_from_coords (GimpVectorsStrokeType  type,
 {
   switch (type)
     {
-      case GIMP_VECTORS_STROKE_TYPE_BEZIER:
-        return gimp_bezier_stroke_new_from_coords (coords, n_coords, closed);
-        break;
-      default:
-        g_warning ("unknown type in gimp_stroke_new_from_coords(): %d", type);
-        return NULL;
+    case GIMP_VECTORS_STROKE_TYPE_BEZIER:
+      return gimp_bezier_stroke_new_from_coords (coords, n_coords, closed);
+      break;
+    default:
+      g_warning ("unknown type in gimp_stroke_new_from_coords(): %d", type);
+      return NULL;
     }
 }
 
