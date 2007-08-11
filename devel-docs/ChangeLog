@@ -1,3 +1,7 @@
+2007-08-12  Sven Neumann  <sven@gimp.org>
+
+	* libgimpbase/tmpl/gimpbaseenums.sgml: regenerated.
+
 2007-08-10  Sven Neumann  <sven@gimp.org>
 
 	* app/app-sections.txt
