@@ -855,7 +855,7 @@ print_size_info_set_resolution (PrintSizeInfo *info,
   gimp_print_preview_set_image_dpi (GIMP_PRINT_PREVIEW (info->preview),
                                     data->xres, data->yres);
   gimp_print_preview_set_image_offsets (GIMP_PRINT_PREVIEW (info->preview),
-                                        offset_x, offset_y);
+                                        data->offset_x, data->offset_y);
   gimp_print_preview_set_image_offsets_max (GIMP_PRINT_PREVIEW (info->preview),
                                             offset_x_max, offset_y_max);
 }
