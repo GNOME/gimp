@@ -1,5 +1,10 @@
 2007-08-12  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):
+	Right-align X, Y, Width and Height.
+
+2007-08-12  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangleoptions.[ch]: Setup a
 	GIMP_STOCK_AUTO_MODE GtkImage to be shown in the options when
 	Fixed: Aspect ratio/Size entries are in auto-mode.

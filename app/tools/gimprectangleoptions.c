@@ -1000,6 +1000,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   /* X */
   entry = gimp_prop_size_entry_new (config, "x0", "unit", "%a",
                                     GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
+  gtk_table_set_col_spacing (GTK_TABLE (entry), 1, 0);
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("X:"), 0.0, 0.5,
@@ -1008,6 +1009,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   /* Y */
   entry = gimp_prop_size_entry_new (config, "y0", "unit", "%a",
                                     GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
+  gtk_table_set_col_spacing (GTK_TABLE (entry), 1, 0);
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Y:"), 0.0, 0.5,
@@ -1018,6 +1020,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                                    "width", "unit", "%a",
                                                    GIMP_SIZE_ENTRY_UPDATE_SIZE,
                                                    300);
+  gtk_table_set_col_spacing (GTK_TABLE (private->width_entry), 1, 0);
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->width_entry),
                                   FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
@@ -1030,6 +1033,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                                     "height", "unit", "%a",
                                                     GIMP_SIZE_ENTRY_UPDATE_SIZE,
                                                     300);
+  gtk_table_set_col_spacing (GTK_TABLE (private->height_entry), 1, 0);
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->height_entry),
                                   FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
