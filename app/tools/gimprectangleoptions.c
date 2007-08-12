@@ -64,6 +64,9 @@ static gboolean gimp_number_pair_entry_history_select              (GtkEntryComp
 
 static void     gimp_number_pair_entry_history_add                 (GtkWidget                     *entry,
                                                                     GtkTreeModel                  *model);
+static void     gimp_rectangle_options_hide_on_user_override       (GimpNumberPairEntry           *number_pair_entry,
+                                                                    GParamSpec                    *param_spec,
+                                                                    GtkWidget                     *widget);
 
 
 /* TODO: Calculate this dynamically so that the GtkEntry:s are always
@@ -319,8 +322,8 @@ gimp_rectangle_options_private_finalize (GimpRectangleOptionsPrivate *private)
 {
   g_object_unref (private->fixed_width_entry);
   g_object_unref (private->fixed_height_entry);
-  g_object_unref (private->fixed_aspect_entry);
-  g_object_unref (private->fixed_size_entry);
+  g_object_unref (private->fixed_aspect_hbox);
+  g_object_unref (private->fixed_size_hbox);
   g_object_unref (private->size_button_box);
   g_object_unref (private->aspect_button_box);
 
@@ -674,13 +677,13 @@ gimp_rectangle_options_unparent_fixed_rule_widgets (GimpRectangleOptionsPrivate 
     gtk_container_remove (GTK_CONTAINER (private->second_row_hbox),
                           private->fixed_height_entry);
 
-  if (gtk_widget_get_parent (private->fixed_aspect_entry) != NULL)
+  if (gtk_widget_get_parent (private->fixed_aspect_hbox) != NULL)
     gtk_container_remove (GTK_CONTAINER (private->second_row_hbox),
-                          private->fixed_aspect_entry);
+                          private->fixed_aspect_hbox);
 
-  if (gtk_widget_get_parent (private->fixed_size_entry) != NULL)
+  if (gtk_widget_get_parent (private->fixed_size_hbox) != NULL)
     gtk_container_remove (GTK_CONTAINER (private->second_row_hbox),
-                          private->fixed_size_entry);
+                          private->fixed_size_hbox);
 
   if (gtk_widget_get_parent (private->size_button_box) != NULL)
     gtk_container_remove (GTK_CONTAINER (private->second_row_hbox),
@@ -733,12 +736,12 @@ gimp_rectangle_options_fixed_rule_changed (GtkWidget                   *combo_bo
   switch (private->fixed_rule)
     {
     case GIMP_RECTANGLE_TOOL_FIXED_ASPECT:
-      if (gtk_widget_get_parent (private->fixed_aspect_entry) == NULL)
+      if (gtk_widget_get_parent (private->fixed_aspect_hbox) == NULL)
         {
           gimp_rectangle_options_unparent_fixed_rule_widgets (private);
 
           gtk_box_pack_start_defaults (GTK_BOX (private->second_row_hbox),
-                                       private->fixed_aspect_entry);
+                                       private->fixed_aspect_hbox);
 
           gtk_box_pack_start (GTK_BOX (private->second_row_hbox),
                               private->aspect_button_box,
@@ -767,12 +770,12 @@ gimp_rectangle_options_fixed_rule_changed (GtkWidget                   *combo_bo
       break;
 
     case GIMP_RECTANGLE_TOOL_FIXED_SIZE:
-      if (gtk_widget_get_parent (private->fixed_size_entry) == NULL)
+      if (gtk_widget_get_parent (private->fixed_size_hbox) == NULL)
         {
           gimp_rectangle_options_unparent_fixed_rule_widgets (private);
 
           gtk_box_pack_start_defaults (GTK_BOX (private->second_row_hbox),
-                                       private->fixed_size_entry);
+                                       private->fixed_size_hbox);
 
           gtk_box_pack_start (GTK_BOX (private->second_row_hbox),
                               private->size_button_box,
@@ -794,6 +797,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   GtkWidget *table;
   GtkWidget *entry;
   GtkWidget *hbox;
+  GtkWidget *image;
   GList     *children;
   gint       row = 0;
 
@@ -857,7 +861,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
      */
     {
       /* Aspect ratio entry */
-      private->fixed_aspect_entry =
+      entry =
         gimp_prop_number_pair_entry_new (config,
                                          "aspect-numerator",
                                          "aspect-denominator",
@@ -869,14 +873,13 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                          TRUE,
                                          0.001, GIMP_MAX_IMAGE_SIZE);
 
-      g_object_ref_sink (private->fixed_aspect_entry);
       gimp_rectangle_options_setup_ratio_completion (GIMP_RECTANGLE_OPTIONS (tool_options),
-                                                     private->fixed_aspect_entry,
+                                                     entry,
                                                      private->aspect_history);
-      gtk_widget_show (private->fixed_aspect_entry);
+      gtk_widget_show (entry);
 
       private->aspect_button_box =
-        gimp_prop_enum_stock_box_new (G_OBJECT (private->fixed_aspect_entry),
+        gimp_prop_enum_stock_box_new (G_OBJECT (entry),
                                       "aspect", "gimp", -1, -1);
       g_object_ref_sink (private->aspect_button_box);
       gtk_widget_show (private->aspect_button_box);
@@ -886,6 +889,25 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
         gtk_container_get_children (GTK_CONTAINER (private->aspect_button_box));
       gtk_widget_hide (children->data);
       g_list_free (children);
+
+      image = gtk_image_new_from_stock (GIMP_STOCK_AUTO_MODE,
+                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
+      g_object_set (image,
+                    "visible",
+                    !gimp_number_pair_entry_get_user_override (GIMP_NUMBER_PAIR_ENTRY (entry)),
+                    NULL);
+      g_signal_connect (entry, "notify::user-override",
+                        G_CALLBACK (gimp_rectangle_options_hide_on_user_override),
+                        image);
+
+      private->fixed_aspect_hbox = gtk_hbox_new (FALSE, 0);
+      g_object_ref_sink (private->fixed_aspect_hbox);
+      gtk_box_pack_start (GTK_BOX (private->fixed_aspect_hbox),
+                          image,
+                          FALSE, FALSE, 0);
+      gtk_box_pack_start_defaults (GTK_BOX (private->fixed_aspect_hbox),
+                                   entry);
+      gtk_widget_show (private->fixed_aspect_hbox);
 
 
       /* Fixed width entry */
@@ -910,7 +932,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (private->fixed_height_entry);
 
       /* Size entry */
-      private->fixed_size_entry =
+      entry =
         gimp_prop_number_pair_entry_new (config,
                                          "desired-fixed-size-width",
                                          "desired-fixed-size-height",
@@ -923,13 +945,32 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                          1, GIMP_MAX_IMAGE_SIZE);
 
       gimp_rectangle_options_setup_ratio_completion (GIMP_RECTANGLE_OPTIONS (tool_options),
-                                                     private->fixed_size_entry,
+                                                     entry,
                                                      private->size_history);
-      g_object_ref_sink (private->fixed_size_entry);
-      gtk_widget_show (private->fixed_size_entry);
+      gtk_widget_show (entry);
+
+
+      image = gtk_image_new_from_stock (GIMP_STOCK_AUTO_MODE,
+                                        GTK_ICON_SIZE_MENU);
+      g_object_set (image,
+                    "visible",
+                    !gimp_number_pair_entry_get_user_override (GIMP_NUMBER_PAIR_ENTRY (entry)),
+                    NULL);
+      g_signal_connect (entry, "notify::user-override",
+                        G_CALLBACK (gimp_rectangle_options_hide_on_user_override),
+                        image);
+
+      private->fixed_size_hbox = gtk_hbox_new (FALSE, 0);
+      g_object_ref_sink (private->fixed_size_hbox);
+      gtk_box_pack_start (GTK_BOX (private->fixed_size_hbox),
+                          image,
+                          FALSE, FALSE, 0);
+      gtk_box_pack_start_defaults (GTK_BOX (private->fixed_size_hbox),
+                                   entry);
+      gtk_widget_show (private->fixed_size_hbox);
 
       private->size_button_box =
-        gimp_prop_enum_stock_box_new (G_OBJECT (private->fixed_size_entry),
+        gimp_prop_enum_stock_box_new (G_OBJECT (entry),
                                       "aspect", "gimp", -1, -1);
       g_object_ref_sink (private->size_button_box);
       gtk_widget_show (private->size_button_box);
@@ -1142,3 +1183,13 @@ gimp_number_pair_entry_history_add (GtkWidget    *entry,
     }
 }
 
+static void
+gimp_rectangle_options_hide_on_user_override (GimpNumberPairEntry *number_pair_entry,
+                                              GParamSpec          *param_spec,
+                                              GtkWidget           *widget)
+{
+  g_object_set (widget,
+                "visible",
+                !gimp_number_pair_entry_get_user_override (number_pair_entry),
+                NULL);
+}

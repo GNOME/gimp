@@ -142,6 +142,8 @@ G_BEGIN_DECLS
 
 /*  in menu size:  */
 
+#define GIMP_STOCK_AUTO_MODE                "gimp-auto-mode"
+
 #define GIMP_STOCK_CONVERT_RGB              "gimp-convert-rgb"
 #define GIMP_STOCK_CONVERT_GRAYSCALE        "gimp-convert-grayscale"
 #define GIMP_STOCK_CONVERT_INDEXED          "gimp-convert-indexed"

@@ -176,6 +176,8 @@ static const GtkStockItem gimp_stock_items[] =
   { GIMP_STOCK_TEXT_DIR_RTL,             NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_PRINT_RESOLUTION,         NULL,        0, 0, LIBGIMP_DOMAIN },
 
+  { GIMP_STOCK_AUTO_MODE,                NULL,        0, 0, LIBGIMP_DOMAIN },
+
   { GIMP_STOCK_CONVERT_RGB,              NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CONVERT_GRAYSCALE,        NULL,        0, 0, LIBGIMP_DOMAIN },
   { GIMP_STOCK_CONVERT_INDEXED,          NULL,        0, 0, LIBGIMP_DOMAIN },
@@ -488,6 +490,8 @@ static const struct
 gimp_stock_menu_pixbufs[] =
 {
   { GIMP_STOCK_CENTER,                   stock_center_16                   },
+
+  { GIMP_STOCK_AUTO_MODE,                stock_auto_mode_16                },
 
   { GIMP_STOCK_CONVERT_RGB,              stock_convert_rgb_16              },
   { GIMP_STOCK_CONVERT_GRAYSCALE,        stock_convert_grayscale_16        },

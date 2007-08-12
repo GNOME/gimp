@@ -1,3 +1,15 @@
+2007-08-12  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangleoptions.[ch]: Setup a
+	GIMP_STOCK_AUTO_MODE GtkImage to be shown in the options when
+	Fixed: Aspect ratio/Size entries are in auto-mode.
+
+	* themes/Default/images/Makefile.am: Added
+	stock-auto-mode-16.png (which is a copy of
+	preferences/folders-interp-16.png for now).
+
+	* libgimpwidgets/gimpstock.[ch]: Added GIMP_STOCK_AUTO_MODE.
+
 2007-08-12  Sven Neumann  <sven@gimp.org>
 
 	* modules/cdisplay_lcms.c (cdisplay_lcms_get_display_profile):

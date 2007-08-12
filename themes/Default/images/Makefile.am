@@ -124,6 +124,7 @@ STOCK_MENU_IMAGES = \
 
 STOCK_BUTTON_IMAGES = \
 	stock-anchor-16.png			\
+	stock-auto-mode-16.png			\
 	stock-center-24.png			\
 	stock-channel-24.png			\
 	stock-channel-alpha-24.png		\
