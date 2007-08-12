@@ -891,7 +891,8 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
       g_list_free (children);
 
       image = gtk_image_new_from_stock (GIMP_STOCK_AUTO_MODE,
-                                        GTK_ICON_SIZE_SMALL_TOOLBAR);
+                                        GTK_ICON_SIZE_MENU);
+      gtk_widget_set_size_request (GTK_WIDGET (image), 16, 16);
       g_object_set (image,
                     "visible",
                     !gimp_number_pair_entry_get_user_override (GIMP_NUMBER_PAIR_ENTRY (entry)),
@@ -952,6 +953,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
       image = gtk_image_new_from_stock (GIMP_STOCK_AUTO_MODE,
                                         GTK_ICON_SIZE_MENU);
+      gtk_widget_set_size_request (GTK_WIDGET (image), 16, 16);
       g_object_set (image,
                     "visible",
                     !gimp_number_pair_entry_get_user_override (GIMP_NUMBER_PAIR_ENTRY (entry)),

@@ -1,6 +1,11 @@
 2007-08-12  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):
+	Set a 16x16 size request on the auto-mode images.
+
+2007-08-12  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):
 	Right-align X, Y, Width and Height entries.
 
 2007-08-12  Martin Nordholts  <martinn@svn.gnome.org>
