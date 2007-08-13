@@ -1,5 +1,10 @@
 2007-08-13  Sven Neumann  <sven@gimp.org>
 
+	* app/base/gimphistogram.c (gimp_histogram_get_std_dev): corrected
+	caluclation for the histogram in RGB mode (bug #466189).
+
+2007-08-13  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpnumberpairentry.c: use italic font if not in
 	user-override mode.
 

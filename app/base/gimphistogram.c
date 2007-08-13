@@ -469,7 +469,22 @@ gimp_histogram_get_std_dev (GimpHistogram        *histogram,
     count = 1.0;
 
   for (i = start; i <= end; i++)
-    dev += gimp_histogram_get_value (histogram, channel, i) * SQR (i - mean);
+    {
+      gdouble value;
+
+      if (channel == GIMP_HISTOGRAM_RGB)
+        {
+          value = (HISTOGRAM_VALUE (GIMP_HISTOGRAM_RED,   i) +
+                   HISTOGRAM_VALUE (GIMP_HISTOGRAM_GREEN, i) +
+                   HISTOGRAM_VALUE (GIMP_HISTOGRAM_BLUE,  i));
+        }
+      else
+        {
+          value = gimp_histogram_get_value (histogram, channel, i);
+        }
+
+      dev += value * SQR (i - mean);
+    }
 
   return sqrt (dev / count);
 }
