@@ -18,11 +18,12 @@
 
 #include "config.h"
 
+#include <glib.h>  /* lcms.h uses the "inline" keyword */
+
 #ifdef G_OS_WIN32
+#define STRICT
 #include <windows.h>
 #endif
-
-#include <glib.h>  /* lcms.h uses the "inline" keyword */
 
 #ifdef HAVE_LCMS_LCMS_H
 #define LCMS_WIN_TYPES_ALREADY_DEFINED

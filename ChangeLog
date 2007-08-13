@@ -1,5 +1,10 @@
 2007-08-13  Sven Neumann  <sven@gimp.org>
 
+	* modules/cdisplay_lcms.c: include glib.h before checking for
+	G_OS_WIN32. Also #define STRICT for strict type checks.
+
+2007-08-13  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplay.c
 	* app/display/gimpdisplay-render.c: formatting.
 
