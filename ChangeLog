@@ -1,3 +1,9 @@
+2007-08-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):
+	Put the auto-mode GtkImage to the right of the Aspect ratio/Size
+	entry instead of to the left.
+
 2007-08-12  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):

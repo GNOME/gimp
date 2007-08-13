@@ -903,11 +903,11 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
       private->fixed_aspect_hbox = gtk_hbox_new (FALSE, 0);
       g_object_ref_sink (private->fixed_aspect_hbox);
+      gtk_box_pack_start_defaults (GTK_BOX (private->fixed_aspect_hbox),
+                                   entry);
       gtk_box_pack_start (GTK_BOX (private->fixed_aspect_hbox),
                           image,
                           FALSE, FALSE, 0);
-      gtk_box_pack_start_defaults (GTK_BOX (private->fixed_aspect_hbox),
-                                   entry);
       gtk_widget_show (private->fixed_aspect_hbox);
 
 
@@ -964,11 +964,11 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
       private->fixed_size_hbox = gtk_hbox_new (FALSE, 0);
       g_object_ref_sink (private->fixed_size_hbox);
+      gtk_box_pack_start_defaults (GTK_BOX (private->fixed_size_hbox),
+                                   entry);
       gtk_box_pack_start (GTK_BOX (private->fixed_size_hbox),
                           image,
                           FALSE, FALSE, 0);
-      gtk_box_pack_start_defaults (GTK_BOX (private->fixed_size_hbox),
-                                   entry);
       gtk_widget_show (private->fixed_size_hbox);
 
       private->size_button_box =
