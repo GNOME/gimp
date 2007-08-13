@@ -1,3 +1,8 @@
+2007-08-13  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplay.c
+	* app/display/gimpdisplay-render.c: formatting.
+
 2007-08-13  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scheme-wrapper.c (ts_output_string): Use the

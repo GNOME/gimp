@@ -239,7 +239,6 @@ gimp_display_shell_render (GimpDisplayShell *shell,
     TileManager *src_tiles;
     gint         level;
 
-
     level = gimp_projection_get_level (projection,
                                        shell->scale_x,
                                        shell->scale_y);

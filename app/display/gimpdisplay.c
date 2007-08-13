@@ -525,6 +525,7 @@ gimp_display_flush_whenever (GimpDisplay *display,
                                        (area->y2 - area->y1));
             }
         }
+
       gimp_area_list_free (display->update_areas);
       display->update_areas = NULL;
     }
@@ -548,13 +549,14 @@ gimp_display_paint_area (GimpDisplay *display,
   y1 = CLAMP (y,     0, display->image->height);
   x2 = CLAMP (x + w, 0, display->image->width);
   y2 = CLAMP (y + h, 0, display->image->height);
+
   x = x1;
   y = y1;
   w = (x2 - x1);
   h = (y2 - y1);
 
   /*  display the area  */
-  gimp_display_shell_transform_xy_f (shell, x, y,         &x1_f, &y1_f, FALSE);
+  gimp_display_shell_transform_xy_f (shell, x,     y,     &x1_f, &y1_f, FALSE);
   gimp_display_shell_transform_xy_f (shell, x + w, y + h, &x2_f, &y2_f, FALSE);
 
   /*  make sure to expose a superset of the transformed sub-pixel expose
