@@ -1,3 +1,9 @@
+2007-08-13  Claude Paroz <claude@2xlibre.net>
+
+	* mk.po:
+	* ne.po:
+	* km.po: Removed executable property.
+
 2007-08-11 Axel Wernicke <axel.wernicke@gmail.com>
 
 	* de.po: Updated German translation.
