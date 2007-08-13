@@ -437,9 +437,11 @@ gui_pdb_dialog_new (Gimp          *gimp,
 
           /*  workaround for bug #360106  */
           {
-            GSource  *source  = g_timeout_source_new (200);
-            GClosure *closure = g_cclosure_new_object (G_CALLBACK (gui_pdb_dialog_present),
-                                                       dialog);
+            GSource  *source = g_timeout_source_new (100);
+            GClosure *closure;
+
+            closure = g_cclosure_new_object (G_CALLBACK (gui_pdb_dialog_present),
+                                             G_OBJECT (dialog));
 
             g_source_set_closure (source, closure);
             g_source_attach (source, NULL);

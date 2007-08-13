@@ -1,5 +1,9 @@
 2007-08-13  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/gui-vtable.c (gui_pdb_dialog_new): added missing cast.
+
+2007-08-13  Sven Neumann  <sven@gimp.org>
+
 	* modules/Makefile.am (libcdisplay_lcms_la_LIBADD): link with
 	gdi32 on PLATFORM_WIN32.
 
