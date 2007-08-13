@@ -18,16 +18,17 @@
 
 #include "config.h"
 
+#ifdef G_OS_WIN32
+#include <windows.h>
+#endif
+
 #include <glib.h>  /* lcms.h uses the "inline" keyword */
 
 #ifdef HAVE_LCMS_LCMS_H
+#define LCMS_WIN_TYPES_ALREADY_DEFINED
 #include <lcms/lcms.h>
 #else
 #include <lcms.h>
-#endif
-
-#ifdef G_OS_WIN32
-#include <windows.h>
 #endif
 
 #include <gtk/gtk.h>

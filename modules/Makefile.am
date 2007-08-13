@@ -92,6 +92,10 @@ libcdisplay_lcms_la_SOURCES = cdisplay_lcms.c
 libcdisplay_lcms_la_LDFLAGS = -avoid-version -module $(no_undefined)
 libcdisplay_lcms_la_LIBADD = $(cdisplay_libadd) $(LIBLCMS)
 
+if PLATFORM_WIN32
+libcdisplay_lcms_la_LIBADD += -lgdi32
+endif
+
 libcdisplay_proof_la_SOURCES = cdisplay_proof.c
 libcdisplay_proof_la_LDFLAGS = -avoid-version -module $(no_undefined)
 libcdisplay_proof_la_LIBADD = $(cdisplay_libadd) $(LIBLCMS)
