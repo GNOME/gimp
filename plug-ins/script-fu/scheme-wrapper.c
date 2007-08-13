@@ -259,30 +259,25 @@ ts_get_error_msg (void)
 const gchar *
 ts_get_success_msg (void)
 {
-  if (sc.vptr->is_string(sc.value)) {
+  if (sc.vptr->is_string(sc.value))
     return sc.vptr->string_value(sc.value);
-  }
-  else
-    return "Success";
+
+  return "Success";
 }
 
+/* len is length of 'string' in bytes */
 void
 ts_output_string (const char *string, int len)
 {
   g_return_if_fail (len >= 0);
 
   if (len > 0 && ts_console_mode)
-  {
-    /* len is the number of UTF-8 characters; we need the number of bytes */
-    len = g_utf8_offset_to_pointer (string, len) - string;
-
     script_fu_output_to_console (string, len);
-  }
 }
 
 
-static void  init_constants   (void);
-static void  init_procedures  (void);
+static void  init_constants  (void);
+static void  init_procedures (void);
 
 static gboolean register_scripts = FALSE;
 

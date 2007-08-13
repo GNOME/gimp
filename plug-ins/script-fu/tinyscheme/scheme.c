@@ -1550,6 +1550,7 @@ static void putchars(scheme *sc, const char *chars, int char_cnt) {
   if (char_cnt <= 0)
       return;
 
+  /* Get length of 'chars' in bytes */
   char_cnt = g_utf8_offset_to_pointer(chars, (long)char_cnt) - chars;
 
   if (sc->print_error) {

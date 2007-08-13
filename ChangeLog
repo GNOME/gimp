@@ -1,3 +1,10 @@
+2007-08-13  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scheme-wrapper.c (ts_output_string): Use the
+	string length in bytes passed in instead of recalculating it.
+
+	* plug-ins/script-fu/tinyscheme/scheme.c: Added comment.
+
 2007-08-13  Sven Neumann  <sven@gimp.org>
 
 	* app/base/gimphistogram.c (gimp_histogram_get_std_dev): corrected
