@@ -23,9 +23,9 @@
 #ifdef G_OS_WIN32
 #define STRICT
 #include <windows.h>
+#define LCMS_WIN_TYPES_ALREADY_DEFINED
 #endif
 
-#define LCMS_WIN_TYPES_ALREADY_DEFINED
 #ifdef HAVE_LCMS_LCMS_H
 #include <lcms/lcms.h>
 #else
