@@ -1,5 +1,17 @@
 2007-08-13  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpnumberpairentry.c: use italic font if not in
+	user-override mode.
+
+	* app/tools/gimprectangleoptions.c: removed auto-mode icon.
+
+	* themes/Default/images/Makefile.am
+	* themes/Default/images/stock-auto-mode-16.png
+	* libgimpwidgets/gimpnumberpairentry.[ch]: removed
+	GIMP_STOCK_AUTO_MODE.
+
+2007-08-13  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/gui-vtable.c (gui_pdb_dialog_new): added missing cast.
 
 2007-08-13  Sven Neumann  <sven@gimp.org>

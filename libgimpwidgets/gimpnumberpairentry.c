@@ -86,6 +86,9 @@ typedef struct
    */
   gboolean     user_override;
 
+  /* Is the font style currently set to ITALIC or NORMAL ? */
+  gboolean     font_italic;
+
   /* What separators that are valid when parsing input, e.g. when the
    * widget is used for aspect ratio, valid separators are typically
    * ':' and '/'.
@@ -123,6 +126,7 @@ static void         gimp_number_pair_entry_get_property      (GObject           
                                                               guint                property_id,
                                                               GValue              *value,
                                                               GParamSpec          *pspec);
+static void         gimp_number_pair_entry_changed           (GimpNumberPairEntry *entry);
 static gboolean     gimp_number_pair_entry_events            (GtkWidget           *widgett,
                                                               GdkEvent            *event);
 
@@ -276,12 +280,16 @@ gimp_number_pair_entry_init (GimpNumberPairEntry *entry)
   priv->default_left_number  = 1.0;
   priv->default_right_number = 1.0;
   priv->user_override        = FALSE;
+  priv->font_italic          = FALSE;
   priv->separators           = NULL;
   priv->num_separators       = 0;
   priv->allow_simplification = FALSE;
   priv->min_valid_value      = G_MINDOUBLE;
   priv->max_valid_value      = G_MAXDOUBLE;
 
+  g_signal_connect (entry, "changed",
+                    G_CALLBACK (gimp_number_pair_entry_changed),
+                    NULL);
   g_signal_connect (entry, "focus-out-event",
                     G_CALLBACK (gimp_number_pair_entry_events),
                     NULL);
@@ -636,6 +644,35 @@ gimp_number_pair_entry_get_aspect (GimpNumberPairEntry *entry)
     }
 }
 
+static void
+gimp_number_pair_entry_modify_font (GimpNumberPairEntry *entry,
+                                    gboolean             italic)
+{
+  GimpNumberPairEntryPrivate *priv = GIMP_NUMBER_PAIR_ENTRY_GET_PRIVATE (entry);
+  GtkRcStyle                 *rc_style;
+
+  if (priv->font_italic == italic)
+    return;
+
+  rc_style = gtk_widget_get_modifier_style (GTK_WIDGET (entry));
+
+  if (! rc_style->font_desc)
+    {
+      PangoContext *context = gtk_widget_get_pango_context (GTK_WIDGET (entry));
+
+      rc_style->font_desc = pango_font_description_copy (pango_context_get_font_description (context));
+    }
+
+  pango_font_description_set_style (rc_style->font_desc,
+                                    italic ?
+                                    PANGO_STYLE_ITALIC : PANGO_STYLE_NORMAL);
+
+  gtk_widget_modify_style (GTK_WIDGET (entry), rc_style);
+
+  priv->font_italic = italic;
+}
+
+
 /**
  * gimp_number_pair_entry_set_user_override:
  * @entry:         A #GimpNumberPairEntry widget.
@@ -660,12 +697,14 @@ gimp_number_pair_entry_set_user_override (GimpNumberPairEntry *entry,
 
   priv->user_override = user_override;
 
-  if (!priv->user_override)
+  if (! user_override)
     {
       gimp_number_pair_entry_set_default_values (entry,
                                                  priv->default_left_number,
                                                  priv->default_right_number);
     }
+
+  gimp_number_pair_entry_modify_font (entry, ! user_override);
 
   g_object_notify (G_OBJECT (entry), "user-override");
 }
@@ -688,6 +727,12 @@ gimp_number_pair_entry_get_user_override (GimpNumberPairEntry *entry)
   priv = GIMP_NUMBER_PAIR_ENTRY_GET_PRIVATE (entry);
 
   return priv->user_override;
+}
+
+static void
+gimp_number_pair_entry_changed (GimpNumberPairEntry *entry)
+{
+  gimp_number_pair_entry_modify_font (entry, FALSE);
 }
 
 static gboolean
@@ -824,9 +869,14 @@ gimp_number_pair_entry_update_text (GimpNumberPairEntry *entry)
   buffer = gimp_number_pair_entry_strdup_number_pair_string (entry,
                                                              priv->left_number,
                                                              priv->right_number);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+  g_signal_handlers_block_by_func (entry,
+                                   gimp_number_pair_entry_changed, NULL);
 
+  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
   g_free (buffer);
+
+  g_signal_handlers_unblock_by_func (entry,
+                                     gimp_number_pair_entry_changed, NULL);
 }
 
 static gboolean

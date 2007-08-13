@@ -64,9 +64,6 @@ static gboolean gimp_number_pair_entry_history_select              (GtkEntryComp
 
 static void     gimp_number_pair_entry_history_add                 (GtkWidget                     *entry,
                                                                     GtkTreeModel                  *model);
-static void     gimp_rectangle_options_hide_on_user_override       (GimpNumberPairEntry           *number_pair_entry,
-                                                                    GParamSpec                    *param_spec,
-                                                                    GtkWidget                     *widget);
 
 
 /* TODO: Calculate this dynamically so that the GtkEntry:s are always
@@ -797,7 +794,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   GtkWidget *table;
   GtkWidget *entry;
   GtkWidget *hbox;
-  GtkWidget *image;
   GList     *children;
   gint       row = 0;
 
@@ -856,8 +852,8 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (private->second_row_hbox);
     }
 
-    /* Create and prepare the widgets that are on the second row dependant of
-     * current fixed-rule
+    /* Create and prepare the widgets that are on the second row
+     * dependant of current fixed-rule
      */
     {
       /* Aspect ratio entry */
@@ -890,26 +886,10 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
       gtk_widget_hide (children->data);
       g_list_free (children);
 
-      image = gtk_image_new_from_stock (GIMP_STOCK_AUTO_MODE,
-                                        GTK_ICON_SIZE_MENU);
-      gtk_widget_set_size_request (GTK_WIDGET (image), 16, 16);
-      g_object_set (image,
-                    "visible",
-                    !gimp_number_pair_entry_get_user_override (GIMP_NUMBER_PAIR_ENTRY (entry)),
-                    NULL);
-      g_signal_connect (entry, "notify::user-override",
-                        G_CALLBACK (gimp_rectangle_options_hide_on_user_override),
-                        image);
-
       private->fixed_aspect_hbox = gtk_hbox_new (FALSE, 0);
       g_object_ref_sink (private->fixed_aspect_hbox);
-      gtk_box_pack_start_defaults (GTK_BOX (private->fixed_aspect_hbox),
-                                   entry);
-      gtk_box_pack_start (GTK_BOX (private->fixed_aspect_hbox),
-                          image,
-                          FALSE, FALSE, 0);
+      gtk_box_pack_start_defaults (GTK_BOX (private->fixed_aspect_hbox), entry);
       gtk_widget_show (private->fixed_aspect_hbox);
-
 
       /* Fixed width entry */
       private->fixed_width_entry =
@@ -951,24 +931,10 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
       gtk_widget_show (entry);
 
 
-      image = gtk_image_new_from_stock (GIMP_STOCK_AUTO_MODE,
-                                        GTK_ICON_SIZE_MENU);
-      gtk_widget_set_size_request (GTK_WIDGET (image), 16, 16);
-      g_object_set (image,
-                    "visible",
-                    !gimp_number_pair_entry_get_user_override (GIMP_NUMBER_PAIR_ENTRY (entry)),
-                    NULL);
-      g_signal_connect (entry, "notify::user-override",
-                        G_CALLBACK (gimp_rectangle_options_hide_on_user_override),
-                        image);
-
       private->fixed_size_hbox = gtk_hbox_new (FALSE, 0);
       g_object_ref_sink (private->fixed_size_hbox);
       gtk_box_pack_start_defaults (GTK_BOX (private->fixed_size_hbox),
                                    entry);
-      gtk_box_pack_start (GTK_BOX (private->fixed_size_hbox),
-                          image,
-                          FALSE, FALSE, 0);
       gtk_widget_show (private->fixed_size_hbox);
 
       private->size_button_box =
@@ -1187,15 +1153,4 @@ gimp_number_pair_entry_history_add (GtkWidget    *entry,
 
       /* FIXME: limit the size of the history */
     }
-}
-
-static void
-gimp_rectangle_options_hide_on_user_override (GimpNumberPairEntry *number_pair_entry,
-                                              GParamSpec          *param_spec,
-                                              GtkWidget           *widget)
-{
-  g_object_set (widget,
-                "visible",
-                !gimp_number_pair_entry_get_user_override (number_pair_entry),
-                NULL);
 }
