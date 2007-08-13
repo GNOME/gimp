@@ -25,8 +25,8 @@
 #include <windows.h>
 #endif
 
-#ifdef HAVE_LCMS_LCMS_H
 #define LCMS_WIN_TYPES_ALREADY_DEFINED
+#ifdef HAVE_LCMS_LCMS_H
 #include <lcms/lcms.h>
 #else
 #include <lcms.h>
