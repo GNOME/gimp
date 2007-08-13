@@ -8,33 +8,311 @@
 # Alexandre Prokoudine <alexandre.prokoudine@gmail.com>, 2005, 2006.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp python HEAD\n"
+"Project-Id-Version: gimp python trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-13 21:07+0200\n"
-"PO-Revision-Date: 2006-08-29 19:57+0400\n"
+"POT-Creation-Date: 2007-08-13 19:34+0400\n"
+"PO-Revision-Date: 2007-08-06 14:55+0300\n"
 "Last-Translator: Alexandre Prokoudine <alexandre.prokoudine@gmail.com>\n"
 "Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.2\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
 "10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+#: ../plug-ins/pygimp/gimpfu.py:380
+msgid "Missing exception information"
+msgstr "Отсутствует информация о прерывании"
+
+#: ../plug-ins/pygimp/gimpfu.py:389
+#, python-format
+msgid "An error occured running %s"
+msgstr "При запуске %s произошла ошибка"
+
+#: ../plug-ins/pygimp/gimpfu.py:400
+msgid "_More Information"
+msgstr "_Подробнее"
+
+#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
+#: ../plug-ins/pygimp/gimpfu.py:524
+msgid "No"
+msgstr "Нет"
+
+#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
+msgid "Yes"
+msgstr "Да"
+
+#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
+msgid "Python-Fu File Selection"
+msgstr "Выбор файла в Python-Fu"
+
+#: ../plug-ins/pygimp/gimpfu.py:569
+msgid "Python-Fu Folder Selection"
+msgstr "Выбор каталога в Python-Fu"
+
+#: ../plug-ins/pygimp/gimpfu.py:659
+#, python-format
+msgid "Invalid input for '%s'"
+msgstr "Некорректный ввод для '%s'"
+
+#: ../plug-ins/pygimp/gimpui.py:175
+msgid "Python-Fu Color Selection"
+msgstr "Выделение цвета в Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+msgid "Saving as colored XHTML"
+msgstr "Сохранение раскрашенного XHTML"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
+msgid "Save as colored XHTML"
+msgstr "Сохранить как раскрашенный XHTML"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
+msgid "Colored XHTML"
+msgstr "Раскрашенный XHTML"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+msgid "Character _source"
+msgstr "_Источник символа"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+msgid "Source code"
+msgstr "Исходный код"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+msgid "Text file"
+msgstr "Текстовый файл"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+msgid "Entry box"
+msgstr "Поле ввода"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+msgid "_File to read or characters to use"
+msgstr "_Читаемый файл или используемые символы"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+msgid "Fo_nt size in pixels"
+msgstr "_Кегль шрифта в пикселах"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
+msgid "_Write a separate CSS file"
+msgstr "З_аписать отдельный файл CSS"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
 msgstr "Консоль Скрипт-Фу"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
 msgid "_Browse..."
 msgstr "_Просмотреть..."
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
-#, fuzzy
-msgid "Gimp-Python Console"
-msgstr "Консоль Скрипт-Фу"
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
+msgid "Python Procedure Browser"
+msgstr "Браузер процедур Python"
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
-#, fuzzy
-msgid "Interactive Python Development"
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Не удалось открыть '%s' для записи: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Не удалось записать в '%s': %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
+msgid "Save Python-Fu Console Output"
+msgstr "Сохранить вывод консоли Python-Fu"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
+msgid "Interactive Gimp-Python interpreter"
 msgstr "Интерактивная консоль для разработки на Python"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
+msgid "_Console"
+msgstr "_Консоль"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+msgid "Add a layer of fog"
+msgstr "Добавить слой тумана"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+msgid "_Fog..."
+msgstr "_Туман..."
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+msgid "_Layer name"
+msgstr "_Имя слоя"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+msgid "Clouds"
+msgstr "Облака"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+msgid "_Fog color"
+msgstr "_Цвет тумана"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+msgid "_Turbulence"
+msgstr "Т_урбулентность"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+msgid "Op_acity"
+msgstr "_Непрозрачность"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
+msgid "Offset the colors in a palette"
+msgstr "Сместить цвета в палитре"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
+msgid "_Offset Palette..."
+msgstr "_Сдвиг палитры..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+msgid "Palette"
+msgstr "Палитра"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
+msgid "Off_set"
+msgstr "Сд_виг"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
+msgid "Sort the colors in a palette"
+msgstr "Отсортировать цвета в палитре"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
+msgid "_Sort Palette..."
+msgstr "Сортировка _палитры..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+msgid "Color _model"
+msgstr "Цветовая _модель"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "RGB"
+msgstr "RGB"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+msgid "HSV"
+msgstr "HSV"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+msgid "Channel to _sort"
+msgstr "Сортируемые _каналы"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+msgid "Red or Hue"
+msgstr "Красный или тон"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+msgid "Green or Saturation"
+msgstr "Зелёный или насыщенность"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+msgid "Blue or Value"
+msgstr "Синий или значение"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+msgid "_Ascending"
+msgstr "_Восходящий"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "Создать повторяющийся градиент из цветов палитры"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
+msgid "Palette to _Repeating Gradient"
+msgstr "П_алитра в повторяющийся градиент"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
+msgid "Create a gradient using colors from the palette"
+msgstr "Создать градиент, используя цвета палитры"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
+msgid "Palette to _Gradient"
+msgstr "Палитра в _градиент"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
+msgid "Slice"
+msgstr "Нарезка"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr "Разрезать изображение по направляющим в HTML-таблицу с его фрагментами"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
+msgid "_Slice..."
+msgstr "_Нарезка для веба..."
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+msgid "Path for HTML export"
+msgstr "Каталог экспорта"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+msgid "Filename for export"
+msgstr "Имя экспортируемого файла"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+msgid "Image name prefix"
+msgstr "Префикс имени файла"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+msgid "Image format"
+msgstr "Формат изображения"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+msgid "Separate image folder"
+msgstr "Изображения в отдельном каталоге"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+msgid "Folder for image export"
+msgstr "Имя каталога изображений"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+msgid "Space between table elements"
+msgstr "Пробел между элементами таблицы"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+msgid "Javascript for onmouseover and clicked"
+msgstr "JavaScript для onmouseover и clicked"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+msgid "Skip animation for table caps"
+msgstr "Пропустить анимацию для заголовков таблицы"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+msgid "Add a drop shadow to a layer, and optionally bevel it"
+msgstr "Добавить в изображение отбрасываемую тень и добавить бордюр"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
+msgid "_Drop Shadow and Bevel..."
+msgstr "Отбрасываемая тень с _бордюром"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+msgid "_Shadow blur"
+msgstr "_Размытость тени"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+msgid "_Bevel"
+msgstr "_Бордюр"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+msgid "_Drop shadow"
+msgstr "Отбр_асываемая тень"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+msgid "Drop shadow _X displacement"
+msgstr "Смещение тени по _X"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
+msgid "Drop shadow _Y displacement"
+msgstr "Смещение тени по _Y"
+
+#, fuzzy
+#~ msgid "Gimp-Python Console"
+#~ msgstr "Консоль Скрипт-Фу"
