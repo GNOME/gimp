@@ -424,7 +424,7 @@ save_image (Config *config,
 		guint8 *d = data + x * drawable->bpp;
 		gdouble alpha = drawable_type == GIMP_RGBA_IMAGE ? d[3] : 0xff;
 
-		alpha *= config->opacity / 25600.0;
+		alpha *= config->opacity / 25500.0;
 		*(p++) = 0.5 + alpha * (gdouble) d[0];
 		*(p++) = 0.5 + alpha * (gdouble) d[1];
 		*(p++) = 0.5 + alpha * (gdouble) d[2];

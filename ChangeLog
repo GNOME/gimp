@@ -1,5 +1,10 @@
 2007-08-14  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/csource.c (save_image): fixed calculation of
+	alpha value (bug #466402).
+
+2007-08-14  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/libgimp-intl.h: define Q_() for translation context.
 
 2007-08-13  Sven Neumann  <sven@gimp.org>
