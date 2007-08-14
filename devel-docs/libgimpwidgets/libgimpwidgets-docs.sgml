@@ -31,6 +31,8 @@
     <xi:include href="xml/gimpcolorhexentry.xml" />
     <xi:include href="xml/gimpcolorscale.xml" />
     <xi:include href="xml/gimpcolorselection.xml" />
+    <xi:include href="xml/gimpcolorprofilestore.xml" />
+    <xi:include href="xml/gimpcolorprofilecombobox.xml" />
     <xi:include href="xml/gimpdialog.xml" />
     <xi:include href="xml/gimpenumstore.xml" />
     <xi:include href="xml/gimpenumcombobox.xml" />

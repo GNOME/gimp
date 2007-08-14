@@ -27,6 +27,7 @@ CFILE_GLOB = $(DOC_SOURCE_DIR)/*.c
 
 # Header files to ignore when scanning
 IGNORE_HFILES = \
+	gimpcolorprofilestore-private.h	\
 	gimpwidgets-private.h
 
 # Images to copy into HTML directory

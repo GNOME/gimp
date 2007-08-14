@@ -305,6 +305,28 @@ create_color_hex_entry (void)
 }
 
 static WidgetInfo *
+create_color_profile_combo_box (void)
+{
+  GtkWidget *vbox;
+  GtkWidget *combo;
+  GtkWidget *align;
+
+  vbox = gtk_vbox_new (FALSE, 6);
+  align = gtk_alignment_new (0.5, 0.5, 0.5, 0.0);
+  combo = gimp_color_profile_combo_box_new (gtk_dialog_new (), NULL);
+  gimp_color_profile_combo_box_add (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                    NULL, "sRGB");
+  gtk_combo_box_set_active (GTK_COMBO_BOX (combo), 0);
+  gtk_container_add (GTK_CONTAINER (align), combo);
+  gtk_box_pack_start_defaults (GTK_BOX (vbox), align);
+  gtk_box_pack_start (GTK_BOX (vbox),
+                      gtk_label_new ("Color Profile Combo Box"),
+                      FALSE, FALSE, 0);
+
+  return new_widget_info ("gimp-color-profile-combo-box", vbox, SMALL);
+}
+
+static WidgetInfo *
 create_color_scale (void)
 {
   GtkWidget *vbox;
@@ -703,6 +725,7 @@ get_all_widgets (void)
   retval = g_list_append (retval, create_color_area ());
   retval = g_list_append (retval, create_color_button ());
   retval = g_list_append (retval, create_color_hex_entry ());
+  retval = g_list_append (retval, create_color_profile_combo_box ());
   retval = g_list_append (retval, create_color_scale ());
   retval = g_list_append (retval, create_color_selection ());
   retval = g_list_append (retval, create_dialog ());

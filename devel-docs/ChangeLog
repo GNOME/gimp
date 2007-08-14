@@ -1,3 +1,21 @@
+2007-08-14  Sven Neumann  <sven@gimp.org>
+
+	* tools/widgets.c: added GimpColorProfileComboBox to doc-shooter.
+
+	* libgimpwidgets/images/gimp-color-profile-combo-box.png: added
+	screenshot.
+
+	* libgimpwidgets/Makefile.am: ignore
+	libgimpwidgets/gimpcolorprofilestore-private.h.
+
+	* libgimpwidgets/libgimpwidgets-docs.sgml
+	* libgimpwidgets/libgimpwidgets-sections.txt
+	* libgimpwidgets/libgimpwidgets.types: added docs for 
+	GimpColorProfileStore and GimpColorProfileComboBox.
+
+	* libgimpwidgets/tmpl/gimpcolorprofilestore.sgml
+	* libgimpwidgets/tmpl/gimpcolorprofilecombobox.sgml: new files.
+
 2007-08-12  Sven Neumann  <sven@gimp.org>
 
 	* libgimpbase/tmpl/gimpbaseenums.sgml: regenerated.

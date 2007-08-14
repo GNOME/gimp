@@ -195,6 +195,42 @@ GIMP_IS_COLOR_SELECTION_CLASS
 GIMP_COLOR_SELECTION_GET_CLASS
 </SECTION>
 
+<SECTION>
+<FILE>gimpcolorprofilestore</FILE>
+<TITLE>GimpColorProfileStore</TITLE>
+GimpColorProfileStore
+gimp_color_profile_store_new
+gimp_color_profile_store_add
+<SUBSECTION Standard>
+GimpColorProfileStoreClass
+GIMP_COLOR_PROFILE_STORE
+GIMP_IS_COLOR_PROFILE_STORE
+GIMP_TYPE_COLOR_PROFILE_STORE
+gimp_color_profile_store_get_type
+GIMP_COLOR_PROFILE_STORE_CLASS
+GIMP_IS_COLOR_PROFILE_STORE_CLASS
+GIMP_COLOR_PROFILE_STORE_GET_CLASS
+</SECTION>
+
+<SECTION>
+<FILE>gimpcolorprofilecombobox</FILE>
+<TITLE>GimpColorProfileComboBox</TITLE>
+GimpColorProfileComboBox
+gimp_color_profile_combo_box_new
+gimp_color_profile_combo_box_new_with_model
+gimp_color_profile_combo_box_add
+gimp_color_profile_combo_box_set_active
+gimp_color_profile_combo_box_get_active
+<SUBSECTION Standard>
+GimpColorProfileComboBoxClass
+GIMP_COLOR_PROFILE_COMBO_BOX
+GIMP_IS_COLOR_PROFILE_COMBO_BOX
+GIMP_TYPE_COLOR_PROFILE_COMBO_BOX
+gimp_color_profile_combo_box_get_type
+GIMP_COLOR_PROFILE_COMBO_BOX_CLASS
+GIMP_IS_COLOR_PROFILE_COMBO_BOX_CLASS
+GIMP_COLOR_PROFILE_COMBO_BOX_GET_CLASS
+</SECTION>
 
 <SECTION>
 <FILE>gimpenumstore</FILE>
