@@ -1273,7 +1273,6 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   g_signal_connect (dialog, "response",
                     G_CALLBACK (lcms_icc_file_chooser_dialog_response),
                     combo);
-  g_object_unref (dialog);
 
   if (config->rgb_profile)
     profile = lcms_load_profile (config->rgb_profile, NULL);

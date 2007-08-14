@@ -1023,7 +1023,6 @@ prefs_profile_combo_box_new (Gimp         *gimp,
 
   combo = gimp_color_profile_combo_box_new_with_model (dialog,
                                                        GTK_TREE_MODEL (store));
-  g_object_unref (dialog);
 
   g_object_set_data (G_OBJECT (combo),
                      "property-name", (gpointer) property_name);

@@ -1,5 +1,10 @@
 2007-08-14  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/preferences-dialog.c
+	* plug-ins/common/lcms.c: don't unref the file-chooser dialog.
+
+2007-08-14  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/Makefile.am
 	* libgimpwidgets/gimpwidgets.h
 	* libgimpwidgets/gimpwidgetstypes.h
