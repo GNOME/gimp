@@ -332,6 +332,8 @@ _gimp_color_profile_store_history_add (GimpColorProfileStore *store,
         }
     }
 
+  if (! uri)
+    return FALSE;
 
   if (label && *label)
     {
@@ -339,7 +341,7 @@ _gimp_color_profile_store_history_add (GimpColorProfileStore *store,
                                                             uri, label,
                                                             ++max);
     }
-  else if (uri)
+  else
     {
       gchar *filename = g_filename_from_uri (uri, NULL, NULL);
       gchar *basename = g_filename_display_basename (filename);
@@ -349,10 +351,6 @@ _gimp_color_profile_store_history_add (GimpColorProfileStore *store,
                                                             ++max);
       g_free (basename);
       g_free (filename);
-    }
-  else
-    {
-      return FALSE;
     }
 
   return iter_valid;
