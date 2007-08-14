@@ -1,3 +1,7 @@
+2007-08-14  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-intl.h: define Q_() for translation context.
+
 2007-08-13  Sven Neumann  <sven@gimp.org>
 
 	* modules/cdisplay_lcms.c: include glib.h before checking for

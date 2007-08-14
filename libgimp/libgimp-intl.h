@@ -30,6 +30,7 @@
 
 
 #define _(String) dgettext (GETTEXT_PACKAGE "-libgimp", String)
+#define Q_(String) g_strip_context ((String), dgettext (GETTEXT_PACKAGE "-libgimp", String))
 
 #undef gettext
 #define gettext(String) dgettext (GETTEXT_PACKAGE "-libgimp", String)
