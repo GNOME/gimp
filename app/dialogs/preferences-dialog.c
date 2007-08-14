@@ -1008,6 +1008,36 @@ prefs_profile_combo_changed (GimpColorProfileComboBox *combo,
 }
 
 static GtkWidget *
+prefs_profile_combo_add_tooltip (GtkWidget   *combo,
+                                 GObject     *config,
+                                 const gchar *property_name)
+{
+  GParamSpec  *param_spec;
+  const gchar *blurb;
+
+  param_spec = g_object_class_find_property (G_OBJECT_GET_CLASS (config),
+                                             property_name);
+
+  blurb = g_param_spec_get_blurb (param_spec);
+
+  /*  can't set a tooltip on a combo_box  */
+  if (blurb)
+    {
+      GtkWidget *ebox = gtk_event_box_new ();
+
+      gimp_help_set_help_data (ebox,
+                               dgettext (GETTEXT_PACKAGE "-libgimp", blurb),
+                               NULL);
+      gtk_container_add (GTK_CONTAINER (ebox), combo);
+      gtk_widget_show (combo);
+
+      return ebox;
+    }
+
+  return combo;
+}
+
+static GtkWidget *
 prefs_profile_combo_box_new (Gimp         *gimp,
                              GObject      *config,
                              GtkListStore *store,
@@ -1037,7 +1067,7 @@ prefs_profile_combo_box_new (Gimp         *gimp,
                     G_CALLBACK (prefs_profile_combo_changed),
                     config);
 
-  return combo;
+  return prefs_profile_combo_add_tooltip (combo, config, property_name);
 }
 
 static GtkWidget *
