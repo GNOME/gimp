@@ -1261,6 +1261,7 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   gchar       *history;
   gchar       *label;
   gchar       *name;
+  gchar       *uri;
   cmsHPROFILE  profile;
 
   dialog = lcms_icc_file_chooser_dialog_new ();
@@ -1288,8 +1289,14 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   label = g_strdup_printf (_("RGB workspace (%s)"), name);
   g_free (name);
 
+  if (config->rgb_profile)
+    uri = g_filename_to_uri (config->rgb_profile, NULL, NULL);
+  else
+    uri = NULL;
+
   gimp_color_profile_combo_box_add (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                    config->rgb_profile, label);
+                                    uri, label);
+  g_free (uri);
   g_free (label);
 
   if (filename)
