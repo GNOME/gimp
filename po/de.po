@@ -17,8 +17,8 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-08 12:14+0200\n"
-"PO-Revision-Date: 2007-08-08 12:15+0200\n"
-"Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
+"PO-Revision-Date: 2007-08-14 21:40+0200\n"
+"Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -382,7 +382,7 @@ msgstr "Module"
 #: ../app/actions/actions.c:180 ../app/core/core-enums.c:858
 #: ../app/core/gimpchannel.c:363
 msgid "Quick Mask"
-msgstr "Schnelle Maske"
+msgstr "Schnellmaske"
 
 #: ../app/actions/actions.c:183 ../app/dialogs/dialogs.c:197
 msgid "Sample Points"
@@ -2428,7 +2428,7 @@ msgstr "Leinwandgröße an Ebenen anpassen"
 
 #: ../app/actions/image-actions.c:91
 msgid "Resize the image to enclose all layers"
-msgstr "Bildgröße so verändern, dass es alle Ebenen hineinpassen"
+msgstr "Bildgröße so verändern, dass alle Ebenen hineinpassen"
 
 #: ../app/actions/image-actions.c:96
 msgid "F_it Canvas to Selection"
@@ -2861,7 +2861,7 @@ msgstr "Effekt der Ebenenmaske ablehnen"
 
 #: ../app/actions/layers-actions.c:239
 msgid "Apply Layer _Mask"
-msgstr "Ebenenmaske an_wenden …"
+msgstr "Ebenenmaske an_wenden"
 
 #: ../app/actions/layers-actions.c:240
 msgid "Apply the effect of the layer mask and remove it"
@@ -3322,12 +3322,11 @@ msgstr "Alle Filter zurücksetzen"
 #: ../app/actions/plug-in-commands.c:281
 msgid "Do you really want to reset all filters to default values?"
 msgstr ""
-"Möchten sie alle Filter auf Vorgabeeinstellungen zurücksetzen?Wollen Sie "
-"wirklich alle Werkzeugeinstellungen auf Vorgabewerte zurüchsetzen?"
+"Wollen Sie wirklich alle Filter auf Vorgabeeinstellungen zurücksetzen?"
 
 #: ../app/actions/quick-mask-actions.c:42
 msgid "Quick Mask Menu"
-msgstr "Schnelle Maske Menü"
+msgstr "Schnellmasken-Menü"
 
 #: ../app/actions/quick-mask-actions.c:46
 msgid "_Configure Color and Opacity..."
@@ -3335,12 +3334,12 @@ msgstr "Farbe und Deckkraft _festlegen …"
 
 #: ../app/actions/quick-mask-actions.c:54
 msgid "Toggle _Quick Mask"
-msgstr "_Schnelle Maske aktivieren/deaktivieren"
+msgstr "_Schnellmaske aktivieren/deaktivieren"
 
 #: ../app/actions/quick-mask-actions.c:54
 #: ../app/display/gimpdisplayshell.c:1025
 msgid "Toggle Quick Mask"
-msgstr "Schnelle Maske aktivieren/deaktivieren"
+msgstr "Schnellmaske aktivieren/deaktivieren"
 
 #: ../app/actions/quick-mask-actions.c:63
 msgid "Mask _Selected Areas"
@@ -6291,11 +6290,11 @@ msgstr ""
 
 #: ../app/core/gimpimage-quick-mask.c:82
 msgid "Enable Quick Mask"
-msgstr "Schnelle Maske aktivieren"
+msgstr "Schnellmaske aktivieren"
 
 #: ../app/core/gimpimage-quick-mask.c:132
 msgid "Disable Quick Mask"
-msgstr "Schnelle Maske deaktivieren"
+msgstr "Schnellmaske deaktivieren"
 
 #: ../app/core/gimpimage-sample-points.c:53
 msgid "Add Sample_Point"

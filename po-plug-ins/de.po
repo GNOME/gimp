@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: GIMP 2.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-11 13:51+0200\n"
-"PO-Revision-Date: 2007-08-07 18:00+0200\n"
+"PO-Revision-Date: 2007-08-14 21:45+0200\n"
 "Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -2556,11 +2556,11 @@ msgstr "Farbtabelle wird umsortiert"
 msgid "Sort on Hue"
 msgstr "Nach Farbton sortieren"
 
-# XXX "Nach Helligkeit sortieren" (!?)
 #: ../plug-ins/common/colormap-remap.c:487
 msgid "Sort on Saturation"
 msgstr "Nach Sättigung sortieren"
 
+# XXX "Nach Helligkeit sortieren" (!?)
 #: ../plug-ins/common/colormap-remap.c:491
 msgid "Sort on Value"
 msgstr "Nach Wert sortieren"
@@ -3205,12 +3205,11 @@ msgstr "_Helligkeit"
 
 #: ../plug-ins/common/decompose.c:197
 msgid "Hue (HSL)"
-msgstr ""
+msgstr "Farbton (HSL)"
 
 #: ../plug-ins/common/decompose.c:198
-#, fuzzy
 msgid "Saturation (HSL)"
-msgstr "Sättigung"
+msgstr "Sättigung (HSL)"
 
 #: ../plug-ins/common/decompose.c:199
 #, fuzzy
@@ -4047,7 +4046,7 @@ msgstr "Fenster"
 
 #: ../plug-ins/common/fp.c:703 ../plug-ins/common/lic.c:672
 msgid "_Saturation"
-msgstr "_Sättigung:"
+msgstr "_Sättigung"
 
 #: ../plug-ins/common/fp.c:711
 msgid "A_dvanced"
@@ -5160,7 +5159,7 @@ msgstr "_Ableitung"
 
 #: ../plug-ins/common/lic.c:685
 msgid "_Gradient"
-msgstr "_Farbverlauf"
+msgstr "Farb_verlauf"
 
 # TODO! Zusammenrollen ?
 #: ../plug-ins/common/lic.c:691
@@ -5169,11 +5168,11 @@ msgstr "Aufrollen"
 
 #: ../plug-ins/common/lic.c:696
 msgid "_With white noise"
-msgstr "_Mit weißem Rauschen"
+msgstr "Mit _weißem Rauschen"
 
 #: ../plug-ins/common/lic.c:697
 msgid "W_ith source image"
-msgstr "M_it Quellbild"
+msgstr "Mit _Quellbild"
 
 #: ../plug-ins/common/lic.c:716
 msgid "_Effect image:"
@@ -5181,7 +5180,7 @@ msgstr "_Effektbild:"
 
 #: ../plug-ins/common/lic.c:727
 msgid "_Filter length:"
-msgstr "_Filterlänge:"
+msgstr "Filter_länge:"
 
 #: ../plug-ins/common/lic.c:736
 msgid "_Noise magnitude:"
@@ -5201,7 +5200,7 @@ msgstr "M_aximum:"
 
 #: ../plug-ins/common/lic.c:809
 msgid "Special effects that nobody understands"
-msgstr ""
+msgstr "Spezialeffekte, die niemand versteht"
 
 #: ../plug-ins/common/lic.c:814
 msgid "_Van Gogh (LIC)..."
@@ -5774,7 +5773,7 @@ msgstr "A_lpha:"
 
 #: ../plug-ins/common/noisify.c:144
 msgid "Distort colors by random amounts"
-msgstr ""
+msgstr "Farben um zufällige Werte verändern"
 
 #: ../plug-ins/common/noisify.c:154
 msgid "_RGB Noise..."
@@ -6716,15 +6715,15 @@ msgstr "LZ77"
 
 #: ../plug-ins/common/randomize.c:102
 msgid "Random Hurl"
-msgstr "Zufällig Verwirbeln"
+msgstr "Zufällig verwirbeln"
 
 #: ../plug-ins/common/randomize.c:103
 msgid "Random Pick"
-msgstr "Zufällig Vertauschen"
+msgstr "Zufällig vertauschen"
 
 #: ../plug-ins/common/randomize.c:104
 msgid "Random Slur"
-msgstr "Zufällig Schmelzen"
+msgstr "Zufällig schmelzen"
 
 #: ../plug-ins/common/randomize.c:200
 msgid "Completely randomize a fraction of pixels"
@@ -6740,7 +6739,7 @@ msgstr ""
 
 #: ../plug-ins/common/randomize.c:231
 msgid "_Hurl..."
-msgstr "_Verwirbeln"
+msgstr "Ver_wirbeln"
 
 #: ../plug-ins/common/randomize.c:243
 msgid "_Pick..."
@@ -7079,11 +7078,12 @@ msgstr "Einfärben"
 
 #: ../plug-ins/common/scatter_hsv.c:105
 msgid "Randomize hue/saturation/value independently"
-msgstr ""
+msgstr "Farbton/Sättigung/Wert unabhängig voneinander randomisieren"
 
+# XXX  mit Unterstrich
 #: ../plug-ins/common/scatter_hsv.c:110
 msgid "HSV Noise..."
-msgstr "HSV-Rauschen"
+msgstr "_HSV-Rauschen …"
 
 #: ../plug-ins/common/scatter_hsv.c:218
 msgid "HSV Noise"
@@ -7789,7 +7789,7 @@ msgstr ""
 
 #: ../plug-ins/common/spread.c:100
 msgid "Sp_read..."
-msgstr "Ver_streuen …"
+msgstr "_Verstreuen …"
 
 #: ../plug-ins/common/spread.c:183
 msgid "Spreading"
@@ -11294,9 +11294,8 @@ msgid "Create Guides..."
 msgstr "Hilfslinien erstellen"
 
 #: ../plug-ins/imagemap/imap_menu.c:199
-#, fuzzy
 msgid "_Help"
-msgstr "_Farbton"
+msgstr "_Hilfe"
 
 #: ../plug-ins/imagemap/imap_menu.c:200
 #, fuzzy
@@ -11587,7 +11586,7 @@ msgstr "XMP-Daten speichern"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1041
 msgid "Use custom quality settings"
-msgstr ""
+msgstr "Benutzerdefinierte Qualitätseinstellungen"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1046
 msgid ""
@@ -11595,6 +11594,9 @@ msgid ""
 "settings (quantization tables), enable this option to get almost the same "
 "quality and file size."
 msgstr ""
+"Wenn das Originalbild von einer JPEG-Datei mit nicht standardisierten "
+"Qualitätseinstellungen (Quantisierungs-Tabellen) stammt, "
+"aktivieren Sie diese Option für etwa gleiche Qualität und Dateigröße"
 
 #. Subsampling
 #: ../plug-ins/jpeg/jpeg-save.c:1070
@@ -11603,19 +11605,19 @@ msgstr "Zwischenschritte:"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1077
 msgid "1x1,1x1,1x1 (best quality)"
-msgstr ""
+msgstr "1x1,1x1,1x1 (maximale Qualität)"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1078
 msgid "2x1,1x1,1x1 (4:2:2)"
-msgstr ""
+msgstr "2x1,1x1,1x1 (4:2:2)"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1079
 msgid "1x2,1x1,1x1"
-msgstr ""
+msgstr "1x2,1x1,1x1"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1080
 msgid "2x2,1x1,1x1 (smallest file)"
-msgstr ""
+msgstr "2x2,1x1,1x1 (minimale Dateigröße)"
 
 #. DCT method
 #: ../plug-ins/jpeg/jpeg-save.c:1095
@@ -11918,7 +11920,7 @@ msgstr "Drucken"
 
 #: ../plug-ins/rcm/rcm.c:99
 msgid "Replace a range of colors with another"
-msgstr "Einen Bereich von Farben durch einem Anderen ersetzen"
+msgstr "Einen Bereich von Farben durch einen anderen ersetzen"
 
 #: ../plug-ins/rcm/rcm.c:106
 msgid "_Rotate Colors..."
