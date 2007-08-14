@@ -150,14 +150,15 @@ gimp_image_item_list_transform (GimpImage              *image,
 
 /**
  * gimp_image_item_list_get_list:
- * @item:  A linked @item.
- * @which: Which items to return.
+ * @image:   An @image.
+ * @exclude: An item to exclude.
+ * @type:    Which type of items to return.
+ * @set:     Set the returned items are part of.
  *
- * This function returns a #GList og #GimpItem's for which the
- * "linked" property is #TRUE. Note that the passed in @item
- * must be linked too.
+ * This function returns a #GList of #GimpItem<!-- -->s for which the
+ * @type and @set criterions match.
  *
- * Return value: The list of linked items, excluding the passed @item.
+ * Return value: The list of items, excluding @exclude.
  **/
 GList *
 gimp_image_item_list_get_list (GimpImage        *image,

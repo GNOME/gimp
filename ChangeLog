@@ -1,3 +1,7 @@
+2007-08-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/gimpimage-item-list.c: fixed API docs.
+
 2007-08-14  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c: Fixed regression at zoom
