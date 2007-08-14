@@ -1,3 +1,7 @@
+2007-08-15  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: removed fade-outline.scm.
+
 2007-08-14  Ulf-D. Ehlert  <ulfehlert@svn.gnome.org>
 
 	* de.po: Updated German translation.

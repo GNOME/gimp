@@ -47,7 +47,6 @@ scripts = \
 	distress-selection.scm		\
 	drop-shadow.scm			\
 	erase-rows.scm			\
-	fade-outline.scm		\
 	flatland.scm			\
 	font-map.scm			\
 	frosty-logo.scm			\

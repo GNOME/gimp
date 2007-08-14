@@ -48,7 +48,6 @@ plug-ins/script-fu/scripts/difference-clouds.scm
 plug-ins/script-fu/scripts/distress-selection.scm
 plug-ins/script-fu/scripts/drop-shadow.scm
 plug-ins/script-fu/scripts/erase-rows.scm
-plug-ins/script-fu/scripts/fade-outline.scm
 plug-ins/script-fu/scripts/flatland.scm
 plug-ins/script-fu/scripts/font-map.scm
 plug-ins/script-fu/scripts/frosty-logo.scm
