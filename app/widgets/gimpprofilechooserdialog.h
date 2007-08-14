@@ -42,7 +42,7 @@ struct _GimpProfileChooserDialog
   Gimp                 *gimp;
   GtkTextBuffer        *buffer;
 
-  gchar                *uri;
+  gchar                *filename;
   gchar                *desc;
 
   guint                 idle_id;

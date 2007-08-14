@@ -238,11 +238,11 @@ gimp_profile_chooser_dialog_new (Gimp        *gimp,
 
 gchar *
 gimp_profile_chooser_dialog_get_desc (GimpProfileChooserDialog *dialog,
-                                      const gchar              *uri)
+                                      const gchar              *filename)
 {
   g_return_val_if_fail (GIMP_IS_PROFILE_CHOOSER_DIALOG (dialog), NULL);
 
-  if (uri && dialog->uri && strcmp (uri, dialog->uri) == 0)
+  if (filename && dialog->filename && strcmp (filename, dialog->filename) == 0)
     return g_strdup (dialog->desc);
 
   return NULL;
@@ -253,8 +253,8 @@ gimp_profile_chooser_dialog_update_preview (GimpProfileChooserDialog *dialog)
 {
   gtk_text_buffer_set_text (dialog->buffer, "", 0);
 
-  g_free (dialog->uri);
-  dialog->uri = NULL;
+  g_free (dialog->filename);
+  dialog->filename = NULL;
 
   g_free (dialog->desc);
   dialog->desc = NULL;
@@ -303,14 +303,9 @@ gimp_profile_view_new (GtkTextBuffer *buffer)
 static gboolean
 gimp_profile_view_query (GimpProfileChooserDialog *dialog)
 {
-  gchar  *uri;
-  gchar  *filename;
+  gchar *filename;
 
-  uri = gtk_file_chooser_get_preview_uri (GTK_FILE_CHOOSER (dialog));
-  if (! uri)
-    return FALSE;
-
-  filename = g_filename_from_uri (uri, NULL, NULL);
+  filename = gtk_file_chooser_get_preview_filename (GTK_FILE_CHOOSER (dialog));
 
   if (filename)
     {
@@ -350,8 +345,8 @@ gimp_profile_view_query (GimpProfileChooserDialog *dialog)
               name = NULL;
             }
 
-          dialog->uri = uri;
-          uri = NULL;
+          dialog->filename = filename;
+          filename = NULL;
 
           g_free (name);
           g_free (desc);
@@ -360,8 +355,6 @@ gimp_profile_view_query (GimpProfileChooserDialog *dialog)
 
       g_free (filename);
     }
-
-  g_free (uri);
 
   return FALSE;
 }

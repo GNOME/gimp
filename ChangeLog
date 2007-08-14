@@ -1,5 +1,17 @@
 2007-08-14  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolorprofilecombobox.[ch]
+	* libgimpwidgets/gimpcolorprofilestore.[ch]
+	* libgimpwidgets/gimpcolorprofilestore-private.h: changed API to
+	deal with filenames instead of URIs.
+
+	* app/widgets/gimpprofilechooserdialog.[ch]: same here.
+
+	* app/dialogs/preferences-dialog.c
+	* plug-ins/common/lcms.c: changed accordingly.
+
+2007-08-14  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/preferences-dialog.c
 	* plug-ins/common/lcms.c: don't unref the file-chooser dialog.
 

@@ -291,37 +291,38 @@ gimp_color_profile_combo_box_new_with_model (GtkWidget    *dialog,
 /**
  * gimp_color_profile_combo_box_add:
  * @combo:
- * @uri:
+ * @filename:
  * @label:
  *
  * Since: GIMP 2.4
  **/
 void
 gimp_color_profile_combo_box_add (GimpColorProfileComboBox *combo,
-                                  const gchar              *uri,
+                                  const gchar              *filename,
                                   const gchar              *label)
 {
   GtkTreeModel *model;
 
   g_return_if_fail (GIMP_IS_COLOR_PROFILE_COMBO_BOX (combo));
-  g_return_if_fail (label != NULL || uri == NULL);
+  g_return_if_fail (label != NULL || filename == NULL);
 
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
 
-  gimp_color_profile_store_add (GIMP_COLOR_PROFILE_STORE (model), uri, label);
+  gimp_color_profile_store_add (GIMP_COLOR_PROFILE_STORE (model),
+                                filename, label);
 }
 
 /**
  * gimp_color_profile_combo_box_set_active:
  * @combo:
- * @uri:
+ * @filename:
  * @label:
  *
  * Since: GIMP 2.4
  **/
 void
 gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
-                                         const gchar              *uri,
+                                         const gchar              *filename,
                                          const gchar              *label)
 {
   GtkTreeModel *model;
@@ -332,7 +333,7 @@ gimp_color_profile_combo_box_set_active (GimpColorProfileComboBox *combo,
   model = gtk_combo_box_get_model (GTK_COMBO_BOX (combo));
 
   if (_gimp_color_profile_store_history_add (GIMP_COLOR_PROFILE_STORE (model),
-                                             uri, label, &iter))
+                                             filename, label, &iter))
     gtk_combo_box_set_active_iter (GTK_COMBO_BOX (combo), &iter);
 }
 
@@ -354,18 +355,18 @@ gimp_color_profile_combo_box_get_active (GimpColorProfileComboBox *combo)
 
   if (gtk_combo_box_get_active_iter (GTK_COMBO_BOX (combo), &iter))
     {
-      gchar *uri;
+      gchar *filename;
       gint   type;
 
       gtk_tree_model_get (model, &iter,
                           GIMP_COLOR_PROFILE_STORE_ITEM_TYPE, &type,
-                          GIMP_COLOR_PROFILE_STORE_URI,       &uri,
+                          GIMP_COLOR_PROFILE_STORE_FILENAME,  &filename,
                           -1);
 
       if (type == GIMP_COLOR_PROFILE_STORE_ITEM_FILE)
-        return uri;
+        return filename;
 
-      g_free (uri);
+      g_free (filename);
     }
 
   return NULL;

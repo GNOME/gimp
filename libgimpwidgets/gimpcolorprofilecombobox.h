@@ -64,10 +64,10 @@ GtkWidget * gimp_color_profile_combo_box_new_with_model   (GtkWidget    *dialog,
                                                            GtkTreeModel *model);
 
 void        gimp_color_profile_combo_box_add              (GimpColorProfileComboBox *combo,
-                                                           const gchar              *uri,
+                                                           const gchar              *filename,
                                                            const gchar              *label);
 void        gimp_color_profile_combo_box_set_active       (GimpColorProfileComboBox *combo,
-                                                           const gchar              *uri,
+                                                           const gchar              *filename,
                                                            const gchar              *label);
 gchar *     gimp_color_profile_combo_box_get_active       (GimpColorProfileComboBox *combo);
 

@@ -37,13 +37,13 @@ typedef enum
 {
   GIMP_COLOR_PROFILE_STORE_ITEM_TYPE,
   GIMP_COLOR_PROFILE_STORE_LABEL,
-  GIMP_COLOR_PROFILE_STORE_URI,
+  GIMP_COLOR_PROFILE_STORE_FILENAME,
   GIMP_COLOR_PROFILE_STORE_INDEX
 } GimpColorProfileStoreColumns;
 
 
 G_GNUC_INTERNAL gboolean  _gimp_color_profile_store_history_add (GimpColorProfileStore *store,
-                                                                 const gchar           *uri,
+                                                                 const gchar           *filename,
                                                                  const gchar           *label,
                                                                  GtkTreeIter           *iter);
 

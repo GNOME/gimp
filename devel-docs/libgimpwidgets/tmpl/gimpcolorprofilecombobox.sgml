@@ -59,7 +59,7 @@ GimpColorProfileComboBox
 </para>
 
 @combo: 
-@uri: 
+@filename: 
 @label: 
 
 
@@ -69,7 +69,7 @@ GimpColorProfileComboBox
 </para>
 
 @combo: 
-@uri: 
+@filename: 
 @label: 
 
 

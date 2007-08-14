@@ -43,7 +43,7 @@ GimpColorProfileStore
 </para>
 
 @store: 
-@uri: 
+@filename: 
 @label: 
 
 

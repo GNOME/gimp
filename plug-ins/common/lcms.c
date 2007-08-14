@@ -1162,27 +1162,25 @@ lcms_icc_apply_dialog (gint32       image,
 
 static void
 lcms_icc_combo_box_set_active (GimpColorProfileComboBox *combo,
-                               const gchar              *uri)
+                               const gchar              *filename)
 {
-  cmsHPROFILE  profile;
-  gchar       *filename = g_filename_from_uri (uri, NULL, NULL);
-  gchar       *name     = NULL;
+  cmsHPROFILE  profile = NULL;
+  gchar       *label   = NULL;
 
-  profile = lcms_load_profile (filename, NULL);
+  if (filename)
+    profile = lcms_load_profile (filename, NULL);
 
   if (profile)
     {
-      name = lcms_icc_profile_get_desc (profile);
-      if (! name)
-        name = lcms_icc_profile_get_name (profile);
+      label = lcms_icc_profile_get_desc (profile);
+      if (! label)
+        label = lcms_icc_profile_get_name (profile);
 
       cmsCloseProfile (profile);
     }
 
-  g_free (filename);
-
-  gimp_color_profile_combo_box_set_active (combo, uri, name);
-  g_free (name);
+  gimp_color_profile_combo_box_set_active (combo, filename, label);
+  g_free (label);
 }
 
 static void
@@ -1192,12 +1190,13 @@ lcms_icc_file_chooser_dialog_response (GtkFileChooser           *dialog,
 {
   if (response == GTK_RESPONSE_ACCEPT)
     {
-      gchar *uri = gtk_file_chooser_get_uri (dialog);
+      gchar *filename = gtk_file_chooser_get_filename (dialog);
 
-      if (uri)
+      if (filename)
         {
-          lcms_icc_combo_box_set_active (combo, uri);
-          g_free (uri);
+          lcms_icc_combo_box_set_active (combo, filename);
+
+          g_free (filename);
         }
     }
 
@@ -1261,7 +1260,6 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   gchar       *history;
   gchar       *label;
   gchar       *name;
-  gchar       *uri;
   cmsHPROFILE  profile;
 
   dialog = lcms_icc_file_chooser_dialog_new ();
@@ -1289,31 +1287,15 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   label = g_strdup_printf (_("RGB workspace (%s)"), name);
   g_free (name);
 
-  if (config->rgb_profile)
-    uri = g_filename_to_uri (config->rgb_profile, NULL, NULL);
-  else
-    uri = NULL;
-
   gimp_color_profile_combo_box_add (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                    uri, label);
-  g_free (uri);
+                                    config->rgb_profile, label);
   g_free (label);
 
   if (filename)
-    {
-      gchar *uri = g_filename_to_uri (filename, NULL, NULL);
-
-      if (uri)
-        {
-          lcms_icc_combo_box_set_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                         uri);
-          g_free (uri);
-        }
-    }
+    lcms_icc_combo_box_set_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                   filename);
   else
-    {
-      gtk_combo_box_set_active (GTK_COMBO_BOX (combo), 0);
-    }
+    gtk_combo_box_set_active (GTK_COMBO_BOX (combo), 0);
 
   return combo;
 }
@@ -1405,17 +1387,14 @@ lcms_dialog (GimpColorConfig *config,
 
   if (run)
     {
-      cmsHPROFILE  dest_profile;
-      gchar       *filename = NULL;
-      gchar       *uri;
+      GimpColorProfileComboBox *box = GIMP_COLOR_PROFILE_COMBO_BOX (combo);
+      gchar                    *filename;
+      cmsHPROFILE               dest_profile;
 
-      uri = gimp_color_profile_combo_box_get_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo));
+      filename = gimp_color_profile_combo_box_get_active (box);
 
-      if (uri)
+      if (filename)
         {
-          filename = g_filename_from_uri (uri, NULL, NULL);
-          g_free (uri);
-
           dest_profile = lcms_load_profile (filename, NULL);
         }
       else

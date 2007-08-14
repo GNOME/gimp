@@ -976,16 +976,18 @@ prefs_profile_combo_dialog_response (GimpProfileChooserDialog *dialog,
 {
   if (response == GTK_RESPONSE_ACCEPT)
     {
-      gchar *uri = gtk_file_chooser_get_uri (GTK_FILE_CHOOSER (dialog));
+      gchar *filename;
 
-      if (uri)
+      filename = gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (dialog));
+
+      if (filename)
         {
-          gchar *label = gimp_profile_chooser_dialog_get_desc (dialog, uri);
+          gchar *label = gimp_profile_chooser_dialog_get_desc (dialog,
+                                                               filename);
 
-          gimp_color_profile_combo_box_set_active (combo, uri, label);
+          gimp_color_profile_combo_box_set_active (combo, filename, label);
 
           g_free (label);
-          g_free (uri);
         }
     }
 
@@ -996,15 +998,13 @@ static void
 prefs_profile_combo_changed (GimpColorProfileComboBox *combo,
                              GObject                  *config)
 {
-  gchar *uri      = gimp_color_profile_combo_box_get_active (combo);
-  gchar *filename = uri ? g_filename_from_uri (uri, NULL, NULL) : NULL;
+  gchar *filename = gimp_color_profile_combo_box_get_active (combo);
 
   g_object_set (config,
                 g_object_get_data (G_OBJECT (combo), "property-name"), filename,
                 NULL);
 
   g_free (filename);
-  g_free (uri);
 }
 
 static GtkWidget *
@@ -1017,7 +1017,6 @@ prefs_profile_combo_box_new (Gimp         *gimp,
   GtkWidget *dialog = gimp_profile_chooser_dialog_new (gimp, label);
   GtkWidget *combo;
   gchar     *filename;
-  gchar     *uri = NULL;
 
   g_object_get (config, property_name, &filename, NULL);
 
@@ -1027,19 +1026,8 @@ prefs_profile_combo_box_new (Gimp         *gimp,
   g_object_set_data (G_OBJECT (combo),
                      "property-name", (gpointer) property_name);
 
-  if (filename)
-    {
-      uri = g_filename_to_uri (filename, NULL, NULL);
-
-      if (! uri)
-        g_warning ("couldn't convert filename to URI");
-
-      g_free (filename);
-    }
-
   gimp_color_profile_combo_box_set_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
-                                           uri, NULL);
-  g_free (uri);
+                                           filename, NULL);
 
   g_signal_connect (dialog, "response",
                     G_CALLBACK (prefs_profile_combo_dialog_response),
