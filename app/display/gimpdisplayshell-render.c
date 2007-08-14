@@ -67,6 +67,9 @@ struct _RenderInfo
   gint              dest_bpp;
   gint              dest_bpl;
   gint              dest_width;
+
+  gint              xstart;
+  gint              xdelta;
 };
 
 static void gimp_display_shell_setup_render_info_scale
@@ -876,6 +879,9 @@ gimp_display_shell_setup_render_info_scale (RenderInfo       *info,
 
   info->src_x     = (gdouble) info->x / info->scalex;
   info->src_y     = (gdouble) info->y / info->scaley;
+
+  info->xstart = (info->src_x + ((info->x/info->scalex)-floor(info->x/info->scalex))) * 65536.0;
+  info->xdelta = (1 << 16) * (1.0/info->scalex);
 }
 
 static const guint *
@@ -908,7 +914,7 @@ render_image_tile_fault (RenderInfo *info)
   guchar       *dest;
   gint          width;
   gint          tilex;
-  gint          stepx;
+  gint          xdelta;
   gint          bpp;
   glong         x;
 
@@ -924,12 +930,14 @@ render_image_tile_fault (RenderInfo *info)
   bpp   = tile_manager_bpp (info->src_tiles);
   dest  = tile_buf;
 
-  x     = info->src_x << 16;
+  x     = info->xstart;
+  
+
   width = info->w;
 
   tilex = info->src_x / TILE_WIDTH;
 
-  stepx = (1 << 16) * (1.0/info->scalex);
+  xdelta = info->xdelta;
 
   do
     {
@@ -949,7 +957,7 @@ render_image_tile_fault (RenderInfo *info)
           *dest++ = *s++;
         }
 
-      x += stepx;
+      x += xdelta;
       skipped = (x >> 16) - src_x;
       if (skipped)
         {

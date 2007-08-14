@@ -1,3 +1,18 @@
+2007-08-14  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c: Fixed regression at zoom
+	levels > 100%, and moved some floating point code out of the worker
+	function.
+
+2007-08-14  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/common/dicom.c
+	* plug-ins/common/psd-load.c
+	* plug-ins/common/sunras.c: applied patch from Nils Philippsen
+	that replaces several calls to g_error() by g_message() and
+	gimp_quit() so that GIMP does not complain when a plug-in exits.
+	Fixes bug #466610.
+
 2007-08-14  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/common/dicom.c
