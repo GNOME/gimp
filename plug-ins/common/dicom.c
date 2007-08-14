@@ -415,8 +415,9 @@ load_image (const gchar *filename)
 
       if (element_length >= (G_MAXUINT - 6))
         {
-          g_error ("'%s' seems to have an incorrect value field length.",
+          g_message ("'%s' seems to have an incorrect value field length.",
                      gimp_filename_to_utf8 (filename));
+          gimp_quit ();
         }
 
       /* Read contents. Allocate a bit more to make room for casts to int
@@ -481,8 +482,9 @@ load_image (const gchar *filename)
 
   if ((width > GIMP_MAX_IMAGE_SIZE) || (height > GIMP_MAX_IMAGE_SIZE))
     {
-      g_error ("'%s' has a larger image size than GIMP can handle.",
+      g_message ("'%s' has a larger image size than GIMP can handle.",
                  gimp_filename_to_utf8 (filename));
+      gimp_quit ();
     }
 
   dicominfo->width  = width;

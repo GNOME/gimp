@@ -1051,12 +1051,14 @@ do_layer_record (FILE    *fd,
   if ((layer->height > GIMP_MAX_IMAGE_SIZE) ||
       (layer->width > GIMP_MAX_IMAGE_SIZE))
     {
-      g_error ("Input file has a larger layer size than GIMP can handle.");
+      g_message ("Input file has a larger layer size than GIMP can handle.");
+      gimp_quit ();
     }
 
   if (layer->height && layer->width > (G_MAXUINT / layer->height))
     {
-      g_error ("Input file has a larger layer size than GIMP can handle.");
+      g_message ("Input file has a larger layer size than GIMP can handle.");
+      gimp_quit ();
     }
 
   IFDBG g_printerr ("\t\t\t\tLayer extents: (%d,%d) -> (%d,%d)\n",
@@ -1185,12 +1187,14 @@ do_layer_record (FILE    *fd,
     if ((layer->lm_height > GIMP_MAX_IMAGE_SIZE) ||
         (layer->lm_width > GIMP_MAX_IMAGE_SIZE))
       {
-        g_error ("Input file has a larger layer mask size than GIMP can handle.");
+        g_message ("Input file has a larger layer mask size than GIMP can handle.");
+        gimp_quit ();
       }
 
     if (layer->lm_height && layer->lm_width > (G_MAXUINT / layer->lm_height))
       {
-        g_error ("Input file has a larger layer mask size than GIMP can handle.");
+        g_message ("Input file has a larger layer mask size than GIMP can handle.");
+        gimp_quit ();
       }
 
       color = getguchar(fd, "lmask color");
@@ -3229,8 +3233,9 @@ read_whole_file (FILE *fd, const gchar *filename)
 
     if (PSDheader.channels > 56)
       {
-        g_error ("'%s' has more channels than GIMP can handle.",
-                 gimp_filename_to_utf8 (filename));
+        g_message ("'%s' has more channels than GIMP can handle.",
+                   gimp_filename_to_utf8 (filename));
+        gimp_quit ();
       }
 
     PSDheader.rows     = getgint32 (fd, "rows");
@@ -3242,14 +3247,16 @@ read_whole_file (FILE *fd, const gchar *filename)
     if ((PSDheader.rows > GIMP_MAX_IMAGE_SIZE) ||
         (PSDheader.columns > GIMP_MAX_IMAGE_SIZE))
       {
-        g_error ("'%s' has a larger image size than GIMP can handle.",
-                 gimp_filename_to_utf8 (filename));
+        g_message ("'%s' has a larger image size than GIMP can handle.",
+                   gimp_filename_to_utf8 (filename));
+        gimp_quit ();
       }
 
     if (PSDheader.rows && PSDheader.columns > (G_MAXUINT / PSDheader.rows))
       {
-        g_error ("'%s' has a larger image size than GIMP can handle.",
-                 gimp_filename_to_utf8 (filename));
+        g_message ("'%s' has a larger image size than GIMP can handle.",
+                   gimp_filename_to_utf8 (filename));
+        gimp_quit ();
       }
 
     PSDheader.bpp      = getgint16 (fd, "depth");
