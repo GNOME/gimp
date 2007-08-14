@@ -56,7 +56,6 @@ struct _RenderInfo
   GimpDisplayShell *shell;
   TileManager      *src_tiles;
   const guint      *alpha;
-  const guchar     *scale;
   const guchar     *src;
   guchar           *dest;
   gint              x, y;
@@ -163,9 +162,6 @@ static void     render_image_indexed_a          (RenderInfo       *info);
 
 static const guint  * render_image_init_alpha         (gint        mult);
 
-static const guchar * render_image_accelerate_scaling (gint        width,
-                                                       gint        start,
-                                                       gdouble     scalex);
 static const guchar * render_image_tile_fault         (RenderInfo *info);
 
 
@@ -880,10 +876,6 @@ gimp_display_shell_setup_render_info_scale (RenderInfo       *info,
 
   info->src_x     = (gdouble) info->x / info->scalex;
   info->src_y     = (gdouble) info->y / info->scaley;
-
-  info->scale     = render_image_accelerate_scaling (info->w,
-                                                     info->x,
-                                                     info->scalex);
 }
 
 static const guint *
@@ -907,39 +899,18 @@ render_image_init_alpha (gint mult)
   return alpha_mult;
 }
 
-static const guchar *
-render_image_accelerate_scaling (gint    width,
-                                 gint    start,
-                                 gdouble scalex)
-{
-  static guchar *scale = NULL;
-
-  gint  i;
-
-  if (! scale)
-    scale = g_new (guchar, GIMP_RENDER_BUF_WIDTH + 1);
-
-  for (i = 0; i <= width; i++)
-    {
-      scale[i] = RINT (floor ((start + 1) / scalex) - floor (start / scalex));
-      start++;
-    }
-
-  return scale;
-}
-
+/* function to render a horizontal line of view data */
 static const guchar *
 render_image_tile_fault (RenderInfo *info)
 {
   Tile         *tile;
   const guchar *src;
-  const guchar *scale;
   guchar       *dest;
   gint          width;
   gint          tilex;
-  gint          step;
+  gint          stepx;
   gint          bpp;
-  gint          x;
+  glong         x;
 
   tile = tile_manager_get_tile (info->src_tiles,
                                 info->src_x, info->src_y, TRUE, FALSE);
@@ -951,17 +922,20 @@ render_image_tile_fault (RenderInfo *info)
                            info->src_y % TILE_HEIGHT);
 
   bpp   = tile_manager_bpp (info->src_tiles);
-  scale = info->scale;
   dest  = tile_buf;
 
-  x     = info->src_x;
+  x     = info->src_x << 16;
   width = info->w;
 
   tilex = info->src_x / TILE_WIDTH;
 
+  stepx = (1 << 16) * (1.0/info->scalex);
+
   do
     {
-      const guchar *s = src;
+      const guchar *s  = src;
+      gint  src_x = x >> 16;
+      gint  skipped;
 
       switch (bpp)
         {
@@ -975,25 +949,25 @@ render_image_tile_fault (RenderInfo *info)
           *dest++ = *s++;
         }
 
-      step = *scale++;
-
-      if (step)
+      x += stepx;
+      skipped = (x >> 16) - src_x;
+      if (skipped)
         {
-          x += step;
-          src += step * bpp;
+          src += skipped * bpp;
+          src_x += skipped;
 
-          if ((x / TILE_WIDTH) != tilex)
+          if ((src_x / TILE_WIDTH) != tilex)
             {
               tile_release (tile, FALSE);
               tilex += 1;
 
               tile = tile_manager_get_tile (info->src_tiles,
-                                            x, info->src_y, TRUE, FALSE);
+                                            src_x, info->src_y, TRUE, FALSE);
               if (!tile)
                 return tile_buf;
 
               src = tile_data_pointer (tile,
-                                       x % TILE_WIDTH,
+                                       src_x % TILE_WIDTH,
                                        info->src_y % TILE_HEIGHT);
             }
         }
