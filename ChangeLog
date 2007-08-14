@@ -1,3 +1,23 @@
+2007-08-14  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/Makefile.am
+	* libgimpwidgets/gimpwidgets.h
+	* libgimpwidgets/gimpwidgetstypes.h
+	* libgimpwidgets/gimpcolorprofilecombobox.[ch]
+	* libgimpwidgets/gimpcolorprofilestore.[ch]
+	* libgimpwidgets/gimpcolorprofilestore-private.h: new widget to
+	select color profiles.
+
+	* libgimpwidgets/gimpwidgets.def: updated.
+
+	* app/widgets/gimpprofilechooserdialog.[ch]: remember the name of
+	the last previewed profile.
+
+	* app/dialogs/preferences-dialog.c: use the new color profile
+	combo-box.
+
+	* plug-ins/common/lcms.c: use the new color profile combo-box.
+
 2007-08-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/core/gimpimage-item-list.c: fixed API docs.

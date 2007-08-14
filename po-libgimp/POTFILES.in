@@ -37,6 +37,7 @@ libgimpthumb/gimpthumbnail.c
 
 libgimpwidgets/gimpbrowser.c
 libgimpwidgets/gimpcolorbutton.c
+libgimpwidgets/gimpcolorprofilestore.c
 libgimpwidgets/gimpcolorscales.c
 libgimpwidgets/gimpcolorselect.c
 libgimpwidgets/gimpcolorselection.c

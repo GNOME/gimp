@@ -37,6 +37,8 @@
 #include <libgimpwidgets/gimpcolordisplaystack.h>
 #include <libgimpwidgets/gimpcolorhexentry.h>
 #include <libgimpwidgets/gimpcolornotebook.h>
+#include <libgimpwidgets/gimpcolorprofilecombobox.h>
+#include <libgimpwidgets/gimpcolorprofilestore.h>
 #include <libgimpwidgets/gimpcolorscale.h>
 #include <libgimpwidgets/gimpcolorscales.h>
 #include <libgimpwidgets/gimpcolorselector.h>

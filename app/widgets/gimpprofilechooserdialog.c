@@ -236,10 +236,28 @@ gimp_profile_chooser_dialog_new (Gimp        *gimp,
                        NULL);
 }
 
+gchar *
+gimp_profile_chooser_dialog_get_desc (GimpProfileChooserDialog *dialog,
+                                      const gchar              *uri)
+{
+  g_return_val_if_fail (GIMP_IS_PROFILE_CHOOSER_DIALOG (dialog), NULL);
+
+  if (uri && dialog->uri && strcmp (uri, dialog->uri) == 0)
+    return g_strdup (dialog->desc);
+
+  return NULL;
+}
+
 static void
 gimp_profile_chooser_dialog_update_preview (GimpProfileChooserDialog *dialog)
 {
   gtk_text_buffer_set_text (dialog->buffer, "", 0);
+
+  g_free (dialog->uri);
+  dialog->uri = NULL;
+
+  g_free (dialog->desc);
+  dialog->desc = NULL;
 
   if (dialog->idle_id)
     g_source_remove (dialog->idle_id);
@@ -296,13 +314,15 @@ gimp_profile_view_query (GimpProfileChooserDialog *dialog)
 
   if (filename)
     {
+      gchar *name = NULL;
+      gchar *desc = NULL;
       gchar *info = NULL;
 
       if (plug_in_icc_profile_file_info (dialog->gimp,
                                          gimp_get_user_context (dialog->gimp),
                                          NULL,
                                          filename,
-                                         NULL, NULL, &info,
+                                         &name, &desc, &info,
                                          NULL))
         {
           gsize info_len = strlen (info);
@@ -318,6 +338,23 @@ gimp_profile_view_query (GimpProfileChooserDialog *dialog)
             }
 
           gtk_text_buffer_set_text (dialog->buffer, info, info_len);
+
+          if (desc)
+            {
+              dialog->desc = desc;
+              desc = NULL;
+            }
+          else if (name)
+            {
+              dialog->desc = name;
+              name = NULL;
+            }
+
+          dialog->uri = uri;
+          uri = NULL;
+
+          g_free (name);
+          g_free (desc);
           g_free (info);
         }
 

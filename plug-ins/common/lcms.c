@@ -538,7 +538,7 @@ lcms_icc_apply (GimpColorConfig *config,
       cmsCloseProfile (src_profile);
       cmsCloseProfile (dest_profile);
 
-      g_printerr ("skipping conversion because profiles seem to be equal:\n");
+      g_printerr ("lcms: skipping conversion because profiles seem to be equal:\n");
       g_printerr (" %s\n", src_desc);
       g_printerr (" %s\n", dest_desc);
 
@@ -1160,6 +1160,158 @@ lcms_icc_apply_dialog (gint32       image,
   return run;
 }
 
+static void
+lcms_icc_combo_box_set_active (GimpColorProfileComboBox *combo,
+                               const gchar              *uri)
+{
+  cmsHPROFILE  profile;
+  gchar       *filename = g_filename_from_uri (uri, NULL, NULL);
+  gchar       *name     = NULL;
+
+  profile = lcms_load_profile (filename, NULL);
+
+  if (profile)
+    {
+      name = lcms_icc_profile_get_desc (profile);
+      if (! name)
+        name = lcms_icc_profile_get_name (profile);
+
+      cmsCloseProfile (profile);
+    }
+
+  g_free (filename);
+
+  gimp_color_profile_combo_box_set_active (combo, uri, name);
+  g_free (name);
+}
+
+static void
+lcms_icc_file_chooser_dialog_response (GtkFileChooser           *dialog,
+                                       gint                      response,
+                                       GimpColorProfileComboBox *combo)
+{
+  if (response == GTK_RESPONSE_ACCEPT)
+    {
+      gchar *uri = gtk_file_chooser_get_uri (dialog);
+
+      if (uri)
+        {
+          lcms_icc_combo_box_set_active (combo, uri);
+          g_free (uri);
+        }
+    }
+
+  gtk_widget_hide (GTK_WIDGET (dialog));
+}
+
+static GtkWidget *
+lcms_icc_file_chooser_dialog_new (void)
+{
+  GtkWidget     *dialog;
+  GtkFileFilter *filter;
+
+  dialog = gtk_file_chooser_dialog_new (_("Select destination profile"),
+                                        NULL,
+                                        GTK_FILE_CHOOSER_ACTION_OPEN,
+
+                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        GTK_STOCK_OPEN,   GTK_RESPONSE_ACCEPT,
+
+                                        NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_ACCEPT,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
+
+#ifndef G_OS_WIN32
+  {
+    const gchar folder[] = "/usr/share/color/icc";
+
+    if (g_file_test (folder, G_FILE_TEST_IS_DIR))
+      gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
+                                            folder, NULL);
+  }
+#endif
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("All files (*.*)"));
+  gtk_file_filter_add_pattern (filter, "*");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("ICC color profile (*.icc, *.icm)"));
+  gtk_file_filter_add_pattern (filter, "*.[Ii][Cc][Cc]");
+  gtk_file_filter_add_pattern (filter, "*.[Ii][Cc][Mm]");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
+
+  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
+
+  return dialog;
+}
+
+static GtkWidget *
+lcms_icc_combo_box_new (GimpColorConfig *config,
+                        const gchar     *filename)
+{
+  GtkWidget   *combo;
+  GtkWidget   *dialog;
+  gchar       *history;
+  gchar       *label;
+  gchar       *name;
+  cmsHPROFILE  profile;
+
+  dialog = lcms_icc_file_chooser_dialog_new ();
+  history = gimp_personal_rc_file ("profilerc");
+
+  combo = gimp_color_profile_combo_box_new (dialog, history);
+
+  g_free (history);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (lcms_icc_file_chooser_dialog_response),
+                    combo);
+  g_object_unref (dialog);
+
+  if (config->rgb_profile)
+    profile = lcms_load_profile (config->rgb_profile, NULL);
+  else
+    profile = cmsCreate_sRGBProfile ();
+
+  name = lcms_icc_profile_get_desc (profile);
+  if (! name)
+    name = lcms_icc_profile_get_name (profile);
+
+  cmsCloseProfile (profile);
+
+  label = g_strdup_printf (_("RGB workspace (%s)"), name);
+  g_free (name);
+
+  gimp_color_profile_combo_box_add (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                    config->rgb_profile, label);
+  g_free (label);
+
+  if (filename)
+    {
+      gchar *uri = g_filename_to_uri (filename, NULL, NULL);
+
+      if (uri)
+        {
+          lcms_icc_combo_box_set_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                         uri);
+          g_free (uri);
+        }
+    }
+  else
+    {
+      gtk_combo_box_set_active (GTK_COMBO_BOX (combo), 0);
+    }
+
+  return combo;
+}
+
 static gboolean
 lcms_dialog (GimpColorConfig *config,
              gint32           image,
@@ -1169,10 +1321,9 @@ lcms_dialog (GimpColorConfig *config,
   GtkWidget   *vbox;
   GtkWidget   *frame;
   GtkWidget   *label;
+  GtkWidget   *combo;
   cmsHPROFILE  src_profile;
-  cmsHPROFILE  dest_profile;
   gchar       *name;
-  gchar       *filename = NULL;
   gboolean     success  = TRUE;
   gboolean     run;
 
@@ -1189,8 +1340,6 @@ lcms_dialog (GimpColorConfig *config,
 
   if (! src_profile)
     src_profile = cmsCreate_sRGBProfile ();
-
-  dest_profile = cmsCreate_sRGBProfile ();
 
   gimp_ui_init (PLUG_IN_BINARY, FALSE);
 
@@ -1221,7 +1370,7 @@ lcms_dialog (GimpColorConfig *config,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), vbox);
   gtk_widget_show (vbox);
 
-  frame = gimp_frame_new ("Current Color Profile");
+  frame = gimp_frame_new (_("Current Color Profile"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
@@ -1236,39 +1385,58 @@ lcms_dialog (GimpColorConfig *config,
 
   g_free (name);
 
-  frame = gimp_frame_new (apply ? "Convert to" : "Assign");
+  frame = gimp_frame_new (apply ? _("Convert to") : _("Assign"));
   gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
   gtk_widget_show (frame);
 
-  name = lcms_icc_profile_get_desc (dest_profile);
-  if (! name)
-    name = lcms_icc_profile_get_name (dest_profile);
-
-  label = gtk_label_new (name);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.0, 0.5);
-  gtk_container_add (GTK_CONTAINER (frame), label);
-  gtk_widget_show (label);
-
-  g_free (name);
+  combo = lcms_icc_combo_box_new (config, NULL);
+  gtk_container_add (GTK_CONTAINER (frame), combo);
+  gtk_widget_show (combo);
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
 
-  gtk_widget_destroy (dialog);
+  gtk_widget_hide (dialog);
 
   if (run)
     {
-      if (apply)
-        success = lcms_image_apply_profile (image,
-                                            src_profile, dest_profile,
-                                            filename);
+      cmsHPROFILE  dest_profile;
+      gchar       *filename = NULL;
+      gchar       *uri;
+
+      uri = gimp_color_profile_combo_box_get_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo));
+
+      if (uri)
+        {
+          filename = g_filename_from_uri (uri, NULL, NULL);
+          g_free (uri);
+
+          dest_profile = lcms_load_profile (filename, NULL);
+        }
       else
-        success = lcms_image_set_profile (image, dest_profile, filename);
+        {
+          dest_profile = cmsCreate_sRGBProfile ();
+        }
+
+      if (lcms_icc_profile_is_rgb (dest_profile))
+        {
+          if (apply)
+            success = lcms_image_apply_profile (image,
+                                                src_profile, dest_profile,
+                                                filename);
+          else
+            success = lcms_image_set_profile (image, dest_profile, filename);
+        }
+      else
+        {
+          gimp_message (_("Destination profile is not for RGB color space."));
+        }
+
+      cmsCloseProfile (dest_profile);
     }
 
-  cmsCloseProfile (src_profile);
-  cmsCloseProfile (dest_profile);
+  gtk_widget_destroy (dialog);
 
-  g_free (filename);
+  cmsCloseProfile (src_profile);
 
   return success;
 }

@@ -62,6 +62,15 @@ EXPORTS
 	gimp_color_hex_entry_set_color
 	gimp_color_notebook_get_type
 	gimp_color_notebook_set_has_page
+	gimp_color_profile_combo_box_add
+	gimp_color_profile_combo_box_get_active
+	gimp_color_profile_combo_box_get_type
+	gimp_color_profile_combo_box_new
+	gimp_color_profile_combo_box_new_with_model
+	gimp_color_profile_combo_box_set_active
+	gimp_color_profile_store_add
+	gimp_color_profile_store_get_type
+	gimp_color_profile_store_new
 	gimp_color_scale_entry_new
 	gimp_color_scale_get_type
 	gimp_color_scale_new

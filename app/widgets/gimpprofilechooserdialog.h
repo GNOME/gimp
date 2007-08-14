@@ -41,6 +41,10 @@ struct _GimpProfileChooserDialog
 
   Gimp                 *gimp;
   GtkTextBuffer        *buffer;
+
+  gchar                *uri;
+  gchar                *desc;
+
   guint                 idle_id;
 };
 
@@ -50,10 +54,12 @@ struct _GimpProfileChooserDialogClass
 };
 
 
-GType       gimp_profile_chooser_dialog_get_type      (void) G_GNUC_CONST;
+GType       gimp_profile_chooser_dialog_get_type (void) G_GNUC_CONST;
 
-GtkWidget * gimp_profile_chooser_dialog_new           (Gimp        *gimp,
-                                                       const gchar *title);
+GtkWidget * gimp_profile_chooser_dialog_new      (Gimp        *gimp,
+                                                  const gchar *title);
 
+gchar     * gimp_profile_chooser_dialog_get_desc (GimpProfileChooserDialog *dialog,
+                                                  const gchar              *uri);
 
 #endif /* __GIMP_PROFILE_CHOOSER_DIALOG_H__ */
