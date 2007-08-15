@@ -1,3 +1,7 @@
+2007-08-15  Sven Neumann  <sven@gimp.org>
+
+	* data/images: renamed old splash and logo images.
+
 2007-08-15  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c: added a bilinear filtering
