@@ -148,7 +148,7 @@ print_page_layout_gui (PrintData *data)
 
   /*  main hbox  */
   main_hbox = gtk_hbox_new (FALSE, 12);
-  gtk_box_pack_start (GTK_BOX (layout), main_hbox, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (layout), main_hbox, TRUE, TRUE, 0);
   gtk_widget_show (main_hbox);
 
   /*  main vbox  */

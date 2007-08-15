@@ -1,5 +1,10 @@
 2007-08-15  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/print/print-page-layout.c: applied patch from Stefan
+	Röllin that makes the preview resize with the dialog (bug #466923).
+
+2007-08-15  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolorprofilecombobox.c
 	* libgimpwidgets/gimpcolorprofilestore.c: documentation.
 
