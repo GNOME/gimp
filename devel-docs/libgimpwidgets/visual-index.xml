@@ -25,6 +25,9 @@
   <link linkend="GimpColorSelection">
     <inlinegraphic fileref="gimp-color-selection.png" format="PNG"></inlinegraphic>
   </link>
+  <link linkend="GimpColorProfileComboBox">
+    <inlinegraphic fileref="gimp-color-profile-combo-box.png" format="PNG"></inlinegraphic>
+  </link>
   <link linkend="GimpDialog">
     <inlinegraphic fileref="gimp-dialog.png" format="PNG"></inlinegraphic>
   </link>
