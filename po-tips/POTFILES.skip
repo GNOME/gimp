@@ -363,7 +363,6 @@ app/xcf/xcf-read.c
 app/xcf/xcf-seek.c
 app/xcf/xcf-write.c
 app/xcf/xcf.c
-data/tips/gimp-tips.xml.in
 desktop/gimp.desktop.in
 desktop/gimp.desktop.in.in
 libgimp/gimpbrushselectbutton.c
@@ -681,7 +680,11 @@ plug-ins/pygimp/plug-ins/shadow_bevel.py
 plug-ins/rcm/rcm.c
 plug-ins/rcm/rcm_dialog.c
 plug-ins/rcm/rcm_stock.c
-plug-ins/script-fu/contactsheet.scm
+plug-ins/script-fu/script-fu-console.c
+plug-ins/script-fu/script-fu-interface.c
+plug-ins/script-fu/script-fu-scripts.c
+plug-ins/script-fu/script-fu-server.c
+plug-ins/script-fu/script-fu.c
 plug-ins/sel2path/pxl-outline.c
 plug-ins/sel2path/sel2path.c
 plug-ins/sgi/sgi.c

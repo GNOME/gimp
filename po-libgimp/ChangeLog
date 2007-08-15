@@ -1,7 +1,10 @@
+2007-08-15  Sven Neumann  <sven@gimp.org>
+
+	* POTFILES.in: added missing file modules/colorsel_cmyk_lcms.c.
+
 2007-08-14  Sven Neumann  <sven@gimp.org>
 
-	* po-libgimp/POTFILES.in: added new file 
-	libgimpwidgets/gimpcolorprofilestore.c.
+	* POTFILES.in: added new file libgimpwidgets/gimpcolorprofilestore.c.
 
 2007-08-14 Marco Ciampa  <ciampix@libero.it>
 
