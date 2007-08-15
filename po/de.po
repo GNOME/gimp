@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-15 10:34+0200\n"
-"PO-Revision-Date: 2007-08-15 11:34+0200\n"
+"PO-Revision-Date: 2007-08-15 13:11+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -10525,7 +10525,7 @@ msgstr "Auswahl auf alle sichtbaren Bereiche stützen"
 
 #: ../app/tools/gimpselectionoptions.c:344 ../app/tools/gimptextoptions.c:456
 msgid "Antialiasing"
-msgstr "Kantenglättung"
+msgstr "Kanten glätten"
 
 #: ../app/tools/gimpselectionoptions.c:362
 msgid "Feather edges"
