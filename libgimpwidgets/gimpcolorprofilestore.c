@@ -94,6 +94,7 @@ gimp_color_profile_store_class_init (GimpColorProfileStoreClass *klass)
   /**
    * GimpColorProfileStore:history:
    *
+   * Filename of the color history used to populate the profile store.
    *
    * Since: GIMP 2.4
    */
@@ -246,13 +247,14 @@ gimp_color_profile_store_new (const gchar *history)
 
 /**
  * gimp_color_profile_store_add:
- * @store:
- * @filename:
- * @label:
+ * @store:    a #GimpColorProfileStore
+ * @filename: filename of the profile to add (or %NULL)
+ * @label:    label to use for the profile
+ *            (may only be %NULL if @filename is %NULL)
  *
- * Adds an item to the #GimpColorProfileStore. Items added with this
- * function will be kept at the top, separated from the history of last
- * used items.
+ * Adds a color profile item to the #GimpColorProfileStore. Items
+ * added with this function will be kept at the top, separated from
+ * the history of last used color profiles.
  *
  * This function is often used to add a selectable item for the %NULL
  * filename. If you pass %NULL for both @filename and @label, the
@@ -289,10 +291,10 @@ gimp_color_profile_store_add (GimpColorProfileStore *store,
 
 /**
  * _gimp_color_profile_store_history_add:
- * @store:
- * @filename:
- * @label:
- * @iter:
+ * @store:    a #GimpColorProfileStore
+ * @filename: filename of the profile to add (or %NULL)
+ * @label:    label to use for the profile (or %NULL)
+ * @iter:     a #GtkTreeIter
  *
  * Return value: %TRUE if the iter is valid and pointing to the item
  *

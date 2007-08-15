@@ -1,5 +1,6 @@
 2007-08-15  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpcolorprofilecombobox.c
 	* libgimpwidgets/gimpcolorprofilestore.c: documentation.
 
 2007-08-15  Sven Neumann  <sven@gimp.org>
