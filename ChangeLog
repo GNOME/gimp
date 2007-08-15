@@ -1,3 +1,7 @@
+2007-08-16  Sven Neumann  <sven@gimp.org>
+
+	* Made 2.4.0-rc1 release, a release candidate for GIMP 2.4.0.
+
 2007-08-15  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: bumped the version to 2.4.0-rc1.

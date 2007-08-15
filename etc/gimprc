@@ -32,7 +32,7 @@
 # Sets how many processors GIMP should try to use simultaneously.  This is an
 # integer value.
 # 
-# (num-processors 2)
+# (num-processors 1)
 
 # When the amount of pixel data exceeds this limit, GIMP will start to swap
 # tiles to disk.  This is a lot slower but it makes it possible to work on
@@ -159,8 +159,8 @@
 # Sets the default image in the "File/New" dialog.  This is a parameter list.
 # 
 # (default-image
-#     (width 377)
-#     (height 233)
+#     (width 420)
+#     (height 300)
 #     (unit pixels)
 #     (xresolution 72.000000)
 #     (yresolution 72.000000)

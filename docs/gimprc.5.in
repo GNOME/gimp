@@ -54,7 +54,7 @@ on a folder that is mounted over NFS.  For these reasons, it may be desirable
 to put your swap file in "/tmp".  This is a single folder.
 
 .TP
-(num-processors 2)
+(num-processors 1)
 
 Sets how many processors GIMP should try to use simultaneously.  This is an
 integer value.
@@ -208,8 +208,8 @@ are yes and no.
 
 .TP
 (default-image
-    (width 377)
-    (height 233)
+    (width 420)
+    (height 300)
     (unit pixels)
     (xresolution 72.000000)
     (yresolution 72.000000)
