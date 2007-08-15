@@ -220,9 +220,19 @@ gimp_color_profile_store_get_property (GObject    *object,
 
 /**
  * gimp_color_profile_store_new:
- * @history:
+ * @history: filename of the profilerc (or %NULL for no history)
  *
- * Return value: a new #GimpColorProfileStore.
+ * Creates a new #GimpColorProfileStore object and populates it with
+ * last used profiles read from the file @history. The updated history
+ * is written back to disk when the store is disposed.
+ *
+ * The filename passed as @history is typically created using the
+ * following code snippet:
+ * <informalexample><programlisting>
+ *  gchar *history = gimp_personal_rc_file ("profilerc");
+ * </programlisting></informalexample>
+ *
+ * Return value: a new #GimpColorProfileStore
  *
  * Since: GIMP 2.4
  **/
@@ -239,6 +249,15 @@ gimp_color_profile_store_new (const gchar *history)
  * @store:
  * @filename:
  * @label:
+ *
+ * Adds an item to the #GimpColorProfileStore. Items added with this
+ * function will be kept at the top, separated from the history of last
+ * used items.
+ *
+ * This function is often used to add a selectable item for the %NULL
+ * filename. If you pass %NULL for both @filename and @label, the
+ * @label will be set to the string "None" for you (and translated for
+ * the user).
  *
  * Since: GIMP 2.4
  **/
