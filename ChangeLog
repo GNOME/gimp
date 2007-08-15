@@ -1,3 +1,13 @@
+2007-08-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/core/core-types.h: remove GimpPlugInDebug typedef.
+
+	* app/plug-in/plug-in-types.h: added it here instead.
+
+	* app/core/gimpchannel-combine.h
+	* app/widgets/gimppropwidgets.[ch]: match parameter names
+	in .c, .h and API docs to make gtk-doc happy.
+
 2007-08-15  Joao S. O. Bueno Calligaris <gwidion@mpc.com.br>
 
         * plug-ins/pygimp/pygimp-drawable.c: avoids function call

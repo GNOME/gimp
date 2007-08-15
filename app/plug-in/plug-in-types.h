@@ -26,6 +26,7 @@
 
 
 typedef struct _GimpPlugIn           GimpPlugIn;
+typedef struct _GimpPlugInDebug      GimpPlugInDebug;
 typedef struct _GimpPlugInDef        GimpPlugInDef;
 typedef struct _GimpPlugInManager    GimpPlugInManager;
 typedef struct _GimpPlugInMenuBranch GimpPlugInMenuBranch;

@@ -478,8 +478,7 @@ gimp_prop_number_pair_entry_data_free (GimpPropNumberPairEntryData *data)
 }
 
 
-static void  gimp_prop_number_pair_entry_config_notify
-                                                         (GObject                     *config,
+static void  gimp_prop_number_pair_entry_config_notify   (GObject                     *config,
                                                           GParamSpec                  *param_spec,
                                                           GtkEntry                    *entry);
 static void  gimp_prop_number_pair_entry_number_pair_numbers_changed
@@ -501,7 +500,7 @@ static void  gimp_prop_number_pair_entry_number_pair_user_override_notify
  * @user_override_property:        Name of boolean property for user override mode.
  * @connect_numbers_changed:       %TRUE to connect to the widgets "numbers-changed"
  *                                 signal, %FALSE to not connect.
- * @connect_numbers_changed:       %TRUE to connect to the widgets "ratio-changed"
+ * @connect_ratio_changed:         %TRUE to connect to the widgets "ratio-changed"
  *                                 signal, %FALSE to not connect.
  * @separators:
  * @allow_simplification:

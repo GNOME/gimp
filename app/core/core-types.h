@@ -159,7 +159,6 @@ typedef struct _GimpGradientSegment GimpGradientSegment;
 typedef struct _GimpSamplePoint     GimpSamplePoint;
 typedef         guint32             GimpTattoo;
 typedef struct _GimpPaletteEntry    GimpPaletteEntry;
-typedef struct _GimpPlugInDebug     GimpPlugInDebug;
 typedef struct _GimpScanConvert     GimpScanConvert;
 
 
