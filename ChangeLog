@@ -17,10 +17,13 @@
 
 2007-08-15  Øyvind Kolås  <pippin@gimp.org>
 
+	Improve resampling when zooming out of the image for zoom-ratios that
+	are not powers of two.
+
 	* app/display/gimpdisplayshell-render.c: added a bilinear filtering
 	like weighting of neighbourhood pixels for approximating the
 	downsampling from the next larger level in the projection mipmap.
-	Also some general code cleanup.
+	Also some general code cleanup. Closes bug #76096.
 
 2007-08-15  Sven Neumann  <sven@gimp.org>
 
