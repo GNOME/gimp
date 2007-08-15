@@ -131,6 +131,7 @@ gimp_font_select_get_type
 gimp_font_view_get_type
 gimp_foreground_select_options_get_type
 gimp_foreground_select_tool_get_type
+gimp_foreground_select_tool_undo_get_type
 gimp_free_select_tool_get_type
 gimp_fuzzy_select_tool_get_type
 gimp_get_type
@@ -165,6 +166,7 @@ gimp_imagefile_get_type
 gimp_ink_get_type
 gimp_ink_options_get_type
 gimp_ink_tool_get_type
+gimp_ink_undo_get_type
 gimp_interpreter_db_get_type
 gimp_iscissors_tool_get_type
 gimp_item_get_type
@@ -228,6 +230,7 @@ gimp_plug_in_procedure_get_type
 gimp_plugin_config_get_type
 gimp_posterize_tool_get_type
 gimp_procedure_get_type
+gimp_profile_chooser_dialog_new
 gimp_progress_box_get_type
 gimp_progress_dialog_get_type
 gimp_progress_interface_get_type
@@ -286,6 +289,7 @@ gimp_tool_view_get_type
 gimp_toolbox_get_type
 gimp_transform_options_get_type
 gimp_transform_tool_get_type
+gimp_transform_tool_undo_get_type
 gimp_ui_manager_get_type
 gimp_undo_editor_get_type
 gimp_undo_get_type

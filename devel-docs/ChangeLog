@@ -1,3 +1,10 @@
+2007-08-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/app.types
+	* app/app-docs.sgml
+	* app/app-sections.txt: completely updated, everything from app/
+	should be listed now.
+
 2007-08-15  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/visual-index.xml: added GimpColorProfileComboBox

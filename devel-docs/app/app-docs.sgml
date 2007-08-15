@@ -39,6 +39,7 @@
     <title>Paint Functions</title>
     <xi:include href="xml/paint-funcs-types.xml" />
     <xi:include href="xml/paint-funcs.xml" />
+    <xi:include href="xml/reduce-region.xml" />
     <xi:include href="xml/scale-region.xml" />
     <xi:include href="xml/subsample-region.xml" />
   </part>
@@ -145,6 +146,7 @@
       <xi:include href="xml/gimpcontainer-filter.xml" />
       <xi:include href="xml/gimplist.xml" />
       <xi:include href="xml/gimpdocumentlist.xml" />
+      <xi:include href="xml/gimptoolpresets.xml" />
     </chapter>
 
     <chapter id="app-core-gimp">
@@ -190,8 +192,12 @@
       <xi:include href="xml/gimpdata.xml" />
       <xi:include href="xml/gimpbrush.xml" />
       <xi:include href="xml/gimpbrush-header.xml" />
+      <xi:include href="xml/gimpbrush-load.xml" />
+      <xi:include href="xml/gimpbrush-scale.xml" />
       <xi:include href="xml/gimpbrushclipboard.xml" />
       <xi:include href="xml/gimpbrushgenerated.xml" />
+      <xi:include href="xml/gimpbrushgenerated-load.xml" />
+      <xi:include href="xml/gimpbrushgenerated-save.xml" />
       <xi:include href="xml/gimpbrushpipe.xml" />
       <xi:include href="xml/gimpgradient.xml" />
       <xi:include href="xml/gimpgradient-load.xml" />
@@ -201,6 +207,7 @@
       <xi:include href="xml/gimppalette-load.xml" />
       <xi:include href="xml/gimppattern.xml" />
       <xi:include href="xml/gimppattern-header.xml" />
+      <xi:include href="xml/gimppattern-load.xml" />
       <xi:include href="xml/gimppatternclipboard.xml" />
     </chapter>
 
@@ -221,6 +228,7 @@
       <xi:include href="xml/gimpdrawable-preview.xml" />
       <xi:include href="xml/gimpdrawable-transform.xml" />
       <xi:include href="xml/gimpchannel.xml" />
+      <xi:include href="xml/gimpchannel-combine.xml" />
       <xi:include href="xml/gimpchannel-select.xml" />
       <xi:include href="xml/gimplayermask.xml" />
       <xi:include href="xml/gimpselection.xml" />
@@ -231,6 +239,7 @@
     <chapter id="app-core-image">
       <title>The GimpImage Object</title>
       <xi:include href="xml/gimpimage.xml" />
+      <xi:include href="xml/gimpimage-arrange.xml" />
       <xi:include href="xml/gimpimage-colorhash.xml" />
       <xi:include href="xml/gimpimage-colormap.xml" />
       <xi:include href="xml/gimpimage-contiguous-region.xml" />
@@ -240,7 +249,7 @@
       <xi:include href="xml/gimpimage-flip.xml" />
       <xi:include href="xml/gimpimage-grid.xml" />
       <xi:include href="xml/gimpimage-guides.xml" />
-      <xi:include href="xml/gimpimage-sample-points.xml" />
+      <xi:include href="xml/gimpimage-item-list.xml" />
       <xi:include href="xml/gimpimage-merge.xml" />
       <xi:include href="xml/gimpimage-new.xml" />
       <xi:include href="xml/gimpimage-pick-color.xml" />
@@ -248,6 +257,7 @@
       <xi:include href="xml/gimpimage-quick-mask.xml" />
       <xi:include href="xml/gimpimage-resize.xml" />
       <xi:include href="xml/gimpimage-rotate.xml" />
+      <xi:include href="xml/gimpimage-sample-points.xml" />
       <xi:include href="xml/gimpimage-scale.xml" />
       <xi:include href="xml/gimpimage-snap.xml" />
       <xi:include href="xml/gimpimage-undo.xml" />
@@ -300,6 +310,8 @@
     <chapter id="app-core-misc-utils">
       <title>Misc. Utilities</title>
       <xi:include href="xml/gimp-utils.xml" />
+      <xi:include href="xml/gimp-transform-region.xml" />
+      <xi:include href="xml/gimp-transform-resize.xml" />
       <xi:include href="xml/gimp-transform-utils.xml" />
       <xi:include href="xml/gimparea.xml" />
       <xi:include href="xml/gimpcoords.xml" />
@@ -307,7 +319,9 @@
       <xi:include href="xml/gimpinterpreterdb.xml" />
       <xi:include href="xml/gimpmarshal.xml" />
       <xi:include href="xml/gimpparamspecs.xml" />
+      <xi:include href="xml/gimpparamspecs-desc.xml" />
       <xi:include href="xml/gimppreviewcache.xml" />
+      <xi:include href="xml/gimpsamplepoint.xml" />
       <xi:include href="xml/gimpscanconvert.xml" />
     </chapter>
   </part>
@@ -332,16 +346,28 @@
 
   <part id="app-vectors-part">
     <title>Vectors</title>
-    <xi:include href="xml/vectors-types.xml" />
-    <xi:include href="xml/gimpanchor.xml" />
-    <xi:include href="xml/gimpbezierstroke.xml" />
-    <xi:include href="xml/gimpstroke.xml" />
-    <xi:include href="xml/gimpvectors.xml" />
-    <xi:include href="xml/gimpvectors-compat.xml" />
-    <xi:include href="xml/gimpvectors-preview.xml" />
-    <xi:include href="xml/gimpvectors-import.xml" />
-    <xi:include href="xml/gimpvectors-export.xml" />
-    <xi:include href="xml/gimpvectors-warp.xml" />
+
+    <chapter id="app-vectors-vectors">
+      <title>The GimpVectors Objects</title>
+      <xi:include href="xml/vectors-types.xml" />
+      <xi:include href="xml/gimpanchor.xml" />
+      <xi:include href="xml/gimpbezierstroke.xml" />
+      <xi:include href="xml/gimpstroke.xml" />
+      <xi:include href="xml/gimpstroke-new.xml" />
+      <xi:include href="xml/gimpvectors.xml" />
+      <xi:include href="xml/gimpvectors-compat.xml" />
+      <xi:include href="xml/gimpvectors-preview.xml" />
+      <xi:include href="xml/gimpvectors-import.xml" />
+      <xi:include href="xml/gimpvectors-export.xml" />
+      <xi:include href="xml/gimpvectors-warp.xml" />
+    </chapter>
+
+    <chapter id="app-vectors-undo">
+      <title>Vectors Undo Objects</title>
+      <xi:include href="xml/gimpvectorsundo.xml" />
+      <xi:include href="xml/gimpvectorsmodundo.xml" />
+      <xi:include href="xml/gimpvectorspropundo.xml" />
+    </chapter>
   </part>
 
   <part id="app-xcf-part">
@@ -371,6 +397,7 @@
 
   <part id="app-pdb-part">
     <title>Procedural Database</title>
+    <xi:include href="xml/pdb-types.xml" />
     <xi:include href="xml/gimppdb.xml" />
     <xi:include href="xml/gimppdb-query.xml" />
     <xi:include href="xml/gimp-pdb-compat.xml" />
@@ -383,11 +410,11 @@
   <part id="app-plug-in-part">
     <title>Plug-Ins</title>
     <xi:include href="xml/plug-in-types.xml" />
+    <xi:include href="xml/plug-in-enums.xml" />
     <xi:include href="xml/plug-in-params.xml" />
 
     <chapter id="app-plug-in-management">
       <title>Initialization &amp; Plug-In Management</title>
-      <xi:include href="xml/plug-in-rc.xml" />
       <xi:include href="xml/gimpplugindef.xml" />
       <xi:include href="xml/gimppluginmanager.xml" />
       <xi:include href="xml/gimppluginmanager-call.xml" />
@@ -398,6 +425,7 @@
       <xi:include href="xml/gimppluginmanager-locale-domain.xml" />
       <xi:include href="xml/gimppluginmanager-menu-branch.xml" />
       <xi:include href="xml/gimppluginmanager-query.xml" />
+      <xi:include href="xml/plug-in-rc.xml" />
     </chapter>
 
     <chapter id="app-plug-in-execution">
@@ -407,8 +435,11 @@
       <xi:include href="xml/gimpplugin-cleanup.xml" />
       <xi:include href="xml/gimpplugin-message.xml" />
       <xi:include href="xml/gimpplugin-progress.xml" />
+      <xi:include href="xml/gimpplugindebug.xml" />
+      <xi:include href="xml/gimppluginerror.xml" />
       <xi:include href="xml/gimppluginprocframe.xml" />
       <xi:include href="xml/gimppluginshm.xml" />
+      <xi:include href="xml/plug-in-icc-profile.xml" />
     </chapter>
   </part>
 
@@ -422,7 +453,6 @@
       <title>The Paint Core &amp; Options</title>
       <xi:include href="xml/gimppaintcore.xml" />
       <xi:include href="xml/gimppaintcore-stroke.xml" />
-      <xi:include href="xml/gimppaintcoreundo.xml" />
       <xi:include href="xml/gimppaintoptions.xml" />
       <xi:include href="xml/gimpbrushcore.xml" />
       <xi:include href="xml/gimpbrushcore-kernels.xml" />
@@ -431,7 +461,7 @@
     </chapter>
 
     <chapter id="app-paint-implementations">
-      <title>Paint Implementations</title>
+      <title>Paint Implementations &amp; Options</title>
       <xi:include href="xml/gimpairbrush.xml" />
       <xi:include href="xml/gimpairbrushoptions.xml" />
       <xi:include href="xml/gimpclone.xml" />
@@ -453,6 +483,12 @@
       <xi:include href="xml/gimpperspectivecloneoptions.xml" />
       <xi:include href="xml/gimpsmudge.xml" />
       <xi:include href="xml/gimpsmudgeoptions.xml" />
+    </chapter>
+
+    <chapter id="app-paint-undo">
+      <title>Paint Undo Objects</title>
+      <xi:include href="xml/gimppaintcoreundo.xml" />
+      <xi:include href="xml/gimpinkundo.xml" />
     </chapter>
   </part>
 
@@ -527,6 +563,7 @@
       <xi:include href="xml/gimpdisplayshell-autoscroll.xml" />
       <xi:include href="xml/gimpdisplayshell-selection.xml" />
       <xi:include href="xml/gimpdisplayshell-title.xml" />
+      <xi:include href="xml/gimpdisplayshell-progress.xml" />
       <xi:include href="xml/gimpdisplayshell-transform.xml" />
     </chapter>
 
@@ -585,6 +622,7 @@
       <xi:include href="xml/gimpiscissorstool.xml" />
       <xi:include href="xml/gimpforegroundselectoptions.xml" />
       <xi:include href="xml/gimpforegroundselecttool.xml" />
+      <xi:include href="xml/gimpforegroundselecttoolundo.xml" />
     </chapter>
 
     <chapter id="app-tools-paint">
@@ -687,6 +725,11 @@
       <xi:include href="xml/gimpcontrollerinfo.xml" />
       <xi:include href="xml/gimpcontrollerkeyboard.xml" />
       <xi:include href="xml/gimpcontrollerwheel.xml" />
+    </chapter>
+
+    <chapter id="app-widgets-color-selectors">
+      <title>Built-in Color Selector Modules</title>
+      <xi:include href="xml/gimpcolorselectorpalette.xml" />
     </chapter>
 
     <chapter id="app-widgets-docks">
@@ -792,6 +835,7 @@
       <xi:include href="xml/gimperrordialog.xml" />
       <xi:include href="xml/gimpfiledialog.xml" />
       <xi:include href="xml/gimpmessagedialog.xml" />
+      <xi:include href="xml/gimpprofilechooserdialog.xml" />
       <xi:include href="xml/gimpprogressdialog.xml" />
       <xi:include href="xml/gimptexteditor.xml" />
       <xi:include href="xml/gimptooldialog.xml" />
