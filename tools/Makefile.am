@@ -13,12 +13,12 @@ bin_PROGRAMS = $(GIMP_REMOTE)
 noinst_PROGRAMS = test-clipboard
 
 EXTRA_PROGRAMS = \
-	gimp-remote-2.3	\
+	gimp-remote-2.4	\
 	kernelgen
 
-gimp_remote_2_3_SOURCES = gimp-remote.c
+gimp_remote_2_4_SOURCES = gimp-remote.c
 
-gimp_remote_2_3_LDADD = \
+gimp_remote_2_4_LDADD = \
 	$(GTK_LIBS)	\
 	$(LIBXMU)
 

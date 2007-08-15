@@ -1,5 +1,18 @@
 2007-08-15  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: bumped the version to 2.4.0-rc1.
+
+	* README
+	* INSTALL: updated for the GIMP 2.4 release candidate(s).
+
+	* data/images/gimp-splash.png: added splash screen for the 2.4
+	release candidate(s).
+
+	* app/Makefile.am
+	* tools/Makefile.am: adjust targets for 2.4.
+
+2007-08-15  Sven Neumann  <sven@gimp.org>
+
 	* data/images: renamed old splash and logo images.
 
 2007-08-15  Øyvind Kolås  <pippin@gimp.org>

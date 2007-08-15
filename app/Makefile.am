@@ -32,9 +32,9 @@ SUBDIRS = \
 
 
 if ENABLE_GIMP_CONSOLE
-bin_PROGRAMS = gimp-2.3 gimp-console-2.3
+bin_PROGRAMS = gimp-2.4 gimp-console-2.4
 else
-bin_PROGRAMS = gimp-2.3
+bin_PROGRAMS = gimp-2.4
 endif
 
 app_sources = \
@@ -52,7 +52,7 @@ app_sources = \
 	units.h		\
 	gimp-intl.h
 
-gimp_2_3_SOURCES = $(app_sources)
+gimp_2_4_SOURCES = $(app_sources)
 
 
 EXTRA_DIST = \
@@ -97,7 +97,7 @@ AM_LDFLAGS = $(mwindows) $(munix) \
 	-u $(SYMPREFIX)gimp_coords_mix		\
 	-u $(SYMPREFIX)gimp_plug_in_manager_restore
 
-gimp_2_3_LDADD = \
+gimp_2_4_LDADD = \
 	gui/libappgui.a			\
 	actions/libappactions.a		\
 	dialogs/libappdialogs.a		\
@@ -139,13 +139,13 @@ gimp_2_3_LDADD = \
 
 if ENABLE_GIMP_CONSOLE
 
-gimp_console_2_3_SOURCES = $(app_sources)
+gimp_console_2_4_SOURCES = $(app_sources)
 
-gimp_console_2_3_CPPFLAGS = \
+gimp_console_2_4_CPPFLAGS = \
 	$(AM_CPPFLAGS)			\
 	-DGIMP_CONSOLE_COMPILATION
 
-gimp_console_2_3_LDADD = \
+gimp_console_2_4_LDADD = \
 	widgets/widgets-enums.o		\
 	display/display-enums.o		\
 	display/gimpdisplayoptions.o	\

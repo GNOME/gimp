@@ -1,11 +1,11 @@
-Installation instructions for GIMP 2.3
+Installation instructions for GIMP 2.4
 --------------------------------------
 
 There are some basic steps to building and installing GIMP.
 
-GIMP 2.3 replaces earlier GIMP 2.x versions. It is advised that you
-uninstall them before installing GIMP 2.3. If you want to keep your
-older GIMP 2.x installation in parallel to GIMP 2.3, you have to
+GIMP 2.4 replaces earlier GIMP 2.x versions. It is advised that you
+uninstall them before installing GIMP 2.4. If you want to keep your
+older GIMP 2.x installation in parallel to GIMP 2.4, you have to
 choose a separate prefix which is not in your default library search
 path.
 
@@ -66,9 +66,9 @@ header files installed.
      of make, we'd appreciate if you'd send us a patch with the changes.
 
  10. Install GIMP by running `make install'. In order to avoid clashes
-     with other versions of GIMP, we install a binary called gimp-2.3.
+     with other versions of GIMP, we install a binary called gimp-2.4.
      By default there's also a link created so that you can type 'gimp'
-     to start gimp-2.3.
+     to start gimp-2.4.
 
 Please make sure you don't have any old GTK+-2.x, jpeg, etc. libraries 
 lying around on your system, otherwise configure may fail to find the 
@@ -80,8 +80,8 @@ packages are included below. Here is an illustration of commands that
 might be used to build and install GIMP. The actual configuration,
 compilation and installation output is not shown.
 
-  % tar xvfz gimp-2.3.x.tar.gz   # unpack the sources
-  % cd gimp-2.3.x                # change to the toplevel directory
+  % tar xvfz gimp-2.4.x.tar.gz   # unpack the sources
+  % cd gimp-2.4.x                # change to the toplevel directory
   % ./configure                  # run the `configure' script
   % make                         # build GIMP
   % make install                 # install GIMP
@@ -116,8 +116,8 @@ These are:
      is intended primarily as a convenience for developers.
 
   --enable-gimpdir=DIR.  This option changes the default directory
-     GIMP uses to search for its configuration files from ~/.gimp-2.3 
-     (the directory .gimp-2.3 in the users home directory) to DIR.
+     GIMP uses to search for its configuration files from ~/.gimp-2.4 
+     (the directory .gimp-2.4 in the users home directory) to DIR.
 
   --enable-binreloc.  When compiled for Linux with this option enabled,
      GIMP will be binary relocatable.  Plug-ins and data files will
@@ -209,8 +209,8 @@ These are:
      if you call configure with --without-desktop-dir.
 
   --disable-default-binary. Use this option if you don't want to make
-     gimp-2.3 the default gimp installation. Otherwise a link called
-     gimp pointing to the gimp-2.3 executable will be installed.
+     gimp-2.4 the default gimp installation. Otherwise a link called
+     gimp pointing to the gimp-2.4 executable will be installed.
 
   --disable-gimp-console.  Use this option if you don't want the
      gimp-console binary to be built in addition to the standard binary.
@@ -227,7 +227,7 @@ The `make' command builds several things:
  - A bunch of public libraries in the directories starting with 'libgimp'.
  - The plug-in programs in the 'plug-ins' directory.
  - Some modules in the 'modules' subdirectory.
- - The main GIMP program 'gimp-2.3' in `app'.
+ - The main GIMP program 'gimp-2.4' in `app'.
 
 The `make install' commands installs the gimp header files associated 
 with the libgimp libraries, the plug-ins, some data files and the GIMP 

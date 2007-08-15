@@ -1,14 +1,18 @@
-The GNU Image Manipulation Program Version 2.3
+The GNU Image Manipulation Program Version 2.4
 ----------------------------------------------
 
-This is an unstable development version of GIMP. Please realize that
-this is in no way a final product. A lot of new features are
-incomplete and some things may even be completely broken. If you need
-to get work done, please use the stable version, GIMP 2.2.
+This is a release candidate for GIMP 2.4, the new stable version of
+GIMP. Please realize that this is in not yet the 2.4.0 release. This
+release candidate should be feature complete and pretty close to what
+you will get with 2.4.0. But there might still be bugs and even some
+minor changes pending in some places.  you way a final product. A lot
+of new features are incomplete and some things may even be completely
+broken. If you need to get work done, please stick to the stable
+version, GIMP 2.2 until GIMP 2.4 is released.
 
-GIMP 2.3 replaces earlier GIMP 2.x versions. It is advised that you
-uninstall them before installing GIMP 2.3. If you want to keep your
-older GIMP 2.x installation in parallel to GIMP 2.3, you have to
+GIMP 2.4 replaces earlier GIMP 2.x versions. It is advised that you
+uninstall them before installing GIMP 2.4. If you want to keep your
+older GIMP 2.x installation in parallel to GIMP 2.4, you have to
 choose a separate prefix which is not in your default library search
 path. Otherwise your GIMP 2.2 or GIMP 2.0 installation will start to
 use the new libraries. You have been warned.
@@ -95,13 +99,13 @@ servers are:
 The look of GIMP's interface can be customized like any other GTK app
 by editing the ~/.gtkrc-2.0 file or by using "themes" (ready-made
 customizations).  For downloadable themes and further details, see
-http://gtk.themes.org.  Additionally, GIMP reads ~/.gimp-2.3/gtkrc so
+http://gtk.themes.org.  Additionally, GIMP reads ~/.gimp-2.4/gtkrc so
 you can have settings that only apply to GIMP.
 
 Included is a set of keybindings similar to those in Adobe Photoshop.
 You can find them in the ps-menurc file.  To use them, copy this file
-to ~/.gimp-2.3/menurc. You can also manually change the keybindings to
-any of your choice by editing ~/.gimp-2.3/menurc.
+to ~/.gimp-2.4/menurc. You can also manually change the keybindings to
+any of your choice by editing ~/.gimp-2.4/menurc.
 
 
 Have fun,
