@@ -1211,7 +1211,12 @@ pygimp_drawable_new(GimpDrawable *drawable, gint32 ID)
 	ID = drawable->drawable_id;
 
     /* create the appropriate object type */
-    if (gimp_drawable_is_layer(ID))
+    
+    /* avoids calling gimp_drawable_is_layer with an invalid id
+     * pygimp_channel_new handles it cleanly 
+     */
+    if (gimp_drawable_is_valid(ID) && 
+        gimp_drawable_is_layer(ID))
 	self = pygimp_layer_new(ID);
     else
 	self = pygimp_channel_new(ID);

@@ -1,3 +1,8 @@
+2007-08-15  Joao S. O. Bueno Calligaris <gwidion@mpc.com.br>
+
+        * plug-ins/pygimp/pygimp-drawable.c: avoids function call
+	with an invalid drawable id
+	
 2007-08-15  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/print-page-layout.c: applied patch from Stefan
