@@ -1,3 +1,7 @@
+2007-08-16  Sven Neumann  <sven@gimp.org>
+
+	* release-howto.txt: added a check-list for doing a GIMP release.
+
 2007-08-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/app.types

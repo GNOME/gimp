@@ -1,0 +1,63 @@
+
+                        How to do a GIMP release
+                      ----------------------------
+                  a check-list for doing a GIMP release
+
+
+ ( ) Check that you have working ssh access to ftp.gimp.org and that you
+     are a member of the ftp group.
+
+ ( ) Check that ftp.gimp.org has enough space to upload the release and to
+     place it into the FTP area. If not, make place or ask Yosh to do that.
+
+
+ ( ) Make sure the checkout is up to date, clean from uncommitted changes.
+
+ ( ) Check that the version number is correct in configure.in
+
+ ( ) Run ./autogen.sh --enable-gtk-doc
+
+ ( ) Do a complete build of the source tree.
+
+ ( ) Check if README or INSTALL need to be updated.
+
+ ( ) Does the splash screen need to be changed?
+
+ ( ) Run 'make distcheck'.
+
+ ( ) If there are problems with 'make distcheck', fix them and try again.
+
+ ( ) Commit changes that you had to do to get 'make distcheck' running.
+
+ ( ) Add the release entry to the ChangeLog.
+
+ ( ) Run 'make dist' to create the final tarball.
+
+ ( ) Use md5sum to create a checksum of the tarball (tar.bz2).
+
+ ( ) Upload the tarball (tar.bz2) and the .md5 file to your home directory
+     on ftp.gimp.org.  Keep a copy of the .md5 file around.
+
+ ( ) Commit the changes to ChangeLog and generated files that were changed
+     by running 'make dist'.
+
+ ( ) Tag the release.
+
+ ( ) Move the tarball and the .md5 file to its final destination in the
+     FTP area (/home/ftp/pub/gimp/v2.x).
+
+ ( ) Update the 0.0_LATEST-IS- file in the directory on the FTP server.
+
+ ( ) Change permissions of the new files to make them writable by the 'ftp'
+     group. This will allow other members of this group to correct mistakes
+     and to update the 0.0_LATEST-IS- file next time.
+
+ ( ) Add the new version to the GIMP product on bugzilla.gimp.org.
+
+ ( ) Check out or update the 'gimp-web' module and change
+     downloads/index.htrw.  Commit this change, the web server should
+     then update itself soon.
+
+ ( ) Bump the version number in configure.in and commit this change.
+
+ ( ) Grab a properly chilled beverage and enjoy yourself.
