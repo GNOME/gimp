@@ -15,7 +15,11 @@
 
  ( ) Check that the version number is correct in configure.in
 
+ ( ) Run 'make maintainer-clean -k'
+
  ( ) Run ./autogen.sh --enable-gtk-doc
+
+ ( ) Revert po/Makefile.in.in to the state in SVN.
 
  ( ) Do a complete build of the source tree.
 
@@ -42,6 +46,12 @@
      by running 'make dist'.
 
  ( ) Tag the release.
+      - For a release from trunk:
+        svn cp svn+ssh://svn.gnome.org/svn/gimp/trunk \
+               svn+ssh://svn.gnome.org/svn/gimp/tags/GIMP_2_x_y
+      - For a release from a branch
+        svn cp svn+ssh://svn.gnome.org/svn/gimp/branches/gimp_2_x
+               svn+ssh://svn.gnome.org/svn/gimp/tags/GIMP_2_x_y
 
  ( ) Move the tarball and the .md5 file to its final destination in the
      FTP area (/home/ftp/pub/gimp/v2.x).
