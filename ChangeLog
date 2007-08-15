@@ -1,3 +1,10 @@
+2007-08-15  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c: added a bilinear filtering
+	like weighting of neighbourhood pixels for approximating the
+	downsampling from the next larger level in the projection mipmap.
+	Also some general code cleanup.
+
 2007-08-15  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/print/print.c (end_print): added a timeout as a
