@@ -71,3 +71,7 @@
  ( ) Bump the version number in configure.in and commit this change.
 
  ( ) Grab a properly chilled beverage and enjoy yourself.
+
+ ( ) Give the mirrors a reasonably long time to update, then announce the
+     release on gimp.org and on the GIMP mailing lists (don't forget
+     gimp-announce).
