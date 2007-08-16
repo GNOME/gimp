@@ -1,5 +1,10 @@
 2007-08-16  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/whirlpinch.c: applied patch from Aurimas Juška to
+	fix bug #467368.
+
+2007-08-16  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/polar.c: applied patch from Aurimas Juška to fix
 	bug #467369.
 
