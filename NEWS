@@ -7,6 +7,18 @@ This is the development branch of GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
+Changes in GIMP 2.4.0-rc1
+=========================
+
+- further improvement to the Print plug-in
+- completed the color management functionality for 2.4
+- store JPEG setting with the image and use them when again as JPEG file
+- further improved the rectangle tools, in particular handling of the
+  fixed aspect ratio
+- added color profile selector widget
+- further improved the display quality for zoomed-out views
+
+
 Changes in GIMP 2.3.19
 ======================
 
