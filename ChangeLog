@@ -1,3 +1,8 @@
+2007-08-16  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/polar.c: applied patch from Aurimas Juška to fix
+	bug #467369.
+
 2007-08-16  Raphaël Quinet  <raphael@gimp.org>
 
 	* README: updated Mailing Lists section.

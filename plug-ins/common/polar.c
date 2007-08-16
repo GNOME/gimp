@@ -131,6 +131,8 @@ static gint sel_width, sel_height;
 static double cen_x, cen_y;
 static double scale_x, scale_y;
 
+static guchar back_color[4];
+
 /***** Functions *****/
 
 MAIN ()
@@ -180,6 +182,7 @@ run (const gchar      *name,
   GimpPDBStatusType  status;
   GimpRunMode        run_mode;
   gdouble            xhsiz, yhsiz;
+  GimpRGB            background;
 
   status   = GIMP_PDB_SUCCESS;
   run_mode = param[0].data.d_int32;
@@ -229,6 +232,12 @@ run (const gchar      *name,
       scale_x = 1.0;
       scale_y = 1.0;
     }
+
+  /* Get background color */
+  gimp_context_get_background (&background);
+  gimp_rgb_set_alpha (&background, 0.0);
+  gimp_drawable_get_color_uchar (drawable->drawable_id, &background,
+                                 back_color);
 
   /* See how we will run */
 
@@ -329,7 +338,7 @@ polarize_func (gint x,
       gint b;
       for (b = 0; b < bpp; b++)
         {
-          dest[b] = 255;
+          dest[b] = back_color[b];
         }
     }
 }
@@ -344,7 +353,9 @@ polarize (GimpDrawable *drawable)
   pft = gimp_pixel_fetcher_new (drawable, FALSE);
 
   gimp_context_get_background (&background);
+  gimp_rgb_set_alpha (&background, 0.0);
   gimp_pixel_fetcher_set_bg_color (pft, &background);
+  gimp_pixel_fetcher_set_edge_mode (pft, GIMP_PIXEL_FETCHER_EDGE_SMEAR);
 
   gimp_progress_init (_("Polar coordinates"));
 
