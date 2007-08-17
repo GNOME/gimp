@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-17 19:20+0200\n"
-"PO-Revision-Date: 2007-08-17 19:34+0200\n"
+"POT-Creation-Date: 2007-08-17 20:23+0200\n"
+"PO-Revision-Date: 2007-08-17 20:29+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -53,15 +53,15 @@ msgid ""
 "GIMP; if not, write to the Free Software Foundation, Inc., 59 Temple Place - "
 "Suite 330, Boston, MA 02111-1307, USA."
 msgstr ""
-"GIMP je svobodný software; můžete jej šířit a modifikovat podleustanovení "
-"GNU General Public License, vydávané Free SoftwareFoundation; a to buď verze "
-"2 této licence anebo (podle vašeho uvážení)kterékoli pozdější verze.\n"
+"GIMP je svobodný software; můžete jej šířit a modifikovat podle ustanovení "
+"GNU General Public License, vydávané Free Software Foundation; a to buď "
+"verze 2 této licence anebo (podle vašeho uvážení) kterékoli pozdější verze.\n"
 "\n"
 "GIMP je rozšiřován v naději, že bude užitečný, avšak BEZ JAKÉKOLI ZÁRUKY; "
-"neposkytují se ani odvozené záruky PRODEJNOSTI aneboVHODNOSTI PRO URČITÝ "
+"neposkytují se ani odvozené záruky PRODEJNOSTI anebo VHODNOSTI PRO URČITÝ "
 "ÚČEL. Další podrobnosti hledejte ve GNU General Public License.\n"
 "\n"
-"Kopii GNU General Public License jste měl obdržet spolu s tímtoprogramem; "
+"Kopii GNU General Public License jste měli obdržet spolu s tímto programem; "
 "pokud se tak nestalo, napište o ni Free Software Foundation,Inc., 59 Temple "
 "Place - Suite 330, Boston, MA 02111-1307, USA."
 
@@ -3183,7 +3183,7 @@ msgstr "_Filtry"
 
 #: ../app/actions/plug-in-actions.c:84
 msgid "Recently Used"
-msgstr "Nedávno použité"
+msgstr "Naposled použité"
 
 #: ../app/actions/plug-in-actions.c:85
 msgid "_Blur"
@@ -3259,7 +3259,7 @@ msgstr "Spustit naposledy použitý zásuvný modul se stejnými nastaveními"
 
 #: ../app/actions/plug-in-actions.c:118
 msgid "R_e-Show Last"
-msgstr "Zobrazit _poslední"
+msgstr "_Znovu zobrazit poslední"
 
 #: ../app/actions/plug-in-actions.c:119
 msgid "Show the last used plug-in dialog again"
@@ -3273,15 +3273,15 @@ msgstr "Z_opakovat \"%s\""
 #: ../app/actions/plug-in-actions.c:492
 #, c-format
 msgid "R_e-Show \"%s\""
-msgstr "Znovu z_obrazit \"%s\""
+msgstr "_Znovu zobrazit \"%s\""
 
 #: ../app/actions/plug-in-actions.c:503
 msgid "Repeat Last"
-msgstr "Opakovat poslední"
+msgstr "Zopakovat poslední"
 
 #: ../app/actions/plug-in-actions.c:505
 msgid "Re-Show Last"
-msgstr "Znovu zobrazit poslední"
+msgstr "_Znovu zobrazit poslední"
 
 #: ../app/actions/plug-in-commands.c:262
 msgid "Reset all Filters"
