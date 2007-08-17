@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-17 18:45+0200\n"
-"PO-Revision-Date: 2007-08-17 18:46+0200\n"
+"PO-Revision-Date: 2007-08-17 19:16+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1644,19 +1644,19 @@ msgstr "Vytvořit tlačítko nabídky třetí úrovně podle klasického tématu
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
-msgstr "_Popisek podtlačítka na trubici..."
+msgstr "_Popisek tlačítka II. úrovně..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
 msgid "Tub_e Sub-Sub-Button Label..."
-msgstr "Popisek podpodtlačítka _na trubici..."
+msgstr "_Popisek tlačítka III. úrovně"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
 msgid "_General Tube Labels..."
-msgstr "_Obecné popisky na trubici..."
+msgstr "_Obecné popisky..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
 msgid "_Tube Button Label..."
-msgstr "Popisek _tlačítka na trubici"
+msgstr "Popisek _tlačítka I. úrovně"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid ""
