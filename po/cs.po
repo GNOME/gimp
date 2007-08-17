@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-17 18:41+0200\n"
-"PO-Revision-Date: 2007-08-17 18:44+0200\n"
+"POT-Creation-Date: 2007-08-17 19:20+0200\n"
+"PO-Revision-Date: 2007-08-17 19:34+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3243,7 +3243,7 @@ msgstr "_Animace"
 
 #: ../app/actions/plug-in-actions.c:103
 msgid "Reset all _Filters"
-msgstr "Přenastavit všechny _filtry"
+msgstr "Resetovat všechny _filtry"
 
 #: ../app/actions/plug-in-actions.c:104
 msgid "Reset all plug-ins to their default settings"
@@ -3251,7 +3251,7 @@ msgstr "Nastavit všechny zásuvné moduly na výchozí hodnoty"
 
 #: ../app/actions/plug-in-actions.c:112
 msgid "Re_peat Last"
-msgstr "_Opakovat poslední"
+msgstr "Z_opakovat poslední"
 
 #: ../app/actions/plug-in-actions.c:113
 msgid "Rerun the last used plug-in using the same settings"
@@ -3259,7 +3259,7 @@ msgstr "Spustit naposledy použitý zásuvný modul se stejnými nastaveními"
 
 #: ../app/actions/plug-in-actions.c:118
 msgid "R_e-Show Last"
-msgstr "Z_novu zobrazit poslední"
+msgstr "Zobrazit _poslední"
 
 #: ../app/actions/plug-in-actions.c:119
 msgid "Show the last used plug-in dialog again"
@@ -9127,7 +9127,7 @@ msgstr "Vyplnit průhledné oblasti"
 
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160 ../app/tools/gimphealtool.c:99
-#: ../app/tools/gimpperspectiveclonetool.c:909
+#: ../app/tools/gimpperspectiveclonetool.c:904
 #: ../app/tools/gimpselectionoptions.c:409
 msgid "Sample merged"
 msgstr "Sloučený vzorek"
@@ -9182,12 +9182,12 @@ msgid "Click to set a new clone source"
 msgstr "Klikněte pro nastavení zdroje klonování"
 
 #: ../app/tools/gimpclonetool.c:109
-#: ../app/tools/gimpperspectiveclonetool.c:904
+#: ../app/tools/gimpperspectiveclonetool.c:899
 msgid "Source"
 msgstr "Zdroj"
 
 #: ../app/tools/gimpclonetool.c:128 ../app/tools/gimphealtool.c:111
-#: ../app/tools/gimpperspectiveclonetool.c:923
+#: ../app/tools/gimpperspectiveclonetool.c:918
 msgid "Alignment:"
 msgstr "Zarovnání"
 
@@ -9516,7 +9516,7 @@ msgid "Type  (%s)"
 msgstr "Typ  (%s)"
 
 #: ../app/tools/gimpdodgeburntool.c:214
-#: ../app/tools/gimpperspectiveclonetool.c:896
+#: ../app/tools/gimpperspectiveclonetool.c:891
 msgid "Mode"
 msgstr "Režim"
 
@@ -10202,7 +10202,7 @@ msgstr ""
 msgid "_Perspective Clone"
 msgstr "_Perspektivní klonování"
 
-#: ../app/tools/gimpperspectiveclonetool.c:651
+#: ../app/tools/gimpperspectiveclonetool.c:646
 msgid "Ctrl-Click to set a clone source"
 msgstr "Podržte Ctrl a klikněte pro nastavení zdroje klonování"
 
