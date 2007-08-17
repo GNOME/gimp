@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-10 18:33+0200\n"
-"PO-Revision-Date: 2007-08-10 23:58+0200\n"
+"POT-Creation-Date: 2007-08-17 18:45+0200\n"
+"PO-Revision-Date: 2007-08-17 18:46+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -144,7 +144,7 @@ msgstr "Interaktivní konzole pro vývoj Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:116
 msgid "Script-Fu _Console"
-msgstr "_Konzola Script-Fu"
+msgstr "_Konzole Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
@@ -1053,9 +1053,7 @@ msgstr "Řezba..."
 msgid ""
 "Create a logo with text raised above or carved in to the specified "
 "background image"
-msgstr ""
-"Vytvořit logo s vyvýšeným textem nebo vyrytým do zadaného "
-"obrázku pozadí"
+msgstr "Vytvořit logo s vyvýšeným textem nebo vyrytým do zadaného obrázku pozadí"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
@@ -1118,8 +1116,8 @@ msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
 msgstr ""
-"Do vybrané oblasti (či alfy) přidat chromový efekt pomocí zadané "
-"'stencil' ve stupních šedi"
+"Do vybrané oblasti (či alfy) přidat chromový efekt pomocí zadané 'stencil' "
+"ve stupních šedi"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
@@ -1442,42 +1440,6 @@ msgstr "Řady/sloupce"
 msgid "_Erase Every Other Row..."
 msgstr "_Vymazat každou druhou řadu..."
 
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:1
-msgid "Apply generated layermask"
-msgstr "Použít vygenerovanou masku vrstvy"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:2
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
-msgid "Border size"
-msgstr "Velikost okraje"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:3
-msgid "Clear unselected maskarea"
-msgstr "Vymazat nevybranou oblast masky"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:4
-msgid "Create a layermask that fades the edges of the selected region (or alpha)"
-msgstr "Vytvořit masku vrstvy prolínající okraje vybrané oblasti (nebo alfy)"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:6
-#, no-c-format
-msgid "Fade from %"
-msgstr "Pohasnout z %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:8
-#, no-c-format
-msgid "Fade to %"
-msgstr "Pohasnout na %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:9
-msgid "Use growing selection"
-msgstr "Použít rostoucí výběr"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:10
-msgid "_Fade to Layer Mask..."
-msgstr "_Vymizet do masky vrstvy..."
-
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 msgid "Create an image filled with a Land Pattern"
 msgstr "Vytvořen obrázek vyplněný vzorkem země"
@@ -1585,6 +1547,11 @@ msgstr "Přidat stín"
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
 msgid "Blur border"
 msgstr "Rozostřit okraj"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
+msgid "Border size"
+msgstr "Velikost okraje"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
