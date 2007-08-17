@@ -210,11 +210,6 @@ gimp_source_tool_motion (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
-    source->set_source = TRUE;
-  else
-    source->set_source = FALSE;
-
   GIMP_TOOL_CLASS (parent_class)->motion (tool, coords, time, state, display);
 
   source_tool->src_x = source->src_x;

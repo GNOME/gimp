@@ -1,3 +1,11 @@
+2007-08-17  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimpperspectiveclonetool.c (motion)
+	* app/tools/gimpsourcetool.c (motion): don't allow to ctrl-switch
+	between clone and set-source mode while painting. It's totally
+	unclear to me why we used to allow this since it doesn't make much
+	sense and isn't very intuitive either. Fixes bug #467605.
+
 2007-08-16  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/whirlpinch.c: applied patch from Aurimas Juška to
