@@ -1,3 +1,7 @@
+2007-08-16  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Fixed some bugs
+
 2007-08-13  Alexandre Prokoudine <alexandre.prokoudine@gmail.com>
 
 	* ru.po: Updated Russian translation.
@@ -34,7 +38,7 @@
 
 2007-07-08  Jorge Gonzalez <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation by Francisco Vila.
+	* es.po: Updated Spanish translation by Francisco Vila.
 
 2007-06-15  Jovan Naumovski  <jovan@lugola.net>
 
