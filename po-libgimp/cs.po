@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-17 11:53+0200\n"
-"PO-Revision-Date: 2007-08-17 13:26+0200\n"
+"POT-Creation-Date: 2007-08-17 21:26+0200\n"
+"PO-Revision-Date: 2007-08-17 21:34+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -763,11 +763,11 @@ msgstr "%d GB"
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
 #: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:407
 msgid "(invalid UTF-8 string)"
-msgstr "(neplatný řetězec v UTF-8)"
+msgstr "(neplatný UTF-8 řetězec)"
 
 #: ../libgimpconfig/gimpcolorconfig.c:40
 msgid "Mode of operation for color management."
-msgstr "Režim práce pro správu barev."
+msgstr "Pracovní režim správy barev."
 
 #: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "The color profile of your (primary) monitor."
@@ -1362,7 +1362,7 @@ msgstr "Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvo
 
 #: ../modules/cdisplay_lcms.c:249
 msgid "Mode of operation:"
-msgstr "Režim práce:"
+msgstr "Pracovní režim:"
 
 #: ../modules/cdisplay_lcms.c:256
 msgid "Image profile:"
