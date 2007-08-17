@@ -167,9 +167,6 @@ static void gimp_rectangle_tool_iface_base_init     (GimpRectangleToolInterface 
 static GimpRectangleToolPrivate *
                 gimp_rectangle_tool_get_private     (GimpRectangleTool *rectangle);
 
-GimpRectangleConstraint
-                gimp_rectangle_tool_get_constraint  (GimpRectangleTool *rectangle);
-
 /*  Rectangle helper functions  */
 static void     gimp_rectangle_tool_start           (GimpRectangleTool *rectangle,
                                                      GimpDisplay       *display);

@@ -124,6 +124,8 @@ gboolean    gimp_rectangle_tool_execute             (GimpRectangleTool       *re
 void        gimp_rectangle_tool_cancel              (GimpRectangleTool       *rect_tool);
 void        gimp_rectangle_tool_set_constraint      (GimpRectangleTool       *rectangle,
                                                      GimpRectangleConstraint  constraint);
+GimpRectangleConstraint gimp_rectangle_tool_get_constraint
+                                                    (GimpRectangleTool       *rectangle);
 GimpRectangleFunction gimp_rectangle_tool_get_function (GimpRectangleTool    *rectangle);
 void        gimp_rectangle_tool_set_function        (GimpRectangleTool       *rectangle,
                                                      GimpRectangleFunction    function);

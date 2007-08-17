@@ -1,3 +1,16 @@
+2007-08-17  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpcroptool.c
+	(gimp_crop_tool_constructor): Connect to the "image-changed"
+	signal of GimpContext and update default aspect when image
+	changes (fixes bug #417166), by using
+	(gimp_crop_tool_update_default_fixed_ratio_options): which is a
+	new function that does this. This function is called whenever it
+	is time to update defualts.
+
+	* app/tools/gimprectangletool.[ch]: Made
+	gimp_rectangle_tool_get_constraint part of the rectangle tool API.
+
 2007-08-17  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/print/print-page-layout.c: set a default page setup on
