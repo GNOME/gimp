@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-17 18:45+0200\n"
-"PO-Revision-Date: 2007-08-17 19:16+0200\n"
+"PO-Revision-Date: 2007-08-17 19:51+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1177,7 +1177,7 @@ msgstr "Posuny (pixely * 2)"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:1
 msgid "Circuit seed"
-msgstr "Hnízdo okruhu"
+msgstr "Hnízdo obvodu"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
 msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
@@ -1206,7 +1206,7 @@ msgstr "Oddělená vrstva"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:7
 msgid "_Circuit..."
-msgstr "_Okruh..."
+msgstr "_Obvod..."
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:1
 msgid "Add a cloth-like texture to the selected region (or alpha)"

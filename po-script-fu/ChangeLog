@@ -6,6 +6,10 @@
 
 	* cs.po: Fixed some bugs
 
+2007-08-16  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Fixed some bugs
+
 2007-08-15  Sven Neumann  <sven@gimp.org>
 
 	* POTFILES.in: removed fade-outline.scm.
