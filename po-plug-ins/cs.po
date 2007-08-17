@@ -13,7 +13,7 @@ msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-10 17:07+0200\n"
-"PO-Revision-Date: 2007-08-10 17:13+0200\n"
+"PO-Revision-Date: 2007-08-17 21:47+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -3595,7 +3595,7 @@ msgstr "Detekce hran s ovládáním síly hran"
 
 #: ../plug-ins/common/dog.c:142
 msgid "_Difference of Gaussians..."
-msgstr "_Rozdíl Gaussových rozostření..."
+msgstr "_Rozdíl Gaussovských rozostření..."
 
 #: ../plug-ins/common/dog.c:233 ../plug-ins/common/dog.c:280
 msgid "DoG Edge Detect"
@@ -4128,16 +4128,16 @@ msgstr "Nejjednodušší, nejčastěji používaný způsob rozostřování"
 
 #: ../plug-ins/common/gauss.c:172
 msgid "_Gaussian Blur..."
-msgstr "_Gaussovo rozostření..."
+msgstr "_Gaussovské rozostření..."
 
 #: ../plug-ins/common/gauss.c:179 ../plug-ins/common/gauss.c:199
 #: ../plug-ins/common/gauss.c:219 ../plug-ins/common/gauss.c:239
 msgid "Apply a gaussian blur"
-msgstr "Aplikovat Gaussovo rozostření"
+msgstr "Aplikovat Gaussovské rozostření"
 
 #: ../plug-ins/common/gauss.c:428 ../plug-ins/common/gauss.c:476
 msgid "Gaussian Blur"
-msgstr "Gaussovo rozostření"
+msgstr "Gaussovské rozostření"
 
 #. parameter settings
 #: ../plug-ins/common/gauss.c:506
@@ -6777,7 +6777,7 @@ msgstr "Odstranit efekt červených očí způsobený fotografickým bleskem"
 
 #: ../plug-ins/common/redeye.c:118
 msgid "_Red Eye Removal..."
-msgstr "Odstranit červených _oči..."
+msgstr "Odstranit červené _oči..."
 
 #: ../plug-ins/common/redeye.c:145
 msgid "Red Eye Removal"
@@ -7096,11 +7096,11 @@ msgstr "Rozostřit sousední pixely, ale pouze v oblastech nízkého kontrastu"
 
 #: ../plug-ins/common/sel_gauss.c:117
 msgid "_Selective Gaussian Blur..."
-msgstr "_Selektivní Gaussovo rozostření..."
+msgstr "_Selektivní Gaussovské rozostření..."
 
 #: ../plug-ins/common/sel_gauss.c:197 ../plug-ins/common/sel_gauss.c:234
 msgid "Selective Gaussian Blur"
-msgstr "Selektivní Gaussovo rozostření"
+msgstr "Selektivní Gaussovské rozostření"
 
 #: ../plug-ins/common/sel_gauss.c:273
 msgid "_Blur radius:"
