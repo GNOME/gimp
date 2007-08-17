@@ -1,5 +1,12 @@
 2007-08-17  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/print/print-page-layout.c: set a default page setup on
+	the operation if it is NULL to prevent crash in new installations
+	(which don't have a setup yet). Fixes bug #467643, patch from
+	Stefan Röllin.
+
+2007-08-17  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimpperspectiveclonetool.c (motion)
 	* app/tools/gimpsourcetool.c (motion): don't allow to ctrl-switch
 	between clone and set-source mode while painting. It's totally

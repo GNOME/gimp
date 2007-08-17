@@ -115,6 +115,13 @@ print_page_layout_gui (PrintData *data)
   info.image_width  = gimp_drawable_width (data->drawable_id);
   info.image_height = gimp_drawable_height (data->drawable_id);
 
+  setup = gtk_print_operation_get_default_page_setup (data->operation);
+  if (! setup)
+    {
+      setup = gtk_page_setup_new ();
+      gtk_print_operation_set_default_page_setup (data->operation, setup);
+    }
+
   layout = gtk_vbox_new (FALSE, 6);
   gtk_container_set_border_width (GTK_CONTAINER (layout), 12);
 
@@ -201,8 +208,6 @@ print_page_layout_gui (PrintData *data)
                     G_CALLBACK (print_size_info_use_full_page_toggled),
                     NULL);
   gtk_widget_show (button);
-
-  setup = gtk_print_operation_get_default_page_setup (data->operation);
 
   info.preview = gimp_print_preview_new (setup, data->drawable_id);
   gimp_print_preview_set_use_full_page (GIMP_PRINT_PREVIEW(info.preview),
@@ -873,11 +878,6 @@ print_size_info_set_page_setup (PrintSizeInfo *info)
   gdouble       y;
 
   setup = gtk_print_operation_get_default_page_setup (data->operation);
-  if (! setup)
-    {
-      setup = gtk_page_setup_new ();
-      gtk_print_operation_set_default_page_setup (data->operation, setup);
-    }
 
   print_size_info_get_page_dimensions (info,
                                        &page_width, &page_height,
