@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-17 20:23+0200\n"
-"PO-Revision-Date: 2007-08-17 20:29+0200\n"
+"POT-Creation-Date: 2007-08-18 11:22+0200\n"
+"PO-Revision-Date: 2007-08-18 12:28+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -787,7 +787,7 @@ msgstr "Nastavit černou jako barvu popředí, bílou jako barvu pozadí"
 
 #: ../app/actions/context-actions.c:71
 msgid "S_wap Colors"
-msgstr "P_rohodit Barvy"
+msgstr "P_rohodit barvy"
 
 #: ../app/actions/context-actions.c:72
 msgid "Exchange foreground and background colors"
@@ -3027,7 +3027,7 @@ msgstr "_Přiblížit"
 #: ../app/actions/palette-editor-actions.c:93
 #: ../app/actions/view-actions.c:255
 msgid "Zoom _Out"
-msgstr "Od_dálit"
+msgstr "_Oddálit"
 
 #: ../app/actions/palette-editor-actions.c:99
 msgid "Zoom _All"
@@ -3281,7 +3281,7 @@ msgstr "Zopakovat poslední"
 
 #: ../app/actions/plug-in-actions.c:505
 msgid "Re-Show Last"
-msgstr "_Znovu zobrazit poslední"
+msgstr "Znovu zobrazit poslední"
 
 #: ../app/actions/plug-in-commands.c:262
 msgid "Reset all Filters"
@@ -3981,7 +3981,7 @@ msgstr "Zavřít toto okno obrázku"
 
 #: ../app/actions/view-actions.c:87
 msgid "_Fit Image in Window"
-msgstr "_Obrázek do okna"
+msgstr "_Přizpůsobit obrázek oknu"
 
 #: ../app/actions/view-actions.c:88
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
@@ -3989,7 +3989,7 @@ msgstr "Upravit stupeň přiblížení, aby byl obrázek plně viditelný"
 
 #: ../app/actions/view-actions.c:93
 msgid "Fit Image _to Window"
-msgstr "Obrázek _podle okna"
+msgstr "_Vyplnit okno obrázkem"
 
 #: ../app/actions/view-actions.c:94
 msgid "Adjust the zoom ratio so that the window is used optimally"
@@ -3997,7 +3997,7 @@ msgstr "Upravit stupeň přiblížení, aby bylo okno optimálně využito"
 
 #: ../app/actions/view-actions.c:99 ../app/actions/view-actions.c:575
 msgid "Re_vert Zoom"
-msgstr "_Obrátit přiblížení"
+msgstr "Předcho_zí přiblížení"
 
 #: ../app/actions/view-actions.c:100
 msgid "Restore the previous zoom level"
@@ -6989,7 +6989,7 @@ msgstr "Vlastnosti"
 
 #: ../app/dialogs/image-properties-dialog.c:89
 msgid "Color Profile"
-msgstr "Barevný profil"
+msgstr "Profil barev"
 
 #: ../app/dialogs/image-properties-dialog.c:94
 msgid "Comment"
@@ -9389,19 +9389,19 @@ msgstr "Druh změny ostrosti  (%s)"
 msgid "Current layer only"
 msgstr "Pouze aktuální vrstva"
 
-#: ../app/tools/gimpcroptool.c:101
+#: ../app/tools/gimpcroptool.c:112
 msgid "Crop"
 msgstr "Oříznout"
 
-#: ../app/tools/gimpcroptool.c:102
+#: ../app/tools/gimpcroptool.c:113
 msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr "Ořez: odstranění okrajů z obrazu či vrstvy"
 
-#: ../app/tools/gimpcroptool.c:103
+#: ../app/tools/gimpcroptool.c:114
 msgid "_Crop"
 msgstr "_Ořezat"
 
-#: ../app/tools/gimpcroptool.c:208
+#: ../app/tools/gimpcroptool.c:234
 msgid "Click or press Enter to crop"
 msgstr "Klikněte nebo stiskněte Enter pro oříznutí"
 
@@ -10295,7 +10295,7 @@ msgstr "Výběr obdélníku: výběr obdélníkové oblasti"
 msgid "_Rectangle Select"
 msgstr "Výběr _obdélníku"
 
-#: ../app/tools/gimprectangletool.c:915 ../app/tools/gimprectangletool.c:1823
+#: ../app/tools/gimprectangletool.c:916 ../app/tools/gimprectangletool.c:1824
 msgid "Rectangle: "
 msgstr "Obdélník: "
 
