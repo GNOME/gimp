@@ -79,7 +79,8 @@ static gboolean   gimp_crop_tool_execute         (GimpRectangleTool     *rectang
                                                   gint                   h);
 
 static void   gimp_crop_tool_update_default_fixed_ratio_options
-                                                 (GimpCropTool          *crop_tool);
+                                                 (GimpCropTool          *crop_tool,
+                                                  gboolean               ignore_pending);
 
 static void   gimp_crop_tool_notify_layer_only   (GimpCropOptions       *options,
                                                   GParamSpec            *pspec,
@@ -193,7 +194,8 @@ gimp_crop_tool_constructor (GType                  type,
                                       GIMP_RECTANGLE_CONSTRAIN_DRAWABLE :
                                       GIMP_RECTANGLE_CONSTRAIN_IMAGE);
 
-  gimp_crop_tool_update_default_fixed_ratio_options (GIMP_CROP_TOOL (object));
+  gimp_crop_tool_update_default_fixed_ratio_options (GIMP_CROP_TOOL (object),
+                                                     FALSE);
 
   return object;
 }
@@ -231,7 +233,8 @@ gimp_crop_tool_button_release (GimpTool              *tool,
 {
   gimp_tool_push_status (tool, display, _("Click or press Enter to crop"));
 
-  gimp_crop_tool_update_default_fixed_ratio_options (GIMP_CROP_TOOL (tool));
+  gimp_crop_tool_update_default_fixed_ratio_options (GIMP_CROP_TOOL (tool),
+                                                     FALSE);
 
   gimp_rectangle_tool_button_release (tool, coords, time, state, release_type,
                                       display);
@@ -317,7 +320,8 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
 
       gimp_image_flush (image);
 
-      gimp_crop_tool_update_default_fixed_ratio_options (GIMP_CROP_TOOL (tool));
+      gimp_crop_tool_update_default_fixed_ratio_options (GIMP_CROP_TOOL (tool),
+                                                         TRUE);
 
       return TRUE;
     }
@@ -328,11 +332,13 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
 /**
  * gimp_crop_tool_update_default_fixed_ratio_options:
  * @crop_tool:
+ * @ignore_pending: %TRUE to ignore any pending crop rectangle.
  *
  * Sets the default aspect numerator/denominator to that of the current
  * layer/image/pending crop rectangle.
  */
-static void gimp_crop_tool_update_default_fixed_ratio_options (GimpCropTool *crop_tool)
+static void gimp_crop_tool_update_default_fixed_ratio_options (GimpCropTool *crop_tool,
+                                                               gboolean      ignore_pending)
 {
   GimpTool             *tool;
   GimpRectangleTool    *rectangle_tool;
@@ -344,7 +350,7 @@ static void gimp_crop_tool_update_default_fixed_ratio_options (GimpCropTool *cro
   rectangle_tool    = GIMP_RECTANGLE_TOOL (tool);
   rectangle_options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rectangle_tool);
 
-  if (tool->display != NULL)
+  if (tool->display != NULL && !ignore_pending)
     {
       gint crop_rectangle_width;
       gint crop_rectangle_height;
@@ -426,7 +432,8 @@ gimp_crop_tool_notify_layer_only (GimpCropOptions *options,
                                       GIMP_RECTANGLE_CONSTRAIN_DRAWABLE :
                                       GIMP_RECTANGLE_CONSTRAIN_IMAGE);
 
-  gimp_crop_tool_update_default_fixed_ratio_options (GIMP_CROP_TOOL (tool));
+  gimp_crop_tool_update_default_fixed_ratio_options (GIMP_CROP_TOOL (tool),
+                                                     FALSE);
 }
 
 static void
@@ -434,5 +441,6 @@ gimp_crop_tool_image_changed (GimpContext  *gimp_context,
                               GimpImage    *image,
                               GimpCropTool *crop_tool)
 {
-  gimp_crop_tool_update_default_fixed_ratio_options (GIMP_CROP_TOOL (crop_tool));
+  gimp_crop_tool_update_default_fixed_ratio_options (GIMP_CROP_TOOL (crop_tool),
+                                                     FALSE);
 }

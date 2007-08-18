@@ -1,3 +1,10 @@
+2007-08-18  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpcroptool.c
+	(gimp_crop_tool_update_default_fixed_ratio_options): Added a
+	'ignore_pending' boolean parameter so that the pending rectangle
+	can be ignored in gimp_crop_tool_execute, as it should be.
+
 2007-08-17  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpcroptool.c
