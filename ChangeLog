@@ -1,5 +1,11 @@
 2007-08-18  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_button_press): Clear highlight in previously
+	active shell when changing active shell.
+
+2007-08-18  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimpcroptool.c (gimp_crop_tool_button_release): Call
 	gimp_crop_tool_update_default_fixed_ratio_options after
 	gimp_rectangle_tool_button_release, so that the state of the

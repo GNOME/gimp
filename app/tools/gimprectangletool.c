@@ -606,7 +606,11 @@ gimp_rectangle_tool_button_press (GimpTool        *tool,
   if (display != tool->display)
     {
       if (gimp_draw_tool_is_active (draw_tool))
-        gimp_draw_tool_stop (draw_tool);
+        {
+          gimp_display_shell_set_highlight (GIMP_DISPLAY_SHELL (draw_tool->display->shell),
+                                            NULL);
+          gimp_draw_tool_stop (draw_tool);
+        }
 
       gimp_rectangle_tool_set_function (rectangle, RECT_CREATING);
 
