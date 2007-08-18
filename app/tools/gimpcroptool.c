@@ -233,11 +233,16 @@ gimp_crop_tool_button_release (GimpTool              *tool,
 {
   gimp_tool_push_status (tool, display, _("Click or press Enter to crop"));
 
+  gimp_rectangle_tool_button_release (tool,
+                                      coords,
+                                      time,
+                                      state,
+                                      release_type,
+                                      display);
+
   gimp_crop_tool_update_default_fixed_ratio_options (GIMP_CROP_TOOL (tool),
                                                      FALSE);
 
-  gimp_rectangle_tool_button_release (tool, coords, time, state, release_type,
-                                      display);
 }
 
 static void
