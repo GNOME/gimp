@@ -1,3 +1,9 @@
+2007-08-18  Michael Natterer  <mitch@gimp.org>
+
+	* app/actions/view-actions.c (view_actions_update): use _()
+	instead of N_() when setting the label of "Revert Zoom"
+	directly. Fixes bug #467933.
+
 2007-08-18  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c: Don't make

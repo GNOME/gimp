@@ -572,7 +572,7 @@ view_actions_update (GimpActionGroup *group,
   else
     {
       gimp_action_group_set_action_label (group, "view-zoom-revert",
-                                          N_("Re_vert Zoom"));
+                                          _("Re_vert Zoom"));
     }
 
   SET_SENSITIVE ("view-zoom-out",    display);
