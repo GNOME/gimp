@@ -2,10 +2,10 @@
 
 	* app/tools/gimprectangletool.c: Don't make
 	GIMP_RECTANGLE_CONSTRAIN_NONE into GIMP_RECTANGLE_CONSTRAIN_IMAGE,
-	and restructure the code a bit in the rectagle adjusting functions
-	so that they can handle the _NONE constraint. The effect of this
-	change is that rectangle tools no longer are constrained when
-	using fixed-rules.
+	and restructure the code a bit in the rectangle adjustingo
+	functions so that they can handle the _NONE constraint. The effect
+	of this change is that rectangle based selection tools no longer
+	are constrained when using fixed-rules.
 
 2007-08-18  Martin Nordholts  <martinn@svn.gnome.org>
 
