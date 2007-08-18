@@ -1,5 +1,14 @@
 2007-08-18  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangletool.c: Don't make
+	GIMP_RECTANGLE_CONSTRAIN_NONE into GIMP_RECTANGLE_CONSTRAIN_IMAGE,
+	and restructure the code a bit in the rectagle adjusting functions
+	so that they can handle the _NONE constraint. The effect of this
+	change is that rectangle tools no longer are constrained when
+	using fixed-rules.
+
+2007-08-18  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangletool.c
 	(gimp_rectangle_tool_button_press): Clear highlight in previously
 	active shell when changing active shell.

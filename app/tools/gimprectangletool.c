@@ -2553,6 +2553,9 @@ gimp_rectangle_tool_clamp_width (GimpRectangleTool       *rectangle_tool,
   gint                      min_x;
   gint                      max_x;
 
+  if (constraint == GIMP_RECTANGLE_CONSTRAIN_NONE)
+    return;
+
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle_tool);
 
   gimp_rectangle_tool_get_constraints (rectangle_tool,
@@ -2618,6 +2621,9 @@ gimp_rectangle_tool_clamp_height (GimpRectangleTool       *rectangle_tool,
   GimpRectangleToolPrivate *private;
   gint                      min_y;
   gint                      max_y;
+
+  if (constraint == GIMP_RECTANGLE_CONSTRAIN_NONE)
+    return;
 
   private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle_tool);
 
@@ -2695,6 +2701,9 @@ gimp_rectangle_tool_keep_inside_horizontally (GimpRectangleTool      *rectangle_
   gint                         min_x;
   gint                         max_x;
 
+  if (constraint == GIMP_RECTANGLE_CONSTRAIN_NONE)
+    return;
+
   gimp_rectangle_tool_get_constraints (rectangle_tool,
                                              &min_x,
                                              NULL,
@@ -2744,6 +2753,9 @@ gimp_rectangle_tool_keep_inside_vertically (GimpRectangleTool      *rectangle_to
   GimpRectangleToolPrivate    *private;
   gint                         min_y;
   gint                         max_y;
+
+  if (constraint == GIMP_RECTANGLE_CONSTRAIN_NONE)
+    return;
 
   gimp_rectangle_tool_get_constraints (rectangle_tool,
                                              NULL,
@@ -3233,9 +3245,6 @@ gimp_rectangle_tool_update_with_coord (GimpRectangleTool *rectangle_tool,
 
   /* Calculate what constraint to use when needed. */
   constraint_to_use = gimp_rectangle_tool_get_constraint (rectangle_tool);
-  if (constraint_to_use == GIMP_RECTANGLE_CONSTRAIN_NONE)
-    constraint_to_use = GIMP_RECTANGLE_CONSTRAIN_IMAGE;
-
 
   /* Apply the active fixed-rule */
 
@@ -3249,39 +3258,48 @@ gimp_rectangle_tool_update_with_coord (GimpRectangleTool *rectangle_tool,
                       1.0 / tool->display->image->height,
                       tool->display->image->width);
 
-      if (private->function != RECT_MOVING)
-        {
-          ClampedSide clamped_sides = CLAMPED_NONE;
-
-          gimp_rectangle_tool_apply_aspect (rectangle_tool,
-                                            aspect,
-                                            clamped_sides);
-
-          /* After we have applied aspect, we might have taken the rectangle
-           * outside of constraint, so clamp and apply aspect again. We will get
-           * the right result this time, since 'clamped_sides' will be setup
-           * correctly now.
-           */
-          gimp_rectangle_tool_clamp (rectangle_tool,
-                                     &clamped_sides,
-                                     constraint_to_use,
-                                     options_private->fixed_center);
-
-          gimp_rectangle_tool_apply_aspect (rectangle_tool,
-                                            aspect,
-                                            clamped_sides);
-        }
-      else
+      if (constraint_to_use == GIMP_RECTANGLE_CONSTRAIN_NONE)
         {
           gimp_rectangle_tool_apply_aspect (rectangle_tool,
                                             aspect,
                                             CLAMPED_NONE);
+        }
+      else
+        {
+          if (private->function != RECT_MOVING)
+            {
+              ClampedSide clamped_sides = CLAMPED_NONE;
 
-          /* When fixed ratio is used, we always want the rectangle inside the
-           * canvas.
-           */
-          gimp_rectangle_tool_keep_inside (rectangle_tool,
-                                           constraint_to_use);
+              gimp_rectangle_tool_apply_aspect (rectangle_tool,
+                                                aspect,
+                                                clamped_sides);
+
+              /* After we have applied aspect, we might have taken the rectangle
+               * outside of constraint, so clamp and apply aspect again. We will get
+               * the right result this time, since 'clamped_sides' will be setup
+               * correctly now.
+               */
+              gimp_rectangle_tool_clamp (rectangle_tool,
+                                         &clamped_sides,
+                                         constraint_to_use,
+                                         options_private->fixed_center);
+
+              gimp_rectangle_tool_apply_aspect (rectangle_tool,
+                                                aspect,
+                                                clamped_sides);
+            }
+          else
+            {
+              gimp_rectangle_tool_apply_aspect (rectangle_tool,
+                                                aspect,
+                                                CLAMPED_NONE);
+
+              /* When fixed ratio is used, we always want the rectangle inside the
+               * canvas.
+               */
+              gimp_rectangle_tool_keep_inside (rectangle_tool,
+                                               constraint_to_use);
+            }
         }
     }
   else if (gimp_rectangle_options_fixed_rule_active (options,
@@ -3396,48 +3414,19 @@ gimp_rectangle_tool_handle_general_clamping (GimpRectangleTool *rectangle_tool)
   /* fixed_aspect takes care of clamping by it self, so just return in case that
    * is in use. Also return if no constraints should be enforced.
    */
-  if (gimp_rectangle_options_fixed_rule_active (options,
-                                                GIMP_RECTANGLE_TOOL_FIXED_ASPECT) ||
-      (constraint != GIMP_RECTANGLE_CONSTRAIN_IMAGE &&
-       constraint != GIMP_RECTANGLE_CONSTRAIN_DRAWABLE))
+  if (constraint == GIMP_RECTANGLE_CONSTRAIN_NONE)
     return;
 
-  /* fixed_width and fixed_height takes care of clamping if they are turned on,
-   * so we only need to care if they are not on.
-   */
-  if (!gimp_rectangle_options_fixed_rule_active (options,
-                                                 GIMP_RECTANGLE_TOOL_FIXED_WIDTH))
+  if (private->function != RECT_MOVING)
     {
-      /* Never clamp a moved rect; it causes the rectangle to get "consumed". */
-      if (private->function == RECT_MOVING)
-        {
-          gimp_rectangle_tool_keep_inside_horizontally (rectangle_tool,
-                                                        constraint);
-        }
-      else
-        {
-          gimp_rectangle_tool_clamp_width (rectangle_tool,
-                                           NULL,
-                                           constraint,
-                                           options_private->fixed_center);
-        }
+      gimp_rectangle_tool_clamp (rectangle_tool,
+                                 NULL,
+                                 constraint,
+                                 options_private->fixed_center);
     }
-
-  if (!gimp_rectangle_options_fixed_rule_active (options,
-                                                 GIMP_RECTANGLE_TOOL_FIXED_HEIGHT))
+  else
     {
-      /* Never clamp a moved rect; it causes the rectangle to get "consumed". */
-      if (private->function == RECT_MOVING)
-        {
-          gimp_rectangle_tool_keep_inside_vertically (rectangle_tool,
-                                                      constraint);
-        }
-      else
-        {
-          gimp_rectangle_tool_clamp_height (rectangle_tool,
-                                            NULL,
-                                            constraint,
-                                            options_private->fixed_center);
-        }
+      gimp_rectangle_tool_keep_inside (rectangle_tool,
+                                       constraint);
     }
 }
