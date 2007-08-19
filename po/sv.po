@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-19 17:05+0200\n"
-"PO-Revision-Date: 2007-08-19 21:35+0100\n"
+"PO-Revision-Date: 2007-08-19 23:49+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -3282,7 +3282,7 @@ msgstr "_Ljus och skugga"
 
 #: ../app/actions/plug-in-actions.c:92
 msgid "_Distorts"
-msgstr "För_vanskningar"
+msgstr "För_vräng"
 
 #: ../app/actions/plug-in-actions.c:93
 msgid "_Artistic"
