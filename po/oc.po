@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.3.17\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-04-29 13:21+0200\n"
-"PO-Revision-Date: 2007-08-07 14:01+0200\n"
+"PO-Revision-Date: 2007-08-19 19:13+0200\n"
 "Last-Translator: Yannig MARCHEGAY (Kokoyaya) <yannig@marchegay.org>\n"
 "Language-Team: Occitan (post 1500) <ubuntu-l10n-oci@lists.ubuntu.com>\n"
 "MIME-Version: 1.0\n"
@@ -3909,7 +3909,7 @@ msgstr "_Visualizacion"
 
 #: ../app/actions/view-actions.c:68
 msgid "_Zoom"
-msgstr ""
+msgstr "_Zoom"
 
 #: ../app/actions/view-actions.c:69
 msgid "_Padding Color"
@@ -4105,7 +4105,7 @@ msgstr "1_6:1  (1600 %)"
 
 #: ../app/actions/view-actions.c:293
 msgid "Zoom 16:1"
-msgstr ""
+msgstr "Zoom 16:1"
 
 #: ../app/actions/view-actions.c:298
 msgid "_8:1  (800%)"
@@ -4113,7 +4113,7 @@ msgstr "_8:1  (800 %)"
 
 #: ../app/actions/view-actions.c:299
 msgid "Zoom 8:1"
-msgstr ""
+msgstr "Zoom 8:1"
 
 #: ../app/actions/view-actions.c:304
 msgid "_4:1  (400%)"
@@ -4121,7 +4121,7 @@ msgstr "_4:1  (400 %)"
 
 #: ../app/actions/view-actions.c:305
 msgid "Zoom 4:1"
-msgstr ""
+msgstr "Zoom 4:1"
 
 #: ../app/actions/view-actions.c:310
 msgid "_2:1  (200%)"
@@ -4129,7 +4129,7 @@ msgstr "_2:1  (200 %)"
 
 #: ../app/actions/view-actions.c:311 ../app/actions/view-actions.c:317
 msgid "Zoom 1:1"
-msgstr ""
+msgstr "Zoom 1:1"
 
 #: ../app/actions/view-actions.c:316
 msgid "_1:1  (100%)"
@@ -4141,7 +4141,7 @@ msgstr "1:_2  (50 %)"
 
 #: ../app/actions/view-actions.c:323
 msgid "Zoom 1:2"
-msgstr ""
+msgstr "Zoom 1:2"
 
 #: ../app/actions/view-actions.c:328
 msgid "1:_4  (25%)"
@@ -4149,23 +4149,23 @@ msgstr "1:_4  (25 %)"
 
 #: ../app/actions/view-actions.c:329
 msgid "Zoom 1:4"
-msgstr ""
+msgstr "Zoom 1:4"
 
 #: ../app/actions/view-actions.c:334
 msgid "1:_8  (12.5%)"
-msgstr "1:_8  (12.5\\%)"
+msgstr "1:_8  (12.5 %)"
 
 #: ../app/actions/view-actions.c:335
 msgid "Zoom 1:8"
-msgstr ""
+msgstr "Zoom 1:8"
 
 #: ../app/actions/view-actions.c:340
 msgid "1:1_6  (6.25%)"
-msgstr "1:1_6  (6,25\\%)"
+msgstr "1:1_6  (6,25 %)"
 
 #: ../app/actions/view-actions.c:341
 msgid "Zoom 1:16"
-msgstr ""
+msgstr "Zoom 1:16"
 
 #: ../app/actions/view-actions.c:346
 msgid "Othe_r..."
@@ -4228,7 +4228,7 @@ msgstr ""
 #: ../app/actions/view-actions.c:699
 #, c-format
 msgid "_Zoom (%s)"
-msgstr ""
+msgstr "_Zoom (%s)"
 
 #: ../app/actions/view-commands.c:586
 msgid "Set Canvas Padding Color"
@@ -4318,7 +4318,7 @@ msgstr "Diferéncia"
 
 #: ../app/base/base-enums.c:118
 msgid "Addition"
-msgstr ""
+msgstr "Adicion"
 
 #: ../app/base/base-enums.c:120
 msgid "Darken only"
@@ -8135,7 +8135,7 @@ msgstr ""
 
 #: ../app/display/gimpdisplayshell-scale.c:682
 msgid "Zoom:"
-msgstr ""
+msgstr "Zoom :"
 
 #: ../app/display/gimpdisplayshell-title.c:226
 msgid "RGB-empty"
@@ -9677,7 +9677,7 @@ msgstr ""
 
 #: ../app/tools/gimpmagnifytool.c:86
 msgid "Zoom"
-msgstr ""
+msgstr "Zoom"
 
 #: ../app/tools/gimpmagnifytool.c:87
 msgid "Zoom Tool: Adjust the zoom level"
