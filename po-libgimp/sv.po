@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-09 21:35+0200\n"
-"PO-Revision-Date: 2007-08-09 21:35+0100\n"
+"POT-Creation-Date: 2007-08-19 17:05+0200\n"
+"PO-Revision-Date: 2007-08-19 17:06+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -632,7 +632,7 @@ msgid "Incremental"
 msgstr "Inkrementell"
 
 #: ../libgimpbase/gimpbaseenums.c:623
-#: ../modules/cdisplay_lcms.c:208
+#: ../modules/cdisplay_lcms.c:214
 msgid "None"
 msgstr "Ingen"
 
@@ -770,7 +770,8 @@ msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170
 #: ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:200
+#: ../modules/cdisplay_lcms.c:206
+#: ../modules/colorsel_cmyk_lcms.c:407
 msgid "(invalid UTF-8 string)"
 msgstr "(ogiltig UTF-8 sträng)"
 
@@ -864,6 +865,7 @@ msgstr "vid tolkning av elementet \"%s\": %s"
 #: ../libgimpconfig/gimpconfig-iface.c:467
 #: ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
+#: ../libgimpwidgets/gimpcolorprofilestore.c:593
 msgid "fatal parse error"
 msgstr "ödesdigert tolkningsfel"
 
@@ -990,6 +992,14 @@ msgstr "_Svart"
 #: ../libgimpwidgets/gimpcolorbutton.c:130
 msgid "_White"
 msgstr "_Vit"
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:142
+msgid "Select color profile from disk..."
+msgstr "Välj färgprofil från disk..."
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:278
+msgid "profile|None"
+msgstr "Ingen"
 
 #: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
@@ -1329,31 +1339,31 @@ msgstr "Kontrast"
 msgid "Contrast c_ycles:"
 msgstr "Kontrastc_ykler:"
 
-#: ../modules/cdisplay_lcms.c:99
+#: ../modules/cdisplay_lcms.c:105
 msgid "Color management display filter using ICC color profiles"
 msgstr "Visningsfilter för färghantering med ICC-färgprofiler"
 
-#: ../modules/cdisplay_lcms.c:160
+#: ../modules/cdisplay_lcms.c:166
 msgid "Color Management"
 msgstr "Färghantering"
 
-#: ../modules/cdisplay_lcms.c:229
+#: ../modules/cdisplay_lcms.c:235
 msgid "This filter takes its configuration from the Color Management section in the Preferences dialog."
 msgstr "Det här filtret tar sin konfiguration från sektionen Färghantering i inställningsdialogrutan."
 
-#: ../modules/cdisplay_lcms.c:243
+#: ../modules/cdisplay_lcms.c:249
 msgid "Mode of operation:"
 msgstr "Operationsläge:"
 
-#: ../modules/cdisplay_lcms.c:250
+#: ../modules/cdisplay_lcms.c:256
 msgid "Image profile:"
 msgstr "Bildprofil:"
 
-#: ../modules/cdisplay_lcms.c:257
+#: ../modules/cdisplay_lcms.c:263
 msgid "Monitor profile:"
 msgstr "Skärmprofil:"
 
-#: ../modules/cdisplay_lcms.c:264
+#: ../modules/cdisplay_lcms.c:270
 msgid "Print simulation profile:"
 msgstr "Profil för utskriftssimulering:"
 
@@ -1386,42 +1396,51 @@ msgid "CMYK color selector"
 msgstr "Färgväljare för CMYK"
 
 #: ../modules/colorsel_cmyk.c:130
+#: ../modules/colorsel_cmyk_lcms.c:154
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
 #: ../modules/colorsel_cmyk.c:148
+#: ../modules/colorsel_cmyk_lcms.c:171
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
 #: ../modules/colorsel_cmyk.c:150
+#: ../modules/colorsel_cmyk_lcms.c:173
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
 #: ../modules/colorsel_cmyk.c:152
+#: ../modules/colorsel_cmyk_lcms.c:175
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
 #: ../modules/colorsel_cmyk.c:154
+#: ../modules/colorsel_cmyk_lcms.c:177
 msgid "_K"
 msgstr "_K"
 
 #: ../modules/colorsel_cmyk.c:158
+#: ../modules/colorsel_cmyk_lcms.c:181
 msgid "Cyan"
 msgstr "Cyan"
 
 #: ../modules/colorsel_cmyk.c:159
+#: ../modules/colorsel_cmyk_lcms.c:182
 msgid "Magenta"
 msgstr "Magenta"
 
 #: ../modules/colorsel_cmyk.c:160
+#: ../modules/colorsel_cmyk_lcms.c:183
 msgid "Yellow"
 msgstr "Gul"
 
 #: ../modules/colorsel_cmyk.c:161
+#: ../modules/colorsel_cmyk_lcms.c:184
 msgid "Black"
 msgstr "Svart"
 
@@ -1432,6 +1451,19 @@ msgstr "Svart_begränsning:"
 #: ../modules/colorsel_cmyk.c:212
 msgid "The percentage of black to pull out of the colored inks."
 msgstr "Mängden svart i procent att ta ut ur dom färgade bläcken."
+
+#: ../modules/colorsel_cmyk_lcms.c:91
+msgid "CMYK color selector (using color profile)"
+msgstr "CMYK-färgväljare (använd färgprofil)"
+
+#: ../modules/colorsel_cmyk_lcms.c:396
+msgid "Profile: (none)"
+msgstr "Profil: (ingen)"
+
+#: ../modules/colorsel_cmyk_lcms.c:409
+#, c-format
+msgid "Profile: %s"
+msgstr "Profil: %s"
 
 #: ../modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
