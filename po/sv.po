@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-16 22:59+0200\n"
-"PO-Revision-Date: 2007-08-16 22:59+0100\n"
+"POT-Creation-Date: 2007-08-19 17:05+0200\n"
+"PO-Revision-Date: 2007-08-19 21:35+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -480,7 +480,7 @@ msgstr "Uppdatera penslar"
 
 #: ../app/actions/brushes-actions.c:86
 msgid "_Edit Brush..."
-msgstr "_Redigera pensel..."
+msgstr "R_edigera pensel..."
 
 #: ../app/actions/brushes-actions.c:87
 msgid "Edit brush"
@@ -528,7 +528,7 @@ msgstr "Kanalmeny"
 
 #: ../app/actions/channels-actions.c:48
 msgid "_Edit Channel Attributes..."
-msgstr "_Redigera kanalattribut..."
+msgstr "R_edigera kanalattribut..."
 
 #: ../app/actions/channels-actions.c:49
 msgid "Edit the channel's name, color and opacity"
@@ -697,7 +697,7 @@ msgstr "Färgkartemeny"
 #: ../app/actions/colormap-actions.c:47
 #: ../app/actions/palette-editor-actions.c:48
 msgid "_Edit Color..."
-msgstr "_Redigera färg..."
+msgstr "R_edigera färg..."
 
 #: ../app/actions/colormap-actions.c:48
 #: ../app/actions/palette-editor-actions.c:49
@@ -976,7 +976,7 @@ msgstr "Öppna dialogrutan för histogram"
 
 #: ../app/actions/dialogs-actions.c:111
 msgid "_Selection Editor"
-msgstr "_Markeringsredigerare"
+msgstr "Markeringsredi_gerare"
 
 #: ../app/actions/dialogs-actions.c:112
 msgid "Open the selection editor"
@@ -1113,7 +1113,7 @@ msgstr "Öppna felkonsollen"
 
 #: ../app/actions/dialogs-actions.c:218
 msgid "_Preferences"
-msgstr "_Inställningar"
+msgstr "I_nställningar"
 
 #: ../app/actions/dialogs-actions.c:219
 msgid "Open the preferences dialog"
@@ -1196,7 +1196,7 @@ msgstr "F_likstil"
 
 #: ../app/actions/dockable-actions.c:58
 msgid "_Close Tab"
-msgstr "_Stäng flik"
+msgstr "S_täng flik"
 
 #: ../app/actions/dockable-actions.c:63
 msgid "_Detach Tab"
@@ -1479,7 +1479,7 @@ msgstr "Vitbalans fungerar endast på RGB-lager."
 
 #: ../app/actions/edit-actions.c:63
 msgid "_Edit"
-msgstr "_Redigera"
+msgstr "R_edigera"
 
 #: ../app/actions/edit-actions.c:64
 msgid "_Paste as"
@@ -1571,7 +1571,7 @@ msgstr "Kopiera den markerade regionen till urklipp"
 
 #: ../app/actions/edit-actions.c:126
 msgid "_Paste"
-msgstr "Kli_stra in"
+msgstr "Klistra _in"
 
 #: ../app/actions/edit-actions.c:127
 msgid "Paste the content of the clipboard"
@@ -1579,7 +1579,7 @@ msgstr "Klistra in innehållet i urklipp"
 
 #: ../app/actions/edit-actions.c:132
 msgid "Paste _Into"
-msgstr "Klistra in _i"
+msgstr "Klist_ra in i"
 
 #: ../app/actions/edit-actions.c:133
 msgid "Paste the content of the clipboard into the current selection"
@@ -1791,7 +1791,7 @@ msgstr "_Arkiv"
 
 #: ../app/actions/file-actions.c:65
 msgid "Open _Recent"
-msgstr "Öppna _senaste"
+msgstr "Öppna _tidigare"
 
 #: ../app/actions/file-actions.c:66
 msgid "Acq_uire"
@@ -1807,7 +1807,7 @@ msgstr "Öppna en bildfil"
 
 #: ../app/actions/file-actions.c:75
 msgid "Op_en as Layers..."
-msgstr "Öp_pna som lager..."
+msgstr "Öppna som _lager..."
 
 #: ../app/actions/file-actions.c:76
 msgid "Open an image file as layers"
@@ -1815,7 +1815,7 @@ msgstr "Öppna en bildfil som lager"
 
 #: ../app/actions/file-actions.c:81
 msgid "Open _Location..."
-msgstr "Öppna _plats..."
+msgstr "Öppna pla_ts..."
 
 #: ../app/actions/file-actions.c:82
 msgid "Open an image file from a specified location"
@@ -2352,7 +2352,7 @@ msgstr "Uppdatera gradienter"
 
 #: ../app/actions/gradients-actions.c:87
 msgid "_Edit Gradient..."
-msgstr "_Redigera gradient..."
+msgstr "R_edigera gradient..."
 
 #: ../app/actions/gradients-actions.c:88
 msgid "Edit gradient"
@@ -2695,7 +2695,7 @@ msgstr "Aktivera textverktyget på det här textlagret"
 
 #: ../app/actions/layers-actions.c:68
 msgid "_Edit Layer Attributes..."
-msgstr "_Redigera lagerattribut..."
+msgstr "R_edigera lagerattribut..."
 
 #: ../app/actions/layers-actions.c:69
 msgid "Edit the layer's name"
@@ -3170,7 +3170,7 @@ msgstr "Uppdatera paletter"
 
 #: ../app/actions/palettes-actions.c:93
 msgid "_Edit Palette..."
-msgstr "_Redigera palett..."
+msgstr "R_edigera palett..."
 
 #: ../app/actions/palettes-actions.c:94
 msgid "Edit palette"
@@ -3238,7 +3238,7 @@ msgstr "Uppdatera mönster"
 
 #: ../app/actions/patterns-actions.c:86
 msgid "_Edit Pattern..."
-msgstr "_Redigera mönster..."
+msgstr "R_edigera mönster..."
 
 #: ../app/actions/patterns-actions.c:87
 msgid "Edit pattern"
@@ -3250,7 +3250,7 @@ msgstr "Filte_r"
 
 #: ../app/actions/plug-in-actions.c:84
 msgid "Recently Used"
-msgstr "Senast använd"
+msgstr "Senast använda"
 
 #: ../app/actions/plug-in-actions.c:85
 msgid "_Blur"
@@ -3282,7 +3282,7 @@ msgstr "_Ljus och skugga"
 
 #: ../app/actions/plug-in-actions.c:92
 msgid "_Distorts"
-msgstr "_Störningar"
+msgstr "För_vanskningar"
 
 #: ../app/actions/plug-in-actions.c:93
 msgid "_Artistic"
@@ -3352,7 +3352,7 @@ msgstr "Visa senaste igen"
 
 #: ../app/actions/plug-in-commands.c:262
 msgid "Reset all Filters"
-msgstr "Återställ alla  filter"
+msgstr "Återställ alla filter"
 
 #: ../app/actions/plug-in-commands.c:281
 msgid "Do you really want to reset all filters to default values?"
@@ -3440,7 +3440,7 @@ msgstr "Invertera markeringen"
 
 #: ../app/actions/select-actions.c:68
 msgid "_Float"
-msgstr "_Flyt"
+msgstr "_Flytande"
 
 #: ../app/actions/select-actions.c:69
 msgid "Create a floating selection"
@@ -3464,7 +3464,7 @@ msgstr "Ta bort luddigheten från markeringen"
 
 #: ../app/actions/select-actions.c:86
 msgid "S_hrink..."
-msgstr "K_rymp..."
+msgstr "För_minska..."
 
 #: ../app/actions/select-actions.c:87
 msgid "Contract the selection"
@@ -3472,11 +3472,11 @@ msgstr "Förminska markeringen"
 
 #: ../app/actions/select-actions.c:92
 msgid "_Grow..."
-msgstr "_Öka..."
+msgstr "Först_ora..."
 
 #: ../app/actions/select-actions.c:93
 msgid "Enlarge the selection"
-msgstr "Förstora markeringe"
+msgstr "Förstora markeringen"
 
 #: ../app/actions/select-actions.c:98
 msgid "Bo_rder..."
@@ -3603,7 +3603,7 @@ msgstr "Duplicera den valda mallen"
 
 #: ../app/actions/templates-actions.c:64
 msgid "_Edit Template..."
-msgstr "_Redigera mall..."
+msgstr "R_edigera mall..."
 
 #: ../app/actions/templates-actions.c:65
 msgid "Edit the selected template"
@@ -3777,7 +3777,7 @@ msgstr "_Verktyg"
 
 #: ../app/actions/tools-actions.c:51
 msgid "_Selection Tools"
-msgstr "_Markeringsverktyg"
+msgstr "Markerings_verktyg"
 
 #: ../app/actions/tools-actions.c:52
 msgid "_Paint Tools"
@@ -3861,7 +3861,7 @@ msgstr "_Slingverktyg"
 
 #: ../app/actions/vectors-actions.c:53
 msgid "_Edit Path Attributes..."
-msgstr "_Redigera slingattribut..."
+msgstr "R_edigera slingattribut..."
 
 #: ../app/actions/vectors-actions.c:54
 msgid "Edit path attributes"
@@ -4068,7 +4068,7 @@ msgstr "Skapa en annan vy för denna bild"
 
 #: ../app/actions/view-actions.c:81
 msgid "_Close"
-msgstr "_Stäng"
+msgstr "S_täng"
 
 #: ../app/actions/view-actions.c:82
 msgid "Close this image window"
@@ -4354,7 +4354,7 @@ msgstr "Använd en godtycklig färg"
 
 #: ../app/actions/view-actions.c:379
 msgid "As in _Preferences"
-msgstr "Som i _inställningarna"
+msgstr "Som i i_nställningarna"
 
 #: ../app/actions/view-actions.c:380
 msgid "Reset padding color to what's configured in preferences"
@@ -7477,7 +7477,7 @@ msgstr "Målningsalternativ som delas av verktyg"
 
 #: ../app/dialogs/preferences-dialog.c:1918
 msgid "Move Tool"
-msgstr "Flyttaverktyg"
+msgstr "Flyttningsverktyg"
 
 #: ../app/dialogs/preferences-dialog.c:1922
 msgid "Set layer or path as active"
@@ -9014,7 +9014,7 @@ msgstr "Fyll transparenta områden"
 #: ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160
 #: ../app/tools/gimphealtool.c:99
-#: ../app/tools/gimpperspectiveclonetool.c:909
+#: ../app/tools/gimpperspectiveclonetool.c:904
 #: ../app/tools/gimpselectionoptions.c:409
 msgid "Sample merged"
 msgstr "Sampla sammanfogade"
@@ -9071,13 +9071,13 @@ msgid "Click to set a new clone source"
 msgstr "Klicka för att ställa in en ny kloningskälla"
 
 #: ../app/tools/gimpclonetool.c:109
-#: ../app/tools/gimpperspectiveclonetool.c:904
+#: ../app/tools/gimpperspectiveclonetool.c:899
 msgid "Source"
 msgstr "Källa"
 
 #: ../app/tools/gimpclonetool.c:128
 #: ../app/tools/gimphealtool.c:111
-#: ../app/tools/gimpperspectiveclonetool.c:923
+#: ../app/tools/gimpperspectiveclonetool.c:918
 msgid "Alignment:"
 msgstr "Arrangemang:"
 
@@ -9285,19 +9285,19 @@ msgstr "Konvolveringstyp  (%s)"
 msgid "Current layer only"
 msgstr "Endast aktuellt lager"
 
-#: ../app/tools/gimpcroptool.c:101
+#: ../app/tools/gimpcroptool.c:112
 msgid "Crop"
 msgstr "Beskär"
 
-#: ../app/tools/gimpcroptool.c:102
+#: ../app/tools/gimpcroptool.c:113
 msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr "Beskäringsverktyg: Ta bort kantområden från bild eller lager"
 
-#: ../app/tools/gimpcroptool.c:103
+#: ../app/tools/gimpcroptool.c:114
 msgid "_Crop"
 msgstr "_Beskär"
 
-#: ../app/tools/gimpcroptool.c:208
+#: ../app/tools/gimpcroptool.c:234
 msgid "Click or press Enter to crop"
 msgstr "Klicka eller tryck på Enter för att beskära"
 
@@ -9420,7 +9420,7 @@ msgid "Type  (%s)"
 msgstr "Typ (%s)"
 
 #: ../app/tools/gimpdodgeburntool.c:214
-#: ../app/tools/gimpperspectiveclonetool.c:896
+#: ../app/tools/gimpperspectiveclonetool.c:891
 msgid "Mode"
 msgstr "Läge"
 
@@ -9910,7 +9910,7 @@ msgstr "Mätningsverktyg: Mät avstånd och vinklar"
 
 #: ../app/tools/gimpmeasuretool.c:123
 msgid "_Measure"
-msgstr "_Mät"
+msgstr "Mät_ning"
 
 #: ../app/tools/gimpmeasuretool.c:238
 msgid "Add Guides"
@@ -10114,7 +10114,7 @@ msgstr "Verktyg för perspektiv kloning: Klona från en bildkälla efter en pers
 msgid "_Perspective Clone"
 msgstr "_Perspektiv kloning"
 
-#: ../app/tools/gimpperspectiveclonetool.c:651
+#: ../app/tools/gimpperspectiveclonetool.c:646
 msgid "Ctrl-Click to set a clone source"
 msgstr "Ctrl-klicka för att ställa in en kloningskälla"
 
@@ -10208,8 +10208,8 @@ msgstr "Rektangelmarkeringsverktyg: Markera en rektangulär region"
 msgid "_Rectangle Select"
 msgstr "_Rekt. markering"
 
-#: ../app/tools/gimprectangletool.c:915
-#: ../app/tools/gimprectangletool.c:1823
+#: ../app/tools/gimprectangletool.c:916
+#: ../app/tools/gimprectangletool.c:1824
 msgid "Rectangle: "
 msgstr "Rektangel: "
 
