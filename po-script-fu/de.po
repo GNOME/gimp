@@ -6,21 +6,22 @@
 # Jens Seidel <jseidel@cvs.gnome.org>
 # Roman Joost <romanofski@gimp.org>, 2004-2005.
 # Sven Neumann <sven@gimp.org>, 2004.
-# Hendrik Brandt <heb@gnome-de.org>, 2004-2006.
+# Hendrik Brandt <heb@gnome-de.org>, 2004-2007.
+# Ulf-D. Ehlert <ulfehlert@svn.gnome.org>, 2007.
 # 
 # 
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu HEAD\n"
+"Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-12 22:17+0200\n"
-"PO-Revision-Date: 2007-08-14 22:00+0200\n"
-"Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
+"POT-Creation-Date: 2007-08-19 17:22+0200\n"
+"PO-Revision-Date: 2007-08-19 18:02+0200\n"
+"Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);"
 
 #: ../plug-ins/script-fu/script-fu-console.c:144
 #: ../plug-ins/script-fu/script-fu-console.c:213
@@ -88,7 +89,7 @@ msgstr "Skript-Fu-Dateiauswahl"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:463
 msgid "Script-Fu Folder Selection"
-msgstr "Skript-Fu-Verzeichnisauswahl"
+msgstr "Skript-Fu-Ordnerauswahl"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Font Selection"
@@ -137,7 +138,7 @@ msgstr "Server-Port:"
 
 #: ../plug-ins/script-fu/script-fu-server.c:750
 msgid "Server logfile:"
-msgstr "Server-Protokoll:"
+msgstr "Server-Logdatei:"
 
 #: ../plug-ins/script-fu/script-fu.c:110
 msgid "Interactive console for Script-Fu development"
@@ -193,11 +194,11 @@ msgstr "_Werkzeuge"
 
 #: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Web Page Themes"
-msgstr "_Web-Seiten-Themen"
+msgstr "_Internet-Seiten-Designs"
 
 #: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Alien Glow"
-msgstr "_Alien Glow"
+msgstr "_Alien-Glow"
 
 #: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Beveled Pattern"
@@ -278,7 +279,7 @@ msgstr "3-D-_Umriss …"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
-msgstr "Bumpmap (Alpha-Ebene) Weichzeichnerradius"
+msgstr "Weichzeichnenradius der Bump-Map (Alpha-Ebene)"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Create a logo with outlined text and a drop shadow"
@@ -287,7 +288,7 @@ msgstr "Ein Logo mit nachgezogenem Text und Schlagschatten erstellen"
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:6
 msgid "Default bumpmap settings"
-msgstr "Standard-Bumpmap-Einstellungen"
+msgstr "Standard-Bump-Map-Einstellungen"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:5
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
@@ -448,7 +449,7 @@ msgstr "Text"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:1
 msgid "3_D Truchet..."
-msgstr "3_D-Truchet …"
+msgstr "3-_D-Truchet …"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:2
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
@@ -488,7 +489,7 @@ msgstr "Blockgröße"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:4
 msgid "Create an image filled with a 3D Truchet pattern"
-msgstr "Ein mit einem 3D-Truchet-Muster gefülltes Bild erzeugen"
+msgstr "Ein mit einem 3-D-Truchet-Muster gefülltes Bild erzeugen"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
@@ -569,7 +570,7 @@ msgstr "Farbänderung"
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
 msgid "Create an arrow graphic with an eerie glow for web pages"
 msgstr ""
-"Eine Pfeil-Grafik mit einem unheimlichen Glühen für Internet-Seiten erstellen"
+"Eine Pfeilgrafik mit einem unheimlichen Glühen für Internet-Seiten erstellen"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -671,7 +672,7 @@ msgstr "_Schaltfläche …"
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
 msgid "Create a button graphic with an eerie glow for web pages"
 msgstr ""
-"Eine Schaltflächen-Grafik mit einem unheimlichen Glühen für Internet-Seiten "
+"Eine Schaltflächengrafik mit einem unheimlichen Glühen für Internet-Seiten "
 "erstellen"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
@@ -700,9 +701,7 @@ msgstr "Textfarbe"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
 msgid "Add an eerie glow around the selected region (or alpha)"
-msgstr ""
-"Ein unheimliches Glühen um den ausgewählten Bereich (oder den Alphakanal) "
-"erzeugen"
+msgstr "Ein unheimliches Glühen um die Auswahl oder die Transparenz erzeugen"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
 msgid "Alien _Glow..."
@@ -719,12 +718,11 @@ msgstr "Leuchtgröße (Pixel×4)"
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
 msgid "Add psychedelic outlines to the selected region (or alpha)"
 msgstr ""
-"Einen psychedelischen Umriss um den ausgewählten Bereich (oder den "
-"Alphakanal) erzeugen"
+"Einen psychedelischen Umriss um die Auswahl oder die Transparenz erzeugen"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "Alien _Neon..."
-msgstr "Alien _Neon …"
+msgstr "Alien-_Neon …"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
 msgid "Create a logo with psychedelic outlines around the text"
@@ -768,7 +766,7 @@ msgstr "_Einfach 1 …"
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:1
 msgid "Add a shadow and a highlight to the selected region (or alpha)"
-msgstr "Einen Schatten und ein Schlaglicht zum ausgewählten Bereich hinzufügen"
+msgstr "Einen Schatten und ein Schlaglicht zur Auswahl oder Transparenz hinzufügen"
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 msgid "B_asic II..."
@@ -867,7 +865,7 @@ msgid ""
 "an animation"
 msgstr ""
 "Zwischenebenen erstellen, um zwei oder mehr Ebenen über einem Hintergrund "
-"animiert über zu blenden"
+"animiert überzublenden"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Intermediate frames"
@@ -1083,6 +1081,8 @@ msgid ""
 "Create a logo with text raised above or carved in to the specified "
 "background image"
 msgstr ""
+"Ein Logo erzeugen mit Text der über dem Hintergrund schwebt oder in diesen "
+"eingraviert ist"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
@@ -1095,12 +1095,11 @@ msgstr "Kreidefarbe"
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:3
 msgid "Create a chalk drawing effect for the selected region (or alpha)"
 msgstr ""
-"Einen Kreidestricheffekt auf den ausgewählten Bereich (oder den Alphakanal) "
-"anwenden"
+"Einen Kreidestricheffekt auf die Auswahl oder Transparenz anwenden"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:4
 msgid "Create a logo resembling chalk scribbled on a blackboard"
-msgstr ""
+msgstr "Ein Logo ähnlicher einer beschriebenen Kreidetafel erstellen"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:8
 msgid "_Chalk..."
@@ -1109,8 +1108,7 @@ msgstr "K_reide …"
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
 msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
 msgstr ""
-"Einen zerfressenen Holzschnitzeffekt auf den ausgewählten Bereich (oder den "
-"Alphakanal) anwenden"
+"Einen zerfressenen Holzschnitzeffekt auf die Auswahl oder die Transparenz anwenden"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "Blur amount"
@@ -1195,8 +1193,7 @@ msgstr "_Chrom aufkleben …"
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 msgid "Add a simple chrome effect to the selected region (or alpha)"
 msgstr ""
-"Einen einfachen Chrom-Effekt auf den ausgewählten Bereich (oder den "
-"Alphakanal) anwenden"
+"Einen einfachen Chrom-Effekt auf die Auswahl oder die Transparenz anwenden"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 msgid "C_hrome..."
@@ -1253,7 +1250,7 @@ msgstr "Eine gewebeähnliche Struktur zur Auswahl (oder Transparenz) hinzufügen
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:2
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:1
 msgid "Azimuth"
-msgstr "Azimuth"
+msgstr "Azimut"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:3
 msgid "Blur X"
@@ -1298,8 +1295,8 @@ msgid ""
 "Add a comic-book effect to the selected region (or alpha) by outlining and "
 "filling with a gradient"
 msgstr ""
-"Einen Comic-Heft-Effekt auf den ausgewählten Bereich (oder Alphakanal) "
-"anwenden, indem Ränder nachgezeichnet und mit einem Verlauf gefüllt werden"
+"Einen Comic-Heft-Effekt auf die Auswahl oder die Transparenz anwenden, "
+"indem Ränder nachgezeichnet und mit einem Verlauf gefüllt werden"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
@@ -1325,8 +1322,7 @@ msgid ""
 "Add a metallic effect to the selected region (or alpha) with reflections and "
 "perspective shadows"
 msgstr ""
-"Einen Metalleffekt mit Reflexionen und perspektivischem Schatten auf den "
-"ausgewählten Bereich (oder den Alphakanal) anwenden"
+"Einen Metalleffekt mit Reflexionen und perspektivischem Schatten auf die Auswahl oder die Transparenz anwenden"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
@@ -1362,7 +1358,7 @@ msgstr "Plastisches Rauschen …"
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
 msgid "Solid noise applied with Difference layer mode"
-msgstr ""
+msgstr "Eine räumliche Störung mit Hilfe des plastischen Ebenenmodus erzeugen"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "Distress the selection"
@@ -1386,7 +1382,7 @@ msgstr "Verteilen"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (bigger 1<-->255 smaller)"
-msgstr "Schwellwert (Größer 1 .. 255 Kleiner)"
+msgstr "Schwellwert (größer 1 .. 255 kleiner)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
 msgid "_Distort..."
@@ -1479,48 +1475,9 @@ msgstr "Zeilen/Spalten"
 msgid "_Erase Every Other Row..."
 msgstr "_Jede zweite Zeile löschen …"
 
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:1
-msgid "Apply generated layermask"
-msgstr "Erstellte Ebenenmaske anwenden"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:2
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
-msgid "Border size"
-msgstr "Randgröße (Pixel)"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:3
-msgid "Clear unselected maskarea"
-msgstr "Nicht ausgewählten Maskenbereich löschen"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:4
-msgid ""
-"Create a layermask that fades the edges of the selected region (or alpha)"
-msgstr ""
-"Eine Ebenenmaske erstellen, die die Kanten einer Auswahl (oder "
-"des Alphakanals) ausblendet"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:6
-#, no-c-format
-msgid "Fade from %"
-msgstr "Überblenden von %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:8
-#, no-c-format
-msgid "Fade to %"
-msgstr "Überblenden nach %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:9
-msgid "Use growing selection"
-msgstr "Auswahl vergrößern"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:10
-msgid "_Fade to Layer Mask..."
-msgstr "_Ebenenmaske ausblenden …"
-
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 msgid "Create an image filled with a Land Pattern"
-msgstr ""
+msgstr "Ein Bild erzeugen, das mit einem Landschaftsmuster ausgefüllt ist"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:2
 #: ../plug-ins/script-fu/scripts/land.scm.h:2
@@ -1540,7 +1497,7 @@ msgstr "Bildbreite"
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:5
 #: ../plug-ins/script-fu/scripts/land.scm.h:7
 msgid "Random seed"
-msgstr "Zufallsgeneratorstartwert"
+msgstr "Zufälliger Anfangswert"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:6
 #: ../plug-ins/script-fu/scripts/land.scm.h:8
@@ -1568,6 +1525,8 @@ msgstr "Schwarz auf Weiß"
 msgid ""
 "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
+"Ein Bild erzeugen, das Vorschaubilder von Schriften inklusive der "
+"Schriftnamen enthält"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
 msgid "Font _size (pixels)"
@@ -1606,8 +1565,7 @@ msgid ""
 "Add a frost effect to the selected region (or alpha) with an added drop "
 "shadow"
 msgstr ""
-"Einen Frosteffekt mit Schlagschatten auf den ausgewählten Bereich (oder den "
-"Alphakanal) anwenden"
+"Einen Frosteffekt mit Schlagschatten auf die Auswahl oder die Transparenz anwenden"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
@@ -1629,6 +1587,11 @@ msgstr "Schatten hinzufügen"
 msgid "Blur border"
 msgstr "Rand weichzeichnen"
 
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
+msgid "Border size"
+msgstr "Randgröße"
+
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
 msgstr "Körnigkeit (1 ist wenig)"
@@ -1649,10 +1612,14 @@ msgstr "Automatisch zuschneiden"
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
 msgid "Create an image of a large header using the gimp.org webpage theme"
 msgstr ""
+"Eine große Seitenkopfgrafik unter Verwendung des gimp.org-Internet-Themas "
+"erstellen"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
 msgid "Create an image of a small header using the gimp.org webpage theme"
 msgstr ""
+"Eine kleine Seitenkopfgrafik unter Verwendung des gimp.org-Internet-Themas "
+"erstellen"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
 msgid "Dark color"
@@ -1671,7 +1638,7 @@ msgstr "Bild indizieren"
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:9
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
 msgid "Number of colors"
-msgstr "Anzahl der Farben"
+msgstr "Farbanzahl"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
@@ -1701,46 +1668,53 @@ msgid ""
 "Create an image of a Tube Button Label Header using the gimp.org webpage "
 "theme"
 msgstr ""
+"Das Bild einer röhrenförmigen Menüleiste mit dem gimp.org-Internet-"
+"Seiten-Designs erstellen"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
 msgstr ""
+"Das Bild einer röhrenförmigen Menüeintrages mit dem gimp.org-Internet-"
+"Seiten-Designs erstellen"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "Create an image of a second level Tube Button Label using the gimp.org "
 "webpage theme"
 msgstr ""
+"Das Bild einer röhrenförmigen Menüeintrages der zweiten Ebene mit dem gimp."
+"org-Internet-Seiten-Designs erstellen"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
 msgid ""
 "Create an image of a third level Tube Button Label using the gimp.org "
 "webpage theme"
 msgstr ""
+"Das Bild einer röhrenförmigen Menüeintrages der dritten Ebene mit dem gimp."
+"org-Internet-Seiten-Designs erstellen"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
-msgstr "T_ube Sub-Button Beschriftung …"
+msgstr "Menübeschriftung 2. Ebene …"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
 msgid "Tub_e Sub-Sub-Button Label..."
-msgstr "Tub_e Sub-Sub-Button Beschriftung …"
+msgstr "Menübeschriftung 3. Ebene …"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
 msgid "_General Tube Labels..."
-msgstr "_Allgemeine Tube Beschriftung …"
+msgstr "_Allgemeine Beschriftung …"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
 msgid "_Tube Button Label..."
-msgstr "_Tube Button Beschriftung …"
+msgstr "_Schaltflächen-Beschriftung …"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:1
 msgid ""
 "Add gradients, patterns, shadows, and bump maps to the selected region (or "
 "alpha)"
 msgstr ""
-"Farbverläufe, Muster, Schatten und Bumpmaps auf den ausgewählten Bereich "
-"(oder den Alphakanal) anwenden"
+"Farbverläufe, Muster, Schatten und Bump-Map auf die Auswahl oder die Transparenz anwenden"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
@@ -1752,7 +1726,7 @@ msgstr "Farbverlauf (Text)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:5
 msgid "Create a logo with gradients, patterns, shadows, and bump maps"
-msgstr "Ein Logo mit Farbverläufen, Mustern, Schatten und Bumpmaps erzeugen"
+msgstr "Ein Logo mit Farbverläufen, Mustern, Schatten und Bump-Map erzeugen"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Glo_ssy..."
@@ -1798,8 +1772,7 @@ msgstr "Muster überlagern"
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "Add a glowing hot metal effect to the selected region (or alpha)"
 msgstr ""
-"Den Effekt eines glühendheißen Metalls auf den ausgewählten Bereich (oder "
-"den Alphakanal) anwenden"
+"Den Effekt eines glühendheißen Metalls auf die Auswahl oder die Transparenz anwenden"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
 msgid "Create a logo that looks like glowing hot metal"
@@ -1816,8 +1789,7 @@ msgstr "Gl_ühendheiß …"
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
 msgstr ""
-"Eine glänzende Oberfläche und einen Schrägeneffekt auf den ausgewählten "
-"Bereich (oder den Alphakanal) anwenden"
+"Eine glänzende Oberfläche und einen Schrägeneffekt auf die Auswahl oder die Transparenz anwenden"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
@@ -1832,6 +1804,7 @@ msgstr "Zellengröße (Pixel)"
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 msgid "Create a logo with a shiny look and beveled edges"
 msgstr ""
+"Ein Logo mit einem polierten Aussehen und abgeschrägten Kanten erzeugen"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 msgid "Gradient Beve_l..."
@@ -1839,11 +1812,11 @@ msgstr "Verlaufsschräge …"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "Create an image filled with an example of the current gradient"
-msgstr ""
+msgstr "Ein Bild erzeugen, welches mit dem aktuellen Farbverlauf gefüllt ist"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
 msgid "Custom _Gradient..."
-msgstr "_Eigener Farbverlauf"
+msgstr "_Eigener Farbverlauf …"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
@@ -1851,6 +1824,8 @@ msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
 msgstr ""
+"Ein Gitter aus der angegebenen Liste von X- und Y-Koordinaten mit dem "
+"aktuellen Pinsel zeichnen"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X divisions"
@@ -1871,6 +1846,8 @@ msgstr "Neue Hilfslinien aus _Auswahl"
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 msgid "Add a guide at the position specified as a percentage of the image size"
 msgstr ""
+"Eine Hilfslinie an den prozentual angegebenen Ort der Gesamtgröße des Bildes "
+"platzieren"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:2
@@ -1899,6 +1876,8 @@ msgstr "Vertikal"
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:1
 msgid "Add a guide at the orientation and position specified (in pixels)"
 msgstr ""
+"Eine Hilfslinie an den über die Ausrichtung und die Position (in Pixeln) "
+"angegebenen Ort hinzufügen"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
 msgid "New _Guide..."
@@ -1910,7 +1889,7 @@ msgstr "Position"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "Remove all horizontal and vertical guides"
-msgstr ""
+msgstr "Alle horizontalen und vertikalen Hilfslinien entfernen"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
 msgid "_Remove all Guides"
@@ -1922,7 +1901,7 @@ msgstr "HG-Deckkraft"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
 msgid "Create a graph of the Hue, Saturation, and Value distributions"
-msgstr ""
+msgstr "Einen Graph der Farbton-, Sättigungs- und Farbwert-Anteile erzeugen"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
 msgid "Draw _HSV Graph..."
@@ -1958,7 +1937,7 @@ msgstr "Auswahl statt der unten angegebenen Werte verwenden"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
 msgid "Create a logo in a two-color, scribbled text style"
-msgstr ""
+msgstr "Ein Logo in einem zweifarbigen, gekritzeltem Textstil erstellen"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
 msgid "Frame color"
@@ -1974,7 +1953,7 @@ msgstr "Imigre-_26 …"
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:1
 msgid "Create an image filled with a topographic map pattern"
-msgstr ""
+msgstr "Ein Bild gefüllt mit einem topografischem Kartenmuster erstellen"
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:6
 msgid "Land height"
@@ -1990,7 +1969,7 @@ msgstr "_Land …"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:1
 msgid "Fill the current selection with lava"
-msgstr ""
+msgstr "Die aktuelle Auswahl mit Lava füllen"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:4
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:8
@@ -2013,6 +1992,8 @@ msgstr "_Lava …"
 msgid ""
 "Fill a layer with rays emanating outward from its center using the FG color"
 msgstr ""
+"Eine Ebene mit Strahlen in der Vordergrundfarbe füllen, die aus ihrem "
+"Zentrum herausstrahlen"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
@@ -2036,19 +2017,19 @@ msgstr "Schärfe (Grad)"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:1
 msgid "Create a rectangular brush"
-msgstr ""
+msgstr "Einen rechteckigen Pinsel erstellen"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "Create a rectangular brush with feathered edges"
-msgstr ""
+msgstr "Einen rechteckigen Pinsel mit weichen Kanten erstellen"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
 msgid "Create an elliptical brush"
-msgstr ""
+msgstr "Einen elliptischen Pinsel erstellen"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid "Create an elliptical brush with feathered edges"
-msgstr ""
+msgstr "Einen elliptischen Pinsel mit weichen Kanten erstellen"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
 msgid "Elli_ptical, Feathered..."
@@ -2083,7 +2064,7 @@ msgstr "R_echteckig …"
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "Convert the selected region (or alpha) into a neon-sign like object"
 msgstr ""
-"Den ausgewählten Bereich (oder den Alphakanal) in ein Leuchtreklame-"
+"Die Auswahl oder die Transparenz in ein Leuchtreklame-"
 "ähnliches Objekt umwandeln"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
@@ -2100,7 +2081,7 @@ msgstr "Effektgröße (Pixel×5)"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:9
 msgid "N_eon..."
-msgstr "_Neon …"
+msgstr "L_euchtreklame …"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:3
 msgid "Cell size (pixels)"
@@ -2108,7 +2089,7 @@ msgstr "Zellengröße (Pixel)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:4
 msgid "Create a logo in the style of newspaper printing"
-msgstr ""
+msgstr "Ein Logo im Stil eines Zeitungsausdrucks erzeugen"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:4
@@ -2159,12 +2140,13 @@ msgstr "Neuer _Pinsel …"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
 msgid "Paste the clipboard contents into a new brush"
-msgstr ""
+msgstr "Den Zwischenablageinhalt als neuen Pinsel einfügen"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
 msgid "There is no image data in the clipboard to paste."
 msgstr ""
+"Es sind keine Bilddaten in der Zwischenablage, die eingefügt werden könnten."
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
 msgid "New _Pattern..."
@@ -2172,7 +2154,7 @@ msgstr "Neues _Muster …"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
 msgid "Paste the clipboard contents into a new pattern"
-msgstr ""
+msgstr "Den Inhalt der Zwischenablage als neues Muster einfügen"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:4
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
@@ -2182,6 +2164,8 @@ msgstr "Mustername"
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
 msgid "Add a perspective shadow to the selected region (or alpha)"
 msgstr ""
+"Einen perspektivischen Schatten zur ausgewählten Region oder Transparenz "
+"hinzufügen"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
 msgid "Angle"
@@ -2206,6 +2190,7 @@ msgstr "_Perspektive …"
 #: ../plug-ins/script-fu/scripts/predator.scm.h:1
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
 msgstr ""
+"Einen »Predator«-Effekt zur ausgewählten Region oder Transparenz hinzufügen"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge amount"
@@ -2225,7 +2210,7 @@ msgstr "_Predator …"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:2
 msgid "Create images, each containing an oval button graphic"
-msgstr ""
+msgstr "Mehrere Bilder erzeugen, jedes mit einer ovalen Knopfgrafik"
 
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:5
 msgid "Lower color"
@@ -2307,6 +2292,8 @@ msgstr "Schwarz"
 msgid ""
 "Create a multi-layer image by adding a ripple effect to the current image"
 msgstr ""
+"Ein Mehrebenenbild durch das Hinzufügen eines Welleneffektes zum aktuellen "
+"Bild erzeugen"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
 msgid "Edge behavior"
@@ -2343,7 +2330,7 @@ msgstr "Schlagschatten hinzufügen"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:4
 msgid "Edge radius"
-msgstr "Eckenradius"
+msgstr "Eckradius"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
 msgid ""
@@ -2358,6 +2345,8 @@ msgstr "Runde _Ecken …"
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr ""
+"Die Farbtabelle eines Bildes auf die Farben einer vorgegebenen Tabelle "
+"ändern."
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
 msgid "Palette"
@@ -2365,7 +2354,7 @@ msgstr "Palette"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
 msgid "Se_t Colormap..."
-msgstr "Farbtabelle einstellen …"
+msgstr "Farbtabelle setzen …"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Convert a selection to a brush"
@@ -2426,19 +2415,19 @@ msgstr "_Dia …"
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
 msgid "Create a State Of The Art chromed logo"
-msgstr ""
+msgstr "Ein modernes verchromtes Logo erstellen"
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
 msgid "SOTA Chrome..."
-msgstr "S_OTA Chrom …"
+msgstr "SOTA Chrom …"
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
 msgid "Create a logo with a speedy text effect"
-msgstr ""
+msgstr "Ein Logo mit einem schnellen Texteffekt erstellen"
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
 msgid "Speed Text..."
-msgstr "_Schneller Text …"
+msgstr "Schneller Text …"
 
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:2
 msgid "Create a simple sphere with a drop shadow"
@@ -2463,10 +2452,12 @@ msgstr "_Kugel …"
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Create an animation by mapping the current image onto a spinning sphere"
 msgstr ""
+"Eine Animation durch das Abbilden des aktuellen Bildes auf eine rotierende "
+"Kugel erzeugen"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
-msgstr "Frames"
+msgstr "Einzebilder"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:3
 msgid "Index to n colors (0 = remain RGB)"
@@ -2569,7 +2560,7 @@ msgstr "Polygon: 9 Seiten"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
 msgid "Rendering Spyro"
-msgstr "Spyro wird gerendert"
+msgstr "Spyrograph wird berechnet"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
@@ -2614,7 +2605,7 @@ msgstr "Explosionsfarbe"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:3
 msgid "Create a logo using a starburst gradient"
-msgstr ""
+msgstr "Ein Logo mit einem sternenförmigen Verlauf erzeugen"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:4
 msgid "Effect size (pixels * 30)"
@@ -2625,8 +2616,8 @@ msgid ""
 "Fill the selected region (or alpha) with a starburst gradient and add a "
 "shadow"
 msgstr ""
-"Eine Sternenexplosion plus Schatten auf den ausgewählten Bereich (oder den "
-"Alphakanal) anwenden"
+"Eine Sternenexplosion plus Schatten auf die Auswahl oder die Transparenz "
+"anwenden"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:8
 msgid "Starb_urst..."
@@ -2646,7 +2637,7 @@ msgid ""
 "Fill the selected region (or alpha) with a rock-like texture, a nova glow, "
 "and shadow"
 msgstr ""
-"Den ausgewählten Bereich (oder den Alphakanal) mit einer felsähnlichen "
+"Die Auswahl oder die Transparenz mit einer felsenähnlichen "
 "Textur, Novaleuchten und Schatten füllen"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
@@ -2655,11 +2646,11 @@ msgstr "Starscap_e …"
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:4
 msgid "Create an image filled with a swirled tile effect"
-msgstr ""
+msgstr "Ein Bild mit herumwirbelnden Kacheln erzeugen"
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Swirl-_Tile..."
-msgstr "Strudel-_Kachel …"
+msgstr "_Kachelstrudel …"
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Whirl amount"
@@ -2667,7 +2658,7 @@ msgstr "Strudelstärke"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
 msgid "Create an image filled with a swirly pattern"
-msgstr ""
+msgstr "Ein Bild mit wirbelnden Mustern erzeugen"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of times to whirl"
@@ -2688,8 +2679,7 @@ msgstr "_Strudelig …"
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 msgid "Add a Trace of Particles effect to the selected region (or alpha)"
 msgstr ""
-"Einen Partikelspureffekt auf den ausgewählten Bereich (oder den Alphakanal) "
-"anwenden"
+"Einen Partikelspureffekt auf die Auswahl oder die Transparenz anwenden"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 msgid "Base color"
@@ -2697,7 +2687,7 @@ msgstr "Grundfarbe"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 msgid "Create a logo using a Trace Of Particles effect"
-msgstr ""
+msgstr "Ein Logo mit einem Partikelspureffekt erzeugen"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
 msgid "Edge only"
@@ -2723,6 +2713,8 @@ msgstr "Kantenglättung"
 msgid ""
 "Create a logo by rendering the specified text along the perimeter of a circle"
 msgstr ""
+"Ein Logo erzeugen, bei dem der angegebene Text entlang des Umlauf eines "
+"Kreises geschrieben wird"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 msgid "Fill angle"
@@ -2736,6 +2728,8 @@ msgstr "Text i_m Kreis …"
 msgid ""
 "Create a textured logo with highlights, shadows, and a mosaic background"
 msgstr ""
+"Ein texturiertes Logo erstellen, mit Glanzlichtern, Schatten und einem "
+"Mosaikhintergrund"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Ending blend"
@@ -2746,8 +2740,7 @@ msgid ""
 "Fill the selected region (or alpha) with a texture and add highlights, "
 "shadows, and a mosaic background"
 msgstr ""
-"Eine Textur mit Höhen, Schatten und einem Mosaikhintergrund auf den "
-"ausgewählten Bereich (oder den Alphakanal) anwenden"
+"Eine Textur mit Höhen, Schatten und einem Mosaikhintergrund auf die Auswahl oder die Transparenz anwenden"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
@@ -2784,6 +2777,8 @@ msgstr "Horizontal weichzeichnen"
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
 msgid "Blur the edges of an image so the result tiles seamlessly"
 msgstr ""
+"Die Bildkanten so verwischen, dass die erzeugten Kacheln nahtlos aneinander "
+"passen"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
 msgid "Blur type"
@@ -2807,7 +2802,7 @@ msgstr "_Kachelbarer Weichzeichner …"
 
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:1
 msgid "Create a decorative web title header"
-msgstr ""
+msgstr "Eine dekorative Internet-Seiten-Überschrift erstellen"
 
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:6
 msgid "Web Title Header..."
@@ -2815,7 +2810,7 @@ msgstr "Webseiten-Ü_berschrift …"
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:3
 msgid "Create an image filled with a Truchet pattern"
-msgstr ""
+msgstr "Ein mit einem Truchet-Muster gefülltes Bild erstellen"
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground color"
@@ -2842,6 +2837,8 @@ msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
 msgstr ""
+"Ein Mehrebenenbild aus dem aktuellen Bild erzeugen, mit dem Effekt als ob "
+"ein Stein auf das Bild geworfen wäre"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
@@ -2859,7 +2856,8 @@ msgstr "_Wellen …"
 msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
-msgstr ""
+msgstr "Eine neue Ebene mit Gewebeeffekt erzeugen, welche als Überblendung oder "
+"Bump-Map verwendet werden kann"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
@@ -2991,5 +2989,3 @@ msgstr "Glanzlichtdeckkraft"
 msgid "_Xach-Effect..."
 msgstr "_Xach-Effekt …"
 
-#~ msgid "/Script-Fu/"
-#~ msgstr "/Skript-Fu/"
