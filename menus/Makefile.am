@@ -45,7 +45,7 @@ EXTRA_DIST = \
 	menus.xsl			\
 	makefile.msc
 
-MAINTAINERCLEAN_FILES = $(menudata_built_files)
+MAINTAINERCLEANFILES = $(menudata_built_files)
 
 
 if GIMP_UNSTABLE
