@@ -977,8 +977,8 @@ msgid ""
 "Burn-In: Needs two layers in total!\\nA foreground text layer with "
 "transparency and a background layer."
 msgstr ""
-"Burn-In: necessita di due livelli in totale!\\nUn livello di testo in "
-"primopiano con trasparenza e un livello di sfondo."
+"Burn-In: necessita di due livelli in tutto!\n"
+"Un livello di testo con trasparenza in primo piano e un livello di sfondo."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Corona width"
@@ -1275,7 +1275,7 @@ msgstr "Aggiunge all'immagine delle macchie di caffe molto realistiche"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid "Darken only\\n(Better, but only for images with a lot of white)"
-msgstr "Solo scurire\\n(migliore ma solo per immagini con molto bianco)"
+msgstr "Solo scurire\n(migliore ma solo per immagini con molto bianco)"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
@@ -2174,7 +2174,7 @@ msgstr "Incolla i contenuti degli appunti in un nuovo pennello"
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
 msgid "There is no image data in the clipboard to paste."
-msgstr "Non ci sono dati immagine negli appunti da incollare."
+msgstr "Negli appunti non ci sono dati di tipo immagine da incollare."
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
 msgid "New _Pattern..."
@@ -2373,7 +2373,7 @@ msgstr "Angoli a_rrotondati..."
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr ""
-"Cambia la mappacolore di un'immagine ai colori di una specifica tavolozza."
+"Trasforma la mappa dei colori di una immagine usando i colori di una tavolozza specificata"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
 msgid "Palette"
@@ -2381,7 +2381,7 @@ msgstr "Tavolozza"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
 msgid "Se_t Colormap..."
-msgstr "Impos_ta mappa colore..."
+msgstr "Impos_ta mappa colori..."
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Convert a selection to a brush"

@@ -6956,7 +6956,7 @@ msgstr "Navigazione"
 
 #: ../app/dialogs/dialogs.c:203
 msgid "Display Navigation"
-msgstr "Mostra navigazione"
+msgstr "Navigazione vista"
 
 #: ../app/dialogs/dialogs.c:209
 msgid "FG/BG"

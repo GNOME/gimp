@@ -2006,7 +2006,7 @@ msgstr "Esecuzione animazione:"
 
 #: ../plug-ins/common/animationplay.c:664
 msgid "Playback speed"
-msgstr "Velocità di esecuzione"
+msgstr "Velocità di riproduzione"
 
 #: ../plug-ins/common/animationplay.c:802
 msgid "Tried to display an invalid layer."
