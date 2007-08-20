@@ -1,4 +1,11 @@
 2007-08-18  Michael Natterer  <mitch@gimp.org>
+	    Simon Budig  <simon@gimp.org>
+	    Øyvind Kolås  <pippin@gimp.org>
+	    Roman Joost  <romanofski@gimp.org>
+
+	* app/sven.c: changed license from free to bus2342. Congratulations!
+
+2007-08-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/actions/view-actions.c (view_actions_update): use _()
 	instead of N_() when setting the label of "Revert Zoom"
