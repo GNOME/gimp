@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-19 17:07+0200\n"
-"PO-Revision-Date: 2007-08-20 00:17+0100\n"
+"PO-Revision-Date: 2007-08-20 19:07+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -2277,7 +2277,7 @@ msgstr "sträck ut_hsv: cmap var NULL! Avslutar...\n"
 
 #: ../plug-ins/common/blinds.c:116
 msgid "Simulate an image painted on window blinds"
-msgstr ""
+msgstr "Simulera en bild målad på fönsterpersienner"
 
 #: ../plug-ins/common/blinds.c:121
 msgid "_Blinds..."
@@ -2674,7 +2674,7 @@ msgstr "_Växla färger"
 #: ../plug-ins/common/colormap-remap.c:299
 #: ../plug-ins/common/colormap-remap.c:310
 msgid "Invalid remap array was passed to remap function"
-msgstr ""
+msgstr "Ogiltig ommappningskedja skickades till ommappningsfunktion"
 
 #: ../plug-ins/common/colormap-remap.c:334
 msgid "Rearranging the colormap"
@@ -3476,7 +3476,7 @@ msgstr "rödton-cr709f"
 #: ../plug-ins/common/decompose.c:294
 #: ../plug-ins/common/decompose.c:308
 msgid "Decompose an image into separate colorspace components"
-msgstr ""
+msgstr "Separera en bild till separata färgrymdskomponenter"
 
 #: ../plug-ins/common/decompose.c:300
 #: ../plug-ins/common/decompose.c:318
@@ -4583,9 +4583,8 @@ msgid "milliseconds"
 msgstr "millisekunder"
 
 #: ../plug-ins/common/gif-save.c:1378
-#, fuzzy
 msgid "_Frame disposal where unspecified:"
-msgstr "Bildrutehantering där ej specificerat: "
+msgstr "Bild_rutehantering där inte specificerat:"
 
 #: ../plug-ins/common/gif-save.c:1382
 msgid "I don't care"
@@ -4606,7 +4605,7 @@ msgstr "_Använd ovanstående fördröjning för alla bildrutor"
 
 #: ../plug-ins/common/gif-save.c:1412
 msgid "U_se disposal entered above for all frames"
-msgstr ""
+msgstr "An_vänd hantering angiven ovan för alla bildrutor"
 
 #: ../plug-ins/common/gif-save.c:2565
 msgid "Error writing output file."
@@ -4689,7 +4688,7 @@ msgstr "Ranger:"
 
 #: ../plug-ins/common/glasstile.c:126
 msgid "Simulate distortion caused by square glass tiles"
-msgstr ""
+msgstr "Simulera förvridning orsakad av fyrkantiga glasrutor"
 
 #: ../plug-ins/common/glasstile.c:132
 msgid "_Glass Tile..."
@@ -4944,7 +4943,7 @@ msgstr "C källkodshuud"
 
 #: ../plug-ins/common/hot.c:207
 msgid "Find and fix pixels that may be unsafely bright"
-msgstr ""
+msgstr "Hitta och rätta till bildpunkter som kan vara för ljusstarka"
 
 #: ../plug-ins/common/hot.c:217
 msgid "_Hot..."
@@ -4977,9 +4976,8 @@ msgid "_Blacken"
 msgstr "_Svärta"
 
 #: ../plug-ins/common/illusion.c:91
-#, fuzzy
 msgid "Superimpose many altered copies of the image"
-msgstr "Använd bildens färg"
+msgstr "Lägg över många förändrade kopior av bilden"
 
 #: ../plug-ins/common/illusion.c:96
 msgid "_Illusion..."
@@ -5004,7 +5002,7 @@ msgstr "Läge _2"
 
 #: ../plug-ins/common/iwarp.c:262
 msgid "Use mouse control to warp image areas"
-msgstr ""
+msgstr "Använd musstyrning för att förvrida bildområden"
 
 #: ../plug-ins/common/iwarp.c:267
 msgid "_IWarp..."
@@ -5823,7 +5821,7 @@ msgstr "Kan inte lägga till ännu en punkt.\n"
 
 #: ../plug-ins/common/neon.c:134
 msgid "Simulate the glowing boundary of a neon light"
-msgstr ""
+msgstr "Simulera en glödande avgränsning för ett neonljus"
 
 #: ../plug-ins/common/neon.c:139
 msgid "_Neon..."
@@ -5888,7 +5886,7 @@ msgstr "Luminans"
 
 #: ../plug-ins/common/newsprint.c:519
 msgid "Halftone the image to give newspaper-like effect"
-msgstr ""
+msgstr "Halvtona bilden för att ge en dagstidningseffekt"
 
 #: ../plug-ins/common/newsprint.c:528
 msgid "Newsprin_t..."
@@ -6265,9 +6263,8 @@ msgstr "Procent _vitt:"
 
 #: ../plug-ins/common/pix.c:140
 #: ../plug-ins/common/pix.c:157
-#, fuzzy
 msgid "Alias Pix image"
-msgstr "X pixmap-bild"
+msgstr "Alias Pix-bild"
 
 #: ../plug-ins/common/pixelize.c:164
 msgid "Simplify image into an array of solid-colored squares"
@@ -6951,11 +6948,11 @@ msgstr "Slumpa fullständigt en del av bildpunkterna"
 
 #: ../plug-ins/common/randomize.c:202
 msgid "Randomly interchange some pixels with neighbors"
-msgstr ""
+msgstr "Växla slumpmässigt vissa bildpunkter med närliggande"
 
 #: ../plug-ins/common/randomize.c:204
 msgid "Randomly slide some pixels downward (similar to melting)"
-msgstr ""
+msgstr "Dra slumpmässigt ner vissa bildpunkter (liknande smältning)"
 
 #: ../plug-ins/common/randomize.c:231
 msgid "_Hurl..."
@@ -7075,7 +7072,7 @@ msgstr "Indexerad palettyp"
 
 #: ../plug-ins/common/redeye.c:107
 msgid "Remove the red eye effect caused by camera flashes"
-msgstr ""
+msgstr "Ta bort röda ögon som orsakats av kamerablixtar"
 
 #: ../plug-ins/common/redeye.c:118
 msgid "_Red Eye Removal..."
@@ -7147,7 +7144,7 @@ msgstr "Retinex: filtrering"
 
 #: ../plug-ins/common/ripple.c:129
 msgid "Displace pixels in a ripple pattern"
-msgstr ""
+msgstr "Förskjut bildpunkter i ett krusmönster"
 
 #: ../plug-ins/common/ripple.c:136
 msgid "_Ripple..."
@@ -7360,7 +7357,7 @@ msgstr "Dra musen, efter fördröjningen, för att markera regionen för skärmb
 
 #: ../plug-ins/common/screenshot.c:1013
 msgid "At the end of the delay, click in a window to snap it."
-msgstr ""
+msgstr "Vid slutet av fördröjningen, klicka i ett fönster för att fästa det."
 
 #. Area
 #: ../plug-ins/common/screenshot.c:1019
@@ -7654,7 +7651,7 @@ msgstr "_Y-storlek:"
 
 #: ../plug-ins/common/sobel.c:108
 msgid "Specialized direction-dependent edge detection"
-msgstr ""
+msgstr "Specialiserad riktningsberoende kantidentifiering"
 
 #: ../plug-ins/common/sobel.c:121
 msgid "_Sobel..."
@@ -7682,7 +7679,7 @@ msgstr "Sobel kantidentifiering"
 
 #: ../plug-ins/common/softglow.c:134
 msgid "Simulate glow by making highlights intense and fuzzy"
-msgstr ""
+msgstr "Simulera glöd genom att göra färgmarkeringar intensiva och oskarpa"
 
 #: ../plug-ins/common/softglow.c:139
 msgid "_Softglow..."
