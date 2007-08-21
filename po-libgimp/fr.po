@@ -15,14 +15,14 @@
 # Au sujet de "événement" contre "évènement", c'est ce dernier qui a été
 # retenu car préconisé par l'Académie française.
 #
-# 
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-27 23:54+0200\n"
-"PO-Revision-Date: 2007-05-29 08:42+0200\n"
-"Last-Translator: Laurent Monin <gimp@norz.org>\n"
+"POT-Creation-Date: 2007-08-22 01:14+0200\n"
+"PO-Revision-Date: 2007-08-22 00:05+0200\n"
+"Last-Translator: Stéphane Raimbault <stephane.raimbault@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -543,7 +543,7 @@ msgstr "Suivant la forme (excroissances)"
 
 #: ../libgimpbase/gimpbaseenums.c:397
 msgid "Spiral (cw)"
-msgstr "Spirale (sens hotaire)"
+msgstr "Spirale (sens horaire)"
 
 #: ../libgimpbase/gimpbaseenums.c:398
 msgid "Spiral (ccw)"
@@ -633,7 +633,7 @@ msgstr "Constante"
 msgid "Incremental"
 msgstr "Incrémental"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:267
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:214
 msgid "None"
 msgstr "Aucun"
 
@@ -770,7 +770,7 @@ msgid "%d GB"
 msgstr "%d Gio"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:259
+#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:407
 msgid "(invalid UTF-8 string)"
 msgstr "(chaîne de caractères UTF-8 non valide)"
 
@@ -877,6 +877,7 @@ msgstr "en interprétant l'expression « %s » : %s"
 #: ../libgimpconfig/gimpconfig-iface.c:454
 #: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
+#: ../libgimpwidgets/gimpcolorprofilestore.c:593
 msgid "fatal parse error"
 msgstr "erreur fatale d'interprétation"
 
@@ -999,6 +1000,14 @@ msgstr "_Noir"
 #: ../libgimpwidgets/gimpcolorbutton.c:130
 msgid "_White"
 msgstr "_Blanc"
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:142
+msgid "Select color profile from disk..."
+msgstr "Choisir un profil de couleurs sur le disque..."
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:278
+msgid "profile|None"
+msgstr "Aucun"
 
 #: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
@@ -1349,17 +1358,17 @@ msgstr "Contraste"
 msgid "Contrast c_ycles:"
 msgstr "C_ycles de contraste :"
 
-#: ../modules/cdisplay_lcms.c:116
+#: ../modules/cdisplay_lcms.c:105
 msgid "Color management display filter using ICC color profiles"
 msgstr ""
 "Filtre d'affichage de la gestion des couleurs utilisant les profils "
 "colorimétriques ICC"
 
-#: ../modules/cdisplay_lcms.c:184
+#: ../modules/cdisplay_lcms.c:166
 msgid "Color Management"
 msgstr "Gestion des couleurs"
 
-#: ../modules/cdisplay_lcms.c:288
+#: ../modules/cdisplay_lcms.c:235
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1367,19 +1376,19 @@ msgstr ""
 "Ce filtre applique la configuration de la section Gestion des couleurs des "
 "préférences."
 
-#: ../modules/cdisplay_lcms.c:302
+#: ../modules/cdisplay_lcms.c:249
 msgid "Mode of operation:"
 msgstr "Mode d'opération :"
 
-#: ../modules/cdisplay_lcms.c:309
-msgid "RGB working space profile:"
-msgstr "Profil d'espace de travail RVB :"
+#: ../modules/cdisplay_lcms.c:256
+msgid "Image profile:"
+msgstr "Profil d'image :"
 
-#: ../modules/cdisplay_lcms.c:316
+#: ../modules/cdisplay_lcms.c:263
 msgid "Monitor profile:"
 msgstr "Profil du moniteur :"
 
-#: ../modules/cdisplay_lcms.c:323
+#: ../modules/cdisplay_lcms.c:270
 msgid "Print simulation profile:"
 msgstr "Profil de simulation d'impression :"
 
@@ -1412,43 +1421,43 @@ msgstr "Point de _compensation du noir"
 msgid "CMYK color selector"
 msgstr "Sélecteur de couleurs CMJN"
 
-#: ../modules/colorsel_cmyk.c:130
+#: ../modules/colorsel_cmyk.c:130 ../modules/colorsel_cmyk_lcms.c:154
 msgid "CMYK"
 msgstr "CMJN"
 
 #. Cyan
-#: ../modules/colorsel_cmyk.c:148
+#: ../modules/colorsel_cmyk.c:148 ../modules/colorsel_cmyk_lcms.c:171
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/colorsel_cmyk.c:150
+#: ../modules/colorsel_cmyk.c:150 ../modules/colorsel_cmyk_lcms.c:173
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/colorsel_cmyk.c:152
+#: ../modules/colorsel_cmyk.c:152 ../modules/colorsel_cmyk_lcms.c:175
 msgid "_Y"
 msgstr "_J"
 
 #. Key (Black)
-#: ../modules/colorsel_cmyk.c:154
+#: ../modules/colorsel_cmyk.c:154 ../modules/colorsel_cmyk_lcms.c:177
 msgid "_K"
 msgstr "_N"
 
-#: ../modules/colorsel_cmyk.c:158
+#: ../modules/colorsel_cmyk.c:158 ../modules/colorsel_cmyk_lcms.c:181
 msgid "Cyan"
 msgstr "Cyan"
 
-#: ../modules/colorsel_cmyk.c:159
+#: ../modules/colorsel_cmyk.c:159 ../modules/colorsel_cmyk_lcms.c:182
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../modules/colorsel_cmyk.c:160
+#: ../modules/colorsel_cmyk.c:160 ../modules/colorsel_cmyk_lcms.c:183
 msgid "Yellow"
 msgstr "Jaune"
 
-#: ../modules/colorsel_cmyk.c:161
+#: ../modules/colorsel_cmyk.c:161 ../modules/colorsel_cmyk_lcms.c:184
 msgid "Black"
 msgstr "Noir"
 
@@ -1459,6 +1468,19 @@ msgstr "_Supplément de noir :"
 #: ../modules/colorsel_cmyk.c:212
 msgid "The percentage of black to pull out of the colored inks."
 msgstr "Le pourcentage de noir à ajouter aux encres de couleur."
+
+#: ../modules/colorsel_cmyk_lcms.c:91
+msgid "CMYK color selector (using color profile)"
+msgstr "Sélecteur de couleurs CMJN (utilisant le profil de couleurs)"
+
+#: ../modules/colorsel_cmyk_lcms.c:396
+msgid "Profile: (none)"
+msgstr "Profil : (aucun)"
+
+#: ../modules/colorsel_cmyk_lcms.c:409
+#, c-format
+msgid "Profile: %s"
+msgstr "Profil : %s"
 
 #: ../modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
@@ -1766,7 +1788,7 @@ msgstr "Retour du point de vue %d"
 
 #: ../modules/controller_dx_dinput.c:1111
 msgid "DirectInput Events"
-msgstr "Evènements DirectInput"
+msgstr "Évènements DirectInput"
 
 #: ../modules/controller_midi.c:167
 msgid "MIDI event controller"
@@ -1813,7 +1835,7 @@ msgstr "Contrôleur %03d"
 
 #: ../modules/controller_midi.c:436
 msgid "MIDI Events"
-msgstr "Événements MIDI"
+msgstr "Évènements MIDI"
 
 #: ../modules/controller_midi.c:454
 msgid "GIMP"
@@ -1822,12 +1844,3 @@ msgstr "GIMP"
 #: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr "Contrôleur d'entrée GIMP MIDI"
-
-#~ msgid "Image source"
-#~ msgstr "Image source"
-
-#~ msgid "Pattern source"
-#~ msgstr "Motif source"
-
-#~ msgid "pixels/%s"
-#~ msgstr "pixels/%s"
