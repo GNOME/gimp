@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-19 22:50+0100\n"
-"PO-Revision-Date: 2007-08-21 14:42+0100\n"
+"PO-Revision-Date: 2007-08-21 16:39+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -2767,11 +2767,11 @@ msgstr "Flytta det här lagret till nederst i lagerstacken"
 
 #: ../app/actions/layers-actions.c:122
 msgid "_Anchor Layer"
-msgstr "_Ankra lager"
+msgstr "För_ankra lager"
 
 #: ../app/actions/layers-actions.c:123
 msgid "Anchor the floating layer"
-msgstr "Ankra det flytande lagret"
+msgstr "Förankra det flytande lagret"
 
 #: ../app/actions/layers-actions.c:128
 msgid "Merge Do_wn"
@@ -4377,11 +4377,11 @@ msgstr "_Zooma (%s)"
 
 #: ../app/actions/view-commands.c:586
 msgid "Set Canvas Padding Color"
-msgstr "Ställ in utfyllnadsfärg på rityta"
+msgstr "Ställ in utfyllnadsfärg för rityta"
 
 #: ../app/actions/view-commands.c:588
 msgid "Set Custom Canvas Padding Color"
-msgstr "Ställ in anpassad utfyllnadsfärg på rityta"
+msgstr "Ställ in anpassad utfyllnadsfärg för rityta"
 
 #: ../app/actions/window-actions.c:168
 #, c-format
@@ -4586,7 +4586,7 @@ msgstr "När aktiverat blir en bild den aktiva bilden när dess bildfönstar få
 
 #: ../app/config/gimprc-blurbs.h:23
 msgid "Sets the canvas padding color used if the padding mode is set to custom color."
-msgstr "Ställer in utfyllnadsfärg på rityta om utfyllnadsläget är inställt till anpassad färg."
+msgstr "Ställer in utfyllnadsfärg för rityta om utfyllnadsläget är inställt till anpassad färg."
 
 #: ../app/config/gimprc-blurbs.h:27
 msgid "Specifies how the area around the image should be drawn."
@@ -5276,7 +5276,7 @@ msgstr "Flytande markering"
 
 #: ../app/core/core-enums.c:876
 msgid "Anchor floating selection"
-msgstr "Ankra flytande markering"
+msgstr "Förankra flytande markering"
 
 #: ../app/core/core-enums.c:877
 msgid "Remove floating selection"
@@ -6334,11 +6334,11 @@ msgstr "Ta bort lytande markering"
 
 #: ../app/core/gimplayer-floating-sel.c:131
 msgid "Cannot anchor this layer because it is not a floating selection."
-msgstr "Kan inte ankra det här lagret, för det är inte en flytande markering."
+msgstr "Kan inte förankra det här lagret, för det är inte en flytande markering."
 
 #: ../app/core/gimplayer-floating-sel.c:138
 msgid "Anchor Floating Selection"
-msgstr "Ankra flytande markering"
+msgstr "Förankra flytande markering"
 
 #: ../app/core/gimplayer-floating-sel.c:212
 msgid "Cannot create a new layer from the floating selection because it belongs to a layer mask or channel."
@@ -10305,7 +10305,7 @@ msgstr "Klicka och dra för att flytta en kopia av de markerade bildpunkterna"
 
 #: ../app/tools/gimpselectiontool.c:308
 msgid "Click to anchor the floating selection"
-msgstr "Klicka för att ankra den flytande markeringen"
+msgstr "Klicka för att förankra den flytande markeringen"
 
 #: ../app/tools/gimpsheartool.c:81
 msgid "Shear"
