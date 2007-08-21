@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-19 17:05+0200\n"
-"PO-Revision-Date: 2007-08-19 23:49+0100\n"
+"POT-Creation-Date: 2007-08-19 22:50+0100\n"
+"PO-Revision-Date: 2007-08-21 14:42+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -136,7 +136,7 @@ msgstr "Satskommando att köra (kan användas flera gånger)"
 
 #: ../app/main.c:225
 msgid "The procedure to process batch commands with"
-msgstr "Proceduren för att behandla satskommandon med"
+msgstr "Proceduren att behandla satskommandon med"
 
 #: ../app/main.c:230
 msgid "Send messages to console instead of using a dialog"
@@ -197,7 +197,7 @@ msgstr "%s version %s"
 
 #: ../app/main.c:778
 msgid "Another GIMP instance is already running."
-msgstr "En annan instans av GIMP kör redan."
+msgstr "En annan instans av GIMP körs redan."
 
 #: ../app/sanity.c:216
 #, c-format
@@ -588,7 +588,7 @@ msgstr "_Sänk kanal"
 
 #: ../app/actions/channels-actions.c:91
 msgid "Lower this channel one step in the channel stack"
-msgstr "Sänk den här kanalen till nederst i kanalstacken"
+msgstr "Sänk den här kanalen ett steg i kanalstacken"
 
 #: ../app/actions/channels-actions.c:96
 msgid "Lower Channel to _Bottom"
@@ -596,7 +596,7 @@ msgstr "Sänk kanal till _underst"
 
 #: ../app/actions/channels-actions.c:97
 msgid "Lower this channel to the bottom of the channel stack"
-msgstr "Sänk den här kanalen till nederst i kanalstacken"
+msgstr "Sänk den här kanalen längst ner i kanalstacken"
 
 #: ../app/actions/channels-actions.c:105
 msgid "Channel to Sele_ction"
@@ -892,7 +892,7 @@ msgstr "_Lager, kanaler och slingor"
 
 #: ../app/actions/dialogs-actions.c:43
 msgid "Open a Layers, Channels & Paths dock"
-msgstr "Öppna en dock för lager, kanaler och slingor"
+msgstr "Öppna en docka för lager, kanaler och slingor"
 
 #: ../app/actions/dialogs-actions.c:48
 msgid "_Brushes, Patterns & Gradients"
@@ -908,7 +908,7 @@ msgstr "_Allmänt och blandat"
 
 #: ../app/actions/dialogs-actions.c:55
 msgid "Open a dock containing miscellaneous dialogs"
-msgstr "Öppna en dock som innehåller diverse dialogrutor"
+msgstr "Öppna en docka som innehåller diverse dialogrutor"
 
 #: ../app/actions/dialogs-actions.c:60
 msgid "Tool_box"
@@ -1021,7 +1021,7 @@ msgstr "_Färger"
 
 #: ../app/actions/dialogs-actions.c:142
 msgid "Open the FG/BG color dialog"
-msgstr "Öppna dialogrutan för RG/BG-färger"
+msgstr "Öppna dialogrutan för FG/BG-färger"
 
 #: ../app/actions/dialogs-actions.c:147
 msgid "_Brushes"
@@ -1405,7 +1405,7 @@ msgstr "_Länkad"
 
 #: ../app/actions/drawable-actions.c:79
 msgid "Toggle the linked state"
-msgstr "Växla till länkat tillstånd"
+msgstr "Växla länkat tillstånd"
 
 #: ../app/actions/drawable-actions.c:85
 #: ../app/actions/vectors-actions.c:147
@@ -1517,7 +1517,7 @@ msgstr "Ångra starkt"
 
 #: ../app/actions/edit-actions.c:85
 msgid "Undo the last operation, skipping visibility changes"
-msgstr "Ångra senaste åtgärden, hoppa över synliga ändringar"
+msgstr "Ångra senaste åtgärden, hoppa över ändringar gällande synlighet"
 
 #: ../app/actions/edit-actions.c:90
 msgid "Strong Redo"
@@ -1542,7 +1542,7 @@ msgstr "_Tona..."
 
 #: ../app/actions/edit-actions.c:103
 msgid "Modify paint mode and opacity of the last pixel manipulation"
-msgstr "Ändra målningsläge och opacitet till senaste bildspunktsmanipuleringen"
+msgstr "Ändra målningsläge och opacitet för senaste bildspunktsmanipuleringen"
 
 #: ../app/actions/edit-actions.c:108
 msgid "Cu_t"
@@ -2160,7 +2160,7 @@ msgstr "_Dela segment vid mittpunkt"
 
 #: ../app/actions/gradient-editor-actions.c:784
 msgid "Split Segment _Uniformly..."
-msgstr "Dela segment _uniformt..."
+msgstr "Dela segment _likformigt..."
 
 #: ../app/actions/gradient-editor-actions.c:786
 msgid "_Delete Segment"
@@ -2196,7 +2196,7 @@ msgstr "_Dela segment vid mittpunkter"
 
 #: ../app/actions/gradient-editor-actions.c:806
 msgid "Split Segments _Uniformly..."
-msgstr "Dela segmenten _uniformt..."
+msgstr "Dela segmenten _likformigt..."
 
 #: ../app/actions/gradient-editor-actions.c:808
 msgid "_Delete Selection"
@@ -2264,19 +2264,19 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-commands.c:554
 msgid "Split Segment Uniformly"
-msgstr "Dela segment uniformt"
+msgstr "Dela segment likformigt"
 
 #: ../app/actions/gradient-editor-commands.c:555
 msgid "Split Gradient Segment Uniformly"
-msgstr "Dela gradientsegmentet uniformt"
+msgstr "Dela gradientsegmentet likformigt"
 
 #: ../app/actions/gradient-editor-commands.c:559
 msgid "Split Segments Uniformly"
-msgstr "Dela segmenten uniformt"
+msgstr "Dela segmenten likformigt"
 
 #: ../app/actions/gradient-editor-commands.c:560
 msgid "Split Gradient Segments Uniformly"
-msgstr "Dela gradientsegmenten uniformt"
+msgstr "Dela gradientsegmenten likformigt"
 
 #: ../app/actions/gradient-editor-commands.c:573
 msgid "Split"
@@ -2287,7 +2287,7 @@ msgid ""
 "Select the number of uniform parts\n"
 "in which to split the selected segment."
 msgstr ""
-"Välj antalet uniforma delar som du\n"
+"Välj antalet likformiga delar som du\n"
 "vill dela det markerade segmentet i."
 
 #: ../app/actions/gradient-editor-commands.c:597
@@ -2295,7 +2295,7 @@ msgid ""
 "Select the number of uniform parts\n"
 "in which to split the segments in the selection."
 msgstr ""
-"Välj antalet uniforma delar som du\n"
+"Välj antalet likformiga delar som du\n"
 "vill dela segmenten i markeringen i."
 
 #: ../app/actions/gradients-actions.c:44
@@ -8324,7 +8324,6 @@ msgstr "Annat..."
 
 #: ../app/file/file-open.c:130
 #: ../app/file/file-save.c:112
-#, c-format
 msgid "Not a regular file"
 msgstr "Inte en vanlig fil"
 
@@ -8339,7 +8338,6 @@ msgid "%s plug-In could not open image"
 msgstr "Insticksmodulen %s kunde inte öppna bild"
 
 #: ../app/file/file-open.c:471
-#, c-format
 msgid "Image doesn't contain any layers"
 msgstr "Bilden innehåller inga lager"
 
@@ -8353,7 +8351,6 @@ msgid "Color management has been disabled. It can be enabled again in the Prefer
 msgstr "Färghantering har inaktiverats. Den kan aktiveras igen i inställningsdialogen."
 
 #: ../app/file/file-procedure.c:200
-#, c-format
 msgid "Unknown file type"
 msgstr "Okänd filtyp"
 
@@ -8369,7 +8366,6 @@ msgstr "\"%s\"' är inte ett giltigt URI-schema"
 
 #: ../app/file/file-utils.c:88
 #: ../app/file/file-utils.c:122
-#, c-format
 msgid "Invalid character sequence in URI"
 msgstr "Ogiltig teckensekvens i URI"
 
@@ -8383,7 +8379,6 @@ msgid "Airbrush"
 msgstr "Färgspruta"
 
 #: ../app/paint/gimpbrushcore.c:354
-#, c-format
 msgid "No brushes available for use with this tool."
 msgstr "Det finns inga penslar tillgängliga för detta verktyg."
 
@@ -8393,7 +8388,6 @@ msgid "Clone"
 msgstr "Klona"
 
 #: ../app/paint/gimpclone.c:141
-#, c-format
 msgid "No patterns available for use with this tool."
 msgstr "Inga mönster finns tillgängliga för detta verktyg."
 
@@ -8416,7 +8410,6 @@ msgid "Heal"
 msgstr "Läk"
 
 #: ../app/paint/gimpheal.c:126
-#, c-format
 msgid "Healing does not operate on indexed layers."
 msgstr "Läkning fungerar inte på indexerade lager."
 
@@ -8437,7 +8430,6 @@ msgid "Perspective Clone"
 msgstr "Perspektiv klon"
 
 #: ../app/paint/gimpperspectiveclone.c:160
-#, c-format
 msgid "Perspective Clone does not operate on indexed layers."
 msgstr "Perspektiv klon fungerar inte på indexerade lager."
 
@@ -8447,7 +8439,6 @@ msgid "Smudge"
 msgstr "Smeta"
 
 #: ../app/paint/gimpsourcecore.c:227
-#, c-format
 msgid "Set a source image first."
 msgstr "Ställ in en källbild först."
 
@@ -8924,7 +8915,6 @@ msgid "Blen_d"
 msgstr "Färgto_ning"
 
 #: ../app/tools/gimpblendtool.c:163
-#, c-format
 msgid "Blend does not operate on indexed layers."
 msgstr "Toning fungerar inte på indexerade lager."
 
@@ -8956,7 +8946,6 @@ msgid "Adjust Brightness and Contrast"
 msgstr "Justera ljusstyrka och kontrast"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:169
-#, c-format
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "Ljusstyrka-Kontrast går inte att använda på indexerade lager."
 
@@ -9094,7 +9083,6 @@ msgid "Adjust Color Balance"
 msgstr "Justera färgbalans"
 
 #: ../app/tools/gimpcolorbalancetool.c:153
-#, c-format
 msgid "Color Balance operates only on RGB color layers."
 msgstr "Färgbalans fungerar endast på RGB-färglager."
 
@@ -9143,7 +9131,6 @@ msgid "Colorize the Image"
 msgstr "Färglägg bilden"
 
 #: ../app/tools/gimpcolorizetool.c:148
-#, c-format
 msgid "Colorize operates only on RGB color layers."
 msgstr "Färgläggning fungerar endast på RGB-lager."
 
@@ -9330,7 +9317,6 @@ msgid "Save curves settings to file"
 msgstr "Spara kurvinställningar till fil"
 
 #: ../app/tools/gimpcurvestool.c:253
-#, c-format
 msgid "Curves does not operate on indexed layers."
 msgstr "Kurvor fungerar inte på indexerade lager."
 
@@ -9365,13 +9351,11 @@ msgstr "Kurvtyp"
 
 #: ../app/tools/gimpcurvestool.c:753
 #: ../app/tools/gimplevelstool.c:672
-#, c-format
 msgid "not a GIMP Levels file"
 msgstr "inte en GIMP-nivåerfil"
 
 #: ../app/tools/gimpcurvestool.c:767
 #: ../app/tools/gimplevelstool.c:711
-#, c-format
 msgid "parse error"
 msgstr "tolkningsfel"
 
@@ -9655,7 +9639,6 @@ msgid "Adjust Hue / Lightness / Saturation"
 msgstr "Justera nyans / ljushet / mättnad"
 
 #: ../app/tools/gimphuesaturationtool.c:173
-#, c-format
 msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Nyans-Mättnad fungerar endast på RGB-lager."
 
@@ -9839,7 +9822,6 @@ msgid "Save levels settings to file"
 msgstr "Spara nivåinställningar till fil"
 
 #: ../app/tools/gimplevelstool.c:236
-#, c-format
 msgid "Levels does not operate on indexed layers."
 msgstr "Nivåer fungerar inte på indexerade lager."
 
@@ -10151,7 +10133,6 @@ msgid "Posterize (Reduce Number of Colors)"
 msgstr "Posterisera (reducera antalet färger)"
 
 #: ../app/tools/gimpposterizetool.c:140
-#, c-format
 msgid "Posterize does not operate on indexed layers."
 msgstr "Kan inte använda posterisering på indexerade lager."
 
@@ -10458,7 +10439,6 @@ msgid "Apply Threshold"
 msgstr "Tillämpa tröskelvärde"
 
 #: ../app/tools/gimpthresholdtool.c:148
-#, c-format
 msgid "Threshold does not operate on indexed layers."
 msgstr "Kan inte använda tröskelvärde på indexerade lager."
 
@@ -10800,7 +10780,6 @@ msgid "No paths found in '%s'"
 msgstr "Inga slingor hittades i \"%s\""
 
 #: ../app/vectors/gimpvectors-import.c:339
-#, c-format
 msgid "No paths found in the buffer"
 msgstr "Inga slingor hittades i bufferten"
 
@@ -11189,7 +11168,6 @@ msgid "Remove Controller '%s'?"
 msgstr "Ta bort enheten \"%s\"?"
 
 #: ../app/widgets/gimpcontrollerlist.c:571
-#, c-format
 msgid ""
 "Removing this controller from the list of active controllers will permanently delete all event mappings you have configured.\n"
 "\n"
