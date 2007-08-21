@@ -3246,6 +3246,10 @@ gimp_rectangle_tool_update_with_coord (GimpRectangleTool *rectangle_tool,
   /* Calculate what constraint to use when needed. */
   constraint_to_use = gimp_rectangle_tool_get_constraint (rectangle_tool);
 
+  /* If the rectangle is being moved, we are done already since we should change it's shape then. */
+  if (private->function == RECT_MOVING)
+    return;
+
   /* Apply the active fixed-rule */
 
   if (gimp_rectangle_options_fixed_rule_active (options,

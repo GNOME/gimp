@@ -1,3 +1,9 @@
+2007-08-21  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_update_with_coord): Don't adjust the
+	rectangle shape if it is is merely being moved.
+
 2007-08-20  Michael Natterer  <mitch@gimp.org>
 
 	* menus/Makefile.am: s/MAINTAINERCLEAN_FILES/MAINTAINERCLEANFILES/
