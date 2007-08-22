@@ -1,3 +1,12 @@
+2007-08-22  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c: replaced bilinear
+	interpolation from next larger pyramid level with a boxfilter
+	of the next larger pyramid level.
+
+	This is probably the last update to the quality of the display
+	in GIMP 2.4.
+
 2007-08-21  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c
