@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-19 22:50+0100\n"
-"PO-Revision-Date: 2007-08-21 16:39+0100\n"
+"POT-Creation-Date: 2007-08-22 08:32+0200\n"
+"PO-Revision-Date: 2007-08-22 08:41+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -4774,7 +4774,7 @@ msgstr "När aktiverat är statusraden synlig. Detta kan också ändras med \"Vi
 
 #: ../app/config/gimprc-blurbs.h:310
 msgid "When enabled, the selection is visible by default. This can also be toggled with the \"View->Show Selection\" command."
-msgstr "När aktiverat är urvalet synlig. Detta kan också ändras med \"Visa -> Visa urval\"-kommandot."
+msgstr "När aktiverat är urvalet synligt. Detta kan också ändras med \"Visa -> Visa urval\"-kommandot."
 
 #: ../app/config/gimprc-blurbs.h:314
 msgid "When enabled, the layer boundary is visible by default. This can also be toggled with the \"View->Show Layer Boundary\" command."
@@ -5663,7 +5663,7 @@ msgstr "Urklippshanterare"
 #: ../app/core/gimpbrushgenerated-load.c:87
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-msgstr "Ödesdigert tolkningsfel i penselfilen \"%s\": Inte en GIMP penselfil."
+msgstr "Ödesdigert tolkningsfel i penselfilen \"%s\": Inte en GIMP-penselfil."
 
 #: ../app/core/gimpbrushgenerated-load.c:104
 #, c-format
@@ -6932,7 +6932,7 @@ msgstr "Bekräfta skalning"
 #: ../app/dialogs/image-scale-dialog.c:243
 #, c-format
 msgid "Scaling the image to the chosen size will make it use more memory than what is configured as \"Maximum Image Size\" in the Preferences dialog (currently %s)."
-msgstr "Skalning av bilden till den valda storleken innebära att den kommer att använda mer minne än vad \"Maximal bildstorlek\" är konfigurerad till i inställningsdialogen (för närvarande %s)."
+msgstr "Skalning av bilden till den valda storleken innebär att den kommer att använda mer minne än vad \"Maximal bildstorlek\" är konfigurerad till i inställningsdialogen (för närvarande %s)."
 
 #: ../app/dialogs/image-scale-dialog.c:258
 msgid "Scaling the image to the chosen size will shrink some layers completely away."
@@ -8222,7 +8222,7 @@ msgstr[1] "Om du inte sparar bilden kommer du att förlora ändringar gjorda de 
 msgid "If you don't save the image, changes from the last hour and %d minute will be lost."
 msgid_plural "If you don't save the image, changes from the last hour and %d minutes will be lost."
 msgstr[0] "Om du inte sparar bilden kommer du att förlora ändringar gjorda den senaste timmen och %d minut."
-msgstr[1] "\"Om du inte sparar bilden kommer du att förlora ändringar gjorda de senaste timmen och %d minuterna."
+msgstr[1] "\"Om du inte sparar bilden kommer du att förlora ändringar gjorda den senaste timmen och %d minuterna."
 
 #: ../app/display/gimpdisplayshell-close.c:253
 #, c-format
@@ -8250,7 +8250,7 @@ msgstr "Förkasta lager"
 #: ../app/widgets/gimplayertreeview.c:834
 #: ../app/widgets/gimptoolbox-dnd.c:356
 msgid "Dropped Buffer"
-msgstr "Förkastade buffert"
+msgstr "Förkastad buffert"
 
 #: ../app/display/gimpdisplayshell-filter-dialog.c:78
 msgid "Color Display Filters"
@@ -8324,6 +8324,7 @@ msgstr "Annat..."
 
 #: ../app/file/file-open.c:130
 #: ../app/file/file-save.c:112
+#, c-format
 msgid "Not a regular file"
 msgstr "Inte en vanlig fil"
 
@@ -8338,6 +8339,7 @@ msgid "%s plug-In could not open image"
 msgstr "Insticksmodulen %s kunde inte öppna bild"
 
 #: ../app/file/file-open.c:471
+#, c-format
 msgid "Image doesn't contain any layers"
 msgstr "Bilden innehåller inga lager"
 
@@ -8351,6 +8353,7 @@ msgid "Color management has been disabled. It can be enabled again in the Prefer
 msgstr "Färghantering har inaktiverats. Den kan aktiveras igen i inställningsdialogen."
 
 #: ../app/file/file-procedure.c:200
+#, c-format
 msgid "Unknown file type"
 msgstr "Okänd filtyp"
 
@@ -8362,10 +8365,11 @@ msgstr "Insticksmodulen %s kunde inte spara bild"
 #: ../app/file/file-utils.c:74
 #, c-format
 msgid "'%s:' is not a valid URI scheme"
-msgstr "\"%s\"' är inte ett giltigt URI-schema"
+msgstr "\"%s\" är inte ett giltigt URI-schema"
 
 #: ../app/file/file-utils.c:88
 #: ../app/file/file-utils.c:122
+#, c-format
 msgid "Invalid character sequence in URI"
 msgstr "Ogiltig teckensekvens i URI"
 
@@ -8379,6 +8383,7 @@ msgid "Airbrush"
 msgstr "Färgspruta"
 
 #: ../app/paint/gimpbrushcore.c:354
+#, c-format
 msgid "No brushes available for use with this tool."
 msgstr "Det finns inga penslar tillgängliga för detta verktyg."
 
@@ -8388,6 +8393,7 @@ msgid "Clone"
 msgstr "Klona"
 
 #: ../app/paint/gimpclone.c:141
+#, c-format
 msgid "No patterns available for use with this tool."
 msgstr "Inga mönster finns tillgängliga för detta verktyg."
 
@@ -8410,6 +8416,7 @@ msgid "Heal"
 msgstr "Läk"
 
 #: ../app/paint/gimpheal.c:126
+#, c-format
 msgid "Healing does not operate on indexed layers."
 msgstr "Läkning fungerar inte på indexerade lager."
 
@@ -8427,11 +8434,12 @@ msgstr "Penna"
 #: ../app/paint/paint-enums.c:52
 #: ../app/tools/gimpperspectiveclonetool.c:120
 msgid "Perspective Clone"
-msgstr "Perspektiv klon"
+msgstr "Perspektivkloning"
 
 #: ../app/paint/gimpperspectiveclone.c:160
+#, c-format
 msgid "Perspective Clone does not operate on indexed layers."
-msgstr "Perspektiv klon fungerar inte på indexerade lager."
+msgstr "Perspektivkloning fungerar inte på indexerade lager."
 
 #: ../app/paint/gimpsmudge.c:78
 #: ../app/tools/gimpsmudgetool.c:53
@@ -8439,6 +8447,7 @@ msgid "Smudge"
 msgstr "Smeta"
 
 #: ../app/paint/gimpsourcecore.c:227
+#, c-format
 msgid "Set a source image first."
 msgstr "Ställ in en källbild först."
 
@@ -8915,6 +8924,7 @@ msgid "Blen_d"
 msgstr "Färgto_ning"
 
 #: ../app/tools/gimpblendtool.c:163
+#, c-format
 msgid "Blend does not operate on indexed layers."
 msgstr "Toning fungerar inte på indexerade lager."
 
@@ -8946,6 +8956,7 @@ msgid "Adjust Brightness and Contrast"
 msgstr "Justera ljusstyrka och kontrast"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:169
+#, c-format
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "Ljusstyrka-Kontrast går inte att använda på indexerade lager."
 
@@ -9083,6 +9094,7 @@ msgid "Adjust Color Balance"
 msgstr "Justera färgbalans"
 
 #: ../app/tools/gimpcolorbalancetool.c:153
+#, c-format
 msgid "Color Balance operates only on RGB color layers."
 msgstr "Färgbalans fungerar endast på RGB-färglager."
 
@@ -9131,6 +9143,7 @@ msgid "Colorize the Image"
 msgstr "Färglägg bilden"
 
 #: ../app/tools/gimpcolorizetool.c:148
+#, c-format
 msgid "Colorize operates only on RGB color layers."
 msgstr "Färgläggning fungerar endast på RGB-lager."
 
@@ -9317,6 +9330,7 @@ msgid "Save curves settings to file"
 msgstr "Spara kurvinställningar till fil"
 
 #: ../app/tools/gimpcurvestool.c:253
+#, c-format
 msgid "Curves does not operate on indexed layers."
 msgstr "Kurvor fungerar inte på indexerade lager."
 
@@ -9351,11 +9365,13 @@ msgstr "Kurvtyp"
 
 #: ../app/tools/gimpcurvestool.c:753
 #: ../app/tools/gimplevelstool.c:672
+#, c-format
 msgid "not a GIMP Levels file"
-msgstr "inte en GIMP-nivåerfil"
+msgstr "inte en GIMP-nivåfil"
 
 #: ../app/tools/gimpcurvestool.c:767
 #: ../app/tools/gimplevelstool.c:711
+#, c-format
 msgid "parse error"
 msgstr "tolkningsfel"
 
@@ -9369,7 +9385,7 @@ msgstr "Verktyg för blekning / bränning: Gör selektivt ljusare eller mörkare
 
 #: ../app/tools/gimpdodgeburntool.c:75
 msgid "Dod_ge / Burn"
-msgstr "Ble_k / B_ränn"
+msgstr "Ble_k / Bränn"
 
 #: ../app/tools/gimpdodgeburntool.c:173
 msgid "Click to dodge"
@@ -9436,7 +9452,7 @@ msgstr "_Ellipsmarkering"
 
 #: ../app/tools/gimperasertool.c:67
 msgid "Eraser Tool: Erase to background or transparency using a brush"
-msgstr "Suddningsverktyg: Sudda mot bakgrunden eller transparent med en pensel"
+msgstr "Suddningsverktyg: Sudda mot bakgrunden eller transparens med en pensel"
 
 #: ../app/tools/gimperasertool.c:68
 msgid "_Eraser"
@@ -9561,7 +9577,7 @@ msgstr "F_örgrundsmarkering"
 
 #: ../app/tools/gimpforegroundselecttool.c:310
 msgid "Add more strokes or press Enter to accept the selection"
-msgstr "Lägg till fler str"
+msgstr "Lägg till fler strykningar eller tryck på Enter för att godta markeringen"
 
 #: ../app/tools/gimpforegroundselecttool.c:312
 msgid "Mark foreground by painting on the object to extract"
@@ -9601,7 +9617,7 @@ msgstr "L_uddig markering"
 
 #: ../app/tools/gimphealtool.c:54
 msgid "Healing Tool: Heal image irregularities"
-msgstr "Läkningsverktyg: Motverk ojämnheter i bilden"
+msgstr "Läkningsverktyg: Motverka ojämnheter i bilden"
 
 #: ../app/tools/gimphealtool.c:55
 msgid "_Heal"
@@ -9639,6 +9655,7 @@ msgid "Adjust Hue / Lightness / Saturation"
 msgstr "Justera nyans / ljushet / mättnad"
 
 #: ../app/tools/gimphuesaturationtool.c:173
+#, c-format
 msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Nyans-Mättnad fungerar endast på RGB-lager."
 
@@ -9779,7 +9796,7 @@ msgstr "%s: inaktivera automatisk fästning"
 
 #: ../app/tools/gimpiscissorstool.c:938
 msgid "Click to close the curve"
-msgstr "Klicka för att avsluta kurvan"
+msgstr "Klicka för att sluta kurvan"
 
 #: ../app/tools/gimpiscissorstool.c:944
 msgid "Click to add a point on this segment"
@@ -9822,6 +9839,7 @@ msgid "Save levels settings to file"
 msgstr "Spara nivåinställningar till fil"
 
 #: ../app/tools/gimplevelstool.c:236
+#, c-format
 msgid "Levels does not operate on indexed layers."
 msgstr "Nivåer fungerar inte på indexerade lager."
 
@@ -10090,11 +10108,11 @@ msgstr "Pe_nna"
 
 #: ../app/tools/gimpperspectiveclonetool.c:121
 msgid "Perspective Clone Tool: Clone from an image source after applying a perspective transformation"
-msgstr "Verktyg för perspektiv kloning: Klona från en bildkälla efter en perspektiv transformering tillämpats"
+msgstr "Verktyg för perspektivkloning: Klona från en bildkälla efter en perspektiv transformering tillämpats"
 
 #: ../app/tools/gimpperspectiveclonetool.c:123
 msgid "_Perspective Clone"
-msgstr "_Perspektiv kloning"
+msgstr "_Perspektivkloning"
 
 #: ../app/tools/gimpperspectiveclonetool.c:646
 msgid "Ctrl-Click to set a clone source"
@@ -10133,6 +10151,7 @@ msgid "Posterize (Reduce Number of Colors)"
 msgstr "Posterisera (reducera antalet färger)"
 
 #: ../app/tools/gimpposterizetool.c:140
+#, c-format
 msgid "Posterize does not operate on indexed layers."
 msgstr "Kan inte använda posterisering på indexerade lager."
 
@@ -10361,7 +10380,7 @@ msgstr "Indragning av första raden"
 
 #: ../app/tools/gimptextoptions.c:152
 msgid "Adjust line spacing"
-msgstr "Justera linjemellanrum"
+msgstr "Justera radavstånd"
 
 #: ../app/tools/gimptextoptions.c:158
 msgid "Adjust letter spacing"
@@ -10439,6 +10458,7 @@ msgid "Apply Threshold"
 msgstr "Tillämpa tröskelvärde"
 
 #: ../app/tools/gimpthresholdtool.c:148
+#, c-format
 msgid "Threshold does not operate on indexed layers."
 msgstr "Kan inte använda tröskelvärde på indexerade lager."
 
@@ -10780,6 +10800,7 @@ msgid "No paths found in '%s'"
 msgstr "Inga slingor hittades i \"%s\""
 
 #: ../app/vectors/gimpvectors-import.c:339
+#, c-format
 msgid "No paths found in the buffer"
 msgstr "Inga slingor hittades i bufferten"
 
@@ -11168,6 +11189,7 @@ msgid "Remove Controller '%s'?"
 msgstr "Ta bort enheten \"%s\"?"
 
 #: ../app/widgets/gimpcontrollerlist.c:571
+#, c-format
 msgid ""
 "Removing this controller from the list of active controllers will permanently delete all event mappings you have configured.\n"
 "\n"
@@ -11485,7 +11507,7 @@ msgstr "Kunde inte hitta GIMP-hjälpläsaren"
 
 #: ../app/widgets/gimphelp.c:195
 msgid "The GIMP help browser plug-in appears to be missing from your installation."
-msgstr "GIMP hjälpläsarinsticksmodulen verkar saknas i din installation."
+msgstr "GIMP:s hjälpläsarinsticksmodulen verkar saknas i din installation."
 
 #: ../app/widgets/gimphelp.c:229
 msgid "Help browser doesn't start"
@@ -11911,7 +11933,7 @@ msgstr "Blanksteg"
 #. do not translate the part before the |
 #: ../app/widgets/gimpwidgets-utils.c:558
 msgid "keyboard label|Backslash"
-msgstr "Backsteg"
+msgstr "Bakåtvänt snedstreck"
 
 #: ../app/widgets/gimpwidgets-utils.c:668
 #, c-format
@@ -12108,11 +12130,11 @@ msgstr "Bildredigerare"
 
 #: ../tools/gimp-remote.c:84
 msgid "Use a running GIMP only, never start a new one"
-msgstr "Använd endast en körande GIMP-instans, starta aldrig en ny"
+msgstr "Använd endast en GIMP-instans som körs, starta aldrig en ny"
 
 #: ../tools/gimp-remote.c:89
 msgid "Only check if GIMP is running, then quit"
-msgstr "Kontrollera endast om GIMP kör, avsluta sedan"
+msgstr "Kontrollera endast om GIMP körs, avsluta sedan"
 
 #: ../tools/gimp-remote.c:94
 msgid "Print X window ID of GIMP toolbox window, then quit"
