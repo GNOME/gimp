@@ -925,10 +925,10 @@ compute_sample (gint          left_weight,
   left_weight >>= 2;
   right_weight >>= 2;
   middle_weight >>= 2;
-  top_weight >>= 3;
-  bottom_weight >>= 3;
-  center_weight >>= 3;
-  sum >>= 5;            /* need to adjust the sum of weights accordingly as
+  top_weight >>= 2;
+  bottom_weight >>= 2;
+  center_weight >>= 2;
+  sum >>= 4;            /* need to adjust the sum of weights accordingly as
                            well */
   switch (bpp)
     {
@@ -1107,7 +1107,7 @@ render_image_tile_fault (RenderInfo *info)
        * borders of the pixelation cells.
        */
 
-      (info->scalex < 0.20 || info->scaley < 0.20))
+      (info->scalex < 0.25 || info->scaley < 0.25))
         /* use nearest neighbour scaling when being abused, to avoid integer overflows */ 
     {
       return render_image_tile_fault_nearest (info);
@@ -1616,8 +1616,7 @@ static const guchar *
 render_image_tile_fault_one_row (RenderInfo *info)
 {
   /* NOTE: there are some additional overhead that can be factored out
-   * in the tile administration in this fast path, see above commented
-   * out code for inspiration.
+   * in the tile administration in this fast path
    */ 
 
   Tile         *tile0;
