@@ -9,12 +9,12 @@
 # Francisco Vila <francisco.vila@hispalinux.es>, 2005, 2006, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-libgimp.HEAD\n"
+"Project-Id-Version: gimp-libgimp.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-07 03:58+0100\n"
-"PO-Revision-Date: 2007-08-13 18:15+0200\n"
+"POT-Creation-Date: 2007-08-16 22:32+0100\n"
+"PO-Revision-Date: 2007-08-20 13:49+0200\n"
 "Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
-"Language-Team: Spanish <traductores@es.gnome.org>\n"
+"Language-Team: Español <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -51,7 +51,8 @@ msgstr ""
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
 #, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "El complemento %s sólo puede manejar capas como fotogramas de animación"
+msgstr ""
+"El complemento %s sólo puede manejar capas como fotogramas de animación"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
@@ -138,7 +139,8 @@ msgstr "El complemento %s sólo puede manejar imágenes RGB o indexadas"
 #: ../libgimp/gimpexport.c:337
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "El complemento %s sólo puede manejar imágenes indexadas o de tonos de gris"
+msgstr ""
+"El complemento %s sólo puede manejar imágenes indexadas o de tonos de gris"
 
 #: ../libgimp/gimpexport.c:348
 #, c-format
@@ -628,7 +630,7 @@ msgstr "Constante"
 msgid "Incremental"
 msgstr "Incremental"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:208
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:214
 msgid "None"
 msgstr "Ninguno"
 
@@ -766,7 +768,7 @@ msgid "%d GB"
 msgstr "%d GiB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:200
+#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:407
 msgid "(invalid UTF-8 string)"
 msgstr "(cadena UTF-8 inválida)"
 
@@ -872,6 +874,7 @@ msgstr "mientras se analizaba la señal «%s»: %s"
 #: ../libgimpconfig/gimpconfig-iface.c:454
 #: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
+#: ../libgimpwidgets/gimpcolorprofilestore.c:593
 msgid "fatal parse error"
 msgstr "Error fatal de análisis"
 
@@ -994,6 +997,14 @@ msgstr "Ne_gro"
 #: ../libgimpwidgets/gimpcolorbutton.c:130
 msgid "_White"
 msgstr "_Blanco"
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:142
+msgid "Select color profile from disk..."
+msgstr "Seleccionar perfil de color del disco..."
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:278
+msgid "profile|None"
+msgstr "Ninguno"
 
 #: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
@@ -1349,15 +1360,16 @@ msgstr "Contraste"
 msgid "Contrast c_ycles:"
 msgstr "C_iclos de contraste:"
 
-#: ../modules/cdisplay_lcms.c:99
+#: ../modules/cdisplay_lcms.c:105
 msgid "Color management display filter using ICC color profiles"
-msgstr "Filtro de gestión del color de la pantalla que utiliza perfiles de color ICC"
+msgstr ""
+"Filtro de gestión del color de la pantalla que utiliza perfiles de color ICC"
 
-#: ../modules/cdisplay_lcms.c:160
+#: ../modules/cdisplay_lcms.c:166
 msgid "Color Management"
 msgstr "Gestión del color"
 
-#: ../modules/cdisplay_lcms.c:229
+#: ../modules/cdisplay_lcms.c:235
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1365,19 +1377,19 @@ msgstr ""
 "Este filtro toma su configuración de la sección de gestión del color en el "
 "diálogo de preferencias."
 
-#: ../modules/cdisplay_lcms.c:243
+#: ../modules/cdisplay_lcms.c:249
 msgid "Mode of operation:"
 msgstr "Modo de funcionamiento:"
 
-#: ../modules/cdisplay_lcms.c:250
+#: ../modules/cdisplay_lcms.c:256
 msgid "Image profile:"
 msgstr "Perfil de imagen:"
 
-#: ../modules/cdisplay_lcms.c:257
+#: ../modules/cdisplay_lcms.c:263
 msgid "Monitor profile:"
 msgstr "Perfil del monitor:"
 
-#: ../modules/cdisplay_lcms.c:264
+#: ../modules/cdisplay_lcms.c:270
 msgid "Print simulation profile:"
 msgstr "Perfil de la simulación de impresión:"
 
@@ -1409,43 +1421,43 @@ msgstr "Compensación de punto _negro:"
 msgid "CMYK color selector"
 msgstr "Selector de color CMYK"
 
-#: ../modules/colorsel_cmyk.c:130
+#: ../modules/colorsel_cmyk.c:130 ../modules/colorsel_cmyk_lcms.c:154
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/colorsel_cmyk.c:148
+#: ../modules/colorsel_cmyk.c:148 ../modules/colorsel_cmyk_lcms.c:171
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/colorsel_cmyk.c:150
+#: ../modules/colorsel_cmyk.c:150 ../modules/colorsel_cmyk_lcms.c:173
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/colorsel_cmyk.c:152
+#: ../modules/colorsel_cmyk.c:152 ../modules/colorsel_cmyk_lcms.c:175
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/colorsel_cmyk.c:154
+#: ../modules/colorsel_cmyk.c:154 ../modules/colorsel_cmyk_lcms.c:177
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/colorsel_cmyk.c:158
+#: ../modules/colorsel_cmyk.c:158 ../modules/colorsel_cmyk_lcms.c:181
 msgid "Cyan"
 msgstr "Cian"
 
-#: ../modules/colorsel_cmyk.c:159
+#: ../modules/colorsel_cmyk.c:159 ../modules/colorsel_cmyk_lcms.c:182
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../modules/colorsel_cmyk.c:160
+#: ../modules/colorsel_cmyk.c:160 ../modules/colorsel_cmyk_lcms.c:183
 msgid "Yellow"
 msgstr "Amarillo"
 
-#: ../modules/colorsel_cmyk.c:161
+#: ../modules/colorsel_cmyk.c:161 ../modules/colorsel_cmyk_lcms.c:184
 msgid "Black"
 msgstr "Negro"
 
@@ -1456,6 +1468,19 @@ msgstr "_Extracción de negro:"
 #: ../modules/colorsel_cmyk.c:212
 msgid "The percentage of black to pull out of the colored inks."
 msgstr "El porcentaje de negro que se extraerá de las tintas coloreadas."
+
+#: ../modules/colorsel_cmyk_lcms.c:91
+msgid "CMYK color selector (using color profile)"
+msgstr "Selector de color CMYK (utilizando perfil de color)"
+
+#: ../modules/colorsel_cmyk_lcms.c:396
+msgid "Profile: (none)"
+msgstr "Perfil: (ninguno)"
+
+#: ../modules/colorsel_cmyk_lcms.c:409
+#, c-format
+msgid "Profile: %s"
+msgstr "Perfil: %s"
 
 # Painter-style es "estilo pintor". REVISAR. FVD.
 #: ../modules/colorsel_triangle.c:104
@@ -1657,7 +1682,8 @@ msgstr "Dispositivo:"
 
 #: ../modules/controller_linux_input.c:250
 msgid "The name of the device to read Linux Input events from."
-msgstr "Nombre del dispositivo desde el que leer los eventos de entrada de Linux."
+msgstr ""
+"Nombre del dispositivo desde el que leer los eventos de entrada de Linux."
 
 #: ../modules/controller_linux_input.c:261
 msgid "Linux Input"
@@ -1822,4 +1848,3 @@ msgstr "GIMP"
 #: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr "Controlador de entrada MIDI del GIMP"
-
