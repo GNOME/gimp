@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-18 11:46+0200\n"
-"PO-Revision-Date: 2007-08-18 11:48+0200\n"
+"POT-Creation-Date: 2007-08-22 18:00+0200\n"
+"PO-Revision-Date: 2007-08-22 18:08+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -4961,29 +4961,24 @@ msgid "Cleanup"
 msgstr "Úklid"
 
 #: ../plug-ins/common/lcms.c:198
-#, fuzzy
 msgid "_Assign Color Profile..."
-msgstr "Použít barevný profil"
+msgstr "_Přiřadit profil barev"
 
 #: ../plug-ins/common/lcms.c:214
-#, fuzzy
 msgid "Assign default RGB Profile"
-msgstr "Použít výchozí RGB profil"
+msgstr "Přiřadit výchozí RGB profil"
 
 #: ../plug-ins/common/lcms.c:231
-#, fuzzy
 msgid "_Convert to Color Profile..."
-msgstr "Nastavit barevný profil"
+msgstr "_Převést do profilu barev..."
 
 #: ../plug-ins/common/lcms.c:249
-#, fuzzy
 msgid "Convert to default RGB Profile"
-msgstr "Nastavit výchozí barevný profil"
+msgstr "Převést do výchozího RGB profilu"
 
 #: ../plug-ins/common/lcms.c:263
-#, fuzzy
 msgid "Image Color Profile Information"
-msgstr "Informace o profilu barev"
+msgstr "Informace o profilu barev obrázku"
 
 #: ../plug-ins/common/lcms.c:277
 msgid "Color Profile Information"
@@ -5045,9 +5040,8 @@ msgid "_Don't ask me again"
 msgstr "_Neptat se znovu"
 
 #: ../plug-ins/common/lcms.c:1212
-#, fuzzy
 msgid "Select destination profile"
-msgstr "Druhá cílová barva"
+msgstr "Zvolte cílový profil"
 
 #: ../plug-ins/common/lcms.c:1239
 msgid "All files (*.*)"
@@ -5055,40 +5049,36 @@ msgstr "Všechny soubory (*.*)"
 
 #: ../plug-ins/common/lcms.c:1244
 msgid "ICC color profile (*.icc, *.icm)"
-msgstr ""
+msgstr "ICC profil barev (*.icc, *.icm)"
 
 #: ../plug-ins/common/lcms.c:1287
-#, fuzzy, c-format
+#, c-format
 msgid "RGB workspace (%s)"
-msgstr "Výchozí pracovní prostor RGB"
+msgstr "Pracovní prostor RGB (%s)"
 
 #: ../plug-ins/common/lcms.c:1335
-#, fuzzy
 msgid "Convert to ICC Color Profile"
-msgstr "Nastavit barevný profil"
+msgstr "Převést do ICC profilu barev"
 
 #: ../plug-ins/common/lcms.c:1336
-#, fuzzy
 msgid "Assign ICC Color Profile"
-msgstr "Použít barevný profil"
+msgstr "Přiřadit ICC profil barev"
 
 #: ../plug-ins/common/lcms.c:1344
 msgid "_Assign"
-msgstr ""
+msgstr "_Přiřadit"
 
 #: ../plug-ins/common/lcms.c:1361
-#, fuzzy
 msgid "Current Color Profile"
-msgstr "Nastavit barevný profil"
+msgstr "Aktuální profil barev"
 
 #: ../plug-ins/common/lcms.c:1376
-#, fuzzy
 msgid "Convert to"
-msgstr "_Konvertovat"
+msgstr "Převést do"
 
 #: ../plug-ins/common/lcms.c:1376
 msgid "Assign"
-msgstr ""
+msgstr "Přiřadit"
 
 #: ../plug-ins/common/lcms.c:1416
 msgid "Destination profile is not for RGB color space."
@@ -11451,7 +11441,7 @@ msgstr "Uložit data XMP"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1041
 msgid "Use custom quality settings"
-msgstr ""
+msgstr "Použít vlastní nastavení kvality"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1046
 msgid ""
@@ -11459,6 +11449,9 @@ msgid ""
 "settings (quantization tables), enable this option to get almost the same "
 "quality and file size."
 msgstr ""
+"Pokud byl originál obrázku načten z JPEG souboru s nestandardním "
+"nastavením kvality (kvantizačními tabulkami), dosáhnete aktivací "
+"této volby téměř stejné kvality a velikosti souboru."
 
 #. Subsampling
 #: ../plug-ins/jpeg/jpeg-save.c:1070
