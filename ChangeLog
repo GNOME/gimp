@@ -1,3 +1,8 @@
+2007-08-24  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: applied patch from Tim Mooney which fixes
+	configure output if libexif is not found. Fixes bug #469708.
+
 2007-08-23  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c: added a static global
