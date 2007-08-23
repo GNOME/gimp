@@ -1,5 +1,12 @@
 2007-08-23  Øyvind Kolås  <pippin@gimp.org>
 
+	* app/display/gimpdisplayshell-render.c: added a static global
+	variable with configuration.
+	(compute_sample): moved common computation of alpha*weight factors 
+	for channel out of loop.
+
+2007-08-23  Øyvind Kolås  <pippin@gimp.org>
+
 	* app/display/gimpdisplayshell-render.c: (compute_sample),
 	(render_image_tile_fault), (render_image_tile_fault_one_row):
 	refactored to use arrays of tiles/source pixels instead of individual

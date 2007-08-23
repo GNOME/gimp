@@ -46,6 +46,15 @@
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-render.h"
 
+#define GIMP_DISPLAY_ZOOM_FAST      1 << 0  /* use the fastest possible code
+                                               path trading quality for speed
+                                             */
+#define GIMP_DISPLAY_ZOOM_PIXEL_AA  1 << 1  /* provide AA edges when zooming in
+                                               on the actual pixels */
+
+/* The default settings are debatable, and perhaps this should even somehow be
+ * configurable by the user. */
+static gint gimp_zoom_quality = 0; /*GIMP_DISPLAY_ZOOM_PIXEL_AA;  */
 
 typedef struct _RenderInfo  RenderInfo;
 
@@ -907,17 +916,17 @@ compute_sample (gint           left_weight,
                 gint           top_weight,
                 gint           center_weight,
                 gint           bottom_weight,
-                gint           sum,
-                const guchar **src,
+                gint           sum,          /* divisor for */
+                const guchar **src,          /* the 9 surrounding source pixels */
                 guchar        *dest,
                 gint           bpp)
 {
 
   /* adjusting the weights to avoid integer overflowing */
-  left_weight >>= 2;
-  right_weight >>= 2;
+  left_weight   >>= 2;
+  right_weight  >>= 2;
   middle_weight >>= 2;
-  top_weight >>= 2;
+  top_weight    >>= 2;
   bottom_weight >>= 2;
   center_weight >>= 2;
   sum >>= 4;            /* need to adjust the sum of weights accordingly as
@@ -925,99 +934,105 @@ compute_sample (gint           left_weight,
   switch (bpp)
     {
       gint i;
+
+
       gint a;
       case 4:
 #define ALPHA 3
-        a = (middle_weight * (
-               src[1][ALPHA] * top_weight +
-               src[4][ALPHA] * center_weight +
-               src[7][ALPHA] * bottom_weight) +
+        {
+          gint factors[9]={
+              src[1][ALPHA] * top_weight,
+              src[4][ALPHA] * center_weight,
+              src[7][ALPHA] * bottom_weight,
+              src[2][ALPHA] * top_weight,
+              src[5][ALPHA] * center_weight,
+              src[8][ALPHA] * bottom_weight,
+              src[0][ALPHA] * top_weight,
+              src[3][ALPHA] * center_weight,
+              src[6][ALPHA] * bottom_weight
+          };
 
-             right_weight * (
-               src[2][ALPHA] * top_weight +
-               src[5][ALPHA] * center_weight +
-               src[8][ALPHA] * bottom_weight) +
+          a = (middle_weight * (factors[0]+factors[1]+factors[2]) +
+               right_weight *  (factors[3]+factors[4]+factors[5]) +
+               left_weight *   (factors[6]+factors[7]+factors[8]));
+          dest[ALPHA] = a/sum;
 
-             left_weight * (
-               src[0][ALPHA] * top_weight +
-               src[3][ALPHA] * center_weight +
-               src[6][ALPHA] * bottom_weight));
-        dest[ALPHA] = a/sum;  /*< if the data was premultiplied, this would
-                                  be the computation for every channel, and
-                                  the shifting would not be needed */
+          for (i=0; i<ALPHA; i++)
+            {
+              gint res = ((middle_weight * (
+                            factors[0] * src[1][i] + 
+                            factors[1] * src[4][i] +  
+                            factors[2] * src[7][i]) + 
 
-        for (i=0; i<ALPHA; i++)
-          {
-            gint res = ((middle_weight * (
-                          src[1][ALPHA] * src[1][i] * top_weight +     /*< perhaps the alpha could be merged with */
-                          src[4][ALPHA] * src[4][i] * center_weight +  /*  the vertical weights once per pixel instead */
-                          src[7][ALPHA] * src[7][i] * bottom_weight) + /*  of four times in total? */
+                          right_weight * (
+                            factors[3] * src[2][i] +
+                            factors[4] * src[5][i] +
+                            factors[5] * src[8][i]) +
 
-                        right_weight * (
-                          src[2][ALPHA] * src[2][i] * top_weight +
-                          src[5][ALPHA] * src[5][i] * center_weight +
-                          src[8][ALPHA] * src[8][i] * bottom_weight) +
+                          left_weight * (
+                            factors[6] * src[0][i] +
+                            factors[7] * src[3][i] +
+                            factors[8] * src[6][i])
 
-                        left_weight * (
-                          src[0][ALPHA] * src[0][i] * top_weight +
-                          src[3][ALPHA] * src[3][i] * center_weight +
-                          src[6][ALPHA] * src[6][i] * bottom_weight)
-
-                        ) / a);
-            if (res < 0)
-              dest[i] = 0;
-            else if (res>255)
-              dest[i] = 255;
-            else
-              dest[i] = res;
-          }
+                          ) / a);
+              if (res < 0)
+                dest[i] = 0;
+              else if (res>255)
+                dest[i] = 255;
+              else
+                dest[i] = res;
+            }
+        }
 #undef ALPHA
         break;
       case 2:
 #define ALPHA 1
-        a = (middle_weight * (
-               src[1][ALPHA] * top_weight +
-               src[4][ALPHA] * center_weight +
-               src[7][ALPHA] * bottom_weight) +
+        /* NOTE: this is a copy and paste of the code above, the ALPHA changes
+         * the behavior in all needed ways. */
+        {
+          gint factors[9]={
+              src[1][ALPHA] * top_weight,
+              src[4][ALPHA] * center_weight,
+              src[7][ALPHA] * bottom_weight,
+              src[2][ALPHA] * top_weight,
+              src[5][ALPHA] * center_weight,
+              src[8][ALPHA] * bottom_weight,
+              src[0][ALPHA] * top_weight,
+              src[3][ALPHA] * center_weight,
+              src[6][ALPHA] * bottom_weight
+          };
 
-             right_weight * (
-               src[2][ALPHA] * top_weight +
-               src[5][ALPHA] * center_weight +
-               src[8][ALPHA] * bottom_weight) +
+          a = (middle_weight * (factors[0]+factors[1]+factors[2]) +
+               right_weight *  (factors[3]+factors[4]+factors[5]) +
+               left_weight *   (factors[6]+factors[7]+factors[8]));
+          dest[ALPHA] = a/sum;  
+                               
+          for (i=0; i<ALPHA; i++)
+            {
+              gint res = ((middle_weight * (
+                            factors[0] * src[1][i] + 
+                            factors[1] * src[4][i] +  
+                            factors[2] * src[7][i]) + 
 
-             left_weight * (
-               src[0][ALPHA] * top_weight +
-               src[3][ALPHA] * center_weight +
-               src[6][ALPHA] * bottom_weight));
-        dest[ALPHA] = a/sum;  /*< if the data was premultiplied, this would
-                                  be the computation for every channel, and
-                                  the shifting would not be needed */
+                          right_weight * (
+                            factors[3] * src[2][i] +
+                            factors[4] * src[5][i] +
+                            factors[5] * src[8][i]) +
 
-        for (i=0; i<ALPHA; i++)
-          {
-            gint res = ((middle_weight * (
-                          src[1][ALPHA] * src[1][i] * top_weight +
-                          src[4][ALPHA] * src[4][i] * center_weight +
-                          src[7][ALPHA] * src[7][i] * bottom_weight) +
+                          left_weight * (
+                            factors[6] * src[0][i] +
+                            factors[7] * src[3][i] +
+                            factors[8] * src[6][i])
 
-                        right_weight * (
-                          src[2][ALPHA] * src[2][i] * top_weight +
-                          src[5][ALPHA] * src[5][i] * center_weight +
-                          src[8][ALPHA] * src[8][i] * bottom_weight) +
-
-                        left_weight * (
-                          src[0][ALPHA] * src[0][i] * top_weight +
-                          src[3][ALPHA] * src[3][i] * center_weight +
-                          src[6][ALPHA] * src[6][i] * bottom_weight)
-
-                        ) / a);
-            if (res < 0)
-              dest[i] = 0;
-            else if (res>255)
-              dest[i] = 255;
-            else
-              dest[i] = res;
-          }
+                          ) / a);
+              if (res < 0)
+                dest[i] = 0;
+              else if (res>255)
+                dest[i] = 255;
+              else
+                dest[i] = res;
+            }
+        }
 #undef ALPHA
         break;
       default:
@@ -1066,13 +1081,18 @@ render_image_tile_fault (RenderInfo *info)
   gint          top_weight;
   gint          center_weight;
   gint          bottom_weight;
-  
+ 
+
+
   /* dispatch to fast path functions on special conditions */
-  if ((info->scalex == 1.0 &&
+  if ((gimp_zoom_quality & GIMP_DISPLAY_ZOOM_FAST) ||
+   
+      (info->scalex == 1.0 &&
        info->scaley == 1.0) ||  /* use nearest neighbour for exact use of
                                    levels */
       (info->shell->scale_x > 1.0 &&
-       info->shell->scale_y > 1.0) ||
+       info->shell->scale_y > 1.0 &&
+       (!(gimp_zoom_quality & GIMP_DISPLAY_ZOOM_PIXEL_AA))) ||
 
       /* use nearest neighbour interpolation when the desired scale
        * is 1:1 with the available pyramid. By removing this optimization
