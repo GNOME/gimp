@@ -1,3 +1,11 @@
+2007-08-23  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c: (compute_sample),
+	(render_image_tile_fault), (render_image_tile_fault_one_row):
+	refactored to use arrays of tiles/source pixels instead of individual
+	variables, also modified the order of the 0..8 numbers to sorted
+	in increasing row-major order.
+
 2007-08-22  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c: replaced bilinear

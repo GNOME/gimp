@@ -908,15 +908,7 @@ compute_sample (gint          left_weight,
                 gint          center_weight,
                 gint          bottom_weight,
                 gint          sum,
-                const guchar *src0,
-                const guchar *src1,
-                const guchar *src2,
-                const guchar *src3,
-                const guchar *src4,
-                const guchar *src5,
-                const guchar *src6,
-                const guchar *src7,
-                const guchar *src8,
+                const guchar *src[9],
                 guchar       *dest,
                 gint          bpp)
 {
@@ -937,19 +929,19 @@ compute_sample (gint          left_weight,
       case 4:
 #define ALPHA 3
         a = (middle_weight * (
-               src5[ALPHA] * top_weight +
-               src0[ALPHA] * center_weight +
-               src2[ALPHA] * bottom_weight) +
+               src[1][ALPHA] * top_weight +
+               src[4][ALPHA] * center_weight +
+               src[7][ALPHA] * bottom_weight) +
 
              right_weight * (
-               src6[ALPHA] * top_weight +
-               src1[ALPHA] * center_weight +
-               src3[ALPHA] * bottom_weight) +
+               src[2][ALPHA] * top_weight +
+               src[5][ALPHA] * center_weight +
+               src[8][ALPHA] * bottom_weight) +
 
              left_weight * (
-               src4[ALPHA] * top_weight +
-               src7[ALPHA] * center_weight +
-               src8[ALPHA] * bottom_weight));
+               src[0][ALPHA] * top_weight +
+               src[3][ALPHA] * center_weight +
+               src[6][ALPHA] * bottom_weight));
         dest[ALPHA] = a/sum;  /*< if the data was premultiplied, this would
                                   be the computation for every channel, and
                                   the shifting would not be needed */
@@ -957,19 +949,19 @@ compute_sample (gint          left_weight,
         for (i=0; i<ALPHA; i++)
           {
             gint res = ((middle_weight * (
-                          src5[ALPHA] * src5[i] * top_weight +     /*< perhaps the alpha could be merged with */
-                          src0[ALPHA] * src0[i] * center_weight +  /*  the vertical weights once per pixel instead */
-                          src2[ALPHA] * src2[i] * bottom_weight) + /*  of four times in total? */
+                          src[1][ALPHA] * src[1][i] * top_weight +     /*< perhaps the alpha could be merged with */
+                          src[4][ALPHA] * src[4][i] * center_weight +  /*  the vertical weights once per pixel instead */
+                          src[7][ALPHA] * src[7][i] * bottom_weight) + /*  of four times in total? */
 
                         right_weight * (
-                          src6[ALPHA] * src6[i] * top_weight +
-                          src1[ALPHA] * src1[i] * center_weight +
-                          src3[ALPHA] * src3[i] * bottom_weight) +
+                          src[2][ALPHA] * src[2][i] * top_weight +
+                          src[5][ALPHA] * src[5][i] * center_weight +
+                          src[8][ALPHA] * src[8][i] * bottom_weight) +
 
                         left_weight * (
-                          src4[ALPHA] * src4[i] * top_weight +
-                          src7[ALPHA] * src7[i] * center_weight +
-                          src8[ALPHA] * src8[i] * bottom_weight)
+                          src[0][ALPHA] * src[0][i] * top_weight +
+                          src[3][ALPHA] * src[3][i] * center_weight +
+                          src[6][ALPHA] * src[6][i] * bottom_weight)
 
                         ) / a);
             if (res < 0)
@@ -984,19 +976,19 @@ compute_sample (gint          left_weight,
       case 2:
 #define ALPHA 1
         a = (middle_weight * (
-               src5[ALPHA] * top_weight +
-               src0[ALPHA] * center_weight +
-               src2[ALPHA] * bottom_weight) +
+               src[1][ALPHA] * top_weight +
+               src[4][ALPHA] * center_weight +
+               src[7][ALPHA] * bottom_weight) +
 
              right_weight * (
-               src6[ALPHA] * top_weight +
-               src1[ALPHA] * center_weight +
-               src3[ALPHA] * bottom_weight) +
+               src[2][ALPHA] * top_weight +
+               src[5][ALPHA] * center_weight +
+               src[8][ALPHA] * bottom_weight) +
 
              left_weight * (
-               src4[ALPHA] * top_weight +
-               src7[ALPHA] * center_weight +
-               src8[ALPHA] * bottom_weight));
+               src[0][ALPHA] * top_weight +
+               src[3][ALPHA] * center_weight +
+               src[6][ALPHA] * bottom_weight));
         dest[ALPHA] = a/sum;  /*< if the data was premultiplied, this would
                                   be the computation for every channel, and
                                   the shifting would not be needed */
@@ -1004,19 +996,19 @@ compute_sample (gint          left_weight,
         for (i=0; i<ALPHA; i++)
           {
             gint res = ((middle_weight * (
-                          src5[ALPHA] * src5[i] * top_weight +
-                          src0[ALPHA] * src0[i] * center_weight +
-                          src2[ALPHA] * src2[i] * bottom_weight) +
+                          src[1][ALPHA] * src[1][i] * top_weight +
+                          src[4][ALPHA] * src[4][i] * center_weight +
+                          src[7][ALPHA] * src[7][i] * bottom_weight) +
 
                         right_weight * (
-                          src6[ALPHA] * src6[i] * top_weight +
-                          src1[ALPHA] * src1[i] * center_weight +
-                          src3[ALPHA] * src3[i] * bottom_weight) +
+                          src[2][ALPHA] * src[2][i] * top_weight +
+                          src[5][ALPHA] * src[5][i] * center_weight +
+                          src[8][ALPHA] * src[8][i] * bottom_weight) +
 
                         left_weight * (
-                          src4[ALPHA] * src4[i] * top_weight +
-                          src7[ALPHA] * src7[i] * center_weight +
-                          src8[ALPHA] * src8[i] * bottom_weight)
+                          src[0][ALPHA] * src[0][i] * top_weight +
+                          src[3][ALPHA] * src[3][i] * center_weight +
+                          src[6][ALPHA] * src[6][i] * bottom_weight)
 
                         ) / a);
             if (res < 0)
@@ -1038,35 +1030,17 @@ static const guchar * render_image_tile_fault_one_row  (RenderInfo *info);
 static const guchar * render_image_tile_fault_nearest  (RenderInfo *info);
 
 
-/*  456   <- this is the order of the numbered tiles/pixels
- *  701
- *  823
+/*  012 <- this is the order of the numbered source tiles / pixels.
+ *  345    for the 3x3 neighbourhoods.
+ *  678
  */
-
 
 /* function to render a horizontal line of view data */
 static const guchar *
 render_image_tile_fault (RenderInfo *info)
 {
-  Tile         *tile0;
-  Tile         *tile1;
-  Tile         *tile2;
-  Tile         *tile3;
-  Tile         *tile4;
-  Tile         *tile5;
-  Tile         *tile6;
-  Tile         *tile7;
-  Tile         *tile8;
-
-  const guchar *src0;
-  const guchar *src1;
-  const guchar *src2;
-  const guchar *src3;
-  const guchar *src4;
-  const guchar *src5;
-  const guchar *src6;
-  const guchar *src7;
-  const guchar *src8;
+  Tile         *tile[9];
+  const guchar *src[9];
 
   guchar       *dest;
   gint          width;
@@ -1095,9 +1069,8 @@ render_image_tile_fault (RenderInfo *info)
   
   /* dispatch to fast path functions on special conditions */
   if ((info->scalex == 1.0 &&
-       info->scaley == 1.0) ||  /* use nearest neighbour for exact use of levels */
-
-
+       info->scaley == 1.0) ||  /* use nearest neighbour for exact use of
+                                   levels */
       (info->shell->scale_x > 1.0 &&
        info->shell->scale_y > 1.0) ||
 
@@ -1108,7 +1081,8 @@ render_image_tile_fault (RenderInfo *info)
        */
 
       (info->scalex < 0.25 || info->scaley < 0.25))
-        /* use nearest neighbour scaling when being abused, to avoid integer overflows */ 
+        /* use nearest neighbour scaling when being abused, to avoid integer
+         * overflows */ 
     {
       return render_image_tile_fault_nearest (info);
     }
@@ -1142,120 +1116,120 @@ render_image_tile_fault (RenderInfo *info)
       center_weight = (footprint_y*2) - top_weight - bottom_weight;
     }
 
-  tile0 = tile_manager_get_tile (info->src_tiles,
+  tile[4] = tile_manager_get_tile (info->src_tiles,
                                  info->src_x, info->src_y, TRUE, FALSE);
-  tile2 = tile_manager_get_tile (info->src_tiles,
+  tile[7] = tile_manager_get_tile (info->src_tiles,
                                  info->src_x, info->src_y+1, TRUE, FALSE);
-  tile5 = tile_manager_get_tile (info->src_tiles,
+  tile[1] = tile_manager_get_tile (info->src_tiles,
                                  info->src_x, info->src_y-1, TRUE, FALSE);
 
-  tile1 = tile_manager_get_tile (info->src_tiles,
+  tile[5] = tile_manager_get_tile (info->src_tiles,
                                  info->src_x+1, info->src_y, TRUE, FALSE);
-  tile3 = tile_manager_get_tile (info->src_tiles,
+  tile[8] = tile_manager_get_tile (info->src_tiles,
                                  info->src_x+1, info->src_y+1, TRUE, FALSE);
-  tile6 = tile_manager_get_tile (info->src_tiles,
+  tile[2] = tile_manager_get_tile (info->src_tiles,
                                  info->src_x+1, info->src_y-1, TRUE, FALSE);
 
-  tile7 = tile_manager_get_tile (info->src_tiles,
+  tile[3] = tile_manager_get_tile (info->src_tiles,
                                  info->src_x-1, info->src_y, TRUE, FALSE);
-  tile8 = tile_manager_get_tile (info->src_tiles,
+  tile[6] = tile_manager_get_tile (info->src_tiles,
                                  info->src_x-1, info->src_y+1, TRUE, FALSE);
-  tile4 = tile_manager_get_tile (info->src_tiles,
+  tile[0] = tile_manager_get_tile (info->src_tiles,
                                  info->src_x-1, info->src_y-1, TRUE, FALSE);
 
-  g_return_val_if_fail (tile0 != NULL, tile_buf);
+  g_return_val_if_fail (tile[4] != NULL, tile_buf);
 
-  src0 = tile_data_pointer (tile0,
+  src[4] = tile_data_pointer (tile[4],
                             info->src_x % TILE_WIDTH,
                             info->src_y % TILE_HEIGHT);
-  if (tile1)
+  if (tile[5])
     {
-      src1 = tile_data_pointer (tile1,
+      src[5] = tile_data_pointer (tile[5],
                                 (info->src_x + 1)% TILE_WIDTH,
                                 info->src_y % TILE_HEIGHT);
     }
   else
     {
-      src1 = src0;  /* reusing existing pixel data */
+      src[5] = src[4];  /* reusing existing pixel data */
     }
 
-  if (tile2)
+  if (tile[7])
     {
-      src2 = tile_data_pointer (tile2,
+      src[7] = tile_data_pointer (tile[7],
                                 info->src_x % TILE_WIDTH,
                                 (info->src_y + 1) % TILE_HEIGHT);
     }
   else
     {
-      src2 = src0;  /* reusing existing pixel data */
+      src[7] = src[4];  /* reusing existing pixel data */
     }
 
-  if (tile5)
+  if (tile[1])
     {
-      src5 = tile_data_pointer (tile5,
+      src[1] = tile_data_pointer (tile[1],
                                 (info->src_x) % TILE_WIDTH,
                                 (info->src_y - 1) % TILE_HEIGHT);
     }
   else
     {
-      src5 = src0;  /* reusing existing pixel data */
+      src[1] = src[4];  /* reusing existing pixel data */
     }
 
-  if (tile3)
+  if (tile[8])
     {
-      src3 = tile_data_pointer (tile3,
+      src[8] = tile_data_pointer (tile[8],
                                 (info->src_x + 1) % TILE_WIDTH,
                                 (info->src_y + 1) % TILE_HEIGHT);
     }
   else
     {
-      src3 = src1;  /* reusing existing pixel data */
+      src[8] = src[5];  /* reusing existing pixel data */
     }
 
 
 
-  if (tile4)
+  if (tile[0])
     {
-      src4 = tile_data_pointer (tile4,
+      src[0] = tile_data_pointer (tile[0],
                                 (info->src_x - 1) % TILE_WIDTH,
                                 (info->src_y - 1) % TILE_HEIGHT);
     }
   else
     {
-      src4 = src5;  /* reusing existing pixel data */
+      src[0] = src[1];  /* reusing existing pixel data */
     }
 
-  if (tile6)
+  if (tile[2])
     {
-      src6 = tile_data_pointer (tile6,
+      src[2] = tile_data_pointer (tile[2],
                                 (info->src_x + 1) % TILE_WIDTH,
                                 (info->src_y - 1) % TILE_HEIGHT);
     }
   else
     {
-      src6 = src0;  /* reusing existing pixel data */
+      src[2] = src[4];  /* reusing existing pixel data */
     }
 
-  if (tile7)
+  if (tile[3])
     {
-      src7 = tile_data_pointer (tile7,
+      src[3] = tile_data_pointer (tile[3],
                                 (info->src_x - 1) % TILE_WIDTH,
                                 (info->src_y) % TILE_HEIGHT);
     }
   else
     {
-      src7 = src0;  /* reusing existing pixel data */
+      src[3] = src[4];  /* reusing existing pixel data */
     }
 
-  if (tile8)
+  if (tile[6])
     {
-      src8 = tile_data_pointer (tile8,
+      src[6] = tile_data_pointer (tile[6],
                                 (info->src_x - 1) % TILE_WIDTH,
                                 (info->src_y + 1) % TILE_HEIGHT);
     }
   else
     {
-      src8 = src2;  /* reusing existing pixel data */
+      src[6] = src[7];  /* reusing existing pixel data */
     }
 
   bpp    = tile_manager_bpp (info->src_tiles);
@@ -1295,9 +1269,7 @@ render_image_tile_fault (RenderInfo *info)
 
       compute_sample (left_weight, middle_weight, right_weight,
                       top_weight, center_weight, bottom_weight, foosum,
-                      src0, src1, src2, src3, src4, src5, src6, src7, src8,
-                      dest,
-                      bpp);
+                      src, dest, bpp);
       }
       dest += bpp;
 
@@ -1312,84 +1284,87 @@ render_image_tile_fault (RenderInfo *info)
            * correct
            */ 
 
-          if (src4 != src5)
+          if (src[0] != src[1])
             {
-              src4 += skipped * bpp;
+              src[0] += skipped * bpp;
             }
           else
             {
-              tilexL=-1;  /* this forces a refetch of the left most source samples */
+              tilexL=-1;  /* this forces a refetch of the left most source
+                             samples */
             }
             
-          if (src7 != src0)
+          if (src[3] != src[4])
             {
-              src7 += skipped * bpp;
+              src[3] += skipped * bpp;
             }
           else
             {
-              tilexL=-1;  /* this forces a refetch of the left most source samples */
+              tilexL=-1;  /* this forces a refetch of the left most source
+                             samples */
             }
 
-          if (src8 != src2)
+          if (src[6] != src[7])
             {
-              src8 += skipped * bpp;
+              src[6] += skipped * bpp;
             }
           else
             {
-              tilexL=-1;  /* this forces a refetch of the left most source samples */
+              tilexL=-1;  /* this forces a refetch of the left most source
+                             samples */
             }
 
-          src5 += skipped * bpp;
-          src0 += skipped * bpp;
-          src2 += skipped * bpp;
+          src[1] += skipped * bpp;
+          src[4] += skipped * bpp;
+          src[7] += skipped * bpp;
 
-          src1 += skipped * bpp;
-          src3 += skipped * bpp;
-          src6 += skipped * bpp;
+          src[5] += skipped * bpp;
+          src[8] += skipped * bpp;
+          src[2] += skipped * bpp;
 
 
           src_x += skipped;
 
           if ((src_x / TILE_WIDTH) != tilex0)
             {
-              tile_release (tile0, FALSE);
+              tile_release (tile[4], FALSE);
 
-              if (tile2)
-                tile_release (tile2, FALSE);
-              if (tile5)
-                tile_release (tile5, FALSE);
+              if (tile[7])
+                tile_release (tile[7], FALSE);
+              if (tile[1])
+                tile_release (tile[1], FALSE);
 
               tilex0 += 1;
 
-              tile0 = tile_manager_get_tile (info->src_tiles,
+              tile[4] = tile_manager_get_tile (info->src_tiles,
                                              src_x, info->src_y, TRUE, FALSE);
-              tile2 = tile_manager_get_tile (info->src_tiles,
+              tile[7] = tile_manager_get_tile (info->src_tiles,
                                              src_x, info->src_y+1, TRUE, FALSE);
-              tile5 = tile_manager_get_tile (info->src_tiles,
+              tile[1] = tile_manager_get_tile (info->src_tiles,
                                              src_x, info->src_y-1, TRUE, FALSE);
-              if (!tile0)
+              if (!tile[4])
                 goto done;
 
-              src0 = tile_data_pointer (tile0,
+              src[4] = tile_data_pointer (tile[4],
                                         src_x % TILE_WIDTH,
                                         info->src_y % TILE_HEIGHT);
-              if (!tile2)
+              if (!tile[7])
                 {
-                  src2 = src0;
+                  src[7] = src[4];
                 }
               else
                 {
-                  src2 = tile_data_pointer (tile2,
+                  src[7] = tile_data_pointer (tile[7],
                                             (src_x) % TILE_WIDTH,
                                             (info->src_y + 1) % TILE_HEIGHT);
                 }
-              if (!tile5)
+              if (!tile[1])
                 {
-                  src5 = src0;
+                  src[1] = src[4];
                 }
               else
                 {
-                  src5 = tile_data_pointer (tile5,
+                  src[1] = tile_data_pointer (tile[1],
                                             src_x % TILE_WIDTH,
                                             (info->src_y - 1)% TILE_HEIGHT);
                 }
@@ -1397,54 +1372,54 @@ render_image_tile_fault (RenderInfo *info)
 
           if (((src_x+1) / TILE_WIDTH) != tilex1)
             {
-              if (tile1)
-                tile_release (tile1, FALSE);
-              if (tile3)
-                tile_release (tile3, FALSE);
-              if (tile6)
-                tile_release (tile6, FALSE);
+              if (tile[5])
+                tile_release (tile[5], FALSE);
+              if (tile[8])
+                tile_release (tile[8], FALSE);
+              if (tile[2])
+                tile_release (tile[2], FALSE);
 
               tilex1 += 1;
 
-              tile1 = tile_manager_get_tile (info->src_tiles,
+              tile[5] = tile_manager_get_tile (info->src_tiles,
                                              src_x + 1, info->src_y,
                                              TRUE, FALSE);
-              tile3 = tile_manager_get_tile (info->src_tiles,
+              tile[8] = tile_manager_get_tile (info->src_tiles,
                                              src_x + 1, info->src_y + 1,
                                              TRUE, FALSE);
-              tile6 = tile_manager_get_tile (info->src_tiles,
+              tile[2] = tile_manager_get_tile (info->src_tiles,
                                              src_x + 1, info->src_y - 1,
                                              TRUE, FALSE);
 
-              if (!tile1)
+              if (!tile[5])
                 {
-                  src1 = src0;
+                  src[5] = src[4];
                 }
               else
                 {
-                  src1 = tile_data_pointer (tile1,
+                  src[5] = tile_data_pointer (tile[5],
                                             (src_x + 1) % TILE_WIDTH,
                                             info->src_y % TILE_HEIGHT);
                 }
 
-              if (!tile3)
+              if (!tile[8])
                 {
-                  src3 = src2;
+                  src[8] = src[7];
                 }
               else
                 {
-                  src3 = tile_data_pointer (tile3,
+                  src[8] = tile_data_pointer (tile[8],
                                             (src_x + 1) % TILE_WIDTH,
                                             (info->src_y+1) % TILE_HEIGHT);
                 }
 
-              if (!tile6)
+              if (!tile[2])
                 {
-                  src6 = src5;
+                  src[2] = src[1];
                 }
               else
                 {
-                  src6 = tile_data_pointer (tile6,
+                  src[2] = tile_data_pointer (tile[2],
                                             (src_x + 1) % TILE_WIDTH,
                                             (info->src_y-1) % TILE_HEIGHT);
                 }
@@ -1452,54 +1427,54 @@ render_image_tile_fault (RenderInfo *info)
 
           if (((src_x-1) / TILE_WIDTH) != tilexL)
             {
-              if (tile4)
-                tile_release (tile4, FALSE);
-              if (tile7)
-                tile_release (tile7, FALSE);
-              if (tile8)
-                tile_release (tile8, FALSE);
+              if (tile[0])
+                tile_release (tile[0], FALSE);
+              if (tile[3])
+                tile_release (tile[3], FALSE);
+              if (tile[6])
+                tile_release (tile[6], FALSE);
 
               tilexL += 1;
 
-              tile4 = tile_manager_get_tile (info->src_tiles,
+              tile[0] = tile_manager_get_tile (info->src_tiles,
                                              src_x - 1, info->src_y - 1,
                                              TRUE, FALSE);
-              tile7 = tile_manager_get_tile (info->src_tiles,
+              tile[3] = tile_manager_get_tile (info->src_tiles,
                                              src_x - 1, info->src_y,
                                              TRUE, FALSE);
-              tile8 = tile_manager_get_tile (info->src_tiles,
+              tile[6] = tile_manager_get_tile (info->src_tiles,
                                              src_x - 1, info->src_y + 1,
                                              TRUE, FALSE);
 
-              if (!tile7)
+              if (!tile[3])
                 {
-                  src7 = src0;
+                  src[3] = src[4];
                 }
               else
                 {
-                  src7 = tile_data_pointer (tile7,
+                  src[3] = tile_data_pointer (tile[3],
                                             (src_x - 1) % TILE_WIDTH,
                                             info->src_y % TILE_HEIGHT);
                 }
 
-              if (!tile8)
+              if (!tile[6])
                 {
-                  src8 = src2;
+                  src[6] = src[7];
                 }
               else
                 {
-                  src8 = tile_data_pointer (tile8,
+                  src[6] = tile_data_pointer (tile[6],
                                             (src_x - 1) % TILE_WIDTH,
                                             (info->src_y+1) % TILE_HEIGHT);
                 }
 
-              if (!tile4)
+              if (!tile[0])
                 {
-                  src4 = src5;
+                  src[0] = src[1];
                 }
               else
                 {
-                  src4 = tile_data_pointer (tile4,
+                  src[0] = tile_data_pointer (tile[0],
                                             (src_x - 1) % TILE_WIDTH,
                                             (info->src_y-1) % TILE_HEIGHT);
                 }
@@ -1509,24 +1484,9 @@ render_image_tile_fault (RenderInfo *info)
   while (--width);
 
 done:
-  if (tile0)
-    tile_release (tile0, FALSE);
-  if (tile1)
-    tile_release (tile1, FALSE);
-  if (tile2)
-    tile_release (tile2, FALSE);
-  if (tile3)
-    tile_release (tile3, FALSE);
-  if (tile4)
-    tile_release (tile4, FALSE);
-  if (tile5)
-    tile_release (tile5, FALSE);
-  if (tile6)
-    tile_release (tile6, FALSE);
-  if (tile7)
-    tile_release (tile7, FALSE);
-  if (tile8)
-    tile_release (tile8, FALSE);
+  for (x=0; x<9; x++)
+    if (tile[x])
+      tile_release (tile[x], FALSE);
 
   return tile_buf;
 }
@@ -1616,22 +1576,12 @@ static const guchar *
 render_image_tile_fault_one_row (RenderInfo *info)
 {
   /* NOTE: there are some additional overhead that can be factored out
-   * in the tile administration in this fast path
+   * in the tile administration of this fast path
    */ 
 
-  Tile         *tile0;
-  Tile         *tile1;
-  Tile         *tile7;
+  Tile         *tile[3];
 
-  const guchar *src0;
-  const guchar *src1;
-  const guchar *src2;
-  const guchar *src3;
-  const guchar *src4;
-  const guchar *src5;
-  const guchar *src6;
-  const guchar *src7;
-  const guchar *src8;
+  const guchar *src[9];
 
   guchar       *dest;
   gint          width;
@@ -1676,84 +1626,84 @@ render_image_tile_fault_one_row (RenderInfo *info)
       center_weight = (footprint_y*2) - top_weight - bottom_weight;
     }
 
-  tile0 = tile_manager_get_tile (info->src_tiles,
+  tile[0] = tile_manager_get_tile (info->src_tiles,
                                  info->src_x, info->src_y, TRUE, FALSE);
 
-  tile1 = tile_manager_get_tile (info->src_tiles,
+  tile[1] = tile_manager_get_tile (info->src_tiles,
                                  info->src_x+1, info->src_y, TRUE, FALSE);
 
-  tile7 = tile_manager_get_tile (info->src_tiles,
+  tile[2] = tile_manager_get_tile (info->src_tiles,
                                  info->src_x-1, info->src_y, TRUE, FALSE);
 
-  g_return_val_if_fail (tile0 != NULL, tile_buf);
+  g_return_val_if_fail (tile[0] != NULL, tile_buf);
 
-  src0 = tile_data_pointer (tile0,
+  src[4] = tile_data_pointer (tile[0],
                             info->src_x % TILE_WIDTH,
                             info->src_y % TILE_HEIGHT);
-  src2 = tile_data_pointer (tile0,
+  src[7] = tile_data_pointer (tile[0],
                             info->src_x % TILE_WIDTH,
                             (info->src_y + 1) % TILE_HEIGHT);
-  if (tile1)
+  if (tile[1])
     {
-      src1 = tile_data_pointer (tile1,
+      src[5] = tile_data_pointer (tile[1],
                                 (info->src_x + 1)% TILE_WIDTH,
                                 info->src_y % TILE_HEIGHT);
-      src3 = tile_data_pointer (tile1,
+      src[8] = tile_data_pointer (tile[1],
                                 (info->src_x + 1) % TILE_WIDTH,
                                 (info->src_y + 1) % TILE_HEIGHT);
     }
   else
     {
-      src1 = src0;  /* reusing existing pixel data */
-      src3 = src1;  /* reusing existing pixel data */
+      src[5] = src[4];  /* reusing existing pixel data */
+      src[8] = src[5];  /* reusing existing pixel data */
     }
 
-  if (tile7)
+  if (tile[2])
     {
-      src5 = tile_data_pointer (tile7,
+      src[1] = tile_data_pointer (tile[2],
                                 (info->src_x) % TILE_WIDTH,
                                 (info->src_y - 1) % TILE_HEIGHT);
     }
   else
     {
-      src5 = src0;  /* reusing existing pixel data */
+      src[1] = src[4];  /* reusing existing pixel data */
     }
 
-  if (tile7)
+  if (tile[2])
     {
-      src4 = tile_data_pointer (tile7,
+      src[0] = tile_data_pointer (tile[2],
                                 (info->src_x - 1) % TILE_WIDTH,
                                 (info->src_y - 1) % TILE_HEIGHT);
     }
   else
     {
-      src4 = src5;  /* reusing existing pixel data */
+      src[0] = src[1];  /* reusing existing pixel data */
     }
 
-  if (tile1)
+  if (tile[1])
     {
-      src6 = tile_data_pointer (tile1,
+      src[2] = tile_data_pointer (tile[1],
                                 (info->src_x + 1) % TILE_WIDTH,
                                 (info->src_y - 1) % TILE_HEIGHT);
     }
   else
     {
-      src6 = src0;  /* reusing existing pixel data */
+      src[2] = src[4];  /* reusing existing pixel data */
     }
 
-  if (tile7)
+  if (tile[2])
     {
-      src7 = tile_data_pointer (tile7,
+      src[3] = tile_data_pointer (tile[2],
                                 (info->src_x - 1) % TILE_WIDTH,
                                 (info->src_y) % TILE_HEIGHT);
-      src8 = tile_data_pointer (tile7,
+      src[6] = tile_data_pointer (tile[2],
                                 (info->src_x - 1) % TILE_WIDTH,
                                 (info->src_y + 1) % TILE_HEIGHT);
     }
   else
     {
-      src7 = src0;  /* reusing existing pixel data */
-      src8 = src2;  /* reusing existing pixel data */
+      src[3] = src[4];  /* reusing existing pixel data */
+      src[6] = src[7];  /* reusing existing pixel data */
     }
 
   bpp    = tile_manager_bpp (info->src_tiles);
@@ -1793,9 +1743,7 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
       compute_sample (left_weight, middle_weight, right_weight,
                       top_weight, center_weight, bottom_weight, foosum,
-                      src0, src1, src2, src3, src4, src5, src6, src7, src8,
-                      dest,
-                      bpp);
+                      src, dest, bpp);
       }
       dest += bpp;
 
@@ -1810,92 +1758,95 @@ render_image_tile_fault_one_row (RenderInfo *info)
            * correct
            */ 
 
-          if (src4 != src5)
+          if (src[0] != src[1])
             {
-              src4 += skipped * bpp;
+              src[0] += skipped * bpp;
             }
           else
             {
-              tilexL=-1;  /* this forces a refetch of the left most source samples */
+              tilexL=-1;  /* this forces a refetch of the left most source
+                             samples */
             }
             
-          if (src7 != src0)
+          if (src[3] != src[4])
             {
-              src7 += skipped * bpp;
+              src[3] += skipped * bpp;
             }
           else
             {
-              tilexL=-1;  /* this forces a refetch of the left most source samples */
+              tilexL=-1;  /* this forces a refetch of the left most source
+                             samples */
             }
 
-          if (src8 != src2)
+          if (src[6] != src[7])
             {
-              src8 += skipped * bpp;
+              src[6] += skipped * bpp;
             }
           else
             {
-              tilexL=-1;  /* this forces a refetch of the left most source samples */
+              tilexL=-1;  /* this forces a refetch of the left most source
+                             samples */
             }
 
-          src5 += skipped * bpp;
-          src0 += skipped * bpp;
-          src2 += skipped * bpp;
+          src[1] += skipped * bpp;
+          src[4] += skipped * bpp;
+          src[7] += skipped * bpp;
 
-          src1 += skipped * bpp;
-          src3 += skipped * bpp;
-          src6 += skipped * bpp;
+          src[5] += skipped * bpp;
+          src[8] += skipped * bpp;
+          src[2] += skipped * bpp;
 
 
           src_x += skipped;
 
           if ((src_x / TILE_WIDTH) != tilex0)
             {
-              tile_release (tile0, FALSE);
+              tile_release (tile[0], FALSE);
 
               tilex0 += 1;
 
-              tile0 = tile_manager_get_tile (info->src_tiles,
+              tile[0] = tile_manager_get_tile (info->src_tiles,
                                              src_x, info->src_y, TRUE, FALSE);
-              if (!tile0)
+              if (!tile[0])
                 goto done;
 
-              src0 = tile_data_pointer (tile0,
+              src[4] = tile_data_pointer (tile[0],
                                         src_x % TILE_WIDTH,
                                         info->src_y % TILE_HEIGHT);
-              src2 = tile_data_pointer (tile0,
+              src[7] = tile_data_pointer (tile[0],
                                         (src_x) % TILE_WIDTH,
                                         (info->src_y + 1) % TILE_HEIGHT);
-              src5 = tile_data_pointer (tile0,
+              src[1] = tile_data_pointer (tile[0],
                                         src_x % TILE_WIDTH,
                                         (info->src_y - 1)% TILE_HEIGHT);
             }
 
           if (((src_x+1) / TILE_WIDTH) != tilex1)
             {
-              if (tile1)
-                tile_release (tile1, FALSE);
+              if (tile[1])
+                tile_release (tile[1], FALSE);
 
               tilex1 += 1;
 
-              tile1 = tile_manager_get_tile (info->src_tiles,
+              tile[1] = tile_manager_get_tile (info->src_tiles,
                                              src_x + 1, info->src_y,
                                              TRUE, FALSE);
 
-              if (!tile1)
+              if (!tile[1])
                 {
-                  src1 = src0;
-                  src3 = src2;
-                  src6 = src5;
+                  src[5] = src[4];
+                  src[8] = src[7];
+                  src[2] = src[1];
                 }
               else
                 {
-                  src1 = tile_data_pointer (tile1,
+                  src[5] = tile_data_pointer (tile[1],
                                             (src_x + 1) % TILE_WIDTH,
                                             info->src_y % TILE_HEIGHT);
-                  src3 = tile_data_pointer (tile1,
+                  src[8] = tile_data_pointer (tile[1],
                                             (src_x + 1) % TILE_WIDTH,
                                             (info->src_y+1) % TILE_HEIGHT);
-                  src6 = tile_data_pointer (tile1,
+                  src[2] = tile_data_pointer (tile[1],
                                             (src_x + 1) % TILE_WIDTH,
                                             (info->src_y-1) % TILE_HEIGHT);
                 }
@@ -1903,30 +1854,30 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
           if (((src_x-1) / TILE_WIDTH) != tilexL)
             {
-              if (tile7)
-                tile_release (tile7, FALSE);
+              if (tile[2])
+                tile_release (tile[2], FALSE);
 
               tilexL += 1;
 
-              tile7 = tile_manager_get_tile (info->src_tiles,
+              tile[2] = tile_manager_get_tile (info->src_tiles,
                                              src_x - 1, info->src_y,
                                              TRUE, FALSE);
 
-              if (!tile7)
+              if (!tile[2])
                 {
-                  src7 = src0;
-                  src8 = src2;
-                  src4 = src5;
+                  src[3] = src[4];
+                  src[6] = src[7];
+                  src[0] = src[1];
                 }
               else
                 {
-                  src7 = tile_data_pointer (tile7,
+                  src[3] = tile_data_pointer (tile[2],
                                             (src_x - 1) % TILE_WIDTH,
                                             info->src_y % TILE_HEIGHT);
-                  src8 = tile_data_pointer (tile7,
+                  src[6] = tile_data_pointer (tile[2],
                                             (src_x - 1) % TILE_WIDTH,
                                             (info->src_y+1) % TILE_HEIGHT);
-                  src4 = tile_data_pointer (tile7,
+                  src[0] = tile_data_pointer (tile[2],
                                             (src_x - 1) % TILE_WIDTH,
                                             (info->src_y-1) % TILE_HEIGHT);
                 }
@@ -1936,12 +1887,9 @@ render_image_tile_fault_one_row (RenderInfo *info)
   while (--width);
 
 done:
-  if (tile0)
-    tile_release (tile0, FALSE);
-  if (tile1)
-    tile_release (tile1, FALSE);
-  if (tile7)
-    tile_release (tile7, FALSE);
+  for (x=0; x<3; x++)
+    if (tile[x])
+      tile_release (tile[x], FALSE);
 
   return tile_buf;
 }
