@@ -901,16 +901,16 @@ render_image_init_alpha (gint mult)
 }
 
 static inline void
-compute_sample (gint          left_weight,
-                gint          middle_weight,
-                gint          right_weight,
-                gint          top_weight,
-                gint          center_weight,
-                gint          bottom_weight,
-                gint          sum,
-                const guchar *src[9],
-                guchar       *dest,
-                gint          bpp)
+compute_sample (gint           left_weight,
+                gint           middle_weight,
+                gint           right_weight,
+                gint           top_weight,
+                gint           center_weight,
+                gint           bottom_weight,
+                gint           sum,
+                const guchar **src,
+                guchar        *dest,
+                gint           bpp)
 {
 
   /* adjusting the weights to avoid integer overflowing */
