@@ -1,3 +1,8 @@
+2007-08-24  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c: (compute_sample)
+	fixed a division by zero issue.
+
 2007-08-24  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: applied patch from Tim Mooney which fixes

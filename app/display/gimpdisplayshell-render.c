@@ -959,7 +959,10 @@ compute_sample (gint           left_weight,
 
           for (i=0; i<ALPHA; i++)
             {
-              gint res = ((middle_weight * (
+              gint res;
+              if (a)
+                {
+                  res = ((middle_weight * (
                             factors[0] * src[1][i] + 
                             factors[1] * src[4][i] +  
                             factors[2] * src[7][i]) + 
@@ -975,6 +978,11 @@ compute_sample (gint           left_weight,
                             factors[8] * src[6][i])
 
                           ) / a);
+                }
+              else
+                {
+                  res = 0;
+                }
               if (res < 0)
                 dest[i] = 0;
               else if (res>255)
@@ -1005,11 +1013,14 @@ compute_sample (gint           left_weight,
           a = (middle_weight * (factors[0]+factors[1]+factors[2]) +
                right_weight *  (factors[3]+factors[4]+factors[5]) +
                left_weight *   (factors[6]+factors[7]+factors[8]));
-          dest[ALPHA] = a/sum;  
-                               
+          dest[ALPHA] = a/sum;
+
           for (i=0; i<ALPHA; i++)
             {
-              gint res = ((middle_weight * (
+              gint res;
+              if (a)
+                {
+                  res = ((middle_weight * (
                             factors[0] * src[1][i] + 
                             factors[1] * src[4][i] +  
                             factors[2] * src[7][i]) + 
@@ -1025,6 +1036,11 @@ compute_sample (gint           left_weight,
                             factors[8] * src[6][i])
 
                           ) / a);
+                }
+              else
+                {
+                  res = 0;
+                }
               if (res < 0)
                 dest[i] = 0;
               else if (res>255)
