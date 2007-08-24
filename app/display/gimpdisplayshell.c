@@ -456,7 +456,7 @@ gimp_display_shell_destroy (GtkObject *object)
 
   if (shell->highlight)
     {
-      g_free (shell->highlight);
+      g_slice_free (GdkRectangle, shell->highlight);
       shell->highlight = NULL;
     }
 
@@ -1667,7 +1667,7 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
         }
       else
         {
-          g_free (shell->highlight);
+          g_slice_free (GdkRectangle, shell->highlight);
           shell->highlight = NULL;
 
           gimp_display_shell_expose_full (shell);
@@ -1675,7 +1675,7 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
     }
   else if (highlight)
     {
-      shell->highlight = g_memdup (highlight, sizeof (GdkRectangle));
+      shell->highlight = g_slice_dup (GdkRectangle, highlight);
 
       gimp_display_shell_expose_full (shell);
     }

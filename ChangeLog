@@ -1,3 +1,8 @@
+2007-08-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.c: allocate shell->highlight with
+	GSlice.
+
 2007-08-24  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c: swapped center and middle
