@@ -553,10 +553,10 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
 
       if (shell->highlight)
         {
-          rect.x      = SCALEX (shell, shell->highlight->x);
-          rect.y      = SCALEY (shell, shell->highlight->y);
-          rect.width  = SCALEX (shell, shell->highlight->width);
-          rect.height = SCALEY (shell, shell->highlight->height);
+          rect.x      = ceil  (shell->scale_x * shell->highlight->x);
+          rect.y      = ceil  (shell->scale_y * shell->highlight->y);
+          rect.width  = floor (shell->scale_x * shell->highlight->width);
+          rect.height = floor (shell->scale_y * shell->highlight->height);
         }
 
       /*  display the image in RENDER_BUF_WIDTH x RENDER_BUF_HEIGHT

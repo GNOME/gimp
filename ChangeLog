@@ -1,5 +1,14 @@
 2007-08-24  Michael Natterer  <mitch@gimp.org>
 
+	* app/display/gimpdisplayshell-draw.c
+	(gimp_display_shell_draw_area): don't use SCALEX()/SCALEY() on x/y
+	*and* width/height of the highlight rectangle because that adds up
+	the error introduced by the ceil() contained in these macros.
+	Instead, scale manually and use ceil() on x/y and floor() on
+	width/height. Fixes off-by-one rendering artifacts (bug #467972).
+
+2007-08-24  Michael Natterer  <mitch@gimp.org>
+
 	* app/display/gimpdisplayshell.c: don't use g_slice_dup(), that's
 	in GLib 2.14 only.
 
