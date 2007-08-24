@@ -912,16 +912,16 @@ render_image_init_alpha (gint mult)
 }
 
 static inline void
-compute_sample (guint          left_weight,
-                guint          center_weight,
-                guint          right_weight,
-                guint          top_weight,
-                guint          middle_weight,
-                guint          bottom_weight,
-                guint          sum,  
-                const guchar **src,   /* the 9 surrounding source pixels */
-                guchar        *dest,
-                gint           bpp)
+box_filter (guint          left_weight,
+            guint          center_weight,
+            guint          right_weight,
+            guint          top_weight,
+            guint          middle_weight,
+            guint          bottom_weight,
+            guint          sum,  
+            const guchar **src,   /* the 9 surrounding source pixels */
+            guchar        *dest,
+            gint           bpp)
 {
   switch (bpp)
     {
@@ -1024,7 +1024,7 @@ compute_sample (guint          left_weight,
 #undef ALPHA
         break;
       default:
-        g_warning ("bpp=%i not implemented as bicubic filter", bpp);
+        g_warning ("bpp=%i not implemented as box filter", bpp);
     }
 }
 
@@ -1071,8 +1071,6 @@ render_image_tile_fault (RenderInfo *info)
   guint         middle_weight;
   guint         bottom_weight;
  
-
-
   /* dispatch to fast path functions on special conditions */
   if ((gimp_zoom_quality & GIMP_DISPLAY_ZOOM_FAST) ||
    
@@ -1085,8 +1083,8 @@ render_image_tile_fault (RenderInfo *info)
           info->shell->scale_y > 1.0 &&
           (!(gimp_zoom_quality & GIMP_DISPLAY_ZOOM_PIXEL_AA))) 
 
-      /* or at any point when we're at more than 200% */
-      || (info->shell->scale_x > 2.0 ||
+      /* or at any point when both scale factors are more than 200% */
+      || (info->shell->scale_x > 2.0 &&
           info->shell->scale_y > 2.0 )
       )
     {
@@ -1098,7 +1096,8 @@ render_image_tile_fault (RenderInfo *info)
            ((info->src_y - 1) & ~(TILE_WIDTH -1))
           )
     {
-      /* all the tiles needed are in a single row */
+      /* all the tiles needed are in a single row, use a tile iterator
+       * optimized for this case. */
       return render_image_tile_fault_one_row (info);
     }
 
@@ -1269,9 +1268,9 @@ render_image_tile_fault (RenderInfo *info)
 
         center_weight = footprint_x - left_weight - right_weight;
 
-      compute_sample (left_weight, center_weight, right_weight,
-                      top_weight, middle_weight, bottom_weight, foosum,
-                      src, dest, bpp);
+      box_filter (left_weight, center_weight, right_weight,
+                  top_weight, middle_weight, bottom_weight, foosum,
+                  src, dest, bpp);
       }
       dest += bpp;
 
@@ -1742,9 +1741,9 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
         center_weight = footprint_x - left_weight - right_weight;
 
-        compute_sample (left_weight, center_weight, right_weight,
-                        top_weight, middle_weight, bottom_weight, foosum,
-                        src, dest, bpp);
+        box_filter (left_weight, center_weight, right_weight,
+                    top_weight, middle_weight, bottom_weight, foosum,
+                    src, dest, bpp);
       }
       dest += bpp;
 
