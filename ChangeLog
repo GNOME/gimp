@@ -1,3 +1,8 @@
+2007-08-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell.c: don't use g_slice_dup(), that's
+	in GLib 2.14 only.
+
 2007-08-24  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c: s/compute_sample/box_filter/.

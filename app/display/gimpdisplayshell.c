@@ -1675,7 +1675,8 @@ gimp_display_shell_set_highlight (GimpDisplayShell   *shell,
     }
   else if (highlight)
     {
-      shell->highlight = g_slice_dup (GdkRectangle, highlight);
+      shell->highlight = g_slice_new (GdkRectangle);
+      *shell->highlight = *highlight;
 
       gimp_display_shell_expose_full (shell);
     }
