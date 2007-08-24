@@ -130,7 +130,7 @@ gimp_selection_value (gint32 image_ID,
  * Determine whether the selection is empty.
  *
  * This procedure returns TRUE if the selection for the specified image
- * is not empty.
+ * is empty.
  *
  * Returns: Is the selection empty?
  */

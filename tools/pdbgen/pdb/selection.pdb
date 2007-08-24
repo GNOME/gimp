@@ -97,8 +97,7 @@ sub selection_is_empty {
     $blurb = 'Determine whether the selection is empty.';
 
     $help = <<'HELP';
-This procedure returns TRUE if the selection for the specified image is not
-empty.
+This procedure returns TRUE if the selection for the specified image is empty.
 HELP
 
     &std_pdb_misc;

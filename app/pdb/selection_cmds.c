@@ -598,7 +598,7 @@ register_selection_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-selection-is-empty",
                                      "Determine whether the selection is empty.",
-                                     "This procedure returns TRUE if the selection for the specified image is not empty.",
+                                     "This procedure returns TRUE if the selection for the specified image is empty.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",

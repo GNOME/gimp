@@ -1,3 +1,13 @@
+2007-08-24  Raphaël Quinet  <raphael@gimp.org>
+
+	* tools/pdbgen/pdb/selection.pdb: fixed incorrect description of
+	gimp-selection-is-empty, reported by pk.  This function returns
+	TRUE when the selection is empty, but the description stated the
+	opposite.
+
+	* app/pdb/selection_cmds.c
+	* libgimp/gimpselection_pdb.c: regenerated.
+	
 2007-08-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/display/gimpdisplayshell-draw.c
