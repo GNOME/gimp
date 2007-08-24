@@ -1,3 +1,7 @@
+2007-08-24  Michael Natterer  <mitch@gimp.org>
+
+	* plug-ins/common/scatter_hsv.c: stylistic cleanup.
+
 2007-08-24  Jakub Friedl  <jfriedl@suse.cz>
 
 	* plug-ins/common/scatter_hsv.c: fixing

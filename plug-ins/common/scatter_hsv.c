@@ -126,7 +126,6 @@ query (void)
                           GIMP_PLUGIN,
                           G_N_ELEMENTS (args), 0,
                           args, NULL);
-
 }
 
 static void
@@ -158,7 +157,7 @@ run (const gchar      *name,
       gimp_get_data (HSV_NOISE_PROC, &VALS);
       if (!gimp_drawable_is_rgb (drawable->drawable_id))
         {
-          g_message ("Cannot operate on non-RGB drawables.");
+          g_message (_("Can only operate on RGB drawables."));
           return;
         }
       if (! scatter_hsv_dialog (drawable))
@@ -250,14 +249,14 @@ randomize_value (gint     now,
 
   if (new < min)
     {
-      if (wraps_around == TRUE)
+      if (wraps_around)
         new += steps;
       else
         new = min;
     }
   if (max < new)
     {
-      if (wraps_around == TRUE)
+      if (wraps_around)
         new -= steps;
       else
         new = max;
@@ -265,9 +264,10 @@ randomize_value (gint     now,
   return new;
 }
 
-static void scatter_hsv_scatter (guchar *r,
-                                 guchar *g,
-                                 guchar *b)
+static void
+scatter_hsv_scatter (guchar *r,
+                     guchar *g,
+                     guchar *b)
 {
   gint h, s, v;
   gint h1, s1, v1;
@@ -277,11 +277,13 @@ static void scatter_hsv_scatter (guchar *r,
 
   gimp_rgb_to_hsv_int (&h, &s, &v);
 
-  if (0 < VALS.hue_distance)
-    h = randomize_value (h, 0, 360, TRUE, VALS.hue_distance);
-  if ((0 < VALS.saturation_distance))
+  if (VALS.hue_distance > 0)
+    h = randomize_value (h, 0, 360, TRUE,  VALS.hue_distance);
+
+  if (VALS.saturation_distance > 0)
     s = randomize_value (s, 0, 255, FALSE, VALS.saturation_distance);
-  if ((0 < VALS.value_distance))
+
+  if (VALS.value_distance > 0)
     v = randomize_value (v, 0, 255, FALSE, VALS.value_distance);
 
   h1 = h; s1 = s; v1 = v;
@@ -292,9 +294,9 @@ static void scatter_hsv_scatter (guchar *r,
 
   gimp_rgb_to_hsv_int (&h2, &s2, &v2); /* h2 should be h1. But... */
 
-  if ((abs (h1 - h2) <= VALS.hue_distance)
-      && (abs (s1 - s2) <= VALS.saturation_distance)
-      && (abs (v1 - v2) <= VALS.value_distance))
+  if ((abs (h1 - h2) <= VALS.hue_distance)        &&
+      (abs (s1 - s2) <= VALS.saturation_distance) &&
+      (abs (v1 - v2) <= VALS.value_distance))
     {
       *r = h;
       *g = s;
@@ -338,7 +340,9 @@ scatter_hsv_preview (GimpPreview *preview)
   g_free (dst);
 }
 
+
 /* dialog stuff */
+
 static gboolean
 scatter_hsv_dialog (GimpDrawable *drawable)
 {
@@ -375,6 +379,7 @@ scatter_hsv_dialog (GimpDrawable *drawable)
   preview = gimp_drawable_preview_new (drawable, &VALS.preview);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
+
   g_signal_connect (preview, "invalidated",
                     G_CALLBACK (scatter_hsv_preview),
                     NULL);
