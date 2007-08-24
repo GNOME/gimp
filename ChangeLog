@@ -7,9 +7,6 @@
 	* plug-ins/jpeg/jpeg-exif.c (jpeg_exif_rotate): swap the saved
 	settings when the image is rotated.  Fixes bug #466593.
 
-	* devel-docs/release-howto.txt: added note about having admin
-	access to Bugzilla and to the news section on www.gimp.org.
-
 2007-08-24  Raphaël Quinet  <raphael@gimp.org>
 
 	* tools/pdbgen/pdb/selection.pdb: fixed incorrect description of
