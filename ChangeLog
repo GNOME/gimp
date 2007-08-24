@@ -1,5 +1,10 @@
 2007-08-24  Raphaël Quinet  <raphael@gimp.org>
 
+	* plug-ins/jpeg/jpeg-save.c (save_dialog): use a label that is
+	easier to understand.  Required code changes will follow later.
+
+2007-08-24  Raphaël Quinet  <raphael@gimp.org>
+
 	* plug-ins/jpeg/jpeg-settings.c (jpeg_swap_original_settings): new
 	function that swaps the vertical and horizontal axis for the saved
 	subsampling parameters and quantization tables.
