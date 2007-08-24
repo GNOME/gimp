@@ -1,5 +1,17 @@
 2007-08-24  Raphaël Quinet  <raphael@gimp.org>
 
+	* plug-ins/jpeg/jpeg-settings.c (jpeg_swap_original_settings): new
+	function that swaps the vertical and horizontal axis for the saved
+	subsampling parameters and quantization tables.
+
+	* plug-ins/jpeg/jpeg-exif.c (jpeg_exif_rotate): swap the saved
+	settings when the image is rotated.  Fixes bug #466593.
+
+	* devel-docs/release-howto.txt: added note about having admin
+	access to Bugzilla and to the news section on www.gimp.org.
+
+2007-08-24  Raphaël Quinet  <raphael@gimp.org>
+
 	* tools/pdbgen/pdb/selection.pdb: fixed incorrect description of
 	gimp-selection-is-empty, reported by pk.  This function returns
 	TRUE when the selection is empty, but the description stated the

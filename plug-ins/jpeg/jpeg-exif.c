@@ -18,8 +18,8 @@
 
 /*
  * EXIF-handling code for the jpeg plugin.  May eventually be better
- * to move this stuff into libgimpbase and make it available for
- * other plugins.
+ * to move this stuff into libgimpbase or a new libgimpmetadata and
+ * make it available for other plugins.
  */
 
 #include "config.h"
@@ -45,6 +45,7 @@
 #include "gimpexif.h"
 
 #include "jpeg.h"
+#include "jpeg-settings.h"
 
 #include "libgimp/stdplugins-intl.h"
 
@@ -248,20 +249,24 @@ jpeg_exif_rotate (gint32 image_ID,
 
     case 5:  /* flipped diagonally around '\'    */
       gimp_image_rotate (image_ID, GIMP_ROTATE_90);
+      jpeg_swap_original_settings (image_ID);
       gimp_image_flip (image_ID, GIMP_ORIENTATION_HORIZONTAL);
       break;
 
     case 6:  /* 90 CW                            */
       gimp_image_rotate (image_ID, GIMP_ROTATE_90);
+      jpeg_swap_original_settings (image_ID);
       break;
 
     case 7:  /* flipped diagonally around '/'    */
       gimp_image_rotate (image_ID, GIMP_ROTATE_90);
+      jpeg_swap_original_settings (image_ID);
       gimp_image_flip (image_ID, GIMP_ORIENTATION_VERTICAL);
       break;
 
     case 8:  /* 90 CCW                           */
       gimp_image_rotate (image_ID, GIMP_ROTATE_270);
+      jpeg_swap_original_settings (image_ID);
       break;
 
     default: /* can't happen                     */

@@ -70,7 +70,7 @@
 
  ( ) Check out or update the 'gimp-web' module and change
      downloads/index.htrw.  Commit this change, the web server should
-     then update itself soon (usually less than half an hour).
+     then update itself soon (usually less than an hour).
 
  ( ) Bump the version number in configure.in and commit this change.
 

@@ -31,14 +31,15 @@
  * Additional data following the quantization tables is currently
  * ignored and can be used for future extensions.
  *
- * The parasite contains the original subsampling for each component
- * instead of saving only the subsampling type as used by the jpeg
- * plug-in ("subsmp") in order to improve the compatibility with
- * future versions of the plug-in that may support more subsampling
- * types.  The same applies to the other settings: for example, up to
- * 4 quantization tables will be saved in the parasite even if the
- * current code cannot restore more than 3 of them (4 tables may be
- * needed by unusual JPEG color spaces such as JCS_CMYK or JCS_YCCK).
+ * In order to improve the compatibility with future versions of the
+ * plug-in that may support more subsampling types ("subsmp"), the
+ * parasite contains the original subsampling for each component
+ * instead of saving only one byte containing the subsampling type as
+ * used by the jpeg plug-in.  The same applies to the other settings:
+ * for example, up to 4 quantization tables will be saved in the
+ * parasite even if the current code cannot restore more than 2 of
+ * them (4 tables may be needed by unusual JPEG color spaces such as
+ * JCS_CMYK or JCS_YCCK).
  */
 
 #include "config.h"
@@ -280,14 +281,13 @@ jpeg_restore_original_tables (gint32    image_ID,
       if (src_size >= 4)
         {
           src = gimp_parasite_data (parasite);
-          src += 2;
-          num_components   = *src++;
-          num_tables       = *src++;
+          num_components = src[2];
+          num_tables     = src[3];
 
           if (src_size >= (4 + num_components * 2 + num_tables * 128)
               && num_tables == num_quant_tables)
             {
-              src += num_components * 2;
+              src += 4 + num_components * 2;
               quant_tables = g_new (guint *, num_tables);
 
               for (t = 0; t < num_tables; t++)
@@ -309,4 +309,84 @@ jpeg_restore_original_tables (gint32    image_ID,
       gimp_parasite_free (parasite);
     }
   return NULL;
+}
+
+
+/**
+ * jpeg_swap_original_settings:
+ * @image_ID: the image that may contain original jpeg settings in a parasite.
+ *
+ * Swap the horizontal and vertical axis for the saved subsampling
+ * parameters and quantization tables.  This should be done if the
+ * image has been rotated by +90 or -90 degrees or if it has been
+ * mirrored along its diagonal.
+ */
+void
+jpeg_swap_original_settings (gint32 image_ID)
+{
+  GimpParasite *parasite;
+  const guchar *src;
+  glong         src_size;
+  gint          num_components;
+  gint          num_tables;
+  guchar       *new_data;
+  guchar       *dest;
+  gint          t;
+  gint          i;
+  gint          j;
+
+  parasite = gimp_image_parasite_find (image_ID, "jpeg-settings");
+  if (parasite)
+    {
+      src_size = gimp_parasite_data_size (parasite);
+      if (src_size >= 4)
+        {
+          src = gimp_parasite_data (parasite);
+          num_components = src[2];
+          num_tables     = src[3];
+
+          if (src_size >= (4 + num_components * 2 + num_tables * 128))
+            {
+              new_data = g_new (guchar, src_size);
+              dest = new_data;
+              *dest++ = *src++;
+              *dest++ = *src++;
+              *dest++ = *src++;
+              *dest++ = *src++;
+              for (i = 0; i < num_components; i++)
+                {
+                  dest[0] = src[1];
+                  dest[1] = src[0];
+                  dest += 2;
+                  src += 2;
+                }
+              for (t = 0; t < num_tables; t++)
+                {
+                  for (i = 0; i < 8; i++)
+                    {
+                      for (j = 0; j < 8; j++)
+                        {
+                          dest[i * 16 + j * 2]     = src[j * 16 + i * 2];
+                          dest[i * 16 + j * 2 + 1] = src[j * 16 + i * 2 + 1];
+                        }
+                    }
+                  dest += 128;
+                  src += 128;
+                  if (src_size > (4 + num_components * 2 + num_tables * 128))
+                    {
+                      memcpy (dest, src, src_size - (4 + num_components * 2
+                                                     + num_tables * 128));
+                    }
+                }
+              gimp_parasite_free (parasite);
+              parasite = gimp_parasite_new ("jpeg-settings",
+                                            GIMP_PARASITE_PERSISTENT,
+                                            src_size,
+                                            new_data);
+              g_free (new_data);
+              gimp_image_parasite_attach (image_ID, parasite);
+            }
+        }
+      gimp_parasite_free (parasite);
+    }
 }
