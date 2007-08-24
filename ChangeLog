@@ -1,3 +1,8 @@
+2007-08-24  Jakub Friedl  <jfriedl@suse.cz>
+
+	* plug-ins/common/scatter_hsv.c: fixing
+	bug #469519 and some cleanup.
+
 2007-08-24  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c: (compute_sample)

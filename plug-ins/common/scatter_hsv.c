@@ -55,7 +55,7 @@ static void     scatter_hsv_scatter (guchar           *r,
 static gint     randomize_value     (gint              now,
                                      gint              min,
                                      gint              max,
-                                     gint              mod_p,
+                                     gboolean          wraps_around,
                                      gint              rand_max);
 
 
@@ -96,7 +96,7 @@ query (void)
     { GIMP_PDB_IMAGE,    "image",               "Input image (not used)" },
     { GIMP_PDB_DRAWABLE, "drawable",            "Input drawable" },
     { GIMP_PDB_INT32,    "holdness",            "convolution strength" },
-    { GIMP_PDB_INT32,    "hue-distance",        "distribution distance on hue axis [0,255]" },
+    { GIMP_PDB_INT32,    "hue-distance",        "scattering of hue angle [0,180]" },
     { GIMP_PDB_INT32,    "saturation-distance", "distribution distance on saturation axis [0,255]" },
     { GIMP_PDB_INT32,    "value-distance",      "distribution distance on value axis [0,255]" }
   };
@@ -166,10 +166,10 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      VALS.holdness            = param[3].data.d_int32;
-      VALS.hue_distance        = param[4].data.d_int32;
-      VALS.saturation_distance = param[5].data.d_int32;
-      VALS.value_distance      = param[6].data.d_int32;
+      VALS.holdness            = CLAMP (param[3].data.d_int32, 1, 8);
+      VALS.hue_distance        = CLAMP (param[4].data.d_int32, 0, 180);
+      VALS.saturation_distance = CLAMP (param[5].data.d_int32, 0, 255);
+      VALS.value_distance      = CLAMP (param[6].data.d_int32, 0, 255);
       break;
 
     case GIMP_RUN_WITH_LAST_VALS:
@@ -223,11 +223,11 @@ scatter_hsv (GimpDrawable *drawable)
 }
 
 static gint
-randomize_value (gint now,
-                 gint min,
-                 gint max,
-                 gint mod_p,
-                 gint rand_max)
+randomize_value (gint     now,
+                 gint     min,
+                 gint     max,
+                 gboolean wraps_around,
+                 gint     rand_max)
 {
   gint    flag, new, steps, index;
   gdouble rand_val;
@@ -250,14 +250,14 @@ randomize_value (gint now,
 
   if (new < min)
     {
-      if (mod_p == 1)
+      if (wraps_around == TRUE)
         new += steps;
       else
         new = min;
     }
   if (max < new)
     {
-      if (mod_p == 1)
+      if (wraps_around == TRUE)
         new -= steps;
       else
         new = max;
@@ -278,11 +278,11 @@ static void scatter_hsv_scatter (guchar *r,
   gimp_rgb_to_hsv_int (&h, &s, &v);
 
   if (0 < VALS.hue_distance)
-    h = randomize_value (h, 0, 255, 1, VALS.hue_distance);
+    h = randomize_value (h, 0, 360, TRUE, VALS.hue_distance);
   if ((0 < VALS.saturation_distance))
-    s = randomize_value (s, 0, 255, 0, VALS.saturation_distance);
+    s = randomize_value (s, 0, 255, FALSE, VALS.saturation_distance);
   if ((0 < VALS.value_distance))
-    v = randomize_value (v, 0, 255, 0, VALS.value_distance);
+    v = randomize_value (v, 0, 255, FALSE, VALS.value_distance);
 
   h1 = h; s1 = s; v1 = v;
 
@@ -399,7 +399,7 @@ scatter_hsv_dialog (GimpDrawable *drawable)
 
   adj = gimp_scale_entry_new (GTK_TABLE (table), 0, 1,
                               _("H_ue:"), SCALE_WIDTH, ENTRY_WIDTH,
-                              VALS.hue_distance, 0, 255, 1, 8, 0,
+                              VALS.hue_distance, 0, 180, 1, 6, 0,
                               TRUE, 0, 0,
                               NULL, NULL);
   g_signal_connect (adj, "value-changed",
