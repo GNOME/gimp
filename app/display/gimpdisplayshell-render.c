@@ -951,10 +951,9 @@ compute_sample (guint          left_weight,
 
           for (i=0; i<=ALPHA; i++)
             {
-              guint res;
               if (a)
                 {
-                  res = ((middle_weight * (
+                  dest[i] = ((middle_weight * (
                             factors[0] * src[1][i] + 
                             factors[1] * src[4][i] +  
                             factors[2] * src[7][i]) + 
@@ -969,18 +968,8 @@ compute_sample (guint          left_weight,
                             factors[7] * src[3][i] +
                             factors[8] * src[6][i])
 
-                          ) / a);
+                          ) / a) & 0xff;
                 }
-              else
-                {
-                  res = 0;
-                }
-              if (res < 0)
-                dest[i] = 0;
-              else if (res>255)
-                dest[i] = 255;
-              else
-                dest[i] = res;
             }
         }
 #undef ALPHA
@@ -1011,10 +1000,9 @@ compute_sample (guint          left_weight,
 
           for (i=0; i<=ALPHA; i++)
             {
-              guint res;
               if (a)
                 {
-                  res = ((middle_weight * (
+                  dest[i] = ((middle_weight * (
                             factors[0] * src[1][i] + 
                             factors[1] * src[4][i] +  
                             factors[2] * src[7][i]) + 
@@ -1029,18 +1017,8 @@ compute_sample (guint          left_weight,
                             factors[7] * src[3][i] +
                             factors[8] * src[6][i])
 
-                          ) / a);
+                          ) / a) & 0xff;
                 }
-              else
-                {
-                  res = 0;
-                }
-              if (res < 0)
-                dest[i] = 0;
-              else if (res>255)
-                dest[i] = 255;
-              else
-                dest[i] = res;
             }
         }
 #undef ALPHA
@@ -1083,6 +1061,7 @@ render_image_tile_fault (RenderInfo *info)
 
   gint          footprint_x;
   gint          footprint_y;
+  guint         foosum;
 
   guint         left_weight;
   guint         middle_weight;
@@ -1125,6 +1104,7 @@ render_image_tile_fault (RenderInfo *info)
 
   footprint_y = (1.0/info->scaley) * 256;
   footprint_x = (1.0/info->scalex) * 256;
+  foosum = footprint_x * footprint_y;
 
     {
       gint dy = info->yfraction;
@@ -1277,7 +1257,6 @@ render_image_tile_fault (RenderInfo *info)
 
       {
         gint  dx = (x >> 8) & 0xff;
-        guint foosum;
         if (dx > footprint_x/2)
           left_weight = 0;
         else
@@ -1289,8 +1268,6 @@ render_image_tile_fault (RenderInfo *info)
           right_weight = footprint_x/2 - (0xff - dx);
 
         middle_weight = footprint_x - left_weight - right_weight;
-
-        foosum = footprint_x * footprint_y;
 
       compute_sample (left_weight, middle_weight, right_weight,
                       top_weight, center_weight, bottom_weight, foosum,
@@ -1624,6 +1601,7 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
   guint         footprint_x;
   guint         footprint_y;
+  guint         foosum;
 
   guint         left_weight;
   guint         middle_weight;
@@ -1635,6 +1613,7 @@ render_image_tile_fault_one_row (RenderInfo *info)
   
   footprint_y = (1.0/info->scaley) * 256;
   footprint_x = (1.0/info->scalex) * 256;
+  foosum      = footprint_x * footprint_y;
 
     {
       gint dy = info->yfraction;
@@ -1751,7 +1730,6 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
       {
         gint  dx = (x >> 8) & 0xff;
-        guint foosum;
         if (dx > footprint_x/2)
           left_weight = 0;
         else
@@ -1763,8 +1741,6 @@ render_image_tile_fault_one_row (RenderInfo *info)
           right_weight = footprint_x/2 - (0xff - dx);
 
         middle_weight = footprint_x - left_weight - right_weight;
-
-        foosum = footprint_x * footprint_y;
 
         compute_sample (left_weight, middle_weight, right_weight,
                         top_weight, center_weight, bottom_weight, foosum,
