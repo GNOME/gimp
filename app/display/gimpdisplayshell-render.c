@@ -913,10 +913,10 @@ render_image_init_alpha (gint mult)
 
 static inline void
 compute_sample (guint          left_weight,
-                guint          middle_weight,
+                guint          center_weight,
                 guint          right_weight,
                 guint          top_weight,
-                guint          center_weight,
+                guint          middle_weight,
                 guint          bottom_weight,
                 guint          sum,  
                 const guchar **src,   /* the 9 surrounding source pixels */
@@ -933,17 +933,17 @@ compute_sample (guint          left_weight,
         {
           guint factors[9]={
               (src[1][ALPHA] * top_weight)    >> 8,
-              (src[4][ALPHA] * center_weight) >> 8,
+              (src[4][ALPHA] * middle_weight) >> 8,
               (src[7][ALPHA] * bottom_weight) >> 8,
               (src[2][ALPHA] * top_weight)    >> 8,
-              (src[5][ALPHA] * center_weight) >> 8,
+              (src[5][ALPHA] * middle_weight) >> 8,
               (src[8][ALPHA] * bottom_weight) >> 8,
               (src[0][ALPHA] * top_weight)    >> 8,
-              (src[3][ALPHA] * center_weight) >> 8,
+              (src[3][ALPHA] * middle_weight) >> 8,
               (src[6][ALPHA] * bottom_weight) >> 8
           };
 
-          a = (middle_weight * (factors[0]+factors[1]+factors[2]) +
+          a = (center_weight * (factors[0]+factors[1]+factors[2]) +
                right_weight  * (factors[3]+factors[4]+factors[5]) +
                left_weight   * (factors[6]+factors[7]+factors[8]));
 
@@ -953,7 +953,7 @@ compute_sample (guint          left_weight,
             {
               if (a)
                 {
-                  dest[i] = ((middle_weight * (
+                  dest[i] = ((center_weight * (
                             factors[0] * src[1][i] + 
                             factors[1] * src[4][i] +  
                             factors[2] * src[7][i]) + 
@@ -982,17 +982,17 @@ compute_sample (guint          left_weight,
         {
           guint factors[9]={
               (src[1][ALPHA] * top_weight)    >> 8,
-              (src[4][ALPHA] * center_weight) >> 8,
+              (src[4][ALPHA] * middle_weight) >> 8,
               (src[7][ALPHA] * bottom_weight) >> 8,
               (src[2][ALPHA] * top_weight)    >> 8,
-              (src[5][ALPHA] * center_weight) >> 8,
+              (src[5][ALPHA] * middle_weight) >> 8,
               (src[8][ALPHA] * bottom_weight) >> 8,
               (src[0][ALPHA] * top_weight)    >> 8,
-              (src[3][ALPHA] * center_weight) >> 8,
+              (src[3][ALPHA] * middle_weight) >> 8,
               (src[6][ALPHA] * bottom_weight) >> 8
           };
 
-          a = (middle_weight * (factors[0]+factors[1]+factors[2]) +
+          a = (center_weight * (factors[0]+factors[1]+factors[2]) +
                right_weight  * (factors[3]+factors[4]+factors[5]) +
                left_weight   * (factors[6]+factors[7]+factors[8]));
 
@@ -1002,7 +1002,7 @@ compute_sample (guint          left_weight,
             {
               if (a)
                 {
-                  dest[i] = ((middle_weight * (
+                  dest[i] = ((center_weight * (
                             factors[0] * src[1][i] + 
                             factors[1] * src[4][i] +  
                             factors[2] * src[7][i]) + 
@@ -1064,11 +1064,11 @@ render_image_tile_fault (RenderInfo *info)
   guint         foosum;
 
   guint         left_weight;
-  guint         middle_weight;
+  guint         center_weight;
   guint         right_weight;
 
   guint         top_weight;
-  guint         center_weight;
+  guint         middle_weight;
   guint         bottom_weight;
  
 
@@ -1118,7 +1118,7 @@ render_image_tile_fault (RenderInfo *info)
       else
         bottom_weight = footprint_y/2 - (0xff - dy);
 
-      center_weight = footprint_y - top_weight - bottom_weight;
+      middle_weight = footprint_y - top_weight - bottom_weight;
     }
 
   tile[4] = tile_manager_get_tile (info->src_tiles,
@@ -1267,10 +1267,10 @@ render_image_tile_fault (RenderInfo *info)
         else
           right_weight = footprint_x/2 - (0xff - dx);
 
-        middle_weight = footprint_x - left_weight - right_weight;
+        center_weight = footprint_x - left_weight - right_weight;
 
-      compute_sample (left_weight, middle_weight, right_weight,
-                      top_weight, center_weight, bottom_weight, foosum,
+      compute_sample (left_weight, center_weight, right_weight,
+                      top_weight, middle_weight, bottom_weight, foosum,
                       src, dest, bpp);
       }
       dest += bpp;
@@ -1604,11 +1604,11 @@ render_image_tile_fault_one_row (RenderInfo *info)
   guint         foosum;
 
   guint         left_weight;
-  guint         middle_weight;
+  guint         center_weight;
   guint         right_weight;
 
   guint         top_weight;
-  guint         center_weight;
+  guint         middle_weight;
   guint         bottom_weight;
   
   footprint_y = (1.0/info->scaley) * 256;
@@ -1627,7 +1627,7 @@ render_image_tile_fault_one_row (RenderInfo *info)
       else
         bottom_weight = footprint_y/2 - (0xff - dy);
 
-      center_weight = footprint_y - top_weight - bottom_weight;
+      middle_weight = footprint_y - top_weight - bottom_weight;
     }
 
   tile[0] = tile_manager_get_tile (info->src_tiles,
@@ -1740,10 +1740,10 @@ render_image_tile_fault_one_row (RenderInfo *info)
         else
           right_weight = footprint_x/2 - (0xff - dx);
 
-        middle_weight = footprint_x - left_weight - right_weight;
+        center_weight = footprint_x - left_weight - right_weight;
 
-        compute_sample (left_weight, middle_weight, right_weight,
-                        top_weight, center_weight, bottom_weight, foosum,
+        compute_sample (left_weight, center_weight, right_weight,
+                        top_weight, middle_weight, bottom_weight, foosum,
                         src, dest, bpp);
       }
       dest += bpp;

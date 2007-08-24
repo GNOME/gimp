@@ -1,5 +1,11 @@
 2007-08-24  Øyvind Kolås  <pippin@gimp.org>
 
+	* app/display/gimpdisplayshell-render.c: swapped center and middle
+	terms around (now center means horizontal (betwen left and right )and
+	middle means vertical (between top and bottom)).
+
+2007-08-24  Øyvind Kolås  <pippin@gimp.org>
+
 	* app/display/gimpdisplayshell-render.c: (compute_sample): removed
 	a temporary variable, simplified logic slightly.
 	(render_image_tile_fault, render_image_tile_fault_one_row): moved
