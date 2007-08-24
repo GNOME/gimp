@@ -54,7 +54,7 @@
 
 /* The default settings are debatable, and perhaps this should even somehow be
  * configurable by the user. */
-static gint gimp_zoom_quality = 0; /*GIMP_DISPLAY_ZOOM_PIXEL_AA;  */
+static gint gimp_zoom_quality = 0;/*GIMP_DISPLAY_ZOOM_PIXEL_AA;*/
 
 typedef struct _RenderInfo  RenderInfo;
 
@@ -916,31 +916,20 @@ compute_sample (gint           left_weight,
                 gint           top_weight,
                 gint           center_weight,
                 gint           bottom_weight,
-                gint           sum,          /* divisor for */
-                const guchar **src,          /* the 9 surrounding source pixels */
+                gint           sum,  
+                const guchar **src,   /* the 9 surrounding source pixels */
                 guchar        *dest,
                 gint           bpp)
 {
-
-  /* adjusting the weights to avoid integer overflowing */
-  left_weight   >>= 2;
-  right_weight  >>= 2;
-  middle_weight >>= 2;
-  top_weight    >>= 2;
-  bottom_weight >>= 2;
-  center_weight >>= 2;
-  sum >>= 4;            /* need to adjust the sum of weights accordingly as
-                           well */
   switch (bpp)
     {
       gint i;
 
-
-      gint a;
+      guint a;
       case 4:
 #define ALPHA 3
         {
-          gint factors[9]={
+          guint factors[9]={
               src[1][ALPHA] * top_weight,
               src[4][ALPHA] * center_weight,
               src[7][ALPHA] * bottom_weight,
@@ -952,15 +941,19 @@ compute_sample (gint           left_weight,
               src[6][ALPHA] * bottom_weight
           };
 
-          a = (middle_weight * (factors[0]+factors[1]+factors[2]) +
-               right_weight *  (factors[3]+factors[4]+factors[5]) +
-               left_weight *   (factors[6]+factors[7]+factors[8]));
-          dest[ALPHA] = a/sum;
+          for (i=0; i<9; i++)
+            factors[i] >>= 8;
 
-          for (i=0; i<ALPHA; i++)
+          a = (middle_weight * (factors[0]+factors[1]+factors[2]) +
+               right_weight  * (factors[3]+factors[4]+factors[5]) +
+               left_weight   * (factors[6]+factors[7]+factors[8]));
+
+          dest[ALPHA] = (a << 4) / (sum >> 4);
+
+          for (i=0; i<=ALPHA; i++)
             {
-              gint res;
-              if (a)
+              guint res;
+              if (a>0.001)
                 {
                   res = ((middle_weight * (
                             factors[0] * src[1][i] + 
@@ -995,10 +988,11 @@ compute_sample (gint           left_weight,
         break;
       case 2:
 #define ALPHA 1
+
         /* NOTE: this is a copy and paste of the code above, the ALPHA changes
          * the behavior in all needed ways. */
         {
-          gint factors[9]={
+          guint factors[9]={
               src[1][ALPHA] * top_weight,
               src[4][ALPHA] * center_weight,
               src[7][ALPHA] * bottom_weight,
@@ -1010,15 +1004,19 @@ compute_sample (gint           left_weight,
               src[6][ALPHA] * bottom_weight
           };
 
-          a = (middle_weight * (factors[0]+factors[1]+factors[2]) +
-               right_weight *  (factors[3]+factors[4]+factors[5]) +
-               left_weight *   (factors[6]+factors[7]+factors[8]));
-          dest[ALPHA] = a/sum;
+          for (i=0; i<9; i++)
+            factors[i] >>= 8;
 
-          for (i=0; i<ALPHA; i++)
+          a = (middle_weight * (factors[0]+factors[1]+factors[2]) +
+               right_weight  * (factors[3]+factors[4]+factors[5]) +
+               left_weight   * (factors[6]+factors[7]+factors[8]));
+
+          dest[ALPHA] = (a << 4) / (sum >> 4);
+
+          for (i=0; i<=ALPHA; i++)
             {
-              gint res;
-              if (a)
+              guint res;
+              if (a>0.001)
                 {
                   res = ((middle_weight * (
                             factors[0] * src[1][i] + 
@@ -1104,26 +1102,16 @@ render_image_tile_fault (RenderInfo *info)
   if ((gimp_zoom_quality & GIMP_DISPLAY_ZOOM_FAST) ||
    
       (info->scalex == 1.0 &&
-       info->scaley == 1.0) ||  /* use nearest neighbour for exact use of
-                                   levels */
+       info->scaley == 1.0) ||  /* use nearest neighbour for exact levels */
+
       (info->shell->scale_x > 1.0 &&
        info->shell->scale_y > 1.0 &&
-       (!(gimp_zoom_quality & GIMP_DISPLAY_ZOOM_PIXEL_AA))) ||
+       (!(gimp_zoom_quality & GIMP_DISPLAY_ZOOM_PIXEL_AA))) 
 
-      /* use nearest neighbour interpolation when the desired scale
-       * is 1:1 with the available pyramid. By removing this optimization
-       * zoom levels > 100% will have antialiasing on the crossings in the
-       * borders of the pixelation cells.
-       */
-
-      (info->scalex < 0.25 || info->scaley < 0.25))
-        /* use nearest neighbour scaling when being abused, to avoid integer
-         * overflows */ 
+      )
     {
       return render_image_tile_fault_nearest (info);
     }
-  /* FIXME: it is crucial that this fast path is migrated to the
-   * proper box filter code as well before commiting to GIMP */
   else if (((info->src_y)     & ~(TILE_WIDTH -1)) ==
            ((info->src_y + 1) & ~(TILE_WIDTH -1)) &&
            ((info->src_y)     & ~(TILE_WIDTH -1)) ==
@@ -1694,9 +1682,9 @@ render_image_tile_fault_one_row (RenderInfo *info)
       src[8] = src[5];  /* reusing existing pixel data */
     }
 
-  if (tile[2])
+  if (tile[0])
     {
-      src[1] = tile_data_pointer (tile[2],
+      src[1] = tile_data_pointer (tile[0],
                                 (info->src_x) % TILE_WIDTH,
                                 (info->src_y - 1) % TILE_HEIGHT);
     }
@@ -1777,9 +1765,9 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
         foosum = footprint_x*2 * footprint_y*2;
 
-      compute_sample (left_weight, middle_weight, right_weight,
-                      top_weight, center_weight, bottom_weight, foosum,
-                      src, dest, bpp);
+        compute_sample (left_weight, middle_weight, right_weight,
+                        top_weight, center_weight, bottom_weight, foosum,
+                        src, dest, bpp);
       }
       dest += bpp;
 

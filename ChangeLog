@@ -1,3 +1,17 @@
+2007-08-24  Øyvind Kolås  <pippin@gimp.org>
+
+	Reshuffled shifting code in fixed point code of display to improve
+	quality.
+
+	* app/display/gimpdisplayshell-render.c:
+		(compute_sample): reshuffle a bit of the fixed point induced
+		shifting to allow higher precision.
+		(render_image_tile_fault): remove need to disable box-filter
+		for some non square zoom ratios that was needed before
+		compute_sample cleanup.
+		, (render_image_tile_fault_one_row): fetch source sample #1
+		from the correct tile.
+
 2007-08-24  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/scatter_hsv.c: stylistic cleanup.
