@@ -10,6 +10,10 @@
  ( ) Check that ftp.gimp.org has enough space to upload the release and to
      place it into the FTP area. If not, make place or ask Yosh to do that.
 
+ ( ) Check that you have admin access to the GIMP product on
+     bugzilla.gimp.org and to the news section on www.gimp.org, or that
+     someone can do the changes for you.
+
 
  ( ) Make sure the checkout is up to date, clean from uncommitted changes.
 
@@ -66,7 +70,7 @@
 
  ( ) Check out or update the 'gimp-web' module and change
      downloads/index.htrw.  Commit this change, the web server should
-     then update itself soon.
+     then update itself soon (usually less than half an hour).
 
  ( ) Bump the version number in configure.in and commit this change.
 
