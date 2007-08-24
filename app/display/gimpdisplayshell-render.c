@@ -50,11 +50,13 @@
                                                path trading quality for speed
                                              */
 #define GIMP_DISPLAY_ZOOM_PIXEL_AA  1 << 1  /* provide AA edges when zooming in
-                                               on the actual pixels */
+                                               on the actual pixels (in current
+                                             code only enables it between 100%
+                                             and 200% zoom) */
 
 /* The default settings are debatable, and perhaps this should even somehow be
  * configurable by the user. */
-static gint gimp_zoom_quality = 0;/*GIMP_DISPLAY_ZOOM_PIXEL_AA;*/
+static gint gimp_zoom_quality = GIMP_DISPLAY_ZOOM_PIXEL_AA;
 
 typedef struct _RenderInfo  RenderInfo;
 
@@ -910,13 +912,13 @@ render_image_init_alpha (gint mult)
 }
 
 static inline void
-compute_sample (gint           left_weight,
-                gint           middle_weight,
-                gint           right_weight,
-                gint           top_weight,
-                gint           center_weight,
-                gint           bottom_weight,
-                gint           sum,  
+compute_sample (guint          left_weight,
+                guint          middle_weight,
+                guint          right_weight,
+                guint          top_weight,
+                guint          center_weight,
+                guint          bottom_weight,
+                guint          sum,  
                 const guchar **src,   /* the 9 surrounding source pixels */
                 guchar        *dest,
                 gint           bpp)
@@ -930,30 +932,27 @@ compute_sample (gint           left_weight,
 #define ALPHA 3
         {
           guint factors[9]={
-              src[1][ALPHA] * top_weight,
-              src[4][ALPHA] * center_weight,
-              src[7][ALPHA] * bottom_weight,
-              src[2][ALPHA] * top_weight,
-              src[5][ALPHA] * center_weight,
-              src[8][ALPHA] * bottom_weight,
-              src[0][ALPHA] * top_weight,
-              src[3][ALPHA] * center_weight,
-              src[6][ALPHA] * bottom_weight
+              (src[1][ALPHA] * top_weight)    >> 8,
+              (src[4][ALPHA] * center_weight) >> 8,
+              (src[7][ALPHA] * bottom_weight) >> 8,
+              (src[2][ALPHA] * top_weight)    >> 8,
+              (src[5][ALPHA] * center_weight) >> 8,
+              (src[8][ALPHA] * bottom_weight) >> 8,
+              (src[0][ALPHA] * top_weight)    >> 8,
+              (src[3][ALPHA] * center_weight) >> 8,
+              (src[6][ALPHA] * bottom_weight) >> 8
           };
-
-          for (i=0; i<9; i++)
-            factors[i] >>= 8;
 
           a = (middle_weight * (factors[0]+factors[1]+factors[2]) +
                right_weight  * (factors[3]+factors[4]+factors[5]) +
                left_weight   * (factors[6]+factors[7]+factors[8]));
 
-          dest[ALPHA] = (a << 4) / (sum >> 4);
+          dest[ALPHA] = a / sum;
 
           for (i=0; i<=ALPHA; i++)
             {
               guint res;
-              if (a>0.001)
+              if (a)
                 {
                   res = ((middle_weight * (
                             factors[0] * src[1][i] + 
@@ -993,30 +992,27 @@ compute_sample (gint           left_weight,
          * the behavior in all needed ways. */
         {
           guint factors[9]={
-              src[1][ALPHA] * top_weight,
-              src[4][ALPHA] * center_weight,
-              src[7][ALPHA] * bottom_weight,
-              src[2][ALPHA] * top_weight,
-              src[5][ALPHA] * center_weight,
-              src[8][ALPHA] * bottom_weight,
-              src[0][ALPHA] * top_weight,
-              src[3][ALPHA] * center_weight,
-              src[6][ALPHA] * bottom_weight
+              (src[1][ALPHA] * top_weight)    >> 8,
+              (src[4][ALPHA] * center_weight) >> 8,
+              (src[7][ALPHA] * bottom_weight) >> 8,
+              (src[2][ALPHA] * top_weight)    >> 8,
+              (src[5][ALPHA] * center_weight) >> 8,
+              (src[8][ALPHA] * bottom_weight) >> 8,
+              (src[0][ALPHA] * top_weight)    >> 8,
+              (src[3][ALPHA] * center_weight) >> 8,
+              (src[6][ALPHA] * bottom_weight) >> 8
           };
-
-          for (i=0; i<9; i++)
-            factors[i] >>= 8;
 
           a = (middle_weight * (factors[0]+factors[1]+factors[2]) +
                right_weight  * (factors[3]+factors[4]+factors[5]) +
                left_weight   * (factors[6]+factors[7]+factors[8]));
 
-          dest[ALPHA] = (a << 4) / (sum >> 4);
+          dest[ALPHA] = a / sum;
 
           for (i=0; i<=ALPHA; i++)
             {
               guint res;
-              if (a>0.001)
+              if (a)
                 {
                   res = ((middle_weight * (
                             factors[0] * src[1][i] + 
@@ -1088,26 +1084,31 @@ render_image_tile_fault (RenderInfo *info)
   gint          footprint_x;
   gint          footprint_y;
 
-  gint          left_weight;
-  gint          middle_weight;
-  gint          right_weight;
+  guint         left_weight;
+  guint         middle_weight;
+  guint         right_weight;
 
-  gint          top_weight;
-  gint          center_weight;
-  gint          bottom_weight;
+  guint         top_weight;
+  guint         center_weight;
+  guint         bottom_weight;
  
 
 
   /* dispatch to fast path functions on special conditions */
   if ((gimp_zoom_quality & GIMP_DISPLAY_ZOOM_FAST) ||
    
+      /* use nearest neighbour for exact levels */
       (info->scalex == 1.0 &&
-       info->scaley == 1.0) ||  /* use nearest neighbour for exact levels */
+       info->scaley == 1.0) 
 
-      (info->shell->scale_x > 1.0 &&
-       info->shell->scale_y > 1.0 &&
-       (!(gimp_zoom_quality & GIMP_DISPLAY_ZOOM_PIXEL_AA))) 
+      /* or when we're larger than 1.0 and not using any AA */
+      || (info->shell->scale_x > 1.0 &&
+          info->shell->scale_y > 1.0 &&
+          (!(gimp_zoom_quality & GIMP_DISPLAY_ZOOM_PIXEL_AA))) 
 
+      /* or at any point when we're at more than 200% */
+      || (info->shell->scale_x > 2.0 ||
+          info->shell->scale_y > 2.0 )
       )
     {
       return render_image_tile_fault_nearest (info);
@@ -1122,22 +1123,22 @@ render_image_tile_fault (RenderInfo *info)
       return render_image_tile_fault_one_row (info);
     }
 
-  footprint_y = (1.0/info->scaley) * 256 / 2;
-  footprint_x = (1.0/info->scalex) * 256 / 2;
+  footprint_y = (1.0/info->scaley) * 256;
+  footprint_x = (1.0/info->scalex) * 256;
 
     {
       gint dy = info->yfraction;
-      if (dy > footprint_y)
+      if (dy > footprint_y/2)
         top_weight = 0;
       else
-        top_weight = footprint_y - dy;
+        top_weight = footprint_y/2 - dy;
 
-      if (0xff - dy > footprint_y) 
+      if (0xff - dy > footprint_y/2) 
         bottom_weight = 0;
       else
-        bottom_weight = footprint_y - (0xff - dy);
+        bottom_weight = footprint_y/2 - (0xff - dy);
 
-      center_weight = (footprint_y*2) - top_weight - bottom_weight;
+      center_weight = footprint_y - top_weight - bottom_weight;
     }
 
   tile[4] = tile_manager_get_tile (info->src_tiles,
@@ -1275,21 +1276,21 @@ render_image_tile_fault (RenderInfo *info)
       gint  skipped;
 
       {
-        gint dx = (x >> 8) & 0xff;
-        gint foosum;
-        if (dx > footprint_x)
+        gint  dx = (x >> 8) & 0xff;
+        guint foosum;
+        if (dx > footprint_x/2)
           left_weight = 0;
         else
-          left_weight = footprint_x - dx;
+          left_weight = footprint_x/2 - dx;
 
-        if (0xff - dx > footprint_x)
+        if (0xff - dx > footprint_x/2)
           right_weight = 0;
         else
-          right_weight = footprint_x - (0xff - dx);
+          right_weight = footprint_x/2 - (0xff - dx);
 
-        middle_weight = (footprint_x*2) - left_weight - right_weight;
+        middle_weight = footprint_x - left_weight - right_weight;
 
-        foosum = footprint_x*2 * footprint_y*2;
+        foosum = footprint_x * footprint_y;
 
       compute_sample (left_weight, middle_weight, right_weight,
                       top_weight, center_weight, bottom_weight, foosum,
@@ -1621,33 +1622,33 @@ render_image_tile_fault_one_row (RenderInfo *info)
   gint          bpp;
   glong         x;
 
-  gint          footprint_x;
-  gint          footprint_y;
+  guint         footprint_x;
+  guint         footprint_y;
 
-  gint          left_weight;
-  gint          middle_weight;
-  gint          right_weight;
+  guint         left_weight;
+  guint         middle_weight;
+  guint         right_weight;
 
-  gint          top_weight;
-  gint          center_weight;
-  gint          bottom_weight;
+  guint         top_weight;
+  guint         center_weight;
+  guint         bottom_weight;
   
-  footprint_y = (1.0/info->scaley) * 256 / 2;
-  footprint_x = (1.0/info->scalex) * 256 / 2;
+  footprint_y = (1.0/info->scaley) * 256;
+  footprint_x = (1.0/info->scalex) * 256;
 
     {
       gint dy = info->yfraction;
-      if (dy > footprint_y)
+      if (dy > footprint_y/2)
         top_weight = 0;
       else
-        top_weight = footprint_y - dy;
+        top_weight = footprint_y/2 - dy;
 
-      if (0xff - dy > footprint_y) 
+      if (0xff - dy > footprint_y/2)
         bottom_weight = 0;
       else
-        bottom_weight = footprint_y - (0xff - dy);
+        bottom_weight = footprint_y/2 - (0xff - dy);
 
-      center_weight = (footprint_y*2) - top_weight - bottom_weight;
+      center_weight = footprint_y - top_weight - bottom_weight;
     }
 
   tile[0] = tile_manager_get_tile (info->src_tiles,
@@ -1749,21 +1750,21 @@ render_image_tile_fault_one_row (RenderInfo *info)
       gint  skipped;
 
       {
-        gint dx = (x >> 8) & 0xff;
-        gint foosum;
-        if (dx > footprint_x)
+        gint  dx = (x >> 8) & 0xff;
+        guint foosum;
+        if (dx > footprint_x/2)
           left_weight = 0;
         else
-          left_weight = footprint_x - dx;
+          left_weight = footprint_x/2 - dx;
 
-        if (0xff - dx > footprint_x)
+        if (0xff - dx > footprint_x/2)
           right_weight = 0;
         else
-          right_weight = footprint_x - (0xff - dx);
+          right_weight = footprint_x/2 - (0xff - dx);
 
-        middle_weight = (footprint_x*2) - left_weight - right_weight;
+        middle_weight = footprint_x - left_weight - right_weight;
 
-        foosum = footprint_x*2 * footprint_y*2;
+        foosum = footprint_x * footprint_y;
 
         compute_sample (left_weight, middle_weight, right_weight,
                         top_weight, center_weight, bottom_weight, foosum,

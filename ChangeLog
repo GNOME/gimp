@@ -1,5 +1,13 @@
 2007-08-24  Øyvind Kolås  <pippin@gimp.org>
 
+	* app/display/gimpdisplayshell-render.c: Replaced signed integres with
+	unsigned ones for weights etc to gain some additional bits of
+	precision. Enabled anti-aliasing for zoomlevels between 100% and 200%
+	to improve the smoothness of the display at the levels where the size
+	differences between pixels yields the most distracting artifacts.
+
+2007-08-24  Øyvind Kolås  <pippin@gimp.org>
+
 	Reshuffled shifting code in fixed point code of display to improve
 	quality.
 
@@ -24,7 +32,7 @@
 2007-08-24  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c: (compute_sample)
-	fixed a division by zero issue.
+	fixed a division by zero issue. Fixes bug #469785.
 
 2007-08-24  Michael Natterer  <mitch@gimp.org>
 
