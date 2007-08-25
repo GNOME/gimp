@@ -65,4 +65,6 @@ void           gimp_color_profile_store_add      (GimpColorProfileStore *store,
                                                   const gchar           *label);
 
 
+G_END_DECLS
+
 #endif  /* __GIMP_COLOR_PROFILE_STORE_H__ */

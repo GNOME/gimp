@@ -1,3 +1,7 @@
+2007-08-26  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* libgimpwidgets/gimpcolorprofilestore.h: Add a G_END_DECLS.
+
 2007-08-24  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/jpeg/jpeg-save.c (save_dialog): use a label that is
