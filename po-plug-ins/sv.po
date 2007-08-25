@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-19 17:07+0200\n"
-"PO-Revision-Date: 2007-08-20 19:07+0100\n"
+"POT-Creation-Date: 2007-08-25 13:41+0200\n"
+"PO-Revision-Date: 2007-08-25 13:41+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -2771,12 +2771,12 @@ msgstr "_Nyans:"
 
 #: ../plug-ins/common/compose.c:213
 #: ../plug-ins/common/compose.c:221
-#: ../plug-ins/common/scatter_hsv.c:413
+#: ../plug-ins/common/scatter_hsv.c:418
 msgid "_Saturation:"
 msgstr "_Mättnad:"
 
 #: ../plug-ins/common/compose.c:214
-#: ../plug-ins/common/scatter_hsv.c:425
+#: ../plug-ins/common/scatter_hsv.c:430
 msgid "_Value:"
 msgstr "_Intensitet:"
 
@@ -5264,7 +5264,7 @@ msgid "_Convert"
 msgstr "_Konvertera"
 
 #: ../plug-ins/common/lcms.c:1148
-#: ../plug-ins/jpeg/jpeg-exif.c:367
+#: ../plug-ins/jpeg/jpeg-exif.c:372
 msgid "_Don't ask me again"
 msgstr "_Fråga mig inte igen"
 
@@ -5557,6 +5557,7 @@ msgid "Maxim_um RGB..."
 msgstr "Maxima_l RGB..."
 
 #: ../plug-ins/common/max_rgb.c:134
+#: ../plug-ins/common/scatter_hsv.c:160
 msgid "Can only operate on RGB drawables."
 msgstr "Kan endast arbeta med RGB-ritytor."
 
@@ -6449,12 +6450,12 @@ msgid "Co_mpression level:"
 msgstr "Ko_mpressionsnivå:"
 
 #: ../plug-ins/common/png.c:1895
-#: ../plug-ins/jpeg/jpeg-save.c:1153
+#: ../plug-ins/jpeg/jpeg-save.c:1154
 msgid "_Load Defaults"
 msgstr "_Läs in standardvärden"
 
 #: ../plug-ins/common/png.c:1903
-#: ../plug-ins/jpeg/jpeg-save.c:1162
+#: ../plug-ins/jpeg/jpeg-save.c:1163
 msgid "S_ave Defaults"
 msgstr "S_para standardvärden"
 
@@ -7298,19 +7299,19 @@ msgstr "Slumpa nyans/mättnad/ljusstyrka individuellt"
 msgid "HSV Noise..."
 msgstr "NMI-brus..."
 
-#: ../plug-ins/common/scatter_hsv.c:218
+#: ../plug-ins/common/scatter_hsv.c:217
 msgid "HSV Noise"
 msgstr "NMI-brus"
 
-#: ../plug-ins/common/scatter_hsv.c:354
+#: ../plug-ins/common/scatter_hsv.c:358
 msgid "Scatter HSV"
 msgstr "Skingra NMI"
 
-#: ../plug-ins/common/scatter_hsv.c:389
+#: ../plug-ins/common/scatter_hsv.c:394
 msgid "_Holdness:"
 msgstr "_Låsningsgrad:"
 
-#: ../plug-ins/common/scatter_hsv.c:401
+#: ../plug-ins/common/scatter_hsv.c:406
 msgid "H_ue:"
 msgstr "N_yans:"
 
@@ -11628,19 +11629,19 @@ msgstr "Kartfilformat"
 msgid "View Source"
 msgstr "Visa källa"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:283
+#: ../plug-ins/jpeg/jpeg-exif.c:288
 msgid "Rotate Image?"
 msgstr "Rotera bild?"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:286
+#: ../plug-ins/jpeg/jpeg-exif.c:291
 msgid "_Keep Orientation"
 msgstr "_Behåll orientering"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:342
+#: ../plug-ins/jpeg/jpeg-exif.c:347
 msgid "According to the EXIF data, this image is rotated."
 msgstr "Enligt EXIF-datat så är den här bilden roterad."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:357
+#: ../plug-ins/jpeg/jpeg-exif.c:362
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Vill du att GIMP ska rotera den till standardorienteringen?"
 
@@ -11723,53 +11724,53 @@ msgid "Save XMP data"
 msgstr "Spara XMP-data"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1041
-msgid "Use custom quality settings"
-msgstr "Använd anpassade kvalitetsinställningar"
+msgid "Use quality settings from original image"
+msgstr "Använd kvalitetsinställningar från originalbilden"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1046
+#: ../plug-ins/jpeg/jpeg-save.c:1047
 msgid "If the original image was loaded from a JPEG file using non-standard quality settings (quantization tables), enable this option to get almost the same quality and file size."
 msgstr "Om originalbilden lästes in från en JPEG-fil med icke-standardiserade kvalitetsinställningar (kvantiseringstabeller), aktivera det här alternativet för att få nästan samma kvalitet och filstorlek."
 
 #. Subsampling
-#: ../plug-ins/jpeg/jpeg-save.c:1070
+#: ../plug-ins/jpeg/jpeg-save.c:1071
 msgid "Subsampling:"
 msgstr "Subsampling:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1077
+#: ../plug-ins/jpeg/jpeg-save.c:1078
 msgid "1x1,1x1,1x1 (best quality)"
 msgstr "1x1,1x1,1x1 (bäst kvalitet)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1078
+#: ../plug-ins/jpeg/jpeg-save.c:1079
 msgid "2x1,1x1,1x1 (4:2:2)"
 msgstr "2x1,1x1,1x1 (4:2:2)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1079
+#: ../plug-ins/jpeg/jpeg-save.c:1080
 msgid "1x2,1x1,1x1"
 msgstr "1x2,1x1,1x1"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1080
+#: ../plug-ins/jpeg/jpeg-save.c:1081
 msgid "2x2,1x1,1x1 (smallest file)"
 msgstr "2x2,1x1,1x1 (minst filstorlek)"
 
 #. DCT method
-#: ../plug-ins/jpeg/jpeg-save.c:1095
+#: ../plug-ins/jpeg/jpeg-save.c:1096
 msgid "DCT method:"
 msgstr "DCT-metod:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1101
+#: ../plug-ins/jpeg/jpeg-save.c:1102
 msgid "Fast Integer"
 msgstr "Snabba heltal"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1102
+#: ../plug-ins/jpeg/jpeg-save.c:1103
 msgid "Integer"
 msgstr "Heltal"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1103
+#: ../plug-ins/jpeg/jpeg-save.c:1104
 msgid "Floating-Point"
 msgstr "Flyttal"
 
 # src/sidebar.c:107
-#: ../plug-ins/jpeg/jpeg-save.c:1117
+#: ../plug-ins/jpeg/jpeg-save.c:1118
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -12457,6 +12458,8 @@ msgstr "Fel: Kan ej läsa XJT-egenskapsfilen \"%s\"."
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fel: XJT-egenskapsfilen \"%s\" är tom."
 
+#~ msgid "Use custom quality settings"
+#~ msgstr "Använd anpassade kvalitetsinställningar"
 #~ msgid "Force baseline JPEG"
 #~ msgstr "Tvinga grundläggande JPEG"
 
