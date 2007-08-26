@@ -37,6 +37,10 @@
 
 #include <glib-object.h>
 
+#ifdef G_OS_WIN32
+#include <io.h> /* get_osfhandle */
+#endif
+
 #if HAVE_DBUS_GLIB
 #include <dbus/dbus-glib.h>
 #endif

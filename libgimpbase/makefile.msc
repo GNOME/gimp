@@ -10,10 +10,10 @@ PKG_VER = $(GIMP_VER)
 
 DEFINES = -DGIMPDIR=\"$(GIMPDIR)\" -DDATADIR=\"\" -DSYSCONFDIR=\"\" \
 	-DPLUGINDIR=\"plug-ins\" -DLOCALEDIR=\"locale\" \
-	-DGIMP_PACKAGE=\"gimp-2.3\" \
-	-DGIMP_DATA_VERSION=\"2.3\" \
-	-DGIMP_PLUGIN_VERSION=\"2.3\" \
-	-DGIMP_SYSCONF_VERSION=\"2.3\" \
+	-DGIMP_PACKAGE=\"gimp-2.4\" \
+	-DGIMP_DATA_VERSION=\"2.4\" \
+	-DGIMP_PLUGIN_VERSION=\"2.4\" \
+	-DGIMP_SYSCONF_VERSION=\"2.4\" \
 
 top_srcdir = $(PRJ_TOP)
 top_builddir = $(PRJ_TOP)

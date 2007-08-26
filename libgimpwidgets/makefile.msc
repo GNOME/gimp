@@ -40,8 +40,11 @@ OBJECTS = \
 	gimpcolorarea.obj \
 	gimpcolorbutton.obj \
 	gimpcolordisplay.obj \
+	gimpcolordisplaystack.obj \
 	gimpcolorhexentry.obj \
 	gimpcolornotebook.obj \
+	gimpcolorprofilecombobox.obj \
+	gimpcolorprofilestore.obj \
 	gimpcolorscale.obj \
 	gimpcolorscales.obj \
 	gimpcolorselect.obj \
@@ -61,6 +64,7 @@ OBJECTS = \
 	gimpintcombobox.obj \
 	gimpintstore.obj \
 	gimpmemsizeentry.obj \
+	gimpnumberpairentry.obj \
 	gimpoffsetarea.obj \
 	gimpoldwidgets.obj \
 	gimppageselector.obj \
@@ -70,11 +74,9 @@ OBJECTS = \
 	gimppreviewarea.obj \
 	gimppreview.obj \
 	gimppropwidgets.obj \
-	gimpratioentry.obj \
 	gimpscrolledpreview.obj \
 	gimpstringcombobox.obj \
 	gimpquerybox.obj \
-#	gimpresolutionentry.obj \
 	gimpsizeentry.obj \
 	gimpstock.obj \
 	gimpunitmenu.obj \

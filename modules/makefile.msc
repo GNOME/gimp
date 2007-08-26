@@ -83,9 +83,10 @@ cdisplay_highcontrast-$(GIMP_VER).dll : cdisplay_highcontrast.obj
 cdisplay_lcms-$(GIMP_VER).dll : cdisplay_lcms.obj
 	$(CC) $(CFLAGS) $(LCMS_CFLAGS) -LD -Fe$@ cdisplay_lcms.obj $(LDFLAGS) \
 	..\libgimpbase\gimpbase-$(GIMP_VER).lib \
+	..\libgimpcolor\gimpcolor-$(GIMP_VER).lib \
 	..\libgimpconfig\gimpconfig-$(GIMP_VER).lib \
 	..\libgimpwidgets\gimpwidgets-$(GIMP_VER).lib \
-	$(DEPLIBS) $(LCMS_LIBS)
+	$(DEPLIBS) $(LCMS_LIBS) user32.lib gdi32.lib
 
 cdisplay_proof-$(GIMP_VER).dll : cdisplay_proof.obj
 	$(CC) $(CFLAGS) $(LCMS_CFLAGS) -LD -Fe$@ cdisplay_proof.obj $(LDFLAGS) \

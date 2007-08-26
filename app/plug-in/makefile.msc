@@ -20,6 +20,7 @@ OBJECTS = \
 	gimpenvirontable.obj \
 	gimpinterpreterdb.obj \
 	gimpplugin.obj \
+	gimppluginerror.obj \
 	gimpplugin-cleanup.obj \
 	gimpplugin-context.obj \
 	gimpplugindebug.obj \

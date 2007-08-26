@@ -192,7 +192,7 @@ INCLUDES = \
 
 DEFINES = \
 	-DGIMP_COMPILATION \
-	-DGIMP_APP_VERSION=\"2.3\" \
+	-DGIMP_APP_VERSION=\"2.4\" \
 	-DG_LOG_DOMAIN=\"Gimp-Core\"
 
 all : \

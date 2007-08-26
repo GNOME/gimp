@@ -1,3 +1,10 @@
+2007-08-26  Hans Breuer  <hans@breuer.org>
+
+	* **/makefile.msc app/gimpcore.def : updated msvc build
+	* app/main.c : include <io.h> for get_osfhandle()
+	* plug-ins/jpeg/jpeg-settings.h : prototype
+	jpeg_swap_original_settings
+
 2007-08-26  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* libgimpwidgets/gimpcolorprofilestore.h: Add a G_END_DECLS.
