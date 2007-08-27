@@ -1,35 +1,311 @@
-# translation of pt_BR.po to Brazilian Portuguese
+# translation of pt_BR.po to
 # Mensagens em português do Brazil pt_BR para o  GIMP.
+#
 # Marcia Norie Nakaza <norie@conectiva.com.br>, 2000.
 # Alexandre Folle de Menezes <afmenez@terra.com.br>, 2002-2003.
-# Joao S. O. Bueno Calligaris <gwidion@mpc.com.br>, 2004.
-#
+# Joao S. O. Bueno Calligaris <gwidion@mpc.com.br>, 2004, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: pt_BR\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-13 21:07+0200\n"
-"PO-Revision-Date: 2004-12-14 19:22-0200\n"
+"POT-Creation-Date: 2007-08-25 11:41-0300\n"
+"PO-Revision-Date: 2007-08-26 21:00-0300\n"
 "Last-Translator: Joao S. O. Bueno Calligaris <gwidion@mpc.com.br>\n"
-"Language-Team: Brazilian Portuguese <<gnome-l10n-br@listas.cipsga.org.br>>\n"
+"Language-Team:  <GNOME-l10n-br <Gnome-l10n-BR@listas.cipsga.org.br>>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.3\n"
+"X-Generator: KBabel 1.11.4\n"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:43
+#: ../plug-ins/pygimp/gimpfu.py:380
+msgid "Missing exception information"
+msgstr "Sem informação sobre a exceção"
+
+#: ../plug-ins/pygimp/gimpfu.py:389
+#, python-format
+msgid "An error occured running %s"
+msgstr "Ocorreu um erro ao executar %s"
+
+#: ../plug-ins/pygimp/gimpfu.py:400
+msgid "_More Information"
+msgstr "_Mais informações"
+
+#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
+#: ../plug-ins/pygimp/gimpfu.py:524
+msgid "No"
+msgstr "Não"
+
+#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
+msgid "Yes"
+msgstr "Sim"
+
+#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
+msgid "Python-Fu File Selection"
+msgstr "Seleção de Arquivos do Python-Fu"
+
+#: ../plug-ins/pygimp/gimpfu.py:569
+msgid "Python-Fu Folder Selection"
+msgstr "Seleção de Pastas do Python-Fu"
+
+#: ../plug-ins/pygimp/gimpfu.py:659
+#, python-format
+msgid "Invalid input for '%s'"
+msgstr "Saída inválida para '%s'"
+
+#: ../plug-ins/pygimp/gimpui.py:175
+msgid "Python-Fu Color Selection"
+msgstr "Seleção de Cores do Python Fu"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:107
+msgid "Saving as colored XHTML"
+msgstr "Salvando como XHTML colorido"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:184
+msgid "Save as colored XHTML"
+msgstr "Salva como um XHTML colorido"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:189
+msgid "Colored XHTML"
+msgstr "XHTML colorido"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+msgid "Character _source"
+msgstr "Origem dos Caracteres"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
+msgid "Source code"
+msgstr "Cóidgo fonte"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
+msgid "Text file"
+msgstr "Arquivo texto"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
+msgid "Entry box"
+msgstr "Texto da entrada "
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+msgid "_File to read or characters to use"
+msgstr "Arquivo a _Ler, ou Texto a Usar"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+msgid "Fo_nt size in pixels"
+msgstr "_Tamanho  da Fonte (px)"
+
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
+msgid "_Write a separate CSS file"
+msgstr "_Escrever um arquivo CSS separado"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
 msgstr "Console Python"
 
-#: ../plug-ins/pygimp/plug-ins/gimpcons.py:75
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
 msgid "_Browse..."
 msgstr "_Procurar..."
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:217
-#, fuzzy
-msgid "Gimp-Python Console"
-msgstr "Console Python"
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:132
+msgid "Python Procedure Browser"
+msgstr "Navegador Procedural do Python"
 
-#: ../plug-ins/pygimp/plug-ins/gtkcons.py:218
-msgid "Interactive Python Development"
-msgstr ""
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:161
+#, python-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Não foi possível abrir '%s'para escrita: %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:176
+#, python-format
+msgid "Could not write to '%s': %s"
+msgstr "Não foi possível escrever em '%s': %s"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:184
+msgid "Save Python-Fu Console Output"
+msgstr "Salvar Saída do Console Python"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
+msgid "Interactive Gimp-Python interpreter"
+msgstr "Interpretador Interativo de Python no GIMP"
+
+#: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
+msgid "_Console"
+msgstr "_Console"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:51
+msgid "Add a layer of fog"
+msgstr "Adiciona uma camada de nevoeiro"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:56
+msgid "_Fog..."
+msgstr "_Nevoeiro..."
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+msgid "_Layer name"
+msgstr "_Nome da camada"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+msgid "Clouds"
+msgstr "Nuvens"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:62
+msgid "_Fog color"
+msgstr "Cor do _Nevoeiro"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+msgid "_Turbulence"
+msgstr "_Turbulência"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+msgid "Op_acity"
+msgstr "Opa_cidade"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
+msgid "Offset the colors in a palette"
+msgstr "Desloca as cores da paleta"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
+msgid "_Offset Palette..."
+msgstr "_Deslocar Paleta..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:53
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:57
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:79
+msgid "Palette"
+msgstr "Paleta"
+
+#: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
+msgid "Off_set"
+msgstr "D_eslocamento"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
+msgid "Sort the colors in a palette"
+msgstr "Ordena as cores da paleta"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:54
+msgid "_Sort Palette..."
+msgstr "_Ordena Paleta..."
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
+msgid "Color _model"
+msgstr "_Modelo de cor"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
+msgid "RGB"
+msgstr "RGB"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:60
+msgid "HSV"
+msgstr "HSV"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
+msgid "Channel to _sort"
+msgstr "Canal a _ordenar"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
+msgid "Red or Hue"
+msgstr "Vermelho ou Matiz"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:63
+msgid "Green or Saturation"
+msgstr "Verde ou saturação"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:64
+msgid "Blue or Value"
+msgstr "Azul ou Valor"
+
+#: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
+msgid "_Ascending"
+msgstr "_Ascendente"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
+msgid "Create a repeating gradient using colors from the palette"
+msgstr "Cria um degradê repetitivo usando cores da paleta"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:55
+msgid "Palette to _Repeating Gradient"
+msgstr "Paleta para Degradê com _Repetições"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:72
+msgid "Create a gradient using colors from the palette"
+msgstr "Cria um degradê usando cores da paleta"
+
+#: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:77
+msgid "Palette to _Gradient"
+msgstr "Paleta para Degradê"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:57
+msgid "Slice"
+msgstr "Fatiar"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:416
+msgid "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr "Corta uma imagem ao longo das suas guias, cria imagens e um trecho de HTML com uma tabela - opcionalmente gera javascript para animar as três camadas de cima da imagem quando o mouse estiver sobre a tabela"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:427
+msgid "_Slice..."
+msgstr "_Fatiar..."
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+msgid "Path for HTML export"
+msgstr "Caminho para a exportação de HTML"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+msgid "Filename for export"
+msgstr "Nome do arquivo para exportação"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+msgid "Image name prefix"
+msgstr "Prefixo dos nomes das imagens"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
+msgid "Image format"
+msgstr "Formato das imagens"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+msgid "Separate image folder"
+msgstr "Separar pasta de imagens"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
+msgid "Folder for image export"
+msgstr "Pasta para exportação de imagens"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+msgid "Space between table elements"
+msgstr "Espaço entre os elementos da tabela"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+msgid "Javascript for onmouseover and clicked"
+msgstr "Animação Javascript para onmouseover e clicked"
+
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
+msgid "Skip animation for table caps"
+msgstr "Não animar os cantos da tabela"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+msgid "Add a drop shadow to a layer, and optionally bevel it"
+msgstr "Adiciona uma sombra projetada a uma camada, e opcionalmente cria um chanfro nas bordas"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
+msgid "_Drop Shadow and Bevel..."
+msgstr "_Sombra Projetada e Chanfrar..."
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+msgid "_Shadow blur"
+msgstr "_Desfocagem da sombra"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
+msgid "_Bevel"
+msgstr "_Chanfrar"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+msgid "_Drop shadow"
+msgstr "_Sombra projetada"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+msgid "Drop shadow _X displacement"
+msgstr "Deslocamento _X "
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
+msgid "Drop shadow _Y displacement"
+msgstr "Deslocamento _Y"
+
