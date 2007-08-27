@@ -18,14 +18,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-18 12:38+0200\n"
-"PO-Revision-Date: 2007-08-18 12:38+0200\n"
+"POT-Creation-Date: 2007-08-27 21:44+0200\n"
+"PO-Revision-Date: 2007-08-27 21:44+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:547
 #: ../plug-ins/gfig/gfig-dialog.c:274 ../plug-ins/gflare/gflare.c:883
@@ -2638,11 +2638,11 @@ msgid "_Hue:"
 msgstr "_Farbton:"
 
 #: ../plug-ins/common/compose.c:213 ../plug-ins/common/compose.c:221
-#: ../plug-ins/common/scatter_hsv.c:413
+#: ../plug-ins/common/scatter_hsv.c:418
 msgid "_Saturation:"
 msgstr "_Sättigung:"
 
-#: ../plug-ins/common/compose.c:214 ../plug-ins/common/scatter_hsv.c:425
+#: ../plug-ins/common/compose.c:214 ../plug-ins/common/scatter_hsv.c:430
 msgid "_Value:"
 msgstr "_Wert:"
 
@@ -5095,7 +5095,7 @@ msgstr "_Beibehalten"
 msgid "_Convert"
 msgstr "_Konvertieren"
 
-#: ../plug-ins/common/lcms.c:1148 ../plug-ins/jpeg/jpeg-exif.c:367
+#: ../plug-ins/common/lcms.c:1148 ../plug-ins/jpeg/jpeg-exif.c:372
 msgid "_Don't ask me again"
 msgstr "_Nicht erneut fragen"
 
@@ -5387,7 +5387,7 @@ msgstr "Das Bild auf reines Rot, Grün und Blau reduzieren"
 msgid "Maxim_um RGB..."
 msgstr "_Maximales RGB …"
 
-#: ../plug-ins/common/max_rgb.c:134
+#: ../plug-ins/common/max_rgb.c:134 ../plug-ins/common/scatter_hsv.c:160
 msgid "Can only operate on RGB drawables."
 msgstr "Es kann nur mit RGB-Bildern gearbeitet werden."
 
@@ -6269,11 +6269,11 @@ msgstr "Farb_werte aus Transparenz speichern"
 msgid "Co_mpression level:"
 msgstr "_Kompressionsgrad:"
 
-#: ../plug-ins/common/png.c:1895 ../plug-ins/jpeg/jpeg-save.c:1153
+#: ../plug-ins/common/png.c:1895 ../plug-ins/jpeg/jpeg-save.c:1154
 msgid "_Load Defaults"
 msgstr "Standardwerte _laden"
 
-#: ../plug-ins/common/png.c:1903 ../plug-ins/jpeg/jpeg-save.c:1162
+#: ../plug-ins/common/png.c:1903 ../plug-ins/jpeg/jpeg-save.c:1163
 msgid "S_ave Defaults"
 msgstr "Standardwerte _speichern"
 
@@ -7138,19 +7138,19 @@ msgstr "Farbton/Sättigung/Wert unabhängig voneinander randomisieren"
 msgid "HSV Noise..."
 msgstr "HSV-Rauschen …"
 
-#: ../plug-ins/common/scatter_hsv.c:218
+#: ../plug-ins/common/scatter_hsv.c:217
 msgid "HSV Noise"
 msgstr "HSV-Rauschen"
 
-#: ../plug-ins/common/scatter_hsv.c:354
+#: ../plug-ins/common/scatter_hsv.c:358
 msgid "Scatter HSV"
 msgstr "HSV streuen"
 
-#: ../plug-ins/common/scatter_hsv.c:389
+#: ../plug-ins/common/scatter_hsv.c:394
 msgid "_Holdness:"
 msgstr "_Festhalten:"
 
-#: ../plug-ins/common/scatter_hsv.c:401
+#: ../plug-ins/common/scatter_hsv.c:406
 msgid "H_ue:"
 msgstr "_Farbton:"
 
@@ -11509,19 +11509,19 @@ msgstr "Map-Dateiformat"
 msgid "View Source"
 msgstr "Quelle zeigen"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:283
+#: ../plug-ins/jpeg/jpeg-exif.c:288
 msgid "Rotate Image?"
 msgstr "Bild drehen?"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:286
+#: ../plug-ins/jpeg/jpeg-exif.c:291
 msgid "_Keep Orientation"
 msgstr "Ausrichtung _beibehalten"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:342
+#: ../plug-ins/jpeg/jpeg-exif.c:347
 msgid "According to the EXIF data, this image is rotated."
 msgstr "Den EXIF-Daten zufolge ist das Bild gedreht."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:357
+#: ../plug-ins/jpeg/jpeg-exif.c:362
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Soll GIMP für Sie das Bild in die Standardausrichtung drehen?"
 
@@ -11601,10 +11601,10 @@ msgid "Save XMP data"
 msgstr "XMP-Daten speichern"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1041
-msgid "Use custom quality settings"
-msgstr "Benutzerdefinierte Qualitätseinstellungen"
+msgid "Use quality settings from original image"
+msgstr "Qualitätseinstellungen des Originalbildes verwenden"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1046
+#: ../plug-ins/jpeg/jpeg-save.c:1047
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -11615,44 +11615,44 @@ msgstr ""
 "Option für etwa gleiche Qualität und Dateigröße."
 
 #. Subsampling
-#: ../plug-ins/jpeg/jpeg-save.c:1070
+#: ../plug-ins/jpeg/jpeg-save.c:1071
 msgid "Subsampling:"
 msgstr "Zwischenschritte:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1077
+#: ../plug-ins/jpeg/jpeg-save.c:1078
 msgid "1x1,1x1,1x1 (best quality)"
 msgstr "1×1,1×1,1×1 (höchste Qualität)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1078
+#: ../plug-ins/jpeg/jpeg-save.c:1079
 msgid "2x1,1x1,1x1 (4:2:2)"
 msgstr "2×1,1×1,1×1 (4:2:2)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1079
+#: ../plug-ins/jpeg/jpeg-save.c:1080
 msgid "1x2,1x1,1x1"
 msgstr "1×2,1×1,1×1"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1080
+#: ../plug-ins/jpeg/jpeg-save.c:1081
 msgid "2x2,1x1,1x1 (smallest file)"
 msgstr "2×2,1×1,1×1 (kleinste Dateigröße)"
 
 #. DCT method
-#: ../plug-ins/jpeg/jpeg-save.c:1095
+#: ../plug-ins/jpeg/jpeg-save.c:1096
 msgid "DCT method:"
 msgstr "DCT-Methode:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1101
+#: ../plug-ins/jpeg/jpeg-save.c:1102
 msgid "Fast Integer"
 msgstr "Schnelle Ganzzahlen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1102
+#: ../plug-ins/jpeg/jpeg-save.c:1103
 msgid "Integer"
 msgstr "Ganzzahlen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1103
+#: ../plug-ins/jpeg/jpeg-save.c:1104
 msgid "Floating-Point"
 msgstr "Fließkommazahlen"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1117
+#: ../plug-ins/jpeg/jpeg-save.c:1118
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -12339,3 +12339,4 @@ msgstr "Fehler: XJT-Eigenschaften-Datei »%s« konnte nicht gelesen werden."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fehler: Die XJT-Eigenschaften-Datei »%s« ist leer."
+
