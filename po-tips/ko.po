@@ -3,255 +3,155 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP 2.3\n"
+"Project-Id-Version: GIMP 2.4\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-06-10 18:11+0200\n"
-"PO-Revision-Date: 2005-06-10 18:21+0200\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"PO-Revision-Date: 2007-08-27 16:17+0900\n"
+"Last-Translator: Choi, Ji-Hui <like.a.dust@gmail.com>\n"
+"Language-Team: Choi, Ji-Hui <like.a.dust@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr ""
+msgstr "<big>김프에 오신것을 환영합니다!</big>"
 
 #: ../data/tips/gimp-tips.xml.in.h:2
-msgid ""
-"<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles "
-"viewing the mask directly."
-msgstr ""
+msgid "<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles viewing the mask directly."
+msgstr "레이어 대화상자에서 레이어 마스크의 미리보기를 <tt>Alt</tt>-클릭하면 마스크 표시 여부를 전환합니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:3
-msgid ""
-"<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
-"the effect of the layer mask."
-msgstr ""
+msgid "<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles the effect of the layer mask."
+msgstr "레이어 대화상자에서 레이어 마스크의 미리보기를 <tt>Ctrl</tt>-클릭하면, 레이어 마스크의 효과를 전환합니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:4
-msgid ""
-"<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
-"color instead of the foreground color."
-msgstr ""
+msgid "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background color instead of the foreground color."
+msgstr "영역 채우기 도구에서 <tt>Ctrl</tt>-클릭하면, 전경색대신 배경색을 사용합니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:5
-msgid ""
-"<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
-"degree angles."
-msgstr ""
+msgid "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 degree angles."
+msgstr "회전 도구에서 <tt>Ctrl</tt>-드래그하면, 회전 각을 15도 단위로 제한합니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:6
-msgid ""
-"<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
-"but that one. <tt>Shift</tt>-click again to show all layers."
-msgstr ""
+msgid "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers but that one. <tt>Shift</tt>-click again to show all layers."
+msgstr "레이어 대화상자에서 눈동자 아이콘을 <tt>Shift</tt>-클릭하면, 현재 레이어를 제외한 모든 레이어를 숨깁니다. 다시 <tt>Shift</tt>-클릭하면 모든 레이어를 표시합니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:7
-msgid ""
-"A floating selection must be anchored to a new layer or to the last active "
-"layer before doing other operations on the image. Click on the &quot;New "
-"Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
-"use the menus to do the same."
-msgstr ""
+msgid "A floating selection must be anchored to a new layer or to the last active layer before doing other operations on the image. Click on the &quot;New Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or use the menus to do the same."
+msgstr "떠있는 선택은 이미지에 다른 조작을 하기 전에 새 레이어나 마지막 활성 레이어에 고정해야 합니다. 레이어 대화상자의 &quot;새 레이어&quot;나 &quot;떠있는 레이어 고정&quot; 단추를 클릭하거나, 같은 기능을 하는 메뉴를 사용하십시오."
 
 #: ../data/tips/gimp-tips.xml.in.h:8
-msgid ""
-"After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
-"dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
-"selecting a menu item, and pressing the desired key combination. If &quot;"
-"Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP."
-msgstr ""
+msgid "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences dialog, you can reassign shortcut keys. Do so by bringing up the menu, selecting a menu item, and pressing the desired key combination. If &quot;Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when you exit GIMP."
+msgstr "기본 설정 대화상자에서 &quot;동적인 키보드 단축키&quot;를 선택한 다음, 단축키를 재할당 할 수 있습니다. 단축키를 설정하려면 해당 메뉴를 열고, 메뉴 항목을 선택하고, 원하는 키 조합을 누르면 됩니다. &quot;마칠 때 키보드 단축키 저장&quot;을 선택했다면, 김프를 마칠 때 단축키 설정이 저장됩니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:9
-msgid ""
-"Click and drag on a ruler to place a guide on an image. All dragged "
-"selections will snap to the guides. You can remove guides by dragging them "
-"off the image with the Move tool."
-msgstr ""
+msgid "Click and drag on a ruler to place a guide on an image. All dragged selections will snap to the guides. You can remove guides by dragging them off the image with the Move tool."
+msgstr "이미지에 안내선을 표시하려면 눈금자를 클릭한 다음 드래그하십시오. 드래그를 사용하는 모든 선택은 안내선에 자동으로 맞춰집니다. 이동 도구로 안내선을 이미지 밖으로 드래그하면 없어집니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:10
-msgid ""
-"GIMP allows you to undo most changes to the image, so feel free to "
-"experiment."
+msgid "GIMP allows you to undo most changes to the image, so feel free to experiment."
 msgstr ""
 
 #: ../data/tips/gimp-tips.xml.in.h:11
-msgid ""
-"GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
-"bz2</tt>, if you have bzip2 installed) to the filename and your image will "
-"be saved compressed. Of course loading compressed images works too."
+msgid "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>.bz2</tt>, if you have bzip2 installed) to the filename and your image will be saved compressed. Of course loading compressed images works too."
 msgstr ""
 
 #: ../data/tips/gimp-tips.xml.in.h:12
-msgid ""
-"GIMP uses layers to let you organize your image. Think of them as a stack of "
-"slides or filters, such that looking through them you see a composite of "
-"their contents."
+msgid "GIMP uses layers to let you organize your image. Think of them as a stack of slides or filters, such that looking through them you see a composite of their contents."
 msgstr ""
 
 #: ../data/tips/gimp-tips.xml.in.h:13
-msgid ""
-"If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
-"layer doesn't have an alpha-channel. You can add an alpha-channel using "
-"Layer-&gt;Transparency-&gt;Add Alpha Channel."
+msgid "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this layer doesn't have an alpha-channel. You can add an alpha-channel using Layer-&gt;Transparency-&gt;Add Alpha Channel."
 msgstr ""
 
 #: ../data/tips/gimp-tips.xml.in.h:14
-msgid ""
-"If some of your scanned photos do not look colorful enough, you can easily "
-"improve their tonal range with the &quot;Auto&quot; button in the Levels "
-"tool (Layer-&gt;Colors-&gt;Levels). If there are any color casts, you can "
-"correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
-msgstr ""
+msgid "If some of your scanned photos do not look colorful enough, you can easily improve their tonal range with the &quot;Auto&quot; button in the Levels tool (Layer-&gt;Colors-&gt;Levels). If there are any color casts, you can correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
+msgstr "스캔된 사진이 칙칙해 보일 때, 레벨 도구(레이어-&gt;색상-&gt;레벨)에서 &quot;자동&quot; 단추를 사용하면 손쉽게 색조의 폭을 향상 시킬 수 있습니다. 색상이 무언가 불안하다면, 곡선 도구(레이어-&gt;색상-&gt;곡선)를 사용해서 수정할 수 있습니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:15
-msgid ""
-"If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
-"with their current settings. You can use the Paintbrush in gradient mode or "
-"even the Eraser or the Smudge tool."
-msgstr ""
+msgid "If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used with their current settings. You can use the Paintbrush in gradient mode or even the Eraser or the Smudge tool."
+msgstr "경로를 따라그릴 때(편집-&gt;경로 따라 그리기), 그리기 도구들을 현재을 설정으로 사용할 수 있습니다. 그라디언트 모드 페인트브러시는 물론이고 심지어 지우개나 문지르기 도구도 사용할 수 있습니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:16
-msgid ""
-"If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
-"in an image window to hide or show the toolbox and other dialogs."
-msgstr ""
+msgid "If your screen is too cluttered, you can press <tt>Tab</tt> multiple times in an image window to hide or show the toolbox and other dialogs."
+msgstr "화면이 너무 어지럽다면, 이미지 창에서 <tt>Tab</tt>을 여러 번 눌러서, 도구 상자나 다른 대화상자들을 표시하거나 숨길 수 있습니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:17
-msgid ""
-"Most plug-ins work on the current layer of the current image. In some cases, "
-"you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
-"plug-in to work on the whole image."
-msgstr ""
+msgid "Most plug-ins work on the current layer of the current image. In some cases, you will have to merge all layers (Image-&gt;Flatten Image) if you want the plug-in to work on the whole image."
+msgstr "대부분의 플러그인들은 현재 이미지의 현재 레이어에만 조작합니다. 경우에 따라, 플러그인이 전체 이미지를 조작하도록 하려면 모든 레이어를 합쳐야(이미지-&gt;배경으로 이미지 합치기) 될 수도 있습니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:18
-msgid ""
-"Not all effects can be applied to all kinds of images. This is indicated by "
-"a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layer-&gt;Transparency-&gt;Add "
-"Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
-msgstr ""
+msgid "Not all effects can be applied to all kinds of images. This is indicated by a grayed-out menu-entry. You may need to change the image mode to RGB (Image-&gt;Mode-&gt;RGB), add an alpha-channel (Layer-&gt;Transparency-&gt;Add Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
+msgstr "모든 효과가 모든 종류의 이미지에 적용되지는 않습니다. 이런 경우에는 메뉴 항목이 회색으로 표시됩니다. 이미지의 모드를 RGB로 바꾸거나(이미지-&gt;모드-&gt;RGB), 알파 채널을 더하거나(레이어-&gt;투명도-&gt;알파 채널 더하기), 배경으로 합쳐야(이미지-&gt;배경으로 합치기) 할 수도 있습니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:19
-msgid ""
-"Pressing and holding the <tt>Shift</tt> key before making a selection allows "
-"you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
-"tt> before making a selection subtracts from the current one."
-msgstr ""
+msgid "Pressing and holding the <tt>Shift</tt> key before making a selection allows you to add to the current selection instead of replacing it. Using <tt>Ctrl</tt> before making a selection subtracts from the current one."
+msgstr "<tt>Shift</tt>키를 누른 채로 선택을 만들면 현재 선택을 바꾸는 대신 더합니다. <tt>Ctrl</tt>를 누른 채로 선택을 만들면 현재 선택에서 뺍니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:20
-msgid ""
-"To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
-"ellipse select. To place a circle precisely, drag horizontal and vertical "
-"guides tangent to the circle you want to select, place your cursor at the "
-"intersection of the guides, and the resulting selection will just touch the "
-"guides."
-msgstr ""
+msgid "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an ellipse select. To place a circle precisely, drag horizontal and vertical guides tangent to the circle you want to select, place your cursor at the intersection of the guides, and the resulting selection will just touch the guides."
+msgstr "원형 선택을 만들려면, 타원형 선택을 하는 동안 <tt>Shift</tt>를 누르세요. 원을 정확한 위치에 만들려면, 선택하려는 원의 접선으로 가로 세로 안내선을 만들고, 커서를 안내선의 교차점에 두면, 안내선에 맞춰서 선택할 수 있습니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:21
-msgid ""
-"When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
-"click will draw a straight line from your last drawing point to your current "
-"cursor position. If you also press <tt>Ctrl</tt>, the line will be "
-"constrained to 15 degree angles."
-msgstr ""
+msgid "When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-click will draw a straight line from your last drawing point to your current cursor position. If you also press <tt>Ctrl</tt>, the line will be constrained to 15 degree angles."
+msgstr "그리기 도구(페인트브러시, 에어브러시, 연필)를 사용할 때, <tt>Shift</tt>-클릭하면 마지막으로 그린 곳에서 현재 커서 위치로 직선을 그립니다. <tt>Ctrl</tt>도 같이 누르면, 직선을 15도 단위로 제한합니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:22
-msgid ""
-"When you save an image to work on it again later, try using XCF, GIMP's "
-"native file format (use the file extension <tt>.xcf</tt>). This preserves "
-"the layers and every aspect of your work-in-progress. Once a project is "
-"completed, you can save it as JPEG, PNG, GIF, ..."
-msgstr ""
+msgid "When you save an image to work on it again later, try using XCF, GIMP's native file format (use the file extension <tt>.xcf</tt>). This preserves the layers and every aspect of your work-in-progress. Once a project is completed, you can save it as JPEG, PNG, GIF, ..."
+msgstr "나중에 다시 작업할 이미지를 저장할 때는 김프의 자체 파일 형식인 XCF(파일 확장자가 <tt>.xcf</tt>입니다)를 사용해보세요. 이 형식을 사용하면 레이어와 작업 중인 모든 측면들이 보존됩니다. 프로젝트를 완료했을 때, JPEG, PNG, GIF, ... 등으로 저장하면 됩니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:23
-msgid ""
-"You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
-"the window move, your window manager uses the <tt>Alt</tt> key already. Try "
-"pressing <tt>Shift</tt> at the same time."
-msgstr ""
+msgid "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes the window move, your window manager uses the <tt>Alt</tt> key already. Try pressing <tt>Shift</tt> at the same time."
+msgstr "<tt>Alt</tt>-드래그를 사용해서 선택을 조절하거나 이동할 수 있습니다. 이렇게 했더니 창이 움직인다면, 사용 중인 창 관리자가 <tt>Alt</tt>를 사용하고 있는 겁니다. 그럴 땐 <tt>Shift</tt>키도 같이 눌러 주세요."
 
 #: ../data/tips/gimp-tips.xml.in.h:24
-msgid ""
-"You can adjust the selection range for fuzzy select by clicking and dragging "
-"left and right."
-msgstr ""
+msgid "You can adjust the selection range for fuzzy select by clicking and dragging left and right."
+msgstr "퍼지 선택에서, 클릭하고 왼쪽이나 오른쪽으로 드래그하면 선택 범위를 조절할 수 있습니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:25
-msgid ""
-"You can create and edit complex selections using the Path tool. The Paths "
-"dialog allows you to work on multiple paths and to convert them to "
-"selections."
-msgstr ""
+msgid "You can create and edit complex selections using the Path tool. The Paths dialog allows you to work on multiple paths and to convert them to selections."
+msgstr "경로 도구를 이용해서 복잡한 선택을 만들고 고칠 수 있습니다. 경로 대화상자에서 여러 개의 경로를 조작하여, 선택으로 변환할 수 있습니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:26
-msgid ""
-"You can drag a layer from the Layers dialog and drop it onto the toolbox. "
-"This will create a new image containing only that layer."
-msgstr ""
+msgid "You can drag a layer from the Layers dialog and drop it onto the toolbox. This will create a new image containing only that layer."
+msgstr "레이어 대화상자에서 레이어를 드래그해서 도구 상자에 드롭하면, 그 레이어만 가진 새 이미지가 만들어 집니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:27
-msgid ""
-"You can drag and drop many things in GIMP. For example, dragging a color "
-"from the toolbox or from a color palette and dropping it into an image will "
-"fill the current image or selection with that color."
-msgstr ""
+msgid "You can drag and drop many things in GIMP. For example, dragging a color from the toolbox or from a color palette and dropping it into an image will fill the current image or selection with that color."
+msgstr "김프에서는 많은 것을 드래그하고 드롭할 수 있습니다. 예를 들면, 도구 상자나 색상표에서 색상을 드래그해서 이미지에 드롭하면 현재 이미지나 선택을 그 색상으로 채웁니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:28
-msgid ""
-"You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
-"strokes the edge of your current selection. More complex shapes can be drawn "
-"using the Path tool or with Filters-&gt;Render-&gt;Gfig."
-msgstr ""
+msgid "You can draw simple squares or circles using Edit-&gt;Stroke Selection. It strokes the edge of your current selection. More complex shapes can be drawn using the Path tool or with Filters-&gt;Render-&gt;Gfig."
+msgstr "편집-&gt;선택 따라그리기를 사용하면 단순한 사격형이나 원을 그릴 수 있습니다. 현재 선택의 모서리를 따라 그립니다. 더 복잡한 도형은 경로 도구나 필터-&gt;렌더-&gt;Gfig를 사용해서 그릴 수 있습니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:29
-msgid ""
-"You can get context-sensitive help for most of the GIMP's features by "
-"pressing the F1 key at any time. This also works inside the menus."
-msgstr ""
+msgid "You can get context-sensitive help for most of the GIMP's features by pressing the F1 key at any time. This also works inside the menus."
+msgstr "언제라도 F1키를 누르면 GIMP의 대부분의 기능들에 대해서 문맥에 맞는 도움말을 볼 수 있습니다. 물론 메뉴 안에서도 됩니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:30
-msgid ""
-"You can perform many layer operations by right-clicking on the text label of "
-"a layer in the Layers dialog."
-msgstr ""
+msgid "You can perform many layer operations by right-clicking on the text label of a layer in the Layers dialog."
+msgstr "레이어 대화상자의 텍스트 레이블에서 오른쪽-클릭을 하면 많은 레이어 관련 작업을 수행할 수 있습니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:31
-msgid ""
-"You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
-"are making a selection in order to constrain it to a square or a circle, or "
-"to have it centered on its starting point."
-msgstr ""
+msgid "You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you are making a selection in order to constrain it to a square or a circle, or to have it centered on its starting point."
+msgstr "선택하는 동안 <tt>Shift</tt>를 누르면, 정사각형이나 정원으로 제한할 수 있습니다. <tt>Ctrl</tt>을 누르면 시작점을 가운데로 만들 수 있죠."
 
 #: ../data/tips/gimp-tips.xml.in.h:32
-msgid ""
-"You can save a selection to a channel (Select-&gt;Save to Channel) and then "
-"modify this channel with any paint tools. Using the buttons in the Channels "
-"dialog, you can toggle the visibility of this new channel or convert it to a "
-"selection."
-msgstr ""
+msgid "You can save a selection to a channel (Select-&gt;Save to Channel) and then modify this channel with any paint tools. Using the buttons in the Channels dialog, you can toggle the visibility of this new channel or convert it to a selection."
+msgstr "선택을 채널에 저장하고(선택-&gt;채널로 저장), 이 채널을 원하는 그리기 도구로 고칠 수 있습니다. 채널 대화상자의 단추들을 이용해서 채널을 표시하거나 숨길 수 있고, 선택으로 변환할 수도 있습니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:33
-msgid ""
-"You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
-"image (if your window manager doesn't trap those keys...)."
-msgstr ""
+msgid "You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an image (if your window manager doesn't trap those keys...)."
+msgstr "<tt>Alt</tt>-<tt>Tab</tt>를 누르면 이미지의 모든 레이어를 돌아가면서 선택합니다(창관리자가 이 키를 가로채지 않는다면 말이죠...)."
 
 #: ../data/tips/gimp-tips.xml.in.h:34
-msgid ""
-"You can use the middle mouse button to pan around the image, if it's larger "
-"than its display window."
-msgstr ""
+msgid "You can use the middle mouse button to pan around the image, if it's larger than its display window."
+msgstr "이미지가 표시하는 창 보다 크면, 가운데 마우스 단추를사용해서 이미지의 주위를 밀고 당기면서 볼 수 있습니다."
 
 #: ../data/tips/gimp-tips.xml.in.h:35
-msgid ""
-"You can use the paint tools to change the selection. Click on the &quot;"
-"Quick Mask&quot; button at the bottom left of an image window. Change your "
-"selection by painting in the image and click on the button again to convert "
-"it back to a normal selection."
-msgstr ""
+msgid "You can use the paint tools to change the selection. Click on the &quot;Quick Mask&quot; button at the bottom left of an image window. Change your selection by painting in the image and click on the button again to convert it back to a normal selection."
+msgstr "선택을 고치기 위해서 그리기 도구를 사용할 수 있습니다. 이미지 창의 좌하단에 있는 &quot;퀵마스크&quot; 단추를 클릭하십시오. 이미지에 그리기만 하면 선택이 되고 단추를 한번 더 클릭하면 보통의 선택으로 바뀝니다."
+
