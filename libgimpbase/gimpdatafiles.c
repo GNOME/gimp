@@ -113,15 +113,9 @@ gimp_datafiles_read_directories (const gchar            *path_str,
                                  GimpDatafileLoaderFunc  loader_func,
                                  gpointer                user_data)
 {
-  GimpDatafileData  file_data;
-  struct stat       filestat;
-  gchar            *local_path;
-  GList            *path;
-  GList            *list;
-  gchar            *filename;
-  gint              err;
-  GDir             *dir;
-  const gchar      *dir_ent;
+  gchar *local_path;
+  GList *path;
+  GList *list;
 
   g_return_if_fail (path_str != NULL);
   g_return_if_fail (loader_func != NULL);
@@ -133,13 +127,27 @@ gimp_datafiles_read_directories (const gchar            *path_str,
   for (list = path; list; list = g_list_next (list))
     {
       const gchar *dirname = list->data;
+      GDir        *dir;
 
       dir = g_dir_open (dirname, 0, NULL);
 
       if (dir)
         {
+          const gchar *dir_ent;
+
           while ((dir_ent = g_dir_read_name (dir)))
             {
+              GimpDatafileData  file_data;
+              struct stat       filestat;
+              gchar            *filename;
+              gint              err;
+
+              /*  skip files starting with '.' so we don't try to parse
+               *  stuff like .DS_Store or other metadata storage files
+               */
+              if (dir_ent[0] == '.')
+                continue;
+
               filename = g_build_filename (dirname, dir_ent, NULL);
 
               err = g_stat (filename, &filestat);

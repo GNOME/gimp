@@ -1,3 +1,10 @@
+2007-08-28  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/gimpdatafiles.c (gimp_datafiles_read_directories):
+	skip files starting with '.' so we don't try to parse .DS_Store
+	and other metadata storage files. Also moved variables to local
+	scopes.
+
 2007-08-28  Tor Lillqvist  <tml@novell.com>
 
 	* libgimpbase/gimpenv.c: Update doc comments about filename
