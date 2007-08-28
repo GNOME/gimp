@@ -14,9 +14,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-19 17:22+0200\n"
-"PO-Revision-Date: 2007-08-19 18:02+0200\n"
-"Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
+"POT-Creation-Date: 2007-08-28 13:10+0200\n"
+"PO-Revision-Date: 2007-08-28 13:17+0200\n"
+"Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -523,7 +523,7 @@ msgstr "Dicke"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:1
 msgid "Add B_evel..."
-msgstr "_Rand abschrägen …"
+msgstr "Rand ab_schrägen …"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
 msgid "Add a beveled border to an image"
@@ -766,7 +766,8 @@ msgstr "_Einfach 1 …"
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:1
 msgid "Add a shadow and a highlight to the selected region (or alpha)"
-msgstr "Einen Schatten und ein Schlaglicht zur Auswahl oder Transparenz hinzufügen"
+msgstr ""
+"Einen Schatten und ein Schlaglicht zur Auswahl oder Transparenz hinzufügen"
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 msgid "B_asic II..."
@@ -1081,7 +1082,7 @@ msgid ""
 "Create a logo with text raised above or carved in to the specified "
 "background image"
 msgstr ""
-"Ein Logo erzeugen mit Text der über dem Hintergrund schwebt oder in diesen "
+"Ein Logo erzeugen mit Text, der über dem Hintergrund schwebt oder in diesen "
 "eingraviert ist"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
@@ -1094,12 +1095,11 @@ msgstr "Kreidefarbe"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:3
 msgid "Create a chalk drawing effect for the selected region (or alpha)"
-msgstr ""
-"Einen Kreidestricheffekt auf die Auswahl oder Transparenz anwenden"
+msgstr "Einen Kreidestricheffekt auf die Auswahl oder Transparenz anwenden"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:4
 msgid "Create a logo resembling chalk scribbled on a blackboard"
-msgstr "Ein Logo ähnlicher einer beschriebenen Kreidetafel erstellen"
+msgstr "Ein Logo ähnlich einer beschriebenen Kreidetafel erstellen"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:8
 msgid "_Chalk..."
@@ -1108,7 +1108,8 @@ msgstr "K_reide …"
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
 msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
 msgstr ""
-"Einen zerfressenen Holzschnitzeffekt auf die Auswahl oder die Transparenz anwenden"
+"Einen zerfressenen Holzschnitzeffekt auf die Auswahl oder die Transparenz "
+"anwenden"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "Blur amount"
@@ -1295,8 +1296,8 @@ msgid ""
 "Add a comic-book effect to the selected region (or alpha) by outlining and "
 "filling with a gradient"
 msgstr ""
-"Einen Comic-Heft-Effekt auf die Auswahl oder die Transparenz anwenden, "
-"indem Ränder nachgezeichnet und mit einem Verlauf gefüllt werden"
+"Einen Comic-Heft-Effekt auf die Auswahl oder die Transparenz anwenden, indem "
+"Ränder nachgezeichnet und mit einem Verlauf gefüllt werden"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
@@ -1322,7 +1323,8 @@ msgid ""
 "Add a metallic effect to the selected region (or alpha) with reflections and "
 "perspective shadows"
 msgstr ""
-"Einen Metalleffekt mit Reflexionen und perspektivischem Schatten auf die Auswahl oder die Transparenz anwenden"
+"Einen Metalleffekt mit Reflexionen und perspektivischem Schatten auf die "
+"Auswahl oder die Transparenz anwenden"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
@@ -1565,7 +1567,8 @@ msgid ""
 "Add a frost effect to the selected region (or alpha) with an added drop "
 "shadow"
 msgstr ""
-"Einen Frosteffekt mit Schlagschatten auf die Auswahl oder die Transparenz anwenden"
+"Einen Frosteffekt mit Schlagschatten auf die Auswahl oder die Transparenz "
+"anwenden"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
@@ -1596,14 +1599,15 @@ msgstr "Randgröße"
 msgid "Granularity (1 is Low)"
 msgstr "Körnigkeit (1 ist wenig)"
 
+# XXX: opacity (Deckkraft)
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
 #, no-c-format
 msgid "Shadow weight (%)"
-msgstr "Schattenbreite (%)"
+msgstr "Schattenintensität (%)"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
 msgid "_Fuzzy Border..."
-msgstr "Ra_nd ausblenden …"
+msgstr "Rand aus_blenden …"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "Autocrop"
@@ -1668,30 +1672,30 @@ msgid ""
 "Create an image of a Tube Button Label Header using the gimp.org webpage "
 "theme"
 msgstr ""
-"Das Bild einer röhrenförmigen Menüleiste mit dem gimp.org-Internet-"
-"Seiten-Designs erstellen"
+"Das Bild einer röhrenförmigen Menüleiste mit dem Design der "
+"gimp.org-Internetseiten erstellen"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
 msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
 msgstr ""
-"Das Bild einer röhrenförmigen Menüeintrages mit dem gimp.org-Internet-"
-"Seiten-Designs erstellen"
+"Das Bild eines röhrenförmigen Menüeintrages mit dem Design der "
+"gimp.org-Internetseiten erstellen"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
 msgid ""
 "Create an image of a second level Tube Button Label using the gimp.org "
 "webpage theme"
 msgstr ""
-"Das Bild einer röhrenförmigen Menüeintrages der zweiten Ebene mit dem gimp."
-"org-Internet-Seiten-Designs erstellen"
+"Das Bild eines röhrenförmigen Menüeintrages der zweiten Ebene mit dem "
+"Design der gimp.org-Internetseiten erstellen"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
 msgid ""
 "Create an image of a third level Tube Button Label using the gimp.org "
 "webpage theme"
 msgstr ""
-"Das Bild einer röhrenförmigen Menüeintrages der dritten Ebene mit dem gimp."
-"org-Internet-Seiten-Designs erstellen"
+"Das Bild eines röhrenförmigen Menüeintrages der dritten Ebene mit dem "
+"Design der gimp.org-Internetseiten erstellen"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
@@ -1714,7 +1718,8 @@ msgid ""
 "Add gradients, patterns, shadows, and bump maps to the selected region (or "
 "alpha)"
 msgstr ""
-"Farbverläufe, Muster, Schatten und Bump-Map auf die Auswahl oder die Transparenz anwenden"
+"Farbverläufe, Muster, Schatten und Bump-Map auf die Auswahl oder die "
+"Transparenz anwenden"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
@@ -1772,7 +1777,8 @@ msgstr "Muster überlagern"
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "Add a glowing hot metal effect to the selected region (or alpha)"
 msgstr ""
-"Den Effekt eines glühendheißen Metalls auf die Auswahl oder die Transparenz anwenden"
+"Den Effekt eines glühendheißen Metalls auf die Auswahl oder die Transparenz "
+"anwenden"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
 msgid "Create a logo that looks like glowing hot metal"
@@ -1789,7 +1795,8 @@ msgstr "Gl_ühendheiß …"
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
 msgstr ""
-"Eine glänzende Oberfläche und einen Schrägeneffekt auf die Auswahl oder die Transparenz anwenden"
+"Eine glänzende Oberfläche und einen Schrägeneffekt auf die Auswahl oder die "
+"Transparenz anwenden"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
@@ -2064,8 +2071,8 @@ msgstr "R_echteckig …"
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "Convert the selected region (or alpha) into a neon-sign like object"
 msgstr ""
-"Die Auswahl oder die Transparenz in ein Leuchtreklame-"
-"ähnliches Objekt umwandeln"
+"Die Auswahl oder die Transparenz in ein Leuchtreklame-ähnliches Objekt "
+"umwandeln"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
 msgid "Create a logo in the style of a neon sign"
@@ -2340,7 +2347,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
 msgid "_Round Corners..."
-msgstr "Runde _Ecken …"
+msgstr "_Runde Ecken …"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
 msgid "Change the colormap of an image to the colors in a specified palette."
@@ -2637,8 +2644,8 @@ msgid ""
 "Fill the selected region (or alpha) with a rock-like texture, a nova glow, "
 "and shadow"
 msgstr ""
-"Die Auswahl oder die Transparenz mit einer felsenähnlichen "
-"Textur, Novaleuchten und Schatten füllen"
+"Die Auswahl oder die Transparenz mit einer felsenähnlichen Textur, "
+"Novaleuchten und Schatten füllen"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
 msgid "Sta_rscape..."
@@ -2678,8 +2685,7 @@ msgstr "_Strudelig …"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 msgid "Add a Trace of Particles effect to the selected region (or alpha)"
-msgstr ""
-"Einen Partikelspureffekt auf die Auswahl oder die Transparenz anwenden"
+msgstr "Einen Partikelspureffekt auf die Auswahl oder die Transparenz anwenden"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 msgid "Base color"
@@ -2740,7 +2746,8 @@ msgid ""
 "Fill the selected region (or alpha) with a texture and add highlights, "
 "shadows, and a mosaic background"
 msgstr ""
-"Eine Textur mit Höhen, Schatten und einem Mosaikhintergrund auf die Auswahl oder die Transparenz anwenden"
+"Eine Textur mit Höhen, Schatten und einem Mosaikhintergrund auf die Auswahl "
+"oder die Transparenz anwenden"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
@@ -2856,8 +2863,9 @@ msgstr "_Wellen …"
 msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
-msgstr "Eine neue Ebene mit Gewebeeffekt erzeugen, welche als Überblendung oder "
-"Bump-Map verwendet werden kann"
+msgstr ""
+"Eine neue Ebene mit Gewebeeffekt erzeugen, welche als Überblendung oder Bump-"
+"Map verwendet werden kann"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
@@ -2988,4 +2996,3 @@ msgstr "Glanzlichtdeckkraft"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_Xach-Effekt …"
-
