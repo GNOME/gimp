@@ -1,3 +1,9 @@
+2007-08-28  Jakub Steiner <jimmac@ximian.com>
+
+	* themes/Default/images/preferences/folder-palettes-{16,22}*:
+	* themes/Default/images/preferences/folder-themes-{16,22}*:
+		missing sizes. Addresses bug #436815
+
 2007-08-28  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimpdatafiles.c (gimp_datafiles_read_directories):
