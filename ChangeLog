@@ -1,3 +1,9 @@
+2007-08-28  Tor Lillqvist  <tml@novell.com>
+
+	* libgimpbase/gimpenv.c: Update doc comments about filename
+	encoding on Windows. It is now always UTF-8, like in
+	GLib. (#471033) Change "Win32" to "Windows" in doc comments.
+
 2007-08-28  Jakub Friedl  <jfriedl@suse.cz>
 
 	* plug-ins/common/redeye.c: CLAMP()ing the red value

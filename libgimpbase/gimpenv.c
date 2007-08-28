@@ -153,7 +153,8 @@ gimp_env_init (gboolean plug_in)
  *
  * The returned string is owned by GIMP and must not be modified or
  * freed. The returned string is in the encoding used for filenames by
- * the system, which isn't necessarily UTF-8 (never is on Windows).
+ * GLib, which isn't necessarily UTF-8. (On Windows it always is
+ * UTF-8.)
  *
  * Returns: The user-specific GIMP settings directory.
  **/
@@ -321,12 +322,13 @@ gimp_toplevel_directory (void)
  * Returns the top directory for GIMP data. If the environment
  * variable GIMP2_DATADIR exists, that is used.  It should be an
  * absolute pathname.  Otherwise, on Unix the compile-time defined
- * directory is used.  On Win32, the installation directory as deduced
- * from the executable's name is used.
+ * directory is used. On Windows, the installation directory as deduced
+ * from the executable's full filename is used.
  *
  * The returned string is owned by GIMP and must not be modified or
  * freed. The returned string is in the encoding used for filenames by
- * the system, which isn't necessarily UTF-8 (never is on Windows).
+ * GLib, which isn't necessarily UTF-8. (On Windows it always is
+ * UTF-8.)
  *
  * Returns: The top directory for GIMP data.
  **/
@@ -352,12 +354,13 @@ gimp_data_directory (void)
  * Returns the top directory for GIMP locale files. If the environment
  * variable GIMP2_LOCALEDIR exists, that is used.  It should be an
  * absolute pathname.  Otherwise, on Unix the compile-time defined
- * directory is used.  On Win32, the installation directory as deduced
- * from the executable's name is used.
+ * directory is used. On Windows, the installation directory as deduced
+ * from the executable's full filename is used.
  *
  * The returned string is owned by GIMP and must not be modified or
  * freed. The returned string is in the encoding used for filenames by
- * the system, which isn't necessarily UTF-8 (never is on Windows).
+ * GLib, which isn't necessarily UTF-8. (On Windows it always is
+ * UTF-8.)
  *
  * Returns: The top directory for GIMP locale files.
  */
@@ -383,12 +386,13 @@ gimp_locale_directory (void)
  * Returns the top directory for GIMP config files. If the environment
  * variable GIMP2_SYSCONFDIR exists, that is used.  It should be an
  * absolute pathname.  Otherwise, on Unix the compile-time defined
- * directory is used.  On Win32, the installation directory as deduced
- * from the executable's name is used.
+ * directory is used. On Windows, the installation directory as deduced
+ * from the executable's full filename is used.
  *
  * The returned string is owned by GIMP and must not be modified or
  * freed. The returned string is in the encoding used for filenames by
- * the system, which isn't necessarily UTF-8 (never is on Windows).
+ * GLib, which isn't necessarily UTF-8. (On Windows it always is
+ * UTF-8.).
  *
  * Returns: The top directory for GIMP config files.
  **/
@@ -589,12 +593,13 @@ gimp_user_directory (GimpUserDirectory type)
  * Returns the top directory for GIMP plug_ins and modules. If the
  * environment variable GIMP2_PLUGINDIR exists, that is used.  It
  * should be an absolute pathname. Otherwise, on Unix the compile-time
- * defined directory is used. On Win32, the installation directory as
- * deduced from the executable's name is used.
+ * defined directory is used. On Windows, the installation directory as
+ * deduced from the executable's full filename is used.
  *
  * The returned string is owned by GIMP and must not be modified or
  * freed. The returned string is in the encoding used for filenames by
- * the system, which isn't necessarily UTF-8 (never is on Windows).
+ * GLib, which isn't necessarily UTF-8. (On Windows it always is
+ * UTF-8.)
  *
  * Returns: The top directory for GIMP plug_ins and modules.
  **/
@@ -621,9 +626,9 @@ gimp_plug_in_directory (void)
  * Returns the name of a file in the user-specific GIMP settings directory.
  *
  * The returned string is allocated dynamically and *SHOULD* be freed
- * with g_free() after use. The returned string is in the encoding used
- * for filenames by the system, which isn't necessarily UTF-8 (never
- * is on Windows).
+ * with g_free() after use. The returned string is in the encoding
+ * used for filenames by GLib, which isn't necessarily
+ * UTF-8. (On Windows it always is UTF-8.)
  *
  * Returns: The name of a file in the user-specific GIMP settings directory.
  **/
@@ -640,7 +645,8 @@ gimp_personal_rc_file (const gchar *basename)
  *
  * The returned string is owned by GIMP and must not be modified or
  * freed. The returned string is in the encoding used for filenames by
- * the system, which isn't necessarily UTF-8 (never is on Windows).
+ * GLib, which isn't necessarily UTF-8. (On Windows it always is
+ * UTF-8.)
  *
  * Returns: The name of GIMP's application-specific gtkrc file.
  **/
