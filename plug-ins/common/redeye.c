@@ -399,8 +399,8 @@ redeye_inner_loop (const guchar *src,
           if (adjusted_red >= adjusted_green - adjusted_threshold &&
               adjusted_red >= adjusted_blue - adjusted_threshold)
             {
-              d[red] = ((gdouble) (adjusted_green + adjusted_blue)
-                        / (2.0  * RED_FACTOR));
+              d[red] = CLAMP (((gdouble) (adjusted_green + adjusted_blue)
+                        / (2.0  * RED_FACTOR)), 0, 255);
             }
           else
             {

@@ -1,3 +1,8 @@
+2007-08-28  Jakub Friedl  <jfriedl@suse.cz>
+
+	* plug-ins/common/redeye.c: CLAMP()ing the red value
+	so that it is in the 0-255 range. Fixes bug #470914.
+
 2007-08-26  Hans Breuer  <hans@breuer.org>
 
 	* **/makefile.msc app/gimpcore.def : updated msvc build
