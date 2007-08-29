@@ -54,6 +54,7 @@ gen_property (GString            *buffer,
 {
   gint         i;
   const gchar *ns_prefix;
+  gchar       *escaped_value;
 
   switch (property->type)
     {
@@ -64,10 +65,12 @@ gen_property (GString            *buffer,
     case XMP_TYPE_MIME_TYPE:
     case XMP_TYPE_TEXT:
     case XMP_TYPE_RATIONAL:
+      escaped_value = g_markup_escape_text (value_array[0], -1);
       g_string_append_printf (buffer, "  <%s:%s>%s</%s:%s>\n",
                               schema->prefix, property->name,
-                              value_array[0],
+                              escaped_value,
                               schema->prefix, property->name);
+      g_free (escaped_value);
       break;
 
     case XMP_TYPE_LOCALE_BAG:
@@ -77,8 +80,12 @@ gen_property (GString            *buffer,
       g_string_append_printf (buffer, "  <%s:%s>\n   <rdf:Bag>\n",
                               schema->prefix, property->name);
       for (i = 0; value_array[i] != NULL; i++)
-        g_string_append_printf (buffer, "    <rdf:li>%s</rdf:li>\n",
-                                value_array[i]);
+        {
+          escaped_value = g_markup_escape_text (value_array[i], -1);
+          g_string_append_printf (buffer, "    <rdf:li>%s</rdf:li>\n",
+                                  escaped_value);
+          g_free (escaped_value);
+        }
       g_string_append_printf (buffer, "   </rdf:Bag>\n  </%s:%s>\n",
                               schema->prefix, property->name);
       break;
@@ -90,8 +97,12 @@ gen_property (GString            *buffer,
       g_string_append_printf (buffer, "  <%s:%s>\n   <rdf:Seq>\n",
                               schema->prefix, property->name);
       for (i = 0; value_array[i] != NULL; i++)
-        g_string_append_printf (buffer, "    <rdf:li>%s</rdf:li>\n",
-                                value_array[i]);
+        {
+          escaped_value = g_markup_escape_text (value_array[i], -1);
+          g_string_append_printf (buffer, "    <rdf:li>%s</rdf:li>\n",
+                                  escaped_value);
+          g_free (escaped_value);
+        }
       g_string_append_printf (buffer, "   </rdf:Seq>\n  </%s:%s>\n",
                               schema->prefix, property->name);
       break;
@@ -100,9 +111,13 @@ gen_property (GString            *buffer,
       g_string_append_printf (buffer, "  <%s:%s>\n   <rdf:Alt>\n",
                               schema->prefix, property->name);
       for (i = 0; value_array[i] != NULL; i += 2)
-        g_string_append_printf (buffer,
-                                "    <rdf:li xml:lang='%s'>%s</rdf:li>\n",
-                                value_array[i], value_array[i + 1]);
+        {
+          escaped_value = g_markup_escape_text (value_array[i + 1], -1);
+          g_string_append_printf (buffer,
+                                  "    <rdf:li xml:lang='%s'>%s</rdf:li>\n",
+                                  value_array[i], escaped_value);
+          g_free (escaped_value);
+        }
       g_string_append_printf (buffer, "   </rdf:Alt>\n  </%s:%s>\n",
                               schema->prefix, property->name);
       break;
@@ -140,10 +155,14 @@ gen_property (GString            *buffer,
         }
       if (value_array[0] && value_array[1])
         for (i = 2; value_array[i] != NULL; i += 2)
-          g_string_append_printf (buffer, "   <%s:%s>%s</%s:%s>\n",
-                                  ns_prefix, value_array[i],
-                                  value_array[i + 1],
-                                  ns_prefix, value_array[i]);
+          {
+            escaped_value = g_markup_escape_text (value_array[i + 1], -1);
+            g_string_append_printf (buffer, "   <%s:%s>%s</%s:%s>\n",
+                                    ns_prefix, value_array[i],
+                                    escaped_value,
+                                    ns_prefix, value_array[i]);
+            g_free (escaped_value);
+          }
       g_string_append_printf (buffer, "  </%s:%s>\n",
                               schema->prefix, property->name);
       break;

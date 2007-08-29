@@ -1,3 +1,9 @@
+2007-08-29  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/metadata/xmp-encode.c (gen_property): escape the text
+	values output in the XMP packet.  Based on a bug report and patch
+	by John Marshall.  Fixes bug #455481.
+
 2007-08-29  Jakub Friedl  <jfriedl@suse.cz>
 
 	* plug-ins/common/scatter_hsv.c: Calling randomize_value with
