@@ -26,6 +26,7 @@ PREFS_IMAGES = \
 	folders-interp.png		\
 	folders-modules-22.png		\
 	folders-modules.png		\
+	folders-palettes-22.png		\
 	folders-palettes.png		\
 	folders-patterns-22.png		\
 	folders-patterns.png		\
@@ -33,6 +34,7 @@ PREFS_IMAGES = \
 	folders-plug-ins.png		\
 	folders-scripts-22.png		\
 	folders-scripts.png		\
+	folders-themes-22.png		\
 	folders-themes.png		\
 	folders-tool-plug-ins-22.png	\
 	folders-tool-plug-ins.png	\
