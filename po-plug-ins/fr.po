@@ -12,13 +12,14 @@
 # Jonathan Ernst <jonathan@ernstfamily.ch>, 2007.
 # Laurent Monin <gimp@norz.org>, 2007.
 # Stéphane Raimbault <stephane.raimbault@gmail.com>, 2007.
+# Jean-Luc Coulon <jean.luc.coulon@gmail.com>, 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-22 01:03+0200\n"
-"PO-Revision-Date: 2007-08-22 01:03+0200\n"
+"POT-Creation-Date: 2007-08-30 01:01+0200\n"
+"PO-Revision-Date: 2007-08-30 01:07+0200\n"
 "Last-Translator: Stéphane Raimbault <stephane.raimbault@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -102,7 +103,7 @@ msgstr "Itérations :"
 #: ../plug-ins/FractalExplorer/Dialogs.c:773
 msgid ""
 "The higher the number of iterations, the more details will be calculated"
-msgstr "Plus le nombre d'itérations est élévé, plus de détails seront calculés"
+msgstr "Plus le nombre d'itérations est élevé, plus de détails seront calculés"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:781
 msgid "CX:"
@@ -358,7 +359,7 @@ msgstr "_Fractales"
 #: ../plug-ins/common/gif-save.c:986 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
 #: ../plug-ins/common/mng.c:950 ../plug-ins/common/pat.c:447
-#: ../plug-ins/common/pcx.c:605 ../plug-ins/common/pix.c:508
+#: ../plug-ins/common/pcx.c:587 ../plug-ins/common/pix.c:508
 #: ../plug-ins/common/png.c:1244 ../plug-ins/common/pnm.c:936
 #: ../plug-ins/common/postscript.c:1194 ../plug-ins/common/psd-save.c:1549
 #: ../plug-ins/common/raw.c:528 ../plug-ins/common/raw.c:555
@@ -367,7 +368,7 @@ msgstr "_Fractales"
 #: ../plug-ins/common/xbm.c:1016 ../plug-ins/common/xwd.c:598
 #: ../plug-ins/fits/fits.c:457 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/gfli/gfli.c:715
-#: ../plug-ins/ifscompose/ifscompose.c:2376 ../plug-ins/jpeg/jpeg-save.c:323
+#: ../plug-ins/ifscompose/ifscompose.c:2376 ../plug-ins/jpeg/jpeg-save.c:325
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:282
 #: ../plug-ins/winicon/icosave.c:1020 ../plug-ins/xjt/xjt.c:1280
 #: ../plug-ins/xjt/xjt.c:1714
@@ -398,9 +399,9 @@ msgstr "Enregistrer les paramètres de la fractale"
 #: ../plug-ins/common/compressor.c:622 ../plug-ins/common/curve_bend.c:869
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gif-load.c:309 ../plug-ins/common/gih.c:649
-#: ../plug-ins/common/lcms.c:724 ../plug-ins/common/lcms.c:995
+#: ../plug-ins/common/lcms.c:724 ../plug-ins/common/lcms.c:997
 #: ../plug-ins/common/mng.c:1121 ../plug-ins/common/pat.c:317
-#: ../plug-ins/common/pcx.c:309 ../plug-ins/common/pix.c:329
+#: ../plug-ins/common/pcx.c:291 ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:703 ../plug-ins/common/pnm.c:482
 #: ../plug-ins/common/poppler.c:501 ../plug-ins/common/postscript.c:1021
 #: ../plug-ins/common/postscript.c:3029 ../plug-ins/common/psd-load.c:2125
@@ -1163,7 +1164,7 @@ msgstr "Mauvaise palette de couleurs"
 #: ../plug-ins/bmp/bmpread.c:154 ../plug-ins/common/CEL.c:304
 #: ../plug-ins/common/dicom.c:301 ../plug-ins/common/gbr.c:353
 #: ../plug-ins/common/gif-load.c:314 ../plug-ins/common/gih.c:654
-#: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:314
+#: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:296
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:710
 #: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:546
 #: ../plug-ins/common/postscript.c:1027 ../plug-ins/common/psd-load.c:2130
@@ -1201,12 +1202,12 @@ msgstr "Format de compression BMP inconnu ou non valide."
 msgid "Unsupported or invalid bitdepth."
 msgstr "Profondeur de bit non valide ou non gérée."
 
-#: ../plug-ins/bmp/bmpread.c:550 ../plug-ins/common/pcx.c:338
+#: ../plug-ins/bmp/bmpread.c:550 ../plug-ins/common/pcx.c:320
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "La largeur de l'image est non valide ou non prise en charge : %d"
 
-#: ../plug-ins/bmp/bmpread.c:555 ../plug-ins/common/pcx.c:343
+#: ../plug-ins/bmp/bmpread.c:555 ../plug-ins/common/pcx.c:325
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "La hauteur de l'image est non valide ou non prise en charge : %d"
@@ -1218,8 +1219,8 @@ msgstr "La hauteur de l'image est non valide ou non prise en charge : %d"
 #: ../plug-ins/common/CEL.c:352 ../plug-ins/common/blinds.c:277
 #: ../plug-ins/common/compose.c:924 ../plug-ins/common/decompose.c:703
 #: ../plug-ins/common/dicom.c:503 ../plug-ins/common/film.c:746
-#: ../plug-ins/common/gif-load.c:879 ../plug-ins/common/pcx.c:356
-#: ../plug-ins/common/pcx.c:362 ../plug-ins/common/pix.c:368
+#: ../plug-ins/common/gif-load.c:879 ../plug-ins/common/pcx.c:338
+#: ../plug-ins/common/pcx.c:344 ../plug-ins/common/pix.c:368
 #: ../plug-ins/common/png.c:831 ../plug-ins/common/pnm.c:570
 #: ../plug-ins/common/psd-load.c:2553 ../plug-ins/common/raw.c:691
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:956
@@ -1253,14 +1254,14 @@ msgstr "La canal alpha sera ignoré."
 #: ../plug-ins/bmp/bmpwrite.c:305 ../plug-ins/common/CEL.c:573
 #: ../plug-ins/common/gbr.c:621 ../plug-ins/common/gif-save.c:993
 #: ../plug-ins/common/gih.c:1263 ../plug-ins/common/gtm.c:245
-#: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:567
+#: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:549
 #: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1251
 #: ../plug-ins/common/pnm.c:941 ../plug-ins/common/postscript.c:1199
 #: ../plug-ins/common/psd-save.c:1554 ../plug-ins/common/sunras.c:549
 #: ../plug-ins/common/tga.c:1138 ../plug-ins/common/tiff-save.c:681
 #: ../plug-ins/common/xbm.c:1021 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:603 ../plug-ins/fits/fits.c:462
-#: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:281
+#: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:283
 #: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:1015
 #: ../plug-ins/xjt/xjt.c:1697
 #, c-format
@@ -1275,7 +1276,7 @@ msgstr "Enregistrer en BMP"
 msgid "_Run-Length Encoded"
 msgstr "Encodé en _Run-Length"
 
-#: ../plug-ins/bmp/bmpwrite.c:826 ../plug-ins/jpeg/jpeg-save.c:891
+#: ../plug-ins/bmp/bmpwrite.c:826 ../plug-ins/jpeg/jpeg-save.c:893
 msgid "_Advanced Options"
 msgstr "_Options avancées"
 
@@ -1401,7 +1402,7 @@ msgstr "Modèle de couleur _RVB"
 
 #: ../plug-ins/common/AlienMap2.c:519
 msgid "_HSL color model"
-msgstr "Modèle de couleur _TSL"
+msgstr "Modèle de couleur _TSV"
 
 #: ../plug-ins/common/CEL.c:109 ../plug-ins/common/CEL.c:127
 msgid "KISS CEL"
@@ -2488,7 +2489,7 @@ msgstr "_Taille :"
 
 #: ../plug-ins/common/checkerboard.c:421
 msgid "_Psychobilly"
-msgstr "_Boursoufflure"
+msgstr "_Boursouflure"
 
 #: ../plug-ins/common/color_enhance.c:69
 msgid "Stretch color saturation to cover maximum possible range"
@@ -2587,7 +2588,7 @@ msgstr ""
 
 #: ../plug-ins/common/colortoalpha.c:96
 msgid "Convert a specified color to transparency"
-msgstr "Convertit une couleur indiquée en tranparence"
+msgstr "Convertit une couleur indiquée en transparence"
 
 #: ../plug-ins/common/colortoalpha.c:103
 msgid "Color to _Alpha..."
@@ -2639,17 +2640,17 @@ msgid "_Hue:"
 msgstr "_Teinte :"
 
 #: ../plug-ins/common/compose.c:213 ../plug-ins/common/compose.c:221
-#: ../plug-ins/common/scatter_hsv.c:413
+#: ../plug-ins/common/scatter_hsv.c:418
 msgid "_Saturation:"
 msgstr "_Saturation :"
 
-#: ../plug-ins/common/compose.c:214 ../plug-ins/common/scatter_hsv.c:425
+#: ../plug-ins/common/compose.c:214 ../plug-ins/common/scatter_hsv.c:430
 msgid "_Value:"
 msgstr "Vale_ur :"
 
 #: ../plug-ins/common/compose.c:219 ../plug-ins/common/decompose.c:193
 msgid "HSL"
-msgstr "TSL"
+msgstr "TSV"
 
 #: ../plug-ins/common/compose.c:222
 msgid "_Lightness:"
@@ -2799,7 +2800,7 @@ msgstr "L'image n'est pas une image en tons de gris (bpp = %d)"
 
 #: ../plug-ins/common/compose.c:811
 msgid "Unable to recompose, source layer not found"
-msgstr "Impossible de récomposer, un calque source n'a pas été trouvé"
+msgstr "Impossible de recomposer, un calque source n'a pas été trouvé"
 
 #: ../plug-ins/common/compose.c:1477
 msgid "Compose"
@@ -2891,36 +2892,36 @@ msgstr ""
 msgid "Applying convolution"
 msgstr "Calcul de convolution..."
 
-#: ../plug-ins/common/convmatrix.c:951
+#: ../plug-ins/common/convmatrix.c:925
 msgid "Convolution Matrix"
 msgstr "Matrice de convolution"
 
-#: ../plug-ins/common/convmatrix.c:988
+#: ../plug-ins/common/convmatrix.c:962
 msgid "Matrix"
 msgstr "Matrice"
 
-#: ../plug-ins/common/convmatrix.c:1026
+#: ../plug-ins/common/convmatrix.c:1000
 msgid "D_ivisor:"
 msgstr "Divi_seur :"
 
-#: ../plug-ins/common/convmatrix.c:1052 ../plug-ins/common/depthmerge.c:767
+#: ../plug-ins/common/convmatrix.c:1026 ../plug-ins/common/depthmerge.c:767
 #: ../plug-ins/common/raw.c:1022
 msgid "O_ffset:"
 msgstr "_Décalage :"
 
-#: ../plug-ins/common/convmatrix.c:1081
+#: ../plug-ins/common/convmatrix.c:1055
 msgid "N_ormalise"
 msgstr "N_ormaliser"
 
-#: ../plug-ins/common/convmatrix.c:1093
+#: ../plug-ins/common/convmatrix.c:1067
 msgid "A_lpha-weighting"
 msgstr "Poids al_pha"
 
-#: ../plug-ins/common/convmatrix.c:1112
+#: ../plug-ins/common/convmatrix.c:1086
 msgid "Border"
 msgstr "Bordure"
 
-#: ../plug-ins/common/convmatrix.c:1139
+#: ../plug-ins/common/convmatrix.c:1113
 msgid "Channels"
 msgstr "Canaux"
 
@@ -3199,11 +3200,11 @@ msgstr "lumière"
 
 #: ../plug-ins/common/decompose.c:197
 msgid "Hue (HSL)"
-msgstr "Teinte (TSL)"
+msgstr "Teinte (TSV)"
 
 #: ../plug-ins/common/decompose.c:198
 msgid "Saturation (HSL)"
-msgstr "Saturation (TSL)"
+msgstr "Saturation (TSV)"
 
 #: ../plug-ins/common/decompose.c:199
 msgid "Lightness"
@@ -3501,7 +3502,7 @@ msgstr "Image DICOM (Digital Imaging and Communications in Medicine)"
 msgid "'%s' is not a DICOM file."
 msgstr "« %s » n'est pas un fichier DICOM."
 
-#: ../plug-ins/common/dicom.c:678 ../plug-ins/common/pcx.c:599
+#: ../plug-ins/common/dicom.c:678 ../plug-ins/common/pcx.c:581
 #: ../plug-ins/common/pnm.c:927
 msgid "Cannot save images with alpha channel."
 msgstr "Impossible d'enregistrer des images avec un canal alpha."
@@ -5065,84 +5066,84 @@ msgid "'%s' does not appear to be an ICC color profile"
 msgstr "« %s » ne semble pas être un fichier de couleur ICC"
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:797
+#: ../plug-ins/common/lcms.c:796
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Conversion de « %s » vers « %s »"
 
-#: ../plug-ins/common/lcms.c:1014
+#: ../plug-ins/common/lcms.c:1016
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Impossible de charger le profil ICC depuis « %s »"
 
-#: ../plug-ins/common/lcms.c:1036
+#: ../plug-ins/common/lcms.c:1038
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "L'image « %s » a un profil de couleurs embarqué :"
 
-#: ../plug-ins/common/lcms.c:1080
+#: ../plug-ins/common/lcms.c:1082
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Convertir l'image vers l'espace de travail RVB (%s) ?"
 
-#: ../plug-ins/common/lcms.c:1111
+#: ../plug-ins/common/lcms.c:1113
 msgid "Convert to RGB working space?"
 msgstr "Convertir vers l'espace de travail RVB ?"
 
-#: ../plug-ins/common/lcms.c:1116
+#: ../plug-ins/common/lcms.c:1118
 msgid "_Keep"
 msgstr "_Conserver"
 
-#: ../plug-ins/common/lcms.c:1121
+#: ../plug-ins/common/lcms.c:1123
 msgid "_Convert"
 msgstr "_Convertir"
 
-#: ../plug-ins/common/lcms.c:1148 ../plug-ins/jpeg/jpeg-exif.c:367
+#: ../plug-ins/common/lcms.c:1150 ../plug-ins/jpeg/jpeg-exif.c:372
 msgid "_Don't ask me again"
 msgstr "_Ne plus me demander"
 
-#: ../plug-ins/common/lcms.c:1212
+#: ../plug-ins/common/lcms.c:1214
 msgid "Select destination profile"
 msgstr "Sélection du profil de destination"
 
-#: ../plug-ins/common/lcms.c:1239
+#: ../plug-ins/common/lcms.c:1241
 msgid "All files (*.*)"
 msgstr "Tous les fichiers (*.*)"
 
-#: ../plug-ins/common/lcms.c:1244
+#: ../plug-ins/common/lcms.c:1246
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profil de couleurs ICC (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1287
+#: ../plug-ins/common/lcms.c:1289
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "Espace de travail RVB (%s)"
 
-#: ../plug-ins/common/lcms.c:1335
+#: ../plug-ins/common/lcms.c:1337
 msgid "Convert to ICC Color Profile"
 msgstr "Convertir en profil de couleurs ICC"
 
-#: ../plug-ins/common/lcms.c:1336
+#: ../plug-ins/common/lcms.c:1338
 msgid "Assign ICC Color Profile"
 msgstr "Assigner un profil de couleurs ICC"
 
-#: ../plug-ins/common/lcms.c:1344
+#: ../plug-ins/common/lcms.c:1346
 msgid "_Assign"
 msgstr "_Assigner"
 
-#: ../plug-ins/common/lcms.c:1361
+#: ../plug-ins/common/lcms.c:1363
 msgid "Current Color Profile"
 msgstr "Profil de couleurs actuel"
 
-#: ../plug-ins/common/lcms.c:1376
+#: ../plug-ins/common/lcms.c:1378
 msgid "Convert to"
 msgstr "Convertir"
 
-#: ../plug-ins/common/lcms.c:1376
+#: ../plug-ins/common/lcms.c:1378
 msgid "Assign"
 msgstr "Assigner"
 
-#: ../plug-ins/common/lcms.c:1416
+#: ../plug-ins/common/lcms.c:1418
 msgid "Destination profile is not for RGB color space."
 msgstr "Le profil de destination n'est pas pour un espace de couleur RVB."
 
@@ -5152,15 +5153,15 @@ msgstr "Corrige la distorsion d'une lentille"
 
 #: ../plug-ins/common/lens.c:148
 msgid "Lens Distortion..."
-msgstr "Distortion de lentille..."
+msgstr "Distorsion de lentille..."
 
 #: ../plug-ins/common/lens.c:813
 msgid "Lens distortion"
-msgstr "Distortion de lentille"
+msgstr "Distorsion de lentille"
 
 #: ../plug-ins/common/lens.c:933
 msgid "Lens Distortion"
-msgstr "Distortion de lentille"
+msgstr "Distorsion de lentille"
 
 #: ../plug-ins/common/lens.c:970
 msgid "_Main:"
@@ -5388,7 +5389,7 @@ msgstr "Réduire l'image à du rouge, vert ou bleu pur"
 msgid "Maxim_um RGB..."
 msgstr "_Maximum RVB..."
 
-#: ../plug-ins/common/max_rgb.c:134
+#: ../plug-ins/common/max_rgb.c:134 ../plug-ins/common/scatter_hsv.c:160
 msgid "Can only operate on RGB drawables."
 msgstr "Ne peut opérer que sur des tracés RVB."
 
@@ -6031,26 +6032,26 @@ msgstr "Chaîne de caractères UTF-8 non valide dans le fichier de motif « %s�
 msgid "Save as Pattern"
 msgstr "Enregistrer en tant que motif"
 
-#: ../plug-ins/common/pcx.c:147 ../plug-ins/common/pcx.c:166
+#: ../plug-ins/common/pcx.c:129 ../plug-ins/common/pcx.c:148
 msgid "ZSoft PCX image"
 msgstr "Image ZSoft PCX"
 
-#: ../plug-ins/common/pcx.c:319
+#: ../plug-ins/common/pcx.c:301
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Impossible de lire l'en-tête depuis « %s »"
 
-#: ../plug-ins/common/pcx.c:326
+#: ../plug-ins/common/pcx.c:308
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "« %s » n'est pas un fichier PCX"
 
-#: ../plug-ins/common/pcx.c:348
+#: ../plug-ins/common/pcx.c:330
 #, c-format
 msgid "Invalid number of bytes per line: %hd"
 msgstr "Nombre d'octets non valides par ligne : %hd"
 
-#: ../plug-ins/common/pcx.c:397
+#: ../plug-ins/common/pcx.c:379
 msgid "Unusual PCX flavour, giving up"
 msgstr "Semble PCX inhabituel, abandon"
 
@@ -6069,7 +6070,7 @@ msgstr "Photocopie"
 #: ../plug-ins/common/photocopy.c:890 ../plug-ins/common/sharpen.c:514
 #: ../plug-ins/common/softglow.c:695
 msgid "_Sharpness:"
-msgstr "Augmention de contra_ste :"
+msgstr "Augmentation de contra_ste :"
 
 #: ../plug-ins/common/photocopy.c:904
 msgid "Percent _black:"
@@ -6218,7 +6219,7 @@ msgid ""
 "The PNG file specifies an offset that caused the layer to be positioned "
 "outside the image."
 msgstr ""
-"Le fichier PNG spécifie un décalage qui entraine un calque positionné en "
+"Le fichier PNG spécifie un décalage qui entraîne un calque positionné en "
 "dehors de l'image."
 
 #: ../plug-ins/common/png.c:1229
@@ -6266,11 +6267,11 @@ msgstr "Enregistrer les valeurs de couleur pour les pixels _transparents"
 msgid "Co_mpression level:"
 msgstr "Niveau de _compression :"
 
-#: ../plug-ins/common/png.c:1895 ../plug-ins/jpeg/jpeg-save.c:1153
+#: ../plug-ins/common/png.c:1895 ../plug-ins/jpeg/jpeg-save.c:1165
 msgid "_Load Defaults"
 msgstr "_Charger défauts"
 
-#: ../plug-ins/common/png.c:1903 ../plug-ins/jpeg/jpeg-save.c:1162
+#: ../plug-ins/common/png.c:1903 ../plug-ins/jpeg/jpeg-save.c:1174
 msgid "S_ave Defaults"
 msgstr "_Enregistrer défauts"
 
@@ -6347,7 +6348,7 @@ msgstr "Brut"
 
 #: ../plug-ins/common/pnm.c:1132
 msgid "Ascii"
-msgstr "Ascii"
+msgstr "ASCII"
 
 #: ../plug-ins/common/polar.c:156
 msgid "Convert image to or from polar coordinates"
@@ -6381,7 +6382,7 @@ msgstr "Sens _inverse"
 msgid ""
 "If checked the mapping will begin at the right side, as opposed to beginning "
 "at the left."
-msgstr "Si coché, le tracé commencera du coté droit et non du coté gauche.."
+msgstr "Si coché, le tracé commencera du coté droit et non du coté gauche."
 
 #: ../plug-ins/common/polar.c:674
 msgid "Map from _top"
@@ -6724,18 +6725,14 @@ msgstr "Erreur : ne peut convertir le type d'image de base GIMP en mode PSD"
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
 "more than 30000 pixels wide or tall."
-msgstr ""
-"Impossible d'enregistrer « %s ». Le format PSD ne supporte pas les images "
-"deplus de 30000 pixels."
+msgstr "Impossible d'enregistrer « %s ». Le format PSD ne supporte pas les images de plus de 30 000 pixels."
 
 #: ../plug-ins/common/psd-save.c:1537
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
 "layers that are more than 30000 pixels wide or tall."
-msgstr ""
-"Impossible d'enregistrer « %s ». Le format PSD ne supporte pas les images "
-"conteant des calques de plus de 30000 pixels."
+msgstr "Impossible d'enregistrer « %s ». Le format PSD ne supporte pas les images contenant des calques de plus de 30 000 pixels."
 
 #: ../plug-ins/common/psp.c:356 ../plug-ins/common/psp.c:380
 msgid "Paint Shop Pro image"
@@ -7128,19 +7125,19 @@ msgstr "Modifie aléatoirement et indépendamment teinte/saturation/valeur "
 msgid "HSV Noise..."
 msgstr "Brouillage TSV"
 
-#: ../plug-ins/common/scatter_hsv.c:218
+#: ../plug-ins/common/scatter_hsv.c:217
 msgid "HSV Noise"
 msgstr "Brouillage TSV"
 
-#: ../plug-ins/common/scatter_hsv.c:354
+#: ../plug-ins/common/scatter_hsv.c:358
 msgid "Scatter HSV"
 msgstr "Dispersion TSV"
 
-#: ../plug-ins/common/scatter_hsv.c:389
+#: ../plug-ins/common/scatter_hsv.c:394
 msgid "_Holdness:"
 msgstr "_Contrôle :"
 
-#: ../plug-ins/common/scatter_hsv.c:401
+#: ../plug-ins/common/scatter_hsv.c:406
 msgid "H_ue:"
 msgstr "_Teinte :"
 
@@ -8283,7 +8280,7 @@ msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
 msgstr ""
-"Une définition d'unité sera enregistrée uniquement lorsque GIMP quiterra si "
+"Une définition d'unité sera enregistrée uniquement lorsque GIMP quittera si "
 "la colonne est cochée."
 
 #: ../plug-ins/common/uniteditor.c:96
@@ -8315,7 +8312,7 @@ msgid ""
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
 msgstr ""
-"Ce champ est une aide pour les champs d'entrées numériques.  Il indique "
+"Ce champ est une aide pour les champs d'entrées numériques. Il indique "
 "combien de décimales sont nécessaires pour obtenir approximativement la même "
 "précision qu'avec un champ d'entrée en « pouce » avec deux décimales."
 
@@ -9721,7 +9718,7 @@ msgstr "Saisissez un nom pour le nouvel éblouissement graduel"
 #: ../plug-ins/gflare/gflare.c:3008
 #, c-format
 msgid "The name '%s' is used already!"
-msgstr "Le nom '%s' est déjà utilisé"
+msgstr "Le nom « %s » est déjà utilisé"
 
 #: ../plug-ins/gflare/gflare.c:3064
 msgid "Copy Gradient Flare"
@@ -10070,7 +10067,7 @@ msgstr "Exécuter diverses opérations artistiques"
 
 #: ../plug-ins/gimpressionist/gimp.c:79
 msgid "_GIMPressionist..."
-msgstr "_GIMPressionnist..."
+msgstr "_GIMPressionist..."
 
 #: ../plug-ins/gimpressionist/gimp.c:350
 msgid "Painting"
@@ -10078,7 +10075,7 @@ msgstr "Peinture"
 
 #: ../plug-ins/gimpressionist/gimpressionist.c:121
 msgid "GIMPressionist"
-msgstr "GIMPressionnist"
+msgstr "GIMPressionist"
 
 #: ../plug-ins/gimpressionist/orientation.c:74
 msgid "Or_ientation"
@@ -10578,7 +10575,7 @@ msgstr "Allez à la page d'index"
 
 #: ../plug-ins/helpbrowser/dialog.c:745
 msgid "Visit the GIMP documentation website"
-msgstr "Visiter le sie Web de la documentation GIMP"
+msgstr "Visiter le site Web de la documentation GIMP"
 
 #: ../plug-ins/helpbrowser/dialog.c:821
 msgid "Document not found"
@@ -10714,7 +10711,7 @@ msgstr "Rayon du point :"
 #: ../plug-ins/ifscompose/ifscompose.c:1302
 #, c-format
 msgid "Rendering IFS (%d/%d)"
-msgstr "Rendu de fractliser en cours (%d/%d)"
+msgstr "Rendu de fractaliser en cours (%d/%d)"
 
 #: ../plug-ins/ifscompose/ifscompose.c:1468
 #, c-format
@@ -11074,7 +11071,7 @@ msgstr "Paramètres de la grille"
 
 #: ../plug-ins/imagemap/imap_grid.c:201
 msgid "_Snap-to grid enabled"
-msgstr "Accorchage à la _grille activé"
+msgstr "Accrochage à la _grille activé"
 
 #: ../plug-ins/imagemap/imap_grid.c:207
 msgid "Grid Visibility and Type"
@@ -11485,19 +11482,19 @@ msgstr "Format de fichier Map"
 msgid "View Source"
 msgstr "Voir la source"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:283
+#: ../plug-ins/jpeg/jpeg-exif.c:288
 msgid "Rotate Image?"
 msgstr "Tourner l'image ?"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:286
+#: ../plug-ins/jpeg/jpeg-exif.c:291
 msgid "_Keep Orientation"
 msgstr "Conserver l'_orientation"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:342
+#: ../plug-ins/jpeg/jpeg-exif.c:347
 msgid "According to the EXIF data, this image is rotated."
 msgstr "Suivant la donnée EXIF, cette image est tournée."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:357
+#: ../plug-ins/jpeg/jpeg-exif.c:362
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Souhaitez-vous que GIMP la pivote vers son orientation normale ?"
 
@@ -11510,77 +11507,77 @@ msgstr "Aperçu JPEG"
 msgid "Opening thumbnail for '%s'"
 msgstr "Ouverture de la vignette pour « %s »"
 
-#: ../plug-ins/jpeg/jpeg-save.c:196
+#: ../plug-ins/jpeg/jpeg-save.c:198
 #, c-format
 msgid "File size: %02.01f kB"
 msgstr "Taille du fichier : %02.01f Kio"
 
-#: ../plug-ins/jpeg/jpeg-save.c:665
+#: ../plug-ins/jpeg/jpeg-save.c:667
 msgid "Calculating file size..."
 msgstr "Calcul de la taille du fichier..."
 
-#: ../plug-ins/jpeg/jpeg-save.c:756 ../plug-ins/jpeg/jpeg-save.c:870
+#: ../plug-ins/jpeg/jpeg-save.c:758 ../plug-ins/jpeg/jpeg-save.c:872
 msgid "File size: unknown"
 msgstr "Taille du fichier : inconnue"
 
-#: ../plug-ins/jpeg/jpeg-save.c:814
+#: ../plug-ins/jpeg/jpeg-save.c:816
 msgid "Save as JPEG"
 msgstr "Enregistrer en JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:849
+#: ../plug-ins/jpeg/jpeg-save.c:851
 msgid "_Quality:"
 msgstr "_Qualité :"
 
-#: ../plug-ins/jpeg/jpeg-save.c:853
+#: ../plug-ins/jpeg/jpeg-save.c:855
 msgid "JPEG quality parameter"
 msgstr "Paramètres de qualité du JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:868
+#: ../plug-ins/jpeg/jpeg-save.c:870
 msgid "Enable preview to obtain the file size."
 msgstr "Active l'aperçu pour obtenir la taille de fichier."
 
-#: ../plug-ins/jpeg/jpeg-save.c:879
+#: ../plug-ins/jpeg/jpeg-save.c:881
 msgid "Show _preview in image window"
 msgstr "A_fficher l'aperçu dans la fenêtre d'image"
 
-#: ../plug-ins/jpeg/jpeg-save.c:920
+#: ../plug-ins/jpeg/jpeg-save.c:922
 msgid "_Smoothing:"
 msgstr "A_doucissement :"
 
-#: ../plug-ins/jpeg/jpeg-save.c:933
+#: ../plug-ins/jpeg/jpeg-save.c:935
 msgid "Frequency (rows):"
 msgstr "Fréquence (rangées) :"
 
-#: ../plug-ins/jpeg/jpeg-save.c:949
+#: ../plug-ins/jpeg/jpeg-save.c:951
 msgid "Use restart markers"
 msgstr "Marqueurs de redémarrage"
 
-#: ../plug-ins/jpeg/jpeg-save.c:965 ../plug-ins/xjt/xjt.c:877
+#: ../plug-ins/jpeg/jpeg-save.c:967 ../plug-ins/xjt/xjt.c:877
 msgid "Optimize"
 msgstr "Optimiser"
 
-#: ../plug-ins/jpeg/jpeg-save.c:978
+#: ../plug-ins/jpeg/jpeg-save.c:980
 msgid "Progressive"
 msgstr "Progressif"
 
-#: ../plug-ins/jpeg/jpeg-save.c:993
+#: ../plug-ins/jpeg/jpeg-save.c:995
 msgid "Save EXIF data"
 msgstr "Enregistrer les données EXIF"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1010
+#: ../plug-ins/jpeg/jpeg-save.c:1012
 msgid "Save thumbnail"
 msgstr "Enregistrer la vignette"
 
 #. XMP metadata
-#: ../plug-ins/jpeg/jpeg-save.c:1026
+#: ../plug-ins/jpeg/jpeg-save.c:1028
 msgid "Save XMP data"
 msgstr "Enregistrer les données XMP"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1041
-msgid "Use custom quality settings"
-msgstr "Utiliser des paramètres de qualité personnalisés"
+#: ../plug-ins/jpeg/jpeg-save.c:1043
+msgid "Use quality settings from original image"
+msgstr "Utiliser les paramètres de qualité de l'image originale"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1046
+#: ../plug-ins/jpeg/jpeg-save.c:1049
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
@@ -11591,44 +11588,44 @@ msgstr ""
 "cette option pour obtenir une qualité et une taille de fichier similaire."
 
 #. Subsampling
-#: ../plug-ins/jpeg/jpeg-save.c:1070
+#: ../plug-ins/jpeg/jpeg-save.c:1073
 msgid "Subsampling:"
 msgstr "Sous-échantillonage :"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1077
+#: ../plug-ins/jpeg/jpeg-save.c:1080
 msgid "1x1,1x1,1x1 (best quality)"
 msgstr "1x1, 1x1, 1x1 (meilleure qualité)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1078
+#: ../plug-ins/jpeg/jpeg-save.c:1081
 msgid "2x1,1x1,1x1 (4:2:2)"
 msgstr "2x1, 1x1, 1x1 (4:2:2)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1079
+#: ../plug-ins/jpeg/jpeg-save.c:1082
 msgid "1x2,1x1,1x1"
 msgstr "1x2, 1x1, 1x1"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1080
+#: ../plug-ins/jpeg/jpeg-save.c:1083
 msgid "2x2,1x1,1x1 (smallest file)"
 msgstr "2x2, 1x1, 1x1 (fichier le plus petit)"
 
 #. DCT method
-#: ../plug-ins/jpeg/jpeg-save.c:1095
+#: ../plug-ins/jpeg/jpeg-save.c:1107
 msgid "DCT method:"
 msgstr "Méthode DCT :"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1101
+#: ../plug-ins/jpeg/jpeg-save.c:1113
 msgid "Fast Integer"
 msgstr "Entier rapide"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1102
+#: ../plug-ins/jpeg/jpeg-save.c:1114
 msgid "Integer"
 msgstr "Entier"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1103
+#: ../plug-ins/jpeg/jpeg-save.c:1115
 msgid "Floating-Point"
 msgstr "Virgule flottante"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1117
+#: ../plug-ins/jpeg/jpeg-save.c:1129
 msgid "Comment"
 msgstr "Commentaire"
 
@@ -12316,3 +12313,6 @@ msgstr "Erreur : Impossible de lire le fichier de propriétés XJT « %s »."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Erreur : le fichier de propriétés XJT « %s » est vide."
+
+#~ msgid "Use custom quality settings"
+#~ msgstr "Utiliser des paramètres de qualité personnalisés"
