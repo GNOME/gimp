@@ -1,3 +1,10 @@
+2007-08-29  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/common/pcx.c: applied modified patch from Nils
+	Philippsen that uses the glib endianness conversion macros instead
+	of the ones provided in the old code (broken on S390/S390x).
+	Fixes bug #471189.
+
 2007-08-29  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/common/lcms.c (lcms_image_apply_profile):
