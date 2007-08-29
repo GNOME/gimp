@@ -278,7 +278,7 @@ scatter_hsv_scatter (guchar *r,
   gimp_rgb_to_hsv_int (&h, &s, &v);
 
   if (VALS.hue_distance > 0)
-    h = randomize_value (h, 0, 360, TRUE,  VALS.hue_distance);
+    h = randomize_value (h, 0, 359, TRUE,  VALS.hue_distance);
 
   if (VALS.saturation_distance > 0)
     s = randomize_value (s, 0, 255, FALSE, VALS.saturation_distance);
