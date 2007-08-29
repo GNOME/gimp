@@ -1,5 +1,16 @@
 2007-08-29  Raphaël Quinet  <raphael@gimp.org>
 
+	* plug-ins/jpeg/jpeg-save.[ch]
+	* plug-ins/jpeg/jpeg.c: change the behavior of the code so that
+	"Use quality settings from original image" does what it claims,
+	even if these settings are worse than the user's defaults (note
+	that the option is not automatically enabled in this case).  Also
+	set the subsampling type when that box is checked.
+
+	* plug-ins/jpeg/jpeg-settings.h: formatting.
+
+2007-08-29  Raphaël Quinet  <raphael@gimp.org>
+
 	* plug-ins/common/pcx.c: applied modified patch from Nils
 	Philippsen that uses the glib endianness conversion macros instead
 	of the ones provided in the old code (broken on S390/S390x).

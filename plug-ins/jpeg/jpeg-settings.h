@@ -30,4 +30,4 @@ gboolean  jpeg_restore_original_settings (gint32    image_ID,
 guint   **jpeg_restore_original_tables   (gint32    image_ID,
                                           gint      num_quant_tables);
 
-void      jpeg_swap_original_settings    (gint32 image_ID);
+void      jpeg_swap_original_settings    (gint32    image_ID);

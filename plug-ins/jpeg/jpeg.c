@@ -420,7 +420,7 @@ run (const gchar      *name,
               jsvals.save_exif        = save_vals->save_exif;
               jsvals.save_thumbnail   = save_vals->save_thumbnail;
               jsvals.save_xmp         = save_vals->save_xmp;
-              jsvals.use_quant_tables = save_vals->use_quant_tables;
+              jsvals.use_orig_quality = save_vals->use_orig_quality;
 
               gimp_parasite_free (parasite);
             }
@@ -439,7 +439,7 @@ run (const gchar      *name,
               if (orig_quality > jsvals.quality)
                 {
                   jsvals.quality = orig_quality;
-                  jsvals.use_quant_tables = TRUE;
+                  jsvals.use_orig_quality = TRUE;
                 }
               if (orig_subsmp == 2
                   || (orig_subsmp > 0 && jsvals.subsmp == 0))

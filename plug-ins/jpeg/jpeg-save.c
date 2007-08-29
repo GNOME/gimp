@@ -64,7 +64,7 @@
 #define DEFAULT_EXIF             TRUE
 #define DEFAULT_THUMBNAIL        FALSE
 #define DEFAULT_XMP              TRUE
-#define DEFAULT_USE_QUANT_TABLES FALSE
+#define DEFAULT_USE_ORIG_QUALITY FALSE
 
 #define JPEG_DEFAULTS_PARASITE  "jpeg-save-defaults"
 
@@ -93,7 +93,7 @@ typedef struct
   GtkWidget     *use_restart_markers;   /*checkbox setting use restart markers*/
   GtkTextBuffer *text_buffer;
   GtkObject     *scale_data;            /*for restart markers*/
-  gulong        handler_id_restart;
+  gulong         handler_id_restart;
 
   GtkObject     *quality;               /*quality slidebar*/
   GtkObject     *smoothing;             /*smoothing slidebar*/
@@ -106,19 +106,21 @@ typedef struct
   GtkWidget     *save_exif;
   GtkWidget     *save_thumbnail;
   GtkWidget     *save_xmp;
-  GtkWidget     *use_quant_tables;      /*quant tables toggle*/
+  GtkWidget     *use_orig_quality;      /*quant tables toggle*/
 } JpegSaveGui;
 
-static void  make_preview        (void);
+static void  make_preview           (void);
 
-static void  save_restart_update (GtkAdjustment *adjustment,
-                                  GtkWidget     *toggle);
-static void  subsampling_changed (GtkWidget     *combo,
-                                  GtkObject     *entry);
-static void  quality_changed     (GtkObject     *scale_entry,
-                                  GtkWidget     *toggle);
-static void  use_quant_changed   (GtkWidget     *toggle,
-                                  GtkObject     *scale_entry);
+static void  save_restart_update    (GtkAdjustment *adjustment,
+                                     GtkWidget     *toggle);
+static void  subsampling_changed    (GtkWidget     *combo,
+                                     GtkObject     *entry);
+static void  quality_changed        (GtkObject     *scale_entry,
+                                     GtkWidget     *toggle);
+static void  use_orig_qual_changed  (GtkWidget     *toggle,
+                                     GtkObject     *scale_entry);
+static void  use_orig_qual_changed2 (GtkWidget     *toggle,
+                                     GtkWidget     *combo);
 
 #ifdef HAVE_EXIF
 
@@ -372,7 +374,7 @@ save_image (const gchar *filename,
 
   jpeg_set_quality (&cinfo, (gint) (jsvals.quality + 0.5), jsvals.baseline);
 
-  if (jsvals.use_quant_tables && num_quant_tables > 0)
+  if (jsvals.use_orig_quality && num_quant_tables > 0)
     {
       guint **quant_tables;
       gint    t;
@@ -1036,8 +1038,8 @@ save_dialog (void)
 
   gtk_widget_set_sensitive (toggle, has_metadata);
 
-  /* custom quantization tables */
-  pg.use_quant_tables = toggle =
+  /* custom quantization tables - now used also for original quality */
+  pg.use_orig_quality = toggle =
     gtk_check_button_new_with_label (_("Use quality settings from original "
                                        "image"));
   gtk_table_attach (GTK_TABLE (table), toggle, 0, 4, 5, 6, GTK_FILL, 0, 0, 0);
@@ -1052,19 +1054,19 @@ save_dialog (void)
 
   g_signal_connect (toggle, "toggled",
                     G_CALLBACK (gimp_toggle_button_update),
-                    &jsvals.use_quant_tables);
+                    &jsvals.use_orig_quality);
 
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle),
-                                jsvals.use_quant_tables
-                                && (num_quant_tables > 0));
-  gtk_widget_set_sensitive (toggle, (num_quant_tables > 0));
+                                jsvals.use_orig_quality
+                                && (orig_quality > 0));
+  gtk_widget_set_sensitive (toggle, (orig_quality > 0));
 
   /* changing quality disables custom quantization tables, and vice-versa */
   g_signal_connect (pg.quality, "value-changed",
                     G_CALLBACK (quality_changed),
-                    pg.use_quant_tables);
-  g_signal_connect (pg.use_quant_tables, "toggled",
-                    G_CALLBACK (use_quant_changed),
+                    pg.use_orig_quality);
+  g_signal_connect (pg.use_orig_quality, "toggled",
+                    G_CALLBACK (use_orig_qual_changed),
                     pg.quality);
 
   /* Subsampling */
@@ -1089,8 +1091,17 @@ save_dialog (void)
                               entry);
 
   dtype = gimp_drawable_type (drawable_ID_global);
-  if (dtype != GIMP_RGB_IMAGE && dtype != GIMP_RGBA_IMAGE)
-    gtk_widget_set_sensitive (combo, FALSE);
+  if (dtype == GIMP_RGB_IMAGE || dtype == GIMP_RGBA_IMAGE)
+    {
+      g_signal_connect (pg.use_orig_quality, "toggled",
+                        G_CALLBACK (use_orig_qual_changed2),
+                        pg.subsmp);
+    }
+  else
+    {
+      gtk_widget_set_sensitive (combo, FALSE);
+    }
+
 
   /* DCT method */
   label = gtk_label_new (_("DCT method:"));
@@ -1228,7 +1239,7 @@ load_save_defaults (void)
   jsvals.save_exif        = DEFAULT_EXIF;
   jsvals.save_thumbnail   = DEFAULT_THUMBNAIL;
   jsvals.save_xmp         = DEFAULT_XMP;
-  jsvals.use_quant_tables = DEFAULT_USE_QUANT_TABLES;
+  jsvals.use_orig_quality = DEFAULT_USE_ORIG_QUALITY;
 
 #ifdef HAVE_EXIF
   if (exif_data && (exif_data->data))
@@ -1304,7 +1315,7 @@ load_gui_defaults (JpegSaveGui *pg)
 
   SET_ACTIVE_BTTN (optimize);
   SET_ACTIVE_BTTN (progressive);
-  SET_ACTIVE_BTTN (use_quant_tables);
+  SET_ACTIVE_BTTN (use_orig_quality);
   SET_ACTIVE_BTTN (preview);
 #ifdef HAVE_EXIF
   SET_ACTIVE_BTTN (save_exif);
@@ -1363,21 +1374,32 @@ static void
 quality_changed (GtkObject *scale_entry,
                  GtkWidget *toggle)
 {
-  if (jsvals.use_quant_tables)
+  if (jsvals.use_orig_quality)
     {
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), FALSE);
     }
 }
 
 static void
-use_quant_changed (GtkWidget *toggle,
-                   GtkObject *scale_entry)
+use_orig_qual_changed (GtkWidget *toggle,
+                       GtkObject *scale_entry)
 {
-  if (jsvals.use_quant_tables && orig_quality > 0)
+  if (jsvals.use_orig_quality && orig_quality > 0)
     {
       g_signal_handlers_block_by_func (scale_entry, quality_changed, toggle);
       gtk_adjustment_set_value (GTK_ADJUSTMENT (scale_entry), orig_quality);
       g_signal_handlers_unblock_by_func (scale_entry, quality_changed, toggle);
+    }
+}
+
+static void
+use_orig_qual_changed2 (GtkWidget *toggle,
+                        GtkWidget *combo)
+{
+  /* the test is (orig_quality > 0), not (orig_subsmp > 0) - this is normal */
+  if (jsvals.use_orig_quality && orig_quality > 0)
+    {
+      gimp_int_combo_box_set_active (GIMP_INT_COMBO_BOX (combo), orig_subsmp);
     }
 }
 
