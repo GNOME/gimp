@@ -1,5 +1,12 @@
 2007-08-29  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/common/lcms.c (lcms_image_apply_profile):
+	gimp-selection-* procedures operate on the image_ID, not on the
+	selection drawable_ID itself. Fixes bug #470589. Also remove the
+	saved selection channel after reloading it.
+
+2007-08-29  Michael Natterer  <mitch@gimp.org>
+
 	* themes/Default/images/preferences/Makefile.am (PREFS_IMAGES):
 	install and distribute the new icons. Fixes bug #436815
 

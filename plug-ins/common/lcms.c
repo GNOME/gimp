@@ -779,7 +779,6 @@ lcms_image_apply_profile (gint32       image,
                           cmsHPROFILE  dest_profile,
                           const gchar *filename)
 {
-  gint32 selection       = gimp_image_get_selection (image);
   gint32 saved_selection = -1;
 
   gimp_image_undo_group_start (image);
@@ -802,10 +801,10 @@ lcms_image_apply_profile (gint32       image,
       g_free (src);
   }
 
-  if (! gimp_selection_is_empty (selection))
+  if (! gimp_selection_is_empty (image))
     {
-      saved_selection = gimp_selection_save (selection);
-      gimp_selection_none (selection);
+      saved_selection = gimp_selection_save (image);
+      gimp_selection_none (image);
     }
 
   switch (gimp_image_base_type (image))
@@ -825,7 +824,10 @@ lcms_image_apply_profile (gint32       image,
     }
 
   if (saved_selection != -1)
-    gimp_selection_load (saved_selection);
+    {
+      gimp_selection_load (saved_selection);
+      gimp_image_remove_channel (image, saved_selection);
+    }
 
   gimp_progress_update (1.0);
   gimp_displays_flush ();
