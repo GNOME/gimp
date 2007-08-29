@@ -1,3 +1,9 @@
+2007-08-29  Jakub Friedl  <jfriedl@suse.cz>
+
+	* plug-ins/common/convmatrix.c: Removes the fprint function.
+	Values are printed using g_snprintf and "%g" which supresses
+	trailing zeroes. Fixes bug #471051.
+
 2007-08-29  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/jpeg/jpeg-save.[ch]

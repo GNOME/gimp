@@ -707,32 +707,6 @@ convolve_image (GimpDrawable *drawable,
  */
 
 static void
-fprint (gfloat  f,
-        gchar  *buffer,
-        gsize   len)
-{
-  guint i, t;
-
-  g_snprintf (buffer, len, "%.7f", f);
-  buffer[len - 1] = '\0';
-
-  for (t = 0; t < len - 1 && buffer[t] != '.'; t++)
-      ;
-
-  i = t + 1;
-
-  while (buffer[i] != '\0')
-    {
-      if (buffer[i] != '0')
-        t = i + 1;
-
-      i++;
-    }
-
-  buffer[t] = '\0';
-}
-
-static void
 redraw_matrix (void)
 {
   gint  x, y;
@@ -741,7 +715,7 @@ redraw_matrix (void)
   for (y = 0; y < MATRIX_SIZE; y++)
     for (x = 0; x < MATRIX_SIZE; x++)
       {
-        fprint (config.matrix[x][y], buffer, sizeof (buffer));
+        g_snprintf (buffer, sizeof (buffer), "%g", config.matrix[x][y]);
         gtk_entry_set_text (GTK_ENTRY (widget_set.matrix[x][y]), buffer);
       }
 }
@@ -776,10 +750,10 @@ redraw_off_and_div (void)
 {
   gchar buffer[12];
 
-  fprint (config.divisor, buffer, sizeof (buffer));
+  g_snprintf (buffer, sizeof (buffer), "%g", config.divisor);
   gtk_entry_set_text (GTK_ENTRY (widget_set.divisor), buffer);
 
-  fprint (config.offset, buffer, sizeof (buffer));
+  g_snprintf (buffer, sizeof (buffer), "%g", config.offset);
   gtk_entry_set_text (GTK_ENTRY (widget_set.offset), buffer);
 }
 
