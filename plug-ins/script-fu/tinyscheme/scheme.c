@@ -41,13 +41,36 @@
 #include <limits.h>
 #include <float.h>
 #include <ctype.h>
+#include <string.h>
 
 #include <libintl.h>
 
 #include "scheme-private.h"
 
 #if !STANDALONE
-#include "../scheme-wrapper.h"
+static ts_output_func   ts_output_handler = NULL;
+static gpointer         ts_output_data = NULL;
+
+void
+ts_register_output_func (ts_output_func  func,
+                         gpointer        user_data)
+{
+  ts_output_handler = func;
+  ts_output_data    = user_data;
+}
+
+/* len is length of 'string' in bytes or -1 for null terminated strings */
+void
+ts_output_string (TsOutputType  type,
+                  const char   *string,
+                  int           len)
+{
+  if (len < 0)
+    len = strlen (string);
+
+  if (ts_output_handler && len > 0)
+    (* ts_output_handler) (type, string, len, ts_output_data);
+}
 #endif
 
 /* Used for documentation purposes, to signal functions in 'interface' */

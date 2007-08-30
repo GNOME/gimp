@@ -1,3 +1,10 @@
+2007-08-30  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/script-fu/scheme-wrapper.c
+	* plug-ins/script-fu/tinyscheme/scheme.[ch]
+	* plug-ins/script-fu/scheme-wrapper.h: Shuffeled some
+	code around to have scheme.c not include scheme-wrapper.h.
+
 2007-08-30  Raphaël Quinet  <raphael@gimp.org>
 
 	* data/tips/gimp-tips.xml.in: expanded old tip and mentioned that

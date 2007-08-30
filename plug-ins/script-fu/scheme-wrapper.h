@@ -19,15 +19,7 @@
 #ifndef SCHEME_WRAPPER_H
 #define SCHEME_WRAPPER_H
 
-typedef enum { TS_OUTPUT_NORMAL, TS_OUTPUT_ERROR } TsOutputType;
-
-typedef void (* ts_output_func)       (TsOutputType    type,
-                                       const char     *string,
-                                       int             len,
-                                       gpointer        data);
-
-void          ts_register_output_func (ts_output_func  func,
-                                       gpointer        user_data);
+#include "tinyscheme/scheme.h"
 
 void          ts_stdout_output_func   (TsOutputType    type,
                                        const char     *string,
@@ -47,10 +39,6 @@ const gchar * ts_get_success_msg   (void);
 void          tinyscheme_init      (const gchar  *path,
                                     gboolean      local_register_scripts);
 void          tinyscheme_deinit    (void);
-
-void          ts_output_string     (TsOutputType  type,
-                                    const char   *string,
-                                    int           len);
 
 void          ts_interpret_stdin   (void);
 

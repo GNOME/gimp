@@ -114,6 +114,22 @@ typedef struct num {
      } value;
 } num;
 
+#if !STANDALONE
+
+typedef enum { TS_OUTPUT_NORMAL, TS_OUTPUT_ERROR } TsOutputType;
+
+typedef void (* ts_output_func)       (TsOutputType    type,
+                                       const char     *string,
+                                       int             len,
+                                       gpointer        data);
+
+SCHEME_EXPORT void ts_register_output_func (ts_output_func  func,
+                                            gpointer        user_data);
+SCHEME_EXPORT void ts_output_string        (TsOutputType    type,
+                                            const char     *string,
+                                            int             len);
+#endif
+
 SCHEME_EXPORT scheme *scheme_init_new();
 SCHEME_EXPORT scheme *scheme_init_new_custom_alloc(func_alloc malloc, func_dealloc free);
 SCHEME_EXPORT int scheme_init(scheme *sc);

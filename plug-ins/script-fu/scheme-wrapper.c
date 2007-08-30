@@ -47,9 +47,6 @@
 
 #include "scheme-wrapper.h"
 
-static ts_output_func   ts_output_handler = NULL;
-static gpointer         ts_output_data = NULL;
-
 #undef cons
 
 struct named_constant
@@ -192,14 +189,6 @@ static scheme sc;
 
 
 void
-ts_register_output_func (ts_output_func  func,
-                         gpointer        user_data)
-{
-  ts_output_handler = func;
-  ts_output_data    = user_data;
-}
-
-void
 ts_stdout_output_func (TsOutputType  type,
                        const char   *string,
                        int           len,
@@ -262,19 +251,6 @@ ts_get_success_msg (void)
     return sc.vptr->string_value(sc.value);
 
   return "Success";
-}
-
-/* len is length of 'string' in bytes or -1 for null terminated strings */
-void
-ts_output_string (TsOutputType  type,
-                  const char   *string,
-                  int           len)
-{
-  if (len < 0)
-    len = strlen (string);
-
-  if (ts_output_handler && len > 0)
-    (* ts_output_handler) (type, string, len, ts_output_data);
 }
 
 
