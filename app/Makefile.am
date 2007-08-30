@@ -92,6 +92,7 @@ INCLUDES = \
 	-I$(includedir)
 
 AM_LDFLAGS = $(mwindows) $(munix) \
+	$(CARBON_LDFLAGS)			\
 	-u $(SYMPREFIX)xcf_init			\
 	-u $(SYMPREFIX)internal_procs_init	\
 	-u $(SYMPREFIX)gimp_coords_mix		\

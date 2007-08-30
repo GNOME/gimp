@@ -29,6 +29,8 @@ libappgui_a_SOURCES = \
 	splash.c		\
 	splash.h		\
 	themes.c		\
-	themes.h
+	themes.h		\
+	sync-menu.c		\
+	sync-menu.h
 
 EXTRA_DIST = makefile.msc

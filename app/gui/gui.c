@@ -84,6 +84,9 @@
 #include "session.h"
 #include "splash.h"
 #include "themes.h"
+#ifdef HAVE_CARBON
+#include "sync-menu.h"
+#endif /* HAVE_CARBON */
 
 #include "gimp-intl.h"
 
@@ -457,6 +460,21 @@ gui_restore_after_callback (Gimp               *gimp,
                                                     "<Image>",
                                                     gimp,
                                                     gui_config->tearoff_menus);
+  gimp_ui_manager_update (image_ui_manager, NULL);
+
+#ifdef HAVE_CARBON
+  {
+    GtkWidget *menu;
+
+    menu = gtk_ui_manager_get_widget (image_ui_manager,
+				      "/dummy-menubar/image-popup");
+
+    if (GTK_IS_MENU_ITEM (menu))
+      menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
+
+    sync_menu_takeover_menu (GTK_MENU_SHELL (menu));
+  }
+#endif /* HAVE_CARBON */
 
   g_signal_connect_object (gui_config, "notify::tearoff-menus",
                            G_CALLBACK (gui_tearoff_menus_notify),

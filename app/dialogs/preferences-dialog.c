@@ -1298,9 +1298,11 @@ prefs_display_options_frame_add (Gimp         *gimp,
   gtk_box_pack_start (GTK_BOX (hbox), checks_vbox, TRUE, TRUE, 0);
   gtk_widget_show (checks_vbox);
 
+#ifndef HAVE_CARBON
   prefs_check_button_add (object, "show-menubar",
                           _("Show _menubar"),
                           GTK_BOX (checks_vbox));
+#endif /* !HAVE_CARBON */
   prefs_check_button_add (object, "show-rulers",
                           _("Show _rulers"),
                           GTK_BOX (checks_vbox));

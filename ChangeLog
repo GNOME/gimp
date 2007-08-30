@@ -1,3 +1,20 @@
+2007-08-30  Michael Natterer  <mitch@gimp.org>
+
+	First version of global menubar support for OSX. Work in progress.
+
+	* app/gui/Makefile.am
+	* app/gui/sync-menu.[ch]: new files containing code that takes
+	a GtkMenuShell and proxies it in the OSX global menubar. Taken
+	from http://developer.imendio.com/projects/gtk-macosx/menubar
+
+	* app/gui/gui.c: put the global image popup menu to the menubar.
+
+	* app/dialogs/preferences-dialog.c
+	* app/display/gimpdisplayshell.c
+	* app/widgets/gimptoolbox.c: #ifdef out all menubars in windows.
+
+	* app/Makefile.am (AM_LDFLAGS): add $(CARBON_LDFLAGS)
+
 2007-08-30  Jakub Friedl  <jfriedl@suse.cz>
 
 	* plug-ins/common/scatter_hsv.c: Randomizing hue of desaturated
