@@ -1,3 +1,9 @@
+2007-08-29  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme.c: Applied change suggested
+	in SourceForge bug #1593861 which stops integer? from thinking that
+	non-numbers are integers.
+
 2007-08-30  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme.[ch]
