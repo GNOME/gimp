@@ -277,11 +277,16 @@ scatter_hsv_scatter (guchar *r,
 
   gimp_rgb_to_hsv_int (&h, &s, &v);
 
-  if (VALS.hue_distance > 0)
+  /* there is no need for scattering hue of desaturated pixels here */
+  if ((VALS.hue_distance > 0) && (s > 0))
     h = randomize_value (h, 0, 359, TRUE,  VALS.hue_distance);
 
-  if (VALS.saturation_distance > 0)
+  /* desaturated pixels get random hue before increasing saturation */
+  if (VALS.saturation_distance > 0) {
+    if (s == 0)
+      h = g_random_int_range (0, 360);
     s = randomize_value (s, 0, 255, FALSE, VALS.saturation_distance);
+  }
 
   if (VALS.value_distance > 0)
     v = randomize_value (v, 0, 255, FALSE, VALS.value_distance);

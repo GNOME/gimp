@@ -1,3 +1,8 @@
+2007-08-30  Jakub Friedl  <jfriedl@suse.cz>
+
+	* plug-ins/common/scatter_hsv.c: Randomizing hue of desaturated
+	pixels before increasing saturation. Fixes #471476.
+
 2007-08-29  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme.c: Applied change suggested
