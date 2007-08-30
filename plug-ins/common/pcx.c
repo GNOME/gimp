@@ -51,22 +51,22 @@ static void   load_1     (FILE             *fp,
                           gint              width,
                           gint              height,
                           guchar           *buffer,
-                          gint16            bytes);
+                          guint16           bytes);
 static void   load_4     (FILE             *fp,
                           gint              width,
                           gint              height,
                           guchar           *buffer,
-                          gint16            bytes);
+                          guint16           bytes);
 static void   load_8     (FILE             *fp,
                           gint              width,
                           gint              height,
                           guchar           *buffer,
-                          gint16            bytes);
+                          guint16           bytes);
 static void   load_24    (FILE             *fp,
                           gint              width,
                           gint              height,
                           guchar           *buffer,
-                          gint16            bytes);
+                          guint16           bytes);
 static void   readline   (FILE             *fp,
                           guchar           *buffer,
                           gint              bytes);
@@ -259,21 +259,72 @@ guchar mono[6]= { 0, 0, 0, 255, 255, 255 };
 
 static struct
 {
-  guint8 manufacturer;
-  guint8 version;
-  guint8 compression;
-  guint8 bpp;
-  gint16 x1, y1;
-  gint16 x2, y2;
-  gint16 hdpi;
-  gint16 vdpi;
-  guint8 colormap[48];
-  guint8 reserved;
-  guint8 planes;
-  gint16 bytesperline;
-  gint16 color;
-  guint8 filler[58];
+  guint8  manufacturer;
+  guint8  version;
+  guint8  compression;
+  guint8  bpp;
+  guint16 x1, y1;
+  guint16 x2, y2;
+  guint16 hdpi;
+  guint16 vdpi;
+  guint8  colormap[48];
+  guint8  reserved;
+  guint8  planes;
+  guint16 bytesperline;
+  guint16 color;
+  guint8  filler[58];
 } pcx_header;
+
+static struct {
+  size_t   size;
+  gpointer address;
+} pcx_header_buf_xlate[] = {
+  { 1,  &pcx_header.manufacturer },
+  { 1,  &pcx_header.version },
+  { 1,  &pcx_header.compression },
+  { 1,  &pcx_header.bpp },
+  { 2,  &pcx_header.x1 },
+  { 2,  &pcx_header.y1 },
+  { 2,  &pcx_header.x2 },
+  { 2,  &pcx_header.y2 },
+  { 2,  &pcx_header.hdpi },
+  { 2,  &pcx_header.vdpi },
+  { 48, &pcx_header.colormap },
+  { 1,  &pcx_header.reserved },
+  { 1,  &pcx_header.planes },
+  { 2,  &pcx_header.bytesperline },
+  { 2,  &pcx_header.color },
+  { 58, &pcx_header.filler },
+  { 0,  NULL }
+};
+
+static void
+pcx_header_from_buffer (const gpointer buf)
+{
+  gint i;
+  gint buf_offset = 0;
+
+  for (i = 0; pcx_header_buf_xlate[i].size != 0; i++)
+    {
+      g_memmove (pcx_header_buf_xlate[i].address, buf + buf_offset,
+                 pcx_header_buf_xlate[i].size);
+      buf_offset += pcx_header_buf_xlate[i].size;
+    }
+}
+
+static void
+pcx_header_to_buffer (const gpointer buf)
+{
+  gint i;
+  gint buf_offset = 0;
+
+  for (i = 0; pcx_header_buf_xlate[i].size != 0; i++)
+    {
+      g_memmove (buf + buf_offset, pcx_header_buf_xlate[i].address,
+                 pcx_header_buf_xlate[i].size);
+      buf_offset += pcx_header_buf_xlate[i].size;
+    }
+}
 
 static gint32
 load_image (const gchar *filename)
@@ -281,9 +332,11 @@ load_image (const gchar *filename)
   FILE         *fd;
   GimpDrawable *drawable;
   GimpPixelRgn  pixel_rgn;
-  gint16        offset_x, offset_y, height, width;
+  guint16       offset_x, offset_y;
+  gint32        width, height;
   gint32        image, layer;
   guchar       *dest, cmap[768];
+  guint8        header_buf[128];
 
   fd = g_fopen (filename, "rb");
   if (!fd)
@@ -296,12 +349,14 @@ load_image (const gchar *filename)
   gimp_progress_init_printf (_("Opening '%s'"),
                              gimp_filename_to_utf8 (filename));
 
-  if (fread (&pcx_header, 128, 1, fd) == 0)
+  if (fread (header_buf, 128, 1, fd) == 0)
     {
       g_message (_("Could not read header from '%s'"),
                  gimp_filename_to_utf8 (filename));
       return -1;
     }
+
+  pcx_header_from_buffer (header_buf);
 
   if (pcx_header.manufacturer != 10)
     {
@@ -310,25 +365,19 @@ load_image (const gchar *filename)
       return -1;
     }
 
-  offset_x = GINT16_FROM_LE (pcx_header.x1);
-  offset_y = GINT16_FROM_LE (pcx_header.y1);
-  width = GINT16_FROM_LE (pcx_header.x2) - offset_x + 1;
-  height = GINT16_FROM_LE (pcx_header.y2) - offset_y + 1;
+  offset_x = GUINT16_FROM_LE (pcx_header.x1);
+  offset_y = GUINT16_FROM_LE (pcx_header.y1);
+  width = GUINT16_FROM_LE (pcx_header.x2) - offset_x + 1;
+  height = GUINT16_FROM_LE (pcx_header.y2) - offset_y + 1;
 
-  if (width < 0)
+  if ((width < 0) || (width > GIMP_MAX_IMAGE_SIZE))
     {
       g_message (_("Unsupported or invalid image width: %d"), width);
       return -1;
     }
-  if (height < 0)
+  if ((height < 0) || (height > GIMP_MAX_IMAGE_SIZE))
     {
       g_message (_("Unsupported or invalid image height: %d"), height);
-      return -1;
-    }
-  if (GINT16_FROM_LE (pcx_header.bytesperline) <= 0)
-    {
-      g_message (_("Invalid number of bytes per line: %hd"),
-                 GINT16_FROM_LE (pcx_header.bytesperline));
       return -1;
     }
 
@@ -352,27 +401,31 @@ load_image (const gchar *filename)
   if (pcx_header.planes == 1 && pcx_header.bpp == 1)
     {
       dest = (guchar *) g_malloc (width * height);
-      load_1 (fd, width, height, dest, GINT16_FROM_LE (pcx_header.bytesperline));
+      load_1 (fd, width, height, dest,
+              GUINT16_FROM_LE (pcx_header.bytesperline));
       gimp_image_set_colormap (image, mono, 2);
     }
   else if (pcx_header.planes == 4 && pcx_header.bpp == 1)
     {
       dest = (guchar *) g_malloc (width * height);
-      load_4(fd, width, height, dest, GINT16_FROM_LE (pcx_header.bytesperline));
+      load_4 (fd, width, height, dest,
+              GUINT16_FROM_LE (pcx_header.bytesperline));
       gimp_image_set_colormap (image, pcx_header.colormap, 16);
     }
   else if (pcx_header.planes == 1 && pcx_header.bpp == 8)
     {
       dest = (guchar *) g_malloc (width * height);
-      load_8(fd, width, height, dest, GINT16_FROM_LE (pcx_header.bytesperline));
-      fseek(fd, -768L, SEEK_END);
-      fread(cmap, 768, 1, fd);
+      load_8 (fd, width, height, dest,
+              GUINT16_FROM_LE (pcx_header.bytesperline));
+      fseek (fd, -768L, SEEK_END);
+      fread (cmap, 768, 1, fd);
       gimp_image_set_colormap (image, cmap, 256);
     }
   else if (pcx_header.planes == 3 && pcx_header.bpp == 8)
     {
       dest = (guchar *) g_malloc (width * height * 3);
-      load_24(fd, width, height, dest, GINT16_FROM_LE (pcx_header.bytesperline));
+      load_24 (fd, width, height, dest,
+               GUINT16_FROM_LE (pcx_header.bytesperline));
     }
   else
     {
@@ -392,14 +445,14 @@ load_image (const gchar *filename)
 }
 
 static void
-load_8 (FILE   *fp,
-	gint    width,
-	gint    height,
-	guchar *buffer,
-	gint16  bytes)
+load_8 (FILE    *fp,
+	gint     width,
+	gint     height,
+	guchar  *buffer,
+	guint16  bytes)
 {
   gint    row;
-  guchar *line= g_new (guchar, bytes);
+  guchar *line = g_new (guchar, bytes);
 
   for (row = 0; row < height; buffer += width, ++row)
     {
@@ -412,14 +465,14 @@ load_8 (FILE   *fp,
 }
 
 static void
-load_24 (FILE   *fp,
-	 gint    width,
-	 gint    height,
-	 guchar *buffer,
-	 gint16  bytes)
+load_24 (FILE    *fp,
+	 gint     width,
+	 gint     height,
+	 guchar  *buffer,
+	 guint16  bytes)
 {
   gint    x, y, c;
-  guchar *line= g_new (guchar, bytes);
+  guchar *line = g_new (guchar, bytes);
 
   for (y = 0; y < height; buffer += width * 3, ++y)
     {
@@ -438,11 +491,11 @@ load_24 (FILE   *fp,
 }
 
 static void
-load_1 (FILE   *fp,
-	gint    width,
-	gint    height,
-	guchar *buffer,
-	gint16  bytes)
+load_1 (FILE    *fp,
+	gint     width,
+	gint     height,
+	guchar  *buffer,
+	guint16  bytes)
 {
   gint    x, y;
   guchar *line = g_new (guchar, bytes);
@@ -464,18 +517,19 @@ load_1 (FILE   *fp,
 }
 
 static void
-load_4 (FILE   *fp,
-	gint    width,
-	gint    height,
-	guchar *buffer,
-	gint16  bytes)
+load_4 (FILE    *fp,
+	gint     width,
+	gint     height,
+	guchar  *buffer,
+	guint16  bytes)
 {
   gint    x, y, c;
-  guchar *line= g_new (guchar, bytes);
+  guchar *line = g_new (guchar, bytes);
 
   for (y = 0; y < height; buffer += width, ++y)
     {
-      for (x = 0; x < width; ++x) buffer[x] = 0;
+      for (x = 0; x < width; ++x)
+        buffer[x] = 0;
       for (c = 0; c < 4; ++c)
 	{
 	  readline(fp, line, bytes);
@@ -536,8 +590,10 @@ save_image (const gchar *filename,
   GimpImageType  drawable_type;
   guchar        *cmap= NULL;
   guchar        *pixels;
-  gint           offset_x, offset_y, width, height;
+  gint           offset_x, offset_y;
+  guint          width, height;
   gint           colors, i;
+  guint8         header_buf[128];
 
   drawable = gimp_drawable_get (layer);
   drawable_type = gimp_drawable_type (layer);
@@ -558,23 +614,23 @@ save_image (const gchar *filename,
     case GIMP_INDEXED_IMAGE:
       cmap = gimp_image_get_colormap (image, &colors);
       pcx_header.bpp = 8;
-      pcx_header.bytesperline = GINT16_TO_LE (width);
+      pcx_header.bytesperline = GUINT16_TO_LE (width);
       pcx_header.planes = 1;
-      pcx_header.color = GINT16_TO_LE (1);
+      pcx_header.color = GUINT16_TO_LE (1);
       break;
 
     case GIMP_RGB_IMAGE:
       pcx_header.bpp = 8;
       pcx_header.planes = 3;
-      pcx_header.color = GINT16_TO_LE (1);
-      pcx_header.bytesperline = GINT16_TO_LE (width);
+      pcx_header.color = GUINT16_TO_LE (1);
+      pcx_header.bytesperline = GUINT16_TO_LE (width);
       break;
 
     case GIMP_GRAY_IMAGE:
       pcx_header.bpp = 8;
       pcx_header.planes = 1;
-      pcx_header.color = GINT16_TO_LE (2);
-      pcx_header.bytesperline = GINT16_TO_LE (width);
+      pcx_header.color = GUINT16_TO_LE (2);
+      pcx_header.bytesperline = GUINT16_TO_LE (width);
       break;
 
     default:
@@ -592,16 +648,44 @@ save_image (const gchar *filename,
   pixels = (guchar *) g_malloc (width * height * pcx_header.planes);
   gimp_pixel_rgn_get_rect (&pixel_rgn, pixels, 0, 0, width, height);
 
-  pcx_header.x1 = GINT16_TO_LE (offset_x);
-  pcx_header.y1 = GINT16_TO_LE (offset_y);
-  pcx_header.x2 = GINT16_TO_LE (offset_x + width - 1);
-  pcx_header.y2 = GINT16_TO_LE (offset_y + height - 1);
+  if ((offset_x < 0) || (offset_x > (1<<16)))
+    {
+      g_message (_("Invalid X offset: %d"), offset_x);
+      return FALSE;
+    }
 
-  pcx_header.hdpi = GINT16_TO_LE (300);
-  pcx_header.vdpi = GINT16_TO_LE (300);
+  if ((offset_y < 0) || (offset_y > (1<<16)))
+    {
+      g_message (_("Invalid Y offset: %d"), offset_y);
+      return FALSE;
+    }
+
+  if (offset_x + width - 1 > (1<<16))
+    {
+      g_message (_("Right border out of bounds (must be < %d): %d"), (1<<16),
+                 offset_x + width - 1);
+      return FALSE;
+    }
+
+  if (offset_y + height - 1 > (1<<16))
+    {
+      g_message (_("Bottom border out of bounds (must be < %d): %d"), (1<<16),
+                 offset_y + height - 1);
+      return FALSE;
+    }
+
+  pcx_header.x1 = GUINT16_TO_LE ((guint16)offset_x);
+  pcx_header.y1 = GUINT16_TO_LE ((guint16)offset_y);
+  pcx_header.x2 = GUINT16_TO_LE ((guint16)(offset_x + width - 1));
+  pcx_header.y2 = GUINT16_TO_LE ((guint16)(offset_y + height - 1));
+
+  pcx_header.hdpi = GUINT16_TO_LE (300);
+  pcx_header.vdpi = GUINT16_TO_LE (300);
   pcx_header.reserved = 0;
 
-  fwrite (&pcx_header, 128, 1, fp);
+  pcx_header_to_buffer (header_buf);
+
+  fwrite (header_buf, 128, 1, fp);
 
   switch (drawable_type)
     {
@@ -611,7 +695,9 @@ save_image (const gchar *filename,
       fwrite (cmap, colors, 3, fp);
       for (i = colors; i < 256; i++)
 	{
-	  fputc (0, fp); fputc (0, fp); fputc (0, fp);
+	  fputc (0, fp);
+          fputc (0, fp);
+          fputc (0, fp);
 	}
       break;
 
@@ -624,7 +710,9 @@ save_image (const gchar *filename,
       fputc (0x0c, fp);
       for (i = 0; i < 256; i++)
 	{
-	  fputc ((guchar) i, fp); fputc ((guchar) i, fp); fputc ((guchar) i, fp);
+	  fputc ((guchar) i, fp);
+          fputc ((guchar) i, fp);
+          fputc ((guchar) i, fp);
 	}
       break;
 
@@ -635,7 +723,12 @@ save_image (const gchar *filename,
   gimp_drawable_detach (drawable);
   g_free (pixels);
 
-  fclose (fp);
+  if (fclose (fp) != 0)
+    {
+      g_message (_("Writing to file '%s' failed: %s"),
+                 gimp_filename_to_utf8 (filename), g_strerror (errno));
+      return FALSE;
+    }
   return TRUE;
 }
 
@@ -661,8 +754,9 @@ save_24 (FILE   *fp,
 	 gint    height,
 	 guchar *buffer)
 {
-  int x, y, c;
+  int     x, y, c;
   guchar *line;
+
   line = (guchar *) g_malloc (width);
 
   for (y = 0; y < height; ++y)
@@ -676,7 +770,7 @@ save_24 (FILE   *fp,
 	  writeline (fp, line, width);
 	}
       buffer += width * 3;
-    gimp_progress_update ((double) y / (double) height);
+      gimp_progress_update ((double) y / (double) height);
     }
   g_free (line);
 }
@@ -686,8 +780,8 @@ writeline (FILE   *fp,
 	   guchar *buffer,
 	   gint    bytes)
 {
-  guchar value, count;
-  guchar *finish = buffer+ bytes;
+  guchar  value, count;
+  guchar *finish = buffer + bytes;
 
   while (buffer < finish)
     {
