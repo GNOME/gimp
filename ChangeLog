@@ -19,6 +19,8 @@
 	* plug-ins/script-fu/servertest.py: small script to test the
 	communication with the script-fu-server.
 
+	This hopefully fixes bug #438997
+
 2007-08-29  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/metadata/xmp-encode.c (gen_property): escape the text
