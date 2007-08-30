@@ -47,7 +47,8 @@
 
 #include "scheme-wrapper.h"
 
-static int   ts_console_mode;
+static ts_output_func   ts_output_handler = NULL;
+static gpointer         ts_output_data = NULL;
 
 #undef cons
 
@@ -188,27 +189,36 @@ struct named_constant const old_constants[] =
 
 
 static scheme sc;
-static FILE  *ts_output;
 
 
-/* wrapper functions */
-FILE *
-ts_get_output_file (void)
+void
+ts_register_output_func (ts_output_func  func,
+                         gpointer        user_data)
 {
-  return ts_output;
+  ts_output_handler = func;
+  ts_output_data    = user_data;
 }
 
 void
-ts_set_output_file (FILE *file)
+ts_stdout_output_func (TsOutputType  type,
+                       const char   *string,
+                       int           len,
+                       gpointer      user_data)
 {
-  scheme_set_output_port_file (&sc, file);
-  ts_output = file;
+  if (len < 0)
+    len = strlen (string);
+  fprintf (stdout, "%.*s", len, string);
 }
 
 void
-ts_set_console_mode (int flag)
+ts_gstring_output_func (TsOutputType  type,
+                        const char   *string,
+                        int           len,
+                        gpointer      user_data)
 {
-  ts_console_mode = flag;
+  GString *gstr = (GString *) user_data;
+
+  g_string_append_len (gstr, string, len);
 }
 
 void
@@ -220,8 +230,10 @@ ts_set_print_flag (gint print_flag)
 void
 ts_print_welcome (void)
 {
-  fprintf (ts_output, "Welcome to TinyScheme, Version 1.38\n");
-  fprintf (ts_output, "Copyright (c) Dimitrios Souflis\n");
+  ts_output_string (TS_OUTPUT_NORMAL,
+                    "Welcome to TinyScheme, Version 1.38\n", -1);
+  ts_output_string (TS_OUTPUT_NORMAL,
+                    "Copyright (c) Dimitrios Souflis\n", -1);
 }
 
 void
@@ -233,13 +245,6 @@ ts_interpret_stdin (void)
 gint
 ts_interpret_string (const gchar *expr)
 {
-  port *pt = sc.outport->_object._port;
-
-  memset (sc.linebuff, '\0', LINESIZE);
-  pt->rep.string.curr = sc.linebuff;
-  /* Somewhere 'past_the_end' gets altered so it needs to be reset ~~~~~ */
-  pt->rep.string.past_the_end = &sc.linebuff[LINESIZE-1];
-
 #if DEBUG_SCRIPTS
   sc.print_output = 1;
   sc.tracing = 1;
@@ -248,12 +253,6 @@ ts_interpret_string (const gchar *expr)
   sc.vptr->load_string (&sc, (char *)expr);
 
   return sc.retcode;
-}
-
-const char *
-ts_get_error_msg (void)
-{
-  return sc.linebuff;
 }
 
 const gchar *
@@ -265,14 +264,17 @@ ts_get_success_msg (void)
   return "Success";
 }
 
-/* len is length of 'string' in bytes */
+/* len is length of 'string' in bytes or -1 for null terminated strings */
 void
-ts_output_string (const char *string, int len)
+ts_output_string (TsOutputType  type,
+                  const char   *string,
+                  int           len)
 {
-  g_return_if_fail (len >= 0);
+  if (len < 0)
+    len = strlen (string);
 
-  if (len > 0 && ts_console_mode)
-    script_fu_output_to_console (string, len);
+  if (ts_output_handler && len > 0)
+    (* ts_output_handler) (type, string, len, ts_output_data);
 }
 
 
@@ -286,7 +288,6 @@ tinyscheme_init (const gchar *path,
                  gboolean     local_register_scripts)
 {
   register_scripts = local_register_scripts;
-  ts_output_routine = ts_output_string;
 
   /* init the interpreter */
   if (!scheme_init (&sc))
@@ -296,11 +297,12 @@ tinyscheme_init (const gchar *path,
     }
 
   scheme_set_input_port_file (&sc, stdin);
-  ts_set_output_file (stdout);
+  scheme_set_output_port_file (&sc, stdout);
+  ts_register_output_func (ts_stdout_output_func, NULL);
 
   /* Initialize the TinyScheme extensions */
-  init_ftx(&sc);
-  init_re(&sc);
+  init_ftx (&sc);
+  init_re (&sc);
 
   /* register in the interpreter the gimp functions and types. */
   init_constants ();
@@ -590,19 +592,7 @@ convert_string (gchar *str)
 static pointer
 my_err (char *msg, pointer a)
 {
-  if (ts_console_mode)
-    {
-      gchar *tmp = g_strdup_printf ("Error: %s\n", msg);
-
-      script_fu_output_to_console (tmp, -1);
-
-      g_free (tmp);
-    }
-  else
-    {
-      g_message (msg);
-    }
-
+  ts_output_string (TS_OUTPUT_ERROR, msg, -1);
   return sc.NIL;
 }
 

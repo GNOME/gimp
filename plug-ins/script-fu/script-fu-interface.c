@@ -762,7 +762,7 @@ static void
 script_fu_ok (SFScript *script)
 {
   gchar   *escaped;
-  GString *s;
+  GString *s, *output;
   gchar   *command;
   gchar    buffer[G_ASCII_DTOSTR_BUF_SIZE];
   gint     i;
@@ -898,8 +898,11 @@ script_fu_ok (SFScript *script)
   command = g_string_free (s, FALSE);
 
   /*  run the command through the interpreter  */
+  output = g_string_new ("");
+  ts_register_output_func (ts_gstring_output_func, output);
   if (ts_interpret_string (command))
-    script_fu_error_msg (command);
+    script_fu_error_msg (command, output->str);
+  g_string_free (output, TRUE);
 
   g_free (command);
 }

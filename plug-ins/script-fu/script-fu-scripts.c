@@ -41,7 +41,6 @@
 
 #include "script-fu-intl.h"
 
-
 typedef struct
 {
   SFScript *script;
@@ -126,14 +125,12 @@ script_fu_find_scripts (const gchar *path)
   script_menu_list = NULL;
 }
 
-#if 1   /* ~~~~~ */
 static pointer
-my_err(scheme *sc, char *msg)
+my_err (scheme *sc, char *msg)
 {
-  g_printerr (msg);
+  ts_output_string (TS_OUTPUT_ERROR, msg, -1);
   return sc->F;
 }
-#endif
 
 pointer
 script_fu_add_script (scheme *sc, pointer a)
@@ -663,10 +660,10 @@ script_fu_add_menu (scheme *sc, pointer a)
 }
 
 void
-script_fu_error_msg (const gchar *command)
+script_fu_error_msg (const gchar *command, const gchar *msg)
 {
   g_message (_("Error while executing\n%s\n\n%s"),
-             command, ts_get_error_msg ());
+             command, msg);
 }
 
 
@@ -680,12 +677,16 @@ script_fu_load_script (const GimpDatafileData *file_data,
     {
       gchar *command;
       gchar *escaped = g_strescape (file_data->filename, NULL);
+      GString *output;
 
       command = g_strdup_printf ("(load \"%s\")", escaped);
       g_free (escaped);
 
+      output = g_string_new ("");
+      ts_register_output_func (ts_gstring_output_func, output);
       if (ts_interpret_string (command))
-        script_fu_error_msg (command);
+        script_fu_error_msg (command, output->str);
+      g_string_free (output, TRUE);
 
 #ifdef G_OS_WIN32
       /* No, I don't know why, but this is
@@ -844,6 +845,7 @@ script_fu_script_proc (const gchar      *name,
   GimpRunMode        run_mode;
   SFScript          *script;
   gint               min_args = 0;
+  GString           *output;
 
   run_mode = params[0].data.d_int32;
 
@@ -1001,8 +1003,11 @@ script_fu_script_proc (const gchar      *name,
               command = g_string_free (s, FALSE);
 
               /*  run the command through the interpreter  */
+              output = g_string_new ("");
+              ts_register_output_func (ts_gstring_output_func, output);
               if (ts_interpret_string (command))
-                script_fu_error_msg (command);
+                script_fu_error_msg (command, output->str);
+              g_string_free (output, TRUE);
 
               g_free (command);
             }

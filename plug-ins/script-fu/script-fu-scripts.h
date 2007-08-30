@@ -22,6 +22,7 @@
 void     script_fu_find_scripts  (const gchar *path);
 pointer  script_fu_add_script    (scheme *sc, pointer a);
 pointer  script_fu_add_menu      (scheme *sc, pointer a);
-void     script_fu_error_msg     (const gchar *command);
+void     script_fu_error_msg     (const gchar *command,
+                                  const gchar *msg);
 
 #endif /*  __SCRIPT_FU_SCRIPTS__  */

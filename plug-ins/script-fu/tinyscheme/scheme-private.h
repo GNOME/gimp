@@ -72,7 +72,6 @@ pointer safe_foreign;    /* register to avoid gc problems */
 
 int interactive_repl;    /* are we in an interactive REPL? */
 int print_output;        /* set to 1 to print results and error messages */
-int print_error;         /* set to 1 while printing error messages */
 
 struct cell _sink;
 pointer sink;            /* when mem. alloc. fails */
@@ -117,7 +116,6 @@ char    gc_verbose;      /* if gc_verbose is not zero, print gc status */
 char    no_memory;       /* Whether mem. alloc. has failed */
 
 #define LINESIZE 1024
-char    linebuff[LINESIZE];
 char    strbuff[LINESIZE];
 
 FILE *tmpfp;

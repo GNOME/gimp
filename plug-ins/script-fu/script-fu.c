@@ -178,8 +178,6 @@ script_fu_run (const gchar      *name,
 
   path = script_fu_search_path ();
 
-  ts_set_console_mode (0);
-
   /*  Determine before we allow scripts to register themselves
    *   whether this is the base, automatically installed script-fu extension
    */
@@ -230,7 +228,6 @@ script_fu_run (const gchar      *name,
        *  The script-fu text console for interactive Scheme development
        */
 
-      ts_output_routine = NULL;
       script_fu_text_console_run (name, nparams, param,
                                   nreturn_vals, return_vals);
     }

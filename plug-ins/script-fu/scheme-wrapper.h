@@ -19,22 +19,38 @@
 #ifndef SCHEME_WRAPPER_H
 #define SCHEME_WRAPPER_H
 
-FILE        * ts_get_output_file   (void);
-void          ts_set_output_file   (FILE *file);
+typedef enum { TS_OUTPUT_NORMAL, TS_OUTPUT_ERROR } TsOutputType;
 
-void          ts_set_console_mode  (int flag);
+typedef void (* ts_output_func)       (TsOutputType    type,
+                                       const char     *string,
+                                       int             len,
+                                       gpointer        data);
+
+void          ts_register_output_func (ts_output_func  func,
+                                       gpointer        user_data);
+
+void          ts_stdout_output_func   (TsOutputType    type,
+                                       const char     *string,
+                                       int             len,
+                                       gpointer        user_data);
+
+void          ts_gstring_output_func  (TsOutputType    type,
+                                       const char     *string,
+                                       int             len,
+                                       gpointer        user_data);
 
 void          ts_set_print_flag    (gint);
 void          ts_print_welcome     (void);
 
-const gchar * ts_get_error_msg     (void);
 const gchar * ts_get_success_msg   (void);
 
-void          tinyscheme_init      (const gchar *path,
-                                    gboolean     local_register_scripts);
+void          tinyscheme_init      (const gchar  *path,
+                                    gboolean      local_register_scripts);
 void          tinyscheme_deinit    (void);
 
-void          ts_output_string     (const char *string, int len);
+void          ts_output_string     (TsOutputType  type,
+                                    const char   *string,
+                                    int           len);
 
 void          ts_interpret_stdin   (void);
 

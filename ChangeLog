@@ -1,3 +1,24 @@
+2007-08-30  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme.[ch]
+	* plug-ins/script-fu/tinyscheme/scheme-private.h: small changes
+	to tinyscheme - mostly removing workarounds for message output.
+
+	* plug-ins/script-fu/scheme-wrapper.[ch]: try to channel the
+	output through a central function, have various output functions
+	to handle the messages. Remove some hacks.
+
+	* plug-ins/script-fu/script-fu-text-console.c
+	* plug-ins/script-fu/script-fu-scripts.[ch]
+	* plug-ins/script-fu/script-fu-interface.c
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/script-fu-server.c
+	* plug-ins/script-fu/script-fu-console.[ch]: use the new
+	infrastructure. Remove more hacks.
+
+	* plug-ins/script-fu/servertest.py: small script to test the
+	communication with the script-fu-server.
+
 2007-08-29  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/metadata/xmp-encode.c (gen_property): escape the text

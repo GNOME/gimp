@@ -450,31 +450,29 @@ static gboolean
 execute_command (SFCommand *cmd)
 {
   guchar       buffer[RESPONSE_HEADER];
-  const gchar *response;
+  GString     *response;
   time_t       clock1;
   time_t       clock2;
-  gint         response_len;
   gboolean     error;
   gint         i;
 
   server_log ("Processing request #%d\n", cmd->request_no);
   time (&clock1);
 
+  response = g_string_new ("");
+  ts_register_output_func (ts_gstring_output_func, response);
+
   /*  run the command  */
   if (ts_interpret_string (cmd->command) != 0)
     {
       error = TRUE;
-      response = ts_get_error_msg ();
-      response_len = strlen (response);
-
-      server_log ("%s\n", response);
+      server_log ("%s\n", response->str);
     }
   else
     {
       error = FALSE;
 
-      response = ts_get_success_msg ();
-      response_len = strlen (response);
+      g_string_assign (response, ts_get_success_msg ());
 
       time (&clock2);
       server_log ("Request #%d processed in %f seconds, finishing on %s",
@@ -483,8 +481,8 @@ execute_command (SFCommand *cmd)
 
   buffer[MAGIC_BYTE]     = MAGIC;
   buffer[ERROR_BYTE]     = error ? TRUE : FALSE;
-  buffer[RSP_LEN_H_BYTE] = (guchar) (response_len >> 8);
-  buffer[RSP_LEN_L_BYTE] = (guchar) (response_len & 0xFF);
+  buffer[RSP_LEN_H_BYTE] = (guchar) (response->len >> 8);
+  buffer[RSP_LEN_L_BYTE] = (guchar) (response->len & 0xFF);
 
   /*  Write the response to the client  */
   for (i = 0; i < RESPONSE_HEADER; i++)
@@ -495,13 +493,15 @@ execute_command (SFCommand *cmd)
         return FALSE;
       }
 
-  for (i = 0; i < response_len; i++)
-    if (cmd->filedes > 0 && send (cmd->filedes, response + i, 1, 0) < 0)
+  for (i = 0; i < response->len; i++)
+    if (cmd->filedes > 0 && send (cmd->filedes, response->str + i, 1, 0) < 0)
       {
         /*  Write error  */
         print_socket_api_error ("send");
         return FALSE;
       }
+
+  g_string_free (response, TRUE);
 
   return FALSE;
 }

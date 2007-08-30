@@ -42,7 +42,8 @@ script_fu_text_console_run (const gchar      *name,
   static GimpParam  values[1];
 
   /*  Enable Script-Fu output  */
-  ts_set_output_file (stdout);
+  ts_register_output_func (ts_stdout_output_func, NULL);
+
   ts_print_welcome ();
 
   /*  Run the interface  */

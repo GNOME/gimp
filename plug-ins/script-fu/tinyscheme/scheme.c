@@ -46,6 +46,10 @@
 
 #include "scheme-private.h"
 
+#if !STANDALONE
+#include "../scheme-wrapper.h"
+#endif
+
 /* Used for documentation purposes, to signal functions in 'interface' */
 #define INTERFACE
 
@@ -92,7 +96,7 @@ static int utf8_stricmp(const char *s1, const char *s2)
   return result;
 }
 
-#define min(a, b)  ((a <= b) ? a : b)
+#define min(a, b)  ((a) <= (b) ? (a) : (b))
 
 #if USE_STRLWR
 /*
@@ -395,8 +399,6 @@ static void assign_proc(scheme *sc, enum scheme_opcodes, char *name);
 scheme *scheme_init_new(void);
 #if !STANDALONE
 void scheme_call(scheme *sc, pointer func, pointer args);
-
-void (*ts_output_routine) (const char *, int) = NULL;
 #endif
 
 #define num_ivalue(n)       (n.is_fixnum?(n).value.ivalue:(long)(n).value.rvalue)
@@ -1544,7 +1546,6 @@ static void backchar(scheme *sc, gunichar c) {
 static void putchars(scheme *sc, const char *chars, int char_cnt) {
   int   free_bytes;     /* Space remaining in buffer (in bytes) */
   int   l;
-  char *s;
   port *pt=sc->outport->_object._port;
 
   if (char_cnt <= 0)
@@ -1553,22 +1554,15 @@ static void putchars(scheme *sc, const char *chars, int char_cnt) {
   /* Get length of 'chars' in bytes */
   char_cnt = g_utf8_offset_to_pointer(chars, (long)char_cnt) - chars;
 
-  if (sc->print_error) {
-      l = strlen(sc->linebuff);
-      s = &sc->linebuff[l];
-      memcpy(s, chars, min(char_cnt, LINESIZE-l-1));
-      return;
-  }
-
   if(pt->kind&port_file) {
 #if STANDALONE
       fwrite(chars,1,char_cnt,pt->rep.stdio.file);
       fflush(pt->rep.stdio.file);
 #else
       /* If output is still directed to stdout (the default) it should be    */
-      /* safe to redirect it to the routine pointed to by ts_output_routine. */
-      if (pt->rep.stdio.file == stdout && ts_output_routine != NULL)
-           (*ts_output_routine) (chars, char_cnt);
+      /* safe to redirect it to the registered output routine. */
+      if (pt->rep.stdio.file == stdout)
+           ts_output_string (TS_OUTPUT_NORMAL, chars, char_cnt);
       else {
         fwrite(chars,1,char_cnt,pt->rep.stdio.file);
         fflush(pt->rep.stdio.file);
@@ -3647,9 +3641,6 @@ static pointer opexe_4(scheme *sc, enum scheme_opcodes op) {
                sc->args=cons(sc,mk_string(sc," -- "),sc->args);
                setimmutable(car(sc->args));
           }
-          if (sc->print_error == 0)     /* Reset buffer if not already */
-              sc->linebuff[0] = '\0';   /* in error message output mode*/
-          sc->print_error = 1;
           putstr(sc, "Error: ");
           putstr(sc, strvalue(car(sc->args)));
           sc->args = cdr(sc->args);
@@ -3664,7 +3655,6 @@ static pointer opexe_4(scheme *sc, enum scheme_opcodes op) {
                s_goto(sc,OP_P0LIST);
           } else {
                putstr(sc, "\n");
-               sc->print_error = 0;
                if(sc->interactive_repl) {
                     s_goto(sc,OP_T0LVL);
                } else {
@@ -3964,8 +3954,7 @@ static pointer opexe_5(scheme *sc, enum scheme_opcodes op) {
                     s_return(sc,x);
                }
           default:
-               sprintf(sc->linebuff, "syntax error: illegal token %d", sc->tok);
-               Error_0(sc,sc->linebuff);
+               Error_1(sc, "syntax error: illegal token", mk_integer (sc, sc->tok));
           }
           break;
 
@@ -4515,7 +4504,6 @@ int scheme_init_custom_alloc(scheme *sc, func_alloc malloc, func_dealloc free) {
   sc->nesting=0;
   sc->interactive_repl=0;
   sc->print_output=0;
-  sc->print_error=0;
 
   if (alloc_cellseg(sc,FIRST_CELLSEGS) != FIRST_CELLSEGS) {
     sc->no_memory=1;
