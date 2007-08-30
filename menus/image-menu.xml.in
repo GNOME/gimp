@@ -589,6 +589,14 @@
       <separator />
     </menu>
 
+    <menu action="help-menu" name="Help">
+      <menuitem action="help-help" />
+      <menuitem action="help-context-help" />
+      <menuitem action="dialogs-tips" />
+      <menuitem action="dialogs-about" />
+      <separator />
+    </menu>
+
   </menubar-and-popup>
 
 </ui>

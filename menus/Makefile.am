@@ -49,12 +49,16 @@ MAINTAINERCLEANFILES = $(menudata_built_files)
 
 
 if GIMP_UNSTABLE
-XSLTPARAMS = --stringparam debug-menu yes
+DEBUG_MENU_PARAMS = --stringparam debug-menu yes
+endif
+
+if HAVE_CARBON
+HELP_MENU_PARAMS = --stringparam help-menu yes
 endif
 
 %.xml: %.xml.in $(srcdir)/menus.xsl dialogs-menuitems.xml
 if HAVE_XSLTPROC
-	$(XSLTPROC) --xinclude $(XSLTPARAMS) $(srcdir)/menus.xsl $< > $(@) || rm -f $(@)
+	$(XSLTPROC) --xinclude $(DEBUG_MENU_PARAMS) $(HELP_MENU_PARAMS) $(srcdir)/menus.xsl $< > $(@) || rm -f $(@)
 else
 	@echo "*** xsltproc is required to build the menus XML files ***"; exit 1;
 endif

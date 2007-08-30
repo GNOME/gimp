@@ -1660,6 +1660,7 @@ if test "x$carbon_ok" = "xyes"; then
   CARBON_LDFLAGS="-framework Carbon"
   AC_SUBST(CARBON_LDFLAGS)
 fi
+AM_CONDITIONAL(HAVE_CARBON, test "x$carbon_ok" = "xyes")
 
 
 ##########################################################

@@ -624,7 +624,8 @@ sync_menu_shell (GtkMenuShell *menu_shell,
       if (GTK_IS_TEAROFF_MENU_ITEM (menu_item))
 	continue;
 
-      if (toplevel && g_object_get_data (G_OBJECT (menu_item), "gtk-empty-menu-item"))
+      if (toplevel && g_object_get_data (G_OBJECT (menu_item),
+					 "gtk-empty-menu-item"))
 	continue;
 
       carbon_item = carbon_menu_item_get (menu_item);

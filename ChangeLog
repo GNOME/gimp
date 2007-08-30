@@ -1,3 +1,17 @@
+2007-08-30  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/sync-menu.c: take over cosmetic fix from upstream.
+
+	* configure.in: add HAVE_CARBON as AM_CONDITIONAL
+
+	* menus/image-menu.xml.in: add the Help menu to the image menu.
+
+	* menus/Makefile.am
+	* menus/menus.xsl: filter it away if we are not on carbon.
+
+	* app/menus/menus.c: added the "help" action group to the image UI
+	manager.
+
 2007-08-30  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/script-fu/scheme-wrapper.c
