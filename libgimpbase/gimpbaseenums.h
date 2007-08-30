@@ -330,7 +330,7 @@ typedef enum
   GIMP_TRANSFORM_RESIZE_ADJUST           = 0, /*< desc="Adjust" >*/
   GIMP_TRANSFORM_RESIZE_CLIP             = 1, /*< desc="Clip" >*/
   GIMP_TRANSFORM_RESIZE_CROP,                 /*< desc="Crop to result" >*/
-  GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT,     /*< desc="Crop with aspect" >*/
+  GIMP_TRANSFORM_RESIZE_CROP_WITH_ASPECT      /*< desc="Crop with aspect" >*/
 } GimpTransformResize;
 
 

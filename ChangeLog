@@ -1,5 +1,9 @@
 2007-08-30  Michael Natterer  <mitch@gimp.org>
 
+	* libgimpbase/gimpbaseenums.h: remove extraneous comma.
+
+2007-08-30  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/sync-menu.c: take over cosmetic fix from upstream.
 
 	* configure.in: add HAVE_CARBON as AM_CONDITIONAL
