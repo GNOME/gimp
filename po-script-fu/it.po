@@ -6,45 +6,45 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-19 21:22+0200\n"
-"PO-Revision-Date: 2007-06-12 19:25+0200\n"
+"POT-Creation-Date: 2007-08-30 18:51+0200\n"
+"PO-Revision-Date: 2007-08-30 18:47+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:144
-#: ../plug-ins/script-fu/script-fu-console.c:213
+#: ../plug-ins/script-fu/script-fu-console.c:135
+#: ../plug-ins/script-fu/script-fu-console.c:202
 msgid "Script-Fu Console"
 msgstr "Console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:209
+#: ../plug-ins/script-fu/script-fu-console.c:198
 msgid "Welcome to TinyScheme"
 msgstr "Benvenuti a TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:215
+#: ../plug-ins/script-fu/script-fu-console.c:204
 msgid "Interactive Scheme Development"
 msgstr "Sviluppo interattivo in Scheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:251
+#: ../plug-ins/script-fu/script-fu-console.c:240
 msgid "_Browse..."
 msgstr "_Naviga..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:313
+#: ../plug-ins/script-fu/script-fu-console.c:300
 msgid "Save Script-Fu Console Output"
 msgstr "Salva il risultato della console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:360
+#: ../plug-ins/script-fu/script-fu-console.c:347
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossibile aprire \"%s\" in scrittura: %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:389
+#: ../plug-ins/script-fu/script-fu-console.c:376
 msgid "Script-Fu Procedure Browser"
 msgstr "Navigatore delle procedure script-fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:723
+#: ../plug-ins/script-fu/script-fu-console.c:719
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "La modalità di valutazione Script-Fu permette solo invocazioni non "
@@ -103,7 +103,7 @@ msgstr "Selezione gradiente Script-Fu"
 msgid "Script-Fu Brush Selection"
 msgstr "Selezione pennello Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:664
+#: ../plug-ins/script-fu/script-fu-scripts.c:665
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -148,115 +148,115 @@ msgstr "Server per le operazioni Script-Fu remote"
 msgid "_Start Server..."
 msgstr "Avvia _server..."
 
-#: ../plug-ins/script-fu/script-fu.c:301
+#: ../plug-ins/script-fu/script-fu.c:298
 msgid "_GIMP Online"
 msgstr "_GIMP online"
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:299
 msgid "_User Manual"
 msgstr "Manuale _utente"
 
-#: ../plug-ins/script-fu/script-fu.c:305
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:307
+#: ../plug-ins/script-fu/script-fu.c:304
 msgid "_Buttons"
 msgstr "P_ulsanti"
 
-#: ../plug-ins/script-fu/script-fu.c:309
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Logos"
 msgstr "_Logotipi"
 
-#: ../plug-ins/script-fu/script-fu.c:311
+#: ../plug-ins/script-fu/script-fu.c:308
 msgid "_Misc"
 msgstr "_Varie"
 
-#: ../plug-ins/script-fu/script-fu.c:313
+#: ../plug-ins/script-fu/script-fu.c:310
 msgid "_Patterns"
 msgstr "_Motivi"
 
-#: ../plug-ins/script-fu/script-fu.c:315
+#: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:317
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "_Utilities"
 msgstr "_Utilità"
 
-#: ../plug-ins/script-fu/script-fu.c:319
+#: ../plug-ins/script-fu/script-fu.c:316
 msgid "_Web Page Themes"
 msgstr "Temi per pagine _web"
 
-#: ../plug-ins/script-fu/script-fu.c:321
+#: ../plug-ins/script-fu/script-fu.c:318
 msgid "_Alien Glow"
 msgstr "Bagliore _alieno"
 
-#: ../plug-ins/script-fu/script-fu.c:323
+#: ../plug-ins/script-fu/script-fu.c:320
 msgid "_Beveled Pattern"
 msgstr "Motivo in _bassorilievo"
 
-#: ../plug-ins/script-fu/script-fu.c:325
+#: ../plug-ins/script-fu/script-fu.c:322
 msgid "_Classic.Gimp.Org"
 msgstr "_Classico gimp.org"
 
-#: ../plug-ins/script-fu/script-fu.c:328
+#: ../plug-ins/script-fu/script-fu.c:325
 msgid "Alpha to _Logo"
 msgstr "Alfa a _logotipo"
 
-#: ../plug-ins/script-fu/script-fu.c:330
+#: ../plug-ins/script-fu/script-fu.c:327
 msgid "An_imation"
 msgstr "An_imazioni"
 
-#: ../plug-ins/script-fu/script-fu.c:332
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "_Animators"
 msgstr "_Animatori"
 
-#: ../plug-ins/script-fu/script-fu.c:334
+#: ../plug-ins/script-fu/script-fu.c:331
 msgid "_Artistic"
 msgstr "_Artistici"
 
-#: ../plug-ins/script-fu/script-fu.c:336
+#: ../plug-ins/script-fu/script-fu.c:333
 msgid "_Blur"
 msgstr "_Sfocature"
 
-#: ../plug-ins/script-fu/script-fu.c:338
+#: ../plug-ins/script-fu/script-fu.c:335
 msgid "_Decor"
 msgstr "_Decorazioni"
 
-#: ../plug-ins/script-fu/script-fu.c:340
+#: ../plug-ins/script-fu/script-fu.c:337
 msgid "_Effects"
 msgstr "_Effetti"
 
-#: ../plug-ins/script-fu/script-fu.c:342
+#: ../plug-ins/script-fu/script-fu.c:339
 msgid "En_hance"
 msgstr "_Miglioramenti"
 
-#: ../plug-ins/script-fu/script-fu.c:344
+#: ../plug-ins/script-fu/script-fu.c:341
 msgid "_Light and Shadow"
 msgstr "_Luci e ombre"
 
-#: ../plug-ins/script-fu/script-fu.c:346
+#: ../plug-ins/script-fu/script-fu.c:343
 msgid "S_hadow"
 msgstr "_Ombre"
 
-#: ../plug-ins/script-fu/script-fu.c:348
+#: ../plug-ins/script-fu/script-fu.c:345
 msgid "_Render"
 msgstr "_Render"
 
-#: ../plug-ins/script-fu/script-fu.c:350
+#: ../plug-ins/script-fu/script-fu.c:347
 msgid "_Alchemy"
 msgstr "_Alchimia"
 
-#: ../plug-ins/script-fu/script-fu.c:353
+#: ../plug-ins/script-fu/script-fu.c:350
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Rileggere tutti gli Script-Fu disponibili"
 
-#: ../plug-ins/script-fu/script-fu.c:358
+#: ../plug-ins/script-fu/script-fu.c:355
 msgid "_Refresh Scripts"
 msgstr "_Rinfresca gli scripts"
 
-#: ../plug-ins/script-fu/script-fu.c:381
+#: ../plug-ins/script-fu/script-fu.c:378
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -1275,7 +1275,9 @@ msgstr "Aggiunge all'immagine delle macchie di caffe molto realistiche"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid "Darken only\\n(Better, but only for images with a lot of white)"
-msgstr "Solo scurire\n(migliore ma solo per immagini con molto bianco)"
+msgstr ""
+"Solo scurire\n"
+"(migliore ma solo per immagini con molto bianco)"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
@@ -1470,45 +1472,6 @@ msgstr "Righe/Colonne"
 msgid "_Erase Every Other Row..."
 msgstr "Canc_ella ogni altra riga..."
 
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:1
-msgid "Apply generated layermask"
-msgstr "Applica livello maschera generato"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:2
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
-msgid "Border size"
-msgstr "Dimensione bordo"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:3
-msgid "Clear unselected maskarea"
-msgstr "Pulisci aree maschere non selezionate"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:4
-msgid ""
-"Create a layermask that fades the edges of the selected region (or alpha)"
-msgstr ""
-"Crea una maschera di livello che sfuma i bordi della regione o al livello "
-"alfa selezionati"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:6
-#, no-c-format
-msgid "Fade from %"
-msgstr "Sfuma da %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:8
-#, no-c-format
-msgid "Fade to %"
-msgstr "Sfuma fino %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:9
-msgid "Use growing selection"
-msgstr "Utilizza selezione crescente"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:10
-msgid "_Fade to Layer Mask..."
-msgstr "S_fuma sulla maschera di livello..."
-
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 msgid "Create an image filled with a Land Pattern"
 msgstr "Crea un'immagine riempita con un motivo paesaggio"
@@ -1612,7 +1575,7 @@ msgstr "_Congelato..."
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
 msgid "Add a jagged, fuzzy border to an image"
-msgstr "Aggiunge un bordo frastagliato all'immagine"
+msgstr "Aggiunge un bordo vaporoso all'immagine"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Add shadow"
@@ -1621,6 +1584,11 @@ msgstr "Aggiungi ombra"
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
 msgid "Blur border"
 msgstr "Sfuoca bordo"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
+msgid "Border size"
+msgstr "Dimensione bordo"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
@@ -1633,7 +1601,7 @@ msgstr "Peso ombra (%)"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
 msgid "_Fuzzy Border..."
-msgstr "Bordo _fuzzy..."
+msgstr "Bordo _vaporoso..."
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:1
 msgid "Autocrop"
@@ -2373,7 +2341,8 @@ msgstr "Angoli a_rrotondati..."
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
 msgid "Change the colormap of an image to the colors in a specified palette."
 msgstr ""
-"Trasforma la mappa dei colori di una immagine usando i colori di una tavolozza specificata"
+"Trasforma la mappa dei colori di una immagine usando i colori di una "
+"tavolozza specificata"
 
 #: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
 msgid "Palette"
@@ -3014,3 +2983,27 @@ msgstr "Opacità illuminazione"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Effetto _xach..."
+
+#~ msgid "Apply generated layermask"
+#~ msgstr "Applica livello maschera generato"
+
+#~ msgid "Clear unselected maskarea"
+#~ msgstr "Pulisci aree maschere non selezionate"
+
+#~ msgid ""
+#~ "Create a layermask that fades the edges of the selected region (or alpha)"
+#~ msgstr ""
+#~ "Crea una maschera di livello che sfuma i bordi della regione o al livello "
+#~ "alfa selezionati"
+
+#~ msgid "Fade from %"
+#~ msgstr "Sfuma da %"
+
+#~ msgid "Fade to %"
+#~ msgstr "Sfuma fino %"
+
+#~ msgid "Use growing selection"
+#~ msgstr "Utilizza selezione crescente"
+
+#~ msgid "_Fade to Layer Mask..."
+#~ msgstr "S_fuma sulla maschera di livello..."
