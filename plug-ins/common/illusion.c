@@ -275,100 +275,61 @@ illusion (GimpDrawable *drawable)
 static void
 illusion_preview (GimpPreview  *preview,
                   GimpDrawable *drawable)
+
 {
-  guchar  **pixels;
-  guchar   *destpixels;
-  guchar   *preview_cache;
+  gint                  x, y;
+  gint                  sx, sy;
+  gint                  preview_width, preview_height;
+  guchar               *src;
+  guchar               *dest;
+  guchar               *src_pixel;
+  guchar               *dest_pixel;
+  gint                  bpp;
+  IllusionParam_t       param;
+  gint                  width, height;
+  gint                  x1, y1, x2, y2;
 
-  gint      width;
-  gint      height;
-  gint      bpp;
-  gint      center_x;
-  gint      center_y;
+  gimp_drawable_mask_bounds (drawable->drawable_id, &x1, &y1, &x2, &y2);
+  width  = x2 - x1;
+  height = y2 - y1;
 
-  gint      x, y, b;
-  gint      xx = 0;
-  gint      yy = 0;
-  gdouble   scale, radius, cx, cy, angle, offset, zoom;
+  param.pft = gimp_pixel_fetcher_new (drawable, FALSE);
+  gimp_pixel_fetcher_set_edge_mode (param.pft, GIMP_PIXEL_FETCHER_EDGE_SMEAR);
 
-  preview_cache = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
-                                                &width, &height, &bpp);
+  param.has_alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  param.center_x = (x1 + x2) / 2.0;
+  param.center_y = (y1 + y2) / 2.0;
+  param.scale = sqrt (width * width + height * height) / 2;
+  param.offset = (gint) (param.scale / 2);
 
-  zoom = gimp_zoom_preview_get_factor (GIMP_ZOOM_PREVIEW (preview));
+  src = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
+                                      &preview_width, &preview_height, &bpp);
+  dest = g_malloc (preview_width * preview_height * bpp);
 
-  gimp_preview_transform (preview,
-                          drawable->width / 2.0, drawable->height / 2.0,
-                          &center_x, &center_y);
+  src_pixel = src;
+  dest_pixel = dest;
 
-  pixels     = g_new (guchar *, height);
-  destpixels = g_new (guchar, height * width * bpp);
-
-  for (y = 0; y < height; y++)
+  for (y = 0; y < preview_height; y++)
     {
-      pixels[y]     = g_new (guchar, width * bpp);
-      memcpy (pixels[y],
-              preview_cache + width * bpp * y,
-              width * bpp);
-    }
-
-  scale  = sqrt (width * width * zoom * zoom + height * height * zoom * zoom) / 2;
-  offset = (gint) (scale / 2);
-
-  for (y = 0; y < height; y++)
-    {
-      cy = ((gdouble)y - center_y) / scale;
-      for (x = 0; x < width; x++)
+      for (x = 0; x < preview_width; x++)
         {
-          cx = ((gdouble)x - center_x) / scale;
-          angle = floor (atan2 (cy, cx) * parameters.division / G_PI_2)
-            * G_PI_2 / parameters.division + (G_PI / parameters.division);
-          radius = sqrt ((gdouble) (cx * cx + cy * cy));
+          gimp_preview_untransform (preview, x, y, &sx, &sy);
 
-          if (parameters.type1)
-            {
-              xx = x - offset * cos (angle);
-              yy = y - offset * sin (angle);
-            }
-          else                  /* Type 2 */
-            {
-              xx = x - offset * sin (angle);
-              yy = y - offset * cos (angle);
-            }
+          illusion_func (sx, sy,
+                         src_pixel, dest_pixel,
+                         bpp,
+                         (gpointer) &param);
 
-          xx = CLAMP (xx, 0, width - 1);
-          yy = CLAMP (yy, 0, height - 1);
-
-          if (bpp == 2 || bpp == 4)
-            {
-              gdouble alpha1 = pixels[y][x * bpp + bpp - 1];
-              gdouble alpha2 = pixels[yy][xx * bpp + bpp - 1];
-              gdouble alpha = (1 - radius) * alpha1 + radius * alpha2;
-
-              for (b = 0; alpha > 0 && b < bpp - 1; b++)
-                {
-                  destpixels[(y * width + x) * bpp+b] =
-                    ((1-radius) * alpha1 * pixels[y][x * bpp + b]
-                     + radius * alpha2 * pixels[yy][xx * bpp + b])/alpha;
-                }
-              destpixels[(y * width + x) * bpp + bpp-1] = alpha;
-            }
-          else
-            {
-              for (b = 0; b < bpp; b++)
-                destpixels[(y * width + x) * bpp+b] =
-                  (1-radius) * pixels[y][x * bpp + b]
-                  + radius * pixels[yy][xx * bpp + b];
-            }
+          src_pixel += bpp;
+          dest_pixel += bpp;
         }
     }
-  gimp_preview_draw_buffer (preview, destpixels, width * bpp);
 
-  for (y = 0; y < height; y++)
-    g_free (pixels[y]);
-  g_free (pixels);
+  gimp_pixel_fetcher_destroy (param.pft);
 
-  g_free (destpixels);
-  g_free (preview_cache);
+  gimp_preview_draw_buffer (preview, dest, preview_width * bpp);
+  g_free (dest);
+  g_free (src);
 }
 
 static gboolean

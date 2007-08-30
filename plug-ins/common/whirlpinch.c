@@ -611,122 +611,62 @@ static void
 dialog_update_preview (GimpDrawable *drawable,
                        GimpPreview  *preview)
 {
-  gdouble  left, right, bottom, top;
-  gdouble  dx, dy;
-  gdouble  px, py;
-  gdouble  cx, cy;
-  gint     ix, iy;
-  gint     x, y;
-  gdouble  whirl;
-  gdouble  scale_x, scale_y;
-  guchar  *p_ul, *p_lr, *i;
-  guchar   outside[4];
-  GimpRGB  background;
-  gint     width, height;
-  guchar  *src, *dest;
-  gint     j;
-
-  gimp_context_get_background (&background);
-
-  switch (img_bpp)
-    {
-    case 1:
-      outside[0] = outside[1] = outside [2] = gimp_rgb_luminance_uchar (&background);
-      outside[3] = 255;
-      break;
-
-    case 2:
-      outside[0] = outside[1] = outside [2] = gimp_rgb_luminance_uchar (&background);
-      outside[3] = 0;
-      break;
-
-    case 3:
-      gimp_rgb_get_uchar (&background,
-                          &outside[0], &outside[1], &outside[2]);
-      outside[3] = 255;
-      break;
-
-    case 4:
-      gimp_rgb_get_uchar (&background,
-                          &outside[0], &outside[1], &outside[2]);
-      outside[3] = 0;
-      break;
-    }
-
-  left   = sel_x1;
-  right  = sel_x2 - 1;
-  bottom = sel_y2 - 1;
-  top    = sel_y1;
-
-  src = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
-                                      &width, &height, &img_bpp);
-  dest = g_new (guchar, width * height * img_bpp);
-
-  dx = (right - left) / (width - 1);
-  dy = (bottom - top) / (height - 1);
+  gdouble               cx, cy;
+  gint                  x, y;
+  gint                  sx, sy;
+  gint                  width, height;
+  guchar               *pixel;
+  GimpRGB               background;
+  guchar               *dest;
+  gint                  j;
+  gint                  bpp;
+  GimpPixelFetcher     *pft;
+  guchar                in_pixels[4][4];
+  guchar               *in_values[4];
+  gdouble               whirl;
 
   whirl   = wpvals.whirl * G_PI / 180.0;
   radius2 = radius * radius * wpvals.radius;
 
-  scale_x = (double) width / (right - left + 1);
-  scale_y = (double) height / (bottom - top + 1);
+  for (j = 0; j < 4; j++)
+    in_values[j] = in_pixels[j];
 
-  py = top;
+  pft = gimp_pixel_fetcher_new (drawable, FALSE);
 
-  p_ul = dest;
-  p_lr = dest + img_bpp * (width * height - 1);
+  gimp_context_get_background (&background);
+  gimp_rgb_set_alpha (&background, 0.0);
+  gimp_pixel_fetcher_set_bg_color (pft, &background);
+  gimp_pixel_fetcher_set_edge_mode (pft, GIMP_PIXEL_FETCHER_EDGE_SMEAR);
 
-  for (y = 0; y <= (height / 2); y++)
+  dest = gimp_zoom_preview_get_source (GIMP_ZOOM_PREVIEW (preview),
+                                       &width, &height, &bpp);
+
+  pixel = dest;
+
+  for (y = 0; y < height; y++)
     {
-      px = left;
-
       for (x = 0; x < width; x++)
         {
-          calc_undistorted_coords (px, py, whirl, wpvals.pinch, &cx, &cy);
+          gimp_preview_untransform (preview, x, y, &sx, &sy);
+          calc_undistorted_coords ((gdouble)sx, (gdouble)sy,
+                                   whirl, wpvals.pinch,
+                                   &cx, &cy);
 
-          cx = (cx - left) * scale_x;
-          cy = (cy - top) * scale_y;
+          gimp_pixel_fetcher_get_pixel (pft, cx, cy, in_pixels[0]);
+          gimp_pixel_fetcher_get_pixel (pft, cx + 1, cy, in_pixels[1]);
+          gimp_pixel_fetcher_get_pixel (pft, cx, cy + 1, in_pixels[2]);
+          gimp_pixel_fetcher_get_pixel (pft, cx + 1, cy + 1, in_pixels[3]);
 
-          /* Upper left mirror */
+          gimp_bilinear_pixels_8 (pixel, cx, cy, bpp,
+                                  img_has_alpha, in_values);
 
-          ix = (int) (cx + 0.5);
-          iy = (int) (cy + 0.5);
-
-          if ((ix >= 0) && (ix < width) &&
-              (iy >= 0) && (iy < height))
-            i = src + img_bpp * (width * iy + ix);
-          else
-            i = outside;
-
-          for (j = 0; j < img_bpp; j++)
-            p_ul[j] = i[j];
-
-          p_ul += img_bpp;
-
-          /* Lower right mirror */
-
-          ix = width - ix - 1;
-          iy = height - iy - 1;
-
-          if ((ix >= 0) && (ix < width) &&
-              (iy >= 0) && (iy < height))
-            i = src + img_bpp * (width * iy + ix);
-          else
-            i = outside;
-
-          for (j = 0; j < img_bpp; j++)
-            p_lr[j] = i[j];
-
-          p_lr -= img_bpp;
-
-          px += dx;
+          pixel += bpp;
         }
-
-      py += dy;
     }
 
-  gimp_preview_draw_buffer (preview, dest, width * img_bpp);
+  gimp_pixel_fetcher_destroy (pft);
 
-  g_free (src);
+  gimp_preview_draw_buffer (preview, dest, width * bpp);
   g_free (dest);
 }
+

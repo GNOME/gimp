@@ -1,3 +1,11 @@
+2007-08-30  Karine Delvare  <edhel@gimp.org>
+
+	* plug-ins/common/illusion.c
+	* plug-ins/common/polar.c
+	* plug-ins/common/whirlpinch.c: applied patches from Aurimas Juška
+	that fixes use of the GimpZoomPreview widget in those plug-ins (see
+	bug #356716), and makes illusion handle selections properly.
+
 2007-08-30  Raphaël Quinet  <raphael@gimp.org>
 
 	* authors.xml: updated some entries, added contributors: Nicola
