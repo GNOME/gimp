@@ -1,5 +1,11 @@
 2007-08-30  Raphaël Quinet  <raphael@gimp.org>
 
+	* data/tips/gimp-tips.xml.in: expanded old tip and mentioned that
+	it is possible to configure most window managers so that they do
+	not steal the Alt key from the applications.  Fixes bug #471565.
+
+2007-08-30  Raphaël Quinet  <raphael@gimp.org>
+
 	* plug-ins/common/pcx.c: applied modified patch from Nils
 	Philippsen that adds more sanity checks when loading and saving
 	images.  Fixes the reopened bug #471189.

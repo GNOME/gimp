@@ -85,6 +85,15 @@
       (Image→Flatten Image).
     </_thetip>
   </tip>
+  <tip level="beginner">
+    <_thetip>
+      You can adjust or move a selection by using <tt>Alt</tt>-drag.
+      If this makes the window move, your window manager uses the
+      <tt>Alt</tt> key already.  Most window managers can be
+      configured to ignore the <tt>Alt</tt> key or to use
+      the <tt>Super</tt> key (or "Windows logo") instead.
+    </_thetip>
+  </tip>
 
 <!--                                                                       -->
 <!-- Tips for intermediate users start here                                -->
@@ -138,13 +147,6 @@
       allows you to add to the current selection instead of replacing it.
       Using <tt>Ctrl</tt> before making a selection subtracts from the
       current one.
-    </_thetip>
-  </tip>
-  <tip level="intermediate">
-    <_thetip>
-      You can adjust or move a selection by using <tt>Alt</tt>-drag.
-      If this makes the window move, your window manager uses the
-      <tt>Alt</tt> key already.
     </_thetip>
   </tip>
   <tip level="intermediate">
