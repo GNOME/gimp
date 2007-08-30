@@ -16,6 +16,7 @@
   <contributor role="author" last-active="1.2">Sven Anders</contributor>
   <contributor role="author" last-active="2.4">Henrik Brix Andersen</contributor>
   <contributor role="author" last-active="1.0">Karl-Johan Andersson</contributor>
+  <contributor role="author" last-active="2.4">Nicola Archibald</contributor>
   <contributor role="author" last-active="1.0">John Beale</contributor>
   <contributor role="author" last-active="2.0">Zach Beane</contributor>
   <contributor role="author" last-active="1.0">Tom Bech</contributor>
@@ -149,6 +150,7 @@
   <contributor role="author" last-active="2.4">Chris Mohler</contributor>
   <contributor role="author" last-active="2.4">Chris Moller</contributor>
   <contributor role="author" last-active="2.0">David Monniaux</contributor>
+  <contributor role="author" last-active="2.4">Tim Mooney</contributor>
   <contributor role="author" last-active="2.4">Adam D Moss</contributor>
   <contributor role="author" last-active="1.2">Balazs Nagy</contributor>
   <contributor role="author" last-active="1.2">Yukihiro Nakai</contributor>
@@ -174,7 +176,8 @@
   <contributor role="author" last-active="2.4">Akkana Peck</contributor>
   <contributor role="author" last-active="2.0">Asbjorn Pettersen</contributor>
   <contributor role="author" last-active="1.2">Mike Phillips</contributor>
-  <contributor role="author" last-active="2.2">Ari Pollak</contributor>
+  <contributor role="author" last-active="2.4">Nils Philippsen</contributor>
+  <contributor role="author" last-active="2.4">Ari Pollak</contributor>
   <contributor role="author" last-active="2.4">Raphaël Quinet</contributor>
   <contributor role="documenter" last-active="2.4">Manuel Quiñones</contributor>
   <contributor role="author" last-active="1.2">Tom Rathborne</contributor>
@@ -228,6 +231,7 @@
   <contributor role="author" last-active="1.2">Calvin Williamson</contributor>
   <contributor role="author" last-active="2.4">Matthew Wilson</contributor>
   <contributor role="author" last-active="2.4">Karl Günter Wünsch</contributor>
+  <contributor role="author" last-active="2.4">Yoshinori Yamakawa</contributor>
   <contributor role="author" last-active="1.2">Shirasaki Yasuhiro</contributor>
 
 </gimp-authors>
