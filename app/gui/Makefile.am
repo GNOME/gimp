@@ -30,7 +30,7 @@ libappgui_a_SOURCES = \
 	splash.h		\
 	themes.c		\
 	themes.h		\
-	sync-menu.c		\
-	sync-menu.h
+	gtk-macmenu.c		\
+	gtk-macmenu.h
 
 EXTRA_DIST = makefile.msc

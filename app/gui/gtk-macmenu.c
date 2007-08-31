@@ -30,7 +30,7 @@
 
 #include <Carbon/Carbon.h>
 
-#include "sync-menu.h"
+#include "gtk-macmenu.h"
 
 
 /* TODO

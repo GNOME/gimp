@@ -85,7 +85,7 @@
 #include "splash.h"
 #include "themes.h"
 #ifdef HAVE_CARBON
-#include "sync-menu.h"
+#include "gtk-macmenu.h"
 #endif /* HAVE_CARBON */
 
 #include "gimp-intl.h"

@@ -1,5 +1,14 @@
 2007-08-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/sync-menu.[ch]: renamed...
+
+	* app/gui/gtk-macmenu.[ch]: ...to these to match new namespace.
+
+	* app/gui/Makefile.am
+	* app/gui/gui.c: changed accordingly.
+
+2007-08-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/gui/sync-menu.[ch]: new versions with sane namespace and
 	support for setting the application menu's "Quit", "About" and
 	"Preferences" items.

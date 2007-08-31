@@ -21,8 +21,8 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __SYNC_MENU_H__
-#define __SYNC_MENU_H__
+#ifndef __GTK_MACMENU_H__
+#define __GTK_MACMENU_H__
 
 #include <gtk/gtk.h>
 
@@ -38,4 +38,4 @@ void   gtk_macmenu_set_prefs_item (GtkMenuItem  *menu_item,
 
 G_END_DECLS
 
-#endif /* __SYNC_MENU_H__ */
+#endif /* __GTK_MACMENU_H__ */
