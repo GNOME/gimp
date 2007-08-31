@@ -949,6 +949,15 @@ void set_safe_foreign (scheme *sc, pointer data) {
   }
 }
 
+pointer foreign_error (scheme *sc, const char *s, pointer a) {
+  if (sc->safe_foreign == sc->NIL) {
+    fprintf (stderr, "set_foreign_error_flag called outside a foreign function\n");
+  } else {
+    sc->foreign_error = cons (sc, mk_string (sc, s), a);
+  }
+  return sc->T;
+}
+
 
 /* char_cnt is length of string in chars. */
 /* str points to a NUL terminated string. */
@@ -2579,9 +2588,16 @@ static pointer opexe_0(scheme *sc, enum scheme_opcodes op) {
                s_goto(sc,procnum(sc->code));   /* PROCEDURE */
           } else if (is_foreign(sc->code)) {
                sc->safe_foreign = cons (sc, sc->NIL, sc->safe_foreign);
+               sc->foreign_error = sc->NIL;
                x=sc->code->_object._ff(sc,sc->args);
                sc->safe_foreign = cdr (sc->safe_foreign);
-               s_return(sc,x);
+               if (sc->foreign_error == sc->NIL) {
+                   s_return(sc,x);
+               } else {
+                   x = sc->foreign_error;
+                   sc->foreign_error = sc->NIL;
+                   Error_1 (sc, string_value (car (x)), cdr (x));
+               }
           } else if (is_closure(sc->code) || is_macro(sc->code)
                      || is_promise(sc->code)) { /* CLOSURE */
             /* Should not accept promise */

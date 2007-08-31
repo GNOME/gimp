@@ -161,6 +161,7 @@ void    putcharacter(scheme *sc, gunichar c);
 void    putstr(scheme *sc, const char *s);
 
 SCHEME_EXPORT void set_safe_foreign (scheme *sc, pointer data);
+SCHEME_EXPORT pointer foreign_error (scheme *sc, const char *s, pointer a);
 
 #if USE_INTERFACE
 struct scheme_interface {

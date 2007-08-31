@@ -1,9 +1,5 @@
 2007-08-31  Simon Budig  <simon@gimp.org>
 
-	* MAINTAINERS: adjusted to enforced gnome-svn standards  :-(
-
-2007-08-31  Simon Budig  <simon@gimp.org>
-
 	* plug-ins/script-fu/tinyscheme/scheme.[ch]
 	* plug-ins/script-fu/tinyscheme/scheme-private.h: make it possible
 	for foreign functions to return an error.
@@ -11,6 +7,10 @@
 	* plug-ins/script-fu/script-fu-scripts.c
 	* plug-ins/script-fu/scheme-wrapper.c: Make use of this.
 	Fixes bug #472026.
+
+2007-08-31  Simon Budig  <simon@gimp.org>
+
+	* MAINTAINERS: adjusted to enforced gnome-svn standards  :-(
 
 2007-08-31  Michael Natterer  <mitch@gimp.org>
 

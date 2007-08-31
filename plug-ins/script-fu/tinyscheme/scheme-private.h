@@ -69,6 +69,7 @@ pointer envir;           /* stack register for current environment */
 pointer code;            /* register for current code */
 pointer dump;            /* stack register for next evaluation */
 pointer safe_foreign;    /* register to avoid gc problems */
+pointer foreign_error;   /* used for foreign functions to signal an error */
 
 int interactive_repl;    /* are we in an interactive REPL? */
 int print_output;        /* set to 1 to print results and error messages */
