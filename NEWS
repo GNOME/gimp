@@ -7,6 +7,18 @@ This is the development branch of GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
+Changes in GIMP 2.4.0-rc2
+=========================
+
+- more improvements and bug fixes in the rectangle tools
+- antialias the display for zoom levels between 100% and 200%
+- improve JPEG settings handling
+- fix script-fu error erporting
+- on OS X, get rid of menubars in windows and use the global menubar
+- fix GimpZoomPreview-using plug-ins
+- bug fixes
+
+
 Changes in GIMP 2.4.0-rc1
 =========================
 
