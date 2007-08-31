@@ -1,3 +1,9 @@
+2007-08-31  Raphaël Quinet  <raphael@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c (render_image_tile_fault):
+	do not use anti-aliasing when the zoom is exactly 200%.  Fixes bug
+	#472150.  Also miscellaneous cosmetic changes.
+
 2007-08-31  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/antialias.c: fixed subtle cut'n'paste bug,
