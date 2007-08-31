@@ -1064,11 +1064,11 @@ render_image_tile_fault (RenderInfo *info)
   guint         bottom_weight;
 
   /* dispatch to fast path functions on special conditions */
-  if ((gimp_zoom_quality & GIMP_DISPLAY_ZOOM_FAST) ||
+  if ((gimp_zoom_quality & GIMP_DISPLAY_ZOOM_FAST)
 
       /* use nearest neighbour for exact levels */
-      (info->scalex == 1.0 &&
-       info->scaley == 1.0)
+      || (info->scalex == 1.0 &&
+          info->scaley == 1.0) 
 
       /* or when we're larger than 1.0 and not using any AA */
       || (info->shell->scale_x > 1.0 &&
@@ -1078,6 +1078,11 @@ render_image_tile_fault (RenderInfo *info)
       /* or at any point when both scale factors are greater or equal to 200% */
       || (info->shell->scale_x >= 2.0 &&
           info->shell->scale_y >= 2.0 )
+  
+      /* or when we're scaling a 1bpp texture, this code-path seems to be
+       * invoked when interacting with SIOX which uses a palletized drawable
+       */
+      || (tile_manager_bpp (info->src_tiles)==1)
       )
     {
       return render_image_tile_fault_nearest (info);

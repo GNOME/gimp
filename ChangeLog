@@ -1,3 +1,10 @@
+2007-08-31  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c: (render_image_tile_fault):
+	use nearest neighbour resampling when rendering for a 1byte per pixel
+	drawable (ony happens when interacting with the SIOX tool, and then
+	the buffer is a indexed; not a greyscale buffer), fixes bug #472027.
+
 2007-08-31  Raphaël Quinet  <raphael@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c (render_image_tile_fault):
