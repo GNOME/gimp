@@ -257,12 +257,16 @@ render (GimpDrawable *drawable)
       memcpy (&rowafter[0], &rowafter[bytes], bytes);
       memcpy (&rowafter[(width + 1) * bytes], &rowafter[width * bytes], bytes);
 
+      /* this macro returns the current pixel if it has some opacity. Otherwise
+       * it returns the center pixel of the current 3x3 area. */
+#define USE_IF_ALPHA(p) (((!has_alpha) || *((p)+alpha)) ? (p) : &rowthis[(col+1)*bytes])
+
       for (col = x; col < (x + w); ++col)
         {
           /* do 9x extrapolation pass */
           if (((!has_alpha) || (rowthis[(col+1)*bytes+alpha])) &&
               extrapolate9 (bytes,
-                            &ninepix[0],
+                            &ninepix[0*bytes],
                             &ninepix[1*bytes],
                             &ninepix[2*bytes],
                             &ninepix[3*bytes],
@@ -271,23 +275,15 @@ render (GimpDrawable *drawable)
                             &ninepix[6*bytes],
                             &ninepix[7*bytes],
                             &ninepix[8*bytes],
-                            ((!has_alpha) || rowbefore[(col+0)*bytes+alpha]) ?
-                            &rowbefore[(col+0)*bytes] : &rowthis[(col+1)*bytes],
-                            ((!has_alpha) || rowbefore[(col+1)*bytes+alpha]) ?
-                            &rowbefore[(col+1)*bytes] : &rowthis[(col+1)*bytes],
-                            ((!has_alpha) || rowbefore[(col+2)*bytes+alpha]) ?
-                            &rowbefore[(col+2)*bytes] : &rowthis[(col+1)*bytes],
-                            ((!has_alpha) || rowthis[(col+0)*bytes+alpha]) ?
-                            &rowthis[(col+0)*bytes] : &rowthis[(col+1)*bytes],
-                            &rowthis[(col+1)*bytes],
-                            ((!has_alpha) || rowthis[(col+2)*bytes+alpha]) ?
-                            &rowthis[(col+2)*bytes] : &rowthis[(col+1)*bytes],
-                            ((!has_alpha) || rowafter[(col+0)*bytes+alpha]) ?
-                            &rowafter[(col+0)*bytes] : &rowafter[(col+1)*bytes],
-                            ((!has_alpha) || rowafter[(col+1)*bytes+alpha]) ?
-                            &rowafter[(col+1)*bytes] : &rowafter[(col+1)*bytes],
-                            ((!has_alpha) || rowafter[(col+2)*bytes+alpha]) ?
-                            &rowafter[(col+2)*bytes] : &rowafter[(col+1)*bytes]
+                            USE_IF_ALPHA (&rowbefore[(col+0)*bytes]),
+                            USE_IF_ALPHA (&rowbefore[(col+1)*bytes]),
+                            USE_IF_ALPHA (&rowbefore[(col+2)*bytes]),
+                            USE_IF_ALPHA (&rowthis  [(col+0)*bytes]),
+                                          &rowthis  [(col+1)*bytes],
+                            USE_IF_ALPHA (&rowthis  [(col+2)*bytes]),
+                            USE_IF_ALPHA (&rowafter [(col+0)*bytes]),
+                            USE_IF_ALPHA (&rowafter [(col+1)*bytes]),
+                            USE_IF_ALPHA (&rowafter [(col+2)*bytes])
                             ))
             {
               /* subsample results and put into dest */
@@ -305,6 +301,8 @@ render (GimpDrawable *drawable)
               memcpy (&dest[col * bytes], &rowthis[(col + 1) * bytes], bytes);
             }
         }
+
+#undef USE_IF_ALPHA
 
       /* write result row to dest */
       gimp_pixel_rgn_set_row (&destPR, &dest[x * bytes],

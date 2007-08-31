@@ -1,3 +1,8 @@
+2007-08-31  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/common/antialias.c: fixed subtle cut'n'paste bug,
+	made the code a little bit more readable.
+
 2007-08-30  Karine Delvare  <edhel@gimp.org>
 
 	* plug-ins/common/illusion.c
