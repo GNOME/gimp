@@ -1,3 +1,9 @@
+2007-08-31  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/tile-manager.c (tile_manager_get): if
+	tile_manager->cached_tile is requested for writing, clear the
+	cache before giving out the tile. Fixes bug #472170.
+
 2007-08-31  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c: (render_image_tile_fault):

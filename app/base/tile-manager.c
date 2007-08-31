@@ -198,6 +198,14 @@ tile_manager_get (TileManager *tm,
     {
       if (wantwrite)
         {
+          if (tile_num == tm->cached_num)
+            {
+              tile_release (tm->cached_tile, FALSE);
+
+              tm->cached_tile = NULL;
+              tm->cached_num  = -1;
+            }
+
           if ((*tile_ptr)->share_count > 1)
             {
               /* Copy-on-write required */
@@ -759,11 +767,11 @@ read_pixel_data_1 (TileManager *tm,
 
       if (num != tm->cached_num)    /* must fetch a new tile */
         {
-           if (tm->cached_tile)
-             tile_release (tm->cached_tile, FALSE);
+          if (tm->cached_tile)
+            tile_release (tm->cached_tile, FALSE);
 
-           tm->cached_num  = num;
-           tm->cached_tile = tile_manager_get (tm, num, TRUE, FALSE);
+          tm->cached_num  = num;
+          tm->cached_tile = tile_manager_get (tm, num, TRUE, FALSE);
         }
 
       if (tm->cached_tile)
