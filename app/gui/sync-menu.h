@@ -28,7 +28,13 @@
 
 G_BEGIN_DECLS
 
-void sync_menu_takeover_menu (GtkMenuShell *menu_shell);
+void   gtk_macmenu_set_menubar    (GtkMenuShell *menu_shell);
+
+void   gtk_macmenu_set_quit_item  (GtkMenuItem  *menu_item);
+void   gtk_macmenu_set_about_item (GtkMenuItem  *menu_item,
+				   const gchar  *label);
+void   gtk_macmenu_set_prefs_item (GtkMenuItem  *menu_item,
+                                   const gchar  *label);
 
 G_END_DECLS
 

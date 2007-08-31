@@ -1,5 +1,14 @@
 2007-08-31  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/sync-menu.[ch]: new versions with sane namespace and
+	support for setting the application menu's "Quit", "About" and
+	"Preferences" items.
+
+	* app/gui/gui.c: changed accordingly and use the new menu items
+	from the application menu.
+
+2007-08-31  Michael Natterer  <mitch@gimp.org>
+
 	* app/base/tile-manager.c (tile_manager_get): if
 	tile_manager->cached_tile is requested for writing, clear the
 	cache before giving out the tile. Fixes bug #472170.

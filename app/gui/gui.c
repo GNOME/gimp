@@ -465,14 +465,30 @@ gui_restore_after_callback (Gimp               *gimp,
 #ifdef HAVE_CARBON
   {
     GtkWidget *menu;
+    GtkWidget *item;
 
-    menu = gtk_ui_manager_get_widget (image_ui_manager,
+    menu = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
 				      "/dummy-menubar/image-popup");
 
     if (GTK_IS_MENU_ITEM (menu))
       menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
 
-    sync_menu_takeover_menu (GTK_MENU_SHELL (menu));
+    gtk_macmenu_set_menubar (GTK_MENU_SHELL (menu));
+
+    item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
+                                      "/dummy-menubar/image-popup/File/file-quit");
+    if (GTK_IS_MENU_ITEM (item))
+      gtk_macmenu_set_quit_item (GTK_MENU_ITEM (item));
+
+    item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
+                                      "/dummy-menubar/image-popup/Help/dialogs-about");
+    if (GTK_IS_MENU_ITEM (item))
+      gtk_macmenu_set_about_item (GTK_MENU_ITEM (item), _("About GIMP"));
+
+    item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
+                                      "/dummy-menubar/image-popup/Edit/dialogs-preferences");
+    if (GTK_IS_MENU_ITEM (item))
+      gtk_macmenu_set_prefs_item (GTK_MENU_ITEM (item), _("Preferences"));
   }
 #endif /* HAVE_CARBON */
 

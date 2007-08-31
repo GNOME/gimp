@@ -689,7 +689,7 @@ sync_menu_shell (GtkMenuShell *menu_shell,
 }
 
 void
-sync_menu_takeover_menu (GtkMenuShell *menu_shell)
+gtk_macmenu_set_menubar (GtkMenuShell *menu_shell)
 {
   MenuRef carbon_menubar;
 
@@ -707,6 +707,88 @@ sync_menu_takeover_menu (GtkMenuShell *menu_shell)
   setup_menu_event_handler ();
 
   sync_menu_shell (menu_shell, carbon_menubar, TRUE);
+}
+
+void
+gtk_macmenu_set_quit_item (GtkMenuItem *menu_item)
+{
+  MenuRef       appmenu;
+  MenuItemIndex index;
+
+  g_return_if_fail (GTK_IS_MENU_ITEM (menu_item));
+
+  if (GetIndMenuItemWithCommandID (NULL, kHICommandQuit, 1,
+                                   &appmenu, &index) == noErr)
+    {
+      SetMenuItemCommandID (appmenu, index, 0);
+      SetMenuItemProperty (appmenu, index,
+                           GTK_QUARTZ_MENU_CREATOR,
+                           GTK_QUARTZ_ITEM_WIDGET,
+                           sizeof (menu_item), &menu_item);
+
+      gtk_widget_hide (GTK_WIDGET (menu_item));
+    }
+}
+
+void
+gtk_macmenu_set_about_item (GtkMenuItem *menu_item,
+			    const gchar *label)
+{
+  MenuRef appmenu;
+
+  g_return_if_fail (GTK_IS_MENU_ITEM (menu_item));
+  g_return_if_fail (label != NULL);
+
+  if (GetIndMenuItemWithCommandID (NULL, kHICommandHide, 1,
+				   &appmenu, NULL) == noErr)
+    {
+      CFStringRef cfstr;
+
+      cfstr = CFStringCreateWithCString (NULL, label,
+					 kCFStringEncodingUTF8);
+
+      InsertMenuItemTextWithCFString (appmenu, cfstr, 0, 0, 0);
+      SetMenuItemProperty (appmenu, 1,
+			   GTK_QUARTZ_MENU_CREATOR,
+			   GTK_QUARTZ_ITEM_WIDGET,
+			   sizeof (menu_item), &menu_item);
+
+      CFRelease (cfstr);
+
+      gtk_widget_hide (GTK_WIDGET (menu_item));
+    }
+}
+
+void
+gtk_macmenu_set_prefs_item (GtkMenuItem  *menu_item,
+			    const gchar  *label)
+{
+  MenuRef appmenu;
+
+  g_return_if_fail (GTK_IS_MENU_ITEM (menu_item));
+  g_return_if_fail (label != NULL);
+
+  if (GetIndMenuItemWithCommandID (NULL, kHICommandHide, 1,
+                                   &appmenu, NULL) == noErr)
+    {
+      CFStringRef cfstr;
+
+      InsertMenuItemTextWithCFString (appmenu, NULL, 1,
+				      kMenuItemAttrSeparator, 0);
+
+      cfstr = CFStringCreateWithCString (NULL, label,
+                                         kCFStringEncodingUTF8);
+
+      InsertMenuItemTextWithCFString (appmenu, cfstr, 2, 0, 0);
+      SetMenuItemProperty (appmenu, 3,
+                           GTK_QUARTZ_MENU_CREATOR,
+                           GTK_QUARTZ_ITEM_WIDGET,
+                           sizeof (menu_item), &menu_item);
+
+      CFRelease (cfstr);
+
+      gtk_widget_hide (GTK_WIDGET (menu_item));
+    }
 }
 
 #endif /* HAVE_CARBON */
