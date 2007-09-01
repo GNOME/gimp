@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-01 07:51+0100\n"
-"PO-Revision-Date: 2007-08-01 13:57+0100\n"
+"POT-Creation-Date: 2007-09-01 22:49+0200\n"
+"PO-Revision-Date: 2007-09-01 22:50+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: ../data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr "<big>Välkommen till GNU Image Manipulation Program!</big>"
+msgstr "<big>Välkommen till GNU:s bildmanipuleringsprogram!</big>"
 
 #: ../data/tips/gimp-tips.xml.in.h:2
 msgid "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking with the eyedropper tool sets the background color instead of the foreground color."
@@ -98,8 +98,8 @@ msgid "When you save an image to work on it again later, try using XCF, GIMP's n
 msgstr "Prova att använda XCF, GIMP:s inbyggda filformat (använd filändelsen <tt>.xcf</tt>), när du sparar en bild för att arbeta med den senare. Detta bevarar lagren och alla aspekter av ditt pågående arbete. När ett projekt väl är färdigt kan du spara det som JPEG, PNG, GIF, ..."
 
 #: ../data/tips/gimp-tips.xml.in.h:21
-msgid "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes the window move, your window manager uses the <tt>Alt</tt> key already."
-msgstr "Du kan justera eller flytta en markering genom att använda <tt>Alt</tt> och dra. Om detta gör att fönstret flyttar sig använder din fönsterhanterare redan <tt>Alt</tt>-tangenten."
+msgid "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes the window move, your window manager uses the <tt>Alt</tt> key already. Most window managers can be configured to ignore the <tt>Alt</tt> key or to use the <tt>Super</tt> key (or \"Windows logo\") instead."
+msgstr "Du kan justera eller flytta en markering genom att använda <tt>Alt</tt> och dra. Om detta gör att fönstret flyttar sig använder din fönsterhanterare redan <tt>Alt</tt>-tangenten. De flesta fönsterhanterare kan konfigureras till att ignorera <tt>Alt</tt>-tangenten eller till att använda <tt>Super</tt>-tangenten (eller \"Windows logo\") istället."
 
 #: ../data/tips/gimp-tips.xml.in.h:22
 msgid "You can create and edit complex selections using the Path tool. The Paths dialog allows you to work on multiple paths and to convert them to selections."
