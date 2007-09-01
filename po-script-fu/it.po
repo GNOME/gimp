@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-31 18:04+0200\n"
-"PO-Revision-Date: 2007-09-01 03:10+0200\n"
+"PO-Revision-Date: 2007-09-01 03:35+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -514,11 +514,11 @@ msgstr "Spessore"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:1
 msgid "Add B_evel..."
-msgstr "Aggiungi rili_evo..."
+msgstr "Porta in rili_evo..."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
 msgid "Add a beveled border to an image"
-msgstr "Aggiunge un bordo in rilievo ad un'immagine"
+msgstr "Porta in rilievo il bordo di un'immagine"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
