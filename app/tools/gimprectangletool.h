@@ -129,12 +129,17 @@ GimpRectangleConstraint gimp_rectangle_tool_get_constraint
 GimpRectangleFunction gimp_rectangle_tool_get_function (GimpRectangleTool    *rectangle);
 void        gimp_rectangle_tool_set_function        (GimpRectangleTool       *rectangle,
                                                      GimpRectangleFunction    function);
-void        gimp_rectangle_tool_get_rectangle_size  (GimpRectangleTool       *rectangle,
-                                                     gint                    *width,
-                                                     gint                    *height);
 void        gimp_rectangle_tool_get_press_coords    (GimpRectangleTool       *rectangle,
                                                      gint                    *pressx_ptr,
                                                      gint                    *pressy_ptr);
+void        gimp_rectangle_tool_pending_size_set    (GimpRectangleTool       *rectangle,
+                                                     GObject                 *object,
+                                                     const gchar             *width_property,
+                                                     const gchar             *height_property);
+void        gimp_rectangle_tool_constraint_size_set (GimpRectangleTool       *rectangle,
+                                                     GObject                 *object,
+                                                     const gchar             *width_property,
+                                                     const gchar             *height_property);
 
 
 /*  convenience functions  */

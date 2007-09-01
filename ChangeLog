@@ -1,3 +1,16 @@
+2007-09-01  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpcroptool.c
+	(gimp_crop_tool_update_default_fixed_ratio_options):
+	Generalize the default Fixed: Aspect ratio option setting code
+	so that it can later be used for Fixed: Size as well, and move
+	it to
+
+	* app/tools/gimprectangletool.[ch]
+	(gimp_rectangle_tool_pending_size_set)
+	(gimp_rectangle_tool_constraint_size_set): and use these two new
+	functions instead.
+
 2007-08-31  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme.[ch]

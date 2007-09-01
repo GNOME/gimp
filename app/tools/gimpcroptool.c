@@ -342,14 +342,13 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
  * Sets the default aspect numerator/denominator to that of the current
  * layer/image/pending crop rectangle.
  */
-static void gimp_crop_tool_update_default_fixed_ratio_options (GimpCropTool *crop_tool,
-                                                               gboolean      ignore_pending)
+static void
+gimp_crop_tool_update_default_fixed_ratio_options (GimpCropTool *crop_tool,
+                                                   gboolean      ignore_pending)
 {
   GimpTool             *tool;
   GimpRectangleTool    *rectangle_tool;
   GimpRectangleOptions *rectangle_options;
-  gdouble               default_numerator;
-  gdouble               default_denominator;
 
   tool              = GIMP_TOOL (crop_tool);
   rectangle_tool    = GIMP_RECTANGLE_TOOL (tool);
@@ -357,74 +356,18 @@ static void gimp_crop_tool_update_default_fixed_ratio_options (GimpCropTool *cro
 
   if (tool->display != NULL && !ignore_pending)
     {
-      gint crop_rectangle_width;
-      gint crop_rectangle_height;
-
-      /* There exists a pending crop rectangle, set default aspect ratio to the
-       * same aspect ratio of the rectangle.
-       */
-
-      gimp_rectangle_tool_get_rectangle_size (rectangle_tool,
-                                              &crop_rectangle_width,
-                                              &crop_rectangle_height);
-
-      default_numerator   = MAX (crop_rectangle_width,  1.0);
-      default_denominator = MAX (crop_rectangle_height, 1.0);
+      gimp_rectangle_tool_pending_size_set (rectangle_tool,
+                                            G_OBJECT (rectangle_options),
+                                            "default-aspect-numerator",
+                                            "default-aspect-denominator");
     }
   else
     {
-      GimpRectangleConstraint  constraint;
-      GimpContext             *gimp_context;
-      GimpImage               *image;
-
-      /* There exist no rectangle, set defaults */
-
-      gimp_context = gimp_get_user_context (tool->tool_info->gimp);
-      image        = gimp_context_get_image (gimp_context);
-
-      if (image == NULL)
-        {
-          default_numerator   = 1.0;
-          default_denominator = 1.0;
-        }
-      else
-        {
-          constraint = gimp_rectangle_tool_get_constraint (rectangle_tool);
-
-          switch (constraint)
-            {
-            case GIMP_RECTANGLE_CONSTRAIN_DRAWABLE:
-              {
-                GimpItem *item = GIMP_ITEM (gimp_image_get_active_layer (image));
-
-                if (item == NULL)
-                  {
-                    default_numerator   = 1.0;
-                    default_denominator = 1.0;
-                  }
-                else
-                  {
-                    default_numerator   = gimp_item_width (item);
-                    default_denominator = gimp_item_height (item);
-                  }
-              }
-              break;
-
-            case GIMP_RECTANGLE_CONSTRAIN_IMAGE:
-            default:
-              {
-                default_numerator   = image->width;
-                default_denominator = image->height;
-              }
-              break;
-            }
-        }
+      gimp_rectangle_tool_constraint_size_set (rectangle_tool,
+                                               G_OBJECT (rectangle_options),
+                                               "default-aspect-numerator",
+                                               "default-aspect-denominator");
     }
-
-  g_object_set (rectangle_options,
-                "default-aspect-numerator",   default_numerator,
-                "default-aspect-denominator", default_denominator,
-                NULL);
 }
 
 static void

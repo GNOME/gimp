@@ -29,11 +29,14 @@
 
 #include "tools-types.h"
 
+#include "core/gimp.h"
 #include "core/gimpchannel.h"
-#include "core/gimpimage.h"
+#include "core/gimpcontext.h"
 #include "core/gimpimage-crop.h"
-#include "core/gimppickable.h"
+#include "core/gimpimage.h"
 #include "core/gimpmarshal.h"
+#include "core/gimppickable.h"
+#include "core/gimptoolinfo.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -453,6 +456,104 @@ gimp_rectangle_tool_get_press_coords (GimpRectangleTool *rectangle,
 
   *pressx_ptr = private->pressx;
   *pressy_ptr = private->pressy;
+}
+
+/**
+ * gimp_rectangle_tool_pending_size_set_option:
+ * @width_property:  Option property to set to pending rectangle width.
+ * @height_property: Option property to set to pending rectangle height.
+ *
+ * Sets specified rectangle tool options properties to the width and
+ * height of the current pending rectangle.
+ */
+void
+gimp_rectangle_tool_pending_size_set (GimpRectangleTool *rectangle_tool,
+                                      GObject           *object,
+                                      const gchar       *width_property,
+                                      const gchar       *height_property)
+{
+  GimpRectangleToolPrivate *private;
+
+  g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (rectangle_tool));
+  g_return_if_fail (width_property  != NULL);
+  g_return_if_fail (height_property != NULL);
+
+  private = gimp_rectangle_tool_get_private (rectangle_tool);
+
+  g_object_set (object,
+                width_property,  MAX ((double)(private->x2 - private->x1), 1.0),
+                height_property, MAX ((double)(private->y2 - private->y1), 1.0),
+                NULL);
+}
+
+/**
+ * gimp_rectangle_tool_constraint_size_set_option:
+ * @width_property:  Option property to set to current constraint width.
+ * @height_property: Option property to set to current constraint height.
+ *
+ * Sets specified rectangle tool options properties to the width and
+ * height of the current contraint size.
+ */
+void
+gimp_rectangle_tool_constraint_size_set (GimpRectangleTool *rectangle_tool,
+                                         GObject           *object,
+                                         const gchar       *width_property,
+                                         const gchar       *height_property)
+{
+  GimpContext             *gimp_context;
+  GimpImage               *image;
+  GimpTool                *tool;
+  gdouble                  width;
+  gdouble                  height;
+
+  tool         = GIMP_TOOL (rectangle_tool);
+  gimp_context = gimp_get_user_context (tool->tool_info->gimp);
+  image        = gimp_context_get_image (gimp_context);
+
+  if (image == NULL)
+    {
+      width  = 1.0;
+      height = 1.0;
+    }
+  else
+    {
+      GimpRectangleConstraint constraint;
+
+      constraint = gimp_rectangle_tool_get_constraint (rectangle_tool);
+
+      switch (constraint)
+        {
+        case GIMP_RECTANGLE_CONSTRAIN_DRAWABLE:
+          {
+            GimpItem *item = GIMP_ITEM (gimp_image_get_active_layer (image));
+
+            if (item == NULL)
+              {
+                width  = 1.0;
+                height = 1.0;
+              }
+            else
+              {
+                width  = gimp_item_width (item);
+                height = gimp_item_height (item);
+              }
+          }
+          break;
+
+        case GIMP_RECTANGLE_CONSTRAIN_IMAGE:
+        default:
+          {
+            width  = image->width;
+            height = image->height;
+          }
+          break;
+        }
+    }
+
+  g_object_set (object,
+                width_property,  width,
+                height_property, height,
+                NULL);
 }
 
 void
@@ -2146,24 +2247,6 @@ gimp_rectangle_tool_set_function (GimpRectangleTool     *rectangle,
 
       gimp_draw_tool_resume (draw_tool);
     }
-}
-
-void
-gimp_rectangle_tool_get_rectangle_size (GimpRectangleTool *rectangle,
-                                        gint              *width,
-                                        gint              *height)
-{
-  GimpRectangleToolPrivate *private;
-
-  g_return_if_fail (GIMP_IS_RECTANGLE_TOOL (rectangle));
-
-  private = GIMP_RECTANGLE_TOOL_GET_PRIVATE (rectangle);
-
-  if (width != NULL)
-    *width  = private->x2 - private->x1;
-
-  if (height != NULL)
-    *height = private->y2 - private->y1;
 }
 
 static void
