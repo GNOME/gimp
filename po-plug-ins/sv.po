@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-25 13:41+0200\n"
-"PO-Revision-Date: 2007-08-25 13:41+0100\n"
+"POT-Creation-Date: 2007-09-01 22:51+0200\n"
+"PO-Revision-Date: 2007-09-01 22:58+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -357,7 +357,7 @@ msgstr "_Fraktaler"
 #: ../plug-ins/common/mng.c:561
 #: ../plug-ins/common/mng.c:950
 #: ../plug-ins/common/pat.c:447
-#: ../plug-ins/common/pcx.c:605
+#: ../plug-ins/common/pcx.c:643
 #: ../plug-ins/common/pix.c:508
 #: ../plug-ins/common/png.c:1244
 #: ../plug-ins/common/pnm.c:936
@@ -376,7 +376,7 @@ msgstr "_Fraktaler"
 #: ../plug-ins/gfig/gfig.c:794
 #: ../plug-ins/gfli/gfli.c:715
 #: ../plug-ins/ifscompose/ifscompose.c:2376
-#: ../plug-ins/jpeg/jpeg-save.c:323
+#: ../plug-ins/jpeg/jpeg-save.c:325
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:282
 #: ../plug-ins/winicon/icosave.c:1020
 #: ../plug-ins/xjt/xjt.c:1280
@@ -415,10 +415,10 @@ msgstr "Spara fraktalparametrar"
 #: ../plug-ins/common/gif-load.c:309
 #: ../plug-ins/common/gih.c:649
 #: ../plug-ins/common/lcms.c:724
-#: ../plug-ins/common/lcms.c:995
+#: ../plug-ins/common/lcms.c:997
 #: ../plug-ins/common/mng.c:1121
 #: ../plug-ins/common/pat.c:317
-#: ../plug-ins/common/pcx.c:309
+#: ../plug-ins/common/pcx.c:344
 #: ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:703
 #: ../plug-ins/common/pnm.c:482
@@ -1212,7 +1212,7 @@ msgstr "Felaktig färgkarta"
 #: ../plug-ins/common/gif-load.c:314
 #: ../plug-ins/common/gih.c:654
 #: ../plug-ins/common/pat.c:322
-#: ../plug-ins/common/pcx.c:314
+#: ../plug-ins/common/pcx.c:349
 #: ../plug-ins/common/pix.c:334
 #: ../plug-ins/common/png.c:710
 #: ../plug-ins/common/pnm.c:487
@@ -1268,13 +1268,13 @@ msgid "Unsupported or invalid bitdepth."
 msgstr "Bitdjupet stöds inte eller är ogiltigt."
 
 #: ../plug-ins/bmp/bmpread.c:550
-#: ../plug-ins/common/pcx.c:338
+#: ../plug-ins/common/pcx.c:375
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Bildens bredd är ogiltig eller stöds inte: %d"
 
 #: ../plug-ins/bmp/bmpread.c:555
-#: ../plug-ins/common/pcx.c:343
+#: ../plug-ins/common/pcx.c:380
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Bildens höjd är ogiltig eller stöds inte: %d"
@@ -1291,8 +1291,8 @@ msgstr "Bildens höjd är ogiltig eller stöds inte: %d"
 #: ../plug-ins/common/dicom.c:503
 #: ../plug-ins/common/film.c:746
 #: ../plug-ins/common/gif-load.c:879
-#: ../plug-ins/common/pcx.c:356
-#: ../plug-ins/common/pcx.c:362
+#: ../plug-ins/common/pcx.c:387
+#: ../plug-ins/common/pcx.c:393
 #: ../plug-ins/common/pix.c:368
 #: ../plug-ins/common/png.c:831
 #: ../plug-ins/common/pnm.c:570
@@ -1341,7 +1341,7 @@ msgstr "Alfakanal kommer att ignoreras."
 #: ../plug-ins/common/gih.c:1263
 #: ../plug-ins/common/gtm.c:245
 #: ../plug-ins/common/pat.c:452
-#: ../plug-ins/common/pcx.c:567
+#: ../plug-ins/common/pcx.c:605
 #: ../plug-ins/common/pix.c:513
 #: ../plug-ins/common/png.c:1251
 #: ../plug-ins/common/pnm.c:941
@@ -1355,7 +1355,7 @@ msgstr "Alfakanal kommer att ignoreras."
 #: ../plug-ins/common/xwd.c:603
 #: ../plug-ins/fits/fits.c:462
 #: ../plug-ins/gfli/gfli.c:684
-#: ../plug-ins/jpeg/jpeg-save.c:281
+#: ../plug-ins/jpeg/jpeg-save.c:283
 #: ../plug-ins/sgi/sgi.c:537
 #: ../plug-ins/winicon/icosave.c:1015
 #: ../plug-ins/xjt/xjt.c:1697
@@ -1372,7 +1372,7 @@ msgid "_Run-Length Encoded"
 msgstr "_Run-Length-kodad"
 
 #: ../plug-ins/bmp/bmpwrite.c:826
-#: ../plug-ins/jpeg/jpeg-save.c:891
+#: ../plug-ins/jpeg/jpeg-save.c:893
 msgid "_Advanced Options"
 msgstr "_Avancerade inställningar"
 
@@ -1799,7 +1799,7 @@ msgstr "Zoomskala:"
 
 #: ../plug-ins/common/CML_explorer.c:1352
 msgid "Start offset:"
-msgstr "Startavstånd:"
+msgstr "Startposition:"
 
 #: ../plug-ins/common/CML_explorer.c:1361
 msgid "Seed of Random (only for \"From Seed\" Modes)"
@@ -2418,17 +2418,17 @@ msgstr "_Höjd:"
 #: ../plug-ins/common/bumpmap.c:930
 #: ../plug-ins/common/postscript.c:3379
 msgid "_X offset:"
-msgstr "_X offset:"
+msgstr "_X-position:"
 
 #: ../plug-ins/common/bumpmap.c:933
 #: ../plug-ins/common/bumpmap.c:947
 msgid "The offset can be adjusted by dragging the preview using the middle mouse button."
-msgstr "Offset kan justeras genom att dra förhandsgranskningen med mittenmusknappen."
+msgstr "Positionen kan justeras genom att dra förhandsgranskningen med mittenmusknappen."
 
 #: ../plug-ins/common/bumpmap.c:944
 #: ../plug-ins/common/postscript.c:3388
 msgid "_Y offset:"
-msgstr "_Y offset:"
+msgstr "_Y-position:"
 
 #: ../plug-ins/common/bumpmap.c:958
 msgid "_Waterlevel:"
@@ -2771,12 +2771,12 @@ msgstr "_Nyans:"
 
 #: ../plug-ins/common/compose.c:213
 #: ../plug-ins/common/compose.c:221
-#: ../plug-ins/common/scatter_hsv.c:418
+#: ../plug-ins/common/scatter_hsv.c:423
 msgid "_Saturation:"
 msgstr "_Mättnad:"
 
 #: ../plug-ins/common/compose.c:214
-#: ../plug-ins/common/scatter_hsv.c:430
+#: ../plug-ins/common/scatter_hsv.c:435
 msgid "_Value:"
 msgstr "_Intensitet:"
 
@@ -3030,37 +3030,37 @@ msgstr "Konvolvering fungerar inte på lager som är mindre än 3x3 bildpunkter.
 msgid "Applying convolution"
 msgstr "Tillämpar konvolvering"
 
-#: ../plug-ins/common/convmatrix.c:951
+#: ../plug-ins/common/convmatrix.c:925
 msgid "Convolution Matrix"
 msgstr "Konvolveringsmatris"
 
-#: ../plug-ins/common/convmatrix.c:988
+#: ../plug-ins/common/convmatrix.c:962
 msgid "Matrix"
 msgstr "Matris"
 
-#: ../plug-ins/common/convmatrix.c:1026
+#: ../plug-ins/common/convmatrix.c:1000
 msgid "D_ivisor:"
 msgstr "N_ämnare:"
 
-#: ../plug-ins/common/convmatrix.c:1052
+#: ../plug-ins/common/convmatrix.c:1026
 #: ../plug-ins/common/depthmerge.c:767
 #: ../plug-ins/common/raw.c:1022
 msgid "O_ffset:"
 msgstr "O_ffset:"
 
-#: ../plug-ins/common/convmatrix.c:1081
+#: ../plug-ins/common/convmatrix.c:1055
 msgid "N_ormalise"
 msgstr "_Normalisera"
 
-#: ../plug-ins/common/convmatrix.c:1093
+#: ../plug-ins/common/convmatrix.c:1067
 msgid "A_lpha-weighting"
 msgstr "A_lfa-viktning"
 
-#: ../plug-ins/common/convmatrix.c:1112
+#: ../plug-ins/common/convmatrix.c:1086
 msgid "Border"
 msgstr "Kant"
 
-#: ../plug-ins/common/convmatrix.c:1139
+#: ../plug-ins/common/convmatrix.c:1113
 msgid "Channels"
 msgstr "Kanaler"
 
@@ -3670,7 +3670,7 @@ msgid "'%s' is not a DICOM file."
 msgstr "\"%s\" är inte en DICOM-fil"
 
 #: ../plug-ins/common/dicom.c:678
-#: ../plug-ins/common/pcx.c:599
+#: ../plug-ins/common/pcx.c:637
 #: ../plug-ins/common/pnm.c:927
 msgid "Cannot save images with alpha channel."
 msgstr "Kan inte spara bilder med en alfakanal."
@@ -4105,7 +4105,7 @@ msgstr "Bild_mellanrum:"
 
 #: ../plug-ins/common/film.c:1172
 msgid "_Hole offset:"
-msgstr "_Håloffset:"
+msgstr "_Hålposition:"
 
 #: ../plug-ins/common/film.c:1183
 msgid "Ho_le width:"
@@ -4797,7 +4797,7 @@ msgstr "Bredd:"
 #. attach labels
 #: ../plug-ins/common/grid.c:857
 msgid "Offset:"
-msgstr "Offset:"
+msgstr "Position:"
 
 #. attach color selectors
 #: ../plug-ins/common/grid.c:896
@@ -4984,19 +4984,19 @@ msgid "_Illusion..."
 msgstr "_Illusion..."
 
 #: ../plug-ins/common/illusion.c:168
-#: ../plug-ins/common/illusion.c:389
+#: ../plug-ins/common/illusion.c:350
 msgid "Illusion"
 msgstr "Illusion"
 
-#: ../plug-ins/common/illusion.c:427
+#: ../plug-ins/common/illusion.c:388
 msgid "_Divisions:"
 msgstr "_Delning:"
 
-#: ../plug-ins/common/illusion.c:437
+#: ../plug-ins/common/illusion.c:398
 msgid "Mode _1"
 msgstr "Läge _1"
 
-#: ../plug-ins/common/illusion.c:452
+#: ../plug-ins/common/illusion.c:413
 msgid "Mode _2"
 msgstr "Läge _2"
 
@@ -5231,85 +5231,85 @@ msgid "'%s' does not appear to be an ICC color profile"
 msgstr "\"%s\" verkar inte vara en ICC-färgprofil"
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:797
+#: ../plug-ins/common/lcms.c:796
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Konverterar från \"%s\" till \"%s\""
 
-#: ../plug-ins/common/lcms.c:1014
+#: ../plug-ins/common/lcms.c:1016
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Kunde inte läsa in ICC-profil från \"%s\""
 
-#: ../plug-ins/common/lcms.c:1036
+#: ../plug-ins/common/lcms.c:1038
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "Bilden \"%s\" har en inbäddad färgprofil:"
 
-#: ../plug-ins/common/lcms.c:1080
+#: ../plug-ins/common/lcms.c:1082
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Konvertera bilden till RGB-arbetsrymden (%s)?"
 
-#: ../plug-ins/common/lcms.c:1111
+#: ../plug-ins/common/lcms.c:1113
 msgid "Convert to RGB working space?"
 msgstr "Konvertera till RGB-arbetsrymd?"
 
-#: ../plug-ins/common/lcms.c:1116
+#: ../plug-ins/common/lcms.c:1118
 msgid "_Keep"
 msgstr "_Behåll"
 
-#: ../plug-ins/common/lcms.c:1121
+#: ../plug-ins/common/lcms.c:1123
 msgid "_Convert"
 msgstr "_Konvertera"
 
-#: ../plug-ins/common/lcms.c:1148
+#: ../plug-ins/common/lcms.c:1150
 #: ../plug-ins/jpeg/jpeg-exif.c:372
 msgid "_Don't ask me again"
 msgstr "_Fråga mig inte igen"
 
-#: ../plug-ins/common/lcms.c:1212
+#: ../plug-ins/common/lcms.c:1214
 msgid "Select destination profile"
 msgstr "Välj målprofil"
 
-#: ../plug-ins/common/lcms.c:1239
+#: ../plug-ins/common/lcms.c:1241
 msgid "All files (*.*)"
 msgstr "Alla filer (*.*)"
 
-#: ../plug-ins/common/lcms.c:1244
+#: ../plug-ins/common/lcms.c:1246
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC-färgprofil (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1287
+#: ../plug-ins/common/lcms.c:1289
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "RGB-arbetsrymd (%s)"
 
-#: ../plug-ins/common/lcms.c:1335
+#: ../plug-ins/common/lcms.c:1337
 msgid "Convert to ICC Color Profile"
 msgstr "Konvertera till ICC-färgprofil"
 
-#: ../plug-ins/common/lcms.c:1336
+#: ../plug-ins/common/lcms.c:1338
 msgid "Assign ICC Color Profile"
 msgstr "Tilldela ICC-färgprofil"
 
-#: ../plug-ins/common/lcms.c:1344
+#: ../plug-ins/common/lcms.c:1346
 msgid "_Assign"
 msgstr "_Tilldela"
 
-#: ../plug-ins/common/lcms.c:1361
+#: ../plug-ins/common/lcms.c:1363
 msgid "Current Color Profile"
 msgstr "Aktuell färgprofil"
 
-#: ../plug-ins/common/lcms.c:1376
+#: ../plug-ins/common/lcms.c:1378
 msgid "Convert to"
 msgstr "Konvertera till"
 
-#: ../plug-ins/common/lcms.c:1376
+#: ../plug-ins/common/lcms.c:1378
 msgid "Assign"
 msgstr "Tilldela"
 
-#: ../plug-ins/common/lcms.c:1416
+#: ../plug-ins/common/lcms.c:1418
 msgid "Destination profile is not for RGB color space."
 msgstr "Målprofilen är inte för RGB-färgrymd."
 
@@ -6212,29 +6212,49 @@ msgstr "Ogiltig UTF-8-sträng i mönsterfilen \"%s\"."
 msgid "Save as Pattern"
 msgstr "Spara som mönster"
 
-#: ../plug-ins/common/pcx.c:147
-#: ../plug-ins/common/pcx.c:166
+#: ../plug-ins/common/pcx.c:129
+#: ../plug-ins/common/pcx.c:148
 msgid "ZSoft PCX image"
 msgstr "ZSoft PCX-bild"
 
-#: ../plug-ins/common/pcx.c:319
+#: ../plug-ins/common/pcx.c:354
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Kan inte läsa sidfot från \"%s\""
 
-#: ../plug-ins/common/pcx.c:326
+#: ../plug-ins/common/pcx.c:363
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "\"%s\" är inte en PCX-fil"
 
-#: ../plug-ins/common/pcx.c:348
-#, c-format
-msgid "Invalid number of bytes per line: %hd"
-msgstr "Ogiltigt antal byte per rad: %hd"
-
-#: ../plug-ins/common/pcx.c:397
+#: ../plug-ins/common/pcx.c:432
 msgid "Unusual PCX flavour, giving up"
 msgstr "Ovanlig PCX-variant; ger upp"
+
+#: ../plug-ins/common/pcx.c:653
+#, c-format
+msgid "Invalid X offset: %d"
+msgstr "Ogiltig X-position: %d"
+
+#: ../plug-ins/common/pcx.c:659
+#, c-format
+msgid "Invalid Y offset: %d"
+msgstr "Ogiltig Y-position: %d"
+
+#: ../plug-ins/common/pcx.c:665
+#, c-format
+msgid "Right border out of bounds (must be < %d): %d"
+msgstr "Högra ramen är utanför intervallet (måste vara < %d): %d"
+
+#: ../plug-ins/common/pcx.c:672
+#, c-format
+msgid "Bottom border out of bounds (must be < %d): %d"
+msgstr "Nedre ramen är utanför intervallet (måste vara < %d): %d"
+
+#: ../plug-ins/common/pcx.c:728
+#, c-format
+msgid "Writing to file '%s' failed: %s"
+msgstr "Skrivning till filen \"%s\" misslyckades: %s"
 
 #: ../plug-ins/common/photocopy.c:155
 msgid "Simulate color distortion produced by a copy machine"
@@ -6402,7 +6422,7 @@ msgstr "Okänd färgmodell i PNG-filen \"%s\"."
 
 #: ../plug-ins/common/png.c:868
 msgid "The PNG file specifies an offset that caused the layer to be positioned outside the image."
-msgstr "PNG-filen anger ett offset som fick lagret att bli placerat utanför bilden."
+msgstr "PNG-filen angav en position som orsakade att lagret blev placerat utanför bilden."
 
 #: ../plug-ins/common/png.c:1229
 #, c-format
@@ -6427,7 +6447,7 @@ msgstr "Spara _gamma"
 
 #: ../plug-ins/common/png.c:1819
 msgid "Save layer o_ffset"
-msgstr "Spara lager_offset"
+msgstr "Spara lager_position"
 
 #: ../plug-ins/common/png.c:1828
 msgid "Save _resolution"
@@ -6450,12 +6470,12 @@ msgid "Co_mpression level:"
 msgstr "Ko_mpressionsnivå:"
 
 #: ../plug-ins/common/png.c:1895
-#: ../plug-ins/jpeg/jpeg-save.c:1154
+#: ../plug-ins/jpeg/jpeg-save.c:1165
 msgid "_Load Defaults"
 msgstr "_Läs in standardvärden"
 
 #: ../plug-ins/common/png.c:1903
-#: ../plug-ins/jpeg/jpeg-save.c:1163
+#: ../plug-ins/jpeg/jpeg-save.c:1174
 msgid "S_ave Defaults"
 msgstr "S_para standardvärden"
 
@@ -6559,7 +6579,7 @@ msgstr "Cirkel_djup i procent:"
 
 #: ../plug-ins/common/polar.c:642
 msgid "Offset _angle:"
-msgstr "_Vinkeloffset:"
+msgstr "_Vinkelposition:"
 
 #: ../plug-ins/common/polar.c:657
 msgid "_Map backwards"
@@ -7303,15 +7323,15 @@ msgstr "NMI-brus..."
 msgid "HSV Noise"
 msgstr "NMI-brus"
 
-#: ../plug-ins/common/scatter_hsv.c:358
+#: ../plug-ins/common/scatter_hsv.c:363
 msgid "Scatter HSV"
 msgstr "Skingra NMI"
 
-#: ../plug-ins/common/scatter_hsv.c:394
+#: ../plug-ins/common/scatter_hsv.c:399
 msgid "_Holdness:"
 msgstr "_Låsningsgrad:"
 
-#: ../plug-ins/common/scatter_hsv.c:406
+#: ../plug-ins/common/scatter_hsv.c:411
 msgid "H_ue:"
 msgstr "N_yans:"
 
@@ -10431,7 +10451,7 @@ msgstr "Ändra vinkeln på vald vektor"
 
 #: ../plug-ins/gimpressionist/orientmap.c:665
 msgid "Ang_le offset:"
-msgstr "Vin_keloffset:"
+msgstr "Vin_kelposition:"
 
 #: ../plug-ins/gimpressionist/orientmap.c:669
 msgid "Offset all vectors with a given angle"
@@ -11655,122 +11675,122 @@ msgstr "JPEG förhandsgranska"
 msgid "Opening thumbnail for '%s'"
 msgstr "Öppnar miniatyrbild för \"%s\""
 
-#: ../plug-ins/jpeg/jpeg-save.c:196
+#: ../plug-ins/jpeg/jpeg-save.c:198
 #, c-format
 msgid "File size: %02.01f kB"
 msgstr "Filstorlek: %02.01f kB"
 
-#: ../plug-ins/jpeg/jpeg-save.c:665
+#: ../plug-ins/jpeg/jpeg-save.c:667
 msgid "Calculating file size..."
 msgstr "Beräknar filstorlek..."
 
-#: ../plug-ins/jpeg/jpeg-save.c:756
-#: ../plug-ins/jpeg/jpeg-save.c:870
+#: ../plug-ins/jpeg/jpeg-save.c:758
+#: ../plug-ins/jpeg/jpeg-save.c:872
 msgid "File size: unknown"
 msgstr "Filstorlek: okänd"
 
-#: ../plug-ins/jpeg/jpeg-save.c:814
+#: ../plug-ins/jpeg/jpeg-save.c:816
 msgid "Save as JPEG"
 msgstr "Spara som JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:849
+#: ../plug-ins/jpeg/jpeg-save.c:851
 msgid "_Quality:"
 msgstr "_Kvalitet:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:853
+#: ../plug-ins/jpeg/jpeg-save.c:855
 msgid "JPEG quality parameter"
 msgstr "JPEG kvalitetsparameter"
 
-#: ../plug-ins/jpeg/jpeg-save.c:868
+#: ../plug-ins/jpeg/jpeg-save.c:870
 msgid "Enable preview to obtain the file size."
 msgstr "Aktivera förhandsvisning för att läsa av filstorleken."
 
-#: ../plug-ins/jpeg/jpeg-save.c:879
+#: ../plug-ins/jpeg/jpeg-save.c:881
 msgid "Show _preview in image window"
 msgstr "Visa _förhandsgranskning i bildfönstret"
 
-#: ../plug-ins/jpeg/jpeg-save.c:920
+#: ../plug-ins/jpeg/jpeg-save.c:922
 msgid "_Smoothing:"
 msgstr "_Utjämnande:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:933
+#: ../plug-ins/jpeg/jpeg-save.c:935
 msgid "Frequency (rows):"
 msgstr "Omstartsfrekvens (rader):"
 
-#: ../plug-ins/jpeg/jpeg-save.c:949
+#: ../plug-ins/jpeg/jpeg-save.c:951
 msgid "Use restart markers"
 msgstr "Använd omstartsmarkörer"
 
-#: ../plug-ins/jpeg/jpeg-save.c:965
+#: ../plug-ins/jpeg/jpeg-save.c:967
 #: ../plug-ins/xjt/xjt.c:877
 msgid "Optimize"
 msgstr "Optimera"
 
-#: ../plug-ins/jpeg/jpeg-save.c:978
+#: ../plug-ins/jpeg/jpeg-save.c:980
 msgid "Progressive"
 msgstr "Progressiv"
 
-#: ../plug-ins/jpeg/jpeg-save.c:993
+#: ../plug-ins/jpeg/jpeg-save.c:995
 msgid "Save EXIF data"
 msgstr "Spara EXIF-data"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1010
+#: ../plug-ins/jpeg/jpeg-save.c:1012
 msgid "Save thumbnail"
 msgstr "Spara miniatyrbild"
 
 #. XMP metadata
-#: ../plug-ins/jpeg/jpeg-save.c:1026
+#: ../plug-ins/jpeg/jpeg-save.c:1028
 msgid "Save XMP data"
 msgstr "Spara XMP-data"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1041
+#: ../plug-ins/jpeg/jpeg-save.c:1043
 msgid "Use quality settings from original image"
 msgstr "Använd kvalitetsinställningar från originalbilden"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1047
+#: ../plug-ins/jpeg/jpeg-save.c:1049
 msgid "If the original image was loaded from a JPEG file using non-standard quality settings (quantization tables), enable this option to get almost the same quality and file size."
 msgstr "Om originalbilden lästes in från en JPEG-fil med icke-standardiserade kvalitetsinställningar (kvantiseringstabeller), aktivera det här alternativet för att få nästan samma kvalitet och filstorlek."
 
 #. Subsampling
-#: ../plug-ins/jpeg/jpeg-save.c:1071
+#: ../plug-ins/jpeg/jpeg-save.c:1073
 msgid "Subsampling:"
 msgstr "Subsampling:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1078
+#: ../plug-ins/jpeg/jpeg-save.c:1080
 msgid "1x1,1x1,1x1 (best quality)"
 msgstr "1x1,1x1,1x1 (bäst kvalitet)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1079
+#: ../plug-ins/jpeg/jpeg-save.c:1081
 msgid "2x1,1x1,1x1 (4:2:2)"
 msgstr "2x1,1x1,1x1 (4:2:2)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1080
+#: ../plug-ins/jpeg/jpeg-save.c:1082
 msgid "1x2,1x1,1x1"
 msgstr "1x2,1x1,1x1"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1081
+#: ../plug-ins/jpeg/jpeg-save.c:1083
 msgid "2x2,1x1,1x1 (smallest file)"
 msgstr "2x2,1x1,1x1 (minst filstorlek)"
 
 #. DCT method
-#: ../plug-ins/jpeg/jpeg-save.c:1096
+#: ../plug-ins/jpeg/jpeg-save.c:1107
 msgid "DCT method:"
 msgstr "DCT-metod:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1102
+#: ../plug-ins/jpeg/jpeg-save.c:1113
 msgid "Fast Integer"
 msgstr "Snabba heltal"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1103
+#: ../plug-ins/jpeg/jpeg-save.c:1114
 msgid "Integer"
 msgstr "Heltal"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1104
+#: ../plug-ins/jpeg/jpeg-save.c:1115
 msgid "Floating-Point"
 msgstr "Flyttal"
 
 # src/sidebar.c:107
-#: ../plug-ins/jpeg/jpeg-save.c:1118
+#: ../plug-ins/jpeg/jpeg-save.c:1129
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -11832,7 +11852,7 @@ msgstr "Multiplikator (57):"
 
 #: ../plug-ins/maze/maze_face.c:271
 msgid "Offset (1):"
-msgstr "Offset (1):"
+msgstr "Position (1):"
 
 #. The maze algorithm frame
 #: ../plug-ins/maze/maze_face.c:282
@@ -12458,6 +12478,8 @@ msgstr "Fel: Kan ej läsa XJT-egenskapsfilen \"%s\"."
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fel: XJT-egenskapsfilen \"%s\" är tom."
 
+#~ msgid "Invalid number of bytes per line: %hd"
+#~ msgstr "Ogiltigt antal byte per rad: %hd"
 #~ msgid "Use custom quality settings"
 #~ msgstr "Använd anpassade kvalitetsinställningar"
 #~ msgid "Force baseline JPEG"
