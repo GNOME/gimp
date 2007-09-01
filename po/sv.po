@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-01 22:23+0200\n"
-"PO-Revision-Date: 2007-09-01 22:44+0100\n"
+"PO-Revision-Date: 2007-09-01 23:00+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -1393,7 +1393,7 @@ msgstr "Automatisk korrigering av vitbalans"
 
 #: ../app/actions/drawable-actions.c:69
 msgid "_Offset..."
-msgstr "_Offset..."
+msgstr "_Position..."
 
 #: ../app/actions/drawable-actions.c:70
 msgid "Shift the pixels, optionally wrapping them at the borders"
@@ -5900,7 +5900,7 @@ msgstr "Nivåer"
 
 #: ../app/core/gimpdrawable-offset.c:316
 msgid "Offset Drawable"
-msgstr "Offset rityta"
+msgstr "Position för rityta"
 
 #: ../app/core/gimpdrawable-stroke.c:321
 msgid "Render Stroke"
@@ -7073,15 +7073,15 @@ msgstr "Tillgängliga typer:"
 
 #: ../app/dialogs/offset-dialog.c:104
 msgid "Offset Layer"
-msgstr "Offsetlager"
+msgstr "Lagerposition"
 
 #: ../app/dialogs/offset-dialog.c:106
 msgid "Offset Layer Mask"
-msgstr "Offsetlagermask"
+msgstr "Lagerpositionsmask"
 
 #: ../app/dialogs/offset-dialog.c:108
 msgid "Offset Channel"
-msgstr "Offsetkanal"
+msgstr "Kanalposition"
 
 #. The offset frame
 #: ../app/dialogs/offset-dialog.c:114
@@ -7089,12 +7089,12 @@ msgstr "Offsetkanal"
 #: ../app/dialogs/resize-dialog.c:197
 #: ../app/widgets/gimpgrideditor.c:268
 msgid "Offset"
-msgstr "Offset"
+msgstr "Position"
 
 #. offset, used as a verb
 #: ../app/dialogs/offset-dialog.c:123
 msgid "_Offset"
-msgstr "_Offset"
+msgstr "_Position"
 
 #: ../app/dialogs/offset-dialog.c:180
 #: ../app/dialogs/resize-dialog.c:226
@@ -7108,7 +7108,7 @@ msgstr "_Y:"
 
 #: ../app/dialogs/offset-dialog.c:209
 msgid "Offset by  x/_2, y/2"
-msgstr "Offset med x/_2, y/2"
+msgstr "Position med x/_2, y/2"
 
 #. The edge behavior frame
 #: ../app/dialogs/offset-dialog.c:218
@@ -8891,7 +8891,7 @@ msgstr "Distribuera nederkanter för målen"
 #: ../app/tools/gimpaligntool.c:708
 #: ../app/tools/gimpblendoptions.c:212
 msgid "Offset:"
-msgstr "Offset:"
+msgstr "Position:"
 
 #: ../app/tools/gimpblendoptions.c:222
 #: ../app/widgets/gimpbrusheditor.c:146
