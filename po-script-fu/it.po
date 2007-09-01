@@ -7,7 +7,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-31 18:04+0200\n"
-"PO-Revision-Date: 2007-08-31 18:05+0200\n"
+"PO-Revision-Date: 2007-09-01 03:10+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
 "MIME-Version: 1.0\n"
@@ -270,7 +270,7 @@ msgstr "Pr_ofilo 3D..."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:2
 msgid "Bumpmap (alpha layer) blur radius"
-msgstr "Bumpmap (livello alfa) raggio di sfocatura"
+msgstr "Mappa a sbalzo (livello alfa) raggio di sfocatura"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
 msgid "Create a logo with outlined text and a drop shadow"
@@ -279,7 +279,7 @@ msgstr "Crea un logotipo con testo delineato e con un'ombra"
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:6
 msgid "Default bumpmap settings"
-msgstr "Impostazioni predefinite Bumpmap"
+msgstr "Impostazioni predefinite mappa a sbalzo"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:5
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
@@ -523,7 +523,7 @@ msgstr "Aggiunge un bordo in rilievo ad un'immagine"
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
 msgid "Keep bump layer"
-msgstr "Mantieni livello Bump"
+msgstr "Mantieni il livello mappa a sbalzo"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
@@ -540,7 +540,7 @@ msgstr "Aggiungi _bordo..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Add a border around an image"
-msgstr "Aggiunge un bordo in rilievo ad un'immagine"
+msgstr "Aggiunge un bordo attorno ad un'immagine"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:3
 msgid "Border X size"
