@@ -576,15 +576,6 @@ gimp_display_shell_draw_area (GimpDisplayShell *shell,
                                          i - shell->disp_yoffset,
                                          dx, dy,
                                          shell->highlight ? &rect : NULL);
-
-#ifdef STRESS_TEST
-              /* Invalidate the projection just after we render it! */
-              gimp_image_invalidate_without_render (shell->display->image,
-                                                    j - shell->disp_xoffset,
-                                                    i - shell->disp_yoffset,
-                                                    dx, dy,
-                                                    0, 0, 0, 0);
-#endif
             }
         }
     }
