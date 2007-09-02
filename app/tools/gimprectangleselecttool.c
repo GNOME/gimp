@@ -112,6 +112,9 @@ static void     gimp_rect_select_tool_real_select         (GimpRectSelectTool *r
                                                            gint                y,
                                                            gint                w,
                                                            gint                h);
+static void     gimp_rect_select_tool_update_option_defaults
+                                                          (GimpRectSelectTool *rect_select_tool,
+                                                           gboolean            ignore_pending);
 
 static void    gimp_rect_select_tool_round_corners_notify (GimpRectSelectOptions *options,
                                                            GParamSpec            *pspec,
@@ -219,6 +222,9 @@ gimp_rect_select_tool_constructor (GType                  type,
   g_signal_connect_object (options, "notify::corner-radius",
                            G_CALLBACK (gimp_rect_select_tool_round_corners_notify),
                            object, 0);
+
+  gimp_rect_select_tool_update_option_defaults (GIMP_RECT_SELECT_TOOL (object),
+                                                FALSE);
 
   return object;
 }
@@ -431,6 +437,9 @@ gimp_rect_select_tool_button_release (GimpTool              *tool,
     }
 
   rect_select->redo = NULL;
+
+  gimp_rect_select_tool_update_option_defaults (rect_select,
+                                                FALSE);
 }
 
 static void
@@ -574,6 +583,51 @@ gimp_rect_select_tool_real_select (GimpRectSelectTool *rect_select,
     }
 }
 
+/**
+ * gimp_rect_select_tool_update_option_defaults:
+ * @crop_tool:
+ * @ignore_pending: %TRUE to ignore any pending crop rectangle.
+ *
+ * Sets the default Fixed: Aspect ratio and Fixed: Size option
+ * properties.
+ */
+static void
+gimp_rect_select_tool_update_option_defaults (GimpRectSelectTool *rect_select_tool,
+                                              gboolean            ignore_pending)
+{
+  GimpTool             *tool;
+  GimpRectangleTool    *rectangle_tool;
+  GimpRectangleOptions *rectangle_options;
+
+  tool              = GIMP_TOOL (rect_select_tool);
+  rectangle_tool    = GIMP_RECTANGLE_TOOL (tool);
+  rectangle_options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rectangle_tool);
+
+  if (tool->display != NULL && !ignore_pending)
+    {
+      /* There is a pending rectangle and we should not ignore it, so
+       * set default Fixed: Size to the same as the current pending
+       * rectangle width/height.
+       */
+
+      gimp_rectangle_tool_pending_size_set (rectangle_tool,
+                                            G_OBJECT (rectangle_options),
+                                            "default-fixed-size-width",
+                                            "default-fixed-size-height");
+    }
+  else
+    {
+      /* There is no pending rectangle, set default Fixed: Size to
+       * 100x100.
+       */
+
+      g_object_set (G_OBJECT (rectangle_options),
+                    "default-fixed-size-width",  100.0,
+                    "default-fixed-size-height", 100.0,
+                    NULL);
+    }
+}
+
 /*
  * This function is called if the user clicks and releases the left
  * button without moving it.  There are the things we might want
@@ -646,6 +700,9 @@ gimp_rect_select_tool_execute (GimpRectangleTool *rectangle,
           gimp_tool_control_set_preserve (tool->control, FALSE);
         }
     }
+
+  gimp_rect_select_tool_update_option_defaults (GIMP_RECT_SELECT_TOOL (rectangle),
+                                                FALSE);
 
   return TRUE;
 }

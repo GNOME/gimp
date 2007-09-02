@@ -1,3 +1,15 @@
+2007-09-02  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangleselecttool.c
+	(gimp_rect_select_tool_update_option_defaults): New function to
+	update default values for Fixed: Size. This function is called to
+	update defaults values for Fixed: Size to that of the pending
+	rectangle width x height if there is one, or 100x100 otherwise.
+
+	* app/tools/gimpcroptool.c
+	(gimp_crop_tool_update_option_defaults): Set Fixed: Size to the
+	size of the pending crop rectangle, or 100x100 if there is none.
+
 2007-09-01  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpcroptool.c

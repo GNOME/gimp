@@ -78,7 +78,7 @@ static gboolean   gimp_crop_tool_execute         (GimpRectangleTool     *rectang
                                                   gint                   w,
                                                   gint                   h);
 
-static void   gimp_crop_tool_update_default_fixed_ratio_options
+static void   gimp_crop_tool_update_option_defaults
                                                  (GimpCropTool          *crop_tool,
                                                   gboolean               ignore_pending);
 
@@ -194,8 +194,8 @@ gimp_crop_tool_constructor (GType                  type,
                                       GIMP_RECTANGLE_CONSTRAIN_DRAWABLE :
                                       GIMP_RECTANGLE_CONSTRAIN_IMAGE);
 
-  gimp_crop_tool_update_default_fixed_ratio_options (GIMP_CROP_TOOL (object),
-                                                     FALSE);
+  gimp_crop_tool_update_option_defaults (GIMP_CROP_TOOL (object),
+                                         FALSE);
 
   return object;
 }
@@ -240,8 +240,8 @@ gimp_crop_tool_button_release (GimpTool              *tool,
                                       release_type,
                                       display);
 
-  gimp_crop_tool_update_default_fixed_ratio_options (GIMP_CROP_TOOL (tool),
-                                                     FALSE);
+  gimp_crop_tool_update_option_defaults (GIMP_CROP_TOOL (tool),
+                                         FALSE);
 
 }
 
@@ -325,8 +325,8 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
 
       gimp_image_flush (image);
 
-      gimp_crop_tool_update_default_fixed_ratio_options (GIMP_CROP_TOOL (tool),
-                                                         TRUE);
+      gimp_crop_tool_update_option_defaults (GIMP_CROP_TOOL (tool),
+                                             TRUE);
 
       return TRUE;
     }
@@ -335,16 +335,16 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
 }
 
 /**
- * gimp_crop_tool_update_default_fixed_ratio_options:
+ * gimp_crop_tool_update_option_defaults:
  * @crop_tool:
  * @ignore_pending: %TRUE to ignore any pending crop rectangle.
  *
- * Sets the default aspect numerator/denominator to that of the current
- * layer/image/pending crop rectangle.
+ * Sets the default Fixed: Aspect ratio and Fixed: Size option
+ * properties.
  */
 static void
-gimp_crop_tool_update_default_fixed_ratio_options (GimpCropTool *crop_tool,
-                                                   gboolean      ignore_pending)
+gimp_crop_tool_update_option_defaults (GimpCropTool *crop_tool,
+                                       gboolean      ignore_pending)
 {
   GimpTool             *tool;
   GimpRectangleTool    *rectangle_tool;
@@ -356,17 +356,37 @@ gimp_crop_tool_update_default_fixed_ratio_options (GimpCropTool *crop_tool,
 
   if (tool->display != NULL && !ignore_pending)
     {
+      /* There is a pending rectangle and we should not ignore it, so
+       * set default Fixed: Aspect ratio and Fixed: Size to the same
+       * as the current pending rectangle width/height.
+       */
+
       gimp_rectangle_tool_pending_size_set (rectangle_tool,
                                             G_OBJECT (rectangle_options),
                                             "default-aspect-numerator",
                                             "default-aspect-denominator");
+
+      gimp_rectangle_tool_pending_size_set (rectangle_tool,
+                                            G_OBJECT (rectangle_options),
+                                            "default-fixed-size-width",
+                                            "default-fixed-size-height");
     }
   else
     {
+      /* There is no pending rectangle, set default Fixed: Aspect
+       * ratio to that of the current image/layer, and the size to
+       * 100x100.
+       */
+
       gimp_rectangle_tool_constraint_size_set (rectangle_tool,
                                                G_OBJECT (rectangle_options),
                                                "default-aspect-numerator",
                                                "default-aspect-denominator");
+
+      g_object_set (G_OBJECT (rectangle_options),
+                    "default-fixed-size-width",  100.0,
+                    "default-fixed-size-height", 100.0,
+                    NULL);
     }
 }
 
@@ -380,8 +400,8 @@ gimp_crop_tool_notify_layer_only (GimpCropOptions *options,
                                       GIMP_RECTANGLE_CONSTRAIN_DRAWABLE :
                                       GIMP_RECTANGLE_CONSTRAIN_IMAGE);
 
-  gimp_crop_tool_update_default_fixed_ratio_options (GIMP_CROP_TOOL (tool),
-                                                     FALSE);
+  gimp_crop_tool_update_option_defaults (GIMP_CROP_TOOL (tool),
+                                         FALSE);
 }
 
 static void
@@ -389,6 +409,6 @@ gimp_crop_tool_image_changed (GimpContext  *gimp_context,
                               GimpImage    *image,
                               GimpCropTool *crop_tool)
 {
-  gimp_crop_tool_update_default_fixed_ratio_options (GIMP_CROP_TOOL (crop_tool),
-                                                     FALSE);
+  gimp_crop_tool_update_option_defaults (GIMP_CROP_TOOL (crop_tool),
+                                         FALSE);
 }
