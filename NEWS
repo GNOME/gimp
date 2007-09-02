@@ -17,6 +17,8 @@ Changes in GIMP 2.4.0-rc2
 - fix script-fu error reporting
 - on OS X, get rid of menubars in windows and use the global menubar
 - fix plug-ins using GimpZoomPreview
+- throw properly catchable exceptions from foreign script-fu function
+  (like PDB wrappers)
 - bug fixes
 
 
