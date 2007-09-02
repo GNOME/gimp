@@ -1,3 +1,7 @@
+2007-09-02  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: bump version to 2.4.0-rc2.
+
 2007-09-02  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/display/gimpdisplayshell-draw.c
