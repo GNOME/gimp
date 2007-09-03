@@ -1,3 +1,4 @@
+# translation of gimp-script-fu.HEAD.po to Hungarian
 # Hungarian translation of gimp-script-fu.
 # Copyright (C) 2001, 2003, 2004, 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp-script-fu package.
@@ -10,49 +11,49 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-25 14:16+0100\n"
-"PO-Revision-Date: 2007-03-25 22:47+0200\n"
+"POT-Creation-Date: 2007-08-14 09:45+0100\n"
+"PO-Revision-Date: 2007-09-02 04:49+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
-"Language-Team: Hungarian <gnome@gnome.hu>\n"
+"Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:143
-#: ../plug-ins/script-fu/script-fu-console.c:210
+#: ../plug-ins/script-fu/script-fu-console.c:144
+#: ../plug-ins/script-fu/script-fu-console.c:213
 msgid "Script-Fu Console"
 msgstr "Script-Fu konzol"
 
-#: ../plug-ins/script-fu/script-fu-console.c:206
+#: ../plug-ins/script-fu/script-fu-console.c:209
 msgid "Welcome to TinyScheme"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu-console.c:212
+#: ../plug-ins/script-fu/script-fu-console.c:215
 msgid "Interactive Scheme Development"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu-console.c:248
+#: ../plug-ins/script-fu/script-fu-console.c:251
 msgid "_Browse..."
 msgstr "_Tallózás..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:310
+#: ../plug-ins/script-fu/script-fu-console.c:313
 #, fuzzy
 msgid "Save Script-Fu Console Output"
 msgstr "Script-Fu konzol"
 
-#: ../plug-ins/script-fu/script-fu-console.c:357
+#: ../plug-ins/script-fu/script-fu-console.c:360
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu-console.c:386
+#: ../plug-ins/script-fu/script-fu-console.c:389
 #, fuzzy
 msgid "Script-Fu Procedure Browser"
 msgstr "Eljárásböngésző"
 
-#: ../plug-ins/script-fu/script-fu-console.c:711
+#: ../plug-ins/script-fu/script-fu-console.c:730
 #, fuzzy
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "A Script-Fu kiértékelő módja csak nem-interaktív meghívást tesz lehetővé"
@@ -66,58 +67,52 @@ msgstr "A Script-Fu nem képes egyszerre több szkriptet feldolgozni."
 msgid "You are already running the \"%s\" script."
 msgstr "Már futtatja a(z) \"%s\" szkriptet."
 
-#. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:216
-#: ../plug-ins/script-fu/script-fu-interface.c:219
-msgid "/Script-Fu/"
-msgstr "/Script-Fu/"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:237
+#: ../plug-ins/script-fu/script-fu-interface.c:238
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:299
+#: ../plug-ins/script-fu/script-fu-interface.c:300
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:347
+#: ../plug-ins/script-fu/script-fu-interface.c:348
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu színválasztó"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:459
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu fájlválasztó"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:462
+#: ../plug-ins/script-fu/script-fu-interface.c:463
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu mappaválasztó"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:474
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu betűkészlet-választó"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:482
+#: ../plug-ins/script-fu/script-fu-interface.c:483
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu palettaválasztó"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:491
+#: ../plug-ins/script-fu/script-fu-interface.c:492
 #, fuzzy
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu mintaválasztó"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:500
+#: ../plug-ins/script-fu/script-fu-interface.c:501
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu színátmenet-választó"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:509
+#: ../plug-ins/script-fu/script-fu-interface.c:510
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu ecsetválasztó"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:661
+#: ../plug-ins/script-fu/script-fu-scripts.c:668
 #, fuzzy, c-format
 msgid ""
 "Error while executing\n"
@@ -164,125 +159,120 @@ msgstr ""
 msgid "_Start Server..."
 msgstr "Kiszolgáló _indítása..."
 
-#: ../plug-ins/script-fu/script-fu.c:300
-#, fuzzy
-msgid "_GIMP Online"
-msgstr "GIMP-kiegészítő"
-
 #: ../plug-ins/script-fu/script-fu.c:301
+msgid "_GIMP Online"
+msgstr "_GIMP-webhely"
+
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
-msgstr ""
+msgstr "_Felhasználói kézikönyv"
 
-#: ../plug-ins/script-fu/script-fu.c:304
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
-msgstr "/Script-Fu/"
+msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:306
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Buttons"
-msgstr "G_omb..."
+msgstr "_Gombok"
 
-#: ../plug-ins/script-fu/script-fu.c:308
+#: ../plug-ins/script-fu/script-fu.c:309
 msgid "_Logos"
-msgstr ""
+msgstr "_Logók"
 
-#: ../plug-ins/script-fu/script-fu.c:310
+#: ../plug-ins/script-fu/script-fu.c:311
 msgid "_Misc"
-msgstr ""
+msgstr "_Vegyes"
 
-#: ../plug-ins/script-fu/script-fu.c:312
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Patterns"
-msgstr "Minta"
+msgstr "M_inták"
 
-#: ../plug-ins/script-fu/script-fu.c:314
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
-msgstr "_Szöveg"
+msgstr "_Teszt"
 
-#: ../plug-ins/script-fu/script-fu.c:316
-msgid "_Utils"
-msgstr ""
+#: ../plug-ins/script-fu/script-fu.c:317
+msgid "_Utilities"
+msgstr "Segéd_programok"
 
-#: ../plug-ins/script-fu/script-fu.c:318
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Web Page Themes"
-msgstr ""
+msgstr "_Weblap-témák"
 
-#: ../plug-ins/script-fu/script-fu.c:320
+#: ../plug-ins/script-fu/script-fu.c:321
 #, fuzzy
 msgid "_Alien Glow"
 msgstr "Idegen r_agyogás..."
 
-#: ../plug-ins/script-fu/script-fu.c:322
+#: ../plug-ins/script-fu/script-fu.c:323
 #, fuzzy
 msgid "_Beveled Pattern"
 msgstr "Minta"
 
-#: ../plug-ins/script-fu/script-fu.c:324
+#: ../plug-ins/script-fu/script-fu.c:325
 msgid "_Classic.Gimp.Org"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:327
+#: ../plug-ins/script-fu/script-fu.c:328
 msgid "Alpha to _Logo"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:329
+#: ../plug-ins/script-fu/script-fu.c:330
 msgid "An_imation"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:331
+#: ../plug-ins/script-fu/script-fu.c:332
 msgid "_Animators"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:333
+#: ../plug-ins/script-fu/script-fu.c:334
 msgid "_Artistic"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:335
+#: ../plug-ins/script-fu/script-fu.c:336
 #, fuzzy
 msgid "_Blur"
 msgstr "X-elmosás"
 
-#: ../plug-ins/script-fu/script-fu.c:337
+#: ../plug-ins/script-fu/script-fu.c:338
 msgid "_Decor"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:339
+#: ../plug-ins/script-fu/script-fu.c:340
 #, fuzzy
 msgid "_Effects"
 msgstr "_Xach-effektus..."
 
-#: ../plug-ins/script-fu/script-fu.c:341
+#: ../plug-ins/script-fu/script-fu.c:342
 msgid "En_hance"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:343
+#: ../plug-ins/script-fu/script-fu.c:344
 msgid "_Light and Shadow"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:345
+#: ../plug-ins/script-fu/script-fu.c:346
 #, fuzzy
 msgid "S_hadow"
 msgstr "Árnyék"
 
-#: ../plug-ins/script-fu/script-fu.c:347
+#: ../plug-ins/script-fu/script-fu.c:348
 msgid "_Render"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:349
+#: ../plug-ins/script-fu/script-fu.c:350
 msgid "_Alchemy"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:352
+#: ../plug-ins/script-fu/script-fu.c:353
 msgid "Re-read all available Script-Fu scripts"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:357
+#: ../plug-ins/script-fu/script-fu.c:358
 msgid "_Refresh Scripts"
 msgstr "Parancsfájlok _frissítése"
 
-#: ../plug-ins/script-fu/script-fu.c:380
+#: ../plug-ins/script-fu/script-fu.c:381
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
@@ -500,8 +490,9 @@ msgid "Block size"
 msgstr "Blokkméret"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:4
+#, fuzzy
 msgid "Create an image filled with a 3D Truchet pattern"
-msgstr ""
+msgstr "Kép létrehozása a jelenlegi színátmenettel kitöltve"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
@@ -1019,8 +1010,9 @@ msgid "Color 3"
 msgstr "3. szín"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:4
+#, fuzzy
 msgid "Create an image filled with a camouflage pattern"
-msgstr ""
+msgstr "Kép létrehozása a jelenlegi színátmenettel kitöltve"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:6
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:6
@@ -1316,10 +1308,6 @@ msgstr ""
 msgid "Effect size (pixels)"
 msgstr "Hatás mérete (képpont)"
 
-#: ../plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "This procedure is deprecated! use \\'gimp-edit-copy-visible\\' instead."
-msgstr ""
-
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
 msgid "Background image"
 msgstr "Háttérkép"
@@ -1341,9 +1329,8 @@ msgid "Solid noise applied with Difference layer mode"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
-#, fuzzy
 msgid "Distress the selection"
-msgstr "Kijelölés _torzítása..."
+msgstr "A kijelölés torzítása"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:2
 msgid "Granularity (1 is low)"
@@ -1497,8 +1484,9 @@ msgid "_Fade to Layer Mask..."
 msgstr "_ASCII-ből képréteg..."
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
+#, fuzzy
 msgid "Create an image filled with a Land Pattern"
-msgstr ""
+msgstr "Kép létrehozása a jelenlegi színátmenettel kitöltve"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:2
 #: ../plug-ins/script-fu/scripts/land.scm.h:2
@@ -1545,15 +1533,16 @@ msgstr "Fehér alapon fekete"
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
+"Kép létrehozása egy adott betűkészlet-szűrőnek megfelelő "
+"betűkészletek előnézeteivel"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
 msgid "Font _size (pixels)"
 msgstr "Betűmér_et (képpont)"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:5
-#, fuzzy
 msgid "Render _Font Map..."
-msgstr "Térkép _megjelenítése..."
+msgstr "Betűkészlet-lista _megjelenítése..."
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:6
 msgid "Use font _name as text"
@@ -1623,12 +1612,14 @@ msgid "Autocrop"
 msgstr "Automatikus levágás"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
+#, fuzzy
 msgid "Create an image of a large header using the gimp.org webpage theme"
-msgstr ""
+msgstr "Kép létrehozása"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
+#, fuzzy
 msgid "Create an image of a small header using the gimp.org webpage theme"
-msgstr ""
+msgstr "Kép létrehozása"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
 msgid "Dark color"
@@ -1673,26 +1664,30 @@ msgid "_Small Header..."
 msgstr "_Kis fejléc..."
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+#, fuzzy
 msgid ""
 "Create an image of a Tube Button Label Header using the gimp.org webpage "
 "theme"
-msgstr ""
+msgstr "Kép létrehozása"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+#, fuzzy
 msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
-msgstr ""
+msgstr "Kép létrehozása"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
+#, fuzzy
 msgid ""
 "Create an image of a second level Tube Button Label using the gimp.org "
 "webpage theme"
-msgstr ""
+msgstr "Kép létrehozása"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
+#, fuzzy
 msgid ""
 "Create an image of a third level Tube Button Label using the gimp.org "
 "webpage theme"
-msgstr ""
+msgstr "Kép létrehozása"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
@@ -1809,7 +1804,7 @@ msgstr "Három_dimenziós színátmenet..."
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "Create an image filled with an example of the current gradient"
-msgstr ""
+msgstr "Kép létrehozása a jelenlegi színátmenettel kitöltve"
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
 msgid "Custom _Gradient..."
@@ -1820,7 +1815,7 @@ msgstr "Egyéni _színátmenet..."
 msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
-msgstr ""
+msgstr "Rács rajzolása a jelenlegi ecsettel az X- illetve Y-koordináták alapján"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X divisions"
@@ -1840,7 +1835,7 @@ msgstr "Új segédvonalak a _kijelölésből"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
 msgid "Add a guide at the position specified as a percentage of the image size"
-msgstr ""
+msgstr "Segédvonal felvétele a képméret százalékában megadott helyen"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:2
@@ -1868,7 +1863,7 @@ msgstr "Függőleges"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:1
 msgid "Add a guide at the orientation and position specified (in pixels)"
-msgstr ""
+msgstr "Segédvonal felvétele a megadott tájolással a (képpontban) megadott helyen"
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
 msgid "New _Guide..."
@@ -1881,7 +1876,7 @@ msgstr "Pozíció (százalékban)"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "Remove all horizontal and vertical guides"
-msgstr ""
+msgstr "Az összes vízszintes és függőleges segédvonal eltávolítása"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
 msgid "_Remove all Guides"
@@ -1893,7 +1888,7 @@ msgstr "Háttér átlátszatlansága"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
 msgid "Create a graph of the Hue, Saturation, and Value distributions"
-msgstr ""
+msgstr "Grafikon készítése az árnyalat-, telítettség- és fényerő-eloszlásról"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
 msgid "Draw _HSV Graph..."
@@ -1924,7 +1919,6 @@ msgid "Start Y"
 msgstr "Kezdet, Y"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:10
-#, fuzzy
 msgid "Use selection bounds instead of values below"
 msgstr "A kijelölés határainak használata a lentiek helyett"
 
@@ -1946,8 +1940,9 @@ msgid "Imigre-_26..."
 msgstr "Imigre-26..."
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:1
+#, fuzzy
 msgid "Create an image filled with a topographic map pattern"
-msgstr ""
+msgstr "Kép létrehozása a jelenlegi színátmenettel kitöltve"
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:6
 msgid "Land height"
@@ -2008,19 +2003,19 @@ msgstr "Élesség (fokban)"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:1
 msgid "Create a rectangular brush"
-msgstr ""
+msgstr "Téglalap alakú ecset létrehozása"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
 msgid "Create a rectangular brush with feathered edges"
-msgstr ""
+msgstr "Téglalap alakú ecset létrehozása lágy szélekkel"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
 msgid "Create an elliptical brush"
-msgstr ""
+msgstr "Ellipszis alakú ecset létrehozása"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
 msgid "Create an elliptical brush with feathered edges"
-msgstr ""
+msgstr "Ellipszis alakú ecset létrehozása lágy szélekkel"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
 msgid "Elli_ptical, Feathered..."
@@ -2050,7 +2045,7 @@ msgstr "_Elliptikus..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:13
 msgid "_Rectangular..."
-msgstr "_Téglalap..."
+msgstr "Tég_lalap..."
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "Convert the selected region (or alpha) into a neon-sign like object"
@@ -2129,6 +2124,11 @@ msgstr "Új _ecset..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
 msgid "Paste the clipboard contents into a new brush"
+msgstr "A vágólap tartalmának beillesztése egy új ecsetbe"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
+msgid "There is no image data in the clipboard to paste."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
@@ -2137,7 +2137,7 @@ msgstr "Új _minta..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
 msgid "Paste the clipboard contents into a new pattern"
-msgstr ""
+msgstr "A vágólap tartalmának beillesztése egy új mintába"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:4
 #: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
@@ -2242,8 +2242,9 @@ msgid "Behavior"
 msgstr "Viselkedés"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
+#, fuzzy
 msgid "Create an image filled with an Earth-like map pattern"
-msgstr ""
+msgstr "Kép létrehozása a jelenlegi színátmenettel kitöltve"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
 msgid "Detail in Middle"
@@ -2263,7 +2264,7 @@ msgstr "Rétegsorrend megfordítása"
 
 #: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:2
 msgid "Reverse the order of layers in the image"
-msgstr ""
+msgstr "A rétegek képbeli sorrendjének megfordítása"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:1
 msgid "Black"
@@ -2319,6 +2320,18 @@ msgstr ""
 msgid "_Round Corners..."
 msgstr "_Gömbölyített sarok..."
 
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr "Egy kép színtérképének módosítása egy megadott paletta színeire"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
+msgid "Palette"
+msgstr "Paletta"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
+msgid "Se_t Colormap..."
+msgstr "Színtérkép _beállítása..."
+
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
 msgid "Convert a selection to a brush"
 msgstr ""
@@ -2353,17 +2366,10 @@ msgid "Radius (%)"
 msgstr "Sugár (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
-#, fuzzy
 msgid "Round the corners of the current selection"
-msgstr "Négy segédvonalat hoz létre a jelenlegi kijelölés határoló téglalapja köré."
+msgstr "A jelenlegi kijelölés sarkainak lekerekítése"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
-msgid ""
-"Round the corners of the current selection (deprecated, use Rounded "
-"Rectangle)"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/selection-round.scm.h:6
 msgid "Rounded R_ectangle..."
 msgstr "Leke_rekített téglalap..."
 
@@ -2608,8 +2614,9 @@ msgid "Sta_rscape..."
 msgstr "Starsca_pe..."
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:4
+#, fuzzy
 msgid "Create an image filled with a swirled tile effect"
-msgstr ""
+msgstr "Kép létrehozása a jelenlegi színátmenettel kitöltve"
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Swirl-_Tile..."
@@ -2620,8 +2627,9 @@ msgid "Whirl amount"
 msgstr "Csavarások száma"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
+#, fuzzy
 msgid "Create an image filled with a swirly pattern"
-msgstr ""
+msgstr "Kép létrehozása a jelenlegi színátmenettel kitöltve"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of times to whirl"
@@ -2763,8 +2771,9 @@ msgid "Web Title Header..."
 msgstr "Webes fejléc..."
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:3
+#, fuzzy
 msgid "Create an image filled with a Truchet pattern"
-msgstr ""
+msgstr "Kép létrehozása a jelenlegi színátmenettel kitöltve"
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground color"
@@ -2847,8 +2856,9 @@ msgid "Bookmark to the GIMP web site"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
+#, fuzzy
 msgid "Bookmark to the user manual"
-msgstr ""
+msgstr "Felhasználói kézikönyv"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "Create and Use _Selections"
@@ -2891,9 +2901,8 @@ msgid "_Preparing your Images for the Web"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
-#, fuzzy
 msgid "_User Manual Web Site"
-msgstr "_Fő webhely"
+msgstr "A felhasználói _kézikönyv webhelye"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
 msgid "_Working with Digital Camera Photos"
