@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-14 09:46+0100\n"
-"PO-Revision-Date: 2007-09-02 08:11+0200\n"
+"PO-Revision-Date: 2007-09-02 20:18+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -261,111 +261,110 @@ msgstr "Minta kiválasztása"
 
 #: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
-msgstr ""
+msgstr "név alapján"
 
 #: ../libgimp/gimpprocbrowserdialog.c:141
 msgid "by description"
-msgstr ""
+msgstr "leírás alapján"
 
 #: ../libgimp/gimpprocbrowserdialog.c:142
 msgid "by help"
-msgstr ""
+msgstr "a segítség alapján"
 
 #: ../libgimp/gimpprocbrowserdialog.c:143
 msgid "by author"
-msgstr ""
+msgstr "szerző alapján"
 
 #: ../libgimp/gimpprocbrowserdialog.c:144
 msgid "by copyright"
-msgstr ""
+msgstr "copyright alapján"
 
 #: ../libgimp/gimpprocbrowserdialog.c:145
 msgid "by date"
-msgstr ""
+msgstr "dátum alapján"
 
 #: ../libgimp/gimpprocbrowserdialog.c:146
 msgid "by type"
-msgstr ""
+msgstr "típus alapján"
 
 #: ../libgimp/gimpprocbrowserdialog.c:377
 msgid "Searching"
-msgstr ""
+msgstr "Keresés"
 
 #: ../libgimp/gimpprocbrowserdialog.c:388
 msgid "Searching by name"
-msgstr ""
+msgstr "Keresés név alapján"
 
 #: ../libgimp/gimpprocbrowserdialog.c:409
 msgid "Searching by description"
-msgstr ""
+msgstr "Keresés leírás alapján"
 
 #: ../libgimp/gimpprocbrowserdialog.c:416
 msgid "Searching by help"
-msgstr ""
+msgstr "Keresés a segítség alapján"
 
 #: ../libgimp/gimpprocbrowserdialog.c:423
 msgid "Searching by author"
-msgstr ""
+msgstr "Keresés szerző alapján"
 
 #: ../libgimp/gimpprocbrowserdialog.c:430
 msgid "Searching by copyright"
-msgstr ""
+msgstr "Keresés copyright alapján"
 
 #: ../libgimp/gimpprocbrowserdialog.c:437
 msgid "Searching by date"
-msgstr ""
+msgstr "Keresés dátum alapján"
 
 #: ../libgimp/gimpprocbrowserdialog.c:444
 msgid "Searching by type"
-msgstr ""
+msgstr "Keresés típus alapján"
 
 #: ../libgimp/gimpprocbrowserdialog.c:454
 #, c-format
 msgid "%d procedure"
 msgid_plural "%d procedures"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d eljárás"
+msgstr[1] "%d eljárás"
 
 #: ../libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
-msgstr ""
+msgstr "Nincs találat a lekérdezésre"
 
 #: ../libgimp/gimpprocbrowserdialog.c:467
 #, c-format
 msgid "%d procedure matches your query"
 msgid_plural "%d procedures match your query"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d eljárás felel meg a lekérdezésnek"
+msgstr[1] "%d eljárás felel meg a lekérdezésnek"
 
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
 msgid "No matches"
-msgstr ""
+msgstr "Nincs találat"
 
 #: ../libgimp/gimpprocview.c:143
 msgid "Parameters"
-msgstr ""
+msgstr "Paraméterek"
 
 #: ../libgimp/gimpprocview.c:156
 msgid "Return Values"
-msgstr ""
+msgstr "Visszatérési értékek"
 
 #: ../libgimp/gimpprocview.c:169
 msgid "Additional Information"
-msgstr ""
+msgstr "További információ"
 
 #: ../libgimp/gimpprocview.c:210
-#, fuzzy
 msgid "Author:"
-msgstr "Horgony"
+msgstr "Szerző:"
 
 #: ../libgimp/gimpprocview.c:222
 msgid "Date:"
-msgstr ""
+msgstr "Dátum:"
 
 #: ../libgimp/gimpprocview.c:234
 msgid "Copyright:"
-msgstr ""
+msgstr "Copyright:"
 
 #: ../libgimp/gimpunitcache.c:57
 msgid "percent"
@@ -533,7 +532,7 @@ msgstr "Sötétítés"
 
 #: ../libgimpbase/gimpbaseenums.c:388
 msgid "gradient|Linear"
-msgstr ""
+msgstr "Lineáris"
 
 #: ../libgimpbase/gimpbaseenums.c:389
 msgid "Bi-linear"
@@ -675,22 +674,21 @@ msgstr "Háromszöghullám"
 
 #: ../libgimpbase/gimpbaseenums.c:654
 msgid "Run interactively"
-msgstr ""
+msgstr "Interaktív működés"
 
 #: ../libgimpbase/gimpbaseenums.c:655
 msgid "Run non-interactively"
-msgstr ""
+msgstr "Nem interaktív működés"
 
 #: ../libgimpbase/gimpbaseenums.c:656
 msgid "Run with last used values"
-msgstr ""
+msgstr "Végrehajtás a legutóbb használt értékekkel"
 
 #: ../libgimpbase/gimpbaseenums.c:684
 msgid "Pixels"
 msgstr "képpont"
 
 #: ../libgimpbase/gimpbaseenums.c:685
-#, fuzzy
 msgid "Points"
 msgstr "pont"
 
@@ -744,7 +742,7 @@ msgstr "GIMP-kiterjesztés"
 
 #: ../libgimpbase/gimpbaseenums.c:884
 msgid "Temporary Procedure"
-msgstr ""
+msgstr "Ideiglenes eljárás"
 
 #: ../libgimpbase/gimpmemsize.c:180
 #, c-format
@@ -804,15 +802,12 @@ msgid "(invalid UTF-8 string)"
 msgstr "(érvénytelen UTF-8 karakterlánc)"
 
 #: ../libgimpconfig/gimpcolorconfig.c:40
-#, fuzzy
 msgid "Mode of operation for color management."
-msgstr ""
-"Működési mód"
-"Színkezelés"
+msgstr "Működési mód a színkezelés számára."
 
 #: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "The color profile of your (primary) monitor."
-msgstr ""
+msgstr "Az elsődleges monitor színprofilja."
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid ""
@@ -820,6 +815,9 @@ msgid ""
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
+"Ha be van kapcsolva, akkor a GIMP az ablakkezelő megjelenítési "
+"színprofilját használja. Ekkor a beállított monitorprofil "
+"csak probléma esetén lesz használva."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
 msgid "The default RGB working space color profile."
@@ -827,25 +825,23 @@ msgstr "Az alapértelmezett RGB munkaterület színprofilja."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr ""
+msgstr "Az RGB és a CMYK közti átalakításhoz használt CMYK színprofil."
 
 #: ../libgimpconfig/gimpcolorconfig.c:52
-#, fuzzy
 msgid "The color profile used for simulating a printed version (softproof)."
-msgstr ""
-"Nyomtatásszimulációs "
-"próbanyomat"
+msgstr "Nyomtatott változat szimulációjához (próbanyomat) használt színprofil."
 
 #: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "Sets how colors are mapped for your display."
-msgstr ""
+msgstr "A színeknek a képernyőre való leképezését adja meg."
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
-#, fuzzy
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
-msgstr "Nyomtatásszimulációs"
+msgstr ""
+"Megadja, hogy a színek hogyan legyenek átalakítva az RGB munkaterületről "
+"a nyomtatásszimulációs eszközre."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -987,10 +983,11 @@ msgstr "Nincs betöltve"
 
 #: ../libgimpthumb/gimpthumb-utils.c:125
 #, c-format
+#, fuzzy
 msgid ""
 "Cannot determine a valid home directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
-msgstr ""
+msgstr "Ideiglenes "
 
 #: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
@@ -1007,9 +1004,8 @@ msgid "Could not create thumbnail for %s: %s"
 msgstr "Nem sikerült létrehozni bélyegképet ehhez: %s: %s"
 
 #: ../libgimpwidgets/gimpbrowser.c:98
-#, fuzzy
 msgid "_Search:"
-msgstr "_Nyírás"
+msgstr "_Keresés:"
 
 #: ../libgimpwidgets/gimpcolorbutton.c:118
 msgid "_Foreground Color"
