@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-14 09:46+0100\n"
-"PO-Revision-Date: 2007-09-02 09:03+0200\n"
+"PO-Revision-Date: 2007-09-03 04:44+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -2086,7 +2086,6 @@ msgid "Remove optimization to make editing easier"
 msgstr ""
 
 #: ../plug-ins/common/animoptimize.c:178
-#, fuzzy
 msgid "_Unoptimize"
 msgstr "O_ptimalizáció eltávolítása"
 
@@ -2099,9 +2098,8 @@ msgid "_Find Backdrop"
 msgstr "Háttér _keresése"
 
 #: ../plug-ins/common/animoptimize.c:427
-#, fuzzy
 msgid "Unoptimizing animation"
-msgstr "Optimalizáció eltávolítása az animációból..."
+msgstr "Optimalizáció eltávolítása az animációból"
 
 #: ../plug-ins/common/animoptimize.c:430
 msgid "Removing animation background"
@@ -2121,7 +2119,6 @@ msgid "Antialias using the Scale3X edge-extrapolation algorithm"
 msgstr ""
 
 #: ../plug-ins/common/antialias.c:90
-#, fuzzy
 msgid "_Antialias"
 msgstr "Éls_imítás"
 
@@ -3724,9 +3721,8 @@ msgstr ""
 
 # TODO: ellenőrizni
 #: ../plug-ins/common/dog.c:142
-#, fuzzy
 msgid "_Difference of Gaussians..."
-msgstr "Gaussok különbsége..."
+msgstr "_Gaussok különbsége..."
 
 #: ../plug-ins/common/dog.c:233 ../plug-ins/common/dog.c:280
 msgid "DoG Edge Detect"
@@ -3915,7 +3911,6 @@ msgid "Combine several images on a film strip"
 msgstr ""
 
 #: ../plug-ins/common/film.c:222
-#, fuzzy
 msgid "_Filmstrip..."
 msgstr "_Film..."
 
@@ -4035,24 +4030,20 @@ msgid "_Number height:"
 msgstr "S_zámok magassága:"
 
 #: ../plug-ins/common/flarefx.c:188
-#, fuzzy
 msgid "Add a lens flare effect"
-msgstr "A csillogási effektus középpontja"
+msgstr "Lencsecsillogási effektus hozzáadása"
 
 #: ../plug-ins/common/flarefx.c:195
-#, fuzzy
 msgid "Lens _Flare..."
-msgstr "Csillogás rajzolása..."
+msgstr "Lencse_csillogás..."
 
 #: ../plug-ins/common/flarefx.c:270
-#, fuzzy
 msgid "Render lens flare"
-msgstr "Csillogás rajzolása..."
+msgstr "Lencsecsillogás rajzolása"
 
 #: ../plug-ins/common/flarefx.c:306
-#, fuzzy
 msgid "Lens Flare"
-msgstr "Új színátmenetes csillogás"
+msgstr "Lencsecsillogás"
 
 #: ../plug-ins/common/flarefx.c:753
 msgid "Center of Flare Effect"
@@ -5229,21 +5220,19 @@ msgstr "_Hozzárendelés"
 
 #: ../plug-ins/common/lens.c:143
 msgid "Corrects lens distortion"
-msgstr ""
+msgstr "Lencse torzításának javítása"
 
 #: ../plug-ins/common/lens.c:148
-#, fuzzy
 msgid "Lens Distortion..."
-msgstr "Élkeresés..."
+msgstr "Lencse-torzítás..."
 
 #: ../plug-ins/common/lens.c:813
 msgid "Lens distortion"
-msgstr ""
+msgstr "Lencse-torzítás"
 
 #: ../plug-ins/common/lens.c:933
-#, fuzzy
 msgid "Lens Distortion"
-msgstr "Neon-élkeresés"
+msgstr "Lencse-torzítás"
 
 #: ../plug-ins/common/lens.c:970
 #, fuzzy
@@ -5921,19 +5910,16 @@ msgid "Distort colors by random amounts"
 msgstr ""
 
 #: ../plug-ins/common/noisify.c:154
-#, fuzzy
 msgid "_RGB Noise..."
-msgstr "_Egyenletes zaj..."
+msgstr "_RGB-zaj..."
 
 #: ../plug-ins/common/noisify.c:282
-#, fuzzy
 msgid "Adding noise"
-msgstr "Zaj hozzáadása..."
+msgstr "Zaj hozzáadása"
 
 #: ../plug-ins/common/noisify.c:448
-#, fuzzy
 msgid "RGB Noise"
-msgstr "Zaj"
+msgstr "RGB-zaj"
 
 #: ../plug-ins/common/noisify.c:481
 msgid "Co_rrelated noise"
@@ -5966,22 +5952,18 @@ msgid "Add a starburst to the image"
 msgstr ""
 
 #: ../plug-ins/common/nova.c:177
-#, fuzzy
 msgid "Super_nova..."
 msgstr "Szu_pernova..."
 
 #: ../plug-ins/common/nova.c:261
-#, fuzzy
 msgid "Rendering supernova"
-msgstr "Szupernova megjelenítése..."
+msgstr "Szupernova megjelenítése"
 
 #: ../plug-ins/common/nova.c:304
-#, fuzzy
 msgid "Supernova"
 msgstr "Szupernova"
 
 #: ../plug-ins/common/nova.c:349
-#, fuzzy
 msgid "Supernova Color Picker"
 msgstr "Szupernova-színválasztó"
 
@@ -6241,34 +6223,33 @@ msgstr "Ö_rvénylés:"
 
 #: ../plug-ins/common/plugin-browser.c:134
 msgid "Display information about plug-ins"
-msgstr ""
+msgstr "Információ megjelenítése a bővítményekről"
 
 #: ../plug-ins/common/plugin-browser.c:144
 msgid "_Plug-In Browser"
 msgstr "_Bővítményböngésző"
 
 #: ../plug-ins/common/plugin-browser.c:372
-#, fuzzy
 msgid "Searching by name"
-msgstr "Keresés _név alapján"
+msgstr "Keresés név alapján"
 
 #: ../plug-ins/common/plugin-browser.c:386
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d bővítmény"
+msgstr[1] "%d bővítmény"
 
 #: ../plug-ins/common/plugin-browser.c:395
 msgid "No matches for your query"
-msgstr ""
+msgstr "Nincs találat a lekérdezésre"
 
 #: ../plug-ins/common/plugin-browser.c:398
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d bővítmény felel meg a lekérdezésnek"
+msgstr[1] "%d bővítmény felel meg a lekérdezésnek"
 
 #: ../plug-ins/common/plugin-browser.c:529
 msgid "No matches"
@@ -6295,9 +6276,8 @@ msgstr "Képtípusok"
 
 #: ../plug-ins/common/plugin-browser.c:623
 #: ../plug-ins/common/plugin-browser.c:686
-#, fuzzy
 msgid "Installation Date"
-msgstr "Beillesztés dátuma"
+msgstr "Telepítés dátuma"
 
 #: ../plug-ins/common/plugin-browser.c:647
 msgid "List View"
@@ -6470,22 +6450,19 @@ msgstr "ASCII"
 
 #: ../plug-ins/common/polar.c:154
 msgid "Convert image to or from polar coordinates"
-msgstr ""
+msgstr "Kép átalakítása polárkoordinátásra vagy polárkoordinátásról"
 
 #: ../plug-ins/common/polar.c:161
-#, fuzzy
 msgid "P_olar Coordinates..."
-msgstr "P_olárkoordináták..."
+msgstr "Polárkoordi_náták..."
 
 #: ../plug-ins/common/polar.c:349
-#, fuzzy
 msgid "Polar coordinates"
-msgstr "P_olárkoordináták..."
+msgstr "Polárkoordináták"
 
 #: ../plug-ins/common/polar.c:581
-#, fuzzy
 msgid "Polar Coordinates"
-msgstr "P_olárkoordináták..."
+msgstr "Polárkoordináták"
 
 #: ../plug-ins/common/polar.c:619
 msgid "Circle _depth in percent:"
@@ -6756,7 +6733,7 @@ msgstr "Az előné_zet mérete:"
 
 #: ../plug-ins/common/procedure-browser.c:83
 msgid "List available procedures in the PDB"
-msgstr ""
+msgstr "Az eljárás-adatbázisban szereplő eljárások listázása"
 
 #: ../plug-ins/common/procedure-browser.c:88
 msgid "Procedure _Browser"
@@ -7028,29 +7005,30 @@ msgid "Indexed Palette Type"
 msgstr "Indexelt palettatípus"
 
 #: ../plug-ins/common/redeye.c:107
+#, fuzzy
 msgid "Remove the red eye effect caused by camera flashes"
-msgstr ""
+msgstr "Vörös szem eltávolítása"
 
 #: ../plug-ins/common/redeye.c:118
 msgid "_Red Eye Removal..."
-msgstr ""
+msgstr "Vörös sz_em eltávolítása..."
 
 #: ../plug-ins/common/redeye.c:145
 msgid "Red Eye Removal"
-msgstr ""
+msgstr "Vörös szem eltávolítása"
 
 #: ../plug-ins/common/redeye.c:179
+#, fuzzy
 msgid "Threshold for the red eye color to remove."
-msgstr ""
+msgstr "Vörös szem eltávolítása"
 
 #: ../plug-ins/common/redeye.c:184
 msgid "Manually selecting the eyes may improve the results."
 msgstr ""
 
 #: ../plug-ins/common/redeye.c:317
-#, fuzzy
 msgid "Removing red eye"
-msgstr "Szín eltávolítása..."
+msgstr "Vörös szem eltávolítása"
 
 #: ../plug-ins/common/retinex.c:156
 msgid "Enhance contrast using the Retinex method"
@@ -7259,14 +7237,12 @@ msgid "Randomize hue/saturation/value independently"
 msgstr ""
 
 #: ../plug-ins/common/scatter_hsv.c:110
-#, fuzzy
 msgid "HSV Noise..."
-msgstr "Egyenletes zaj..."
+msgstr "HSV-zaj..."
 
 #: ../plug-ins/common/scatter_hsv.c:218
-#, fuzzy
 msgid "HSV Noise"
-msgstr "Zaj"
+msgstr "HSV-zaj"
 
 #: ../plug-ins/common/scatter_hsv.c:354
 msgid "Scatter HSV"
@@ -7649,7 +7625,6 @@ msgid "_Keep sign of result (one direction only)"
 msgstr "Az eredmény _előjelének megtartása (csak egy irány)"
 
 #: ../plug-ins/common/sobel.c:368
-#, fuzzy
 msgid "Sobel edge detecting"
 msgstr "Sobel-élkeresés"
 
@@ -8524,18 +8499,18 @@ msgid "The unit's plural form."
 msgstr "A mértékegység többes száma."
 
 #: ../plug-ins/common/uniteditor.c:121
-#, fuzzy
 msgid "Create a new unit from scratch"
-msgstr "Teljesen új mértékegység létrehozása."
+msgstr "Teljesen új mértékegység létrehozása"
 
 #: ../plug-ins/common/uniteditor.c:127
-#, fuzzy
 msgid "Create a new unit using the currently selected unit as template"
-msgstr "Új mértékegység létrehozása a jelenleg kiválasztott mértékegység alapján."
+msgstr ""
+"Új mértékegység létrehozása a jelenleg kiválasztott mértékegységet használva "
+"sablonként"
 
 #: ../plug-ins/common/uniteditor.c:145
 msgid "Create or alter units used in GIMP"
-msgstr ""
+msgstr "A GIMP-ben használt mértékegységek módosítása illetve létrehozása"
 
 #: ../plug-ins/common/uniteditor.c:150
 msgid "_Unit Editor"
@@ -9800,17 +9775,15 @@ msgid "Produce a lense flare effect using gradients"
 msgstr ""
 
 #: ../plug-ins/gflare/gflare.c:814
-#, fuzzy
 msgid "_Gradient Flare..."
-msgstr "Színátmenetes csillogás..."
+msgstr "Színátmenetes csill_ogás..."
 
 #.
 #. *    Dialog Shell
 #.
 #: ../plug-ins/gflare/gflare.c:953 ../plug-ins/gflare/gflare.c:2287
-#, fuzzy
 msgid "Gradient Flare"
-msgstr "Színátmenetes csillogás..."
+msgstr "Színátmenetes csillogás"
 
 #: ../plug-ins/gflare/gflare.c:1255
 #, c-format
@@ -10210,9 +10183,8 @@ msgid "Selects if the resulting image should be seamlessly tileable"
 msgstr "Folytonosan csempézhető legyen-e a létrejövő kép"
 
 #: ../plug-ins/gimpressionist/general.c:204
-#, fuzzy
 msgid "Drop shadow"
-msgstr "Árnyék"
+msgstr "Vetett árnyék"
 
 #: ../plug-ins/gimpressionist/general.c:209
 msgid "Adds a shadow effect to each brush stroke"
@@ -10714,15 +10686,16 @@ msgstr ""
 "hatása"
 
 #: ../plug-ins/help/gimphelpdomain.c:178
-#, fuzzy
 msgid "The GIMP help files are not found."
-msgstr "A GIMP súgófájljai nincsenek telepítve."
+msgstr "A GIMP súgófájljai nem találhatók."
 
 #: ../plug-ins/help/gimphelpdomain.c:179
 msgid ""
 "Please install the additional help package or use the online user manual at "
 "http://docs.gimp.org/."
 msgstr ""
+"Telepítse a kiegészítő súgócsomagot, vagy használja a webes felhasználói "
+"kézikönyvet: http://docs.gimp.org/"
 
 #: ../plug-ins/help/gimphelpdomain.c:185
 msgid "There is a problem with the GIMP help files."
@@ -10942,9 +10915,8 @@ msgid "Open IFS Fractal file"
 msgstr "IFS fraktálkészítő-fájl megnyitása"
 
 #: ../plug-ins/imagemap/imap_about.c:43
-#, fuzzy
 msgid "Image Map Plug-In"
-msgstr "Imagemap (kép-térkép) bővítmény 2.2"
+msgstr "\"Image map\" (kép-térkép) bővítmény"
 
 #: ../plug-ins/imagemap/imap_about.c:47
 #, fuzzy
@@ -11270,12 +11242,10 @@ msgid "Error opening file"
 msgstr "Hiba a fájl megnyitásakor"
 
 #: ../plug-ins/imagemap/imap_file.c:68
-#, fuzzy
 msgid "Load Image Map"
 msgstr "Kép-térkép betöltése"
 
 #: ../plug-ins/imagemap/imap_file.c:123
-#, fuzzy
 msgid "Save Image Map"
 msgstr "Kép-térkép mentése"
 
@@ -11333,12 +11303,10 @@ msgid "_Preview"
 msgstr "Elő_nézet"
 
 #: ../plug-ins/imagemap/imap_main.c:124
-#, fuzzy
 msgid "Create a clickable imagemap"
-msgstr "Új kép létrehozása"
+msgstr "Kattintható kép-térkép létrehozása"
 
 #: ../plug-ins/imagemap/imap_main.c:129
-#, fuzzy
 msgid "_Image Map..."
 msgstr "_Kép-térkép..."
 
