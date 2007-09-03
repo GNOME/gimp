@@ -61,7 +61,7 @@ DISTCLEANFILES = $(desktop_files)
 
 
 gimp.desktop: gimp.desktop.in $(wildcard $(top_srcdir)/po/*.po)
-	$(INTLTOOL_MERGE) $(top_srcdir)/po $< $(@) -d -u -c $(top_builddir)/po/.intltool-merge-cachemake
+	$(INTLTOOL_MERGE) $(top_srcdir)/po $< $(@) -d -u -c $(top_builddir)/po/.intltool-merge-cache
 
 validate: gimp.desktop
 	( dfvalidate=`which desktop-file-validate`; \

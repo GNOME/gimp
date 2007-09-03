@@ -18,7 +18,7 @@ DISTCLEANFILES = $(tipsdata_data_files)
 
 
 gimp-tips.xml: gimp-tips.xml.in $(wildcard $(top_srcdir)/po-tips/*.po)
-	$(INTLTOOL_MERGE) $(top_srcdir)/po-tips $< $(@) -x -u -c $(top_builddir)/po-tips/.intltool-merge-cachemake
+	$(INTLTOOL_MERGE) $(top_srcdir)/po-tips $< $(@) -x -u -c $(top_builddir)/po-tips/.intltool-merge-cache
 
 
 validate: gimp-tips.xml
