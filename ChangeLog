@@ -1,5 +1,13 @@
 2007-09-03  Michael Natterer  <mitch@gimp.org>
 
+	* app/core/gimp-transform-region.c: Applied slightly reformatted
+	patch by Jakub Friedl and Daniel Hornung which ROUND()s the
+	floating point result values before assigning them to integers to
+	avoid reducing the output space to [0..254] (thus darkening the
+	image). Fixes bug #472806.
+
+2007-09-03  Michael Natterer  <mitch@gimp.org>
+
 	* data/tips/Makefile.am
 	* desktop/Makefile.am:
 	s/.intltool-merge-cachemake/.intltool-merge-cache/ to fix

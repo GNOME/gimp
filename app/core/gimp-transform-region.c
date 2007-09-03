@@ -811,14 +811,13 @@ sample_linear (PixelSurround *surround,
    */
   for (i = 0; i < alpha; i++)
     {
-      gint newval;
-
-      newval = (a_recip *
+      gint newval =
+        ROUND ((a_recip *
                 BILINEAR (alphachan[0]                 * data[i],
                           alphachan[bytes]             * data[bytes + i],
                           alphachan[rowstride]         * data[rowstride + i],
                           alphachan[rowstride + bytes] * data[rowstride + bytes + i],
-                          du, dv));
+                          du, dv)));
 
       color[i] = CLAMP (newval, 0, 255);
     }
@@ -1187,25 +1186,26 @@ sample_cubic (PixelSurround *surround,
    */
   for (i = 0; i < alpha; i++)
     {
-      gint newval = (a_recip *
-                     gimp_drawable_transform_cubic
-                     (dv,
-                      CUBIC_SCALED_ROW (du,
-                                        i + data + rowstride * 0,
-                                        data + alpha + rowstride * 0,
-                                        bytes),
-                      CUBIC_SCALED_ROW (du,
-                                        i + data + rowstride * 1,
-                                        data + alpha + rowstride * 1,
-                                        bytes),
-                      CUBIC_SCALED_ROW (du,
-                                        i + data + rowstride * 2,
-                                        data + alpha + rowstride * 2,
-                                        bytes),
-                      CUBIC_SCALED_ROW (du,
-                                        i + data + rowstride * 3,
-                                        data + alpha + rowstride * 3,
-                                        bytes)));
+      gint newval =
+        ROUND ((a_recip *
+                gimp_drawable_transform_cubic
+                (dv,
+                 CUBIC_SCALED_ROW (du,
+                                   i + data + rowstride * 0,
+                                   data + alpha + rowstride * 0,
+                                   bytes),
+                 CUBIC_SCALED_ROW (du,
+                                   i + data + rowstride * 1,
+                                   data + alpha + rowstride * 1,
+                                   bytes),
+                 CUBIC_SCALED_ROW (du,
+                                   i + data + rowstride * 2,
+                                   data + alpha + rowstride * 2,
+                                   bytes),
+                 CUBIC_SCALED_ROW (du,
+                                   i + data + rowstride * 3,
+                                   data + alpha + rowstride * 3,
+                                   bytes))));
 
       color[i] = CLAMP (newval, 0, 255);
     }
@@ -1306,7 +1306,7 @@ sample_lanczos (PixelSurround *surround,
         }
 
       newval *= arecip;
-      color[b] = CLAMP (newval, 0, 255);
+      color[b] = CLAMP (ROUND (newval), 0, 255);
     }
 
   color[alpha] = RINT (aval);
