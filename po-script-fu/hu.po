@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-14 09:45+0100\n"
-"PO-Revision-Date: 2007-09-02 04:49+0200\n"
+"PO-Revision-Date: 2007-09-03 03:46+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -24,24 +24,23 @@ msgstr ""
 #: ../plug-ins/script-fu/script-fu-console.c:144
 #: ../plug-ins/script-fu/script-fu-console.c:213
 msgid "Script-Fu Console"
-msgstr "Script-Fu konzol"
+msgstr "Script-Fu-konzol"
 
 #: ../plug-ins/script-fu/script-fu-console.c:209
 msgid "Welcome to TinyScheme"
-msgstr ""
+msgstr "Üdvözli a TinyScheme"
 
 #: ../plug-ins/script-fu/script-fu-console.c:215
 msgid "Interactive Scheme Development"
-msgstr ""
+msgstr "Interaktív Scheme-fejlesztés"
 
 #: ../plug-ins/script-fu/script-fu-console.c:251
 msgid "_Browse..."
 msgstr "_Tallózás..."
 
 #: ../plug-ins/script-fu/script-fu-console.c:313
-#, fuzzy
 msgid "Save Script-Fu Console Output"
-msgstr "Script-Fu konzol"
+msgstr "Script-Fu-konzol kimenetének mentése"
 
 #: ../plug-ins/script-fu/script-fu-console.c:360
 #, c-format
@@ -49,23 +48,21 @@ msgid "Could not open '%s' for writing: %s"
 msgstr ""
 
 #: ../plug-ins/script-fu/script-fu-console.c:389
-#, fuzzy
 msgid "Script-Fu Procedure Browser"
-msgstr "Eljárásböngésző"
+msgstr "Script-Fu-eljárásböngésző"
 
 #: ../plug-ins/script-fu/script-fu-console.c:730
-#, fuzzy
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "A Script-Fu kiértékelő módja csak nem-interaktív meghívást tesz lehetővé"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:191
 msgid "Script-Fu cannot process two scripts at the same time."
-msgstr "A Script-Fu nem képes egyszerre több szkriptet feldolgozni."
+msgstr "A Script-Fu nem képes egyszerre több parancsfájlt feldolgozni."
 
 #: ../plug-ins/script-fu/script-fu-interface.c:193
 #, c-format
 msgid "You are already running the \"%s\" script."
-msgstr "Már futtatja a(z) \"%s\" szkriptet."
+msgstr "Már futtatja a(z) \"%s\" parancsfájlt."
 
 #: ../plug-ins/script-fu/script-fu-interface.c:238
 #, c-format
@@ -100,7 +97,6 @@ msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu palettaválasztó"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:492
-#, fuzzy
 msgid "Script-Fu Pattern Selection"
 msgstr "Script-Fu mintaválasztó"
 
@@ -126,26 +122,23 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu-server.c:711
 msgid "Script-Fu Server Options"
-msgstr "Script-Fu Kiszolgáló beállításai"
+msgstr "Script-Fu-kiszolgáló beállításai"
 
 #: ../plug-ins/script-fu/script-fu-server.c:716
-#, fuzzy
 msgid "_Start Server"
-msgstr "Kiszolgáló _indítása..."
+msgstr "Kiszolgáló _indítása"
 
 #: ../plug-ins/script-fu/script-fu-server.c:744
-#, fuzzy
 msgid "Server port:"
 msgstr "Kiszolgáló által használt port:"
 
 #: ../plug-ins/script-fu/script-fu-server.c:750
-#, fuzzy
 msgid "Server logfile:"
 msgstr "Kiszolgáló által használt naplófájl:"
 
 #: ../plug-ins/script-fu/script-fu.c:110
 msgid "Interactive console for Script-Fu development"
-msgstr ""
+msgstr "Interaktív konzol Script-Fu-fejlesztéshez"
 
 #: ../plug-ins/script-fu/script-fu.c:116
 msgid "Script-Fu _Console"
@@ -153,7 +146,7 @@ msgstr "Script-Fu-_konzol"
 
 #: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
-msgstr ""
+msgstr "Kiszolgáló a Script-Fu távoli működtetéséhez"
 
 #: ../plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
@@ -215,7 +208,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:328
 msgid "Alpha to _Logo"
-msgstr ""
+msgstr "Alfát lo_góvá"
 
 #: ../plug-ins/script-fu/script-fu.c:330
 msgid "An_imation"
@@ -236,7 +229,7 @@ msgstr "X-elmosás"
 
 #: ../plug-ins/script-fu/script-fu.c:338
 msgid "_Decor"
-msgstr ""
+msgstr "_Dekor"
 
 #: ../plug-ins/script-fu/script-fu.c:340
 #, fuzzy
@@ -266,17 +259,18 @@ msgstr ""
 
 #: ../plug-ins/script-fu/script-fu.c:353
 msgid "Re-read all available Script-Fu scripts"
-msgstr ""
+msgstr "Összes elérhető Script-Fu-parancsfájl újraolvasása"
 
 #: ../plug-ins/script-fu/script-fu.c:358
 msgid "_Refresh Scripts"
 msgstr "Parancsfájlok _frissítése"
 
 #: ../plug-ins/script-fu/script-fu.c:381
+#, fuzzy
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
-msgstr ""
+msgstr "Parancsfájlok frissítése"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -287,8 +281,9 @@ msgid "Bumpmap (alpha layer) blur radius"
 msgstr "Buckaleképezés (alfa-réteg) elmosásának sugara"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
+#, fuzzy
 msgid "Create a logo with outlined text and a drop shadow"
-msgstr ""
+msgstr "Vetett árnyék"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:6
@@ -379,8 +374,9 @@ msgid "Outline blur radius"
 msgstr "Körvonal elmosásának sugara"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
+#, fuzzy
 msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
-msgstr ""
+msgstr "Vetett árnyék"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -741,16 +737,18 @@ msgid "Width of gaps"
 msgstr "Rések szélessége"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
+#, fuzzy
 msgid ""
 "Add a gradient effect, a drop shadow, and a background to the selected "
 "region (or alpha)"
-msgstr ""
+msgstr "Vetett árnyék"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
+#, fuzzy
 msgid ""
 "Create a plain text logo with a gradient effect, a drop shadow, and a "
 "background"
-msgstr ""
+msgstr "Vetett árnyék"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
@@ -1042,9 +1040,8 @@ msgid "Image to carve"
 msgstr "Kivésendő kép"
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
-#, fuzzy
 msgid "Stencil C_arve..."
-msgstr "_Vésés..."
+msgstr "Stencil-_vésés..."
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
 msgid "Background Image"
@@ -1163,9 +1160,8 @@ msgid "Highlight balance"
 msgstr "Kiemelés egyensúlya"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
-#, fuzzy
 msgid "Stencil C_hrome..."
-msgstr "Kró_m..."
+msgstr "Stencil-kró_m..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 msgid "Add a simple chrome effect to the selected region (or alpha)"
@@ -1357,8 +1353,9 @@ msgid "_Distort..."
 msgstr "_Torzítás..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
+#, fuzzy
 msgid "Add a drop shadow to the selected region (or alpha)"
-msgstr ""
+msgstr "Vetett árnyék"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
@@ -1396,7 +1393,6 @@ msgid "Opacity"
 msgstr "Átlátszatlanság"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
-#, fuzzy
 msgid "_Drop Shadow..."
 msgstr "_Vetett árnyék..."
 
@@ -1409,9 +1405,8 @@ msgid "Erase"
 msgstr "Törlés"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
-#, fuzzy
 msgid "Erase every other row or column"
-msgstr "_Minden második sor törlése..."
+msgstr "Minden második sor vagy oszlop törlése"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/fill"
@@ -1442,7 +1437,6 @@ msgid "Rows/cols"
 msgstr "Sorok/oszlopok"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:11
-#, fuzzy
 msgid "_Erase Every Other Row..."
 msgstr "_Minden második sor törlése..."
 
@@ -1575,8 +1569,9 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
+#, fuzzy
 msgid "Create frozen logo with an added drop shadow"
-msgstr ""
+msgstr "Vetett árnyék"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
 msgid "_Frosty..."
@@ -2406,8 +2401,9 @@ msgid "Speed Text..."
 msgstr "Száguldó szöveg..."
 
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:2
+#, fuzzy
 msgid "Create a simple sphere with a drop shadow"
-msgstr ""
+msgstr "Vetett árnyék"
 
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:3
 msgid "Lighting (degrees)"
@@ -2853,12 +2849,11 @@ msgstr "Szö_vés..."
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
 msgid "Bookmark to the GIMP web site"
-msgstr ""
+msgstr "Könyvjelző a GIMP weblapjához"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
-#, fuzzy
 msgid "Bookmark to the user manual"
-msgstr "Felhasználói kézikönyv"
+msgstr "Könyvjelző a felhasználói kézikönyvhöz"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
 msgid "Create and Use _Selections"
@@ -2866,15 +2861,15 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
 msgid "Create, Open and Save _Files"
-msgstr ""
+msgstr "_Fájlok létrehozása, megnyitása és mentése"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
 msgid "Drawing _Simple Objects"
-msgstr ""
+msgstr "_Egyszerű objektumok rajzolása"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
 msgid "How to Use _Dialogs"
-msgstr ""
+msgstr "A _párbeszédablakok használata"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
 msgid "Plug-in _Registry"
@@ -2882,11 +2877,11 @@ msgstr "_Bővítményjegyzék"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
 msgid "Using _Paths"
-msgstr ""
+msgstr "Út_vonalak használata"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
 msgid "_Basic Concepts"
-msgstr ""
+msgstr "_Alapinformációk"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
 msgid "_Developer Web Site"
@@ -2898,7 +2893,7 @@ msgstr "_Fő webhely"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
 msgid "_Preparing your Images for the Web"
-msgstr ""
+msgstr "Képek készítése a _webhez"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
 msgid "_User Manual Web Site"
@@ -2906,7 +2901,7 @@ msgstr "A felhasználói _kézikönyv webhelye"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
 msgid "_Working with Digital Camera Photos"
-msgstr ""
+msgstr "_Digitális kamerák képeinek használata"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
