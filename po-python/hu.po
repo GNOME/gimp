@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp-python.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-14 09:46+0100\n"
-"PO-Revision-Date: 2007-09-02 04:27+0200\n"
+"PO-Revision-Date: 2007-09-03 03:38+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -129,7 +129,7 @@ msgstr "Python konzol"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
 msgid "Interactive Gimp-Python interpreter"
-msgstr ""
+msgstr "Interaktív GIMP-Python-fordító"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
 msgid "_Console"
@@ -137,11 +137,11 @@ msgstr "_Konzol"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:51
 msgid "Add a layer of fog"
-msgstr ""
+msgstr "Ködréteg hozzáadása"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "_Fog..."
-msgstr ""
+msgstr "_Köd..."
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "_Layer name"
@@ -240,7 +240,7 @@ msgstr "Palettát színátme_netté"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:57
 msgid "Slice"
-msgstr ""
+msgstr "Szeletelés"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
@@ -248,7 +248,7 @@ msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
-msgstr ""
+msgstr "_Szeletelés..."
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "Path for HTML export"
@@ -287,30 +287,36 @@ msgid "Skip animation for table caps"
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
+#, fuzzy
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr ""
+msgstr "Vetett árnyék"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
+#, fuzzy
 msgid "_Drop Shadow and Bevel..."
-msgstr ""
+msgstr "Vetett árnyék"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
+#, fuzzy
 msgid "_Shadow blur"
-msgstr ""
+msgstr "árnyék elmosása"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
 msgid "_Bevel"
 msgstr ""
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
+#, fuzzy
 msgid "_Drop shadow"
-msgstr ""
+msgstr "Vetett árnyék"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+#, fuzzy
 msgid "Drop shadow _X displacement"
-msgstr ""
+msgstr "Vetett árnyék X-eltolása"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
+#, fuzzy
 msgid "Drop shadow _Y displacement"
-msgstr ""
+msgstr "Vetett árnyék Y-eltolása"
 
