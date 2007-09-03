@@ -924,33 +924,43 @@ gimp_value_set_item (GValue   *value,
 #endif
 
   if (GIMP_VALUE_HOLDS_ITEM_ID (value))
-    value->data[0].v_int = item ? gimp_item_get_ID (item) : -1;
-
+    {
+      value->data[0].v_int = item ? gimp_item_get_ID (item) : -1;
+    }
   else if (GIMP_VALUE_HOLDS_DRAWABLE_ID (value) &&
-           GIMP_IS_DRAWABLE (item))
-    gimp_value_set_drawable (value, GIMP_DRAWABLE (item));
-
+           (item == NULL || GIMP_IS_DRAWABLE (item)))
+    {
+      gimp_value_set_drawable (value, GIMP_DRAWABLE (item));
+    }
   else if (GIMP_VALUE_HOLDS_LAYER_ID (value) &&
-           GIMP_IS_LAYER (item))
-    gimp_value_set_layer (value, GIMP_LAYER (item));
-
+           (item == NULL || GIMP_IS_LAYER (item)))
+    {
+      gimp_value_set_layer (value, GIMP_LAYER (item));
+    }
   else if (GIMP_VALUE_HOLDS_CHANNEL_ID (value) &&
-           GIMP_IS_CHANNEL (item))
-    gimp_value_set_channel (value, GIMP_CHANNEL (item));
-
+           (item == NULL || GIMP_IS_CHANNEL (item)))
+    {
+      gimp_value_set_channel (value, GIMP_CHANNEL (item));
+    }
   else if (GIMP_VALUE_HOLDS_LAYER_MASK_ID (value) &&
-           GIMP_IS_LAYER_MASK (item))
-    gimp_value_set_layer_mask (value, GIMP_LAYER_MASK (item));
-
+           (item == NULL || GIMP_IS_LAYER_MASK (item)))
+    {
+      gimp_value_set_layer_mask (value, GIMP_LAYER_MASK (item));
+    }
   else if (GIMP_VALUE_HOLDS_SELECTION_ID (value) &&
-           GIMP_IS_SELECTION (item))
-    gimp_value_set_selection (value, GIMP_SELECTION (item));
-
+           (item == NULL || GIMP_IS_SELECTION (item)))
+    {
+      gimp_value_set_selection (value, GIMP_SELECTION (item));
+    }
   else if (GIMP_VALUE_HOLDS_VECTORS_ID (value) &&
-           GIMP_IS_VECTORS (item))
-    gimp_value_set_vectors (value, GIMP_VECTORS (item));
+           (item == NULL || GIMP_IS_VECTORS (item)))
+    {
+      gimp_value_set_vectors (value, GIMP_VECTORS (item));
+    }
   else
-    g_return_if_reached ();
+    {
+      g_return_if_reached ();
+    }
 }
 
 
