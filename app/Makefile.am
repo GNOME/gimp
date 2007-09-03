@@ -220,13 +220,17 @@ endif
 #
 dist-dump-gimprc: gimp-console-$(GIMP_APP_VERSION)$(EXEEXT)
 	./$< --dump-gimprc-system > gimprc.tmp	\
-		&& (cmp -s gimprc.tmp $(top_srcdir)/etc/gimprc ||	\
-		    cp gimprc.tmp $(top_srcdir)/etc/gimprc)		\
-		&& rm gimprc.tmp
+		&& sed -e "s/num-processors [0-9]*/num-processors 1/"	\
+		   gimprc.tmp > gimprc.tmp2				\
+		&& (cmp -s gimprc.tmp2 $(top_srcdir)/etc/gimprc ||	\
+		    cp gimprc.tmp2 $(top_srcdir)/etc/gimprc)		\
+		&& rm gimprc.tmp gimprc.tmp2
 	./$< --dump-gimprc-manpage > gimprc.tmp	\
-		&& (cmp -s gimprc.tmp $(top_srcdir)/docs/gimprc.5.in ||	\
-		    cp gimprc.tmp $(top_srcdir)/docs/gimprc.5.in)	\
-		&& rm gimprc.tmp
+		&& sed -e "s/num-processors [0-9]*/num-processors 1/"	\
+		   gimprc.tmp > gimprc.tmp2				\
+		&& (cmp -s gimprc.tmp2 $(top_srcdir)/docs/gimprc.5.in ||\
+		    cp gimprc.tmp2 $(top_srcdir)/docs/gimprc.5.in)	\
+		&& rm gimprc.tmp gimprc.tmp2
 
 dist-hook: dist-check-gimp-console dist-dump-gimprc
 

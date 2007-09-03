@@ -1,7 +1,15 @@
 2007-09-03  Michael Natterer  <mitch@gimp.org>
 
+	* Made 2.4.0-rc2 release.
+
+	* app/Makefile.am (dist-dump-gimprc): added some sed voodoo to
+	make sure the num-processors in the distributed gimprc and its
+	manpage don't depend on the machine that does make dist.
+
+2007-09-03  Michael Natterer  <mitch@gimp.org>
+
 	* app/core/gimp-transform-region.c: Applied slightly reformatted
-	patch by Jakub Friedl and Daniel Hornung which ROUND()s the
+	patch from Jakub Friedl and Daniel Hornung which ROUND()s the
 	floating point result values before assigning them to integers to
 	avoid reducing the output space to [0..254] (thus darkening the
 	image). Fixes bug #472806.
