@@ -1,3 +1,4 @@
+# translation of gimp-libgimp.HEAD.po to Hungarian
 # Hungarian translation of gimp-libgimp.
 # Copyright (C) 2000, 2001, 2002, 2004, 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp-libgimp package.
@@ -9,10 +10,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-03-19 21:49+0000\n"
-"PO-Revision-Date: 2007-03-25 16:04+0200\n"
+"POT-Creation-Date: 2007-08-14 09:46+0100\n"
+"PO-Revision-Date: 2007-09-02 08:11+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
-"Language-Team: Hungarian <gnome@gnome.hu>\n"
+"Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -29,9 +30,12 @@ msgid "_Browse..."
 msgstr "_Tallózás..."
 
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "%s plug-in can't handle layers"
-msgstr "%s nem kezeli a rétegeket"
+msgstr ""
+"bővítmény"
+"%s nem kezeli a rétegeket"
 
 #: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
@@ -39,14 +43,20 @@ msgid "Merge Visible Layers"
 msgstr "Látható rétegek összefésülése"
 
 #: ../libgimp/gimpexport.c:226
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "%s plug-in can't handle layer offsets, size or opacity"
-msgstr "%s nem kezeli a rétegeltolásokat, a méretet vagy az átlátszatlanságot"
+msgstr ""
+"bővítmény"
+"%s nem kezeli a rétegeltolásokat, a méretet vagy az átlátszatlanságot"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr "%s a rétegeket csak animáció képkockájaként kezeli"
+msgstr ""
+"bővítmény"
+"%s a rétegeket csak animáció képkockájaként kezeli"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
@@ -58,23 +68,32 @@ msgid "Flatten Image"
 msgstr "Kép lapítása"
 
 #: ../libgimp/gimpexport.c:262
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "%s plug-in can't handle transparency"
-msgstr "%s nem kezeli az átlátszóságot"
+msgstr ""
+"bővítmény"
+"%s nem kezeli az átlátszóságot"
 
 #: ../libgimp/gimpexport.c:271
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "%s plug-in can't handle layer masks"
-msgstr "%s nem kezeli a rétegmaszkokat"
+msgstr ""
+"bővítmény"
+"%s nem kezeli a rétegmaszkokat"
 
 #: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
 msgstr "Rétegmaszkok alkalmazása"
 
 #: ../libgimp/gimpexport.c:280
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "%s plug-in can only handle RGB images"
-msgstr "%s csak RGB képeket kezel"
+msgstr ""
+"bővítmény"
+"%s csak RGB képeket kezel"
 
 #: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
@@ -82,9 +101,12 @@ msgid "Convert to RGB"
 msgstr "Átalakítás RGB-be"
 
 #: ../libgimp/gimpexport.c:289
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "%s plug-in can only handle grayscale images"
-msgstr "%s csak szürkeárnyalatos képeket kezel"
+msgstr ""
+"bővítmény"
+"%s csak szürkeárnyalatos képeket kezel"
 
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
@@ -92,9 +114,12 @@ msgid "Convert to Grayscale"
 msgstr "Átalakítás szürkeárnyalatosba"
 
 #: ../libgimp/gimpexport.c:298
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "%s plug-in can only handle indexed images"
-msgstr "%s csak indexelt képeket kezel"
+msgstr ""
+"bővítmény"
+"%s csak indexelt képeket kezel"
 
 #: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
 #: ../libgimp/gimpexport.c:338
@@ -106,9 +131,12 @@ msgstr ""
 "(a finomhangoláshoz válassza a kézi beállítást)"
 
 #: ../libgimp/gimpexport.c:308
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr "%s csak bitképes (kétszínű) indexelt képeket kezel"
+msgstr ""
+"bővítmény"
+"%s csak bitképes (kétszínű) indexelt képeket kezel"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -119,24 +147,36 @@ msgstr ""
 "(a finomhangoláshoz válassza a kézi beállítást)"
 
 #: ../libgimp/gimpexport.c:318
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr "%s csak RGB vagy szürkeárnyalatos képeket kezel"
+msgstr ""
+"bővítmény"
+"%s csak RGB vagy szürkeárnyalatos képeket kezel"
 
 #: ../libgimp/gimpexport.c:327
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "%s plug-in  can only handle RGB or indexed images"
-msgstr "%s csak RGB vagy indexelt képeket kezel"
+msgstr ""
+"bővítmény"
+"%s csak RGB vagy indexelt képeket kezel"
 
 #: ../libgimp/gimpexport.c:337
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr "%s csak szürkeárnyalatos vagy indexelt képeket kezel"
+msgstr ""
+"bővítmény"
+"%s csak szürkeárnyalatos vagy indexelt képeket kezel"
 
 #: ../libgimp/gimpexport.c:348
-#, fuzzy, c-format
+#, c-format
+#, fuzzy
 msgid "%s plug-in needs an alpha channel"
-msgstr "%s számára szükséges egy alfa-csatorna"
+msgstr ""
+"bővítmény"
+"%s számára szükséges egy alfa-csatorna"
 
 #: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
@@ -357,7 +397,7 @@ msgstr "A réteg s_zürkeárnyalatos másolata"
 
 #: ../libgimpbase/gimpbaseenums.c:33
 msgid "C_hannel"
-msgstr ""
+msgstr "_Csatorna"
 
 #: ../libgimpbase/gimpbaseenums.c:63
 msgid "FG to BG (RGB)"
@@ -440,55 +480,48 @@ msgid "Large"
 msgstr "Nagy"
 
 #: ../libgimpbase/gimpbaseenums.c:230
-#, fuzzy
 msgid "Light checks"
 msgstr "Világos négyzetháló"
 
 #: ../libgimpbase/gimpbaseenums.c:231
-#, fuzzy
 msgid "Mid-tone checks"
 msgstr "Középszürke négyzetháló"
 
 #: ../libgimpbase/gimpbaseenums.c:232
-#, fuzzy
 msgid "Dark checks"
 msgstr "Sötét négyzetháló"
 
 #: ../libgimpbase/gimpbaseenums.c:233
-#, fuzzy
 msgid "White only"
 msgstr "Csak fehér"
 
 #: ../libgimpbase/gimpbaseenums.c:234
-#, fuzzy
 msgid "Gray only"
 msgstr "Csak szürke"
 
 #: ../libgimpbase/gimpbaseenums.c:235
-#, fuzzy
 msgid "Black only"
 msgstr "Csak fekete"
 
 #: ../libgimpbase/gimpbaseenums.c:263
-msgid "Image source"
-msgstr "Képforrás"
+msgid "Image"
+msgstr "Kép"
 
 #: ../libgimpbase/gimpbaseenums.c:264
-msgid "Pattern source"
-msgstr "Mintaforrás"
+msgid "Pattern"
+msgstr "Minta"
 
 #: ../libgimpbase/gimpbaseenums.c:293
-#, fuzzy
 msgid "Lightness"
-msgstr "Világos négyzetháló"
+msgstr "Fényerő"
 
 #: ../libgimpbase/gimpbaseenums.c:294
 msgid "Luminosity"
-msgstr ""
+msgstr "Fényesség"
 
 #: ../libgimpbase/gimpbaseenums.c:295
 msgid "Average"
-msgstr ""
+msgstr "Átlag"
 
 #: ../libgimpbase/gimpbaseenums.c:323
 msgid "Dodge"
@@ -544,23 +577,23 @@ msgstr "Spirál (óramutató járásával ellentétesen)"
 
 #: ../libgimpbase/gimpbaseenums.c:429
 msgid "Intersections (dots)"
-msgstr ""
+msgstr "Metszéspontok (pontok)"
 
 #: ../libgimpbase/gimpbaseenums.c:430
 msgid "Intersections (crosshairs)"
-msgstr ""
+msgstr "Metszéspontok (keresztek)"
 
 #: ../libgimpbase/gimpbaseenums.c:431
 msgid "Dashed"
-msgstr ""
+msgstr "Szaggatott"
 
 #: ../libgimpbase/gimpbaseenums.c:432
 msgid "Double dashed"
-msgstr ""
+msgstr "Dupla szaggatott"
 
 #: ../libgimpbase/gimpbaseenums.c:433
 msgid "Solid"
-msgstr ""
+msgstr "Egyenletes"
 
 # TODO: jelentése?
 #: ../libgimpbase/gimpbaseenums.c:462
@@ -606,19 +639,19 @@ msgstr "Indexelt-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:562
 msgid "interpolation|None"
-msgstr ""
+msgstr "Nincs"
 
 #: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|Linear"
-msgstr ""
+msgstr "Lineáris"
 
 #: ../libgimpbase/gimpbaseenums.c:564
 msgid "Cubic"
-msgstr ""
+msgstr "Köbös"
 
 #: ../libgimpbase/gimpbaseenums.c:565
 msgid "Sinc (Lanczos3)"
-msgstr ""
+msgstr "Sinc (Lánczos 3)"
 
 #: ../libgimpbase/gimpbaseenums.c:593
 msgid "Constant"
@@ -628,7 +661,7 @@ msgstr "Állandó"
 msgid "Incremental"
 msgstr "Összeadódó"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:267
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:214
 msgid "None"
 msgstr "Nincs"
 
@@ -675,27 +708,27 @@ msgstr "Fényes színek"
 
 #: ../libgimpbase/gimpbaseenums.c:744
 msgid "Normal (Forward)"
-msgstr ""
+msgstr "Normál (előre)"
 
 #: ../libgimpbase/gimpbaseenums.c:745
 msgid "Corrective (Backward)"
-msgstr ""
+msgstr "Javítási (hátra)"
 
 #: ../libgimpbase/gimpbaseenums.c:775
 msgid "Adjust"
-msgstr ""
+msgstr "Igazítás"
 
 #: ../libgimpbase/gimpbaseenums.c:776
 msgid "Clip"
-msgstr ""
+msgstr "Vágás"
 
 #: ../libgimpbase/gimpbaseenums.c:777
 msgid "Crop to result"
-msgstr ""
+msgstr "Vágás az eredményre"
 
 #: ../libgimpbase/gimpbaseenums.c:778
 msgid "Crop with aspect"
-msgstr ""
+msgstr "Vágás méretarányosan"
 
 #: ../libgimpbase/gimpbaseenums.c:881
 msgid "Internal GIMP procedure"
@@ -703,18 +736,18 @@ msgstr ""
 
 #: ../libgimpbase/gimpbaseenums.c:882
 msgid "GIMP Plug-In"
-msgstr ""
+msgstr "GIMP-bővítmény"
 
 #: ../libgimpbase/gimpbaseenums.c:883
 msgid "GIMP Extension"
-msgstr ""
+msgstr "GIMP-kiterjesztés"
 
 #: ../libgimpbase/gimpbaseenums.c:884
 msgid "Temporary Procedure"
 msgstr ""
 
 #: ../libgimpbase/gimpmemsize.c:180
-#, fuzzy, c-format
+#, c-format
 msgid "%d Byte"
 msgid_plural "%d Bytes"
 msgstr[0] "%d bájt"
@@ -766,13 +799,16 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:259
+#: ../modules/cdisplay_lcms.c:206
 msgid "(invalid UTF-8 string)"
 msgstr "(érvénytelen UTF-8 karakterlánc)"
 
 #: ../libgimpconfig/gimpcolorconfig.c:40
+#, fuzzy
 msgid "Mode of operation for color management."
 msgstr ""
+"Működési mód"
+"Színkezelés"
 
 #: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "The color profile of your (primary) monitor."
@@ -787,81 +823,82 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
 msgid "The default RGB working space color profile."
-msgstr ""
+msgstr "Az alapértelmezett RGB munkaterület színprofilja."
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:52
+#, fuzzy
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr ""
+"Nyomtatásszimulációs "
+"próbanyomat"
 
 #: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "Sets how colors are mapped for your display."
 msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
+#, fuzzy
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
-msgstr ""
+msgstr "Nyomtatásszimulációs"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
-msgstr ""
+msgstr "Nincs színkezelés"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:25
 msgid "Color managed display"
-msgstr ""
+msgstr "Színkezeléssel rendelkező kijelző"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:26
 msgid "Print simulation"
-msgstr ""
+msgstr "Nyomtatásszimuláció"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:56
 msgid "Perceptual"
 msgstr "Érzékelési"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57
-#, fuzzy
 msgid "Relative colorimetric"
 msgstr "Relatív színmérési"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
-#, fuzzy
 msgid "intent|Saturation"
 msgstr "Telítettség"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
-#, fuzzy
 msgid "Absolute colorimetric"
 msgstr "Abszolút színmérési"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:96
+#: ../libgimpconfig/gimpconfig-deserialize.c:97
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
 msgstr "%s kifejezés értéke nem egy érvényes UTF-8 szöveg"
 
 #. please don't translate 'yes' and 'no'
-#: ../libgimpconfig/gimpconfig-deserialize.c:427
+#: ../libgimpconfig/gimpconfig-deserialize.c:436
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
 msgstr ""
 "csak \"yes\" vagy \"no\" érték szerepelhetne %s logikai kifejezésben, de \"%s"
 "\" szerepel"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:501
+#: ../libgimpconfig/gimpconfig-deserialize.c:510
 #, c-format
 msgid "invalid value '%s' for token %s"
 msgstr "érvénytelen érték (\"%s\") %s kifejezésben"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:516
+#: ../libgimpconfig/gimpconfig-deserialize.c:525
 #, c-format
 msgid "invalid value '%ld' for token %s"
 msgstr "érvénytelen érték (\"%ld\") %s kifejezésben"
 
-#: ../libgimpconfig/gimpconfig-deserialize.c:585
+#: ../libgimpconfig/gimpconfig-deserialize.c:594
 #, c-format
 msgid "while parsing token '%s': %s"
 msgstr "\"%s\" kifejezés elemzése közben: %s"
@@ -877,17 +914,23 @@ msgstr "végzetes feldolgozási hiba"
 msgid "Cannot expand ${%s}"
 msgstr "${%s} nem bővíthető"
 
-#: ../libgimpconfig/gimpconfigwriter.c:135
+#: ../libgimpconfig/gimpconfigwriter.c:78
+#: ../libgimpconfig/gimpconfigwriter.c:693
+#, c-format
+msgid "Error writing to '%s': %s"
+msgstr "Hiba a(z) \"%s\" fájl írása közben: %s"
+
+#: ../libgimpconfig/gimpconfigwriter.c:136
 #, c-format
 msgid "Could not create temporary file for '%s': %s"
 msgstr "Nem lehet átmeneti fájlt létrehozni a(z) \"%s\" számára: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:148
+#: ../libgimpconfig/gimpconfigwriter.c:149
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Nem lehet írásra megnyitni \"%s\"-t: %s"
 
-#: ../libgimpconfig/gimpconfigwriter.c:667
+#: ../libgimpconfig/gimpconfigwriter.c:674
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -896,7 +939,7 @@ msgstr ""
 "Hiba történt \"%s\" átmeneti fájljába való íráskor: %s\n"
 "Az eredeti fájl nem módosult."
 
-#: ../libgimpconfig/gimpconfigwriter.c:675
+#: ../libgimpconfig/gimpconfigwriter.c:682
 #, c-format
 msgid ""
 "Error writing to temporary file for '%s': %s\n"
@@ -905,12 +948,7 @@ msgstr ""
 "Hiba történt \"%s\" átmeneti fájljába való íráskor: %s\n"
 "Nem lett létrehozva fájl."
 
-#: ../libgimpconfig/gimpconfigwriter.c:686
-#, c-format
-msgid "Error writing to '%s': %s"
-msgstr "Hiba a(z) \"%s\" fájl írása közben: %s"
-
-#: ../libgimpconfig/gimpconfigwriter.c:704
+#: ../libgimpconfig/gimpconfigwriter.c:711
 #, c-format
 msgid "Could not create '%s': %s"
 msgstr "Nem lehet létrehozni a(z) \"%s\"-t: %s"
@@ -1002,24 +1040,24 @@ msgid "Old:"
 msgstr "Régi:"
 
 #: ../libgimpwidgets/gimpcolorselection.c:286
-#, fuzzy
 msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
-msgstr "A HTML-ben és a CSS-ben használatos hexadecimális színjelölés"
+msgstr ""
+"Hexadecimális színmegadás, amely például a HTML-ben és a CSS-ben használatos. "
+"Ez a bejegyzés elfogad CSS-színneveket is."
 
 #: ../libgimpwidgets/gimpcolorselection.c:292
-#, fuzzy
 msgid "HTML _notation:"
 msgstr "H_TML-jelölés:"
 
 #: ../libgimpwidgets/gimpfileentry.c:174
 msgid "Open a file selector to browse your folders"
-msgstr ""
+msgstr "Fájlválasztó megnyitása a mappák böngészéséhez"
 
 #: ../libgimpwidgets/gimpfileentry.c:175
 msgid "Open a file selector to browse your files"
-msgstr ""
+msgstr "Fájlválasztó megnyitása a fájlok böngészéséhez"
 
 #: ../libgimpwidgets/gimpfileentry.c:335
 msgid "Select Folder"
@@ -1029,15 +1067,15 @@ msgstr "Mappa kiválasztása"
 msgid "Select File"
 msgstr "Fájl kiválasztása"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:202
+#: ../libgimpwidgets/gimpmemsizeentry.c:204
 msgid "Kilobytes"
 msgstr "Kilobájt"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:203
+#: ../libgimpwidgets/gimpmemsizeentry.c:205
 msgid "Megabytes"
 msgstr "Megabájt"
 
-#: ../libgimpwidgets/gimpmemsizeentry.c:204
+#: ../libgimpwidgets/gimpmemsizeentry.c:206
 msgid "Gigabytes"
 msgstr "Gigabájt"
 
@@ -1118,11 +1156,6 @@ msgid "This text input field is limited to %d character."
 msgid_plural "This text input field is limited to %d characters."
 msgstr[0] ""
 msgstr[1] ""
-
-#: ../libgimpwidgets/gimpresolutionentry.c:382
-#, fuzzy, c-format
-msgid "pixels/%s"
-msgstr "képpont"
 
 #: ../libgimpwidgets/gimpstock.c:113
 msgid "Anchor"
@@ -1294,14 +1327,13 @@ msgstr "Képforrás"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:217
 msgid "Zoom in"
-msgstr ""
+msgstr "Nagyítás"
 
 #: ../libgimpwidgets/gimpwidgetsenums.c:218
 msgid "Zoom out"
-msgstr ""
+msgstr "Kicsinyítés"
 
 #: ../modules/cdisplay_colorblind.c:67
-#, fuzzy
 msgid "Protanopia (insensitivity to red)"
 msgstr "Protanopia (a vörös szín érzékelésének hiánya)"
 
@@ -1322,9 +1354,8 @@ msgid "Color Deficient Vision"
 msgstr "Színérzékelési probléma"
 
 #: ../modules/cdisplay_colorblind.c:507
-#, fuzzy
 msgid "Color _deficiency type:"
-msgstr "Érzékelési probléma _típusa:"
+msgstr "Színérzékelési probléma _típusa:"
 
 #: ../modules/cdisplay_gamma.c:91
 msgid "Gamma color display filter"
@@ -1336,7 +1367,7 @@ msgstr "Gamma"
 
 #: ../modules/cdisplay_gamma.c:253
 msgid "_Gamma:"
-msgstr "_Gamma:"
+msgstr "G_amma:"
 
 #: ../modules/cdisplay_highcontrast.c:91
 msgid "High Contrast color display filter"
@@ -1347,40 +1378,43 @@ msgid "Contrast"
 msgstr "Kontraszt"
 
 #: ../modules/cdisplay_highcontrast.c:253
-#, fuzzy
 msgid "Contrast c_ycles:"
 msgstr "Kontraszt_ciklusok:"
 
-#: ../modules/cdisplay_lcms.c:116
+#: ../modules/cdisplay_lcms.c:105
 #, fuzzy
 msgid "Color management display filter using ICC color profiles"
-msgstr "ICC színprofilt használó \"színes próbanyomat\" szűrő"
-
-#: ../modules/cdisplay_lcms.c:184
-msgid "Color Management"
 msgstr ""
+"Színkezelés"
+"ICC színprofilt használó \"színes próbanyomat\" szűrő"
 
-#: ../modules/cdisplay_lcms.c:288
+#: ../modules/cdisplay_lcms.c:166
+msgid "Color Management"
+msgstr "Színkezelés"
+
+#: ../modules/cdisplay_lcms.c:235
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
+"Ez a szűrő a beállítási párbeszédablak színkezelési részéből veszi "
+"a beállításait."
 
-#: ../modules/cdisplay_lcms.c:302
+#: ../modules/cdisplay_lcms.c:249
 msgid "Mode of operation:"
-msgstr ""
+msgstr "Működési mód:"
 
-#: ../modules/cdisplay_lcms.c:309
-msgid "RGB working space profile:"
-msgstr ""
+#: ../modules/cdisplay_lcms.c:256
+msgid "Image profile:"
+msgstr "Képprofil:"
 
-#: ../modules/cdisplay_lcms.c:316
+#: ../modules/cdisplay_lcms.c:263
 msgid "Monitor profile:"
-msgstr ""
+msgstr "Monitorprofil:"
 
-#: ../modules/cdisplay_lcms.c:323
+#: ../modules/cdisplay_lcms.c:270
 msgid "Print simulation profile:"
-msgstr ""
+msgstr "Nyomtatásszimulációs profil:"
 
 #: ../modules/cdisplay_proof.c:102
 msgid "Color proof filter using ICC color profile"
@@ -1578,13 +1612,11 @@ msgid "X Move Right"
 msgstr ""
 
 #: ../modules/controller_linux_input.c:92
-#: ../modules/controller_dx_dinput.c:478
-msgid "Y Move Away"
+msgid "Y Move Forward"
 msgstr ""
 
 #: ../modules/controller_linux_input.c:93
-#: ../modules/controller_dx_dinput.c:481
-msgid "Y Move Near"
+msgid "Y Move Back"
 msgstr ""
 
 #: ../modules/controller_linux_input.c:94
@@ -1598,13 +1630,11 @@ msgid "Z Move Down"
 msgstr ""
 
 #: ../modules/controller_linux_input.c:97
-#: ../modules/controller_dx_dinput.c:496
-msgid "X Axis Tilt Away"
+msgid "X Axis Tilt Forward"
 msgstr ""
 
 #: ../modules/controller_linux_input.c:98
-#: ../modules/controller_dx_dinput.c:499
-msgid "X Axis Tilt Near"
+msgid "X Axis Tilt Back"
 msgstr ""
 
 #: ../modules/controller_linux_input.c:99
@@ -1724,6 +1754,22 @@ msgstr ""
 #: ../modules/controller_dx_dinput.c:452
 #, c-format
 msgid "Button %d Release"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:478
+msgid "Y Move Away"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:481
+msgid "Y Move Near"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:496
+msgid "X Axis Tilt Away"
+msgstr ""
+
+#: ../modules/controller_dx_dinput.c:499
+msgid "X Axis Tilt Near"
 msgstr ""
 
 #: ../modules/controller_dx_dinput.c:528
