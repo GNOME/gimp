@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-08-14 09:46+0100\n"
-"PO-Revision-Date: 2007-09-02 08:49+0200\n"
+"PO-Revision-Date: 2007-09-03 02:40+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -73,7 +73,9 @@ msgstr ""
 #, c-format
 #, fuzzy
 msgid "No batch interpreter specified, using the default '%s'.\n"
-msgstr "alapértelmezett"
+msgstr ""
+"Fordítók"
+"alapértelmezett"
 
 #: ../app/batch.c:93 ../app/batch.c:111
 #, fuzzy, c-format
@@ -1101,27 +1103,24 @@ msgid "_Module Manager"
 msgstr "_Modulkezelő"
 
 #: ../app/actions/dialogs-actions.c:231
-#, fuzzy
 msgid "Open the module manager dialog"
-msgstr "Képmegnyitási párbeszédablak"
+msgstr "A modulkezelő párbeszédablakának megnyitása"
 
 #: ../app/actions/dialogs-actions.c:236
 msgid "_Tip of the Day"
 msgstr "_A nap ötlete"
 
 #: ../app/actions/dialogs-actions.c:237
-#, fuzzy
 msgid "Show the tip of the day"
-msgstr "_A nap ötlete"
+msgstr "A nap ötletének megjelenítése"
 
 #: ../app/actions/dialogs-actions.c:242
 msgid "_About"
 msgstr "_Névjegy"
 
 #: ../app/actions/dialogs-actions.c:243 ../app/dialogs/about-dialog.c:114
-#, fuzzy
 msgid "About GIMP"
-msgstr "Kilépés a GIMP-ből"
+msgstr "A GIMP névjegye"
 
 #: ../app/actions/dock-actions.c:43
 msgid "M_ove to Screen"
@@ -1321,14 +1320,16 @@ msgid "Clear Document History"
 msgstr "Dokumentumok előzménye"
 
 #: ../app/actions/documents-commands.c:210
+#, fuzzy
 msgid "Remove all entries from the document history?"
-msgstr ""
+msgstr "Dokumentum-előzmények"
 
 #: ../app/actions/documents-commands.c:214
+#, fuzzy
 msgid ""
 "Clearing the document history will permanently remove all currently listed "
 "entries."
-msgstr ""
+msgstr "Dokumentum-előzmények"
 
 #: ../app/actions/drawable-actions.c:45
 msgid "_Desaturate..."
@@ -1664,9 +1665,8 @@ msgid "Copied pixels to the clipboard"
 msgstr "képpontok másolása a vágólapra"
 
 #: ../app/actions/edit-commands.c:278 ../app/actions/edit-commands.c:454
-#, fuzzy
 msgid "There is no image data in the clipboard to paste."
-msgstr "a vágólap"
+msgstr "Nincs beilleszthető képadat a vágólapon."
 
 #: ../app/actions/edit-commands.c:292
 msgid "Cut Named"
@@ -2335,7 +2335,7 @@ msgstr "_Súgó"
 
 #: ../app/actions/help-actions.c:42
 msgid "Open the GIMP user manual"
-msgstr ""
+msgstr "A GIMP felhasználói kézikönyvének megnyitása"
 
 #: ../app/actions/help-actions.c:47
 msgid "_Context Help"
@@ -2343,7 +2343,7 @@ msgstr "_Helyi súgó"
 
 #: ../app/actions/help-actions.c:48
 msgid "Show the help for a specific user interface item"
-msgstr ""
+msgstr "Segítség megjelenítése a felhasználói felület egy bizonyos eleméhez"
 
 #: ../app/actions/image-actions.c:47
 msgid "Toolbox Menu"
@@ -4547,7 +4547,7 @@ msgstr "Megadja, hogyan nézzen ki a kép körül levő terület."
 
 #: ../app/config/gimprc-blurbs.h:33
 msgid "How to handle embedded color profiles when opening a file."
-msgstr ""
+msgstr "Hogyan legyenek kezelve a beágyazott színprofilok egy fájl megnyitásakor."
 
 #: ../app/config/gimprc-blurbs.h:36
 msgid "Ask for confirmation before closing an image without saving."
@@ -4712,14 +4712,13 @@ msgstr ""
 "lekérdezve a vízszintes és a függőleges felbontási információ."
 
 #: ../app/config/gimprc-blurbs.h:208
-#, fuzzy
 msgid ""
 "If enabled, the move tool sets the edited layer or path as active.  This "
 "used to be the default behaviour in older versions."
 msgstr ""
-"Ha be van kapcsolva, akkor az áthelyezési eszköz módosítja az aktív réteget "
-"illetve útvonalat egy réteg illetve útvonal kijelölésekor. A korábbi "
-"verziókban ez volt az alapértelmezett viselkedés."
+"Ha be van kapcsolva, akkor az áthelyezési eszköz aktívvá teszi a szerkesztett "
+"réteget illetve útvonalat. A korábbi verziókban ez volt az alapértelmezett "
+"viselkedés."
 
 #: ../app/config/gimprc-blurbs.h:212
 msgid ""
@@ -4731,7 +4730,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:216
 msgid "Sets how many processors GIMP should try to use simultaneously."
-msgstr ""
+msgstr "Megadja, hogy hány processzort próbáljon egyidejűleg használni a GIMP."
 
 #: ../app/config/gimprc-blurbs.h:229
 msgid ""
@@ -4767,7 +4766,6 @@ msgstr ""
 "megjelenő előnézeteinek méretét adja meg."
 
 #: ../app/config/gimprc-blurbs.h:254
-#, fuzzy
 msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes."
@@ -4776,7 +4774,6 @@ msgstr ""
 "követni fogja azt a kép ablakának mérete."
 
 #: ../app/config/gimprc-blurbs.h:258
-#, fuzzy
 msgid ""
 "When enabled, the image window will automatically resize itself when zooming "
 "into and out of images."
@@ -4799,9 +4796,10 @@ msgstr ""
 #: ../app/config/gimprc-blurbs.h:269
 msgid "Add all opened and saved files to the document history on disk."
 msgstr ""
+"Az összes megnyitott és elmentett fájl felvétele a lemezen levő "
+"dokumentum-előzményekbe."
 
 #: ../app/config/gimprc-blurbs.h:272
-#, fuzzy
 msgid "Save the positions and sizes of the main dialogs when GIMP exits."
 msgstr ""
 "A fő párbeszédablakok pozíciójának és méretének mentése a GIMP-ből történő "
@@ -4911,21 +4909,18 @@ msgstr ""
 "Átállítható a \"Nézet->Vonalzók megjelenítése\" funkcióval is."
 
 #: ../app/config/gimprc-blurbs.h:330
-#, fuzzy
 msgid "Enable displaying a handy GIMP tip on startup."
 msgstr "Ha bekapcsolja, akkor a GIMP minden indításakor egy tipp fog megjelenni."
 
 #: ../app/config/gimprc-blurbs.h:333
-#, fuzzy
 msgid "Show a tooltip when the pointer hovers over an item."
-msgstr "mutató"
+msgstr "Buboréksúgó megjelenítése, amikor a mutató egy elem felett van."
 
 #: ../app/config/gimprc-blurbs.h:336
 msgid "What to do when the space bar is pressed in the image window."
-msgstr ""
+msgstr "Mi a teendő, amikor a szóközbillentyű lenyomásra kerül a képablakban."
 
 #: ../app/config/gimprc-blurbs.h:339
-#, fuzzy
 msgid ""
 "Sets the swap file location. GIMP uses a tile based memory allocation "
 "scheme. The swap file is used to quickly and easily swap tiles out to disk "
@@ -4934,7 +4929,7 @@ msgid ""
 "file is created on a folder that is mounted over NFS.  For these reasons, it "
 "may be desirable to put your swap file in \"/tmp\"."
 msgstr ""
-"Megadja a cserefájl helyét. A program egy képrészletekre épülő "
+"Megadja a cserefájl helyét. A GIMP egy képrészletekre épülő "
 "memóriafoglalási módszert használ, a képrészleteket szükség esetén kiírja a "
 "cserefájlba illetve visszaolvassa onnan. Nagy képek feldolgozása esetén a "
 "cserefájl mérete erősen megnőhet. Ha a cserefájl elérése NFS-en keresztül "
@@ -4965,7 +4960,6 @@ msgstr ""
 "billentyűkombinációt)."
 
 #: ../app/config/gimprc-blurbs.h:361
-#, fuzzy
 msgid "Save changed keyboard shortcuts when GIMP exits."
 msgstr "Megváltozott gyorsbillentyűk mentése a GIMP-ből történő kilépéskor."
 
@@ -4974,7 +4968,6 @@ msgid "Restore saved keyboard shortcuts on each GIMP startup."
 msgstr "Lementett gyorsbillentyűk visszaállítása a GIMP minden egyes indulásakor."
 
 #: ../app/config/gimprc-blurbs.h:367
-#, fuzzy
 msgid ""
 "Sets the folder for temporary storage. Files will appear here during the "
 "course of running GIMP.  Most files will disappear when GIMP exits, but some "
@@ -4987,11 +4980,8 @@ msgstr ""
 "tehát olyan könyvtárt választani, amelyet több felhasználó is használhat."
 
 #: ../app/config/gimprc-blurbs.h:379
-#, fuzzy
 msgid "Sets the size of the thumbnail shown in the Open dialog."
-msgstr ""
-"párbeszédablak"
-"A visszavonási előzményeknél megjelenő előnézetek méretét adja meg."
+msgstr "A megnyitási párbeszédablakban megjelenő bélyegképek méretét adja meg."
 
 #: ../app/config/gimprc-blurbs.h:382
 msgid ""
@@ -5003,13 +4993,17 @@ msgstr ""
 "itt megadott méretnél."
 
 #: ../app/config/gimprc-blurbs.h:386
-#, fuzzy
 msgid ""
 "When the amount of pixel data exceeds this limit, GIMP will start to swap "
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
 "images that wouldn't fit into memory otherwise.  If you have a lot of RAM, "
 "you may want to set this to a higher value."
-msgstr "képpont"
+msgstr ""
+"Ha a képpont-adatok mennyisége meghaladja ezt a korlátot, akkor a GIMP "
+"elkezdi kitenni lemezre a képrészleteket. Ez a tárolási módszer "
+"lényegesen lassabb, de lehetővé teszi olyan képek feldolgozását is, amelyek "
+"egyébként nem férnének be a memóriába. Ha nagyobb méretű memória "
+"van a gépben, akkor érdemes lehet ezt egy magasabb értékre állítani."
 
 #: ../app/config/gimprc-blurbs.h:396
 msgid ""
@@ -5559,7 +5553,6 @@ msgid "Delete layer mask"
 msgstr "Rétegmaszk törlése"
 
 #: ../app/core/core-enums.c:912
-#, fuzzy
 msgid "Show layer mask"
 msgstr "Rétegmaszk megjelenítése"
 
@@ -5580,7 +5573,6 @@ msgid "Channel color"
 msgstr "Csatornaszín"
 
 #: ../app/core/core-enums.c:917
-#, fuzzy
 msgid "New path"
 msgstr "Új útvonal"
 
@@ -6068,9 +6060,8 @@ msgid "Equalize"
 msgstr "Kiegyenlítés"
 
 #: ../app/core/gimpdrawable-foreground-extract.c:138
-#, fuzzy
 msgid "Foreground Extraction"
-msgstr "Előtérszín"
+msgstr "Előtér kivonása"
 
 #: ../app/core/gimpdrawable-invert.c:61
 msgid "Invert"
@@ -7234,7 +7225,6 @@ msgid "Autoload"
 msgstr "Automatikus betöltés"
 
 #: ../app/dialogs/module-dialog.c:174
-#, fuzzy
 msgid "Module Path"
 msgstr "Modul útvonala"
 
@@ -7296,12 +7286,10 @@ msgid "State:"
 msgstr "Állapot:"
 
 #: ../app/dialogs/module-dialog.c:512
-#, fuzzy
 msgid "Last error:"
-msgstr "Utolsó hiba:"
+msgstr "Legutóbbi hiba:"
 
 #: ../app/dialogs/module-dialog.c:513
-#, fuzzy
 msgid "Available types:"
 msgstr "Elérhető típusok:"
 
@@ -8078,8 +8066,9 @@ msgid "Temporary folder:"
 msgstr "Ideiglenes könyvtár:"
 
 #: ../app/dialogs/preferences-dialog.c:2614
+#, fuzzy
 msgid "Select Folder for Temporary Files"
-msgstr ""
+msgstr "Ideiglenes "
 
 #: ../app/dialogs/preferences-dialog.c:2618
 msgid "Swap folder:"
@@ -8719,7 +8708,7 @@ msgstr "Maszatolás"
 
 #: ../app/paint/gimpsourcecore.c:227
 msgid "Set a source image first."
-msgstr ""
+msgstr "Előbb állítson be egy forrásképet."
 
 #: ../app/paint/paint-enums.c:51
 msgid "Modify Perspective Plane"
@@ -8806,9 +8795,8 @@ msgid "2D Transforming"
 msgstr "Kétdimenziós átalakítás..."
 
 #: ../app/pdb/edit_cmds.c:631 ../app/tools/gimpblendtool.c:224
-#, fuzzy
 msgid "Blending"
-msgstr "Színátmenet..."
+msgstr "Színátmenet"
 
 #: ../app/pdb/gimppdb.c:303 ../app/pdb/gimppdb.c:368
 #, fuzzy, c-format
@@ -8911,13 +8899,15 @@ msgstr "Érvénytelen változónév a(z) \"%s\" környezeti fájlban: %s"
 
 #: ../app/plug-in/gimpinterpreterdb.c:264
 #, c-format
+#, fuzzy
 msgid "Bad interpreter referenced in interpreter file %s: %s"
-msgstr ""
+msgstr "Fordítók"
 
 #: ../app/plug-in/gimpinterpreterdb.c:322
 #, c-format
+#, fuzzy
 msgid "Bad binary format string in interpreter file %s"
-msgstr ""
+msgstr "Fordítók"
 
 #: ../app/plug-in/gimpplugin.c:635
 #, c-format
@@ -8957,7 +8947,9 @@ msgstr "Kiegészítők indítása"
 #: ../app/plug-in/gimppluginmanager.c:296
 #, fuzzy
 msgid "Plug-In Interpreters"
-msgstr "Bővítmények mappái"
+msgstr ""
+"Bővítmények mappái "
+"Fordítók"
 
 #: ../app/plug-in/gimppluginmanager.c:303
 msgid "Plug-In Environment"
@@ -9214,14 +9206,14 @@ msgid "Blend does not operate on indexed layers."
 msgstr "Kiegyenlítés nem hajtható végre indexelt rétegeken."
 
 #: ../app/tools/gimpblendtool.c:399 ../app/tools/gimppainttool.c:593
-#, fuzzy, c-format
+#, c-format
 msgid "%s for constrained angles"
-msgstr "Távolság- és szögmérő"
+msgstr "szög korlátozása: %s"
 
 #: ../app/tools/gimpblendtool.c:400
 #, c-format
 msgid "%s to move the whole line"
-msgstr ""
+msgstr "az egész vonal áthelyezése: %s"
 
 #: ../app/tools/gimpblendtool.c:402
 msgid "Blend: "
@@ -9338,17 +9330,17 @@ msgstr "_Másoló"
 
 #: ../app/tools/gimpclonetool.c:86 ../app/tools/gimpclonetool.c:89
 msgid "Click to clone"
-msgstr ""
+msgstr "Másolás: kattintással"
 
 #: ../app/tools/gimpclonetool.c:87 ../app/tools/gimpclonetool.c:91
 #, c-format
 msgid "%s to set a new clone source"
-msgstr ""
+msgstr "új másolási forrás beállítása: %s"
 
 #: ../app/tools/gimpclonetool.c:90
-#, fuzzy
+# megjelenítéskor elé kerül egy Ctrl+
 msgid "Click to set a new clone source"
-msgstr "Új útvonal-komponens kattintással hozható létre."
+msgstr "Kattintás: új másolási forrás beállítása"
 
 #: ../app/tools/gimpclonetool.c:109
 #: ../app/tools/gimpperspectiveclonetool.c:904
@@ -9480,21 +9472,19 @@ msgstr "Szín_pipetta"
 
 #: ../app/tools/gimpcolorpickertool.c:242
 msgid "Click in any image to view its color"
-msgstr ""
+msgstr "A szín megjelenítéséhez kattintson valamelyik képre"
 
 #: ../app/tools/gimpcolorpickertool.c:249 ../app/tools/gimppainttool.c:496
-#, fuzzy
 msgid "Click in any image to pick the foreground color"
-msgstr "A rács előtérszínének módosítása"
+msgstr "Az előtérszín beállításához kattintson valamelyik képre"
 
 #: ../app/tools/gimpcolorpickertool.c:257 ../app/tools/gimppainttool.c:502
-#, fuzzy
 msgid "Click in any image to pick the background color"
-msgstr "A rács háttérszínének módosítása"
+msgstr "A háttérszín beállításához kattintson valamelyik képre"
 
 #: ../app/tools/gimpcolorpickertool.c:265
 msgid "Click in any image to add the color to the palette"
-msgstr ""
+msgstr "A színnek a palettára való felvételéhez kattintson valamelyik képre"
 
 #. tool->display->shell
 #: ../app/tools/gimpcolorpickertool.c:318
@@ -9528,34 +9518,30 @@ msgid "Bl_ur / Sharpen"
 msgstr "Elmosás _vagy élesítés"
 
 #: ../app/tools/gimpconvolvetool.c:170
-#, fuzzy
 msgid "Click to blur"
-msgstr "Elmosás"
+msgstr "Elmosás: kattintással"
 
 #: ../app/tools/gimpconvolvetool.c:171
-#, fuzzy
 msgid "Click to blur the line"
-msgstr "elmosásához kattintson ide"
+msgstr "A vonal elmosása: kattintással"
 
 #: ../app/tools/gimpconvolvetool.c:172
-#, fuzzy, c-format
+#, c-format
 msgid "%s to sharpen"
-msgstr "Elmosás vagy élesítés"
+msgstr "élesítés: %s"
 
 #: ../app/tools/gimpconvolvetool.c:176
-#, fuzzy
 msgid "Click to sharpen"
-msgstr "Elmosás vagy élesítés"
+msgstr "Élesítés: kattintással"
 
 #: ../app/tools/gimpconvolvetool.c:177
-#, fuzzy
 msgid "Click to sharpen the line"
-msgstr "élesítéséhez kattintson ide"
+msgstr "A vonal élesítése: kattintással"
 
 #: ../app/tools/gimpconvolvetool.c:178
-#, fuzzy, c-format
+#, c-format
 msgid "%s to blur"
-msgstr "Elmosás"
+msgstr "elmosás: %s"
 
 #. the type radio box
 #: ../app/tools/gimpconvolvetool.c:199
@@ -9580,9 +9566,8 @@ msgid "_Crop"
 msgstr "_Vágás"
 
 #: ../app/tools/gimpcroptool.c:208
-#, fuzzy
 msgid "Click or press Enter to crop"
-msgstr "vágás"
+msgstr "Vágás: kattintással vagy Enter lenyomásával"
 
 #: ../app/tools/gimpcurvestool.c:151
 msgid "Curves Tool: Adjust color curves"
@@ -9618,13 +9603,13 @@ msgid "Curves does not operate on indexed layers."
 msgstr "Az invertálás nem hajtható végre indexelt rétegeken."
 
 #: ../app/tools/gimpcurvestool.c:355
-#, fuzzy
 msgid "Click to add a control point"
-msgstr "A szerkesztendő útvonal kijelölése kattintással végezhető."
+msgstr "Vezérlőpont felvétele: kattintással"
 
 #: ../app/tools/gimpcurvestool.c:360
+#, fuzzy
 msgid "Click to add control points to all channels"
-msgstr ""
+msgstr "Vezérlőpontok felvétele minden csatornába: kattintással"
 
 #: ../app/tools/gimpcurvestool.c:555 ../app/tools/gimplevelstool.c:365
 msgid "Cha_nnel:"
@@ -9666,33 +9651,30 @@ msgid "Dod_ge / Burn"
 msgstr "F_akítás vagy sötétítés"
 
 #: ../app/tools/gimpdodgeburntool.c:173
-#, fuzzy
 msgid "Click to dodge"
-msgstr "Fakítás"
+msgstr "Fakítás: kattintással"
 
 #: ../app/tools/gimpdodgeburntool.c:174
-#, fuzzy
 msgid "Click to dodge the line"
-msgstr "fakításAz útvonal kattintással nyitható szét."
+msgstr "A vonal fakítása: kattintással"
 
 #: ../app/tools/gimpdodgeburntool.c:175
 #, c-format
 msgid "%s to burn"
-msgstr ""
+msgstr "sötétítés: %s"
 
 #: ../app/tools/gimpdodgeburntool.c:179
 msgid "Click to burn"
-msgstr ""
+msgstr "Sötétítés: kattintással"
 
 #: ../app/tools/gimpdodgeburntool.c:180
-#, fuzzy
 msgid "Click to burn the line"
-msgstr "Előnézeti kép létrehozásához kattintson ide"
+msgstr "A vonal sötétítése: kattintással"
 
 #: ../app/tools/gimpdodgeburntool.c:181
-#, fuzzy, c-format
+#, c-format
 msgid "%s to dodge"
-msgstr "Fakítás"
+msgstr "fakítás: %s"
 
 #. the type (dodge or burn)
 #: ../app/tools/gimpdodgeburntool.c:202
@@ -9740,19 +9722,17 @@ msgid "_Eraser"
 msgstr "_Radír"
 
 #: ../app/tools/gimperasertool.c:97
-#, fuzzy
 msgid "Click to erase"
-msgstr "Színtörlés"
+msgstr "Törlés: kattintással"
 
 #: ../app/tools/gimperasertool.c:98
-#, fuzzy
 msgid "Click to erase the line"
-msgstr "Előnézeti kép létrehozásához kattintson ide"
+msgstr "A vonal törlése: kattintással"
 
 #: ../app/tools/gimperasertool.c:99
-#, fuzzy, c-format
+#, c-format
 msgid "%s to pick a background color"
-msgstr "Háttérszín beállítása"
+msgstr "háttérszín beállítása: %s"
 
 #. the anti_erase toggle
 #: ../app/tools/gimperasertool.c:146
@@ -9862,17 +9842,18 @@ msgid "F_oreground Select"
 msgstr "E_lőtér-kijelölés"
 
 #: ../app/tools/gimpforegroundselecttool.c:310
-#, fuzzy
 msgid "Add more strokes or press Enter to accept the selection"
-msgstr "kijelölés"
+msgstr ""
+"Vegyen fel további vonalakat, vagy nyomja meg az Entert a kijelölés "
+"elfogadásához"
 
 #: ../app/tools/gimpforegroundselecttool.c:312
 msgid "Mark foreground by painting on the object to extract"
-msgstr ""
+msgstr "Jelölje meg az előtért a kivonandó objektumra való festéssel"
 
 #: ../app/tools/gimpforegroundselecttool.c:323
 msgid "Draw a rough circle around the object to extract"
-msgstr ""
+msgstr "Rajzoljon egy hozzávetőleges kört a kivonandó objektum köré"
 
 #: ../app/tools/gimpforegroundselecttool.c:744
 msgid "command|Foreground Select"
@@ -9911,19 +9892,18 @@ msgid "_Heal"
 msgstr "_Javítás"
 
 #: ../app/tools/gimphealtool.c:77 ../app/tools/gimphealtool.c:80
-#, fuzzy
 msgid "Click to heal"
-msgstr "JavításAz útvonal kattintással nyitható szét."
+msgstr "Javítás: kattintással"
 
 #: ../app/tools/gimphealtool.c:78 ../app/tools/gimphealtool.c:82
-#, fuzzy, c-format
+#, c-format
 msgid "%s to set a new heal source"
-msgstr "Javítás"
+msgstr "új javítási forrás beállítása: %s"
 
 #: ../app/tools/gimphealtool.c:81
-#, fuzzy
+# elé kerül egy "Ctrl+"
 msgid "Click to set a new heal source"
-msgstr "JavításÚj útvonalat kattintással lehet létrehozni."
+msgstr "Kattintás: új javítási forrás beállítása"
 
 #: ../app/tools/gimphistogramoptions.c:127
 msgid "Histogram Scale"
@@ -10068,23 +10048,22 @@ msgid "Intelligent _Scissors"
 msgstr "_Intelligens olló"
 
 #: ../app/tools/gimpiscissorstool.c:919 ../app/tools/gimpmeasuretool.c:602
-#, fuzzy
 msgid "Click-Drag to move this point"
-msgstr "Az útvonal áthelyezése húzással végezhető."
+msgstr "A pont áthelyezése: kattintás+húzás"
 
 #: ../app/tools/gimpiscissorstool.c:921 ../app/tools/gimpiscissorstool.c:986
-#, fuzzy, c-format
+#, c-format
 msgid "%s: disable auto-snap"
-msgstr "illesztés"
+msgstr "%s: automatikus illesztés kikapcsolása"
 
 #: ../app/tools/gimpiscissorstool.c:938
 #, fuzzy
 msgid "Click to close the curve"
-msgstr "Előnézeti kép létrehozásához kattintson ide"
+msgstr "A görbe lezárása: kattintással"
 
 #: ../app/tools/gimpiscissorstool.c:944
 msgid "Click to add a point on this segment"
-msgstr ""
+msgstr "Pont felvétele a szakaszra: kattintással"
 
 #: ../app/tools/gimpiscissorstool.c:958
 #, fuzzy
@@ -10097,9 +10076,8 @@ msgid "Press Enter to convert to a selection"
 msgstr "kijelölés"
 
 #: ../app/tools/gimpiscissorstool.c:983
-#, fuzzy
 msgid "Click or Click-Drag to add a point"
-msgstr "A szerkesztendő útvonal kijelölése kattintással végezhető."
+msgstr "Pont felvétele: kattintás vagy kattintás+húzás"
 
 #: ../app/tools/gimplevelstool.c:158
 msgid "Levels Tool: Adjust color levels"
@@ -10204,27 +10182,23 @@ msgstr "Segédvonalak hozzáadása"
 
 #: ../app/tools/gimpmeasuretool.c:554
 msgid "Click to place vertical and horizontal guides"
-msgstr ""
+msgstr "Függőleges és vízszintes segédvonalak elhelyezése: kattintással"
 
 #: ../app/tools/gimpmeasuretool.c:563
-#, fuzzy
 msgid "Click to place a horizontal guide"
-msgstr "Réteg vagy segédvonal kijelölése"
+msgstr "Vízszintes segédvonal elhelyezése: kattintással"
 
 #: ../app/tools/gimpmeasuretool.c:577
-#, fuzzy
 msgid "Click to place a vertical guide"
-msgstr "Réteg vagy segédvonal kijelölése"
+msgstr "Függőleges segédvonal elhelyezése: kattintással"
 
 #: ../app/tools/gimpmeasuretool.c:591
-#, fuzzy
 msgid "Click-Drag to add a new point"
-msgstr "Új útvonalat kattintással lehet létrehozni."
+msgstr "Új pont felvétele: kattintás+húzás"
 
 #: ../app/tools/gimpmeasuretool.c:621
-#, fuzzy
 msgid "Click-Drag to move all points"
-msgstr "Az útvonal áthelyezése húzással végezhető."
+msgstr "Az összes pont áthelyezése: kattintás+húzás"
 
 #. tool->display->shell
 #: ../app/tools/gimpmeasuretool.c:980
@@ -10406,7 +10380,7 @@ msgstr "_Perspektivikus klón"
 
 #: ../app/tools/gimpperspectiveclonetool.c:651
 msgid "Ctrl-Click to set a clone source"
-msgstr ""
+msgstr "Másolási forrás beállítása: Ctrl+kattintás"
 
 #: ../app/tools/gimpperspectivetool.c:68
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
@@ -10426,9 +10400,8 @@ msgid "Perspective transformation"
 msgstr "Perspektivikus átalakítás"
 
 #: ../app/tools/gimpperspectivetool.c:113
-#, fuzzy
 msgid "Transformation Matrix"
-msgstr "Átalakítás"
+msgstr "Transzformációs mátrix"
 
 #: ../app/tools/gimpposterizetool.c:78
 msgid "Posterize Tool: Reduce to a limited set of colors"
@@ -10504,9 +10477,8 @@ msgid "Rectangle: "
 msgstr "Téglalap: "
 
 #: ../app/tools/gimpregionselecttool.c:162
-#, fuzzy
 msgid "Move the mouse to change threshold"
-msgstr "Küszöb"
+msgstr "A küszöb módosításához mozgassa az egeret"
 
 #: ../app/tools/gimprotatetool.c:85
 msgid "Rotate"
@@ -10581,51 +10553,43 @@ msgid "Select by:"
 msgstr "Kijelölés alapja:"
 
 #: ../app/tools/gimpselectiontool.c:251
-#, fuzzy
 msgid "Click-Drag to replace the current selection"
-msgstr "A jelenlegi kijelölés cseréje"
+msgstr "A jelenlegi kijelölés helyett újat: kattintás+húzás"
 
 #: ../app/tools/gimpselectiontool.c:259
-#, fuzzy
 msgid "Click-Drag to create a new selection"
-msgstr ""
-"Új kijelölést"
-"kattintással lehet létrehozni."
+msgstr "Új kijelölés létrehozása: kattintás+húzás"
 
 #: ../app/tools/gimpselectiontool.c:264
-#, fuzzy
 msgid "Click-Drag to add to the current selection"
-msgstr "A rétegmaszk hozzáadása a jelenlegi kijelöléshez"
+msgstr "Hozzáadás a jelenlegi kijelöléshez: kattintás+húzás"
 
 #: ../app/tools/gimpselectiontool.c:273
-#, fuzzy
 msgid "Click-Drag to subtract from the current selection"
-msgstr "Kivonás a kijelölésből"
+msgstr "Kivonás a jelenlegi kijelölésből: kattintás+húzás"
 
 #: ../app/tools/gimpselectiontool.c:282
-#, fuzzy
 msgid "Click-Drag to intersect with the current selection"
-msgstr "Metszet a jelenlegi kijelöléssel"
+msgstr "Metszet a jelenlegi kijelöléssel: kattintás+húzás"
 
 #: ../app/tools/gimpselectiontool.c:292
-#, fuzzy
 msgid "Click-Drag to move the selection mask"
-msgstr "A rögzítést húzással lehet áthelyezni."
+msgstr "A kijelölési maszk áthelyezése: kattintás+húzás"
 
 #: ../app/tools/gimpselectiontool.c:300
-#, fuzzy
 msgid "Click-Drag to move the selected pixels"
-msgstr "A képpontok áthelyezése húzással végezhető."
+msgstr "A kijelölt képpontok áthelyezése: kattintás+húzás"
 
 #: ../app/tools/gimpselectiontool.c:304
-#, fuzzy
 msgid "Click-Drag to move a copy of the selected pixels"
-msgstr "A rögzítés kattintással köthető össze a kijelölt végponttal."
+msgstr "A kijelölt képpontok másolatának áthelyezése: kattintás+húzás"
 
 #: ../app/tools/gimpselectiontool.c:308
 #, fuzzy
 msgid "Click to anchor the floating selection"
-msgstr "Lebegő kijelölés rögzítése"
+msgstr ""
+"Lebegő kijelölés rögzítése "
+": kattintással"
 
 #: ../app/tools/gimpsheartool.c:81
 msgid "Shear"
@@ -10644,14 +10608,12 @@ msgid "command|Shear"
 msgstr "Nyírás"
 
 #: ../app/tools/gimpsheartool.c:133
-#, fuzzy
 msgid "Shear magnitude _X:"
-msgstr "X irányú nyírás mértéke:"
+msgstr "_X irányú nyírás mértéke:"
 
 #: ../app/tools/gimpsheartool.c:143
-#, fuzzy
 msgid "Shear magnitude _Y:"
-msgstr "Y irányú nyírás mértéke:"
+msgstr "_Y irányú nyírás mértéke:"
 
 #: ../app/tools/gimpsmudgetool.c:54
 msgid "Smudge Tool: Smudge selectively using a brush"
@@ -10662,14 +10624,12 @@ msgid "_Smudge"
 msgstr "Maszat_olás"
 
 #: ../app/tools/gimpsmudgetool.c:74
-#, fuzzy
 msgid "Click to smudge"
-msgstr "A képre illesztve"
+msgstr "Maszatolás: kattintással"
 
 #: ../app/tools/gimpsmudgetool.c:75
-#, fuzzy
 msgid "Click to smudge the line"
-msgstr "Előnézeti kép létrehozásához kattintson ide"
+msgstr "A vonal maszatolása: kattintással"
 
 #: ../app/tools/gimptextoptions.c:114
 msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
@@ -10921,86 +10881,72 @@ msgid "Move Anchors"
 msgstr "Rögzítések áthelyezése"
 
 #: ../app/tools/gimpvectortool.c:1145
-#, fuzzy
 msgid "Click to pick path to edit"
-msgstr "A szerkesztendő útvonal kijelölése kattintással végezhető."
+msgstr "A szerkesztendő útvonal kijelölése: kattintással"
 
 #: ../app/tools/gimpvectortool.c:1148
-#, fuzzy
 msgid "Click to create a new path"
-msgstr "Új útvonalat kattintással lehet létrehozni."
+msgstr "Új útvonal létrehozása: kattintással"
 
 #: ../app/tools/gimpvectortool.c:1151
-#, fuzzy
 msgid "Click to create a new component of the path"
-msgstr "Új útvonal-komponens kattintással hozható létre."
+msgstr "Új útvonal-komponens létrehozása: kattintással"
 
 #: ../app/tools/gimpvectortool.c:1154
-#, fuzzy
 msgid "Click or Click-Drag to create a new anchor"
-msgstr "Új útvonalat kattintással lehet létrehozni."
+msgstr "Új rögzítés létrehozása: kattintás vagy kattintás+húzás"
 
 #: ../app/tools/gimpvectortool.c:1163 ../app/tools/gimpvectortool.c:1170
-#, fuzzy
 msgid "Click-Drag to move the anchor around"
-msgstr "A rögzítést húzással lehet áthelyezni."
+msgstr "A rögzítés áthelyezése: kattintás+húzás"
 
 #: ../app/tools/gimpvectortool.c:1173 ../app/tools/gimpvectortool.c:1184
-#, fuzzy
 msgid "Click-Drag to move the anchors around"
-msgstr "A rögzítéseket húzással lehet áthelyezni."
+msgstr "A rögzítések áthelyezése: kattintás+húzás"
 
 #: ../app/tools/gimpvectortool.c:1176
-#, fuzzy
 msgid "Click-Drag to move the handle around"
-msgstr "A rögzítést húzással lehet áthelyezni."
+msgstr "A vezérlőpont áthelyezése: kattintás+húzás"
 
 #: ../app/tools/gimpvectortool.c:1189
-#, fuzzy
 msgid "Click-Drag to change the shape of the curve"
-msgstr "A görbe alakja húzással módosítható. (Shift: szimmetrikus.)"
+msgstr "A görbe alakjának módosítása: kattintás+húzás"
 
 #: ../app/tools/gimpvectortool.c:1192
 #, c-format
 msgid "%s: symmetrical"
-msgstr ""
+msgstr "%s: szimmetrikus"
 
 #: ../app/tools/gimpvectortool.c:1196
-#, fuzzy
 msgid "Click-Drag to move the component around"
-msgstr "Az útvonal áthelyezése húzással végezhető."
+msgstr "A komponens áthelyezése: kattintás+húzás"
 
 #: ../app/tools/gimpvectortool.c:1203
-#, fuzzy
 msgid "Click-Drag to move the path around"
-msgstr "Az útvonal áthelyezése húzással végezhető."
+msgstr "Az útvonal áthelyezése: kattintás+húzás"
 
 #: ../app/tools/gimpvectortool.c:1206
-#, fuzzy
 msgid "Click-Drag to insert an anchor on the path"
-msgstr ""
-"Újabb rögzítést kattintással lehet beszúrni az útvonalba. (A Shift is "
-"használható.)"
+msgstr "Újabb rögzítés beszúrása az útvonalba: kattintás+húzás"
 
 #: ../app/tools/gimpvectortool.c:1213
-#, fuzzy
 msgid "Click to delete this anchor"
-msgstr "A rögzítés kattintással törölhető."
+msgstr "A rögzítés törlése: kattintással"
 
 #: ../app/tools/gimpvectortool.c:1216
 #, fuzzy
 msgid "Click to connect this anchor with the selected endpoint"
-msgstr "A rögzítés kattintással köthető össze a kijelölt végponttal."
+msgstr ""
+": kattintással"
+"A rögzítés kattintással köthető össze a kijelölt végponttal."
 
 #: ../app/tools/gimpvectortool.c:1220
-#, fuzzy
 msgid "Click to open up the path"
-msgstr "Az útvonal kattintással nyitható szét."
+msgstr "Az útvonal szétnyitása: kattintással"
 
 #: ../app/tools/gimpvectortool.c:1223
-#, fuzzy
 msgid "Click to make this node angular"
-msgstr "A csomópont kattintással tehető csúcsossá."
+msgstr "A csomópont csúcsossá tevése: kattintással"
 
 #: ../app/tools/gimpvectortool.c:1729
 msgid "Delete Anchors"
@@ -11345,14 +11291,12 @@ msgid "Larger Previews"
 msgstr "Nagyobb előnézetek"
 
 #: ../app/widgets/gimpcontrollereditor.c:201
-#, fuzzy
 msgid "_Dump events from this controller"
-msgstr "Ezen vezérlő eseményeinek listázása"
+msgstr "Ezen vezérlő _eseményeinek listázása"
 
 #: ../app/widgets/gimpcontrollereditor.c:206
-#, fuzzy
 msgid "_Enable this controller"
-msgstr "Ezen vezérlő engedélyezése"
+msgstr "Ezen vezérlő e_ngedélyezése"
 
 #: ../app/widgets/gimpcontrollereditor.c:227
 msgid "Name:"
@@ -11363,29 +11307,27 @@ msgid "Event"
 msgstr "Esemény"
 
 #: ../app/widgets/gimpcontrollereditor.c:366
-#, fuzzy
 msgid "_Grab event"
-msgstr "Szí_nátmenet"
+msgstr "Esemény el_fogása"
 
 #: ../app/widgets/gimpcontrollereditor.c:376
-#, fuzzy
 msgid "Select the next event arriving from the controller"
-msgstr "Ezen vezérlő eseményeinek listázása"
+msgstr "A vezérlőtől érkező következő esemény kijelölése"
 
 #: ../app/widgets/gimpcontrollereditor.c:534
 #, c-format
 msgid "Remove the action assigned to '%s'"
-msgstr ""
+msgstr "Az ehhez hozzárendelt művelet eltávolítása: \"%s\""
 
 #: ../app/widgets/gimpcontrollereditor.c:539
 #, c-format
 msgid "Assign an action to '%s'"
-msgstr ""
+msgstr "Művelet hozzárendelése ehhez: \"%s\""
 
 #: ../app/widgets/gimpcontrollereditor.c:661
-#, fuzzy, c-format
+#, c-format
 msgid "Select Action for Event '%s'"
-msgstr "Jelölje ki a vezérlő eseményéhez tartozó műveletet"
+msgstr "Jelölje ki a(z) \"%s\" eseményhez tartozó műveletet"
 
 #: ../app/widgets/gimpcontrollereditor.c:666
 msgid "Select Controller Event Action"
@@ -11526,9 +11468,8 @@ msgid ""
 msgstr ""
 
 #: ../app/widgets/gimpcontrollerlist.c:631
-#, fuzzy
 msgid "Configure Input Controller"
-msgstr "Bemeneti vezérlők"
+msgstr "Bemeneti vezérlő beállítása"
 
 #: ../app/widgets/gimpcontrollerwheel.c:69
 #: ../app/widgets/gimpcontrollerwheel.c:72
@@ -12481,8 +12422,9 @@ msgid "Print X window ID of GIMP toolbox window, then quit"
 msgstr "Eszköztár"
 
 #: ../tools/gimp-remote.c:99
+#, fuzzy
 msgid "Start GIMP without showing the startup window"
-msgstr ""
+msgstr "Nem jeleníti meg az üdvözlőképernyőt"
 
 #: ../tools/gimp-remote.c:205
 msgid "Could not connect to GIMP."
