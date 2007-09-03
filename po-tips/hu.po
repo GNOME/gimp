@@ -1,3 +1,4 @@
+# translation of gimp-tips.HEAD.po to Hungarian
 # Hungarian translation of gimp-tips.
 # Copyright (C) 2004, 2006, 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp-tips package.
@@ -8,10 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-tips.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-04-18 10:45+0100\n"
-"PO-Revision-Date: 2007-04-25 11:54+0200\n"
-"Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
-"Language-Team: Hungarian <gnome@gnome.hu>\n"
+"POT-Creation-Date: 2007-08-14 09:45+0100\n"
+"PO-Revision-Date: 2007-08-14 11:44+0200\n"
+"Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
+"Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -292,8 +293,8 @@ msgstr ""
 
 #: ../data/tips/gimp-tips.xml.in.h:26
 msgid ""
-"You can get context-sensitive help for most of the GIMP's features by "
-"pressing the F1 key at any time. This also works inside the menus."
+"You can get context-sensitive help for most of GIMP's features by pressing "
+"the F1 key at any time. This also works inside the menus."
 msgstr ""
 "A GIMP legtöbb funkciójáról környezetérzékeny segítség kérhető az F1 "
 "billentyű lenyomásával. Ez a menükön belül is működik."
