@@ -1929,8 +1929,8 @@ gimp_bezier_stroke_new_ellipse (const GimpCoords *center,
   GimpCoords     p1 = *center;
   GimpCoords     p2 = *center;
   GimpCoords     p3 = *center;
-  GimpCoords     dx = *center;
-  GimpCoords     dy = *center;
+  GimpCoords     dx = { 0, };
+  GimpCoords     dy = { 0, };
   const gdouble  circlemagic = 4.0 * (G_SQRT2 - 1.0) / 3.0;
   GimpAnchor    *handle;
 
@@ -1958,7 +1958,6 @@ gimp_bezier_stroke_new_ellipse (const GimpCoords *center,
   gimp_coords_mix (1.0,    &p3, -circlemagic, &dy, &p1);
   gimp_coords_mix (1.0, center,         -1.0, &dy, &p3);
   gimp_coords_mix (1.0,    &p3, -circlemagic, &dx, &p2);
-
   gimp_bezier_stroke_cubicto (stroke, &p1, &p2, &p3);
 
   handle = g_list_first (GIMP_STROKE (stroke)->anchors)->data;
