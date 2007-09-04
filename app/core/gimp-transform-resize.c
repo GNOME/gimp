@@ -36,14 +36,15 @@
 #else
 #error "no FINITE() implementation available?!"
 #endif
-#define EPSILON  0.00000001
+
+#define EPSILON       0.00000001
 #define MIN4(a,b,c,d) MIN(MIN((a),(b)),MIN((c),(d)))
 #define MAX4(a,b,c,d) MAX(MAX((a),(b)),MAX((c),(d)))
 
 
 typedef struct
 {
-  gdouble  x, y;
+  gdouble x, y;
 } Point;
 
 typedef struct
@@ -53,55 +54,56 @@ typedef struct
   gdouble aspect;
 } Rectangle;
 
-static void  gimp_transform_resize_adjust (gdouble  dx1,
-                                           gdouble  dy1,
-                                           gdouble  dx2,
-                                           gdouble  dy2,
-                                           gdouble  dx3,
-                                           gdouble  dy3,
-                                           gdouble  dx4,
-                                           gdouble  dy4,
-                                           gint    *x1,
-                                           gint    *y1,
-                                           gint    *x2,
-                                           gint    *y2);
-static void  gimp_transform_resize_crop   (gdouble  dx1,
-                                           gdouble  dy1,
-                                           gdouble  dx2,
-                                           gdouble  dy2,
-                                           gdouble  dx3,
-                                           gdouble  dy3,
-                                           gdouble  dx4,
-                                           gdouble  dy4,
-                                           gdouble  aspect,
-                                           gint    *x1,
-                                           gint    *y1,
-                                           gint    *x2,
-                                           gint    *y2);
 
-static void      add_rectangle   (Point      points[4],
-                                  Rectangle *r,
-                                  Point      a,
-                                  Point      b,
-                                  Point      c,
-                                  Point      d);
-static gboolean  intersect       (Point      a,
-                                  Point      b,
-                                  Point      c,
-                                  Point      d,
-                                  Point     *i);
-static gboolean  intersect_x     (Point      a,
-                                  Point      b,
-                                  Point      c,
-                                  Point     *i);
-static gboolean  intersect_y     (Point      a,
-                                  Point      b,
-                                  Point      c,
-                                  Point     *i);
-static gboolean  in_poly         (Point      points[4],
-                                  Point      p);
-static gboolean  point_on_border (Point      points[4],
-                                  Point      p);
+static void      gimp_transform_resize_adjust        (gdouble    dx1,
+                                                      gdouble    dy1,
+                                                      gdouble    dx2,
+                                                      gdouble    dy2,
+                                                      gdouble    dx3,
+                                                      gdouble    dy3,
+                                                      gdouble    dx4,
+                                                      gdouble    dy4,
+                                                      gint      *x1,
+                                                      gint      *y1,
+                                                      gint      *x2,
+                                                      gint      *y2);
+static void      gimp_transform_resize_crop          (gdouble    dx1,
+                                                      gdouble    dy1,
+                                                      gdouble    dx2,
+                                                      gdouble    dy2,
+                                                      gdouble    dx3,
+                                                      gdouble    dy3,
+                                                      gdouble    dx4,
+                                                      gdouble    dy4,
+                                                      gdouble    aspect,
+                                                      gint      *x1,
+                                                      gint      *y1,
+                                                      gint      *x2,
+                                                      gint      *y2);
+
+static void      add_rectangle                       (Point      points[4],
+                                                      Rectangle *r,
+                                                      Point      a,
+                                                      Point      b,
+                                                      Point      c,
+                                                      Point      d);
+static gboolean  intersect                           (Point      a,
+                                                      Point      b,
+                                                      Point      c,
+                                                      Point      d,
+                                                      Point     *i);
+static gboolean  intersect_x                         (Point      a,
+                                                      Point      b,
+                                                      Point      c,
+                                                      Point     *i);
+static gboolean  intersect_y                         (Point      a,
+                                                      Point      b,
+                                                      Point      c,
+                                                      Point     *i);
+static gboolean  in_poly                             (Point      points[4],
+                                                      Point      p);
+static gboolean  point_on_border                     (Point      points[4],
+                                                      Point      p);
 
 static void      find_two_point_rectangle            (Rectangle *r,
                                                       Point      points[4],
@@ -118,6 +120,8 @@ static void      find_three_point_rectangle_triangle (Rectangle *r,
 static void      find_maximum_aspect_rectangle       (Rectangle *r,
                                                       Point      points[4],
                                                       gint       p);
+
+
 /*
  * This function wants to be passed the inverse transformation matrix!!
  */
@@ -266,7 +270,6 @@ gimp_transform_resize_crop (gdouble  dx1,
     }
 
 
-
   /* find the convex hull using Jarvis's March as the points are passed
    * in different orders due to gimp_matrix3_transform_point()
    */
@@ -358,10 +361,10 @@ gimp_transform_resize_crop (gdouble  dx1,
         }
     }
 
-  *x1 = floor(r.a.x + 0.5);
-  *y1 = floor(r.a.y + 0.5);
-  *x2 = ceil(r.c.x - 0.5);
-  *y2 = ceil(r.c.y - 0.5);
+  *x1 = floor (r.a.x + 0.5);
+  *y1 = floor (r.a.y + 0.5);
+  *x2 = ceil  (r.c.x - 0.5);
+  *y2 = ceil  (r.c.y - 0.5);
 
   *x1 = *x1 - ((-ax) * 2);
   *y1 = *y1 - ((-ay) * 2);
@@ -379,9 +382,9 @@ find_three_point_rectangle (Rectangle *r,
   Point b = points[(p + 1) % 4];  /* 1 2 3 0 */
   Point c = points[(p + 2) % 4];  /* 2 3 0 2 */
   Point d = points[(p + 3) % 4];  /* 3 0 1 1 */
-  Point i1;     /* intersection point */
-  Point i2;     /* intersection point */
-  Point i3;     /* intersection point */
+  Point i1;                       /* intersection point */
+  Point i2;                       /* intersection point */
+  Point i3;                       /* intersection point */
 
   if (intersect_x (b, c,  a,  &i1) &&
       intersect_y (c, d,  i1, &i2) &&
@@ -413,8 +416,8 @@ find_three_point_rectangle_corner (Rectangle *r,
   Point b = points[(p + 1) % 4];  /* 1 2 3 0 */
   Point c = points[(p + 2) % 4];  /* 2 3 0 2 */
   Point d = points[(p + 3) % 4];  /* 3 0 1 1 */
-  Point i1;     /* intersection point */
-  Point i2;     /* intersection point */
+  Point i1;                       /* intersection point */
+  Point i2;                       /* intersection point */
 
   if (intersect_x (b, c, a , &i1) &&
       intersect_y (c, d, i1, &i2))
@@ -442,9 +445,9 @@ find_two_point_rectangle (Rectangle *r,
   Point b = points[(p + 1) % 4];  /* 1 2 3 0 */
   Point c = points[(p + 2) % 4];  /* 2 3 0 2 */
   Point d = points[(p + 3) % 4];  /* 2 3 0 2 */
-  Point i1;     /* intersection point */
-  Point i2;     /* intersection point */
-  Point mid;    /* Mid point */
+  Point i1;                       /* intersection point */
+  Point i2;                       /* intersection point */
+  Point mid;                      /* Mid point */
 
   add_rectangle (points, r, a, a, c, c);
   add_rectangle (points, r, b, b, d, d);
@@ -464,12 +467,12 @@ find_three_point_rectangle_triangle (Rectangle *r,
                                      Point      points[4],
                                      gint       p)
 {
-  Point a = points[p % 4];          /* 0 1 2 3 */
-  Point b = points[(p + 1) % 4];    /* 1 2 3 0 */
-  Point c = points[(p + 2) % 4];    /* 2 3 0 2 */
-  Point d = points[(p + 3) % 4];    /* 3 0 1 1 */
-  Point i1;                         /* intersection point */
-  Point i2;                         /* intersection point */
+  Point a = points[p % 4];        /* 0 1 2 3 */
+  Point b = points[(p + 1) % 4];  /* 1 2 3 0 */
+  Point c = points[(p + 2) % 4];  /* 2 3 0 2 */
+  Point d = points[(p + 3) % 4];  /* 3 0 1 1 */
+  Point i1;                       /* intersection point */
+  Point i2;                       /* intersection point */
   Point mid;
 
   mid.x = (a.x + b.x) / 2.0;
@@ -501,9 +504,9 @@ find_maximum_aspect_rectangle (Rectangle *r,
   Point b = points[(p + 1) % 4];  /* 1 2 3 0 */
   Point c = points[(p + 2) % 4];  /* 2 3 0 2 */
   Point d = points[(p + 3) % 4];  /* 2 3 0 2 */
-  Point i1;     /* intersection point */
-  Point i2;     /* intersection point */
-  Point i3;     /* intersection point */
+  Point i1;                       /* intersection point */
+  Point i2;                       /* intersection point */
+  Point i3;                       /* intersection point */
 
   if (intersect_x (b, c, a, &i1))
     {
@@ -648,13 +651,13 @@ intersect (Point  a,
   gdouble a2  = (d.y - c.y);
   gdouble b2  = (c.x - d.x);
   gdouble c2  = a2 * c.x + b2 * c.y;
-  gdouble det = a1*b2 - a2*b1;
+  gdouble det = a1 * b2 - a2 * b1;
 
   if (det == 0)
     return FALSE;
 
-  i->x = (b2*c1 - b1*c2) / det;
-  i->y = (a1*c2 - a2*c1) / det;
+  i->x = (b2 * c1 - b1 * c2) / det;
+  i->y = (a1 * c2 - a2 * c1) / det;
 
   return TRUE;
 }
@@ -678,13 +681,13 @@ intersect_x (Point  a,
   a2 = (d.y - c.y);
   b2 = (c.x - d.x);
   c2 = a2 * c.x + b2 * c.y;
-  det = a1*b2 - a2*b1;
+  det = a1 * b2 - a2 * b1;
 
   if (det == 0)
     return FALSE;
 
-  i->x = (b2*c1 - b1*c2) / det;
-  i->y = (a1*c2 - a2*c1) / det;
+  i->x = (b2 * c1 - b1 * c2) / det;
+  i->y = (a1 * c2 - a2 * c1) / det;
 
   return TRUE;
 }
@@ -708,13 +711,13 @@ intersect_y (Point  a,
   a2 = (d.y - c.y);
   b2 = (c.x - d.x);
   c2 = a2 * c.x + b2 * c.y;
-  det = a1*b2 - a2*b1;
+  det = a1 * b2 - a2 * b1;
 
   if (det == 0)
     return FALSE;
 
-  i->x = (b2*c1 - b1*c2) / det;
-  i->y = (a1*c2 - a2*c1) / det;
+  i->x = (b2 * c1 - b1 * c2) / det;
+  i->y = (a1 * c2 - a2 * c1) / det;
 
   return TRUE;
 }
@@ -733,10 +736,10 @@ add_rectangle (Point      points[4],
   gdouble miny, maxy;
   gint    i;
 
-  minx = MIN4(a.x,b.x,c.x,d.x);
-  maxx = MAX4(a.x,b.x,c.x,d.x);
-  miny = MIN4(a.y,b.y,c.y,d.y);
-  maxy = MAX4(a.y,b.y,c.y,d.y);
+  minx = MIN4 (a.x, b.x, c.x, d.x);
+  maxx = MAX4 (a.x, b.x, c.x, d.x);
+  miny = MIN4 (a.y, b.y, c.y, d.y);
+  maxy = MAX4 (a.y, b.y, c.y, d.y);
 
   a.x = minx;
   a.y = miny;
@@ -755,10 +758,10 @@ add_rectangle (Point      points[4],
 
   for ( i = 0 ; i < 4 ; i++)
     {
-      if (in_poly(points, a) &&
-          in_poly(points, b) &&
-          in_poly(points, c) &&
-          in_poly(points, d))
+      if (in_poly (points, a) &&
+          in_poly (points, b) &&
+          in_poly (points, c) &&
+          in_poly (points, d))
         {
           gdouble area = width * height;
 

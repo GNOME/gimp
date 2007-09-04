@@ -920,7 +920,7 @@ gimp_value_set_item (GValue   *value,
   g_return_if_fail (item == NULL || GIMP_IS_ITEM (item));
 
 #ifdef __GNUC__
-#warning FIXME remove hack as soon as bug #375864 is fixed */
+#warning FIXME remove hack as soon as bug #375864 is fixed
 #endif
 
   if (GIMP_VALUE_HOLDS_ITEM_ID (value))

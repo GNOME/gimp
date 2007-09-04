@@ -122,9 +122,10 @@ gimp_drawable_transform_tiles_affine (GimpDrawable           *drawable,
     clip_result = GIMP_TRANSFORM_RESIZE_CLIP;
 
   /*  Find the bounding coordinates of target */
-  gimp_transform_resize_boundary (&inv, clip_result, u1, v1, u2, v2,
-                                        &x1, &y1, &x2, &y2);
-  
+  gimp_transform_resize_boundary (&inv, clip_result,
+                                  u1, v1, u2, v2,
+                                  &x1, &y1, &x2, &y2);
+
   /*  Get the new temporary buffer for the transformed result  */
   new_tiles = tile_manager_new (x2 - x1, y2 - y1,
                                 tile_manager_bpp (orig_tiles));
