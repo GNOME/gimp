@@ -1,3 +1,11 @@
+2007-09-06  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme-private.h: quick fix:
+	raise the cell segment size as well as the number of possible
+	segments to reduce the likelihood of a failing (make-vector)
+
+	(yes, this is a hack and no proper fix)
+
 2007-09-04  Simon Budig  <simon@gimp.org>
 
 	* app/vectors/gimpbezierstroke.c: Fix initialization of the
