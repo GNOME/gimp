@@ -842,8 +842,6 @@ response_callback (GtkWidget    *widget,
 static void
 check_config (GimpDrawable *drawable)
 {
-  gint i;
-
   config.alpha_weighting = 0;
 
   if (!gimp_drawable_has_alpha (drawable->drawable_id))
