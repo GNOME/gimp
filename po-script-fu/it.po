@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp 2.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-31 18:04+0200\n"
+"POT-Creation-Date: 2007-09-06 08:54+0200\n"
 "PO-Revision-Date: 2007-09-01 03:35+0200\n"
 "Last-Translator: Marco Ciampa <ciampix@libero.it>\n"
 "Language-Team: gimp.linux.it\n"
@@ -103,7 +103,7 @@ msgstr "Selezione gradiente Script-Fu"
 msgid "Script-Fu Brush Selection"
 msgstr "Selezione pennello Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:665
+#: ../plug-ins/script-fu/script-fu-scripts.c:656
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -1275,9 +1275,7 @@ msgstr "Aggiunge all'immagine delle macchie di caffe molto realistiche"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
 msgid "Darken only\\n(Better, but only for images with a lot of white)"
-msgstr ""
-"Solo scurire\n"
-"(migliore ma solo per immagini con molto bianco)"
+msgstr "Solo toni scuri\\n(migliore ma solo per immagini con molto bianco)"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
@@ -2325,7 +2323,7 @@ msgstr "Aggiungi ombra"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:4
 msgid "Edge radius"
-msgstr "Raggio margine"
+msgstr "Raggio bordo"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
 msgid ""
