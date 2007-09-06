@@ -605,14 +605,16 @@ convolve_image (GimpDrawable *drawable,
 
   if (gimp_drawable_is_rgb (drawable->drawable_id))
     {
-      for (i = 0; i <CHANNELS; i++)
+      for (i = 0; i < CHANNELS; i++)
         chanmask[i] = config.channels[i + 1];
     }
   else /* Grayscale */
-    chanmask[0] = config.channels[0];
+    {
+      chanmask[0] = config.channels[0];
+    }
 
   if (gimp_drawable_has_alpha (drawable->drawable_id))
-    chanmask[alpha_channel] = config.channels[alpha_channel];
+    chanmask[alpha_channel] = config.channels[4];
 
   src_row_w = src_w + HALF_WINDOW + HALF_WINDOW;
 
@@ -842,14 +844,12 @@ check_config (GimpDrawable *drawable)
 {
   gint i;
 
-  for (i = 0; i < CHANNELS; i++)
-    config.channels[i] = FALSE;
   config.alpha_weighting = 0;
 
   if (!gimp_drawable_has_alpha (drawable->drawable_id))
     {
-      config.alpha_weighting   = -1;
-      config.bmode       = EXTEND;
+      config.alpha_weighting = -1;
+      config.bmode           = EXTEND;
     }
 }
 

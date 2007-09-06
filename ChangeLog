@@ -1,5 +1,14 @@
 2007-09-06  Simon Budig  <simon@gimp.org>
 
+	* plug-ins/common/convmatrix.c: there is no need to mess
+	with the selected channels within check_config(). Also fix
+	bug with with copying its values into the chanmask
+	in convolve_image()
+
+	Fixes bug #472518
+
+2007-09-06  Simon Budig  <simon@gimp.org>
+
 	* plug-ins/script-fu/tinyscheme/scheme-private.h: quick fix:
 	raise the cell segment size as well as the number of possible
 	segments to reduce the likelihood of a failing (make-vector)
