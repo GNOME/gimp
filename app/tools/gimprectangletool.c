@@ -2308,6 +2308,9 @@ gimp_rectangle_tool_auto_shrink (GimpRectangleTool *rectangle)
                     "y2", offset_y + shrunk_y2,
                     NULL);
 
+      gimp_rectangle_tool_rectangle_changed (rectangle);
+
+      gimp_rectangle_tool_update_handle_sizes (rectangle);
       gimp_rectangle_tool_update_highlight (rectangle);
 
       gimp_draw_tool_resume (GIMP_DRAW_TOOL (rectangle));

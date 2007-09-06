@@ -1,3 +1,9 @@
+2007-09-06  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_auto_shrink):
+	Call gimp_rectangle_tool_rectangle_changed and recalculate handle
+	sizes after 'Auto shrink selection'. Fixes bug #474344.
+
 2007-09-06  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/contactsheet.scm: Preserve aspect ratio
