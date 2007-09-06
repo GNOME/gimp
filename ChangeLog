@@ -1,3 +1,9 @@
+2007-09-06  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scripts/contactsheet.scm: Preserve aspect ratio
+	of original images. Center thumbnails in space above filename label.
+	Added new sheet size of 1600x1200 pixels. Changed a dialog label.
+
 2007-09-06  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/convmatrix.c: there is no need to mess

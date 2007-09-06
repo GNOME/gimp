@@ -1,4 +1,4 @@
-; "Contact Sheet" v1.1 September 2, 2004
+; "Contact Sheet" v1.2 September 5, 2007
 ; by Kevin Cozens <kcozens@interlog.com>
 ;
 ; GIMP - The GNU Image Manipulation Program
@@ -18,9 +18,16 @@
 ; along with this program; if not, write to the Free Software
 ; Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 ;
-; Created version 1.1
+; Version 1.0 (July 27, 2004)
+; Created
+;
+; Version 1.1 (September 2, 2004)
 ; Added ability to select sheet size, set font used for sheet and image
-; titles, background color, and colour used for titles.
+;
+; Version 1.2 (September 5, 2007)
+; Preserve aspect ratio of original image. Center thumbnail in the area
+; allowed for the thumbnail. Added disable/enable of undo operations.
+; Added 1600x1200 sheet size.
 
 (define (script-fu-contactsheet dir sheet-size
          title-font legend-font text-color bg-color)
@@ -31,10 +38,10 @@
          (sheet-h)
          (thumb-w)
          (thumb-h)
-         (border-x)
-         (border-y)
-         (off-x)
-         (off-y)
+         (border-x) ;Space between rows and at top and bottom of thumbnails
+         (border-y) ;Space between columns and at left and right of thumbnails
+         (off-x)  ; Additional X shift to properly center a row of thumbnails
+         (off-y)  ; Additional Y shift to properly center rows of thumbnails
          (count)
          )
 
@@ -82,6 +89,17 @@
              (set! off-y 0)
              (set! count 7)
         )
+
+        ((4) (set! sheet-w 1600)
+             (set! sheet-h 1200)
+             (set! thumb-w 120)
+             (set! thumb-h 90)
+             (set! border-x 36)
+             (set! border-y 25)
+             (set! off-x 2)
+             (set! off-y 0)
+             (set! count 9)
+        )
       )
 
       (list sheet-w sheet-h thumb-w thumb-h border-x border-y off-x off-y count)
@@ -113,9 +131,21 @@
     )
   )
 
-  ;This routine should preserve the aspect ratio of the original image
   (define (make-thumbnail-size img thumb-w thumb-h)
-    (gimp-image-scale img thumb-w thumb-h)
+    (let* (
+          (file-height (car (gimp-image-height img)))
+          (file-width  (car (gimp-image-width img)))
+          (aspect-ratio (/ file-width file-height))
+          )
+
+      ;Preserve the aspect ratio of the original image
+      (if (> file-width file-height)
+        (set! thumb-h (/ thumb-w aspect-ratio))
+        (set! thumb-w (* thumb-h aspect-ratio))
+      )
+
+      (gimp-image-scale img thumb-w thumb-h)
+    )
   )
 
   (let* (
@@ -166,6 +196,9 @@
     (set! max-y max-x)
 
     (set! sheet-img (car (gimp-image-new sheet-width sheet-height RGB)))
+
+    (gimp-image-undo-disable sheet-img)
+
     (set! sheet-layer (car (gimp-layer-new sheet-img sheet-width sheet-height
                             RGB-IMAGE "Background"
                             100 NORMAL-MODE)))
@@ -198,9 +231,15 @@
                                   sheet-img)))
 
               (gimp-image-add-layer sheet-img tmp-layer 0)
+
+              ;Move thumbnail in to position and center it in area available.
               (gimp-layer-set-offsets tmp-layer
-                (+ border-x off-x (* pos-x (+ thumb-w border-x)))
-                (+ border-y off-y (* pos-y (+ thumb-h border-y)))
+                (+ border-x off-x (* pos-x (+ thumb-w border-x))
+                   (/ (- thumb-w (car (gimp-image-width new-img))) 2)
+                )
+                (+ border-y off-y (* pos-y (+ thumb-h border-y))
+                   (/ (- thumb-h (car (gimp-image-height new-img))) 2)
+                )
               )
 
               (gimp-image-delete new-img)
@@ -210,7 +249,7 @@
               (gimp-layer-set-offsets tmp-layer
                 (+ border-x off-x (* pos-x (+ thumb-w border-x))
                    (/ (- thumb-w (car (gimp-drawable-width tmp-layer))) 2))
-                (+ border-y off-y (* pos-y (+ thumb-h border-y)) thumb-h 2)
+                (+ border-y off-y (* pos-y (+ thumb-h border-y)) thumb-h 6)
               )
 
               (set! img-count (+ img-count 1))
@@ -263,6 +302,7 @@
         )
       )
 
+      (gimp-image-undo-enable sheet-img)
       (gimp-image-delete sheet-img)
 
       (display (string-append _"Created " (number->string sheet-num)
@@ -282,11 +322,12 @@
     "Kevin Cozens"
     "July 19, 2004"
     ""
-    SF-DIRNAME _"Directory"        "/tmp/test"
+    SF-DIRNAME _"Images Directory" "/tmp/test"
     SF-OPTION  _"Sheet size"       '("640 x 480"
                                      "800 x 600"
                                      "1024 x 768"
-                                     "1280 x 1024")
+                                     "1280 x 1024"
+                                     "1600 x 1200")
     SF-FONT    _"Title font"       "Sans Bold Italic"
     SF-FONT    _"Legend font"      "Sans Bold"
     SF-COLOR   _"Text color"       "white"
