@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-30 01:01+0200\n"
-"PO-Revision-Date: 2007-08-30 01:07+0200\n"
+"POT-Creation-Date: 2007-09-07 15:37+0200\n"
+"PO-Revision-Date: 2007-09-07 15:20+0200\n"
 "Last-Translator: Stéphane Raimbault <stephane.raimbault@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -359,7 +359,7 @@ msgstr "_Fractales"
 #: ../plug-ins/common/gif-save.c:986 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
 #: ../plug-ins/common/mng.c:950 ../plug-ins/common/pat.c:447
-#: ../plug-ins/common/pcx.c:587 ../plug-ins/common/pix.c:508
+#: ../plug-ins/common/pcx.c:643 ../plug-ins/common/pix.c:508
 #: ../plug-ins/common/png.c:1244 ../plug-ins/common/pnm.c:936
 #: ../plug-ins/common/postscript.c:1194 ../plug-ins/common/psd-save.c:1549
 #: ../plug-ins/common/raw.c:528 ../plug-ins/common/raw.c:555
@@ -401,7 +401,7 @@ msgstr "Enregistrer les paramètres de la fractale"
 #: ../plug-ins/common/gif-load.c:309 ../plug-ins/common/gih.c:649
 #: ../plug-ins/common/lcms.c:724 ../plug-ins/common/lcms.c:997
 #: ../plug-ins/common/mng.c:1121 ../plug-ins/common/pat.c:317
-#: ../plug-ins/common/pcx.c:291 ../plug-ins/common/pix.c:329
+#: ../plug-ins/common/pcx.c:344 ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:703 ../plug-ins/common/pnm.c:482
 #: ../plug-ins/common/poppler.c:501 ../plug-ins/common/postscript.c:1021
 #: ../plug-ins/common/postscript.c:3029 ../plug-ins/common/psd-load.c:2125
@@ -1164,7 +1164,7 @@ msgstr "Mauvaise palette de couleurs"
 #: ../plug-ins/bmp/bmpread.c:154 ../plug-ins/common/CEL.c:304
 #: ../plug-ins/common/dicom.c:301 ../plug-ins/common/gbr.c:353
 #: ../plug-ins/common/gif-load.c:314 ../plug-ins/common/gih.c:654
-#: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:296
+#: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:349
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:710
 #: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:546
 #: ../plug-ins/common/postscript.c:1027 ../plug-ins/common/psd-load.c:2130
@@ -1200,14 +1200,14 @@ msgstr "Format de compression BMP inconnu ou non valide."
 
 #: ../plug-ins/bmp/bmpread.c:544
 msgid "Unsupported or invalid bitdepth."
-msgstr "Profondeur de bit non valide ou non gérée."
+msgstr "Profondeur de bit non valide ou non prise en charge."
 
-#: ../plug-ins/bmp/bmpread.c:550 ../plug-ins/common/pcx.c:320
+#: ../plug-ins/bmp/bmpread.c:550 ../plug-ins/common/pcx.c:375
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "La largeur de l'image est non valide ou non prise en charge : %d"
 
-#: ../plug-ins/bmp/bmpread.c:555 ../plug-ins/common/pcx.c:325
+#: ../plug-ins/bmp/bmpread.c:555 ../plug-ins/common/pcx.c:380
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "La hauteur de l'image est non valide ou non prise en charge : %d"
@@ -1219,8 +1219,8 @@ msgstr "La hauteur de l'image est non valide ou non prise en charge : %d"
 #: ../plug-ins/common/CEL.c:352 ../plug-ins/common/blinds.c:277
 #: ../plug-ins/common/compose.c:924 ../plug-ins/common/decompose.c:703
 #: ../plug-ins/common/dicom.c:503 ../plug-ins/common/film.c:746
-#: ../plug-ins/common/gif-load.c:879 ../plug-ins/common/pcx.c:338
-#: ../plug-ins/common/pcx.c:344 ../plug-ins/common/pix.c:368
+#: ../plug-ins/common/gif-load.c:879 ../plug-ins/common/pcx.c:387
+#: ../plug-ins/common/pcx.c:393 ../plug-ins/common/pix.c:368
 #: ../plug-ins/common/png.c:831 ../plug-ins/common/pnm.c:570
 #: ../plug-ins/common/psd-load.c:2553 ../plug-ins/common/raw.c:691
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:956
@@ -1254,7 +1254,7 @@ msgstr "La canal alpha sera ignoré."
 #: ../plug-ins/bmp/bmpwrite.c:305 ../plug-ins/common/CEL.c:573
 #: ../plug-ins/common/gbr.c:621 ../plug-ins/common/gif-save.c:993
 #: ../plug-ins/common/gih.c:1263 ../plug-ins/common/gtm.c:245
-#: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:549
+#: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:605
 #: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1251
 #: ../plug-ins/common/pnm.c:941 ../plug-ins/common/postscript.c:1199
 #: ../plug-ins/common/psd-save.c:1554 ../plug-ins/common/sunras.c:549
@@ -1419,7 +1419,7 @@ msgstr "Impossible de créer une nouvelle image"
 #: ../plug-ins/common/CEL.c:430
 #, c-format
 msgid "Unsupported bit depth (%d)!"
-msgstr "Profondeur de bit non gérée (%d)"
+msgstr "Profondeur de bit non prise en charge (%d)"
 
 #: ../plug-ins/common/CML_explorer.c:129
 msgid "Keep image's values"
@@ -2027,7 +2027,7 @@ msgstr "Vitesse de lecture"
 
 #: ../plug-ins/common/animationplay.c:802
 msgid "Tried to display an invalid layer."
-msgstr "Tente d'afficher un calque invalide."
+msgstr "Tente d'afficher un calque non valide."
 
 #: ../plug-ins/common/animationplay.c:1322
 #, c-format
@@ -2640,11 +2640,11 @@ msgid "_Hue:"
 msgstr "_Teinte :"
 
 #: ../plug-ins/common/compose.c:213 ../plug-ins/common/compose.c:221
-#: ../plug-ins/common/scatter_hsv.c:418
+#: ../plug-ins/common/scatter_hsv.c:423
 msgid "_Saturation:"
 msgstr "_Saturation :"
 
-#: ../plug-ins/common/compose.c:214 ../plug-ins/common/scatter_hsv.c:430
+#: ../plug-ins/common/compose.c:214 ../plug-ins/common/scatter_hsv.c:435
 msgid "_Value:"
 msgstr "Vale_ur :"
 
@@ -2892,36 +2892,36 @@ msgstr ""
 msgid "Applying convolution"
 msgstr "Calcul de convolution..."
 
-#: ../plug-ins/common/convmatrix.c:925
+#: ../plug-ins/common/convmatrix.c:923
 msgid "Convolution Matrix"
 msgstr "Matrice de convolution"
 
-#: ../plug-ins/common/convmatrix.c:962
+#: ../plug-ins/common/convmatrix.c:960
 msgid "Matrix"
 msgstr "Matrice"
 
-#: ../plug-ins/common/convmatrix.c:1000
+#: ../plug-ins/common/convmatrix.c:998
 msgid "D_ivisor:"
 msgstr "Divi_seur :"
 
-#: ../plug-ins/common/convmatrix.c:1026 ../plug-ins/common/depthmerge.c:767
+#: ../plug-ins/common/convmatrix.c:1024 ../plug-ins/common/depthmerge.c:767
 #: ../plug-ins/common/raw.c:1022
 msgid "O_ffset:"
 msgstr "_Décalage :"
 
-#: ../plug-ins/common/convmatrix.c:1055
+#: ../plug-ins/common/convmatrix.c:1053
 msgid "N_ormalise"
 msgstr "N_ormaliser"
 
-#: ../plug-ins/common/convmatrix.c:1067
+#: ../plug-ins/common/convmatrix.c:1065
 msgid "A_lpha-weighting"
 msgstr "Poids al_pha"
 
-#: ../plug-ins/common/convmatrix.c:1086
+#: ../plug-ins/common/convmatrix.c:1084
 msgid "Border"
 msgstr "Bordure"
 
-#: ../plug-ins/common/convmatrix.c:1113
+#: ../plug-ins/common/convmatrix.c:1111
 msgid "Channels"
 msgstr "Canaux"
 
@@ -3502,7 +3502,7 @@ msgstr "Image DICOM (Digital Imaging and Communications in Medicine)"
 msgid "'%s' is not a DICOM file."
 msgstr "« %s » n'est pas un fichier DICOM."
 
-#: ../plug-ins/common/dicom.c:678 ../plug-ins/common/pcx.c:581
+#: ../plug-ins/common/dicom.c:678 ../plug-ins/common/pcx.c:637
 #: ../plug-ins/common/pnm.c:927
 msgid "Cannot save images with alpha channel."
 msgstr "Impossible d'enregistrer des images avec un canal alpha."
@@ -4213,7 +4213,7 @@ msgstr "Brosse GIMP"
 
 #: ../plug-ins/common/gbr.c:388 ../plug-ins/common/gbr.c:400
 msgid "Unsupported brush format"
-msgstr "Format de brosse non supporté"
+msgstr "Format de brosse non pris en charge"
 
 #: ../plug-ins/common/gbr.c:411
 #, c-format
@@ -4314,8 +4314,9 @@ msgid ""
 "GIF: Undocumented GIF composite type %d is not handled.  Animation might not "
 "play or re-save perfectly."
 msgstr ""
-"GIF : composite type GIF non documenté %d n'est pas supporté. L'animation "
-"pourrait ne pas se jouer ou être ré-engistrée parfaitement."
+"GIF : le type GIF composite %d est non documenté et n'est pas pris en "
+"charge. L'animation pourrait ne pas se jouer ou être ré-engistrée "
+"parfaitement."
 
 #: ../plug-ins/common/gif-save.c:683
 msgid "Couldn't simply reduce colors further. Saving as opaque."
@@ -4328,7 +4329,7 @@ msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
 msgstr ""
-"Le format GIF ne supporte seulement que les commentaires codés en ASCII 7 "
+"Le format GIF prend uniquement en charge les commentaires codés en ASCII 7 "
 "bits. Aucun commentaire n'est enregistré."
 
 #: ../plug-ins/common/gif-save.c:958
@@ -4641,9 +4642,9 @@ msgid ""
 "crash your browser."
 msgstr ""
 "Vous êtes sur le point de créer\n"
-"un énorme fichier HTML qui,\n"
-"selon toute probabilité,\n"
-"plantera votre navigateur."
+"un énorme fichier HTML qui, selon\n"
+"toute probabilité, mettra en\n"
+"difficulté votre navigateur."
 
 #. HTML Page Options
 #: ../plug-ins/common/gtm.c:445
@@ -4811,19 +4812,19 @@ msgstr "Superpose beaucoup de copies altérées de l'image"
 msgid "_Illusion..."
 msgstr "_Illusion..."
 
-#: ../plug-ins/common/illusion.c:168 ../plug-ins/common/illusion.c:389
+#: ../plug-ins/common/illusion.c:168 ../plug-ins/common/illusion.c:350
 msgid "Illusion"
 msgstr "Illusion"
 
-#: ../plug-ins/common/illusion.c:427
+#: ../plug-ins/common/illusion.c:388
 msgid "_Divisions:"
 msgstr "_Divisions :"
 
-#: ../plug-ins/common/illusion.c:437
+#: ../plug-ins/common/illusion.c:398
 msgid "Mode _1"
 msgstr "Mode _1"
 
-#: ../plug-ins/common/illusion.c:452
+#: ../plug-ins/common/illusion.c:413
 msgid "Mode _2"
 msgstr "Mode _2"
 
@@ -6036,24 +6037,45 @@ msgstr "Enregistrer en tant que motif"
 msgid "ZSoft PCX image"
 msgstr "Image ZSoft PCX"
 
-#: ../plug-ins/common/pcx.c:301
+#: ../plug-ins/common/pcx.c:354
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Impossible de lire l'en-tête depuis « %s »"
 
-#: ../plug-ins/common/pcx.c:308
+#: ../plug-ins/common/pcx.c:363
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "« %s » n'est pas un fichier PCX"
 
-#: ../plug-ins/common/pcx.c:330
-#, c-format
-msgid "Invalid number of bytes per line: %hd"
-msgstr "Nombre d'octets non valides par ligne : %hd"
-
-#: ../plug-ins/common/pcx.c:379
+#: ../plug-ins/common/pcx.c:432
 msgid "Unusual PCX flavour, giving up"
 msgstr "Semble PCX inhabituel, abandon"
+
+#: ../plug-ins/common/pcx.c:653
+#, c-format
+msgid "Invalid X offset: %d"
+msgstr "Décalage X non valide : %d"
+
+#: ../plug-ins/common/pcx.c:659
+#, c-format
+msgid "Invalid Y offset: %d"
+msgstr "Décalage Y non valide : %d"
+
+#: ../plug-ins/common/pcx.c:665
+#, c-format
+msgid "Right border out of bounds (must be < %d): %d"
+msgstr "La bordure droite est hors limites (doit être inférieure à %d) : %d"
+
+#: ../plug-ins/common/pcx.c:672
+#, c-format
+msgid "Bottom border out of bounds (must be < %d): %d"
+msgstr ""
+"La bordure inférieure est hors limites (doit être inférieure à %d) : %d"
+
+#: ../plug-ins/common/pcx.c:728
+#, c-format
+msgid "Writing to file '%s' failed: %s"
+msgstr "Impossible d'écrire dans le fichier « %s » : %s"
 
 #: ../plug-ins/common/photocopy.c:155
 msgid "Simulate color distortion produced by a copy machine"
@@ -6303,15 +6325,15 @@ msgstr "Fin de fichier prématurée."
 
 #: ../plug-ins/common/pnm.c:515
 msgid "Invalid file."
-msgstr "Fichier invalide."
+msgstr "Fichier non valide."
 
 #: ../plug-ins/common/pnm.c:529
 msgid "File not in a supported format."
-msgstr "Le fichier est dans un format non supporté."
+msgstr "Le fichier est dans un format non pris en charge."
 
 #: ../plug-ins/common/pnm.c:538
 msgid "Invalid X resolution."
-msgstr "Résolution X invalide."
+msgstr "Résolution X non valide."
 
 #: ../plug-ins/common/pnm.c:540
 msgid "Image width is larger than GIMP can handle."
@@ -6319,7 +6341,7 @@ msgstr "L'image est plus large que GIMP ne peut prendre en charge."
 
 #: ../plug-ins/common/pnm.c:547
 msgid "Invalid Y resolution."
-msgstr "Résolution Y invalide."
+msgstr "Résolution Y non valide."
 
 #: ../plug-ins/common/pnm.c:549
 msgid "Image height is larger than GIMP can handle."
@@ -6327,7 +6349,7 @@ msgstr "L'image est plus haute que GIMP ne peut prendre en charge."
 
 #: ../plug-ins/common/pnm.c:561
 msgid "Invalid maximum value."
-msgstr "Valeur maximale invalide."
+msgstr "Valeur maximale non valide."
 
 #: ../plug-ins/common/pnm.c:745
 msgid "Error reading file."
@@ -6424,7 +6446,7 @@ msgstr "%s-pages"
 
 #: ../plug-ins/common/poppler.c:760
 msgid "Import from PDF"
-msgstr "Import depuis PDF"
+msgstr "Importation depuis un PDF"
 
 #: ../plug-ins/common/poppler.c:765 ../plug-ins/common/postscript.c:3081
 #: ../plug-ins/common/tiff-load.c:440
@@ -6498,7 +6520,7 @@ msgstr "Une erreur d'écriture est survenue"
 
 #: ../plug-ins/common/postscript.c:3076
 msgid "Import from PostScript"
-msgstr "Importer depuis un PostScript"
+msgstr "Importation depuis un PostScript"
 
 #. Rendering
 #: ../plug-ins/common/postscript.c:3119
@@ -6713,7 +6735,7 @@ msgid ""
 "plug-in does not support that, using normal mode instead."
 msgstr ""
 "Impossible d'enregistrer le calque avec le mode « %s ». Soit le format de "
-"fichier PSD, soit le greffon d'enregistrement ne le supporte pas, "
+"fichier PSD, soit le greffon d'enregistrement ne le prend pas en charge, "
 "utilisation du mode normal à la place."
 
 #: ../plug-ins/common/psd-save.c:608
@@ -6725,14 +6747,18 @@ msgstr "Erreur : ne peut convertir le type d'image de base GIMP en mode PSD"
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images that are "
 "more than 30000 pixels wide or tall."
-msgstr "Impossible d'enregistrer « %s ». Le format PSD ne supporte pas les images de plus de 30 000 pixels."
+msgstr ""
+"Impossible d'enregistrer « %s ». Le format PSD ne prend pas en charge les "
+"images de plus de 30 000 pixels."
 
 #: ../plug-ins/common/psd-save.c:1537
 #, c-format
 msgid ""
 "Unable to save '%s'.  The psd file format does not support images with "
 "layers that are more than 30000 pixels wide or tall."
-msgstr "Impossible d'enregistrer « %s ». Le format PSD ne supporte pas les images contenant des calques de plus de 30 000 pixels."
+msgstr ""
+"Impossible d'enregistrer « %s ». Le format PSD ne prend pas en charge les "
+"images contenant des calques de plus de 30 000 pixels."
 
 #: ../plug-ins/common/psp.c:356 ../plug-ins/common/psp.c:380
 msgid "Paint Shop Pro image"
@@ -7129,15 +7155,15 @@ msgstr "Brouillage TSV"
 msgid "HSV Noise"
 msgstr "Brouillage TSV"
 
-#: ../plug-ins/common/scatter_hsv.c:358
+#: ../plug-ins/common/scatter_hsv.c:363
 msgid "Scatter HSV"
 msgstr "Dispersion TSV"
 
-#: ../plug-ins/common/scatter_hsv.c:394
+#: ../plug-ins/common/scatter_hsv.c:399
 msgid "_Holdness:"
 msgstr "_Contrôle :"
 
-#: ../plug-ins/common/scatter_hsv.c:406
+#: ../plug-ins/common/scatter_hsv.c:411
 msgid "H_ue:"
 msgstr "_Teinte :"
 
@@ -7884,7 +7910,7 @@ msgstr "Impossible d'ouvrir « %s » comme un fichier SUN-Raster"
 
 #: ../plug-ins/common/sunras.c:396
 msgid "The type of this SUN-rasterfile is not supported"
-msgstr "Le type de ce fichier SUN-Raster n'est pas supporté"
+msgstr "Le type de ce fichier SUN-Raster n'est pas pris en charge"
 
 #: ../plug-ins/common/sunras.c:425
 #, c-format
@@ -7893,7 +7919,7 @@ msgstr "Impossible de lire les entrées de couleurs de « %s »"
 
 #: ../plug-ins/common/sunras.c:433
 msgid "Type of colormap not supported"
-msgstr "Type de palette de couleurs non supporté."
+msgstr "Type de palette de couleurs non pris en charge"
 
 #: ../plug-ins/common/sunras.c:440 ../plug-ins/common/xbm.c:810
 #: ../plug-ins/common/xwd.c:475
@@ -7937,7 +7963,7 @@ msgstr ""
 
 #: ../plug-ins/common/sunras.c:502
 msgid "This image depth is not supported"
-msgstr "Cette résolution d'image n'est pas supportée"
+msgstr "Cette résolution d'image n'est pas prise en charge"
 
 #: ../plug-ins/common/sunras.c:524
 msgid "SUNRAS save cannot handle images with alpha channels"
@@ -8111,7 +8137,7 @@ msgstr "TIFF « %s » ne contient aucun répertoire"
 
 #: ../plug-ins/common/tiff-load.c:435
 msgid "Import from TIFF"
-msgstr "Import depuis TIFF"
+msgstr "Importation depuis TIFF"
 
 #: ../plug-ins/common/tiff-load.c:960
 msgid "TIFF Channel"
@@ -8134,7 +8160,7 @@ msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
-"Le format TIFF ne supporte seulement que les commentaires\n"
+"Le format TIFF ne prend seulement en charge que les commentaires\n"
 "codés en ASCII 7 bits. Aucune commentaire n'est enregistré."
 
 #: ../plug-ins/common/tiff-save.c:1047
@@ -9039,7 +9065,7 @@ msgid ""
 "not supported."
 msgstr ""
 "Le fichier XWD %s est de format %d, profondeur %d et bits par pixel %d. De "
-"tels fichiers ne sont pas supportés."
+"tels fichiers ne sont pas pris en charge."
 
 #: ../plug-ins/common/xwd.c:578
 msgid "Cannot save images with alpha channels."
@@ -10388,7 +10414,7 @@ msgstr "Recharge le dossier des préréglages"
 
 #: ../plug-ins/gimpressionist/preview.c:192
 msgid "Refresh the Preview window"
-msgstr "Rafraîchir la fenêtre d'Aperçu"
+msgstr "Actualiser la fenêtre d'aperçu"
 
 #: ../plug-ins/gimpressionist/preview.c:200
 msgid "Revert to the original image"
@@ -10835,11 +10861,11 @@ msgstr "Bordure d_roite"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:185
 msgid "_Upper border"
-msgstr "Bordure ha_ute"
+msgstr "Bordure _supérieure"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:189
 msgid "Lo_wer border"
-msgstr "Bordure ba_sse"
+msgstr "Bordure _inférieure"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:197
 msgid "_Base URL:"
@@ -11635,7 +11661,7 @@ msgstr "Image JPEG"
 
 #: ../plug-ins/jpeg/jpeg.c:301
 msgid "Export Preview"
-msgstr "Exporter l'aperçu"
+msgstr "Exportation d'aperçu"
 
 #: ../plug-ins/maze/algorithms.c:289
 msgid "Constructing maze using Prim's Algorithm"
@@ -12051,7 +12077,7 @@ msgid ""
 "(not supported by SGI)"
 msgstr ""
 "RLE aggressif\n"
-"(non supporté par SGI)"
+"(non pris en charge par SGI)"
 
 #: ../plug-ins/twain/twain.c:354
 msgid "_Scanner/Camera..."
@@ -12168,8 +12194,8 @@ msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
 msgstr ""
-"Les grands icônes et la compression ne sont pas supportés par tous les "
-"programmes. Les applications anciennes ne parviendront peut être pas à "
+"Les grands icônes et la compression ne sont pas prises en charge par tous "
+"les programmes. Les applications anciennes ne parviendront peut être pas à "
 "ouvrir ce fichier correctement."
 
 #: ../plug-ins/winicon/icodialog.c:178
@@ -12255,8 +12281,8 @@ msgstr "Le fichier XJT contient le code de calque inconnu %d"
 #, c-format
 msgid "Warning: unsupported layermode %d saved to XJT"
 msgstr ""
-"Avertissement : mode de calque %d non supporté lors de l'enregistrement au "
-"format XJT"
+"Avertissement : mode de calque %d non pris en charge lors de "
+"l'enregistrement au format XJT"
 
 #: ../plug-ins/xjt/xjt.c:777
 #, c-format
@@ -12279,8 +12305,8 @@ msgstr "Le fichier XJT contient le type d'unité inconnu %d"
 #, c-format
 msgid "Warning: unsupported unittype %d saved to XJT"
 msgstr ""
-"Avertissement : type d'unité %d non supporté lors de l'enregistrement au "
-"format XJT"
+"Avertissement : type d'unité %d non pris en charge lors de l'enregistrement "
+"au format XJT"
 
 #: ../plug-ins/xjt/xjt.c:854
 msgid "Save as XJT"
@@ -12313,6 +12339,9 @@ msgstr "Erreur : Impossible de lire le fichier de propriétés XJT « %s »."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Erreur : le fichier de propriétés XJT « %s » est vide."
+
+#~ msgid "Invalid number of bytes per line: %hd"
+#~ msgstr "Nombre d'octets non valides par ligne : %hd"
 
 #~ msgid "Use custom quality settings"
 #~ msgstr "Utiliser des paramètres de qualité personnalisés"

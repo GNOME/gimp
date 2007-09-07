@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-21 23:58+0200\n"
-"PO-Revision-Date: 2007-08-22 01:11+0200\n"
+"POT-Creation-Date: 2007-09-07 15:37+0200\n"
+"PO-Revision-Date: 2007-09-07 15:29+0200\n"
 "Last-Translator: Stéphane Raimbault <stephane.raimbault@gmail.com>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -98,129 +98,130 @@ msgstr ""
 "L'interpréteur batch « %s » n'est pas disponible, le mode batch est "
 "désactivé."
 
-#: ../app/main.c:150 ../tools/gimp-remote.c:79
+#: ../app/main.c:154 ../tools/gimp-remote.c:79
 msgid "Show version information and exit"
 msgstr "Affiche l'information de version et quitte"
 
-#: ../app/main.c:155
+#: ../app/main.c:159
 msgid "Show license information and exit"
 msgstr "Affiche l'information de licence et quitte"
 
-#: ../app/main.c:160
+#: ../app/main.c:164
 msgid "Be more verbose"
 msgstr "Être plus bavard"
 
-#: ../app/main.c:165
+#: ../app/main.c:169
 msgid "Start a new GIMP instance"
 msgstr "Démarre une nouvelle instance de GIMP"
 
-#: ../app/main.c:170
+#: ../app/main.c:174
 msgid "Open images as new"
 msgstr "Ouvre en tant que nouvelles images"
 
-#: ../app/main.c:175
+#: ../app/main.c:179
 msgid "Run without a user interface"
 msgstr "Lance sans interface utilisateur"
 
-#: ../app/main.c:180
+#: ../app/main.c:184
 msgid "Do not load brushes, gradients, patterns, ..."
 msgstr "Ne charge pas les brosses, dégradés, palettes, motifs..."
 
-#: ../app/main.c:185
+#: ../app/main.c:189
 msgid "Do not load any fonts"
 msgstr "Ne charge aucune police"
 
-#: ../app/main.c:190
+#: ../app/main.c:194
 msgid "Do not show a startup window"
 msgstr "N'affiche pas l'écran de démarrage"
 
-#: ../app/main.c:195
+#: ../app/main.c:199
 msgid "Do not use shared memory between GIMP and plugins"
 msgstr "N'utilise pas la mémoire partagée entre GIMP et ses greffons"
 
-#: ../app/main.c:200
+#: ../app/main.c:204
 msgid "Do not use special CPU acceleration functions"
 msgstr "N'utilise pas les accélérations propres aux CPU"
 
-#: ../app/main.c:205
+#: ../app/main.c:209
 msgid "Use an alternate sessionrc file"
 msgstr "Utiliser un autre fichier sessionrc"
 
-#: ../app/main.c:210
+#: ../app/main.c:214
 msgid "Use an alternate user gimprc file"
 msgstr "Utiliser un autre fichier système gimprc"
 
-#: ../app/main.c:215
+#: ../app/main.c:219
 msgid "Use an alternate system gimprc file"
 msgstr "Utiliser un autre fichier système gimprc"
 
-#: ../app/main.c:220
+#: ../app/main.c:224
 msgid "Batch command to run (can be used multiple times)"
 msgstr "Commande batch à lancer (peut être utilisé plusieurs fois)"
 
-#: ../app/main.c:225
+#: ../app/main.c:229
 msgid "The procedure to process batch commands with"
 msgstr "La procédure pour exécuter les commandes batch"
 
-#: ../app/main.c:230
+#: ../app/main.c:234
 msgid "Send messages to console instead of using a dialog"
 msgstr ""
 "Envoie les messages dans la console au lieu d'utiliser une boîte de dialogue"
 
 #. don't translate the mode names (off|on|warn)
-#: ../app/main.c:236
+#: ../app/main.c:240
 msgid "PDB compatibility mode (off|on|warn)"
 msgstr "Mode compatibilité PDB (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
-#: ../app/main.c:242
+#: ../app/main.c:246
 msgid "Debug in case of a crash (never|query|always)"
-msgstr "Débogage en cas de plantage (never|query|always)"
+msgstr "Débogage en cas d'arrêt brutal (never|query|always)"
 
-#: ../app/main.c:247
+#: ../app/main.c:251
 msgid "Enable non-fatal debugging signal handlers"
 msgstr "Active le débogage pour les signaux non fatals"
 
-#: ../app/main.c:252
+#: ../app/main.c:256
 msgid "Make all warnings fatal"
 msgstr "Rend tous les signaux fatals"
 
-#: ../app/main.c:257
+#: ../app/main.c:261
 msgid "Output a gimprc file with default settings"
 msgstr "Créé un fichier gimprc avec les paramètres par défaut"
 
-#: ../app/main.c:337
+#: ../app/main.c:341
 msgid "[FILE|URI...]"
 msgstr "[FICHIER|URI...]"
 
-#: ../app/main.c:355
+#: ../app/main.c:359
 msgid ""
 "GIMP could not initialize the graphical user interface.\n"
 "Make sure a proper setup for your display environment exists."
 msgstr ""
 "GIMP ne peut pas initialiser l'interface graphique utilisateur.\n"
-"Assurez-vous qu'une configuration adaptée à votre environnement d'affichage existe."
+"Assurez-vous qu'une configuration adaptée à votre environnement d'affichage "
+"existe."
 
-#: ../app/main.c:433
+#: ../app/main.c:437
 msgid "GIMP output. Type any character to close this window."
 msgstr ""
 "Sortie GIMP. Saisissez n'importe quel caractère pour fermer cette fenêtre."
 
-#: ../app/main.c:434
+#: ../app/main.c:438
 #, c-format
 msgid "(Type any character to close this window)\n"
 msgstr "(saisissez n'importe quel caractère pour fermer cette fenêtre)\n"
 
-#: ../app/main.c:451
+#: ../app/main.c:455
 msgid "GIMP output. You can minimize this window, but don't close it."
 msgstr "Sortie GIMP. Vous pouvez réduire cette fenêtre mais ne la fermez pas."
 
-#: ../app/main.c:553 ../tools/gimp-remote.c:323
+#: ../app/main.c:557 ../tools/gimp-remote.c:323
 #, c-format
 msgid "%s version %s"
 msgstr "%s version %s"
 
-#: ../app/main.c:778
+#: ../app/main.c:782
 msgid "Another GIMP instance is already running."
 msgstr "Une autre instance de GIMP est déjà lancée."
 
@@ -246,9 +247,12 @@ msgid ""
 "you didn't tell GLib about this. Please set the environment variable "
 "G_FILENAME_ENCODING."
 msgstr ""
-"Le nom du répertoire contenant la configuration utilisateur de GIMP ne peut être converti en UTF-8 : %s\n"
+"Le nom du répertoire contenant la configuration utilisateur de GIMP ne peut "
+"être converti en UTF-8 : %s\n"
 "\n"
-"Très probablement votre système de fichiers stocke les fichiers avec un codage différent d'UTF-8 et vous ne l'avez pas déclaré auprès de GLib. Définissez la valeur de la variable d'environnement G_FILENAME_ENCODING."
+"Très probablement votre système de fichiers stocke les fichiers avec un "
+"codage différent d'UTF-8 et vous ne l'avez pas déclaré auprès de GLib. "
+"Définissez la valeur de la variable d'environnement G_FILENAME_ENCODING."
 
 #: ../app/actions/actions.c:99 ../app/dialogs/dialogs.c:215
 #: ../app/widgets/gimpbrusheditor.c:90
@@ -257,7 +261,7 @@ msgstr "Éditeur de brosses"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:102 ../app/core/gimp.c:824
-#: ../app/dialogs/dialogs.c:148 ../app/dialogs/preferences-dialog.c:2689
+#: ../app/dialogs/dialogs.c:148 ../app/dialogs/preferences-dialog.c:2691
 msgid "Brushes"
 msgstr "Brosses"
 
@@ -300,7 +304,7 @@ msgstr "Attachable"
 
 #. Document History
 #: ../app/actions/actions.c:132 ../app/dialogs/dialogs.c:162
-#: ../app/dialogs/preferences-dialog.c:1607
+#: ../app/dialogs/preferences-dialog.c:1609
 msgid "Document History"
 msgstr "Historique des documents"
 
@@ -321,7 +325,7 @@ msgid "File"
 msgstr "Fichier"
 
 #: ../app/actions/actions.c:147 ../app/dialogs/dialogs.c:156
-#: ../app/dialogs/preferences-dialog.c:2705
+#: ../app/dialogs/preferences-dialog.c:2707
 msgid "Fonts"
 msgstr "Polices"
 
@@ -332,7 +336,7 @@ msgstr "Éditeur de dégradé"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:153 ../app/core/gimp.c:836
-#: ../app/dialogs/dialogs.c:152 ../app/dialogs/preferences-dialog.c:2701
+#: ../app/dialogs/dialogs.c:152 ../app/dialogs/preferences-dialog.c:2703
 msgid "Gradients"
 msgstr "Dégradés"
 
@@ -362,17 +366,17 @@ msgstr "Éditeur de palette"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:171 ../app/core/gimp.c:832
-#: ../app/dialogs/dialogs.c:154 ../app/dialogs/preferences-dialog.c:2697
+#: ../app/dialogs/dialogs.c:154 ../app/dialogs/preferences-dialog.c:2699
 msgid "Palettes"
 msgstr "Palettes"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:174 ../app/core/gimp.c:828
-#: ../app/dialogs/dialogs.c:150 ../app/dialogs/preferences-dialog.c:2693
+#: ../app/dialogs/dialogs.c:150 ../app/dialogs/preferences-dialog.c:2695
 msgid "Patterns"
 msgstr "Motifs"
 
-#: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2709
+#: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2711
 msgid "Plug-Ins"
 msgstr "Greffons"
 
@@ -400,7 +404,7 @@ msgid "Text Editor"
 msgstr "Éditeur de texte"
 
 #: ../app/actions/actions.c:195 ../app/dialogs/dialogs.c:129
-#: ../app/dialogs/preferences-dialog.c:1849 ../app/gui/gui.c:438
+#: ../app/dialogs/preferences-dialog.c:1851 ../app/gui/gui.c:441
 msgid "Tool Options"
 msgstr "Options des outils"
 
@@ -741,12 +745,12 @@ msgid "_Tool"
 msgstr "_Outil"
 
 #: ../app/actions/context-actions.c:51
-#: ../app/dialogs/preferences-dialog.c:1909
+#: ../app/dialogs/preferences-dialog.c:1911
 msgid "_Brush"
 msgstr "_Brosse"
 
 #: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:98
-#: ../app/dialogs/preferences-dialog.c:1912
+#: ../app/dialogs/preferences-dialog.c:1914
 msgid "_Pattern"
 msgstr "_Motif"
 
@@ -756,7 +760,7 @@ msgstr "_Palette"
 
 #: ../app/actions/context-actions.c:54
 #: ../app/dialogs/palette-import-dialog.c:216
-#: ../app/dialogs/preferences-dialog.c:1915
+#: ../app/dialogs/preferences-dialog.c:1917
 msgid "_Gradient"
 msgstr "_Dégradé"
 
@@ -828,7 +832,7 @@ msgstr "Échantillonner sur tous les calques"
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:451
 #: ../app/widgets/gimplayertreeview.c:763 ../app/widgets/gimptoolbox-dnd.c:158
-#: ../app/widgets/gimptoolbox.c:894
+#: ../app/widgets/gimptoolbox.c:896
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -1131,6 +1135,7 @@ msgid "_About"
 msgstr "À _propos"
 
 #: ../app/actions/dialogs-actions.c:243 ../app/dialogs/about-dialog.c:114
+#: ../app/gui/gui.c:486
 msgid "About GIMP"
 msgstr "À propos de GIMP"
 
@@ -2573,7 +2578,7 @@ msgstr "Échelle et taille de l'image"
 
 #. Scaling
 #: ../app/actions/image-commands.c:661 ../app/actions/layers-commands.c:1051
-#: ../app/dialogs/preferences-dialog.c:1894
+#: ../app/dialogs/preferences-dialog.c:1896
 #: ../app/pdb/drawable_transform_cmds.c:670
 #: ../app/pdb/drawable_transform_cmds.c:745
 #: ../app/pdb/transform_tools_cmds.c:283 ../app/tools/gimpscaletool.c:107
@@ -3324,7 +3329,7 @@ msgid "Toggle _Quick Mask"
 msgstr "(Dés)activ_er le masque rapide"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:1025
+#: ../app/display/gimpdisplayshell.c:1027
 msgid "Toggle Quick Mask"
 msgstr "(Dés)activer le masque rapide"
 
@@ -5011,7 +5016,11 @@ msgid ""
 "tiles to disk.  This is a lot slower but it makes it possible to work on "
 "images that wouldn't fit into memory otherwise.  If you have a lot of RAM, "
 "you may want to set this to a higher value."
-msgstr "Quand la quantité de pixels à traiter dépasse cette limite, GIMP va commencer à swapper sur le disque. C'est un peu plus lent mais il est ainsi possible de travailler sur des images plus grandes que la mémoire. Si vous avez beaucoup de RAM, il conviendrait de définir cette valeur plus haut."
+msgstr ""
+"Quand la quantité de pixels à traiter dépasse cette limite, GIMP va "
+"commencer à swapper sur le disque. C'est un peu plus lent mais il est ainsi "
+"possible de travailler sur des images plus grandes que la mémoire. Si vous "
+"avez beaucoup de RAM, il conviendrait de définir cette valeur plus haut."
 
 #: ../app/config/gimprc-blurbs.h:396
 msgid ""
@@ -5053,7 +5062,10 @@ msgid ""
 "Sets an upper limit to the memory that is used per image to keep operations "
 "on the undo stack. Regardless of this setting, at least as many undo-levels "
 "as configured can be undone."
-msgstr "Fixe une limite supérieure à la mémoire utilisée par l'image pour conserver les opérations de la pile d'annulations. Au minimum, autant de niveaux d'annulations que configurés par ce paramètre pourront être annulés."
+msgstr ""
+"Fixe une limite supérieure à la mémoire utilisée par l'image pour conserver "
+"les opérations de la pile d'annulations. Au minimum, autant de niveaux "
+"d'annulations que configurés par ce paramètre pourront être annulés."
 
 #: ../app/config/gimprc-blurbs.h:419
 msgid "Sets the size of the previews in the Undo History."
@@ -5159,7 +5171,7 @@ msgid "White"
 msgstr "Blanc"
 
 #. Transparency
-#: ../app/core/core-enums.c:250 ../app/dialogs/preferences-dialog.c:2280
+#: ../app/core/core-enums.c:250 ../app/dialogs/preferences-dialog.c:2282
 msgid "Transparency"
 msgstr "Transparence"
 
@@ -5251,11 +5263,11 @@ msgstr "Cercle"
 msgid "Diamond"
 msgstr "Losange"
 
-#: ../app/core/core-enums.c:472 ../app/dialogs/preferences-dialog.c:2312
+#: ../app/core/core-enums.c:472 ../app/dialogs/preferences-dialog.c:2314
 msgid "Horizontal"
 msgstr "Horizontal"
 
-#: ../app/core/core-enums.c:473 ../app/dialogs/preferences-dialog.c:2314
+#: ../app/core/core-enums.c:473 ../app/dialogs/preferences-dialog.c:2316
 msgid "Vertical"
 msgstr "Vertical"
 
@@ -5467,7 +5479,7 @@ msgid "Text"
 msgstr "Texte"
 
 #: ../app/core/core-enums.c:881 ../app/core/core-enums.c:924
-#: ../app/core/gimpdrawable-transform.c:559
+#: ../app/core/gimpdrawable-transform.c:560
 msgid "Transform"
 msgstr "Transformer"
 
@@ -5630,7 +5642,7 @@ msgid "Convert to RGB workspace"
 msgstr "Convertir vers l'espace RVB"
 
 #: ../app/core/gimp-contexts.c:141 ../app/core/gimptooloptions.c:239
-#: ../app/gui/session.c:257 ../app/menus/menus.c:429
+#: ../app/gui/session.c:257 ../app/menus/menus.c:430
 #: ../app/widgets/gimpdevices.c:258
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -5685,7 +5697,9 @@ msgstr "PP vers Transparent"
 msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
 "settings to '%s'."
-msgstr "Il semble que vous ayez utilisé GIMP-%s auparavant. GIMP va maintenant migrer vos paramètres utilisateur vers « %s »."
+msgstr ""
+"Il semble que vous ayez utilisé GIMP-%s auparavant. GIMP va maintenant "
+"migrer vos paramètres utilisateur vers « %s »."
 
 #: ../app/core/gimp-user-install.c:202
 #, c-format
@@ -5740,7 +5754,7 @@ msgid "Documents"
 msgstr "Documents"
 
 #. initialize the module list
-#: ../app/core/gimp.c:853 ../app/dialogs/preferences-dialog.c:2717
+#: ../app/core/gimp.c:853 ../app/dialogs/preferences-dialog.c:2719
 msgid "Modules"
 msgstr "Modules"
 
@@ -5805,8 +5819,8 @@ msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"Erreur fatale à l'analyse du fichier de brosse « %s » : profondeur non "
-"supportée %d\n"
+"Erreur fatale à l'analyse du fichier de brosse « %s » : profondeur %d non "
+"prise en charge\n"
 "Les brosses GIMP doivent être TONS DE GRIS ou RVBA."
 
 #: ../app/core/gimpbrush-load.c:448
@@ -5933,7 +5947,7 @@ msgstr "Retourner le canal"
 msgid "Rotate Channel"
 msgstr "Rotation du canal"
 
-#: ../app/core/gimpchannel.c:265 ../app/core/gimpdrawable-transform.c:829
+#: ../app/core/gimpchannel.c:265 ../app/core/gimpdrawable-transform.c:830
 msgid "Transform Channel"
 msgstr "Transformation du canal"
 
@@ -6074,20 +6088,20 @@ msgid "Render Stroke"
 msgstr "Tracer"
 
 #. Start a transform undo group
-#: ../app/core/gimpdrawable-transform.c:620 ../app/tools/gimpfliptool.c:112
+#: ../app/core/gimpdrawable-transform.c:621 ../app/tools/gimpfliptool.c:112
 msgid "command|Flip"
 msgstr "Retourner"
 
 #. Start a transform undo group
-#: ../app/core/gimpdrawable-transform.c:704 ../app/tools/gimprotatetool.c:113
+#: ../app/core/gimpdrawable-transform.c:705 ../app/tools/gimprotatetool.c:113
 msgid "command|Rotate"
 msgstr "Rotation"
 
-#: ../app/core/gimpdrawable-transform.c:827 ../app/core/gimplayer.c:252
+#: ../app/core/gimpdrawable-transform.c:828 ../app/core/gimplayer.c:252
 msgid "Transform Layer"
 msgstr "Transformation du calque"
 
-#: ../app/core/gimpdrawable-transform.c:842
+#: ../app/core/gimpdrawable-transform.c:843
 msgid "Transformation"
 msgstr "Transformation"
 
@@ -6434,7 +6448,7 @@ msgstr "Le calque est déjà tout en bas."
 msgid "Lower Path to Bottom"
 msgstr "Envoyer le chemin en bas de la pile"
 
-#: ../app/core/gimpimagefile.c:547 ../app/dialogs/preferences-dialog.c:1739
+#: ../app/core/gimpimagefile.c:547 ../app/dialogs/preferences-dialog.c:1741
 msgid "Folder"
 msgstr "Dossier"
 
@@ -6652,8 +6666,8 @@ msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
-"Chargement de la palette « %s » : nombre de colonnes invalide à la ligne %d. "
-"Utilisation de la valeur par défaut."
+"Chargement de la palette « %s » : nombre de colonnes non valide à la ligne %"
+"d. Utilisation de la valeur par défaut."
 
 #. maybe we should just abort?
 #: ../app/core/gimppalette-load.c:184
@@ -6703,9 +6717,9 @@ msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
-"Erreur fatale à l'analyse du fichier de motif « %s » : profondeur de motif "
-"non supportée %d.\n"
-" Les motifs GIMP doivent être TONS DE GRIS ou RVB."
+"Erreur fatale à l'analyse du fichier de motif « %s » : profondeur de motif %"
+"dnon prise en charge.\n"
+"Les motifs GIMP doivent être TONS DE GRIS ou RVB."
 
 #: ../app/core/gimppattern-load.c:139
 #, c-format
@@ -6937,7 +6951,7 @@ msgstr "_Désaturer"
 msgid "Choose shade of gray based on:"
 msgstr "Choisir la nuance de gris basée sur :"
 
-#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:168
+#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:171
 #: ../app/gui/gui-message.c:146
 msgid "GIMP Message"
 msgstr "Message de GIMP"
@@ -7100,7 +7114,7 @@ msgid "Create a New Image"
 msgstr "Créer une nouvelle image"
 
 #: ../app/dialogs/image-new-dialog.c:144
-#: ../app/dialogs/preferences-dialog.c:1990
+#: ../app/dialogs/preferences-dialog.c:1992
 msgid "_Template:"
 msgstr "_Modèle :"
 
@@ -7119,7 +7133,10 @@ msgstr "Vous essayez de créer une image avec une taille de %s"
 msgid ""
 "An image of the chosen size will use more memory than what is configured as "
 "\"Maximum Image Size\" in the Preferences dialog (currently %s)."
-msgstr "Une image à la taille demandée nécessite plus de mémoire que la « taille maximum d'image » définie dans la boîte de dialogue Préférences (actuellement %s)."
+msgstr ""
+"Une image à la taille demandée nécessite plus de mémoire que la « taille "
+"maximum d'image » définie dans la boîte de dialogue Préférences "
+"(actuellement %s)."
 
 #: ../app/dialogs/image-properties-dialog.c:60
 #: ../app/dialogs/image-properties-dialog.c:63
@@ -7152,7 +7169,10 @@ msgid ""
 "Scaling the image to the chosen size will make it use more memory than what "
 "is configured as \"Maximum Image Size\" in the Preferences dialog (currently "
 "%s)."
-msgstr "Redimensionner l'image à la taille demandée nécessite plus de mémoire que la « taille maximum d'image » définie dans la boîte de dialogue Préférences (actuellement %s)."
+msgstr ""
+"Redimensionner l'image à la taille demandée nécessite plus de mémoire que la "
+"« taille maximum d'image » définie dans la boîte de dialogue Préférences "
+"(actuellement %s)."
 
 #: ../app/dialogs/image-scale-dialog.c:258
 msgid ""
@@ -7178,7 +7198,7 @@ msgstr ""
 "saisissez un nouveau raccourci ou la barre d'espace pour effacer."
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:89
-#: ../app/dialogs/preferences-dialog.c:1663
+#: ../app/dialogs/preferences-dialog.c:1665
 msgid "_Save keyboard shortcuts on exit"
 msgstr "_Enregistrer à la sortie les raccourcis clavier"
 
@@ -7454,7 +7474,9 @@ msgstr ""
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
-msgstr "Vos paramètres des fenêtres seront réinitialisés, aux valeurs par défaut, la prochaine fois que vous démarrerez GIMP."
+msgstr ""
+"Vos paramètres des fenêtres seront réinitialisés, aux valeurs par défaut, la "
+"prochaine fois que vous démarrerez GIMP."
 
 #: ../app/dialogs/preferences-dialog.c:675
 msgid ""
@@ -7472,699 +7494,699 @@ msgstr ""
 "Vos options des outils seront réinitialisés aux valeurs par défaut la "
 "prochaine fois que vous démarrerez GIMP."
 
-#: ../app/dialogs/preferences-dialog.c:1302
+#: ../app/dialogs/preferences-dialog.c:1303
 msgid "Show _menubar"
 msgstr "Afficher la barre de _menu"
 
-#: ../app/dialogs/preferences-dialog.c:1305
+#: ../app/dialogs/preferences-dialog.c:1307
 msgid "Show _rulers"
 msgstr "Afficher les _règles"
 
-#: ../app/dialogs/preferences-dialog.c:1308
+#: ../app/dialogs/preferences-dialog.c:1310
 msgid "Show scroll_bars"
 msgstr "Afficher les barres de _défilement"
 
-#: ../app/dialogs/preferences-dialog.c:1311
+#: ../app/dialogs/preferences-dialog.c:1313
 msgid "Show s_tatusbar"
 msgstr "Afficher la barre d'é_tat"
 
-#: ../app/dialogs/preferences-dialog.c:1319
+#: ../app/dialogs/preferences-dialog.c:1321
 msgid "Show s_election"
 msgstr "Afficher la _sélection"
 
-#: ../app/dialogs/preferences-dialog.c:1322
+#: ../app/dialogs/preferences-dialog.c:1324
 msgid "Show _layer boundary"
 msgstr "Afficher les _bords du calque"
 
-#: ../app/dialogs/preferences-dialog.c:1325
+#: ../app/dialogs/preferences-dialog.c:1327
 msgid "Show _guides"
 msgstr "Afficher les g_uides"
 
-#: ../app/dialogs/preferences-dialog.c:1328
+#: ../app/dialogs/preferences-dialog.c:1330
 msgid "Show gri_d"
 msgstr "Afficher la g_rille"
 
-#: ../app/dialogs/preferences-dialog.c:1334
+#: ../app/dialogs/preferences-dialog.c:1336
 msgid "Canvas _padding mode:"
 msgstr "Mode de _remplissage du canevas :"
 
-#: ../app/dialogs/preferences-dialog.c:1339
+#: ../app/dialogs/preferences-dialog.c:1341
 msgid "Custom p_adding color:"
 msgstr "Couleur de remplissage _personnalisée :"
 
-#: ../app/dialogs/preferences-dialog.c:1340
+#: ../app/dialogs/preferences-dialog.c:1342
 msgid "Select Custom Canvas Padding Color"
 msgstr "Sélectionner des couleurs de remplissage personnalisés du canevas"
 
-#: ../app/dialogs/preferences-dialog.c:1429
+#: ../app/dialogs/preferences-dialog.c:1431 ../app/gui/gui.c:491
 msgid "Preferences"
 msgstr "Préférences"
 
-#: ../app/dialogs/preferences-dialog.c:1541
-#: ../app/dialogs/preferences-dialog.c:2725
+#: ../app/dialogs/preferences-dialog.c:1543
+#: ../app/dialogs/preferences-dialog.c:2727
 msgid "Environment"
 msgstr "Environnement"
 
-#: ../app/dialogs/preferences-dialog.c:1555
+#: ../app/dialogs/preferences-dialog.c:1557
 msgid "Resource Consumption"
 msgstr "Configuration des ressources"
 
-#: ../app/dialogs/preferences-dialog.c:1565
+#: ../app/dialogs/preferences-dialog.c:1567
 msgid "Minimal number of _undo levels:"
 msgstr "Nombre minimal de niveaux d'_annulation :"
 
-#: ../app/dialogs/preferences-dialog.c:1568
+#: ../app/dialogs/preferences-dialog.c:1570
 msgid "Maximum undo _memory:"
 msgstr "_Mémoire maximale pour l'annulation :"
 
-#: ../app/dialogs/preferences-dialog.c:1571
+#: ../app/dialogs/preferences-dialog.c:1573
 msgid "Tile cache _size:"
 msgstr "Taille du _cache d'image :"
 
-#: ../app/dialogs/preferences-dialog.c:1574
+#: ../app/dialogs/preferences-dialog.c:1576
 msgid "Maximum _new image size:"
 msgstr "Taille ma_ximale de la nouvelle image :"
 
-#: ../app/dialogs/preferences-dialog.c:1579
+#: ../app/dialogs/preferences-dialog.c:1581
 msgid "Number of _processors to use:"
 msgstr "Nombre de _processeurs à utiliser :"
 
 #. Image Thumbnails
-#: ../app/dialogs/preferences-dialog.c:1584
+#: ../app/dialogs/preferences-dialog.c:1586
 msgid "Image Thumbnails"
 msgstr "Vignettes d'image"
 
-#: ../app/dialogs/preferences-dialog.c:1589
+#: ../app/dialogs/preferences-dialog.c:1591
 msgid "Size of _thumbnails:"
 msgstr "_Taille des vignettes :"
 
-#: ../app/dialogs/preferences-dialog.c:1593
+#: ../app/dialogs/preferences-dialog.c:1595
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Taille max_imale pour les fichiers de vignettes :"
 
 #. File Saving
-#: ../app/dialogs/preferences-dialog.c:1597
+#: ../app/dialogs/preferences-dialog.c:1599
 msgid "Saving Images"
 msgstr "Enregistrer les images"
 
-#: ../app/dialogs/preferences-dialog.c:1600
+#: ../app/dialogs/preferences-dialog.c:1602
 msgid "Confirm closing of unsa_ved images"
 msgstr "C_onfirmer la fermeture des images non enregistrées"
 
-#: ../app/dialogs/preferences-dialog.c:1610
+#: ../app/dialogs/preferences-dialog.c:1612
 msgid "Save document _history on exit"
 msgstr "Enregistrer à la sortie l'_historique des documents"
 
-#: ../app/dialogs/preferences-dialog.c:1619
+#: ../app/dialogs/preferences-dialog.c:1621
 msgid "User Interface"
 msgstr "Interface utilisateur"
 
-#: ../app/dialogs/preferences-dialog.c:1622
+#: ../app/dialogs/preferences-dialog.c:1624
 msgid "Interface"
 msgstr "Interface"
 
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1629
+#: ../app/dialogs/preferences-dialog.c:1631
 msgid "Previews"
 msgstr "Aperçus"
 
-#: ../app/dialogs/preferences-dialog.c:1632
+#: ../app/dialogs/preferences-dialog.c:1634
 msgid "_Enable layer & channel previews"
 msgstr "_Activer les aperçus de calque & canal"
 
-#: ../app/dialogs/preferences-dialog.c:1638
+#: ../app/dialogs/preferences-dialog.c:1640
 msgid "_Default layer & channel preview size:"
 msgstr "Taille par défaut de l'aperç_u de calque & canal :"
 
-#: ../app/dialogs/preferences-dialog.c:1641
+#: ../app/dialogs/preferences-dialog.c:1643
 msgid "Na_vigation preview size:"
 msgstr "Taille de l'aperçu de _navigation :"
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1645
+#: ../app/dialogs/preferences-dialog.c:1647
 msgid "Keyboard Shortcuts"
 msgstr "Raccourcis clavier"
 
-#: ../app/dialogs/preferences-dialog.c:1649
+#: ../app/dialogs/preferences-dialog.c:1651
 msgid "Show menu _mnemonics (access keys)"
 msgstr "Afficher les a_ccélérateurs claviers (touches d'accès aux menus)"
 
-#: ../app/dialogs/preferences-dialog.c:1652
+#: ../app/dialogs/preferences-dialog.c:1654
 msgid "_Use dynamic keyboard shortcuts"
 msgstr "Utiliser les raccourcis clavier _dynamiques"
 
-#: ../app/dialogs/preferences-dialog.c:1656
+#: ../app/dialogs/preferences-dialog.c:1658
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "C_onfigurer les raccourcis clavier..."
 
-#: ../app/dialogs/preferences-dialog.c:1667
+#: ../app/dialogs/preferences-dialog.c:1669
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Enregistrer _maintenant les raccourcis"
 
-#: ../app/dialogs/preferences-dialog.c:1674
+#: ../app/dialogs/preferences-dialog.c:1676
 msgid "_Reset Keyboard Shortcuts to Default Values"
 msgstr "_Rétablir les raccourcis clavier aux valeurs par défaut"
 
-#: ../app/dialogs/preferences-dialog.c:1683
+#: ../app/dialogs/preferences-dialog.c:1685
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "E_ffacer tous les raccourcis clavier"
 
-#: ../app/dialogs/preferences-dialog.c:1695
-#: ../app/dialogs/preferences-dialog.c:1734
+#: ../app/dialogs/preferences-dialog.c:1697
+#: ../app/dialogs/preferences-dialog.c:1736
 msgid "Theme"
 msgstr "Thème"
 
-#: ../app/dialogs/preferences-dialog.c:1704
+#: ../app/dialogs/preferences-dialog.c:1706
 msgid "Select Theme"
 msgstr "Sélectionner un thème"
 
-#: ../app/dialogs/preferences-dialog.c:1786
+#: ../app/dialogs/preferences-dialog.c:1788
 msgid "Reload C_urrent Theme"
 msgstr "Recharger le _thème actuel"
 
-#: ../app/dialogs/preferences-dialog.c:1798
+#: ../app/dialogs/preferences-dialog.c:1800
 msgid "Help System"
 msgstr "Système d'aide"
 
 #. General
-#: ../app/dialogs/preferences-dialog.c:1810
-#: ../app/dialogs/preferences-dialog.c:1861
-#: ../app/dialogs/preferences-dialog.c:2048
+#: ../app/dialogs/preferences-dialog.c:1812
+#: ../app/dialogs/preferences-dialog.c:1863
+#: ../app/dialogs/preferences-dialog.c:2050
 #: ../app/widgets/gimpcontrollereditor.c:188
 msgid "General"
 msgstr "Général"
 
-#: ../app/dialogs/preferences-dialog.c:1813
+#: ../app/dialogs/preferences-dialog.c:1815
 msgid "Show _tooltips"
 msgstr "Afficher les _bulles d'aide"
 
-#: ../app/dialogs/preferences-dialog.c:1816
+#: ../app/dialogs/preferences-dialog.c:1818
 msgid "Show help _buttons"
 msgstr "Afficher les boutons d'aid_e"
 
-#: ../app/dialogs/preferences-dialog.c:1819
+#: ../app/dialogs/preferences-dialog.c:1821
 msgid "Show tips on _startup"
 msgstr "Afficher les astuces au _démarrage"
 
 #. Help Browser
-#: ../app/dialogs/preferences-dialog.c:1823
+#: ../app/dialogs/preferences-dialog.c:1825
 msgid "Help Browser"
 msgstr "Navigateur d'aide"
 
-#: ../app/dialogs/preferences-dialog.c:1827
+#: ../app/dialogs/preferences-dialog.c:1829
 msgid "H_elp browser to use:"
 msgstr "_Navigateur d'aide à utiliser :"
 
-#: ../app/dialogs/preferences-dialog.c:1832
+#: ../app/dialogs/preferences-dialog.c:1834
 msgid "Web Browser"
 msgstr "Navigateur Web"
 
-#: ../app/dialogs/preferences-dialog.c:1836
+#: ../app/dialogs/preferences-dialog.c:1838
 msgid "_Web browser to use:"
 msgstr "N_avigateur Web à utiliser :"
 
-#: ../app/dialogs/preferences-dialog.c:1864
+#: ../app/dialogs/preferences-dialog.c:1866
 msgid "_Save tool options on exit"
 msgstr "Enregistrer à la _sortie les options des outils"
 
-#: ../app/dialogs/preferences-dialog.c:1868
+#: ../app/dialogs/preferences-dialog.c:1870
 msgid "Save Tool Options _Now"
 msgstr "Enregistrer _maintenant les options des outils"
 
-#: ../app/dialogs/preferences-dialog.c:1875
+#: ../app/dialogs/preferences-dialog.c:1877
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "_Restaurer les options des outils aux valeurs par défaut"
 
 #. Snapping Distance
-#: ../app/dialogs/preferences-dialog.c:1885
+#: ../app/dialogs/preferences-dialog.c:1887
 msgid "Guide & Grid Snapping"
 msgstr "Alignement sur les guides et la grille"
 
-#: ../app/dialogs/preferences-dialog.c:1890
+#: ../app/dialogs/preferences-dialog.c:1892
 msgid "_Snap distance:"
 msgstr "Distance d'_alignement :"
 
-#: ../app/dialogs/preferences-dialog.c:1898
+#: ../app/dialogs/preferences-dialog.c:1900
 msgid "Default _interpolation:"
 msgstr "_Interpolation par défaut :"
 
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1905
+#: ../app/dialogs/preferences-dialog.c:1907
 msgid "Paint Options Shared Between Tools"
 msgstr "Options de peinture partagées entre les outils"
 
-#: ../app/dialogs/preferences-dialog.c:1918
+#: ../app/dialogs/preferences-dialog.c:1920
 msgid "Move Tool"
 msgstr "Outil de déplacement"
 
-#: ../app/dialogs/preferences-dialog.c:1922
+#: ../app/dialogs/preferences-dialog.c:1924
 msgid "Set layer or path as active"
 msgstr "Définir le calque ou le chemin comme actif"
 
-#: ../app/dialogs/preferences-dialog.c:1935
+#: ../app/dialogs/preferences-dialog.c:1937
 msgid "Toolbox"
 msgstr "Boîte à outils"
 
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1947
-#: ../app/dialogs/preferences-dialog.c:2121
+#: ../app/dialogs/preferences-dialog.c:1949
+#: ../app/dialogs/preferences-dialog.c:2123
 #: ../app/widgets/gimpgrideditor.c:196
 msgid "Appearance"
 msgstr "Apparence"
 
-#: ../app/dialogs/preferences-dialog.c:1951
+#: ../app/dialogs/preferences-dialog.c:1953
 msgid "Show _foreground & background color"
 msgstr "Afficher la couleur de _premier et d'arrière-plan"
 
-#: ../app/dialogs/preferences-dialog.c:1955
+#: ../app/dialogs/preferences-dialog.c:1957
 msgid "Show active _brush, pattern & gradient"
 msgstr "Afficher les _brosses, motifs et dégradés actifs"
 
-#: ../app/dialogs/preferences-dialog.c:1959
+#: ../app/dialogs/preferences-dialog.c:1961
 msgid "Show active _image"
 msgstr "Afficher l'_image active"
 
-#: ../app/dialogs/preferences-dialog.c:1972
+#: ../app/dialogs/preferences-dialog.c:1974
 msgid "Default New Image"
 msgstr "Nouvelle image par défaut"
 
-#: ../app/dialogs/preferences-dialog.c:1975
+#: ../app/dialogs/preferences-dialog.c:1977
 msgid "Default Image"
 msgstr "Image par défaut"
 
-#: ../app/dialogs/preferences-dialog.c:2012
+#: ../app/dialogs/preferences-dialog.c:2014
 msgid "Default Image Grid"
 msgstr "Grille d'image par défaut"
 
-#: ../app/dialogs/preferences-dialog.c:2015
+#: ../app/dialogs/preferences-dialog.c:2017
 msgid "Default Grid"
 msgstr "Grille par défaut"
 
-#: ../app/dialogs/preferences-dialog.c:2036
+#: ../app/dialogs/preferences-dialog.c:2038
 msgid "Image Windows"
 msgstr "Fenêtres d'images"
 
-#: ../app/dialogs/preferences-dialog.c:2051
+#: ../app/dialogs/preferences-dialog.c:2053
 msgid "Use \"_Dot for dot\" by default"
 msgstr "Utiliser « _point pour point » par défaut"
 
-#: ../app/dialogs/preferences-dialog.c:2057
+#: ../app/dialogs/preferences-dialog.c:2059
 msgid "Marching _ants speed:"
 msgstr "_Vitesse de défilement des pointillés :"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:2061
+#: ../app/dialogs/preferences-dialog.c:2063
 msgid "Zoom & Resize Behavior"
 msgstr "Comportement du zoom et du redimensionnement"
 
-#: ../app/dialogs/preferences-dialog.c:2065
+#: ../app/dialogs/preferences-dialog.c:2067
 msgid "Resize window on _zoom"
 msgstr "Redimensionner la fenêtre après un _zoom"
 
-#: ../app/dialogs/preferences-dialog.c:2068
+#: ../app/dialogs/preferences-dialog.c:2070
 msgid "Resize window on image _size change"
 msgstr "Redimensionner la fenêtre après un changement de _taille d'image"
 
-#: ../app/dialogs/preferences-dialog.c:2074
+#: ../app/dialogs/preferences-dialog.c:2076
 msgid "Fit to window"
 msgstr "Ajuster à la fenêtre"
 
-#: ../app/dialogs/preferences-dialog.c:2076
+#: ../app/dialogs/preferences-dialog.c:2078
 msgid "Initial zoom _ratio:"
 msgstr "_Facteur d'échelle initial :"
 
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2080
+#: ../app/dialogs/preferences-dialog.c:2082
 msgid "Space Bar"
 msgstr "Barre espace"
 
-#: ../app/dialogs/preferences-dialog.c:2086
+#: ../app/dialogs/preferences-dialog.c:2088
 msgid "_While space bar is pressed:"
 msgstr "T_ant que la barre espace est appuyée :"
 
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:2090
+#: ../app/dialogs/preferences-dialog.c:2092
 msgid "Mouse Pointers"
 msgstr "Pointeurs de souris"
 
-#: ../app/dialogs/preferences-dialog.c:2094
+#: ../app/dialogs/preferences-dialog.c:2096
 msgid "Show _brush outline"
 msgstr "A_fficher le contour de la brosse"
 
-#: ../app/dialogs/preferences-dialog.c:2097
+#: ../app/dialogs/preferences-dialog.c:2099
 msgid "Show pointer for paint _tools"
 msgstr "Aff_icher le pointeur pour les outils de peinture"
 
-#: ../app/dialogs/preferences-dialog.c:2103
+#: ../app/dialogs/preferences-dialog.c:2105
 msgid "Pointer _mode:"
 msgstr "Mod_e de pointage :"
 
-#: ../app/dialogs/preferences-dialog.c:2106
+#: ../app/dialogs/preferences-dialog.c:2108
 msgid "Pointer re_ndering:"
 msgstr "_Rendu du pointeur :"
 
-#: ../app/dialogs/preferences-dialog.c:2118
+#: ../app/dialogs/preferences-dialog.c:2120
 msgid "Image Window Appearance"
 msgstr "Apparence de la fenêtre d'images"
 
-#: ../app/dialogs/preferences-dialog.c:2129
+#: ../app/dialogs/preferences-dialog.c:2131
 msgid "Default Appearance in Normal Mode"
 msgstr "Apparence par défaut en mode normal"
 
-#: ../app/dialogs/preferences-dialog.c:2134
+#: ../app/dialogs/preferences-dialog.c:2136
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Apparence par défaut en mode plein écran"
 
-#: ../app/dialogs/preferences-dialog.c:2143
+#: ../app/dialogs/preferences-dialog.c:2145
 msgid "Image Title & Statusbar Format"
 msgstr "Format du titre et de la barre d'état de l'image"
 
-#: ../app/dialogs/preferences-dialog.c:2146
+#: ../app/dialogs/preferences-dialog.c:2148
 msgid "Title & Status"
 msgstr "Titre et État"
 
-#: ../app/dialogs/preferences-dialog.c:2164
+#: ../app/dialogs/preferences-dialog.c:2166
 msgid "Current format"
 msgstr "Format actuel"
 
-#: ../app/dialogs/preferences-dialog.c:2165
+#: ../app/dialogs/preferences-dialog.c:2167
 msgid "Default format"
 msgstr "Format par défaut"
 
-#: ../app/dialogs/preferences-dialog.c:2166
+#: ../app/dialogs/preferences-dialog.c:2168
 msgid "Show zoom percentage"
 msgstr "Afficher le pourcentage de zoom"
 
-#: ../app/dialogs/preferences-dialog.c:2167
+#: ../app/dialogs/preferences-dialog.c:2169
 msgid "Show zoom ratio"
 msgstr "Afficher le facteur d'échelle"
 
-#: ../app/dialogs/preferences-dialog.c:2168
+#: ../app/dialogs/preferences-dialog.c:2170
 msgid "Show image size"
 msgstr "Afficher la taille de l'image"
 
-#: ../app/dialogs/preferences-dialog.c:2181
+#: ../app/dialogs/preferences-dialog.c:2183
 msgid "Image Title Format"
 msgstr "Format du titre de l'image"
 
-#: ../app/dialogs/preferences-dialog.c:2183
+#: ../app/dialogs/preferences-dialog.c:2185
 msgid "Image Statusbar Format"
 msgstr "Format de la barre d'état de l'image"
 
-#: ../app/dialogs/preferences-dialog.c:2268
+#: ../app/dialogs/preferences-dialog.c:2270
 msgid "Display"
 msgstr "Affichage"
 
-#: ../app/dialogs/preferences-dialog.c:2284
+#: ../app/dialogs/preferences-dialog.c:2286
 msgid "_Check style:"
 msgstr "_Style de damier :"
 
-#: ../app/dialogs/preferences-dialog.c:2287
+#: ../app/dialogs/preferences-dialog.c:2289
 msgid "Check _size:"
 msgstr "_Taille du damier :"
 
-#: ../app/dialogs/preferences-dialog.c:2290
+#: ../app/dialogs/preferences-dialog.c:2292
 msgid "Monitor Resolution"
 msgstr "Résolution du moniteur"
 
-#: ../app/dialogs/preferences-dialog.c:2294
+#: ../app/dialogs/preferences-dialog.c:2296
 #: ../app/widgets/gimpcursorview.c:124 ../app/widgets/gimpgrideditor.c:261
 #: ../app/widgets/gimpgrideditor.c:293
 msgid "Pixels"
 msgstr "Pixels"
 
-#: ../app/dialogs/preferences-dialog.c:2316
+#: ../app/dialogs/preferences-dialog.c:2318
 #: ../app/widgets/gimpimagepropview.c:465
 msgid "ppi"
 msgstr "ppp"
 
-#: ../app/dialogs/preferences-dialog.c:2332
+#: ../app/dialogs/preferences-dialog.c:2334
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "_Depuis le système (actuellement %d x %d ppp)"
 
-#: ../app/dialogs/preferences-dialog.c:2352
+#: ../app/dialogs/preferences-dialog.c:2354
 msgid "_Enter manually"
 msgstr "Entrer _manuellement"
 
-#: ../app/dialogs/preferences-dialog.c:2367
+#: ../app/dialogs/preferences-dialog.c:2369
 msgid "C_alibrate..."
 msgstr "_Calibrer..."
 
-#: ../app/dialogs/preferences-dialog.c:2389
+#: ../app/dialogs/preferences-dialog.c:2391
 msgid "Color Management"
 msgstr "Gestion des couleurs"
 
-#: ../app/dialogs/preferences-dialog.c:2409
+#: ../app/dialogs/preferences-dialog.c:2411
 msgid "_RGB profile:"
 msgstr "Profil _RVB :"
 
-#: ../app/dialogs/preferences-dialog.c:2410
+#: ../app/dialogs/preferences-dialog.c:2412
 msgid "Select RGB Color Profile"
 msgstr "Sélectionner un profil colorimétrique RVB"
 
-#: ../app/dialogs/preferences-dialog.c:2411
+#: ../app/dialogs/preferences-dialog.c:2413
 msgid "_CMYK profile:"
 msgstr "Profil _CMJN :"
 
-#: ../app/dialogs/preferences-dialog.c:2412
+#: ../app/dialogs/preferences-dialog.c:2414
 msgid "Select CMYK Color Profile"
 msgstr "Sélectionner un profil colorimétrique CMJN"
 
-#: ../app/dialogs/preferences-dialog.c:2413
+#: ../app/dialogs/preferences-dialog.c:2415
 msgid "_Monitor profile:"
 msgstr "Profil m_oniteur :"
 
-#: ../app/dialogs/preferences-dialog.c:2414
+#: ../app/dialogs/preferences-dialog.c:2416
 msgid "Select Monitor Color Profile"
 msgstr "Sélectionner le profil colorimétrique du moniteur"
 
-#: ../app/dialogs/preferences-dialog.c:2415
+#: ../app/dialogs/preferences-dialog.c:2417
 msgid "_Print simulation profile:"
 msgstr "Profil de _simulation d'impression :"
 
-#: ../app/dialogs/preferences-dialog.c:2416
+#: ../app/dialogs/preferences-dialog.c:2418
 msgid "Select Printer Color Profile"
 msgstr "Sélectionner le profil colorimétrique d'impression"
 
-#: ../app/dialogs/preferences-dialog.c:2427
+#: ../app/dialogs/preferences-dialog.c:2429
 msgid "_Mode of operation:"
 msgstr "_Mode d'opération :"
 
-#: ../app/dialogs/preferences-dialog.c:2455
+#: ../app/dialogs/preferences-dialog.c:2457
 msgid "_Try to obtain the monitor profile from the windowing system"
 msgstr ""
 "_Essayer d'obtenir le profil du moniteur depuis le système de multifenêtrage"
 
-#: ../app/dialogs/preferences-dialog.c:2466
+#: ../app/dialogs/preferences-dialog.c:2468
 msgid "_Display rendering intent:"
 msgstr "Mo_de de rendu de l'affichage :"
 
-#: ../app/dialogs/preferences-dialog.c:2475
+#: ../app/dialogs/preferences-dialog.c:2477
 msgid "_Softproof rendering intent:"
 msgstr "Mode de rendu de la s_imulation :"
 
-#: ../app/dialogs/preferences-dialog.c:2486
+#: ../app/dialogs/preferences-dialog.c:2488
 msgid "File Open behaviour:"
 msgstr "Comportement à l'ouverture d'un fichier :"
 
-#: ../app/dialogs/preferences-dialog.c:2496
+#: ../app/dialogs/preferences-dialog.c:2498
 msgid "Input Devices"
 msgstr "Périphériques d'entrée"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2506
+#: ../app/dialogs/preferences-dialog.c:2508
 msgid "Extended Input Devices"
 msgstr "Périphériques d'entrée étendus"
 
-#: ../app/dialogs/preferences-dialog.c:2510
+#: ../app/dialogs/preferences-dialog.c:2512
 msgid "Configure E_xtended Input Devices..."
 msgstr "_Configurer les périphériques d'entrée étendus"
 
-#: ../app/dialogs/preferences-dialog.c:2517
+#: ../app/dialogs/preferences-dialog.c:2519
 msgid "_Save input device settings on exit"
 msgstr "_Enregistrer l'état des périphériques en quittant"
 
-#: ../app/dialogs/preferences-dialog.c:2521
+#: ../app/dialogs/preferences-dialog.c:2523
 msgid "Save Input Device Settings _Now"
 msgstr "Enregistrer l'état des périphériques _maintenant"
 
-#: ../app/dialogs/preferences-dialog.c:2528
+#: ../app/dialogs/preferences-dialog.c:2530
 msgid "_Reset Saved Input Device Settings to Default Values"
 msgstr "_Restaurer l'état enregistré des périphériques aux valeurs par défaut"
 
-#: ../app/dialogs/preferences-dialog.c:2543
+#: ../app/dialogs/preferences-dialog.c:2545
 msgid "Additional Input Controllers"
 msgstr "Contrôleurs d'entrée additionnels"
 
-#: ../app/dialogs/preferences-dialog.c:2546
+#: ../app/dialogs/preferences-dialog.c:2548
 msgid "Input Controllers"
 msgstr "Contrôleurs d'entrée"
 
-#: ../app/dialogs/preferences-dialog.c:2562
+#: ../app/dialogs/preferences-dialog.c:2564
 msgid "Window Management"
 msgstr "Gestion des fenêtres"
 
-#: ../app/dialogs/preferences-dialog.c:2571
+#: ../app/dialogs/preferences-dialog.c:2573
 msgid "Window Manager Hints"
 msgstr "Envois au gestionnaire des fenêtres"
 
-#: ../app/dialogs/preferences-dialog.c:2577
+#: ../app/dialogs/preferences-dialog.c:2579
 msgid "Hint for the _toolbox:"
 msgstr "Envoi pour la _boîte d'outils :"
 
-#: ../app/dialogs/preferences-dialog.c:2581
+#: ../app/dialogs/preferences-dialog.c:2583
 msgid "Hint for other _docks:"
 msgstr "Envoi pour les au_tres fenêtres :"
 
-#: ../app/dialogs/preferences-dialog.c:2586
+#: ../app/dialogs/preferences-dialog.c:2588
 msgid "Toolbox and other docks are transient to the active image window"
 msgstr ""
 "La boîte à outils et les autres dialogues sont transitoires depuis la "
 "fenêtre d'image active"
 
-#: ../app/dialogs/preferences-dialog.c:2591
+#: ../app/dialogs/preferences-dialog.c:2593
 msgid "Focus"
 msgstr "Focus"
 
-#: ../app/dialogs/preferences-dialog.c:2595
+#: ../app/dialogs/preferences-dialog.c:2597
 msgid "Activate the _focused image"
 msgstr "Activer le _focus sur image"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2599
+#: ../app/dialogs/preferences-dialog.c:2601
 msgid "Window Positions"
 msgstr "Emplacements des fenêtres"
 
-#: ../app/dialogs/preferences-dialog.c:2602
+#: ../app/dialogs/preferences-dialog.c:2604
 msgid "_Save window positions on exit"
 msgstr "_Enregistrer à la sortie la position des fenêtres"
 
-#: ../app/dialogs/preferences-dialog.c:2606
+#: ../app/dialogs/preferences-dialog.c:2608
 msgid "Save Window Positions _Now"
 msgstr "Enregistrer _maintenant la position des fenêtres"
 
-#: ../app/dialogs/preferences-dialog.c:2613
+#: ../app/dialogs/preferences-dialog.c:2615
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "_Restaurer les positions enregistrées aux valeurs par défaut"
 
-#: ../app/dialogs/preferences-dialog.c:2628
+#: ../app/dialogs/preferences-dialog.c:2630
 msgid "Folders"
 msgstr "Dossiers"
 
-#: ../app/dialogs/preferences-dialog.c:2648
+#: ../app/dialogs/preferences-dialog.c:2650
 msgid "Temporary folder:"
 msgstr "Dossier temporaire :"
 
-#: ../app/dialogs/preferences-dialog.c:2649
+#: ../app/dialogs/preferences-dialog.c:2651
 msgid "Select Folder for Temporary Files"
 msgstr "Sélectionner un dossier pour les fichiers temporaires"
 
-#: ../app/dialogs/preferences-dialog.c:2653
+#: ../app/dialogs/preferences-dialog.c:2655
 msgid "Swap folder:"
 msgstr "Dossier d'échange (swap) :"
 
-#: ../app/dialogs/preferences-dialog.c:2654
+#: ../app/dialogs/preferences-dialog.c:2656
 msgid "Select Swap Folder"
 msgstr "Sélectionnez un dossier d'échange (swap)"
 
-#: ../app/dialogs/preferences-dialog.c:2689
+#: ../app/dialogs/preferences-dialog.c:2691
 msgid "Brush Folders"
 msgstr "Dossiers des brosses"
 
-#: ../app/dialogs/preferences-dialog.c:2691
+#: ../app/dialogs/preferences-dialog.c:2693
 msgid "Select Brush Folders"
 msgstr "Sélectionnez un dossier de brosses"
 
-#: ../app/dialogs/preferences-dialog.c:2693
+#: ../app/dialogs/preferences-dialog.c:2695
 msgid "Pattern Folders"
 msgstr "Dossiers des motifs"
 
-#: ../app/dialogs/preferences-dialog.c:2695
+#: ../app/dialogs/preferences-dialog.c:2697
 msgid "Select Pattern Folders"
 msgstr "Sélectionnez un dossier de motifs"
 
-#: ../app/dialogs/preferences-dialog.c:2697
+#: ../app/dialogs/preferences-dialog.c:2699
 msgid "Palette Folders"
 msgstr "Dossiers des palettes"
 
-#: ../app/dialogs/preferences-dialog.c:2699
+#: ../app/dialogs/preferences-dialog.c:2701
 msgid "Select Palette Folders"
 msgstr "Sélectionnez un dossier de palettes"
 
-#: ../app/dialogs/preferences-dialog.c:2701
+#: ../app/dialogs/preferences-dialog.c:2703
 msgid "Gradient Folders"
 msgstr "Dossiers des dégradés"
 
-#: ../app/dialogs/preferences-dialog.c:2703
+#: ../app/dialogs/preferences-dialog.c:2705
 msgid "Select Gradient Folders"
 msgstr "Sélectionnez un dossier de dégradés"
 
-#: ../app/dialogs/preferences-dialog.c:2705
+#: ../app/dialogs/preferences-dialog.c:2707
 msgid "Font Folders"
 msgstr "Dossiers des polices"
 
-#: ../app/dialogs/preferences-dialog.c:2707
+#: ../app/dialogs/preferences-dialog.c:2709
 msgid "Select Font Folders"
 msgstr "Sélectionner les dossiers des polices"
 
-#: ../app/dialogs/preferences-dialog.c:2709
+#: ../app/dialogs/preferences-dialog.c:2711
 msgid "Plug-In Folders"
 msgstr "Dossiers des greffons"
 
-#: ../app/dialogs/preferences-dialog.c:2711
+#: ../app/dialogs/preferences-dialog.c:2713
 msgid "Select Plug-In Folders"
 msgstr "Sélectionnez un dossier de greffons"
 
-#: ../app/dialogs/preferences-dialog.c:2713
+#: ../app/dialogs/preferences-dialog.c:2715
 msgid "Scripts"
 msgstr "Scripts"
 
-#: ../app/dialogs/preferences-dialog.c:2713
+#: ../app/dialogs/preferences-dialog.c:2715
 msgid "Script-Fu Folders"
 msgstr "Dossiers des Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2715
+#: ../app/dialogs/preferences-dialog.c:2717
 msgid "Select Script-Fu Folders"
 msgstr "Sélectionnez un dossier de Script-Fu"
 
-#: ../app/dialogs/preferences-dialog.c:2717
+#: ../app/dialogs/preferences-dialog.c:2719
 msgid "Module Folders"
 msgstr "Dossiers des modules"
 
-#: ../app/dialogs/preferences-dialog.c:2719
+#: ../app/dialogs/preferences-dialog.c:2721
 msgid "Select Module Folders"
 msgstr "Sélectionnez un dossier de modules"
 
-#: ../app/dialogs/preferences-dialog.c:2721
+#: ../app/dialogs/preferences-dialog.c:2723
 msgid "Interpreters"
 msgstr "Interpréteurs"
 
-#: ../app/dialogs/preferences-dialog.c:2721
+#: ../app/dialogs/preferences-dialog.c:2723
 msgid "Interpreter Folders"
 msgstr "Dossiers d'interpréteur"
 
-#: ../app/dialogs/preferences-dialog.c:2723
+#: ../app/dialogs/preferences-dialog.c:2725
 msgid "Select Interpreter Folders"
 msgstr "Sélectionnez un dossier d'interpréteur"
 
-#: ../app/dialogs/preferences-dialog.c:2725
+#: ../app/dialogs/preferences-dialog.c:2727
 msgid "Environment Folders"
 msgstr "Dossiers d'environnement"
 
-#: ../app/dialogs/preferences-dialog.c:2727
+#: ../app/dialogs/preferences-dialog.c:2729
 msgid "Select Environment Folders"
 msgstr "Sélectionnez un dossier d'environnement"
 
-#: ../app/dialogs/preferences-dialog.c:2729
+#: ../app/dialogs/preferences-dialog.c:2731
 msgid "Themes"
 msgstr "Thèmes"
 
-#: ../app/dialogs/preferences-dialog.c:2729
+#: ../app/dialogs/preferences-dialog.c:2731
 msgid "Theme Folders"
 msgstr "Dossiers des thèmes"
 
-#: ../app/dialogs/preferences-dialog.c:2731
+#: ../app/dialogs/preferences-dialog.c:2733
 msgid "Select Theme Folders"
 msgstr "Sélectionnez un dossier de thèmes"
 
@@ -8426,15 +8448,15 @@ msgstr "Bascule sur l'outil déplacement"
 msgid "Image saved to '%s'"
 msgstr "Image enregistrée comme %s"
 
-#: ../app/display/gimpdisplayshell.c:887
+#: ../app/display/gimpdisplayshell.c:889
 msgid "Access the image menu"
 msgstr "Accéder au menu d'image"
 
-#: ../app/display/gimpdisplayshell.c:996
+#: ../app/display/gimpdisplayshell.c:998
 msgid "Zoom image when window size changes"
 msgstr "Zoom l'image quand la fenêtre change de taille"
 
-#: ../app/display/gimpdisplayshell.c:1046
+#: ../app/display/gimpdisplayshell.c:1048
 msgid "Navigate the image display"
 msgstr "Naviguer dans l'affichage d'image"
 
@@ -8611,7 +8633,9 @@ msgstr "L'ouverture de « %s » a échoué : %s"
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
-msgstr "La gestion des couleurs a été désactivée. Elle peut être activée à nouveau dans la boîte de dialogue Préférences."
+msgstr ""
+"La gestion des couleurs a été désactivée. Elle peut être activée à nouveau "
+"dans la boîte de dialogue Préférences."
 
 #: ../app/file/file-procedure.c:200
 msgid "Unknown file type"
@@ -8916,7 +8940,7 @@ msgid ""
 "The dying plug-in may have messed up GIMP's internal state. You may want to "
 "save your images and restart GIMP to be on the safe side."
 msgstr ""
-"Le greffon a planté.« %s »\n"
+"Le greffon s'est arrêté brutalement.« %s »\n"
 "(%s)\n"
 "\n"
 "Le greffon a peut être corrompu l'état interne de GIMP. Vous devriez "
@@ -10398,7 +10422,7 @@ msgstr "Clo_nage en perspective"
 
 #: ../app/tools/gimpperspectiveclonetool.c:646
 msgid "Ctrl-Click to set a clone source"
-msgstr "Ctrl-Clic pour déterminer une source à cloner"
+msgstr "« Ctrl + clic » pour déterminer une source à cloner"
 
 #: ../app/tools/gimpperspectivetool.c:68
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
@@ -10479,20 +10503,20 @@ msgstr "Réduction fusionnée"
 msgid "Rounded corners"
 msgstr "Coins arrondis"
 
-#: ../app/tools/gimprectangleselecttool.c:138
+#: ../app/tools/gimprectangleselecttool.c:141
 msgid "Rectangle Select"
 msgstr "Sélection rectangulaire"
 
-#: ../app/tools/gimprectangleselecttool.c:139
+#: ../app/tools/gimprectangleselecttool.c:142
 msgid "Rectangle Select Tool: Select a rectangular region"
 msgstr ""
 "Outil de sélection rectangulaire : sélectionne des régions rectangulaires"
 
-#: ../app/tools/gimprectangleselecttool.c:140
+#: ../app/tools/gimprectangleselecttool.c:143
 msgid "_Rectangle Select"
 msgstr "Sélection _rectangulaire"
 
-#: ../app/tools/gimprectangletool.c:916 ../app/tools/gimprectangletool.c:1824
+#: ../app/tools/gimprectangletool.c:1017 ../app/tools/gimprectangletool.c:1925
 msgid "Rectangle: "
 msgstr "Rectangle :"
 
@@ -12150,7 +12174,7 @@ msgstr ""
 "Le dégradé actif.\n"
 "Cliquez pour ouvrir la boîte de dialogue des dégradés."
 
-#: ../app/widgets/gimptoolbox.c:687
+#: ../app/widgets/gimptoolbox.c:689
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Click to open the color selection dialog."
@@ -12417,7 +12441,7 @@ msgstr "Ouverture de « %s »"
 #: ../app/xcf/xcf.c:309
 #, c-format
 msgid "XCF error: unsupported XCF file version %d encountered"
-msgstr "Erreur XCF : Version %d non supportée du format XCF rencontrée"
+msgstr "Erreur XCF : la version %d du format XCF non prise en charge"
 
 #: ../app/xcf/xcf.c:375
 #, c-format
