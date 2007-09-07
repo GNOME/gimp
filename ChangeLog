@@ -1,3 +1,13 @@
+2007-09-07  Michael Natterer  <mitch@gimp.org>
+
+	* app/base/tile-manager.c (read_pixel_data_1): use a temporary
+	variable to store the return value of tile_manager_get() instead
+	of assigning to tm->cached_tile directly to make sure
+	tm->cached_num and tm->cached_tile are always in a consistent
+	state (the requested tile might be invalid and needs to be
+	validated, which would call tile_manager_get() recursively, which
+	in turn would clear the cached tile). Fixes bug #472770.
+
 2007-09-06  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c (gimp_rectangle_tool_auto_shrink):

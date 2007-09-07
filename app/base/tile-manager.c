@@ -767,11 +767,25 @@ read_pixel_data_1 (TileManager *tm,
 
       if (num != tm->cached_num)    /* must fetch a new tile */
         {
+          Tile *tile;
+
           if (tm->cached_tile)
             tile_release (tm->cached_tile, FALSE);
 
+          tm->cached_num  = -1;
+          tm->cached_tile = NULL;
+
+          /*  use a temporary variable instead of assigning to
+           *  tm->cached_tile directly to make sure tm->cached_num
+           *  and tm->cached_tile are always in a consistent state.
+           *  (the requested tile might be invalid and needs to be
+           *  validated, which would call tile_manager_get() recursively,
+           *  which in turn would clear the cached tile) See bug #472770.
+           */
+          tile = tile_manager_get (tm, num, TRUE, FALSE);
+
           tm->cached_num  = num;
-          tm->cached_tile = tile_manager_get (tm, num, TRUE, FALSE);
+          tm->cached_tile = tile;
         }
 
       if (tm->cached_tile)
