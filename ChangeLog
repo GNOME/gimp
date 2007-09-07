@@ -1,5 +1,15 @@
 2007-09-07  Michael Natterer  <mitch@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_script_proc):
+	applied patch from Kevin Cozens which implements RUN-WITH-LAST-VALS.
+	On top of that, factored out script_fu_collect_standard_args()
+	which collects DISPLAY,IMAGE,[DRAWABLE|LAYER|...] from the passed
+	parameters according to the new calling conventions (the old code
+	for INTERACTIVE was broken). Also cleaned up the function a bit.
+	Fixes bug #472493.
+
+2007-09-07  Michael Natterer  <mitch@gimp.org>
+
 	* app/base/tile-manager.c (read_pixel_data_1): use a temporary
 	variable to store the return value of tile_manager_get() instead
 	of assigning to tm->cached_tile directly to make sure

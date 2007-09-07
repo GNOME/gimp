@@ -41,6 +41,7 @@
 
 #include "script-fu-intl.h"
 
+
 typedef struct
 {
   SFScript *script;
@@ -651,7 +652,8 @@ script_fu_add_menu (scheme *sc, pointer a)
 }
 
 void
-script_fu_error_msg (const gchar *command, const gchar *msg)
+script_fu_error_msg (const gchar *command,
+                     const gchar *msg)
 {
   g_message (_("Error while executing\n%s\n\n%s"),
              command, msg);
@@ -824,6 +826,49 @@ script_fu_param_init (SFScript        *script,
   return FALSE;
 }
 
+static gint
+script_fu_collect_standard_args (SFScript        *script,
+                                 gint             nparams,
+                                 const GimpParam *params)
+{
+  gint params_consumed = 0;
+
+  /*  the first parameter may be a DISPLAY id  */
+  if (script_fu_param_init (script,
+                            nparams, params, SF_DISPLAY, params_consumed))
+    {
+      params_consumed++;
+    }
+
+  /*  an IMAGE id may come first or after the DISPLAY id  */
+  if (script_fu_param_init (script,
+                            nparams, params, SF_IMAGE, params_consumed))
+    {
+      params_consumed++;
+
+      /*  and may be followed by a DRAWABLE, LAYER, CHANNEL or
+       *  VECTORS id
+       */
+      if (script_fu_param_init (script,
+                                nparams, params, SF_DRAWABLE,
+                                params_consumed) ||
+          script_fu_param_init (script,
+                                nparams, params, SF_LAYER,
+                                params_consumed) ||
+          script_fu_param_init (script,
+                                nparams, params, SF_CHANNEL,
+                                params_consumed) ||
+          script_fu_param_init (script,
+                                nparams, params, SF_VECTORS,
+                                params_consumed))
+        {
+          params_consumed++;
+        }
+    }
+
+  return params_consumed;
+}
+
 static void
 script_fu_script_proc (const gchar      *name,
                        gint              nparams,
@@ -832,88 +877,53 @@ script_fu_script_proc (const gchar      *name,
                        GimpParam       **return_vals)
 {
   static GimpParam   values[1];
-  GimpPDBStatusType  status   = GIMP_PDB_SUCCESS;
-  GimpRunMode        run_mode;
+  GimpPDBStatusType  status = GIMP_PDB_SUCCESS;
   SFScript          *script;
-  gint               min_args = 0;
-  GString           *output;
 
-  run_mode = params[0].data.d_int32;
+  script = script_fu_find_script (name);
 
-  if (! (script = script_fu_find_script (name)))
+  if (! script)
+    status = GIMP_PDB_CALLING_ERROR;
+
+  if (status == GIMP_PDB_SUCCESS)
     {
-      status = GIMP_PDB_CALLING_ERROR;
-    }
-  else
-    {
+      GimpRunMode run_mode;
+
+      run_mode = params[0].data.d_int32;
+
       if (script->num_args == 0)
         run_mode = GIMP_RUN_NONINTERACTIVE;
 
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
-          /*  the first parameter may be a DISPLAY id  */
-          if (script_fu_param_init (script,
-                                    nparams, params, SF_DISPLAY, min_args))
-            {
-              min_args++;
-            }
+          {
+            gint min_args = 0;
 
-          /*  an IMAGE id may come first or after the DISPLAY id  */
-          if (script_fu_param_init (script,
-                                    nparams, params, SF_IMAGE, min_args))
-            {
-              min_args++;
+            /*  First, try to collect the standard script arguments...  */
+            min_args = script_fu_collect_standard_args (script, nparams, params);
 
-              /*  and may be followed by a DRAWABLE id  */
-              if (script_fu_param_init (script,
-                                        nparams, params, SF_DRAWABLE, min_args))
-                min_args++;
-            }
-
-          /*  the first parameter may be a LAYER id  */
-          if (min_args == 0 &&
-              script_fu_param_init (script,
-                                    nparams, params, SF_LAYER, min_args))
-            {
-              min_args++;
-            }
-
-          /*  the first parameter may be a CHANNEL id  */
-          if (min_args == 0 &&
-              script_fu_param_init (script,
-                                    nparams, params, SF_CHANNEL, min_args))
-            {
-              min_args++;
-            }
-
-          /*  the first parameter may be a VECTORS id  */
-          if (min_args == 0 &&
-              script_fu_param_init (script,
-                                    nparams, params, SF_VECTORS, min_args))
-            {
-              min_args++;
-            }
-
-          /*  First acquire information with a dialog  */
-          /*  Skip this part if the script takes no parameters */
-          if (script->num_args > min_args)
-            {
-              script_fu_interface (script, min_args);
-              break;
-            }
-          /*  else fallthrough  */
+            /*  ...then acquire the rest of arguments (if any) with a dialog  */
+            if (script->num_args > min_args)
+              {
+                script_fu_interface (script, min_args);
+                break;
+              }
+            /*  otherwise (if the script takes no more arguments), skip
+             *  this part and run the script directly (fallthrough)
+             */
+          }
 
         case GIMP_RUN_NONINTERACTIVE:
-          /*  Make sure all the arguments are there!  */
+          /*  Make sure all the arguments are there  */
           if (nparams != (script->num_args + 1))
             status = GIMP_PDB_CALLING_ERROR;
 
           if (status == GIMP_PDB_SUCCESS)
             {
               GString *s;
+              GString *output;
               gchar   *command;
-              gchar    buffer[G_ASCII_DTOSTR_BUF_SIZE];
               gint     i;
 
               s = g_string_new ("(");
@@ -968,9 +978,13 @@ script_fu_script_proc (const gchar      *name,
                       break;
 
                     case SF_ADJUSTMENT:
-                      g_ascii_dtostr (buffer, sizeof (buffer),
-                                      param->data.d_float);
-                      g_string_append (s, buffer);
+                      {
+                        gchar buffer[G_ASCII_DTOSTR_BUF_SIZE];
+
+                        g_ascii_dtostr (buffer, sizeof (buffer),
+                                        param->data.d_float);
+                        g_string_append (s, buffer);
+                      }
                       break;
 
                     case SF_FONT:
@@ -1002,6 +1016,140 @@ script_fu_script_proc (const gchar      *name,
 
               g_free (command);
             }
+          break;
+
+        case GIMP_RUN_WITH_LAST_VALS:
+          {
+            GString *s;
+            GString *output;
+            gchar   *command;
+            gint     i;
+
+            /*  First, try to collect the standard script arguments  */
+            script_fu_collect_standard_args (script, nparams, params);
+
+            s = g_string_new ("(");
+            g_string_append (s, script->name);
+
+            for (i = 0; i < script->num_args; i++)
+              {
+                SFArgValue *arg_value = &script->arg_values[i];
+
+                g_string_append_c (s, ' ');
+
+                switch (script->arg_types[i])
+                  {
+                  case SF_IMAGE:
+                  case SF_DRAWABLE:
+                  case SF_LAYER:
+                  case SF_CHANNEL:
+                  case SF_VECTORS:
+                  case SF_DISPLAY:
+                    g_string_append_printf (s, "%d", arg_value->sfa_image);
+                    break;
+
+                  case SF_COLOR:
+                    {
+                      guchar r, g, b;
+
+                      gimp_rgb_get_uchar (&arg_value->sfa_color, &r, &g, &b);
+                      g_string_append_printf (s, "'(%d %d %d)",
+                                              (gint) r, (gint) g, (gint) b);
+                    }
+                    break;
+
+                  case SF_TOGGLE:
+                    g_string_append (s, arg_value->sfa_toggle ? "TRUE" : "FALSE");
+                    break;
+
+                  case SF_VALUE:
+                    g_string_append (s, arg_value->sfa_value);
+                    break;
+
+                  case SF_STRING:
+                  case SF_TEXT:
+                    {
+                      gchar *tmp = g_strescape (arg_value->sfa_value, NULL);
+
+                      g_string_append_printf (s, "\"%s\"", tmp);
+                      g_free (tmp);
+                    }
+                    break;
+
+                  case SF_ADJUSTMENT:
+                    {
+                      gchar buffer[G_ASCII_DTOSTR_BUF_SIZE];
+
+                      g_ascii_dtostr (buffer, sizeof (buffer),
+                                      arg_value->sfa_adjustment.value);
+                      g_string_append (s, buffer);
+                    }
+                    break;
+
+                  case SF_FILENAME:
+                  case SF_DIRNAME:
+                    {
+                      gchar *tmp = g_strescape (arg_value->sfa_file.filename,
+                                                NULL);
+
+                      g_string_append_printf (s, "\"%s\"", tmp);
+                      g_free (tmp);
+                    }
+                    break;
+
+                  case SF_FONT:
+                    g_string_append_printf (s, "\"%s\"", arg_value->sfa_font);
+                    break;
+
+                  case SF_PALETTE:
+                    g_string_append_printf (s, "\"%s\"", arg_value->sfa_palette);
+                    break;
+
+                  case SF_PATTERN:
+                    g_string_append_printf (s, "\"%s\"", arg_value->sfa_pattern);
+                    break;
+
+                  case SF_GRADIENT:
+                    g_string_append_printf (s, "\"%s\"", arg_value->sfa_gradient);
+                    break;
+
+                  case SF_BRUSH:
+                    {
+                      gchar buffer[G_ASCII_DTOSTR_BUF_SIZE];
+
+                      g_ascii_dtostr (buffer, sizeof (buffer),
+                                      arg_value->sfa_brush.opacity);
+                      g_string_append_printf (s, "'(\"%s\" %s %d %d)",
+                                              arg_value->sfa_brush.name,
+                                              buffer,
+                                              arg_value->sfa_brush.spacing,
+                                              arg_value->sfa_brush.paint_mode);
+                    }
+                    break;
+
+                  case SF_OPTION:
+                    g_string_append_printf (s, "%d", arg_value->sfa_option.history);
+                    break;
+
+                  case SF_ENUM:
+                    g_string_append_printf (s, "%d", arg_value->sfa_enum.history);
+                    break;
+                  }
+              }
+
+            g_string_append_c (s, ')');
+
+            command = g_string_free (s, FALSE);
+
+            /*  run the command through the interpreter  */
+            output = g_string_new ("");
+            ts_register_output_func (ts_gstring_output_func, output);
+            if (ts_interpret_string (command))
+              script_fu_error_msg (command, output->str);
+            g_string_free (output, TRUE);
+
+            g_free (command);
+          }
           break;
 
         default:
