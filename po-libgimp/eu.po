@@ -9,10 +9,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: eu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-01 18:52+0200\n"
-"PO-Revision-Date: 2007-08-01 18:50+0200\n"
+"POT-Creation-Date: 2007-09-08 13:36+0200\n"
+"PO-Revision-Date: 2007-09-08 13:39+0200\n"
 "Last-Translator: Iñaki Larrañaga Murgoitio <dooteo@zundan.com>\n"
-"Language-Team: Basque <eu@li.org>\n"
+"Language-Team: Basque <itzulpena@euskalgnu.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -111,8 +111,7 @@ msgstr ""
 #: ../libgimp/gimpexport.c:308
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr ""
-"%s plugin-ak indexatutako bitmap (bi kolore) irudiak bakarrik kudea ditzake"
+msgstr "%s plugin-ak indexatutako bitmap (bi kolore) irudiak bakarrik kudea ditzake"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -135,8 +134,7 @@ msgstr "%s plugin-ak GBU edo indexatutako irudiak bakarrik kudea ditzake"
 #: ../libgimp/gimpexport.c:337
 #, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr ""
-"%s plugin-ak gris-eskalako edo indexatutako irudiak bakarrik kudea ditzake"
+msgstr "%s plugin-ak gris-eskalako edo indexatutako irudiak bakarrik kudea ditzake"
 
 #: ../libgimp/gimpexport.c:348
 #, c-format
@@ -623,7 +621,7 @@ msgstr "Konstantea"
 msgid "Incremental"
 msgstr "Inkrementala"
 
-#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:267
+#: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:214
 msgid "None"
 msgstr "Bat ere ez"
 
@@ -760,7 +758,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:259
+#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:407
 msgid "(invalid UTF-8 string)"
 msgstr "(UTF-8 kate baliogabea)"
 
@@ -792,8 +790,7 @@ msgstr "Erabiliko den CMYK kolore-profila GBUtik CMYKra bihurtzeko."
 
 #: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The color profile used for simulating a printed version (softproof)."
-msgstr ""
-"Inprimatutako bertsioa (soft-proba) simulatzeko erabiliko den kolore-profila."
+msgstr "Inprimatutako bertsioa (soft-proba) simulatzeko erabiliko den kolore-profila."
 
 #: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "Sets how colors are mapped for your display."
@@ -844,8 +841,7 @@ msgstr "%s tokenarentzako balioa ez da baliozko UTF-8 katea"
 #: ../libgimpconfig/gimpconfig-deserialize.c:436
 #, c-format
 msgid "expected 'yes' or 'no' for boolean token %s, got '%s'"
-msgstr ""
-"'yes' edo 'no' espero zen %s token boolearrarentzat, baina '%s' jaso da"
+msgstr "'yes' edo 'no' espero zen %s token boolearrarentzat, baina '%s' jaso da"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:510
 #, c-format
@@ -865,6 +861,7 @@ msgstr "'%s' tokena analizatzen zen bitartean: %s"
 #: ../libgimpconfig/gimpconfig-iface.c:454
 #: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
+#: ../libgimpwidgets/gimpcolorprofilestore.c:593
 msgid "fatal parse error"
 msgstr "analisi-errore larria"
 
@@ -986,6 +983,14 @@ msgstr "_Beltza"
 #: ../libgimpwidgets/gimpcolorbutton.c:130
 msgid "_White"
 msgstr "_Zuria"
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:142
+msgid "Select color profile from disk..."
+msgstr "Hautatu kolore-profila diskotik..."
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:278
+msgid "profile|None"
+msgstr "Bat ere ez"
 
 #: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
@@ -1301,8 +1306,7 @@ msgstr "Tritanopia (urdinarekiko sentikortasunik ez)"
 
 #: ../modules/cdisplay_colorblind.c:200
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr ""
-"Kolorearen defizita simulatzeko iragazkia (Brettel-Vienot-Mollon algoritmoa)"
+msgstr "Kolorearen defizita simulatzeko iragazkia (Brettel-Vienot-Mollon algoritmoa)"
 
 #: ../modules/cdisplay_colorblind.c:292
 msgid "Color Deficient Vision"
@@ -1336,15 +1340,15 @@ msgstr "Kontrastea"
 msgid "Contrast c_ycles:"
 msgstr "Kontraste-_zikloak:"
 
-#: ../modules/cdisplay_lcms.c:116
+#: ../modules/cdisplay_lcms.c:105
 msgid "Color management display filter using ICC color profiles"
 msgstr "Kolore-kudeaketaren iragazkia, ICC kolore-profilan erabilia"
 
-#: ../modules/cdisplay_lcms.c:184
+#: ../modules/cdisplay_lcms.c:166
 msgid "Color Management"
 msgstr "Kolore-kudeaketa"
 
-#: ../modules/cdisplay_lcms.c:288
+#: ../modules/cdisplay_lcms.c:235
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
@@ -1352,19 +1356,19 @@ msgstr ""
 "Iragazki honek Hobespenak elkarizketa-koadroko Kolore-kudeaketa ataletik "
 "hartzen du bere konfigurazioa."
 
-#: ../modules/cdisplay_lcms.c:302
+#: ../modules/cdisplay_lcms.c:249
 msgid "Mode of operation:"
 msgstr "Eragiketa-modua:"
 
-#: ../modules/cdisplay_lcms.c:309
-msgid "RGB working space profile:"
-msgstr "GBU laneko arearen profila:"
+#: ../modules/cdisplay_lcms.c:256
+msgid "Image profile:"
+msgstr "Irudi-profila:"
 
-#: ../modules/cdisplay_lcms.c:316
+#: ../modules/cdisplay_lcms.c:263
 msgid "Monitor profile:"
 msgstr "Monitorearen profila:"
 
-#: ../modules/cdisplay_lcms.c:323
+#: ../modules/cdisplay_lcms.c:270
 msgid "Print simulation profile:"
 msgstr "Inprimatze-simulazioaren profila:"
 
@@ -1396,43 +1400,43 @@ msgstr "Puntu -beltzaren konpentsazioa"
 msgid "CMYK color selector"
 msgstr "CMYK kolore-hautatzailea"
 
-#: ../modules/colorsel_cmyk.c:130
+#: ../modules/colorsel_cmyk.c:130 ../modules/colorsel_cmyk_lcms.c:154
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/colorsel_cmyk.c:148
+#: ../modules/colorsel_cmyk.c:148 ../modules/colorsel_cmyk_lcms.c:171
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/colorsel_cmyk.c:150
+#: ../modules/colorsel_cmyk.c:150 ../modules/colorsel_cmyk_lcms.c:173
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/colorsel_cmyk.c:152
+#: ../modules/colorsel_cmyk.c:152 ../modules/colorsel_cmyk_lcms.c:175
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/colorsel_cmyk.c:154
+#: ../modules/colorsel_cmyk.c:154 ../modules/colorsel_cmyk_lcms.c:177
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/colorsel_cmyk.c:158
+#: ../modules/colorsel_cmyk.c:158 ../modules/colorsel_cmyk_lcms.c:181
 msgid "Cyan"
 msgstr "Cyana"
 
-#: ../modules/colorsel_cmyk.c:159
+#: ../modules/colorsel_cmyk.c:159 ../modules/colorsel_cmyk_lcms.c:182
 msgid "Magenta"
 msgstr "Magenta"
 
-#: ../modules/colorsel_cmyk.c:160
+#: ../modules/colorsel_cmyk.c:160 ../modules/colorsel_cmyk_lcms.c:183
 msgid "Yellow"
 msgstr "Horia"
 
-#: ../modules/colorsel_cmyk.c:161
+#: ../modules/colorsel_cmyk.c:161 ../modules/colorsel_cmyk_lcms.c:184
 msgid "Black"
 msgstr "Beltza"
 
@@ -1443,6 +1447,19 @@ msgstr "Beltz _gehigarria:"
 #: ../modules/colorsel_cmyk.c:212
 msgid "The percentage of black to pull out of the colored inks."
 msgstr "Beltzaren ehunekoa koloredun tintetatik ateratzeko."
+
+#: ../modules/colorsel_cmyk_lcms.c:91
+msgid "CMYK color selector (using color profile)"
+msgstr "CMYK kolore-hautatzailea (kolore-profilan erabilia)"
+
+#: ../modules/colorsel_cmyk_lcms.c:396
+msgid "Profile: (none)"
+msgstr "Profila: (bat ere ez)"
+
+#: ../modules/colorsel_cmyk_lcms.c:409
+#, c-format
+msgid "Profile: %s"
+msgstr "Profila: %s"
 
 #: ../modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
@@ -1806,3 +1823,4 @@ msgstr "GIMP"
 #: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr "GIMP MIDI sarreraren kontroladorea"
+
