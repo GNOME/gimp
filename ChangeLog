@@ -1,3 +1,7 @@
+2007-09-08  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpforegroundselecttoolundo.c: removed unused variable.
+
 2007-09-07  Michael Natterer  <mitch@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_script_proc):

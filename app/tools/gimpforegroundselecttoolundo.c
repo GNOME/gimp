@@ -156,11 +156,8 @@ gimp_foreground_select_tool_undo_pop (GimpUndo              *undo,
                                       GimpUndoMode           undo_mode,
                                       GimpUndoAccumulator   *accum)
 {
-  GimpForegroundSelectToolUndo *foreground_select_tool_undo =
-    GIMP_FOREGROUND_SELECT_TOOL_UNDO (undo);
-
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
- }
+}
 
 static void
 gimp_foreground_select_tool_undo_free (GimpUndo     *undo,
