@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.3.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-07-07 20:07+0800\n"
-"PO-Revision-Date: 2005-07-07 23:04+0800\n"
+"PO-Revision-Date: 2007-09-09 23:52+0800\n"
 "Last-Translator: Abel Cheung <abel@oaka.org>\n"
 "Language-Team: Chinese (traditional) <communit@linuxhall.org>\n"
 "MIME-Version: 1.0\n"
@@ -11097,17 +11097,16 @@ msgid "XCF error: unsupported XCF file version %d encountered"
 msgstr "XCF 錯誤：不支援 XCF 檔案版本 %d"
 
 #: ../desktop/gimp.desktop.in.in.h:1
-#, fuzzy
 msgid "Create images and edit photographs"
-msgstr "製作/修改影像或相片"
+msgstr "建立圖像與編輯照片"
 
 #: ../desktop/gimp.desktop.in.in.h:2
 msgid "GNU Image Manipulation Program"
-msgstr ""
+msgstr "GNU 影像處理程式"
 
 #: ../desktop/gimp.desktop.in.in.h:3
 msgid "Image Editor"
-msgstr "色盤編輯程序"
+msgstr "影像編輯器"
 
 #: ../tools/gimp-remote.c:83
 msgid "Use a running GIMP only, never start a new one"
