@@ -133,7 +133,6 @@ static void       gimp_layer_transform          (GimpItem           *item,
                                                  const GimpMatrix3  *matrix,
                                                  GimpTransformDirection direction,
                                                  GimpInterpolationType  interpolation_type,
-                                                 gboolean            supersample,
                                                  gint                recursion_level,
                                                  GimpTransformResize    clip_result,
                                                  GimpProgress       *progress);
@@ -776,7 +775,6 @@ gimp_layer_transform (GimpItem               *item,
                       const GimpMatrix3      *matrix,
                       GimpTransformDirection  direction,
                       GimpInterpolationType   interpolation_type,
-                      gboolean                supersample,
                       gint                    recursion_level,
                       GimpTransformResize     clip_result,
                       GimpProgress           *progress)
@@ -792,14 +790,14 @@ gimp_layer_transform (GimpItem               *item,
 
   GIMP_ITEM_CLASS (parent_class)->transform (item, context, matrix, direction,
                                              interpolation_type,
-                                             supersample, recursion_level,
-                                             clip_result, progress);
+                                             recursion_level,
+                                             clip_result,
+                                             progress);
 
   if (layer->mask)
     gimp_item_transform (GIMP_ITEM (layer->mask), context,
                          matrix, direction,
-                         interpolation_type,
-                         supersample, recursion_level,
+                         interpolation_type, recursion_level,
                          clip_result, progress);
 }
 

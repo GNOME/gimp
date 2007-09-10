@@ -114,7 +114,6 @@ static void       gimp_channel_transform     (GimpItem         *item,
                                               const GimpMatrix3 *matrix,
                                               GimpTransformDirection direction,
                                               GimpInterpolationType interpolation_type,
-                                              gboolean          supersample,
                                               gint              recursion_level,
                                               GimpTransformResize clip_result,
                                               GimpProgress     *progress);
@@ -654,7 +653,6 @@ gimp_channel_transform (GimpItem               *item,
                         const GimpMatrix3      *matrix,
                         GimpTransformDirection  direction,
                         GimpInterpolationType   interpolation_type,
-                        gboolean                supersample,
                         gint                    recursion_level,
                         GimpTransformResize     clip_result,
                         GimpProgress           *progress)
@@ -664,8 +662,9 @@ gimp_channel_transform (GimpItem               *item,
 
   GIMP_ITEM_CLASS (parent_class)->transform (item, context, matrix, direction,
                                              interpolation_type,
-                                             supersample, recursion_level,
-                                             clip_result, progress);
+                                             recursion_level,
+                                             clip_result,
+                                             progress);
 }
 
 static gboolean

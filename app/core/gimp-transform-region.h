@@ -30,7 +30,6 @@ void   gimp_transform_region (GimpPickable          *pickable,
                               gint                   dest_y2,
                               const GimpMatrix3     *matrix,
                               GimpInterpolationType  interpolation_type,
-                              gboolean               supersample,
                               gint                   recursion_level,
                               GimpProgress          *progress);
 

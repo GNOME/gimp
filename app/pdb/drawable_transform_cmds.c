@@ -146,8 +146,7 @@ drawable_transform_flip_invoker (GimpProcedure     *procedure,
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
-                                                    interpolation, supersample,
-                                                    recursion_level,
+                                                    interpolation, recursion_level,
                                                     clip_result, progress);
 
           if (progress)
@@ -220,8 +219,7 @@ drawable_transform_flip_default_invoker (GimpProcedure     *procedure,
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type,
-                                                    interpolate, 3,
+                                                    interpolation_type, 3,
                                                     clip_result, progress);
 
           if (progress)
@@ -306,8 +304,7 @@ drawable_transform_perspective_invoker (GimpProcedure     *procedure,
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
-                                                    interpolation, supersample,
-                                                    recursion_level,
+                                                    interpolation, recursion_level,
                                                     clip_result, progress);
 
           if (progress)
@@ -390,8 +387,7 @@ drawable_transform_perspective_default_invoker (GimpProcedure     *procedure,
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type,
-                                                    interpolate, 3,
+                                                    interpolation_type, 3,
                                                     clip_result, progress);
 
           if (progress)
@@ -517,8 +513,7 @@ drawable_transform_rotate_invoker (GimpProcedure     *procedure,
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
-                                                    interpolation, supersample,
-                                                    recursion_level,
+                                                    interpolation, recursion_level,
                                                     clip_result, progress);
 
           if (progress)
@@ -595,8 +590,7 @@ drawable_transform_rotate_default_invoker (GimpProcedure     *procedure,
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type,
-                                                    interpolate, 3,
+                                                    interpolation_type, 3,
                                                     clip_result, progress);
 
           if (progress)
@@ -672,8 +666,7 @@ drawable_transform_scale_invoker (GimpProcedure     *procedure,
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
-                                                    interpolation, supersample,
-                                                    recursion_level,
+                                                    interpolation, recursion_level,
                                                     clip_result, progress);
 
           if (progress)
@@ -747,8 +740,7 @@ drawable_transform_scale_default_invoker (GimpProcedure     *procedure,
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type,
-                                                    interpolate, 3,
+                                                    interpolation_type, 3,
                                                     clip_result, progress);
 
           if (progress)
@@ -820,8 +812,7 @@ drawable_transform_shear_invoker (GimpProcedure     *procedure,
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
-                                                    interpolation, supersample,
-                                                    recursion_level,
+                                                    interpolation, recursion_level,
                                                     clip_result, progress);
 
           if (progress)
@@ -891,8 +882,7 @@ drawable_transform_shear_default_invoker (GimpProcedure     *procedure,
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type,
-                                                    interpolate, 3,
+                                                    interpolation_type, 3,
                                                     clip_result, progress);
 
           if (progress)
@@ -975,8 +965,7 @@ drawable_transform_2d_invoker (GimpProcedure     *procedure,
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
-                                                    interpolation, supersample,
-                                                    recursion_level,
+                                                    interpolation, recursion_level,
                                                     clip_result, progress);
 
           if (progress)
@@ -1057,8 +1046,7 @@ drawable_transform_2d_default_invoker (GimpProcedure     *procedure,
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type,
-                                                    interpolate, 3,
+                                                    interpolation_type, 3,
                                                     clip_result, progress);
 
           if (progress)
@@ -1149,8 +1137,7 @@ drawable_transform_matrix_invoker (GimpProcedure     *procedure,
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, transform_direction,
-                                                    interpolation, supersample,
-                                                    recursion_level,
+                                                    interpolation, recursion_level,
                                                     clip_result, progress);
 
           if (progress)
@@ -1239,8 +1226,7 @@ drawable_transform_matrix_default_invoker (GimpProcedure     *procedure,
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type,
-                                                    interpolate, 3,
+                                                    interpolation_type, 3,
                                                     clip_result, progress);
 
           if (progress)
@@ -1376,13 +1362,13 @@ register_drawable_transform_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("supersample",
                                                      "supersample",
-                                                     "Whether to perform supersample",
+                                                     "This parameter is ignored, supersampling is performed based on the interpolation type",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("recursion-level",
                                                       "recursion level",
-                                                      "Level of recursion (3 is a nice default)",
+                                                      "Maximum recursion level used for supersampling (3 is a nice value)",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1548,13 +1534,13 @@ register_drawable_transform_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("supersample",
                                                      "supersample",
-                                                     "Whether to perform supersample",
+                                                     "This parameter is ignored, supersampling is performed based on the interpolation type",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("recursion-level",
                                                       "recursion level",
-                                                      "Level of recursion (3 is a nice default)",
+                                                      "Maximum recursion level used for supersampling (3 is a nice value)",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1781,13 +1767,13 @@ register_drawable_transform_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("supersample",
                                                      "supersample",
-                                                     "Whether to perform supersample",
+                                                     "This parameter is ignored, supersampling is performed based on the interpolation type",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("recursion-level",
                                                       "recursion level",
-                                                      "Level of recursion (3 is a nice default)",
+                                                      "Maximum recursion level used for supersampling (3 is a nice value)",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -1931,13 +1917,13 @@ register_drawable_transform_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("supersample",
                                                      "supersample",
-                                                     "Whether to perform supersample",
+                                                     "This parameter is ignored, supersampling is performed based on the interpolation type",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("recursion-level",
                                                       "recursion level",
-                                                      "Level of recursion (3 is a nice default)",
+                                                      "Maximum recursion level used for supersampling (3 is a nice value)",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2072,13 +2058,13 @@ register_drawable_transform_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("supersample",
                                                      "supersample",
-                                                     "Whether to perform supersample",
+                                                     "This parameter is ignored, supersampling is performed based on the interpolation type",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("recursion-level",
                                                       "recursion level",
-                                                      "Level of recursion (3 is a nice default)",
+                                                      "Maximum recursion level used for supersampling (3 is a nice value)",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2231,13 +2217,13 @@ register_drawable_transform_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("supersample",
                                                      "supersample",
-                                                     "Whether to perform supersample",
+                                                     "This parameter is ignored, supersampling is performed based on the interpolation type",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("recursion-level",
                                                       "recursion level",
-                                                      "Level of recursion (3 is a nice default)",
+                                                      "Maximum recursion level used for supersampling (3 is a nice value)",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
@@ -2429,13 +2415,13 @@ register_drawable_transform_procs (GimpPDB *pdb)
   gimp_procedure_add_argument (procedure,
                                g_param_spec_boolean ("supersample",
                                                      "supersample",
-                                                     "Whether to perform supersample",
+                                                     "This parameter is ignored, supersampling is performed based on the interpolation type",
                                                      FALSE,
                                                      GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_int32 ("recursion-level",
                                                       "recursion level",
-                                                      "Level of recursion (3 is a nice default)",
+                                                      "Maximum recursion level used for supersampling (3 is a nice value)",
                                                       1, G_MAXINT32, 1,
                                                       GIMP_PARAM_READWRITE));
   gimp_procedure_add_argument (procedure,

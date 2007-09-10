@@ -975,7 +975,6 @@ gimp_item_transform (GimpItem               *item,
                      const GimpMatrix3      *matrix,
                      GimpTransformDirection  direction,
                      GimpInterpolationType   interpolation,
-                     gboolean                supersample,
                      gint                    recursion_level,
                      GimpTransformResize     clip_result,
                      GimpProgress           *progress)
@@ -996,8 +995,7 @@ gimp_item_transform (GimpItem               *item,
                                item_class->transform_desc);
 
   item_class->transform (item, context, matrix, direction, interpolation,
-                         supersample, recursion_level,
-                         clip_result, progress);
+                         recursion_level, clip_result, progress);
 
   gimp_image_undo_group_end (image);
 }

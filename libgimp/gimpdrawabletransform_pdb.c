@@ -86,8 +86,8 @@ gimp_drawable_transform_flip_simple (gint32              drawable_ID,
  * @y1: vert. coord. of other end of axis.
  * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
- * @supersample: Whether to perform supersample.
- * @recursion_level: Level of recursion (3 is a nice default).
+ * @supersample: This parameter is ignored, supersampling is performed based on the interpolation type.
+ * @recursion_level: Maximum recursion level used for supersampling (3 is a nice value).
  * @clip_result: Whether to clip results.
  *
  * Flip the specified drawable around a given line.
@@ -210,8 +210,8 @@ gimp_drawable_transform_flip_default (gint32   drawable_ID,
  * @y3: The new y coordinate of lower-right corner of original bounding box.
  * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
- * @supersample: Whether to perform supersample.
- * @recursion_level: Level of recursion (3 is a nice default).
+ * @supersample: This parameter is ignored, supersampling is performed based on the interpolation type.
+ * @recursion_level: Maximum recursion level used for supersampling (3 is a nice value).
  * @clip_result: How to clip results.
  *
  * Perform a possibly non-affine transformation on the specified
@@ -411,8 +411,8 @@ gimp_drawable_transform_rotate_simple (gint32           drawable_ID,
  * @center_y: The vert. coordinate of the center of rotation.
  * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
- * @supersample: Whether to perform supersample.
- * @recursion_level: Level of recursion (3 is a nice default).
+ * @supersample: This parameter is ignored, supersampling is performed based on the interpolation type.
+ * @recursion_level: Maximum recursion level used for supersampling (3 is a nice value).
  * @clip_result: How to clip results.
  *
  * Rotate the specified drawable about given coordinates through the
@@ -530,8 +530,8 @@ gimp_drawable_transform_rotate_default (gint32              drawable_ID,
  * @y1: The new y coordinate of the lower-right corner of the scaled region.
  * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
- * @supersample: Whether to perform supersample.
- * @recursion_level: Level of recursion (3 is a nice default).
+ * @supersample: This parameter is ignored, supersampling is performed based on the interpolation type.
+ * @recursion_level: Maximum recursion level used for supersampling (3 is a nice value).
  * @clip_result: How to clip results.
  *
  * Scale the specified drawable with extra parameters
@@ -645,8 +645,8 @@ gimp_drawable_transform_scale_default (gint32              drawable_ID,
  * @magnitude: The magnitude of the shear.
  * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
- * @supersample: Whether to perform supersample.
- * @recursion_level: Level of recursion (3 is a nice default).
+ * @supersample: This parameter is ignored, supersampling is performed based on the interpolation type.
+ * @recursion_level: Maximum recursion level used for supersampling (3 is a nice value).
  * @clip_result: How to clip results.
  *
  * Shear the specified drawable about its center by the specified
@@ -760,8 +760,8 @@ gimp_drawable_transform_shear_default (gint32              drawable_ID,
  * @dest_y: Y coordinate of where the center goes.
  * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
- * @supersample: Whether to perform supersample.
- * @recursion_level: Level of recursion (3 is a nice default).
+ * @supersample: This parameter is ignored, supersampling is performed based on the interpolation type.
+ * @recursion_level: Maximum recursion level used for supersampling (3 is a nice value).
  * @clip_result: How to clip results.
  *
  * Transform the specified drawable in 2d, with extra parameters.
@@ -900,8 +900,8 @@ gimp_drawable_transform_2d_default (gint32              drawable_ID,
  * @coeff_2_2: coefficient (2,2) of the transformation matrix.
  * @transform_direction: Direction of transformation.
  * @interpolation: Type of interpolation.
- * @supersample: Whether to perform supersample.
- * @recursion_level: Level of recursion (3 is a nice default).
+ * @supersample: This parameter is ignored, supersampling is performed based on the interpolation type.
+ * @recursion_level: Maximum recursion level used for supersampling (3 is a nice value).
  * @clip_result: How to clip results.
  *
  * Transform the specified drawable in 2d, with extra parameters.

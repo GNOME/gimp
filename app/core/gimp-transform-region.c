@@ -70,7 +70,6 @@ static void  gimp_transform_region_linear  (TileManager       *orig_tiles,
                                             gint               v2,
                                             const GimpMatrix3 *m,
                                             gint               alpha,
-                                            gboolean           supersample,
                                             gint               recursion_level,
                                             const guchar      *bg_color,
                                             GimpProgress      *progress);
@@ -86,7 +85,6 @@ static void  gimp_transform_region_cubic   (TileManager       *orig_tiles,
                                             gint               v2,
                                             const GimpMatrix3 *m,
                                             gint               alpha,
-                                            gboolean           supersample,
                                             gint               recursion_level,
                                             const guchar      *bg_color,
                                             GimpProgress      *progress);
@@ -102,7 +100,6 @@ static void  gimp_transform_region_lanczos (TileManager       *orig_tiles,
                                             gint               v2,
                                             const GimpMatrix3 *m,
                                             gint               alpha,
-                                            gboolean           supersample,
                                             gint               recursion_level,
                                             const guchar      *bg_color,
                                             GimpProgress      *progress);
@@ -180,7 +177,6 @@ gimp_transform_region (GimpPickable          *pickable,
                        gint                   dest_y2,
                        const GimpMatrix3     *matrix,
                        GimpInterpolationType  interpolation_type,
-                       gboolean               supersample,
                        gint                   recursion_level,
                        GimpProgress          *progress)
 {
@@ -259,7 +255,7 @@ gimp_transform_region (GimpPickable          *pickable,
       gimp_transform_region_linear (orig_tiles, destPR,
                                     dest_x1, dest_y1, dest_x2, dest_y2,
                                     u1, v1, u2, v2,
-                                    &m, alpha, supersample, recursion_level,
+                                    &m, alpha, recursion_level,
                                     bg_color, progress);
       break;
 
@@ -267,7 +263,7 @@ gimp_transform_region (GimpPickable          *pickable,
       gimp_transform_region_cubic (orig_tiles, destPR,
                                    dest_x1, dest_y1, dest_x2, dest_y2,
                                    u1, v1, u2, v2,
-                                   &m, alpha, supersample, recursion_level,
+                                   &m, alpha, recursion_level,
                                    bg_color, progress);
       break;
 
@@ -275,7 +271,7 @@ gimp_transform_region (GimpPickable          *pickable,
       gimp_transform_region_lanczos (orig_tiles, destPR,
                                      dest_x1, dest_y1, dest_x2, dest_y2,
                                      u1, v1, u2, v2,
-                                     &m, alpha, supersample, recursion_level,
+                                     &m, alpha, recursion_level,
                                      bg_color, progress);
       break;
     }
@@ -387,7 +383,6 @@ gimp_transform_region_linear (TileManager        *orig_tiles,
                               gint                v2,
                               const GimpMatrix3  *m,
                               gint                alpha,
-                              gboolean            supersample,
                               gint                recursion_level,
                               const guchar       *bg_color,
                               GimpProgress       *progress)
@@ -433,8 +428,7 @@ gimp_transform_region_linear (TileManager        *orig_tiles,
               normalize_coords (5, tu, tv, tw, u, v);
 
               /*  Set the destination pixels  */
-              if (supersample &&
-                  supersample_dtest (u[1], v[1], u[2], v[2],
+              if (supersample_dtest (u[1], v[1], u[2], v[2],
                                      u[3], v[3], u[4], v[4]))
                 {
                   sample_adapt (orig_tiles,
@@ -491,7 +485,6 @@ gimp_transform_region_cubic (TileManager        *orig_tiles,
                              gint                v2,
                              const GimpMatrix3  *m,
                              gint                alpha,
-                             gboolean            supersample,
                              gint                recursion_level,
                              const guchar       *bg_color,
                              GimpProgress       *progress)
@@ -536,8 +529,7 @@ gimp_transform_region_cubic (TileManager        *orig_tiles,
               /*  normalize homogeneous coords  */
               normalize_coords (5, tu, tv, tw, u, v);
 
-              if (supersample &&
-                  supersample_dtest (u[1], v[1], u[2], v[2],
+              if (supersample_dtest (u[1], v[1], u[2], v[2],
                                      u[3], v[3], u[4], v[4]))
                 {
                   sample_adapt (orig_tiles,
@@ -594,7 +586,6 @@ gimp_transform_region_lanczos (TileManager       *orig_tiles,
                                gint               v2,
                                const GimpMatrix3 *m,
                                gint               alpha,
-                               gboolean           supersample,
                                gint               recursion_level,
                                const guchar      *bg_color,
                                GimpProgress      *progress)
@@ -644,8 +635,7 @@ gimp_transform_region_lanczos (TileManager       *orig_tiles,
               /*  normalize homogeneous coords  */
               normalize_coords (5, tu, tv, tw, u, v);
 
-              if (supersample &&
-                  supersample_dtest (u[1], v[1], u[2], v[2],
+              if (supersample_dtest (u[1], v[1], u[2], v[2],
                                      u[3], v[3], u[4], v[4]))
                 {
                   sample_adapt (orig_tiles,

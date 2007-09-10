@@ -39,7 +39,6 @@ TileManager * gimp_drawable_transform_tiles_affine (GimpDrawable           *draw
                                                     const GimpMatrix3      *matrix,
                                                     GimpTransformDirection  direction,
                                                     GimpInterpolationType   interpolation_type,
-                                                    gboolean                supersample,
                                                     gint                    recursion_level,
                                                     GimpTransformResize     clip_result,
                                                     GimpProgress           *progress);
@@ -63,7 +62,6 @@ gboolean      gimp_drawable_transform_affine       (GimpDrawable           *draw
                                                     const GimpMatrix3      *matrix,
                                                     GimpTransformDirection  direction,
                                                     GimpInterpolationType   interpolation_type,
-                                                    gboolean                supersample,
                                                     gint                    recursion_level,
                                                     GimpTransformResize     clip_result,
                                                     GimpProgress           *progress);

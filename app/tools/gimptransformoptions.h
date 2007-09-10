@@ -41,7 +41,6 @@ struct _GimpTransformOptions
   GimpTransformType         type;
   GimpTransformDirection    direction;
   GimpInterpolationType     interpolation;
-  gboolean                  supersample;
   gint                      recursion_level;
   gboolean                  clip;
   GimpTransformPreviewType  preview_type;

@@ -145,7 +145,7 @@ perspective_invoker (GimpProcedure     *procedure,
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix,
                                                     GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, TRUE, 3,
+                                                    interpolation_type, 3,
                                                     FALSE, progress);
 
           if (progress)
@@ -212,7 +212,7 @@ rotate_invoker (GimpProcedure     *procedure,
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix,
                                                     GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, FALSE, 3,
+                                                    interpolation_type, 3,
                                                     FALSE, progress);
 
           if (progress)
@@ -286,7 +286,7 @@ scale_invoker (GimpProcedure     *procedure,
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix,
                                                     GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, TRUE, 3,
+                                                    interpolation_type, 3,
                                                     FALSE, progress);
 
           if (progress)
@@ -355,7 +355,7 @@ shear_invoker (GimpProcedure     *procedure,
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix,
                                                     GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, FALSE, 3,
+                                                    interpolation_type, 3,
                                                     FALSE, progress);
 
           if (progress)
@@ -428,7 +428,7 @@ transform_2d_invoker (GimpProcedure     *procedure,
           /* Transform the selection */
           success = gimp_drawable_transform_affine (drawable, context,
                                                     &matrix, GIMP_TRANSFORM_FORWARD,
-                                                    interpolation_type, TRUE, 3,
+                                                    interpolation_type, 3,
                                                     FALSE, progress);
 
           if (progress)

@@ -1,5 +1,33 @@
 2007-09-10  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp-transform-region.[ch]
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-transform.[ch]
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-item-list.[ch]
+	* app/core/gimpitem-linked.[ch]
+	* app/core/gimpitem.[ch]
+	* app/core/gimplayer.c
+	* app/paint/gimpperspectiveclone.c
+	* app/vectors/gimpvectors.c: removed supersample parameter from
+	transform functions and perform it depending on the interpolation
+	type (bug #473265).
+
+	* app/tools/gimptransformoptions.[ch]
+	* app/tools/gimptransformtool.c: removed Supersample toggle from
+	the transform tool options.
+
+	* tools/pdbgen/pdb/drawable_transform.pdb
+	* tools/pdbgen/pdb/transform_tools.pdb: document that the
+	supersample parameter is unused and improved documentation of the
+	recursion-level parameter.
+
+	* app/pdb/transform_tools_cmds.c
+	* app/pdb/drawable_transform_cmds.c
+	* libgimp/gimpdrawabletransform_pdb.c: regenerated.
+
+2007-09-10  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpperspectiveclonetool.c
 	(gimp_perspective_clone_tool_motion): removed unused variable.
 

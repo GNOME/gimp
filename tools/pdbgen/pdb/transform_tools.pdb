@@ -126,7 +126,7 @@ sub perspective {
       success = gimp_drawable_transform_affine (drawable, context,
                                                 &matrix,
                                                 GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, TRUE, 3,
+                                                interpolation_type, 3,
                                                 FALSE, progress);
 
       if (progress)
@@ -189,7 +189,7 @@ sub rotate {
       success = gimp_drawable_transform_affine (drawable, context,
                                                 &matrix,
                                                 GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, FALSE, 3,
+                                                interpolation_type, 3,
                                                 FALSE, progress);
 
       if (progress)
@@ -263,7 +263,7 @@ sub scale {
       success = gimp_drawable_transform_affine (drawable, context,
                                                 &matrix,
                                                 GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, TRUE, 3,
+                                                interpolation_type, 3,
                                                 FALSE, progress);
 
       if (progress)
@@ -329,7 +329,7 @@ sub shear {
       success = gimp_drawable_transform_affine (drawable, context,
                                                 &matrix,
                                                 GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, FALSE, 3,
+                                                interpolation_type, 3,
                                                 FALSE, progress);
 
       if (progress)
@@ -398,7 +398,7 @@ sub transform_2d {
       /* Transform the selection */
       success = gimp_drawable_transform_affine (drawable, context,
                                                 &matrix, GIMP_TRANSFORM_FORWARD,
-                                                interpolation_type, TRUE, 3,
+                                                interpolation_type, 3,
                                                 FALSE, progress);
 
       if (progress)

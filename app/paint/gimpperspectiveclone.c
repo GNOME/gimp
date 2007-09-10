@@ -399,8 +399,7 @@ gimp_perspective_clone_get_source (GimpSourceCore   *source_core,
                          &destPR,
                          x1d, y1d, x2d, y2d,
                          &matrix,
-                         GIMP_INTERPOLATION_LINEAR,
-                         FALSE, 0, NULL);
+                         GIMP_INTERPOLATION_LINEAR, 0, NULL);
 
   tile_manager_unref (orig_tiles);
 

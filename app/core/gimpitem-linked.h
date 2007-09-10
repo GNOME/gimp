@@ -40,7 +40,6 @@ void   gimp_item_linked_transform (GimpItem               *item,
                                    const GimpMatrix3      *matrix,
                                    GimpTransformDirection  direction,
                                    GimpInterpolationType   interpolation_type,
-                                   gboolean                supersample,
                                    gint                    recursion_level,
                                    GimpTransformResize     clip_result,
                                    GimpProgress           *progress);
