@@ -406,10 +406,9 @@ gimp_perspective_clone_tool_motion (GimpTool        *tool,
                                     GdkModifierType  state,
                                     GimpDisplay     *display)
 {
-  GimpPerspectiveCloneTool    *clone_tool  = GIMP_PERSPECTIVE_CLONE_TOOL (tool);
-  GimpPaintTool               *paint_tool  = GIMP_PAINT_TOOL (tool);
-  GimpPerspectiveClone        *clone       = GIMP_PERSPECTIVE_CLONE (paint_tool->core);
-  GimpSourceCore              *source_core = GIMP_SOURCE_CORE (clone);
+  GimpPerspectiveCloneTool    *clone_tool = GIMP_PERSPECTIVE_CLONE_TOOL (tool);
+  GimpPaintTool               *paint_tool = GIMP_PAINT_TOOL (tool);
+  GimpPerspectiveClone        *clone      = GIMP_PERSPECTIVE_CLONE (paint_tool->core);
   GimpPerspectiveCloneOptions *options;
 
   options = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (tool);
