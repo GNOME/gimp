@@ -1,5 +1,10 @@
 2007-09-10  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/lcms.c (lcms_drawable_transform): copy the alpha
+	channel to the destination region. Fixes bug #473998.
+
+2007-09-10  Sven Neumann  <sven@gimp.org>
+
 	* etc/ps-menurc: minor update for 2.4. Removed bindings for brush
 	radius as these keys are now bound by default.
 

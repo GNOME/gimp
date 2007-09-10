@@ -387,9 +387,9 @@ run (const gchar      *name,
     case PROC_INFO:
     case PROC_FILE_INFO:
       {
-        gchar *name;
-        gchar *desc;
-        gchar *info;
+        gchar *name = NULL;
+        gchar *desc = NULL;
+        gchar *info = NULL;
 
         cmsErrorAction (LCMS_ERROR_IGNORE);
 
@@ -934,12 +934,13 @@ lcms_drawable_transform (GimpDrawable  *drawable,
                          gdouble        progress_start,
                          gdouble        progress_end)
 {
-  GimpPixelRgn	src_rgn;
-  GimpPixelRgn	dest_rgn;
-  gpointer      pr;
-  gdouble       range = progress_end - progress_start;
-  guint         count = 0;
-  guint         done  = 0;
+  GimpPixelRgn   src_rgn;
+  GimpPixelRgn   dest_rgn;
+  gpointer       pr;
+  const gboolean alpha = gimp_drawable_has_alpha (drawable->drawable_id);
+  gdouble        range = progress_end - progress_start;
+  guint          count = 0;
+  guint          done  = 0;
 
   gimp_pixel_rgn_init (&src_rgn, drawable,
                        0, 0, drawable->width, drawable->height, FALSE, FALSE);
@@ -957,6 +958,22 @@ lcms_drawable_transform (GimpDrawable  *drawable,
       for (y = 0; y < dest_rgn.h; y++)
         {
           cmsDoTransform (transform, src, dest, dest_rgn.w);
+
+          /* copy the alpha values, cmsDoTransform() leaves them untouched */
+          if (alpha)
+            {
+              const guchar *s = src;
+              guchar       *d = dest;
+              gint          w = dest_rgn.w;
+
+              while (w--)
+                {
+                  d[3] = s[3];
+
+                  s += 4;
+                  d += 4;
+                }
+            }
 
           src  += src_rgn.rowstride;
           dest += dest_rgn.rowstride;
