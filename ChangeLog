@@ -1,5 +1,11 @@
 2007-09-10  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/lens.c: applied patch from Aurimas Juška which
+	simplifies the code by using GimpPixelFetcher and fixes handling
+	of selections in the preview. Fixes the last aspect of bug #356716.
+
+2007-09-10  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp-transform-region.[ch]
 	* app/core/gimpchannel.c
 	* app/core/gimpdrawable-transform.[ch]
