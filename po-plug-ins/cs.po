@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-22 18:00+0200\n"
-"PO-Revision-Date: 2007-08-22 18:08+0200\n"
+"POT-Creation-Date: 2007-09-10 11:50+0200\n"
+"PO-Revision-Date: 2007-09-10 12:00+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -349,7 +349,7 @@ msgstr "_Fraktály"
 #: ../plug-ins/common/gif-save.c:986 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
 #: ../plug-ins/common/mng.c:950 ../plug-ins/common/pat.c:447
-#: ../plug-ins/common/pcx.c:605 ../plug-ins/common/pix.c:508
+#: ../plug-ins/common/pcx.c:643 ../plug-ins/common/pix.c:508
 #: ../plug-ins/common/png.c:1244 ../plug-ins/common/pnm.c:936
 #: ../plug-ins/common/postscript.c:1194 ../plug-ins/common/psd-save.c:1549
 #: ../plug-ins/common/raw.c:528 ../plug-ins/common/raw.c:555
@@ -358,7 +358,7 @@ msgstr "_Fraktály"
 #: ../plug-ins/common/xbm.c:1016 ../plug-ins/common/xwd.c:598
 #: ../plug-ins/fits/fits.c:457 ../plug-ins/flame/flame.c:442
 #: ../plug-ins/gfig/gfig.c:794 ../plug-ins/gfli/gfli.c:715
-#: ../plug-ins/ifscompose/ifscompose.c:2376 ../plug-ins/jpeg/jpeg-save.c:323
+#: ../plug-ins/ifscompose/ifscompose.c:2376 ../plug-ins/jpeg/jpeg-save.c:325
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:282
 #: ../plug-ins/winicon/icosave.c:1020 ../plug-ins/xjt/xjt.c:1280
 #: ../plug-ins/xjt/xjt.c:1714
@@ -389,9 +389,9 @@ msgstr "Zapsat parametry fraktálu"
 #: ../plug-ins/common/compressor.c:622 ../plug-ins/common/curve_bend.c:869
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gif-load.c:309 ../plug-ins/common/gih.c:649
-#: ../plug-ins/common/lcms.c:724 ../plug-ins/common/lcms.c:995
+#: ../plug-ins/common/lcms.c:724 ../plug-ins/common/lcms.c:997
 #: ../plug-ins/common/mng.c:1121 ../plug-ins/common/pat.c:317
-#: ../plug-ins/common/pcx.c:309 ../plug-ins/common/pix.c:329
+#: ../plug-ins/common/pcx.c:344 ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:703 ../plug-ins/common/pnm.c:482
 #: ../plug-ins/common/poppler.c:501 ../plug-ins/common/postscript.c:1021
 #: ../plug-ins/common/postscript.c:3029 ../plug-ins/common/psd-load.c:2125
@@ -1146,7 +1146,7 @@ msgstr "Špatná barevná mapa"
 #: ../plug-ins/bmp/bmpread.c:154 ../plug-ins/common/CEL.c:304
 #: ../plug-ins/common/dicom.c:301 ../plug-ins/common/gbr.c:353
 #: ../plug-ins/common/gif-load.c:314 ../plug-ins/common/gih.c:654
-#: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:314
+#: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:349
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:710
 #: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:546
 #: ../plug-ins/common/postscript.c:1027 ../plug-ins/common/psd-load.c:2130
@@ -1184,12 +1184,12 @@ msgstr "Neznámý nebo neplatný formát komprese BMP."
 msgid "Unsupported or invalid bitdepth."
 msgstr "Nepodporovaná nebo neplatná bitová hloubka"
 
-#: ../plug-ins/bmp/bmpread.c:550 ../plug-ins/common/pcx.c:338
+#: ../plug-ins/bmp/bmpread.c:550 ../plug-ins/common/pcx.c:375
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Nepodporovaná nebo neplatná šířka obrázku: %d"
 
-#: ../plug-ins/bmp/bmpread.c:555 ../plug-ins/common/pcx.c:343
+#: ../plug-ins/bmp/bmpread.c:555 ../plug-ins/common/pcx.c:380
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Nepodporovaná nebo neplatná výška obrázku: %d"
@@ -1201,8 +1201,8 @@ msgstr "Nepodporovaná nebo neplatná výška obrázku: %d"
 #: ../plug-ins/common/CEL.c:352 ../plug-ins/common/blinds.c:277
 #: ../plug-ins/common/compose.c:924 ../plug-ins/common/decompose.c:703
 #: ../plug-ins/common/dicom.c:503 ../plug-ins/common/film.c:746
-#: ../plug-ins/common/gif-load.c:879 ../plug-ins/common/pcx.c:356
-#: ../plug-ins/common/pcx.c:362 ../plug-ins/common/pix.c:368
+#: ../plug-ins/common/gif-load.c:879 ../plug-ins/common/pcx.c:387
+#: ../plug-ins/common/pcx.c:393 ../plug-ins/common/pix.c:368
 #: ../plug-ins/common/png.c:831 ../plug-ins/common/pnm.c:570
 #: ../plug-ins/common/psd-load.c:2553 ../plug-ins/common/raw.c:691
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:956
@@ -1234,14 +1234,14 @@ msgstr "Alfa kanál bude ignorován."
 #: ../plug-ins/bmp/bmpwrite.c:305 ../plug-ins/common/CEL.c:573
 #: ../plug-ins/common/gbr.c:621 ../plug-ins/common/gif-save.c:993
 #: ../plug-ins/common/gih.c:1263 ../plug-ins/common/gtm.c:245
-#: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:567
+#: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:605
 #: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1251
 #: ../plug-ins/common/pnm.c:941 ../plug-ins/common/postscript.c:1199
 #: ../plug-ins/common/psd-save.c:1554 ../plug-ins/common/sunras.c:549
 #: ../plug-ins/common/tga.c:1138 ../plug-ins/common/tiff-save.c:681
 #: ../plug-ins/common/xbm.c:1021 ../plug-ins/common/xpm.c:623
 #: ../plug-ins/common/xwd.c:603 ../plug-ins/fits/fits.c:462
-#: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:281
+#: ../plug-ins/gfli/gfli.c:684 ../plug-ins/jpeg/jpeg-save.c:283
 #: ../plug-ins/sgi/sgi.c:537 ../plug-ins/winicon/icosave.c:1015
 #: ../plug-ins/xjt/xjt.c:1697
 #, c-format
@@ -1256,7 +1256,7 @@ msgstr "Zapsat jako BMP"
 msgid "_Run-Length Encoded"
 msgstr "Kódované _RunLength"
 
-#: ../plug-ins/bmp/bmpwrite.c:826 ../plug-ins/jpeg/jpeg-save.c:891
+#: ../plug-ins/bmp/bmpwrite.c:826 ../plug-ins/jpeg/jpeg-save.c:893
 msgid "_Advanced Options"
 msgstr "_Pokročilá nastavení"
 
@@ -2609,11 +2609,11 @@ msgid "_Hue:"
 msgstr "_Odstín:"
 
 #: ../plug-ins/common/compose.c:213 ../plug-ins/common/compose.c:221
-#: ../plug-ins/common/scatter_hsv.c:413
+#: ../plug-ins/common/scatter_hsv.c:423
 msgid "_Saturation:"
 msgstr "_Sytost:"
 
-#: ../plug-ins/common/compose.c:214 ../plug-ins/common/scatter_hsv.c:425
+#: ../plug-ins/common/compose.c:214 ../plug-ins/common/scatter_hsv.c:435
 msgid "_Value:"
 msgstr "_Jas:"
 
@@ -2858,36 +2858,36 @@ msgstr "Konvoluce nefunguje na vrstvách menších než 3x3 pixely."
 msgid "Applying convolution"
 msgstr "Provádí se konvoluce"
 
-#: ../plug-ins/common/convmatrix.c:951
+#: ../plug-ins/common/convmatrix.c:923
 msgid "Convolution Matrix"
 msgstr "Konvoluční matice"
 
-#: ../plug-ins/common/convmatrix.c:988
+#: ../plug-ins/common/convmatrix.c:960
 msgid "Matrix"
 msgstr "Matice"
 
-#: ../plug-ins/common/convmatrix.c:1026
+#: ../plug-ins/common/convmatrix.c:998
 msgid "D_ivisor:"
 msgstr "Děl_itel:"
 
-#: ../plug-ins/common/convmatrix.c:1052 ../plug-ins/common/depthmerge.c:767
+#: ../plug-ins/common/convmatrix.c:1024 ../plug-ins/common/depthmerge.c:767
 #: ../plug-ins/common/raw.c:1022
 msgid "O_ffset:"
 msgstr "_Posun:"
 
-#: ../plug-ins/common/convmatrix.c:1081
+#: ../plug-ins/common/convmatrix.c:1053
 msgid "N_ormalise"
 msgstr "_Normalizovat"
 
-#: ../plug-ins/common/convmatrix.c:1093
+#: ../plug-ins/common/convmatrix.c:1065
 msgid "A_lpha-weighting"
 msgstr "Vážená a_lfa"
 
-#: ../plug-ins/common/convmatrix.c:1112
+#: ../plug-ins/common/convmatrix.c:1084
 msgid "Border"
 msgstr "Obvod"
 
-#: ../plug-ins/common/convmatrix.c:1139
+#: ../plug-ins/common/convmatrix.c:1111
 msgid "Channels"
 msgstr "Kanály"
 
@@ -3465,7 +3465,7 @@ msgstr "Obrázek Digital Imaging and Communications in Medicine"
 msgid "'%s' is not a DICOM file."
 msgstr "'%s' není soubor DICOM."
 
-#: ../plug-ins/common/dicom.c:678 ../plug-ins/common/pcx.c:599
+#: ../plug-ins/common/dicom.c:678 ../plug-ins/common/pcx.c:637
 #: ../plug-ins/common/pnm.c:927
 msgid "Cannot save images with alpha channel."
 msgstr "Nemohu uložit obrázky s alfa kanálem."
@@ -4755,19 +4755,19 @@ msgstr "Položit na sebe mnoho pozměněných kopií obrázku"
 msgid "_Illusion..."
 msgstr "_Iluze..."
 
-#: ../plug-ins/common/illusion.c:168 ../plug-ins/common/illusion.c:389
+#: ../plug-ins/common/illusion.c:168 ../plug-ins/common/illusion.c:350
 msgid "Illusion"
 msgstr "Iluze"
 
-#: ../plug-ins/common/illusion.c:427
+#: ../plug-ins/common/illusion.c:388
 msgid "_Divisions:"
 msgstr "_Dělení:"
 
-#: ../plug-ins/common/illusion.c:437
+#: ../plug-ins/common/illusion.c:398
 msgid "Mode _1"
 msgstr "Režim _1"
 
-#: ../plug-ins/common/illusion.c:452
+#: ../plug-ins/common/illusion.c:413
 msgid "Mode _2"
 msgstr "Režim _2"
 
@@ -5003,84 +5003,84 @@ msgid "'%s' does not appear to be an ICC color profile"
 msgstr "'%s' zřejmě není barevným profilem ICC"
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:797
+#: ../plug-ins/common/lcms.c:796
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Konvertuji z '%s' do '%s'"
 
-#: ../plug-ins/common/lcms.c:1014
+#: ../plug-ins/common/lcms.c:1016
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Nelze načíst ICC profil z '%s'"
 
-#: ../plug-ins/common/lcms.c:1036
+#: ../plug-ins/common/lcms.c:1038
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "Obrázek '%s' obsahuje vložený barevný profil:"
 
-#: ../plug-ins/common/lcms.c:1080
+#: ../plug-ins/common/lcms.c:1082
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Převest obrázek do pracovního prostoru RGB (%s)?"
 
-#: ../plug-ins/common/lcms.c:1111
+#: ../plug-ins/common/lcms.c:1113
 msgid "Convert to RGB working space?"
 msgstr "Konvertovat do pracovního prostoru RGB?"
 
-#: ../plug-ins/common/lcms.c:1116
+#: ../plug-ins/common/lcms.c:1118
 msgid "_Keep"
 msgstr "_Ponechat"
 
-#: ../plug-ins/common/lcms.c:1121
+#: ../plug-ins/common/lcms.c:1123
 msgid "_Convert"
 msgstr "_Konvertovat"
 
-#: ../plug-ins/common/lcms.c:1148 ../plug-ins/jpeg/jpeg-exif.c:367
+#: ../plug-ins/common/lcms.c:1150 ../plug-ins/jpeg/jpeg-exif.c:372
 msgid "_Don't ask me again"
 msgstr "_Neptat se znovu"
 
-#: ../plug-ins/common/lcms.c:1212
+#: ../plug-ins/common/lcms.c:1214
 msgid "Select destination profile"
 msgstr "Zvolte cílový profil"
 
-#: ../plug-ins/common/lcms.c:1239
+#: ../plug-ins/common/lcms.c:1241
 msgid "All files (*.*)"
 msgstr "Všechny soubory (*.*)"
 
-#: ../plug-ins/common/lcms.c:1244
+#: ../plug-ins/common/lcms.c:1246
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC profil barev (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1287
+#: ../plug-ins/common/lcms.c:1289
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "Pracovní prostor RGB (%s)"
 
-#: ../plug-ins/common/lcms.c:1335
+#: ../plug-ins/common/lcms.c:1337
 msgid "Convert to ICC Color Profile"
 msgstr "Převést do ICC profilu barev"
 
-#: ../plug-ins/common/lcms.c:1336
+#: ../plug-ins/common/lcms.c:1338
 msgid "Assign ICC Color Profile"
 msgstr "Přiřadit ICC profil barev"
 
-#: ../plug-ins/common/lcms.c:1344
+#: ../plug-ins/common/lcms.c:1346
 msgid "_Assign"
 msgstr "_Přiřadit"
 
-#: ../plug-ins/common/lcms.c:1361
+#: ../plug-ins/common/lcms.c:1363
 msgid "Current Color Profile"
 msgstr "Aktuální profil barev"
 
-#: ../plug-ins/common/lcms.c:1376
+#: ../plug-ins/common/lcms.c:1378
 msgid "Convert to"
 msgstr "Převést do"
 
-#: ../plug-ins/common/lcms.c:1376
+#: ../plug-ins/common/lcms.c:1378
 msgid "Assign"
 msgstr "Přiřadit"
 
-#: ../plug-ins/common/lcms.c:1416
+#: ../plug-ins/common/lcms.c:1418
 msgid "Destination profile is not for RGB color space."
 msgstr "Cílový profil není určen pro prostor RGB."
 
@@ -5321,7 +5321,7 @@ msgstr "Redukovat obrázek na čistou červenou, zelenou a modrou"
 msgid "Maxim_um RGB..."
 msgstr "_Nejvyšší RGB..."
 
-#: ../plug-ins/common/max_rgb.c:134
+#: ../plug-ins/common/max_rgb.c:134 ../plug-ins/common/scatter_hsv.c:160
 msgid "Can only operate on RGB drawables."
 msgstr "Umí pracovat pouze s RGB obrazovkami."
 
@@ -5959,28 +5959,48 @@ msgstr "Neplatný řetězec UTF-8 v souboru vzorku '%s'."
 msgid "Save as Pattern"
 msgstr "Zapsat jako vzorek"
 
-#: ../plug-ins/common/pcx.c:147 ../plug-ins/common/pcx.c:166
+#: ../plug-ins/common/pcx.c:129 ../plug-ins/common/pcx.c:148
 msgid "ZSoft PCX image"
 msgstr "Obrázek ZSoft PCX"
 
-#: ../plug-ins/common/pcx.c:319
+#: ../plug-ins/common/pcx.c:354
 #, c-format
 msgid "Could not read header from '%s'"
 msgstr "Nemohu číst hlavičku z '%s'"
 
-#: ../plug-ins/common/pcx.c:326
+#: ../plug-ins/common/pcx.c:363
 #, c-format
 msgid "'%s' is not a PCX file"
 msgstr "'%s' není soubor PCX"
 
-#: ../plug-ins/common/pcx.c:348
-#, c-format
-msgid "Invalid number of bytes per line: %hd"
-msgstr "Neplatný počet bajtů na řádku: %hd"
-
-#: ../plug-ins/common/pcx.c:397
+#: ../plug-ins/common/pcx.c:432
 msgid "Unusual PCX flavour, giving up"
 msgstr "Neobvyklá verze PCX, vzdávám to"
+
+#: ../plug-ins/common/pcx.c:653
+#, c-format
+msgid "Invalid X offset: %d"
+msgstr "Neplatný offset X: %d"
+
+#: ../plug-ins/common/pcx.c:659
+#, c-format
+msgid "Invalid Y offset: %d"
+msgstr "Neplatný offset Y: %d"
+
+#: ../plug-ins/common/pcx.c:665
+#, c-format
+msgid "Right border out of bounds (must be < %d): %d"
+msgstr "Pravý okraj mimo rozsah (musí být < %d): %d"
+
+#: ../plug-ins/common/pcx.c:672
+#, c-format
+msgid "Bottom border out of bounds (must be < %d): %d"
+msgstr "Spodní okraj mimo rozsah (musí být < %d): %d"
+
+#: ../plug-ins/common/pcx.c:728
+#, c-format
+msgid "Writing to file '%s' failed: %s"
+msgstr "Zápis do souboru '%s' selhal: %s"
 
 #: ../plug-ins/common/photocopy.c:155
 msgid "Simulate color distortion produced by a copy machine"
@@ -6196,11 +6216,11 @@ msgstr "Uložit _hodnoty barvy průhledných pixelů"
 msgid "Co_mpression level:"
 msgstr "Úroveň ko_mprese:"
 
-#: ../plug-ins/common/png.c:1895 ../plug-ins/jpeg/jpeg-save.c:1153
+#: ../plug-ins/common/png.c:1895 ../plug-ins/jpeg/jpeg-save.c:1165
 msgid "_Load Defaults"
 msgstr "_Načíst implicitní nastavení"
 
-#: ../plug-ins/common/png.c:1903 ../plug-ins/jpeg/jpeg-save.c:1162
+#: ../plug-ins/common/png.c:1903 ../plug-ins/jpeg/jpeg-save.c:1174
 msgid "S_ave Defaults"
 msgstr "_Uložit implicitní nastavení"
 
@@ -7048,19 +7068,19 @@ msgstr "Nezávisle randomizovat odstín/sytost/hodnotu"
 msgid "HSV Noise..."
 msgstr "HSV šum..."
 
-#: ../plug-ins/common/scatter_hsv.c:218
+#: ../plug-ins/common/scatter_hsv.c:217
 msgid "HSV Noise"
 msgstr "HSV šum"
 
-#: ../plug-ins/common/scatter_hsv.c:354
+#: ../plug-ins/common/scatter_hsv.c:363
 msgid "Scatter HSV"
 msgstr "Roztřepení HSV"
 
-#: ../plug-ins/common/scatter_hsv.c:389
+#: ../plug-ins/common/scatter_hsv.c:399
 msgid "_Holdness:"
 msgstr "_Zadržení:"
 
-#: ../plug-ins/common/scatter_hsv.c:401
+#: ../plug-ins/common/scatter_hsv.c:411
 msgid "H_ue:"
 msgstr "O_dstín:"
 
@@ -11348,19 +11368,19 @@ msgstr "Formát souboru mapy"
 msgid "View Source"
 msgstr "Zobrazit zdroj"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:283
+#: ../plug-ins/jpeg/jpeg-exif.c:288
 msgid "Rotate Image?"
 msgstr "Otočit obrázek?"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:286
+#: ../plug-ins/jpeg/jpeg-exif.c:291
 msgid "_Keep Orientation"
 msgstr "_Zachovat orientaci"
 
-#: ../plug-ins/jpeg/jpeg-exif.c:342
+#: ../plug-ins/jpeg/jpeg-exif.c:347
 msgid "According to the EXIF data, this image is rotated."
 msgstr "Podle dat EXIF je tento obrázek rotován."
 
-#: ../plug-ins/jpeg/jpeg-exif.c:357
+#: ../plug-ins/jpeg/jpeg-exif.c:362
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Chcete, aby jej GIMP rotoval do standardní orientace?"
 
@@ -11373,125 +11393,125 @@ msgstr "JPEG náhled"
 msgid "Opening thumbnail for '%s'"
 msgstr "Otevírá se miniatura '%s'"
 
-#: ../plug-ins/jpeg/jpeg-save.c:196
+#: ../plug-ins/jpeg/jpeg-save.c:198
 #, c-format
 msgid "File size: %02.01f kB"
 msgstr "Velikost souboru: %02.01f kB"
 
-#: ../plug-ins/jpeg/jpeg-save.c:665
+#: ../plug-ins/jpeg/jpeg-save.c:667
 msgid "Calculating file size..."
 msgstr "Počítá se velikost souboru..."
 
-#: ../plug-ins/jpeg/jpeg-save.c:756 ../plug-ins/jpeg/jpeg-save.c:870
+#: ../plug-ins/jpeg/jpeg-save.c:758 ../plug-ins/jpeg/jpeg-save.c:872
 msgid "File size: unknown"
 msgstr "Velikost souboru: neznámá"
 
-#: ../plug-ins/jpeg/jpeg-save.c:814
+#: ../plug-ins/jpeg/jpeg-save.c:816
 msgid "Save as JPEG"
 msgstr "Zapsat jako JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:849
+#: ../plug-ins/jpeg/jpeg-save.c:851
 msgid "_Quality:"
 msgstr "_Kvalita:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:853
+#: ../plug-ins/jpeg/jpeg-save.c:855
 msgid "JPEG quality parameter"
 msgstr "Parametr kvality JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:868
+#: ../plug-ins/jpeg/jpeg-save.c:870
 msgid "Enable preview to obtain the file size."
 msgstr "Povolit náhled pro zjištění velikosti souboru."
 
-#: ../plug-ins/jpeg/jpeg-save.c:879
+#: ../plug-ins/jpeg/jpeg-save.c:881
 msgid "Show _preview in image window"
 msgstr "Zobrazit _náhled v okně obrázku"
 
-#: ../plug-ins/jpeg/jpeg-save.c:920
+#: ../plug-ins/jpeg/jpeg-save.c:922
 msgid "_Smoothing:"
 msgstr "_Vyhlazování:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:933
+#: ../plug-ins/jpeg/jpeg-save.c:935
 msgid "Frequency (rows):"
 msgstr "Frekvence (řádky):"
 
-#: ../plug-ins/jpeg/jpeg-save.c:949
+#: ../plug-ins/jpeg/jpeg-save.c:951
 msgid "Use restart markers"
 msgstr "Používat restartovací značky"
 
-#: ../plug-ins/jpeg/jpeg-save.c:965 ../plug-ins/xjt/xjt.c:877
+#: ../plug-ins/jpeg/jpeg-save.c:967 ../plug-ins/xjt/xjt.c:877
 msgid "Optimize"
 msgstr "Optimalizovat"
 
-#: ../plug-ins/jpeg/jpeg-save.c:978
+#: ../plug-ins/jpeg/jpeg-save.c:980
 msgid "Progressive"
 msgstr "Progresivní"
 
-#: ../plug-ins/jpeg/jpeg-save.c:993
+#: ../plug-ins/jpeg/jpeg-save.c:995
 msgid "Save EXIF data"
 msgstr "Uložit data EXIF"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1010
+#: ../plug-ins/jpeg/jpeg-save.c:1012
 msgid "Save thumbnail"
 msgstr "Uložit miniaturu"
 
 #. XMP metadata
-#: ../plug-ins/jpeg/jpeg-save.c:1026
+#: ../plug-ins/jpeg/jpeg-save.c:1028
 msgid "Save XMP data"
 msgstr "Uložit data XMP"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1041
-msgid "Use custom quality settings"
-msgstr "Použít vlastní nastavení kvality"
+#: ../plug-ins/jpeg/jpeg-save.c:1043
+msgid "Use quality settings from original image"
+msgstr "Použít nastavení kvality z původního obrázku"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1046
+#: ../plug-ins/jpeg/jpeg-save.c:1049
 msgid ""
 "If the original image was loaded from a JPEG file using non-standard quality "
 "settings (quantization tables), enable this option to get almost the same "
 "quality and file size."
 msgstr ""
-"Pokud byl originál obrázku načten z JPEG souboru s nestandardním "
-"nastavením kvality (kvantizačními tabulkami), dosáhnete aktivací "
-"této volby téměř stejné kvality a velikosti souboru."
+"Pokud byl originál obrázku načten z JPEG souboru s nestandardním nastavením "
+"kvality (kvantizačními tabulkami), dosáhnete aktivací této volby téměř "
+"stejné kvality a velikosti souboru."
 
 #. Subsampling
-#: ../plug-ins/jpeg/jpeg-save.c:1070
+#: ../plug-ins/jpeg/jpeg-save.c:1073
 msgid "Subsampling:"
 msgstr "Podvzorkování:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1077
+#: ../plug-ins/jpeg/jpeg-save.c:1080
 msgid "1x1,1x1,1x1 (best quality)"
 msgstr "1x1,1x1,1x1 (nejlepší kvalita)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1078
+#: ../plug-ins/jpeg/jpeg-save.c:1081
 msgid "2x1,1x1,1x1 (4:2:2)"
 msgstr "2x1,1x1,1x1 (4:2:2)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1079
+#: ../plug-ins/jpeg/jpeg-save.c:1082
 msgid "1x2,1x1,1x1"
 msgstr "1x2,1x1,1x1"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1080
+#: ../plug-ins/jpeg/jpeg-save.c:1083
 msgid "2x2,1x1,1x1 (smallest file)"
 msgstr "2x2,1x1,1x1 (nejmenší soubor)"
 
 #. DCT method
-#: ../plug-ins/jpeg/jpeg-save.c:1095
+#: ../plug-ins/jpeg/jpeg-save.c:1107
 msgid "DCT method:"
 msgstr "Metoda DCT:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1101
+#: ../plug-ins/jpeg/jpeg-save.c:1113
 msgid "Fast Integer"
 msgstr "Rychlé celočíselné"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1102
+#: ../plug-ins/jpeg/jpeg-save.c:1114
 msgid "Integer"
 msgstr "Celočíselné"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1103
+#: ../plug-ins/jpeg/jpeg-save.c:1115
 msgid "Floating-Point"
 msgstr "V plovoucí řádové čárce"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1117
+#: ../plug-ins/jpeg/jpeg-save.c:1129
 msgid "Comment"
 msgstr "Komentář"
 
