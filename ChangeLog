@@ -1,3 +1,8 @@
+2007-09-10  Sven Neumann  <sven@gimp.org>
+
+	* etc/ps-menurc: minor update for 2.4. Removed bindings for brush
+	radius as these keys are now bound by default.
+
 2007-09-08  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpforegroundselecttoolundo.c: removed unused variable.

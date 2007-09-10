@@ -1,7 +1,7 @@
-; This file installs keyboard shortcuts from Photoshop 6 in GIMP 2.2.
+; This file installs keyboard shortcuts from Photoshop 6 in GIMP.
 ;
 ; Rename it to 'menurc' and place it into your personal GIMP directory:
-; ~/.gimp-2.2 folder (Linux) or C:\Documents and Settings\<user>\.gimp-2.2
+; ~/.gimp-2.4 folder (Linux) or C:\Documents and Settings\<user>\.gimp-2.4
 ; folder (Windows).
 ;
 ; There is a web-page describing these keybindings at
@@ -104,14 +104,12 @@
 (gtk_accel_path "<Actions>/layers/layers-merge-down" "<Control>e")
 (gtk_accel_path "<Actions>/layers/layers-raise" "<Control>bracketright")
 (gtk_accel_path "<Actions>/layers/layers-anchor" "<Alt>h")
-(gtk_accel_path "<Actions>/context/context-brush-radius-decrease-skip" "bracketleft")
 (gtk_accel_path "<Actions>/edit/edit-named-cut" "")
 (gtk_accel_path "<Actions>/file/file-revert" "F12")
 (gtk_accel_path "<Actions>/tools/tools-smudge" "")
 (gtk_accel_path "<Actions>/drawable/drawable-desaturate" "<Shift><Control>u")
 (gtk_accel_path "<Actions>/layers/layers-select-top" "<Alt>braceright")
 (gtk_accel_path "<Actions>/dialogs/dialogs-document-history" "<Shift><Control>h")
-(gtk_accel_path "<Actions>/context/context-brush-radius-increase-skip" "bracketright")
 (gtk_accel_path "<Actions>/select/select-float" "")
 (gtk_accel_path "<Actions>/drawable/drawable-invert" "<Control>i")
 (gtk_accel_path "<Actions>/context/context-brush-select-previous" "comma")
