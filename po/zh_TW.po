@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp 2.2.9\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-07-07 10:24+0800\n"
-"PO-Revision-Date: 2005-07-07 19:32+0800\n"
+"PO-Revision-Date: 2007-09-10 17:14+0800\n"
 "Last-Translator: Abel Cheung <abel@oaka.org>\n"
 "Language-Team: Chinese (traditional) <communit@linuxhall.org>\n"
 "MIME-Version: 1.0\n"
@@ -10700,11 +10700,11 @@ msgstr "XCF 錯誤：不支援 XCF 檔案版本 %d"
 
 #: ../data/misc/gimp.desktop.in.in.h:1
 msgid "Create and edit images or photographs"
-msgstr "製作/修改影像或相片"
+msgstr "建立圖像與編輯照片"
 
 #: ../data/misc/gimp.desktop.in.in.h:2
 msgid "Image Editor"
-msgstr "色盤編輯程序"
+msgstr "影像編輯器"
 
 #~ msgid "Transformations do not work on layers that contain layer masks."
 #~ msgstr "影像變換不適用於有圖層遮罩的圖層上。"
