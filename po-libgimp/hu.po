@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-14 09:46+0100\n"
+"POT-Creation-Date: 2007-09-03 23:51+0100\n"
 "PO-Revision-Date: 2007-09-02 20:18+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
@@ -30,12 +30,9 @@ msgid "_Browse..."
 msgstr "_Tallózás..."
 
 #: ../libgimp/gimpexport.c:217 ../libgimp/gimpexport.c:253
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s plug-in can't handle layers"
-msgstr ""
-"bővítmény"
-"%s nem kezeli a rétegeket"
+msgstr "bővítmény%s nem kezeli a rétegeket"
 
 #: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
@@ -43,20 +40,16 @@ msgid "Merge Visible Layers"
 msgstr "Látható rétegek összefésülése"
 
 #: ../libgimp/gimpexport.c:226
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s plug-in can't handle layer offsets, size or opacity"
 msgstr ""
-"bővítmény"
-"%s nem kezeli a rétegeltolásokat, a méretet vagy az átlátszatlanságot"
+"bővítmény%s nem kezeli a rétegeltolásokat, a méretet vagy az "
+"átlátszatlanságot"
 
 #: ../libgimp/gimpexport.c:235 ../libgimp/gimpexport.c:244
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s plug-in can only handle layers as animation frames"
-msgstr ""
-"bővítmény"
-"%s a rétegeket csak animáció képkockájaként kezeli"
+msgstr "bővítmény%s a rétegeket csak animáció képkockájaként kezeli"
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
@@ -68,32 +61,23 @@ msgid "Flatten Image"
 msgstr "Kép lapítása"
 
 #: ../libgimp/gimpexport.c:262
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s plug-in can't handle transparency"
-msgstr ""
-"bővítmény"
-"%s nem kezeli az átlátszóságot"
+msgstr "bővítmény%s nem kezeli az átlátszóságot"
 
 #: ../libgimp/gimpexport.c:271
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s plug-in can't handle layer masks"
-msgstr ""
-"bővítmény"
-"%s nem kezeli a rétegmaszkokat"
+msgstr "bővítmény%s nem kezeli a rétegmaszkokat"
 
 #: ../libgimp/gimpexport.c:272
 msgid "Apply Layer Masks"
 msgstr "Rétegmaszkok alkalmazása"
 
 #: ../libgimp/gimpexport.c:280
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s plug-in can only handle RGB images"
-msgstr ""
-"bővítmény"
-"%s csak RGB képeket kezel"
+msgstr "bővítmény%s csak RGB képeket kezel"
 
 #: ../libgimp/gimpexport.c:281 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:328
@@ -101,12 +85,9 @@ msgid "Convert to RGB"
 msgstr "Átalakítás RGB-be"
 
 #: ../libgimp/gimpexport.c:289
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s plug-in can only handle grayscale images"
-msgstr ""
-"bővítmény"
-"%s csak szürkeárnyalatos képeket kezel"
+msgstr "bővítmény%s csak szürkeárnyalatos képeket kezel"
 
 #: ../libgimp/gimpexport.c:290 ../libgimp/gimpexport.c:319
 #: ../libgimp/gimpexport.c:340
@@ -114,12 +95,9 @@ msgid "Convert to Grayscale"
 msgstr "Átalakítás szürkeárnyalatosba"
 
 #: ../libgimp/gimpexport.c:298
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s plug-in can only handle indexed images"
-msgstr ""
-"bővítmény"
-"%s csak indexelt képeket kezel"
+msgstr "bővítmény%s csak indexelt képeket kezel"
 
 #: ../libgimp/gimpexport.c:299 ../libgimp/gimpexport.c:328
 #: ../libgimp/gimpexport.c:338
@@ -131,12 +109,9 @@ msgstr ""
 "(a finomhangoláshoz válassza a kézi beállítást)"
 
 #: ../libgimp/gimpexport.c:308
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr ""
-"bővítmény"
-"%s csak bitképes (kétszínű) indexelt képeket kezel"
+msgstr "bővítmény%s csak bitképes (kétszínű) indexelt képeket kezel"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -147,36 +122,24 @@ msgstr ""
 "(a finomhangoláshoz válassza a kézi beállítást)"
 
 #: ../libgimp/gimpexport.c:318
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s plug-in can only handle RGB or grayscale images"
-msgstr ""
-"bővítmény"
-"%s csak RGB vagy szürkeárnyalatos képeket kezel"
+msgstr "bővítmény%s csak RGB vagy szürkeárnyalatos képeket kezel"
 
 #: ../libgimp/gimpexport.c:327
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s plug-in  can only handle RGB or indexed images"
-msgstr ""
-"bővítmény"
-"%s csak RGB vagy indexelt képeket kezel"
+msgstr "bővítmény%s csak RGB vagy indexelt képeket kezel"
 
 #: ../libgimp/gimpexport.c:337
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s plug-in can only handle grayscale or indexed images"
-msgstr ""
-"bővítmény"
-"%s csak szürkeárnyalatos vagy indexelt képeket kezel"
+msgstr "bővítmény%s csak szürkeárnyalatos vagy indexelt képeket kezel"
 
 #: ../libgimp/gimpexport.c:348
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid "%s plug-in needs an alpha channel"
-msgstr ""
-"bővítmény"
-"%s számára szükséges egy alfa-csatorna"
+msgstr "bővítmény%s számára szükséges egy alfa-csatorna"
 
 #: ../libgimp/gimpexport.c:349
 msgid "Add Alpha Channel"
@@ -215,7 +178,8 @@ msgstr ""
 #. the footline
 #: ../libgimp/gimpexport.c:573
 msgid "The export conversion won't modify your original image."
-msgstr "Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
+msgstr ""
+"Az exportáláshoz szükséges átalakítások nem módosítják az eredeti képet."
 
 #: ../libgimp/gimpexport.c:673
 #, c-format
@@ -797,7 +761,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:206
+#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:407
 msgid "(invalid UTF-8 string)"
 msgstr "(érvénytelen UTF-8 karakterlánc)"
 
@@ -815,9 +779,9 @@ msgid ""
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Ha be van kapcsolva, akkor a GIMP az ablakkezelő megjelenítési "
-"színprofilját használja. Ekkor a beállított monitorprofil "
-"csak probléma esetén lesz használva."
+"Ha be van kapcsolva, akkor a GIMP az ablakkezelő megjelenítési színprofilját "
+"használja. Ekkor a beállított monitorprofil csak probléma esetén lesz "
+"használva."
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
 msgid "The default RGB working space color profile."
@@ -840,8 +804,8 @@ msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
 msgstr ""
-"Megadja, hogy a színek hogyan legyenek átalakítva az RGB munkaterületről "
-"a nyomtatásszimulációs eszközre."
+"Megadja, hogy a színek hogyan legyenek átalakítva az RGB munkaterületről a "
+"nyomtatásszimulációs eszközre."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -902,6 +866,7 @@ msgstr "\"%s\" kifejezés elemzése közben: %s"
 #: ../libgimpconfig/gimpconfig-iface.c:454
 #: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
+#: ../libgimpwidgets/gimpcolorprofilestore.c:593
 msgid "fatal parse error"
 msgstr "végzetes feldolgozási hiba"
 
@@ -982,8 +947,7 @@ msgid "Not loaded"
 msgstr "Nincs betöltve"
 
 #: ../libgimpthumb/gimpthumb-utils.c:125
-#, c-format
-#, fuzzy
+#, fuzzy, c-format
 msgid ""
 "Cannot determine a valid home directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
@@ -1023,6 +987,14 @@ msgstr "Fe_kete"
 msgid "_White"
 msgstr "_Fehér"
 
+#: ../libgimpwidgets/gimpcolorprofilestore.c:142
+msgid "Select color profile from disk..."
+msgstr ""
+
+#: ../libgimpwidgets/gimpcolorprofilestore.c:278
+msgid "profile|None"
+msgstr ""
+
 #: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
 msgstr "Színskála"
@@ -1040,8 +1012,8 @@ msgid ""
 "Hexadecimal color notation as used in HTML and CSS.  This entry also accepts "
 "CSS color names."
 msgstr ""
-"Hexadecimális színmegadás, amely például a HTML-ben és a CSS-ben használatos. "
-"Ez a bejegyzés elfogad CSS-színneveket is."
+"Hexadecimális színmegadás, amely például a HTML-ben és a CSS-ben "
+"használatos. Ez a bejegyzés elfogad CSS-színneveket is."
 
 #: ../libgimpwidgets/gimpcolorselection.c:292
 msgid "HTML _notation:"
@@ -1343,7 +1315,8 @@ msgstr "Tritanopia (a kék szín érzékelésének hiánya)"
 
 #: ../modules/cdisplay_colorblind.c:200
 msgid "Color deficit simulation filter (Brettel-Vienot-Mollon algorithm)"
-msgstr "Színérzékelési problémát szimuláló szűrő (Brettel-Vienot-Mollon-módszer)"
+msgstr ""
+"Színérzékelési problémát szimuláló szűrő (Brettel-Vienot-Mollon-módszer)"
 
 #: ../modules/cdisplay_colorblind.c:292
 msgid "Color Deficient Vision"
@@ -1380,9 +1353,7 @@ msgstr "Kontraszt_ciklusok:"
 #: ../modules/cdisplay_lcms.c:105
 #, fuzzy
 msgid "Color management display filter using ICC color profiles"
-msgstr ""
-"Színkezelés"
-"ICC színprofilt használó \"színes próbanyomat\" szűrő"
+msgstr "SzínkezelésICC színprofilt használó \"színes próbanyomat\" szűrő"
 
 #: ../modules/cdisplay_lcms.c:166
 msgid "Color Management"
@@ -1393,8 +1364,8 @@ msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
 msgstr ""
-"Ez a szűrő a beállítási párbeszédablak színkezelési részéből veszi "
-"a beállításait."
+"Ez a szűrő a beállítási párbeszédablak színkezelési részéből veszi a "
+"beállításait."
 
 #: ../modules/cdisplay_lcms.c:249
 msgid "Mode of operation:"
@@ -1440,43 +1411,43 @@ msgstr "_Feketepont-kompenzáció"
 msgid "CMYK color selector"
 msgstr "CMYK színválasztó"
 
-#: ../modules/colorsel_cmyk.c:130
+#: ../modules/colorsel_cmyk.c:130 ../modules/colorsel_cmyk_lcms.c:154
 msgid "CMYK"
 msgstr "CMYK"
 
 #. Cyan
-#: ../modules/colorsel_cmyk.c:148
+#: ../modules/colorsel_cmyk.c:148 ../modules/colorsel_cmyk_lcms.c:171
 msgid "_C"
 msgstr "_C"
 
 #. Magenta
-#: ../modules/colorsel_cmyk.c:150
+#: ../modules/colorsel_cmyk.c:150 ../modules/colorsel_cmyk_lcms.c:173
 msgid "_M"
 msgstr "_M"
 
 #. Yellow
-#: ../modules/colorsel_cmyk.c:152
+#: ../modules/colorsel_cmyk.c:152 ../modules/colorsel_cmyk_lcms.c:175
 msgid "_Y"
 msgstr "_Y"
 
 #. Key (Black)
-#: ../modules/colorsel_cmyk.c:154
+#: ../modules/colorsel_cmyk.c:154 ../modules/colorsel_cmyk_lcms.c:177
 msgid "_K"
 msgstr "_K"
 
-#: ../modules/colorsel_cmyk.c:158
+#: ../modules/colorsel_cmyk.c:158 ../modules/colorsel_cmyk_lcms.c:181
 msgid "Cyan"
 msgstr "Ciánkék"
 
-#: ../modules/colorsel_cmyk.c:159
+#: ../modules/colorsel_cmyk.c:159 ../modules/colorsel_cmyk_lcms.c:182
 msgid "Magenta"
 msgstr "Bíborvörös"
 
-#: ../modules/colorsel_cmyk.c:160
+#: ../modules/colorsel_cmyk.c:160 ../modules/colorsel_cmyk_lcms.c:183
 msgid "Yellow"
 msgstr "Sárga"
 
-#: ../modules/colorsel_cmyk.c:161
+#: ../modules/colorsel_cmyk.c:161 ../modules/colorsel_cmyk_lcms.c:184
 msgid "Black"
 msgstr "Fekete"
 
@@ -1488,6 +1459,21 @@ msgstr "_Fekete kivonása:"
 #: ../modules/colorsel_cmyk.c:212
 msgid "The percentage of black to pull out of the colored inks."
 msgstr "A színes tintákból kivonandó fekete százaléka."
+
+#: ../modules/colorsel_cmyk_lcms.c:91
+#, fuzzy
+msgid "CMYK color selector (using color profile)"
+msgstr "ICC színprofilt használó \"színes próbanyomat\" szűrő"
+
+#: ../modules/colorsel_cmyk_lcms.c:396
+#, fuzzy
+msgid "Profile: (none)"
+msgstr "_Profil:"
+
+#: ../modules/colorsel_cmyk_lcms.c:409
+#, fuzzy, c-format
+msgid "Profile: %s"
+msgstr "_Profil:"
 
 #: ../modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
@@ -1849,4 +1835,3 @@ msgstr ""
 #: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr ""
-
