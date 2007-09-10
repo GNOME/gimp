@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-14 09:45+0100\n"
-"PO-Revision-Date: 2007-09-03 03:46+0200\n"
+"POT-Creation-Date: 2007-09-03 23:59+0100\n"
+"PO-Revision-Date: 2007-09-09 00:43+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -21,37 +21,37 @@ msgstr ""
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 "X-Generator: KBabel 1.11.4\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:144
-#: ../plug-ins/script-fu/script-fu-console.c:213
+#: ../plug-ins/script-fu/script-fu-console.c:135
+#: ../plug-ins/script-fu/script-fu-console.c:202
 msgid "Script-Fu Console"
 msgstr "Script-Fu-konzol"
 
-#: ../plug-ins/script-fu/script-fu-console.c:209
+#: ../plug-ins/script-fu/script-fu-console.c:198
 msgid "Welcome to TinyScheme"
 msgstr "Üdvözli a TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:215
+#: ../plug-ins/script-fu/script-fu-console.c:204
 msgid "Interactive Scheme Development"
 msgstr "Interaktív Scheme-fejlesztés"
 
-#: ../plug-ins/script-fu/script-fu-console.c:251
+#: ../plug-ins/script-fu/script-fu-console.c:240
 msgid "_Browse..."
 msgstr "_Tallózás..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:313
+#: ../plug-ins/script-fu/script-fu-console.c:300
 msgid "Save Script-Fu Console Output"
 msgstr "Script-Fu-konzol kimenetének mentése"
 
-#: ../plug-ins/script-fu/script-fu-console.c:360
+#: ../plug-ins/script-fu/script-fu-console.c:347
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu-console.c:389
+#: ../plug-ins/script-fu/script-fu-console.c:376
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu-eljárásböngésző"
 
-#: ../plug-ins/script-fu/script-fu-console.c:730
+#: ../plug-ins/script-fu/script-fu-console.c:719
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr "A Script-Fu kiértékelő módja csak nem-interaktív meghívást tesz lehetővé"
 
@@ -108,7 +108,7 @@ msgstr "Script-Fu színátmenet-választó"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu ecsetválasztó"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:668
+#: ../plug-ins/script-fu/script-fu-scripts.c:656
 #, fuzzy, c-format
 msgid ""
 "Error while executing\n"
@@ -152,120 +152,118 @@ msgstr "Kiszolgáló a Script-Fu távoli működtetéséhez"
 msgid "_Start Server..."
 msgstr "Kiszolgáló _indítása..."
 
-#: ../plug-ins/script-fu/script-fu.c:301
+#: ../plug-ins/script-fu/script-fu.c:298
 msgid "_GIMP Online"
 msgstr "_GIMP-webhely"
 
-#: ../plug-ins/script-fu/script-fu.c:302
+#: ../plug-ins/script-fu/script-fu.c:299
 msgid "_User Manual"
 msgstr "_Felhasználói kézikönyv"
 
-#: ../plug-ins/script-fu/script-fu.c:305
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:307
+#: ../plug-ins/script-fu/script-fu.c:304
 msgid "_Buttons"
 msgstr "_Gombok"
 
-#: ../plug-ins/script-fu/script-fu.c:309
+#: ../plug-ins/script-fu/script-fu.c:306
 msgid "_Logos"
 msgstr "_Logók"
 
-#: ../plug-ins/script-fu/script-fu.c:311
+#: ../plug-ins/script-fu/script-fu.c:308
 msgid "_Misc"
 msgstr "_Vegyes"
 
-#: ../plug-ins/script-fu/script-fu.c:313
+#: ../plug-ins/script-fu/script-fu.c:310
 msgid "_Patterns"
 msgstr "M_inták"
 
-#: ../plug-ins/script-fu/script-fu.c:315
+#: ../plug-ins/script-fu/script-fu.c:312
 msgid "_Test"
 msgstr "_Teszt"
 
-#: ../plug-ins/script-fu/script-fu.c:317
+#: ../plug-ins/script-fu/script-fu.c:314
 msgid "_Utilities"
 msgstr "Segéd_programok"
 
-#: ../plug-ins/script-fu/script-fu.c:319
+#: ../plug-ins/script-fu/script-fu.c:316
 msgid "_Web Page Themes"
 msgstr "_Weblap-témák"
 
-#: ../plug-ins/script-fu/script-fu.c:321
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu.c:318
 msgid "_Alien Glow"
-msgstr "Idegen r_agyogás..."
+msgstr "Idegen r_agyogás"
 
-#: ../plug-ins/script-fu/script-fu.c:323
-#, fuzzy
+#: ../plug-ins/script-fu/script-fu.c:320
 msgid "_Beveled Pattern"
-msgstr "Minta"
+msgstr "_Térhatású minta"
+
+#: ../plug-ins/script-fu/script-fu.c:322
+msgid "_Classic.Gimp.Org"
+msgstr "_Classic.Gimp.Org"
 
 #: ../plug-ins/script-fu/script-fu.c:325
-msgid "_Classic.Gimp.Org"
-msgstr ""
-
-#: ../plug-ins/script-fu/script-fu.c:328
 msgid "Alpha to _Logo"
 msgstr "Alfát lo_góvá"
 
-#: ../plug-ins/script-fu/script-fu.c:330
+#: ../plug-ins/script-fu/script-fu.c:327
 msgid "An_imation"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:332
+#: ../plug-ins/script-fu/script-fu.c:329
 msgid "_Animators"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:334
+#: ../plug-ins/script-fu/script-fu.c:331
 msgid "_Artistic"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:336
+#: ../plug-ins/script-fu/script-fu.c:333
 #, fuzzy
 msgid "_Blur"
 msgstr "X-elmosás"
 
-#: ../plug-ins/script-fu/script-fu.c:338
+#: ../plug-ins/script-fu/script-fu.c:335
 msgid "_Decor"
 msgstr "_Dekor"
 
-#: ../plug-ins/script-fu/script-fu.c:340
+#: ../plug-ins/script-fu/script-fu.c:337
 #, fuzzy
 msgid "_Effects"
 msgstr "_Xach-effektus..."
 
-#: ../plug-ins/script-fu/script-fu.c:342
+#: ../plug-ins/script-fu/script-fu.c:339
 msgid "En_hance"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:344
+#: ../plug-ins/script-fu/script-fu.c:341
 msgid "_Light and Shadow"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:346
+#: ../plug-ins/script-fu/script-fu.c:343
 #, fuzzy
 msgid "S_hadow"
 msgstr "Árnyék"
 
-#: ../plug-ins/script-fu/script-fu.c:348
+#: ../plug-ins/script-fu/script-fu.c:345
 msgid "_Render"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:350
+#: ../plug-ins/script-fu/script-fu.c:347
 msgid "_Alchemy"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:353
+#: ../plug-ins/script-fu/script-fu.c:350
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Összes elérhető Script-Fu-parancsfájl újraolvasása"
 
-#: ../plug-ins/script-fu/script-fu.c:358
+#: ../plug-ins/script-fu/script-fu.c:355
 msgid "_Refresh Scripts"
 msgstr "Parancsfájlok _frissítése"
 
-#: ../plug-ins/script-fu/script-fu.c:381
+#: ../plug-ins/script-fu/script-fu.c:378
 #, fuzzy
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
@@ -283,7 +281,9 @@ msgstr "Buckaleképezés (alfa-réteg) elmosásának sugara"
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
 #, fuzzy
 msgid "Create a logo with outlined text and a drop shadow"
-msgstr "Vetett árnyék"
+msgstr ""
+"Logó létrehozása"
+"Vetett árnyék"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:6
@@ -374,9 +374,10 @@ msgid "Outline blur radius"
 msgstr "Körvonal elmosásának sugara"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
-#, fuzzy
 msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
-msgstr "Vetett árnyék"
+msgstr ""
+"A kijelölt terület (vagy az alfa) körvonalainak megrajzolása "
+"egy mintával, továbbá vetett árnyék hozzáadása"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -526,7 +527,7 @@ msgstr "Le_sarkítás..."
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
 msgid "Add a beveled border to an image"
-msgstr ""
+msgstr "Rézsútos keret hozzáadása egy képhez"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
@@ -548,7 +549,7 @@ msgstr "Kere_t hozzáadása..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:2
 msgid "Add a border around an image"
-msgstr ""
+msgstr "Keret hozzáadása egy kép köré"
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:3
 msgid "Border X size"
@@ -567,8 +568,9 @@ msgid "Delta value on color"
 msgstr "Delta-érték a színen"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
+#, fuzzy
 msgid "Create an arrow graphic with an eerie glow for web pages"
-msgstr ""
+msgstr "Titokzatos ragyogás"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
@@ -636,8 +638,9 @@ msgid "Bar length"
 msgstr "Téglalap hosszúsága"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+#, fuzzy
 msgid "Create an Hrule graphic with an eerie glow for web pages"
-msgstr ""
+msgstr "Titokzatos ragyogás"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
@@ -645,8 +648,9 @@ msgid "_Hrule..."
 msgstr "_Vízszintes elválasztó..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+#, fuzzy
 msgid "Create a bullet graphic with an eerie glow for web pages"
-msgstr ""
+msgstr "Titokzatos ragyogás"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -665,8 +669,9 @@ msgid "B_utton..."
 msgstr "G_omb..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
+#, fuzzy
 msgid "Create a button graphic with an eerie glow for web pages"
-msgstr ""
+msgstr "Titokzatos ragyogás"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow radius"
@@ -694,15 +699,18 @@ msgstr "Szövegszín"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
 msgid "Add an eerie glow around the selected region (or alpha)"
-msgstr ""
+msgstr "Titokzatos ragyogás hozzáadása a kijelölt terület köré (vagy az alfa köré)"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
 msgid "Alien _Glow..."
 msgstr "Idegen r_agyogás..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
+#, fuzzy
 msgid "Create a logo with an alien glow around the text"
 msgstr ""
+"Logó létrehozása "
+"Idegen ragyogás"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
 msgid "Glow size (pixels * 4)"
@@ -710,15 +718,16 @@ msgstr "Ragyogás mérete (képpont * 4)"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
 msgid "Add psychedelic outlines to the selected region (or alpha)"
-msgstr ""
+msgstr "Pszichedelikus körvonalak hozzáadása a kijelölt területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "Alien _Neon..."
 msgstr "_Idegen neon..."
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
+#, fuzzy
 msgid "Create a logo with psychedelic outlines around the text"
-msgstr ""
+msgstr "Logó létrehozása a szöveg körüli pszichedelikus körvonalakkal"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
 msgid "Fade away"
@@ -737,34 +746,41 @@ msgid "Width of gaps"
 msgstr "Rések szélessége"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
-#, fuzzy
 msgid ""
 "Add a gradient effect, a drop shadow, and a background to the selected "
 "region (or alpha)"
-msgstr "Vetett árnyék"
+msgstr ""
+"Színátmenet-effektus, vetett árnyék és háttér hozzáadása a kijelölt "
+"területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 #, fuzzy
 msgid ""
 "Create a plain text logo with a gradient effect, a drop shadow, and a "
 "background"
-msgstr "Vetett árnyék"
+msgstr ""
+"színátmenet-effektus"
+"Vetett árnyék "
+"háttér"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
-msgstr "_Egyszerű I..."
+msgstr "_Egyszerű 1..."
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:1
 msgid "Add a shadow and a highlight to the selected region (or alpha)"
-msgstr ""
+msgstr "Árnyék és kiemelés hozzáadása a kijelölt területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 msgid "B_asic II..."
-msgstr "E_gyszerű II..."
+msgstr "E_gyszerű 2..."
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:4
+#, fuzzy
 msgid "Create a simple logo with a shadow and a highlight"
 msgstr ""
+"logó létrehozása"
+"Árnyék és kiemelés"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:1
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
@@ -774,7 +790,7 @@ msgstr "Rézsútos rész szélessége"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
 msgid "Create a simple, beveled button graphic for webpages"
-msgstr ""
+msgstr "Egyszerű rézsútos gombrajzolat létrehozása weblapokhoz"
 
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
 msgid "Lower-right color"
@@ -796,11 +812,11 @@ msgstr "Bal felső szín"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
 msgid "Create a beveled pattern arrow for webpages"
-msgstr ""
+msgstr "Rézsútos nyíl létrehozása weblapokhoz"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
 msgid "Create a beveled pattern bullet for webpages"
-msgstr ""
+msgstr "Rézsútos golyó létrehozása weblapokhoz"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
@@ -814,11 +830,11 @@ msgstr "Átlátszó háttér"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
 msgid "Create a beveled pattern button for webpages"
-msgstr ""
+msgstr "Rézsútos gomb létrehozása weblapokhoz"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
 msgid "Create a beveled pattern heading for webpages"
-msgstr ""
+msgstr "Rézsútos fejléc létrehozása weblapokhoz"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
 msgid "H_eading..."
@@ -826,7 +842,7 @@ msgstr "_Fejléc..."
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
 msgid "Create a beveled pattern hrule for webpages"
-msgstr ""
+msgstr "Rézsútos vízszintes vonal létrehozása weblapokhoz"
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
@@ -845,13 +861,15 @@ msgstr "Szélesség"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:1
 msgid "Blend Animation needs at least three source layers"
-msgstr ""
+msgstr "Animációként való keveréshez szükség van legalább három forrásrétegre"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
 msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
 msgstr ""
+"Köztes rétegek létrehozása kettő vagy több rétegnek egy háttér előtti, "
+"animációként való keveréséhez"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Intermediate frames"
@@ -867,13 +885,15 @@ msgstr "Elmosás maximális sugara"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
 msgid "_Blend..."
-msgstr "_Színkeverés..."
+msgstr "Keveré_s..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
 msgid ""
 "Add blended backgrounds, highlights, and shadows to the selected region (or "
 "alpha)"
 msgstr ""
+"Átmenetes hátterek, kiemelések és árnyékok hozzáadása "
+"a kijelölt területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
@@ -885,7 +905,7 @@ msgstr "Színátmenet-mód"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
 msgid "Create a logo with blended backgrounds, highlights, and shadows"
-msgstr ""
+msgstr "Logó létrehozása átmenetes hátterekkel, kiemelésekkel és árnyékokkal"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "Custom Gradient"
@@ -928,7 +948,7 @@ msgstr "Eltolás (képpont)"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
 msgid "Add 'cow spots' to the selected region (or alpha)"
-msgstr ""
+msgstr "\"Tehénfoltok\" hozzáadása a kijelölt területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
@@ -941,7 +961,7 @@ msgstr "_Tehén..."
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Create a logo with text in the style of 'cow spots'"
-msgstr ""
+msgstr "Logó létrehozása szöveggel \"tehénfoltos\" stílusban"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 msgid "Spots density X"
@@ -964,10 +984,11 @@ msgid "B_urn-In..."
 msgstr "_Beégetés..."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
+#, fuzzy
 msgid ""
 "Burn-In: Needs two layers in total!\\nA foreground text layer with "
 "transparency and a background layer."
-msgstr ""
+msgstr "háttér"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Corona width"
@@ -978,6 +999,8 @@ msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
 msgstr ""
+"Köztes rétegek létrehozása két réteg közti animált beégésszerű "
+"átmenet ábrázolásához"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout"
@@ -1056,10 +1079,13 @@ msgid "Carved..."
 msgstr "Vésett..."
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
+#, fuzzy
 msgid ""
 "Create a logo with text raised above or carved in to the specified "
 "background image"
 msgstr ""
+"Logó létrehozása "
+"háttér"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
@@ -1071,11 +1097,14 @@ msgstr "Kréta színe"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:3
 msgid "Create a chalk drawing effect for the selected region (or alpha)"
-msgstr ""
+msgstr "Krétarajz-szerű hatás létrehozása a kijelölt területen (vagy az alfán)"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:4
+#, fuzzy
 msgid "Create a logo resembling chalk scribbled on a blackboard"
 msgstr ""
+"Krétarajz-szerű hatás létrehozása a kijelölt területen (vagy az alfán)"
+"Logó létrehozása"
 
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:8
 msgid "_Chalk..."
@@ -1083,7 +1112,7 @@ msgstr "K_réta..."
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
 msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Mállott fafaragást ábrázoló hatás hozzáadása a kijelölt területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "Blur amount"
@@ -1099,7 +1128,7 @@ msgstr "Morzsolás mértéke"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
 msgid "Create a logo resembling a chipped wood carving"
-msgstr ""
+msgstr "Mállott fafaragásra hasonlító logó létrehozása"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Drop shadow"
@@ -1122,6 +1151,8 @@ msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
 msgstr ""
+"Króm-effektus hozzáadása a kijelölt területhez (vagy az alfához) "
+"egy megadott (szürkeárnyalatos) stencilt használva"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
@@ -1165,15 +1196,18 @@ msgstr "Stencil-kró_m..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
 msgid "Add a simple chrome effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Egyszerű króm-effektus hozzáadása a kijelölt területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 msgid "C_hrome..."
 msgstr "Kró_m..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+#, fuzzy
 msgid "Create a simplistic, but cool, chromed logo"
 msgstr ""
+"Egyszerű króm-effektus hozzáadása a kijelölt területhez (vagy az alfához)"
+"logó létrehozása"
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:8
 msgid "Offsets (pixels * 2)"
@@ -1186,6 +1220,8 @@ msgstr "Áramkör-kezdőérték"
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
 msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
 msgstr ""
+"A kijelölt terület (vagy az alfa) kitöltése az áramköri lapokon levőkhöz "
+"hasonló mintákkal"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:3
 #: ../plug-ins/script-fu/scripts/lava.scm.h:3
@@ -1214,7 +1250,7 @@ msgstr "Ára_mkör..."
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:1
 msgid "Add a cloth-like texture to the selected region (or alpha)"
-msgstr ""
+msgstr "Ruhaanyag-szerű textúra hozzáadása a kijelölt területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:2
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:1
@@ -1245,13 +1281,12 @@ msgstr "_Szövetszerűvé tétel..."
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:1
 msgid "Add realistic looking coffee stains to the image"
-msgstr ""
+msgstr "Valósághű kinézetű kávéfoltok hozzáadása a képhez"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
-#, fuzzy
 msgid "Darken only\\n(Better, but only for images with a lot of white)"
 msgstr ""
-"Csak sötétítés\n"
+"Csak sötétítés\\n"
 "(jobb, de csak sok fehéret tartalmazó képeknél)"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
@@ -1267,14 +1302,19 @@ msgid ""
 "Add a comic-book effect to the selected region (or alpha) by outlining and "
 "filling with a gradient"
 msgstr ""
+"Képregény-effektus hozzáadása a kijelölt területhez (vagy az alfához) "
+"körvonalazással és színátmenettel való kitöltéssel"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
 msgstr "_Képregény..."
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
+#, fuzzy
 msgid "Create a comic-book style logo by outlining and filling with a gradient"
 msgstr ""
+"logó létrehozása"
+"színátmenet"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
 msgid "Outline color"
@@ -1290,14 +1330,17 @@ msgid ""
 "Add a metallic effect to the selected region (or alpha) with reflections and "
 "perspective shadows"
 msgstr ""
+"Fémes hatás hozzáadása a kijelölt területhez (vagy az alfához) "
+"tükröződésekkel és perspektivikus árnyékokkal"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
 msgstr "_Hűvös fém..."
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
+#, fuzzy
 msgid "Create a metallic logo with reflections and perspective shadows"
-msgstr ""
+msgstr "Fémes logó létrehozása tükröződésekkel és perspektivikus árnyékokkal"
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
@@ -1309,8 +1352,11 @@ msgid "Background image"
 msgstr "Háttérkép"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
+#, fuzzy
 msgid "Create a logo with a crystal/gel effect displacing the image underneath"
 msgstr ""
+"Logó létrehozása "
+"effektus"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 msgid "Crystal..."
@@ -1318,11 +1364,11 @@ msgstr "Kristály..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:1
 msgid "Difference Clouds..."
-msgstr ""
+msgstr "\"Különbség\"-felhők..."
 
 #: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
 msgid "Solid noise applied with Difference layer mode"
-msgstr ""
+msgstr "\"Különbség\" rétegmódban létrehozott egyenletes zaj"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "Distress the selection"
@@ -1353,9 +1399,8 @@ msgid "_Distort..."
 msgstr "_Torzítás..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-#, fuzzy
 msgid "Add a drop shadow to the selected region (or alpha)"
-msgstr "Vetett árnyék"
+msgstr "Vetett árnyék hozzáadása a kijelölt területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
@@ -1440,43 +1485,6 @@ msgstr "Sorok/oszlopok"
 msgid "_Erase Every Other Row..."
 msgstr "_Minden második sor törlése..."
 
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:1
-msgid "Apply generated layermask"
-msgstr "Generált rétegmaszk alkalmazása"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:2
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
-msgid "Border size"
-msgstr "Keret mérete"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:3
-msgid "Clear unselected maskarea"
-msgstr "Nem kijelölt maszkterület törlése"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:4
-msgid "Create a layermask that fades the edges of the selected region (or alpha)"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:6
-#, no-c-format
-msgid "Fade from %"
-msgstr "Elhalványítás kezdete, %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:8
-#, fuzzy, no-c-format
-msgid "Fade to %"
-msgstr "Elhalványítás vége, %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:9
-msgid "Use growing selection"
-msgstr "Növekvő kijelölés használata"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:10
-#, fuzzy
-msgid "_Fade to Layer Mask..."
-msgstr "_ASCII-ből képréteg..."
-
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 #, fuzzy
 msgid "Create an image filled with a Land Pattern"
@@ -1527,8 +1535,8 @@ msgstr "Fehér alapon fekete"
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
 msgid "Create an image filled with previews of fonts matching a fontname filter"
 msgstr ""
-"Kép létrehozása egy adott betűkészlet-szűrőnek megfelelő "
-"betűkészletek előnézeteivel"
+"Kép létrehozása egy adott betűkészlet-szűrőnek megfelelő betűkészletek "
+"előnézeteivel"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:4
 msgid "Font _size (pixels)"
@@ -1567,11 +1575,13 @@ msgid ""
 "Add a frost effect to the selected region (or alpha) with an added drop "
 "shadow"
 msgstr ""
+"Fagyási effektus és vetett árnyék hozzáadása a kijelölt területhez "
+"(vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 #, fuzzy
 msgid "Create frozen logo with an added drop shadow"
-msgstr "Vetett árnyék"
+msgstr "\"Fagyott\" logó létrehozása vetett árnyékkal"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
 msgid "_Frosty..."
@@ -1579,7 +1589,7 @@ msgstr "_Fagyos..."
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
 msgid "Add a jagged, fuzzy border to an image"
-msgstr ""
+msgstr "Recés, homályos keret hozzáadása egy képhez"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Add shadow"
@@ -1588,6 +1598,11 @@ msgstr "Árnyék hozzáadása"
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
 msgid "Blur border"
 msgstr "Keret elmosása"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
+msgid "Border size"
+msgstr "Keret mérete"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
@@ -1705,6 +1720,8 @@ msgid ""
 "Add gradients, patterns, shadows, and bump maps to the selected region (or "
 "alpha)"
 msgstr ""
+"Színátmenetek, minták, árnyékok és buckaleképezések hozzáadása "
+"a kijelölt területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
@@ -1715,8 +1732,11 @@ msgid "Blend gradient (text)"
 msgstr "Színátmenet (szöveg)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:5
+#, fuzzy
 msgid "Create a logo with gradients, patterns, shadows, and bump maps"
 msgstr ""
+"Logó létrehozása színátmenetekkel, mintákkal, árnyékokkal és "
+"buckaleképezésekkel"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Glo_ssy..."
@@ -1761,11 +1781,12 @@ msgstr "Átfedési minta használata"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
 msgid "Add a glowing hot metal effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Izzó forró fémes hatás hozzáadása a kijelölt területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
+#, fuzzy
 msgid "Create a logo that looks like glowing hot metal"
-msgstr ""
+msgstr "Izzó forró fémet ábrázoló logó létrehozása"
 
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
 msgid "Effect size (pixels * 3)"
@@ -1778,6 +1799,8 @@ msgstr "I_zzó forró..."
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
 msgstr ""
+"Fényes kinézet és rézsútos (háromdimenziós) effektus hozzáadása "
+"a kijelölt területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
@@ -1791,7 +1814,7 @@ msgstr "Keret mérete (képpont)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
 msgid "Create a logo with a shiny look and beveled edges"
-msgstr ""
+msgstr "Logó létrehozása fényes kinézettel és rézsútos (térhatású) szélekkel"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 msgid "Gradient Beve_l..."
@@ -1918,8 +1941,9 @@ msgid "Use selection bounds instead of values below"
 msgstr "A kijelölés határainak használata a lentiek helyett"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
+#, fuzzy
 msgid "Create a logo in a two-color, scribbled text style"
-msgstr ""
+msgstr "Logó létrehozása"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
 msgid "Frame color"
@@ -1953,7 +1977,7 @@ msgstr "_Térkép..."
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:1
 msgid "Fill the current selection with lava"
-msgstr ""
+msgstr "A jelenlegi kijelölés kitöltése lávával"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:4
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:8
@@ -1975,6 +1999,8 @@ msgstr "_Láva..."
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
 msgid "Fill a layer with rays emanating outward from its center using the FG color"
 msgstr ""
+"Réteg kitöltése a középpontjából kiinduló, onnan kifelé haladó, "
+"az előtérszínnel megrajzolt sugarakkal"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
@@ -2044,11 +2070,11 @@ msgstr "Tég_lalap..."
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
 msgid "Convert the selected region (or alpha) into a neon-sign like object"
-msgstr ""
+msgstr "A kijelölt terület (vagy az alfa) átalakítása neonembléma-szerű objektummá"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
 msgid "Create a logo in the style of a neon sign"
-msgstr ""
+msgstr "Logó létrehozása egy neonembléma stílusában"
 
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create shadow"
@@ -2067,8 +2093,9 @@ msgid "Cell size (pixels)"
 msgstr "Cellaméret (képpont)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:4
+#, fuzzy
 msgid "Create a logo in the style of newspaper printing"
-msgstr ""
+msgstr "Logó létrehozása"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:4
@@ -2087,7 +2114,7 @@ msgstr "Fókusz elvétele"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:3
 msgid "Make an image look like an old photo"
-msgstr ""
+msgstr "A kép átalakítása régi fotóra emlékeztető kinézetűvé"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:4
 msgid "Mottle"
@@ -2141,7 +2168,7 @@ msgstr "Minta neve"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
 msgid "Add a perspective shadow to the selected region (or alpha)"
-msgstr ""
+msgstr "Perspektivikus árnyék hozzáadása a kijelölt területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
 msgid "Angle"
@@ -2165,7 +2192,7 @@ msgstr "_Perspektivikus..."
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:1
 msgid "Add a 'Predator' effect to the selected region (or alpha)"
-msgstr ""
+msgstr "\"Predator\" effektus hozzáadása a kijelölt területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge amount"
@@ -2239,7 +2266,9 @@ msgstr "Viselkedés"
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
 #, fuzzy
 msgid "Create an image filled with an Earth-like map pattern"
-msgstr "Kép létrehozása a jelenlegi színátmenettel kitöltve"
+msgstr ""
+"Föld-szerű"
+"Kép létrehozása a jelenlegi színátmenettel kitöltve"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
 msgid "Detail in Middle"
@@ -2268,9 +2297,10 @@ msgstr "Fekete"
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Create a multi-layer image by adding a ripple effect to the current image"
 msgstr ""
+"Többrétegű kép létrehozása egy fodrozódásszerű effektust adva a "
+"jelenlegi képhez"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
-#, fuzzy
 msgid "Edge behavior"
 msgstr "Szél viselkedése"
 
@@ -2310,6 +2340,8 @@ msgstr "Szél sugara"
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
 msgid "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr ""
+"Egy kép sarkainak lekerekítése, továbbá esetlegesen vetett árnyék "
+"és háttér hozzáadása"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
 msgid "_Round Corners..."
@@ -2370,7 +2402,7 @@ msgstr "Leke_rekített téglalap..."
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:1
 msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
-msgstr ""
+msgstr "Diafilm-szerű keret, oldalsó lyukak és címkék hozzáadása egy képhez"
 
 #: ../plug-ins/script-fu/scripts/slide.scm.h:3
 msgid "Font color"
@@ -2385,16 +2417,20 @@ msgid "_Slide..."
 msgstr "_Dia..."
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
+#, fuzzy
 msgid "Create a State Of The Art chromed logo"
-msgstr ""
+msgstr "logó létrehozása"
 
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
 msgid "SOTA Chrome..."
 msgstr "Fejlett króm..."
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
+#, fuzzy
 msgid "Create a logo with a speedy text effect"
 msgstr ""
+"Logó létrehozása "
+"effektus"
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
 msgid "Speed Text..."
@@ -2423,7 +2459,7 @@ msgstr "_Gömb..."
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
 msgid "Create an animation by mapping the current image onto a spinning sphere"
-msgstr ""
+msgstr "Animáció létrehozása a jelenlegi képet egy forgó gömbre leképezve"
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
@@ -2442,11 +2478,8 @@ msgid "_Spinning Globe..."
 msgstr "Fo_rgó földgömb..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-#, fuzzy
 msgid "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr ""
-"Spirográfok, epitrochoidok és Lissajous-görbék rajzolása. További "
-"információ: http://netword.com/*spyrogimp"
+msgstr "Spirográfok, epitrochoidok és Lissajous-görbék hozzáadása a jelenlegi réteghez"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2575,7 +2608,7 @@ msgstr "Kitörés színe"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:3
 msgid "Create a logo using a starburst gradient"
-msgstr ""
+msgstr "Logó létrehozása csillagkitörést ábrázoló színátmenettel"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:4
 msgid "Effect size (pixels * 30)"
@@ -2586,6 +2619,8 @@ msgid ""
 "Fill the selected region (or alpha) with a starburst gradient and add a "
 "shadow"
 msgstr ""
+"A kijelölt terület (vagy az alfa) kitöltése csillagkitörést ábrázoló "
+"színátmenettel, továbbá árnyék hozzáadása"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:8
 msgid "Starb_urst..."
@@ -2593,7 +2628,7 @@ msgstr "_Csillagkitörés..."
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
 msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
-msgstr ""
+msgstr "Logó létrehozása kövezet-szerű textúrával, nova-ragyogással és árnyékkal"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 msgid "Effect size (pixels * 4)"
@@ -2604,6 +2639,8 @@ msgid ""
 "Fill the selected region (or alpha) with a rock-like texture, a nova glow, "
 "and shadow"
 msgstr ""
+"A kijelölt terület (vagy az alfa) kitöltése kövezet-szerű textúrával, "
+"nova-ragyogással és árnyékkal"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
 msgid "Sta_rscape..."
@@ -2612,7 +2649,9 @@ msgstr "Starsca_pe..."
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:4
 #, fuzzy
 msgid "Create an image filled with a swirled tile effect"
-msgstr "Kép létrehozása a jelenlegi színátmenettel kitöltve"
+msgstr ""
+"Kép létrehozása a jelenlegi színátmenettel kitöltve "
+"effektus"
 
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Swirl-_Tile..."
@@ -2645,7 +2684,7 @@ msgstr "Ö_rvénylő..."
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 msgid "Add a Trace of Particles effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Részecskenyomvonal-szerű hatás hozzáadása a kijelölt területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 msgid "Base color"
@@ -2653,7 +2692,7 @@ msgstr "Alapszín"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
 msgid "Create a logo using a Trace Of Particles effect"
-msgstr ""
+msgstr "Logó létrehozása részecskenyomvonal-szerű hatással"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
 msgid "Edge only"
@@ -2676,8 +2715,9 @@ msgid "Antialias"
 msgstr "Élsimítás"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
+#, fuzzy
 msgid "Create a logo by rendering the specified text along the perimeter of a circle"
-msgstr ""
+msgstr "Logó létrehozása"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 msgid "Fill angle"
@@ -2691,6 +2731,8 @@ msgstr "Szövegkör..."
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
 msgid "Create a textured logo with highlights, shadows, and a mosaic background"
 msgstr ""
+"Textúrázott logó létrehozása kiemelésekkel, árnyékokkal és mozaikos "
+"háttérrel"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Ending blend"
@@ -2701,6 +2743,8 @@ msgid ""
 "Fill the selected region (or alpha) with a texture and add highlights, "
 "shadows, and a mosaic background"
 msgstr ""
+"A kijelölt terület (vagy az alfa) kitöltése textúrával, majd kiemelések, "
+"árnyékok és mozaikos háttér hozzáadása"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
@@ -2737,6 +2781,8 @@ msgstr "Vízszintes elmosás"
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
 msgid "Blur the edges of an image so the result tiles seamlessly"
 msgstr ""
+"Kép széleinek elmosása úgy, hogy az eredmény alkalmas legyen "
+"finom átmenetű csempézéshez"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
 msgid "Blur type"
@@ -2796,6 +2842,8 @@ msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
 msgstr ""
+"Többrétegű kép létrehozása olyan hatással, mintha egy kő lett volna "
+"dobva a jelenlegi képbe"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
@@ -2814,6 +2862,8 @@ msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr ""
+"Új réteg létrehozása szövési effektussal kitöltve - borítóként "
+"vagy buckaleképezéshez való használatra"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
@@ -2905,7 +2955,7 @@ msgstr "_Digitális kamerák képeinek használata"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-msgstr ""
+msgstr "Finom áttetsző térbeli hatás hozzáadása a kijelölt területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow X offset"
