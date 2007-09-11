@@ -51,8 +51,9 @@
                                              */
 #define GIMP_DISPLAY_ZOOM_PIXEL_AA  1 << 1  /* provide AA edges when zooming in
                                                on the actual pixels (in current
-                                             code only enables it between 100%
-                                             and 200% zoom) */
+                                               code only enables it between
+                                               100% and 200% zoom)
+                                             */
 
 /* The default settings are debatable, and perhaps this should even somehow be
  * configurable by the user. */
@@ -78,7 +79,6 @@ struct _RenderInfo
   gint              dest_bpp;
   gint              dest_bpl;
   gint              dest_width;
-
   gint              xstart;
   gint              xdelta;
   gint              yfraction;
@@ -931,17 +931,18 @@ box_filter (guint          left_weight,
       case 4:
 #define ALPHA 3
         {
-          guint factors[9] = {
-            (src[1][ALPHA] * top_weight)    >> 8,
-            (src[4][ALPHA] * middle_weight) >> 8,
-            (src[7][ALPHA] * bottom_weight) >> 8,
-            (src[2][ALPHA] * top_weight)    >> 8,
-            (src[5][ALPHA] * middle_weight) >> 8,
-            (src[8][ALPHA] * bottom_weight) >> 8,
-            (src[0][ALPHA] * top_weight)    >> 8,
-            (src[3][ALPHA] * middle_weight) >> 8,
-            (src[6][ALPHA] * bottom_weight) >> 8
-          };
+          const guint factors[9] =
+            {
+              (src[1][ALPHA] * top_weight)    >> 8,
+              (src[4][ALPHA] * middle_weight) >> 8,
+              (src[7][ALPHA] * bottom_weight) >> 8,
+              (src[2][ALPHA] * top_weight)    >> 8,
+              (src[5][ALPHA] * middle_weight) >> 8,
+              (src[8][ALPHA] * bottom_weight) >> 8,
+              (src[0][ALPHA] * top_weight)    >> 8,
+              (src[3][ALPHA] * middle_weight) >> 8,
+              (src[6][ALPHA] * bottom_weight) >> 8
+            };
 
           a = (center_weight * (factors[0] + factors[1] + factors[2]) +
                right_weight  * (factors[3] + factors[4] + factors[5]) +
@@ -976,17 +977,18 @@ box_filter (guint          left_weight,
         /* NOTE: this is a copy and paste of the code above, the ALPHA changes
          * the behavior in all needed ways. */
         {
-          guint factors[9] = {
-            (src[1][ALPHA] * top_weight)    >> 8,
-            (src[4][ALPHA] * middle_weight) >> 8,
-            (src[7][ALPHA] * bottom_weight) >> 8,
-            (src[2][ALPHA] * top_weight)    >> 8,
-            (src[5][ALPHA] * middle_weight) >> 8,
-            (src[8][ALPHA] * bottom_weight) >> 8,
-            (src[0][ALPHA] * top_weight)    >> 8,
-            (src[3][ALPHA] * middle_weight) >> 8,
-            (src[6][ALPHA] * bottom_weight) >> 8
-          };
+          const guint factors[9] =
+            {
+              (src[1][ALPHA] * top_weight)    >> 8,
+              (src[4][ALPHA] * middle_weight) >> 8,
+              (src[7][ALPHA] * bottom_weight) >> 8,
+              (src[2][ALPHA] * top_weight)    >> 8,
+              (src[5][ALPHA] * middle_weight) >> 8,
+              (src[8][ALPHA] * bottom_weight) >> 8,
+              (src[0][ALPHA] * top_weight)    >> 8,
+              (src[3][ALPHA] * middle_weight) >> 8,
+              (src[6][ALPHA] * bottom_weight) >> 8
+            };
 
           a = (center_weight * (factors[0] + factors[1] + factors[2]) +
                right_weight  * (factors[3] + factors[4] + factors[5]) +
@@ -1068,7 +1070,7 @@ render_image_tile_fault (RenderInfo *info)
 
       /* use nearest neighbour for exact levels */
       || (info->scalex == 1.0 &&
-          info->scaley == 1.0) 
+          info->scaley == 1.0)
 
       /* or when we're larger than 1.0 and not using any AA */
       || (info->shell->scale_x > 1.0 &&
@@ -1078,7 +1080,7 @@ render_image_tile_fault (RenderInfo *info)
       /* or at any point when both scale factors are greater or equal to 200% */
       || (info->shell->scale_x >= 2.0 &&
           info->shell->scale_y >= 2.0 )
-  
+
       /* or when we're scaling a 1bpp texture, this code-path seems to be
        * invoked when interacting with SIOX which uses a palletized drawable
        */
@@ -1104,6 +1106,7 @@ render_image_tile_fault (RenderInfo *info)
 
     {
       gint dy = info->yfraction;
+
       if (dy > footprint_y / 2)
         top_weight = 0;
       else
@@ -1262,6 +1265,7 @@ render_image_tile_fault (RenderInfo *info)
 
       {
         gint  dx = (x >> 8) & 0xff;
+
         if (dx > footprint_x / 2)
           left_weight = 0;
         else
@@ -1274,10 +1278,11 @@ render_image_tile_fault (RenderInfo *info)
 
         center_weight = footprint_x - left_weight - right_weight;
 
-      box_filter (left_weight, center_weight, right_weight,
-                  top_weight, middle_weight, bottom_weight, foosum,
-                  src, dest, bpp);
+        box_filter (left_weight, center_weight, right_weight,
+                    top_weight, middle_weight, bottom_weight, foosum,
+                    src, dest, bpp);
       }
+
       dest += bpp;
 
       x += xdelta;
@@ -1297,8 +1302,8 @@ render_image_tile_fault (RenderInfo *info)
             }
           else
             {
-              tilexL=-1;  /* this forces a refetch of the left most source
-                             samples */
+              tilexL =- 1;  /* this forces a refetch of the left most source
+                               samples */
             }
 
           if (src[3] != src[4])
@@ -1307,8 +1312,8 @@ render_image_tile_fault (RenderInfo *info)
             }
           else
             {
-              tilexL=-1;  /* this forces a refetch of the left most source
-                             samples */
+              tilexL = -1;  /* this forces a refetch of the left most source
+                               samples */
             }
 
           if (src[6] != src[7])
@@ -1317,8 +1322,8 @@ render_image_tile_fault (RenderInfo *info)
             }
           else
             {
-              tilexL=-1;  /* this forces a refetch of the left most source
-                             samples */
+              tilexL = -1;  /* this forces a refetch of the left most source
+                               samples */
             }
 
           src[1] += skipped * bpp;
@@ -1494,7 +1499,7 @@ render_image_tile_fault (RenderInfo *info)
   while (--width);
 
 done:
-  for (x=0; x<9; x++)
+  for (x = 0; x < 9; x++)
     if (tile[x])
       tile_release (tile[x], FALSE);
 
@@ -1536,9 +1541,9 @@ render_image_tile_fault_nearest (RenderInfo *info)
 
   do
     {
-      const guchar *s  = src;
-      gint  src_x = x >> 16;
-      gint  skipped;
+      const guchar *s     = src;
+      gint          src_x = x >> 16;
+      gint          skipped;
 
       switch (bpp)
         {
@@ -1553,7 +1558,9 @@ render_image_tile_fault_nearest (RenderInfo *info)
         }
 
       x += xdelta;
+
       skipped = (x >> 16) - src_x;
+
       if (skipped)
         {
           src += skipped * bpp;
@@ -1623,20 +1630,21 @@ render_image_tile_fault_one_row (RenderInfo *info)
   footprint_x = (1.0/info->scalex) * 256;
   foosum      = footprint_x * footprint_y;
 
-    {
-      gint dy = info->yfraction;
-      if (dy > footprint_y / 2)
-        top_weight = 0;
-      else
-        top_weight = footprint_y / 2 - dy;
+  {
+    gint dy = info->yfraction;
 
-      if (0xff - dy > footprint_y / 2)
-        bottom_weight = 0;
-      else
-        bottom_weight = footprint_y / 2 - (0xff - dy);
+    if (dy > footprint_y / 2)
+      top_weight = 0;
+    else
+      top_weight = footprint_y / 2 - dy;
 
-      middle_weight = footprint_y - top_weight - bottom_weight;
-    }
+    if (0xff - dy > footprint_y / 2)
+      bottom_weight = 0;
+    else
+      bottom_weight = footprint_y / 2 - (0xff - dy);
+
+    middle_weight = footprint_y - top_weight - bottom_weight;
+  }
 
   tile[0] = tile_manager_get_tile (info->src_tiles,
                                    info->src_x, info->src_y, TRUE, FALSE);
@@ -1733,11 +1741,12 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
   do
     {
-      gint  src_x = x >> 16;
-      gint  skipped;
+      gint src_x = x >> 16;
+      gint skipped;
 
       {
-        gint  dx = (x >> 8) & 0xff;
+        gint dx = (x >> 8) & 0xff;
+
         if (dx > footprint_x / 2)
           left_weight = 0;
         else
@@ -1754,6 +1763,7 @@ render_image_tile_fault_one_row (RenderInfo *info)
                     top_weight, middle_weight, bottom_weight, foosum,
                     src, dest, bpp);
       }
+
       dest += bpp;
 
       x += xdelta;
@@ -1773,8 +1783,8 @@ render_image_tile_fault_one_row (RenderInfo *info)
             }
           else
             {
-              tilexL=-1;  /* this forces a refetch of the left most source
-                             samples */
+              tilexL = -1;  /* this forces a refetch of the left most source
+                               samples */
             }
 
           if (src[3] != src[4])
@@ -1783,8 +1793,8 @@ render_image_tile_fault_one_row (RenderInfo *info)
             }
           else
             {
-              tilexL=-1;  /* this forces a refetch of the left most source
-                             samples */
+              tilexL = -1;  /* this forces a refetch of the left most source
+                               samples */
             }
 
           if (src[6] != src[7])
@@ -1793,8 +1803,8 @@ render_image_tile_fault_one_row (RenderInfo *info)
             }
           else
             {
-              tilexL=-1;  /* this forces a refetch of the left most source
-                             samples */
+              tilexL = -1;  /* this forces a refetch of the left most source
+                               samples */
             }
 
           src[1] += skipped * bpp;

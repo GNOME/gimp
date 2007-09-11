@@ -1,5 +1,9 @@
 2007-09-11  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-render.c: formatting.
+
+2007-09-11  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage.c (gimp_image_add_layers): make the first of
 	the added layers the active layer. Fixes bug #469752.
 
