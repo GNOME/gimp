@@ -396,7 +396,7 @@ spread_dialog (gint32        image_ID,
   g_signal_connect (preview, "invalidated",
                     G_CALLBACK (spread_preview_update),
                     size);
-  g_signal_connect_swapped (size, "refval-changed",
+  g_signal_connect_swapped (size, "value-changed",
                             G_CALLBACK (gimp_preview_invalidate),
                             preview);
 

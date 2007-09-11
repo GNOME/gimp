@@ -1,3 +1,8 @@
+2007-09-11  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/spread.c (spread_dialog): update the preview on
+	"value-changed", instead of "refval-changed". Fixes bug #469360.
+
 2007-09-11  Simon Budig  <simon@gimp.org>
 
 	* tools/pdbgen/pdb/context.pdb: add PDB function to determine
