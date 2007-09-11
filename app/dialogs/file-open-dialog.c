@@ -110,12 +110,6 @@ file_open_dialog_response (GtkWidget *open_dialog,
 
   gimp_file_dialog_set_sensitive (dialog, FALSE);
 
-  /*  open layers in reverse order so they appear in the same
-   *  order as in the file dialog
-   */
-  if (dialog->image)
-    uris = g_slist_reverse (uris);
-
   for (list = uris; list; list = g_slist_next (list))
     {
       gchar *filename = file_utils_filename_from_uri (list->data);

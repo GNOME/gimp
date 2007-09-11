@@ -1,5 +1,11 @@
 2007-09-11  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/file-open-dialog.c: don't reverse the order of URIs
+	when opening multiple files as layers. Fixes one aspect of bug
+	#469752.
+
+2007-09-11  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/lcms.c: allow to specify rendering intent and 
 	black point compensation. Fixes bug #474787.
 
