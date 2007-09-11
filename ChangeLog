@@ -1,5 +1,10 @@
 2007-09-11  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage.c (gimp_image_add_layers): make the first of
+	the added layers the active layer. Fixes bug #469752.
+
+2007-09-11  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/spread.c (spread_dialog): update the preview on
 	"value-changed", instead of "refval-changed". Fixes bug #469360.
 

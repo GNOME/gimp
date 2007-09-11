@@ -3036,6 +3036,9 @@ gimp_image_add_layers (GimpImage   *image,
       position++;
     }
 
+  if (layers)
+    gimp_image_set_active_layer (image, layers->data);
+
   gimp_image_undo_group_end (image);
 }
 
