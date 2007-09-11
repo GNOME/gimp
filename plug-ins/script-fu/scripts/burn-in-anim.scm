@@ -208,7 +208,7 @@
         )
 
         ;--- false form of "if-1"
-        (gimp-message _"Burn-In: Needs two layers in total!\nA foreground text layer with transparency and a background layer.")
+        (gimp-message _"The Burn-In script needs two layers in total. A foreground layer with transparency and a background layer.")
     )
   )
 )
