@@ -1,3 +1,8 @@
+2007-09-11  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/psp.c: don't use "major" and "minor" as variable
+	names, they may conflict with system symbols.
+
 2007-09-11  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c: formatting.

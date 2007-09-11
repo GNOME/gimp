@@ -313,7 +313,7 @@ static PSPSaveVals psvals =
   PSP_COMP_LZ77
 };
 
-static guint16 major, minor;
+static guint16 psp_ver_major, psp_ver_minor;
 
 
 MAIN ()
@@ -479,7 +479,7 @@ read_block_header (FILE    *f,
   if (fread (buf, 4, 1, f) < 1
       || fread (&id, 2, 1, f) < 1
       || fread (&len, 4, 1, f) < 1
-      || (major < 4 && fread (total_len, 4, 1, f) < 1))
+      || (psp_ver_major < 4 && fread (total_len, 4, 1, f) < 1))
     {
       g_message ("Error reading block header");
       return -1;
@@ -495,7 +495,7 @@ read_block_header (FILE    *f,
 
   IFDBG(3) g_message ("%s at %ld", block_name (id), header_start);
 
-  if (major < 4)
+  if (psp_ver_major < 4)
     {
       *init_len = GUINT32_FROM_LE (len);
       *total_len = GUINT32_FROM_LE (*total_len);
@@ -527,7 +527,7 @@ read_general_image_attribute_block (FILE     *f,
       return -1;
     }
 
-  if (major >= 4)
+  if (psp_ver_major >= 4)
     fseek (f, 4, SEEK_CUR);
 
   if (fread (&ia->width, 4, 1, f) < 1
@@ -1041,7 +1041,7 @@ read_layer_block (FILE     *f,
       sub_block_start = ftell (f);
 
       /* Read layer information chunk */
-      if (major >= 4)
+      if (psp_ver_major >= 4)
 	{
 	  if (fseek (f, 4, SEEK_CUR) < 0
 	      || fread (&namelen, 2, 1, f) < 1
@@ -1195,7 +1195,7 @@ read_layer_block (FILE     *f,
 
       gimp_layer_set_lock_alpha (layer_ID, transparency_protected);
 
-      if (major < 4)
+      if (psp_ver_major < 4)
 	if (try_fseek (f, sub_block_start + sub_init_len, SEEK_SET) < 0)
 	  {
 	    return -1;
@@ -1239,7 +1239,7 @@ read_layer_block (FILE     *f,
 
 	  channel_start = ftell (f);
 
-	  if (major == 4)
+	  if (psp_ver_major == 4)
 	    fseek (f, 4, SEEK_CUR); /* Unknown field */
 
 	  if (fread (&compressed_len, 4, 1, f) < 1
@@ -1281,7 +1281,7 @@ read_layer_block (FILE     *f,
 	  else
 	    offset = channel_type - PSP_CHANNEL_RED;
 
-	  if (major < 4)
+	  if (psp_ver_major < 4)
 	    if (try_fseek (f, channel_start + channel_init_len, SEEK_SET) < 0)
 	      {
 		return -1;
@@ -1436,8 +1436,8 @@ load_image (const gchar *filename)
 
   /* Read thePSP File Header */
   if (fread (buf, 32, 1, f) < 1
-      || fread (&major, 2, 1, f) < 1
-      || fread (&minor, 2, 1, f) < 1)
+      || fread (&psp_ver_major, 2, 1, f) < 1
+      || fread (&psp_ver_minor, 2, 1, f) < 1)
     {
       g_message ("Error reading file header");
       goto error;
@@ -1449,24 +1449,24 @@ load_image (const gchar *filename)
       goto error;
     }
 
-  major = GUINT16_FROM_LE (major);
-  minor = GUINT16_FROM_LE (minor);
+  psp_ver_major = GUINT16_FROM_LE (psp_ver_major);
+  psp_ver_minor = GUINT16_FROM_LE (psp_ver_minor);
 
   /* I only have the documentation for file format version 3.0,
    * but PSP 6 writes version 4.0. Let's hope it's backwards compatible.
    * Earlier versions probably don't have all the fields I expect
    * so don't accept those.
    */
-  if (major < 3)
+  if (psp_ver_major < 3)
     {
       g_message ("Unsupported PSP file format version "
 		 "%d.%d, only knows 3.0 (and later?)",
-		 major, minor);
+		 psp_ver_major, psp_ver_minor);
       goto error;
     }
-  else if (major == 3)
+  else if (psp_ver_major == 3)
     ; /* OK */
-  else if (major == 4 && minor == 0)
+  else if (psp_ver_major == 4 && psp_ver_minor == 0)
     g_message ("Warning: PSP file format version "
 	       "4.0. Support for this format version "
 	       "is based on reverse engineering, "
@@ -1474,7 +1474,7 @@ load_image (const gchar *filename)
   else
     {
       g_message ("Unsupported PSP file format version %d.%d",
-		 major, minor);
+		 psp_ver_major, psp_ver_minor);
       goto error;
     }
 
