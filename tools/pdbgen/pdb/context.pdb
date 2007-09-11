@@ -136,6 +136,33 @@ CODE
     );
 }
 
+sub context_list_paint_methods {
+    $blurb = 'Lists the available paint methods.';
+
+    $help = <<'HELP';
+This procedure lists the names of the available paint methods. Any
+of the results can be used for gimp_context_set_paint_method().
+HELP
+
+    &simon_pdb_misc('2007', '2.4');
+
+    @outargs = (
+        { name => 'paint_methods', type => 'stringarray', void_ret => 1,
+          desc => 'The names of the available paint methods',
+          array => { desc => 'The number of the available paint methods' } }
+    );
+
+    %invoke = (
+        code => <<'CODE'
+{
+  paint_methods = gimp_container_get_name_array (gimp->paint_info_list,
+                                                 &num_paint_methods);
+}
+CODE
+    );
+}
+
+
 sub context_get_foreground {
     $blurb = "Get the current GIMP foreground color.";
 
@@ -696,6 +723,7 @@ CODE
 
 @procs = qw(context_push context_pop
             context_get_paint_method context_set_paint_method
+            context_list_paint_methods
             context_get_foreground context_set_foreground
             context_get_background context_set_background
             context_set_default_colors context_swap_colors

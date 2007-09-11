@@ -156,6 +156,51 @@ gimp_context_set_paint_method (const gchar *name)
 }
 
 /**
+ * gimp_context_list_paint_methods:
+ * @num_paint_methods: The number of the available paint methods.
+ * @paint_methods: The names of the available paint methods.
+ *
+ * Lists the available paint methods.
+ *
+ * This procedure lists the names of the available paint methods. Any
+ * of the results can be used for gimp_context_set_paint_method().
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_context_list_paint_methods (gint    *num_paint_methods,
+                                 gchar ***paint_methods)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+  gint i;
+
+  return_vals = gimp_run_procedure ("gimp-context-list-paint-methods",
+                                    &nreturn_vals,
+                                    GIMP_PDB_END);
+
+  *num_paint_methods = 0;
+  *paint_methods = NULL;
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  if (success)
+    {
+      *num_paint_methods = return_vals[1].data.d_int32;
+      *paint_methods = g_new (gchar *, *num_paint_methods);
+      for (i = 0; i < *num_paint_methods; i++)
+        (*paint_methods)[i] = g_strdup (return_vals[2].data.d_stringarray[i]);
+    }
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
  * gimp_context_get_foreground:
  * @foreground: The foreground color.
  *

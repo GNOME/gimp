@@ -130,6 +130,28 @@ context_set_paint_method_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
+context_list_paint_methods_invoker (GimpProcedure     *procedure,
+                                    Gimp              *gimp,
+                                    GimpContext       *context,
+                                    GimpProgress      *progress,
+                                    const GValueArray *args)
+{
+  GValueArray *return_vals;
+  gint32 num_paint_methods = 0;
+  gchar **paint_methods = NULL;
+
+  paint_methods = gimp_container_get_name_array (gimp->paint_info_list,
+                                                 &num_paint_methods);
+
+  return_vals = gimp_procedure_get_return_values (procedure, TRUE);
+
+  g_value_set_int (&return_vals->values[1], num_paint_methods);
+  gimp_value_take_stringarray (&return_vals->values[2], paint_methods, num_paint_methods);
+
+  return return_vals;
+}
+
+static GValueArray *
 context_get_foreground_invoker (GimpProcedure     *procedure,
                                 Gimp              *gimp,
                                 GimpContext       *context,
@@ -647,6 +669,33 @@ register_context_procs (GimpPDB *pdb)
                                                        FALSE, FALSE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-context-list-paint-methods
+   */
+  procedure = gimp_procedure_new (context_list_paint_methods_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-context-list-paint-methods");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-context-list-paint-methods",
+                                     "Lists the available paint methods.",
+                                     "This procedure lists the names of the available paint methods. Any of the results can be used for 'gimp-context-set-paint-method'.",
+                                     "Simon Budig",
+                                     "Simon Budig",
+                                     "2007",
+                                     NULL);
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_int32 ("num-paint-methods",
+                                                          "num paint methods",
+                                                          "The number of the available paint methods",
+                                                          0, G_MAXINT32, 0,
+                                                          GIMP_PARAM_READWRITE));
+  gimp_procedure_add_return_value (procedure,
+                                   gimp_param_spec_string_array ("paint-methods",
+                                                                 "paint methods",
+                                                                 "The names of the available paint methods",
+                                                                 GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);
 

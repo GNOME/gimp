@@ -1,3 +1,14 @@
+2007-09-11  Simon Budig  <simon@gimp.org>
+
+	* tools/pdbgen/pdb/context.pdb: add PDB function to determine
+	the available paint methods.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/context_cmds.c
+	* libgimp/gimpcontext_pdb.[ch]: regenerated.
+
+	Fixes bug #473513
+
 2007-09-11  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/file-open-dialog.c: don't reverse the order of URIs

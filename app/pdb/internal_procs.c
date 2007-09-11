@@ -29,7 +29,7 @@
 #include "internal_procs.h"
 
 
-/* 550 procedures registered total */
+/* 551 procedures registered total */
 
 void
 internal_procs_init (GimpPDB *pdb)
