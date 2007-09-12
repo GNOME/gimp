@@ -1026,7 +1026,6 @@ box_filter (guint          left_weight,
 static const guchar * render_image_tile_fault_one_row  (RenderInfo *info);
 static const guchar * render_image_tile_fault_nearest  (RenderInfo *info);
 
-
 /*  012 <- this is the order of the numbered source tiles / pixels.
  *  345    for the 3x3 neighbourhoods.
  *  678
@@ -1064,6 +1063,12 @@ render_image_tile_fault (RenderInfo *info)
   guint         top_weight;
   guint         middle_weight;
   guint         bottom_weight;
+  
+  guint         source_width;
+  guint         source_height;
+
+  source_width = tile_manager_width (info->src_tiles);
+  source_height = tile_manager_height (info->src_tiles);
 
   /* dispatch to fast path functions on special conditions */
   if ((gimp_zoom_quality & GIMP_DISPLAY_ZOOM_FAST)
@@ -1092,7 +1097,8 @@ render_image_tile_fault (RenderInfo *info)
   else if (((info->src_y)     & ~(TILE_WIDTH -1)) ==
            ((info->src_y + 1) & ~(TILE_WIDTH -1)) &&
            ((info->src_y)     & ~(TILE_WIDTH -1)) ==
-           ((info->src_y - 1) & ~(TILE_WIDTH -1))
+           ((info->src_y - 1) & ~(TILE_WIDTH -1)) &&
+           (info->src_y + 1 < source_height)
           )
     {
       /* all the tiles needed are in a single row, use a tile iterator
@@ -1262,6 +1268,18 @@ render_image_tile_fault (RenderInfo *info)
 
         center_weight = footprint_x - left_weight - right_weight;
 
+       if (src_x + 1 >= source_width)
+        {
+           src[2]=src[1];
+           src[5]=src[4];
+           src[8]=src[7];
+        }
+       if (info->src_y + 1 >= source_height)
+        {
+           src[6]=src[3];
+           src[7]=src[4];
+           src[8]=src[5];
+        }
         box_filter (left_weight, center_weight, right_weight,
                     top_weight, middle_weight, bottom_weight, foosum,
                     src, dest, bpp);
@@ -1470,6 +1488,7 @@ render_image_tile_fault (RenderInfo *info)
                                               src_x - 1, info->src_y - 1);
                 }
             }
+
         }
     }
   while (--width);
@@ -1598,6 +1617,10 @@ render_image_tile_fault_one_row (RenderInfo *info)
   guint         middle_weight;
   guint         bottom_weight;
 
+  guint         source_width;
+
+  source_width = tile_manager_width (info->src_tiles);
+
   footprint_y = (1.0/info->scaley) * 256;
   footprint_x = (1.0/info->scalex) * 256;
   foosum      = footprint_x * footprint_y;
@@ -1714,6 +1737,12 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
         center_weight = footprint_x - left_weight - right_weight;
 
+        if (src_x + 1 >= source_width)
+          {
+            src[2]=src[1];
+            src[5]=src[4];
+            src[8]=src[7];
+          }
         box_filter (left_weight, center_weight, right_weight,
                     top_weight, middle_weight, bottom_weight, foosum,
                     src, dest, bpp);
