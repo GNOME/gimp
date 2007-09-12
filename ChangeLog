@@ -1,5 +1,11 @@
 2007-09-12  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpcontainer-filter.c
+	(gimp_container_filter_by_name): changed to use extended regular
+	expression syntax.
+
+2007-09-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/lcms.c: remember color conversion parameters
 	(bug #475966).
 

@@ -131,7 +131,7 @@ gimp_container_filter_by_name (const GimpContainer  *container,
   g_return_val_if_fail (regexp != NULL, NULL);
   g_return_val_if_fail (error == NULL || *error == NULL, NULL);
 
-  ret = regcomp (&regex, regexp, REG_ICASE | REG_NOSUB);
+  ret = regcomp (&regex, regexp, REG_EXTENDED | REG_ICASE | REG_NOSUB);
   if (ret)
     {
       gsize  error_len;
