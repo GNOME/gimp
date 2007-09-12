@@ -796,11 +796,11 @@ gimp_display_shell_new (GimpDisplay     *display,
   main_vbox = gtk_vbox_new (FALSE, 1);
   gtk_container_add (GTK_CONTAINER (shell), main_vbox);
 
-#ifndef HAVE_CARBON
+#ifndef GDK_WINDOWING_QUARTZ
   shell->menubar =
     gtk_ui_manager_get_widget (GTK_UI_MANAGER (shell->menubar_manager),
                                "/image-menubar");
-#endif /* !HAVE_CARBON */
+#endif /* !GDK_WINDOWING_QUARTZ */
 
   if (shell->menubar)
     {

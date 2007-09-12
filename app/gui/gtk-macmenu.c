@@ -23,9 +23,10 @@
 
 #include "config.h"
 
-#ifdef HAVE_CARBON
-
 #include <gtk/gtk.h>
+
+#ifdef GDK_WINDOWING_QUARTZ
+
 #include <gdk/gdkkeysyms.h>
 
 #include <Carbon/Carbon.h>
@@ -791,4 +792,4 @@ gtk_macmenu_set_prefs_item (GtkMenuItem  *menu_item,
     }
 }
 
-#endif /* HAVE_CARBON */
+#endif /* GDK_WINDOWING_QUARTZ */

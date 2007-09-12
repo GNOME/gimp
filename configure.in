@@ -944,6 +944,13 @@ AC_SUBST(GIMP_REMOTE)
 AC_SUBST(GIMP_COMMAND)
 
 
+###############################
+# Some stuff is quartz specific
+###############################
+
+AM_CONDITIONAL(HAVE_GDK_QUARTZ, test "x$gdk_target" = "xquartz")
+
+
 ###################
 # Check for libtiff
 ###################

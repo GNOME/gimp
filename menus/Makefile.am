@@ -52,7 +52,7 @@ if GIMP_UNSTABLE
 DEBUG_MENU_PARAMS = --stringparam debug-menu yes
 endif
 
-if HAVE_CARBON
+if HAVE_GDK_QUARTZ
 HELP_MENU_PARAMS = --stringparam help-menu yes
 endif
 

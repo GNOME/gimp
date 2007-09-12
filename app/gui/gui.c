@@ -84,9 +84,9 @@
 #include "session.h"
 #include "splash.h"
 #include "themes.h"
-#ifdef HAVE_CARBON
+#ifdef GDK_WINDOWING_QUARTZ
 #include "gtk-macmenu.h"
-#endif /* HAVE_CARBON */
+#endif /* GDK_WINDOWING_QUARTZ */
 
 #include "gimp-intl.h"
 
@@ -462,7 +462,7 @@ gui_restore_after_callback (Gimp               *gimp,
                                                     gui_config->tearoff_menus);
   gimp_ui_manager_update (image_ui_manager, NULL);
 
-#ifdef HAVE_CARBON
+#ifdef GDK_WINDOWING_QUARTZ
   {
     GtkWidget *menu;
     GtkWidget *item;
@@ -490,7 +490,7 @@ gui_restore_after_callback (Gimp               *gimp,
     if (GTK_IS_MENU_ITEM (item))
       gtk_macmenu_set_prefs_item (GTK_MENU_ITEM (item), _("Preferences"));
   }
-#endif /* HAVE_CARBON */
+#endif /* GDK_WINDOWING_QUARTZ */
 
   g_signal_connect_object (gui_config, "notify::tearoff-menus",
                            G_CALLBACK (gui_tearoff_menus_notify),

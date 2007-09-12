@@ -1,3 +1,19 @@
+2007-09-12  Michael Natterer  <mitch@gimp.org>
+
+	Bring back our menus when building on OS X but not against the
+	quartz GDK backend:
+
+	* configure.in: added conditional HAVE_GDK_QUARTZ.
+
+	* menus/Makefile.am: use it when moving the help menu around.
+
+	* app/dialogs/preferences-dialog.c
+	* app/display/gimpdisplayshell.c
+	* app/gui/gtk-macmenu.c
+	* app/gui/gui.c
+	* app/widgets/gimptoolbox.c: use #ifdef GDK_WINDOWING_QUARTZ
+	instead of #ifdef HAVE_CARBON when enabling the global menubar.
+
 2007-09-12  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimpcolorprofilecombobox.c
