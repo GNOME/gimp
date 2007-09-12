@@ -283,12 +283,17 @@ GtkWidget *
 gimp_color_profile_combo_box_new (GtkWidget   *dialog,
                                   const gchar *history)
 {
+  GtkWidget    *combo;
+  GtkListStore *store;
+
   g_return_val_if_fail (GTK_IS_DIALOG (dialog), NULL);
 
-  return g_object_new (GIMP_TYPE_COLOR_PROFILE_COMBO_BOX,
-                       "dialog", dialog,
-                       "model",  gimp_color_profile_store_new (history),
-                       NULL);
+  store = gimp_color_profile_store_new (history);
+  combo = gimp_color_profile_combo_box_new_with_model (dialog,
+                                                       GTK_TREE_MODEL (store));
+  g_object_unref (store);
+
+  return combo;
 }
 
 /**
