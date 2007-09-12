@@ -75,6 +75,12 @@ typedef struct
   const gint   min_params;
 } Procedure;
 
+typedef struct
+{
+  GimpColorRenderingIntent intent;
+  gboolean                 bpc;
+} LcmsValues;
+
 
 static void  query (void);
 static void  run   (const gchar      *name,
@@ -140,11 +146,10 @@ static gboolean     lcms_icc_apply_dialog        (gint32           image,
                                                   cmsHPROFILE      dest_profile,
                                                   gboolean        *dont_ask);
 
-static gboolean     lcms_dialog                  (GimpColorConfig *config,
+static GimpPDBStatusType  lcms_dialog            (GimpColorConfig *config,
                                                   gint32           image,
                                                   gboolean         apply,
-                                                  GimpColorRenderingIntent intent,
-                                                  gboolean         bpc);
+                                                  LcmsValues      *values);
 
 
 static const GimpParamDef set_args[] =
@@ -346,6 +351,9 @@ run (const gchar      *name,
   if (proc == NONE)
     goto done;
 
+  if (nparams < procedures[proc].min_params)
+    goto done;
+
   if (proc != PROC_FILE_INFO)
     config = gimp_get_color_configuration ();
 
@@ -394,23 +402,27 @@ run (const gchar      *name,
 
   if (run_mode == GIMP_RUN_INTERACTIVE)
     {
+      LcmsValues values = { intent, bpc };
+
       switch (proc)
         {
         case PROC_SET:
-          status = lcms_dialog (config, image, FALSE, intent, bpc);
+          status = lcms_dialog (config, image, FALSE, &values);
           goto done;
 
         case PROC_APPLY:
-          status = lcms_dialog (config, image, TRUE, intent, bpc);
+          gimp_get_data (name, &values);
+
+          status = lcms_dialog (config, image, TRUE, &values);
+
+          if (status == GIMP_PDB_SUCCESS)
+            gimp_set_data (name, &values, sizeof (LcmsValues));
           goto done;
 
         default:
           break;
         }
     }
-
-  if (nparams < procedures[proc].min_params)
-    goto done;
 
   switch (proc)
     {
@@ -1384,12 +1396,11 @@ lcms_icc_combo_box_new (GimpColorConfig *config,
   return combo;
 }
 
-static gboolean
-lcms_dialog (GimpColorConfig          *config,
-             gint32                    image,
-             gboolean                  apply,
-             GimpColorRenderingIntent  intent,
-             gboolean                  bpc)
+static GimpPDBStatusType
+lcms_dialog (GimpColorConfig *config,
+             gint32           image,
+             gboolean         apply,
+             LcmsValues      *values)
 {
   GimpColorProfileComboBox *box;
   GtkWidget                *dialog;
@@ -1399,7 +1410,7 @@ lcms_dialog (GimpColorConfig          *config,
   GtkWidget                *combo;
   cmsHPROFILE               src_profile;
   gchar                    *name;
-  gboolean                  success = TRUE;
+  gboolean                  success = FALSE;
   gboolean                  run;
 
   src_profile = lcms_image_get_profile (config, image, NULL);
@@ -1493,21 +1504,21 @@ lcms_dialog (GimpColorConfig          *config,
       gtk_widget_show (combo);
 
       gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
-                                  intent,
+                                  values->intent,
                                   G_CALLBACK (gimp_int_combo_box_get_active),
-                                  &intent);
+                                  &values->intent);
 
       gtk_label_set_mnemonic_widget (GTK_LABEL (label), combo);
 
       toggle =
         gtk_check_button_new_with_mnemonic (_("_Black Point Compensation"));
-      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), bpc);
+      gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (toggle), values->bpc);
       gtk_box_pack_start (GTK_BOX (vbox), toggle, FALSE, FALSE, 0);
       gtk_widget_show (toggle);
 
       g_signal_connect (toggle, "toggled",
                         G_CALLBACK (gimp_toggle_button_update),
-                        &bpc);
+                        &values->bpc);
     }
 
   run = (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK);
@@ -1534,7 +1545,7 @@ lcms_dialog (GimpColorConfig          *config,
             success = lcms_image_apply_profile (image,
                                                 src_profile, dest_profile,
                                                 filename,
-                                                intent, bpc);
+                                                values->intent, values->bpc);
           else
             success = lcms_image_set_profile (image, dest_profile, filename);
         }
@@ -1550,5 +1561,7 @@ lcms_dialog (GimpColorConfig          *config,
 
   cmsCloseProfile (src_profile);
 
-  return success;
+  return (run ?
+          (success ? GIMP_PDB_SUCCESS : GIMP_PDB_EXECUTION_ERROR) :
+          GIMP_PDB_CANCEL);
 }

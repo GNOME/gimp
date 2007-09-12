@@ -1,5 +1,10 @@
 2007-09-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/lcms.c: remember color conversion parameters
+	(bug #475966).
+
+2007-09-12  Sven Neumann  <sven@gimp.org>
+
 	* libgimp/gimp.def: added gimp_context_list_paint_methods.
 
 	* libgimp/tmpl/gimpcontext.sgml: regenerated.
