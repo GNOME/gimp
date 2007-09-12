@@ -930,16 +930,15 @@ supersample_dtest (gdouble x0, gdouble y0,
                    gdouble x2, gdouble y2,
                    gdouble x3, gdouble y3)
 {
-#define SQRT2 1.414213562373095
-  return (fabs (x0 - x1) > SQRT2 ||
-          fabs (x1 - x2) > SQRT2 ||
-          fabs (x2 - x3) > SQRT2 ||
-          fabs (x3 - x0) > SQRT2 ||
+  return (fabs (x0 - x1) > G_SQRT2 ||
+          fabs (x1 - x2) > G_SQRT2 ||
+          fabs (x2 - x3) > G_SQRT2 ||
+          fabs (x3 - x0) > G_SQRT2 ||
 
-          fabs (y0 - y1) > SQRT2 ||
-          fabs (y1 - y2) > SQRT2 ||
-          fabs (y2 - y3) > SQRT2 ||
-          fabs (y3 - y0) > SQRT2);
+          fabs (y0 - y1) > G_SQRT2 ||
+          fabs (y1 - y2) > G_SQRT2 ||
+          fabs (y2 - y3) > G_SQRT2 ||
+          fabs (y3 - y0) > G_SQRT2);
 }
 
 /*

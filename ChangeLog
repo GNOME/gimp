@@ -1,3 +1,8 @@
+2007-09-12  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimp-transform-region.c (supersample_dtest): use
+	G_SQRT2 instead of defining this constant again.
+
 2007-09-12  Michael Natterer  <mitch@gimp.org>
 
 	Bring back our menus when building on OS X but not against the
