@@ -1,3 +1,11 @@
+2007-09-12  Øyvind Kolås  <pippin@gimp.org>
+
+	* app/core/gimp-transform-region.c: (supersample_dtest): do not invoke
+	supersampling for linear, bicubic and lanczos until the largest
+	horizontal/vertical difference between transformed pixel corners goes
+	above sqrt(2) (this ensures interpolation instead of supersampling is
+	used for rotation.)
+
 2007-09-12  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpcontainer-filter.c

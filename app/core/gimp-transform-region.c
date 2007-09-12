@@ -897,8 +897,9 @@ sample_bi (TileManager  *tm,
 
 
 /*
- * Returns TRUE if one of the deltas of the
- * quad edge is > 1.0 (16.16 fixed values).
+ * Returns TRUE if one of the deltas of the quad edge is > 1.0 (16.16 fixed
+ * values). This is the condition used on whether additional recursive
+ * subdivision should be used.
  */
 static inline gboolean
 supersample_test (gint x0, gint y0,
@@ -918,8 +919,10 @@ supersample_test (gint x0, gint y0,
 }
 
 /*
- *  Returns TRUE if one of the deltas of the
- *  quad edge is > 1.0 (double values).
+ * Returns TRUE if one of the deltas of the quad edge is > sqrt(2) (double
+ * values). This is the condition used on whether supersampling should be used
+ * or not. By making this sqrt(2) supersampling will not be triggered by
+ * rotations.
  */
 static inline gboolean
 supersample_dtest (gdouble x0, gdouble y0,
@@ -927,15 +930,16 @@ supersample_dtest (gdouble x0, gdouble y0,
                    gdouble x2, gdouble y2,
                    gdouble x3, gdouble y3)
 {
-  return (fabs (x0 - x1) > 1.0 ||
-          fabs (x1 - x2) > 1.0 ||
-          fabs (x2 - x3) > 1.0 ||
-          fabs (x3 - x0) > 1.0 ||
+#define SQRT2 1.414213562373095
+  return (fabs (x0 - x1) > SQRT2 ||
+          fabs (x1 - x2) > SQRT2 ||
+          fabs (x2 - x3) > SQRT2 ||
+          fabs (x3 - x0) > SQRT2 ||
 
-          fabs (y0 - y1) > 1.0 ||
-          fabs (y1 - y2) > 1.0 ||
-          fabs (y2 - y3) > 1.0 ||
-          fabs (y3 - y0) > 1.0);
+          fabs (y0 - y1) > SQRT2 ||
+          fabs (y1 - y2) > SQRT2 ||
+          fabs (y2 - y3) > SQRT2 ||
+          fabs (y3 - y0) > SQRT2);
 }
 
 /*
