@@ -1,7 +1,7 @@
 2007-09-12  Sven Neumann  <sven@gimp.org>
 
 	* app/base/tile.c (tile_data_pointer): use the offsets module
-	TILE_WIDTH and TILE_HEIGHT instead of doing the module operation
+	TILE_WIDTH and TILE_HEIGHT instead of doing the modulo operation
 	in each and every caller.
 
 	* app/base/boundary.c
