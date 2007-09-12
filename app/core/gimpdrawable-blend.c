@@ -513,9 +513,7 @@ gradient_calc_shapeburst_angular_factor (gdouble x,
 
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
 
-  value = 1.0 - *((gfloat *) tile_data_pointer (tile,
-                                                ix % TILE_WIDTH,
-                                                iy % TILE_HEIGHT));
+  value = 1.0 - *((gfloat *) tile_data_pointer (tile, ix, iy));
 
   tile_release (tile, FALSE);
 
@@ -534,9 +532,7 @@ gradient_calc_shapeburst_spherical_factor (gdouble x,
 
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
 
-  value = *((gfloat *) tile_data_pointer (tile,
-                                          ix % TILE_WIDTH,
-                                          iy % TILE_HEIGHT));
+  value = *((gfloat *) tile_data_pointer (tile, ix, iy));
   value = 1.0 - sin (0.5 * G_PI * value);
 
   tile_release (tile, FALSE);
@@ -556,9 +552,7 @@ gradient_calc_shapeburst_dimpled_factor (gdouble x,
 
   tile = tile_manager_get_tile (distR.tiles, ix, iy, TRUE, FALSE);
 
-  value = *((gfloat *) tile_data_pointer (tile,
-                                          ix % TILE_WIDTH,
-                                          iy % TILE_HEIGHT));
+  value = *((gfloat *) tile_data_pointer (tile, ix, iy));
   value = cos (0.5 * G_PI * value);
 
   tile_release (tile, FALSE);

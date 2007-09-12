@@ -522,11 +522,8 @@ find_empty_segs (PixelRegion  *maskPR,
 
               tile = tile_manager_get_tile (maskPR->tiles,
                                             x, scanline, TRUE, FALSE);
-              data =
-                (const guchar *) tile_data_pointer (tile,
-                                                    x % TILE_WIDTH,
-                                                    scanline % TILE_HEIGHT) +
-                (tile_bpp(tile) - 1);
+              data = ((const guchar *) tile_data_pointer (tile, x, scanline) +
+                      tile_bpp (tile) - 1);
 
               tilex = x / TILE_WIDTH;
               dstep = tile_bpp (tile);

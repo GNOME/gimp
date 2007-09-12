@@ -1102,23 +1102,24 @@ render_image_tile_fault (RenderInfo *info)
 
   footprint_y = (1.0 / info->scaley) * 256;
   footprint_x = (1.0 / info->scalex) * 256;
+
   foosum = footprint_x * footprint_y;
 
-    {
-      gint dy = info->yfraction;
+  {
+    gint dy = info->yfraction;
 
-      if (dy > footprint_y / 2)
-        top_weight = 0;
-      else
-        top_weight = footprint_y / 2 - dy;
+    if (dy > footprint_y / 2)
+      top_weight = 0;
+    else
+      top_weight = footprint_y / 2 - dy;
 
-      if (0xff - dy > footprint_y / 2)
-        bottom_weight = 0;
-      else
-        bottom_weight = footprint_y / 2 - (0xff - dy);
+    if (0xff - dy > footprint_y / 2)
+      bottom_weight = 0;
+    else
+      bottom_weight = footprint_y / 2 - (0xff - dy);
 
-      middle_weight = footprint_y - top_weight - bottom_weight;
-    }
+    middle_weight = footprint_y - top_weight - bottom_weight;
+  }
 
   tile[4] = tile_manager_get_tile (info->src_tiles,
                                    info->src_x, info->src_y,
@@ -1152,14 +1153,11 @@ render_image_tile_fault (RenderInfo *info)
 
   g_return_val_if_fail (tile[4] != NULL, tile_buf);
 
-  src[4] = tile_data_pointer (tile[4],
-                              info->src_x % TILE_WIDTH,
-                              info->src_y % TILE_HEIGHT);
+  src[4] = tile_data_pointer (tile[4], info->src_x, info->src_y);
+
   if (tile[5])
     {
-      src[5] = tile_data_pointer (tile[5],
-                                  (info->src_x + 1) % TILE_WIDTH,
-                                  info->src_y % TILE_HEIGHT);
+      src[5] = tile_data_pointer (tile[5], info->src_x + 1, info->src_y);
     }
   else
     {
@@ -1168,9 +1166,7 @@ render_image_tile_fault (RenderInfo *info)
 
   if (tile[7])
     {
-      src[7] = tile_data_pointer (tile[7],
-                                  info->src_x % TILE_WIDTH,
-                                  (info->src_y + 1) % TILE_HEIGHT);
+      src[7] = tile_data_pointer (tile[7], info->src_x, info->src_y + 1);
     }
   else
     {
@@ -1179,9 +1175,7 @@ render_image_tile_fault (RenderInfo *info)
 
   if (tile[1])
     {
-      src[1] = tile_data_pointer (tile[1],
-                                  (info->src_x) % TILE_WIDTH,
-                                  (info->src_y - 1) % TILE_HEIGHT);
+      src[1] = tile_data_pointer (tile[1], info->src_x, info->src_y - 1);
     }
   else
     {
@@ -1190,9 +1184,7 @@ render_image_tile_fault (RenderInfo *info)
 
   if (tile[8])
     {
-      src[8] = tile_data_pointer (tile[8],
-                                  (info->src_x + 1) % TILE_WIDTH,
-                                  (info->src_y + 1) % TILE_HEIGHT);
+      src[8] = tile_data_pointer (tile[8], info->src_x + 1, info->src_y + 1);
     }
   else
     {
@@ -1203,9 +1195,7 @@ render_image_tile_fault (RenderInfo *info)
 
   if (tile[0])
     {
-      src[0] = tile_data_pointer (tile[0],
-                                  (info->src_x - 1) % TILE_WIDTH,
-                                  (info->src_y - 1) % TILE_HEIGHT);
+      src[0] = tile_data_pointer (tile[0], info->src_x - 1, info->src_y - 1);
     }
   else
     {
@@ -1214,9 +1204,7 @@ render_image_tile_fault (RenderInfo *info)
 
   if (tile[2])
     {
-      src[2] = tile_data_pointer (tile[2],
-                                  (info->src_x + 1) % TILE_WIDTH,
-                                  (info->src_y - 1) % TILE_HEIGHT);
+      src[2] = tile_data_pointer (tile[2], info->src_x + 1, info->src_y - 1);
     }
   else
     {
@@ -1225,9 +1213,7 @@ render_image_tile_fault (RenderInfo *info)
 
   if (tile[3])
     {
-      src[3] = tile_data_pointer (tile[3],
-                                (info->src_x - 1) % TILE_WIDTH,
-                                (info->src_y) % TILE_HEIGHT);
+      src[3] = tile_data_pointer (tile[3], info->src_x - 1, info->src_y);
     }
   else
     {
@@ -1236,9 +1222,7 @@ render_image_tile_fault (RenderInfo *info)
 
   if (tile[6])
     {
-      src[6] = tile_data_pointer (tile[6],
-                                  (info->src_x - 1) % TILE_WIDTH,
-                                  (info->src_y + 1) % TILE_HEIGHT);
+      src[6] = tile_data_pointer (tile[6], info->src_x - 1, info->src_y + 1);
     }
   else
     {
@@ -1357,31 +1341,29 @@ render_image_tile_fault (RenderInfo *info)
               tile[1] = tile_manager_get_tile (info->src_tiles,
                                                src_x, info->src_y - 1,
                                                TRUE, FALSE);
-              if (!tile[4])
+              if (! tile[4])
                 goto done;
 
-              src[4] = tile_data_pointer (tile[4],
-                                          src_x % TILE_WIDTH,
-                                          info->src_y % TILE_HEIGHT);
-              if (!tile[7])
+              src[4] = tile_data_pointer (tile[4], src_x, info->src_y);
+
+              if (! tile[7])
                 {
                   src[7] = src[4];
                 }
               else
                 {
                   src[7] = tile_data_pointer (tile[7],
-                                              (src_x) % TILE_WIDTH,
-                                              (info->src_y + 1) % TILE_HEIGHT);
+                                              src_x, info->src_y + 1);
                 }
-              if (!tile[1])
+
+              if (! tile[1])
                 {
                   src[1] = src[4];
                 }
               else
                 {
                   src[1] = tile_data_pointer (tile[1],
-                                              src_x % TILE_WIDTH,
-                                              (info->src_y - 1)% TILE_HEIGHT);
+                                              src_x, info->src_y - 1);
                 }
             }
 
@@ -1406,37 +1388,34 @@ render_image_tile_fault (RenderInfo *info)
                                                src_x + 1, info->src_y - 1,
                                                TRUE, FALSE);
 
-              if (!tile[5])
+              if (! tile[5])
                 {
                   src[5] = src[4];
                 }
               else
                 {
                   src[5] = tile_data_pointer (tile[5],
-                                              (src_x + 1) % TILE_WIDTH,
-                                              info->src_y % TILE_HEIGHT);
+                                              src_x + 1, info->src_y);
                 }
 
-              if (!tile[8])
+              if (! tile[8])
                 {
                   src[8] = src[7];
                 }
               else
                 {
                   src[8] = tile_data_pointer (tile[8],
-                                              (src_x + 1) % TILE_WIDTH,
-                                              (info->src_y + 1) % TILE_HEIGHT);
+                                              src_x + 1, info->src_y + 1);
                 }
 
-              if (!tile[2])
+              if (! tile[2])
                 {
                   src[2] = src[1];
                 }
               else
                 {
                   src[2] = tile_data_pointer (tile[2],
-                                              (src_x + 1) % TILE_WIDTH,
-                                              (info->src_y - 1) % TILE_HEIGHT);
+                                              src_x + 1, info->src_y - 1);
                 }
             }
 
@@ -1461,37 +1440,34 @@ render_image_tile_fault (RenderInfo *info)
                                                src_x - 1, info->src_y + 1,
                                                TRUE, FALSE);
 
-              if (!tile[3])
+              if (! tile[3])
                 {
                   src[3] = src[4];
                 }
               else
                 {
                   src[3] = tile_data_pointer (tile[3],
-                                              (src_x - 1) % TILE_WIDTH,
-                                              info->src_y % TILE_HEIGHT);
+                                              src_x - 1, info->src_y);
                 }
 
-              if (!tile[6])
+              if (! tile[6])
                 {
                   src[6] = src[7];
                 }
               else
                 {
                   src[6] = tile_data_pointer (tile[6],
-                                              (src_x - 1) % TILE_WIDTH,
-                                              (info->src_y + 1) % TILE_HEIGHT);
+                                              src_x - 1, info->src_y + 1);
                 }
 
-              if (!tile[0])
+              if (! tile[0])
                 {
                   src[0] = src[1];
                 }
               else
                 {
                   src[0] = tile_data_pointer (tile[0],
-                                              (src_x - 1) % TILE_WIDTH,
-                                              (info->src_y - 1) % TILE_HEIGHT);
+                                              src_x - 1, info->src_y - 1);
                 }
             }
         }
@@ -1524,9 +1500,7 @@ render_image_tile_fault_nearest (RenderInfo *info)
 
   g_return_val_if_fail (tile != NULL, tile_buf);
 
-  src = tile_data_pointer (tile,
-                           info->src_x % TILE_WIDTH,
-                           info->src_y % TILE_HEIGHT);
+  src = tile_data_pointer (tile, info->src_x, info->src_y);
 
   bpp   = tile_manager_bpp (info->src_tiles);
   dest  = tile_buf;
@@ -1573,12 +1547,10 @@ render_image_tile_fault_nearest (RenderInfo *info)
 
               tile = tile_manager_get_tile (info->src_tiles,
                                             src_x, info->src_y, TRUE, FALSE);
-              if (!tile)
+              if (! tile)
                 return tile_buf;
 
-              src = tile_data_pointer (tile,
-                                       src_x % TILE_WIDTH,
-                                       info->src_y % TILE_HEIGHT);
+              src = tile_data_pointer (tile, src_x, info->src_y);
             }
         }
     }
@@ -1657,20 +1629,13 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
   g_return_val_if_fail (tile[0] != NULL, tile_buf);
 
-  src[4] = tile_data_pointer (tile[0],
-                              info->src_x % TILE_WIDTH,
-                              info->src_y % TILE_HEIGHT);
-  src[7] = tile_data_pointer (tile[0],
-                              info->src_x % TILE_WIDTH,
-                              (info->src_y + 1) % TILE_HEIGHT);
+  src[4] = tile_data_pointer (tile[0], info->src_x, info->src_y);
+  src[7] = tile_data_pointer (tile[0], info->src_x, info->src_y + 1);
+
   if (tile[1])
     {
-      src[5] = tile_data_pointer (tile[1],
-                                  (info->src_x + 1)% TILE_WIDTH,
-                                  info->src_y % TILE_HEIGHT);
-      src[8] = tile_data_pointer (tile[1],
-                                  (info->src_x + 1) % TILE_WIDTH,
-                                  (info->src_y + 1) % TILE_HEIGHT);
+      src[5] = tile_data_pointer (tile[1], info->src_x + 1, info->src_y);
+      src[8] = tile_data_pointer (tile[1], info->src_x + 1, info->src_y + 1);
     }
   else
     {
@@ -1680,9 +1645,7 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
   if (tile[0])
     {
-      src[1] = tile_data_pointer (tile[0],
-                                  (info->src_x) % TILE_WIDTH,
-                                  (info->src_y - 1) % TILE_HEIGHT);
+      src[1] = tile_data_pointer (tile[0], info->src_x, info->src_y - 1);
     }
   else
     {
@@ -1691,9 +1654,7 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
   if (tile[2])
     {
-      src[0] = tile_data_pointer (tile[2],
-                                  (info->src_x - 1) % TILE_WIDTH,
-                                  (info->src_y - 1) % TILE_HEIGHT);
+      src[0] = tile_data_pointer (tile[2], info->src_x - 1, info->src_y - 1);
     }
   else
     {
@@ -1702,9 +1663,7 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
   if (tile[1])
     {
-      src[2] = tile_data_pointer (tile[1],
-                                  (info->src_x + 1) % TILE_WIDTH,
-                                  (info->src_y - 1) % TILE_HEIGHT);
+      src[2] = tile_data_pointer (tile[1], info->src_x + 1, info->src_y - 1);
     }
   else
     {
@@ -1713,12 +1672,8 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
   if (tile[2])
     {
-      src[3] = tile_data_pointer (tile[2],
-                                  (info->src_x - 1) % TILE_WIDTH,
-                                  (info->src_y) % TILE_HEIGHT);
-      src[6] = tile_data_pointer (tile[2],
-                                  (info->src_x - 1) % TILE_WIDTH,
-                                  (info->src_y + 1) % TILE_HEIGHT);
+      src[3] = tile_data_pointer (tile[2], info->src_x - 1, info->src_y);
+      src[6] = tile_data_pointer (tile[2], info->src_x - 1, info->src_y + 1);
     }
   else
     {
@@ -1826,18 +1781,12 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
               tile[0] = tile_manager_get_tile (info->src_tiles,
                                                src_x, info->src_y, TRUE, FALSE);
-              if (!tile[0])
+              if (! tile[0])
                 goto done;
 
-              src[4] = tile_data_pointer (tile[0],
-                                          src_x % TILE_WIDTH,
-                                          info->src_y % TILE_HEIGHT);
-              src[7] = tile_data_pointer (tile[0],
-                                          (src_x) % TILE_WIDTH,
-                                          (info->src_y + 1) % TILE_HEIGHT);
-              src[1] = tile_data_pointer (tile[0],
-                                          src_x % TILE_WIDTH,
-                                          (info->src_y - 1)% TILE_HEIGHT);
+              src[4] = tile_data_pointer (tile[0], src_x, info->src_y);
+              src[7] = tile_data_pointer (tile[0], src_x, info->src_y + 1);
+              src[1] = tile_data_pointer (tile[0], src_x, info->src_y - 1);
             }
 
           if (((src_x + 1) / TILE_WIDTH) != tilex1)
@@ -1851,7 +1800,7 @@ render_image_tile_fault_one_row (RenderInfo *info)
                                                src_x + 1, info->src_y,
                                                TRUE, FALSE);
 
-              if (!tile[1])
+              if (! tile[1])
                 {
                   src[5] = src[4];
                   src[8] = src[7];
@@ -1860,14 +1809,11 @@ render_image_tile_fault_one_row (RenderInfo *info)
               else
                 {
                   src[5] = tile_data_pointer (tile[1],
-                                              (src_x + 1) % TILE_WIDTH,
-                                              info->src_y % TILE_HEIGHT);
+                                              src_x + 1, info->src_y);
                   src[8] = tile_data_pointer (tile[1],
-                                              (src_x + 1) % TILE_WIDTH,
-                                              (info->src_y + 1) % TILE_HEIGHT);
+                                              src_x + 1, info->src_y + 1);
                   src[2] = tile_data_pointer (tile[1],
-                                              (src_x + 1) % TILE_WIDTH,
-                                              (info->src_y - 1) % TILE_HEIGHT);
+                                              src_x + 1, info->src_y - 1);
                 }
             }
 
@@ -1882,7 +1828,7 @@ render_image_tile_fault_one_row (RenderInfo *info)
                                                src_x - 1, info->src_y,
                                                TRUE, FALSE);
 
-              if (!tile[2])
+              if (! tile[2])
                 {
                   src[3] = src[4];
                   src[6] = src[7];
@@ -1891,14 +1837,11 @@ render_image_tile_fault_one_row (RenderInfo *info)
               else
                 {
                   src[3] = tile_data_pointer (tile[2],
-                                              (src_x - 1) % TILE_WIDTH,
-                                              info->src_y % TILE_HEIGHT);
+                                              src_x - 1, info->src_y);
                   src[6] = tile_data_pointer (tile[2],
-                                              (src_x - 1) % TILE_WIDTH,
-                                              (info->src_y + 1) % TILE_HEIGHT);
+                                              src_x - 1, info->src_y + 1);
                   src[0] = tile_data_pointer (tile[2],
-                                              (src_x - 1) % TILE_WIDTH,
-                                              (info->src_y - 1) % TILE_HEIGHT);
+                                              src_x - 1, info->src_y - 1);
                 }
             }
         }

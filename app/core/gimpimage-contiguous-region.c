@@ -155,10 +155,10 @@ gimp_image_contiguous_region_by_seed (GimpImage           *image,
   tile = tile_manager_get_tile (srcPR.tiles, x, y, TRUE, FALSE);
   if (tile)
     {
-      guchar *start;
-      guchar  start_col[MAX_CHANNELS];
+      const guchar *start;
+      guchar        start_col[MAX_CHANNELS];
 
-      start = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+      start = tile_data_pointer (tile, x, y);
 
       if (has_alpha)
         {
@@ -454,8 +454,8 @@ ref_tiles (TileManager  *src,
   *s_tile = tile_manager_get_tile (src, x, y, TRUE, FALSE);
   *m_tile = tile_manager_get_tile (mask, x, y, TRUE, TRUE);
 
-  *s = tile_data_pointer (*s_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
-  *m = tile_data_pointer (*m_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+  *s = tile_data_pointer (*s_tile, x, y);
+  *m = tile_data_pointer (*m_tile, x, y);
 }
 
 static int
@@ -598,9 +598,9 @@ find_contiguous_region_helper (GimpImage           *image,
                                gint                 y,
                                const guchar        *col)
 {
-  gint   start, end;
-  gint   new_start, new_end;
-  gint   val;
+  gint    start, end;
+  gint    new_start, new_end;
+  gint    val;
   Tile   *tile;
   GQueue *coord_stack;
 
@@ -624,9 +624,7 @@ find_contiguous_region_helper (GimpImage           *image,
       for (x = start + 1; x < end; x++)
         {
           tile = tile_manager_get_tile (mask->tiles, x, y, TRUE, FALSE);
-          val = *(guchar *) (tile_data_pointer (tile,
-                                                x % TILE_WIDTH,
-                                                y % TILE_HEIGHT));
+          val = *(const guchar *) (tile_data_pointer (tile, x, y));
           tile_release (tile, FALSE);
           if (val != 0)
             continue;

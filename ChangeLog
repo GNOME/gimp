@@ -1,5 +1,24 @@
 2007-09-12  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile.c (tile_data_pointer): use the offsets module
+	TILE_WIDTH and TILE_HEIGHT instead of doing the module operation
+	in each and every caller.
+
+	* app/base/boundary.c
+	* app/base/pixel-region.c
+	* app/base/tile-manager.c
+	* app/core/gimpchannel.c
+	* app/core/gimpdrawable-blend.c
+	* app/core/gimpdrawable.c
+	* app/core/gimpimage-contiguous-region.c
+	* app/core/gimplayer.c
+	* app/display/gimpdisplayshell-render.c
+	* app/paint-funcs/paint-funcs.c
+	* app/paint/gimppaintcore.c
+	* app/tools/gimpiscissorstool.c: changed accordingly.
+
+2007-09-12  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimp-transform-region.c (supersample_dtest): use
 	G_SQRT2 instead of defining this constant again.
 

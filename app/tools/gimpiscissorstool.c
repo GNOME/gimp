@@ -1452,24 +1452,28 @@ gradient_map_value (TileManager *map,
                     guint8      *grad,
                     guint8      *dir)
 {
-  static gint  cur_tilex;
-  static gint  cur_tiley;
-  guint8      *p;
+  static gint   cur_tilex;
+  static gint   cur_tiley;
+  const guint8 *p;
 
-  if (!cur_tile ||
+  if (! cur_tile ||
       x / TILE_WIDTH != cur_tilex ||
       y / TILE_HEIGHT != cur_tiley)
     {
       if (cur_tile)
         tile_release (cur_tile, FALSE);
+
       cur_tile = tile_manager_get_tile (map, x, y, TRUE, FALSE);
+
       if (!cur_tile)
         return FALSE;
+
       cur_tilex = x / TILE_WIDTH;
       cur_tiley = y / TILE_HEIGHT;
     }
 
-  p = tile_data_pointer (cur_tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+  p = tile_data_pointer (cur_tile, x, y);
+
   *grad = p[0];
   *dir  = p[1];
 
@@ -1755,7 +1759,8 @@ gradmap_tile_validate (TileManager *tm,
   sw = tile_ewidth (srctile);
   sh = tile_eheight (srctile);
 
-  pixel_region_init_data (&srcPR, tile_data_pointer (srctile, 0, 0),
+  pixel_region_init_data (&srcPR,
+                          tile_data_pointer (srctile, 0, 0),
                           gimp_pickable_get_bytes (pickable),
                           gimp_pickable_get_bytes (pickable) *
                           MIN (dw, sw),

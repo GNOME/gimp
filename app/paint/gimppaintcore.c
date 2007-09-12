@@ -648,8 +648,7 @@ gimp_paint_core_get_orig_image (GimpPaintCore *core,
           undo_tile = tile_manager_get_tile (core->undo_tiles,
                                              srcPR.x, srcPR.y,
                                              TRUE, FALSE);
-          s = tile_data_pointer (undo_tile,
-                                 srcPR.x % TILE_WIDTH, srcPR.y % TILE_HEIGHT);
+          s = tile_data_pointer (undo_tile, srcPR.x, srcPR.y);
         }
       else
         {
@@ -746,8 +745,7 @@ gimp_paint_core_get_orig_proj (GimpPaintCore *core,
           saved_tile = tile_manager_get_tile (core->saved_proj_tiles,
                                               srcPR.x, srcPR.y,
                                               TRUE, FALSE);
-          s = tile_data_pointer (saved_tile,
-                                 srcPR.x % TILE_WIDTH, srcPR.y % TILE_HEIGHT);
+          s = tile_data_pointer (saved_tile, srcPR.x, srcPR.y);
         }
       else
         {

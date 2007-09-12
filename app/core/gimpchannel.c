@@ -845,7 +845,7 @@ gimp_channel_get_opacity_at (GimpPickable *pickable,
 
   tile = tile_manager_get_tile (GIMP_DRAWABLE (channel)->tiles, x, y,
                                 TRUE, FALSE);
-  val = *(guchar *) (tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT));
+  val = *(guchar *) (tile_data_pointer (tile, x, y));
   tile_release (tile, FALSE);
 
   return val;

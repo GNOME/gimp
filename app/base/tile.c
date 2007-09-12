@@ -389,7 +389,7 @@ tile_data_pointer (Tile *tile,
                    gint  xoff,
                    gint  yoff)
 {
-  gsize offset = yoff * tile->ewidth + xoff;
+  gsize offset = (yoff % TILE_HEIGHT) * tile->ewidth + (xoff % TILE_HEIGHT);
 
   return (gpointer) (tile->data + offset * tile->bpp);
 }

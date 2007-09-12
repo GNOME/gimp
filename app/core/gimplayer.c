@@ -856,9 +856,7 @@ gimp_layer_get_opacity_at (GimpPickable *pickable,
       tile = tile_manager_get_tile (GIMP_DRAWABLE (layer)->tiles,
                                     x, y, TRUE, FALSE);
 
-      val = * ((guchar *) tile_data_pointer (tile,
-                                             x % TILE_WIDTH,
-                                             y % TILE_HEIGHT) +
+      val = * ((const guchar *) tile_data_pointer (tile, x, y) +
                tile_bpp (tile) - 1);
 
       if (layer->mask)

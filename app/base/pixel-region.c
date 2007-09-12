@@ -169,7 +169,7 @@ pixel_region_get_row (PixelRegion *PR,
       while (x < end)
         {
           tile = tile_manager_get_tile (PR->tiles, x, y, TRUE, FALSE);
-          tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+          tile_data = tile_data_pointer (tile, x, y);
           npixels = tile_ewidth (tile) - (x % TILE_WIDTH);
 
           if ((x + npixels) > end) /* make sure we don't write past the end */
@@ -230,7 +230,7 @@ pixel_region_get_col (PixelRegion *PR,
   while (y < end)
     {
       tile = tile_manager_get_tile (PR->tiles, x, y, TRUE, FALSE);
-      tile_data = tile_data_pointer (tile, x % TILE_WIDTH, y % TILE_HEIGHT);
+      tile_data = tile_data_pointer (tile, x, y);
       boundary = y + (tile_eheight(tile) - (y % TILE_HEIGHT));
 
       if (boundary > end) /* make sure we don't write past the end */

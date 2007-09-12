@@ -2843,9 +2843,7 @@ shapeburst_region (PixelRegion      *srcPR,
                   tile = tile_manager_get_tile (srcPR->tiles,
                                                 x, y, TRUE, FALSE);
 
-                  tile_data = tile_data_pointer (tile,
-                                                 x % TILE_WIDTH,
-                                                 y % TILE_HEIGHT);
+                  tile_data = tile_data_pointer (tile, x, y);
                   width = tile_ewidth (tile);
 
                   boundary = MIN (y % TILE_HEIGHT,
