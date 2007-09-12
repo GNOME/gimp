@@ -629,6 +629,7 @@ pnm_load_ascii (PNMScanner   *scan,
                 /* Truncated files will just have all 0's at the end of the images */
                 if (pnmscanner_eof (scan))
                   g_message (_("Premature end of file."));
+
                 if (info->np)
                   pnmscanner_gettoken (scan, buf, BUFLEN);
                 else
@@ -641,12 +642,16 @@ pnm_load_ascii (PNMScanner   *scan,
                     break;
 
                   case 1:
-                    d[b] = (*buf == '0') ? 0xff : 0x00;
+                    if (info->np)
+                      d[b] = (*buf == '0') ? 0x00 : 0xff;
+                    else
+                      d[b] = (*buf == '0') ? 0xff : 0x00; /* invert for PBM */
                     break;
 
                   default:
-                    d[b] = (255.0 * (((gdouble)(g_ascii_isdigit (*buf) ? atoi (buf) : 0))
-                                     / (gdouble)(info->maxval)));
+                    d[b] = (255.0 * (((gdouble) (g_ascii_isdigit (*buf) ?
+                                                 atoi (buf) : 0))
+                                     / (gdouble) (info->maxval)));
                   }
               }
 

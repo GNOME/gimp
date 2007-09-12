@@ -1,5 +1,10 @@
 2007-09-12  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/pnm.c (pnm_load_ascii): fixed loading of PGM
+	files with maxval of 1 (bug #475991).
+
+2007-09-12  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/lcms.c: fixed use of black-point-compensation
 	parameter (bug #475952).
 
