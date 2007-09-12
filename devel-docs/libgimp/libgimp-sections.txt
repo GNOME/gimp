@@ -249,6 +249,7 @@ gimp_context_get_font
 gimp_context_set_font
 gimp_context_get_paint_method
 gimp_context_set_paint_method
+gimp_context_list_paint_methods
 </SECTION>
 
 <SECTION>

@@ -1,3 +1,7 @@
+2007-09-12  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/libgimp-sections.txt: added gimp_context_list_paint_methods.
+
 2007-08-24  Raphaël Quinet  <raphael@gimp.org>
 
 	* release-howto.txt: added note about having admin access to

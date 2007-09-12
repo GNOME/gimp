@@ -78,6 +78,7 @@ EXPORTS
 	gimp_context_get_paint_mode
 	gimp_context_get_palette
 	gimp_context_get_pattern
+	gimp_context_list_paint_methods
 	gimp_context_pop
 	gimp_context_push
 	gimp_context_set_background
