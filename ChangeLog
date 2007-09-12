@@ -1,3 +1,9 @@
+2007-09-12  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimpunitmenu.c (gimp_unit_menu_create_selection):
+	if the parent toplevel is modal, make the unit selection dialog
+	modal too. Fixes bug #389358.
+
 2007-09-12  Sven Neumann  <sven@gimp.org>
 
 	* app/base/tile.c (tile_data_pointer): use the offsets module

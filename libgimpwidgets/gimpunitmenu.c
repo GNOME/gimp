@@ -571,12 +571,15 @@ gimp_unit_menu_create_selection (GimpUnitMenu *menu)
   GtkTreeSelection *sel;
   GtkTreeIter       iter;
   GtkTreePath      *path;
+  GtkDialogFlags    flags  = GTK_DIALOG_DESTROY_WITH_PARENT;
   GimpUnit          unit;
   gint              num_units;
 
+  if (gtk_window_get_modal (GTK_WINDOW (parent)))
+    flags |= GTK_DIALOG_MODAL;
+
   menu->selection = gimp_dialog_new (_("Unit Selection"), "gimp-unit-selection",
-                                     parent,
-                                     GTK_DIALOG_DESTROY_WITH_PARENT,
+                                     parent, flags,
                                      gimp_standard_help_func,
                                      "gimp-unit-dialog",
 
