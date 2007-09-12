@@ -359,11 +359,11 @@ gimp_color_profile_combo_box_add (GimpColorProfileComboBox *combo,
  * gimp_color_profile_combo_box_set_active:
  * @combo:    a #GimpColorProfileComboBox
  * @filename: filename of the profile to select
- * @label:    label
+ * @label:    label to use when adding a new entry (can be %NULL)
  *
  * Selects a color profile from the @combo and makes it the active
- * item.  If the profile is not listed in the @combo, then it is
- * added.
+ * item.  If the profile is not listed in the @combo, then it is added
+ * with the given @label (or @filename in case that @label is %NULL).
  *
  * Since: GIMP 2.4
  **/
