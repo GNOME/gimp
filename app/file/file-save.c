@@ -67,8 +67,7 @@
 /*  public functions  */
 
 GimpPDBStatusType
-file_save (Gimp                *gimp,
-           GimpImage           *image,
+file_save (GimpImage           *image,
            GimpContext         *context,
            GimpProgress        *progress,
            const gchar         *uri,
@@ -84,7 +83,6 @@ file_save (Gimp                *gimp,
   gint32             image_ID;
   gint32             drawable_ID;
 
-  g_return_val_if_fail (GIMP_IS_GIMP (gimp), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (GIMP_IS_IMAGE (image), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (GIMP_IS_CONTEXT (context), GIMP_PDB_CALLING_ERROR);
   g_return_val_if_fail (progress == NULL || GIMP_IS_PROGRESS (progress),
@@ -186,7 +184,7 @@ file_save (Gimp                *gimp,
         gimp_imagefile_save_thumbnail (imagefile, file_proc->mime_type, image);
 
       if (image->gimp->config->save_document_history)
-        gimp_recent_list_add_uri (gimp, uri, file_proc->mime_type);
+        gimp_recent_list_add_uri (image->gimp, uri, file_proc->mime_type);
     }
   else if (status != GIMP_PDB_CANCEL)
     {

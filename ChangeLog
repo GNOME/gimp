@@ -1,5 +1,13 @@
 2007-09-13  Nils Philippsen  <nphilipp@redhat.com>
 
+	* app/file/file-save.[ch] (file_save)
+	* app/dialogs/file-save-dialog.c (file_save_dialog_save_image)
+	* app/actions/file-commands.c (file_save_cmd_callback)
+	* app/widgets/gimpdnd-xds.c (gimp_dnd_xds_save_image): don't pass
+	Gimp instance to file_save() calls as it's not needed
+
+2007-09-13  Nils Philippsen  <nphilipp@redhat.com>
+
 	drop own recently used files code in favour of GtkRecentManager:
 	
 	* app/core/gimp-gui.[ch] (gimp_recent_list_add_uri)
