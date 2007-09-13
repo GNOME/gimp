@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-03 23:59+0100\n"
-"PO-Revision-Date: 2007-09-13 22:54+0200\n"
+"POT-Creation-Date: 2007-09-13 21:55+0100\n"
+"PO-Revision-Date: 2007-09-13 22:59+0200\n"
 "Last-Translator: Gabor Kelemen <kelemeng@gnome.hu>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -109,7 +109,7 @@ msgstr "Script-Fu színátmenet-választó"
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu ecsetválasztó"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:656
+#: ../plug-ins/script-fu/script-fu-scripts.c:658
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -266,7 +266,10 @@ msgstr "Parancsfájlok _frissítése"
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
-msgstr "Nem használhatja a \"Parancsfájlok frissítése\" lehetőséget amíg nyitva van egy Script-Fu párbeszédablak. Zárja be az összes Script-Fu ablakot és próbálja újra."
+msgstr ""
+"Nem használhatja a \"Parancsfájlok frissítése\" lehetőséget amíg nyitva van "
+"egy Script-Fu párbeszédablak. Zárja be az összes Script-Fu ablakot és "
+"próbálja újra."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -371,8 +374,8 @@ msgstr "Körvonal elmosásának sugara"
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
 msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
 msgstr ""
-"A kijelölt terület (vagy az alfa) körvonalainak megrajzolása "
-"egy mintával, továbbá vetett árnyék hozzáadása"
+"A kijelölt terület (vagy az alfa) körvonalainak megrajzolása egy mintával, "
+"továbbá vetett árnyék hozzáadása"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
 #: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
@@ -585,7 +588,7 @@ msgstr "Kép lapítása"
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 msgid "Glow color"
@@ -643,7 +646,9 @@ msgstr "_Vízszintes elválasztó..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
 msgid "Create a bullet graphic with an eerie glow for web pages"
-msgstr "Golyó-grafika létrehozása \"titokzatos ragyogás\" effektussal weblapok számára"
+msgstr ""
+"Golyó-grafika létrehozása \"titokzatos ragyogás\" effektussal weblapok "
+"számára"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
@@ -875,8 +880,8 @@ msgid ""
 "Add blended backgrounds, highlights, and shadows to the selected region (or "
 "alpha)"
 msgstr ""
-"Átmenetes hátterek, kiemelések és árnyékok hozzáadása "
-"a kijelölt területhez (vagy az alfához)"
+"Átmenetes hátterek, kiemelések és árnyékok hozzáadása a kijelölt területhez "
+"(vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
@@ -967,38 +972,38 @@ msgid "B_urn-In..."
 msgstr "_Beégetés..."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
-msgid ""
-"Burn-In: Needs two layers in total!\\nA foreground text layer with "
-"transparency and a background layer."
-msgstr "Beégetés: Összesen két réteg szükséges: egy átlátszó előtérszöveg-réteg és egy háttérréteg."
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Corona width"
 msgstr "Koronaszélesség"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
 msgstr ""
-"Köztes rétegek létrehozása két réteg közti animált beégésszerű "
-"átmenet ábrázolásához"
+"Köztes rétegek létrehozása két réteg közti animált beégésszerű átmenet "
+"ábrázolásához"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Fadeout"
 msgstr "Elhalványítás"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout width"
 msgstr "Elhalványítási szélesség"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 msgid "Prepare for GIF"
 msgstr "Előkészítés GIF-hez"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Speed (pixels/frame)"
 msgstr "Sebesség (képpont/képkocka)"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+msgid ""
+"The Burn-In script needs two layers in total. A foreground layer with "
+"transparency and a background layer."
+msgstr "A beégetés parancsfájl összesen két réteget igényel; egy átlátszó előtérszöveg-réteget és egy háttérréteget."
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:1
 msgid "Color 1"
@@ -1064,8 +1069,8 @@ msgid ""
 "Create a logo with text raised above or carved in to the specified "
 "background image"
 msgstr ""
-"Logó létrehozása egy adott szövegnek a megadott háttérkép fölé "
-"való helyezésével vagy abba való \"belevésésével\""
+"Logó létrehozása egy adott szövegnek a megadott háttérkép fölé való "
+"helyezésével vagy abba való \"belevésésével\""
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
@@ -1089,7 +1094,9 @@ msgstr "K_réta..."
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
 msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
-msgstr "Mállott fafaragást ábrázoló hatás hozzáadása a kijelölt területhez (vagy az alfához)"
+msgstr ""
+"Mállott fafaragást ábrázoló hatás hozzáadása a kijelölt területhez (vagy az "
+"alfához)"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
 msgid "Blur amount"
@@ -1128,8 +1135,8 @@ msgid ""
 "Add a chrome effect to the selected region (or alpha) using a specified "
 "(grayscale) stencil"
 msgstr ""
-"Króm-effektus hozzáadása a kijelölt területhez (vagy az alfához) "
-"egy megadott (szürkeárnyalatos) stencilt használva"
+"Króm-effektus hozzáadása a kijelölt területhez (vagy az alfához) egy "
+"megadott (szürkeárnyalatos) stencilt használva"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
@@ -1258,10 +1265,8 @@ msgid "Add realistic looking coffee stains to the image"
 msgstr "Valósághű kinézetű kávéfoltok hozzáadása a képhez"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
-msgid "Darken only\\n(Better, but only for images with a lot of white)"
-msgstr ""
-"Csak sötétítés\\n"
-"(jobb, de csak sok fehéret tartalmazó képeknél)"
+msgid "Darken only"
+msgstr "Csak sötétítés"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
@@ -1286,8 +1291,8 @@ msgstr "_Képregény..."
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
 msgid "Create a comic-book style logo by outlining and filling with a gradient"
 msgstr ""
-"Képregény-szerű logó létrehozása körvonalazással és színátmenettel "
-"való kitöltéssel"
+"Képregény-szerű logó létrehozása körvonalazással és színátmenettel való "
+"kitöltéssel"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
 msgid "Outline color"
@@ -1543,8 +1548,8 @@ msgid ""
 "Add a frost effect to the selected region (or alpha) with an added drop "
 "shadow"
 msgstr ""
-"Fagyási effektus és vetett árnyék hozzáadása a kijelölt területhez "
-"(vagy az alfához)"
+"Fagyási effektus és vetett árnyék hozzáadása a kijelölt területhez (vagy az "
+"alfához)"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
 msgid "Create frozen logo with an added drop shadow"
@@ -1652,13 +1657,17 @@ msgstr "Gombcímkét ábrázoló kép létrehozása a gimp.org weblap témája a
 msgid ""
 "Create an image of a second level Tube Button Label using the gimp.org "
 "webpage theme"
-msgstr "Másodszintű gombcímkét ábrázoló kép létrehozása a gimp.org weblap témája alapján"
+msgstr ""
+"Másodszintű gombcímkét ábrázoló kép létrehozása a gimp.org weblap témája "
+"alapján"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
 msgid ""
 "Create an image of a third level Tube Button Label using the gimp.org "
 "webpage theme"
-msgstr "Harmadszintű gombcímkét ábrázoló kép létrehozása a gimp.org weblap témája alapján"
+msgstr ""
+"Harmadszintű gombcímkét ábrázoló kép létrehozása a gimp.org weblap témája "
+"alapján"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
@@ -1681,8 +1690,8 @@ msgid ""
 "Add gradients, patterns, shadows, and bump maps to the selected region (or "
 "alpha)"
 msgstr ""
-"Színátmenetek, minták, árnyékok és buckaleképezések hozzáadása "
-"a kijelölt területhez (vagy az alfához)"
+"Színátmenetek, minták, árnyékok és buckaleképezések hozzáadása a kijelölt "
+"területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
@@ -1758,8 +1767,8 @@ msgstr "I_zzó forró..."
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
 msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
 msgstr ""
-"Fényes kinézet és rézsútos (háromdimenziós) effektus hozzáadása "
-"a kijelölt területhez (vagy az alfához)"
+"Fényes kinézet és rézsútos (háromdimenziós) effektus hozzáadása a kijelölt "
+"területhez (vagy az alfához)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
@@ -1954,8 +1963,8 @@ msgstr "_Láva..."
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
 msgid "Fill a layer with rays emanating outward from its center using the FG color"
 msgstr ""
-"Réteg kitöltése a középpontjából kiinduló, onnan kifelé haladó, "
-"az előtérszínnel megrajzolt sugarakkal"
+"Réteg kitöltése a középpontjából kiinduló, onnan kifelé haladó, az "
+"előtérszínnel megrajzolt sugarakkal"
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
@@ -2246,8 +2255,8 @@ msgstr "Fekete"
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
 msgid "Create a multi-layer image by adding a ripple effect to the current image"
 msgstr ""
-"Többrétegű kép létrehozása egy fodrozódásszerű effektust adva a "
-"jelenlegi képhez"
+"Többrétegű kép létrehozása egy fodrozódásszerű effektust adva a jelenlegi "
+"képhez"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
 msgid "Edge behavior"
@@ -2289,8 +2298,8 @@ msgstr "Szél sugara"
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
 msgid "Round the corners of an image and optionally add a drop-shadow and background"
 msgstr ""
-"Egy kép sarkainak lekerekítése, továbbá esetlegesen vetett árnyék "
-"és háttér hozzáadása"
+"Egy kép sarkainak lekerekítése, továbbá esetlegesen vetett árnyék és háttér "
+"hozzáadása"
 
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
 msgid "_Round Corners..."
@@ -2423,7 +2432,9 @@ msgstr "Fo_rgó földgömb..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
 msgid "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
-msgstr "Spirográfok, epitrochoidok és Lissajous-görbék hozzáadása a jelenlegi réteghez"
+msgstr ""
+"Spirográfok, epitrochoidok és Lissajous-görbék hozzáadása a jelenlegi "
+"réteghez"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
@@ -2583,8 +2594,8 @@ msgid ""
 "Fill the selected region (or alpha) with a rock-like texture, a nova glow, "
 "and shadow"
 msgstr ""
-"A kijelölt terület (vagy az alfa) kitöltése kövezet-szerű textúrával, "
-"nova-ragyogással és árnyékkal"
+"A kijelölt terület (vagy az alfa) kitöltése kövezet-szerű textúrával, nova-"
+"ragyogással és árnyékkal"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
 msgid "Sta_rscape..."
@@ -2624,7 +2635,9 @@ msgstr "Ö_rvénylő..."
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
 msgid "Add a Trace of Particles effect to the selected region (or alpha)"
-msgstr "Részecskenyomvonal-szerű hatás hozzáadása a kijelölt területhez (vagy az alfához)"
+msgstr ""
+"Részecskenyomvonal-szerű hatás hozzáadása a kijelölt területhez (vagy az "
+"alfához)"
 
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 msgid "Base color"
@@ -2668,9 +2681,7 @@ msgstr "Szö_vegkör..."
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
 msgid "Create a textured logo with highlights, shadows, and a mosaic background"
-msgstr ""
-"Textúrázott logó létrehozása kiemelésekkel, árnyékokkal és mozaikos "
-"háttérrel"
+msgstr "Textúrázott logó létrehozása kiemelésekkel, árnyékokkal és mozaikos háttérrel"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Ending blend"
@@ -2719,8 +2730,8 @@ msgstr "Vízszintes elmosás"
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
 msgid "Blur the edges of an image so the result tiles seamlessly"
 msgstr ""
-"Kép széleinek elmosása úgy, hogy az eredmény alkalmas legyen "
-"finom átmenetű csempézéshez"
+"Kép széleinek elmosása úgy, hogy az eredmény alkalmas legyen finom átmenetű "
+"csempézéshez"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
 msgid "Blur type"
@@ -2779,8 +2790,8 @@ msgid ""
 "Create a multi-layer image with an effect like a stone was thrown into the "
 "current image"
 msgstr ""
-"Többrétegű kép létrehozása olyan hatással, mintha egy kő lett volna "
-"dobva a jelenlegi képbe"
+"Többrétegű kép létrehozása olyan hatással, mintha egy kő lett volna dobva a "
+"jelenlegi képbe"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
@@ -2799,8 +2810,8 @@ msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr ""
-"Új réteg létrehozása szövési effektussal kitöltve - borítóként "
-"vagy buckaleképezéshez való használatra"
+"Új réteg létrehozása szövési effektussal kitöltve - borítóként vagy "
+"buckaleképezéshez való használatra"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
@@ -2892,7 +2903,9 @@ msgstr "_Digitális kamerák képeinek használata"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
 msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
-msgstr "Finom áttetsző térbeli hatás hozzáadása a kijelölt területhez (vagy az alfához)"
+msgstr ""
+"Finom áttetsző térbeli hatás hozzáadása a kijelölt területhez (vagy az "
+"alfához)"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow X offset"
