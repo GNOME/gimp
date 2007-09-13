@@ -1,3 +1,8 @@
+2007-09-13  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: : remove PANGO_DISABLE_DEPRECATED only for
+	pango >= 1.19, GIMP builds fine against 1.18
+
 2007-09-13  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpviewable.c: removed static variable debug_context
@@ -14,7 +19,7 @@
 
 2007-09-13  Michael Natterer  <mitch@gimp.org>
 
-	* configure.in: remove FOO_DISABLE_DEPRECATED for only glib >= 2.15
+	* configure.in: remove FOO_DISABLE_DEPRECATED only for glib >= 2.15
 	and gtk+ >= 2.13, GIMP builds fine against the 2.14 and 2.12 APIs
 	apart from:
 
