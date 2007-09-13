@@ -1,7 +1,8 @@
 ## Process this file with automake to produce Makefile.in
 
 AM_CPPFLAGS = \
-	-DG_LOG_DOMAIN=\"Gimp-GUI\"
+	-DG_LOG_DOMAIN=\"Gimp-GUI\"	\
+	-DGIMP_COMMAND=\"@GIMP_COMMAND@\"
 
 INCLUDES = \
 	-I$(top_builddir)	\

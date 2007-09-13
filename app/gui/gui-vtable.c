@@ -545,31 +545,31 @@ gui_pdb_dialog_close (Gimp          *gimp,
 }
 
 static gboolean
-gui_recent_list_add_uri (Gimp *gimp,
+gui_recent_list_add_uri (Gimp        *gimp,
                          const gchar *uri,
                          const gchar *mime_type)
 {
   GtkRecentManager *mgr;
-  GtkRecentData recent;
+  GtkRecentData     recent;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (uri != NULL, FALSE);
   g_return_val_if_fail (mime_type != NULL, FALSE);
-  g_return_val_if_fail (strlen (mime_type) != 0, FALSE);
-  g_return_val_if_fail (g_utf8_validate (mime_type, -1, NULL), FALSE);
 
   mgr = gtk_recent_manager_get_default ();
+
   g_return_val_if_fail (mgr != NULL, FALSE);
 
   /* use last part of the URI */
   recent.display_name = NULL;
+
   /* no special description */
-  recent.description = NULL;
-  recent.mime_type = mime_type;
-  recent.app_name = "gimp";
-  recent.app_exec = "gimp %u";
-  recent.groups = NULL;
-  recent.is_private = FALSE;
+  recent.description  = NULL;
+  recent.mime_type    = (gchar *) mime_type;
+  recent.app_name     = (gchar *) g_get_application_name ();
+  recent.app_exec     = GIMP_COMMAND " %u";
+  recent.groups       = NULL;
+  recent.is_private   = FALSE;
 
   return gtk_recent_manager_add_full (mgr, uri, &recent);
 }
