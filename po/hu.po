@@ -15,7 +15,7 @@ msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-04 00:01+0100\n"
-"PO-Revision-Date: 2007-09-09 01:12+0200\n"
+"PO-Revision-Date: 2007-09-09 18:45+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -1313,21 +1313,20 @@ msgid "Remove dangling entries"
 msgstr "Elavult bejegyzések eltávolítása"
 
 #: ../app/actions/documents-commands.c:187
-#, fuzzy
 msgid "Clear Document History"
-msgstr "Dokumentumok előzménye"
+msgstr "Dokumentum-előzmények törlése"
 
 #: ../app/actions/documents-commands.c:210
-#, fuzzy
 msgid "Remove all entries from the document history?"
-msgstr "Dokumentum-előzmények"
+msgstr "Törölni kívánja az összes bejegyzést a dokumentum-előzményekből?"
 
 #: ../app/actions/documents-commands.c:214
-#, fuzzy
 msgid ""
 "Clearing the document history will permanently remove all currently listed "
 "entries."
-msgstr "Dokumentum-előzmények"
+msgstr ""
+"A dokumentum-előzmények törlése véglegesen eltávolítja a jelenleg "
+"a listában szereplő elemeket."
 
 #: ../app/actions/drawable-actions.c:45
 msgid "_Desaturate..."
@@ -1655,12 +1654,11 @@ msgstr "Valóban szeretné törölni a kép visszavonási előzményeit?"
 #: ../app/actions/edit-commands.c:171
 #, c-format
 msgid "Clearing the undo history of this image will gain %s of memory."
-msgstr ""
+msgstr "A kép visszavonási előzményeinek törlése %s memóriát szabadít fel."
 
 #: ../app/actions/edit-commands.c:211
-#, fuzzy
 msgid "Copied pixels to the clipboard"
-msgstr "képpontok másolása a vágólapra"
+msgstr "Képpontok átmásolva a vágólapra"
 
 #: ../app/actions/edit-commands.c:278 ../app/actions/edit-commands.c:454
 msgid "There is no image data in the clipboard to paste."
@@ -2540,17 +2538,15 @@ msgstr "Kép nyomtatási felbontásának módosítása"
 #: ../app/actions/image-commands.c:374
 #: ../app/pdb/drawable_transform_cmds.c:144
 #: ../app/pdb/drawable_transform_cmds.c:218
-#, fuzzy
 msgid "Flipping"
-msgstr "Tükrözés..."
+msgstr "Tükrözés"
 
 #: ../app/actions/image-commands.c:395
 #: ../app/pdb/drawable_transform_cmds.c:515
 #: ../app/pdb/drawable_transform_cmds.c:593
 #: ../app/pdb/transform_tools_cmds.c:209 ../app/tools/gimprotatetool.c:114
-#, fuzzy
 msgid "Rotating"
-msgstr "Forgatás..."
+msgstr "Elforgatás"
 
 #: ../app/actions/image-commands.c:420 ../app/actions/layers-commands.c:599
 msgid "Cannot crop because the current selection is empty."
