@@ -1,15 +1,15 @@
 # Lithuanian translation of GIMP.i
 # Copyright (C) 2004-2007 Free Software Foundation, Inc.
 # Žygimantas Beručka <zygis@gnome.org>, 2004-2007.
-# 
-# 
+#
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-26 00:03+0300\n"
-"PO-Revision-Date: 2007-07-17 19:08+0300\n"
-"Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
+"PO-Revision-Date: 2007-08-31 22:55+0200\n"
+"Last-Translator: Giedrius Naudžiūnas <gimpng@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -28,18 +28,21 @@ msgstr "Vykdant %s iškilo klaida"
 msgid "_More Information"
 msgstr "_Daugiau informacijos"
 
-#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
+#: ../plug-ins/pygimp/gimpfu.py:506
+#: ../plug-ins/pygimp/gimpfu.py:518
 #: ../plug-ins/pygimp/gimpfu.py:524
 msgid "No"
 msgstr "Ne"
 
-#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:516
+#: ../plug-ins/pygimp/gimpfu.py:524
 msgid "Yes"
 msgstr "Taip"
 
-#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:558
+#: ../plug-ins/pygimp/gimpui.py:222
 msgid "Python-Fu File Selection"
-msgstr "Python-Fu rinkmenų parinkimas"
+msgstr "Python-Fu failų parinkimas"
 
 #: ../plug-ins/pygimp/gimpfu.py:569
 msgid "Python-Fu Folder Selection"
@@ -76,7 +79,7 @@ msgstr "Pirminis kodas"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Text file"
-msgstr "Tekstinė rinkmena"
+msgstr "Tekstinis failas"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Entry box"
@@ -84,7 +87,7 @@ msgstr "Įvesties laukelis"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
 msgid "_File to read or characters to use"
-msgstr "_Skaitytina rinkmena arba naudotini simboliai"
+msgstr "_Skaitytinas failas arba naudotini simboliai"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
 msgid "Fo_nt size in pixels"
@@ -92,7 +95,7 @@ msgstr "Š_rifto dydis pikseliais"
 
 #: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
 msgid "_Write a separate CSS file"
-msgstr "Į_rašyti atskirą CSS rinkmeną"
+msgstr "Į_rašyti atskirą CSS failą"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
@@ -237,9 +240,7 @@ msgstr "Supjaustyti"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr ""
-"Supjaustyti paveikslėlį pagal gaires, sukuriamas paveikslėlis ir HTML "
-"lentelės kodas"
+msgstr "Supjaustyti paveikslėlį pagal gaires, sukuriamas paveikslėlis ir HTML lentelės kodas"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
@@ -251,7 +252,7 @@ msgstr "Kelias HTML eksportavimui"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:433
 msgid "Filename for export"
-msgstr "Eksportuotinos rinkmenos pavadinimas"
+msgstr "Eksportuotino failo pavadinimas"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:434
 msgid "Image name prefix"
@@ -308,3 +309,4 @@ msgstr "Metamo šešėlio _X poslinkis"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
 msgid "Drop shadow _Y displacement"
 msgstr "Metamo šešėlio _Y poslinkis"
+
