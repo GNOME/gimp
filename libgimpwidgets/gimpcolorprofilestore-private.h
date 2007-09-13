@@ -23,7 +23,6 @@
 #ifndef __GIMP_COLOR_PROFILE_STORE_PRIVATE_H__
 #define __GIMP_COLOR_PROFILE_STORE_PRIVATE_H__
 
-G_BEGIN_DECLS
 
 typedef enum
 {
@@ -42,10 +41,13 @@ typedef enum
 } GimpColorProfileStoreColumns;
 
 
-G_GNUC_INTERNAL gboolean  _gimp_color_profile_store_history_add (GimpColorProfileStore *store,
-                                                                 const gchar           *filename,
-                                                                 const gchar           *label,
-                                                                 GtkTreeIter           *iter);
+G_GNUC_INTERNAL gboolean  _gimp_color_profile_store_history_add     (GimpColorProfileStore *store,
+                                                                     const gchar           *filename,
+                                                                     const gchar           *label,
+                                                                     GtkTreeIter           *iter);
+
+G_GNUC_INTERNAL void      _gimp_color_profile_store_history_reorder (GimpColorProfileStore *store,
+                                                                     GtkTreeIter           *iter);
 
 
 #endif  /* __GIMP_COLOR_PROFILE_STORE_PRIVATE_H__ */

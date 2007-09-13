@@ -37,6 +37,8 @@
 #include "libgimp/libgimp-intl.h"
 
 
+#define HISTORY_SIZE  8
+
 enum
 {
   PROP_0,
@@ -375,6 +377,65 @@ _gimp_color_profile_store_history_add (GimpColorProfileStore *store,
   return iter_valid;
 }
 
+/**
+ * _gimp_color_profile_store_history_reorder
+ * @store: a #GimpColorProfileStore
+ * @iter:  a #GtkTreeIter
+ *
+ * Moves the entry pointed to by @iter to the front of the MRU list.
+ *
+ * Since: GIMP 2.4
+ **/
+void
+_gimp_color_profile_store_history_reorder (GimpColorProfileStore *store,
+                                           GtkTreeIter           *iter)
+{
+  GtkTreeModel *model;
+  gint          index;
+  gboolean      iter_valid;
+
+  g_return_if_fail (GIMP_IS_COLOR_PROFILE_STORE (store));
+  g_return_if_fail (iter != NULL);
+
+  model = GTK_TREE_MODEL (store);
+
+  gtk_tree_model_get (model, iter,
+                      GIMP_COLOR_PROFILE_STORE_INDEX, &index,
+                      -1);
+
+  if (index == 0)
+    return;  /* already at the top */
+
+  for (iter_valid = gtk_tree_model_get_iter_first (model, iter);
+       iter_valid;
+       iter_valid = gtk_tree_model_iter_next (model, iter))
+    {
+      gint type;
+      gint this_index;
+
+      gtk_tree_model_get (model, iter,
+                          GIMP_COLOR_PROFILE_STORE_ITEM_TYPE, &type,
+                          GIMP_COLOR_PROFILE_STORE_INDEX,     &this_index,
+                          -1);
+
+      if (type == GIMP_COLOR_PROFILE_STORE_ITEM_FILE && this_index > -1)
+        {
+          if (this_index < index)
+            {
+              this_index++;
+            }
+          else if (this_index == index)
+            {
+              this_index = 0;
+            }
+
+          gtk_list_store_set (GTK_LIST_STORE (store), iter,
+                              GIMP_COLOR_PROFILE_STORE_INDEX, this_index,
+                              -1);
+        }
+    }
+}
+
 static gboolean
 gimp_color_profile_store_history_insert (GimpColorProfileStore *store,
                                          GtkTreeIter           *iter,
@@ -436,8 +497,8 @@ gimp_color_profile_store_history_insert (GimpColorProfileStore *store,
                         GIMP_COLOR_PROFILE_STORE_ITEM_TYPE,
                         GIMP_COLOR_PROFILE_STORE_ITEM_FILE,
                         GIMP_COLOR_PROFILE_STORE_FILENAME, filename,
-                        GIMP_COLOR_PROFILE_STORE_LABEL, label,
-                        GIMP_COLOR_PROFILE_STORE_INDEX, index,
+                        GIMP_COLOR_PROFILE_STORE_LABEL,    label,
+                        GIMP_COLOR_PROFILE_STORE_INDEX,    index,
                         -1);
 
   return iter_valid;
@@ -604,9 +665,12 @@ gimp_color_profile_store_save (GimpColorProfileStore  *store,
                                GError                **error)
 {
   GimpConfigWriter *writer;
-  GtkTreeModel     *model = GTK_TREE_MODEL (store);
+  GtkTreeModel     *model;
   GtkTreeIter       iter;
+  gchar            *labels[HISTORY_SIZE]    = { NULL, };
+  gchar            *filenames[HISTORY_SIZE] = { NULL, };
   gboolean          iter_valid;
+  gint              i;
 
   writer = gimp_config_writer_new_file (filename,
                                         TRUE,
@@ -615,46 +679,56 @@ gimp_color_profile_store_save (GimpColorProfileStore  *store,
   if (! writer)
     return FALSE;
 
-  /*  FIXME: store the history in MRU order  */
+  model = GTK_TREE_MODEL (store);
 
   for (iter_valid = gtk_tree_model_get_iter_first (model, &iter);
        iter_valid;
        iter_valid = gtk_tree_model_iter_next (model, &iter))
     {
       gint type;
+      gint index;
 
       gtk_tree_model_get (model, &iter,
                           GIMP_COLOR_PROFILE_STORE_ITEM_TYPE, &type,
+                          GIMP_COLOR_PROFILE_STORE_INDEX,     &index,
                           -1);
 
-      if (type == GIMP_COLOR_PROFILE_STORE_ITEM_FILE)
+      if (type == GIMP_COLOR_PROFILE_STORE_ITEM_FILE &&
+          index >= 0                                 &&
+          index < HISTORY_SIZE)
         {
-          gchar *label;
-          gchar *filename;
+          if (labels[index] || filenames[index])
+            g_warning ("%s: double index %d", G_STRFUNC, index);
 
           gtk_tree_model_get (model, &iter,
-                              GIMP_COLOR_PROFILE_STORE_LABEL,    &label,
-                              GIMP_COLOR_PROFILE_STORE_FILENAME, &filename,
+                              GIMP_COLOR_PROFILE_STORE_LABEL,
+                              &labels[index],
+                              GIMP_COLOR_PROFILE_STORE_FILENAME,
+                              &filenames[index],
                               -1);
-
-          if (filename && label)
-            {
-              gchar *uri = g_filename_to_uri (filename, NULL, NULL);
-
-              if (uri)
-                {
-                  gimp_config_writer_open (writer, "color-profile");
-                  gimp_config_writer_string (writer, label);
-                  gimp_config_writer_string (writer, uri);
-                  gimp_config_writer_close (writer);
-
-                  g_free (uri);
-                }
-            }
-
-          g_free (filename);
-          g_free (label);
         }
+    }
+
+
+  for (i = 0; i < HISTORY_SIZE; i++)
+    {
+      if (filenames[i] && labels[i])
+        {
+          gchar *uri = g_filename_to_uri (filenames[i], NULL, NULL);
+
+          if (uri)
+            {
+              gimp_config_writer_open (writer, "color-profile");
+              gimp_config_writer_string (writer, labels[i]);
+              gimp_config_writer_string (writer, uri);
+              gimp_config_writer_close (writer);
+
+              g_free (uri);
+            }
+        }
+
+      g_free (filenames[i]);
+      g_free (labels[i]);
     }
 
   return gimp_config_writer_finish (writer,

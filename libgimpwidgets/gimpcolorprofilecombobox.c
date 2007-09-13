@@ -253,7 +253,8 @@ gimp_color_profile_combo_box_changed (GtkComboBox *combo)
 
       priv->last_path = gtk_tree_model_get_path (model, &iter);
 
-      /*  FIXME: update order of history  */
+      _gimp_color_profile_store_history_reorder (GIMP_COLOR_PROFILE_STORE (model),
+                                                 &iter);
       break;
 
     default:

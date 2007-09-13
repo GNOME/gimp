@@ -1,3 +1,10 @@
+2007-09-13  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/gimpcolorprofilestore-private.h
+	* libgimpwidgets/gimpcolorprofilestore.c
+	* libgimpwidgets/gimpcolorprofilecombobox.c: only keep the eight
+	most recently used profiles in the history.
+
 2007-09-13  Nils Philippsen  <nphilipp@redhat.com>
 
 	* app/file/file-save.[ch] (file_save)
@@ -8,7 +15,7 @@
 
 2007-09-13  Nils Philippsen  <nphilipp@redhat.com>
 
-	drop own recently used files code in favour of GtkRecentManager:
+	Drop own recently used files code in favour of GtkRecentManager:
 	
 	* app/core/gimp-gui.[ch] (gimp_recent_list_add_uri)
 	* app/gui/gui-vtable.c (gui_recent_list_add_uri): add
