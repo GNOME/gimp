@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-26 00:03+0300\n"
+"POT-Creation-Date: 2007-09-14 02:01+0300\n"
 "PO-Revision-Date: 2007-08-31 22:55+0200\n"
 "Last-Translator: Giedrius Naudžiūnas <gimpng@gmail.com>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
@@ -28,19 +28,16 @@ msgstr "Vykdant %s iškilo klaida"
 msgid "_More Information"
 msgstr "_Daugiau informacijos"
 
-#: ../plug-ins/pygimp/gimpfu.py:506
-#: ../plug-ins/pygimp/gimpfu.py:518
+#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
 #: ../plug-ins/pygimp/gimpfu.py:524
 msgid "No"
 msgstr "Ne"
 
-#: ../plug-ins/pygimp/gimpfu.py:516
-#: ../plug-ins/pygimp/gimpfu.py:524
+#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
 msgid "Yes"
 msgstr "Taip"
 
-#: ../plug-ins/pygimp/gimpfu.py:558
-#: ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu failų parinkimas"
 
@@ -240,7 +237,9 @@ msgstr "Supjaustyti"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "Supjaustyti paveikslėlį pagal gaires, sukuriamas paveikslėlis ir HTML lentelės kodas"
+msgstr ""
+"Supjaustyti paveikslėlį pagal gaires, sukuriamas paveikslėlis ir HTML "
+"lentelės kodas"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
@@ -309,4 +308,3 @@ msgstr "Metamo šešėlio _X poslinkis"
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
 msgid "Drop shadow _Y displacement"
 msgstr "Metamo šešėlio _Y poslinkis"
-
