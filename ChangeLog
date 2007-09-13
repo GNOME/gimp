@@ -1,3 +1,12 @@
+2007-09-13  Sven Neumann  <sven@gimp.org>
+
+	* app/text/gimpfontlist.c (gimp_font_list_add_font): corrected
+	Pango version number in comment.
+
+	* app/widgets/gimpundoeditor.c (gimp_undo_editor_set_context):
+	chain up after initializing the context. Fixes a warning about
+	gimp_viewable_get_new_preview() being called with a NULL context.
+
 2007-09-13  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: remove FOO_DISABLE_DEPRECATED for only glib >= 2.15
@@ -27,7 +36,7 @@
 
 2007-09-12  Sven Neumann  <sven@gimp.org>
 
-	* app/base/tile.c (tile_data_pointer): use the offsets module
+	* app/base/tile.c (tile_data_pointer): use the offsets modulo
 	TILE_WIDTH and TILE_HEIGHT instead of doing the modulo operation
 	in each and every caller.
 

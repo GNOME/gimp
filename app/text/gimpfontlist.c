@@ -165,7 +165,7 @@ gimp_font_list_add_font (GimpFontList         *list,
     }
 
 #ifdef __GNUC__
-#warning remove this as soon as we depend on Pango 1.6.5
+#warning remove this as soon as we depend on Pango 1.16.5
 #endif
   if (g_str_has_suffix (name, " Not-Rotated"))
     name[len - strlen (" Not-Rotated")] = '\0';

@@ -216,8 +216,6 @@ gimp_undo_editor_set_context (GimpDocked  *docked,
 {
   GimpUndoEditor *editor = GIMP_UNDO_EDITOR (docked);
 
-  parent_docked_iface->set_context (docked, context);
-
   if (editor->context)
     g_object_unref (editor->context);
 
@@ -225,6 +223,11 @@ gimp_undo_editor_set_context (GimpDocked  *docked,
 
   if (editor->context)
     g_object_ref (editor->context);
+
+  /* This calls gimp_undo_editor_set_image(), so make sure that it
+   * isn't called before editor->context has been initialized.
+   */
+  parent_docked_iface->set_context (docked, context);
 
   gimp_container_view_set_context (GIMP_CONTAINER_VIEW (editor->view),
                                    context);
