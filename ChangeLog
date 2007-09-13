@@ -1,3 +1,10 @@
+2007-09-13  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scripts/lava.scm: Removed 'from-selection'.
+	Reset active layer after calling gimp-selection-save. Modified
+	version of patch from Jakub Friedl which fixes bug #476672. Don't
+	add alpha if drawable already has alpha. Minor format changes.
+
 2007-09-13  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/Makefile.am
