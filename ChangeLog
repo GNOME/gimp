@@ -1,5 +1,10 @@
 2007-09-13  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpviewable.c: removed static variable debug_context
+	but keep the warnings about NULL contexts.
+
+2007-09-13  Sven Neumann  <sven@gimp.org>
+
 	* app/text/gimpfontlist.c (gimp_font_list_add_font): corrected
 	Pango version number in comment.
 

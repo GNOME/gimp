@@ -106,8 +106,6 @@ static guint  viewable_signals[LAST_SIGNAL] = { 0 };
 static GQuark quark_preview_temp_buf        = 0;
 static GQuark quark_preview_pixbuf          = 0;
 
-static gboolean debug_context = TRUE;
-
 
 static void
 gimp_viewable_class_init (GimpViewableClass *klass)
@@ -661,7 +659,7 @@ gimp_viewable_get_preview (GimpViewable *viewable,
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
 
-  if (debug_context && context == NULL)
+  if (G_UNLIKELY (context == NULL))
     g_warning ("%s: context is NULL", G_STRFUNC);
 
   viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
@@ -721,7 +719,7 @@ gimp_viewable_get_new_preview (GimpViewable *viewable,
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
 
-  if (debug_context && context == NULL)
+  if (G_UNLIKELY (context == NULL))
     g_warning ("%s: context is NULL", G_STRFUNC);
 
   viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
@@ -827,7 +825,7 @@ gimp_viewable_get_pixbuf (GimpViewable *viewable,
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
 
-  if (debug_context && context == NULL)
+  if (G_UNLIKELY (context == NULL))
     g_warning ("%s: context is NULL", G_STRFUNC);
 
   viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
@@ -887,7 +885,7 @@ gimp_viewable_get_new_pixbuf (GimpViewable *viewable,
   g_return_val_if_fail (width  > 0, NULL);
   g_return_val_if_fail (height > 0, NULL);
 
-  if (debug_context && context == NULL)
+  if (G_UNLIKELY (context == NULL))
     g_warning ("%s: context is NULL", G_STRFUNC);
 
   viewable_class = GIMP_VIEWABLE_GET_CLASS (viewable);
