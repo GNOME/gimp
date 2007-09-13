@@ -511,7 +511,7 @@ file_save_dialog_save_image (GtkWidget           *save_dialog,
 
   g_object_ref (image);
 
-  status = file_save (image, gimp_get_user_context (image->gimp),
+  status = file_save (image->gimp, image, gimp_get_user_context (image->gimp),
                       GIMP_PROGRESS (save_dialog),
                       uri, save_proc,
                       GIMP_RUN_INTERACTIVE, save_a_copy, &error);

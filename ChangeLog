@@ -1,3 +1,26 @@
+2007-09-13  Nils Philippsen  <nphilipp@redhat.com>
+
+	drop own recently used files code in favour of GtkRecentManager:
+	
+	* app/core/gimp-gui.c (gimp_recent_list_add_uri), app/core/gimp-gui.h,
+	app/gui/gui-vtable.c (gui_recent_list_add_uri): add
+	{gimp,gui}_recent_list_add_uri(), gui_recent_list_add_uri() dispatches to
+	GtkRecentManager
+
+	* app/dialogs/file-save-dialog.c (file_save_dialog_save_image),
+	app/actions/file-commands.c (file_save_cmd_callback),
+	app/widgets/gimpdnd-xds.c (gimp_dnd_xds_save_image): pass Gimp instance to
+	file_save() calls
+	
+	* app/file/file-open.c (file_open_with_proc_and_display,
+	file_open_layers), app/file/file-save.c (file_save), app/file/file-save.h:
+	pass Gimp instance to gimp_recent_list_add_uri() calls
+
+	* app/file/gimprecentitem.c, app/file/gimprecentitem.h,
+	app/file/gimprecentlist.c, app/file/gimprecentlist.h: removed
+
+	* app/file/Makefile.am: drop reference to removed files
+
 2007-09-13  Michael Natterer  <mitch@gimp.org>
 
 	* configure.in: : remove PANGO_DISABLE_DEPRECATED only for

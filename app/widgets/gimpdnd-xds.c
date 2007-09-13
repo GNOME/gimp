@@ -158,7 +158,8 @@ gimp_dnd_xds_save_image (GdkDragContext   *context,
           ! g_file_test (filename, G_FILE_TEST_EXISTS) ||
           gimp_file_overwrite_dialog (NULL, uri))
         {
-          if (file_save (image, gimp_get_user_context (image->gimp), NULL,
+          if (file_save (image->gimp, image,
+                         gimp_get_user_context (image->gimp), NULL,
                          uri, proc, GIMP_RUN_INTERACTIVE, FALSE,
                          &error) == GIMP_PDB_SUCCESS)
             {

@@ -69,7 +69,6 @@
 #include "file-open.h"
 #include "file-procedure.h"
 #include "file-utils.h"
-#include "gimprecentlist.h"
 
 #include "gimp-intl.h"
 
@@ -353,7 +352,7 @@ file_open_with_proc_and_display (Gimp                *gimp,
             }
 
           if (gimp->config->save_document_history)
-            gimp_recent_list_add_uri (uri, mime_type);
+            gimp_recent_list_add_uri (gimp, uri, mime_type);
         }
 
       /*  the display owns the image now  */
@@ -463,7 +462,7 @@ file_open_layers (Gimp                *gimp,
                                       uri, mime_type);
 
           if (gimp->config->save_document_history)
-            gimp_recent_list_add_uri (uri, mime_type);
+            gimp_recent_list_add_uri (gimp, uri, mime_type);
         }
       else
         {

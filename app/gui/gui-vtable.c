@@ -116,7 +116,9 @@ static gboolean       gui_pdb_dialog_set       (Gimp                *gimp,
 static gboolean       gui_pdb_dialog_close     (Gimp                *gimp,
                                                 GimpContainer       *container,
                                                 const gchar         *callback_name);
-
+static gboolean       gui_recent_list_add_uri  (Gimp                *gimp,
+                                                const gchar         *uri,
+                                                const gchar         *mime_type);
 
 /*  public functions  */
 
@@ -146,6 +148,7 @@ gui_vtable_init (Gimp *gimp)
   gimp->gui.pdb_dialog_new      = gui_pdb_dialog_new;
   gimp->gui.pdb_dialog_set      = gui_pdb_dialog_set;
   gimp->gui.pdb_dialog_close    = gui_pdb_dialog_close;
+  gimp->gui.recent_list_add_uri = gui_recent_list_add_uri;
 }
 
 
@@ -539,4 +542,34 @@ gui_pdb_dialog_close (Gimp          *gimp,
     }
 
   return FALSE;
+}
+
+static gboolean
+gui_recent_list_add_uri (Gimp *gimp,
+                         const gchar *uri,
+                         const gchar *mime_type)
+{
+  GtkRecentManager *mgr;
+  GtkRecentData recent;
+
+  g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
+  g_return_val_if_fail (uri != NULL, FALSE);
+  g_return_val_if_fail (mime_type != NULL, FALSE);
+  g_return_val_if_fail (strlen (mime_type) != 0, FALSE);
+  g_return_val_if_fail (g_utf8_validate (mime_type, -1, NULL), FALSE);
+
+  mgr = gtk_recent_manager_get_default ();
+  g_return_val_if_fail (mgr != NULL, FALSE);
+
+  /* use last part of the URI */
+  recent.display_name = NULL;
+  /* no special description */
+  recent.description = NULL;
+  recent.mime_type = mime_type;
+  recent.app_name = "gimp";
+  recent.app_exec = "gimp %u";
+  recent.groups = NULL;
+  recent.is_private = FALSE;
+
+  return gtk_recent_manager_add_full (mgr, uri, &recent);
 }

@@ -22,10 +22,6 @@ libappfile_a_SOURCES = \
 	file-save.c		\
 	file-save.h		\
 	file-utils.c		\
-	file-utils.h		\
-	gimprecentitem.c	\
-	gimprecentitem.h	\
-	gimprecentlist.c	\
-	gimprecentlist.h
+	file-utils.h
 
 EXTRA_DIST = makefile.msc

@@ -230,7 +230,8 @@ file_save_cmd_callback (GtkAction *action,
                                                           FALSE);
                 }
 
-              status = file_save (image, action_data_get_context (data),
+              status = file_save (image->gimp, image,
+                                  action_data_get_context (data),
                                   GIMP_PROGRESS (display),
                                   uri, save_proc,
                                   GIMP_RUN_WITH_LAST_VALS, FALSE, &error);
