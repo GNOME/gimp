@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-04 00:00+0100\n"
-"PO-Revision-Date: 2007-09-09 01:14+0200\n"
+"PO-Revision-Date: 2007-09-09 18:04+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -5741,7 +5741,7 @@ msgstr "Fényesség"
 
 #: ../plug-ins/common/newsprint.c:519
 msgid "Halftone the image to give newspaper-like effect"
-msgstr "A kép féltónusozása (halftone) újságpapír-effektus elérése érdekében"
+msgstr "A kép féltónusozása (halftone) újság-effektus elérése érdekében"
 
 #: ../plug-ins/common/newsprint.c:528
 msgid "Newsprin_t..."
@@ -7090,9 +7090,8 @@ msgid "Sorry, channels and masks can not be rotated."
 msgstr "Csatornákat és maszkokat nem lehet forgatni."
 
 #: ../plug-ins/common/rotate.c:437
-#, fuzzy
 msgid "Rotating"
-msgstr "Forgatás"
+msgstr "Elforgatás"
 
 #: ../plug-ins/common/sample_colorize.c:298
 msgid "Colorize image using a sample image as a guide"
