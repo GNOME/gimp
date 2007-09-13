@@ -1,3 +1,17 @@
+2007-09-13  Michael Natterer  <mitch@gimp.org>
+
+	* configure.in: remove FOO_DISABLE_DEPRECATED for only glib >= 2.15
+	and gtk+ >= 2.13, GIMP builds fine against the 2.14 and 2.12 APIs
+	apart from:
+
+	* app/tools/gimpselectionoptions.c
+	* libgimpwidgets/gimphelpui.c: undef GTK_DISABLE_DEPRECATED because
+	GtkTooltips is deprecated in gtk+ 2.12.
+
+	* libgimp/gimpui.c
+	* plug-ins/common/pat.c: the address of an array is always
+	non-NULL, no need to check for that. Fixes new gcc warnings.
+
 2007-09-12  Øyvind Kolås  <pippin@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c: (render_image_tile_fault),

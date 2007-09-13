@@ -88,8 +88,7 @@ gimp_ui_init (const gchar *prog_name,
       const gchar var_name[] = "GDK_DISPLAY";
 #endif
 
-      if (var_name)
-        putenv (g_strdup_printf ("%s=%s", var_name, display_name));
+      putenv (g_strdup_printf ("%s=%s", var_name, display_name));
     }
 
   gtk_init (NULL, NULL);

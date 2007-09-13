@@ -274,7 +274,7 @@ run (const gchar      *name,
       if (export == GIMP_EXPORT_EXPORT)
 	gimp_image_delete (image_ID);
 
-      if (description && strlen (description))
+      if (strlen (description))
         {
           gimp_image_attach_new_parasite (orig_image_ID, "gimp-pattern-name",
                                           GIMP_PARASITE_PERSISTENT,
