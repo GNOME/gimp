@@ -1,5 +1,12 @@
 2007-09-13  Sven Neumann  <sven@gimp.org>
 
+	* app/gui/Makefile.am
+	* app/gui/gui-vtable.c (gui_recent_list_add_uri): use GIMP_COMMAND
+	instead of hardcoding "gimp" as the command line used to launch
+	this resource. Use the translated full application name.
+
+2007-09-13  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpcolorprofilestore-private.h
 	* libgimpwidgets/gimpcolorprofilestore.c
 	* libgimpwidgets/gimpcolorprofilecombobox.c: only keep the eight
