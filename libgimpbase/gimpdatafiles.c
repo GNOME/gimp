@@ -210,8 +210,5 @@ is_hidden (const gchar *filename)
   /*  skip files starting with '.' so we don't try to parse
    *  stuff like .DS_Store or other metadata storage files
    */
-  if (filename[0] == '.')
-    return TRUE;
-
-  return FALSE;
+  return (filename[0] == '.');
 }
