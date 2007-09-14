@@ -210,10 +210,10 @@ tile_pyramid_get_tiles (TilePyramid *pyramid,
  **/
 void
 tile_pyramid_invalidate_area (TilePyramid *pyramid,
-                              gint               x,
-                              gint               y,
-                              gint               width,
-                              gint               height)
+                              gint         x,
+                              gint         y,
+                              gint         width,
+                              gint         height)
 {
   gint level;
 

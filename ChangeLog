@@ -1,3 +1,9 @@
+2007-09-14  Sven Neumann  <sven@gimp.org>
+
+	* app/base/tile-pyramid.c: formatting.
+
+	* app/display/gimpdisplayshell-render.c: removed unused include.
+
 2007-09-13  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/lava.scm: Removed 'from-selection'.
