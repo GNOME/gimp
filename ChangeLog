@@ -1,7 +1,3 @@
-2007-09-14  Gintautas Miliauskas  <gintas@akl.lt>
-
-	* lt.po: Updated Lithuanian translation.
-
 2007-09-13  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/lava.scm: Removed 'from-selection'.
