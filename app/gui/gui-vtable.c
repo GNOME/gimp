@@ -551,6 +551,7 @@ gui_recent_list_add_uri (Gimp        *gimp,
 {
   GtkRecentManager *mgr;
   GtkRecentData     recent;
+  const gchar      *groups[2] = { "Graphics", NULL };
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), FALSE);
   g_return_val_if_fail (uri != NULL, FALSE);
@@ -566,9 +567,9 @@ gui_recent_list_add_uri (Gimp        *gimp,
   /* no special description */
   recent.description  = NULL;
   recent.mime_type    = (gchar *) mime_type;
-  recent.app_name     = (gchar *) g_get_application_name ();
+  recent.app_name     = "GNU Image Manipulation Program";
   recent.app_exec     = GIMP_COMMAND " %u";
-  recent.groups       = NULL;
+  recent.groups       = groups;
   recent.is_private   = FALSE;
 
   return gtk_recent_manager_add_full (mgr, uri, &recent);
