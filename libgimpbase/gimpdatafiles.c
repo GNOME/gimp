@@ -43,50 +43,11 @@
 #include "gimpenv.h"
 
 
-#ifdef G_OS_WIN32
-/*
- * On Windows there is no concept like the Unix executable flag.
- * There is a weak emulation provided by the MS C Runtime using file
- * extensions (com, exe, cmd, bat). This needs to be extended to treat
- * scripts (Python, Perl, ...) as executables, too. We use the PATHEXT
- * variable, which is also used by cmd.exe.
- */
-static gboolean
-is_script (const gchar *filename)
-{
-  static gchar **exts = NULL;
+static inline gboolean   is_script (const gchar *filename);
+static inline gboolean   is_hidden (const gchar *filename);
 
-  const gchar   *ext = strrchr (filename, '.');
-  gchar         *pathext;
-  gint           i;
 
-  if (exts == NULL)
-    {
-      pathext = g_getenv ("PATHEXT");
-      if (pathext != NULL)
-        {
-          exts = g_strsplit (pathext, G_SEARCHPATH_SEPARATOR_S, 100);
-        }
-      else
-        {
-          exts = g_new (gchar *, 1);
-          exts[0] = NULL;
-        }
-    }
-
-  i = 0;
-  while (exts[i] != NULL)
-    {
-      if (g_ascii_strcasecmp (ext, exts[i]) == 0)
-        return TRUE;
-      i++;
-    }
-
-  return FALSE;
-}
-#else  /* !G_OS_WIN32 */
-#define is_script(filename) FALSE
-#endif
+/*  public functions  */
 
 gboolean
 gimp_datafiles_check_extension (const gchar *filename,
@@ -137,30 +98,25 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 
           while ((dir_ent = g_dir_read_name (dir)))
             {
-              GimpDatafileData  file_data;
-              struct stat       filestat;
-              gchar            *filename;
-              gint              err;
+              struct stat  filestat;
+              gchar       *filename;
 
-              /*  skip files starting with '.' so we don't try to parse
-               *  stuff like .DS_Store or other metadata storage files
-               */
-              if (dir_ent[0] == '.')
+              if (is_hidden (dir_ent))
                 continue;
 
               filename = g_build_filename (dirname, dir_ent, NULL);
 
-              err = g_stat (filename, &filestat);
-
-              file_data.filename = filename;
-              file_data.dirname  = dirname;
-              file_data.basename = dir_ent;
-              file_data.atime    = filestat.st_atime;
-              file_data.mtime    = filestat.st_mtime;
-              file_data.ctime    = filestat.st_ctime;
-
-              if (! err)
+              if (! g_stat (filename, &filestat))
                 {
+                  GimpDatafileData  file_data;
+
+                  file_data.filename = filename;
+                  file_data.dirname  = dirname;
+                  file_data.basename = dir_ent;
+                  file_data.atime    = filestat.st_atime;
+                  file_data.mtime    = filestat.st_mtime;
+                  file_data.ctime    = filestat.st_ctime;
+
                   if (flags & G_FILE_TEST_EXISTS)
                     {
                       (* loader_func) (&file_data, user_data);
@@ -201,4 +157,61 @@ gimp_datafiles_read_directories (const gchar            *path_str,
 
   gimp_path_free (path);
   g_free (local_path);
+}
+
+
+/*  private functions  */
+
+static inline gboolean
+is_script (const gchar *filename)
+{
+#ifdef G_OS_WIN32
+  /* On Windows there is no concept like the Unix executable flag.
+   * There is a weak emulation provided by the MS C Runtime using file
+   * extensions (com, exe, cmd, bat). This needs to be extended to treat
+   * scripts (Python, Perl, ...) as executables, too. We use the PATHEXT
+   * variable, which is also used by cmd.exe.
+   */
+  static gchar **exts = NULL;
+
+  const gchar   *ext = strrchr (filename, '.');
+  gchar         *pathext;
+  gint           i;
+
+  if (exts == NULL)
+    {
+      pathext = g_getenv ("PATHEXT");
+      if (pathext != NULL)
+        {
+          exts = g_strsplit (pathext, G_SEARCHPATH_SEPARATOR_S, 100);
+        }
+      else
+        {
+          exts = g_new (gchar *, 1);
+          exts[0] = NULL;
+        }
+    }
+
+  i = 0;
+  while (exts[i] != NULL)
+    {
+      if (g_ascii_strcasecmp (ext, exts[i]) == 0)
+        return TRUE;
+      i++;
+    }
+#endif /* G_OS_WIN32 */
+
+  return FALSE;
+}
+
+static inline gboolean
+is_hidden (const gchar *filename)
+{
+  /*  skip files starting with '.' so we don't try to parse
+   *  stuff like .DS_Store or other metadata storage files
+   */
+  if (filename[0] == '.')
+    return TRUE;
+
+  return FALSE;
 }

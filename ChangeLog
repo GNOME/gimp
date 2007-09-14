@@ -1,3 +1,10 @@
+2007-09-14  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpbase/gimpdatafiles.c: move private functions to the end
+	of the file. Added function is_hidden() and use it in
+	gimp_datafiles_read_directories(). Moved variables to local
+	scopes.
+
 2007-09-14  Sven Neumann  <sven@gimp.org>
 
 	* app/gui/gui-vtable.c (gui_recent_list_add_uri): use the
