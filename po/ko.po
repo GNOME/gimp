@@ -1,13 +1,14 @@
 # gimp ko.po
 # Sung-Hyun Nam <namsh@kldp.org>, 1998, 1999
 # Dongsu Jang <iolo@hellocity.net>, 2004
+# Choi, Ji-Hui <like.a.dust@gmail.com>, 2007
 msgid ""
 msgstr ""
 "Project-Id-Version: HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2004-12-28 16:58+0100\n"
-"PO-Revision-Date: 2007-08-27 16:16+0900\n"
-"Last-Translator: Choi, Ji-Hui <like.a.dust@gmail.com>\n"
+"PO-Revision-Date: 2007-09-03 17:11+0900\n"
+"Last-Translator: Mr.Dust <like.a.dust@gmail.com>\n"
 "Language-Team: Korean <ko@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -2218,7 +2219,7 @@ msgstr "레이어 자르기"
 
 #: app/actions/layers-commands.c:683
 msgid "Layer Mask to Selection"
-msgstr "/레이어 마스크를 선택으로"
+msgstr "레이어 마스크를 선택으로"
 
 #: app/actions/layers-commands.c:904
 #: app/core/gimplayer.c:1066
@@ -2443,7 +2444,7 @@ msgstr "지도(_M)"
 
 #: app/actions/plug-in-actions.c:75
 msgid "_Render"
-msgstr "형성(_R)"
+msgstr "렌더(_R)"
 
 #: app/actions/plug-in-actions.c:76
 msgid "_Clouds"
@@ -3220,7 +3221,7 @@ msgstr "1:2  (50%)"
 
 #: app/actions/view-actions.c:265
 msgid "1:4  (25%)"
-msgstr "/1:4  (25%)"
+msgstr "1:4  (25%)"
 
 #: app/actions/view-actions.c:270
 msgid "1:8  (12.5%)"
