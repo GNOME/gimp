@@ -990,9 +990,6 @@ layers_add_mask_response (GtkWidget          *widget,
       gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_LAYER_ADD_MASK,
                                    _("Add Layer Mask"));
 
-      if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-        gimp_layer_add_alpha (layer);
-
       mask = gimp_layer_create_mask (layer, layer_add_mask_type,
                                      dialog->channel);
 

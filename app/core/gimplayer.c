@@ -1491,9 +1491,9 @@ gimp_layer_apply_mask (GimpLayer         *layer,
   if (! layer->mask)
     return;
 
-  /*  this operation can only be done to layers with an alpha channel  */
+  /*  APPLY can only be done to layers with an alpha channel  */
   if (! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
-    return;
+    g_return_if_fail (mode == GIMP_MASK_DISCARD || push_undo == TRUE);
 
   item = GIMP_ITEM (layer);
 
@@ -1510,6 +1510,12 @@ gimp_layer_apply_mask (GimpLayer         *layer,
                                    _("Delete Layer Mask"));
 
       gimp_image_undo_push_layer_mask_remove (image, NULL, layer, layer->mask);
+
+      if (mode == GIMP_MASK_APPLY &&
+          ! gimp_drawable_has_alpha (GIMP_DRAWABLE (layer)))
+        {
+          gimp_layer_add_alpha (layer);
+        }
     }
 
   /*  check if applying the mask changes the projection  */

@@ -1,3 +1,14 @@
+2007-09-15  Michael Natterer  <mitch@gimp.org>
+
+	Make layer masks work consistently on layers without alpha.
+	Fixes bug #475548.
+
+	* app/core/gimplayer.c (gimp_layer_apply_mask): changed to work
+	on layers without alpha.
+
+	* app/actions/layers-commands.c (layers_add_mask_response): don't
+	automatically add an alpha channel when adding a layer mask.
+
 2007-09-14  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpbase/gimpdatafiles.c: move private functions to the end
