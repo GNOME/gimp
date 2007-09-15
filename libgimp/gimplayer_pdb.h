@@ -41,6 +41,7 @@ gint32                 gimp_layer_new_from_drawable    (gint32                dr
 G_GNUC_INTERNAL gint32 _gimp_layer_copy                (gint32                layer_ID,
                                                         gboolean              add_alpha);
 gboolean               gimp_layer_add_alpha            (gint32                layer_ID);
+gboolean               gimp_layer_flatten              (gint32                layer_ID);
 gboolean               gimp_layer_scale                (gint32                layer_ID,
                                                         gint                  new_width,
                                                         gint                  new_height,

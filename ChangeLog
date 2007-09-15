@@ -1,5 +1,15 @@
 2007-09-15  Michael Natterer  <mitch@gimp.org>
 
+	* tools/pdbgen/pdb/layer.pdb: added gimp-layer-flatten.
+	Fixes bug #477026. Fixed docs of gimp-layer-add-alpha.
+
+	* app/pdb/internal_procs.c
+	* app/pdb/layer_cmds.c
+	* libgimp/gimplayer_pdb.[ch]: regenerated.
+	* libgimp/gimp.def: changed accordingly.
+
+2007-09-15  Michael Natterer  <mitch@gimp.org>
+
 	Make layer masks work consistently on layers without alpha.
 	Fixes bug #475548.
 

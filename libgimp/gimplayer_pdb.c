@@ -161,10 +161,9 @@ _gimp_layer_copy (gint32   layer_ID,
  *
  * This procedure adds an additional component to the specified layer
  * if it does not already possess an alpha channel. An alpha channel
- * makes it possible to move a layer from the bottom of the layer stack
- * and to clear and erase to transparency, instead of the background
- * color. This transforms images of type RGB to RGBA, GRAY to GRAYA,
- * and INDEXED to INDEXEDA.
+ * makes it possible to clear and erase to transparency, instead of the
+ * background color. This transforms layers of type RGB to RGBA, GRAY
+ * to GRAYA, and INDEXED to INDEXEDA.
  *
  * Returns: TRUE on success.
  */
@@ -176,6 +175,40 @@ gimp_layer_add_alpha (gint32 layer_ID)
   gboolean success = TRUE;
 
   return_vals = gimp_run_procedure ("gimp-layer-add-alpha",
+                                    &nreturn_vals,
+                                    GIMP_PDB_LAYER, layer_ID,
+                                    GIMP_PDB_END);
+
+  success = return_vals[0].data.d_status == GIMP_PDB_SUCCESS;
+
+  gimp_destroy_params (return_vals, nreturn_vals);
+
+  return success;
+}
+
+/**
+ * gimp_layer_flatten:
+ * @layer_ID: The layer.
+ *
+ * Remove the alpha channel from the layer if it has one.
+ *
+ * This procedure removes the alpha channel from a layer, blending all
+ * (partially) transparent pixels in the layer against the background
+ * color. This transforms layers of type RGBA to RGB, GRAYA to GRAY,
+ * and INDEXEDA to INDEXED.
+ *
+ * Returns: TRUE on success.
+ *
+ * Since: GIMP 2.4
+ */
+gboolean
+gimp_layer_flatten (gint32 layer_ID)
+{
+  GimpParam *return_vals;
+  gint nreturn_vals;
+  gboolean success = TRUE;
+
+  return_vals = gimp_run_procedure ("gimp-layer-flatten",
                                     &nreturn_vals,
                                     GIMP_PDB_LAYER, layer_ID,
                                     GIMP_PDB_END);

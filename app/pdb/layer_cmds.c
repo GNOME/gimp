@@ -185,6 +185,26 @@ layer_add_alpha_invoker (GimpProcedure     *procedure,
 }
 
 static GValueArray *
+layer_flatten_invoker (GimpProcedure     *procedure,
+                       Gimp              *gimp,
+                       GimpContext       *context,
+                       GimpProgress      *progress,
+                       const GValueArray *args)
+{
+  gboolean success = TRUE;
+  GimpLayer *layer;
+
+  layer = gimp_value_get_layer (&args->values[0], gimp);
+
+  if (success)
+    {
+      gimp_layer_flatten (layer, context);
+    }
+
+  return gimp_procedure_get_return_values (procedure, success);
+}
+
+static GValueArray *
 layer_scale_invoker (GimpProcedure     *procedure,
                      Gimp              *gimp,
                      GimpContext       *context,
@@ -977,10 +997,32 @@ register_layer_procs (GimpPDB *pdb)
   gimp_procedure_set_static_strings (procedure,
                                      "gimp-layer-add-alpha",
                                      "Add an alpha channel to the layer if it doesn't already have one.",
-                                     "This procedure adds an additional component to the specified layer if it does not already possess an alpha channel. An alpha channel makes it possible to move a layer from the bottom of the layer stack and to clear and erase to transparency, instead of the background color. This transforms images of type RGB to RGBA, GRAY to GRAYA, and INDEXED to INDEXEDA.",
+                                     "This procedure adds an additional component to the specified layer if it does not already possess an alpha channel. An alpha channel makes it possible to clear and erase to transparency, instead of the background color. This transforms layers of type RGB to RGBA, GRAY to GRAYA, and INDEXED to INDEXEDA.",
                                      "Spencer Kimball & Peter Mattis",
                                      "Spencer Kimball & Peter Mattis",
                                      "1995-1996",
+                                     NULL);
+  gimp_procedure_add_argument (procedure,
+                               gimp_param_spec_layer_id ("layer",
+                                                         "layer",
+                                                         "The layer",
+                                                         pdb->gimp, FALSE,
+                                                         GIMP_PARAM_READWRITE));
+  gimp_pdb_register_procedure (pdb, procedure);
+  g_object_unref (procedure);
+
+  /*
+   * gimp-layer-flatten
+   */
+  procedure = gimp_procedure_new (layer_flatten_invoker);
+  gimp_object_set_static_name (GIMP_OBJECT (procedure), "gimp-layer-flatten");
+  gimp_procedure_set_static_strings (procedure,
+                                     "gimp-layer-flatten",
+                                     "Remove the alpha channel from the layer if it has one.",
+                                     "This procedure removes the alpha channel from a layer, blending all (partially) transparent pixels in the layer against the background color. This transforms layers of type RGBA to RGB, GRAYA to GRAY, and INDEXEDA to INDEXED.",
+                                     "Michael Natterer <mitch@gimp.org>",
+                                     "Michael Natterer",
+                                     "2007",
                                      NULL);
   gimp_procedure_add_argument (procedure,
                                gimp_param_spec_layer_id ("layer",

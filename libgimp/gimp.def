@@ -405,6 +405,7 @@ EXPORTS
 	gimp_layer_add_mask
 	gimp_layer_copy
 	gimp_layer_create_mask
+	gimp_layer_flatten
 	gimp_layer_from_mask
 	gimp_layer_get_apply_mask
 	gimp_layer_get_edit_mask
