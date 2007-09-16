@@ -4525,7 +4525,7 @@ msgid ""
 msgstr ""
 "Olet tallentamassa valtavaa\n"
 "HTML sivua joka todennäköisesti\n"
-"jumittaa selaimesi."
+"hyydyttää selaimesi."
 
 #. HTML Page Options
 #: ../plug-ins/common/gtm.c:444
@@ -12183,7 +12183,7 @@ msgstr ""
 #~ "Adaptiivinen hybridi tuottaa yleensä parhaimman tuloksen.\n"
 #~ "Järjestetty on nopeampi ja yhtä hyvä valokuvissa.\n"
 #~ "Nopeat algoritmit ovat nopeampia ja toimivat hyvin tekstille ja "
-#~ "viivapiirroksielle.\n"
+#~ "viivapiirroksille.\n"
 #~ "Floyd-Steinberg on yleisesti heikompilaatuinen."
 
 #~ msgid "%s -- Print v%s"
