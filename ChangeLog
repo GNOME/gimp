@@ -1,3 +1,10 @@
+2007-09-17  Simon Budig  <simon@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c: avoid rendering
+	issues by adding xdelta/2 to xstart.
+
+	Probably fixes bug #474509.
+
 2007-09-15  Michael Natterer  <mitch@gimp.org>
 
 	* tools/pdbgen/pdb/layer.pdb: added gimp-layer-flatten.

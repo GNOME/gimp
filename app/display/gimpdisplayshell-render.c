@@ -882,11 +882,14 @@ gimp_display_shell_render_info_scale (RenderInfo       *info,
   info->src_x     = (gdouble) info->x / info->scalex;
   info->src_y     = (gdouble) info->y / info->scaley;
 
-  info->xstart    = (info->src_x +
-                     ((info->x / info->scalex) -
-                      floor (info->x / info->scalex))) * 65536.0;
-
   info->xdelta    = (1 << 16) * (1.0 / info->scalex);
+  info->xstart    = (gdouble) info->x / info->scalex * 65536.0;
+
+  /* avoid aliasing errors when zooming in */
+  if (info->scalex > 1)
+    {
+      info->xstart += info->xdelta / 2;
+    }
 }
 
 static const guint *
@@ -1062,7 +1065,7 @@ render_image_tile_fault (RenderInfo *info)
   guint         top_weight;
   guint         middle_weight;
   guint         bottom_weight;
-  
+
   guint         source_width;
   guint         source_height;
 
