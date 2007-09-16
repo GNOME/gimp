@@ -241,7 +241,7 @@ msgstr ""
 "s\n"
 "\n"
 "Luultavimmin tiedostosysteemi tallentaa tiedostot muuten kuin UTF-8, ja et "
-"ole määritellyt tätä. Aseta ympäristömuuttujen G_FILENAME_ENCODING arvo."
+"ole määritellyt tätä. Aseta ympäristömuuttujan G_FILENAME_ENCODING arvo."
 
 #: ../app/actions/actions.c:99 ../app/dialogs/dialogs.c:215
 #: ../app/widgets/gimpbrusheditor.c:90
