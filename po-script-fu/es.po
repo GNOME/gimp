@@ -3,17 +3,18 @@
 # Copyright © 1998-2000,2003, 2006, 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
 #
-# Oscar Cebellán Ramos <cebaman@bigfoot.com>
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2004, 2005, 2006.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007.
+# Jorge González <jorgegonz@svn.gnome.org>, 2007.
+# Oscar Cebellán Ramos <cebaman@bigfoot.com>
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-script-fu.HEAD\n"
+"Project-Id-Version: gimp-script-fu.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-06 03:48+0100\n"
-"PO-Revision-Date: 2007-07-06 12:09+0200\n"
-"Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
+"POT-Creation-Date: 2007-08-15 03:54+0100\n"
+"PO-Revision-Date: 2007-09-16 11:20+0200\n"
+"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -33,7 +34,7 @@ msgstr "Bienvenido a TinyScheme"
 
 #: ../plug-ins/script-fu/script-fu-console.c:215
 msgid "Interactive Scheme Development"
-msgstr "Desarrollo interactivo para Scheme"
+msgstr "Desarrollo interactivo de Scheme"
 
 #: ../plug-ins/script-fu/script-fu-console.c:251
 msgid "_Browse..."
@@ -41,7 +42,7 @@ msgstr "_Examinar..."
 
 #: ../plug-ins/script-fu/script-fu-console.c:313
 msgid "Save Script-Fu Console Output"
-msgstr "Guardar salida de la Consola Script-Fu"
+msgstr "Guardar salida de la consola Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-console.c:360
 #, c-format
@@ -63,7 +64,7 @@ msgstr "Script-Fu no puede procesar dos scripts a la vez."
 #: ../plug-ins/script-fu/script-fu-interface.c:193
 #, c-format
 msgid "You are already running the \"%s\" script."
-msgstr "Está ya ejecutando el script «%s»."
+msgstr "Ya está ejecutando el script «%s»."
 
 #: ../plug-ins/script-fu/script-fu-interface.c:238
 #, c-format
@@ -107,9 +108,9 @@ msgstr "Selección de degradado de Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu-interface.c:510
 msgid "Script-Fu Brush Selection"
-msgstr "Selección de brocha de Script-Fu"
+msgstr "Selección de pincel de Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:664
+#: ../plug-ins/script-fu/script-fu-scripts.c:668
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -983,8 +984,8 @@ msgstr "_Quemado…"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
 msgid ""
-"Burn-In: Needs two layers in total!\n"
-"A foreground text layer with transparency and a background layer."
+"Burn-In: Needs two layers in total!\\nA foreground text layer with "
+"transparency and a background layer."
 msgstr ""
 "Quemado: ¡Requiere dos capas en total!\n"
 "Una capa de texto con transparencia en primer plano y una capa de fondo."
@@ -1238,7 +1239,7 @@ msgstr "Sin fondo (sólo para capa separada)"
 # //O Bueno, siguiendo tus maravillosos consejos...
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:5
 msgid "Oilify mask size"
-msgstr "Tamaño de la máscara del óleo"
+msgstr "Tamaño de la máscara para el efecto de óleo"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:6
 #: ../plug-ins/script-fu/scripts/lava.scm.h:6
@@ -1286,9 +1287,7 @@ msgid "Add realistic looking coffee stains to the image"
 msgstr "Añadir manchas de café de aspecto realista a la imagen"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
-msgid ""
-"Darken only\n"
-"(Better, but only for images with a lot of white)"
+msgid "Darken only\\n(Better, but only for images with a lot of white)"
 msgstr ""
 "Sólo oscurecer\n"
 "(Mejor, pero sólo para imágenes con mucho blanco)"
@@ -1487,44 +1486,6 @@ msgstr "Filas/columnas"
 msgid "_Erase Every Other Row..."
 msgstr "_Borrar las otras filas..."
 
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:1
-msgid "Apply generated layermask"
-msgstr "Aplicar la máscara de capa generada"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:2
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
-msgid "Border size"
-msgstr "Tamaño del borde"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:3
-msgid "Clear unselected maskarea"
-msgstr "Borrar el área de máscara no seleccionada"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:4
-msgid "Create a layermask that fades the edges of the selected region (or alpha)"
-msgstr ""
-"Crear una máscara de capa que difumina los bordes de la región o "
-"transparencia seleccionada"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:6
-#, no-c-format
-msgid "Fade from %"
-msgstr "Desvanecer desde %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:8
-#, no-c-format
-msgid "Fade to %"
-msgstr "Desvanecer hasta %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:9
-msgid "Use growing selection"
-msgstr "Usar selección creciente"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:10
-msgid "_Fade to Layer Mask..."
-msgstr "_Desvanecer a máscara de capa…"
-
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 msgid "Create an image filled with a Land Pattern"
 msgstr "Crear una imagen rellena con un dibujo de terreno"
@@ -1623,7 +1584,7 @@ msgstr "Crear un logotipo escarchado con una sombra arrojada añadida"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
 msgid "_Frosty..."
-msgstr "_Congelado..."
+msgstr "_Escarchado..."
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
 msgid "Add a jagged, fuzzy border to an image"
@@ -1635,7 +1596,12 @@ msgstr "Añadir sombra"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
 msgid "Blur border"
-msgstr "Borde de desenfoque"
+msgstr "Desenfocar el borde"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
+msgid "Border size"
+msgstr "Tamaño del borde"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
@@ -2041,7 +2007,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
-msgstr "Línea _nova..."
+msgstr "_Nova de líneas..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:3
 msgid "Number of lines"
@@ -2078,7 +2044,7 @@ msgstr "Crear un pincel elíptico con bordes difuminados"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
 msgid "Elli_ptical, Feathered..."
-msgstr "_Elíptica, difuminada..."
+msgstr "Elí_ptica, difuminada..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
 msgid "Feathering"
@@ -2090,7 +2056,7 @@ msgstr "Nombre"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
 msgid "Re_ctangular, Feathered..."
-msgstr "_Rectangular, difuminada..."
+msgstr "Re_ctangular, difuminada..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:10
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:5
@@ -2169,7 +2135,7 @@ msgstr "_Foto antigua..."
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:1
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:1
 msgid "Brush name"
-msgstr "Nombre de la brocha"
+msgstr "Nombre del pincel"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:2
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:1
@@ -2180,7 +2146,7 @@ msgstr "Nombre de archivo"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:3
 msgid "New _Brush..."
-msgstr "_Brocha nueva..."
+msgstr "_Pincel nuevo..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
 msgid "Paste the clipboard contents into a new brush"
@@ -2398,7 +2364,7 @@ msgstr "Convertir una selección en un pincel"
 
 #: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:5
 msgid "To _Brush..."
-msgstr "A _brocha..."
+msgstr "A _pincel..."
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
 msgid "Convert a selection to an image"
@@ -2519,7 +2485,7 @@ msgstr "Aerógrafo"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:3
 msgid "Brush"
-msgstr "Brocha"
+msgstr "Pincel"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Circle"
@@ -2539,11 +2505,11 @@ msgstr "Cuadro"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:10
 msgid "Gradient: Loop Sawtooth"
-msgstr "Degradado: Bucle diente de sierra"
+msgstr "Degradado: bucle diente de sierra"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:11
 msgid "Gradient: Loop Triangle"
-msgstr "Degradado: Bucle de triángulo"
+msgstr "Degradado: bucle de triángulo"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:12
 msgid "Hexagon"
@@ -2555,7 +2521,7 @@ msgstr "Radio del hoyo"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:14
 msgid "Inner teeth"
-msgstr "Diente interno"
+msgstr "Dientes interiores"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:15
 msgid "Lissajous"
@@ -2567,7 +2533,7 @@ msgstr "Margen (píxeles)"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:17
 msgid "Outer teeth"
-msgstr "Diente exterior"
+msgstr "Dientes exteriores"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:18
 msgid "Pencil"
@@ -2603,7 +2569,7 @@ msgstr "Forma"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:26
 msgid "Solid Color"
-msgstr "Color sólido"
+msgstr "Color liso"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 msgid "Spyrograph"
@@ -2632,7 +2598,7 @@ msgstr "Tipo"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:33
 msgid "_Spyrogimp..."
-msgstr "_Espirógrafo..."
+msgstr "_Espirógrafo del GIMP..."
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:2
 msgid "Burst color"
@@ -2704,7 +2670,7 @@ msgstr "Número de veces a girar"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
 msgid "Quarter size"
-msgstr "Un cuarto del tamaño"
+msgstr "Tamaño del cuadrante"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
 msgid "Whirl angle"
@@ -2915,15 +2881,15 @@ msgstr "Profundidad de la sombra"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:6
 msgid "Thread density"
-msgstr "Densidad de la hebra"
+msgstr "Densidad de hebras"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:7
 msgid "Thread intensity"
-msgstr "Intensidad de la hebra"
+msgstr "Intensidad de las hebras"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:8
 msgid "Thread length"
-msgstr "Longitud de la hebra"
+msgstr "Longitud de las hebras"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:9
 msgid "_Weave..."
