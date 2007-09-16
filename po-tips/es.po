@@ -5,13 +5,14 @@
 # Pablo G. del Campo <pablodc@bigfoot.com>, 2003, 2004.
 # Francisco Javier F. Serrador <serrador@cvs.gnome.org>, 2003, 2004, 2005.
 # Francisco Vila <francisco.vila@hispalinux.es>, 2006, 2007.
+# Jorge González <jorgegonz@svn.gnome.org>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tips.HEAD\n"
+"Project-Id-Version: gimp-tips.HEAD.es\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-07 03:44+0100\n"
-"PO-Revision-Date: 2007-07-06 11:55+0200\n"
-"Last-Translator: Francisco Vila <francisco.vila@hispalinux.es>\n"
+"POT-Creation-Date: 2007-08-30 17:19+0100\n"
+"PO-Revision-Date: 2007-09-16 11:16+0200\n"
+"Last-Translator: Jorge González <jorgegonz@svn.gnome.org>\n"
 "Language-Team: Spanish <traductores@es.gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -237,11 +238,15 @@ msgstr ""
 #: ../data/tips/gimp-tips.xml.in.h:21
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
-"the window move, your window manager uses the <tt>Alt</tt> key already."
+"the window move, your window manager uses the <tt>Alt</tt> key already. Most "
+"window managers can be configured to ignore the <tt>Alt</tt> key or to use "
+"the <tt>Super</tt> key (or \"Windows logo\") instead."
 msgstr ""
 "Puede ajustar y recolocar una selección utilizando <tt>Alt</tt> y "
 "arrastrando. Si esto hace que la ventana se mueva, su administrador de "
-"ventanas ya utiliza la tecla <tt>Alt</tt>."
+"ventanas ya utiliza la tecla <tt>Alt</tt>. La mayor parte de los "
+"gestores de ventanas se pueden configurar para que ignoren la tecla <tt>Alt</tt> "
+"o para que usen la tecla <tt>Super</tt> (o «tecla de Windows») en su lugar."
 
 #: ../data/tips/gimp-tips.xml.in.h:22
 msgid ""
