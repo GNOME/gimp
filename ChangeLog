@@ -1,3 +1,9 @@
+2007-09-17  Nils Philippsen  <nphilipp@redhat.com>
+
+	* plug-ins/common/pcx.c (load_image): verify that the bytesperline header
+	field (number of bytes to allocate per plane and line) isn't less than the
+	width of the image
+
 2007-09-17  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpdockbook.[ch]: when DND-hovering > 500ms over a
