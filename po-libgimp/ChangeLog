@@ -1,6 +1,10 @@
+2007-09-17  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation
+
 2007-09-16  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation by Francisco Vila
+	* es.po: Updated Spanish translation by Francisco Vila
 
 2007-09-16  Wadim Dziedzic  <wadimd@svn.gnome.org>
 
@@ -20,7 +24,7 @@
 
 2007-09-08  Inaki Larranaga Murgoitio  <dooteo@zundan.com>
 
-        * eu.po: Updated Basque translation.
+	* eu.po: Updated Basque translation.
 
 2007-09-04 Gabor Kelemen  <kelemeng@gnome.hu>
 
