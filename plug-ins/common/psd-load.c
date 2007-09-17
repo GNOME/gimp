@@ -252,6 +252,7 @@ typedef struct PsdLayer
 
   gboolean    protecttrans;
   gboolean    visible;
+  gboolean    drop;
 
   gchar      *name;
 
@@ -1048,6 +1049,8 @@ do_layer_record (FILE    *fd,
   layer->width  = right - left;
   layer->height = bottom - top;
 
+  layer->drop = FALSE;
+
   if ((layer->height > GIMP_MAX_IMAGE_SIZE) ||
       (layer->width > GIMP_MAX_IMAGE_SIZE))
     {
@@ -1335,6 +1338,26 @@ do_layer_record (FILE    *fd,
           }
           break;
 
+        /* Adjustment layers */
+        case 0x6c65766c:                /* levl     levels */
+        case 0x63757276:                /* curv     curves */
+        case 0x62726974:                /* brit     brightness & contrast */
+        case 0x626c6e63:                /* blnc     color balance */
+        case 0x626c7768:                /* blwh     black & white */
+        case 0x68756520:                /* hue      hue & saturation  (PS4) */
+        case 0x68756532:                /* hue2     hue & saturation (PS5 & later) */
+        case 0x73656c63:                /* selc     selective color */
+        case 0x6d697872:                /* mixr     channel mixer */
+        case 0x6772646d:                /* grdm     gradient map */
+        case 0x7068666c:                /* phfl     photo filter */
+        case 0x65787041:                /* expA     exposure */
+        case 0x6e767274:                /* nvrt     invert */
+        case 0x74687273:                /* thrs     threshold */
+        case 0x706f7374:                /* post     posterize */
+          layer->drop = TRUE;
+          throwchunk (xdsize, fd, "Adjustment layers throw");
+          break;
+
         /* lsct: Layer Set Controls Type */
         case 0x6c736374:
           {
@@ -1347,12 +1370,17 @@ do_layer_record (FILE    *fd,
               {
                 case 1:
                 case 2:
+                  /* 1 = Start folder - Open */
+                  /* 2 = Start folder - Closed */
+
+                  layer->drop = TRUE;
+
                   blendsignature = getgint32 (fd, "layer extra data block lsct");
                   blendkey = getgint32 (fd, "layer extra data block lsct");
 
                   IFDBG
                     {
-                      g_printerr ("Close layer set.\n\t\t\t\t\t\t\tBlend = 0x%08x '%c%c%c%c'\n",
+                      g_printerr ("Start layer set.\n\t\t\t\t\t\t\tBlend = 0x%08x '%c%c%c%c'\n",
                                   blendkey,
                                   ((gchar*)(&blendkey))[3],
                                   ((gchar*)(&blendkey))[2],
@@ -1365,7 +1393,10 @@ do_layer_record (FILE    *fd,
                   break;
 
                 case 3:
-                  IFDBG g_printerr ("Open layer set.\n");
+                  /* 3 = End folder */
+                  IFDBG g_printerr ("End layer set.\n");
+                  /* These are hidden layers in the ps UI */
+                  layer->drop = TRUE;
                   if (xdsize-4)
                     throwchunk (xdsize-4, fd, "lsct: Layer Set Controls throw");
                   break;
@@ -2432,6 +2463,9 @@ load_image (const gchar *name)
           drawable = NULL;
 
           g_free (merged_data);
+
+          if (layer->drop)
+            gimp_image_remove_layer (image_ID, layer_ID);
 
           gimp_progress_update ((double) (lnum+1.0) /
                                 (double) psd_image.num_layers);

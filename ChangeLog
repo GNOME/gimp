@@ -1,3 +1,10 @@
+2007-09-17  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* plug-ins/common/psd-load.c (do_layer_record, load_image):
+	Applied slightly modified patch from John Marshall that drops
+	adjustment and layer group layers when loading PSD files. Fixes
+	bug #474718.
+
 2007-09-17  Nils Philippsen  <nphilipp@redhat.com>
 
 	* plug-ins/common/pcx.c (load_image): verify that the bytesperline
