@@ -5,8 +5,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: km\n"
-"Report-Msgid-Bugs-To: translate-editor@lists.sourceforge.net\n"
-"POT-Creation-Date: 2007-04-18 14:41+0700\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-04-19 20:19+0100\n"
 "PO-Revision-Date: 2007-04-19 14:34+0700\n"
 "Last-Translator: Khoem Sokhem<khoemsokhem@khmeros.info>\n"
 "Language-Team: Khmer<support@khmeros.info>\n"
@@ -159,9 +159,7 @@ msgstr "ស្រអាប់"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
 msgid "Offset the colors in a palette"
-msgstr ""
-"អុហ្វសិត​ពណ៌​នៅ​ក្នុងក្ដារ"
-"​"
+msgstr "អុហ្វសិត​ពណ៌​នៅ​ក្នុងក្ដារ​"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:50
 msgid "_Offset Palette..."

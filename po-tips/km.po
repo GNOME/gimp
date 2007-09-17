@@ -1,276 +1,279 @@
-#   translation of km.po to Khmer
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# translation of gimp-tips.HEAD.km.po to Khmer
 # eng vannak <evannak@khmeros.info>, 2006.
 # Poch Sokun <sokun_poch@khmeros.info>, 2006.
-# Khoem Sokhem <khoemsokhem@khmeros.info>, 2006.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2006, 2007.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 msgid ""
 msgstr ""
-"Project-Id-Version: km\n"
-"Report-Msgid-Bugs-To: translate-editor@lists.sourceforge.net\n"
-"POT-Creation-Date: 2005-06-10 10:35+0000\n"
-"PO-Revision-Date: 2007-04-18 10:43+0700\n"
-"Last-Translator: Khoem Sokhem<khoemsokhem@khmeros.info>\n"
-"Language-Team: Khmer<support@khmeros.info>\n"
+"Project-Id-Version: gimp-tips.HEAD.km\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-08-13 14:41+0100\n"
+"PO-Revision-Date: 2007-09-11 16:10+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <en@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootling 0.2\n"
+"X-Generator: KBabel 1.11.4\n"
 
-#: ../tips/gimp-tips.xml.in.h:1
+#: ../data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
 msgstr "<big>សូម​ស្វាគមន៍​មក​កាន់​កម្មវិធី​រៀបចំ​រូបភាព​របស់ GNU !</big>"
 
-#: ../tips/gimp-tips.xml.in.h:2
-msgid ""
-"<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles "
-"viewing the mask directly."
-msgstr "<tt>ជំនួស</tt>-ចុច​លើ​ទិដ្ឋភាព​មើល​ជា​មុន​របស់​របាំង​ស្រទាប់​នៅ​ក្នុង​ប្រអប់​ស្រទាប់ ដើម្បី​បិទ/បើក​ការ​មើល​របាំង​ដោយ​ផ្ទាល់ ។"
-
-#: ../tips/gimp-tips.xml.in.h:3
-msgid ""
-"<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
-"the effect of the layer mask."
-msgstr "<tt>បញ្ជា</tt>-ចុច​លើ​ទិដ្ឋភាព​មើលជាមុន​របស់​របាំង​ស្រទាប់​ក្នុង​ប្រអប់​ស្រទាប់ ដើម្បី​បិទ/បើក​បែបផែន​របស់​របាំង​ស្រទាប់ ។"
-
-#: ../tips/gimp-tips.xml.in.h:4
+#: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
-"color instead of the foreground color."
-msgstr "<tt>បញ្ជា</tt>-ចុច​ជា​មួយ​នឹង​ឧបករណ៍​បំពេញ​ធុង ដើម្បី​ឲ្យ​វា​ប្រើ​ពណ៌​ផ្ទៃខាងក្រោយ​ជំនួស​ឲ្យ​ពណ៌​ផ្ទៃ​ខាងមុខ ។"
+"color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
+"with the eyedropper tool sets the background color instead of the foreground "
+"color."
+msgstr "<tt>បញ្ជា(Ctrl)</tt>-ចុច​ជា​មួយ​នឹង​ឧបករណ៍​បំពេញ​ធុង ដើម្បី​ឲ្យ​វា​ប្រើ​ពណ៌​ផ្ទៃខាងក្រោយ​ជំនួស​ឲ្យ​ពណ៌​ផ្ទៃ​ខាងមុខ ។ ដូច​គ្នា​នេះ​ដែរការ​ចុច <tt>បញ្ជា(Ctrl)</tt> ជា​មួយ​នឹង​ឧបករណ៍​​ចាក់ពណ៌​កំណត់​ពណ៌​ផ្ទៃខាង​ក្រោយ​ជំនួស​ឲ្យ​ពណ៌​ផ្ទៃ​ខាង​មុខ ។"
 
-#: ../tips/gimp-tips.xml.in.h:5
+#: ../data/tips/gimp-tips.xml.in.h:3
+msgid ""
+"<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
+"toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
+"mask's preview in the Layers dialog toggles viewing the mask directly."
+msgstr "<tt>បញ្ជា(Ctrl)</tt> ចុច​លើ​ទិដ្ឋភាព​មើលជា​មុន​របស់​របាំង​ស្រទាប់​នៅ​ក្នុង​ប្រអប់​ស្រទាប់ បិទ/បើក​​បែបផែន​របាំង​ស្រទាប់ ។ <tt>ជំនួស (Alt)</tt> ចុច​លើ​ទិដ្ឋភាព​មើលជា​មុន​របស់​របាំង​នៅ​ក្នុង​ប្រអប់​ស្រទាប់ បិទ/បើក​ការ​មើល​របាំង​ដោយ​ផ្ទាល់​ ។"
+
+#: ../data/tips/gimp-tips.xml.in.h:4
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
 msgstr "<tt>បញ្ជា</tt>-អូស​ជា​មួយ​នឹង​ឧបករណ៍​បង្វឹល នឹង​បង្ខំ​ការង្វឹល​ឲ្យ​ទៅ​មុំ ១៥ អង្សា ។"
 
-#: ../tips/gimp-tips.xml.in.h:6
+#: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
-msgstr "<tt>ប្ដូរ</tt>-ចុច​លើ​រូបតំណាង​ភ្នែក​នៅ​ក្នុង​ប្រអប់​ស្រទាប់ ដើម្បី​លាក់​ស្រទាប់​ទាំងអស់ ប៉ុន្តែ​លើកលែង​មួយ ។ <tt>ប្ដូរ</tt>-ចុច​ម្ដង​ទៀត​ដើម្បី​បង្ហាញ​ស្រទាប់​ទាំងអស់ ។"
+msgstr ""
+"<tt>ប្ដូរ</tt>-ចុច​លើ​រូបតំណាង​ភ្នែក​នៅ​ក្នុង​ប្រអប់​ស្រទាប់ ដើម្បី​លាក់​ស្រទាប់​ទាំងអស់ ប៉ុន្តែ​លើកលែង​មួយ ។ "
+"<tt>ប្ដូរ</tt>-ចុច​ម្ដង​ទៀត​ដើម្បី​បង្ហាញ​ស្រទាប់​ទាំងអស់ ។"
 
-#: ../tips/gimp-tips.xml.in.h:7
+#: ../data/tips/gimp-tips.xml.in.h:6
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
 "Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
 "use the menus to do the same."
 msgstr ""
-"ជម្រើស​អណ្ដែត​ត្រូវ​តែ​បាន​បោះយុថ្កា​ទៅ​ស្រទាប់​ថ្មី​មួយ ឬ ទៅ​ស្រទាប់​ដែល​សកម្ម​ចុង​ក្រោយ មុន​នឹង​ធ្វើ​ប្រតិបត្តិការ​ផ្សេងៗទៀត​នៅ​លើ​រូបភាព ។ ចុច​លើ​ប៊ូតុង &quot;ស្រទាប់​ថ្មី&quot; ឬ &quot;ស្រទាប់​យុថ្កា&quot; នៅ​ក្នុង​ប្រអប់​ស្រទាប់ ឬ "
-"ប្រើ​ម៉ឺនុយ​ដើម្បី​ធ្វើ​ការងារ​ដូចគ្នា ។"
+"ជម្រើស​អណ្ដែត​ត្រូវ​តែ​បាន​បោះយុថ្កា​ទៅ​ស្រទាប់​ថ្មី​មួយ ឬ ទៅ​ស្រទាប់​ដែល​សកម្ម​ចុង​ក្រោយ មុន​នឹង​ធ្វើ​ប្រតិបត្តិការ​"
+"ផ្សេងៗទៀត​នៅ​លើ​រូបភាព ។ ចុច​លើ​ប៊ូតុង &quot;ស្រទាប់​ថ្មី&quot; ឬ &quot;ស្រទាប់​យុថ្កា&quot; នៅ​ក្នុង​"
+"ប្រអប់​ស្រទាប់ ឬ ប្រើ​ម៉ឺនុយ​ដើម្បី​ធ្វើ​ការងារ​ដូចគ្នា ។"
 
-#: ../tips/gimp-tips.xml.in.h:8
+#: ../data/tips/gimp-tips.xml.in.h:7
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
 "selecting a menu item, and pressing the desired key combination. If &quot;"
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP."
+"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
+"shortcuts."
 msgstr ""
-"បន្ទាប់​ពី​អ្នក​បាន​អនុញ្ញាត &quot;ផ្លូវកាត់ក្ដារ​ចុច​ថាមវន្ត&quot; នៅ​ក្នុង​ប្រអប់​ចំណូលចិត្ត អ្នកអាច​ផ្ដល់​គ្រាប់​ចុច​ផ្លូវកាត់​ឡើង​វិញ ។ ធ្វើ​ដូច្នេះ​ដោយ​ប្រើ​ម៉ឺនុយ "
-"ជ្រើស​ធាតុ​ម៉ឺនុយ ហើយ​ចុច​បន្សំ​គ្រាប់ចុច​ដែល​ចង់​បាន ។ ប្រសិន​បើ &quot;"
-"ការ​រក្សាទុក​ផ្លូវកាត់​ក្ដារចុច&quot; ត្រូវ​បាន​អនុញ្ញាត ការ​ចង​គ្រាប់ចុច​ត្រូវ​បាន​រក្សាទុក​នៅ​ពេល​ដែល​អ្នក​ចេញ​ពី GIMP ។"
+"បន្ទាប់​ពី​អ្ន​កបាន​បើក &quot;ផ្លូវកាត់​ក្ដារចុច​ថាមវន្ត&quot; នៅ​ក្នុង​ប្រអប់​ចំណូល​ចិត្ត អ្នក​អាច​ផ្ដល់​គ្រាប់ចុច​ផ្លូវកាត់​ឡើង​វិញ ។ ធ្វើ​ដូច្នេះ​ដោយ​​មាន​ម៉ឺនុយ​លេច​ឡើង ដោយ​ជ្រើស​ធាតុ​ម៉ឺនុយ ហើយ​ចុច​បន្សំ​គ្រាប់ចុច​ដែល​អ្នក​ចង់​បាន ។ ប្រសិន​បើ​បាន​បើក&quot;"
+"រក្សាទុក​ផ្លូវកាត់​ក្ដារចុច&quot; ការ​ចង​គ្រាប់ចុច​ត្រូវ​បាន​រក្សាទុក នៅ​ពេល​ដែល​អ្នក​ចេញ​ពី GIMP ។ អ្នក​​គួតែរ​បិទ​ &quotផ្លូវកាត់​ក្ដារចុច​ថាមវន្តs&quot;បន្ទាប់​ពី​នោះ,ដើម្បី​ការពារ​ការ​ផ្ដល់/ផ្ដល់​ផ្លូវកាត់​ឡើង​វិញ​ដោយ​ចៃដន្យ ។."
 
-#: ../tips/gimp-tips.xml.in.h:9
+#: ../data/tips/gimp-tips.xml.in.h:8
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
-msgstr "ចុច ហើយ​អូស​លើ​បន្ទាត់​ដើម្បី​ដាក់​អ្នក​នាំផ្លូវ​នៅ​លើ​រូបភាព ។ ជ្រើស​ដែល​បាន​អូស​ទាំងអស់​នឹង​ខ្ទាស់​ទៅ​អ្នក​នាំផ្លូវ ។ អ្នក​អាច​យក​អ្នក​នាំផ្លូវ​ចេញ​ដោយ​អូស​ពួកវា​ចេញ​ពី​រូបភាព​ដោយ​ប្រើ​ឧបករណ៍​ផ្លាស់ទី ។"
+msgstr ""
+"ចុច ហើយ​អូស​លើ​បន្ទាត់​ដើម្បី​ដាក់​អ្នក​នាំផ្លូវ​នៅ​លើ​រូបភាព ។ ជ្រើស​ដែល​បាន​អូស​ទាំងអស់​នឹង​ខ្ទាស់​ទៅ​អ្នក​"
+"នាំផ្លូវ ។ អ្នក​អាច​យក​អ្នក​នាំផ្លូវ​ចេញ​ដោយ​អូស​ពួកវា​ចេញ​ពី​រូបភាព​ដោយ​ប្រើ​ឧបករណ៍​ផ្លាស់ទី ។"
 
-#: ../tips/gimp-tips.xml.in.h:10
+#: ../data/tips/gimp-tips.xml.in.h:9
 msgid ""
 "GIMP allows you to undo most changes to the image, so feel free to "
 "experiment."
 msgstr ""
-"GIMP អនុញ្ញាត​ឲ្យ​អ្នក​មិន​ធ្វើ​ឡើងវិញ​នូវ​ការ​ផ្លាស់ប្ដូរ​ជា​ច្រើន​ទៅ​លើ​រូបភាព"
-"ដូច្នេះ​សូម​ធ្វើ​ការ​ពិសោធន៍​តាម​ចិត្ត ។"
+"GIMP អនុញ្ញាត​ឲ្យ​អ្នក​មិន​ធ្វើ​ឡើងវិញ​នូវ​ការ​ផ្លាស់ប្ដូរ​ជា​ច្រើន​ទៅ​លើ​រូបភាពដូច្នេះ​សូម​ធ្វើ​ការ​ពិសោធន៍​តាម​"
+"ចិត្ត ។"
 
-#: ../tips/gimp-tips.xml.in.h:11
+#: ../data/tips/gimp-tips.xml.in.h:10
 msgid ""
 "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
-"GIMP គាំទ្រ​ការ​បង្ហាប់ gzip នៅ​ពេល​បង្ហោះ ។ គ្រាន់​តែ​បន្ថែម <tt>.gz</tt> (ឬ <tt>."
-"bz2</tt> ប្រសិន​បើ​អ្នក​បាន​ដំឡើង bzip2) ទៅ​ប្រព័ន្ធ​ឯកសារ និង​រូបភាព​របស់​អ្នក​នឹង​ត្រូវ​បាន​រក្សាទុក​ដោយ​បង្ហាប់ ។ តាម​ពិត​ការ​ផ្ទុក​រូបភាព​ដែល​បាន​បង្ហាប់​ក៏​ដំណើរការ​ផងដែរ ។"
+"GIMP គាំទ្រ​ការ​បង្ហាប់ gzip នៅ​ពេល​បង្ហោះ ។ គ្រាន់​តែ​បន្ថែម <tt>.gz</tt> (ឬ <tt>.bz2</"
+"tt> ប្រសិន​បើ​អ្នក​បាន​ដំឡើង bzip2) ទៅ​ប្រព័ន្ធ​ឯកសារ និង​រូបភាព​របស់​អ្នក​នឹង​ត្រូវ​បាន​រក្សាទុក​ដោយ​"
+"បង្ហាប់ ។ តាម​ពិត​ការ​ផ្ទុក​រូបភាព​ដែល​បាន​បង្ហាប់​ក៏​ដំណើរការ​ផងដែរ ។"
 
-#: ../tips/gimp-tips.xml.in.h:12
+#: ../data/tips/gimp-tips.xml.in.h:11
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
-msgstr "GIMP ប្រើ​ស្រទាប់​ដើម្បី​អនុញ្ញាត​ឲ្យ​អ្នក​រៀបចំ​រូបភាព​របស់​អ្នក ។ គិត​ថា​ពួក​វាជា​ជង់​ស្លាយ ឬ​ជា​តម្រង ដូច្នេះ​ការ​មើល​កាត់​ពួកវា អ្នក​នឹង​ឃើញ​សមាសភាគ​មាតិកា​របស់​ពួកវា ។"
+msgstr ""
+"GIMP ប្រើ​ស្រទាប់​ដើម្បី​អនុញ្ញាត​ឲ្យ​អ្នក​រៀបចំ​រូបភាព​របស់​អ្នក ។ គិត​ថា​ពួក​វាជា​ជង់​ស្លាយ ឬ​ជា​តម្រង ដូច្នេះ​"
+"ការ​មើល​កាត់​ពួកវា អ្នក​នឹង​ឃើញ​សមាសភាគ​មាតិកា​របស់​ពួកវា ។"
 
-#: ../tips/gimp-tips.xml.in.h:13
+#: ../data/tips/gimp-tips.xml.in.h:12
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
-"Layer-&gt;Transparency-&gt;Add Alpha Channel."
-msgstr "ប្រសិន​បើ​ឈ្មោះ របស់​ស្រទាប់​នៅ​ក្នុង​ប្រអប់​ស្រទាប់​ត្រូវ​បាន​បង្ហាញ​ជា​លក្ខណៈ​ <b>ដិត</b> ស្រទាប់​នេះ​មិន​មាន​ឆានែល​អាល់ហ្វាទេ ។ អ្នក​អាច​បន្ថែម​ឆានែល​ដោយ​ប្រើ​ស្រទាប់-&gt ថ្លា-&gt បន្ថែម​ឆានែល​អាល់ហ្វា ។"
+"Layer→Transparency→Add Alpha Channel."
+msgstr ""
+"ប្រសិន​បើ​ឈ្មោះ​របស់​ស្រទាប់​នៅ​ក្នុង​ប្រអប់​ស្រទាប់​បាន​បង្ហាញជា​ <b>ដិត</b> ស្រទាប់​នេះ​មិនមាន​ឆានែល​អាល់ហ្វា​ទេ ។ អ្នក​អាច​បន្ថែម​ឆានែលអាល់ហ្វា​ដោយ​ប្រើ​ឆានែល​អាល់ហ្វា "
+"Layer→Transparency→Add ។"
 
-#: ../tips/gimp-tips.xml.in.h:14
+#: ../data/tips/gimp-tips.xml.in.h:13
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
-"tool (Layer-&gt;Colors-&gt;Levels). If there are any color casts, you can "
-"correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
-msgstr "ប្រសិន​បើ​​រូបភាព​ដែល​បាន​ស្កេន​របស់​អ្នក​មួយ​ចំនួន​មើល​ទៅ​មិនមាន​ពណ៌​គ្រប់គ្រាន់​ទេ អ្នក​អាច​បង្កើតជួរ​ពណ៌​របស់​ពួកវា​យ៉ាង​ងាយស្រូល ដោយ​ប្រើ​ប៊ូតុង &quot;ស្វ័យប្រវត្តិ&quot; នៅ​ក្នុង​ឧបករណ៍​កម្រិត (ស្រទាប់-&gt;ពណ៌-&gt;កម្រិត) ។ ប្រសិន​បើ​មាន​ការ​ចោលពណ៌​ណាមួយ អ្នក​អាច​កែ​ពួកវា​ដោយ​ប្រើ​ឧបករណ៍​ខ្សែកោង (ស្រទាប់-&gt;ពណ៌-&gt;ខ្សែកោង) ។"
+"tool (Colors→Levels). If there are any color casts, you can correct them "
+"with the Curves tool (Colors→Curves)."
+msgstr "ប្រសិន​បើ​​រូបថត​ដែល​ស្កេន​មួយ​ចំនួន​របស់​អ្នក​មើល​ទៅ​គ្មាន​ពណ៌​គ្រប់គ្រាន់​ទេ អ្នក​អាច​បង្កើន​ជួរ​របស់ពួកវា​យ៉ាង​ងាយស្រួលដោយ​ប៊ូតុង&quot;ស្វ័យ​ប្រវត្តិ&quot; នៅ​ក្នុង​ឧបករណ៍​កម្រិត (កម្រិត​ពណ៌) ។ ប្រសិន​បើ​មាន​ការ​ចោល​ពណ៌​មួយ​ចំនួន អ្នក​អាច​កែ​ពួកវា​ដោយ​ឧបករណ៍​ខ្សែកោង (ខ្សែកោង​ពណ៌) ។"
 
-#: ../tips/gimp-tips.xml.in.h:15
+#: ../data/tips/gimp-tips.xml.in.h:14
 msgid ""
-"If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
-"with their current settings. You can use the Paintbrush in gradient mode or "
-"even the Eraser or the Smudge tool."
-msgstr "ប្រសិន​បើ​អ្នក​ខ្វាច់​ផ្លូវ​មួយ (កែសម្រួល-&gt;ខ្វាច់ផ្លូវ) ឧបករណ៍​គូរ​អាច​ត្រូវ​បាន​ប្រើ​ជា​មួយ​នឹង​ការ​កំណត់​បច្ចុប្បន្ន​របស់​ពួកវា ។ អ្នក​អាច​ប្រើ​ជក់​ក្នុង​របៀប​ជម្រាល ឬ​ប្រើ​ជ័រលុប ឬ​ឧបករណ៍​ស្នាម​ប្រឡាក់ ។"
+"If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
+"their current settings. You can use the Paintbrush in gradient mode or even "
+"the Eraser or the Smudge tool."
+msgstr "ប្រសិន​បើ​ផ្លូវខ្វាច់​ផ្លូវ (កែសម្រួល​ផ្លូវ​ខ្វាច់) ឧបករណ៍​គូរ​អាច​ត្រូវ​បានប្រើ​ជា​មួយ​នឹង​ការ​កំណត់​បច្ចុប្បន្ន​របស់​ពួកវា ។ អ្នក​អាច​ប្រើ​ជក់​គូរ​នៅ​ក្នុង​របៀប​ជម្រាល ឬ​ជ័រ​លុប ឬ​ឧបករណ៍ស្នាម​ប្រឡាក់ ។"
 
-#: ../tips/gimp-tips.xml.in.h:16
+#: ../data/tips/gimp-tips.xml.in.h:15
 msgid ""
-"If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
-"in an image window to hide or show the toolbox and other dialogs."
-msgstr "ប្រសិន​បើ​អេក្រង់​របស់​អ្នក​រាយប៉ាយ​ពេក អ្នក​អាច​ចុច <tt>ថេប</tt> ច្រើន​ដង​នៅ​ក្នុង​បង្អួច​រូបភាព ដើម្បី​លាក់ ឬ​បង្ហាញ​របារ​ឧបករណ៍ និង​ប្រអប់​ផ្សេងៗទៀត ។"
+"If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
+"window to toggle the visibility of the toolbox and other dialogs."
+msgstr "ប្រសិន​បើ​អេក្រង់​របស់​អ្នក​រាយប៉ាយ​ពេក អ្នក​អាច​ចុច <tt>ថេប(Tab)</tt> នៅ​ក្ច្រើនុង​បង្អួច​រូបភាព​ ដើម្បី​បិទ/បើក​ភាព​មើលឃើញ​របស់​របារ​ឧបករណ៍ និង​ប្រអប់​របស់​វា ។"
 
-#: ../tips/gimp-tips.xml.in.h:17
+#: ../data/tips/gimp-tips.xml.in.h:16
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
-"you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
-"plug-in to work on the whole image."
-msgstr "កម្មវិធី​ជំនួយ​ភាគ​ច្រើន​ធ្វើការ​លើ​ស្រទាប់​បច្ចុប្បន្ន​របស់​រូបភាព​បច្ចុប្បន្ន ។ ក្នុង​ករណី​មួយ​ចំនួន អ្នក​ត្រូវតែ​បញ្ចូល​ស្រទាប់​ទាំងអស់​ចូលគ្នា (រូបភាព-&gt;រូបភាព​សំប៉ែត) ប្រសិន​បើ​អ្នក​ចង់​ឲ្យ​កម្មវិធី​ជំនួយ​ធ្វើការ​លើ​រូបភាព​ទាំងមូល ។"
+"you will have to merge all layers (Image→Flatten Image) if you want the plug-"
+"in to work on the whole image."
+msgstr ""
+"កម្មវិធី​ជំនួយ​ភាគ​ច្រើន​ដំណើរការ​​លើ​ស្រទាប់​បច្ចុប្បន្ន​របស់​រូបភាព​បច្ចុប្បន្ន ។ ក្នុង​ករណី​មួយ​ចំនួន អ្នក​ត្រូវតែ​បញ្ចូល​"
+"ស្រទាប់​ទាំងអស់​ចូលគ្នា (រូបភាព Image→Flatten) ប្រសិន​បើ​អ្នក​ចង់​ឲ្យ​កម្មវិធី​ជំនួយ​ដំណើរការ​លើ​រូបភាព​"
+"ទាំងមូល ។"
 
-#: ../tips/gimp-tips.xml.in.h:18
+#: ../data/tips/gimp-tips.xml.in.h:17
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
-"a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layer-&gt;Transparency-&gt;Add "
-"Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
-msgstr "មិន​មែន​បែបផែន​ទាំងអស់​អាច​ត្រូវ​បាន​អនុវត្ត​ទៅ​លើ​រូបភាព​គ្រប់​ប្រភេទ​នោះ​ទេ ។ វា​ត្រូវ​បាន​ចង្អុល​បង្ហាញ​ដោយ​ធាតុ​ម៉ឺនុយ​ប្រផេះ ។ អ្នក​ប្រហែល​ត្រូវការ​ផ្លាស់ប្ដូរ​របៀប​រូបភាព​ទៅ RGB (រូបភាព-&gt;របៀប-&gt;RGB) ​បន្ថែម​ឆានែល​អាល់ហ្វាមួយ (​ស្រទាប់​-&gt;​ថ្លា​-&gt;​បន្ថែម​ឆានែល​អាល់ហ្វា​) ឬ​ធ្វើ​ឲ្យ​វា​រាប​ស្មើ (​រូបភាព​-&gt;ធ្វើ​ឲ្យ​រូបភាពរាបស្មើ) ។"
+"a grayed-out menu-entry. You may need to change the image mode to RGB "
+"(Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha "
+"Channel) or flatten it (Image→Flatten Image)."
+msgstr ""
+"មិន​មែន​បែបផែន​ទាំងអស់​អាច​ត្រូវ​បាន​អនុវត្ត​ទៅ​លើ​រូបភាព​គ្រប់​ប្រភេទ​នោះ​ទេ ។ វា​ត្រូវ​បាន​ចង្អុល​បង្ហាញ​ដោយ​​ធាតុ​ម៉ឺនុយ​ប្រផេះ ។ អ្នក​ប្រហែល​ត្រូវការ​ផ្លាស់ប្ដូរ​របៀប​រូបភាព​ទៅជា RGB (Image→Mode→RGB) ​"
+"បន្ថែម​ឆានែល​អាល់ហ្វា (​ឆានែល​អាល់ហ្វា Layer→Transparency→Add) ឬ​ធ្វើ​ឲ្យ​វា​រាប​ស្មើ (​រូបភាព Image→Flatten) ។"
 
-#: ../tips/gimp-tips.xml.in.h:19
+#: ../data/tips/gimp-tips.xml.in.h:18
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
 "tt> before making a selection subtracts from the current one."
 msgstr ""
-"ចុច និង​​ទប់​គ្រាប់ចុច <tt>ប្ដូរ</tt> មុន​ពេល​ធ្វើការ​ជ្រើស ដោយ​អនុញ្ញា​តឲ្យ​អ្នក​បន្ថែម​ជម្រើស​បច្ចុប្បន្ន​ជំនួស​ឲ្យ​ការ​ជំនួស​ការ​ជំនួស​វា ។ ដោយ​ប្រើ <tt>បញ្ជា</"
-"tt> មុន​ពេល​ធ្វើការ​ជ្រើស​ដោយ​ដក​ពី​ជម្រើស​បច្ចុប្បន្ន​មួយ ។"
+"ចុច និង​​ទប់​គ្រាប់ចុច <tt>ប្ដូរ</tt> មុន​ពេល​ធ្វើការ​ជ្រើស ដោយ​អនុញ្ញា​តឲ្យ​អ្នក​បន្ថែម​ជម្រើស​បច្ចុប្បន្ន​ជំនួស​"
+"ឲ្យ​ការ​ជំនួស​ការ​ជំនួស​វា ។ ដោយ​ប្រើ <tt>បញ្ជា</tt> មុន​ពេល​ធ្វើការ​ជ្រើស​ដោយ​ដក​ពី​ជម្រើស​បច្ចុប្បន្ន​មួយ ។"
 
-#: ../tips/gimp-tips.xml.in.h:20
+#: ../data/tips/gimp-tips.xml.in.h:19
 msgid ""
 "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
 "ellipse select. To place a circle precisely, drag horizontal and vertical "
 "guides tangent to the circle you want to select, place your cursor at the "
 "intersection of the guides, and the resulting selection will just touch the "
 "guides."
-msgstr "ដើម្បី​បង្កើត​ការ​ជ្រើស​រាង​រង្វង់ ឈរលើ​ <tt>ប្ដូរ</tt> ខណៈ​ធ្វើ​ជម្រើស​​រាង​ពង​ក្រពើ ។ ដើម្បី​ដាក់​រង្វង់​យ៉ាង​ជាក់លាក់​អូស​អ័ក្ស​តង់សង់​ដោយ​ផ្ដេក​និង​ បញ្ឈរ​ទៅ​រង្វង់​ដែល​អ្នក​ចង់​ជ្រើស​ ​ដាក់​ទស្សន៍​ទ្រនិច​របស់​អ្នក​នៅ​ត្រង់​ចំណុច​ប្រសព្វ​នៃ​មគ្គុទ្ទេសក៍​ ​និងលទ្ធផល​នៃ​ការ​ជ្រើស​នឹង​ប៉ះ​បន្ទាត់​នាំ​ផ្លូវ ។"
-
-#: ../tips/gimp-tips.xml.in.h:21
-msgid ""
-"When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
-"click will draw a straight line from your last drawing point to your current "
-"cursor position. If you also press <tt>Ctrl</tt>, the line will be "
-"constrained to 15 degree angles."
 msgstr ""
-"នៅ​ពេល​ប្រើ​ឧបករណ៍​គូរ​មួយ (ជក់ ច្រាស ឬ​ខ្មៅដៃ) <tt>ប្ដូរ</tt>-"
-"ចុច​នឹង​គូរ​បន្ទាត់​ត្រង់​មួយ​ពី​ចំណុច​គូរ​ចុង​ក្រោយ​របស់​អ្នក​ទៅ​ទីតាំង​ទស្សន៍​ទ្រនិច​បច្ចុប្បន្ន ។ ប្រសិន​បើ​អ្នក​ចុច <tt>បញ្ជា</tt>ផង​ដែរ បន្ទាត់​នឹង​ត្រូវបាន​បង្ខំ​ឲ្យ​ទៅ​មុំ ១៥ អង្សា ។"
+"ដើម្បី​បង្កើត​ការ​ជ្រើស​រាង​រង្វង់ ឈរលើ​ <tt>ប្ដូរ</tt> ខណៈ​ធ្វើ​ជម្រើស​​រាង​ពង​ក្រពើ ។ ដើម្បី​ដាក់​រង្វង់​"
+"យ៉ាង​ជាក់លាក់​អូស​អ័ក្ស​តង់សង់​ដោយ​ផ្ដេក​និង​ បញ្ឈរ​ទៅ​រង្វង់​ដែល​អ្នក​ចង់​ជ្រើស​ ​ដាក់​ទស្សន៍​ទ្រនិច​របស់​អ្នក​នៅ​ត្រង់​ចំណុច​"
+"ប្រសព្វ​នៃ​មគ្គុទ្ទេសក៍​ ​និងលទ្ធផល​នៃ​ការ​ជ្រើស​នឹង​ប៉ះ​បន្ទាត់​នាំ​ផ្លូវ ។"
 
-#: ../tips/gimp-tips.xml.in.h:22
+#: ../data/tips/gimp-tips.xml.in.h:20
 msgid ""
 "When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
 "the layers and every aspect of your work-in-progress. Once a project is "
 "completed, you can save it as JPEG, PNG, GIF, ..."
-msgstr "នៅ​ពេល​ដែល​អ្នក​រក្សា​រូបភាព​ទុក​ដើម្បី​ធ្វើ​ការ​ជាមួយ​វា​នៅ​ពេល​ក្រោយ​​ ​ព្យាយាម​ប្រើទ្រង់ទ្រាយ​ឯកសារ​ដើម XCF ​របស់​ GIMP (​ប្រើ​កន្ទុយ​ឯកសារ <tt>.xcf</tt>​) ។ ការ​បង្ការ​​ស្រទាប់​នេះ​និង​ទិដ្ឋភាពនៃ​ការងារ​ក្នុង​វឌ្ឍនភាព ។ គ្រា​មួយ​គម្រោង​ត្រូវ​បាន​បញ្ចប់​ទាំងស្រុង​ ​អ្នក​អាច​រក្សា​វា​ទុក​ជា JPEG, PNG, GIF, ..."
+msgstr ""
+"នៅ​ពេល​ដែល​អ្នក​រក្សា​រូបភាព​ទុក​ដើម្បី​ធ្វើ​ការ​ជាមួយ​វា​នៅ​ពេល​ក្រោយ​​ ​ព្យាយាម​ប្រើទ្រង់ទ្រាយ​ឯកសារ​ដើម XCF ​"
+"របស់​ GIMP (​ប្រើ​កន្ទុយ​ឯកសារ <tt>.xcf</tt>​) ។ ការ​បង្ការ​​ស្រទាប់​នេះ​និង​ទិដ្ឋភាពនៃ​ការងារ​ក្នុង​"
+"វឌ្ឍនភាព ។ គ្រា​មួយ​គម្រោង​ត្រូវ​បាន​បញ្ចប់​ទាំងស្រុង​ ​អ្នក​អាច​រក្សា​វា​ទុក​ជា JPEG, PNG, GIF, ..."
 
-#: ../tips/gimp-tips.xml.in.h:23
+#: ../data/tips/gimp-tips.xml.in.h:21
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
-"the window move, your window manager uses the <tt>Alt</tt> key already. Try "
-"pressing <tt>Shift</tt> at the same time."
-msgstr "អ្នក​អាច​លៃតម្រូវ ឬ​ផ្លាស់ទី​ជម្រើស ដោយប្រើ <tt>ជំនួស</tt>-អូស ។ ប្រសិន​បើ​វា​​ធ្វើឲ្យ​បង្អួច​ផ្លាស់ទី កម្មវិធី​គ្រប់គ្រង​បង្អួច​របស់​អ្នក ​ប្រើ​គ្រាប់ចុច <tt>ជំនួស</tt> រួច​ហើយ ។ សាកល្បង​ចុច <tt>ប្ដូរ</tt> នៅ​ពេល​តែ​មួយ ។"
+"the window move, your window manager uses the <tt>Alt</tt> key already."
+msgstr ""
+"អ្នក​អាច​លៃតម្រូវ ឬ​ផ្លាស់ទី​ជម្រើស ដោយប្រើ <tt>ជំនួស(Alt)</tt>-អូស ។ ប្រសិន​បើ​វា​​ធ្វើឲ្យ​បង្អួច​ផ្លាស់ទី "
+"កម្មវិធី​គ្រប់គ្រង​បង្អួច​របស់​អ្នក ​ប្រើ​គ្រាប់ចុច <tt>ជំនួស(Alt)</tt> រួច​ហើយ ។"
 
-#: ../tips/gimp-tips.xml.in.h:24
-msgid ""
-"You can adjust the selection range for fuzzy select by clicking and dragging "
-"left and right."
-msgstr "អ្នក​អាច​លៃតម្រូវ​ជួរ​ជម្រើស​សម្រាប់​ភាព​ស្រពិចស្រពិល ជ្រើស​ដោយ​​ចុច ហើយ​អូស​ខាងឆ្វេង និង​ស្ដាំ ។"
-
-#: ../tips/gimp-tips.xml.in.h:25
+#: ../data/tips/gimp-tips.xml.in.h:22
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
-msgstr "អ្នក​អាច​បង្កើត និង​កែសម្រួល​ជម្រើស​ស្មុគស្មាញ ដោយ​ប្រើ​ឧបករណ៍ផ្លូវ ។ ប្រអប់​ផ្លូវ អនុញ្ញាត​ឲ្យ​អ្នក​ធ្វើការ​លើ​ផ្លូវ​ជា​ច្រើន និង​បម្លែង​ពួកវា​ទៅ​ជា​ជម្រើស ។"
+msgstr ""
+"អ្នក​អាច​បង្កើត និង​កែសម្រួល​ជម្រើស​ស្មុគស្មាញ ដោយ​ប្រើ​ឧបករណ៍ផ្លូវ ។ ប្រអប់​ផ្លូវ អនុញ្ញាត​ឲ្យ​អ្នក​ធ្វើការ​លើ​"
+"ផ្លូវ​ជា​ច្រើន និង​បម្លែង​ពួកវា​ទៅ​ជា​ជម្រើស ។"
 
-#: ../tips/gimp-tips.xml.in.h:26
+#: ../data/tips/gimp-tips.xml.in.h:23
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
-msgstr "អ្នក​អាច​អូស​ស្រទាប់​មួយ​ពី​ប្រអប់​ស្រទាប់​និង​ទម្លាក់​វា​ទៅ​ក្នុង​ប្រអប់​ឧបករណ៍ ។ វា​នឹង​បង្កើត​រូបភាព​ថ្មី​មួយ​ដែល​ផ្ទុក​តែ​ស្រទាប់​នោះ ។"
+msgstr ""
+"អ្នក​អាច​អូស​ស្រទាប់​មួយ​ពី​ប្រអប់​ស្រទាប់​និង​ទម្លាក់​វា​ទៅ​ក្នុង​ប្រអប់​ឧបករណ៍ ។ វា​នឹង​បង្កើត​រូបភាព​ថ្មី​មួយ​ដែល​ផ្ទុក​តែ​"
+"ស្រទាប់​នោះ ។"
 
-#: ../tips/gimp-tips.xml.in.h:27
+#: ../data/tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
-"fill the current image or selection with that color."
-msgstr "អ្នក​អាច​អូស និង​ទម្លាក់វត្ថុ​ជា​ច្រើន​ក្នុង GIMP ។ ឧទាហរណ៍ អូស​ពណ៌​មួយ​ពី​ប្រអប់​ឧបករណ៍ ឬ​ពីបន្ទះ​ពណ៌ និង​ទម្លាក់​វាក្នុង​រូបភាព នឹង​បំពេញ​រូបភាព​បច្ចុប្បន្ន ឬ​ការ​ជ្រើស​ដោយ​ពណ៌​នោះ ។"
+"fill the current selection with that color."
+msgstr "អ្នក​អាច​អូស និង​ទម្លាក់​វត្ថុ​ជា​ច្រើន​នៅ​ក្នុង GIMP ។ ឧទាហរណ៍ ការ​អូស​ពណ៌​មួយ​ពី​ប្រអប់ឧបករណ៍ ឬ​ពី​ក្ដារលាយ​ពណ៌ ហើយ​ទម្លាក់​វា​ទៅ​ក្នុង​រូបភាព​ នឹង​បំពេញ​ជម្រើស​បច្ចុប្បន្ន​ដោយ​ពណ៌​នោះ ។"
 
-#: ../tips/gimp-tips.xml.in.h:28
+#: ../data/tips/gimp-tips.xml.in.h:25
 msgid ""
-"You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
+"You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
-"using the Path tool or with Filters-&gt;Render-&gt;Gfig."
-msgstr "អ្នក​អាច​គូរ​ការ៉េ ឬ​រង្វង់​សាមញ្ញា ដោយ​ប្រើ កែសម្រួល-&gt;ជម្រើស​ខ្វាច់ ។ វា​ខ្វាច់​គែម​របស់​ជម្រើស​បច្ចុប្បន្ន ។ រាង​ស្មុគស្មាញ​ផ្សេងៗ​ទៀត​អាច​ត្រូវបាន​គូរ ដោយ​ប្រើ​ឧបករណ៍ ឬ ដោយ​តម្រង-&gt;ការ​បង្ហាញ-&gt;Gfig ។"
+"using the Path tool or with Filters→Render→Gfig."
+msgstr "អ្នក​អាច​គូរ​ការ៉េ​ ឬ​រង្វង់​ធម្មតា​ដោយ​ប្រើ​​ជម្រើស Edit→Stroke ។ វា​ខ្វាច់​គែម​របស់​ជម្រើស​បច្ចុប្បន្ន​របស់​អ្នក ។ រាង​លំបាក​បន្ថែម​ទៀត​អាច​ត្រូវ​បានគូរ​ដោយ​ប្រើ​ឧបករណ៍​ផ្លូវ ឬ​ Filters→Render→Gfig ។"
 
-#: ../tips/gimp-tips.xml.in.h:29
+#: ../data/tips/gimp-tips.xml.in.h:26
 msgid ""
-"You can get context-sensitive help for most of the GIMP's features by "
-"pressing the F1 key at any time. This also works inside the menus."
-msgstr "អ្នក​អាច​យក​ជំនួយ​ការ​បរិបទ​សម្រាប់​លក្ខណៈ​ពិសេស​របស់ GIMP ដោយ​ចុច​គ្រាប់​ចុច F1 គ្រប់​ពេល ។ ការ​នេះ​ធ្វើ​ការ​នៅ​ក្នុង​ម៉ឺនុយ​​ដែរ ។"
+"You can get context-sensitive help for most of GIMP's features by pressing "
+"the F1 key at any time. This also works inside the menus."
+msgstr "អ្នក​អាច​ទទួល​ជំនួយ​បរិបទ​សម្រាប់​លក្ខណៈ​សម្បត្តិ​ជា​ច្រើន​របស់ GIMP ដោយ​ចុច​គ្រាប់​ចុច F1 នៅ​ពេល​ណា​មួយ ។ វា​ក៏​ដំណើរការ​ខាង​ក្នុង​ម៉ឺនុយ​ផងដែរ ។"
 
-#: ../tips/gimp-tips.xml.in.h:30
+#: ../data/tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
-msgstr "អ្នក​អាច​ប្រតិបត្តិ​ប្រតិបត្តិការ​ស្រទាប់​ជា​ច្រើន ដោយ​ចុច​ខាងស្ដាំ​លើ​ស្លាក​អត្ថបទ​របស់​ស្រទាប់​មួយ​ក្នុង​ប្រអប់​ស្រទាប់ ។"
-
-#: ../tips/gimp-tips.xml.in.h:31
-msgid ""
-"You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
-"are making a selection in order to constrain it to a square or a circle, or "
-"to have it centered on its starting point."
 msgstr ""
-"អ្នក​អាច​ចុច ឬ​លែង​គ្រាប់​ចុច <tt>ប្ដូរ</tt> និង <tt>បញ្ជា</tt> ខណៈពេល​អ្នក​កំពុង​ធ្វើការ​ជ្រើស ដើម្បី​ឲ្យ​វា​ទៅ​ជា​ការ៉េ ឬ​រង្វង់ ឬ"
-"ដើម្បី​ឲ្យ​វា​នៅ​ចំ​កណ្ដាល​នៅ​លើ​ចំណុច​ចាប់ផ្ដើម ។"
+"អ្នក​អាច​ប្រតិបត្តិ​ប្រតិបត្តិការ​ស្រទាប់​ជា​ច្រើន ដោយ​ចុច​ខាងស្ដាំ​លើ​ស្លាក​អត្ថបទ​របស់​ស្រទាប់​មួយ​ក្នុង​ប្រអប់​"
+"ស្រទាប់ ។"
 
-#: ../tips/gimp-tips.xml.in.h:32
+#: ../data/tips/gimp-tips.xml.in.h:28
 msgid ""
-"You can save a selection to a channel (Select-&gt;Save to Channel) and then "
+"You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
 "dialog, you can toggle the visibility of this new channel or convert it to a "
 "selection."
-msgstr "អ្នក​អាច​រក្សាទុក​ជម្រើស​មួយ​ទៅ​ឆានែល (ជម្រើស-&gt;រក្សាទុក​ទៅ​ឆានែល) ហើយ​បន្ទាប់​មក​កែប្រែ​ឆានែល​នេះដោយ​ប្រើ​ឧបករណ៍​គូរ​ណា​មួយ ។ ដោយ​ប្រើ​ប៊ូតុង​ក្នុង​ប្រអប់​ឆានែល អ្នក​អាច​បិទ/បើក​ភាព​មើល​ឃើញ​នៃ​ឆានែល​ថ្មី​នេះ ឬ​បម្លែង​ទៅ​ជា​ជម្រើស​មួយ ។"
+msgstr "អ្នក​អាច​រក្សាទុក​ជម្រើស​ទៅ​ឆានែល (ជ្រើស​រក្សាទុក​ទៅ​ឆានែល) ហើយ​បន្ទាប់​មក​កែប្រែ​ឆានែល​នេះ​ដោយ​ឧបករណ៍​គូរ​ណា​មួយ ។ ដោយ​ប្រើ​ប៊ូតុង​នៅ​ក្នុង​ប្រអប់​ឆានែល អ្នក​អាច​បិទ​បើក​ភាព​មើល​ឃើញ​របស់​ឆានែល​ថ្មី​នេះ ឬ​បម្លែង​ទៅ​ជា​ជម្រើស​មួយ ។"
 
-#: ../tips/gimp-tips.xml.in.h:33
+#: ../data/tips/gimp-tips.xml.in.h:29
 msgid ""
-"You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
+"You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
-msgstr "អ្នកអាចប្រើ <tt>ជំនួស</tt>-<tt>ថេប</tt> ដើម្បីបង្វិលកាត់ស្រទាប់ទាំងអស់ក្នុងរូបភាព (ប្រសិនបើកម្មវិធីគ្រប់គ្រងបង្អួចរបស់អ្នក មិនតាមដានគ្រាប់ចុចទាំងនោះ...) ។"
+msgstr "អ្នក​អាច​ប្រើ <tt>បញ្ជា (Ctrl)</tt>-<tt>ថេប(Tab)</tt> ដើម្បី​ទៅ​កាន់​គ្រប់ស្រទាប់​ទាំង​អស់​នៅ​ក្នុង​រូបភាព (ប្រសិន​បើ​កម្មវិធី​គ្រប់គ្រង​បង្អួច​របស់​អ្នក​​មិន​តាម​គ្រាប់ចុច​ទាំង​នោះ...) ។"
 
-#: ../tips/gimp-tips.xml.in.h:34
+#: ../data/tips/gimp-tips.xml.in.h:30
 msgid ""
-"You can use the middle mouse button to pan around the image, if it's larger "
-"than its display window."
-msgstr "អ្នក​អាច​ប្រើ​ប៊ូតុង​កណ្ដុរ​កណ្ដាល​ដើម្បី​រៀបចំ​ជុំវិញ​រូបភាព ប្រសិនបើ​វា​ធំ​ជាង​បង្អួច​បង្ហាញ​របស់​វា ។"
+"You can use the middle mouse button to pan around the image (or optionally "
+"hold <tt>Spacebar</tt> while you move the mouse)."
+msgstr "អ្នក​អាច​ប្រើ​ប៊ូតុង​កណ្ដុរ​កណ្ដាល ដើម្បីរុញ​ជុំវិញ​រូបភាព (ឬ​ជា​ជម្រើស សង្កត់<tt>ចន្លោះ​មិន​ឃើញ</tt>ខណៈពេល​ផ្លាស់ទី​កណ្ដុរ) ។"
 
-#: ../tips/gimp-tips.xml.in.h:35
+#: ../data/tips/gimp-tips.xml.in.h:31
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
 "selection by painting in the image and click on the button again to convert "
 "it back to a normal selection."
 msgstr ""
-"អ្នក​អាច​ប្រើ​ឧបករណ៍​គូរ​ដើម្បី​ផ្លាស់ប្ដូរ​ជម្រើស ។ ចុច​លើ​ប៊ូតុង &quot;"
-"របាំង​លឿន&quot; នៅ​បាត​ខាង​ឆ្វេង​របស់​បង្អួច​រូបភាព ។ ផ្លាស់ប្ដូរ​ជម្រើស​របស់​អ្នក​ដោយ​គូរ​ក្នុង​រូបភាព និង​ចុច​លើ​ប៊ូតុង​ម្ដង​ទៀត ដើម្បី​បម្លែង​វា​ទៅ​ជម្រើស​ដើម​វិញ ។"
+"អ្នក​អាច​ប្រើ​ឧបករណ៍​គូរ​ដើម្បី​ផ្លាស់ប្ដូរ​ជម្រើស ។ ចុច​លើ​ប៊ូតុង &quot;របាំង​លឿន&quot; នៅ​បាត​ខាង​ឆ្វេង​"
+"របស់​បង្អួច​រូបភាព ។ ផ្លាស់ប្ដូរ​ជម្រើស​របស់​អ្នក​ដោយ​គូរ​ក្នុង​រូបភាព និង​ចុច​លើ​ប៊ូតុង​ម្ដង​ទៀត ដើម្បី​បម្លែង​វា​ទៅ​"
+"ជម្រើស​ដើម​វិញ ។"
+

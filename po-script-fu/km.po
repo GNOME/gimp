@@ -1,218 +1,270 @@
-#    translation of km.po to Khmer
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# translation of gimp-script-fu.HEAD.po to Khmer
 # eng vannak <evannak@khmeros.info>, 2006.
 # Poch Sokun <sokun_poch@khmeros.info>, 2006.
-# Khoem Sokhem <khoemsokhem@khmeros.info>, 2006.
+# Khoem Sokhem <khoemsokhem@khmeros.info>, 2006, 2007.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
 msgid ""
 msgstr ""
-"Project-Id-Version: km\n"
-"Report-Msgid-Bugs-To: translate-editor@lists.sourceforge.net\n"
-"POT-Creation-Date: 2006-02-22 19:21+0100\n"
-"PO-Revision-Date: 2007-04-18 10:42+0700\n"
-"Last-Translator: Khoem Sokhem<khoemsokhem@khmeros.info>\n"
-"Language-Team: Khmer<support@khmeros.info>\n"
+"Project-Id-Version: gimp-script-fu.HEAD\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2007-08-15 03:54+0100\n"
+"PO-Revision-Date: 2007-09-15 14:45+0700\n"
+"Last-Translator: Khoem Sokhem <khoemsokhem@khmeros.info>\n"
+"Language-Team: Khmer <support@khmeros.info>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Pootling 0.2\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:144
+#: ../plug-ins/script-fu/script-fu-console.c:213
 msgid "Script-Fu Console"
 msgstr "កុងសូលស្គ្រីប-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:237
+#: ../plug-ins/script-fu/script-fu-console.c:209
+msgid "Welcome to TinyScheme"
+msgstr "សូម​ស្វាគមន៍​មក​កាន់ TinyScheme"
+
+#: ../plug-ins/script-fu/script-fu-console.c:215
+msgid "Interactive Scheme Development"
+msgstr "ការ​អភិវឌ្ឍន៍​គ្រោងការណ៍​អន្តរកម្ម"
+
+#: ../plug-ins/script-fu/script-fu-console.c:251
 msgid "_Browse..."
 msgstr "_រកមើល..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:275
+#: ../plug-ins/script-fu/script-fu-console.c:313
+msgid "Save Script-Fu Console Output"
+msgstr "រក្សាទុកលទ្ធផល​កុងសូល Script-Fu"
+
+#: ../plug-ins/script-fu/script-fu-console.c:360
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "មិន​អាច​បើក '%s' ដើម្បី​សរសេរ ៖ %s"
+
+#: ../plug-ins/script-fu/script-fu-console.c:389
 msgid "Script-Fu Procedure Browser"
 msgstr "កម្មវិធី​រុករក​បែបបទ ស្គ្រីប-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:584
-msgid "Script-Fu evaluate mode allows only noninteractive invocation"
-msgstr "របៀប​វាយ​តម្លៃ​របស់​ស្គ្រីប Fu អនុញ្ញាត​តែ​ការ​អធិដ្ឋាន​គ្មាន​អន្តរកម្ម​តែ​ប៉ុណ្ណោះ"
+#: ../plug-ins/script-fu/script-fu-console.c:730
+msgid "Script-Fu evaluation mode only allows non-interactive invocation"
+msgstr "របៀប​វាយ​តម្លៃ​របស់ Script-Fu អនុញ្ញាត​តែ​ការ​អធិដ្ឋាន​គ្មាន​អន្តរកម្ម​តែ​ប៉ុណ្ណោះ"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:174
+#: ../plug-ins/script-fu/script-fu-interface.c:191
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "ស្គ្រីប-Fu មិន​អាច​ដំណើរការ​ស្គ្រីប​ពីរ​នៅ​ពេល​តែមួយ ។"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:176
+#: ../plug-ins/script-fu/script-fu-interface.c:193
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "អ្នក​កំពុង​រត់​ស្គ្រីប \"%s\" រួច​ហើយ ។"
 
-#. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:199
-#: ../plug-ins/script-fu/script-fu-interface.c:201
-msgid "/Script-Fu/"
-msgstr "/ស្គ្រីប-Fu/"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:214
+#: ../plug-ins/script-fu/script-fu-interface.c:238
 #, c-format
 msgid "Script-Fu: %s"
-msgstr "ស្គ្រីប​-Fu: %s"
+msgstr "Script-Fu ៖ %s"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:281
+#: ../plug-ins/script-fu/script-fu-interface.c:300
 #, c-format
 msgid "%s:"
 msgstr "%s ៖"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:324
+#: ../plug-ins/script-fu/script-fu-interface.c:348
 msgid "Script-Fu Color Selection"
-msgstr "ជម្រើស​​ពណ៌ ស្គ្រីប-Fu"
+msgstr "ជម្រើស​ពណ៌ Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:431
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu File Selection"
 msgstr "ជម្រើស​ឯកសារ ស្គ្រីប​-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:435
+#: ../plug-ins/script-fu/script-fu-interface.c:463
 msgid "Script-Fu Folder Selection"
 msgstr "ជម្រើស​​​ពណ៌ ស្គ្រីប​-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:449
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Font Selection"
 msgstr "ជម្រើស​​​​ពុម្ព​អក្សរ ស្គ្រីប​-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:457
+#: ../plug-ins/script-fu/script-fu-interface.c:483
 msgid "Script-Fu Palette Selection"
 msgstr "ជម្រើស​​ក្ដារលាយ ស្គ្រីប​-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:465
-msgid "Script-fu Pattern Selection"
-msgstr "ជម្រើស​លំនាំ ស្គ្រីប​-fu"
+#: ../plug-ins/script-fu/script-fu-interface.c:492
+msgid "Script-Fu Pattern Selection"
+msgstr "ជម្រើស​លំនាំ Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:472
+#: ../plug-ins/script-fu/script-fu-interface.c:501
 msgid "Script-Fu Gradient Selection"
 msgstr "ជម្រើស​ជម្រាល​ស្គ្រីប-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:480
+#: ../plug-ins/script-fu/script-fu-interface.c:510
 msgid "Script-Fu Brush Selection"
 msgstr "ជម្រើស​ច្រាស ស្គ្រីប​-Fu"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:1008
-#, c-format
-msgid "About %s"
-msgstr "អំពី %s"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1073
-msgid "Author:"
-msgstr "អ្នកនិពន្ធ ៖ ៖"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1080
-msgid "Copyright:"
-msgstr "រក្សា​សិទ្ធិ ៖"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1087
-msgid "Date:"
-msgstr "កាលបរិច្ឆេទ ៖"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:1096
-msgid "Image Types:"
-msgstr "ប្រភេទ​រូបភាព ៖"
-
-#: ../plug-ins/script-fu/script-fu-scripts.c:644
+#: ../plug-ins/script-fu/script-fu-scripts.c:668
 #, c-format
 msgid ""
 "Error while executing\n"
 "%s\n"
+"\n"
 "%s"
 msgstr ""
 "កំហុស​ខណៈពេល​ប្រតិបត្តិ\n"
 "%s\n"
+"\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:653
+#: ../plug-ins/script-fu/script-fu-server.c:711
 msgid "Script-Fu Server Options"
 msgstr "ជម្រើស​ម៉ាស៊ីន​បម្រើ ស្គ្រីប​-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:658
+#: ../plug-ins/script-fu/script-fu-server.c:716
 msgid "_Start Server"
 msgstr "_ចាប់ផ្ដើម​ម៉ាស៊ីន​បម្រើ"
 
-#: ../plug-ins/script-fu/script-fu-server.c:686
+#: ../plug-ins/script-fu/script-fu-server.c:744
 msgid "Server port:"
 msgstr "ច្រក​ម៉ាស៊ីន​បម្រើ ៖"
 
-#: ../plug-ins/script-fu/script-fu-server.c:692
+#: ../plug-ins/script-fu/script-fu-server.c:750
 msgid "Server logfile:"
 msgstr "ឯកសារ​កំណត់​ហេតុ​ម៉ាស៊ីន​បម្រើ ៖"
+
+#: ../plug-ins/script-fu/script-fu.c:110
+msgid "Interactive console for Script-Fu development"
+msgstr "កុងសូល​អន្តរកម្ម​សម្រាប់​ការ​អភិវឌ្ឍន៍ Script-Fu"
 
 #: ../plug-ins/script-fu/script-fu.c:116
 msgid "Script-Fu _Console"
 msgstr "កុងសូល ស្គ្រីប​-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:123 ../plug-ins/script-fu/script-fu.c:152
-#: ../plug-ins/script-fu/script-fu.c:313
-msgid "<Toolbox>/Xtns/Languages/Script-Fu"
-msgstr "<Toolbox>/Xtns/ភាសា​/ស្គ្រីប​-Fu"
+#: ../plug-ins/script-fu/script-fu.c:140
+msgid "Server for remote Script-Fu operation"
+msgstr "ម៉ាស៊ីន​បម្រើ​សម្រាប់​ប្រតិបត្តិការ Script-Fu ពី​ចម្ងាយ"
 
 #: ../plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
-msgstr "_ចាប់ផ្ដើម​ម៉ាស៊ីន​បម្រើ..."
+msgstr "ចាប់ផ្ដើម​ម៉ាស៊ីន​បម្រើ... "
 
-#: ../plug-ins/script-fu/script-fu.c:270
+#: ../plug-ins/script-fu/script-fu.c:301
+msgid "_GIMP Online"
+msgstr "GIMP លើ​បណ្ដាញ "
+
+#: ../plug-ins/script-fu/script-fu.c:302
+msgid "_User Manual"
+msgstr "សៀវភៅ​ដៃ​អ្នក​ប្រើ "
+
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
 msgstr "_ស្គ្រីប-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:272
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Buttons"
 msgstr "_ប៊ូតុង"
 
-#: ../plug-ins/script-fu/script-fu.c:274
+#: ../plug-ins/script-fu/script-fu.c:309
 msgid "_Logos"
 msgstr "_រូបសញ្ញា"
 
-#: ../plug-ins/script-fu/script-fu.c:276
+#: ../plug-ins/script-fu/script-fu.c:311
 msgid "_Misc"
 msgstr "_ផ្សេងៗ"
 
-#: ../plug-ins/script-fu/script-fu.c:278
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Patterns"
 msgstr "_លំនាំ"
 
-#: ../plug-ins/script-fu/script-fu.c:280
+#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "_សាកល្បង"
 
-#: ../plug-ins/script-fu/script-fu.c:282
-msgid "_Utils"
-msgstr "_ឧបករណ៍​ប្រើប្រាស់"
+#: ../plug-ins/script-fu/script-fu.c:317
+msgid "_Utilities"
+msgstr "ឧបករណ៍​ប្រើប្រាស់ "
 
-#: ../plug-ins/script-fu/script-fu.c:284
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Web Page Themes"
 msgstr "_ស្បែក​ទំព័រ​បណ្ដាញ"
 
-#: ../plug-ins/script-fu/script-fu.c:286
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Alien Glow"
 msgstr "_ពន្លឺ​ក្រហម​ទុំ​ចម្លែក"
 
-#: ../plug-ins/script-fu/script-fu.c:288
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Beveled Pattern"
 msgstr "_លំនាំដែល​មាន​ជ្រុងទេរ"
 
-#: ../plug-ins/script-fu/script-fu.c:290
+#: ../plug-ins/script-fu/script-fu.c:325
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:293
+#: ../plug-ins/script-fu/script-fu.c:328
 msgid "Alpha to _Logo"
 msgstr "អាល់ហ្វា​ទៅ​រូប​សញ្ញា"
 
-#: ../plug-ins/script-fu/script-fu.c:295
+#: ../plug-ins/script-fu/script-fu.c:330
+msgid "An_imation"
+msgstr "ចលនា "
+
+#: ../plug-ins/script-fu/script-fu.c:332
+msgid "_Animators"
+msgstr "ជីវចល "
+
+#: ../plug-ins/script-fu/script-fu.c:334
+msgid "_Artistic"
+msgstr "សិល្បៈ "
+
+#: ../plug-ins/script-fu/script-fu.c:336
+msgid "_Blur"
+msgstr "ព្រិលៗ "
+
+#: ../plug-ins/script-fu/script-fu.c:338
 msgid "_Decor"
 msgstr "_កែលម្អរ"
 
-#: ../plug-ins/script-fu/script-fu.c:297
+#: ../plug-ins/script-fu/script-fu.c:340
+msgid "_Effects"
+msgstr "បែបផែន "
+
+#: ../plug-ins/script-fu/script-fu.c:342
+msgid "En_hance"
+msgstr "ធ្វើ​ឲ្យ​ប្រសើរ "
+
+#: ../plug-ins/script-fu/script-fu.c:344
+msgid "_Light and Shadow"
+msgstr "ពន្លឺ និង​ស្រមោល "
+
+#: ../plug-ins/script-fu/script-fu.c:346
+msgid "S_hadow"
+msgstr "ស្រមោល "
+
+#: ../plug-ins/script-fu/script-fu.c:348
 msgid "_Render"
 msgstr "_បង្ហាញ"
 
-#: ../plug-ins/script-fu/script-fu.c:305
+#: ../plug-ins/script-fu/script-fu.c:350
+msgid "_Alchemy"
+msgstr "ការ​ច្នៃ"
+
+#: ../plug-ins/script-fu/script-fu.c:353
+msgid "Re-read all available Script-Fu scripts"
+msgstr "អាន​ស្គ្រីប Script-Fu ដែល​មាន​ទាំង​អស់​ឡើង​វិញ"
+
+#: ../plug-ins/script-fu/script-fu.c:358
 msgid "_Refresh Scripts"
 msgstr "_ធ្វើ​ឲ្យ​ស្គ្រីប​ស្រស់"
+
+#: ../plug-ins/script-fu/script-fu.c:381
+msgid ""
+"You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
+"Please close all Script-Fu windows and try again."
+msgstr ""
+"អ្នក​មិនអាច​ប្រើ \"ស្គ្រីប​ធ្វើ​ឲ្យស្រស់\" ខណៈពេល​​ប្រអប់​របស់ Script-Fu កំពុង​បើក ។  "
+"សូម​បិទ​បង្អួច​ Script-Fu ទាំង​អស់ ហើយ​ព្យាយាម​ម្ដង​ទៀត ។"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -223,190 +275,198 @@ msgid "Bumpmap (alpha layer) blur radius"
 msgstr "ផែនទី​រដិបរដុប (ស្រទាប់​អាល់ហ្វា) ធ្វើ​ឲ្យ​កាំ​ព្រិលៗ"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:3
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:4
+msgid "Create a logo with outlined text and a drop shadow"
+msgstr "បង្កើត​រូបសញ្ញា​ដែល​មាន​អត្ថបទ​គ្រោង និង​​ទម្លាក់​ស្រមោល"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:6
 msgid "Default bumpmap settings"
 msgstr "ការ​កំណត់​ផែនទី​រដិបរដុប​លំនាំដើម"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:4
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/chalk.scm.h:3
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:5
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:6
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:2
-#: ../plug-ins/script-fu/scripts/slide.scm.h:1
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:4
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/title-header.scm.h:1
-msgid "Font"
-msgstr "ពុម្ពអក្សរ"
-
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:5
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:5
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:3
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:10
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/chalk.scm.h:4
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:7
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:5
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:8
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:6
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:6
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:7
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:2
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:7
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:3
+#: ../plug-ins/script-fu/scripts/slide.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:5
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:4
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/title-header.scm.h:2
+msgid "Font"
+msgstr "ពុម្ពអក្សរ"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:12
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:6
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:9
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:8
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:8
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:6
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:3
 msgid "Font size (pixels)"
 msgstr "ទំហំ​ពុម្ព​អក្សរ​ (ភីកសែល​)"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:6
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:7
 msgid "Outline blur radius"
 msgstr "គ្រោង​កាំ​ធ្វើ​ឲ្យ​ព្រិល"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:11
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
+msgid "Outline the selected region (or alpha) with a pattern and add a drop shadow"
+msgstr "គ្រោង​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា) ជា​មួយ​នឹង​លំនាំ ហើយ​បន្ថែម​ការ​ទម្លាក់​ស្រមោល"
+
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:13
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:11
 msgid "Pattern"
 msgstr "លំនាំ"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:8
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:14
-#: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:16
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:6
 msgid "Shadow X offset"
 msgstr "ស្រមោល​អុហ្វសិត X"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:9
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:15
-#: ../plug-ins/script-fu/scripts/round-corners.scm.h:6
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:11
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:17
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:7
 msgid "Shadow Y offset"
 msgstr "ស្រមោល​អុហ្វសិត Y"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:10
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:12
 msgid "Shadow blur radius"
 msgstr "កាំ​ធ្វើ​ឲ្យ​ស្រមោល​ព្រិល"
 
-#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:11
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:8
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:5
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:15
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/chalk.scm.h:5
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:16
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:9
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:12
-#: ../plug-ins/script-fu/scripts/slide.scm.h:4
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:9
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:12
-#: ../plug-ins/script-fu/scripts/title-header.scm.h:4
+#: ../plug-ins/script-fu/scripts/3d-outline.scm.h:13
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:17
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:7
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:14
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:18
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:10
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:13
+#: ../plug-ins/script-fu/scripts/slide.scm.h:5
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:8
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:5
 msgid "Text"
 msgstr "អត្ថបទ"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:1
 msgid "3_D Truchet..."
-msgstr "3_D Truchet..."
+msgstr "ត្រីវិមាត្រ Truchet..."
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:2
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:1
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:1
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:1
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:2
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:1
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:1
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:1
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:2
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:1
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:1
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:2
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:1
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:1
 msgid "Background color"
@@ -418,50 +478,58 @@ msgid "Block size"
 msgstr "ទំហំប្លុក"
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:4
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
+msgid "Create an image filled with a 3D Truchet pattern"
+msgstr "បង្កើត​រូបភាព​ដែល​បានបំពេញ​លំនាំ​ត្រីមាត្រ Truchet"
+
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
 msgid "End blend"
 msgstr "ល្បាយបញ្ចប់"
 
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:5
-#: ../plug-ins/script-fu/scripts/truchet.scm.h:4
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:6
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:5
 msgid "Number of X tiles"
 msgstr "ចំនួន​ក្រឡាក្បឿង X"
 
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:6
-#: ../plug-ins/script-fu/scripts/truchet.scm.h:5
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:7
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:6
 msgid "Number of Y tiles"
 msgstr "ចំនួន​ក្រឡាក្បឿង Y"
 
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:7
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:14
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:8
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:16
 msgid "Start blend"
 msgstr "ល្បាយ​ចាប់ផ្ដើម"
 
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:8
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:9
 msgid "Supersample"
 msgstr "គំរូ​ខ្ពស់"
 
-#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:9
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
-#: ../plug-ins/script-fu/scripts/truchet.scm.h:7
+#: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:10
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:8
 msgid "Thickness"
 msgstr "ភាព​ក្រាស់"
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:1
 msgid "Add B_evel..."
-msgstr "បន្ថែម B_evel..."
+msgstr "បន្ថែម​ជ្រុង​ទេរ... "
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:10
+msgid "Add a beveled border to an image"
+msgstr "បន្ថែម​ស៊ុម​ជ្រុង​ទេរ​ទៅ​​រូបភាព"
+
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
 msgid "Keep bump layer"
 msgstr "រក្សា​ស្រទាប់​គ្រើម"
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:5
-#: ../plug-ins/script-fu/scripts/round-corners.scm.h:7
-#: ../plug-ins/script-fu/scripts/slide.scm.h:5
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:5
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:6
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:8
+#: ../plug-ins/script-fu/scripts/slide.scm.h:6
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:6
 msgid "Work on copy"
 msgstr "ធ្វើការ​អំពី​ការចម្លង"
 
@@ -470,77 +538,85 @@ msgid "Add _Border..."
 msgstr "បន្ថែម​ស៊ុម..."
 
 #: ../plug-ins/script-fu/scripts/addborder.scm.h:2
+msgid "Add a border around an image"
+msgstr "បន្ថែម​ស៊ុម​ជុំវិញ​រូបភាព"
+
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:3
 msgid "Border X size"
 msgstr "ស៊ុម​ទំហំ X"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:3
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
 msgid "Border Y size"
 msgstr "ស៊ុម​ទំហំ Y"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
 msgid "Border color"
 msgstr "ពណ៌​ស៊ុម"
 
-#: ../plug-ins/script-fu/scripts/addborder.scm.h:5
+#: ../plug-ins/script-fu/scripts/addborder.scm.h:6
 msgid "Delta value on color"
 msgstr "តម្លៃ​ដែលតា​លើ​ពណ៌"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
-msgid "Down"
-msgstr "​ចុះក្រោម"
+msgid "Create an arrow graphic with an eerie glow for web pages"
+msgstr "បង្កើត​ក្រាហ្វិក​ព្រួញ​ដែល​មាន​ពន្លឺ​ខ្លាំង​​សម្រាប់​ទំព័រ​បណ្ដាញ"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
-#: ../plug-ins/script-fu/scripts/camo.scm.h:4
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
-msgid "Flatten image"
-msgstr "ធ្វើ​ឲ្យ​រូបភាព​រាបស្មើ"
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+msgid "Down"
+msgstr "​ចុះក្រោម"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:4
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:5
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:3
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:6
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/camo.scm.h:5
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
+msgid "Flatten image"
+msgstr "ធ្វើ​ឲ្យ​រូបភាព​រាបស្មើ"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 msgid "Glow color"
 msgstr "ពណ៌​ពន្លឺ​ក្រហម​ទុំ"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:2
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
 msgid "Left"
 msgstr "ឆ្វេង​"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:4
 msgid "Orientation"
 msgstr "ទិស​"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:7
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
 msgid "Right"
 msgstr "ស្តាំ"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:8
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:6
-#: ../plug-ins/script-fu/scripts/lava.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/lava.scm.h:7
 msgid "Size"
 msgstr "ទំហំ"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
 msgid "Up"
 msgstr "ឡើង​លើ​"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:10
-#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:11
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:9
 msgid "_Arrow..."
-msgstr "_ព្រួញ..."
+msgstr "ព្រួញ... "
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:2
 msgid "Bar height"
@@ -550,19 +626,27 @@ msgstr "កម្ពស់​របារ"
 msgid "Bar length"
 msgstr "ប្រវែង​របារ"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
+msgid "Create an Hrule graphic with an eerie glow for web pages"
+msgstr "បង្កើត​ក្រាហ្វិក Hrule ដែល​មាន​ពន្លឺ​ខ្លាំង​សម្រាប់​ទំព័រ​បណ្ដាញ"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:5
 msgid "_Hrule..."
 msgstr "_Hrule..."
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:4
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:5
-#: ../plug-ins/script-fu/scripts/tileblur.scm.h:6
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
+msgid "Create a bullet graphic with an eerie glow for web pages"
+msgstr "បង្កើត​ក្រាហ្វិក​ចំណុច​ដែល​មាន​ពន្លឺខ្លាំង​​សម្រាប់​ទំព័រ​បណ្ដាញ"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:7
 msgid "Radius"
 msgstr "កាំ"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:6
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:5
 msgid "_Bullet..."
 msgstr "_ចំណុច..."
 
@@ -571,191 +655,288 @@ msgstr "_ចំណុច..."
 msgid "B_utton..."
 msgstr "ប៊ូតុង..."
 
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
+msgid "Create a button graphic with an eerie glow for web pages"
+msgstr "បង្កើត​ក្រាហ្វិក​ប៊ូតុង​ដែល​មាន​ពន្លឺខ្លាំង​សម្រាប់​ទំព័រ​បណ្ដាញ"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
 msgid "Glow radius"
 msgstr "កាំ​ពន្លឺ​ក្រហម​ទុំ"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:6
 msgid "Padding"
 msgstr "ចន្លោះ"
 
-#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:10
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:9
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:16
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:12
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:7
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:10
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:13
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:8
+#: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:18
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:14
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:18
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:11
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:14
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:9
 msgid "Text color"
 msgstr "​ពណ៌​អត្ថបទ"
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:1
+msgid "Add an eerie glow around the selected region (or alpha)"
+msgstr "បន្ថែម​ពន្លឺខ្លាំងជុំវិញ​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា)"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
 msgid "Alien _Glow..."
 msgstr "ពន្លឺ​ក្រហមទុំ​ចម្លែក..."
 
-#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
+msgid "Create a logo with an alien glow around the text"
+msgstr "បង្កើត​រូបសញ្ញា​ដែល​មាន​ពន្លឺ​ខ្លាំង​ពី​ខាងក្រៅ​ជុំវិញ​អត្ថបទ"
+
+#: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:7
 msgid "Glow size (pixels * 4)"
 msgstr "ទំហំ​ពន្លឺក្រហមទុំ (ភីកសែល * ៤)"
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:1
+msgid "Add psychedelic outlines to the selected region (or alpha)"
+msgstr "បន្ថែម​គ្រោង​រវើរវាយ​ទៅ​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា)"
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "Alien _Neon..."
 msgstr "ណេអុង​ចម្លែក..."
 
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
+msgid "Create a logo with psychedelic outlines around the text"
+msgstr "បង្កើត​រូបសញ្ញា​ដែល​មាន​គ្រោង​រវើរវាយ​ជុំវិញ​អត្ថបទ"
+
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:5
 msgid "Fade away"
 msgstr "លេច​ទៅ​បន្តិច​ម្ដង"
 
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
 msgid "Number of bands"
 msgstr "ចំនួនក្រុម​​"
 
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:11
 msgid "Width of bands"
 msgstr "ទទឹងក្រុម"
 
-#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:12
 msgid "Width of gaps"
 msgstr "ទទឹងចន្លោះ"
 
-#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:1
+msgid ""
+"Add a gradient effect, a drop shadow, and a background to the selected "
+"region (or alpha)"
+msgstr "បន្ថែម​បែបផែន​ជម្រាល ទម្លាក់​ស្រមោល និង​ផ្ទៃខាង​ក្រោយ​ទៅ​តំបន់ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា)"
+
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
+msgid ""
+"Create a plain text logo with a gradient effect, a drop shadow, and a "
+"background"
+msgstr "បង្កើត​រូបសញ្ញា​អត្ថបទ​ធម្មតា​ដែល​មាន​បែបផែន​ជម្រាល ទម្លាក់​ស្រមោល និង​ផ្ទៃ​ខាង​ក្រោយ"
+
+#: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
 msgstr "_មូលដ្ឋាន I..."
 
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:1
+msgid "Add a shadow and a highlight to the selected region (or alpha)"
+msgstr "បន្ថែម​ស្រមោល និង​បន្លិច​ទៅ​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា)"
+
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:2
 msgid "B_asic II..."
 msgstr "មូល​ដ្ឋាន II..."
 
+#: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:4
+msgid "Create a simple logo with a shadow and a highlight"
+msgstr "បង្កើត​រូបសញ្ញា​ធម្មតា​ដែល​មាន​ស្រមោល និង​បន្លិច"
+
 #: ../plug-ins/script-fu/scripts/beveled-button.scm.h:1
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:1
 msgid "Bevel width"
 msgstr "ទទឹង​ទេរ"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:2
+msgid "Create a simple, beveled button graphic for webpages"
+msgstr "បង្កើត​ក្រាហ្វិក​ប៊ូតុង​ធម្មតា​ជ្រុងទេរ​ធម្មតា​សម្រាប់​ទំព័រ​បណ្ដាញ"
+
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:5
 msgid "Lower-right color"
 msgstr "ពណ៌​ខាងស្ដាំ​ទាប​ជាង"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:6
-#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:5
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:11
 msgid "Pressed"
 msgstr "បាន​សង្កត់​"
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:8
 msgid "Simple _Beveled Button..."
 msgstr "ប៊ូតុង​ទេរ​ធម្មតា..."
 
-#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-button.scm.h:11
 msgid "Upper-left color"
 msgstr "ពណ៌​ខាង​ឆ្វេងខ្ពស់​ជាង"
 
+#: ../plug-ins/script-fu/scripts/beveled-pattern-arrow.scm.h:1
+msgid "Create a beveled pattern arrow for webpages"
+msgstr "បង្កើត​​ព្រួញ​លំនាំ​ជ្រុងទេរ​សម្រាប់​ទំព័រ​បណ្ដាញ"
+
 #: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:1
+msgid "Create a beveled pattern bullet for webpages"
+msgstr "បង្កើត​ចំណុច​លំនាំ​ជ្រុងទេរ​សម្រាប់​ទំព័រ​បណ្ដាញ"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:2
 msgid "Diameter"
 msgstr "អង្កត់ផ្ចិត"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:3
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-bullet.scm.h:4
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:7
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:4
 msgid "Transparent background"
 msgstr "ពណ៌​ផ្ទៃ​ខាង​ក្រោយ​ថ្លា"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
+#: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:2
+msgid "Create a beveled pattern button for webpages"
+msgstr "បង្កើត​ប៊ូតុង​លំនាំ​ជ្រុងទេរ​សម្រាប់​ទំព័រ​បណ្ដាញ"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:1
+msgid "Create a beveled pattern heading for webpages"
+msgstr "បង្កើត​ក្បាល​លំនាំ​ជ្រុង​ទេរ​សម្រាប់​ទំព័រ​បណ្ដាញ"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:4
 msgid "H_eading..."
 msgstr "ក្បាល..."
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:1
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:6
+msgid "Create a beveled pattern hrule for webpages"
+msgstr "បង្កើត​ hrule លំនាំ​ជ្រុង​ទេរ​សម្រាប់​ទំព័រ​បណ្ដាញ"
+
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
 msgid "Height"
 msgstr "កម្ពស់"
 
-#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:3
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:10
+#: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:4
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:5
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:11
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:11
 msgid "Width"
 msgstr "ទទឹង"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:1
+msgid "Blend Animation needs at least three source layers"
+msgstr "បញ្ចូល​ចលនា​ចូល​គ្នា យ៉ាង​ហោចណាស់​ត្រូវការ​ស្រទាប់​ប្រភព​ចំនួន​បី"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
+msgid ""
+"Create intermediate layers to blend two or more layers over a background as "
+"an animation"
+msgstr "បង្កើត​ស្រទាប់​មធ្យម​ ដើម្បី​លាយ​ស្រទាប់ពីរ ឬ​ច្រើន​លើ​ផ្ទៃ​ខាង​ក្រោយ​ជា​ចលនា"
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Intermediate frames"
 msgstr "ស៊ុម​មធ្យម"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
 msgid "Looped"
 msgstr "រង្វិលជុំ"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
 msgid "Max. blur radius"
 msgstr "កាំ​ធ្វើ​ឲ្យ​ព្រិល​អតិ."
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
 msgid "_Blend..."
 msgstr "_លាយ..."
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
+msgid ""
+"Add blended backgrounds, highlights, and shadows to the selected region (or "
+"alpha)"
+msgstr "បន្ថែម​ផ្ទៃ​ខាង​ក្រោយ​ដែល​បានលាយ​បញ្ចូល បន្លិច និង​ស្រមោល​ទៅ​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា)"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
 msgstr "បានលាយ..."
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:4
 msgid "Blend mode"
 msgstr "របៀប​លាយ"
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:5
+msgid "Create a logo with blended backgrounds, highlights, and shadows"
+msgstr "បង្កើត​រូបសញ្ញា​ដែល​មាន​ផ្ទៃ​ខាង​ក្រោយ​ដែល​បានលាយ​បញ្ចូល​គ្នា បន្លិច និង​ស្រមោល"
+
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
 msgid "Custom Gradient"
 msgstr "ជម្រាល​ផ្ទាល់ខ្លួន"
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:8
 msgid "FG-BG-HSV"
 msgstr "FG-BG-HSV"
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:9
 msgid "FG-BG-RGB"
 msgstr "FG-BG-RGB"
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:10
 msgid "FG-Transparent"
 msgstr "FG-ថ្លា"
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:11
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:5
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/land.scm.h:2
-#: ../plug-ins/script-fu/scripts/lava.scm.h:1
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:13
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/land.scm.h:3
+#: ../plug-ins/script-fu/scripts/lava.scm.h:2
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:9
 msgid "Gradient"
 msgstr "ជម្រាល"
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:12
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:6
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:4
-#: ../plug-ins/script-fu/scripts/title-header.scm.h:3
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:14
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:3
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:5
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:4
 msgid "Gradient reverse"
 msgstr "ដាក់​បញ្ច្រាស​ជម្រាល"
 
-#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:13
+#: ../plug-ins/script-fu/scripts/blended-logo.scm.h:15
 msgid "Offset (pixels)"
 msgstr "អុហ្វសិត (ភីកសែល)"
 
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:1
+msgid "Add 'cow spots' to the selected region (or alpha)"
+msgstr "បន្ថែម 'ចំណុច​ cow' ទៅ​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា)"
+
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+msgid "Background Color"
+msgstr "ពណ៌​ផ្ទៃខាងក្រោយ"
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
 msgid "Bo_vination..."
 msgstr "Bo_vination..."
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+msgid "Create a logo with text in the style of 'cow spots'"
+msgstr "បង្កើត​រូបសញ្ញា​ដែល​មាន​អត្ថបទ​នៅ​ក្នុង​រចនាប័ទ្មរបស់​ 'ចំណុច cow'"
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 msgid "Spots density X"
 msgstr "ដង់ស៊ីតេ​ចំណុច X"
 
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:9
 msgid "Spots density Y"
 msgstr "ដង់ស៊ីតេ​ចំណុច Y"
 
@@ -772,26 +953,34 @@ msgid "B_urn-In..."
 msgstr "ដុតក្នុង..."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
-msgid "Burn-In: Need two layers in total!"
-msgstr "ដុតក្នុង ៖ ជា​សរុប​ត្រូវការ​ស្រទាប់​ពីរ !"
+msgid ""
+"Burn-In: Needs two layers in total!\\nA foreground text layer with "
+"transparency and a background layer."
+msgstr "បញ្ចូល​គ្នា ៖ ត្រូវការ​ស្រទាប់​សរុប​ចំនួន​ពីរ !\\nស្រទាប់​អត្ថបទ​ផ្ទៃខាង​មុខដែល​មាន​ភាព​ថ្លា និង​ស្រទាប់​ផ្ទៃខាង​ក្រោយ ។"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Corona width"
 msgstr "ទទឹង​ព្រះអាទិត្យ"
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+msgid ""
+"Create intermediate layers to produce an animated 'burn-in' transition "
+"between two layers"
+msgstr "បង្កើត​ស្រទាប់​មធ្យម​ដើម្បី​កាត់បន្ថយ​ដំណើរការ​ផ្លាស់ប្ដូរ 'បញ្ចូល​គ្នា' រវាង​ស្រទាប់​ពីរ"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout"
 msgstr "លិចបន្តិច​ម្ដង"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 msgid "Fadeout width"
 msgstr "ទទឹងលិច​បន្តិចម្ដង"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Prepare for GIF"
 msgstr "រៀបចំ​សម្រាប់ ​GIF"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
 msgid "Speed (pixels/frame)"
 msgstr "ល្បឿន (ភីកសែល/ស៊ុម)"
 
@@ -807,24 +996,28 @@ msgstr "ពណ៌ ២"
 msgid "Color 3"
 msgstr "ពណ៌ ៣"
 
-#: ../plug-ins/script-fu/scripts/camo.scm.h:5
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:5
-msgid "Granularity"
-msgstr "​ជាគ្រាប់តូចៗ"
+#: ../plug-ins/script-fu/scripts/camo.scm.h:4
+msgid "Create an image filled with a camouflage pattern"
+msgstr "បង្កើត​រូបភាព​ដែល​បាន​បំពេញ​ដោយ​លំនាំបន្លំ"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:6
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:6
-msgid "Image size"
-msgstr "ទំហំរូបភាព"
+msgid "Granularity"
+msgstr "​ជា​គ្រាប់តូចៗ"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:7
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:2
-msgid "Smooth"
-msgstr "​រលូន"
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:7
+msgid "Image size"
+msgstr "ទំហំ​រូបភាព"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:8
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:3
+msgid "Smooth"
+msgstr "​រលោង"
+
+#: ../plug-ins/script-fu/scripts/camo.scm.h:9
 msgid "_Camouflage..."
-msgstr "_ក្លែងបន្លំ..."
+msgstr "បន្លំ... "
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:1
 msgid "Carve white areas"
@@ -839,8 +1032,7 @@ msgid "Stencil C_arve..."
 msgstr "ការឆ្លាក់​ស្តង់ស៊ីល..."
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
-msgid "Background image"
+msgid "Background Image"
 msgstr "រូបភាព​ផ្ទៃ​ខាង​ក្រោយ"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
@@ -851,7 +1043,13 @@ msgstr "ឆ្លាក់​អត្ថបទ​ដែល​លើក​ឡើ
 msgid "Carved..."
 msgstr "បាន​ឆ្លាក់..."
 
-#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
+msgid ""
+"Create a logo with text raised above or carved in to the specified "
+"background image"
+msgstr "បង្កើត​រូបសញ្ញា​ដែលមាន​អត្ថបទ​​បាន​លើកឡើង ឬ​ឆ្លាក់​ទៅ​រូបភាព​ផ្ទៃ​ខាង​ក្រោយ​ដែល​បាន​បញ្ជាក់"
+
+#: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
 msgid "Padding around text"
 msgstr "ចន្លោះ​ជុំវិញ​អត្ថបទ"
 
@@ -859,83 +1057,115 @@ msgstr "ចន្លោះ​ជុំវិញ​អត្ថបទ"
 msgid "Chalk color"
 msgstr "ពណ៌​ដីស"
 
-#: ../plug-ins/script-fu/scripts/chalk.scm.h:6
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:3
+msgid "Create a chalk drawing effect for the selected region (or alpha)"
+msgstr "បង្កើត​បែបផែន​គំនូរ​ដីស​សម្រាប់​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា)"
+
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:4
+msgid "Create a logo resembling chalk scribbled on a blackboard"
+msgstr "បង្កើត​រូបសញ្ញា​ប្រហាក់ប្រហែល​នឹង​ដីស​នៅ​លើ​ក្ដារ​ឃៀន"
+
+#: ../plug-ins/script-fu/scripts/chalk.scm.h:8
 msgid "_Chalk..."
 msgstr "_ដីស..."
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:1
-msgid "Blur amount"
-msgstr "ចំនួន​ព្រិល"
+msgid "Add a chipped woodcarving effect to the selected region (or alpha)"
+msgstr "បន្ថែម​បែបផែន​ចម្លាក់​ឈើ​ដែល​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា)"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:2
-msgid "Chip Awa_y..."
-msgstr "បន្ទះ​សៀគ្វីតូច​ចេញ​ឆ្ងាយ..."
+msgid "Blur amount"
+msgstr "ចំនួន​ព្រិលៗ"
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:3
-msgid "Chip amount"
-msgstr "ចំនួន​បន្ទះ​សៀគ្វី​តូច"
+msgid "Chip Awa_y..."
+msgstr "កាត់ចេញ... "
 
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:4
+msgid "Chip amount"
+msgstr "ចំនួន​កាត់ចេញ"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
+msgid "Create a logo resembling a chipped wood carving"
+msgstr "បង្កើត​រូបសញ្ញា​ប្រហាក់ប្រហែល​នឹង​ចម្លាក់​ឈើ"
+
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:6
 msgid "Drop shadow"
 msgstr "ទម្លាក់​ស្រមោល"
 
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:5
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:7
 msgid "Fill BG with pattern"
 msgstr "បំពេញ​ផ្ទៃខាង​ក្រោយ​ដោយ​លំនាំ"
 
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:8
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:10
 msgid "Invert"
 msgstr "ដាក់​បញ្ច្រាស"
 
-#: ../plug-ins/script-fu/scripts/chip-away.scm.h:9
+#: ../plug-ins/script-fu/scripts/chip-away.scm.h:11
 msgid "Keep background"
 msgstr "រក្សា​ផ្ទៃ​ខាង​ក្រោយ"
 
 #: ../plug-ins/script-fu/scripts/chrome-it.scm.h:1
+msgid ""
+"Add a chrome effect to the selected region (or alpha) using a specified "
+"(grayscale) stencil"
+msgstr ""
+"បន្ថែម​បែបផែន​ក្រូម​ទៅ​តំបន់​ដែល​បានជ្រើស (ឬ​អាល់ហ្វា) ដោយ​ប្រើស្តង់ស៊ីល​ដែល​បានបញ្ជាក់"
+"(មាត្រដ្ឋាន​ប្រផេះ)"
+
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:1
 msgid "Chrome balance"
 msgstr "តុល្យភាព​ក្រូម"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:2
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:2
 msgid "Chrome factor"
 msgstr "កត្តា​ក្រូម​"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:3
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:3
 msgid "Chrome lightness"
 msgstr "ពន្លឺក្រូម"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:4
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
 #: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:4
 msgid "Chrome saturation"
 msgstr "តិត្ថិភាព​ក្រូម"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:5
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
 msgid "Chrome white areas"
 msgstr "ផ្ទៃ​ពណ៌ស​ក្រូម"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:6
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:6
 msgid "Environment map"
 msgstr "ការ​ផ្គូផ្គង​បរិស្ថាន"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:7
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
 msgid "Highlight balance"
 msgstr "តុល្យភាព​ការ​ពន្លិច"
 
-#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:8
+#: ../plug-ins/script-fu/scripts/chrome-it.scm.h:9
 msgid "Stencil C_hrome..."
 msgstr "ក្រូម​ស្តង់ស៊ីល..."
 
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:1
+msgid "Add a simple chrome effect to the selected region (or alpha)"
+msgstr "បន្ថែម​បែបផែន​ក្រូម​ធម្មតា​ទៅ​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា)"
+
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 msgid "C_hrome..."
 msgstr "ក្រូម..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+msgid "Create a simplistic, but cool, chromed logo"
+msgstr "បង្កើត​រូបសញ្ញា​ដែល​ងាយស្រួល ស្អាត មាន​ពណ៌​ដូច​ក្រូម"
+
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:8
 msgid "Offsets (pixels * 2)"
 msgstr "អុហ្វសិត (ភីកសែល * ២)"
 
@@ -944,159 +1174,215 @@ msgid "Circuit seed"
 msgstr "គ្រាប់​​សៀគ្វី"
 
 #: ../plug-ins/script-fu/scripts/circuit.scm.h:2
-#: ../plug-ins/script-fu/scripts/lava.scm.h:2
-#: ../plug-ins/script-fu/scripts/predator.scm.h:2
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
+msgid "Fill the selected region (or alpha) with traces like those on a circuit board"
+msgstr "បំពេញ​តំបន់​ដែល​បានជ្រើស (ឬ​អាល់ហ្វា) ដែល​មាន​ដាន​ដូច​នឹង​ក្ដារ​សៀរគ្វី"
+
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:3
+#: ../plug-ins/script-fu/scripts/lava.scm.h:3
+#: ../plug-ins/script-fu/scripts/predator.scm.h:3
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
 msgid "Keep selection"
 msgstr "រក្សា​ជម្រើស​"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:3
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:4
 msgid "No background (only for separate layer)"
 msgstr "គ្មាន​ផ្ទៃខាងក្រោយ (សម្រាប់​តែ​ការ​បំបែក​ស្រទាប់)"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:4
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:5
 msgid "Oilify mask size"
 msgstr "ទំហំ​របាំង​ប្រេង"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:5
-#: ../plug-ins/script-fu/scripts/lava.scm.h:5
-#: ../plug-ins/script-fu/scripts/predator.scm.h:5
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:6
+#: ../plug-ins/script-fu/scripts/lava.scm.h:6
+#: ../plug-ins/script-fu/scripts/predator.scm.h:6
 msgid "Separate layer"
 msgstr "ការ​បំបែក​ស្រទាប់"
 
-#: ../plug-ins/script-fu/scripts/circuit.scm.h:6
+#: ../plug-ins/script-fu/scripts/circuit.scm.h:7
 msgid "_Circuit..."
 msgstr "_សៀគ្វី..."
 
 #: ../plug-ins/script-fu/scripts/clothify.scm.h:1
+msgid "Add a cloth-like texture to the selected region (or alpha)"
+msgstr "បន្ថែម​វាយនភាព​ដូច​ក្រណាត់​ទៅ​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា)"
+
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:2
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:1
 msgid "Azimuth"
 msgstr "Azimuth"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm.h:2
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:3
 msgid "Blur X"
 msgstr "ព្រិល X"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm.h:3
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:4
 msgid "Blur Y"
 msgstr "ព្រិល Y"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm.h:4
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:4
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:5
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:5
 msgid "Depth"
 msgstr "ជម្រៅ"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm.h:5
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:5
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:6
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:6
 msgid "Elevation"
 msgstr "កម្ពស់"
 
-#: ../plug-ins/script-fu/scripts/clothify.scm.h:6
+#: ../plug-ins/script-fu/scripts/clothify.scm.h:7
 msgid "_Clothify..."
 msgstr "_ធ្វើ​ឲ្យ​ដូច​ក្រណាត់..."
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:1
-msgid ""
-"Darken only\n"
-"(Better, but only for images with a lot of white)"
-msgstr "បាន​តែ​ងងឹត​\n(​ធ្វើ​ឲ្យ​ប្រសើរ​ ប៉ុន្តែ​សម្រាប់​តែ​រូបភាព​ដែល​មាន​ពណ៌​សច្រើនប៉ុណ្ណោះ​)"
+msgid "Add realistic looking coffee stains to the image"
+msgstr "បន្ថែម​ភាព​ពិត​មើល​ទៅ​ដូចជាស្នាម​ប្រលាក់​កាហ្វេ​ទៅ​រូបភាព"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
+msgid "Darken only\\n(Better, but only for images with a lot of white)"
+msgstr ""
+"បាន​តែ​ងងឹត​\\n"
+"(​ធ្វើ​ឲ្យ​ប្រសើរ​ ប៉ុន្តែ​សម្រាប់​តែ​រូបភាព​ដែល​មាន​ពណ៌​ស​ច្រើន​ប៉ុណ្ណោះ​)"
+
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
 msgstr "ស្នាម​ប្រឡាក់"
 
-#: ../plug-ins/script-fu/scripts/coffee.scm.h:3
+#: ../plug-ins/script-fu/scripts/coffee.scm.h:4
 msgid "_Coffee Stain..."
 msgstr "_ស្នាម​ប្រឡាក់កាហ្វេ..."
 
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:1
+msgid ""
+"Add a comic-book effect to the selected region (or alpha) by outlining and "
+"filling with a gradient"
+msgstr "បន្ថែម​បែបផែន​សៀវភៅកំប្លែង​ទៅ​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា) ដោយ​ធ្វើ​គ្រោង និង​បំពេញ​ដោយ​ជម្រាល"
+
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
 msgstr "សៀវភៅ​កំប្លែង..."
 
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
+msgid "Create a comic-book style logo by outlining and filling with a gradient"
+msgstr "បង្កើត​រូបសញ្ញា​រចនាប័ទ្ម​សៀវភៅ​កំប្លែង ដោយ​ធ្វើ​គ្រោង និង​បំពេញ​ដោយ​ជម្រាល"
+
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
 msgid "Outline color"
 msgstr "ពណ៌​គ្រោង"
 
-#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:9
+#: ../plug-ins/script-fu/scripts/comic-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:11
 msgid "Outline size"
 msgstr "ទំហំ​គ្រោង"
 
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
+msgid ""
+"Add a metallic effect to the selected region (or alpha) with reflections and "
+"perspective shadows"
+msgstr "បន្ថែម​បែបផែន​ដូច​លោហធាតុ​ទៅ​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា) ដែល​មាន​ការ​ជះពន្លឺ និង​ស្រមោល​យថាទស្សន៍"
+
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
 msgid "Cool _Metal..."
 msgstr "លោហៈ​ត្រជាក់..."
 
-#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:4
+msgid "Create a metallic logo with reflections and perspective shadows"
+msgstr "បង្កើត​រូបសញ្ញា​ដូច​លោហធាតុ ដែល​មាន​ការ​ជះពន្លឺ និង​ស្រមោល​យថាទស្សន៍"
+
+#: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:4
 msgid "Effect size (pixels)"
 msgstr "ទំហំ​បែបផែន (​ភីកសែល)"
 
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
+msgid "Background image"
+msgstr "រូបភាព​ផ្ទៃ​ខាង​ក្រោយ"
+
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
+msgid "Create a logo with a crystal/gel effect displacing the image underneath"
+msgstr "បង្កើត​រូបសញ្ញា​ដែល​មាន​បែបផែន​គ្រីស្តាល់/អន្ធិលៗដោយ​ដាក់​រូបភាព​ខាង​ក្រោម"
+
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:4
 msgid "Crystal..."
 msgstr "គ្រីស្តាល..."
 
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:1
+msgid "Difference Clouds..."
+msgstr "ពពក​ផ្សេងគ្នា... "
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
+msgid "Solid noise applied with Difference layer mode"
+msgstr "ការ​រំខាន​តាន់​បាន​អនុវត្ត​ដោយ​របៀប​ស្រទាប់​ផ្សេង​គ្នា"
+
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
+msgid "Distress the selection"
+msgstr "យក​ជម្រើស​"
+
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:2
 msgid "Granularity (1 is low)"
 msgstr "គ្រាប់តូចៗ (១ ទាប​)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:3
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:4
 msgid "Smooth horizontally"
 msgstr "រលូន​ផ្ដេក"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:4
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:5
 msgid "Smooth vertically"
 msgstr "រលូន​បញ្ឈរ"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:5
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:6
 msgid "Spread"
 msgstr "រាលដាល"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:6
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
 msgid "Threshold (bigger 1<-->255 smaller)"
 msgstr "កម្រិត​ពន្លឺ (ធំជាង ១<-->២៥៥ តូចជាង)"
 
-#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:7
+#: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
 msgid "_Distort..."
 msgstr "_បង្ខូច​ទ្រង់ទ្រាយ..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
+msgid "Add a drop shadow to the selected region (or alpha)"
+msgstr "បន្ថែម​ការ​ទម្លាក់​ស្រមោល​ទៅ​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា)"
+
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
 msgid "Allow resizing"
 msgstr "អនុញ្ញាត​ឲ្យ​ផ្លាស់ប្ដូរ​ទំហំ"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:3
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:2
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:3
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:3
 msgid "Blur radius"
 msgstr "កាំ​ព្រិល"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:3
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:4
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:4
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:4
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:5
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:5
 msgid "Color"
 msgstr "ពណ៌"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:4
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
 msgid "Offset X"
 msgstr "អុហ្វសិត X"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
 msgid "Offset Y"
 msgstr "អុហ្វសិត Y"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:7
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
 msgid "Opacity"
 msgstr "ភាព​ស្រអាប់"
 
-#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:7
-msgid "_Drop-Shadow..."
-msgstr "_ទម្លាក់​ស្រមោល..."
+#: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
+msgid "_Drop Shadow..."
+msgstr "ទម្លាក់​ស្រមោល... "
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:1
 msgid "Columns"
@@ -1107,100 +1393,76 @@ msgid "Erase"
 msgstr "លុប"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
+msgid "Erase every other row or column"
+msgstr "លុបរាល់​ជួរឈរ ឬ​ជួរដេក​ផ្សេងៗ"
+
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
 msgid "Erase/fill"
 msgstr "លុប/បំពេញ"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:5
 msgid "Even"
 msgstr "គូ"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:5
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:6
 msgid "Even/odd"
 msgstr "គូ/សេស"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:6
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:7
 msgid "Fill with BG"
 msgstr "បំពេញ​ដោយ​ផ្ទៃខាងក្រោយ"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:7
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:8
 msgid "Odd"
 msgstr "សេស"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:8
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:9
 msgid "Rows"
 msgstr "ជួរដេក"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:9
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:10
 msgid "Rows/cols"
 msgstr "ជួរ​ឈរ/ជួរ​ដេក"
 
-#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:10
+#: ../plug-ins/script-fu/scripts/erase-rows.scm.h:11
 msgid "_Erase Every Other Row..."
 msgstr "_លុប​គ្រប់​ជួរដេក​ផ្សេងៗ..."
 
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:1
-msgid "Apply generated layermask"
-msgstr "អនុវត្ត​របាំង​ស្រទាប់​ដែល​បាន​បង្កើត"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:2
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
-msgid "Border size"
-msgstr "ទំហំ​ស៊ុម"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:3
-msgid "Clear unselected maskarea"
-msgstr "ជម្រះ​ផ្ទៃ​របាំង​ដែល​មិន​បាន​ជ្រើស"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:5
-#, no-c-format
-msgid "Fade from %"
-msgstr "លេច​បន្តិច​ម្ដង​ពី %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:7
-#, no-c-format
-msgid "Fade to %"
-msgstr "លេច​បន្តិច​ម្ដង​ទៅ %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:8
-msgid "Use growing selection"
-msgstr "ប្រើ​ជម្រើស​កើនឡើង"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:9
-msgid "_Fade to Layer Mask..."
-msgstr "_លិចបន្តិច​ម្ដង​ទៅ​របាំង​ស្រទាប់..."
-
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
-#: ../plug-ins/script-fu/scripts/land.scm.h:1
+msgid "Create an image filled with a Land Pattern"
+msgstr "បង្កើត​រូបភាព​ដែល​បានបំពេញ​ដោយ​លំនាំ​ដី"
+
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:2
+#: ../plug-ins/script-fu/scripts/land.scm.h:2
 msgid "Detail level"
 msgstr "កម្រិត​សេចក្ដី​លម្អិត"
 
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:2
-#: ../plug-ins/script-fu/scripts/land.scm.h:3
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:3
+#: ../plug-ins/script-fu/scripts/land.scm.h:4
 msgid "Image height"
 msgstr "កម្ពស់​រូបភាព"
 
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:3
-#: ../plug-ins/script-fu/scripts/land.scm.h:4
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:4
+#: ../plug-ins/script-fu/scripts/land.scm.h:5
 msgid "Image width"
 msgstr "ទទឹង​រូបភាព"
 
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:4
-#: ../plug-ins/script-fu/scripts/land.scm.h:6
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:5
+#: ../plug-ins/script-fu/scripts/land.scm.h:7
 msgid "Random seed"
 msgstr "គ្រាប់​​ចៃដន្យ​"
 
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:5
-#: ../plug-ins/script-fu/scripts/land.scm.h:7
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:6
+#: ../plug-ins/script-fu/scripts/land.scm.h:8
 msgid "Scale X"
 msgstr "មាត្រ​ដ្ឋាន X"
 
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:6
-#: ../plug-ins/script-fu/scripts/land.scm.h:8
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:7
+#: ../plug-ins/script-fu/scripts/land.scm.h:9
 msgid "Scale Y"
 msgstr "មាត្រ​ដ្ឋាន Y"
 
-#: ../plug-ins/script-fu/scripts/flatland.scm.h:7
+#: ../plug-ins/script-fu/scripts/flatland.scm.h:8
 msgid "_Flatland..."
 msgstr "_រាបស្មើ..."
 
@@ -1213,59 +1475,82 @@ msgid "Black on white"
 msgstr "ពណ៌ខ្មៅ​នៅ​លើ​ពណ៌ស"
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:3
+msgid "Create an image filled with previews of fonts matching a fontname filter"
+msgstr "បង្កើត​រូបភាព​ដែល​បាន​បំពេញ​ដោយ​​ទិដ្ឋភាព​មើល​ជា​មុន​នៃ​ការ​ផ្គូផ្គង​ពុម្ពអក្សរ​ជា​មួយ​នឹង​តម្រង​ឈ្មោះ​ពុម្ពអក្សរ"
+
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:4
 msgid "Font _size (pixels)"
 msgstr "ទំហំ​ពុម្ព​អក្សរ (​ភីកសែល​)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:4
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:5
 msgid "Render _Font Map..."
 msgstr "បង្ហាញ​ការ​ផ្គូផ្គង​ពុម្ពអក្សរ..."
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:5
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:6
 msgid "Use font _name as text"
 msgstr "ប្រើ​ឈ្មោះ​ពុម្ព​អក្សរ​ជា​អត្ថបទ"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:6
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:7
 msgid "_Border (pixels)"
 msgstr "_ស៊ុម (ភីកសែល)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:7
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:8
 msgid "_Color scheme"
 msgstr "_គ្រោងការណ៍​ពណ៌"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:8
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:9
 msgid "_Filter (regexp)"
 msgstr "_តម្រង (regexp)"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:9
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:10
 msgid "_Labels"
 msgstr "_ស្លាក"
 
-#: ../plug-ins/script-fu/scripts/font-map.scm.h:10
+#: ../plug-ins/script-fu/scripts/font-map.scm.h:11
 msgid "_Text"
 msgstr "_អត្ថបទ"
 
-#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
+msgid ""
+"Add a frost effect to the selected region (or alpha) with an added drop "
+"shadow"
+msgstr "បន្ថែម​បែបផែនតំណក់​ទឹក​ទៅ​តំបន់ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា) ដែល​មាន​ការ​ទម្លាក់ស្រមោល​ដែល​បាន​បន្ថែម"
+
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
+msgid "Create frozen logo with an added drop shadow"
+msgstr "បង្កើត​រូបសញ្ញា​កក​ដែល​មាន​ការ​ទម្លាក់​ស្រមោល​ដែល​បានបន្ថែម"
+
+#: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:8
 msgid "_Frosty..."
 msgstr "_ទឹកកក..."
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:1
+msgid "Add a jagged, fuzzy border to an image"
+msgstr "បន្ថែម jagged ស៊ុម​មិន​ច្បាស់​ទៅ​រូបភាព"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
 msgid "Add shadow"
 msgstr "បន្ថែម​ស្រមោល"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:2
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
 msgid "Blur border"
 msgstr "ធ្វើ​ឲ្យ​ស៊ុម​ព្រិល"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:6
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
+msgid "Border size"
+msgstr "ទំហំ​ស៊ុម"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
 msgstr "គ្រាប់តូចៗ (១ ទាប)"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:8
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:9
 #, no-c-format
 msgid "Shadow weight (%)"
 msgstr "កម្ពស់​ស្រមោល (%)"
 
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:11
 msgid "_Fuzzy Border..."
 msgstr "_ស៊ុម​ស្រពិចស្រពិល..."
 
@@ -1274,187 +1559,266 @@ msgid "Autocrop"
 msgstr "ច្រឹប​ស្វ័យប្រវត្តិ"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
+msgid "Create an image of a large header using the gimp.org webpage theme"
+msgstr "បង្កើត​រូបភាព​ដែល​មាន​ក្បាល​ធំ ដោយ​ប្រើ​ស្បែក​របស់​ទំព័រ​បណ្ដាញ gimp.org"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
+msgid "Create an image of a small header using the gimp.org webpage theme"
+msgstr "បង្កើត​រូបភាព​ដែល​មានក្បាល​តូច​ ដោយ​ប្រើ​ស្បែក​របស់​ទំព័រ​បណ្ដាញ gimp.org"
+
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
 msgid "Dark color"
 msgstr "ពណ៌​ងងឹត"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:5
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:7
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
 msgid "Highlight color"
 msgstr "ពណ៌​បន្លិច"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:8
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
 msgid "Index image"
 msgstr "រូបភាព​លិបិក្រម"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:7
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:9
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
 msgid "Number of colors"
 msgstr "ចំនួន​ពណ៌"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:8
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
 msgid "Remove background"
 msgstr "យក​ផ្ទៃខាងក្រោយ​ចេញ"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:9
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
 msgid "Select-by-color threshold"
 msgstr "ជ្រើស​តាម​កម្រិត​ពណ៌"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:12
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
 msgid "Shadow color"
 msgstr "ពណ៌​ស្រមោល"
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:15
 msgid "_Big Header..."
 msgstr "_ក្បាលធំ..."
 
-#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:14
+#: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:16
 msgid "_Small Header..."
 msgstr "_ក្បាលតូច..."
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
+msgid ""
+"Create an image of a Tube Button Label Header using the gimp.org webpage "
+"theme"
+msgstr "បង្កើត​រូបភាព​ដែល​មាន​ក្បាលស្លាក​ប៊ូតុង​រាង​ជា​បំពង់ ដោយ​ប្រើ​ស្បែក​របស់​ទំព័រ​បណ្ដាញ gimp.org"
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
+msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
+msgstr "បង្កើត​រូបភាព​ដែល​មាន​ស្លាក​ប៊ូតុង​បំពង់ ដោយ​ប្រើ​ស្បែក​របស់​ទំព័រ​បណ្ដាញ gimp.org"
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
+msgid ""
+"Create an image of a second level Tube Button Label using the gimp.org "
+"webpage theme"
+msgstr "បង្កើត​រូបភាព​ដែល​មាន​ស្លាក​ប៊ូតុង​បំពង់កម្រិត​ទីពីរ ដោយ​ប្រើ​ស្បែក​ទំព័រ​បណ្ដាញ gimp.org"
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
+msgid ""
+"Create an image of a third level Tube Button Label using the gimp.org "
+"webpage theme"
+msgstr "បង្កើត​រូបភាព​ដែល​មាន​ស្លាក​ប៊ូតុង​បំពង់​កម្រិត​ទី​បី ដោយ​ប្រើស្បែក​ទំព័រ​បណ្ដាញ gimp.org"
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
 msgstr "ស្លាក​ប៊ូតុងរង​ជា​បំពង់..."
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
 msgid "Tub_e Sub-Sub-Button Label..."
 msgstr "ស្លាក​ប៊ូតុងរង​ជា​បំពង់..."
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
 msgid "_General Tube Labels..."
 msgstr "_ស្លាក​បំពង់​ទូទៅ..."
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
 msgid "_Tube Button Label..."
 msgstr "_ស្លាក​ប៊ូតុង​ជា​បំពង់..."
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:2
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:1
+msgid ""
+"Add gradients, patterns, shadows, and bump maps to the selected region (or "
+"alpha)"
+msgstr "បន្ថែម​ជម្រាល លំនាំ ស្រមោល និង​ផែនទី​រដិបរដុប​ទៅ​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា)"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:3
 msgid "Blend gradient (outline)"
 msgstr "ជម្រាល​ល្បាយ (​គ្រោង​)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:3
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:4
 msgid "Blend gradient (text)"
 msgstr "ជម្រាល​ល្បាយ (​អត្ថបទ​)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:7
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:5
+msgid "Create a logo with gradients, patterns, shadows, and bump maps"
+msgstr "បង្កើត​រូបសញ្ញា​ដែល​មាន​ជម្រាល លំនាំ ស្រមោល និង​ផែនទី​រដិបរដុប"
+
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:9
 msgid "Glo_ssy..."
 msgstr "រលោង..."
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:8
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:10
 msgid "Outline gradient reverse"
 msgstr "បញ្ច្រាស​ជម្រាល​គ្រោង"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:10
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:12
 msgid "Pattern (outline)"
 msgstr "លំនាំ (​គ្រោង​)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:11
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:13
 msgid "Pattern (overlay)"
 msgstr "លំនាំ (​គ្រប់​ពី​លើ​)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:12
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:14
 msgid "Pattern (text)"
 msgstr "លំនាំ (​អត្ថបទ​)"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:13
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:4
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:15
+#: ../plug-ins/script-fu/scripts/sphere.scm.h:5
 msgid "Shadow"
 msgstr "ស្រមោល"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:17
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:19
 msgid "Text gradient reverse"
 msgstr "បញ្ច្រាស​ជម្រាល​អត្ថបទ"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:18
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:20
 msgid "Use pattern for outline instead of gradient"
 msgstr "ប្រើ​លំនាំ​សម្រាប់​គ្រោង​ជំនួស​ឲ្យ​ជម្រាល"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:19
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:21
 msgid "Use pattern for text instead of gradient"
 msgstr "ប្រើ​លំនាំ​សម្រាប់​អត្ថបទ​ជំនួស​ឲ្យ​ជម្រាល"
 
-#: ../plug-ins/script-fu/scripts/glossy.scm.h:20
+#: ../plug-ins/script-fu/scripts/glossy.scm.h:22
 msgid "Use pattern overlay"
 msgstr "ប្រើ​លំនាំ​គ្រប់​ពី​លើ"
 
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:1
+msgid "Add a glowing hot metal effect to the selected region (or alpha)"
+msgstr "បន្ថែម​បែបផែន​លោហ​ដែលក្ដៅ​ខ្លាំង​ទៅ​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា)"
+
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:3
+msgid "Create a logo that looks like glowing hot metal"
+msgstr "បង្កើត​រូបសញ្ញា​ដែល​មើល​ទៅ​ដូច​នឹង​លោហក្ដៅ​ខ្លាំង"
+
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:4
 msgid "Effect size (pixels * 3)"
 msgstr "ទំហំ​បែបផែន (ភីកសែល * ៣)"
 
-#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:7
 msgid "Glo_wing Hot..."
 msgstr "ចំណុច​ពន្លឺ​ក្រហម​ទុំ..."
 
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:1
+msgid "Add a shiny look and bevel effect to the selected region (or alpha)"
+msgstr "បន្ថែម​បែប​ផែន​ពន្លឺ​រលោង​ និង​ជ្រុងទេរ​ទៅ​តំបន់​ដែល​បានជ្រើស (ឬ​អាល់ហ្វា)"
+
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
 msgstr "កម្ពស់​ទេរ (ភាព​ច្បាស់​)​"
 
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:4
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:2
 msgid "Border size (pixels)"
 msgstr "ទំហំ​ស៊ុម (​ភីកសែល​)"
 
-#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
+msgid "Create a logo with a shiny look and beveled edges"
+msgstr "បង្កើត​រូបសញ្ញា​ដែល​មាន​គែម​ពន្លឺ​រលោង និង​ជ្រុងទេរ"
+
+#: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 msgid "Gradient Beve_l..."
 msgstr "ជម្រាលទេរ..."
 
-#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:3
-msgid "Render _Image..."
-msgstr "បង្ហាញ​រូបភាព..."
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
+msgid "Create an image filled with an example of the current gradient"
+msgstr "បង្កើត​រូបភាព​ដែល​បាន​បំពេញ​ដោយ​ឧទាហរណ៍​ជម្រាល​បច្ចុប្បន្ន"
+
+#: ../plug-ins/script-fu/scripts/gradient-example.scm.h:2
+msgid "Custom _Gradient..."
+msgstr "ពណ៌​ជម្រាល​ផ្ទាល់ខ្លួន..."
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
+msgid ""
+"Draw a grid as specified by the lists of X and Y locations using the current "
+"brush"
+msgstr "គូរ​ក្រឡាចត្រង្គ​ដូច​ដែល​បាន​បញ្ជាក់​ដោយ​បញ្ជីទីតាំង X និង Y ដោយ​ប្រើ​ជក់​បច្ចុប្បន្ន"
+
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X divisions"
 msgstr "ភាគ X"
 
-#: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:3
 msgid "Y divisions"
 msgstr "ភាគចែក Y"
 
-#: ../plug-ins/script-fu/scripts/grid-system.scm.h:3
-msgid "_Divisions..."
-msgstr "_ភាគ..."
-
-#: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
-msgid "Creates four Guides around the bounding box of the current selection."
-msgstr "បង្កើត​បន្ទាត់​នាំផ្លូវ​បួន​ជុំវិញ​ប្រអប់​ព្រំដែន​របស់​ជម្រើស​បច្ចុប្បន្ន ។"
+#: ../plug-ins/script-fu/scripts/grid-system.scm.h:4
+msgid "_Grid..."
+msgstr "ក្រឡាចត្រង្គ..."
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "New Guides from _Selection"
 msgstr "បន្ទាត់​នាំ​ផ្លូវ​ពី​ជម្រើស​"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:1
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:1
-msgid "Direction"
-msgstr "ទិស"
+msgid "Add a guide at the position specified as a percentage of the image size"
+msgstr "បន្ថែម​បន្ទាត់​នាំផ្លូវ​នៅ​ទីតាំង​ដែល​បាន​បញ្ជាក់​ជា​ភាគរយ​របស់​ទំហំ​រូបភាព"
 
 #: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:2
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:2
+msgid "Direction"
+msgstr "ទិស"
+
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:3
 msgid "Horizontal"
 msgstr "ផ្ដេក"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:3
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:4
 msgid "New Guide (by _Percent)..."
 msgstr "បន្ទាត់​នាំ​ផ្លូវ​ថ្មី (​ដោយ​ភាគរយ​)..."
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:5
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
 #, no-c-format
 msgid "Position (in %)"
 msgstr "ទីតាំង (ក្នុង %)"
 
-#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:6
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
+#: ../plug-ins/script-fu/scripts/guides-new-percent.scm.h:7
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:6
 msgid "Vertical"
 msgstr "បញ្ឈរ"
 
-#: ../plug-ins/script-fu/scripts/guides-new.scm.h:3
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:1
+msgid "Add a guide at the orientation and position specified (in pixels)"
+msgstr "បន្ថែម​បន្ទាត់​នាំផ្លូវ​នៅ​ទិស និង​ទីតាំង​ដែល​បានបញ្ជាក់ (គិតជា​ភីកសែល)"
+
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:4
 msgid "New _Guide..."
 msgstr "បន្ទាត់​នាំ​ផ្លូវ​ថ្មី..."
 
+#: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
+msgid "Position"
+msgstr "ទីតាំង"
+
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
+msgid "Remove all horizontal and vertical guides"
+msgstr "យក​មគ្គុទ្ទេសក៍​បញ្ឈរ និង​ផ្ដេក​ចេញ​ទាំង​អស់"
+
+#: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
 msgid "_Remove all Guides"
 msgstr "_យក​បន្ទាត់​នាំផ្លូវ​ទាំងអស់​ចេញ"
 
@@ -1463,137 +1827,181 @@ msgid "BG opacity"
 msgstr "ភាព​ស្រអាប់​របស់​ផ្ទៃខាងក្រោយ"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
+msgid "Create a graph of the Hue, Saturation, and Value distributions"
+msgstr "បង្កើត​ក្រាហ្វិក​នៃ​ពណ៌លាំៗ តិត្ថិភាព និង​គុណលក្ខណៈ​តម្លៃ"
+
+#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
 msgid "Draw _HSV Graph..."
 msgstr "គូរ​ក្រាប HSV..."
 
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
+#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:4
 msgid "End X"
 msgstr "X បញ្ចប់"
 
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:4
+#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:5
 msgid "End Y"
 msgstr "Y បញ្ចប់"
 
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:5
+#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:6
 msgid "From top-left to bottom-right"
 msgstr "ពី​កំពូល​ខាង​ឆ្វេង​ទៅ​បាត​ខាង​ស្ដាំ"
 
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:6
+#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:7
 msgid "Graph scale"
 msgstr "មាត្រដ្ឋាន​ក្រាប"
 
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:7
+#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:8
 msgid "Start X"
 msgstr "X ចាប់ផ្ដើម"
 
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:8
+#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:9
 msgid "Start Y"
 msgstr "Y ចាប់ផ្ដើម"
 
-#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:9
-msgid "Use selection bounds instead of belows"
-msgstr "ប្រើ​ព្រំដែន​ជម្រើស​ជំនួស​ឲ្យ​ខាងក្រោម"
+#: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:10
+msgid "Use selection bounds instead of values below"
+msgstr "ប្រើ​ព្រំដែន​ជម្រើស​ជំនួស​តម្លៃ​​ឲ្យ​ខាងក្រោម"
 
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:3
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
+msgid "Create a logo in a two-color, scribbled text style"
+msgstr "បង្កើត​រូបសញ្ញា​ពីរពណ៌ រចនាប័ទ្ម​អត្ថបទដែល​បាន​សរសេរ"
+
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
 msgid "Frame color"
 msgstr "ពណ៌​ស៊ុម"
 
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
 msgid "Frame size"
 msgstr "ទំហំ​ស៊ុម"
 
-#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
+#: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
 msgid "Imigre-_26..."
 msgstr "Imigre-២៦..."
 
-#: ../plug-ins/script-fu/scripts/land.scm.h:5
+#: ../plug-ins/script-fu/scripts/land.scm.h:1
+msgid "Create an image filled with a topographic map pattern"
+msgstr "បង្កើត​រូបភាព​ដែល​បាន​បំពេញ​ដោយ​លំនាំ​ផែនទីកន្លែង​ណាមួយ"
+
+#: ../plug-ins/script-fu/scripts/land.scm.h:6
 msgid "Land height"
 msgstr "កម្ពស់​ដី"
 
-#: ../plug-ins/script-fu/scripts/land.scm.h:9
+#: ../plug-ins/script-fu/scripts/land.scm.h:10
 msgid "Sea depth"
 msgstr "ជម្រៅ​សមុទ្រ"
 
-#: ../plug-ins/script-fu/scripts/land.scm.h:10
+#: ../plug-ins/script-fu/scripts/land.scm.h:11
 msgid "_Land..."
 msgstr "_ដី..."
 
-#: ../plug-ins/script-fu/scripts/lava.scm.h:3
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
+#: ../plug-ins/script-fu/scripts/lava.scm.h:1
+msgid "Fill the current selection with lava"
+msgstr "បំពេញ​ជ្រើស​បច្ចុប្បន្ន​ដោយ​កម្អែ​ភ្នំភ្លើង"
+
+#: ../plug-ins/script-fu/scripts/lava.scm.h:4
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:8
 msgid "Roughness"
 msgstr "ភាព​គគ្រើម"
 
-#: ../plug-ins/script-fu/scripts/lava.scm.h:4
+#: ../plug-ins/script-fu/scripts/lava.scm.h:5
 msgid "Seed"
 msgstr "គ្រាប់"
 
-#: ../plug-ins/script-fu/scripts/lava.scm.h:7
+#: ../plug-ins/script-fu/scripts/lava.scm.h:8
 msgid "Use current gradient"
 msgstr "ប្រើ​ជម្រាល​បច្ចុប្បន្ន"
 
-#: ../plug-ins/script-fu/scripts/lava.scm.h:8
+#: ../plug-ins/script-fu/scripts/lava.scm.h:9
 msgid "_Lava..."
 msgstr "_កំអែរ​ភ្នំ​ភ្លើង..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
+msgid "Fill a layer with rays emanating outward from its center using the FG color"
+msgstr "បំពេញ​ស្រទាប់​ដោយកាំរស្មី​ចេញ​ពីខាង​ក្រៅ​ពី​ចំណុច​កណ្ដាល​របស់​វា ដោយ​ប្រើ​ពណ៌ FG"
+
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
 msgid "Line _Nova..."
 msgstr "បន្ទាត់​ភពផ្កាយ..."
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm.h:2
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:3
 msgid "Number of lines"
 msgstr "ចំនួន​បន្ទាត់"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm.h:3
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:4
 msgid "Offset radius"
 msgstr "កាំ​អុហ្វសិត"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm.h:4
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:5
 msgid "Randomness"
 msgstr "ភាព​ចៃដន្យ"
 
-#: ../plug-ins/script-fu/scripts/line-nova.scm.h:5
+#: ../plug-ins/script-fu/scripts/line-nova.scm.h:6
 msgid "Sharpness (degrees)"
 msgstr "ភាព​ច្បាស់ (​អង្សា​)"
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:1
+msgid "Create a rectangular brush"
+msgstr "បង្កើត​ច្រាស​រាង​ពងក្រពើ"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:2
+msgid "Create a rectangular brush with feathered edges"
+msgstr "បង្កើត​ច្រាស​រាង​ចតុកោណកែង​ដែល​មានគែម​បាន​ដាក់​ស្លាប"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
+msgid "Create an elliptical brush"
+msgstr "បង្កើត​ច្រាស​រាង​ពងក្រពើ"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
+msgid "Create an elliptical brush with feathered edges"
+msgstr "បង្កើត​ច្រាស​រាង​ពង​ក្រពើ​ដែលមាន​គែម​ដែល​បាន​ដាក់​ស្លាប"
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
+msgid "Elli_ptical, Feathered..."
+msgstr "រាង​ពងក្រពើ បាន​ដាក់​ស្លាប..."
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
 msgid "Feathering"
 msgstr "ការដាក់ស្លាប"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:3
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:8
 msgid "Name"
 msgstr "ឈ្មោះ"
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:4
-msgid "New Elli_ptical..."
-msgstr "រាង​ពង​ក្រពើ​ថ្មី..."
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:9
+msgid "Re_ctangular, Feathered..."
+msgstr "ចតុកោណកែង បាន​ដាក់ស្លាប... "
 
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:5
-msgid "New Elliptical, Feathered..."
-msgstr "រាង​ពងក្រពើ​ថ្មី បាន​ដាក់​ស្លាប..."
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:6
-msgid "New Re_ctangular..."
-msgstr "ចតុកោណ​កែង​ថ្មី..."
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
-msgid "New Rectangular, Feathered..."
-msgstr "ចតុកោណកែង​ថ្មី បាន​ដាក់ស្លាប..."
-
-#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:8
-#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:3
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:10
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:5
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "Spacing"
 msgstr "ចន្លោះ"
 
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:12
+msgid "_Elliptical..."
+msgstr "រាង​ពង​ក្រពើ​... "
+
+#: ../plug-ins/script-fu/scripts/mkbrush.scm.h:13
+msgid "_Rectangular..."
+msgstr "ចតុកោណកែង​​... "
+
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:2
+msgid "Convert the selected region (or alpha) into a neon-sign like object"
+msgstr "បម្លែង​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា) ទៅ​ជា​វត្ថុ​ដូច​ជា​សញ្ញា​ណេអុង"
+
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
+msgid "Create a logo in the style of a neon sign"
+msgstr "បង្កើត​រូបសញ្ញា​នៅ​ក្នុង​រចនាប័ទ្ម​របស់​សញ្ញា​ណេអុង"
+
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:4
 msgid "Create shadow"
 msgstr "បង្កើត​ស្រមោល"
 
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:5
 msgid "Effect size (pixels * 5)"
 msgstr "ទំហំ​បែបផែន (ភីកសែល * ៥)"
 
-#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/neon-logo.scm.h:9
 msgid "N_eon..."
 msgstr "ណេអុង..."
 
@@ -1601,13 +2009,17 @@ msgstr "ណេអុង..."
 msgid "Cell size (pixels)"
 msgstr "ទំហំ​ក្រឡា (​ភីកសែល​)"
 
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:5
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:3
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:4
+msgid "Create a logo in the style of newspaper printing"
+msgstr "បង្កើត​រូបសញ្ញា​នៅ​ក្នុង​រចនាប័ទ្ម​របស់​កា​របោះពុម្ព​កាសែត"
+
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:6
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:4
 #, no-c-format
 msgid "Density (%)"
 msgstr "ដង់ស៊ីតេ (%)"
 
-#: ../plug-ins/script-fu/scripts/news-text.scm.h:8
+#: ../plug-ins/script-fu/scripts/news-text.scm.h:9
 msgid "Newsprint Te_xt..."
 msgstr "អត្ថបទ​បោះពុម្ព​ថ្មី..."
 
@@ -1616,14 +2028,18 @@ msgid "Defocus"
 msgstr "ធ្វើ​ឲ្យ​មិន​ច្បាស់"
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:3
+msgid "Make an image look like an old photo"
+msgstr "ធ្វើ​ឲ្យ​រូបភាព​ដូច​ជា​រូបថត​ចាស់"
+
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:4
 msgid "Mottle"
 msgstr "ពណ៌​ចម្រុះ"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:4
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:5
 msgid "Sepia"
 msgstr "ពណ៌​សូកូឡា"
 
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:6
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:7
 msgid "_Old Photo..."
 msgstr "_រូបថត​ចាស់..."
 
@@ -1634,8 +2050,8 @@ msgstr "ឈ្មោះ​ច្រាស"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:2
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:1
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:3
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
 msgid "File name"
 msgstr "ឈ្មោះ​ឯកសារ"
 
@@ -1643,92 +2059,117 @@ msgstr "ឈ្មោះ​ឯកសារ"
 msgid "New _Brush..."
 msgstr "ច្រាស​ថ្មី..."
 
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
+msgid "Paste the clipboard contents into a new brush"
+msgstr "បិទភ្ជាប់​មាតិកា​ក្ដារតម្បៀតខ្ទាស់​ទៅ​ក្នុង​ច្រាស​ថ្មី​មួយ"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
+msgid "There is no image data in the clipboard to paste."
+msgstr "គ្មាន​ទិន្នន័យ​រូបភាព​នៅ​ក្នុង​ក្ដារ​តម្បៀត​ខ្ទាស់​ត្រូវ​បិទភ្ជាប់ ។"
+
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
 msgid "New _Pattern..."
 msgstr "លំនាំ​ថ្មី..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
+msgid "Paste the clipboard contents into a new pattern"
+msgstr "បិទភ្ជាប់​មាតិកា​ក្ដារតម្បៀតខ្ទាស់​ទៅ​ក្នុង​លំនាំថ្មី​មួយ"
+
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:4
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 msgid "Pattern name"
 msgstr "ឈ្មោះ​លំនាំ"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:2
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:1
+msgid "Add a perspective shadow to the selected region (or alpha)"
+msgstr "បន្ថែម​ស្រមោល​យថាទស្សន៍​ទៅ​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា)"
+
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:3
 msgid "Angle"
 msgstr "មុំ"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:5
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:6
 msgid "Interpolation"
 msgstr "ការ​បន្ថែម​ថ្មី"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:7
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
 msgid "Relative distance of horizon"
 msgstr "ចម្ងាយ​ទំនាក់ទំនង​របស់​ជើងមេឃ​"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:8
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
 msgid "Relative length of shadow"
 msgstr "ប្រវែង​ទំនាក់ទំនង​របស់​ស្រមោល"
 
-#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:9
+#: ../plug-ins/script-fu/scripts/perspective-shadow.scm.h:10
 msgid "_Perspective..."
 msgstr "_យថាទស្សន៍..."
 
 #: ../plug-ins/script-fu/scripts/predator.scm.h:1
+msgid "Add a 'Predator' effect to the selected region (or alpha)"
+msgstr "បន្ថែម​បែបផែន 'Predator' ទៅ​តំបន់​ដែល​បាន​ជ្រើស​ (ឬ​អាល់ហ្វា)"
+
+#: ../plug-ins/script-fu/scripts/predator.scm.h:2
 msgid "Edge amount"
 msgstr "ចំនួន​គែម"
 
-#: ../plug-ins/script-fu/scripts/predator.scm.h:3
+#: ../plug-ins/script-fu/scripts/predator.scm.h:4
 msgid "Pixel amount"
 msgstr "ចំនួន​ភីកសែល"
 
-#: ../plug-ins/script-fu/scripts/predator.scm.h:4
+#: ../plug-ins/script-fu/scripts/predator.scm.h:5
 msgid "Pixelize"
 msgstr "កំណត់​ជា​ភីកសែល"
 
-#: ../plug-ins/script-fu/scripts/predator.scm.h:6
+#: ../plug-ins/script-fu/scripts/predator.scm.h:7
 msgid "_Predator..."
 msgstr "_Predator..."
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:4
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:2
+msgid "Create images, each containing an oval button graphic"
+msgstr "បង្កើត​រូបភាព ដែល​នីមួយៗ​មាន​ក្រាហ្វិក​ប៊ូតុងរាង​ពងក្រពើ"
+
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:5
 msgid "Lower color"
 msgstr "ពណ៌ទាប​"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:5
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:6
 msgid "Lower color (active)"
 msgstr "ពណ៌ទាប (សកម្ម)"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:6
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:7
 msgid "Not pressed"
 msgstr "មិន​បាន​ចុច"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:7
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:8
 msgid "Not pressed (active)"
 msgstr "មិន​បាន​ចុច (​សកម្ម​)"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:8
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:9
 msgid "Padding X"
 msgstr "ចន្លោះ X"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:9
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:10
 msgid "Padding Y"
 msgstr "ចន្លោះ Y"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:11
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:12
 msgid "Round ratio"
 msgstr "អនុបាត​មូល"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:14
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:15
 msgid "Text color (active)"
 msgstr "ពណ៌​អត្ថបទ (​សកម្ម​)"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:15
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:16
 msgid "Upper color"
 msgstr "ពណ៌ខ្ពស់"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:16
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:17
 msgid "Upper color (active)"
 msgstr "ពណ៌ខ្ពស់ (សកម្ម​)"
 
-#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:17
+#: ../plug-ins/script-fu/scripts/pupi-button.scm.h:18
 msgid "_Round Button..."
 msgstr "_ប៊ូតុងមូល..."
 
@@ -1737,43 +2178,59 @@ msgid "Behavior"
 msgstr "ឥរិយាបថ"
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:2
-msgid "Detail in middle"
+msgid "Create an image filled with an Earth-like map pattern"
+msgstr "បង្កើត​រូបភាព​ដែល​បាន​បំពេញ​ដោយ​លំនាំ​ផែនទី​ដូច​ជា​ផែនដី"
+
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
+msgid "Detail in Middle"
 msgstr "សេចក្ដី​លម្អិត​នៅ​កណ្ដាល"
 
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:7
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:8
 msgid "Render _Map..."
 msgstr "បង្ហាញ​ផែនទី..."
 
-#: ../plug-ins/script-fu/scripts/rendermap.scm.h:8
+#: ../plug-ins/script-fu/scripts/rendermap.scm.h:9
 msgid "Tile"
 msgstr "​ក្រឡាក្បឿង"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:1
+msgid "Reverse Layer Order"
+msgstr "បញ្ច្រាស​លំដាប់​ស្រទាប់"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:2
+msgid "Reverse the order of layers in the image"
+msgstr "បញ្ច្រាស​លំដាប់​របស់​ស្រទាប់​នៅ​ក្នុង​រូបភាព"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:1
 msgid "Black"
 msgstr "ពណ៌ខ្មៅ"
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:2
+msgid "Create a multi-layer image by adding a ripple effect to the current image"
+msgstr "បង្កើត​រូបភាព​ដែល​មាន​ច្រើន​ស្រទាប់ ដោយ​បន្ថែម​បែបផែន​អង្កាញ់​ទៅ​រូបភាព​បច្ចុប្បន្ន"
+
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
 msgid "Edge behavior"
 msgstr "ឥរិយាបថ​គែម"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:3
-#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:4
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:4
 msgid "Number of frames"
 msgstr "ចំនួន​ស៊ុម"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:4
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:5
 msgid "Rippling strength"
 msgstr "កម្លាំង​អង្កាញ់"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:5
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:6
 msgid "Smear"
 msgstr "ស្នាមប្រឡាក់"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:6
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:7
 msgid "Wrap"
 msgstr "រុំ"
 
-#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:7
+#: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:8
 msgid "_Rippling..."
 msgstr "_អង្កាញ់..."
 
@@ -1789,19 +2246,47 @@ msgstr "បន្ថែម​ការ​ទម្លាក់​ស្រមោ
 msgid "Edge radius"
 msgstr "កាំគែម"
 
-#: ../plug-ins/script-fu/scripts/round-corners.scm.h:8
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:5
+msgid "Round the corners of an image and optionally add a drop-shadow and background"
+msgstr "ជុំវិញ​ជ្រុង​របស់​រូបភាព ហើយ​ជា​ជម្រើស​បន្ថែម​ទម្លាល់​ស្រមោល​ និង​ផ្ទៃ​ខាង​ក្រោយ"
+
+#: ../plug-ins/script-fu/scripts/round-corners.scm.h:9
 msgid "_Round Corners..."
 msgstr "_ជ្រុង​មូល..."
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:4
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr "ផ្លាស់ប្ដូរ​ផែនទី​ពណ៌របស់​រូបភាព​ទៅ​ជា​ពណ៌​នៅ​ក្នុង​ក្ដារលាយ​ដែល​បាន​បញ្ជាក់ ។"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
+msgid "Palette"
+msgstr "ក្ដារលាយ"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
+msgid "Se_t Colormap..."
+msgstr "កំណត់​ផែនទី​ពណ៌... "
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+msgid "Convert a selection to a brush"
+msgstr "បម្លែង​ជម្រើស​ទៅ​ជា​ច្រាស"
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:5
 msgid "To _Brush..."
 msgstr "ទៅ​ច្រាស..."
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
+msgid "Convert a selection to an image"
+msgstr "បម្លែង​ជម្រើស​ទៅ​ជា​រូបភាព"
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm.h:2
 msgid "To _Image"
 msgstr "ទៅ​រូបភាព"
 
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+msgid "Convert a selection to a pattern"
+msgstr "បម្លែង​ជម្រើស​ទៅ​ជា​លំនាំ"
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
 msgid "To _Pattern..."
 msgstr "ទៅ​លំនាំ..."
 
@@ -1815,82 +2300,104 @@ msgid "Radius (%)"
 msgstr "កាំ (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
+msgid "Round the corners of the current selection"
+msgstr "ជុំវិញ​ជ្រុង​របស់​ជម្រើស​បច្ចុប្បន្ន"
+
+#: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
 msgid "Rounded R_ectangle..."
 msgstr "ចតុកោណកែង​ជ្រុង​មូល"
 
-#: ../plug-ins/script-fu/scripts/slide.scm.h:2
+#: ../plug-ins/script-fu/scripts/slide.scm.h:1
+msgid "Add a slide-film like frame, sprocket holes, and labels to an image"
+msgstr "បន្ថែម​ស៊ុម​ដូច​ជា​ហ្វីល​ស្លាយ រន្ធ​ និង​ស្លាក​ទៅ​រូបភាព"
+
+#: ../plug-ins/script-fu/scripts/slide.scm.h:3
 msgid "Font color"
 msgstr "ពណ៌​ពុម្ពអក្សរ"
 
-#: ../plug-ins/script-fu/scripts/slide.scm.h:3
+#: ../plug-ins/script-fu/scripts/slide.scm.h:4
 msgid "Number"
 msgstr "លេខ"
 
-#: ../plug-ins/script-fu/scripts/slide.scm.h:6
+#: ../plug-ins/script-fu/scripts/slide.scm.h:7
 msgid "_Slide..."
 msgstr "_ស្លាយ..."
 
-#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:5
+msgid "Create a State Of The Art chromed logo"
+msgstr "បង្កើត​ស្ថានភាព​របស់​រូបសញ្ញាដែល​មាន​សិល្បៈក្រូម"
+
+#: ../plug-ins/script-fu/scripts/sota-chrome-logo.scm.h:10
 msgid "SOTA Chrome..."
 msgstr "ក្រូម SOTA..."
 
-#: ../plug-ins/script-fu/scripts/speed-text.scm.h:6
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
+msgid "Create a logo with a speedy text effect"
+msgstr "បង្កើត​រូបសញ្ញា​ដោយ​បែបផែន​អត្ថបទ​លឿន"
+
+#: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
 msgid "Speed Text..."
 msgstr "ល្បឿន​អត្ថបទ..."
 
 #: ../plug-ins/script-fu/scripts/sphere.scm.h:2
+msgid "Create a simple sphere with a drop shadow"
+msgstr "បង្កើត​ស៊្វែរ​ធម្មតា​ដោយ​ទម្លាក់​ស្រមោល"
+
+#: ../plug-ins/script-fu/scripts/sphere.scm.h:3
 msgid "Lighting (degrees)"
 msgstr "ពន្លឺ (អង្សា)"
 
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:3
+#: ../plug-ins/script-fu/scripts/sphere.scm.h:4
 msgid "Radius (pixels)"
 msgstr "កាំ (​ភីកសែល​)"
 
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:5
+#: ../plug-ins/script-fu/scripts/sphere.scm.h:6
 msgid "Sphere color"
 msgstr "ពណ៌​ស្វែរ"
 
-#: ../plug-ins/script-fu/scripts/sphere.scm.h:6
+#: ../plug-ins/script-fu/scripts/sphere.scm.h:7
 msgid "_Sphere..."
 msgstr "_ស្វែរ..."
 
 #: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:1
+msgid "Create an animation by mapping the current image onto a spinning sphere"
+msgstr "បង្កើត​ចលនា​ដោយ​ផ្គូផ្គង​រូបភាព​បច្ចុប្បន្ន​ទៅ​នឹង​ស៊្វែរ​បង្កើន​បន្ថយ"
+
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:2
 msgid "Frames"
 msgstr "ស៊ុម"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:2
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:3
 msgid "Index to n colors (0 = remain RGB)"
 msgstr "លិបិក្រម​ទៅ n ពណ៌ (0 = នៅសល់ RGB)"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:4
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:5
 msgid "Turn from left to right"
 msgstr "ត្រឡប់​ពី​ឆ្វេង​ទៅ​ស្ដាំ"
 
-#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:6
+#: ../plug-ins/script-fu/scripts/spinning-globe.scm.h:7
 msgid "_Spinning Globe..."
 msgstr "_ការបង្វិល​សកល..."
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
+msgid "Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
+msgstr "បន្ថែមខ្សែកោង Spirographs, Epitrochoids និង Lissajous ទៅ​ស្រទាប់​បច្ចុប្បន្ន"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
 msgid "Airbrush"
 msgstr "ជក់ខ្យល់"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
-msgid "Brush"
-msgstr "ច្រាស"
-
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:3
+msgid "Brush"
+msgstr "ជក់"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:4
 msgid "Circle"
 msgstr "រង្វង់"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:5
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:6
 msgid "Color method"
 msgstr "វិធី​សាស្ត្រ​ពណ៌"
-
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:6
-msgid ""
-"Draws Spirographs, Epitrochoids and Lissajous Curves. More info at http://"
-"netword.com/*spyrogimp"
-msgstr "គូឬ Spirographs, Epitrochoids និងខ្សែកោង Lissajous ។ ព័ត៌មាន​បន្ថែម​សូម​មើល​នៅ http://netword.com/*spyrogimp"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:7
 msgid "Epitrochoid"
@@ -1901,11 +2408,11 @@ msgid "Frame"
 msgstr "ស៊ុម"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:10
-msgid "Gradient: loop sawtooth"
+msgid "Gradient: Loop Sawtooth"
 msgstr "ជម្រាល ៖ ធ្មេញ​រណារ​រង្វិលជុំ"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:11
-msgid "Gradient: loop triangle"
+msgid "Gradient: Loop Triangle"
 msgstr "ជម្រាល ៖ ត្រីកោណ​រង្វិលជុំ"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:12
@@ -1957,39 +2464,43 @@ msgid "Polygon: 9 sides"
 msgstr "ពហុកោណ ៖ ៩ ជ្រុង"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+msgid "Rendering Spyro"
+msgstr "បង្ហាញ Spyro"
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
 msgstr "រាង"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:26
 msgid "Solid Color"
 msgstr "ពណ៌​តាន់"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 msgid "Spyrograph"
 msgstr "Spyrograph"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Square"
 msgstr "ការេ"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:6
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
 msgid "Start angle"
 msgstr "មុំ​ចាប់ផ្ដើម"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:30
 msgid "Tool"
 msgstr "ឧបករណ៍"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:31
 msgid "Triangle"
 msgstr "ត្រីកោណ"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:31
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:32
 msgid "Type"
 msgstr "ប្រភេទ"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:32
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:33
 msgid "_Spyrogimp..."
 msgstr "_Spyrogimp..."
 
@@ -1998,62 +2509,98 @@ msgid "Burst color"
 msgstr "ពណ៌​ផ្ទុះ"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:3
+msgid "Create a logo using a starburst gradient"
+msgstr "បង្កើត​រូបសញ្ញា​ដោយ​ប្រើ​ជម្រាល"
+
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:4
 msgid "Effect size (pixels * 30)"
 msgstr "ទំហំ​បែបផែន (​ភីកសែល * ៣0​)"
 
-#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:5
+msgid ""
+"Fill the selected region (or alpha) with a starburst gradient and add a "
+"shadow"
+msgstr "បំពេញ​តំបន់​ដែល​បាន​ជ្រើស​ (ឬ​អាល់ហ្វា) ដោយ​ជម្រើស និង​បន្ថែម​ស្រមោល"
+
+#: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:8
 msgid "Starb_urst..."
 msgstr "Starb_urst..."
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
+msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
+msgstr "បង្កើត​រូបសញ្ញា​ដោយ​ប្រើ​វាយនភាព​ដូច​ថ្ម ពន្លឺ​ក្រហមទំ​រាយ​ផ្កាយ និង​ស្រមោល"
+
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
 msgid "Effect size (pixels * 4)"
 msgstr "ទំហំ​បែបផែន (​ភីកសែល * ៤)"
 
-#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
+msgid ""
+"Fill the selected region (or alpha) with a rock-like texture, a nova glow, "
+"and shadow"
+msgstr "បំពេញ​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា) ដោយ​វាយនភាព​ដូច​ជា​ថ្ម ពន្លឺ​ក្រហមទំ​រា​យ​ផ្កាយ និង​ស្រមោល"
+
+#: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
 msgid "Sta_rscape..."
 msgstr "Sta_rscape..."
 
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:8
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:4
+msgid "Create an image filled with a swirled tile effect"
+msgstr "បង្កើត​រូបភាព​ដែល​បានបំពេញ​ដោយ​បែបផែន​ក្រឡាក្បឿង​គួច"
+
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:9
 msgid "Swirl-_Tile..."
 msgstr "កួចក្រឡា​ក្បឿង..."
 
-#: ../plug-ins/script-fu/scripts/swirltile.scm.h:9
+#: ../plug-ins/script-fu/scripts/swirltile.scm.h:10
 msgid "Whirl amount"
 msgstr "ចំនួន​គួច"
 
 #: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:1
+msgid "Create an image filled with a swirly pattern"
+msgstr "បង្កើត​រូបភាព​ដែល​បានបំពេញ​ដោយ​លំនាំគួច"
+
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
 msgid "Number of times to whirl"
 msgstr "ចំនួន​ដង​ត្រូវ​គួចកួច"
 
-#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:2
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
 msgid "Quarter size"
 msgstr "ទំហំ ១/៤"
 
-#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:3
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
 msgid "Whirl angle"
 msgstr "មុំ​គួច"
 
-#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:4
+#: ../plug-ins/script-fu/scripts/swirly-pattern.scm.h:5
 msgid "_Swirly..."
 msgstr "_កំនួច..."
 
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:1
+msgid "Add a Trace of Particles effect to the selected region (or alpha)"
+msgstr "បន្ថែម​បែបផែន​ដានតូចៗ​ទៅ​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា)"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:3
 msgid "Base color"
 msgstr "ពណ៌​មូលដ្ឋាន"
 
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
+msgid "Create a logo using a Trace Of Particles effect"
+msgstr "បង្កើត​រូបសញ្ញា​ដោយ​ប្រើបែបផែន​របស់ដាន​ភាព​តូចៗ"
+
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:6
 msgid "Edge only"
 msgstr "តែ​គែម​ប៉ុណ្ណោះ"
 
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:7
 msgid "Edge width"
 msgstr "ទទឹង​គែម"
 
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
 msgid "Hit rate"
 msgstr "អត្រា​វាយ"
 
-#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:12
 msgid "_Particle Trace..."
 msgstr "_ស្នាមតូចៗ..."
 
@@ -2062,42 +2609,58 @@ msgid "Antialias"
 msgstr "ប្រឆាំង​ភាព​រឆេតរឆូត"
 
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:2
+msgid "Create a logo by rendering the specified text along the perimeter of a circle"
+msgstr "បង្កើត​រូបសញ្ញា​ដោយ​បង្ហាញ​អត្ថបទ​ដែល​បាន​បញ្ជាក់​រួម​​ជាមួយ​នឹងបរិវេណ​របស់​រង្វង់"
+
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:3
 msgid "Fill angle"
 msgstr "មុំ​បំពេញ"
 
-#: ../plug-ins/script-fu/scripts/text-circle.scm.h:8
+#: ../plug-ins/script-fu/scripts/text-circle.scm.h:9
 msgid "Text C_ircle..."
 msgstr "រង្វង់​អត្ថបទ..."
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:3
+msgid "Create a textured logo with highlights, shadows, and a mosaic background"
+msgstr ""
+"បង្កើត​រូបសញ្ញា​វាយនភាព​ដោយ​មានបន្លិច ស្រមោល និង​ផ្ទៃ​ខាង​ក្រោយ​មូសាអ៊ីក"
+"​"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Ending blend"
 msgstr "ល្បាយបញ្ចប់"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
+msgid ""
+"Fill the selected region (or alpha) with a texture and add highlights, "
+"shadows, and a mosaic background"
+msgstr "បំពេញ​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា) ដោយ​វាយនភាព ហើយ​បន្ថែម​ស្រមោល​បន្លិច និង​ផ្ទៃ​ខាង​ក្រោយ​មូសាអ៊ីក"
+
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
 msgstr "ឆកោណ"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:9
 msgid "Mosaic tile type"
 msgstr "ប្រភេទ​ក្រឡាក្បឿង​ម៉ូសាអ៊ីក"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:10
 msgid "Octagons"
 msgstr "អដ្ឋកោណ"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:10
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:12
 msgid "Squares"
 msgstr "ការេ"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:11
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:13
 msgid "Starting blend"
 msgstr "ល្បាយ​ចាប់ផ្ដើម"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:13
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:15
 msgid "Text pattern"
 msgstr "លំនាំ​អត្ថបទ"
 
-#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:14
+#: ../plug-ins/script-fu/scripts/textured-logo.scm.h:16
 msgid "_Textured..."
 msgstr "_បាន​ដាក់​វាយនភាព..."
 
@@ -2106,34 +2669,46 @@ msgid "Blur horizontally"
 msgstr "ព្រិលៗផ្ដេក"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
+msgid "Blur the edges of an image so the result tiles seamlessly"
+msgstr "ធ្វើ​ឲ្យ​គែម​រូបភាព​ព្រិល ដូច្នេះ​លទ្ធផល​កម្រ​មាន​ក្រឡា​ណាស់"
+
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
 msgid "Blur type"
 msgstr "ប្រភេទ​ព្រិល"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:4
 msgid "Blur vertically"
 msgstr "ព្រិលៗបញ្ឈរ"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm.h:4
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:5
 msgid "IIR"
 msgstr "IIR"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm.h:5
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:6
 msgid "RLE"
 msgstr "RLE"
 
-#: ../plug-ins/script-fu/scripts/tileblur.scm.h:7
+#: ../plug-ins/script-fu/scripts/tileblur.scm.h:8
 msgid "_Tileable Blur..."
 msgstr "_ព្រិលៗជា​ក្រឡាក្បឿង..."
 
-#: ../plug-ins/script-fu/scripts/title-header.scm.h:5
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:1
+msgid "Create a decorative web title header"
+msgstr "បង្កើត​បឋមកថា​ចំណង​ជើង​បណ្ដាញ​តុបតែងលម្អ​"
+
+#: ../plug-ins/script-fu/scripts/title-header.scm.h:6
 msgid "Web Title Header..."
 msgstr "ក្បាល​ចំណង​ជើង​បណ្ដាញ..."
 
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:3
+msgid "Create an image filled with a Truchet pattern"
+msgstr "បង្កើត​រូបភាព​មួយ​ដែល​បាន​បំពេញ​ដោយ​លំនាំ Truchet"
+
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:4
 msgid "Foreground color"
 msgstr "ពណ៌​ផ្ទៃខាងមុខ"
 
-#: ../plug-ins/script-fu/scripts/truchet.scm.h:6
+#: ../plug-ins/script-fu/scripts/truchet.scm.h:7
 msgid "T_ruchet..."
 msgstr "T_ruchet..."
 
@@ -2150,129 +2725,156 @@ msgid "Amplitude"
 msgstr "ទំហំ​វិសេសវិសាល"
 
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:2
+msgid ""
+"Create a multi-layer image with an effect like a stone was thrown into the "
+"current image"
+msgstr ""
+"បង្កើត​រូបភាព​ដែល​មាន​ស្រទាប់​ច្រើន​ជា​មួយ​នឹង​បែបផែន​ដូច​ជា​ថ្ម​​ដែល​ត្រូ​វបាន​បោះ​ចូល​ទៅ​ក្នុង​រូបភាព "
+"​បច្ចុប្បន្ន"
+
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:3
 msgid "Invert direction"
 msgstr "បញ្ច្រាស​ទិសដៅ"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:4
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:5
 msgid "Wavelength"
 msgstr "ប្រវែង​រលក"
 
-#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:5
+#: ../plug-ins/script-fu/scripts/waves-anim.scm.h:6
 msgid "_Waves..."
 msgstr "_រលក..."
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:1
+msgid ""
+"Create a new layer filled with a weave effect to be used as an overlay or "
+"bump map"
+msgstr "បង្កើត​ស្រទាប់​ថ្មី​ដែល​បាន​បំពេញ​ដោយ​បែបផែន​ប្រឌឹត​ដែល​ត្រូវ​ប្រើ​ជា​ផែនទី​រដិបរដុប ឬ​លាប​ទឹក​ប្រាក់"
+
+#: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
 msgstr "ចន្លោះ​បន្ទះ"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:2
+#: ../plug-ins/script-fu/scripts/weave.scm.h:3
 msgid "Ribbon width"
 msgstr "ទទឹង​បន្ទះ​"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:3
+#: ../plug-ins/script-fu/scripts/weave.scm.h:4
 msgid "Shadow darkness"
 msgstr "ភាព​ងងឹត​របស់​ស្រមោល"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:4
+#: ../plug-ins/script-fu/scripts/weave.scm.h:5
 msgid "Shadow depth"
 msgstr "ជម្រៅ​ស្រមោល​"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:5
+#: ../plug-ins/script-fu/scripts/weave.scm.h:6
 msgid "Thread density"
 msgstr "ដង់ស៊ីតេ​ខ្សែ​ស្រឡាយ"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:6
+#: ../plug-ins/script-fu/scripts/weave.scm.h:7
 msgid "Thread intensity"
 msgstr "អាំងតង់ស៊ីតេ​ខ្សែ​ស្រឡាយ"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:7
+#: ../plug-ins/script-fu/scripts/weave.scm.h:8
 msgid "Thread length"
 msgstr "ប្រវែង​ខ្សែ​ស្រឡាយ"
 
-#: ../plug-ins/script-fu/scripts/weave.scm.h:8
+#: ../plug-ins/script-fu/scripts/weave.scm.h:9
 msgid "_Weave..."
 msgstr "_ត្បាញ..."
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
-msgid "Create and use _Selections"
-msgstr "បង្កើត និង​ប្រើ​ជម្រើស"
+msgid "Bookmark to the GIMP web site"
+msgstr "ចំណាំ​ទៅ​តំបន់​បណ្ដាញ​ GIMP"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
+msgid "Bookmark to the user manual"
+msgstr "ចំណាំ​ទៅ​កាន់​សៀវភៅ​ដៃ​អ្នក​ប្រើ"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
+msgid "Create and Use _Selections"
+msgstr "បង្កើត និង​ប្រើ​ជម្រើស"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
 msgid "Create, Open and Save _Files"
 msgstr "បង្កើត បើក និង​រក្សាទុក​ឯកសារ"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
 msgid "Drawing _Simple Objects"
 msgstr "គូរ​វត្ថុ​ធម្មតា"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
-msgid "Howto use _Dialogs"
-msgstr "របៀប​ប្រើ​ប្រអប់"
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
+msgid "How to Use _Dialogs"
+msgstr "របៀប​ប្រើ​ប្រអប់ "
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
 msgid "Plug-in _Registry"
 msgstr "​បញ្ជី​ឈ្មោះ​កម្មវិធី​ជំនួយ"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
 msgid "Using _Paths"
 msgstr "ប្រើផ្លូវ"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
-msgid "_Basics of TheGIMP"
-msgstr "_មូលដ្ឋាន​របស់ TheGIMP"
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
+msgid "_Basic Concepts"
+msgstr "គំនិត​មូលដ្ឋាន "
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
 msgid "_Developer Web Site"
 msgstr "_អ្នក​អភិវឌ្ឍន៍​តំបន់​បណ្ដាញ"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
 msgid "_Main Web Site"
 msgstr "_តំបន់​បណ្ដាញ​មេ"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
-msgid "_Preparing your Images for the web"
-msgstr "_រៀបចំ​រូបភាព​របស់​អ្នក​សម្រាប់​បណ្ដាញ"
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
+msgid "_Preparing your Images for the Web"
+msgstr "រៀបចំ​រូបភាព​របស់​អ្នក​សម្រាប់​បណ្ដាញ"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
 msgid "_User Manual Web Site"
 msgstr "_របៀប​ប្រើ​តំបន់​បណ្ដាញ"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
 msgid "_Working with Digital Camera Photos"
 msgstr "_ធ្វើការ​ជា​មួយ​រូបថត​ម៉ាស៊ីន​ថត​ឌីជីថល"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
+msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
+msgstr "បន្ថែម​បែបផែន​ត្រីមាត្រព្រិល​ប្រសព្វ​ទៅ​តំបន់​ដែល​បាន​ជ្រើស (ឬ​អាល់ហ្វា)"
+
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
 msgid "Drop shadow X offset"
 msgstr "ទម្លាក់​ស្រមោល​អុហ្វសិត X"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:3
 msgid "Drop shadow Y offset"
 msgstr "ទម្លាក់​ស្រមោល​អុហ្វសិត Y"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:3
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:4
 msgid "Drop shadow blur radius"
 msgstr "ទម្លាក់​ស្រមោល​កាំព្រិលៗ"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:4
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:5
 msgid "Drop shadow color"
 msgstr "ទម្លាក់​ពណ៌​ស្រមោល"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:5
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:6
 msgid "Drop shadow opacity"
 msgstr "ទម្លាក់​ភាព​ស្រអាប់​របស់​ស្រមោល"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:6
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
 msgid "Highlight X offset"
 msgstr "បន្លិច​អុហ្វសិត X"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:7
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:8
 msgid "Highlight Y offset"
 msgstr "បន្លិច​អុហ្វសិត Y"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:9
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:10
 msgid "Highlight opacity"
 msgstr "បន្លិច​ភាព​ស្រអាប់"
 
-#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:11
+#: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "_បែបផែន Xach..."
+
