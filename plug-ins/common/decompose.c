@@ -446,7 +446,10 @@ run (const gchar      *name,
 
 	  /*  Store data  */
 	  if (run_mode == GIMP_RUN_INTERACTIVE)
-	    gimp_set_data (PLUG_IN_PROC, &decovals, sizeof (DecoVals));
+            {
+	      gimp_set_data (PLUG_IN_PROC, &decovals, sizeof (DecoVals));
+              gimp_displays_flush ();
+            }
 	}
     }
 

@@ -1,5 +1,11 @@
 2007-09-17  Simon Budig  <simon@gimp.org>
 
+	* plug-ins/common/decompose.c: flush the displays at the end.
+
+	Fixes bug #477008.
+
+2007-09-17  Simon Budig  <simon@gimp.org>
+
 	* app/display/gimpdisplayshell-render.c: avoid rendering
 	issues by adding xdelta/2 to xstart.
 
