@@ -1,8 +1,8 @@
 2007-09-17  Nils Philippsen  <nphilipp@redhat.com>
 
-	* plug-ins/common/pcx.c (load_image): verify that the bytesperline header
-	field (number of bytes to allocate per plane and line) isn't less than the
-	width of the image
+	* plug-ins/common/pcx.c (load_image): verify that the bytesperline
+	header field (number of bytes to allocate per plane and line)
+	isn't less than the width of the image (bug #477802).
 
 2007-09-17  Michael Natterer  <mitch@gimp.org>
 
