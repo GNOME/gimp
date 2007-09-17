@@ -28,6 +28,7 @@
 
 #include <gtk/gtk.h>
 
+#include "libgimpbase/gimpbase.h"
 #include "libgimpconfig/gimpconfig.h"
 #include "libgimpmath/gimpmath.h"
 #include "libgimpmodule/gimpmodule.h"
@@ -287,31 +288,153 @@ cdisplay_proof_convert (GimpColorDisplay *display,
     cmsDoTransform (proof->transform, buf, buf, width);
 }
 
+static void
+cdisplay_proof_combo_box_set_active (GimpColorProfileComboBox *combo,
+                                     const gchar              *filename)
+{
+  cmsHPROFILE  profile = NULL;
+  gchar       *label   = NULL;
+
+  if (filename)
+    profile = cmsOpenProfileFromFile (filename, "r");
+
+  if (profile)
+    {
+      label = gimp_any_to_utf8 (cmsTakeProductDesc (profile), -1, NULL);
+      if (! label)
+        label = gimp_any_to_utf8 (cmsTakeProductName (profile), -1, NULL);
+
+      cmsCloseProfile (profile);
+    }
+
+  gimp_color_profile_combo_box_set_active (combo, filename, label);
+  g_free (label);
+}
+
+static void
+cdisplay_proof_file_chooser_dialog_response (GtkFileChooser           *dialog,
+                                             gint                      response,
+                                             GimpColorProfileComboBox *combo)
+{
+  if (response == GTK_RESPONSE_ACCEPT)
+    {
+      gchar *filename = gtk_file_chooser_get_filename (dialog);
+
+      if (filename)
+        {
+          cdisplay_proof_combo_box_set_active (combo, filename);
+
+          g_free (filename);
+        }
+    }
+
+  gtk_widget_hide (GTK_WIDGET (dialog));
+}
+
+static GtkWidget *
+cdisplay_proof_file_chooser_dialog_new (void)
+{
+  GtkWidget     *dialog;
+  GtkFileFilter *filter;
+
+  dialog = gtk_file_chooser_dialog_new (_("Choose an ICC Color Profile"),
+                                        NULL,
+                                        GTK_FILE_CHOOSER_ACTION_OPEN,
+
+                                        GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+                                        GTK_STOCK_OPEN,   GTK_RESPONSE_ACCEPT,
+
+                                        NULL);
+
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_ACCEPT,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  gtk_dialog_set_default_response (GTK_DIALOG (dialog), GTK_RESPONSE_ACCEPT);
+
+#ifndef G_OS_WIN32
+  {
+    const gchar folder[] = "/usr/share/color/icc";
+
+    if (g_file_test (folder, G_FILE_TEST_IS_DIR))
+      gtk_file_chooser_add_shortcut_folder (GTK_FILE_CHOOSER (dialog),
+                                            folder, NULL);
+  }
+#endif
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("All files (*.*)"));
+  gtk_file_filter_add_pattern (filter, "*");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
+
+  filter = gtk_file_filter_new ();
+  gtk_file_filter_set_name (filter, _("ICC color profile (*.icc, *.icm)"));
+  gtk_file_filter_add_pattern (filter, "*.[Ii][Cc][Cc]");
+  gtk_file_filter_add_pattern (filter, "*.[Ii][Cc][Mm]");
+  gtk_file_chooser_add_filter (GTK_FILE_CHOOSER (dialog), filter);
+
+  gtk_file_chooser_set_filter (GTK_FILE_CHOOSER (dialog), filter);
+
+  return dialog;
+}
+
+static void
+cdisplay_proof_profile_changed (GtkWidget     *combo,
+                                CdisplayProof *proof)
+{
+  gchar *profile;
+
+  profile = gimp_color_profile_combo_box_get_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo));
+
+  g_object_set (proof,
+                "profile", profile,
+                NULL);
+
+  g_free (profile);
+}
+
 static GtkWidget *
 cdisplay_proof_configure (GimpColorDisplay *display)
 {
   CdisplayProof *proof = CDISPLAY_PROOF (display);
   GtkWidget     *table;
   GtkWidget     *combo;
-  GtkWidget     *entry;
   GtkWidget     *toggle;
+  GtkWidget     *dialog;
+  gchar         *history;
 
   table = gtk_table_new (3, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
 
-  combo = gimp_prop_enum_combo_box_new (G_OBJECT (proof), "intent", 0, 0);
+  dialog = cdisplay_proof_file_chooser_dialog_new ();
+
+  history = gimp_personal_rc_file ("profilerc");
+  combo = gimp_color_profile_combo_box_new (dialog, history);
+  g_free (history);
+
+  g_signal_connect (dialog, "response",
+                    G_CALLBACK (cdisplay_proof_file_chooser_dialog_response),
+                    combo);
+
+  g_signal_connect (combo, "changed",
+                    G_CALLBACK (cdisplay_proof_profile_changed),
+                    proof);
+
+  if (proof->profile)
+    cdisplay_proof_combo_box_set_active (GIMP_COLOR_PROFILE_COMBO_BOX (combo),
+                                         proof->profile);
 
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 0,
-                             _("_Intent:"), 0.0, 0.5,
+                             _("_Profile:"), 0.0, 0.5,
                              combo, 1, FALSE);
 
-  entry = gimp_prop_file_chooser_button_new (G_OBJECT (proof), "profile",
-                                             _("Choose an ICC Color Profile"),
-                                             GTK_FILE_CHOOSER_ACTION_OPEN);
+  combo = gimp_prop_enum_combo_box_new (G_OBJECT (proof), "intent", 0, 0);
+
   gimp_table_attach_aligned (GTK_TABLE (table), 0, 1,
-                             _("_Profile:"), 0.0, 0.5,
-                             entry, 1, FALSE);
+                             _("_Intent:"), 0.0, 0.5,
+                             combo, 1, FALSE);
 
   toggle = gimp_prop_check_button_new (G_OBJECT (proof),
                                        "black-point-compensation",
@@ -338,9 +461,6 @@ cdisplay_proof_changed (GimpColorDisplay *display)
   if (! proof->profile)
     return;
 
-  /*  This should be read from the global parasite pool.
-   *  For now, just use the built-in sRGB profile.
-   */
   rgbProfile = cmsCreate_sRGBProfile ();
 
   proofProfile = cmsOpenProfileFromFile (proof->profile, "r");

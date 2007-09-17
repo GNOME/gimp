@@ -1,3 +1,8 @@
+2007-09-17  Sven Neumann  <sven@gimp.org>
+
+	* modules/cdisplay_proof.c: use a GimpColorProfileComboBox for
+	profile selection.
+
 2007-09-17  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/decompose.c: flush the displays at the end.
