@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-10 11:50+0200\n"
-"PO-Revision-Date: 2007-09-10 12:00+0200\n"
+"POT-Creation-Date: 2007-09-18 13:42+0200\n"
+"PO-Revision-Date: 2007-09-18 13:43+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -349,8 +349,8 @@ msgstr "_Fraktály"
 #: ../plug-ins/common/gif-save.c:986 ../plug-ins/common/gih.c:1258
 #: ../plug-ins/common/gtm.c:225 ../plug-ins/common/mng.c:561
 #: ../plug-ins/common/mng.c:950 ../plug-ins/common/pat.c:447
-#: ../plug-ins/common/pcx.c:643 ../plug-ins/common/pix.c:508
-#: ../plug-ins/common/png.c:1244 ../plug-ins/common/pnm.c:936
+#: ../plug-ins/common/pcx.c:645 ../plug-ins/common/pix.c:508
+#: ../plug-ins/common/png.c:1244 ../plug-ins/common/pnm.c:941
 #: ../plug-ins/common/postscript.c:1194 ../plug-ins/common/psd-save.c:1549
 #: ../plug-ins/common/raw.c:528 ../plug-ins/common/raw.c:555
 #: ../plug-ins/common/spheredesigner.c:2120 ../plug-ins/common/sunras.c:544
@@ -389,12 +389,12 @@ msgstr "Zapsat parametry fraktálu"
 #: ../plug-ins/common/compressor.c:622 ../plug-ins/common/curve_bend.c:869
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gif-load.c:309 ../plug-ins/common/gih.c:649
-#: ../plug-ins/common/lcms.c:724 ../plug-ins/common/lcms.c:997
+#: ../plug-ins/common/lcms.c:789 ../plug-ins/common/lcms.c:1091
 #: ../plug-ins/common/mng.c:1121 ../plug-ins/common/pat.c:317
 #: ../plug-ins/common/pcx.c:344 ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:703 ../plug-ins/common/pnm.c:482
 #: ../plug-ins/common/poppler.c:501 ../plug-ins/common/postscript.c:1021
-#: ../plug-ins/common/postscript.c:3029 ../plug-ins/common/psd-load.c:2125
+#: ../plug-ins/common/postscript.c:3029 ../plug-ins/common/psd-load.c:2156
 #: ../plug-ins/common/psp.c:1432 ../plug-ins/common/raw.c:243
 #: ../plug-ins/common/raw.c:645 ../plug-ins/common/spheredesigner.c:2010
 #: ../plug-ins/common/sunras.c:378 ../plug-ins/common/svg.c:321
@@ -1149,7 +1149,7 @@ msgstr "Špatná barevná mapa"
 #: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:349
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:710
 #: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:546
-#: ../plug-ins/common/postscript.c:1027 ../plug-ins/common/psd-load.c:2130
+#: ../plug-ins/common/postscript.c:1027 ../plug-ins/common/psd-load.c:2161
 #: ../plug-ins/common/raw.c:650 ../plug-ins/common/sunras.c:470
 #: ../plug-ins/common/tga.c:428 ../plug-ins/common/tiff-load.c:558
 #: ../plug-ins/common/wmf.c:956 ../plug-ins/common/xbm.c:725
@@ -1184,12 +1184,12 @@ msgstr "Neznámý nebo neplatný formát komprese BMP."
 msgid "Unsupported or invalid bitdepth."
 msgstr "Nepodporovaná nebo neplatná bitová hloubka"
 
-#: ../plug-ins/bmp/bmpread.c:550 ../plug-ins/common/pcx.c:375
+#: ../plug-ins/bmp/bmpread.c:550 ../plug-ins/common/pcx.c:376
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Nepodporovaná nebo neplatná šířka obrázku: %d"
 
-#: ../plug-ins/bmp/bmpread.c:555 ../plug-ins/common/pcx.c:380
+#: ../plug-ins/bmp/bmpread.c:555 ../plug-ins/common/pcx.c:381
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Nepodporovaná nebo neplatná výška obrázku: %d"
@@ -1199,12 +1199,12 @@ msgstr "Nepodporovaná nebo neplatná výška obrázku: %d"
 #.
 #: ../plug-ins/bmp/bmpread.c:559 ../plug-ins/common/CEL.c:349
 #: ../plug-ins/common/CEL.c:352 ../plug-ins/common/blinds.c:277
-#: ../plug-ins/common/compose.c:924 ../plug-ins/common/decompose.c:703
+#: ../plug-ins/common/compose.c:924 ../plug-ins/common/decompose.c:706
 #: ../plug-ins/common/dicom.c:503 ../plug-ins/common/film.c:746
-#: ../plug-ins/common/gif-load.c:879 ../plug-ins/common/pcx.c:387
-#: ../plug-ins/common/pcx.c:393 ../plug-ins/common/pix.c:368
+#: ../plug-ins/common/gif-load.c:879 ../plug-ins/common/pcx.c:393
+#: ../plug-ins/common/pcx.c:399 ../plug-ins/common/pix.c:368
 #: ../plug-ins/common/png.c:831 ../plug-ins/common/pnm.c:570
-#: ../plug-ins/common/psd-load.c:2553 ../plug-ins/common/raw.c:691
+#: ../plug-ins/common/psd-load.c:2587 ../plug-ins/common/raw.c:691
 #: ../plug-ins/common/smooth_palette.c:257 ../plug-ins/common/sunras.c:956
 #: ../plug-ins/common/tga.c:1029 ../plug-ins/common/tiff-load.c:942
 #: ../plug-ins/common/tile.c:267 ../plug-ins/common/xbm.c:880
@@ -1234,9 +1234,9 @@ msgstr "Alfa kanál bude ignorován."
 #: ../plug-ins/bmp/bmpwrite.c:305 ../plug-ins/common/CEL.c:573
 #: ../plug-ins/common/gbr.c:621 ../plug-ins/common/gif-save.c:993
 #: ../plug-ins/common/gih.c:1263 ../plug-ins/common/gtm.c:245
-#: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:605
+#: ../plug-ins/common/pat.c:452 ../plug-ins/common/pcx.c:607
 #: ../plug-ins/common/pix.c:513 ../plug-ins/common/png.c:1251
-#: ../plug-ins/common/pnm.c:941 ../plug-ins/common/postscript.c:1199
+#: ../plug-ins/common/pnm.c:946 ../plug-ins/common/postscript.c:1199
 #: ../plug-ins/common/psd-save.c:1554 ../plug-ins/common/sunras.c:549
 #: ../plug-ins/common/tga.c:1138 ../plug-ins/common/tiff-save.c:681
 #: ../plug-ins/common/xbm.c:1021 ../plug-ins/common/xpm.c:623
@@ -2779,7 +2779,7 @@ msgstr "Kompozice"
 msgid "Compose Channels"
 msgstr "Kompozice kanálů"
 
-#: ../plug-ins/common/compose.c:1514 ../plug-ins/common/decompose.c:1495
+#: ../plug-ins/common/compose.c:1514 ../plug-ins/common/decompose.c:1498
 msgid "Color _model:"
 msgstr "Barevný _model:"
 
@@ -3290,23 +3290,23 @@ msgstr "_Dekomponovat..."
 msgid "Decomposing"
 msgstr "Dekomponuji"
 
-#: ../plug-ins/common/decompose.c:1460
+#: ../plug-ins/common/decompose.c:1463
 msgid "Decompose"
 msgstr "Dekompozice"
 
-#: ../plug-ins/common/decompose.c:1483
+#: ../plug-ins/common/decompose.c:1486
 msgid "Extract Channels"
 msgstr "Extrahovat kanály"
 
-#: ../plug-ins/common/decompose.c:1530
+#: ../plug-ins/common/decompose.c:1533
 msgid "_Decompose to layers"
 msgstr "Dekomponovat do _vrstev"
 
-#: ../plug-ins/common/decompose.c:1541
+#: ../plug-ins/common/decompose.c:1544
 msgid "_Foreground as registration color"
 msgstr "_Popředí jako registrační barva"
 
-#: ../plug-ins/common/decompose.c:1542
+#: ../plug-ins/common/decompose.c:1545
 msgid ""
 "Pixels in the foreground color will appear black in all output images.  This "
 "can be used for things like crop marks that have to show up on all channels."
@@ -3465,8 +3465,8 @@ msgstr "Obrázek Digital Imaging and Communications in Medicine"
 msgid "'%s' is not a DICOM file."
 msgstr "'%s' není soubor DICOM."
 
-#: ../plug-ins/common/dicom.c:678 ../plug-ins/common/pcx.c:637
-#: ../plug-ins/common/pnm.c:927
+#: ../plug-ins/common/dicom.c:678 ../plug-ins/common/pcx.c:639
+#: ../plug-ins/common/pnm.c:932
 msgid "Cannot save images with alpha channel."
 msgstr "Nemohu uložit obrázky s alfa kanálem."
 
@@ -4960,167 +4960,175 @@ msgstr "_Laplaceův"
 msgid "Cleanup"
 msgstr "Úklid"
 
-#: ../plug-ins/common/lcms.c:198
+#: ../plug-ins/common/lcms.c:228
 msgid "_Assign Color Profile..."
 msgstr "_Přiřadit profil barev"
 
-#: ../plug-ins/common/lcms.c:214
+#: ../plug-ins/common/lcms.c:244
 msgid "Assign default RGB Profile"
 msgstr "Přiřadit výchozí RGB profil"
 
-#: ../plug-ins/common/lcms.c:231
+#: ../plug-ins/common/lcms.c:261
 msgid "_Convert to Color Profile..."
 msgstr "_Převést do profilu barev..."
 
-#: ../plug-ins/common/lcms.c:249
+#: ../plug-ins/common/lcms.c:279
 msgid "Convert to default RGB Profile"
 msgstr "Převést do výchozího RGB profilu"
 
-#: ../plug-ins/common/lcms.c:263
+#: ../plug-ins/common/lcms.c:293
 msgid "Image Color Profile Information"
 msgstr "Informace o profilu barev obrázku"
 
-#: ../plug-ins/common/lcms.c:277
+#: ../plug-ins/common/lcms.c:307
 msgid "Color Profile Information"
 msgstr "Informace o profilu barev"
 
-#: ../plug-ins/common/lcms.c:499
+#: ../plug-ins/common/lcms.c:563
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Barevný profil '%s' není určen pro prostor RGB."
 
-#: ../plug-ins/common/lcms.c:605
+#: ../plug-ins/common/lcms.c:670
 msgid "Default RGB working space"
 msgstr "Výchozí pracovní prostor RGB"
 
-#: ../plug-ins/common/lcms.c:693
+#: ../plug-ins/common/lcms.c:758
 msgid "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr "Data připojená jako 'icc-profile' zřejmě nejsou barevným profilem ICC"
 
-#: ../plug-ins/common/lcms.c:743
+#: ../plug-ins/common/lcms.c:808
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "'%s' zřejmě není barevným profilem ICC"
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:796
+#: ../plug-ins/common/lcms.c:863
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Konvertuji z '%s' do '%s'"
 
-#: ../plug-ins/common/lcms.c:1016
+#: ../plug-ins/common/lcms.c:1110
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Nelze načíst ICC profil z '%s'"
 
-#: ../plug-ins/common/lcms.c:1038
+#: ../plug-ins/common/lcms.c:1132
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "Obrázek '%s' obsahuje vložený barevný profil:"
 
-#: ../plug-ins/common/lcms.c:1082
+#: ../plug-ins/common/lcms.c:1176
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Převest obrázek do pracovního prostoru RGB (%s)?"
 
-#: ../plug-ins/common/lcms.c:1113
+#: ../plug-ins/common/lcms.c:1207
 msgid "Convert to RGB working space?"
 msgstr "Konvertovat do pracovního prostoru RGB?"
 
-#: ../plug-ins/common/lcms.c:1118
+#: ../plug-ins/common/lcms.c:1212
 msgid "_Keep"
 msgstr "_Ponechat"
 
-#: ../plug-ins/common/lcms.c:1123
+#: ../plug-ins/common/lcms.c:1217
 msgid "_Convert"
 msgstr "_Konvertovat"
 
-#: ../plug-ins/common/lcms.c:1150 ../plug-ins/jpeg/jpeg-exif.c:372
+#: ../plug-ins/common/lcms.c:1244 ../plug-ins/jpeg/jpeg-exif.c:372
 msgid "_Don't ask me again"
 msgstr "_Neptat se znovu"
 
-#: ../plug-ins/common/lcms.c:1214
+#: ../plug-ins/common/lcms.c:1308
 msgid "Select destination profile"
 msgstr "Zvolte cílový profil"
 
-#: ../plug-ins/common/lcms.c:1241
+#: ../plug-ins/common/lcms.c:1335
 msgid "All files (*.*)"
 msgstr "Všechny soubory (*.*)"
 
-#: ../plug-ins/common/lcms.c:1246
+#: ../plug-ins/common/lcms.c:1340
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC profil barev (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1289
+#: ../plug-ins/common/lcms.c:1383
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "Pracovní prostor RGB (%s)"
 
-#: ../plug-ins/common/lcms.c:1337
+#: ../plug-ins/common/lcms.c:1433
 msgid "Convert to ICC Color Profile"
 msgstr "Převést do ICC profilu barev"
 
-#: ../plug-ins/common/lcms.c:1338
+#: ../plug-ins/common/lcms.c:1434
 msgid "Assign ICC Color Profile"
 msgstr "Přiřadit ICC profil barev"
 
-#: ../plug-ins/common/lcms.c:1346
+#: ../plug-ins/common/lcms.c:1442
 msgid "_Assign"
 msgstr "_Přiřadit"
 
-#: ../plug-ins/common/lcms.c:1363
+#: ../plug-ins/common/lcms.c:1459
 msgid "Current Color Profile"
 msgstr "Aktuální profil barev"
 
-#: ../plug-ins/common/lcms.c:1378
+#: ../plug-ins/common/lcms.c:1474
 msgid "Convert to"
 msgstr "Převést do"
 
-#: ../plug-ins/common/lcms.c:1378
+#: ../plug-ins/common/lcms.c:1474
 msgid "Assign"
 msgstr "Přiřadit"
 
-#: ../plug-ins/common/lcms.c:1418
+#: ../plug-ins/common/lcms.c:1498
+msgid "_Rendering Intent:"
+msgstr "_Záměr vykreslování:"
+
+#: ../plug-ins/common/lcms.c:1514
+msgid "_Black Point Compensation"
+msgstr "_Kompenzace černého bodu"
+
+#: ../plug-ins/common/lcms.c:1554
 msgid "Destination profile is not for RGB color space."
 msgstr "Cílový profil není určen pro prostor RGB."
 
-#: ../plug-ins/common/lens.c:143
+#: ../plug-ins/common/lens.c:115
 msgid "Corrects lens distortion"
 msgstr "Opravit zkreslení objektivu"
 
-#: ../plug-ins/common/lens.c:148
+#: ../plug-ins/common/lens.c:120
 msgid "Lens Distortion..."
 msgstr "Zkreslení objektivu..."
 
-#: ../plug-ins/common/lens.c:813
+#: ../plug-ins/common/lens.c:383
 msgid "Lens distortion"
 msgstr "Zkreslení objektivu"
 
-#: ../plug-ins/common/lens.c:933
+#: ../plug-ins/common/lens.c:483
 msgid "Lens Distortion"
 msgstr "Zkreslení objektivu"
 
-#: ../plug-ins/common/lens.c:970
+#: ../plug-ins/common/lens.c:520
 msgid "_Main:"
 msgstr "_Hlavní:"
 
-#: ../plug-ins/common/lens.c:984
+#: ../plug-ins/common/lens.c:534
 msgid "_Edge:"
 msgstr "_Okraj:"
 
-#: ../plug-ins/common/lens.c:998 ../plug-ins/flame/flame.c:1213
+#: ../plug-ins/common/lens.c:548 ../plug-ins/flame/flame.c:1213
 msgid "_Zoom:"
 msgstr "Při_blížení:"
 
-#: ../plug-ins/common/lens.c:1012
+#: ../plug-ins/common/lens.c:562
 msgid "_Brighten:"
 msgstr "_Zjasnit:"
 
-#: ../plug-ins/common/lens.c:1026
+#: ../plug-ins/common/lens.c:576
 msgid "_X shift:"
 msgstr "Posun _X:"
 
-#: ../plug-ins/common/lens.c:1040
+#: ../plug-ins/common/lens.c:590
 msgid "_Y shift:"
 msgstr "Posun _Y:"
 
@@ -5973,31 +5981,35 @@ msgstr "Nemohu číst hlavičku z '%s'"
 msgid "'%s' is not a PCX file"
 msgstr "'%s' není soubor PCX"
 
-#: ../plug-ins/common/pcx.c:432
+#: ../plug-ins/common/pcx.c:386
+msgid "Invalid number of bytes per line in PCX header"
+msgstr "Neplatný počet bajtů na řádek v hlaviččce PCX"
+
+#: ../plug-ins/common/pcx.c:434
 msgid "Unusual PCX flavour, giving up"
 msgstr "Neobvyklá verze PCX, vzdávám to"
 
-#: ../plug-ins/common/pcx.c:653
+#: ../plug-ins/common/pcx.c:655
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Neplatný offset X: %d"
 
-#: ../plug-ins/common/pcx.c:659
+#: ../plug-ins/common/pcx.c:661
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Neplatný offset Y: %d"
 
-#: ../plug-ins/common/pcx.c:665
+#: ../plug-ins/common/pcx.c:667
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Pravý okraj mimo rozsah (musí být < %d): %d"
 
-#: ../plug-ins/common/pcx.c:672
+#: ../plug-ins/common/pcx.c:674
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Spodní okraj mimo rozsah (musí být < %d): %d"
 
-#: ../plug-ins/common/pcx.c:728
+#: ../plug-ins/common/pcx.c:730
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Zápis do souboru '%s' selhal: %s"
@@ -6246,7 +6258,7 @@ msgstr "Obrázek PPM"
 
 #: ../plug-ins/common/pnm.c:513 ../plug-ins/common/pnm.c:535
 #: ../plug-ins/common/pnm.c:544 ../plug-ins/common/pnm.c:555
-#: ../plug-ins/common/pnm.c:631 ../plug-ins/common/pnm.c:692
+#: ../plug-ins/common/pnm.c:631 ../plug-ins/common/pnm.c:697
 msgid "Premature end of file."
 msgstr "Předčasný konec souboru."
 
@@ -6278,24 +6290,24 @@ msgstr "Výška obrázku je větší, než GIMP dokáže zpracovat"
 msgid "Invalid maximum value."
 msgstr "Neplatná maximální hodnota."
 
-#: ../plug-ins/common/pnm.c:745
+#: ../plug-ins/common/pnm.c:750
 msgid "Error reading file."
 msgstr "Chyba při čtení souboru."
 
-#: ../plug-ins/common/pnm.c:1110
+#: ../plug-ins/common/pnm.c:1115
 msgid "Save as PNM"
 msgstr "Zapsat jako PNM"
 
 #. file save type
-#: ../plug-ins/common/pnm.c:1127
+#: ../plug-ins/common/pnm.c:1132
 msgid "Data formatting"
 msgstr "Formátování dat"
 
-#: ../plug-ins/common/pnm.c:1131
+#: ../plug-ins/common/pnm.c:1136
 msgid "Raw"
 msgstr "Binární"
 
-#: ../plug-ins/common/pnm.c:1132
+#: ../plug-ins/common/pnm.c:1137
 msgid "Ascii"
 msgstr "ASCII"
 
@@ -6591,59 +6603,59 @@ msgstr "_Prohlížeč procedur"
 msgid "Procedure Browser"
 msgstr "Prohlížeč procedur"
 
-#: ../plug-ins/common/psd-load.c:526
+#: ../plug-ins/common/psd-load.c:527
 msgid "Invalid UTF-8 string in PSD file"
 msgstr "Neplatný řetězec UTF-8 v souboru PSD"
 
-#: ../plug-ins/common/psd-load.c:622
+#: ../plug-ins/common/psd-load.c:623
 msgid "Cannot handle bitmap PSD files"
 msgstr "Nelze zpracovat bitmapové PSD soubory"
 
-#: ../plug-ins/common/psd-load.c:631
+#: ../plug-ins/common/psd-load.c:632
 msgid "Cannot handle PSD files in CMYK color"
 msgstr "Nelze zpracovat PSD soubory v barevném režimu CMYK"
 
-#: ../plug-ins/common/psd-load.c:634
+#: ../plug-ins/common/psd-load.c:635
 msgid "Cannot handle PSD files in Multichannel color"
 msgstr "Nelze zpracovat PSD soubory ve vícekanálovém režimu"
 
-#: ../plug-ins/common/psd-load.c:637
+#: ../plug-ins/common/psd-load.c:638
 msgid "Cannot handle PSD files in Duotone color"
 msgstr "Nelze zpracovat PSD soubory v duplex režimu"
 
-#: ../plug-ins/common/psd-load.c:640
+#: ../plug-ins/common/psd-load.c:641
 msgid "Cannot handle PSD files in Lab color"
 msgstr "Nezle zpracovat PSD soubory v barvách Lab"
 
-#: ../plug-ins/common/psd-load.c:643
+#: ../plug-ins/common/psd-load.c:644
 #, c-format
 msgid "Cannot handle the color mode %d of the PSD file"
 msgstr "Nelze zpracovat barevný režim %d tohoto PSD souboru"
 
-#: ../plug-ins/common/psd-load.c:736
+#: ../plug-ins/common/psd-load.c:737
 #, c-format
 msgid "Cannot handle PSD file with more than %d channels"
 msgstr "Nelze zpracovat PSD soubor s více než %d kanály"
 
-#: ../plug-ins/common/psd-load.c:2488
+#: ../plug-ins/common/psd-load.c:2522
 msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
 msgstr "Nelze zpracovat PSD soubory v barevném prostoru CMYK s více než 5 kanály"
 
-#: ../plug-ins/common/psd-load.c:2503
+#: ../plug-ins/common/psd-load.c:2537
 #, c-format
 msgid "Cannot handle image mode %d (%s)"
 msgstr "Nelze zpracovat obrazový režim %d (%s)"
 
-#: ../plug-ins/common/psd-load.c:2512
+#: ../plug-ins/common/psd-load.c:2546
 #, c-format
 msgid "Cannot handle %d bits per channel PSD files"
 msgstr "Nelze zpracovat PSD soubory s %d bity na kanál"
 
-#: ../plug-ins/common/psd-load.c:3313
+#: ../plug-ins/common/psd-load.c:3347
 msgid "This is not an Adobe Photoshop PSD file"
 msgstr "Toto není soubor Adobe Photoshop PSD"
 
-#: ../plug-ins/common/psd-load.c:3318
+#: ../plug-ins/common/psd-load.c:3352
 #, c-format
 msgid "The PSD file has bad version number '%d', not 1"
 msgstr "PSD soubor má špatné číslo verze '%d', nikoliv 1"

@@ -1,10 +1,14 @@
+2007-09-17  Jakub Friedl  <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation
+
 2007-09-17  Sven Neumann  <sven@gimp.org>
 
 	* km.po: updated Kmer translation (bug #420417).
 
 2007-09-16  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation by Francisco Vila
+	* es.po: Updated Spanish translation by Francisco Vila
 
 2007-09-15  Changwoo Ryu  <cwryu@debian.org>
 
