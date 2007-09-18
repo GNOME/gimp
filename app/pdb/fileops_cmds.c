@@ -496,12 +496,14 @@ register_thumbnail_loader_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
-      gchar *canonical = gimp_canonicalize_identifier (load_proc);
+      gchar *canonical   = gimp_canonicalize_identifier (load_proc);
+      gchar *canon_thumb = gimp_canonicalize_identifier (thumb_proc);
 
       success = gimp_plug_in_manager_register_thumb_loader (gimp->plug_in_manager,
-                                                            canonical, thumb_proc);
+                                                            canonical, canon_thumb);
 
       g_free (canonical);
+      g_free (canon_thumb);
     }
 
   return gimp_procedure_get_return_values (procedure, success);

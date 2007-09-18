@@ -1,3 +1,10 @@
+2007-09-18  Michael Natterer  <mitch@gimp.org>
+
+	* tools/pdbgen/pdb/fileops.pdb: canonicalize the name of the
+	thumbnail loader procedure too. Fixes bug #477917.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
 2007-09-17  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* plug-ins/common/psd-load.c (do_layer_record, load_image):
