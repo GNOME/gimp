@@ -1,5 +1,15 @@
 2007-09-18  Michael Natterer  <mitch@gimp.org>
 
+	* app/gui/gtk-macmenu.[ch]: removed...
+
+	* app/gui/ige-mac-menu.[ch]: ...and replaced by new versions which
+	don't use the GTK+ namespace.
+
+	* app/gui/Makefile.am
+	* app/gui/gui.c: changed accorgingly.
+
+2007-09-18  Michael Natterer  <mitch@gimp.org>
+
 	* configure.in: replaced HAVE_GDK_QUARTZ conditional by
 	--disable-toolbox-menu configure switch which defaults to "yes"
 	normally and to "no" on quartz.

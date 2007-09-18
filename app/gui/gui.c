@@ -85,7 +85,7 @@
 #include "splash.h"
 #include "themes.h"
 #ifdef GDK_WINDOWING_QUARTZ
-#include "gtk-macmenu.h"
+#include "ige-mac-menu.h"
 #endif /* GDK_WINDOWING_QUARTZ */
 
 #include "gimp-intl.h"
@@ -473,22 +473,22 @@ gui_restore_after_callback (Gimp               *gimp,
     if (GTK_IS_MENU_ITEM (menu))
       menu = gtk_menu_item_get_submenu (GTK_MENU_ITEM (menu));
 
-    gtk_macmenu_set_menubar (GTK_MENU_SHELL (menu));
+    ige_mac_menu_set_menubar (GTK_MENU_SHELL (menu));
 
     item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
                                       "/dummy-menubar/image-popup/File/file-quit");
     if (GTK_IS_MENU_ITEM (item))
-      gtk_macmenu_set_quit_item (GTK_MENU_ITEM (item));
+      ige_mac_menu_set_quit_item (GTK_MENU_ITEM (item));
 
     item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
                                       "/dummy-menubar/image-popup/Help/dialogs-about");
     if (GTK_IS_MENU_ITEM (item))
-      gtk_macmenu_set_about_item (GTK_MENU_ITEM (item), _("About GIMP"));
+      ige_mac_menu_set_about_item (GTK_MENU_ITEM (item), _("About GIMP"));
 
     item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
                                       "/dummy-menubar/image-popup/Edit/dialogs-preferences");
     if (GTK_IS_MENU_ITEM (item))
-      gtk_macmenu_set_prefs_item (GTK_MENU_ITEM (item), _("Preferences"));
+      ige_mac_menu_set_prefs_item (GTK_MENU_ITEM (item), _("Preferences"));
   }
 #endif /* GDK_WINDOWING_QUARTZ */
 

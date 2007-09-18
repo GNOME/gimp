@@ -21,21 +21,20 @@
  * Boston, MA 02111-1307, USA.
  */
 
-#ifndef __GTK_MACMENU_H__
-#define __GTK_MACMENU_H__
+#ifndef __IGE_MAC_MENU_H__
+#define __IGE_MAC_MENU_H__
 
 #include <gtk/gtk.h>
 
 G_BEGIN_DECLS
 
-void   gtk_macmenu_set_menubar    (GtkMenuShell *menu_shell);
-
-void   gtk_macmenu_set_quit_item  (GtkMenuItem  *menu_item);
-void   gtk_macmenu_set_about_item (GtkMenuItem  *menu_item,
-				   const gchar  *label);
-void   gtk_macmenu_set_prefs_item (GtkMenuItem  *menu_item,
-                                   const gchar  *label);
+void   ige_mac_menu_set_menubar    (GtkMenuShell *menu_shell);
+void   ige_mac_menu_set_quit_item  (GtkMenuItem  *menu_item);
+void   ige_mac_menu_set_about_item (GtkMenuItem  *menu_item,
+                                    const gchar  *label);
+void   ige_mac_menu_set_prefs_item (GtkMenuItem  *menu_item,
+                                    const gchar  *label);
 
 G_END_DECLS
 
-#endif /* __GTK_MACMENU_H__ */
+#endif /* __IGE_MAC_MENU_H__ */
