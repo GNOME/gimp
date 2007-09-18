@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: cs\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-10 11:43+0200\n"
-"PO-Revision-Date: 2007-09-17 16:17+0200\n"
+"POT-Creation-Date: 2007-09-18 13:41+0200\n"
+"PO-Revision-Date: 2007-09-18 13:40+0200\n"
 "Last-Translator: Jakub Friedl <jfriedl@suse.cz>\n"
 "Language-Team: Czech <gnome-cs-list@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -111,7 +111,8 @@ msgstr ""
 #: ../libgimp/gimpexport.c:308
 #, c-format
 msgid "%s plug-in can only handle bitmap (two color) indexed images"
-msgstr "Modul %s umí zpracovat pouze bitmapové (dvoubarevné) indexované obrázky"
+msgstr ""
+"Modul %s umí zpracovat pouze bitmapové (dvoubarevné) indexované obrázky"
 
 #: ../libgimp/gimpexport.c:309
 msgid ""
@@ -865,7 +866,7 @@ msgstr "při zpracování prvku '%s': %s"
 #: ../libgimpconfig/gimpconfig-iface.c:454
 #: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
-#: ../libgimpwidgets/gimpcolorprofilestore.c:593
+#: ../libgimpwidgets/gimpcolorprofilestore.c:654
 msgid "fatal parse error"
 msgstr "fatální chyba zpracování"
 
@@ -988,11 +989,11 @@ msgstr "_Černá"
 msgid "_White"
 msgstr "_Bílá"
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:142
+#: ../libgimpwidgets/gimpcolorprofilestore.c:144
 msgid "Select color profile from disk..."
 msgstr "Vyberte barevný profil z disku..."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:278
+#: ../libgimpwidgets/gimpcolorprofilestore.c:280
 msgid "profile|None"
 msgstr "Žádný"
 
@@ -1202,15 +1203,15 @@ msgstr "Na_klonění"
 msgid "More..."
 msgstr "Více..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:577
+#: ../libgimpwidgets/gimpunitmenu.c:581
 msgid "Unit Selection"
 msgstr "Výběr jednotek"
 
-#: ../libgimpwidgets/gimpunitmenu.c:626
+#: ../libgimpwidgets/gimpunitmenu.c:629
 msgid "Unit"
 msgstr "Jednotka"
 
-#: ../libgimpwidgets/gimpunitmenu.c:630
+#: ../libgimpwidgets/gimpunitmenu.c:633
 msgid "Factor"
 msgstr "Faktor"
 
@@ -1358,7 +1359,8 @@ msgstr "Správa barev"
 msgid ""
 "This filter takes its configuration from the Color Management section in the "
 "Preferences dialog."
-msgstr "Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
+msgstr ""
+"Tento filtr bere své nastavení z oddílu Správa barev dialogu Předvolby."
 
 #: ../modules/cdisplay_lcms.c:249
 msgid "Mode of operation:"
@@ -1376,27 +1378,35 @@ msgstr "Profil monitoru:"
 msgid "Print simulation profile:"
 msgstr "Profil simulace tisku:"
 
-#: ../modules/cdisplay_proof.c:102
+#: ../modules/cdisplay_proof.c:103
 msgid "Color proof filter using ICC color profile"
 msgstr "Filtr barevného náhledu používající barevný profil ICC"
 
-#: ../modules/cdisplay_proof.c:179
+#: ../modules/cdisplay_proof.c:180
 msgid "Color Proof"
 msgstr "Barevný náhled"
 
-#: ../modules/cdisplay_proof.c:306
-msgid "_Intent:"
-msgstr "_Cíl:"
-
-#: ../modules/cdisplay_proof.c:310
+#: ../modules/cdisplay_proof.c:340
 msgid "Choose an ICC Color Profile"
 msgstr "Zvolte profil barev ICC"
 
-#: ../modules/cdisplay_proof.c:313
+#: ../modules/cdisplay_proof.c:367
+msgid "All files (*.*)"
+msgstr "Všechny soubory (*.*)"
+
+#: ../modules/cdisplay_proof.c:372
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr "ICC profil barev (*.icc, *.icm)"
+
+#: ../modules/cdisplay_proof.c:430
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/cdisplay_proof.c:318
+#: ../modules/cdisplay_proof.c:436
+msgid "_Intent:"
+msgstr "_Cíl:"
+
+#: ../modules/cdisplay_proof.c:441
 msgid "_Black Point Compensation"
 msgstr "_Kompenzace černého bodu"
 
@@ -1827,4 +1837,3 @@ msgstr "GIMP"
 #: ../modules/controller_midi.c:456
 msgid "GIMP MIDI Input Controller"
 msgstr "Gimpí ovladač vstupu MIDI"
-
