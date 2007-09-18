@@ -26,6 +26,7 @@
 
 #include "gimppluginmanager.h"
 #include "gimppluginmanager-menu-branch.h"
+#include "plug-in-menu-path.h"
 
 
 /*  public functions  */
@@ -67,13 +68,15 @@ gimp_plug_in_manager_add_menu_branch (GimpPlugInManager *manager,
   branch = g_slice_new (GimpPlugInMenuBranch);
 
   branch->prog_name  = g_strdup (prog_name);
-  branch->menu_path  = g_strdup (menu_path);
+  branch->menu_path  = plug_in_menu_path_map (menu_path);
   branch->menu_label = g_strdup (menu_label);
 
   manager->menu_branches = g_slist_append (manager->menu_branches, branch);
 
   g_signal_emit_by_name (manager, "menu-branch-added",
-                         prog_name, menu_path, menu_label);
+                         branch->prog_name,
+                         branch->menu_path,
+                         branch->menu_label);
 
 #ifdef VERBOSE
   g_print ("added menu branch \"%s\" at path \"%s\"\n",

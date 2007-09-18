@@ -202,9 +202,9 @@ gimp_toolbox_constructor (GType                  type,
 
   manager = GTK_UI_MANAGER (GIMP_IMAGE_DOCK (toolbox)->ui_manager);
 
-#ifndef GDK_WINDOWING_QUARTZ
+#ifdef ENABLE_TOOLBOX_MENU
   toolbox->menu_bar = gtk_ui_manager_get_widget (manager, "/toolbox-menubar");
-#endif /* !GDK_WINDOWING_QUARTZ */
+#endif /* ENABLE_TOOLBOX_MENU */
 
   if (toolbox->menu_bar)
     {

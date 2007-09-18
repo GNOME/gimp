@@ -1,5 +1,27 @@
 2007-09-18  Michael Natterer  <mitch@gimp.org>
 
+	* configure.in: replaced HAVE_GDK_QUARTZ conditional by
+	--disable-toolbox-menu configure switch which defaults to "yes"
+	normally and to "no" on quartz.
+
+	* app/widgets/gimptoolbox.c: changed #ifdef accordingly.
+
+	* app/plug-in/Makefile.am
+	* app/plug-in/plug-in-menu-path.[ch]: new generic machanism to map
+	around menu locations. If ENABLE_TOOLBOX_MENU is false, map
+	"Xtns" and "Help" from <Toolbox> to <Image>.
+
+	* app/plug-in/gimppluginmanager-menu-branch.c
+	* app/plug-in/gimppluginprocedure.c: run all menu paths through the
+	new mapping function.
+
+	* menus/Makefile.am
+	* menus/menus.xsl
+	* menus/image-menu.xml.in: add both the "Xtns" and "Help" menus to
+	the image menubar if TOOLBOX_MENU is false.
+
+2007-09-18  Michael Natterer  <mitch@gimp.org>
+
 	* tools/pdbgen/pdb/fileops.pdb: canonicalize the name of the
 	thumbnail loader procedure too. Fixes bug #477917.
 

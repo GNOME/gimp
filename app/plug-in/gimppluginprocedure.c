@@ -36,6 +36,7 @@
 #define __YES_I_NEED_GIMP_PLUG_IN_MANAGER_CALL__
 #include "gimppluginmanager-call.h"
 #include "gimppluginprocedure.h"
+#include "plug-in-menu-path.h"
 
 #include "gimp-intl.h"
 
@@ -334,6 +335,7 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
   gchar         *basename = NULL;
   const gchar   *required = NULL;
   gchar         *p;
+  gchar         *mapped_path;
 
   g_return_val_if_fail (GIMP_IS_PLUG_IN_PROCEDURE (proc), FALSE);
   g_return_val_if_fail (menu_path != NULL, FALSE);
@@ -483,10 +485,12 @@ gimp_plug_in_procedure_add_menu_path (GimpPlugInProcedure  *proc,
 
   g_free (basename);
 
-  proc->menu_paths = g_list_append (proc->menu_paths, g_strdup (menu_path));
+  mapped_path = plug_in_menu_path_map (menu_path);
+
+  proc->menu_paths = g_list_append (proc->menu_paths, mapped_path);
 
   g_signal_emit (proc, gimp_plug_in_procedure_signals[MENU_PATH_ADDED], 0,
-                 menu_path);
+                 mapped_path);
 
   return TRUE;
 

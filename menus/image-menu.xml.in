@@ -589,6 +589,14 @@
       <separator />
     </menu>
 
+    <menu action="extensions-menu" name="Xtns">
+      <placeholder name="Extensions">
+	<menuitem action="dialogs-module-dialog"/>
+      </placeholder>
+      <placeholder name="Languages"/>
+      <separator/>
+    </menu>
+
     <menu action="help-menu" name="Help">
       <menuitem action="help-help" />
       <menuitem action="help-context-help" />
