@@ -1,5 +1,12 @@
 2007-09-19  Raphaël Quinet  <raphael@gimp.org>
 
+	* plug-ins/jpeg/jpegqual.c: Re-wrote large parts of the code,
+	still work in progress: use GOption for command-line options, add
+	number of quantization tables in QuantInfo, added info for more
+	sources (devices or software) but not verified yet.
+
+2007-09-19  Raphaël Quinet  <raphael@gimp.org>
+
 	* plug-ins/jpeg/jpeg-load.c
 	* plug-ins/jpeg/jpeg-save.c: ifdef'ed out some debugging
 	statements so that they show up only in unstable releases.
