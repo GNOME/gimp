@@ -350,11 +350,7 @@ query (void)
     { GIMP_PDB_IMAGE,    "image2",       "Second input image" },
     { GIMP_PDB_IMAGE,    "image3",       "Third input image" },
     { GIMP_PDB_IMAGE,    "image4",       "Fourth input image" },
-    { GIMP_PDB_STRING,   "compose-type", "What to compose: RGB, RGBA, HSV, HSL, CMY, CMYK" },
-    { GIMP_PDB_INT8,     "value1",       "Mask value if image 1 is -1" },
-    { GIMP_PDB_INT8,     "value2",       "Mask value if image 2 is -1" },
-    { GIMP_PDB_INT8,     "value3",       "Mask value if image 3 is -1" },
-    { GIMP_PDB_INT8,     "value4",       "Mask value if image 4 is -1" }
+    { GIMP_PDB_STRING,   "compose-type", "What to compose: RGB, RGBA, HSV, HSL, CMY, CMYK" }
   };
 
   static const GimpParamDef return_vals[] =
@@ -370,11 +366,7 @@ query (void)
     { GIMP_PDB_DRAWABLE, "drawable2",    "Second input drawable" },
     { GIMP_PDB_DRAWABLE, "drawable3",    "Third input drawable" },
     { GIMP_PDB_DRAWABLE, "drawable4",    "Fourth input drawable" },
-    { GIMP_PDB_STRING,   "compose-type", "What to compose: RGB, RGBA, HSV, HSL, CMY, CMYK" },
-    { GIMP_PDB_INT8,     "value1",       "Mask value if image 1 is -1" },
-    { GIMP_PDB_INT8,     "value2",       "Mask value if image 2 is -1" },
-    { GIMP_PDB_INT8,     "value3",       "Mask value if image 3 is -1" },
-    { GIMP_PDB_INT8,     "value4",       "Mask value if image 4 is -1" }
+    { GIMP_PDB_STRING,   "compose-type", "What to compose: RGB, RGBA, HSV, HSL, CMY, CMYK" }
   };
 
   static const GimpParamDef drw_return_vals[] =
@@ -571,14 +563,8 @@ run (const gchar      *name,
                 {
                   if (composevals.inputs[i].comp.ID == -1)
                     {
-                      if (nparams < 8 + i)
-                        {
-                          status = GIMP_PDB_CALLING_ERROR;
-                          break;
-                        }
-
-                      composevals.inputs[i].is_ID    = FALSE;
-                      composevals.inputs[i].comp.val = param[7 + i].data.d_int8;
+                      composevals.inputs[i].is_ID = FALSE;
+                      composevals.inputs[i].comp.val = 0;
                     }
                   else
                     {
