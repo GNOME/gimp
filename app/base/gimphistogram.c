@@ -562,8 +562,6 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 
   if (mask)
     {
-      gdouble masked;
-
       src  = region->data;
       msrc = mask->data;
 
@@ -578,7 +576,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 
               while (w--)
                 {
-                  masked = m[0] / 255.0;
+                  const gdouble masked = m[0] / 255.0;
 
                   VALUE (0, s[0]) += masked;
 
@@ -600,9 +598,10 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 
               while (w--)
                 {
-                  masked = m[0] / 255.0;
+                  const gdouble masked = m[0] / 255.0;
+                  const gdouble weight = s[1] / 255.0;
 
-                  VALUE (0, s[0]) += masked;
+                  VALUE (0, s[0]) += weight * masked;
                   VALUE (1, s[1]) += masked;
 
                   s += 2;
@@ -623,7 +622,7 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 
               while (w--)
                 {
-                  masked = m[0] / 255.0;
+                  const gdouble masked = m[0] / 255.0;
 
                   VALUE (1, s[0]) += masked;
                   VALUE (2, s[1]) += masked;
@@ -654,19 +653,20 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 
               while (w--)
                 {
-                  masked = m[0] / 255.0;
+                  const gdouble masked = m[0] / 255.0;
+                  const gdouble weight = s[3] / 255.0;
 
-                  VALUE (1, s[0]) += masked;
-                  VALUE (2, s[1]) += masked;
-                  VALUE (3, s[2]) += masked;
+                  VALUE (1, s[0]) += weight * masked;
+                  VALUE (2, s[1]) += weight * masked;
+                  VALUE (3, s[2]) += weight * masked;
                   VALUE (4, s[3]) += masked;
 
                   max = (s[0] > s[1]) ? s[0] : s[1];
 
                   if (s[2] > max)
-                   VALUE (0, s[2]) += masked;
+                   VALUE (0, s[2]) += weight * masked;
                   else
-                    VALUE (0, max) += masked;
+                    VALUE (0, max) += weight * masked;
 
                   s += 4;
                   m += 1;
@@ -709,7 +709,9 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 
               while (w--)
                 {
-                  VALUE (0, s[0]) += 1.0;
+                  const gdouble weight = s[1] / 255;
+
+                  VALUE (0, s[0]) += weight;
                   VALUE (1, s[1]) += 1.0;
 
                   s += 2;
@@ -753,17 +755,19 @@ gimp_histogram_calculate_sub_region (GimpHistogram *histogram,
 
               while (w--)
                 {
-                  VALUE (1, s[0]) += 1.0;
-                  VALUE (2, s[1]) += 1.0;
-                  VALUE (3, s[2]) += 1.0;
+                  const gdouble weight = s[3] / 255;
+
+                  VALUE (1, s[0]) += weight;
+                  VALUE (2, s[1]) += weight;
+                  VALUE (3, s[2]) += weight;
                   VALUE (4, s[3]) += 1.0;
 
                   max = (s[0] > s[1]) ? s[0] : s[1];
 
                   if (s[2] > max)
-                    VALUE (0, s[2]) += 1.0;
+                    VALUE (0, s[2]) += weight;
                   else
-                    VALUE (0, max) += 1.0;
+                    VALUE (0, max) += weight;
 
                   s += 4;
                 }

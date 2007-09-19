@@ -1,5 +1,10 @@
 2007-09-19  Sven Neumann  <sven@gimp.org>
 
+	* app/base/gimphistogram.c: weight pixels by their alpha value
+	(bug #477689).
+
+2007-09-19  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/compose.c: removed extra arguments that were
 	added to the compose procedures in the 2.3 development cycle.
 	Restores compatibility and fixes bug #477795.
