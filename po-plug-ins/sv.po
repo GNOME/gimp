@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-12 20:42+0200\n"
-"PO-Revision-Date: 2007-09-12 20:45+0100\n"
+"POT-Creation-Date: 2007-09-19 13:56+0200\n"
+"PO-Revision-Date: 2007-09-19 13:57+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -357,7 +357,7 @@ msgstr "_Fraktaler"
 #: ../plug-ins/common/mng.c:561
 #: ../plug-ins/common/mng.c:950
 #: ../plug-ins/common/pat.c:447
-#: ../plug-ins/common/pcx.c:643
+#: ../plug-ins/common/pcx.c:645
 #: ../plug-ins/common/pix.c:508
 #: ../plug-ins/common/png.c:1244
 #: ../plug-ins/common/pnm.c:941
@@ -425,7 +425,7 @@ msgstr "Spara fraktalparametrar"
 #: ../plug-ins/common/poppler.c:501
 #: ../plug-ins/common/postscript.c:1021
 #: ../plug-ins/common/postscript.c:3029
-#: ../plug-ins/common/psd-load.c:2125
+#: ../plug-ins/common/psd-load.c:2156
 #: ../plug-ins/common/psp.c:1432
 #: ../plug-ins/common/raw.c:243
 #: ../plug-ins/common/raw.c:645
@@ -445,7 +445,7 @@ msgstr "Spara fraktalparametrar"
 #: ../plug-ins/gfli/gfli.c:464
 #: ../plug-ins/help/gimphelplocale.c:193
 #: ../plug-ins/jpeg/jpeg-load.c:93
-#: ../plug-ins/jpeg/jpeg-load.c:871
+#: ../plug-ins/jpeg/jpeg-load.c:876
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:271
 #: ../plug-ins/uri/uri-backend-libcurl.c:186
 #: ../plug-ins/winicon/icoload.c:651
@@ -1218,7 +1218,7 @@ msgstr "Felaktig färgkarta"
 #: ../plug-ins/common/pnm.c:487
 #: ../plug-ins/common/poppler.c:546
 #: ../plug-ins/common/postscript.c:1027
-#: ../plug-ins/common/psd-load.c:2130
+#: ../plug-ins/common/psd-load.c:2161
 #: ../plug-ins/common/raw.c:650
 #: ../plug-ins/common/sunras.c:470
 #: ../plug-ins/common/tga.c:428
@@ -1268,13 +1268,13 @@ msgid "Unsupported or invalid bitdepth."
 msgstr "Bitdjupet stöds inte eller är ogiltigt."
 
 #: ../plug-ins/bmp/bmpread.c:550
-#: ../plug-ins/common/pcx.c:375
+#: ../plug-ins/common/pcx.c:376
 #, c-format
 msgid "Unsupported or invalid image width: %d"
 msgstr "Bildens bredd är ogiltig eller stöds inte: %d"
 
 #: ../plug-ins/bmp/bmpread.c:555
-#: ../plug-ins/common/pcx.c:380
+#: ../plug-ins/common/pcx.c:381
 #, c-format
 msgid "Unsupported or invalid image height: %d"
 msgstr "Bildens höjd är ogiltig eller stöds inte: %d"
@@ -1287,16 +1287,16 @@ msgstr "Bildens höjd är ogiltig eller stöds inte: %d"
 #: ../plug-ins/common/CEL.c:352
 #: ../plug-ins/common/blinds.c:277
 #: ../plug-ins/common/compose.c:924
-#: ../plug-ins/common/decompose.c:703
+#: ../plug-ins/common/decompose.c:706
 #: ../plug-ins/common/dicom.c:503
 #: ../plug-ins/common/film.c:746
 #: ../plug-ins/common/gif-load.c:879
-#: ../plug-ins/common/pcx.c:387
 #: ../plug-ins/common/pcx.c:393
+#: ../plug-ins/common/pcx.c:399
 #: ../plug-ins/common/pix.c:368
 #: ../plug-ins/common/png.c:831
 #: ../plug-ins/common/pnm.c:570
-#: ../plug-ins/common/psd-load.c:2553
+#: ../plug-ins/common/psd-load.c:2587
 #: ../plug-ins/common/raw.c:691
 #: ../plug-ins/common/smooth_palette.c:257
 #: ../plug-ins/common/sunras.c:956
@@ -1309,7 +1309,7 @@ msgstr "Bildens höjd är ogiltig eller stöds inte: %d"
 #: ../plug-ins/gfig/gfig-dialog.c:1284
 #: ../plug-ins/gimpressionist/general.c:122
 #: ../plug-ins/jpeg/jpeg-load.c:244
-#: ../plug-ins/jpeg/jpeg-load.c:784
+#: ../plug-ins/jpeg/jpeg-load.c:789
 #: ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:571
 #: ../plug-ins/winsnap/winsnap.c:1155
@@ -1341,7 +1341,7 @@ msgstr "Alfakanal kommer att ignoreras."
 #: ../plug-ins/common/gih.c:1263
 #: ../plug-ins/common/gtm.c:245
 #: ../plug-ins/common/pat.c:452
-#: ../plug-ins/common/pcx.c:605
+#: ../plug-ins/common/pcx.c:607
 #: ../plug-ins/common/pix.c:513
 #: ../plug-ins/common/png.c:1251
 #: ../plug-ins/common/pnm.c:946
@@ -1372,7 +1372,7 @@ msgid "_Run-Length Encoded"
 msgstr "_Run-Length-kodad"
 
 #: ../plug-ins/bmp/bmpwrite.c:826
-#: ../plug-ins/jpeg/jpeg-save.c:893
+#: ../plug-ins/jpeg/jpeg-save.c:897
 msgid "_Advanced Options"
 msgstr "_Avancerade inställningar"
 
@@ -2946,7 +2946,7 @@ msgid "Compose Channels"
 msgstr "Komponera kanaler"
 
 #: ../plug-ins/common/compose.c:1514
-#: ../plug-ins/common/decompose.c:1495
+#: ../plug-ins/common/decompose.c:1498
 msgid "Color _model:"
 msgstr "Färg_modell:"
 
@@ -3487,23 +3487,23 @@ msgstr "_Separera..."
 msgid "Decomposing"
 msgstr "Separering"
 
-#: ../plug-ins/common/decompose.c:1460
+#: ../plug-ins/common/decompose.c:1463
 msgid "Decompose"
 msgstr "Separera"
 
-#: ../plug-ins/common/decompose.c:1483
+#: ../plug-ins/common/decompose.c:1486
 msgid "Extract Channels"
 msgstr "Extrahera kanaler"
 
-#: ../plug-ins/common/decompose.c:1530
+#: ../plug-ins/common/decompose.c:1533
 msgid "_Decompose to layers"
 msgstr "Separera till la_ger"
 
-#: ../plug-ins/common/decompose.c:1541
+#: ../plug-ins/common/decompose.c:1544
 msgid "_Foreground as registration color"
 msgstr "_Förgrund som registreringsfärg"
 
-#: ../plug-ins/common/decompose.c:1542
+#: ../plug-ins/common/decompose.c:1545
 msgid "Pixels in the foreground color will appear black in all output images.  This can be used for things like crop marks that have to show up on all channels."
 msgstr "Bildpunkter i förgrundsfärgen kommer att visas svarta i alla utdatabilder.  Det kan användas för saker som beskäringsmarkeringar som måste visas i alla kanaler."
 
@@ -3670,7 +3670,7 @@ msgid "'%s' is not a DICOM file."
 msgstr "\"%s\" är inte en DICOM-fil"
 
 #: ../plug-ins/common/dicom.c:678
-#: ../plug-ins/common/pcx.c:637
+#: ../plug-ins/common/pcx.c:639
 #: ../plug-ins/common/pnm.c:932
 msgid "Cannot save images with alpha channel."
 msgstr "Kan inte spara bilder med en alfakanal."
@@ -6236,31 +6236,35 @@ msgstr "Kan inte läsa sidfot från \"%s\""
 msgid "'%s' is not a PCX file"
 msgstr "\"%s\" är inte en PCX-fil"
 
-#: ../plug-ins/common/pcx.c:432
+#: ../plug-ins/common/pcx.c:386
+msgid "Invalid number of bytes per line in PCX header"
+msgstr "Ogiltigt antal byte per rad i PCX-huvud"
+
+#: ../plug-ins/common/pcx.c:434
 msgid "Unusual PCX flavour, giving up"
 msgstr "Ovanlig PCX-variant; ger upp"
 
-#: ../plug-ins/common/pcx.c:653
+#: ../plug-ins/common/pcx.c:655
 #, c-format
 msgid "Invalid X offset: %d"
 msgstr "Ogiltig X-position: %d"
 
-#: ../plug-ins/common/pcx.c:659
+#: ../plug-ins/common/pcx.c:661
 #, c-format
 msgid "Invalid Y offset: %d"
 msgstr "Ogiltig Y-position: %d"
 
-#: ../plug-ins/common/pcx.c:665
+#: ../plug-ins/common/pcx.c:667
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
 msgstr "Högra ramen är utanför intervallet (måste vara < %d): %d"
 
-#: ../plug-ins/common/pcx.c:672
+#: ../plug-ins/common/pcx.c:674
 #, c-format
 msgid "Bottom border out of bounds (must be < %d): %d"
 msgstr "Nedre ramen är utanför intervallet (måste vara < %d): %d"
 
-#: ../plug-ins/common/pcx.c:728
+#: ../plug-ins/common/pcx.c:730
 #, c-format
 msgid "Writing to file '%s' failed: %s"
 msgstr "Skrivning till filen \"%s\" misslyckades: %s"
@@ -6479,12 +6483,12 @@ msgid "Co_mpression level:"
 msgstr "Ko_mpressionsnivå:"
 
 #: ../plug-ins/common/png.c:1895
-#: ../plug-ins/jpeg/jpeg-save.c:1165
+#: ../plug-ins/jpeg/jpeg-save.c:1169
 msgid "_Load Defaults"
 msgstr "_Läs in standardvärden"
 
 #: ../plug-ins/common/png.c:1903
-#: ../plug-ins/jpeg/jpeg-save.c:1174
+#: ../plug-ins/jpeg/jpeg-save.c:1178
 msgid "S_ave Defaults"
 msgstr "S_para standardvärden"
 
@@ -6858,59 +6862,59 @@ msgstr "Procedurbläddrare"
 msgid "Procedure Browser"
 msgstr "Procedurbläddrare"
 
-#: ../plug-ins/common/psd-load.c:526
+#: ../plug-ins/common/psd-load.c:527
 msgid "Invalid UTF-8 string in PSD file"
 msgstr "Ogiltig UTF-8-sträng i PSD-fil"
 
-#: ../plug-ins/common/psd-load.c:622
+#: ../plug-ins/common/psd-load.c:623
 msgid "Cannot handle bitmap PSD files"
 msgstr "Kan inte hantera bitmappade PSD-filer"
 
-#: ../plug-ins/common/psd-load.c:631
+#: ../plug-ins/common/psd-load.c:632
 msgid "Cannot handle PSD files in CMYK color"
 msgstr "Kan inte hantera PSD-filer i CMYK-färg"
 
-#: ../plug-ins/common/psd-load.c:634
+#: ../plug-ins/common/psd-load.c:635
 msgid "Cannot handle PSD files in Multichannel color"
 msgstr "Kan inte hantera PSD-filer i Multichannel-färg"
 
-#: ../plug-ins/common/psd-load.c:637
+#: ../plug-ins/common/psd-load.c:638
 msgid "Cannot handle PSD files in Duotone color"
 msgstr "Kan inte hantera PSD-filer i Duotone-färg"
 
-#: ../plug-ins/common/psd-load.c:640
+#: ../plug-ins/common/psd-load.c:641
 msgid "Cannot handle PSD files in Lab color"
 msgstr "Kan inte hantera PSD-filer i Lab-färg"
 
-#: ../plug-ins/common/psd-load.c:643
+#: ../plug-ins/common/psd-load.c:644
 #, c-format
 msgid "Cannot handle the color mode %d of the PSD file"
 msgstr "Kan inte hantera färgläge %d för PSD-filen"
 
-#: ../plug-ins/common/psd-load.c:736
+#: ../plug-ins/common/psd-load.c:737
 #, c-format
 msgid "Cannot handle PSD file with more than %d channels"
 msgstr "Kan inte hantera PSD-filer med fler än %d kanaler"
 
-#: ../plug-ins/common/psd-load.c:2488
+#: ../plug-ins/common/psd-load.c:2522
 msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
 msgstr "Kan inte hantera PSD-filer i CMYK-färg med fler än 5 kanaler"
 
-#: ../plug-ins/common/psd-load.c:2503
+#: ../plug-ins/common/psd-load.c:2537
 #, c-format
 msgid "Cannot handle image mode %d (%s)"
 msgstr "Kan inte hantera bildläge %d (%s)"
 
-#: ../plug-ins/common/psd-load.c:2512
+#: ../plug-ins/common/psd-load.c:2546
 #, c-format
 msgid "Cannot handle %d bits per channel PSD files"
 msgstr "Kan inte hantera PSD-filer med %d bitar per kanal"
 
-#: ../plug-ins/common/psd-load.c:3313
+#: ../plug-ins/common/psd-load.c:3347
 msgid "This is not an Adobe Photoshop PSD file"
 msgstr "Detta är inte en Adobe Photoshop PSD-fil"
 
-#: ../plug-ins/common/psd-load.c:3318
+#: ../plug-ins/common/psd-load.c:3352
 #, c-format
 msgid "The PSD file has bad version number '%d', not 1"
 msgstr "PSD-filen har felaktigt versionsnummer \"%d\", inte 1"
@@ -11678,7 +11682,7 @@ msgstr "Vill du att GIMP ska rotera den till standardorienteringen?"
 msgid "JPEG preview"
 msgstr "JPEG förhandsgranska"
 
-#: ../plug-ins/jpeg/jpeg-load.c:650
+#: ../plug-ins/jpeg/jpeg-load.c:655
 #: ../plug-ins/winicon/icoload.c:722
 #, c-format
 msgid "Opening thumbnail for '%s'"
@@ -11689,117 +11693,117 @@ msgstr "Öppnar miniatyrbild för \"%s\""
 msgid "File size: %02.01f kB"
 msgstr "Filstorlek: %02.01f kB"
 
-#: ../plug-ins/jpeg/jpeg-save.c:667
+#: ../plug-ins/jpeg/jpeg-save.c:673
 msgid "Calculating file size..."
 msgstr "Beräknar filstorlek..."
 
-#: ../plug-ins/jpeg/jpeg-save.c:758
-#: ../plug-ins/jpeg/jpeg-save.c:872
+#: ../plug-ins/jpeg/jpeg-save.c:764
+#: ../plug-ins/jpeg/jpeg-save.c:876
 msgid "File size: unknown"
 msgstr "Filstorlek: okänd"
 
-#: ../plug-ins/jpeg/jpeg-save.c:816
+#: ../plug-ins/jpeg/jpeg-save.c:820
 msgid "Save as JPEG"
 msgstr "Spara som JPEG"
 
-#: ../plug-ins/jpeg/jpeg-save.c:851
+#: ../plug-ins/jpeg/jpeg-save.c:855
 msgid "_Quality:"
 msgstr "_Kvalitet:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:855
+#: ../plug-ins/jpeg/jpeg-save.c:859
 msgid "JPEG quality parameter"
 msgstr "JPEG kvalitetsparameter"
 
-#: ../plug-ins/jpeg/jpeg-save.c:870
+#: ../plug-ins/jpeg/jpeg-save.c:874
 msgid "Enable preview to obtain the file size."
 msgstr "Aktivera förhandsvisning för att läsa av filstorleken."
 
-#: ../plug-ins/jpeg/jpeg-save.c:881
+#: ../plug-ins/jpeg/jpeg-save.c:885
 msgid "Show _preview in image window"
 msgstr "Visa _förhandsgranskning i bildfönstret"
 
-#: ../plug-ins/jpeg/jpeg-save.c:922
+#: ../plug-ins/jpeg/jpeg-save.c:926
 msgid "_Smoothing:"
 msgstr "_Utjämnande:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:935
+#: ../plug-ins/jpeg/jpeg-save.c:939
 msgid "Frequency (rows):"
 msgstr "Omstartsfrekvens (rader):"
 
-#: ../plug-ins/jpeg/jpeg-save.c:951
+#: ../plug-ins/jpeg/jpeg-save.c:955
 msgid "Use restart markers"
 msgstr "Använd omstartsmarkörer"
 
-#: ../plug-ins/jpeg/jpeg-save.c:967
+#: ../plug-ins/jpeg/jpeg-save.c:971
 #: ../plug-ins/xjt/xjt.c:877
 msgid "Optimize"
 msgstr "Optimera"
 
-#: ../plug-ins/jpeg/jpeg-save.c:980
+#: ../plug-ins/jpeg/jpeg-save.c:984
 msgid "Progressive"
 msgstr "Progressiv"
 
-#: ../plug-ins/jpeg/jpeg-save.c:995
+#: ../plug-ins/jpeg/jpeg-save.c:999
 msgid "Save EXIF data"
 msgstr "Spara EXIF-data"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1012
+#: ../plug-ins/jpeg/jpeg-save.c:1016
 msgid "Save thumbnail"
 msgstr "Spara miniatyrbild"
 
 #. XMP metadata
-#: ../plug-ins/jpeg/jpeg-save.c:1028
+#: ../plug-ins/jpeg/jpeg-save.c:1032
 msgid "Save XMP data"
 msgstr "Spara XMP-data"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1043
+#: ../plug-ins/jpeg/jpeg-save.c:1047
 msgid "Use quality settings from original image"
 msgstr "Använd kvalitetsinställningar från originalbilden"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1049
+#: ../plug-ins/jpeg/jpeg-save.c:1053
 msgid "If the original image was loaded from a JPEG file using non-standard quality settings (quantization tables), enable this option to get almost the same quality and file size."
 msgstr "Om originalbilden lästes in från en JPEG-fil med icke-standardiserade kvalitetsinställningar (kvantiseringstabeller), aktivera det här alternativet för att få nästan samma kvalitet och filstorlek."
 
 #. Subsampling
-#: ../plug-ins/jpeg/jpeg-save.c:1073
+#: ../plug-ins/jpeg/jpeg-save.c:1077
 msgid "Subsampling:"
 msgstr "Subsampling:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1080
+#: ../plug-ins/jpeg/jpeg-save.c:1084
 msgid "1x1,1x1,1x1 (best quality)"
 msgstr "1x1,1x1,1x1 (bäst kvalitet)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1081
+#: ../plug-ins/jpeg/jpeg-save.c:1085
 msgid "2x1,1x1,1x1 (4:2:2)"
 msgstr "2x1,1x1,1x1 (4:2:2)"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1082
+#: ../plug-ins/jpeg/jpeg-save.c:1086
 msgid "1x2,1x1,1x1"
 msgstr "1x2,1x1,1x1"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1083
+#: ../plug-ins/jpeg/jpeg-save.c:1087
 msgid "2x2,1x1,1x1 (smallest file)"
 msgstr "2x2,1x1,1x1 (minst filstorlek)"
 
 #. DCT method
-#: ../plug-ins/jpeg/jpeg-save.c:1107
+#: ../plug-ins/jpeg/jpeg-save.c:1111
 msgid "DCT method:"
 msgstr "DCT-metod:"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1113
+#: ../plug-ins/jpeg/jpeg-save.c:1117
 msgid "Fast Integer"
 msgstr "Snabba heltal"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1114
+#: ../plug-ins/jpeg/jpeg-save.c:1118
 msgid "Integer"
 msgstr "Heltal"
 
-#: ../plug-ins/jpeg/jpeg-save.c:1115
+#: ../plug-ins/jpeg/jpeg-save.c:1119
 msgid "Floating-Point"
 msgstr "Flyttal"
 
 # src/sidebar.c:107
-#: ../plug-ins/jpeg/jpeg-save.c:1129
+#: ../plug-ins/jpeg/jpeg-save.c:1133
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -12487,8 +12491,6 @@ msgstr "Fel: Kan ej läsa XJT-egenskapsfilen \"%s\"."
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fel: XJT-egenskapsfilen \"%s\" är tom."
 
-#~ msgid "Invalid number of bytes per line: %hd"
-#~ msgstr "Ogiltigt antal byte per rad: %hd"
 #~ msgid "Use custom quality settings"
 #~ msgstr "Använd anpassade kvalitetsinställningar"
 #~ msgid "Force baseline JPEG"
