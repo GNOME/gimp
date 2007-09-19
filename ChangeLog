@@ -1,3 +1,13 @@
+2007-09-19  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/jpeg/jpeg-load.c
+	* plug-ins/jpeg/jpeg-save.c: ifdef'ed out some debugging
+	statements so that they show up only in unstable releases.
+
+	* plug-ins/jpeg/jpeg.c (run): removed calls to gimp_set_data() and
+	gimp_get_data() so that changes made to the JPEG save settings for
+	one file do not affect other files saved later.
+
 2007-09-18  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/gtk-macmenu.[ch]: removed...

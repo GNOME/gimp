@@ -269,8 +269,10 @@ load_image (const gchar *filename,
 
           if (marker->marker == JPEG_COM)
             {
+#ifdef GIMP_UNSTABLE
               g_print ("jpeg-load: found image comment (%d bytes)\n",
                        marker->data_length);
+#endif
 
               if (! comment_buffer)
                 {
@@ -287,8 +289,10 @@ load_image (const gchar *filename,
                    && (len > sizeof (JPEG_APP_HEADER_EXIF) + 8)
                    && ! strcmp (JPEG_APP_HEADER_EXIF, data))
             {
+#ifdef GIMP_UNSTABLE
               g_print ("jpeg-load: found EXIF block (%d bytes)\n",
                        (gint) (len - sizeof (JPEG_APP_HEADER_EXIF)));
+#endif
 #ifdef HAVE_EXIF
               if (! exif_data)
                 exif_data = exif_data_new ();
@@ -338,9 +342,10 @@ load_image (const gchar *filename,
               gint       nreturn_vals;
               gchar     *xmp_packet;
 
+#ifdef GIMP_UNSTABLE
               g_print ("jpeg-load: found XMP packet (%d bytes)\n",
                        (gint) (len - sizeof (JPEG_APP_HEADER_XMP)));
-
+#endif
               xmp_packet = g_strndup (data + sizeof (JPEG_APP_HEADER_XMP),
                                       len - sizeof (JPEG_APP_HEADER_XMP));
 

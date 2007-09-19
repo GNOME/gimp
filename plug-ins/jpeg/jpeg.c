@@ -393,15 +393,13 @@ run (const gchar      *name,
 
         case GIMP_RUN_INTERACTIVE:
         case GIMP_RUN_WITH_LAST_VALS:
-          /*  Possibly retrieve data  */
-          gimp_get_data (SAVE_PROC, &jsvals);
-
+          /* restore the values found when loading the file (if available) */
           jpeg_restore_original_settings (orig_image_ID,
                                           &orig_quality,
                                           &orig_subsmp,
                                           &num_quant_tables);
 
-          /* load up the previously used values */
+          /* load up the previously used values (if file was saved once) */
           parasite = gimp_image_parasite_find (orig_image_ID,
                                                "jpeg-save-options");
           if (parasite)
@@ -441,8 +439,7 @@ run (const gchar      *name,
                   jsvals.quality = orig_quality;
                   jsvals.use_orig_quality = TRUE;
                 }
-              if (orig_subsmp == 2
-                  || (orig_subsmp > 0 && jsvals.subsmp == 0))
+              if (orig_subsmp == 2 || (orig_subsmp > 0 && jsvals.subsmp == 0))
                 jsvals.subsmp = orig_subsmp;
             }
           break;
@@ -481,16 +478,11 @@ run (const gchar      *name,
 
       if (status == GIMP_PDB_SUCCESS)
         {
-          if (save_image (param[3].data.d_string,
-                          image_ID,
-                          drawable_ID,
-                          orig_image_ID,
-                          FALSE))
-            {
-              /*  Store mvals data  */
-              gimp_set_data (SAVE_PROC, &jsvals, sizeof (JpegSaveVals));
-            }
-          else
+          if (! save_image (param[3].data.d_string,
+                            image_ID,
+                            drawable_ID,
+                            orig_image_ID,
+                            FALSE))
             {
               status = GIMP_PDB_EXECUTION_ERROR;
             }

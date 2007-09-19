@@ -563,7 +563,9 @@ save_image (const gchar *filename,
           exif_data_save_data (exif_data_tmp, &exif_buf, &exif_buf_len);
         }
 
+#ifdef GIMP_UNSTABLE
       g_print ("jpeg-save: saving EXIF block (%d bytes)\n", exif_buf_len);
+#endif
       jpeg_write_marker (&cinfo, JPEG_APP0 + 1, exif_buf, exif_buf_len);
 
       if (exif_buf)
@@ -574,8 +576,10 @@ save_image (const gchar *filename,
   /* Step 4.1: Write the comment out - pw */
   if (image_comment && *image_comment)
     {
+#ifdef GIMP_UNSTABLE
       g_print ("jpeg-save: saving image comment (%d bytes)\n",
                (int) strlen (image_comment));
+#endif
       jpeg_write_marker (&cinfo, JPEG_COM,
                          (guchar *) image_comment, strlen (image_comment));
     }
@@ -593,8 +597,10 @@ save_image (const gchar *filename,
 
           xmp_data = ((const gchar *) gimp_parasite_data (parasite)) + 10;
           xmp_data_size = gimp_parasite_data_size (parasite) - 10;
+#ifdef GIMP_UNSTABLE
           g_print ("jpeg-save: saving XMP packet (%d bytes)\n",
                    (int) xmp_data_size);
+#endif
           app_block = g_malloc (sizeof (JPEG_APP_HEADER_XMP) + xmp_data_size);
           memcpy (app_block, JPEG_APP_HEADER_XMP,
                   sizeof (JPEG_APP_HEADER_XMP));
@@ -772,8 +778,6 @@ destroy_preview (void)
       gimp_drawable_detach (drawable_global);
       drawable_global = NULL;
     }
-
-  g_printerr ("destroy_preview (%d, %d)\n", preview_image_ID, preview_layer_ID);
 
   if (gimp_image_is_valid (preview_image_ID) &&
       gimp_drawable_is_valid (preview_layer_ID))
