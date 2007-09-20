@@ -1,3 +1,8 @@
+2007-09-20  Sven Neumann  <sven@gimp.org>
+
+	* app/gui/gui-vtable.c (gui_recent_list_add_uri): use
+	"application/octet-stream" as MIME type in case that it is unset.
+
 2007-09-20  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/jpeg/jpegqual.c (quant_info): updated the table of
