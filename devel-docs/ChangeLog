@@ -1,3 +1,8 @@
+2007-09-20  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/images/*.png: recreated using the new version of
+	the Clearlooks theme (as shipped with GNOME 2.20).
+
 2007-09-12  Sven Neumann  <sven@gimp.org>
 
 	* libgimp/libgimp-sections.txt: added gimp_context_list_paint_methods.
