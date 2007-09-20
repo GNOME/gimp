@@ -169,6 +169,7 @@ file_save (GimpImage           *image,
 
           gimp_image_set_uri (image, uri);
           gimp_image_set_save_proc (image, file_proc);
+
           gimp_image_clean_all (image);
         }
 

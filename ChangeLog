@@ -1,5 +1,24 @@
 2007-09-20  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage.[ch]: added a load_proc member to GimpImage
+	and getters and setters for it.
+
+	* app/file/file-open.c (file_open_image): set the load procedure,
+	but only if it hasn't been set already. Use the MIME type from the
+	load procedure that is set on the image.
+
+	* tools/pdbgen/pdb/fileops.pdb (file_load_invoker): set the load
+	procedure. This causes it to be set when the URI plug-in calls
+	gimp-file-load to load the image.
+
+	* app/pdb/fileops_cmds.c: regenerated.
+
+	* app/widgets/gimpimagepropview.c
+	(gimp_image_prop_view_label_set_filetype): use the MIME type from
+	the load procedure, in case that no save procedure is set.
+
+2007-09-20  Sven Neumann  <sven@gimp.org>
+
 	* app/gui/gui-vtable.c (gui_recent_list_add_uri): use
 	"application/octet-stream" as MIME type in case that it is unset.
 

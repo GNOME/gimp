@@ -372,6 +372,10 @@ gimp_image_prop_view_label_set_filetype (GtkWidget *label,
   GimpPlugInProcedure *proc;
 
   proc = gimp_image_get_save_proc (image);
+
+  if (! proc)
+    proc = gimp_image_get_load_proc (image);
+
   if (! proc)
     {
       gchar *filename = gimp_image_get_filename (image);

@@ -94,6 +94,17 @@ file_load_invoker (GimpProcedure     *procedure,
 
   g_value_array_free (new_args);
 
+  if (g_value_get_enum (return_vals->values) == GIMP_PDB_SUCCESS)
+    {
+      if (return_vals->n_values > 1 &&
+          GIMP_VALUE_HOLDS_IMAGE_ID (return_vals->values + 1))
+        {
+          GimpImage *image = gimp_value_get_image (return_vals->values + 1,
+                                                   gimp);
+          gimp_image_set_load_proc (image, file_proc);
+        }
+    }
+
   return return_vals;
 }
 

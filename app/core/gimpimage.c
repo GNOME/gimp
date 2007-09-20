@@ -566,6 +566,7 @@ gimp_image_init (GimpImage *image)
 
   image->ID                    = 0;
 
+  image->load_proc             = NULL;
   image->save_proc             = NULL;
 
   image->width                 = 0;
@@ -1420,6 +1421,23 @@ gimp_image_get_filename (const GimpImage *image)
     return NULL;
 
   return g_filename_from_uri (uri, NULL, NULL);
+}
+
+void
+gimp_image_set_load_proc (GimpImage           *image,
+                          GimpPlugInProcedure *proc)
+{
+  g_return_if_fail (GIMP_IS_IMAGE (image));
+
+  image->load_proc = proc;
+}
+
+GimpPlugInProcedure *
+gimp_image_get_load_proc (const GimpImage *image)
+{
+  g_return_val_if_fail (GIMP_IS_IMAGE (image), NULL);
+
+  return image->load_proc;
 }
 
 void

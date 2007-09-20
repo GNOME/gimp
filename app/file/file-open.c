@@ -165,6 +165,12 @@ file_open_image (Gimp                *gimp,
         {
           file_open_sanitize_image (image, as_new);
 
+          /* Only set the load procedure if it hasn't already been set. */
+          if (! gimp_image_get_load_proc (image))
+            gimp_image_set_load_proc (image, file_proc);
+
+          file_proc = gimp_image_get_load_proc (image);
+
           if (mime_type)
             *mime_type = file_proc->mime_type;
         }
