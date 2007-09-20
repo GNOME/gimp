@@ -1,3 +1,8 @@
+2007-09-20  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/jpeg/jpegqual.c (quant_info): updated the table of
+	known devices and software, work in progress.
+
 2007-09-20  Michael Natterer  <mitch@gimp.org>
 
 	* menus/image-menu.xml.in: added placeholder Edit/Preferences and
