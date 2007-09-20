@@ -187,8 +187,10 @@
         <menuitem action="vectors-stroke" />
       </placeholder>
       <separator />
+      <placeholder name="Preferences">
         <menuitem action="dialogs-preferences" />      
         <menuitem action="dialogs-keyboard-shortcuts" />
+      </placeholder>
       <separator />
     </menu>
 

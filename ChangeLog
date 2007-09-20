@@ -1,3 +1,11 @@
+2007-09-20  Michael Natterer  <mitch@gimp.org>
+
+	* menus/image-menu.xml.in: added placeholder Edit/Preferences and
+	move the preferences and keyboard shortcut dialogs there.
+
+	* plug-ins/common/uniteditor.c (query): register the unit editor
+	there too.
+
 2007-09-19  Sven Neumann  <sven@gimp.org>
 
 	* app/base/gimphistogram.c: weight pixels by their alpha value
