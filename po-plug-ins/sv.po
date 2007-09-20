@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-19 13:56+0200\n"
-"PO-Revision-Date: 2007-09-19 13:57+0100\n"
+"POT-Creation-Date: 2007-09-21 00:21+0200\n"
+"PO-Revision-Date: 2007-09-21 00:23+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -1286,7 +1286,7 @@ msgstr "Bildens höjd är ogiltig eller stöds inte: %d"
 #: ../plug-ins/common/CEL.c:349
 #: ../plug-ins/common/CEL.c:352
 #: ../plug-ins/common/blinds.c:277
-#: ../plug-ins/common/compose.c:924
+#: ../plug-ins/common/compose.c:910
 #: ../plug-ins/common/decompose.c:706
 #: ../plug-ins/common/dicom.c:503
 #: ../plug-ins/common/film.c:746
@@ -2871,91 +2871,91 @@ msgstr "_Blåton cb709f:"
 msgid "_Redness cr709f:"
 msgstr "_Rödton cr709f:"
 
-#: ../plug-ins/common/compose.c:393
+#: ../plug-ins/common/compose.c:385
 msgid "Create an image using multiple gray images as color channels"
 msgstr "Skapa en bild med hjälp av flera gråbilder som färgkanaler"
 
-#: ../plug-ins/common/compose.c:399
+#: ../plug-ins/common/compose.c:391
 msgid "C_ompose..."
 msgstr "K_omponera..."
 
-#: ../plug-ins/common/compose.c:423
+#: ../plug-ins/common/compose.c:415
 msgid "Recompose an image that was previously decomposed"
 msgstr "Komponera om en bild som tidigare var uppdelad"
 
-#: ../plug-ins/common/compose.c:431
+#: ../plug-ins/common/compose.c:423
 msgid "R_ecompose"
 msgstr "Komponera o_m"
 
-#: ../plug-ins/common/compose.c:475
+#: ../plug-ins/common/compose.c:467
 msgid "You can only run 'Recompose' if the active image was originally produced by 'Decompose'."
 msgstr "Du kan endast köra \"Komponera om\" om den aktiva bilden ursprungligen skapades av \"Separera\"."
 
-#: ../plug-ins/common/compose.c:499
+#: ../plug-ins/common/compose.c:491
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
 msgstr "Fel vid avläsning av \"decompose-data\"-parasit: för få lager hittades"
 
-#: ../plug-ins/common/compose.c:532
+#: ../plug-ins/common/compose.c:524
 #, c-format
 msgid "Could not get layers for image %d"
 msgstr "Kunde inte få lagren för bild %d"
 
-#: ../plug-ins/common/compose.c:605
+#: ../plug-ins/common/compose.c:591
 msgid "Composing"
 msgstr "Komponering"
 
-#: ../plug-ins/common/compose.c:690
-#: ../plug-ins/common/compose.c:1724
+#: ../plug-ins/common/compose.c:676
+#: ../plug-ins/common/compose.c:1710
 msgid "At least one image is needed to compose"
 msgstr "Minst en bild behövs för att komponera"
 
-#: ../plug-ins/common/compose.c:701
-#: ../plug-ins/common/compose.c:714
+#: ../plug-ins/common/compose.c:687
+#: ../plug-ins/common/compose.c:700
 #, c-format
 msgid "Specified layer %d not found"
 msgstr "Angivet lager %d kan inte hittas"
 
-#: ../plug-ins/common/compose.c:721
+#: ../plug-ins/common/compose.c:707
 msgid "Drawables have different size"
 msgstr "Ritytor är olika stora"
 
-#: ../plug-ins/common/compose.c:746
+#: ../plug-ins/common/compose.c:732
 msgid "Images have different size"
 msgstr "Bilderna är olika stora"
 
-#: ../plug-ins/common/compose.c:763
+#: ../plug-ins/common/compose.c:749
 msgid "Error in getting layer IDs"
 msgstr "Fel vid hämtande av lager-IDn"
 
-#: ../plug-ins/common/compose.c:784
+#: ../plug-ins/common/compose.c:770
 #, c-format
 msgid "Image is not a gray image (bpp=%d)"
 msgstr "Bilden är inte en gråskalebild (bpp=%d)"
 
-#: ../plug-ins/common/compose.c:811
+#: ../plug-ins/common/compose.c:797
 msgid "Unable to recompose, source layer not found"
 msgstr "Kunde inte komponera om, källagret hittades inte"
 
-#: ../plug-ins/common/compose.c:1477
+#: ../plug-ins/common/compose.c:1463
 msgid "Compose"
 msgstr "Komponera"
 
 #. Compose type combo
-#: ../plug-ins/common/compose.c:1504
+#: ../plug-ins/common/compose.c:1490
 msgid "Compose Channels"
 msgstr "Komponera kanaler"
 
-#: ../plug-ins/common/compose.c:1514
+#: ../plug-ins/common/compose.c:1500
 #: ../plug-ins/common/decompose.c:1498
 msgid "Color _model:"
 msgstr "Färg_modell:"
 
 #. Channel representation table
-#: ../plug-ins/common/compose.c:1546
+#: ../plug-ins/common/compose.c:1532
 msgid "Channel Representations"
 msgstr "Kanalrepresentationer"
 
-#: ../plug-ins/common/compose.c:1609
+#: ../plug-ins/common/compose.c:1595
 msgid "Mask value"
 msgstr "Maskvärde"
 
@@ -8569,8 +8569,8 @@ msgid "Create or alter units used in GIMP"
 msgstr "Skapa eller ändra enheter som används i GIMP"
 
 #: ../plug-ins/common/uniteditor.c:150
-msgid "_Unit Editor"
-msgstr "_Enhetsredigerare"
+msgid "U_nits"
+msgstr "E_nheter"
 
 #: ../plug-ins/common/uniteditor.c:208
 msgid "Add a New Unit"
@@ -12491,6 +12491,8 @@ msgstr "Fel: Kan ej läsa XJT-egenskapsfilen \"%s\"."
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Fel: XJT-egenskapsfilen \"%s\" är tom."
 
+#~ msgid "_Unit Editor"
+#~ msgstr "_Enhetsredigerare"
 #~ msgid "Use custom quality settings"
 #~ msgstr "Använd anpassade kvalitetsinställningar"
 #~ msgid "Force baseline JPEG"
