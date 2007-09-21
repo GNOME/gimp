@@ -7,6 +7,19 @@ This is the development branch of GIMP. Here's where all the shiny
 new stuff is being done that will one day be released as GIMP 2.4.
 
 
+Changes in GIMP 2.4.0-rc3
+=========================
+
+- use the new format for storing recently used files
+- added conversion options to the color profile conversion plug-in
+- allow to disable the toolbox menu on all platforms
+- further improved handling of the JPEG settings
+- switch tabs when hovering over them
+- added a PDB function to remove the alpha channel from a layer
+- plug-in previews remember the state of the Preview checkbox (bug #478657)
+- bug fixes
+
+
 Changes in GIMP 2.4.0-rc2
 =========================
 
