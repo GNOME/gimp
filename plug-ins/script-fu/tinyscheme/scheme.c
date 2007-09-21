@@ -348,12 +348,9 @@ static int is_ascii_name(const char *name, int *pc) {
 
 #endif
 
-static const char utf8_length[128] =
+/* Number of bytes expected AFTER lead byte of UTF-8 character. */
+static const char utf8_length[64] =
 {
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, /* 0x80-0x8f */
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, /* 0x90-0x9f */
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, /* 0xa0-0xaf */
-    0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0, /* 0xb0-0xbf */
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, /* 0xc0-0xcf */
     1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1, /* 0xd0-0xdf */
     2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2, /* 0xe0-0xef */
@@ -1479,21 +1476,50 @@ static gunichar basic_inchar(port *pt) {
   int  len;
 
   if(pt->kind&port_file) {
-    char utf8[7];
-    char *s;
+    unsigned char utf8[7];
+    int  c;
     int  i;
 
-    utf8[0] = fgetc(pt->rep.stdio.file);
-    if (utf8[0] & 0x80)
-    {
-       len = utf8_length[ utf8[0]&0x7F ];
-       s = &utf8[1];
-       for (i = 0; i < len; ++i)
-         *s++ = fgetc(pt->rep.stdio.file);
-       /* FIXME: Check for bad character and search for next good char. */
-       return g_utf8_get_char_validated(utf8, len+1);
-    }
-    return (gunichar)utf8[0];
+    while (TRUE)
+      {
+        c = fgetc(pt->rep.stdio.file);
+        if (c == EOF) return EOF;
+        utf8[0] = c;
+
+        if (utf8[0] <= 0x7f)
+          {
+            return (gunichar) utf8[0];
+          }
+
+        /* Check for valid lead byte per RFC-3629 */
+        if (utf8[0] >= 0xc2 && utf8[0] <= 0xf4)
+          {
+            len = utf8_length[utf8[0] & 0x3F];
+            for (i = 1; i <= len; i++)
+              {
+                c = fgetc(pt->rep.stdio.file);
+                if (c == EOF) return EOF;
+                utf8[i] = c;
+                if ((utf8[i] & 0xc0) != 0x80)
+                  {
+                    break;
+                  }
+              }
+
+            if (i <= len || (utf8[len] & 0xc0) != 0x80)
+              {
+                /* Invalid UTF-8 sequence. Try pushing back the last
+                 * byte read as the start of a new character. */
+                ungetc (utf8[i], pt->rep.stdio.file);
+              }
+            else
+              {
+                return g_utf8_get_char ((char *) &utf8[0]);
+              }
+          }
+
+        /* Everything else is invalid and will be ignored */
+      }
   } else {
     if(*pt->rep.string.curr==0
        || pt->rep.string.curr==pt->rep.string.past_the_end) {

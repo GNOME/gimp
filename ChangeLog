@@ -1,3 +1,9 @@
+2007-09-21  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme.c (basic_inchar): Applied
+	modified patch from Simon Budig. Any bytes read from a file which
+	are not valid UTF-8 characters will be ignored. Fixes bug #476356.
+
 2007-09-21  Sven Neumann  <sven@gimp.org>
 
 	General fix for bug #478657:
