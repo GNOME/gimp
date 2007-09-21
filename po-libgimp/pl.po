@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD.pl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-16 02:22+0200\n"
+"POT-Creation-Date: 2007-09-21 19:48+0200\n"
 "PO-Revision-Date: 2007-09-13 09:58+0200\n"
 "Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
 "Language-Team: Polish <gnome-l10n@lists.aviary.pl>\n"
@@ -921,6 +921,7 @@ msgid "Could not create '%s': %s"
 msgstr "Nie można utworzyć \"%s\": %s"
 
 #: ../libgimpconfig/gimpscanner.c:255
+#, c-format
 msgid "invalid UTF-8 string"
 msgstr "Niepoprawny tekst UTF-8"
 
@@ -968,6 +969,7 @@ msgstr "Nie można utworzyć folderu \"%s\" z miniaturkami."
 
 # Miniaturki nie zawierają znacznika Thumb...
 #: ../libgimpthumb/gimpthumbnail.c:498
+#, c-format
 msgid "Thumbnail contains no Thumb::URI tag"
 msgstr "Miniaturki nie zawierają znacznika Thumb::URI"
 
@@ -1121,7 +1123,7 @@ msgstr "Rozmiar szachownicy"
 msgid "Check Style"
 msgstr "Wygląd szachownicy"
 
-#. toggle button to (des)activate the instant preview
+#. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "_Podgląd"
@@ -1388,28 +1390,36 @@ msgstr "Profil monitora:"
 msgid "Print simulation profile:"
 msgstr "Profil symulacji wydruku:"
 
-#: ../modules/cdisplay_proof.c:102
+#: ../modules/cdisplay_proof.c:103
 msgid "Color proof filter using ICC color profile"
 msgstr "Filtr korygujący kolory w oparciu o profil ICC"
 
 # REV: Proof to "Kontrola/Sprawdzanie"
-#: ../modules/cdisplay_proof.c:179
+#: ../modules/cdisplay_proof.c:180
 msgid "Color Proof"
 msgstr "Korekcja kolorów"
 
-#: ../modules/cdisplay_proof.c:306
-msgid "_Intent:"
-msgstr "Pożądany _efekt:"
-
-#: ../modules/cdisplay_proof.c:310
+#: ../modules/cdisplay_proof.c:340
 msgid "Choose an ICC Color Profile"
 msgstr "Wybór profilu kolorów ICC"
 
-#: ../modules/cdisplay_proof.c:313
+#: ../modules/cdisplay_proof.c:367
+msgid "All files (*.*)"
+msgstr ""
+
+#: ../modules/cdisplay_proof.c:372
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr ""
+
+#: ../modules/cdisplay_proof.c:430
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/cdisplay_proof.c:318
+#: ../modules/cdisplay_proof.c:436
+msgid "_Intent:"
+msgstr "Pożądany _efekt:"
+
+#: ../modules/cdisplay_proof.c:441
 msgid "_Black Point Compensation"
 msgstr "Kompensacja _czarnego punktu"
 
