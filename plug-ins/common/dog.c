@@ -45,7 +45,6 @@ typedef struct
   gdouble  outer;
   gboolean normalize;
   gboolean invert;
-  gboolean preview;
 } DoGValues;
 
 
@@ -111,8 +110,7 @@ static DoGValues dogvals =
   3.0,  /* inner radius  */
   1.0,  /* outer radius  */
   TRUE, /* normalize     */
-  TRUE, /* invert        */
-  TRUE, /* preview       */
+  TRUE  /* invert        */
 };
 
 MAIN ()
@@ -298,7 +296,7 @@ dog_dialog (gint32        image_ID,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &dogvals.preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect (preview, "invalidated",

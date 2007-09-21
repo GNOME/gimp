@@ -51,7 +51,6 @@ typedef struct
   gboolean use_exponent_map;
   gint     exponent_map;
   gint     mode;
-  gboolean preview;
 } OilifyVals;
 
 
@@ -86,8 +85,7 @@ static OilifyVals ovals =
   8.0,        /* exponent           */
   FALSE,      /* use exponent map?  */
   -1,         /* exponent map       */
-  MODE_INTEN, /* mode               */
-  TRUE        /* preview            */
+  MODE_INTEN  /* mode               */
 };
 
 
@@ -794,7 +792,7 @@ oilify_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &ovals.preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",

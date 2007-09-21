@@ -48,7 +48,6 @@
 #define filter_type      (despeckle_vals[1])    /* filter type */
 #define black_level      (despeckle_vals[2])    /* Black level */
 #define white_level      (despeckle_vals[3])    /* White level */
-#define update_toggle    (despeckle_vals[4])    /* Update the preview? */
 
 #define VALUE_SWAP(a,b)   \
   { register gdouble t = (a); (a) = (b); (b) = t; }
@@ -111,13 +110,12 @@ static GtkWidget    *preview;                 /* Preview widget   */
 static GimpDrawable *drawable = NULL;         /* Current drawable */
 
 
-static gint despeckle_vals[7] =
+static gint despeckle_vals[4] =
 {
   3,                  /* Default value for the diameter */
   FILTER_ADAPTIVE,    /* Default value for the filter type */
   7,                  /* Default value for the black level */
-  248,                /* Default value for the white level */
-  TRUE                /* Default value for the update toggle */
+  248                 /* Default value for the white level */
 };
 
 
@@ -414,7 +412,7 @@ despeckle_dialog (void)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &update_toggle);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 

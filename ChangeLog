@@ -1,5 +1,17 @@
 2007-09-21  Sven Neumann  <sven@gimp.org>
 
+	General fix for bug #478657:
+
+	* libgimp/gimpaspectpreview.c
+	* libgimp/gimpdrawablepreview.c
+	* libgimp/gimpzoompreview.c: let all preview widgets store the
+	state of the Preview toggle. Declared "toggle" parameter as unused.
+
+	* plug-ins/common/*.c: pass NULL for "toggle" to
+	gimp_drawable_preview_new() and gimp_aspect_preview_new().
+
+2007-09-21  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppreview.c: formatting.
 
 	* libgimpwidgets/gimpscrolledpreview.c: make use of freeze/thaw to

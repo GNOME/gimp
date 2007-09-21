@@ -27,8 +27,8 @@
    In other word, pixel itself is not a neighbor of it.
 */
 /*
-   in response to bug #156545, after lengthy discussion, the meanings of "dilate"
-   and "erode" are being swapped -- 19 May 2006.
+   in response to bug #156545, after lengthy discussion, the meanings
+   of "dilate" and "erode" are being swapped -- 19 May 2006.
 */
 
 #include "config.h"
@@ -150,7 +150,6 @@ typedef struct
   gint     direction_mask;
   gint     lower_limit;
   gint     upper_limit;
-  gboolean preview;
 } VPValueType;
 
 static VPValueType vpvals =
@@ -160,8 +159,7 @@ static VPValueType vpvals =
   1.0,      /* [0.0:1.0]                             */
   15,       /* propagate to all 4 directions         */
   0,        /* lower_limit                           */
-  255,      /* upper_limit                           */
-  TRUE      /* preview                               */
+  255       /* upper_limit                           */
 };
 
 /* dialog variables */
@@ -1083,7 +1081,7 @@ vpropagate_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &vpvals.preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",

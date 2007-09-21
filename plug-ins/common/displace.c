@@ -77,7 +77,6 @@ typedef struct
   gint         displace_map_y;
   gint         displace_type;
   DisplaceMode mode;
-  gboolean     preview;
 } DisplaceVals;
 
 
@@ -128,8 +127,7 @@ static DisplaceVals dvals =
   -1,                           /* displace_map_x */
   -1,                           /* displace_map_y */
   GIMP_PIXEL_FETCHER_EDGE_WRAP, /* displace_type */
-  CARTESIAN_MODE,               /* mode */
-  TRUE
+  CARTESIAN_MODE                /* mode */
 };
 
 
@@ -346,7 +344,7 @@ displace_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &dvals.preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",

@@ -94,7 +94,6 @@ typedef struct
   gdouble  xsize;
   gdouble  ysize;
   gboolean random_seed;
-  gboolean preview;
 } SolidNoiseValues;
 
 
@@ -144,8 +143,7 @@ static SolidNoiseValues snvals =
   1,     /* detail        */
   4.0,   /* xsize         */
   4.0,   /* ysize         */
-  FALSE, /* random seed   */
-  TRUE   /* preview       */
+  FALSE  /* random seed   */
 };
 
 static gint         xclip, yclip;
@@ -583,7 +581,7 @@ solid_noise_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_aspect_preview_new (drawable, &snvals.preview);
+  preview = gimp_aspect_preview_new (drawable, NULL);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",

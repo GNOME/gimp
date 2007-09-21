@@ -40,6 +40,16 @@ enum
   PROP_DRAWABLE
 };
 
+typedef struct
+{
+  gboolean  update;
+} PreviewSettings;
+
+
+static GObject * gimp_aspect_preview_constructor (GType                  type,
+                                                  guint                  n_params,
+                                                  GObjectConstructParam *params);
+
 
 static void  gimp_aspect_preview_get_property (GObject         *object,
                                                guint            property_id,
@@ -49,6 +59,7 @@ static void  gimp_aspect_preview_set_property (GObject         *object,
                                                guint            property_id,
                                                const GValue    *value,
                                                GParamSpec      *pspec);
+static void  gimp_aspect_preview_destroy      (GtkObject       *object);
 static void  gimp_aspect_preview_style_set    (GtkWidget       *widget,
                                                GtkStyle        *prev_style);
 static void  gimp_aspect_preview_draw         (GimpPreview     *preview);
@@ -74,16 +85,22 @@ G_DEFINE_TYPE (GimpAspectPreview, gimp_aspect_preview, GIMP_TYPE_PREVIEW)
 
 #define parent_class gimp_aspect_preview_parent_class
 
+static gint gimp_aspect_preview_counter = 0;
+
 
 static void
 gimp_aspect_preview_class_init (GimpAspectPreviewClass *klass)
 {
-  GObjectClass     *object_class  = G_OBJECT_CLASS (klass);
-  GtkWidgetClass   *widget_class  = GTK_WIDGET_CLASS (klass);
-  GimpPreviewClass *preview_class = GIMP_PREVIEW_CLASS (klass);
+  GObjectClass     *object_class     = G_OBJECT_CLASS (klass);
+  GtkObjectClass   *gtk_object_class = GTK_OBJECT_CLASS (klass);
+  GtkWidgetClass   *widget_class     = GTK_WIDGET_CLASS (klass);
+  GimpPreviewClass *preview_class    = GIMP_PREVIEW_CLASS (klass);
 
+  object_class->constructor  = gimp_aspect_preview_constructor;
   object_class->get_property = gimp_aspect_preview_get_property;
   object_class->set_property = gimp_aspect_preview_set_property;
+
+  gtk_object_class->destroy  = gimp_aspect_preview_destroy;
 
   widget_class->style_set    = gimp_aspect_preview_style_set;
 
@@ -110,6 +127,32 @@ gimp_aspect_preview_init (GimpAspectPreview *preview)
                 "check-size", gimp_check_size (),
                 "check-type", gimp_check_type (),
                 NULL);
+}
+
+static GObject *
+gimp_aspect_preview_constructor (GType                  type,
+                                 guint                  n_params,
+                                 GObjectConstructParam *params)
+{
+  GObject         *object;
+  gchar           *data_name;
+  PreviewSettings  settings;
+
+  data_name = g_strdup_printf ("%s-aspect-preview-%d",
+                               g_get_prgname (),
+                               gimp_aspect_preview_counter++);
+
+  object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
+
+  if (gimp_get_data (data_name, &settings))
+    {
+      gimp_preview_set_update (GIMP_PREVIEW (object), settings.update);
+    }
+
+  g_object_set_data_full (object, "gimp-aspect-preview-data-name",
+                          data_name, (GDestroyNotify) g_free);
+
+  return object;
 }
 
 static void
@@ -151,6 +194,25 @@ gimp_aspect_preview_set_property (GObject      *object,
       G_OBJECT_WARN_INVALID_PROPERTY_ID (object, property_id, pspec);
       break;
     }
+}
+
+static void
+gimp_aspect_preview_destroy (GtkObject *object)
+{
+  const gchar *data_name = g_object_get_data (G_OBJECT (object),
+                                              "gimp-aspect-preview-data-name");
+
+  if (data_name)
+    {
+      GimpPreview     *preview = GIMP_PREVIEW (object);
+      PreviewSettings  settings;
+
+      settings.update = gimp_preview_get_update (preview);
+
+      gimp_set_data (data_name, &settings, sizeof (PreviewSettings));
+    }
+
+  GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
 
 static void
@@ -299,22 +361,18 @@ gimp_aspect_preview_set_drawable (GimpAspectPreview *preview,
                   NULL);
 }
 
-static void
-gimp_aspect_preview_notify_update (GimpPreview *preview,
-                                   GParamSpec  *pspec,
-                                   gboolean    *toggle)
-{
-  *toggle = gimp_preview_get_update (preview);
-}
-
 /**
  * gimp_aspect_preview_new:
  * @drawable: a #GimpDrawable
- * @toggle:   pointer to a #gboolean variable to sync with the "Preview"
- *            check-button or %NULL
+ * @toggle:   unused
  *
  * Creates a new #GimpAspectPreview widget for @drawable. See also
  * gimp_drawable_preview_new().
+ *
+ * In GIMP 2.2 the @toggle parameter was provided to conviently access
+ * the state of the "Preview" check-button. This is not any longer
+ * necessary as the preview itself now stores this state, as well as
+ * the scroll offset.
  *
  * Since: GIMP 2.2
  **/
@@ -322,23 +380,9 @@ GtkWidget *
 gimp_aspect_preview_new (GimpDrawable *drawable,
                          gboolean     *toggle)
 {
-  GtkWidget *preview;
-
   g_return_val_if_fail (drawable != NULL, NULL);
 
-  preview = g_object_new (GIMP_TYPE_ASPECT_PREVIEW,
-                          "drawable", drawable,
-                          NULL);
-
-  if (toggle)
-    {
-      gimp_preview_set_update (GIMP_PREVIEW (preview), *toggle);
-
-      g_signal_connect (preview, "notify::update",
-                        G_CALLBACK (gimp_aspect_preview_notify_update),
-                        toggle);
-    }
-
-
-  return preview;
+  return g_object_new (GIMP_TYPE_ASPECT_PREVIEW,
+                       "drawable", drawable,
+                       NULL);
 }

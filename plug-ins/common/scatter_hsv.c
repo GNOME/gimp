@@ -73,7 +73,6 @@ typedef struct
   gint     hue_distance;
   gint     saturation_distance;
   gint     value_distance;
-  gboolean preview;
 } ValueType;
 
 static ValueType VALS =
@@ -81,8 +80,7 @@ static ValueType VALS =
   2,
   3,
   10,
-  10,
-  TRUE
+  10
 };
 
 MAIN ()
@@ -381,7 +379,7 @@ scatter_hsv_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &VALS.preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
 

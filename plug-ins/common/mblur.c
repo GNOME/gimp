@@ -65,8 +65,8 @@ typedef struct
   gdouble   center_x;
   gdouble   center_y;
   gboolean  blur_outward;
-  gboolean  preview;
 } mblur_vals_t;
+
 
 /***** Prototypes *****/
 
@@ -113,13 +113,12 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 static mblur_vals_t mbvals =
 {
-  MBLUR_LINEAR, /* mblur_type */
-  5,            /* length     */
-  10,           /* radius     */
-  100000.0,     /* center_x   */
-  100000.0,     /* center_y   */
-  TRUE,         /* blur_outward */
-  TRUE          /* preview    */
+  MBLUR_LINEAR, /* mblur_type   */
+  5,            /* length       */
+  10,           /* radius       */
+  100000.0,     /* center_x     */
+  100000.0,     /* center_y     */
+  TRUE          /* blur_outward */
 };
 
 
@@ -1018,7 +1017,7 @@ mblur_dialog (gint32        image_ID,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &mbvals.preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 

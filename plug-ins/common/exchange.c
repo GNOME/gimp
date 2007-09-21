@@ -55,7 +55,6 @@ typedef struct
   GimpRGB  from;
   GimpRGB  to;
   GimpRGB  threshold;
-  gboolean preview;
 } myParams;
 
 /* lets prototype */
@@ -81,8 +80,7 @@ static myParams xargs =
 {
   { 0.0, 0.0, 0.0, 1.0 }, /* from      */
   { 0.0, 0.0, 0.0, 1.0 }, /* to        */
-  { 0.0, 0.0, 0.0, 1.0 }, /* threshold */
-  TRUE                    /* preview   */
+  { 0.0, 0.0, 0.0, 1.0 }  /* threshold */
 };
 
 static GtkWidget    *from_colorbutton;
@@ -312,7 +310,7 @@ exchange_dialog (GimpDrawable *drawable)
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), frame);
   gtk_widget_show (frame);
 
-  preview = gimp_drawable_preview_new (drawable, &xargs.preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_container_add (GTK_CONTAINER (frame), preview);
   gtk_widget_show (preview);
 

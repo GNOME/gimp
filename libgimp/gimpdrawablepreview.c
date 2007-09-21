@@ -42,8 +42,9 @@ enum
 
 typedef struct
 {
-  gint     x, y;
-  gboolean update;
+  gint      x;
+  gint      y;
+  gboolean  update;
 } PreviewSettings;
 
 
@@ -81,6 +82,8 @@ G_DEFINE_TYPE (GimpDrawablePreview, gimp_drawable_preview,
                GIMP_TYPE_SCROLLED_PREVIEW)
 
 #define parent_class gimp_drawable_preview_parent_class
+
+static gint gimp_drawable_preview_counter = 0;
 
 
 static void
@@ -129,16 +132,24 @@ gimp_drawable_preview_constructor (GType                  type,
                                    GObjectConstructParam *params)
 {
   GObject         *object;
+  gchar           *data_name;
   PreviewSettings  settings;
-  gchar           *data_name = g_strconcat (g_get_prgname (), "-preview", NULL);
+
+  data_name = g_strdup_printf ("%s-drawable-preview-%d",
+                               g_get_prgname (),
+                               ++gimp_drawable_preview_counter);
 
   object = G_OBJECT_CLASS (parent_class)->constructor (type, n_params, params);
 
   if (gimp_get_data (data_name, &settings))
-    gimp_scrolled_preview_set_position (GIMP_SCROLLED_PREVIEW (object),
-                                        settings.x, settings.y);
+    {
+      gimp_preview_set_update (GIMP_PREVIEW (object), settings.update);
+      gimp_scrolled_preview_set_position (GIMP_SCROLLED_PREVIEW (object),
+                                          settings.x, settings.y);
+    }
 
-  g_free (data_name);
+  g_object_set_data_full (object, "gimp-drawable-preview-data-name",
+                          data_name, (GDestroyNotify) g_free);
 
   return object;
 }
@@ -188,17 +199,20 @@ gimp_drawable_preview_set_property (GObject      *object,
 static void
 gimp_drawable_preview_destroy (GtkObject *object)
 {
-  GimpPreview     *preview = GIMP_PREVIEW (object);
-  PreviewSettings  settings;
-  gchar           *data_name;
+  const gchar *data_name = g_object_get_data (G_OBJECT (object),
+                                              "gimp-drawable-preview-data-name");
 
-  settings.x      = preview->xoff + preview->xmin;
-  settings.y      = preview->yoff + preview->ymin;
-  settings.update = TRUE;
+  if (data_name)
+    {
+      GimpPreview     *preview = GIMP_PREVIEW (object);
+      PreviewSettings  settings;
 
-  data_name = g_strconcat (g_get_prgname (), "-preview", NULL);
-  gimp_set_data (data_name, &settings, sizeof (PreviewSettings));
-  g_free (data_name);
+      settings.x      = preview->xoff + preview->xmin;
+      settings.y      = preview->yoff + preview->ymin;
+      settings.update = gimp_preview_get_update (preview);
+
+      gimp_set_data (data_name, &settings, sizeof (PreviewSettings));
+    }
 
   GTK_OBJECT_CLASS (parent_class)->destroy (object);
 }
@@ -521,26 +535,17 @@ _gimp_drawable_preview_get_bounds (GimpDrawable *drawable,
 }
 
 
-static void
-gimp_drawable_preview_notify_update (GimpPreview *preview,
-                                     GParamSpec  *pspec,
-                                     gboolean    *toggle)
-{
-  *toggle = gimp_preview_get_update (preview);
-}
-
-
 /**
  * gimp_drawable_preview_new:
  * @drawable: a #GimpDrawable
- * @toggle:   pointer to a #gboolean variable to sync with the "Preview"
- *            check-button or %NULL
+ * @toggle:   unused
  *
- * Creates a new #GimpDrawablePreview widget for @drawable. If
- * updating the preview takes considerable time, you will want to
- * store the state of the "Preview" check-button in the plug-in
- * data. For convenience you can pass a pointer to the #gboolean as
- * @toggle.
+ * Creates a new #GimpDrawablePreview widget for @drawable.
+ *
+ * In GIMP 2.2 the @toggle parameter was provided to conviently access
+ * the state of the "Preview" check-button. This is not any longer
+ * necessary as the preview itself now stores this state, as well as
+ * the scroll offset.
  *
  * Returns: A pointer to the new #GimpDrawablePreview widget.
  *
@@ -550,25 +555,11 @@ GtkWidget *
 gimp_drawable_preview_new (GimpDrawable *drawable,
                            gboolean     *toggle)
 {
-  GtkWidget *preview;
-
   g_return_val_if_fail (drawable != NULL, NULL);
 
-  preview = g_object_new (GIMP_TYPE_DRAWABLE_PREVIEW,
-                          "drawable", drawable,
-                          NULL);
-
-  if (toggle)
-    {
-      gimp_preview_set_update (GIMP_PREVIEW (preview), *toggle);
-
-      g_signal_connect (preview, "notify::update",
-                        G_CALLBACK (gimp_drawable_preview_notify_update),
-                        toggle);
-    }
-
-
-  return preview;
+  return g_object_new (GIMP_TYPE_DRAWABLE_PREVIEW,
+                       "drawable", drawable,
+                       NULL);
 }
 
 /**

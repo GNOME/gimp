@@ -38,7 +38,6 @@
 typedef struct
 {
   GimpRGB  color;
-  gboolean preview;
 } C2AValues;
 
 
@@ -74,8 +73,7 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 static C2AValues pvals =
 {
-  { 1.0, 1.0, 1.0, 1.0 }, /* white default */
-  TRUE                    /* preview       */
+  { 1.0, 1.0, 1.0, 1.0 } /* white default */
 };
 
 
@@ -397,7 +395,7 @@ color_to_alpha_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &pvals.preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect (preview, "invalidated",

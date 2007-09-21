@@ -50,7 +50,6 @@ typedef struct
   gdouble  threshold;
   gdouble  pct_black;
   gdouble  pct_white;
-  gboolean update_preview;
 } PhotocopyVals;
 
 
@@ -107,8 +106,7 @@ static PhotocopyVals pvals =
   0.8,  /* sharpness */
   0.75, /* threshold */
   0.2,  /* pct_black */
-  0.2,  /* pct_white */
-  TRUE  /* update_preview */
+  0.2   /* pct_white */
 };
 
 
@@ -857,7 +855,7 @@ photocopy_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &pvals.update_preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 

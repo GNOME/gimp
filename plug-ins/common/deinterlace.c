@@ -42,7 +42,6 @@ enum
 typedef struct
 {
   gint     evenness;
-  gboolean preview;
 } DeinterlaceValues;
 
 
@@ -72,8 +71,7 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 static DeinterlaceValues devals =
 {
-  EVEN_FIELDS,  /* evenness */
-  TRUE          /* preview */
+  EVEN_FIELDS   /* evenness */
 };
 
 MAIN ()
@@ -345,7 +343,7 @@ deinterlace_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &devals.preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",

@@ -41,9 +41,8 @@
 
 typedef struct
 {
-  gint     shift_amount;
-  gint     orientation;
-  gboolean preview;
+  gint  shift_amount;
+  gint  orientation;
 } ShiftValues;
 
 
@@ -78,8 +77,7 @@ const GimpPlugInInfo PLUG_IN_INFO =
 static ShiftValues shvals =
 {
   5,          /* shift amount */
-  HORIZONTAL, /* orientation  */
-  TRUE        /* preview */
+  HORIZONTAL  /* orientation  */
 };
 
 
@@ -375,7 +373,7 @@ shift_dialog (gint32        image_ID,
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &shvals.preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",

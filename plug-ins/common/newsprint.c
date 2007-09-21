@@ -222,7 +222,6 @@ typedef struct
   gdouble  input_spi;     /* input samples per inch */
   gdouble  output_lpi;    /* desired output lines per inch */
   gboolean lock_channels; /* changes to one channel affect all */
-  gboolean preview;
 } NewsprintUIValues;
 
 
@@ -306,8 +305,7 @@ static const NewsprintUIValues factory_defaults_ui =
 {
   72,    /* input spi     */
   7.2,   /* output lpi    */
-  FALSE, /* lock channels */
-  TRUE   /* preview       */
+  FALSE  /* lock channels */
 };
 
 /* Mutable copy for normal use.  Initialised in run(). */
@@ -1217,7 +1215,7 @@ newsprint_dialog (GimpDrawable *drawable)
   gtk_box_pack_end (GTK_BOX (hbox), vbox, FALSE, FALSE, 0);
   gtk_widget_show (vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &pvals_ui.preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start_defaults (GTK_BOX (hbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",

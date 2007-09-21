@@ -1085,9 +1085,8 @@ enum
 
 typedef struct
 {
-  gint     direction;
-  gint     depth;
-  gboolean update_preview;
+  gint  direction;
+  gint  depth;
 } StrucValues;
 
 
@@ -1117,8 +1116,7 @@ const GimpPlugInInfo PLUG_IN_INFO =
 static StrucValues svals =
 {
   0,     /* direction */
-  4,     /* depth     */
-  TRUE
+  4      /* depth     */
 };
 
 
@@ -1283,7 +1281,7 @@ struc_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &svals.update_preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 

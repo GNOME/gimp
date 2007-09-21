@@ -50,7 +50,6 @@ typedef struct
   gdouble  elevation;
   gint32   depth;
   gint32   embossp;
-  gboolean preview;
 } piArgs;
 
 static piArgs evals =
@@ -58,8 +57,7 @@ static piArgs evals =
   30.0,    /* azimuth   */
   45.0,    /* elevation */
   20,      /* depth     */
-  1,       /* emboss    */
-  TRUE     /* preview   */
+  1        /* emboss    */
 };
 
 struct embossFilter
@@ -466,7 +464,7 @@ emboss_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &evals.preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",

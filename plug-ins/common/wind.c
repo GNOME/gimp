@@ -137,12 +137,11 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 struct config_tag
 {
-  gint        threshold;      /* derivative comparison for edge detection */
-  direction_t direction;      /* of wind, LEFT or RIGHT */
-  gint        strength;       /* how many pixels to bleed */
-  algorithm_t alg;            /* which algorithm */
-  edge_t      edge;           /* controls abs, negation of derivative */
-  gboolean    update_preview; /* should the preview be active? */
+  gint        threshold;   /* derivative comparison for edge detection */
+  direction_t direction;   /* of wind, LEFT or RIGHT */
+  gint        strength;    /* how many pixels to bleed */
+  algorithm_t alg;         /* which algorithm */
+  edge_t      edge;        /* controls abs, negation of derivative */
 };
 
 typedef struct config_tag config_t;
@@ -152,8 +151,7 @@ config_t config =
   LEFT,        /* bleed to the right */
   10,          /* how many pixels to bleed */
   RENDER_WIND, /* default algorithm */
-  LEADING,     /* abs(derivative); */
-  TRUE         /* update_preview */
+  LEADING      /* abs(derivative) */
 };
 
 MAIN ()
@@ -890,7 +888,7 @@ dialog_box (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &config.update_preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",

@@ -84,14 +84,12 @@ const GimpPlugInInfo PLUG_IN_INFO =
 
 typedef struct
 {
-  gint     sharpen_percent;
-  gboolean update_preview;
+  gint  sharpen_percent;
 } SharpenParams;
 
 static SharpenParams sharpen_params =
 {
-  10,
-  TRUE
+  10
 };
 
 static intneg neg_lut[256];   /* Negative coefficient LUT */
@@ -496,8 +494,7 @@ sharpen_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable,
-                                       &sharpen_params.update_preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 

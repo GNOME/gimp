@@ -92,7 +92,6 @@ typedef struct
   TileType tile_type;
   gint     tile_surface;
   gint     grout_color;
-  gboolean update_preview;
 } MosaicVals;
 
 
@@ -320,8 +319,7 @@ static MosaicVals mvals =
   1,           /* color_averaging  */
   HEXAGONS,    /* tile_type */
   SMOOTH,      /* tile_surface */
-  BW,          /* grout_color */
-  TRUE         /* preview */
+  BW           /* grout_color */
 };
 
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -611,7 +609,7 @@ mosaic_dialog (GimpDrawable *drawable)
   gtk_widget_show (main_vbox);
 
   /* A preview */
-  preview = gimp_drawable_preview_new (drawable, &mvals.update_preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",

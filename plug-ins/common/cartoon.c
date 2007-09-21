@@ -44,7 +44,6 @@ typedef struct
   gdouble  mask_radius;
   gdouble  threshold;
   gdouble  pct_black;
-  gboolean update_preview;
 } CartoonVals;
 
 
@@ -100,8 +99,7 @@ static CartoonVals cvals =
 {
   7.0,  /* mask_radius */
   1.0,  /* threshold */
-  0.2,  /* pct_black */
-  TRUE  /* update_preview */
+  0.2   /* pct_black */
 };
 
 
@@ -829,7 +827,7 @@ cartoon_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &cvals.update_preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 

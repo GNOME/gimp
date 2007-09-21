@@ -46,7 +46,6 @@ typedef struct
   gdouble  radius;
   gdouble  amount;
   gint     threshold;
-  gboolean update_preview;
 } UnsharpMaskParams;
 
 typedef struct
@@ -94,12 +93,11 @@ static void      preview_update      (GimpPreview    *preview);
 
 /* create a few globals, set default values */
 static UnsharpMaskParams unsharp_params =
-  {
-    5.0, /* default radius = 5 */
-    0.5, /* default amount = .5 */
-    0,   /* default threshold = 0 */
-    TRUE /* default is to update the preview */
-  };
+{
+  5.0, /* default radius    */
+  0.5, /* default amount    */
+  0    /* default threshold */
+};
 
 /* Setting PLUG_IN_INFO */
 const GimpPlugInInfo PLUG_IN_INFO =
@@ -662,8 +660,7 @@ unsharp_mask_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable,
-                                       &unsharp_params.update_preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 

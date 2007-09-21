@@ -53,7 +53,6 @@ typedef struct
 {
   gdouble  radius;
   gint     maxdelta;
-  gboolean update_preview;
 } BlurValues;
 
 
@@ -84,8 +83,7 @@ const GimpPlugInInfo PLUG_IN_INFO =
 static BlurValues bvals =
 {
   5.0, /* radius   */
-  50,  /* maxdelta */
-  TRUE /* update_preview */
+  50   /* maxdelta */
 };
 
 MAIN ()
@@ -252,7 +250,7 @@ sel_gauss_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &bvals.update_preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start (GTK_BOX (main_vbox), preview, TRUE, TRUE, 0);
   gtk_widget_show (preview);
 

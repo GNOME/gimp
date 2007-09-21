@@ -57,7 +57,6 @@ typedef struct
   gint     waveform;
   gboolean antialias;
   gboolean tile;
-  gboolean preview;
 } RippleValues;
 
 
@@ -100,8 +99,7 @@ static RippleValues rvals =
   WRAP,       /* edges       */
   SINE,       /* waveform    */
   TRUE,       /* antialias   */
-  FALSE,      /* tile        */
-  TRUE        /* preview     */
+  FALSE       /* tile        */
 };
 
 /***** Functions *****/
@@ -487,7 +485,7 @@ ripple_dialog (GimpDrawable *drawable)
   gtk_container_add (GTK_CONTAINER (GTK_DIALOG (dialog)->vbox), main_vbox);
   gtk_widget_show (main_vbox);
 
-  preview = gimp_drawable_preview_new (drawable, &rvals.preview);
+  preview = gimp_drawable_preview_new (drawable, NULL);
   gtk_box_pack_start_defaults (GTK_BOX (main_vbox), preview);
   gtk_widget_show (preview);
   g_signal_connect_swapped (preview, "invalidated",
