@@ -38,7 +38,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD.pl\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-16 02:19+0200\n"
+"POT-Creation-Date: 2007-09-21 19:50+0200\n"
 "PO-Revision-Date: 2007-09-13 09:46+0200\n"
 "Last-Translator: Bartosz Kosiorek <gang65@poczta.onet.pl>\n"
 "Language-Team: Polish <gnome-l10n@lists.aviary.pl>\n"
@@ -870,7 +870,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:133
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1388
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1389
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:770
 #: ../app/pdb/image_cmds.c:1995 ../app/widgets/gimpdnd-xds.c:98
@@ -5125,7 +5125,7 @@ msgstr "wartość tokenu %s nie jest poprawnym napisem UTF-8"
 #. no undo (or redo) steps available
 #: ../app/core/core-enums.c:53 ../app/core/core-enums.c:252
 #: ../app/core/core-enums.c:504 ../app/paint/paint-enums.c:81
-#: ../app/widgets/gimpimagepropview.c:411
+#: ../app/widgets/gimpimagepropview.c:415
 msgid "None"
 msgstr "Brak"
 
@@ -6347,143 +6347,143 @@ msgstr "Przesuń punkt wzorcowy"
 msgid "Can't undo %s"
 msgstr "Nie można cofnąć operacji %s"
 
-#: ../app/core/gimpimage.c:1458
+#: ../app/core/gimpimage.c:1476
 msgid "Change Image Resolution"
 msgstr "Zmiana rozdzielczości obrazu"
 
-#: ../app/core/gimpimage.c:1498
+#: ../app/core/gimpimage.c:1516
 msgid "Change Image Unit"
 msgstr "Zmiana jednostki obrazu"
 
-#: ../app/core/gimpimage.c:2343
+#: ../app/core/gimpimage.c:2361
 msgid "Attach Parasite to Image"
 msgstr "Dołączenie do obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:2381
+#: ../app/core/gimpimage.c:2399
 msgid "Remove Parasite from Image"
 msgstr "Usunięcie z obrazu danych pasożytniczych"
 
-#: ../app/core/gimpimage.c:2839
+#: ../app/core/gimpimage.c:2857
 msgid "Add Layer"
 msgstr "Dodanie warstwy"
 
-#: ../app/core/gimpimage.c:2904 ../app/core/gimpimage.c:2917
+#: ../app/core/gimpimage.c:2922 ../app/core/gimpimage.c:2935
 msgid "Remove Layer"
 msgstr "Usunięcie warstwy"
 
-#: ../app/core/gimpimage.c:3059
+#: ../app/core/gimpimage.c:3077
 msgid "Layer cannot be raised higher."
 msgstr "Nie można bardziej podnieść warstwy."
 
 # KOLIZJA
 # app/core/gimpimage.c - Podniesienie warstwy
 # app/widgets/gimplayertreeview.c - Podnosi warstwę
-#: ../app/core/gimpimage.c:3064
+#: ../app/core/gimpimage.c:3082
 msgid "Raise Layer"
 msgstr "Podniesienie warstwy"
 
-#: ../app/core/gimpimage.c:3081
+#: ../app/core/gimpimage.c:3099
 msgid "Layer cannot be lowered more."
 msgstr "Nie można bardziej obniżyć warstwy."
 
 # KOLIZJA
 # app/core/gimpimage.c - Obniżenie warstwy
 # app/widgets/gimplayertreeview.c - Obniża warstwę
-#: ../app/core/gimpimage.c:3086
+#: ../app/core/gimpimage.c:3104
 msgid "Lower Layer"
 msgstr "Obniżenie warstwy"
 
 # KOLIZJA
 # app/core/gimpimage.c - Podniesienie warstwy na wierzchołek
 # app/widgets/gimplayertreeview.c - Podnosi warstwę na wierzchołek
-#: ../app/core/gimpimage.c:3097
+#: ../app/core/gimpimage.c:3115
 msgid "Raise Layer to Top"
 msgstr "Podniesienie warstwy na wierzchołek"
 
 # KOLIZJA
 # app/core/gimpimage.c - Obniżenie warstwy na dno
 # app/widgets/gimplayertreeview.c - Obniża warstwę na dno
-#: ../app/core/gimpimage.c:3112
+#: ../app/core/gimpimage.c:3130
 msgid "Lower Layer to Bottom"
 msgstr "Obniżenie warstwy na dno"
 
-#: ../app/core/gimpimage.c:3184
+#: ../app/core/gimpimage.c:3202
 msgid "Add Channel"
 msgstr "Dodanie kanału"
 
-#: ../app/core/gimpimage.c:3229 ../app/core/gimpimage.c:3240
+#: ../app/core/gimpimage.c:3247 ../app/core/gimpimage.c:3258
 msgid "Remove Channel"
 msgstr "Usunięcie kanału"
 
-#: ../app/core/gimpimage.c:3287
+#: ../app/core/gimpimage.c:3305
 msgid "Channel cannot be raised higher."
 msgstr "Nie można bardziej podnieść kanału."
 
-#: ../app/core/gimpimage.c:3292
+#: ../app/core/gimpimage.c:3310
 msgid "Raise Channel"
 msgstr "Podniesienie kanału"
 
-#: ../app/core/gimpimage.c:3309
+#: ../app/core/gimpimage.c:3327
 msgid "Channel is already on top."
 msgstr "Kanał jest już na wierzchu."
 
-#: ../app/core/gimpimage.c:3314
+#: ../app/core/gimpimage.c:3332
 msgid "Raise Channel to Top"
 msgstr "Podniesienie kanału na wierzchołek"
 
-#: ../app/core/gimpimage.c:3331
+#: ../app/core/gimpimage.c:3349
 msgid "Channel cannot be lowered more."
 msgstr "Nie można bardziej obniżyć kanału."
 
-#: ../app/core/gimpimage.c:3336
+#: ../app/core/gimpimage.c:3354
 msgid "Lower Channel"
 msgstr "Obniża kanał"
 
-#: ../app/core/gimpimage.c:3356
+#: ../app/core/gimpimage.c:3374
 msgid "Channel is already on the bottom."
 msgstr "Kanał jest już na dnie."
 
-#: ../app/core/gimpimage.c:3361
+#: ../app/core/gimpimage.c:3379
 msgid "Lower Channel to Bottom"
 msgstr "Obniżenie kanału na dno"
 
-#: ../app/core/gimpimage.c:3435
+#: ../app/core/gimpimage.c:3453
 msgid "Add Path"
 msgstr "Dodanie ścieżki"
 
-#: ../app/core/gimpimage.c:3481
+#: ../app/core/gimpimage.c:3499
 msgid "Remove Path"
 msgstr "Usunięcie ścieżki"
 
-#: ../app/core/gimpimage.c:3525
+#: ../app/core/gimpimage.c:3543
 msgid "Path cannot be raised higher."
 msgstr "Nie można bardziej podnieść ścieżki."
 
-#: ../app/core/gimpimage.c:3530
+#: ../app/core/gimpimage.c:3548
 msgid "Raise Path"
 msgstr "Podniesienie ścieżki"
 
-#: ../app/core/gimpimage.c:3547
+#: ../app/core/gimpimage.c:3565
 msgid "Path is already on top."
 msgstr "Ścieżka jest już na wierzchu."
 
-#: ../app/core/gimpimage.c:3552
+#: ../app/core/gimpimage.c:3570
 msgid "Raise Path to Top"
 msgstr "Podniesienie ścieżki na wierzch"
 
-#: ../app/core/gimpimage.c:3569
+#: ../app/core/gimpimage.c:3587
 msgid "Path cannot be lowered more."
 msgstr "Nie można bardziej obniżyć ścieżki."
 
-#: ../app/core/gimpimage.c:3574
+#: ../app/core/gimpimage.c:3592
 msgid "Lower Path"
 msgstr "Obniżenie ścieżki"
 
-#: ../app/core/gimpimage.c:3594
+#: ../app/core/gimpimage.c:3612
 msgid "Path is already on the bottom."
 msgstr "Ścieżka jest już na dnie."
 
-#: ../app/core/gimpimage.c:3599
+#: ../app/core/gimpimage.c:3617
 msgid "Lower Path to Bottom"
 msgstr "Obniżenie ścieżki na dno"
 
@@ -6520,7 +6520,7 @@ msgid "(Preview may be out of date)"
 msgstr "(Podgląd może być nieaktualny)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:624 ../app/widgets/gimpimagepropview.c:437
+#: ../app/core/gimpimagefile.c:624 ../app/widgets/gimpimagepropview.c:441
 #: ../app/widgets/gimpsizebox.c:438 ../app/widgets/gimptemplateeditor.c:564
 #, c-format
 msgid "%d × %d pixel"
@@ -7946,7 +7946,7 @@ msgid "Pixels"
 msgstr "Piksele"
 
 #: ../app/dialogs/preferences-dialog.c:2318
-#: ../app/widgets/gimpimagepropview.c:465
+#: ../app/widgets/gimpimagepropview.c:469
 msgid "ppi"
 msgstr "ppi"
 
@@ -8635,40 +8635,43 @@ msgid "Other..."
 msgstr "Inne..."
 
 #: ../app/file/file-open.c:129 ../app/file/file-save.c:111
+#, c-format
 msgid "Not a regular file"
 msgstr "To nie jest zwykły plik"
 
-#: ../app/file/file-open.c:174
+#: ../app/file/file-open.c:180
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "Wtyczka %s zwróciła kod powodzenia, lecz nie zwróciła obrazu."
 
-#: ../app/file/file-open.c:183
+#: ../app/file/file-open.c:189
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "Wtyczka %s nie może otworzyć obrazu"
 
-#: ../app/file/file-open.c:470
+#: ../app/file/file-open.c:474
+#, c-format
 msgid "Image doesn't contain any layers"
 msgstr "Obraz nie zawiera żadnych warstw"
 
 # c-format
-#: ../app/file/file-open.c:519
+#: ../app/file/file-open.c:523
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Nie można otworzyć pliku \"%s\": %s"
 
-#: ../app/file/file-open.c:593
+#: ../app/file/file-open.c:597
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
 msgstr ""
 
 #: ../app/file/file-procedure.c:200
+#, c-format
 msgid "Unknown file type"
 msgstr "Nieznany typ pliku"
 
-#: ../app/file/file-save.c:192
+#: ../app/file/file-save.c:193
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Wtyczka %s nie może zapisać obrazu"
@@ -8679,6 +8682,7 @@ msgid "'%s:' is not a valid URI scheme"
 msgstr "\"%s:\" nie jest poprawnym znacznikiem URI"
 
 #: ../app/file/file-utils.c:88 ../app/file/file-utils.c:122
+#, c-format
 msgid "Invalid character sequence in URI"
 msgstr "Niepoprawna ciąg znaków w URI"
 
@@ -8691,6 +8695,7 @@ msgid "Airbrush"
 msgstr "Aerograf"
 
 #: ../app/paint/gimpbrushcore.c:354
+#, c-format
 msgid "No brushes available for use with this tool."
 msgstr "Brak dostępnych pędzli dla tego narzędzia."
 
@@ -8699,6 +8704,7 @@ msgid "Clone"
 msgstr "Klonowanie"
 
 #: ../app/paint/gimpclone.c:141
+#, c-format
 msgid "No patterns available for use with this tool."
 msgstr "Brak dostępnych deseni, dla tego narzędzia."
 
@@ -8719,6 +8725,7 @@ msgid "Heal"
 msgstr "Łatka"
 
 #: ../app/paint/gimpheal.c:126
+#, c-format
 msgid "Healing does not operate on indexed layers."
 msgstr "Łatanie nie jest możliwe na warstwach indeksowanych."
 
@@ -8736,6 +8743,7 @@ msgid "Perspective Clone"
 msgstr "Klon perspektywy"
 
 #: ../app/paint/gimpperspectiveclone.c:160
+#, c-format
 msgid "Perspective Clone does not operate on indexed layers."
 msgstr "Klon perspektywy nie jest możliwy na warstwach indeksowanych."
 
@@ -8744,6 +8752,7 @@ msgid "Smudge"
 msgstr "Rozsmarowywanie"
 
 #: ../app/paint/gimpsourcecore.c:227
+#, c-format
 msgid "Set a source image first."
 msgstr "Najpierw wybierz źródło obrazu."
 
@@ -9243,6 +9252,7 @@ msgid "Blen_d"
 msgstr "_Gradient"
 
 #: ../app/tools/gimpblendtool.c:163
+#, c-format
 msgid "Blend does not operate on indexed layers."
 msgstr "Gradient nie pracuje na warstwach indeksowanych."
 
@@ -9273,6 +9283,7 @@ msgid "Adjust Brightness and Contrast"
 msgstr "Modyfikacja jasności i kontrastu"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:169
+#, c-format
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "Nie można modyfikować jasności i kontrastu na warstwach indeksowanych."
 
@@ -9411,6 +9422,7 @@ msgid "Adjust Color Balance"
 msgstr "Modyfikacja balansu kolorów"
 
 #: ../app/tools/gimpcolorbalancetool.c:153
+#, c-format
 msgid "Color Balance operates only on RGB color layers."
 msgstr "Zmiana balansu koloru jest możliwa tylko na warstwach RGB."
 
@@ -9458,6 +9470,7 @@ msgid "Colorize the Image"
 msgstr "Barwienie obrazu"
 
 #: ../app/tools/gimpcolorizetool.c:148
+#, c-format
 msgid "Colorize operates only on RGB color layers."
 msgstr "Barwienie obrazu jest możliwe tylko na warstwach RGB."
 
@@ -9643,6 +9656,7 @@ msgid "Save curves settings to file"
 msgstr "Zapis ustawień krzywych w pliku"
 
 #: ../app/tools/gimpcurvestool.c:253
+#, c-format
 msgid "Curves does not operate on indexed layers."
 msgstr "Narzędzie Krzywe nie operuje na warstwach indeksowanych."
 
@@ -9673,10 +9687,12 @@ msgid "Curve Type"
 msgstr "Typ krzywej"
 
 #: ../app/tools/gimpcurvestool.c:753 ../app/tools/gimplevelstool.c:672
+#, c-format
 msgid "not a GIMP Levels file"
 msgstr "nie jest plikiem Poziomów GIMP-a"
 
 #: ../app/tools/gimpcurvestool.c:767 ../app/tools/gimplevelstool.c:711
+#, c-format
 msgid "parse error"
 msgstr "błąd przy analizie składniowej"
 
@@ -9971,6 +9987,7 @@ msgid "Adjust Hue / Lightness / Saturation"
 msgstr "Modyfikacja odcienia / jasności / nasycenia"
 
 #: ../app/tools/gimphuesaturationtool.c:173
+#, c-format
 msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Zmiany odcienia i nasycenia kolorów są możliwe tylko na warstwach RGB."
 
@@ -10151,6 +10168,7 @@ msgid "Save levels settings to file"
 msgstr "Zapis ustawień poziomów w pliku"
 
 #: ../app/tools/gimplevelstool.c:236
+#, c-format
 msgid "Levels does not operate on indexed layers."
 msgstr "Narzędzie poziomy, nie operuje na warstwach indeksowanych."
 
@@ -10467,6 +10485,7 @@ msgid "Posterize (Reduce Number of Colors)"
 msgstr "Redukcja kolorów (zmniejszenie ilości kolorów)"
 
 #: ../app/tools/gimpposterizetool.c:140
+#, c-format
 msgid "Posterize does not operate on indexed layers."
 msgstr "Redukcja kolorów nie jest możliwa na warstwach indeksowanych."
 
@@ -10788,6 +10807,7 @@ msgid "Apply Threshold"
 msgstr "Progowanie"
 
 #: ../app/tools/gimpthresholdtool.c:148
+#, c-format
 msgid "Threshold does not operate on indexed layers."
 msgstr "Progowanie nie jest możliwe na warstwach indeksowanych."
 
@@ -11118,6 +11138,7 @@ msgid "No paths found in '%s'"
 msgstr "Nie odnaleziono ścieżek w pliku \"%s\""
 
 #: ../app/vectors/gimpvectors-import.c:339
+#, c-format
 msgid "No paths found in the buffer"
 msgstr "Nie odnaleziono ścieżek w buforze"
 
@@ -11502,6 +11523,7 @@ msgid "Remove Controller '%s'?"
 msgstr "Usunąć urządzenie '%s'?"
 
 #: ../app/widgets/gimpcontrollerlist.c:571
+#, c-format
 msgid ""
 "Removing this controller from the list of active controllers will "
 "permanently delete all event mappings you have configured.\n"
@@ -11941,17 +11963,17 @@ msgstr "Ilość kanałów:"
 msgid "Number of paths:"
 msgstr "Ilość ścieżek:"
 
-#: ../app/widgets/gimpimagepropview.c:460
+#: ../app/widgets/gimpimagepropview.c:464
 #, c-format
 msgid "pixels/%s"
 msgstr "pikseli/%s"
 
-#: ../app/widgets/gimpimagepropview.c:462
+#: ../app/widgets/gimpimagepropview.c:466
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:482
+#: ../app/widgets/gimpimagepropview.c:486
 msgid "colors"
 msgstr "kolory"
 
