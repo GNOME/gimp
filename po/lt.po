@@ -1,28 +1,31 @@
+# translation of lt.po to Lithuanian
 # Lithuanian translation of GIMP.
 # Copyright (C) 2001-2007 Free Software Foundation, Inc.
+#
+#  Take me down to the Paradise City,
+#  where the grass is green and the girls are pretty!
+#
 # Mantas Kriaučiūnas <mantas@akl.lt>, 2001-2004.
 # Eglė Kriaučiūnienė <egle@akl.lt>, 2001-2004.
 # Karina Gribanova <buratina@delfi.lt>, 2001-2002.
 # Linas Vasiliauskas <linasv@centras.lt>, 2004.
 # Giedrius Naudžiūnas <gimpng@gmail.com>, 2004-2005.
 # Žygimantas Beručka <zygis@gnome.org>, 2004-2007.
-# 
-#  Take me down to the Paradise City,
-#  where the grass is green and the girls are pretty!
-# 
+# Gintautas Miliauskas <gintas@akl.lt>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP HEAD\n"
+"Project-Id-Version: lt\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-18 22:12+0300\n"
-"PO-Revision-Date: 2007-09-19 13:25+0300\n"
+"POT-Creation-Date: 2007-09-21 23:58+0300\n"
+"PO-Revision-Date: 2007-09-21 23:58+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
-"Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
+"Language-Team: Lithuanian <gnome-lt@lists.akl.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
 "100<10 || n%100>=20) ? 1 : 2);\n"
+"X-Generator: KBabel 1.11.4\n"
 
 #: ../app/about.h:24
 msgid "GIMP"
@@ -189,7 +192,7 @@ msgstr "Išvesti gimprc failą su numatytaisiais parametrais"
 
 #: ../app/main.c:341
 msgid "[FILE|URI...]"
-msgstr "[RINKMENA|URI...]"
+msgstr "[FAILAS|URI...]"
 
 #: ../app/main.c:359
 msgid ""
@@ -245,9 +248,9 @@ msgstr ""
 "Aplanko, kuriame yra GIMP naudojo konfigūracija, pavadinimo konvertuoti į "
 "UTF-8 nepavyko: %s\n"
 "\n"
-"Tikriausiai jūsų failų sistema saugo failus kitokia koduote nei UTF-8 "
-"ir jūs GLib to nenurodėte. Patikrinkite aplinkos kintamojo "
-"G_FILENAME_ENCODING reikšmę."
+"Tikriausiai jūsų failų sistema saugo failus kitokia koduote nei UTF-8 ir jūs "
+"GLib to nenurodėte. Patikrinkite aplinkos kintamojo G_FILENAME_ENCODING "
+"reikšmę."
 
 #: ../app/actions/actions.c:99 ../app/dialogs/dialogs.c:215
 #: ../app/widgets/gimpbrusheditor.c:90
@@ -838,7 +841,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:133
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1388
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1389
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:770
 #: ../app/pdb/image_cmds.c:1995 ../app/widgets/gimpdnd-xds.c:98
@@ -1896,8 +1899,7 @@ msgstr "Įveskite pavadinimą šiam šablonui"
 #: ../app/actions/file-commands.c:342
 msgid "Revert failed. No file name associated with this image."
 msgstr ""
-"Atstatyti nepavyko. Su šiuo paveikslėliu nesusietas joks failo "
-"pavadinimas."
+"Atstatyti nepavyko. Su šiuo paveikslėliu nesusietas joks failo pavadinimas."
 
 #: ../app/actions/file-commands.c:355
 msgid "Revert Image"
@@ -4468,11 +4470,11 @@ msgid ""
 "using different filenames, restart GIMP and check the location of the swap "
 "directory in your Preferences."
 msgstr ""
-"Nepavyko atverti mainų failo. GIMP išnaudojo visą atmintį ir negali "
-"naudoti mainų failo. Kai kurios jūsų paveikslėlių dalys gali būti "
-"sugadintos. Pabandykite išsaugoti savo paveikslėlius naudodami kitus "
-"failų vardus, paleiskite GIMP iš naujo ir patikrinkite Nustatymuose "
-"nurodytą mainų aplanko vietą."
+"Nepavyko atverti mainų failo. GIMP išnaudojo visą atmintį ir negali naudoti "
+"mainų failo. Kai kurios jūsų paveikslėlių dalys gali būti sugadintos. "
+"Pabandykite išsaugoti savo paveikslėlius naudodami kitus failų vardus, "
+"paleiskite GIMP iš naujo ir patikrinkite Nustatymuose nurodytą mainų aplanko "
+"vietą."
 
 #: ../app/base/tile-swap.c:558
 #, c-format
@@ -4625,8 +4627,8 @@ msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
 msgstr ""
-"Įjungus užtikrinama, kad atvėrus failą bus matomas visas paveikslėlis, "
-"kitu atveju jis bus rodomas santykiu 1:1."
+"Įjungus užtikrinama, kad atvėrus failą bus matomas visas paveikslėlis, kitu "
+"atveju jis bus rodomas santykiu 1:1."
 
 #: ../app/config/gimprc-blurbs.h:164
 msgid ""
@@ -4906,8 +4908,8 @@ msgid ""
 msgstr ""
 "Nurodo mainų failo vietą. GIMP naudoja tekstūromis pagrįsta atminties "
 "paskirstymo schemą. Mainų failas naudojamas norint greitai ir lengvai įkelti "
-"tekstūras į diską ir iš jo. Turėkite omenyje, kad mainų failas lengvai "
-"gali tapti labai didelis, jei GIMP naudojami labai dideli paveikslėliai. Taip "
+"tekstūras į diską ir iš jo. Turėkite omenyje, kad mainų failas lengvai gali "
+"tapti labai didelis, jei GIMP naudojami labai dideli paveikslėliai. Taip "
 "pat, sistema gali nepakenčiamai sulėtėti, jei mainų failas sukuriamas "
 "aplanke, prijungtame naudojant NFS. Dėl šiu priežasčių rekomenduojama "
 "patalpinti mainų failą aplanke „/tmp“."
@@ -4951,8 +4953,8 @@ msgid ""
 "shared by other users."
 msgstr ""
 "Nurodo laikinojo saugojimo aplanką. GIMP veikimo metu ten bus saugomi "
-"failai. Užvėrus GIMP dauguma failų pranyks, tačiau kai kurie gali "
-"likti, taigi, būtų geriausia, jei šis aplankas būtų neviešinamas kitiems "
+"failai. Užvėrus GIMP dauguma failų pranyks, tačiau kai kurie gali likti, "
+"taigi, būtų geriausia, jei šis aplankas būtų neviešinamas kitiems "
 "naudotojams."
 
 #: ../app/config/gimprc-blurbs.h:379
@@ -5038,9 +5040,9 @@ msgid ""
 "appended to the command with a space separating the two."
 msgstr ""
 "Nurodo naudotiną išorinę žiniatinklio naršyklę. Tai gali būti absoliutus "
-"kelias arba vykdomojo failo, esančio naudotojo „PATH“, pavadinimas. "
-"Jeigu komandoje yra „%s“, tai bus pakeista URL, kitu atveju URL bus pridėtas "
-"prie komandos atskiriant juos tarpu."
+"kelias arba vykdomojo failo, esančio naudotojo „PATH“, pavadinimas. Jeigu "
+"komandoje yra „%s“, tai bus pakeista URL, kitu atveju URL bus pridėtas prie "
+"komandos atskiriant juos tarpu."
 
 #: ../app/config/gimprc-deserialize.c:136 ../app/core/gimp-modules.c:134
 #: ../app/core/gimp-units.c:164 ../app/gui/session.c:160
@@ -5056,7 +5058,7 @@ msgstr "žymės %s reikšmė nėra UTF-8 eilutė"
 #. no undo (or redo) steps available
 #: ../app/core/core-enums.c:53 ../app/core/core-enums.c:252
 #: ../app/core/core-enums.c:504 ../app/paint/paint-enums.c:81
-#: ../app/widgets/gimpimagepropview.c:411
+#: ../app/widgets/gimpimagepropview.c:415
 msgid "None"
 msgstr "Nėra"
 
@@ -5070,7 +5072,7 @@ msgstr "Floyd-Steinberg (sumažintas spalvų nublukimas)"
 
 #: ../app/core/core-enums.c:56
 msgid "Positioned"
-msgstr ""
+msgstr "Pozicionuota"
 
 #: ../app/core/core-enums.c:85
 msgid "Generate optimum palette"
@@ -5143,7 +5145,7 @@ msgstr "Apvesti su piešimo įrankiu"
 msgid "Solid color"
 msgstr "Gryna spalva"
 
-# Miter apibrėžimas (http://dictionary.cambridge.org/define.asp?key=51203&dict=CALD): 
+# Miter apibrėžimas (http://dictionary.cambridge.org/define.asp?key=51203&dict=CALD):
 #: ../app/core/core-enums.c:336
 msgid "Miter"
 msgstr "Kampinis"
@@ -5768,8 +5770,8 @@ msgid ""
 "Fatal parse error in brush file '%s': Unsupported brush depth %d\n"
 "GIMP brushes must be GRAY or RGBA."
 msgstr ""
-"Lemtinga apdorojimo klaida teptukų faile „%s“: nepalaikomas teptuko "
-"gylis %d\n"
+"Lemtinga apdorojimo klaida teptukų faile „%s“: nepalaikomas teptuko gylis %"
+"d\n"
 "GIMP teptukai turi būti PILKI arba RGBA."
 
 #: ../app/core/gimpbrush-load.c:448
@@ -5784,8 +5786,7 @@ msgstr ""
 #, c-format
 msgid "Fatal parse error in brush file '%s': Wide brushes are not supported."
 msgstr ""
-"Lemtinga apdorojimo klaida teptukų faile „%s“: platūs teptukai "
-"nepalaikomi."
+"Lemtinga apdorojimo klaida teptukų faile „%s“: platūs teptukai nepalaikomi."
 
 #: ../app/core/gimpbrushclipboard.c:181 ../app/core/gimppatternclipboard.c:181
 #: ../app/widgets/gimpclipboard.c:296
@@ -5796,24 +5797,23 @@ msgstr "Iškarpinė"
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
 msgstr ""
-"Lemtinga apdorojimo klaida teptukų faile „%s“: tai ne GIMP teptukų "
-"failas."
+"Lemtinga apdorojimo klaida teptukų faile „%s“: tai ne GIMP teptukų failas."
 
 #: ../app/core/gimpbrushgenerated-load.c:104
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
 msgstr ""
-"Lemtinga apdorojimo klaida teptukų faile „%s“: nežinoma GIMP teptukų "
-"versija eilutėje %d."
+"Lemtinga apdorojimo klaida teptukų faile „%s“: nežinoma GIMP teptukų versija "
+"eilutėje %d."
 
 #: ../app/core/gimpbrushgenerated-load.c:150
 #, c-format
 msgid ""
 "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr ""
-"Lemtinga apdorojimo klaida teptukų faile „%s“: nežinoma GIMP teptuko "
-"forma eilutėje %d."
+"Lemtinga apdorojimo klaida teptukų faile „%s“: nežinoma GIMP teptuko forma "
+"eilutėje %d."
 
 #: ../app/core/gimpbrushgenerated-load.c:226
 #, c-format
@@ -6058,8 +6058,7 @@ msgstr "Transformavimas"
 #, c-format
 msgid "Fatal parse error in gradient file '%s': Read error in line %d."
 msgstr ""
-"Lemtinga apdorojimo klaida gradiento faile „%s“: skaitymo klaida "
-"eilutėje %d."
+"Lemtinga apdorojimo klaida gradiento faile „%s“: skaitymo klaida eilutėje %d."
 
 #: ../app/core/gimpgradient-load.c:81
 #, c-format
@@ -6076,8 +6075,8 @@ msgstr "Netinkama UTF-8 eilutė gradiento faile „%s“."
 #, c-format
 msgid "Fatal parse error in gradient file '%s': File is corrupt in line %d."
 msgstr ""
-"Lemtinga apdorojimo klaida gradiento faile „%s“: failas sugadintas "
-"eilutėje %d."
+"Lemtinga apdorojimo klaida gradiento faile „%s“: failas sugadintas eilutėje %"
+"d."
 
 #: ../app/core/gimpgradient-load.c:218 ../app/core/gimpgradient-load.c:229
 #, c-format
@@ -6259,131 +6258,131 @@ msgstr "Perkelti mėginio tašką"
 msgid "Can't undo %s"
 msgstr "Negalima atšaukti %s"
 
-#: ../app/core/gimpimage.c:1458
+#: ../app/core/gimpimage.c:1476
 msgid "Change Image Resolution"
 msgstr "Keisti paveikslėlio raišką"
 
-#: ../app/core/gimpimage.c:1498
+#: ../app/core/gimpimage.c:1516
 msgid "Change Image Unit"
 msgstr "Keisti paveikslėlio vienetus"
 
-#: ../app/core/gimpimage.c:2343
+#: ../app/core/gimpimage.c:2361
 msgid "Attach Parasite to Image"
 msgstr "Prie paveikslėlio prisegti parazitą"
 
-#: ../app/core/gimpimage.c:2381
+#: ../app/core/gimpimage.c:2399
 msgid "Remove Parasite from Image"
 msgstr "Pašalinti nuo paveikslėlio parazitą"
 
-#: ../app/core/gimpimage.c:2839
+#: ../app/core/gimpimage.c:2857
 msgid "Add Layer"
 msgstr "Pridėti sluoksnį"
 
-#: ../app/core/gimpimage.c:2904 ../app/core/gimpimage.c:2917
+#: ../app/core/gimpimage.c:2922 ../app/core/gimpimage.c:2935
 msgid "Remove Layer"
 msgstr "Pašalinti sluoksnį"
 
-#: ../app/core/gimpimage.c:3059
+#: ../app/core/gimpimage.c:3077
 msgid "Layer cannot be raised higher."
 msgstr "Sluoksnio aukščiau pakelti negalima."
 
-#: ../app/core/gimpimage.c:3064
+#: ../app/core/gimpimage.c:3082
 msgid "Raise Layer"
 msgstr "Pakelti sluoksnį"
 
-#: ../app/core/gimpimage.c:3081
+#: ../app/core/gimpimage.c:3099
 msgid "Layer cannot be lowered more."
 msgstr "Sluoksnio žemiau nuleisti negalima."
 
-#: ../app/core/gimpimage.c:3086
+#: ../app/core/gimpimage.c:3104
 msgid "Lower Layer"
 msgstr "Nuleisti sluoksnį"
 
-#: ../app/core/gimpimage.c:3097
+#: ../app/core/gimpimage.c:3115
 msgid "Raise Layer to Top"
 msgstr "Pakelti sluoksnį iki viršaus"
 
-#: ../app/core/gimpimage.c:3112
+#: ../app/core/gimpimage.c:3130
 msgid "Lower Layer to Bottom"
 msgstr "Nuleisti sluoksnį iki apačios"
 
-#: ../app/core/gimpimage.c:3184
+#: ../app/core/gimpimage.c:3202
 msgid "Add Channel"
 msgstr "Pridėti kanalą"
 
-#: ../app/core/gimpimage.c:3229 ../app/core/gimpimage.c:3240
+#: ../app/core/gimpimage.c:3247 ../app/core/gimpimage.c:3258
 msgid "Remove Channel"
 msgstr "Pašalinti kanalą"
 
-#: ../app/core/gimpimage.c:3287
+#: ../app/core/gimpimage.c:3305
 msgid "Channel cannot be raised higher."
 msgstr "Kanalo aukščiau pakelti negalima."
 
-#: ../app/core/gimpimage.c:3292
+#: ../app/core/gimpimage.c:3310
 msgid "Raise Channel"
 msgstr "Pakelti kanalą"
 
-#: ../app/core/gimpimage.c:3309
+#: ../app/core/gimpimage.c:3327
 msgid "Channel is already on top."
 msgstr "Sluoksnis jau viršuje."
 
-#: ../app/core/gimpimage.c:3314
+#: ../app/core/gimpimage.c:3332
 msgid "Raise Channel to Top"
 msgstr "Pakelti kanalą į viršų"
 
-#: ../app/core/gimpimage.c:3331
+#: ../app/core/gimpimage.c:3349
 msgid "Channel cannot be lowered more."
 msgstr "Kanalo žemiau nuleisti negalima."
 
-#: ../app/core/gimpimage.c:3336
+#: ../app/core/gimpimage.c:3354
 msgid "Lower Channel"
 msgstr "Nuleisti kanalą"
 
-#: ../app/core/gimpimage.c:3356
+#: ../app/core/gimpimage.c:3374
 msgid "Channel is already on the bottom."
 msgstr "Sluoksnis jau yra apačioje"
 
-#: ../app/core/gimpimage.c:3361
+#: ../app/core/gimpimage.c:3379
 msgid "Lower Channel to Bottom"
 msgstr "Nuleisti kanalą į apačią"
 
-#: ../app/core/gimpimage.c:3435
+#: ../app/core/gimpimage.c:3453
 msgid "Add Path"
 msgstr "Pridėti kontūrą"
 
-#: ../app/core/gimpimage.c:3481
+#: ../app/core/gimpimage.c:3499
 msgid "Remove Path"
 msgstr "Pašalinti kontūrą"
 
-#: ../app/core/gimpimage.c:3525
+#: ../app/core/gimpimage.c:3543
 msgid "Path cannot be raised higher."
 msgstr "Kontūro aukščiau pakelti negalima."
 
-#: ../app/core/gimpimage.c:3530
+#: ../app/core/gimpimage.c:3548
 msgid "Raise Path"
 msgstr "Pakelti kontūrą"
 
-#: ../app/core/gimpimage.c:3547
+#: ../app/core/gimpimage.c:3565
 msgid "Path is already on top."
 msgstr "Kontūras jau yra viršuje."
 
-#: ../app/core/gimpimage.c:3552
+#: ../app/core/gimpimage.c:3570
 msgid "Raise Path to Top"
 msgstr "Pakelti kontūrą iki viršaus"
 
-#: ../app/core/gimpimage.c:3569
+#: ../app/core/gimpimage.c:3587
 msgid "Path cannot be lowered more."
 msgstr "Kontūro žemiau nuleisti negalima."
 
-#: ../app/core/gimpimage.c:3574
+#: ../app/core/gimpimage.c:3592
 msgid "Lower Path"
 msgstr "Nuleisti kontūrą"
 
-#: ../app/core/gimpimage.c:3594
+#: ../app/core/gimpimage.c:3612
 msgid "Path is already on the bottom."
 msgstr "Kontūras jau yra apačioje."
 
-#: ../app/core/gimpimage.c:3599
+#: ../app/core/gimpimage.c:3617
 msgid "Lower Path to Bottom"
 msgstr "Nuleisti kontūrą iki apačios"
 
@@ -6420,7 +6419,7 @@ msgid "(Preview may be out of date)"
 msgstr "(Peržiūra gali būti pasenusi)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:624 ../app/widgets/gimpimagepropview.c:437
+#: ../app/core/gimpimagefile.c:624 ../app/widgets/gimpimagepropview.c:441
 #: ../app/widgets/gimpsizebox.c:438 ../app/widgets/gimptemplateeditor.c:564
 #, c-format
 msgid "%d × %d pixel"
@@ -6623,8 +6622,7 @@ msgstr ""
 #: ../app/core/gimppalette-load.c:210
 #, c-format
 msgid "Reading palette file '%s': RGB value out of range in line %d."
-msgstr ""
-"Skaitomas paletės failas „%s“: %d eilutėje RGB reikšmė yra už ribų."
+msgstr "Skaitomas paletės failas „%s“: %d eilutėje RGB reikšmė yra už ribų."
 
 #: ../app/core/gimppattern-load.c:85 ../app/core/gimppattern-load.c:131
 #: ../app/core/gimppattern-load.c:162
@@ -6638,7 +6636,8 @@ msgstr ""
 msgid ""
 "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
-"Lemtinga apdorojimo klaida raštų faile „%s“: nežinoma paletės formato versija %d."
+"Lemtinga apdorojimo klaida raštų faile „%s“: nežinoma paletės formato "
+"versija %d."
 
 #: ../app/core/gimppattern-load.c:114
 #, c-format
@@ -6962,8 +6961,8 @@ msgid ""
 "The given filename does not have any known file extension. Please enter a "
 "known file extension or select a file format from the file format list."
 msgstr ""
-"Nurodyto failo pavadinimo plėtinys nežinomas. Įveskite failo "
-"plėtinį arba failų formatų sąraše pasirinkite failo formatą."
+"Nurodyto failo pavadinimo plėtinys nežinomas. Įveskite failo plėtinį arba "
+"failų formatų sąraše pasirinkite failo formatą."
 
 #: ../app/dialogs/file-save-dialog.c:394
 msgid ""
@@ -6971,9 +6970,9 @@ msgid ""
 "extension. Please enter a file extension that matches the selected file "
 "format or enter no file extension at all."
 msgstr ""
-"Saugant ne vietinius failus reikia nustatyti failo formatą pagal "
-"failo plėtinį. Įveskite failo plėtinį, atitinkantį pasirinkto "
-"failo formatą arba iš viso nenurodykite failo plėtinio."
+"Saugant ne vietinius failus reikia nustatyti failo formatą pagal failo "
+"plėtinį. Įveskite failo plėtinį, atitinkantį pasirinkto failo formatą arba "
+"iš viso nenurodykite failo plėtinio."
 
 #: ../app/dialogs/file-save-dialog.c:454
 msgid "Extension Mismatch"
@@ -7832,7 +7831,7 @@ msgid "Pixels"
 msgstr "Taškų"
 
 #: ../app/dialogs/preferences-dialog.c:2318
-#: ../app/widgets/gimpimagepropview.c:465
+#: ../app/widgets/gimpimagepropview.c:469
 msgid "ppi"
 msgstr "taškų colyje"
 
@@ -8230,8 +8229,7 @@ msgstr "Panašu, kad nėra GIMP patarimų failo!"
 #, c-format
 msgid "There should be a file called '%s'. Please check your installation."
 msgstr ""
-"Turėtų būti failas pavadinimu „%s“. Patikrinkite ar teisingai įdiegėte "
-"GIMP."
+"Turėtų būti failas pavadinimu „%s“. Patikrinkite ar teisingai įdiegėte GIMP."
 
 #: ../app/dialogs/tips-dialog.c:98
 msgid "The GIMP tips file could not be parsed!"
@@ -8526,31 +8524,29 @@ msgid "Other..."
 msgstr "Kitas..."
 
 #: ../app/file/file-open.c:129 ../app/file/file-save.c:111
-#, c-format
 msgid "Not a regular file"
 msgstr "Tai nėra paprastas failas"
 
-#: ../app/file/file-open.c:174
+#: ../app/file/file-open.c:180
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr "Įskiepis %s grąžino reikšmę SUCCESS, tačiau negrąžino paveikslėlio"
 
-#: ../app/file/file-open.c:183
+#: ../app/file/file-open.c:189
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr "Įskiepiui %s nepavyko atverti paveikslėlio"
 
-#: ../app/file/file-open.c:470
-#, c-format
+#: ../app/file/file-open.c:474
 msgid "Image doesn't contain any layers"
 msgstr "Paveikslėlyje nėra sluoksnių"
 
-#: ../app/file/file-open.c:519
+#: ../app/file/file-open.c:523
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "Nepavyko atverti „%s“: %s"
 
-#: ../app/file/file-open.c:593
+#: ../app/file/file-open.c:597
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -8558,11 +8554,10 @@ msgstr ""
 "Spalvų valdymas buvo išjungtas. Jį vėl galima įjungti Nustatymų dialoge."
 
 #: ../app/file/file-procedure.c:200
-#, c-format
 msgid "Unknown file type"
 msgstr "Nežinomas failo tipas"
 
-#: ../app/file/file-save.c:192
+#: ../app/file/file-save.c:193
 #, c-format
 msgid "%s plug-in could not save image"
 msgstr "Įskiepiui %s nepavyko išsaugoti paveikslėlio"
@@ -8573,7 +8568,6 @@ msgid "'%s:' is not a valid URI scheme"
 msgstr "„%s:“ nėra tinkama URI schema"
 
 #: ../app/file/file-utils.c:88 ../app/file/file-utils.c:122
-#, c-format
 msgid "Invalid character sequence in URI"
 msgstr "URI yra netinkama simbolių seka"
 
@@ -8586,7 +8580,6 @@ msgid "Airbrush"
 msgstr "Dažų purkštuvas"
 
 #: ../app/paint/gimpbrushcore.c:354
-#, c-format
 msgid "No brushes available for use with this tool."
 msgstr "Šiam įrankiui nėra naudotinų teptukų."
 
@@ -8595,7 +8588,6 @@ msgid "Clone"
 msgstr "Klonavimas"
 
 #: ../app/paint/gimpclone.c:141
-#, c-format
 msgid "No patterns available for use with this tool."
 msgstr "Šiam įrankiui nėra naudotinų raštų."
 
@@ -8616,7 +8608,6 @@ msgid "Heal"
 msgstr "Taisyti"
 
 #: ../app/paint/gimpheal.c:126
-#, c-format
 msgid "Healing does not operate on indexed layers."
 msgstr "Taisymas indeksuotuose sluoksniuose negalimas."
 
@@ -8634,7 +8625,6 @@ msgid "Perspective Clone"
 msgstr "Perspektyvos klonavimas"
 
 #: ../app/paint/gimpperspectiveclone.c:160
-#, c-format
 msgid "Perspective Clone does not operate on indexed layers."
 msgstr "Perspektyvos klonavimas negalimas indeksuotuose sluoksniuose."
 
@@ -8643,7 +8633,6 @@ msgid "Smudge"
 msgstr "Ištepimas"
 
 #: ../app/paint/gimpsourcecore.c:227
-#, c-format
 msgid "Set a source image first."
 msgstr "Pirma pasirinkite šaltinio paveikslėlį"
 
@@ -8844,8 +8833,7 @@ msgstr "Aplinkos faile %s yra neteisingas kintamojo pavadinimas: %s"
 #: ../app/plug-in/gimpinterpreterdb.c:264
 #, c-format
 msgid "Bad interpreter referenced in interpreter file %s: %s"
-msgstr ""
-"Interpretatoriaus faile „%s“ nurodytas blogas interpretatorius: %s"
+msgstr "Interpretatoriaus faile „%s“ nurodytas blogas interpretatorius: %s"
 
 #: ../app/plug-in/gimpinterpreterdb.c:322
 #, c-format
@@ -9141,7 +9129,6 @@ msgid "Blen_d"
 msgstr "Perėji_mas"
 
 #: ../app/tools/gimpblendtool.c:163
-#, c-format
 msgid "Blend does not operate on indexed layers."
 msgstr "Perėjimas neveikia indeksuotose sluoksniuose."
 
@@ -9172,7 +9159,6 @@ msgid "Adjust Brightness and Contrast"
 msgstr "Nustatyti šviesumą ir kontrastą"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:169
-#, c-format
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "Šviesumas - ryškumas negalimas indeksuotuose sluoksniuose."
 
@@ -9307,7 +9293,6 @@ msgid "Adjust Color Balance"
 msgstr "Nustatyti spalvų balansą"
 
 #: ../app/tools/gimpcolorbalancetool.c:153
-#, c-format
 msgid "Color Balance operates only on RGB color layers."
 msgstr "Spalvų balansas veikia tik RGB spalvų sluoksniuose."
 
@@ -9355,7 +9340,6 @@ msgid "Colorize the Image"
 msgstr "Spalvinti paveikslėlį"
 
 #: ../app/tools/gimpcolorizetool.c:148
-#, c-format
 msgid "Colorize operates only on RGB color layers."
 msgstr "Spalvinimas veikia tik RGB spalvų sluoksniuose."
 
@@ -9545,7 +9529,6 @@ msgid "Save curves settings to file"
 msgstr "Išsaugoti kreivių parametrus į failo"
 
 #: ../app/tools/gimpcurvestool.c:253
-#, c-format
 msgid "Curves does not operate on indexed layers."
 msgstr "Kreivės neveikia indeksuotuose sluoksniuose."
 
@@ -9577,12 +9560,10 @@ msgid "Curve Type"
 msgstr "Kreivės tipas"
 
 #: ../app/tools/gimpcurvestool.c:753 ../app/tools/gimplevelstool.c:672
-#, c-format
 msgid "not a GIMP Levels file"
 msgstr "tai ne GIMP lygių failas"
 
 #: ../app/tools/gimpcurvestool.c:767 ../app/tools/gimplevelstool.c:711
-#, c-format
 msgid "parse error"
 msgstr "apdorojimo klaida"
 
@@ -9878,7 +9859,6 @@ msgid "Adjust Hue / Lightness / Saturation"
 msgstr "Reguliuoti atspalvį / šviesumą / sodrumą"
 
 #: ../app/tools/gimphuesaturationtool.c:173
-#, c-format
 msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Spalva - sodrumas veikia tik su RGB spalvų sluoksniais."
 
@@ -10062,7 +10042,6 @@ msgid "Save levels settings to file"
 msgstr "Išsaugoti lygių parametrus į failą"
 
 #: ../app/tools/gimplevelstool.c:236
-#, c-format
 msgid "Levels does not operate on indexed layers."
 msgstr "Lygiai neveikia indeksuotuose sluoksniuose."
 
@@ -10374,7 +10353,6 @@ msgid "Posterize (Reduce Number of Colors)"
 msgstr "Sumažinti spalvų kiekį"
 
 #: ../app/tools/gimpposterizetool.c:140
-#, c-format
 msgid "Posterize does not operate on indexed layers."
 msgstr "Spalvų kiekio sumažinimas neveikia indeksuotiems paveikslėliams."
 
@@ -10695,7 +10673,6 @@ msgid "Apply Threshold"
 msgstr "Pritaikyti slenkstį"
 
 #: ../app/tools/gimpthresholdtool.c:148
-#, c-format
 msgid "Threshold does not operate on indexed layers."
 msgstr "Slenkstis neveikia indeksuotiems sluoksniams."
 
@@ -11025,7 +11002,6 @@ msgid "No paths found in '%s'"
 msgstr "„%s“ kontūrų nerasta"
 
 #: ../app/vectors/gimpvectors-import.c:339
-#, c-format
 msgid "No paths found in the buffer"
 msgstr "Nėra kontūrų buferyje"
 
@@ -11407,7 +11383,6 @@ msgid "Remove Controller '%s'?"
 msgstr "Pašalinti kontrolerį „%s“?"
 
 #: ../app/widgets/gimpcontrollerlist.c:571
-#, c-format
 msgid ""
 "Removing this controller from the list of active controllers will "
 "permanently delete all event mappings you have configured.\n"
@@ -11839,17 +11814,17 @@ msgstr "Kanalų skaičius:"
 msgid "Number of paths:"
 msgstr "Kontūrų skaičius:"
 
-#: ../app/widgets/gimpimagepropview.c:460
+#: ../app/widgets/gimpimagepropview.c:464
 #, c-format
 msgid "pixels/%s"
 msgstr "taškai/%s"
 
-#: ../app/widgets/gimpimagepropview.c:462
+#: ../app/widgets/gimpimagepropview.c:466
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:482
+#: ../app/widgets/gimpimagepropview.c:486
 msgid "colors"
 msgstr "spalvos"
 
