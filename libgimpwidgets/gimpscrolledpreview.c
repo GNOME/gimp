@@ -155,7 +155,7 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
   priv->vscr_policy = GTK_POLICY_AUTOMATIC;
 
   priv->in_drag     = FALSE;
-  priv->frozen      = 0;
+  priv->frozen      = 1;  /* we are frozen during init */
 
   /*  scrollbars  */
   adj = gtk_adjustment_new (0, 0, GIMP_PREVIEW (preview)->width - 1, 1.0,
@@ -219,6 +219,8 @@ gimp_scrolled_preview_init (GimpScrolledPreview *preview)
   g_signal_connect (preview->nav_icon, "button-press-event",
                     G_CALLBACK (gimp_scrolled_preview_nav_button_press),
                     preview);
+
+  priv->frozen = 0;  /* thaw without actually calling draw/invalidate */
 }
 
 static void
@@ -305,6 +307,8 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
   gint width  = GIMP_PREVIEW (preview)->xmax - GIMP_PREVIEW (preview)->xmin;
   gint height = GIMP_PREVIEW (preview)->ymax - GIMP_PREVIEW (preview)->ymin;
 
+  gimp_scrolled_preview_freeze (preview);
+
   GIMP_PREVIEW (preview)->width  = MIN (width,  allocation->width);
   GIMP_PREVIEW (preview)->height = MIN (height, allocation->height);
 
@@ -359,8 +363,7 @@ gimp_scrolled_preview_area_size_allocate (GtkWidget           *widget,
       gtk_widget_hide (preview->nav_icon);
     }
 
-  gimp_preview_draw (GIMP_PREVIEW (preview));
-  gimp_preview_invalidate (GIMP_PREVIEW (preview));
+  gimp_scrolled_preview_thaw (preview);
 }
 
 static gboolean
@@ -777,6 +780,8 @@ gimp_scrolled_preview_set_position (GimpScrolledPreview *preview,
 
   g_return_if_fail (GIMP_IS_SCROLLED_PREVIEW (preview));
 
+  gimp_scrolled_preview_freeze (preview);
+
   gimp_scrolled_preview_hscr_update (preview);
   gimp_scrolled_preview_vscr_update (preview);
 
@@ -785,6 +790,8 @@ gimp_scrolled_preview_set_position (GimpScrolledPreview *preview,
 
   adj = gtk_range_get_adjustment (GTK_RANGE (preview->vscr));
   gtk_adjustment_set_value (adj, y - GIMP_PREVIEW (preview)->ymin);
+
+  gimp_scrolled_preview_thaw (preview);
 }
 
 /**

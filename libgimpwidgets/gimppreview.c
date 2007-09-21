@@ -273,7 +273,7 @@ gimp_preview_init (GimpPreview *preview)
                     GTK_FILL | GTK_EXPAND, GTK_FILL, 0, 0);
   gtk_widget_show (priv->controls);
 
-  /*  toggle button to (des)activate the instant preview  */
+  /*  toggle button to (de)activate the instant preview  */
   preview->toggle = gtk_check_button_new_with_mnemonic (_("_Preview"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (preview->toggle),
                                 preview->update_preview);
@@ -468,11 +468,10 @@ gimp_preview_notify_checks (GimpPreview *preview)
 static gboolean
 gimp_preview_invalidate_now (GimpPreview *preview)
 {
-  GtkWidget *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (preview));
-  GimpPreviewClass *class = GIMP_PREVIEW_GET_CLASS (preview);
+  GtkWidget        *toplevel = gtk_widget_get_toplevel (GTK_WIDGET (preview));
+  GimpPreviewClass *class    = GIMP_PREVIEW_GET_CLASS (preview);
 
-  if (class->draw)
-    class->draw (preview);
+  gimp_preview_draw (preview);
 
   preview->timeout_id = 0;
 

@@ -1,5 +1,12 @@
 2007-09-21  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppreview.c: formatting.
+
+	* libgimpwidgets/gimpscrolledpreview.c: make use of freeze/thaw to
+	reduce the number of updates during initialization.
+
+2007-09-21  Sven Neumann  <sven@gimp.org>
+
 	* app/file/file-open.c (file_open_image): set the image clean
 	after handling the color profile.
 
