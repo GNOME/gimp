@@ -194,9 +194,7 @@ file_open_image (Gimp                *gimp,
 
   if (image)
     {
-      gimp_image_undo_disable (image);
       file_open_handle_color_profile (image, context, progress, run_mode);
-      gimp_image_undo_enable (image);
     }
 
   return image;
@@ -624,6 +622,8 @@ file_open_handle_color_profile (GimpImage    *image,
 {
   if (gimp_image_parasite_find (image, "icc-profile"))
     {
+      gimp_image_undo_disable (image);
+
       switch (image->gimp->config->color_profile_policy)
         {
         case GIMP_COLOR_PROFILE_POLICY_ASK:
@@ -640,5 +640,8 @@ file_open_handle_color_profile (GimpImage    *image,
                                        GIMP_RUN_NONINTERACTIVE);
           break;
         }
+
+      gimp_image_clean_all (image);
+      gimp_image_undo_enable (image);
     }
 }

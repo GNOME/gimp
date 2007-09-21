@@ -1,3 +1,8 @@
+2007-09-21  Sven Neumann  <sven@gimp.org>
+
+	* app/file/file-open.c (file_open_image): set the image clean
+	after handling the color profile.
+
 2007-09-20  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpimage.[ch]: added a load_proc member to GimpImage
