@@ -1,5 +1,11 @@
 2007-09-21  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/libgimp-sections.txt: added gimp_layer_flatten.
+
+	* libgimp/tmpl/gimplayer.sgml: regenerated.
+
+2007-09-21  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/images/gimp-dialog.png
 	* libgimpwidgets/images/gimp-file-entry.png
 	* libgimpwidgets/images/gimp-path-editor.png: updated with GTK+	2.12,

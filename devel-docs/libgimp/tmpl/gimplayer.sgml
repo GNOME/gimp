@@ -96,6 +96,15 @@ Operations on a single layer.
 @Returns: 
 
 
+<!-- ##### FUNCTION gimp_layer_flatten ##### -->
+<para>
+
+</para>
+
+@layer_ID: 
+@Returns: 
+
+
 <!-- ##### FUNCTION gimp_layer_set_offsets ##### -->
 <para>
 
