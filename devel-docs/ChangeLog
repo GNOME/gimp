@@ -1,3 +1,10 @@
+2007-09-21  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/images/gimp-dialog.png
+	* libgimpwidgets/images/gimp-file-entry.png
+	* libgimpwidgets/images/gimp-path-editor.png: updated with GTK+	2.12,
+	showing off new Tango icons.
+
 2007-09-20  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/images/*.png: recreated using the new version of
