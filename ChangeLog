@@ -1,5 +1,16 @@
 2007-09-22  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimpcropoptions.[ch]: Add an allow-growing option.
+
+	* app/tools/gimpcroptool.c: Take the new allow-growing option into
+	account when setting crop rectangle constraints, and restructure
+	the code a bit.
+	(gimp_crop_tool_execute): Allow rectangles larger than the
+	image/layer being sent to gimp_image_crop() since that function
+	handles that fine. These changes fixes bug #368325.
+
+2007-09-22  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangletool.c
 	(gimp_rectangle_tool_set_constraint): Enforce constraints of any
 	pending rectangle when setting a constraint.

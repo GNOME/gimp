@@ -37,7 +37,8 @@
 
 enum
 {
-  PROP_LAYER_ONLY = GIMP_RECTANGLE_OPTIONS_PROP_LAST + 1
+  PROP_LAYER_ONLY = GIMP_RECTANGLE_OPTIONS_PROP_LAST + 1,
+  PROP_ALLOW_GROWING
 };
 
 
@@ -72,6 +73,11 @@ gimp_crop_options_class_init (GimpCropOptionsClass *klass)
                                     FALSE,
                                     GIMP_PARAM_STATIC_STRINGS);
 
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_ALLOW_GROWING,
+                                    "allow-growing", NULL,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+
   gimp_rectangle_options_install_properties (object_class);
 }
 
@@ -97,6 +103,10 @@ gimp_crop_options_set_property (GObject      *object,
       GIMP_CROP_OPTIONS (object)->layer_only = g_value_get_boolean (value);
       break;
 
+    case PROP_ALLOW_GROWING:
+      GIMP_CROP_OPTIONS (object)->allow_growing = g_value_get_boolean (value);
+      break;
+
     default:
       gimp_rectangle_options_set_property (object, property_id, value, pspec);
       break;
@@ -113,6 +123,10 @@ gimp_crop_options_get_property (GObject    *object,
     {
     case PROP_LAYER_ONLY:
       g_value_set_boolean (value, GIMP_CROP_OPTIONS (object)->layer_only);
+      break;
+
+    case PROP_ALLOW_GROWING:
+      g_value_set_boolean (value, GIMP_CROP_OPTIONS (object)->allow_growing);
       break;
 
     default:
@@ -132,6 +146,12 @@ gimp_crop_options_gui (GimpToolOptions *tool_options)
   /*  layer toggle  */
   button = gimp_prop_check_button_new (config, "layer-only",
                                        _("Current layer only"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
+
+  /*  allow growing toggle  */
+  button = gimp_prop_check_button_new (config, "allow-growing",
+                                       _("Allow growing"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_show (button);
 

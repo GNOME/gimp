@@ -82,9 +82,12 @@ static void   gimp_crop_tool_update_option_defaults
                                                  (GimpCropTool          *crop_tool,
                                                   gboolean               ignore_pending);
 
-static void   gimp_crop_tool_notify_layer_only   (GimpCropOptions       *options,
+static GimpRectangleConstraint gimp_crop_tool_get_constraint
+                                                 (GimpCropTool          *crop_tool);
+
+static void   gimp_crop_tool_options_notify      (GimpCropOptions       *options,
                                                   GParamSpec            *pspec,
-                                                  GimpTool              *tool);
+                                                  GimpCropTool          *crop_tool);
 
 static void   gimp_crop_tool_image_changed       (GimpContext           *gimp_context,
                                                   GimpImage             *image,
@@ -163,6 +166,7 @@ gimp_crop_tool_constructor (GType                  type,
                             GObjectConstructParam *params)
 {
   GObject         *object;
+  GimpCropTool    *crop_tool;
   GimpCropOptions *options;
   GimpContext     *gimp_context;
   GimpToolInfo    *tool_info;
@@ -178,23 +182,27 @@ gimp_crop_tool_constructor (GType                  type,
 
   gimp_context = gimp_get_user_context (tool_info->gimp);
 
+  crop_tool = GIMP_CROP_TOOL (object);
+
   g_signal_connect_object (gimp_context, "image-changed",
                            G_CALLBACK (gimp_crop_tool_image_changed),
-                           GIMP_CROP_TOOL (object), 0);
+                           crop_tool, 0);
 
 
   options = GIMP_CROP_TOOL_GET_OPTIONS (object);
 
   g_signal_connect_object (options, "notify::layer-only",
-                           G_CALLBACK (gimp_crop_tool_notify_layer_only),
+                           G_CALLBACK (gimp_crop_tool_options_notify),
+                           object, 0);
+
+  g_signal_connect_object (options, "notify::allow-growing",
+                           G_CALLBACK (gimp_crop_tool_options_notify),
                            object, 0);
 
   gimp_rectangle_tool_set_constraint (GIMP_RECTANGLE_TOOL (object),
-                                      options->layer_only ?
-                                      GIMP_RECTANGLE_CONSTRAIN_DRAWABLE :
-                                      GIMP_RECTANGLE_CONSTRAIN_IMAGE);
+                                      gimp_crop_tool_get_constraint (crop_tool));
 
-  gimp_crop_tool_update_option_defaults (GIMP_CROP_TOOL (object),
+  gimp_crop_tool_update_option_defaults (crop_tool,
                                          FALSE);
 
   return object;
@@ -276,47 +284,19 @@ gimp_crop_tool_execute (GimpRectangleTool  *rectangle,
                         gint                w,
                         gint                h)
 {
-  GimpTool             *tool;
-  GimpCropOptions      *options;
-  GimpRectangleOptions *rectangle_options;
-  GimpImage            *image;
-  gint                  max_x, max_y;
-  gboolean              rectangle_exists;
+  GimpTool        *tool;
+  GimpCropOptions *options;
+  GimpImage       *image;
 
-  tool              = GIMP_TOOL (rectangle);
-  options           = GIMP_CROP_TOOL_GET_OPTIONS (tool);
-  rectangle_options = GIMP_RECTANGLE_TOOL_GET_OPTIONS (rectangle);
+  tool    = GIMP_TOOL (rectangle);
+  options = GIMP_CROP_TOOL_GET_OPTIONS (tool);
 
   gimp_tool_pop_status (tool, tool->display);
 
   image = tool->display->image;
-  max_x = image->width;
-  max_y = image->height;
-
-  rectangle_exists = (x <= max_x && y <= max_y &&
-                      x + w >= 0 && y + h >= 0 &&
-                      w > 0 && h > 0);
-
-  if (x < 0)
-    {
-      w += x;
-      x = 0;
-    }
-
-  if (y < 0)
-    {
-      h += y;
-      y = 0;
-    }
-
-  if (x + w > max_x)
-    w = max_x - x;
-
-  if (y + h > max_y)
-    h = max_y - y;
 
   /* if rectangle exists, crop it */
-  if (rectangle_exists)
+  if (w > 0 && h > 0)
     {
       gimp_image_crop (image, GIMP_CONTEXT (options),
                        x, y, w + x, h + y,
@@ -390,17 +370,31 @@ gimp_crop_tool_update_option_defaults (GimpCropTool *crop_tool,
     }
 }
 
-static void
-gimp_crop_tool_notify_layer_only (GimpCropOptions *options,
-                                  GParamSpec      *pspec,
-                                  GimpTool        *tool)
+static GimpRectangleConstraint
+gimp_crop_tool_get_constraint (GimpCropTool *crop_tool)
 {
-  gimp_rectangle_tool_set_constraint (GIMP_RECTANGLE_TOOL (tool),
-                                      options->layer_only ?
-                                      GIMP_RECTANGLE_CONSTRAIN_DRAWABLE :
-                                      GIMP_RECTANGLE_CONSTRAIN_IMAGE);
+  GimpCropOptions *crop_options = GIMP_CROP_TOOL_GET_OPTIONS (crop_tool);
 
-  gimp_crop_tool_update_option_defaults (GIMP_CROP_TOOL (tool),
+  if (crop_options->allow_growing)
+    {
+      return GIMP_RECTANGLE_CONSTRAIN_NONE;
+    }
+  else
+    {
+      return crop_options->layer_only ? GIMP_RECTANGLE_CONSTRAIN_DRAWABLE :
+                                        GIMP_RECTANGLE_CONSTRAIN_IMAGE;
+    }
+}
+
+static void
+gimp_crop_tool_options_notify (GimpCropOptions *options,
+                               GParamSpec      *pspec,
+                               GimpCropTool    *crop_tool)
+{
+  gimp_rectangle_tool_set_constraint (GIMP_RECTANGLE_TOOL (crop_tool),
+                                      gimp_crop_tool_get_constraint (crop_tool));
+
+  gimp_crop_tool_update_option_defaults (crop_tool,
                                          FALSE);
 }
 

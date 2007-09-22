@@ -38,7 +38,13 @@ struct _GimpCropOptions
 {
   GimpToolOptions  parent_instence;
 
+  /* Work on the current layer rather than the image. */
   gboolean         layer_only;
+
+  /* Allow the crop rectangle to be larger than the image/layer. This
+   * will resize the image/layer.
+   */
+  gboolean         allow_growing;
 };
 
 
