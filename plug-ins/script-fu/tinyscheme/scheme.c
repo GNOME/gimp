@@ -1480,12 +1480,12 @@ static gunichar basic_inchar(port *pt) {
     int  c;
     int  i;
 
+    c = fgetc(pt->rep.stdio.file);
+    if (c == EOF) return EOF;
+    utf8[0] = c;
+
     while (TRUE)
       {
-        c = fgetc(pt->rep.stdio.file);
-        if (c == EOF) return EOF;
-        utf8[0] = c;
-
         if (utf8[0] <= 0x7f)
           {
             return (gunichar) utf8[0];
@@ -1506,19 +1506,21 @@ static gunichar basic_inchar(port *pt) {
                   }
               }
 
-            if (i <= len || (utf8[len] & 0xc0) != 0x80)
+            if (i > len)
               {
-                /* Invalid UTF-8 sequence. Try pushing back the last
-                 * byte read as the start of a new character. */
-                ungetc (utf8[i], pt->rep.stdio.file);
+                return g_utf8_get_char ((char *) utf8);
               }
-            else
-              {
-                return g_utf8_get_char ((char *) &utf8[0]);
-              }
-          }
 
-        /* Everything else is invalid and will be ignored */
+            /* we did not get enough continuation characters. */
+            utf8[0] = utf8[i];          /* ignore and restart */
+          }
+        else
+          {
+            /* Everything else is invalid and will be ignored */
+            c = fgetc(pt->rep.stdio.file);
+            if (c == EOF) return EOF;
+            utf8[0] = c;
+          }
       }
   } else {
     if(*pt->rep.string.curr==0

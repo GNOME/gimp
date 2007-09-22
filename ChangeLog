@@ -1,3 +1,7 @@
+2007-09-22  Simon Budig  <simon@gimp.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme.c: further simplifications.
+
 2007-09-21  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme.c (basic_inchar): Applied
