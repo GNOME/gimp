@@ -1,3 +1,12 @@
+2007-09-23  Simon Budig  <simon@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c: implement
+	bresenham-like stepping for interpolating the view in
+	x-direction. Since I now know how it is supposed to work
+	the y direction will follow shortly.
+
+	Adresses bug #474509.
+
 2007-09-22  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimpcropoptions.[ch]: Add an allow-growing option.

@@ -78,8 +78,11 @@ struct _RenderInfo
   gint              dest_bpp;
   gint              dest_bpl;
   gint              dest_width;
-  gint              xstart;
-  gint              xdelta;
+
+  /* Bresenham helpers */
+  gint              x_dest_inc; /* amount to increment for each dest. pixel  */
+  gint              x_src_dec;  /* amount to decrement for each source pixel */
+  gint              dx_start;   /* pixel fraction for first pixel            */
   gint              yfraction;
 };
 
@@ -874,22 +877,20 @@ gimp_display_shell_render_info_scale (RenderInfo       *info,
   /* We must reset info->dest because this member is modified in render
    * functions.
    */
-  info->dest      = shell->render_buf;
+  info->dest     = shell->render_buf;
 
-  info->scalex    = scale_x;
-  info->scaley    = scale_y;
+  info->scalex   = scale_x;
+  info->scaley   = scale_y;
 
-  info->src_x     = (gdouble) info->x / info->scalex;
-  info->src_y     = (gdouble) info->y / info->scaley;
+  info->src_y    = (gdouble) info->y / info->scaley;
 
-  info->xdelta    = (1 << 16) * (1.0 / info->scalex);
-  info->xstart    = (gdouble) info->x / info->scalex * 65536.0;
+  /* use Bresenham like stepping */
+  info->x_dest_inc = tile_manager_width (src_tiles);
+  info->x_src_dec  = ceil (tile_manager_width (src_tiles) * info->scalex);
 
-  /* avoid aliasing errors when zooming in */
-  if (info->scalex > 1)
-    {
-      info->xstart += info->xdelta / 2;
-    }
+  info->dx_start   = info->x_dest_inc * info->x + info->x_dest_inc/2;
+  info->src_x      = info->dx_start / info->x_src_dec;
+  info->dx_start   = info->dx_start % info->x_src_dec;
 }
 
 static const guint *
@@ -1048,14 +1049,13 @@ render_image_tile_fault (RenderInfo *info)
                              sample pair */
   gint          tilexL;   /* the current x-tile indice used for the left
                              sample pair */
-  gint          xdelta;   /* fixed point amount to increment source x
-                             coordinas for each horizontal integer destination
-                             pixel increment */
   gint          bpp;
-  glong         x;
+  gint          dx;
+  gint          src_x;
+  gint          skipped;
 
-  gint          footprint_x;
-  gint          footprint_y;
+  guint         footprint_x;
+  guint         footprint_y;
   guint         foosum;
 
   guint         left_weight;
@@ -1109,7 +1109,7 @@ render_image_tile_fault (RenderInfo *info)
     }
 
   footprint_y = (1.0 / info->scaley) * 256;
-  footprint_x = (1.0 / info->scalex) * 256;
+  footprint_x = info->x_src_dec;
 
   foosum = footprint_x * footprint_y;
 
@@ -1240,7 +1240,8 @@ render_image_tile_fault (RenderInfo *info)
   bpp    = tile_manager_bpp (info->src_tiles);
   dest   = tile_buf;
 
-  x      = info->xstart;
+  dx     = info->dx_start;
+  src_x  = info->src_x;
 
   width  = info->w;
 
@@ -1248,53 +1249,38 @@ render_image_tile_fault (RenderInfo *info)
   tilex1 = (info->src_x + 1) / TILE_WIDTH;
   tilexL = (info->src_x - 1) / TILE_WIDTH;
 
-  xdelta = info->xdelta;
-
   do
     {
-      gint  src_x = x >> 16;
-      gint  skipped;
+      /* we're dealing with unsigneds here, be extra careful */
+      left_weight  = MAX (footprint_x / 2, dx) - dx;
+      right_weight = MAX (dx, footprint_x / 2) - footprint_x / 2;
+      center_weight = footprint_x - left_weight - right_weight;
 
-      {
-        gint  dx = (x >> 8) & 0xff;
-
-        if (dx > footprint_x / 2)
-          left_weight = 0;
-        else
-          left_weight = footprint_x / 2 - dx;
-
-        if (0xff - dx > footprint_x / 2)
-          right_weight = 0;
-        else
-          right_weight = footprint_x / 2 - (0xff - dx);
-
-        center_weight = footprint_x - left_weight - right_weight;
-
-       if (src_x + 1 >= source_width)
+      if (src_x + 1 >= source_width)
         {
            src[2]=src[1];
            src[5]=src[4];
            src[8]=src[7];
         }
-       if (info->src_y + 1 >= source_height)
+      if (info->src_y + 1 >= source_height)
         {
            src[6]=src[3];
            src[7]=src[4];
            src[8]=src[5];
         }
-        box_filter (left_weight, center_weight, right_weight,
-                    top_weight, middle_weight, bottom_weight, foosum,
-                    src, dest, bpp);
-      }
+      box_filter (left_weight, center_weight, right_weight,
+                  top_weight, middle_weight, bottom_weight, foosum,
+                  src, dest, bpp);
 
       dest += bpp;
 
-      x += xdelta;
-
-      skipped = (x >> 16) - src_x;
+      dx += info->x_dest_inc;
+      skipped = dx / info->x_src_dec;
 
       if (skipped)
         {
+          dx -= skipped * info->x_src_dec;
+
           /* if we changed integer source pixel coordinates in the source
            * buffer, make sure the src pointers (and their backing tiles) are
            * correct
@@ -1496,9 +1482,9 @@ render_image_tile_fault (RenderInfo *info)
   while (--width);
 
 done:
-  for (x = 0; x < 9; x++)
-    if (tile[x])
-      tile_release (tile[x], FALSE);
+  for (dx = 0; dx < 9; dx++)
+    if (tile[dx])
+      tile_release (tile[dx], FALSE);
 
   return tile_buf;
 }
@@ -1512,9 +1498,9 @@ render_image_tile_fault_nearest (RenderInfo *info)
   guchar       *dest;
   gint          width;
   gint          tilex;
-  gint          xdelta;
   gint          bpp;
-  glong         x;
+  gint          src_x;
+  gint          dx;
 
   tile = tile_manager_get_tile (info->src_tiles,
                                 info->src_x, info->src_y, TRUE, FALSE);
@@ -1526,18 +1512,16 @@ render_image_tile_fault_nearest (RenderInfo *info)
   bpp   = tile_manager_bpp (info->src_tiles);
   dest  = tile_buf;
 
-  x     = info->xstart;
+  dx    = info->dx_start;
 
   width = info->w;
 
+  src_x = info->src_x;
   tilex = info->src_x / TILE_WIDTH;
-
-  xdelta = info->xdelta;
 
   do
     {
       const guchar *s     = src;
-      gint          src_x = x >> 16;
       gint          skipped;
 
       switch (bpp)
@@ -1552,14 +1536,14 @@ render_image_tile_fault_nearest (RenderInfo *info)
           *dest++ = *s++;
         }
 
-      x += xdelta;
-
-      skipped = (x >> 16) - src_x;
+      dx += info->x_dest_inc;
+      skipped = dx / info->x_src_dec;
 
       if (skipped)
         {
           src += skipped * bpp;
           src_x += skipped;
+          dx -= skipped * info->x_src_dec;
 
           if ((src_x / TILE_WIDTH) != tilex)
             {
@@ -1601,11 +1585,10 @@ render_image_tile_fault_one_row (RenderInfo *info)
                              sample pair */
   gint          tilexL;   /* the current x-tile indice used for the left
                              sample pair */
-  gint          xdelta;   /* fixed point amount to increment source x
-                             coordinas for each horizontal integer destination
-                             pixel increment */
   gint          bpp;
-  glong         x;
+  gint          dx;
+  gint          src_x;
+  gint          skipped;
 
   guint         footprint_x;
   guint         footprint_y;
@@ -1624,7 +1607,7 @@ render_image_tile_fault_one_row (RenderInfo *info)
   source_width = tile_manager_width (info->src_tiles);
 
   footprint_y = (1.0/info->scaley) * 256;
-  footprint_x = (1.0/info->scalex) * 256;
+  footprint_x = info->x_src_dec;
   foosum      = footprint_x * footprint_y;
 
   {
@@ -1709,7 +1692,8 @@ render_image_tile_fault_one_row (RenderInfo *info)
   bpp    = tile_manager_bpp (info->src_tiles);
   dest   = tile_buf;
 
-  x      = info->xstart;
+  dx     = info->dx_start;
+  src_x  = info->src_x;
 
   width  = info->w;
 
@@ -1717,47 +1701,31 @@ render_image_tile_fault_one_row (RenderInfo *info)
   tilex1 = (info->src_x + 1) / TILE_WIDTH;
   tilexL = (info->src_x - 1) / TILE_WIDTH;
 
-  xdelta = info->xdelta;
-
   do
     {
-      gint src_x = x >> 16;
-      gint skipped;
+      left_weight  = MAX (footprint_x / 2, dx) - dx;
+      right_weight = MAX (dx, footprint_x / 2) - footprint_x / 2;
+      center_weight = footprint_x - left_weight - right_weight;
 
-      {
-        gint dx = (x >> 8) & 0xff;
-
-        if (dx > footprint_x / 2)
-          left_weight = 0;
-        else
-          left_weight = footprint_x / 2 - dx;
-
-        if (0xff - dx > footprint_x / 2)
-          right_weight = 0;
-        else
-          right_weight = footprint_x / 2 - (0xff - dx);
-
-        center_weight = footprint_x - left_weight - right_weight;
-
-        if (src_x + 1 >= source_width)
-          {
-            src[2]=src[1];
-            src[5]=src[4];
-            src[8]=src[7];
-          }
-        box_filter (left_weight, center_weight, right_weight,
-                    top_weight, middle_weight, bottom_weight, foosum,
-                    src, dest, bpp);
-      }
+      if (src_x + 1 >= source_width)
+        {
+          src[2]=src[1];
+          src[5]=src[4];
+          src[8]=src[7];
+        }
+      box_filter (left_weight, center_weight, right_weight,
+                  top_weight, middle_weight, bottom_weight, foosum,
+                  src, dest, bpp);
 
       dest += bpp;
 
-      x += xdelta;
-
-      skipped = (x >> 16) - src_x;
+      dx += info->x_dest_inc;
+      skipped = dx / info->x_src_dec;
 
       if (skipped)
         {
+          dx -= skipped * info->x_src_dec;
+
           /* if we changed integer source pixel coordinates in the source
            * buffer, make sure the src pointers (and their backing tiles) are
            * correct
@@ -1880,9 +1848,9 @@ render_image_tile_fault_one_row (RenderInfo *info)
   while (--width);
 
 done:
-  for (x=0; x<3; x++)
-    if (tile[x])
-      tile_release (tile[x], FALSE);
+  for (dx=0; dx<3; dx++)
+    if (tile[dx])
+      tile_release (tile[dx], FALSE);
 
   return tile_buf;
 }
