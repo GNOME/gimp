@@ -430,6 +430,20 @@ gimp_rectangle_tool_set_constraint (GimpRectangleTool       *tool,
 
   private->constraint = constraint;
 
+  gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+  gimp_rectangle_tool_clamp (tool,
+                             NULL,
+                             constraint,
+                             FALSE);
+
+  gimp_rectangle_tool_update_highlight (tool);
+  gimp_rectangle_tool_update_handle_sizes (tool);
+
+  gimp_rectangle_tool_rectangle_changed (tool);
+
+  gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+
   g_object_notify (G_OBJECT (tool), "constraint");
 }
 
@@ -3453,6 +3467,9 @@ gimp_rectangle_tool_get_constraints (GimpRectangleTool       *rectangle_tool,
     max_y = &max_y_dummy;
 
   tool = GIMP_TOOL (rectangle_tool);
+
+  if (tool->display == NULL)
+    return;
 
   switch (constraint)
     {
