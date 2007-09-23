@@ -112,7 +112,6 @@ static void     gimp_rect_select_tool_real_select         (GimpRectSelectTool *r
                                                            gint                y,
                                                            gint                w,
                                                            gint                h);
-static gboolean gimp_rect_select_tool_should_draw         (GimpRectSelectTool *rect_select_tool);
 static void     gimp_rect_select_tool_update_option_defaults
                                                           (GimpRectSelectTool *rect_select_tool,
                                                            gboolean            ignore_pending);
@@ -244,9 +243,6 @@ static void
 gimp_rect_select_tool_draw (GimpDrawTool *draw_tool)
 {
   GimpRectSelectTool *rect_sel = GIMP_RECT_SELECT_TOOL (draw_tool);
-
-  if (! gimp_rect_select_tool_should_draw (rect_sel))
-    return;
 
   gimp_rectangle_tool_draw (draw_tool);
 
@@ -584,27 +580,6 @@ gimp_rect_select_tool_real_select (GimpRectSelectTool *rect_select,
                                      options->feather_radius,
                                      options->feather_radius,
                                      TRUE);
-    }
-}
-
-static gboolean
-gimp_rect_select_tool_should_draw (GimpRectSelectTool *rect_select_tool)
-{
-  GimpTool         *tool  = GIMP_TOOL (rect_select_tool);
-  GimpDisplayShell *shell = GIMP_DISPLAY_SHELL (tool->display->shell);
-
-  /* If the tool is active i.e. if we are creating or resizing the
-   * rectangle, always draw it. Otherwise only draw it if selections
-   * are drawn.
-   */
-
-  if (gimp_tool_control_is_active (tool->control))
-    {
-      return TRUE;
-    }
-  else
-    {
-      return gimp_display_shell_get_show_selection (shell);
     }
 }
 

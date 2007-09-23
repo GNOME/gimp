@@ -1,5 +1,10 @@
 2007-09-23  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/tools/gimprectangleselecttool.c: Reverted commits for
+	bug #479426, it's NOTABUG.
+
+2007-09-23  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangleselecttool.c
 	(gimp_rect_select_tool_should_draw): New name for
 	gimp_rect_select_selection_visible() which has been changed to
