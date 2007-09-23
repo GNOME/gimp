@@ -1,5 +1,14 @@
 2007-09-23  Simon Budig  <simon@gimp.org>
 
+	* app/display/gimpdisplayshell-render.c: use Bresenham stepping
+	for the y-direction as well.
+
+	Fixes bug #474509.
+
+	Retired old and unused functions.
+
+2007-09-23  Simon Budig  <simon@gimp.org>
+
 	* app/display/gimpdisplayshell-render.c: implement
 	bresenham-like stepping for interpolating the view in
 	x-direction. Since I now know how it is supposed to work

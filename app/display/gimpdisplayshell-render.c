@@ -83,6 +83,12 @@ struct _RenderInfo
   gint              x_dest_inc; /* amount to increment for each dest. pixel  */
   gint              x_src_dec;  /* amount to decrement for each source pixel */
   gint              dx_start;   /* pixel fraction for first pixel            */
+
+  gint              y_dest_inc;
+  gint              y_src_dec;
+  gint              dy_start;
+
+  gint              dy;
   gint              yfraction;
 };
 
@@ -171,27 +177,12 @@ gimp_display_shell_render_setup_notify (GObject    *config,
 
 /*  Render Image functions  */
 
-static void           render_image_rgb          (RenderInfo *info);
 static void           render_image_rgb_a        (RenderInfo *info);
-static void           render_image_gray         (RenderInfo *info);
 static void           render_image_gray_a       (RenderInfo *info);
-static void           render_image_indexed      (RenderInfo *info);
-static void           render_image_indexed_a    (RenderInfo *info);
 
 static const guint  * render_image_init_alpha   (gint        mult);
 
 static const guchar * render_image_tile_fault   (RenderInfo *info);
-
-
-static RenderFunc render_funcs[6] =
-{
-  render_image_rgb,
-  render_image_rgb_a,
-  render_image_gray,
-  render_image_gray_a,
-  render_image_indexed,
-  render_image_indexed_a,
-};
 
 
 static void  gimp_display_shell_render_highlight (GimpDisplayShell *shell,
@@ -268,13 +259,27 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
   /* Currently, only RGBA and GRAYA projection types are used - the rest
    * are in case of future need.  -- austin, 28th Nov 1998.
+   *
+   * I retired them before they reach the age of 9 years unused...
+   *                              -- simon,  23rd Sep 2007.
    */
   type = gimp_projection_get_image_type (projection);
 
   if (G_UNLIKELY (type != GIMP_RGBA_IMAGE && type != GIMP_GRAYA_IMAGE))
     g_warning ("using untested projection type %d", type);
 
-  (* render_funcs[type]) (&info);
+  switch (type)
+    {
+      case GIMP_RGBA_IMAGE:
+        render_image_rgb_a (&info);
+        break;
+      case GIMP_GRAYA_IMAGE:
+        render_image_gray_a (&info);
+        break;
+      default:
+        g_printerr ("gimp_display_shell_render: unsupported projection type\n");
+        g_assert_not_reached ();
+    }
 
   /*  apply filters to the rendered projection  */
   if (shell->filter_stack)
@@ -396,7 +401,7 @@ gimp_display_shell_render_mask (GimpDisplayShell *shell,
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->yfraction = 256 * fmod (y / info->scaley, 1.0);
+  info->dy = info->dy_start;
   info->src = render_image_tile_fault (info);
 
   while (TRUE)
@@ -478,327 +483,59 @@ gimp_display_shell_render_mask (GimpDisplayShell *shell,
 /*************************/
 
 static void
-render_image_indexed (RenderInfo *info)
-{
-  const guchar *cmap;
-  gint          y, ye;
-  gint          x, xe;
-  gboolean      initial = TRUE;
-
-  cmap = gimp_image_get_colormap (info->shell->display->image);
-
-  y  = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  info->yfraction = 256 * fmod (y / info->scaley, 1.0);
-  info->src = render_image_tile_fault (info);
-
-  while (TRUE)
-    {
-      gint error = floor ((y + 1) / info->scaley) - floor (y / info->scaley);
-
-      if (!initial && (error == 0))
-        {
-          memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-        }
-      else
-        {
-          const guchar *src  = info->src;
-          guchar       *dest = info->dest;
-
-          for (x = info->x; x < xe; x++)
-            {
-              guint  val = src[INDEXED_PIX] * 3;
-
-              src += 1;
-
-              dest[0] = cmap[val + 0];
-              dest[1] = cmap[val + 1];
-              dest[2] = cmap[val + 2];
-              dest += 3;
-            }
-        }
-
-      if (++y == ye)
-        break;
-
-      info->dest += info->dest_bpl;
-
-      if (error)
-        {
-          info->src_y += error;
-          info->yfraction = 256 * fmod (y / info->scaley, 1.0);
-          info->src = render_image_tile_fault (info);
-
-          initial = TRUE;
-        }
-      else
-        {
-          initial = FALSE;
-        }
-    }
-}
-
-static void
-render_image_indexed_a (RenderInfo *info)
-{
-  const guint  *alpha = info->alpha;
-  const guchar *cmap  = gimp_image_get_colormap (info->shell->display->image);
-  gint          y, ye;
-  gint          x, xe;
-  gboolean      initial = TRUE;
-
-  y  = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  info->yfraction = 256 * fmod (y / info->scaley, 1.0);
-  info->src = render_image_tile_fault (info);
-
-  while (TRUE)
-    {
-      gint error = floor ((y + 1) / info->scaley) - floor (y / info->scaley);
-
-      if (!initial && (error == 0) && (y & check_mod))
-        {
-          memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-        }
-      else
-        {
-          const guchar *src  = info->src;
-          guchar       *dest = info->dest;
-          guint         dark_light;
-
-          dark_light = (y >> check_shift) + (info->x >> check_shift);
-
-          for (x = info->x; x < xe; x++)
-            {
-              guint r, g, b, a = alpha[src[ALPHA_I_PIX]];
-              guint val        = src[INDEXED_PIX] * 3;
-
-              src += 2;
-
-              if (dark_light & 0x1)
-                {
-                  r = gimp_render_blend_dark_check[(a | cmap[val + 0])];
-                  g = gimp_render_blend_dark_check[(a | cmap[val + 1])];
-                  b = gimp_render_blend_dark_check[(a | cmap[val + 2])];
-                }
-              else
-                {
-                  r = gimp_render_blend_light_check[(a | cmap[val + 0])];
-                  g = gimp_render_blend_light_check[(a | cmap[val + 1])];
-                  b = gimp_render_blend_light_check[(a | cmap[val + 2])];
-                }
-
-                dest[0] = r;
-                dest[1] = g;
-                dest[2] = b;
-                dest += 3;
-
-                if (((x + 1) & check_mod) == 0)
-                  dark_light += 1;
-              }
-        }
-
-      if (++y == ye)
-        break;
-
-      info->dest += info->dest_bpl;
-
-      if (error)
-        {
-          info->src_y += error;
-          info->yfraction = 256 * fmod (y / info->scaley, 1.0);
-          info->src = render_image_tile_fault (info);
-
-          initial = TRUE;
-        }
-      else
-        {
-          initial = FALSE;
-        }
-    }
-}
-
-static void
-render_image_gray (RenderInfo *info)
-{
-  gint      y, ye;
-  gint      x, xe;
-  gboolean  initial = TRUE;
-
-  y  = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  info->yfraction = 256 * fmod (y / info->scaley, 1.0);
-  info->src = render_image_tile_fault (info);
-
-  while (TRUE)
-    {
-      gint error = floor ((y + 1) / info->scaley) - floor (y / info->scaley);
-
-      if (!initial && (error == 0))
-        {
-          memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-        }
-      else
-        {
-          const guchar *src  = info->src;
-          guchar       *dest = info->dest;
-
-          for (x = info->x; x < xe; x++)
-            {
-              guint val = src[GRAY_PIX];
-
-              src += 1;
-
-              dest[0] = val;
-              dest[1] = val;
-              dest[2] = val;
-              dest += 3;
-            }
-        }
-
-      if (++y == ye)
-        break;
-
-      info->dest += info->dest_bpl;
-
-      if (error)
-        {
-          info->src_y += error;
-          info->yfraction = 256 * fmod (y / info->scaley, 1.0);
-          info->src = render_image_tile_fault (info);
-
-          initial = TRUE;
-        }
-      else
-        {
-          initial = FALSE;
-        }
-    }
-}
-
-static void
 render_image_gray_a (RenderInfo *info)
 {
   const guint *alpha = info->alpha;
   gint         y, ye;
   gint         x, xe;
-  gboolean     initial = TRUE;
 
   y  = info->y;
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->yfraction = 256 * fmod (y / info->scaley, 1.0);
+  info->dy = info->dy_start;
   info->src = render_image_tile_fault (info);
 
   while (TRUE)
     {
-      gint error = floor ((y + 1) / info->scaley) - floor (y / info->scaley);
+      const guchar *src  = info->src;
+      guchar       *dest = info->dest;
+      guint         dark_light;
 
-      if (!initial && (error == 0) && (y & check_mod))
+      dark_light = (y >> check_shift) + (info->x >> check_shift);
+
+      for (x = info->x; x < xe; x++)
         {
-          memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
+          guint a = alpha[src[ALPHA_G_PIX]];
+          guint val;
+
+          if (dark_light & 0x1)
+            val = gimp_render_blend_dark_check[(a | src[GRAY_PIX])];
+          else
+            val = gimp_render_blend_light_check[(a | src[GRAY_PIX])];
+
+          src += 2;
+
+          dest[0] = val;
+          dest[1] = val;
+          dest[2] = val;
+          dest += 3;
+
+          if (((x + 1) & check_mod) == 0)
+            dark_light += 1;
         }
-      else
-        {
-          const guchar *src  = info->src;
-          guchar       *dest = info->dest;
-          guint         dark_light;
 
-          dark_light = (y >> check_shift) + (info->x >> check_shift);
-
-          for (x = info->x; x < xe; x++)
-            {
-              guint a = alpha[src[ALPHA_G_PIX]];
-              guint val;
-
-              if (dark_light & 0x1)
-                val = gimp_render_blend_dark_check[(a | src[GRAY_PIX])];
-              else
-                val = gimp_render_blend_light_check[(a | src[GRAY_PIX])];
-
-              src += 2;
-
-              dest[0] = val;
-              dest[1] = val;
-              dest[2] = val;
-              dest += 3;
-
-              if (((x + 1) & check_mod) == 0)
-                dark_light += 1;
-            }
-        }
 
       if (++y == ye)
         break;
 
-      info->dest += info->dest_bpl;
+      info->dest  += info->dest_bpl;
 
-      if (error)
-        {
-          info->src_y += error;
-          info->yfraction = 256 * fmod (y / info->scaley, 1.0);
-          info->src = render_image_tile_fault (info);
+      info->dy    += info->y_dest_inc;
+      info->src_y += info->dy / info->y_src_dec;
+      info->dy     = info->dy % info->y_src_dec;
 
-          initial = TRUE;
-        }
-      else
-        {
-          initial = FALSE;
-        }
-    }
-}
-
-static void
-render_image_rgb (RenderInfo *info)
-{
-  gint      y, ye;
-  gint      xe;
-  gboolean  initial = TRUE;
-
-  y  = info->y;
-  ye = info->y + info->h;
-  xe = info->x + info->w;
-
-  info->yfraction = 256 * fmod (y / info->scaley, 1.0);
-  info->src = render_image_tile_fault (info);
-
-  while (TRUE)
-    {
-      gint error = floor ((y + 1) / info->scaley) - floor (y / info->scaley);
-
-      if (!initial && (error == 0))
-        {
-          memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-        }
-      else
-        {
-          memcpy (info->dest, info->src, 3 * info->w);
-        }
-
-      if (++y == ye)
-        break;
-
-      info->dest += info->dest_bpl;
-
-      if (error)
-        {
-          info->src_y += error;
-          info->yfraction = 256 * fmod (y / info->scaley, 1.0);
-          info->src = render_image_tile_fault (info);
-
-          initial = TRUE;
-        }
-      else
-        {
-          initial = FALSE;
-        }
+      info->src = render_image_tile_fault (info);
     }
 }
 
@@ -813,13 +550,11 @@ render_image_rgb_a (RenderInfo *info)
   ye = info->y + info->h;
   xe = info->x + info->w;
 
-  info->yfraction = 256 * fmod (y / info->scaley, 1.0);
+  info->dy = info->dy_start;
   info->src = render_image_tile_fault (info);
 
   while (TRUE)
     {
-      gint error = floor ((y + 1) / info->scaley) - floor (y / info->scaley);
-
       const guchar *src  = info->src;
       guchar       *dest = info->dest;
       guint         dark_light;
@@ -859,8 +594,10 @@ render_image_rgb_a (RenderInfo *info)
 
       info->dest += info->dest_bpl;
 
-      info->yfraction = 256 * fmod (y / info->scaley, 1.0);
-      info->src_y += error;
+      info->dy    += info->y_dest_inc;
+      info->src_y += info->dy / info->y_src_dec;
+      info->dy     = info->dy % info->y_src_dec;
+
       info->src = render_image_tile_fault (info);
     }
 }
@@ -891,6 +628,14 @@ gimp_display_shell_render_info_scale (RenderInfo       *info,
   info->dx_start   = info->x_dest_inc * info->x + info->x_dest_inc/2;
   info->src_x      = info->dx_start / info->x_src_dec;
   info->dx_start   = info->dx_start % info->x_src_dec;
+
+  /* same for y */
+  info->y_dest_inc = tile_manager_height (src_tiles);
+  info->y_src_dec  = ceil (tile_manager_height (src_tiles) * info->scaley);
+
+  info->dy_start   = info->y_dest_inc * info->y + info->y_dest_inc/2;
+  info->src_y      = info->dy_start / info->y_src_dec;
+  info->dy_start   = info->dy_start % info->y_src_dec;
 }
 
 static const guint *
@@ -1108,26 +853,14 @@ render_image_tile_fault (RenderInfo *info)
       return render_image_tile_fault_one_row (info);
     }
 
-  footprint_y = (1.0 / info->scaley) * 256;
+  footprint_y = info->y_src_dec;
   footprint_x = info->x_src_dec;
 
   foosum = footprint_x * footprint_y;
 
-  {
-    gint dy = info->yfraction;
-
-    if (dy > footprint_y / 2)
-      top_weight = 0;
-    else
-      top_weight = footprint_y / 2 - dy;
-
-    if (0xff - dy > footprint_y / 2)
-      bottom_weight = 0;
-    else
-      bottom_weight = footprint_y / 2 - (0xff - dy);
-
-    middle_weight = footprint_y - top_weight - bottom_weight;
-  }
+  top_weight    = MAX (footprint_y / 2, info->dy) - info->dy;
+  bottom_weight = MAX (info->dy, footprint_y / 2) - footprint_y / 2;
+  middle_weight = footprint_y - top_weight - bottom_weight;
 
   tile[4] = tile_manager_get_tile (info->src_tiles,
                                    info->src_x, info->src_y,
@@ -1606,25 +1339,13 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
   source_width = tile_manager_width (info->src_tiles);
 
-  footprint_y = (1.0/info->scaley) * 256;
+  footprint_y = info->y_src_dec;
   footprint_x = info->x_src_dec;
   foosum      = footprint_x * footprint_y;
 
-  {
-    gint dy = info->yfraction;
-
-    if (dy > footprint_y / 2)
-      top_weight = 0;
-    else
-      top_weight = footprint_y / 2 - dy;
-
-    if (0xff - dy > footprint_y / 2)
-      bottom_weight = 0;
-    else
-      bottom_weight = footprint_y / 2 - (0xff - dy);
-
-    middle_weight = footprint_y - top_weight - bottom_weight;
-  }
+  top_weight    = MAX (footprint_y / 2, info->dy) - info->dy;
+  bottom_weight = MAX (info->dy, footprint_y / 2) - footprint_y / 2;
+  middle_weight = footprint_y - top_weight - bottom_weight;
 
   tile[0] = tile_manager_get_tile (info->src_tiles,
                                    info->src_x, info->src_y, TRUE, FALSE);
