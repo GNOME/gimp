@@ -1,27 +1,24 @@
-# translation of lt.po to Lithuanian
 # Lithuanian translation of GIMP plug-ins.
 # Copyright (C) 2002-2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Gimp package.
-#
-#
 # Mantas Kriaučiūnas <mantas@akl.lt>, 2002.
 # Eglė Girinaitė <eglyte@centras.lt>, 2002.
 # Žygimantas Beručka <zygis@gnome.org>, 2004-2007.
-# Gintautas Miliauskas <gintas@akl.lt>, 2007.
+# 
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: lt\n"
+"Project-Id-Version: GIMP plug-ins HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-22 00:02+0300\n"
-"PO-Revision-Date: 2007-09-22 00:02+0300\n"
+"POT-Creation-Date: 2007-09-23 13:09+0300\n"
+"PO-Revision-Date: 2007-09-23 13:10+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
-"Language-Team: Lithuanian <gnome-lt@lists.akl.lt>\n"
+"Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
 "100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: KBabel 1.11.4\n"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:547
 #: ../plug-ins/gfig/gfig-dialog.c:274 ../plug-ins/gflare/gflare.c:883
@@ -528,7 +525,7 @@ msgstr "Aukštos _kokybės peržiūra"
 
 #: ../plug-ins/Lighting/lighting_ui.c:337
 msgid "Enable/disable high quality preview"
-msgstr "Įjungti/išjungti aukštos kokybės peržiūrą"
+msgstr "Įjungti / išjungti aukštos kokybės peržiūrą"
 
 #: ../plug-ins/Lighting/lighting_ui.c:344
 msgid "Distance:"
@@ -537,7 +534,7 @@ msgstr "Atstumas:"
 #: ../plug-ins/Lighting/lighting_ui.c:378
 #: ../plug-ins/MapObject/mapobject_ui.c:626
 msgid "Light Settings"
-msgstr "Šviesos nustatymai"
+msgstr "Šviesos parametrai"
 
 #: ../plug-ins/Lighting/lighting_ui.c:391
 msgid "Light 1"
@@ -1706,7 +1703,7 @@ msgstr "Ki_ti"
 
 #: ../plug-ins/common/CML_explorer.c:1420
 msgid "Copy Settings"
-msgstr "Kopijuoti nustatymus"
+msgstr "Kopijuoti parametrus"
 
 #: ../plug-ins/common/CML_explorer.c:1439
 msgid "Source channel:"
@@ -2435,11 +2432,11 @@ msgstr "Išsaugoti š_viesingumą"
 
 #: ../plug-ins/common/channel_mixer.c:877
 msgid "Load Channel Mixer Settings"
-msgstr "Įkelti kanalų maišytuvo nustatymus"
+msgstr "Įkelti kanalų maišytuvo parametrus"
 
 #: ../plug-ins/common/channel_mixer.c:1004
 msgid "Save Channel Mixer Settings"
-msgstr "Išsaugoti kanalų maišytuvo nustatymus"
+msgstr "Išsaugoti kanalų maišytuvo parametrus"
 
 #: ../plug-ins/common/checkerboard.c:89
 msgid "Create a checkerboard pattern"
@@ -4863,7 +4860,7 @@ msgstr "D_eformavimo stiprumas:"
 
 #: ../plug-ins/common/iwarp.c:1162
 msgid "_Bilinear"
-msgstr "_Dvilinijinis"
+msgstr "_Linijinis dvikryptis"
 
 #: ../plug-ins/common/iwarp.c:1176
 msgid "Adaptive s_upersample"
@@ -4880,7 +4877,7 @@ msgstr "S_lenkstis:"
 #: ../plug-ins/common/iwarp.c:1219 ../plug-ins/common/sinus.c:771
 #: ../plug-ins/gflare/gflare.c:2793
 msgid "_Settings"
-msgstr "_Nustatymai"
+msgstr "_Parametrai"
 
 #: ../plug-ins/common/iwarp.c:1268
 msgid "IWarp"
@@ -5601,6 +5598,7 @@ msgid "_FG/BG lighting"
 msgstr "_Pirmo plano/fono apšvietimas"
 
 #: ../plug-ins/common/mosaic.c:2685
+#, c-format
 msgid "Unable to add additional point.\n"
 msgstr "Nepavyko pridėti papildomo taško.\n"
 
@@ -7288,7 +7286,7 @@ msgstr "Sinusas"
 
 #: ../plug-ins/common/sinus.c:690
 msgid "Drawing Settings"
-msgstr "Piešimo nustatymai"
+msgstr "Piešimo parametrai"
 
 #: ../plug-ins/common/sinus.c:700
 msgid "_X scale:"
@@ -7304,7 +7302,7 @@ msgstr "Su_dėtingumas:"
 
 #: ../plug-ins/common/sinus.c:728
 msgid "Calculation Settings"
-msgstr "Skaičiavimo nustatymai"
+msgstr "Skaičiavimo parametrai"
 
 #: ../plug-ins/common/sinus.c:741
 msgid "R_andom seed:"
@@ -7366,7 +7364,7 @@ msgstr "_Antra spalva:"
 
 #: ../plug-ins/common/sinus.c:895
 msgid "Blend Settings"
-msgstr "Perėjimo nustatymai"
+msgstr "Perėjimo parametrai"
 
 #: ../plug-ins/common/sinus.c:908
 msgid "L_inear"
@@ -7374,7 +7372,7 @@ msgstr "L_inijinis"
 
 #: ../plug-ins/common/sinus.c:909
 msgid "Bili_near"
-msgstr "Dvili_nijinis"
+msgstr "Li_nijinis dvikryptis"
 
 #: ../plug-ins/common/sinus.c:910
 msgid "Sin_usoidal"
@@ -8204,7 +8202,7 @@ msgstr "Al_ternatyvios plytelės"
 
 #: ../plug-ins/common/tileit.c:489
 msgid "_Explicit tile"
-msgstr "_Išreikštinė plytelė"
+msgstr ""
 
 #: ../plug-ins/common/tileit.c:495
 msgid "Ro_w:"
@@ -9424,7 +9422,7 @@ msgstr "Fonas:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1305
 msgid "Feather"
-msgstr "Plunksna"
+msgstr ""
 
 #: ../plug-ins/gfig/gfig-dialog.c:1329
 msgid "Radius:"
@@ -10916,7 +10914,7 @@ msgstr "Žinia_tinklio svetainė"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:211
 msgid "_Ftp Site"
-msgstr "_FTP svetainė"
+msgstr "_Ftp svetainė"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:217
 msgid "_Gopher"
@@ -10928,7 +10926,7 @@ msgstr "_Kita"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:229
 msgid "F_ile"
-msgstr "F_ailas"
+msgstr "R_inkmena"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:235
 msgid "WAI_S"
@@ -10981,12 +10979,12 @@ msgstr "_JavaScript"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:451
 msgid "Area Settings"
-msgstr "Ploto nustatymai"
+msgstr "Ploto parametrai"
 
 #: ../plug-ins/imagemap/imap_edit_area_info.c:493
 #, c-format
 msgid "Area #%d Settings"
-msgstr "Ploto #%d nustatymai"
+msgstr "Ploto #%d parametrai"
 
 #: ../plug-ins/imagemap/imap_file.c:48 ../plug-ins/imagemap/imap_menu.c:71
 msgid "Error opening file"
@@ -11002,7 +11000,7 @@ msgstr "Išsaugoti paveikslėlio planą"
 
 #: ../plug-ins/imagemap/imap_grid.c:197
 msgid "Grid Settings"
-msgstr "Tinklelio nustatymai"
+msgstr "Tinklelio parametrai"
 
 #: ../plug-ins/imagemap/imap_grid.c:201
 msgid "_Snap-to grid enabled"
@@ -11644,6 +11642,7 @@ msgstr ""
 "Išklojamas labirintas veiks neidealiai."
 
 #: ../plug-ins/metadata/xmp-parse.c:240
+#, c-format
 msgid "Error: No XMP packet found"
 msgstr "Klaida: nerastas XMP paketas"
 
@@ -12035,10 +12034,12 @@ msgid "Failed to write %s to '%s': %s"
 msgstr "Nepavyko įrašyti %s į „%s“: %s"
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:57
+#, c-format
 msgid "Could not initialize libcurl"
 msgstr "Nepavyko inicializuoti libcurl"
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:160
+#, c-format
 msgid "Could not open output file for writing"
 msgstr "Nepavyko rašymui atverti išvesties failo"
 
@@ -12239,3 +12240,6 @@ msgstr "Klaida: nepavyko perskaityti XJT savybių failo „%s“."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Klaida: XJT savybių failas „%s“ yra tuščias."
+
+#~ msgid "_Unit Editor"
+#~ msgstr "_Vienetų redaktorius"
