@@ -299,7 +299,7 @@ static struct {
 };
 
 static void
-pcx_header_from_buffer (const gpointer buf)
+pcx_header_from_buffer (guint8 *buf)
 {
   gint i;
   gint buf_offset = 0;
@@ -313,7 +313,7 @@ pcx_header_from_buffer (const gpointer buf)
 }
 
 static void
-pcx_header_to_buffer (const gpointer buf)
+pcx_header_to_buffer (guint8 *buf)
 {
   gint i;
   gint buf_offset = 0;
