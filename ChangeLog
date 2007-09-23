@@ -1,3 +1,10 @@
+2007-09-23  Simon Budig  <simon@gimp.org>
+
+	* app/display/gimpdisplay.c: Accomodate for spill that
+	happens by the box filtering.
+
+	Fixes bug #474509. Again. Hopefully.
+
 2007-09-23  Michael Natterer  <mitch@gimp.org>
 
 	* menus/toolbox-menu.xml.in: added placeholder File/Preferences

@@ -561,11 +561,14 @@ gimp_display_paint_area (GimpDisplay *display,
 
   /*  make sure to expose a superset of the transformed sub-pixel expose
    *  area, not a subset. bug #126942. --mitch
+   *
+   *  also acommodate for spill introduced by potential box filtering.
+   *  (bug #474509). --simon
    */
-  x1 = floor (x1_f);
-  y1 = floor (y1_f);
-  x2 = ceil (x2_f);
-  y2 = ceil (y2_f);
+  x1 = floor (x1_f - 0.5);
+  y1 = floor (y1_f - 0.5);
+  x2 = ceil (x2_f + 0.5);
+  y2 = ceil (y2_f + 0.5);
 
   gimp_display_shell_expose_area (shell, x1, y1, x2 - x1, y2 - y1);
 }
