@@ -1,3 +1,10 @@
+2007-09-23  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangleselecttool.c
+	(gimp_rect_select_tool_draw): Only draw the rectangle when `Show
+	selection' is `true', with the help of a new function
+	gimp_rect_select_tool_selection_visible(). Fixes bug #474509.
+
 2007-09-23  Simon Budig  <simon@gimp.org>
 
 	* plug-ins/common/bumpmap.c: add a few strategically placed
