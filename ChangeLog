@@ -1,5 +1,11 @@
 2007-09-23  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimptooloptionseditor.c
+	(gimp_tool_options_editor_get_title): avoid the crash reported in
+	bug #470304.
+
+2007-09-23  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/lcms.c: marked blurbs as translatable.
 
 2007-09-23  Simon Budig  <simon@gimp.org>
