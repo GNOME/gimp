@@ -1032,6 +1032,7 @@ dialog_preview_events (GtkWidget   *area,
 
       gtk_grab_add (area);
 
+      return TRUE;
       break;
 
     case GDK_BUTTON_RELEASE:
@@ -1040,6 +1041,8 @@ dialog_preview_events (GtkWidget   *area,
           gtk_grab_remove (area);
           bmint.drag_mode = DRAG_NONE;
           gimp_preview_invalidate (preview);
+
+          return TRUE;
         }
 
       break;
@@ -1084,6 +1087,7 @@ dialog_preview_events (GtkWidget   *area,
 
       gimp_preview_invalidate (preview);
 
+      return TRUE;
       break;
 
     default:

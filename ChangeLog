@@ -1,5 +1,12 @@
 2007-09-23  Simon Budig  <simon@gimp.org>
 
+	* plug-ins/common/bumpmap.c: add a few strategically placed
+	return TRUEs to stop event propagation.
+
+	Fixes bug #479389
+
+2007-09-23  Simon Budig  <simon@gimp.org>
+
 	* app/display/gimpdisplayshell-render.c: oops - managed to miss the
 	mask rendering.
 
