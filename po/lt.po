@@ -1,31 +1,28 @@
-# translation of lt.po to Lithuanian
 # Lithuanian translation of GIMP.
 # Copyright (C) 2001-2007 Free Software Foundation, Inc.
-#
-#  Take me down to the Paradise City,
-#  where the grass is green and the girls are pretty!
-#
 # Mantas Kriaučiūnas <mantas@akl.lt>, 2001-2004.
 # Eglė Kriaučiūnienė <egle@akl.lt>, 2001-2004.
 # Karina Gribanova <buratina@delfi.lt>, 2001-2002.
 # Linas Vasiliauskas <linasv@centras.lt>, 2004.
 # Giedrius Naudžiūnas <gimpng@gmail.com>, 2004-2005.
 # Žygimantas Beručka <zygis@gnome.org>, 2004-2007.
-# Gintautas Miliauskas <gintas@akl.lt>, 2007.
+# 
+#  Take me down to the Paradise City,
+#  where the grass is green and the girls are pretty!
+# 
 msgid ""
 msgstr ""
-"Project-Id-Version: lt\n"
+"Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-21 23:58+0300\n"
-"PO-Revision-Date: 2007-09-21 23:58+0300\n"
+"POT-Creation-Date: 2007-09-22 22:25+0300\n"
+"PO-Revision-Date: 2007-09-23 02:34+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
-"Language-Team: Lithuanian <gnome-lt@lists.akl.lt>\n"
+"Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
 "100<10 || n%100>=20) ? 1 : 2);\n"
-"X-Generator: KBabel 1.11.4\n"
 
 #: ../app/about.h:24
 msgid "GIMP"
@@ -192,7 +189,7 @@ msgstr "Išvesti gimprc failą su numatytaisiais parametrais"
 
 #: ../app/main.c:341
 msgid "[FILE|URI...]"
-msgstr "[FAILAS|URI...]"
+msgstr "[RINKMENA|URI...]"
 
 #: ../app/main.c:359
 msgid ""
@@ -2365,7 +2362,7 @@ msgstr "Rodyti konkretaus naudotojo sąsajos elemento žinyną"
 
 #: ../app/actions/image-actions.c:47
 msgid "Toolbox Menu"
-msgstr "Įrankių dėžės meniu"
+msgstr "Įrankinė meniu"
 
 #: ../app/actions/image-actions.c:51 ../app/actions/image-actions.c:55
 msgid "Image Menu"
@@ -2410,7 +2407,7 @@ msgstr "K_omponentai"
 
 #: ../app/actions/image-actions.c:72 ../app/actions/image-actions.c:78
 msgid "_New..."
-msgstr "_Nauja..."
+msgstr "_Naujas..."
 
 #: ../app/actions/image-actions.c:73 ../app/actions/image-actions.c:79
 msgid "Create a new image"
@@ -3777,7 +3774,7 @@ msgstr "Atkurti įrankio tvarką ir matomumą"
 
 #: ../app/actions/tools-actions.c:90
 msgid "_Show in Toolbox"
-msgstr "_Rodyti įrankių dėžėje"
+msgstr "_Rodyti įrankinėje"
 
 #: ../app/actions/tools-actions.c:99
 msgid "_By Color"
@@ -4369,7 +4366,7 @@ msgstr "RGB"
 
 #: ../app/base/base-enums.c:111
 msgid "Normal"
-msgstr "Normalus"
+msgstr "Normali"
 
 #: ../app/base/base-enums.c:112
 msgid "Dissolve"
@@ -5072,7 +5069,7 @@ msgstr "Floyd-Steinberg (sumažintas spalvų nublukimas)"
 
 #: ../app/core/core-enums.c:56
 msgid "Positioned"
-msgstr "Pozicionuota"
+msgstr ""
 
 #: ../app/core/core-enums.c:85
 msgid "Generate optimum palette"
@@ -5145,7 +5142,7 @@ msgstr "Apvesti su piešimo įrankiu"
 msgid "Solid color"
 msgstr "Gryna spalva"
 
-# Miter apibrėžimas (http://dictionary.cambridge.org/define.asp?key=51203&dict=CALD):
+# Miter apibrėžimas (http://dictionary.cambridge.org/define.asp?key=51203&dict=CALD): 
 #: ../app/core/core-enums.c:336
 msgid "Miter"
 msgstr "Kampinis"
@@ -5621,7 +5618,7 @@ msgstr "Užpildyti balta"
 
 #: ../app/core/gimp-edit.c:461
 msgid "Fill with Transparency"
-msgstr "Užpildyti skaidrumu"
+msgstr "Užpildyti permatomumu"
 
 #: ../app/core/gimp-edit.c:465
 msgid "Fill with Pattern"
@@ -7281,7 +7278,7 @@ msgstr "Užpildyti _fono spalva"
 
 #: ../app/dialogs/offset-dialog.c:228
 msgid "Make _transparent"
-msgstr "Padaryti _skaidriu"
+msgstr "Padaryti _permatomu"
 
 #: ../app/dialogs/palette-import-dialog.c:156
 msgid "Import a New Palette"
@@ -7660,7 +7657,7 @@ msgstr "Nustatyti sluoksnį ar kontūrą aktyviu"
 
 #: ../app/dialogs/preferences-dialog.c:1937
 msgid "Toolbox"
-msgstr "Įrankių dėžė"
+msgstr "Įrankinė"
 
 #. Appearance
 #: ../app/dialogs/preferences-dialog.c:1949
@@ -8524,6 +8521,7 @@ msgid "Other..."
 msgstr "Kitas..."
 
 #: ../app/file/file-open.c:129 ../app/file/file-save.c:111
+#, c-format
 msgid "Not a regular file"
 msgstr "Tai nėra paprastas failas"
 
@@ -8538,6 +8536,7 @@ msgid "%s plug-In could not open image"
 msgstr "Įskiepiui %s nepavyko atverti paveikslėlio"
 
 #: ../app/file/file-open.c:474
+#, c-format
 msgid "Image doesn't contain any layers"
 msgstr "Paveikslėlyje nėra sluoksnių"
 
@@ -8554,6 +8553,7 @@ msgstr ""
 "Spalvų valdymas buvo išjungtas. Jį vėl galima įjungti Nustatymų dialoge."
 
 #: ../app/file/file-procedure.c:200
+#, c-format
 msgid "Unknown file type"
 msgstr "Nežinomas failo tipas"
 
@@ -8568,6 +8568,7 @@ msgid "'%s:' is not a valid URI scheme"
 msgstr "„%s:“ nėra tinkama URI schema"
 
 #: ../app/file/file-utils.c:88 ../app/file/file-utils.c:122
+#, c-format
 msgid "Invalid character sequence in URI"
 msgstr "URI yra netinkama simbolių seka"
 
@@ -8580,6 +8581,7 @@ msgid "Airbrush"
 msgstr "Dažų purkštuvas"
 
 #: ../app/paint/gimpbrushcore.c:354
+#, c-format
 msgid "No brushes available for use with this tool."
 msgstr "Šiam įrankiui nėra naudotinų teptukų."
 
@@ -8588,6 +8590,7 @@ msgid "Clone"
 msgstr "Klonavimas"
 
 #: ../app/paint/gimpclone.c:141
+#, c-format
 msgid "No patterns available for use with this tool."
 msgstr "Šiam įrankiui nėra naudotinų raštų."
 
@@ -8608,6 +8611,7 @@ msgid "Heal"
 msgstr "Taisyti"
 
 #: ../app/paint/gimpheal.c:126
+#, c-format
 msgid "Healing does not operate on indexed layers."
 msgstr "Taisymas indeksuotuose sluoksniuose negalimas."
 
@@ -8625,6 +8629,7 @@ msgid "Perspective Clone"
 msgstr "Perspektyvos klonavimas"
 
 #: ../app/paint/gimpperspectiveclone.c:160
+#, c-format
 msgid "Perspective Clone does not operate on indexed layers."
 msgstr "Perspektyvos klonavimas negalimas indeksuotuose sluoksniuose."
 
@@ -8633,6 +8638,7 @@ msgid "Smudge"
 msgstr "Ištepimas"
 
 #: ../app/paint/gimpsourcecore.c:227
+#, c-format
 msgid "Set a source image first."
 msgstr "Pirma pasirinkite šaltinio paveikslėlį"
 
@@ -9129,6 +9135,7 @@ msgid "Blen_d"
 msgstr "Perėji_mas"
 
 #: ../app/tools/gimpblendtool.c:163
+#, c-format
 msgid "Blend does not operate on indexed layers."
 msgstr "Perėjimas neveikia indeksuotose sluoksniuose."
 
@@ -9159,6 +9166,7 @@ msgid "Adjust Brightness and Contrast"
 msgstr "Nustatyti šviesumą ir kontrastą"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:169
+#, c-format
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "Šviesumas - ryškumas negalimas indeksuotuose sluoksniuose."
 
@@ -9172,11 +9180,11 @@ msgstr "Kon_trastas:"
 
 #: ../app/tools/gimpbucketfilloptions.c:100
 msgid "Allow completely transparent regions to be filled"
-msgstr "Leisti užpildyti visiškai permatomus regionus"
+msgstr "Leisti užpildyti visiškai permatomas sritis"
 
 #: ../app/tools/gimpbucketfilloptions.c:106
 msgid "Base filled area on all visible layers"
-msgstr "Padėti užpildytą plotą visuose sluoksniuose"
+msgstr "Padėti užpildytą sritį visuose sluoksniuose"
 
 #: ../app/tools/gimpbucketfilloptions.c:112
 #: ../app/tools/gimpselectionoptions.c:128
@@ -9210,14 +9218,14 @@ msgstr "Panašių spalvų ieškojimas"
 
 #: ../app/tools/gimpbucketfilloptions.c:269
 msgid "Fill transparent areas"
-msgstr "Užpildyti skaidrias sritis"
+msgstr "Užpildyti permatomas sritis"
 
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpperspectiveclonetool.c:903
 #: ../app/tools/gimpselectionoptions.c:414
 msgid "Sample merged"
-msgstr ""
+msgstr "Sujungtas mėginys"
 
 #: ../app/tools/gimpbucketfilloptions.c:294
 msgid "Fill by:"
@@ -9293,6 +9301,7 @@ msgid "Adjust Color Balance"
 msgstr "Nustatyti spalvų balansą"
 
 #: ../app/tools/gimpcolorbalancetool.c:153
+#, c-format
 msgid "Color Balance operates only on RGB color layers."
 msgstr "Spalvų balansas veikia tik RGB spalvų sluoksniuose."
 
@@ -9340,6 +9349,7 @@ msgid "Colorize the Image"
 msgstr "Spalvinti paveikslėlį"
 
 #: ../app/tools/gimpcolorizetool.c:148
+#, c-format
 msgid "Colorize operates only on RGB color layers."
 msgstr "Spalvinimas veikia tik RGB spalvų sluoksniuose."
 
@@ -9479,24 +9489,28 @@ msgstr "%s norėdami išlieti"
 msgid "Convolve Type  (%s)"
 msgstr "Suliejimo ir paaštrinimo tipas (%s)"
 
-#: ../app/tools/gimpcropoptions.c:134
+#: ../app/tools/gimpcropoptions.c:148
 msgid "Current layer only"
 msgstr "Tik esamame sluoksnyje"
 
-#: ../app/tools/gimpcroptool.c:112
+#: ../app/tools/gimpcropoptions.c:154
+msgid "Allow growing"
+msgstr ""
+
+#: ../app/tools/gimpcroptool.c:115
 msgid "Crop"
 msgstr "Apkirpti"
 
-#: ../app/tools/gimpcroptool.c:113
+#: ../app/tools/gimpcroptool.c:116
 msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr ""
 "Apkirpimo įrankis: pašalinti kraštinius paveikslėlio ar sluoksnio plotus"
 
-#: ../app/tools/gimpcroptool.c:114
+#: ../app/tools/gimpcroptool.c:117
 msgid "_Crop"
 msgstr "_Apkirpti"
 
-#: ../app/tools/gimpcroptool.c:234
+#: ../app/tools/gimpcroptool.c:242
 msgid "Click or press Enter to crop"
 msgstr "Norėdami apkirpti, spustelėkite arba paspauskite Enter"
 
@@ -9529,6 +9543,7 @@ msgid "Save curves settings to file"
 msgstr "Išsaugoti kreivių parametrus į failo"
 
 #: ../app/tools/gimpcurvestool.c:253
+#, c-format
 msgid "Curves does not operate on indexed layers."
 msgstr "Kreivės neveikia indeksuotuose sluoksniuose."
 
@@ -9560,10 +9575,12 @@ msgid "Curve Type"
 msgstr "Kreivės tipas"
 
 #: ../app/tools/gimpcurvestool.c:753 ../app/tools/gimplevelstool.c:672
+#, c-format
 msgid "not a GIMP Levels file"
 msgstr "tai ne GIMP lygių failas"
 
 #: ../app/tools/gimpcurvestool.c:767 ../app/tools/gimplevelstool.c:711
+#, c-format
 msgid "parse error"
 msgstr "apdorojimo klaida"
 
@@ -9859,6 +9876,7 @@ msgid "Adjust Hue / Lightness / Saturation"
 msgstr "Reguliuoti atspalvį / šviesumą / sodrumą"
 
 #: ../app/tools/gimphuesaturationtool.c:173
+#, c-format
 msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Spalva - sodrumas veikia tik su RGB spalvų sluoksniais."
 
@@ -10042,6 +10060,7 @@ msgid "Save levels settings to file"
 msgstr "Išsaugoti lygių parametrus į failą"
 
 #: ../app/tools/gimplevelstool.c:236
+#, c-format
 msgid "Levels does not operate on indexed layers."
 msgstr "Lygiai neveikia indeksuotuose sluoksniuose."
 
@@ -10249,7 +10268,7 @@ msgstr "Kietumas"
 
 #: ../app/tools/gimppaintoptions-gui.c:283
 msgid "Rate"
-msgstr "Santykis"
+msgstr "Greitis"
 
 #: ../app/tools/gimppaintoptions-gui.c:299
 #: ../app/tools/gimppaintoptions-gui.c:308 ../app/tools/tools-enums.c:123
@@ -10258,7 +10277,7 @@ msgstr "Dydis"
 
 #: ../app/tools/gimppaintoptions-gui.c:343
 msgid "Fade out"
-msgstr "Išblukimas"
+msgstr "Išnykimas"
 
 #: ../app/tools/gimppaintoptions-gui.c:352
 #: ../app/tools/gimppaintoptions-gui.c:445
@@ -10353,6 +10372,7 @@ msgid "Posterize (Reduce Number of Colors)"
 msgstr "Sumažinti spalvų kiekį"
 
 #: ../app/tools/gimpposterizetool.c:140
+#, c-format
 msgid "Posterize does not operate on indexed layers."
 msgstr "Spalvų kiekio sumažinimas neveikia indeksuotiems paveikslėliams."
 
@@ -10409,7 +10429,7 @@ msgstr "Stačiakampio pažymėjimo įrankis: pasirinkti stačiakampį regioną"
 msgid "_Rectangle Select"
 msgstr "_Stačiakampio pažymėjimas"
 
-#: ../app/tools/gimprectangletool.c:1017 ../app/tools/gimprectangletool.c:1925
+#: ../app/tools/gimprectangletool.c:1031 ../app/tools/gimprectangletool.c:1939
 msgid "Rectangle: "
 msgstr "Stačiakampis: "
 
@@ -10673,6 +10693,7 @@ msgid "Apply Threshold"
 msgstr "Pritaikyti slenkstį"
 
 #: ../app/tools/gimpthresholdtool.c:148
+#, c-format
 msgid "Threshold does not operate on indexed layers."
 msgstr "Slenkstis neveikia indeksuotiems sluoksniams."
 
@@ -11002,6 +11023,7 @@ msgid "No paths found in '%s'"
 msgstr "„%s“ kontūrų nerasta"
 
 #: ../app/vectors/gimpvectors-import.c:339
+#, c-format
 msgid "No paths found in the buffer"
 msgstr "Nėra kontūrų buferyje"
 
@@ -11383,6 +11405,7 @@ msgid "Remove Controller '%s'?"
 msgstr "Pašalinti kontrolerį „%s“?"
 
 #: ../app/widgets/gimpcontrollerlist.c:571
+#, c-format
 msgid ""
 "Removing this controller from the list of active controllers will "
 "permanently delete all event mappings you have configured.\n"
@@ -12221,7 +12244,7 @@ msgstr "Interneto naršyklė"
 
 #: ../app/widgets/widgets-enums.c:229
 msgid "Linear"
-msgstr "Tiesinis"
+msgstr "Linijinis"
 
 #: ../app/widgets/widgets-enums.c:230
 msgid "Logarithmic"
