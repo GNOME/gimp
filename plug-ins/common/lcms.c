@@ -218,7 +218,7 @@ query (void)
   };
 
   gimp_install_procedure (PLUG_IN_PROC_SET,
-                          "Set ICC color profile on the image",
+                          N_("Set a color profile on the image"),
                           "This procedure sets an ICC color profile on an "
                           "image using the 'icc-profile' parasite. It does "
                           "not do any color conversion.",
@@ -248,7 +248,7 @@ query (void)
                           set_rgb_args, NULL);
 
   gimp_install_procedure (PLUG_IN_PROC_APPLY,
-                          "Apply a color profile on the image",
+                          _("Apply a color profile on the image"),
                           "This procedure transform from the image's color "
                           "profile (or the default RGB profile if none is "
                           "set) to the given ICC color profile. Only RGB "
