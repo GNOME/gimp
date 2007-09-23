@@ -153,6 +153,7 @@ query (void)
 			  G_N_ELEMENTS (args), 0,
                           args, NULL);
 
+  gimp_plugin_menu_register (PLUG_IN_PROC, "<Toolbox>/File/Preferences");
   gimp_plugin_menu_register (PLUG_IN_PROC, "<Image>/Edit/Preferences");
   gimp_plugin_icon_register (PLUG_IN_PROC, GIMP_ICON_TYPE_STOCK_ID,
                              (const guint8 *) GIMP_STOCK_TOOL_MEASURE);

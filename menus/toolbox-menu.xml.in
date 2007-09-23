@@ -21,7 +21,10 @@
         <menuitem action="edit-paste-as-new" />
       </menu>
       <separator />
-      <menuitem action="dialogs-preferences" />
+      <placeholder name="Preferences">
+	<menuitem action="dialogs-preferences" />
+	<menuitem action="dialogs-keyboard-shortcuts" />
+      </placeholder>
       <menu action="dialogs-menu" name="Dialogs">
         <menu action="dialogs-new-dock-menu" name="Create New Dock">
           <menuitem action="dialogs-new-dock-lcp" />
