@@ -1,5 +1,9 @@
 2007-09-23  Sven Neumann  <sven@gimp.org>
 
+	* Made 2.4.0-rc3 release.
+
+2007-09-23  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimptooloptionseditor.c
 	(gimp_tool_options_editor_get_title): avoid the crash reported in
 	bug #470304.

@@ -17,6 +17,7 @@ Changes in GIMP 2.4.0-rc3
 - switch tabs when hovering over them
 - added a PDB function to remove the alpha channel from a layer
 - plug-in previews remember the state of the Preview checkbox (bug #478657)
+- allow to grow the image/layer using the Crop tool
 - bug fixes
 
 
