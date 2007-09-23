@@ -1,6 +1,14 @@
 2007-09-23  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangleselecttool.c
+	(gimp_rect_select_tool_should_draw): New name for
+	gimp_rect_select_selection_visible() which has been changed to
+	always return TRUE when the tool is active, i.e. when a rectangle
+	is being create or resized. Better fix for bug #479426.
+
+2007-09-23  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangleselecttool.c
 	(gimp_rect_select_tool_draw): Only draw the rectangle when `Show
 	selection' is `true', with the help of a new function
 	gimp_rect_select_tool_selection_visible(). Fixes bug #479426.
