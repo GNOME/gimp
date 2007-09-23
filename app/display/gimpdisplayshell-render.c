@@ -89,7 +89,6 @@ struct _RenderInfo
   gint              dy_start;
 
   gint              dy;
-  gint              yfraction;
 };
 
 static void  gimp_display_shell_render_info_scale   (RenderInfo       *info,
@@ -395,7 +394,6 @@ gimp_display_shell_render_mask (GimpDisplayShell *shell,
 {
   gint      y, ye;
   gint      x, xe;
-  gboolean  initial = TRUE;
 
   y  = info->y;
   ye = info->y + info->h;
@@ -406,74 +404,58 @@ gimp_display_shell_render_mask (GimpDisplayShell *shell,
 
   while (TRUE)
     {
-      gint error = floor ((y + 1) / info->scaley) - floor (y / info->scaley);
+      const guchar *src  = info->src;
+      guchar       *dest = info->dest;
 
-      if (!initial && (error == 0))
+      switch (shell->mask_color)
         {
-          memcpy (info->dest, info->dest - info->dest_bpl, info->dest_width);
-        }
-      else
-        {
-          const guchar *src  = info->src;
-          guchar       *dest = info->dest;
-
-          switch (shell->mask_color)
+        case GIMP_RED_CHANNEL:
+          for (x = info->x; x < xe; x++, src++, dest += 3)
             {
-            case GIMP_RED_CHANNEL:
-              for (x = info->x; x < xe; x++, src++, dest += 3)
-                {
-                  if (*src & 0x80)
-                    continue;
+              if (*src & 0x80)
+                continue;
 
-                  dest[1] = dest[1] >> 2;
-                  dest[2] = dest[2] >> 2;
-                }
-              break;
-
-            case GIMP_GREEN_CHANNEL:
-              for (x = info->x; x < xe; x++, src++, dest += 3)
-                {
-                  if (*src & 0x80)
-                    continue;
-
-                  dest[0] = dest[0] >> 2;
-                  dest[2] = dest[2] >> 2;
-                }
-              break;
-
-            case GIMP_BLUE_CHANNEL:
-              for (x = info->x; x < xe; x++, src++, dest += 3)
-                {
-                  if (*src & 0x80)
-                    continue;
-
-                  dest[0] = dest[0] >> 2;
-                  dest[1] = dest[1] >> 2;
-                }
-              break;
-
-            default:
-              break;
+              dest[1] = dest[1] >> 2;
+              dest[2] = dest[2] >> 2;
             }
+          break;
+
+        case GIMP_GREEN_CHANNEL:
+          for (x = info->x; x < xe; x++, src++, dest += 3)
+            {
+              if (*src & 0x80)
+                continue;
+
+              dest[0] = dest[0] >> 2;
+              dest[2] = dest[2] >> 2;
+            }
+          break;
+
+        case GIMP_BLUE_CHANNEL:
+          for (x = info->x; x < xe; x++, src++, dest += 3)
+            {
+              if (*src & 0x80)
+                continue;
+
+              dest[0] = dest[0] >> 2;
+              dest[1] = dest[1] >> 2;
+            }
+          break;
+
+        default:
+          break;
         }
 
       if (++y == ye)
         break;
 
-      info->dest += info->dest_bpl;
+      info->dest  += info->dest_bpl;
 
-      if (error)
-        {
-          info->src_y += error;
-          info->yfraction = 256 * fmod (y / info->scaley, 1.0);
-          info->src = render_image_tile_fault (info);
+      info->dy    += info->y_dest_inc;
+      info->src_y += info->dy / info->y_src_dec;
+      info->dy     = info->dy % info->y_src_dec;
 
-          initial = TRUE;
-        }
-      else
-        {
-          initial = FALSE;
-        }
+      info->src = render_image_tile_fault (info);
     }
 }
 
@@ -592,7 +574,7 @@ render_image_rgb_a (RenderInfo *info)
       if (++y == ye)
         break;
 
-      info->dest += info->dest_bpl;
+      info->dest  += info->dest_bpl;
 
       info->dy    += info->y_dest_inc;
       info->src_y += info->dy / info->y_src_dec;

@@ -1,5 +1,10 @@
 2007-09-23  Simon Budig  <simon@gimp.org>
 
+	* app/display/gimpdisplayshell-render.c: oops - managed to miss the
+	mask rendering.
+
+2007-09-23  Simon Budig  <simon@gimp.org>
+
 	* app/display/gimpdisplayshell-render.c: use Bresenham stepping
 	for the y-direction as well.
 
