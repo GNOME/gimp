@@ -1,3 +1,7 @@
+2007-09-24  Matic Zgur  <mr.zgur@gmail.com>
+
+	* configure.in: Added 'sl' to ALL_LINUGAS.
+
 2007-09-24  Simon Budig  <simon@gimp.org>
 
 	* app/pdb/vectors_cmds.c: fixed error on how many points get
