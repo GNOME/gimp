@@ -88,11 +88,16 @@ static const gchar *
 get_menu_label_text (GtkWidget  *menu_item,
 		     GtkWidget **label)
 {
-  *label = find_menu_label (menu_item);
-  if (!*label)
-    return NULL;
+  GtkWidget *my_label;
 
-  return gtk_label_get_text (GTK_LABEL (*label));
+  my_label = find_menu_label (menu_item);
+  if (label)
+    *label = my_label;
+
+  if (my_label)
+    return gtk_label_get_text (GTK_LABEL (my_label));
+
+  return NULL;
 }
 
 static gboolean
@@ -239,11 +244,10 @@ carbon_menu_item_update_submenu (CarbonMenuItem *carbon_item,
 
   if (submenu)
     {
-      GtkWidget   *label = NULL;
       const gchar *label_text;
       CFStringRef  cfstr = NULL;
 
-      label_text = get_menu_label_text (widget, &label);
+      label_text = get_menu_label_text (widget, NULL);
       if (label_text)
         cfstr = CFStringCreateWithCString (NULL, label_text,
 					   kCFStringEncodingUTF8);
@@ -270,11 +274,10 @@ static void
 carbon_menu_item_update_label (CarbonMenuItem *carbon_item,
 			       GtkWidget      *widget)
 {
-  GtkWidget   *label;
   const gchar *label_text;
   CFStringRef  cfstr = NULL;
 
-  label_text = get_menu_label_text (widget, &label);
+  label_text = get_menu_label_text (widget, NULL);
   if (label_text)
     cfstr = CFStringCreateWithCString (NULL, label_text,
 				       kCFStringEncodingUTF8);
@@ -753,7 +756,6 @@ ige_mac_menu_add_app_menu_item (IgeMacMenuGroup *group,
 
   g_return_if_fail (group != NULL);
   g_return_if_fail (GTK_IS_MENU_ITEM (menu_item));
-  g_return_if_fail (label != NULL);
 
   if (GetIndMenuItemWithCommandID (NULL, kHICommandHide, 1,
                                    &appmenu, NULL) != noErr)
@@ -788,6 +790,9 @@ ige_mac_menu_add_app_menu_item (IgeMacMenuGroup *group,
 					      kMenuItemAttrSeparator, 0);
 	      index++;
 	    }
+
+	  if (!label)
+	    label = get_menu_label_text (GTK_WIDGET (menu_item), NULL);
 
 	  cfstr = CFStringCreateWithCString (NULL, label,
 					     kCFStringEncodingUTF8);

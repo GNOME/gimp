@@ -495,17 +495,17 @@ gui_restore_after_callback (Gimp               *gimp,
     item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
                                       "/dummy-menubar/image-popup/Edit/Preferences/dialogs-preferences");
     if (GTK_IS_MENU_ITEM (item))
-      ige_mac_menu_add_app_menu_item (group, GTK_MENU_ITEM (item), _("Preferences"));
+      ige_mac_menu_add_app_menu_item (group, GTK_MENU_ITEM (item), NULL);
 
     item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
                                       "/dummy-menubar/image-popup/Edit/Preferences/dialogs-keyboard-shortcuts");
     if (GTK_IS_MENU_ITEM (item))
-      ige_mac_menu_add_app_menu_item (group, GTK_MENU_ITEM (item), _("Keyboard Shortcuts"));
+      ige_mac_menu_add_app_menu_item (group, GTK_MENU_ITEM (item), NULL);
 
     item = gtk_ui_manager_get_widget (GTK_UI_MANAGER (image_ui_manager),
                                       "/dummy-menubar/image-popup/Edit/Preferences/plug-in-unit-editor");
     if (GTK_IS_MENU_ITEM (item))
-      ige_mac_menu_add_app_menu_item (group, GTK_MENU_ITEM (item), _("Units"));
+      ige_mac_menu_add_app_menu_item (group, GTK_MENU_ITEM (item), NULL);
   }
 #endif /* GDK_WINDOWING_QUARTZ */
 
