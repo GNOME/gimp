@@ -1,3 +1,9 @@
+2007-09-24  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/drop-shadow.scm: applied patch from
+	Ulf-D. Ehlert which fixes a bug which may shrink the image instead
+	of enlarging it (bug #478385).
+
 2007-09-23  Sven Neumann  <sven@gimp.org>
 
 	* Made 2.4.0-rc3 release.
