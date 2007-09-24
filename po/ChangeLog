@@ -1,3 +1,7 @@
+2007-09-24  Jakub Friedl <jfriedl@suse.cz>
+
+	* cs.po: Updated Czech translation.
+
 2007-09-23  Daniel Nylander <po@danielnylander.se>
 
 	* sv.po: Updated Swedish translation.
@@ -28,7 +32,7 @@
 
 2007-09-16  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation by Francisco Vila
+	* es.po: Updated Spanish translation by Francisco Vila
 
 2007-09-16  Wadim Dziedzic  <wadimd@svn.gnome.org>
 
