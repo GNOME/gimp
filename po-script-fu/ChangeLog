@@ -1,3 +1,7 @@
+2007-09-24  Ulf-D. Ehlert  <ulfehlert@svn.gnome.org>
+
+	* de.po: Bugfixes in German translation.
+
 2007-09-21  Artur Flinta  <aflinta@svn.gnome.org>
 
 	* pl.po: Updated Polish translation by GNOME PL Team.
@@ -12,7 +16,7 @@
 
 2007-09-16  Jorge Gonzalez  <jorgegonz@svn.gnome.org>
 
-        * es.po: Updated Spanish translation by Francisco Vila
+	* es.po: Updated Spanish translation by Francisco Vila
 
 2007-09-16  Wadim Dziedzic  <wadimd@svn.gnome.org>
 
