@@ -4,8 +4,9 @@
 
 2007-09-24  Simon Budig  <simon@gimp.org>
 
-	* app/pdb/vectors_cmds.c: fixed error on how many points get
+	* tools/pdbgen/pdb/vectors.pdb: fixed error on how many points get
 	initialized.
+	* app/pdb/vectors_cmds.c: regenerated
 
 	Probably fixes bug #479790.
 
