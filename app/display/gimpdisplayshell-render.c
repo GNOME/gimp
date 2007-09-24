@@ -661,7 +661,7 @@ box_filter (guint          left_weight,
       case 4:
 #define ALPHA 3
         {
-          const guint factors[9] =
+          guint factors[9] =
             {
               (src[1][ALPHA] * top_weight)    >> 8,
               (src[4][ALPHA] * middle_weight) >> 8,
@@ -707,7 +707,7 @@ box_filter (guint          left_weight,
         /* NOTE: this is a copy and paste of the code above, the ALPHA changes
          * the behavior in all needed ways. */
         {
-          const guint factors[9] =
+          guint factors[9] =
             {
               (src[1][ALPHA] * top_weight)    >> 8,
               (src[4][ALPHA] * middle_weight) >> 8,

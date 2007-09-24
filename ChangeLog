@@ -1,3 +1,8 @@
+2007-09-24  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c: removed const qualifiers
+	to fix compilation on Solaris 8 (bug #479817).
+
 2007-09-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/ige-mac-menu.c (ige_mac_menu_add_app_menu_item): allow
