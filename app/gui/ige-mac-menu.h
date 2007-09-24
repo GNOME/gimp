@@ -28,12 +28,15 @@
 
 G_BEGIN_DECLS
 
-void   ige_mac_menu_set_menubar    (GtkMenuShell *menu_shell);
-void   ige_mac_menu_set_quit_item  (GtkMenuItem  *menu_item);
-void   ige_mac_menu_set_about_item (GtkMenuItem  *menu_item,
-                                    const gchar  *label);
-void   ige_mac_menu_set_prefs_item (GtkMenuItem  *menu_item,
-                                    const gchar  *label);
+typedef struct _IgeMacMenuGroup IgeMacMenuGroup;
+
+void              ige_mac_menu_set_menu_bar       (GtkMenuShell    *menu_shell);
+void              ige_mac_menu_set_quit_menu_item (GtkMenuItem     *menu_item);
+
+IgeMacMenuGroup * ige_mac_menu_add_app_menu_group (void);
+void              ige_mac_menu_add_app_menu_item  (IgeMacMenuGroup *group,
+						   GtkMenuItem     *menu_item,
+						   const gchar     *label);
 
 G_END_DECLS
 

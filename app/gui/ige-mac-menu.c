@@ -683,7 +683,7 @@ sync_menu_shell (GtkMenuShell *menu_shell,
 }
 
 void
-ige_mac_menu_set_menubar (GtkMenuShell *menu_shell)
+ige_mac_menu_set_menu_bar (GtkMenuShell *menu_shell)
 {
   MenuRef carbon_menubar;
 
@@ -704,7 +704,7 @@ ige_mac_menu_set_menubar (GtkMenuShell *menu_shell)
 }
 
 void
-ige_mac_menu_set_quit_item (GtkMenuItem *menu_item)
+ige_mac_menu_set_quit_menu_item (GtkMenuItem *menu_item)
 {
   MenuRef       appmenu;
   MenuItemIndex index;
@@ -724,65 +724,93 @@ ige_mac_menu_set_quit_item (GtkMenuItem *menu_item)
     }
 }
 
-void
-ige_mac_menu_set_about_item (GtkMenuItem *menu_item,
-                             const gchar *label)
+
+struct _IgeMacMenuGroup
 {
-  MenuRef appmenu;
+  GList *items;
+};
 
-  g_return_if_fail (GTK_IS_MENU_ITEM (menu_item));
-  g_return_if_fail (label != NULL);
+static GList *app_menu_groups = NULL;
 
-  if (GetIndMenuItemWithCommandID (NULL, kHICommandHide, 1,
-				   &appmenu, NULL) == noErr)
-    {
-      CFStringRef cfstr;
+IgeMacMenuGroup *
+ige_mac_menu_add_app_menu_group (void)
+{
+  IgeMacMenuGroup *group = g_slice_new0 (IgeMacMenuGroup);
 
-      cfstr = CFStringCreateWithCString (NULL, label,
-					 kCFStringEncodingUTF8);
+  app_menu_groups = g_list_append (app_menu_groups, group);
 
-      InsertMenuItemTextWithCFString (appmenu, cfstr, 0, 0, 0);
-      SetMenuItemProperty (appmenu, 1,
-			   IGE_QUARTZ_MENU_CREATOR,
-			   IGE_QUARTZ_ITEM_WIDGET,
-			   sizeof (menu_item), &menu_item);
-
-      CFRelease (cfstr);
-
-      gtk_widget_hide (GTK_WIDGET (menu_item));
-    }
+  return group;
 }
 
 void
-ige_mac_menu_set_prefs_item (GtkMenuItem  *menu_item,
-                             const gchar  *label)
+ige_mac_menu_add_app_menu_item (IgeMacMenuGroup *group,
+				GtkMenuItem     *menu_item,
+				const gchar     *label)
 {
-  MenuRef appmenu;
+  MenuRef  appmenu;
+  GList   *list;
+  gint     index = 0;
 
+  g_return_if_fail (group != NULL);
   g_return_if_fail (GTK_IS_MENU_ITEM (menu_item));
   g_return_if_fail (label != NULL);
 
   if (GetIndMenuItemWithCommandID (NULL, kHICommandHide, 1,
-                                   &appmenu, NULL) == noErr)
+                                   &appmenu, NULL) != noErr)
     {
-      CFStringRef cfstr;
-
-      InsertMenuItemTextWithCFString (appmenu, NULL, 1,
-				      kMenuItemAttrSeparator, 0);
-
-      cfstr = CFStringCreateWithCString (NULL, label,
-                                         kCFStringEncodingUTF8);
-
-      InsertMenuItemTextWithCFString (appmenu, cfstr, 2, 0, 0);
-      SetMenuItemProperty (appmenu, 3,
-                           IGE_QUARTZ_MENU_CREATOR,
-                           IGE_QUARTZ_ITEM_WIDGET,
-                           sizeof (menu_item), &menu_item);
-
-      CFRelease (cfstr);
-
-      gtk_widget_hide (GTK_WIDGET (menu_item));
+      g_warning ("%s: retrieving app menu failed",
+		 G_STRFUNC);
+      return;
     }
+
+  for (list = app_menu_groups; list; list = g_list_next (list))
+    {
+      IgeMacMenuGroup *list_group = list->data;
+
+      index += g_list_length (list_group->items);
+
+      /*  adjust index for the separator between groups, but not
+       *  before the first group
+       */
+      if (list_group->items && list->prev)
+	index++;
+
+      if (group == list_group)
+	{
+	  CFStringRef cfstr;
+
+	  /*  add a separator before adding the first item, but not
+	   *  for the first group
+	   */
+	  if (!group->items && list->prev)
+	    {
+	      InsertMenuItemTextWithCFString (appmenu, NULL, index,
+					      kMenuItemAttrSeparator, 0);
+	      index++;
+	    }
+
+	  cfstr = CFStringCreateWithCString (NULL, label,
+					     kCFStringEncodingUTF8);
+
+	  InsertMenuItemTextWithCFString (appmenu, cfstr, index, 0, 0);
+	  SetMenuItemProperty (appmenu, index + 1,
+			       IGE_QUARTZ_MENU_CREATOR,
+			       IGE_QUARTZ_ITEM_WIDGET,
+			       sizeof (menu_item), &menu_item);
+
+	  CFRelease (cfstr);
+
+	  gtk_widget_hide (GTK_WIDGET (menu_item));
+
+	  group->items = g_list_append (group->items, menu_item);
+
+	  return;
+	}
+    }
+
+  if (!list)
+    g_warning ("%s: app menu group %p does not exist",
+	       G_STRFUNC, group);
 }
 
 #endif /* GDK_WINDOWING_QUARTZ */

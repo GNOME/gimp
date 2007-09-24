@@ -1,3 +1,12 @@
+2007-09-24  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/ige-mac-menu.[ch]: new versions with slight API renaming
+	and new generalized API for adding application menu items.
+
+	* app/gui/gui.c (gui_restore_after_callback): follow API changes
+	and add "Preferences", "Keyboard Shortcuts" and "Units" to the
+	application menu's preferences section.
+
 2007-09-24  Simon Budig  <simon@gimp.org>
 
 	* app/xcf/xcf-load.c: use the correct default values for the
