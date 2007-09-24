@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-21 00:21+0200\n"
-"PO-Revision-Date: 2007-09-21 00:23+0100\n"
+"POT-Creation-Date: 2007-09-24 09:03+0200\n"
+"PO-Revision-Date: 2007-09-24 09:03+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -653,7 +653,7 @@ msgstr "Position"
 
 #: ../plug-ins/Lighting/lighting_ui.c:474
 #: ../plug-ins/common/flarefx.c:772
-#: ../plug-ins/common/mblur.c:1082
+#: ../plug-ins/common/mblur.c:1081
 #: ../plug-ins/common/nova.c:463
 #: ../plug-ins/common/papertile.c:282
 #: ../plug-ins/flame/flame.c:1227
@@ -668,7 +668,7 @@ msgstr "Ljuskällans X-position i XYZ-rummet"
 
 #: ../plug-ins/Lighting/lighting_ui.c:487
 #: ../plug-ins/common/flarefx.c:777
-#: ../plug-ins/common/mblur.c:1087
+#: ../plug-ins/common/mblur.c:1086
 #: ../plug-ins/common/nova.c:468
 #: ../plug-ins/common/papertile.c:291
 #: ../plug-ins/flame/flame.c:1241
@@ -694,8 +694,8 @@ msgstr "Ljuskällans Z-position i XYZ-rummet"
 #. radio buttons for choosing LEFT or RIGHT
 #. *************************************************
 #: ../plug-ins/Lighting/lighting_ui.c:509
-#: ../plug-ins/common/struc.c:1294
-#: ../plug-ins/common/wind.c:936
+#: ../plug-ins/common/struc.c:1292
+#: ../plug-ins/common/wind.c:934
 msgid "Direction"
 msgstr "Riktning"
 
@@ -1000,9 +1000,9 @@ msgstr "Använd/använd inte borttagning av ojämna kanter (kantutjämning)"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:579
 #: ../plug-ins/common/bumpmap.c:916
-#: ../plug-ins/common/emboss.c:525
+#: ../plug-ins/common/emboss.c:523
 #: ../plug-ins/common/fractaltrace.c:796
-#: ../plug-ins/common/struc.c:1326
+#: ../plug-ins/common/struc.c:1324
 msgid "_Depth:"
 msgstr "_Djup:"
 
@@ -1012,8 +1012,8 @@ msgstr "Kvalitet på kantutjämning. Högre är bättre, men långsammare"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:591
 #: ../plug-ins/common/redeye.c:173
-#: ../plug-ins/common/unsharp.c:707
-#: ../plug-ins/common/wind.c:999
+#: ../plug-ins/common/unsharp.c:704
+#: ../plug-ins/common/wind.c:997
 #: ../plug-ins/imagemap/imap_preferences.c:441
 msgid "_Threshold:"
 msgstr "_Tröskelvärde:"
@@ -1162,7 +1162,7 @@ msgid "Cylinder radius"
 msgstr "Cylinderradie"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1264
-#: ../plug-ins/common/mblur.c:1113
+#: ../plug-ins/common/mblur.c:1112
 msgid "L_ength:"
 msgstr "L_ängd:"
 
@@ -1491,7 +1491,7 @@ msgstr "Fasvinkel, omfång 0-360"
 #. Propagate Mode
 #: ../plug-ins/common/AlienMap2.c:514
 #: ../plug-ins/common/hot.c:595
-#: ../plug-ins/common/vpropagate.c:1098
+#: ../plug-ins/common/vpropagate.c:1096
 #: ../plug-ins/common/waves.c:276
 msgid "Mode"
 msgstr "Läge"
@@ -2293,19 +2293,19 @@ msgstr "Persienner"
 
 #. Orientation toggle box
 #: ../plug-ins/common/blinds.c:259
-#: ../plug-ins/common/ripple.c:538
+#: ../plug-ins/common/ripple.c:536
 msgid "Orientation"
 msgstr "Orientering"
 
 #: ../plug-ins/common/blinds.c:263
-#: ../plug-ins/common/ripple.c:542
+#: ../plug-ins/common/ripple.c:540
 #: ../plug-ins/common/tileit.c:425
 #: ../plug-ins/pagecurl/pagecurl.c:534
 msgid "_Horizontal"
 msgstr "_Horisontell"
 
 #: ../plug-ins/common/blinds.c:264
-#: ../plug-ins/common/ripple.c:543
+#: ../plug-ins/common/ripple.c:541
 #: ../plug-ins/common/tileit.c:435
 #: ../plug-ins/pagecurl/pagecurl.c:533
 msgid "_Vertical"
@@ -2334,7 +2334,7 @@ msgid "_Blur"
 msgstr "Gör _oskarp"
 
 #: ../plug-ins/common/blur.c:178
-#: ../plug-ins/common/unsharp.c:441
+#: ../plug-ins/common/unsharp.c:439
 msgid "Blurring"
 msgstr "Gör suddig"
 
@@ -2407,7 +2407,7 @@ msgid "_Tile bumpmap"
 msgstr "_Plattlägg Bumpmap"
 
 #: ../plug-ins/common/bumpmap.c:892
-#: ../plug-ins/common/emboss.c:501
+#: ../plug-ins/common/emboss.c:499
 msgid "_Azimuth:"
 msgstr "_Asimut:"
 
@@ -2454,20 +2454,20 @@ msgstr "Sträcker automatiskt ut kontrast"
 msgid "c_astretch: cmap was NULL!  Quitting...\n"
 msgstr "c_astretch: cmap var NULL! Avslutar...\n"
 
-#: ../plug-ins/common/cartoon.c:144
+#: ../plug-ins/common/cartoon.c:142
 msgid "Simulate a cartoon by enhancing edges"
 msgstr "Simulera en serietidning genom att förstärka kanterna"
 
-#: ../plug-ins/common/cartoon.c:149
+#: ../plug-ins/common/cartoon.c:147
 msgid "Ca_rtoon..."
 msgstr "Seri_eteckning..."
 
-#: ../plug-ins/common/cartoon.c:231
-#: ../plug-ins/common/dog.c:253
+#: ../plug-ins/common/cartoon.c:229
+#: ../plug-ins/common/dog.c:251
 #: ../plug-ins/common/gauss.c:445
 #: ../plug-ins/common/neon.c:225
-#: ../plug-ins/common/photocopy.c:243
-#: ../plug-ins/common/sel_gauss.c:213
+#: ../plug-ins/common/photocopy.c:241
+#: ../plug-ins/common/sel_gauss.c:211
 #: ../plug-ins/common/softglow.c:221
 #: ../plug-ins/gflare/gflare.c:965
 #: ../plug-ins/sgi/sgi.c:520
@@ -2475,16 +2475,16 @@ msgstr "Seri_eteckning..."
 msgid "Cannot operate on indexed color images."
 msgstr "Kan inte arbeta med indexerade färgbilder."
 
-#: ../plug-ins/common/cartoon.c:811
+#: ../plug-ins/common/cartoon.c:809
 msgid "Cartoon"
 msgstr "Serieteckning"
 
-#: ../plug-ins/common/cartoon.c:848
-#: ../plug-ins/common/photocopy.c:876
+#: ../plug-ins/common/cartoon.c:846
+#: ../plug-ins/common/photocopy.c:874
 msgid "_Mask radius:"
 msgstr "_maskradie:"
 
-#: ../plug-ins/common/cartoon.c:862
+#: ../plug-ins/common/cartoon.c:860
 msgid "_Percent black:"
 msgstr "_Procent svart:"
 
@@ -2547,7 +2547,7 @@ msgstr "_Ut-kanal:"
 #: ../plug-ins/common/diffraction.c:501
 #: ../plug-ins/common/diffraction.c:539
 #: ../plug-ins/common/diffraction.c:577
-#: ../plug-ins/common/exchange.c:400
+#: ../plug-ins/common/exchange.c:398
 #: ../plug-ins/common/noisify.c:530
 #: ../plug-ins/common/noisify.c:537
 msgid "_Red:"
@@ -2559,7 +2559,7 @@ msgstr "_Röd:"
 #: ../plug-ins/common/diffraction.c:510
 #: ../plug-ins/common/diffraction.c:548
 #: ../plug-ins/common/diffraction.c:586
-#: ../plug-ins/common/exchange.c:460
+#: ../plug-ins/common/exchange.c:458
 #: ../plug-ins/common/noisify.c:531
 #: ../plug-ins/common/noisify.c:538
 msgid "_Green:"
@@ -2571,7 +2571,7 @@ msgstr "_Grön:"
 #: ../plug-ins/common/diffraction.c:519
 #: ../plug-ins/common/diffraction.c:557
 #: ../plug-ins/common/diffraction.c:595
-#: ../plug-ins/common/exchange.c:521
+#: ../plug-ins/common/exchange.c:519
 #: ../plug-ins/common/noisify.c:532
 #: ../plug-ins/common/noisify.c:539
 msgid "_Blue:"
@@ -2708,24 +2708,24 @@ msgstr "Arrangera om färgkarta"
 msgid "Drag and drop colors to rearrange the colormap.  The numbers shown are the original indices.  Right-click for a menu with sort options."
 msgstr "Dra och släpp färgerna för att arrangera om färgkartan. Siffrorna som visas är originalindexen. Högerklicka för en meny med sorteringsalternativ."
 
-#: ../plug-ins/common/colortoalpha.c:96
+#: ../plug-ins/common/colortoalpha.c:94
 msgid "Convert a specified color to transparency"
 msgstr "Konvertera en angiven färg till transparens"
 
-#: ../plug-ins/common/colortoalpha.c:103
+#: ../plug-ins/common/colortoalpha.c:101
 msgid "Color to _Alpha..."
 msgstr "Färg till _Alfa..."
 
-#: ../plug-ins/common/colortoalpha.c:186
+#: ../plug-ins/common/colortoalpha.c:184
 msgid "Removing color"
 msgstr "Tar bort färg"
 
-#: ../plug-ins/common/colortoalpha.c:379
+#: ../plug-ins/common/colortoalpha.c:377
 msgid "Color to Alpha"
 msgstr "Färg till Alfa"
 
 #. spinbutton 1
-#: ../plug-ins/common/colortoalpha.c:411
+#: ../plug-ins/common/colortoalpha.c:409
 #: ../plug-ins/common/mapcolor.c:424
 #: ../plug-ins/gfli/gfli.c:840
 #: ../plug-ins/gfli/gfli.c:910
@@ -2734,11 +2734,11 @@ msgstr "Färg till Alfa"
 msgid "From:"
 msgstr "Från:"
 
-#: ../plug-ins/common/colortoalpha.c:415
+#: ../plug-ins/common/colortoalpha.c:413
 msgid "Color to Alpha Color Picker"
 msgstr "Färg till Alfa färghämtare"
 
-#: ../plug-ins/common/colortoalpha.c:430
+#: ../plug-ins/common/colortoalpha.c:428
 msgid "to alpha"
 msgstr "till Alfa"
 
@@ -2771,12 +2771,12 @@ msgstr "_Nyans:"
 
 #: ../plug-ins/common/compose.c:213
 #: ../plug-ins/common/compose.c:221
-#: ../plug-ins/common/scatter_hsv.c:423
+#: ../plug-ins/common/scatter_hsv.c:421
 msgid "_Saturation:"
 msgstr "_Mättnad:"
 
 #: ../plug-ins/common/compose.c:214
-#: ../plug-ins/common/scatter_hsv.c:435
+#: ../plug-ins/common/scatter_hsv.c:433
 msgid "_Value:"
 msgstr "_Intensitet:"
 
@@ -2984,12 +2984,12 @@ msgid "Re_d"
 msgstr "R_öd"
 
 #: ../plug-ins/common/convmatrix.c:103
-#: ../plug-ins/common/newsprint.c:355
+#: ../plug-ins/common/newsprint.c:353
 msgid "_Green"
 msgstr "_Grön"
 
 #: ../plug-ins/common/convmatrix.c:104
-#: ../plug-ins/common/newsprint.c:363
+#: ../plug-ins/common/newsprint.c:361
 msgid "_Blue"
 msgstr "_Blå"
 
@@ -3003,10 +3003,10 @@ msgstr "U_töka"
 
 # ?
 #: ../plug-ins/common/convmatrix.c:111
-#: ../plug-ins/common/displace.c:474
-#: ../plug-ins/common/edge.c:710
+#: ../plug-ins/common/displace.c:472
+#: ../plug-ins/common/edge.c:708
 #: ../plug-ins/common/fractaltrace.c:736
-#: ../plug-ins/common/ripple.c:563
+#: ../plug-ins/common/ripple.c:561
 msgid "_Wrap"
 msgstr "_Wrap"
 
@@ -3194,7 +3194,7 @@ msgstr "Automatisk _förhandsgranskning"
 #. Options area, bottom of column
 #. Options section
 #: ../plug-ins/common/curve_bend.c:1279
-#: ../plug-ins/common/ripple.c:504
+#: ../plug-ins/common/ripple.c:502
 #: ../plug-ins/gfig/gfig-dialog.c:1207
 msgid "Options"
 msgstr "Alternativ"
@@ -3212,8 +3212,8 @@ msgstr "Ut_jämnande"
 #. The antialiasing toggle
 #: ../plug-ins/common/curve_bend.c:1322
 #: ../plug-ins/common/gqbist.c:853
-#: ../plug-ins/common/mosaic.c:730
-#: ../plug-ins/common/ripple.c:513
+#: ../plug-ins/common/mosaic.c:728
+#: ../plug-ins/common/ripple.c:511
 msgid "_Antialiasing"
 msgstr "_Kantutjämning"
 
@@ -3507,24 +3507,24 @@ msgstr "_Förgrund som registreringsfärg"
 msgid "Pixels in the foreground color will appear black in all output images.  This can be used for things like crop marks that have to show up on all channels."
 msgstr "Bildpunkter i förgrundsfärgen kommer att visas svarta i alla utdatabilder.  Det kan användas för saker som beskäringsmarkeringar som måste visas i alla kanaler."
 
-#: ../plug-ins/common/deinterlace.c:93
+#: ../plug-ins/common/deinterlace.c:91
 msgid "Fix images where every other row is missing"
 msgstr "Rätta till bilder där varannan rad saknas"
 
-#: ../plug-ins/common/deinterlace.c:102
+#: ../plug-ins/common/deinterlace.c:100
 msgid "_Deinterlace..."
 msgstr "A_vfläta..."
 
-#: ../plug-ins/common/deinterlace.c:159
-#: ../plug-ins/common/deinterlace.c:327
+#: ../plug-ins/common/deinterlace.c:157
+#: ../plug-ins/common/deinterlace.c:325
 msgid "Deinterlace"
 msgstr "Avfläta"
 
-#: ../plug-ins/common/deinterlace.c:359
+#: ../plug-ins/common/deinterlace.c:357
 msgid "Keep o_dd fields"
 msgstr "Behåll _udda fält"
 
-#: ../plug-ins/common/deinterlace.c:360
+#: ../plug-ins/common/deinterlace.c:358
 msgid "Keep _even fields"
 msgstr "Behåll _jämna fält"
 
@@ -3578,47 +3578,47 @@ msgstr "Skrivbordslänk"
 msgid "Error loading desktop file '%s': %s"
 msgstr "Fel vid inläsning av skrivbordsfilen \"%s\": %s"
 
-#: ../plug-ins/common/despeckle.c:149
+#: ../plug-ins/common/despeckle.c:147
 msgid "Remove speckle noise from the image"
 msgstr "Ta bort specklebrus från bilden"
 
-#: ../plug-ins/common/despeckle.c:155
+#: ../plug-ins/common/despeckle.c:153
 msgid "Des_peckle..."
 msgstr "Damm och _repor..."
 
-#: ../plug-ins/common/despeckle.c:396
-#: ../plug-ins/common/despeckle.c:616
+#: ../plug-ins/common/despeckle.c:394
+#: ../plug-ins/common/despeckle.c:614
 msgid "Despeckle"
 msgstr "Damm och repor"
 
-#: ../plug-ins/common/despeckle.c:425
+#: ../plug-ins/common/despeckle.c:423
 msgid "Median"
 msgstr "Median"
 
-#: ../plug-ins/common/despeckle.c:433
+#: ../plug-ins/common/despeckle.c:431
 msgid "_Adaptive"
 msgstr "_Adaptivt"
 
-#: ../plug-ins/common/despeckle.c:443
+#: ../plug-ins/common/despeckle.c:441
 msgid "R_ecursive"
 msgstr "R_ekursivt"
 
-#: ../plug-ins/common/despeckle.c:464
+#: ../plug-ins/common/despeckle.c:462
 #: ../plug-ins/common/neon.c:730
-#: ../plug-ins/common/nlfilt.c:1090
+#: ../plug-ins/common/nlfilt.c:1088
 #: ../plug-ins/common/nova.c:366
-#: ../plug-ins/common/unsharp.c:681
+#: ../plug-ins/common/unsharp.c:678
 #: ../plug-ins/common/whirlpinch.c:588
 #: ../plug-ins/gflare/gflare.c:2684
 #: ../plug-ins/imagemap/imap_circle.c:278
 msgid "_Radius:"
 msgstr "_Radie:"
 
-#: ../plug-ins/common/despeckle.c:480
+#: ../plug-ins/common/despeckle.c:478
 msgid "_Black level:"
 msgstr "_Svartnivå:"
 
-#: ../plug-ins/common/despeckle.c:496
+#: ../plug-ins/common/despeckle.c:494
 msgid "_White level:"
 msgstr "_Vitnivå:"
 
@@ -3729,210 +3729,210 @@ msgstr "Po_larisation:"
 msgid "Other Options"
 msgstr "Övriga alternativ"
 
-#: ../plug-ins/common/displace.c:144
+#: ../plug-ins/common/displace.c:142
 msgid "_X displacement"
 msgstr "_X-förskjutning"
 
-#: ../plug-ins/common/displace.c:144
+#: ../plug-ins/common/displace.c:142
 msgid "_Pinch"
 msgstr "_Nyp"
 
-#: ../plug-ins/common/displace.c:145
+#: ../plug-ins/common/displace.c:143
 msgid "_Y displacement"
 msgstr "_Y-förskjutning"
 
-#: ../plug-ins/common/displace.c:145
+#: ../plug-ins/common/displace.c:143
 msgid "_Whirl"
 msgstr "_Virvla"
 
-#: ../plug-ins/common/displace.c:171
+#: ../plug-ins/common/displace.c:169
 msgid "Displace pixels as indicated by displacement maps"
 msgstr "Förskjut bildpunkter som indikerat av förskjutningskartor"
 
-#: ../plug-ins/common/displace.c:181
+#: ../plug-ins/common/displace.c:179
 msgid "_Displace..."
 msgstr "_Förskjut..."
 
-#: ../plug-ins/common/displace.c:292
+#: ../plug-ins/common/displace.c:290
 msgid "Displacing"
 msgstr "Förskjutning"
 
-#: ../plug-ins/common/displace.c:328
+#: ../plug-ins/common/displace.c:326
 msgid "Displace"
 msgstr "Förskjut"
 
 #. X options
-#: ../plug-ins/common/displace.c:364
+#: ../plug-ins/common/displace.c:362
 msgid "_X displacement:"
 msgstr "_X-förskjutning:"
 
 #. Y Options
-#: ../plug-ins/common/displace.c:411
+#: ../plug-ins/common/displace.c:409
 msgid "_Y displacement:"
 msgstr "_Y-förskjutning:"
 
-#: ../plug-ins/common/displace.c:461
+#: ../plug-ins/common/displace.c:459
 msgid "Displacement Mode"
 msgstr "Förskjutningsläge"
 
-#: ../plug-ins/common/displace.c:464
+#: ../plug-ins/common/displace.c:462
 msgid "_Cartesian"
 msgstr "_Cartesian"
 
-#: ../plug-ins/common/displace.c:465
+#: ../plug-ins/common/displace.c:463
 msgid "_Polar"
 msgstr "_Polär"
 
-#: ../plug-ins/common/displace.c:470
+#: ../plug-ins/common/displace.c:468
 msgid "Edge Behavior"
 msgstr "Kantbeteende"
 
-#: ../plug-ins/common/displace.c:476
-#: ../plug-ins/common/edge.c:723
-#: ../plug-ins/common/ripple.c:564
+#: ../plug-ins/common/displace.c:474
+#: ../plug-ins/common/edge.c:721
+#: ../plug-ins/common/ripple.c:562
 #: ../plug-ins/common/waves.c:280
 msgid "_Smear"
 msgstr "_Smeta ut"
 
-#: ../plug-ins/common/displace.c:478
-#: ../plug-ins/common/edge.c:736
+#: ../plug-ins/common/displace.c:476
+#: ../plug-ins/common/edge.c:734
 #: ../plug-ins/common/fractaltrace.c:740
-#: ../plug-ins/common/newsprint.c:400
+#: ../plug-ins/common/newsprint.c:398
 msgid "_Black"
 msgstr "_Svart"
 
-#: ../plug-ins/common/dog.c:135
+#: ../plug-ins/common/dog.c:133
 msgid "Edge detection with control of edge thickness"
 msgstr "Kantidentifiering med kontroll av kanttjocklek"
 
-#: ../plug-ins/common/dog.c:142
+#: ../plug-ins/common/dog.c:140
 msgid "_Difference of Gaussians..."
 msgstr "Gaussisk _differens..."
 
-#: ../plug-ins/common/dog.c:233
-#: ../plug-ins/common/dog.c:280
+#: ../plug-ins/common/dog.c:231
+#: ../plug-ins/common/dog.c:278
 msgid "DoG Edge Detect"
 msgstr "DoG kantidentifiering"
 
-#: ../plug-ins/common/dog.c:308
+#: ../plug-ins/common/dog.c:306
 msgid "Smoothing Parameters"
 msgstr "Utjämningsparametrar"
 
-#: ../plug-ins/common/dog.c:322
+#: ../plug-ins/common/dog.c:320
 msgid "_Radius 1:"
 msgstr "_Radie 1:"
 
-#: ../plug-ins/common/dog.c:326
+#: ../plug-ins/common/dog.c:324
 msgid "R_adius 2:"
 msgstr "R_adie 2:"
 
-#: ../plug-ins/common/dog.c:338
+#: ../plug-ins/common/dog.c:336
 #: ../plug-ins/common/normalize.c:92
 msgid "_Normalize"
 msgstr "_Normalisera"
 
-#: ../plug-ins/common/dog.c:349
+#: ../plug-ins/common/dog.c:347
 #: ../plug-ins/gimpressionist/paper.c:149
 msgid "_Invert"
 msgstr "_Invertera"
 
-#: ../plug-ins/common/edge.c:154
+#: ../plug-ins/common/edge.c:152
 msgid "Several simple methods for detecting edges"
 msgstr "Flera enkla metoder för att identifiera kanter"
 
-#: ../plug-ins/common/edge.c:159
+#: ../plug-ins/common/edge.c:157
 msgid "_Edge..."
 msgstr "_Kant..."
 
-#: ../plug-ins/common/edge.c:231
+#: ../plug-ins/common/edge.c:229
 msgid "Edge detection"
 msgstr "Kantidentifiering"
 
-#: ../plug-ins/common/edge.c:635
+#: ../plug-ins/common/edge.c:633
 msgid "Edge Detection"
 msgstr "Kantidentifiering"
 
-#: ../plug-ins/common/edge.c:669
+#: ../plug-ins/common/edge.c:667
 msgid "Sobel"
 msgstr "Sobel"
 
-#: ../plug-ins/common/edge.c:670
+#: ../plug-ins/common/edge.c:668
 msgid "Prewitt compass"
 msgstr "Prewitt-kompass"
 
-#: ../plug-ins/common/edge.c:671
+#: ../plug-ins/common/edge.c:669
 #: ../plug-ins/common/sinus.c:904
 msgid "Gradient"
 msgstr "Gradient"
 
-#: ../plug-ins/common/edge.c:672
+#: ../plug-ins/common/edge.c:670
 msgid "Roberts"
 msgstr "Roberts"
 
 # kanske "Differential" på svenska också, här
-#: ../plug-ins/common/edge.c:673
+#: ../plug-ins/common/edge.c:671
 msgid "Differential"
 msgstr "Differential"
 
-#: ../plug-ins/common/edge.c:674
+#: ../plug-ins/common/edge.c:672
 #: ../plug-ins/common/laplace.c:243
 msgid "Laplace"
 msgstr "Laplace"
 
-#: ../plug-ins/common/edge.c:683
+#: ../plug-ins/common/edge.c:681
 msgid "_Algorithm:"
 msgstr "_Algoritm:"
 
-#: ../plug-ins/common/edge.c:691
+#: ../plug-ins/common/edge.c:689
 msgid "A_mount:"
 msgstr "M_ängd:"
 
-#: ../plug-ins/common/emboss.c:126
+#: ../plug-ins/common/emboss.c:124
 msgid "Simulate an image created by embossing"
 msgstr "Simulera en bild skapad genom ciselering"
 
-#: ../plug-ins/common/emboss.c:132
+#: ../plug-ins/common/emboss.c:130
 msgid "_Emboss..."
 msgstr "_Ciselera..."
 
-#: ../plug-ins/common/emboss.c:386
-#: ../plug-ins/common/emboss.c:448
+#: ../plug-ins/common/emboss.c:384
+#: ../plug-ins/common/emboss.c:446
 msgid "Emboss"
 msgstr "Ciselera"
 
-#: ../plug-ins/common/emboss.c:476
+#: ../plug-ins/common/emboss.c:474
 msgid "Function"
 msgstr "Funktion"
 
-#: ../plug-ins/common/emboss.c:480
+#: ../plug-ins/common/emboss.c:478
 msgid "_Bumpmap"
 msgstr "_Bumpmap"
 
-#: ../plug-ins/common/emboss.c:481
+#: ../plug-ins/common/emboss.c:479
 msgid "_Emboss"
 msgstr "_Ciselera"
 
-#: ../plug-ins/common/emboss.c:513
+#: ../plug-ins/common/emboss.c:511
 msgid "E_levation:"
 msgstr "H_öjd:"
 
-#: ../plug-ins/common/engrave.c:103
+#: ../plug-ins/common/engrave.c:101
 msgid "Simulate an antique engraving"
 msgstr "Simulera en antik gravering"
 
-#: ../plug-ins/common/engrave.c:108
+#: ../plug-ins/common/engrave.c:106
 msgid "En_grave..."
 msgstr "_Gravera..."
 
-#: ../plug-ins/common/engrave.c:182
+#: ../plug-ins/common/engrave.c:180
 msgid "Engraving"
 msgstr "Gravering"
 
-#: ../plug-ins/common/engrave.c:211
+#: ../plug-ins/common/engrave.c:209
 msgid "Engrave"
 msgstr "Gravera"
 
-#: ../plug-ins/common/engrave.c:245
+#: ../plug-ins/common/engrave.c:243
 #: ../plug-ins/common/film.c:1003
 #: ../plug-ins/common/gtm.c:600
 #: ../plug-ins/common/papertile.c:313
@@ -3947,56 +3947,56 @@ msgstr "Gravera"
 msgid "_Height:"
 msgstr "_Höjd:"
 
-#: ../plug-ins/common/engrave.c:256
+#: ../plug-ins/common/engrave.c:254
 msgid "_Limit line width"
 msgstr "_Begränsa linjebredd"
 
-#: ../plug-ins/common/exchange.c:124
+#: ../plug-ins/common/exchange.c:122
 msgid "Swap one color with another"
 msgstr "Byt en färg med en annan"
 
-#: ../plug-ins/common/exchange.c:130
+#: ../plug-ins/common/exchange.c:128
 msgid "_Color Exchange..."
 msgstr "_Färgutbyte..."
 
-#: ../plug-ins/common/exchange.c:215
-#: ../plug-ins/common/exchange.c:289
+#: ../plug-ins/common/exchange.c:213
+#: ../plug-ins/common/exchange.c:287
 msgid "Color Exchange"
 msgstr "Färgutbyte"
 
-#: ../plug-ins/common/exchange.c:311
+#: ../plug-ins/common/exchange.c:309
 msgid "Middle-Click Inside Preview to Pick \"From Color\""
 msgstr "Mittenklicka inne i förhandsgranskningen för att välja \"Från färg\""
 
-#: ../plug-ins/common/exchange.c:349
+#: ../plug-ins/common/exchange.c:347
 msgid "To Color"
 msgstr "Till färg"
 
-#: ../plug-ins/common/exchange.c:349
+#: ../plug-ins/common/exchange.c:347
 msgid "From Color"
 msgstr "Från färg"
 
-#: ../plug-ins/common/exchange.c:367
+#: ../plug-ins/common/exchange.c:365
 msgid "Color Exchange: To Color"
 msgstr "Färgutbyte: till färg"
 
-#: ../plug-ins/common/exchange.c:368
+#: ../plug-ins/common/exchange.c:366
 msgid "Color Exchange: From Color"
 msgstr "Färgutbyte: från färg"
 
-#: ../plug-ins/common/exchange.c:426
+#: ../plug-ins/common/exchange.c:424
 msgid "R_ed threshold:"
 msgstr "_Rött tröskelvärde:"
 
-#: ../plug-ins/common/exchange.c:486
+#: ../plug-ins/common/exchange.c:484
 msgid "G_reen threshold:"
 msgstr "_Grönt tröskelvärde:"
 
-#: ../plug-ins/common/exchange.c:547
+#: ../plug-ins/common/exchange.c:545
 msgid "B_lue threshold:"
 msgstr "_Blått tröskelvärde:"
 
-#: ../plug-ins/common/exchange.c:575
+#: ../plug-ins/common/exchange.c:573
 msgid "Lock _thresholds"
 msgstr "_Lås tröskelvärden"
 
@@ -4383,13 +4383,13 @@ msgstr "Oskärperadie"
 
 #: ../plug-ins/common/gauss.c:520
 #: ../plug-ins/common/jigsaw.c:2456
-#: ../plug-ins/common/spread.c:386
+#: ../plug-ins/common/spread.c:384
 msgid "_Horizontal:"
 msgstr "_Horisontell:"
 
 #: ../plug-ins/common/gauss.c:524
 #: ../plug-ins/common/jigsaw.c:2473
-#: ../plug-ins/common/spread.c:390
+#: ../plug-ins/common/spread.c:388
 msgid "_Vertical:"
 msgstr "_Vertikal:"
 
@@ -4686,25 +4686,25 @@ msgstr "Dimension:"
 msgid "Ranks:"
 msgstr "Ranger:"
 
-#: ../plug-ins/common/glasstile.c:126
+#: ../plug-ins/common/glasstile.c:124
 msgid "Simulate distortion caused by square glass tiles"
 msgstr "Simulera förvridning orsakad av fyrkantiga glasrutor"
 
-#: ../plug-ins/common/glasstile.c:132
+#: ../plug-ins/common/glasstile.c:130
 msgid "_Glass Tile..."
 msgstr "_Glasplattor..."
 
-#: ../plug-ins/common/glasstile.c:212
-#: ../plug-ins/common/glasstile.c:252
+#: ../plug-ins/common/glasstile.c:210
+#: ../plug-ins/common/glasstile.c:250
 msgid "Glass Tile"
 msgstr "Glasplattor"
 
-#: ../plug-ins/common/glasstile.c:290
+#: ../plug-ins/common/glasstile.c:288
 msgid "Tile _width:"
 msgstr "Platt_bredd:"
 
-#: ../plug-ins/common/glasstile.c:304
-#: ../plug-ins/common/mosaic.c:663
+#: ../plug-ins/common/glasstile.c:302
+#: ../plug-ins/common/mosaic.c:661
 msgid "Tile _height:"
 msgstr "Platt_höjd:"
 
@@ -5188,6 +5188,10 @@ msgstr "_Laplace"
 msgid "Cleanup"
 msgstr "Städa upp"
 
+#: ../plug-ins/common/lcms.c:221
+msgid "Set a color profile on the image"
+msgstr "Ställ in en färgprofil på bilden"
+
 #: ../plug-ins/common/lcms.c:228
 msgid "_Assign Color Profile..."
 msgstr "_Tilldela färgprofil..."
@@ -5195,6 +5199,10 @@ msgstr "_Tilldela färgprofil..."
 #: ../plug-ins/common/lcms.c:244
 msgid "Assign default RGB Profile"
 msgstr "Tilldela standard-RGB-profil"
+
+#: ../plug-ins/common/lcms.c:251
+msgid "Apply a color profile on the image"
+msgstr "Tillämpa en färgprofil på bilden"
 
 #: ../plug-ins/common/lcms.c:261
 msgid "_Convert to Color Profile..."
@@ -5566,7 +5574,7 @@ msgid "Maxim_um RGB..."
 msgstr "Maxima_l RGB..."
 
 #: ../plug-ins/common/max_rgb.c:134
-#: ../plug-ins/common/scatter_hsv.c:160
+#: ../plug-ins/common/scatter_hsv.c:158
 msgid "Can only operate on RGB drawables."
 msgstr "Kan endast arbeta med RGB-ritytor."
 
@@ -5586,53 +5594,53 @@ msgstr "_Lås maximala kanalerna"
 msgid "Ho_ld the minimal channels"
 msgstr "L_ås minimala kanalerna"
 
-#: ../plug-ins/common/mblur.c:156
+#: ../plug-ins/common/mblur.c:155
 msgid "Simulate movement using directional blur"
 msgstr "Simulera rörelse med riktad oskärpa"
 
-#: ../plug-ins/common/mblur.c:163
+#: ../plug-ins/common/mblur.c:162
 msgid "_Motion Blur..."
 msgstr "_Rörelseoskärpa..."
 
-#: ../plug-ins/common/mblur.c:898
+#: ../plug-ins/common/mblur.c:897
 msgid "Motion blurring"
 msgstr "Rörelseoskärpa"
 
-#: ../plug-ins/common/mblur.c:1000
+#: ../plug-ins/common/mblur.c:999
 msgid "Motion Blur"
 msgstr "Rörelseoskärpa"
 
-#: ../plug-ins/common/mblur.c:1033
+#: ../plug-ins/common/mblur.c:1032
 msgid "Blur Type"
 msgstr "Oskärpetyp"
 
-#: ../plug-ins/common/mblur.c:1037
+#: ../plug-ins/common/mblur.c:1036
 msgid "_Linear"
 msgstr "_Linjär"
 
-#: ../plug-ins/common/mblur.c:1038
+#: ../plug-ins/common/mblur.c:1037
 msgid "_Radial"
 msgstr "_Radiell"
 
-#: ../plug-ins/common/mblur.c:1039
+#: ../plug-ins/common/mblur.c:1038
 #: ../plug-ins/imagemap/imap_menu.c:203
 msgid "_Zoom"
 msgstr "_Zooma"
 
-#: ../plug-ins/common/mblur.c:1046
+#: ../plug-ins/common/mblur.c:1045
 msgid "Blur Center"
 msgstr "Mittpunkt för oskärpa"
 
-#: ../plug-ins/common/mblur.c:1089
+#: ../plug-ins/common/mblur.c:1088
 msgid "Blur _outward"
 msgstr "Gör oskarp _utåt"
 
-#: ../plug-ins/common/mblur.c:1102
+#: ../plug-ins/common/mblur.c:1101
 msgid "Blur Parameters"
 msgstr "Parametrar för oskärpa"
 
-#: ../plug-ins/common/mblur.c:1126
-#: ../plug-ins/common/newsprint.c:1003
+#: ../plug-ins/common/mblur.c:1125
+#: ../plug-ins/common/newsprint.c:1001
 msgid "_Angle:"
 msgstr "_Vinkel:"
 
@@ -5745,86 +5753,86 @@ msgstr "Standard bildrutepaus:"
 msgid "MNG animation"
 msgstr "MNG-animation"
 
-#: ../plug-ins/common/mosaic.c:361
+#: ../plug-ins/common/mosaic.c:359
 msgid "Convert the image into irregular tiles"
 msgstr "Konvertera bilden till oregelbundna plattor"
 
-#: ../plug-ins/common/mosaic.c:366
+#: ../plug-ins/common/mosaic.c:364
 msgid "_Mosaic..."
 msgstr "_Mosaik..."
 
 #. progress bar for gradient finding
-#: ../plug-ins/common/mosaic.c:505
+#: ../plug-ins/common/mosaic.c:503
 msgid "Finding edges"
 msgstr "Hittar kanter"
 
 #. Progress bar for rendering tiles
-#: ../plug-ins/common/mosaic.c:559
+#: ../plug-ins/common/mosaic.c:557
 msgid "Rendering tiles"
 msgstr "Renderar plattor"
 
-#: ../plug-ins/common/mosaic.c:592
+#: ../plug-ins/common/mosaic.c:590
 msgid "Mosaic"
 msgstr "Mosaik"
 
-#: ../plug-ins/common/mosaic.c:632
+#: ../plug-ins/common/mosaic.c:630
 msgid "Squares"
 msgstr "Kvadrater"
 
-#: ../plug-ins/common/mosaic.c:633
+#: ../plug-ins/common/mosaic.c:631
 msgid "Hexagons"
 msgstr "Hexagoner"
 
-#: ../plug-ins/common/mosaic.c:634
+#: ../plug-ins/common/mosaic.c:632
 msgid "Octagons & squares"
 msgstr "Oktagoner och kvadrater"
 
 # Osäker!
-#: ../plug-ins/common/mosaic.c:635
+#: ../plug-ins/common/mosaic.c:633
 msgid "Triangles"
 msgstr "Trianglar"
 
-#: ../plug-ins/common/mosaic.c:643
+#: ../plug-ins/common/mosaic.c:641
 msgid "_Tiling primitives:"
 msgstr "_Plattläggningsprimitiver:"
 
-#: ../plug-ins/common/mosaic.c:651
+#: ../plug-ins/common/mosaic.c:649
 msgid "Tile _size:"
 msgstr "Platt_storlek:"
 
-#: ../plug-ins/common/mosaic.c:676
+#: ../plug-ins/common/mosaic.c:674
 msgid "Til_e spacing:"
 msgstr "Pla_ttmellanrum:"
 
-#: ../plug-ins/common/mosaic.c:688
+#: ../plug-ins/common/mosaic.c:686
 msgid "Tile _neatness:"
 msgstr "Platt_ordning:"
 
-#: ../plug-ins/common/mosaic.c:701
+#: ../plug-ins/common/mosaic.c:699
 msgid "Light _direction:"
 msgstr "Ljus_riktning"
 
-#: ../plug-ins/common/mosaic.c:713
+#: ../plug-ins/common/mosaic.c:711
 msgid "Color _variation:"
 msgstr "Färg_variation:"
 
-#: ../plug-ins/common/mosaic.c:742
+#: ../plug-ins/common/mosaic.c:740
 msgid "Co_lor averaging"
 msgstr "Fä_rgmedelvärda"
 
-#: ../plug-ins/common/mosaic.c:755
+#: ../plug-ins/common/mosaic.c:753
 msgid "Allo_w tile splitting"
 msgstr "Ti_llåt plattdelning"
 
-#: ../plug-ins/common/mosaic.c:768
+#: ../plug-ins/common/mosaic.c:766
 msgid "_Pitted surfaces"
 msgstr "_Gropiga ytor"
 
-#: ../plug-ins/common/mosaic.c:781
+#: ../plug-ins/common/mosaic.c:779
 msgid "_FG/BG lighting"
 msgstr "_FGBG ljussättning"
 
-#: ../plug-ins/common/mosaic.c:2687
+#: ../plug-ins/common/mosaic.c:2685
 #, c-format
 msgid "Unable to add additional point.\n"
 msgstr "Kan inte lägga till ännu en punkt.\n"
@@ -5846,7 +5854,7 @@ msgid "Neon Detection"
 msgstr "Neonidentifiering"
 
 #: ../plug-ins/common/neon.c:745
-#: ../plug-ins/common/unsharp.c:694
+#: ../plug-ins/common/unsharp.c:691
 msgid "_Amount:"
 msgstr "_Mängd:"
 
@@ -5870,138 +5878,138 @@ msgstr "PS kvadrat (Euklidisk punkt)"
 msgid "PS Diamond"
 msgstr "PS romb"
 
-#: ../plug-ins/common/newsprint.c:334
+#: ../plug-ins/common/newsprint.c:332
 msgid "_Grey"
 msgstr "_Grått"
 
-#: ../plug-ins/common/newsprint.c:347
+#: ../plug-ins/common/newsprint.c:345
 msgid "R_ed"
 msgstr "R_öd"
 
-#: ../plug-ins/common/newsprint.c:376
+#: ../plug-ins/common/newsprint.c:374
 msgid "C_yan"
 msgstr "C_yan"
 
-#: ../plug-ins/common/newsprint.c:384
+#: ../plug-ins/common/newsprint.c:382
 msgid "Magen_ta"
 msgstr "Magen_ta"
 
-#: ../plug-ins/common/newsprint.c:392
+#: ../plug-ins/common/newsprint.c:390
 msgid "_Yellow"
 msgstr "G_ul"
 
-#: ../plug-ins/common/newsprint.c:413
+#: ../plug-ins/common/newsprint.c:411
 msgid "Luminance"
 msgstr "Luminans"
 
-#: ../plug-ins/common/newsprint.c:519
+#: ../plug-ins/common/newsprint.c:517
 msgid "Halftone the image to give newspaper-like effect"
 msgstr "Halvtona bilden för att ge en dagstidningseffekt"
 
-#: ../plug-ins/common/newsprint.c:528
+#: ../plug-ins/common/newsprint.c:526
 msgid "Newsprin_t..."
 msgstr "_Tidningstryck..."
 
-#: ../plug-ins/common/newsprint.c:629
-#: ../plug-ins/common/newsprint.c:1190
+#: ../plug-ins/common/newsprint.c:627
+#: ../plug-ins/common/newsprint.c:1188
 msgid "Newsprint"
 msgstr "Tidningstryck"
 
-#: ../plug-ins/common/newsprint.c:1033
+#: ../plug-ins/common/newsprint.c:1031
 msgid "_Spot function:"
 msgstr "_Fläckfunktion:"
 
 #. resolution settings
-#: ../plug-ins/common/newsprint.c:1241
+#: ../plug-ins/common/newsprint.c:1239
 msgid "Resolution"
 msgstr "Upplösning"
 
-#: ../plug-ins/common/newsprint.c:1260
+#: ../plug-ins/common/newsprint.c:1258
 msgid "_Input SPI:"
 msgstr "_Ingående SPI:"
 
-#: ../plug-ins/common/newsprint.c:1274
+#: ../plug-ins/common/newsprint.c:1272
 msgid "O_utput LPI:"
 msgstr "U_tgående LPI:"
 
-#: ../plug-ins/common/newsprint.c:1287
+#: ../plug-ins/common/newsprint.c:1285
 msgid "C_ell size:"
 msgstr "C_ellstorlek:"
 
 #. screen settings
-#: ../plug-ins/common/newsprint.c:1300
+#: ../plug-ins/common/newsprint.c:1298
 #: ../plug-ins/gflare/gflare.c:555
 msgid "Screen"
 msgstr "Skärm"
 
-#: ../plug-ins/common/newsprint.c:1319
+#: ../plug-ins/common/newsprint.c:1317
 msgid "B_lack pullout (%):"
 msgstr "S_vartseparation (%):"
 
-#: ../plug-ins/common/newsprint.c:1341
+#: ../plug-ins/common/newsprint.c:1339
 msgid "Separate to:"
 msgstr "Separera till:"
 
-#: ../plug-ins/common/newsprint.c:1345
+#: ../plug-ins/common/newsprint.c:1343
 msgid "_RGB"
 msgstr "_RGB"
 
-#: ../plug-ins/common/newsprint.c:1362
+#: ../plug-ins/common/newsprint.c:1360
 msgid "C_MYK"
 msgstr "C_MYK"
 
-#: ../plug-ins/common/newsprint.c:1379
+#: ../plug-ins/common/newsprint.c:1377
 msgid "I_ntensity"
 msgstr "I_ntensitet"
 
-#: ../plug-ins/common/newsprint.c:1404
+#: ../plug-ins/common/newsprint.c:1402
 msgid "_Lock channels"
 msgstr "_Lås kanaler"
 
-#: ../plug-ins/common/newsprint.c:1417
+#: ../plug-ins/common/newsprint.c:1415
 msgid "_Factory Defaults"
 msgstr "_Standardvärden"
 
 #. anti-alias control
-#: ../plug-ins/common/newsprint.c:1443
+#: ../plug-ins/common/newsprint.c:1441
 #: ../plug-ins/gfig/gfig-dialog.c:1256
 msgid "Antialiasing"
 msgstr "Kantutjämning"
 
-#: ../plug-ins/common/newsprint.c:1451
+#: ../plug-ins/common/newsprint.c:1449
 msgid "O_versample:"
 msgstr "Ö_versampla:"
 
-#: ../plug-ins/common/nlfilt.c:120
+#: ../plug-ins/common/nlfilt.c:118
 msgid "Nonlinear swiss army knife filter"
 msgstr "Ickelinjärt schweizisk arméknivsfilter"
 
-#: ../plug-ins/common/nlfilt.c:126
+#: ../plug-ins/common/nlfilt.c:124
 msgid "_NL Filter..."
 msgstr "_NL-filter..."
 
-#: ../plug-ins/common/nlfilt.c:954
-#: ../plug-ins/common/nlfilt.c:1017
+#: ../plug-ins/common/nlfilt.c:952
+#: ../plug-ins/common/nlfilt.c:1015
 msgid "NL Filter"
 msgstr "NL-filter"
 
-#: ../plug-ins/common/nlfilt.c:1045
+#: ../plug-ins/common/nlfilt.c:1043
 msgid "Filter"
 msgstr "Filtrera"
 
-#: ../plug-ins/common/nlfilt.c:1049
+#: ../plug-ins/common/nlfilt.c:1047
 msgid "_Alpha trimmed mean"
 msgstr "_Alfa-trimmat medelvärde"
 
-#: ../plug-ins/common/nlfilt.c:1051
+#: ../plug-ins/common/nlfilt.c:1049
 msgid "Op_timal estimation"
 msgstr "Op_timal skattning"
 
-#: ../plug-ins/common/nlfilt.c:1053
+#: ../plug-ins/common/nlfilt.c:1051
 msgid "_Edge enhancement"
 msgstr "_Kantförbättring"
 
-#: ../plug-ins/common/nlfilt.c:1078
+#: ../plug-ins/common/nlfilt.c:1076
 msgid "A_lpha:"
 msgstr "A_lfa:"
 
@@ -6079,35 +6087,35 @@ msgstr "Slump_nyans:"
 msgid "Center of Nova"
 msgstr "Mittpunkt för nova"
 
-#: ../plug-ins/common/oilify.c:121
-#: ../plug-ins/common/oilify.c:136
+#: ../plug-ins/common/oilify.c:119
+#: ../plug-ins/common/oilify.c:134
 msgid "Smear colors to simulate an oil painting"
 msgstr "Smeta ut färger för att simulera en oljemålning"
 
-#: ../plug-ins/common/oilify.c:127
+#: ../plug-ins/common/oilify.c:125
 msgid "Oili_fy..."
 msgstr "_Oljifiera..."
 
-#: ../plug-ins/common/oilify.c:249
+#: ../plug-ins/common/oilify.c:247
 msgid "Oil painting"
 msgstr "Oljemålning"
 
-#: ../plug-ins/common/oilify.c:776
+#: ../plug-ins/common/oilify.c:774
 msgid "Oilify"
 msgstr "Oljifiera"
 
-#: ../plug-ins/common/oilify.c:814
+#: ../plug-ins/common/oilify.c:812
 msgid "_Mask size:"
 msgstr "_Maskstorlek:"
 
 #.
 #. * Mask-size map check button
 #.
-#: ../plug-ins/common/oilify.c:829
+#: ../plug-ins/common/oilify.c:827
 msgid "Use m_ask-size map:"
 msgstr "Använd m_askstorlekskarta:"
 
-#: ../plug-ins/common/oilify.c:866
+#: ../plug-ins/common/oilify.c:864
 #: ../plug-ins/common/sinus.c:922
 msgid "_Exponent:"
 msgstr "_Exponent:"
@@ -6115,14 +6123,14 @@ msgstr "_Exponent:"
 #.
 #. * Exponent map check button
 #.
-#: ../plug-ins/common/oilify.c:881
+#: ../plug-ins/common/oilify.c:879
 msgid "Use e_xponent map:"
 msgstr "Använd e_xponentkarta:"
 
 #.
 #. * Intensity algorithm check button
 #.
-#: ../plug-ins/common/oilify.c:917
+#: ../plug-ins/common/oilify.c:915
 msgid "_Use intensity algorithm"
 msgstr "_Använd intensitetsalgoritm"
 
@@ -6269,29 +6277,29 @@ msgstr "Nedre ramen är utanför intervallet (måste vara < %d): %d"
 msgid "Writing to file '%s' failed: %s"
 msgstr "Skrivning till filen \"%s\" misslyckades: %s"
 
-#: ../plug-ins/common/photocopy.c:155
+#: ../plug-ins/common/photocopy.c:153
 msgid "Simulate color distortion produced by a copy machine"
 msgstr "Simulera färgförvridning producerat av en kopieringsmaskin"
 
-#: ../plug-ins/common/photocopy.c:160
+#: ../plug-ins/common/photocopy.c:158
 msgid "_Photocopy..."
 msgstr "_Fotokopia..."
 
-#: ../plug-ins/common/photocopy.c:839
+#: ../plug-ins/common/photocopy.c:837
 msgid "Photocopy"
 msgstr "Fotokopia"
 
-#: ../plug-ins/common/photocopy.c:890
-#: ../plug-ins/common/sharpen.c:514
+#: ../plug-ins/common/photocopy.c:888
+#: ../plug-ins/common/sharpen.c:511
 #: ../plug-ins/common/softglow.c:695
 msgid "_Sharpness:"
 msgstr "_Skärpa:"
 
-#: ../plug-ins/common/photocopy.c:904
+#: ../plug-ins/common/photocopy.c:902
 msgid "Percent _black:"
 msgstr "Procent _svart:"
 
-#: ../plug-ins/common/photocopy.c:918
+#: ../plug-ins/common/photocopy.c:916
 msgid "Percent _white:"
 msgstr "Procent _vitt:"
 
@@ -6324,24 +6332,24 @@ msgstr "Bildpunkts_bredd:"
 msgid "Pixel _height:"
 msgstr "Bildpunkts_höjd:"
 
-#: ../plug-ins/common/plasma.c:178
+#: ../plug-ins/common/plasma.c:176
 msgid "Create a random plasma texture"
 msgstr "Skapa en slumpmässig plasmatextur"
 
-#: ../plug-ins/common/plasma.c:183
+#: ../plug-ins/common/plasma.c:181
 msgid "_Plasma..."
 msgstr "_Plasma..."
 
-#: ../plug-ins/common/plasma.c:265
-#: ../plug-ins/common/plasma.c:302
+#: ../plug-ins/common/plasma.c:263
+#: ../plug-ins/common/plasma.c:300
 msgid "Plasma"
 msgstr "Plasma"
 
-#: ../plug-ins/common/plasma.c:338
+#: ../plug-ins/common/plasma.c:336
 msgid "Random _seed:"
 msgstr "Slump_frö:"
 
-#: ../plug-ins/common/plasma.c:349
+#: ../plug-ins/common/plasma.c:347
 msgid "T_urbulence:"
 msgstr "T_urbulens:"
 
@@ -7001,7 +7009,7 @@ msgid "_Slur..."
 msgstr "S_luddra..."
 
 #: ../plug-ins/common/randomize.c:744
-#: ../plug-ins/common/snoise.c:603
+#: ../plug-ins/common/snoise.c:601
 msgid "_Random seed:"
 msgstr "Slump_frö:"
 
@@ -7176,53 +7184,53 @@ msgstr "_Dynamisk:"
 msgid "Retinex: filtering"
 msgstr "Retinex: filtrering"
 
-#: ../plug-ins/common/ripple.c:129
+#: ../plug-ins/common/ripple.c:127
 msgid "Displace pixels in a ripple pattern"
 msgstr "Förskjut bildpunkter i ett krusmönster"
 
-#: ../plug-ins/common/ripple.c:136
+#: ../plug-ins/common/ripple.c:134
 msgid "_Ripple..."
 msgstr "_Krusar..."
 
-#: ../plug-ins/common/ripple.c:226
+#: ../plug-ins/common/ripple.c:224
 msgid "Rippling"
 msgstr "Krusar"
 
-#: ../plug-ins/common/ripple.c:468
+#: ../plug-ins/common/ripple.c:466
 msgid "Ripple"
 msgstr "Krusning"
 
-#: ../plug-ins/common/ripple.c:525
+#: ../plug-ins/common/ripple.c:523
 msgid "_Retain tilability"
 msgstr "_Bevara upprepningsbarhet"
 
 #. Edges toggle box
-#: ../plug-ins/common/ripple.c:559
+#: ../plug-ins/common/ripple.c:557
 msgid "Edges"
 msgstr "Kanter"
 
-#: ../plug-ins/common/ripple.c:565
+#: ../plug-ins/common/ripple.c:563
 msgid "_Blank"
 msgstr "_Blank"
 
 #. Wave toggle box
-#: ../plug-ins/common/ripple.c:587
+#: ../plug-ins/common/ripple.c:585
 msgid "Wave Type"
 msgstr "Vågtyp"
 
-#: ../plug-ins/common/ripple.c:591
+#: ../plug-ins/common/ripple.c:589
 msgid "Saw_tooth"
 msgstr "Såg_tand"
 
-#: ../plug-ins/common/ripple.c:592
+#: ../plug-ins/common/ripple.c:590
 msgid "S_ine"
 msgstr "S_inus"
 
-#: ../plug-ins/common/ripple.c:615
+#: ../plug-ins/common/ripple.c:613
 msgid "_Period:"
 msgstr "_Period:"
 
-#: ../plug-ins/common/ripple.c:628
+#: ../plug-ins/common/ripple.c:626
 msgid "A_mplitude:"
 msgstr "A_mplitud:"
 
@@ -7324,27 +7332,27 @@ msgstr "Sampelanalys"
 msgid "Remap colorized"
 msgstr "Mappa om färgsättning"
 
-#: ../plug-ins/common/scatter_hsv.c:105
+#: ../plug-ins/common/scatter_hsv.c:103
 msgid "Randomize hue/saturation/value independently"
 msgstr "Slumpa nyans/mättnad/ljusstyrka individuellt"
 
-#: ../plug-ins/common/scatter_hsv.c:110
+#: ../plug-ins/common/scatter_hsv.c:108
 msgid "HSV Noise..."
 msgstr "NMI-brus..."
 
-#: ../plug-ins/common/scatter_hsv.c:217
+#: ../plug-ins/common/scatter_hsv.c:215
 msgid "HSV Noise"
 msgstr "NMI-brus"
 
-#: ../plug-ins/common/scatter_hsv.c:363
+#: ../plug-ins/common/scatter_hsv.c:361
 msgid "Scatter HSV"
 msgstr "Skingra NMI"
 
-#: ../plug-ins/common/scatter_hsv.c:399
+#: ../plug-ins/common/scatter_hsv.c:397
 msgid "_Holdness:"
 msgstr "_Låsningsgrad:"
 
-#: ../plug-ins/common/scatter_hsv.c:411
+#: ../plug-ins/common/scatter_hsv.c:409
 msgid "H_ue:"
 msgstr "N_yans:"
 
@@ -7424,24 +7432,24 @@ msgstr "Fördröjning"
 msgid "seconds"
 msgstr "sekunder"
 
-#: ../plug-ins/common/sel_gauss.c:106
+#: ../plug-ins/common/sel_gauss.c:104
 msgid "Blur neighboring pixels, but only in low-contrast areas"
 msgstr "Gör närliggande bildpunkter oskarpa, men endast i lågkontrastområden"
 
-#: ../plug-ins/common/sel_gauss.c:117
+#: ../plug-ins/common/sel_gauss.c:115
 msgid "_Selective Gaussian Blur..."
 msgstr "_Selektiv gaussisk oskärpa..."
 
-#: ../plug-ins/common/sel_gauss.c:197
-#: ../plug-ins/common/sel_gauss.c:234
+#: ../plug-ins/common/sel_gauss.c:195
+#: ../plug-ins/common/sel_gauss.c:232
 msgid "Selective Gaussian Blur"
 msgstr "Selektiv gaussisk oskärpa"
 
-#: ../plug-ins/common/sel_gauss.c:273
+#: ../plug-ins/common/sel_gauss.c:271
 msgid "_Blur radius:"
 msgstr "_Oskärperadie:"
 
-#: ../plug-ins/common/sel_gauss.c:283
+#: ../plug-ins/common/sel_gauss.c:281
 msgid "_Max. delta:"
 msgstr "_Max delta:"
 
@@ -7457,50 +7465,50 @@ msgstr "_Delutplattning..."
 msgid "Semi-Flattening"
 msgstr "Delutplattning"
 
-#: ../plug-ins/common/sharpen.c:115
+#: ../plug-ins/common/sharpen.c:113
 msgid "Make image sharper (less powerful than Unsharp Mask)"
 msgstr "Gör bilden skarpare (mindre kraftfull än oskarp mask)"
 
-#: ../plug-ins/common/sharpen.c:122
+#: ../plug-ins/common/sharpen.c:120
 msgid "_Sharpen..."
 msgstr "Gör _skarpare..."
 
 #.
 #. * Let the user know what we're doing...
 #.
-#: ../plug-ins/common/sharpen.c:309
+#: ../plug-ins/common/sharpen.c:307
 msgid "Sharpening"
 msgstr "Gör skarpare"
 
-#: ../plug-ins/common/sharpen.c:478
+#: ../plug-ins/common/sharpen.c:476
 msgid "Sharpen"
 msgstr "Gör skarpare"
 
-#: ../plug-ins/common/shift.c:103
+#: ../plug-ins/common/shift.c:101
 msgid "Shift each row of pixels by a random amount"
 msgstr "Skifta varje bildpunktsrad med ett slumpmässigt antal"
 
-#: ../plug-ins/common/shift.c:110
+#: ../plug-ins/common/shift.c:108
 msgid "_Shift..."
 msgstr "_Skifta..."
 
-#: ../plug-ins/common/shift.c:191
+#: ../plug-ins/common/shift.c:189
 msgid "Shifting"
 msgstr "Skiftar"
 
-#: ../plug-ins/common/shift.c:357
+#: ../plug-ins/common/shift.c:355
 msgid "Shift"
 msgstr "Skifta"
 
-#: ../plug-ins/common/shift.c:388
+#: ../plug-ins/common/shift.c:386
 msgid "Shift _horizontally"
 msgstr "Skifta _horisontellt"
 
-#: ../plug-ins/common/shift.c:391
+#: ../plug-ins/common/shift.c:389
 msgid "Shift _vertically"
 msgstr "Skifta _vertikalt"
 
-#: ../plug-ins/common/shift.c:422
+#: ../plug-ins/common/shift.c:420
 msgid "Shift _amount:"
 msgstr "Skift_mängd:"
 
@@ -7646,40 +7654,40 @@ msgstr "Utjämnad palett"
 msgid "_Search depth:"
 msgstr "_Sökdjup:"
 
-#: ../plug-ins/common/snoise.c:178
+#: ../plug-ins/common/snoise.c:176
 msgid "Create a random cloud-like texture"
 msgstr "Skapa en slumpmässig molnliknande textur"
 
-#: ../plug-ins/common/snoise.c:184
+#: ../plug-ins/common/snoise.c:182
 msgid "_Solid Noise..."
 msgstr "_Fast brus..."
 
 #. Dialog initialization
-#: ../plug-ins/common/snoise.c:317
-#: ../plug-ins/common/snoise.c:565
+#: ../plug-ins/common/snoise.c:315
+#: ../plug-ins/common/snoise.c:563
 msgid "Solid Noise"
 msgstr "Fast brus"
 
-#: ../plug-ins/common/snoise.c:616
+#: ../plug-ins/common/snoise.c:614
 msgid "_Detail:"
 msgstr "_Detalj:"
 
 #. Turbulent
-#: ../plug-ins/common/snoise.c:626
+#: ../plug-ins/common/snoise.c:624
 msgid "T_urbulent"
 msgstr "T_urbulent"
 
 # Osäker!
 #. Tilable
-#: ../plug-ins/common/snoise.c:640
+#: ../plug-ins/common/snoise.c:638
 msgid "T_ilable"
 msgstr "U_pprepningsbar"
 
-#: ../plug-ins/common/snoise.c:655
+#: ../plug-ins/common/snoise.c:653
 msgid "_X size:"
 msgstr "_X-storlek:"
 
-#: ../plug-ins/common/snoise.c:668
+#: ../plug-ins/common/snoise.c:666
 msgid "_Y size:"
 msgstr "_Y-storlek:"
 
@@ -7727,143 +7735,143 @@ msgstr "Softglow..."
 msgid "_Glow radius:"
 msgstr "_Skenradie:"
 
-#: ../plug-ins/common/sparkle.c:180
+#: ../plug-ins/common/sparkle.c:178
 msgid "Turn bright spots into starry sparkles"
 msgstr "Gör om ljusa fläckar till stjärngnister"
 
-#: ../plug-ins/common/sparkle.c:188
+#: ../plug-ins/common/sparkle.c:186
 msgid "_Sparkle..."
 msgstr "_Glittra..."
 
-#: ../plug-ins/common/sparkle.c:225
+#: ../plug-ins/common/sparkle.c:223
 msgid "Region selected for filter is empty"
 msgstr "Region markerad för filter är tom"
 
-#: ../plug-ins/common/sparkle.c:301
+#: ../plug-ins/common/sparkle.c:299
 msgid "Sparkling"
 msgstr "Glittrar"
 
-#: ../plug-ins/common/sparkle.c:339
+#: ../plug-ins/common/sparkle.c:337
 msgid "Sparkle"
 msgstr "Glittra"
 
-#: ../plug-ins/common/sparkle.c:375
+#: ../plug-ins/common/sparkle.c:373
 msgid "Luminosity _threshold:"
 msgstr "_Tröskelvärde för luminans:"
 
-#: ../plug-ins/common/sparkle.c:378
+#: ../plug-ins/common/sparkle.c:376
 msgid "Adjust the luminosity threshold"
 msgstr "Justera tröskelvärdet för luminans"
 
-#: ../plug-ins/common/sparkle.c:388
+#: ../plug-ins/common/sparkle.c:386
 msgid "F_lare intensity:"
 msgstr "_Överstrålningsintensitet:"
 
-#: ../plug-ins/common/sparkle.c:391
+#: ../plug-ins/common/sparkle.c:389
 msgid "Adjust the flare intensity"
 msgstr "Justera överstrålningsintensiteten"
 
-#: ../plug-ins/common/sparkle.c:401
+#: ../plug-ins/common/sparkle.c:399
 msgid "_Spike length:"
 msgstr "_Tagglängd:"
 
-#: ../plug-ins/common/sparkle.c:404
+#: ../plug-ins/common/sparkle.c:402
 msgid "Adjust the spike length"
 msgstr "Justera tagglängden"
 
-#: ../plug-ins/common/sparkle.c:414
+#: ../plug-ins/common/sparkle.c:412
 msgid "Sp_ike points:"
 msgstr "T_aggpunkter"
 
-#: ../plug-ins/common/sparkle.c:417
+#: ../plug-ins/common/sparkle.c:415
 msgid "Adjust the number of spikes"
 msgstr "Justera antal taggar"
 
-#: ../plug-ins/common/sparkle.c:427
+#: ../plug-ins/common/sparkle.c:425
 msgid "Spi_ke angle (-1: random):"
 msgstr "Ta_ggvinkel (-1: slumpmässig):"
 
-#: ../plug-ins/common/sparkle.c:430
+#: ../plug-ins/common/sparkle.c:428
 msgid "Adjust the spike angle (-1 causes a random angle to be chosen)"
 msgstr "Justera taggvinkeln (-1 betyder att slumpmässig vinkel blir vald)"
 
-#: ../plug-ins/common/sparkle.c:441
+#: ../plug-ins/common/sparkle.c:439
 msgid "Spik_e density:"
 msgstr "Tagg_täthet:"
 
-#: ../plug-ins/common/sparkle.c:444
+#: ../plug-ins/common/sparkle.c:442
 msgid "Adjust the spike density"
 msgstr "Justera taggtäthet"
 
-#: ../plug-ins/common/sparkle.c:454
+#: ../plug-ins/common/sparkle.c:452
 msgid "Tr_ansparency:"
 msgstr "Tr_ansparens:"
 
-#: ../plug-ins/common/sparkle.c:457
+#: ../plug-ins/common/sparkle.c:455
 msgid "Adjust the opacity of the spikes"
 msgstr "Justera taggarnas opacitet"
 
-#: ../plug-ins/common/sparkle.c:467
+#: ../plug-ins/common/sparkle.c:465
 msgid "_Random hue:"
 msgstr "_Slumpmässig nyans:"
 
-#: ../plug-ins/common/sparkle.c:470
+#: ../plug-ins/common/sparkle.c:468
 msgid "Adjust how much the hue should be changed randomly"
 msgstr "Justera hur mycket nyansen skall ändras slumpmässigt"
 
-#: ../plug-ins/common/sparkle.c:480
+#: ../plug-ins/common/sparkle.c:478
 msgid "Rando_m saturation:"
 msgstr "Slump_mässig mättnad:"
 
-#: ../plug-ins/common/sparkle.c:483
+#: ../plug-ins/common/sparkle.c:481
 msgid "Adjust how much the saturation should be changed randomly"
 msgstr "Justera hur mycket mättnaden skall ändras slumpmässigt"
 
-#: ../plug-ins/common/sparkle.c:500
+#: ../plug-ins/common/sparkle.c:498
 msgid "_Preserve luminosity"
 msgstr "_Bevara luminans"
 
-#: ../plug-ins/common/sparkle.c:507
+#: ../plug-ins/common/sparkle.c:505
 msgid "Should the luminosity be preserved?"
 msgstr "Ska luminansen bevaras?"
 
-#: ../plug-ins/common/sparkle.c:516
+#: ../plug-ins/common/sparkle.c:514
 msgid "In_verse"
 msgstr "Om_vänd"
 
-#: ../plug-ins/common/sparkle.c:522
+#: ../plug-ins/common/sparkle.c:520
 msgid "Should the effect be inversed?"
 msgstr "Skall en omvänd effekt utföras?"
 
-#: ../plug-ins/common/sparkle.c:531
+#: ../plug-ins/common/sparkle.c:529
 msgid "A_dd border"
 msgstr "L_ägg till ram"
 
-#: ../plug-ins/common/sparkle.c:537
+#: ../plug-ins/common/sparkle.c:535
 msgid "Draw a border of spikes around the image"
 msgstr "Rita en ram av taggar runt bilden"
 
-#: ../plug-ins/common/sparkle.c:551
+#: ../plug-ins/common/sparkle.c:549
 msgid "_Natural color"
 msgstr "_Naturlig färg"
 
-#: ../plug-ins/common/sparkle.c:552
+#: ../plug-ins/common/sparkle.c:550
 msgid "_Foreground color"
 msgstr "_Förgrundsfärg"
 
-#: ../plug-ins/common/sparkle.c:553
+#: ../plug-ins/common/sparkle.c:551
 msgid "_Background color"
 msgstr "_Bakgrundsfärg"
 
-#: ../plug-ins/common/sparkle.c:560
+#: ../plug-ins/common/sparkle.c:558
 msgid "Use the color of the image"
 msgstr "Använd bildens färg"
 
-#: ../plug-ins/common/sparkle.c:561
+#: ../plug-ins/common/sparkle.c:559
 msgid "Use the foreground color"
 msgstr "Använd förgrundsfärg"
 
-#: ../plug-ins/common/sparkle.c:562
+#: ../plug-ins/common/sparkle.c:560
 msgid "Use the background color"
 msgstr "Använd bakgrundsfärg"
 
@@ -8027,55 +8035,55 @@ msgstr "Sfär_designer..."
 msgid "Region selected for plug-in is empty"
 msgstr "Region markerad för insticksmodul är tom"
 
-#: ../plug-ins/common/spread.c:91
+#: ../plug-ins/common/spread.c:89
 msgid "Move pixels around randomly"
 msgstr "Flytta runt bildpunkter slumpmässigt"
 
-#: ../plug-ins/common/spread.c:100
+#: ../plug-ins/common/spread.c:98
 msgid "Sp_read..."
 msgstr "Sp_rider..."
 
-#: ../plug-ins/common/spread.c:183
+#: ../plug-ins/common/spread.c:181
 msgid "Spreading"
 msgstr "Sprider"
 
-#: ../plug-ins/common/spread.c:346
+#: ../plug-ins/common/spread.c:344
 msgid "Spread"
 msgstr "Sprid"
 
-#: ../plug-ins/common/spread.c:371
+#: ../plug-ins/common/spread.c:369
 msgid "Spread Amount"
 msgstr "Spridningsmängd"
 
-#: ../plug-ins/common/struc.c:1142
+#: ../plug-ins/common/struc.c:1140
 msgid "Add a canvas texture to the image"
 msgstr "Lägg till en canvastextur till bilden"
 
-#: ../plug-ins/common/struc.c:1147
+#: ../plug-ins/common/struc.c:1145
 msgid "_Apply Canvas..."
 msgstr "_Tillämpa rityta..."
 
-#: ../plug-ins/common/struc.c:1228
+#: ../plug-ins/common/struc.c:1226
 msgid "Applying canvas"
 msgstr "Tillämpar rityta"
 
-#: ../plug-ins/common/struc.c:1265
+#: ../plug-ins/common/struc.c:1263
 msgid "Apply Canvas"
 msgstr "Tillämpa rityta"
 
-#: ../plug-ins/common/struc.c:1298
+#: ../plug-ins/common/struc.c:1296
 msgid "_Top-right"
 msgstr "_Överst till höger"
 
-#: ../plug-ins/common/struc.c:1299
+#: ../plug-ins/common/struc.c:1297
 msgid "Top-_left"
 msgstr "Överst till _vänster"
 
-#: ../plug-ins/common/struc.c:1300
+#: ../plug-ins/common/struc.c:1298
 msgid "_Bottom-left"
 msgstr "_Nere till vänster"
 
-#: ../plug-ins/common/struc.c:1301
+#: ../plug-ins/common/struc.c:1299
 msgid "Bottom-_right"
 msgstr "Nere till _höger"
 
@@ -8572,63 +8580,63 @@ msgstr "Skapa eller ändra enheter som används i GIMP"
 msgid "U_nits"
 msgstr "E_nheter"
 
-#: ../plug-ins/common/uniteditor.c:208
+#: ../plug-ins/common/uniteditor.c:209
 msgid "Add a New Unit"
 msgstr "Lägg till en ny enhet"
 
-#: ../plug-ins/common/uniteditor.c:237
+#: ../plug-ins/common/uniteditor.c:238
 msgid "_ID:"
 msgstr "_ID:"
 
-#: ../plug-ins/common/uniteditor.c:248
+#: ../plug-ins/common/uniteditor.c:249
 msgid "_Factor:"
 msgstr "_Faktor:"
 
-#: ../plug-ins/common/uniteditor.c:258
+#: ../plug-ins/common/uniteditor.c:259
 msgid "_Digits:"
 msgstr "_Decimaler:"
 
-#: ../plug-ins/common/uniteditor.c:270
+#: ../plug-ins/common/uniteditor.c:271
 msgid "_Symbol:"
 msgstr "_Symbol:"
 
-#: ../plug-ins/common/uniteditor.c:282
+#: ../plug-ins/common/uniteditor.c:283
 msgid "_Abbreviation:"
 msgstr "_Förkortning:"
 
-#: ../plug-ins/common/uniteditor.c:294
+#: ../plug-ins/common/uniteditor.c:295
 msgid "Si_ngular:"
 msgstr "_Singularis:"
 
-#: ../plug-ins/common/uniteditor.c:306
+#: ../plug-ins/common/uniteditor.c:307
 msgid "_Plural:"
 msgstr "_Pluralis:"
 
-#: ../plug-ins/common/uniteditor.c:349
+#: ../plug-ins/common/uniteditor.c:350
 msgid "Incomplete input"
 msgstr "Ofullständig inmatning"
 
-#: ../plug-ins/common/uniteditor.c:352
+#: ../plug-ins/common/uniteditor.c:353
 msgid "Please fill in all text fields."
 msgstr "Fyll i alla textfält."
 
-#: ../plug-ins/common/uniteditor.c:409
+#: ../plug-ins/common/uniteditor.c:410
 msgid "Unit Editor"
 msgstr "Enhetsredigerare"
 
-#: ../plug-ins/common/unsharp.c:130
+#: ../plug-ins/common/unsharp.c:128
 msgid "The most widely useful method for sharpening an image"
 msgstr "Den mest användbara metoden för att öka skärpan i en bild"
 
-#: ../plug-ins/common/unsharp.c:140
+#: ../plug-ins/common/unsharp.c:138
 msgid "_Unsharp Mask..."
 msgstr "_Oskarp mask..."
 
-#: ../plug-ins/common/unsharp.c:477
+#: ../plug-ins/common/unsharp.c:475
 msgid "Merging"
 msgstr "Sammanfogar"
 
-#: ../plug-ins/common/unsharp.c:644
+#: ../plug-ins/common/unsharp.c:642
 msgid "Unsharp Mask"
 msgstr "Oskarp mask"
 
@@ -8706,105 +8714,105 @@ msgstr "Invertera _värde"
 msgid "Value Invert"
 msgstr "Invertera värde"
 
-#: ../plug-ins/common/vpropagate.c:191
+#: ../plug-ins/common/vpropagate.c:189
 msgid "More _white (larger value)"
 msgstr "Mera _vitt (större värde)"
 
-#: ../plug-ins/common/vpropagate.c:194
+#: ../plug-ins/common/vpropagate.c:192
 msgid "More blac_k (smaller value)"
 msgstr "Mera _svart (mindre värde)"
 
-#: ../plug-ins/common/vpropagate.c:197
+#: ../plug-ins/common/vpropagate.c:195
 msgid "_Middle value to peaks"
 msgstr "_Mellanvärden till toppar"
 
-#: ../plug-ins/common/vpropagate.c:200
+#: ../plug-ins/common/vpropagate.c:198
 msgid "_Foreground to peaks"
 msgstr "_Förgrund till toppar"
 
-#: ../plug-ins/common/vpropagate.c:203
+#: ../plug-ins/common/vpropagate.c:201
 msgid "O_nly foreground"
 msgstr "_Endast förgrund"
 
-#: ../plug-ins/common/vpropagate.c:206
+#: ../plug-ins/common/vpropagate.c:204
 msgid "Only b_ackground"
 msgstr "Endast b_akgrund"
 
-#: ../plug-ins/common/vpropagate.c:209
+#: ../plug-ins/common/vpropagate.c:207
 msgid "Mor_e opaque"
 msgstr "M_er opak"
 
-#: ../plug-ins/common/vpropagate.c:212
+#: ../plug-ins/common/vpropagate.c:210
 msgid "More t_ransparent"
 msgstr "Mer t_ransparent"
 
-#: ../plug-ins/common/vpropagate.c:235
+#: ../plug-ins/common/vpropagate.c:233
 msgid "Propagate certain colors to neighboring pixels"
 msgstr "Propagera vissa färger till närliggande bildpunkter"
 
-#: ../plug-ins/common/vpropagate.c:240
+#: ../plug-ins/common/vpropagate.c:238
 msgid "_Value Propagate..."
 msgstr "Sprid _värden..."
 
-#: ../plug-ins/common/vpropagate.c:247
+#: ../plug-ins/common/vpropagate.c:245
 msgid "Shrink darker areas of the image"
 msgstr "Förminska mörkare områden av bilden"
 
-#: ../plug-ins/common/vpropagate.c:252
+#: ../plug-ins/common/vpropagate.c:250
 msgid "E_rode"
 msgstr "E_rodera"
 
-#: ../plug-ins/common/vpropagate.c:259
+#: ../plug-ins/common/vpropagate.c:257
 msgid "Grow darker areas of the image"
 msgstr "Förstora mörkare områden av bilden"
 
-#: ../plug-ins/common/vpropagate.c:264
+#: ../plug-ins/common/vpropagate.c:262
 msgid "_Dilate"
 msgstr "_Väx"
 
-#: ../plug-ins/common/vpropagate.c:475
-#: ../plug-ins/common/vpropagate.c:1065
+#: ../plug-ins/common/vpropagate.c:473
+#: ../plug-ins/common/vpropagate.c:1063
 msgid "Value Propagate"
 msgstr "Sprid värden"
 
 #. Parameter settings
-#: ../plug-ins/common/vpropagate.c:1130
+#: ../plug-ins/common/vpropagate.c:1128
 msgid "Propagate"
 msgstr "Sprid"
 
-#: ../plug-ins/common/vpropagate.c:1143
+#: ../plug-ins/common/vpropagate.c:1141
 msgid "Lower t_hreshold:"
 msgstr "_Undre tröskelvärde:"
 
-#: ../plug-ins/common/vpropagate.c:1155
+#: ../plug-ins/common/vpropagate.c:1153
 msgid "_Upper threshold:"
 msgstr "_Övre tröskelvärde:"
 
-#: ../plug-ins/common/vpropagate.c:1167
+#: ../plug-ins/common/vpropagate.c:1165
 msgid "_Propagating rate:"
 msgstr "_Spridningstakt:"
 
-#: ../plug-ins/common/vpropagate.c:1178
+#: ../plug-ins/common/vpropagate.c:1176
 msgid "To l_eft"
 msgstr "Åt _vänster"
 
-#: ../plug-ins/common/vpropagate.c:1181
+#: ../plug-ins/common/vpropagate.c:1179
 msgid "To _right"
 msgstr "Åt _höger"
 
-#: ../plug-ins/common/vpropagate.c:1184
+#: ../plug-ins/common/vpropagate.c:1182
 msgid "To _top"
 msgstr "U_ppåt"
 
-#: ../plug-ins/common/vpropagate.c:1187
+#: ../plug-ins/common/vpropagate.c:1185
 msgid "To _bottom"
 msgstr "_Nedåt"
 
-#: ../plug-ins/common/vpropagate.c:1196
+#: ../plug-ins/common/vpropagate.c:1194
 msgid "Propagating _alpha channel"
 msgstr "Sprider _alfakanal"
 
-#: ../plug-ins/common/vpropagate.c:1207
+#: ../plug-ins/common/vpropagate.c:1205
 msgid "Propagating value channel"
 msgstr "Sprider ljusstyrkekanal"
 
@@ -9019,79 +9027,79 @@ msgstr "_Virvlingsvinkel:"
 msgid "_Pinch amount:"
 msgstr "_Nypmängd:"
 
-#: ../plug-ins/common/wind.c:177
+#: ../plug-ins/common/wind.c:175
 msgid "Smear image to give windblown effect"
 msgstr "Smeta ut bilden för att ge den en vindeffekt"
 
-#: ../plug-ins/common/wind.c:182
+#: ../plug-ins/common/wind.c:180
 msgid "Wi_nd..."
 msgstr "Vi_nd..."
 
-#: ../plug-ins/common/wind.c:317
+#: ../plug-ins/common/wind.c:315
 msgid "Rendering blast"
 msgstr "Renderar vindstöt"
 
-#: ../plug-ins/common/wind.c:444
+#: ../plug-ins/common/wind.c:442
 msgid "Rendering wind"
 msgstr "Renderar vind"
 
-#: ../plug-ins/common/wind.c:872
+#: ../plug-ins/common/wind.c:870
 msgid "Wind"
 msgstr "Vind"
 
 #. ********************************************************
 #. radio buttons for choosing wind rendering algorithm
 #. *****************************************************
-#: ../plug-ins/common/wind.c:912
+#: ../plug-ins/common/wind.c:910
 msgid "Style"
 msgstr "Typ"
 
-#: ../plug-ins/common/wind.c:916
+#: ../plug-ins/common/wind.c:914
 msgid "_Wind"
 msgstr "_Vind"
 
-#: ../plug-ins/common/wind.c:917
+#: ../plug-ins/common/wind.c:915
 msgid "_Blast"
 msgstr "_Vindstöt"
 
-#: ../plug-ins/common/wind.c:940
+#: ../plug-ins/common/wind.c:938
 msgid "_Left"
 msgstr "_Vänster"
 
-#: ../plug-ins/common/wind.c:941
+#: ../plug-ins/common/wind.c:939
 msgid "_Right"
 msgstr "_Höger"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
 #. **************************************************
-#: ../plug-ins/common/wind.c:960
+#: ../plug-ins/common/wind.c:958
 msgid "Edge Affected"
 msgstr "Påverkad kant"
 
-#: ../plug-ins/common/wind.c:964
+#: ../plug-ins/common/wind.c:962
 msgid "L_eading"
 msgstr "F_ramkant"
 
-#: ../plug-ins/common/wind.c:965
+#: ../plug-ins/common/wind.c:963
 msgid "Tr_ailing"
 msgstr "B_akkant"
 
 # src/dialogs.c:502 src/dialogs.c:600
-#: ../plug-ins/common/wind.c:966
+#: ../plug-ins/common/wind.c:964
 msgid "Bot_h"
 msgstr "B_åde och"
 
-#: ../plug-ins/common/wind.c:1003
+#: ../plug-ins/common/wind.c:1001
 msgid "Higher values restrict the effect to fewer areas of the image"
 msgstr "Högre värden begränsar effekten till färre delar av bilden"
 
-#: ../plug-ins/common/wind.c:1018
+#: ../plug-ins/common/wind.c:1016
 #: ../plug-ins/gimpressionist/orientmap.c:676
 msgid "_Strength:"
 msgstr "_Styrka:"
 
-#: ../plug-ins/common/wind.c:1022
+#: ../plug-ins/common/wind.c:1020
 msgid "Higher values increase the magnitude of the effect"
 msgstr "Högre värden ökar magnituden av effekten"
 
