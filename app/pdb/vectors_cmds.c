@@ -768,8 +768,8 @@ vectors_stroke_new_from_points_invoker (GimpProcedure     *procedure,
       if (type == GIMP_VECTORS_STROKE_TYPE_BEZIER &&
           num_points % 6 == 0)
         {
-          coords = g_new (GimpCoords, num_points);
-          for (i = 0; i < num_points; i++)
+          coords = g_new (GimpCoords, num_points/2);
+          for (i = 0; i < num_points/2; i++)
             {
               coords[i] = default_coords;
               coords[i].x = controlpoints[i*2];

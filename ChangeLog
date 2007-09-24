@@ -1,3 +1,10 @@
+2007-09-24  Simon Budig  <simon@gimp.org>
+
+	* app/pdb/vectors_cmds.c: fixed error on how many points get
+	initialized.
+
+	Probably fixes bug #479790.
+
 2007-09-24  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c: removed const qualifiers
