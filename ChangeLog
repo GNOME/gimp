@@ -1,3 +1,8 @@
+2007-09-25  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpwidgets-utils.c (gimp_widget_accel_changed):
+	show the keyboard shortcut in brackets, as we do in other places.
+
 2007-09-25  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/fuzzyborder.scm: Applied patch from
