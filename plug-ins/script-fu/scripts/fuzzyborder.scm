@@ -42,6 +42,8 @@
        (theLayer)
        )
 
+    (gimp-context-push)
+
     (gimp-selection-all inImage)
     (set! theImage (if (= inCopy TRUE)
                      (car (gimp-image-duplicate inImage))
@@ -126,6 +128,8 @@
       )
     )
     (gimp-displays-flush)
+
+    (gimp-context-pop)
   )
 )
 
