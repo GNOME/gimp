@@ -172,7 +172,7 @@ gimp_message_box_constructor (GType                  type,
                                              GTK_ICON_SIZE_DIALOG);
       gtk_widget_pop_composite_child ();
 
-      gtk_misc_set_alignment (GTK_MISC (box->image), 0.5, 0.0);
+      gtk_misc_set_alignment (GTK_MISC (box->image), 0.0, 0.0);
       gtk_widget_set_parent (box->image, GTK_WIDGET (box));
       gtk_widget_show (box->image);
     }

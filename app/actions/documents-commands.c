@@ -185,7 +185,7 @@ documents_clear_cmd_callback (GtkAction *action,
   context = gimp_container_view_get_context (editor->view);
 
   dialog = gimp_message_dialog_new (_("Clear Document History"),
-                                    GIMP_STOCK_QUESTION,
+                                    GTK_STOCK_CLEAR,
                                     GTK_WIDGET (editor),
                                     GTK_DIALOG_MODAL |
                                     GTK_DIALOG_DESTROY_WITH_PARENT,

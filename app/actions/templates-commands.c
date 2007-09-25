@@ -218,7 +218,7 @@ templates_delete_cmd_callback (GtkAction *action,
       delete_data->template  = template;
 
       dialog =
-        gimp_message_dialog_new (_("Delete Template"), GIMP_STOCK_QUESTION,
+        gimp_message_dialog_new (_("Delete Template"), GTK_STOCK_DELETE,
                                  GTK_WIDGET (editor), 0,
                                  gimp_standard_help_func, NULL,
 

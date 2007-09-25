@@ -1,5 +1,16 @@
 2007-09-25  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpmessagebox.c (gimp_message_box_constructor):
+	left-align the image.
+
+	* app/actions/data-commands.c
+	* app/actions/documents-commands.c
+	* app/actions/file-commands.c
+	* app/actions/templates-commands.c: use more meaningful stock
+	icons for message dialogs.
+
+2007-09-25  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/common/decompose.c: reverted "fix" for bug #477008.
 
 	* tools/pdbgen/pdb/display.pdb
