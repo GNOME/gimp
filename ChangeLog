@@ -1,5 +1,14 @@
 2007-09-25  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/decompose.c: reverted "fix" for bug #477008.
+
+	* tools/pdbgen/pdb/display.pdb
+	* app/pdb/display_cmds.c: flush the image before creating a new
+	display for it. Fixes bug #477008 also for other plug-ins like
+	Screenshot.
+
+2007-09-25  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpwidgets-utils.c (gimp_widget_accel_changed):
 	show the keyboard shortcut in brackets, as we do in other places.
 

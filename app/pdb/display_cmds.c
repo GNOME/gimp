@@ -72,6 +72,8 @@ display_new_invoker (GimpProcedure     *procedure,
 
   if (success)
     {
+      gimp_image_flush (image);
+
       display = gimp_create_display (gimp, image, GIMP_UNIT_PIXEL, 1.0);
 
       if (display)
