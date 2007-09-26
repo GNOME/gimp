@@ -51,13 +51,13 @@
 #define MORE  1
 #define LESS -1
 
-typedef void (*EntscaleIntCallbackFunc) (gint value, gpointer data);
+typedef void (* EntscaleIntCallbackFunc) (gint value, gpointer data);
 
 typedef struct
 {
   GtkObject               *adjustment;
   GtkWidget               *entry;
-  gint                     constraint;
+  gboolean                 constraint;
   EntscaleIntCallbackFunc  callback;
   gpointer	           call_data;
 } EntscaleIntData;
@@ -70,13 +70,7 @@ gchar buffer[BUFSIZE];
 
 
 gboolean     maze_dialog         (void);
-
 static void  maze_message        (const gchar *message);
-
-#ifdef SHOW_PRNG_PRIVATES
-static void  maze_entry_callback (GtkWidget   *widget,
-                                  gpointer     data);
-#endif
 
 
 /* Looking back, it would probably have been easier to completely
@@ -137,18 +131,22 @@ static void div_buttonr_callback (GtkObject *object);
 #endif
 
 /* entscale stuff begin */
-static GtkWidget*   entscale_int_new ( GtkWidget *table, gint x, gint y,
-				       gchar *caption, gint *intvar,
-				       gint min, gint max, gboolean constraint,
-				       EntscaleIntCallbackFunc callback,
-				       gpointer data );
+static GtkWidget * entscale_int_new (GtkWidget               *table,
+                                     gint                     x,
+                                     gint                     y,
+                                     const gchar             *caption,
+                                     gint                    *intvar,
+                                     gint                     min,
+                                     gint                     max,
+                                     gboolean                 constraint,
+                                     EntscaleIntCallbackFunc  callback,
+                                     gpointer                 data);
 
-static void   entscale_int_destroy_callback (GtkWidget     *widget,
-					     gpointer       data);
-static void   entscale_int_scale_update     (GtkAdjustment *adjustment,
-					     gpointer       data);
-static void   entscale_int_entry_update     (GtkWidget     *widget,
-					     gpointer       data);
+static void   entscale_int_scale_update (GtkAdjustment *adjustment,
+					 gpointer       data);
+static void   entscale_int_entry_update (GtkWidget     *widget,
+					 gpointer       data);
+
 
 #define ISODD(X) ((X) & 1)
 /* entscale stuff end */
@@ -202,11 +200,8 @@ maze_dialog (void)
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
   gtk_widget_show (frame);
 
-#ifdef SHOW_PRNG_PRIVATES
-  table = gtk_table_new (8, 3, FALSE);
-#else
   table = gtk_table_new (6, 3, FALSE);
-#endif
+
   gtk_table_set_col_spacings (GTK_TABLE (table), 6);
   gtk_table_set_row_spacings (GTK_TABLE (table), 6);
   gtk_container_add (GTK_CONTAINER (frame), table);
@@ -247,34 +242,6 @@ maze_dialog (void)
 			     hbox, 1, TRUE);
   gtk_table_set_row_spacing (GTK_TABLE (table), trow, 12);
   trow++;
-
-#ifdef SHOW_PRNG_PRIVATES
-  /* Multiple input box */
-  entry = gtk_entry_new ();
-  gtk_widget_set_size_request (entry, ENTRY_WIDTH, -1);
-  g_snprintf (buffer, BUFSIZE, "%d", mvals.multiple);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer );
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, trow,
-			     _("Multiple (57):"), 0.0, 0.5,
-			     entry, 1, FALSE);
-  trow++;
-  g_signal_connect (entry, "changed",
-                    G_CALLBACK (maze_entry_callback),
-                    &mvals.multiple);
-
-  /* Offset input box */
-  entry = gtk_entry_new ();
-  gtk_widget_set_size_request (entry, ENTRY_WIDTH, -1);
-  g_snprintf (buffer, BUFSIZE, "%d", mvals.offset);
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer );
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, trow,
-			     _("Offset (1):"), 0.0, 0.5,
-			     entry, 1, FALSE);
-  trow++;
-  g_signal_connect (entry, "changed",
-                    G_CALLBACK (maze_entry_callback),
-                    &mvals.offset);
-#endif
 
   g_object_unref (group);
 
@@ -415,7 +382,8 @@ div_button_callback (GtkWidget *button,
   guint        max, divs;
   gint         direction;
 
-  direction = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button), "direction"));
+  direction = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (button),
+                                                  "direction"));
   max = *((guint*) g_object_get_data (G_OBJECT (entry), "max"));
 
   /* Tileable mazes shall have only an even number of divisions.
@@ -570,17 +538,6 @@ maze_message (const gchar *message)
   gtk_label_set_text (GTK_LABEL (msg_label), message);
 }
 
-#ifdef SHOW_PRNG_PRIVATES
-static void
-maze_entry_callback (GtkWidget *widget,
-		     gpointer   data)
-{
-  gint *text_val = (gint *) data;
-
-  *text_val = atoi (gtk_entry_get_text (GTK_ENTRY (widget)));
-}
-#endif
-
 /* ==================================================================== */
 /* As found in pixelize.c,
  * hacked to return a pointer to the entry widget. */
@@ -608,16 +565,16 @@ maze_entry_callback (GtkWidget *widget,
  *    call_data:  data for callback func
  */
 static GtkWidget*
-entscale_int_new (GtkWidget *table,
-		  gint       x,
-		  gint       y,
-		  gchar     *caption,
-		  gint      *intvar,
-		  gint       min,
-		  gint       max,
-		  gboolean   constraint,
-		  EntscaleIntCallbackFunc callback,
-		  gpointer   call_data)
+entscale_int_new (GtkWidget               *table,
+		  gint                     x,
+		  gint                     y,
+		  const gchar             *caption,
+		  gint                    *intvar,
+		  gint                     min,
+		  gint                     max,
+		  gboolean                 constraint,
+		  EntscaleIntCallbackFunc  callback,
+		  gpointer                 call_data)
 {
   EntscaleIntData *userdata;
   GtkWidget *hbox;
@@ -670,9 +627,9 @@ entscale_int_new (GtkWidget *table,
   g_signal_connect (adjustment, "value-changed",
                     G_CALLBACK (entscale_int_scale_update),
                     intvar);
-  g_signal_connect (entry, "destroy",
-                    G_CALLBACK (entscale_int_destroy_callback),
-                    userdata );
+  g_signal_connect_swapped (entry, "destroy",
+                            G_CALLBACK (g_free),
+                            userdata);
 
   /* start packing */
   hbox = gtk_hbox_new (FALSE, 5);
@@ -692,17 +649,6 @@ entscale_int_new (GtkWidget *table,
   return entry;
 }
 
-
-/* when destroyed, userdata is destroyed too */
-static void
-entscale_int_destroy_callback (GtkWidget *widget,
-			       gpointer   data)
-{
-  EntscaleIntData *userdata;
-
-  userdata = data;
-  g_free (userdata);
-}
 
 static void
 entscale_int_scale_update (GtkAdjustment *adjustment,

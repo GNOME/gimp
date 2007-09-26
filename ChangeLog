@@ -1,3 +1,7 @@
+2007-09-26  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/maze/maze_face.c: minor cleanup, removed unused code.
+
 2007-09-25  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpmessagebox.c (gimp_message_box_constructor):
