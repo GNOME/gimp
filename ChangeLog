@@ -1,3 +1,10 @@
+2007-09-26  Simon Budig  <simon@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c: fix the numerical overflow
+	for the new box-filtering stuff.
+
+	Fixes bug #479807.
+
 2007-09-26  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/maze/maze_face.c (maze_dialog): use separate variables

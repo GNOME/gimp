@@ -88,6 +88,12 @@ struct _RenderInfo
   gint              y_src_dec;
   gint              dy_start;
 
+  gint              footprint_x;
+  gint              footprint_y;
+  gint              footarea;
+  gint              footshift_x;
+  gint              footshift_y;
+
   gint              dy;
 };
 
@@ -618,6 +624,35 @@ gimp_display_shell_render_info_scale (RenderInfo       *info,
   info->dy_start   = info->y_dest_inc * info->y + info->y_dest_inc/2;
   info->src_y      = info->dy_start / info->y_src_dec;
   info->dy_start   = info->dy_start % info->y_src_dec;
+
+  /* make sure that the footprint is in the range 256..512 */
+  info->footprint_x = info->x_src_dec;
+  info->footshift_x = 0;
+  while (info->footprint_x > 512)
+    {
+      info->footprint_x >>= 1;
+      info->footshift_x --;
+    }
+  while (info->footprint_x < 256)
+    {
+      info->footprint_x <<= 1;
+      info->footshift_x ++;
+    }
+
+  info->footprint_y = info->y_src_dec;
+  info->footshift_y = 0;
+  while (info->footprint_y > 512)
+    {
+      info->footprint_y >>= 1;
+      info->footshift_y --;
+    }
+  while (info->footprint_y < 256)
+    {
+      info->footprint_y <<= 1;
+      info->footshift_y ++;
+    }
+
+  info->footarea = info->footprint_x * info->footprint_y;
 }
 
 static const guint *
@@ -781,10 +816,6 @@ render_image_tile_fault (RenderInfo *info)
   gint          src_x;
   gint          skipped;
 
-  guint         footprint_x;
-  guint         footprint_y;
-  guint         foosum;
-
   guint         left_weight;
   guint         center_weight;
   guint         right_weight;
@@ -835,14 +866,18 @@ render_image_tile_fault (RenderInfo *info)
       return render_image_tile_fault_one_row (info);
     }
 
-  footprint_y = info->y_src_dec;
-  footprint_x = info->x_src_dec;
+  top_weight    = MAX (info->footprint_y / 2,
+                       info->footshift_y > 0 ? info->dy << info->footshift_y
+                                             : info->dy >> -info->footshift_y)
+                  - (info->footshift_y > 0 ? info->dy << info->footshift_y
+                                           : info->dy >> -info->footshift_y);
 
-  foosum = footprint_x * footprint_y;
+  bottom_weight = MAX (info->footprint_y / 2,
+                       info->footshift_y > 0 ? info->dy << info->footshift_y
+                                             : info->dy >> -info->footshift_y)
+                  - info->footprint_y / 2;
 
-  top_weight    = MAX (footprint_y / 2, info->dy) - info->dy;
-  bottom_weight = MAX (info->dy, footprint_y / 2) - footprint_y / 2;
-  middle_weight = footprint_y - top_weight - bottom_weight;
+  middle_weight = info->footprint_y - top_weight - bottom_weight;
 
   tile[4] = tile_manager_get_tile (info->src_tiles,
                                    info->src_x, info->src_y,
@@ -967,9 +1002,18 @@ render_image_tile_fault (RenderInfo *info)
   do
     {
       /* we're dealing with unsigneds here, be extra careful */
-      left_weight  = MAX (footprint_x / 2, dx) - dx;
-      right_weight = MAX (dx, footprint_x / 2) - footprint_x / 2;
-      center_weight = footprint_x - left_weight - right_weight;
+      left_weight  = MAX (info->footprint_x / 2,
+                          info->footshift_x > 0 ? dx << info->footshift_x
+                                                : dx >> -info->footshift_x)
+                     - (info->footshift_x > 0 ? dx << info->footshift_x
+                                              : dx >> -info->footshift_x);
+
+      right_weight = MAX (info->footprint_x / 2,
+                          info->footshift_x > 0 ? dx << info->footshift_x
+                                                : dx >> -info->footshift_x)
+                     - info->footprint_x / 2;
+
+      center_weight = info->footprint_x - left_weight - right_weight;
 
       if (src_x + 1 >= source_width)
         {
@@ -984,7 +1028,7 @@ render_image_tile_fault (RenderInfo *info)
            src[8]=src[5];
         }
       box_filter (left_weight, center_weight, right_weight,
-                  top_weight, middle_weight, bottom_weight, foosum,
+                  top_weight, middle_weight, bottom_weight, info->footarea,
                   src, dest, bpp);
 
       dest += bpp;
@@ -1305,10 +1349,6 @@ render_image_tile_fault_one_row (RenderInfo *info)
   gint          src_x;
   gint          skipped;
 
-  guint         footprint_x;
-  guint         footprint_y;
-  guint         foosum;
-
   guint         left_weight;
   guint         center_weight;
   guint         right_weight;
@@ -1321,13 +1361,18 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
   source_width = tile_manager_width (info->src_tiles);
 
-  footprint_y = info->y_src_dec;
-  footprint_x = info->x_src_dec;
-  foosum      = footprint_x * footprint_y;
+  top_weight    = MAX (info->footprint_y / 2,
+                       info->footshift_y > 0 ? info->dy << info->footshift_y
+                                             : info->dy >> -info->footshift_y)
+                  - (info->footshift_y > 0 ? info->dy << info->footshift_y
+                                           : info->dy >> -info->footshift_y);
 
-  top_weight    = MAX (footprint_y / 2, info->dy) - info->dy;
-  bottom_weight = MAX (info->dy, footprint_y / 2) - footprint_y / 2;
-  middle_weight = footprint_y - top_weight - bottom_weight;
+  bottom_weight = MAX (info->footprint_y / 2,
+                       info->footshift_y > 0 ? info->dy << info->footshift_y
+                                             : info->dy >> -info->footshift_y)
+                  - info->footprint_y / 2;
+
+  middle_weight = info->footprint_y - top_weight - bottom_weight;
 
   tile[0] = tile_manager_get_tile (info->src_tiles,
                                    info->src_x, info->src_y, TRUE, FALSE);
@@ -1406,9 +1451,18 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
   do
     {
-      left_weight  = MAX (footprint_x / 2, dx) - dx;
-      right_weight = MAX (dx, footprint_x / 2) - footprint_x / 2;
-      center_weight = footprint_x - left_weight - right_weight;
+      left_weight  = MAX (info->footprint_x / 2,
+                          info->footshift_x > 0 ? dx << info->footshift_x
+                                                : dx >> -info->footshift_x)
+                     - (info->footshift_x > 0 ? dx << info->footshift_x
+                                              : dx >> -info->footshift_x);
+
+      right_weight = MAX (info->footprint_x / 2,
+                          info->footshift_x > 0 ? dx << info->footshift_x
+                                                : dx >> -info->footshift_x)
+                     - info->footprint_x / 2;
+
+      center_weight = info->footprint_x - left_weight - right_weight;
 
       if (src_x + 1 >= source_width)
         {
@@ -1417,7 +1471,7 @@ render_image_tile_fault_one_row (RenderInfo *info)
           src[8]=src[7];
         }
       box_filter (left_weight, center_weight, right_weight,
-                  top_weight, middle_weight, bottom_weight, foosum,
+                  top_weight, middle_weight, bottom_weight, info->footarea,
                   src, dest, bpp);
 
       dest += bpp;
