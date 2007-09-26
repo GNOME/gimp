@@ -114,7 +114,8 @@ static cmsHPROFILE  lcms_image_get_profile       (GimpColorConfig *config,
                                                   guchar          *checksum);
 static gboolean     lcms_image_set_profile       (gint32           image,
                                                   cmsHPROFILE      profile,
-                                                  const gchar     *filename);
+                                                  const gchar     *filename,
+                                                  gboolean         undo_group);
 static gboolean     lcms_image_apply_profile     (gint32           image,
                                                   cmsHPROFILE      src_profile,
                                                   cmsHPROFILE      dest_profile,
@@ -520,11 +521,11 @@ lcms_icc_set (GimpColorConfig *config,
 
   if (filename)
     {
-      success = lcms_image_set_profile (image, NULL, filename);
+      success = lcms_image_set_profile (image, NULL, filename, TRUE);
     }
   else
     {
-      success = lcms_image_set_profile (image, NULL, config->rgb_profile);
+      success = lcms_image_set_profile (image, NULL, config->rgb_profile, TRUE);
     }
 
   return success ? GIMP_PDB_SUCCESS : GIMP_PDB_EXECUTION_ERROR;
@@ -772,7 +773,8 @@ lcms_image_get_profile (GimpColorConfig *config,
 static gboolean
 lcms_image_set_profile (gint32       image,
                         cmsHPROFILE  profile,
-                        const gchar *filename)
+                        const gchar *filename,
+                        gboolean     undo_group)
 {
   g_return_val_if_fail (image != -1, FALSE);
 
@@ -811,7 +813,8 @@ lcms_image_set_profile (gint32       image,
             }
         }
 
-      gimp_image_undo_group_start (image);
+      if (undo_group)
+        gimp_image_undo_group_start (image);
 
       parasite = gimp_parasite_new ("icc-profile",
                                     GIMP_PARASITE_PERSISTENT |
@@ -826,14 +829,16 @@ lcms_image_set_profile (gint32       image,
     }
   else
     {
-      gimp_image_undo_group_start (image);
+      if (undo_group)
+        gimp_image_undo_group_start (image);
 
       gimp_image_parasite_detach (image, "icc-profile");
     }
 
   gimp_image_parasite_detach (image, "icc-profile-name");
 
-  gimp_image_undo_group_end (image);
+  if (undo_group)
+    gimp_image_undo_group_end (image);
 
   return TRUE;
 }
@@ -850,7 +855,7 @@ lcms_image_apply_profile (gint32                    image,
 
   gimp_image_undo_group_start (image);
 
-  if (! lcms_image_set_profile (image, dest_profile, filename))
+  if (! lcms_image_set_profile (image, dest_profile, filename, FALSE))
     {
       return FALSE;
     }
@@ -1547,7 +1552,8 @@ lcms_dialog (GimpColorConfig *config,
                                                 filename,
                                                 values->intent, values->bpc);
           else
-            success = lcms_image_set_profile (image, dest_profile, filename);
+            success = lcms_image_set_profile (image,
+                                              dest_profile, filename, TRUE);
         }
       else
         {

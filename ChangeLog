@@ -1,5 +1,9 @@
 2007-09-26  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/lcms.c: don't create nested undo groups.
+
+2007-09-26  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimageundo.c (gimp_image_undo_pop): call
 	gimp_color_managed_profile_changed() if an icc-profile is attached
 	or removed from an image by an undo operation (bug #475983).
