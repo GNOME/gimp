@@ -23,6 +23,7 @@
 #include <glib-object.h>
 
 #include "libgimpbase/gimpbase.h"
+#include "libgimpcolor/gimpcolor.h"
 #include "libgimpconfig/gimpconfig.h"
 
 #include "core-types.h"
@@ -246,6 +247,7 @@ gimp_image_undo_pop (GimpUndo            *undo,
                      GimpUndoAccumulator *accum)
 {
   GimpImageUndo *image_undo = GIMP_IMAGE_UNDO (undo);
+  GimpImage     *image      = undo->image;
 
   GIMP_UNDO_CLASS (parent_class)->pop (undo, undo_mode, accum);
 
@@ -256,12 +258,12 @@ gimp_image_undo_pop (GimpUndo            *undo,
         GimpImageBaseType base_type;
 
         base_type = image_undo->base_type;
-        image_undo->base_type = undo->image->base_type;
-        g_object_set (undo->image, "base-type", base_type, NULL);
+        image_undo->base_type = image->base_type;
+        g_object_set (image, "base-type", base_type, NULL);
 
-        gimp_image_colormap_changed (undo->image, -1);
+        gimp_image_colormap_changed (image, -1);
 
-        if (image_undo->base_type != undo->image->base_type)
+        if (image_undo->base_type != image->base_type)
           accum->mode_changed = TRUE;
       }
       break;
@@ -274,35 +276,35 @@ gimp_image_undo_pop (GimpUndo            *undo,
         width  = image_undo->width;
         height = image_undo->height;
 
-        image_undo->width  = undo->image->width;
-        image_undo->height = undo->image->height;
+        image_undo->width  = image->width;
+        image_undo->height = image->height;
 
-        g_object_set (undo->image,
+        g_object_set (image,
                       "width",  width,
                       "height", height,
                       NULL);
 
         gimp_drawable_invalidate_boundary
-          (GIMP_DRAWABLE (gimp_image_get_mask (undo->image)));
+          (GIMP_DRAWABLE (gimp_image_get_mask (image)));
 
-        if (undo->image->width  != image_undo->width ||
-            undo->image->height != image_undo->height)
+        if (image->width  != image_undo->width ||
+            image->height != image_undo->height)
           accum->size_changed = TRUE;
       }
       break;
 
     case GIMP_UNDO_IMAGE_RESOLUTION:
-      if (ABS (image_undo->xresolution - undo->image->xresolution) >= 1e-5 ||
-          ABS (image_undo->yresolution - undo->image->yresolution) >= 1e-5)
+      if (ABS (image_undo->xresolution - image->xresolution) >= 1e-5 ||
+          ABS (image_undo->yresolution - image->yresolution) >= 1e-5)
         {
           gdouble xres;
           gdouble yres;
 
-          xres = undo->image->xresolution;
-          yres = undo->image->yresolution;
+          xres = image->xresolution;
+          yres = image->yresolution;
 
-          undo->image->xresolution = image_undo->xresolution;
-          undo->image->yresolution = image_undo->yresolution;
+          image->xresolution = image_undo->xresolution;
+          image->yresolution = image_undo->yresolution;
 
           image_undo->xresolution = xres;
           image_undo->yresolution = yres;
@@ -310,12 +312,12 @@ gimp_image_undo_pop (GimpUndo            *undo,
           accum->resolution_changed = TRUE;
         }
 
-      if (image_undo->resolution_unit != undo->image->resolution_unit)
+      if (image_undo->resolution_unit != image->resolution_unit)
         {
           GimpUnit unit;
 
-          unit = undo->image->resolution_unit;
-          undo->image->resolution_unit = image_undo->resolution_unit;
+          unit = image->resolution_unit;
+          image->resolution_unit = image_undo->resolution_unit;
           image_undo->resolution_unit = unit;
 
           accum->unit_changed = TRUE;
@@ -326,9 +328,9 @@ gimp_image_undo_pop (GimpUndo            *undo,
       {
         GimpGrid *grid;
 
-        grid = gimp_config_duplicate (GIMP_CONFIG (undo->image->grid));
+        grid = gimp_config_duplicate (GIMP_CONFIG (image->grid));
 
-        gimp_image_set_grid (undo->image, image_undo->grid, FALSE);
+        gimp_image_set_grid (image, image_undo->grid, FALSE);
 
         g_object_unref (image_undo->grid);
         image_undo->grid = grid;
@@ -340,11 +342,11 @@ gimp_image_undo_pop (GimpUndo            *undo,
         guchar *colormap;
         gint    num_colors;
 
-        num_colors = gimp_image_get_colormap_size (undo->image);
-        colormap   = g_memdup (gimp_image_get_colormap (undo->image),
+        num_colors = gimp_image_get_colormap_size (image);
+        colormap   = g_memdup (gimp_image_get_colormap (image),
                                num_colors * 3);
 
-        gimp_image_set_colormap (undo->image,
+        gimp_image_set_colormap (image,
                                  image_undo->colormap, image_undo->num_colors,
                                  FALSE);
 
@@ -359,18 +361,22 @@ gimp_image_undo_pop (GimpUndo            *undo,
     case GIMP_UNDO_PARASITE_ATTACH:
     case GIMP_UNDO_PARASITE_REMOVE:
       {
-        GimpParasite *parasite;
-
-        parasite = image_undo->parasite;
+        GimpParasite *parasite = image_undo->parasite;
+        const gchar  *name;
 
         image_undo->parasite = gimp_parasite_copy
-          (gimp_image_parasite_find (undo->image, image_undo->parasite_name));
+          (gimp_image_parasite_find (image, image_undo->parasite_name));
 
         if (parasite)
-          gimp_parasite_list_add (undo->image->parasites, parasite);
+          gimp_parasite_list_add (image->parasites, parasite);
         else
-          gimp_parasite_list_remove (undo->image->parasites,
+          gimp_parasite_list_remove (image->parasites,
                                      image_undo->parasite_name);
+
+        name = parasite ? parasite->name : image_undo->parasite_name;
+
+        if (strcmp (name, "icc-profile") == 0)
+          gimp_color_managed_profile_changed (GIMP_COLOR_MANAGED (image));
 
         if (parasite)
           gimp_parasite_free (parasite);

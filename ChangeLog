@@ -1,3 +1,9 @@
+2007-09-26  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpimageundo.c (gimp_image_undo_pop): call
+	gimp_color_managed_profile_changed() if an icc-profile is attached
+	or removed from an image by an undo operation (bug #475983).
+
 2007-09-26  Simon Budig  <simon@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c: fix the numerical overflow
@@ -14,7 +20,7 @@
 
 	* app/widgets/gimpcontrollerwheel.c (gimp_controller_wheel_scroll):
 	fixed check for modifier keys and always return on a matched
-	event(bug #480319). Also reordered the list of events as the code
+	event (bug #480319). Also reordered the list of events as the code
 	does not any longer rely on a certain order.
 
 2007-09-26  Sven Neumann  <sven@gimp.org>
