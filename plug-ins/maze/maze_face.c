@@ -51,15 +51,15 @@
 #define MORE  1
 #define LESS -1
 
-typedef void (* EntscaleIntCallbackFunc) (gint value, gpointer data);
+typedef void (* EntscaleIntCallback) (gint value, gpointer data);
 
 typedef struct
 {
-  GtkObject               *adjustment;
-  GtkWidget               *entry;
-  gboolean                 constraint;
-  EntscaleIntCallbackFunc  callback;
-  gpointer	           call_data;
+  GtkObject           *adjustment;
+  GtkWidget           *entry;
+  gboolean             constraint;
+  EntscaleIntCallback  callback;
+  gpointer	       call_data;
 } EntscaleIntData;
 /* entscale stuff end */
 
@@ -131,16 +131,16 @@ static void div_buttonr_callback (GtkObject *object);
 #endif
 
 /* entscale stuff begin */
-static GtkWidget * entscale_int_new (GtkWidget               *table,
-                                     gint                     x,
-                                     gint                     y,
-                                     const gchar             *caption,
-                                     gint                    *intvar,
-                                     gint                     min,
-                                     gint                     max,
-                                     gboolean                 constraint,
-                                     EntscaleIntCallbackFunc  callback,
-                                     gpointer                 data);
+static GtkWidget * entscale_int_new (GtkWidget           *table,
+                                     gint                 x,
+                                     gint                 y,
+                                     const gchar         *caption,
+                                     gint                *intvar,
+                                     gint                 min,
+                                     gint                 max,
+                                     gboolean             constraint,
+                                     EntscaleIntCallback  callback,
+                                     gpointer             data);
 
 static void   entscale_int_scale_update (GtkAdjustment *adjustment,
 					 gpointer       data);
@@ -165,7 +165,8 @@ maze_dialog (void)
   GtkWidget    *table;
   GtkWidget    *table2;
   GtkWidget    *tilecheck;
-  GtkWidget    *entry;
+  GtkWidget    *width_entry;
+  GtkWidget    *height_entry;
   GtkWidget    *hbox;
   GtkWidget    *frame;
   GtkSizeGroup *group;
@@ -210,33 +211,33 @@ maze_dialog (void)
   group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
   /* entscale == Entry and Scale pair function found in pixelize.c */
-  entry = entscale_int_new (table, 0, trow, _("Width (pixels):"),
-                            &mvals.width,
-                            1, sel_w/4, TRUE,
-                            (EntscaleIntCallbackFunc) height_width_callback,
-                            &entry);
+  width_entry = entscale_int_new (table, 0, trow, _("Width (pixels):"),
+                                  &mvals.width,
+                                  1, sel_w/4, TRUE,
+                                  (EntscaleIntCallback) height_width_callback,
+                                  &width_entry);
   trow++;
 
   /* Number of Divisions entry */
-  hbox = divbox_new (&sel_w, entry, &entry);
+  hbox = divbox_new (&sel_w, width_entry, &width_entry);
   g_snprintf (buffer, BUFSIZE, "%d", (sel_w / mvals.width));
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+  gtk_entry_set_text (GTK_ENTRY (width_entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, trow,
 			     _("Pieces:"), 0.0, 0.5,
 			     hbox, 1, TRUE);
   gtk_table_set_row_spacing (GTK_TABLE (table), trow, 12);
   trow++;
 
-  entry = entscale_int_new (table, 0, trow, _("Height (pixels):"),
-                            &mvals.height,
-                            1, sel_h/4, TRUE,
-                            (EntscaleIntCallbackFunc) height_width_callback,
-                            &entry);
+  height_entry = entscale_int_new (table, 0, trow, _("Height (pixels):"),
+                                   &mvals.height,
+                                   1, sel_h/4, TRUE,
+                                   (EntscaleIntCallback) height_width_callback,
+                                   &height_entry);
   trow++;
 
-  hbox = divbox_new (&sel_h, entry, &entry);
+  hbox = divbox_new (&sel_h, height_entry, &height_entry);
   g_snprintf (buffer, BUFSIZE, "%d", (sel_h / mvals.height));
-  gtk_entry_set_text (GTK_ENTRY (entry), buffer);
+  gtk_entry_set_text (GTK_ENTRY (height_entry), buffer);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, trow,
 			     _("Pieces:"), 0.0, 0.5,
 			     hbox, 1, TRUE);
@@ -484,7 +485,7 @@ div_entry_callback (GtkWidget *entry,
 {
   guint divs, width, max;
   EntscaleIntData *userdata;
-  EntscaleIntCallbackFunc friend_callback;
+  EntscaleIntCallback friend_callback;
 
   divs = atoi (gtk_entry_get_text (GTK_ENTRY (entry)));
   if (divs < 4) /* If this is under 4 (e.g. 0), something's weird.      */
@@ -565,16 +566,16 @@ maze_message (const gchar *message)
  *    call_data:  data for callback func
  */
 static GtkWidget*
-entscale_int_new (GtkWidget               *table,
-		  gint                     x,
-		  gint                     y,
-		  const gchar             *caption,
-		  gint                    *intvar,
-		  gint                     min,
-		  gint                     max,
-		  gboolean                 constraint,
-		  EntscaleIntCallbackFunc  callback,
-		  gpointer                 call_data)
+entscale_int_new (GtkWidget           *table,
+		  gint                 x,
+		  gint                 y,
+		  const gchar         *caption,
+		  gint                *intvar,
+		  gint                 min,
+		  gint                 max,
+		  gboolean             constraint,
+		  EntscaleIntCallback  callback,
+		  gpointer             call_data)
 {
   EntscaleIntData *userdata;
   GtkWidget *hbox;

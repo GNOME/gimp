@@ -1,9 +1,14 @@
 2007-09-26  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/maze/maze_face.c (maze_dialog): use separate variables
+	for width and height entry. Fixes bug #480303.
+
+2007-09-26  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcontrollerwheel.c (gimp_controller_wheel_scroll):
 	fixed check for modifier keys and always return on a matched
 	event(bug #480319). Also reordered the list of events as the code
-	now does not any longer rely on a certain order.
+	does not any longer rely on a certain order.
 
 2007-09-26  Sven Neumann  <sven@gimp.org>
 
