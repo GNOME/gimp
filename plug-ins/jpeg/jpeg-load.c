@@ -46,7 +46,11 @@
 
 static void  jpeg_load_resolution  (gint32                         image_ID,
                                     struct jpeg_decompress_struct *cinfo);
-static void  jpeg_sanitize_comment (gchar *comment);
+
+static void  jpeg_sanitize_comment (gchar                         *comment);
+
+static void  jpeg_load_cmyk_to_rgb (guchar                        *buf,
+                                    glong                          pixels);
 
 
 GimpDrawable    *drawable_global;
@@ -67,7 +71,6 @@ load_image (const gchar *filename,
   struct my_error_mgr           jerr;
   FILE    *infile;
   guchar  *buf;
-  guchar  * volatile padded_buf = NULL;
   guchar **rowbuf;
   guchar  *profile;
   guint    profile_size;
@@ -209,14 +212,6 @@ load_image (const gchar *filename,
       return -1;
       break;
     }
-
-  if (preview)
-    padded_buf = g_new (guchar, tile_height * cinfo.output_width *
-                        (cinfo.output_components + 1));
-  else if (cinfo.out_color_space == JCS_CMYK)
-    padded_buf = g_new (guchar, tile_height * cinfo.output_width * 3);
-  else
-    padded_buf = NULL;
 
   if (preview)
     {
@@ -401,27 +396,8 @@ load_image (const gchar *filename,
       for (i = 0; i < scanlines; i++)
         jpeg_read_scanlines (&cinfo, (JSAMPARRAY) &rowbuf[i], 1);
 
-      if (cinfo.out_color_space == JCS_CMYK) /* CMYK -> RGB */
-        {
-          const guchar *src    = buf;
-          guchar       *dest   = buf;
-          gint          pixels = drawable->width * scanlines;
-
-          while (pixels--)
-            {
-              guint c = src[0];
-              guint m = src[1];
-              guint y = src[2];
-              guint k = src[3];
-
-              dest[0] = (c * k) / 255;
-              dest[1] = (m * k) / 255;
-              dest[2] = (y * k) / 255;
-
-              src  += 4;
-              dest += 3;
-            }
-        }
+      if (cinfo.out_color_space == JCS_CMYK)
+        jpeg_load_cmyk_to_rgb (buf, drawable->width * scanlines);
 
       gimp_pixel_rgn_set_rect (&pixel_rgn, buf,
                                0, start, drawable->width, scanlines);
@@ -602,7 +578,6 @@ load_thumbnail_image (const gchar *filename,
   struct jpeg_decompress_struct cinfo;
   struct my_error_mgr           jerr;
   guchar     *buf;
-  guchar  * volatile padded_buf = NULL;
   guchar    **rowbuf;
   gint        image_type;
   gint        layer_type;
@@ -773,27 +748,10 @@ load_thumbnail_image (const gchar *filename,
       for (i = 0; i < scanlines; i++)
         jpeg_read_scanlines (&cinfo, (JSAMPARRAY) &rowbuf[i], 1);
 
-      if (cinfo.out_color_space == JCS_CMYK) /* buf-> RGB in padded_buf */
-        {
-          guchar *dest = padded_buf;
-          guchar *src  = buf;
-          gint    num  = drawable->width * scanlines;
+      if (cinfo.out_color_space == JCS_CMYK)
+        jpeg_load_cmyk_to_rgb (buf, drawable->width * scanlines);
 
-          for (i = 0; i < num; i++)
-            {
-              guint r_c, g_m, b_y, a_k;
-
-              r_c = *(src++);
-              g_m = *(src++);
-              b_y = *(src++);
-              a_k = *(src++);
-              *(dest++) = (r_c * a_k) / 255;
-              *(dest++) = (g_m * a_k) / 255;
-              *(dest++) = (b_y * a_k) / 255;
-            }
-        }
-
-      gimp_pixel_rgn_set_rect (&pixel_rgn, padded_buf ? padded_buf : buf,
+      gimp_pixel_rgn_set_rect (&pixel_rgn, buf,
                                0, start, drawable->width, scanlines);
 
       gimp_progress_update ((gdouble) cinfo.output_scanline /
@@ -817,7 +775,6 @@ load_thumbnail_image (const gchar *filename,
   /* free up the temporary buffers */
   g_free (rowbuf);
   g_free (buf);
-  g_free (padded_buf);
 
   /* At this point you may want to check to see whether any
    * corrupt-data warnings occurred (test whether
@@ -903,3 +860,27 @@ load_thumbnail_image (const gchar *filename,
 }
 
 #endif /* HAVE_EXIF */
+
+
+static void
+jpeg_load_cmyk_to_rgb (guchar *buf,
+                       glong   pixels)
+{
+  const guchar *src  = buf;
+  guchar       *dest = buf;
+
+  while (pixels--)
+    {
+      guint c = src[0];
+      guint m = src[1];
+      guint y = src[2];
+      guint k = src[3];
+
+      dest[0] = (c * k) / 255;
+      dest[1] = (m * k) / 255;
+      dest[2] = (y * k) / 255;
+
+      src  += 4;
+      dest += 3;
+    }
+}
