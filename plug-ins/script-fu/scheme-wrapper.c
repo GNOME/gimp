@@ -624,9 +624,9 @@ g_printerr ("\nIn marshall_proc_db_call ()\n");
   /*  Make sure there are arguments  */
   if (a == sc->NIL)
     return foreign_error (sc,
-                          "Procedure database argument marshaller was called with no arguments. "
+                          "Procedure argument marshaller was called with no arguments. "
                           "The procedure to be executed and the arguments it requires "
-                          " (possibly none) must be specified.", 0);
+                          "(possibly none) must be specified.", 0);
 
   /*  The PDB procedure name is the argument or first argument of the list  */
   if (sc->vptr->is_pair (a))
@@ -805,7 +805,7 @@ g_printerr ("      string arg is '%s'\n", args[i].data.d_string);
                   if (!sc->vptr->is_number (v_element))
                     {
                       g_snprintf (error_str, sizeof (error_str),
-                                  "Item %d in vector is not a number (argument %d for function %s)\n",
+                                  "Item %d in vector is not a number (argument %d for function %s)",
                                   j+1, i+1, proc_name);
                       return foreign_error (sc, error_str, vector);
                     }
@@ -856,7 +856,7 @@ if (count > 0)
                   if (!sc->vptr->is_number (v_element))
                     {
                       g_snprintf (error_str, sizeof (error_str),
-                                  "Item %d in vector is not a number (argument %d for function %s)\n",
+                                  "Item %d in vector is not a number (argument %d for function %s)",
                                   j+1, i+1, proc_name);
                       return foreign_error (sc, error_str, vector);
                     }
@@ -907,7 +907,7 @@ if (count > 0)
                   if (!sc->vptr->is_number (v_element))
                     {
                       g_snprintf (error_str, sizeof (error_str),
-                                  "Item %d in vector is not a number (argument %d for function %s)\n",
+                                  "Item %d in vector is not a number (argument %d for function %s)",
                                   j+1, i+1, proc_name);
                       return foreign_error (sc, error_str, vector);
                     }
@@ -958,7 +958,7 @@ if (count > 0)
                   if (!sc->vptr->is_number (v_element))
                     {
                       g_snprintf (error_str, sizeof (error_str),
-                                  "Item %d in vector is not a number (argument %d for function %s)\n",
+                                  "Item %d in vector is not a number (argument %d for function %s)",
                                   j+1, i+1, proc_name);
                       return foreign_error (sc, error_str, vector);
                     }
@@ -1009,7 +1009,7 @@ if (count > 0)
                   if (!sc->vptr->is_string (v_element))
                     {
                       g_snprintf (error_str, sizeof (error_str),
-                                  "Item %d in vector is not a string (argument %d for function %s)\n",
+                                  "Item %d in vector is not a string (argument %d for function %s)",
                                   j+1, i+1, proc_name);
                       return foreign_error (sc, error_str, vector);
                     }
@@ -1205,8 +1205,8 @@ g_printerr ("  Invalid type for argument %d\n", i+1);
 g_printerr ("  Did not return status\n");
 #endif
       g_snprintf (error_str, sizeof(error_str),
-               "Procedural database execution of %s did not return a status:\n    ",
-               proc_name);
+                  "Procedure execution of %s did not return a status",
+                  proc_name);
 
       return foreign_error (sc, error_str, 0);
     }
@@ -1220,15 +1220,15 @@ g_printerr ("    return value is %s\n",
     {
     case GIMP_PDB_EXECUTION_ERROR:
       g_snprintf (error_str, sizeof (error_str),
-              "Procedural database execution of %s failed:\n    ",
-              proc_name);
+                  "Procedure execution of %s failed",
+                  proc_name);
       return foreign_error (sc, error_str, 0);
       break;
 
     case GIMP_PDB_CALLING_ERROR:
       g_snprintf (error_str, sizeof (error_str),
-               "Procedural database execution of %s failed on invalid input arguments:\n    ",
-               proc_name);
+                  "Procedure execution of %s failed on invalid input arguments",
+                  proc_name);
       return foreign_error (sc, error_str, 0);
       break;
 
@@ -1482,7 +1482,7 @@ g_printerr ("      data '%.*s'\n",
               break;
 
             case GIMP_PDB_STATUS:
-              return foreign_error (sc, "Procedural database execution returned multiple status values", 0);
+              return foreign_error (sc, "Procedure execution returned multiple status values", 0);
               break;
 
             default:
