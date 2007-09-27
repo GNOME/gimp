@@ -1,5 +1,11 @@
 2007-09-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/scripts/add-bevel.scm: fixed GimpImageType
+	parameter passed to gimp-layer-new. Do not register the script for
+	grayscale images, it doesn't handle them properly.
+
+2007-09-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scheme-wrapper.c: unified error
 	messages, removed trailing newlines.
 

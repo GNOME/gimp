@@ -70,7 +70,7 @@
         (bump-layer (car (gimp-layer-new image
                                          (+ width 2)
                                          (+ height 2)
-                                         GRAY
+                                         RGB-IMAGE
                                          "Bumpmap"
                                          100
                                          NORMAL-MODE)))
@@ -188,7 +188,7 @@
   "Andrew Donkin <ard@cs.waikato.ac.nz>"
   "Andrew Donkin"
   "1997/11/06"
-  "RGB* GRAY*"
+  "RGB*"
   SF-IMAGE       "Image"           0
   SF-DRAWABLE    "Drawable"        0
   SF-ADJUSTMENT _"Thickness"       '(5 0 30 1 2 0 0)
@@ -196,5 +196,4 @@
   SF-TOGGLE     _"Keep bump layer" FALSE
 )
 
-(script-fu-menu-register "script-fu-add-bevel"
-                         "<Image>/Filters/Decor")
+(script-fu-menu-register "script-fu-add-bevel" "<Image>/Filters/Decor")
