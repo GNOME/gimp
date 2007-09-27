@@ -184,12 +184,12 @@ load_image (const gchar *filename,
     {
     case 1:
       image_type = GIMP_GRAY;
-      layer_type = preview ? GIMP_GRAYA_IMAGE : GIMP_GRAY_IMAGE;
+      layer_type = GIMP_GRAY_IMAGE;
       break;
 
     case 3:
       image_type = GIMP_RGB;
-      layer_type = preview ? GIMP_RGBA_IMAGE : GIMP_RGB_IMAGE;
+      layer_type = GIMP_RGB_IMAGE;
       break;
 
     case 4:
@@ -395,64 +395,35 @@ load_image (const gchar *filename,
       start = cinfo.output_scanline;
       end   = cinfo.output_scanline + tile_height;
       end   = MIN (end, cinfo.output_height);
+
       scanlines = end - start;
 
       for (i = 0; i < scanlines; i++)
         jpeg_read_scanlines (&cinfo, (JSAMPARRAY) &rowbuf[i], 1);
 
-      if (preview) /* Add a dummy alpha channel -- convert buf to padded_buf */
+      if (cinfo.out_color_space == JCS_CMYK) /* CMYK -> RGB */
         {
-          guchar *dest = padded_buf;
-          guchar *src  = buf;
-          gint    num  = drawable->width * scanlines;
+          const guchar *src    = buf;
+          guchar       *dest   = buf;
+          gint          pixels = drawable->width * scanlines;
 
-          switch (cinfo.output_components)
+          while (pixels--)
             {
-            case 1:
-              for (i = 0; i < num; i++)
-                {
-                  *(dest++) = *(src++);
-                  *(dest++) = 255;
-                }
-              break;
+              guint c = src[0];
+              guint m = src[1];
+              guint y = src[2];
+              guint k = src[3];
 
-            case 3:
-              for (i = 0; i < num; i++)
-                {
-                  *(dest++) = *(src++);
-                  *(dest++) = *(src++);
-                  *(dest++) = *(src++);
-                  *(dest++) = 255;
-                }
-              break;
+              dest[0] = (c * k) / 255;
+              dest[1] = (m * k) / 255;
+              dest[2] = (y * k) / 255;
 
-            default:
-              g_warning ("JPEG - shouldn't have gotten here.\n"
-                         "Report to http://bugzilla.gnome.org/");
-              break;
-            }
-        }
-      else if (cinfo.out_color_space == JCS_CMYK) /* buf-> RGB in padded_buf */
-        {
-          guchar *dest = padded_buf;
-          guchar *src  = buf;
-          gint    num  = drawable->width * scanlines;
-
-          for (i = 0; i < num; i++)
-            {
-              guint r_c, g_m, b_y, a_k;
-
-              r_c = *(src++);
-              g_m = *(src++);
-              b_y = *(src++);
-              a_k = *(src++);
-              *(dest++) = (r_c * a_k) / 255;
-              *(dest++) = (g_m * a_k) / 255;
-              *(dest++) = (b_y * a_k) / 255;
+              src  += 4;
+              dest += 3;
             }
         }
 
-      gimp_pixel_rgn_set_rect (&pixel_rgn, padded_buf ? padded_buf : buf,
+      gimp_pixel_rgn_set_rect (&pixel_rgn, buf,
                                0, start, drawable->width, scanlines);
 
       if (! preview && (cinfo.output_scanline % 32) == 0)
@@ -475,7 +446,6 @@ load_image (const gchar *filename,
   /* free up the temporary buffers */
   g_free (rowbuf);
   g_free (buf);
-  g_free (padded_buf);
 
   /* After finish_decompress, we can close the input file.
    * Here we postpone it until after no more JPEG errors are possible,
@@ -734,9 +704,6 @@ load_thumbnail_image (const gchar *filename,
 
   /* Create a new image of the proper size and associate the
    * filename with it.
-   *
-   * Preview layers, not being on the bottom of a layer stack,
-   * MUST HAVE AN ALPHA CHANNEL!
    */
   switch (cinfo.output_components)
     {
@@ -774,11 +741,6 @@ load_thumbnail_image (const gchar *filename,
       return -1;
       break;
     }
-
-  if (cinfo.out_color_space == JCS_CMYK)
-    padded_buf = g_new (guchar, tile_height * cinfo.output_width * 3);
-  else
-    padded_buf = NULL;
 
   image_ID = gimp_image_new (cinfo.output_width, cinfo.output_height,
                              image_type);
