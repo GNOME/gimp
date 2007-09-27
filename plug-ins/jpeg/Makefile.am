@@ -52,6 +52,7 @@ jpeg_LDADD = \
 	$(libgimpmath)		\
 	$(libgimpbase)		\
 	$(LIBJPEG)		\
+	$(LIBLCMS)		\
 	$(GTK_LIBS)		\
 	$(EXIF_LIBS)		\
 	$(RT_LIBS)		\

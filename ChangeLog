@@ -1,5 +1,15 @@
 2007-09-27  Sven Neumann  <sven@gimp.org>
 
+	* configure.in: define HAVE_LCMS if lcms is available.
+
+	* plug-ins/jpeg/Makefile.am: link with LIBLCMS.
+
+	* plug-ins/jpeg/jpeg-load.c (load_image): when loading a CMYK JPEG
+	file and it comes with an embedded CMYK profile, use lcms to do
+	the colorspace conversion.
+
+2007-09-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/jpeg/jpeg-load.c (load_thumbnail_image): same change
 	here. Moved colorspace conversion to a utility function.
 

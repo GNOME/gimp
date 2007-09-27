@@ -1377,6 +1377,7 @@ if test "x$with_lcms" != xno; then
       ])
   ])
   if test $have_lcms = yes; then
+    AC_DEFINE(HAVE_LCMS, 1, [Define to 1 if lcms is available]),
     LIBLCMS="-llcms"
     LCMS='lcms$(EXEEXT)'
   else

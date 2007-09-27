@@ -31,6 +31,14 @@
 #include <libexif/exif-data.h>
 #endif /* HAVE_EXIF */
 
+#ifdef HAVE_LCMS
+#ifdef HAVE_LCMS_LCMS_H
+#include <lcms/lcms.h>
+#else
+#include <lcms.h>
+#endif
+#endif
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
@@ -50,7 +58,8 @@ static void  jpeg_load_resolution  (gint32                         image_ID,
 static void  jpeg_sanitize_comment (gchar                         *comment);
 
 static void  jpeg_load_cmyk_to_rgb (guchar                        *buf,
-                                    glong                          pixels);
+                                    glong                          pixels,
+                                    gpointer                       transform);
 
 
 GimpDrawable    *drawable_global;
@@ -81,6 +90,12 @@ load_image (const gchar *filename,
   gint     i, start, end;
   jpeg_saved_marker_ptr marker;
   gint     orientation = 0;
+
+#ifdef HAVE_LCMS
+  cmsHTRANSFORM  cmyk_transform = NULL;
+#else
+  gpointer       cmyk_transform = NULL;
+#endif
 
   /* We set up the normal JPEG error routines. */
   cinfo.err = jpeg_std_error (&jerr.pub);
@@ -364,12 +379,44 @@ load_image (const gchar *filename,
       /* Step 5.3: check for an embedded ICC profile in APP2 markers */
       if (jpeg_icc_read_profile (&cinfo, &profile, &profile_size))
         {
-          GimpParasite *parasite = gimp_parasite_new ("icc-profile",
-                                                      GIMP_PARASITE_PERSISTENT |
-                                                      GIMP_PARASITE_UNDOABLE,
-                                                      profile_size, profile);
-          gimp_image_parasite_attach (image_ID, parasite);
-          gimp_parasite_free (parasite);
+#ifdef HAVE_LCMS
+          if (cinfo.out_color_space == JCS_CMYK)
+            {
+              cmsHPROFILE cmyk_profile;
+
+              cmyk_profile = cmsOpenProfileFromMem (profile, profile_size);
+
+              if (cmyk_profile)
+                {
+                  if (cmsGetColorSpace (cmyk_profile) == icSigCmykData)
+                    {
+                      cmsHPROFILE rgb_profile = cmsCreate_sRGBProfile ();
+
+                      cmyk_transform =
+                        cmsCreateTransform (cmyk_profile, TYPE_CMYK_8_REV,
+                                            rgb_profile,  TYPE_RGB_8,
+                                            0, 0);
+
+                      cmsCloseProfile (rgb_profile);
+                    }
+
+                  cmsCloseProfile (cmyk_profile);
+                }
+            }
+#endif
+
+          /* don't attach the CMYK profile we are using to convert the data */
+          if (! cmyk_transform)
+            {
+              GimpParasite *parasite;
+
+              parasite = gimp_parasite_new ("icc-profile",
+                                            GIMP_PARASITE_PERSISTENT |
+                                            GIMP_PARASITE_UNDOABLE,
+                                            profile_size, profile);
+              gimp_image_parasite_attach (image_ID, parasite);
+              gimp_parasite_free (parasite);
+            }
 
           g_free (profile);
         }
@@ -397,7 +444,8 @@ load_image (const gchar *filename,
         jpeg_read_scanlines (&cinfo, (JSAMPARRAY) &rowbuf[i], 1);
 
       if (cinfo.out_color_space == JCS_CMYK)
-        jpeg_load_cmyk_to_rgb (buf, drawable->width * scanlines);
+        jpeg_load_cmyk_to_rgb (buf, drawable->width * scanlines,
+                               cmyk_transform);
 
       gimp_pixel_rgn_set_rect (&pixel_rgn, buf,
                                0, start, drawable->width, scanlines);
@@ -413,6 +461,11 @@ load_image (const gchar *filename,
   /* We can ignore the return value since suspension is not possible
    * with the stdio data source.
    */
+
+#ifdef HAVE_LCMS
+  if (cmyk_transform)
+    cmsDeleteTransform (cmyk_transform);
+#endif
 
   /* Step 8: Release JPEG decompression object */
 
@@ -749,7 +802,7 @@ load_thumbnail_image (const gchar *filename,
         jpeg_read_scanlines (&cinfo, (JSAMPARRAY) &rowbuf[i], 1);
 
       if (cinfo.out_color_space == JCS_CMYK)
-        jpeg_load_cmyk_to_rgb (buf, drawable->width * scanlines);
+        jpeg_load_cmyk_to_rgb (buf, drawable->width * scanlines, NULL);
 
       gimp_pixel_rgn_set_rect (&pixel_rgn, buf,
                                0, start, drawable->width, scanlines);
@@ -863,11 +916,20 @@ load_thumbnail_image (const gchar *filename,
 
 
 static void
-jpeg_load_cmyk_to_rgb (guchar *buf,
-                       glong   pixels)
+jpeg_load_cmyk_to_rgb (guchar   *buf,
+                       glong     pixels,
+                       gpointer  transform)
 {
   const guchar *src  = buf;
   guchar       *dest = buf;
+
+#ifdef HAVE_LCMS
+  if (transform)
+    {
+      cmsDoTransform (transform, buf, buf, pixels);
+      return;
+    }
+#endif
 
   while (pixels--)
     {
