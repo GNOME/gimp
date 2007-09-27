@@ -887,12 +887,9 @@ script_fu_script_proc (const gchar      *name,
 
   if (status == GIMP_PDB_SUCCESS)
     {
-      GimpRunMode run_mode;
+      GimpRunMode run_mode = params[0].data.d_int32;
 
-      run_mode = params[0].data.d_int32;
-
-      if (script->num_args == 0)
-        run_mode = GIMP_RUN_NONINTERACTIVE;
+      set_run_mode_constant (run_mode);
 
       switch (run_mode)
         {
@@ -901,7 +898,8 @@ script_fu_script_proc (const gchar      *name,
             gint min_args = 0;
 
             /*  First, try to collect the standard script arguments...  */
-            min_args = script_fu_collect_standard_args (script, nparams, params);
+            min_args = script_fu_collect_standard_args (script,
+                                                        nparams, params);
 
             /*  ...then acquire the rest of arguments (if any) with a dialog  */
             if (script->num_args > min_args)

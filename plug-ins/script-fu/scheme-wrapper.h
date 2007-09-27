@@ -40,6 +40,8 @@ void          tinyscheme_init      (const gchar  *path,
                                     gboolean      local_register_scripts);
 void          tinyscheme_deinit    (void);
 
+void          set_run_mode_constant (GimpRunMode run_mode);
+
 void          ts_interpret_stdin   (void);
 
 /* if the return value is 0, success. error otherwise. */

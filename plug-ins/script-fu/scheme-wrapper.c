@@ -333,6 +333,19 @@ tinyscheme_deinit (void)
   scheme_deinit (&sc);
 }
 
+/* Create an SF-RUN-MODE constant for use in scripts.  */
+/* It is set to the run mode state determined by GIMP. */
+void
+set_run_mode_constant (GimpRunMode run_mode)
+{
+  pointer symbol;
+
+  symbol = sc.vptr->mk_symbol (&sc, "SF-RUN-MODE");
+  sc.vptr->scheme_define (&sc, sc.global_env, symbol,
+                          sc.vptr->mk_integer (&sc, run_mode));
+  sc.vptr->setimmutable(symbol);
+}
+
 static void     convert_string               (gchar  *str);
 static pointer  marshall_proc_db_call        (scheme *sc, pointer  a);
 static pointer  script_fu_register_call      (scheme *sc, pointer  a);

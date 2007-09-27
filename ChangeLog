@@ -1,3 +1,22 @@
+2007-09-27  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	Create SF-RUN-MODE constant for use in Script-Fu. Fixes bug #479893.
+
+	* plug-ins/script-fu/scheme-wrapper.c
+	* plug-ins/script-fu/scheme-wrapper.h: Added set_run_mode_constant()
+	which creates a new constant called SF-RUN-MODE. This constant can
+	be used by Script-Fu scripts when calling a plug-in that needs to
+	know the current run mode.
+
+	* plug-ins/script-fu/script-fu-scripts.c
+	* plug-ins/script-fu/script-fu-console.c
+	* plug-ins/script-fu/script-fu.c
+	* plug-ins/script-fu/script-fu-server.c: Added calls to create the
+	new SF-RUN-MODE constant.
+
+	* plug-ins/script-fu/scripts/difference-clouds.scm: Pass SF-RUN-MODE
+	to the solid noise plug-in instead of always using RUN-INTERACTIVE.
+
 2007-09-27  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/ige-mac-menu.c: new version which correctly updates the
