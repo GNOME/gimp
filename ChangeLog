@@ -1,3 +1,8 @@
+2007-09-27  Michael Natterer  <mitch@gimp.org>
+
+	* app/gui/ige-mac-menu.c: new version which correctly updates the
+	menus when items are added or removed.
+
 2007-09-27  Sven Neumann  <sven@gimp.org>
 
 	* configure.in: define HAVE_LCMS if lcms is available.
@@ -120,7 +125,7 @@
 2007-09-24  Michael Natterer  <mitch@gimp.org>
 
 	* app/gui/ige-mac-menu.c (ige_mac_menu_add_app_menu_item): allow
-	to pass NULL as label and get the label from the menu itew.
+	to pass NULL as label and get the label from the menu item.
 
 	* app/gui/gui.c (gui_restore_after_callback): pass NULL as labels
 	for the preferences menu items.

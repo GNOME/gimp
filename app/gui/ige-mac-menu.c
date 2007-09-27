@@ -49,7 +49,8 @@
 
 static void   sync_menu_shell (GtkMenuShell *menu_shell,
 			       MenuRef       carbon_menu,
-			       gboolean      toplevel);
+			       gboolean      toplevel,
+			       gboolean      debug);
 
 
 /*
@@ -257,7 +258,7 @@ carbon_menu_item_update_submenu (CarbonMenuItem *carbon_item,
       SetMenuItemHierarchicalMenu (carbon_item->menu, carbon_item->index,
 				   carbon_item->submenu);
 
-      sync_menu_shell (GTK_MENU_SHELL (submenu), carbon_item->submenu, FALSE);
+      sync_menu_shell (GTK_MENU_SHELL (submenu), carbon_item->submenu, FALSE, FALSE);
 
       if (cfstr)
 	CFRelease (cfstr);
@@ -507,7 +508,7 @@ menu_event_handler_func (EventHandlerCallRef  event_handler_call_ref,
 	  HICommand command;
 	  OSStatus  err;
 
-	  /*g_print ("Menu: kEventClassCommand/kEventCommandProcess\n");*/
+	  /*g_printerr ("Menu: kEventClassCommand/kEventCommandProcess\n");*/
 
 	  err = GetEventParameter (event_ref, kEventParamDirectObject,
 				   typeHICommand, 0,
@@ -547,18 +548,18 @@ menu_event_handler_func (EventHandlerCallRef  event_handler_call_ref,
 	  /* This is called when an item is selected (what is the
 	   * GTK+ term? prelight?)
 	   */
-	  /*g_print ("kEventClassMenu/kEventMenuTargetItem\n");*/
+	  /*g_printerr ("kEventClassMenu/kEventMenuTargetItem\n");*/
 	  break;
 
 	case kEventMenuOpening:
 	  /* Is it possible to dynamically build the menu here? We
 	   * can at least set visibility/sensitivity.
 	   */
-	  /*g_print ("kEventClassMenu/kEventMenuOpening\n");*/
+	  /*g_printerr ("kEventClassMenu/kEventMenuOpening\n");*/
 	  break;
 
 	case kEventMenuClosed:
-	  /*g_print ("kEventClassMenu/kEventMenuClosed\n");*/
+	  /*g_printerr ("kEventClassMenu/kEventMenuClosed\n");*/
 	  break;
 
 	default:
@@ -603,11 +604,15 @@ setup_menu_event_handler (void)
 static void
 sync_menu_shell (GtkMenuShell *menu_shell,
                  MenuRef       carbon_menu,
-		 gboolean      toplevel)
+		 gboolean      toplevel,
+		 gboolean      debug)
 {
   GList         *children;
   GList         *l;
   MenuItemIndex  carbon_index = 1;
+
+  if (debug)
+    g_printerr ("%s: syncing shell %p\n", G_STRFUNC, menu_shell);
 
   carbon_menu_connect (GTK_WIDGET (menu_shell), carbon_menu);
 
@@ -627,10 +632,18 @@ sync_menu_shell (GtkMenuShell *menu_shell,
 
       carbon_item = carbon_menu_item_get (menu_item);
 
+      if (debug)
+	g_printerr ("%s: carbon_item %d for menu_item %d (%s, %s)\n",
+		    G_STRFUNC, carbon_item ? carbon_item->index : -1,
+		    carbon_index, get_menu_label_text (menu_item, NULL),
+		    g_type_name (G_TYPE_FROM_INSTANCE (menu_item)));
+
       if (carbon_item && carbon_item->index != carbon_index)
 	{
-	  DeleteMenuItem (carbon_item->menu,
-			  carbon_item->index);
+	  if (debug)
+	    g_printerr ("%s:   -> not matching, deleting\n", G_STRFUNC);
+
+	  DeleteMenuItem (carbon_item->menu, carbon_index);
 	  carbon_item = NULL;
 	}
 
@@ -640,6 +653,9 @@ sync_menu_shell (GtkMenuShell *menu_shell,
 	  const gchar        *label_text;
 	  CFStringRef         cfstr      = NULL;
 	  MenuItemAttributes  attributes = 0;
+
+	  if (debug)
+	    g_printerr ("%s:   -> creating new\n", G_STRFUNC);
 
 	  label_text = get_menu_label_text (menu_item, &label);
 	  if (label_text)
@@ -656,7 +672,7 @@ sync_menu_shell (GtkMenuShell *menu_shell,
 	    attributes |= kMenuItemAttrHidden;
 
 	  InsertMenuItemTextWithCFString (carbon_menu, cfstr,
-					  carbon_index,
+					  carbon_index - 1,
 					  attributes, 0);
 	  SetMenuItemProperty (carbon_menu, carbon_index,
 			       IGE_QUARTZ_MENU_CREATOR,
@@ -685,10 +701,75 @@ sync_menu_shell (GtkMenuShell *menu_shell,
   g_list_free (children);
 }
 
+
+static gulong emission_hook_id = 0;
+
+static gboolean
+parent_set_emission_hook (GSignalInvocationHint *ihint,
+			  guint                  n_param_values,
+			  const GValue          *param_values,
+			  gpointer               data)
+{
+  GtkWidget *instance = g_value_get_object (param_values);
+
+  if (GTK_IS_MENU_ITEM (instance))
+    {
+      GtkWidget *previous_parent = g_value_get_object (param_values + 1);
+      GtkWidget *menu_shell      = NULL;
+
+      if (GTK_IS_MENU_SHELL (previous_parent))
+	{
+	  menu_shell = previous_parent;
+        }
+      else if (GTK_IS_MENU_SHELL (instance->parent))
+	{
+	  menu_shell = instance->parent;
+	}
+
+      if (menu_shell)
+        {
+	  CarbonMenu *carbon_menu = carbon_menu_get (menu_shell);
+
+	  if (carbon_menu)
+	    {
+#if 0
+	      g_printerr ("%s: item %s %p (%s, %s)\n", G_STRFUNC,
+			  previous_parent ? "removed from" : "added to",
+			  menu_shell,
+			  get_menu_label_text (instance, NULL),
+			  g_type_name (G_TYPE_FROM_INSTANCE (instance)));
+#endif
+
+	      sync_menu_shell (GTK_MENU_SHELL (menu_shell),
+			       carbon_menu->menu,
+			       carbon_menu->menu == (MenuRef) data,
+			       FALSE);
+	    }
+        }
+    }
+
+  return TRUE;
+}
+
+static void
+parent_set_emission_hook_remove (GtkWidget *widget,
+				 gpointer   data)
+{
+  g_signal_remove_emission_hook (g_signal_lookup ("parent-set",
+						  GTK_TYPE_WIDGET),
+				 emission_hook_id);
+}
+
+
+/*
+ * public functions
+ */
+
 void
 ige_mac_menu_set_menu_bar (GtkMenuShell *menu_shell)
 {
   MenuRef carbon_menubar;
+  guint   hook_id;
 
   g_return_if_fail (GTK_IS_MENU_SHELL (menu_shell));
 
@@ -703,7 +784,18 @@ ige_mac_menu_set_menu_bar (GtkMenuShell *menu_shell)
 
   setup_menu_event_handler ();
 
-  sync_menu_shell (menu_shell, carbon_menubar, TRUE);
+  emission_hook_id =
+    g_signal_add_emission_hook (g_signal_lookup ("parent-set",
+						 GTK_TYPE_WIDGET),
+				0,
+				parent_set_emission_hook,
+				carbon_menubar, NULL);
+
+  g_signal_connect (menu_shell, "destroy",
+		    G_CALLBACK (parent_set_emission_hook_remove),
+		    NULL);
+
+  sync_menu_shell (menu_shell, carbon_menubar, TRUE, FALSE);
 }
 
 void
