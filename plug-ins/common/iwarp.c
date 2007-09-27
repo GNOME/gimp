@@ -292,13 +292,14 @@ run (const gchar      *name,
   destdrawable = drawable = gimp_drawable_get (param[2].data.d_drawable);
   imageID = param[1].data.d_int32;
 
-  /*  Make sure that the drawable is gray or RGB color  */
+  /*  Make sure that the drawable is grayscale or RGB color  */
   if (gimp_drawable_is_rgb (drawable->drawable_id) ||
       gimp_drawable_is_gray (drawable->drawable_id))
     {
       switch (run_mode)
         {
         case GIMP_RUN_INTERACTIVE:
+        case GIMP_RUN_WITH_LAST_VALS:
           gimp_get_data (PLUG_IN_PROC, &iwarp_vals);
           gimp_tile_cache_ntiles (2 * (drawable->width + gimp_tile_width ()-1) /
                                   gimp_tile_width ());
@@ -309,10 +310,6 @@ run (const gchar      *name,
           break;
 
         case GIMP_RUN_NONINTERACTIVE:
-          status = GIMP_PDB_CALLING_ERROR;
-        break;
-
-        case GIMP_RUN_WITH_LAST_VALS:
           status = GIMP_PDB_CALLING_ERROR;
         break;
 

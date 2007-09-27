@@ -1,5 +1,11 @@
 2007-09-27  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/iwarp.c (run): show the dialog when called with
+	GIMP_RUN_WITH_LAST_VALS. This is better than just doing nothing
+	when being called from the Repeat menu item (bug #480796).
+
+2007-09-27  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/add-bevel.scm: fixed GimpImageType
 	parameter passed to gimp-layer-new. Do not register the script for
 	grayscale images, it doesn't handle them properly.
