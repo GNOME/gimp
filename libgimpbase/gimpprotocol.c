@@ -1779,9 +1779,9 @@ gp_params_destroy (GPParam *params,
 
         case GIMP_PDB_PARASITE:
           if (params[i].data.d_parasite.name)
-            g_free(params[i].data.d_parasite.name);
+            g_free (params[i].data.d_parasite.name);
           if (params[i].data.d_parasite.data)
-            g_free(params[i].data.d_parasite.data);
+            g_free (params[i].data.d_parasite.data);
           break;
 
         case GIMP_PDB_END:

@@ -346,11 +346,14 @@ set_run_mode_constant (GimpRunMode run_mode)
   sc.vptr->setimmutable(symbol);
 }
 
-static void     convert_string               (gchar  *str);
-static pointer  marshall_proc_db_call        (scheme *sc, pointer  a);
-static pointer  script_fu_register_call      (scheme *sc, pointer  a);
-static pointer  script_fu_menu_register_call (scheme *sc, pointer  a);
-static pointer  script_fu_quit_call          (scheme *sc, pointer  a);
+static void     convert_string                   (gchar  *str);
+static pointer  script_fu_marshal_procedure_call (scheme *sc, pointer  a);
+static void     script_fu_marshal_destroy_args   (GimpParam *params,
+                                                  gint       n_params);
+
+static pointer  script_fu_register_call          (scheme *sc, pointer  a);
+static pointer  script_fu_menu_register_call     (scheme *sc, pointer  a);
+static pointer  script_fu_quit_call              (scheme *sc, pointer  a);
 
 
 /*
@@ -511,7 +514,7 @@ init_procedures (void)
   symbol = sc.vptr->mk_symbol (&sc, "gimp-proc-db-call");
   sc.vptr->scheme_define (&sc, sc.global_env, symbol,
                           sc.vptr->mk_foreign_func (&sc,
-                                                    marshall_proc_db_call));
+                                                    script_fu_marshal_procedure_call));
   sc.vptr->setimmutable(symbol);
 
   gimp_procedural_db_query (".*", ".*", ".*", ".*", ".*", ".*", ".*",
@@ -580,7 +583,7 @@ convert_string (gchar *str)
 
 /* This is called by the Scheme interpreter to allow calls to GIMP functions */
 static pointer
-marshall_proc_db_call (scheme *sc, pointer a)
+script_fu_marshal_procedure_call (scheme *sc, pointer a)
 {
   GimpParam       *args;
   GimpParam       *values = NULL;
@@ -631,7 +634,7 @@ char *status_types[] = {
   "GIMP_PDB_CANCEL"
 };
 
-g_printerr ("\nIn marshall_proc_db_call ()\n");
+g_printerr ("\nIn script_fu_marshal_procedure_call ()\n");
 #endif
 
   /*  Make sure there are arguments  */
@@ -798,16 +801,17 @@ g_printerr ("      string arg is '%s'\n", args[i].data.d_string);
           if (success)
             {
               n_elements = args[i-1].data.d_int32;
-              if (n_elements < 0 || n_elements > sc->vptr->vector_length (vector))
+              if (n_elements < 0 ||
+                  n_elements > sc->vptr->vector_length (vector))
                 {
                   g_snprintf (error_str, sizeof (error_str),
                               "INT32 vector (argument %d) for function %s has "
                               "size of %ld but expected size of %d",
-                              i+1, proc_name, sc->vptr->vector_length (vector), n_elements);
+                              i+1, proc_name,
+                              sc->vptr->vector_length (vector), n_elements);
                   return foreign_error (sc, error_str, 0);
                 }
 
-              /* FIXME: Check that g_new returned non-NULL value. */
               args[i].data.d_int32array = g_new (gint32, n_elements);
 
               for (j = 0; j < n_elements; j++)
@@ -902,12 +906,14 @@ if (count > 0)
           if (success)
             {
               n_elements = args[i-1].data.d_int32;
-              if (n_elements < 0 || n_elements > sc->vptr->vector_length (vector))
+              if (n_elements < 0 ||
+                  n_elements > sc->vptr->vector_length (vector))
                 {
                   g_snprintf (error_str, sizeof (error_str),
                               "INT8 vector (argument %d) for function %s has "
                               "size of %ld but expected size of %d",
-                              i+1, proc_name, sc->vptr->vector_length (vector), n_elements);
+                              i+1, proc_name,
+                              sc->vptr->vector_length (vector), n_elements);
                   return foreign_error (sc, error_str, 0);
                 }
 
@@ -953,12 +959,14 @@ if (count > 0)
           if (success)
             {
               n_elements = args[i-1].data.d_int32;
-              if (n_elements < 0 || n_elements > sc->vptr->vector_length (vector))
+              if (n_elements < 0 ||
+                  n_elements > sc->vptr->vector_length (vector))
                 {
                   g_snprintf (error_str, sizeof (error_str),
                               "FLOAT vector (argument %d) for function %s has "
                               "size of %ld but expected size of %d",
-                              i+1, proc_name, sc->vptr->vector_length (vector), n_elements);
+                              i+1, proc_name,
+                              sc->vptr->vector_length (vector), n_elements);
                   return foreign_error (sc, error_str, 0);
                 }
 
@@ -1004,12 +1012,14 @@ if (count > 0)
           if (success)
             {
               n_elements = args[i-1].data.d_int32;
-              if (n_elements < 0 || n_elements > sc->vptr->vector_length (vector))
+              if (n_elements < 0 ||
+                  n_elements > sc->vptr->vector_length (vector))
                 {
                   g_snprintf (error_str, sizeof (error_str),
                               "STRING vector (argument %d) for function %s has "
                               "length of %ld but expected length of %d",
-                              i+1, proc_name, sc->vptr->vector_length (vector), n_elements);
+                              i+1, proc_name,
+                              sc->vptr->vector_length (vector), n_elements);
                   return foreign_error (sc, error_str, 0);
                 }
 
@@ -1525,7 +1535,7 @@ g_printerr ("      data '%.*s'\n",
   gimp_destroy_params (values, nvalues);
 
   /*  free up arguments and values  */
-  g_free (args);
+  script_fu_marshal_destroy_args (args, nparams);
 
   /*  free the query information  */
   g_free (proc_blurb);
@@ -1547,6 +1557,64 @@ g_printerr ("      data '%.*s'\n",
 #endif
 
   return return_val;
+
+}
+
+static void
+script_fu_marshal_destroy_args (GimpParam *params,
+                                gint       n_params)
+{
+  gint i;
+
+  for (i = 0; i < n_params; i++)
+    {
+      switch (params[i].type)
+        {
+        case GIMP_PDB_INT32:
+        case GIMP_PDB_INT16:
+        case GIMP_PDB_INT8:
+        case GIMP_PDB_FLOAT:
+        case GIMP_PDB_STRING:
+          break;
+
+        case GIMP_PDB_INT32ARRAY:
+          g_free (params[i].data.d_int32array);
+          break;
+
+        case GIMP_PDB_INT16ARRAY:
+          g_free (params[i].data.d_int16array);
+          break;
+
+        case GIMP_PDB_INT8ARRAY:
+          g_free (params[i].data.d_int8array);
+          break;
+
+        case GIMP_PDB_FLOATARRAY:
+          g_free (params[i].data.d_floatarray);
+          break;
+
+        case GIMP_PDB_STRINGARRAY:
+          g_free (params[i].data.d_stringarray);
+          break;
+
+        case GIMP_PDB_COLOR:
+        case GIMP_PDB_REGION:
+        case GIMP_PDB_DISPLAY:
+        case GIMP_PDB_IMAGE:
+        case GIMP_PDB_LAYER:
+        case GIMP_PDB_CHANNEL:
+        case GIMP_PDB_DRAWABLE:
+        case GIMP_PDB_SELECTION:
+        case GIMP_PDB_BOUNDARY:
+        case GIMP_PDB_VECTORS:
+        case GIMP_PDB_PARASITE:
+        case GIMP_PDB_STATUS:
+        case GIMP_PDB_END:
+          break;
+        }
+    }
+
+  g_free (params);
 }
 
 static pointer
