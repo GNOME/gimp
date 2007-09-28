@@ -83,8 +83,6 @@ load_image (const gchar *filename,
   FILE    *infile;
   guchar  *buf;
   guchar **rowbuf;
-  guchar  *profile;
-  guint    profile_size;
   gint     image_type;
   gint     layer_type;
   gint     tile_height;
@@ -266,8 +264,10 @@ load_image (const gchar *filename,
   if (! preview)
     {
       GString  *comment_buffer = NULL;
+      guint8   *profile        = NULL;
+      guint     profile_size   = 0;
 #ifdef HAVE_EXIF
-      ExifData *exif_data = NULL;
+      ExifData *exif_data      = NULL;
 #endif
 
       /* Step 5.0: save the original JPEG settings in a parasite */
@@ -379,26 +379,25 @@ load_image (const gchar *filename,
         }
 
       /* Step 5.3: check for an embedded ICC profile in APP2 markers */
-      if (jpeg_icc_read_profile (&cinfo, &profile, &profile_size))
+      jpeg_icc_read_profile (&cinfo, &profile, &profile_size);
+
+      if (cinfo.out_color_space == JCS_CMYK)
         {
-          if (cinfo.out_color_space == JCS_CMYK)
-            {
-              cmyk_transform = jpeg_load_cmyk_transform (profile, profile_size);
-            }
-          else  /* don't attach the profile if we are converting the data */
-            {
-              GimpParasite *parasite;
-
-              parasite = gimp_parasite_new ("icc-profile",
-                                            GIMP_PARASITE_PERSISTENT |
-                                            GIMP_PARASITE_UNDOABLE,
-                                            profile_size, profile);
-              gimp_image_parasite_attach (image_ID, parasite);
-              gimp_parasite_free (parasite);
-            }
-
-          g_free (profile);
+          cmyk_transform = jpeg_load_cmyk_transform (profile, profile_size);
         }
+      else if (profile) /* don't attach the profile if we are transforming */
+        {
+          GimpParasite *parasite;
+
+          parasite = gimp_parasite_new ("icc-profile",
+                                        GIMP_PARASITE_PERSISTENT |
+                                        GIMP_PARASITE_UNDOABLE,
+                                        profile_size, profile);
+          gimp_image_parasite_attach (image_ID, parasite);
+          gimp_parasite_free (parasite);
+        }
+
+      g_free (profile);
 
       /* Do not attach the "jpeg-save-options" parasite to the image
        * because this conflicts with the global defaults (bug #75398).
