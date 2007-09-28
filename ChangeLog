@@ -1,3 +1,8 @@
+2007-09-28  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/jpeg/jpeg-load.c: moved handling of the CMYK profile to
+	a utility function. Respect the user's color management settings.
+
 2007-09-27  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	Create SF-RUN-MODE constant for use in Script-Fu. Fixes bug #479893.

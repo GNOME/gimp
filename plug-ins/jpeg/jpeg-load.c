@@ -52,14 +52,16 @@
 #include "jpeg-load.h"
 
 
-static void  jpeg_load_resolution  (gint32                         image_ID,
-                                    struct jpeg_decompress_struct *cinfo);
+static void      jpeg_load_resolution  (gint32                         image_ID,
+                                        struct jpeg_decompress_struct *cinfo);
 
-static void  jpeg_sanitize_comment (gchar                         *comment);
+static void      jpeg_load_sanitize_comment (gchar    *comment);
 
-static void  jpeg_load_cmyk_to_rgb (guchar                        *buf,
-                                    glong                          pixels,
-                                    gpointer                       transform);
+static gpointer  jpeg_load_cmyk_transform   (guint8   *profile_data,
+                                             gsize     profile_len);
+static void      jpeg_load_cmyk_to_rgb      (guchar   *buf,
+                                             glong     pixels,
+                                             gpointer  transform);
 
 
 GimpDrawable    *drawable_global;
@@ -316,7 +318,7 @@ load_image (const gchar *filename,
         {
           GimpParasite *parasite;
 
-          jpeg_sanitize_comment (comment_buffer->str);
+          jpeg_load_sanitize_comment (comment_buffer->str);
           parasite = gimp_parasite_new ("gimp-comment",
                                         GIMP_PARASITE_PERSISTENT,
                                         strlen (comment_buffer->str) + 1,
@@ -379,34 +381,11 @@ load_image (const gchar *filename,
       /* Step 5.3: check for an embedded ICC profile in APP2 markers */
       if (jpeg_icc_read_profile (&cinfo, &profile, &profile_size))
         {
-#ifdef HAVE_LCMS
           if (cinfo.out_color_space == JCS_CMYK)
             {
-              cmsHPROFILE cmyk_profile;
-
-              cmyk_profile = cmsOpenProfileFromMem (profile, profile_size);
-
-              if (cmyk_profile)
-                {
-                  if (cmsGetColorSpace (cmyk_profile) == icSigCmykData)
-                    {
-                      cmsHPROFILE rgb_profile = cmsCreate_sRGBProfile ();
-
-                      cmyk_transform =
-                        cmsCreateTransform (cmyk_profile, TYPE_CMYK_8_REV,
-                                            rgb_profile,  TYPE_RGB_8,
-                                            0, 0);
-
-                      cmsCloseProfile (rgb_profile);
-                    }
-
-                  cmsCloseProfile (cmyk_profile);
-                }
+              cmyk_transform = jpeg_load_cmyk_transform (profile, profile_size);
             }
-#endif
-
-          /* don't attach the CMYK profile we are using to convert the data */
-          if (! cmyk_transform)
+          else  /* don't attach the profile if we are converting the data */
             {
               GimpParasite *parasite;
 
@@ -553,7 +532,7 @@ jpeg_load_resolution (gint32                         image_ID,
  * non-ASCII characters such as a copyright sign, a soft hyphen, etc.
  */
 static void
-jpeg_sanitize_comment (gchar *comment)
+jpeg_load_sanitize_comment (gchar *comment)
 {
   if (! g_utf8_validate (comment, -1, NULL))
     {
@@ -913,6 +892,84 @@ load_thumbnail_image (const gchar *filename,
 }
 
 #endif /* HAVE_EXIF */
+
+
+static gpointer
+jpeg_load_cmyk_transform (guint8 *profile_data,
+                          gsize   profile_len)
+{
+#ifdef HAVE_LCMS
+  GimpColorConfig *config       = gimp_get_color_configuration ();
+  cmsHPROFILE      cmyk_profile = NULL;
+  cmsHPROFILE      rgb_profile  = NULL;
+  cmsHTRANSFORM    transform;
+
+  /*  try to load the embedded CMYK profile  */
+  if (profile_data)
+    {
+      cmyk_profile = cmsOpenProfileFromMem (profile_data, profile_len);
+
+      if (cmyk_profile)
+        {
+          if (! cmsGetColorSpace (cmyk_profile) == icSigCmykData)
+            {
+              cmsCloseProfile (cmyk_profile);
+              cmyk_profile = NULL;
+            }
+        }
+    }
+
+  /*  if that fails, try to load the CMYK profile configured in the prefs  */
+  if (! cmyk_profile && config->cmyk_profile)
+    {
+      cmyk_profile = cmsOpenProfileFromFile (config->cmyk_profile, "r");
+
+      if (cmyk_profile && ! cmsGetColorSpace (cmyk_profile) == icSigCmykData)
+        {
+          cmsCloseProfile (cmyk_profile);
+          cmyk_profile = NULL;
+        }
+    }
+
+  /*  bail out if we can't load any CMYK profile  */
+  if (! cmyk_profile)
+    {
+      g_object_unref (config);
+      return NULL;
+    }
+
+  /*  try to load the RGB profile configured in the prefs  */
+  if (config->rgb_profile)
+    {
+      rgb_profile = cmsOpenProfileFromFile (config->rgb_profile, "r");
+
+      if (rgb_profile && ! cmsGetColorSpace (rgb_profile) == icSigRgbData)
+        {
+          cmsCloseProfile (rgb_profile);
+          rgb_profile = NULL;
+        }
+    }
+
+  /*  use the built-in sRGB profile as fallback  */
+  if (! rgb_profile)
+    {
+      rgb_profile = cmsCreate_sRGBProfile ();
+    }
+
+  g_object_unref (config);
+
+  transform = cmsCreateTransform (cmyk_profile, TYPE_CMYK_8_REV,
+                                  rgb_profile,  TYPE_RGB_8,
+                                  0, 0);
+
+  cmsCloseProfile (cmyk_profile);
+  cmsCloseProfile (rgb_profile);
+
+  return transform;
+#else  /* HAVE_LCMS */
+  return NULL;
+#endif
+}
 
 
 static void
