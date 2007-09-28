@@ -526,7 +526,7 @@ gimp_hwb_to_rgb (gdouble  hue,
  *
  * The function changes the arguments to point to the HSV value
  * corresponding, with the returned values in the following
- * ranges: H [0, 360], S [0, 255], V [0, 255].
+ * ranges: H [0, 359], S [0, 255], V [0, 255].
  **/
 void
 gimp_rgb_to_hsv_int (gint *red,
@@ -561,7 +561,9 @@ gimp_rgb_to_hsv_int (gint *red,
     s = delta / v;
 
   if (s == 0.0)
-    h = 0.0;
+    {
+      h = 0.0;
+    }
   else
     {
       if (r == v)
@@ -573,6 +575,7 @@ gimp_rgb_to_hsv_int (gint *red,
 
       if (h < 0.0)
         h += 360.0;
+
       if (h > 360.0)
         h -= 360.0;
     }
@@ -580,6 +583,10 @@ gimp_rgb_to_hsv_int (gint *red,
   *red   = ROUND (h);
   *green = ROUND (s * 255.0);
   *blue  = ROUND (v);
+
+  /* avoid the ambiguity of returning different values for the same color */
+  if (*red == 360)
+    *red = 0;
 }
 
 /**
@@ -616,9 +623,9 @@ gimp_hsv_to_rgb_int (gint *hue,
       v = *value      / 255.0;
 
       if (h == 360)
-         h_temp = 0;
+        h_temp = 0;
       else
-         h_temp = h;
+        h_temp = h;
 
       h_temp = h_temp / 60.0;
       i = floor (h_temp);
