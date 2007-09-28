@@ -1,6 +1,6 @@
 2007-09-28  Sven Neumann  <sven@gimp.org>
 
-	* libgimpcolor/gimpcolorspace.c (gimp_hwb_to_rgb): avoid the
+	* libgimpcolor/gimpcolorspace.c (gimp_hsv_to_rgb_int): avoid the
 	ambiguity of returning different values for the same color and
 	limit the Hue output range to [0..359].
 
