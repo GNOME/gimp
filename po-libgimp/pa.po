@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD.pa\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-17 14:38+0100\n"
-"PO-Revision-Date: 2007-09-28 05:51+0530\n"
+"PO-Revision-Date: 2007-09-28 07:13+0530\n"
 "Last-Translator: ASB <aalam@users.sf.net>\n"
 "Language-Team: Punjabi <punjabi-l10n@users.sf.net>\n"
 "MIME-Version: 1.0\n"
@@ -36,7 +36,7 @@ msgstr "%s ਪਲੱਗਇਨ ਲੇਅਰ ਹੈਂਡਲ ਨਹੀਂ ਕਰ �
 #: ../libgimp/gimpexport.c:218 ../libgimp/gimpexport.c:227
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:254
 msgid "Merge Visible Layers"
-msgstr "ਦਿੱਖ ਪਰਤਾਂ ਨੂੰ ਵਿਲੀਨ ਕਰੋ"
+msgstr "ਦਿੱਖ ਲੇਅਰਾਂ ਮਰਜ਼ ਕਰੋ"
 
 #: ../libgimp/gimpexport.c:226
 #, c-format
@@ -50,7 +50,7 @@ msgstr "%s ਪਲੱਗਇਨ ਕੇਵਲ ਲੇਅਰ, ਜੋ ਕਿ ਐਨੀ
 
 #: ../libgimp/gimpexport.c:236 ../libgimp/gimpexport.c:245
 msgid "Save as Animation"
-msgstr "ਸਜੀਵਤਾ ਦੇ ਤੌਰ ਤੇ ਸੰਭਾਲੋ"
+msgstr "ਐਨੀਮੇਸ਼ਨ ਵਾਂਗ ਸੰਭਾਲੋ"
 
 #: ../libgimp/gimpexport.c:245 ../libgimp/gimpexport.c:254
 #: ../libgimp/gimpexport.c:263
@@ -173,7 +173,7 @@ msgstr "ਤੁਹਾਡਾ ਚਿੱਤਰ ਹੇਠਲੇ ਕਾਰਨਾਂ �
 #. the footline
 #: ../libgimp/gimpexport.c:573
 msgid "The export conversion won't modify your original image."
-msgstr "ਐਕਸਪੋਰਟ ਕਨਵਰਜ਼ਨ ਤੁਹਾਡੇ ਮੁੱਢਲੇ ਚਿੱਤਰ ਨੂੰ ਤਬਦੀਲ ਨਹੀਂ ਕਰੇਗਾ ।"
+msgstr "ਐਕਸਪੋਰਟ ਕਨਵਰਜ਼ਨ ਤੁਹਾਡੇ ਅਸਲੀ ਚਿੱਤਰ ਨੂੰ ਤਬਦੀਲ ਨਹੀਂ ਕਰੇਗਾ ।"
 
 #: ../libgimp/gimpexport.c:673
 #, c-format
@@ -195,19 +195,19 @@ msgstr ""
 
 #: ../libgimp/gimpfontselectbutton.c:130
 msgid "Font Selection"
-msgstr "ਫੋਟ ਚੋਣ"
+msgstr "ਫੋਂਟ ਚੋਣ"
 
 #: ../libgimp/gimpfontselectbutton.c:145
 msgid "Sans"
-msgstr ""
+msgstr "Sans"
 
 #: ../libgimp/gimpgradientselectbutton.c:148
 msgid "Gradient Selection"
-msgstr "ਢਾਲਵਾ ਚੋਣ"
+msgstr "ਗਰੇਡੀਐਂਟ ਚੋਣ"
 
 #: ../libgimp/gimpmenu.c:450 ../libgimpwidgets/gimpintstore.c:239
 msgid "(Empty)"
-msgstr ""
+msgstr "(ਖਾਲੀ)"
 
 #: ../libgimp/gimppaletteselectbutton.c:130
 msgid "Palette Selection"
@@ -215,67 +215,67 @@ msgstr ""
 
 #: ../libgimp/gimppatternselectbutton.c:156
 msgid "Pattern Selection"
-msgstr "ਤਰਤੀਬ ਚੋਣ"
+msgstr "ਪੈਟਰਨ ਚੋਣ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:140
 msgid "by name"
-msgstr ""
+msgstr "ਨਾਂ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:141
 msgid "by description"
-msgstr ""
+msgstr "ਵੇਰਵੇ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:142
 msgid "by help"
-msgstr ""
+msgstr "ਮੱਦਦ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:143
 msgid "by author"
-msgstr ""
+msgstr "ਲੇਖਕ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:144
 msgid "by copyright"
-msgstr ""
+msgstr "ਕਾਪੀਰਾਈਟ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:145
 msgid "by date"
-msgstr ""
+msgstr "ਮਿਤੀ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:146
 msgid "by type"
-msgstr ""
+msgstr "ਟਾਈਪ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:377
 msgid "Searching"
-msgstr ""
+msgstr "ਖੋਜ ਜਾਰੀ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:388
 msgid "Searching by name"
-msgstr ""
+msgstr "ਨਾਂ ਨਾਲ ਖੋਜ ਜਾਰੀ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:409
 msgid "Searching by description"
-msgstr ""
+msgstr "ਵੇਰਵੇ ਨਾਲ ਖੋਜ ਜਾਰੀ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:416
 msgid "Searching by help"
-msgstr ""
+msgstr "ਮੱਦਦ ਨਾਲ ਖੋਜ ਜਾਰੀ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:423
 msgid "Searching by author"
-msgstr ""
+msgstr "ਲੇਖਕ ਨਾਲ ਖੋਜ ਜਾਰੀ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:430
 msgid "Searching by copyright"
-msgstr ""
+msgstr "ਕਾਪੀਰਾਈਟ ਨਾਲ ਖੋਜ ਜਾਰੀ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:437
 msgid "Searching by date"
-msgstr ""
+msgstr "ਮਿਤੀ ਨਾਲ ਖੋਜ ਜਾਰੀ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:444
 msgid "Searching by type"
-msgstr ""
+msgstr "ਟਾਈਪ ਨਾਲ ਖੋਜ ਜਾਰੀ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:454
 #, c-format
@@ -286,7 +286,7 @@ msgstr[1] ""
 
 #: ../libgimp/gimpprocbrowserdialog.c:463
 msgid "No matches for your query"
-msgstr ""
+msgstr "ਤੁਹਾਡੀ ਕਿਊਰੀ ਲਈ ਕੋਈ ਮੇਲ ਨਹੀਂ"
 
 #: ../libgimp/gimpprocbrowserdialog.c:467
 #, c-format
@@ -298,19 +298,19 @@ msgstr[1] ""
 #. count label
 #: ../libgimp/gimpprocbrowserdialog.c:516 ../libgimpwidgets/gimpbrowser.c:114
 msgid "No matches"
-msgstr ""
+msgstr "ਕੋਈ ਮੇਲ ਨਹੀਂ"
 
 #: ../libgimp/gimpprocview.c:143
 msgid "Parameters"
-msgstr ""
+msgstr "ਪੈਰਾਮੀਟਰ"
 
 #: ../libgimp/gimpprocview.c:156
 msgid "Return Values"
-msgstr ""
+msgstr "ਜਵਾਬੀ ਮੁੱਲ"
 
 #: ../libgimp/gimpprocview.c:169
 msgid "Additional Information"
-msgstr ""
+msgstr "ਹੋਰ ਜਾਣਕਾਰੀ"
 
 #: ../libgimp/gimpprocview.c:210
 msgid "Author:"
@@ -318,19 +318,19 @@ msgstr "ਲੇਖਕ:"
 
 #: ../libgimp/gimpprocview.c:222
 msgid "Date:"
-msgstr ""
+msgstr "ਮਿਤੀ:"
 
 #: ../libgimp/gimpprocview.c:234
 msgid "Copyright:"
-msgstr ""
+msgstr "ਕਾਪੀਰਾਈਟ:"
 
 #: ../libgimp/gimpunitcache.c:57
 msgid "percent"
-msgstr "ਪ੍ਤੀਸ਼ਤ"
+msgstr "ਫੀਸਦੀ"
 
 #: ../libgimpbase/gimpbaseenums.c:27
 msgid "_White (full opacity)"
-msgstr "ਚਿੱਟਾ_White (ਪੂਰਾ ਧੁੰਦਲਾਪਨ)"
+msgstr "ਚਿੱਟਾ (ਪੂਰਾ ਧੁੰਦਲਾਪਨ)(_W)"
 
 #: ../libgimpbase/gimpbaseenums.c:28
 msgid "_Black (full transparency)"
@@ -354,15 +354,15 @@ msgstr "ਲੇਅਰ ਦੀ ਗਰੇ-ਸਕੇਲ ਕਾਪੀ(_G)"
 
 #: ../libgimpbase/gimpbaseenums.c:33
 msgid "C_hannel"
-msgstr ""
+msgstr "ਚੈਨਲ(_h)"
 
 #: ../libgimpbase/gimpbaseenums.c:63
 msgid "FG to BG (RGB)"
-msgstr "FG ਤੋ BG (RGB)"
+msgstr "FG ਤੋਂ BG (RGB)"
 
 #: ../libgimpbase/gimpbaseenums.c:64
 msgid "FG to BG (HSV)"
-msgstr "FG ਤੋ BG (HSV)"
+msgstr "FG ਤੋਂ BG (HSV)"
 
 #: ../libgimpbase/gimpbaseenums.c:65
 msgid "FG to transparent"
@@ -446,7 +446,7 @@ msgstr "ਮਿਡ-ਟੋਨ ਚੈੱਕ"
 
 #: ../libgimpbase/gimpbaseenums.c:232
 msgid "Dark checks"
-msgstr ""
+msgstr "ਗੂੜਾ ਚੈੱਕ"
 
 #: ../libgimpbase/gimpbaseenums.c:233
 msgid "White only"
@@ -470,27 +470,27 @@ msgstr "ਪੈਟਰਨ"
 
 #: ../libgimpbase/gimpbaseenums.c:293
 msgid "Lightness"
-msgstr ""
+msgstr "ਲਾਈਟਨੈਂਸ"
 
 #: ../libgimpbase/gimpbaseenums.c:294
 msgid "Luminosity"
-msgstr ""
+msgstr "ਲੁਮਿਨੋਸਟੀ"
 
 #: ../libgimpbase/gimpbaseenums.c:295
 msgid "Average"
-msgstr ""
+msgstr "ਔਸਤ"
 
 #: ../libgimpbase/gimpbaseenums.c:323
 msgid "Dodge"
-msgstr ""
+msgstr "ਡੋਡਜੀ"
 
 #: ../libgimpbase/gimpbaseenums.c:324
 msgid "Burn"
-msgstr ""
+msgstr "ਬਰਨ"
 
 #: ../libgimpbase/gimpbaseenums.c:388
 msgid "gradient|Linear"
-msgstr ""
+msgstr "ਲੀਨੀਅਰ"
 
 #: ../libgimpbase/gimpbaseenums.c:389
 msgid "Bi-linear"
@@ -498,7 +498,7 @@ msgstr "ਬਾਈ-ਲੀਨੀਅਰ"
 
 #: ../libgimpbase/gimpbaseenums.c:390
 msgid "Radial"
-msgstr "ਕਰਣੀ"
+msgstr "ਰੇਡੀਕਲ"
 
 #: ../libgimpbase/gimpbaseenums.c:391 ../libgimpwidgets/gimpwidgetsenums.c:24
 msgid "Square"
@@ -618,7 +618,7 @@ msgstr "ਵਾਧਾ"
 
 #: ../libgimpbase/gimpbaseenums.c:623 ../modules/cdisplay_lcms.c:214
 msgid "None"
-msgstr "ਕੋਈ ਨਹੀ"
+msgstr "ਕੋਈ ਨਹੀਂ"
 
 #: ../libgimpbase/gimpbaseenums.c:624
 msgid "Sawtooth wave"
@@ -630,15 +630,15 @@ msgstr "ਤਿਕੋਨੀ ਲਹਿਰ"
 
 #: ../libgimpbase/gimpbaseenums.c:654
 msgid "Run interactively"
-msgstr ""
+msgstr "ਇੰਟਰ-ਐਕਟਿਵਲੀ ਚਲਾਓ"
 
 #: ../libgimpbase/gimpbaseenums.c:655
 msgid "Run non-interactively"
-msgstr ""
+msgstr "ਗ਼ੈਰ-ਇੰਟਰ-ਐਕਟਿਵਲੀ ਚਲਾਓ"
 
 #: ../libgimpbase/gimpbaseenums.c:656
 msgid "Run with last used values"
-msgstr ""
+msgstr "ਆਖਰੀ ਵਰਤੇ ਮੁੱਲਾਂ ਨਾਲ ਚਲਾਓ"
 
 #: ../libgimpbase/gimpbaseenums.c:684
 msgid "Pixels"
@@ -666,7 +666,7 @@ msgstr "ਨਾਰਮਲ (ਅੱਗੇ)"
 
 #: ../libgimpbase/gimpbaseenums.c:745
 msgid "Corrective (Backward)"
-msgstr ""
+msgstr "ਕੱਰੀਇਕਟਿਵ (ਪਿੱਛੇ)"
 
 #: ../libgimpbase/gimpbaseenums.c:775
 msgid "Adjust"
@@ -715,55 +715,55 @@ msgstr "%.2f KB"
 #: ../libgimpbase/gimpmemsize.c:190
 #, c-format
 msgid "%.1f KB"
-msgstr "%.1f ਕਿਲੋ-ਬਾਈਟ"
+msgstr "%.1f KB"
 
 #: ../libgimpbase/gimpmemsize.c:194
 #, c-format
 msgid "%d KB"
-msgstr "%d ਕੇਬੀ"
+msgstr "%d KB"
 
 #: ../libgimpbase/gimpmemsize.c:201
 #, c-format
 msgid "%.2f MB"
-msgstr "%.2f ਐਮਬੀ"
+msgstr "%.2f MB"
 
 #: ../libgimpbase/gimpmemsize.c:205
 #, c-format
 msgid "%.1f MB"
-msgstr "%.1f ਐਮਬੀ"
+msgstr "%.1f MB"
 
 #: ../libgimpbase/gimpmemsize.c:209
 #, c-format
 msgid "%d MB"
-msgstr "%d ਐਮਬੀ"
+msgstr "%d MB"
 
 #: ../libgimpbase/gimpmemsize.c:216
 #, c-format
 msgid "%.2f GB"
-msgstr "%.2f ਜੀਬੀ"
+msgstr "%.2f GB"
 
 #: ../libgimpbase/gimpmemsize.c:220
 #, c-format
 msgid "%.1f GB"
-msgstr "%.1f ਜੀਬੀ"
+msgstr "%.1f GB"
 
 #: ../libgimpbase/gimpmemsize.c:224
 #, c-format
 msgid "%d GB"
-msgstr "%d ਜੀਬੀ"
+msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
 #: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:407
 msgid "(invalid UTF-8 string)"
-msgstr "(ਅਯੋਗ UTF-8 ਸਤਰ)"
+msgstr "(ਗਲਤ UTF-8 ਲਾਈਨ)"
 
 #: ../libgimpconfig/gimpcolorconfig.c:40
 msgid "Mode of operation for color management."
-msgstr ""
+msgstr "ਰੰਗ ਪਰਬੰਧ ਲਈ ਓਪਰੇਸ਼ਨ ਦਾ ਮੋਡ"
 
 #: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "The color profile of your (primary) monitor."
-msgstr ""
+msgstr "ਤੁਹਾਡੇ (ਪ੍ਰਾਇਮਰੀ) ਮਾਨੀਟਰ ਲਈ ਰੰਗ ਪਰੋਫਾਇਲ ਹੈ।"
 
 #: ../libgimpconfig/gimpcolorconfig.c:44
 msgid ""
@@ -771,14 +771,16 @@ msgid ""
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
+"ਜਦੋਂ ਯੋਗ ਕੀਤਾ ਤਾਂ ਜੈਮਪ ਵਿੰਡੋਜ਼ ਸਿਸਟਮ ਤੋਂ ਕਲਰ ਪਰੋਫਾਇਲ ਵੇਖਾਉਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੇਗਾ। "
+"  ਸੰਰਚਿਤ ਮਾਨੀਟਰ ਪਰੋਫਾਇਲ ਨੂੰ ਤਦ ਫਾਲ-ਬੈਕ ਦੇ ਤੌਰ ਉੱਤੇ ਹੀ ਵਰਤਿਆ ਜਾਵੇਗਾ।"
 
 #: ../libgimpconfig/gimpcolorconfig.c:48
 msgid "The default RGB working space color profile."
-msgstr ""
+msgstr "ਡਿਫਾਲਟ RGB ਵਰਕਿੰਗ ਸਪੇਸ ਰੰਗ ਪਰੋਫਾਇਲ ਹੈ।"
 
 #: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The CMYK color profile used to convert between RGB and CMYK."
-msgstr ""
+msgstr "RGB ਅਤੇ CMYK ਵਿੱਚ ਬਦਲਣ ਵਾਸਤੇ ਵਰਤਿਆ ਜਾਂਦਾ CMYK ਰੰਗ ਪਰੋਫਾਇਲ"
 
 #: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The color profile used for simulating a printed version (softproof)."
@@ -786,7 +788,7 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "Sets how colors are mapped for your display."
-msgstr ""
+msgstr "ਤੁਹਾਡੇ ਡਿਸਪਲੇਅ ਉੱਤੇ ਕਿੰਨੇ ਰੰਗ ਮੈਪ ਕੀਤੇ ਜਾਣੇ ਹਨ।"
 
 #: ../libgimpconfig/gimpcolorconfig.c:56
 msgid ""
@@ -796,19 +798,19 @@ msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
-msgstr ""
+msgstr "ਕੋਈ ਕਲਰ ਪਰਬੰਧ ਨਹੀਂ ਹੈ"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:25
 msgid "Color managed display"
-msgstr ""
+msgstr "ਕਲਰ ਪਰਬੰਧ ਡਿਸਪਲੇਅ"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:26
 msgid "Print simulation"
-msgstr ""
+msgstr "ਪਰਿੰਟ ਸਿਮੂਲੇਸ਼ਨ"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:56
 msgid "Perceptual"
-msgstr "ਪ੍ਰਤੱਖ ਗਿਆਨਸ਼ੀਲ"
+msgstr ""
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:57
 msgid "Relative colorimetric"
@@ -825,7 +827,7 @@ msgstr "ਪੂਰਨ ਕਲੋਰੀਮੈਟ੍ਰਿਕ"
 #: ../libgimpconfig/gimpconfig-deserialize.c:97
 #, c-format
 msgid "value for token %s is not a valid UTF-8 string"
-msgstr "ਟੋਕਨ %s ਦਾ ਮੁੱਲ ਜਾਇਜ ਯੂਟੀਐਫ-8 ਸਤਰ ਨ੍ਰਿ ਹੈ"
+msgstr "ਟੋਕਨ %s ਦਾ ਮੁੱਲ ਜਾਇਜ UTF-8 ਲਾਈਨ ਨਹੀਂ ਹੈ"
 
 #. please don't translate 'yes' and 'no'
 #: ../libgimpconfig/gimpconfig-deserialize.c:436
@@ -836,7 +838,7 @@ msgstr "ਬੂਲੀਅਨ ਟੋਕਨ  %s ਲਈ 'ਹਾਂ' ਜਾਂ 'ਨਹ
 #: ../libgimpconfig/gimpconfig-deserialize.c:510
 #, c-format
 msgid "invalid value '%s' for token %s"
-msgstr "ਗਲਤ ਮੁੱਲ '%s' ਟੋਕਨ %s ਲਈ"
+msgstr "ਟੋਕਨ %2$s ਲਈ ਗਲਤ ਮੁੱਲ '%1$s"
 
 #: ../libgimpconfig/gimpconfig-deserialize.c:525
 #, c-format
@@ -874,7 +876,7 @@ msgstr "'%s' ਲਈ ਆਰਜ਼ੀ ਫਾਇਲ ਨਹੀ ਬਣਾ ਸਕਿ�
 #: ../libgimpconfig/gimpconfigwriter.c:149
 #, c-format
 msgid "Could not open '%s' for writing: %s"
-msgstr " '%s' ਨੂੰ ਲਿਖਣ ਲਈ ਖੋਲਣਾ ਅਸਫਲ: %s"
+msgstr "'%s' ਨੂੰ ਲਿਖਣ ਲਈ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ: %s"
 
 #: ../libgimpconfig/gimpconfigwriter.c:674
 #, c-format
@@ -901,23 +903,23 @@ msgstr "'%s' ਨੂੰ ਬਣਾਇਆ ਨਹੀ ਜਾ ਸਕਿਆ ਹੈ: %s"
 
 #: ../libgimpconfig/gimpscanner.c:255
 msgid "invalid UTF-8 string"
-msgstr "ਗਲਤ ਯੂਟੀਐਫ-8 ਸਤਰ"
+msgstr "ਗਲਤ UTF-8 ਲਾਈਨ"
 
 #: ../libgimpconfig/gimpscanner.c:606
 #, c-format
 msgid "Error while parsing '%s' in line %d: %s"
-msgstr "ਗਲਤੀ, '%s' ਨੂੰ ਪਾਰਸ ਕਰਨ ਦੌਰਾਨ, ਸਤਰ %d ਵਿੱਚ: %s"
+msgstr "ਗਲਤੀ, '%s' ਨੂੰ ਪਾਰਸ ਕਰਨ ਦੌਰਾਨ, ਲਾਈਨ %d ਵਿੱਚ: %s"
 
 #: ../libgimpmodule/gimpmodule.c:153 ../libgimpmodule/gimpmodule.c:171
 #: ../libgimpmodule/gimpmodule.c:280 ../libgimpmodule/gimpmodule.c:307
 #: ../libgimpmodule/gimpmodule.c:418
 #, c-format
 msgid "Module '%s' load error: %s"
-msgstr "ਮੈਡਿਊਲ '%s' ਲੋਡ ਕਰਨ ਵਿੱਚ ਗਲਤੀ: %s"
+msgstr "ਮੋਡੀਊਲ '%s' ਲੋਡ ਕਰਨ ਵਿੱਚ ਗਲਤੀ: %s"
 
 #: ../libgimpmodule/gimpmodule.c:375
 msgid "Module error"
-msgstr "ਮੈਡਿਊਲ ਗਲਤੀ"
+msgstr "ਮੋਡੀਊਲ ਗਲਤੀ"
 
 #: ../libgimpmodule/gimpmodule.c:376
 msgid "Loaded"
@@ -925,11 +927,11 @@ msgstr "ਲੋਡ ਕੀਤਾ"
 
 #: ../libgimpmodule/gimpmodule.c:377
 msgid "Load failed"
-msgstr "ਲੋਡ ਅਸਫਲ"
+msgstr "ਲੋਡ ਫੇਲ੍ਹ"
 
 #: ../libgimpmodule/gimpmodule.c:378
 msgid "Not loaded"
-msgstr "ਲੋਡ ਨਹੀ ਹੋਇਆ"
+msgstr "ਲੋਡ ਨਹੀਂ ਹੋਇਆ"
 
 #: ../libgimpthumb/gimpthumb-utils.c:125
 #, c-format
@@ -937,15 +939,17 @@ msgid ""
 "Cannot determine a valid home directory.\n"
 "Thumbnails will be stored in the folder for temporary files (%s) instead."
 msgstr ""
+"ਇੱਕ ਠੀਕ ਘਰ ਡਾਇਰੈਕਟਰੀ ਨਹੀਂ ਜਾਣੀ ਨਹੀਂ ਜਾ ਸਕੀ।\n"
+"ਥੰਮਨੇਲਾਂ ਨੂੰ ਆਰਜ਼ੀ ਫਾਇਲਾਂ (%s) ਦੀ ਬਜਾਏ ਫੋਲਡਰ ਵਿੱਚ ਸੰਭਾਲਿਆ ਜਾਵੇਗਾ।"
 
 #: ../libgimpthumb/gimpthumb-utils.c:249 ../libgimpthumb/gimpthumb-utils.c:317
 #, c-format
 msgid "Failed to create thumbnail folder '%s'."
-msgstr "ਥੰਮਨੇਲ ਫੋਲਡਰ '%s' ਬਣਾਉਣ ਵਿੱਚ ਅਸਫਲ ।"
+msgstr "ਥੰਮਨੇਲ ਫੋਲਡਰ '%s' ਬਣਾਉਣ ਲਈ ਫੇਲ੍ਹ ਹੈ।"
 
 #: ../libgimpthumb/gimpthumbnail.c:498
 msgid "Thumbnail contains no Thumb::URI tag"
-msgstr ""
+msgstr "ਥੰਮਨੇਲ ਵਿੱਚ ਕੋਈ ਥੰਮ ਨਹੀਂ ਹੈ::URI ਟੈਗ"
 
 #: ../libgimpthumb/gimpthumbnail.c:898
 #, c-format
@@ -1354,7 +1358,7 @@ msgstr "ਮਾਨੀਟਰ ਪਰੋਫਾਇਲ:"
 
 #: ../modules/cdisplay_lcms.c:270
 msgid "Print simulation profile:"
-msgstr ""
+msgstr "ਪਰਿੰਟ ਸਿਮੂਲੇਸ਼ਨ ਪਰੋਫਾਇਲ:"
 
 #: ../modules/cdisplay_proof.c:103
 msgid "Color proof filter using ICC color profile"
