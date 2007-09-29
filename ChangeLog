@@ -1,3 +1,9 @@
+2007-09-29  Michael Natterer  <mitch@gimp.org>
+
+	* libgimp/gimp.c (gimp_extension_process): loop around select() as
+	long as it returns EINTR. Enables debugging of script-fu on
+	OSX (and maybe all BSDish systems).
+
 2007-09-28  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-console.c: allocate the

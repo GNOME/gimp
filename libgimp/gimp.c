@@ -1339,32 +1339,37 @@ void
 gimp_extension_process (guint timeout)
 {
 #ifndef G_OS_WIN32
-  fd_set readfds;
-  gint   select_val;
-  struct timeval  tv;
-  struct timeval *tvp;
+  gint select_val;
 
-  if (timeout)
+  do
     {
-      tv.tv_sec  = timeout / 1000;
-      tv.tv_usec = (timeout % 1000) * 1000;
-      tvp = &tv;
-    }
-  else
-    tvp = NULL;
+      fd_set readfds;
+      struct timeval  tv;
+      struct timeval *tvp;
 
-  FD_ZERO (&readfds);
-  FD_SET (g_io_channel_unix_get_fd (_readchannel), &readfds);
+      if (timeout)
+	{
+	  tv.tv_sec  = timeout / 1000;
+	  tv.tv_usec = (timeout % 1000) * 1000;
+	  tvp = &tv;
+	}
+      else
+	tvp = NULL;
 
-  if ((select_val = select (FD_SETSIZE, &readfds, NULL, NULL, tvp)) > 0)
-    {
-      gimp_single_message ();
+      FD_ZERO (&readfds);
+      FD_SET (g_io_channel_unix_get_fd (_readchannel), &readfds);
+
+      if ((select_val = select (FD_SETSIZE, &readfds, NULL, NULL, tvp)) > 0)
+	{
+	  gimp_single_message ();
+	}
+      else if (select_val == -1 && errno != EINTR)
+	{
+	  perror ("gimp_extension_process");
+	  gimp_quit ();
+	}
     }
-  else if (select_val == -1)
-    {
-      perror ("gimp_extension_process");
-      gimp_quit ();
-    }
+  while (select_val == -1 && errno == EINTR);
 #else
   /* Zero means infinite wait for us, but g_poll and
    * g_io_channel_win32_poll use -1 to indicate
