@@ -326,11 +326,13 @@ pygimp_param_from_tuple(PyObject *args, const GimpParamDef *ptype, int nparams)
     }
     if (!PyTuple_Check(tuple)) {
 	PyErr_SetString(PyExc_TypeError, "wrong type of parameter");
+        Py_DECREF(tuple);
 	return NULL;
     }
 
     if (PyTuple_Size(tuple) != nparams) {
 	PyErr_SetString(PyExc_TypeError, "wrong number of parameters");
+        Py_DECREF(tuple);
 	return NULL;
     }
 

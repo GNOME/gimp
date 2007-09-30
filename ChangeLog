@@ -1,5 +1,10 @@
 2007-09-30  Manish Singh  <yosh@gimp.org>
 
+	* plug-ins/pygimp/pygimp-pdb.c (pygimp_param_from_tuple): drop the
+	reference we added to the args tuple in the error case.
+
+2007-09-30  Manish Singh  <yosh@gimp.org>
+
 	* plug-ins/pygimp/plug-ins/foggify.py: fill layer before using it.
 	Fixes bug #481798, thanks to Jakub Friedl for suggesting fix.
 
