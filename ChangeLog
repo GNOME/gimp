@@ -1,3 +1,8 @@
+2007-09-30  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/pygimp/plug-ins/foggify.py: fill layer before using it.
+	Fixes bug #481798, thanks to Jakub Friedl for suggesting fix.
+
 2007-09-29  Michael Natterer  <mitch@gimp.org>
 
 	* libgimp/gimp.c (gimp_extension_process): loop around select() as
