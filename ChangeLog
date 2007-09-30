@@ -1,5 +1,10 @@
 2007-09-30  Sven Neumann  <sven@gimp.org>
 
+	* app/actions/templates-commands.c: reverted last change. We would
+	also have to change a string if we wanted to do this change.
+
+2007-09-30  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/templates-commands.c
 	(templates_create_image_cmd_callback): when creating an image from a
 	template, skip the New Image dialog as suggested in bug #480802.

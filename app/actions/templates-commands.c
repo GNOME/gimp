@@ -31,7 +31,6 @@
 #include "core/gimp-utils.h"
 #include "core/gimpcontainer.h"
 #include "core/gimpcontext.h"
-#include "core/gimpimage-new.h"
 #include "core/gimptemplate.h"
 
 #include "widgets/gimpcontainerview.h"
@@ -43,9 +42,9 @@
 #include "widgets/gimptemplateview.h"
 
 #include "dialogs/dialogs.h"
+#include "dialogs/image-new-dialog.h"
 #include "dialogs/template-options-dialog.h"
 
-#include "actions.h"
 #include "templates-commands.h"
 
 #include "gimp-intl.h"
@@ -79,12 +78,10 @@ void
 templates_create_image_cmd_callback (GtkAction *action,
                                      gpointer   data)
 {
-  Gimp                *gimp;
   GimpContainerEditor *editor = GIMP_CONTAINER_EDITOR (data);
   GimpContainer       *container;
   GimpContext         *context;
   GimpTemplate        *template;
-  return_if_no_gimp(gimp,data);
 
   container = gimp_container_view_get_container (editor->view);
   context   = gimp_container_view_get_context (editor->view);
@@ -93,8 +90,19 @@ templates_create_image_cmd_callback (GtkAction *action,
 
   if (template && gimp_container_have (container, GIMP_OBJECT (template)))
     {
-      gimp_template_create_image (gimp, template, context);
-      gimp_image_new_set_last_template (gimp, template);
+      GdkScreen *screen = gtk_widget_get_screen (GTK_WIDGET (editor));
+      GtkWidget *dialog;
+
+      dialog = gimp_dialog_factory_dialog_new (global_dialog_factory, screen,
+                                               "gimp-image-new-dialog",
+                                               -1, FALSE);
+
+      if (dialog)
+        {
+          image_new_dialog_set (dialog, NULL, template);
+
+          gtk_window_present (GTK_WINDOW (dialog));
+        }
     }
 }
 
