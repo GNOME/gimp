@@ -20,9 +20,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-22 01:14+0200\n"
+"POT-Creation-Date: 2007-09-30 22:36+0200\n"
 "PO-Revision-Date: 2007-08-22 00:05+0200\n"
-"Last-Translator: Stéphane Raimbault <stephane.raimbault@gmail.com>\n"
+"Last-Translator: Laurent Monin <gimp@norz.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -877,7 +877,7 @@ msgstr "en interprétant l'expression « %s » : %s"
 #: ../libgimpconfig/gimpconfig-iface.c:454
 #: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
-#: ../libgimpwidgets/gimpcolorprofilestore.c:593
+#: ../libgimpwidgets/gimpcolorprofilestore.c:654
 msgid "fatal parse error"
 msgstr "erreur fatale d'interprétation"
 
@@ -1001,11 +1001,11 @@ msgstr "_Noir"
 msgid "_White"
 msgstr "_Blanc"
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:142
+#: ../libgimpwidgets/gimpcolorprofilestore.c:144
 msgid "Select color profile from disk..."
 msgstr "Choisir un profil de couleurs sur le disque..."
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:278
+#: ../libgimpwidgets/gimpcolorprofilestore.c:280
 msgid "profile|None"
 msgstr "Aucun"
 
@@ -1125,7 +1125,7 @@ msgstr "Taille du damier"
 msgid "Check Style"
 msgstr "Style du damier"
 
-#. toggle button to (des)activate the instant preview
+#. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "_Aperçu"
@@ -1213,15 +1213,15 @@ msgstr "_Cisailler"
 msgid "More..."
 msgstr "Suite..."
 
-#: ../libgimpwidgets/gimpunitmenu.c:577
+#: ../libgimpwidgets/gimpunitmenu.c:581
 msgid "Unit Selection"
 msgstr "Sélection des unités"
 
-#: ../libgimpwidgets/gimpunitmenu.c:626
+#: ../libgimpwidgets/gimpunitmenu.c:629
 msgid "Unit"
 msgstr "Unité"
 
-#: ../libgimpwidgets/gimpunitmenu.c:630
+#: ../libgimpwidgets/gimpunitmenu.c:633
 msgid "Factor"
 msgstr "Facteur"
 
@@ -1392,28 +1392,36 @@ msgstr "Profil du moniteur :"
 msgid "Print simulation profile:"
 msgstr "Profil de simulation d'impression :"
 
-#: ../modules/cdisplay_proof.c:102
+#: ../modules/cdisplay_proof.c:103
 msgid "Color proof filter using ICC color profile"
 msgstr ""
 "Filtre de calibration des couleurs utilisant le profil colorimétrique ICC"
 
-#: ../modules/cdisplay_proof.c:179
+#: ../modules/cdisplay_proof.c:180
 msgid "Color Proof"
 msgstr "Calibration des couleurs"
 
-#: ../modules/cdisplay_proof.c:306
-msgid "_Intent:"
-msgstr "_Rendu des couleurs :"
-
-#: ../modules/cdisplay_proof.c:310
+#: ../modules/cdisplay_proof.c:340
 msgid "Choose an ICC Color Profile"
 msgstr "Choisir un profil colorimétrique ICC"
 
-#: ../modules/cdisplay_proof.c:313
+#: ../modules/cdisplay_proof.c:367
+msgid "All files (*.*)"
+msgstr "Tous les fichiers (*.*)"
+
+#: ../modules/cdisplay_proof.c:372
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr "Profil colorimétrique ICC (*.icc, *.icm)"
+
+#: ../modules/cdisplay_proof.c:430
 msgid "_Profile:"
 msgstr "_Profil :"
 
-#: ../modules/cdisplay_proof.c:318
+#: ../modules/cdisplay_proof.c:436
+msgid "_Intent:"
+msgstr "_Rendu des couleurs :"
+
+#: ../modules/cdisplay_proof.c:441
 msgid "_Black Point Compensation"
 msgstr "Point de _compensation du noir"
 

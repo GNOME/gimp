@@ -15,45 +15,45 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-07-27 23:51+0200\n"
-"PO-Revision-Date: 2007-07-27 23:30+0200\n"
+"POT-Creation-Date: 2007-09-30 22:36+0200\n"
+"PO-Revision-Date: 2007-09-25 22:44+0200\n"
 "Last-Translator: Laurent Monin <gimp@norz.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/script-fu/script-fu-console.c:144
-#: ../plug-ins/script-fu/script-fu-console.c:213
+#: ../plug-ins/script-fu/script-fu-console.c:133
+#: ../plug-ins/script-fu/script-fu-console.c:200
 msgid "Script-Fu Console"
 msgstr "Console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:209
+#: ../plug-ins/script-fu/script-fu-console.c:196
 msgid "Welcome to TinyScheme"
 msgstr "Bienvenue sur TinyScheme"
 
-#: ../plug-ins/script-fu/script-fu-console.c:215
+#: ../plug-ins/script-fu/script-fu-console.c:202
 msgid "Interactive Scheme Development"
 msgstr "Développement Scheme interactif"
 
-#: ../plug-ins/script-fu/script-fu-console.c:251
+#: ../plug-ins/script-fu/script-fu-console.c:238
 msgid "_Browse..."
 msgstr "_Parcourir..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:313
+#: ../plug-ins/script-fu/script-fu-console.c:296
 msgid "Save Script-Fu Console Output"
 msgstr "Enregistrer les sorties de la console Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:360
+#: ../plug-ins/script-fu/script-fu-console.c:343
 #, c-format
 msgid "Could not open '%s' for writing: %s"
 msgstr "Impossible d'ouvrir « %s » pour écrire : %s"
 
-#: ../plug-ins/script-fu/script-fu-console.c:389
+#: ../plug-ins/script-fu/script-fu-console.c:372
 msgid "Script-Fu Procedure Browser"
 msgstr "Navigateur de procédures Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-console.c:730
+#: ../plug-ins/script-fu/script-fu-console.c:716
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 "Le mode d'évaluation de Script-Fu autorise uniquement un appel non-interactif"
@@ -111,7 +111,7 @@ msgstr "Sélection du dégradé Script-Fu"
 msgid "Script-Fu Brush Selection"
 msgstr "Sélection de la brosse Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:664
+#: ../plug-ins/script-fu/script-fu-scripts.c:658
 #, c-format
 msgid ""
 "Error while executing\n"
@@ -124,19 +124,19 @@ msgstr ""
 "\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:711
+#: ../plug-ins/script-fu/script-fu-server.c:712
 msgid "Script-Fu Server Options"
 msgstr "Options du serveur Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu-server.c:716
+#: ../plug-ins/script-fu/script-fu-server.c:717
 msgid "_Start Server"
 msgstr "_Démarrer le serveur"
 
-#: ../plug-ins/script-fu/script-fu-server.c:744
+#: ../plug-ins/script-fu/script-fu-server.c:745
 msgid "Server port:"
 msgstr "Port du serveur :"
 
-#: ../plug-ins/script-fu/script-fu-server.c:750
+#: ../plug-ins/script-fu/script-fu-server.c:751
 msgid "Server logfile:"
 msgstr "Fichier journal du serveur :"
 
@@ -591,7 +591,7 @@ msgstr "Aplatir l'image"
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:7
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:8
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
 #: ../plug-ins/script-fu/scripts/neon-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:6
 msgid "Glow color"
@@ -973,18 +973,10 @@ msgid "B_urn-In..."
 msgstr "En _flammes..."
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
-msgid ""
-"Burn-In: Needs two layers in total!\\nA foreground text layer with "
-"transparency and a background layer."
-msgstr ""
-"L'effet « en flammes » nécessite deux calques au total,\n"
-"un calque de texte avec transparence en premier plan et un calque de fond."
-
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid "Corona width"
 msgstr "Largeur de la couronne"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
 msgid ""
 "Create intermediate layers to produce an animated 'burn-in' transition "
 "between two layers"
@@ -992,21 +984,29 @@ msgstr ""
 "Crée des calques intermédiaires pour produire une animation de transition "
 "« en flammes » entre deux calques"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:6
 msgid "Fadeout"
 msgstr "Fondu"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:8
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:7
 msgid "Fadeout width"
 msgstr "Largeur de l'estompement"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:9
 msgid "Prepare for GIF"
 msgstr "Préparer pour GIF"
 
-#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:10
 msgid "Speed (pixels/frame)"
 msgstr "Vitesse (pixels/image)"
+
+#: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:11
+msgid ""
+"The Burn-In script needs two layers in total. A foreground layer with "
+"transparency and a background layer."
+msgstr ""
+"L'effet « en flammes » nécessite deux calques au total. Un calque de premier "
+"plan avec transparence et un calque de fond."
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:1
 msgid "Color 1"
@@ -1270,10 +1270,8 @@ msgid "Add realistic looking coffee stains to the image"
 msgstr "Ajoute une tache de café réaliste à l'image"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
-msgid "Darken only\\n(Better, but only for images with a lot of white)"
-msgstr ""
-"Assombrir seulement\\n(meilleur, mais uniquement sur les images avec "
-"beaucoup de blanc)"
+msgid "Darken only"
+msgstr "Assombrir seulement"
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
 msgid "Stains"
@@ -1466,45 +1464,6 @@ msgstr "Rangées/colonnes"
 msgid "_Erase Every Other Row..."
 msgstr "Change une colonne ou rangée _sur deux..."
 
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:1
-msgid "Apply generated layermask"
-msgstr "Appliquer le masque de calque généré"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:2
-#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
-#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
-msgid "Border size"
-msgstr "Taille de bordure"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:3
-msgid "Clear unselected maskarea"
-msgstr "Effacer les zones non sélectionnées du masque "
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:4
-msgid ""
-"Create a layermask that fades the edges of the selected region (or alpha)"
-msgstr ""
-"Crée un masque de calque qui estompe progressivement les bords de la région "
-"sélectionnée (ou alpha)"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:6
-#, no-c-format
-msgid "Fade from %"
-msgstr "Estompement depuis %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:8
-#, no-c-format
-msgid "Fade to %"
-msgstr "Estompement vers %"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:9
-msgid "Use growing selection"
-msgstr "Utiliser une sélection croissante"
-
-#: ../plug-ins/script-fu/scripts/fade-outline.scm.h:10
-msgid "_Fade to Layer Mask..."
-msgstr "_Estompement vers masque de calque..."
-
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:1
 msgid "Create an image filled with a Land Pattern"
 msgstr "Crée une image remplie avec un motif de terrain"
@@ -1617,6 +1576,11 @@ msgstr "Ajouter une ombre"
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:3
 msgid "Blur border"
 msgstr "Bordure floue"
+
+#: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:4
+#: ../plug-ins/script-fu/scripts/old-photo.scm.h:1
+msgid "Border size"
+msgstr "Taille de bordure"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
 msgid "Granularity (1 is Low)"
@@ -3004,6 +2968,35 @@ msgstr "Opacité d'éclairage"
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr "Effet _Xach..."
+
+#~ msgid "Darken only\\n(Better, but only for images with a lot of white)"
+#~ msgstr ""
+#~ "Assombrir seulement\\n(meilleur, mais uniquement sur les images avec "
+#~ "beaucoup de blanc)"
+
+#~ msgid "Apply generated layermask"
+#~ msgstr "Appliquer le masque de calque généré"
+
+#~ msgid "Clear unselected maskarea"
+#~ msgstr "Effacer les zones non sélectionnées du masque "
+
+#~ msgid ""
+#~ "Create a layermask that fades the edges of the selected region (or alpha)"
+#~ msgstr ""
+#~ "Crée un masque de calque qui estompe progressivement les bords de la "
+#~ "région sélectionnée (ou alpha)"
+
+#~ msgid "Fade from %"
+#~ msgstr "Estompement depuis %"
+
+#~ msgid "Fade to %"
+#~ msgstr "Estompement vers %"
+
+#~ msgid "Use growing selection"
+#~ msgstr "Utiliser une sélection croissante"
+
+#~ msgid "_Fade to Layer Mask..."
+#~ msgstr "_Estompement vers masque de calque..."
 
 #~ msgid "/Script-Fu/"
 #~ msgstr "/Script-Fu/"
