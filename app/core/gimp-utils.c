@@ -493,12 +493,14 @@ gimp_get_temp_filename (Gimp        *gimp,
   gchar       *path;
 
   g_return_val_if_fail (GIMP_IS_GIMP (gimp), NULL);
-  g_return_val_if_fail (extension != NULL, NULL);
 
   if (id == 0)
     pid = getpid ();
 
-  basename = g_strdup_printf ("gimp-temp-%d%d.%s", pid, id++, extension);
+  if (extension)
+    basename = g_strdup_printf ("gimp-temp-%d%d.%s", pid, id++, extension);
+  else
+    basename = g_strdup_printf ("gimp-temp-%d%d", pid, id++);
 
   path = gimp_config_path_expand (GIMP_BASE_CONFIG (gimp->config)->temp_path,
                                   TRUE, NULL);

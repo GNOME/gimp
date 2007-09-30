@@ -1,5 +1,14 @@
 2007-09-30  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimp-utils.c (gimp_get_temp_filename): handle a NULL
+	extension and create a filename without file extension.
+
+	* tools/pdbgen/pdb/fileops.pdb
+	* app/pdb/fileops_cmds.c: allow NULL to be passed as extension
+	parameter to gimp_temp_name().
+
+2007-09-30  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/templates-commands.c: reverted last change. We would
 	also have to change a string if we wanted to do this change.
 

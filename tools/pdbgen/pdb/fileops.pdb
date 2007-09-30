@@ -403,7 +403,8 @@ HELP
     &josh_pdb_misc('1997');
 
     @inargs = (
-        { name => 'extension', type => 'string', allow_non_utf8 => 1,
+        { name => 'extension', type => 'string',
+	  allow_non_utf8 => 1, null_ok => 1,
           desc => 'The extension the file will have' }
     );
 

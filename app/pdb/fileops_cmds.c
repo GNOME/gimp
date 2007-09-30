@@ -804,7 +804,7 @@ register_fileops_procs (GimpPDB *pdb)
                                gimp_param_spec_string ("extension",
                                                        "extension",
                                                        "The extension the file will have",
-                                                       TRUE, FALSE, FALSE,
+                                                       TRUE, TRUE, FALSE,
                                                        NULL,
                                                        GIMP_PARAM_READWRITE));
   gimp_procedure_add_return_value (procedure,
