@@ -1,3 +1,13 @@
+2007-09-30  Simon Budig  <simon@gimp.org>
+
+	* app/display/gimpdisplayshell.[ch]
+	* app/display/gimpdisplayshell-render.c: 64bittified the code so
+	  that the new renderer also works for big images. Slightly
+	  reorganized.
+
+	* app/display/gimpdisplayshell-transform.c: Another go at
+	  bug #474509. This even might be fixed now...
+
 2007-09-30  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimp-utils.c (gimp_get_temp_filename): handle a NULL

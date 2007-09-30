@@ -40,6 +40,7 @@
 #include "core/gimpguide.h"
 #include "core/gimpimage.h"
 #include "core/gimpimage-snap.h"
+#include "core/gimpprojection.h"
 #include "core/gimpmarshal.h"
 #include "core/gimpsamplepoint.h"
 
@@ -231,6 +232,11 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->offset_y               = 0;
   shell->scale_x                = 1.0;
   shell->scale_y                = 1.0;
+  shell->level                  = 0;
+  shell->x_dest_inc             = 1;
+  shell->y_dest_inc             = 1;
+  shell->x_src_dec              = 1;
+  shell->y_src_dec              = 1;
 
   shell->last_scale             = 0.0;
   shell->last_scale_time        = 0;
@@ -1119,6 +1125,9 @@ gimp_display_shell_new (GimpDisplay     *display,
 
   gimp_display_shell_title_init (shell);
 
+  /* make sure the information is up-to-date */
+  gimp_display_shell_scale_changed (shell);
+
   return GTK_WIDGET (shell);
 }
 
@@ -1149,15 +1158,24 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
 void
 gimp_display_shell_scale_changed (GimpDisplayShell *shell)
 {
+  GimpImage   *image;
+
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
+  image = shell->display->image;
+
   shell->scale_x = (gimp_zoom_model_get_factor (shell->zoom)
-                    * SCREEN_XRES (shell)
-                    / shell->display->image->xresolution);
+                    * SCREEN_XRES (shell) / image->xresolution);
 
   shell->scale_y = (gimp_zoom_model_get_factor (shell->zoom)
-                    * SCREEN_YRES (shell)
-                    / shell->display->image->yresolution);
+                    * SCREEN_YRES (shell) / image->yresolution);
+
+  shell->level = gimp_projection_get_level (image->projection,
+                                            shell->scale_x, shell->scale_y);
+  shell->x_dest_inc = image->width;
+  shell->y_dest_inc = image->height;
+  shell->x_src_dec  = ceil (image->width  * shell->scale_x);
+  shell->y_src_dec  = ceil (image->height * shell->scale_y);
 }
 
 void
@@ -1440,6 +1458,9 @@ gimp_display_shell_flush (GimpDisplayShell *shell,
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
   gimp_display_shell_title_update (shell);
+
+  /* make sure the information is up-to-date */
+  gimp_display_shell_scale_changed (shell);
 
   if (now)
     {

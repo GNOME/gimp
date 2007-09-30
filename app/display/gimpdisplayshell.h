@@ -26,7 +26,8 @@
 
 
 /* Apply to a float the same rounding mode used in the renderer */
-#define  PROJ_ROUND(coord) ((gint) ceil (coord))
+#define  PROJ_ROUND(coord)   ((gint) (coord))
+#define  PROJ_ROUND64(coord) ((gint64) (coord))
 
 /* finding the effective screen resolution (double) */
 #define  SCREEN_XRES(s)   ((s)->dot_for_dot ? \
@@ -79,6 +80,12 @@ struct _GimpDisplayShell
 
   gdouble           scale_x;           /*  horizontal scale factor            */
   gdouble           scale_y;           /*  vertical scale factor              */
+
+  gint              level;             /*  level of projection pyramid        */
+  gint              x_src_dec;         /*  increments for the bresenham style */
+  gint              y_src_dec;         /*  image --> display transformation   */
+  gint              x_dest_inc;
+  gint              y_dest_inc;
 
   gdouble           last_scale;        /*  scale used when reverting zoom     */
   guint             last_scale_time;   /*  time when last_scale was set       */

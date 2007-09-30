@@ -82,11 +82,11 @@ struct _RenderInfo
   /* Bresenham helpers */
   gint              x_dest_inc; /* amount to increment for each dest. pixel  */
   gint              x_src_dec;  /* amount to decrement for each source pixel */
-  gint              dx_start;   /* pixel fraction for first pixel            */
+  gint64            dx_start;   /* pixel fraction for first pixel            */
 
   gint              y_dest_inc;
   gint              y_src_dec;
-  gint              dy_start;
+  gint64            dy_start;
 
   gint              footprint_x;
   gint              footprint_y;
@@ -94,7 +94,7 @@ struct _RenderInfo
   gint              footshift_x;
   gint              footshift_y;
 
-  gint              dy;
+  gint64            dy;
 };
 
 static void  gimp_display_shell_render_info_scale   (RenderInfo       *info,
@@ -586,7 +586,8 @@ render_image_rgb_a (RenderInfo *info)
       info->src_y += info->dy / info->y_src_dec;
       info->dy     = info->dy % info->y_src_dec;
 
-      info->src = render_image_tile_fault (info);
+      if (info->src_y >= 0)
+        info->src = render_image_tile_fault (info);
     }
 }
 
@@ -610,18 +611,18 @@ gimp_display_shell_render_info_scale (RenderInfo       *info,
   info->src_y    = (gdouble) info->y / info->scaley;
 
   /* use Bresenham like stepping */
-  info->x_dest_inc = tile_manager_width (src_tiles);
-  info->x_src_dec  = ceil (tile_manager_width (src_tiles) * info->scalex);
+  info->x_dest_inc = shell->x_dest_inc;
+  info->x_src_dec  = shell->x_src_dec << shell->level;
 
-  info->dx_start   = info->x_dest_inc * info->x + info->x_dest_inc/2;
+  info->dx_start   = ((gint64) info->x_dest_inc) * info->x + info->x_dest_inc/2;
   info->src_x      = info->dx_start / info->x_src_dec;
   info->dx_start   = info->dx_start % info->x_src_dec;
 
   /* same for y */
-  info->y_dest_inc = tile_manager_height (src_tiles);
-  info->y_src_dec  = ceil (tile_manager_height (src_tiles) * info->scaley);
+  info->y_dest_inc = shell->y_dest_inc;
+  info->y_src_dec  = shell->y_src_dec << shell->level;
 
-  info->dy_start   = info->y_dest_inc * info->y + info->y_dest_inc/2;
+  info->dy_start   = ((gint64) info->y_dest_inc * info->y) + info->y_dest_inc/2;
   info->src_y      = info->dy_start / info->y_src_dec;
   info->dy_start   = info->dy_start % info->y_src_dec;
 
@@ -1259,7 +1260,7 @@ render_image_tile_fault_nearest (RenderInfo *info)
   gint          tilex;
   gint          bpp;
   gint          src_x;
-  gint          dx;
+  gint64        dx;
 
   tile = tile_manager_get_tile (info->src_tiles,
                                 info->src_x, info->src_y, TRUE, FALSE);

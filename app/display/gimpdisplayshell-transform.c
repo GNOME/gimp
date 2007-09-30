@@ -98,6 +98,7 @@ gimp_display_shell_transform_xy (GimpDisplayShell *shell,
 {
   gint offset_x = 0;
   gint offset_y = 0;
+  gint64 tx, ty;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (nx != NULL);
@@ -109,18 +110,23 @@ gimp_display_shell_transform_xy (GimpDisplayShell *shell,
 
       item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
       gimp_item_offsets (item, &offset_x, &offset_y);
+      x += offset_x;
+      y += offset_y;
     }
 
-  x = shell->scale_x * (x + offset_x) - shell->offset_x;
-  y = shell->scale_y * (y + offset_y) - shell->offset_y;
+  tx = PROJ_ROUND64 (x * shell->x_src_dec) + (shell->x_dest_inc >> 1) - 1;
+  ty = PROJ_ROUND64 (y * shell->y_src_dec) + (shell->y_dest_inc >> 1) - 1;
 
-  /* The projected coordinates can easily overflow a gint in the case of big
+  tx /= shell->x_dest_inc;
+  ty /= shell->y_dest_inc;
+
+  tx += shell->disp_xoffset - shell->offset_x;
+  ty += shell->disp_yoffset - shell->offset_y;
+
+  /* The projected coordinates might overflow a gint in the case of big
      images at high zoom levels, so we clamp them here to avoid problems.  */
-  x = CLAMP (x, G_MININT, G_MAXINT);
-  y = CLAMP (y, G_MININT, G_MAXINT);
-
-  *nx = PROJ_ROUND (x) + shell->disp_xoffset;
-  *ny = PROJ_ROUND (y) + shell->disp_yoffset;
+  *nx = CLAMP (tx, G_MININT, G_MAXINT);
+  *ny = CLAMP (ty, G_MININT, G_MAXINT);
 }
 
 /**
@@ -150,13 +156,11 @@ gimp_display_shell_untransform_xy (GimpDisplayShell *shell,
 {
   gint offset_x = 0;
   gint offset_y = 0;
+  gint64 tx, ty;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (nx != NULL);
   g_return_if_fail (ny != NULL);
-
-  x -= shell->disp_xoffset;
-  y -= shell->disp_yoffset;
 
   if (use_offsets)
     {
@@ -166,16 +170,20 @@ gimp_display_shell_untransform_xy (GimpDisplayShell *shell,
       gimp_item_offsets (item, &offset_x, &offset_y);
     }
 
-  if (round)
-    {
-      *nx = ROUND ((x + shell->offset_x) / shell->scale_x - offset_x);
-      *ny = ROUND ((y + shell->offset_y) / shell->scale_y - offset_y);
-    }
-  else
-    {
-      *nx = (gint) ((x + shell->offset_x) / shell->scale_x - offset_x);
-      *ny = (gint) ((y + shell->offset_y) / shell->scale_y - offset_y);
-    }
+  tx = x + shell->offset_x - shell->disp_xoffset;
+  ty = y + shell->offset_y - shell->disp_yoffset;
+
+  tx *= shell->x_dest_inc;
+  ty *= shell->y_dest_inc;
+
+  tx += round ? shell->x_dest_inc : shell->x_dest_inc >> 1;
+  ty += round ? shell->y_dest_inc : shell->y_dest_inc >> 1;
+
+  tx /= shell->x_src_dec;
+  ty /= shell->y_src_dec;
+
+  *nx = CLAMP (tx - offset_x, G_MININT, G_MAXINT);
+  *ny = CLAMP (ty - offset_y, G_MININT, G_MAXINT);
 }
 
 /**
@@ -302,18 +310,14 @@ gimp_display_shell_transform_points (GimpDisplayShell *shell,
     {
       gdouble x, y;
 
-      x = shell->scale_x * (points[i * 2]     + offset_x) - shell->offset_x;
-      y = shell->scale_y * (points[i * 2 + 1] + offset_y) - shell->offset_y;
+      x = points[i*2]   + offset_x;
+      y = points[i*2+1] + offset_y;
 
-      /* The projected coordinates can easily overflow a gint in the
-         case of big images at high zoom levels, so we clamp them here
-         to avoid problems.
-       */
-      x = CLAMP (x, G_MININT, G_MAXINT);
-      y = CLAMP (y, G_MININT, G_MAXINT);
+      x = PROJ_ROUND64 (shell->x_src_dec * x + (shell->x_dest_inc >> 1) - 1) / shell->x_dest_inc;
+      y = PROJ_ROUND64 (shell->y_src_dec * y + (shell->y_dest_inc >> 1) - 1) / shell->y_dest_inc;
 
-      coords[i].x = PROJ_ROUND (x) + shell->disp_xoffset;
-      coords[i].y = PROJ_ROUND (y) + shell->disp_yoffset;
+      coords[i].x = CLAMP (x + shell->disp_xoffset - shell->offset_x, G_MININT, G_MAXINT);
+      coords[i].y = CLAMP (y + shell->disp_yoffset - shell->offset_y, G_MININT, G_MAXINT);
     }
 }
 
@@ -354,18 +358,14 @@ gimp_display_shell_transform_coords (GimpDisplayShell *shell,
     {
       gdouble x, y;
 
-      x = shell->scale_x * (image_coords[i].x + offset_x) - shell->offset_x;
-      y = shell->scale_y * (image_coords[i].y + offset_y) - shell->offset_y;
+      x = image_coords[i].x + offset_x;
+      y = image_coords[i].y + offset_y;
 
-      /* The projected coordinates can easily overflow a gint in the
-         case of big images at high zoom levels, so we clamp them here
-         to avoid problems.
-       */
-      x = CLAMP (x, G_MININT, G_MAXINT);
-      y = CLAMP (y, G_MININT, G_MAXINT);
+      x = PROJ_ROUND64 (shell->x_src_dec * x + (shell->x_dest_inc >> 1) - 1) / shell->x_dest_inc;
+      y = PROJ_ROUND64 (shell->y_src_dec * y + (shell->y_dest_inc >> 1) - 1) / shell->y_dest_inc;
 
-      disp_coords[i].x = PROJ_ROUND (x) + shell->disp_xoffset;
-      disp_coords[i].y = PROJ_ROUND (y) + shell->disp_yoffset;
+      disp_coords[i].x = CLAMP (x + shell->disp_xoffset - shell->offset_x, G_MININT, G_MAXINT);
+      disp_coords[i].y = CLAMP (y + shell->disp_yoffset - shell->offset_y, G_MININT, G_MAXINT);
     }
 }
 
@@ -404,27 +404,23 @@ gimp_display_shell_transform_segments (GimpDisplayShell *shell,
 
   for (i = 0; i < n_segs ; i++)
     {
-      gdouble x1, x2;
-      gdouble y1, y2;
+      gint64 x1, x2;
+      gint64 y1, y2;
 
-      x1 = shell->scale_x * (src_segs[i].x1 + offset_x) - shell->offset_x;
-      x2 = shell->scale_x * (src_segs[i].x2 + offset_x) - shell->offset_x;
-      y1 = shell->scale_y * (src_segs[i].y1 + offset_y) - shell->offset_y;
-      y2 = shell->scale_y * (src_segs[i].y2 + offset_y) - shell->offset_y;
+      x1 = src_segs[i].x1 + offset_x;
+      x2 = src_segs[i].x2 + offset_x;
+      y1 = src_segs[i].y1 + offset_y;
+      y2 = src_segs[i].y2 + offset_y;
 
-      /* The projected coordinates can easily overflow a gint in the
-         case of big images at high zoom levels, so we clamp them here
-         to avoid problems.
-       */
-      x1 = CLAMP (x1, G_MININT, G_MAXINT);
-      x2 = CLAMP (x2, G_MININT, G_MAXINT);
-      y1 = CLAMP (y1, G_MININT, G_MAXINT);
-      y2 = CLAMP (y2, G_MININT, G_MAXINT);
+      x1 = (x1 * shell->x_src_dec + (shell->x_dest_inc >> 1) - 1) / shell->x_dest_inc;
+      x2 = (x2 * shell->x_src_dec + (shell->x_dest_inc >> 1) - 1) / shell->x_dest_inc;
+      y1 = (y1 * shell->y_src_dec + (shell->y_dest_inc >> 1) - 1) / shell->y_dest_inc;
+      y2 = (y2 * shell->y_src_dec + (shell->y_dest_inc >> 1) - 1) / shell->y_dest_inc;
 
-      dest_segs[i].x1 = PROJ_ROUND (x1) + shell->disp_xoffset;
-      dest_segs[i].x2 = PROJ_ROUND (x2) + shell->disp_xoffset;
-      dest_segs[i].y1 = PROJ_ROUND (y1) + shell->disp_yoffset;
-      dest_segs[i].y2 = PROJ_ROUND (y2) + shell->disp_yoffset;
+      dest_segs[i].x1 = CLAMP (x1 + shell->disp_xoffset - shell->offset_x, G_MININT, G_MAXINT);
+      dest_segs[i].x2 = CLAMP (x2 + shell->disp_xoffset - shell->offset_x, G_MININT, G_MAXINT);
+      dest_segs[i].y1 = CLAMP (y1 + shell->disp_yoffset - shell->offset_y, G_MININT, G_MAXINT);
+      dest_segs[i].y2 = CLAMP (y2 + shell->disp_yoffset - shell->offset_y, G_MININT, G_MAXINT);
     }
 }
 
