@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp python\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-12-20 00:01-0500\n"
+"POT-Creation-Date: 2007-09-29 20:39-0400\n"
 "PO-Revision-Date: 2005-09-06 00:14-0400\n"
 "Last-Translator: Adam Weinberger <adamw@gnome.org>\n"
 "Language-Team: Canadian English <adamw@gnome.org>\n"
@@ -16,37 +16,37 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../plug-ins/pygimp/gimpfu.py:335
+#: ../plug-ins/pygimp/gimpfu.py:380
 msgid "Missing exception information"
 msgstr "Missing exception information"
 
-#: ../plug-ins/pygimp/gimpfu.py:344
+#: ../plug-ins/pygimp/gimpfu.py:389
 #, python-format
 msgid "An error occured running %s"
 msgstr "An error occurred running %s"
 
-#: ../plug-ins/pygimp/gimpfu.py:355
+#: ../plug-ins/pygimp/gimpfu.py:400
 msgid "_More Information"
 msgstr "_More Information"
 
-#: ../plug-ins/pygimp/gimpfu.py:461 ../plug-ins/pygimp/gimpfu.py:473
-#: ../plug-ins/pygimp/gimpfu.py:479
+#: ../plug-ins/pygimp/gimpfu.py:506 ../plug-ins/pygimp/gimpfu.py:518
+#: ../plug-ins/pygimp/gimpfu.py:524
 msgid "No"
 msgstr "No"
 
-#: ../plug-ins/pygimp/gimpfu.py:471 ../plug-ins/pygimp/gimpfu.py:479
+#: ../plug-ins/pygimp/gimpfu.py:516 ../plug-ins/pygimp/gimpfu.py:524
 msgid "Yes"
 msgstr "Yes"
 
-#: ../plug-ins/pygimp/gimpfu.py:517 ../plug-ins/pygimp/gimpui.py:222
+#: ../plug-ins/pygimp/gimpfu.py:558 ../plug-ins/pygimp/gimpui.py:222
 msgid "Python-Fu File Selection"
 msgstr "Python-Fu File Selection"
 
-#: ../plug-ins/pygimp/gimpfu.py:528
+#: ../plug-ins/pygimp/gimpfu.py:569
 msgid "Python-Fu Folder Selection"
 msgstr "Python-Fu Folder Selection"
 
-#: ../plug-ins/pygimp/gimpfu.py:618
+#: ../plug-ins/pygimp/gimpfu.py:659
 #, python-format
 msgid "Invalid input for '%s'"
 msgstr "Invalid input for '%s'"
@@ -67,33 +67,33 @@ msgstr "Save as coloured XHTML"
 msgid "Colored XHTML"
 msgstr "Coloured XHTML"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:192
-msgid "Character source"
-msgstr "Character source"
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
+msgid "Character _source"
+msgstr "Character _source"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:193
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:197
 msgid "Source code"
 msgstr "Source code"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:194
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
 msgid "Text file"
 msgstr "Text file"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:195
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
 msgid "Entry box"
 msgstr "Entry box"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:196
-msgid "File to read or characters to use"
-msgstr "File to read or characters to use"
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:200
+msgid "_File to read or characters to use"
+msgstr "_File to read or characters to use"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:198
-msgid "Font size in pixels"
-msgstr "Font size in pixels"
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:202
+msgid "Fo_nt size in pixels"
+msgstr "Fo_nt size in pixels"
 
-#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:199
-msgid "Write a separate CSS file"
-msgstr "Write a separate CSS file"
+#: ../plug-ins/pygimp/plug-ins/colorxhtml.py:203
+msgid "_Write a separate CSS file"
+msgstr "_Write a separate CSS file"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
@@ -137,25 +137,25 @@ msgstr "Add a layer of fog"
 msgid "_Fog..."
 msgstr "_Fog..."
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:59
-msgid "Layer name"
-msgstr "Layer name"
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
+msgid "_Layer name"
+msgstr "_Layer name"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:59
+#: ../plug-ins/pygimp/plug-ins/foggify.py:61
 msgid "Clouds"
 msgstr "Clouds"
 
-#: ../plug-ins/pygimp/plug-ins/foggify.py:60
-msgid "Fog color"
-msgstr "Fog colour"
-
-#: ../plug-ins/pygimp/plug-ins/foggify.py:61
-msgid "Turbulence"
-msgstr "Turbulence"
-
 #: ../plug-ins/pygimp/plug-ins/foggify.py:62
-msgid "Opacity"
-msgstr "Opacity"
+msgid "_Fog color"
+msgstr "_Fog colour"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:63
+msgid "_Turbulence"
+msgstr "_Turbulence"
+
+#: ../plug-ins/pygimp/plug-ins/foggify.py:64
+msgid "Op_acity"
+msgstr "Op_acity"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:45
 msgid "Offset the colors in a palette"
@@ -173,8 +173,8 @@ msgid "Palette"
 msgstr "Palette"
 
 #: ../plug-ins/pygimp/plug-ins/palette-offset.py:54
-msgid "Offset"
-msgstr "Offset"
+msgid "Off_set"
+msgstr "Off_set"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:49
 msgid "Sort the colors in a palette"
@@ -185,8 +185,8 @@ msgid "_Sort Palette..."
 msgstr "_Sort Palette..."
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:58
-msgid "Color model"
-msgstr "Colour model"
+msgid "Color _model"
+msgstr "Colour _model"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:59
 msgid "RGB"
@@ -197,8 +197,8 @@ msgid "HSV"
 msgstr "HSV"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:61
-msgid "Channel to sort"
-msgstr "Channel to sort"
+msgid "Channel to _sort"
+msgstr "Channel to _sort"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:62
 msgid "Red or Hue"
@@ -213,8 +213,8 @@ msgid "Blue or Value"
 msgstr "Blue or Value"
 
 #: ../plug-ins/pygimp/plug-ins/palette-sort.py:65
-msgid "Ascending"
-msgstr "Ascending"
+msgid "_Ascending"
+msgstr "_Ascending"
 
 #: ../plug-ins/pygimp/plug-ins/palette-to-gradient.py:50
 msgid "Create a repeating gradient using colors from the palette"
@@ -238,45 +238,46 @@ msgstr "Slice"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:416
 msgid "Cuts an image along its guides, creates images and a HTML table snippet"
-msgstr "Cuts an image along its guides, creates images and a HTML table snippet"
+msgstr ""
+"Cuts an image along its guides, creates images and a HTML table snippet"
 
 #: ../plug-ins/pygimp/plug-ins/py-slice.py:427
 msgid "_Slice..."
 msgstr "_Slice..."
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:430
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
 msgid "Path for HTML export"
 msgstr "Path for HTML export"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:431
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
 msgid "Filename for export"
 msgstr "Filename for export"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:432
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
 msgid "Image name prefix"
 msgstr "Image name prefix"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:433
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:435
 msgid "Image format"
 msgstr "Image format"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:434
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
 msgid "Separate image folder"
 msgstr "Separate image folder"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:436
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:438
 msgid "Folder for image export"
 msgstr "Folder for image export"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:437
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
 msgid "Space between table elements"
 msgstr "Space between table elements"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:439
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
 msgid "Javascript for onmouseover and clicked"
 msgstr "Javascript for onmouseover and clicked"
 
-#: ../plug-ins/pygimp/plug-ins/py-slice.py:441
+#: ../plug-ins/pygimp/plug-ins/py-slice.py:443
 msgid "Skip animation for table caps"
 msgstr "Skip animation for table caps"
 
@@ -288,22 +289,22 @@ msgstr "Add a drop shadow to a layer, and optionally bevel it"
 msgid "_Drop Shadow and Bevel..."
 msgstr "_Drop Shadow and Bevel..."
 
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:69
-msgid "Shadow blur"
-msgstr "Shadow blur"
-
-#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:70
-msgid "Bevel"
-msgstr "Bevel"
-
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
-msgid "Drop shadow"
-msgstr "Drop shadow"
+msgid "_Shadow blur"
+msgstr "_Shadow blur"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:72
-msgid "Drop shadow X displacement"
-msgstr "Drop shadow X displacement"
+msgid "_Bevel"
+msgstr "_Bevel"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:73
-msgid "Drop shadow Y displacement"
-msgstr "Drop shadow Y displacement"
+msgid "_Drop shadow"
+msgstr "_Drop shadow"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:74
+msgid "Drop shadow _X displacement"
+msgstr "Drop shadow _X displacement"
+
+#: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:75
+msgid "Drop shadow _Y displacement"
+msgstr "Drop shadow _Y displacement"
