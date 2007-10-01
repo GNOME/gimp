@@ -5,15 +5,15 @@
 # Copyright (C) 2007 The GNOME Project
 # This file is distributed under the same license as the Gimp package.
 #
-# Olle Niit <olle@paalalinn.com>, 2005.
+# Olle Niit <olle@paalalinn.com>, 2005-2007.
 # Priit Laes <amd@store20.com>
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp_et\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-21 04:20+0100\n"
-"PO-Revision-Date: 2007-08-24 01:21+0300\n"
-"Last-Translator: Priit Laes <amd@store20.com>\n"
+"PO-Revision-Date: 2007-10-01 01:16+0300\n"
+"Last-Translator: Olle Niit <olle@paalalinn.com>\n"
 "Language-Team: estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -69,7 +69,7 @@ msgstr ""
 #: ../app/batch.c:75
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
-msgstr ""
+msgstr "Batch interpretaatorit pole kirjeldatud, kasutatakse vaikimisi '%s'.\n"
 
 #: ../app/batch.c:93 ../app/batch.c:111
 #, c-format
@@ -134,7 +134,7 @@ msgstr "Kasuta alternatiivset gimprc faili."
 
 #: ../app/main.c:220
 msgid "Batch command to run (can be used multiple times)"
-msgstr ""
+msgstr "Käivitatav batch käsk (võib kasutada mitu korda)"
 
 #: ../app/main.c:225
 msgid "The procedure to process batch commands with"
@@ -168,7 +168,7 @@ msgstr "Väljastab vaikeseadetega gimprc faili."
 
 #: ../app/main.c:337
 msgid "[FILE|URI...]"
-msgstr ""
+msgstr "[FAIL|URI...]"
 
 #: ../app/main.c:355
 msgid ""
@@ -1460,11 +1460,11 @@ msgstr "_Korda"
 
 #: ../app/actions/edit-actions.c:79
 msgid "Redo the last operation that was undone"
-msgstr ""
+msgstr "Tee uuesti viimati tühistatud käsk"
 
 #: ../app/actions/edit-actions.c:84
 msgid "Strong Undo"
-msgstr ""
+msgstr "Tugev tagasivõtmine"
 
 #: ../app/actions/edit-actions.c:85
 msgid "Undo the last operation, skipping visibility changes"
@@ -1472,7 +1472,7 @@ msgstr ""
 
 #: ../app/actions/edit-actions.c:90
 msgid "Strong Redo"
-msgstr ""
+msgstr "Tugev kordamine"
 
 #: ../app/actions/edit-actions.c:91
 msgid "Redo the last operation that was undone, skipping visibility changes"
@@ -2178,7 +2178,7 @@ msgstr "Dubleeri lõik"
 
 #: ../app/actions/gradient-editor-commands.c:454
 msgid "Replicate Gradient Segment"
-msgstr ""
+msgstr "Dubleeri spektrikomplekti lõik"
 
 #: ../app/actions/gradient-editor-commands.c:458
 msgid "Replicate Selection"
@@ -2186,7 +2186,7 @@ msgstr "Dubleeri valik"
 
 #: ../app/actions/gradient-editor-commands.c:459
 msgid "Replicate Gradient Selection"
-msgstr ""
+msgstr "Dubleeri spektrikomplekti valik"
 
 #: ../app/actions/gradient-editor-commands.c:472
 msgid "Replicate"
@@ -2210,19 +2210,19 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-commands.c:554
 msgid "Split Segment Uniformly"
-msgstr ""
+msgstr "Tükelda lõik ühtlaselt"
 
 #: ../app/actions/gradient-editor-commands.c:555
 msgid "Split Gradient Segment Uniformly"
-msgstr ""
+msgstr "Tükelda spektrikomplekti lõik ühtlaselt"
 
 #: ../app/actions/gradient-editor-commands.c:559
 msgid "Split Segments Uniformly"
-msgstr ""
+msgstr "Tükelda lõigud ühtlaselt"
 
 #: ../app/actions/gradient-editor-commands.c:560
 msgid "Split Gradient Segments Uniformly"
-msgstr ""
+msgstr "Tükelda spektrikomplekti lõigud ühtlaselt"
 
 #: ../app/actions/gradient-editor-commands.c:573
 msgid "Split"
@@ -2388,7 +2388,7 @@ msgstr "_Mahuta lõuend kihtidesse"
 
 #: ../app/actions/image-actions.c:91
 msgid "Resize the image to enclose all layers"
-msgstr ""
+msgstr "Muuda pildi suurust, et pilt ümbritseks kõiki kihte"
 
 #: ../app/actions/image-actions.c:96
 msgid "F_it Canvas to Selection"
@@ -2768,7 +2768,7 @@ msgstr "_Lisa kihi mask..."
 
 #: ../app/actions/layers-actions.c:189
 msgid "Add a mask that allows non-destructive editing of transparency"
-msgstr ""
+msgstr "Lisa mask, millega saab ohutult läbipaistvust redigeerida"
 
 #: ../app/actions/layers-actions.c:194
 msgid "Add Alpha C_hannel"
@@ -2820,7 +2820,7 @@ msgstr "Rakinda kihi _mask"
 
 #: ../app/actions/layers-actions.c:240
 msgid "Apply the effect of the layer mask and remove it"
-msgstr ""
+msgstr "Rakenda kihi maski effekti ja eemalda see siis"
 
 #: ../app/actions/layers-actions.c:245
 msgid "Delete Layer Mas_k"
@@ -9729,9 +9729,8 @@ msgid "Intelligent _Scissors"
 msgstr "Arukad _käärid"
 
 #: ../app/tools/gimpiscissorstool.c:919 ../app/tools/gimpmeasuretool.c:602
-#, fuzzy
 msgid "Click-Drag to move this point"
-msgstr "Klõpsa-lohista valitud pikslite liigutamiseks"
+msgstr "Klõpsa-lohista selle punkti liigutamiseks"
 
 #: ../app/tools/gimpiscissorstool.c:921 ../app/tools/gimpiscissorstool.c:986
 #, c-format
@@ -9739,9 +9738,8 @@ msgid "%s: disable auto-snap"
 msgstr "%s: keela automaat-napsamine"
 
 #: ../app/tools/gimpiscissorstool.c:938
-#, fuzzy
 msgid "Click to close the curve"
-msgstr "Eelvaate loomiseks klõpsa"
+msgstr "Klõpsa kurvi sulgemiseks"
 
 #: ../app/tools/gimpiscissorstool.c:944
 #, fuzzy
@@ -9749,13 +9747,12 @@ msgid "Click to add a point on this segment"
 msgstr "Klõpsa kontrollpunkti lisamiseks"
 
 #: ../app/tools/gimpiscissorstool.c:958
-#, fuzzy
 msgid "Click or press Enter to convert to a selection"
-msgstr "Kärpimiskes klõpsa või vajuta Enterit"
+msgstr "Klõpsa või vajuta Enterit et teisendada valikuks"
 
 #: ../app/tools/gimpiscissorstool.c:968
 msgid "Press Enter to convert to a selection"
-msgstr ""
+msgstr "Vajuta Enterit er teisendada valikuks"
 
 #: ../app/tools/gimpiscissorstool.c:983
 #, fuzzy
@@ -9867,14 +9864,12 @@ msgid "Click to place vertical and horizontal guides"
 msgstr ""
 
 #: ../app/tools/gimpmeasuretool.c:563
-#, fuzzy
 msgid "Click to place a horizontal guide"
-msgstr "Vali kiht või abijoon"
+msgstr "Klõpsa horisontaalse abijoone asetamiseks"
 
 #: ../app/tools/gimpmeasuretool.c:577
-#, fuzzy
 msgid "Click to place a vertical guide"
-msgstr "Klõpsa uue parandamise lähtekoha seadmiseks"
+msgstr "Klõpsa vertikaalse abijoone asetamiseks"
 
 #: ../app/tools/gimpmeasuretool.c:591
 #, fuzzy
@@ -9967,9 +9962,8 @@ msgid "Brush:"
 msgstr "Pintsel:"
 
 #: ../app/tools/gimppaintoptions-gui.c:131
-#, fuzzy
 msgid "Scale:"
-msgstr "Vii mõõtu"
+msgstr "Mõõtmed:"
 
 #: ../app/tools/gimppaintoptions-gui.c:147
 #: ../app/tools/gimppaintoptions-gui.c:436
@@ -10069,11 +10063,8 @@ msgid "Ctrl-Click to set a clone source"
 msgstr "Ctrl-Klõps klooni lähtekoha seadmiseks."
 
 #: ../app/tools/gimpperspectivetool.c:68
-#, fuzzy
 msgid "Perspective Tool: Change perspective of the layer, selection or path"
-msgstr ""
-"Perspektiivi tööriist: Muuda kihi või valiku perspektiivi (ruumilisuse "
-"illusiooni loomine)"
+msgstr "Perspektiivi tööriist: Muuda kihi, valiku või vektorjoone perspektiivi"
 
 #: ../app/tools/gimpperspectivetool.c:70
 msgid "_Perspective"
@@ -10084,9 +10075,8 @@ msgid "command|Perspective"
 msgstr "Perspektiiv"
 
 #: ../app/tools/gimpperspectivetool.c:98
-#, fuzzy
 msgid "Perspective transformation"
-msgstr "Perspektiivi muutmise teave"
+msgstr "Perspektiivi muutmine"
 
 #: ../app/tools/gimpperspectivetool.c:113
 msgid "Transformation Matrix"
@@ -10129,14 +10119,12 @@ msgid "Highlight"
 msgstr "Tõsta esile"
 
 #: ../app/tools/gimprectangleoptions.c:547
-#, fuzzy
 msgid "X:"
-msgstr "_X:"
+msgstr "X:"
 
 #: ../app/tools/gimprectangleoptions.c:555
-#, fuzzy
 msgid "Y:"
-msgstr "_Y:"
+msgstr "Y:"
 
 #: ../app/tools/gimprectangleoptions.c:566
 #: ../app/tools/gimprectangleoptions.c:580
@@ -10145,19 +10133,16 @@ msgstr "Fikseeritud"
 
 #. Auto Shrink
 #: ../app/tools/gimprectangleoptions.c:596
-#, fuzzy
 msgid "Auto Shrink Selection"
 msgstr "Valiku automaatkahandus"
 
 #: ../app/tools/gimprectangleoptions.c:604
-#, fuzzy
 msgid "Shrink merged"
-msgstr "Teralisuse liitmine"
+msgstr "Kahanda ühendatud"
 
 #: ../app/tools/gimprectangleselectoptions.c:154
-#, fuzzy
 msgid "Rounded corners"
-msgstr "Hiire kursorid"
+msgstr "Ümardatud nurgad"
 
 #: ../app/tools/gimprectangleselecttool.c:138
 msgid "Rectangle Select"
@@ -10184,37 +10169,32 @@ msgid "Rotate"
 msgstr "Pööra"
 
 #: ../app/tools/gimprotatetool.c:86
-#, fuzzy
 msgid "Rotate Tool: Rotate the layer, selection or path"
-msgstr "Pööramise tööriist: Kihti või valitud ala pööramiseks"
+msgstr "Pööramise tööriist: Pööra kihti, valitud ala või vektorjoont"
 
 #: ../app/tools/gimprotatetool.c:87
 msgid "_Rotate"
 msgstr "_Pööra"
 
 #: ../app/tools/gimprotatetool.c:142
-#, fuzzy
 msgid "_Angle:"
-msgstr "Nurk:"
+msgstr "_Nurk:"
 
 #: ../app/tools/gimprotatetool.c:157
-#, fuzzy
 msgid "Center _X:"
-msgstr "Keskpaiga X:"
+msgstr "Keskpaiga _X:"
 
 #: ../app/tools/gimprotatetool.c:166
-#, fuzzy
 msgid "Center _Y:"
-msgstr "Keskpaiga Y:"
+msgstr "Keskpaiga _Y:"
 
 #: ../app/tools/gimpscaletool.c:78
 msgid "Scale"
 msgstr "Vii mõõtu"
 
 #: ../app/tools/gimpscaletool.c:79
-#, fuzzy
 msgid "Scale Tool: Scale the layer, selection or path"
-msgstr "Mõõtuviimise tööriist: Vii kiht või valitud ala mõõtu"
+msgstr "Mõõtuviimise tööriist: Vii mõõtu kiht, valitud ala või vektorjoon"
 
 #: ../app/tools/gimpscaletool.c:80
 msgid "_Scale"
@@ -10294,32 +10274,31 @@ msgstr "Klõpsa ujuva valiku ankurdamiseks"
 
 #: ../app/tools/gimpsheartool.c:81
 msgid "Shear"
-msgstr "Nihe"
+msgstr "Nihuta"
 
 #: ../app/tools/gimpsheartool.c:82
-#, fuzzy
 msgid "Shear Tool: Shear the layer, selection or path"
-msgstr "Nihutamise tööriist: Nihuta kihti või valikut"
+msgstr "Nihutamise tööriist: Nihuta kihti, valikut või vektorjoont"
 
 #: ../app/tools/gimpsheartool.c:83
 msgid "S_hear"
-msgstr "_Nihe"
+msgstr "_Nihuta"
 
 #: ../app/tools/gimpsheartool.c:109
 msgid "command|Shear"
-msgstr "Nihe"
+msgstr "Nihuta"
 
 #: ../app/tools/gimpsheartool.c:133
 msgid "Shear magnitude _X:"
-msgstr ""
+msgstr "Nihke suurus _X:"
 
 #: ../app/tools/gimpsheartool.c:143
 msgid "Shear magnitude _Y:"
-msgstr ""
+msgstr "Nihke suurus _Y:"
 
 #: ../app/tools/gimpsmudgetool.c:54
 msgid "Smudge Tool: Smudge selectively using a brush"
-msgstr ""
+msgstr "Määrimise tööriist: Määri valikuliselt pintslit kasutades"
 
 #: ../app/tools/gimpsmudgetool.c:55
 msgid "_Smudge"
@@ -10443,16 +10422,15 @@ msgstr "Suund"
 
 #: ../app/tools/gimptransformoptions.c:296
 msgid "Interpolation:"
-msgstr ""
+msgstr "Interpoleerimine:"
 
 #: ../app/tools/gimptransformoptions.c:306
 msgid "Supersampling"
 msgstr ""
 
 #: ../app/tools/gimptransformoptions.c:315
-#, fuzzy
 msgid "Clipping:"
-msgstr "Peegeldamine"
+msgstr "Väljalõikamine:"
 
 #: ../app/tools/gimptransformoptions.c:333
 msgid "Preview:"
@@ -10500,6 +10478,10 @@ msgid ""
 "%s  Subtract\n"
 "%s  Intersect"
 msgstr ""
+"Vektorjoon valikusse\n"
+"%s  Lisa\n"
+"%s  Lahuta\n"
+"%s  Liida"
 
 #: ../app/tools/gimpvectoroptions.c:188
 msgid "Create Selection from Path"
@@ -11264,9 +11246,8 @@ msgid "Configure this tab"
 msgstr "Häälesta seda kaarti"
 
 #: ../app/widgets/gimpdockseparator.c:44
-#, fuzzy
 msgid "You can drop dockable dialogs here"
-msgstr "Võid pukseerida dokitavad dialoogid siia."
+msgstr "Võid pukseerida dokitavad dialoogid siia"
 
 #: ../app/widgets/gimperrordialog.c:151
 msgid "Too many error messages!"
@@ -11321,9 +11302,9 @@ msgid "Zoom factor: %d:1"
 msgstr "Suurendusfaktor: %d:1"
 
 #: ../app/widgets/gimpgradienteditor.c:788
-#, fuzzy, c-format
+#, c-format
 msgid "Displaying [%0.4f, %0.4f]"
-msgstr "Kuvamine [%0.6f, %0.6f]"
+msgstr "Kuvamine [%0.4f, %0.4f]"
 
 #: ../app/widgets/gimpgradienteditor.c:1008
 #, c-format
@@ -11336,14 +11317,14 @@ msgid "RGB (%0.3f, %0.3f, %0.3f)"
 msgstr "RGB (%0.3f, %0.3f, %0.3f)"
 
 #: ../app/widgets/gimpgradienteditor.c:1011
-#, fuzzy, c-format
+#, c-format
 msgid "HSV (%0.1f, %0.1f, %0.1f)"
-msgstr "HSV (%0.3f, %0.3f, %0.3f)"
+msgstr "HSV (%0.1f, %0.1f, %0.1f)"
 
 #: ../app/widgets/gimpgradienteditor.c:1013
-#, fuzzy, c-format
+#, c-format
 msgid "Luminance: %0.1f    Opacity: %0.1f"
-msgstr "Intensiivsus: %0.3f    Läbipaistmatus: %0.3f"
+msgstr "Intensiivsus: %0.1f    Läbipaistmatus: %0.1f"
 
 #: ../app/widgets/gimpgradienteditor.c:1044
 #, c-format
@@ -11388,14 +11369,14 @@ msgstr "Klõps: vali    Tõmba: liiguta"
 
 #: ../app/widgets/gimpgradienteditor.c:1559
 #: ../app/widgets/gimpgradienteditor.c:1567
-#, fuzzy, c-format
+#, c-format
 msgid "Handle position: %0.4f"
-msgstr "Asukoht: %0.6f"
+msgstr "Asukoht: %0.4f"
 
 #: ../app/widgets/gimpgradienteditor.c:1584
-#, fuzzy, c-format
+#, c-format
 msgid "Distance: %0.4f"
-msgstr "Vahemaa: %0.6f"
+msgstr "Vahemaa: %0.4f"
 
 #: ../app/widgets/gimpgrideditor.c:209
 msgid "Line _style:"
@@ -11807,9 +11788,9 @@ msgid "Delete saved options..."
 msgstr "Kustuta salvestatud võimalused..."
 
 #: ../app/widgets/gimptooloptionseditor.c:472
-#, fuzzy, c-format
+#, c-format
 msgid "Error saving tool options presets: %s"
-msgstr "Viga XCF faili salvestamisel: %s"
+msgstr "Viga tööriista võimaluste salvestamisel: %s"
 
 #: ../app/widgets/gimpuimanager.c:733
 msgid "Your GIMP installation is incomplete:"
