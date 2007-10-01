@@ -1,3 +1,14 @@
+2007-10-01  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/camo.scm
+	* plug-ins/script-fu/scripts/distress-selection.scm
+	* plug-ins/script-fu/scripts/fuzzyborder.scm
+	* plug-ins/script-fu/scripts/old-photo.scm
+	* plug-ins/script-fu/scripts/rendermap.scm
+	* plug-ins/script-fu/scripts/tileblur.scm
+	* plug-ins/script-fu/scripts/unsharp-mask.scm: use
+	RUN-NONINTERACTIVE for the run-mode instead of TRUE.
+
 2007-09-30  Simon Budig  <simon@gimp.org>
 
 	* app/display/gimpdisplayshell.[ch]

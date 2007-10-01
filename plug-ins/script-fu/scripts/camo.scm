@@ -45,15 +45,18 @@
     (gimp-context-set-background inColor1)
     (gimp-drawable-fill baseLayer BACKGROUND-FILL)
 
-    (plug-in-solid-noise TRUE theImage thickLayer 1 0 (rand 65536) 1 inGrain inGrain)
-    (plug-in-solid-noise TRUE theImage thinLayer 1 0 (rand 65536) 1 inGrain inGrain)
+    (plug-in-solid-noise RUN-NONINTERACTIVE
+			 theImage thickLayer 1 0 (rand 65536) 1 inGrain inGrain)
+    (plug-in-solid-noise RUN-NONINTERACTIVE
+			 theImage thinLayer 1 0 (rand 65536) 1 inGrain inGrain)
     (gimp-threshold thickLayer 127 255)
     (gimp-threshold thinLayer 145 255)
 
     (set! theBlur (- 16 inGrain))
 
     (gimp-context-set-background inColor2)
-    (gimp-by-color-select thickLayer '(0 0 0) 127 CHANNEL-OP-REPLACE  TRUE FALSE 0 FALSE)
+    (gimp-by-color-select thickLayer
+			  '(0 0 0) 127 CHANNEL-OP-REPLACE TRUE FALSE 0 FALSE)
     (gimp-edit-clear thickLayer)
     (gimp-selection-invert theImage)
     (gimp-edit-fill thickLayer BACKGROUND-FILL)

@@ -71,16 +71,17 @@
                     (/ theHeight inGranu)
                     TRUE)
 
-  (plug-in-spread TRUE
+  (plug-in-spread RUN-NONINTERACTIVE
                   theImage
                   theLayer
                   inSpread
                   inSpread)
 
-  (plug-in-gauss-iir TRUE theImage theLayer inSmooth inSmoothH inSmoothV)
+  (plug-in-gauss-iir RUN-NONINTERACTIVE
+		     theImage theLayer inSmooth inSmoothH inSmoothV)
   (gimp-layer-scale theLayer theWidth theHeight TRUE)
-  (plug-in-threshold-alpha TRUE theImage theLayer inThreshold)
-  (plug-in-gauss-iir TRUE theImage theLayer 1 TRUE TRUE)
+  (plug-in-threshold-alpha RUN-NONINTERACTIVE theImage theLayer inThreshold)
+  (plug-in-gauss-iir RUN-NONINTERACTIVE theImage theLayer 1 TRUE TRUE)
   (gimp-selection-layer-alpha theLayer)
   (gimp-image-remove-layer theImage theLayer)
   (if (and (= (car (gimp-drawable-is-channel inDrawable)) TRUE)

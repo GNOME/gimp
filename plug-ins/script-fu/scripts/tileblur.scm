@@ -47,8 +47,10 @@
 
     (gimp-selection-none theImage)
     (if (= inType 0)
-        (plug-in-gauss-iir TRUE theImage theLayer inRadius inHoriz inVert)
-        (plug-in-gauss-rle TRUE theImage theLayer inRadius inHoriz inVert)
+        (plug-in-gauss-iir RUN-NONINTERACTIVE
+			   theImage theLayer inRadius inHoriz inVert)
+        (plug-in-gauss-rle RUN-NONINTERACTIVE
+			   theImage theLayer inRadius inHoriz inVert)
     )
 
     (gimp-layer-resize theLayer

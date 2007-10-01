@@ -38,7 +38,8 @@
                                       "I've got more rubber ducks than you!"
                                       100 NORMAL-MODE)))
   (gimp-image-add-layer theImage theLayer 0)
-  (plug-in-solid-noise TRUE theImage theLayer 1 0 (rand 65536)
+  (plug-in-solid-noise RUN-NONINTERACTIVE
+		       theImage theLayer 1 0 (rand 65536)
                        inGrain inGrain inGrain)
 
   (if (= inWiden 1)
@@ -49,7 +50,8 @@
         (gimp-image-add-layer theImage thinLayer 0)
 
         (let ((theBigGrain (min 15 (* 2 inGrain))))
-          (plug-in-solid-noise TRUE theImage thinLayer 1 0 (rand 65536)
+          (plug-in-solid-noise RUN-NONINTERACTIVE
+			       theImage thinLayer 1 0 (rand 65536)
                                theBigGrain theBigGrain theBigGrain))
 
         (gimp-context-set-background '(255 255 255))
@@ -67,7 +69,7 @@
 
   (gimp-selection-none theImage)
   (gimp-context-set-gradient inGrad)
-  (plug-in-gradmap TRUE theImage theLayer)
+  (plug-in-gradmap RUN-NONINTERACTIVE theImage theLayer)
 
   (gimp-display-new theImage)
 
