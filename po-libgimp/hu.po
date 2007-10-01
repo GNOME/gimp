@@ -1229,7 +1229,7 @@ msgstr "Ú_j kiindulóérték"
 msgid "Seed random number generator with a generated random number"
 msgstr ""
 "A véletlenszám-előállítás kiindulóértékének beállítása egy előállított "
-"véletlenszámmal"
+"véletlen számmal"
 
 #: ../libgimpwidgets/gimpwidgets.c:1026
 msgid "_Randomize"
