@@ -176,6 +176,7 @@ gimp_pdb_dialog_close
 gimp_get_program_class
 gimp_get_display_name
 gimp_get_theme_dir
+gimp_recent_list_add_uri
 </SECTION>
 
 <SECTION>
@@ -1136,6 +1137,8 @@ gimp_image_set_uri
 gimp_image_get_uri
 gimp_image_set_filename
 gimp_image_get_filename
+gimp_image_get_load_proc
+gimp_image_set_load_proc
 gimp_image_set_save_proc
 gimp_image_get_save_proc
 gimp_image_saved
@@ -2270,6 +2273,7 @@ GIMP_DISPLAY_OPTIONS_GET_CLASS
 <SECTION>
 <FILE>gimpdisplayshell</FILE>
 PROJ_ROUND
+PROJ_ROUND64
 SCREEN_XRES
 SCREEN_YRES
 SCALEX
@@ -4164,9 +4168,11 @@ gimp_rectangle_tool_draw
 gimp_rectangle_tool_execute
 gimp_rectangle_tool_cancel
 gimp_rectangle_tool_set_constraint
+gimp_rectangle_tool_get_constraint
 gimp_rectangle_tool_get_function
 gimp_rectangle_tool_set_function
-gimp_rectangle_tool_get_rectangle_size
+gimp_rectangle_tool_constraint_size_set
+gimp_rectangle_tool_pending_size_set
 gimp_rectangle_tool_get_press_coords
 gimp_rectangle_tool_install_properties
 gimp_rectangle_tool_set_property
@@ -8318,33 +8324,6 @@ file_utils_save_thumbnail
 </SECTION>
 
 <SECTION>
-<FILE>gimprecentitem</FILE>
-GimpRecentItem
-gimp_recent_item_new
-gimp_recent_item_ref
-gimp_recent_item_unref
-gimp_recent_item_new_from_uri
-gimp_recent_item_set_uri
-gimp_recent_item_get_uri
-gimp_recent_item_get_uri_utf8
-gimp_recent_item_set_mime_type
-gimp_recent_item_get_mime_type
-gimp_recent_item_set_timestamp
-gimp_recent_item_get_timestamp
-gimp_recent_item_get_groups
-gimp_recent_item_in_group
-gimp_recent_item_add_group
-gimp_recent_item_remove_group
-gimp_recent_item_set_private
-gimp_recent_item_get_private
-</SECTION>
-
-<SECTION>
-<FILE>gimprecentlist</FILE>
-gimp_recent_list_add_uri
-</SECTION>
-
-<SECTION>
 <FILE>about-dialog</FILE>
 about_dialog_create
 </SECTION>
@@ -8513,6 +8492,15 @@ gui_message
 gui_vtable_init
 </SECTION>
  
+<SECTION>
+<FILE>ige-mac-menu</FILE>
+IgeMacMenuGroup
+ige_mac_menu_set_menu_bar
+ige_mac_menu_set_quit_menu_item
+ige_mac_menu_add_app_menu_group
+ige_mac_menu_add_app_menu_item
+</SECTION>
+
 <SECTION>
 <FILE>themes</FILE>
 themes_init
@@ -9566,7 +9554,6 @@ gimp_get_mod_name_control
 gimp_get_mod_name_alt
 gimp_get_mod_separator
 gimp_get_mod_string
-gimp_get_accel_string
 gimp_suggest_modifiers
 gimp_get_screen_resolution
 gimp_rgb_get_gdk_color
@@ -10408,6 +10395,7 @@ image_menu_setup
 <SECTION>
 <FILE>plug-in-menus</FILE>
 plug_in_menus_setup
+plug_in_menu_path_map
 </SECTION>
 
 <SECTION>

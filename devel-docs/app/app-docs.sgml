@@ -340,8 +340,6 @@
     <xi:include href="xml/file-save.xml" />
     <xi:include href="xml/file-procedure.xml" />
     <xi:include href="xml/file-utils.xml" />
-    <xi:include href="xml/gimprecentitem.xml" />
-    <xi:include href="xml/gimprecentlist.xml" />
   </part>
 
   <part id="app-vectors-part">
@@ -1127,6 +1125,7 @@
     <chapter id="app-gui-utils">
       <title>Misc. Utilities</title>
       <xi:include href="xml/color-history.xml" />
+      <xi:include href="xml/ige-mac-menu.xml" />
       <xi:include href="xml/session.xml" />
       <xi:include href="xml/splash.xml" />
       <xi:include href="xml/themes.xml" />
