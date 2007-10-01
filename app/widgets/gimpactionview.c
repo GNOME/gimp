@@ -38,7 +38,6 @@
 #include "gimpmessagebox.h"
 #include "gimpmessagedialog.h"
 #include "gimpuimanager.h"
-#include "gimpwidgets-utils.h"
 
 #include "gimp-intl.h"
 
@@ -527,7 +526,7 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
   label = gimp_strip_uline (tmp);
   g_free (tmp);
 
-  accel_string = gimp_get_accel_string (accel_key, accel_mask);
+  accel_string = gtk_accelerator_get_label (accel_key, accel_mask);
 
   confirm_data = g_slice_new (ConfirmData);
 

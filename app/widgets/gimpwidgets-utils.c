@@ -465,13 +465,13 @@ gimp_get_mod_string (GdkModifierType modifiers)
   }
   modifier_strings[] =
   {
-    { GDK_SHIFT_MASK,                                    NULL },
-    { GDK_CONTROL_MASK,                                  NULL },
-    { GDK_MOD1_MASK,                                     NULL },
-    { GDK_SHIFT_MASK | GDK_CONTROL_MASK,                 NULL },
-    { GDK_SHIFT_MASK | GDK_MOD1_MASK,                    NULL },
-    { GDK_CONTROL_MASK | GDK_MOD1_MASK,                  NULL },
-    { GDK_SHIFT_MASK | GDK_CONTROL_MASK | GDK_MOD1_MASK, NULL }
+    { GDK_SHIFT_MASK,                                      NULL },
+    { GDK_CONTROL_MASK,                                    NULL },
+    { GDK_MOD1_MASK,                                       NULL },
+    { GDK_SHIFT_MASK   | GDK_CONTROL_MASK,                 NULL },
+    { GDK_SHIFT_MASK   | GDK_MOD1_MASK,                    NULL },
+    { GDK_CONTROL_MASK | GDK_MOD1_MASK,                    NULL },
+    { GDK_SHIFT_MASK   | GDK_CONTROL_MASK | GDK_MOD1_MASK, NULL }
   };
 
   gint i;
@@ -482,7 +482,7 @@ gimp_get_mod_string (GdkModifierType modifiers)
         {
           if (! modifier_strings[i].name)
             {
-              GString *str = g_string_new ("");
+              GString *str = g_string_new (NULL);
 
               if (modifiers & GDK_SHIFT_MASK)
                 {
@@ -513,70 +513,6 @@ gimp_get_mod_string (GdkModifierType modifiers)
     }
 
   return NULL;
-}
-
-static void
-gimp_substitute_underscores (gchar *str)
-{
-  gchar *p;
-
-  for (p = str; *p; p++)
-    if (*p == '_')
-      *p = ' ';
-}
-
-
-/* pretty much straight copy of _gtk_accel_label_class_get_accelerator_label */
-gchar *
-gimp_get_accel_string (guint           key,
-                       GdkModifierType modifiers)
-{
-  GtkAccelLabelClass *accel_label_class;
-  GString            *gstring;
-  gunichar            ch;
-
-  accel_label_class = g_type_class_peek (GTK_TYPE_ACCEL_LABEL);
-
-  gstring = g_string_new (gimp_get_mod_string (modifiers));
-
-  if (gstring->len > 0)
-    g_string_append (gstring, gimp_get_mod_separator ());
-
-  ch = gdk_keyval_to_unicode (key);
-
-  if (ch && (g_unichar_isgraph (ch) || ch == ' ') &&
-      (ch < 0x80 || accel_label_class->latin1_to_char))
-    {
-      switch (ch)
-        {
-        case ' ':
-          /* do not translate the part before the | */
-          g_string_append (gstring, Q_("keyboard label|Space"));
-          break;
-        case '\\':
-          /* do not translate the part before the | */
-          g_string_append (gstring, Q_("keyboard label|Backslash"));
-          break;
-        default:
-          g_string_append_unichar (gstring, g_unichar_toupper (ch));
-          break;
-        }
-    }
-  else
-    {
-      gchar *tmp;
-
-      tmp = gtk_accelerator_name (key, 0);
-
-      if (tmp[0] != 0 && tmp[1] == 0)
-        tmp[0] = g_ascii_toupper (tmp[0]);
-
-      gimp_substitute_underscores (tmp);
-      g_string_append (gstring, tmp);
-      g_free (tmp);
-    }
-
-  return g_string_free (gstring, FALSE);
 }
 
 #define BUF_SIZE 100
@@ -1058,8 +994,8 @@ gimp_widget_accel_changed (GtkAccelGroup   *accel_group,
           accel_key->accel_key &&
           accel_key->accel_flags & GTK_ACCEL_VISIBLE)
         {
-          gchar *accel = gimp_get_accel_string (accel_key->accel_key,
-                                                accel_key->accel_mods);
+          gchar *accel = gtk_accelerator_get_label (accel_key->accel_key,
+                                                    accel_key->accel_mods);
 
           tooltip = g_strdup_printf ("%s  (%s)", orig_tooltip, accel);
           g_free (accel);

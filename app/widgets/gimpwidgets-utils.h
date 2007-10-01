@@ -53,8 +53,6 @@ const gchar     * gimp_get_mod_name_control  (void);
 const gchar     * gimp_get_mod_name_alt      (void);
 const gchar     * gimp_get_mod_separator     (void);
 const gchar     * gimp_get_mod_string        (GdkModifierType  modifiers);
-gchar           * gimp_get_accel_string      (guint            key,
-                                              GdkModifierType  modifiers);
 gchar           * gimp_suggest_modifiers     (const gchar     *message,
                                               GdkModifierType  modifiers,
                                               const gchar     *shift_format,

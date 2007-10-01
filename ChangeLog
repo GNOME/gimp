@@ -1,3 +1,11 @@
+2007-10-01  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpwidgets-utils.[ch]: removed
+	gimp_get_accel_string() and use gtk_accelerator_get_label()
+	instead.
+
+	* app/widgets/gimpactionview.c: ditto.
+
 2007-10-01  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/scripts/camo.scm
