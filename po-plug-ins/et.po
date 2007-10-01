@@ -4,13 +4,13 @@
 # Copyright (C) 2001-2005 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Gimp package.
 #
-# Olle Niit <olle@paalalinn.com>, 2005.
+# Olle Niit <olle@paalalinn.com>, 2005-2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-25 22:07+0100\n"
-"PO-Revision-Date: 2007-07-28 01:54+0300\n"
+"PO-Revision-Date: 2007-10-01 00:40+0300\n"
 "Last-Translator: Olle Niit <olle@paalalinn.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -39,16 +39,14 @@ msgid "Realtime preview"
 msgstr "Reaalajas eelvaade"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:646
-#, fuzzy
 msgid "If enabled the preview will be redrawn automatically"
 msgstr ""
 "Kui selle võimaluse lubad, joonistatakse eelvaade muudatuste korral "
 "automaatselt"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:649
-#, fuzzy
 msgid "R_edraw preview"
-msgstr "Uuestijoonistuse eelvaade"
+msgstr "Uuestijoonistuse _eelvaade"
 
 #. Zoom Options
 #: ../plug-ins/FractalExplorer/Dialogs.c:657
@@ -56,14 +54,12 @@ msgid "Zoom"
 msgstr "Suurendus"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:693
-#, fuzzy
 msgid "Undo last zoom change"
-msgstr "Tühista viimane suurendus"
+msgstr "Tühista viimane suurenduse muutus"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:703
-#, fuzzy
 msgid "Redo last zoom change"
-msgstr "Korda viimast suurendust"
+msgstr "Korda viimast suurenduste muutust"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:718
 msgid "_Parameters"
@@ -71,7 +67,7 @@ msgstr "_Parameetrid"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:721
 msgid "Fractal Parameters"
-msgstr ""
+msgstr "Fraktaali parameetrid"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:734
 #: ../plug-ins/MapObject/mapobject_ui.c:1111
@@ -118,7 +114,7 @@ msgstr "CY:"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:809
 msgid "Load a fractal from file"
-msgstr ""
+msgstr "Lae fraktaal failist"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:817
 msgid "Reset parameters to default values"
@@ -126,12 +122,12 @@ msgstr "Sea uuesti algväärtused"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:826
 msgid "Save active fractal to file"
-msgstr ""
+msgstr "Salvesta aktiivne fraktaal faili"
 
 #. Fractal type toggle box
 #: ../plug-ins/FractalExplorer/Dialogs.c:829
 msgid "Fractal Type"
-msgstr ""
+msgstr "Fraktaali tüüp"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:842
 msgid "Mandelbrot"
@@ -486,16 +482,15 @@ msgstr ""
 #: ../plug-ins/Lighting/lighting_apply.c:104
 #: ../plug-ins/Lighting/lighting_ui.c:988
 msgid "Lighting Effects"
-msgstr ""
+msgstr "Valgustuse effektid"
 
 #: ../plug-ins/Lighting/lighting_main.c:195
-#, fuzzy
 msgid "Apply various lighting effects to an image"
-msgstr "Rakenda aktiivne spektrikomplekti lõplikule pildile"
+msgstr "Rakenda pildile erinevaid valgustuseffekte"
 
 #: ../plug-ins/Lighting/lighting_main.c:200
 msgid "_Lighting Effects..."
-msgstr ""
+msgstr "Va_lgustuse effektid..."
 
 #. General options
 #: ../plug-ins/Lighting/lighting_ui.c:294
@@ -647,7 +642,7 @@ msgstr ""
 #: ../plug-ins/Lighting/lighting_ui.c:509 ../plug-ins/common/struc.c:1294
 #: ../plug-ins/common/wind.c:936
 msgid "Direction"
-msgstr ""
+msgstr "Suund"
 
 #. X
 #: ../plug-ins/Lighting/lighting_ui.c:518
@@ -657,12 +652,12 @@ msgstr ""
 #: ../plug-ins/MapObject/mapobject_ui.c:1058
 #: ../plug-ins/ifscompose/ifscompose.c:525
 msgid "X:"
-msgstr ""
+msgstr "X:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:524
 #: ../plug-ins/MapObject/mapobject_ui.c:749
 msgid "Light source X direction in XYZ space"
-msgstr ""
+msgstr "Valgusallika X suund XYZ ruumis"
 
 #. Y
 #: ../plug-ins/Lighting/lighting_ui.c:530
@@ -673,12 +668,12 @@ msgstr ""
 #: ../plug-ins/MapObject/mapobject_ui.c:1167
 #: ../plug-ins/ifscompose/ifscompose.c:539
 msgid "Y:"
-msgstr ""
+msgstr "Y:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:536
 #: ../plug-ins/MapObject/mapobject_ui.c:762
 msgid "Light source Y direction in XYZ space"
-msgstr ""
+msgstr "Valgusallika Y suund XYZ ruumis"
 
 #: ../plug-ins/Lighting/lighting_ui.c:542
 #: ../plug-ins/MapObject/mapobject_ui.c:715
@@ -687,12 +682,12 @@ msgstr ""
 #: ../plug-ins/MapObject/mapobject_ui.c:1080
 #: ../plug-ins/MapObject/mapobject_ui.c:1179
 msgid "Z:"
-msgstr ""
+msgstr "Z:"
 
 #: ../plug-ins/Lighting/lighting_ui.c:548
 #: ../plug-ins/MapObject/mapobject_ui.c:775
 msgid "Light source Z direction in XYZ space"
-msgstr ""
+msgstr "Valgusallika Z suund XYZ ruumis"
 
 #: ../plug-ins/Lighting/lighting_ui.c:551
 msgid "I_solate"
@@ -772,12 +767,12 @@ msgstr "Logaritmiline"
 #: ../plug-ins/Lighting/lighting_ui.c:808 ../plug-ins/common/bumpmap.c:837
 #: ../plug-ins/flame/flame.c:747
 msgid "Sinusoidal"
-msgstr ""
+msgstr "Sinusoidne"
 
 #: ../plug-ins/Lighting/lighting_ui.c:809 ../plug-ins/common/bumpmap.c:836
 #: ../plug-ins/flame/flame.c:748
 msgid "Spherical"
-msgstr ""
+msgstr "Sfääriline"
 
 #: ../plug-ins/Lighting/lighting_ui.c:819
 msgid "Cu_rve:"
@@ -819,7 +814,7 @@ msgstr ""
 #: ../plug-ins/Lighting/lighting_ui.c:927
 #: ../plug-ins/MapObject/mapobject_ui.c:1307
 msgid "_Material"
-msgstr ""
+msgstr "_Materjal"
 
 #: ../plug-ins/Lighting/lighting_ui.c:931
 msgid "_Bump Map"
@@ -901,7 +896,7 @@ msgstr ""
 
 #: ../plug-ins/MapObject/mapobject_ui.c:490
 msgid "Sphere"
-msgstr ""
+msgstr "Sfäär"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:491
 msgid "Box"
@@ -933,7 +928,7 @@ msgstr ""
 
 #: ../plug-ins/MapObject/mapobject_ui.c:536
 msgid "Create new image"
-msgstr ""
+msgstr "Loo uus pilt"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:555
 msgid "Enable _antialiasing"
@@ -947,7 +942,7 @@ msgstr ""
 #: ../plug-ins/common/emboss.c:525 ../plug-ins/common/fractaltrace.c:796
 #: ../plug-ins/common/struc.c:1326
 msgid "_Depth:"
-msgstr ""
+msgstr "_Sügavus:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:582
 msgid "Antialiasing quality. Higher is better, but slower"
@@ -1018,15 +1013,15 @@ msgstr ""
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1012
 msgid "Object X position in XYZ space"
-msgstr ""
+msgstr "Objekti X asukoht XYZ ruumis"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1025
 msgid "Object Y position in XYZ space"
-msgstr ""
+msgstr "Objekti Y asukoht XYZ ruumis"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1038
 msgid "Object Z position in XYZ space"
-msgstr ""
+msgstr "Objekti Z asukoht XYZ ruumis"
 
 #. Rotation
 #: ../plug-ins/MapObject/mapobject_ui.c:1047
@@ -1078,11 +1073,11 @@ msgstr ""
 #: ../plug-ins/MapObject/mapobject_ui.c:1205
 #: ../plug-ins/print/print-page-layout.c:429
 msgid "_Top:"
-msgstr ""
+msgstr "Ü_lemine:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1205
 msgid "_Bottom:"
-msgstr ""
+msgstr "_Alumine:"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1210
 msgid "Images for the Cap Faces"
@@ -1131,7 +1126,7 @@ msgstr ""
 
 #: ../plug-ins/bmp/bmp.c:124 ../plug-ins/bmp/bmp.c:143
 msgid "Windows BMP image"
-msgstr ""
+msgstr "Windowsi BMP pilt"
 
 #: ../plug-ins/bmp/bmpread.c:85
 msgid "Bad colormap"
@@ -1220,14 +1215,12 @@ msgid "The bitmap ends unexpectedly."
 msgstr ""
 
 #: ../plug-ins/bmp/bmpwrite.c:187 ../plug-ins/bmp/bmpwrite.c:209
-#, fuzzy
 msgid "Cannot save indexed image with transparency in BMP file format."
-msgstr "Ei saa alfakanaliga indekseeritud pilte töödelda."
+msgstr "BMP faili formaati ei saa läbipaistvusega indekseeritud pilti salvestada."
 
 #: ../plug-ins/bmp/bmpwrite.c:189 ../plug-ins/bmp/bmpwrite.c:211
-#, fuzzy
 msgid "Alpha channel will be ignored."
-msgstr "EXIF andmeid ignoreeritakse."
+msgstr "Alfa kanalit ignoreeritakse."
 
 #. And let's begin the progress
 #. init the progress meter
@@ -1262,15 +1255,15 @@ msgstr "E_rivõimalused"
 
 #: ../plug-ins/bmp/bmpwrite.c:841
 msgid "16 bits"
-msgstr ""
+msgstr "16 biti"
 
 #: ../plug-ins/bmp/bmpwrite.c:877
 msgid "24 bits"
-msgstr ""
+msgstr "24 bitti"
 
 #: ../plug-ins/bmp/bmpwrite.c:894
 msgid "32 bits"
-msgstr ""
+msgstr "32 bitti"
 
 #: ../plug-ins/common/AlienMap2.c:140
 msgid "_Modify red channel"
@@ -1551,15 +1544,15 @@ msgstr ""
 
 #: ../plug-ins/common/CML_explorer.c:223
 msgid "All black"
-msgstr ""
+msgstr "Kõik must"
 
 #: ../plug-ins/common/CML_explorer.c:224
 msgid "All gray"
-msgstr ""
+msgstr "Kõik hall"
 
 #: ../plug-ins/common/CML_explorer.c:225
 msgid "All white"
-msgstr ""
+msgstr "Kõik valge"
 
 #: ../plug-ins/common/CML_explorer.c:226
 msgid "The first row of the image"
@@ -1606,11 +1599,11 @@ msgstr ""
 #: ../plug-ins/gimpressionist/orientation.c:138
 #: ../plug-ins/gimpressionist/size.c:141
 msgid "Value"
-msgstr ""
+msgstr "Väärtus"
 
 #: ../plug-ins/common/CML_explorer.c:307
 msgid "(None)"
-msgstr ""
+msgstr "(Puudub)"
 
 #: ../plug-ins/common/CML_explorer.c:455
 msgid "Create abstract Coupled-Map Lattice patterns"
@@ -1663,7 +1656,7 @@ msgstr ""
 
 #: ../plug-ins/common/CML_explorer.c:1337
 msgid "Initial value:"
-msgstr ""
+msgstr "Algväärtus:"
 
 #: ../plug-ins/common/CML_explorer.c:1343
 msgid "Zoom scale:"
@@ -1799,9 +1792,8 @@ msgid "Warning: the source and the destination are the same channel."
 msgstr ""
 
 #: ../plug-ins/common/CML_explorer.c:1948
-#, fuzzy
 msgid "Save CML Explorer Parameters"
-msgstr "Parameetrite salvestamine"
+msgstr "Salvesta CML Exploreri parameetrid"
 
 #: ../plug-ins/common/CML_explorer.c:2059
 #: ../plug-ins/common/channel_mixer.c:1067
@@ -1810,9 +1802,8 @@ msgid "Parameters were saved to '%s'"
 msgstr "Parameetrid on '%s'-i salvestatud"
 
 #: ../plug-ins/common/CML_explorer.c:2081
-#, fuzzy
 msgid "Load CML Explorer Parameters"
-msgstr "Parameetrite lugemine"
+msgstr "Lae CML Exploreri parameetrid"
 
 #: ../plug-ins/common/CML_explorer.c:2199
 msgid "Error: it's not CML parameter file."
@@ -1824,9 +1815,9 @@ msgid "Warning: '%s' is an old format file."
 msgstr "Hoiatus: fail '%s' on vanas formaadis."
 
 #: ../plug-ins/common/CML_explorer.c:2210
-#, fuzzy, c-format
+#, c-format
 msgid "Warning: '%s' is a parameter file for a newer version of CML Explorer."
-msgstr "Hoiatus: fail '%s' on uuemale CML_explorer'ile kui mina."
+msgstr "Hoiatus: parameetrite fail '%s' on uuemale CML_explorer'ile kui mina."
 
 #: ../plug-ins/common/CML_explorer.c:2273
 msgid "Error: failed to load parameters"
@@ -1846,12 +1837,10 @@ msgid "_Format:"
 msgstr "_Formaat:"
 
 #: ../plug-ins/common/align_layers.c:128
-#, fuzzy
 msgid "Align all visible layers of the image"
-msgstr "Joonda nähtavad kihid"
+msgstr "Joonda pildi kõik nähtavad kihid"
 
 #: ../plug-ins/common/align_layers.c:133
-#, fuzzy
 msgid "Align Visi_ble Layers..."
 msgstr "_Joonda nähtavad kihid..."
 
@@ -1885,7 +1874,7 @@ msgstr ""
 
 #: ../plug-ins/common/align_layers.c:439
 msgid "Left edge"
-msgstr ""
+msgstr "Vasak serv"
 
 #: ../plug-ins/common/align_layers.c:440 ../plug-ins/common/align_layers.c:470
 #: ../plug-ins/gflare/gflare.c:2639
@@ -1894,7 +1883,7 @@ msgstr "Keskele"
 
 #: ../plug-ins/common/align_layers.c:441
 msgid "Right edge"
-msgstr ""
+msgstr "Parem serv"
 
 #: ../plug-ins/common/align_layers.c:450
 msgid "Ho_rizontal base:"
@@ -1914,11 +1903,11 @@ msgstr ""
 
 #: ../plug-ins/common/align_layers.c:469
 msgid "Top edge"
-msgstr ""
+msgstr "Ülemine serv"
 
 #: ../plug-ins/common/align_layers.c:471
 msgid "Bottom edge"
-msgstr ""
+msgstr "Alumine serv"
 
 #: ../plug-ins/common/align_layers.c:480
 msgid "Ver_tical base:"
@@ -1953,64 +1942,57 @@ msgid "Step to next frame"
 msgstr "Samm järgmisesse kaadrisse"
 
 #: ../plug-ins/common/animationplay.c:447
-#, fuzzy
 msgid "Rewind the animation"
 msgstr "Keri animatsioon tagasi"
 
 #: ../plug-ins/common/animationplay.c:465
-#, fuzzy
 msgid "Faster"
-msgstr "Pehmenda"
+msgstr "Kiiremini"
 
 #: ../plug-ins/common/animationplay.c:465
 msgid "Increase the speed of the animation"
-msgstr ""
+msgstr "Suurenda animatsiooni kiirust"
 
 #: ../plug-ins/common/animationplay.c:470
-#, fuzzy
 msgid "Slower"
-msgstr "_Alumine"
+msgstr "Aeglasemalt"
 
 #: ../plug-ins/common/animationplay.c:470
 msgid "Decrease the speed of the animation"
-msgstr ""
+msgstr "Vähenda animatsiooni kiirust"
 
 #: ../plug-ins/common/animationplay.c:475
 msgid "Reset speed"
-msgstr ""
+msgstr "Nulli kiirus"
 
 #: ../plug-ins/common/animationplay.c:475
-#, fuzzy
 msgid "Reset the speed of the animation"
-msgstr "Kasuta pildi värvi"
+msgstr "Nulli animatsiooni kiirus"
 
 #: ../plug-ins/common/animationplay.c:483
 #: ../plug-ins/common/animationplay.c:1445
-#, fuzzy
 msgid "Start playback"
-msgstr "Alusta/Lõpeta mahamängimine"
+msgstr "Alusta mahamängimist"
 
 #: ../plug-ins/common/animationplay.c:487
-#, fuzzy
 msgid "Detach"
-msgstr "Venita"
+msgstr "Ühenda lahti"
 
 #: ../plug-ins/common/animationplay.c:488
 msgid "Detach the animation from the dialog window"
-msgstr ""
+msgstr "Ühenda animatsioon dialoogiakna küljest lahti."
 
 #: ../plug-ins/common/animationplay.c:581
 msgid "Animation Playback:"
 msgstr "Animatsiooni mahamängimine:"
 
 #: ../plug-ins/common/animationplay.c:664
-#, fuzzy
 msgid "Playback speed"
-msgstr "_Mahamängimine..."
+msgstr "Mahamängimise kiirus"
 
 #: ../plug-ins/common/animationplay.c:802
 msgid "Tried to display an invalid layer."
-msgstr ""
+msgstr "Püüti maha mängida vigast kihti."
 
 #: ../plug-ins/common/animationplay.c:1322
 #, c-format
@@ -2018,17 +2000,16 @@ msgid "Frame %d of %d"
 msgstr "Kaader %d %d-st"
 
 #: ../plug-ins/common/animationplay.c:1445
-#, fuzzy
 msgid "Stop playback"
-msgstr "Alusta/Lõpeta mahamängimine"
+msgstr "Lõpeta mahamängimine"
 
 #: ../plug-ins/common/animoptimize.c:133
 msgid "Modify image to reduce size when saved as GIF animation"
-msgstr ""
+msgstr "Muuda pilti suuruse vähendamiseks kui salvestad GIF animatsioonina"
 
 #: ../plug-ins/common/animoptimize.c:145
 msgid "Optimize (for _GIF)"
-msgstr ""
+msgstr "Optimeeri (_GIF jaoks)"
 
 #: ../plug-ins/common/animoptimize.c:153
 msgid "Reduce file size where combining layers is possible"
@@ -2040,12 +2021,11 @@ msgstr ""
 
 #: ../plug-ins/common/animoptimize.c:171
 msgid "Remove optimization to make editing easier"
-msgstr ""
+msgstr "Eemalda optimeerimine et muuta redigeerimine lihtsamaks"
 
 #: ../plug-ins/common/animoptimize.c:178
-#, fuzzy
 msgid "_Unoptimize"
-msgstr "Optimeeri"
+msgstr "_Eemalda optimeerimine"
 
 #: ../plug-ins/common/animoptimize.c:198
 msgid "_Remove Backdrop"
@@ -2057,7 +2037,7 @@ msgstr ""
 
 #: ../plug-ins/common/animoptimize.c:427
 msgid "Unoptimizing animation"
-msgstr ""
+msgstr "Animatsioonilt optimeerimise eemaldamine"
 
 #: ../plug-ins/common/animoptimize.c:430
 msgid "Removing animation background"
@@ -2124,18 +2104,16 @@ msgid "Remove empty borders from the image"
 msgstr ""
 
 #: ../plug-ins/common/autocrop.c:90
-#, fuzzy
 msgid "Autocrop Imag_e"
-msgstr "Pildi _automaatkärbe"
+msgstr "Pildi automaatkärb_e"
 
 #: ../plug-ins/common/autocrop.c:99
 msgid "Remove empty borders from the layer"
 msgstr ""
 
 #: ../plug-ins/common/autocrop.c:104
-#, fuzzy
 msgid "Autocrop Lay_er"
-msgstr "_Kihi automaatkärbe"
+msgstr "Kihi automaatkärb_e"
 
 #: ../plug-ins/common/autocrop.c:151
 msgid "Cropping"
@@ -2332,7 +2310,7 @@ msgstr ""
 
 #: ../plug-ins/common/cartoon.c:149
 msgid "Ca_rtoon..."
-msgstr ""
+msgstr "Ka_rikatuur..."
 
 #: ../plug-ins/common/cartoon.c:231 ../plug-ins/common/dog.c:253
 #: ../plug-ins/common/gauss.c:445 ../plug-ins/common/neon.c:225
@@ -2340,11 +2318,11 @@ msgstr ""
 #: ../plug-ins/common/softglow.c:221 ../plug-ins/gflare/gflare.c:965
 #: ../plug-ins/sgi/sgi.c:520 ../plug-ins/xjt/xjt.c:1688
 msgid "Cannot operate on indexed color images."
-msgstr ""
+msgstr "Ei suuda töötada pildiga, millel on indekseeritud värvid."
 
 #: ../plug-ins/common/cartoon.c:811
 msgid "Cartoon"
-msgstr ""
+msgstr "Karikatuur"
 
 #: ../plug-ins/common/cartoon.c:848 ../plug-ins/common/photocopy.c:876
 msgid "_Mask radius:"
@@ -2355,9 +2333,8 @@ msgid "_Percent black:"
 msgstr ""
 
 #: ../plug-ins/common/ccanalyze.c:106
-#, fuzzy
 msgid "Analyze the set of colors in the image"
-msgstr "Kasuta pildi värvi"
+msgstr "Analüüsi pildil olevaid värve"
 
 #: ../plug-ins/common/ccanalyze.c:112
 msgid "Colorcube A_nalysis..."
@@ -2370,7 +2347,7 @@ msgstr ""
 #. output results
 #: ../plug-ins/common/ccanalyze.c:384
 #: ../plug-ins/imagemap/imap_cmd_guides.c:231
-#, fuzzy, c-format
+#, c-format
 msgid "Image dimensions: %d × %d"
 msgstr "Pildi mõõtmed: %d x %d"
 
@@ -2401,7 +2378,7 @@ msgstr ""
 #: ../plug-ins/common/channel_mixer.c:271
 #: ../plug-ins/common/channel_mixer.c:492
 msgid "Channel Mixer"
-msgstr ""
+msgstr "Kanali mikser"
 
 #: ../plug-ins/common/channel_mixer.c:528
 msgid "O_utput channel:"
@@ -2433,7 +2410,7 @@ msgstr "_Sinine:"
 
 #: ../plug-ins/common/channel_mixer.c:635
 msgid "_Monochrome"
-msgstr ""
+msgstr "_Mustvalge"
 
 #: ../plug-ins/common/channel_mixer.c:648
 msgid "Preserve _luminosity"
@@ -2441,11 +2418,11 @@ msgstr ""
 
 #: ../plug-ins/common/channel_mixer.c:877
 msgid "Load Channel Mixer Settings"
-msgstr ""
+msgstr "Lae kanalimikseri seaded"
 
 #: ../plug-ins/common/channel_mixer.c:1004
 msgid "Save Channel Mixer Settings"
-msgstr ""
+msgstr "Salvesta kanalimikseri seaded"
 
 #: ../plug-ins/common/checkerboard.c:89
 msgid "Create a checkerboard pattern"
@@ -2489,9 +2466,8 @@ msgid "Replace all colors with shades of a specified color"
 msgstr ""
 
 #: ../plug-ins/common/colorify.c:108
-#, fuzzy
 msgid "Colorif_y..."
-msgstr "Täida värviga"
+msgstr "_Täida värviga..."
 
 #: ../plug-ins/common/colorify.c:169
 msgid "Colorifying"
@@ -2499,15 +2475,15 @@ msgstr "Täida värviga"
 
 #: ../plug-ins/common/colorify.c:255
 msgid "Colorify"
-msgstr ""
+msgstr "Täida värviga"
 
 #: ../plug-ins/common/colorify.c:289
 msgid "Custom color:"
-msgstr "Kohandatud värv"
+msgstr "Kohandatud värv:"
 
 #: ../plug-ins/common/colorify.c:294
 msgid "Colorify Custom Color"
-msgstr ""
+msgstr "Täida omatehtud värviga"
 
 #: ../plug-ins/common/colormap-remap.c:97
 msgid "Rearrange the colormap"
@@ -2537,25 +2513,23 @@ msgstr ""
 
 #: ../plug-ins/common/colormap-remap.c:483
 msgid "Sort on Hue"
-msgstr ""
+msgstr "Sorteeri värvitooni järgi"
 
 #: ../plug-ins/common/colormap-remap.c:487
-#, fuzzy
 msgid "Sort on Saturation"
-msgstr "_Küllastus"
+msgstr "Sorteeri küllastuse järgi"
 
 #: ../plug-ins/common/colormap-remap.c:491
 msgid "Sort on Value"
-msgstr ""
+msgstr "Sorteeri väärtuse järgi"
 
 #: ../plug-ins/common/colormap-remap.c:495
 msgid "Reverse Order"
-msgstr ""
+msgstr "Vastupidises järjekorras"
 
 #: ../plug-ins/common/colormap-remap.c:499
-#, fuzzy
 msgid "Reset Order"
-msgstr "_Vasak raam"
+msgstr "Tühista järjestamine"
 
 #: ../plug-ins/common/colormap-remap.c:598
 msgid "Rearrange Colormap"
@@ -2569,7 +2543,7 @@ msgstr ""
 
 #: ../plug-ins/common/colortoalpha.c:96
 msgid "Convert a specified color to transparency"
-msgstr ""
+msgstr "Muuda määratud värv läbipaistvaks"
 
 #: ../plug-ins/common/colortoalpha.c:103
 msgid "Color to _Alpha..."
@@ -2592,7 +2566,7 @@ msgstr ""
 
 #: ../plug-ins/common/colortoalpha.c:415
 msgid "Color to Alpha Color Picker"
-msgstr ""
+msgstr "Värv alfaks värvivalija"
 
 #: ../plug-ins/common/colortoalpha.c:430
 msgid "to alpha"
@@ -2601,7 +2575,7 @@ msgstr "alfaks"
 #: ../plug-ins/common/compose.c:189 ../plug-ins/common/decompose.c:170
 #: ../plug-ins/common/raw.c:1002
 msgid "RGB"
-msgstr ""
+msgstr "RGB"
 
 #: ../plug-ins/common/compose.c:200 ../plug-ins/common/decompose.c:178
 msgid "RGBA"
@@ -2610,7 +2584,7 @@ msgstr "RGBA"
 #: ../plug-ins/common/compose.c:204 ../plug-ins/common/noisify.c:525
 #: ../plug-ins/common/noisify.c:540
 msgid "_Alpha:"
-msgstr ""
+msgstr "_Alfa:"
 
 #: ../plug-ins/common/compose.c:211 ../plug-ins/common/decompose.c:184
 msgid "HSV"
@@ -2630,12 +2604,10 @@ msgid "_Value:"
 msgstr "_Väärtus:"
 
 #: ../plug-ins/common/compose.c:219 ../plug-ins/common/decompose.c:193
-#, fuzzy
 msgid "HSL"
-msgstr "HSV"
+msgstr "HSL"
 
 #: ../plug-ins/common/compose.c:222
-#, fuzzy
 msgid "_Lightness:"
 msgstr "_Heledus:"
 
@@ -2717,7 +2689,7 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:393
 msgid "Create an image using multiple gray images as color channels"
-msgstr ""
+msgstr "Loo pilt kasutades mitut halli pilti värvikanalitena"
 
 #: ../plug-ins/common/compose.c:399
 msgid "C_ompose..."
@@ -2744,7 +2716,7 @@ msgstr ""
 #: ../plug-ins/common/compose.c:532
 #, c-format
 msgid "Could not get layers for image %d"
-msgstr ""
+msgstr "Ei leidnud kihte pildile %d"
 
 #: ../plug-ins/common/compose.c:605
 msgid "Composing"
@@ -2765,7 +2737,7 @@ msgstr ""
 
 #: ../plug-ins/common/compose.c:746
 msgid "Images have different size"
-msgstr ""
+msgstr "Pildid on erinevate suurustega"
 
 #: ../plug-ins/common/compose.c:763
 msgid "Error in getting layer IDs"
@@ -2774,7 +2746,7 @@ msgstr ""
 #: ../plug-ins/common/compose.c:784
 #, c-format
 msgid "Image is not a gray image (bpp=%d)"
-msgstr ""
+msgstr "Pilt ei ole halltoonides (bpp=%d)"
 
 #: ../plug-ins/common/compose.c:811
 msgid "Unable to recompose, source layer not found"
@@ -2812,11 +2784,11 @@ msgstr "bzip arhiiv"
 
 #: ../plug-ins/common/compressor.c:373
 msgid "No sensible file extension, saving as compressed XCF."
-msgstr ""
+msgstr "Puudub mõistlik faililaiend, salvestan kui pakitud XCF."
 
 #: ../plug-ins/common/compressor.c:536
 msgid "No sensible file extension, attempting to load with file magic."
-msgstr ""
+msgstr "Puudub mõistlik faililaiend, püüan avada nõiakunsti abil."
 
 #: ../plug-ins/common/convmatrix.c:101
 msgid "Gr_ey"
@@ -2846,7 +2818,7 @@ msgstr "_Laiendatud"
 #: ../plug-ins/common/edge.c:710 ../plug-ins/common/fractaltrace.c:736
 #: ../plug-ins/common/ripple.c:563
 msgid "_Wrap"
-msgstr ""
+msgstr "_Murra"
 
 #: ../plug-ins/common/convmatrix.c:112
 msgid "Cro_p"
@@ -2874,7 +2846,7 @@ msgstr ""
 
 #: ../plug-ins/common/convmatrix.c:988
 msgid "Matrix"
-msgstr ""
+msgstr "Maatriks"
 
 #: ../plug-ins/common/convmatrix.c:1026
 msgid "D_ivisor:"
@@ -2883,12 +2855,11 @@ msgstr ""
 #: ../plug-ins/common/convmatrix.c:1052 ../plug-ins/common/depthmerge.c:767
 #: ../plug-ins/common/raw.c:1022
 msgid "O_ffset:"
-msgstr ""
+msgstr "_Nihe:"
 
 #: ../plug-ins/common/convmatrix.c:1081
-#, fuzzy
 msgid "N_ormalise"
-msgstr "Normaalne"
+msgstr "Tee n_ormaalseks"
 
 #: ../plug-ins/common/convmatrix.c:1093
 msgid "A_lpha-weighting"
@@ -2896,11 +2867,11 @@ msgstr ""
 
 #: ../plug-ins/common/convmatrix.c:1112
 msgid "Border"
-msgstr ""
+msgstr "Raam"
 
 #: ../plug-ins/common/convmatrix.c:1139
 msgid "Channels"
-msgstr ""
+msgstr "Kanalid"
 
 #: ../plug-ins/common/csource.c:110
 msgid "C source code"
@@ -2912,7 +2883,7 @@ msgstr "Salvesta C lähtekoodina"
 
 #: ../plug-ins/common/csource.c:668
 msgid "_Prefixed name:"
-msgstr ""
+msgstr "_Eesliitega nimi:"
 
 #: ../plug-ins/common/csource.c:677
 msgid "Co_mment:"
@@ -3162,33 +3133,28 @@ msgid "value"
 msgstr "väärtus"
 
 #: ../plug-ins/common/decompose.c:193 ../plug-ins/common/decompose.c:197
-#, fuzzy
 msgid "hue_l"
-msgstr "värvitoon"
+msgstr "värvitoon_l"
 
 #: ../plug-ins/common/decompose.c:194 ../plug-ins/common/decompose.c:198
-#, fuzzy
 msgid "saturation_l"
-msgstr "küllastus"
+msgstr "küllastus_l"
 
 #: ../plug-ins/common/decompose.c:195 ../plug-ins/common/decompose.c:199
-#, fuzzy
 msgid "lightness"
-msgstr "Heledus:"
+msgstr "heledus"
 
 #: ../plug-ins/common/decompose.c:197
 msgid "Hue (HSL)"
-msgstr ""
+msgstr "Värvitoon (HSL)"
 
 #: ../plug-ins/common/decompose.c:198
-#, fuzzy
 msgid "Saturation (HSL)"
-msgstr "_Küllastus"
+msgstr "Küllastus (HSL)"
 
 #: ../plug-ins/common/decompose.c:199
-#, fuzzy
 msgid "Lightness"
-msgstr "Heledus:"
+msgstr "Heledus"
 
 #: ../plug-ins/common/decompose.c:202 ../plug-ins/common/decompose.c:206
 msgid "cyan"
@@ -3394,9 +3360,9 @@ msgid "Desktop Link"
 msgstr ""
 
 #: ../plug-ins/common/desktop-link.c:163
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading desktop file '%s': %s"
-msgstr "Viga faili '%s' avamisel"
+msgstr "Viga töölauafaili '%s' laadimisel: %s"
 
 #: ../plug-ins/common/despeckle.c:149
 msgid "Remove speckle noise from the image"
@@ -3431,11 +3397,11 @@ msgstr "_Raadius:"
 
 #: ../plug-ins/common/despeckle.c:480
 msgid "_Black level:"
-msgstr ""
+msgstr "_Musta tase:"
 
 #: ../plug-ins/common/despeckle.c:496
 msgid "_White level:"
-msgstr ""
+msgstr "_Valge tase:"
 
 #: ../plug-ins/common/destripe.c:103
 msgid "Remove vertical stripe artifacts from the image"
@@ -3597,7 +3563,7 @@ msgstr ""
 #: ../plug-ins/common/displace.c:476 ../plug-ins/common/edge.c:723
 #: ../plug-ins/common/ripple.c:564 ../plug-ins/common/waves.c:280
 msgid "_Smear"
-msgstr ""
+msgstr "_Määri"
 
 #: ../plug-ins/common/displace.c:478 ../plug-ins/common/edge.c:736
 #: ../plug-ins/common/fractaltrace.c:740 ../plug-ins/common/newsprint.c:400
@@ -3682,7 +3648,7 @@ msgstr ""
 
 #: ../plug-ins/common/edge.c:691
 msgid "A_mount:"
-msgstr ""
+msgstr "_Kogus:"
 
 #: ../plug-ins/common/emboss.c:126
 msgid "Simulate an image created by embossing"
@@ -3698,7 +3664,7 @@ msgstr ""
 
 #: ../plug-ins/common/emboss.c:476
 msgid "Function"
-msgstr ""
+msgstr "Funktsioon"
 
 #: ../plug-ins/common/emboss.c:480
 msgid "_Bumpmap"
@@ -3714,19 +3680,19 @@ msgstr ""
 
 #: ../plug-ins/common/engrave.c:103
 msgid "Simulate an antique engraving"
-msgstr ""
+msgstr "Jäljenda vanaaegset graveeringut"
 
 #: ../plug-ins/common/engrave.c:108
 msgid "En_grave..."
-msgstr ""
+msgstr "_Graveeri..."
 
 #: ../plug-ins/common/engrave.c:182
 msgid "Engraving"
-msgstr ""
+msgstr "Graveerimine"
 
 #: ../plug-ins/common/engrave.c:211
 msgid "Engrave"
-msgstr ""
+msgstr "Graveeri"
 
 #: ../plug-ins/common/engrave.c:245 ../plug-ins/common/film.c:1003
 #: ../plug-ins/common/gtm.c:600 ../plug-ins/common/papertile.c:313
@@ -3740,19 +3706,19 @@ msgstr "_Kõrgus:"
 
 #: ../plug-ins/common/engrave.c:256
 msgid "_Limit line width"
-msgstr ""
+msgstr "Piira joone _laiust"
 
 #: ../plug-ins/common/exchange.c:124
 msgid "Swap one color with another"
-msgstr ""
+msgstr "Vaheta üks värv teisega"
 
 #: ../plug-ins/common/exchange.c:130
 msgid "_Color Exchange..."
-msgstr ""
+msgstr "_Värvi vahetamine..."
 
 #: ../plug-ins/common/exchange.c:215 ../plug-ins/common/exchange.c:289
 msgid "Color Exchange"
-msgstr ""
+msgstr "Värvi vahetamine"
 
 #: ../plug-ins/common/exchange.c:311
 msgid "Middle-Click Inside Preview to Pick \"From Color\""
@@ -3768,11 +3734,11 @@ msgstr "Värvist"
 
 #: ../plug-ins/common/exchange.c:367
 msgid "Color Exchange: To Color"
-msgstr ""
+msgstr "Värvi vahetamine: värviks"
 
 #: ../plug-ins/common/exchange.c:368
 msgid "Color Exchange: From Color"
-msgstr ""
+msgstr "Värvi vahetamine: värvist"
 
 #: ../plug-ins/common/exchange.c:426
 msgid "R_ed threshold:"
@@ -3921,18 +3887,16 @@ msgid "Render lens flare"
 msgstr ""
 
 #: ../plug-ins/common/flarefx.c:306
-#, fuzzy
 msgid "Lens Flare"
-msgstr "Ava fail"
+msgstr ""
 
 #: ../plug-ins/common/flarefx.c:753
 msgid "Center of Flare Effect"
 msgstr ""
 
 #: ../plug-ins/common/flarefx.c:793 ../plug-ins/common/nova.c:484
-#, fuzzy
 msgid "Show _position"
-msgstr "Näita valikut"
+msgstr "Näita _asukohta"
 
 #: ../plug-ins/common/fp.c:230
 msgid "Cyan:"
@@ -3984,7 +3948,7 @@ msgstr ""
 
 #: ../plug-ins/common/fp.c:404
 msgid "Applying filter pack"
-msgstr ""
+msgstr "Rakendan filtripakki"
 
 #: ../plug-ins/common/fp.c:524
 msgid "Original:"
@@ -4268,20 +4232,20 @@ msgid "Background (%d%s)"
 msgstr "Tagapõhi (%d%s)"
 
 #: ../plug-ins/common/gif-load.c:904
-#, fuzzy, c-format
+#, c-format
 msgid "Opening '%s' (frame %d)"
-msgstr "'%s' avamine"
+msgstr "'%s' avamine (kaader %d)"
 
 #: ../plug-ins/common/gif-load.c:933 ../plug-ins/common/iwarp.c:796
 #: ../plug-ins/common/iwarp.c:831
 #, c-format
 msgid "Frame %d"
-msgstr ""
+msgstr "Kaader %d"
 
 #: ../plug-ins/common/gif-load.c:935
 #, c-format
 msgid "Frame %d (%d%s)"
-msgstr ""
+msgstr "Kaader %d (%d%s)"
 
 #: ../plug-ins/common/gif-load.c:966
 #, c-format
@@ -4298,7 +4262,7 @@ msgstr ""
 msgid ""
 "The GIF format only supports comments in 7bit ASCII encoding. No comment is "
 "saved."
-msgstr ""
+msgstr "GIF formaat toetab ainult 7bit ASCII kodeeringus kommentaare. Kommentaari ei salvestatud."
 
 #: ../plug-ins/common/gif-save.c:958
 msgid ""
@@ -4307,7 +4271,7 @@ msgstr ""
 
 #: ../plug-ins/common/gif-save.c:1135
 msgid "Delay inserted to prevent evil CPU-sucking animation."
-msgstr ""
+msgstr "Lisati viivitus, et animatsioon ei koormaks protsessorit."
 
 #: ../plug-ins/common/gif-save.c:1175
 msgid ""
@@ -4323,12 +4287,12 @@ msgstr ""
 
 #: ../plug-ins/common/gif-save.c:1233
 msgid "Save as GIF"
-msgstr ""
+msgstr "Salvesta GIF formaadis"
 
 #. regular gif parameter settings
 #: ../plug-ins/common/gif-save.c:1255
 msgid "GIF Options"
-msgstr ""
+msgstr "GIF võimalused"
 
 #: ../plug-ins/common/gif-save.c:1261
 msgid "I_nterlace"
@@ -4336,12 +4300,12 @@ msgstr "Ü_lerealaotus"
 
 #: ../plug-ins/common/gif-save.c:1277
 msgid "_GIF comment:"
-msgstr ""
+msgstr "_GIF kommentaar:"
 
 #. additional animated gif parameter settings
 #: ../plug-ins/common/gif-save.c:1334
 msgid "Animated GIF Options"
-msgstr ""
+msgstr "Animeeritud GIF võimalused"
 
 #: ../plug-ins/common/gif-save.c:1340
 msgid "_Loop forever"
@@ -4382,7 +4346,7 @@ msgstr ""
 
 #: ../plug-ins/common/gif-save.c:2565
 msgid "Error writing output file."
-msgstr ""
+msgstr "Viga väljundfaili kirjutamisel."
 
 #: ../plug-ins/common/gif-save.c:2635
 #, c-format
@@ -4452,7 +4416,7 @@ msgstr "Näita kui:"
 
 #: ../plug-ins/common/gih.c:1039
 msgid "Dimension:"
-msgstr ""
+msgstr "Mõõtmed:"
 
 #: ../plug-ins/common/gih.c:1114
 msgid "Ranks:"
@@ -4495,9 +4459,8 @@ msgid "Load QBE File"
 msgstr "Laadi QBE fail"
 
 #: ../plug-ins/common/gqbist.c:749
-#, fuzzy
 msgid "Save as QBE File"
-msgstr "Salvesta fail"
+msgstr "Salvesta QBE failina"
 
 #: ../plug-ins/common/gqbist.c:803
 msgid "G-Qbist"
@@ -4528,9 +4491,8 @@ msgid "Palette Map"
 msgstr "Värvipaleti kaart"
 
 #: ../plug-ins/common/grid.c:142
-#, fuzzy
 msgid "Draw a grid on the image"
-msgstr "Mine üks leht edasi"
+msgstr "Joonista pildile ruudustik"
 
 #: ../plug-ins/common/grid.c:148
 msgid "_Grid..."
@@ -4964,45 +4926,44 @@ msgid "Cleanup"
 msgstr "Nullimine"
 
 #: ../plug-ins/common/lcms.c:189
-#, fuzzy
 msgid "Set color profile"
-msgstr "Kasuta pildi värvi"
+msgstr "Värfiprofiili seadmine"
 
 #: ../plug-ins/common/lcms.c:205
 msgid "Set default RGB profile"
-msgstr ""
+msgstr "Sea vaikimis RGB profiil"
 
 #: ../plug-ins/common/lcms.c:222
 msgid "Apply color profile"
-msgstr ""
+msgstr "Rakenda värviprofiili"
 
 #: ../plug-ins/common/lcms.c:240
 msgid "Apply default RGB profile"
-msgstr ""
+msgstr "Rakenda vaikimisi RGB profiili"
 
 #: ../plug-ins/common/lcms.c:254 ../plug-ins/common/lcms.c:268
 msgid "Color Profile Information"
-msgstr ""
+msgstr "Värviprofiili teave"
 
 #: ../plug-ins/common/lcms.c:471
-#, fuzzy, c-format
+#, c-format
 msgid "Could not open color profile from '%s'"
-msgstr "Ei suutnud '%s' kirjutamiseks avada: %s"
+msgstr "Ei suutnud avada värviprofiili asikohast ' %s'"
 
 #: ../plug-ins/common/lcms.c:479
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
-msgstr ""
+msgstr "Värviprofiil '%s' ei ole RGB värviruumis."
 
 #. ICC color profile conversion
 #: ../plug-ins/common/lcms.c:551
 #, c-format
 msgid "Converting from '%s' to '%s'"
-msgstr ""
+msgstr "'%s' teisendamine '%s'-ks"
 
 #: ../plug-ins/common/lcms.c:619
 msgid "Default RGB working space"
-msgstr ""
+msgstr "Vaikimisi RGB tööruum"
 
 #: ../plug-ins/common/lcms.c:711
 msgid ""
@@ -5012,12 +4973,12 @@ msgstr ""
 #: ../plug-ins/common/lcms.c:769
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
-msgstr ""
+msgstr "'%s' ei tundu olevat ICC värviprofiil"
 
 #: ../plug-ins/common/lcms.c:962
-#, fuzzy, c-format
+#, c-format
 msgid "Could not load ICC profile from '%s'"
-msgstr "Ei suutnud PNG vaikeseadeid laadida"
+msgstr "Ei suutnud laadida ICC profiili asukohast '%s'"
 
 #: ../plug-ins/common/lcms.c:985
 #, c-format
@@ -5031,20 +4992,19 @@ msgstr ""
 
 #: ../plug-ins/common/lcms.c:1060
 msgid "Convert to RGB working space?"
-msgstr ""
+msgstr "Teisendan RGB tööruumi?"
 
 #: ../plug-ins/common/lcms.c:1065
 msgid "_Keep"
 msgstr ""
 
 #: ../plug-ins/common/lcms.c:1070
-#, fuzzy
 msgid "_Convert"
-msgstr "_Sisesta"
+msgstr "_Teisenda"
 
 #: ../plug-ins/common/lcms.c:1097 ../plug-ins/jpeg/jpeg-exif.c:367
 msgid "_Don't ask me again"
-msgstr ""
+msgstr "Ära _rohkem küsi"
 
 #: ../plug-ins/common/lens.c:143
 msgid "Corrects lens distortion"
@@ -5063,33 +5023,28 @@ msgid "Lens Distortion"
 msgstr ""
 
 #: ../plug-ins/common/lens.c:970
-#, fuzzy
 msgid "_Main:"
-msgstr "_Tsüaan:"
+msgstr "Pea_mine:"
 
 #: ../plug-ins/common/lens.c:984
-#, fuzzy
 msgid "_Edge:"
-msgstr "_Nurk:"
+msgstr "_Serv:"
 
 #: ../plug-ins/common/lens.c:998 ../plug-ins/flame/flame.c:1213
 msgid "_Zoom:"
 msgstr "_Suurendus:"
 
 #: ../plug-ins/common/lens.c:1012
-#, fuzzy
 msgid "_Brighten:"
-msgstr "_Heledus:"
+msgstr "_Heledamaks:"
 
 #: ../plug-ins/common/lens.c:1026
-#, fuzzy
 msgid "_X shift:"
-msgstr "_X suurus:"
+msgstr "_X nihe:"
 
 #: ../plug-ins/common/lens.c:1040
-#, fuzzy
 msgid "_Y shift:"
-msgstr "_Y suurus:"
+msgstr "_Y nihe:"
 
 #: ../plug-ins/common/lic.c:566 ../plug-ins/common/lic.c:641
 msgid "Van Gogh (LIC)"
@@ -5097,11 +5052,11 @@ msgstr ""
 
 #: ../plug-ins/common/lic.c:666
 msgid "Effect Channel"
-msgstr ""
+msgstr "Effekti kanal"
 
 #: ../plug-ins/common/lic.c:673
 msgid "_Brightness"
-msgstr ""
+msgstr "_Heledus"
 
 #: ../plug-ins/common/lic.c:679
 msgid "Effect Operator"
@@ -5121,7 +5076,7 @@ msgstr ""
 
 #: ../plug-ins/common/lic.c:696
 msgid "_With white noise"
-msgstr ""
+msgstr "_Valge müraga"
 
 #: ../plug-ins/common/lic.c:697
 msgid "W_ith source image"
@@ -5145,24 +5100,23 @@ msgstr ""
 
 #: ../plug-ins/common/lic.c:754
 msgid "_Minimum value:"
-msgstr ""
+msgstr "_Väikseim väärtus:"
 
 #: ../plug-ins/common/lic.c:763
 msgid "M_aximum value:"
-msgstr ""
+msgstr "_Suurim väärtus:"
 
 #: ../plug-ins/common/lic.c:809
 msgid "Special effects that nobody understands"
-msgstr ""
+msgstr "Spetsiaaleffekt, millest keegi aru ei saa"
 
 #: ../plug-ins/common/lic.c:814
 msgid "_Van Gogh (LIC)..."
-msgstr ""
+msgstr "_Van Gogh (LIC)..."
 
 #: ../plug-ins/common/mail.c:259
-#, fuzzy
 msgid "Email the image"
-msgstr "_Kogu pilt"
+msgstr "Saada pilt e-mailiga"
 
 #: ../plug-ins/common/mail.c:265
 msgid "_Mail Image..."
@@ -5239,9 +5193,8 @@ msgid "Map colors sending foreground to black, background to white"
 msgstr ""
 
 #: ../plug-ins/common/mapcolor.c:151
-#, fuzzy
 msgid "Adjust _Foreground & Background"
-msgstr "_Esiplaan ja tagapõhi"
+msgstr "Reguleeri _esiplaani ja tagapõhja"
 
 #: ../plug-ins/common/mapcolor.c:160
 msgid "Map color range specified by two colors to another range"
@@ -5256,9 +5209,8 @@ msgid "Cannot operate on gray or indexed color images."
 msgstr ""
 
 #: ../plug-ins/common/mapcolor.c:235
-#, fuzzy
 msgid "Adjusting foreground and background colors"
-msgstr "Esiplaani / tagapõhja värvid"
+msgstr "Esiplaani ja tagapõhja värvide reguleerimine"
 
 #: ../plug-ins/common/mapcolor.c:277
 msgid "Mapping colors"
@@ -5288,7 +5240,6 @@ msgid "Reduce image to pure red, green, and blue"
 msgstr ""
 
 #: ../plug-ins/common/max_rgb.c:95
-#, fuzzy
 msgid "Maxim_um RGB..."
 msgstr "_Maksimaalne RGB..."
 
@@ -5489,42 +5440,40 @@ msgid "Mosaic"
 msgstr "Mosaiik"
 
 #: ../plug-ins/common/mosaic.c:632
-#, fuzzy
 msgid "Squares"
-msgstr "_Ruudukujuline"
+msgstr "Ruudud"
 
 #: ../plug-ins/common/mosaic.c:633
 msgid "Hexagons"
-msgstr ""
+msgstr "Kuusnurgad"
 
 #: ../plug-ins/common/mosaic.c:634
 msgid "Octagons & squares"
-msgstr ""
+msgstr "Kaheksanurgad ja ruudud"
 
 #: ../plug-ins/common/mosaic.c:635
 msgid "Triangles"
-msgstr ""
+msgstr "Kolmnurgad"
 
 #: ../plug-ins/common/mosaic.c:643
 msgid "_Tiling primitives:"
 msgstr ""
 
 #: ../plug-ins/common/mosaic.c:651
-#, fuzzy
 msgid "Tile _size:"
-msgstr "Eelvaate _suurus:"
+msgstr "Klotsi _suurus:"
 
 #: ../plug-ins/common/mosaic.c:676
 msgid "Til_e spacing:"
-msgstr ""
+msgstr "Klotsi vah_emaa:"
 
 #: ../plug-ins/common/mosaic.c:688
 msgid "Tile _neatness:"
-msgstr ""
+msgstr "Klotsi _puhtus:"
 
 #: ../plug-ins/common/mosaic.c:701
 msgid "Light _direction:"
-msgstr ""
+msgstr "_Valguse suund:"
 
 #: ../plug-ins/common/mosaic.c:713
 msgid "Color _variation:"
@@ -5836,9 +5785,8 @@ msgstr ""
 #. * Intensity algorithm check button
 #.
 #: ../plug-ins/common/oilify.c:917
-#, fuzzy
 msgid "_Use intensity algorithm"
-msgstr "Pseudotoonimise algoritm:"
+msgstr "Kas_uta intensiivsuse algoritmi:"
 
 #: ../plug-ins/common/papertile.c:243 ../plug-ins/common/papertile.c:556
 msgid "Paper Tile"
@@ -5858,7 +5806,7 @@ msgstr "_Tagapõhi"
 
 #: ../plug-ins/common/papertile.c:326
 msgid "_Ignore"
-msgstr ""
+msgstr "_Ignoreeri"
 
 #: ../plug-ins/common/papertile.c:328
 msgid "_Force"
@@ -6031,23 +5979,22 @@ msgstr ""
 
 #: ../plug-ins/common/plugin-browser.c:134
 msgid "Display information about plug-ins"
-msgstr ""
+msgstr "Väita teavet pistikute kohta"
 
 #: ../plug-ins/common/plugin-browser.c:144
-#, fuzzy
 msgid "_Plug-In Browser"
-msgstr "GIMPi abiinfo sirvija"
+msgstr "_Pistikute sirvija"
 
 #: ../plug-ins/common/plugin-browser.c:372
 msgid "Searching by name"
-msgstr ""
+msgstr "Nime järgi otsimine"
 
 #: ../plug-ins/common/plugin-browser.c:386
 #, c-format
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d pistik"
+msgstr[1] "%d pistikud"
 
 #: ../plug-ins/common/plugin-browser.c:395
 msgid "No matches for your query"
@@ -6057,21 +6004,20 @@ msgstr ""
 #, c-format
 msgid "%d plug-in matches your query"
 msgid_plural "%d plug-ins match your query"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "%d pistik sobib sinu päringuga"
+msgstr[1] "%d pistikut sobib sinu päringuga"
 
 #: ../plug-ins/common/plugin-browser.c:529
 msgid "No matches"
-msgstr ""
+msgstr "Sobivaid pole"
 
 #: ../plug-ins/common/plugin-browser.c:554
-#, fuzzy
 msgid "Plug-In Browser"
-msgstr "GIMPi abiinfo sirvija"
+msgstr "Pistikute sirvija"
 
 #: ../plug-ins/common/plugin-browser.c:597
 msgid "Name"
-msgstr ""
+msgstr "Nimi"
 
 #: ../plug-ins/common/plugin-browser.c:605
 #: ../plug-ins/common/plugin-browser.c:668
@@ -6081,23 +6027,21 @@ msgstr "Menüü"
 
 #: ../plug-ins/common/plugin-browser.c:613
 #: ../plug-ins/common/plugin-browser.c:677
-#, fuzzy
 msgid "Image Types"
-msgstr "Pildid"
+msgstr "Pildi tüübid"
 
 #: ../plug-ins/common/plugin-browser.c:623
 #: ../plug-ins/common/plugin-browser.c:686
 msgid "Installation Date"
-msgstr ""
+msgstr "Paigaldamise kuupäev"
 
 #: ../plug-ins/common/plugin-browser.c:647
 msgid "List View"
-msgstr ""
+msgstr "Nimekirjavaade"
 
 #: ../plug-ins/common/plugin-browser.c:709
-#, fuzzy
 msgid "Tree View"
-msgstr "Eelvaade"
+msgstr "Puuvaade"
 
 #: ../plug-ins/common/png.c:261 ../plug-ins/common/png.c:282
 #: ../plug-ins/common/png.c:302 ../plug-ins/common/png.c:319
@@ -6105,9 +6049,9 @@ msgid "PNG image"
 msgstr "PNG pilt"
 
 #: ../plug-ins/common/png.c:613
-#, fuzzy, c-format
+#, c-format
 msgid "Error loading PNG file: %s"
-msgstr "Viga faili '%s' avamisel"
+msgstr "Viga PNG faili laadimisel: %s"
 
 #: ../plug-ins/common/png.c:686
 #, c-format
@@ -6118,7 +6062,7 @@ msgstr "Viga '%s' lugemisel. Fail rikutud?"
 #: ../plug-ins/common/png.c:814
 #, c-format
 msgid "Unknown color model in PNG file '%s'."
-msgstr ""
+msgstr "Tundmatu värvimudel PNG failis '%s'."
 
 #: ../plug-ins/common/png.c:868
 msgid ""
@@ -6172,12 +6116,10 @@ msgid "Co_mpression level:"
 msgstr "_Tihenduse tase:"
 
 #: ../plug-ins/common/png.c:1886 ../plug-ins/jpeg/jpeg-save.c:1096
-#, fuzzy
 msgid "_Load Defaults"
-msgstr "_Laadi vaikeseaded"
+msgstr "_Lae vaikeseaded"
 
 #: ../plug-ins/common/png.c:1894 ../plug-ins/jpeg/jpeg-save.c:1105
-#, fuzzy
 msgid "S_ave Defaults"
 msgstr "_Salvesta vaikeseaded"
 
@@ -6190,9 +6132,8 @@ msgid "PNM image"
 msgstr "PNM pilt"
 
 #: ../plug-ins/common/pnm.c:279
-#, fuzzy
 msgid "PBM image"
-msgstr "PNM pilt"
+msgstr "PBM pilt"
 
 #: ../plug-ins/common/pnm.c:291
 msgid "PGM image"
@@ -6209,40 +6150,36 @@ msgid "Premature end of file."
 msgstr ""
 
 #: ../plug-ins/common/pnm.c:515
-#, fuzzy
 msgid "Invalid file."
-msgstr "PNM: Vigane fail."
+msgstr "Vigane fail."
 
 #: ../plug-ins/common/pnm.c:529
 msgid "File not in a supported format."
 msgstr "Fail ei ole toetatud formaadis."
 
 #: ../plug-ins/common/pnm.c:538
-#, fuzzy
 msgid "Invalid X resolution."
-msgstr "PNM: Vigane X eraldusvõime."
+msgstr "Vigane X eraldusvõime."
 
 #: ../plug-ins/common/pnm.c:540
 msgid "Image width is larger than GIMP can handle."
-msgstr ""
+msgstr "Pildi laius on suurem kui GIMP suudab käsitleda."
 
 #: ../plug-ins/common/pnm.c:547
-#, fuzzy
 msgid "Invalid Y resolution."
-msgstr "PNM: Vigane Y eraldusvõime."
+msgstr "Vigane Y eraldusvõime."
 
 #: ../plug-ins/common/pnm.c:549
 msgid "Image height is larger than GIMP can handle."
-msgstr ""
+msgstr "Pildi kõrgus on suurem kui GIMP suudab käsitleda."
 
 #: ../plug-ins/common/pnm.c:561
 msgid "Invalid maximum value."
-msgstr ""
+msgstr "Vigane suurim väärtus."
 
 #: ../plug-ins/common/pnm.c:745
-#, fuzzy
 msgid "Error reading file."
-msgstr "Viga faili lugemisel"
+msgstr "Viga faili lugemisel."
 
 #: ../plug-ins/common/pnm.c:1110
 msgid "Save as PNM"
@@ -6255,11 +6192,11 @@ msgstr ""
 
 #: ../plug-ins/common/pnm.c:1131
 msgid "Raw"
-msgstr ""
+msgstr "Raw"
 
 #: ../plug-ins/common/pnm.c:1132
 msgid "Ascii"
-msgstr ""
+msgstr "Ascii"
 
 #: ../plug-ins/common/polar.c:154
 msgid "Convert image to or from polar coordinates"
@@ -6283,7 +6220,7 @@ msgstr ""
 
 #: ../plug-ins/common/polar.c:631
 msgid "Offset _angle:"
-msgstr ""
+msgstr "Nihke _nurk:"
 
 #: ../plug-ins/common/polar.c:646
 msgid "_Map backwards"
@@ -6322,7 +6259,7 @@ msgstr ""
 #: ../plug-ins/common/poppler.c:579
 #, c-format
 msgid "%s-%s"
-msgstr ""
+msgstr "%s-%s"
 
 #: ../plug-ins/common/poppler.c:581 ../plug-ins/common/postscript.c:1109
 #, c-format
@@ -6351,9 +6288,9 @@ msgid "_Resolution:"
 msgstr "_Eraldusvõime:"
 
 #: ../plug-ins/common/poppler.c:1107
-#, fuzzy, c-format
+#, c-format
 msgid "pixels/%s"
-msgstr "pikslit"
+msgstr "pikslit/%s"
 
 #: ../plug-ins/common/postscript.c:597 ../plug-ins/common/postscript.c:689
 msgid "PostScript document"
@@ -6374,7 +6311,7 @@ msgstr ""
 
 #: ../plug-ins/common/postscript.c:1174
 msgid "PostScript save cannot handle images with alpha channels"
-msgstr ""
+msgstr "PostScripti salvestamine ei suuda käsitleda alfakanaliga pilte"
 
 #: ../plug-ins/common/postscript.c:1711 ../plug-ins/common/postscript.c:1744
 #, c-format
@@ -6423,7 +6360,7 @@ msgstr ""
 #: ../plug-ins/common/postscript.c:3185
 #: ../plug-ins/common/spheredesigner.c:2650
 msgid "Layers"
-msgstr ""
+msgstr "Kihid"
 
 #: ../plug-ins/common/postscript.c:3187
 msgid "Images"
@@ -6574,9 +6511,9 @@ msgid "Cannot handle the color mode %d of the PSD file"
 msgstr ""
 
 #: ../plug-ins/common/psd-load.c:736
-#, fuzzy, c-format
+#, c-format
 msgid "Cannot handle PSD file with more than %d channels"
-msgstr "Ei saa salvestada alfakanaliga pilte."
+msgstr "Ei suuda käsitleda PSD faili, millel on rohkem kui %d kanalit"
 
 #: ../plug-ins/common/psd-load.c:2484
 msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
@@ -6593,9 +6530,8 @@ msgid "Cannot handle %d bits per channel PSD files"
 msgstr ""
 
 #: ../plug-ins/common/psd-load.c:3306
-#, fuzzy
 msgid "This is not an Adobe Photoshop PSD file"
-msgstr "See ei ole GIF fail"
+msgstr "See ei ole Adobe Photoshop PSD fail"
 
 #: ../plug-ins/common/psd-load.c:3311
 #, c-format
@@ -6657,19 +6593,16 @@ msgid "LZ77"
 msgstr "LZ77"
 
 #: ../plug-ins/common/randomize.c:102
-#, fuzzy
 msgid "Random Hurl"
-msgstr "Random Hurl 1.7"
+msgstr ""
 
 #: ../plug-ins/common/randomize.c:103
-#, fuzzy
 msgid "Random Pick"
-msgstr "Random Pick 1.7"
+msgstr ""
 
 #: ../plug-ins/common/randomize.c:104
-#, fuzzy
 msgid "Random Slur"
-msgstr "Random Slur 1.7"
+msgstr ""
 
 #: ../plug-ins/common/randomize.c:200
 msgid "Completely randomize a fraction of pixels"
@@ -6728,9 +6661,8 @@ msgid "Image"
 msgstr "Pilt"
 
 #: ../plug-ins/common/raw.c:1003
-#, fuzzy
 msgid "RGB Alpha"
-msgstr "Alfa"
+msgstr "RGB alfa"
 
 #: ../plug-ins/common/raw.c:1004
 msgid "Planar RGB"
@@ -6738,15 +6670,15 @@ msgstr ""
 
 #: ../plug-ins/common/raw.c:1005
 msgid "Indexed"
-msgstr ""
+msgstr "Indekseeritud"
 
 #: ../plug-ins/common/raw.c:1006
 msgid "Indexed Alpha"
-msgstr ""
+msgstr "Indekseeritud alfa"
 
 #: ../plug-ins/common/raw.c:1011
 msgid "Image _Type:"
-msgstr ""
+msgstr "Pildi _tüüp:"
 
 #: ../plug-ins/common/raw.c:1061
 msgid "Palette"
@@ -6807,7 +6739,7 @@ msgstr ""
 
 #: ../plug-ins/common/redeye.c:145
 msgid "Red Eye Removal"
-msgstr ""
+msgstr "Punasilmsuse eemaldamine"
 
 #: ../plug-ins/common/redeye.c:179
 msgid "Threshold for the red eye color to remove."
@@ -6815,12 +6747,11 @@ msgstr ""
 
 #: ../plug-ins/common/redeye.c:184
 msgid "Manually selecting the eyes may improve the results."
-msgstr ""
+msgstr "Silmade käsitsi valimine võib parandada tulemusi."
 
 #: ../plug-ins/common/redeye.c:317
-#, fuzzy
 msgid "Removing red eye"
-msgstr "Värvi eemaldamine"
+msgstr "Punasilmsuse eemaldamine"
 
 #: ../plug-ins/common/retinex.c:156
 msgid "Enhance contrast using the Retinex method"
@@ -6896,9 +6827,8 @@ msgid "Edges"
 msgstr ""
 
 #: ../plug-ins/common/ripple.c:565
-#, fuzzy
 msgid "_Blank"
-msgstr "_Must"
+msgstr "_Tühi"
 
 #. Wave toggle box
 #: ../plug-ins/common/ripple.c:587
@@ -7041,20 +6971,19 @@ msgstr ""
 
 #: ../plug-ins/common/scatter_hsv.c:401
 msgid "H_ue:"
-msgstr ""
+msgstr "_Värvitoon:"
 
 #: ../plug-ins/common/screenshot.c:234
 msgid "Create an image from an area of the screen"
-msgstr ""
+msgstr "Loo pilt ekraani pildistamise teel"
 
 #: ../plug-ins/common/screenshot.c:247
 msgid "_Screenshot..."
 msgstr "_Pilt ekraanilt..."
 
 #: ../plug-ins/common/screenshot.c:412
-#, fuzzy
 msgid "Error selecting the window"
-msgstr "Viga hiirekursori krabamisel"
+msgstr "Viga akna valimisel"
 
 #: ../plug-ins/common/screenshot.c:770
 msgid "Importing screenshot"
@@ -7073,13 +7002,12 @@ msgid "There was an error taking the screenshot."
 msgstr "Viga kuvatõmmise tegemisel."
 
 #: ../plug-ins/common/screenshot.c:978
-#, fuzzy
 msgid "S_nap"
-msgstr "_Vaheta"
+msgstr "_Pildista"
 
 #: ../plug-ins/common/screenshot.c:1008
 msgid "After the delay, the screenshot is taken."
-msgstr ""
+msgstr "Foto tehakse peale viivitust."
 
 #: ../plug-ins/common/screenshot.c:1010
 msgid ""
@@ -7092,39 +7020,34 @@ msgstr ""
 
 #. Area
 #: ../plug-ins/common/screenshot.c:1019
-#, fuzzy
 msgid "Area"
-msgstr "Ala:"
+msgstr "Ala"
 
 #: ../plug-ins/common/screenshot.c:1030
 msgid "Take a screenshot of a single _window"
 msgstr "Tee kuvatõmmis üksikust _aknast"
 
 #: ../plug-ins/common/screenshot.c:1051
-#, fuzzy
 msgid "Include window _decoration"
-msgstr "Koos akna dekoratsioonidega"
+msgstr "Koos akna _dekoratsiooniga"
 
 #: ../plug-ins/common/screenshot.c:1067
-#, fuzzy
 msgid "Take a screenshot of the entire _screen"
-msgstr "Tee kuvatõmmis üksikust _aknast"
+msgstr "Tee kuvatõmmis tervest ekraani_st"
 
 #: ../plug-ins/common/screenshot.c:1084
-#, fuzzy
 msgid "Select a _region to grab"
-msgstr "Vali regioon"
+msgstr "Vali _regioon mida pildistada"
 
 #. Delay
 #: ../plug-ins/common/screenshot.c:1099
 msgid "Delay"
-msgstr ""
+msgstr "Viivitus"
 
 #. this is the unit label of a spinbutton
 #: ../plug-ins/common/screenshot.c:1121
-#, fuzzy
 msgid "seconds"
-msgstr "millisekundit"
+msgstr "sekundit"
 
 #: ../plug-ins/common/sel_gauss.c:106
 msgid "Blur neighboring pixels, but only in low-contrast areas"
@@ -7494,9 +7417,8 @@ msgid "Adjust the spike density"
 msgstr ""
 
 #: ../plug-ins/common/sparkle.c:454
-#, fuzzy
 msgid "Tr_ansparency:"
-msgstr "Läbipaistev"
+msgstr "Läbip_aistvus:"
 
 #: ../plug-ins/common/sparkle.c:457
 msgid "Adjust the opacity of the spikes"
@@ -7866,9 +7788,8 @@ msgid "RunLength Encoded"
 msgstr ""
 
 #: ../plug-ins/common/svg.c:138
-#, fuzzy
 msgid "SVG image"
-msgstr "GIF pilt"
+msgstr "SVG pilt"
 
 #: ../plug-ins/common/svg.c:322 ../plug-ins/common/svg.c:685
 msgid "Unknown reason"
@@ -8001,9 +7922,8 @@ msgid "TIFF '%s' does not contain any directories"
 msgstr ""
 
 #: ../plug-ins/common/tiff-load.c:412
-#, fuzzy
 msgid "Import from TIFF"
-msgstr "Impordi PDF failist"
+msgstr "Impordi TIFF failist"
 
 #: ../plug-ins/common/tiff-load.c:935
 msgid "TIFF Channel"
@@ -8022,6 +7942,8 @@ msgid ""
 "The TIFF format only supports comments in\n"
 "7bit ASCII encoding. No comment is saved."
 msgstr ""
+"TIFF formaat toetab kommentaare ainult\n"
+"7bit ASCII kodeeringus. Kommentaari ei salvestatud."
 
 #: ../plug-ins/common/tiff-save.c:1026
 msgid "Save as TIFF"
@@ -8030,7 +7952,7 @@ msgstr "Salvesta TIFF failina"
 #. compression
 #: ../plug-ins/common/tiff-save.c:1048
 msgid "Compression"
-msgstr ""
+msgstr "Pakkimine"
 
 #: ../plug-ins/common/tiff-save.c:1052
 msgid "_None"
@@ -8232,18 +8154,16 @@ msgid "The unit's plural form."
 msgstr "Ühiku nimetus mitmuses."
 
 #: ../plug-ins/common/uniteditor.c:121
-#, fuzzy
 msgid "Create a new unit from scratch"
-msgstr "Uue ühiku tühjalt kohalt loomine."
+msgstr "Loo uus ühik tühjalt kohalt"
 
 #: ../plug-ins/common/uniteditor.c:127
-#, fuzzy
 msgid "Create a new unit using the currently selected unit as template"
-msgstr "Uut ühikut luues kasuta valitud ühikut mallina."
+msgstr "Loo uus ühik kasutades valitud ühikut mallina"
 
 #: ../plug-ins/common/uniteditor.c:145
 msgid "Create or alter units used in GIMP"
-msgstr ""
+msgstr "Loo või muuda GIMPis kasutatavaid ühikuid"
 
 #: ../plug-ins/common/uniteditor.c:150
 msgid "_Unit Editor"
@@ -8431,9 +8351,8 @@ msgid "E_rode"
 msgstr ""
 
 #: ../plug-ins/common/vpropagate.c:259
-#, fuzzy
 msgid "Grow darker areas of the image"
-msgstr "Kasuta pildi värvi"
+msgstr "Kasvata pildi tumedamaid alasid"
 
 #: ../plug-ins/common/vpropagate.c:264
 msgid "_Dilate"
@@ -8490,15 +8409,15 @@ msgstr ""
 
 #: ../plug-ins/common/warp.c:241
 msgid "_Warp..."
-msgstr ""
+msgstr "_Kooluta..."
 
 #: ../plug-ins/common/warp.c:377
 msgid "Warp"
-msgstr ""
+msgstr "Kooluta"
 
 #: ../plug-ins/common/warp.c:398
 msgid "Basic Options"
-msgstr ""
+msgstr "Lihtvõimalused"
 
 #: ../plug-ins/common/warp.c:420
 msgid "Step size:"
@@ -8517,11 +8436,11 @@ msgstr ""
 
 #: ../plug-ins/common/warp.c:472
 msgid "Wrap"
-msgstr ""
+msgstr "Murra"
 
 #: ../plug-ins/common/warp.c:487
 msgid "Smear"
-msgstr ""
+msgstr "Määri"
 
 #: ../plug-ins/common/warp.c:502 ../plug-ins/fits/fits.c:1002
 #: ../plug-ins/flame/flame.c:1151 ../plug-ins/gfig/gfig-dialog.c:1460
@@ -8529,15 +8448,14 @@ msgid "Black"
 msgstr "Must"
 
 #: ../plug-ins/common/warp.c:517
-#, fuzzy
 msgid "Foreground color"
-msgstr "_Esiplaani värv"
+msgstr "Esiplaani värv"
 
 #. --------------------------------------------------------------------
 #. ---------    The secondary table         --------------------------
 #: ../plug-ins/common/warp.c:537
 msgid "Advanced Options"
-msgstr ""
+msgstr "Erivõimalused"
 
 #: ../plug-ins/common/warp.c:553
 msgid "Dither size:"
@@ -8545,7 +8463,7 @@ msgstr ""
 
 #: ../plug-ins/common/warp.c:566
 msgid "Rotation angle:"
-msgstr ""
+msgstr "Pöördenurk:"
 
 #: ../plug-ins/common/warp.c:579
 msgid "Substeps:"
@@ -9158,7 +9076,6 @@ msgstr "Näita pilti"
 
 #. "snap to grid" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:493
-#, fuzzy
 msgid "checkbutton|Snap to grid"
 msgstr "Napsa ruudustikule"
 
@@ -11059,14 +10976,12 @@ msgid "Zoom out"
 msgstr "Vähendus"
 
 #: ../plug-ins/imagemap/imap_menu.c:185
-#, fuzzy
 msgid "_Zoom To"
-msgstr "_Suurendus"
+msgstr "_Suurenda kuni"
 
 #: ../plug-ins/imagemap/imap_menu.c:187
-#, fuzzy
 msgid "_Mapping"
-msgstr "Koolutamine"
+msgstr ""
 
 #: ../plug-ins/imagemap/imap_menu.c:188
 msgid "Edit Map Info..."
@@ -11097,9 +11012,8 @@ msgid "_Help"
 msgstr "_Abi"
 
 #: ../plug-ins/imagemap/imap_menu.c:200
-#, fuzzy
 msgid "_Contents"
-msgstr "Kontekst"
+msgstr "_Sisu"
 
 #: ../plug-ins/imagemap/imap_menu.c:208
 msgid "Area List"
@@ -11107,12 +11021,11 @@ msgstr ""
 
 #: ../plug-ins/imagemap/imap_menu.c:218
 msgid "Arrow"
-msgstr ""
+msgstr "Nool"
 
 #: ../plug-ins/imagemap/imap_menu.c:219
-#, fuzzy
 msgid "Select existing area"
-msgstr "Vali järgmine"
+msgstr "Vali olemasolev ala"
 
 #: ../plug-ins/imagemap/imap_menu.c:221
 msgid "Define Rectangle area"
@@ -11616,64 +11529,55 @@ msgstr ""
 
 #: ../plug-ins/print/print-page-layout.c:118
 msgid "_Adjust Page Size and Orientation"
-msgstr ""
+msgstr "_Reguleeri lehe suurust ja suunda"
 
 #: ../plug-ins/print/print-page-layout.c:132
-#, fuzzy
 msgid "Printable area:"
-msgstr "Printeri nimi:"
+msgstr "Prinditav ala:"
 
 #: ../plug-ins/print/print-page-layout.c:178
 msgid "Ignore Page _Margins"
-msgstr ""
+msgstr "Ignoreeri lehe _veeriseid"
 
 #: ../plug-ins/print/print-page-layout.c:335
-#, fuzzy
 msgid "_X resolution:"
-msgstr "_Eraldusvõime:"
+msgstr "_X eraldusvõime:"
 
 #: ../plug-ins/print/print-page-layout.c:339
-#, fuzzy
 msgid "_Y resolution:"
-msgstr "_Eraldusvõime:"
+msgstr "_Y eraldusvõime:"
 
 #: ../plug-ins/print/print-page-layout.c:392
-#, fuzzy
 msgid "Image Offsets"
-msgstr "Pildid"
+msgstr "Pildi nihked"
 
 #: ../plug-ins/print/print-page-layout.c:425
-#, fuzzy
 msgid "_Left:"
-msgstr "Vasak:"
+msgstr "Vasakult:"
 
 #: ../plug-ins/print/print-page-layout.c:448
 msgid "Center:"
-msgstr ""
+msgstr "Keskele:"
 
 #: ../plug-ins/print/print-page-layout.c:459
-#, fuzzy
 msgid "H_orizontally"
-msgstr "Horisontaalne"
+msgstr "H_orisontaalselt"
 
 #: ../plug-ins/print/print-page-layout.c:466
-#, fuzzy
 msgid "_Vertically"
-msgstr "_Vertikaalne"
+msgstr "_Vertikaalselt"
 
 #: ../plug-ins/print/print.c:87
-#, fuzzy
 msgid "Print the image"
-msgstr "Prindi faili"
+msgstr "Trüki pilt välja"
 
 #: ../plug-ins/print/print.c:92
 msgid "_Print..."
 msgstr "_Prindi..."
 
 #: ../plug-ins/print/print.c:233
-#, fuzzy
 msgid "An error occurred while trying to print:"
-msgstr "Salvestamisel juhtusid müned vead"
+msgstr "Üritades printida tekkis viga:"
 
 #: ../plug-ins/print/print.c:268
 msgid "Printing"
@@ -11685,12 +11589,11 @@ msgstr ""
 
 #: ../plug-ins/rcm/rcm.c:106
 msgid "_Rotate Colors..."
-msgstr ""
+msgstr "Pöö_ra värve..."
 
 #: ../plug-ins/rcm/rcm.c:140
-#, fuzzy
 msgid "Rotating the colors"
-msgstr "Värvi eemaldamine"
+msgstr "Värvide pööramine"
 
 #: ../plug-ins/rcm/rcm_dialog.c:119
 msgid "Original"
@@ -11764,13 +11667,12 @@ msgid "Degrees"
 msgstr "Kraadid"
 
 #: ../plug-ins/rcm/rcm_dialog.c:652
-#, fuzzy
 msgid "Rotate Colors"
-msgstr "Värviks"
+msgstr "Värvide pööramine"
 
 #: ../plug-ins/rcm/rcm_dialog.c:692
 msgid "Main Options"
-msgstr ""
+msgstr "Peavõimalused"
 
 #: ../plug-ins/rcm/rcm_dialog.c:695
 msgid "Gray Options"
@@ -11885,9 +11787,8 @@ msgid "Could not initialize libcurl"
 msgstr ""
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:160
-#, fuzzy
 msgid "Could not open output file for writing"
-msgstr "Ei suutnud '%s' kirjutamiseks avada: %s"
+msgstr "Ei suutnud väljundfaili kirjutamiseks avada"
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:198
 #, c-format
@@ -11970,15 +11871,14 @@ msgid "32 bpp, 8-bit alpha, no palette"
 msgstr ""
 
 #: ../plug-ins/winicon/icodialog.c:196
-#, fuzzy
 msgid "Compressed (PNG)"
-msgstr "Suurus pakitult: %s"
+msgstr "Pakitud (PNG)"
 
 #. read successfully. add to image
 #: ../plug-ins/winicon/icoload.c:616
 #, c-format
 msgid "Icon #%i"
-msgstr ""
+msgstr "Ikoon #%i"
 
 #: ../plug-ins/winicon/main.c:103 ../plug-ins/winicon/main.c:137
 msgid "Microsoft Windows icon"
