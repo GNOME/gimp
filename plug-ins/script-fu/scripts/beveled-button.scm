@@ -117,7 +117,7 @@
                      FALSE 0 0 TRUE
                      0 0 (- img-width 1) (- img-height 1))
 
-    (plug-in-bump-map 1 img gradient bumpmap
+    (plug-in-bump-map RUN-NONINTERACTIVE img gradient bumpmap
                       135 45 bevel-width 0 0 0 0 TRUE pressed 0)
 
     ; Create text layer

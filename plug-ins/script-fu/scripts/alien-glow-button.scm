@@ -123,7 +123,7 @@
     (gimp-context-set-foreground glow-color)
     (gimp-edit-fill glow-layer FOREGROUND-FILL)
     (gimp-selection-none img)
-    (plug-in-gauss-rle 1 img glow-layer glow-radius TRUE TRUE)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img glow-layer glow-radius TRUE TRUE)
     (gimp-context-set-foreground text-color)
     (let (
          (textl (car (gimp-text-fontname

@@ -48,9 +48,9 @@
     (gimp-context-set-background '(127 127 127))
     (gimp-image-add-layer ripple-image ripple-layer 0)
     (gimp-edit-fill ripple-layer BACKGROUND-FILL)
-    (plug-in-noisify 1 ripple-image ripple-layer FALSE 1.0 1.0 1.0 0.0)
+    (plug-in-noisify RUN-NONINTERACTIVE ripple-image ripple-layer FALSE 1.0 1.0 1.0 0.0)
     ; tile noise
-    (set! rippletiled-ret (plug-in-tile 1 ripple-image ripple-layer (* width 3) (* height 3) TRUE))
+    (set! rippletiled-ret (plug-in-tile RUN-NONINTERACTIVE ripple-image ripple-layer (* width 3) (* height 3) TRUE))
     (gimp-image-undo-enable ripple-image)
     (gimp-image-delete ripple-image)
 
@@ -59,9 +59,9 @@
     (gimp-image-undo-disable rippletiled-image)
 
     ; process tiled noise into usable displacement map
-    (plug-in-gauss-iir 1 rippletiled-image rippletiled-layer 35 TRUE TRUE)
+    (plug-in-gauss-iir RUN-NONINTERACTIVE rippletiled-image rippletiled-layer 35 TRUE TRUE)
     (gimp-equalize rippletiled-layer TRUE)
-    (plug-in-gauss-rle 1 rippletiled-image rippletiled-layer 5 TRUE TRUE)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE rippletiled-image rippletiled-layer 5 TRUE TRUE)
     (gimp-equalize rippletiled-layer TRUE)
 
     ; displacement map is now in rippletiled-layer of rippletiled-image
@@ -94,7 +94,7 @@
       (copy-layer-ripple out-imagestack this-layer img drawable)
 
       (set! dup-layer (car (gimp-image-get-active-layer dup-image)))
-      (plug-in-displace 1 out-imagestack this-layer
+      (plug-in-displace RUN-NONINTERACTIVE out-imagestack this-layer
                         displacement displacement
                         TRUE TRUE dup-layer dup-layer edge-type)
 

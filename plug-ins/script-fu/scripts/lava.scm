@@ -92,12 +92,12 @@
         (gimp-context-set-gradient gradient)
     )
 
-    (plug-in-solid-noise 1 image active-layer FALSE TRUE seed 2 2 2)
-    (plug-in-cubism 1 image active-layer tile_size 2.5 0)
-    (plug-in-oilify 1 image active-layer mask_size 0)
-    (plug-in-edge 1 image active-layer 2 0 0)
-    (plug-in-gauss-rle 1 image active-layer 2 TRUE TRUE)
-    (plug-in-gradmap 1 image active-layer)
+    (plug-in-solid-noise RUN-NONINTERACTIVE image active-layer FALSE TRUE seed 2 2 2)
+    (plug-in-cubism RUN-NONINTERACTIVE image active-layer tile_size 2.5 0)
+    (plug-in-oilify RUN-NONINTERACTIVE image active-layer mask_size 0)
+    (plug-in-edge RUN-NONINTERACTIVE image active-layer 2 0 0)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE image active-layer 2 TRUE TRUE)
+    (plug-in-gradmap RUN-NONINTERACTIVE image active-layer)
 
     (if (= keep-selection FALSE)
         (gimp-selection-none image)

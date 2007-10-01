@@ -56,10 +56,10 @@
     (gimp-edit-fill text-mask BACKGROUND-FILL)
     (gimp-selection-none img)
     (if (> blur-radius 0)
-        (plug-in-gauss-iir 1 img text-mask blur-radius 1 1)
+        (plug-in-gauss-iir RUN-NONINTERACTIVE img text-mask blur-radius 1 1)
     )
 
-    (plug-in-newsprint 1 img text-mask cell-size
+    (plug-in-newsprint RUN-NONINTERACTIVE img text-mask cell-size
                        0 0 45.0 3 45.0 0 45.0 0 45.0 0 3)
 
     (gimp-edit-fill text-layer FOREGROUND-FILL)

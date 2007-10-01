@@ -42,11 +42,11 @@
 
     ; the actual effect
     (gimp-layer-set-lock-alpha logo-layer FALSE)
-    (plug-in-gauss-rle 1 img logo-layer 2.0 1 1)
-    (plug-in-spread 1 img logo-layer 5.0 5.0)
-    (plug-in-ripple 1 img logo-layer 27 2 0 0 0 TRUE TRUE)
-    (plug-in-ripple 1 img logo-layer 27 2 1 0 0 TRUE TRUE)
-    (plug-in-sobel 1 img logo-layer TRUE TRUE TRUE)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img logo-layer 2.0 1 1)
+    (plug-in-spread RUN-NONINTERACTIVE img logo-layer 5.0 5.0)
+    (plug-in-ripple RUN-NONINTERACTIVE img logo-layer 27 2 0 0 0 TRUE TRUE)
+    (plug-in-ripple RUN-NONINTERACTIVE img logo-layer 27 2 1 0 0 TRUE TRUE)
+    (plug-in-sobel RUN-NONINTERACTIVE img logo-layer TRUE TRUE TRUE)
     (gimp-levels logo-layer 0 0 120 3.5 0 255)
 
     ; work-around for sobel edge detect screw-up (why does this happen?)

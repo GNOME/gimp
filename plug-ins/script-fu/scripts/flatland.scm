@@ -45,13 +45,13 @@
     (gimp-image-add-layer img layer-one 0)
    ; (gimp-img-add-layer img layer-two 1)
 
-    (plug-in-solid-noise 1 img layer-one 1 0 seed detail xscale yscale )
-    (plug-in-c-astretch 1 img layer-one)
+    (plug-in-solid-noise RUN-NONINTERACTIVE img layer-one 1 0 seed detail xscale yscale )
+    (plug-in-c-astretch RUN-NONINTERACTIVE img layer-one)
     (set! layer-two (car (gimp-layer-copy layer-one TRUE)))
     (gimp-image-add-layer img layer-two -1)
     (gimp-image-set-active-layer img layer-two)
 
-    (plug-in-gradmap 1 img layer-two)
+    (plug-in-gradmap RUN-NONINTERACTIVE img layer-two)
     (gimp-image-undo-enable img)
     (gimp-display-new img)
   )

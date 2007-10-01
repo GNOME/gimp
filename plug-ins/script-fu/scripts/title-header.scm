@@ -106,13 +106,13 @@
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill bumpmap-layer BACKGROUND-FILL)
     (gimp-selection-none img)
-    (plug-in-gauss-rle 1 img bumpmap-layer 4.0 TRUE TRUE)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img bumpmap-layer 4.0 TRUE TRUE)
 
     ; Fore layer, bumpmap
 
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill fore-layer BACKGROUND-FILL)
-    (plug-in-bump-map 1 img fore-layer bumpmap-layer 135.0 45.0 4 0 0 0 0 FALSE FALSE 0)
+    (plug-in-bump-map RUN-NONINTERACTIVE img fore-layer bumpmap-layer 135.0 45.0 4 0 0 0 0 FALSE FALSE 0)
 
     ; Text layer
 

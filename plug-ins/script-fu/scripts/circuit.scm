@@ -103,9 +103,9 @@
     )
 
     (gimp-selection-load active-selection)
-    (plug-in-maze 1 image active-layer 5 5 TRUE 0 seed 57 1)
-    (plug-in-oilify 1 image active-layer mask-size 0)
-    (plug-in-edge 1 image active-layer 2 1 0)
+    (plug-in-maze RUN-NONINTERACTIVE image active-layer 5 5 TRUE 0 seed 57 1)
+    (plug-in-oilify RUN-NONINTERACTIVE image active-layer mask-size 0)
+    (plug-in-edge RUN-NONINTERACTIVE image active-layer 2 1 0)
     (if (= type RGBA-IMAGE)
       (gimp-desaturate active-layer))
 

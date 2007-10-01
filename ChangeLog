@@ -1,3 +1,8 @@
+2007-10-01  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/*.scm: use RUN-NONINTERACTIVE for the
+	run-mode where 1 was used instead.
+
 2007-10-01  Michael Natterer  <mitch@gimp.org>
 
 	* app/widgets/gimpwidgets-utils.[ch]: removed

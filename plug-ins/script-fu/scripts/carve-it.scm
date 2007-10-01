@@ -90,7 +90,7 @@
     (gimp-edit-copy mask-drawable)
     (gimp-image-add-channel img mask 0)
 
-    (plug-in-tile 1 img layer1 width height FALSE)
+    (plug-in-tile RUN-NONINTERACTIVE img layer1 width height FALSE)
     (set! mask-fs (car (gimp-edit-paste mask FALSE)))
     (gimp-floating-sel-anchor mask-fs)
     (if (= carve-white FALSE)
@@ -106,8 +106,8 @@
 
     (set! mask-emboss (car (gimp-channel-copy mask-fat)))
     (gimp-image-add-channel img mask-emboss 0)
-    (plug-in-gauss-rle 1 img mask-emboss feather TRUE TRUE)
-    (plug-in-emboss 1 img mask-emboss 315.0 45.0 7 TRUE)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img mask-emboss feather TRUE TRUE)
+    (plug-in-emboss RUN-NONINTERACTIVE img mask-emboss 315.0 45.0 7 TRUE)
 
     (gimp-context-set-background '(180 180 180))
     (gimp-selection-load mask-fat)
@@ -139,7 +139,7 @@
     (gimp-floating-sel-to-layer cast-shadow-layer)
     (gimp-layer-set-mode cast-shadow-layer MULTIPLY-MODE)
     (gimp-layer-set-opacity cast-shadow-layer 75)
-    (plug-in-gauss-rle 1 img cast-shadow-layer feather TRUE TRUE)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img cast-shadow-layer feather TRUE TRUE)
     (gimp-layer-translate cast-shadow-layer offx offy)
 
     (set! csl-mask (car (gimp-layer-create-mask cast-shadow-layer ADD-BLACK-MASK)))

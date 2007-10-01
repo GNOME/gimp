@@ -171,10 +171,10 @@
 
     (gimp-selection-none img)
     (if (not (= feather1 0))
-	(plug-in-gauss-rle 1 img tube-layer feather1 TRUE TRUE))
+	(plug-in-gauss-rle RUN-NONINTERACTIVE img tube-layer feather1 TRUE TRUE))
     (gimp-selection-load selection)
     (if (not (= feather2 0))
-	(plug-in-gauss-rle 1 img tube-layer feather2 TRUE TRUE))
+	(plug-in-gauss-rle RUN-NONINTERACTIVE img tube-layer feather2 TRUE TRUE))
 
     (gimp-selection-feather img inc-shrink)
     (gimp-selection-shrink img inc-shrink)

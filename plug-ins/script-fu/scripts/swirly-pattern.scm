@@ -24,7 +24,7 @@
   (define (whirl-it img drawable angle times)
     (if (> times 0)
         (begin
-          (plug-in-whirl-pinch 1 img drawable angle 0.0 1.0)
+          (plug-in-whirl-pinch RUN-NONINTERACTIVE img drawable angle 0.0 1.0)
           (whirl-it img drawable angle (- times 1)))))
 
   (let* ((hsize (* qsize 2))
@@ -44,7 +44,7 @@
     (gimp-context-set-foreground '(0 0 0))
     (gimp-context-set-background '(255 255 255))
 
-    (plug-in-checkerboard 1 img drawable 0 qsize)
+    (plug-in-checkerboard RUN-NONINTERACTIVE img drawable 0 qsize)
 
     ; Whirl upper left
 

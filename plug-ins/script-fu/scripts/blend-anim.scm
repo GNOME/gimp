@@ -133,7 +133,7 @@
 							   blur
 							   blur)
 					(if (>= blur 1.0)
-						(plug-in-gauss-rle 1
+						(plug-in-gauss-rle RUN-NONINTERACTIVE
 							   image
 							   upper-copy
 							   blur
@@ -150,7 +150,7 @@
 							   blur
 							   blur)
 					(if (>= blur 1.0)
-						(plug-in-gauss-rle 1
+						(plug-in-gauss-rle RUN-NONINTERACTIVE
 							   image
 							   lower-copy
 							   blur

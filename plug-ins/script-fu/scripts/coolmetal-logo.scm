@@ -54,9 +54,9 @@
                      0 0 0 (+ height 5))
 
     (gimp-rect-select img 0 (- (/ height 2) feather) img-width (* 2 feather) CHANNEL-OP-REPLACE 0 0)
-    (plug-in-gauss-iir 1 img logo-layer smear TRUE TRUE)
+    (plug-in-gauss-iir RUN-NONINTERACTIVE img logo-layer smear TRUE TRUE)
     (gimp-selection-none img)
-    (plug-in-ripple 1 img logo-layer period amplitude 1 0 1 TRUE FALSE)
+    (plug-in-ripple RUN-NONINTERACTIVE img logo-layer period amplitude 1 0 1 TRUE FALSE)
     (gimp-layer-translate logo-layer 5 5)
     (gimp-layer-resize logo-layer img-width img-height 5 5)
 
@@ -64,14 +64,14 @@
     (set! channel (car (gimp-selection-save img)))
     (gimp-selection-shrink img shrink)
     (gimp-selection-invert img)
-    (plug-in-gauss-rle 1 img channel feather TRUE TRUE)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img channel feather TRUE TRUE)
     (gimp-selection-layer-alpha logo-layer)
     (gimp-selection-invert img)
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill channel BACKGROUND-FILL)
     (gimp-selection-none img)
 
-    (plug-in-bump-map 1 img logo-layer channel 135 45 depth 0 0 0 0 FALSE FALSE 0)
+    (plug-in-bump-map RUN-NONINTERACTIVE img logo-layer channel 135 45 depth 0 0 0 0 FALSE FALSE 0)
 
     (gimp-selection-layer-alpha logo-layer)
     (set! fs (car (gimp-selection-float shadow-layer 0 0)))
@@ -83,7 +83,7 @@
                       (+ 5 width) height
                       FALSE FALSE)
     (gimp-floating-sel-anchor fs)
-    (plug-in-gauss-rle 1 img shadow-layer smear TRUE TRUE)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img shadow-layer smear TRUE TRUE)
 
     (gimp-rect-select img 5 5 width height CHANNEL-OP-REPLACE FALSE 0)
     (gimp-edit-copy logo-layer)

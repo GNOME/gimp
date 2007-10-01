@@ -82,13 +82,13 @@
     (gimp-selection-none img)
 
     (gimp-layer-set-lock-alpha bump-layer FALSE)
-    (plug-in-spread 1 img bump-layer spread-amount spread-amount)
+    (plug-in-spread RUN-NONINTERACTIVE img bump-layer spread-amount spread-amount)
     (gimp-selection-layer-alpha bump-layer)
-    (plug-in-gauss-rle 1 img bump-layer blur-amount TRUE TRUE)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img bump-layer blur-amount TRUE TRUE)
 
     (gimp-selection-none img)
 
-    (plug-in-bump-map 1 img logo-layer bump-layer
+    (plug-in-bump-map RUN-NONINTERACTIVE img logo-layer bump-layer
                       135.00 25.0 60 0 0 0 0 TRUE invert 1)
 
     (gimp-drawable-set-visible bump-layer FALSE)
@@ -104,7 +104,7 @@
             (gimp-context-set-background '(0 0 0))
             (gimp-edit-fill shadow-layer BACKGROUND-FILL)
             (gimp-selection-none img)
-            (plug-in-gauss-rle 1 img shadow-layer 5 TRUE TRUE)
+            (plug-in-gauss-rle RUN-NONINTERACTIVE img shadow-layer 5 TRUE TRUE)
             (gimp-layer-translate shadow-layer 6 6))))
 
      (if (= keep-bump FALSE)

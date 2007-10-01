@@ -81,7 +81,7 @@
                      FALSE 0 0 TRUE
                      0 0 width 0)
 
-    (plug-in-mosaic 1 img blend-layer 12 1 1 0.7 TRUE 135 0.2 TRUE FALSE
+    (plug-in-mosaic RUN-NONINTERACTIVE img blend-layer 12 1 1 0.7 TRUE 135 0.2 TRUE FALSE
                     tile-type 1 0)
 
     (gimp-layer-translate logo-layer (- b-size-2) (- b-size-2))

@@ -141,7 +141,7 @@
     (copy-layer-sota img layer1 banding-img banding-layer)
     (gimp-image-delete banding-img)
     (gimp-layer-scale layer1 width height FALSE)
-    (plug-in-gauss-iir 1 img layer1 10 TRUE TRUE)
+    (plug-in-gauss-iir RUN-NONINTERACTIVE img layer1 10 TRUE TRUE)
     (gimp-layer-set-opacity layer1 50)
     (gimp-drawable-set-visible layer1 TRUE)
     (gimp-drawable-set-visible layer2 TRUE)

@@ -24,21 +24,21 @@
     (gimp-image-add-layer img layer-one 0)
     (gimp-context-set-background bg-color)
     (gimp-edit-fill layer-one BACKGROUND-FILL)
-    (plug-in-noisify 1 img layer-one FALSE noise-level noise-level noise-level 1.0)
+    (plug-in-noisify RUN-NONINTERACTIVE img layer-one FALSE noise-level noise-level noise-level 1.0)
 
-    (plug-in-whirl-pinch 1 img layer-one whirl-amount 0.0 1.0)
-    (plug-in-whirl-pinch 1 img layer-one whirl-amount 0.0 1.0)
-    (plug-in-whirl-pinch 1 img layer-one whirl-amount 0.0 1.0)
+    (plug-in-whirl-pinch RUN-NONINTERACTIVE img layer-one whirl-amount 0.0 1.0)
+    (plug-in-whirl-pinch RUN-NONINTERACTIVE img layer-one whirl-amount 0.0 1.0)
+    (plug-in-whirl-pinch RUN-NONINTERACTIVE img layer-one whirl-amount 0.0 1.0)
 
     (gimp-drawable-offset layer-one TRUE 0 cx cy)
 
-    (plug-in-whirl-pinch 1 img layer-one whirl-amount 0.0 1.0)
-    (plug-in-whirl-pinch 1 img layer-one whirl-amount 0.0 1.0)
-    (plug-in-whirl-pinch 1 img layer-one whirl-amount 0.0 1.0)
+    (plug-in-whirl-pinch RUN-NONINTERACTIVE img layer-one whirl-amount 0.0 1.0)
+    (plug-in-whirl-pinch RUN-NONINTERACTIVE img layer-one whirl-amount 0.0 1.0)
+    (plug-in-whirl-pinch RUN-NONINTERACTIVE img layer-one whirl-amount 0.0 1.0)
 
-    (plug-in-gauss-rle 1 img layer-one blurRadius TRUE TRUE)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img layer-one blurRadius TRUE TRUE)
 
-    (plug-in-bump-map 1 img layer-one layer-one azimuth elevation depth 0 0 0 0 FALSE FALSE 0)
+    (plug-in-bump-map RUN-NONINTERACTIVE img layer-one layer-one azimuth elevation depth 0 0 0 0 FALSE FALSE 0)
 
     (gimp-display-new img)
     (gimp-image-undo-enable img)

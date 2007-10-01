@@ -58,9 +58,9 @@
     (gimp-selection-all img)
     (gimp-edit-fill white-layer BACKGROUND-FILL)
     (gimp-layer-set-lock-alpha white-layer FALSE)
-    (plug-in-spread 1 img white-layer (* 3 ol-width) (* 3 ol-width))
-    (plug-in-gauss-rle 1 img white-layer (* 2 ol-width) 1 1)
-    (plug-in-threshold-alpha 1 img white-layer 0)
+    (plug-in-spread RUN-NONINTERACTIVE img white-layer (* 3 ol-width) (* 3 ol-width))
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img white-layer (* 2 ol-width) 1 1)
+    (plug-in-threshold-alpha RUN-NONINTERACTIVE img white-layer 0)
     (gimp-layer-set-lock-alpha white-layer TRUE)
     (gimp-edit-fill white-layer BACKGROUND-FILL)
     (gimp-selection-none img)
@@ -71,8 +71,8 @@
     (gimp-edit-fill black-layer BACKGROUND-FILL)
     (gimp-selection-none img)
     (gimp-layer-set-lock-alpha black-layer FALSE)
-    (plug-in-gauss-rle 1 img black-layer ol-width 1 1)
-    (plug-in-threshold-alpha 1 img black-layer 0)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img black-layer ol-width 1 1)
+    (plug-in-threshold-alpha RUN-NONINTERACTIVE img black-layer 0)
 
     (gimp-context-set-gradient gradient)
     (gimp-layer-set-lock-alpha logo-layer TRUE)
@@ -83,11 +83,11 @@
                      FALSE 0 0 TRUE
                      0 (* height 0.3) 0 (* height 0.78))
 
-    (plug-in-noisify 1 img logo-layer 0 0.20 0.20 0.20 0.20)
+    (plug-in-noisify RUN-NONINTERACTIVE img logo-layer 0 0.20 0.20 0.20 0.20)
     (gimp-selection-none img)
     (gimp-layer-set-lock-alpha logo-layer FALSE)
     (gimp-brightness-contrast logo-layer 0 30)
-    (plug-in-threshold-alpha 1 img logo-layer 60)
+    (plug-in-threshold-alpha RUN-NONINTERACTIVE img logo-layer 60)
     (gimp-image-set-active-layer img logo-layer)
 
     (gimp-context-pop)

@@ -131,7 +131,7 @@
     (gimp-edit-fill bumpmap BACKGROUND-FILL)
 
     (gimp-selection-none img)
-    (plug-in-gauss-rle 1 img bumpmap bevel 1 1)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img bumpmap bevel 1 1)
 
     ; Create gradient layer
 
@@ -148,7 +148,7 @@
 
     (gimp-selection-none img)
 
-    (plug-in-bump-map 1 img gradient bumpmap
+    (plug-in-bump-map RUN-NONINTERACTIVE img gradient bumpmap
                       135 45 bevel 0 0 0 0 TRUE pressed 0)
 
 ;     Create text layer

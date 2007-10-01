@@ -147,7 +147,7 @@
                                   shadow-depth))
          (tile-img (car tile))
          (tile-layer (cadr tile))
-          (weaving (plug-in-tile 1 tile-img tile-layer width height TRUE)))
+          (weaving (plug-in-tile RUN-NONINTERACTIVE tile-img tile-layer width height TRUE)))
     (gimp-image-delete tile-img)
     weaving))
 
@@ -213,7 +213,7 @@
                                  r3-x1 r3-y1 r3-width r3-height))
          (tile-img (car tile))
          (tile-layer (cadr tile))
-         (mask (plug-in-tile 1 tile-img tile-layer final-width final-height
+         (mask (plug-in-tile RUN-NONINTERACTIVE tile-img tile-layer final-width final-height
                              TRUE)))
     (gimp-image-delete tile-img)
     mask))
@@ -278,13 +278,13 @@
     (gimp-image-add-layer img drawable -1)
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill drawable BACKGROUND-FILL)
-    (plug-in-noisify 1 img drawable FALSE dense dense dense dense)
-    (plug-in-c-astretch 1 img drawable)
+    (plug-in-noisify RUN-NONINTERACTIVE img drawable FALSE dense dense dense dense)
+    (plug-in-c-astretch RUN-NONINTERACTIVE img drawable)
     (cond ((eq? orientation 'horizontal)
-           (plug-in-gauss-rle 1 img drawable length TRUE FALSE))
+           (plug-in-gauss-rle RUN-NONINTERACTIVE img drawable length TRUE FALSE))
           ((eq? orientation 'vertical)
-           (plug-in-gauss-rle 1 img drawable length FALSE TRUE)))
-    (plug-in-c-astretch 1 img drawable)
+           (plug-in-gauss-rle RUN-NONINTERACTIVE img drawable length FALSE TRUE)))
+    (plug-in-c-astretch RUN-NONINTERACTIVE img drawable)
     drawable))
 
 (define (create-complete-weave width

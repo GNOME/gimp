@@ -60,7 +60,7 @@
 
     ; Bumpmap
 
-    (plug-in-bump-map 1 img background bumpmap 135 45 2 0 0 0 0 TRUE FALSE 0)
+    (plug-in-bump-map RUN-NONINTERACTIVE img background bumpmap 135 45 2 0 0 0 0 TRUE FALSE 0)
 
     (gimp-image-set-active-layer img background)
     (gimp-image-remove-layer img bumpmap)

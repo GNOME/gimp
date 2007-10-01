@@ -137,7 +137,7 @@
   (gimp-edit-fill shadow-layer BACKGROUND-FILL)
   (gimp-selection-none image)
   (gimp-layer-set-lock-alpha shadow-layer FALSE)
-  (if (>= shadow-blur 1.0) (plug-in-gauss-rle 1
+  (if (>= shadow-blur 1.0) (plug-in-gauss-rle RUN-NONINTERACTIVE
                                               image
                                               shadow-layer
                                               shadow-blur

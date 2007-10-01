@@ -71,7 +71,7 @@
     (gimp-edit-fill text-mask BACKGROUND-FILL)
     (gimp-selection-none img)
 
-    (plug-in-newsprint 1 img text-mask cell-size 0 0 0.0 1 45.0 0 45.0 0 45.0 0 5)
+    (plug-in-newsprint RUN-NONINTERACTIVE img text-mask cell-size 0 0 0.0 1 45.0 0 45.0 0 45.0 0 5)
 
     (gimp-layer-remove-mask text-layer MASK-APPLY)
 

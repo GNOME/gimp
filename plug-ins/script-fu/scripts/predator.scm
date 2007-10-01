@@ -96,10 +96,10 @@
 
     ; all the fun stuff goes here
     (if (= pixelize TRUE)
-        (plug-in-pixelize 1 image active-layer pixel-size)
+        (plug-in-pixelize RUN-NONINTERACTIVE image active-layer pixel-size)
     )
-    (plug-in-max-rgb 1 image active-layer 0)
-    (plug-in-edge 1 image active-layer edge-amount 1 0)
+    (plug-in-max-rgb RUN-NONINTERACTIVE image active-layer 0)
+    (plug-in-edge RUN-NONINTERACTIVE image active-layer edge-amount 1 0)
 
     ; clean up the selection copy
     (gimp-selection-load active-selection)

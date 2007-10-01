@@ -100,7 +100,7 @@
     (gimp-context-set-background ds-color)
     (gimp-edit-fill shadow-layer BACKGROUND-FILL)
     (gimp-selection-none image)
-    (plug-in-gauss-rle 1 image shadow-layer ds-blur TRUE TRUE)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE image shadow-layer ds-blur TRUE TRUE)
     (gimp-selection-load active-selection)
     (gimp-edit-clear shadow-layer)
     (gimp-image-lower-layer image shadow-layer)

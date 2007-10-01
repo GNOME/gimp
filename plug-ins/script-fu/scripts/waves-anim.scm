@@ -63,7 +63,7 @@
     (gimp-image-add-layer image waves-layer -1)
     (gimp-drawable-set-name waves-layer layer-name)
 
-    (plug-in-waves 1
+    (plug-in-waves RUN-NONINTERACTIVE
                    image
                    waves-layer
                    amplitude
@@ -78,7 +78,7 @@
   )
 
   (gimp-drawable-set-name source-layer "Frame 1")
-  (plug-in-waves 1
+  (plug-in-waves RUN-NONINTERACTIVE
                  image
                  source-layer
                  amplitude

@@ -97,7 +97,7 @@
         (text-layer (car (gimp-text-fontname img -1 0 0 text b-size TRUE size PIXELS font)))
         (width (car (gimp-drawable-width text-layer)))
         (height (car (gimp-drawable-height text-layer)))
-        (tile-ret (plug-in-tile 1 back-img back-layer width height TRUE))
+        (tile-ret (plug-in-tile RUN-NONINTERACTIVE back-img back-layer width height TRUE))
         (tile-img (car tile-ret))
         (tile-layer (cadr tile-ret))
         (tile-width (car (gimp-drawable-width tile-layer)))
@@ -139,7 +139,7 @@
     (copy-layer-crystal img layer1 banding-img banding-layer)
     (gimp-image-delete banding-img)
     (gimp-layer-scale layer1 width height FALSE)
-    (plug-in-gauss-iir 1 img layer1 10 TRUE TRUE)
+    (plug-in-gauss-iir RUN-NONINTERACTIVE img layer1 10 TRUE TRUE)
     (gimp-layer-set-opacity layer1 50)
     (set! layer1 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
     (gimp-curves-spline layer1 0 18 (spline1))
@@ -156,7 +156,7 @@
     (gimp-edit-stroke disp-map)
     (gimp-selection-none img)
 
-    (plug-in-gauss-rle 1 img disp-map blur TRUE TRUE)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img disp-map blur TRUE TRUE)
     (gimp-levels disp-map 0 0 255 1.0 96 255)
 
     (if (= (car (gimp-drawable-is-rgb bg-layer)) 1)
@@ -170,7 +170,7 @@
     (set! layer2 (car (gimp-layer-copy bg-layer TRUE)))
     (gimp-image-add-layer img layer2 1)
 
-    (plug-in-displace 1 img layer2 displace displace TRUE TRUE disp-map disp-map 0)
+    (plug-in-displace RUN-NONINTERACTIVE img layer2 displace displace TRUE TRUE disp-map disp-map 0)
     (set! layer-mask2 (car (gimp-layer-create-mask layer2 ADD-BLACK-MASK)))
     (gimp-layer-add-mask layer2 layer-mask2)
     (gimp-selection-layer-alpha text-layer)
@@ -181,7 +181,7 @@
     (gimp-levels layer2 0 0 200 1.5 50 255)
     (gimp-layer-set-mode layer1 OVERLAY-MODE)
 
-    (plug-in-gauss-rle 1 img text-layer blur TRUE TRUE)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img text-layer blur TRUE TRUE)
     (gimp-layer-set-lock-alpha text-layer TRUE)
     (gimp-context-set-background '(0 0 0))
     (gimp-edit-fill text-layer BACKGROUND-FILL)

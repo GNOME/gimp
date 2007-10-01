@@ -78,8 +78,8 @@
     (gimp-edit-fill glow-layer FOREGROUND-FILL)
     (gimp-selection-none img)
     (if (>= radius 16)
-        (plug-in-gauss-rle 1 img glow-layer 25 TRUE TRUE)
-        (plug-in-gauss-rle 1 img glow-layer 12 TRUE TRUE)
+        (plug-in-gauss-rle RUN-NONINTERACTIVE img glow-layer 25 TRUE TRUE)
+        (plug-in-gauss-rle RUN-NONINTERACTIVE img glow-layer 12 TRUE TRUE)
     )
 
     (if (= flatten TRUE)

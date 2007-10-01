@@ -56,14 +56,14 @@
     (gimp-context-set-foreground '(0 0 0))
     (gimp-edit-fill logo-layer FOREGROUND-FILL)
     (gimp-layer-set-lock-alpha logo-layer FALSE)
-    (plug-in-gauss-iir 1 img logo-layer outline-blur-radius TRUE TRUE)
+    (plug-in-gauss-iir RUN-NONINTERACTIVE img logo-layer outline-blur-radius TRUE TRUE)
 
     (gimp-drawable-set-visible pattern FALSE)
     (set! layer2 (car (gimp-image-merge-visible-layers img CLIP-TO-IMAGE)))
-    (plug-in-edge 1 img layer2 2 1 0)
+    (plug-in-edge RUN-NONINTERACTIVE img layer2 2 1 0)
     (set! layer3 (car (gimp-layer-copy layer2 TRUE)))
     (gimp-image-add-layer img layer3 2)
-    (plug-in-gauss-iir 1 img layer2 bump-map-blur-radius TRUE TRUE)
+    (plug-in-gauss-iir RUN-NONINTERACTIVE img layer2 bump-map-blur-radius TRUE TRUE)
 
     (gimp-selection-all img)
     (gimp-context-set-pattern text-pattern)
@@ -82,7 +82,7 @@
 
     (gimp-layer-remove-mask pattern MASK-APPLY)
     (gimp-invert layer3)
-    (plug-in-gauss-iir 1 img layer3 shadow-blur-radius TRUE TRUE)
+    (plug-in-gauss-iir RUN-NONINTERACTIVE img layer3 shadow-blur-radius TRUE TRUE)
 
     (gimp-drawable-offset layer3 0 1 s-offset-x s-offset-y)
 

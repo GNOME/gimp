@@ -153,7 +153,7 @@
                              shadow-height
                              shadow-blur
                              shadow-blur)
-          (plug-in-gauss-rle 1
+          (plug-in-gauss-rle RUN-NONINTERACTIVE
                              image
                              shadow-layer
                              shadow-blur

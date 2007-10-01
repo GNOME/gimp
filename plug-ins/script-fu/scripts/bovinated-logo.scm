@@ -56,15 +56,15 @@
     (gimp-layer-set-lock-alpha blur-layer FALSE)
     (gimp-selection-layer-alpha logo-layer)
     (gimp-edit-fill blur-layer BACKGROUND-FILL)
-    (plug-in-gauss-rle 1 img blur-layer 5.0 1 1)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img blur-layer 5.0 1 1)
     (gimp-selection-none img)
     (gimp-layer-set-lock-alpha logo-layer TRUE)
     (gimp-selection-all img)
-    (plug-in-solid-noise 1 img logo-layer 0 0 23 1 spots-x spots-y)
+    (plug-in-solid-noise RUN-NONINTERACTIVE img logo-layer 0 0 23 1 spots-x spots-y)
     (gimp-brightness-contrast logo-layer 0 127)
     (gimp-selection-none img)
     (gimp-layer-set-lock-alpha logo-layer FALSE)
-    (plug-in-bump-map 1 img logo-layer blur-layer
+    (plug-in-bump-map RUN-NONINTERACTIVE img logo-layer blur-layer
                       135 50 10 0 0 0 30 TRUE FALSE 0)
     (gimp-layer-set-offsets blur-layer 5 5)
     (gimp-invert blur-layer)

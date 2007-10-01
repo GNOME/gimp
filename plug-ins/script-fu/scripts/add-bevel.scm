@@ -139,13 +139,13 @@
     (gimp-selection-none image)
 
     ; To further lessen jaggies?
-    ;(plug-in-gauss-rle 1 image bump-layer thickness TRUE TRUE)
+    ;(plug-in-gauss-rle RUN-NONINTERACTIVE image bump-layer thickness TRUE TRUE)
 
 
     ;
     ; BUMPMAP INVOCATION:
     ;
-    (plug-in-bump-map 1 image pic-layer bump-layer 125 45 3 0 0 0 0 TRUE FALSE 1)
+    (plug-in-bump-map RUN-NONINTERACTIVE image pic-layer bump-layer 125 45 3 0 0 0 0 TRUE FALSE 1)
 
     ;------------------------------------------------------------
     ;

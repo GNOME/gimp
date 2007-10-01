@@ -87,7 +87,7 @@
       (gimp-layer-translate shadow-layer 5 5)
 
       (gimp-layer-set-lock-alpha shadow-layer FALSE)
-      (plug-in-gauss-rle 1 img shadow-layer 5 TRUE TRUE)
+      (plug-in-gauss-rle RUN-NONINTERACTIVE img shadow-layer 5 TRUE TRUE)
       (gimp-layer-set-opacity shadow-layer 60)
       (gimp-image-lower-layer img shadow-layer)
       (gimp-image-lower-layer img shadow-layer)
@@ -108,7 +108,7 @@
     )
 
     (if (= crop TRUE)
-         (plug-in-autocrop 1 img text-layer)
+         (plug-in-autocrop RUN-NONINTERACTIVE img text-layer)
     )
 
     (if (= index TRUE)

@@ -68,7 +68,7 @@
     (gimp-selection-grow img border)
     (gimp-edit-fill glow-layer FOREGROUND-FILL)
     (gimp-selection-none img)
-    (plug-in-gauss-rle 1 img glow-layer 25 TRUE TRUE)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img glow-layer 25 TRUE TRUE)
 
     (gimp-image-undo-enable img)
 

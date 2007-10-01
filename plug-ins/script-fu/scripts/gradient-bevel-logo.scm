@@ -54,7 +54,7 @@
     (gimp-layer-set-lock-alpha blur-layer FALSE)
     (gimp-selection-layer-alpha logo-layer)
     (gimp-edit-fill blur-layer BACKGROUND-FILL)
-    (plug-in-gauss-rle 1 img blur-layer bevel-width 1 1)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img blur-layer bevel-width 1 1)
     (gimp-selection-none img)
     (gimp-context-set-background '(127 127 127))
     (gimp-context-set-foreground '(255 255 255))
@@ -68,7 +68,7 @@
 
     (gimp-selection-none img)
     (gimp-layer-set-lock-alpha logo-layer FALSE)
-    (plug-in-bump-map 1 img logo-layer blur-layer 115 bevel-height 5 0 0 0 15 TRUE FALSE 0)
+    (plug-in-bump-map RUN-NONINTERACTIVE img logo-layer blur-layer 115 bevel-height 5 0 0 0 15 TRUE FALSE 0)
     (gimp-layer-set-offsets blur-layer 5 5)
     (gimp-invert blur-layer)
     (gimp-layer-set-opacity blur-layer 50.0)

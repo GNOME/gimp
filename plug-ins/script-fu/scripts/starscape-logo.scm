@@ -108,12 +108,12 @@
              FALSE 0 0 TRUE
              cx cy bx by)
 
-    (plug-in-nova 1 img glow-layer novax novay glow-color novaradius 100 0)
+    (plug-in-nova RUN-NONINTERACTIVE img glow-layer novax novay glow-color novaradius 100 0)
 
     (gimp-selection-all img)
     (gimp-context-set-pattern "Stone")
     (gimp-edit-bucket-fill bump-channel PATTERN-BUCKET-FILL NORMAL-MODE 100 0 FALSE 0 0)
-    (plug-in-bump-map 1 img logo-layer bump-channel
+    (plug-in-bump-map RUN-NONINTERACTIVE img logo-layer bump-channel
               135.0 45.0 4 0 0 0 0 FALSE FALSE 0)
     (gimp-image-remove-channel img bump-channel)
     (gimp-selection-none img)

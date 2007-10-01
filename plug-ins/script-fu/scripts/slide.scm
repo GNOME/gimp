@@ -115,7 +115,7 @@
                      (/ (- width crop-width) 2)
                      (/ (- height crop-height) 2))
   (if (< ratio 1)
-      (plug-in-rotate 1 image pic-layer 1 FALSE)
+      (plug-in-rotate RUN-NONINTERACTIVE image pic-layer 1 FALSE)
   )
 
 ; add the background layer
@@ -208,7 +208,7 @@
     (gimp-context-set-foreground '(0 0 0))
     (gimp-edit-fill film-mask BACKGROUND-FILL)
     (gimp-selection-none image)
-    (plug-in-gauss-rle 1 image film-mask hole-radius TRUE TRUE)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE image film-mask hole-radius TRUE TRUE)
     (gimp-threshold film-mask 127 255)
 
     (gimp-layer-remove-mask film-layer MASK-APPLY)
@@ -220,7 +220,7 @@
 
 ; eventually rotate the whole thing back
   (if (< ratio 1)
-      (plug-in-rotate 1 image pic-layer 3 TRUE)
+      (plug-in-rotate RUN-NONINTERACTIVE image pic-layer 3 TRUE)
   )
 
 ; clean up after the script

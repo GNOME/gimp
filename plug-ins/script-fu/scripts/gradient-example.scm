@@ -42,7 +42,7 @@
 
     (gimp-context-set-foreground (list fg-color fg-color fg-color))
     (gimp-context-set-background (list bg-color bg-color bg-color))
-    (plug-in-checkerboard 1 img drawable 0 8)
+    (plug-in-checkerboard RUN-NONINTERACTIVE img drawable 0 8)
 
     (gimp-context-pop)
 

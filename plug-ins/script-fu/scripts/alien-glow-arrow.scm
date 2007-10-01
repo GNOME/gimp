@@ -156,7 +156,7 @@
     (gimp-selection-none img)
 
 
-    (plug-in-gauss-rle 1 img glow-layer blur-radius TRUE TRUE)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE img glow-layer blur-radius TRUE TRUE)
 
     (gimp-context-set-background bg-color)
     (gimp-edit-fill bg-layer BACKGROUND-FILL)

@@ -41,24 +41,24 @@
   (gimp-image-undo-disable img)
   (gimp-image-add-layer img layer-one 0)
 
-  (plug-in-solid-noise 1 img layer-one TRUE FALSE seed detail xscale yscale)
-  (plug-in-c-astretch 1 img layer-one)
+  (plug-in-solid-noise RUN-NONINTERACTIVE img layer-one TRUE FALSE seed detail xscale yscale)
+  (plug-in-c-astretch RUN-NONINTERACTIVE img layer-one)
   (set! layer-two (car (gimp-layer-copy layer-one TRUE)))
   (gimp-image-add-layer img layer-two -1)
   (gimp-image-set-active-layer img layer-two)
 
-  (plug-in-gradmap 1 img layer-two)
+  (plug-in-gradmap RUN-NONINTERACTIVE img layer-two)
 
 
 
   (gimp-by-color-select layer-one '(190 190 190) 55 CHANNEL-OP-REPLACE FALSE FALSE 0 FALSE)
-  (plug-in-bump-map 1 img layer-two layer-one 135.0 35 landheight 0 0 0 0 TRUE FALSE 0)
+  (plug-in-bump-map RUN-NONINTERACTIVE img layer-two layer-one 135.0 35 landheight 0 0 0 0 TRUE FALSE 0)
 
-  ;(plug-in-c-astretch 1 img layer-two)
+  ;(plug-in-c-astretch RUN-NONINTERACTIVE img layer-two)
   (gimp-selection-invert img)
-  (plug-in-bump-map 1 img layer-two layer-one 135.0 35 seadepth 0 0 0 0 TRUE FALSE 0)
+  (plug-in-bump-map RUN-NONINTERACTIVE img layer-two layer-one 135.0 35 seadepth 0 0 0 0 TRUE FALSE 0)
 
-  ;(plug-in-c-astretch 1 img layer-two)
+  ;(plug-in-c-astretch RUN-NONINTERACTIVE img layer-two)
 
   ; uncomment the next line if you want to keep a selection of the "land"
   (gimp-selection-none img)

@@ -55,21 +55,21 @@
     ;; now make the distortion data
     (gimp-context-set-background '(255 255 255))
     (gimp-edit-fill distortion-layer BACKGROUND-FILL)
-    (plug-in-noisify 1 distortion-img distortion-layer FALSE prob prob prob 0.0)
-    (plug-in-gauss-rle 1 distortion-img distortion-layer radius 1 1)
-    (plug-in-c-astretch 1 distortion-img distortion-layer)
-    (plug-in-gauss-rle 1 distortion-img distortion-layer radius 1 1)
+    (plug-in-noisify RUN-NONINTERACTIVE distortion-img distortion-layer FALSE prob prob prob 0.0)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE distortion-img distortion-layer radius 1 1)
+    (plug-in-c-astretch RUN-NONINTERACTIVE distortion-img distortion-layer)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE distortion-img distortion-layer radius 1 1)
     ;; OK, apply it to dist-text-layer
-    (plug-in-displace 1 img dist-text-layer radius radius 1 1
+    (plug-in-displace RUN-NONINTERACTIVE img dist-text-layer radius radius 1 1
                       distortion-layer distortion-layer 0)
     ;; make the distortion data once again fro the frame
     (gimp-edit-fill distortion-layer BACKGROUND-FILL)
-    (plug-in-noisify 1 distortion-img distortion-layer FALSE prob prob prob 0.0)
-    (plug-in-gauss-rle 1 distortion-img distortion-layer radius 1 1)
-    (plug-in-c-astretch 1 distortion-img distortion-layer)
-    (plug-in-gauss-rle 1 distortion-img distortion-layer radius 1 1)
+    (plug-in-noisify RUN-NONINTERACTIVE distortion-img distortion-layer FALSE prob prob prob 0.0)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE distortion-img distortion-layer radius 1 1)
+    (plug-in-c-astretch RUN-NONINTERACTIVE distortion-img distortion-layer)
+    (plug-in-gauss-rle RUN-NONINTERACTIVE distortion-img distortion-layer radius 1 1)
     ;; then, apply it to dist-frame-layer
-    (plug-in-displace 1 img dist-frame-layer radius radius 1 1
+    (plug-in-displace RUN-NONINTERACTIVE img dist-frame-layer radius radius 1 1
                       distortion-layer distortion-layer 0)
     ;; Finally, clear the bottom layer (text-layer)
     (gimp-selection-all img)
