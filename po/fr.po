@@ -19,7 +19,7 @@ msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-30 22:34+0200\n"
-"PO-Revision-Date: 2007-09-25 22:38+0200\n"
+"PO-Revision-Date: 2007-10-02 00:28+0200\n"
 "Last-Translator: Laurent Monin <gimp@norz.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -6853,11 +6853,11 @@ msgstr "picas"
 
 #: ../app/core/gimpunit.c:71
 msgid "percent"
-msgstr "pourcentage"
+msgstr "pour cent"
 
 #: ../app/core/gimpunit.c:71
 msgid "plural|percent"
-msgstr "plural|pourcentage"
+msgstr "pour cent"
 
 #: ../app/dialogs/about-dialog.c:127
 msgid "Visit the GIMP website"
