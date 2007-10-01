@@ -10,12 +10,12 @@ scripts = \
 	palette-offset.py	\
 	palette-sort.py		\
 	palette-to-gradient.py	\
-	py-slice.py		\
-	shadow_bevel.py
+	py-slice.py
 
 test_scripts = \
 	benchmark-foreground-extract.py	\
 	clothify.py		\
+	shadow_bevel.py		\
 	sphere.py		\
 	whirlpinch.py
 

@@ -1,5 +1,10 @@
 2007-10-01  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/pygimp/plug-ins/Makefile.am: moved shadow_bevel.py to
+	test-scripts so that it isn't installed by default (bug #482289).
+
+2007-10-01  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/*.scm: use RUN-NONINTERACTIVE for the
 	run-mode where 1 was used instead.
 
