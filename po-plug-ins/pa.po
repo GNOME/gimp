@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD.pa\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-26 10:02+0100\n"
-"PO-Revision-Date: 2007-09-27 16:41+0530\n"
+"PO-Revision-Date: 2007-10-01 16:29+0530\n"
 "Last-Translator: ASB <aalam@users.sf.net>\n"
 "Language-Team: Punjabi <punjabi-l10n@users.sf.net>\n"
 "MIME-Version: 1.0\n"
@@ -500,7 +500,7 @@ msgstr "ਆਮ ਚੋਣ"
 
 #: ../plug-ins/Lighting/lighting_ui.c:302
 msgid "T_ransparent background"
-msgstr "ਪਾਰਦਰਸ਼ੀ ਪਿੱਠਭੂਮੀ(_r)"
+msgstr "ਪਾਰਦਰਸ਼ੀ ਬੈਕਗਰਾਊਂਡ(_r)"
 
 #: ../plug-ins/Lighting/lighting_ui.c:312
 msgid "Make destination image transparent where bump height is zero"
@@ -1121,19 +1121,19 @@ msgstr "ਆਬਜੈਕਟ ਲਈ ਮੈਪ"
 #: ../plug-ins/MapObject/mapobject_ui.c:1400
 #: ../plug-ins/common/diffraction.c:477
 msgid "_Preview!"
-msgstr "ਨਮੂਨਾ!"
+msgstr "ਝਲਕ(_P)!"
 
 #: ../plug-ins/MapObject/mapobject_ui.c:1427
 msgid "Show preview _wireframe"
-msgstr ""
+msgstr "ਝਲਕ ਵਾਇਰਫਰੇਮ ਵੇਖਾਓ(_w)"
 
 #: ../plug-ins/bmp/bmp.c:124 ../plug-ins/bmp/bmp.c:143
 msgid "Windows BMP image"
-msgstr ""
+msgstr "Windows BMP ਚਿੱਤਰ"
 
 #: ../plug-ins/bmp/bmpread.c:85
 msgid "Bad colormap"
-msgstr ""
+msgstr "ਗਲਤ ਕਲਰ-ਮੈਪ"
 
 #. max. rows allocated
 #. column, highest column ever used
@@ -1210,12 +1210,12 @@ msgstr ""
 #: ../plug-ins/jpeg/jpeg-load.c:789 ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1155
 msgid "Background"
-msgstr "ਪਿੱਠਭੂਮੀ"
+msgstr "ਬੈਕਗਰਾਊਂਡ"
 
 #: ../plug-ins/bmp/bmpread.c:730 ../plug-ins/bmp/bmpread.c:771
 #: ../plug-ins/bmp/bmpread.c:821
 msgid "The bitmap ends unexpectedly."
-msgstr ""
+msgstr "ਬਿੱਟਮੈਪ ਅਚਾਨਕ ਖਤਮ ਹੋਇਆ।"
 
 #: ../plug-ins/bmp/bmpwrite.c:187 ../plug-ins/bmp/bmpwrite.c:209
 msgid "Cannot save indexed image with transparency in BMP file format."
@@ -1223,7 +1223,7 @@ msgstr ""
 
 #: ../plug-ins/bmp/bmpwrite.c:189 ../plug-ins/bmp/bmpwrite.c:211
 msgid "Alpha channel will be ignored."
-msgstr ""
+msgstr "ਐਲਫ਼ਾ ਚੈਨਲ ਅਣਡਿੱਠਾ ਕੀਤਾ ਜਾਵੇਗਾ।"
 
 #. And let's begin the progress
 #. init the progress meter
@@ -1246,7 +1246,7 @@ msgstr "'%s' ਸੰਭਾਲੀ ਜਾ ਰਹੀ ਹੈ"
 
 #: ../plug-ins/bmp/bmpwrite.c:791
 msgid "Save as BMP"
-msgstr ""
+msgstr "BMP ਵਾਂਗ ਸੰਭਾਲੋ"
 
 #: ../plug-ins/bmp/bmpwrite.c:814
 msgid "_Run-Length Encoded"
@@ -1282,7 +1282,7 @@ msgstr "ਹਰਾ ਚੈਨਲ ਸੋਧ(_d)"
 
 #: ../plug-ins/common/AlienMap2.c:141
 msgid "Mo_dify saturation channel"
-msgstr "ਸਤ੍ਰਿਪਤ ਚੈਨਲ ਸੋਧ(_d)"
+msgstr "ਸੰਤ੍ਰਿਪਤ ਚੈਨਲ ਸੋਧ(_d)"
 
 #: ../plug-ins/common/AlienMap2.c:142
 msgid "Mod_ify blue channel"
@@ -2948,7 +2948,7 @@ msgstr "ਟਾਇਲ ਸੰਤ੍ਰਿਪਤ(_i):"
 
 #: ../plug-ins/common/cubism.c:328
 msgid "_Use background color"
-msgstr "ਪਿੱਠਭੂਮੀ ਰੰਗ ਵਰਤੋਂ(_U)"
+msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ ਵਰਤੋਂ(_U)"
 
 #: ../plug-ins/common/cubism.c:418
 msgid "Cubistic transformation"
@@ -4413,7 +4413,7 @@ msgstr ""
 
 #: ../plug-ins/common/gih.c:1030
 msgid "Display as:"
-msgstr ""
+msgstr "ਇੰਝ ਵੇਖੋ:"
 
 #: ../plug-ins/common/gih.c:1039
 msgid "Dimension:"
@@ -4421,7 +4421,7 @@ msgstr "ਮਾਪ:"
 
 #: ../plug-ins/common/gih.c:1114
 msgid "Ranks:"
-msgstr ""
+msgstr "ਰੈਂਕ:"
 
 #: ../plug-ins/common/glasstile.c:124
 msgid "Simulate distortion caused by square glass tiles"
@@ -4429,15 +4429,15 @@ msgstr ""
 
 #: ../plug-ins/common/glasstile.c:130
 msgid "_Glass Tile..."
-msgstr ""
+msgstr "ਗਲਾਸ ਟਾਇਲ(_G)..."
 
 #: ../plug-ins/common/glasstile.c:210 ../plug-ins/common/glasstile.c:250
 msgid "Glass Tile"
-msgstr ""
+msgstr "ਗਲਾਸ ਟਾਇਲ"
 
 #: ../plug-ins/common/glasstile.c:288
 msgid "Tile _width:"
-msgstr ""
+msgstr "ਟਾਇਲ ਚੌੜਾਈ(_w):"
 
 #: ../plug-ins/common/glasstile.c:302 ../plug-ins/common/mosaic.c:661
 msgid "Tile _height:"
@@ -4481,7 +4481,7 @@ msgstr ""
 
 #: ../plug-ins/common/gradmap.c:119
 msgid "_Palette Map"
-msgstr ""
+msgstr "ਪਲੇਅਟ ਮੈਪ(_P)"
 
 #: ../plug-ins/common/gradmap.c:162
 msgid "Gradient Map"
@@ -4489,11 +4489,11 @@ msgstr "ਗਰੇਡੀਐਂਟ ਮੈਪ"
 
 #: ../plug-ins/common/gradmap.c:167
 msgid "Palette Map"
-msgstr ""
+msgstr "ਪੈਲਅਟ ਮੈਪ"
 
 #: ../plug-ins/common/grid.c:142
 msgid "Draw a grid on the image"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਉੱਤੇ ਗਰਿੱਡ ਵਾਹੋ"
 
 #: ../plug-ins/common/grid.c:148
 msgid "_Grid..."
@@ -4511,11 +4511,11 @@ msgstr "ਗਰਿੱਡ"
 #. attach labels
 #: ../plug-ins/common/grid.c:717
 msgid "Horizontal"
-msgstr "ਖਿਤਿਜੀ"
+msgstr "ਹਾਰੀਜ਼ਟਲ"
 
 #: ../plug-ins/common/grid.c:719
 msgid "Vertical"
-msgstr "ਲੰਬਕਾਰੀ"
+msgstr "ਵਰਟੀਕਲ"
 
 #: ../plug-ins/common/grid.c:721
 msgid "Intersection"
@@ -4530,16 +4530,16 @@ msgstr "ਚੌੜਾਈ:"
 #. attach labels
 #: ../plug-ins/common/grid.c:857
 msgid "Offset:"
-msgstr "ਅੰਤਰਲੰਬ :"
+msgstr "ਆਫਸੈੱਟ:"
 
 #. attach color selectors
 #: ../plug-ins/common/grid.c:896
 msgid "Horizontal Color"
-msgstr ""
+msgstr "ਹਾਰੀਜ਼ਟਲ ਰੰਗ"
 
 #: ../plug-ins/common/grid.c:914
 msgid "Vertical Color"
-msgstr ""
+msgstr "ਵਰਟੀਕਲ ਰੰਗ"
 
 #: ../plug-ins/common/grid.c:932
 msgid "Intersection Color"
@@ -4547,11 +4547,11 @@ msgstr ""
 
 #: ../plug-ins/common/gtm.c:155
 msgid "HTML table"
-msgstr ""
+msgstr "HTML ਟੇਬਲ"
 
 #: ../plug-ins/common/gtm.c:398
 msgid "Save as HTML table"
-msgstr "HTML ਸਾਰਣੀ ਵਾਂਗ ਸੰਭਾਲੋ"
+msgstr "HTML ਟੇਬਲ ਵਾਂਗ ਸੰਭਾਲੋ"
 
 #: ../plug-ins/common/gtm.c:425
 msgid "Warning"
@@ -4567,7 +4567,7 @@ msgstr ""
 #. HTML Page Options
 #: ../plug-ins/common/gtm.c:445
 msgid "HTML Page Options"
-msgstr ""
+msgstr "HTML ਪੇਜ਼ ਚੋਣਾਂ"
 
 #: ../plug-ins/common/gtm.c:452
 msgid "_Generate full HTML document"
@@ -4607,7 +4607,7 @@ msgstr ""
 
 #: ../plug-ins/common/gtm.c:510
 msgid "C_aption"
-msgstr ""
+msgstr "ਸੁਰਖੀ(_a)"
 
 #: ../plug-ins/common/gtm.c:516
 msgid "Check if you would like to have the table captioned."
@@ -4619,7 +4619,7 @@ msgstr ""
 
 #: ../plug-ins/common/gtm.c:544
 msgid "C_ell content:"
-msgstr ""
+msgstr "ਸੈੱਲ ਸਮੱਗਰੀ(_e):"
 
 #: ../plug-ins/common/gtm.c:548
 msgid "The text to go into each cell."
@@ -4632,7 +4632,7 @@ msgstr "ਟੇਬਲ ਚੋਣਾਂ"
 
 #: ../plug-ins/common/gtm.c:569
 msgid "_Border:"
-msgstr ""
+msgstr "ਬਾਰਡਰ(_B):"
 
 #: ../plug-ins/common/gtm.c:573
 msgid "The number of pixels in the table border."
@@ -4676,7 +4676,7 @@ msgstr ""
 
 #: ../plug-ins/common/header.c:77
 msgid "C source code header"
-msgstr ""
+msgstr "C ਸੋਰਸ ਕੋਡ ਹੈੱਡਰ"
 
 #: ../plug-ins/common/hot.c:207
 msgid "Find and fix pixels that may be unsafely bright"
@@ -4684,11 +4684,11 @@ msgstr ""
 
 #: ../plug-ins/common/hot.c:217
 msgid "_Hot..."
-msgstr ""
+msgstr "ਹਾਟ(_H)..."
 
 #: ../plug-ins/common/hot.c:379 ../plug-ins/common/hot.c:570
 msgid "Hot"
-msgstr ""
+msgstr "ਹਾਟ"
 
 #: ../plug-ins/common/hot.c:607
 msgid "Create _new layer"
@@ -4765,11 +4765,11 @@ msgstr "ਫਰੇਮਾਂ ਦੀ ਗਿਣਤੀ(_f):"
 
 #: ../plug-ins/common/iwarp.c:1053
 msgid "R_everse"
-msgstr ""
+msgstr "ਉਲਟ(_e)"
 
 #: ../plug-ins/common/iwarp.c:1062
 msgid "_Ping pong"
-msgstr ""
+msgstr "ਪਿੰਗ ਪਾਂਗ(_P)"
 
 #: ../plug-ins/common/iwarp.c:1075
 msgid "_Animate"
@@ -4797,7 +4797,7 @@ msgstr "ਹਟਾਓ(_v)"
 
 #: ../plug-ins/common/iwarp.c:1113
 msgid "S_hrink"
-msgstr ""
+msgstr "ਸੁੰਘੜੋ(_h)"
 
 #: ../plug-ins/common/iwarp.c:1114
 msgid "Sw_irl CW"
@@ -4834,7 +4834,7 @@ msgstr "ਸਥਾਪਨ(_S)"
 
 #: ../plug-ins/common/iwarp.c:1268
 msgid "IWarp"
-msgstr ""
+msgstr "IWarp"
 
 #: ../plug-ins/common/iwarp.c:1304
 msgid ""
@@ -4848,7 +4848,7 @@ msgstr ""
 
 #: ../plug-ins/common/jigsaw.c:361
 msgid "_Jigsaw..."
-msgstr ""
+msgstr "_Jigsaw..."
 
 #: ../plug-ins/common/jigsaw.c:414
 msgid "Assembling jigsaw"
@@ -4901,15 +4901,15 @@ msgstr "ਵਰਗ(_S)"
 
 #: ../plug-ins/common/jigsaw.c:2543
 msgid "C_urved"
-msgstr ""
+msgstr "ਕਰਵ(_u)"
 
 #: ../plug-ins/common/jigsaw.c:2547
 msgid "Each piece has straight sides"
-msgstr ""
+msgstr "ਹਰੇਕ ਟੁਕੜੇ ਦੀਆਂ ਸਿੱਧੀਆਂ ਸਾਈਡਾਂ ਹਨ"
 
 #: ../plug-ins/common/jigsaw.c:2548
 msgid "Each piece has curved sides"
-msgstr ""
+msgstr "ਹਰੇਕ ਟੁਕੜੇ ਦੀਆਂ ਕਵਰ ਸਾਈਡਾਂ ਹਨ"
 
 #: ../plug-ins/common/laplace.c:75
 msgid "High-resolution edge detection"
@@ -4929,27 +4929,27 @@ msgstr "ਚਿੱਤਰ ਉੱਤੇ ਕਲਰ ਪਰੋਫਾਇਲ ਸੈੱ�
 
 #: ../plug-ins/common/lcms.c:228
 msgid "_Assign Color Profile..."
-msgstr ""
+msgstr "ਕਲਰ ਪਰੋਫਾਇਲ ਲਾਗੂ ਕਰੋ(_A)..."
 
 #: ../plug-ins/common/lcms.c:244
 msgid "Assign default RGB Profile"
-msgstr ""
+msgstr "ਡਿਫਾਲਟ RGB ਪਰੋਫਾਇਲ ਲਾਗੂ ਕਰੋ"
 
 #: ../plug-ins/common/lcms.c:251
 msgid "Apply a color profile on the image"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਉੱਤੇ ਕਲਰ ਪਰੋਫਾਇਲ ਲਾਗੂ ਕਰੋ"
 
 #: ../plug-ins/common/lcms.c:261
 msgid "_Convert to Color Profile..."
-msgstr ""
+msgstr "ਕਲਰ ਪਰੋਫਾਇਲ 'ਚ ਬਦਲੋ(_C)..."
 
 #: ../plug-ins/common/lcms.c:279
 msgid "Convert to default RGB Profile"
-msgstr ""
+msgstr "ਡਿਫਾਲਟ RGB ਪਰੋਫਾਇਲ 'ਚ ਬਦਲੋ"
 
 #: ../plug-ins/common/lcms.c:293
 msgid "Image Color Profile Information"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਕਲਰ ਪਰੋਫਾਇਲ ਜਾਣਕਾਰੀ"
 
 #: ../plug-ins/common/lcms.c:307
 msgid "Color Profile Information"
@@ -4962,7 +4962,7 @@ msgstr ""
 
 #: ../plug-ins/common/lcms.c:670
 msgid "Default RGB working space"
-msgstr ""
+msgstr "ਡਿਫਾਲਟ RGB ਵਰਕਿੰਗ ਸਪੇਸ"
 
 #: ../plug-ins/common/lcms.c:758
 msgid "Data attached as 'icc-profile' does not appear to be an ICC color profile"
@@ -4977,7 +4977,7 @@ msgstr "'%s' ਇੱਕ ICC ਕਲਰ ਪਰੋਫਾਇਲ ਨਹੀਂ ਜਾ�
 #: ../plug-ins/common/lcms.c:863
 #, c-format
 msgid "Converting from '%s' to '%s'"
-msgstr ""
+msgstr "'%s' ਤੋਂ '%s' ਬਦਲਿਆ ਜਾ ਰਿਹਾ ਹੈ"
 
 #: ../plug-ins/common/lcms.c:1110
 #, c-format
@@ -4996,11 +4996,11 @@ msgstr ""
 
 #: ../plug-ins/common/lcms.c:1207
 msgid "Convert to RGB working space?"
-msgstr ""
+msgstr "ਕੀ RGB ਵਰਕਿੰਗ ਸਪੇਸ 'ਚ ਬਦਲਣਾ ਹੈ?"
 
 #: ../plug-ins/common/lcms.c:1212
 msgid "_Keep"
-msgstr ""
+msgstr "ਰੱਖੋ(_K)"
 
 #: ../plug-ins/common/lcms.c:1217
 msgid "_Convert"
@@ -5008,7 +5008,7 @@ msgstr "ਕਨਵਰਟ(_I)"
 
 #: ../plug-ins/common/lcms.c:1244 ../plug-ins/jpeg/jpeg-exif.c:372
 msgid "_Don't ask me again"
-msgstr ""
+msgstr "ਮੈਨੂੰ ਮੁੜ ਨਾ ਪੁੱਛੋ(_D)"
 
 #: ../plug-ins/common/lcms.c:1308
 msgid "Select destination profile"
@@ -5025,27 +5025,27 @@ msgstr "ICC ਰੰਗ ਪਰੋਫਾਇਲ (*.icc, *.icm)"
 #: ../plug-ins/common/lcms.c:1383
 #, c-format
 msgid "RGB workspace (%s)"
-msgstr ""
+msgstr "RGB ਵਰਕਸਪੇਸ (%s)"
 
 #: ../plug-ins/common/lcms.c:1433
 msgid "Convert to ICC Color Profile"
-msgstr ""
+msgstr "ICC ਕਲਰ ਪਰੋਫਾਇਲ 'ਚ ਬਦਲੋ"
 
 #: ../plug-ins/common/lcms.c:1434
 msgid "Assign ICC Color Profile"
-msgstr ""
+msgstr "ICC ਕਲਰ ਪਰੋਫਾਇਲ ਦਿਓ"
 
 #: ../plug-ins/common/lcms.c:1442
 msgid "_Assign"
-msgstr ""
+msgstr "ਜਾਰੀ ਕਰੋ(_A)"
 
 #: ../plug-ins/common/lcms.c:1459
 msgid "Current Color Profile"
-msgstr ""
+msgstr "ਮੌਜੂਦਾ ਕਲਰ ਪਰੋਫਾਇਲ"
 
 #: ../plug-ins/common/lcms.c:1474
 msgid "Convert to"
-msgstr ""
+msgstr "ਬਦਲੋ"
 
 #: ../plug-ins/common/lcms.c:1474
 msgid "Assign"
@@ -5057,7 +5057,7 @@ msgstr ""
 
 #: ../plug-ins/common/lcms.c:1514
 msgid "_Black Point Compensation"
-msgstr ""
+msgstr "ਬਲੈਕ ਪੁਆਇੰਟ ਪੂਰਤੀ(_B)"
 
 #: ../plug-ins/common/lcms.c:1554
 msgid "Destination profile is not for RGB color space."
@@ -5089,7 +5089,7 @@ msgstr "ਕੋਨਾ(_E):"
 
 #: ../plug-ins/common/lens.c:548 ../plug-ins/flame/flame.c:1213
 msgid "_Zoom:"
-msgstr "ਆਕਾਰ:"
+msgstr "ਜ਼ੂਮ(_Z):"
 
 #: ../plug-ins/common/lens.c:562
 msgid "_Brighten:"
@@ -5113,19 +5113,19 @@ msgstr "ਪਰਭਾਵ ਚੈਨਲ"
 
 #: ../plug-ins/common/lic.c:673
 msgid "_Brightness"
-msgstr ""
+msgstr "ਚਮਕ(_B)"
 
 #: ../plug-ins/common/lic.c:679
 msgid "Effect Operator"
-msgstr ""
+msgstr "ਪਰਭਾਵ ਓਪਰੇਟਰ"
 
 #: ../plug-ins/common/lic.c:684
 msgid "_Derivative"
-msgstr ""
+msgstr "ਡੇਰੀਵੇਟਿਵ(_D)"
 
 #: ../plug-ins/common/lic.c:685
 msgid "_Gradient"
-msgstr "ਢਾਲਵਾਂ(_G)"
+msgstr "ਗਰੇਂਡੀਐਂਟ(_G)"
 
 #: ../plug-ins/common/lic.c:691
 msgid "Convolve"
@@ -5157,7 +5157,7 @@ msgstr ""
 
 #: ../plug-ins/common/lic.c:754
 msgid "_Minimum value:"
-msgstr ""
+msgstr "ਘੱਟੋ-ਘੱਟ ਮੁੱਲ(_M):"
 
 #: ../plug-ins/common/lic.c:763
 msgid "M_aximum value:"
@@ -5169,7 +5169,7 @@ msgstr ""
 
 #: ../plug-ins/common/lic.c:814
 msgid "_Van Gogh (LIC)..."
-msgstr ""
+msgstr "_Van Gogh (LIC)..."
 
 #: ../plug-ins/common/mail.c:259
 msgid "Email the image"
@@ -5177,11 +5177,11 @@ msgstr "ਚਿੱਤਰ ਈਮੇਲ ਕਰੋ"
 
 #: ../plug-ins/common/mail.c:265
 msgid "_Mail Image..."
-msgstr "ਚਿੱਤਰ ਪੱਤਰ ਵਿੱਚ ਭੇਜੋ(_M)..."
+msgstr "ਚਿੱਤਰ ਮੇਲ ਕਰੋ(_M)..."
 
 #: ../plug-ins/common/mail.c:524
 msgid "Send as Mail"
-msgstr "ਪੱਤਰ ਵਾਂਗ ਭੇਜੋ"
+msgstr "ਮੇਲ ਵਾਂਗ ਭੇਜੋ"
 
 #: ../plug-ins/common/mail.c:529
 msgid "_Send"
@@ -5194,7 +5194,7 @@ msgstr "ਫਾਇਲ-ਨਾਂ(_F):"
 #. Encapsulation label
 #: ../plug-ins/common/mail.c:568
 msgid "Encapsulation:"
-msgstr ""
+msgstr "ਇੰਕੈਪਸੂਲੇਸ਼ਨ:"
 
 #: ../plug-ins/common/mail.c:580
 msgid "_MIME"
@@ -5202,7 +5202,7 @@ msgstr "_MIME"
 
 #: ../plug-ins/common/mail.c:581
 msgid "_Uuencode"
-msgstr ""
+msgstr "_Uuencode"
 
 #: ../plug-ins/common/mail.c:595
 msgid "_Recipient:"
@@ -5251,7 +5251,7 @@ msgstr ""
 
 #: ../plug-ins/common/mapcolor.c:151
 msgid "Adjust _Foreground & Background"
-msgstr ""
+msgstr "ਫਾਰਗਰਾਊਂਡ ਅਤੇ ਬੈਕਗਰਾਊਂਡ ਅਡਜੱਸਟ ਕਰੋ(_F)"
 
 #: ../plug-ins/common/mapcolor.c:160
 msgid "Map color range specified by two colors to another range"
@@ -5263,7 +5263,7 @@ msgstr ""
 
 #: ../plug-ins/common/mapcolor.c:214 ../plug-ins/common/mapcolor.c:526
 msgid "Cannot operate on gray or indexed color images."
-msgstr ""
+msgstr "ਗਰੇ ਜਾਂ ਇੰਡੈਕਸਡ ਰੰਗ ਚਿੱਤਰ ਉੱਤੇ ਓਪਰੇਟ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।"
 
 #: ../plug-ins/common/mapcolor.c:235
 msgid "Adjusting foreground and background colors"
@@ -5275,7 +5275,7 @@ msgstr "ਮੈਪਿੰਗ ਰੰਗ"
 
 #: ../plug-ins/common/mapcolor.c:352
 msgid "Map Color Range"
-msgstr ""
+msgstr "ਮੈਪ ਰੰਗ ਰੇਜ਼"
 
 #: ../plug-ins/common/mapcolor.c:383
 msgid "Source Color Range"
@@ -5306,7 +5306,7 @@ msgstr ""
 
 #: ../plug-ins/common/max_rgb.c:234
 msgid "Max RGB"
-msgstr ""
+msgstr "ਵੱਧੋ-ਵੱਧ RGB"
 
 #: ../plug-ins/common/max_rgb.c:259
 msgid "Maximum RGB Value"
@@ -5342,11 +5342,11 @@ msgstr ""
 
 #: ../plug-ins/common/mblur.c:1036
 msgid "_Linear"
-msgstr "ਰੇਖਿਕ(_L)"
+msgstr "ਲੀਨੀਅਰ(_L)"
 
 #: ../plug-ins/common/mblur.c:1037
 msgid "_Radial"
-msgstr ""
+msgstr "ਰੇਡੀਕਲ(_R)"
 
 #: ../plug-ins/common/mblur.c:1038 ../plug-ins/imagemap/imap_menu.c:203
 msgid "_Zoom"
@@ -5384,11 +5384,11 @@ msgstr "MNG ਚੋਣਾਂ"
 
 #: ../plug-ins/common/mng.c:1345
 msgid "Interlace"
-msgstr ""
+msgstr "ਇੰਟਰਲੇਸ"
 
 #: ../plug-ins/common/mng.c:1357
 msgid "Save background color"
-msgstr "ਪਿੱਠਭੂਮੀ ਚਿੱਤਰ ਵਾਂਗ ਸੰਭਾਲੋ"
+msgstr "ਬੈਕਗਰਾਊਂਡ ਚਿੱਤਰ ਵਾਂਗ ਸੰਭਾਲੋ"
 
 #: ../plug-ins/common/mng.c:1368
 msgid "Save gamma"
@@ -5428,7 +5428,7 @@ msgstr "ਸਭ JNG"
 
 #: ../plug-ins/common/mng.c:1427
 msgid "Default chunks type:"
-msgstr ""
+msgstr "ਡਿਫਾਲਟ ਚੱਕ ਟਾਇਪ:"
 
 #: ../plug-ins/common/mng.c:1430
 msgid "Combine"
@@ -5440,11 +5440,11 @@ msgstr "ਤਬਦੀਲ"
 
 #: ../plug-ins/common/mng.c:1442
 msgid "Default frame disposal:"
-msgstr ""
+msgstr "ਡਿਫਾਲਟ ਫਰੇਮ ਡਿਸਪੋਜ਼ਲ:"
 
 #: ../plug-ins/common/mng.c:1454
 msgid "PNG compression level:"
-msgstr ""
+msgstr "PNG ਕੰਪਰੈੱਸ ਲੈਵਲ:"
 
 #: ../plug-ins/common/mng.c:1462 ../plug-ins/common/png.c:1881
 msgid "Choose a high compression level for small file size"
@@ -5452,15 +5452,15 @@ msgstr ""
 
 #: ../plug-ins/common/mng.c:1476
 msgid "JPEG compression quality:"
-msgstr "JPEG ਨਪੀੜਨ ਗੁਣਵੱਤਾ:"
+msgstr "JPEG ਕੰਪਰੈੱਸ ਕੁਆਲਟੀ:"
 
 #: ../plug-ins/common/mng.c:1493
 msgid "JPEG smoothing factor:"
-msgstr ""
+msgstr "JPEG ਸਮੂਥਰ ਫੈਕਟਰ:"
 
 #: ../plug-ins/common/mng.c:1503
 msgid "Animated MNG Options"
-msgstr ""
+msgstr "ਐਨੀਮੇਟਡ MNG ਚੋਣਾਂ"
 
 #: ../plug-ins/common/mng.c:1509
 msgid "Loop"
@@ -5468,15 +5468,15 @@ msgstr "ਲੂਪ"
 
 #: ../plug-ins/common/mng.c:1523
 msgid "Default frame delay:"
-msgstr ""
+msgstr "ਡਿਫਾਲਟ ਫਰੇਮ ਡਿਲੇਅ:"
 
 #: ../plug-ins/common/mng.c:1596
 msgid "MNG animation"
-msgstr "MNG ਸਜੀਵਤਾ"
+msgstr "MNG ਐਨੀਮੇਸ਼ਨ"
 
 #: ../plug-ins/common/mosaic.c:359
 msgid "Convert the image into irregular tiles"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਨੂੰ ਇਰ-ਰੈਗੂਲਰ ਟਾਇਲ 'ਚ ਬਦਲੋ"
 
 #: ../plug-ins/common/mosaic.c:364
 msgid "_Mosaic..."
@@ -5506,7 +5506,7 @@ msgstr "ਹੈਕਸਾਗਨ"
 
 #: ../plug-ins/common/mosaic.c:632
 msgid "Octagons & squares"
-msgstr ""
+msgstr "ਅੱਠ-ਭੁਜ ਅਤੇ ਵਰਗ"
 
 #: ../plug-ins/common/mosaic.c:633
 msgid "Triangles"
@@ -5522,7 +5522,7 @@ msgstr "ਟਾਇਲ ਅਕਾਰ(_s):"
 
 #: ../plug-ins/common/mosaic.c:674
 msgid "Til_e spacing:"
-msgstr ""
+msgstr "ਟਾਇਲ ਫਾਸਲਾ(_e):"
 
 #: ../plug-ins/common/mosaic.c:686
 msgid "Tile _neatness:"
@@ -5534,7 +5534,7 @@ msgstr "ਰੌਸ਼ਨੀ ਦਿਸ਼ਾ(_d):"
 
 #: ../plug-ins/common/mosaic.c:711
 msgid "Color _variation:"
-msgstr ""
+msgstr "ਕਲਰ ਵੇਰੀਏਸ਼ਨ(_v):"
 
 #: ../plug-ins/common/mosaic.c:740
 msgid "Co_lor averaging"
@@ -5554,7 +5554,7 @@ msgstr "_FG/BG ਰੌਸ਼ਨੀ"
 
 #: ../plug-ins/common/mosaic.c:2685
 msgid "Unable to add additional point.\n"
-msgstr ""
+msgstr "ਹੋਰ ਪੁਆਇੰਟ ਜੋੜਨ ਲਈ ਅਸਮਰੱਥ ਹੈ।\n"
 
 #: ../plug-ins/common/neon.c:134
 msgid "Simulate the glowing boundary of a neon light"
@@ -5582,7 +5582,7 @@ msgstr "ਗੋਲ"
 
 #: ../plug-ins/common/newsprint.c:136
 msgid "Line"
-msgstr "ਰੇਖਾ"
+msgstr "ਲਾਈਨ"
 
 #: ../plug-ins/common/newsprint.c:145
 msgid "Diamond"
@@ -5594,7 +5594,7 @@ msgstr ""
 
 #: ../plug-ins/common/newsprint.c:162
 msgid "PS Diamond"
-msgstr ""
+msgstr "PS ਹੀਰਾ"
 
 #: ../plug-ins/common/newsprint.c:332
 msgid "_Grey"
@@ -5610,7 +5610,7 @@ msgstr ""
 
 #: ../plug-ins/common/newsprint.c:382
 msgid "Magen_ta"
-msgstr ""
+msgstr "ਮੈਗਨਟਾ(_t)"
 
 #: ../plug-ins/common/newsprint.c:390
 msgid "_Yellow"
@@ -5626,11 +5626,11 @@ msgstr ""
 
 #: ../plug-ins/common/newsprint.c:526
 msgid "Newsprin_t..."
-msgstr ""
+msgstr "ਨਿਊਜ਼-ਪਰਿੰਟ(_t)..."
 
 #: ../plug-ins/common/newsprint.c:627 ../plug-ins/common/newsprint.c:1188
 msgid "Newsprint"
-msgstr ""
+msgstr "ਨਿਊਜ਼-ਪਰਿੰਟ"
 
 #: ../plug-ins/common/newsprint.c:1031
 msgid "_Spot function:"
@@ -5643,11 +5643,11 @@ msgstr "ਰੈਜ਼ੋਲੇਸ਼ਨ"
 
 #: ../plug-ins/common/newsprint.c:1258
 msgid "_Input SPI:"
-msgstr ""
+msgstr "ਇੰਪੁੱਟ SP_I:"
 
 #: ../plug-ins/common/newsprint.c:1272
 msgid "O_utput LPI:"
-msgstr ""
+msgstr "ਆਉਟਪੁੱਟ LPI (_u):"
 
 #: ../plug-ins/common/newsprint.c:1285
 msgid "C_ell size:"
@@ -5656,11 +5656,11 @@ msgstr "ਸੈਲ ਅਕਾਰ(_e):"
 #. screen settings
 #: ../plug-ins/common/newsprint.c:1298 ../plug-ins/gflare/gflare.c:555
 msgid "Screen"
-msgstr "ਪਰਦਾ"
+msgstr "ਸਕਰੀਨ"
 
 #: ../plug-ins/common/newsprint.c:1317
 msgid "B_lack pullout (%):"
-msgstr ""
+msgstr "ਕਾਲਾ ਪੁਲਆਉਟ(_l) (%):"
 
 #: ../plug-ins/common/newsprint.c:1339
 msgid "Separate to:"
@@ -5693,7 +5693,7 @@ msgstr "ਐਟੀਲਾਈਸਿੰਗ"
 
 #: ../plug-ins/common/newsprint.c:1449
 msgid "O_versample:"
-msgstr ""
+msgstr "ਓਵਰ-ਸੈਂਪਲ(_v):"
 
 #: ../plug-ins/common/nlfilt.c:118
 msgid "Nonlinear swiss army knife filter"
@@ -5721,7 +5721,7 @@ msgstr ""
 
 #: ../plug-ins/common/nlfilt.c:1051
 msgid "_Edge enhancement"
-msgstr ""
+msgstr "ਕੋਨਾ ਇਹਾਂਸਮਿੰਟ(_E)"
 
 #: ../plug-ins/common/nlfilt.c:1076
 msgid "A_lpha:"
@@ -5733,15 +5733,15 @@ msgstr ""
 
 #: ../plug-ins/common/noisify.c:154
 msgid "_RGB Noise..."
-msgstr ""
+msgstr "_RGB ਨੋਵਾਇਸ..."
 
 #: ../plug-ins/common/noisify.c:282
 msgid "Adding noise"
-msgstr ""
+msgstr "ਨੋਵਾਇਸ ਸ਼ਾਮਲ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ"
 
 #: ../plug-ins/common/noisify.c:448
 msgid "RGB Noise"
-msgstr ""
+msgstr "RGB ਨੋਵਾਇਸ"
 
 #: ../plug-ins/common/noisify.c:481
 msgid "Co_rrelated noise"
@@ -5770,7 +5770,7 @@ msgstr "ਨਾਰਮੇਲਾਈਜ਼"
 
 #: ../plug-ins/common/nova.c:168
 msgid "Add a starburst to the image"
-msgstr ""
+msgstr "ਇੱਕ ਸਟਾਰ-ਬਰਸਟ ਚਿੱਤਰ 'ਚ ਜੋੜੋ"
 
 #: ../plug-ins/common/nova.c:177
 msgid "Super_nova..."
@@ -5786,11 +5786,11 @@ msgstr "ਸੁਪਰਨੋਵਾ"
 
 #: ../plug-ins/common/nova.c:349
 msgid "Supernova Color Picker"
-msgstr ""
+msgstr "ਸੁਪਰ-ਨੋਵਾ ਕਲਰ ਪਿਕਰ"
 
 #: ../plug-ins/common/nova.c:378
 msgid "_Spokes:"
-msgstr ""
+msgstr "ਸਪੋਕਸ(_S):"
 
 #: ../plug-ins/common/nova.c:393
 msgid "R_andom hue:"
@@ -5798,7 +5798,7 @@ msgstr "ਰਲਵੀਂ ਆਭਾ(_a):"
 
 #: ../plug-ins/common/nova.c:446
 msgid "Center of Nova"
-msgstr "ਸੁਪਰਨੋਵਾ ਦਾ ਸੈਂਟਰ"
+msgstr "ਨੋਵਾ ਦਾ ਸੈਂਟਰ"
 
 #: ../plug-ins/common/oilify.c:119 ../plug-ins/common/oilify.c:134
 msgid "Smear colors to simulate an oil painting"
@@ -5806,11 +5806,11 @@ msgstr ""
 
 #: ../plug-ins/common/oilify.c:125
 msgid "Oili_fy..."
-msgstr ""
+msgstr "ਓਅਲਫਾਈ(_f)..."
 
 #: ../plug-ins/common/oilify.c:247
 msgid "Oil painting"
-msgstr ""
+msgstr "ਤੇਲ ਪੇਟਿੰਗ"
 
 #: ../plug-ins/common/oilify.c:774
 msgid "Oilify"
@@ -5818,7 +5818,7 @@ msgstr ""
 
 #: ../plug-ins/common/oilify.c:812
 msgid "_Mask size:"
-msgstr ""
+msgstr "ਮਾਸਕ ਆਕਾਰ(_M):"
 
 #.
 #. * Mask-size map check button
@@ -5847,7 +5847,7 @@ msgstr ""
 
 #: ../plug-ins/common/papertile.c:243 ../plug-ins/common/papertile.c:556
 msgid "Paper Tile"
-msgstr ""
+msgstr "ਪੇਪਰ ਟਾਇਲ"
 
 #: ../plug-ins/common/papertile.c:269
 msgid "Division"
@@ -5859,7 +5859,7 @@ msgstr ""
 
 #: ../plug-ins/common/papertile.c:324
 msgid "_Background"
-msgstr "ਪਿੱਠਭੂਮੀ(_B)"
+msgstr "ਬੈਕਗਰਾਊਂਡ(_B)"
 
 #: ../plug-ins/common/papertile.c:326
 msgid "_Ignore"
@@ -5871,15 +5871,15 @@ msgstr "ਮਜਬੂਰ(_F)"
 
 #: ../plug-ins/common/papertile.c:335
 msgid "C_entering"
-msgstr ""
+msgstr "ਸੈਂਟਰਿੰਗ(_e)"
 
 #: ../plug-ins/common/papertile.c:350
 msgid "Movement"
-msgstr ""
+msgstr "ਏਧਰ ਓਧਰ"
 
 #: ../plug-ins/common/papertile.c:363
 msgid "_Max (%):"
-msgstr ""
+msgstr "ਵੱਧੋ-ਵੱਧ(_M) (%):"
 
 #: ../plug-ins/common/papertile.c:369
 msgid "_Wrap around"
@@ -5887,11 +5887,11 @@ msgstr "ਪਾਸਿਓ ਸਮੇਟੋ(_W)"
 
 #: ../plug-ins/common/papertile.c:379
 msgid "Background Type"
-msgstr ""
+msgstr "ਬੈਕਗਰਾਊਂਡ ਟਾਇਪ"
 
 #: ../plug-ins/common/papertile.c:386
 msgid "I_nverted image"
-msgstr ""
+msgstr "ਉਲਟ ਕੀਤਾ ਚਿੱਤਰ(_n)"
 
 #: ../plug-ins/common/papertile.c:388
 msgid "Im_age"
@@ -5899,19 +5899,19 @@ msgstr "ਚਿੱਤਰ(_a)"
 
 #: ../plug-ins/common/papertile.c:390
 msgid "Fo_reground color"
-msgstr ""
+msgstr "ਫਾਰਗਰਾਊਂਡ ਰੰਗ(_r)"
 
 #: ../plug-ins/common/papertile.c:392
 msgid "Bac_kground color"
-msgstr ""
+msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ(_k)"
 
 #: ../plug-ins/common/papertile.c:394
 msgid "S_elect here:"
-msgstr ""
+msgstr "ਇੱਥੇ ਚੁਣੋ(_e):"
 
 #: ../plug-ins/common/papertile.c:401
 msgid "Background Color"
-msgstr "ਪਿੱਠਭੂਮੀ ਰੰਗ"
+msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ"
 
 #: ../plug-ins/common/papertile.c:846
 msgid "Cut image into paper tiles, and slide them"
@@ -5923,20 +5923,20 @@ msgstr "ਸਤੰਬਰ 31, 1999"
 
 #: ../plug-ins/common/papertile.c:852
 msgid "_Paper Tile..."
-msgstr ""
+msgstr "ਪੇਪਰ ਟਾਇਲ(_P)..."
 
 #: ../plug-ins/common/pat.c:121 ../plug-ins/common/pat.c:143
 msgid "GIMP pattern"
-msgstr "ਜੈਮਪ ਤਰਤੀਬ"
+msgstr "ਜੈਮਪ ਪੈਟਰਨ"
 
 #: ../plug-ins/common/pat.c:358
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr ""
+msgstr "ਪੈਟਰਨ ਫਾਇਲ '%s' ਵਿੱਚ ਗਲਤ UTF-8 ਲਾਈਨ ਹੈ।"
 
 #: ../plug-ins/common/pat.c:513
 msgid "Save as Pattern"
-msgstr "ਤਰਤੀਬ ਵਾਂਗ ਸੰਭਾਲੋ"
+msgstr "ਪੈਟਰਨ ਵਾਂਗ ਸੰਭਾਲੋ"
 
 #: ../plug-ins/common/pcx.c:129 ../plug-ins/common/pcx.c:148
 msgid "ZSoft PCX image"
@@ -5945,12 +5945,12 @@ msgstr "ZSoft PCX ਚਿੱਤਰ"
 #: ../plug-ins/common/pcx.c:354
 #, c-format
 msgid "Could not read header from '%s'"
-msgstr ""
+msgstr "'%s' ਤੋਂ ਹੈੱਡਰ ਪੜ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ"
 
 #: ../plug-ins/common/pcx.c:363
 #, c-format
 msgid "'%s' is not a PCX file"
-msgstr ""
+msgstr "'%s' ਇੱਕ PCX ਫਾਇਲ ਨਹੀਂ ਹੈ"
 
 #: ../plug-ins/common/pcx.c:386
 msgid "Invalid number of bytes per line in PCX header"
@@ -5963,12 +5963,12 @@ msgstr ""
 #: ../plug-ins/common/pcx.c:655
 #, c-format
 msgid "Invalid X offset: %d"
-msgstr ""
+msgstr "ਗਲਤ X ਆਫਸੈੱਟ: %d"
 
 #: ../plug-ins/common/pcx.c:661
 #, c-format
 msgid "Invalid Y offset: %d"
-msgstr ""
+msgstr "ਗਲਤ Y ਆਫਸੈੱਟ: %d"
 
 #: ../plug-ins/common/pcx.c:667
 #, c-format
@@ -5983,7 +5983,7 @@ msgstr ""
 #: ../plug-ins/common/pcx.c:730
 #, c-format
 msgid "Writing to file '%s' failed: %s"
-msgstr ""
+msgstr "'%s' ਫਾਇਲ ਲਿਖਣ ਲਈ ਫੇਲ੍ਹ: %s"
 
 #: ../plug-ins/common/photocopy.c:153
 msgid "Simulate color distortion produced by a copy machine"
@@ -5991,7 +5991,7 @@ msgstr ""
 
 #: ../plug-ins/common/photocopy.c:158
 msgid "_Photocopy..."
-msgstr ""
+msgstr "ਫੋਟੋਕਾਪੀ(_P)..."
 
 #: ../plug-ins/common/photocopy.c:837
 msgid "Photocopy"
@@ -6000,15 +6000,15 @@ msgstr "ਫੋਟੋਕਾਪੀ"
 #: ../plug-ins/common/photocopy.c:888 ../plug-ins/common/sharpen.c:511
 #: ../plug-ins/common/softglow.c:695
 msgid "_Sharpness:"
-msgstr ""
+msgstr "ਤਿੱਖਾਪਨ(_S):"
 
 #: ../plug-ins/common/photocopy.c:902
 msgid "Percent _black:"
-msgstr ""
+msgstr "ਫੀਸਦੀ ਕਾਲਾ(_b):"
 
 #: ../plug-ins/common/photocopy.c:916
 msgid "Percent _white:"
-msgstr ""
+msgstr "ਫੀਸਦੀ ਸਫ਼ੇਦ(_w):"
 
 #: ../plug-ins/common/pix.c:140 ../plug-ins/common/pix.c:157
 msgid "Alias Pix image"
@@ -6020,7 +6020,7 @@ msgstr ""
 
 #: ../plug-ins/common/pixelize.c:171
 msgid "_Pixelize..."
-msgstr ""
+msgstr "ਪਿਕਸਲਾਇਜ਼(_P)..."
 
 #: ../plug-ins/common/pixelize.c:273
 msgid "Pixelizing"
@@ -6028,11 +6028,11 @@ msgstr "ਪਿਕਸਲਿੰਗ"
 
 #: ../plug-ins/common/pixelize.c:314
 msgid "Pixelize"
-msgstr ""
+msgstr "ਪਿਕਸਲਾਇਜ਼"
 
 #: ../plug-ins/common/pixelize.c:350
 msgid "Pixel _width:"
-msgstr ""
+msgstr "ਪਿਕਸਲ ਚੌੜਾਈ(_w):"
 
 #: ../plug-ins/common/pixelize.c:355
 msgid "Pixel _height:"
@@ -6165,27 +6165,27 @@ msgstr ""
 
 #: ../plug-ins/common/png.c:1801
 msgid "Save _background color"
-msgstr ""
+msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ ਸੰਭਾਲੋ(_b)"
 
 #: ../plug-ins/common/png.c:1809
 msgid "Save _gamma"
-msgstr ""
+msgstr "ਗਾਮਾ ਸੰਭਾਲੋ(_g)"
 
 #: ../plug-ins/common/png.c:1819
 msgid "Save layer o_ffset"
-msgstr ""
+msgstr "ਲੇਅਰ ਆਫਸੈੱਟ ਸੰਭਾਲੋ(_f)"
 
 #: ../plug-ins/common/png.c:1828
 msgid "Save _resolution"
-msgstr ""
+msgstr "ਰੈਜ਼ੋਲੂਸ਼ਨ ਸੰਭਾਲੋ(_r)"
 
 #: ../plug-ins/common/png.c:1838
 msgid "Save creation _time"
-msgstr ""
+msgstr "ਨਿਰਮਾਣ ਟਾਈਮ ਸੰਭਾਲੋ(_t)"
 
 #: ../plug-ins/common/png.c:1847
 msgid "Save comme_nt"
-msgstr ""
+msgstr "ਟਿੱਪਣੀ ਸੰਭਾਲੋ(_n)"
 
 #: ../plug-ins/common/png.c:1863
 msgid "Save color _values from transparent pixels"
@@ -6193,7 +6193,7 @@ msgstr ""
 
 #: ../plug-ins/common/png.c:1877
 msgid "Co_mpression level:"
-msgstr ""
+msgstr "ਕੰਪਰੈੱਸ਼ਨ ਲੈਵਲ(_m):"
 
 #: ../plug-ins/common/png.c:1895 ../plug-ins/jpeg/jpeg-save.c:1169
 msgid "_Load Defaults"
@@ -6235,7 +6235,7 @@ msgstr "ਗਲਤ ਫਾਇਲ ਹੈ।"
 
 #: ../plug-ins/common/pnm.c:529
 msgid "File not in a supported format."
-msgstr "ਫਾਇਲ ਫਾਰਮਿਟ ਹਾਲੇ ਸਹਾਇਕ ਨਹੀਂ ਹੈ।"
+msgstr "ਫਾਇਲ ਫਾਰਮੈਟ ਹਾਲੇ ਸਹਾਇਕ ਨਹੀਂ ਹੈ।"
 
 #: ../plug-ins/common/pnm.c:538
 msgid "Invalid X resolution."
@@ -6268,7 +6268,7 @@ msgstr "PNM ਵਾਂਗ ਸੰਭਾਲੋ"
 #. file save type
 #: ../plug-ins/common/pnm.c:1132
 msgid "Data formatting"
-msgstr "ਡਾਟਾ ਫਾਰਮਿਟ"
+msgstr "ਡਾਟਾ ਫਾਰਮੈਟ"
 
 #: ../plug-ins/common/pnm.c:1136
 msgid "Raw"
@@ -6280,15 +6280,15 @@ msgstr "Ascii"
 
 #: ../plug-ins/common/polar.c:156
 msgid "Convert image to or from polar coordinates"
-msgstr ""
+msgstr "ਪੋਲਰ ਕੋਆਰਡੀਨੇਟ ਤੋਂ ਜਾਂ ਤੱਕ ਚਿੱਤਰ ਬਦਲੋ"
 
 #: ../plug-ins/common/polar.c:163
 msgid "P_olar Coordinates..."
-msgstr ""
+msgstr "ਪੋਲਰ ਕੋਆਰਡੀਨੇਟ(_o)..."
 
 #: ../plug-ins/common/polar.c:360
 msgid "Polar coordinates"
-msgstr ""
+msgstr "ਪੋਲਰ ਕੋਆਰਡੀਨੇਟ"
 
 #: ../plug-ins/common/polar.c:592
 msgid "Polar Coordinates"
@@ -6296,15 +6296,15 @@ msgstr "ਪੋਲਰ ਕੋਆਰਡੀਨੇਟ"
 
 #: ../plug-ins/common/polar.c:630
 msgid "Circle _depth in percent:"
-msgstr ""
+msgstr "ਫੀਸਦੀ ਵਿੱਚ ਚੱਕਰ ਡੂੰਘਾਈ(_d):"
 
 #: ../plug-ins/common/polar.c:642
 msgid "Offset _angle:"
-msgstr "ਅੰਤਰਲੰਬ ਕੋਣ(_a):"
+msgstr "ਆਫਸੈੱਟ ਕੋਣ(_a):"
 
 #: ../plug-ins/common/polar.c:657
 msgid "_Map backwards"
-msgstr ""
+msgstr "ਬੈਕਵਰਡ ਮੈਪ(_M)"
 
 #: ../plug-ins/common/polar.c:663
 msgid ""
@@ -6324,7 +6324,7 @@ msgstr ""
 
 #: ../plug-ins/common/polar.c:692
 msgid "To _polar"
-msgstr ""
+msgstr "ਪੋਲਰ ਤੋਂ(_p)"
 
 #: ../plug-ins/common/polar.c:698
 msgid ""
@@ -6334,7 +6334,7 @@ msgstr ""
 
 #: ../plug-ins/common/poppler.c:283
 msgid "Portable Document Format"
-msgstr "ਪੋਰਟੇਬਲ ਡਾਕੂਮਿੰਟ ਫਾਰਮਿਟ(PDF)"
+msgstr "ਪੋਰਟੇਬਲ ਡਾਕੂਮਿੰਟ ਫਾਰਮੈਟ(PDF)"
 
 #: ../plug-ins/common/poppler.c:580
 #, c-format
@@ -6348,12 +6348,12 @@ msgstr "%s-ਸਫ਼ੇ"
 
 #: ../plug-ins/common/poppler.c:760
 msgid "Import from PDF"
-msgstr "PDF ਤੋਂ ਅਯਾਤ"
+msgstr "PDF ਤੋਂ ਅਯਾਤ ਕਰੋ"
 
 #: ../plug-ins/common/poppler.c:765 ../plug-ins/common/postscript.c:3081
 #: ../plug-ins/common/tiff-load.c:440
 msgid "_Import"
-msgstr "ਅਯਾਤ(_I)"
+msgstr "ਇੰਪੋਰਟ ਕਰੋ(_I)"
 
 #: ../plug-ins/common/poppler.c:831
 msgid "_Width (pixels):"
@@ -6365,7 +6365,7 @@ msgstr "ਉਚਾਈ (ਪਿਕਸਲ) (_H):"
 
 #: ../plug-ins/common/poppler.c:834
 msgid "_Resolution:"
-msgstr "ਰੈਜ਼ੋਲੇਸ਼ਨ(_R_:"
+msgstr "ਰੈਜ਼ੋਲੇਸ਼ਨ(_R):"
 
 #: ../plug-ins/common/poppler.c:1108
 #, c-format
@@ -6374,24 +6374,24 @@ msgstr "ਪਿਕਸਲ/%s"
 
 #: ../plug-ins/common/postscript.c:597 ../plug-ins/common/postscript.c:689
 msgid "PostScript document"
-msgstr ""
+msgstr "ਪੋਸਟ-ਸਕ੍ਰਿਪਟ ਦਸਤਾਵੇਜ਼"
 
 #: ../plug-ins/common/postscript.c:616 ../plug-ins/common/postscript.c:705
 msgid "Encapsulated PostScript image"
-msgstr ""
+msgstr "ਇੰਕੈਪਸੂਲੇਟਡ ਪੋਸਟ-ਸਕ੍ਰਿਪਟ ਚਿੱਤਰ"
 
 #: ../plug-ins/common/postscript.c:636
 msgid "PDF document"
-msgstr ""
+msgstr "PDF ਦਸਤਾਵੇਜ਼"
 
 #: ../plug-ins/common/postscript.c:1034
 #, c-format
 msgid "Could not interpret '%s'"
-msgstr ""
+msgstr "'%s' ਇੰਟਰਪਰੇਫਟ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ"
 
 #: ../plug-ins/common/postscript.c:1174
 msgid "PostScript save cannot handle images with alpha channels"
-msgstr ""
+msgstr "ਪੋਸਟ-ਸਕ੍ਰਿਪਟ ਐਲਫ਼ਾ ਚੈਨਲਾਂ ਨਾਲ ਚਿੱਤਰ ਹੈਂਡਲ ਨਹੀਂ ਕਰ ਸਕਦਾ ਹੈ।"
 
 #: ../plug-ins/common/postscript.c:1711 ../plug-ins/common/postscript.c:1744
 #, c-format
@@ -6401,22 +6401,26 @@ msgid ""
 "location.\n"
 "(%s)"
 msgstr ""
+"ਗੋਸਟ-ਸਕ੍ਰਿਪਟ ਸ਼ੁਰੂ ਕਰਨ ਦੌਰਾਨ ਗਲਤੀ ਹੈ। ਚੈੱਕ ਕਰੋ ਕਿ ਗੋਸਟ-ਸਕ੍ਰਿਪਟ ਇੰਸਟਾਲ ਹੈ ਅਤੇ "
+"- ਜੇ ਲੋੜ ਹੋਵੇ ਤਾਂ GS_PROG ਇੰਵਾਇਰਨਮਿੰਟ ਵੇਰੀਬਲ ਰਾਹੀਂ ਜੈਮਪ ਨੂੰ ਇਸ ਦਾ ਟਿਕਾਣਾ "
+"ਵੀ ਦੱਸੋ।\n"
+"(%s)"
 
 #: ../plug-ins/common/postscript.c:1911 ../plug-ins/common/tiff-load.c:944
 #, c-format
 msgid "Page %d"
-msgstr "ਸਫ਼ਾ %d"
+msgstr "ਪੇਜ਼ %d"
 
 #: ../plug-ins/common/postscript.c:2581 ../plug-ins/common/postscript.c:2714
 #: ../plug-ins/common/postscript.c:2866 ../plug-ins/common/postscript.c:2992
 #: ../plug-ins/common/sunras.c:1485 ../plug-ins/common/sunras.c:1593
 #: ../plug-ins/fits/fits.c:831 ../plug-ins/fits/fits.c:955
 msgid "Write error occurred"
-msgstr ""
+msgstr "ਲਿਖਣ ਗਲਤੀ ਆਈ ਹੈ"
 
 #: ../plug-ins/common/postscript.c:3076
 msgid "Import from PostScript"
-msgstr ""
+msgstr "ਪੋਸਟ-ਸਕ੍ਰਿਪਟ ਤੋਂ ਇੰਪੋਰਟ ਕਰੋ"
 
 #. Rendering
 #: ../plug-ins/common/postscript.c:3119
@@ -6435,7 +6439,7 @@ msgstr "ਸਫ਼ੇ:"
 
 #: ../plug-ins/common/postscript.c:3181
 msgid "Pages to load (e.g.: 1-4 or 1,3,5-7)"
-msgstr ""
+msgstr "ਲੋਡ ਕਰਨ ਲਈ ਪੇਜ਼ (ਜਿਵੇਂ ਕਿ.: 1-4 or 1,3,5-7)"
 
 #: ../plug-ins/common/postscript.c:3185
 #: ../plug-ins/common/spheredesigner.c:2650
@@ -6448,11 +6452,11 @@ msgstr "ਚਿੱਤਰ"
 
 #: ../plug-ins/common/postscript.c:3190
 msgid "Open as"
-msgstr "ਇੰਞ ਖੋਲੋ"
+msgstr "ਇੰਞ ਖੋਲ੍ਹੋ"
 
 #: ../plug-ins/common/postscript.c:3194
 msgid "Try Bounding Box"
-msgstr ""
+msgstr "ਬਾਊਂਡਿੰਗ ਬਾਕਸ ਵਰਤੋਂ"
 
 #. Colouring
 #: ../plug-ins/common/postscript.c:3207
@@ -6497,7 +6501,7 @@ msgstr "ਐਂਟੀ-ਏਲੀਅਸਿੰਗ ਗਰਾਫਿਕਸ"
 
 #: ../plug-ins/common/postscript.c:3314
 msgid "Save as PostScript"
-msgstr "ਪੋਸਟ-ਸਕਰਿਟ ਵਾਂਗ ਸੰਭਾਲੋ"
+msgstr "ਪੋਸਟ-ਸਕ੍ਰਿਪਟ ਵਾਂਗ ਸੰਭਾਲੋ"
 
 #. Image Size
 #: ../plug-ins/common/postscript.c:3345
@@ -6517,7 +6521,7 @@ msgstr ""
 #. Unit
 #: ../plug-ins/common/postscript.c:3410
 msgid "Unit"
-msgstr "ਇਕਾਈ"
+msgstr "ਯੂਨਿਟ"
 
 #: ../plug-ins/common/postscript.c:3414
 msgid "_Inch"
@@ -6534,11 +6538,11 @@ msgstr "ਆਉਟਪੁੱਟ"
 
 #: ../plug-ins/common/postscript.c:3447
 msgid "_PostScript level 2"
-msgstr ""
+msgstr "ਪੋਸਟ-ਸਕ੍ਰਿਪਟ ਲੈਵਲ 2(_P)"
 
 #: ../plug-ins/common/postscript.c:3456
 msgid "_Encapsulated PostScript"
-msgstr ""
+msgstr "ਇੰਕੈਪਸੂਲੇਟਡ ਪੋਸਟ-ਸਕ੍ਰਿਪਟਡ(_E)"
 
 #: ../plug-ins/common/postscript.c:3465
 msgid "P_review"
@@ -6562,64 +6566,64 @@ msgstr ""
 
 #: ../plug-ins/common/psd-load.c:527
 msgid "Invalid UTF-8 string in PSD file"
-msgstr ""
+msgstr "PSD ਵਿੱਚ ਗਲਤ UTF-8 ਲਾਈਨ ਹੈ"
 
 #: ../plug-ins/common/psd-load.c:623
 msgid "Cannot handle bitmap PSD files"
-msgstr ""
+msgstr "ਬਿੱਟਮੈਪ PSD ਫਾਇਲਾਂ ਹੈਂਡਲ ਨਹੀਂ ਕੀਤੀਆਂ ਜਾ ਸਕਦੀਆਂ"
 
 #: ../plug-ins/common/psd-load.c:632
 msgid "Cannot handle PSD files in CMYK color"
-msgstr ""
+msgstr "CMYK ਰੰਗ ਵਿੱਚ PSD ਫਾਇਲਾਂ ਹੈਂਡਲ ਨਹੀਂ ਕੀਤੀਆਂ ਜਾ ਸਕਦੀਆਂ"
 
 #: ../plug-ins/common/psd-load.c:635
 msgid "Cannot handle PSD files in Multichannel color"
-msgstr ""
+msgstr "ਮਲਟੀ-ਚੈਨਲ ਰੰਗ ਵਿੱਚ PSD ਫਾਇਲਾਂ ਹੈਂਡਲ ਨਹੀਂ ਹੋ ਕੀਤੀਆਂ ਜਾ ਸਕਦੀਆਂ"
 
 #: ../plug-ins/common/psd-load.c:638
 msgid "Cannot handle PSD files in Duotone color"
-msgstr ""
+msgstr "PSD ਫਾਇਲਾਂ ਨੂੰ ਡਊ-ਟੋਨ ਰੰਗ ਵਿੱਚ ਹੈਂਡਲ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ"
 
 #: ../plug-ins/common/psd-load.c:641
 msgid "Cannot handle PSD files in Lab color"
-msgstr ""
+msgstr "PSD ਫਾਇਲਾਂ ਨੂੰ ਲੈਬ ਰੰਗ 'ਚ ਹੈਂਡਲ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ"
 
 #: ../plug-ins/common/psd-load.c:644
 #, c-format
 msgid "Cannot handle the color mode %d of the PSD file"
-msgstr ""
+msgstr "PSD ਫਾਇਲ ਦਾ ਕਲਰ ਮੋਡ %d ਹੈਂਡਲ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ"
 
 #: ../plug-ins/common/psd-load.c:737
 #, c-format
 msgid "Cannot handle PSD file with more than %d channels"
-msgstr ""
+msgstr "PSD ਫਾਇਲ ਨਾਲ %d ਤੋਂ ਵੱਧ ਚੈਨਲ ਹੈਂਡਲ ਨਹੀਂ ਕੀਤੇ ਜਾ ਸਕਦੇ"
 
 #: ../plug-ins/common/psd-load.c:2522
 msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
-msgstr ""
+msgstr "5 ਤੋਂ ਵੱਧ ਚੈਨਲਾਂ ਨਾਲ CMYK ਰੰਗ ਵਾਸਤੇ PSD ਫਾਇਲਾਂ ਹੈਂਡਲ ਨਹੀਂ ਕੀਤੀਆਂ ਜਾ ਸਕਦੀਆਂ"
 
 #: ../plug-ins/common/psd-load.c:2537
 #, c-format
 msgid "Cannot handle image mode %d (%s)"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਮੋਡ %d (%s) ਹੈਂਡਲ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ"
 
 #: ../plug-ins/common/psd-load.c:2546
 #, c-format
 msgid "Cannot handle %d bits per channel PSD files"
-msgstr ""
+msgstr "%d ਬਿੱਟ ਪ੍ਰਤੀ ਚੈਨਲ PSD ਫਾਇਲਾਂ ਹੈਂਡਲ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ"
 
 #: ../plug-ins/common/psd-load.c:3347
 msgid "This is not an Adobe Photoshop PSD file"
-msgstr ""
+msgstr "ਇਹ ਅਡੋਬ ਫੋਟੋ-ਸ਼ਾਪ PSD ਫਾਇਲ ਨਹੀਂ ਹੈ"
 
 #: ../plug-ins/common/psd-load.c:3352
 #, c-format
 msgid "The PSD file has bad version number '%d', not 1"
-msgstr ""
+msgstr "PSD ਫਾਇਲ ਦਾ ਗਲਤ ਵਰਜਨ ਨੰਬਰ '%d' ਹੈ, 1 ਨਹੀਂ"
 
 #: ../plug-ins/common/psd-save.c:222
 msgid "Photoshop image"
-msgstr ""
+msgstr "ਫੋਟੋ-ਸ਼ਾਪ ਚਿੱਤਰ"
 
 #: ../plug-ins/common/psd-save.c:353
 #, c-format
@@ -6630,7 +6634,7 @@ msgstr ""
 
 #: ../plug-ins/common/psd-save.c:608
 msgid "Error: Can't convert GIMP base imagetype to PSD mode"
-msgstr ""
+msgstr "ਗਲਤੀ: ਜੈਮਪ ਬੇਸ ਚਿੱਤਰ-ਟਾਇਪ ਨੂੰ PSD ਮੋਡ 'ਚ ਬਦਲਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ।"
 
 #: ../plug-ins/common/psd-save.c:1525
 #, c-format
@@ -6648,7 +6652,7 @@ msgstr ""
 
 #: ../plug-ins/common/psp.c:356 ../plug-ins/common/psp.c:380
 msgid "Paint Shop Pro image"
-msgstr ""
+msgstr "ਪੇਂਟ ਸ਼ਾਪ ਪਰੋ. ਚਿੱਤਰ"
 
 #: ../plug-ins/common/psp.c:397
 msgid "Save as PSP"
@@ -6657,7 +6661,7 @@ msgstr "PSP ਵਾਂਗ ਸੰਭਾਲੋ"
 #. file save type
 #: ../plug-ins/common/psp.c:414
 msgid "Data Compression"
-msgstr "ਡਾਟਾ ਨਪੀੜਨ"
+msgstr "ਡਾਟਾ ਕੰਪਰੈੱਸ"
 
 #: ../plug-ins/common/psp.c:419
 msgid "RLE"
@@ -6697,7 +6701,7 @@ msgstr ""
 
 #: ../plug-ins/common/randomize.c:243
 msgid "_Pick..."
-msgstr ""
+msgstr "ਪਿਕ(_P)..."
 
 #: ../plug-ins/common/randomize.c:255
 msgid "_Slur..."
@@ -6709,11 +6713,11 @@ msgstr "ਰਲਵੀਂ ਸੀਡ(_R):"
 
 #: ../plug-ins/common/randomize.c:753
 msgid "R_andomization (%):"
-msgstr ""
+msgstr "ਰਲਵੇਂ (_a) (%):"
 
 #: ../plug-ins/common/randomize.c:756
 msgid "Percentage of pixels to be filtered"
-msgstr ""
+msgstr "ਫਿਲਟਰ ਕਰਨ ਲਈ ਪਿਕਸਲਾਂ ਦੀ ਫੀ-ਸਦੀ"
 
 #: ../plug-ins/common/randomize.c:765
 msgid "R_epeat:"
@@ -6721,7 +6725,7 @@ msgstr "ਰੀਪਟ(_e):"
 
 #: ../plug-ins/common/randomize.c:768
 msgid "Number of times to apply filter"
-msgstr ""
+msgstr "ਫਿਲਟਰ ਲਾਗੂ ਕਰਨ ਦੀ ਗਿਣਤੀ"
 
 #: ../plug-ins/common/raw.c:179 ../plug-ins/common/raw.c:194
 msgid "Raw image data"
@@ -6757,7 +6761,7 @@ msgstr "ਚਿੱਤਰ ਟਾਈਪ(_T):"
 
 #: ../plug-ins/common/raw.c:1061
 msgid "Palette"
-msgstr ""
+msgstr "ਪੈਲਅਟ"
 
 #: ../plug-ins/common/raw.c:1071 ../plug-ins/common/raw.c:1170
 msgid "R, G, B (normal)"
@@ -6769,7 +6773,7 @@ msgstr "B, G, R, X (BMP ਸਟਾਇਲ)"
 
 #: ../plug-ins/common/raw.c:1077
 msgid "_Palette Type:"
-msgstr ""
+msgstr "ਪੈਲਅਟ ਟਾਇਪ(_P):"
 
 #: ../plug-ins/common/raw.c:1088
 msgid "Off_set:"
@@ -6781,7 +6785,7 @@ msgstr "ਪੈਲਅਟ ਫਾਇਲ ਚੁਣੋ"
 
 #: ../plug-ins/common/raw.c:1106
 msgid "Pal_ette File:"
-msgstr ""
+msgstr "ਪੈਲਅਟ ਫਾਇਲ(_e):"
 
 #: ../plug-ins/common/raw.c:1134
 msgid "Raw Image Save"
@@ -6801,7 +6805,7 @@ msgstr "ਪਲੇਨਰ (RRR,GGG,BBB)"
 
 #: ../plug-ins/common/raw.c:1166
 msgid "Indexed Palette Type"
-msgstr ""
+msgstr "ਇੰਡੈਕਸਡ ਪੈਲਅਟ ਟਾਇਪ"
 
 #: ../plug-ins/common/redeye.c:107
 msgid "Remove the red eye effect caused by camera flashes"
@@ -6853,7 +6857,7 @@ msgstr "ਯੂਨੀਫਾਰਮ(_U)"
 
 #: ../plug-ins/common/retinex.c:324
 msgid "_Low"
-msgstr ""
+msgstr "ਘੱਟ(_L)"
 
 #: ../plug-ins/common/retinex.c:326
 msgid "_High"
@@ -7315,7 +7319,7 @@ msgstr ""
 
 #: ../plug-ins/common/sinus.c:932
 msgid "_Blend"
-msgstr ""
+msgstr "ਬਲੈਂਡ(_B)"
 
 #: ../plug-ins/common/sinus.c:1049
 msgid "Do _preview"
@@ -7323,11 +7327,11 @@ msgstr "ਝਲਕ ਦਿਓ(_p)"
 
 #: ../plug-ins/common/smooth_palette.c:83
 msgid "Derive a smooth color palette from the image"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਤੋਂ ਇੱਕ ਸਮੂਥ ਰੰਗ ਪੈਲਅਟ ਬਣਾਓ"
 
 #: ../plug-ins/common/smooth_palette.c:88
 msgid "Smoo_th Palette..."
-msgstr ""
+msgstr "ਸਮੂਥ ਪੈਲਅਟ(_t)..."
 
 #: ../plug-ins/common/smooth_palette.c:179
 msgid "Deriving smooth palette"
@@ -7335,7 +7339,7 @@ msgstr ""
 
 #: ../plug-ins/common/smooth_palette.c:412
 msgid "Smooth Palette"
-msgstr ""
+msgstr "ਸਮੂਥ ਪੈਲਅਟ"
 
 #: ../plug-ins/common/smooth_palette.c:452
 msgid "_Search depth:"
@@ -7526,11 +7530,11 @@ msgstr "ਉਲਟ(_v)"
 
 #: ../plug-ins/common/sparkle.c:520
 msgid "Should the effect be inversed?"
-msgstr ""
+msgstr "ਕੀ ਪਰਭਾਵ ਉਲਟਾ ਕੀਤਾ ਜਾਵੇ?"
 
 #: ../plug-ins/common/sparkle.c:529
 msgid "A_dd border"
-msgstr ""
+msgstr "ਬਾਰਡਰ ਸ਼ਾਮਲ ਕਰੋ(_d)"
 
 #: ../plug-ins/common/sparkle.c:535
 msgid "Draw a border of spikes around the image"
@@ -7542,23 +7546,23 @@ msgstr "ਕੁਦਰਤੀ ਰੰਗ(_N)"
 
 #: ../plug-ins/common/sparkle.c:550
 msgid "_Foreground color"
-msgstr ""
+msgstr "ਫਾਰਗਰਾਊਂਡ ਰੰਗ(_F)"
 
 #: ../plug-ins/common/sparkle.c:551
 msgid "_Background color"
-msgstr ""
+msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ(_B)"
 
 #: ../plug-ins/common/sparkle.c:558
 msgid "Use the color of the image"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਦਾ ਰੰਗ ਵਰਤੋਂ"
 
 #: ../plug-ins/common/sparkle.c:559
 msgid "Use the foreground color"
-msgstr ""
+msgstr "ਫਾਰਗਰਾਊਂਡ ਰੰਗ ਵਰਤੋਂ"
 
 #: ../plug-ins/common/sparkle.c:560
 msgid "Use the background color"
-msgstr ""
+msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ ਵਰਤੋਂ"
 
 #: ../plug-ins/common/spheredesigner.c:291
 #: ../plug-ins/gimpressionist/general.c:148
@@ -7567,7 +7571,7 @@ msgstr "ਗੂੜਾ"
 
 #: ../plug-ins/common/spheredesigner.c:292
 msgid "Checker"
-msgstr ""
+msgstr "ਚੈੱਕਰ"
 
 #: ../plug-ins/common/spheredesigner.c:293
 msgid "Marble"
@@ -7595,7 +7599,7 @@ msgstr "ਸਪਰਲ"
 
 #: ../plug-ins/common/spheredesigner.c:299
 msgid "Spots"
-msgstr ""
+msgstr "ਧੱਬੇ"
 
 #: ../plug-ins/common/spheredesigner.c:1750
 #: ../plug-ins/common/spheredesigner.c:2697
@@ -7604,7 +7608,7 @@ msgstr "ਟੈਕਸਟ"
 
 #: ../plug-ins/common/spheredesigner.c:1752
 msgid "Bumpmap"
-msgstr ""
+msgstr "ਬੰਪ-ਮੈਪ"
 
 #: ../plug-ins/common/spheredesigner.c:1754
 #: ../plug-ins/common/spheredesigner.c:2699
@@ -7634,7 +7638,7 @@ msgstr "ਵਿਸ਼ੇਸ਼ਤਾ"
 
 #: ../plug-ins/common/spheredesigner.c:2698
 msgid "Bump"
-msgstr ""
+msgstr "ਬੰਪ"
 
 #: ../plug-ins/common/spheredesigner.c:2725
 msgid "Texture:"
@@ -7647,7 +7651,7 @@ msgstr "ਰੰਗ:"
 #: ../plug-ins/common/spheredesigner.c:2733
 #: ../plug-ins/common/spheredesigner.c:2744
 msgid "Color Selection Dialog"
-msgstr ""
+msgstr "ਕਲਰ ਚੋਣ ਡਾਈਲਾਗ"
 
 #. Scale
 #: ../plug-ins/common/spheredesigner.c:2755
@@ -7662,11 +7666,11 @@ msgstr ""
 
 #: ../plug-ins/common/spheredesigner.c:2770
 msgid "Amount:"
-msgstr "ਖਾਤਾ:"
+msgstr "ਮਾਤਰਾ:"
 
 #: ../plug-ins/common/spheredesigner.c:2777
 msgid "Exp.:"
-msgstr ""
+msgstr "Exp.:"
 
 #: ../plug-ins/common/spheredesigner.c:2784
 msgid "Transformations"
@@ -7674,23 +7678,23 @@ msgstr "ਟਰਾਂਸਫਰਮੇਸ਼ਨ"
 
 #: ../plug-ins/common/spheredesigner.c:2807
 msgid "Scale Y:"
-msgstr ""
+msgstr "Y ਸਕਲੇ:"
 
 #: ../plug-ins/common/spheredesigner.c:2813
 msgid "Scale Z:"
-msgstr ""
+msgstr "Z ਸਕੇਲ:"
 
 #: ../plug-ins/common/spheredesigner.c:2820
 msgid "Rotate X:"
-msgstr ""
+msgstr "X ਘੁੰਮਾਓ:"
 
 #: ../plug-ins/common/spheredesigner.c:2827
 msgid "Rotate Y:"
-msgstr ""
+msgstr "Y ਘੁੰਮਾਓ:"
 
 #: ../plug-ins/common/spheredesigner.c:2834
 msgid "Rotate Z:"
-msgstr ""
+msgstr "Z ਘੁੰਮਾਓ:"
 
 #: ../plug-ins/common/spheredesigner.c:2841
 msgid "Position X:"
@@ -7710,19 +7714,19 @@ msgstr "ਰੈਂਡਰਿੰਗ ਗੋਲ਼ਾ"
 
 #: ../plug-ins/common/spheredesigner.c:3020
 msgid "Create an image of a textured sphere"
-msgstr ""
+msgstr "ਇੱਕ ਟੈਕਸਟ ਗੋਲ਼ੇ ਨਾਲ ਇੱਕ ਚਿੱਤਰ ਬਣਾਓ"
 
 #: ../plug-ins/common/spheredesigner.c:3027
 msgid "Sphere _Designer..."
-msgstr ""
+msgstr "ਗੋਲ਼ਾ ਡਿਜ਼ਾਇਨਰ(_D)..."
 
 #: ../plug-ins/common/spheredesigner.c:3081
 msgid "Region selected for plug-in is empty"
-msgstr ""
+msgstr "ਪਲੱਗਇਨ ਰਾਹੀਂ ਚੁਣਿਆ ਖੇਤਰ ਖਾਲੀ ਹੈ"
 
 #: ../plug-ins/common/spread.c:89
 msgid "Move pixels around randomly"
-msgstr ""
+msgstr "ਪਿਕਸਲ ਏਧਰ-ਓਧਰ ਖਿੰਡਾਓ"
 
 #: ../plug-ins/common/spread.c:98
 msgid "Sp_read..."
@@ -7734,27 +7738,27 @@ msgstr "ਸਪਰੈਡਿੰਗ"
 
 #: ../plug-ins/common/spread.c:344
 msgid "Spread"
-msgstr "ਫੈਲਿਆ"
+msgstr "ਸਪਰੈੱਡ"
 
 #: ../plug-ins/common/spread.c:369
 msgid "Spread Amount"
-msgstr ""
+msgstr "ਸਪਰੈੱਡ ਮਾਤਰਾ"
 
 #: ../plug-ins/common/struc.c:1140
 msgid "Add a canvas texture to the image"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਉੱਤੇ ਕੈਨਵਸ ਟੈਸਕਟ ਲਾਗੂ ਕਰੋ"
 
 #: ../plug-ins/common/struc.c:1145
 msgid "_Apply Canvas..."
-msgstr ""
+msgstr "ਕੈਨਵਸ ਲਾਗੂ ਕਰੋ(_A)..."
 
 #: ../plug-ins/common/struc.c:1226
 msgid "Applying canvas"
-msgstr ""
+msgstr "ਕੈਨਵਸ ਲਾਗੂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
 #: ../plug-ins/common/struc.c:1263
 msgid "Apply Canvas"
-msgstr ""
+msgstr "ਕੈਨਵਸ ਲਾਗੂ ਕਰੋ"
 
 #: ../plug-ins/common/struc.c:1296
 msgid "_Top-right"
@@ -7762,7 +7766,7 @@ msgstr "ਉੱਤੇ-ਸੱਜੇ(_T)"
 
 #: ../plug-ins/common/struc.c:1297
 msgid "Top-_left"
-msgstr ""
+msgstr "ਉੱਤੇ-ਖੱਬੇ(_l)"
 
 #: ../plug-ins/common/struc.c:1298
 msgid "_Bottom-left"
@@ -7774,7 +7778,7 @@ msgstr "ਤਲ-ਸੱਜੇ(_r)"
 
 #: ../plug-ins/common/sunras.c:215 ../plug-ins/common/sunras.c:235
 msgid "SUN Rasterfile image"
-msgstr ""
+msgstr "SUN ਰਾਸਟਰ-ਫਾਇਲ ਚਿੱਤਰ"
 
 #: ../plug-ins/common/sunras.c:388
 #, c-format
@@ -7788,11 +7792,11 @@ msgstr ""
 #: ../plug-ins/common/sunras.c:425
 #, c-format
 msgid "Could not read color entries from '%s'"
-msgstr ""
+msgstr "'%s' ਤੋਂ ਕਲਰ ਐਂਟਰੀਆਂ ਨਹੀਂ ਪੜ੍ਹੀਆਂ ਨਹੀਂ ਜਾ ਸਕੀਆਂ"
 
 #: ../plug-ins/common/sunras.c:433
 msgid "Type of colormap not supported"
-msgstr ""
+msgstr "ਕਲਰ-ਮੈਪ ਦੀ ਟਾਇਪ ਸਹਿਯੋਗੀ ਨਹੀਂ ਹੈ"
 
 #: ../plug-ins/common/sunras.c:440 ../plug-ins/common/xbm.c:810
 #: ../plug-ins/common/xwd.c:475
@@ -7801,6 +7805,8 @@ msgid ""
 "'%s':\n"
 "No image width specified"
 msgstr ""
+"'%s':\n"
+"ਕੋਈ ਚਿੱਤਰ ਚੌੜਾਈ ਨਹੀਂ ਦਿੱਤੀ"
 
 #: ../plug-ins/common/sunras.c:448 ../plug-ins/common/xbm.c:817
 #: ../plug-ins/common/xwd.c:484
@@ -7809,6 +7815,8 @@ msgid ""
 "'%s':\n"
 "Image width is larger than GIMP can handle"
 msgstr ""
+"'%s':\n"
+"ਚਿੱਤਰ ਚੌੜਾਈ ਜੈਮਪ ਨੂੰ ਹੈਂਡਲ ਕਰਨ ਤੋਂ ਵੱਡਾ ਹੈ"
 
 #: ../plug-ins/common/sunras.c:456 ../plug-ins/common/xbm.c:824
 #: ../plug-ins/common/xwd.c:492
@@ -7817,6 +7825,8 @@ msgid ""
 "'%s':\n"
 "No image height specified"
 msgstr ""
+"'%s':\n"
+"ਕੋਈ ਚਿੱਤਰ ਉਚਾਈ ਨਹੀਂ ਦਿੱਤੀ ਹੈ"
 
 #: ../plug-ins/common/sunras.c:464 ../plug-ins/common/xbm.c:831
 #: ../plug-ins/common/xwd.c:500
@@ -7825,10 +7835,12 @@ msgid ""
 "'%s':\n"
 "Image height is larger than GIMP can handle"
 msgstr ""
+"'%s':\n"
+"ਚਿੱਤਰ ਉਚਾਈ ਜੈਮਪ ਨੂੰ ਹੈਂਡਲ ਕਰਨ ਤੋਂ ਵੱਡਾ ਹੈ"
 
 #: ../plug-ins/common/sunras.c:502
 msgid "This image depth is not supported"
-msgstr ""
+msgstr "ਇਹ ਚਿੱਤਰ ਡੂੰਘਾਈ ਸਹਿਯੋਗੀ ਨਹੀਂ ਹੈ"
 
 #: ../plug-ins/common/sunras.c:524
 msgid "SUNRAS save cannot handle images with alpha channels"
@@ -7836,7 +7848,7 @@ msgstr ""
 
 #: ../plug-ins/common/sunras.c:535
 msgid "Can't operate on unknown image types"
-msgstr ""
+msgstr "ਅਣਜਾਣ ਚਿੱਤਰ ਟਾਇਪਾਂ ਉੱਤੇ ਓਪਰੇਟ ਨਹੀਂ ਹੋ ਸਕਦਾ"
 
 #: ../plug-ins/common/sunras.c:1063 ../plug-ins/common/sunras.c:1154
 #: ../plug-ins/common/sunras.c:1235 ../plug-ins/common/sunras.c:1330
@@ -7844,20 +7856,20 @@ msgstr ""
 #: ../plug-ins/common/xwd.c:1591 ../plug-ins/common/xwd.c:1791
 #: ../plug-ins/common/xwd.c:2048 ../plug-ins/fits/fits.c:678
 msgid "EOF encountered on reading"
-msgstr ""
+msgstr "ਪੜ੍ਹਨ ਉੱਤੇ EOF ਮਿਲਿਆ"
 
 #: ../plug-ins/common/sunras.c:1610
 msgid "Save as SUNRAS"
-msgstr ""
+msgstr "SUNRAS ਵਾਂਗ ਸੰਭਾਲੋ"
 
 #. file save type
 #: ../plug-ins/common/sunras.c:1627
 msgid "Data Formatting"
-msgstr ""
+msgstr "ਡਾਟਾ ਫਾਰਮੈਟਿੰਗ"
 
 #: ../plug-ins/common/sunras.c:1631
 msgid "RunLength Encoded"
-msgstr ""
+msgstr "RunLength ਇੰਕੋਡਿੰਗ"
 
 #: ../plug-ins/common/svg.c:138
 msgid "SVG image"
@@ -7865,7 +7877,7 @@ msgstr "SVG ਚਿੱਤਰ"
 
 #: ../plug-ins/common/svg.c:323 ../plug-ins/common/svg.c:704
 msgid "Unknown reason"
-msgstr "ਅਣਪਛਾਤਾ ਕਾਰਨ"
+msgstr "ਅਣਜਾਣ ਕਾਰਨ"
 
 #: ../plug-ins/common/svg.c:327
 msgid "Rendering SVG"
@@ -7873,23 +7885,25 @@ msgstr "ਰੈਂਡਰਿੰਗ SVG"
 
 #: ../plug-ins/common/svg.c:339
 msgid "Rendered SVG"
-msgstr ""
+msgstr "ਰੈਂਡਰਿੰਡ SVG"
 
 #: ../plug-ins/common/svg.c:553 ../plug-ins/common/wmf.c:338
 #, c-format
 msgid "%d × %d"
-msgstr ""
+msgstr "%d × %d"
 
 #: ../plug-ins/common/svg.c:561
 msgid ""
 "SVG file does not\n"
 "specify a size!"
 msgstr ""
+"SVG ਫਾਇਲ ਦਾ ਆਕਾਰ\n"
+"ਨਹੀਂ ਦਿੱਤਾ ਹੈ!"
 
 #. Scalable Vector Graphics is SVG, should perhaps not be translated
 #: ../plug-ins/common/svg.c:711
 msgid "Render Scalable Vector Graphics"
-msgstr ""
+msgstr "ਰੈਂਡਰ ਸਕੇਲਬਲ ਵੈਕਟਰ ਗਰਾਫਿਕਸ"
 
 #: ../plug-ins/common/svg.c:783 ../plug-ins/common/wmf.c:557
 msgid "Height:"
@@ -7916,7 +7930,7 @@ msgstr "ਪਿਕਸਲ/%a"
 #. Path Import
 #: ../plug-ins/common/svg.c:924
 msgid "Import _paths"
-msgstr ""
+msgstr "ਮਾਰਗ ਇੰਪੋਰਟ ਕਰੋ(_p)"
 
 #: ../plug-ins/common/svg.c:930
 msgid "Import path elements of the SVG so they can be used with the GIMP path tool"
@@ -7924,35 +7938,35 @@ msgstr ""
 
 #: ../plug-ins/common/svg.c:943
 msgid "Merge imported paths"
-msgstr ""
+msgstr "ਇੰਪੋਰਟ ਕੀਤੇ ਮਾਰਗ ਮਰਜ਼ ਕਰੋ"
 
 #: ../plug-ins/common/tga.c:238 ../plug-ins/common/tga.c:257
 msgid "TarGA image"
-msgstr ""
+msgstr "TarGA ਚਿੱਤਰ"
 
 #: ../plug-ins/common/tga.c:434
 #, c-format
 msgid "Cannot read footer from '%s'"
-msgstr ""
+msgstr "'%s' ਤੋਂ ਫੁੱਟਰ ਪੜ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ"
 
 #: ../plug-ins/common/tga.c:450
 #, c-format
 msgid "Cannot read extension from '%s'"
-msgstr ""
+msgstr "'%s' ਤੋਂ ਇਕਸਟੈਨਸ਼ਨ ਪੜ੍ਹੀ ਨਹੀਂ ਜਾ ਸਕਦੀ"
 
 #: ../plug-ins/common/tga.c:1323
 msgid "Save as TGA"
-msgstr ""
+msgstr "TGA ਵਾਂਗ ਸੰਭਾਲੋ"
 
 #. rle
 #: ../plug-ins/common/tga.c:1346
 msgid "_RLE compression"
-msgstr "_RLE ਸੁੰਘੜਨ"
+msgstr "_RLE ਕੰਪਰੈੱਸ"
 
 #. origin
 #: ../plug-ins/common/tga.c:1356
 msgid "Or_igin at bottom left"
-msgstr ""
+msgstr "ਤਲ ਖੱਬੇ ਤੋਂ ਸ਼ੁਰੂਆਤ(_i)"
 
 #: ../plug-ins/common/threshold_alpha.c:85
 msgid "Make transparency all-or-nothing"
@@ -7964,11 +7978,11 @@ msgstr "ਥਰੈਸ਼ਹੋਲਡ ਐਲਫ਼ਾ(_T)..."
 
 #: ../plug-ins/common/threshold_alpha.c:131
 msgid "The layer has its alpha channel locked."
-msgstr ""
+msgstr "ਲੇਅਰ ਦਾ ਐਲਫ਼ਾ ਚੈਨਲ ਲਾਕ ਹੈ।"
 
 #: ../plug-ins/common/threshold_alpha.c:137
 msgid "RGBA/GRAYA drawable is not selected."
-msgstr ""
+msgstr "RGBA/GRAYA ਡਰਾਅਯੋਗ ਚੁਣਿਆ ਨਹੀਂ ਗਿਆ।"
 
 #: ../plug-ins/common/threshold_alpha.c:165
 msgid "Coloring transparency"
@@ -7976,11 +7990,11 @@ msgstr "ਕਲਰਿੰਗ ਟਰਾਂਸਪਰੇਸੀ"
 
 #: ../plug-ins/common/threshold_alpha.c:248
 msgid "Threshold Alpha"
-msgstr ""
+msgstr "ਥਰੈਸ਼ਹੋਲਡ ਐਲਫਾ"
 
 #: ../plug-ins/common/threshold_alpha.c:283
 msgid "Threshold:"
-msgstr "ਅਧਾਰ ਮੁੱਲ:"
+msgstr "ਥਰੈਸ਼ਹੋਲਡ:"
 
 #: ../plug-ins/common/tiff-load.c:239 ../plug-ins/common/tiff-save.c:181
 #: ../plug-ins/common/tiff-save.c:198
@@ -8016,12 +8030,12 @@ msgstr ""
 
 #: ../plug-ins/common/tiff-save.c:1047
 msgid "Save as TIFF"
-msgstr ""
+msgstr "TIFF ਵਾਂਗ ਸੰਭਾਲੋ"
 
 #. compression
 #: ../plug-ins/common/tiff-save.c:1069
 msgid "Compression"
-msgstr "ਨਪੀੜਨ"
+msgstr "ਕੰਪਰੈੱਸ"
 
 #: ../plug-ins/common/tiff-save.c:1073
 msgid "_None"
@@ -8033,7 +8047,7 @@ msgstr "_LZW"
 
 #: ../plug-ins/common/tiff-save.c:1075
 msgid "_Pack Bits"
-msgstr ""
+msgstr "ਪੈਕ ਬਿੱਟ(_P)"
 
 #: ../plug-ins/common/tiff-save.c:1076
 msgid "_Deflate"
@@ -8045,11 +8059,11 @@ msgstr "_JPEG"
 
 #: ../plug-ins/common/tiff-save.c:1078
 msgid "CCITT Group _3 fax"
-msgstr ""
+msgstr "CCITT ਗਰੁੱਪ _3 ਫੈਕਸ"
 
 #: ../plug-ins/common/tiff-save.c:1079
 msgid "CCITT Group _4 fax"
-msgstr ""
+msgstr "CCITT ਗਰੁੱਪ _4 ਫੈਕਸ"
 
 #: ../plug-ins/common/tiff-save.c:1101
 msgid "Save _color values from transparent pixels"
@@ -8078,7 +8092,7 @@ msgstr "ਟਾਇਲ"
 
 #: ../plug-ins/common/tile.c:422
 msgid "Tile to New Size"
-msgstr ""
+msgstr "ਨਵੇਂ ਆਕਾਰ ਲਈ ਟਾਇਲ"
 
 #: ../plug-ins/common/tile.c:444
 msgid "C_reate new image"
@@ -8168,11 +8182,11 @@ msgstr ""
 
 #: ../plug-ins/common/uniteditor.c:98
 msgid "Factor"
-msgstr "ਗੁਣਾਂਕ"
+msgstr "ਫੈਕਟਰ"
 
 #: ../plug-ins/common/uniteditor.c:98
 msgid "How many units make up an inch."
-msgstr ""
+msgstr "ਕਿੰਨੇ ਯੂਨਿਟ ਇੰਚ ਬਣਾਉਦੇ ਹਨ।"
 
 #: ../plug-ins/common/uniteditor.c:99
 msgid "Digits"
@@ -8205,19 +8219,19 @@ msgstr ""
 
 #: ../plug-ins/common/uniteditor.c:109
 msgid "Singular"
-msgstr ""
+msgstr "ਇੱਕ-ਵਚਨ"
 
 #: ../plug-ins/common/uniteditor.c:109
 msgid "The unit's singular form."
-msgstr ""
+msgstr "ਯੂਨਿਟ ਦਾ ਇੱਕ-ਵਚਨ ਹੈ।"
 
 #: ../plug-ins/common/uniteditor.c:110
 msgid "Plural"
-msgstr ""
+msgstr "ਬਹੁ-ਵਚਨ"
 
 #: ../plug-ins/common/uniteditor.c:110
 msgid "The unit's plural form."
-msgstr ""
+msgstr "ਯੂਨਿਟ ਦਾ ਬਹੁ-ਵਚਨ ਫਾਰਮ ਹੈ।"
 
 #: ../plug-ins/common/uniteditor.c:121
 msgid "Create a new unit from scratch"
@@ -8321,15 +8335,15 @@ msgstr "_3x3"
 
 #: ../plug-ins/common/video.c:47
 msgid "Larg_e 3x3"
-msgstr ""
+msgstr "ਵੱਡਾ(_e) 3x3"
 
 #: ../plug-ins/common/video.c:48
 msgid "_Hex"
-msgstr ""
+msgstr "ਹੈਕਸਾ(_H)"
 
 #: ../plug-ins/common/video.c:49
 msgid "_Dots"
-msgstr ""
+msgstr "ਡਾਟ(_D)"
 
 #: ../plug-ins/common/video.c:1806
 msgid "Simulate distortion produced by a fuzzy or low-res monitor"
@@ -8337,7 +8351,7 @@ msgstr ""
 
 #: ../plug-ins/common/video.c:1813
 msgid "Vi_deo..."
-msgstr ""
+msgstr "ਵੀਡਿਓ(_d)..."
 
 #: ../plug-ins/common/video.c:1885 ../plug-ins/common/video.c:2016
 msgid "Video"
@@ -8354,7 +8368,7 @@ msgstr ""
 
 #: ../plug-ins/common/video.c:2092
 msgid "_Rotated"
-msgstr ""
+msgstr "ਘੁੰਮਾਇਆ(_R)"
 
 #: ../plug-ins/common/vinvert.c:90
 msgid "Invert the brightness of each pixel"
@@ -8370,11 +8384,11 @@ msgstr "ਮੁੱਲ ਉਲਟ"
 
 #: ../plug-ins/common/vpropagate.c:189
 msgid "More _white (larger value)"
-msgstr ""
+msgstr "ਹੋਰ ਸਫ਼ੈਦ (ਵੱਡਾ ਮੁੱਲ)(_w)"
 
 #: ../plug-ins/common/vpropagate.c:192
 msgid "More blac_k (smaller value)"
-msgstr ""
+msgstr "ਹੋਰ ਕਾਲਾ(ਛੋਟਾ ਮੁੱਲ)(_k)"
 
 #: ../plug-ins/common/vpropagate.c:195
 msgid "_Middle value to peaks"
@@ -8382,15 +8396,15 @@ msgstr ""
 
 #: ../plug-ins/common/vpropagate.c:198
 msgid "_Foreground to peaks"
-msgstr ""
+msgstr "ਪੀਕ ਲਈ ਫਾਰਗਰਾਊਂਡ(_F)"
 
 #: ../plug-ins/common/vpropagate.c:201
 msgid "O_nly foreground"
-msgstr ""
+msgstr "ਕੇਵਲ ਫਾਰਗਰਾਊਂਡ(_n)"
 
 #: ../plug-ins/common/vpropagate.c:204
 msgid "Only b_ackground"
-msgstr ""
+msgstr "ਕੇਵਲ ਬੈਕਗਰਾਊਂਡ(_a)"
 
 #: ../plug-ins/common/vpropagate.c:207
 msgid "Mor_e opaque"
@@ -8455,7 +8469,7 @@ msgstr "ਸੱਜਾ(_r)"
 
 #: ../plug-ins/common/vpropagate.c:1182
 msgid "To _top"
-msgstr ""
+msgstr "ਉੱਤੇ(_t)"
 
 #: ../plug-ins/common/vpropagate.c:1185
 msgid "To _bottom"
@@ -8492,13 +8506,13 @@ msgstr "ਸਟੈਂਪ ਆਕਾਰ:"
 #. Displacement map menu
 #: ../plug-ins/common/warp.c:443
 msgid "Displacement map:"
-msgstr ""
+msgstr "ਡਿਸਪਲੇਸਮਿੰਟ ਮੈਪ:"
 
 #. =======================================================================
 #. Displacement Type
 #: ../plug-ins/common/warp.c:461
 msgid "On edges:"
-msgstr ""
+msgstr "ਕੋਨਿਆਂ ਉੱਤੇ:"
 
 #: ../plug-ins/common/warp.c:472
 msgid "Wrap"
@@ -8533,7 +8547,7 @@ msgstr "ਘੁੰਮਾਓ ਕੋਣ:"
 
 #: ../plug-ins/common/warp.c:579
 msgid "Substeps:"
-msgstr ""
+msgstr "ਸਬ-ਸਟੈਪ:"
 
 #. Magnitude map menu
 #: ../plug-ins/common/warp.c:588
@@ -8552,15 +8566,15 @@ msgstr "ਹੋਰ ਤਕਨੀਕੀ ਚੋਣਾਂ"
 
 #: ../plug-ins/common/warp.c:640
 msgid "Gradient scale:"
-msgstr ""
+msgstr "ਗਰੇਂਡੀਐਂਟ ਸਕੇਲ:"
 
 #: ../plug-ins/common/warp.c:663
 msgid "Gradient map selection menu"
-msgstr ""
+msgstr "ਗਰੇਂਡੀਐਂਟ ਮੈਪ ਚੋਣ ਮੇਨੂ"
 
 #: ../plug-ins/common/warp.c:673
 msgid "Vector mag:"
-msgstr ""
+msgstr "ਵੈਕਟਰ mag:"
 
 #. Angle
 #: ../plug-ins/common/warp.c:688 ../plug-ins/ifscompose/ifscompose.c:567
@@ -8592,11 +8606,11 @@ msgstr "ਫਲੋ ਸਟੈਪ %d "
 
 #: ../plug-ins/common/waves.c:120
 msgid "Distort the image with waves"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਤਰੰਗ ਨਾਲ ਬਦਲੋ"
 
 #: ../plug-ins/common/waves.c:125
 msgid "_Waves..."
-msgstr "ਵੇਵ(_W)..."
+msgstr "ਤਰੰਗ(_W)..."
 
 #: ../plug-ins/common/waves.c:248
 msgid "Waves"
@@ -8604,19 +8618,19 @@ msgstr "ਤਰੰਗਾਂ"
 
 #: ../plug-ins/common/waves.c:293
 msgid "_Reflective"
-msgstr ""
+msgstr "ਪਰਵਰਤਨ(_R)"
 
 #: ../plug-ins/common/waves.c:312
 msgid "_Amplitude:"
-msgstr ""
+msgstr "ਐਪਲੀਚਿਊਡ(_A):"
 
 #: ../plug-ins/common/waves.c:324
 msgid "_Phase:"
-msgstr ""
+msgstr "ਫੇਜ਼(_P):"
 
 #: ../plug-ins/common/waves.c:336
 msgid "_Wavelength:"
-msgstr ""
+msgstr "ਵੇਵ ਲੰਬਾਈ(_W):"
 
 #: ../plug-ins/common/waves.c:447
 msgid "Waving"
@@ -8654,7 +8668,7 @@ msgstr ""
 
 #: ../plug-ins/common/whirlpinch.c:149
 msgid "W_hirl and Pinch..."
-msgstr ""
+msgstr "ਵਰਲ ਅਤੇ ਪਿੰਚ(_h)..."
 
 #: ../plug-ins/common/whirlpinch.c:193
 msgid "Region affected by plug-in is empty"
@@ -8662,11 +8676,11 @@ msgstr ""
 
 #: ../plug-ins/common/whirlpinch.c:341
 msgid "Whirling and pinching"
-msgstr ""
+msgstr "ਵਰਲਿੰਗ ਅਤੇ ਪਿੰਚਿੰਗ"
 
 #: ../plug-ins/common/whirlpinch.c:528
 msgid "Whirl and Pinch"
-msgstr ""
+msgstr "ਵਰਲ ਅਤੇ ਪਿੰਚ"
 
 #: ../plug-ins/common/whirlpinch.c:564
 msgid "_Whirl angle:"
@@ -8674,7 +8688,7 @@ msgstr "ਵਰਲ ਕੋਣ(_W):"
 
 #: ../plug-ins/common/whirlpinch.c:576
 msgid "_Pinch amount:"
-msgstr ""
+msgstr "ਪਿੰਚ ਮਾਤਰਾ(_P):"
 
 #: ../plug-ins/common/wind.c:175
 msgid "Smear image to give windblown effect"
@@ -8682,11 +8696,11 @@ msgstr ""
 
 #: ../plug-ins/common/wind.c:180
 msgid "Wi_nd..."
-msgstr ""
+msgstr "ਵਿੰਡ(_n)..."
 
 #: ../plug-ins/common/wind.c:315
 msgid "Rendering blast"
-msgstr ""
+msgstr "ਬਲਾਸਟ ਰੈਡਰਿੰਗ"
 
 #: ../plug-ins/common/wind.c:442
 msgid "Rendering wind"
@@ -8701,34 +8715,34 @@ msgstr "ਹਵਾ"
 #. *****************************************************
 #: ../plug-ins/common/wind.c:910
 msgid "Style"
-msgstr "ਸ਼ੈਲੀ"
+msgstr "ਸਟਾਇਲ"
 
 #: ../plug-ins/common/wind.c:914
 msgid "_Wind"
-msgstr ""
+msgstr "ਹਵਾ(_W)"
 
 #: ../plug-ins/common/wind.c:915
 msgid "_Blast"
-msgstr ""
+msgstr "ਬਲਾਸਟ(_B)"
 
 #: ../plug-ins/common/wind.c:938
 msgid "_Left"
-msgstr ""
+msgstr "ਖੱਬੇ(_L)"
 
 #: ../plug-ins/common/wind.c:939
 msgid "_Right"
-msgstr ""
+msgstr "ਸੱਜੇ(_R)"
 
 #. ****************************************************
 #. radio buttons for choosing BOTH, LEADING, TRAILING
 #. **************************************************
 #: ../plug-ins/common/wind.c:958
 msgid "Edge Affected"
-msgstr ""
+msgstr "ਕੋਨਾ ਪਰਭਾਵਿਤ"
 
 #: ../plug-ins/common/wind.c:962
 msgid "L_eading"
-msgstr ""
+msgstr "ਲੀਡਿੰਗ(_e)"
 
 #: ../plug-ins/common/wind.c:963
 msgid "Tr_ailing"
@@ -8736,7 +8750,7 @@ msgstr ""
 
 #: ../plug-ins/common/wind.c:964
 msgid "Bot_h"
-msgstr "ਦੋਵੇ"
+msgstr "ਦੋਵੇਂ(_h)"
 
 #: ../plug-ins/common/wind.c:1001
 msgid "Higher values restrict the effect to fewer areas of the image"
@@ -8744,7 +8758,7 @@ msgstr ""
 
 #: ../plug-ins/common/wind.c:1016 ../plug-ins/gimpressionist/orientmap.c:676
 msgid "_Strength:"
-msgstr ""
+msgstr "ਸ਼ਕਤੀ(_S):"
 
 #: ../plug-ins/common/wind.c:1020
 msgid "Higher values increase the magnitude of the effect"
@@ -8752,30 +8766,32 @@ msgstr ""
 
 #: ../plug-ins/common/wmf.c:126
 msgid "Microsoft WMF file"
-msgstr ""
+msgstr "Microsoft WMF ਫਾਇਲ"
 
 #: ../plug-ins/common/wmf.c:332
 msgid ""
 "WMF file does not\n"
 "specify a size!"
 msgstr ""
+"WMF ਫਾਇਲ ਨੇ ਆਕਾਰ\n"
+"ਨਹੀਂ ਦਿੱਤਾ!"
 
 #: ../plug-ins/common/wmf.c:480
 msgid "Render Windows Metafile"
-msgstr ""
+msgstr "Windows Metafile ਰੈਂਡਰ"
 
 #: ../plug-ins/common/wmf.c:951 ../plug-ins/sgi/sgi.c:313
 #, c-format
 msgid "Could not open '%s' for reading."
-msgstr ""
+msgstr "ਪੜ੍ਹਨ ਲਈ '%s' ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ।"
 
 #: ../plug-ins/common/wmf.c:965
 msgid "Rendered WMF"
-msgstr ""
+msgstr "ਰੈਂਡਰਿੰਗ WMF"
 
 #: ../plug-ins/common/xbm.c:172 ../plug-ins/common/xbm.c:190
 msgid "X BitMap image"
-msgstr ""
+msgstr "X BitMap ਚਿੱਤਰ"
 
 #: ../plug-ins/common/xbm.c:803
 #, c-format
@@ -8783,6 +8799,8 @@ msgid ""
 "'%s':\n"
 "Could not read header (ftell == %ld)"
 msgstr ""
+"'%s':\n"
+"ਹੈੱਡਰ ਨਹੀਂ ਪੜ੍ਹਿਆ ਜਾ ਸਕਿਆ (ftell == %ld)"
 
 #: ../plug-ins/common/xbm.c:838
 #, c-format
@@ -8790,6 +8808,8 @@ msgid ""
 "'%s':\n"
 "No image data type specified"
 msgstr ""
+"'%s':\n"
+"ਕੋਈ ਚਿੱਤਰ ਡਾਟਾ ਨਹੀਂ ਦਿੱਤਾ।"
 
 #. The image is not black-and-white.
 #: ../plug-ins/common/xbm.c:980
@@ -8805,10 +8825,12 @@ msgid ""
 "You cannot save a cursor mask for an image\n"
 "which has no alpha channel."
 msgstr ""
+"ਤੁਸੀਂ ਇੱਕ ਕਰਸਰ ਮਾਸਕ ਨੂੰ ਇੱਕ ਚਿੱਤਰ ਵਾਂਗ ਨਹੀਂ\n"
+"ਸੰਭਾਲ ਸਕਦੇ, ਜਿਸ ਦਾ ਕੋਈ ਐਲਫ਼ਾ ਚੈਨਲ ਨਾ ਹੋਵੇ।"
 
 #: ../plug-ins/common/xbm.c:1166
 msgid "Save as XBM"
-msgstr ""
+msgstr "XBM ਵਾਂਗ ਸੰਭਾਲੋ"
 
 #. parameter settings
 #: ../plug-ins/common/xbm.c:1183
@@ -8818,54 +8840,54 @@ msgstr "XBM ਚੋਣ"
 #. X10 format
 #: ../plug-ins/common/xbm.c:1193
 msgid "_X10 format bitmap"
-msgstr ""
+msgstr "_X10 ਫਾਰਮੈਟ ਬਿੱਟਮੈਪ"
 
 #: ../plug-ins/common/xbm.c:1213
 msgid "_Identifier prefix:"
-msgstr ""
+msgstr "ਪਛਾਣ ਪ੍ਰੀ-ਫਿਕਸ(_I):"
 
 #. hotspot toggle
 #: ../plug-ins/common/xbm.c:1235
 msgid "_Write hot spot values"
-msgstr ""
+msgstr "ਹਾਟ ਸਪਾਟ ਮੁੱਲ ਲਿਖੋ(_W)"
 
 #: ../plug-ins/common/xbm.c:1257
 msgid "Hot spot _X:"
-msgstr ""
+msgstr "ਹਾਟ ਸਪਾਟ _X:"
 
 #: ../plug-ins/common/xbm.c:1267
 msgid "Hot spot _Y:"
-msgstr ""
+msgstr "ਹਾਟ ਸਪਾਟ _Y:"
 
 #. mask file
 #: ../plug-ins/common/xbm.c:1274
 msgid "Mask File"
-msgstr ""
+msgstr "ਮਾਸਕ ਫਾਇਲ"
 
 #: ../plug-ins/common/xbm.c:1284
 msgid "W_rite extra mask file"
-msgstr ""
+msgstr "ਵਾਧੂ ਮਾਸਕ ਫਾਇਲ ਲਿਖੋ(_r)"
 
 #: ../plug-ins/common/xbm.c:1297
 msgid "_Mask file extension:"
-msgstr ""
+msgstr "ਫਾਇਲ ਐਕਸ਼ਟੈਂਸ਼ਨ ਮਾਸਕ(_M):"
 
 #: ../plug-ins/common/xpm.c:173 ../plug-ins/common/xpm.c:198
 msgid "X PixMap image"
-msgstr ""
+msgstr "X PixMap ਚਿੱਤਰ"
 
 #: ../plug-ins/common/xpm.c:353
 #, c-format
 msgid "Error opening file '%s'"
-msgstr ""
+msgstr "'%s' ਫਾਇਲ ਖੋਲ੍ਹਣ ਦੌਰਾਨ ਗਲਤੀ"
 
 #: ../plug-ins/common/xpm.c:358
 msgid "XPM file invalid"
-msgstr ""
+msgstr "XPM ਫਾਇਲ ਗਲਤ"
 
 #: ../plug-ins/common/xpm.c:772
 msgid "Save as XPM"
-msgstr ""
+msgstr "XPM ਵਾਂਗ ਸੰਭਾਲੋ"
 
 #: ../plug-ins/common/xpm.c:796
 msgid "_Alpha threshold:"
@@ -8878,11 +8900,11 @@ msgstr "X ਵਿੰਡੋ ਡੰਪ"
 #: ../plug-ins/common/xwd.c:428
 #, c-format
 msgid "Could not read XWD header from '%s'"
-msgstr ""
+msgstr "'%s' ਤੋਂ XWD ਹੈਂਡਰ ਪੜ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ।"
 
 #: ../plug-ins/common/xwd.c:466
 msgid "Can't read color entries"
-msgstr ""
+msgstr "ਕਲਰ ਐਂਟਰੀਆਂ ਪੜ੍ਹੀਆਂ ਨਹੀਂ ਜਾ ਸਕਦੀਆਂ"
 
 #: ../plug-ins/common/xwd.c:555
 #, c-format
@@ -8890,62 +8912,64 @@ msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
 "not supported."
 msgstr ""
+"XWD-ਫਾਇਲ %s ਦਾ ਫਾਰਮੈਟ %d, ਡੂੰਘਾਈ %d ਅਤੇ %d ਬਿੱਟ ਪ੍ਰਤੀ ਪਿਕਸਲ ਹਨ। ਇਸ ਸਮੇਂ ਇਹ "
+"ਸਹਿਯੋਗੀ ਨਹੀਂ ਹੈ।"
 
 #: ../plug-ins/common/xwd.c:578
 msgid "Cannot save images with alpha channels."
-msgstr ""
+msgstr "ਐਲਫ਼ਾ ਚੈਨਲਾਂ ਨਾਲ ਚਿੱਤਰ ਸੰਭਾਲਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ ਹੈ।"
 
 #: ../plug-ins/common/xwd.c:2179
 msgid "Error during writing indexed/gray image"
-msgstr ""
+msgstr "ਇੰਡੈਕਸਡ/ਗਰੇ ਚਿੱਤਰ ਲਿਖਣ ਦੌਰਾਨ ਗਲਤੀ"
 
 #: ../plug-ins/common/xwd.c:2277
 msgid "Error during writing rgb image"
-msgstr ""
+msgstr "rgb ਚਿੱਤਰ ਲਿਖਣ ਦੌਰਾਨ ਗਲਤੀ"
 
 #: ../plug-ins/common/zealouscrop.c:85
 msgid "Autocrop unused space from edges and middle"
-msgstr ""
+msgstr "ਕੋਨਿਆਂ ਅਤੇ ਵਿੱਚੋਂ ਤੋਂ ਨਾ-ਵਰਤੀ ਸਪੇਸ ਆਟੋ-ਕਰੋਪ ਕਰੋ"
 
 #: ../plug-ins/common/zealouscrop.c:90
 msgid "_Zealous Crop"
-msgstr ""
+msgstr "_Zealous ਕਰੋਪ"
 
 #: ../plug-ins/common/zealouscrop.c:138
 msgid "Zealous cropping"
-msgstr ""
+msgstr "Zealous ਕਰੋਪਿੰਗ"
 
 #: ../plug-ins/common/zealouscrop.c:239
 msgid "Nothing to crop."
-msgstr ""
+msgstr "ਕਰੋਪ ਕਰਨ ਲਈ ਕੁਝ ਨਹੀਂ ਹੈ।"
 
 #: ../plug-ins/faxg3/faxg3.c:102
 msgid "G3 fax image"
-msgstr ""
+msgstr "G3 ਫੈਕਸ ਚਿੱਤਰ"
 
 #: ../plug-ins/fits/fits.c:166 ../plug-ins/fits/fits.c:186
 msgid "Flexible Image Transport System"
-msgstr ""
+msgstr "ਫਲੈਕਸਬਲ ਈਮੇਜ਼ ਟਰਾਂਸਪੋਰਟ ਸਿਸਟਮ (FITS)"
 
 #: ../plug-ins/fits/fits.c:354
 msgid "Error during open of FITS file"
-msgstr ""
+msgstr "FITS ਫਾਇਲ ਖੋਲ੍ਹਣ ਦੌਰਾਨ ਗਲਤੀ"
 
 #: ../plug-ins/fits/fits.c:359
 msgid "FITS file keeps no displayable images"
-msgstr ""
+msgstr "FITS ਫਾਇਲ ਨਾ-ਵੇਖਾਉਣਯੋਗ ਚਿੱਤਰ ਨਹੀਂ ਰੱਖਦੀ ਹੈ"
 
 #: ../plug-ins/fits/fits.c:437
 msgid "FITS save cannot handle images with alpha channels"
-msgstr ""
+msgstr "FITS ਸੰਭਾਲਣ ਦੌਰਾਨ ਐਲਫ਼ਾ ਚੈਨਲ ਚਿੱਤਰ ਹੈਂਡਲ ਨਹੀਂ ਕੀਤੇ ਜਾ ਸਕਦੇ"
 
 #: ../plug-ins/fits/fits.c:974
 msgid "Load FITS File"
-msgstr ""
+msgstr "FITS ਫਾਇਲ ਲੋਡ ਕਰੋ"
 
 #: ../plug-ins/fits/fits.c:998
 msgid "Replacement for undefined pixels"
-msgstr ""
+msgstr "ਦਿੱਤੇ ਪਿਕਸਲ ਲਈ ਬਦਲਾਅ"
 
 #: ../plug-ins/fits/fits.c:1003 ../plug-ins/gfig/gfig-dialog.c:1286
 #: ../plug-ins/gfig/gfig-dialog.c:1461
@@ -8954,15 +8978,15 @@ msgstr "ਸਫੈਦ"
 
 #: ../plug-ins/fits/fits.c:1010
 msgid "Pixel value scaling"
-msgstr ""
+msgstr "ਪਿਕਸਲ ਮੁੱਲ ਸਕੇਲਿੰਗ"
 
 #: ../plug-ins/fits/fits.c:1015
 msgid "By DATAMIN/DATAMAX"
-msgstr ""
+msgstr "DATAMIN/DATAMAX ਨਾਲ"
 
 #: ../plug-ins/fits/fits.c:1022
 msgid "Image Composing"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਕੰਪੋਜ਼ਿੰਗ"
 
 #: ../plug-ins/flame/flame.c:128
 msgid "Create cosmic recursive fractal flames"
@@ -8970,24 +8994,24 @@ msgstr ""
 
 #: ../plug-ins/flame/flame.c:133
 msgid "_Flame..."
-msgstr ""
+msgstr "ਫਲੇਮ(_F)..."
 
 #: ../plug-ins/flame/flame.c:226
 msgid "Drawing flame"
-msgstr ""
+msgstr "ਡਰਾਇੰਗ ਫਲੇਮ"
 
 #: ../plug-ins/flame/flame.c:318
 msgid "Flame works only on RGB drawables."
-msgstr ""
+msgstr "ਫਲੇਮ ਸਿਰਫ਼ RGB ਡਰਾਅਯੋਗ ਨਾਲ ਹੀ ਕੰਮ ਕਰਦੀ ਹੈ।"
 
 #: ../plug-ins/flame/flame.c:401
 #, c-format
 msgid "'%s' is not a regular file"
-msgstr ""
+msgstr "'%s' ਰੈਗੂਲਰ ਫਾਇਲ ਨਹੀਂ ਹੈ"
 
 #: ../plug-ins/flame/flame.c:645
 msgid "Edit Flame"
-msgstr ""
+msgstr "ਫਲੇਮ ਸੋਧ"
 
 #: ../plug-ins/flame/flame.c:668
 msgid "Directions"
@@ -8999,11 +9023,11 @@ msgstr "ਕੰਟਰੋਲ"
 
 #: ../plug-ins/flame/flame.c:718
 msgid "_Speed:"
-msgstr "ਗਤੀ:"
+msgstr "ਸਪੀਡ(_S):"
 
 #: ../plug-ins/flame/flame.c:735
 msgid "_Randomize"
-msgstr "ਬੇਤਰਤੀਬੀ"
+msgstr "ਬੇਪੈਟਰਨੀ(_R)"
 
 #: ../plug-ins/flame/flame.c:744
 msgid "Same"
@@ -9016,39 +9040,39 @@ msgstr "ਰਲਵਾਂ"
 
 #: ../plug-ins/flame/flame.c:749
 msgid "Swirl"
-msgstr ""
+msgstr "ਸਵਿਰਲ"
 
 #: ../plug-ins/flame/flame.c:750
 msgid "Horseshoe"
-msgstr ""
+msgstr "ਹਾਰਸ-ਸ਼ੂ"
 
 #: ../plug-ins/flame/flame.c:751 ../plug-ins/gfig/gfig-dialog.c:1442
 msgid "Polar"
-msgstr ""
+msgstr "ਪੋਲਰ"
 
 #: ../plug-ins/flame/flame.c:752
 msgid "Bent"
-msgstr ""
+msgstr "ਬਿੰਟ"
 
 #: ../plug-ins/flame/flame.c:765
 msgid "_Variation:"
-msgstr ""
+msgstr "ਵੇਰੀਏਸ਼ਨ(_V):"
 
 #: ../plug-ins/flame/flame.c:787
 msgid "Load Flame"
-msgstr ""
+msgstr "ਫਲੇਮ ਲੋਡ ਕਰੋ"
 
 #: ../plug-ins/flame/flame.c:802
 msgid "Save Flame"
-msgstr ""
+msgstr "ਫਲੇਮ ਸੰਭਾਲੋ"
 
 #: ../plug-ins/flame/flame.c:944
 msgid "Flame"
-msgstr ""
+msgstr "ਲਪਟ(Flame)"
 
 #: ../plug-ins/flame/flame.c:1045
 msgid "_Rendering"
-msgstr ""
+msgstr "ਰੈਂਡਰਿੰਗ(_R)"
 
 #: ../plug-ins/flame/flame.c:1071
 msgid "Co_ntrast:"
@@ -9056,11 +9080,11 @@ msgstr "ਕਾਨਟਰਾਸਟ(_n):"
 
 #: ../plug-ins/flame/flame.c:1085
 msgid "_Gamma:"
-msgstr "ਗਾਮਾ:"
+msgstr "ਗਾਮਾ(_G):"
 
 #: ../plug-ins/flame/flame.c:1099
 msgid "Sample _density:"
-msgstr ""
+msgstr "ਸੈਂਪਲ ਡੈਂਸਟੀ(_d):"
 
 #: ../plug-ins/flame/flame.c:1110
 msgid "Spa_tial oversample:"
@@ -9072,36 +9096,36 @@ msgstr ""
 
 #: ../plug-ins/flame/flame.c:1140
 msgid "Color_map:"
-msgstr ""
+msgstr "ਕਲਰ ਮੈਪ(_m):"
 
 #: ../plug-ins/flame/flame.c:1182
 msgid "Custom gradient"
-msgstr ""
+msgstr "ਕਸਟਮ ਗਰੇਂਡੀਐਂਟ"
 
 #: ../plug-ins/flame/flame.c:1208
 msgid "C_amera"
-msgstr "ਕੈਮਰਾ"
+msgstr "ਕੈਮਰਾ(_a)"
 
 #: ../plug-ins/gfig/gfig-bezier.c:443
 msgid "Closed"
-msgstr "ਬੰਦ"
+msgstr "ਬੰਦ ਕੀਤਾ"
 
 #: ../plug-ins/gfig/gfig-bezier.c:448
 msgid "Close curve on completion"
-msgstr ""
+msgstr "ਪੂਰਾ ਹੋਣ ਉੱਤੇ ਕਰਵ ਬੰਦ ਕਰੋ"
 
 #: ../plug-ins/gfig/gfig-bezier.c:453
 msgid "Show Line Frame"
-msgstr ""
+msgstr "ਲਾਈਨ ਫਰੇਮ ਵੇਖਾਓ"
 
 #: ../plug-ins/gfig/gfig-bezier.c:458
 msgid "Draws lines between the control points. Only during curve creation"
-msgstr ""
+msgstr "ਕੰਟਰੋਲ ਪੁਆਇੰਟਾਂ ਵਿਚਲੇ ਲਾਈਨਾਂ ਖਿੱਚੋ। ਸਿਰਫ਼ ਕਰਵ ਵਿੱਚ ਹੀ ਬਣਾਓ।"
 
 #. Start building the dialog up
 #: ../plug-ins/gfig/gfig-dialog.c:286
 msgid "Gfig"
-msgstr ""
+msgstr "Gfig"
 
 #. Tool options notebook
 #: ../plug-ins/gfig/gfig-dialog.c:337
@@ -9119,7 +9143,7 @@ msgstr "ਭਰੋ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:415
 msgid "No fill"
-msgstr ""
+msgstr "ਕੋਈ ਨਾ ਭਰੋ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:416
 msgid "Color fill"
@@ -9131,7 +9155,7 @@ msgstr "ਪੈਟਰਨ ਭਰੋ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:418
 msgid "Shape gradient"
-msgstr ""
+msgstr "ਸ਼ਕਲ ਗਰੇਡੀਐਂਟ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:419
 msgid "Vertical gradient"
@@ -9149,7 +9173,7 @@ msgstr "ਚਿੱਤਰ ਵੇਖਾਓ"
 #. "snap to grid" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:493
 msgid "checkbutton|Snap to grid"
-msgstr ""
+msgstr "ਗਰਿੱਡ ਲਈ ਸਨੈਪ"
 
 #. "show grid" checkbutton at bottom of style frame
 #: ../plug-ins/gfig/gfig-dialog.c:502
@@ -9158,11 +9182,11 @@ msgstr "ਗਰਿੱਡ ਵੇਖੋ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:637
 msgid "Load Gfig Object Collection"
-msgstr ""
+msgstr "Gfig ਆਬਜੈਕਟ ਭੰਡਾਰ ਲੋਡ ਕਰੋ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:686
 msgid "Save Gfig Drawing"
-msgstr ""
+msgstr "Gfig ਡਰਾਇੰਗ ਸੰਭਾਲੋ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:831
 msgid "First Gfig"
@@ -9178,39 +9202,39 @@ msgstr "ਸਾਫ਼ ਕਰੋ(_C)"
 
 #: ../plug-ins/gfig/gfig-dialog.c:878 ../plug-ins/imagemap/imap_menu.c:209
 msgid "_Grid"
-msgstr ""
+msgstr "ਗਰਿੱਡ(_G)"
 
 #: ../plug-ins/gfig/gfig-dialog.c:886
 msgid "Raise selected object"
-msgstr ""
+msgstr "ਚੁਣਿਆ ਆਬਜੈਕਟ ਉੱਤੇ ਭੇਜੋ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:890
 msgid "Lower selected object"
-msgstr ""
+msgstr "ਚੁਣਿਆ ਆਬਜੈਕਟ ਹੇਠਾਂ ਭੇਜੋ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:894
 msgid "Raise selected object to top"
-msgstr ""
+msgstr "ਚੁਣਿਆ ਆਬਜੈਕਟ ਉੱਤਲੇ ਦੇ ਉੱਤੇ ਕਰੋ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:898
 msgid "Lower selected object to bottom"
-msgstr ""
+msgstr "ਚੁਣਿਆ ਆਬਜੈਕਟ ਤਲ ਦੇ ਹੇਠਾਂ ਭੇਜੋ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:902
 msgid "Show previous object"
-msgstr ""
+msgstr "ਪਿਛਲਾ ਆਬਜੈਕਟ ਵੇਖਾਓ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:906
 msgid "Show next object"
-msgstr ""
+msgstr "ਅਗਲਾ ਆਬਜੈਕਟ ਵੇਖਾਓ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:910 ../plug-ins/gfig/gfig-stock.c:53
 msgid "Show all objects"
-msgstr ""
+msgstr "ਸਭ ਆਬਜੈਕਟ ਵੇਖਾਓ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:916 ../plug-ins/gfig/gfig-stock.c:47
 msgid "Create line"
-msgstr "ਰੇਖਾ ਬਣਾਓ"
+msgstr "ਲਾਈਨ ਬਣਾਓ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:919 ../plug-ins/gfig/gfig-stock.c:51
 msgid "Create rectangle"
@@ -9218,11 +9242,11 @@ msgstr "ਚਤੁਰਭੁਜ ਬਣਾਓ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:922 ../plug-ins/gfig/gfig-stock.c:42
 msgid "Create circle"
-msgstr ""
+msgstr "ਚੱਕਰ ਬਣਾਓ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:925 ../plug-ins/gfig/gfig-stock.c:46
 msgid "Create ellipse"
-msgstr ""
+msgstr "ਅੰਡਾਕਾਰ ਬਣਾਓ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:928 ../plug-ins/gfig/gfig-stock.c:44
 msgid "Create arc"
@@ -9230,7 +9254,7 @@ msgstr "ਚਾਪ ਬਣਾਓ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:931 ../plug-ins/gfig/gfig-stock.c:50
 msgid "Create reg polygon"
-msgstr ""
+msgstr "ਰੈਗੂਲਰ ਪੋਲੀਗਨ ਬਣਾਓ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:934 ../plug-ins/gfig/gfig-stock.c:55
 msgid "Create star"
@@ -9242,31 +9266,31 @@ msgstr ""
 
 #: ../plug-ins/gfig/gfig-dialog.c:940
 msgid "Create bezier curve. Shift + Button ends object creation."
-msgstr ""
+msgstr "ਬੇਜ਼ੀਅਰ ਕਵਰ ਬਣਾਓ। Shift + ਬਟਨ ਐਂਡ ਆਬਜੈਕਟ ਬਣਾਓ।"
 
 #: ../plug-ins/gfig/gfig-dialog.c:944 ../plug-ins/gfig/gfig-stock.c:48
 msgid "Move an object"
-msgstr "ਇਕਾਈ ਹਟਾਉ"
+msgstr "ਇੱਕ ਆਬਜੈਕਟ ਹਿਲਾਓ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:947 ../plug-ins/gfig/gfig-stock.c:49
 msgid "Move a single point"
-msgstr ""
+msgstr "ਇੱਕ ਸਿੰਗਲ ਪੁਆਇੰਟ ਭੇਜੋ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:950 ../plug-ins/gfig/gfig-stock.c:43
 msgid "Copy an object"
-msgstr ""
+msgstr "ਇੱਕ ਆਬਜੈਕਟ ਕਾਪੀ ਕਰੋ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:953 ../plug-ins/gfig/gfig-stock.c:45
 msgid "Delete an object"
-msgstr ""
+msgstr "ਇੱਕ ਆਬਜੈਕਟ ਹਟਾਓ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:956 ../plug-ins/gfig/gfig-stock.c:52
 msgid "Select an object"
-msgstr ""
+msgstr "ਇੱਕ ਆਬਜੈਕਟ ਚੁਣੋ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1038
 msgid "This tool has no options"
-msgstr ""
+msgstr "ਇਹ ਟੂਲ ਲਈ ਕੋਈ ਚੋਣ ਨਹੀਂ ਹੈ"
 
 #. Put buttons in
 #: ../plug-ins/gfig/gfig-dialog.c:1228
@@ -9288,23 +9312,25 @@ msgstr "ਪਾਰਦਰਸ਼ੀ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1285
 msgid "Foreground"
-msgstr "ਮੁੱਖ-ਭੂਮੀ"
+msgstr "ਫਾਰਗਰਾਊਂਡ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1287 ../plug-ins/imagemap/imap_cmd_copy.c:54
 #: ../plug-ins/imagemap/imap_cmd_copy_object.c:55
 #: ../plug-ins/imagemap/imap_menu.c:160
 msgid "Copy"
-msgstr "ਨਕਲ"
+msgstr "ਕਾਪੀ ਕਰੋ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1296
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
 msgstr ""
+"ਲੇਅਰ ਬੈਕਗਰਾਊਂਡ ਟਾਇਪ ਹੈ। ਕਾਪੀ ਨਾਲ ਪਿਛਲੀ ਲੇਅਰ ਨੂੰ ਡਰਾਅ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਕਾਪੀ ਕੀਤਾ "
+"ਜਾਵੇਗਾ।"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1302
 msgid "Background:"
-msgstr "ਪਿੱਠਭੂਮੀ:"
+msgstr "ਬੈਕਗਰਾਊਂਡ:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1305
 msgid "Feather"
@@ -9312,7 +9338,7 @@ msgstr "ਅੱਗੇ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1329
 msgid "Radius:"
-msgstr "ਅਰਧ-ਵਿਆਸ:"
+msgstr "ਰੇਡੀਅਸ:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1386
 msgid "Grid spacing:"
@@ -9320,11 +9346,11 @@ msgstr "ਗਰਿੱਡ ਸਪੇਸਿੰਗ:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1403
 msgid "Polar grid sectors desired:"
-msgstr ""
+msgstr "ਪੋਲਰ ਗਰਿੱਡ ਸੈਕਟਰ ਲੋੜੀਦਾ:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1425
 msgid "Polar grid radius interval:"
-msgstr ""
+msgstr "ਪੋਲਰ ਗਰਿੱਡ ਰੇਡੀਅਸ ਇੰਟਰਵਲ:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1441 ../plug-ins/imagemap/imap_menu.c:220
 msgid "Rectangle"
@@ -9332,11 +9358,11 @@ msgstr "ਚਤੁਰਭੁਜ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1443
 msgid "Isometric"
-msgstr ""
+msgstr "ਆਈਸੋਮੈਟਰਿਕ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1452
 msgid "Grid type:"
-msgstr ""
+msgstr "ਗਰਿੱਡ ਟਾਇਪ:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1459 ../plug-ins/gflare/gflare.c:552
 msgid "Normal"
@@ -9344,7 +9370,7 @@ msgstr "ਸਧਾਰਨ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1462
 msgid "Grey"
-msgstr ""
+msgstr "ਗਰੇ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1463
 msgid "Darker"
@@ -9356,7 +9382,7 @@ msgstr "ਹਲਕਾ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1465
 msgid "Very dark"
-msgstr ""
+msgstr "ਬਹੁਤ ਗੂੜ੍ਹਾ"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1474
 msgid "Grid color:"
@@ -9381,23 +9407,23 @@ msgstr "ਸਥਿਤੀ:"
 
 #: ../plug-ins/gfig/gfig-dobject.c:585
 msgid "Hey where has the object gone ?"
-msgstr ""
+msgstr "ਓਏ ਆਬਜੈਕਟ ਕਿੱਥੇ ਗਿਆ?"
 
 #: ../plug-ins/gfig/gfig-dobject.c:955
 msgid "Error reading file"
-msgstr ""
+msgstr "ਫਾਇਲ ਪੜ੍ਹਨ ਦੌਰਾਨ ਗਲਤੀ"
 
 #: ../plug-ins/gfig/gfig-dobject.c:1044
 msgid "Editing read-only object - you will not be able to save it"
-msgstr ""
+msgstr "ਕੇਵਲ-ਪੜ੍ਹਨ ਆਬਜੈਕਟ ਸੋਧ - ਤੁਸੀਂ ਇਹ ਸੰਭਾਲ ਨਹੀਂ ਸਕੋਗੇ।"
 
 #: ../plug-ins/gfig/gfig-poly.c:51
 msgid "Regular Polygon Number of Sides"
-msgstr ""
+msgstr "ਰੈਗੂਲਰ ਪੋਲੀਗਨ ਸਾਇਡਾਂ ਦੀ ਗਿਣਤੀ"
 
 #: ../plug-ins/gfig/gfig-preview.c:328
 msgid "Object Details"
-msgstr "ਇਕਾਈ ਵੇਰਵਾ"
+msgstr "ਆਬਜੈਕਟ ਵੇਰਵਾ"
 
 #. Position labels
 #: ../plug-ins/gfig/gfig-preview.c:378
@@ -9406,11 +9432,11 @@ msgstr "XY ਸਥਿਤੀ:"
 
 #: ../plug-ins/gfig/gfig-spiral.c:55
 msgid "Spiral Number of Turns"
-msgstr "ਘੁੰਮਾਉ ਾਂ ਦੀ ਗਿਣਤੀ"
+msgstr "ਘੁੰਮਾਉ ਚੱਕਰਾਂ ਦੀ ਗਿਣਤੀ"
 
 #: ../plug-ins/gfig/gfig-star.c:52
 msgid "Star Number of Points"
-msgstr ""
+msgstr "ਸਟਾਰ ਪੁਆਇੰਟਾਂ ਦੀ ਗਿਣਤੀ"
 
 #: ../plug-ins/gfig/gfig-stock.c:41
 msgid "Create bezier curve"
@@ -9418,15 +9444,15 @@ msgstr "ਬੇਜ਼ੀਅਰ ਕਰਵ ਬਣਾਓ"
 
 #: ../plug-ins/gfig/gfig.c:124
 msgid "Create geometric shapes"
-msgstr ""
+msgstr "ਜੁਮੈਟਰੀ ਸ਼ਕਲਾਂ ਬਣਾਓ"
 
 #: ../plug-ins/gfig/gfig.c:135
 msgid "_Gfig..."
-msgstr ""
+msgstr "_Gfig..."
 
 #: ../plug-ins/gfig/gfig.c:731
 msgid "Error trying to save figure as a parasite: can't attach parasite to drawable."
-msgstr ""
+msgstr "ਪੈਰਾਸਾਇਟ ਵਾਂਗ ਸ਼ਕਲ ਸੰਭਾਲਣ ਦੌਰਾਨ ਗਲਤੀ ਹੈ: ਪੈਰਾਸਾਇਟ ਨੂੰ ਡਰਾਯੋਗ ਵਾਂਗ ਅਟੈਂਚ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ।"
 
 #: ../plug-ins/gfig/gfig.c:758
 #, c-format
@@ -9439,11 +9465,11 @@ msgstr "ਸ਼ਾਮਲ"
 
 #: ../plug-ins/gflare/gflare.c:554
 msgid "Overlay"
-msgstr "ਪਰਤ ਫੈਲਾਉ"
+msgstr "ਓਵਰ-ਲੇਅ"
 
 #: ../plug-ins/gflare/gflare.c:809
 msgid "Produce a lense flare effect using gradients"
-msgstr ""
+msgstr "ਗਰੇਡੀਐਂਟ ਨਾਲ ਇੱਕ ਲੈਂਨਜ਼ ਫਲੇਅਰ ਪਰਭਾਵ ਬਣਾਓ"
 
 #: ../plug-ins/gflare/gflare.c:814
 msgid "_Gradient Flare..."
@@ -9459,17 +9485,17 @@ msgstr "ਗਰੇਂਡੀਐਂਟ ਫਲੇਅਰ"
 #: ../plug-ins/gflare/gflare.c:1255
 #, c-format
 msgid "Failed to open GFlare file '%s': %s"
-msgstr ""
+msgstr "GFlare ਫਾਇਲ '%s' ਖੋਲ੍ਹਣ ਲਈ ਫੇਲ੍ਹ: %s"
 
 #: ../plug-ins/gflare/gflare.c:1263
 #, c-format
 msgid "'%s' is not a valid GFlare file."
-msgstr ""
+msgstr "'%s' ਇੱਕ ਠੀਕ GFlare ਫਾਇਲ ਨਹੀਂ ਹੈ।"
 
 #: ../plug-ins/gflare/gflare.c:1317
 #, c-format
 msgid "invalid formatted GFlare file: %s\n"
-msgstr ""
+msgstr "ਗਲਤ ਫਾਰਮੈਟ GFlare ਫਾਇਲ: %s\n"
 
 #: ../plug-ins/gflare/gflare.c:1442
 #, c-format
@@ -9482,15 +9508,15 @@ msgstr ""
 #: ../plug-ins/gflare/gflare.c:1475
 #, c-format
 msgid "Failed to write GFlare file '%s': %s"
-msgstr ""
+msgstr "GFlare ਫਾਇਲ '%s' ਲਿਖਣ ਲਈ ਫੇਲ੍ਹ: %s"
 
 #: ../plug-ins/gflare/gflare.c:2344
 msgid "A_uto update preview"
-msgstr ""
+msgstr "ਆਟੋ ਅੱਪਡੇਟ ਝਲਕ(_u)"
 
 #: ../plug-ins/gflare/gflare.c:2395
 msgid "`Default' is created."
-msgstr ""
+msgstr "`Default' ਬਣਾਇਆ।"
 
 #: ../plug-ins/gflare/gflare.c:2396
 msgid "Default"
@@ -9509,7 +9535,7 @@ msgstr "ਪੈਰਾਮੀਟਰ"
 
 #: ../plug-ins/gflare/gflare.c:2697
 msgid "Ro_tation:"
-msgstr ""
+msgstr "ਘੁੰਮਾਓ(_t):"
 
 #: ../plug-ins/gflare/gflare.c:2709
 msgid "_Hue rotation:"
@@ -9533,7 +9559,7 @@ msgstr "ਵੱਧੋ-ਵੱਧ ਡੂੰਘਾਈ(_M):"
 
 #: ../plug-ins/gflare/gflare.c:2783
 msgid "_Threshold"
-msgstr ""
+msgstr "ਥਰੈਸ਼ਹੋਲਡ(_T)"
 
 #: ../plug-ins/gflare/gflare.c:2921
 msgid "S_elector"
@@ -9558,7 +9584,7 @@ msgstr "ਗਰੇਡੀਐਂਟ ਫਲੇਅਰ ਕਾਪੀ ਕਰੋ"
 
 #: ../plug-ins/gflare/gflare.c:3067
 msgid "Enter a name for the copied GFlare"
-msgstr ""
+msgstr "ਕਾਪੀ GFlare ਲਈ ਇੱਕ ਨਾਂ ਦਿਓ।"
 
 #: ../plug-ins/gflare/gflare.c:3089
 #, c-format
@@ -9567,7 +9593,7 @@ msgstr "ਨਾਂ `%s' ਪਹਿਲਾਂ ਹੀ ਵਰਤਿਆ ਹੈ!"
 
 #: ../plug-ins/gflare/gflare.c:3120
 msgid "Cannot delete!! There must be at least one GFlare."
-msgstr ""
+msgstr "ਹਟਾਇਆ ਨਹੀਂ ਜਾ ਸਕਦਾ! ਘੱਟੋ-ਘੱਟ ਇੱਕ GFlare ਹੋਣਾ ਲਾਜ਼ਮੀ ਹੈ।"
 
 #: ../plug-ins/gflare/gflare.c:3130
 msgid "Delete Gradient Flare"
@@ -9604,12 +9630,12 @@ msgstr "ਪੇਂਟ ਮੋਡ:"
 #. Rays
 #: ../plug-ins/gflare/gflare.c:3400
 msgid "Rays Paint Options"
-msgstr ""
+msgstr "ਕਿਰਨ ਪੇਂਟ ਚੋਣਾਂ"
 
 #. Rays
 #: ../plug-ins/gflare/gflare.c:3428
 msgid "Second Flares Paint Options"
-msgstr ""
+msgstr "ਦੂਜਾ ਫਲੇਅਰ ਪੇਂਟ ਚੋਣਾਂ"
 
 #: ../plug-ins/gflare/gflare.c:3455 ../plug-ins/gimpressionist/general.c:116
 msgid "_General"
@@ -9621,16 +9647,16 @@ msgstr "ਆਮ(_G)"
 #: ../plug-ins/gflare/gflare.c:3481 ../plug-ins/gflare/gflare.c:3584
 #: ../plug-ins/gflare/gflare.c:3723
 msgid "Gradients"
-msgstr "ਢਾਲਵਾਂ"
+msgstr "ਗਰੇਡੀਐਂਟ"
 
 #: ../plug-ins/gflare/gflare.c:3492 ../plug-ins/gflare/gflare.c:3597
 #: ../plug-ins/gflare/gflare.c:3734
 msgid "Radial gradient:"
-msgstr ""
+msgstr "ਰੇਡੀਕਲ ਗਰੇਡੀਐਂਟ:"
 
 #: ../plug-ins/gflare/gflare.c:3496 ../plug-ins/gflare/gflare.c:3601
 msgid "Angular gradient:"
-msgstr ""
+msgstr "ਕੋਣੀ ਗਰੇਂਡੀਐਂਟ:"
 
 #: ../plug-ins/gflare/gflare.c:3500 ../plug-ins/gflare/gflare.c:3605
 msgid "Angular size gradient:"
@@ -9653,11 +9679,11 @@ msgstr "ਆਭਾ ਘੁੰਮਾਓ:"
 
 #: ../plug-ins/gflare/gflare.c:3558
 msgid "G_low"
-msgstr ""
+msgstr "ਗਲੋ(_l)"
 
 #: ../plug-ins/gflare/gflare.c:3662
 msgid "# of Spikes:"
-msgstr ""
+msgstr "# ਸਪਾਇਕ ਦਾ:"
 
 #: ../plug-ins/gflare/gflare.c:3674
 msgid "Spike thickness:"
@@ -9665,11 +9691,11 @@ msgstr "ਸਪਾਈਕ ਮੋਟਾਈ:"
 
 #: ../plug-ins/gflare/gflare.c:3688
 msgid "_Rays"
-msgstr "ਰੇਖਾਵਾਂ"
+msgstr "ਕਿਰਨਾਂ(_R)"
 
 #: ../plug-ins/gflare/gflare.c:3738
 msgid "Size factor gradient:"
-msgstr ""
+msgstr "ਆਕਾਰ ਫੈਕਟਰ ਗਰੇਂਡੀਐਂਟ:"
 
 #: ../plug-ins/gflare/gflare.c:3742
 msgid "Probability gradient:"
@@ -9680,7 +9706,7 @@ msgstr ""
 #.
 #: ../plug-ins/gflare/gflare.c:3804
 msgid "Shape of Second Flares"
-msgstr ""
+msgstr "ਦੂਜੇ ਫਲੇਅਰ ਦੀ ਸ਼ਕਲ"
 
 #: ../plug-ins/gflare/gflare.c:3812 ../plug-ins/imagemap/imap_menu.c:222
 msgid "Circle"
@@ -9696,28 +9722,28 @@ msgstr "ਰੈਂਡਮ ਸੀਡ:"
 
 #: ../plug-ins/gflare/gflare.c:3876
 msgid "_Second Flares"
-msgstr ""
+msgstr "ਦੂਜਾ ਫਲੇਅਰ(_S)"
 
 #: ../plug-ins/gfli/gfli.c:163 ../plug-ins/gfli/gfli.c:183
 msgid "AutoDesk FLIC animation"
-msgstr ""
+msgstr "ਆਟੋ-ਡੈਸਕ FLIC ਐਨੀਮੇਸ਼ਨ"
 
 #: ../plug-ins/gfli/gfli.c:529
 #, c-format
 msgid "Frame (%i)"
-msgstr ""
+msgstr "ਫਰੇਮ (%i)"
 
 #: ../plug-ins/gfli/gfli.c:680
 msgid "Sorry, I can save only INDEXED and GRAY images."
-msgstr ""
+msgstr "ਅਫਸੋਸ, ਮੈਂ ਕੇਵਲ ਇੰਡੈਕਸ ਅਤੇ ਗਰੇ ਚਿੱਤਰ ਹੀ ਸੰਭਾਲ ਸਕਦਾ ਹਾਂ।"
 
 #: ../plug-ins/gfli/gfli.c:811
 msgid "GFLI 1.3 - Load framestack"
-msgstr ""
+msgstr "GFLI 1.3 - ਫਰੇਮਸਟੇਕ ਲੋਡ ਕਰੋ"
 
 #: ../plug-ins/gfli/gfli.c:879
 msgid "GFLI 1.3 - Save framestack"
-msgstr ""
+msgstr "GFLI 1.3 - ਫਰੇਮ-ਸਟੇਕ ਸੰਭਾਲੋ"
 
 #: ../plug-ins/gimpressionist/brush.c:230
 msgid "Can only save drawables!"
@@ -9725,7 +9751,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/brush.c:235
 msgid "Save Brush"
-msgstr ""
+msgstr "ਬੁਰਸ਼ ਸੰਭਾਲੋ"
 
 #: ../plug-ins/gimpressionist/brush.c:490
 msgid "_Brush"
@@ -9767,11 +9793,11 @@ msgstr "ਰੰਗ"
 
 #: ../plug-ins/gimpressionist/color.c:52
 msgid "A_verage under brush"
-msgstr ""
+msgstr "ਬੁਰਸ਼ ਥੱਲੇ ਔਸਤ(_v)"
 
 #: ../plug-ins/gimpressionist/color.c:54
 msgid "C_enter of brush"
-msgstr ""
+msgstr "ਬੁਰਸ਼ ਦਾ ਸੈਂਟਰ(_e)"
 
 #: ../plug-ins/gimpressionist/color.c:61
 msgid "Color is computed from the average of all pixels under the brush"
@@ -9783,7 +9809,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/color.c:76
 msgid "Color _noise:"
-msgstr ""
+msgstr "ਕਲਰ ਨੋਵਾਇਸ(_n):"
 
 #: ../plug-ins/gimpressionist/color.c:80
 msgid "Adds random noise to the color"
@@ -9791,15 +9817,15 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/general.c:132
 msgid "Keep original"
-msgstr ""
+msgstr "ਅਸਲੀ ਰੱਖੋ"
 
 #: ../plug-ins/gimpressionist/general.c:133
 msgid "Preserve the original image as a background"
-msgstr ""
+msgstr "ਅਸਲੀ ਚਿੱਤਰ ਬੈਕਗਰਾਊਂਡ ਵਾਂਗ ਰੱਖੋ"
 
 #: ../plug-ins/gimpressionist/general.c:138
 msgid "From paper"
-msgstr ""
+msgstr "ਪੇਪਰ ਤੋਂ"
 
 #: ../plug-ins/gimpressionist/general.c:139
 msgid "Copy the texture of the selected paper as a background"
@@ -9807,7 +9833,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/general.c:149
 msgid "Solid colored background"
-msgstr ""
+msgstr "ਗੂੜ੍ਹੀ ਰੰਗਦਾਰ ਬੈਕਗਰਾਊਂਡ"
 
 #: ../plug-ins/gimpressionist/general.c:168
 msgid "Use a transparent background; Only the strokes painted will be visible"
@@ -9815,7 +9841,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/general.c:185
 msgid "Paint edges"
-msgstr ""
+msgstr "ਪੇਂਟ ਕੋਨੇ"
 
 #: ../plug-ins/gimpressionist/general.c:190
 msgid "Selects if to place strokes all the way out to the edges of the image"
@@ -9824,7 +9850,7 @@ msgstr ""
 #. Tileable checkbox
 #: ../plug-ins/gimpressionist/general.c:195 ../plug-ins/maze/maze_face.c:283
 msgid "Tileable"
-msgstr ""
+msgstr "ਟਾਇਲੇਬਲ"
 
 #: ../plug-ins/gimpressionist/general.c:199
 msgid "Selects if the resulting image should be seamlessly tileable"
@@ -9840,7 +9866,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/general.c:222
 msgid "Edge darken:"
-msgstr ""
+msgstr "ਕੋਨਾ ਗੂੜ੍ਹਾ:"
 
 #: ../plug-ins/gimpressionist/general.c:226
 msgid "How much to \"darken\" the edges of each brush stroke"
@@ -9848,7 +9874,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/general.c:231
 msgid "Shadow darken:"
-msgstr ""
+msgstr "ਛਾਂ ਗੂੜ੍ਹੀ:"
 
 #: ../plug-ins/gimpressionist/general.c:235
 msgid "How much to \"darken\" the drop shadow"
@@ -9856,7 +9882,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/general.c:240
 msgid "Shadow depth:"
-msgstr ""
+msgstr "ਛਾਂ ਡੂੰਘਾਈ:"
 
 #: ../plug-ins/gimpressionist/general.c:244
 msgid "The depth of the drop shadow, i.e. how far apart from the object it should be"
@@ -9880,11 +9906,11 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/gimp.c:74
 msgid "Performs various artistic operations"
-msgstr ""
+msgstr "ਕਈ ਕਲਾਕਾਰੀ ਓਪਰੇਸ਼ਨ ਕਰੋ"
 
 #: ../plug-ins/gimpressionist/gimp.c:79
 msgid "_GIMPressionist..."
-msgstr ""
+msgstr "_GIMPressionist..."
 
 #: ../plug-ins/gimpressionist/gimp.c:350
 msgid "Painting"
@@ -9892,23 +9918,23 @@ msgstr "ਪੇਟਿੰਗ"
 
 #: ../plug-ins/gimpressionist/gimpressionist.c:121
 msgid "GIMPressionist"
-msgstr ""
+msgstr "GIMPressionist"
 
 #: ../plug-ins/gimpressionist/orientation.c:74
 msgid "Or_ientation"
-msgstr ""
+msgstr "ਸਥਿਤੀ(_i)"
 
 #: ../plug-ins/gimpressionist/orientation.c:88
 msgid "Directions:"
-msgstr ""
+msgstr "ਦਿਸ਼ਾ:"
 
 #: ../plug-ins/gimpressionist/orientation.c:92
 msgid "The number of directions (i.e. brushes) to use"
-msgstr ""
+msgstr "ਵਰਤਣ ਲਈ ਦਿਸ਼ਾ (ਬੁਰਸ਼) ਦੀ ਗਿਣਤੀ।"
 
 #: ../plug-ins/gimpressionist/orientation.c:100
 msgid "Start angle:"
-msgstr ""
+msgstr "ਸ਼ੁਰੂ ਕੋਣ:"
 
 #: ../plug-ins/gimpressionist/orientation.c:104
 msgid "The starting angle of the first brush to create"
@@ -9916,7 +9942,7 @@ msgstr ""
 
 #: ../plug-ins/gimpressionist/orientation.c:112
 msgid "Angle span:"
-msgstr ""
+msgstr "ਕੋਣ ਸਪੇਨ:"
 
 #: ../plug-ins/gimpressionist/orientation.c:116
 msgid "The angle span of the first brush to create"
@@ -9946,7 +9972,7 @@ msgstr ""
 #: ../plug-ins/gimpressionist/orientation.c:150
 #: ../plug-ins/gimpressionist/size.c:153
 msgid "Radial"
-msgstr ""
+msgstr "ਰੇਡੀਕਲ"
 
 #: ../plug-ins/gimpressionist/orientation.c:151
 msgid "Let the direction from the center determine the direction of the stroke"
