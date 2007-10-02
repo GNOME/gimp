@@ -441,8 +441,8 @@ parse_set_property (XMPParseContext     *context,
   g_return_if_fail (schema != NULL);
   if (! find_iter_for_schema (xmp_model, schema, &iter))
     {
-      g_warning ("Unable to set XMP property '%s' because its schema is bad",
-                 name);
+      g_printerr ("Unable to set XMP property '%s' because its schema is bad",
+                  name);
       return;
     }
   ns_prefix = schema->prefix;
@@ -691,7 +691,7 @@ parse_error (XMPParseContext *context,
              GError          *error,
              gpointer         user_data)
 {
-  g_warning ("While parsing XMP metadata:\n%s\n", error->message);
+  g_printerr ("While parsing XMP metadata:\n%s\n", error->message);
 }
 
 static XMPParser xmp_parser = {

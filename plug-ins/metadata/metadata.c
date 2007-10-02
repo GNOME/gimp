@@ -400,7 +400,7 @@ run (const gchar      *name,
                                        - METADATA_MARKER_LEN,
                                        FALSE, &error))
         {
-          g_warning ("Metadata parasite seems to be corrupt");
+          g_printerr ("Metadata parasite seems to be corrupt");
           /* continue anyway, we will attach a clean parasite later */
         }
       gimp_parasite_free (parasite);
@@ -441,12 +441,12 @@ run (const gchar      *name,
     }
   else if (! strcmp (name, GET_PROC))
     {
-      g_warning ("Not implemented yet\n"); /* FIXME */
+      g_printerr ("Not implemented yet (GET_PROC)\n"); /* FIXME */
       status = GIMP_PDB_EXECUTION_ERROR;
     }
   else if (! strcmp (name, SET_PROC))
     {
-      g_warning ("Not implemented yet\n"); /* FIXME */
+      g_printerr ("Not implemented yet (SET_PROC)\n"); /* FIXME */
       status = GIMP_PDB_EXECUTION_ERROR;
     }
   else if (! strcmp (name, GET_SIMPLE_PROC))
@@ -506,7 +506,7 @@ run (const gchar      *name,
     {
       /* FIXME: this is easy to implement, but the first thing to do is */
       /* to improve the code of export_dialog_response() in interface.c */
-      g_warning ("Not implemented yet\n");
+      g_printerr ("Not implemented yet (EXPORT_PROC)\n");
       status = GIMP_PDB_EXECUTION_ERROR;
     }
   else if (! strcmp (name, EDITOR_PROC))
@@ -522,7 +522,7 @@ run (const gchar      *name,
         }
 
        */
-      g_warning ("Not implemented yet\n");
+      g_printerr ("Not implemented yet (EDITOR_PROC)\n");
       status = GIMP_PDB_EXECUTION_ERROR;
     }
   else

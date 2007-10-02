@@ -168,12 +168,12 @@ gen_property (GString            *buffer,
       break;
 
     case XMP_TYPE_THUMBNAIL_ALT:
-      g_warning ("FIXME: output not implemented yet (%s:%s)",
-                 schema->prefix, property->name);
+      g_printerr ("FIXME: output not implemented yet (%s:%s)",
+                  schema->prefix, property->name);
       break;
 
     case XMP_TYPE_UNKNOWN:
-      g_warning ("Unknown property type for %s", property->name);
+      g_printerr ("Unknown property type for %s", property->name);
       break;
     }
 }

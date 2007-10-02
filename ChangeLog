@@ -1,3 +1,10 @@
+2007-10-02  Raphaël Quinet  <raphael@gimp.org>
+
+	* plug-ins/metadata/metadata.c
+	* plug-ins/metadata/xmp-model.c
+	* plug-ins/metadata/xmp-encode.c: replaced calls to g_warning() by
+	g_printerr().
+
 2007-10-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/oilify.c (get_map_value): clamp values used for
