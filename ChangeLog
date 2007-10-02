@@ -1,3 +1,9 @@
+2007-10-02  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scripts/guides-new.scm: Use 'list' to create
+	argument list for SF-ADJUSTMENT since it uses a named constant.
+	Fixes bug #480799.
+
 2007-10-01  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/burn-in-anim.scm: use RUN-NONINTERACTIVE
