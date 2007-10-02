@@ -1,3 +1,9 @@
+2007-10-03  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/scripts/perspective-shadow.scm: applied patch
+	from Ulf-D. Ehlert that fixes resizing in the Perspective Shadow
+	script (bug #482743).
+
 2007-10-02  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/common/scatter_hsv.c (scatter_hsv_dialog): changed the

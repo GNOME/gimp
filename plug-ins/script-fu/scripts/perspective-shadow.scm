@@ -117,13 +117,25 @@
 
           (if (< shadow-offset-x 0)
               (begin
-                (set! image-offset-x (- 0 shadow-offset-x))
-                (set! new-image-width (- new-image-width image-offset-x))))
+                (set! image-offset-x (abs shadow-offset-x))
+                (set! new-image-width (+ new-image-width image-offset-x))
+                ; adjust to new coordinate system
+                (set! x0 (+ x0 image-offset-x))
+                (set! x1 (+ x1 image-offset-x))
+                (set! x2 (+ x2 image-offset-x))
+                (set! x3 (+ x3 image-offset-x))
+              ))
 
           (if (< shadow-offset-y 0)
               (begin
-                (set! image-offset-y (- 0 shadow-offset-y))
-                (set! new-image-height (- new-image-height image-offset-y))))
+                (set! image-offset-y (abs shadow-offset-y))
+                (set! new-image-height (+ new-image-height image-offset-y))
+                ; adjust to new coordinate system
+                (set! y0 (+ y0 image-offset-y))
+                (set! y1 (+ y1 image-offset-y))
+                (set! y2 (+ y2 image-offset-y))
+                (set! y3 (+ y3 image-offset-y))
+              ))
 
           (if (> (+ shadow-width shadow-offset-x) new-image-width)
               (set! new-image-width (+ shadow-width shadow-offset-x)))
@@ -143,7 +155,7 @@
                       x3 y3
                       TRANSFORM-FORWARD
                       interpolation
-                      TRUE 3 FALSE)
+                      TRUE 3 TRANSFORM-RESIZE-ADJUST)
 
     (if (>= shadow-blur 1.0)
         (begin
