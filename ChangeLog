@@ -1,3 +1,8 @@
+2007-10-02  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/scatter_hsv.c (scatter_hsv_dialog): changed the
+	dialog title to adopt to the menu label we changed two years ago.
+
 2007-10-02  Raphaël Quinet  <raphael@gimp.org>
 
 	* plug-ins/metadata/metadata.c

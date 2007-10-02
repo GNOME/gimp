@@ -358,7 +358,7 @@ scatter_hsv_dialog (GimpDrawable *drawable)
 
   gimp_ui_init (PLUG_IN_BINARY, TRUE);
 
-  dialog = gimp_dialog_new (_("Scatter HSV"), PLUG_IN_BINARY,
+  dialog = gimp_dialog_new (_("HSV Noise"), PLUG_IN_BINARY,
                             NULL, 0,
                             gimp_standard_help_func, HSV_NOISE_PROC,
 
