@@ -1,3 +1,8 @@
+2007-10-02  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/oilify.c (get_map_value): clamp values used for
+	the exponent map to 1..255. Fixes bug #478618.
+
 2007-10-02  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/scripts/guides-new.scm: Use 'list' to create

@@ -270,15 +270,18 @@ run (const gchar      *name,
  * Helper function to read a sample from a mask-size/exponent map
  */
 static inline gfloat
-get_map_value (guchar *src,
-               gint    bpp)
+get_map_value (const guchar *src,
+               gint          bpp)
 {
   gfloat value;
 
   if (bpp >= 3)
     value = GIMP_RGB_LUMINANCE (src[0], src[1], src[2]);
   else
-    value = (gfloat) *src;
+    value = *src;
+
+  if (value < 1.0)
+    value = 1.0;
 
   /*  value should be in [0,1]  */
   value /= 255.0;
