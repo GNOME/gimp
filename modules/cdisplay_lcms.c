@@ -308,6 +308,7 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
   cmsHPROFILE      src_profile   = NULL;
   cmsHPROFILE      dest_profile  = NULL;
   cmsHPROFILE      proof_profile = NULL;
+  DWORD            flags         = 0;
 
   if (lcms->transform)
     {
@@ -333,6 +334,12 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
       break;
     }
 
+  if (config->display_intent ==
+      GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC)
+    {
+      flags |= cmsFLAGS_WHITEBLACKCOMPENSATION;
+    }
+
   if (proof_profile)
     {
       if (! src_profile)
@@ -341,12 +348,14 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
       if (! dest_profile)
        dest_profile = cmsCreate_sRGBProfile ();
 
+      flags |= cmsFLAGS_SOFTPROOFING;
+
       lcms->transform = cmsCreateProofingTransform (src_profile,  TYPE_RGB_8,
                                                     dest_profile, TYPE_RGB_8,
                                                     proof_profile,
                                                     config->simulation_intent,
                                                     config->display_intent,
-                                                    cmsFLAGS_SOFTPROOFING);
+                                                    flags);
       cmsCloseProfile (proof_profile);
     }
   else if (src_profile || dest_profile)
@@ -360,7 +369,7 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
       lcms->transform = cmsCreateTransform (src_profile,  TYPE_RGB_8,
                                             dest_profile, TYPE_RGB_8,
                                             config->display_intent,
-                                            0);
+                                            flags);
     }
 
   if (dest_profile)

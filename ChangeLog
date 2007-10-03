@@ -1,5 +1,8 @@
 2007-10-03  Sven Neumann  <sven@gimp.org>
 
+	* modules/cdisplay_lcms.c: use black point compensation if the
+	rendering intent is relative colorimetric.
+
 	* plug-ins/common/lcms.c: use the display rendering intent as set
 	in the user's color management preferences as the default for the
 	color conversion. Default to using black point compensation if the
