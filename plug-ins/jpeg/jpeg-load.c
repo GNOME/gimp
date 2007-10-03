@@ -901,6 +901,7 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
   GimpColorConfig *config       = gimp_get_color_configuration ();
   cmsHPROFILE      cmyk_profile = NULL;
   cmsHPROFILE      rgb_profile  = NULL;
+  DWORD            flags        = 0;
   cmsHTRANSFORM    transform;
 
   /*  try to load the embedded CMYK profile  */
@@ -955,14 +956,21 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
       rgb_profile = cmsCreate_sRGBProfile ();
     }
 
-  g_object_unref (config);
+  if (config->display_intent ==
+      GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC)
+    {
+      flags |= cmsFLAGS_WHITEBLACKCOMPENSATION;
+    }
 
   transform = cmsCreateTransform (cmyk_profile, TYPE_CMYK_8_REV,
                                   rgb_profile,  TYPE_RGB_8,
-                                  0, 0);
+                                  config->display_intent,
+                                  flags);
 
   cmsCloseProfile (cmyk_profile);
   cmsCloseProfile (rgb_profile);
+
+  g_object_unref (config);
 
   return transform;
 #else  /* HAVE_LCMS */

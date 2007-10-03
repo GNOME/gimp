@@ -1,3 +1,10 @@
+2007-10-04  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/jpeg/jpeg-load.c (jpeg_load_cmyk_transform): use the
+	display rendering intent as set in the user's color management
+	preferences. Use black point compensation if the rendering intent
+	is relative colorimetric.
+
 2007-10-03  Sven Neumann  <sven@gimp.org>
 
 	* modules/cdisplay_lcms.c: use black point compensation if the
