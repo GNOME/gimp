@@ -6513,9 +6513,7 @@ msgstr ""
 #.
 #: ../app/dialogs/about-dialog.c:129
 msgid "translator-credits"
-msgstr ""
-"La còla occitana de revirada d'Ubuntu, 2006 - ubuntu-l10n-oci@lists.ubuntu."
-"com"
+msgstr "Yannig Marchegay (Kokoyaya) <yannig@marchegay.org)"
 
 #: ../app/dialogs/about-dialog.c:528
 msgid "GIMP is brought to you by"
@@ -6593,7 +6591,7 @@ msgstr "Messatge GIMP"
 
 #: ../app/dialogs/dialogs.c:133
 msgid "Devices"
-msgstr "Periferiques"
+msgstr "Periferics"
 
 #: ../app/dialogs/dialogs.c:133
 msgid "Device Status"
@@ -7205,7 +7203,7 @@ msgstr ""
 
 #: ../app/dialogs/preferences-dialog.c:1522
 msgid "User Interface"
-msgstr "Interfaç usuari"
+msgstr "Interfaç utilizaire"
 
 #: ../app/dialogs/preferences-dialog.c:1525
 msgid "Interface"
