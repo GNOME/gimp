@@ -1,5 +1,12 @@
 2007-10-03  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/lcms.c: use the display rendering intent as set
+	in the user's color management preferences as the default for the
+	color conversion. Default to using black point compensation if the
+	rendering intent is relative colorimetric (bug #475983).
+
+2007-10-03  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/scripts/perspective-shadow.scm: applied patch
 	from Ulf-D. Ehlert that fixes resizing in the Perspective Shadow
 	script (bug #482743).

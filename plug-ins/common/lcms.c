@@ -330,10 +330,10 @@ run (const gchar      *name,
   GimpRunMode               run_mode = GIMP_RUN_NONINTERACTIVE;
   gint32                    image    = -1;
   const gchar              *filename = NULL;
-  GimpColorRenderingIntent  intent   = GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL;
-  gboolean                  bpc      = FALSE;
   GimpColorConfig          *config   = NULL;
   gboolean                  dont_ask = FALSE;
+  GimpColorRenderingIntent  intent;
+  gboolean                  bpc;
   static GimpParam          values[6];
 
   INIT_I18N ();
@@ -357,6 +357,13 @@ run (const gchar      *name,
 
   if (proc != PROC_FILE_INFO)
     config = gimp_get_color_configuration ();
+
+  if (config)
+    intent = config->display_intent;
+  else
+    intent = GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL;
+
+  bpc = (intent == GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC);
 
   switch (proc)
     {
