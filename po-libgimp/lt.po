@@ -9,14 +9,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP (libgimp) HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-19 14:41+0300\n"
-"PO-Revision-Date: 2007-09-19 14:48+0300\n"
+"POT-Creation-Date: 2007-10-04 18:13+0300\n"
+"PO-Revision-Date: 2007-10-04 18:13+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n%"
+"100<10 || n%100>=20) ? 1 : 2);\n"
 
 #: ../libgimp/gimpbrushselectbutton.c:170
 msgid "Brush Selection"
@@ -383,11 +384,11 @@ msgstr "Kitoks gradientas"
 
 #: ../libgimpbase/gimpbaseenums.c:95
 msgid "FG color fill"
-msgstr "Pirmo plano spalvotas užpildymas"
+msgstr "Užpildumas pirmo plano spalva"
 
 #: ../libgimpbase/gimpbaseenums.c:96
 msgid "BG color fill"
-msgstr "Fono spalvotas užpildymas"
+msgstr "Užpildymas fono spalva"
 
 #: ../libgimpbase/gimpbaseenums.c:97
 msgid "Pattern fill"
@@ -503,7 +504,7 @@ msgstr "Linijinis"
 
 #: ../libgimpbase/gimpbaseenums.c:389
 msgid "Bi-linear"
-msgstr "Tiesinis dvikryptis"
+msgstr "Linijinis dvikryptis"
 
 #: ../libgimpbase/gimpbaseenums.c:390
 msgid "Radial"
@@ -511,7 +512,7 @@ msgstr "Radialinis"
 
 #: ../libgimpbase/gimpbaseenums.c:391 ../libgimpwidgets/gimpwidgetsenums.c:24
 msgid "Square"
-msgstr "Kvadratas"
+msgstr "Kvadratinis"
 
 #: ../libgimpbase/gimpbaseenums.c:392
 msgid "Conical (sym)"
@@ -523,15 +524,15 @@ msgstr "Kūginis (nesimetriškas)"
 
 #: ../libgimpbase/gimpbaseenums.c:394
 msgid "Shaped (angular)"
-msgstr "Forma (kampas)"
+msgstr "Forminis (kampinis)"
 
 #: ../libgimpbase/gimpbaseenums.c:395
 msgid "Shaped (spherical)"
-msgstr "Forma (sfera)"
+msgstr "Forminis (sferinis)"
 
 #: ../libgimpbase/gimpbaseenums.c:396
 msgid "Shaped (dimpled)"
-msgstr "Forma (įdubęs)"
+msgstr "Forminis (įdubęs)"
 
 #: ../libgimpbase/gimpbaseenums.c:397
 msgid "Spiral (cw)"
@@ -763,7 +764,7 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:407
+#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:408
 msgid "(invalid UTF-8 string)"
 msgstr "(nekorektiška UTF-8 eilutė)"
 
@@ -1116,7 +1117,7 @@ msgstr "Kvadratėlių dydis"
 msgid "Check Style"
 msgstr "Kvadratėlių stilius"
 
-#. toggle button to (des)activate the instant preview
+#. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "_Peržiūra"
@@ -1470,11 +1471,11 @@ msgstr "Iš spalvotų dažų atimamas juodos spalva kiekis procentais."
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK spalvų parinkiklis (naudojant spalvų profilį)"
 
-#: ../modules/colorsel_cmyk_lcms.c:396
+#: ../modules/colorsel_cmyk_lcms.c:397
 msgid "Profile: (none)"
 msgstr "Profilis: (nėra)"
 
-#: ../modules/colorsel_cmyk_lcms.c:409
+#: ../modules/colorsel_cmyk_lcms.c:410
 #, c-format
 msgid "Profile: %s"
 msgstr "Profilis: %s"
