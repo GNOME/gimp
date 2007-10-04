@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-22 22:25+0300\n"
-"PO-Revision-Date: 2007-09-23 02:34+0300\n"
+"POT-Creation-Date: 2007-10-04 18:09+0300\n"
+"PO-Revision-Date: 2007-10-04 18:10+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -1130,7 +1130,7 @@ msgid "_About"
 msgstr "_Apie"
 
 #: ../app/actions/dialogs-actions.c:243 ../app/dialogs/about-dialog.c:114
-#: ../app/gui/gui.c:486
+#: ../app/gui/gui.c:490
 msgid "About GIMP"
 msgstr "Apie GIMP"
 
@@ -2044,11 +2044,11 @@ msgstr "P_riekinio plano spalva (permatoma)"
 #: ../app/actions/gradient-editor-actions.c:278
 #: ../app/actions/gradient-editor-actions.c:306
 msgid "B_ackground Color (Transparent)"
-msgstr "Fono spalva (permatoma)"
+msgstr "_Fono spalva (permatoma)"
 
 #: ../app/actions/gradient-editor-actions.c:314
 msgid "_Linear"
-msgstr "_Linijinis"
+msgstr "_Tiesinis"
 
 #: ../app/actions/gradient-editor-actions.c:319
 msgid "_Curved"
@@ -3330,7 +3330,7 @@ msgid "Toggle _Quick Mask"
 msgstr "Perjungti _greitą kaukę"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:1027
+#: ../app/display/gimpdisplayshell.c:1033
 msgid "Toggle Quick Mask"
 msgstr "Perjungti greitą kaukę"
 
@@ -4326,11 +4326,11 @@ msgstr "Perkelti šį langą į ekraną %s"
 
 #: ../app/base/base-enums.c:23
 msgid "Smooth"
-msgstr "Glotnus"
+msgstr "Glotni"
 
 #: ../app/base/base-enums.c:24
 msgid "Freehand"
-msgstr "Laisva ranka"
+msgstr "Sukurta ranka"
 
 #: ../app/base/base-enums.c:55 ../app/base/base-enums.c:125
 #: ../app/core/core-enums.c:1200
@@ -4422,11 +4422,11 @@ msgstr "Padalinti"
 
 #: ../app/base/base-enums.c:127
 msgid "Dodge"
-msgstr "Blukinimas"
+msgstr "Šviesinimas"
 
 #: ../app/base/base-enums.c:128
 msgid "Burn"
-msgstr "Ryškinimas"
+msgstr "Tamsinimas"
 
 #: ../app/base/base-enums.c:129
 msgid "Hard light"
@@ -5498,7 +5498,7 @@ msgstr "Nustatyti sluoksnio nepermatomumą"
 
 #: ../app/core/core-enums.c:906
 msgid "Lock/Unlock alpha channel"
-msgstr "Užrakinti/atrakinti alfa kanalą"
+msgstr "Užrakinti / atrakinti alfa kanalą"
 
 #: ../app/core/core-enums.c:907
 msgid "Text layer"
@@ -7448,7 +7448,7 @@ msgstr "Kita _užpildo spalva:"
 msgid "Select Custom Canvas Padding Color"
 msgstr "Pasirinkti kitą piešimo erdvės užpildo spalvą"
 
-#: ../app/dialogs/preferences-dialog.c:1431 ../app/gui/gui.c:491
+#: ../app/dialogs/preferences-dialog.c:1431
 msgid "Preferences"
 msgstr "Nustatymai"
 
@@ -8355,15 +8355,15 @@ msgstr "Perjungti į perkėlimo įrankį"
 msgid "Image saved to '%s'"
 msgstr "Paveikslėlis išsaugotas į „%s“"
 
-#: ../app/display/gimpdisplayshell.c:889
+#: ../app/display/gimpdisplayshell.c:895
 msgid "Access the image menu"
 msgstr "Pasiekti paveikslėlio meniu"
 
-#: ../app/display/gimpdisplayshell.c:998
+#: ../app/display/gimpdisplayshell.c:1004
 msgid "Zoom image when window size changes"
 msgstr "Keičiantis lango dydžiui keisti paveikslėlio mastelį"
 
-#: ../app/display/gimpdisplayshell.c:1048
+#: ../app/display/gimpdisplayshell.c:1054
 msgid "Navigate the image display"
 msgstr "Žvalgyti paveikslėlio ekraną"
 
@@ -8600,7 +8600,7 @@ msgstr "Suliejimas ir paaštrinimas"
 
 #: ../app/paint/gimpdodgeburn.c:87
 msgid "Dodge/Burn"
-msgstr "Blukinimas ir ryškinimas"
+msgstr "Šviesinimas ir tamsinimas"
 
 #: ../app/paint/gimperaser.c:62 ../app/tools/gimperasertool.c:66
 msgid "Eraser"
@@ -8640,7 +8640,7 @@ msgstr "Ištepimas"
 #: ../app/paint/gimpsourcecore.c:227
 #, c-format
 msgid "Set a source image first."
-msgstr "Pirma pasirinkite šaltinio paveikslėlį"
+msgstr "Iš pradžių pasirinkite šaltinio paveikslėlį."
 
 #: ../app/paint/paint-enums.c:51
 msgid "Modify Perspective Plane"
@@ -8648,23 +8648,23 @@ msgstr "Keisti perspektyvos plokštumą"
 
 #: ../app/paint/paint-enums.c:82
 msgid "Aligned"
-msgstr "Sulygiuota"
+msgstr "Lygiuotas"
 
 #: ../app/paint/paint-enums.c:83
 msgid "Registered"
-msgstr "Registruota"
+msgstr "Registruotas"
 
 #: ../app/paint/paint-enums.c:84
 msgid "Fixed"
-msgstr "Fiksuota"
+msgstr "Fiksuotas"
 
 #: ../app/paint/paint-enums.c:111
 msgid "Blur"
-msgstr "Sulieti"
+msgstr "Suliejimas"
 
 #: ../app/paint/paint-enums.c:112
 msgid "Sharpen"
-msgstr "Paaštrinti"
+msgstr "Paaštrinimas"
 
 #: ../app/pdb/channel_cmds.c:176
 msgid "Combine Masks"
@@ -9214,7 +9214,7 @@ msgstr "Užpildyti panašias spalvas"
 #: ../app/tools/gimpbucketfilloptions.c:253
 #: ../app/tools/gimpselectionoptions.c:398
 msgid "Finding Similar Colors"
-msgstr "Panašių spalvų ieškojimas"
+msgstr "Panašių spalvų paieška"
 
 #: ../app/tools/gimpbucketfilloptions.c:269
 msgid "Fill transparent areas"
@@ -9290,7 +9290,7 @@ msgstr "Lygiavimas:"
 
 #: ../app/tools/gimpcolorbalancetool.c:93
 msgid "Color Balance Tool: Adjust color distribution"
-msgstr "Spalvų balanso įrankis: keisti spalvų pasiskirstymą"
+msgstr "Spalvų balanso įrankis: koreguoti spalvų pasiskirstymą"
 
 #: ../app/tools/gimpcolorbalancetool.c:94
 msgid "Color _Balance..."
@@ -9298,7 +9298,7 @@ msgstr "Spalvų _balansas..."
 
 #: ../app/tools/gimpcolorbalancetool.c:111
 msgid "Adjust Color Balance"
-msgstr "Nustatyti spalvų balansą"
+msgstr "Koreguoti spalvų balansą"
 
 #: ../app/tools/gimpcolorbalancetool.c:153
 #, c-format
@@ -9307,30 +9307,30 @@ msgstr "Spalvų balansas veikia tik RGB spalvų sluoksniuose."
 
 #: ../app/tools/gimpcolorbalancetool.c:236
 msgid "Select Range to Adjust"
-msgstr "Pasirinkite keistiną sritį"
+msgstr "Pasirinkite koreguotiną sritį"
 
 #: ../app/tools/gimpcolorbalancetool.c:243 ../app/tools/gimplevelstool.c:179
 msgid "Adjust Color Levels"
-msgstr "Keisti spalvų lygius"
+msgstr "Koreguoti spalvų lygius"
 
 #: ../app/tools/gimpcolorbalancetool.c:259
 #: ../app/tools/gimphuesaturationtool.c:233
 msgid "Cyan"
-msgstr "Žydras"
+msgstr "Žydra"
 
 #: ../app/tools/gimpcolorbalancetool.c:266
 #: ../app/tools/gimphuesaturationtool.c:235
 msgid "Magenta"
-msgstr "Rožinis"
+msgstr "Rožinė"
 
 #: ../app/tools/gimpcolorbalancetool.c:273
 #: ../app/tools/gimphuesaturationtool.c:231
 msgid "Yellow"
-msgstr "Geltonas"
+msgstr "Geltona"
 
 #: ../app/tools/gimpcolorbalancetool.c:283
 msgid "R_eset Range"
-msgstr "Atstatyti _sritis"
+msgstr "Atstatyti _rėžį"
 
 #: ../app/tools/gimpcolorbalancetool.c:292
 msgid "Preserve _luminosity"
@@ -9397,7 +9397,7 @@ msgstr "Naudoti informacinį langą (%s)"
 
 #: ../app/tools/gimpcolorpickertool.c:96
 msgid "Color Picker"
-msgstr "Spalvų pipetė"
+msgstr "Spalvų parinkiklis"
 
 #: ../app/tools/gimpcolorpickertool.c:97
 msgid "Color Picker Tool: Set colors from image pixels"
@@ -9405,7 +9405,7 @@ msgstr "Spalvų parinkimo įrankis: pasirinkti spalvas iš paveikslėlio taškel
 
 #: ../app/tools/gimpcolorpickertool.c:98
 msgid "C_olor Picker"
-msgstr "S_palvų pipetė"
+msgstr "S_palvų parinkiklis"
 
 #: ../app/tools/gimpcolorpickertool.c:242
 msgid "Click in any image to view its color"
@@ -9429,7 +9429,7 @@ msgstr ""
 #. tool->display->shell
 #: ../app/tools/gimpcolorpickertool.c:318
 msgid "Color Picker Information"
-msgstr "Spalvų pipetės informacija"
+msgstr "Spalvų parinkiklio informacija"
 
 #: ../app/tools/gimpcolortool.c:255 ../app/tools/gimpcolortool.c:432
 msgid "Move Sample Point: "
@@ -9487,7 +9487,7 @@ msgstr "%s norėdami išlieti"
 #: ../app/tools/gimpconvolvetool.c:199
 #, c-format
 msgid "Convolve Type  (%s)"
-msgstr "Suliejimo ir paaštrinimo tipas (%s)"
+msgstr "Suliejimo / paaštrinimo tipas (%s)"
 
 #: ../app/tools/gimpcropoptions.c:148
 msgid "Current layer only"
@@ -9495,7 +9495,7 @@ msgstr "Tik esamame sluoksnyje"
 
 #: ../app/tools/gimpcropoptions.c:154
 msgid "Allow growing"
-msgstr ""
+msgstr "Leisti didinimą"
 
 #: ../app/tools/gimpcroptool.c:115
 msgid "Crop"
@@ -9504,7 +9504,7 @@ msgstr "Apkirpti"
 #: ../app/tools/gimpcroptool.c:116
 msgid "Crop Tool: Remove edge areas from image or layer"
 msgstr ""
-"Apkirpimo įrankis: pašalinti kraštinius paveikslėlio ar sluoksnio plotus"
+"Apkirpimo įrankis: pašalinti kraštines paveikslėlio ar sluoksnio sritis"
 
 #: ../app/tools/gimpcroptool.c:117
 msgid "_Crop"
@@ -9524,7 +9524,7 @@ msgstr "_Kreivės..."
 
 #: ../app/tools/gimpcurvestool.c:178
 msgid "Adjust Color Curves"
-msgstr "Nustatyti spalvų kreives"
+msgstr "Koreguoti spalvų kreives"
 
 #: ../app/tools/gimpcurvestool.c:180
 msgid "Load Curves"
@@ -9586,43 +9586,43 @@ msgstr "apdorojimo klaida"
 
 #: ../app/tools/gimpdodgeburntool.c:73
 msgid "Dodge / Burn"
-msgstr "Blukinimas / ryškinimas"
+msgstr "Šviesinimas / tamsinimas"
 
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
 msgstr ""
-"Blukinimo / ryškinimo įrankis: pasirenkamas pašviesinimas ar patamsinimas "
+"Šviesinimo / tamsinimo įrankis: pasirenkamas pašviesinimas ar patamsinimas "
 "naudojant teptuką"
 
 #: ../app/tools/gimpdodgeburntool.c:75
 msgid "Dod_ge / Burn"
-msgstr "Blu_kinimas / ryškinimas"
+msgstr "Švi_esinimas / tamsinimas"
 
 #: ../app/tools/gimpdodgeburntool.c:173
 msgid "Click to dodge"
-msgstr "Spustelėkite norėdami blukinti"
+msgstr "Spustelėkite norėdami šviesinti"
 
 #: ../app/tools/gimpdodgeburntool.c:174
 msgid "Click to dodge the line"
-msgstr "Spustelėkite norėdami blukinti liniją"
+msgstr "Spustelėkite norėdami šviesinti liniją"
 
 #: ../app/tools/gimpdodgeburntool.c:175
 #, c-format
 msgid "%s to burn"
-msgstr "%s norėdami ryškinti"
+msgstr "%s norėdami tamsinti"
 
 #: ../app/tools/gimpdodgeburntool.c:179
 msgid "Click to burn"
-msgstr "Spustelėkite norėdami ryškinti"
+msgstr "Spustelėkite norėdami tamsinti"
 
 #: ../app/tools/gimpdodgeburntool.c:180
 msgid "Click to burn the line"
-msgstr "Spustelėkite norėdami ryškinti liniją"
+msgstr "Spustelėkite norėdami tamsinti liniją"
 
 #: ../app/tools/gimpdodgeburntool.c:181
 #, c-format
 msgid "%s to dodge"
-msgstr "%s norėdami blukinti"
+msgstr "%s norėdami šviesinti"
 
 #. the type (dodge or burn)
 #: ../app/tools/gimpdodgeburntool.c:202
@@ -9711,7 +9711,7 @@ msgstr ""
 
 #: ../app/tools/gimpfliptool.c:80
 msgid "_Flip"
-msgstr "_Apsukti"
+msgstr "Ap_sukti"
 
 #: ../app/tools/gimpforegroundselectoptions.c:77
 msgid "Select a single contiguous area"
@@ -9726,7 +9726,7 @@ msgid ""
 "Smaller values give a more accurate selection border but may introduce holes "
 "in the selection"
 msgstr ""
-"Naudojant mažesnes reikšmes pasirinkimo rėmelis yra tikslesnis, bet "
+"Naudojant mažesnes reikšmes pažymėjimo rėmelis yra tikslesnis, tačiau "
 "pažymėtoje srityje gali atsirasti skylių"
 
 #: ../app/tools/gimpforegroundselectoptions.c:107
@@ -9783,7 +9783,7 @@ msgstr "Jautrumas spalvoms"
 
 #: ../app/tools/gimpforegroundselecttool.c:145
 msgid "Foreground Select"
-msgstr "Priekinio plano žymėjimas"
+msgstr "Priekinio plano pažymėjimas"
 
 #: ../app/tools/gimpforegroundselecttool.c:146
 msgid "Foreground Select Tool: Select a region containing foreground objects"
@@ -9793,7 +9793,7 @@ msgstr ""
 
 #: ../app/tools/gimpforegroundselecttool.c:147
 msgid "F_oreground Select"
-msgstr "_Priekinio plano žymėjimas"
+msgstr "_Priekinio plano pažymėjimas"
 
 #: ../app/tools/gimpforegroundselecttool.c:310
 msgid "Add more strokes or press Enter to accept the selection"
@@ -9810,7 +9810,7 @@ msgstr "Norėdami iškirpti objektą, apveskite aplink jį grubų apskritimą"
 
 #: ../app/tools/gimpforegroundselecttool.c:744
 msgid "command|Foreground Select"
-msgstr "Priekinio plano žymėjimas"
+msgstr "Priekinio plano pažymėjimas"
 
 #: ../app/tools/gimpfreeselecttool.c:98
 msgid "Free Select Tool: Select a hand-drawn region"
@@ -9861,15 +9861,15 @@ msgstr "Spustelėkite norėdami nurodyti naują taisymo šaltinį"
 #  The shell and main vbox
 #: ../app/tools/gimphistogramoptions.c:127
 msgid "Histogram Scale"
-msgstr "Histogramos mastelis"
+msgstr "Histogramos skalė"
 
 #: ../app/tools/gimphuesaturationtool.c:113
 msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
-msgstr "Atspalvio - sodrumo įrankis: keisti atspalvį, sodrumą bei šviesumą"
+msgstr "Atspalvio – sodrumo įrankis: keisti atspalvį, sodrumą ir šviesumą"
 
 #: ../app/tools/gimphuesaturationtool.c:114
 msgid "Hue-_Saturation..."
-msgstr "Atspalvis - _sodrumas..."
+msgstr "Atspalvis – _sodrumas..."
 
 #: ../app/tools/gimphuesaturationtool.c:131
 msgid "Adjust Hue / Lightness / Saturation"
@@ -9878,7 +9878,7 @@ msgstr "Reguliuoti atspalvį / šviesumą / sodrumą"
 #: ../app/tools/gimphuesaturationtool.c:173
 #, c-format
 msgid "Hue-Saturation operates only on RGB color layers."
-msgstr "Spalva - sodrumas veikia tik su RGB spalvų sluoksniais."
+msgstr "Atspalvis – sodrumas veikia tik RGB spalvų sluoksniuose."
 
 #: ../app/tools/gimphuesaturationtool.c:229
 msgid "M_aster"
@@ -9943,7 +9943,7 @@ msgstr "Greitas saugojimas"
 #: ../app/tools/gimpimagemaptool.c:611
 #, c-format
 msgid "Settings saved to '%s'"
-msgstr "Nustatymai išsaugoti į „%s“"
+msgstr "Parametrai išsaugoti į „%s“"
 
 #. adjust sliders
 #: ../app/tools/gimpinkoptions-gui.c:56
@@ -11037,46 +11037,46 @@ msgstr "Nepavyko importuoti kontūrų iš „%s“: %s"
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpactionview.c:313
+#: ../app/widgets/gimpactionview.c:312
 #: ../app/widgets/gimpcontrollereditor.c:347
 msgid "Action"
 msgstr "Veiksmas"
 
-#: ../app/widgets/gimpactionview.c:342
+#: ../app/widgets/gimpactionview.c:341
 msgid "Shortcut"
 msgstr "Kombinacija"
 
-#: ../app/widgets/gimpactionview.c:366
+#: ../app/widgets/gimpactionview.c:365
 msgid "Name"
 msgstr "Pavadinimas"
 
-#: ../app/widgets/gimpactionview.c:498 ../app/widgets/gimpactionview.c:698
+#: ../app/widgets/gimpactionview.c:497 ../app/widgets/gimpactionview.c:697
 msgid "Changing shortcut failed."
 msgstr "Kombinacijos pakeisti nepavyko"
 
-#: ../app/widgets/gimpactionview.c:540
+#: ../app/widgets/gimpactionview.c:539
 msgid "Conflicting Shortcuts"
 msgstr "Konfliktuojančios kombinacijos"
 
-#: ../app/widgets/gimpactionview.c:546
+#: ../app/widgets/gimpactionview.c:545
 msgid "_Reassign shortcut"
 msgstr "_Iš naujo paskirti kombinaciją"
 
-#: ../app/widgets/gimpactionview.c:557
+#: ../app/widgets/gimpactionview.c:556
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "Kombinacija „%s“ jau naudoja „%s“ iš grupės „%s“."
 
-#: ../app/widgets/gimpactionview.c:561
+#: ../app/widgets/gimpactionview.c:560
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "Iš naujo priskiriant kombinaciją ji bus pašalinta iš „%s“."
 
-#: ../app/widgets/gimpactionview.c:634
+#: ../app/widgets/gimpactionview.c:633
 msgid "Invalid shortcut."
 msgstr "Netinkama konbinacija."
 
-#: ../app/widgets/gimpactionview.c:722
+#: ../app/widgets/gimpactionview.c:721
 msgid "Removing shortcut failed."
 msgstr "Nepavyko pašalinti kombinacijos."
 
@@ -11333,7 +11333,7 @@ msgid "Keyboard Events"
 msgstr "Klaviatūros įvykiai"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:223
-#: ../app/widgets/gimpcontrollerwheel.c:222
+#: ../app/widgets/gimpcontrollerwheel.c:225
 msgid "Ready"
 msgstr "Pasiruošęs"
 
@@ -11422,7 +11422,6 @@ msgstr ""
 msgid "Configure Input Controller"
 msgstr "Konfigūruoti įvesties kontrolerį"
 
-#: ../app/widgets/gimpcontrollerwheel.c:69
 #: ../app/widgets/gimpcontrollerwheel.c:72
 #: ../app/widgets/gimpcontrollerwheel.c:75
 #: ../app/widgets/gimpcontrollerwheel.c:78
@@ -11430,10 +11429,10 @@ msgstr "Konfigūruoti įvesties kontrolerį"
 #: ../app/widgets/gimpcontrollerwheel.c:84
 #: ../app/widgets/gimpcontrollerwheel.c:87
 #: ../app/widgets/gimpcontrollerwheel.c:90
+#: ../app/widgets/gimpcontrollerwheel.c:93
 msgid "Scroll Up"
 msgstr "Slinkimas aukštyn"
 
-#: ../app/widgets/gimpcontrollerwheel.c:94
 #: ../app/widgets/gimpcontrollerwheel.c:97
 #: ../app/widgets/gimpcontrollerwheel.c:100
 #: ../app/widgets/gimpcontrollerwheel.c:103
@@ -11441,10 +11440,10 @@ msgstr "Slinkimas aukštyn"
 #: ../app/widgets/gimpcontrollerwheel.c:109
 #: ../app/widgets/gimpcontrollerwheel.c:112
 #: ../app/widgets/gimpcontrollerwheel.c:115
+#: ../app/widgets/gimpcontrollerwheel.c:118
 msgid "Scroll Down"
 msgstr "Slinkimas žemyn"
 
-#: ../app/widgets/gimpcontrollerwheel.c:119
 #: ../app/widgets/gimpcontrollerwheel.c:122
 #: ../app/widgets/gimpcontrollerwheel.c:125
 #: ../app/widgets/gimpcontrollerwheel.c:128
@@ -11452,10 +11451,10 @@ msgstr "Slinkimas žemyn"
 #: ../app/widgets/gimpcontrollerwheel.c:134
 #: ../app/widgets/gimpcontrollerwheel.c:137
 #: ../app/widgets/gimpcontrollerwheel.c:140
+#: ../app/widgets/gimpcontrollerwheel.c:143
 msgid "Scroll Left"
 msgstr "Slinkimas kairėn"
 
-#: ../app/widgets/gimpcontrollerwheel.c:144
 #: ../app/widgets/gimpcontrollerwheel.c:147
 #: ../app/widgets/gimpcontrollerwheel.c:150
 #: ../app/widgets/gimpcontrollerwheel.c:153
@@ -11463,14 +11462,15 @@ msgstr "Slinkimas kairėn"
 #: ../app/widgets/gimpcontrollerwheel.c:159
 #: ../app/widgets/gimpcontrollerwheel.c:162
 #: ../app/widgets/gimpcontrollerwheel.c:165
+#: ../app/widgets/gimpcontrollerwheel.c:168
 msgid "Scroll Right"
 msgstr "Slinkimas dešinėn"
 
-#: ../app/widgets/gimpcontrollerwheel.c:177
+#: ../app/widgets/gimpcontrollerwheel.c:180
 msgid "Mouse Wheel"
 msgstr "Pelės ratukas"
 
-#: ../app/widgets/gimpcontrollerwheel.c:221
+#: ../app/widgets/gimpcontrollerwheel.c:224
 msgid "Mouse Wheel Events"
 msgstr "Pelės ratuko įvykiai"
 
@@ -11869,7 +11869,7 @@ msgstr "Užrakinti alfa kanalą"
 
 #: ../app/widgets/gimplayertreeview.c:322
 msgid "Lock:"
-msgstr "Užrakinti"
+msgstr "Užrakinti:"
 
 #: ../app/widgets/gimplayertreeview.c:874
 msgid "Empty Layer"
@@ -12159,37 +12159,27 @@ msgstr "Atverti palečių pasirinkimo dialogą"
 msgid "Open the font selection dialog"
 msgstr "Atverti šriftų pasirinkimo dialogą"
 
-#. do not translate the part before the |
-#: ../app/widgets/gimpwidgets-utils.c:554
-msgid "keyboard label|Space"
-msgstr "Tarpo klavišas"
-
-#. do not translate the part before the |
-#: ../app/widgets/gimpwidgets-utils.c:558
-msgid "keyboard label|Backslash"
-msgstr "Kairinis brūkšnys"
-
-#: ../app/widgets/gimpwidgets-utils.c:668
+#: ../app/widgets/gimpwidgets-utils.c:604
 #, c-format
 msgid "%s (try %s)"
 msgstr "%s (bandykite %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:668
+#: ../app/widgets/gimpwidgets-utils.c:604
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:672
+#: ../app/widgets/gimpwidgets-utils.c:608
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (bandykite %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:676
+#: ../app/widgets/gimpwidgets-utils.c:612
 #, c-format
 msgid "%s (try %s, %s, %s)"
 msgstr "%s (bandykite %s, %s, %s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:942
+#: ../app/widgets/gimpwidgets-utils.c:878
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "Netinkami UTF-8 duomenys faile „%s“."
@@ -12240,15 +12230,15 @@ msgstr "GIMP žinyno naršyklė"
 
 #: ../app/widgets/widgets-enums.c:202
 msgid "Web browser"
-msgstr "Interneto naršyklė"
+msgstr "Žiniatinklio naršyklė"
 
 #: ../app/widgets/widgets-enums.c:229
 msgid "Linear"
-msgstr "Linijinis"
+msgstr "Tiesinė"
 
 #: ../app/widgets/widgets-enums.c:230
 msgid "Logarithmic"
-msgstr "Logaritminis"
+msgstr "Logaritminė"
 
 #: ../app/widgets/widgets-enums.c:263
 msgid "Icon"
