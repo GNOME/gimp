@@ -959,7 +959,7 @@ jpeg_load_cmyk_transform (guint8 *profile_data,
   if (config->display_intent ==
       GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC)
     {
-      flags |= cmsFLAGS_WHITEBLACKCOMPENSATION;
+      flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
     }
 
   transform = cmsCreateTransform (cmyk_profile, TYPE_CMYK_8_REV,

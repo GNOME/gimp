@@ -467,15 +467,18 @@ cdisplay_proof_changed (GimpColorDisplay *display)
 
   if (proofProfile)
     {
+      DWORD flags = cmsFLAGS_SOFTPROOFING;
+
+      if (proof->bpc)
+        flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
+
       proof->transform = cmsCreateProofingTransform (rgbProfile,
                                                      TYPE_RGB_8,
                                                      rgbProfile, TYPE_RGB_8,
                                                      proofProfile,
                                                      proof->intent,
                                                      proof->intent,
-                                                     cmsFLAGS_SOFTPROOFING |
-                                                     (proof->bpc ?
-                                                      cmsFLAGS_WHITEBLACKCOMPENSATION : 0));
+                                                     flags);
 
       cmsCloseProfile (proofProfile);
     }

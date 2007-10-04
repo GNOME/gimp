@@ -337,7 +337,7 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
   if (config->display_intent ==
       GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC)
     {
-      flags |= cmsFLAGS_WHITEBLACKCOMPENSATION;
+      flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
     }
 
   if (proof_profile)

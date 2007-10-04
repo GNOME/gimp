@@ -416,7 +416,7 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
   if (config->display_intent ==
       GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC)
     {
-      flags |= cmsFLAGS_WHITEBLACKCOMPENSATION;
+      flags |= cmsFLAGS_BLACKPOINTCOMPENSATION;
     }
 
   module->rgb2cmyk = cmsCreateTransform (rgb_profile,  TYPE_RGB_DBL,

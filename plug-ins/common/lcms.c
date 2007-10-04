@@ -961,7 +961,7 @@ lcms_image_transform_rgb (gint32                    image,
                                           dest_profile, format,
                                           intent,
                                           bpc ?
-                                          cmsFLAGS_WHITEBLACKCOMPENSATION : 0);
+                                          cmsFLAGS_BLACKPOINTCOMPENSATION : 0);
 
           last_format = format;
         }
@@ -1002,7 +1002,7 @@ lcms_image_transform_indexed (gint32                    image,
   transform = cmsCreateTransform (src_profile,  TYPE_RGB_8,
                                   dest_profile, TYPE_RGB_8,
                                   intent,
-                                  bpc ? cmsFLAGS_WHITEBLACKCOMPENSATION : 0);
+                                  bpc ? cmsFLAGS_BLACKPOINTCOMPENSATION : 0);
 
   if (transform)
     {
