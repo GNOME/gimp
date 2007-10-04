@@ -376,6 +376,7 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
 {
   GimpColorSelector *selector = GIMP_COLOR_SELECTOR (module);
   GimpColorConfig   *config   = module->config;
+  DWORD              flags    = 0;
   cmsHPROFILE        rgb_profile;
   cmsHPROFILE        cmyk_profile;
   const gchar       *name;
@@ -412,14 +413,20 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
 
   rgb_profile = color_config_get_rgb_profile (config);
 
+  if (config->display_intent ==
+      GIMP_COLOR_RENDERING_INTENT_RELATIVE_COLORIMETRIC)
+    {
+      flags |= cmsFLAGS_WHITEBLACKCOMPENSATION;
+    }
+
   module->rgb2cmyk = cmsCreateTransform (rgb_profile,  TYPE_RGB_DBL,
                                          cmyk_profile, TYPE_CMYK_DBL,
-                                         INTENT_PERCEPTUAL,
-                                          0);
+                                         config->display_intent,
+                                         flags);
   module->cmyk2rgb = cmsCreateTransform (cmyk_profile, TYPE_CMYK_DBL,
                                          rgb_profile,  TYPE_RGB_DBL,
-                                         INTENT_PERCEPTUAL,
-                                          0);
+                                         config->display_intent,
+                                         flags);
 
   cmsCloseProfile (rgb_profile);
   cmsCloseProfile (cmyk_profile);

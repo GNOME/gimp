@@ -5,6 +5,8 @@
 	preferences. Use black point compensation if the rendering intent
 	is relative colorimetric.
 
+	* modules/colorsel_cmyk_lcms.c: same change here.
+
 2007-10-03  Sven Neumann  <sven@gimp.org>
 
 	* modules/cdisplay_lcms.c: use black point compensation if the
