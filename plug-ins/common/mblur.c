@@ -34,15 +34,18 @@
 
 #include "config.h"
 
+#include <string.h>
+
 #include <libgimp/gimp.h>
 #include <libgimp/gimpui.h>
 
 #include "libgimp/stdplugins-intl.h"
 
 
-#define PLUG_IN_PROC    "plug-in-mblur"
-#define PLUG_IN_BINARY  "mblur"
-#define PLUG_IN_VERSION "May 2007, 1.3"
+#define PLUG_IN_PROC         "plug-in-mblur"
+#define PLUG_IN_PROC_INWARD  "plug-in-mblur-inward"
+#define PLUG_IN_BINARY       "mblur"
+#define PLUG_IN_VERSION      "May 2007, 1.3"
 
 
 #define MBLUR_LENGTH_MAX    256.0
@@ -77,29 +80,29 @@ static void run   (const gchar      *name,
                    gint             *nreturn_vals,
                    GimpParam       **return_vals);
 
-static void             mblur        (GimpDrawable *drawable,
-                                      GimpPreview  *preview);
-static void             mblur_linear (GimpDrawable *drawable,
-                                      GimpPreview  *preview,
-                                      gint          x1,
-                                      gint          y1,
-                                      gint          width,
-                                      gint          height);
-static void             mblur_radial (GimpDrawable *drawable,
-                                      GimpPreview  *preview,
-                                      gint          x1,
-                                      gint          y1,
-                                      gint          width,
-                                      gint          height);
-static void             mblur_zoom   (GimpDrawable *drawable,
-                                      GimpPreview  *preview,
-                                      gint          x1,
-                                      gint          y1,
-                                      gint          width,
-                                      gint          height);
+static void      mblur        (GimpDrawable *drawable,
+                               GimpPreview  *preview);
+static void      mblur_linear (GimpDrawable *drawable,
+                               GimpPreview  *preview,
+                               gint          x1,
+                               gint          y1,
+                               gint          width,
+                               gint          height);
+static void      mblur_radial (GimpDrawable *drawable,
+                               GimpPreview  *preview,
+                               gint          x1,
+                               gint          y1,
+                               gint          width,
+                               gint          height);
+static void      mblur_zoom   (GimpDrawable *drawable,
+                               GimpPreview  *preview,
+                               gint          x1,
+                               gint          y1,
+                               gint          width,
+                               gint          height);
 
-static gboolean         mblur_dialog (gint32        image_ID,
-                                      GimpDrawable *drawable);
+static gboolean  mblur_dialog (gint32        image_ID,
+                               GimpDrawable *drawable);
 
 /***** Variables *****/
 
@@ -144,11 +147,10 @@ query (void)
     { GIMP_PDB_IMAGE,    "image",     "Input image" },
     { GIMP_PDB_DRAWABLE, "drawable",  "Input drawable" },
     { GIMP_PDB_INT32,    "type",      "Type of motion blur (0 - linear, 1 - radial, 2 - zoom)" },
-    { GIMP_PDB_INT32,     "length",    "Length" },
-    { GIMP_PDB_INT32,     "angle",     "Angle" },
-    { GIMP_PDB_FLOAT,     "center-x",     "Center X (optional)" },
-    { GIMP_PDB_FLOAT,     "center-y",     "Center Y (optional)" },
-    { GIMP_PDB_INT32,     "blur-outward", "For radial, 1 for outward, 0 for inward (optional)" },
+    { GIMP_PDB_INT32,    "length",    "Length" },
+    { GIMP_PDB_INT32,    "angle",     "Angle" },
+    { GIMP_PDB_FLOAT,    "center-x",  "Center X (optional)" },
+    { GIMP_PDB_FLOAT,    "center-y",  "Center Y (optional)" },
   };
 
   gimp_install_procedure (PLUG_IN_PROC,
@@ -156,6 +158,19 @@ query (void)
                           "This plug-in simulates the effect seen when "
                           "photographing a moving object at a slow shutter "
                           "speed. Done by adding multiple displaced copies.",
+                          "Torsten Martinsen, Federico Mena Quintero, Daniel Skarda, Joerg Gittinger",
+                          "Torsten Martinsen, Federico Mena Quintero, Daniel Skarda, Joerg Gittinger",
+                          PLUG_IN_VERSION,
+                          N_("_Motion Blur..."),
+                          "RGB*, GRAY*",
+                          GIMP_PLUGIN,
+                          G_N_ELEMENTS (args), 0,
+                          args, NULL);
+
+  gimp_install_procedure (PLUG_IN_PROC_INWARD,
+                          N_("Simulate movement using directional blur"),
+                          "This procedure is equivalent to plug-in-mblur but "
+                          "performs the radial blur inward instead of outward.",
                           "Torsten Martinsen, Federico Mena Quintero, Daniel Skarda, Joerg Gittinger",
                           "Torsten Martinsen, Federico Mena Quintero, Daniel Skarda, Joerg Gittinger",
                           PLUG_IN_VERSION,
@@ -220,12 +235,8 @@ run (const gchar      *name,
       break;
 
     case GIMP_RUN_NONINTERACTIVE:
-      /* Make sure all the arguments are present */
-      if (nparams == 9)
-        {
-          mbvals.blur_outward = param[8].data.d_int32;
-          --nparams;
-        }
+      if (strcmp (name, PLUG_IN_PROC_INWARD) == 0)
+        mbvals.blur_outward = FALSE;
 
       if (nparams == 8)
         {
@@ -233,7 +244,9 @@ run (const gchar      *name,
           mbvals.center_y = param[7].data.d_float;
         }
       else if (nparams != 6)
-        status = GIMP_PDB_CALLING_ERROR;
+        {
+          status = GIMP_PDB_CALLING_ERROR;
+        }
 
       if (status == GIMP_PDB_SUCCESS)
         {

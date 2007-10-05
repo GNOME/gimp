@@ -1,5 +1,10 @@
 2007-10-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/mblur.c: restore compatibility by registering an
+	extra procedure for the inward/outward parameter (bug #483426).
+
+2007-10-05  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/preferences-dialog.c: allow to configure the
 	out-of-gamut warning color.
 
