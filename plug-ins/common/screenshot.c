@@ -797,7 +797,7 @@ create_image (GdkPixbuf   *pixbuf,
                                       100, GIMP_NORMAL_MODE, 0.0, 1.0);
   gimp_image_add_layer (image, layer, 0);
 
-  if (shape)
+  if (shape && ! gdk_region_empty (shape))
     {
       image_select_shape (image, shape);
       gimp_layer_add_alpha (layer);

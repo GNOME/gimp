@@ -1,5 +1,10 @@
 2007-10-05  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/common/screenshot.c (create_image): check that the
+	window shape is non-empty before applying it to the alpha channel.
+
+2007-10-05  Sven Neumann  <sven@gimp.org>
+
 	* modules/cdisplay_lcms.c (cdisplay_lcms_get_display_profile):
 	support the new revision of the ICC Profiles In X specification
 	which handles Xinerama setups.
