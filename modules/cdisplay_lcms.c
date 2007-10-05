@@ -474,8 +474,6 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
        */
       atom_name = g_strdup_printf ("_ICC_PROFILE_%d", monitor + 1);
 
-      g_printerr ("%s\n", atom_name);
-
       if (gdk_property_get (gdk_screen_get_root_window (screen),
                             gdk_atom_intern (atom_name, FALSE),
                             GDK_NONE,
