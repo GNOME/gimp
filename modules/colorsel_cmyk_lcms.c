@@ -396,7 +396,7 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
 
   gtk_label_set_text (GTK_LABEL (module->name_label), _("Profile: (none)"));
 
-  if (! config || config->mode == GIMP_COLOR_MANAGEMENT_OFF)
+  if (! config)
     goto out;
 
   if (! config->cmyk_profile ||

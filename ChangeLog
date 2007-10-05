@@ -1,5 +1,10 @@
 2007-10-05  Sven Neumann  <sven@gimp.org>
 
+	* modules/colorsel_cmyk_lcms.c: always use the configured CMYK
+	profile, regardless of the color management mode.
+
+2007-10-05  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/plug-in-menu-path.c (plug_in_menu_path_map):
 	rewritten array handling to make the IRIX MIPSpro compiler happy
 	(bug #483619).
