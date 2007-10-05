@@ -2397,7 +2397,7 @@ prefs_dialog_new (Gimp       *gimp,
                                      &top_iter,
                                      page_index++);
 
-  table = prefs_table_new (9, GTK_CONTAINER (vbox));
+  table = prefs_table_new (10, GTK_CONTAINER (vbox));
 
   {
     static const struct
@@ -2451,15 +2451,16 @@ prefs_dialog_new (Gimp       *gimp,
 
         if (i == 2) /* display profile */
           {
+            gtk_table_set_row_spacing (GTK_TABLE (table), row - 2, 12);
+
             button =
               gimp_prop_check_button_new (color_config,
                                           "display-profile-from-gdk",
-                                          _("_Try to obtain the monitor "
-                                            "profile from the windowing "
-                                            "system"));
+                                          _("_Try to use the system monitor "
+                                            "profile"));
 
             gtk_table_attach_defaults (GTK_TABLE (table),
-                                       button, 0, 2, row, row + 1);
+                                       button, 1, 2, row, row + 1);
             gtk_widget_show (button);
             row++;
 
@@ -2479,14 +2480,22 @@ prefs_dialog_new (Gimp       *gimp,
           }
       }
 
-    gtk_table_set_row_spacing (GTK_TABLE (table), row - 1, 12);
-
     g_object_unref (store);
-    g_object_unref (color_config);
+
+    button = gimp_prop_check_button_new (color_config, "simulation-gamut-check",
+                                         _("Mark out of gamut colors"));
+    gtk_table_attach_defaults (GTK_TABLE (table),
+                               button, 1, 2, row, row + 1);
+    gtk_widget_show (button);
+    row++;
+
+    gtk_table_set_row_spacing (GTK_TABLE (table), row - 1, 12);
 
     button = prefs_enum_combo_box_add (object, "color-profile-policy", 0, 0,
                                        _("File Open behaviour:"),
                                        GTK_TABLE (table), row++, NULL);
+
+    g_object_unref (color_config);
   }
 
 

@@ -53,12 +53,22 @@ GimpColorConfig
 
 </para>
 
+<!-- ##### ARG GimpColorConfig:out-of-gamut-color ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG GimpColorConfig:printer-profile ##### -->
 <para>
 
 </para>
 
 <!-- ##### ARG GimpColorConfig:rgb-profile ##### -->
+<para>
+
+</para>
+
+<!-- ##### ARG GimpColorConfig:simulation-gamut-check ##### -->
 <para>
 
 </para>

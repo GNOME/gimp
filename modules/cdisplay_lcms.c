@@ -350,6 +350,17 @@ cdisplay_lcms_changed (GimpColorDisplay *display)
 
       flags |= cmsFLAGS_SOFTPROOFING;
 
+      if (config->simulation_gamut_check)
+        {
+          guchar r, g, b;
+
+          flags |= cmsFLAGS_GAMUTCHECK;
+
+          gimp_rgb_get_uchar (&config->out_of_gamut_color, &r, &g, &b);
+
+          cmsSetAlarmCodes (r, g, b);
+        }
+
       lcms->transform = cmsCreateProofingTransform (src_profile,  TYPE_RGB_8,
                                                     dest_profile, TYPE_RGB_8,
                                                     proof_profile,

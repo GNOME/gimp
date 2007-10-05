@@ -1,3 +1,14 @@
+2007-10-05  Sven Neumann  <sven@gimp.org>
+
+	* libgimpconfig/gimpcolorconfig.[ch]: added settings for marking
+	out-of-gamut colors in the Print Simulation (bug #476824).
+
+	* app/dialogs/preferences-dialog.c: added a check-button for the
+	out-of-gamut warning and tweaked the layout of the Color Management
+	page to make the relationship of the settings more obvious.
+
+	* modules/cdisplay_lcms.c: mark out-of-gamut colors.
+
 2007-10-04  Sven Neumann  <sven@gimp.org>
 
 	* modules/cdisplay_lcms.c

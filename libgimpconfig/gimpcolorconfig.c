@@ -24,6 +24,8 @@
 
 #include <glib-object.h>
 
+#include "libgimpcolor/gimpcolor.h"
+
 #include "gimpconfigtypes.h"
 
 #include "gimpcolorconfig-enums.h"
@@ -55,6 +57,11 @@
 #define SIMULATION_RENDERING_INTENT_BLURB \
   N_("Sets how colors are converted from RGB working space to the " \
      "print simulation device.")
+#define SIMULATION_GAMUT_CHECK_BLURB \
+  N_("When enabled, the print simulation will mark colors which can not be " \
+     "represented in the target color space.")
+#define OUT_OF_GAMUT_COLOR_BLURB \
+  N_("The color to use for marking colors which are out of gamut.")
 
 
 enum
@@ -68,6 +75,8 @@ enum
   PROP_PRINTER_PROFILE,
   PROP_DISPLAY_RENDERING_INTENT,
   PROP_SIMULATION_RENDERING_INTENT,
+  PROP_SIMULATION_GAMUT_CHECK,
+  PROP_OUT_OF_GAMUT_COLOR,
   PROP_DISPLAY_MODULE
 };
 
@@ -95,6 +104,9 @@ static void
 gimp_color_config_class_init (GimpColorConfigClass *klass)
 {
   GObjectClass *object_class = G_OBJECT_CLASS (klass);
+  GimpRGB       color;
+
+  gimp_rgba_set_uchar (&color, 0xff, 0x00, 0xff, 0xff);
 
   object_class->finalize     = gimp_color_config_finalize;
   object_class->set_property = gimp_color_config_set_property;
@@ -138,6 +150,17 @@ gimp_color_config_class_init (GimpColorConfigClass *klass)
                                  GIMP_TYPE_COLOR_RENDERING_INTENT,
                                  GIMP_COLOR_RENDERING_INTENT_PERCEPTUAL,
                                  GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_BOOLEAN (object_class, PROP_SIMULATION_GAMUT_CHECK,
+                                    "simulation-gamut-check",
+                                    SIMULATION_GAMUT_CHECK_BLURB,
+                                    FALSE,
+                                    GIMP_PARAM_STATIC_STRINGS);
+  GIMP_CONFIG_INSTALL_PROP_RGB (object_class, PROP_OUT_OF_GAMUT_COLOR,
+                                "out-of-gamut-color",
+                                OUT_OF_GAMUT_COLOR_BLURB,
+                                FALSE, &color,
+                                GIMP_PARAM_STATIC_STRINGS);
+
   GIMP_CONFIG_INSTALL_PROP_STRING (object_class, PROP_DISPLAY_MODULE,
                                    "display-module", NULL,
                                    "CdisplayLcms",
@@ -210,6 +233,12 @@ gimp_color_config_set_property (GObject      *object,
     case PROP_SIMULATION_RENDERING_INTENT:
       color_config->simulation_intent = g_value_get_enum (value);
       break;
+    case PROP_SIMULATION_GAMUT_CHECK:
+      color_config->simulation_gamut_check = g_value_get_boolean (value);
+      break;
+    case PROP_OUT_OF_GAMUT_COLOR:
+      color_config->out_of_gamut_color = *(GimpRGB *) g_value_get_boxed (value);
+      break;
     case PROP_DISPLAY_MODULE:
       g_free (color_config->display_module);
       color_config->display_module = g_value_dup_string (value);
@@ -254,6 +283,12 @@ gimp_color_config_get_property (GObject    *object,
       break;
     case PROP_SIMULATION_RENDERING_INTENT:
       g_value_set_enum (value, color_config->simulation_intent);
+      break;
+    case PROP_SIMULATION_GAMUT_CHECK:
+      g_value_set_boolean (value, color_config->simulation_gamut_check);
+      break;
+    case PROP_OUT_OF_GAMUT_COLOR:
+      g_value_set_boxed (value, &color_config->out_of_gamut_color);
       break;
     case PROP_DISPLAY_MODULE:
       g_value_set_string (value, color_config->display_module);
