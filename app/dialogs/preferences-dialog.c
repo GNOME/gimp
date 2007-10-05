@@ -66,6 +66,9 @@
 
 #define RESPONSE_RESET 1
 
+#define COLOR_BUTTON_WIDTH  40
+#define COLOR_BUTTON_HEIGHT 24
+
 
 /*  preferences local functions  */
 
@@ -1182,7 +1185,8 @@ prefs_color_button_add (GObject      *config,
 {
   GtkWidget *button = gimp_prop_color_button_new (config, property_name,
                                                   title,
-                                                  60, 24,
+                                                  COLOR_BUTTON_WIDTH,
+                                                  COLOR_BUTTON_HEIGHT,
                                                   GIMP_COLOR_AREA_FLAT);
 
   if (button)
@@ -2494,7 +2498,8 @@ prefs_dialog_new (Gimp       *gimp,
 
     button = gimp_prop_color_button_new (color_config, "out-of-gamut-color",
                                          _("Select Warning Color"),
-                                         40, -1,
+                                         COLOR_BUTTON_WIDTH,
+                                         COLOR_BUTTON_HEIGHT,
                                          GIMP_COLOR_AREA_FLAT);
     gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
     gtk_widget_show (button);
