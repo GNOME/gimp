@@ -469,25 +469,16 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
           monitor = gdk_screen_get_monitor_at_window (screen, widget->window);
         }
 
-      /* In the ICC Profiles In X specification monitors are
-       * enumerated starting with one.
-       */
-      atom_name = g_strdup_printf ("_ICC_PROFILE_%d", monitor + 1);
+      if (monitor > 0)
+        atom_name = g_strdup_printf ("_ICC_PROFILE_%d", monitor);
+      else
+        atom_name = g_strdup ("_ICC_PROFILE");
 
       if (gdk_property_get (gdk_screen_get_root_window (screen),
                             gdk_atom_intern (atom_name, FALSE),
                             GDK_NONE,
                             0, 64 * 1024 * 1024, FALSE,
                             &type, &format, &nitems, &data) && nitems > 0)
-        {
-          profile = cmsOpenProfileFromMem (data, nitems);
-          g_free (data);
-        }
-      else if (gdk_property_get (gdk_screen_get_root_window (screen),
-                                 gdk_atom_intern ("_ICC_PROFILE", FALSE),
-                                 GDK_NONE,
-                                 0, 64 * 1024 * 1024, FALSE,
-                                 &type, &format, &nitems, &data) && nitems > 0)
         {
           profile = cmsOpenProfileFromMem (data, nitems);
           g_free (data);
