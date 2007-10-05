@@ -1,5 +1,11 @@
 2007-10-05  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/plug-in-menu-path.c (plug_in_menu_path_map):
+	rewritten array handling to make the IRIX MIPSpro compiler happy
+	(bug #483619).
+
+2007-10-05  Sven Neumann  <sven@gimp.org>
+
 	* libgimpconfig/gimpcolorconfig.[ch]: added settings for marking
 	out-of-gamut colors in the Print Simulation (bug #476824).
 

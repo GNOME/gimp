@@ -42,22 +42,21 @@ static const MenuPathMapping menu_path_mappings[] =
 {
 #ifndef ENABLE_TOOLBOX_MENU
   { "<Toolbox>/Xtns", "<Image>/Xtns" },
-  { "<Toolbox>/Help", "<Image>/Help" }
+  { "<Toolbox>/Help", "<Image>/Help" },
 #endif /* ENABLE_TOOLBOX_MENU */
+  { NULL, NULL                       }
 };
 
 
 gchar *
 plug_in_menu_path_map (const gchar *menu_path)
 {
-  gint i;
+  const MenuPathMapping *mapping;
 
   g_return_val_if_fail (menu_path != NULL, NULL);
 
-  for (i = 0; i < G_N_ELEMENTS (menu_path_mappings); i++)
+  for (mapping = menu_path_mappings; mapping->orig_path; mapping++)
     {
-      const MenuPathMapping *mapping = &menu_path_mappings[i];
-
       if (g_str_has_prefix (menu_path, mapping->orig_path))
         {
           gint   orig_len = strlen (mapping->orig_path);
