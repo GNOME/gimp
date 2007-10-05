@@ -172,7 +172,7 @@ are compiled against.
 
 @module: 
 @name: 
-@_static_values: 
+@const_static_values: 
 @Returns: 
 
 
