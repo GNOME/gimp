@@ -48,7 +48,7 @@
 #define PLUG_IN_VERSION      "May 2007, 1.3"
 
 
-#define MBLUR_LENGTH_MAX    256.0
+#define MBLUR_LENGTH_MAX     256.0
 
 
 typedef enum
@@ -170,7 +170,7 @@ query (void)
   gimp_install_procedure (PLUG_IN_PROC_INWARD,
                           N_("Simulate movement using directional blur"),
                           "This procedure is equivalent to plug-in-mblur but "
-                          "performs the radial blur inward instead of outward.",
+                          "performs the zoom blur inward instead of outward.",
                           "Torsten Martinsen, Federico Mena Quintero, Daniel Skarda, Joerg Gittinger",
                           "Torsten Martinsen, Federico Mena Quintero, Daniel Skarda, Joerg Gittinger",
                           PLUG_IN_VERSION,
