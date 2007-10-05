@@ -1,5 +1,11 @@
 2007-10-05  Sven Neumann  <sven@gimp.org>
 
+	* modules/cdisplay_lcms.c (cdisplay_lcms_get_display_profile):
+	support the new revision of the ICC Profiles In X specification
+	which handles Xinerama setups.
+
+2007-10-05  Sven Neumann  <sven@gimp.org>
+
 	* app/dialogs/preferences-dialog.c: use the same size for all
 	color buttons.
 

@@ -445,10 +445,12 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
     {
       GimpColorManaged *managed;
       GdkScreen        *screen;
-      GdkAtom           type   = GDK_NONE;
-      gint              format = 0;
-      gint              nitems = 0;
-      guchar           *data   = NULL;
+      GdkAtom           type    = GDK_NONE;
+      gint              format  = 0;
+      gint              nitems  = 0;
+      gint              monitor = 0;
+      gchar            *atom_name;
+      guchar           *data    = NULL;
 
       managed = gimp_color_display_get_managed (GIMP_COLOR_DISPLAY (lcms));
 
@@ -459,8 +461,23 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
 
       g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
 
+      if (GTK_IS_WIDGET (managed) &&
+          GTK_WIDGET_DRAWABLE (managed))
+        {
+          GtkWidget *widget = GTK_WIDGET (managed);
+
+          monitor = gdk_screen_get_monitor_at_window (screen, widget->window);
+        }
+
+      /* In the ICC Profiles In X specification monitors are
+       * enumerated starting with one.
+       */
+      atom_name = g_strdup_printf ("_ICC_PROFILE_%d", monitor + 1);
+
+      g_printerr ("%s\n", atom_name);
+
       if (gdk_property_get (gdk_screen_get_root_window (screen),
-                            gdk_atom_intern ("_ICC_PROFILE", FALSE),
+                            gdk_atom_intern (atom_name, FALSE),
                             GDK_NONE,
                             0, 64 * 1024 * 1024, FALSE,
                             &type, &format, &nitems, &data) && nitems > 0)
@@ -468,6 +485,17 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
           profile = cmsOpenProfileFromMem (data, nitems);
           g_free (data);
         }
+      else if (gdk_property_get (gdk_screen_get_root_window (screen),
+                                 gdk_atom_intern ("_ICC_PROFILE", FALSE),
+                                 GDK_NONE,
+                                 0, 64 * 1024 * 1024, FALSE,
+                                 &type, &format, &nitems, &data) && nitems > 0)
+        {
+          profile = cmsOpenProfileFromMem (data, nitems);
+          g_free (data);
+        }
+
+      g_free (atom_name);
     }
 #elif defined G_OS_WIN32
   if (config->display_profile_from_gdk)
