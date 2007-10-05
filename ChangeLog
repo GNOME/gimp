@@ -1,5 +1,10 @@
 2007-10-05  Sven Neumann  <sven@gimp.org>
 
+	* app/dialogs/preferences-dialog.c: allow to configure the
+	out-of-gamut warning color.
+
+2007-10-05  Sven Neumann  <sven@gimp.org>
+
 	* modules/colorsel_cmyk_lcms.c: always use the configured CMYK
 	profile, regardless of the color management mode.
 

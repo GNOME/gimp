@@ -2482,12 +2482,25 @@ prefs_dialog_new (Gimp       *gimp,
 
     g_object_unref (store);
 
+    hbox = gtk_hbox_new (FALSE, 6);
+    gtk_table_attach_defaults (GTK_TABLE (table), hbox, 1, 2, row, row + 1);
+    gtk_widget_show (hbox);
+    row++;
+
     button = gimp_prop_check_button_new (color_config, "simulation-gamut-check",
                                          _("Mark out of gamut colors"));
-    gtk_table_attach_defaults (GTK_TABLE (table),
-                               button, 1, 2, row, row + 1);
+    gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
     gtk_widget_show (button);
-    row++;
+
+    button = gimp_prop_color_button_new (color_config, "out-of-gamut-color",
+                                         _("Select Warning Color"),
+                                         40, -1,
+                                         GIMP_COLOR_AREA_FLAT);
+    gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
+    gtk_widget_show (button);
+
+    gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
+                                  gimp_get_user_context (gimp));
 
     gtk_table_set_row_spacing (GTK_TABLE (table), row - 1, 12);
 
