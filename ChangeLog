@@ -1,3 +1,7 @@
+2007-10-06  Manish Singh  <yosh@gimp.org>
+
+	* configure.in: ditch stray "," character.
+
 2007-10-05  Sven Neumann  <sven@gimp.org>
 
 	* modules/cdisplay_lcms.c (cdisplay_lcms_get_display_profile):
