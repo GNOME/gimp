@@ -806,8 +806,8 @@ gimp_selection_float (GimpChannel  *selection,
   GimpImage   *image;
   GimpLayer   *layer;
   TileManager *tiles;
-  gint         x1, y1, x2, y2;
-  gboolean     non_empty;
+  gint         x1, y1;
+  gint         x2, y2;
 
   g_return_val_if_fail (GIMP_IS_SELECTION (selection), NULL);
   g_return_val_if_fail (GIMP_IS_DRAWABLE (drawable), NULL);
@@ -817,14 +817,9 @@ gimp_selection_float (GimpChannel  *selection,
   image = gimp_item_get_image (GIMP_ITEM (selection));
 
   /*  Make sure there is a region to float...  */
-  non_empty = gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2);
-  if (! non_empty || (x1 == x2) || (y1 == y2))
-    {
-      gimp_message (image->gimp, NULL, GIMP_MESSAGE_WARNING,
-                    _("Cannot float selection because the "
-                      "selected region is empty."));
-      return NULL;
-    }
+  if (! gimp_drawable_mask_bounds (drawable, &x1, &y1, &x2, &y2) ||
+      (x1 == x2 || y1 == y2))
+    return NULL;
 
   /*  Start an undo group  */
   gimp_image_undo_group_start (image, GIMP_UNDO_GROUP_FS_FLOAT,
@@ -850,6 +845,7 @@ gimp_selection_float (GimpChannel  *selection,
 
   /*  Set the offsets  */
   tile_manager_get_offsets (tiles, &x1, &y1);
+
   GIMP_ITEM (layer)->offset_x = x1 + off_x;
   GIMP_ITEM (layer)->offset_y = y1 + off_y;
 

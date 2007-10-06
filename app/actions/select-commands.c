@@ -118,13 +118,23 @@ select_float_cmd_callback (GtkAction *action,
                            gpointer   data)
 {
   GimpImage *image;
+  GtkWidget *widget;
   return_if_no_image (image, data);
+  return_if_no_widget (widget, data);
 
-  gimp_selection_float (gimp_image_get_mask (image),
-                        gimp_image_get_active_drawable (image),
-                        action_data_get_context (data),
-                        TRUE, 0, 0);
-  gimp_image_flush (image);
+  if (gimp_selection_float (gimp_image_get_mask (image),
+                            gimp_image_get_active_drawable (image),
+                            action_data_get_context (data),
+                            TRUE, 0, 0))
+    {
+      gimp_image_flush (image);
+    }
+  else
+    {
+      gimp_message (image->gimp, G_OBJECT (widget), GIMP_MESSAGE_WARNING,
+                    _("Cannot float selection because the selected region "
+                      "is empty."));
+    }
 }
 
 void

@@ -1,3 +1,11 @@
+2007-10-06  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpselection.c (gimp_selection_float): don't pop up a
+	warning dialog if the selection is empty (bug #483896).
+	
+	* app/actions/select-commands.c (select_float_cmd_callback): use
+	gimp_message() here in case that gimp_selection_float() fails.
+
 2007-10-06  Manish Singh  <yosh@gimp.org>
 
 	* configure.in: ditch stray "," character.
