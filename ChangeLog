@@ -1,3 +1,8 @@
+2007-10-06  Manish Singh  <yosh@gimp.org>
+
+	* plug-ins/common/poppler.c: Implement non-interactive mode, and make
+	it match the old PDF loader API. Fixes bug #483425.
+
 2007-10-06  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpeditselectiontool.c (gimp_edit_selection_tool_draw):

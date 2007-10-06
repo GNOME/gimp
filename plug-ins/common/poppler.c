@@ -246,10 +246,12 @@ query (void)
   {
     { GIMP_PDB_INT32,     "run-mode",     "Interactive, non-interactive"     },
     { GIMP_PDB_STRING,    "filename",     "The name of the file to load"     },
-    { GIMP_PDB_STRING,    "raw-filename", "The name entered"                 },
+    { GIMP_PDB_STRING,    "raw-filename", "The name entered"                 }
+    /* XXX: Nice to have API at some point, but needs work
     { GIMP_PDB_INT32,     "resolution",   "Resolution to rasterize to (dpi)" },
     { GIMP_PDB_INT32,     "n-pages",      "Number of pages to load (0 for all)" },
     { GIMP_PDB_INT32ARRAY,"pages",        "The pages to load"                }
+    */
   };
 
   static const GimpParamDef load_return_vals[] =
@@ -339,7 +341,7 @@ run (const gchar      *name,
 
   if (strcmp (name, LOAD_PROC) == 0)
     {
-      PdfSelectedPages *pages = g_new (PdfSelectedPages, 1);
+      PdfSelectedPages pages = { 0, NULL };
 
       switch (run_mode)
         {
@@ -355,16 +357,41 @@ run (const gchar      *name,
               break;
             }
 
-          if (load_dialog (doc, pages))
+          if (load_dialog (doc, &pages))
             gimp_set_data (LOAD_PROC, &loadvals, sizeof(loadvals));
           else
             status = GIMP_PDB_CANCEL;
           break;
 
 	case GIMP_RUN_WITH_LAST_VALS:
-        case GIMP_RUN_NONINTERACTIVE:
-          /* FIXME: implement non-interactive mode */
+          /* FIXME: implement last vals mode */
           status = GIMP_PDB_EXECUTION_ERROR;
+          break;
+
+        case GIMP_RUN_NONINTERACTIVE:
+          doc = open_document (param[1].data.d_string);
+
+          if (doc)
+            {
+              PopplerPage *test_page = poppler_document_get_page (doc, 0);
+
+              if (test_page)
+                {
+                  pages.n_pages = 1;
+                  pages.pages = g_new (gint, 1);
+                  pages.pages[0] = 0;
+
+                  g_object_unref (test_page);
+                }
+              else
+                {
+                  status = GIMP_PDB_EXECUTION_ERROR;
+                  g_object_unref (doc);
+                }
+            }
+          else
+            status = GIMP_PDB_EXECUTION_ERROR;
+
           break;
         }
 
@@ -374,7 +401,7 @@ run (const gchar      *name,
                                  run_mode,
                                  loadvals.target,
                                  loadvals.resolution,
-                                 pages);
+                                 &pages);
 
           if (image_ID != -1)
             {
@@ -391,8 +418,7 @@ run (const gchar      *name,
       if (doc)
         g_object_unref (doc);
 
-      g_free (pages->pages);
-      g_free (pages);
+      g_free (pages.pages);
     }
   else if (strcmp (name, LOAD_THUMB_PROC) == 0)
     {
