@@ -1,5 +1,10 @@
 2007-10-06  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-colormap.c (gimp_image_set_colormap): don't
+	delete the colormap on indexed images. Fixes bug #483887.
+
+2007-10-06  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-colormap.c (gimp_image_set_colormap): set all
 	entries to zero before assigning the new colormap.
 
