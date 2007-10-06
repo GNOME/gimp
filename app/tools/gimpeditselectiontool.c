@@ -704,13 +704,15 @@ gimp_edit_selection_tool_draw (GimpDrawTool *draw_tool)
             gimp_item_offsets (active_item, &off_x, &off_y);
           }
 
-        if (! floating_sel)
-          gimp_draw_tool_draw_boundary (draw_tool,
-                                        edit_select->segs_in,
-                                        edit_select->num_segs_in,
-                                        edit_select->cumlx + off_x,
-                                        edit_select->cumly + off_y,
-                                        FALSE);
+        if (! floating_sel && edit_select->segs_in)
+          {
+            gimp_draw_tool_draw_boundary (draw_tool,
+                                          edit_select->segs_in,
+                                          edit_select->num_segs_in,
+                                          edit_select->cumlx + off_x,
+                                          edit_select->cumly + off_y,
+                                          FALSE);
+          }
 
         if (edit_select->segs_out)
           {

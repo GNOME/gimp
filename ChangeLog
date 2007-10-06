@@ -1,5 +1,11 @@
 2007-10-06  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpeditselectiontool.c (gimp_edit_selection_tool_draw):
+	check that there are segments to draw before calling
+	gimp_draw_tool_draw_boundary().
+
+2007-10-06  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpimage-colormap.c (gimp_image_set_colormap): don't
 	delete the colormap on indexed images. Fixes bug #483887.
 
