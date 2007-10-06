@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-12 17:39+0200\n"
-"PO-Revision-Date: 2007-08-28 13:25+0200\n"
+"PO-Revision-Date: 2007-10-04 14:00+0200\n"
 "Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1571,7 +1571,7 @@ msgstr "In Aus_wahl einfügen"
 
 #: ../app/actions/edit-actions.c:133
 msgid "Paste the content of the clipboard into the current selection"
-msgstr "Den Inhalt der der Zwischenablage in die Auswahl einfügen"
+msgstr "Den Inhalt der Zwischenablage in die Auswahl einfügen"
 
 #: ../app/actions/edit-actions.c:138
 msgid "Paste as New"
@@ -8166,15 +8166,15 @@ msgstr "Modulordner"
 
 #: ../app/dialogs/preferences-dialog.c:2721
 msgid "Select Module Folders"
-msgstr "Moduleordner auswählen"
+msgstr "Modulordner auswählen"
 
 #: ../app/dialogs/preferences-dialog.c:2723
 msgid "Interpreters"
-msgstr "Interpreten"
+msgstr "Interpreter"
 
 #: ../app/dialogs/preferences-dialog.c:2723
 msgid "Interpreter Folders"
-msgstr "Interpretenordner"
+msgstr "Interpreterordner"
 
 #: ../app/dialogs/preferences-dialog.c:2725
 msgid "Select Interpreter Folders"
