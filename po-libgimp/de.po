@@ -1,6 +1,6 @@
 # translation of de.po to Deutsch
 # This is the German catalog for the libgimp.
-# Copyright (C) 1999 - 2005, 2007 Free Software Foundation, Inc.
+# Copyright (C) 1999 - 2007 Free Software Foundation, Inc.
 # Daniel Egger <Daniel.Egger@suse.de>
 # Christian Neumair <christian-neumair@web.de>
 # Michael Natterer <mitch@gimp.org>
@@ -15,8 +15,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-15 16:50+0200\n"
-"PO-Revision-Date: 2007-08-15 16:50+0200\n"
+"POT-Creation-Date: 2007-10-06 13:38+0200\n"
+"PO-Revision-Date: 2007-10-06 13:37+0200\n"
 "Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -766,55 +766,68 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:407
+#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:408
 msgid "(invalid UTF-8 string)"
 msgstr "(Ungültige UTF-8-Zeichenkette)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:40
+#: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "Mode of operation for color management."
 msgstr "Arbeitsmodus der Farbverwaltung."
 
-#: ../libgimpconfig/gimpcolorconfig.c:42
+#: ../libgimpconfig/gimpcolorconfig.c:44
 msgid "The color profile of your (primary) monitor."
 msgstr "Das Farbprofil für Ihren (primären) Bildschirm."
 
-#: ../libgimpconfig/gimpcolorconfig.c:44
+#: ../libgimpconfig/gimpcolorconfig.c:46
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
 "fallback."
 msgstr ""
-"Wenn diese Option ausgewählt ist, wird GIMP versuchen, das "
-"Bildschirmfarbprofil des Fenstersystems zu verwenden. Das konfigurierte "
-"Monitorprofil wird dann nur als Ausweichlösung verwendet."
+"Wenn diese Option ausgewählt ist, versucht GIMP das Bildschirmfarbprofil des "
+"Fenstersystems zu verwenden. Das konfigurierte Monitorprofil wird dann nur "
+"als Ausweichlösung verwendet."
 
-#: ../libgimpconfig/gimpcolorconfig.c:48
+#: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The default RGB working space color profile."
 msgstr "Das Standard-RGB-Farbprofil."
 
-#: ../libgimpconfig/gimpcolorconfig.c:50
+#: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr ""
 "Das CMYK-Farbprofil, welches zum Konvertieren zwischen RGB und CMYK "
 "verwendet wird."
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr ""
 "Das Farbprofil, welche zur Simulation einer Druckversion (Druckprobe) "
 "verwendet wird."
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "Sets how colors are mapped for your display."
 msgstr "Legt fest, wie Farben auf Ihren Bildschirm abgebildet werden."
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
 msgstr ""
 "Legt fest, wie Farben vom RGB-Farbraum zum simulierten Drucker verändert "
 "werden."
+
+#: ../libgimpconfig/gimpcolorconfig.c:61
+msgid ""
+"When enabled, the print simulation will mark colors which can not be "
+"represented in the target color space."
+msgstr ""
+"Wenn diese Option ausgewählt ist, werden in der Drucksimulation Farben "
+"markiert, die nicht im Ziel-Farbraum wiedergegeben werden können."
+
+#: ../libgimpconfig/gimpcolorconfig.c:64
+msgid "The color to use for marking colors which are out of gamut."
+msgstr ""
+"Die Farbe, mit der Farben markiert werden, die ausserhalb des Gamut liegen."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -874,7 +887,7 @@ msgstr "beim Verarbeiten von %s: %s"
 #: ../libgimpconfig/gimpconfig-iface.c:454
 #: ../libgimpconfig/gimpconfig-iface.c:467 ../libgimpconfig/gimpscanner.c:498
 #: ../libgimpconfig/gimpscanner.c:579
-#: ../libgimpwidgets/gimpcolorprofilestore.c:591
+#: ../libgimpwidgets/gimpcolorprofilestore.c:654
 msgid "fatal parse error"
 msgstr "Schwerwiegender Syntaxanalysefehler"
 
@@ -1000,11 +1013,11 @@ msgstr "_Schwarz"
 msgid "_White"
 msgstr "_Weiß"
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:141
+#: ../libgimpwidgets/gimpcolorprofilestore.c:144
 msgid "Select color profile from disk..."
 msgstr "Farbprofil von Festplatte wählen …"
 
-#: ../libgimpwidgets/gimpcolorprofilestore.c:276
+#: ../libgimpwidgets/gimpcolorprofilestore.c:280
 msgid "profile|None"
 msgstr "Keines"
 
@@ -1124,7 +1137,7 @@ msgstr "Schachbrettgröße"
 msgid "Check Style"
 msgstr "Schachbrettmuster"
 
-#. toggle button to (des)activate the instant preview
+#. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "_Vorschau"
@@ -1212,15 +1225,15 @@ msgstr "_Scheren"
 msgid "More..."
 msgstr "Mehr …"
 
-#: ../libgimpwidgets/gimpunitmenu.c:577
+#: ../libgimpwidgets/gimpunitmenu.c:581
 msgid "Unit Selection"
 msgstr "Einheit auswählen"
 
-#: ../libgimpwidgets/gimpunitmenu.c:626
+#: ../libgimpwidgets/gimpunitmenu.c:629
 msgid "Unit"
 msgstr "Einheit"
 
-#: ../libgimpwidgets/gimpunitmenu.c:630
+#: ../libgimpwidgets/gimpunitmenu.c:633
 msgid "Factor"
 msgstr "Faktor"
 
@@ -1388,27 +1401,35 @@ msgstr "Monitor-Profil:"
 msgid "Print simulation profile:"
 msgstr "Drucksimulationsprofil:"
 
-#: ../modules/cdisplay_proof.c:102
+#: ../modules/cdisplay_proof.c:103
 msgid "Color proof filter using ICC color profile"
 msgstr "Farbandruck-Filter mittels ICC-Farbprofilen"
 
-#: ../modules/cdisplay_proof.c:179
+#: ../modules/cdisplay_proof.c:180
 msgid "Color Proof"
 msgstr "Farbandruck"
 
-#: ../modules/cdisplay_proof.c:306
-msgid "_Intent:"
-msgstr "_Vorsatz:"
-
-#: ../modules/cdisplay_proof.c:310
+#: ../modules/cdisplay_proof.c:340
 msgid "Choose an ICC Color Profile"
 msgstr "ICC-Farbprofil auswählen"
 
-#: ../modules/cdisplay_proof.c:313
+#: ../modules/cdisplay_proof.c:367
+msgid "All files (*.*)"
+msgstr "Alle Dateien (*.*)"
+
+#: ../modules/cdisplay_proof.c:372
+msgid "ICC color profile (*.icc, *.icm)"
+msgstr "ICC Farbprofil (*.icc, *.icm)"
+
+#: ../modules/cdisplay_proof.c:430
 msgid "_Profile:"
 msgstr "_Profil:"
 
-#: ../modules/cdisplay_proof.c:318
+#: ../modules/cdisplay_proof.c:436
+msgid "_Intent:"
+msgstr "_Vorsatz:"
+
+#: ../modules/cdisplay_proof.c:441
 msgid "_Black Point Compensation"
 msgstr "Schwarzpunkt-Abgleich"
 
@@ -1470,11 +1491,11 @@ msgstr ""
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK-Farbwähler (mittels Farbprofil)"
 
-#: ../modules/colorsel_cmyk_lcms.c:396
+#: ../modules/colorsel_cmyk_lcms.c:397
 msgid "Profile: (none)"
 msgstr "Profil: (keines)"
 
-#: ../modules/colorsel_cmyk_lcms.c:409
+#: ../modules/colorsel_cmyk_lcms.c:410
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
