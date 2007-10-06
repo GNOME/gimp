@@ -64,7 +64,9 @@ gimp_image_set_colormap (GimpImage    *image,
 
   if (cmap)
     {
-      if (! image->cmap)
+      if (image->cmap)
+        memset (image->cmap, 0, GIMP_IMAGE_COLORMAP_SIZE);
+      else
         image->cmap = g_new0 (guchar, GIMP_IMAGE_COLORMAP_SIZE);
 
       memcpy (image->cmap, cmap, n_colors * 3);

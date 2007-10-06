@@ -4106,7 +4106,7 @@ struct initial_regions_struct
   GimpLayerModeEffects  mode;
   const gboolean       *affect;
   InitialMode           type;
-  guchar               *data;
+  const guchar         *data;
 };
 
 static void
@@ -4118,7 +4118,7 @@ initial_sub_region (struct initial_regions_struct *st,
   gint                  h;
   guchar               *s, *d, *m;
   guchar               *buf;
-  guchar               *data;
+  const guchar         *data;
   guint                 opacity;
   GimpLayerModeEffects  mode;
   const gboolean       *affect;
@@ -4259,7 +4259,7 @@ void
 initial_region (PixelRegion          *src,
                 PixelRegion          *dest,
                 PixelRegion          *mask,
-                guchar               *data,
+                const guchar         *data,
                 guint                 opacity,
                 GimpLayerModeEffects  mode,
                 const gboolean       *affect,
@@ -4283,7 +4283,7 @@ struct combine_regions_struct
   GimpLayerModeEffects  mode;
   const gboolean       *affect;
   CombinationMode       type;
-  guchar               *data;
+  const guchar         *data;
   gboolean              opacity_quickskip_possible;
   gboolean              transparency_quickskip_possible;
 };
@@ -4333,7 +4333,7 @@ combine_sub_region (struct combine_regions_struct *st,
                     PixelRegion                   *dest,
                     PixelRegion                   *mask)
 {
-  guchar               *data;
+  const guchar         *data;
   guint                 opacity;
   guint                 layer_mode_opacity;
   const guchar         *layer_mode_mask;
@@ -4684,7 +4684,7 @@ combine_regions (PixelRegion          *src1,
                  PixelRegion          *src2,
                  PixelRegion          *dest,
                  PixelRegion          *mask,
-                 guchar               *data,
+                 const guchar         *data,
                  guint                 opacity,
                  GimpLayerModeEffects  mode,
                  const gboolean       *affect,
@@ -4773,7 +4773,7 @@ combine_regions_replace (PixelRegion     *src1,
                          PixelRegion     *src2,
                          PixelRegion     *dest,
                          PixelRegion     *mask,
-                         guchar          *data,
+                         const guchar    *data,
                          guint            opacity,
                          const gboolean  *affect,
                          CombinationMode  type)

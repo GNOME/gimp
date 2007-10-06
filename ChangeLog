@@ -1,5 +1,12 @@
 2007-10-06  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpimage-colormap.c (gimp_image_set_colormap): set all
+	entries to zero before assigning the new colormap.
+
+	* app/paint-funcs/paint-funcs.[ch]: added const qualifiers.
+
+2007-10-06  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/helpbrowser/dialog.c: store the zoom factor. Doesn't
 	work currently, but just needs a simple fix in gtkhtml2.
 
