@@ -1,5 +1,10 @@
 2007-10-06  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/helpbrowser/dialog.c: store the zoom factor. Doesn't
+	work currently, but just needs a simple fix in gtkhtml2.
+
+2007-10-06  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpselection.c (gimp_selection_float): don't pop up a
 	warning dialog if the selection is empty (bug #483896).
 	

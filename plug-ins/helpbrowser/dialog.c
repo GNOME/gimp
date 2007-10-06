@@ -67,9 +67,10 @@
 
 typedef struct
 {
-  gint32  width;
-  gint32  height;
-  gint32  paned_position;
+  gint     width;
+  gint     height;
+  gint     paned_position;
+  gdouble  zoom;
 } DialogData;
 
 enum
@@ -196,7 +197,7 @@ browser_dialog_open (void)
   GtkCellRenderer *cell;
   GdkPixbuf       *pixbuf;
   gchar           *eek_png_path;
-  DialogData       data = { 720, 560, 240 };
+  DialogData       data = { 720, 560, 240, 1.0 };
 
   gimp_ui_init ("helpbrowser", TRUE);
 
@@ -378,6 +379,7 @@ browser_dialog_open (void)
                     G_CALLBACK (view_button_press),
                     NULL);
 
+  html_view_set_magnification (HTML_VIEW (html), data.zoom);
   html_view_set_document (HTML_VIEW (html), html_document_new ());
 
   g_signal_connect (HTML_VIEW (html)->document, "title-changed",
@@ -877,8 +879,8 @@ index_callback (GtkAction *action,
 }
 
 static void
-zoom_in_callback (GtkAction  *action,
-                  gpointer  data)
+zoom_in_callback (GtkAction *action,
+                  gpointer   data)
 {
   html_view_zoom_in (HTML_VIEW (html));
 }
@@ -1053,14 +1055,12 @@ dialog_unmap (GtkWidget *window,
               GtkWidget *paned)
 {
   DialogData  data;
-  gint        width;
-  gint        height;
 
-  gtk_window_get_size (GTK_WINDOW (window), &width, &height);
+  gtk_window_get_size (GTK_WINDOW (window), &data.width, &data.height);
 
-  data.width          = width;
-  data.height         = height;
   data.paned_position = gtk_paned_get_position (GTK_PANED (paned));
+
+  data.zoom = html ? html_view_get_magnification (HTML_VIEW (html)) : 1.0;
 
   gimp_set_data (GIMP_HELP_BROWSER_DIALOG_DATA, &data, sizeof (data));
 
