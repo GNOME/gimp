@@ -1,4 +1,4 @@
-# translation of gimp.HEAD.po to Punjabi
+# translation of gimp.HEAD.pa.po to Punjabi
 # translation of gimp.HEAD.po to
 # Copyright (C) 2004 THE gimp.HEAD'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp.HEAD package.
@@ -11,12 +11,12 @@
 # ASB <aalam@users.sf.net>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp.HEAD\n"
+"Project-Id-Version: gimp.HEAD.pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-08-29 04:24+0100\n"
-"PO-Revision-Date: 2007-08-30 08:41+0530\n"
+"POT-Creation-Date: 2007-10-05 10:02+0100\n"
+"PO-Revision-Date: 2007-10-07 09:09+0530\n"
 "Last-Translator: ASB <aalam@users.sf.net>\n"
-"Language-Team: Punjabi <punjabi-l10n@lists.sf.net>\n"
+"Language-Team: Punjabi <punjabi-l10n@users.sf.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -83,7 +83,7 @@ msgstr ""
 #: ../app/batch.c:75
 #, c-format
 msgid "No batch interpreter specified, using the default '%s'.\n"
-msgstr ""
+msgstr "ਕੋਈ ਬੈਂਚ ਇੰਟਰਪਰੇਟਰ ਨਹੀਂ ਦਿੱਤਾ ਹੈ, ਡਿਫਾਲਟ '%s' ਵਰਤਿਆ ਜਾ ਰਿਹਾ ਹੈ।\n"
 
 #: ../app/batch.c:93 ../app/batch.c:111
 #, c-format
@@ -148,11 +148,11 @@ msgstr "ਇੱਕ ਬਦਲਵੀ ਸਿਸਟਮ gimprc ਫਾਇਲ ਵਰਤ�
 
 #: ../app/main.c:224
 msgid "Batch command to run (can be used multiple times)"
-msgstr ""
+msgstr "ਚਲਾਉਣ ਲਈ ਬੈਂਚ ਕਮਾਂਡ (ਕਈ ਵਾਰ ਵਰਤੀ ਜਾ ਸਕਦੀ ਹੈ)"
 
 #: ../app/main.c:229
 msgid "The procedure to process batch commands with"
-msgstr ""
+msgstr "ਬੈਂਚ ਕਮਾਂਡ ਉੱਤੇ ਪਰੋਸੈਂਸ ਲਈ ਢੰਗ"
 
 #: ../app/main.c:234
 msgid "Send messages to console instead of using a dialog"
@@ -161,12 +161,12 @@ msgstr "ਇੱਕ ਡਾਈਲਾਗ ਦੀ ਬਜਾਏ ਕੰਨਸੋਲ ਉ�
 #. don't translate the mode names (off|on|warn)
 #: ../app/main.c:240
 msgid "PDB compatibility mode (off|on|warn)"
-msgstr "PDB ਕੰਪੈਟੇਬਿਲਟੀ ਮੋਡ (ਬੰਦ|ਚਾਲੂ|ਚੇਤਾਵਨੀ)"
+msgstr "PDB ਕੰਪੈਟੇਬਿਲਟੀ ਮੋਡ (off|on|warn)"
 
 #. don't translate the mode names (never|query|always)
 #: ../app/main.c:246
 msgid "Debug in case of a crash (never|query|always)"
-msgstr ""
+msgstr "ਕਰੈਸ਼ ਹੋਣ ਦੀ ਹਾਲਤ ਵਿੱਚ ਡੀਬੱਗ (never|query|always)"
 
 #: ../app/main.c:251
 msgid "Enable non-fatal debugging signal handlers"
@@ -221,6 +221,9 @@ msgid ""
 "\n"
 "Please check the value of the environment variable G_FILENAME_ENCODING."
 msgstr ""
+"ਸੰਰਚਿਤ ਫਾਇਲ-ਨਾਂ ਇੰਕੋਡਿੰਗ ਨੂੰ UTF-8 ਵਿੱਚ ਨਹੀਂ ਬਦਲਿਆ ਜਾ ਸਕਦਾ: %s\n"
+"\n"
+"ਇੰਵਾਇਰਨਮਿੰਟ ਵੇਰੀਬਲ G_FILENAME_ENCODING ਦਾ ਮੁੱਲ ਚੈੱਕ ਕਰੋ ਜੀ।"
 
 #: ../app/sanity.c:235
 #, c-format
@@ -240,7 +243,7 @@ msgstr "ਬੁਰਸ਼ ਐਡੀਟਰ"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:102 ../app/core/gimp.c:824
-#: ../app/dialogs/dialogs.c:148 ../app/dialogs/preferences-dialog.c:2689
+#: ../app/dialogs/dialogs.c:148 ../app/dialogs/preferences-dialog.c:2713
 msgid "Brushes"
 msgstr "ਬੁਰਸ਼"
 
@@ -283,7 +286,7 @@ msgstr "ਡੋਕ-ਯੋਗ"
 
 #. Document History
 #: ../app/actions/actions.c:132 ../app/dialogs/dialogs.c:162
-#: ../app/dialogs/preferences-dialog.c:1607
+#: ../app/dialogs/preferences-dialog.c:1609
 msgid "Document History"
 msgstr "ਦਸਤਾਵੇਜ਼ ਅਤੀਤ"
 
@@ -304,7 +307,7 @@ msgid "File"
 msgstr "ਫਾਇਲ"
 
 #: ../app/actions/actions.c:147 ../app/dialogs/dialogs.c:156
-#: ../app/dialogs/preferences-dialog.c:2705
+#: ../app/dialogs/preferences-dialog.c:2729
 msgid "Fonts"
 msgstr "ਫੋਂਟ"
 
@@ -315,7 +318,7 @@ msgstr "ਗਰੇਡੀਐਂਟ ਐਡੀਟਰ"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:153 ../app/core/gimp.c:836
-#: ../app/dialogs/dialogs.c:152 ../app/dialogs/preferences-dialog.c:2701
+#: ../app/dialogs/dialogs.c:152 ../app/dialogs/preferences-dialog.c:2725
 msgid "Gradients"
 msgstr "ਗਰੇਡੀਐਂਟ"
 
@@ -345,22 +348,22 @@ msgstr "ਪੈਲਅਟ ਐਡੀਟਰ"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:171 ../app/core/gimp.c:832
-#: ../app/dialogs/dialogs.c:154 ../app/dialogs/preferences-dialog.c:2697
+#: ../app/dialogs/dialogs.c:154 ../app/dialogs/preferences-dialog.c:2721
 msgid "Palettes"
 msgstr "ਪੈਲਅਟ"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:174 ../app/core/gimp.c:828
-#: ../app/dialogs/dialogs.c:150 ../app/dialogs/preferences-dialog.c:2693
+#: ../app/dialogs/dialogs.c:150 ../app/dialogs/preferences-dialog.c:2717
 msgid "Patterns"
 msgstr "ਪੈਟਰਨ"
 
-#: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2709
+#: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2733
 msgid "Plug-Ins"
 msgstr "ਪਲੱਗਇਨ"
 
 #: ../app/actions/actions.c:180 ../app/core/core-enums.c:858
-#: ../app/core/gimpchannel.c:363
+#: ../app/core/gimpchannel.c:362
 msgid "Quick Mask"
 msgstr "ਚੁਸਤ ਮਾਸਕ"
 
@@ -383,7 +386,7 @@ msgid "Text Editor"
 msgstr "ਟੈਕਸਟ ਐਡੀਟਰ"
 
 #: ../app/actions/actions.c:195 ../app/dialogs/dialogs.c:129
-#: ../app/dialogs/preferences-dialog.c:1849 ../app/gui/gui.c:438
+#: ../app/dialogs/preferences-dialog.c:1851 ../app/gui/gui.c:441
 msgid "Tool Options"
 msgstr "ਟੂਲ ਚੋਣ"
 
@@ -514,7 +517,7 @@ msgstr "ਚੈਨਲ ਗੁਣ ਸੋਧ(_E)..."
 
 #: ../app/actions/channels-actions.c:49
 msgid "Edit the channel's name, color and opacity"
-msgstr ""
+msgstr "ਚੈਨਲ ਨਾਂ, ਰੰਗ ਅਤੇ ਧੁੰਦਲਾਪਨ ਸੋਧੋ"
 
 #: ../app/actions/channels-actions.c:54
 msgid "_New Channel..."
@@ -562,7 +565,7 @@ msgstr "ਚੈਨਲ ਉੱਤੇ ਰੇਜ਼ ਕਰੋ(_T)"
 
 #: ../app/actions/channels-actions.c:85
 msgid "Raise this channel to the top of the channel stack"
-msgstr ""
+msgstr "ਇਹ ਚੈਨਲ ਨੂੰ ਚੈਨਲ ਸਟਾਕ ਦੇ ਸਭ ਤੋਂ ਟਾਪ ਉੱਤੇ ਉਭਾਰੋ"
 
 #: ../app/actions/channels-actions.c:90
 msgid "_Lower Channel"
@@ -570,7 +573,7 @@ msgstr "ਹੇਠਲਾ ਚੈਨਲ(_L)"
 
 #: ../app/actions/channels-actions.c:91
 msgid "Lower this channel one step in the channel stack"
-msgstr ""
+msgstr "ਇਹ ਚੈਨਲ ਨੂੰ ਚੈਨਲ ਸਟਾਕ ਵਿੱਚ ਇੱਕ ਸਟੈਪ ਹੇਠਾਂ ਭੇਜੋ"
 
 #: ../app/actions/channels-actions.c:96
 msgid "Lower Channel to _Bottom"
@@ -724,12 +727,12 @@ msgid "_Tool"
 msgstr "ਟੂਲ(_T)"
 
 #: ../app/actions/context-actions.c:51
-#: ../app/dialogs/preferences-dialog.c:1909
+#: ../app/dialogs/preferences-dialog.c:1911
 msgid "_Brush"
 msgstr "ਬੁਰਸ਼(_B)"
 
 #: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:98
-#: ../app/dialogs/preferences-dialog.c:1912
+#: ../app/dialogs/preferences-dialog.c:1914
 msgid "_Pattern"
 msgstr "ਪੈਟਰਨ(_P)"
 
@@ -739,7 +742,7 @@ msgstr "ਪੈਲਅਟ(_P)"
 
 #: ../app/actions/context-actions.c:54
 #: ../app/dialogs/palette-import-dialog.c:216
-#: ../app/dialogs/preferences-dialog.c:1915
+#: ../app/dialogs/preferences-dialog.c:1917
 msgid "_Gradient"
 msgstr "ਗਰੇਡੀਐਂਟ(_G)"
 
@@ -803,13 +806,13 @@ msgid "Sample Merged"
 msgstr "ਸੈਂਪਲ ਮਿਲਾਨ"
 
 #: ../app/actions/data-commands.c:107 ../app/actions/documents-commands.c:311
-#: ../app/actions/file-commands.c:170 ../app/dialogs/file-open-dialog.c:203
-#: ../app/dialogs/file-open-dialog.c:249
+#: ../app/actions/file-commands.c:170 ../app/dialogs/file-open-dialog.c:197
+#: ../app/dialogs/file-open-dialog.c:243
 #: ../app/dialogs/file-open-location-dialog.c:213
 #: ../app/dialogs/file-open-location-dialog.c:225
 #: ../app/display/gimpdisplayshell-dnd.c:451
 #: ../app/widgets/gimplayertreeview.c:763 ../app/widgets/gimptoolbox-dnd.c:158
-#: ../app/widgets/gimptoolbox.c:894
+#: ../app/widgets/gimptoolbox.c:896
 #, c-format
 msgid ""
 "Opening '%s' failed:\n"
@@ -821,7 +824,7 @@ msgstr ""
 "%s"
 
 #: ../app/actions/data-commands.c:133
-#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1388
+#: ../app/core/gimpbrushgenerated-load.c:125 ../app/core/gimpimage.c:1389
 #: ../app/core/gimppalette-import.c:210 ../app/core/gimppalette-load.c:223
 #: ../app/core/gimppalette.c:333 ../app/dialogs/palette-import-dialog.c:770
 #: ../app/pdb/image_cmds.c:1995 ../app/widgets/gimpdnd-xds.c:98
@@ -1111,6 +1114,7 @@ msgid "_About"
 msgstr "ਇਸ ਬਾਰੇ(_A)"
 
 #: ../app/actions/dialogs-actions.c:243 ../app/dialogs/about-dialog.c:114
+#: ../app/gui/gui.c:490
 msgid "About GIMP"
 msgstr "ਜੈਮਪ ਬਾਰੇ"
 
@@ -1318,9 +1322,7 @@ msgstr "ਕੀ ਦਸਤਾਵੇਜ਼ ਅਤੀਤ ਤੋਂ ਸਭ ਐਂਟ�
 msgid ""
 "Clearing the document history will permanently remove all currently listed "
 "entries."
-msgstr ""
-"ਦਸਤਾਵੇਜ਼ ਅਤੀਤ ਨੂੰ ਹਟਾਉਣ ਨਾਲ ਇਸ ਸਮੇਂ ਸਭ ਲਿਸਟ ਕੀਤੀਆਂ ਐਂਟਰੀਆਂ ਸਾਫ਼ ਕਰ ਦਿੱਤੀਆਂ "
-"ਜਾਣਗੀਆਂ।"
+msgstr "ਦਸਤਾਵੇਜ਼ ਅਤੀਤ ਨੂੰ ਹਟਾਉਣ ਨਾਲ ਇਸ ਸਮੇਂ ਸਭ ਲਿਸਟ ਕੀਤੀਆਂ ਐਂਟਰੀਆਂ ਸਾਫ਼ ਕਰ ਦਿੱਤੀਆਂ ਜਾਣਗੀਆਂ।"
 
 #: ../app/actions/drawable-actions.c:45
 msgid "_Desaturate..."
@@ -1380,19 +1382,19 @@ msgstr "ਦਿੱਖ ਬਦਲੋ"
 
 #: ../app/actions/drawable-actions.c:95 ../app/actions/image-actions.c:171
 msgid "Flip _Horizontally"
-msgstr "ਖਿਤਿਜੀ ਝਟਕੋ(_H):"
+msgstr "ਹਾਰੀਜ਼ਟਲ ਝਟਕੋ(_H):"
 
 #: ../app/actions/drawable-actions.c:96
 msgid "Flip horizontally"
-msgstr "ਖਿਤਿਜੀ ਝਟਕੋ"
+msgstr "ਹਾਰੀਜ਼ਟਲ ਝਟਕੋ"
 
 #: ../app/actions/drawable-actions.c:101 ../app/actions/image-actions.c:177
 msgid "Flip _Vertically"
-msgstr "ਲੰਬਕਾਰੀ ਝਟਕੋ(_V):"
+msgstr "ਵਰਟੀਕਲ ਝਟਕੋ(_V):"
 
 #: ../app/actions/drawable-actions.c:102
 msgid "Flip vertically"
-msgstr "ਲੰਬਕਾਰੀ ਝਟਕੋ"
+msgstr "ਵਰਟੀਕਲ ਝਟਕੋ"
 
 #: ../app/actions/drawable-actions.c:110 ../app/actions/image-actions.c:186
 msgid "Rotate 90° _clockwise"
@@ -1408,7 +1410,7 @@ msgstr "_180° ਘੁੰਮਾਓ"
 
 #: ../app/actions/drawable-actions.c:117
 msgid "Turn upside-down"
-msgstr "ਉਪਰਲਾ ਪਾਸਾ ਹੇਠਾਂ ਕਰੋ"
+msgstr "ਉਤਲਾ ਪਾਸਾ ਹੇਠਾਂ ਕਰੋ"
 
 #: ../app/actions/drawable-actions.c:122 ../app/actions/image-actions.c:198
 msgid "Rotate 90° counter-clock_wise"
@@ -1428,7 +1430,7 @@ msgstr ""
 
 #: ../app/actions/drawable-commands.c:124
 msgid "Invert does not operate on indexed layers."
-msgstr ""
+msgstr "ਉਲਟ ਇੰਡੈਕਸ ਲੇਅਰ ਉੱਤੇ ਓਪਰੇਟ ਨਹੀਂ ਕਰਦਾ।"
 
 #: ../app/actions/drawable-commands.c:147
 msgid "White Balance operates only on RGB color layers."
@@ -1833,14 +1835,14 @@ msgstr "ਸੰਭਾਲੋ ਅਤੇ ਬੰਦ ਕਰੋ..."
 
 #: ../app/actions/file-actions.c:133
 msgid "Save this image and close its window"
-msgstr "ਇਹ ਚਿੱਤਰ ਸੰਭਾਲੋ ਅਤੇ ਇਹ ਝਰੋਖਾ ਬੰਦ ਕਰੋ"
+msgstr "ਇਹ ਚਿੱਤਰ ਸੰਭਾਲੋ ਅਤੇ ਇਹ ਵਿੰਡੋ ਬੰਦ ਕਰੋ"
 
 #: ../app/actions/file-commands.c:247
 msgid "Saving canceled"
 msgstr "ਸੰਭਾਲਣਾ ਰੱਦ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
 #: ../app/actions/file-commands.c:256 ../app/dialogs/file-save-dialog.c:539
-#: ../app/widgets/gimpdnd-xds.c:178
+#: ../app/widgets/gimpdnd-xds.c:179
 #, c-format
 msgid ""
 "Saving '%s' failed:\n"
@@ -1949,7 +1951,7 @@ msgstr "ਸੱਜਾ ਰੰਗ ਲੋਡ ਕਰੋ(_o)"
 
 #: ../app/actions/gradient-editor-actions.c:61
 msgid "Sa_ve Right Color To"
-msgstr ""
+msgstr "ਸੱਜਾ ਰੰਗ ਸੰਭਾਲੋ(_v)"
 
 #: ../app/actions/gradient-editor-actions.c:67
 msgid "L_eft Endpoint's Color..."
@@ -2042,7 +2044,7 @@ msgstr "ਗੋਲਾਕਾਰ (ਘੱਟਦਾ)(_d)"
 #: ../app/actions/gradient-editor-actions.c:339
 #: ../app/actions/gradient-editor-actions.c:362
 msgid "(Varies)"
-msgstr ""
+msgstr "(ਬਦਲਵਾਂ)"
 
 #: ../app/actions/gradient-editor-actions.c:347
 #: ../app/actions/image-actions.c:153
@@ -2094,11 +2096,11 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:775
 msgid "Coloring _Type for Segment"
-msgstr ""
+msgstr "ਸਿਗਮੈਂਟ ਲਈ ਕਲਰਿੰਗ ਟਾਈਪ(_T)"
 
 #: ../app/actions/gradient-editor-actions.c:778
 msgid "_Flip Segment"
-msgstr ""
+msgstr "ਸਿਗਮੈਂਟ ਫਿਲਪ ਕਰੋ(_F)"
 
 #: ../app/actions/gradient-editor-actions.c:780
 msgid "_Replicate Segment..."
@@ -2114,11 +2116,11 @@ msgstr ""
 
 #: ../app/actions/gradient-editor-actions.c:786
 msgid "_Delete Segment"
-msgstr ""
+msgstr "ਸਿਗਮੈਂਟ ਹਟਾਓ(_D)"
 
 #: ../app/actions/gradient-editor-actions.c:788
 msgid "Re-_center Segment's Midpoint"
-msgstr ""
+msgstr "ਸਿਗਮੈਂਟ ਦਾ ਮਿਡ-ਪੁਆਇੰਟ ਰੀ-ਸੈਂਟਰ ਕਰੋ(_c)"
 
 #: ../app/actions/gradient-editor-actions.c:790
 msgid "Re-distribute _Handles in Segment"
@@ -2201,12 +2203,16 @@ msgid ""
 "Select the number of times\n"
 "to replicate the selected segment."
 msgstr ""
+"ਚੁਣੇ ਸਿਗਮੈਂਟ ਨੂੰ ਰੈਪਲੀਕੇਟ ਕਰਨ ਦੀ\n"
+"ਗਿਣਤੀ ਚੁਣੋ।"
 
 #: ../app/actions/gradient-editor-commands.c:495
 msgid ""
 "Select the number of times\n"
 "to replicate the selection."
 msgstr ""
+"ਚੋਣ ਨੂੰ ਰੈਪਲੀਕੇਟ ਕਰਨ ਦੀ\n"
+"ਗਿਣਤੀ ਚੁਣੋ।"
 
 #: ../app/actions/gradient-editor-commands.c:554
 msgid "Split Segment Uniformly"
@@ -2303,7 +2309,7 @@ msgstr "ਗਰੇਡੀਐਂਟ ਸੋਧ"
 #: ../app/actions/gradients-commands.c:66
 #, c-format
 msgid "Save '%s' as POV-Ray"
-msgstr ""
+msgstr "'%s' ਨੂੰ POV-ਕਿਰਨ ਵਾਂਗ ਸੰਭਾਲੋ"
 
 #: ../app/actions/help-actions.c:38 ../app/actions/help-actions.c:41
 msgid "_Help"
@@ -2315,7 +2321,7 @@ msgstr "ਜੈਮਪ ਯੂਜ਼ਰ ਦਸਤਾਵੇਜ਼ ਖੋਲ੍ਹੋ
 
 #: ../app/actions/help-actions.c:47
 msgid "_Context Help"
-msgstr "ਭਾਗ ਮੱਦਦ(_C)"
+msgstr "ਸਮੱਗਰੀ ਮੱਦਦ(_C)"
 
 #: ../app/actions/help-actions.c:48
 msgid "Show the help for a specific user interface item"
@@ -2420,7 +2426,7 @@ msgstr "ਚੋਣ ਲਈ ਕਰੋਪ ਕਰੋ(_C)"
 
 #: ../app/actions/image-actions.c:115
 msgid "Crop the image to the extents of the selection"
-msgstr "ਚੋਣ ਨੂੰ ਫੈਲਾਉਣ ਲਈ ਚਿੱਤਰ ਫੈਲਾਓ"
+msgstr "ਚੋਣ ਨੂੰ ਫੈਲਾਉਣ ਲਈ ਚਿੱਤਰ ਕਰੋਪ (crop) ਕਰੋ"
 
 #: ../app/actions/image-actions.c:120
 msgid "_Duplicate"
@@ -2484,23 +2490,23 @@ msgstr "ਚਿੱਤਰ ਨੂੰ ਇੰਡੈਕਸਡ ਰੰਗਾਂ ਵਿ�
 
 #: ../app/actions/image-actions.c:172
 msgid "Flip image horizontally"
-msgstr "ਚਿੱਤਰ ਖਿਤਿਜੀ ਝਟਕੋ"
+msgstr "ਚਿੱਤਰ ਹਾਰੀਜ਼ਟਲ ਝਟਕੋ"
 
 #: ../app/actions/image-actions.c:178
 msgid "Flip image vertically"
-msgstr "ਚਿੱਤਰ ਲੰਬਕਾਰੀ ਝਟਕੋ"
+msgstr "ਚਿੱਤਰ ਵਰਟੀਕਲ ਝਟਕੋ"
 
 #: ../app/actions/image-actions.c:187
 msgid "Rotate the image 90 degrees to the right"
-msgstr ""
+msgstr "ਚਿੱਤਰ 90 ਡਿਗਰੀ ਸੱਜੇ ਨੂੰ ਘੁੰਮਾਓ"
 
 #: ../app/actions/image-actions.c:193
 msgid "Turn the image upside-down"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਉੱਤਲਾ ਪਾਸਾ ਹੇਠਾਂ ਭੇਜੋ"
 
 #: ../app/actions/image-actions.c:199
 msgid "Rotate the image 90 degrees to the left"
-msgstr "ਚਿੱਤਰ 90 ਦਰਜੇ ਖੱਬੇ ਘੁੰਮਾਓ"
+msgstr "ਚਿੱਤਰ 90 ਡਿਗਰੀ ਖੱਬੇ ਘੁੰਮਾਓ"
 
 #: ../app/actions/image-commands.c:247
 msgid "Set Image Canvas Size"
@@ -2517,13 +2523,13 @@ msgstr "ਚਿੱਤਰ ਪਰਿੰਟ ਰੈਜ਼ੋਲੂਸ਼ਨ ਸੈੱ
 
 #: ../app/actions/image-commands.c:374
 #: ../app/pdb/drawable_transform_cmds.c:144
-#: ../app/pdb/drawable_transform_cmds.c:218
+#: ../app/pdb/drawable_transform_cmds.c:217
 msgid "Flipping"
 msgstr "ਝਟਕਿਆ ਜਾ ਰਿਹਾ ਹੈ"
 
 #: ../app/actions/image-commands.c:395
-#: ../app/pdb/drawable_transform_cmds.c:515
-#: ../app/pdb/drawable_transform_cmds.c:593
+#: ../app/pdb/drawable_transform_cmds.c:511
+#: ../app/pdb/drawable_transform_cmds.c:588
 #: ../app/pdb/transform_tools_cmds.c:209 ../app/tools/gimprotatetool.c:114
 msgid "Rotating"
 msgstr "ਘੁੰਮਾਇਆ ਜਾ ਰਿਹਾ ਹੈ"
@@ -2541,10 +2547,10 @@ msgid "Scale Image"
 msgstr "ਚਿੱਤਰ ਸਕੇਲ ਕਰੋ"
 
 #. Scaling
-#: ../app/actions/image-commands.c:661 ../app/actions/layers-commands.c:1051
-#: ../app/dialogs/preferences-dialog.c:1894
-#: ../app/pdb/drawable_transform_cmds.c:670
-#: ../app/pdb/drawable_transform_cmds.c:745
+#: ../app/actions/image-commands.c:661 ../app/actions/layers-commands.c:1048
+#: ../app/dialogs/preferences-dialog.c:1896
+#: ../app/pdb/drawable_transform_cmds.c:664
+#: ../app/pdb/drawable_transform_cmds.c:738
 #: ../app/pdb/transform_tools_cmds.c:283 ../app/tools/gimpscaletool.c:107
 msgid "Scaling"
 msgstr "ਸਕੇਲਿੰਗ"
@@ -2647,7 +2653,7 @@ msgstr "ਡੁਪਲੀਕੇਟ ਲੇਅਰ(_u)"
 
 #: ../app/actions/layers-actions.c:87
 msgid "Create a duplicate of the layer and add it to the image"
-msgstr ""
+msgstr "ਲੇਅਰ ਦੀ ਇੱਕ ਡੁਪਲੀਕੇਟ ਬਣਾਓ ਅਤੇ ਇਸ ਵਿੱਚ ਚਿੱਤਰ ਸ਼ਾਮਲ ਕਰੋ"
 
 #: ../app/actions/layers-actions.c:92
 msgid "_Delete Layer"
@@ -2759,7 +2765,7 @@ msgstr "ਲੇਅਰ ਭਾਗ ਦਾ ਆਕਾਰ ਬਦਲੋ"
 
 #: ../app/actions/layers-actions.c:183
 msgid "Crop the layer to the extents of the selection"
-msgstr ""
+msgstr "ਚੋਣ ਦੇ ਫੈਲਾ ਲਈ ਲੇਅਰ ਕਰੋਪ ਕਰੋ"
 
 #: ../app/actions/layers-actions.c:188
 msgid "Add La_yer Mask..."
@@ -2863,15 +2869,15 @@ msgstr "ਚੋਣ ਵਿੱਚ ਸ਼ਾਮਲ(_d)"
 
 #: ../app/actions/layers-actions.c:288
 msgid "Add the layer's alpha channel to the current selection"
-msgstr ""
+msgstr "ਮੌਜੂਦਾ ਚੋਣ ਵਿੱਚ ਲੇਅਰ ਦਾ ਐਲਫ਼ਾ ਚੈਨਲ ਵਿੱਚ ਸ਼ਾਮਲ ਕਰੋ"
 
 #: ../app/actions/layers-actions.c:294
 msgid "Subtract the layer's alpha channel from the current selection"
-msgstr ""
+msgstr "ਮੌਜੂਦਾ ਚੋਣ ਵਿੱਚੋਂ ਲੇਅਰ ਦੀ ਐਲਫ਼ਾ ਚੈਨਲ ਹਟਾਓ"
 
 #: ../app/actions/layers-actions.c:300
 msgid "Intersect the layer's alpha channel with the current selection"
-msgstr ""
+msgstr "ਮੌਜੂਦਾ ਚੋਣ ਨਾਲ ਲੇਅਰ ਦਾ ਐਲਫ਼ਾ ਚੈਨਲ ਇੰਟਰਸੈਕਟ"
 
 #: ../app/actions/layers-actions.c:308
 msgid "_Text to Selection"
@@ -2952,7 +2958,7 @@ msgstr "ਇੱਕ ਨਵੀਂ ਲੇਅਰ ਬਣਾਓ"
 msgid "Set Layer Boundary Size"
 msgstr "ਲੇਅਰ ਬਾਊਂਡਰ ਆਕਾਰ ਸੈੱਟ ਕਰੋ"
 
-#: ../app/actions/layers-commands.c:572 ../app/core/gimplayer.c:248
+#: ../app/actions/layers-commands.c:572 ../app/core/gimplayer.c:247
 msgid "Scale Layer"
 msgstr "ਲੇਅਰ ਸਕੇਲ ਕਰੋ"
 
@@ -2968,7 +2974,7 @@ msgstr "ਚੋਣ ਲਈ ਲੇਅਰ ਮਾਸਕ"
 msgid "Please select a channel first"
 msgstr "ਪਹਿਲਾਂ ਇੱਕ ਚੈਨਲ ਤਾਂ ਚੁਣੋ ਜੀ"
 
-#: ../app/actions/layers-commands.c:991 ../app/core/gimplayer.c:1248
+#: ../app/actions/layers-commands.c:991 ../app/core/gimplayer.c:1244
 #: ../app/dialogs/layer-add-mask-dialog.c:81
 msgid "Add Layer Mask"
 msgstr "ਲੇਅਰ ਮਾਸਕ ਸ਼ਾਮਲ ਕਰੋ"
@@ -3069,7 +3075,7 @@ msgstr "ਪੈਲਅਟ ਟਿਕਾਣਾ ਕਾਪੀ ਕਰੋ(_L)"
 
 #: ../app/actions/palettes-actions.c:73
 msgid "Copy palette file location to clipboard"
-msgstr ""
+msgstr "ਪੈਲਅਟ ਫਾਇਲ ਟਿਕਾਣਾ ਕਲਿੱਪਬੋਰਡ 'ਚ ਕਾਪੀ ਕਰੋ"
 
 #: ../app/actions/palettes-actions.c:78
 msgid "_Delete Palette"
@@ -3109,11 +3115,11 @@ msgstr "ਪੈਟਰਨ ਮੇਨੂ"
 
 #: ../app/actions/patterns-actions.c:47
 msgid "_Open Pattern as Image"
-msgstr "ਪੈਲਅਟ ਨੂੰ ਚਿੱਤਰ ਵਾਂਗ ਖੋਲ੍ਹੋ(_O)"
+msgstr "ਪੈਟਰਨ ਚਿੱਤਰ ਵਾਂਗ ਖੋਲ੍ਹੋ(_O)"
 
 #: ../app/actions/patterns-actions.c:48
 msgid "Open pattern as image"
-msgstr "ਪੈਲਅਟ ਨੂੰ ਚਿੱਤਰ ਵਾਂਗ ਖੋਲ੍ਹੋ"
+msgstr "ਪੈਟਰਨ ਚਿੱਤਰ ਵਾਂਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/actions/patterns-actions.c:53
 msgid "_New Pattern"
@@ -3137,7 +3143,7 @@ msgstr "ਪੈਟਰਨ ਟਿਕਾਣਾ ਕਾਪੀ ਕਰੋ(_L)"
 
 #: ../app/actions/patterns-actions.c:66
 msgid "Copy pattern file location to clipboard"
-msgstr ""
+msgstr "ਪੈਟਰਨ ਫਾਇਲ ਟਿਕਾਣਾ ਕਲਿੱਪਬੋਰਡ 'ਚ ਕਾਪੀ ਕਰੋ"
 
 #: ../app/actions/patterns-actions.c:71
 msgid "_Delete Pattern"
@@ -3290,7 +3296,7 @@ msgid "Toggle _Quick Mask"
 msgstr "ਚੁਸਤ ਮਾਸਕ ਬਦਲੋ(_Q)"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:1025
+#: ../app/display/gimpdisplayshell.c:1033
 msgid "Toggle Quick Mask"
 msgstr "ਤੁਰੰਤ ਮਾਸਕ ਬਦਲੋ"
 
@@ -3444,7 +3450,7 @@ msgstr ""
 
 #: ../app/actions/select-commands.c:186
 msgid "_Shrink from image border"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਬਾਰਡਰ ਤੋਂ ਸੁੰਘੜੋ(_S)"
 
 #: ../app/actions/select-commands.c:207 ../app/core/gimpselection.c:176
 msgid "Grow Selection"
@@ -3460,7 +3466,7 @@ msgstr "ਬਾਰਡਰ ਚੋਣ"
 
 #: ../app/actions/select-commands.c:235
 msgid "Border selection by"
-msgstr ""
+msgstr "ਬਾਰਡਰ ਚੋਣ ਰਾਹੀਂ"
 
 #. Feather button
 #: ../app/actions/select-commands.c:245
@@ -3652,7 +3658,7 @@ msgstr "ਸੰਭਾਲੀ ਚੋਣ"
 
 #: ../app/actions/tool-options-commands.c:138
 msgid "Rename Saved Tool Options"
-msgstr ""
+msgstr "ਸੰਭਾਲੇ ਟੂਲ ਚੋਣ ਨਾਂ-ਬਦਲੋ"
 
 #: ../app/actions/tool-options-commands.c:142
 msgid "Enter a new name for the saved options"
@@ -3933,7 +3939,7 @@ msgid "Path to Selection"
 msgstr "ਚੋਣ ਲਈ ਮਾਰਗ"
 
 #: ../app/actions/vectors-commands.c:369 ../app/tools/gimpvectoroptions.c:198
-#: ../app/tools/gimpvectortool.c:1908 ../app/vectors/gimpvectors.c:200
+#: ../app/tools/gimpvectortool.c:1908 ../app/vectors/gimpvectors.c:199
 msgid "Stroke Path"
 msgstr "ਮਾਰਗ ਸਟਰੋਕ"
 
@@ -3947,7 +3953,7 @@ msgstr "ਜ਼ੂਮ(_Z)"
 
 #: ../app/actions/view-actions.c:69
 msgid "_Padding Color"
-msgstr "ਚਿਣੇ ਰੰਗ(_P)"
+msgstr "ਪੈਡਿੰਗ ਰੰਗ(_P)"
 
 #: ../app/actions/view-actions.c:71
 msgid "Move to Screen"
@@ -3971,7 +3977,7 @@ msgstr "ਵਿੰਡੋ ਵਿੱਚ ਚਿੱਤਰ ਫਿੱਟ ਕਰੋ(_F)"
 
 #: ../app/actions/view-actions.c:88
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
-msgstr ""
+msgstr "ਜ਼ੂਮ ਰੇਸ਼ੋ ਨੂੰ ਇੰਝ ਅਡਜੱਸਟ ਕਰੋ ਕਿ ਚਿੱਤਰ ਪੂਰਾ ਵੇਖਾਈ ਦੇਵੇ"
 
 #: ../app/actions/view-actions.c:93
 msgid "Fit Image _to Window"
@@ -4003,7 +4009,7 @@ msgstr "ਵੇਖਣ ਫਿਲਟਰ(_F)..."
 
 #: ../app/actions/view-actions.c:112
 msgid "Configure filters applied to this view"
-msgstr ""
+msgstr "ਇਹ ਝਲਕ ਵਾਸਤੇ ਲਾਗੂ ਕਰਨ ਲਈ ਫਿਲਟਰ ਸੰਰਚਨਾ"
 
 #: ../app/actions/view-actions.c:117
 msgid "Shrink _Wrap"
@@ -4015,11 +4021,11 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:132
 msgid "_Dot for Dot"
-msgstr "ਬਿੰਦੀ ਲਈ ਬਿੰਦੀ(_D)"
+msgstr "ਡਾਟ ਲਈ ਡਾਟ(_D)"
 
 #: ../app/actions/view-actions.c:133
 msgid "A pixel on the screen represents an image pixel"
-msgstr ""
+msgstr "ਸਕਰੀਨ ਉੱਤੇ ਇੱਕ ਪਿਕਸਲ ਇੱਕ ਚਿੱਤਰ ਪਿਕਸਲ ਨੂੰ ਵੇਖਾਉਦਾ ਹੈ।"
 
 #: ../app/actions/view-actions.c:139
 msgid "Show _Selection"
@@ -4035,7 +4041,7 @@ msgstr "ਲੇਅਰ ਬਾਊਂਡਰ ਵੇਖਾਓ(_L)"
 
 #: ../app/actions/view-actions.c:147
 msgid "Draw a border around the active layer"
-msgstr ""
+msgstr "ਐਕਟਿਵ ਲੇਅਰ ਦੁਆਲੇ ਇੱਕ ਬਾਰਡਰ ਖਿੱਚੋ"
 
 #: ../app/actions/view-actions.c:153
 msgid "Show _Guides"
@@ -4059,7 +4065,7 @@ msgstr "ਸੈਂਪਲ ਪੁਆਇੰਟ ਵੇਖਾਓ"
 
 #: ../app/actions/view-actions.c:168
 msgid "Display the image's color sample points"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਦੇ ਰੰਗ ਸੈਂਪਲ ਪੁਆਇੰਟ ਵੇਖਾਓ"
 
 #: ../app/actions/view-actions.c:174
 msgid "Sn_ap to Guides"
@@ -4071,7 +4077,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:181
 msgid "Sna_p to Grid"
-msgstr ""
+msgstr "ਗਰਿੱਡ ਲਈ ਸਨੈਪ(_p)"
 
 #: ../app/actions/view-actions.c:182
 msgid "Tool operations snap to the grid"
@@ -4079,7 +4085,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:188
 msgid "Snap to _Canvas Edges"
-msgstr ""
+msgstr "ਕੈਨਵਸ ਕੋਨੇ ਲਈ ਸਨੈਪ(_C)"
 
 #: ../app/actions/view-actions.c:189
 msgid "Tool operations snap to the canvas edges"
@@ -4087,7 +4093,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:195
 msgid "Snap t_o Active Path"
-msgstr ""
+msgstr "ਐਕਟਿਵ ਪਾਥ ਲਈ ਸਨੈਪ(_o)"
 
 #: ../app/actions/view-actions.c:196
 msgid "Tool operations snap to the active path"
@@ -4095,7 +4101,7 @@ msgstr ""
 
 #: ../app/actions/view-actions.c:202
 msgid "Show _Menubar"
-msgstr "ਮੇਨੂ-ਪੱਟੀ ਵੇਖਾਓ(_M)"
+msgstr "ਮੇਨੂ-ਬਾਰ ਵੇਖਾਓ(_M)"
 
 #: ../app/actions/view-actions.c:203
 msgid "Show this window's menubar"
@@ -4266,11 +4272,11 @@ msgstr "ਜ਼ੂਮ (%s)(_Z)"
 
 #: ../app/actions/view-commands.c:586
 msgid "Set Canvas Padding Color"
-msgstr ""
+msgstr "ਕੈਨਵਸ ਪੈਡਿੰਗ ਰੰਗ ਸੈੱਟ ਕਰੋ"
 
 #: ../app/actions/view-commands.c:588
 msgid "Set Custom Canvas Padding Color"
-msgstr ""
+msgstr "ਕਸਟਮ ਕੈਨਵਸ ਪੈਡਿੰਗ ਰੰਗ ਸੈੱਟ ਕਰੋ"
 
 #: ../app/actions/window-actions.c:168
 #, c-format
@@ -4336,7 +4342,7 @@ msgstr "ਪਿੱਛੇ"
 
 #: ../app/base/base-enums.c:114
 msgid "Multiply"
-msgstr "ਬਹੁ"
+msgstr "ਗੁਣਾ"
 
 #: ../app/base/base-enums.c:115
 msgid "Screen"
@@ -4429,7 +4435,7 @@ msgstr ""
 #: ../app/base/tile-swap.c:558
 #, c-format
 msgid "Failed to resize swap file: %s"
-msgstr ""
+msgstr "ਸਵੈਪ ਫਾਇਲ ਮੁੜ-ਆਕਾਰ ਵਾਸਤੇ ਫੇਲ੍ਹ: %s"
 
 #: ../app/config/gimpconfig-file.c:68 ../app/core/gimpbrushgenerated-save.c:63
 #: ../app/core/gimpgradient-save.c:51 ../app/core/gimpgradient-save.c:145
@@ -4510,8 +4516,8 @@ msgid ""
 "When enabled, this will ensure that each pixel of an image gets mapped to a "
 "pixel on the screen."
 msgstr ""
-"ਜਦੋਂ ਇਹ ਸੈੱਟ ਕੀਤਾ ਗਿਆ ਤਾਂ ਇਹ ਯਕੀਨੀ ਬਣਾਇਆ ਜਾਵੇਗਾ ਕਿ ਚਿੱਤਰ ਦਾ ਹਰੇਕ ਪਿਕਸਲ ਨੂੰ ਸਕਰੀਨ "
-"ਦੇ ਪਿਕਸਲ ਨਾਲ ਮੇਲ ਦਿੱਤਾ ਜਾਵੇਗਾ।"
+"ਜਦੋਂ ਇਹ ਸੈੱਟ ਕੀਤਾ ਗਿਆ ਤਾਂ ਇਹ ਯਕੀਨੀ ਬਣਾਇਆ ਜਾਵੇਗਾ ਕਿ ਚਿੱਤਰ ਦਾ ਹਰੇਕ ਪਿਕਸਲ ਨੂੰ ਸਕਰੀਨ ਦੇ "
+"ਪਿਕਸਲ ਨਾਲ ਮੇਲ ਦਿੱਤਾ ਜਾਵੇਗਾ।"
 
 #: ../app/config/gimprc-blurbs.h:75
 msgid "This is the distance in pixels where Guide and Grid snapping activates."
@@ -4560,9 +4566,7 @@ msgstr "ਚਿੱਤਰ ਵਿੰਡੋ ਟਾਇਟਲ ਵਿੱਚ ਵੇਖ�
 msgid ""
 "When enabled, this will ensure that the full image is visible after a file "
 "is opened, otherwise it will be displayed with a scale of 1:1."
-msgstr ""
-"ਜਦੋਂ ਸੈੱਟ ਕੀਤਾ ਤਾਂ, ਫਾਇਲ ਖੋਲ੍ਹਣ ਮਗਰੋਂ ਪੂਰਾ ਚਿੱਤਰ ਖੁਲੇਗਾ, ਨਹੀ ਤਾਂ ਇਹ 1:1 ਅਨੁਪਾਤ ਵਿੱਚ "
-"ਖੁੱਲੇਗਾ ।"
+msgstr "ਜਦੋਂ ਸੈੱਟ ਕੀਤਾ ਤਾਂ, ਫਾਇਲ ਖੋਲ੍ਹਣ ਮਗਰੋਂ ਪੂਰਾ ਚਿੱਤਰ ਖੁਲੇਗਾ, ਨਹੀ ਤਾਂ ਇਹ 1:1 ਅਨੁਪਾਤ ਵਿੱਚ ਖੁੱਲੇਗਾ ।"
 
 #: ../app/config/gimprc-blurbs.h:164
 msgid "Install a private colormap; might be useful on 8-bit (256 colors) displays."
@@ -4657,8 +4661,8 @@ msgid ""
 "When enabled, the image window will automatically resize itself whenever the "
 "physical image size changes."
 msgstr ""
-"ਜਦੋਂ ਸੈੱਟ ਕੀਤਾ ਤਾਂ, ਚਿੱਤਰ ਝਰੋਖਾ ਭੌਤਿਕ ਚਿੱਤਰ ਦੇ ਅਕਾਰ ਵਿੱਚ ਤਬਦੀਲੀ ਅਨੁਸਾਰ ਆਪਣੇ ਆਪ ਨੂੰ "
-"ਤਬਦੀਲ ਕਰ ਲਵੇਗਾ।"
+"ਜਦੋਂ ਸੈੱਟ ਕੀਤਾ ਤਾਂ, ਚਿੱਤਰ ਵਿੰਡੋ ਭੌਤਿਕ ਚਿੱਤਰ ਦੇ ਅਕਾਰ ਵਿੱਚ ਤਬਦੀਲੀ ਅਨੁਸਾਰ ਆਪਣੇ ਆਪ ਨੂੰ ਤਬਦੀਲ ਕਰ "
+"ਲਵੇਗਾ।"
 
 #: ../app/config/gimprc-blurbs.h:258
 msgid ""
@@ -4898,7 +4902,7 @@ msgstr "ਟੋਕਨ %s ਦਾ ਮੁੱਲ ਠੀਕ UTF-8 ਲਾਈਨ ਨਹ�
 #. no undo (or redo) steps available
 #: ../app/core/core-enums.c:53 ../app/core/core-enums.c:252
 #: ../app/core/core-enums.c:504 ../app/paint/paint-enums.c:81
-#: ../app/widgets/gimpimagepropview.c:411
+#: ../app/widgets/gimpimagepropview.c:415
 msgid "None"
 msgstr "ਕੋਈ ਨਹੀਂ"
 
@@ -4912,7 +4916,7 @@ msgstr ""
 
 #: ../app/core/core-enums.c:56
 msgid "Positioned"
-msgstr ""
+msgstr "ਸਥਿਤੀ"
 
 #: ../app/core/core-enums.c:85
 msgid "Generate optimum palette"
@@ -4964,7 +4968,7 @@ msgid "White"
 msgstr "ਸਫੈਦ"
 
 #. Transparency
-#: ../app/core/core-enums.c:250 ../app/dialogs/preferences-dialog.c:2280
+#: ../app/core/core-enums.c:250 ../app/dialogs/preferences-dialog.c:2282
 msgid "Transparency"
 msgstr "ਪਾਰਦਰਸ਼ਤਾ"
 
@@ -5056,11 +5060,11 @@ msgstr "ਚੱਕਰ"
 msgid "Diamond"
 msgstr "ਹੀਰਾ"
 
-#: ../app/core/core-enums.c:472 ../app/dialogs/preferences-dialog.c:2312
+#: ../app/core/core-enums.c:472 ../app/dialogs/preferences-dialog.c:2314
 msgid "Horizontal"
 msgstr "ਖਿਤਿਜੀ"
 
-#: ../app/core/core-enums.c:473 ../app/dialogs/preferences-dialog.c:2314
+#: ../app/core/core-enums.c:473 ../app/dialogs/preferences-dialog.c:2316
 msgid "Vertical"
 msgstr "ਲੰਬਕਾਰੀ"
 
@@ -5272,7 +5276,7 @@ msgid "Text"
 msgstr "ਟੈਕਸਟ"
 
 #: ../app/core/core-enums.c:881 ../app/core/core-enums.c:924
-#: ../app/core/gimpdrawable-transform.c:559
+#: ../app/core/gimpdrawable-transform.c:557
 msgid "Transform"
 msgstr "ਟਰਾਂਸਫਰਮ"
 
@@ -5428,14 +5432,14 @@ msgstr "ਪੁੱਛੋ ਕਿ ਕੀ ਕਰਨਾ ਹੈ"
 
 #: ../app/core/core-enums.c:1259
 msgid "Keep embedded profile"
-msgstr ""
+msgstr "ਇੰਬੈੱਡ ਪਰੋਫਾਇਲ ਰੱਖੋ"
 
 #: ../app/core/core-enums.c:1260
 msgid "Convert to RGB workspace"
 msgstr "RGB ਵਰਕਸਪੇਸ ਲਈ ਕਨਵਰਟ"
 
 #: ../app/core/gimp-contexts.c:141 ../app/core/gimptooloptions.c:239
-#: ../app/gui/session.c:257 ../app/menus/menus.c:429
+#: ../app/gui/session.c:257 ../app/menus/menus.c:430
 #: ../app/widgets/gimpdevices.c:258
 #, c-format
 msgid "Deleting \"%s\" failed: %s"
@@ -5491,8 +5495,8 @@ msgid ""
 "It seems you have used GIMP %s before.  GIMP will now migrate your user "
 "settings to '%s'."
 msgstr ""
-"ਇੰਝ ਜਾਪਦਾ ਹੈ ਕਿ ਤੁਸੀਂ ਜੈਮਪ %s ਪਹਿਲਾਂ ਵਰਤਿਆ ਹੈ। ਜੈਮਪ ਤੁਹਾਡੀ ਯੂਜ਼ਰ ਸੈਟਿੰਗ "
-"'%s' ਲਈ ਮਾਈਗਰੇਟ ਕਰੇਗਾ।"
+"ਇੰਝ ਜਾਪਦਾ ਹੈ ਕਿ ਤੁਸੀਂ ਜੈਮਪ %s ਪਹਿਲਾਂ ਵਰਤਿਆ ਹੈ। ਜੈਮਪ ਤੁਹਾਡੀ ਯੂਜ਼ਰ ਸੈਟਿੰਗ '%s' ਲਈ ਮਾਈਗਰੇਟ "
+"ਕਰੇਗਾ।"
 
 #: ../app/core/gimp-user-install.c:202
 #, c-format
@@ -5500,8 +5504,8 @@ msgid ""
 "It appears that you are using GIMP for the first time.  GIMP will now create "
 "a folder named '%s' and copy some files to it."
 msgstr ""
-"ਇੰਝ ਜਾਪਦਾ ਹੈ ਕਿ ਤੁਸੀਂ ਜੈਮਪ ਪਹਿਲੀਂ ਵਾਰ ਵਰਤ ਰਹੇ ਹੋ। ਜੈਮਪ ਹੁਣ '%s' ਨਾਂ ਦਾ ਫੋਲਡਰ "
-"ਬਣਾਏਗਾ ਅਤੇ ਕੁਝ ਫਾਈਲਾਂ ਇੱਥੇ ਕਾਪੀ ਕਰੇਗਾ।"
+"ਇੰਝ ਜਾਪਦਾ ਹੈ ਕਿ ਤੁਸੀਂ ਜੈਮਪ ਪਹਿਲੀਂ ਵਾਰ ਵਰਤ ਰਹੇ ਹੋ। ਜੈਮਪ ਹੁਣ '%s' ਨਾਂ ਦਾ ਫੋਲਡਰ ਬਣਾਏਗਾ ਅਤੇ "
+"ਕੁਝ ਫਾਈਲਾਂ ਇੱਥੇ ਕਾਪੀ ਕਰੇਗਾ।"
 
 #: ../app/core/gimp-user-install.c:305
 #, c-format
@@ -5547,7 +5551,7 @@ msgid "Documents"
 msgstr "ਦਸਤਾਵੇਜ਼"
 
 #. initialize the module list
-#: ../app/core/gimp.c:853 ../app/dialogs/preferences-dialog.c:2717
+#: ../app/core/gimp.c:853 ../app/dialogs/preferences-dialog.c:2741
 msgid "Modules"
 msgstr "ਮੋਡੀਊਲ"
 
@@ -5574,7 +5578,7 @@ msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਪਾਰਸ
 #: ../app/core/gimpbrush-load.c:239
 #, c-format
 msgid "Fatal parse error in brush file '%s': Unknown depth %d."
-msgstr ""
+msgstr "ਬੁਰਸ਼ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਗਲਤੀ ਹੈ: ਅਣਜਾਣ %d ਡੂੰਘਾਈ।"
 
 #: ../app/core/gimpbrush-load.c:252
 #, c-format
@@ -5647,7 +5651,7 @@ msgstr "ਲਾਈਨ %d: %s"
 #: ../app/core/gimpbrushgenerated-load.c:228
 #, c-format
 msgid "File is truncated in line %d"
-msgstr ""
+msgstr "ਫਾਇਲ %d ਲਾਈਨ ਵਿੱਚ ਕਾਂਟੀ-ਛਾਂਟੀ ਗਈ"
 
 #: ../app/core/gimpbrushgenerated-load.c:231
 #, c-format
@@ -5690,87 +5694,87 @@ msgstr "ਫ਼ਜੀ ਚੋਣ"
 msgid "command|Select by Color"
 msgstr "ਰੰਗ ਨਾਲ ਚੁਣੋ"
 
-#: ../app/core/gimpchannel.c:258
+#: ../app/core/gimpchannel.c:257
 msgid "Channel"
 msgstr "ਚੈਨਲ"
 
-#: ../app/core/gimpchannel.c:259
+#: ../app/core/gimpchannel.c:258
 msgid "Rename Channel"
 msgstr "ਚੈਨਲ ਨਾਂ-ਬਦਲੋ"
 
-#: ../app/core/gimpchannel.c:260
+#: ../app/core/gimpchannel.c:259
 msgid "Move Channel"
 msgstr "ਚੈਨਲ ਹਿਲਾਓ"
 
-#: ../app/core/gimpchannel.c:261
+#: ../app/core/gimpchannel.c:260
 msgid "Scale Channel"
 msgstr "ਸਕੇਲ ਚੈਨਲ ਕਰੋ"
 
-#: ../app/core/gimpchannel.c:262
+#: ../app/core/gimpchannel.c:261
 msgid "Resize Channel"
 msgstr "ਚੈਨਲ ਮੁੜ-ਅਕਾਰ"
 
-#: ../app/core/gimpchannel.c:263
+#: ../app/core/gimpchannel.c:262
 msgid "Flip Channel"
 msgstr "ਚੈਨਲ ਝਟਕੋ"
 
-#: ../app/core/gimpchannel.c:264
+#: ../app/core/gimpchannel.c:263
 msgid "Rotate Channel"
 msgstr "ਚੈਨਲ ਘੁੰਮਾਓ"
 
-#: ../app/core/gimpchannel.c:265 ../app/core/gimpdrawable-transform.c:829
+#: ../app/core/gimpchannel.c:264 ../app/core/gimpdrawable-transform.c:826
 msgid "Transform Channel"
 msgstr "ਚੈਨਲ ਟਰਾਂਸਫਰਮ ਕਰੋ"
 
-#: ../app/core/gimpchannel.c:266
+#: ../app/core/gimpchannel.c:265
 msgid "Stroke Channel"
 msgstr "ਚੈਨਲ ਸਟਰੋਕ"
 
-#: ../app/core/gimpchannel.c:287
+#: ../app/core/gimpchannel.c:286
 msgid "Feather Channel"
 msgstr "ਖੰਭ ਚੈਨਲ"
 
-#: ../app/core/gimpchannel.c:288
+#: ../app/core/gimpchannel.c:287
 msgid "Sharpen Channel"
 msgstr ""
 
-#: ../app/core/gimpchannel.c:289
+#: ../app/core/gimpchannel.c:288
 msgid "Clear Channel"
 msgstr "ਚੈਨਲ ਸਾਫ਼ ਕਰੋ"
 
-#: ../app/core/gimpchannel.c:290
+#: ../app/core/gimpchannel.c:289
 msgid "Fill Channel"
 msgstr "ਭਰੋ ਚੈਨਲ"
 
-#: ../app/core/gimpchannel.c:291
+#: ../app/core/gimpchannel.c:290
 msgid "Invert Channel"
 msgstr "ਉਲਟ ਚੈਨਲ"
 
-#: ../app/core/gimpchannel.c:292
+#: ../app/core/gimpchannel.c:291
 msgid "Border Channel"
 msgstr "ਬਾਰਡਰ ਚੈਨਲ"
 
-#: ../app/core/gimpchannel.c:293
+#: ../app/core/gimpchannel.c:292
 msgid "Grow Channel"
 msgstr "ਉਭਾਰੋ ਚੈਨਲ"
 
-#: ../app/core/gimpchannel.c:294
+#: ../app/core/gimpchannel.c:293
 msgid "Shrink Channel"
 msgstr "ਸੁੰਘੜੋ ਚੈਨਲ"
 
-#: ../app/core/gimpchannel.c:692
+#: ../app/core/gimpchannel.c:691
 msgid "Cannot stroke empty channel."
 msgstr "ਖਾਲੀ ਚੈਨਲ ਨੂੰ ਦਬਾਇਆ ਨਹੀ ਜਾ ਸਕਦਾ "
 
-#: ../app/core/gimpchannel.c:1591
+#: ../app/core/gimpchannel.c:1590
 msgid "Set Channel Color"
 msgstr "ਚੈਨਲ ਰੰਗ ਸੈੱਟ ਕਰੋ"
 
-#: ../app/core/gimpchannel.c:1639
+#: ../app/core/gimpchannel.c:1638
 msgid "Set Channel Opacity"
 msgstr "ਚੈਨਲ ਧੁੰਦਾਲਪਨ ਸੈੱਟ ਕਰੋ"
 
-#: ../app/core/gimpchannel.c:1707 ../app/core/gimpselection.c:532
+#: ../app/core/gimpchannel.c:1706 ../app/core/gimpselection.c:532
 msgid "Selection Mask"
 msgstr "ਮਾਸਕ ਚੋਣ"
 
@@ -5852,27 +5856,27 @@ msgstr "ਲੈਵਲ"
 
 #: ../app/core/gimpdrawable-offset.c:316
 msgid "Offset Drawable"
-msgstr ""
+msgstr "ਆਫਸੈੱਟ ਡਰਾਅਯੋਗ"
 
 #: ../app/core/gimpdrawable-stroke.c:321
 msgid "Render Stroke"
 msgstr "ਰੈਂਡਰ ਸਟਰੋਕ"
 
 #. Start a transform undo group
-#: ../app/core/gimpdrawable-transform.c:620 ../app/tools/gimpfliptool.c:112
+#: ../app/core/gimpdrawable-transform.c:617 ../app/tools/gimpfliptool.c:112
 msgid "command|Flip"
 msgstr "ਫਲਿਪ"
 
 #. Start a transform undo group
-#: ../app/core/gimpdrawable-transform.c:704 ../app/tools/gimprotatetool.c:113
+#: ../app/core/gimpdrawable-transform.c:701 ../app/tools/gimprotatetool.c:113
 msgid "command|Rotate"
 msgstr "ਘੁੰਮਾਓ"
 
-#: ../app/core/gimpdrawable-transform.c:827 ../app/core/gimplayer.c:252
+#: ../app/core/gimpdrawable-transform.c:824 ../app/core/gimplayer.c:251
 msgid "Transform Layer"
 msgstr "ਲੇਅਰ ਟਰਾਂਸਫਰਮ"
 
-#: ../app/core/gimpdrawable-transform.c:842
+#: ../app/core/gimpdrawable-transform.c:839
 msgid "Transformation"
 msgstr "ਟਰਾਂਸਫਰਮੇਸ਼ਨ"
 
@@ -5935,7 +5939,7 @@ msgstr "ਗਰਿੱਡ ਰੇਖਾਵਾਂ ਵਿੱਚ ਲੇਟਵੀ ਦ�
 
 #: ../app/core/gimpgrid.c:106
 msgid "Vertical spacing of grid lines."
-msgstr "ਗਰਿੱਡ ਰੇਖਾਵਾਂ ਵਿੱਚ ਲੰਬਕਾਰੀ ਦੂਰੀ"
+msgstr "ਗਰਿੱਡ ਰੇਖਾਵਾਂ ਵਿੱਚ ਵਰਟੀਕਲ ਦੂਰੀ"
 
 #: ../app/core/gimpgrid.c:115
 msgid "Horizontal offset of the first grid line; this may be a negative number."
@@ -5963,7 +5967,7 @@ msgstr "ਰੰਗ-ਮੈਪ ਵਿੱਚ ਰੰਗ ਸ਼ਾਮਲ"
 
 #: ../app/core/gimpimage-convert.c:788
 msgid "Cannot convert image: palette is empty."
-msgstr ""
+msgstr "ਚਿੱਤਰ ਬਦਲਿਆ ਨਹੀਂ ਜਾ ਸਕਦਾ: ਪੈਲਅਟ ਖਾਲੀ ਹੈ।"
 
 #: ../app/core/gimpimage-convert.c:802
 msgid "Convert Image to RGB"
@@ -5999,7 +6003,7 @@ msgstr "ਲੇਟਵੀ ਗਾਈਡ ਜੋੜ੍ਹੋ"
 
 #: ../app/core/gimpimage-guides.c:72
 msgid "Add Vertical Guide"
-msgstr "ਲੰਬਕਾਰੀ ਗਾਈਡ ਜੋੜ੍ਹੋ"
+msgstr "ਵਰਟੀਕਲ ਗਾਈਡ ਜੋੜ੍ਹੋ"
 
 #: ../app/core/gimpimage-guides.c:113 ../app/tools/gimpmovetool.c:546
 msgid "Remove Guide"
@@ -6021,7 +6025,7 @@ msgstr "ਆਈਟਮਾਂ ਝਟਕੋ"
 msgid "Rotate Items"
 msgstr "ਆਈਟਮਾਂ ਘੁੰਮਾਓ"
 
-#: ../app/core/gimpimage-item-list.c:138
+#: ../app/core/gimpimage-item-list.c:137
 msgid "Transform Items"
 msgstr "ਆਈਟਮਾਂ ਟਰਾਂਸਫਰਮ"
 
@@ -6047,15 +6051,15 @@ msgstr "ਦਿੱਖ ਮਾਰਗ ਨੂੰ ਵਿਲੀਨ ਕਰਨ ਲਈ ਲ
 
 #: ../app/core/gimpimage-quick-mask.c:82
 msgid "Enable Quick Mask"
-msgstr "ਤੇਜ਼ ਮਾਸਕ ਯੋਗ"
+msgstr "ਤੁਰੰਤ ਮਾਸਕ ਯੋਗ"
 
 #: ../app/core/gimpimage-quick-mask.c:132
 msgid "Disable Quick Mask"
-msgstr "ਲੇਅਰ ਮਾਸਕ ਹਟਾਓ"
+msgstr "ਤੁਰੰਤ ਮਾਸਕ ਆਯੋਗ ਕਰੋ"
 
 #: ../app/core/gimpimage-sample-points.c:53
 msgid "Add Sample_Point"
-msgstr ""
+msgstr "ਸੈਂਪਲ ਪੁਆਇੰਟ ਸ਼ਾਮਲ(_P)"
 
 #: ../app/core/gimpimage-sample-points.c:98 ../app/tools/gimpcolortool.c:425
 msgid "Remove Sample Point"
@@ -6070,135 +6074,135 @@ msgstr "ਸੈਂਪਲ ਪੁਆਇੰਟ ਹਿਲਾਓ"
 msgid "Can't undo %s"
 msgstr "%s ਵਾਪਸ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਦਾ"
 
-#: ../app/core/gimpimage.c:1458
+#: ../app/core/gimpimage.c:1476
 msgid "Change Image Resolution"
 msgstr "ਚਿੱਤਰ ਰੈਜ਼ੋਲੇਸ਼ਨ ਬਦਲੋ"
 
-#: ../app/core/gimpimage.c:1498
+#: ../app/core/gimpimage.c:1516
 msgid "Change Image Unit"
 msgstr "ਚਿੱਤਰ ਯੂਨਿਟ ਬਦਲੋ"
 
-#: ../app/core/gimpimage.c:2343
+#: ../app/core/gimpimage.c:2361
 msgid "Attach Parasite to Image"
 msgstr ""
 
-#: ../app/core/gimpimage.c:2381
+#: ../app/core/gimpimage.c:2399
 msgid "Remove Parasite from Image"
 msgstr ""
 
-#: ../app/core/gimpimage.c:2839
+#: ../app/core/gimpimage.c:2857
 msgid "Add Layer"
 msgstr "ਲੇਅਰ ਸ਼ਾਮਲ"
 
-#: ../app/core/gimpimage.c:2904 ../app/core/gimpimage.c:2917
+#: ../app/core/gimpimage.c:2922 ../app/core/gimpimage.c:2935
 msgid "Remove Layer"
 msgstr "ਲੇਅਰ ਹਟਾਓ"
 
-#: ../app/core/gimpimage.c:3056
+#: ../app/core/gimpimage.c:3077
 msgid "Layer cannot be raised higher."
 msgstr "ਲੇਅਰ ਨੂੰ ਹੋਰ ਉਠਾਇਆ ਨਹੀ ਜਾ ਸਕਦਾ ਹੈ।"
 
-#: ../app/core/gimpimage.c:3061
+#: ../app/core/gimpimage.c:3082
 msgid "Raise Layer"
 msgstr "ਲੇਅਰ ਉਭਾਰੋ"
 
-#: ../app/core/gimpimage.c:3078
+#: ../app/core/gimpimage.c:3099
 msgid "Layer cannot be lowered more."
 msgstr "ਲੇਅਰ ਨੂੰ ਹੋਰ ਹੇਠਾਂ ਨਹੀ ਕੀਤਾ ਜਾ ਸਕਦਾ"
 
-#: ../app/core/gimpimage.c:3083
+#: ../app/core/gimpimage.c:3104
 msgid "Lower Layer"
 msgstr "ਲੇਅਰ ਨੂੰ ਹੇਠ ਕਰੋ"
 
-#: ../app/core/gimpimage.c:3094
+#: ../app/core/gimpimage.c:3115
 msgid "Raise Layer to Top"
 msgstr "ਲੇਅਰ ਨੂੰ ਉੱਤੇ ਉਭਾਰੋ"
 
-#: ../app/core/gimpimage.c:3109
+#: ../app/core/gimpimage.c:3130
 msgid "Lower Layer to Bottom"
 msgstr "ਲੇਅਰ ਨੂੰ ਹੇਠਾਂ ਭੇਜੋ"
 
-#: ../app/core/gimpimage.c:3181
+#: ../app/core/gimpimage.c:3202
 msgid "Add Channel"
 msgstr "ਚੈਨਲ ਸ਼ਾਮਲ ਕਰੋ"
 
-#: ../app/core/gimpimage.c:3226 ../app/core/gimpimage.c:3237
+#: ../app/core/gimpimage.c:3247 ../app/core/gimpimage.c:3258
 msgid "Remove Channel"
 msgstr "ਚੈਨਲ ਹਟਾਓ"
 
-#: ../app/core/gimpimage.c:3284
+#: ../app/core/gimpimage.c:3305
 msgid "Channel cannot be raised higher."
 msgstr "ਚੈਨਲ ਨੂੰ ਹੋਰ ਉਭਾਰਿਆ ਨਹੀ ਜਾ ਸਕਦਾ ਹੈ।"
 
-#: ../app/core/gimpimage.c:3289
+#: ../app/core/gimpimage.c:3310
 msgid "Raise Channel"
 msgstr "ਚੈਨਲ ਉਭਾਰੋ"
 
-#: ../app/core/gimpimage.c:3306
+#: ../app/core/gimpimage.c:3327
 msgid "Channel is already on top."
 msgstr "ਚੈਨਲ ਪਹਿਲਾਂ ਹੀ ਉੱਤੇ ਹੈ।"
 
-#: ../app/core/gimpimage.c:3311
+#: ../app/core/gimpimage.c:3332
 msgid "Raise Channel to Top"
 msgstr "ਉਪਰਲਾ ਚੈਨਲ ਨੂੰ ਉੱਤੇ"
 
-#: ../app/core/gimpimage.c:3328
+#: ../app/core/gimpimage.c:3349
 msgid "Channel cannot be lowered more."
 msgstr "ਚੈਨਲ ਨੂੰ ਹੋਰ ਹੇਠਾਂ ਨਹੀ ਕੀਤਾ ਜਾ ਸਕਦਾ ਹੈ।"
 
-#: ../app/core/gimpimage.c:3333
+#: ../app/core/gimpimage.c:3354
 msgid "Lower Channel"
 msgstr "ਚੈਨਲ ਹੇਠ ਕਰੋ"
 
-#: ../app/core/gimpimage.c:3353
+#: ../app/core/gimpimage.c:3374
 msgid "Channel is already on the bottom."
 msgstr "ਚੈਨਲ ਪਹਿਲਾਂ ਹੀ ਤਲ ਉੱਤੇ ਹੈ।"
 
-#: ../app/core/gimpimage.c:3358
+#: ../app/core/gimpimage.c:3379
 msgid "Lower Channel to Bottom"
 msgstr "ਹੇਠਲਾ ਚੈਨਲ ਥੱਲੇ"
 
-#: ../app/core/gimpimage.c:3432
+#: ../app/core/gimpimage.c:3453
 msgid "Add Path"
 msgstr "ਮਾਰਗ ਸ਼ਾਮਲ ਕਰੋ"
 
-#: ../app/core/gimpimage.c:3478
+#: ../app/core/gimpimage.c:3499
 msgid "Remove Path"
 msgstr "ਮਾਰਗ ਹਟਾਓ"
 
-#: ../app/core/gimpimage.c:3522
+#: ../app/core/gimpimage.c:3543
 msgid "Path cannot be raised higher."
 msgstr "ਮਾਰਗ ਨੂੰ ਹੋਰ ਉਭਾਰਿਆ ਨਹੀ ਜਾ ਸਕਦਾ ਹੈ।"
 
-#: ../app/core/gimpimage.c:3527
+#: ../app/core/gimpimage.c:3548
 msgid "Raise Path"
 msgstr "ਮਾਰਗ ਉਭਾਰੋ"
 
-#: ../app/core/gimpimage.c:3544
+#: ../app/core/gimpimage.c:3565
 msgid "Path is already on top."
 msgstr "ਮਾਰਗ ਪਹਿਲਾਂ ਹੀ ਉੱਤੇ ਹੈ।"
 
-#: ../app/core/gimpimage.c:3549
+#: ../app/core/gimpimage.c:3570
 msgid "Raise Path to Top"
 msgstr "ਮਾਰਗ ਨੂੰ ਉੱਤੇ ਲਿਆਓ"
 
-#: ../app/core/gimpimage.c:3566
+#: ../app/core/gimpimage.c:3587
 msgid "Path cannot be lowered more."
-msgstr ""
+msgstr "ਪਾਥ ਹੋਰ ਹੇਠ ਨਹੀਂ ਹੋ ਸਕਦਾ।"
 
-#: ../app/core/gimpimage.c:3571
+#: ../app/core/gimpimage.c:3592
 msgid "Lower Path"
-msgstr "ਮਾਰਗ ਹੇਠ"
+msgstr "ਪਾਥ ਹੇਠਾਂ"
 
-#: ../app/core/gimpimage.c:3591
+#: ../app/core/gimpimage.c:3612
 msgid "Path is already on the bottom."
 msgstr "ਮਾਰਗ ਪਹਿਲਾਂ ਹੀ ਤਲ ਉੱਤੇ ਹੈ।"
 
-#: ../app/core/gimpimage.c:3596
+#: ../app/core/gimpimage.c:3617
 msgid "Lower Path to Bottom"
 msgstr "ਮਾਰਗ ਨੂੰ ਹੇਠ ਵੱਲ ਭੇਜੋ"
 
-#: ../app/core/gimpimagefile.c:547 ../app/dialogs/preferences-dialog.c:1739
+#: ../app/core/gimpimagefile.c:547 ../app/dialogs/preferences-dialog.c:1741
 msgid "Folder"
 msgstr "ਫੋਲਡਰ"
 
@@ -6231,7 +6235,7 @@ msgid "(Preview may be out of date)"
 msgstr "(ਝਲਕ ਪੁਰਾਣੀ ਹੋ ਸਕਦੀ ਹੈ)"
 
 #. pixel size
-#: ../app/core/gimpimagefile.c:624 ../app/widgets/gimpimagepropview.c:437
+#: ../app/core/gimpimagefile.c:624 ../app/widgets/gimpimagepropview.c:441
 #: ../app/widgets/gimpsizebox.c:438 ../app/widgets/gimptemplateeditor.c:564
 #, c-format
 msgid "%d × %d pixel"
@@ -6249,17 +6253,17 @@ msgstr[1] "%d ਲੇਅਰਾਂ"
 #: ../app/core/gimpimagefile.c:694
 #, c-format
 msgid "Could not open thumbnail '%s': %s"
-msgstr ""
+msgstr "'%s' ਥੰਮਨੇਲ ਖੋਲ੍ਹਿਆ ਨਹੀਂ ਜਾ ਸਕਿਆ: %s"
 
-#: ../app/core/gimpitem.c:1135
+#: ../app/core/gimpitem.c:1133
 msgid "Attach Parasite"
 msgstr ""
 
-#: ../app/core/gimpitem.c:1145
+#: ../app/core/gimpitem.c:1143
 msgid "Attach Parasite to Item"
 msgstr ""
 
-#: ../app/core/gimpitem.c:1187 ../app/core/gimpitem.c:1194
+#: ../app/core/gimpitem.c:1185 ../app/core/gimpitem.c:1192
 msgid "Remove Parasite from Item"
 msgstr ""
 
@@ -6285,38 +6289,38 @@ msgstr ""
 msgid "Floating Selection to Layer"
 msgstr "ਲੇਅਰ ਲਈ ਤਰਦੀ ਚੋਣ"
 
-#: ../app/core/gimplayer.c:245 ../app/tools/tools-enums.c:181
+#: ../app/core/gimplayer.c:244 ../app/tools/tools-enums.c:181
 msgid "Layer"
 msgstr "ਲੇਅਰ"
 
-#: ../app/core/gimplayer.c:246
+#: ../app/core/gimplayer.c:245
 msgid "Rename Layer"
 msgstr "ਲੇਅਰ ਨਾਂ-ਬਦਲੋ"
 
-#: ../app/core/gimplayer.c:247 ../app/pdb/layer_cmds.c:294
-#: ../app/pdb/layer_cmds.c:328
+#: ../app/core/gimplayer.c:246 ../app/pdb/layer_cmds.c:314
+#: ../app/pdb/layer_cmds.c:348
 msgid "Move Layer"
 msgstr "ਲੇਅਰ ਹਿਲਾਓ"
 
-#: ../app/core/gimplayer.c:249
+#: ../app/core/gimplayer.c:248
 msgid "Resize Layer"
 msgstr "ਲੇਅਰ ਮੁੜ-ਅਕਾਰ"
 
-#: ../app/core/gimplayer.c:250
+#: ../app/core/gimplayer.c:249
 msgid "Flip Layer"
 msgstr "ਲੇਅਰ ਝਟਕੋ"
 
-#: ../app/core/gimplayer.c:251
+#: ../app/core/gimplayer.c:250
 msgid "Rotate Layer"
 msgstr "ਲੇਅਰ ਘੁੰਮਾਓ"
 
-#: ../app/core/gimplayer.c:401 ../app/core/gimplayer.c:1294
+#: ../app/core/gimplayer.c:400 ../app/core/gimplayer.c:1290
 #: ../app/core/gimplayermask.c:204
 #, c-format
 msgid "%s mask"
 msgstr "%s ਮਾਸਕ"
 
-#: ../app/core/gimplayer.c:445
+#: ../app/core/gimplayer.c:444
 #, c-format
 msgid ""
 "Floating Selection\n"
@@ -6325,39 +6329,39 @@ msgstr ""
 "ਤਰਦੀ ਚੋਣ\n"
 "(%s)"
 
-#: ../app/core/gimplayer.c:1225
+#: ../app/core/gimplayer.c:1221
 msgid "Cannot add layer mask to layer which is not part of an image."
 msgstr ""
 
-#: ../app/core/gimplayer.c:1232
+#: ../app/core/gimplayer.c:1228
 msgid "Unable to add a layer mask since the layer already has one."
 msgstr ""
 
-#: ../app/core/gimplayer.c:1242
+#: ../app/core/gimplayer.c:1238
 msgid "Cannot add layer mask of different dimensions than specified layer."
 msgstr ""
 
-#: ../app/core/gimplayer.c:1348
+#: ../app/core/gimplayer.c:1344
 msgid "Transfer Alpha to Mask"
 msgstr "ਐਲਫਾ ਨੂੰ ਮਾਸਕ ਵਿੱਚ ਟਰਾਂਸਫਰ ਕਰੋ"
 
-#: ../app/core/gimplayer.c:1513 ../app/core/gimplayermask.c:231
+#: ../app/core/gimplayer.c:1509 ../app/core/gimplayermask.c:231
 msgid "Apply Layer Mask"
 msgstr "ਲੇਅਰ ਮਾਸਕ ਲਾਗੂ ਕਰੋ"
 
-#: ../app/core/gimplayer.c:1514
+#: ../app/core/gimplayer.c:1510
 msgid "Delete Layer Mask"
 msgstr "ਲੇਅਰ ਮਾਸਕ ਹਟਾਓ"
 
-#: ../app/core/gimplayer.c:1615
+#: ../app/core/gimplayer.c:1617
 msgid "Add Alpha Channel"
 msgstr "ਐਲਫਾ ਚੈਨਲ ਸ਼ਾਮਲ ਕਰੋ"
 
-#: ../app/core/gimplayer.c:1666
+#: ../app/core/gimplayer.c:1668
 msgid "Remove Alpha Channel"
 msgstr "ਐਲਫ਼ਾ ਚੈਨਲ ਹਟਾਓ"
 
-#: ../app/core/gimplayer.c:1688
+#: ../app/core/gimplayer.c:1690
 msgid "Layer to Image Size"
 msgstr "ਲੇਅਰ ਨੂੰ ਚਿੱਤਰ ਦੇ ਅਕਾਰ ਅਨੁਸਾਰ ਕਰੋ"
 
@@ -6402,22 +6406,24 @@ msgid ""
 "Reading palette file '%s': Invalid number of columns in line %d. Using "
 "default value."
 msgstr ""
+"ਪੈਲਅਟ ਫਾਇਲ '%s' ਪੜ੍ਹੀ ਜਾ ਰਹੀ ਹੈ: ਲਾਈਨ %d ਵਿੱਚ ਕਾਲਮਾਂ ਦੀ ਗਿਣਤੀ ਗਲਤ ਹੈ। "
+"ਡਿਫਾਲਟ ਮੁੱਲ ਵਰਤੇ ਜਾ ਰਹੇ ਹਨ।"
 
 #. maybe we should just abort?
 #: ../app/core/gimppalette-load.c:184
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
-msgstr ""
+msgstr "ਪੈਲਅਟ ਫਾਇਲ '%s' ਪੜ੍ਹੀ ਜਾ ਰਹੀ ਹੈ: ਲਾਈਨ %d ਵਿੱਚ ਲਾਲ ਭਾਗ ਗੁੰਮ ਹੈ।"
 
 #: ../app/core/gimppalette-load.c:192
 #, c-format
 msgid "Reading palette '%s': Missing GREEN component in line %d."
-msgstr ""
+msgstr "ਪੈਲਅਟ ਫਾਇਲ '%s' ਪੜ੍ਹੀ ਜਾ ਰਹੀ ਹੈ: ਲਾਈਨ %d ਵਿੱਚ ਹਰਾ ਭਾਗ ਗੁੰਮ ਹੈ।"
 
 #: ../app/core/gimppalette-load.c:200
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
-msgstr ""
+msgstr "ਪੈਲਅਟ ਫਾਇਲ '%s' ਪੜ੍ਹੀ ਜਾ ਰਹੀ ਹੈ: ਲਾਈਨ %d ਵਿੱਚ ਨੀਲਾ ਭਾਗ ਗੁੰਮ ਹੈ।"
 
 #: ../app/core/gimppalette-load.c:210
 #, c-format
@@ -6433,7 +6439,7 @@ msgstr "ਪੈਟਰਨ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਪਾਰਸ
 #: ../app/core/gimppattern-load.c:104
 #, c-format
 msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
-msgstr ""
+msgstr "ਪੈਟਰਨ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਪਾਰਸ ਗਲਤੀ: ਅਣਜਾਣ ਪੈਟਰਨ ਫਾਰਮੈਟ ਵਰਜਨ %d।"
 
 #: ../app/core/gimppattern-load.c:114
 #, c-format
@@ -6441,11 +6447,13 @@ msgid ""
 "Fatal parse error in pattern file '%s: Unsupported pattern depth %d.\n"
 "GIMP Patterns must be GRAY or RGB."
 msgstr ""
+"ਪੈਟਰਨ ਫਾਇਲ '%s' ਵਿੱਚ ਘਾਤਕ ਪਾਰਸ ਗਲਤੀ: ਨਾ-ਸਹਾਇਕ ਪੈਟਰਨ ਡੂੰਘਾਈ %d।\n"
+"ਜੈਪਮ ਪੈਟਰਨ ਗਰੇ (GRAY) ਜਾਂ RGB ਹੋਣਾ ਚਾਹੀਦਾ ਹੈ।"
 
 #: ../app/core/gimppattern-load.c:139
 #, c-format
 msgid "Invalid UTF-8 string in pattern file '%s'."
-msgstr ""
+msgstr "ਪੈਟਰਨ ਫਾਇਲ '%s' ਵਿੱਚ ਗਲਤ UTF-8 ਸਤਰ ਹੈ।"
 
 #: ../app/core/gimppdbprogress.c:288 ../app/widgets/gimppdbdialog.c:351
 #, c-format
@@ -6458,7 +6466,7 @@ msgstr "ਉਡੀਕ ਜੀ"
 
 #: ../app/core/gimpselection.c:153 ../app/tools/gimpeditselectiontool.c:190
 msgid "Move Selection"
-msgstr "ਚੋਣ ਹਿਲਾਓ"
+msgstr "ਮੂਵ ਚੋਣ"
 
 #: ../app/core/gimpselection.c:171
 msgid "Sharpen Selection"
@@ -6490,7 +6498,7 @@ msgstr ""
 
 #: ../app/core/gimpselection.c:831
 msgid "Float Selection"
-msgstr "ਚੋਣ ਫਲੋਟ"
+msgstr "ਫਲੋਟ ਚੋਣ"
 
 #: ../app/core/gimpselection.c:848
 msgid "Floated Layer"
@@ -6508,11 +6516,11 @@ msgstr ""
 
 #: ../app/core/gimptemplate.c:126
 msgid "The horizontal image resolution."
-msgstr "ਖਿਤਿਜੀ ਚਿੱਤਰ ਰੈਜ਼ੋਲੇਸ਼ਨ ਹੈ।"
+msgstr "ਹਾਰੀਜ਼ਟਲ ਚਿੱਤਰ ਰੈਜ਼ੋਲੇਸ਼ਨ ਹੈ।"
 
 #: ../app/core/gimptemplate.c:131
 msgid "The vertical image resolution."
-msgstr "ਲੰਬਕਾਰੀ ਚਿੱਤਰ ਰੈਜ਼ੋਲੇਸ਼ਨ"
+msgstr "ਵਰਟੀਕਲ ਚਿੱਤਰ ਰੈਜ਼ੋਲੇਸ਼ਨ"
 
 #: ../app/core/gimptemplate.c:416 ../app/widgets/widgets-enums.c:24
 msgid "Background"
@@ -6653,7 +6661,7 @@ msgstr "ਅਸੰਤ੍ਰਿਪਤ(_D)"
 msgid "Choose shade of gray based on:"
 msgstr ""
 
-#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:168
+#: ../app/dialogs/dialogs-constructors.c:184 ../app/gui/gui.c:171
 #: ../app/gui/gui-message.c:146
 msgid "GIMP Message"
 msgstr "ਜੈਮਪ ਸੁਨੇਹਾ"
@@ -6727,7 +6735,7 @@ msgstr "ਮੋਡ(_M):"
 msgid "_Opacity:"
 msgstr "ਧੁੰਦਲਾਪਨ(_O):"
 
-#: ../app/dialogs/file-open-dialog.c:236
+#: ../app/dialogs/file-open-dialog.c:230
 msgid "Open layers"
 msgstr "ਲੇਅਰਾਂ ਖੋਲ੍ਹੋ"
 
@@ -6809,7 +6817,7 @@ msgid "Create a New Image"
 msgstr "ਇੱਕ ਨਵਾਂ ਚਿੱਤਰ ਬਣਾਓ"
 
 #: ../app/dialogs/image-new-dialog.c:144
-#: ../app/dialogs/preferences-dialog.c:1990
+#: ../app/dialogs/preferences-dialog.c:1992
 msgid "_Template:"
 msgstr "ਟੈਪਲੇਟ(_T):"
 
@@ -6882,7 +6890,7 @@ msgid ""
 msgstr ""
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:89
-#: ../app/dialogs/preferences-dialog.c:1663
+#: ../app/dialogs/preferences-dialog.c:1665
 msgid "_Save keyboard shortcuts on exit"
 msgstr "ਬੰਦ ਕਰਨ ਸਮੇਂ ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਸੰਭਾਲੋ(_S)"
 
@@ -7053,7 +7061,7 @@ msgstr "ਪਾਰਦਰਸ਼ੀ ਬਣਾਓ(_t)"
 
 #: ../app/dialogs/palette-import-dialog.c:156
 msgid "Import a New Palette"
-msgstr "ਨਵੀਂ ਪੈਲਅਟ ਇੰਪੋਰਟ ਕਰੋ"
+msgstr "ਨਵਾਂ ਪੈਲਅਟ ਇੰਪੋਰਟ ਕਰੋ"
 
 #: ../app/dialogs/palette-import-dialog.c:166
 msgid "_Import"
@@ -7154,709 +7162,723 @@ msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
+"ਤੁਹਾਡੇ ਵਿੰਡੋ ਸੈੱਟਅੱਪ ਨੂੰ ਤੁਹਾਡੇ ਅਗਲੇ ਵਾਰ ਜੈਮਪ ਚਾਲੂ ਕਰਨ ਸਮੇਂ ਡਿਫਾਲਟ ਮੁੱਲਾਂ "
+"ਲਈ ਮੁੜ-ਸੈੱਟ ਕਰ ਦਿੱਤਾ ਜਾਵੇਗਾ।"
 
 #: ../app/dialogs/preferences-dialog.c:675
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
+"ਤੁਹਾਡੀਆਂ ਇੰਪੁੱਟ ਸੈਟਿੰਗਾਂ ਨੂੰ ਤੁਹਾਡੇ ਅਗਲੇ ਵਾਰ ਜੈਮਪ ਚਾਲੂ ਕਰਨ ਸਮੇਂ ਡਿਫਾਲਟ ਮੁੱਲਾਂ "
+"ਲਈ ਮੁੜ-ਸੈੱਟ ਕਰ ਦਿੱਤਾ ਜਾਵੇਗਾ।"
 
 #: ../app/dialogs/preferences-dialog.c:710
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
 msgstr ""
+"ਤੁਹਾਡੀਆਂ ਟੂਲ ਚੋਣਾਂ ਨੂੰ ਤੁਹਾਡੇ ਅਗਲੇ ਵਾਰ ਜੈਮਪ ਚਾਲੂ ਕਰਨ ਸਮੇਂ ਡਿਫਾਲਟ ਮੁੱਲਾਂ "
+"ਲਈ ਮੁੜ-ਸੈੱਟ ਕਰ ਦਿੱਤਾ ਜਾਵੇਗਾ।"
 
-#: ../app/dialogs/preferences-dialog.c:1302
+#: ../app/dialogs/preferences-dialog.c:1303
 msgid "Show _menubar"
 msgstr "ਮੇਨੂ-ਬਾਰ ਵੇਖਾਓ(_m)"
 
-#: ../app/dialogs/preferences-dialog.c:1305
+#: ../app/dialogs/preferences-dialog.c:1307
 msgid "Show _rulers"
 msgstr "ਰੂਲਰ ਵੇਖਾਓ(_r)"
 
-#: ../app/dialogs/preferences-dialog.c:1308
+#: ../app/dialogs/preferences-dialog.c:1310
 msgid "Show scroll_bars"
 msgstr "ਸਕਰੋਲ-ਬਾਰ ਵੇਖਾਓ(_b)"
 
-#: ../app/dialogs/preferences-dialog.c:1311
+#: ../app/dialogs/preferences-dialog.c:1313
 msgid "Show s_tatusbar"
 msgstr "ਹਾਲਤ-ਬਾਰ ਵੇਖਾਓ(_t)"
 
-#: ../app/dialogs/preferences-dialog.c:1319
+#: ../app/dialogs/preferences-dialog.c:1321
 msgid "Show s_election"
 msgstr "ਚੋਣ ਵੇਖਾਓ(_e)"
 
-#: ../app/dialogs/preferences-dialog.c:1322
+#: ../app/dialogs/preferences-dialog.c:1324
 msgid "Show _layer boundary"
 msgstr "ਲੇਅਰ ਬਾਊਂਡਰੀ ਵੇਖਾਓ(_l)"
 
-#: ../app/dialogs/preferences-dialog.c:1325
+#: ../app/dialogs/preferences-dialog.c:1327
 msgid "Show _guides"
 msgstr "ਗਾਈਡ ਵੇਖਾਓ(_g)"
 
-#: ../app/dialogs/preferences-dialog.c:1328
+#: ../app/dialogs/preferences-dialog.c:1330
 msgid "Show gri_d"
 msgstr "ਗਰਿੱਡ ਵੇਖਾਓ(_d)"
 
-#: ../app/dialogs/preferences-dialog.c:1334
+#: ../app/dialogs/preferences-dialog.c:1336
 msgid "Canvas _padding mode:"
-msgstr ""
+msgstr "ਕੈਨਵਸ ਪੈਂਡਿੰਗ ਮੋਡ(_p):"
 
-#: ../app/dialogs/preferences-dialog.c:1339
+#: ../app/dialogs/preferences-dialog.c:1341
 msgid "Custom p_adding color:"
-msgstr ""
+msgstr "ਕਸਟਮ ਪੈਡਿੰਗ ਰੰਗ(_a):"
 
-#: ../app/dialogs/preferences-dialog.c:1340
+#: ../app/dialogs/preferences-dialog.c:1342
 msgid "Select Custom Canvas Padding Color"
-msgstr ""
+msgstr "ਕਸਟਮ ਕੈਨਵਸ ਪੈਡਿੰਗ ਰੰਗ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:1429
+#: ../app/dialogs/preferences-dialog.c:1431
 msgid "Preferences"
 msgstr "ਮੇਰੀ-ਪਸੰਦ"
 
-#: ../app/dialogs/preferences-dialog.c:1541
-#: ../app/dialogs/preferences-dialog.c:2725
+#: ../app/dialogs/preferences-dialog.c:1543
+#: ../app/dialogs/preferences-dialog.c:2749
 msgid "Environment"
 msgstr "ਇੰਵਾਇਰਨਮਿੰਟ"
 
-#: ../app/dialogs/preferences-dialog.c:1555
+#: ../app/dialogs/preferences-dialog.c:1557
 msgid "Resource Consumption"
 msgstr "ਸਰੋਤ ਵਰਤੋਂ"
 
-#: ../app/dialogs/preferences-dialog.c:1565
+#: ../app/dialogs/preferences-dialog.c:1567
 msgid "Minimal number of _undo levels:"
 msgstr "ਵਾਪਸ ਪੱਧਰ ਦੀ ਘੱਟੋ-ਘੱਟ ਗਿਣਤੀ(_u):"
 
-#: ../app/dialogs/preferences-dialog.c:1568
+#: ../app/dialogs/preferences-dialog.c:1570
 msgid "Maximum undo _memory:"
 msgstr "ਵੱਧੋ-ਵੱਧ ਵਾਪਸੀ ਮੈਮੋਰੀ(_m):"
 
-#: ../app/dialogs/preferences-dialog.c:1571
+#: ../app/dialogs/preferences-dialog.c:1573
 msgid "Tile cache _size:"
 msgstr "ਟਾਇਲ ਕੈਚੇ ਆਕਾਰ(_s):"
 
-#: ../app/dialogs/preferences-dialog.c:1574
+#: ../app/dialogs/preferences-dialog.c:1576
 msgid "Maximum _new image size:"
 msgstr "ਨਵੇਂ ਚਿੱਤਰ ਦਾ ਵੱਧੋ-ਵੱਧ ਅਕਾਰ(_n):"
 
-#: ../app/dialogs/preferences-dialog.c:1579
+#: ../app/dialogs/preferences-dialog.c:1581
 msgid "Number of _processors to use:"
 msgstr "ਵਰਤਣ ਲਈ ਪਰੋਸੈਸਰਾਂ ਦੀ ਗਿਣਤੀ(_p):"
 
 #. Image Thumbnails
-#: ../app/dialogs/preferences-dialog.c:1584
+#: ../app/dialogs/preferences-dialog.c:1586
 msgid "Image Thumbnails"
 msgstr "ਚਿੱਤਰ ਥੰਮਨੇਲ"
 
-#: ../app/dialogs/preferences-dialog.c:1589
+#: ../app/dialogs/preferences-dialog.c:1591
 msgid "Size of _thumbnails:"
 msgstr "ਥੰਮਨੇਲ ਅਕਾਰ(_t):"
 
-#: ../app/dialogs/preferences-dialog.c:1593
+#: ../app/dialogs/preferences-dialog.c:1595
 msgid "Maximum _filesize for thumbnailing:"
-msgstr ""
+msgstr "ਥੰਮਨੇਲਿੰਗ ਲਈ ਵੱਧੋ-ਵੱਧ ਫਾਇਲ ਆਕਾਰ(_f):"
 
 #. File Saving
-#: ../app/dialogs/preferences-dialog.c:1597
+#: ../app/dialogs/preferences-dialog.c:1599
 msgid "Saving Images"
 msgstr "ਚਿੱਤਰ ਸੰਭਾਲੇ ਜਾ ਰਹੇ ਹਨ"
 
-#: ../app/dialogs/preferences-dialog.c:1600
+#: ../app/dialogs/preferences-dialog.c:1602
 msgid "Confirm closing of unsa_ved images"
-msgstr ""
+msgstr "ਅਣ-ਸੰਭਾਲੇ ਚਿੱਤਰ ਲਈ ਬੰਦ ਕਰਨ ਪੁਸ਼ਟੀ(_v)"
 
-#: ../app/dialogs/preferences-dialog.c:1610
+#: ../app/dialogs/preferences-dialog.c:1612
 msgid "Save document _history on exit"
 msgstr "ਬੰਦ ਕਰਨ ਉੱਤੇ ਦਸਤਾਵੇਜ਼ ਅਤੀਤ ਸੰਭਾਲੋ(_h)"
 
-#: ../app/dialogs/preferences-dialog.c:1619
+#: ../app/dialogs/preferences-dialog.c:1621
 msgid "User Interface"
 msgstr "ਯੂਜਰ ਇੰਟਰਫੇਸ"
 
-#: ../app/dialogs/preferences-dialog.c:1622
+#: ../app/dialogs/preferences-dialog.c:1624
 msgid "Interface"
 msgstr "ਇੰਟਰਫੇਸ"
 
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1629
+#: ../app/dialogs/preferences-dialog.c:1631
 msgid "Previews"
 msgstr "ਝਲਕ"
 
-#: ../app/dialogs/preferences-dialog.c:1632
+#: ../app/dialogs/preferences-dialog.c:1634
 msgid "_Enable layer & channel previews"
 msgstr "ਲੇਅਰ ਅਤੇ ਚੈਨਲ ਝਲਕ ਯੋਗ ਕਰੋ(_E)"
 
-#: ../app/dialogs/preferences-dialog.c:1638
+#: ../app/dialogs/preferences-dialog.c:1640
 msgid "_Default layer & channel preview size:"
-msgstr ""
+msgstr "ਡਿਫਾਲਟ ਲੇਅਰ ਅਤੇ ਚੈਨਲ ਝਲਕ ਆਕਾਰ(_D):"
 
-#: ../app/dialogs/preferences-dialog.c:1641
+#: ../app/dialogs/preferences-dialog.c:1643
 msgid "Na_vigation preview size:"
-msgstr ""
+msgstr "ਨੇਵੀਗੇਸ਼ਨ ਝਲਕ ਆਕਾਰ(_v):"
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1645
+#: ../app/dialogs/preferences-dialog.c:1647
 msgid "Keyboard Shortcuts"
 msgstr "ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ"
 
-#: ../app/dialogs/preferences-dialog.c:1649
+#: ../app/dialogs/preferences-dialog.c:1651
 msgid "Show menu _mnemonics (access keys)"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:1652
+#: ../app/dialogs/preferences-dialog.c:1654
 msgid "_Use dynamic keyboard shortcuts"
 msgstr "ਡਾਇਨੈਮਿਕ ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਵਰਤੋਂ(_U)"
 
-#: ../app/dialogs/preferences-dialog.c:1656
+#: ../app/dialogs/preferences-dialog.c:1658
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਸੰਰਚਨਾ(_K)..."
 
-#: ../app/dialogs/preferences-dialog.c:1667
+#: ../app/dialogs/preferences-dialog.c:1669
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਹੁਣੇ ਸੰਭਾਲੋ(_N)"
 
-#: ../app/dialogs/preferences-dialog.c:1674
+#: ../app/dialogs/preferences-dialog.c:1676
 msgid "_Reset Keyboard Shortcuts to Default Values"
 msgstr "ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟਾਂ ਲਈ ਮੁੱਲ ਡਿਫਾਲਟ ਸੈੱਟ ਕਰੋ(_R)"
 
-#: ../app/dialogs/preferences-dialog.c:1683
+#: ../app/dialogs/preferences-dialog.c:1685
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "ਸਭ ਕੀ-ਬੋਰਡ ਸ਼ਾਰਟਕੱਟ ਹਟਾਓ(_A)"
 
-#: ../app/dialogs/preferences-dialog.c:1695
-#: ../app/dialogs/preferences-dialog.c:1734
+#: ../app/dialogs/preferences-dialog.c:1697
+#: ../app/dialogs/preferences-dialog.c:1736
 msgid "Theme"
 msgstr "ਥੀਮ"
 
-#: ../app/dialogs/preferences-dialog.c:1704
+#: ../app/dialogs/preferences-dialog.c:1706
 msgid "Select Theme"
 msgstr "ਥੀਮ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:1786
+#: ../app/dialogs/preferences-dialog.c:1788
 msgid "Reload C_urrent Theme"
 msgstr "ਮੌਜੂਦਾ ਥੀਮ ਮੁੜ-ਲੋਡ(_u)"
 
-#: ../app/dialogs/preferences-dialog.c:1798
+#: ../app/dialogs/preferences-dialog.c:1800
 msgid "Help System"
 msgstr "ਮੱਦਦ ਸਿਸਟਮ"
 
 #. General
-#: ../app/dialogs/preferences-dialog.c:1810
-#: ../app/dialogs/preferences-dialog.c:1861
-#: ../app/dialogs/preferences-dialog.c:2048
+#: ../app/dialogs/preferences-dialog.c:1812
+#: ../app/dialogs/preferences-dialog.c:1863
+#: ../app/dialogs/preferences-dialog.c:2050
 #: ../app/widgets/gimpcontrollereditor.c:188
 msgid "General"
 msgstr "ਸਧਾਰਨ"
 
-#: ../app/dialogs/preferences-dialog.c:1813
+#: ../app/dialogs/preferences-dialog.c:1815
 msgid "Show _tooltips"
 msgstr "ਟੂਲ-ਟਿੱਪ ਵੇਖਾਓ(_t)"
 
-#: ../app/dialogs/preferences-dialog.c:1816
+#: ../app/dialogs/preferences-dialog.c:1818
 msgid "Show help _buttons"
 msgstr "ਮੱਦਦ ਬਟਨ ਵੇਖਾਓ(_b)"
 
-#: ../app/dialogs/preferences-dialog.c:1819
+#: ../app/dialogs/preferences-dialog.c:1821
 msgid "Show tips on _startup"
 msgstr "ਸ਼ੁਰੂ ਵੇਲੇ ਇਸ਼ਾਰੇ ਵੇਖਾਓ(_s)"
 
 #. Help Browser
-#: ../app/dialogs/preferences-dialog.c:1823
+#: ../app/dialogs/preferences-dialog.c:1825
 msgid "Help Browser"
 msgstr "ਮੱਦਦ ਬਰਾਊਜ਼ਰ"
 
-#: ../app/dialogs/preferences-dialog.c:1827
+#: ../app/dialogs/preferences-dialog.c:1829
 msgid "H_elp browser to use:"
 msgstr "ਵਰਤਣ ਲਈ ਮੱਦਦ ਬਰਾਊਜ਼ਰ(_e):"
 
-#: ../app/dialogs/preferences-dialog.c:1832
+#: ../app/dialogs/preferences-dialog.c:1834
 msgid "Web Browser"
 msgstr "ਵੈੱਬ ਬਰਾਊਜ਼ਰ"
 
-#: ../app/dialogs/preferences-dialog.c:1836
+#: ../app/dialogs/preferences-dialog.c:1838
 msgid "_Web browser to use:"
 msgstr "ਵਰਤਣ ਲਈ ਵੈੱਬ ਬਰਾਊਜ਼ਰ(_W):"
 
-#: ../app/dialogs/preferences-dialog.c:1864
+#: ../app/dialogs/preferences-dialog.c:1866
 msgid "_Save tool options on exit"
 msgstr "ਬੰਧ ਕਰਨ ਸਮੇਂ ਟੂਲ ਚੋਣਾਂ ਸੰਭਾਲੋ(_S)"
 
-#: ../app/dialogs/preferences-dialog.c:1868
+#: ../app/dialogs/preferences-dialog.c:1870
 msgid "Save Tool Options _Now"
 msgstr "ਹੁਣੇ ਟੂਲ ਚੋਣ ਸੰਭਾਲੋ(_N)"
 
-#: ../app/dialogs/preferences-dialog.c:1875
+#: ../app/dialogs/preferences-dialog.c:1877
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "ਟੂਲ ਚੋਣਾਂ ਨੂੰ ਉਹਨਾਂ ਦੇ ਡਿਫਾਲਟ ਮੁੱਲ ਮੁੜ-ਸੈੱਟ ਕਰੋ(_R)"
 
 #. Snapping Distance
-#: ../app/dialogs/preferences-dialog.c:1885
+#: ../app/dialogs/preferences-dialog.c:1887
 msgid "Guide & Grid Snapping"
-msgstr ""
+msgstr "ਗਾਈਡਾਂ ਅਤੇ ਗਰਿੱਡ ਸਨੈਪਿੰਗ"
 
-#: ../app/dialogs/preferences-dialog.c:1890
+#: ../app/dialogs/preferences-dialog.c:1892
 msgid "_Snap distance:"
-msgstr ""
+msgstr "ਸਨੈਪ ਦੂਰੀ(_S):"
 
-#: ../app/dialogs/preferences-dialog.c:1898
+#: ../app/dialogs/preferences-dialog.c:1900
 msgid "Default _interpolation:"
 msgstr ""
 
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1905
+#: ../app/dialogs/preferences-dialog.c:1907
 msgid "Paint Options Shared Between Tools"
-msgstr ""
+msgstr "ਟੂਲ ਵਿੱਚ ਸ਼ੇਅਰ ਪੇਂਟ ਚੋਣ"
 
-#: ../app/dialogs/preferences-dialog.c:1918
+#: ../app/dialogs/preferences-dialog.c:1920
 msgid "Move Tool"
 msgstr "ਟੂਲੇ ਭੇਜੋ"
 
-#: ../app/dialogs/preferences-dialog.c:1922
+#: ../app/dialogs/preferences-dialog.c:1924
 msgid "Set layer or path as active"
 msgstr "ਲੇਅਰ ਜਾਂ ਮਾਰਗ ਐਕਟਿਵ ਬਣਾਓ"
 
-#: ../app/dialogs/preferences-dialog.c:1935
+#: ../app/dialogs/preferences-dialog.c:1937
 msgid "Toolbox"
 msgstr "ਟੂਲ-ਬਕਸਾ"
 
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1947
-#: ../app/dialogs/preferences-dialog.c:2121
+#: ../app/dialogs/preferences-dialog.c:1949
+#: ../app/dialogs/preferences-dialog.c:2123
 #: ../app/widgets/gimpgrideditor.c:196
 msgid "Appearance"
 msgstr "ਦਿੱਖ"
 
-#: ../app/dialogs/preferences-dialog.c:1951
+#: ../app/dialogs/preferences-dialog.c:1953
 msgid "Show _foreground & background color"
 msgstr "ਫਾਰਗਰਾਊਂਡ ਅਤੇ ਬੈਕਗਰਾਊਂਡ ਰੰਗ ਵੇਖਾਓ(_f)"
 
-#: ../app/dialogs/preferences-dialog.c:1955
+#: ../app/dialogs/preferences-dialog.c:1957
 msgid "Show active _brush, pattern & gradient"
 msgstr "ਐਕਟਿਵ ਬੁਰਸ਼, ਪੈਟਰਨਾਂ ਅਤੇ ਢਾਂਲੂ ਵੇਖਾਓ(_b)"
 
-#: ../app/dialogs/preferences-dialog.c:1959
+#: ../app/dialogs/preferences-dialog.c:1961
 msgid "Show active _image"
 msgstr "ਐਕਟਿਵ ਚਿੱਤਰ ਵੇਖਾਓ(_i)"
 
-#: ../app/dialogs/preferences-dialog.c:1972
+#: ../app/dialogs/preferences-dialog.c:1974
 msgid "Default New Image"
 msgstr "ਡਿਫਾਲਟ ਨਵਾਂ ਚਿੱਤਰ"
 
-#: ../app/dialogs/preferences-dialog.c:1975
+#: ../app/dialogs/preferences-dialog.c:1977
 msgid "Default Image"
 msgstr "ਡਿਫਾਲਟ ਚਿੱਤਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2012
+#: ../app/dialogs/preferences-dialog.c:2014
 msgid "Default Image Grid"
 msgstr "ਡਿਫਾਲਟ ਚਿੱਤਰ ਗਰਿੱਡ"
 
-#: ../app/dialogs/preferences-dialog.c:2015
+#: ../app/dialogs/preferences-dialog.c:2017
 msgid "Default Grid"
 msgstr "ਡਿਫਾਲਟ ਗਰਿੱਡ"
 
-#: ../app/dialogs/preferences-dialog.c:2036
+#: ../app/dialogs/preferences-dialog.c:2038
 msgid "Image Windows"
 msgstr "ਚਿੱਤਰ ਵਿੰਡੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2051
+#: ../app/dialogs/preferences-dialog.c:2053
 msgid "Use \"_Dot for dot\" by default"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2057
+#: ../app/dialogs/preferences-dialog.c:2059
 msgid "Marching _ants speed:"
 msgstr ""
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:2061
+#: ../app/dialogs/preferences-dialog.c:2063
 msgid "Zoom & Resize Behavior"
 msgstr "ਜ਼ੂਮ ਅਤੇ ਮੁੜ-ਆਕਾਰ ਰਵੱਈਆ"
 
-#: ../app/dialogs/preferences-dialog.c:2065
+#: ../app/dialogs/preferences-dialog.c:2067
 msgid "Resize window on _zoom"
 msgstr "ਜ਼ੂਮ ਸਮੇਂ ਵਿੰਡੋ ਮੁੜ-ਆਕਾਰ ਕਰੋ(_z)"
 
-#: ../app/dialogs/preferences-dialog.c:2068
+#: ../app/dialogs/preferences-dialog.c:2070
 msgid "Resize window on image _size change"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2074
+#: ../app/dialogs/preferences-dialog.c:2076
 msgid "Fit to window"
 msgstr "ਵਿੰਡੋ ਵਿੱਚ ਫਿੱਟ ਕਰੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2076
+#: ../app/dialogs/preferences-dialog.c:2078
 msgid "Initial zoom _ratio:"
 msgstr "ਸ਼ੁਰੂਆਤੀ ਜ਼ੂਮ ਅਨੁਪਾਤ(_r):"
 
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2080
+#: ../app/dialogs/preferences-dialog.c:2082
 msgid "Space Bar"
 msgstr "ਸਪੇਸ ਪੱਟੀ"
 
-#: ../app/dialogs/preferences-dialog.c:2086
+#: ../app/dialogs/preferences-dialog.c:2088
 msgid "_While space bar is pressed:"
 msgstr ""
 
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:2090
+#: ../app/dialogs/preferences-dialog.c:2092
 msgid "Mouse Pointers"
 msgstr "ਮਾਊਂਸ ਪੁਆਇੰਟਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2094
+#: ../app/dialogs/preferences-dialog.c:2096
 msgid "Show _brush outline"
-msgstr ""
+msgstr "ਬੁਰਸ਼ ਆਉਟ-ਲਾਈਨ ਵੇਖੋ(_b)"
 
-#: ../app/dialogs/preferences-dialog.c:2097
+#: ../app/dialogs/preferences-dialog.c:2099
 msgid "Show pointer for paint _tools"
-msgstr ""
+msgstr "ਪੇਂਟ ਟੂਲ ਲਈ ਪੁਆਇੰਟ ਵੇਖੋ(_t)"
 
-#: ../app/dialogs/preferences-dialog.c:2103
+#: ../app/dialogs/preferences-dialog.c:2105
 msgid "Pointer _mode:"
 msgstr "ਪੁਆਇੰਟਰ ਮੋਡ(_m):"
 
-#: ../app/dialogs/preferences-dialog.c:2106
+#: ../app/dialogs/preferences-dialog.c:2108
 msgid "Pointer re_ndering:"
 msgstr "ਪੁਆਇੰਟਰ ਰੈਂਡਰਿੰਗ(_n):"
 
-#: ../app/dialogs/preferences-dialog.c:2118
+#: ../app/dialogs/preferences-dialog.c:2120
 msgid "Image Window Appearance"
 msgstr "ਚਿੱਤਰ ਵਿੰਡੋ ਦਿੱਖ"
 
-#: ../app/dialogs/preferences-dialog.c:2129
+#: ../app/dialogs/preferences-dialog.c:2131
 msgid "Default Appearance in Normal Mode"
 msgstr "ਸਧਾਰਨ ਮੋਡ ਵਿੱਚ ਡਿਫਾਲਟ ਦਿੱਖ"
 
-#: ../app/dialogs/preferences-dialog.c:2134
+#: ../app/dialogs/preferences-dialog.c:2136
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "ਪੂਰੀ ਸਕਰੀਨ ਮੋਡ ਵਿੱਚ ਡਿਫਾਲਟ ਦਿੱਖ"
 
-#: ../app/dialogs/preferences-dialog.c:2143
+#: ../app/dialogs/preferences-dialog.c:2145
 msgid "Image Title & Statusbar Format"
 msgstr "ਚਿੱਤਰ ਟਾਇਟਲ ਅਤੇ ਹਾਲਤ-ਬਾਰ ਫਾਰਮੈਟ"
 
-#: ../app/dialogs/preferences-dialog.c:2146
+#: ../app/dialogs/preferences-dialog.c:2148
 msgid "Title & Status"
 msgstr "ਟਾਇਟਲ ਅਤੇ ਹਾਲਤ"
 
-#: ../app/dialogs/preferences-dialog.c:2164
+#: ../app/dialogs/preferences-dialog.c:2166
 msgid "Current format"
 msgstr "ਮੌਜੂਦਾ ਫਾਰਮੈਟ"
 
-#: ../app/dialogs/preferences-dialog.c:2165
+#: ../app/dialogs/preferences-dialog.c:2167
 msgid "Default format"
 msgstr "ਡਿਫਾਲਟ ਫਾਰਮੈਟ"
 
-#: ../app/dialogs/preferences-dialog.c:2166
+#: ../app/dialogs/preferences-dialog.c:2168
 msgid "Show zoom percentage"
 msgstr "ਜ਼ੂਮ ਫੀਸਦੀ ਵੇਖਾਓ"
 
-#: ../app/dialogs/preferences-dialog.c:2167
+#: ../app/dialogs/preferences-dialog.c:2169
 msgid "Show zoom ratio"
 msgstr "ਜ਼ੂਮ ਅਨੁਪਾਤ ਵੇਖਾਓ"
 
-#: ../app/dialogs/preferences-dialog.c:2168
+#: ../app/dialogs/preferences-dialog.c:2170
 msgid "Show image size"
 msgstr "ਚਿੱਤਰ ਅਕਾਰ ਵੇਖਾਓ"
 
-#: ../app/dialogs/preferences-dialog.c:2181
+#: ../app/dialogs/preferences-dialog.c:2183
 msgid "Image Title Format"
 msgstr "ਚਿੱਤਰ ਟਾਇਟਲ ਫਾਰਮੈਟ"
 
-#: ../app/dialogs/preferences-dialog.c:2183
+#: ../app/dialogs/preferences-dialog.c:2185
 msgid "Image Statusbar Format"
 msgstr "ਚਿੱਤਰ ਹਾਲਤ-ਬਾਰ ਫਾਰਮੈਟ"
 
-#: ../app/dialogs/preferences-dialog.c:2268
+#: ../app/dialogs/preferences-dialog.c:2270
 msgid "Display"
 msgstr "ਡਿਸਪਲੇਅ"
 
-#: ../app/dialogs/preferences-dialog.c:2284
+#: ../app/dialogs/preferences-dialog.c:2286
 msgid "_Check style:"
 msgstr "ਡੱਬੀਦਾਰ ਸਟਾਇਲ(_C):"
 
-#: ../app/dialogs/preferences-dialog.c:2287
+#: ../app/dialogs/preferences-dialog.c:2289
 msgid "Check _size:"
 msgstr "ਆਕਾਰ ਜਾਂਚ(_s):"
 
-#: ../app/dialogs/preferences-dialog.c:2290
+#: ../app/dialogs/preferences-dialog.c:2292
 msgid "Monitor Resolution"
 msgstr "ਮਾਨੀਟਰ ਰੈਜ਼ੋਲੇਸ਼ਨ"
 
-#: ../app/dialogs/preferences-dialog.c:2294
+#: ../app/dialogs/preferences-dialog.c:2296
 #: ../app/widgets/gimpcursorview.c:124 ../app/widgets/gimpgrideditor.c:261
 #: ../app/widgets/gimpgrideditor.c:293
 msgid "Pixels"
 msgstr "ਪਿਕਸਲ"
 
-#: ../app/dialogs/preferences-dialog.c:2316
-#: ../app/widgets/gimpimagepropview.c:465
+#: ../app/dialogs/preferences-dialog.c:2318
+#: ../app/widgets/gimpimagepropview.c:469
 msgid "ppi"
 msgstr "ppi"
 
-#: ../app/dialogs/preferences-dialog.c:2332
+#: ../app/dialogs/preferences-dialog.c:2334
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "ਆਟੋਮੈਟਿਕ ਖੋਜੋ(_D) (ਹੁਣ %d × %d ppi)"
 
-#: ../app/dialogs/preferences-dialog.c:2352
+#: ../app/dialogs/preferences-dialog.c:2354
 msgid "_Enter manually"
 msgstr "ਖੁਦ ਦਿਓ(_E)"
 
-#: ../app/dialogs/preferences-dialog.c:2367
+#: ../app/dialogs/preferences-dialog.c:2369
 msgid "C_alibrate..."
-msgstr ""
+msgstr "ਕੈਲੀਬਰੇਸ਼ਨ(_a)..."
 
-#: ../app/dialogs/preferences-dialog.c:2389
+#: ../app/dialogs/preferences-dialog.c:2391
 msgid "Color Management"
-msgstr "ਰੰਗ ਪਰਬੰਧਨ"
+msgstr "ਰੰਗ ਪਰਬੰਧ"
 
-#: ../app/dialogs/preferences-dialog.c:2409
+#: ../app/dialogs/preferences-dialog.c:2411
 msgid "_RGB profile:"
 msgstr "_RGB ਪਰੋਫਾਇਲ:"
 
-#: ../app/dialogs/preferences-dialog.c:2410
+#: ../app/dialogs/preferences-dialog.c:2412
 msgid "Select RGB Color Profile"
 msgstr "RGB ਰੰਗ ਪਰੋਫਾਇਲ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2411
+#: ../app/dialogs/preferences-dialog.c:2413
 msgid "_CMYK profile:"
 msgstr "_CMYK ਪਰੋਫਾਇਲ:"
 
-#: ../app/dialogs/preferences-dialog.c:2412
+#: ../app/dialogs/preferences-dialog.c:2414
 msgid "Select CMYK Color Profile"
 msgstr "CMYK ਰੰਗ ਪਰੋਫਾਇਲ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2413
+#: ../app/dialogs/preferences-dialog.c:2415
 msgid "_Monitor profile:"
 msgstr "ਮਾਨੀਟਰ ਪਰੋਫਾਇਲ(_M):"
 
-#: ../app/dialogs/preferences-dialog.c:2414
+#: ../app/dialogs/preferences-dialog.c:2416
 msgid "Select Monitor Color Profile"
 msgstr "ਮਾਨੀਟਰ ਰੰਗ ਪਰੋਫਾਇਲ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2415
+#: ../app/dialogs/preferences-dialog.c:2417
 msgid "_Print simulation profile:"
 msgstr "ਪਰਿੰਟਰ ਸਮਰੂਪ ਪਰੋਫਾਇਲ(_P):"
 
-#: ../app/dialogs/preferences-dialog.c:2416
+#: ../app/dialogs/preferences-dialog.c:2418
 msgid "Select Printer Color Profile"
 msgstr "ਪਰਿੰਟਰ ਰੰਗ ਪਰੋਫਾਇਲ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2427
+#: ../app/dialogs/preferences-dialog.c:2429
 msgid "_Mode of operation:"
-msgstr ""
+msgstr "ਓਪਰੇਸ਼ਨ ਦਾ ਮੋਡ(_M):"
 
-#: ../app/dialogs/preferences-dialog.c:2455
-msgid "_Try to obtain the monitor profile from the windowing system"
-msgstr ""
+#: ../app/dialogs/preferences-dialog.c:2459
+msgid "_Try to use the system monitor profile"
+msgstr "ਸਿਸਟਮ ਮਾਨੀਟਰ ਪਰੋਫਾਇਲ ਵਰਤੋਂ ਦੀ ਟਰਾਈ ਕਰੋ(_T)"
 
-#: ../app/dialogs/preferences-dialog.c:2466
+#: ../app/dialogs/preferences-dialog.c:2469
 msgid "_Display rendering intent:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2475
+#: ../app/dialogs/preferences-dialog.c:2478
 msgid "_Softproof rendering intent:"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2486
+#: ../app/dialogs/preferences-dialog.c:2491
+msgid "Mark out of gamut colors"
+msgstr ""
+
+#: ../app/dialogs/preferences-dialog.c:2496
+msgid "Select Warning Color"
+msgstr "ਚੇਤਾਵਨੀ ਰੰਗ ਚੁਣੋ"
+
+#: ../app/dialogs/preferences-dialog.c:2508
 msgid "File Open behaviour:"
 msgstr "ਫਾਇਲ ਖੋਲ੍ਹਣ ਰਵੱਈਆ:"
 
-#: ../app/dialogs/preferences-dialog.c:2496
+#: ../app/dialogs/preferences-dialog.c:2520
 msgid "Input Devices"
 msgstr "ਇੰਟਪੁੱਟ ਜੰਤਰ"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2506
+#: ../app/dialogs/preferences-dialog.c:2530
 msgid "Extended Input Devices"
 msgstr "ਐਸਟਡੈਂਡ ਇੰਪੁੱਟ ਜੰਤਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2510
+#: ../app/dialogs/preferences-dialog.c:2534
 msgid "Configure E_xtended Input Devices..."
 msgstr "ਸਹਾਇਕ ਇੰਪੁੱਟ ਜੰਤਰ ਸੰਰਚਨਾ(_x)..."
 
-#: ../app/dialogs/preferences-dialog.c:2517
+#: ../app/dialogs/preferences-dialog.c:2541
 msgid "_Save input device settings on exit"
 msgstr "ਬੰਦ ਕਰਨ ਉੱਤੇ ਇੰਪੁੱਟ ਜੰਤਰ ਸੰਭਾਲੋ(_S)"
 
-#: ../app/dialogs/preferences-dialog.c:2521
+#: ../app/dialogs/preferences-dialog.c:2545
 msgid "Save Input Device Settings _Now"
 msgstr "ਹੁਣੇ ਇੰਪੁੱਟ ਜੰਤਰ ਸੰਭਾਲੋ(_N)"
 
-#: ../app/dialogs/preferences-dialog.c:2528
+#: ../app/dialogs/preferences-dialog.c:2552
 msgid "_Reset Saved Input Device Settings to Default Values"
-msgstr ""
+msgstr "ਸੰਭਾਲੀ ਇੰਪੁੱਟ ਜੰਤਰ ਸੈਟਿੰਗ ਨੂੰ ਡਿਫਾਲਟ ਮੁੱਲ ਲਈ ਰੀ-ਸੈੱਟ ਕਰੋ(_R)"
 
-#: ../app/dialogs/preferences-dialog.c:2543
+#: ../app/dialogs/preferences-dialog.c:2567
 msgid "Additional Input Controllers"
 msgstr "ਹੋਰ ਇੰਪੁੱਟ ਕੰਟਰੋਲਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2546
+#: ../app/dialogs/preferences-dialog.c:2570
 msgid "Input Controllers"
 msgstr "ਇੰਪੁੱਟ ਕੰਟਰੋਲਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2562
+#: ../app/dialogs/preferences-dialog.c:2586
 msgid "Window Management"
-msgstr "ਝਰੋਖਾ ਪ੍ਰਬੰਧਨ"
+msgstr "ਵਿੰਡੋ ਪਰਬੰਧ"
 
-#: ../app/dialogs/preferences-dialog.c:2571
+#: ../app/dialogs/preferences-dialog.c:2595
 msgid "Window Manager Hints"
-msgstr "ਝਰੋਖਾ ਪਰਬੰਧਕ ਇਸ਼ਾਰਾ"
+msgstr "ਵਿੰਡੋ ਮੈਨੇਜਰ ਹਿੰਟ"
 
-#: ../app/dialogs/preferences-dialog.c:2577
+#: ../app/dialogs/preferences-dialog.c:2601
 msgid "Hint for the _toolbox:"
 msgstr "ਟੂਲ-ਬਕਸਾ ਲਈ ਇਸ਼ਾਰਾ(_t):"
 
-#: ../app/dialogs/preferences-dialog.c:2581
+#: ../app/dialogs/preferences-dialog.c:2605
 msgid "Hint for other _docks:"
 msgstr "ਹੋਰ ਡਾਕ ਲਈ ਇਸ਼ਾਰਾ(_d):"
 
-#: ../app/dialogs/preferences-dialog.c:2586
+#: ../app/dialogs/preferences-dialog.c:2610
 msgid "Toolbox and other docks are transient to the active image window"
 msgstr ""
 
-#: ../app/dialogs/preferences-dialog.c:2591
+#: ../app/dialogs/preferences-dialog.c:2615
 msgid "Focus"
 msgstr "ਕੇਦਰਿਤ"
 
-#: ../app/dialogs/preferences-dialog.c:2595
+#: ../app/dialogs/preferences-dialog.c:2619
 msgid "Activate the _focused image"
 msgstr ""
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2599
+#: ../app/dialogs/preferences-dialog.c:2623
 msgid "Window Positions"
-msgstr "ਝਰੋਖਾ ਸਥਿਤੀ"
+msgstr "ਵਿੰਡੋ ਸਥਿਤੀ"
 
-#: ../app/dialogs/preferences-dialog.c:2602
+#: ../app/dialogs/preferences-dialog.c:2626
 msgid "_Save window positions on exit"
-msgstr "ਬੰਦ ਕਰਨ ਸਮੇਂ ਝਰੋਖਾ ਟਿਕਾਣਾ ਸੰਭਾਲੋ(_S)"
+msgstr "ਬੰਦ ਕਰਨ ਸਮੇਂ ਵਿੰਡੋ ਟਿਕਾਣਾ ਸੰਭਾਲੋ(_S)"
 
-#: ../app/dialogs/preferences-dialog.c:2606
+#: ../app/dialogs/preferences-dialog.c:2630
 msgid "Save Window Positions _Now"
-msgstr "ਹੁਣੇ ਝਰੋਖਾ ਟਿਕਾਣਾ ਸੰਭਾਲੋ(_N)"
+msgstr "ਹੁਣੇ ਵਿੰਡੋ ਟਿਕਾਣਾ ਸੰਭਾਲੋ(_N)"
 
-#: ../app/dialogs/preferences-dialog.c:2613
+#: ../app/dialogs/preferences-dialog.c:2637
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "ਸੰਭਾਲੀ ਵਿੰਡੋ ਸਥਿਤੀ ਨੂੰ ਡਿਫਾਲਟ ਮੁੱਲ ਲਈ ਰੀ-ਸੈੱਟ ਕਰੋ(_R)"
 
-#: ../app/dialogs/preferences-dialog.c:2628
+#: ../app/dialogs/preferences-dialog.c:2652
 msgid "Folders"
 msgstr "ਫੋਲਡਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2648
+#: ../app/dialogs/preferences-dialog.c:2672
 msgid "Temporary folder:"
 msgstr "ਆਰਜ਼ੀ ਫੋਲਡਰ:"
 
-#: ../app/dialogs/preferences-dialog.c:2649
+#: ../app/dialogs/preferences-dialog.c:2673
 msgid "Select Folder for Temporary Files"
 msgstr "ਆਰਜ਼ੀ ਫਾਇਲਾਂ ਲਈ ਫੋਲਡਰ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2653
+#: ../app/dialogs/preferences-dialog.c:2677
 msgid "Swap folder:"
 msgstr "ਸਵੈਪ ਫੋਲਡਰ:"
 
-#: ../app/dialogs/preferences-dialog.c:2654
+#: ../app/dialogs/preferences-dialog.c:2678
 msgid "Select Swap Folder"
 msgstr "ਸਵੈਪ ਫੋਲਡਰ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2689
+#: ../app/dialogs/preferences-dialog.c:2713
 msgid "Brush Folders"
 msgstr "ਬੁਰਸ਼ ਫੋਲਡਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2691
+#: ../app/dialogs/preferences-dialog.c:2715
 msgid "Select Brush Folders"
 msgstr "ਬੁਰਸ਼ ਫੋਲਡਰ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2693
+#: ../app/dialogs/preferences-dialog.c:2717
 msgid "Pattern Folders"
 msgstr "ਪੈਟਰਨ ਫੋਲਡਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2695
+#: ../app/dialogs/preferences-dialog.c:2719
 msgid "Select Pattern Folders"
 msgstr "ਪੈਟਰਨ ਫੋਲਡਰ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2697
+#: ../app/dialogs/preferences-dialog.c:2721
 msgid "Palette Folders"
 msgstr "ਪੈਲਅਟ ਫੋਲਡਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2699
+#: ../app/dialogs/preferences-dialog.c:2723
 msgid "Select Palette Folders"
 msgstr "ਪੈਲਅਟ ਫੋਲਡਰ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2701
+#: ../app/dialogs/preferences-dialog.c:2725
 msgid "Gradient Folders"
 msgstr "ਗਰੇਡੀਐਂਟ ਫੋਲਡਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2703
+#: ../app/dialogs/preferences-dialog.c:2727
 msgid "Select Gradient Folders"
 msgstr "ਗਰੇਡੀਐਂਟ ਫੋਲਡਰ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2705
+#: ../app/dialogs/preferences-dialog.c:2729
 msgid "Font Folders"
 msgstr "ਫੋਂਟ ਫੋਲਡਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2707
+#: ../app/dialogs/preferences-dialog.c:2731
 msgid "Select Font Folders"
 msgstr "ਫੋਂਟ ਫੋਲਡਰ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2709
+#: ../app/dialogs/preferences-dialog.c:2733
 msgid "Plug-In Folders"
 msgstr "ਪਲੱਗ-ਇਨ ਫੋਲਡਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2711
+#: ../app/dialogs/preferences-dialog.c:2735
 msgid "Select Plug-In Folders"
 msgstr "ਪਲੱਗ-ਇਨ ਫੋਲਡਰ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2713
+#: ../app/dialogs/preferences-dialog.c:2737
 msgid "Scripts"
 msgstr "ਸਕਰਿਪਟ"
 
-#: ../app/dialogs/preferences-dialog.c:2713
+#: ../app/dialogs/preferences-dialog.c:2737
 msgid "Script-Fu Folders"
 msgstr "ਸਕਰਿਪਟ-ਫੂ ਫੋਲਡਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2715
+#: ../app/dialogs/preferences-dialog.c:2739
 msgid "Select Script-Fu Folders"
 msgstr "ਸਕਰਿਪਟ-ਫੂ ਫੋਲਡਰ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2717
+#: ../app/dialogs/preferences-dialog.c:2741
 msgid "Module Folders"
 msgstr "ਮੋਡੀਊਲ ਫੋਲਡਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2719
+#: ../app/dialogs/preferences-dialog.c:2743
 msgid "Select Module Folders"
 msgstr "ਮੋਡੀਊਲ ਫੋਲਡਰ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2721
+#: ../app/dialogs/preferences-dialog.c:2745
 msgid "Interpreters"
 msgstr "ਇੰਟਰਪਰੇਟਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2721
+#: ../app/dialogs/preferences-dialog.c:2745
 msgid "Interpreter Folders"
 msgstr "ਇੰਟਰਪਰੇਟਰ ਫੋਲਡਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2723
+#: ../app/dialogs/preferences-dialog.c:2747
 msgid "Select Interpreter Folders"
 msgstr "ਇੰਟਰਪਰੇਟਰ ਫੋਲਡਰ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2725
+#: ../app/dialogs/preferences-dialog.c:2749
 msgid "Environment Folders"
 msgstr "ਵਾਤਾਵਰਣ ਫੋਲਡਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2727
+#: ../app/dialogs/preferences-dialog.c:2751
 msgid "Select Environment Folders"
 msgstr "ਵਾਤਾਵਰਣ ਫੋਲਡਰ ਚੁਣੋ"
 
-#: ../app/dialogs/preferences-dialog.c:2729
+#: ../app/dialogs/preferences-dialog.c:2753
 msgid "Themes"
 msgstr "ਥੀਮ"
 
-#: ../app/dialogs/preferences-dialog.c:2729
+#: ../app/dialogs/preferences-dialog.c:2753
 msgid "Theme Folders"
 msgstr "ਥੀਮ ਫੋਲਡਰ"
 
-#: ../app/dialogs/preferences-dialog.c:2731
+#: ../app/dialogs/preferences-dialog.c:2755
 msgid "Select Theme Folders"
 msgstr "ਥੀਮ ਫੋਲਡਰ ਚੁਣੋ"
 
@@ -7921,11 +7943,11 @@ msgstr "ਤਬਦੀਲੀਆਂ ਰੱਦ ਕਰੋ(_D)"
 
 #: ../app/dialogs/resize-dialog.c:119
 msgid "Canvas Size"
-msgstr ""
+msgstr "ਕੈਨਵਸ ਸਾਈਜ਼"
 
 #: ../app/dialogs/resize-dialog.c:130 ../app/dialogs/scale-dialog.c:109
 msgid "Layer Size"
-msgstr "ਲੇਅਰ ਅਕਾਰ"
+msgstr "ਲੇਅਰ ਸਾਈਜ਼"
 
 #: ../app/dialogs/resize-dialog.c:294
 msgid "Resize _layers:"
@@ -7933,7 +7955,7 @@ msgstr "ਲੇਅਰ ਮੁੜ-ਅਕਾਰ(_L):"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:70
 msgid "Calibrate Monitor Resolution"
-msgstr ""
+msgstr "ਕੈਲੀਬਰੇਸ਼ਨ ਮਾਨੀਟਰ ਰੈਜ਼ੋਲੂਸ਼ਨ"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:128
 msgid "Measure the rulers and enter their lengths:"
@@ -7941,20 +7963,20 @@ msgstr ""
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:153
 msgid "_Horizontal:"
-msgstr "ਖਿਤਿਜੀ:"
+msgstr "ਹਾਰੀਜ਼ਟਲ(_H):"
 
 #: ../app/dialogs/resolution-calibrate-dialog.c:158
 msgid "_Vertical:"
-msgstr "ਲੰਬਕਾਰੀ:"
+msgstr "ਵਰਟੀਕਲ(_V):"
 
 #. Image size frame
 #: ../app/dialogs/scale-dialog.c:98 ../app/widgets/gimptemplateeditor.c:139
 msgid "Image Size"
-msgstr "ਚਿੱਤਰ ਕਿਸਮ"
+msgstr "ਚਿੱਤਰ ਸਾਈਜ਼"
 
 #: ../app/dialogs/scale-dialog.c:175
 msgid "Quality"
-msgstr "ਗੁਣਵੱਤਾ"
+msgstr "ਕੁਆਲਟੀ"
 
 #: ../app/dialogs/scale-dialog.c:187
 msgid "I_nterpolation:"
@@ -7968,7 +7990,7 @@ msgstr ""
 
 #: ../app/dialogs/stroke-dialog.c:102
 msgid "Choose Stroke Style"
-msgstr ""
+msgstr "ਸਟਰੋਕ ਸਟਾਇਲ ਚੁਣੋ"
 
 #: ../app/dialogs/stroke-dialog.c:214
 msgid "Paint tool:"
@@ -7976,7 +7998,7 @@ msgstr "ਪੇਂਟ ਟੂਲ:"
 
 #: ../app/dialogs/tips-dialog.c:90
 msgid "Your GIMP tips file appears to be missing!"
-msgstr ""
+msgstr "ਤੁਹਾਡਾ ਜੈਮਪ ਟਿੱਪ ਫਾਇਲ ਗੁੰਮ ਜਾਪਦੀ ਹੈ!"
 
 #: ../app/dialogs/tips-dialog.c:92
 #, c-format
@@ -7985,23 +8007,23 @@ msgstr ""
 
 #: ../app/dialogs/tips-dialog.c:98
 msgid "The GIMP tips file could not be parsed!"
-msgstr ""
+msgstr "ਜੈਮਪ ਟਿੱਪ ਫਾਇਲ ਨੂੰ ਪਾਰਸ ਨਹੀਂ ਕੀਤਾ ਜਾ ਸਕਿਆ!"
 
 #: ../app/dialogs/tips-dialog.c:127
 msgid "GIMP Tip of the Day"
-msgstr "ਜੈਮਪ - ਅੱਜ ਦਾ ਇਸ਼ਾਰਾ"
+msgstr "ਜੈਮਪ ਅੱਜ ਦਾ ਟਿੱਪ"
 
 #: ../app/dialogs/tips-dialog.c:133
 msgid "_Previous Tip"
-msgstr "ਇਸ਼ਾਰਾ ਪਿੱਛੇ(_P)"
+msgstr "ਟਿੱਪ ਪਿੱਛੇ(_P)"
 
 #: ../app/dialogs/tips-dialog.c:139
 msgid "_Next Tip"
-msgstr "ਇਸ਼ਾਰਾ ਅੱਗੇ(_N)"
+msgstr "ਅੱਗੇ ਟਿੱਪ(_N)"
 
 #: ../app/dialogs/tips-dialog.c:205
 msgid "Show tip next time GIMP starts"
-msgstr "ਅਗਲੀ ਵਾਰ ਜੈਮਪ ਚੱਲਣ ਤੇ ਇਸ਼ਾਰੇ ਵੇਖਾਓ"
+msgstr "ਅਗਲੀ ਵਾਰ ਜੈਮਪ ਚੱਲਣ ਸਮੇਂ ਟਿੱਪ ਵੇਖੋ"
 
 #. This is a special string to specify the language identifier to
 #. look for in the gimp-tips.xml file. Please translate the C in it
@@ -8022,7 +8044,7 @@ msgstr "ਯੂਜ਼ਰ ਇੰਸਟਾਲੇਸ਼ਨ ਫੇਲ੍ਹ!"
 
 #: ../app/dialogs/user-install-dialog.c:96
 msgid "The GIMP user installation failed; see the log for details."
-msgstr ""
+msgstr "ਜੈਮਪ ਇੰਸਟਾਲੇਸ਼ਨ ਫੇਲ੍ਹ ਹੋਈ ਹੈ; ਵਧੇਰੇ ਜਾਣਕਾਰੀ ਲਈ ਲਾਗ ਵੇਖੋ।"
 
 #: ../app/dialogs/user-install-dialog.c:99
 msgid "Installation Log"
@@ -8071,11 +8093,11 @@ msgstr "ਟੂਲ ਆਈਕਾਨ"
 
 #: ../app/display/display-enums.c:25
 msgid "Tool icon with crosshair"
-msgstr ""
+msgstr "ਕਰਾਸ-ਹੇਅਰ ਨਾਲ ਟੂਲ ਆਈਕਾਨ"
 
 #: ../app/display/display-enums.c:26
 msgid "Crosshair only"
-msgstr ""
+msgstr "ਕਰਾਸ-ਹੇਅਰ ਹੀ"
 
 #: ../app/display/display-enums.c:55
 msgid "From theme"
@@ -8083,15 +8105,15 @@ msgstr "ਥੀਮ ਤੋਂ"
 
 #: ../app/display/display-enums.c:56
 msgid "Light check color"
-msgstr "ਫਿੱਕੇ ਜਾਂਚ ਰੰਗ"
+msgstr "ਫਿੱਕੇ ਚੈੱਕ ਰੰਗ"
 
 #: ../app/display/display-enums.c:57
 msgid "Dark check color"
-msgstr "ਗੂੜ੍ਹੇ ਜਾਂਚ ਰੰਗ"
+msgstr "ਗੂੜ੍ਹੇ ਚੈੱਕ ਰੰਗ"
 
 #: ../app/display/display-enums.c:58
 msgid "Custom color"
-msgstr "ਰੰਗ ਸੋਧ"
+msgstr "ਕਸਟਮ ਰੰਗ"
 
 #: ../app/display/display-enums.c:86
 msgid "No action"
@@ -8103,22 +8125,22 @@ msgstr "ਪੈਨ ਝਲਕ"
 
 #: ../app/display/display-enums.c:88
 msgid "Switch to Move tool"
-msgstr ""
+msgstr "ਮੂਵ ਟੂਲ ਲਈ ਸਵਿੱਚ ਕਰੋ"
 
 #: ../app/display/gimpdisplay-handlers.c:155
 #, c-format
 msgid "Image saved to '%s'"
 msgstr "ਚਿੱਤਰ '%s' ਉੱਤੇ ਸੰਭਾਲਿਆ ਗਿਆ"
 
-#: ../app/display/gimpdisplayshell.c:887
+#: ../app/display/gimpdisplayshell.c:895
 msgid "Access the image menu"
 msgstr ""
 
-#: ../app/display/gimpdisplayshell.c:996
+#: ../app/display/gimpdisplayshell.c:1004
 msgid "Zoom image when window size changes"
 msgstr ""
 
-#: ../app/display/gimpdisplayshell.c:1046
+#: ../app/display/gimpdisplayshell.c:1054
 msgid "Navigate the image display"
 msgstr "ਚਿੱਤਰ ਨੈਗਟਿਵ ਵੇਖੋ"
 
@@ -8153,7 +8175,7 @@ msgid_plural ""
 "If you don't save the image, changes from the last hour and %d minutes will "
 "be lost."
 msgstr[0] ""
-msgstr[1] "ਅਣ-ਸੰਭਾਲਿਆ ਡਾਟਾ ਖਤਮ ਹੋ ਜਾਵੇਗਾ।"
+msgstr[1] ""
 
 #: ../app/display/gimpdisplayshell-close.c:253
 #, c-format
@@ -8166,29 +8188,29 @@ msgstr[1] "ਅਣ-ਸੰਭਾਲਿਆ ਡਾਟਾ ਖਤਮ ਹੋ ਜਾਵ�
 #: ../app/display/gimpdisplayshell-dnd.c:500
 #: ../app/display/gimpdisplayshell-dnd.c:550
 msgid "Drop New Layer"
-msgstr "ਨਵੀ ਲੇਅਰ ਸੁਟੋ"
+msgstr "ਨਵੀਂ ਲੇਅਰ ਡਰਾਪ ਕਰੋ"
 
 #: ../app/display/gimpdisplayshell-dnd.c:262
 msgid "Drop New Path"
-msgstr "ਨਵਾਂ ਮਾਰਗ ਸੁੱਟੋ"
+msgstr "ਨਵਾਂ ਮਾਰਗ ਡਰਾਪ ਕਰੋ"
 
 #: ../app/display/gimpdisplayshell-dnd.c:441
 #: ../app/widgets/gimplayertreeview.c:752
 msgid "Drop layers"
-msgstr "ਲੇਅਰ ਹਟਾਓ"
+msgstr "ਲੇਅਰ ਡਰਾਪ ਕਰੋ"
 
 #: ../app/display/gimpdisplayshell-dnd.c:538
 #: ../app/widgets/gimplayertreeview.c:834 ../app/widgets/gimptoolbox-dnd.c:356
 msgid "Dropped Buffer"
-msgstr ""
+msgstr "ਡਰਾਪ ਕੀਤਾ ਬਫ਼ਰ"
 
 #: ../app/display/gimpdisplayshell-filter-dialog.c:78
 msgid "Color Display Filters"
-msgstr "ਰੰਗ-ਵੇਖਾਉਣ ਲਈ ਫਿਲਟਰ"
+msgstr "ਰੰਗ ਡਿਸਪਲੇਅ ਫਿਲਟਰ"
 
 #: ../app/display/gimpdisplayshell-filter-dialog.c:81
 msgid "Configure Color Display Filters"
-msgstr "ਰੰਗ-ਵੇਖਾਉਣ ਲਈ ਫਿਲਟਰ ਦੀ ਸੰਰਚਨਾ"
+msgstr "ਰੰਗ ਡਿਸਪਲੇਅ ਫਿਲਟਰ ਦੀ ਸੰਰਚਨਾ"
 
 #: ../app/display/gimpdisplayshell-layer-select.c:120
 msgid "Layer Select"
@@ -8196,15 +8218,15 @@ msgstr "ਲੇਅਰ ਚੋਣ"
 
 #: ../app/display/gimpdisplayshell-scale.c:612
 msgid "Zoom Ratio"
-msgstr "ਆਕਾਰ ਅਨੁਪਾਤ"
+msgstr "ਜ਼ੂਮ ਰੇਸ਼ੋ"
 
 #: ../app/display/gimpdisplayshell-scale.c:614
 msgid "Select Zoom Ratio"
-msgstr "ਆਕਾਰ ਅਨੁਪਾਤ ਚੁਣੋ"
+msgstr "ਜ਼ੂਮ ਰੇਸ਼ੋ ਚੁਣੋ"
 
 #: ../app/display/gimpdisplayshell-scale.c:657
 msgid "Zoom ratio:"
-msgstr "ਜ਼ੂਮ ਅਨੁਪਾਤ:"
+msgstr "ਜ਼ੂਮ ਰੇਸ਼ੋ:"
 
 #: ../app/display/gimpdisplayshell-scale.c:682
 msgid "Zoom:"
@@ -8220,11 +8242,11 @@ msgstr "grayscale-empty"
 
 #: ../app/display/gimpdisplayshell-title.c:229
 msgid "grayscale"
-msgstr "ਸਲੇਟੀ"
+msgstr "ਗਰੇ-ਸਕੇਲ"
 
 #: ../app/display/gimpdisplayshell-title.c:232
 msgid "indexed-empty"
-msgstr "ਇੰਡੈਕਸ-ਖਾਲ਼ੀ"
+msgstr "ਇੰਡੈਕਸ-ਖਾਲੀ"
 
 #: ../app/display/gimpdisplayshell-title.c:232
 msgid "indexed"
@@ -8246,36 +8268,36 @@ msgstr "(ਕੋਈ ਨਹੀਂ)"
 
 #: ../app/display/gimpstatusbar.c:223
 msgid "Cancel"
-msgstr "ਰੱਦ"
+msgstr "ਰੱਦ ਕਰੋ"
 
 #: ../app/display/gimpstatusbar.c:483
 msgid "Other..."
 msgstr "ਹੋਰ..."
 
-#: ../app/file/file-open.c:130 ../app/file/file-save.c:112
+#: ../app/file/file-open.c:129 ../app/file/file-save.c:111
 msgid "Not a regular file"
-msgstr "ਇੱਕ ਨਿਯਮਤ ਫਾਇਲ ਨਹੀਂ"
+msgstr "ਇੱਕ ਰੈਗੂਲਰ ਫਾਇਲ ਨਹੀਂ"
 
-#: ../app/file/file-open.c:175
+#: ../app/file/file-open.c:180
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
 msgstr ""
 
-#: ../app/file/file-open.c:184
+#: ../app/file/file-open.c:189
 #, c-format
 msgid "%s plug-In could not open image"
 msgstr ""
 
-#: ../app/file/file-open.c:471
+#: ../app/file/file-open.c:474
 msgid "Image doesn't contain any layers"
 msgstr "ਚਿੱਤਰ 'ਚ ਕੋਈ ਲੇਅਰ ਨਹੀਂ ਹੈ"
 
-#: ../app/file/file-open.c:520
+#: ../app/file/file-open.c:523
 #, c-format
 msgid "Opening '%s' failed: %s"
 msgstr "'%s' ਨੂੰ ਖੋਲ੍ਹਣਾ ਅਸਫਲ: %s"
 
-#: ../app/file/file-open.c:594
+#: ../app/file/file-open.c:597
 msgid ""
 "Color management has been disabled. It can be enabled again in the "
 "Preferences dialog."
@@ -8283,12 +8305,12 @@ msgstr ""
 
 #: ../app/file/file-procedure.c:200
 msgid "Unknown file type"
-msgstr ""
+msgstr "ਅਣਜਾਣ ਫਾਇਲ ਟਾਈਪ"
 
 #: ../app/file/file-save.c:193
 #, c-format
 msgid "%s plug-in could not save image"
-msgstr ""
+msgstr "%s ਪਲੱਗਇਨ ਚਿੱਤਰ ਨਹੀਂ ਸੰਭਾਲ ਸਕਦੀ"
 
 #: ../app/file/file-utils.c:74
 #, c-format
@@ -8301,7 +8323,7 @@ msgstr ""
 
 #: ../app/gui/splash.c:117
 msgid "GIMP Startup"
-msgstr "ਜੈਮਪ ਸ਼ੁਰੂਆਤ"
+msgstr "ਜੈਮਪ ਸਟਾਰਟਅੱਪ"
 
 #: ../app/paint/gimpairbrush.c:69 ../app/tools/gimpairbrushtool.c:54
 msgid "Airbrush"
@@ -8309,11 +8331,11 @@ msgstr "ਏਅਰ-ਬੁਰਸ਼"
 
 #: ../app/paint/gimpbrushcore.c:354
 msgid "No brushes available for use with this tool."
-msgstr ""
+msgstr "ਇਹ ਟੂਲ ਨਾਲ ਵਰਤਣ ਵਾਸਤੇ ਕੋਈ ਬੁਰਸ਼ ਉਪਲੱਬਧ ਨਹੀਂ ਹੈ।"
 
 #: ../app/paint/gimpclone.c:100 ../app/tools/gimpclonetool.c:61
 msgid "Clone"
-msgstr "ਸਮਰੂਪ"
+msgstr "ਕਲੋਨ ਕਰੋ"
 
 #: ../app/paint/gimpclone.c:141
 msgid "No patterns available for use with this tool."
@@ -8350,7 +8372,7 @@ msgstr "ਪਿਨਸਲ"
 #: ../app/paint/gimpperspectiveclone.c:95 ../app/paint/paint-enums.c:52
 #: ../app/tools/gimpperspectiveclonetool.c:120
 msgid "Perspective Clone"
-msgstr "ਅਵਲੋਕਣ ਨਕਲ"
+msgstr "ਅਵਲੋਕਣ ਕਲੋਨ ਕਰੋ"
 
 #: ../app/paint/gimpperspectiveclone.c:160
 msgid "Perspective Clone does not operate on indexed layers."
@@ -8362,7 +8384,7 @@ msgstr "ਧੱਬਾ"
 
 #: ../app/paint/gimpsourcecore.c:227
 msgid "Set a source image first."
-msgstr ""
+msgstr "ਇੱਕ ਸਰੋਤ ਚਿੱਤਰ ਪਹਿਲਾਂ ਸੈੱਟ ਕਰੋ।"
 
 #: ../app/paint/paint-enums.c:51
 msgid "Modify Perspective Plane"
@@ -8370,7 +8392,7 @@ msgstr ""
 
 #: ../app/paint/paint-enums.c:82
 msgid "Aligned"
-msgstr ""
+msgstr "ਇਕਸਾਰ"
 
 #: ../app/paint/paint-enums.c:83
 msgid "Registered"
@@ -8394,7 +8416,7 @@ msgstr "ਮਾਸਕ ਜੋੜੋ"
 
 #: ../app/pdb/color_cmds.c:102 ../app/tools/gimpbrightnesscontrasttool.c:102
 msgid "Brightness-Contrast"
-msgstr "ਪਰਕਾਸ਼ਵਾਨਤਾ-ਵੱਖਰੇਵਾਂ"
+msgstr ""
 
 #: ../app/pdb/color_cmds.c:249 ../app/tools/gimpposterizetool.c:77
 msgid "Posterize"
@@ -8407,7 +8429,7 @@ msgstr "ਕਰਵ"
 
 #: ../app/pdb/color_cmds.c:581 ../app/tools/gimpcolorbalancetool.c:92
 msgid "Color Balance"
-msgstr "ਰੰਗ ਸਾਵਾਂ"
+msgstr "ਰੰਗ ਬੈਂਲਨਸ"
 
 #: ../app/pdb/color_cmds.c:640 ../app/tools/gimpcolorizetool.c:90
 msgid "Colorize"
@@ -8419,28 +8441,28 @@ msgstr "ਆਭਾ-ਸਤ੍ਰਿਪਤ"
 
 #: ../app/pdb/color_cmds.c:827 ../app/tools/gimpthresholdtool.c:82
 msgid "Threshold"
-msgstr "ਮੁੱਢਲਾ ਮੁੱਲ"
+msgstr "ਥਰੈਸ਼ਹੋਲਡ"
 
-#: ../app/pdb/drawable_transform_cmds.c:304
-#: ../app/pdb/drawable_transform_cmds.c:388
+#: ../app/pdb/drawable_transform_cmds.c:302
+#: ../app/pdb/drawable_transform_cmds.c:385
 #: ../app/pdb/transform_tools_cmds.c:142 ../app/tools/gimpperspectivetool.c:67
 msgid "Perspective"
 msgstr "ਅਵਲੋਕਣ"
 
-#: ../app/pdb/drawable_transform_cmds.c:818
-#: ../app/pdb/drawable_transform_cmds.c:889
+#: ../app/pdb/drawable_transform_cmds.c:810
+#: ../app/pdb/drawable_transform_cmds.c:880
 #: ../app/pdb/transform_tools_cmds.c:352 ../app/tools/gimpsheartool.c:110
 msgid "Shearing"
 msgstr "ਘਟਾਇਆ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: ../app/pdb/drawable_transform_cmds.c:973
+#: ../app/pdb/drawable_transform_cmds.c:963
 #: ../app/pdb/transform_tools_cmds.c:426
 msgid "2D Transform"
 msgstr "2D ਟਰਾਂਸਫਰਮ"
 
-#: ../app/pdb/drawable_transform_cmds.c:1055
-#: ../app/pdb/drawable_transform_cmds.c:1147
-#: ../app/pdb/drawable_transform_cmds.c:1237
+#: ../app/pdb/drawable_transform_cmds.c:1044
+#: ../app/pdb/drawable_transform_cmds.c:1135
+#: ../app/pdb/drawable_transform_cmds.c:1224
 msgid "2D Transforming"
 msgstr "2D ਟਰਾਂਸਫਰਮ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
@@ -8531,12 +8553,12 @@ msgstr "ਮੁਕਤ ਚੋਣ"
 #: ../app/plug-in/gimpenvirontable.c:282
 #, c-format
 msgid "Empty variable name in environment file %s"
-msgstr "ਵਾਤਾਵਰਣ ਫਾਇਲ %s ਵਿੱਚ ਵੇਰੀਬਲ ਨਾਂ ਖਾਲੀ ਹੈ"
+msgstr "ਇੰਵਾਇਰਨਮਿੰਟ ਫਾਇਲ %s ਵਿੱਚ ਵੇਰੀਬਲ ਨਾਂ ਖਾਲੀ ਹੈ"
 
 #: ../app/plug-in/gimpenvirontable.c:300
 #, c-format
 msgid "Illegal variable name in environment file %s: %s"
-msgstr "ਵਾਤਾਵਰਣ ਫਾਇਲ %s ਵਿੱਚ ਵੇਰੀਬਲ ਨਾਂ ਗਲਤ ਹੈ: %s"
+msgstr "ਇੰਵਾਇਰਨਮਿੰਟ ਫਾਇਲ %s ਵਿੱਚ ਵੇਰੀਬਲ ਨਾਂ ਗਲਤ ਹੈ: %s"
 
 #: ../app/plug-in/gimpinterpreterdb.c:264
 #, c-format
@@ -8560,7 +8582,7 @@ msgstr ""
 
 #: ../app/plug-in/gimppluginmanager-restore.c:222
 msgid "Searching Plug-Ins"
-msgstr "ਪਲੱਗਇਨ ਦੀ ਜਾਂਚ ਜਾਰੀ ਹੈ"
+msgstr "ਪਲੱਗਇਨ ਦੀ ਖੋਜ ਜਾਰੀ"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:271
 msgid "Resource configuration"
@@ -8568,15 +8590,15 @@ msgstr "ਸਰੋਤ ਸੰਰਚਨਾ"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:307
 msgid "Querying new Plug-ins"
-msgstr "ਨਵੀ ਪਲੱਗ-ਇਨ ਲਈ ਜਾਂਚ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ"
+msgstr "ਨਵੀਂ ਪਲੱਗ-ਇਨ ਲਈ ਕਿਊਰੀ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:357
 msgid "Initializing Plug-ins"
-msgstr "ਪਲੱਗ-ਇਨ ਨੂੰ ਸ਼ੁਰੂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
+msgstr "ਪਲੱਗ-ਇਨ ਸ਼ੁਰੂ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:429
 msgid "Starting Extensions"
-msgstr "ਵਿਸਥਾਰ ਨੂੰ ਸ਼ੁਰੂ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
+msgstr "ਇਕਸਟੈਂਸ਼ਨ ਸ਼ੁਰੂ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ"
 
 #: ../app/plug-in/gimppluginmanager.c:296
 msgid "Plug-In Interpreters"
@@ -8584,7 +8606,7 @@ msgstr "ਪਲੱਗਇਨ ਇੰਟਰਪਰੇਟਰ"
 
 #: ../app/plug-in/gimppluginmanager.c:303
 msgid "Plug-In Environment"
-msgstr "ਪਲੱਗਇਨ ਵਾਤਾਵਰਣ"
+msgstr "ਪਲੱਗਇਨ ਇੰਵਾਇਰਨਮਿੰਟ"
 
 #: ../app/plug-in/plug-in-icc-profile.c:111
 #: ../app/plug-in/plug-in-icc-profile.c:184
@@ -8598,17 +8620,17 @@ msgstr "'%s' ਚਲਾਉਣ ਦੌਰਾਨ ਗਲਤੀ"
 #: ../app/plug-in/plug-in-icc-profile.c:251
 #, c-format
 msgid "Plug-In missing (%s)"
-msgstr ""
+msgstr "ਪਲੱਗਇਨ ਗੁੰਮ ਹੈ (%s)"
 
 #: ../app/plug-in/plug-in-rc.c:206
 #, c-format
 msgid "Skipping '%s': wrong GIMP protocol version."
-msgstr "ਛੱਡਿਆ ਜਾ ਰਿਹਾ ਹੈ '%s': ਗਲਤ ਜੈਮਪ ਪੋਰੋਟੋਕੋਲ ਵਰਜਨ"
+msgstr "'%s' ਛੱਡਿਆ ਗਿਆ: ਗਲਤ ਜੈਮਪ ਪੋਰੋਟੋਕੋਲ ਵਰਜਨ"
 
 #: ../app/plug-in/plug-in-rc.c:479
 #, c-format
 msgid "invalid value '%s' for icon type"
-msgstr ""
+msgstr "ਆਈਕਾਨ ਟਾਈਪ ਲਈ ਗਲਤ ਮੁੱਲ '%s'"
 
 #: ../app/plug-in/plug-in-rc.c:494
 #, c-format
@@ -8617,15 +8639,15 @@ msgstr "ਆਈਕਾਨ ਕਿਸਮ ਲਈ ਗਲਤ ਮੁੱਲ '%ld'"
 
 #: ../app/text/text-enums.c:81
 msgid "Left justified"
-msgstr ""
+msgstr "ਖੱਬੇ ਜਸਟੀਫਾਇਡ"
 
 #: ../app/text/text-enums.c:82
 msgid "Right justified"
-msgstr ""
+msgstr "ਸੱਜੇ ਜਸਟੀਫਾਇਡ"
 
 #: ../app/text/text-enums.c:83
 msgid "Centered"
-msgstr "ਕੇਦਰੀ"
+msgstr "ਸੈਂਟਰਡ"
 
 #: ../app/text/text-enums.c:84
 msgid "Filled"
@@ -8641,43 +8663,43 @@ msgstr ""
 
 #: ../app/text/gimptext-compat.c:108 ../app/tools/gimptexttool.c:706
 msgid "Add Text Layer"
-msgstr "ਨਵੀ ਪਾਠ ਲੇਅਰ ਜੋੜ੍ਹੋ"
+msgstr "ਟੈਕਸਟ ਲੇਅਰ ਸ਼ਾਮਲ"
 
 #: ../app/text/gimptextlayer.c:138
 msgid "Text Layer"
-msgstr "ਪਾਠ ਲੇਅਰ"
+msgstr "ਟੈਕਸਟ ਲੇਅਰ"
 
 #: ../app/text/gimptextlayer.c:139
 msgid "Rename Text Layer"
-msgstr "ਪਾਠ ਲੇਅਰ ਨਾਂ-ਬਦਲੋ"
+msgstr "ਟੈਕਸਟ ਲੇਅਰ ਨਾਂ-ਬਦਲੋ"
 
 #: ../app/text/gimptextlayer.c:140
 msgid "Move Text Layer"
-msgstr "ਪਾਠ ਲੇਅਰ ਏਧਰ-ਓਧਰ"
+msgstr "ਟੈਕਸਟ ਲੇਅਰ ਹਿਲਾਓ"
 
 #: ../app/text/gimptextlayer.c:141
 msgid "Scale Text Layer"
-msgstr "ਪਾਠ ਲੇਅਰ ਪੈਮਾਨਾ"
+msgstr "ਟੈਕਸਟ ਲੇਅਰ ਸਕੇਲ ਕਰੋ"
 
 #: ../app/text/gimptextlayer.c:142
 msgid "Resize Text Layer"
-msgstr "ਪਾਠ ਲੇਅਰ ਮੁੜ-ਆਕਾਰ"
+msgstr "ਟੈਕਸਟ ਲੇਅਰ ਮੁੜ-ਆਕਾਰ"
 
 #: ../app/text/gimptextlayer.c:143
 msgid "Flip Text Layer"
-msgstr "ਪਾਠ ਲੇਅਰ ਨੂੰ ਝਟਕੋ"
+msgstr "ਟੈਕਸਟ ਲੇਅਰ ਨੂੰ ਝਟਕੋ"
 
 #: ../app/text/gimptextlayer.c:144
 msgid "Rotate Text Layer"
-msgstr "ਪਾਠ ਲੇਅਰ ਨੂੰ ਘੁੰਮਾਉ"
+msgstr "ਟੈਕਸਟ ਲੇਅਰ ਨੂੰ ਘੁੰਮਾਉ"
 
 #: ../app/text/gimptextlayer.c:145
 msgid "Transform Text Layer"
-msgstr "ਪਾਠ ਲੇਅਰ ਤਬਦੀਲ"
+msgstr "ਟੈਕਸਟ ਲੇਅਰ ਟਰਾਂਸਫਰਮ"
 
 #: ../app/text/gimptextlayer.c:497
 msgid "Discard Text Information"
-msgstr "ਪਾਠ ਜਾਣਕਾਰੀ ਰੱਦ"
+msgstr "ਟੈਕਸਟ ਜਾਣਕਾਰੀ ਰੱਦ ਕਰੋ"
 
 #: ../app/text/gimptextlayer.c:548
 msgid "Due to lack of any fonts, text functionality is not available."
@@ -8685,7 +8707,7 @@ msgstr ""
 
 #: ../app/text/gimptextlayer.c:583
 msgid "Empty Text Layer"
-msgstr "ਖਾਲੀ ਪਾਠ ਲੇਅਰ"
+msgstr "ਖਾਲੀ ਟੈਕਸਟ ਲੇਅਰ"
 
 #: ../app/text/gimptextlayer-xcf.c:75
 #, c-format
@@ -8716,7 +8738,7 @@ msgstr "ਏਅਰ-ਬੁਰਸ਼(_A)"
 #: ../app/tools/gimpairbrushtool.c:95 ../app/tools/gimpconvolvetool.c:217
 #: ../app/tools/gimpsmudgetool.c:97
 msgid "Rate:"
-msgstr "ਮੁੱਲ:"
+msgstr "ਰੇਟ:"
 
 #: ../app/tools/gimpairbrushtool.c:101
 msgid "Pressure:"
@@ -8796,11 +8818,11 @@ msgstr "ਆਫਸੈੱਟ:"
 
 #: ../app/tools/gimpblendoptions.c:222 ../app/widgets/gimpbrusheditor.c:146
 msgid "Shape:"
-msgstr "ਖਾਕਾ"
+msgstr "ਸ਼ੇਪ:"
 
 #: ../app/tools/gimpblendoptions.c:229 ../app/tools/gimppaintoptions-gui.c:460
 msgid "Repeat:"
-msgstr "ਦੁਹਰਾਉ:"
+msgstr "ਰਪੀਟ:"
 
 #: ../app/tools/gimpblendoptions.c:247
 msgid "Adaptive supersampling"
@@ -8808,13 +8830,13 @@ msgstr ""
 
 #: ../app/tools/gimpblendoptions.c:255
 msgid "Max depth:"
-msgstr "ਵੱਧ ਤੋਂ ਵੱਧ ਡੂੰਘਾਈ:"
+msgstr "ਵੱਧੋ-ਵੱਧ ਡੂੰਘਾਈ:"
 
 #: ../app/tools/gimpblendoptions.c:262
 #: ../app/tools/gimpbucketfilloptions.c:287
-#: ../app/tools/gimpselectionoptions.c:421
+#: ../app/tools/gimpselectionoptions.c:426
 msgid "Threshold:"
-msgstr "ਅਧਾਰ ਮੁੱਲ:"
+msgstr "ਥਰੈਸ਼ਹੋਲਡ:"
 
 #: ../app/tools/gimpblendtool.c:109
 msgid "Blend Tool: Fill selected area with a color gradient"
@@ -8860,11 +8882,11 @@ msgstr "ਇੰਡੈਕਸ ਲੇਅਰਾਂ ਤੇ ਚਮਕੀਲਾਪਨ-�
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:286
 msgid "_Brightness:"
-msgstr "ਚਮਕੀਲਾਪਨ:"
+msgstr "ਚਮਕੀਲਾਪਨ(_B):"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:301
 msgid "Con_trast:"
-msgstr "ਅਸਮਾਨਤਾ:"
+msgstr ""
 
 #: ../app/tools/gimpbucketfilloptions.c:100
 msgid "Allow completely transparent regions to be filled"
@@ -8875,9 +8897,9 @@ msgid "Base filled area on all visible layers"
 msgstr "ਸਾਰੀਆਂ ਦਿੱਖ ਲੇਅਰਾਂ ਲਈ ਅਧਾਰ ਭਰਨ ਖੇਤਰ"
 
 #: ../app/tools/gimpbucketfilloptions.c:112
-#: ../app/tools/gimpselectionoptions.c:123
+#: ../app/tools/gimpselectionoptions.c:128
 msgid "Maximum color difference"
-msgstr "ਅਧਿਕਤਮ ਰੰਗ ਫ਼ਰਕ"
+msgstr "ਵੱਧੋ-ਵੱਧ ਰੰਗ ਫ਼ਰਕ"
 
 #. fill type
 #: ../app/tools/gimpbucketfilloptions.c:226
@@ -8889,7 +8911,7 @@ msgstr "ਭਰਨ ਕਿਸਮ  (%s)"
 #: ../app/tools/gimpbucketfilloptions.c:239
 #, c-format
 msgid "Affected Area  (%s)"
-msgstr "ਪ੍ਰਭਾਵਿਤ ਖੇਤਰ  (%s)"
+msgstr "ਪ੍ਰਭਾਵਿਤ ਏਰੀਆ (%s)"
 
 #: ../app/tools/gimpbucketfilloptions.c:243
 msgid "Fill whole selection"
@@ -8900,7 +8922,7 @@ msgid "Fill similar colors"
 msgstr "ਮਿਲ-ਜੁਲਦੇ ਰੰਗ ਭਰੋ"
 
 #: ../app/tools/gimpbucketfilloptions.c:253
-#: ../app/tools/gimpselectionoptions.c:393
+#: ../app/tools/gimpselectionoptions.c:398
 msgid "Finding Similar Colors"
 msgstr "ਮਿਲ-ਜੁਲਦੇ ਰੰਗ ਖੋਜੋ"
 
@@ -8910,10 +8932,10 @@ msgstr "ਪਾਰਦਰਸ਼ੀ ਖੇਤਰ ਭਰੋ"
 
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160 ../app/tools/gimphealtool.c:99
-#: ../app/tools/gimpperspectiveclonetool.c:904
-#: ../app/tools/gimpselectionoptions.c:409
+#: ../app/tools/gimpperspectiveclonetool.c:903
+#: ../app/tools/gimpselectionoptions.c:414
 msgid "Sample merged"
-msgstr "ਸਧਾਰਨ ਮਿਲਾਨ"
+msgstr "ਸੈਂਪਲ ਮਿਲਾਨ"
 
 #: ../app/tools/gimpbucketfilloptions.c:294
 msgid "Fill by:"
@@ -8921,7 +8943,7 @@ msgstr "ਭਰਿਆ:"
 
 #: ../app/tools/gimpbucketfilltool.c:80
 msgid "Bucket Fill"
-msgstr ""
+msgstr "ਬਾਲਟੀ ਭਰਨ"
 
 #: ../app/tools/gimpbucketfilltool.c:81
 msgid "Bucket Fill Tool: Fill selected area with a color or pattern"
@@ -8929,7 +8951,7 @@ msgstr "ਬਾਲਟੀ ਭਰਨ ਟੂਲ: ਚੁਣਿਆ ਖੇਤਰ ਇੱ
 
 #: ../app/tools/gimpbucketfilltool.c:82
 msgid "_Bucket Fill"
-msgstr ""
+msgstr "ਬਾਲਟੀ ਭਰਨ(_B)"
 
 #: ../app/tools/gimpbycolorselecttool.c:65
 msgid "Select by Color"
@@ -8937,7 +8959,7 @@ msgstr "ਰੰਗ ਨਾਲ ਚੁਣੋ"
 
 #: ../app/tools/gimpbycolorselecttool.c:66
 msgid "Select by Color Tool: Select regions with similar colors"
-msgstr ""
+msgstr "ਰੰਗ ਨਾਲ ਚੁਣੋ: ਰਲਦੇ ਰੰਗਾਂ ਨਾਲ ਖੇਤਰ ਚੁਣੋ"
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "_By Color Select"
@@ -8949,42 +8971,42 @@ msgstr ""
 
 #: ../app/tools/gimpclonetool.c:63
 msgid "_Clone"
-msgstr "ਸਮਰੂਪ(_C)"
+msgstr "ਕਲੋਨ(_C)"
 
 #: ../app/tools/gimpclonetool.c:86 ../app/tools/gimpclonetool.c:89
 msgid "Click to clone"
-msgstr "ਸਮਰੂਪ ਲਈ ਦਬਾਓ"
+msgstr "ਕਲੋਨ ਕਰਨ ਲਈ ਕਲਿੱਕ"
 
 #: ../app/tools/gimpclonetool.c:87 ../app/tools/gimpclonetool.c:91
 #, c-format
 msgid "%s to set a new clone source"
-msgstr ""
+msgstr "%s ਨਵਾਂ ਕਲੋਨ ਸੋਰਸ ਸੈੱਟ ਕਰੋ"
 
 #: ../app/tools/gimpclonetool.c:90
 msgid "Click to set a new clone source"
-msgstr ""
+msgstr "ਇੱਕ ਨਵਾਂ ਕਲੋਨ ਸਰੋਤ ਸੈੱਟ ਕਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ"
 
 #: ../app/tools/gimpclonetool.c:109
-#: ../app/tools/gimpperspectiveclonetool.c:899
+#: ../app/tools/gimpperspectiveclonetool.c:898
 msgid "Source"
 msgstr "ਸਰੋਤ"
 
 #: ../app/tools/gimpclonetool.c:128 ../app/tools/gimphealtool.c:111
-#: ../app/tools/gimpperspectiveclonetool.c:918
+#: ../app/tools/gimpperspectiveclonetool.c:917
 msgid "Alignment:"
 msgstr "ਇਕਸਾਰ:"
 
 #: ../app/tools/gimpcolorbalancetool.c:93
 msgid "Color Balance Tool: Adjust color distribution"
-msgstr ""
+msgstr "ਰੰਗ ਬੈਂਲਨਸ ਟੂਲ: ਅਡਜੱਸਟ ਰੰਗ ਡਿਸਟਰੀਬਿਊਸ਼ਨ"
 
 #: ../app/tools/gimpcolorbalancetool.c:94
 msgid "Color _Balance..."
-msgstr "ਰੰਗ ਸਾਵਾਂ(_B)..."
+msgstr "ਰੰਗ ਬੈਂਲਨਸ(_B)..."
 
 #: ../app/tools/gimpcolorbalancetool.c:111
 msgid "Adjust Color Balance"
-msgstr "ਰੰਗ ਸੰਤੁਲਨ ਅਨੁਕੂਲ ਕਰੋ"
+msgstr "ਰੰਗ ਬੈਂਲਨਸ ਅਡਜੱਸਟ ਕਰੋ"
 
 #: ../app/tools/gimpcolorbalancetool.c:153
 msgid "Color Balance operates only on RGB color layers."
@@ -9044,17 +9066,17 @@ msgstr "ਰੰਗ ਚੁਣੋ"
 #: ../app/tools/gimpcolorizetool.c:206
 #: ../app/tools/gimphuesaturationtool.c:362
 msgid "_Hue:"
-msgstr "ਰੰਗਤ:"
+msgstr "ਆਭਾ(_H):"
 
 #: ../app/tools/gimpcolorizetool.c:220
 #: ../app/tools/gimphuesaturationtool.c:398
 msgid "_Saturation:"
-msgstr "ਸਤ੍ਰਿਪਤੀ:"
+msgstr "ਸਤ੍ਰਿਪਤੀ(_S):"
 
 #: ../app/tools/gimpcolorizetool.c:234
 #: ../app/tools/gimphuesaturationtool.c:380
 msgid "_Lightness:"
-msgstr "ਪਰਕਾਸ਼਼ਮਾਨ:"
+msgstr "ਲਾਈਟਨੈੱਸ(_L):"
 
 #: ../app/tools/gimpcoloroptions.c:161
 msgid "Sample average"
@@ -9062,10 +9084,10 @@ msgstr "ਸੈਂਪਲ ਔਸਤ"
 
 #: ../app/tools/gimpcoloroptions.c:171
 #: ../app/tools/gimprectangleselectoptions.c:166
-#: ../app/tools/gimpselectionoptions.c:370
+#: ../app/tools/gimpselectionoptions.c:375
 #: ../app/widgets/gimpbrusheditor.c:154
 msgid "Radius:"
-msgstr "ਅਰਧ-ਵਿਆਸ:"
+msgstr "ਰੇਡੀਅਸ:"
 
 #. the pick FG/BG frame
 #: ../app/tools/gimpcolorpickeroptions.c:165
@@ -9077,7 +9099,7 @@ msgstr "ਪਿਕ ਮੋਡ  (%s)"
 #: ../app/tools/gimpcolorpickeroptions.c:174
 #, c-format
 msgid "Use info window  (%s)"
-msgstr "ਜਾਣਕਾਰੀ ਝਰੋਖਾ ਵਰਤੋਂ  (%s)"
+msgstr "ਜਾਣਕਾਰੀ ਵਿੰਡੋ ਵਰਤੋਂ  (%s)"
 
 #: ../app/tools/gimpcolorpickertool.c:96
 msgid "Color Picker"
@@ -9105,7 +9127,7 @@ msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ ਚੁਣਨ ਲਈ ਕਿਸੇ �
 
 #: ../app/tools/gimpcolorpickertool.c:265
 msgid "Click in any image to add the color to the palette"
-msgstr ""
+msgstr "ਪੈਲਅਟ ਵਿੱਚ ਰੰਗ ਜੋੜਨ ਲਈ ਕਿਸੇ ਚਿੱਤਰ ਉੱਤੇ ਕਲਿੱਕ ਕਰੋ"
 
 #. tool->display->shell
 #: ../app/tools/gimpcolorpickertool.c:318
@@ -9168,23 +9190,27 @@ msgstr ""
 msgid "Convolve Type  (%s)"
 msgstr ""
 
-#: ../app/tools/gimpcropoptions.c:134
+#: ../app/tools/gimpcropoptions.c:148
 msgid "Current layer only"
 msgstr "ਸਿਰਫ਼ ਮੌਜੂਦਾ ਲੇਅਰ ਲਈ"
 
-#: ../app/tools/gimpcroptool.c:112
-msgid "Crop"
-msgstr "ਫੈਲਾਉ"
-
-#: ../app/tools/gimpcroptool.c:113
-msgid "Crop Tool: Remove edge areas from image or layer"
+#: ../app/tools/gimpcropoptions.c:154
+msgid "Allow growing"
 msgstr ""
 
-#: ../app/tools/gimpcroptool.c:114
-msgid "_Crop"
-msgstr "ਫੈਲਾਓ(_C)"
+#: ../app/tools/gimpcroptool.c:115
+msgid "Crop"
+msgstr "ਕਰੋਪ ਕਰੋ"
 
-#: ../app/tools/gimpcroptool.c:234
+#: ../app/tools/gimpcroptool.c:116
+msgid "Crop Tool: Remove edge areas from image or layer"
+msgstr "ਕਰੋਪ ਕਰੋ: ਚਿੱਤਰ ਜਾਂ ਲੇਅਰ ਤੋਂ ਕੋਨਾ ਏਰੀਆ ਹਟਾਓ"
+
+#: ../app/tools/gimpcroptool.c:117
+msgid "_Crop"
+msgstr "ਕਰੋਪ ਕਰੋ(_C)"
+
+#: ../app/tools/gimpcroptool.c:242
 msgid "Click or press Enter to crop"
 msgstr "ਕਰੋਪ ਕਰਨ ਲਈ ਕਲਿੱਕ ਕਰੋ ਜਾਂ Enter ਦੱਬੋ"
 
@@ -9299,7 +9325,7 @@ msgid "Type  (%s)"
 msgstr "ਕਿਸਮ  (%s)"
 
 #: ../app/tools/gimpdodgeburntool.c:214
-#: ../app/tools/gimpperspectiveclonetool.c:891
+#: ../app/tools/gimpperspectiveclonetool.c:890
 msgid "Mode"
 msgstr "ਮੋਡ"
 
@@ -9748,7 +9774,7 @@ msgstr "ਪੱਧਰ ਸਵੈ ਹੀ ਅਨੁਕੂਲ ਕਰੋ"
 
 #: ../app/tools/gimpmagnifyoptions.c:167
 msgid "Auto-resize window"
-msgstr "ਆਟੋ-ਮੁੜ-ਆਕਾਰ ਝਰੋਖਾ"
+msgstr "ਆਟੋ-ਮੁੜ-ਆਕਾਰ ਵਿੰਡੋ"
 
 #. tool toggle
 #: ../app/tools/gimpmagnifyoptions.c:172 ../app/tools/gimpmoveoptions.c:184
@@ -9770,7 +9796,7 @@ msgstr "ਜ਼ੂਮ(_Z)"
 
 #: ../app/tools/gimpmeasureoptions.c:124
 msgid "Use info window"
-msgstr "ਜਾਣਕਾਰੀ ਝਰੋਖਾ ਵਰਤੋਂ"
+msgstr "ਜਾਣਕਾਰੀ ਵਿੰਡੋ ਵਰਤੋਂ"
 
 #: ../app/tools/gimpmeasuretool.c:121
 msgid "Measure"
@@ -9874,7 +9900,7 @@ msgid "_Paintbrush"
 msgstr "ਪੇਟ-ਬੁਰਸ਼(_P)"
 
 #: ../app/tools/gimppaintoptions-gui.c:99
-#: ../app/tools/gimpselectionoptions.c:336
+#: ../app/tools/gimpselectionoptions.c:341
 #: ../app/widgets/gimpbrushselect.c:190 ../app/widgets/gimplayertreeview.c:273
 msgid "Mode:"
 msgstr "ਮੋਡ:"
@@ -9983,7 +10009,7 @@ msgstr ""
 msgid "_Perspective Clone"
 msgstr ""
 
-#: ../app/tools/gimpperspectiveclonetool.c:646
+#: ../app/tools/gimpperspectiveclonetool.c:645
 msgid "Ctrl-Click to set a clone source"
 msgstr ""
 
@@ -10064,19 +10090,19 @@ msgstr ""
 msgid "Rounded corners"
 msgstr "ਗੋਲ ਕਿਨਾਰੇ"
 
-#: ../app/tools/gimprectangleselecttool.c:138
+#: ../app/tools/gimprectangleselecttool.c:141
 msgid "Rectangle Select"
 msgstr "ਆਇਤਕਾਰ ਚੋਣ"
 
-#: ../app/tools/gimprectangleselecttool.c:139
+#: ../app/tools/gimprectangleselecttool.c:142
 msgid "Rectangle Select Tool: Select a rectangular region"
 msgstr "ਆਇਤਕਾਰ ਚੋਣ ਟੂਲ: ਇੱਕ ਆਇਤਕਾਰ ਖੇਤਰ ਚੁਣੋ"
 
-#: ../app/tools/gimprectangleselecttool.c:140
+#: ../app/tools/gimprectangleselecttool.c:143
 msgid "_Rectangle Select"
 msgstr "ਚਤੁਰਭੁਜੀ ਚੋਣ(_R)"
 
-#: ../app/tools/gimprectangletool.c:916 ../app/tools/gimprectangletool.c:1824
+#: ../app/tools/gimprectangletool.c:1031 ../app/tools/gimprectangletool.c:1939
 msgid "Rectangle: "
 msgstr "ਆਇਤਕਾਰ: "
 
@@ -10124,35 +10150,35 @@ msgstr "ਪੈਮਾਨਾ(_S)"
 msgid "command|Scale"
 msgstr "ਪੈਮਾਨਾ"
 
-#: ../app/tools/gimpselectionoptions.c:98
+#: ../app/tools/gimpselectionoptions.c:103
 msgid "Smooth edges"
 msgstr "ਮੁਲਾਅਮ ਕਿਨਾਰੇ"
 
-#: ../app/tools/gimpselectionoptions.c:112
+#: ../app/tools/gimpselectionoptions.c:117
 msgid "Allow completely transparent regions to be selected"
 msgstr "ਪੂਰੀ ਤਰ੍ਹਾਂ ਪਾਰਦਰਸ਼ੀ ਖੇਤਰ ਦੀ ਚੋਣ ਦੀ ਮਨਜ਼ੂਰੀ ਦਿਉ"
 
-#: ../app/tools/gimpselectionoptions.c:118
+#: ../app/tools/gimpselectionoptions.c:123
 msgid "Base selection on all visible layers"
 msgstr "ਸਾਰੀਆ ਉਪਲੱਬਧ ਲੇਅਰਾਂ ਤੇ ਅਧਾਰ ਚੋਣ"
 
-#: ../app/tools/gimpselectionoptions.c:344 ../app/tools/gimptextoptions.c:456
+#: ../app/tools/gimpselectionoptions.c:349 ../app/tools/gimptextoptions.c:456
 msgid "Antialiasing"
 msgstr "ਐਟੀਲਾਈਸਿੰਗ"
 
-#: ../app/tools/gimpselectionoptions.c:362
+#: ../app/tools/gimpselectionoptions.c:367
 msgid "Feather edges"
 msgstr "ਖੰਭੀ ਕੰਢੇ"
 
-#: ../app/tools/gimpselectionoptions.c:379
+#: ../app/tools/gimpselectionoptions.c:384
 msgid "Show interactive boundary"
 msgstr "ਪਰਸਰ-ਪਰਭਾਵੀ ਹਾਸ਼ੀਏ ਵੇਖਾਓ"
 
-#: ../app/tools/gimpselectionoptions.c:403
+#: ../app/tools/gimpselectionoptions.c:408
 msgid "Select transparent areas"
 msgstr "ਪਾਰਦਰਸ਼ੀ ਖੇਤਰ ਚੁਣੋ"
 
-#: ../app/tools/gimpselectionoptions.c:428
+#: ../app/tools/gimpselectionoptions.c:433
 msgid "Select by:"
 msgstr "ਚੁਣਿਆ:"
 
@@ -10331,36 +10357,32 @@ msgstr "ਮੁੱਢਲਾ-ਮੁੱਲ ਇੰਡੈਕਸ-ਲੇਅਰਾਂ �
 msgid "Automatically adjust to optimal binarization threshold"
 msgstr ""
 
-#: ../app/tools/gimptransformoptions.c:281
+#: ../app/tools/gimptransformoptions.c:249
 msgid "Transform:"
 msgstr "ਤਬਦੀਲ:"
 
-#: ../app/tools/gimptransformoptions.c:287
+#: ../app/tools/gimptransformoptions.c:255
 msgid "Direction"
 msgstr "ਦਿਸ਼ਾ"
 
-#: ../app/tools/gimptransformoptions.c:296
+#: ../app/tools/gimptransformoptions.c:264
 msgid "Interpolation:"
 msgstr ""
 
-#: ../app/tools/gimptransformoptions.c:306
-msgid "Supersampling"
-msgstr ""
-
-#: ../app/tools/gimptransformoptions.c:315
+#: ../app/tools/gimptransformoptions.c:277
 msgid "Clipping:"
 msgstr "ਕਲਿੱਪਿੰਗ:"
 
-#: ../app/tools/gimptransformoptions.c:333
+#: ../app/tools/gimptransformoptions.c:295
 msgid "Preview:"
 msgstr "ਝਲਕ:"
 
-#: ../app/tools/gimptransformoptions.c:374
+#: ../app/tools/gimptransformoptions.c:336
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 ਡਿਗਰੀ  (%s)"
 
-#: ../app/tools/gimptransformoptions.c:378
+#: ../app/tools/gimptransformoptions.c:340
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "ਅਕਾਰ ਅਨੁਪਾਤ  (%s) ਰੱਖੋ"
@@ -10369,11 +10391,11 @@ msgstr "ਅਕਾਰ ਅਨੁਪਾਤ  (%s) ਰੱਖੋ"
 msgid "Transforming"
 msgstr "ਤਬਦੀਲ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: ../app/tools/gimptransformtool.c:1160
+#: ../app/tools/gimptransformtool.c:1156
 msgid "There is no layer to transform."
 msgstr "ਟਰਾਂਸਫਰ ਲਈ ਕੋਈ ਲੇਅਰ ਨਹੀਂ ਹੈ।"
 
-#: ../app/tools/gimptransformtool.c:1171
+#: ../app/tools/gimptransformtool.c:1167
 msgid "There is no path to transform."
 msgstr "ਟਰਾਂਸਫਰ ਲਈ ਕੋਈ ਮਾਰਗ ਨਹੀਂ ਹੈ।"
 
@@ -10581,7 +10603,7 @@ msgstr "ਸਥਿਰ ਆਕਾਰ"
 msgid "Fixed aspect ratio"
 msgstr "ਸਥਿਰ ਅਕਾਰ ਅਨੁਪਾਤ"
 
-#: ../app/tools/tools-enums.c:183 ../app/vectors/gimpvectors.c:192
+#: ../app/tools/tools-enums.c:183 ../app/vectors/gimpvectors.c:191
 msgid "Path"
 msgstr "ਮਾਰਗ"
 
@@ -10609,31 +10631,31 @@ msgstr "ਢਾਂਚਾ"
 msgid "Move"
 msgstr "ਹਿਲਾਓ"
 
-#: ../app/vectors/gimpvectors.c:193
+#: ../app/vectors/gimpvectors.c:192
 msgid "Rename Path"
 msgstr "ਮਾਰਗ ਨਾਂ-ਬਦਲੋ"
 
-#: ../app/vectors/gimpvectors.c:194 ../app/vectors/gimpvectors.c:319
+#: ../app/vectors/gimpvectors.c:193 ../app/vectors/gimpvectors.c:318
 msgid "Move Path"
 msgstr "ਮਾਰਗ ਹਿਲਾਓ"
 
-#: ../app/vectors/gimpvectors.c:195
+#: ../app/vectors/gimpvectors.c:194
 msgid "Scale Path"
 msgstr "ਮਾਰਗ ਪੈਮਾਨਾ"
 
-#: ../app/vectors/gimpvectors.c:196
+#: ../app/vectors/gimpvectors.c:195
 msgid "Resize Path"
 msgstr "ਮਾਰਗ ਮੁੜ-ਆਕਾਰ"
 
-#: ../app/vectors/gimpvectors.c:197 ../app/vectors/gimpvectors.c:413
+#: ../app/vectors/gimpvectors.c:196 ../app/vectors/gimpvectors.c:412
 msgid "Flip Path"
 msgstr "ਮਾਰਗ ਝਟਕੋ"
 
-#: ../app/vectors/gimpvectors.c:198 ../app/vectors/gimpvectors.c:444
+#: ../app/vectors/gimpvectors.c:197 ../app/vectors/gimpvectors.c:443
 msgid "Rotate Path"
 msgstr "ਮਾਰਗ ਘੁੰਮਾਓ"
 
-#: ../app/vectors/gimpvectors.c:199 ../app/vectors/gimpvectors.c:475
+#: ../app/vectors/gimpvectors.c:198 ../app/vectors/gimpvectors.c:473
 msgid "Transform Path"
 msgstr "ਮਾਰਗ ਟਰਾਂਸਫਰਮ"
 
@@ -10669,46 +10691,46 @@ msgstr "'%s' ਤੋਂ ਮਾਰਗ ਲਿਆਉਣ ਵਿੱਚ ਅਸਫਲ: %
 msgid "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 msgstr "RGBA (%0.3f, %0.3f, %0.3f, %0.3f)"
 
-#: ../app/widgets/gimpactionview.c:313
+#: ../app/widgets/gimpactionview.c:312
 #: ../app/widgets/gimpcontrollereditor.c:347
 msgid "Action"
 msgstr "ਕਾਰਵਾਈ"
 
-#: ../app/widgets/gimpactionview.c:342
+#: ../app/widgets/gimpactionview.c:341
 msgid "Shortcut"
 msgstr "ਸ਼ਾਰਟਕੱਟ"
 
-#: ../app/widgets/gimpactionview.c:366
+#: ../app/widgets/gimpactionview.c:365
 msgid "Name"
 msgstr "ਨਾਂ"
 
-#: ../app/widgets/gimpactionview.c:498 ../app/widgets/gimpactionview.c:698
+#: ../app/widgets/gimpactionview.c:497 ../app/widgets/gimpactionview.c:697
 msgid "Changing shortcut failed."
 msgstr ""
 
-#: ../app/widgets/gimpactionview.c:540
+#: ../app/widgets/gimpactionview.c:539
 msgid "Conflicting Shortcuts"
 msgstr "ਸ਼ਾਰਟਕੱਟ ਅਪਵਾਦ"
 
-#: ../app/widgets/gimpactionview.c:546
+#: ../app/widgets/gimpactionview.c:545
 msgid "_Reassign shortcut"
 msgstr "ਸ਼ਾਰਟਕੱਟ ਮੁੜ-ਜਾਰੀ(_R)"
 
-#: ../app/widgets/gimpactionview.c:557
+#: ../app/widgets/gimpactionview.c:556
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr ""
 
-#: ../app/widgets/gimpactionview.c:561
+#: ../app/widgets/gimpactionview.c:560
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr ""
 
-#: ../app/widgets/gimpactionview.c:634
+#: ../app/widgets/gimpactionview.c:633
 msgid "Invalid shortcut."
 msgstr "ਗਲਤ ਸ਼ਾਰਟਕੱਟ ਹੈ।"
 
-#: ../app/widgets/gimpactionview.c:722
+#: ../app/widgets/gimpactionview.c:721
 msgid "Removing shortcut failed."
 msgstr "ਸ਼ਾਰਟਕੱਟ ਨੂੰ ਹਟਾਉਣਾ ਅਸਫ਼ਲ ਹੈ।"
 
@@ -10963,7 +10985,7 @@ msgid "Keyboard Events"
 msgstr "ਕੀ-ਬੋਰਡ ਘਟਨਾਵਾਂ"
 
 #: ../app/widgets/gimpcontrollerkeyboard.c:223
-#: ../app/widgets/gimpcontrollerwheel.c:222
+#: ../app/widgets/gimpcontrollerwheel.c:225
 msgid "Ready"
 msgstr "ਤਿਆਰ"
 
@@ -11041,7 +11063,6 @@ msgstr ""
 msgid "Configure Input Controller"
 msgstr "ਇੰਪੁੱਟ ਕੰਟਰੋਲਰ ਸੰਰਚਨਾ"
 
-#: ../app/widgets/gimpcontrollerwheel.c:69
 #: ../app/widgets/gimpcontrollerwheel.c:72
 #: ../app/widgets/gimpcontrollerwheel.c:75
 #: ../app/widgets/gimpcontrollerwheel.c:78
@@ -11049,10 +11070,10 @@ msgstr "ਇੰਪੁੱਟ ਕੰਟਰੋਲਰ ਸੰਰਚਨਾ"
 #: ../app/widgets/gimpcontrollerwheel.c:84
 #: ../app/widgets/gimpcontrollerwheel.c:87
 #: ../app/widgets/gimpcontrollerwheel.c:90
+#: ../app/widgets/gimpcontrollerwheel.c:93
 msgid "Scroll Up"
 msgstr "ਉੱਤੇ ਸਕਰੋਲ"
 
-#: ../app/widgets/gimpcontrollerwheel.c:94
 #: ../app/widgets/gimpcontrollerwheel.c:97
 #: ../app/widgets/gimpcontrollerwheel.c:100
 #: ../app/widgets/gimpcontrollerwheel.c:103
@@ -11060,10 +11081,10 @@ msgstr "ਉੱਤੇ ਸਕਰੋਲ"
 #: ../app/widgets/gimpcontrollerwheel.c:109
 #: ../app/widgets/gimpcontrollerwheel.c:112
 #: ../app/widgets/gimpcontrollerwheel.c:115
+#: ../app/widgets/gimpcontrollerwheel.c:118
 msgid "Scroll Down"
 msgstr "ਹੇਠਾਂ ਸਕਰੋਲ"
 
-#: ../app/widgets/gimpcontrollerwheel.c:119
 #: ../app/widgets/gimpcontrollerwheel.c:122
 #: ../app/widgets/gimpcontrollerwheel.c:125
 #: ../app/widgets/gimpcontrollerwheel.c:128
@@ -11071,10 +11092,10 @@ msgstr "ਹੇਠਾਂ ਸਕਰੋਲ"
 #: ../app/widgets/gimpcontrollerwheel.c:134
 #: ../app/widgets/gimpcontrollerwheel.c:137
 #: ../app/widgets/gimpcontrollerwheel.c:140
+#: ../app/widgets/gimpcontrollerwheel.c:143
 msgid "Scroll Left"
 msgstr "ਖੱਬੇ ਸਕਰੋਲ"
 
-#: ../app/widgets/gimpcontrollerwheel.c:144
 #: ../app/widgets/gimpcontrollerwheel.c:147
 #: ../app/widgets/gimpcontrollerwheel.c:150
 #: ../app/widgets/gimpcontrollerwheel.c:153
@@ -11082,14 +11103,15 @@ msgstr "ਖੱਬੇ ਸਕਰੋਲ"
 #: ../app/widgets/gimpcontrollerwheel.c:159
 #: ../app/widgets/gimpcontrollerwheel.c:162
 #: ../app/widgets/gimpcontrollerwheel.c:165
+#: ../app/widgets/gimpcontrollerwheel.c:168
 msgid "Scroll Right"
 msgstr "ਸੱਜਾ ਸਕਰੋਲ"
 
-#: ../app/widgets/gimpcontrollerwheel.c:177
+#: ../app/widgets/gimpcontrollerwheel.c:180
 msgid "Mouse Wheel"
 msgstr "ਮਾਊਸ ਪਹੀਆ"
 
-#: ../app/widgets/gimpcontrollerwheel.c:221
+#: ../app/widgets/gimpcontrollerwheel.c:224
 msgid "Mouse Wheel Events"
 msgstr "ਮਾਊਸ ਪਹੀਆ ਘਟਨਾ"
 
@@ -11132,24 +11154,24 @@ msgstr "ਫਾਰਗਰਾਊਂਡ: %d, %d, %d"
 msgid "Background: %d, %d, %d"
 msgstr "ਬੈਕਗਰਾਊਂਡ: %d, %d, %d"
 
-#: ../app/widgets/gimpdnd-xds.c:195
+#: ../app/widgets/gimpdnd-xds.c:196
 msgid "The given filename does not have any known file extension."
 msgstr "ਦਿੱਤੇ ਫਾਇਲ ਨਾਂ ਵਿੱਚ ਕੋਈ ਜਾਣੀ ਫਾਇਲ ਐਕਸ਼ਟੇਸ਼ਨ ਨਹੀਂ ਹੈ।"
 
-#: ../app/widgets/gimpdnd-xds.c:213
+#: ../app/widgets/gimpdnd-xds.c:214
 msgid "File Exists"
 msgstr "ਫਾਇਲ ਮੌਜੂਦ ਹੈ"
 
-#: ../app/widgets/gimpdnd-xds.c:218
+#: ../app/widgets/gimpdnd-xds.c:219
 msgid "_Replace"
 msgstr "ਤਬਦੀਲ(_R)"
 
-#: ../app/widgets/gimpdnd-xds.c:229
+#: ../app/widgets/gimpdnd-xds.c:230
 #, c-format
 msgid "A file named '%s' already exists."
 msgstr "ਇੱਕ ਫਾਇਲ '%s' ਨਾਲ ਪਹਿਲਾਂ ਹੀ ਮੌਜੂਦ ਹੈ।"
 
-#: ../app/widgets/gimpdnd-xds.c:234
+#: ../app/widgets/gimpdnd-xds.c:235
 msgid "Do you want to replace it with the image you are saving?"
 msgstr "ਕੀ ਤੁਸੀਂ ਇਸ ਨੂੰ ਤੁਹਾਡੇ ਵਲੋਂ ਸੰਭਾਲੇ ਜਾ ਰਹੇ ਚਿੱਤਰ ਨਾਲ ਤਬਦੀਲ ਕਰਨਾ ਚਾਹੁੰਦੇ ਹੋ?"
 
@@ -11345,7 +11367,7 @@ msgstr "ਜੈਮਪ ਮੱਦਦ ਬਰਾਊਜ਼ਰ ਲੱਭਿਆ ਨਹ�
 
 #: ../app/widgets/gimphelp.c:195
 msgid "The GIMP help browser plug-in appears to be missing from your installation."
-msgstr ""
+msgstr "ਜੈਮਪ ਮੱਦਦ ਬਰਾਊਜ਼ਰ ਪਲੱਗਇਨ ਤੁਹਾਡੀ ਇੰਸਟਾਲੇਸ਼ਨ ਵਿੱਚ ਮੌਜੂਦ ਨਹੀਂ ਜਾਪਦੀ ਹੈ।"
 
 #: ../app/widgets/gimphelp.c:229
 msgid "Help browser doesn't start"
@@ -11447,17 +11469,17 @@ msgstr "ਚੈਨਲਾਂ ਦੀ ਗਿਣਤੀ:"
 msgid "Number of paths:"
 msgstr "ਮਾਰਗਾਂ ਦੀ ਗਿਣਤੀ:"
 
-#: ../app/widgets/gimpimagepropview.c:460
+#: ../app/widgets/gimpimagepropview.c:464
 #, c-format
 msgid "pixels/%s"
 msgstr "ਪਿਕਸਲ/%s"
 
-#: ../app/widgets/gimpimagepropview.c:462
+#: ../app/widgets/gimpimagepropview.c:466
 #, c-format
 msgid "%g × %g %s"
 msgstr "%g × %g %s"
 
-#: ../app/widgets/gimpimagepropview.c:482
+#: ../app/widgets/gimpimagepropview.c:486
 msgid "colors"
 msgstr "ਰੰਗ"
 
@@ -11562,7 +11584,7 @@ msgstr "ਜੋੜ ਸਟਾਇਲ:"
 
 #: ../app/widgets/gimpstrokeeditor.c:231
 msgid "_Miter limit:"
-msgstr ""
+msgstr "ਮਿਟਰ ਲਿਸ(_M):"
 
 #: ../app/widgets/gimpstrokeeditor.c:238
 msgid "Dash pattern:"
@@ -11690,7 +11712,7 @@ msgstr ""
 "ਐਕਟਿਵ ਗਰੇਡੀਐਂਟ।\n"
 "ਗਰੇਡੀਐਂਟ ਡਾਈਲਾਗ ਖੋਲ੍ਹਣ ਲਈ ਦਬਾਉ।"
 
-#: ../app/widgets/gimptoolbox.c:687
+#: ../app/widgets/gimptoolbox.c:689
 msgid ""
 "Foreground & background colors.  The black and white squares reset colors.  "
 "The arrows swap colors. Click to open the color selection dialog."
@@ -11713,7 +11735,7 @@ msgstr "ਸੰਭਾਲੀ ਚੋਣ ਹਟਾਉ..."
 #: ../app/widgets/gimptooloptionseditor.c:472
 #, c-format
 msgid "Error saving tool options presets: %s"
-msgstr ""
+msgstr "ਟੂਲ ਚੋਣਾਂ ਪ੍ਰੀ-ਸੈੱਟ ਸੰਭਾਲਣ ਦੌਰਾਨ ਗਲਤੀ: %s"
 
 #: ../app/widgets/gimpuimanager.c:733
 msgid "Your GIMP installation is incomplete:"
@@ -11721,20 +11743,20 @@ msgstr "ਤੁਹਾਡੀ ਜੈਮਪ ਇੰਸਟਾਲੇਸ਼ਨ ਮੁਕ
 
 #: ../app/widgets/gimpuimanager.c:735
 msgid "Plase make sure the menu XML files are correctly installed."
-msgstr ""
+msgstr "ਇਹ ਚੈੱਕ ਕਰੋ ਕਿ ਮੇਨੂ XML ਫਾਇਲ ਠੀਕ ਤਰ੍ਹਾਂ ਇੰਸਟਾਲ ਹੈ।"
 
 #: ../app/widgets/gimpuimanager.c:741
 #, c-format
 msgid "There was an error parsing the menu definition from %s: %s"
 msgstr ""
 
-#: ../app/widgets/gimpundoeditor.c:267
+#: ../app/widgets/gimpundoeditor.c:270
 msgid "[ Base Image ]"
-msgstr "[ ਮੂਲ ਚਿੱਤਰ ]"
+msgstr "[ ਬੇਸ ਚਿੱਤਰ ]"
 
 #: ../app/widgets/gimpvectorstreeview.c:110
 msgid "Reorder path"
-msgstr "ਮਾਰਗ ਮੁੜ-ਕਰਮਬੱਧ"
+msgstr "ਮਾਰਗ ਮੁੜ-ਆਰਡਰ"
 
 #: ../app/widgets/gimpvectorstreeview.c:253
 msgid "Empty Path"
@@ -11758,43 +11780,33 @@ msgstr "ਉੱਲਟ"
 
 #: ../app/widgets/gimpviewablebox.c:298
 msgid "Open the palette selection dialog"
-msgstr "ਪੈਟਰਨ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
+msgstr "ਪੈਲਅਟ ਚੋਣ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
 #: ../app/widgets/gimpviewablebox.c:356
 msgid "Open the font selection dialog"
 msgstr "ਫੋਂਟ ਡਾਈਲਾਗ ਖੋਲ੍ਹੋ"
 
-#. do not translate the part before the |
-#: ../app/widgets/gimpwidgets-utils.c:554
-msgid "keyboard label|Space"
-msgstr "ਸਪੇਸ"
-
-#. do not translate the part before the |
-#: ../app/widgets/gimpwidgets-utils.c:558
-msgid "keyboard label|Backslash"
-msgstr "ਬੈਕ-ਸਲੇਸ਼"
-
-#: ../app/widgets/gimpwidgets-utils.c:668
+#: ../app/widgets/gimpwidgets-utils.c:604
 #, c-format
 msgid "%s (try %s)"
-msgstr "%s (%s ਨਾਲ ਕੋਸ਼ਿਸ਼)"
+msgstr "%s (%s ਨਾਲ ਟਰਾਈ)"
 
-#: ../app/widgets/gimpwidgets-utils.c:668
+#: ../app/widgets/gimpwidgets-utils.c:604
 #, c-format
 msgid "%s (%s)"
 msgstr "%s (%s)"
 
-#: ../app/widgets/gimpwidgets-utils.c:672
+#: ../app/widgets/gimpwidgets-utils.c:608
 #, c-format
 msgid "%s (try %s, %s)"
 msgstr "%s (%s, %s ਨਾਲ ਕੋਸ਼ਿਸ਼)"
 
-#: ../app/widgets/gimpwidgets-utils.c:676
+#: ../app/widgets/gimpwidgets-utils.c:612
 #, c-format
 msgid "%s (try %s, %s, %s)"
-msgstr "%s (%s, %s, %s ਨਾਲ ਕੋਸ਼ਿਸ਼)"
+msgstr "%s (%s, %s, %s ਟਰਾਈ ਕਰੋ)"
 
-#: ../app/widgets/gimpwidgets-utils.c:942
+#: ../app/widgets/gimpwidgets-utils.c:878
 #, c-format
 msgid "Invalid UTF-8 data in file '%s'."
 msgstr "ਫਾਇਲ '%s' ਵਿੱਚ ਗਲਤ UTF-8 ਡਾਟਾ ਹੈ।"
@@ -11849,7 +11861,7 @@ msgstr "ਵੈਬ ਬਰਾਊਜ਼ਰ"
 
 #: ../app/widgets/widgets-enums.c:229
 msgid "Linear"
-msgstr "ਰੇਖਿਕ"
+msgstr "ਲੀਨੀਅਰ"
 
 #: ../app/widgets/widgets-enums.c:230
 msgid "Logarithmic"
@@ -11885,11 +11897,11 @@ msgstr "ਸਥਿਤੀ ਤੇ ਵਰਣਨ"
 
 #: ../app/widgets/widgets-enums.c:298
 msgid "Normal window"
-msgstr "ਸਧਾਰਨ ਝਰੋਖਾ"
+msgstr "ਸਧਾਰਨ ਵਿੰਡੋ"
 
 #: ../app/widgets/widgets-enums.c:299
 msgid "Utility window"
-msgstr "ਸਹੂਲਤ ਝਰੋਖਾ"
+msgstr "ਸਹੂਲਤ ਵਿੰਡੋ"
 
 #: ../app/widgets/widgets-enums.c:300
 msgid "Keep above"
@@ -11975,11 +11987,11 @@ msgstr "ਜੇ ਪਹਿਲਾਂ ਜੈਮਪ ਚੱਲਦਾ ਹੋਵੇ ਤ�
 
 #: ../tools/gimp-remote.c:94
 msgid "Print X window ID of GIMP toolbox window, then quit"
-msgstr ""
+msgstr "ਜੈਮਪ ਟੂਲਬਾਕਸ ਵਿੰਡੋ ਦਾ X ਵਿੰਡੋ ID ਪਰਿੰਟ ਕਰਕੇ ਬੰਦ ਕਰੋ"
 
 #: ../tools/gimp-remote.c:99
 msgid "Start GIMP without showing the startup window"
-msgstr "ਜੈਮਪ ਨੂੰ ਸ਼ੁਰੂਆਤੀ ਝਰੋਖਾ ਵੇਖਾਏ ਬਿਨਾਂ ਸ਼ੁਰੂ ਕਰੋ"
+msgstr "ਜੈਮਪ ਸਟਾਰਟਅੱਪ ਵਿੰਡੋ ਵੇਖਾਏ ਬਿਨਾਂ ਸ਼ੁਰੂ ਕਰੋ"
 
 #: ../tools/gimp-remote.c:205
 msgid "Could not connect to GIMP."
