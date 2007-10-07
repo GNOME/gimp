@@ -1,101 +1,95 @@
-# translation of gimp-tips.HEAD.po to Punjabi
 # translation of gimp-tips.HEAD.pa.po to Punjabi
 # Copyright (C) 2004 THE gimp-tips.HEAD'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp-tips.HEAD package.
+#
+#
 # Amanpreet Singh Alam <amanlinux@netscape.net>, 2004.
 # Amanpreet Singh Alam <aalam@redhat.com>, 2004.
-#
-#
+# ASB <aalam@users.sf.net>, 2007.
 msgid ""
 msgstr ""
-"Project-Id-Version: gimp-tips.HEAD\n"
+"Project-Id-Version: gimp-tips.HEAD.pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-05-14 17:18+0200\n"
-"PO-Revision-Date: 2005-05-14 20:39+0530\n"
-"Last-Translator: Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>\n"
-"Language-Team: Punjabi <punlinux-i18n@lists.sourceforge.net>\n"
+"POT-Creation-Date: 2007-08-30 17:19+0100\n"
+"PO-Revision-Date: 2007-10-07 09:20+0530\n"
+"Last-Translator: ASB <aalam@users.sf.net>\n"
+"Language-Team: Punjabi <punjabi-l10n@users.sf.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: KBabel 1.9.1\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "\n"
 
-#: ../tips/gimp-tips.xml.in.h:1
+#: ../data/tips/gimp-tips.xml.in.h:1
 msgid "<big>Welcome to the GNU Image Manipulation Program!</big>"
-msgstr "<big> ਜੈਮਪ (ਗਨੂ ਇਮੈਜ ਮੈਨੂਪੂਲੇਸ਼ਨ ਪ੍ਰੋਗਰਾਮ) ਵਲੋਂ ਜੀ ਆਇਆਂ ਨੂੰ!</big>"
+msgstr "<big> ਜੈਮਪ (ਗਨੂ ਇਮੇਜ਼ ਮੈਨੂਪੂਲੇਸ਼ਨ ਪਰੋਗਰਾਮ) ਵਲੋਂ ਜੀ ਆਇਆਂ ਨੂੰ!</big>"
 
-#: ../tips/gimp-tips.xml.in.h:2
-msgid ""
-"<tt>Alt</tt>-click on the layer mask's preview in the Layers dialog toggles "
-"viewing the mask directly."
-msgstr ""
-"ਪਰਤ ਤਖਤੀ ਵਿਚ ਪਰਤ ਮਖੌਟੇ ਦੇ ਦਰਿਸ਼ ਤੇ <tt>Alt</tt>-ਕਲਿੱਕ ਕਰਨਾ ਮਖੌਟੇ ਨੂੰ ਸਿੱਧੇ ਤੌਰ ਤੇ ਦੇਖਣ ਨੂੰ "
-"ਬਦਲ ਦਿੰਦਾ ਹੈ।"
-
-#: ../tips/gimp-tips.xml.in.h:3
-msgid ""
-"<tt>Ctrl</tt>-click on the layer mask's preview in the Layers dialog toggles "
-"the effect of the layer mask."
-msgstr ""
-"ਪਰਤ ਤਖਤੀ ਵਿਚ ਪਰਤ ਮਖੌਟੇ ਦੇ ਦਰਿਸ਼ ਤੇ <tt>Ctrl</tt>-ਕਲਿੱਕ ਕਰਨਾ ਪਰਤ ਮਖੌਟੇ ਦੇ ਪ੍ਰਭਾਵ ਨੂੰ ਬਦਲ "
-"ਦਿੰਦਾ ਹੈ।"
-
-#: ../tips/gimp-tips.xml.in.h:4
+#: ../data/tips/gimp-tips.xml.in.h:2
 msgid ""
 "<tt>Ctrl</tt>-click with the Bucket Fill tool to have it use the background "
-"color instead of the foreground color."
+"color instead of the foreground color. Similarly, <tt>Ctrl</tt>-clicking "
+"with the eyedropper tool sets the background color instead of the foreground "
+"color."
 msgstr ""
-"ਬਾਲਟੀ ਸੰਦ ਨਾਲ <tt>Ctrl</tt>-ਕਲਿੱਕ ਇਸ ਨੂੰ ਮੂਹਰਲੇ ਰੰਗ ਦੀ ਬਜਾਇ ਪਿਛਲਾ ਰੰਗ ਵਰਤਣ ਦਿੰਦਾ ਹੈ।"
 
-#: ../tips/gimp-tips.xml.in.h:5
+#: ../data/tips/gimp-tips.xml.in.h:3
+msgid ""
+"<tt>Ctrl</tt>-clicking on the layer mask's preview in the Layers dialog "
+"toggles the effect of the layer mask. <tt>Alt</tt>-clicking on the layer "
+"mask's preview in the Layers dialog toggles viewing the mask directly."
+msgstr ""
+
+#: ../data/tips/gimp-tips.xml.in.h:4
 msgid ""
 "<tt>Ctrl</tt>-drag with the Rotate tool will constrain the rotation to 15 "
 "degree angles."
-msgstr "ਘੁੰਮਾਉਣ ਵਾਲਾ ਸੰਦ <tt>Ctrl</tt>-ਖਿੱਚ ਨਾਲ 15 ਡਿਗਰੀ ਦੇ ਕੋਣ ਤੇ ਘੁੰਮਾਵੇਗਾ।"
+msgstr "ਘੁੰਮਾਉਣ ਵਾਲਾ ਟੂਲ <tt>Ctrl</tt>-ਖਿੱਚ ਨਾਲ 15 ਡਿਗਰੀ ਦੇ ਕੋਣ ਉੱਤੇ ਘੁੰਮਾਵੇਗਾ।"
 
-#: ../tips/gimp-tips.xml.in.h:6
+#: ../data/tips/gimp-tips.xml.in.h:5
 msgid ""
 "<tt>Shift</tt>-click on the eye icon in the Layers dialog to hide all layers "
 "but that one. <tt>Shift</tt>-click again to show all layers."
 msgstr ""
-"ਸਾਰੀਆਂ ਪਰਤਾਂ ਢਕਣ ਵਾਸਤੇ, ਪਰ ਉਸ ਇਕ ਵਾਸਤੇ ਪਰਤ ਡਾਇਲਾਗ ਵਿਚ ਅੱਖ ਚਿੱਤਰ ਉੱਪਰ <tt>Shift</tt> "
-"-ਕਲਿਕ ਕਰੋ ਸਾਰੀਆਂ ਪਰਤਾਂ ਦਿਖਾਉਣ ਲਈ ਦੁਬਾਰਾ <tt>Shift</tt>-ਕਲਿੱਕ ਕਰੋ।"
+"ਸਭ ਲੇਅਰਾਂ ਢਕਣ ਵਾਸਤੇ, ਪਰ ਉਸ ਇਕ ਵਾਸਤੇ ਪਰਤ ਡਾਈਲਾਗ ਵਿਚ ਅੱਖ ਚਿੱਤਰ ਉੱਤੇ <tt>Shift</tt> "
+"-ਕਲਿਕ ਕਰੋ ਸਭ ਲੇਅਰਾਂ ਦਿਖਾਉਣ ਲਈ ਮੁੜ <tt>Shift</tt>-ਕਲਿੱਕ ਕਰੋ।"
 
-#: ../tips/gimp-tips.xml.in.h:7
+#: ../data/tips/gimp-tips.xml.in.h:6
 msgid ""
 "A floating selection must be anchored to a new layer or to the last active "
 "layer before doing other operations on the image. Click on the &quot;New "
 "Layer&quot; or the &quot;Anchor Layer&quot; button in the Layers dialog, or "
 "use the menus to do the same."
 msgstr ""
-"ਪ੍ਰਤੀਬਿੰਬ ਤੇ ਕੋਈ ਹੋਰ ਕਿਰਿਆ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ, ਨਵੀਂ ਪਰਤ ਤੇ ਜਾਂ ਪਿਛਲੀ ਕਿਰਿਆਸ਼ੀਲ ਪਰਤ ਤੇ ਚਾਲੂ ਚੋਣ "
-"anchored ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ। ਪਰਤ ਡਾਇਲਾਗ ਵਿਚ &quot;ਨਵੀਂ ਪਰਤ&quot; ਜਾਂ &quot;Anchor "
-"Layer button&quot; ਕਲਿੱਕ ਕਰੋ ਜਾਂ ਅਜਿਹਾ ਸੂਚੀ ਵਰਤ ਕੇ ਕਰ ਸਕਦੇ ਹੋ।"
+"ਚਿੱਤਰ ਤੇ ਕੋਈ ਹੋਰ ਕਾਰਵਾਈ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ, ਨਵੀਂ ਪਰਤ ਉੱਤੇ ਜਾਂ ਪਿਛਲੀ ਐਕਟਿਵ ਪਰਤ ਤੇ ਚਾਲੂ ਚੋਣ "
+"anchored ਹੋਣੀ ਚਾਹੀਦੀ ਹੈ। ਪਰਤ ਡਾਈਲਾਗ ਵਿਚ &quot;ਨਵੀਂ ਪਰਤ&quot; ਜਾਂ &quot;ਲੇਅਰ ਬਟਨ ਐਂਕਰ&quot; ਕਲਿੱਕ ਕਰੋ ਜਾਂ ਅਜਿਹਾ ਸੂਚੀ ਵਰਤ ਕੇ ਕਰ ਸਕਦੇ ਹੋ।"
 
-#: ../tips/gimp-tips.xml.in.h:8
+#: ../data/tips/gimp-tips.xml.in.h:7
+#, fuzzy
 msgid ""
 "After you enabled &quot;Dynamic Keyboard Shortcuts&quot; in the Preferences "
 "dialog, you can reassign shortcut keys. Do so by bringing up the menu, "
 "selecting a menu item, and pressing the desired key combination. If &quot;"
 "Save Keyboard Shortcuts&quot; is enabled, the key bindings are saved when "
-"you exit GIMP."
+"you exit GIMP. You should probably disable &quot;Dynamic Keyboard "
+"Shortcuts&quot; afterwards, to prevent accidentally assigning/reassigning "
+"shortcuts."
 msgstr ""
-"ਅਧਿਕਾਰ ਡਾਇਲਾਗ ਵਿਚ &quot;Dynamic Keyboard Shortcuts&quot; ਯੋਗ ਕਰਨ ਤੋਂ ਬਾਅਦ ਤੁਸੀਂ "
-"ਸਵਿੱਚ shortcut ਦੁਬਾਰਾ ਸੌਂਪ ਸਕਦੇ ਹੋ। ਅਜਿਹਾ ਕਰਨ ਲਈ ਇਕ ਸੂਚੀ ਲਓ,ਆਈਟਮ ਚੁਣੋ ਅਤੇ ਸਹਿਯੋਗੀ ਸਵਿੱਚਾਂ "
+"ਅਧਿਕਾਰ ਡਾਈਲਾਗ ਵਿਚ &quot;Dynamic Keyboard Shortcuts&quot; ਯੋਗ ਕਰਨ ਤੋਂ ਬਾਅਦ ਤੁਸੀਂ "
+"ਸਵਿੱਚ shortcut ਮੁੜ ਸੌਂਪ ਸਕਦੇ ਹੋ। ਅਜਿਹਾ ਕਰਨ ਲਈ ਇਕ ਸੂਚੀ ਲਓ,ਆਈਟਮ ਚੁਣੋ ਅਤੇ ਸਹਿਯੋਗੀ ਸਵਿੱਚਾਂ "
 "ਦਬਾਓ।ਜੇ &quot;Save Keyboard Shortcuts&quot; ਯੋਗ ਹੈ ਤਾਂ ਜੈਮਪ ਤੋਂ ਬਾਹਰ ਆਉਣ ਤੇ ਸਵਿੱਚਾਂ ਦਾ "
 "ਸਹਿਯੋਗ ਸੰਭਾਲਿਆ ਜਾਵੇਗਾ।"
 
-#: ../tips/gimp-tips.xml.in.h:9
+#: ../data/tips/gimp-tips.xml.in.h:8
 msgid ""
 "Click and drag on a ruler to place a guide on an image. All dragged "
 "selections will snap to the guides. You can remove guides by dragging them "
 "off the image with the Move tool."
 msgstr ""
-"ਪ੍ਰਤੀਬਿੰਬ ਉੱਪਰ ਸਹਾਇਕ ਸਥਾਪਿਤ ਕਰਨ ਲਈ ਪੈਮਾਨੇ ਨੂੰ ਕਲਿਕ ਕਰੋ ਤੇ ਖਿੱਚੋ।ਸਾਰੀਆਂ ਖਿਚੀਆਂ ਚੋਣਾਂ ਸਹਾਇਕ "
-"ਵਿੱਚ ਸ਼ਾਮਿਲ ਹੋ ਜਾਣਗੀਆਂ।ਤੁਸੀਂ Move ਸੰਦ ਨਾਲ ਪ੍ਰਤੀਬਿੰਬ ਵਿਚੋਂ ਬਾਹਰ ਖਿੱਚ ਕੇ ਸਹਾਇਕ ਨੂੰ ਹਟਾ ਸਕਦੇ ਹੋ।"
+"ਚਿੱਤਰ ਉੱਤੇ ਸਹਾਇਕ ਸਥਾਪਿਤ ਕਰਨ ਲਈ ਪੈਮਾਨੇ ਨੂੰ ਕਲਿੱਕ ਕਰੋ ਤੇ ਖਿੱਚੋ।ਸਾਰੀਆਂ ਖਿਚੀਆਂ ਚੋਣਾਂ ਸਹਾਇਕ "
+"ਵਿੱਚ ਸ਼ਾਮਿਲ ਹੋ ਜਾਣਗੀਆਂ।ਤੁਸੀਂ Move ਟੂਲ ਨਾਲ ਚਿੱਤਰ ਵਿਚੋਂ ਬਾਹਰ ਖਿੱਚ ਕੇ ਸਹਾਇਕ ਨੂੰ ਹਟਾ ਸਕਦੇ ਹੋ।"
 
-#: ../tips/gimp-tips.xml.in.h:10
+#: ../data/tips/gimp-tips.xml.in.h:9
 msgid ""
 "GIMP allows you to undo most changes to the image, so feel free to "
 "experiment."
@@ -103,97 +97,102 @@ msgstr ""
 "ਜੈਮਪ ਤੁਹਾਨੂੰ ਚਿੱਤਰ ਵਿੱਚ ਲੱਗਭਗ ਸਭ ਤਬਦੀਲੀਆਂ ਵਾਪਿਸ ਕਰਨ ਲਈ ਸਹਾਇਕ ਹੈ, ਇਸ ਕਰਕੇ ਤਜਰਬੇ ਕਰਨੇ ਜਾਰੀ "
 "ਰੱਖੋ।"
 
-#: ../tips/gimp-tips.xml.in.h:11
+#: ../data/tips/gimp-tips.xml.in.h:10
 msgid ""
 "GIMP supports gzip compression on the fly. Just add <tt>.gz</tt> (or <tt>."
 "bz2</tt>, if you have bzip2 installed) to the filename and your image will "
 "be saved compressed. Of course loading compressed images works too."
 msgstr ""
-"ਕੰਮ ਦੇ ਦੌਰਾਨ  ਜੈਮਪ, ਜੀਜੈਪ ਸਕੁਚਿੰਤ ਕਰਨ ਦੀ ਸਹਾਇਤਾ ਦਿੰਦਾ ਹੈ। ਫਾਈਲ ਦੇ ਨਾਂ ਨਾਲ ਸਿਰਫ <tt>.gz</"
-"tt> (ਜਾਂ <tt>.bz2</tt>,ਜੇ ਤੁਹਾਡੇ ਕੋਲ bzip2 ਸਥਾਪਿਤ ਹੈ) ਜੋਡ ਅਤੇ ਤੁਹਾਡਾ ਸੁੰਘਡ਼ਿਆ  ਪ੍ਰਤੀਬਿੰਬ "
-"ਸਾਭਿਆਂ ਜਾਵੇਗਾ। ਸਾਭਿਆਂ ਸੁੰਘਡ਼ਿਆ ਪ੍ਰਤੀਬਿੰਬ ਜਰੂਰ ਜਿਆਦਾ ਕੰਮ ਕਰਦਾ ਹੈ।"
+"ਜੈਮਪ ਤੁਰੰਤ gzip ਕੰਪਰੈੱਸ ਲਈ ਸਹਾਇਕ ਹੈ। ਫਾਇਲ ਨਾਂ ਦੇ ਬਾਅਦ ਕੇਵਲ "
+"<tt>.gz</tt> (ਜਾਂ <tt>.bz2</tt>, ਜੇ bzip2 ਚਾਹੁੰਦੇ ਹੋ) ਦਿਓ ਅਤੇ ਤੁਹਾਡਾ ਚਿੱਤਰ "
+"ਕੰਪਰੈੱਸ ਕਰਕੇ ਸੰਭਾਲਿਆ ਜਾਵੇਗਾ। ਬੇਸ਼ੱਕ ਕੰਪਰੈੱਸ ਕੀਤੇ ਚਿੱਤਰ ਲੋਡ ਵੀ ਕੀਤੇ ਜਾ ਸਕਦੇ ਹਨ।"
 
-#: ../tips/gimp-tips.xml.in.h:12
+#: ../data/tips/gimp-tips.xml.in.h:11
 msgid ""
 "GIMP uses layers to let you organize your image. Think of them as a stack of "
 "slides or filters, such that looking through them you see a composite of "
 "their contents."
 msgstr ""
-"ਤੁਹਾਡਾ ਪ੍ਰਤੀਬਿੰਬ ਤਿਆਰ ਕਰਨ ਵਾਸਤੇ ਜੈਮਪ ਪਰਤਾਂ ਵਰਤਦਾ ਹੈ।ਉਹਨਾਂ ਨੂੰ ਸਲਾਈਡਾਂ ਅਤੇ ਫਿਲਟਰਾਂ ਦਾ ਢੇਰ "
+"ਤੁਹਾਡਾ ਚਿੱਤਰ ਤਿਆਰ ਕਰਨ ਵਾਸਤੇ ਜੈਮਪ ਲੇਅਰਾਂ ਵਰਤਦਾ ਹੈ।ਉਹਨਾਂ ਨੂੰ ਸਲਾਈਡਾਂ ਅਤੇ ਫਿਲਟਰਾਂ ਦਾ ਢੇਰ "
 "ਸੋਚਣਾ ,ਇਸ ਤਰਾਂ ਕਿ ਦੇਖਣ ਉਪਰੰਤ ਉਹ ਆਪਣੇ ਅੰਸ਼ਾਂ ਦਾ ਸਮੂਹ ਲਗਦੇ ਹਨ।"
 
-#: ../tips/gimp-tips.xml.in.h:13
+#: ../data/tips/gimp-tips.xml.in.h:12
+#, fuzzy
 msgid ""
 "If a layer's name in the Layers dialog is displayed in <b>bold</b>, this "
 "layer doesn't have an alpha-channel. You can add an alpha-channel using "
-"Layer-&gt;Transparency-&gt;Add Alpha Channel."
+"Layer→Transparency→Add Alpha Channel."
 msgstr ""
-"ਜੇ ਪਰਤ ਵਾਰਤਾਲਾਪ ਪਰਤ ਦਾ ਨਾਂ <b>ਗੂੜੇ</b> ਅੱਖਰਾਂ ਵਿੱਚ ਹੋਇਆ ਤਾਂ ਇਸ ਪਰਤ ਐਲਫਾ-ਚੈਨਲ ਵਿੱਚ ਨਹੀਂ "
+"ਜੇ ਪਰਤ ਡਾਈਲਾਗ ਪਰਤ ਦਾ ਨਾਂ <b>ਗੂੜੇ</b> ਅੱਖਰਾਂ ਵਿੱਚ ਹੋਇਆ ਤਾਂ ਇਸ ਪਰਤ ਐਲਫਾ-ਚੈਨਲ ਵਿੱਚ ਨਹੀਂ "
 "ਹੋਵੇਗੀ। ਤੁਸੀਂ ਇਸ ਵਿੱਚ ਪਰਤ-&gt;ਪਾਰਦਰਸ਼ਤਾ-&gt;ਐਲਫਾ ਚੈਨਲ ਸ਼ਾਮਿਲ ਨਾਲ ਸ਼ਾਮਿਲ ਕਰ ਸਕਦੇ ਹੋ।"
 
-#: ../tips/gimp-tips.xml.in.h:14
+#: ../data/tips/gimp-tips.xml.in.h:13
+#, fuzzy
 msgid ""
 "If some of your scanned photos do not look colorful enough, you can easily "
 "improve their tonal range with the &quot;Auto&quot; button in the Levels "
-"tool (Layer-&gt;Colors-&gt;Levels). If there are any color casts, you can "
-"correct them with the Curves tool (Layer-&gt;Colors-&gt;Curves)."
+"tool (Colors→Levels). If there are any color casts, you can correct them "
+"with the Curves tool (Colors→Curves)."
 msgstr ""
-"ਜੇ ਤੁਹਾਡੀਆਂ ਸਕੈਨ ਕੀਤੀਆਂ ਤਸਵੀਰਾਂ ਠੀਕ ਤਰਾਂ ਰੰਗਦਾਰ ਨਹੀਂ ਦਿਸਦੀਆਂ,ਤੁਸੀਂ ਲੈਵਲ ਸੰਦ (Layer-&gt;"
+"ਜੇ ਤੁਹਾਡੀਆਂ ਸਕੈਨ ਕੀਤੀਆਂ ਤਸਵੀਰਾਂ ਠੀਕ ਤਰਾਂ ਰੰਗਦਾਰ ਨਹੀਂ ਦਿਸਦੀਆਂ,ਤੁਸੀਂ ਲੈਵਲ ਟੂਲ (Layer-&gt;"
 "Colors-&gt;Levels) ਵਿੱਚ  &quot;Auto&quot; ਸਵਿਚ ਨਾਲ ਓਹਨਾਂ ਦੇ ਰੰਗ ਦੀ ਗਹਿਰਾਈ ਨੂੰ ਸੁਧਾਰ "
-"ਸਕਦੇ ਹੋ। ਜੇ ਉਥੇ ਕੋਈ ਰੰਗ ਬਣਦਾ ਹੈ,ਤੁਸੀਂ ਉਸਨੂੰ Curves ਸੰਦ (Layer-&gt;Colors-&gt;Curves) ਨਾਲ "
+"ਸਕਦੇ ਹੋ। ਜੇ ਉਥੇ ਕੋਈ ਰੰਗ ਬਣਦਾ ਹੈ,ਤੁਸੀਂ ਉਸਨੂੰ Curves ਟੂਲ (Layer-&gt;Colors-&gt;Curves) ਨਾਲ "
 "ਠੀਕ ਕਰ ਸਕਦੇ ਹੋ।"
 
-#: ../tips/gimp-tips.xml.in.h:15
+#: ../data/tips/gimp-tips.xml.in.h:14
 msgid ""
-"If you stroke a path (Edit-&gt;Stroke Path), the paint tools can be used "
-"with their current settings. You can use the Paintbrush in gradient mode or "
-"even the Eraser or the Smudge tool."
+"If you stroke a path (Edit→Stroke Path), the paint tools can be used with "
+"their current settings. You can use the Paintbrush in gradient mode or even "
+"the Eraser or the Smudge tool."
 msgstr ""
-"ਜੇ ਤੁਸੀ ਰਸਤਾ stroke (Edit-&gt;Stroke Selection) ਕਰਦੇ ਹੋ ਤਾਂ ਰੰਗਤ ਸੰਦ ਮੌਜੂਦ ਸਥਿਤੀਆਂ "
-"ਅਨੁਸਾਰ ਵਰਤੇ ਜਾ ਸਕਦੇ ਹਨ।ਤੁਸੀਂ ਰਬਡ਼, Smudge ਸੰਦ ਅਤੇ gradient ਰੂਪ ਵਿਚ ਰੰਗ ਬੁਰਸ਼ ਵੀ ਵਰਤ ਸਕਦੇ "
-"ਹੋ।"
+"ਜੇ ਤੁਸੀ ਮਾਰਗ ਸਟਰੋਕ (ਸੋਧ→ਚੋਣ ਸਟਰੋਕ) ਕਰਦੇ ਹੋ ਤਾਂ ਰੰਗਤ ਟੂਲ ਮੌਜੂਦ ਸਥਿਤੀਆਂ "
+"ਅਨੁਸਾਰ ਵਰਤੇ ਜਾ ਸਕਦੇ ਹਨ।ਤੁਸੀਂ ਰਬੜ, Smudge ਟੂਲ ਅਤੇ gradient ਰੂਪ ਵਿਚ ਪੇਂਟ "
+"ਬੁਰਸ਼ ਵੀ ਵਰਤ ਸਕਦੇ ਹੋ।"
 
-#: ../tips/gimp-tips.xml.in.h:16
+#: ../data/tips/gimp-tips.xml.in.h:15
+#, fuzzy
 msgid ""
-"If your screen is too cluttered, you can press <tt>Tab</tt> multiple times "
-"in an image window to hide or show the toolbox and other dialogs."
+"If your screen is too cluttered, you can press <tt>Tab</tt> in an image "
+"window to toggle the visibility of the toolbox and other dialogs."
 msgstr ""
-"ਜੇ ਤੁਹਾਡੀ ਸਕਰੀਨ ਬਹੁਤੀ ਬੇਤਰਤੀਬੀ ਹੈ ਤਾਂ ਪ੍ਰਤੀਬਿੰਬ ਤਖਤੀ ਵਿਚ ਸੰਦ ਡਬਾ ਅਤੇ ਹੋਰ ਡਾਇਲਾਗ ਢੱਕਣ ਜਾਂ "
+"ਜੇ ਤੁਹਾਡੀ ਸਕਰੀਨ ਬਹੁਤੀ ਬੇਤਰਤੀਬੀ ਹੈ ਤਾਂ ਚਿੱਤਰ ਡਾਈਲਾਗ ਵਿਚ ਟੂਲ ਡਬਾ ਅਤੇ ਹੋਰ ਡਾਈਲਾਗ ਢੱਕਣ ਜਾਂ "
 "ਦਿਖਾਉਣ ਵਾਸਤੇ ਤੁਸੀਂ ਜਿਆਦਾ ਵਾਰ <tt>Tab</tt> ਦਬਾ ਸਕਦੇ ਹੋ।"
 
-#: ../tips/gimp-tips.xml.in.h:17
+#: ../data/tips/gimp-tips.xml.in.h:16
+#, fuzzy
 msgid ""
 "Most plug-ins work on the current layer of the current image. In some cases, "
-"you will have to merge all layers (Image-&gt;Flatten Image) if you want the "
-"plug-in to work on the whole image."
+"you will have to merge all layers (Image→Flatten Image) if you want the plug-"
+"in to work on the whole image."
 msgstr ""
-"ਜਿਆਦਾ ਪਲੱਗਇਨ ਮੌਜੂਦ ਪ੍ਰਤੀਬਿੰਬ ਦੀ ਮੌਜੂਦ ਪਰਤ ਤੇ ਕੰਮ ਕਰਦੇ ਹਨ। ਕੁਝ ਹਾਲਤਾਂ ਵਿਚ ਤੁਹਾਨੂੰ ਸਾਰੀਆਂ ਪਰਤਾਂ"
-"(Image-&gt;Flatten Image) ਨੂੰ ਸ਼ਾਮਿਲ ਕਰਨਾ ਪਵੇਗਾ ਜੇ ਤੁਸੀਂ ਪਲੱਗਇਨ ਨੂੰ ਪੂਰੇ ਪ੍ਰਤੀਬਿੰਬ ਤੇ ਕੰਮ "
+"ਜਿਆਦਾ ਪਲੱਗਇਨ ਮੌਜੂਦ ਚਿੱਤਰ ਦੀ ਮੌਜੂਦ ਪਰਤ ਤੇ ਕੰਮ ਕਰਦੇ ਹਨ। ਕੁਝ ਹਾਲਤਾਂ ਵਿਚ ਤੁਹਾਨੂੰ ਸਭ ਲੇਅਰਾਂ"
+"(Image-&gt;Flatten Image) ਨੂੰ ਸ਼ਾਮਿਲ ਕਰਨਾ ਪਵੇਗਾ ਜੇ ਤੁਸੀਂ ਪਲੱਗਇਨ ਨੂੰ ਪੂਰੇ ਚਿੱਤਰ ਤੇ ਕੰਮ "
 "ਕਰਵਾਉਣਾ ਚਾਹੁੰਦੇ ਹੋ।"
 
-#: ../tips/gimp-tips.xml.in.h:18
+#: ../data/tips/gimp-tips.xml.in.h:17
+#, fuzzy
 msgid ""
 "Not all effects can be applied to all kinds of images. This is indicated by "
-"a grayed-out menu-entry. You may need to change the image mode to RGB (Image-"
-"&gt;Mode-&gt;RGB), add an alpha-channel (Layer-&gt;Transparency-&gt;Add "
-"Alpha Channel) or flatten it (Image-&gt;Flatten Image)."
+"a grayed-out menu-entry. You may need to change the image mode to RGB "
+"(Image→Mode→RGB), add an alpha-channel (Layer→Transparency→Add Alpha "
+"Channel) or flatten it (Image→Flatten Image)."
 msgstr ""
-"ਸਾਰੇ ਪ੍ਰਭਾਵ ਸਾਰੀਆਂ ਕਿਸਮਾਂ ਦੇ ਪ੍ਰਤੀਬਿੰਬਾਂ ਤੇ ਲਾਗੂ ਨਹੀਂ ਕੀਤੇ ਜਾ ਸਕਦੇ।ਇਹ ਸੂਚੀ ਵਿਚਲੇ ਫਿਕੇ ਇੰਦਰਾਜ "
-"ਤੋਂ ਪਤਾ ਚਲਦਾ ਹੈ। ਤੁਸੀਂ ਪ੍ਰਤੀਬਿੰਬ ਰੂਪ ਨੂੰ RGB ਬਦਲ ਸਕਦੇ ਹੋ(ਪ੍ਰਤੀਬਿੰਬ-&gt;ਰੂਪ -&gt;RGB),ਇਕ "
+"ਸਾਰੇ ਪ੍ਰਭਾਵ ਸਾਰੀਆਂ ਕਿਸਮਾਂ ਦੇ ਚਿੱਤਰਾਂ ਤੇ ਲਾਗੂ ਨਹੀਂ ਕੀਤੇ ਜਾ ਸਕਦੇ।ਇਹ ਸੂਚੀ ਵਿਚਲੇ ਫਿਕੇ ਇੰਦਰਾਜ "
+"ਤੋਂ ਪਤਾ ਚਲਦਾ ਹੈ। ਤੁਸੀਂ ਚਿੱਤਰ ਰੂਪ ਨੂੰ RGB ਬਦਲ ਸਕਦੇ ਹੋ(ਚਿੱਤਰ-&gt;ਰੂਪ -&gt;RGB),ਇਕ "
 "ਅਲ਼ਫਾ ਚੈਨਲ( ਪਰਤਾਂ-&gt;ਅਪਾਰਦਰਸ਼ਤਾ-&gt;ਅਲ਼ਫਾ  ਚੈਨਲ ਜਮਾਂ) ਜਮਾਂ ਕਰੋ ਜਾਂ ਸਮਤਲ (Image-&gt;"
 "Flatten Image) ਕਰੋ।"
 
-#: ../tips/gimp-tips.xml.in.h:19
+#: ../data/tips/gimp-tips.xml.in.h:18
 msgid ""
 "Pressing and holding the <tt>Shift</tt> key before making a selection allows "
 "you to add to the current selection instead of replacing it. Using <tt>Ctrl</"
 "tt> before making a selection subtracts from the current one."
 msgstr ""
-"ਚੋਣ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ <tt>Shift</tt> ਸਵਿੱਚ ਦਬਾਅ ਕੇ ਪਕਡ਼ ਨਾ ,ਮੌਜੂਦ ਚੇਣ ਨੂੰ ਬਾਹਰ ਕਰਨ ਦੀ ਥਾਂ,"
+"ਚੋਣ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ <tt>Shift</tt> ਸਵਿੱਚ ਦਬਾਅ ਕੇ ਪਕੜ ਨਾ ,ਮੌਜੂਦ ਚੇਣ ਨੂੰ ਬਾਹਰ ਕਰਨ ਦੀ ਥਾਂ,"
 "ਜਮਾਂ ਕਰਨ ਦੀ ਇਜਾਜਤ ਦਿੰਦਾ ਹੈ। ਚੋਣ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ <tt>Ctrl</tt> ਵਰਤਣ ਨਾਲ ਮੌਜੂਦ ਚੋਂ ਇਕ "
 "ਘਟਾਉਂਦਾ ਹੈ।"
 
-#: ../tips/gimp-tips.xml.in.h:20
+#: ../data/tips/gimp-tips.xml.in.h:19
 msgid ""
 "To create a circle-shaped selection, hold <tt>Shift</tt> while doing an "
 "ellipse select. To place a circle precisely, drag horizontal and vertical "
@@ -201,145 +200,123 @@ msgid ""
 "intersection of the guides, and the resulting selection will just touch the "
 "guides."
 msgstr ""
-"ਸੰਪੂਰਣ ਚੱਕਰ ਬਨਾਉਣ ਵਾਸਤੇ,ਜਦੋਂ ਅੰਡਾਕਾਰ ਚੋਣ ਉਪਰ ਕੰਮ ਕਰਦੇ ਸਮੇਂ <tt>Shift</tt> ਪਕਡ਼ੋ। ਚੱਕਰ ਨੂੰ ਠੀਕ "
-"ਤਰਾਂ ਸਥਾਪਿਤ ਕਰਨ ਲਈ ਇਸ ਉਪਰ ਕਿਸੇ ਇਕ ਬਿੰਦੂ ਨੂੰ ਛੂਹਣ ਵਾਲੀਆਂ ਸਮਤਲ ਅਤੇ ਖਡ਼ਵੀਆਂ ਲਾਈਨਾਂ ਖਿਚੋ। "
+"ਸੰਪੂਰਣ ਚੱਕਰ ਬਨਾਉਣ ਵਾਸਤੇ,ਜਦੋਂ ਅੰਡਾਕਾਰ ਚੋਣ ਉਪਰ ਕੰਮ ਕਰਦੇ ਸਮੇਂ <tt>Shift</tt> ਪਕੜੋ। ਚੱਕਰ ਨੂੰ ਠੀਕ "
+"ਤਰਾਂ ਸਥਾਪਿਤ ਕਰਨ ਲਈ ਇਸ ਉਪਰ ਕਿਸੇ ਇਕ ਬਿੰਦੂ ਨੂੰ ਛੂਹਣ ਵਾਲੀਆਂ ਸਮਤਲ ਅਤੇ ਖੜਵੀਆਂ ਲਾਈਨਾਂ ਖਿਚੋ। "
 "ਲਾਈਨਾਂ ਦੇ ਕੱਟ ਬਿੰਦੂ ਉਪਰ ਆਪਣਾ ਕਰਸਰ ਰਖੋ ਅਤੋ ਅੰਤਲੀ ਚੋਣ ਸਿਰਫ ਲਾਈਨਾਂ ਨੂੰ ਛੂਹੇਗੀ।"
 
-#: ../tips/gimp-tips.xml.in.h:21
-msgid ""
-"When using a drawing tool (Paintbrush, Airbrush, or Pencil), <tt>Shift</tt>-"
-"click will draw a straight line from your last drawing point to your current "
-"cursor position. If you also press <tt>Ctrl</tt>, the line will be "
-"constrained to 15 degree angles."
-msgstr ""
-"ਜਦੋਂ ਉਲੀਕਣ ਵਾਲੇ ਸੰਦ (Paintbrush, Airbrush, or Pencil) ਵਰਤਦੇ ਹੋ,<tt>Shift</tt>-ਕਲਿਕ "
-"ਪਿਛਲੇ ਉਲੀਕ ਬਿੰਦੂ ਤੋਂ ਮੌਜੂਦ ਕਰਸਰ ਬਿੰਦੂ ਤਕ ਸਿੱਧੀ ਲਾਈਨ ਉਲੀਕੇਗੀ। ਜੇ ਤੁਸੀਂ <tt>Ctrl</tt> ਵੀ "
-"ਦਬਾਓਂਗੇ ਤਾਂ ਲਾਈਨ 15 ਡਿਗਰੀ ਕੋਣ ਤੇ ਝੁਕੇਗੀ।"
-
-#: ../tips/gimp-tips.xml.in.h:22
+#: ../data/tips/gimp-tips.xml.in.h:20
 msgid ""
 "When you save an image to work on it again later, try using XCF, GIMP's "
 "native file format (use the file extension <tt>.xcf</tt>). This preserves "
 "the layers and every aspect of your work-in-progress. Once a project is "
 "completed, you can save it as JPEG, PNG, GIF, ..."
 msgstr ""
-"ਜਦੋਂ ਤੁਸੀਂ ਇਕ ਪ੍ਰਤੀਬਿੰਬ ਨੂੰ ਬਾਅਦ ਵਿਚ ਕੰਮ ਕਰਨ ਵਾਸਤੇ ਸੰਭਾਲਦੇ ਹੋ ਤਾਂ ਜੈਮਪ ਮੂਲ ਫਾਈਲ ਰੂਪ, XCFਵਰਤਣ "
-"ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੋ (ਫਾਈਲ ਵਾਧਾ <tt>.xcf</tt> ਵਰਤੋ)। ਇਹ ਪਰਤ ਅਤੇ ਹਰੇਕ ਤਰਾਂ ਦੀ ਕੰਮ ਦੀ ਉੱਨਤੀ "
+"ਜਦੋਂ ਤੁਸੀਂ ਇਕ ਚਿੱਤਰ ਨੂੰ ਬਾਅਦ ਵਿਚ ਕੰਮ ਕਰਨ ਵਾਸਤੇ ਸੰਭਾਲਦੇ ਹੋ ਤਾਂ ਜੈਮਪ ਮੂਲ ਫਾਈਲ ਰੂਪ, XCF "
+"ਵਰਤਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੋ (ਫਾਈਲ ਵਾਧਾ <tt>.xcf</tt> ਵਰਤੋ)। ਇਹ ਪਰਤ ਅਤੇ ਹਰੇਕ ਤਰਾਂ ਦੀ ਕੰਮ ਦੀ ਉੱਨਤੀ "
 "ਬਰਕਰਾਰ ਰਖਦੀ ਹੈ। ਜਦ ਇਕ ਵਾਰ ਪ੍ਰੋਜੈਕਟ ਪੂਰਾ ਹੋ ਜਾਵੇ, ਤੁਸੀਂ ਇਸ ਨੂੰ JPEG, PNG, GIF, .ਦੀ ਤਰਾਂ "
 "ਸੰਭਾਲ ਸਕਦੇ ਹੋ।"
 
-#: ../tips/gimp-tips.xml.in.h:23
+#: ../data/tips/gimp-tips.xml.in.h:21
+#, fuzzy
 msgid ""
 "You can adjust or move a selection by using <tt>Alt</tt>-drag. If this makes "
-"the window move, your window manager uses the <tt>Alt</tt> key already. Try "
-"pressing <tt>Shift</tt> at the same time."
+"the window move, your window manager uses the <tt>Alt</tt> key already. Most "
+"window managers can be configured to ignore the <tt>Alt</tt> key or to use "
+"the <tt>Super</tt> key (or \"Windows logo\") instead."
 msgstr ""
-"ਤੁਸੀਂ <tt>Alt</tt>-drag ਦੁਆਰਾ ਚੋਣ ਨੂੰ ਤਰਤੀਬ ਅਤੇ ਬਦਲ ਸਕਦੇ ਹੋ। ਜੇ ਇਹ ਝਰੋਖੇ ਨੂੰ ਹਿਲਾਂਉਦੀ ਹੈ, "
+"ਤੁਸੀਂ <tt>Alt</tt>-drag ਰਾਹੀਂ ਚੋਣ ਨੂੰ ਤਰਤੀਬ ਅਤੇ ਬਦਲ ਸਕਦੇ ਹੋ। ਜੇ ਇਹ ਝਰੋਖੇ ਨੂੰ ਹਿਲਾਂਉਦੀ ਹੈ, "
 "ਤੁਹਾਡਾ ਝਰੋਖਾ ਪ੍ਰਬੰਧਕ ਪਹਿਲਾਂ ਹੀ <tt>Alt</tt> ਸਵਿੱਚ ਵਰਤਦਾ ਹੈ। ਉਸੇ ਸਮੇਂ <tt>Shift</tt> "
 "ਦਬਾਉਂਣ ਦੀ ਕੋਸ਼ਿਸ਼ ਕਰੋ।"
 
-#: ../tips/gimp-tips.xml.in.h:24
-msgid ""
-"You can adjust the selection range for fuzzy select by clicking and dragging "
-"left and right."
-msgstr "ਕਲਿੱਕ ਕਰਕੇ ਅਤੇ, ਖੱਬੇ ਤੇ ਸੱਜੇ ਖਿੱਚ ਕੇ ਤੁਸੀਂ ਅਸਪਸ਼ੱਟ ਚੋਣ ਵਾਸਤੇ ਚੋਣ ਸੀਮਾ ਨੂੰ ਤਰਤੀਬ ਦੇ ਸਕਦੇ ਹੋ।"
-
-#: ../tips/gimp-tips.xml.in.h:25
+#: ../data/tips/gimp-tips.xml.in.h:22
 msgid ""
 "You can create and edit complex selections using the Path tool. The Paths "
 "dialog allows you to work on multiple paths and to convert them to "
 "selections."
 msgstr ""
-"ਤੁਸੀਂ ਰਸਤਾ ਸੰਦ ਵਰਤ ਕੇ ਔਖੀਆਂ ਚੁਣੌਤੀਆਂ ਬਣਾ ਅਤੇ ਬਦਲ ਸਕਦੇ ਹੋ। ਰਸਤਾ ਤਖਤੀ ਤੁਹਾਨੂੰ ਬਹੁਤੇ ਰਸਤਿਆਂ ਉਪਰ "
-"ਕੰਮ ਕਰਨ ਅਤੇ ਇਹਨਾਂ ਨੂੰ ਚਣੌਤੀਆਂ ਵਿੱਚ ਬਦਲਣ ਦੀ ਇਜ਼ਾਜਤ ਦਿੰਦੀ ਹੈ।"
+"ਤੁਸੀਂ ਪਾਥ ਟੂਲ ਵਰਤ ਕੇ ਔਖੀਆਂ ਚੁਣੌਤੀਆਂ ਬਣਾ ਅਤੇ ਬਦਲ ਸਕਦੇ ਹੋ। ਪਾਥ ਡਾਈਲਾਗ ਤੁਹਾਨੂੰ ਬਹੁਤੇ "
+"ਪਾਥ ਉੱਤੇ ਕੰਮ ਕਰਨ ਅਤੇ ਇਹਨਾਂ ਨੂੰ ਚੁਣੌਤੀਆਂ ਵਿੱਚ ਬਦਲਣ ਦੀ ਇਜ਼ਾਜਤ ਦਿੰਦੀ ਹੈ।"
 
-#: ../tips/gimp-tips.xml.in.h:26
+#: ../data/tips/gimp-tips.xml.in.h:23
 msgid ""
 "You can drag a layer from the Layers dialog and drop it onto the toolbox. "
 "This will create a new image containing only that layer."
 msgstr ""
-"ਤੁਸੀਂ ਪਰਤ ਤਖਤੀ ਵਿਚੋਂ ਇਕ ਪਰਤ ਖਿੱਚ ਕੇ ਸੰਦ ਡਬੇ ਵਿਚ ਛੱਡ ਸਕਦੇ ਹੋ। ਇਸ ਨਾਲ ਸਿਰਫ ਉਸ ਪਰਤ ਵਾਲਾ ਇਕ "
-"ਨਵਾਂ ਪ੍ਰਤੀਬਿੰਬ ਬਣੇਗਾ।"
+"ਤੁਸੀਂ ਲੇਅਰ ਡਾਈਲਾਗ ਵਿਚੋਂ ਇਕ ਲੇਅਰ ਖਿੱਚ ਕੇ ਟੂਲ ਡਬੇ ਵਿਚ ਛੱਡ ਸਕਦੇ ਹੋ। ਇਸ ਨਾਲ ਸਿਰਫ ਉਸ "
+"ਲੇਅਰ ਵਾਲਾ ਇਕ ਨਵਾਂ ਚਿੱਤਰ ਬਣੇਗਾ।"
 
-#: ../tips/gimp-tips.xml.in.h:27
+#: ../data/tips/gimp-tips.xml.in.h:24
 msgid ""
 "You can drag and drop many things in GIMP. For example, dragging a color "
 "from the toolbox or from a color palette and dropping it into an image will "
-"fill the current image or selection with that color."
+"fill the current selection with that color."
 msgstr ""
-"ਤੁਸੀਂ ਜੈਮਪ ਵਿਚ ਇਕ ਤੋਂ ਜਿਆਦਾ ਚੀਜਾਂ ਖਿੱਚ ਅਤੇ ਛੱਡ ਸਕਦੇ ਹੋ। ਉਦਾਹਰਣ ਵਾਸਤੇ, ਸੰਦ ਡੱਬੇ ਜਾਂ ਰੰਗ ਪੱਟੀ "
-"ਵਿਚੋ ਰੰਗ ਖਿੱਚਣਾ ਅਤੇ ਪ੍ਰਤੀਬਿੰਬ ਉੱਪਰ ਛੱਡਣ ਨਾਲ ਮੌਜੂਦ ਪ੍ਰਤੀਬਿੰਬ ਰੰਗੀਨ ਹੋ ਜਾਵੇਗਾ ਜਾਂ ਉਸ ਰੰਗ ਦੀ ਚੋਣ "
+"ਤੁਸੀਂ ਜੈਮਪ ਵਿਚ ਇਕ ਤੋਂ ਜਿਆਦਾ ਚੀਜਾਂ ਖਿੱਚ ਅਤੇ ਛੱਡ ਸਕਦੇ ਹੋ। ਉਦਾਹਰਣ ਵਾਸਤੇ, ਟੂਲ ਡੱਬੇ ਜਾਂ "
+"ਪੈਲਅਟ ਵਿਚੋਂ ਰੰਗ ਖਿੱਚਣਾ ਅਤੇ ਚਿੱਤਰ ਉੱਤੇ ਛੱਡਣ ਨਾਲ ਮੌਜੂਦ ਚਿੱਤਰ ਰੰਗੀਨ ਹੋ ਜਾਵੇਗਾ ਜਾਂ ਉਸ ਰੰਗ ਦੀ ਚੋਣ "
 "ਨਾਲ।"
 
-#: ../tips/gimp-tips.xml.in.h:28
+#: ../data/tips/gimp-tips.xml.in.h:25
 msgid ""
-"You can draw simple squares or circles using Edit-&gt;Stroke Selection. It "
+"You can draw simple squares or circles using Edit→Stroke Selection. It "
 "strokes the edge of your current selection. More complex shapes can be drawn "
-"using the Path tool or with Filters-&gt;Render-&gt;Gfig."
+"using the Path tool or with Filters→Render→Gfig."
 msgstr ""
-"ਤੁਸੀਂ Edit-&gt;Stroke ਚੋਣ ਵਰਤ ਕੇ ਸਾਧਾਰਣ ਵਰਗ ਜਾਂ ਚੱਕਰ ਉਲੀਕ ਸਕਦੇ ਹੋ। ਇਹ ਤੁਹਾਡੀ ਮੌਜੂਦ ਚੋਣ ਦੇ "
-"ਕਿਨਾਰੇ ਨੂੰ ਠੋਕਰ ਦੀ ਹੈ। ਰਸਤਾ ਸੰਦ ਜਾਂ Filters-&gt;Render-&gt;Gfig ਵਰਤ ਕੇ ਜਿਆਦਾ ਔਖੀਆਂ "
-"ਸ਼ਕਲਾਂ ਵੀ ਉਲੀਕੀਆਂ ਜਾ ਸਕਦੀਂਆਂ ਹਨ।"
+"ਤੁਸੀਂ ਸੋਧ→ਸਟਰੋਕ ਚੋਣ ਵਰਤ ਕੇ ਸਾਧਾਰਣ ਵਰਗ ਜਾਂ ਚੱਕਰ ਉਲੀਕ ਸਕਦੇ ਹੋ। ਇਹ ਤੁਹਾਡੀ ਮੌਜੂਦ ਚੋਣ ਦੇ "
+"ਕਿਨਾਰੇ ਨੂੰ ਸਟਰੋਕ ਕਰਦੀ ਹੈ। ਪਾਥ ਟੂਲ ਜਾਂ ਫਿਲਟਰ→ਰੈਂਡਰ→Gfig ਵਰਤ ਕੇ ਜਿਆਦਾ ਔਖੀਆਂ "
+"ਸ਼ਕਲਾਂ ਵੀ ਉਲੀਕੀਆਂ ਜਾ ਸਕਦੀਆਂ ਹਨ।"
 
-#: ../tips/gimp-tips.xml.in.h:29
+#: ../data/tips/gimp-tips.xml.in.h:26
 msgid ""
-"You can get context-sensitive help for most of the GIMP's features by "
-"pressing the F1 key at any time. This also works inside the menus."
+"You can get context-sensitive help for most of GIMP's features by pressing "
+"the F1 key at any time. This also works inside the menus."
 msgstr ""
-"ਕਦੀ ਵੀ ਸਵਿੱਚ F1 ਦਬਾ ਕੇ ਤੁਸੀਂ GIMP ਦੀਆਂ ਜਿਆਦਾਤਰ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਵਾਸਤੇ ਮਦਦ ਸੰਖੇਪ ਪ੍ਰਾਪਤ ਕਰ ਸਕਦੇ "
-"ਹੋ। ਇਹ ਸੂਚੀ ਵਿਚ ਵੀ ਕੰਮ ਕਰਦਾ ਹੈ।"
+"ਕਦੀ ਵੀ ਸਵਿੱਚ F1 ਦਬਾ ਕੇ ਤੁਸੀਂ GIMP ਦੀਆਂ ਜਿਆਦਾਤਰ ਵਿਸ਼ੇਸ਼ਤਾਵਾਂ ਵਾਸਤੇ ਮਦਦ ਸੰਖੇਪ "
+"ਪ੍ਰਾਪਤ ਕਰ ਸਕਦੇ ਹੋ। ਇਹ ਮੇਨੂ ਵਿੱਚ ਵੀ ਕੰਮ ਕਰਦਾ ਹੈ।"
 
-#: ../tips/gimp-tips.xml.in.h:30
+#: ../data/tips/gimp-tips.xml.in.h:27
 msgid ""
 "You can perform many layer operations by right-clicking on the text label of "
 "a layer in the Layers dialog."
 msgstr ""
-"ਪਰਤ ਡਾਇਲਾਗ ਵਿਚ ਪਰਤ ਦੇ ਲੇਬਲ ਮੂਲ ਉੱਪਰ ਰਾਈਟ ਕਲਿੱਕ ਕਰਕੇ ਤੁਸੀਂ ਜਿਆਦਾ ਪਰਤ ਕਿਰਿਆਂਵਾਂ ਲਾਗੂ ਕਰ "
-"ਸਕਦੇ ਹੋ।"
+"ਪਰਤ ਡਾਈਲਾਗ ਵਿਚ ਪਰਤ ਦੇ ਲੇਬਲ ਮੂਲ ਉੱਤੇ ਰਾਈਟ ਕਲਿੱਕ ਕਰਕੇ ਤੁਸੀਂ ਜਿਆਦਾ ਲੇਅਰ ਓਪਰੇਸ਼ਨ "
+"ਲਾਗੂ ਕਰ ਸਕਦੇ ਹੋ।"
 
-#: ../tips/gimp-tips.xml.in.h:31
+#: ../data/tips/gimp-tips.xml.in.h:28
+#, fuzzy
 msgid ""
-"You can press or release the <tt>Shift</tt> and <tt>Ctrl</tt> keys while you "
-"are making a selection in order to constrain it to a square or a circle, or "
-"to have it centered on its starting point."
-msgstr ""
-"ਜਦੋਂ ਤੁਸੀਂ ਇਸ ਨੂੰ ਸੰਪੂਰਣ ਆਇਤ ਜਾਂ ਵਰਗ ਹੋਣ ਲਈ ਚੋਣ ਕਰਦੇ ਹੋ, ਜਾਂ ਇਸ ਦੀ ਸ਼ੁਰੂਆਤ ਉੱਪਰ ਕੇਦਰਿਂਤ ਕਰੋਗੇ ,ਤਾਂ "
-"ਤੁਸੀ ਸਵਿੱਚ <tt>Shift</tt> ਅਤੇ <tt>Ctrl</tt> ਦਬਾ ਜਾਂ ਛੱਡ ਸਕਦੇ ਹੋ।"
-
-#: ../tips/gimp-tips.xml.in.h:32
-msgid ""
-"You can save a selection to a channel (Select-&gt;Save to Channel) and then "
+"You can save a selection to a channel (Select→Save to Channel) and then "
 "modify this channel with any paint tools. Using the buttons in the Channels "
 "dialog, you can toggle the visibility of this new channel or convert it to a "
 "selection."
 msgstr ""
-"ਤੁਸੀਂ ਚੈਨਲ ਦੀ ਚੋਣ ਸਾਂਭ ਸਕਦੇ ਹੋ (&gt; ਚੁਣੋ, ਚੈਨਲ ਵਿਚ ਸੰਭਾਲਣ ਲਈ) ਅਤੇ ਫਿਰ ਕਿਸੇ ਰੰਗਤ ਸੰਦ ਨਾਲ ਇਹ "
-"ਚੈਨਲ ਬਦਲੋ। ਚੈਨਲ ਤਖਤੀ ਦੇ ਬਟਨ ਵਰਤ ਕੇ ਤੁਸੀਂ ਨਵੇਂ ਚੈਨਲ ਦੀ ਦਿੱਖ ਬਦਲ ਸਕਦੇ ਹੋ ਜਾਂ ਇਸ ਨੂੰ ਚੋਣ ਵਿਚ ਬਦਲ "
+"ਤੁਸੀਂ ਚੈਨਲ ਦੀ ਚੋਣ ਸਾਂਭ ਸਕਦੇ ਹੋ (&gt; ਚੁਣੋ, ਚੈਨਲ ਵਿਚ ਸੰਭਾਲਣ ਲਈ) ਅਤੇ ਫਿਰ ਕਿਸੇ ਰੰਗਤ ਟੂਲ ਨਾਲ ਇਹ "
+"ਚੈਨਲ ਬਦਲੋ। ਚੈਨਲ ਡਾਈਲਾਗ ਦੇ ਬਟਨ ਵਰਤ ਕੇ ਤੁਸੀਂ ਨਵੇਂ ਚੈਨਲ ਦੀ ਦਿੱਖ ਬਦਲ ਸਕਦੇ ਹੋ ਜਾਂ ਇਸ ਨੂੰ ਚੋਣ ਵਿਚ ਬਦਲ "
 "ਸਕਦੇ ਹੋ।"
 
-#: ../tips/gimp-tips.xml.in.h:33
+#: ../data/tips/gimp-tips.xml.in.h:29
 msgid ""
-"You can use <tt>Alt</tt>-<tt>Tab</tt> to cycle through all layers in an "
+"You can use <tt>Ctrl</tt>-<tt>Tab</tt> to cycle through all layers in an "
 "image (if your window manager doesn't trap those keys...)."
 msgstr ""
-"ਪ੍ਰਤੀਬਿੰਬ ਦੀਆਂ ਪਰਤਾਂ ਦਾ ਚੱਕਰ ਲਾਉਣ ਵਾਸਤੇ ਤੁਸੀਂ  <tt>Alt</tt>-<tt>Tab</tt> ਵਰਤ ਸਕਦੇ ਹੋ। "
-"(ਜੇ ਤੁਹਾਡਾ ਝਰੋਖਾ ਪ੍ਰਬੰਧਕ ਇਹਨਾਂ ਸਵਿੱਚਾਂ ਨੂੰ ਧੋਖਾ ਨਾ ਸਮਝੇ)"
+"ਚਿੱਤਰ ਦੀਆਂ ਲੇਅਰ ਦਾ ਚੱਕਰ ਲਾਉਣ ਵਾਸਤੇ ਤੁਸੀਂ  <tt>Ctrl</tt>-<tt>Tab</tt> ਵਰਤ ਸਕਦੇ ਹੋ। "
+"(ਜੇ ਤੁਹਾਡਾ ਵਿੰਡੋ ਮੈਨੇਜਰ ਇਹਨਾਂ ਸਵਿੱਚਾਂ ਨੂੰ ਇਸਤੇਮਾਲ ਨਾ ਕਰੇ...)"
 
-#: ../tips/gimp-tips.xml.in.h:34
+#: ../data/tips/gimp-tips.xml.in.h:30
 msgid ""
-"You can use the middle mouse button to pan around the image, if it's larger "
-"than its display window."
+"You can use the middle mouse button to pan around the image (or optionally "
+"hold <tt>Spacebar</tt> while you move the mouse)."
 msgstr ""
-"ਜੇਕਰ ਪ੍ਰਤੀਬਿੰਬ , ਦਿਖਾਉਣ ਵਾਲੀ ਝਰੋਖਾ ਨਾਲੋਂ ਵੱਡਾ ਹੈ ਤਾਂ ਤੁਸੀਂ ਸਾਰੇ ਪ੍ਰਤੀਬਿੰਬ ਦੁਆਲੇ ਘੁੰਮਾਓਣ ਵਾਸਤੇ "
-"ਮਾਊਸ ਦਾ ਵਿਚਕਾਰਲਾ ਬਟਨ ਵਰਤ ਸਕਦੇ ਹੋ।"
+"ਤੁਸੀਂ ਮਿਡਲ ਮਾਊਂਸ ਬਟਨ ਨੂੰ ਚਿੱਤਰ ਦੁਆਲੇ ਪੈਨ ਲਈ ਵਰਤ ਸਕਦੇ ਹੋ (ਜਾਂ ਚੋਣਵੇ ਰੂਪ ਵਿੱਚ "
+"ਆਪਣੇ ਮਾਊਂਸ ਨੂੰ ਹਿਲਾਉਣ ਦੌਰਾਨ <tt>ਸਪੇਸਬਾਰ (spacebar)</tt> ਨੂੰ ਫੜ ਕੇ ਰੱਖੋ)।"
 
-#: ../tips/gimp-tips.xml.in.h:35
+#: ../data/tips/gimp-tips.xml.in.h:31
 msgid ""
 "You can use the paint tools to change the selection. Click on the &quot;"
 "Quick Mask&quot; button at the bottom left of an image window. Change your "
 "selection by painting in the image and click on the button again to convert "
 "it back to a normal selection."
 msgstr ""
-"ਚੋਣ ਨੂੰ ਬਦਲਣ ਲਈ ਤੁਸੀਂ ਰੰਗਤ ਸੰਦ ਵਰਤ ਸਕਦੇ ਹੋ। ਪ੍ਰਤੀਬਿੰਬ ਤਖਤੀ ਦੇ ਹੇਠਾਂ ਖੱਬੇ &quot;Quick "
-"Mask&quot; ਬਟਨ ਕਲਿੱਕ ਕਰੋ। ਪ੍ਰਤੀਬਿੰਬ ਨੰ ਰੰਗ ਕਰਕੇ ਆਪਣੀ ਚੋਣ ਬਦਲੋ ਅਤੇ ਇਸ ਨੂੰ ਸਧਾਰਣ ਚੋਣ ਵਿਚ "
-"ਬਦਲਣ ਵਾਸਤੇ ਦੁਬਾਰਾ ਬਟਨ ਕਲਿੱਕ ਕਰੋ।"
+"ਚੋਣ ਨੂੰ ਬਦਲਣ ਲਈ ਤੁਸੀਂ ਰੰਗਤ ਟੂਲ ਵਰਤ ਸਕਦੇ ਹੋ। ਚਿੱਤਰ ਡਾਈਲਾਗ ਦੇ ਹੇਠਾਂ ਖੱਬੇ &quot;ਤੁਰੰਤ "
+"ਮਾਸਕ&quot; ਬਟਨ ਕਲਿੱਕ ਕਰੋ। ਚਿੱਤਰ ਨੂੰ ਰੰਗ ਕਰਕੇ ਆਪਣੀ ਚੋਣ ਬਦਲੋ ਅਤੇ ਇਸ ਨੂੰ ਸਧਾਰਣ ਚੋਣ ਵਿਚ "
+"ਬਦਲਣ ਵਾਸਤੇ ਮੁੜ ਬਟਨ ਕਲਿੱਕ ਕਰੋ।"
+
