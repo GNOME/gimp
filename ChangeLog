@@ -1,3 +1,8 @@
+2007-10-08  Raphaël Quinet  <raphael@gimp.org>
+
+	* authors.xml: Added Peter Sikking as author (we do not have a
+	more appropriate category for interface architects).
+
 2007-10-07  Sven Neumann  <sven@gimp.org>
 
 	* libgimpconfig/gimpcolorconfig.c: use a neutral gray as the
