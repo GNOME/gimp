@@ -232,7 +232,6 @@ gimp_display_shell_init (GimpDisplayShell *shell)
   shell->offset_y               = 0;
   shell->scale_x                = 1.0;
   shell->scale_y                = 1.0;
-  shell->level                  = 0;
   shell->x_dest_inc             = 1;
   shell->y_dest_inc             = 1;
   shell->x_src_dec              = 1;
@@ -1158,7 +1157,7 @@ gimp_display_shell_reconnect (GimpDisplayShell *shell)
 void
 gimp_display_shell_scale_changed (GimpDisplayShell *shell)
 {
-  GimpImage   *image;
+  GimpImage *image;
 
   g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
 
@@ -1170,8 +1169,6 @@ gimp_display_shell_scale_changed (GimpDisplayShell *shell)
   shell->scale_y = (gimp_zoom_model_get_factor (shell->zoom)
                     * SCREEN_YRES (shell) / image->yresolution);
 
-  shell->level = gimp_projection_get_level (image->projection,
-                                            shell->scale_x, shell->scale_y);
   shell->x_dest_inc = image->width;
   shell->y_dest_inc = image->height;
   shell->x_src_dec  = ceil (image->width  * shell->scale_x);

@@ -81,7 +81,6 @@ struct _GimpDisplayShell
   gdouble           scale_x;           /*  horizontal scale factor            */
   gdouble           scale_y;           /*  vertical scale factor              */
 
-  gint              level;             /*  level of projection pyramid        */
   gint              x_src_dec;         /*  increments for the bresenham style */
   gint              y_src_dec;         /*  image --> display transformation   */
   gint              x_dest_inc;

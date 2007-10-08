@@ -99,9 +99,8 @@ struct _RenderInfo
 
 static void  gimp_display_shell_render_info_scale   (RenderInfo       *info,
                                                      GimpDisplayShell *shell,
-                                                     TileManager      *src_tiles,
-                                                     gdouble           scale_x,
-                                                     gdouble           scale_y);
+                                                     TileManager      *tiles,
+                                                     gint              level);
 
 static void  gimp_display_shell_render_setup_notify (GObject          *config,
                                                      GParamSpec       *param_spec,
@@ -271,11 +270,7 @@ gimp_display_shell_render (GimpDisplayShell *shell,
 
     src_tiles = gimp_projection_get_tiles_at_level (projection, level);
 
-    gimp_display_shell_render_info_scale (&info,
-                                          shell,
-                                          src_tiles,
-                                          shell->scale_x * (1 << level),
-                                          shell->scale_y * (1 << level));
+    gimp_display_shell_render_info_scale (&info, shell, src_tiles, level);
   }
 
   /* Currently, only RGBA and GRAYA projection types are used - the rest
@@ -319,14 +314,8 @@ gimp_display_shell_render (GimpDisplayShell *shell,
     {
       TileManager *src_tiles = gimp_drawable_get_tiles (shell->mask);
 
-      /* The mask does not (yet) have an image pyramid, use the base scale of
-       * the shell.
-       */
-      gimp_display_shell_render_info_scale (&info,
-                                            shell,
-                                            src_tiles,
-                                            shell->scale_x,
-                                            shell->scale_y);
+      /* The mask does not (yet) have an image pyramid, use 0 as level, */
+      gimp_display_shell_render_info_scale (&info, shell, src_tiles, 0);
 
       gimp_display_shell_render_mask (shell, &info);
     }
@@ -610,25 +599,24 @@ render_image_rgb_a (RenderInfo *info)
 static void
 gimp_display_shell_render_info_scale (RenderInfo       *info,
                                       GimpDisplayShell *shell,
-                                      TileManager      *src_tiles,
-                                      gdouble           scale_x,
-                                      gdouble           scale_y)
+                                      TileManager      *tiles,
+                                      gint              level)
 {
-  info->src_tiles = src_tiles;
+  info->src_tiles = tiles;
 
   /* We must reset info->dest because this member is modified in render
    * functions.
    */
   info->dest     = shell->render_buf;
 
-  info->scalex   = scale_x;
-  info->scaley   = scale_y;
+  info->scalex   = shell->scale_x * (1 << level);
+  info->scaley   = shell->scale_y * (1 << level);
 
   info->src_y    = (gdouble) info->y / info->scaley;
 
   /* use Bresenham like stepping */
   info->x_dest_inc = shell->x_dest_inc;
-  info->x_src_dec  = shell->x_src_dec << shell->level;
+  info->x_src_dec  = shell->x_src_dec << level;
 
   info->dx_start   = ((gint64) info->x_dest_inc) * info->x + info->x_dest_inc/2;
   info->src_x      = info->dx_start / info->x_src_dec;
@@ -636,7 +624,7 @@ gimp_display_shell_render_info_scale (RenderInfo       *info,
 
   /* same for y */
   info->y_dest_inc = shell->y_dest_inc;
-  info->y_src_dec  = shell->y_src_dec << shell->level;
+  info->y_src_dec  = shell->y_src_dec << level;
 
   info->dy_start   = ((gint64) info->y_dest_inc * info->y) + info->y_dest_inc/2;
   info->src_y      = info->dy_start / info->y_src_dec;

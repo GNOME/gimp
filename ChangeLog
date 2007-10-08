@@ -1,5 +1,13 @@
 2007-10-08  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell.[ch]: removed level from
+	GimpDisplayShell struct.
+
+	* app/display/gimpdisplayshell-render.c: fixed rendering of the mask.
+	Closes bug #448417 again.
+
+2007-10-08  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpcolorpanel.[ch]: reverted the live update change
 	from bug #451568. It causes breakage such as bug #484757.
 
