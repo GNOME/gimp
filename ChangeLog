@@ -1,5 +1,16 @@
 2007-10-08  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpperspectiveclonetool.c: cosmetics.
+
+2007-10-08  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpviewrendererimage.c
+	(gimp_view_renderer_image_render): as some kind of workaround for
+	bug #459518, show the fallback icon when rendering the preview for
+	an invisible channel.
+
+2007-10-08  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell.[ch]: removed level from
 	GimpDisplayShell struct.
 
