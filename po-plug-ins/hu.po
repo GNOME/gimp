@@ -1,4 +1,5 @@
 # translation of gimp-plug-ins.HEAD.po to Hungarian
+# translation of gimp-plug-ins.HEAD.po to
 # Hungarian translation of gimp-plug-ins.
 # Copyright (C) 2000, 2001, 2003, 2004, 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp-plug-ins package.
@@ -12,7 +13,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-02 10:33+0100\n"
-"PO-Revision-Date: 2007-10-03 23:20+0200\n"
+"PO-Revision-Date: 2007-10-05 22:42+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -9004,13 +9005,12 @@ msgid "Can't read color entries"
 msgstr "Színbejegyzések olvasása sikertelen"
 
 #: ../plug-ins/common/xwd.c:555
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
 "not supported."
 msgstr ""
-"A(z) \"%s\" XWD-fájl formátuma \"%d\",\n"
-"mélysége \"%d\", képpontonkénti bitszáma \"%d\".\n"
+"A(z) \"%s\" XWD-fájl formátuma \"%d\", mélysége \"%d\", képpontonkénti bitszáma \"%d\". "
 "Jelenleg ez nem támogatott."
 
 #: ../plug-ins/common/xwd.c:578
@@ -9067,9 +9067,8 @@ msgid "Load FITS File"
 msgstr "FITS-fájl betöltése"
 
 #: ../plug-ins/fits/fits.c:998
-#, fuzzy
 msgid "Replacement for undefined pixels"
-msgstr "helyettesítés képpontok"
+msgstr "Meghatározatlan képpontok helyettesítője"
 
 #: ../plug-ins/fits/fits.c:1003 ../plug-ins/gfig/gfig-dialog.c:1286
 #: ../plug-ins/gfig/gfig-dialog.c:1461
@@ -9447,14 +9446,12 @@ msgid "Grid spacing:"
 msgstr "Rácstávolság:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1403
-#, fuzzy
 msgid "Polar grid sectors desired:"
-msgstr "Rács"
+msgstr "Kívánt polárrács-szektorok:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1425
-#, fuzzy
 msgid "Polar grid radius interval:"
-msgstr "Rács"
+msgstr "Polárrács sugárintervalluma:"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1441 ../plug-ins/imagemap/imap_menu.c:220
 msgid "Rectangle"
@@ -10509,23 +10506,23 @@ msgstr "GIMP-súgóböngésző"
 
 #: ../plug-ins/helpbrowser/dialog.c:311
 msgid "Drag and drop this icon to a web browser"
-msgstr ""
+msgstr "Húzza át ezt az ikont egy webböngészőbe"
 
 #: ../plug-ins/helpbrowser/dialog.c:700
 msgid "Go back one page"
-msgstr ""
+msgstr "Vissza egy lappal"
 
 #: ../plug-ins/helpbrowser/dialog.c:705
 msgid "Go forward one page"
-msgstr ""
+msgstr "Előre egy lappal"
 
 #: ../plug-ins/helpbrowser/dialog.c:710
 msgid "Go to the index page"
-msgstr ""
+msgstr "Ugrás az indexlapra"
 
 #: ../plug-ins/helpbrowser/dialog.c:745
 msgid "Visit the GIMP documentation website"
-msgstr ""
+msgstr "A GIMP dokumentációs weboldalának megtekintése"
 
 #: ../plug-ins/helpbrowser/dialog.c:821
 msgid "Document not found"
@@ -11130,27 +11127,24 @@ msgid "_File"
 msgstr "_Fájl"
 
 #: ../plug-ins/imagemap/imap_menu.c:147
-#, fuzzy
 msgid "_Open..."
-msgstr "Megnyitás..."
+msgstr "_Megnyitás..."
 
 #: ../plug-ins/imagemap/imap_menu.c:147
 msgid "Open"
 msgstr "Megnyitás"
 
 #: ../plug-ins/imagemap/imap_menu.c:149
-#, fuzzy
 msgid "_Save..."
-msgstr "Mentés..."
+msgstr "M_entés..."
 
 #: ../plug-ins/imagemap/imap_menu.c:149
 msgid "Save"
 msgstr "Mentés"
 
 #: ../plug-ins/imagemap/imap_menu.c:151
-#, fuzzy
 msgid "Save _As..."
-msgstr "Mentés másként"
+msgstr "Mentés más_ként..."
 
 #: ../plug-ins/imagemap/imap_menu.c:156
 msgid "_Edit"
@@ -11437,22 +11431,20 @@ msgid "View Source"
 msgstr "Forrás megtekintése"
 
 #: ../plug-ins/jpeg/jpeg-exif.c:288
-#, fuzzy
 msgid "Rotate Image?"
-msgstr "Forgatás / átméretezés"
+msgstr "Kép elforgatása?"
 
 #: ../plug-ins/jpeg/jpeg-exif.c:291
-#, fuzzy
 msgid "_Keep Orientation"
-msgstr "Irány"
+msgstr "Tájolás megőr_zése"
 
 #: ../plug-ins/jpeg/jpeg-exif.c:347
 msgid "According to the EXIF data, this image is rotated."
-msgstr ""
+msgstr "Az EXIF-adatok szerint ez a kép el van forgatva."
 
 #: ../plug-ins/jpeg/jpeg-exif.c:362
 msgid "Would you like GIMP to rotate it into the standard orientation?"
-msgstr ""
+msgstr "Kívánja, hogy a GIMP elfordítsa azt az eredeti tájolás szerintire?"
 
 #: ../plug-ins/jpeg/jpeg-load.c:246
 msgid "JPEG preview"
@@ -11470,7 +11462,7 @@ msgstr "Fájlméret: %02.01f kB"
 
 #: ../plug-ins/jpeg/jpeg-save.c:673
 msgid "Calculating file size..."
-msgstr ""
+msgstr "Fájlméret kiszámítása..."
 
 #: ../plug-ins/jpeg/jpeg-save.c:764 ../plug-ins/jpeg/jpeg-save.c:876
 msgid "File size: unknown"
@@ -11489,13 +11481,12 @@ msgid "JPEG quality parameter"
 msgstr "A JPEG-minőség paramétere"
 
 #: ../plug-ins/jpeg/jpeg-save.c:874
-#, fuzzy
 msgid "Enable preview to obtain the file size."
-msgstr "előnézet"
+msgstr "A fájlméret meghatározásához kapcsolja be az előnézetet."
 
 #: ../plug-ins/jpeg/jpeg-save.c:885
 msgid "Show _preview in image window"
-msgstr "_Előnézet a kép ablakában"
+msgstr "E_lőnézet a kép ablakában"
 
 #: ../plug-ins/jpeg/jpeg-save.c:926
 msgid "_Smoothing:"
@@ -11532,7 +11523,7 @@ msgstr "XMP-adatok mentése"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1047
 msgid "Use quality settings from original image"
-msgstr ""
+msgstr "Az eredeti kép minőségi beállításainak használata"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1053
 msgid ""
@@ -11540,6 +11531,9 @@ msgid ""
 "settings (quantization tables), enable this option to get almost the same "
 "quality and file size."
 msgstr ""
+"Ha az eredeti kép nem szabványos minőségi beállításokat (kvantálási táblákat) "
+"használó JPEG-fájlból volt betöltve, akkor ezen opció bekapcsolásával "
+"közel azonos minőség és fájlméret érhető el."
 
 #. Subsampling
 #: ../plug-ins/jpeg/jpeg-save.c:1077
@@ -11548,19 +11542,19 @@ msgstr "Alulmintavételezés:"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1084
 msgid "1x1,1x1,1x1 (best quality)"
-msgstr ""
+msgstr "1x1,1x1,1x1 (legjobb minőség)"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1085
 msgid "2x1,1x1,1x1 (4:2:2)"
-msgstr ""
+msgstr "2x1,1x1,1x1 (4:2:2)"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1086
 msgid "1x2,1x1,1x1"
-msgstr ""
+msgstr "1x2,1x1,1x1"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1087
 msgid "2x2,1x1,1x1 (smallest file)"
-msgstr ""
+msgstr "2x2,1x1,1x1 (legkisebb fájl)"
 
 #. DCT method
 #: ../plug-ins/jpeg/jpeg-save.c:1111
@@ -11656,64 +11650,64 @@ msgstr ""
 
 #: ../plug-ins/metadata/xmp-parse.c:240
 msgid "Error: No XMP packet found"
-msgstr ""
+msgstr "Hiba: XMP-csomag nem található"
 
 #: ../plug-ins/metadata/xmp-parse.c:255
 #, c-format
 msgid "Error on line %d char %d: %s"
-msgstr ""
+msgstr "Hiba a(z) %d. sor %d. karakterénél: %s"
 
 #: ../plug-ins/metadata/xmp-parse.c:277
 #, c-format
 msgid "Expected text or optional element <%s>, found <%s> instead"
-msgstr ""
+msgstr "A várt érték: szöveg vagy <%s> opcionális elem; a kapott érték: <%s>"
 
 #: ../plug-ins/metadata/xmp-parse.c:281
 #, c-format
 msgid "Expected element <%s>, found <%s> instead"
-msgstr ""
+msgstr "A várt érték: <%s> elem; a kapott érték: <%s>"
 
 #: ../plug-ins/metadata/xmp-parse.c:296
 #, c-format
 msgid "Unknown element <%s>"
-msgstr ""
+msgstr "Ismeretlen elem: <%s>"
 
 #: ../plug-ins/metadata/xmp-parse.c:325
 #, c-format
 msgid "Unknown attribute \"%s\"=\"%s\" in element <%s>"
-msgstr ""
+msgstr "Ismeretlen attribútum (\"%s\"=\"%s\") ebben az elemben: <%s>"
 
 #: ../plug-ins/metadata/xmp-parse.c:655
 #, c-format
 msgid "Required attribute rdf:about missing in <%s>"
-msgstr ""
+msgstr "Az \"rdf:about\" kötelező attribútum hiányzik ebből: <%s>"
 
 #: ../plug-ins/metadata/xmp-parse.c:881
 #, c-format
 msgid "Nested elements (<%s>) are not allowed in this context"
-msgstr ""
+msgstr "Beágyazott elemek (<%s>) nem engedélyezettek ebben a kontextusban"
 
 #: ../plug-ins/metadata/xmp-parse.c:1005
 #, c-format
 msgid "End of element <%s> not expected in this context"
-msgstr ""
+msgstr "<%s> elem végződése váratlan ebben a kontextusban"
 
 #: ../plug-ins/metadata/xmp-parse.c:1107
 #, c-format
 msgid "The current element (<%s>) cannot contain text"
-msgstr ""
+msgstr "A jelenlegi elem (<%s>) nem tartalmazhat szöveget"
 
 #: ../plug-ins/metadata/xmp-parse.c:1132
 msgid "XMP packets must start with <?xpacket begin=...?>"
-msgstr ""
+msgstr "Az XMP-csomagoknak ezzel kell kezdődniük: <?xpacket begin=...?>"
 
 #: ../plug-ins/metadata/xmp-parse.c:1146
 msgid "XMP packets must end with <?xpacket end=...?>"
-msgstr ""
+msgstr "Az XMP-csomagoknak ezzel kell végződniük: <?xpacket end=...?>"
 
 #: ../plug-ins/metadata/xmp-parse.c:1159
 msgid "XMP cannot contain XML comments or processing instructions"
-msgstr ""
+msgstr "Az XMP nem tartalmazhat XML-megjegyzéseket és feldolgozási utasításokat"
 
 #: ../plug-ins/pagecurl/pagecurl.c:216
 msgid "Curl up one of the image corners"
@@ -11853,9 +11847,8 @@ msgid "_Rotate Colors..."
 msgstr "Színek el_forgatása..."
 
 #: ../plug-ins/rcm/rcm.c:140
-#, fuzzy
 msgid "Rotating the colors"
-msgstr "A színtérkép elforgatása..."
+msgstr "A színek elforgatása"
 
 #: ../plug-ins/rcm/rcm_dialog.c:119
 msgid "Original"
@@ -12000,57 +11993,55 @@ msgstr ""
 
 #: ../plug-ins/twain/twain.c:354
 msgid "_Scanner/Camera..."
-msgstr ""
+msgstr "La_polvasó/kamera..."
 
 #. Initialize our progress dialog
 #: ../plug-ins/twain/twain.c:489
 msgid "Transferring data from scanner/camera"
-msgstr ""
+msgstr "Adatok átvitele a lapolvasóról/kameráról"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:162
 #: ../plug-ins/uri/uri-backend-libcurl.c:126
 #, c-format
 msgid "Downloading %s of image data..."
-msgstr ""
+msgstr "%s képadat letöltése..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:163
 #: ../plug-ins/uri/uri-backend-libcurl.c:133
 #: ../plug-ins/uri/uri-backend-wget.c:348
 #, c-format
 msgid "Downloaded %s of image data"
-msgstr ""
+msgstr "%s képadat letöltve"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:181
 #, c-format
 msgid "Uploading %s of image data..."
-msgstr ""
+msgstr "%s képadat feltöltése..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:182
 #, c-format
 msgid "Uploaded %s of image data"
-msgstr ""
+msgstr "%s képadat feltöltve"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:252
 #: ../plug-ins/uri/uri-backend-libcurl.c:155
 #: ../plug-ins/uri/uri-backend-wget.c:197
-#, fuzzy
 msgid "Connecting to server"
-msgstr "Nincs átalakítandó kijelölés"
+msgstr "Kapcsolódás a kiszolgálóhoz"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:311
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to read %s from '%s': %s"
-msgstr "Nem sikerült menteni a(z) \"%s\" PPM-fájlt: %s"
+msgstr "Nem sikerült olvasni %s mennyiséget innen: \"%s\": %s"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:360
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to write %s to '%s': %s"
-msgstr "Nem sikerült írni a(z) \"%s\" fájlt (színátmenetes csillogás): %s"
+msgstr "Nem sikerült írni %s mennyiséget ide: \"%s\": %s"
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:57
-#, fuzzy
 msgid "Could not initialize libcurl"
-msgstr "Nem sikerült"
+msgstr "Nem sikerült inicializálni a Libcurlt"
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:160
 msgid "Could not open output file for writing"
@@ -12059,7 +12050,7 @@ msgstr "Nem sikerült megnyitni írásra a kimeneti fájlt"
 #: ../plug-ins/uri/uri-backend-libcurl.c:198
 #, c-format
 msgid "Opening '%s' for reading resulted in HTTP response code: %d"
-msgstr ""
+msgstr "A(z) \"%s\" olvasásra való megnyitása a következő HTTP-válaszkódot eredményezte: %d"
 
 #: ../plug-ins/uri/uri-backend-wget.c:164
 #: ../plug-ins/uri/uri-backend-wget.c:184
@@ -12068,36 +12059,35 @@ msgstr ""
 #: ../plug-ins/uri/uri-backend-wget.c:255
 #, c-format
 msgid "wget exited abnormally on URI '%s'"
-msgstr ""
+msgstr "A Wget nem megfelelő módon lépett ki ezen URI hatására: \"%s\""
 
 #. The third line is "Connecting to..."
 #: ../plug-ins/uri/uri-backend-wget.c:192
 #, c-format
 msgid "(timeout is %d second)"
 msgid_plural "(timeout is %d seconds)"
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "(várakozási idő: %d másodperc)"
+msgstr[1] "(várakozási idő: %d másodperc)"
 
 #. The fourth line is either the network request or an error
 #: ../plug-ins/uri/uri-backend-wget.c:221
-#, fuzzy
 msgid "Opening URI"
-msgstr "\"%s\" megnyitása..."
+msgstr "URI megnyitása"
 
 #: ../plug-ins/uri/uri-backend-wget.c:232
 #: ../plug-ins/uri/uri-backend-wget.c:265
-#, fuzzy, c-format
+#, c-format
 msgid "A network error occurred: %s"
-msgstr "Hiba történt az íráskor"
+msgstr "Hálózati hiba történt: %s"
 
 #: ../plug-ins/uri/uri-backend-wget.c:305
 #, c-format
 msgid "Downloading %s of image data"
-msgstr ""
+msgstr "%s képadat letöltése"
 
 #: ../plug-ins/uri/uri-backend-wget.c:310
 msgid "Downloading unknown amount of image data"
-msgstr ""
+msgstr "Ismeretlen mennyiségű képadat letöltése"
 
 #: ../plug-ins/uri/uri.c:117 ../plug-ins/uri/uri.c:138
 msgid "URI"
@@ -12116,6 +12106,9 @@ msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
 msgstr ""
+"A nagy ikonokat és a tömörítést nem minden program támogatja. "
+"Elképzelhető, hogy régebbi alkalmazások nem tudják helyesen megnyitni "
+"ezt a fájlt."
 
 #: ../plug-ins/winicon/icodialog.c:178
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
