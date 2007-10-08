@@ -110,6 +110,7 @@ gimp_display_shell_transform_xy (GimpDisplayShell *shell,
 
       item = GIMP_ITEM (gimp_image_get_active_drawable (shell->display->image));
       gimp_item_offsets (item, &offset_x, &offset_y);
+
       x += offset_x;
       y += offset_y;
     }
@@ -313,11 +314,15 @@ gimp_display_shell_transform_points (GimpDisplayShell *shell,
       x = points[i*2]   + offset_x;
       y = points[i*2+1] + offset_y;
 
-      x = PROJ_ROUND64 (shell->x_src_dec * x + (shell->x_dest_inc >> 1) - 1) / shell->x_dest_inc;
-      y = PROJ_ROUND64 (shell->y_src_dec * y + (shell->y_dest_inc >> 1) - 1) / shell->y_dest_inc;
+      x = PROJ_ROUND64 (shell->x_src_dec * x +
+                        (shell->x_dest_inc >> 1) - 1) / shell->x_dest_inc;
+      y = PROJ_ROUND64 (shell->y_src_dec * y +
+                        (shell->y_dest_inc >> 1) - 1) / shell->y_dest_inc;
 
-      coords[i].x = CLAMP (x + shell->disp_xoffset - shell->offset_x, G_MININT, G_MAXINT);
-      coords[i].y = CLAMP (y + shell->disp_yoffset - shell->offset_y, G_MININT, G_MAXINT);
+      coords[i].x = CLAMP (x + shell->disp_xoffset - shell->offset_x,
+                           G_MININT, G_MAXINT);
+      coords[i].y = CLAMP (y + shell->disp_yoffset - shell->offset_y,
+                           G_MININT, G_MAXINT);
     }
 }
 
@@ -361,11 +366,15 @@ gimp_display_shell_transform_coords (GimpDisplayShell *shell,
       x = image_coords[i].x + offset_x;
       y = image_coords[i].y + offset_y;
 
-      x = PROJ_ROUND64 (shell->x_src_dec * x + (shell->x_dest_inc >> 1) - 1) / shell->x_dest_inc;
-      y = PROJ_ROUND64 (shell->y_src_dec * y + (shell->y_dest_inc >> 1) - 1) / shell->y_dest_inc;
+      x = PROJ_ROUND64 (shell->x_src_dec * x +
+                        (shell->x_dest_inc >> 1) - 1) / shell->x_dest_inc;
+      y = PROJ_ROUND64 (shell->y_src_dec * y +
+                        (shell->y_dest_inc >> 1) - 1) / shell->y_dest_inc;
 
-      disp_coords[i].x = CLAMP (x + shell->disp_xoffset - shell->offset_x, G_MININT, G_MAXINT);
-      disp_coords[i].y = CLAMP (y + shell->disp_yoffset - shell->offset_y, G_MININT, G_MAXINT);
+      disp_coords[i].x = CLAMP (x + shell->disp_xoffset - shell->offset_x,
+                                G_MININT, G_MAXINT);
+      disp_coords[i].y = CLAMP (y + shell->disp_yoffset - shell->offset_y,
+                                G_MININT, G_MAXINT);
     }
 }
 
@@ -412,15 +421,23 @@ gimp_display_shell_transform_segments (GimpDisplayShell *shell,
       y1 = src_segs[i].y1 + offset_y;
       y2 = src_segs[i].y2 + offset_y;
 
-      x1 = (x1 * shell->x_src_dec + (shell->x_dest_inc >> 1) - 1) / shell->x_dest_inc;
-      x2 = (x2 * shell->x_src_dec + (shell->x_dest_inc >> 1) - 1) / shell->x_dest_inc;
-      y1 = (y1 * shell->y_src_dec + (shell->y_dest_inc >> 1) - 1) / shell->y_dest_inc;
-      y2 = (y2 * shell->y_src_dec + (shell->y_dest_inc >> 1) - 1) / shell->y_dest_inc;
+      x1 = (x1 * shell->x_src_dec +
+            (shell->x_dest_inc >> 1) - 1) / shell->x_dest_inc;
+      x2 = (x2 * shell->x_src_dec +
+            (shell->x_dest_inc >> 1) - 1) / shell->x_dest_inc;
+      y1 = (y1 * shell->y_src_dec +
+            (shell->y_dest_inc >> 1) - 1) / shell->y_dest_inc;
+      y2 = (y2 * shell->y_src_dec +
+            (shell->y_dest_inc >> 1) - 1) / shell->y_dest_inc;
 
-      dest_segs[i].x1 = CLAMP (x1 + shell->disp_xoffset - shell->offset_x, G_MININT, G_MAXINT);
-      dest_segs[i].x2 = CLAMP (x2 + shell->disp_xoffset - shell->offset_x, G_MININT, G_MAXINT);
-      dest_segs[i].y1 = CLAMP (y1 + shell->disp_yoffset - shell->offset_y, G_MININT, G_MAXINT);
-      dest_segs[i].y2 = CLAMP (y2 + shell->disp_yoffset - shell->offset_y, G_MININT, G_MAXINT);
+      dest_segs[i].x1 = CLAMP (x1 + shell->disp_xoffset - shell->offset_x,
+                               G_MININT, G_MAXINT);
+      dest_segs[i].x2 = CLAMP (x2 + shell->disp_xoffset - shell->offset_x,
+                               G_MININT, G_MAXINT);
+      dest_segs[i].y1 = CLAMP (y1 + shell->disp_yoffset - shell->offset_y,
+                               G_MININT, G_MAXINT);
+      dest_segs[i].y2 = CLAMP (y2 + shell->disp_yoffset - shell->offset_y,
+                               G_MININT, G_MAXINT);
     }
 }
 

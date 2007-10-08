@@ -31,6 +31,8 @@
 #include "base/tile-manager.h"
 #include "base/tile.h"
 
+#include "config/gimpdisplayconfig.h"
+
 #include "core/gimp.h"
 #include "core/gimpdrawable.h"
 #include "core/gimpimage.h"
@@ -54,10 +56,6 @@
                                                100% and 200% zoom)
                                              */
 
-/* The default settings are debatable, and perhaps this should even somehow be
- * configurable by the user. */
-static gint gimp_zoom_quality = GIMP_DISPLAY_ZOOM_PIXEL_AA;
-
 typedef struct _RenderInfo  RenderInfo;
 
 typedef void (* RenderFunc) (RenderInfo *info);
@@ -78,6 +76,8 @@ struct _RenderInfo
   gint              dest_bpp;
   gint              dest_bpl;
   gint              dest_width;
+
+  gint              zoom_quality;
 
   /* Bresenham helpers */
   gint              x_dest_inc; /* amount to increment for each dest. pixel  */
@@ -216,12 +216,15 @@ gimp_display_shell_render (GimpDisplayShell *shell,
                            GdkRectangle     *highlight)
 {
   GimpProjection *projection;
+  GimpImage      *image;
   RenderInfo      info;
   GimpImageType   type;
 
+  g_return_if_fail (GIMP_IS_DISPLAY_SHELL (shell));
   g_return_if_fail (w > 0 && h > 0);
 
-  projection = shell->display->image->projection;
+  image = shell->display->image;
+  projection = image->projection;
 
   /* Initialize RenderInfo with values that don't change during the
    * call of this function.
@@ -237,12 +240,25 @@ gimp_display_shell_render (GimpDisplayShell *shell,
   info.dest_bpl   = info.dest_bpp * GIMP_RENDER_BUF_WIDTH;
   info.dest_width = info.dest_bpp * info.w;
 
+  switch (GIMP_DISPLAY_CONFIG (image->gimp->config)->zoom_quality)
+    {
+    case GIMP_ZOOM_QUALITY_LOW:
+      info.zoom_quality = GIMP_DISPLAY_ZOOM_FAST;
+      break;
+
+    case GIMP_ZOOM_QUALITY_HIGH:
+      info.zoom_quality = GIMP_DISPLAY_ZOOM_PIXEL_AA;
+      break;
+    }
+
   if (GIMP_IMAGE_TYPE_HAS_ALPHA (gimp_projection_get_image_type (projection)))
     {
       gdouble opacity = gimp_projection_get_opacity (projection);
 
       info.alpha = render_image_init_alpha (opacity * 255.999);
     }
+
+
 
   /* Setup RenderInfo for rendering a GimpProjection level. */
   {
@@ -828,11 +844,11 @@ render_image_tile_fault (RenderInfo *info)
   guint         source_width;
   guint         source_height;
 
-  source_width = tile_manager_width (info->src_tiles);
+  source_width  = tile_manager_width (info->src_tiles);
   source_height = tile_manager_height (info->src_tiles);
 
   /* dispatch to fast path functions on special conditions */
-  if ((gimp_zoom_quality & GIMP_DISPLAY_ZOOM_FAST)
+  if ((info->zoom_quality & GIMP_DISPLAY_ZOOM_FAST)
 
       /* use nearest neighbour for exact levels */
       || (info->scalex == 1.0 &&
@@ -841,7 +857,7 @@ render_image_tile_fault (RenderInfo *info)
       /* or when we're larger than 1.0 and not using any AA */
       || (info->shell->scale_x > 1.0 &&
           info->shell->scale_y > 1.0 &&
-          (!(gimp_zoom_quality & GIMP_DISPLAY_ZOOM_PIXEL_AA)))
+          (! (info->zoom_quality & GIMP_DISPLAY_ZOOM_PIXEL_AA)))
 
       /* or at any point when both scale factors are greater or equal to 200% */
       || (info->shell->scale_x >= 2.0 &&

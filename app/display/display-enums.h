@@ -58,4 +58,15 @@ typedef enum
 } GimpSpaceBarAction;
 
 
+#define GIMP_TYPE_ZOOM_QUALITY (gimp_zoom_quality_get_type ())
+
+GType gimp_zoom_quality_get_type (void) G_GNUC_CONST;
+
+typedef enum
+{
+  GIMP_ZOOM_QUALITY_LOW,   /*< desc="quality|Low"  >*/
+  GIMP_ZOOM_QUALITY_HIGH   /*< desc="quality|High" >*/
+} GimpZoomQuality;
+
+
 #endif /* __DISPLAY_ENUMS_H__ */

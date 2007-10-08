@@ -433,5 +433,8 @@ N_("Sets the external web browser to be used.  This can be an absolute " \
 "a workaround for buggy display drivers. If lines on the canvas are not " \
 "correctly undrawn, try to set this to white."
 
+#define ZOOM_QUALITY_BLURB \
+"There's a tradeoff between speed and quality of the zoomed-out display."
+
 
 #endif  /* __GIMP_RC_BLURBS_H__ */

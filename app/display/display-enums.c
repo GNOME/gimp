@@ -100,6 +100,34 @@ gimp_space_bar_action_get_type (void)
   return type;
 }
 
+GType
+gimp_zoom_quality_get_type (void)
+{
+  static const GEnumValue values[] =
+  {
+    { GIMP_ZOOM_QUALITY_LOW, "GIMP_ZOOM_QUALITY_LOW", "low" },
+    { GIMP_ZOOM_QUALITY_HIGH, "GIMP_ZOOM_QUALITY_HIGH", "high" },
+    { 0, NULL, NULL }
+  };
+
+  static const GimpEnumDesc descs[] =
+  {
+    { GIMP_ZOOM_QUALITY_LOW, N_("quality|Low"), NULL },
+    { GIMP_ZOOM_QUALITY_HIGH, N_("quality|High"), NULL },
+    { 0, NULL, NULL }
+  };
+
+  static GType type = 0;
+
+  if (! type)
+    {
+      type = g_enum_register_static ("GimpZoomQuality", values);
+      gimp_enum_set_value_descriptions (type, descs);
+    }
+
+  return type;
+}
+
 
 /* Generated data ends here */
 

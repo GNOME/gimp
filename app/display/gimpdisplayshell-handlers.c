@@ -114,6 +114,9 @@ static void   gimp_display_shell_padding_notify_handler     (GObject          *c
 static void   gimp_display_shell_ants_speed_notify_handler  (GObject          *config,
                                                              GParamSpec       *param_spec,
                                                              GimpDisplayShell *shell);
+static void   gimp_display_shell_quality_notify_handler     (GObject          *config,
+                                                             GParamSpec       *param_spec,
+                                                             GimpDisplayShell *shell);
 
 static gboolean   gimp_display_shell_idle_update_icon       (gpointer          data);
 
@@ -250,6 +253,11 @@ gimp_display_shell_connect (GimpDisplayShell *shell)
                     G_CALLBACK (gimp_display_shell_ants_speed_notify_handler),
                     shell);
 
+  g_signal_connect (image->gimp->config,
+                    "notify::zoom-quality",
+                    G_CALLBACK (gimp_display_shell_quality_notify_handler),
+                    shell);
+
   gimp_display_shell_invalidate_preview_handler (image, shell);
   gimp_display_shell_quick_mask_changed_handler (image, shell);
 }
@@ -286,6 +294,9 @@ gimp_display_shell_disconnect (GimpDisplayShell *shell)
       shell->pen_gc = NULL;
     }
 
+  g_signal_handlers_disconnect_by_func (image->gimp->config,
+                                        gimp_display_shell_quality_notify_handler,
+                                        shell);
   g_signal_handlers_disconnect_by_func (image->gimp->config,
                                         gimp_display_shell_ants_speed_notify_handler,
                                         shell);
@@ -670,6 +681,14 @@ gimp_display_shell_ants_speed_notify_handler (GObject          *config,
 {
   gimp_display_shell_selection_control (shell, GIMP_SELECTION_PAUSE);
   gimp_display_shell_selection_control (shell, GIMP_SELECTION_RESUME);
+}
+
+static void
+gimp_display_shell_quality_notify_handler (GObject          *config,
+                                           GParamSpec       *param_spec,
+                                           GimpDisplayShell *shell)
+{
+  gimp_display_shell_expose_full (shell);
 }
 
 static gboolean
