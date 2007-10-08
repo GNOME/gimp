@@ -1,5 +1,12 @@
 2007-10-08  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpperspectiveclonetool.c: implement button_release
+	and stop the draw tool when in adjust mode. Fixes bug #483912.
+
+	(gimp_perspective_clone_tool_mode_notify): start the draw tool.
+
+2007-10-08  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpperspectiveclonetool.c: cosmetics.
 
 2007-10-08  Sven Neumann  <sven@gimp.org>

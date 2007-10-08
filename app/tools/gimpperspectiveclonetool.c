@@ -65,10 +65,17 @@ static GimpDisplay * gimp_perspective_clone_tool_has_image     (GimpTool        
 static void          gimp_perspective_clone_tool_control       (GimpTool        *tool,
                                                                 GimpToolAction   action,
                                                                 GimpDisplay     *display);
+static void          gimp_perspective_clone_tool_halt          (GimpPerspectiveCloneTool *clone_tool);
 static void          gimp_perspective_clone_tool_button_press  (GimpTool        *tool,
                                                                 GimpCoords      *coords,
                                                                 guint32          time,
                                                                 GdkModifierType  state,
+                                                                GimpDisplay     *display);
+static void          gimp_perspective_clone_tool_button_release(GimpTool        *tool,
+                                                                GimpCoords      *coords,
+                                                                guint32          time,
+                                                                GdkModifierType  state,
+                                                                GimpButtonReleaseType  release_type,
                                                                 GimpDisplay     *display);
 static void          gimp_perspective_clone_tool_motion        (GimpTool        *tool,
                                                                 GimpCoords      *coords,
@@ -87,7 +94,7 @@ static void          gimp_perspective_clone_tool_oper_update   (GimpTool        
 
 static void          gimp_perspective_clone_tool_mode_notify   (GObject          *config,
                                                                 GParamSpec       *pspec,
-                                                                GimpPerspectiveCloneTool *perspective_clone_tool);
+                                                                GimpPerspectiveCloneTool *clone_tool);
 
 static void          gimp_perspective_clone_tool_draw                   (GimpDrawTool             *draw_tool);
 static void          gimp_perspective_clone_tool_transform_bounding_box (GimpPerspectiveCloneTool *clone_tool);
@@ -133,18 +140,19 @@ gimp_perspective_clone_tool_class_init (GimpPerspectiveCloneToolClass *klass)
   GimpToolClass     *tool_class      = GIMP_TOOL_CLASS (klass);
   GimpDrawToolClass *draw_tool_class = GIMP_DRAW_TOOL_CLASS (klass);
 
-  object_class->constructor = gimp_perspective_clone_tool_constructor;
+  object_class->constructor  = gimp_perspective_clone_tool_constructor;
 
-  tool_class->initialize    = gimp_perspective_clone_tool_initialize;
-  tool_class->has_display   = gimp_perspective_clone_tool_has_display;
-  tool_class->has_image     = gimp_perspective_clone_tool_has_image;
-  tool_class->control       = gimp_perspective_clone_tool_control;
-  tool_class->button_press  = gimp_perspective_clone_tool_button_press;
-  tool_class->motion        = gimp_perspective_clone_tool_motion;
-  tool_class->cursor_update = gimp_perspective_clone_tool_cursor_update;
-  tool_class->oper_update   = gimp_perspective_clone_tool_oper_update;
+  tool_class->initialize     = gimp_perspective_clone_tool_initialize;
+  tool_class->has_display    = gimp_perspective_clone_tool_has_display;
+  tool_class->has_image      = gimp_perspective_clone_tool_has_image;
+  tool_class->control        = gimp_perspective_clone_tool_control;
+  tool_class->button_press   = gimp_perspective_clone_tool_button_press;
+  tool_class->button_release = gimp_perspective_clone_tool_button_release;
+  tool_class->motion         = gimp_perspective_clone_tool_motion;
+  tool_class->cursor_update  = gimp_perspective_clone_tool_cursor_update;
+  tool_class->oper_update    = gimp_perspective_clone_tool_oper_update;
 
-  draw_tool_class->draw     = gimp_perspective_clone_tool_draw;
+  draw_tool_class->draw      = gimp_perspective_clone_tool_draw;
 }
 
 static void
@@ -295,14 +303,29 @@ gimp_perspective_clone_tool_control (GimpTool       *tool,
       break;
 
     case GIMP_TOOL_ACTION_HALT:
-      clone_tool->src_display = NULL;
-      g_object_set (GIMP_PAINT_TOOL (tool)->core,
-                    "src-drawable", NULL,
-                    NULL);
+      gimp_perspective_clone_tool_halt (clone_tool);
       break;
     }
 
   GIMP_TOOL_CLASS (parent_class)->control (tool, action, display);
+}
+
+static void
+gimp_perspective_clone_tool_halt (GimpPerspectiveCloneTool *clone_tool)
+{
+  GimpTool *tool = GIMP_TOOL (clone_tool);
+
+  clone_tool->src_display = NULL;
+
+  g_object_set (GIMP_PAINT_TOOL (tool)->core,
+                "src-drawable", NULL,
+                NULL);
+
+  if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
+    gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
+
+  tool->display  = NULL;
+  tool->drawable = NULL;
 }
 
 static void
@@ -320,8 +343,9 @@ gimp_perspective_clone_tool_button_press (GimpTool        *tool,
 
   options = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (tool);
 
-  if (options->clone_mode == GIMP_PERSPECTIVE_CLONE_MODE_ADJUST)
+  switch (options->clone_mode)
     {
+    case GIMP_PERSPECTIVE_CLONE_MODE_ADJUST:
       if (clone_tool->function == TRANSFORM_CREATING)
         gimp_perspective_clone_tool_oper_update (tool,
                                                  coords, state, TRUE, display);
@@ -330,36 +354,64 @@ gimp_perspective_clone_tool_button_press (GimpTool        *tool,
       clone_tool->lasty = clone_tool->starty = coords->y;
 
       gimp_tool_control_activate (tool->control);
+      break;
+
+    case GIMP_PERSPECTIVE_CLONE_MODE_PAINT:
+      {
+        gdouble nnx, nny;
+
+        gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
+
+        if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
+          {
+            source_core->set_source = TRUE;
+
+            clone_tool->src_display = display;
+          }
+        else
+          {
+            source_core->set_source = FALSE;
+          }
+
+        GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
+                                                      display);
+
+        /* Set the coordinates for the reference cross */
+        gimp_perspective_clone_get_source_point (clone,
+                                                 coords->x, coords->y,
+                                                 &nnx, &nny);
+
+        clone_tool->src_x = nnx;
+        clone_tool->src_y = nny;
+
+        gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+      }
+      break;
     }
-  else
+}
+
+static void
+gimp_perspective_clone_tool_button_release (GimpTool              *tool,
+                                            GimpCoords            *coords,
+                                            guint32                time,
+                                            GdkModifierType        state,
+                                            GimpButtonReleaseType  release_type,
+                                            GimpDisplay           *display)
+{
+  GimpPerspectiveCloneOptions *options;
+
+  options = GIMP_PERSPECTIVE_CLONE_TOOL_GET_OPTIONS (tool);
+
+  switch (options->clone_mode)
     {
-      gdouble nnx, nny;
+    case GIMP_PERSPECTIVE_CLONE_MODE_ADJUST:
+      gimp_tool_control_halt (tool->control);
+      break;
 
-      gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
-
-      if ((state & (GDK_CONTROL_MASK | GDK_SHIFT_MASK)) == GDK_CONTROL_MASK)
-        {
-          source_core->set_source = TRUE;
-
-          clone_tool->src_display = display;
-        }
-      else
-        {
-          source_core->set_source = FALSE;
-        }
-
-      GIMP_TOOL_CLASS (parent_class)->button_press (tool, coords, time, state,
-                                                    display);
-
-      /* Set the coordinates for the reference cross */
-      gimp_perspective_clone_get_source_point (clone,
-                                               coords->x, coords->y,
-                                               &nnx, &nny);
-
-      clone_tool->src_x = nnx;
-      clone_tool->src_y = nny;
-
-      gimp_draw_tool_resume (GIMP_DRAW_TOOL (tool));
+    case GIMP_PERSPECTIVE_CLONE_MODE_PAINT:
+      GIMP_TOOL_CLASS (parent_class)->button_release (tool, coords, time, state,
+                                                      release_type, display);
+      break;
     }
 }
 
@@ -367,14 +419,14 @@ static void
 gimp_perspective_clone_tool_prepare (GimpPerspectiveCloneTool *clone_tool,
                                      GimpDisplay              *display)
 {
-  clone_tool->trans_info[X0] = (gdouble) clone_tool->x1;
-  clone_tool->trans_info[Y0] = (gdouble) clone_tool->y1;
-  clone_tool->trans_info[X1] = (gdouble) clone_tool->x2;
-  clone_tool->trans_info[Y1] = (gdouble) clone_tool->y1;
-  clone_tool->trans_info[X2] = (gdouble) clone_tool->x1;
-  clone_tool->trans_info[Y2] = (gdouble) clone_tool->y2;
-  clone_tool->trans_info[X3] = (gdouble) clone_tool->x2;
-  clone_tool->trans_info[Y3] = (gdouble) clone_tool->y2;
+  clone_tool->trans_info[X0] = clone_tool->x1;
+  clone_tool->trans_info[Y0] = clone_tool->y1;
+  clone_tool->trans_info[X1] = clone_tool->x2;
+  clone_tool->trans_info[Y1] = clone_tool->y1;
+  clone_tool->trans_info[X2] = clone_tool->x1;
+  clone_tool->trans_info[Y2] = clone_tool->y2;
+  clone_tool->trans_info[X3] = clone_tool->x2;
+  clone_tool->trans_info[Y3] = clone_tool->y2;
 }
 
 void
@@ -865,8 +917,14 @@ gimp_perspective_clone_tool_mode_notify (GObject                  *config,
     }
   else
     {
-      gimp_tool_control_set_tool_cursor (GIMP_TOOL (clone_tool)->control,
+      GimpTool *tool = GIMP_TOOL (clone_tool);
+
+      gimp_tool_control_set_tool_cursor (tool->control,
                                          GIMP_TOOL_CURSOR_PERSPECTIVE);
+
+      /*  start drawing the bounding box and handles...  */
+      if (tool->display)
+        gimp_draw_tool_start (GIMP_DRAW_TOOL (clone_tool), tool->display);
     }
 }
 
