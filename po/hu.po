@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-05 10:02+0100\n"
+"POT-Creation-Date: 2007-10-08 20:56+0200\n"
 "PO-Revision-Date: 2007-10-05 22:49+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
@@ -172,7 +172,8 @@ msgstr "PDB-kompatibilitási mód (off|on|warn (ki|be|figyelmeztetés))"
 #. don't translate the mode names (never|query|always)
 #: ../app/main.c:246
 msgid "Debug in case of a crash (never|query|always)"
-msgstr "Programleállás esetén hibakeresés (never|query|always (soha|kérdezés|mindig))"
+msgstr ""
+"Programleállás esetén hibakeresés (never|query|always (soha|kérdezés|mindig))"
 
 #: ../app/main.c:251
 msgid "Enable non-fatal debugging signal handlers"
@@ -255,7 +256,7 @@ msgstr "Ecsetszerkesztő"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:102 ../app/core/gimp.c:824
-#: ../app/dialogs/dialogs.c:148 ../app/dialogs/preferences-dialog.c:2713
+#: ../app/dialogs/dialogs.c:148 ../app/dialogs/preferences-dialog.c:2718
 msgid "Brushes"
 msgstr "Ecsetek"
 
@@ -298,7 +299,7 @@ msgstr "Dokkolható"
 
 #. Document History
 #: ../app/actions/actions.c:132 ../app/dialogs/dialogs.c:162
-#: ../app/dialogs/preferences-dialog.c:1609
+#: ../app/dialogs/preferences-dialog.c:1613
 msgid "Document History"
 msgstr "Dokumentumok előzménye"
 
@@ -319,7 +320,7 @@ msgid "File"
 msgstr "Fájl"
 
 #: ../app/actions/actions.c:147 ../app/dialogs/dialogs.c:156
-#: ../app/dialogs/preferences-dialog.c:2729
+#: ../app/dialogs/preferences-dialog.c:2734
 msgid "Fonts"
 msgstr "Betűkészletek"
 
@@ -330,7 +331,7 @@ msgstr "Színátmenet-szerkesztő"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:153 ../app/core/gimp.c:836
-#: ../app/dialogs/dialogs.c:152 ../app/dialogs/preferences-dialog.c:2725
+#: ../app/dialogs/dialogs.c:152 ../app/dialogs/preferences-dialog.c:2730
 msgid "Gradients"
 msgstr "Színátmenetek"
 
@@ -360,17 +361,17 @@ msgstr "Palettaszerkesztő"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:171 ../app/core/gimp.c:832
-#: ../app/dialogs/dialogs.c:154 ../app/dialogs/preferences-dialog.c:2721
+#: ../app/dialogs/dialogs.c:154 ../app/dialogs/preferences-dialog.c:2726
 msgid "Palettes"
 msgstr "Paletták"
 
 #. initialize the list of gimp patterns
 #: ../app/actions/actions.c:174 ../app/core/gimp.c:828
-#: ../app/dialogs/dialogs.c:150 ../app/dialogs/preferences-dialog.c:2717
+#: ../app/dialogs/dialogs.c:150 ../app/dialogs/preferences-dialog.c:2722
 msgid "Patterns"
 msgstr "Minták"
 
-#: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2733
+#: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2738
 msgid "Plug-Ins"
 msgstr "Bővítmények"
 
@@ -398,7 +399,7 @@ msgid "Text Editor"
 msgstr "Szövegszerkesztő"
 
 #: ../app/actions/actions.c:195 ../app/dialogs/dialogs.c:129
-#: ../app/dialogs/preferences-dialog.c:1851 ../app/gui/gui.c:441
+#: ../app/dialogs/preferences-dialog.c:1855 ../app/gui/gui.c:441
 msgid "Tool Options"
 msgstr "Eszközbeállítások"
 
@@ -739,12 +740,12 @@ msgid "_Tool"
 msgstr "_Eszköz"
 
 #: ../app/actions/context-actions.c:51
-#: ../app/dialogs/preferences-dialog.c:1911
+#: ../app/dialogs/preferences-dialog.c:1915
 msgid "_Brush"
 msgstr "_Ecset"
 
 #: ../app/actions/context-actions.c:52 ../app/actions/plug-in-actions.c:98
-#: ../app/dialogs/preferences-dialog.c:1914
+#: ../app/dialogs/preferences-dialog.c:1918
 msgid "_Pattern"
 msgstr "Min_ta"
 
@@ -754,7 +755,7 @@ msgstr "_Paletta"
 
 #: ../app/actions/context-actions.c:54
 #: ../app/dialogs/palette-import-dialog.c:216
-#: ../app/dialogs/preferences-dialog.c:1917
+#: ../app/dialogs/preferences-dialog.c:1921
 msgid "_Gradient"
 msgstr "Szí_nátmenet"
 
@@ -857,7 +858,8 @@ msgstr "Törli ezt: \"%s\"?"
 
 #: ../app/actions/data-commands.c:257
 #, c-format
-msgid "Are you sure you want to remove '%s' from the list and delete it on disk?"
+msgid ""
+"Are you sure you want to remove '%s' from the list and delete it on disk?"
 msgstr "Biztos, hogy törölni kívánja ezt: \"%s\" a listáról és a lemezről?"
 
 #: ../app/actions/dialogs-actions.c:38
@@ -1381,7 +1383,8 @@ msgstr "_Eltolás..."
 
 #: ../app/actions/drawable-actions.c:70
 msgid "Shift the pixels, optionally wrapping them at the borders"
-msgstr "A képpontok elmozdítása, igény esetén a kereteknél átgördítés a másik oldalra"
+msgstr ""
+"A képpontok elmozdítása, igény esetén a kereteknél átgördítés a másik oldalra"
 
 #: ../app/actions/drawable-actions.c:78 ../app/actions/vectors-actions.c:153
 msgid "_Linked"
@@ -1437,11 +1440,13 @@ msgstr "Elforgatás +_90 fokkal"
 
 #: ../app/actions/drawable-actions.c:123
 msgid "Rotate 90 degrees to the left"
-msgstr "Elforgatás 90 fokkal balra (az óramutató járásával ellentétes irányban)"
+msgstr ""
+"Elforgatás 90 fokkal balra (az óramutató járásával ellentétes irányban)"
 
 #: ../app/actions/drawable-commands.c:75
 msgid "Desaturate operates only on RGB color layers."
-msgstr "A telítetlenné tevés csak RGB színmodellt használó rétegekre alkalmazható."
+msgstr ""
+"A telítetlenné tevés csak RGB színmodellt használó rétegekre alkalmazható."
 
 #: ../app/actions/drawable-commands.c:103
 msgid "Equalize does not operate on indexed layers."
@@ -2429,7 +2434,8 @@ msgstr "Rajzvászon illesztése a ki_jelölésre"
 
 #: ../app/actions/image-actions.c:97
 msgid "Resize the image to the extents of the selection"
-msgstr "A kép méretének módosítása úgy, hogy a kijelölés határaihoz illeszkedjen"
+msgstr ""
+"A kép méretének módosítása úgy, hogy a kijelölés határaihoz illeszkedjen"
 
 #: ../app/actions/image-actions.c:102
 msgid "_Print Size..."
@@ -2477,7 +2483,8 @@ msgstr "_Egy réteggé lapítás"
 
 #: ../app/actions/image-actions.c:133 ../app/actions/layers-actions.c:141
 msgid "Merge all layers into one and remove transparency"
-msgstr "Az összes réteg összefűzése egyetlen réteggé az átlátszóság eltávolításával"
+msgstr ""
+"Az összes réteg összefűzése egyetlen réteggé az átlátszóság eltávolításával"
 
 #: ../app/actions/image-actions.c:138
 msgid "Configure G_rid..."
@@ -2575,7 +2582,7 @@ msgstr "Kép átméretezése"
 
 #. Scaling
 #: ../app/actions/image-commands.c:661 ../app/actions/layers-commands.c:1048
-#: ../app/dialogs/preferences-dialog.c:1896
+#: ../app/dialogs/preferences-dialog.c:1900
 #: ../app/pdb/drawable_transform_cmds.c:664
 #: ../app/pdb/drawable_transform_cmds.c:738
 #: ../app/pdb/transform_tools_cmds.c:283 ../app/tools/gimpscaletool.c:107
@@ -3278,7 +3285,8 @@ msgstr "Leg_utóbbi művelet megismétlése"
 
 #: ../app/actions/plug-in-actions.c:113
 msgid "Rerun the last used plug-in using the same settings"
-msgstr "A legutóbb használt bővítmény ismételt végrehajtása ugyanazon beállításokkal"
+msgstr ""
+"A legutóbb használt bővítmény ismételt végrehajtása ugyanazon beállításokkal"
 
 #: ../app/actions/plug-in-actions.c:118
 msgid "R_e-Show Last"
@@ -3467,59 +3475,63 @@ msgstr "Kijelölés kör_berajzolása"
 msgid "Stroke the selection with last used values"
 msgstr "Kijelölés körberajzolása a legutóbb használt értékekkel"
 
-#: ../app/actions/select-commands.c:138 ../app/core/gimpselection.c:170
+#: ../app/actions/select-commands.c:135
+msgid "Cannot float selection because the selected region is empty."
+msgstr "Nem lehet lebegő kijelölést alkalmazni, mert a kijelölt terület üres."
+
+#: ../app/actions/select-commands.c:148 ../app/core/gimpselection.c:170
 msgid "Feather Selection"
 msgstr "Kijelölés lágy szélűvé tétele"
 
-#: ../app/actions/select-commands.c:142
+#: ../app/actions/select-commands.c:152
 msgid "Feather selection by"
 msgstr "A kijelölés lágy szélének mérete:"
 
-#: ../app/actions/select-commands.c:173 ../app/core/gimpselection.c:177
+#: ../app/actions/select-commands.c:183 ../app/core/gimpselection.c:177
 msgid "Shrink Selection"
 msgstr "Kijelölés szűkítése"
 
-#: ../app/actions/select-commands.c:177
+#: ../app/actions/select-commands.c:187
 msgid "Shrink selection by"
 msgstr "Kijelölés szűkítése ennyivel:"
 
-#: ../app/actions/select-commands.c:186
+#: ../app/actions/select-commands.c:196
 msgid "_Shrink from image border"
 msgstr "Szűkítés a _képkerettől"
 
-#: ../app/actions/select-commands.c:207 ../app/core/gimpselection.c:176
+#: ../app/actions/select-commands.c:217 ../app/core/gimpselection.c:176
 msgid "Grow Selection"
 msgstr "Kijelölés növelése"
 
-#: ../app/actions/select-commands.c:211
+#: ../app/actions/select-commands.c:221
 msgid "Grow selection by"
 msgstr "Kijelölés növelése ennyivel:"
 
-#: ../app/actions/select-commands.c:231 ../app/core/gimpselection.c:175
+#: ../app/actions/select-commands.c:241 ../app/core/gimpselection.c:175
 msgid "Border Selection"
 msgstr "Kijelölés keretezése"
 
-#: ../app/actions/select-commands.c:235
+#: ../app/actions/select-commands.c:245
 msgid "Border selection by"
 msgstr "A kijelölés keretezésének mértéke:"
 
 #. Feather button
-#: ../app/actions/select-commands.c:245
+#: ../app/actions/select-commands.c:255
 msgid "_Feather border"
 msgstr "_Lágy szélek"
 
 #. Edge lock button
-#: ../app/actions/select-commands.c:258
+#: ../app/actions/select-commands.c:268
 msgid "_Lock selection to image edges"
 msgstr "Kijelölés _rögzítése a kép széleihez"
 
-#: ../app/actions/select-commands.c:307 ../app/actions/select-commands.c:338
+#: ../app/actions/select-commands.c:317 ../app/actions/select-commands.c:348
 #: ../app/actions/vectors-commands.c:363 ../app/actions/vectors-commands.c:395
 #: ../app/dialogs/stroke-dialog.c:281
 msgid "There is no active layer or channel to stroke to."
 msgstr "Nincs aktív réteg vagy csatorna, ahol a körvonal megrajzolható lenne."
 
-#: ../app/actions/select-commands.c:313 ../app/core/gimpselection.c:154
+#: ../app/actions/select-commands.c:323 ../app/core/gimpselection.c:154
 msgid "Stroke Selection"
 msgstr "Kijelölés körberajzolása"
 
@@ -3586,7 +3598,8 @@ msgstr "Sablon törlése"
 
 #: ../app/actions/templates-commands.c:247
 #, c-format
-msgid "Are you sure you want to delete template '%s' from the list and from disk?"
+msgid ""
+"Are you sure you want to delete template '%s' from the list and from disk?"
 msgstr "Biztosan törölni akarja a(z) \"%s\" sablont a listáról és a lemezről?"
 
 #: ../app/actions/text-editor-actions.c:44
@@ -4024,7 +4037,8 @@ msgstr "Kép illesztése az ablak_hoz"
 
 #: ../app/actions/view-actions.c:94
 msgid "Adjust the zoom ratio so that the window is used optimally"
-msgstr "A nagyítási arány beállítása úgy, hogy az ablak optimálisan legyen használva"
+msgstr ""
+"A nagyítási arány beállítása úgy, hogy az ablak optimálisan legyen használva"
 
 #: ../app/actions/view-actions.c:99 ../app/actions/view-actions.c:575
 msgid "Re_vert Zoom"
@@ -4539,11 +4553,13 @@ msgstr "Megadja, hogyan nézzen ki a kép körül levő terület."
 
 #: ../app/config/gimprc-blurbs.h:33
 msgid "How to handle embedded color profiles when opening a file."
-msgstr "Hogyan legyenek kezelve a beágyazott színprofilok egy fájl megnyitásakor."
+msgstr ""
+"Hogyan legyenek kezelve a beágyazott színprofilok egy fájl megnyitásakor."
 
 #: ../app/config/gimprc-blurbs.h:36
 msgid "Ask for confirmation before closing an image without saving."
-msgstr "Megerősítés kérése a mentetlen módosítást tartalmazó képek bezárásakor."
+msgstr ""
+"Megerősítés kérése a mentetlen módosítást tartalmazó képek bezárásakor."
 
 #: ../app/config/gimprc-blurbs.h:39
 msgid "Sets the pixel format to use for mouse pointers."
@@ -4638,13 +4654,15 @@ msgstr ""
 "mindig 1:1 arányú nagyítással jelenjen meg a kép."
 
 #: ../app/config/gimprc-blurbs.h:164
-msgid "Install a private colormap; might be useful on 8-bit (256 colors) displays."
+msgid ""
+"Install a private colormap; might be useful on 8-bit (256 colors) displays."
 msgstr ""
 "Saját színtérkép telepítése. A 8 bites (256 színű) megjelenítők esetében "
 "lehet rá szükség."
 
 #: ../app/config/gimprc-blurbs.h:167
-msgid "Sets the level of interpolation used for scaling and other transformations."
+msgid ""
+"Sets the level of interpolation used for scaling and other transformations."
 msgstr ""
 "Az átméretezéshez és egyéb átalakításokhoz használt interpoláció szintjét "
 "adja meg."
@@ -4672,7 +4690,8 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:185
 msgid "When enabled, GIMP will show mnemonics in menus."
-msgstr "Ha be van kapcsolva, akkor a GIMP megjeleníti a gyorskaraktereket a menükben."
+msgstr ""
+"Ha be van kapcsolva, akkor a GIMP megjeleníti a gyorskaraktereket a menükben."
 
 #: ../app/config/gimprc-blurbs.h:188
 msgid ""
@@ -4779,7 +4798,8 @@ msgstr ""
 "indításakor."
 
 #: ../app/config/gimprc-blurbs.h:265
-msgid "Remember the current tool, pattern, color, and brush across GIMP sessions."
+msgid ""
+"Remember the current tool, pattern, color, and brush across GIMP sessions."
 msgstr ""
 "Az aktuális eszköz, minta, szín és ecset megőrzése a programból való "
 "kilépéskor."
@@ -4900,7 +4920,8 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:330
 msgid "Enable displaying a handy GIMP tip on startup."
-msgstr "Ha bekapcsolja, akkor a GIMP minden indításakor egy tipp fog megjelenni."
+msgstr ""
+"Ha bekapcsolja, akkor a GIMP minden indításakor egy tipp fog megjelenni."
 
 #: ../app/config/gimprc-blurbs.h:333
 msgid "Show a tooltip when the pointer hovers over an item."
@@ -4956,7 +4977,8 @@ msgstr "Megváltozott gyorsbillentyűk mentése a GIMP-ből történő kilépés
 
 #: ../app/config/gimprc-blurbs.h:364
 msgid "Restore saved keyboard shortcuts on each GIMP startup."
-msgstr "Lementett gyorsbillentyűk visszaállítása a GIMP minden egyes indulásakor."
+msgstr ""
+"Lementett gyorsbillentyűk visszaállítása a GIMP minden egyes indulásakor."
 
 #: ../app/config/gimprc-blurbs.h:367
 msgid ""
@@ -5144,7 +5166,7 @@ msgid "White"
 msgstr "Fehér"
 
 #. Transparency
-#: ../app/core/core-enums.c:250 ../app/dialogs/preferences-dialog.c:2282
+#: ../app/core/core-enums.c:250 ../app/dialogs/preferences-dialog.c:2286
 msgid "Transparency"
 msgstr "Átlátszóság"
 
@@ -5236,11 +5258,11 @@ msgstr "Kör"
 msgid "Diamond"
 msgstr "Gyémánt"
 
-#: ../app/core/core-enums.c:472 ../app/dialogs/preferences-dialog.c:2314
+#: ../app/core/core-enums.c:472 ../app/dialogs/preferences-dialog.c:2318
 msgid "Horizontal"
 msgstr "Vízszintes"
 
-#: ../app/core/core-enums.c:473 ../app/dialogs/preferences-dialog.c:2316
+#: ../app/core/core-enums.c:473 ../app/dialogs/preferences-dialog.c:2320
 msgid "Vertical"
 msgstr "Függőleges"
 
@@ -5729,7 +5751,7 @@ msgid "Documents"
 msgstr "Dokumentumok"
 
 #. initialize the module list
-#: ../app/core/gimp.c:853 ../app/dialogs/preferences-dialog.c:2741
+#: ../app/core/gimp.c:853 ../app/dialogs/preferences-dialog.c:2746
 msgid "Modules"
 msgstr "Modulok"
 
@@ -5800,7 +5822,8 @@ msgstr ""
 
 #: ../app/core/gimpbrush-load.c:448
 #, c-format
-msgid "Fatal parse error in brush file '%s': unable to decode abr format version %d."
+msgid ""
+"Fatal parse error in brush file '%s': unable to decode abr format version %d."
 msgstr ""
 "Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: az ABR formátum \"%d\" "
 "verziójának dekódolása nem lehetséges."
@@ -5820,18 +5843,21 @@ msgstr "Vágólap"
 #: ../app/core/gimpbrushgenerated-load.c:87
 #, c-format
 msgid "Fatal parse error in brush file '%s': Not a GIMP brush file."
-msgstr "Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: nem GIMP-ecsetfájl."
+msgstr ""
+"Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: nem GIMP-ecsetfájl."
 
 #: ../app/core/gimpbrushgenerated-load.c:104
 #, c-format
-msgid "Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
+msgid ""
+"Fatal parse error in brush file '%s': Unknown GIMP brush version in line %d."
 msgstr ""
 "Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: ismeretlen GIMP-"
 "ecsetverzió a(z) %d. sorban."
 
 #: ../app/core/gimpbrushgenerated-load.c:150
 #, c-format
-msgid "Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
+msgid ""
+"Fatal parse error in brush file '%s': Unknown GIMP brush shape in line %d."
 msgstr ""
 "Végzetes feldolgozási hiba a(z) \"%s\" ecsetfájlban: ismeretlen GIMP-"
 "ecsetforma a(z) %d. sorban."
@@ -6133,7 +6159,8 @@ msgid "The foreground color of the grid."
 msgstr "A rács előtérszíne."
 
 #: ../app/core/gimpgrid.c:95
-msgid "The background color of the grid; only used in double dashed line style."
+msgid ""
+"The background color of the grid; only used in double dashed line style."
 msgstr "A rács háttérszíne; csak dupla szaggatott vonal esetén érvényes."
 
 #: ../app/core/gimpgrid.c:101
@@ -6145,7 +6172,8 @@ msgid "Vertical spacing of grid lines."
 msgstr "Rácsvonalak függőleges távolsága."
 
 #: ../app/core/gimpgrid.c:115
-msgid "Horizontal offset of the first grid line; this may be a negative number."
+msgid ""
+"Horizontal offset of the first grid line; this may be a negative number."
 msgstr "Az első rácsvonal vízszintes eltolása; lehet negatív szám is."
 
 #: ../app/core/gimpgrid.c:122
@@ -6160,11 +6188,11 @@ msgstr "Objektumok elrendezése"
 msgid "Set Colormap"
 msgstr "Színtérkép beállítása"
 
-#: ../app/core/gimpimage-colormap.c:115
+#: ../app/core/gimpimage-colormap.c:118
 msgid "Change Colormap entry"
 msgstr "Színtérkép-bejegyzés módosítása"
 
-#: ../app/core/gimpimage-colormap.c:135
+#: ../app/core/gimpimage-colormap.c:138
 msgid "Add Color to Colormap"
 msgstr "Szín felvétele a színtérképbe"
 
@@ -6407,7 +6435,7 @@ msgstr "Az útvonal már legalul van."
 msgid "Lower Path to Bottom"
 msgstr "Útvonal lesüllyesztése legalulra"
 
-#: ../app/core/gimpimagefile.c:547 ../app/dialogs/preferences-dialog.c:1741
+#: ../app/core/gimpimagefile.c:547 ../app/dialogs/preferences-dialog.c:1745
 msgid "Folder"
 msgstr "Mappa"
 
@@ -6538,7 +6566,8 @@ msgstr ""
 
 #: ../app/core/gimplayer.c:1221
 msgid "Cannot add layer mask to layer which is not part of an image."
-msgstr "Nem lehet rétegmaszkot hozzáadni olyan réteghez, amely nem része egy képnek."
+msgstr ""
+"Nem lehet rétegmaszkot hozzáadni olyan réteghez, amely nem része egy képnek."
 
 #: ../app/core/gimplayer.c:1228
 msgid "Unable to add a layer mask since the layer already has one."
@@ -6546,7 +6575,8 @@ msgstr "Nem lehet rétegmaszkot hozzáadni, mert már van egy rétegmaszk."
 
 #: ../app/core/gimplayer.c:1238
 msgid "Cannot add layer mask of different dimensions than specified layer."
-msgstr "Nem lehet a megadott rétegtől eltérő dimenziójú rétegmaszkot hozzáadni."
+msgstr ""
+"Nem lehet a megadott rétegtől eltérő dimenziójú rétegmaszkot hozzáadni."
 
 #: ../app/core/gimplayer.c:1344
 msgid "Transfer Alpha to Mask"
@@ -6602,7 +6632,8 @@ msgstr ""
 #: ../app/core/gimppalette-load.c:95
 #, c-format
 msgid "Fatal parse error in palette file '%s': Missing magic header."
-msgstr "Végzetes feldolgozási hiba a(z) \"%s\" palettafájlban: hiányzó varázsfejléc."
+msgstr ""
+"Végzetes feldolgozási hiba a(z) \"%s\" palettafájlban: hiányzó varázsfejléc."
 
 #: ../app/core/gimppalette-load.c:123
 #, c-format
@@ -6622,17 +6653,20 @@ msgstr ""
 #: ../app/core/gimppalette-load.c:184
 #, c-format
 msgid "Reading palette file '%s': Missing RED component in line %d."
-msgstr "Hiba a(z) \"%s\" palettafájlban: hiányzó vörös összetevő a(z) %d. sorban."
+msgstr ""
+"Hiba a(z) \"%s\" palettafájlban: hiányzó vörös összetevő a(z) %d. sorban."
 
 #: ../app/core/gimppalette-load.c:192
 #, c-format
 msgid "Reading palette '%s': Missing GREEN component in line %d."
-msgstr "Hiba a(z) \"%s\" palettafájlban: hiányzó zöld összetevő a(z) %d. sorban."
+msgstr ""
+"Hiba a(z) \"%s\" palettafájlban: hiányzó zöld összetevő a(z) %d. sorban."
 
 #: ../app/core/gimppalette-load.c:200
 #, c-format
 msgid "Reading palette file '%s': Missing BLUE component in line %d."
-msgstr "Hiba a(z) \"%s\" palettafájlban: hiányzó kék összetevő a(z) %d. sorban."
+msgstr ""
+"Hiba a(z) \"%s\" palettafájlban: hiányzó kék összetevő a(z) %d. sorban."
 
 #: ../app/core/gimppalette-load.c:210
 #, c-format
@@ -6651,7 +6685,8 @@ msgstr ""
 
 #: ../app/core/gimppattern-load.c:104
 #, c-format
-msgid "Fatal parse error in pattern file '%s': Unknown pattern format version %d."
+msgid ""
+"Fatal parse error in pattern file '%s': Unknown pattern format version %d."
 msgstr ""
 "Végzetes feldolgozási hiba a(z) \"%s\" mintafájlban: ismeretlen "
 "mintaformátum-verzió: %d."
@@ -6709,15 +6744,11 @@ msgstr "Nincs körberajzolható kijelölés."
 msgid "Unable to cut or copy because the selected region is empty."
 msgstr "Nem lehet kivágni vagy másolni, mert a kijelölt terület üres."
 
-#: ../app/core/gimpselection.c:824
-msgid "Cannot float selection because the selected region is empty."
-msgstr "Nem lehet lebegő kijelölést alkalmazni, mert a kijelölt terület üres."
-
-#: ../app/core/gimpselection.c:831
+#: ../app/core/gimpselection.c:826
 msgid "Float Selection"
 msgstr "Lebegő kijelölés"
 
-#: ../app/core/gimpselection.c:848
+#: ../app/core/gimpselection.c:843
 msgid "Floated Layer"
 msgstr "Lebegő réteg"
 
@@ -6999,7 +7030,8 @@ msgstr "Kiterjesztés nem illeszkedik"
 
 #: ../app/dialogs/file-save-dialog.c:470
 msgid "The given file extension does not match the chosen file type."
-msgstr "A megadott fájlkiterjesztés nem illeszkedik a kiválasztott fájltípushoz."
+msgstr ""
+"A megadott fájlkiterjesztés nem illeszkedik a kiválasztott fájltípushoz."
 
 #: ../app/dialogs/file-save-dialog.c:474
 msgid "Do you want to save the image using this name anyway?"
@@ -7050,7 +7082,7 @@ msgid "Create a New Image"
 msgstr "Új kép létrehozása"
 
 #: ../app/dialogs/image-new-dialog.c:144
-#: ../app/dialogs/preferences-dialog.c:1992
+#: ../app/dialogs/preferences-dialog.c:1996
 msgid "_Template:"
 msgstr "Sa_blon:"
 
@@ -7111,7 +7143,8 @@ msgstr ""
 "párbeszédablakban (jelenleg %s)."
 
 #: ../app/dialogs/image-scale-dialog.c:258
-msgid "Scaling the image to the chosen size will shrink some layers completely away."
+msgid ""
+"Scaling the image to the chosen size will shrink some layers completely away."
 msgstr ""
 "A képnek a kiválasztott méretre való átméretezése néhány réteget annyira "
 "összezsugorít, hogy azok teljesen eltűnnek."
@@ -7133,7 +7166,7 @@ msgstr ""
 "meg az új gyorsbillentyűt vagy nyomjon Backspace-t a törléshez."
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:89
-#: ../app/dialogs/preferences-dialog.c:1665
+#: ../app/dialogs/preferences-dialog.c:1669
 msgid "_Save keyboard shortcuts on exit"
 msgstr "Gyorsbillentyűk mentése ki_lépéskor"
 
@@ -7370,27 +7403,27 @@ msgstr "Előnézet"
 msgid "The selected source contains no colors."
 msgstr "A kijelölt forrásban nincsenek színek."
 
-#: ../app/dialogs/preferences-dialog.c:262
+#: ../app/dialogs/preferences-dialog.c:265
 msgid "Reset All Preferences"
 msgstr "Összes beállítás visszaállítása"
 
-#: ../app/dialogs/preferences-dialog.c:280
+#: ../app/dialogs/preferences-dialog.c:283
 msgid "Do you really want to reset all preferences to default values?"
 msgstr ""
 "Valóban vissza kívánja állítani az összes beállítást az alapértelmezett "
 "értékekre?"
 
-#: ../app/dialogs/preferences-dialog.c:350
+#: ../app/dialogs/preferences-dialog.c:353
 msgid "You will have to restart GIMP for the following changes to take effect:"
 msgstr ""
 "A következő változtatások érvénybe léptetéséhez újra kell indítania a GIMP-"
 "et:"
 
-#: ../app/dialogs/preferences-dialog.c:489
+#: ../app/dialogs/preferences-dialog.c:492
 msgid "Configure Input Devices"
 msgstr "Bemeneti eszközök beállítása"
 
-#: ../app/dialogs/preferences-dialog.c:566
+#: ../app/dialogs/preferences-dialog.c:569
 msgid ""
 "Your keyboard shortcuts will be reset to default values the next time you "
 "start GIMP."
@@ -7398,15 +7431,16 @@ msgstr ""
 "A gyorsbillentyűk vissza lesznek állítva az alapértelmezett értékekre a GIMP "
 "következő indításakor."
 
-#: ../app/dialogs/preferences-dialog.c:577
+#: ../app/dialogs/preferences-dialog.c:580
 msgid "Remove all Keyboard Shortcuts"
 msgstr "Összes gyorsbillentyű eltávolítása"
 
-#: ../app/dialogs/preferences-dialog.c:599
+#: ../app/dialogs/preferences-dialog.c:602
 msgid "Do you really want to remove all keyboard shortcuts from all menus?"
-msgstr "Valóban szeretné eltávolítani az összes gyorsbillentyűt az összes menüből?"
+msgstr ""
+"Valóban szeretné eltávolítani az összes gyorsbillentyűt az összes menüből?"
 
-#: ../app/dialogs/preferences-dialog.c:640
+#: ../app/dialogs/preferences-dialog.c:643
 msgid ""
 "Your window setup will be reset to default values the next time you start "
 "GIMP."
@@ -7414,7 +7448,7 @@ msgstr ""
 "Az ablakbeállítások vissza lesznek állítva az alapértelmezett értékekre a "
 "GIMP következő indításakor."
 
-#: ../app/dialogs/preferences-dialog.c:675
+#: ../app/dialogs/preferences-dialog.c:678
 msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
@@ -7422,7 +7456,7 @@ msgstr ""
 "A beviteli eszközök beállításai vissza lesznek állítva az alapértelmezett "
 "értékekre a GIMP következő indításakor."
 
-#: ../app/dialogs/preferences-dialog.c:710
+#: ../app/dialogs/preferences-dialog.c:713
 msgid ""
 "Your tool options will be reset to default values the next time you start "
 "GIMP."
@@ -7430,706 +7464,707 @@ msgstr ""
 "Az eszközbeállítások vissza lesznek állítva az alapértelmezett értékekre a "
 "GIMP következő indításakor."
 
-#: ../app/dialogs/preferences-dialog.c:1303
+#: ../app/dialogs/preferences-dialog.c:1307
 msgid "Show _menubar"
 msgstr "Me_nüsor megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:1307
+#: ../app/dialogs/preferences-dialog.c:1311
 msgid "Show _rulers"
 msgstr "Vonal_zók megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:1310
+#: ../app/dialogs/preferences-dialog.c:1314
 msgid "Show scroll_bars"
 msgstr "Gör_dítősávok megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:1313
+#: ../app/dialogs/preferences-dialog.c:1317
 msgid "Show s_tatusbar"
 msgstr "Á_llapotsor megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:1321
+#: ../app/dialogs/preferences-dialog.c:1325
 msgid "Show s_election"
 msgstr "_Kijelölés megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:1324
+#: ../app/dialogs/preferences-dialog.c:1328
 msgid "Show _layer boundary"
 msgstr "Réteg-_határvonal megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:1327
+#: ../app/dialogs/preferences-dialog.c:1331
 msgid "Show _guides"
 msgstr "Segédvon_alak megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:1330
+#: ../app/dialogs/preferences-dialog.c:1334
 msgid "Show gri_d"
 msgstr "_Rács megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:1336
+#: ../app/dialogs/preferences-dialog.c:1340
 msgid "Canvas _padding mode:"
 msgstr "Ra_jzvászon kitöltési módja:"
 
-#: ../app/dialogs/preferences-dialog.c:1341
+#: ../app/dialogs/preferences-dialog.c:1345
 msgid "Custom p_adding color:"
 msgstr "Egyén_i kitöltési szín:"
 
-#: ../app/dialogs/preferences-dialog.c:1342
+#: ../app/dialogs/preferences-dialog.c:1346
 msgid "Select Custom Canvas Padding Color"
 msgstr "Rajzvászon egyéni kitöltési színének kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:1431
+#: ../app/dialogs/preferences-dialog.c:1435
 msgid "Preferences"
 msgstr "Beállítások"
 
-#: ../app/dialogs/preferences-dialog.c:1543
-#: ../app/dialogs/preferences-dialog.c:2749
+#: ../app/dialogs/preferences-dialog.c:1547
+#: ../app/dialogs/preferences-dialog.c:2754
 msgid "Environment"
 msgstr "Környezet"
 
-#: ../app/dialogs/preferences-dialog.c:1557
+#: ../app/dialogs/preferences-dialog.c:1561
 msgid "Resource Consumption"
 msgstr "Erőforrás-fogyasztás"
 
-#: ../app/dialogs/preferences-dialog.c:1567
+#: ../app/dialogs/preferences-dialog.c:1571
 msgid "Minimal number of _undo levels:"
 msgstr "Vissz_avonások minimális száma:"
 
-#: ../app/dialogs/preferences-dialog.c:1570
+#: ../app/dialogs/preferences-dialog.c:1574
 msgid "Maximum undo _memory:"
 msgstr "Ma_ximális visszavonási memória:"
 
-#: ../app/dialogs/preferences-dialog.c:1573
+#: ../app/dialogs/preferences-dialog.c:1577
 msgid "Tile cache _size:"
 msgstr "Ké_pgyorstár mérete:"
 
-#: ../app/dialogs/preferences-dialog.c:1576
+#: ../app/dialogs/preferences-dialog.c:1580
 msgid "Maximum _new image size:"
 msgstr "Ú_j kép maximális mérete:"
 
-#: ../app/dialogs/preferences-dialog.c:1581
+#: ../app/dialogs/preferences-dialog.c:1585
 msgid "Number of _processors to use:"
 msgstr "Használandó pro_cesszorok száma:"
 
 #. Image Thumbnails
-#: ../app/dialogs/preferences-dialog.c:1586
+#: ../app/dialogs/preferences-dialog.c:1590
 msgid "Image Thumbnails"
 msgstr "Bélyegképek"
 
-#: ../app/dialogs/preferences-dialog.c:1591
+#: ../app/dialogs/preferences-dialog.c:1595
 msgid "Size of _thumbnails:"
 msgstr "Bé_lyegképek mérete:"
 
-#: ../app/dialogs/preferences-dialog.c:1595
+#: ../app/dialogs/preferences-dialog.c:1599
 msgid "Maximum _filesize for thumbnailing:"
 msgstr "Maximális _fájlméret bélyegkép-készítéshez:"
 
 #. File Saving
-#: ../app/dialogs/preferences-dialog.c:1599
+#: ../app/dialogs/preferences-dialog.c:1603
 msgid "Saving Images"
 msgstr "Képek mentése"
 
-#: ../app/dialogs/preferences-dialog.c:1602
+#: ../app/dialogs/preferences-dialog.c:1606
 msgid "Confirm closing of unsa_ved images"
 msgstr "Megerősítés nem mentett képek _bezárásakor"
 
-#: ../app/dialogs/preferences-dialog.c:1612
+#: ../app/dialogs/preferences-dialog.c:1616
 msgid "Save document _history on exit"
 msgstr "Dokumentum-előzmények mentése ki_lépéskor"
 
-#: ../app/dialogs/preferences-dialog.c:1621
+#: ../app/dialogs/preferences-dialog.c:1625
 msgid "User Interface"
 msgstr "Felhasználói felület"
 
-#: ../app/dialogs/preferences-dialog.c:1624
+#: ../app/dialogs/preferences-dialog.c:1628
 msgid "Interface"
 msgstr "Felhasználói felület"
 
 #. Previews
-#: ../app/dialogs/preferences-dialog.c:1631
+#: ../app/dialogs/preferences-dialog.c:1635
 msgid "Previews"
 msgstr "Előnézetek"
 
-#: ../app/dialogs/preferences-dialog.c:1634
+#: ../app/dialogs/preferences-dialog.c:1638
 msgid "_Enable layer & channel previews"
 msgstr "_Réteg és csatorna előnézeteinek engedélyezése"
 
-#: ../app/dialogs/preferences-dialog.c:1640
+#: ../app/dialogs/preferences-dialog.c:1644
 msgid "_Default layer & channel preview size:"
 msgstr "Réteg- és _csatorna-előnézet alapértelmezett mérete:"
 
-#: ../app/dialogs/preferences-dialog.c:1643
+#: ../app/dialogs/preferences-dialog.c:1647
 msgid "Na_vigation preview size:"
 msgstr "_Navigációs előnézet mérete:"
 
 #. Keyboard Shortcuts
-#: ../app/dialogs/preferences-dialog.c:1647
+#: ../app/dialogs/preferences-dialog.c:1651
 msgid "Keyboard Shortcuts"
 msgstr "Gyorsbillentyűk"
 
-#: ../app/dialogs/preferences-dialog.c:1651
+#: ../app/dialogs/preferences-dialog.c:1655
 msgid "Show menu _mnemonics (access keys)"
 msgstr "A menübejegyzések gyorsb_illentyűinek megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:1654
+#: ../app/dialogs/preferences-dialog.c:1658
 msgid "_Use dynamic keyboard shortcuts"
 msgstr "Dinami_kus gyorsbillentyűk használata"
 
-#: ../app/dialogs/preferences-dialog.c:1658
+#: ../app/dialogs/preferences-dialog.c:1662
 msgid "Configure _Keyboard Shortcuts..."
 msgstr "Gyors_billentyűk beállítása..."
 
-#: ../app/dialogs/preferences-dialog.c:1669
+#: ../app/dialogs/preferences-dialog.c:1673
 msgid "Save Keyboard Shortcuts _Now"
 msgstr "Gyorsbillentyűk m_entése most"
 
-#: ../app/dialogs/preferences-dialog.c:1676
+#: ../app/dialogs/preferences-dialog.c:1680
 msgid "_Reset Keyboard Shortcuts to Default Values"
 msgstr "Gyorsbillentyűk vissz_aállítása az alapértékekre"
 
-#: ../app/dialogs/preferences-dialog.c:1685
+#: ../app/dialogs/preferences-dialog.c:1689
 msgid "Remove _All Keyboard Shortcuts"
 msgstr "Öss_zes gyorsbillentyű törlése"
 
-#: ../app/dialogs/preferences-dialog.c:1697
-#: ../app/dialogs/preferences-dialog.c:1736
+#: ../app/dialogs/preferences-dialog.c:1701
+#: ../app/dialogs/preferences-dialog.c:1740
 msgid "Theme"
 msgstr "Téma"
 
-#: ../app/dialogs/preferences-dialog.c:1706
+#: ../app/dialogs/preferences-dialog.c:1710
 msgid "Select Theme"
 msgstr "Téma kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:1788
+#: ../app/dialogs/preferences-dialog.c:1792
 msgid "Reload C_urrent Theme"
 msgstr "_Jelenlegi téma frissítése"
 
-#: ../app/dialogs/preferences-dialog.c:1800
+#: ../app/dialogs/preferences-dialog.c:1804
 msgid "Help System"
 msgstr "Súgórendszer"
 
 #. General
-#: ../app/dialogs/preferences-dialog.c:1812
-#: ../app/dialogs/preferences-dialog.c:1863
-#: ../app/dialogs/preferences-dialog.c:2050
+#: ../app/dialogs/preferences-dialog.c:1816
+#: ../app/dialogs/preferences-dialog.c:1867
+#: ../app/dialogs/preferences-dialog.c:2054
 #: ../app/widgets/gimpcontrollereditor.c:188
 msgid "General"
 msgstr "Általános"
 
-#: ../app/dialogs/preferences-dialog.c:1815
+#: ../app/dialogs/preferences-dialog.c:1819
 msgid "Show _tooltips"
 msgstr "_Buboréksúgó megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:1818
+#: ../app/dialogs/preferences-dialog.c:1822
 msgid "Show help _buttons"
 msgstr "Súgógo_mbok megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:1821
+#: ../app/dialogs/preferences-dialog.c:1825
 msgid "Show tips on _startup"
 msgstr "_Tippek megjelenítése indításkor"
 
 #. Help Browser
-#: ../app/dialogs/preferences-dialog.c:1825
+#: ../app/dialogs/preferences-dialog.c:1829
 msgid "Help Browser"
 msgstr "Súgóböngésző"
 
-#: ../app/dialogs/preferences-dialog.c:1829
+#: ../app/dialogs/preferences-dialog.c:1833
 msgid "H_elp browser to use:"
 msgstr "Használandó súgóböngés_ző:"
 
-#: ../app/dialogs/preferences-dialog.c:1834
+#: ../app/dialogs/preferences-dialog.c:1838
 msgid "Web Browser"
 msgstr "Webböngésző"
 
-#: ../app/dialogs/preferences-dialog.c:1838
+#: ../app/dialogs/preferences-dialog.c:1842
 msgid "_Web browser to use:"
 msgstr "Használandó _webböngésző:"
 
-#: ../app/dialogs/preferences-dialog.c:1866
+#: ../app/dialogs/preferences-dialog.c:1870
 msgid "_Save tool options on exit"
 msgstr "Eszközbeállítások mentése ki_lépéskor"
 
-#: ../app/dialogs/preferences-dialog.c:1870
+#: ../app/dialogs/preferences-dialog.c:1874
 msgid "Save Tool Options _Now"
 msgstr "Eszköz_beállítások mentése most"
 
-#: ../app/dialogs/preferences-dialog.c:1877
+#: ../app/dialogs/preferences-dialog.c:1881
 msgid "_Reset Saved Tool Options to Default Values"
 msgstr "Elmentett eszközbeállítások visszaállítása az _alapértékekre"
 
 #. Snapping Distance
-#: ../app/dialogs/preferences-dialog.c:1887
+#: ../app/dialogs/preferences-dialog.c:1891
 msgid "Guide & Grid Snapping"
 msgstr "Segédvonalhoz és rácshoz illesztés"
 
-#: ../app/dialogs/preferences-dialog.c:1892
+#: ../app/dialogs/preferences-dialog.c:1896
 msgid "_Snap distance:"
 msgstr "_Illesztési távolság:"
 
-#: ../app/dialogs/preferences-dialog.c:1900
+#: ../app/dialogs/preferences-dialog.c:1904
 msgid "Default _interpolation:"
 msgstr "Alapértelmezett inter_poláció:"
 
 #. Global Brush, Pattern, ...
-#: ../app/dialogs/preferences-dialog.c:1907
+#: ../app/dialogs/preferences-dialog.c:1911
 msgid "Paint Options Shared Between Tools"
 msgstr "Az eszközök által közösen használt rajzbeállítások"
 
-#: ../app/dialogs/preferences-dialog.c:1920
+#: ../app/dialogs/preferences-dialog.c:1924
 msgid "Move Tool"
 msgstr "Áthelyezési eszköz"
 
-#: ../app/dialogs/preferences-dialog.c:1924
+#: ../app/dialogs/preferences-dialog.c:1928
 msgid "Set layer or path as active"
 msgstr "Réteg vagy útvonal beállítása aktívnak"
 
-#: ../app/dialogs/preferences-dialog.c:1937
+#: ../app/dialogs/preferences-dialog.c:1941
 msgid "Toolbox"
 msgstr "Eszköztár"
 
 #. Appearance
-#: ../app/dialogs/preferences-dialog.c:1949
-#: ../app/dialogs/preferences-dialog.c:2123
+#: ../app/dialogs/preferences-dialog.c:1953
+#: ../app/dialogs/preferences-dialog.c:2127
 #: ../app/widgets/gimpgrideditor.c:196
 msgid "Appearance"
 msgstr "Megjelenés"
 
-#: ../app/dialogs/preferences-dialog.c:1953
+#: ../app/dialogs/preferences-dialog.c:1957
 msgid "Show _foreground & background color"
 msgstr "_Előtér- és háttérszín megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:1957
+#: ../app/dialogs/preferences-dialog.c:1961
 msgid "Show active _brush, pattern & gradient"
 msgstr "Aktív e_cset, minta és színátmenet megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:1961
+#: ../app/dialogs/preferences-dialog.c:1965
 msgid "Show active _image"
 msgstr "Aktív ké_p megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:1974
+#: ../app/dialogs/preferences-dialog.c:1978
 msgid "Default New Image"
 msgstr "Alapértelmezett új kép"
 
-#: ../app/dialogs/preferences-dialog.c:1977
+#: ../app/dialogs/preferences-dialog.c:1981
 msgid "Default Image"
 msgstr "Alapértelmezett kép"
 
-#: ../app/dialogs/preferences-dialog.c:2014
+#: ../app/dialogs/preferences-dialog.c:2018
 msgid "Default Image Grid"
 msgstr "Alapértelmezett képrács"
 
-#: ../app/dialogs/preferences-dialog.c:2017
+#: ../app/dialogs/preferences-dialog.c:2021
 msgid "Default Grid"
 msgstr "Alapértelmezett rács"
 
-#: ../app/dialogs/preferences-dialog.c:2038
+#: ../app/dialogs/preferences-dialog.c:2042
 msgid "Image Windows"
 msgstr "Képet tartalmazó ablak"
 
-#: ../app/dialogs/preferences-dialog.c:2053
+#: ../app/dialogs/preferences-dialog.c:2057
 msgid "Use \"_Dot for dot\" by default"
 msgstr "A \"_pontról pontra\" beállítás használata alapértelmezettként"
 
-#: ../app/dialogs/preferences-dialog.c:2059
+#: ../app/dialogs/preferences-dialog.c:2063
 msgid "Marching _ants speed:"
 msgstr "Menetelő _hangyák sebessége:"
 
 #. Zoom & Resize Behavior
-#: ../app/dialogs/preferences-dialog.c:2063
+#: ../app/dialogs/preferences-dialog.c:2067
 msgid "Zoom & Resize Behavior"
 msgstr "Nagyítási és méretmódosítási viselkedés"
 
-#: ../app/dialogs/preferences-dialog.c:2067
+#: ../app/dialogs/preferences-dialog.c:2071
 msgid "Resize window on _zoom"
 msgstr "Ablak átméretezése _nagyításkor vagy kicsinyítéskor"
 
-#: ../app/dialogs/preferences-dialog.c:2070
+#: ../app/dialogs/preferences-dialog.c:2074
 msgid "Resize window on image _size change"
 msgstr "Ablak átméretezése a _képméret változásakor"
 
-#: ../app/dialogs/preferences-dialog.c:2076
+#: ../app/dialogs/preferences-dialog.c:2080
 msgid "Fit to window"
 msgstr "Az ablak méretére"
 
-#: ../app/dialogs/preferences-dialog.c:2078
+#: ../app/dialogs/preferences-dialog.c:2082
 msgid "Initial zoom _ratio:"
 msgstr "Kez_deti nagyítási arány:"
 
 #. Space Bar
-#: ../app/dialogs/preferences-dialog.c:2082
+#: ../app/dialogs/preferences-dialog.c:2086
 msgid "Space Bar"
 msgstr "Szóközbillentyű"
 
-#: ../app/dialogs/preferences-dialog.c:2088
+#: ../app/dialogs/preferences-dialog.c:2092
 msgid "_While space bar is pressed:"
 msgstr "A szóközb_illentyű lenyomásakor:"
 
 #. Mouse Pointers
-#: ../app/dialogs/preferences-dialog.c:2092
+#: ../app/dialogs/preferences-dialog.c:2096
 msgid "Mouse Pointers"
 msgstr "Egérmutatók"
 
-#: ../app/dialogs/preferences-dialog.c:2096
+#: ../app/dialogs/preferences-dialog.c:2100
 msgid "Show _brush outline"
 msgstr "_Ecset körvonalának megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:2099
+#: ../app/dialogs/preferences-dialog.c:2103
 msgid "Show pointer for paint _tools"
 msgstr "_Festőeszköz mutatójának megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:2105
+#: ../app/dialogs/preferences-dialog.c:2109
 msgid "Pointer _mode:"
 msgstr "M_utató-mód:"
 
-#: ../app/dialogs/preferences-dialog.c:2108
+#: ../app/dialogs/preferences-dialog.c:2112
 msgid "Pointer re_ndering:"
 msgstr "Mutató meg_jelenése:"
 
-#: ../app/dialogs/preferences-dialog.c:2120
+#: ../app/dialogs/preferences-dialog.c:2124
 msgid "Image Window Appearance"
 msgstr "Képet tartalmazó ablak megjelenése"
 
-#: ../app/dialogs/preferences-dialog.c:2131
+#: ../app/dialogs/preferences-dialog.c:2135
 msgid "Default Appearance in Normal Mode"
 msgstr "Alapértelmezett megjelenés normál módban"
 
-#: ../app/dialogs/preferences-dialog.c:2136
+#: ../app/dialogs/preferences-dialog.c:2140
 msgid "Default Appearance in Fullscreen Mode"
 msgstr "Alapértelmezett megjelenés teljes képernyős módban"
 
-#: ../app/dialogs/preferences-dialog.c:2145
+#: ../app/dialogs/preferences-dialog.c:2149
 msgid "Image Title & Statusbar Format"
 msgstr "Képcím és állapotsor formátuma"
 
-#: ../app/dialogs/preferences-dialog.c:2148
+#: ../app/dialogs/preferences-dialog.c:2152
 msgid "Title & Status"
 msgstr "Cím és állapot"
 
-#: ../app/dialogs/preferences-dialog.c:2166
+#: ../app/dialogs/preferences-dialog.c:2170
 msgid "Current format"
 msgstr "Jelenlegi formátum"
 
-#: ../app/dialogs/preferences-dialog.c:2167
+#: ../app/dialogs/preferences-dialog.c:2171
 msgid "Default format"
 msgstr "Alapértelmezett formátum"
 
-#: ../app/dialogs/preferences-dialog.c:2168
+#: ../app/dialogs/preferences-dialog.c:2172
 msgid "Show zoom percentage"
 msgstr "Nagyítás százalékos mértékének megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:2169
+#: ../app/dialogs/preferences-dialog.c:2173
 msgid "Show zoom ratio"
 msgstr "Nagyítás arányának megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:2170
+#: ../app/dialogs/preferences-dialog.c:2174
 msgid "Show image size"
 msgstr "Képméret megjelenítése"
 
-#: ../app/dialogs/preferences-dialog.c:2183
+#: ../app/dialogs/preferences-dialog.c:2187
 msgid "Image Title Format"
 msgstr "Kép címének formátuma"
 
-#: ../app/dialogs/preferences-dialog.c:2185
+#: ../app/dialogs/preferences-dialog.c:2189
 msgid "Image Statusbar Format"
 msgstr "Kép állapotsorának formátuma"
 
-#: ../app/dialogs/preferences-dialog.c:2270
+#: ../app/dialogs/preferences-dialog.c:2274
 msgid "Display"
 msgstr "Megjelenítés"
 
-#: ../app/dialogs/preferences-dialog.c:2286
+#: ../app/dialogs/preferences-dialog.c:2290
 msgid "_Check style:"
 msgstr "Négyzet_háló-stílus:"
 
-#: ../app/dialogs/preferences-dialog.c:2289
+#: ../app/dialogs/preferences-dialog.c:2293
 msgid "Check _size:"
 msgstr "_Négyzetek mérete:"
 
-#: ../app/dialogs/preferences-dialog.c:2292
+#: ../app/dialogs/preferences-dialog.c:2296
 msgid "Monitor Resolution"
 msgstr "Monitor felbontása"
 
-#: ../app/dialogs/preferences-dialog.c:2296
+#: ../app/dialogs/preferences-dialog.c:2300
 #: ../app/widgets/gimpcursorview.c:124 ../app/widgets/gimpgrideditor.c:261
 #: ../app/widgets/gimpgrideditor.c:293
 msgid "Pixels"
 msgstr "képpont"
 
-#: ../app/dialogs/preferences-dialog.c:2318
+#: ../app/dialogs/preferences-dialog.c:2322
 #: ../app/widgets/gimpimagepropview.c:469
 msgid "ppi"
 msgstr "ppi"
 
-#: ../app/dialogs/preferences-dialog.c:2334
+#: ../app/dialogs/preferences-dialog.c:2338
 #, c-format
 msgid "_Detect automatically (currently %d × %d ppi)"
 msgstr "A_utomatikus meghatározás (jelenleg %d × %d ppi)"
 
-#: ../app/dialogs/preferences-dialog.c:2354
+#: ../app/dialogs/preferences-dialog.c:2358
 msgid "_Enter manually"
 msgstr "Adatok megadása _kézzel"
 
-#: ../app/dialogs/preferences-dialog.c:2369
+#: ../app/dialogs/preferences-dialog.c:2373
 msgid "C_alibrate..."
 msgstr "K_alibrálás..."
 
-#: ../app/dialogs/preferences-dialog.c:2391
+#: ../app/dialogs/preferences-dialog.c:2395
 msgid "Color Management"
 msgstr "Színkezelés"
 
-#: ../app/dialogs/preferences-dialog.c:2411
+#: ../app/dialogs/preferences-dialog.c:2415
 msgid "_RGB profile:"
 msgstr "_RGB profil:"
 
-#: ../app/dialogs/preferences-dialog.c:2412
+#: ../app/dialogs/preferences-dialog.c:2416
 msgid "Select RGB Color Profile"
 msgstr "RGB színprofil kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:2413
+#: ../app/dialogs/preferences-dialog.c:2417
 msgid "_CMYK profile:"
 msgstr "_CMYK profil:"
 
-#: ../app/dialogs/preferences-dialog.c:2414
+#: ../app/dialogs/preferences-dialog.c:2418
 msgid "Select CMYK Color Profile"
 msgstr "CMYK színprofil kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:2415
+#: ../app/dialogs/preferences-dialog.c:2419
 msgid "_Monitor profile:"
 msgstr "Mon_itorprofil:"
 
-#: ../app/dialogs/preferences-dialog.c:2416
+#: ../app/dialogs/preferences-dialog.c:2420
 msgid "Select Monitor Color Profile"
 msgstr "Monitor-színprofil kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:2417
+#: ../app/dialogs/preferences-dialog.c:2421
 msgid "_Print simulation profile:"
 msgstr "Nyomt_atásszimulációs profil:"
 
-#: ../app/dialogs/preferences-dialog.c:2418
+#: ../app/dialogs/preferences-dialog.c:2422
 msgid "Select Printer Color Profile"
 msgstr "Nyomtató-színprofil kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:2429
+#: ../app/dialogs/preferences-dialog.c:2433
 msgid "_Mode of operation:"
 msgstr "_Működési mód:"
 
-#: ../app/dialogs/preferences-dialog.c:2459
+#: ../app/dialogs/preferences-dialog.c:2463
 msgid "_Try to use the system monitor profile"
 msgstr "A ren_dszermonitor profiljának használata, ha lehetséges"
 
-#: ../app/dialogs/preferences-dialog.c:2469
+#: ../app/dialogs/preferences-dialog.c:2473
 msgid "_Display rendering intent:"
 msgstr "Ké_pernyős megjelenítési cél:"
 
-#: ../app/dialogs/preferences-dialog.c:2478
+#: ../app/dialogs/preferences-dialog.c:2482
 msgid "_Softproof rendering intent:"
 msgstr "Pró_banyomat-megjelenítési cél:"
 
-#: ../app/dialogs/preferences-dialog.c:2491
+#: ../app/dialogs/preferences-dialog.c:2495
 msgid "Mark out of gamut colors"
 msgstr "A színskálán kívüli színek megjelölése"
 
-#: ../app/dialogs/preferences-dialog.c:2496
+#: ../app/dialogs/preferences-dialog.c:2500
 msgid "Select Warning Color"
 msgstr "Figyelmeztetési szín kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:2508
+#: ../app/dialogs/preferences-dialog.c:2513
 msgid "File Open behaviour:"
 msgstr "Fájlmegnyitási viselkedés:"
 
-#: ../app/dialogs/preferences-dialog.c:2520
+#: ../app/dialogs/preferences-dialog.c:2525
 msgid "Input Devices"
 msgstr "Bemeneti eszközök"
 
 #. Extended Input Devices
-#: ../app/dialogs/preferences-dialog.c:2530
+#: ../app/dialogs/preferences-dialog.c:2535
 msgid "Extended Input Devices"
 msgstr "Kiterjesztett bemeneti eszközök"
 
-#: ../app/dialogs/preferences-dialog.c:2534
+#: ../app/dialogs/preferences-dialog.c:2539
 msgid "Configure E_xtended Input Devices..."
 msgstr "Kiterjesztett bemeneti eszközök _beállítása..."
 
-#: ../app/dialogs/preferences-dialog.c:2541
+#: ../app/dialogs/preferences-dialog.c:2546
 msgid "_Save input device settings on exit"
 msgstr "Bemeneti eszközök beállításainak m_entése kilépéskor"
 
-#: ../app/dialogs/preferences-dialog.c:2545
+#: ../app/dialogs/preferences-dialog.c:2550
 msgid "Save Input Device Settings _Now"
 msgstr "Bemeneti eszközök beállításainak me_ntése most"
 
-#: ../app/dialogs/preferences-dialog.c:2552
+#: ../app/dialogs/preferences-dialog.c:2557
 msgid "_Reset Saved Input Device Settings to Default Values"
-msgstr "Bemeneti eszközök mentett beállításainak visszaállítása az _alapértékekre"
+msgstr ""
+"Bemeneti eszközök mentett beállításainak visszaállítása az _alapértékekre"
 
-#: ../app/dialogs/preferences-dialog.c:2567
+#: ../app/dialogs/preferences-dialog.c:2572
 msgid "Additional Input Controllers"
 msgstr "További bemeneti vezérlők"
 
-#: ../app/dialogs/preferences-dialog.c:2570
+#: ../app/dialogs/preferences-dialog.c:2575
 msgid "Input Controllers"
 msgstr "Bemeneti vezérlők"
 
-#: ../app/dialogs/preferences-dialog.c:2586
+#: ../app/dialogs/preferences-dialog.c:2591
 msgid "Window Management"
 msgstr "Ablakkezelés"
 
-#: ../app/dialogs/preferences-dialog.c:2595
+#: ../app/dialogs/preferences-dialog.c:2600
 msgid "Window Manager Hints"
 msgstr "Ablakkezelési információ"
 
-#: ../app/dialogs/preferences-dialog.c:2601
+#: ../app/dialogs/preferences-dialog.c:2606
 msgid "Hint for the _toolbox:"
 msgstr "Információ az _eszköztárhoz:"
 
-#: ../app/dialogs/preferences-dialog.c:2605
+#: ../app/dialogs/preferences-dialog.c:2610
 msgid "Hint for other _docks:"
 msgstr "Információ az egyéb _dokkolható ablakokhoz:"
 
-#: ../app/dialogs/preferences-dialog.c:2610
+#: ../app/dialogs/preferences-dialog.c:2615
 msgid "Toolbox and other docks are transient to the active image window"
 msgstr ""
 "Az eszköztár és az egyéb dokkablakok átmenetinek vannak beállítva az aktív "
 "képablakra."
 
-#: ../app/dialogs/preferences-dialog.c:2615
+#: ../app/dialogs/preferences-dialog.c:2620
 msgid "Focus"
 msgstr "Fókusz"
 
-#: ../app/dialogs/preferences-dialog.c:2619
+#: ../app/dialogs/preferences-dialog.c:2624
 msgid "Activate the _focused image"
 msgstr "A _fókusszal rendelkező kép aktiválása"
 
 #. Window Positions
-#: ../app/dialogs/preferences-dialog.c:2623
+#: ../app/dialogs/preferences-dialog.c:2628
 msgid "Window Positions"
 msgstr "Ablakok helyzete"
 
-#: ../app/dialogs/preferences-dialog.c:2626
+#: ../app/dialogs/preferences-dialog.c:2631
 msgid "_Save window positions on exit"
 msgstr "Ablakok helyzetének mentése ki_lépéskor"
 
-#: ../app/dialogs/preferences-dialog.c:2630
+#: ../app/dialogs/preferences-dialog.c:2635
 msgid "Save Window Positions _Now"
 msgstr "Ablakok helyzetének me_ntése most"
 
-#: ../app/dialogs/preferences-dialog.c:2637
+#: ../app/dialogs/preferences-dialog.c:2642
 msgid "_Reset Saved Window Positions to Default Values"
 msgstr "Ablakok elmentett helyzetének visszaállítása az _alapértékekre"
 
-#: ../app/dialogs/preferences-dialog.c:2652
+#: ../app/dialogs/preferences-dialog.c:2657
 msgid "Folders"
 msgstr "Mappák"
 
-#: ../app/dialogs/preferences-dialog.c:2672
+#: ../app/dialogs/preferences-dialog.c:2677
 msgid "Temporary folder:"
 msgstr "Ideiglenes könyvtár:"
 
-#: ../app/dialogs/preferences-dialog.c:2673
+#: ../app/dialogs/preferences-dialog.c:2678
 msgid "Select Folder for Temporary Files"
 msgstr "Jelölje ki az ideiglenes fájlok mappáját"
 
-#: ../app/dialogs/preferences-dialog.c:2677
+#: ../app/dialogs/preferences-dialog.c:2682
 msgid "Swap folder:"
 msgstr "Cseretár könyvtára:"
 
-#: ../app/dialogs/preferences-dialog.c:2678
+#: ../app/dialogs/preferences-dialog.c:2683
 msgid "Select Swap Folder"
 msgstr "Cseretár könyvtárának kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:2713
+#: ../app/dialogs/preferences-dialog.c:2718
 msgid "Brush Folders"
 msgstr "Ecsetek mappái"
 
-#: ../app/dialogs/preferences-dialog.c:2715
+#: ../app/dialogs/preferences-dialog.c:2720
 msgid "Select Brush Folders"
 msgstr "Ecsetek mappáinak kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:2717
+#: ../app/dialogs/preferences-dialog.c:2722
 msgid "Pattern Folders"
 msgstr "Minták mappái"
 
-#: ../app/dialogs/preferences-dialog.c:2719
+#: ../app/dialogs/preferences-dialog.c:2724
 msgid "Select Pattern Folders"
 msgstr "Minták mappáinak kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:2721
+#: ../app/dialogs/preferences-dialog.c:2726
 msgid "Palette Folders"
 msgstr "Paletták mappái"
 
-#: ../app/dialogs/preferences-dialog.c:2723
+#: ../app/dialogs/preferences-dialog.c:2728
 msgid "Select Palette Folders"
 msgstr "Paletták mappáinak kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:2725
+#: ../app/dialogs/preferences-dialog.c:2730
 msgid "Gradient Folders"
 msgstr "Színátmenetek mappái"
 
-#: ../app/dialogs/preferences-dialog.c:2727
+#: ../app/dialogs/preferences-dialog.c:2732
 msgid "Select Gradient Folders"
 msgstr "Színátmenetek mappáinak kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:2729
+#: ../app/dialogs/preferences-dialog.c:2734
 msgid "Font Folders"
 msgstr "Betűkészletek mappái"
 
-#: ../app/dialogs/preferences-dialog.c:2731
+#: ../app/dialogs/preferences-dialog.c:2736
 msgid "Select Font Folders"
 msgstr "Betűkészletek mappáinak kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:2733
+#: ../app/dialogs/preferences-dialog.c:2738
 msgid "Plug-In Folders"
 msgstr "Bővítmények mappái"
 
-#: ../app/dialogs/preferences-dialog.c:2735
+#: ../app/dialogs/preferences-dialog.c:2740
 msgid "Select Plug-In Folders"
 msgstr "Bővítmények mappáinak kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:2737
+#: ../app/dialogs/preferences-dialog.c:2742
 msgid "Scripts"
 msgstr "Parancsfájlok"
 
-#: ../app/dialogs/preferences-dialog.c:2737
+#: ../app/dialogs/preferences-dialog.c:2742
 msgid "Script-Fu Folders"
 msgstr "Script-Fu mappái"
 
-#: ../app/dialogs/preferences-dialog.c:2739
+#: ../app/dialogs/preferences-dialog.c:2744
 msgid "Select Script-Fu Folders"
 msgstr "Script-Fu mappáinak kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:2741
+#: ../app/dialogs/preferences-dialog.c:2746
 msgid "Module Folders"
 msgstr "Modulok mappái"
 
-#: ../app/dialogs/preferences-dialog.c:2743
+#: ../app/dialogs/preferences-dialog.c:2748
 msgid "Select Module Folders"
 msgstr "Modulok mappáinak kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:2745
+#: ../app/dialogs/preferences-dialog.c:2750
 msgid "Interpreters"
 msgstr "Fordítók"
 
-#: ../app/dialogs/preferences-dialog.c:2745
+#: ../app/dialogs/preferences-dialog.c:2750
 msgid "Interpreter Folders"
 msgstr "Fordítók mappái"
 
-#: ../app/dialogs/preferences-dialog.c:2747
+#: ../app/dialogs/preferences-dialog.c:2752
 msgid "Select Interpreter Folders"
 msgstr "Fordítók mappáinak kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:2749
+#: ../app/dialogs/preferences-dialog.c:2754
 msgid "Environment Folders"
 msgstr "Környezet mappái"
 
-#: ../app/dialogs/preferences-dialog.c:2751
+#: ../app/dialogs/preferences-dialog.c:2756
 msgid "Select Environment Folders"
 msgstr "Környezet mappáinak kiválasztása"
 
-#: ../app/dialogs/preferences-dialog.c:2753
+#: ../app/dialogs/preferences-dialog.c:2758
 msgid "Themes"
 msgstr "Témák"
 
-#: ../app/dialogs/preferences-dialog.c:2753
+#: ../app/dialogs/preferences-dialog.c:2758
 msgid "Theme Folders"
 msgstr "Témák mappái"
 
-#: ../app/dialogs/preferences-dialog.c:2755
+#: ../app/dialogs/preferences-dialog.c:2760
 msgid "Select Theme Folders"
 msgstr "Témák mappáinak kiválasztása"
 
@@ -8299,7 +8334,8 @@ msgstr "A felhasználói telepítés nem sikerült."
 
 #: ../app/dialogs/user-install-dialog.c:96
 msgid "The GIMP user installation failed; see the log for details."
-msgstr "A GIMP felhasználói telepítése nem sikerült; részletek a naplóban láthatók."
+msgstr ""
+"A GIMP felhasználói telepítése nem sikerült; részletek a naplóban láthatók."
 
 #: ../app/dialogs/user-install-dialog.c:99
 msgid "Installation Log"
@@ -8382,6 +8418,14 @@ msgstr "Mozgás a nézetben"
 msgid "Switch to Move tool"
 msgstr "Váltás az áthelyezési eszközre"
 
+#: ../app/display/display-enums.c:115
+msgid "quality|Low"
+msgstr "Alacsony"
+
+#: ../app/display/display-enums.c:116
+msgid "quality|High"
+msgstr "Magas"
+
 #: ../app/display/gimpdisplay-handlers.c:155
 #, c-format
 msgid "Image saved to '%s'"
@@ -8418,7 +8462,8 @@ msgstr "Szeretné elmenteni a(z) \"%s\" kép változásait a bezárás előtt?"
 #: ../app/display/gimpdisplayshell-close.c:232
 #, c-format
 msgid "If you don't save the image, changes from the last hour will be lost."
-msgid_plural "If you don't save the image, changes from the last %d hours will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d hours will be lost."
 msgstr[0] ""
 "Ha nem menti a képet, akkor a legutóbbi órában bekövetkezett módosulások "
 "elvesznek."
@@ -8446,7 +8491,8 @@ msgstr[1] ""
 #: ../app/display/gimpdisplayshell-close.c:253
 #, c-format
 msgid "If you don't save the image, changes from the last minute will be lost."
-msgid_plural "If you don't save the image, changes from the last %d minutes will be lost."
+msgid_plural ""
+"If you don't save the image, changes from the last %d minutes will be lost."
 msgstr[0] ""
 "Ha nem menti a képet, akkor a legutóbbi percben bekövetkezett módosulások "
 "elvesznek."
@@ -8546,13 +8592,15 @@ msgid "Other..."
 msgstr "Egyéb..."
 
 #: ../app/file/file-open.c:129 ../app/file/file-save.c:111
+#, c-format
 msgid "Not a regular file"
 msgstr "Nem szabályos fájl"
 
 #: ../app/file/file-open.c:180
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
-msgstr "A(z) %s bővítmény sikeres lefutást jelzett, viszont nem adott vissza képet"
+msgstr ""
+"A(z) %s bővítmény sikeres lefutást jelzett, viszont nem adott vissza képet"
 
 #: ../app/file/file-open.c:189
 #, c-format
@@ -8560,6 +8608,7 @@ msgid "%s plug-In could not open image"
 msgstr "A(z) %s bővítmény nem tudta megnyitni a képet"
 
 #: ../app/file/file-open.c:474
+#, c-format
 msgid "Image doesn't contain any layers"
 msgstr "A kép nem tartalmaz réteget"
 
@@ -8577,6 +8626,7 @@ msgstr ""
 "párbeszédablakban."
 
 #: ../app/file/file-procedure.c:200
+#, c-format
 msgid "Unknown file type"
 msgstr "Ismeretlen fájltípus"
 
@@ -8591,6 +8641,7 @@ msgid "'%s:' is not a valid URI scheme"
 msgstr "\"%s\": érvénytelen URI-séma"
 
 #: ../app/file/file-utils.c:88 ../app/file/file-utils.c:122
+#, c-format
 msgid "Invalid character sequence in URI"
 msgstr "Érvénytelen karaktersorozat az URI-ben"
 
@@ -8603,6 +8654,7 @@ msgid "Airbrush"
 msgstr "Festékszóró"
 
 #: ../app/paint/gimpbrushcore.c:354
+#, c-format
 msgid "No brushes available for use with this tool."
 msgstr "Nincs felhasználható ecset a művelethez."
 
@@ -8611,6 +8663,7 @@ msgid "Clone"
 msgstr "Másoló"
 
 #: ../app/paint/gimpclone.c:141
+#, c-format
 msgid "No patterns available for use with this tool."
 msgstr "Nincs felhasználható minta ehhez az eszközhöz."
 
@@ -8631,6 +8684,7 @@ msgid "Heal"
 msgstr "Javítás"
 
 #: ../app/paint/gimpheal.c:126
+#, c-format
 msgid "Healing does not operate on indexed layers."
 msgstr "Javítás nem hajtható végre indexelt rétegeken."
 
@@ -8648,6 +8702,7 @@ msgid "Perspective Clone"
 msgstr "Perspektivikus klón"
 
 #: ../app/paint/gimpperspectiveclone.c:160
+#, c-format
 msgid "Perspective Clone does not operate on indexed layers."
 msgstr "A perspektivikus klónozás nem működik indexelt rétegeken."
 
@@ -8656,6 +8711,7 @@ msgid "Smudge"
 msgstr "Maszatolás"
 
 #: ../app/paint/gimpsourcecore.c:227
+#, c-format
 msgid "Set a source image first."
 msgstr "Előbb állítson be egy forrásképet."
 
@@ -8838,7 +8894,8 @@ msgstr ""
 "s\" (#%d, típus: %s). Ez az érték kívül esik az engedélyezett tartományon."
 
 #: ../app/pdb/image_cmds.c:2061
-msgid "Image resolution is out of bounds, using the default resolution instead."
+msgid ""
+"Image resolution is out of bounds, using the default resolution instead."
 msgstr ""
 "A kép felbontása az engedélyezett tartományon kívül esik, ezért az "
 "alapértelmezett felbontás lesz használva."
@@ -9059,7 +9116,8 @@ msgstr "Igazítás"
 
 #: ../app/tools/gimpaligntool.c:121
 msgid "Alignment Tool: Align or arrange layers and other objects"
-msgstr "Igazítási eszköz: rétegek és egyéb objektumok igazítása vagy elrendezése"
+msgstr ""
+"Igazítási eszköz: rétegek és egyéb objektumok igazítása vagy elrendezése"
 
 #: ../app/tools/gimpaligntool.c:122
 msgid "_Align"
@@ -9156,6 +9214,7 @@ msgid "Blen_d"
 msgstr "_Színátmenet"
 
 #: ../app/tools/gimpblendtool.c:163
+#, c-format
 msgid "Blend does not operate on indexed layers."
 msgstr "Színátmenet nem használható indexelt rétegeken."
 
@@ -9186,6 +9245,7 @@ msgid "Adjust Brightness and Contrast"
 msgstr "Fényerő és kontraszt beállítása"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:169
+#, c-format
 msgid "Brightness-Contrast does not operate on indexed layers."
 msgstr "A Fényerő-kontraszt beállítás nem működik indexelt rétegeken."
 
@@ -9319,6 +9379,7 @@ msgid "Adjust Color Balance"
 msgstr "Színegyensúly beállítása"
 
 #: ../app/tools/gimpcolorbalancetool.c:153
+#, c-format
 msgid "Color Balance operates only on RGB color layers."
 msgstr "A színegyensúly csak RGB színű rétegeken működik."
 
@@ -9366,6 +9427,7 @@ msgid "Colorize the Image"
 msgstr "A kép színezése"
 
 #: ../app/tools/gimpcolorizetool.c:148
+#, c-format
 msgid "Colorize operates only on RGB color layers."
 msgstr "A színezés csak RGB színű rétegeken működik."
 
@@ -9553,6 +9615,7 @@ msgid "Save curves settings to file"
 msgstr "Görbebeállítások mentése fájlba"
 
 #: ../app/tools/gimpcurvestool.c:253
+#, c-format
 msgid "Curves does not operate on indexed layers."
 msgstr "A görbeeszköz nem használható indexelt rétegeken."
 
@@ -9583,10 +9646,12 @@ msgid "Curve Type"
 msgstr "Görbetípus"
 
 #: ../app/tools/gimpcurvestool.c:753 ../app/tools/gimplevelstool.c:672
+#, c-format
 msgid "not a GIMP Levels file"
 msgstr "nem GIMP-szintfájl"
 
 #: ../app/tools/gimpcurvestool.c:767 ../app/tools/gimplevelstool.c:711
+#, c-format
 msgid "parse error"
 msgstr "feldolgozási hiba"
 
@@ -9596,7 +9661,8 @@ msgstr "Fakítás vagy sötétítés"
 
 #: ../app/tools/gimpdodgeburntool.c:74
 msgid "Dodge / Burn Tool: Selectively lighten or darken using a brush"
-msgstr "Fakítási és sötétítési eszköz: szelektív fényesítés vagy sötétítés ecsettel"
+msgstr ""
+"Fakítási és sötétítési eszköz: szelektív fényesítés vagy sötétítés ecsettel"
 
 #: ../app/tools/gimpdodgeburntool.c:75
 msgid "Dod_ge / Burn"
@@ -9644,7 +9710,7 @@ msgid "Exposure:"
 msgstr "Kitettség:"
 
 #: ../app/tools/gimpeditselectiontool.c:194
-#: ../app/tools/gimpeditselectiontool.c:1103
+#: ../app/tools/gimpeditselectiontool.c:1105
 msgid "Move Floating Selection"
 msgstr "Lebegő kijelölés áthelyezése"
 
@@ -9707,7 +9773,8 @@ msgid "Flip"
 msgstr "Tükrözés"
 
 #: ../app/tools/gimpfliptool.c:78
-msgid "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
+msgid ""
+"Flip Tool: Reverse the layer, selection or path horizontally or vertically"
 msgstr ""
 "Tükrözési eszköz: réteg, kijelölés vagy útvonal vízszintes vagy függőleges "
 "megfordítása"
@@ -9834,7 +9901,8 @@ msgstr "Varázspálca-kijelölés"
 
 #: ../app/tools/gimpfuzzyselecttool.c:64
 msgid "Fuzzy Select Tool: Select a contiguous region on the basis of color"
-msgstr "\"Varázspálca\" kijelölőeszköz: egybefüggő terület kijelölése szín alapján"
+msgstr ""
+"\"Varázspálca\" kijelölőeszköz: egybefüggő terület kijelölése szín alapján"
 
 #: ../app/tools/gimpfuzzyselecttool.c:65
 msgid "Fu_zzy Select"
@@ -9881,6 +9949,7 @@ msgid "Adjust Hue / Lightness / Saturation"
 msgstr "Árnyalat / fényerő / telítettség beállítása"
 
 #: ../app/tools/gimphuesaturationtool.c:173
+#, c-format
 msgid "Hue-Saturation operates only on RGB color layers."
 msgstr "Az árnyalat-telítettség csak RGB színű rétegeken működik."
 
@@ -10062,6 +10131,7 @@ msgid "Save levels settings to file"
 msgstr "Szintbeállítások mentése fájlba"
 
 #: ../app/tools/gimplevelstool.c:236
+#, c-format
 msgid "Levels does not operate on indexed layers."
 msgstr "Szintek nem használhatók indexelt rétegeken."
 
@@ -10196,7 +10266,8 @@ msgstr "Áthelyezés"
 
 #: ../app/tools/gimpmovetool.c:126
 msgid "Move Tool: Move layers, selections, and other objects"
-msgstr "Áthelyezési eszköz: rétegek, kijelölések és egyéb objektumok áthelyezése"
+msgstr ""
+"Áthelyezési eszköz: rétegek, kijelölések és egyéb objektumok áthelyezése"
 
 #: ../app/tools/gimpmovetool.c:127
 msgid "_Move"
@@ -10363,7 +10434,8 @@ msgstr "Transzformációs mátrix"
 
 #: ../app/tools/gimpposterizetool.c:78
 msgid "Posterize Tool: Reduce to a limited set of colors"
-msgstr "Poszter-eszköz: színek számának csökkentése egy korlátozott mennyiségre"
+msgstr ""
+"Poszter-eszköz: színek számának csökkentése egy korlátozott mennyiségre"
 
 #: ../app/tools/gimpposterizetool.c:79
 msgid "_Posterize..."
@@ -10374,6 +10446,7 @@ msgid "Posterize (Reduce Number of Colors)"
 msgstr "Poszter (színek számának csökkentése)"
 
 #: ../app/tools/gimpposterizetool.c:140
+#, c-format
 msgid "Posterize does not operate on indexed layers."
 msgstr "A Poszter nem működik indexelt rétegeken."
 
@@ -10587,7 +10660,8 @@ msgid "Click to smudge the line"
 msgstr "A vonal maszatolása: kattintással"
 
 #: ../app/tools/gimptextoptions.c:114
-msgid "Hinting alters the font outline to produce a crisp bitmap at small sizes"
+msgid ""
+"Hinting alters the font outline to produce a crisp bitmap at small sizes"
 msgstr ""
 "Kis betűméretek esetében a megjelenítési információk (hinting) alapján "
 "módosulnak a betűk körvonalai az olvashatóság javításának érdekében"
@@ -10678,7 +10752,8 @@ msgstr ""
 
 #: ../app/tools/gimpthresholdtool.c:83
 msgid "Threshold Tool: Reduce image to two colors using a threshold"
-msgstr "Küszöb-eszköz: a kép színeinek kettőre csökkentése egy küszöb használatával"
+msgstr ""
+"Küszöb-eszköz: a kép színeinek kettőre csökkentése egy küszöb használatával"
 
 #: ../app/tools/gimpthresholdtool.c:84
 msgid "_Threshold..."
@@ -10689,6 +10764,7 @@ msgid "Apply Threshold"
 msgstr "Küszöbszint alkalmazása"
 
 #: ../app/tools/gimpthresholdtool.c:148
+#, c-format
 msgid "Threshold does not operate on indexed layers."
 msgstr "A küszöb nem használható indexelt rétegek esetén."
 
@@ -11017,6 +11093,7 @@ msgid "No paths found in '%s'"
 msgstr "Nem található útvonal ebben: \"%s\""
 
 #: ../app/vectors/gimpvectors-import.c:339
+#, c-format
 msgid "No paths found in the buffer"
 msgstr "A tárolóban nincsenek útvonalak"
 
@@ -11402,6 +11479,7 @@ msgid "Remove Controller '%s'?"
 msgstr "Eltávolítja a(z) \"%s\" vezérlőt?"
 
 #: ../app/widgets/gimpcontrollerlist.c:571
+#, c-format
 msgid ""
 "Removing this controller from the list of active controllers will "
 "permanently delete all event mappings you have configured.\n"
@@ -11545,7 +11623,8 @@ msgstr "Az összes lap bezárása?"
 
 #: ../app/widgets/gimpdock.c:306
 #, c-format
-msgid "This window has %d tab open. Closing the window will also close all its tabs."
+msgid ""
+"This window has %d tab open. Closing the window will also close all its tabs."
 msgid_plural ""
 "This window has %d tabs open. Closing the window will also close all its "
 "tabs."
@@ -11726,7 +11805,8 @@ msgid "Could not find GIMP help browser."
 msgstr "A GIMP Súgóböngésző nem található."
 
 #: ../app/widgets/gimphelp.c:195
-msgid "The GIMP help browser plug-in appears to be missing from your installation."
+msgid ""
+"The GIMP help browser plug-in appears to be missing from your installation."
 msgstr "Úgy tűnik, a GIMP Súgóböngésző nincs benne a telepítésben."
 
 #: ../app/widgets/gimphelp.c:229
@@ -11872,7 +11952,8 @@ msgid "Auto"
 msgstr "Automatikus"
 
 #: ../app/widgets/gimpmenudock.c:170
-msgid "When enabled the dialog automatically follows the image you are working on."
+msgid ""
+"When enabled the dialog automatically follows the image you are working on."
 msgstr ""
 "Ha be van kapcsolva, akkor a párbeszédablak automatikusan követi az aktuális "
 "képet."
@@ -12376,4 +12457,3 @@ msgstr "Gondoskodjon arról, hogy az eszköztár látható legyen."
 #, c-format
 msgid "Couldn't start '%s': %s"
 msgstr "Nem sikerült elindítani ezt: \"%s\": %s"
-
