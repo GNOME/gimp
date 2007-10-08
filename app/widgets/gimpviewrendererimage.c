@@ -63,99 +63,108 @@ gimp_view_renderer_image_render (GimpViewRenderer *renderer,
                                  GtkWidget        *widget)
 {
   GimpViewRendererImage *rendererimage = GIMP_VIEW_RENDERER_IMAGE (renderer);
-  GimpImage             *image;
-  gint                   view_width;
-  gint                   view_height;
-  gboolean               scaling_up;
-  TempBuf               *render_buf = NULL;
+  GimpImage             *image         = GIMP_IMAGE (renderer->viewable);
+  const gchar           *stock_id;
 
-  image = GIMP_IMAGE (renderer->viewable);
-
-  gimp_viewable_calc_preview_size (image->width,
-                                   image->height,
-                                   renderer->width,
-                                   renderer->height,
-                                   renderer->dot_for_dot,
-                                   image->xresolution,
-                                   image->yresolution,
-                                   &view_width,
-                                   &view_height,
-                                   &scaling_up);
-
-  if (scaling_up)
+  /* The conditions checked here are mostly a hack to hide the fact that
+   * we are creating the channel preview from the image preview and turning
+   * off visibility of a channel has the side-effect of painting the channel
+   * preview all black. See bug #459518 for details.
+   */
+  if (rendererimage->channel == -1 ||
+      (gimp_image_get_component_visible (image, rendererimage->channel) &&
+       gimp_image_get_component_visible (image, GIMP_ALPHA_CHANNEL)))
     {
-      TempBuf *temp_buf;
+      gint      view_width;
+      gint      view_height;
+      gboolean  scaling_up;
+      TempBuf  *render_buf = NULL;
 
-      temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
-                                                renderer->context,
-                                                image->width, image->height);
+      gimp_viewable_calc_preview_size (image->width,
+                                       image->height,
+                                       renderer->width,
+                                       renderer->height,
+                                       renderer->dot_for_dot,
+                                       image->xresolution,
+                                       image->yresolution,
+                                       &view_width,
+                                       &view_height,
+                                       &scaling_up);
 
-      if (temp_buf)
-        {
-          render_buf = temp_buf_scale (temp_buf, view_width, view_height);
-
-          temp_buf_free (temp_buf);
-        }
-    }
-  else
-    {
-      render_buf = gimp_viewable_get_new_preview (renderer->viewable,
-                                                  renderer->context,
-                                                  view_width,
-                                                  view_height);
-    }
-
-  if (render_buf)
-    {
-      gint component_index = -1;
-
-      /*  xresolution != yresolution */
-      if (view_width > renderer->width || view_height > renderer->height)
+      if (scaling_up)
         {
           TempBuf *temp_buf;
 
-          temp_buf = temp_buf_scale (render_buf,
-                                     renderer->width, renderer->height);
+          temp_buf = gimp_viewable_get_new_preview (renderer->viewable,
+                                                    renderer->context,
+                                                    image->width,
+                                                    image->height);
+
+          if (temp_buf)
+            {
+              render_buf = temp_buf_scale (temp_buf, view_width, view_height);
+
+              temp_buf_free (temp_buf);
+            }
+        }
+      else
+        {
+          render_buf = gimp_viewable_get_new_preview (renderer->viewable,
+                                                      renderer->context,
+                                                      view_width,
+                                                      view_height);
+        }
+
+      if (render_buf)
+        {
+          gint component_index = -1;
+
+          /*  xresolution != yresolution */
+          if (view_width > renderer->width || view_height > renderer->height)
+            {
+              TempBuf *temp_buf;
+
+              temp_buf = temp_buf_scale (render_buf,
+                                         renderer->width, renderer->height);
+
+              temp_buf_free (render_buf);
+              render_buf = temp_buf;
+            }
+
+          if (view_width  < renderer->width)
+            render_buf->x = (renderer->width  - view_width)  / 2;
+
+          if (view_height < renderer->height)
+            render_buf->y = (renderer->height - view_height) / 2;
+
+          if (rendererimage->channel != -1)
+            component_index =
+              gimp_image_get_component_index (image, rendererimage->channel);
+
+          gimp_view_renderer_render_buffer (renderer, render_buf,
+                                            component_index,
+                                            GIMP_VIEW_BG_CHECKS,
+                                            GIMP_VIEW_BG_WHITE);
 
           temp_buf_free (render_buf);
-          render_buf = temp_buf;
+
+          return;
         }
-
-      if (view_width  < renderer->width)
-        render_buf->x = (renderer->width  - view_width)  / 2;
-
-      if (view_height < renderer->height)
-        render_buf->y = (renderer->height - view_height) / 2;
-
-      if (rendererimage->channel != -1)
-        component_index =
-          gimp_image_get_component_index (image, rendererimage->channel);
-
-      gimp_view_renderer_render_buffer (renderer, render_buf,
-                                        component_index,
-                                        GIMP_VIEW_BG_CHECKS,
-                                        GIMP_VIEW_BG_WHITE);
-
-      temp_buf_free (render_buf);
     }
-  else
+
+  switch (rendererimage->channel)
     {
-      const gchar *stock_id;
+    case GIMP_RED_CHANNEL:     stock_id = GIMP_STOCK_CHANNEL_RED;     break;
+    case GIMP_GREEN_CHANNEL:   stock_id = GIMP_STOCK_CHANNEL_GREEN;   break;
+    case GIMP_BLUE_CHANNEL:    stock_id = GIMP_STOCK_CHANNEL_BLUE;    break;
+    case GIMP_GRAY_CHANNEL:    stock_id = GIMP_STOCK_CHANNEL_GRAY;    break;
+    case GIMP_INDEXED_CHANNEL: stock_id = GIMP_STOCK_CHANNEL_INDEXED; break;
+    case GIMP_ALPHA_CHANNEL:   stock_id = GIMP_STOCK_CHANNEL_ALPHA;   break;
 
-      switch (rendererimage->channel)
-        {
-        case GIMP_RED_CHANNEL:     stock_id = GIMP_STOCK_CHANNEL_RED;     break;
-        case GIMP_GREEN_CHANNEL:   stock_id = GIMP_STOCK_CHANNEL_GREEN;   break;
-        case GIMP_BLUE_CHANNEL:    stock_id = GIMP_STOCK_CHANNEL_BLUE;    break;
-        case GIMP_GRAY_CHANNEL:    stock_id = GIMP_STOCK_CHANNEL_GRAY;    break;
-        case GIMP_INDEXED_CHANNEL: stock_id = GIMP_STOCK_CHANNEL_INDEXED; break;
-        case GIMP_ALPHA_CHANNEL:   stock_id = GIMP_STOCK_CHANNEL_ALPHA;   break;
-
-        default:
-          stock_id = gimp_viewable_get_stock_id (renderer->viewable);
-          break;
-        }
-
-      gimp_view_renderer_default_render_stock (renderer, widget, stock_id);
+    default:
+      stock_id = gimp_viewable_get_stock_id (renderer->viewable);
+      break;
     }
+
+  gimp_view_renderer_default_render_stock (renderer, widget, stock_id);
 }
