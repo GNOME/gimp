@@ -10,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-libgimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-17 14:38+0100\n"
-"PO-Revision-Date: 2007-10-01 21:35+0200\n"
+"POT-Creation-Date: 2007-10-05 09:22+0100\n"
+"PO-Revision-Date: 2007-10-05 22:39+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -760,19 +760,19 @@ msgid "%d GB"
 msgstr "%d GB"
 
 #: ../libgimpbase/gimputils.c:170 ../libgimpbase/gimputils.c:175
-#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:407
+#: ../modules/cdisplay_lcms.c:206 ../modules/colorsel_cmyk_lcms.c:408
 msgid "(invalid UTF-8 string)"
 msgstr "(érvénytelen UTF-8 karakterlánc)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:40
+#: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "Mode of operation for color management."
 msgstr "Működési mód a színkezelés számára."
 
-#: ../libgimpconfig/gimpcolorconfig.c:42
+#: ../libgimpconfig/gimpcolorconfig.c:44
 msgid "The color profile of your (primary) monitor."
 msgstr "Az elsődleges monitor színprofilja."
 
-#: ../libgimpconfig/gimpcolorconfig.c:44
+#: ../libgimpconfig/gimpcolorconfig.c:46
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
@@ -782,29 +782,41 @@ msgstr ""
 "használja. Ekkor a beállított monitorprofil csak probléma esetén lesz "
 "használva."
 
-#: ../libgimpconfig/gimpcolorconfig.c:48
+#: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The default RGB working space color profile."
 msgstr "Az alapértelmezett RGB munkaterület színprofilja."
 
-#: ../libgimpconfig/gimpcolorconfig.c:50
+#: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "Az RGB és a CMYK közti átalakításhoz használt CMYK színprofil."
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr "Nyomtatott változat szimulációjához (próbanyomat) használt színprofil."
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "Sets how colors are mapped for your display."
 msgstr "A színeknek a képernyőre való leképezését adja meg."
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
 msgstr ""
 "Megadja, hogy a színek hogyan legyenek átalakítva az RGB munkaterületről a "
 "nyomtatásszimulációs eszközre."
+
+#: ../libgimpconfig/gimpcolorconfig.c:61
+msgid ""
+"When enabled, the print simulation will mark colors which can not be "
+"represented in the target color space."
+msgstr ""
+"Ha be van kapcsolva, akkor a nyomtatásszimuláció megjelöli azon színeket, "
+"amelyek nem ábrázolhatók a cél-színtérben."
+
+#: ../libgimpconfig/gimpcolorconfig.c:64
+msgid "The color to use for marking colors which are out of gamut."
+msgstr "A színskálán kívüli színek megjelölésére használandó szín"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -1113,7 +1125,7 @@ msgstr "Négyzetek mérete"
 msgid "Check Style"
 msgstr "Négyzetek stílusa"
 
-#. toggle button to (des)activate the instant preview
+#. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "Előké_p"
@@ -1467,11 +1479,11 @@ msgstr "A színes tintákból kivonandó fekete százaléka."
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK színválasztó (színprofillal)"
 
-#: ../modules/colorsel_cmyk_lcms.c:396
+#: ../modules/colorsel_cmyk_lcms.c:397
 msgid "Profile: (none)"
 msgstr "Profil: (nincs)"
 
-#: ../modules/colorsel_cmyk_lcms.c:409
+#: ../modules/colorsel_cmyk_lcms.c:410
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
@@ -1805,8 +1817,8 @@ msgid ""
 "The MIDI channel to read events from. Set to -1 for reading from all MIDI "
 "channels."
 msgstr ""
-"Azon MIDI-csatorna, amelyről az események olvasandók. -1 értékre állítva "
-"az összes MIDI-csatornáról történik olvasás."
+"Azon MIDI-csatorna, amelyről az események olvasandók. -1 értékre állítva az "
+"összes MIDI-csatornáról történik olvasás."
 
 #: ../modules/controller_midi.c:259
 msgid "MIDI"
