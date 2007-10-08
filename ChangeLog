@@ -1,5 +1,10 @@
 2007-10-08  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpcolorpanel.[ch]: reverted the live update change
+	from bug #451568. It causes breakage such as bug #484757.
+
+2007-10-08  Sven Neumann  <sven@gimp.org>
+
 	* app/config/gimpdisplayconfig.[ch]
 	* app/config/gimprc-blurbs.h
 	* app/display/display-enums.[ch]

@@ -39,7 +39,6 @@ struct _GimpColorPanel
 
   GimpContext     *context;
   GtkWidget       *color_dialog;
-  gboolean         recoursing;
 };
 
 struct _GimpColorPanelClass
