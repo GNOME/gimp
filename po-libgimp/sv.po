@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: libgimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-19 13:55+0200\n"
-"PO-Revision-Date: 2007-09-19 13:56+0100\n"
+"POT-Creation-Date: 2007-10-08 02:27+0200\n"
+"PO-Revision-Date: 2007-10-08 02:29+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -771,41 +771,49 @@ msgstr "%d GB"
 #: ../libgimpbase/gimputils.c:170
 #: ../libgimpbase/gimputils.c:175
 #: ../modules/cdisplay_lcms.c:206
-#: ../modules/colorsel_cmyk_lcms.c:407
+#: ../modules/colorsel_cmyk_lcms.c:408
 msgid "(invalid UTF-8 string)"
 msgstr "(ogiltig UTF-8 sträng)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:40
+#: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "Mode of operation for color management."
 msgstr "Operationsläge för färghantering."
 
-#: ../libgimpconfig/gimpcolorconfig.c:42
+#: ../libgimpconfig/gimpcolorconfig.c:44
 msgid "The color profile of your (primary) monitor."
 msgstr "Färgprofilen för din (primära) skärm."
 
-#: ../libgimpconfig/gimpcolorconfig.c:44
+#: ../libgimpconfig/gimpcolorconfig.c:46
 msgid "When enabled, GIMP will try to use the display color profile from the windowing system.  The configured monitor profile is then only used as a fallback."
 msgstr "När aktiverad kommer GIMP att försöka använda displayfärgprofilen från fönstersystemet.  Den konfigurerade skärmprofilen kommer då endast att användas för att falla tillbaka på."
 
-#: ../libgimpconfig/gimpcolorconfig.c:48
+#: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The default RGB working space color profile."
 msgstr "Standardfärgprofilen för RGB-arbetsrymd."
 
-#: ../libgimpconfig/gimpcolorconfig.c:50
+#: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "CMYK-färgprofilen som används för att konvertera mellan RGB och CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr "Färgprofilen som används för simulering av en utskriven version (färggodkännande på skärm)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "Sets how colors are mapped for your display."
 msgstr "Ställer in hur färger mappas för din display."
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid "Sets how colors are converted from RGB working space to the print simulation device."
 msgstr "Ställer in hur färger konverteras från RGB-arbetsrymd till enheten för utskriftssimulering."
+
+#: ../libgimpconfig/gimpcolorconfig.c:61
+msgid "When enabled, the print simulation will mark colors which can not be represented in the target color space."
+msgstr "När aktiverad kommer utskriftssimuleringen att markera färger som inte kan representeras i målfärgrymden."
+
+#: ../libgimpconfig/gimpcolorconfig.c:64
+msgid "The color to use for marking colors which are out of gamut."
+msgstr "Färgen att använda för att markera färger som är utanför färgomfånget."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -1109,7 +1117,7 @@ msgstr "Rutstorlek"
 msgid "Check Style"
 msgstr "Rutstil"
 
-#. toggle button to (des)activate the instant preview
+#. toggle button to (de)activate the instant preview
 #: ../libgimpwidgets/gimppreview.c:277
 msgid "_Preview"
 msgstr "_Förhandsgranska"
@@ -1464,11 +1472,11 @@ msgstr "Mängden svart i procent att ta ut ur dom färgade bläcken."
 msgid "CMYK color selector (using color profile)"
 msgstr "CMYK-färgväljare (använd färgprofil)"
 
-#: ../modules/colorsel_cmyk_lcms.c:396
+#: ../modules/colorsel_cmyk_lcms.c:397
 msgid "Profile: (none)"
 msgstr "Profil: (ingen)"
 
-#: ../modules/colorsel_cmyk_lcms.c:409
+#: ../modules/colorsel_cmyk_lcms.c:410
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
