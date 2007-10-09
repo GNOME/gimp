@@ -1,5 +1,11 @@
 2007-10-09  Sven Neumann  <sven@gimp.org>
 
+	* app/core/gimpitem.c
+	* app/tools/gimprectangletool.c
+	* app/tools/tools-utils.c: fixed gtk-doc comments.
+
+2007-10-09  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile-pyramid.c (tile_pyramid_write_quarter): optimized
 	the rendering of fully opaque regions.
 

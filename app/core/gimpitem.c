@@ -430,8 +430,7 @@ gimp_item_removed (GimpItem *item)
  * gimp_item_is_removed:
  * @item: the #GimpItem to check.
  *
- * Returns #TRUE if the 'removed' flag is set for @item, and
- * #FALSE otherwise.
+ * Returns: %TRUE if the 'removed' flag is set for @item, %FALSE otherwise.
  */
 gboolean
 gimp_item_is_removed (const GimpItem *item)

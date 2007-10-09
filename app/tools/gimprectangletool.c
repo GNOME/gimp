@@ -1896,8 +1896,8 @@ gimp_rectangle_tool_update_handle_sizes (GimpRectangleTool *rectangle)
  * gimp_rectangle_tool_scale_has_changed:
  * @rectangle_tool: A #GimpRectangleTool.
  *
- * Returns %TRUE if the scale that was used to calculate handle sizes
- * is not the same as the current shell scale.
+ * Returns: %TRUE if the scale that was used to calculate handle sizes
+ *          is not the same as the current shell scale.
  */
 static gboolean
 gimp_rectangle_tool_scale_has_changed (GimpRectangleTool *rectangle_tool)

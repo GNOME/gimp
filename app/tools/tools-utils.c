@@ -30,8 +30,8 @@
  * @dx: the (fixed) delta-x
  * @dy: a suggested delta-y
  *
- * Returns an adjusted dy' near dy such that the slope (dx,dy')
- * is a multiple of 15 degrees.
+ * Returns: An adjusted dy' near dy such that the slope (dx,dy')
+ *          is a multiple of 15 degrees.
  **/
 static gdouble
 gimp_tool_motion_constrain_helper (gdouble dx,
