@@ -1,5 +1,10 @@
 2007-10-09  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile-pyramid.c (tile_pyramid_write_quarter): optimized
+	the rendering of fully opaque regions.
+
+2007-10-09  Sven Neumann  <sven@gimp.org>
+
 	* app/base/tile.[ch]
 	* app/paint-funcs/paint-funcs.c: moved code to update tile row
 	hints to tile.[ch].

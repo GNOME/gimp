@@ -420,7 +420,7 @@ tile_pyramid_write_quarter (Tile *dest,
         case 1:
           for (x = 0; x < src_ewidth / 2; x++)
             {
-              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0]) / 4;
+              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0]) >> 2;
 
               dst += 1;
 
@@ -434,19 +434,26 @@ tile_pyramid_write_quarter (Tile *dest,
         case 2:
           for (x = 0; x < src_ewidth / 2; x++)
             {
-              gint a = src0[1] + src1[1] + src2[1] + src3[1];
+              guint a = src0[1] + src1[1] + src2[1] + src3[1];
 
-              if (a)
+              switch (a)
                 {
+                case 0:    /* all transparent */
+                  dst[0] = dst[1] = 0;
+                  break;
+
+                case 1020: /* all opaque */
+                  dst[0] = (src0[0]  + src1[0] + src2[0] + src3[0]) >> 2;
+                  dst[1] = 255;
+                  break;
+
+                default:
                   dst[0] = ((src0[0] * src0[1] +
                              src1[0] * src1[1] +
                              src2[0] * src2[1] +
                              src3[0] * src3[1]) / a);
-                  dst[1] = a / 4;
-                }
-              else
-                {
-                  dst[0] = dst[1] = 0;
+                  dst[1] = a >> 2;
+                  break;
                 }
 
               dst += 2;
@@ -461,9 +468,9 @@ tile_pyramid_write_quarter (Tile *dest,
         case 3:
           for (x = 0; x < src_ewidth / 2; x++)
             {
-              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0]) / 4;
-              dst[1] = (src0[1] + src1[1] + src2[1] + src3[1]) / 4;
-              dst[2] = (src0[2] + src1[2] + src2[2] + src3[2]) / 4;
+              dst[0] = (src0[0] + src1[0] + src2[0] + src3[0]) >> 2;
+              dst[1] = (src0[1] + src1[1] + src2[1] + src3[1]) >> 2;
+              dst[2] = (src0[2] + src1[2] + src2[2] + src3[2]) >> 2;
 
               dst += 3;
 
@@ -477,10 +484,22 @@ tile_pyramid_write_quarter (Tile *dest,
         case 4:
           for (x = 0; x < src_ewidth / 2; x++)
             {
-              gint a = src0[3] + src1[3] + src2[3] + src3[3];
+              guint a = src0[3] + src1[3] + src2[3] + src3[3];
 
-              if (a)
+              switch (a)
                 {
+                case 0:    /* all transparent */
+                  dst[0] = dst[1] = dst[2] = dst[3] = 0;
+                  break;
+
+                case 1020: /* all opaque */
+                  dst[0] = (src0[0] + src1[0] + src2[0] + src3[0]) >> 2;
+                  dst[1] = (src0[1] + src1[1] + src2[1] + src3[1]) >> 2;
+                  dst[2] = (src0[2] + src1[2] + src2[2] + src3[2]) >> 2;
+                  dst[3] = 255;
+                  break;
+
+                default:
                   dst[0] = ((src0[0] * src0[3] +
                              src1[0] * src1[3] +
                              src2[0] * src2[3] +
@@ -493,11 +512,8 @@ tile_pyramid_write_quarter (Tile *dest,
                              src1[2] * src1[3] +
                              src2[2] * src2[3] +
                              src3[2] * src3[3]) / a);
-                  dst[3] = a / 4;
-                }
-              else
-                {
-                  dst[0] = dst[1] = dst[2] = dst[3] = 0;
+                  dst[3] = a >> 2;
+                  break;
                 }
 
               dst += 4;
