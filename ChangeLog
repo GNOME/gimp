@@ -1,5 +1,12 @@
 2007-10-09  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppropwidgets.c
+	(gimp_prop_file_chooser_button_setup): use the "file-set" signal
+	if possible (introduced with gtk+ 2.12). Enable display of hidden
+	files if the initial filename is a hidden file.
+
+2007-10-09  Sven Neumann  <sven@gimp.org>
+
 	* app/plug-in/gimppluginmanager-restore.c
 	(gimp_plug_in_manager_add_from_rc): changed message about missing
 	executable and only output it if gimp is verbose.

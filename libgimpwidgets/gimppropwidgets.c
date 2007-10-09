@@ -2219,6 +2219,13 @@ gimp_prop_file_chooser_button_setup (GtkWidget  *button,
 
   if (filename)
     {
+      gchar *basename = g_path_get_basename (filename);
+
+      if (basename && basename[0] == '.')
+        gtk_file_chooser_set_show_hidden (GTK_FILE_CHOOSER (button), TRUE);
+
+      g_free (basename);
+
       gtk_file_chooser_set_filename (GTK_FILE_CHOOSER (button), filename);
       g_free (filename);
     }
@@ -2237,20 +2244,28 @@ gimp_prop_file_chooser_button_setup (GtkWidget  *button,
 
   set_param_spec (G_OBJECT (button), widget, param_spec);
 
-  /* this evil hack is here to work around bug #327243 */
-  {
-    GSource  *source = g_idle_source_new ();
+  /*  GtkFileChooserButton::file-set is new in GTK+ 2.12  */
+  if (g_signal_lookup ("file-set", GTK_TYPE_FILE_CHOOSER_BUTTON))
+    {
+      g_signal_connect (button, "file-set",
+                        G_CALLBACK (gimp_prop_file_chooser_button_callback),
+                        config);
+    }
+  else
+    {
+      /* this evil hack is here to work around bug #327243 */
+      GSource  *source = g_idle_source_new ();
 
-    g_object_set_data (G_OBJECT (button),
-                       "gimp-prop-file-chooser-connect", config);
+      g_object_set_data (G_OBJECT (button),
+                         "gimp-prop-file-chooser-connect", config);
 
-    g_source_set_priority (source, G_PRIORITY_LOW);
-    g_source_set_closure (source,
-                          g_cclosure_new_object (G_CALLBACK (gimp_prop_file_chooser_button_connect_idle),
-                                                 G_OBJECT (button)));
-    g_source_attach (source, NULL);
-    g_source_unref (source);
-  }
+      g_source_set_priority (source, G_PRIORITY_LOW);
+      g_source_set_closure (source,
+                            g_cclosure_new_object (G_CALLBACK (gimp_prop_file_chooser_button_connect_idle),
+                                                   G_OBJECT (button)));
+      g_source_attach (source, NULL);
+      g_source_unref (source);
+    }
 
   connect_notify (config, param_spec->name,
                   G_CALLBACK (gimp_prop_file_chooser_button_notify),
