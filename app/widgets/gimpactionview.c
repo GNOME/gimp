@@ -546,6 +546,10 @@ gimp_action_view_conflict_confirm (GimpActionView  *view,
 
                              NULL);
 
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
   g_signal_connect (dialog, "response",
                     G_CALLBACK (gimp_action_view_conflict_response),
                     confirm_data);

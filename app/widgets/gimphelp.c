@@ -257,13 +257,21 @@ gimp_help_browser_error (Gimp        *gimp,
 
                              NULL);
 
-  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box, primary);
+  gtk_dialog_set_alternative_button_order (GTK_DIALOG (dialog),
+                                           GTK_RESPONSE_OK,
+                                           GTK_RESPONSE_CANCEL,
+                                           -1);
+
+  gimp_message_box_set_primary_text (GIMP_MESSAGE_DIALOG (dialog)->box,
+                                     primary);
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box, text);
 
   if (gimp_dialog_run (GIMP_DIALOG (dialog)) == GTK_RESPONSE_OK)
-    g_object_set (gimp->config,
-                  "help-browser", GIMP_HELP_BROWSER_WEB_BROWSER,
-                  NULL);
+    {
+      g_object_set (gimp->config,
+                    "help-browser", GIMP_HELP_BROWSER_WEB_BROWSER,
+                    NULL);
+    }
 
   gtk_widget_destroy (dialog);
 }
@@ -282,14 +290,15 @@ gimp_help_call (Gimp        *gimp,
     {
       GValueArray *return_vals;
 
-      return_vals = gimp_pdb_execute_procedure_by_name (gimp->pdb,
-                                                        gimp_get_user_context (gimp),
-                                                        NULL,
-                                                        procedure_name,
-                                                        G_TYPE_STRING, help_domain,
-                                                        G_TYPE_STRING, help_locales,
-                                                        G_TYPE_STRING, help_id,
-                                                        G_TYPE_NONE);
+      return_vals =
+        gimp_pdb_execute_procedure_by_name (gimp->pdb,
+                                            gimp_get_user_context (gimp),
+                                            NULL,
+                                            procedure_name,
+                                            G_TYPE_STRING, help_domain,
+                                            G_TYPE_STRING, help_locales,
+                                            G_TYPE_STRING, help_id,
+                                            G_TYPE_NONE);
 
       g_value_array_free (return_vals);
 
@@ -346,15 +355,16 @@ gimp_help_call (Gimp        *gimp,
                   help_id      ? help_id      : "(null)");
 #endif
 
-      return_vals = gimp_pdb_execute_procedure_by_name (gimp->pdb,
-                                                        gimp_get_user_context (gimp),
-                                                        NULL,
-                                                        "extension-gimp-help-temp",
-                                                        G_TYPE_STRING, procedure_name,
-                                                        G_TYPE_STRING, help_domain,
-                                                        G_TYPE_STRING, help_locales,
-                                                        G_TYPE_STRING, help_id,
-                                                        G_TYPE_NONE);
+      return_vals =
+        gimp_pdb_execute_procedure_by_name (gimp->pdb,
+                                            gimp_get_user_context (gimp),
+                                            NULL,
+                                            "extension-gimp-help-temp",
+                                            G_TYPE_STRING, procedure_name,
+                                            G_TYPE_STRING, help_domain,
+                                            G_TYPE_STRING, help_locales,
+                                            G_TYPE_STRING, help_id,
+                                            G_TYPE_NONE);
 
       g_value_array_free (return_vals);
     }

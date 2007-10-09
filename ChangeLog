@@ -1,3 +1,11 @@
+2007-10-09  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpactionview.c
+	* app/widgets/gimphelp.c: specify alternative button order for
+	message dialogs.
+
+	* app/dialogs/user-install-dialog.c: removed trailing whitespace.
+
 2007-10-08  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpperspectiveclonetool.c: implement button_release

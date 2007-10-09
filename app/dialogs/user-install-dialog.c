@@ -95,7 +95,7 @@ user_install_dialog_new (GimpUserInstall *install)
   gimp_message_box_set_text (GIMP_MESSAGE_DIALOG (dialog)->box,
 			     _("The GIMP user installation failed; "
 			       "see the log for details."));
- 
+
   frame = gimp_frame_new (_("Installation Log"));
   gtk_container_set_border_width (GTK_CONTAINER (frame), 12);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog)->vbox), frame,
@@ -108,7 +108,7 @@ user_install_dialog_new (GimpUserInstall *install)
                                   GTK_POLICY_AUTOMATIC);
   gtk_container_add (GTK_CONTAINER (frame), scrolled);
   gtk_widget_show (scrolled);
- 
+
   buffer = gtk_text_buffer_new (NULL);
 
   gtk_text_buffer_create_tag (buffer, "bold",
