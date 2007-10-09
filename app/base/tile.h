@@ -77,6 +77,9 @@ void          tile_set_rowhint       (Tile        *tile,
                                       gint         yoff,
                                       TileRowHint  rowhint);
 void          tile_allocate_rowhints (Tile        *tile);
+void          tile_update_rowhints   (Tile        *tile,
+                                      gint         start,
+                                      gint         rows);
 
 void        * tile_data_pointer      (Tile        *tile,
                                       gint         xoff,

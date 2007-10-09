@@ -1,5 +1,11 @@
 2007-10-09  Sven Neumann  <sven@gimp.org>
 
+	* app/base/tile.[ch]
+	* app/paint-funcs/paint-funcs.c: moved code to update tile row
+	hints to tile.[ch].
+
+2007-10-09  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimphelpui.c (gimp_help_connect): pass canonical
 	signal names to gtk_binding_entry_add_signal().
 
