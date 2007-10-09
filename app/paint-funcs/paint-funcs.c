@@ -31,6 +31,7 @@
 #include "base/pixel-region.h"
 #include "base/temp-buf.h"
 #include "base/tile-manager.h"
+#include "base/tile-rowhints.h"
 #include "base/tile.h"
 
 #include "composite/gimp-composite.h"

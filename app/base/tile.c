@@ -23,10 +23,11 @@
 #include "base-types.h"
 
 #include "tile.h"
-#include "tile-private.h"
 #include "tile-cache.h"
 #include "tile-manager.h"
+#include "tile-rowhints.h"
 #include "tile-swap.h"
+#include "tile-private.h"
 
 
 /*  Uncomment for verbose debugging on copy-on-write logic  */
@@ -34,9 +35,6 @@
 
 /*  Uncomment to enable global counters to profile the tile system. */
 /*  #define TILE_PROFILING */
-
-/*  Sanity checks on tile hinting code  */
-/*  #define HINTS_SANITY */
 
 
 /*  This is being used from tile-swap, but just for debugging purposes.  */
@@ -49,247 +47,14 @@ static gint tile_count        = 0;
 static gint tile_share_count  = 0;
 static gint tile_active_count = 0;
 
-#ifdef HINTS_SANITY
 static gint tile_exist_peak   = 0;
 static gint tile_exist_count  = 0;
-#endif
 
 #endif
 
 
 static void tile_destroy (Tile *tile);
 
-
-void
-tile_allocate_rowhints (Tile *tile)
-{
-  if (! tile->rowhint)
-    tile->rowhint = g_slice_alloc0 (sizeof (TileRowHint) * TILE_HEIGHT);
-}
-
-TileRowHint
-tile_get_rowhint (Tile *tile,
-                  gint  yoff)
-{
-  if (! tile->rowhint)
-    return  TILEROWHINT_UNKNOWN;
-
-#ifdef HINTS_SANITY
-  if (yoff < tile_eheight(tile) && yoff >= 0)
-    {
-      return tile->rowhint[yoff];
-    }
-  else
-    {
-      g_error ("GET_ROWHINT OUT OF RANGE");
-    }
-
-  return TILEROWHINT_OUTOFRANGE;
-#else
-  return tile->rowhint[yoff];
-#endif
-}
-
-void
-tile_set_rowhint (Tile        *tile,
-                  gint         yoff,
-                  TileRowHint  rowhint)
-{
-#ifdef HINTS_SANITY
-  if (yoff < tile_eheight(tile) && yoff >= 0)
-    {
-      tile->rowhint[yoff] = rowhint;
-    }
-  else
-    {
-      g_error("SET_ROWHINT OUT OF RANGE");
-    }
-#else
-
-  tile->rowhint[yoff] = rowhint;
-#endif
-}
-
-void
-tile_update_rowhints (Tile *tile,
-                      gint  start,
-                      gint  rows)
-{
-  const guchar *ptr;
-  gint          bpp, ewidth;
-  gint          x, y;
-
-#ifdef HINTS_SANITY
-  g_assert (tile != NULL);
-#endif
-
-  tile_allocate_rowhints (tile);
-
-  bpp = tile_bpp (tile);
-  ewidth = tile_ewidth (tile);
-
-  switch (bpp)
-    {
-    case 1:
-    case 3:
-      for (y = start; y < start + rows; y++)
-        tile_set_rowhint (tile, y, TILEROWHINT_OPAQUE);
-      break;
-
-    case 4:
-#ifdef HINTS_SANITY
-      g_assert (tile != NULL);
-#endif
-
-      ptr = tile_data_pointer (tile, 0, start);
-
-#ifdef HINTS_SANITY
-      g_assert (ptr != NULL);
-#endif
-
-      for (y = start; y < start + rows; y++)
-        {
-          TileRowHint hint = tile_get_rowhint (tile, y);
-
-#ifdef HINTS_SANITY
-          if (hint == TILEROWHINT_BROKEN)
-            g_error ("BROKEN y=%d", y);
-          if (hint == TILEROWHINT_OUTOFRANGE)
-            g_error ("OOR y=%d", y);
-          if (hint == TILEROWHINT_UNDEFINED)
-            g_error ("UNDEFINED y=%d - bpp=%d ew=%d eh=%d",
-                     y, bpp, ewidth, eheight);
-#endif
-
-#ifdef HINTS_SANITY
-          if (hint == TILEROWHINT_TRANSPARENT ||
-              hint == TILEROWHINT_MIXED ||
-              hint == TILEROWHINT_OPAQUE)
-            {
-              goto next_row4;
-            }
-
-          if (hint != TILEROWHINT_UNKNOWN)
-            {
-              g_error ("MEGABOGUS y=%d - bpp=%d ew=%d eh=%d",
-                       y, bpp, ewidth, eheight);
-            }
-#endif
-
-          if (hint == TILEROWHINT_UNKNOWN)
-            {
-              const guchar alpha = ptr[3];
-
-              /* row is all-opaque or all-transparent? */
-              if (alpha == 0 || alpha == 255)
-                {
-                  if (ewidth > 1)
-                    {
-                      for (x = 1; x < ewidth; x++)
-                        {
-                          if (ptr[x * 4 + 3] != alpha)
-                            {
-                              tile_set_rowhint (tile, y, TILEROWHINT_MIXED);
-                              goto next_row4;
-                            }
-                        }
-                    }
-
-                  tile_set_rowhint (tile, y,
-                                    (alpha == 0) ?
-                                    TILEROWHINT_TRANSPARENT :
-                                    TILEROWHINT_OPAQUE);
-                }
-              else
-                {
-                  tile_set_rowhint (tile, y, TILEROWHINT_MIXED);
-                }
-            }
-
-        next_row4:
-          ptr += 4 * ewidth;
-        }
-      break;
-
-    case 2:
-#ifdef HINTS_SANITY
-      g_assert (tile != NULL);
-#endif
-
-      ptr = tile_data_pointer (tile, 0, start);
-
-#ifdef HINTS_SANITY
-      g_assert (ptr != NULL);
-#endif
-
-      for (y = start; y < start + rows; y++)
-        {
-          TileRowHint hint = tile_get_rowhint (tile, y);
-
-#ifdef HINTS_SANITY
-          if (hint == TILEROWHINT_BROKEN)
-            g_error ("BROKEN y=%d",y);
-          if (hint == TILEROWHINT_OUTOFRANGE)
-            g_error ("OOR y=%d",y);
-          if (hint == TILEROWHINT_UNDEFINED)
-            g_error ("UNDEFINED y=%d - bpp=%d ew=%d eh=%d",
-                     y, bpp, ewidth, eheight);
-#endif
-
-#ifdef HINTS_SANITY
-          if (hint == TILEROWHINT_TRANSPARENT ||
-              hint == TILEROWHINT_MIXED ||
-              hint == TILEROWHINT_OPAQUE)
-            {
-              goto next_row2;
-            }
-
-          if (hint != TILEROWHINT_UNKNOWN)
-            {
-              g_error ("MEGABOGUS y=%d - bpp=%d ew=%d eh=%d",
-                       y, bpp, ewidth, eheight);
-            }
-#endif
-
-          if (hint == TILEROWHINT_UNKNOWN)
-            {
-              const guchar alpha = ptr[1];
-
-              /* row is all-opaque or all-transparent? */
-              if (alpha == 0 || alpha == 255)
-                {
-                  if (ewidth > 1)
-                    {
-                      for (x = 1; x < ewidth; x++)
-                        {
-                          if (ptr[x * 2 + 1] != alpha)
-                            {
-                              tile_set_rowhint (tile, y, TILEROWHINT_MIXED);
-                              goto next_row2;
-                            }
-                        }
-                    }
-                  tile_set_rowhint (tile, y,
-                                    (alpha == 0) ?
-                                    TILEROWHINT_TRANSPARENT :
-                                    TILEROWHINT_OPAQUE);
-                }
-              else
-                {
-                  tile_set_rowhint (tile, y, TILEROWHINT_MIXED);
-                }
-            }
-
-        next_row2:
-          ptr += 2 * ewidth;
-        }
-      break;
-
-    default:
-      g_return_if_reached ();
-      break;
-    }
-}
 
 Tile *
 tile_new (gint bpp)
@@ -406,11 +171,9 @@ tile_alloc (Tile *tile)
   tile->data = g_new (guchar, tile->size);
 
 #ifdef TILE_PROFILING
-#ifdef HINTS_SANITY
   tile_exist_count++;
   if (tile_exist_count > tile_exist_peak)
     tile_exist_peak = tile_exist_count;
-#endif
 #endif
 }
 
@@ -452,10 +215,7 @@ tile_destroy (Tile *tile)
 #ifdef TILE_PROFILING
   tile_count--;
 
-#ifdef HINTS_SANITY
   tile_exist_count--;
-#endif
-
 #endif
 }
 

@@ -25,6 +25,7 @@
 #include "tile.h"
 #include "tile-cache.h"
 #include "tile-swap.h"
+#include "tile-rowhints.h"
 #include "tile-private.h"
 
 

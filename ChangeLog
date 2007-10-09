@@ -1,8 +1,20 @@
 2007-10-09  Sven Neumann  <sven@gimp.org>
 
+	* app/base/Makefile.am
+	* app/base/tile.[ch]
+	* app/base/tile-rowhints.[ch]: moved tile row hints code to its
+	own file.
+	
+	* app/base/tile-cache.c
+	* app/base/tile-manager.c
+	* app/base/tile-swap.c
+	* app/paint-funcs/paint-funcs.c: changed accordingly.
+
+2007-10-09  Sven Neumann  <sven@gimp.org>
+
 	* app/core/gimpitem.c
 	* app/tools/gimprectangletool.c
-	* app/tools/tools-utils.c: fixed gtk-doc comments.
+	* app/tools/tools-utils.c: fixed ambiguous gtk-doc comments.
 
 2007-10-09  Sven Neumann  <sven@gimp.org>
 

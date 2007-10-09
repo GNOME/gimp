@@ -54,6 +54,8 @@ libappbase_a_SOURCES = \
 	tile-manager-private.h	\
 	tile-pyramid.c		\
 	tile-pyramid.h		\
+	tile-rowhints.c		\
+	tile-rowhints.h		\
 	tile-swap.c		\
 	tile-swap.h
 

@@ -24,24 +24,9 @@
 #define TILE_HEIGHT  64
 
 
-/*  explicit guchar type rather than enum since gcc chooses an int
- *  representation but arrays of TileRowHints are quite space-critical
- *  in GIMP.
- */
-typedef guchar TileRowHint;
-
-#define TILEROWHINT_UNKNOWN     0
-#define TILEROWHINT_OPAQUE      1
-#define TILEROWHINT_TRANSPARENT 2
-#define TILEROWHINT_MIXED       3
-#define TILEROWHINT_OUTOFRANGE  4
-#define TILEROWHINT_UNDEFINED   5
-#define TILEROWHINT_BROKEN      6
-
-
 /* Returns a newly allocated Tile with all fields initialized to "good" values.
  */
-Tile        * tile_new               (gint         bpp);
+Tile        * tile_new               (gint      bpp);
 
 
 /*
@@ -53,37 +38,27 @@ Tile        * tile_new               (gint         bpp);
  * write access.  (This is a hack, and should be handled better.)
  */
 
-void          tile_lock              (Tile        *tile);
-void          tile_release           (Tile        *tile,
-                                      gboolean     dirty);
+void          tile_lock              (Tile     *tile);
+void          tile_release           (Tile     *tile,
+                                      gboolean  dirty);
 
 /* Allocate the data for the tile.
  */
-void          tile_alloc             (Tile        *tile);
+void          tile_alloc             (Tile     *tile);
 
 /* Return the size in bytes of the tiles data.
  */
-gint          tile_size              (Tile        *tile);
+gint          tile_size              (Tile     *tile);
 
-gint          tile_ewidth            (Tile        *tile);
-gint          tile_eheight           (Tile        *tile);
-gint          tile_bpp               (Tile        *tile);
+gint          tile_ewidth            (Tile     *tile);
+gint          tile_eheight           (Tile     *tile);
+gint          tile_bpp               (Tile     *tile);
 
-gboolean      tile_is_valid          (Tile        *tile);
+gboolean      tile_is_valid          (Tile     *tile);
 
-TileRowHint   tile_get_rowhint       (Tile        *tile,
-                                      gint         yoff);
-void          tile_set_rowhint       (Tile        *tile,
-                                      gint         yoff,
-                                      TileRowHint  rowhint);
-void          tile_allocate_rowhints (Tile        *tile);
-void          tile_update_rowhints   (Tile        *tile,
-                                      gint         start,
-                                      gint         rows);
-
-void        * tile_data_pointer      (Tile        *tile,
-                                      gint         xoff,
-                                      gint         yoff);
+void        * tile_data_pointer      (Tile     *tile,
+                                      gint      xoff,
+                                      gint      yoff);
 
 gint          tile_global_refcount   (void);
 
@@ -94,12 +69,12 @@ gint          tile_global_refcount   (void);
  * discarded.
  */
 
-void          tile_attach            (Tile        *tile,
-                                      void        *tm,
-                                      gint         tile_num);
-void          tile_detach            (Tile        *tile,
-                                      void        *tm,
-                                      gint         tile_num);
+void          tile_attach            (Tile     *tile,
+                                      void     *tm,
+                                      gint      tile_num);
+void          tile_detach            (Tile     *tile,
+                                      void     *tm,
+                                      gint      tile_num);
 
 
 #endif /* __TILE_H__ */

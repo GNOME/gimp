@@ -49,8 +49,9 @@
 #endif
 
 #include "tile.h"
-#include "tile-private.h"
+#include "tile-rowhints.h"
 #include "tile-swap.h"
+#include "tile-private.h"
 
 #include "gimp-intl.h"
 

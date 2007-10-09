@@ -25,11 +25,12 @@
 #include "base-types.h"
 
 #include "tile.h"
-#include "tile-private.h"
 #include "tile-cache.h"
 #include "tile-manager.h"
 #include "tile-manager-private.h"
+#include "tile-rowhints.h"
 #include "tile-swap.h"
+#include "tile-private.h"
 
 
 static inline gint
