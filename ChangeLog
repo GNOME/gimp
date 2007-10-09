@@ -1,5 +1,11 @@
 2007-10-09  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* libgimpwidgets/gimpnumberpairentry.c
+	(gimp_number_pair_entry_get_default_text): Correct gtk-doc
+	comment.
+
+2007-10-09  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimprectangleoptions.[ch]: Connect a new function
 	gimp_rectangle_options_string_current_updates() that updates the
 	Fixed: Aspect entry with a 'Current' string when aspect of the
