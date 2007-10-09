@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-08 02:24+0200\n"
-"PO-Revision-Date: 2007-10-08 02:27+0100\n"
+"POT-Creation-Date: 2007-10-09 21:51+0200\n"
+"PO-Revision-Date: 2007-10-09 21:56+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -3372,7 +3372,7 @@ msgid "Toggle _Quick Mask"
 msgstr "Visa _snabbmask"
 
 #: ../app/actions/quick-mask-actions.c:54
-#: ../app/display/gimpdisplayshell.c:1033
+#: ../app/display/gimpdisplayshell.c:1032
 msgid "Toggle Quick Mask"
 msgstr "Visa snabbmask"
 
@@ -4542,11 +4542,11 @@ msgstr "Ersätt"
 msgid "Anti erase"
 msgstr "Antisudda"
 
-#: ../app/base/tile-swap.c:543
+#: ../app/base/tile-swap.c:544
 msgid "Unable to open swap file. GIMP has run out of memory and cannot use the swap file. Some parts of your images may be corrupted. Try to save your work using different filenames, restart GIMP and check the location of the swap directory in your Preferences."
 msgstr "Kunde inte öppna växlingfilen. GIMP har slut på minne och kan inte använda växlingsfilen. Delar av dina bilder kan vara skadade. Prova att spara ditt arbete under andra filnamn, starta om GIMP och kontrollera platsen för växlingskatalogen i dina inställningar."
 
-#: ../app/base/tile-swap.c:558
+#: ../app/base/tile-swap.c:559
 #, c-format
 msgid "Failed to resize swap file: %s"
 msgstr "Misslyckades med att ändra storlek på växlingsfil: %s"
@@ -5633,7 +5633,7 @@ msgid "Invalid UTF-8 string in brush file '%s'."
 msgstr "Ogiltig UTF-8-sträng i penselfilen \"%s\"."
 
 #: ../app/core/gimpbrush-load.c:283
-#: ../app/core/gimpitem.c:505
+#: ../app/core/gimpitem.c:504
 #: ../app/core/gimppattern-load.c:146
 #: ../app/dialogs/template-options-dialog.c:83
 #: ../app/tools/gimpvectortool.c:296
@@ -6320,16 +6320,16 @@ msgstr[1] "%d lager"
 msgid "Could not open thumbnail '%s': %s"
 msgstr "Kunde inte öppna miniatyrbild \"%s\": %s"
 
-#: ../app/core/gimpitem.c:1133
+#: ../app/core/gimpitem.c:1132
 msgid "Attach Parasite"
 msgstr "Koppla parasit"
 
-#: ../app/core/gimpitem.c:1143
+#: ../app/core/gimpitem.c:1142
 msgid "Attach Parasite to Item"
 msgstr "Koppla parasit till objekt"
 
-#: ../app/core/gimpitem.c:1185
-#: ../app/core/gimpitem.c:1192
+#: ../app/core/gimpitem.c:1184
+#: ../app/core/gimpitem.c:1191
 msgid "Remove Parasite from Item"
 msgstr "Ta bort parasit från objekt"
 
@@ -8187,20 +8187,28 @@ msgstr "Panorera vy"
 msgid "Switch to Move tool"
 msgstr "Växla till flyttningsverktyget"
 
+#: ../app/display/display-enums.c:115
+msgid "quality|Low"
+msgstr "Låg"
+
+#: ../app/display/display-enums.c:116
+msgid "quality|High"
+msgstr "Hög"
+
 #: ../app/display/gimpdisplay-handlers.c:155
 #, c-format
 msgid "Image saved to '%s'"
 msgstr "Bilden sparades till \"%s\""
 
-#: ../app/display/gimpdisplayshell.c:895
+#: ../app/display/gimpdisplayshell.c:894
 msgid "Access the image menu"
 msgstr "Kom åt bildmenyn"
 
-#: ../app/display/gimpdisplayshell.c:1004
+#: ../app/display/gimpdisplayshell.c:1003
 msgid "Zoom image when window size changes"
 msgstr "Zooma bild när fönsterstorlek ändras"
 
-#: ../app/display/gimpdisplayshell.c:1054
+#: ../app/display/gimpdisplayshell.c:1053
 msgid "Navigate the image display"
 msgstr "Navigera i bildvisningen"
 
@@ -8441,7 +8449,7 @@ msgstr "Penna"
 
 #: ../app/paint/gimpperspectiveclone.c:95
 #: ../app/paint/paint-enums.c:52
-#: ../app/tools/gimpperspectiveclonetool.c:120
+#: ../app/tools/gimpperspectiveclonetool.c:127
 msgid "Perspective Clone"
 msgstr "Perspektivkloning"
 
@@ -9023,7 +9031,7 @@ msgstr "Fyll transparenta områden"
 #: ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160
 #: ../app/tools/gimphealtool.c:99
-#: ../app/tools/gimpperspectiveclonetool.c:903
+#: ../app/tools/gimpperspectiveclonetool.c:965
 #: ../app/tools/gimpselectionoptions.c:414
 msgid "Sample merged"
 msgstr "Sampla sammanfogade"
@@ -9080,13 +9088,13 @@ msgid "Click to set a new clone source"
 msgstr "Klicka för att ställa in en ny kloningskälla"
 
 #: ../app/tools/gimpclonetool.c:109
-#: ../app/tools/gimpperspectiveclonetool.c:898
+#: ../app/tools/gimpperspectiveclonetool.c:960
 msgid "Source"
 msgstr "Källa"
 
 #: ../app/tools/gimpclonetool.c:128
 #: ../app/tools/gimphealtool.c:111
-#: ../app/tools/gimpperspectiveclonetool.c:917
+#: ../app/tools/gimpperspectiveclonetool.c:979
 msgid "Alignment:"
 msgstr "Arrangemang:"
 
@@ -9433,7 +9441,7 @@ msgid "Type  (%s)"
 msgstr "Typ (%s)"
 
 #: ../app/tools/gimpdodgeburntool.c:214
-#: ../app/tools/gimpperspectiveclonetool.c:890
+#: ../app/tools/gimpperspectiveclonetool.c:952
 msgid "Mode"
 msgstr "Läge"
 
@@ -10119,15 +10127,15 @@ msgstr "Pennverktyg: Målning med hårda kanter med en pensel"
 msgid "Pe_ncil"
 msgstr "Pe_nna"
 
-#: ../app/tools/gimpperspectiveclonetool.c:121
+#: ../app/tools/gimpperspectiveclonetool.c:128
 msgid "Perspective Clone Tool: Clone from an image source after applying a perspective transformation"
 msgstr "Verktyg för perspektivkloning: Klona från en bildkälla efter en perspektivtransformering tillämpats"
 
-#: ../app/tools/gimpperspectiveclonetool.c:123
+#: ../app/tools/gimpperspectiveclonetool.c:130
 msgid "_Perspective Clone"
 msgstr "_Perspektivkloning"
 
-#: ../app/tools/gimpperspectiveclonetool.c:645
+#: ../app/tools/gimpperspectiveclonetool.c:701
 msgid "Ctrl-Click to set a clone source"
 msgstr "Ctrl-klicka för att ställa in en kloningskälla"
 
@@ -10837,7 +10845,7 @@ msgid "Name"
 msgstr "Namn"
 
 #: ../app/widgets/gimpactionview.c:497
-#: ../app/widgets/gimpactionview.c:697
+#: ../app/widgets/gimpactionview.c:701
 msgid "Changing shortcut failed."
 msgstr "Ändring av genväg misslyckades."
 
@@ -10849,21 +10857,21 @@ msgstr "Krockande genvägar"
 msgid "_Reassign shortcut"
 msgstr "_Ändra genväg"
 
-#: ../app/widgets/gimpactionview.c:556
+#: ../app/widgets/gimpactionview.c:560
 #, c-format
 msgid "Shortcut \"%s\" is already taken by \"%s\" from the \"%s\" group."
 msgstr "Genvägen \"%s\" är redan tagen av \"%s\" från gruppen \"%s\"."
 
-#: ../app/widgets/gimpactionview.c:560
+#: ../app/widgets/gimpactionview.c:564
 #, c-format
 msgid "Reassigning the shortcut will cause it to be removed from \"%s\"."
 msgstr "Ändring av genvägen kommer ta bort den från \"%s\"."
 
-#: ../app/widgets/gimpactionview.c:633
+#: ../app/widgets/gimpactionview.c:637
 msgid "Invalid shortcut."
 msgstr "Ogiltig genväg."
 
-#: ../app/widgets/gimpactionview.c:721
+#: ../app/widgets/gimpactionview.c:725
 msgid "Removing shortcut failed."
 msgstr "Borttagning av genväg misslyckades."
 
