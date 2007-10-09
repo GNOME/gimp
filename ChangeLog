@@ -1,5 +1,9 @@
 2007-10-09  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/jpeg/jpeg-load.c: removed an obsolete comment.
+
+2007-10-09  Sven Neumann  <sven@gimp.org>
+
 	* app/widgets/gimpactionview.c
 	* app/widgets/gimphelp.c: specify alternative button order for
 	message dialogs.

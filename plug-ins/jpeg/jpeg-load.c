@@ -80,21 +80,21 @@ load_image (const gchar *filename,
   gint32           layer_ID;
   struct jpeg_decompress_struct cinfo;
   struct my_error_mgr           jerr;
-  FILE    *infile;
-  guchar  *buf;
-  guchar **rowbuf;
-  gint     image_type;
-  gint     layer_type;
-  gint     tile_height;
-  gint     scanlines;
-  gint     i, start, end;
-  jpeg_saved_marker_ptr marker;
-  gint     orientation = 0;
+  jpeg_saved_marker_ptr         marker;
+  FILE            *infile;
+  guchar          *buf;
+  guchar         **rowbuf;
+  gint             image_type;
+  gint             layer_type;
+  gint             tile_height;
+  gint             scanlines;
+  gint             i, start, end;
+  gint             orientation = 0;
 
 #ifdef HAVE_LCMS
-  cmsHTRANSFORM  cmyk_transform = NULL;
+  cmsHTRANSFORM    cmyk_transform = NULL;
 #else
-  gpointer       cmyk_transform = NULL;
+  gpointer         cmyk_transform = NULL;
 #endif
 
   /* We set up the normal JPEG error routines. */
@@ -159,7 +159,7 @@ load_image (const gchar *filename,
 
   /* Step 3: read file parameters with jpeg_read_header() */
 
-  (void) jpeg_read_header (&cinfo, TRUE);
+  jpeg_read_header (&cinfo, TRUE);
 
   /* We can ignore the return value from jpeg_read_header since
    *   (a) suspension is not possible with the stdio data source, and
@@ -181,8 +181,8 @@ load_image (const gchar *filename,
    * the data.  After jpeg_start_decompress() we have the correct scaled
    * output image dimensions available, as well as the output colormap
    * if we asked for color quantization.
-   * In this example, we need to make an output work buffer of the right size.
    */
+
   /* temporary buffer */
   tile_height = gimp_tile_height ();
   buf = g_new (guchar,
@@ -193,11 +193,6 @@ load_image (const gchar *filename,
   for (i = 0; i < tile_height; i++)
     rowbuf[i] = buf + cinfo.output_width * cinfo.output_components * i;
 
-  /* Create a new image of the proper size and associate the filename with it.
-
-     Preview layers, not being on the bottom of a layer stack, MUST HAVE
-     AN ALPHA CHANNEL!
-   */
   switch (cinfo.output_components)
     {
     case 1:
@@ -608,15 +603,15 @@ load_thumbnail_image (const gchar *filename,
   gint32           layer_ID;
   struct jpeg_decompress_struct cinfo;
   struct my_error_mgr           jerr;
-  guchar     *buf;
-  guchar    **rowbuf;
-  gint        image_type;
-  gint        layer_type;
-  gint        tile_height;
-  gint        scanlines;
-  gint        i, start, end;
-  my_src_ptr  src;
-  FILE       *infile;
+  guchar          *buf;
+  guchar         **rowbuf;
+  gint             image_type;
+  gint             layer_type;
+  gint             tile_height;
+  gint             scanlines;
+  gint             i, start, end;
+  my_src_ptr       src;
+  FILE            *infile;
 
   image_ID = -1;
   exif_data = jpeg_exif_data_new_from_file (filename, NULL);
