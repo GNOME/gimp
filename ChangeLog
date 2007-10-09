@@ -1,5 +1,10 @@
 2007-10-09  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpnumberpairentry.c: fixed ambiguous gtk-doc
+	comment.
+
+2007-10-09  Sven Neumann  <sven@gimp.org>
+
 	* app/base/Makefile.am
 	* app/base/tile.[ch]
 	* app/base/tile-rowhints.[ch]: moved tile row hints code to its

@@ -837,9 +837,7 @@ gimp_number_pair_entry_events (GtkWidget *widget,
  * @left_number:
  * @right_number:
  *
- * Returns allocated data, must be g_free:d.
- *
- * Since: GIMP 2.4
+ * Returns: allocated data, must be g_free:d.
  **/
 static gchar *
 gimp_number_pair_entry_strdup_number_pair_string (GimpNumberPairEntry *entry,
