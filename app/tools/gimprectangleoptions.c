@@ -53,6 +53,9 @@ static void     gimp_rectangle_options_unparent_fixed_rule_widgets (GimpRectangl
 static void     gimp_rectangle_options_fixed_rule_changed          (GtkWidget                     *combo_box,
                                                                     GimpRectangleOptionsPrivate   *private);
 
+static void     gimp_rectangle_options_string_current_updates      (GimpNumberPairEntry           *entry,
+                                                                    GParamSpec                    *param,
+                                                                    GimpRectangleOptions          *rectangle_options);
 static void     gimp_rectangle_options_setup_ratio_completion      (GimpRectangleOptions          *rectangle_options,
                                                                     GtkWidget                     *entry,
                                                                     GtkListStore                  *history);
@@ -302,6 +305,13 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
                                                                 GIMP_PARAM_READWRITE |
                                                                 G_PARAM_CONSTRUCT));
 
+      g_object_interface_install_property (iface,
+                                           g_param_spec_boolean ("use-string-current",
+                                                                 NULL, NULL,
+                                                                 FALSE,
+                                                                 GIMP_PARAM_READWRITE |
+                                                                 GIMP_PARAM_STATIC_STRINGS));
+
      g_object_interface_install_property (iface,
                                           gimp_param_spec_unit ("unit",
                                                                 NULL, NULL,
@@ -455,6 +465,9 @@ gimp_rectangle_options_install_properties (GObjectClass *klass)
                                     GIMP_RECTANGLE_OPTIONS_PROP_CENTER_Y,
                                     "center-y");
   g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_USE_STRING_CURRENT,
+                                    "use-string-current");
+  g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_OPTIONS_PROP_UNIT,
                                     "unit");
 }
@@ -546,6 +559,9 @@ gimp_rectangle_options_set_property (GObject      *object,
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_Y:
       private->center_y = g_value_get_double (value);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_USE_STRING_CURRENT:
+      private->use_string_current = g_value_get_boolean (value);
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_UNIT:
       private->unit = g_value_get_int (value);
@@ -644,6 +660,9 @@ gimp_rectangle_options_get_property (GObject      *object,
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_CENTER_Y:
       g_value_set_double (value, private->center_y);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_USE_STRING_CURRENT:
+      g_value_set_boolean (value, private->use_string_current);
       break;
     case GIMP_RECTANGLE_OPTIONS_PROP_UNIT:
       g_value_set_int (value, private->unit);
@@ -782,6 +801,30 @@ gimp_rectangle_options_fixed_rule_changed (GtkWidget                   *combo_bo
     }
 }
 
+static void
+gimp_rectangle_options_string_current_updates (GimpNumberPairEntry  *entry,
+                                               GParamSpec           *param,
+                                               GimpRectangleOptions *rectangle_options)
+{
+  GimpRectangleOptionsPrivate *private;
+  gboolean                     use_string_current;
+  gboolean                     user_override;
+
+  private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (rectangle_options);
+
+  user_override = gimp_number_pair_entry_get_user_override (entry);
+
+  g_object_get (rectangle_options,
+                "use-string-current", &use_string_current,
+                NULL);
+
+  gimp_number_pair_entry_set_default_text (entry,
+                                           use_string_current ? _("Current") : NULL);
+
+  gtk_widget_set_sensitive (private->aspect_button_box,
+                            ! use_string_current || user_override);
+}
+
 GtkWidget *
 gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 {
@@ -868,6 +911,12 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                          ":/",
                                          TRUE,
                                          0.001, GIMP_MAX_IMAGE_SIZE);
+      g_signal_connect (entry, "notify::user-override",
+                        G_CALLBACK (gimp_rectangle_options_string_current_updates),
+                        config);
+      g_signal_connect_swapped (config, "notify::use-string-current",
+                                G_CALLBACK (gimp_rectangle_options_string_current_updates),
+                                entry);
 
       gimp_rectangle_options_setup_ratio_completion (GIMP_RECTANGLE_OPTIONS (tool_options),
                                                      entry,

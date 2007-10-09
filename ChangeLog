@@ -1,3 +1,35 @@
+2007-10-09  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangleoptions.[ch]: Connect a new function
+	gimp_rectangle_options_string_current_updates() that updates the
+	Fixed: Aspect entry with a 'Current' string when aspect of the
+	current pending rectangle is used, and sets sensitivity FALSE on
+	aspect ratio changing buttons when that string is shown. Prevents
+	the confusion mentioned in bug #479999.
+
+	A new Rectangle Options property 'use-string-current' has been
+	added that should be refactored away from the options object along
+	with references to option widgets.
+
+	* app/tools/gimprectangleselecttool.c
+	(gimp_rect_select_tool_update_option_defaults): Set default Fixed:
+	Aspect ratio to that of the pending rectangle, and always have
+	default Fixed: Size as 100x100.
+
+	* app/tools/gimpcroptool.c
+	(gimp_crop_tool_update_option_defaults): Always have default
+	Fixed: Size 100x100.
+
+	* libgimpwidgets/gimpnumberpairentry.[ch]
+	(gimp_number_pair_entry_class_init): Add a new property
+	'default-text' that contains text to be shown instead of numbers
+	when default numbers are to be shown.
+	(gimp_number_pair_entry_get_default_text)
+	(gimp_number_pair_entry_set_default_text): Getter and setter for
+	it.
+
+	* libgimpwidgets/gimpwidgets.def: Updated.
+
 2007-10-09  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/gimppropwidgets.c

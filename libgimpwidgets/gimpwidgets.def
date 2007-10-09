@@ -177,6 +177,7 @@ EXPORTS
 	gimp_memsize_entry_set_value
 	gimp_menu_item_update
 	gimp_number_pair_entry_get_aspect
+	gimp_number_pair_entry_get_default_text
 	gimp_number_pair_entry_get_default_values
 	gimp_number_pair_entry_get_ratio
 	gimp_number_pair_entry_get_type
@@ -184,6 +185,7 @@ EXPORTS
 	gimp_number_pair_entry_get_values
 	gimp_number_pair_entry_new
 	gimp_number_pair_entry_set_aspect
+	gimp_number_pair_entry_set_default_text
 	gimp_number_pair_entry_set_default_values
 	gimp_number_pair_entry_set_ratio
 	gimp_number_pair_entry_set_user_override

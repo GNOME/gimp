@@ -78,6 +78,11 @@ void           gimp_number_pair_entry_set_values         (GimpNumberPairEntry *e
 void           gimp_number_pair_entry_get_values         (GimpNumberPairEntry *entry,
                                                           gdouble             *left,
                                                           gdouble             *right);
+
+void           gimp_number_pair_entry_set_default_text   (GimpNumberPairEntry *entry,
+                                                          const gchar         *string);
+const gchar *  gimp_number_pair_entry_get_default_text   (GimpNumberPairEntry *entry);
+
 void           gimp_number_pair_entry_set_ratio          (GimpNumberPairEntry *entry,
                                                           gdouble              ratio);
 gdouble        gimp_number_pair_entry_get_ratio          (GimpNumberPairEntry *entry);

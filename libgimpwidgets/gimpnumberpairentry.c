@@ -56,6 +56,7 @@ enum
   PROP_DEFAULT_RIGHT_NUMBER,
   PROP_USER_OVERRIDE,
   PROP_SEPARATORS,
+  PROP_DEFAULT_TEXT,
   PROP_ALLOW_SIMPLIFICATION,
   PROP_MIN_VALID_VALUE,
   PROP_MAX_VALID_VALUE,
@@ -95,6 +96,9 @@ typedef struct
    */
   gunichar    *separators;
   glong        num_separators;
+
+  /* A string to be shown in the entry when in automatic mode */
+  gchar       *default_text;
 
   /* Whether or to not to divide the numbers with the greatest common
    * divisor when input ends in '='.
@@ -230,6 +234,12 @@ gimp_number_pair_entry_class_init (GimpNumberPairEntryClass *klass)
                                                         NULL,
                                                         GIMP_PARAM_READWRITE |
                                                         G_PARAM_CONSTRUCT_ONLY));
+  g_object_class_install_property (object_class, PROP_DEFAULT_TEXT,
+                                   g_param_spec_string ("default-text",
+                                                        "Default text",
+                                                        "String to show when in automatic mode",
+                                                        NULL,
+                                                        GIMP_PARAM_READWRITE));
   g_object_class_install_property (object_class, PROP_ALLOW_SIMPLIFICATION,
                                    g_param_spec_boolean ("allow-simplification",
                                                          "Allow simplification",
@@ -282,6 +292,7 @@ gimp_number_pair_entry_init (GimpNumberPairEntry *entry)
   priv->user_override        = FALSE;
   priv->font_italic          = FALSE;
   priv->separators           = NULL;
+  priv->default_text         = NULL;
   priv->num_separators       = 0;
   priv->allow_simplification = FALSE;
   priv->min_valid_value      = G_MINDOUBLE;
@@ -568,6 +579,59 @@ gimp_number_pair_entry_get_values (GimpNumberPairEntry *entry,
 
   if (right != NULL)
     *right = priv->right_number;
+}
+
+/**
+ * gimp_number_pair_entry_set_default_text:
+ * @entry:  A #GimpNumberPairEntry widget.
+ * @string: Default string.
+ *
+ * Causes the entry to show a given string when in automatic mode,
+ * instead of the default numbers. The only thing this does is making
+ * the #GimpNumberPairEntry showing this string, the internal state
+ * and API calls are not affected.
+ *
+ * Set the default string to %NULL to display default values as
+ * normal.
+ *
+ * Since: GIMP 2.4
+ */
+void gimp_number_pair_entry_set_default_text (GimpNumberPairEntry *entry,
+                                              const gchar         *string)
+{
+  GimpNumberPairEntryPrivate *priv;
+
+  g_return_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry));
+
+  priv = GIMP_NUMBER_PAIR_ENTRY_GET_PRIVATE (entry);
+
+  g_free (priv->default_text);
+  priv->default_text = g_strdup (string);
+
+  gimp_number_pair_entry_update_text (entry);
+
+  g_object_notify (G_OBJECT (entry), "default-text");
+}
+
+/**
+ * gimp_number_pair_entry_get_default_text:
+ * @entry:  A #GimpNumberPairEntry widget.
+ * @string: A string to be shown.
+ *
+ * Returns the string manully set to be shown, or %NULL if values are
+ * shown in a normal fashion.
+ *
+ * Since: GIMP 2.4
+ */
+const gchar * gimp_number_pair_entry_get_default_text (GimpNumberPairEntry *entry)
+{
+  GimpNumberPairEntryPrivate *priv;
+
+  g_return_val_if_fail (GIMP_IS_NUMBER_PAIR_ENTRY (entry), NULL);
+
+  priv = GIMP_NUMBER_PAIR_ENTRY_GET_PRIVATE (entry);
+
+  return priv->default_text;
 }
 
 /**
@@ -864,9 +928,21 @@ gimp_number_pair_entry_update_text (GimpNumberPairEntry *entry)
   GimpNumberPairEntryPrivate *priv = GIMP_NUMBER_PAIR_ENTRY_GET_PRIVATE (entry);
   gchar                      *buffer;
 
-  buffer = gimp_number_pair_entry_strdup_number_pair_string (entry,
-                                                             priv->left_number,
-                                                             priv->right_number);
+  if (! priv->user_override &&
+      priv->default_text != NULL)
+    {
+      /* Instead of the numbers, show the string explicitly set by a
+       * client to show when in automatic mode.
+       */
+      buffer = g_strdup (priv->default_text);
+    }
+  else
+    {
+      buffer = gimp_number_pair_entry_strdup_number_pair_string (entry,
+                                                                 priv->left_number,
+                                                                 priv->right_number);
+    }
+
   g_signal_handlers_block_by_func (entry,
                                    gimp_number_pair_entry_changed, NULL);
 
@@ -1024,6 +1100,10 @@ gimp_number_pair_entry_set_property (GObject      *object,
       else
         priv->separators = NULL;
       break;
+    case PROP_DEFAULT_TEXT:
+      gimp_number_pair_entry_set_default_text (entry,
+                                               g_value_get_string (value));
+      break;
     case PROP_ALLOW_SIMPLIFICATION:
       priv->allow_simplification = g_value_get_boolean (value);
       break;
@@ -1081,6 +1161,9 @@ gimp_number_pair_entry_get_property (GObject    *object,
       break;
     case PROP_ALLOW_SIMPLIFICATION:
       g_value_set_boolean (value, priv->allow_simplification);
+      break;
+    case PROP_DEFAULT_TEXT:
+      g_value_set_string (value, priv->default_text);
       break;
     case PROP_MIN_VALID_VALUE:
       g_value_set_double (value, priv->min_valid_value);

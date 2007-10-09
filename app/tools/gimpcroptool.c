@@ -337,8 +337,8 @@ gimp_crop_tool_update_option_defaults (GimpCropTool *crop_tool,
   if (tool->display != NULL && !ignore_pending)
     {
       /* There is a pending rectangle and we should not ignore it, so
-       * set default Fixed: Aspect ratio and Fixed: Size to the same
-       * as the current pending rectangle width/height.
+       * set default Fixed: Aspect ratio to the same as the current
+       * pending rectangle width/height.
        */
 
       gimp_rectangle_tool_pending_size_set (rectangle_tool,
@@ -346,16 +346,14 @@ gimp_crop_tool_update_option_defaults (GimpCropTool *crop_tool,
                                             "default-aspect-numerator",
                                             "default-aspect-denominator");
 
-      gimp_rectangle_tool_pending_size_set (rectangle_tool,
-                                            G_OBJECT (rectangle_options),
-                                            "default-fixed-size-width",
-                                            "default-fixed-size-height");
+      g_object_set (G_OBJECT (rectangle_options),
+                    "use-string-current", TRUE,
+                    NULL);
     }
   else
     {
       /* There is no pending rectangle, set default Fixed: Aspect
-       * ratio to that of the current image/layer, and the size to
-       * 100x100.
+       * ratio to that of the current image/layer.
        */
 
       gimp_rectangle_tool_constraint_size_set (rectangle_tool,
@@ -364,8 +362,7 @@ gimp_crop_tool_update_option_defaults (GimpCropTool *crop_tool,
                                                "default-aspect-denominator");
 
       g_object_set (G_OBJECT (rectangle_options),
-                    "default-fixed-size-width",  100.0,
-                    "default-fixed-size-height", 100.0,
+                    "use-string-current", FALSE,
                     NULL);
     }
 }

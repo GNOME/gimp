@@ -612,18 +612,22 @@ gimp_rect_select_tool_update_option_defaults (GimpRectSelectTool *rect_select_to
 
       gimp_rectangle_tool_pending_size_set (rectangle_tool,
                                             G_OBJECT (rectangle_options),
-                                            "default-fixed-size-width",
-                                            "default-fixed-size-height");
+                                            "default-aspect-numerator",
+                                            "default-aspect-denominator");
+
+      g_object_set (G_OBJECT (rectangle_options),
+                    "use-string-current", TRUE,
+                    NULL);
     }
   else
     {
-      /* There is no pending rectangle, set default Fixed: Size to
-       * 100x100.
-       */
+      g_object_set (G_OBJECT (rectangle_options),
+                    "default-aspect-numerator",   1.0,
+                    "default-aspect-denominator", 1.0,
+                    NULL);
 
       g_object_set (G_OBJECT (rectangle_options),
-                    "default-fixed-size-width",  100.0,
-                    "default-fixed-size-height", 100.0,
+                    "use-string-current", FALSE,
                     NULL);
     }
 }

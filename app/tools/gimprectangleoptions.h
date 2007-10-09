@@ -43,6 +43,7 @@ typedef enum
   GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_NUMERATOR,
   GIMP_RECTANGLE_OPTIONS_PROP_DEFAULT_ASPECT_DENOMINATOR,
   GIMP_RECTANGLE_OPTIONS_PROP_OVERRIDDEN_FIXED_ASPECT,
+  GIMP_RECTANGLE_OPTIONS_PROP_USE_STRING_CURRENT,
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE,
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE,
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER,
@@ -110,6 +111,12 @@ struct _GimpRectangleOptionsPrivate
   GimpUnit                    unit;
 
   /* options gui */
+
+  /* This gboolean is not part of the actual rectangle tool options,
+   * and should be refactored out along with the pointers to widgets.
+   */
+  gboolean                    use_string_current;
+
   GtkWidget                  *auto_shrink_button;
 
   GtkWidget                  *second_row_hbox;
