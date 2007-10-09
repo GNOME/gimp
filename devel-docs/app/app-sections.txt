@@ -7528,6 +7528,7 @@ tile_detach
 tile_get_rowhint
 tile_set_rowhint
 tile_allocate_rowhints
+tile_update_rowhints
 tile_data_pointer
 tile_global_refcount
 TileRowHint
@@ -7595,9 +7596,7 @@ gimp_composite_value_any_any_any_generic
 GimpPixelFormat
 GIMP_COMPOSITE_ALPHA_OPAQUE
 GIMP_COMPOSITE_ALPHA_TRANSPARENT
-GimpCompositeOptions
 GimpCompositeOperation
-GimpCompositeOperationEffects
 gimp_composite_dispatch
 gimp_composite_init
 gimp_composite_context_print
@@ -8282,10 +8281,13 @@ GIMP_TYPE_CANVAS_PADDING_MODE
 GimpCanvasPaddingMode
 GIMP_TYPE_SPACE_BAR_ACTION
 GimpSpaceBarAction
+GIMP_TYPE_ZOOM_QUALITY
+GimpZoomQuality
 <SUBSECTION Standard>
 gimp_cursor_mode_get_type
 gimp_canvas_padding_mode_get_type
 gimp_space_bar_action_get_type
+gimp_zoom_quality_get_type
 </SECTION>
 
 <SECTION>
