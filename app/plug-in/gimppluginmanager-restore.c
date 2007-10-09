@@ -570,13 +570,13 @@ gimp_plug_in_manager_add_from_rc (GimpPlugInManager *manager,
                                     ondisk_plug_in_def->prog) &&
               (plug_in_def->mtime == ondisk_plug_in_def->mtime))
             {
-              /* Use pluginrc entry, deleting ondisk entry */
+              /* Use pluginrc entry, deleting on-disk entry */
               list->data = plug_in_def;
               g_object_unref (ondisk_plug_in_def);
             }
           else
             {
-              /* Use ondisk entry, deleting pluginrc entry */
+              /* Use on-disk entry, deleting pluginrc entry */
               g_object_unref (plug_in_def);
             }
 
@@ -592,8 +592,13 @@ gimp_plug_in_manager_add_from_rc (GimpPlugInManager *manager,
   g_free (basename1);
 
   manager->write_pluginrc = TRUE;
-  g_printerr ("Executable not found: '%s'\n",
-              gimp_filename_to_utf8 (plug_in_def->prog));
+
+  if (manager->gimp->be_verbose)
+    {
+      g_printerr ("pluginrc lists '%s', but it wasn't found\n",
+                  gimp_filename_to_utf8 (plug_in_def->prog));
+    }
+
   g_object_unref (plug_in_def);
 }
 

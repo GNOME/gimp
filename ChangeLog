@@ -1,5 +1,11 @@
 2007-10-09  Sven Neumann  <sven@gimp.org>
 
+	* app/plug-in/gimppluginmanager-restore.c
+	(gimp_plug_in_manager_add_from_rc): changed message about missing
+	executable and only output it if gimp is verbose.
+
+2007-10-09  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimpnumberpairentry.c: fixed ambiguous gtk-doc
 	comment.
 
