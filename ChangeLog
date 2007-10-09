@@ -1,5 +1,10 @@
 2007-10-09  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimphelpui.c (gimp_help_connect): pass canonical
+	signal names to gtk_binding_entry_add_signal().
+
+2007-10-09  Sven Neumann  <sven@gimp.org>
+
 	* app/actions/window-commands.c: specify alternative button order.
 
 2007-10-09  Sven Neumann  <sven@gimp.org>
