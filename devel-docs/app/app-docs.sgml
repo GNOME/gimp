@@ -99,6 +99,7 @@
       <xi:include href="xml/tile-manager-preview.xml" />
       <xi:include href="xml/tile-manager-private.xml" />
       <xi:include href="xml/tile-pyramid.xml" />
+      <xi:include href="xml/tile-rowhints.xml" />
     </chapter>
    </part>
 

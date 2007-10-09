@@ -1,6 +1,7 @@
 2007-10-09  Sven Neumann  <sven@gimp.org>
 
-	* app/app-sections.txt: updated.
+	* app/app-sections.txt
+	* app/app-docs.sgml: updated.
 
 2007-10-01  Sven Neumann  <sven@gimp.org>
 
