@@ -57,6 +57,11 @@ GimpNumberPairEntry
 
 </para>
 
+<!-- ##### ARG GimpNumberPairEntry:default-text ##### -->
+<para>
+
+</para>
+
 <!-- ##### ARG GimpNumberPairEntry:left-number ##### -->
 <para>
 
@@ -205,5 +210,23 @@ GimpNumberPairEntry
 
 @entry: 
 @user_override: 
+
+
+<!-- ##### FUNCTION gimp_number_pair_entry_get_default_text ##### -->
+<para>
+
+</para>
+
+@entry: 
+@Returns: 
+
+
+<!-- ##### FUNCTION gimp_number_pair_entry_set_default_text ##### -->
+<para>
+
+</para>
+
+@entry: 
+@string: 
 
 
