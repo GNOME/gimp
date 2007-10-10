@@ -446,8 +446,10 @@ gimp_controller_info_event (GimpController            *controller,
   const gchar *event_blurb;
   const gchar *action_name = NULL;
 
-  event_name = gimp_controller_get_event_name (controller, event->any.event_id);
-  event_blurb = gimp_controller_get_event_blurb (controller, event->any.event_id);
+  event_name = gimp_controller_get_event_name (controller,
+                                               event->any.event_id);
+  event_blurb = gimp_controller_get_event_blurb (controller,
+                                                 event->any.event_id);
 
   if (info->debug_events)
     {

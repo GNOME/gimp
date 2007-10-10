@@ -319,9 +319,10 @@ gimp_controllers_event_mapped (GimpControllerInfo        *info,
                                const gchar               *action_name,
                                GimpControllerManager     *manager)
 {
-  GList *list;
+  GtkUIManager *ui_manager = GTK_UI_MANAGER (manager->ui_manager);
+  GList        *list;
 
-  for (list = gtk_ui_manager_get_action_groups (GTK_UI_MANAGER (manager->ui_manager));
+  for (list = gtk_ui_manager_get_action_groups (ui_manager);
        list;
        list = g_list_next (list))
     {
