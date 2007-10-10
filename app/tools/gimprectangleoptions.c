@@ -807,22 +807,18 @@ gimp_rectangle_options_string_current_updates (GimpNumberPairEntry  *entry,
                                                GimpRectangleOptions *rectangle_options)
 {
   GimpRectangleOptionsPrivate *private;
-  gboolean                     use_string_current;
   gboolean                     user_override;
 
   private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (rectangle_options);
 
   user_override = gimp_number_pair_entry_get_user_override (entry);
 
-  g_object_get (rectangle_options,
-                "use-string-current", &use_string_current,
-                NULL);
-
   gimp_number_pair_entry_set_default_text (entry,
-                                           use_string_current ? _("Current") : NULL);
+                                           private->use_string_current ?
+                                           _("Current") : NULL);
 
   gtk_widget_set_sensitive (private->aspect_button_box,
-                            ! use_string_current || user_override);
+                            ! private->use_string_current || user_override);
 }
 
 GtkWidget *
