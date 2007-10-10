@@ -8000,7 +8000,7 @@ msgstr "Fa_rbanpassung der Drucksimulation:"
 
 #: ../app/dialogs/preferences-dialog.c:2495
 msgid "Mark out of gamut colors"
-msgstr "Farben ausserhalb des Gamut markieren"
+msgstr "Farben außerhalb des Gamut markieren"
 
 #: ../app/dialogs/preferences-dialog.c:2500
 msgid "Select Warning Color"
