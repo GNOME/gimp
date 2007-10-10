@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP (libgimp) HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-04 18:13+0300\n"
-"PO-Revision-Date: 2007-10-04 18:13+0300\n"
+"POT-Creation-Date: 2007-10-11 01:29+0300\n"
+"PO-Revision-Date: 2007-10-11 01:31+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -672,11 +672,11 @@ msgstr "Šviesios spalvos"
 
 #: ../libgimpbase/gimpbaseenums.c:744
 msgid "Normal (Forward)"
-msgstr "Normalus (pirmyn)"
+msgstr "Normali (pirmyn)"
 
 #: ../libgimpbase/gimpbaseenums.c:745
 msgid "Corrective (Backward)"
-msgstr "Korekcinis (atgal)"
+msgstr "Korekcinė (atgal)"
 
 #: ../libgimpbase/gimpbaseenums.c:775
 msgid "Adjust"
@@ -684,15 +684,15 @@ msgstr "Koreguoti"
 
 #: ../libgimpbase/gimpbaseenums.c:776
 msgid "Clip"
-msgstr "Apkarpyti"
+msgstr "Apkirpti"
 
 #: ../libgimpbase/gimpbaseenums.c:777
 msgid "Crop to result"
-msgstr "Apkarpyti iki rezultato"
+msgstr "Apkirpti iki rezultato"
 
 #: ../libgimpbase/gimpbaseenums.c:778
 msgid "Crop with aspect"
-msgstr "Apkarpyti išsaugant proporciją"
+msgstr "Apkirpti išsaugant proporciją"
 
 #: ../libgimpbase/gimpbaseenums.c:881
 msgid "Internal GIMP procedure"
@@ -768,15 +768,15 @@ msgstr "%d GB"
 msgid "(invalid UTF-8 string)"
 msgstr "(nekorektiška UTF-8 eilutė)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:40
+#: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "Mode of operation for color management."
 msgstr "Spalvų valdymo operacijos veiksena."
 
-#: ../libgimpconfig/gimpcolorconfig.c:42
+#: ../libgimpconfig/gimpcolorconfig.c:44
 msgid "The color profile of your (primary) monitor."
 msgstr "Jūsų (pirminio) monitoriaus spalvų profilis."
 
-#: ../libgimpconfig/gimpcolorconfig.c:44
+#: ../libgimpconfig/gimpcolorconfig.c:46
 msgid ""
 "When enabled, GIMP will try to use the display color profile from the "
 "windowing system.  The configured monitor profile is then only used as a "
@@ -786,30 +786,42 @@ msgstr ""
 "sistemos. Tuo atveju sukonfigūruotas monitoriaus profilis bus naudojamas tik "
 "kaip atsarginis variantas."
 
-#: ../libgimpconfig/gimpcolorconfig.c:48
+#: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The default RGB working space color profile."
 msgstr "Numatytasis RGB darbinės gamos spalvų profilis."
 
-#: ../libgimpconfig/gimpcolorconfig.c:50
+#: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "CMYK spalvų profilis naudojamas konvertavimui tarp RGB ir CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr ""
 "Spalvų profilis naudojamas simuliuoti atspausdintą versiją (softproof)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "Sets how colors are mapped for your display."
 msgstr "Nurodo kiek spalvų yra skirta Jūsų ekranui."
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid ""
 "Sets how colors are converted from RGB working space to the print simulation "
 "device."
 msgstr ""
 "Nurodo kaip spalvos konvertuojamos iš RGB darbinės gamos į spausdinimo "
 "simuliacijos įrenginį."
+
+#: ../libgimpconfig/gimpcolorconfig.c:61
+msgid ""
+"When enabled, the print simulation will mark colors which can not be "
+"represented in the target color space."
+msgstr ""
+"Kai įjungta, spausdinimo imitavimas pažymės spalvas, kurių negalima "
+"atvaizduoti paskirties spalvų gamoje."
+
+#: ../libgimpconfig/gimpcolorconfig.c:64
+msgid "The color to use for marking colors which are out of gamut."
+msgstr "Spalva, naudotina pažymėti už diapazono ribų esančias spalvas."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -1465,7 +1477,7 @@ msgstr "Juodos _atėmimas:"
 
 #: ../modules/colorsel_cmyk.c:212
 msgid "The percentage of black to pull out of the colored inks."
-msgstr "Iš spalvotų dažų atimamas juodos spalva kiekis procentais."
+msgstr "Iš spalvotų dažų atimamas juodos spalvos kiekis procentais."
 
 #: ../modules/colorsel_cmyk_lcms.c:91
 msgid "CMYK color selector (using color profile)"
@@ -1482,7 +1494,7 @@ msgstr "Profilis: %s"
 
 #: ../modules/colorsel_triangle.c:104
 msgid "Painter-style triangle color selector"
-msgstr "Dailininko stiliaus trikampis spalvų pasirinkimas"
+msgstr "Dailininko stiliaus trikampio spalvų parinkiklis"
 
 #: ../modules/colorsel_triangle.c:170
 msgid "Triangle"
@@ -1490,11 +1502,11 @@ msgstr "Trikampis"
 
 #: ../modules/colorsel_water.c:84
 msgid "Watercolor style color selector"
-msgstr "Vandeninių dažų stiliaus spalvų pasirinkimas"
+msgstr "Akvarelės stiliaus spalvų parinkiklis"
 
 #: ../modules/colorsel_water.c:150
 msgid "Watercolor"
-msgstr "Vandeniniai dažai"
+msgstr "Akvarelė"
 
 #: ../modules/colorsel_water.c:213
 msgid "Pressure"
