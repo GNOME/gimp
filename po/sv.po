@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-09 21:51+0200\n"
-"PO-Revision-Date: 2007-10-09 21:56+0100\n"
+"POT-Creation-Date: 2007-10-11 00:40+0200\n"
+"PO-Revision-Date: 2007-10-11 00:41+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -6975,13 +6975,13 @@ msgstr "Lager_namn:"
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:134
 #: ../app/tools/gimpmeasuretool.c:1056
-#: ../app/tools/gimprectangleoptions.c:995
+#: ../app/tools/gimprectangleoptions.c:1040
 msgid "Width:"
 msgstr "Bredd:"
 
 #: ../app/dialogs/layer-options-dialog.c:140
 #: ../app/tools/gimpmeasuretool.c:1084
-#: ../app/tools/gimprectangleoptions.c:1008
+#: ../app/tools/gimprectangleoptions.c:1053
 msgid "Height:"
 msgstr "Höjd:"
 
@@ -10180,36 +10180,40 @@ msgstr "Kan inte använda posterisering på indexerade lager."
 msgid "Posterize _levels:"
 msgstr "Posterisera _nivåer:"
 
-#: ../app/tools/gimprectangleoptions.c:116
+#: ../app/tools/gimprectangleoptions.c:119
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Använd alla synliga lager vid krympning av markeringen"
 
-#: ../app/tools/gimprectangleoptions.c:804
+#: ../app/tools/gimprectangleoptions.c:818
+msgid "Current"
+msgstr "Aktuell"
+
+#: ../app/tools/gimprectangleoptions.c:843
 msgid "Expand from center"
 msgstr "Expandera från centrum"
 
-#: ../app/tools/gimprectangleoptions.c:823
+#: ../app/tools/gimprectangleoptions.c:862
 msgid "Fixed:"
 msgstr "Fast:"
 
-#: ../app/tools/gimprectangleoptions.c:956
+#: ../app/tools/gimprectangleoptions.c:1001
 msgid "Highlight"
 msgstr "Framhäv"
 
-#: ../app/tools/gimprectangleoptions.c:974
+#: ../app/tools/gimprectangleoptions.c:1019
 msgid "X:"
 msgstr "X:"
 
-#: ../app/tools/gimprectangleoptions.c:983
+#: ../app/tools/gimprectangleoptions.c:1028
 msgid "Y:"
 msgstr "Y:"
 
 #. Auto Shrink
-#: ../app/tools/gimprectangleoptions.c:1022
+#: ../app/tools/gimprectangleoptions.c:1067
 msgid "Auto Shrink Selection"
 msgstr "Krymp markering automatiskt"
 
-#: ../app/tools/gimprectangleoptions.c:1030
+#: ../app/tools/gimprectangleoptions.c:1075
 msgid "Shrink merged"
 msgstr "Krymp sammanfogade"
 
@@ -14461,8 +14465,6 @@ msgstr "Kunde inte starta \"%s\": %s"
 #~ msgstr "Okänt mönsterformatsversion %d i \"%s\"."
 #~ msgid "Error in GIMP pattern file '%s'."
 #~ msgstr "Fel i GIMP-mönsterfilen \"%s\"."
-#~ msgid "Current:"
-#~ msgstr "Aktuell:"
 #~ msgid "Old:"
 #~ msgstr "Gammal:"
 #~ msgid "Dimensions (W x H):"
