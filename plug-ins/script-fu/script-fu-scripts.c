@@ -668,8 +668,8 @@ script_fu_load_script (const GimpDatafileData *file_data,
 {
   if (gimp_datafiles_check_extension (file_data->filename, ".scm"))
     {
-      gchar *command;
-      gchar *escaped = g_strescape (file_data->filename, NULL);
+      gchar   *command;
+      gchar   *escaped = script_fu_strescape (file_data->filename);
       GString *output;
 
       command = g_strdup_printf ("(load \"%s\")", escaped);
@@ -968,8 +968,9 @@ script_fu_script_proc (const gchar      *name,
                     case SF_FILENAME:
                     case SF_DIRNAME:
                       {
-                        gchar *tmp = g_strescape (param->data.d_string, NULL);
+                        gchar *tmp;
 
+                        tmp = script_fu_strescape (param->data.d_string);
                         g_string_append_printf (s, "\"%s\"", tmp);
                         g_free (tmp);
                       }
@@ -1067,8 +1068,9 @@ script_fu_script_proc (const gchar      *name,
                   case SF_STRING:
                   case SF_TEXT:
                     {
-                      gchar *tmp = g_strescape (arg_value->sfa_value, NULL);
+                      gchar *tmp;
 
+                      tmp = script_fu_strescape (arg_value->sfa_value);
                       g_string_append_printf (s, "\"%s\"", tmp);
                       g_free (tmp);
                     }
@@ -1087,9 +1089,9 @@ script_fu_script_proc (const gchar      *name,
                   case SF_FILENAME:
                   case SF_DIRNAME:
                     {
-                      gchar *tmp = g_strescape (arg_value->sfa_file.filename,
-                                                NULL);
+                      gchar *tmp;
 
+                      tmp = script_fu_strescape (arg_value->sfa_file.filename);
                       g_string_append_printf (s, "\"%s\"", tmp);
                       g_free (tmp);
                     }
@@ -1357,4 +1359,48 @@ script_fu_menu_compare (gconstpointer a,
     }
 
   return retval;
+}
+
+/*
+ * Escapes the special characters '\b', '\f', '\n', '\r', '\t', '\' and '"'
+ * in the string source by inserting a '\' before them.
+ */
+gchar *
+script_fu_strescape (const gchar *source)
+{
+  const guchar *p;
+  gchar        *dest;
+  gchar        *q;
+
+  g_return_val_if_fail (source != NULL, NULL);
+
+  p = (const guchar *) source;
+
+  /* Each source byte needs maximally two destination chars */
+  q = dest = g_malloc (strlen (source) * 2 + 1);
+
+  while (*p)
+    {
+      switch (*p)
+        {
+        case '\b':
+        case '\f':
+        case '\n':
+        case '\r':
+        case '\t':
+        case '\\':
+        case '"':
+          *q++ = '\\';
+          /* fallthrough */
+        default:
+          *q++ = *p;
+          break;
+        }
+
+      p++;
+    }
+
+  *q = 0;
+
+  return dest;
 }

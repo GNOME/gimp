@@ -1,5 +1,12 @@
 2007-10-11  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-scripts.[ch]: moved the new string
+	escape function here and also it for the non-interactive case.
+
+	* plug-ins/script-fu/script-fu-interface.c: changed accordingly.
+
+2007-10-11  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-interface.c: don't use
 	g_strescape() as it mangles UTF-8 strings. Introduced our own
 	escape function instead. Fixes bug #485538.
