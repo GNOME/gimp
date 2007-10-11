@@ -427,7 +427,7 @@ script_fu_add_script (scheme *sc, pointer a)
                   while (*val)
                     {
                       if (*val == '/')
-                        *val = '\\';
+                        *val = G_DIR_SEPARATOR;
                       val++;
                     }
 #endif

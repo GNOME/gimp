@@ -1,3 +1,8 @@
+2007-10-11  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/script-fu/script-fu-scripts.c (script_fu_add_script):
+	use G_DIR_SEPARATOR instead of hardcoding the '\' under Windows.
+
 2007-10-10  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimprectangleoptions.c
