@@ -625,9 +625,8 @@ gimp_tool_set_focus_display (GimpTool    *tool,
   g_return_if_fail (display == NULL || GIMP_IS_DISPLAY (display));
 
 #ifdef DEBUG_FOCUS
-  g_printerr ("gimp_tool_set_focus_display: "
-              "tool: %p  display: %p  focus_display: %p\n",
-              tool, display, tool->focus_display);
+  g_printerr ("%s: tool: %p  display: %p  focus_display: %p\n",
+              G_STRFUNC, tool, display, tool->focus_display);
 #endif
 
   if (display != tool->focus_display)
@@ -680,9 +679,8 @@ gimp_tool_set_modifier_state (GimpTool        *tool,
   g_return_if_fail (GIMP_IS_DISPLAY (display));
 
 #ifdef DEBUG_FOCUS
-  g_printerr ("gimp_tool_set_modifier_state: "
-              "tool: %p  display: %p  focus_display: %p\n",
-              tool, display, tool->focus_display);
+  g_printerr ("%s: tool: %p  display: %p  focus_display: %p\n",
+              G_STRFUNC, tool, display, tool->focus_display);
 #endif
 
   g_return_if_fail (display == tool->focus_display);

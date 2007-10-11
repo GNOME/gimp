@@ -1,3 +1,14 @@
+2007-10-11  Michael Natterer  <mitch@gimp.org>
+
+	* app/display/gimpdisplayshell-callbacks.c
+	(gimp_display_shell_canvas_tool_events): if we need to
+	delete/create tools on button press because the active tool
+	doesn't support changing drawables, make sure the newly created
+	tool gets its focus_display and modifier states set correctly.
+	Fixes bug #485119. Improved disabled debug output.
+
+	* app/tools/gimptool.c: stylistic cleanup in debug output.
+
 2007-10-11  Sven Neumann  <sven@gimp.org>
 
 	* plug-ins/script-fu/script-fu-scripts.[ch]: moved the new string
