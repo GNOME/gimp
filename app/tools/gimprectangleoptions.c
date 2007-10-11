@@ -1006,7 +1006,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
   table = gtk_table_new (4, 2, FALSE);
   gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 3);
+  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
   gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
   gtk_widget_show (table);
 
@@ -1017,7 +1017,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("X:"), 0.0, 0.5,
-                             entry, 1, FALSE);
+                             entry, 1, TRUE);
 
   /* Y */
   entry = gimp_prop_size_entry_new (config, "y0", "unit", "%a",
@@ -1026,7 +1026,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Y:"), 0.0, 0.5,
-                             entry, 1, FALSE);
+                             entry, 1, TRUE);
 
   /* Width */
   private->width_entry = gimp_prop_size_entry_new (config,
@@ -1038,7 +1038,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                   FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
                              _("Width:"), 0.0, 0.5,
-                             private->width_entry, 1, FALSE);
+                             private->width_entry, 1, TRUE);
   row++;
 
   /* Height */
@@ -1051,7 +1051,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                   FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
                              _("Height:"), 0.0, 0.5,
-                             private->height_entry, 1, FALSE);
+                             private->height_entry, 1, TRUE);
   row++;
 
   /*  Guide  */
