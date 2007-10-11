@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-02-22 23:04+0100\n"
-"PO-Revision-Date: 2007-09-23 22:07+0100\n"
+"PO-Revision-Date: 2007-10-08 15:22+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -510,7 +510,7 @@ msgstr "vžgano"
 
 #: ../libgimpbase/gimpbaseenums.c:388
 msgid "gradient|Linear"
-msgstr "preliv|Linearen"
+msgstr "gradient|Linearen"
 
 #: ../libgimpbase/gimpbaseenums.c:389
 msgid "Bi-linear"
@@ -616,11 +616,11 @@ msgstr "indeksirana-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:562
 msgid "interpolation|None"
-msgstr "interpolacija|Brez"
+msgstr "interpolation|Brez"
 
 #: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|Linear"
-msgstr "interpolacija|Linearna"
+msgstr "interpolation|Linearna"
 
 #: ../libgimpbase/gimpbaseenums.c:564
 msgid "Cubic"
@@ -780,41 +780,49 @@ msgstr "%d GB"
 #: ../libgimpbase/gimputils.c:170
 #: ../libgimpbase/gimputils.c:175
 #: ../modules/cdisplay_lcms.c:206
-#: ../modules/colorsel_cmyk_lcms.c:407
+#: ../modules/colorsel_cmyk_lcms.c:408
 msgid "(invalid UTF-8 string)"
 msgstr "(neveljaven niz UTF-8)"
 
-#: ../libgimpconfig/gimpcolorconfig.c:40
+#: ../libgimpconfig/gimpcolorconfig.c:42
 msgid "Mode of operation for color management."
 msgstr "Način upravljanja z barvami."
 
-#: ../libgimpconfig/gimpcolorconfig.c:42
+#: ../libgimpconfig/gimpcolorconfig.c:44
 msgid "The color profile of your (primary) monitor."
 msgstr "Barvni profil vašega (primarnega) zaslona."
 
-#: ../libgimpconfig/gimpcolorconfig.c:44
+#: ../libgimpconfig/gimpcolorconfig.c:46
 msgid "When enabled, GIMP will try to use the display color profile from the windowing system.  The configured monitor profile is then only used as a fallback."
 msgstr "Če je vključeno, bo GIMP uporabil prikazani barvni profil okenskega sistema.  Nastavljeni profil monitorja bo tedaj uporabljen le kot nadomestni."
 
-#: ../libgimpconfig/gimpcolorconfig.c:48
+#: ../libgimpconfig/gimpcolorconfig.c:50
 msgid "The default RGB working space color profile."
 msgstr "Privzeti barvni profil RGB delovne površine."
 
-#: ../libgimpconfig/gimpcolorconfig.c:50
+#: ../libgimpconfig/gimpcolorconfig.c:52
 msgid "The CMYK color profile used to convert between RGB and CMYK."
 msgstr "Barvni profik CMYK, uporabljen za pretvorbo med RGB in CMYK."
 
-#: ../libgimpconfig/gimpcolorconfig.c:52
+#: ../libgimpconfig/gimpcolorconfig.c:54
 msgid "The color profile used for simulating a printed version (softproof)."
 msgstr "Barvni profil, uporabljen za simulacijo tiskane različice (programsko preverjanje)."
 
-#: ../libgimpconfig/gimpcolorconfig.c:54
+#: ../libgimpconfig/gimpcolorconfig.c:56
 msgid "Sets how colors are mapped for your display."
 msgstr "Nastavi preslikavo barv za vaš zaslon."
 
-#: ../libgimpconfig/gimpcolorconfig.c:56
+#: ../libgimpconfig/gimpcolorconfig.c:58
 msgid "Sets how colors are converted from RGB working space to the print simulation device."
 msgstr "Določa pretvorbo barv med delovnim prostorom RGB in napravo simulacije tiskanja."
+
+#: ../libgimpconfig/gimpcolorconfig.c:61
+msgid "When enabled, the print simulation will mark colors which can not be represented in the target color space."
+msgstr "Če je vključeno, bo simulacija tiskanja označila tiste barve, ki jih ni mogoče predstaviti v ciljnem barvnem prostoru."
+
+#: ../libgimpconfig/gimpcolorconfig.c:64
+msgid "The color to use for marking colors which are out of gamut."
+msgstr "Barva, ki naj bo uporabljena za označevanje barv, ki so zunaj barvnega obsega."
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:24
 msgid "No color management"
@@ -838,7 +846,7 @@ msgstr "relativne barvne vrednosti (kalorimetrično)"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
 msgid "intent|Saturation"
-msgstr "namen|Nasičenost"
+msgstr "intent|Nasičenost"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
@@ -1006,7 +1014,7 @@ msgstr "Izberite barvni profil z diska ..."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
 msgid "profile|None"
-msgstr "profile|Brez"
+msgstr "intent|Brez"
 
 #: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
@@ -1475,11 +1483,11 @@ msgstr "Odstotek črne barve, ki naj bo odvzet barvam."
 msgid "CMYK color selector (using color profile)"
 msgstr "Barvni izbirnik CMYK (z uporabo barvnega profila)"
 
-#: ../modules/colorsel_cmyk_lcms.c:396
+#: ../modules/colorsel_cmyk_lcms.c:397
 msgid "Profile: (none)"
 msgstr "Profil: (brez)"
 
-#: ../modules/colorsel_cmyk_lcms.c:409
+#: ../modules/colorsel_cmyk_lcms.c:410
 #, c-format
 msgid "Profile: %s"
 msgstr "Profil: %s"
