@@ -1,5 +1,11 @@
 2007-10-11  Sven Neumann  <sven@gimp.org>
 
+	* plug-ins/script-fu/script-fu-interface.c: don't use
+	g_strescape() as it mangles UTF-8 strings. Introduced our own
+	escape function instead. Fixes bug #485538.
+
+2007-10-11  Sven Neumann  <sven@gimp.org>
+
 	* plug-ins/script-fu/script-fu-scripts.c (script_fu_add_script):
 	use G_DIR_SEPARATOR instead of hardcoding the '\' under Windows.
 

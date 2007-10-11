@@ -44,18 +44,18 @@
 
 typedef struct
 {
-  GtkWidget     *dialog;
+  GtkWidget  *dialog;
 
-  GtkWidget     *table;
-  GtkWidget    **widgets;
+  GtkWidget  *table;
+  GtkWidget **widgets;
 
-  GtkWidget     *progress_label;
-  GtkWidget     *progress_bar;
+  GtkWidget  *progress_label;
+  GtkWidget  *progress_bar;
 
-  gchar         *title;
-  gchar         *last_command;
-  gint           command_count;
-  gint           consec_command_count;
+  gchar      *title;
+  gchar      *last_command;
+  gint        command_count;
+  gint        consec_command_count;
 } SFInterface;
 
 
@@ -102,6 +102,8 @@ static void   script_fu_brush_callback      (gpointer              data,
                                              gint                  height,
                                              const guchar         *mask_data,
                                              gboolean              closing);
+
+static gchar * script_fu_strescape          (const gchar          *source);
 
 
 /*
@@ -815,7 +817,7 @@ script_fu_ok (SFScript *script)
           arg_value->sfa_value =
             g_strdup (gtk_entry_get_text (GTK_ENTRY (widget)));
 
-          escaped = g_strescape (arg_value->sfa_value, NULL);
+          escaped = script_fu_strescape (arg_value->sfa_value);
           g_string_append_printf (s, "\"%s\"", escaped);
           g_free (escaped);
           break;
@@ -837,7 +839,7 @@ script_fu_ok (SFScript *script)
                                                              &start, &end,
                                                              FALSE);
 
-            escaped = g_strescape (arg_value->sfa_value, NULL);
+            escaped = script_fu_strescape (arg_value->sfa_value);
             g_string_append_printf (s, "\"%s\"", escaped);
             g_free (escaped);
           }
@@ -851,7 +853,7 @@ script_fu_ok (SFScript *script)
 
         case SF_FILENAME:
         case SF_DIRNAME:
-          escaped = g_strescape (arg_value->sfa_file.filename, NULL);
+          escaped = script_fu_strescape (arg_value->sfa_file.filename);
           g_string_append_printf (s, "\"%s\"", escaped);
           g_free (escaped);
           break;
@@ -1009,4 +1011,68 @@ script_fu_reset (SFScript *script)
           break;
         }
     }
+}
+
+
+/*
+ * Escapes the special characters '\b', '\f', '\n', '\r', '\t', '\' and '"'
+ * in the string source by inserting a '\' before them.
+ */
+static gchar *
+script_fu_strescape (const gchar *source)
+{
+  const guchar *p;
+  gchar        *dest;
+  gchar        *q;
+
+  g_return_val_if_fail (source != NULL, NULL);
+
+  p = (const guchar *) source;
+
+  /* Each source byte needs maximally two destination chars */
+  q = dest = g_malloc (strlen (source) * 2 + 1);
+
+  while (*p)
+    {
+      switch (*p)
+        {
+        case '\b':
+          *q++ = '\\';
+          *q++ = 'b';
+          break;
+        case '\f':
+          *q++ = '\\';
+          *q++ = 'f';
+          break;
+        case '\n':
+          *q++ = '\\';
+          *q++ = 'n';
+          break;
+        case '\r':
+          *q++ = '\\';
+          *q++ = 'r';
+          break;
+        case '\t':
+          *q++ = '\\';
+          *q++ = 't';
+          break;
+        case '\\':
+          *q++ = '\\';
+          *q++ = '\\';
+          break;
+        case '"':
+          *q++ = '\\';
+          *q++ = '"';
+          break;
+        default:
+          *q++ = *p;
+          break;
+        }
+
+      p++;
+    }
+
+  *q = 0;
+
+  return dest;
 }
