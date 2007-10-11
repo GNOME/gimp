@@ -7,12 +7,12 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: GIMP python\n"
+"Project-Id-Version: GIMP-Python\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-02-05 22:16+0000\n"
-"PO-Revision-Date: 2007-09-23 22:07+0100\n"
+"PO-Revision-Date: 2007-10-01 10:43+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
-"Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
+"Language-Team: Martin Srebotnjak, Nedeljko Grabant <miles@filmsi.net, nedeljkograbant@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -105,7 +105,7 @@ msgstr "Zapiši _ločeno datoteko CSS"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:46
 msgid "Python Console"
-msgstr "Konzola Python"
+msgstr "Konzola Pythona"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:50
 msgid "_Browse..."
@@ -131,7 +131,7 @@ msgstr "Shrani izhod konzole Python-Fu"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:218
 msgid "Interactive Gimp-Python interpreter"
-msgstr "Interaktivni prevajalnik Gimp-Python"
+msgstr "Interaktivni tolmač GIMP-Python"
 
 #: ../plug-ins/pygimp/plug-ins/gimpcons.py:223
 msgid "_Console"
@@ -139,7 +139,7 @@ msgstr "_Konzola"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:51
 msgid "Add a layer of fog"
-msgstr "Dodaj sloj megle"
+msgstr "Dodaj plast megle"
 
 #: ../plug-ins/pygimp/plug-ins/foggify.py:56
 msgid "_Fog..."
@@ -290,11 +290,11 @@ msgstr "Preskoči animacijo za začetnice tabele"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:61
 msgid "Add a drop shadow to a layer, and optionally bevel it"
-msgstr "Dodaj padlo senco sloju in jo po potrebi nagni"
+msgstr "Dodaj padlo senco plasti in jo po potrebi izboči"
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:66
 msgid "_Drop Shadow and Bevel..."
-msgstr "_Vrži senco in jo nagni ..."
+msgstr "_Vrži senco in jo izboči ..."
 
 #: ../plug-ins/pygimp/plug-ins/shadow_bevel.py:71
 msgid "_Shadow blur"
