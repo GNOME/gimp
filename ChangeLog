@@ -1,3 +1,7 @@
+2007-10-12  Sven Neumann  <sven@gimp.org>
+
+	* app/core/gimpdrawable-stroke.c: formatting.
+
 2007-10-12  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimprectangleoptions.[ch]: massively simplified the

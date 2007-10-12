@@ -163,10 +163,8 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
        stroke;
        stroke = gimp_vectors_stroke_get_next (vectors, stroke))
     {
-      GimpVector2 *points;
-      gboolean     closed;
-      GArray      *coords;
-      gint i;
+      GArray   *coords;
+      gboolean  closed;
 
       /* Get the interpolated version of this stroke, and add it to our
        * scanconvert.
@@ -175,7 +173,8 @@ gimp_drawable_stroke_vectors (GimpDrawable      *drawable,
 
       if (coords && coords->len)
         {
-          points = g_new0 (GimpVector2, coords->len);
+          GimpVector2 *points = g_new0 (GimpVector2, coords->len);
+          gint         i;
 
           for (i = 0; i < coords->len; i++)
             {
