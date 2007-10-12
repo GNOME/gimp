@@ -119,9 +119,6 @@ struct _GimpRectangleOptionsPrivate
 
   GtkWidget                  *auto_shrink_button;
 
-  GtkWidget                  *second_row_hbox;
-  GtkWidget                  *entry_alignment;
-
   GtkWidget                  *fixed_width_entry;
   GtkWidget                  *fixed_height_entry;
 

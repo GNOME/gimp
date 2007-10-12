@@ -1,5 +1,11 @@
 2007-10-12  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimprectangleoptions.[ch]: massively simplified the
+	fixed rule widget showing/hiding, fixed their spacing, make sure
+	they don't cause UI resizing on rule change.
+
+2007-10-12  Michael Natterer  <mitch@gimp.org>
+
 	* app/widgets/gimpcolorselectorpalette.c: #include "gimp-intl.h"
 
 2007-10-12  Sven Neumann  <sven@gimp.org>
