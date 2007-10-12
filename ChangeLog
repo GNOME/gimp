@@ -1,3 +1,8 @@
+2007-10-12  Sven Neumann  <sven@gimp.org>
+
+	* app/widgets/gimpcolorselectorpalette.c: 
+	* plug-ins/twain/twain.c: marked strings for translation (bug #485937).
+
 2007-10-12  Kevin Cozens  <kcozens@cvs.gnome.org>
 
 	* plug-ins/script-fu/tinyscheme/scheme.c: Fix off by one error.

@@ -84,7 +84,7 @@
  * Plug-in Definitions
  */
 #define PLUG_IN_NAME        "twain-acquire"
-#define PLUG_IN_DESCRIPTION "Capture an image from a TWAIN datasource"
+#define PLUG_IN_DESCRIPTION N_("Capture an image from a TWAIN datasource")
 #define PLUG_IN_HELP        "This plug-in will capture an image from a TWAIN datasource"
 #define PLUG_IN_AUTHOR      "Craig Setera (setera@home.com)"
 #define PLUG_IN_COPYRIGHT   "Craig Setera"
