@@ -1,3 +1,7 @@
+2007-10-12  Michael Natterer  <mitch@gimp.org>
+
+	* app/widgets/gimpcolorselectorpalette.c: #include "gimp-intl.h"
+
 2007-10-12  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpcolorselectorpalette.c: 

@@ -35,6 +35,8 @@
 #include "gimppaletteview.h"
 #include "gimpviewrendererpalette.h"
 
+#include "gimp-intl.h"
+
 
 static void   gimp_color_selector_palette_set_color  (GimpColorSelector *selector,
                                                       const GimpRGB     *rgb,
