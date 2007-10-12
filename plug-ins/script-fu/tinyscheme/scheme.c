@@ -1691,7 +1691,7 @@ static pointer readstrexp(scheme *sc) {
   gunichar c;
   int c1=0;
   int len;
-  enum { st_ok, st_bsl, st_x1, st_x2, st_oct1, st_oct2, st_oct3 } state=st_ok;
+  enum { st_ok, st_bsl, st_x1, st_x2, st_oct1, st_oct2 } state=st_ok;
 
   for (;;) {
     c=inchar(sc);
@@ -1719,10 +1719,6 @@ static pointer readstrexp(scheme *sc) {
       case '1':
       case '2':
       case '3':
-      case '4':
-      case '5':
-      case '6':
-      case '7':
         state=st_oct1;
         c1=g_unichar_digit_value(c);
         break;
@@ -1766,9 +1762,8 @@ static pointer readstrexp(scheme *sc) {
         state=st_ok;
       }
       break;
-    case st_oct1:
-    case st_oct2:
-    case st_oct3:
+    case st_oct1:   /* State when handling second octal digit */
+    case st_oct2:   /* State when handling third octal digit */
       if (!g_unichar_isdigit(c) || g_unichar_digit_value(c) > 7)
       {
         if (state==st_oct1)
@@ -1781,18 +1776,13 @@ static pointer readstrexp(scheme *sc) {
       else
       {
         c1=(c1<<3)+g_unichar_digit_value(c);
-        switch (state)
-        {
-        case st_oct1:
+
+        if (state == st_oct1)
           state=st_oct2;
-          break;
-        case st_oct2:
-          state=st_oct3;
-          break;
-        default:
+        else
+        {
           *p++=c1;
           state=st_ok;
-          break;
         }
       }
       break;

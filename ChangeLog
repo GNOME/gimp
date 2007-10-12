@@ -1,3 +1,9 @@
+2007-10-12  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/tinyscheme/scheme.c: Fix off by one error.
+	Stop on third digit after backslash when reading octal character.
+	Original cause of bug #485538.
+
 2007-10-11  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):
