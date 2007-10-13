@@ -3267,24 +3267,24 @@ gimp_rectangle_tool_apply_aspect (GimpRectangleTool *rectangle_tool,
       return;
 
     case SIDE_TO_RESIZE_LEFT:
-      private->x1 = private->x2 - aspect * current_h;
+      private->x1 = round (private->x2 - aspect * current_h);
       break;
 
     case SIDE_TO_RESIZE_RIGHT:
-      private->x2 = private->x1 + aspect * current_h;
+      private->x2 = round (private->x1 + aspect * current_h);
       break;
 
     case SIDE_TO_RESIZE_TOP:
-      private->y1 = private->y2 - current_w / aspect;
+      private->y1 = round (private->y2 - current_w / aspect);
       break;
 
     case SIDE_TO_RESIZE_BOTTOM:
-      private->y2 = private->y1 + current_w / aspect;
+      private->y2 = round (private->y1 + current_w / aspect);
       break;
 
     case SIDE_TO_RESIZE_TOP_AND_BOTTOM_SYMMETRICALLY:
       {
-        gint correct_h = current_w / aspect;
+        gint correct_h = round (current_w / aspect);
 
         private->y1 = private->center_y_on_fixed_center - correct_h / 2;
         private->y2 = private->y1 + correct_h;
@@ -3293,7 +3293,7 @@ gimp_rectangle_tool_apply_aspect (GimpRectangleTool *rectangle_tool,
 
     case SIDE_TO_RESIZE_LEFT_AND_RIGHT_SYMMETRICALLY:
       {
-        gint correct_w = current_h * aspect;
+        gint correct_w = round (current_h * aspect);
 
         private->x1 = private->center_x_on_fixed_center - correct_w / 2;
         private->x2 = private->x1 + correct_w;

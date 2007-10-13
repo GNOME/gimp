@@ -1,3 +1,9 @@
+2007-10-13  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_apply_aspect): Use round() when solving the
+	aspect ratio equations as this produces more accurate results.
+
 2007-10-12  Sven Neumann  <sven@gimp.org>
 
 	* app/core/gimpdrawable-stroke.c: formatting.
