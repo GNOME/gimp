@@ -171,8 +171,6 @@ run (const gchar      *name,
           switch (run_mode)
             {
             case GIMP_RUN_INTERACTIVE:
-              gimp_get_data (PLUG_IN_PROC_REMAP, map);
-
               if (! remap_dialog (image_ID, map))
                 status = GIMP_PDB_CANCEL;
               break;

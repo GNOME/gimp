@@ -1,3 +1,9 @@
+2007-10-13  Sven Neumann  <sven@gimp.org>
+
+	* plug-ins/common/colormap-remap.c (run): don't use the last-used
+	mapping in interactive mode, only do this when called with run-mode
+	GIMP_RUN_WITH_LAST_VALS. Fixes bug #486283.
+
 2007-10-13  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c
