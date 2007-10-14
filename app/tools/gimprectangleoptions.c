@@ -764,14 +764,13 @@ GtkWidget *
 gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 {
   GimpRectangleOptionsPrivate *private;
-
-  GObject   *config = G_OBJECT (tool_options);
-  GtkWidget *vbox   = gimp_tool_options_gui (tool_options);
-  GtkWidget *button;
-  GtkWidget *combo;
-  GtkWidget *table;
-  GtkWidget *entry;
-  gint       row = 0;
+  GObject                     *config = G_OBJECT (tool_options);
+  GtkWidget                   *vbox   = gimp_tool_options_gui (tool_options);
+  GtkWidget                   *button;
+  GtkWidget                   *combo;
+  GtkWidget                   *table;
+  GtkWidget                   *entry;
+  gint                         row = 0;
 
   private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (tool_options);
 
@@ -976,8 +975,10 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                                     "height", TRUE, "unit", "%a",
                                                     GIMP_SIZE_ENTRY_UPDATE_SIZE,
                                                     300);
+#if 0
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->height_entry),
                                   FALSE);
+#endif
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
                              _("Height:"), 0.0, 0.5,
                              private->height_entry, 1, TRUE);
