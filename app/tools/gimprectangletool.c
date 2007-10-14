@@ -2067,8 +2067,8 @@ gimp_rectangle_tool_update_options (GimpRectangleTool *rectangle,
                                    rectangle);
 
   g_object_set (options,
-                "x0", x,
-                "y0", y,
+                "x", x,
+                "y", y,
                 NULL);
 
   g_object_set (options,
@@ -2154,21 +2154,21 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
   if (! GIMP_TOOL (rectangle)->display)
     return;
 
-  if (! strcmp (pspec->name, "x0"))
+  if (! strcmp (pspec->name, "x"))
     {
-      if (private->x1 != options_private->x0)
+      if (private->x1 != options_private->x)
         gimp_rectangle_tool_synthesize_motion (rectangle,
                                                RECT_MOVING,
-                                               options_private->x0,
+                                               options_private->x,
                                                private->y1);
     }
-  else if (! strcmp (pspec->name, "y0"))
+  else if (! strcmp (pspec->name, "y"))
     {
-      if (private->y1 != options_private->y0)
+      if (private->y1 != options_private->y)
         gimp_rectangle_tool_synthesize_motion (rectangle,
                                                RECT_MOVING,
                                                private->x1,
-                                               options_private->y0);
+                                               options_private->y);
     }
   else if (! strcmp (pspec->name, "width"))
     {
@@ -2251,10 +2251,10 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
 
           /* For some reason these needs to be set separately... */
           g_object_set (options,
-                        "x0", x,
+                        "x", x,
                         NULL);
           g_object_set (options,
-                        "y0", y,
+                        "y", y,
                         NULL);
         }
     }
