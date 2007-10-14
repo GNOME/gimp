@@ -1,3 +1,10 @@
+2007-10-14  Raphaël Quinet  <raphael@gimp.org>
+
+	* app/tools/gimpaligntool.[ch]: Re-wrote the cursor handling
+	logic, added cursor modifiers, added hints in the status bar in
+	order to make it easier to discover how to use the tool.  Adds new
+	translatable strings, fixes bug #486110.
+
 2007-10-14  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c

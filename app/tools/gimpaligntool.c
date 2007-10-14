@@ -37,6 +37,7 @@
 #include "core/gimplist.h"
 
 #include "widgets/gimphelp-ids.h"
+#include "widgets/gimpwidgets-utils.h"
 
 #include "display/gimpdisplay.h"
 #include "display/gimpdisplayshell.h"
@@ -48,6 +49,8 @@
 
 #include "gimp-intl.h"
 
+#define EPSILON      3   /* move distance after which we do a box-select */
+#define MARKER_WIDTH 5   /* size (in pixels) of the square handles */
 
 /*  local function prototypes  */
 
@@ -78,6 +81,15 @@ static void   gimp_align_tool_motion         (GimpTool              *tool,
                                               guint32                time,
                                               GdkModifierType        state,
                                               GimpDisplay           *display);
+static void   gimp_align_tool_oper_update    (GimpTool              *tool,
+                                              GimpCoords            *coords,
+                                              GdkModifierType        state,
+                                              gboolean               proximity,
+                                              GimpDisplay           *display);
+static void   gimp_align_tool_status_update  (GimpTool              *tool,
+                                              GimpDisplay           *display,
+                                              GdkModifierType        state,
+                                              gboolean               proximity);
 static void   gimp_align_tool_cursor_update  (GimpTool              *tool,
                                               GimpCoords            *coords,
                                               GdkModifierType        state,
@@ -140,6 +152,7 @@ gimp_align_tool_class_init (GimpAlignToolClass *klass)
   tool_class->button_press   = gimp_align_tool_button_press;
   tool_class->button_release = gimp_align_tool_button_release;
   tool_class->motion         = gimp_align_tool_motion;
+  tool_class->oper_update    = gimp_align_tool_oper_update;
   tool_class->cursor_update  = gimp_align_tool_cursor_update;
 
   draw_tool_class->draw      = gimp_align_tool_draw;
@@ -150,11 +163,12 @@ gimp_align_tool_init (GimpAlignTool *align_tool)
 {
   GimpTool *tool = GIMP_TOOL (align_tool);
 
-  align_tool->controls        = NULL;
+  align_tool->controls         = NULL;
 
+  align_tool->function         = ALIGN_TOOL_IDLE;
   align_tool->selected_objects = NULL;
 
-  align_tool->align_type = GIMP_ALIGN_LEFT;
+  align_tool->align_type  = GIMP_ALIGN_LEFT;
 
   align_tool->horz_offset = 0;
   align_tool->vert_offset = 0;
@@ -256,13 +270,14 @@ gimp_align_tool_button_press (GimpTool        *tool,
 
   gimp_draw_tool_pause (GIMP_DRAW_TOOL (tool));
 
-  /*  If the tool was being used in another image...reset it  */
+  /*  If the tool was being used in another image... reset it  */
 
   if (display != tool->display)
     {
       if (gimp_draw_tool_is_active (GIMP_DRAW_TOOL (tool)))
         gimp_draw_tool_stop (GIMP_DRAW_TOOL (tool));
 
+      gimp_tool_pop_status (tool, display);
       clear_all_selected_objects (align_tool);
     }
 
@@ -317,8 +332,6 @@ gimp_align_tool_button_release (GimpTool              *tool,
       clear_all_selected_objects (align_tool);
       align_tool->set_reference = FALSE;
     }
-
-#define EPSILON 3
 
   /* if mouse has moved less than EPSILON pixels since button press, select
      the nearest thing, otherwise make a rubber-band rectangle */
@@ -437,15 +450,14 @@ gimp_align_tool_motion (GimpTool        *tool,
 }
 
 static void
-gimp_align_tool_cursor_update (GimpTool        *tool,
-                               GimpCoords      *coords,
-                               GdkModifierType  state,
-                               GimpDisplay     *display)
+gimp_align_tool_oper_update (GimpTool        *tool,
+                             GimpCoords      *coords,
+                             GdkModifierType  state,
+                             gboolean         proximity,
+                             GimpDisplay     *display)
 {
-  GimpDisplayShell  *shell      = GIMP_DISPLAY_SHELL (display->shell);
-  GimpCursorType      cursor      = GIMP_CURSOR_MOUSE;
-  GimpToolCursorType  tool_cursor = GIMP_TOOL_CURSOR_MOVE;
-  GimpCursorModifier  modifier    = GIMP_CURSOR_MODIFIER_NONE;
+  GimpAlignTool      *align_tool  = GIMP_ALIGN_TOOL (tool);
+  GimpDisplayShell   *shell       = GIMP_DISPLAY_SHELL (display->shell);
   gint                snap_distance;
 
   snap_distance =
@@ -455,7 +467,10 @@ gimp_align_tool_cursor_update (GimpTool        *tool,
                                  coords, snap_distance, snap_distance,
                                  NULL, NULL, NULL, NULL, NULL, NULL))
     {
-      tool_cursor = GIMP_TOOL_CURSOR_PATHS;
+      if ((state & GDK_SHIFT_MASK) && align_tool->selected_objects)
+        align_tool->function = ALIGN_TOOL_ADD_PATH;
+      else
+        align_tool->function = ALIGN_TOOL_PICK_PATH;
     }
   else if (gimp_display_shell_get_show_guides (shell) &&
            (NULL != gimp_image_find_guide (display->image,
@@ -463,7 +478,10 @@ gimp_align_tool_cursor_update (GimpTool        *tool,
                                            FUNSCALEX (shell, snap_distance),
                                            FUNSCALEY (shell, snap_distance))))
     {
-      tool_cursor = GIMP_TOOL_CURSOR_MOVE;
+      if ((state & GDK_SHIFT_MASK) && align_tool->selected_objects)
+        align_tool->function = ALIGN_TOOL_ADD_GUIDE;
+      else
+        align_tool->function = ALIGN_TOOL_PICK_GUIDE;
     }
   else
     {
@@ -472,15 +490,150 @@ gimp_align_tool_cursor_update (GimpTool        *tool,
 
       if (layer)
         {
-          tool_cursor = GIMP_TOOL_CURSOR_HAND;
+          if ((state & GDK_SHIFT_MASK) && align_tool->selected_objects)
+            align_tool->function = ALIGN_TOOL_ADD_LAYER;
+          else
+            align_tool->function = ALIGN_TOOL_PICK_LAYER;
+        }
+      else
+        {
+          align_tool->function = ALIGN_TOOL_IDLE;
         }
     }
 
-  gimp_tool_control_set_cursor          (tool->control, cursor);
+  gimp_align_tool_status_update (tool, display, state, proximity);
+}
+
+static void
+gimp_align_tool_cursor_update (GimpTool        *tool,
+                               GimpCoords      *coords,
+                               GdkModifierType  state,
+                               GimpDisplay     *display)
+{
+  GimpAlignTool      *align_tool  = GIMP_ALIGN_TOOL (tool);
+  GimpToolCursorType  tool_cursor = GIMP_TOOL_CURSOR_NONE;
+  GimpCursorModifier  modifier    = GIMP_CURSOR_MODIFIER_NONE;
+
+  if (state & GDK_SHIFT_MASK)
+    {
+      /* always add '+' when Shift is pressed, even if nothing is selected */
+      modifier = GIMP_CURSOR_MODIFIER_PLUS;
+    }
+
+  switch (align_tool->function)
+    {
+    case ALIGN_TOOL_IDLE:
+      tool_cursor = GIMP_TOOL_CURSOR_RECT_SELECT;
+      break;
+
+    case ALIGN_TOOL_PICK_LAYER:
+    case ALIGN_TOOL_ADD_LAYER:
+      tool_cursor = GIMP_TOOL_CURSOR_HAND;
+      break;
+
+    case ALIGN_TOOL_PICK_GUIDE:
+    case ALIGN_TOOL_ADD_GUIDE:
+      tool_cursor = GIMP_TOOL_CURSOR_MOVE;
+      break;
+
+    case ALIGN_TOOL_PICK_PATH:
+    case ALIGN_TOOL_ADD_PATH:
+      tool_cursor = GIMP_TOOL_CURSOR_PATHS;
+      break;
+
+    case ALIGN_TOOL_DRAG_BOX:
+      /* FIXME: it would be nice to add something here, but we cannot easily
+         detect when the tool is in this mode (the draw tool is always active)
+         so this state is not used for the moment.
+      */
+      break;
+    }
+
+  gimp_tool_control_set_cursor          (tool->control, GIMP_CURSOR_MOUSE);
   gimp_tool_control_set_tool_cursor     (tool->control, tool_cursor);
   gimp_tool_control_set_cursor_modifier (tool->control, modifier);
 
   GIMP_TOOL_CLASS (parent_class)->cursor_update (tool, coords, state, display);
+}
+
+static void
+gimp_align_tool_status_update (GimpTool        *tool,
+                               GimpDisplay     *display,
+                               GdkModifierType  state,
+                               gboolean         proximity)
+{
+  GimpAlignTool *align_tool = GIMP_ALIGN_TOOL (tool);
+
+  gimp_tool_pop_status (tool, display);
+
+  if (proximity)
+    {
+      gchar    *status = NULL;
+      gboolean  free_status = FALSE;
+
+      if (! align_tool->selected_objects)
+        {
+          /* no need to suggest Shift if nothing is selected */
+          state |= GDK_SHIFT_MASK;
+        }
+
+      switch (align_tool->function)
+        {
+        case ALIGN_TOOL_IDLE:
+          status = gimp_suggest_modifiers (_("Click on a layer, path or guide, "
+                                             "or Click-Drag to pick several "
+                                             "layers"),
+                                           GDK_SHIFT_MASK & ~state,
+                                           NULL, NULL, NULL);
+          free_status = TRUE;
+          break;
+
+        case ALIGN_TOOL_PICK_LAYER:
+          status = gimp_suggest_modifiers (_("Click to pick this layer as "
+                                             "first item"),
+                                           GDK_SHIFT_MASK & ~state,
+                                           NULL, NULL, NULL);
+          free_status = TRUE;
+          break;
+
+        case ALIGN_TOOL_ADD_LAYER:
+          status = _("Click to add this layer to the list");
+          break;
+
+        case ALIGN_TOOL_PICK_GUIDE:
+          status = gimp_suggest_modifiers (_("Click to pick this guide as "
+                                             "first item"),
+                                           GDK_SHIFT_MASK & ~state,
+                                           NULL, NULL, NULL);
+          free_status = TRUE;
+          break;
+
+        case ALIGN_TOOL_ADD_GUIDE:
+          status = _("Click to add this guide to the list");
+          break;
+
+        case ALIGN_TOOL_PICK_PATH:
+          status = gimp_suggest_modifiers (_("Click to pick this path as "
+                                             "first item"),
+                                           GDK_SHIFT_MASK & ~state,
+                                           NULL, NULL, NULL);
+          free_status = TRUE;
+          break;
+
+        case ALIGN_TOOL_ADD_PATH:
+          status = _("Click to add this path to the list");
+          break;
+
+        case ALIGN_TOOL_DRAG_BOX:
+          break;
+        }
+
+      if (status)
+        gimp_tool_push_status (tool, display, status);
+
+      if (free_status)
+        g_free (status);
+    }
 }
 
 static void
@@ -513,16 +666,16 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
           h = gimp_item_height (item);
 
           gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                      x, y, 4, 4,
+                                      x, y, MARKER_WIDTH, MARKER_WIDTH,
                                       GTK_ANCHOR_NORTH_WEST, FALSE);
           gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                      x + w, y, 4, 4,
+                                      x + w, y, MARKER_WIDTH, MARKER_WIDTH,
                                       GTK_ANCHOR_NORTH_EAST, FALSE);
           gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                      x, y + h, 4, 4,
+                                      x, y + h, MARKER_WIDTH, MARKER_WIDTH,
                                       GTK_ANCHOR_SOUTH_WEST, FALSE);
           gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                      x + w, y + h, 4, 4,
+                                      x + w, y + h, MARKER_WIDTH, MARKER_WIDTH,
                                       GTK_ANCHOR_SOUTH_EAST, FALSE);
         }
       else if (GIMP_IS_GUIDE (list->data))
@@ -538,10 +691,10 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
               x = gimp_guide_get_position (guide);
               h = gimp_image_get_height (image);
               gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                          x, h, 4, 4,
+                                          x, h, MARKER_WIDTH, MARKER_WIDTH,
                                           GTK_ANCHOR_SOUTH, FALSE);
               gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                          x, 0, 4, 4,
+                                          x, 0, MARKER_WIDTH, MARKER_WIDTH,
                                           GTK_ANCHOR_NORTH, FALSE);
               break;
 
@@ -549,10 +702,10 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
               y = gimp_guide_get_position (guide);
               w = gimp_image_get_width (image);
               gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                          w, y, 4, 4,
+                                          w, y, MARKER_WIDTH, MARKER_WIDTH,
                                           GTK_ANCHOR_EAST, FALSE);
               gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
-                                          0, y, 4, 4,
+                                          0, y, MARKER_WIDTH, MARKER_WIDTH,
                                           GTK_ANCHOR_WEST, FALSE);
               break;
 

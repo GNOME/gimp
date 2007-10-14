@@ -22,6 +22,19 @@
 
 #include "gimpdrawtool.h"
 
+/*  tool function/operation/state/mode  */
+typedef enum
+{
+  ALIGN_TOOL_IDLE,
+  ALIGN_TOOL_PICK_LAYER,
+  ALIGN_TOOL_ADD_LAYER,
+  ALIGN_TOOL_PICK_GUIDE,
+  ALIGN_TOOL_ADD_GUIDE,
+  ALIGN_TOOL_PICK_PATH,
+  ALIGN_TOOL_ADD_PATH,
+  ALIGN_TOOL_DRAG_BOX
+} GimpAlignToolFunction;
+
 
 #define GIMP_TYPE_ALIGN_TOOL            (gimp_align_tool_get_type ())
 #define GIMP_ALIGN_TOOL(obj)            (G_TYPE_CHECK_INSTANCE_CAST ((obj), GIMP_TYPE_ALIGN_TOOL, GimpAlignTool))
@@ -42,6 +55,7 @@ struct _GimpAlignTool
   GtkWidget             *controls;
   GtkWidget             *button[ALIGN_TOOL_NUM_BUTTONS];
 
+  GimpAlignToolFunction  function;
   GList                 *selected_objects;
 
   GimpAlignmentType      align_type;
