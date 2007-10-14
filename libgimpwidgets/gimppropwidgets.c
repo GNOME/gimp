@@ -2603,6 +2603,8 @@ static void   gimp_prop_size_entry_notify_unit (GObject       *config,
  * gimp_prop_size_entry_new:
  * @config:             Object to which property is attached.
  * @property_name:      Name of int or double property.
+ * @property_is_pixel:  When %TRUE, the property value is in pixels,
+ *                      and in the selected unit otherwise.
  * @unit_property_name: Name of unit property.
  * @unit_format:        A printf-like unit-format string as is used with
  *                      gimp_unit_menu_new().
@@ -2623,6 +2625,7 @@ static void   gimp_prop_size_entry_notify_unit (GObject       *config,
 GtkWidget *
 gimp_prop_size_entry_new (GObject                   *config,
                           const gchar               *property_name,
+                          gboolean                   property_is_pixel,
                           const gchar               *unit_property_name,
                           const gchar               *unit_format,
                           GimpSizeEntryUpdatePolicy  update_policy,
@@ -2695,14 +2698,25 @@ gimp_prop_size_entry_new (GObject                   *config,
   gimp_size_entry_set_value_boundaries (GIMP_SIZE_ENTRY (sizeentry), 0,
                                         lower, upper);
 
-  gimp_size_entry_set_value (GIMP_SIZE_ENTRY (sizeentry), 0, value);
+  g_object_set_data (G_OBJECT (sizeentry), "value-is-pixel",
+                     GINT_TO_POINTER (property_is_pixel ? TRUE : FALSE));
+
+  if (property_is_pixel)
+    gimp_size_entry_set_refval (GIMP_SIZE_ENTRY (sizeentry), 0, value);
+  else
+    gimp_size_entry_set_value (GIMP_SIZE_ENTRY (sizeentry), 0, value);
 
   g_object_set_data (G_OBJECT (sizeentry), "gimp-config-param-spec",
                      param_spec);
 
-  g_signal_connect (sizeentry, "value-changed",
-                    G_CALLBACK (gimp_prop_size_entry_callback),
-                    config);
+  if (property_is_pixel)
+    g_signal_connect (sizeentry, "refval-changed",
+                      G_CALLBACK (gimp_prop_size_entry_callback),
+                      config);
+  else
+    g_signal_connect (sizeentry, "value-changed",
+                      G_CALLBACK (gimp_prop_size_entry_callback),
+                      config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_size_entry_notify),
@@ -2732,6 +2746,7 @@ gimp_prop_size_entry_callback (GimpSizeEntry *sizeentry,
   GParamSpec *param_spec;
   GParamSpec *unit_param_spec;
   gdouble     value;
+  gboolean    value_is_pixel;
   GimpUnit    unit_value;
 
   param_spec = g_object_get_data (G_OBJECT (sizeentry),
@@ -2742,7 +2757,14 @@ gimp_prop_size_entry_callback (GimpSizeEntry *sizeentry,
   unit_param_spec = g_object_get_data (G_OBJECT (sizeentry),
                                        "gimp-config-param-spec-unit");
 
-  value      = gimp_size_entry_get_value (sizeentry, 0);
+  value_is_pixel = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (sizeentry),
+                                                       "value-is-pixel"));
+
+  if (value_is_pixel)
+    value = gimp_size_entry_get_refval (sizeentry, 0);
+  else
+    value = gimp_size_entry_get_value (sizeentry, 0);
+
   unit_value = gimp_size_entry_get_unit (sizeentry);
 
   if (unit_param_spec)
@@ -2784,7 +2806,9 @@ gimp_prop_size_entry_notify (GObject       *config,
                              GParamSpec    *param_spec,
                              GimpSizeEntry *sizeentry)
 {
-  gdouble value;
+  gdouble  value;
+  gdouble  entry_value;
+  gboolean value_is_pixel;
 
   if (G_IS_PARAM_SPEC_INT (param_spec))
     {
@@ -2803,13 +2827,24 @@ gimp_prop_size_entry_notify (GObject       *config,
                     NULL);
     }
 
-  if (value != gimp_size_entry_get_value (sizeentry, 0))
+  value_is_pixel = GPOINTER_TO_INT (g_object_get_data (G_OBJECT (sizeentry),
+                                                       "value-is-pixel"));
+
+  if (value_is_pixel)
+    entry_value = gimp_size_entry_get_refval (sizeentry, 0);
+  else
+    entry_value = gimp_size_entry_get_value (sizeentry, 0);
+
+  if (value != entry_value)
     {
       g_signal_handlers_block_by_func (sizeentry,
                                        gimp_prop_size_entry_callback,
                                        config);
 
-      gimp_size_entry_set_value (sizeentry, 0, value);
+      if (value_is_pixel)
+        gimp_size_entry_set_refval (sizeentry, 0, value);
+      else
+        gimp_size_entry_set_value (sizeentry, 0, value);
 
       g_signal_handlers_unblock_by_func (sizeentry,
                                          gimp_prop_size_entry_callback,

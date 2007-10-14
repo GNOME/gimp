@@ -1,3 +1,25 @@
+2007-10-14  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimppropwidgets.[ch] (gimp_prop_size_entry_new):
+	added parameter "gboolean property_is_pixel" which indicates that
+	the stored property value is always in pixels and not in the
+	selected unit.
+
+	* app/tools/gimptextoptions.c
+	* app/widgets/gimpstrokeeditor.c: pass FALSE to keep the old
+	behavior.
+
+	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):
+	added property "fixed-unit" which is used for all fixed values
+	now. Perhaps we need separate units for width/height/size. Enable
+	the unit menu on the "Width" and "Height" size entries of the
+	"Fixed" section and configure them to store the value in
+	pixels. This was the easy part, some other widgets still need unit
+	support.
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_start): set
+	the image's resolution on the size entries changed above.
+
 2007-10-14  Raphaël Quinet  <raphael@gimp.org>
 
 	* app/tools/gimpaligntool.[ch]: Re-wrote the cursor handling

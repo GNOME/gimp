@@ -47,6 +47,7 @@ typedef enum
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE,
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE,
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_CENTER,
+  GIMP_RECTANGLE_OPTIONS_PROP_FIXED_UNIT,
   GIMP_RECTANGLE_OPTIONS_PROP_CENTER_X,
   GIMP_RECTANGLE_OPTIONS_PROP_CENTER_Y,
   GIMP_RECTANGLE_OPTIONS_PROP_UNIT,
@@ -103,6 +104,8 @@ struct _GimpRectangleOptionsPrivate
 
   gboolean                    fixed_rule_active;
   GimpRectangleToolFixedRule  fixed_rule;
+
+  GimpUnit                    fixed_unit;
 
   gboolean                    fixed_center;
   gdouble                     center_x;

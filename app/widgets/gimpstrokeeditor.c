@@ -186,7 +186,8 @@ gimp_stroke_editor_constructor (GType                   type,
   gtk_box_pack_start (GTK_BOX (box), label, FALSE, FALSE, 0);
   gtk_widget_show (label);
 
-  size = gimp_prop_size_entry_new (G_OBJECT (editor->options), "width", "unit",
+  size = gimp_prop_size_entry_new (G_OBJECT (editor->options),
+                                   "width", FALSE, "unit",
                                    "%a", GIMP_SIZE_ENTRY_UPDATE_SIZE,
                                    editor->resolution);
   gimp_size_entry_set_pixel_digits (GIMP_SIZE_ENTRY (size), 1);

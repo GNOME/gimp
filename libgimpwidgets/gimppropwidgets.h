@@ -165,6 +165,7 @@ GtkWidget     * gimp_prop_path_editor_new         (GObject       *config,
 
 GtkWidget     * gimp_prop_size_entry_new          (GObject       *config,
                                                    const gchar   *property_name,
+                                                   gboolean       property_is_pixel,
                                                    const gchar   *unit_property_name,
                                                    const gchar   *unit_format,
                                                    GimpSizeEntryUpdatePolicy  update_policy,
