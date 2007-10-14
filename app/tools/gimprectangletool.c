@@ -2212,6 +2212,95 @@ gimp_rectangle_tool_options_notify (GimpRectangleOptions *options,
                                                  y2);
         }
     }
+  else if (! strcmp (pspec->name, "desired-fixed-size-width"))
+    {
+      /* We are only interested in when width and height swaps, so
+       * it's enough to only check e.g. for width.
+       */
+
+      GimpTool *tool   = GIMP_TOOL (rectangle);
+      gint      width  = private->x2 - private->x1;
+      gint      height = private->y2 - private->y1;
+
+      /* Depending on a bunch of conditions, we might want to
+       * immedieately switch width and height of the pending
+       * rectangle.
+       */
+      if (options_private->fixed_rule_active                   &&
+          tool->display                              != NULL   &&
+          tool->button_press_state                   == 0      &&
+          tool->active_modifier_state                == 0      &&
+          options_private->desired_fixed_size_width  == height &&
+          options_private->desired_fixed_size_height == width)
+        {
+          gdouble x = private->x1;
+          gdouble y = private->y1;
+
+          gimp_rectangle_tool_synthesize_motion (rectangle,
+                                                 RECT_RESIZING_LOWER_RIGHT,
+                                                 private->x2,
+                                                 private->y2);
+
+          /* For some reason these needs to be set separately... */
+          g_object_set (options,
+                        "x0", x,
+                        NULL);
+          g_object_set (options,
+                        "y0", y,
+                        NULL);
+        }
+    }
+  else if (! strcmp (pspec->name, "aspect-numerator"))
+    {
+      /* We are only interested in when numerator and denominator
+       * swaps, so it's enough to only check e.g. for numerator.
+       */
+
+      GimpTool *tool              = GIMP_TOOL (rectangle);
+      double    width             = private->x2 - private->x1;
+      double    height            = private->y2 - private->y1;
+      gdouble   new_inverse_ratio = options_private->aspect_denominator /
+                                    options_private->aspect_numerator;
+      gdouble   lower_ratio;
+      gdouble   higher_ratio;
+
+      /* The ratio of the Fixed: Aspect ratio rule and the pending
+       * rectangle is very rarely exactly the same so use an
+       * interval. For small rectangles the below code will
+       * automatically yield a more generous accepted ratio interval
+       * which is exactly what we want.
+       */
+      if (width > height && height > 1.0)
+        {
+          lower_ratio  = width / (height + 1.0);
+          higher_ratio = width / (height - 1.0);
+        }
+      else
+        {
+          lower_ratio  = (width - 1.0) / height;
+          higher_ratio = (width + 1.0) / height;
+        }
+
+      /* Depending on a bunch of conditions, we might want to
+       * immedieately switch width and height of the pending
+       * rectangle.
+       */
+      if (options_private->fixed_rule_active               &&
+          tool->display               != NULL              &&
+          tool->button_press_state    == 0                 &&
+          tool->active_modifier_state == 0                 &&
+          lower_ratio                 <  new_inverse_ratio &&
+          higher_ratio                >  new_inverse_ratio)
+        {
+          gdouble new_x2 = private->x1 + private->y2 - private->y1;
+          gdouble new_y2 = private->y1 + private->x2 - private->x1;
+
+          gimp_rectangle_tool_synthesize_motion (rectangle,
+                                                 RECT_RESIZING_LOWER_RIGHT,
+                                                 new_x2,
+                                                 new_y2);
+        }
+    }
   else if (! strcmp (pspec->name, "highlight"))
     {
       gimp_rectangle_tool_update_highlight (rectangle);

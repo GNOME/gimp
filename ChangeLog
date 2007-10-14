@@ -1,3 +1,10 @@
+2007-10-14  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimprectangletool.c
+	(gimp_rectangle_tool_options_notify): When Fixed: Size/Aspect
+	ratio numbers are swapped and the Fixed:-rule is active, swap
+	width and height on any pending rectangle. Fixed bug #479999.
+
 2007-10-13  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/tools/gimprectangletool.c
