@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-11 00:40+0200\n"
-"PO-Revision-Date: 2007-10-11 00:41+0100\n"
+"POT-Creation-Date: 2007-10-14 14:58+0200\n"
+"PO-Revision-Date: 2007-10-14 15:04+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -5906,7 +5906,7 @@ msgstr "Nivåer"
 msgid "Offset Drawable"
 msgstr "Position för rityta"
 
-#: ../app/core/gimpdrawable-stroke.c:321
+#: ../app/core/gimpdrawable-stroke.c:320
 msgid "Render Stroke"
 msgstr "Rendera penseldrag"
 
@@ -6975,13 +6975,13 @@ msgstr "Lager_namn:"
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:134
 #: ../app/tools/gimpmeasuretool.c:1056
-#: ../app/tools/gimprectangleoptions.c:1040
+#: ../app/tools/gimprectangleoptions.c:951
 msgid "Width:"
 msgstr "Bredd:"
 
 #: ../app/dialogs/layer-options-dialog.c:140
 #: ../app/tools/gimpmeasuretool.c:1084
-#: ../app/tools/gimprectangleoptions.c:1053
+#: ../app/tools/gimprectangleoptions.c:964
 msgid "Height:"
 msgstr "Höjd:"
 
@@ -8834,76 +8834,104 @@ msgstr "Flöde:"
 msgid "Pressure:"
 msgstr "Tryck:"
 
-#: ../app/tools/gimpaligntool.c:120
-#: ../app/tools/gimpaligntool.c:581
+#: ../app/tools/gimpaligntool.c:132
+#: ../app/tools/gimpaligntool.c:734
 msgid "Align"
 msgstr "Arrangera"
 
-#: ../app/tools/gimpaligntool.c:121
+#: ../app/tools/gimpaligntool.c:133
 msgid "Alignment Tool: Align or arrange layers and other objects"
 msgstr "Arrangeringsverktyg: Arrangera lager och andra objekt"
 
-#: ../app/tools/gimpaligntool.c:122
+#: ../app/tools/gimpaligntool.c:134
 msgid "_Align"
 msgstr "_Arrangera"
 
-#: ../app/tools/gimpaligntool.c:593
+#: ../app/tools/gimpaligntool.c:583
+msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
+msgstr "Klicka på ett lager, slinga eller hjälplinje, eller klicka och dra för att välja flera lager"
+
+#: ../app/tools/gimpaligntool.c:592
+msgid "Click to pick this layer as first item"
+msgstr "Klicka för att välja detta lager som första objekt"
+
+#: ../app/tools/gimpaligntool.c:600
+msgid "Click to add this layer to the list"
+msgstr "Klicka för att lägga till detta lager till listan"
+
+#: ../app/tools/gimpaligntool.c:604
+msgid "Click to pick this guide as first item"
+msgstr "Klicka för att välja denna hjälplinje som första objekt"
+
+#: ../app/tools/gimpaligntool.c:612
+msgid "Click to add this guide to the list"
+msgstr "Klicka för att lägga till denna hjälplinje till listan"
+
+#: ../app/tools/gimpaligntool.c:616
+msgid "Click to pick this path as first item"
+msgstr "Klicka för att välja denna slinga som första objekt"
+
+#: ../app/tools/gimpaligntool.c:624
+msgid "Click to add this path to the list"
+msgstr "Klicka för att lägga till denna slinga till listan"
+
+#: ../app/tools/gimpaligntool.c:746
 msgid "Relative to:"
 msgstr "Relativ till:"
 
-#: ../app/tools/gimpaligntool.c:611
+#: ../app/tools/gimpaligntool.c:764
 msgid "Align left edge of target"
 msgstr "Arrangera mot vänsterkant av målet"
 
-#: ../app/tools/gimpaligntool.c:617
+#: ../app/tools/gimpaligntool.c:770
 msgid "Align center of target"
 msgstr "Arrangera mot centrum av målet"
 
-#: ../app/tools/gimpaligntool.c:623
+#: ../app/tools/gimpaligntool.c:776
 msgid "Align right edge of target"
 msgstr "Arrangera mot högerkant av målet"
 
-#: ../app/tools/gimpaligntool.c:633
+#: ../app/tools/gimpaligntool.c:786
 msgid "Align top edge of target"
 msgstr "Arrangera mot överkant av målet"
 
-#: ../app/tools/gimpaligntool.c:639
+#: ../app/tools/gimpaligntool.c:792
 msgid "Align middle of target"
 msgstr "Arrangera mot mitten av målet"
 
-#: ../app/tools/gimpaligntool.c:645
+#: ../app/tools/gimpaligntool.c:798
 msgid "Align bottom of target"
 msgstr "Arrangera mot nederkant av målet"
 
-#: ../app/tools/gimpaligntool.c:649
+#: ../app/tools/gimpaligntool.c:802
 msgid "Distribute"
 msgstr "Distribuera"
 
-#: ../app/tools/gimpaligntool.c:663
+#: ../app/tools/gimpaligntool.c:816
 msgid "Distribute left edges of targets"
 msgstr "Distribuera vänsterkanter för målen"
 
-#: ../app/tools/gimpaligntool.c:670
+#: ../app/tools/gimpaligntool.c:823
 msgid "Distribute horizontal centers of targets"
 msgstr "Distribuera horisontella centrum för målen"
 
-#: ../app/tools/gimpaligntool.c:677
+#: ../app/tools/gimpaligntool.c:830
 msgid "Distribute right edges of targets"
 msgstr "Distribuera högerkanter för målen"
 
-#: ../app/tools/gimpaligntool.c:687
+#: ../app/tools/gimpaligntool.c:840
 msgid "Distribute top edges of targets"
 msgstr "Distribuera överkanter för målen"
 
-#: ../app/tools/gimpaligntool.c:694
+#: ../app/tools/gimpaligntool.c:847
 msgid "Distribute vertical centers of targets"
 msgstr "Distribuera vertikala centrum för målen"
 
-#: ../app/tools/gimpaligntool.c:700
+#: ../app/tools/gimpaligntool.c:853
 msgid "Distribute bottoms of targets"
 msgstr "Distribuera nederkanter för målen"
 
-#: ../app/tools/gimpaligntool.c:708
+#: ../app/tools/gimpaligntool.c:861
 #: ../app/tools/gimpblendoptions.c:212
 msgid "Offset:"
 msgstr "Position:"
@@ -10180,40 +10208,39 @@ msgstr "Kan inte använda posterisering på indexerade lager."
 msgid "Posterize _levels:"
 msgstr "Posterisera _nivåer:"
 
-#: ../app/tools/gimprectangleoptions.c:119
+#: ../app/tools/gimprectangleoptions.c:112
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Använd alla synliga lager vid krympning av markeringen"
 
-#: ../app/tools/gimprectangleoptions.c:818
+#: ../app/tools/gimprectangleoptions.c:731
 msgid "Current"
 msgstr "Aktuell"
 
-#: ../app/tools/gimprectangleoptions.c:843
+#: ../app/tools/gimprectangleoptions.c:754
 msgid "Expand from center"
 msgstr "Expandera från centrum"
 
-#: ../app/tools/gimprectangleoptions.c:862
+#: ../app/tools/gimprectangleoptions.c:777
 msgid "Fixed:"
 msgstr "Fast:"
 
-#: ../app/tools/gimprectangleoptions.c:1001
+#: ../app/tools/gimprectangleoptions.c:912
 msgid "Highlight"
 msgstr "Framhäv"
 
-#: ../app/tools/gimprectangleoptions.c:1019
+#: ../app/tools/gimprectangleoptions.c:930
 msgid "X:"
 msgstr "X:"
 
-#: ../app/tools/gimprectangleoptions.c:1028
+#: ../app/tools/gimprectangleoptions.c:939
 msgid "Y:"
 msgstr "Y:"
 
-#. Auto Shrink
-#: ../app/tools/gimprectangleoptions.c:1067
+#: ../app/tools/gimprectangleoptions.c:975
 msgid "Auto Shrink Selection"
 msgstr "Krymp markering automatiskt"
 
-#: ../app/tools/gimprectangleoptions.c:1075
+#: ../app/tools/gimprectangleoptions.c:982
 msgid "Shrink merged"
 msgstr "Krymp sammanfogade"
 
