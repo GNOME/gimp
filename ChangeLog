@@ -1,6 +1,13 @@
 2007-10-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):
+	Reduced the Width: and Height: labels to W: and H:. Please check
+	and comment, we need some solution for this group of widgets
+	including the unit menu.
+
+2007-10-14  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):
 	enable the unit menu on the "Height" entry. Looks like crap and
 	needs to be changed, but the unit functionality is almost complete
 	now.

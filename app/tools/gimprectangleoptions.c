@@ -966,7 +966,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->width_entry),
                                   FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
-                             _("Width:"), 0.0, 0.5,
+                             _("W:"), 0.0, 0.5,
                              private->width_entry, 1, TRUE);
   row++;
 
@@ -980,7 +980,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                   FALSE);
 #endif
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
-                             _("Height:"), 0.0, 0.5,
+                             _("H:"), 0.0, 0.5,
                              private->height_entry, 1, TRUE);
   row++;
 
