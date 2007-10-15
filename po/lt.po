@@ -14,8 +14,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: GIMP HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-10 16:39+0300\n"
-"PO-Revision-Date: 2007-10-11 01:27+0300\n"
+"POT-Creation-Date: 2007-10-15 19:15+0300\n"
+"PO-Revision-Date: 2007-10-15 19:18+0300\n"
 "Last-Translator: Žygimantas Beručka <zygis@gnome.org>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
@@ -252,7 +252,7 @@ msgstr ""
 #: ../app/actions/actions.c:99 ../app/dialogs/dialogs.c:215
 #: ../app/widgets/gimpbrusheditor.c:90
 msgid "Brush Editor"
-msgstr "Teptukų redaktorius"
+msgstr "Teptukų rengyklė"
 
 #. initialize the list of gimp brushes
 #: ../app/actions/actions.c:102 ../app/core/gimp.c:824
@@ -305,7 +305,7 @@ msgstr "Dokumentų retrospektyva"
 
 #: ../app/actions/actions.c:135
 msgid "Drawable"
-msgstr "Piešiama"
+msgstr "Piešimo sritis"
 
 #: ../app/actions/actions.c:138 ../app/tools/tools-enums.c:272
 msgid "Edit"
@@ -327,7 +327,7 @@ msgstr "Šriftai"
 #: ../app/actions/actions.c:150 ../app/dialogs/dialogs.c:219
 #: ../app/widgets/gimpgradienteditor.c:275
 msgid "Gradient Editor"
-msgstr "Gradientų redaktorius"
+msgstr "Gradientų rengyklė"
 
 #. initialize the list of gimp gradients
 #: ../app/actions/actions.c:153 ../app/core/gimp.c:836
@@ -357,7 +357,7 @@ msgstr "Sluoksniai"
 #: ../app/actions/actions.c:168 ../app/dialogs/dialogs.c:223
 #: ../app/widgets/gimppaletteeditor.c:155
 msgid "Palette Editor"
-msgstr "Palečių redaktorius"
+msgstr "Palečių rengyklė"
 
 #. initialize the list of gimp palettes
 #: ../app/actions/actions.c:171 ../app/core/gimp.c:832
@@ -418,7 +418,7 @@ msgstr "Vaizdas"
 
 #: ../app/actions/brush-editor-actions.c:43
 msgid "Brush Editor Menu"
-msgstr "Teptukų redaktoriaus meniu"
+msgstr "Teptukų rengyklės meniu"
 
 #: ../app/actions/brush-editor-actions.c:50
 msgid "Edit Active Brush"
@@ -959,11 +959,11 @@ msgstr "Atverti histogramos dialogą"
 
 #: ../app/actions/dialogs-actions.c:111
 msgid "_Selection Editor"
-msgstr "Paž_ymėjimų redaktorius"
+msgstr "Paž_ymėjimų rengyklė"
 
 #: ../app/actions/dialogs-actions.c:112
 msgid "Open the selection editor"
-msgstr "Atverti pažymėjimų redaktorių"
+msgstr "Atverti pažymėjimų rengyklę"
 
 #: ../app/actions/dialogs-actions.c:117
 msgid "Na_vigation"
@@ -1107,7 +1107,7 @@ msgstr "_Klavišų kombinacijos"
 
 #: ../app/actions/dialogs-actions.c:225
 msgid "Open the keyboard shortcuts editor"
-msgstr "Atverti klavišų kombinacijų redaktorių"
+msgstr "Atverti klavišų kombinacijų rengyklę"
 
 #: ../app/actions/dialogs-actions.c:230
 msgid "_Module Manager"
@@ -1952,7 +1952,7 @@ msgstr "Perskanuoti šriftų sąrašą"
 
 #: ../app/actions/gradient-editor-actions.c:46
 msgid "Gradient Editor Menu"
-msgstr "Gradientų redaktoriaus meniu"
+msgstr "Gradientų rengyklės meniu"
 
 #: ../app/actions/gradient-editor-actions.c:50
 msgid "Left Color Type"
@@ -2970,11 +2970,11 @@ msgstr "Nustatyti sluoksnio nepermatomumą"
 
 #: ../app/actions/layers-commands.c:202
 msgid "Layer Attributes"
-msgstr "Sluoksnio parametrai"
+msgstr "Sluoksnio savybės"
 
 #: ../app/actions/layers-commands.c:205
 msgid "Edit Layer Attributes"
-msgstr "Keisti sluoksnio parametrus"
+msgstr "Keisti sluoksnio savybes"
 
 #: ../app/actions/layers-commands.c:239 ../app/actions/layers-commands.c:241
 #: ../app/actions/layers-commands.c:298 ../app/actions/layers-commands.c:302
@@ -3014,7 +3014,7 @@ msgstr "Pridėti sluoksnio kaukę"
 
 #: ../app/actions/palette-editor-actions.c:44
 msgid "Palette Editor Menu"
-msgstr "Palečių redaktoriaus meniu"
+msgstr "Palečių rengyklės meniu"
 
 #: ../app/actions/palette-editor-actions.c:54
 msgid "_Delete Color"
@@ -3092,7 +3092,7 @@ msgstr "D_ublikuoti paletę"
 
 #: ../app/actions/palettes-actions.c:61
 msgid "Duplicate palette"
-msgstr "Padaryti paletės kopiją"
+msgstr "Sukurti paletės kopiją"
 
 #: ../app/actions/palettes-actions.c:66
 msgid "_Merge Palettes..."
@@ -3168,7 +3168,7 @@ msgstr "D_ublikuoti raštą"
 
 #: ../app/actions/patterns-actions.c:60
 msgid "Duplicate pattern"
-msgstr "Padaryti rašto kopiją"
+msgstr "Sukurti rašto kopiją"
 
 #: ../app/actions/patterns-actions.c:65
 msgid "Copy Pattern _Location"
@@ -3348,7 +3348,7 @@ msgstr "Greitos kaukės parametrai"
 
 #: ../app/actions/quick-mask-commands.c:108
 msgid "Edit Quick Mask Attributes"
-msgstr "Keisti greitos kaukės parametrus"
+msgstr "Keisti greitos kaukės savybes"
 
 #: ../app/actions/quick-mask-commands.c:110
 msgid "Edit Quick Mask Color"
@@ -3364,7 +3364,7 @@ msgstr "Mėginių taškų meniu"
 
 #: ../app/actions/select-actions.c:44
 msgid "Selection Editor Menu"
-msgstr "Pažymėjimo redaktoriaus meniu"
+msgstr "Pažymėjimo rengyklės meniu"
 
 #: ../app/actions/select-actions.c:47
 msgid "_Select"
@@ -3392,7 +3392,7 @@ msgstr "_Invertuotą"
 
 #: ../app/actions/select-actions.c:63
 msgid "Invert the selection"
-msgstr "Invertuoti pažymėtas vietas"
+msgstr "Invertuoti pažymėtas sritis"
 
 #: ../app/actions/select-actions.c:68
 msgid "_Float"
@@ -3424,7 +3424,7 @@ msgstr "Su_mažinti..."
 
 #: ../app/actions/select-actions.c:87
 msgid "Contract the selection"
-msgstr "Sankirta su pažymėjimu"
+msgstr "Sumažinti pažymėtą sritį"
 
 #: ../app/actions/select-actions.c:92
 msgid "_Grow..."
@@ -3432,7 +3432,7 @@ msgstr "_Padidinti..."
 
 #: ../app/actions/select-actions.c:93
 msgid "Enlarge the selection"
-msgstr "Padidinti pasirinkimą"
+msgstr "Padidinti pažymėtą sritį"
 
 #: ../app/actions/select-actions.c:98
 msgid "Bo_rder..."
@@ -3440,7 +3440,7 @@ msgstr "_Rėmelis..."
 
 #: ../app/actions/select-actions.c:99
 msgid "Replace the selection by its border"
-msgstr "Pakeisti pasirinktą sritį jos rėmeliu"
+msgstr "Pakeisti pažymėtą sritį jos rėmeliu"
 
 #: ../app/actions/select-actions.c:104
 msgid "Save to _Channel"
@@ -3452,15 +3452,15 @@ msgstr "Išsaugoti pažymėtą sritį į kanalą"
 
 #: ../app/actions/select-actions.c:110
 msgid "_Stroke Selection..."
-msgstr "_Apvesti pažymėtas vietas..."
+msgstr "_Apvesti pažymėtą sritį..."
 
 #: ../app/actions/select-actions.c:111
 msgid "Paint along the selection outline"
-msgstr "Apipiešti aplink pažymėtos srities kontūrą"
+msgstr "Nupiešti pažymėtos srities kontūrą"
 
 #: ../app/actions/select-actions.c:116
 msgid "_Stroke Selection"
-msgstr "_Apvesti pažymėtas vietas"
+msgstr "_Apvesti pažymėtą sritį"
 
 #: ../app/actions/select-actions.c:117
 msgid "Stroke the selection with last used values"
@@ -3473,19 +3473,19 @@ msgstr ""
 
 #: ../app/actions/select-commands.c:148 ../app/core/gimpselection.c:170
 msgid "Feather Selection"
-msgstr "Išlieti pažymėtas vietas"
+msgstr "Išlieti pažymėtas sritis"
 
 #: ../app/actions/select-commands.c:152
 msgid "Feather selection by"
-msgstr "Kiek išlieti pažymėjimo ribas"
+msgstr "Kiek išlieti pažymėtas sritis"
 
 #: ../app/actions/select-commands.c:183 ../app/core/gimpselection.c:177
 msgid "Shrink Selection"
-msgstr "Sumažinti pažymėtas vietas"
+msgstr "Sumažinti pažymėtas sritis"
 
 #: ../app/actions/select-commands.c:187
 msgid "Shrink selection by"
-msgstr "Kiek sumažinti pažymėtas vietas"
+msgstr "Kiek sumažinti pažymėtas sritis"
 
 #: ../app/actions/select-commands.c:196
 msgid "_Shrink from image border"
@@ -3493,19 +3493,19 @@ msgstr "_Sumažinti nuo paveikslėlio rėmelio"
 
 #: ../app/actions/select-commands.c:217 ../app/core/gimpselection.c:176
 msgid "Grow Selection"
-msgstr "Padidinti pažymėtas vietas"
+msgstr "Padidinti pažymėtas sritis"
 
 #: ../app/actions/select-commands.c:221
 msgid "Grow selection by"
-msgstr "Kiek padidinti pažymėtas vietas"
+msgstr "Kiek padidinti pažymėtas sritis"
 
 #: ../app/actions/select-commands.c:241 ../app/core/gimpselection.c:175
 msgid "Border Selection"
-msgstr "Įrėminti pažymėtas vietas"
+msgstr "Įrėminti pažymėtas sritis"
 
 #: ../app/actions/select-commands.c:245
 msgid "Border selection by"
-msgstr "Pažymėtų vietų rėmelio storis"
+msgstr "Pažymėtų sričių rėmelio storis"
 
 #. Feather button
 #: ../app/actions/select-commands.c:255
@@ -3931,7 +3931,7 @@ msgstr "Pridėti"
 
 #: ../app/actions/vectors-actions.c:180 ../app/base/base-enums.c:119
 msgid "Subtract"
-msgstr "Atimti"
+msgstr "Atimtis"
 
 #: ../app/actions/vectors-actions.c:186
 msgid "Intersect"
@@ -4383,7 +4383,7 @@ msgstr "Už"
 
 #: ../app/base/base-enums.c:114
 msgid "Multiply"
-msgstr "Sudauginti"
+msgstr "Daugyba"
 
 #: ../app/base/base-enums.c:115
 msgid "Screen"
@@ -4391,7 +4391,7 @@ msgstr "Ekranas"
 
 #: ../app/base/base-enums.c:116
 msgid "Overlay"
-msgstr "Padengti"
+msgstr "Perdengimas"
 
 #: ../app/base/base-enums.c:117
 msgid "Difference"
@@ -4423,7 +4423,7 @@ msgstr "Spalva"
 
 #: ../app/base/base-enums.c:126
 msgid "Divide"
-msgstr "Padalinti"
+msgstr "Dalyba"
 
 #: ../app/base/base-enums.c:127
 msgid "Dodge"
@@ -6033,7 +6033,7 @@ msgstr "Lygiai"
 msgid "Offset Drawable"
 msgstr ""
 
-#: ../app/core/gimpdrawable-stroke.c:321
+#: ../app/core/gimpdrawable-stroke.c:320
 #, fuzzy
 msgid "Render Stroke"
 msgstr "Atvaizduoti potėpį"
@@ -6899,7 +6899,7 @@ msgstr "Histograma"
 
 #: ../app/dialogs/dialogs.c:189
 msgid "Selection Editor"
-msgstr "Pažymėjimo redaktorius"
+msgstr "Pažymėjimo rengyklė"
 
 #: ../app/dialogs/dialogs.c:193
 msgid "Undo"
@@ -7135,13 +7135,11 @@ msgstr "Sluoksnio _pavadinimas:"
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:134
 #: ../app/tools/gimpmeasuretool.c:1056
-#: ../app/tools/gimprectangleoptions.c:1040
 msgid "Width:"
 msgstr "Plotis:"
 
 #: ../app/dialogs/layer-options-dialog.c:140
 #: ../app/tools/gimpmeasuretool.c:1084
-#: ../app/tools/gimprectangleoptions.c:1053
 msgid "Height:"
 msgstr "Aukštis:"
 
@@ -7364,7 +7362,7 @@ msgstr "Kad įsigaliotų sekantys pakeitimai, turėsite paleisti GIMP iš naujo:
 
 #: ../app/dialogs/preferences-dialog.c:492
 msgid "Configure Input Devices"
-msgstr "Konfigūruoti įvedimo įrengininius"
+msgstr "Konfigūruoti įvesties įrengininius"
 
 #: ../app/dialogs/preferences-dialog.c:569
 msgid ""
@@ -7395,7 +7393,7 @@ msgid ""
 "Your input device settings will be reset to default values the next time you "
 "start GIMP."
 msgstr ""
-"Kitą kartą paleidus GIMP, įvedimo įrenginių parametrai bus atstatyti į "
+"Kitą kartą paleidus GIMP, įvesties įrenginių parametrai bus atstatyti į "
 "numatytąsias reikšmes."
 
 #: ../app/dialogs/preferences-dialog.c:713
@@ -7922,7 +7920,7 @@ msgstr "Papildomi įvesties įrenginiai"
 
 #: ../app/dialogs/preferences-dialog.c:2539
 msgid "Configure E_xtended Input Devices..."
-msgstr "Konfigūruoti iš_plėstus įvedimo įrengininius..."
+msgstr "Konfigūruoti iš_plėstus įvesties įrengininius..."
 
 #: ../app/dialogs/preferences-dialog.c:2546
 msgid "_Save input device settings on exit"
@@ -8690,7 +8688,7 @@ msgstr "Kombinuoti kaukes"
 
 #: ../app/pdb/color_cmds.c:102 ../app/tools/gimpbrightnesscontrasttool.c:102
 msgid "Brightness-Contrast"
-msgstr "Šviesumas-kontrastas"
+msgstr "Šviesumas – kontrastas"
 
 #: ../app/pdb/color_cmds.c:249 ../app/tools/gimpposterizetool.c:77
 msgid "Posterize"
@@ -8711,7 +8709,7 @@ msgstr "Spalvinti"
 
 #: ../app/pdb/color_cmds.c:773 ../app/tools/gimphuesaturationtool.c:112
 msgid "Hue-Saturation"
-msgstr "Atspalvis-Sodrumas"
+msgstr "Atspalvis – sodrumas"
 
 #: ../app/pdb/color_cmds.c:827 ../app/tools/gimpthresholdtool.c:82
 msgid "Threshold"
@@ -8732,7 +8730,7 @@ msgstr "Šlytis"
 #: ../app/pdb/drawable_transform_cmds.c:963
 #: ../app/pdb/transform_tools_cmds.c:426
 msgid "2D Transform"
-msgstr "2D transformavimas."
+msgstr "2D transformavimas"
 
 #: ../app/pdb/drawable_transform_cmds.c:1044
 #: ../app/pdb/drawable_transform_cmds.c:1135
@@ -9050,75 +9048,105 @@ msgstr "Greitis:"
 msgid "Pressure:"
 msgstr "Slėgis:"
 
-#: ../app/tools/gimpaligntool.c:120 ../app/tools/gimpaligntool.c:581
+#: ../app/tools/gimpaligntool.c:132 ../app/tools/gimpaligntool.c:734
 msgid "Align"
 msgstr "Lygiuoti"
 
-#: ../app/tools/gimpaligntool.c:121
+#: ../app/tools/gimpaligntool.c:133
 msgid "Alignment Tool: Align or arrange layers and other objects"
 msgstr "Lygiavimo įrankis: Lygiuoti sluoksnius ir kitus objektus"
 
-#: ../app/tools/gimpaligntool.c:122
+#: ../app/tools/gimpaligntool.c:134
 msgid "_Align"
 msgstr "_Lygiuoti"
 
-#: ../app/tools/gimpaligntool.c:593
+#: ../app/tools/gimpaligntool.c:583
+msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
+msgstr ""
+"Spustelėkite sluoksnį, kontūrą arba gairę, arba spustelėkite ir vilkite, "
+"kad pasirinktumėte kelis sluoksnius"
+
+#: ../app/tools/gimpaligntool.c:592
+msgid "Click to pick this layer as first item"
+msgstr "Spustelėkite norėdami pasirinkti šį sluoksnį kaip pirmą elementą"
+
+#: ../app/tools/gimpaligntool.c:600
+msgid "Click to add this layer to the list"
+msgstr "Spustelėkite norėdami įtraukti šį sluoksnį į sąrašą"
+
+#: ../app/tools/gimpaligntool.c:604
+msgid "Click to pick this guide as first item"
+msgstr "Spustelėkite norėdami pasirinkti šią gairę kaip pirmą elementą"
+
+#: ../app/tools/gimpaligntool.c:612
+msgid "Click to add this guide to the list"
+msgstr "Spustelėkite norėdami įtraukti šią gairę į sąrašą"
+
+#: ../app/tools/gimpaligntool.c:616
+msgid "Click to pick this path as first item"
+msgstr "Spustelėkite norėdami pasirinkti šį kontūrą kaip pirmą elementą"
+
+#: ../app/tools/gimpaligntool.c:624
+msgid "Click to add this path to the list"
+msgstr "Spustelėkite norėdami įtraukti šį kontūrą į sąrašą"
+
+#: ../app/tools/gimpaligntool.c:746
 msgid "Relative to:"
 msgstr "Atžvilgiu:"
 
-#: ../app/tools/gimpaligntool.c:611
+#: ../app/tools/gimpaligntool.c:764
 msgid "Align left edge of target"
 msgstr "Lygiuoti taikinio kairįjį kraštą"
 
-#: ../app/tools/gimpaligntool.c:617
+#: ../app/tools/gimpaligntool.c:770
 msgid "Align center of target"
 msgstr "Lygiuoti taikinio centrą"
 
-#: ../app/tools/gimpaligntool.c:623
+#: ../app/tools/gimpaligntool.c:776
 msgid "Align right edge of target"
 msgstr "Lygiuoti taikinio dešinįjį kraštą"
 
-#: ../app/tools/gimpaligntool.c:633
+#: ../app/tools/gimpaligntool.c:786
 msgid "Align top edge of target"
 msgstr "Lygiuoti taikinio viršutinįjį kraštą"
 
-#: ../app/tools/gimpaligntool.c:639
+#: ../app/tools/gimpaligntool.c:792
 msgid "Align middle of target"
 msgstr "Lygiuoti taikinio vidurį"
 
-#: ../app/tools/gimpaligntool.c:645
+#: ../app/tools/gimpaligntool.c:798
 msgid "Align bottom of target"
 msgstr "Lygiuoti taikinio apačią"
 
-#: ../app/tools/gimpaligntool.c:649
+#: ../app/tools/gimpaligntool.c:802
 msgid "Distribute"
 msgstr "Paskirstyti"
 
-#: ../app/tools/gimpaligntool.c:663
+#: ../app/tools/gimpaligntool.c:816
 msgid "Distribute left edges of targets"
 msgstr "Paskirstyti taikinių kairiuosius kraštus"
 
-#: ../app/tools/gimpaligntool.c:670
+#: ../app/tools/gimpaligntool.c:823
 msgid "Distribute horizontal centers of targets"
 msgstr "Paskirstyti taikinių horizontalius centrus"
 
-#: ../app/tools/gimpaligntool.c:677
+#: ../app/tools/gimpaligntool.c:830
 msgid "Distribute right edges of targets"
 msgstr "Paskirstyti taikinių dešiniuosius kraštus"
 
-#: ../app/tools/gimpaligntool.c:687
+#: ../app/tools/gimpaligntool.c:840
 msgid "Distribute top edges of targets"
 msgstr "Paskirstyti taikinių viršutinius kraštus"
 
-#: ../app/tools/gimpaligntool.c:694
+#: ../app/tools/gimpaligntool.c:847
 msgid "Distribute vertical centers of targets"
 msgstr "Paskirstyti taikinių vertikalius centrus"
 
-#: ../app/tools/gimpaligntool.c:700
+#: ../app/tools/gimpaligntool.c:853
 msgid "Distribute bottoms of targets"
 msgstr "Paskirstyti taikinių apačias"
 
-#: ../app/tools/gimpaligntool.c:708 ../app/tools/gimpblendoptions.c:212
+#: ../app/tools/gimpaligntool.c:861 ../app/tools/gimpblendoptions.c:212
 msgid "Offset:"
 msgstr "Poslinkis:"
 
@@ -10398,40 +10426,47 @@ msgstr "Spalvų kiekio sumažinimas neveikia indeksuotiems paveikslėliams."
 msgid "Posterize _levels:"
 msgstr "Spalvų kiekio sumažinimo _lygiai:"
 
-#: ../app/tools/gimprectangleoptions.c:119
+#: ../app/tools/gimprectangleoptions.c:112
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Mažinant pažymėjimą naudoti visus matomus sluoksnius"
 
-#: ../app/tools/gimprectangleoptions.c:818
+#: ../app/tools/gimprectangleoptions.c:757
 msgid "Current"
 msgstr "Dabartinis"
 
-#: ../app/tools/gimprectangleoptions.c:843
+#: ../app/tools/gimprectangleoptions.c:779
 msgid "Expand from center"
 msgstr "Išplėsti nuo centro"
 
-#: ../app/tools/gimprectangleoptions.c:862
+#: ../app/tools/gimprectangleoptions.c:802
 msgid "Fixed:"
 msgstr "Fiksuota:"
 
-#: ../app/tools/gimprectangleoptions.c:1001
+#: ../app/tools/gimprectangleoptions.c:933
 msgid "Highlight"
 msgstr "Paryškinti"
 
-#: ../app/tools/gimprectangleoptions.c:1019
+#: ../app/tools/gimprectangleoptions.c:950
 msgid "X:"
 msgstr "X:"
 
-#: ../app/tools/gimprectangleoptions.c:1028
+#: ../app/tools/gimprectangleoptions.c:958
 msgid "Y:"
 msgstr "Y:"
 
-#. Auto Shrink
-#: ../app/tools/gimprectangleoptions.c:1067
+#: ../app/tools/gimprectangleoptions.c:969
+msgid "W:"
+msgstr "P:"
+
+#: ../app/tools/gimprectangleoptions.c:983
+msgid "H:"
+msgstr "A:"
+
+#: ../app/tools/gimprectangleoptions.c:994
 msgid "Auto Shrink Selection"
 msgstr "Automatiškai sumažinti pažymėjimą"
 
-#: ../app/tools/gimprectangleoptions.c:1075
+#: ../app/tools/gimprectangleoptions.c:1001
 msgid "Shrink merged"
 msgstr "Sumažinti sujungtus"
 
@@ -11724,7 +11759,7 @@ msgstr "Atstumas: %0.4f"
 
 #: ../app/widgets/gimpgrideditor.c:209
 msgid "Line _style:"
-msgstr "Linijos _stilius:"
+msgstr "Linijų _stilius:"
 
 #: ../app/widgets/gimpgrideditor.c:213
 msgid "Change grid foreground color"
@@ -11961,31 +11996,31 @@ msgstr "%d taškų colyje"
 msgid "Line width:"
 msgstr "Linijos plotis:"
 
-#: ../app/widgets/gimpstrokeeditor.c:201
+#: ../app/widgets/gimpstrokeeditor.c:202
 msgid "_Line Style"
 msgstr "_Linijos stilius"
 
-#: ../app/widgets/gimpstrokeeditor.c:220
+#: ../app/widgets/gimpstrokeeditor.c:221
 msgid "_Cap style:"
 msgstr "_Galų stilius:"
 
-#: ../app/widgets/gimpstrokeeditor.c:226
+#: ../app/widgets/gimpstrokeeditor.c:227
 msgid "_Join style:"
 msgstr "_Jungimo stilius:"
 
-#: ../app/widgets/gimpstrokeeditor.c:231
+#: ../app/widgets/gimpstrokeeditor.c:232
 msgid "_Miter limit:"
 msgstr "_Kampinė riba:"
 
-#: ../app/widgets/gimpstrokeeditor.c:238
+#: ../app/widgets/gimpstrokeeditor.c:239
 msgid "Dash pattern:"
 msgstr "Brūkšnių raštas:"
 
-#: ../app/widgets/gimpstrokeeditor.c:301
+#: ../app/widgets/gimpstrokeeditor.c:302
 msgid "Dash _preset:"
 msgstr "Brūkšnių š_ablonas:"
 
-#: ../app/widgets/gimpstrokeeditor.c:322
+#: ../app/widgets/gimpstrokeeditor.c:323
 msgid "_Antialiasing"
 msgstr "_Glotninimas"
 
