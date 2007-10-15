@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-14 14:58+0200\n"
-"PO-Revision-Date: 2007-10-14 15:04+0100\n"
+"POT-Creation-Date: 2007-10-15 15:28+0200\n"
+"PO-Revision-Date: 2007-10-15 15:29+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -6975,13 +6975,11 @@ msgstr "Lager_namn:"
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:134
 #: ../app/tools/gimpmeasuretool.c:1056
-#: ../app/tools/gimprectangleoptions.c:951
 msgid "Width:"
 msgstr "Bredd:"
 
 #: ../app/dialogs/layer-options-dialog.c:140
 #: ../app/tools/gimpmeasuretool.c:1084
-#: ../app/tools/gimprectangleoptions.c:964
 msgid "Height:"
 msgstr "Höjd:"
 
@@ -10212,35 +10210,43 @@ msgstr "Posterisera _nivåer:"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Använd alla synliga lager vid krympning av markeringen"
 
-#: ../app/tools/gimprectangleoptions.c:731
+#: ../app/tools/gimprectangleoptions.c:757
 msgid "Current"
 msgstr "Aktuell"
 
-#: ../app/tools/gimprectangleoptions.c:754
+#: ../app/tools/gimprectangleoptions.c:779
 msgid "Expand from center"
 msgstr "Expandera från centrum"
 
-#: ../app/tools/gimprectangleoptions.c:777
+#: ../app/tools/gimprectangleoptions.c:802
 msgid "Fixed:"
 msgstr "Fast:"
 
-#: ../app/tools/gimprectangleoptions.c:912
+#: ../app/tools/gimprectangleoptions.c:933
 msgid "Highlight"
 msgstr "Framhäv"
 
-#: ../app/tools/gimprectangleoptions.c:930
+#: ../app/tools/gimprectangleoptions.c:950
 msgid "X:"
 msgstr "X:"
 
-#: ../app/tools/gimprectangleoptions.c:939
+#: ../app/tools/gimprectangleoptions.c:958
 msgid "Y:"
 msgstr "Y:"
 
-#: ../app/tools/gimprectangleoptions.c:975
+#: ../app/tools/gimprectangleoptions.c:969
+msgid "W:"
+msgstr "B:"
+
+#: ../app/tools/gimprectangleoptions.c:983
+msgid "H:"
+msgstr "H:"
+
+#: ../app/tools/gimprectangleoptions.c:994
 msgid "Auto Shrink Selection"
 msgstr "Krymp markering automatiskt"
 
-#: ../app/tools/gimprectangleoptions.c:982
+#: ../app/tools/gimprectangleoptions.c:1001
 msgid "Shrink merged"
 msgstr "Krymp sammanfogade"
 
@@ -11758,31 +11764,31 @@ msgstr "%d punkter/tum"
 msgid "Line width:"
 msgstr "Linjebredd:"
 
-#: ../app/widgets/gimpstrokeeditor.c:201
+#: ../app/widgets/gimpstrokeeditor.c:202
 msgid "_Line Style"
 msgstr "Linje_stil"
 
-#: ../app/widgets/gimpstrokeeditor.c:220
+#: ../app/widgets/gimpstrokeeditor.c:221
 msgid "_Cap style:"
 msgstr "_Ändpunktsstil:"
 
-#: ../app/widgets/gimpstrokeeditor.c:226
+#: ../app/widgets/gimpstrokeeditor.c:227
 msgid "_Join style:"
 msgstr "_Fogstil:"
 
-#: ../app/widgets/gimpstrokeeditor.c:231
+#: ../app/widgets/gimpstrokeeditor.c:232
 msgid "_Miter limit:"
 msgstr "_Kantgräns:"
 
-#: ../app/widgets/gimpstrokeeditor.c:238
+#: ../app/widgets/gimpstrokeeditor.c:239
 msgid "Dash pattern:"
 msgstr "Streckningsmönster:"
 
-#: ../app/widgets/gimpstrokeeditor.c:301
+#: ../app/widgets/gimpstrokeeditor.c:302
 msgid "Dash _preset:"
 msgstr "Förinställning för s_treckning:"
 
-#: ../app/widgets/gimpstrokeeditor.c:322
+#: ../app/widgets/gimpstrokeeditor.c:323
 msgid "_Antialiasing"
 msgstr "_Kantutjämning"
 
@@ -14594,8 +14600,6 @@ msgstr "Kunde inte starta \"%s\": %s"
 #~ msgstr "G:"
 #~ msgid "B:"
 #~ msgstr "B:"
-#~ msgid "H:"
-#~ msgstr "N:"
 #~ msgid "S:"
 #~ msgstr "M:"
 #~ msgid "V:"
