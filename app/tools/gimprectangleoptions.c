@@ -771,9 +771,7 @@ gimp_rectangle_options_string_current_updates (GimpNumberPairEntry  *entry,
 
   gimp_number_pair_entry_set_default_text (entry,
                                            private->use_string_current ?
-                                           /* Current, as in
-                                            * what is currently in use.
-                                            */
+                                           /* Current, as in what is currently in use. */
                                            _("Current") : NULL);
 
   gtk_widget_set_sensitive (private->aspect_button_box,
@@ -989,6 +987,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->width_entry),
                                   FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
+                             /* Width */
                              _("W:"), 0.0, 0.5,
                              private->width_entry, 1, TRUE);
   row++;
@@ -1004,6 +1003,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                                   FALSE);
 #endif
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
+                             /* Height */
                              _("H:"), 0.0, 0.5,
                              private->height_entry, 1, TRUE);
   row++;
