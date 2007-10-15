@@ -1,3 +1,10 @@
+2007-10-15  Martin Nordholts  <martinn@svn.gnome.org>
+
+	* app/tools/gimpaligntool.c (gimp_align_tool_draw): Use
+	gimp_vectors_bounds() instead of gimp_item_offsets|width|height()
+	when calculating bounding rectangle for a path. Part of a fix for
+	bug #486517.
+
 2007-10-15  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimprectangleoptions.[ch]: split the "unit" property

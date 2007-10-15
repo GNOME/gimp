@@ -36,6 +36,8 @@
 #include "core/gimplayer.h"
 #include "core/gimplist.h"
 
+#include "vectors/gimpvectors.h"
+
 #include "widgets/gimphelp-ids.h"
 #include "widgets/gimpwidgets-utils.h"
 
@@ -661,9 +663,25 @@ gimp_align_tool_draw (GimpDrawTool *draw_tool)
         {
           GimpItem *item = GIMP_ITEM (list->data);
 
-          gimp_item_offsets (item, &x, &y);
-          w = gimp_item_width (item);
-          h = gimp_item_height (item);
+          if (GIMP_IS_VECTORS (list->data))
+            {
+              gdouble x1_f, y1_f, x2_f, y2_f;
+
+              gimp_vectors_bounds (GIMP_VECTORS (item),
+                                   &x1_f, &y1_f,
+                                   &x2_f, &y2_f);
+              x = ROUND (x1_f);
+              y = ROUND (y1_f);
+              w = ROUND (x2_f - x1_f);
+              h = ROUND (y2_f - y1_f);
+            }
+          else
+            {
+              gimp_item_offsets (item, &x, &y);
+
+              w = gimp_item_width (item);
+              h = gimp_item_height (item);
+            }
 
           gimp_draw_tool_draw_handle (draw_tool, GIMP_HANDLE_FILLED_SQUARE,
                                       x, y, MARKER_WIDTH, MARKER_WIDTH,
