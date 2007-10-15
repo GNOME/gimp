@@ -1,5 +1,11 @@
 2007-10-15  Martin Nordholts  <martinn@svn.gnome.org>
 
+	* app/core/gimpimage-arrange.c (compute_offset): Use
+	gimp_vectors_bounds() instead of gimp_item_offsets|width|height()
+	when calculating size and position for a path. Fixes bug #486517.
+
+2007-10-15  Martin Nordholts  <martinn@svn.gnome.org>
+
 	* app/tools/gimpaligntool.c (gimp_align_tool_draw): Use
 	gimp_vectors_bounds() instead of gimp_item_offsets|width|height()
 	when calculating bounding rectangle for a path. Part of a fix for
@@ -80,7 +86,7 @@
 	* app/tools/gimprectangletool.c
 	(gimp_rectangle_tool_options_notify): When Fixed: Size/Aspect
 	ratio numbers are swapped and the Fixed:-rule is active, swap
-	width and height on any pending rectangle. Fixed bug #479999.
+	width and height on any pending rectangle. Fixes bug #479999.
 
 2007-10-13  Martin Nordholts  <martinn@svn.gnome.org>
 

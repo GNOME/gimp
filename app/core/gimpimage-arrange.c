@@ -20,7 +20,11 @@
 
 #include <glib-object.h>
 
+#include "libgimpmath/gimpmath.h"
+
 #include "core-types.h"
+
+#include "vectors/gimpvectors.h"
 
 #include "gimpimage.h"
 #include "gimpimage-arrange.h"
@@ -274,9 +278,25 @@ compute_offset (GObject *object,
     {
       GimpItem *item = GIMP_ITEM (object);
 
-      gimp_item_offsets (item, &object_offset_x, &object_offset_y);
-      object_height   = gimp_item_height (item);
-      object_width    = gimp_item_width (item);
+      if (GIMP_IS_VECTORS (object))
+        {
+          gdouble x1_f, y1_f, x2_f, y2_f;
+
+          gimp_vectors_bounds (GIMP_VECTORS (item),
+                               &x1_f, &y1_f,
+                               &x2_f, &y2_f);
+
+          object_offset_x = ROUND (x1_f);
+          object_offset_y = ROUND (y1_f);
+          object_width    = ROUND (x2_f - x1_f);
+          object_height   = ROUND (y2_f - y1_f);
+        }
+      else
+        {
+          gimp_item_offsets (item, &object_offset_x, &object_offset_y);
+          object_height = gimp_item_height (item);
+          object_width  = gimp_item_width (item);
+        }
     }
   else if (GIMP_IS_GUIDE (object))
     {
