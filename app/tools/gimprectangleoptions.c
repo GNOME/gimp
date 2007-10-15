@@ -928,12 +928,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     g_list_free (children);
   }
 
-  /*  Highlight  */
-  button = gimp_prop_check_button_new (config, "highlight",
-                                       _("Highlight"));
-  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
-  gtk_widget_show (button);
-
   /* X, Y, Width, Height table */
 
   table = gtk_table_new (4, 2, FALSE);
@@ -985,6 +979,12 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                              _("H:"), 0.0, 0.5,
                              private->height_entry, 1, TRUE);
   row++;
+
+  /*  Highlight  */
+  button = gimp_prop_check_button_new (config, "highlight",
+                                       _("Highlight"));
+  gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
+  gtk_widget_show (button);
 
   /*  Guide  */
   combo = gimp_prop_enum_combo_box_new (config, "guide", 0, 0);
