@@ -33,7 +33,8 @@ typedef enum
   GIMP_RECTANGLE_OPTIONS_PROP_Y,
   GIMP_RECTANGLE_OPTIONS_PROP_WIDTH,
   GIMP_RECTANGLE_OPTIONS_PROP_HEIGHT,
-  GIMP_RECTANGLE_OPTIONS_PROP_UNIT,
+  GIMP_RECTANGLE_OPTIONS_PROP_POSITION_UNIT,
+  GIMP_RECTANGLE_OPTIONS_PROP_SIZE_UNIT,
 
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE,
   GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE,
@@ -90,7 +91,8 @@ struct _GimpRectangleOptionsPrivate
   gdouble                     width;
   gdouble                     height;
 
-  GimpUnit                    unit;
+  GimpUnit                    position_unit;
+  GimpUnit                    size_unit;
 
   gboolean                    fixed_rule_active;
   GimpRectangleToolFixedRule  fixed_rule;

@@ -165,7 +165,15 @@ gimp_rectangle_options_iface_base_init (GimpRectangleOptionsInterface *iface)
                                                                 G_PARAM_CONSTRUCT));
 
      g_object_interface_install_property (iface,
-                                          gimp_param_spec_unit ("unit",
+                                          gimp_param_spec_unit ("position-unit",
+                                                                NULL, NULL,
+                                                                TRUE, TRUE,
+                                                                GIMP_UNIT_PIXEL,
+                                                                GIMP_PARAM_READWRITE |
+                                                                G_PARAM_CONSTRUCT));
+
+     g_object_interface_install_property (iface,
+                                          gimp_param_spec_unit ("size-unit",
                                                                 NULL, NULL,
                                                                 TRUE, TRUE,
                                                                 GIMP_UNIT_PIXEL,
@@ -409,8 +417,11 @@ gimp_rectangle_options_install_properties (GObjectClass *klass)
                                     GIMP_RECTANGLE_OPTIONS_PROP_HEIGHT,
                                     "height");
   g_object_class_override_property (klass,
-                                    GIMP_RECTANGLE_OPTIONS_PROP_UNIT,
-                                    "unit");
+                                    GIMP_RECTANGLE_OPTIONS_PROP_POSITION_UNIT,
+                                    "position-unit");
+  g_object_class_override_property (klass,
+                                    GIMP_RECTANGLE_OPTIONS_PROP_SIZE_UNIT,
+                                    "size-unit");
 
   g_object_class_override_property (klass,
                                     GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE,
@@ -510,8 +521,11 @@ gimp_rectangle_options_set_property (GObject      *object,
     case GIMP_RECTANGLE_OPTIONS_PROP_HEIGHT:
       private->height = g_value_get_double (value);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_UNIT:
-      private->unit = g_value_get_int (value);
+    case GIMP_RECTANGLE_OPTIONS_PROP_POSITION_UNIT:
+      private->position_unit = g_value_get_int (value);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_SIZE_UNIT:
+      private->size_unit = g_value_get_int (value);
       break;
 
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE:
@@ -617,8 +631,11 @@ gimp_rectangle_options_get_property (GObject      *object,
     case GIMP_RECTANGLE_OPTIONS_PROP_HEIGHT:
       g_value_set_double (value, private->height);
       break;
-    case GIMP_RECTANGLE_OPTIONS_PROP_UNIT:
-      g_value_set_int (value, private->unit);
+    case GIMP_RECTANGLE_OPTIONS_PROP_POSITION_UNIT:
+      g_value_set_int (value, private->position_unit);
+      break;
+    case GIMP_RECTANGLE_OPTIONS_PROP_SIZE_UNIT:
+      g_value_set_int (value, private->size_unit);
       break;
 
     case GIMP_RECTANGLE_OPTIONS_PROP_FIXED_RULE_ACTIVE:
@@ -937,7 +954,9 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (table);
 
   /* X */
-  private->x_entry = gimp_prop_size_entry_new (config, "x", TRUE, "unit", "%a",
+  private->x_entry = gimp_prop_size_entry_new (config,
+                                               "x", TRUE,
+                                               "position-unit", "%a",
                                                GIMP_SIZE_ENTRY_UPDATE_SIZE,
                                                300);
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->x_entry), FALSE);
@@ -946,17 +965,22 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
                              private->x_entry, 1, TRUE);
 
   /* Y */
-  private->y_entry = gimp_prop_size_entry_new (config, "y", TRUE, "unit", "%a",
+  private->y_entry = gimp_prop_size_entry_new (config,
+                                               "y", TRUE,
+                                               "position-unit", "%a",
                                                GIMP_SIZE_ENTRY_UPDATE_SIZE,
                                                300);
+#if 0
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->y_entry), FALSE);
+#endif
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Y:"), 0.0, 0.5,
                              private->y_entry, 1, TRUE);
 
   /* Width */
   private->width_entry = gimp_prop_size_entry_new (config,
-                                                   "width", TRUE, "unit", "%a",
+                                                   "width", TRUE,
+                                                   "size-unit", "%a",
                                                    GIMP_SIZE_ENTRY_UPDATE_SIZE,
                                                    300);
   gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->width_entry),
@@ -968,7 +992,8 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
   /* Height */
   private->height_entry = gimp_prop_size_entry_new (config,
-                                                    "height", TRUE, "unit", "%a",
+                                                    "height", TRUE,
+                                                    "size-unit", "%a",
                                                     GIMP_SIZE_ENTRY_UPDATE_SIZE,
                                                     300);
 #if 0

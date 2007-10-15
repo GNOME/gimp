@@ -1,5 +1,11 @@
 2007-10-15  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimprectangleoptions.[ch]: split the "unit" property
+	into "position-unit" and "size-unit" and added a unit menu to the
+	position widget group. UI pending further changes...
+
+2007-10-15  Michael Natterer  <mitch@gimp.org>
+
 	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):
 	moved the "Highlight" toggle down to the "Guides" combo.
 
