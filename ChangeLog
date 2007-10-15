@@ -1,3 +1,8 @@
+2007-10-15  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimprectangleoptions.c: added translator comment for the
+	string "Current". Changed "Auto Shrink Selection" to "Auto Shrink".
+
 2007-10-15  Martin Nordholts  <martinn@svn.gnome.org>
 
 	* app/core/gimpimage-arrange.c (compute_offset): Use

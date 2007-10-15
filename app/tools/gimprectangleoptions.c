@@ -771,6 +771,9 @@ gimp_rectangle_options_string_current_updates (GimpNumberPairEntry  *entry,
 
   gimp_number_pair_entry_set_default_text (entry,
                                            private->use_string_current ?
+                                           /* Current, as in
+                                            * what is currently in use.
+                                            */
                                            _("Current") : NULL);
 
   gtk_widget_set_sensitive (private->aspect_button_box,
@@ -1017,8 +1020,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (combo);
 
   /*  Auto Shrink  */
-  private->auto_shrink_button =
-    gtk_button_new_with_label (_("Auto Shrink Selection"));
+  private->auto_shrink_button = gtk_button_new_with_label (_("Auto Shrink"));
   gtk_box_pack_start (GTK_BOX (vbox), private->auto_shrink_button,
                       FALSE, FALSE, 0);
   gtk_widget_set_sensitive (private->auto_shrink_button, FALSE);
