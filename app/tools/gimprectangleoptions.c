@@ -769,7 +769,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   GtkWidget                   *button;
   GtkWidget                   *combo;
   GtkWidget                   *table;
-  GtkWidget                   *entry;
   gint                         row = 0;
 
   private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (tool_options);
@@ -785,6 +784,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     GtkWidget    *frame;
     GtkWidget    *vbox2;
     GtkWidget    *hbox;
+    GtkWidget    *entry;
     GtkSizeGroup *size_group;
     GList        *children;
 
@@ -943,20 +943,22 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (table);
 
   /* X */
-  entry = gimp_prop_size_entry_new (config, "x", TRUE, "unit", "%a",
-                                    GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
-  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
+  private->x_entry = gimp_prop_size_entry_new (config, "x", TRUE, "unit", "%a",
+                                               GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                               300);
+  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->x_entry), FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("X:"), 0.0, 0.5,
-                             entry, 1, TRUE);
+                             private->x_entry, 1, TRUE);
 
   /* Y */
-  entry = gimp_prop_size_entry_new (config, "y", TRUE, "unit", "%a",
-                                    GIMP_SIZE_ENTRY_UPDATE_SIZE, 300);
-  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
+  private->y_entry = gimp_prop_size_entry_new (config, "y", TRUE, "unit", "%a",
+                                               GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                               300);
+  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->y_entry), FALSE);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Y:"), 0.0, 0.5,
-                             entry, 1, TRUE);
+                             private->y_entry, 1, TRUE);
 
   /* Width */
   private->width_entry = gimp_prop_size_entry_new (config,

@@ -1948,6 +1948,22 @@ gimp_rectangle_tool_start (GimpRectangleTool *rectangle,
     gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->fixed_height_entry),
                                     0, display->image->yresolution, FALSE);
 
+  if (options_private->x_entry)
+    gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->x_entry),
+                                    0, display->image->xresolution, FALSE);
+
+  if (options_private->y_entry)
+    gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->y_entry),
+                                    0, display->image->yresolution, FALSE);
+
+  if (options_private->width_entry)
+    gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->width_entry),
+                                    0, display->image->xresolution, FALSE);
+
+  if (options_private->height_entry)
+    gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->height_entry),
+                                    0, display->image->yresolution, FALSE);
+
   if (options_private->auto_shrink_button)
     {
       g_signal_connect_swapped (options_private->auto_shrink_button, "clicked",

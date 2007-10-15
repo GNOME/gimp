@@ -138,6 +138,8 @@ struct _GimpRectangleOptionsPrivate
   GtkWidget                  *size_button_box;
   GtkListStore               *size_history;
 
+  GtkWidget                  *x_entry;
+  GtkWidget                  *y_entry;
   GtkWidget                  *width_entry;
   GtkWidget                  *height_entry;
 };

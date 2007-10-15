@@ -1,3 +1,11 @@
+2007-10-15  Michael Natterer  <mitch@gimp.org>
+
+	* app/tools/gimprectangleoptions.[ch]: added the x and y size
+	entries to the GimpRectangleOptionPrivate struct.
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_start): set
+	the image's resolution on the x, y, width and height size entries.
+
 2007-10-14  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimprectangleoptions.c (gimp_rectangle_options_gui):
