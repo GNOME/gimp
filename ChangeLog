@@ -1,5 +1,8 @@
 2007-10-16  Sven Neumann  <sven@gimp.org>
 
+	* app/paint/paint-enums.[ch] (GimpPerspectiveCloneMode): changed
+	"Modify Perspective Plane" to "Modify Perspective".
+
 	* app/tools/gimptextoptions.c (gimp_text_options_gui): changed
 	"Create Path from Text" to "Path from Text".
 

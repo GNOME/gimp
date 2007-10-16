@@ -53,8 +53,8 @@ GType gimp_perspective_clone_mode_get_type (void) G_GNUC_CONST;
 
 typedef enum  /*< pdb-skip >*/
 {
-  GIMP_PERSPECTIVE_CLONE_MODE_ADJUST,  /*< desc="Modify Perspective Plane" >*/
-  GIMP_PERSPECTIVE_CLONE_MODE_PAINT    /*< desc="Perspective Clone"        >*/
+  GIMP_PERSPECTIVE_CLONE_MODE_ADJUST,  /*< desc="Modify Perspective" >*/
+  GIMP_PERSPECTIVE_CLONE_MODE_PAINT    /*< desc="Perspective Clone"  >*/
 } GimpPerspectiveCloneMode;
 
 

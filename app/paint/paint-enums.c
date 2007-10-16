@@ -48,7 +48,7 @@ gimp_perspective_clone_mode_get_type (void)
 
   static const GimpEnumDesc descs[] =
   {
-    { GIMP_PERSPECTIVE_CLONE_MODE_ADJUST, N_("Modify Perspective Plane"), NULL },
+    { GIMP_PERSPECTIVE_CLONE_MODE_ADJUST, N_("Modify Perspective"), NULL },
     { GIMP_PERSPECTIVE_CLONE_MODE_PAINT, N_("Perspective Clone"), NULL },
     { 0, NULL, NULL }
   };
