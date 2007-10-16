@@ -1,3 +1,8 @@
+2007-10-16  Sven Neumann  <sven@gimp.org>
+
+	* libgimp/gimplayer.c (gimp_layer_copy): removed obsolete comment
+	about adding alpha before adding a layer above the background layer.
+
 2007-10-15  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimprectangleoptions.c: added translator comment for the

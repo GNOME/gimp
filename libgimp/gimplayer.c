@@ -73,9 +73,7 @@ gimp_layer_new (gint32                image_ID,
  *
  * This procedure copies the specified layer and returns the copy. The
  * newly copied layer is for use within the original layer's image. It
- * should not be subsequently added to any other image. If you create
- * a copy of the background layer, remember to add an alpha channel
- * before you add the new layer to the image.
+ * should not be subsequently added to any other image.
  *
  * Returns: The newly copied layer.
  */
