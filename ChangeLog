@@ -1,3 +1,9 @@
+2007-10-16  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimppropwidgets.c (gimp_prop_size_entry_new):
+	always connect to refval-changed *and* value-changed of the
+	GimpSizeEntry.
+
 2007-10-16  Sven Neumann  <sven@gimp.org>
 
 	* app/widgets/gimpdnd.c

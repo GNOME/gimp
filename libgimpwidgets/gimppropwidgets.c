@@ -2709,14 +2709,12 @@ gimp_prop_size_entry_new (GObject                   *config,
   g_object_set_data (G_OBJECT (sizeentry), "gimp-config-param-spec",
                      param_spec);
 
-  if (property_is_pixel)
-    g_signal_connect (sizeentry, "refval-changed",
-                      G_CALLBACK (gimp_prop_size_entry_callback),
-                      config);
-  else
-    g_signal_connect (sizeentry, "value-changed",
-                      G_CALLBACK (gimp_prop_size_entry_callback),
-                      config);
+  g_signal_connect (sizeentry, "refval-changed",
+                    G_CALLBACK (gimp_prop_size_entry_callback),
+                    config);
+  g_signal_connect (sizeentry, "value-changed",
+                    G_CALLBACK (gimp_prop_size_entry_callback),
+                    config);
 
   connect_notify (config, property_name,
                   G_CALLBACK (gimp_prop_size_entry_notify),
