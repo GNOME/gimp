@@ -1,5 +1,10 @@
 2007-10-16  Michael Natterer  <mitch@gimp.org>
 
+	* app/tools/gimprectangleoptions.c: redid the x, y, width and
+	height entries according to a mockup from peter.
+
+2007-10-16  Michael Natterer  <mitch@gimp.org>
+
 	* libgimpwidgets/gimppropwidgets.c (gimp_prop_size_entry_new):
 	always connect to refval-changed *and* value-changed of the
 	GimpSizeEntry.

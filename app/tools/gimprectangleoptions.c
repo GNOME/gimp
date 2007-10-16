@@ -778,6 +778,64 @@ gimp_rectangle_options_string_current_updates (GimpNumberPairEntry  *entry,
                             ! private->use_string_current || user_override);
 }
 
+static GtkWidget *
+gimp_rectangle_options_prop_dimension_frame_new (GObject      *config,
+                                                 const gchar  *x_property_name,
+                                                 const gchar  *y_property_name,
+                                                 const gchar  *unit_property_name,
+                                                 const gchar  *table_label,
+                                                 GtkWidget   **x_entry,
+                                                 GtkWidget   **y_entry)
+{
+  GtkWidget *frame;
+  GtkWidget *hbox;
+  GtkWidget *label;
+  GtkWidget *menu;
+  GtkWidget *entry;
+
+  frame = gimp_frame_new (NULL);
+
+  /*  title  */
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_frame_set_label_widget (GTK_FRAME (frame), hbox);
+  gtk_widget_show (hbox);
+
+  label = gtk_label_new (table_label);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_widget_show (label);
+
+  menu = gimp_prop_unit_menu_new (config, unit_property_name, "%a");
+  gtk_box_pack_end (GTK_BOX (hbox), menu, FALSE, FALSE, 0);
+  gtk_widget_show (menu);
+
+  /*  content  */
+  hbox = gtk_hbox_new (FALSE, 4);
+  gtk_container_add (GTK_CONTAINER (frame), hbox);
+  gtk_widget_show (hbox);
+
+  *x_entry = entry = gimp_prop_size_entry_new (config,
+                                               x_property_name, TRUE,
+                                               unit_property_name, "%a",
+                                               GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                               300);
+  gtk_table_set_col_spacings (GTK_TABLE (entry), 0);
+  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
+  gtk_box_pack_start (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
+  gtk_widget_show (entry);
+
+  *y_entry = entry = gimp_prop_size_entry_new (config,
+                                               y_property_name, TRUE,
+                                               unit_property_name, "%a",
+                                               GIMP_SIZE_ENTRY_UPDATE_SIZE,
+                                               300);
+  gtk_table_set_col_spacings (GTK_TABLE (entry), 0);
+  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (entry), FALSE);
+  gtk_box_pack_end (GTK_BOX (hbox), entry, TRUE, TRUE, 0);
+  gtk_widget_show (entry);
+
+  return frame;
+}
+
 GtkWidget *
 gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 {
@@ -786,8 +844,7 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
   GtkWidget                   *vbox   = gimp_tool_options_gui (tool_options);
   GtkWidget                   *button;
   GtkWidget                   *combo;
-  GtkWidget                   *table;
-  gint                         row = 0;
+  GtkWidget                   *frame;
 
   private = GIMP_RECTANGLE_OPTIONS_GET_PRIVATE (tool_options);
 
@@ -799,7 +856,6 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
 
   /* Rectangle fixed-rules (e.g. aspect or width). */
   {
-    GtkWidget    *frame;
     GtkWidget    *vbox2;
     GtkWidget    *hbox;
     GtkWidget    *entry;
@@ -946,67 +1002,25 @@ gimp_rectangle_options_gui (GimpToolOptions *tool_options)
     g_list_free (children);
   }
 
-  /* X, Y, Width, Height table */
+  /* X, Y */
+  frame = gimp_rectangle_options_prop_dimension_frame_new (config,
+                                                           "x", "y",
+                                                           "position-unit",
+                                                           _("Position:"),
+                                                           &private->x_entry,
+                                                           &private->y_entry);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
-  table = gtk_table_new (4, 2, FALSE);
-  gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-  gtk_table_set_row_spacings (GTK_TABLE (table), 2);
-  gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
-  gtk_widget_show (table);
-
-  /* X */
-  private->x_entry = gimp_prop_size_entry_new (config,
-                                               "x", TRUE,
-                                               "position-unit", "%a",
-                                               GIMP_SIZE_ENTRY_UPDATE_SIZE,
-                                               300);
-  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->x_entry), FALSE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("X:"), 0.0, 0.5,
-                             private->x_entry, 1, TRUE);
-
-  /* Y */
-  private->y_entry = gimp_prop_size_entry_new (config,
-                                               "y", TRUE,
-                                               "position-unit", "%a",
-                                               GIMP_SIZE_ENTRY_UPDATE_SIZE,
-                                               300);
-#if 0
-  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->y_entry), FALSE);
-#endif
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
-                             _("Y:"), 0.0, 0.5,
-                             private->y_entry, 1, TRUE);
-
-  /* Width */
-  private->width_entry = gimp_prop_size_entry_new (config,
-                                                   "width", TRUE,
-                                                   "size-unit", "%a",
-                                                   GIMP_SIZE_ENTRY_UPDATE_SIZE,
-                                                   300);
-  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->width_entry),
-                                  FALSE);
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
-                             /* Width */
-                             _("W:"), 0.0, 0.5,
-                             private->width_entry, 1, TRUE);
-  row++;
-
-  /* Height */
-  private->height_entry = gimp_prop_size_entry_new (config,
-                                                    "height", TRUE,
-                                                    "size-unit", "%a",
-                                                    GIMP_SIZE_ENTRY_UPDATE_SIZE,
-                                                    300);
-#if 0
-  gimp_size_entry_show_unit_menu (GIMP_SIZE_ENTRY (private->height_entry),
-                                  FALSE);
-#endif
-  gimp_table_attach_aligned (GTK_TABLE (table), 0, row,
-                             /* Height */
-                             _("H:"), 0.0, 0.5,
-                             private->height_entry, 1, TRUE);
-  row++;
+  /* Width, Height */
+  frame = gimp_rectangle_options_prop_dimension_frame_new (config,
+                                                           "width", "height",
+                                                           "size-unit",
+                                                           _("Size:"),
+                                                           &private->width_entry,
+                                                           &private->height_entry);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   /*  Highlight  */
   button = gimp_prop_check_button_new (config, "highlight",
