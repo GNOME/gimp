@@ -381,7 +381,7 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
   if (tool_options->tool_info->tool_type == GIMP_TYPE_ISCISSORS_TOOL)
     {
       button = gimp_prop_check_button_new (config, "interactive",
-                                           _("Show interactive boundary"));
+                                           _("Interactive boundary"));
       gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
     }

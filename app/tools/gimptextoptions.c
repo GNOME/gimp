@@ -414,6 +414,7 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   GtkWidget       *entry;
   GtkWidget       *box;
   GtkWidget       *spinbutton;
+  GtkSizeGroup    *size_group;
   gint             row = 0;
 
   table = gtk_table_new (10, 3, FALSE);
@@ -459,18 +460,23 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gtk_widget_show (button);
   row++;
 
+  size_group = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
+
   button = gimp_prop_color_button_new (config, "foreground", _("Text Color"),
-                                       -1, 24, GIMP_COLOR_AREA_FLAT);
+                                       40, 24, GIMP_COLOR_AREA_FLAT);
   gimp_color_panel_set_context (GIMP_COLOR_PANEL (button),
                                 GIMP_CONTEXT (options));
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Color:"), 0.0, 0.5,
-                             button, 1, FALSE);
+                             button, 1, TRUE);
+  gtk_size_group_add_widget (size_group, button);
 
   box = gimp_prop_enum_stock_box_new (config, "justify", "gtk-justify", 0, 0);
   gimp_table_attach_aligned (GTK_TABLE (table), 0, row++,
                              _("Justify:"), 0.0, 0.5,
                              box, 2, TRUE);
+  gtk_size_group_add_widget (size_group, box);
+  g_object_unref (size_group);
 
   spinbutton = gimp_prop_spin_button_new (config, "indent", 1.0, 10.0, 1);
   gtk_entry_set_width_chars (GTK_ENTRY (spinbutton), 5);

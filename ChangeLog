@@ -1,5 +1,13 @@
 2007-10-16  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimpselectionoptions.c (gimp_selection_options_gui):
+	changed "Show interactive boundary" to "Interactive boundary".
+
+	* app/tools/gimptextoptions.c: align the color panel with the
+	button box below it.
+
+2007-10-16  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpaligntool.c: reduced width of the tool options.
 
 2007-10-16  Sven Neumann  <sven@gimp.org>
