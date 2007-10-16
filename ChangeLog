@@ -1,5 +1,11 @@
 2007-10-16  Sven Neumann  <sven@gimp.org>
 
+	* app/widgets/gimpdnd.c
+	* app/widgets/gimpdockbook.c: set GDK_WINDOW_TYPE_HINT_DND on
+	popup windows used to implement a DND cursor.
+
+2007-10-16  Sven Neumann  <sven@gimp.org>
+
 	* tools/pdbgen/pdb/gradient.pdb: increased the arbitrary upper
 	limit on the number of segments in
 	gimp-gradient-segment-range-split-uniform. The old value used to
