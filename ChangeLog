@@ -1,3 +1,13 @@
+2007-10-16  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpwidgets/gimppropwidgets.c (gimp_prop_size_entry_new):
+	honor the "show-pixels" and "show-percent" properties of the unit
+	param spec.
+
+	* app/tools/gimprectangletool.c (gimp_rectangle_tool_start): set
+	the image's width/height on the size entries so the percent unit
+	works correctly.
+
 2007-10-16  Sven Neumann  <sven@gimp.org>
 
 	* app/tools/gimpselectionoptions.c (gimp_selection_options_gui):

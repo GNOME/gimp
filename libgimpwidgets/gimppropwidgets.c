@@ -2635,6 +2635,7 @@ gimp_prop_size_entry_new (GObject                   *config,
   GParamSpec *param_spec;
   GParamSpec *unit_param_spec;
   gboolean    show_pixels;
+  gboolean    show_percent;
   gdouble     value;
   gdouble     lower;
   gdouble     upper;
@@ -2658,9 +2659,13 @@ gimp_prop_size_entry_new (GObject                   *config,
         return NULL;
 
       g_value_init (&value, unit_param_spec->value_type);
+
       g_value_set_int (&value, GIMP_UNIT_PIXEL);
-      show_pixels =
-        (g_param_value_validate (unit_param_spec, &value) == FALSE);
+      show_pixels = (g_param_value_validate (unit_param_spec, &value) == FALSE);
+
+      g_value_set_int (&value, GIMP_UNIT_PERCENT);
+      show_percent = (g_param_value_validate (unit_param_spec, &value) == FALSE);
+
       g_value_unset (&value);
 
       g_object_get (config,
@@ -2672,10 +2677,11 @@ gimp_prop_size_entry_new (GObject                   *config,
       unit_param_spec = NULL;
       unit_value      = GIMP_UNIT_INCH;
       show_pixels     = FALSE;
+      show_percent    = FALSE;
     }
 
   sizeentry = gimp_size_entry_new (1, unit_value, unit_format,
-                                   TRUE, FALSE, FALSE,
+                                   show_pixels, show_percent, FALSE,
                                    ceil (log (upper) / log (10) + 2),
                                    update_policy);
   gtk_table_set_col_spacing (GTK_TABLE (sizeentry), 1, 4);

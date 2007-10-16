@@ -1941,28 +1941,52 @@ gimp_rectangle_tool_start (GimpRectangleTool *rectangle,
   gimp_draw_tool_start (GIMP_DRAW_TOOL (tool), tool->display);
 
   if (options_private->fixed_width_entry)
-    gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->fixed_width_entry),
-                                    0, display->image->xresolution, FALSE);
+    {
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->fixed_width_entry),
+                                      0, display->image->xresolution, FALSE);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->fixed_width_entry),
+                                0, 0, display->image->width);
+    }
 
   if (options_private->fixed_height_entry)
-    gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->fixed_height_entry),
-                                    0, display->image->yresolution, FALSE);
+    {
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->fixed_height_entry),
+                                      0, display->image->yresolution, FALSE);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->fixed_height_entry),
+                                0, 0, display->image->height);
+    }
 
   if (options_private->x_entry)
-    gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->x_entry),
-                                    0, display->image->xresolution, FALSE);
+    {
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->x_entry),
+                                      0, display->image->xresolution, FALSE);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->x_entry),
+                                0, 0, display->image->width);
+    }
 
   if (options_private->y_entry)
-    gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->y_entry),
-                                    0, display->image->yresolution, FALSE);
+    {
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->y_entry),
+                                      0, display->image->yresolution, FALSE);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->y_entry),
+                                0, 0, display->image->height);
+    }
 
   if (options_private->width_entry)
-    gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->width_entry),
-                                    0, display->image->xresolution, FALSE);
+    {
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->width_entry),
+                                      0, display->image->xresolution, FALSE);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->width_entry),
+                                0, 0, display->image->width);
+    }
 
   if (options_private->height_entry)
-    gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->height_entry),
-                                    0, display->image->yresolution, FALSE);
+    {
+      gimp_size_entry_set_resolution (GIMP_SIZE_ENTRY (options_private->height_entry),
+                                      0, display->image->yresolution, FALSE);
+      gimp_size_entry_set_size (GIMP_SIZE_ENTRY (options_private->height_entry),
+                                0, 0, display->image->height);
+    }
 
   if (options_private->auto_shrink_button)
     {
