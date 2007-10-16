@@ -1,5 +1,3 @@
-# translation of gimp-plug-ins.HEAD.po to Hungarian
-# translation of gimp-plug-ins.HEAD.po to
 # Hungarian translation of gimp-plug-ins.
 # Copyright (C) 2000, 2001, 2003, 2004, 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp-plug-ins package.
@@ -12,8 +10,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-02 10:33+0100\n"
-"PO-Revision-Date: 2007-10-05 22:42+0200\n"
+"POT-Creation-Date: 2007-10-12 10:11+0100\n"
+"PO-Revision-Date: 2007-10-14 22:43+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -391,11 +389,11 @@ msgstr "Fraktálparaméterek mentése"
 #: ../plug-ins/common/compressor.c:622 ../plug-ins/common/curve_bend.c:869
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gif-load.c:309 ../plug-ins/common/gih.c:649
-#: ../plug-ins/common/lcms.c:791 ../plug-ins/common/lcms.c:1096
+#: ../plug-ins/common/lcms.c:798 ../plug-ins/common/lcms.c:1103
 #: ../plug-ins/common/mng.c:1121 ../plug-ins/common/pat.c:317
 #: ../plug-ins/common/pcx.c:344 ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:703 ../plug-ins/common/pnm.c:482
-#: ../plug-ins/common/poppler.c:501 ../plug-ins/common/postscript.c:1021
+#: ../plug-ins/common/poppler.c:527 ../plug-ins/common/postscript.c:1021
 #: ../plug-ins/common/postscript.c:3029 ../plug-ins/common/psd-load.c:2156
 #: ../plug-ins/common/psp.c:1432 ../plug-ins/common/raw.c:243
 #: ../plug-ins/common/raw.c:645 ../plug-ins/common/spheredesigner.c:2010
@@ -406,7 +404,7 @@ msgstr "Fraktálparaméterek mentése"
 #: ../plug-ins/fits/fits.c:345 ../plug-ins/flame/flame.c:411
 #: ../plug-ins/gfig/gfig.c:434 ../plug-ins/gfli/gfli.c:429
 #: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/gimphelplocale.c:193
-#: ../plug-ins/jpeg/jpeg-load.c:111 ../plug-ins/jpeg/jpeg-load.c:826
+#: ../plug-ins/jpeg/jpeg-load.c:111 ../plug-ins/jpeg/jpeg-load.c:821
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:271
 #: ../plug-ins/uri/uri-backend-libcurl.c:186 ../plug-ins/winicon/icoload.c:651
 #: ../plug-ins/winicon/icoload.c:728 ../plug-ins/xjt/xjt.c:2545
@@ -611,7 +609,7 @@ msgid "Position"
 msgstr "Helyzet"
 
 #: ../plug-ins/Lighting/lighting_ui.c:474 ../plug-ins/common/flarefx.c:772
-#: ../plug-ins/common/mblur.c:1081 ../plug-ins/common/nova.c:463
+#: ../plug-ins/common/mblur.c:1094 ../plug-ins/common/nova.c:463
 #: ../plug-ins/common/papertile.c:282 ../plug-ins/flame/flame.c:1227
 #: ../plug-ins/gflare/gflare.c:2651
 msgid "_X:"
@@ -623,7 +621,7 @@ msgid "Light source X position in XYZ space"
 msgstr "A fényforrás X-helyzete az XYZ térben"
 
 #: ../plug-ins/Lighting/lighting_ui.c:487 ../plug-ins/common/flarefx.c:777
-#: ../plug-ins/common/mblur.c:1086 ../plug-ins/common/nova.c:468
+#: ../plug-ins/common/mblur.c:1099 ../plug-ins/common/nova.c:468
 #: ../plug-ins/common/papertile.c:291 ../plug-ins/flame/flame.c:1241
 #: ../plug-ins/gflare/gflare.c:2655
 msgid "_Y:"
@@ -1106,7 +1104,7 @@ msgstr "S_ugár:"
 msgid "Cylinder radius"
 msgstr "Henger sugara"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1264 ../plug-ins/common/mblur.c:1112
+#: ../plug-ins/MapObject/mapobject_ui.c:1264 ../plug-ins/common/mblur.c:1125
 msgid "L_ength:"
 msgstr "_Hossz:"
 
@@ -1152,7 +1150,7 @@ msgstr "Helytelen színtérkép"
 #: ../plug-ins/common/gif-load.c:314 ../plug-ins/common/gih.c:654
 #: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:349
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:710
-#: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:546
+#: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:572
 #: ../plug-ins/common/postscript.c:1027 ../plug-ins/common/psd-load.c:2161
 #: ../plug-ins/common/raw.c:650 ../plug-ins/common/sunras.c:470
 #: ../plug-ins/common/tga.c:428 ../plug-ins/common/tiff-load.c:558
@@ -1214,8 +1212,8 @@ msgstr "Nem támogatott vagy érvénytelen képmagasság: %d"
 #: ../plug-ins/common/tile.c:267 ../plug-ins/common/xbm.c:880
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:511
 #: ../plug-ins/gfig/gfig-dialog.c:1284
-#: ../plug-ins/gimpressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:254
-#: ../plug-ins/jpeg/jpeg-load.c:757 ../plug-ins/sgi/sgi.c:369
+#: ../plug-ins/gimpressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:249
+#: ../plug-ins/jpeg/jpeg-load.c:752 ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1155
 msgid "Background"
 msgstr "Háttér"
@@ -2733,8 +2731,8 @@ msgid ""
 "You can only run 'Recompose' if the active image was originally produced by "
 "'Decompose'."
 msgstr ""
-"Az \"újra összevonás\" csak akkor hajtható végre, ha az aktív kép "
-"eredetileg szétbontási eljárással készült."
+"Az \"újra összevonás\" csak akkor hajtható végre, ha az aktív kép eredetileg "
+"szétbontási eljárással készült."
 
 #: ../plug-ins/common/compose.c:491
 msgid "Error scanning 'decompose-data' parasite: too few layers found"
@@ -4316,8 +4314,8 @@ msgid ""
 "The image you are trying to save as a GIF contains layers which extend "
 "beyond the actual borders of the image."
 msgstr ""
-"A kép, amelyet Ön GIF-ként szeretne menteni, olyan rétegeket "
-"tartalmaz, amelyek a kép tényleges határain kívülre nyúlnak."
+"A kép, amelyet Ön GIF-ként szeretne menteni, olyan rétegeket tartalmaz, "
+"amelyek a kép tényleges határain kívülre nyúlnak."
 
 #: ../plug-ins/common/gif-save.c:1192
 msgid ""
@@ -5007,111 +5005,111 @@ msgstr "Információ a kép színprofiljáról"
 msgid "Color Profile Information"
 msgstr "Színprofil-információ"
 
-#: ../plug-ins/common/lcms.c:564
+#: ../plug-ins/common/lcms.c:571
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "A(z) \"%s\" színprofil nem RGB színtérhez való."
 
-#: ../plug-ins/common/lcms.c:671
+#: ../plug-ins/common/lcms.c:678
 msgid "Default RGB working space"
 msgstr "Alapértelmezett RGB munkaterület"
 
-#: ../plug-ins/common/lcms.c:759
+#: ../plug-ins/common/lcms.c:766
 msgid "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr "Az ICC-profilként csatolt adatok nem tűnnek ICC-színprofilnak"
 
-#: ../plug-ins/common/lcms.c:810
+#: ../plug-ins/common/lcms.c:817
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "\"%s\" nem tűnik ICC-színprofilnak"
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:868
+#: ../plug-ins/common/lcms.c:875
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Átalakítás erről: \"%s\" erre: \"%s\""
 
-#: ../plug-ins/common/lcms.c:1115
+#: ../plug-ins/common/lcms.c:1122
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Nem sikerült betölteni ICC-profilt innen: \"%s\""
 
-#: ../plug-ins/common/lcms.c:1137
+#: ../plug-ins/common/lcms.c:1144
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "A(z) \"%s\" kép tartalmaz beágyazott színprofilt:"
 
-#: ../plug-ins/common/lcms.c:1181
+#: ../plug-ins/common/lcms.c:1188
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Kívánja átalakítani a képet RGB munkaterületre (%s)?"
 
-#: ../plug-ins/common/lcms.c:1212
+#: ../plug-ins/common/lcms.c:1219
 msgid "Convert to RGB working space?"
 msgstr "Átalakítás RGB munkaterületre?"
 
-#: ../plug-ins/common/lcms.c:1217
+#: ../plug-ins/common/lcms.c:1224
 msgid "_Keep"
 msgstr "M_egtartás"
 
-#: ../plug-ins/common/lcms.c:1222
+#: ../plug-ins/common/lcms.c:1229
 msgid "_Convert"
 msgstr "Át_alakítás"
 
-#: ../plug-ins/common/lcms.c:1249 ../plug-ins/jpeg/jpeg-exif.c:372
+#: ../plug-ins/common/lcms.c:1256 ../plug-ins/jpeg/jpeg-exif.c:372
 msgid "_Don't ask me again"
 msgstr "A jövőben _ne kérdezze meg"
 
-#: ../plug-ins/common/lcms.c:1313
+#: ../plug-ins/common/lcms.c:1320
 msgid "Select destination profile"
 msgstr "Célprofil kiválasztása"
 
-#: ../plug-ins/common/lcms.c:1340
+#: ../plug-ins/common/lcms.c:1347
 msgid "All files (*.*)"
 msgstr "Minden fájl (*.*)"
 
-#: ../plug-ins/common/lcms.c:1345
+#: ../plug-ins/common/lcms.c:1352
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC-színprofil (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1388
+#: ../plug-ins/common/lcms.c:1395
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "RGB munkaterület (%s)"
 
-#: ../plug-ins/common/lcms.c:1438
+#: ../plug-ins/common/lcms.c:1445
 msgid "Convert to ICC Color Profile"
 msgstr "Átalakítás ICC-színprofilra"
 
-#: ../plug-ins/common/lcms.c:1439
+#: ../plug-ins/common/lcms.c:1446
 msgid "Assign ICC Color Profile"
 msgstr "ICC-színprofil hozzárendelése"
 
-#: ../plug-ins/common/lcms.c:1447
+#: ../plug-ins/common/lcms.c:1454
 msgid "_Assign"
 msgstr "_Hozzárendelés"
 
-#: ../plug-ins/common/lcms.c:1464
+#: ../plug-ins/common/lcms.c:1471
 msgid "Current Color Profile"
 msgstr "Jelenlegi színprofil"
 
-#: ../plug-ins/common/lcms.c:1479
+#: ../plug-ins/common/lcms.c:1486
 msgid "Convert to"
 msgstr "Átalakítás erre:"
 
-#: ../plug-ins/common/lcms.c:1479
+#: ../plug-ins/common/lcms.c:1486
 msgid "Assign"
 msgstr "Hozzárendelés"
 
-#: ../plug-ins/common/lcms.c:1503
+#: ../plug-ins/common/lcms.c:1510
 msgid "_Rendering Intent:"
 msgstr "Meg_jelenítési cél:"
 
-#: ../plug-ins/common/lcms.c:1519
+#: ../plug-ins/common/lcms.c:1526
 msgid "_Black Point Compensation"
 msgstr "_Feketepont-kompenzáció"
 
-#: ../plug-ins/common/lcms.c:1560
+#: ../plug-ins/common/lcms.c:1567
 msgid "Destination profile is not for RGB color space."
 msgstr "A célprofil nem RGB színtérhez való."
 
@@ -5372,51 +5370,51 @@ msgstr "Ma_ximális csatorna megtartása"
 msgid "Ho_ld the minimal channels"
 msgstr "Mi_nimális csatorna megtartása"
 
-#: ../plug-ins/common/mblur.c:155
+#: ../plug-ins/common/mblur.c:157 ../plug-ins/common/mblur.c:171
 msgid "Simulate movement using directional blur"
 msgstr "Mozgás szimulálása irányított elmosással"
 
-#: ../plug-ins/common/mblur.c:162
+#: ../plug-ins/common/mblur.c:164 ../plug-ins/common/mblur.c:177
 msgid "_Motion Blur..."
 msgstr "Elmosás el_mozdítással..."
 
-#: ../plug-ins/common/mblur.c:897
+#: ../plug-ins/common/mblur.c:910
 msgid "Motion blurring"
 msgstr "Elmosás elmozdítással"
 
-#: ../plug-ins/common/mblur.c:999
+#: ../plug-ins/common/mblur.c:1012
 msgid "Motion Blur"
 msgstr "Elmosás elmozdítással"
 
-#: ../plug-ins/common/mblur.c:1032
+#: ../plug-ins/common/mblur.c:1045
 msgid "Blur Type"
 msgstr "Elmosás típusa"
 
-#: ../plug-ins/common/mblur.c:1036
+#: ../plug-ins/common/mblur.c:1049
 msgid "_Linear"
 msgstr "_Lineáris"
 
-#: ../plug-ins/common/mblur.c:1037
+#: ../plug-ins/common/mblur.c:1050
 msgid "_Radial"
 msgstr "Sugá_rirányú"
 
-#: ../plug-ins/common/mblur.c:1038 ../plug-ins/imagemap/imap_menu.c:203
+#: ../plug-ins/common/mblur.c:1051 ../plug-ins/imagemap/imap_menu.c:203
 msgid "_Zoom"
 msgstr "_Nagyítás"
 
-#: ../plug-ins/common/mblur.c:1045
+#: ../plug-ins/common/mblur.c:1058
 msgid "Blur Center"
 msgstr "Elmosási középpont"
 
-#: ../plug-ins/common/mblur.c:1088
+#: ../plug-ins/common/mblur.c:1101
 msgid "Blur _outward"
 msgstr "Elmosás k_ifelé"
 
-#: ../plug-ins/common/mblur.c:1101
+#: ../plug-ins/common/mblur.c:1114
 msgid "Blur Parameters"
 msgstr "Elmosás paraméterei"
 
-#: ../plug-ins/common/mblur.c:1125 ../plug-ins/common/newsprint.c:1001
+#: ../plug-ins/common/mblur.c:1138 ../plug-ins/common/newsprint.c:1001
 msgid "_Angle:"
 msgstr "S_zög:"
 
@@ -6027,7 +6025,9 @@ msgstr "Érvénytelen Y-eltolás: %d"
 #: ../plug-ins/common/pcx.c:667
 #, c-format
 msgid "Right border out of bounds (must be < %d): %d"
-msgstr "A jobb oldali szegély kívül esik a korlátokon (kisebbnek kell lennie, mint %d): %d"
+msgstr ""
+"A jobb oldali szegély kívül esik a korlátokon (kisebbnek kell lennie, mint %"
+"d): %d"
 
 #: ../plug-ins/common/pcx.c:674
 #, c-format
@@ -6393,42 +6393,42 @@ msgstr ""
 "Ha nincs bejelölve, akkor a kép körkörösen lesz leképezve egy téglalapra. "
 "Bejelölés esetén a kép egy körre lesz leképezve."
 
-#: ../plug-ins/common/poppler.c:283
+#: ../plug-ins/common/poppler.c:285
 msgid "Portable Document Format"
 msgstr "Portable Document Format"
 
-#: ../plug-ins/common/poppler.c:580
+#: ../plug-ins/common/poppler.c:606
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/poppler.c:582 ../plug-ins/common/postscript.c:1109
+#: ../plug-ins/common/poppler.c:608 ../plug-ins/common/postscript.c:1109
 #, c-format
 msgid "%s-pages"
 msgstr "%s-lapok"
 
-#: ../plug-ins/common/poppler.c:760
+#: ../plug-ins/common/poppler.c:786
 msgid "Import from PDF"
 msgstr "Importálás PDF-ből"
 
-#: ../plug-ins/common/poppler.c:765 ../plug-ins/common/postscript.c:3081
+#: ../plug-ins/common/poppler.c:791 ../plug-ins/common/postscript.c:3081
 #: ../plug-ins/common/tiff-load.c:440
 msgid "_Import"
 msgstr "_Importálás"
 
-#: ../plug-ins/common/poppler.c:831
+#: ../plug-ins/common/poppler.c:857
 msgid "_Width (pixels):"
 msgstr "Szé_lesség (képpontban):"
 
-#: ../plug-ins/common/poppler.c:832
+#: ../plug-ins/common/poppler.c:858
 msgid "_Height (pixels):"
 msgstr "M_agasság (képpontban):"
 
-#: ../plug-ins/common/poppler.c:834
+#: ../plug-ins/common/poppler.c:860
 msgid "_Resolution:"
 msgstr "_Felbontás:"
 
-#: ../plug-ins/common/poppler.c:1108
+#: ../plug-ins/common/poppler.c:1134
 #, c-format
 msgid "pixels/%s"
 msgstr "képpont/%s"
@@ -6462,10 +6462,9 @@ msgid ""
 "location.\n"
 "(%s)"
 msgstr ""
-"Hiba a Ghostscript indításakor. Bizonyosodjon meg arról, hogy "
-"a Ghostscript telepítve van és - ha szükséges - használja a "
-"GS_PROG környezeti változót, amellyel a GIMP számára a "
-"Ghostscript helyét lehet megadni.\n"
+"Hiba a Ghostscript indításakor. Bizonyosodjon meg arról, hogy a Ghostscript "
+"telepítve van és - ha szükséges - használja a GS_PROG környezeti változót, "
+"amellyel a GIMP számára a Ghostscript helyét lehet megadni.\n"
 "(%s)"
 
 #: ../plug-ins/common/postscript.c:1911 ../plug-ins/common/tiff-load.c:944
@@ -6664,7 +6663,9 @@ msgstr "A több mint %d csatornát tartalmazó PSD-fájlok kezelése nem lehets�
 
 #: ../plug-ins/common/psd-load.c:2522
 msgid "Cannot handle PSD files in CMYK color with more than 5 channels"
-msgstr "A több mint 5 csatornát tartalmazó, CMYK színű PSD-fájlok kezelése nem lehetséges"
+msgstr ""
+"A több mint 5 csatornát tartalmazó, CMYK színű PSD-fájlok kezelése nem "
+"lehetséges"
 
 #: ../plug-ins/common/psd-load.c:2537
 #, c-format
@@ -9010,8 +9011,8 @@ msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
 "not supported."
 msgstr ""
-"A(z) \"%s\" XWD-fájl formátuma \"%d\", mélysége \"%d\", képpontonkénti bitszáma \"%d\". "
-"Jelenleg ez nem támogatott."
+"A(z) \"%s\" XWD-fájl formátuma \"%d\", mélysége \"%d\", képpontonkénti "
+"bitszáma \"%d\". Jelenleg ez nem támogatott."
 
 #: ../plug-ins/common/xwd.c:578
 msgid "Cannot save images with alpha channels."
@@ -9561,8 +9562,8 @@ msgstr ""
 #, c-format
 msgid "Error trying to open temporary file '%s' for parasite loading: %s"
 msgstr ""
-"Hiba a(z) \"%s\" átmeneti fájl élősködő-betöltés számára való "
-"megnyitásakor: %s"
+"Hiba a(z) \"%s\" átmeneti fájl élősködő-betöltés számára való megnyitásakor: "
+"%s"
 
 #: ../plug-ins/gflare/gflare.c:553
 msgid "Addition"
@@ -10500,35 +10501,35 @@ msgstr ""
 "Feldolgozási hiba ebben: \"%s\":\n"
 "%s"
 
-#: ../plug-ins/helpbrowser/dialog.c:216
+#: ../plug-ins/helpbrowser/dialog.c:217
 msgid "GIMP Help Browser"
 msgstr "GIMP-súgóböngésző"
 
-#: ../plug-ins/helpbrowser/dialog.c:311
+#: ../plug-ins/helpbrowser/dialog.c:312
 msgid "Drag and drop this icon to a web browser"
 msgstr "Húzza át ezt az ikont egy webböngészőbe"
 
-#: ../plug-ins/helpbrowser/dialog.c:700
+#: ../plug-ins/helpbrowser/dialog.c:702
 msgid "Go back one page"
 msgstr "Vissza egy lappal"
 
-#: ../plug-ins/helpbrowser/dialog.c:705
+#: ../plug-ins/helpbrowser/dialog.c:707
 msgid "Go forward one page"
 msgstr "Előre egy lappal"
 
-#: ../plug-ins/helpbrowser/dialog.c:710
+#: ../plug-ins/helpbrowser/dialog.c:712
 msgid "Go to the index page"
 msgstr "Ugrás az indexlapra"
 
-#: ../plug-ins/helpbrowser/dialog.c:745
+#: ../plug-ins/helpbrowser/dialog.c:747
 msgid "Visit the GIMP documentation website"
 msgstr "A GIMP dokumentációs weboldalának megtekintése"
 
-#: ../plug-ins/helpbrowser/dialog.c:821
+#: ../plug-ins/helpbrowser/dialog.c:823
 msgid "Document not found"
 msgstr "A dokumentum nem található"
 
-#: ../plug-ins/helpbrowser/dialog.c:823
+#: ../plug-ins/helpbrowser/dialog.c:825
 msgid "The requested URL could not be loaded:"
 msgstr "A kért URL nem tölthető be:"
 
@@ -11446,11 +11447,11 @@ msgstr "Az EXIF-adatok szerint ez a kép el van forgatva."
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Kívánja, hogy a GIMP elfordítsa azt az eredeti tájolás szerintire?"
 
-#: ../plug-ins/jpeg/jpeg-load.c:246
+#: ../plug-ins/jpeg/jpeg-load.c:241
 msgid "JPEG preview"
 msgstr "JPEG-előnézet"
 
-#: ../plug-ins/jpeg/jpeg-load.c:631 ../plug-ins/winicon/icoload.c:722
+#: ../plug-ins/jpeg/jpeg-load.c:626 ../plug-ins/winicon/icoload.c:722
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "\"%s\" bélyegképének megnyitása"
@@ -11531,9 +11532,9 @@ msgid ""
 "settings (quantization tables), enable this option to get almost the same "
 "quality and file size."
 msgstr ""
-"Ha az eredeti kép nem szabványos minőségi beállításokat (kvantálási táblákat) "
-"használó JPEG-fájlból volt betöltve, akkor ezen opció bekapcsolásával "
-"közel azonos minőség és fájlméret érhető el."
+"Ha az eredeti kép nem szabványos minőségi beállításokat (kvantálási "
+"táblákat) használó JPEG-fájlból volt betöltve, akkor ezen opció "
+"bekapcsolásával közel azonos minőség és fájlméret érhető el."
 
 #. Subsampling
 #: ../plug-ins/jpeg/jpeg-save.c:1077
@@ -11991,6 +11992,10 @@ msgstr ""
 "Agresszív RLE\n"
 "(az SGI nem támogatja)"
 
+#: ../plug-ins/twain/twain.c:87
+msgid "Capture an image from a TWAIN datasource"
+msgstr "Kép beolvasása TWAIN-adatforrásból"
+
 #: ../plug-ins/twain/twain.c:354
 msgid "_Scanner/Camera..."
 msgstr "La_polvasó/kamera..."
@@ -12050,7 +12055,9 @@ msgstr "Nem sikerült megnyitni írásra a kimeneti fájlt"
 #: ../plug-ins/uri/uri-backend-libcurl.c:198
 #, c-format
 msgid "Opening '%s' for reading resulted in HTTP response code: %d"
-msgstr "A(z) \"%s\" olvasásra való megnyitása a következő HTTP-válaszkódot eredményezte: %d"
+msgstr ""
+"A(z) \"%s\" olvasásra való megnyitása a következő HTTP-válaszkódot "
+"eredményezte: %d"
 
 #: ../plug-ins/uri/uri-backend-wget.c:164
 #: ../plug-ins/uri/uri-backend-wget.c:184
@@ -12106,9 +12113,8 @@ msgid ""
 "Large icons and compression are not supported by all programs. Older "
 "applications may not open this file correctly."
 msgstr ""
-"A nagy ikonokat és a tömörítést nem minden program támogatja. "
-"Elképzelhető, hogy régebbi alkalmazások nem tudják helyesen megnyitni "
-"ezt a fájlt."
+"A nagy ikonokat és a tömörítést nem minden program támogatja. Elképzelhető, "
+"hogy régebbi alkalmazások nem tudják helyesen megnyitni ezt a fájlt."
 
 #: ../plug-ins/winicon/icodialog.c:178
 msgid "1 bpp, 1-bit alpha, 2-slot palette"
