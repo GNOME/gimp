@@ -2279,7 +2279,7 @@ register_gradient_procs (GimpPDB *pdb)
                                gimp_param_spec_int32 ("split-parts",
                                                       "split parts",
                                                       "The number of uniform divisions to split each segment to",
-                                                      2, 20, 2,
+                                                      2, 1024, 2,
                                                       GIMP_PARAM_READWRITE));
   gimp_pdb_register_procedure (pdb, procedure);
   g_object_unref (procedure);

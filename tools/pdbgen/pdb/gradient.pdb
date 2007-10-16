@@ -1085,7 +1085,7 @@ HELP
         { name => 'end_segment', type => 'int32',
           desc => 'The index of the last segment to operate on. If negative,
                    the selection will extend to the end of the string.' },
-        { name => 'split_parts', type => '2 <= int32 <= 20',
+        { name => 'split_parts', type => '2 <= int32 <= 1024',
           desc => 'The number of uniform divisions to split each segment to' }
     );
 
