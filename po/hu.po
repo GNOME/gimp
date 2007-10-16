@@ -1,4 +1,3 @@
-# translation of gimp.HEAD to Hungarian
 # Hungarian translation of gimp.
 # Copyright (C) 1998, 2000, 2001, 2003, 2004, 2007 Free Software Foundation, Inc.
 # This file is distributed under the same license as the gimp package.
@@ -14,9 +13,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-09 21:55+0100\n"
-"PO-Revision-Date: 2007-10-11 08:09+0200\n"
-"Last-Translator: \n"
+"POT-Creation-Date: 2007-10-14 09:55+0100\n"
+"PO-Revision-Date: 2007-10-14 22:58+0200\n"
+"Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -6055,7 +6054,7 @@ msgstr "Szintek"
 msgid "Offset Drawable"
 msgstr "Rajzfelület eltolása"
 
-#: ../app/core/gimpdrawable-stroke.c:321
+#: ../app/core/gimpdrawable-stroke.c:320
 msgid "Render Stroke"
 msgstr "Körvonal megrajzolása"
 
@@ -7155,14 +7154,12 @@ msgstr "Réteg _neve:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:134
-#: ../app/tools/gimpmeasuretool.c:1056
-#: ../app/tools/gimprectangleoptions.c:1044
+#: ../app/tools/gimpmeasuretool.c:1056 ../app/tools/gimprectangleoptions.c:951
 msgid "Width:"
 msgstr "Szélesség:"
 
 #: ../app/dialogs/layer-options-dialog.c:140
-#: ../app/tools/gimpmeasuretool.c:1084
-#: ../app/tools/gimprectangleoptions.c:1057
+#: ../app/tools/gimpmeasuretool.c:1084 ../app/tools/gimprectangleoptions.c:964
 msgid "Height:"
 msgstr "Magasság:"
 
@@ -9062,75 +9059,105 @@ msgstr "Sűrűség:"
 msgid "Pressure:"
 msgstr "Nyomás:"
 
-#: ../app/tools/gimpaligntool.c:120 ../app/tools/gimpaligntool.c:581
+#: ../app/tools/gimpaligntool.c:132 ../app/tools/gimpaligntool.c:734
 msgid "Align"
 msgstr "Igazítás"
 
-#: ../app/tools/gimpaligntool.c:121
+#: ../app/tools/gimpaligntool.c:133
 msgid "Alignment Tool: Align or arrange layers and other objects"
 msgstr "Igazítási eszköz: rétegek és egyéb objektumok igazítása vagy elrendezése"
 
-#: ../app/tools/gimpaligntool.c:122
+#: ../app/tools/gimpaligntool.c:134
 msgid "_Align"
 msgstr "_Igazítás"
 
-#: ../app/tools/gimpaligntool.c:593
+#: ../app/tools/gimpaligntool.c:583
+msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
+msgstr ""
+"Kattintson egy rétegre, útvonalra vagy segédvonalra. Több réteg "
+"kijelölése: kattintás+húzás."
+
+#: ../app/tools/gimpaligntool.c:592
+msgid "Click to pick this layer as first item"
+msgstr "A réteg első elemként való beállítása: kattintással"
+
+#: ../app/tools/gimpaligntool.c:600
+msgid "Click to add this layer to the list"
+msgstr "A réteg hozzáadása a listához: kattintással"
+
+#: ../app/tools/gimpaligntool.c:604
+msgid "Click to pick this guide as first item"
+msgstr "A segédvonal első elemként való beállítása: kattintással"
+
+#: ../app/tools/gimpaligntool.c:612
+msgid "Click to add this guide to the list"
+msgstr "A segédvonal hozzáadása a listához: kattintással"
+
+#: ../app/tools/gimpaligntool.c:616
+msgid "Click to pick this path as first item"
+msgstr "Az útvonal első elemként való beállítása: kattintással"
+
+#: ../app/tools/gimpaligntool.c:624
+msgid "Click to add this path to the list"
+msgstr "Az útvonal hozzáadása a listához: kattintással"
+
+#: ../app/tools/gimpaligntool.c:746
 msgid "Relative to:"
 msgstr "Ehhez viszonyítva:"
 
-#: ../app/tools/gimpaligntool.c:611
+#: ../app/tools/gimpaligntool.c:764
 msgid "Align left edge of target"
 msgstr "A cél bal szélének igazítása"
 
-#: ../app/tools/gimpaligntool.c:617
+#: ../app/tools/gimpaligntool.c:770
 msgid "Align center of target"
 msgstr "A cél közepének igazítása"
 
-#: ../app/tools/gimpaligntool.c:623
+#: ../app/tools/gimpaligntool.c:776
 msgid "Align right edge of target"
 msgstr "A cél jobb oldali szélének igazítása"
 
-#: ../app/tools/gimpaligntool.c:633
+#: ../app/tools/gimpaligntool.c:786
 msgid "Align top edge of target"
 msgstr "A cél felső szélének igazítása"
 
-#: ../app/tools/gimpaligntool.c:639
+#: ../app/tools/gimpaligntool.c:792
 msgid "Align middle of target"
 msgstr "A cél közepének igazítása"
 
-#: ../app/tools/gimpaligntool.c:645
+#: ../app/tools/gimpaligntool.c:798
 msgid "Align bottom of target"
 msgstr "A cél alsó szélének igazítása"
 
-#: ../app/tools/gimpaligntool.c:649
+#: ../app/tools/gimpaligntool.c:802
 msgid "Distribute"
 msgstr "Elrendezés"
 
-#: ../app/tools/gimpaligntool.c:663
+#: ../app/tools/gimpaligntool.c:816
 msgid "Distribute left edges of targets"
 msgstr "A célobjektumok bal széleinek elrendezése"
 
-#: ../app/tools/gimpaligntool.c:670
+#: ../app/tools/gimpaligntool.c:823
 msgid "Distribute horizontal centers of targets"
 msgstr "A célobjektumok vízszintes közepeinek elrendezése"
 
-#: ../app/tools/gimpaligntool.c:677
+#: ../app/tools/gimpaligntool.c:830
 msgid "Distribute right edges of targets"
 msgstr "A célobjektumok jobb oldali széleinek elrendezése"
 
-#: ../app/tools/gimpaligntool.c:687
+#: ../app/tools/gimpaligntool.c:840
 msgid "Distribute top edges of targets"
 msgstr "A célobjektumok felső széleinek elrendezése"
 
-#: ../app/tools/gimpaligntool.c:694
+#: ../app/tools/gimpaligntool.c:847
 msgid "Distribute vertical centers of targets"
 msgstr "A célobjektumok függőleges közepeinek elrendezése"
 
-#: ../app/tools/gimpaligntool.c:700
+#: ../app/tools/gimpaligntool.c:853
 msgid "Distribute bottoms of targets"
 msgstr "A célobjektumok alsó széleinek elrendezése"
 
-#: ../app/tools/gimpaligntool.c:708 ../app/tools/gimpblendoptions.c:212
+#: ../app/tools/gimpaligntool.c:861 ../app/tools/gimpblendoptions.c:212
 msgid "Offset:"
 msgstr "Eltolás:"
 
@@ -10390,40 +10417,39 @@ msgstr "A Poszter nem működik indexelt rétegeken."
 msgid "Posterize _levels:"
 msgstr "Poszter sz_intjei:"
 
-#: ../app/tools/gimprectangleoptions.c:119
+#: ../app/tools/gimprectangleoptions.c:112
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Kijelölés szűkítésekor az összes látható réteg felhasználása"
 
-#: ../app/tools/gimprectangleoptions.c:822
+#: ../app/tools/gimprectangleoptions.c:731
 msgid "Current"
 msgstr "Jelenlegi"
 
-#: ../app/tools/gimprectangleoptions.c:847
+#: ../app/tools/gimprectangleoptions.c:754
 msgid "Expand from center"
 msgstr "Kiterjesztés a középpontból"
 
-#: ../app/tools/gimprectangleoptions.c:866
+#: ../app/tools/gimprectangleoptions.c:777
 msgid "Fixed:"
 msgstr "Rögzített:"
 
-#: ../app/tools/gimprectangleoptions.c:1005
+#: ../app/tools/gimprectangleoptions.c:912
 msgid "Highlight"
 msgstr "Kiemelés"
 
-#: ../app/tools/gimprectangleoptions.c:1023
+#: ../app/tools/gimprectangleoptions.c:930
 msgid "X:"
 msgstr "X:"
 
-#: ../app/tools/gimprectangleoptions.c:1032
+#: ../app/tools/gimprectangleoptions.c:939
 msgid "Y:"
 msgstr "Y:"
 
-#. Auto Shrink
-#: ../app/tools/gimprectangleoptions.c:1071
+#: ../app/tools/gimprectangleoptions.c:975
 msgid "Auto Shrink Selection"
 msgstr "Kijelölés automatikus szűkítése"
 
-#: ../app/tools/gimprectangleoptions.c:1079
+#: ../app/tools/gimprectangleoptions.c:982
 msgid "Shrink merged"
 msgstr "Szűkítés összefésülve"
 
