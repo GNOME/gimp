@@ -1,3 +1,8 @@
+2007-10-16  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.skip: added app/widgets/gimpcolorselectorpalette.c
+	Fixes bug #487153.
+
 2007-10-07 Marco Ciampa  <ciampix@libero.it>
 
 	* it.po: updated italian translation.

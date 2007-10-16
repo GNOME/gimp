@@ -309,6 +309,7 @@ app/widgets/gimpcolordisplayeditor.c
 app/widgets/gimpcoloreditor.c
 app/widgets/gimpcolorframe.c
 app/widgets/gimpcolormapeditor.c
+app/widgets/gimpcolorselectorpalette.c
 app/widgets/gimpcontainerpopup.c
 app/widgets/gimpcontrollereditor.c
 app/widgets/gimpcontrollerkeyboard.c

@@ -1,3 +1,8 @@
+2007-10-16  Michael Natterer  <mitch@gimp.org>
+
+	* POTFILES.skip: added app/widgets/gimpcolorselectorpalette.c
+	Fixes bug #487153.
+
 2007-10-13  Sigurd Gartmann  <sigurdga@yahoo-inc.com>
 
 	* no.po: Updated Norwegian Bokmal translation (fix plurals error).
@@ -10,7 +15,8 @@
 
 2007-10-11  Matic Žgur  <mr.zgur@gmail.com>
 
-	* sl.po: Updated Slovenian translation by Martin Srebotnjak and Nedeljko Grabant.
+	* sl.po: Updated Slovenian translation by Martin Srebotnjak and
+	Nedeljko Grabant.
 
 2007-10-11  Žygimantas Beručka  <zygis@gnome.org>
 
