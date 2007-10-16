@@ -185,7 +185,8 @@ gimp_vector_options_gui (GimpToolOptions *tool_options)
                                               GDK_CONTROL_MASK));
 
   button = gimp_button_new ();
-  gtk_button_set_label (GTK_BUTTON (button), _("Create Selection from Path"));
+  /*  Create a selection from the current path  */
+  gtk_button_set_label (GTK_BUTTON (button), _("Selection from Path"));
   gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, FALSE);
   gimp_help_set_help_data (button, str, GIMP_HELP_PATH_SELECTION_REPLACE);

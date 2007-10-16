@@ -1,3 +1,8 @@
+2007-10-16  Sven Neumann  <sven@gimp.org>
+
+	* app/tools/gimpvectoroptions.c (gimp_vector_options_gui):
+	Changed "Create Selection from Path" to "Selection from Path".
+
 2007-10-16  Michael Natterer  <mitch@gimp.org>
 
 	* app/tools/gimprectangleoptions.c: redid the x, y, width and
