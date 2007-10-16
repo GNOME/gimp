@@ -11,6 +11,9 @@
 
 2007-10-16  Sven Neumann  <sven@gimp.org>
 
+	* libgimp/gimppatternselectbutton.c
+	* libgimp/gimpbrushselectbutton.c
+	* libgimpwidgets/gimpcolorarea.c
 	* app/widgets/gimpdnd.c
 	* app/widgets/gimpdockbook.c: set GDK_WINDOW_TYPE_HINT_DND on
 	popup windows used to implement a DND cursor.
