@@ -761,12 +761,12 @@ gimp_align_tool_controls (GimpAlignTool *align_tool)
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
   gtk_widget_show (hbox);
 
-  label = gtk_label_new (_("Relative to:"));
-  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_widget_show (label);
+  frame = gimp_frame_new (_("Relative to:"));
+  gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
+  gtk_widget_show (frame);
 
   combo = gimp_enum_combo_box_new (GIMP_TYPE_ALIGN_REFERENCE);
-  gtk_box_pack_start (GTK_BOX (hbox), combo, FALSE, FALSE, 0);
+  gtk_container_add (GTK_CONTAINER (frame), combo);
   gimp_int_combo_box_connect (GIMP_INT_COMBO_BOX (combo),
                               GIMP_ALIGN_REFERENCE_FIRST,
                               G_CALLBACK (gimp_int_combo_box_get_active),
