@@ -1,7 +1,10 @@
 2007-10-16  Sven Neumann  <sven@gimp.org>
 
+	* app/tools/gimptextoptions.c (gimp_text_options_gui): changed
+	"Create Path from Text" to "Path from Text".
+
 	* app/tools/gimpvectoroptions.c (gimp_vector_options_gui):
-	Changed "Create Selection from Path" to "Selection from Path".
+	changed "Create Selection from Path" to "Selection from Path".
 
 2007-10-16  Michael Natterer  <mitch@gimp.org>
 

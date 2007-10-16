@@ -488,7 +488,8 @@ gimp_text_options_gui (GimpToolOptions *tool_options)
   gimp_table_attach_stock (GTK_TABLE (table), row++,
                            GIMP_STOCK_LETTER_SPACING, spinbutton, 1, TRUE);
 
-  button = gtk_button_new_with_label (_("Create Path from Text"));
+  /*  Create a path from the current text  */
+  button = gtk_button_new_with_label (_("Path from Text"));
   gtk_box_pack_end (GTK_BOX (vbox), button, FALSE, FALSE, 0);
   gtk_widget_set_sensitive (button, FALSE);
   gtk_widget_show (button);
