@@ -2639,6 +2639,7 @@ gimp_prop_size_entry_new (GObject                   *config,
   gdouble     value;
   gdouble     lower;
   gdouble     upper;
+  gint        characters;
   GimpUnit    unit_value;
 
   param_spec = find_param_spec (config, property_name, G_STRFUNC);
@@ -2682,10 +2683,14 @@ gimp_prop_size_entry_new (GObject                   *config,
       show_percent    = FALSE;
     }
 
+  characters = log (MAX (fabs (lower), fabs (upper))) / log (10);
+
+  if (lower < 0.0)
+    characters += 1;
+
   entry = gimp_size_entry_new (1, unit_value, unit_format,
                                show_pixels, show_percent, FALSE,
-                               ceil (log (upper) / log (10) + 2),
-                               update_policy);
+                               characters, update_policy);
   gtk_table_set_col_spacing (GTK_TABLE (entry), 1, 4);
 
   set_param_spec (NULL,

@@ -1,5 +1,10 @@
 2007-10-17  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppropwidgets.c (gimp_prop_size_entry_new):
+	improved the calculation of the minimum size of the entry.
+
+2007-10-17  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppropwidgets.c: formatting.
 
 	* libgimpwidgets/gimpnumberpairentry.c: fixed formatting and a
