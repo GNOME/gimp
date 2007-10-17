@@ -229,7 +229,7 @@ static const GOptionEntry main_entries[] =
     N_("The procedure to process batch commands with"), "<proc>"
   },
   {
-    "console-messages", 0, 0,
+    "console-messages", 'c', 0,
     G_OPTION_ARG_NONE, &console_messages,
     N_("Send messages to console instead of using a dialog"), NULL
   },

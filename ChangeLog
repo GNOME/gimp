@@ -1,6 +1,7 @@
 2007-10-17  Sven Neumann  <sven@gimp.org>
 
-	* app/main.c: added back short version of --gimprc option.
+	* app/main.c: added back short versions of --gimprc option and
+	--console-messages command-line options.
 
 2007-10-17  Sven Neumann  <sven@gimp.org>
 
