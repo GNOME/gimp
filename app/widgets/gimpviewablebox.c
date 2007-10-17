@@ -187,8 +187,8 @@ gradient_box_new (GimpContainer *container,
                   GimpViewSize   view_size,
                   const gchar   *reverse_prop)
 {
-  GtkWidget    *hbox;
-  GtkWidget    *button;
+  GtkWidget *hbox;
+  GtkWidget *button;
 
   if (! container)
     container = context->gimp->gradient_factory->container;
@@ -213,12 +213,20 @@ gradient_box_new (GimpContainer *container,
     {
       GtkWidget *toggle;
       GtkWidget *view;
+      GtkWidget *image;
       gchar     *signal_name;
 
       toggle = gimp_prop_check_button_new (G_OBJECT (context), reverse_prop,
-                                           _("Reverse"));
+                                           NULL);
       gtk_box_pack_start (GTK_BOX (hbox), toggle, TRUE, TRUE, 0);
       gtk_widget_show (toggle);
+
+      gimp_help_set_help_data (toggle, _("Reverse"), NULL);
+
+      image = gtk_image_new_from_stock (GIMP_STOCK_FLIP_HORIZONTAL,
+                                        GTK_ICON_SIZE_BUTTON);
+      gtk_container_add (GTK_CONTAINER (toggle), image);
+      gtk_widget_show (image);
 
       view = GTK_BIN (button)->child;
 

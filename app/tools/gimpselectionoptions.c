@@ -390,35 +390,25 @@ gimp_selection_options_gui (GimpToolOptions *tool_options)
   if (g_type_is_a (tool_options->tool_info->tool_type,
                    GIMP_TYPE_REGION_SELECT_TOOL))
     {
-      GtkWidget *frame;
-      GtkWidget *vbox2;
       GtkWidget *table;
       GtkWidget *combo;
-
-      frame = gimp_frame_new (_("Finding Similar Colors"));
-      gtk_box_pack_start (GTK_BOX (vbox), frame, FALSE, FALSE, 0);
-      gtk_widget_show (frame);
-
-      vbox2 = gtk_vbox_new (FALSE, 0);
-      gtk_container_add (GTK_CONTAINER (frame), vbox2);
-      gtk_widget_show (vbox2);
 
       /*  the select transparent areas toggle  */
       button = gimp_prop_check_button_new (config, "select-transparent",
                                            _("Select transparent areas"));
-      gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
       /*  the sample merged toggle  */
       button = gimp_prop_check_button_new (config, "sample-merged",
                                            _("Sample merged"));
-      gtk_box_pack_start (GTK_BOX (vbox2), button, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), button, FALSE, FALSE, 0);
       gtk_widget_show (button);
 
       /*  the threshold scale  */
       table = gtk_table_new (2, 3, FALSE);
       gtk_table_set_col_spacings (GTK_TABLE (table), 2);
-      gtk_box_pack_start (GTK_BOX (vbox2), table, FALSE, FALSE, 0);
+      gtk_box_pack_start (GTK_BOX (vbox), table, FALSE, FALSE, 0);
       gtk_widget_show (table);
 
       gimp_prop_scale_entry_new (config, "threshold",
