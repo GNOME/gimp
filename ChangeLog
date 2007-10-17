@@ -1,5 +1,9 @@
 2007-10-17  Sven Neumann  <sven@gimp.org>
 
+	* app/main.c: added back short version of --gimprc option.
+
+2007-10-17  Sven Neumann  <sven@gimp.org>
+
 	* app/tools/gimpselectionoptions.c: removed a frame.
 
 	* app/tools/gimptransformoptions.c: tweaked layout to reduce

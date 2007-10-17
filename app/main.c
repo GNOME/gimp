@@ -209,7 +209,7 @@ static const GOptionEntry main_entries[] =
     N_("Use an alternate sessionrc file"), "<name>"
   },
   {
-    "gimprc", 0, 0,
+    "gimprc", 'g', 0,
     G_OPTION_ARG_FILENAME, &user_gimprc,
     N_("Use an alternate user gimprc file"), "<filename>"
   },
