@@ -16,7 +16,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-15 22:54+0200\n"
+"POT-Creation-Date: 2007-10-17 19:08+0200\n"
 "PO-Revision-Date: 2007-10-17 12:00+0200\n"
 "Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
@@ -4007,7 +4007,7 @@ msgstr "Eigenschaften des neuen Pfades"
 msgid "Path to Selection"
 msgstr "Auswahl aus Pfad"
 
-#: ../app/actions/vectors-commands.c:369 ../app/tools/gimpvectoroptions.c:198
+#: ../app/actions/vectors-commands.c:369 ../app/tools/gimpvectoroptions.c:199
 #: ../app/tools/gimpvectortool.c:1908 ../app/vectors/gimpvectors.c:199
 msgid "Stroke Path"
 msgstr "Pfad nachziehen"
@@ -8756,8 +8756,8 @@ msgid "Set a source image first."
 msgstr "Bitte wählen Sie zuerst ein Bild als Quelle."
 
 #: ../app/paint/paint-enums.c:51
-msgid "Modify Perspective Plane"
-msgstr "Fläche perspektivisch ändern"
+msgid "Modify Perspective"
+msgstr "Perspektive ändern"
 
 #: ../app/paint/paint-enums.c:82
 msgid "Aligned"
@@ -9167,8 +9167,8 @@ msgstr "_Ausrichten"
 #: ../app/tools/gimpaligntool.c:585
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr ""
-"Klicken Sie auf eine Ebene, einen Pfad oder eine Hilfslinie, "
-"oder klicken und ziehen Sie, um mehrere Ebenen auszuwählen"
+"Klicken Sie auf eine Ebene, einen Pfad oder eine Hilfslinie, oder klicken "
+"und ziehen Sie, um mehrere Ebenen auszuwählen"
 
 #: ../app/tools/gimpaligntool.c:594
 msgid "Click to pick this layer as first item"
@@ -9272,7 +9272,7 @@ msgstr "Max. Tiefe:"
 
 #: ../app/tools/gimpblendoptions.c:262
 #: ../app/tools/gimpbucketfilloptions.c:287
-#: ../app/tools/gimpselectionoptions.c:426
+#: ../app/tools/gimpselectionoptions.c:416
 msgid "Threshold:"
 msgstr "Schwelle:"
 
@@ -9362,7 +9362,6 @@ msgid "Fill similar colors"
 msgstr "Ähnliche Farben füllen"
 
 #: ../app/tools/gimpbucketfilloptions.c:253
-#: ../app/tools/gimpselectionoptions.c:398
 msgid "Finding Similar Colors"
 msgstr "Ähnliche Farben finden"
 
@@ -9373,7 +9372,7 @@ msgstr "Transparente Bereiche füllen"
 #: ../app/tools/gimpbucketfilloptions.c:275 ../app/tools/gimpclonetool.c:114
 #: ../app/tools/gimpcolorpickeroptions.c:160 ../app/tools/gimphealtool.c:99
 #: ../app/tools/gimpperspectiveclonetool.c:965
-#: ../app/tools/gimpselectionoptions.c:414
+#: ../app/tools/gimpselectionoptions.c:404
 msgid "Sample merged"
 msgstr "Vereinigung prüfen"
 
@@ -10086,7 +10085,7 @@ msgid "Adjustment"
 msgstr "Justierung"
 
 #: ../app/tools/gimpinkoptions-gui.c:68 ../app/tools/gimpinkoptions-gui.c:93
-#: ../app/tools/gimptextoptions.c:435
+#: ../app/tools/gimprectangleoptions.c:1019 ../app/tools/gimptextoptions.c:436
 msgid "Size:"
 msgstr "Größe:"
 
@@ -10521,42 +10520,28 @@ msgstr "Beim Verkleinern der Auswahl alle sichtbaren Ebenen verwenden"
 msgid "Current"
 msgstr "Aktuell"
 
-#: ../app/tools/gimprectangleoptions.c:796
+#: ../app/tools/gimprectangleoptions.c:853
 msgid "Expand from center"
 msgstr "Aus der Mitte aufziehen"
 
-#: ../app/tools/gimprectangleoptions.c:820
+#: ../app/tools/gimprectangleoptions.c:876
 msgid "Fixed:"
 msgstr "Fest:"
 
-#: ../app/tools/gimprectangleoptions.c:965
-msgid "X:"
-msgstr "X:"
+#: ../app/tools/gimprectangleoptions.c:1009
+msgid "Position:"
+msgstr "Position:"
 
-#: ../app/tools/gimprectangleoptions.c:978
-msgid "Y:"
-msgstr "Y:"
-
-#. Width
-#: ../app/tools/gimprectangleoptions.c:991
-msgid "W:"
-msgstr "B:"
-
-#. Height
-#: ../app/tools/gimprectangleoptions.c:1007
-msgid "H:"
-msgstr "H:"
-
-#: ../app/tools/gimprectangleoptions.c:1013
+#: ../app/tools/gimprectangleoptions.c:1027
 msgid "Highlight"
 msgstr "Hervorheben"
 
 #. Auto Shrink
-#: ../app/tools/gimprectangleoptions.c:1023
+#: ../app/tools/gimprectangleoptions.c:1037
 msgid "Auto Shrink"
 msgstr "Automatisch schrumpfen"
 
-#: ../app/tools/gimprectangleoptions.c:1030
+#: ../app/tools/gimprectangleoptions.c:1044
 msgid "Shrink merged"
 msgstr "Vereinigung mitschrumpfen"
 
@@ -10636,7 +10621,7 @@ msgstr "Auswahl vollständig transparenter Bereiche erlauben"
 msgid "Base selection on all visible layers"
 msgstr "Auswahl auf alle sichtbaren Bereiche stützen"
 
-#: ../app/tools/gimpselectionoptions.c:349 ../app/tools/gimptextoptions.c:456
+#: ../app/tools/gimpselectionoptions.c:349 ../app/tools/gimptextoptions.c:457
 msgid "Antialiasing"
 msgstr "Kanten glätten"
 
@@ -10645,14 +10630,14 @@ msgid "Feather edges"
 msgstr "Kanten ausblenden"
 
 #: ../app/tools/gimpselectionoptions.c:384
-msgid "Show interactive boundary"
-msgstr "Interaktive Begrenzung anzeigen"
+msgid "Interactive boundary"
+msgstr "Interaktive Umrandung"
 
-#: ../app/tools/gimpselectionoptions.c:408
+#: ../app/tools/gimpselectionoptions.c:398
 msgid "Select transparent areas"
 msgstr "Transparente Bereiche auswählen"
 
-#: ../app/tools/gimpselectionoptions.c:433
+#: ../app/tools/gimpselectionoptions.c:423
 msgid "Select by:"
 msgstr "Auswählen nach:"
 
@@ -10761,35 +10746,36 @@ msgstr "Zeilenabstand"
 msgid "Adjust letter spacing"
 msgstr "Zeichenabstand"
 
-#: ../app/tools/gimptextoptions.c:428
+#: ../app/tools/gimptextoptions.c:429
 msgid "Font:"
 msgstr "Schrift:"
 
-#: ../app/tools/gimptextoptions.c:440
+#: ../app/tools/gimptextoptions.c:441
 msgid "Hinting"
 msgstr "Hinting"
 
-#: ../app/tools/gimptextoptions.c:447
+#: ../app/tools/gimptextoptions.c:448
 msgid "Force auto-hinter"
 msgstr "Auto-Hinting erzwingen"
 
-#: ../app/tools/gimptextoptions.c:462
+#: ../app/tools/gimptextoptions.c:465
 msgid "Text Color"
 msgstr "Textfarbe"
 
-#: ../app/tools/gimptextoptions.c:467
+#: ../app/tools/gimptextoptions.c:470
 msgid "Color:"
 msgstr "Farbe:"
 
-#: ../app/tools/gimptextoptions.c:472
+#: ../app/tools/gimptextoptions.c:476
 msgid "Justify:"
 msgstr "Ausrichtung:"
 
-#: ../app/tools/gimptextoptions.c:491
-msgid "Create Path from Text"
-msgstr "Pfad aus Text erzeugen"
-
+#. Create a path from the current text
 #: ../app/tools/gimptextoptions.c:498
+msgid "Path from Text"
+msgstr "Pfad aus Text"
+
+#: ../app/tools/gimptextoptions.c:505
 msgid "Text along Path"
 msgstr "Text an Pfad"
 
@@ -10853,24 +10839,25 @@ msgstr "Transformation:"
 msgid "Direction"
 msgstr "Richtung"
 
-#: ../app/tools/gimptransformoptions.c:264
+#. the interpolation menu
+#: ../app/tools/gimptransformoptions.c:260
 msgid "Interpolation:"
 msgstr "Interpolation:"
 
-#: ../app/tools/gimptransformoptions.c:277
+#: ../app/tools/gimptransformoptions.c:273
 msgid "Clipping:"
 msgstr "Beschneidung:"
 
-#: ../app/tools/gimptransformoptions.c:295
+#: ../app/tools/gimptransformoptions.c:291
 msgid "Preview:"
 msgstr "Vorschau:"
 
-#: ../app/tools/gimptransformoptions.c:336
+#: ../app/tools/gimptransformoptions.c:332
 #, c-format
 msgid "15 degrees  (%s)"
 msgstr "15 Grad (%s)"
 
-#: ../app/tools/gimptransformoptions.c:340
+#: ../app/tools/gimptransformoptions.c:336
 #, c-format
 msgid "Keep aspect  (%s)"
 msgstr "Verhältnis beibehalten (%s)"
@@ -10912,9 +10899,10 @@ msgstr ""
 "%s abziehen\n"
 "%s schneiden"
 
-#: ../app/tools/gimpvectoroptions.c:188
-msgid "Create Selection from Path"
-msgstr "Auswahl aus Pfad erstellen"
+#. Create a selection from the current path
+#: ../app/tools/gimpvectoroptions.c:189
+msgid "Selection from Path"
+msgstr "Auswahl aus Pfad"
 
 #: ../app/tools/gimpvectortool.c:161
 msgid "Paths Tool: Create and edit paths"
@@ -11376,6 +11364,10 @@ msgstr "Farbindex:"
 #: ../app/widgets/gimpcolormapeditor.c:216
 msgid "HTML notation:"
 msgstr "HTML-Notation:"
+
+#: ../app/widgets/gimpcolorselectorpalette.c:59
+msgid "Palette"
+msgstr "Palette"
 
 #: ../app/widgets/gimpcontainerpopup.c:534
 msgid "Smaller Previews"
@@ -12304,15 +12296,15 @@ msgid "Open the gradient selection dialog"
 msgstr "Den Farbverlaufswahldialog öffnen"
 
 # CHECK
-#: ../app/widgets/gimpviewablebox.c:219
+#: ../app/widgets/gimpviewablebox.c:224
 msgid "Reverse"
 msgstr "Umkehren"
 
-#: ../app/widgets/gimpviewablebox.c:298
+#: ../app/widgets/gimpviewablebox.c:306
 msgid "Open the palette selection dialog"
 msgstr "Den Palettenauswahldialog öffnen"
 
-#: ../app/widgets/gimpviewablebox.c:356
+#: ../app/widgets/gimpviewablebox.c:364
 msgid "Open the font selection dialog"
 msgstr "Den Schriftauswahldialog öffnen"
 
