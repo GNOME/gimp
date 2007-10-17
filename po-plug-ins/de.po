@@ -4560,15 +4560,15 @@ msgstr "Das Bild unter Verwendung der Farben der aktiven Palette neu färben"
 
 #: ../plug-ins/common/gradmap.c:119
 msgid "_Palette Map"
-msgstr "_Palettenübersicht:"
+msgstr "Auf _Palette:"
 
 #: ../plug-ins/common/gradmap.c:162
 msgid "Gradient Map"
-msgstr "Farbverlaufsübersicht"
+msgstr "Auf Farbverlauf"
 
 #: ../plug-ins/common/gradmap.c:167
 msgid "Palette Map"
-msgstr "Palettenübersicht"
+msgstr "Auf Palette"
 
 #: ../plug-ins/common/grid.c:142
 msgid "Draw a grid on the image"

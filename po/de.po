@@ -17,7 +17,7 @@ msgstr ""
 "Project-Id-Version: de\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-15 22:54+0200\n"
-"PO-Revision-Date: 2007-10-15 22:53+0200\n"
+"PO-Revision-Date: 2007-10-17 12:00+0200\n"
 "Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
 "Language-Team: Deutsch <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
@@ -1362,7 +1362,7 @@ msgstr "Farbe in Graustufen umwandeln"
 
 #: ../app/actions/drawable-actions.c:51
 msgid "_Equalize"
-msgstr "Abgl_eichen"
+msgstr "_Abgleichen"
 
 #: ../app/actions/drawable-actions.c:52
 msgid "Automatic contrast enhancement"
@@ -1583,7 +1583,7 @@ msgstr "Ein neues Bild aus dem Inhalt der Zwischenablage erzeugen"
 
 #: ../app/actions/edit-actions.c:144
 msgid "_New Image"
-msgstr "_Neues Bild"
+msgstr "Neues _Bild"
 
 #: ../app/actions/edit-actions.c:150
 msgid "Cu_t Named..."
@@ -8712,7 +8712,7 @@ msgstr "Verknüpfen"
 
 #: ../app/paint/gimpdodgeburn.c:87
 msgid "Dodge/Burn"
-msgstr "Abwedeln / Nachbelichten"
+msgstr "Abwedeln/Nachbelichten"
 
 #: ../app/paint/gimperaser.c:62 ../app/tools/gimperasertool.c:66
 msgid "Eraser"
@@ -9167,36 +9167,32 @@ msgstr "_Ausrichten"
 #: ../app/tools/gimpaligntool.c:585
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr ""
+"Klicken Sie auf eine Ebene, einen Pfad oder eine Hilfslinie, "
+"oder klicken und ziehen Sie, um mehrere Ebenen auszuwählen"
 
 #: ../app/tools/gimpaligntool.c:594
-#, fuzzy
 msgid "Click to pick this layer as first item"
-msgstr "Klicken Sie zum Bearbeiten des Pfades"
+msgstr "Klicken Sie, um diese Ebene als erstes Objekt zu wählen"
 
 #: ../app/tools/gimpaligntool.c:602
-#, fuzzy
 msgid "Click to add this layer to the list"
-msgstr "Klicken Sie zum Hinzufügen einer Farbe zur Palette in ein Bild"
+msgstr "Klicken Sie, um diese Ebene zur Liste hinzuzufügen"
 
 #: ../app/tools/gimpaligntool.c:606
-#, fuzzy
 msgid "Click to pick this guide as first item"
-msgstr "Klicken Sie zum Bearbeiten des Pfades"
+msgstr "Klicken Sie, um diese Hilfslinie als erstes Objekt zu wählen"
 
 #: ../app/tools/gimpaligntool.c:614
-#, fuzzy
 msgid "Click to add this guide to the list"
-msgstr "Zum Aufhellen der Linie klicken"
+msgstr "Klicken Sie, um diese Hilfslinie zur Liste hinzuzufügen"
 
 #: ../app/tools/gimpaligntool.c:618
-#, fuzzy
 msgid "Click to pick this path as first item"
-msgstr "Klicken Sie zum Bearbeiten des Pfades"
+msgstr "Klicken Sie, um diesen Pfad zur Liste hinzuzufügen"
 
 #: ../app/tools/gimpaligntool.c:626
-#, fuzzy
 msgid "Click to add this path to the list"
-msgstr "Klicken Sie zum Bearbeiten des Pfades"
+msgstr "Klicken Sie, um diesen Pfad zur Liste hinzuzufügen"
 
 #: ../app/tools/gimpaligntool.c:764
 msgid "Relative to:"
@@ -9313,7 +9309,7 @@ msgstr "Helligkeit/Kontrast: Helligkeit und Kontrast anpassen"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:104
 msgid "B_rightness-Contrast..."
-msgstr "_Helligkeit/Kontrast …"
+msgstr "_Helligkeit / Kontrast …"
 
 #: ../app/tools/gimpbrightnesscontrasttool.c:124
 msgid "Adjust Brightness and Contrast"
@@ -10004,7 +10000,7 @@ msgstr "Histogrammskala"
 
 #: ../app/tools/gimphuesaturationtool.c:113
 msgid "Hue-Saturation Tool: Adjust hue, saturation, and lightness"
-msgstr "Farbton / Sättigung: Farbton, Sättigung und Helligkeit korrigieren"
+msgstr "Farbton/Sättigung: Farbton, Sättigung und Helligkeit korrigieren"
 
 #: ../app/tools/gimphuesaturationtool.c:114
 msgid "Hue-_Saturation..."
@@ -10161,7 +10157,7 @@ msgstr "Klicken Sie zum Hinzufügen eines Punktes zu diesem Segment"
 #: ../app/tools/gimpiscissorstool.c:958
 msgid "Click or press Enter to convert to a selection"
 msgstr ""
-"Drücken Sie die Eingabetaste oder klicken Sie um eine Auswahl zu erstellen"
+"Drücken Sie die Eingabetaste oder klicken Sie, um eine Auswahl zu erstellen"
 
 #: ../app/tools/gimpiscissorstool.c:968
 msgid "Press Enter to convert to a selection"
@@ -10169,7 +10165,7 @@ msgstr "Drücken Sie die Eingabetaste zum Umwandeln in eine Auswahl"
 
 #: ../app/tools/gimpiscissorstool.c:983
 msgid "Click or Click-Drag to add a point"
-msgstr "Klicken oder klicken und ziehen Sie um einen Punkt hinzuzufügen"
+msgstr "Klicken oder klicken und ziehen Sie, um einen Punkt hinzuzufügen"
 
 #: ../app/tools/gimplevelstool.c:158
 msgid "Levels Tool: Adjust color levels"
@@ -10286,7 +10282,7 @@ msgstr "Klicken Sie zum Platzieren einer vertikalen Hilfslinie"
 
 #: ../app/tools/gimpmeasuretool.c:591
 msgid "Click-Drag to add a new point"
-msgstr "Klicken und ziehen Sie um einen neuen Punkt hinzuzufügen"
+msgstr "Klicken und ziehen Sie, um einen neuen Punkt hinzuzufügen"
 
 #: ../app/tools/gimpmeasuretool.c:621
 msgid "Click-Drag to move all points"
@@ -10683,7 +10679,7 @@ msgstr "Klicken und ziehen Sie, um die aktuelle Auswahl zu schneiden"
 
 #: ../app/tools/gimpselectiontool.c:292
 msgid "Click-Drag to move the selection mask"
-msgstr "Klicken und ziehen Sie um die Auswahlmaske zu verschieben"
+msgstr "Klicken und ziehen Sie, um die Auswahlmaske zu verschieben"
 
 #: ../app/tools/gimpselectiontool.c:300
 msgid "Click-Drag to move the selected pixels"

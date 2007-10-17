@@ -1,3 +1,7 @@
+2007-10-17  Ulf-D. Ehlert  <ulfehlert@svn.gnome.org>
+
+	* de.po: Fixed German translation.
+
 2007-10-16  Michael Natterer  <mitch@gimp.org>
 
 	* POTFILES.skip: added app/widgets/gimpcolorselectorpalette.c
@@ -180,7 +184,7 @@
 
 2007-08-23 Joao S. O. Bueno Calligaris <gwidion@mpc.com.br>
 
-       * pt_BR.po: Major Brazilian Portuguese update from 2.2 to 2.4
+	* pt_BR.po: Major Brazilian Portuguese update from 2.2 to 2.4
 
 2007-08-22  Jakub Friedl <jfriedl@suse.cz>
 
