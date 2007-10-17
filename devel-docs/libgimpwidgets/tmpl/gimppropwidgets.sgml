@@ -314,6 +314,7 @@ GimpPropWidgets
 
 @config: 
 @property_name: 
+@property_is_pixel: 
 @unit_property_name: 
 @unit_format: 
 @update_policy: 

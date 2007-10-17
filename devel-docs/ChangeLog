@@ -1,3 +1,7 @@
+2007-10-17  Sven Neumann  <sven@gimp.org>
+
+	* libgimpwidgets/tmpl/gimppropwidgets.sgml: regenerated.
+
 2007-10-10  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/libgimpwidgets-sections.txt: updated.
