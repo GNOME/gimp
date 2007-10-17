@@ -596,8 +596,9 @@ gimp_number_pair_entry_get_values (GimpNumberPairEntry *entry,
  *
  * Since: GIMP 2.4
  */
-void gimp_number_pair_entry_set_default_text (GimpNumberPairEntry *entry,
-                                              const gchar         *string)
+void
+gimp_number_pair_entry_set_default_text (GimpNumberPairEntry *entry,
+                                         const gchar         *string)
 {
   GimpNumberPairEntryPrivate *priv;
 
@@ -616,14 +617,14 @@ void gimp_number_pair_entry_set_default_text (GimpNumberPairEntry *entry,
 /**
  * gimp_number_pair_entry_get_default_text:
  * @entry:  A #GimpNumberPairEntry widget.
- * @string: A string to be shown.
  *
  * Returns: the string manully set to be shown, or %NULL if values are
- * shown in a normal fashion.
+ *          shown in a normal fashion.
  *
  * Since: GIMP 2.4
  */
-const gchar * gimp_number_pair_entry_get_default_text (GimpNumberPairEntry *entry)
+const gchar *
+gimp_number_pair_entry_get_default_text (GimpNumberPairEntry *entry)
 {
   GimpNumberPairEntryPrivate *priv;
 
