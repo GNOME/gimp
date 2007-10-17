@@ -1,5 +1,10 @@
 2007-10-17  Sven Neumann  <sven@gimp.org>
 
+	* app/display/gimpdisplayshell-render.c (box_filter): sprinkled
+	some const qualifiers.
+
+2007-10-17  Sven Neumann  <sven@gimp.org>
+
 	* app/main.c: added back short versions of --gimprc option and
 	--console-messages command-line options.
 

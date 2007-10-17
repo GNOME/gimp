@@ -682,22 +682,21 @@ render_image_init_alpha (gint mult)
 }
 
 static inline void
-box_filter (guint          left_weight,
-            guint          center_weight,
-            guint          right_weight,
-            guint          top_weight,
-            guint          middle_weight,
-            guint          bottom_weight,
-            guint          sum,
+box_filter (const guint    left_weight,
+            const guint    center_weight,
+            const guint    right_weight,
+            const guint    top_weight,
+            const guint    middle_weight,
+            const guint    bottom_weight,
+            const guint    sum,
             const guchar **src,   /* the 9 surrounding source pixels */
             guchar        *dest,
-            gint           bpp)
+            const gint     bpp)
 {
   switch (bpp)
     {
       gint i;
 
-      guint a;
       case 4:
 #define ALPHA 3
         {
@@ -714,9 +713,9 @@ box_filter (guint          left_weight,
               (src[6][ALPHA] * bottom_weight) >> 8
             };
 
-          a = (center_weight * (factors[0] + factors[1] + factors[2]) +
-               right_weight  * (factors[3] + factors[4] + factors[5]) +
-               left_weight   * (factors[6] + factors[7] + factors[8]));
+          guint a = (center_weight * (factors[0] + factors[1] + factors[2]) +
+                     right_weight  * (factors[3] + factors[4] + factors[5]) +
+                     left_weight   * (factors[6] + factors[7] + factors[8]));
 
           dest[ALPHA] = a / sum;
 
@@ -760,9 +759,9 @@ box_filter (guint          left_weight,
               (src[6][ALPHA] * bottom_weight) >> 8
             };
 
-          a = (center_weight * (factors[0] + factors[1] + factors[2]) +
-               right_weight  * (factors[3] + factors[4] + factors[5]) +
-               left_weight   * (factors[6] + factors[7] + factors[8]));
+          guint a = (center_weight * (factors[0] + factors[1] + factors[2]) +
+                     right_weight  * (factors[3] + factors[4] + factors[5]) +
+                     left_weight   * (factors[6] + factors[7] + factors[8]));
 
           dest[ALPHA] = a / sum;
 
@@ -1026,12 +1025,14 @@ render_image_tile_fault (RenderInfo *info)
            src[5]=src[4];
            src[8]=src[7];
         }
+
       if (info->src_y + 1 >= source_height)
         {
            src[6]=src[3];
            src[7]=src[4];
            src[8]=src[5];
         }
+
       box_filter (left_weight, center_weight, right_weight,
                   top_weight, middle_weight, bottom_weight, info->footarea,
                   src, dest, bpp);
@@ -1475,6 +1476,7 @@ render_image_tile_fault_one_row (RenderInfo *info)
           src[5]=src[4];
           src[8]=src[7];
         }
+
       box_filter (left_weight, center_weight, right_weight,
                   top_weight, middle_weight, bottom_weight, info->footarea,
                   src, dest, bpp);
