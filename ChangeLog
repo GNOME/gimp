@@ -1,6 +1,8 @@
 2007-10-17  Sven Neumann  <sven@gimp.org>
 
-	* libgimpwidgets/gimpnumberpairentry.c: fixed formatting and
+	* libgimpwidgets/gimppropwidgets.c: formatting.
+
+	* libgimpwidgets/gimpnumberpairentry.c: fixed formatting and a
 	gtk-doc comment.
 
 2007-10-16  Michael Natterer  <mitch@gimp.org>
