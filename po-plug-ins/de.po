@@ -12,15 +12,16 @@
 # Jens Seidel <jseidel@cvs.gnome.org>, 2005.
 # Axel Wernicke <axel.wernicke@gmail.com>, 2007.
 # Hendrik Brandt <heb@gnome-de.org>, 2004, 2005, 2007.
+# Ulf-D. Ehlert <ulfehlert@svn.gnome.org>, 2007.
 # 
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp trunk\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-08 14:30+0200\n"
-"PO-Revision-Date: 2007-10-10 21:30+0200\n"
-"Last-Translator: Ulf-D. Ehlert <ulfehlert@svn.gnome.org>\n"
+"POT-Creation-Date: 2007-10-18 15:12+0200\n"
+"PO-Revision-Date: 2007-10-18 15:12+0200\n"
+"Last-Translator: Hendrik Brandt <heb@gnome-de.org>\n"
 "Language-Team: German <gnome-de@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -415,7 +416,7 @@ msgstr "Fraktalparameter speichern"
 #: ../plug-ins/fits/fits.c:345 ../plug-ins/flame/flame.c:411
 #: ../plug-ins/gfig/gfig.c:434 ../plug-ins/gfli/gfli.c:429
 #: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/gimphelplocale.c:193
-#: ../plug-ins/jpeg/jpeg-load.c:111 ../plug-ins/jpeg/jpeg-load.c:826
+#: ../plug-ins/jpeg/jpeg-load.c:111 ../plug-ins/jpeg/jpeg-load.c:821
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:271
 #: ../plug-ins/uri/uri-backend-libcurl.c:186 ../plug-ins/winicon/icoload.c:651
 #: ../plug-ins/winicon/icoload.c:728 ../plug-ins/xjt/xjt.c:2545
@@ -1227,8 +1228,8 @@ msgstr "Nicht unterstützte oder ungültige Bildhöhe: %d"
 #: ../plug-ins/common/tile.c:267 ../plug-ins/common/xbm.c:880
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:511
 #: ../plug-ins/gfig/gfig-dialog.c:1284
-#: ../plug-ins/gimpressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:254
-#: ../plug-ins/jpeg/jpeg-load.c:757 ../plug-ins/sgi/sgi.c:369
+#: ../plug-ins/gimpressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:249
+#: ../plug-ins/jpeg/jpeg-load.c:752 ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1155
 msgid "Background"
 msgstr "Hintergrund"
@@ -2538,44 +2539,44 @@ msgstr "Zwei Farben in der Farbtabelle vertauschen"
 msgid "_Swap Colors"
 msgstr "_Farben tauschen"
 
-#: ../plug-ins/common/colormap-remap.c:288
-#: ../plug-ins/common/colormap-remap.c:299
-#: ../plug-ins/common/colormap-remap.c:310
+#: ../plug-ins/common/colormap-remap.c:286
+#: ../plug-ins/common/colormap-remap.c:297
+#: ../plug-ins/common/colormap-remap.c:308
 msgid "Invalid remap array was passed to remap function"
 msgstr ""
 "Es wurde eine ungültige Liste an die Farbneuzordnungsfunktion übergeben"
 
-#: ../plug-ins/common/colormap-remap.c:334
+#: ../plug-ins/common/colormap-remap.c:332
 msgid "Rearranging the colormap"
 msgstr "Farbtabelle wird umsortiert"
 
-#: ../plug-ins/common/colormap-remap.c:483
+#: ../plug-ins/common/colormap-remap.c:481
 msgid "Sort on Hue"
 msgstr "Nach Farbton sortieren"
 
-#: ../plug-ins/common/colormap-remap.c:487
+#: ../plug-ins/common/colormap-remap.c:485
 msgid "Sort on Saturation"
 msgstr "Nach Sättigung sortieren"
 
 # XXX "Nach Helligkeit sortieren" (!?)
-#: ../plug-ins/common/colormap-remap.c:491
+#: ../plug-ins/common/colormap-remap.c:489
 msgid "Sort on Value"
 msgstr "Nach Wert sortieren"
 
-#: ../plug-ins/common/colormap-remap.c:495
+#: ../plug-ins/common/colormap-remap.c:493
 msgid "Reverse Order"
 msgstr "Reihenfolge umkehren"
 
 # ## XXX "Reihenfolge wiederherstellen" (!?)
-#: ../plug-ins/common/colormap-remap.c:499
+#: ../plug-ins/common/colormap-remap.c:497
 msgid "Reset Order"
 msgstr "Reihenfolge zurücksetzen"
 
-#: ../plug-ins/common/colormap-remap.c:598
+#: ../plug-ins/common/colormap-remap.c:596
 msgid "Rearrange Colormap"
 msgstr "Farbtabelle umsortieren"
 
-#: ../plug-ins/common/colormap-remap.c:701
+#: ../plug-ins/common/colormap-remap.c:699
 msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
@@ -4350,8 +4351,8 @@ msgid ""
 "The image you are trying to save as a GIF contains layers which extend "
 "beyond the actual borders of the image."
 msgstr ""
-"Das Bild, welches Sie versuchen als GIF abzuspeichern, enthält Ebenen, die über "
-"die derzeitigen Bildgrenzen hinausgehen."
+"Das Bild, welches Sie versuchen als GIF abzuspeichern, enthält Ebenen, die "
+"über die derzeitigen Bildgrenzen hinausgehen."
 
 #: ../plug-ins/common/gif-save.c:1192
 msgid ""
@@ -4504,7 +4505,8 @@ msgstr "Rang:"
 #: ../plug-ins/common/glasstile.c:124
 msgid "Simulate distortion caused by square glass tiles"
 msgstr ""
-"Optische Verzerrungen, die durch Glasbausteine hervorgerufen werden, simulieren"
+"Optische Verzerrungen, die durch Glasbausteine hervorgerufen werden, "
+"simulieren"
 
 #: ../plug-ins/common/glasstile.c:130
 msgid "_Glass Tile..."
@@ -11561,11 +11563,11 @@ msgstr "Den EXIF-Daten zufolge ist das Bild gedreht."
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Soll GIMP für Sie das Bild in die Standardausrichtung drehen?"
 
-#: ../plug-ins/jpeg/jpeg-load.c:246
+#: ../plug-ins/jpeg/jpeg-load.c:241
 msgid "JPEG preview"
 msgstr "JPEG-Vorschau"
 
-#: ../plug-ins/jpeg/jpeg-load.c:631 ../plug-ins/winicon/icoload.c:722
+#: ../plug-ins/jpeg/jpeg-load.c:626 ../plug-ins/winicon/icoload.c:722
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "Vorschau von »%s« wird geöffnet"
@@ -12110,6 +12112,10 @@ msgid ""
 msgstr ""
 "Agressives RLE\n"
 "(nicht unterstützt von SGI)"
+
+#: ../plug-ins/twain/twain.c:87
+msgid "Capture an image from a TWAIN datasource"
+msgstr "Ein Bild von einer TWAIN-Datenquelle holen"
 
 #: ../plug-ins/twain/twain.c:354
 msgid "_Scanner/Camera..."
