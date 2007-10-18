@@ -1,5 +1,11 @@
 2007-10-18  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimppropwidgets.c (gimp_prop_size_entry_new):
+	moved the calculation of the number of characters to a utility
+	function.
+
+2007-10-18  Sven Neumann  <sven@gimp.org>
+
 	* app/display/gimpdisplayshell-render.c (box_filter): fixed
 	calculation of the alpha value.
 

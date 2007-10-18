@@ -2597,6 +2597,8 @@ static void   gimp_prop_size_entry_notify      (GObject       *config,
 static void   gimp_prop_size_entry_notify_unit (GObject       *config,
                                                 GParamSpec    *param_spec,
                                                 GimpSizeEntry *entry);
+static gint   gimp_prop_size_entry_num_chars   (gdouble        lower,
+                                                gdouble        upper);
 
 
 /**
@@ -2639,7 +2641,6 @@ gimp_prop_size_entry_new (GObject                   *config,
   gdouble     value;
   gdouble     lower;
   gdouble     upper;
-  gint        characters;
   GimpUnit    unit_value;
 
   param_spec = find_param_spec (config, property_name, G_STRFUNC);
@@ -2683,14 +2684,10 @@ gimp_prop_size_entry_new (GObject                   *config,
       show_percent    = FALSE;
     }
 
-  characters = log (MAX (fabs (lower), fabs (upper))) / log (10);
-
-  if (lower < 0.0)
-    characters += 1;
-
   entry = gimp_size_entry_new (1, unit_value, unit_format,
                                show_pixels, show_percent, FALSE,
-                               characters, update_policy);
+                               gimp_prop_size_entry_num_chars (lower, upper),
+                               update_policy);
   gtk_table_set_col_spacing (GTK_TABLE (entry), 1, 4);
 
   set_param_spec (NULL,
@@ -2883,6 +2880,22 @@ gimp_prop_size_entry_notify_unit (GObject       *config,
                                          gimp_prop_size_entry_callback,
                                          config);
     }
+}
+
+static gint
+gimp_prop_size_entry_num_chars (gdouble lower,
+                                gdouble upper)
+{
+  gint lower_chars = log (fabs (lower)) / log (10);
+  gint upper_chars = log (fabs (upper)) / log (10);
+
+  if (lower < 0.0)
+    lower_chars++;
+
+  if (upper < 0.0)
+    upper_chars++;
+
+  return MAX (lower_chars, upper_chars);
 }
 
 
