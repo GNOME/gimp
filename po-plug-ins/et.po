@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: gimp-plug-ins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-25 22:07+0100\n"
-"PO-Revision-Date: 2007-10-01 00:40+0300\n"
+"PO-Revision-Date: 2007-10-11 12:11+0300\n"
 "Last-Translator: Olle Niit <olle@paalalinn.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -2185,11 +2185,11 @@ msgstr ""
 
 #: ../plug-ins/common/blur.c:134
 msgid "_Blur"
-msgstr ""
+msgstr "_Udu"
 
 #: ../plug-ins/common/blur.c:178 ../plug-ins/common/unsharp.c:441
 msgid "Blurring"
-msgstr ""
+msgstr "Udustamine"
 
 #: ../plug-ins/common/borderaverage.c:99
 msgid "Set foreground to the average color of the image border"
@@ -4081,7 +4081,7 @@ msgstr ""
 
 #: ../plug-ins/common/fractaltrace.c:742
 msgid "_White"
-msgstr ""
+msgstr "_Valge"
 
 #: ../plug-ins/common/fractaltrace.c:749
 msgid "Mandelbrot Parameters"
@@ -4089,94 +4089,94 @@ msgstr ""
 
 #: ../plug-ins/common/fractaltrace.c:760
 msgid "X_1:"
-msgstr ""
+msgstr "X_1:"
 
 #: ../plug-ins/common/fractaltrace.c:769
 msgid "X_2:"
-msgstr ""
+msgstr "X_2:"
 
 #: ../plug-ins/common/fractaltrace.c:778
 msgid "Y_1:"
-msgstr ""
+msgstr "Y_1:"
 
 #: ../plug-ins/common/fractaltrace.c:787
 msgid "Y_2:"
-msgstr ""
+msgstr "Y_2:"
 
 #: ../plug-ins/common/gauss.c:159
 msgid "Simplest, most commonly used way of blurring"
-msgstr ""
+msgstr "Lihtsaim, kõige tihedamalt kasutatav uduseks tegemise meetod"
 
 #: ../plug-ins/common/gauss.c:172
 msgid "_Gaussian Blur..."
-msgstr ""
+msgstr "_Gaussi udu..."
 
 #: ../plug-ins/common/gauss.c:179 ../plug-ins/common/gauss.c:199
 #: ../plug-ins/common/gauss.c:219 ../plug-ins/common/gauss.c:239
 msgid "Apply a gaussian blur"
-msgstr ""
+msgstr "Rakenda gaussi udu"
 
 #: ../plug-ins/common/gauss.c:428 ../plug-ins/common/gauss.c:476
 msgid "Gaussian Blur"
-msgstr ""
+msgstr "Gaussi udu"
 
 #. parameter settings
 #: ../plug-ins/common/gauss.c:506
 msgid "Blur Radius"
-msgstr ""
+msgstr "Udu raadius"
 
 #: ../plug-ins/common/gauss.c:520 ../plug-ins/common/jigsaw.c:2458
 #: ../plug-ins/common/spread.c:386
 msgid "_Horizontal:"
-msgstr ""
+msgstr "_Horisontaalne:"
 
 #: ../plug-ins/common/gauss.c:524 ../plug-ins/common/jigsaw.c:2475
 #: ../plug-ins/common/spread.c:390
 msgid "_Vertical:"
-msgstr ""
+msgstr "_Vertikaalne:"
 
 #: ../plug-ins/common/gauss.c:547
 msgid "Blur Method"
-msgstr ""
+msgstr "Udu meetod"
 
 #: ../plug-ins/common/gauss.c:551
 msgid "_IIR"
-msgstr ""
+msgstr "_IIR"
 
 #: ../plug-ins/common/gauss.c:552
 msgid "_RLE"
-msgstr ""
+msgstr "_RLE"
 
 #: ../plug-ins/common/gbr.c:152 ../plug-ins/common/gbr.c:173
 msgid "GIMP brush"
-msgstr ""
+msgstr "GIMPi pintsel"
 
 #: ../plug-ins/common/gbr.c:388 ../plug-ins/common/gbr.c:400
 msgid "Unsupported brush format"
-msgstr ""
+msgstr "Sellist pintsli formaati ei toetata"
 
 #: ../plug-ins/common/gbr.c:411
 #, c-format
 msgid "Error in GIMP brush file '%s'"
-msgstr ""
+msgstr "Viga GIMPi pintslifailis '%s'"
 
 #: ../plug-ins/common/gbr.c:419
 #, c-format
 msgid "Invalid UTF-8 string in brush file '%s'."
-msgstr ""
+msgstr "Vigane UTF-8 tekstilõik pintslifailis '%s'."
 
 #: ../plug-ins/common/gbr.c:425 ../plug-ins/common/gih.c:499
 #: ../plug-ins/common/gih.c:1158 ../plug-ins/gflare/gflare.c:2989
 msgid "Unnamed"
-msgstr ""
+msgstr "Nimetu"
 
 #: ../plug-ins/common/gbr.c:607
 msgid "GIMP brushes are either GRAYSCALE or RGBA"
-msgstr ""
+msgstr "GIMPi pintslid on kas HALLTOONIDES või RGBA formaadis"
 
 #: ../plug-ins/common/gbr.c:704
 msgid "Save as Brush"
-msgstr ""
+msgstr "Salvesta pintslina"
 
 #. attach labels
 #: ../plug-ins/common/gbr.c:731 ../plug-ins/common/grid.c:790
@@ -4190,7 +4190,7 @@ msgstr "Kirjeldus:"
 
 #: ../plug-ins/common/gee.c:99 ../plug-ins/common/gee_zoom.c:121
 msgid "A big hello from the GIMP team!"
-msgstr ""
+msgstr "Tere tulemast GIMPi meeskonna poolt!"
 
 #: ../plug-ins/common/gee.c:104 ../plug-ins/common/gee.c:160
 msgid "Gee Slime"
@@ -4267,7 +4267,7 @@ msgstr "GIF formaat toetab ainult 7bit ASCII kodeeringus kommentaare. Kommentaar
 #: ../plug-ins/common/gif-save.c:958
 msgid ""
 "Cannot save RGB color images. Convert to indexed color or grayscale first."
-msgstr ""
+msgstr "Ei saa salvestada RGB värvidega pilte. Teisenda enne indekseeritud värvidega või halltoonideks."
 
 #: ../plug-ins/common/gif-save.c:1135
 msgid "Delay inserted to prevent evil CPU-sucking animation."
@@ -4630,7 +4630,7 @@ msgstr ""
 #. HTML Table Options
 #: ../plug-ins/common/gtm.c:558
 msgid "Table Options"
-msgstr ""
+msgstr "Tabeli omadused"
 
 #: ../plug-ins/common/gtm.c:569
 msgid "_Border:"
@@ -4666,7 +4666,7 @@ msgstr ""
 
 #: ../plug-ins/common/guillotine.c:69
 msgid "Slice the image into subimages using guides"
-msgstr ""
+msgstr "Tükelda pilt abijoonte abil eraldi piltideks"
 
 #: ../plug-ins/common/guillotine.c:74
 msgid "_Guillotine"
@@ -4678,7 +4678,7 @@ msgstr "Giljotiin"
 
 #: ../plug-ins/common/header.c:77
 msgid "C source code header"
-msgstr ""
+msgstr "C lähtekoodi päis"
 
 #: ../plug-ins/common/hot.c:207
 msgid "Find and fix pixels that may be unsafely bright"
@@ -4718,23 +4718,23 @@ msgstr ""
 
 #: ../plug-ins/common/illusion.c:96
 msgid "_Illusion..."
-msgstr ""
+msgstr "_Illusioon..."
 
 #: ../plug-ins/common/illusion.c:168 ../plug-ins/common/illusion.c:389
 msgid "Illusion"
-msgstr ""
+msgstr "Illusioon"
 
 #: ../plug-ins/common/illusion.c:427
 msgid "_Divisions:"
-msgstr ""
+msgstr "_Jagamisi:"
 
 #: ../plug-ins/common/illusion.c:437
 msgid "Mode _1"
-msgstr ""
+msgstr "Režiim _1"
 
 #: ../plug-ins/common/illusion.c:452
 msgid "Mode _2"
-msgstr ""
+msgstr "Režiim _2"
 
 #: ../plug-ins/common/iwarp.c:262
 msgid "Use mouse control to warp image areas"
@@ -5281,7 +5281,7 @@ msgstr ""
 
 #: ../plug-ins/common/mblur.c:1033
 msgid "Blur Type"
-msgstr ""
+msgstr "Udu tüüp"
 
 #: ../plug-ins/common/mblur.c:1037
 msgid "_Linear"
@@ -5672,7 +5672,7 @@ msgstr "_Alfa:"
 
 #: ../plug-ins/common/noisify.c:144
 msgid "Distort colors by random amounts"
-msgstr ""
+msgstr "Moonuta värve juhuslikus ulatuses"
 
 #: ../plug-ins/common/noisify.c:154
 msgid "_RGB Noise..."
@@ -5979,7 +5979,7 @@ msgstr ""
 
 #: ../plug-ins/common/plugin-browser.c:134
 msgid "Display information about plug-ins"
-msgstr "Väita teavet pistikute kohta"
+msgstr "Näita teavet pistikute kohta"
 
 #: ../plug-ins/common/plugin-browser.c:144
 msgid "_Plug-In Browser"
@@ -5994,11 +5994,11 @@ msgstr "Nime järgi otsimine"
 msgid "%d plug-in"
 msgid_plural "%d plug-ins"
 msgstr[0] "%d pistik"
-msgstr[1] "%d pistikud"
+msgstr[1] "%d pistikut"
 
 #: ../plug-ins/common/plugin-browser.c:395
 msgid "No matches for your query"
-msgstr ""
+msgstr "Päringule pole ühtki vastavust"
 
 #: ../plug-ins/common/plugin-browser.c:398
 #, c-format
@@ -6021,9 +6021,8 @@ msgstr "Nimi"
 
 #: ../plug-ins/common/plugin-browser.c:605
 #: ../plug-ins/common/plugin-browser.c:668
-#, fuzzy
 msgid "Menu Path"
-msgstr "Menüü"
+msgstr "Menüü tee"
 
 #: ../plug-ins/common/plugin-browser.c:613
 #: ../plug-ins/common/plugin-browser.c:677
@@ -6451,11 +6450,11 @@ msgstr "_Millimeetrit"
 #. Format
 #: ../plug-ins/common/postscript.c:3441
 msgid "Output"
-msgstr ""
+msgstr "Väljund"
 
 #: ../plug-ins/common/postscript.c:3447
 msgid "_PostScript level 2"
-msgstr ""
+msgstr "_PostScript tase 2"
 
 #: ../plug-ins/common/postscript.c:3456
 msgid "_Encapsulated PostScript"
@@ -6471,15 +6470,15 @@ msgstr "Eelvaate _suurus:"
 
 #: ../plug-ins/common/procedure-browser.c:83
 msgid "List available procedures in the PDB"
-msgstr ""
+msgstr "Kättesaadavate protseduuride nimekiri PDB-s"
 
 #: ../plug-ins/common/procedure-browser.c:88
 msgid "Procedure _Browser"
-msgstr ""
+msgstr "P_rotseduuride sirvija"
 
 #: ../plug-ins/common/procedure-browser.c:126
 msgid "Procedure Browser"
-msgstr ""
+msgstr "Protseduuride sirvija"
 
 #: ../plug-ins/common/psd-load.c:526
 msgid "Invalid UTF-8 string in PSD file"
@@ -7012,11 +7011,11 @@ msgstr "Foto tehakse peale viivitust."
 #: ../plug-ins/common/screenshot.c:1010
 msgid ""
 "After the delay, drag your mouse to select the region for the screenshot."
-msgstr ""
+msgstr "Peale viivituse lõppu vali hiirega lohistades ala, mida soovid pildistada."
 
 #: ../plug-ins/common/screenshot.c:1013
 msgid "At the end of the delay, click in a window to snap it."
-msgstr ""
+msgstr "Peale viivituse lõppu klõpsa aknas, mida pildistada soovid."
 
 #. Area
 #: ../plug-ins/common/screenshot.c:1019
@@ -7063,7 +7062,7 @@ msgstr ""
 
 #: ../plug-ins/common/sel_gauss.c:273
 msgid "_Blur radius:"
-msgstr ""
+msgstr "Udu _raadius:"
 
 #: ../plug-ins/common/sel_gauss.c:283
 msgid "_Max. delta:"
@@ -7110,23 +7109,23 @@ msgstr ""
 
 #: ../plug-ins/common/shift.c:191
 msgid "Shifting"
-msgstr ""
+msgstr "Nihutamine"
 
 #: ../plug-ins/common/shift.c:357
 msgid "Shift"
-msgstr ""
+msgstr "Nihe"
 
 #: ../plug-ins/common/shift.c:388
 msgid "Shift _horizontally"
-msgstr ""
+msgstr "_Horizontaalne nihe"
 
 #: ../plug-ins/common/shift.c:391
 msgid "Shift _vertically"
-msgstr ""
+msgstr "_Vertikaalne nihe"
 
 #: ../plug-ins/common/shift.c:422
 msgid "Shift _amount:"
-msgstr ""
+msgstr "Hihke _suurus:"
 
 #: ../plug-ins/common/sinus.c:186
 msgid "Generate complex sinusoidal textures"
@@ -7134,11 +7133,11 @@ msgstr ""
 
 #: ../plug-ins/common/sinus.c:191
 msgid "_Sinus..."
-msgstr ""
+msgstr "_Siinus..."
 
 #: ../plug-ins/common/sinus.c:284
 msgid "Sinus: rendering"
-msgstr ""
+msgstr "Siinus: tekitamine"
 
 #. Create Main window with a vbox
 #. ==============================
@@ -7176,11 +7175,11 @@ msgstr ""
 
 #: ../plug-ins/common/sinus.c:763
 msgid "_Ideal"
-msgstr ""
+msgstr "_Ideaalne"
 
 #: ../plug-ins/common/sinus.c:764
 msgid "_Distorted"
-msgstr ""
+msgstr "Moonutatu_d"
 
 #: ../plug-ins/common/sinus.c:782 ../plug-ins/common/sinus.c:798
 #: ../plug-ins/imagemap/imap_preferences.c:422
@@ -8005,7 +8004,7 @@ msgstr ""
 
 #: ../plug-ins/common/tile.c:394
 msgid "Tile"
-msgstr ""
+msgstr "Klots"
 
 #: ../plug-ins/common/tile.c:415
 msgid "Tile to New Size"
@@ -8021,7 +8020,7 @@ msgstr ""
 
 #: ../plug-ins/common/tileit.c:220
 msgid "_Small Tiles..."
-msgstr ""
+msgstr "Väik_sed klotsid..."
 
 #: ../plug-ins/common/tileit.c:262
 msgid "Region selected for filter is empty."
@@ -8052,11 +8051,11 @@ msgstr ""
 
 #: ../plug-ins/common/tileit.c:495
 msgid "Ro_w:"
-msgstr ""
+msgstr "_Rida:"
 
 #: ../plug-ins/common/tileit.c:519
 msgid "Col_umn:"
-msgstr ""
+msgstr "_Veerg:"
 
 #: ../plug-ins/common/tileit.c:571
 msgid "O_pacity:"
@@ -8087,7 +8086,7 @@ msgstr "Salvestatud"
 msgid ""
 "A unit definition will only be saved before GIMP exits if this column is "
 "checked."
-msgstr ""
+msgstr "Mõõtühik salvestatakse enne GIMPi sulgemist ainult siis, kui see kontrollkast on märgitud."
 
 #: ../plug-ins/common/uniteditor.c:96
 msgid "ID"
@@ -8096,15 +8095,15 @@ msgstr "ID"
 #: ../plug-ins/common/uniteditor.c:96
 msgid ""
 "This string will be used to identify a unit in GIMP's configuration files."
-msgstr ""
+msgstr "Seda tekstilõiku kasutatakse mõõtühiku identifitseerimiseks GIMPi häälestusfailides."
 
 #: ../plug-ins/common/uniteditor.c:98
 msgid "Factor"
-msgstr ""
+msgstr "Faktor"
 
 #: ../plug-ins/common/uniteditor.c:98
 msgid "How many units make up an inch."
-msgstr ""
+msgstr "Mitu ühikut annab ühe tolli."
 
 #: ../plug-ins/common/uniteditor.c:99
 msgid "Digits"
@@ -8115,7 +8114,7 @@ msgid ""
 "This field is a hint for numerical input fields. It specifies how many "
 "decimal digits the input field should provide to get approximately the same "
 "accuracy as an \"inch\" input field with two decimal digits."
-msgstr ""
+msgstr "See väli on numbrilise sisendvälja vihje. Määrab ära, mitu komakohta peab sisendväljas olema, et saavutada sama tulemus, kui \"toll\" sisendväli kahe komakohaga."
 
 #: ../plug-ins/common/uniteditor.c:104
 msgid "Symbol"
@@ -8215,7 +8214,7 @@ msgstr "Mõõtühiku redaktor"
 
 #: ../plug-ins/common/unsharp.c:130
 msgid "The most widely useful method for sharpening an image"
-msgstr ""
+msgstr "Kõige rohkem kasutatav meetod pildi teravamaks tegemiseks"
 
 #: ../plug-ins/common/unsharp.c:140
 msgid "_Unsharp Mask..."
@@ -8296,11 +8295,11 @@ msgstr ""
 
 #: ../plug-ins/common/vinvert.c:104
 msgid "_Value Invert"
-msgstr ""
+msgstr "_Väärtuse pööramine"
 
 #: ../plug-ins/common/vinvert.c:191
 msgid "Value Invert"
-msgstr ""
+msgstr "Väärtuse pööramine"
 
 #: ../plug-ins/common/vpropagate.c:191
 msgid "More _white (larger value)"
@@ -10538,7 +10537,7 @@ msgstr "Redigeeri objekti"
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:147
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:251
 msgid "Use Gimp Guides"
-msgstr ""
+msgstr "Kasuta GIMPi abijooni"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:160
 msgid "Al_ternate"
@@ -10550,7 +10549,7 @@ msgstr "_Kõik"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:169
 msgid "Add Additional Guides"
-msgstr ""
+msgstr "Lisa veel abijooni"
 
 #: ../plug-ins/imagemap/imap_cmd_gimp_guides.c:177
 msgid "L_eft border"
