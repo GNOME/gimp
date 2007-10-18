@@ -286,7 +286,7 @@ gimp_core_config_class_init (GimpCoreConfigClass *klass)
                                    GIMP_CONFIG_PARAM_AGGREGATE);
   GIMP_CONFIG_INSTALL_PROP_INT (object_class, PROP_UNDO_LEVELS,
                                 "undo-levels", UNDO_LEVELS_BLURB,
-                                0, G_MAXINT, 5,
+                                0, 1 << 20, 5,
                                 GIMP_PARAM_STATIC_STRINGS |
                                 GIMP_CONFIG_PARAM_CONFIRM);
   GIMP_CONFIG_INSTALL_PROP_MEMSIZE (object_class, PROP_UNDO_SIZE,

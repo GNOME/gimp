@@ -1,5 +1,10 @@
 2007-10-18  Sven Neumann  <sven@gimp.org>
 
+	* libgimpwidgets/gimpmemsizeentry.c (gimp_memsize_entry_new):
+	seven digits are enough for a memsize entry.
+	
+2007-10-18  Sven Neumann  <sven@gimp.org>
+
 	* libgimpwidgets/gimppropwidgets.c (gimp_prop_size_entry_new):
 	moved the calculation of the number of characters to a utility
 	function.
