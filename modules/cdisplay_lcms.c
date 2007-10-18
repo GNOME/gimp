@@ -432,6 +432,36 @@ cdisplay_lcms_get_rgb_profile (CdisplayLcms *lcms)
   return profile;
 }
 
+static GdkScreen *
+cdisplay_lcms_get_screen (CdisplayLcms *lcms,
+                          gint         *monitor)
+{
+  GimpColorManaged *managed;
+  GdkScreen        *screen;
+
+  managed = gimp_color_display_get_managed (GIMP_COLOR_DISPLAY (lcms));
+
+  if (GTK_IS_WIDGET (managed))
+    screen = gtk_widget_get_screen (GTK_WIDGET (managed));
+  else
+    screen = gdk_screen_get_default ();
+
+  g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
+
+  if (GTK_IS_WIDGET (managed) && GTK_WIDGET_DRAWABLE (managed))
+    {
+      GtkWidget *widget = GTK_WIDGET (managed);
+
+      *monitor = gdk_screen_get_monitor_at_window (screen, widget->window);
+    }
+  else
+    {
+      *monitor = 0;
+    }
+
+  return screen;
+}
+
 static cmsHPROFILE
 cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
 {
@@ -440,34 +470,18 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
 
   config = gimp_color_display_get_config (GIMP_COLOR_DISPLAY (lcms));
 
-#if defined (GDK_WINDOWING_X11)
+#if defined GDK_WINDOWING_X11
   if (config->display_profile_from_gdk)
     {
-      GimpColorManaged *managed;
-      GdkScreen        *screen;
-      GdkAtom           type    = GDK_NONE;
-      gint              format  = 0;
-      gint              nitems  = 0;
-      gint              monitor = 0;
-      gchar            *atom_name;
-      guchar           *data    = NULL;
+      GdkScreen *screen;
+      GdkAtom    type    = GDK_NONE;
+      gint       format  = 0;
+      gint       nitems  = 0;
+      gint       monitor = 0;
+      gchar     *atom_name;
+      guchar    *data    = NULL;
 
-      managed = gimp_color_display_get_managed (GIMP_COLOR_DISPLAY (lcms));
-
-      if (GTK_IS_WIDGET (managed))
-        screen = gtk_widget_get_screen (GTK_WIDGET (managed));
-      else
-        screen = gdk_screen_get_default ();
-
-      g_return_val_if_fail (GDK_IS_SCREEN (screen), NULL);
-
-      if (GTK_IS_WIDGET (managed) &&
-          GTK_WIDGET_DRAWABLE (managed))
-        {
-          GtkWidget *widget = GTK_WIDGET (managed);
-
-          monitor = gdk_screen_get_monitor_at_window (screen, widget->window);
-        }
+      screen = cdisplay_lcms_get_screen (lcms, &monitor);
 
       if (monitor > 0)
         atom_name = g_strdup_printf ("_ICC_PROFILE_%d", monitor);
@@ -486,6 +500,13 @@ cdisplay_lcms_get_display_profile (CdisplayLcms *lcms)
 
       g_free (atom_name);
     }
+
+#elif defined GDK_WINDOWING_QUARTZ
+  if (config->display_profile_from_gdk)
+    {
+      /* FIXME: implement */
+    }
+
 #elif defined G_OS_WIN32
   if (config->display_profile_from_gdk)
     {
