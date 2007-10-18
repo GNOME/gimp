@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: gimp_et\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-07-21 04:20+0100\n"
-"PO-Revision-Date: 2007-10-01 01:16+0300\n"
+"PO-Revision-Date: 2007-10-15 02:10+0300\n"
 "Last-Translator: Olle Niit <olle@paalalinn.com>\n"
 "Language-Team: estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
@@ -114,7 +114,7 @@ msgstr "Ära näita käivitusakent."
 
 #: ../app/main.c:195
 msgid "Do not use shared memory between GIMP and plugins"
-msgstr "Ära kasuta GIMP'i ja pluginate vahel jagatud mälu."
+msgstr "Ära kasuta GIMP'i ja pistikute vahel jagatud mälu."
 
 #: ../app/main.c:200
 msgid "Do not use special CPU acceleration functions"
@@ -352,7 +352,7 @@ msgstr "Mustrid"
 
 #: ../app/actions/actions.c:177 ../app/dialogs/preferences-dialog.c:2602
 msgid "Plug-Ins"
-msgstr "Pluginad"
+msgstr "Pistikud"
 
 #: ../app/actions/actions.c:180 ../app/core/core-enums.c:858
 #: ../app/core/gimpchannel.c:363
@@ -1068,7 +1068,7 @@ msgstr "Vigade ko_nsool"
 
 #: ../app/actions/dialogs-actions.c:208
 msgid "Open the error console"
-msgstr "Ava veateatadete pult"
+msgstr "Ava veateadete pult"
 
 #: ../app/actions/dialogs-actions.c:218
 msgid "_Preferences"
@@ -1623,9 +1623,9 @@ msgid "_Redo %s"
 msgstr "Ko_rda %s"
 
 #: ../app/actions/edit-actions.c:291
-#, fuzzy, c-format
+#, c-format
 msgid "_Fade %s..."
-msgstr "Salvesta _kui..."
+msgstr "Labipaistev %s..."
 
 #: ../app/actions/edit-commands.c:133
 msgid "Clear Undo History"
@@ -2868,7 +2868,7 @@ msgstr "Lisa kihi alfakanal valikusse"
 
 #: ../app/actions/layers-actions.c:294
 msgid "Subtract the layer's alpha channel from the current selection"
-msgstr ""
+msgstr "Lahuta kihi alfakanal praegusest valikust"
 
 #: ../app/actions/layers-actions.c:300
 msgid "Intersect the layer's alpha channel with the current selection"
@@ -3242,7 +3242,7 @@ msgstr "_Korda viimast"
 
 #: ../app/actions/plug-in-actions.c:113
 msgid "Rerun the last used plug-in using the same settings"
-msgstr "Pane viimatikasutatud plugin samade väärtustega käima"
+msgstr "Pane viimatikasutatud pistik samade väärtustega käima"
 
 #: ../app/actions/plug-in-actions.c:118
 msgid "R_e-Show Last"
@@ -3250,7 +3250,7 @@ msgstr "_Näita viimast uuesti"
 
 #: ../app/actions/plug-in-actions.c:119
 msgid "Show the last used plug-in dialog again"
-msgstr "Näita uuesti viimatikasutatud plugina dialoogi"
+msgstr "Näita uuesti viimatikasutatud pistiku dialoogi"
 
 #: ../app/actions/plug-in-actions.c:491
 #, c-format
@@ -3370,7 +3370,7 @@ msgstr "_Pehmenda..."
 
 #: ../app/actions/select-actions.c:75
 msgid "Blur the selection border so that it fades out smoothly"
-msgstr ""
+msgstr "Udusta valiku piirjooni, et üleminek oleks sujuv"
 
 #: ../app/actions/select-actions.c:80
 msgid "_Sharpen"
@@ -3386,7 +3386,7 @@ msgstr "_Kahanda..."
 
 #: ../app/actions/select-actions.c:87
 msgid "Contract the selection"
-msgstr ""
+msgstr "Muuda valitud ala väiksemaks"
 
 #: ../app/actions/select-actions.c:92
 msgid "_Grow..."
@@ -3394,7 +3394,7 @@ msgstr "_Kasvata..."
 
 #: ../app/actions/select-actions.c:93
 msgid "Enlarge the selection"
-msgstr "Suurenda valitud ala"
+msgstr "Muuda valitud ala suuremaks"
 
 #: ../app/actions/select-actions.c:98
 msgid "Bo_rder..."
@@ -3983,7 +3983,7 @@ msgstr "_Mahuta laiuse järgi aknasse"
 
 #: ../app/actions/view-actions.c:88
 msgid "Adjust the zoom ratio so that the image becomes fully visible"
-msgstr ""
+msgstr "Reguleeri suurust, et pilt tuleks täielikult nähtavale"
 
 #: ../app/actions/view-actions.c:93
 msgid "Fit Image _to Window"
@@ -3991,7 +3991,7 @@ msgstr "Mahuta pilt _aknasse"
 
 #: ../app/actions/view-actions.c:94
 msgid "Adjust the zoom ratio so that the window is used optimally"
-msgstr ""
+msgstr "Reguleeri suurenduse suhet nii, et akent kasutataks optimaalselt"
 
 #: ../app/actions/view-actions.c:99 ../app/actions/view-actions.c:575
 msgid "Re_vert Zoom"
@@ -4047,7 +4047,7 @@ msgstr "Näita kihi _raami"
 
 #: ../app/actions/view-actions.c:147
 msgid "Draw a border around the active layer"
-msgstr ""
+msgstr "Joonista raam ümber aktiivse kihi"
 
 #: ../app/actions/view-actions.c:153
 msgid "Show _Guides"
@@ -4071,7 +4071,7 @@ msgstr "Näita näidispunkte"
 
 #: ../app/actions/view-actions.c:168
 msgid "Display the image's color sample points"
-msgstr ""
+msgstr "Näita pildi värvide näidispunkte"
 
 #: ../app/actions/view-actions.c:174
 msgid "Sn_ap to Guides"
@@ -4079,7 +4079,7 @@ msgstr "Na_psa abijoontele"
 
 #: ../app/actions/view-actions.c:175
 msgid "Tool operations snap to guides"
-msgstr ""
+msgstr "Kui tööriist satub abijoone lähedale, tõmmatakse ta abijoonele"
 
 #: ../app/actions/view-actions.c:181
 msgid "Sna_p to Grid"
@@ -4087,7 +4087,7 @@ msgstr "N_apsa ruudustikule"
 
 #: ../app/actions/view-actions.c:182
 msgid "Tool operations snap to the grid"
-msgstr ""
+msgstr "Kui tööriist satub ruudustiku lähedale, tõmmatakse ta ruudustikule"
 
 #: ../app/actions/view-actions.c:188
 msgid "Snap to _Canvas Edges"
@@ -4095,7 +4095,7 @@ msgstr "Na_psa lõuendi servadele"
 
 #: ../app/actions/view-actions.c:189
 msgid "Tool operations snap to the canvas edges"
-msgstr ""
+msgstr "Kui tööriist satub kanga serva lähedale, tõmmatakse ta kanga servale"
 
 #: ../app/actions/view-actions.c:195
 msgid "Snap t_o Active Path"
@@ -4259,7 +4259,7 @@ msgstr "_Nagu häälestuses kirjas"
 
 #: ../app/actions/view-actions.c:380
 msgid "Reset padding color to what's configured in preferences"
-msgstr ""
+msgstr "Taasta töölaua värv selliseks, nagu häälestustes kirjas on"
 
 #: ../app/actions/view-actions.c:567
 #, c-format
@@ -4494,7 +4494,7 @@ msgstr "Määrab ära kuidas näeb välja pildi ümber olev ala."
 
 #: ../app/config/gimprc-blurbs.h:33
 msgid "How to handle embedded color profiles when opening a file."
-msgstr ""
+msgstr "Mida teha kaasapandud värviprofiiliga faili avamisel?"
 
 #: ../app/config/gimprc-blurbs.h:36
 msgid "Ask for confirmation before closing an image without saving."
@@ -4506,7 +4506,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:42
 msgid "Sets the type of mouse pointers to use."
-msgstr ""
+msgstr "Seab kasutatava hiirekursori tüübi."
 
 #: ../app/config/gimprc-blurbs.h:45
 msgid ""
@@ -4555,7 +4555,7 @@ msgstr ""
 
 #: ../app/config/gimprc-blurbs.h:146
 msgid "Sets the browser used by the help system."
-msgstr ""
+msgstr "Seab veebileitseja, mida abisüsteem kasutab."
 
 #: ../app/config/gimprc-blurbs.h:154
 msgid "Sets the text to appear in image window status bars."
@@ -5766,7 +5766,7 @@ msgstr "Pintselda kanalit"
 
 #: ../app/core/gimpchannel.c:287
 msgid "Feather Channel"
-msgstr ""
+msgstr "Pehmenda kanalit"
 
 #: ../app/core/gimpchannel.c:288
 msgid "Sharpen Channel"
@@ -5841,7 +5841,7 @@ msgstr "%s koopia"
 
 #: ../app/core/gimpdatafactory.c:570
 msgid "You don't have a writable data folder configured."
-msgstr ""
+msgstr "Sul ei ole häälestatud kirjutamisõigustega andmete kausta."
 
 #: ../app/core/gimpdatafactory.c:731
 #, c-format
@@ -5951,7 +5951,7 @@ msgstr ""
 #: ../app/core/gimpgradient-load.c:241 ../app/core/gimpgradient-load.c:255
 #, c-format
 msgid "Gradient file '%s' is corrupt: Segments do not span the range 0-1."
-msgstr ""
+msgstr "Spektrikomplekti fail '%s' on katki: Lõigud pole vahemikus 0-1."
 
 #: ../app/core/gimpgradient-load.c:334
 #, c-format
@@ -5987,11 +5987,11 @@ msgstr "Ruudustiku joonte vertikaalne vahekaugus."
 #: ../app/core/gimpgrid.c:115
 msgid ""
 "Horizontal offset of the first grid line; this may be a negative number."
-msgstr ""
+msgstr "Ruudustiku esimese joone horisontaalne nihe; võib olla ka negatiivne arv."
 
 #: ../app/core/gimpgrid.c:122
 msgid "Vertical offset of the first grid line; this may be a negative number."
-msgstr ""
+msgstr "Ruudustiku esimese joone vertikaalne nihe; võib olla ka negatiivne arv."
 
 #: ../app/core/gimpimage-arrange.c:139
 msgid "Arrange Objects"
@@ -6584,7 +6584,7 @@ msgstr "pikslit"
 #. standard units
 #: ../app/core/gimpunit.c:59
 msgid "inch"
-msgstr "tolli"
+msgstr "toll"
 
 #: ../app/core/gimpunit.c:59
 msgid "inches"
@@ -6592,7 +6592,7 @@ msgstr "tolli"
 
 #: ../app/core/gimpunit.c:60
 msgid "millimeter"
-msgstr "millimeeterit"
+msgstr "millimeeter"
 
 #: ../app/core/gimpunit.c:60
 msgid "millimeters"
@@ -6601,7 +6601,7 @@ msgstr "millimeetrit"
 #. professional units
 #: ../app/core/gimpunit.c:63
 msgid "point"
-msgstr "punkti"
+msgstr "punkt"
 
 #: ../app/core/gimpunit.c:63
 msgid "points"
@@ -6609,7 +6609,7 @@ msgstr "punkti"
 
 #: ../app/core/gimpunit.c:64
 msgid "pica"
-msgstr "piikat"
+msgstr "piika"
 
 #: ../app/core/gimpunit.c:64
 msgid "picas"
@@ -6617,7 +6617,7 @@ msgstr "piikat"
 
 #: ../app/core/gimpunit.c:71
 msgid "percent"
-msgstr "protsenti"
+msgstr "protsent"
 
 #: ../app/core/gimpunit.c:71
 msgid "plural|percent"
@@ -6633,16 +6633,16 @@ msgstr "Külasta GIMP'i kodulehekülge"
 #: ../app/dialogs/about-dialog.c:134
 msgid "translator-credits"
 msgstr ""
-"Olle Niit <olle@paalalinn.ee>, 2005.\n"
+"Olle Niit <olle@paalalinn.ee>, 2005-2007.\n"
 "Priit Laes <amd@store20.com>, 2007."
 
 #: ../app/dialogs/about-dialog.c:533
 msgid "GIMP is brought to you by"
-msgstr ""
+msgstr "GIMPi tõid teieni"
 
 #: ../app/dialogs/about-dialog.c:607
 msgid "This is an unstable development release."
-msgstr ""
+msgstr "See on ebastabiilne arendusväljalase."
 
 #: ../app/dialogs/channel-options-dialog.c:145
 msgid "Channel _name:"
@@ -6654,11 +6654,11 @@ msgstr "Algväärtusta _valikust"
 
 #: ../app/dialogs/convert-dialog.c:125
 msgid "Indexed Color Conversion"
-msgstr ""
+msgstr "Indekseeritud värvideks teisendamine"
 
 #: ../app/dialogs/convert-dialog.c:128
 msgid "Convert Image to Indexed Colors"
-msgstr ""
+msgstr "Teisenda pilt indekseeritud värvidega pildiks"
 
 #: ../app/dialogs/convert-dialog.c:138
 msgid "C_onvert"
@@ -6922,17 +6922,17 @@ msgstr ""
 
 #: ../app/dialogs/image-scale-dialog.c:262
 msgid "Is this what you want to do?"
-msgstr ""
+msgstr "On see sinu kindel soov?"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:50
 msgid "Configure Keyboard Shortcuts"
-msgstr ""
+msgstr "Klaviatuuri kiirklahvide seadistamine"
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:81
 msgid ""
 "To edit a shortcut key, click on the corresponding row and type a new "
 "accelerator, or press backspace to clear."
-msgstr ""
+msgstr "Kiirklahvi muutmiseks klõpsa vastaval real ja sisesta uus kiirklahv. Kiirklahvi tühistamiseks vajuta BACKSPACE klahvi."
 
 #: ../app/dialogs/keyboard-shortcuts-dialog.c:89
 #: ../app/dialogs/preferences-dialog.c:1562
@@ -6941,7 +6941,7 @@ msgstr "_Salvesta GIMP'i sulgemisel klaviatuuri kiirklahvid"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:83
 msgid "Add a Mask to the Layer"
-msgstr ""
+msgstr "Lisa mask kihile"
 
 #: ../app/dialogs/layer-add-mask-dialog.c:110
 msgid "Initialize Layer Mask to:"
@@ -7857,11 +7857,11 @@ msgstr "Kirjatüüpide kausta valimine"
 
 #: ../app/dialogs/preferences-dialog.c:2602
 msgid "Plug-In Folders"
-msgstr "Pluginate kaustad"
+msgstr "Pistikute kaustad"
 
 #: ../app/dialogs/preferences-dialog.c:2604
 msgid "Select Plug-In Folders"
-msgstr "Pluginate kausta valimine"
+msgstr "Pistikute kausta valimine"
 
 #: ../app/dialogs/preferences-dialog.c:2606
 msgid "Scripts"
@@ -8167,18 +8167,16 @@ msgid "Image saved to '%s'"
 msgstr "Pilt salvestati '%s'"
 
 #: ../app/display/gimpdisplayshell.c:861
-#, fuzzy
 msgid "Access the image menu"
-msgstr "Pildi mõõtmete muutmine"
+msgstr "Juurdepääs pildi menüüle"
 
 #: ../app/display/gimpdisplayshell.c:970
 msgid "Zoom image when window size changes"
 msgstr "Akna suuruse muutmisel muuda ka pildi suurust"
 
 #: ../app/display/gimpdisplayshell.c:1020
-#, fuzzy
 msgid "Navigate the image display"
-msgstr "Tõsta selle pildi vaated"
+msgstr "Navigeeri kogu pildi ulatuses"
 
 #: ../app/display/gimpdisplayshell-close.c:125
 #: ../app/display/gimpdisplayshell-close.c:202
@@ -8319,12 +8317,12 @@ msgstr "Ei ole tavaline fail"
 #: ../app/file/file-open.c:172
 #, c-format
 msgid "%s plug-in returned SUCCESS but did not return an image"
-msgstr "%s plugin tagastas SUCCESS kuid ei tagastanud pilti"
+msgstr "%s pistik tagastas SUCCESS kuid ei tagastanud pilti"
 
 #: ../app/file/file-open.c:181
 #, c-format
 msgid "%s plug-In could not open image"
-msgstr "%s plugin ei suutnud pilti avada"
+msgstr "%s pistik ei suutnud pilti avada"
 
 #: ../app/file/file-open.c:461
 msgid "Image doesn't contain any layers"
@@ -8338,7 +8336,7 @@ msgstr "'%s' avamine ebaõnnestus: %s"
 #: ../app/file/file-save.c:193
 #, c-format
 msgid "%s plug-in could not save image"
-msgstr "%s plugin ei suutnud pilti salvestada"
+msgstr "%s pistik ei suutnud pilti salvestada"
 
 #: ../app/file/file-utils.c:74
 #, c-format
@@ -8612,15 +8610,14 @@ msgid ""
 "The dying plug-in may have messed up GIMP's internal state. You may want to "
 "save your images and restart GIMP to be on the safe side."
 msgstr ""
-"Plugin krahhis: \"%s\"\n"
+"Pistik jooksis kokku: \"%s\"\n"
 "(%s)\n"
 "\n"
-"On võimalik krahhinud plugin mõjutab ka GIMPi ennast. Igaks juhuks võiksid "
-"oma pildid salvestada ja GIMPi taaskäivitada."
+"On võimalik, et kokkujooksnud pistik mõjutab ka GIMPi ennast. Igaks juhuks võiksid oma pildid salvestada ja GIMPi taaskäivitada."
 
 #: ../app/plug-in/gimppluginmanager-restore.c:222
 msgid "Searching Plug-Ins"
-msgstr "Uute pluginate otsimine"
+msgstr "Uute pistikute otsimine"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:271
 msgid "Resource configuration"
@@ -8628,11 +8625,11 @@ msgstr "Ressursi häälestamine"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:307
 msgid "Querying new Plug-ins"
-msgstr "Uute pluginate otsimine"
+msgstr "Uute pistikute otsimine"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:357
 msgid "Initializing Plug-ins"
-msgstr "Pluginate käivitamine"
+msgstr "Pistikute käivitamine"
 
 #: ../app/plug-in/gimppluginmanager-restore.c:429
 msgid "Starting Extensions"
@@ -8640,11 +8637,11 @@ msgstr "Laienduste käivitamine"
 
 #: ../app/plug-in/gimppluginmanager.c:296
 msgid "Plug-In Interpreters"
-msgstr "Pluginate interpretaatorid"
+msgstr "Pistikute interpretaatorid"
 
 #: ../app/plug-in/gimppluginmanager.c:303
 msgid "Plug-In Environment"
-msgstr "Plugina töökeskkond"
+msgstr "Pistiku töökeskkond"
 
 #: ../app/plug-in/plug-in-icc-profile.c:103
 #: ../app/plug-in/plug-in-icc-profile.c:169
@@ -9000,7 +8997,7 @@ msgstr "Vali värvi järgi"
 
 #: ../app/tools/gimpbycolorselecttool.c:66
 msgid "Select by Color Tool: Select regions with similar colors"
-msgstr "Vali värvi järgi tööriist: Sarnase värvi aslusel alade valimine"
+msgstr "Vali värvi järgi tööriist: Sarnase värvi alusel alade valimine"
 
 #: ../app/tools/gimpbycolorselecttool.c:67
 msgid "_By Color Select"
@@ -9149,7 +9146,7 @@ msgstr "Värvivalija"
 
 #: ../app/tools/gimpcolorpickertool.c:97
 msgid "Color Picker Tool: Set colors from image pixels"
-msgstr "Vävi valimise tööriist: Vali pildilt värv"
+msgstr "Värvi valimise tööriist: Vali pildilt värv"
 
 #: ../app/tools/gimpcolorpickertool.c:98
 msgid "C_olor Picker"
@@ -9168,9 +9165,8 @@ msgid "Click in any image to pick the background color"
 msgstr "Taustavärvi valimiseks klõpsa suvalisel pildil"
 
 #: ../app/tools/gimpcolorpickertool.c:265
-#, fuzzy
 msgid "Click in any image to add the color to the palette"
-msgstr "Klõpsa pildil värvi lisamiseks värvipaletti"
+msgstr "Klõpsa suvalisel pildil värvi lisamiseks värvipaletti"
 
 #. tool->display->shell
 #: ../app/tools/gimpcolorpickertool.c:318
@@ -9195,7 +9191,7 @@ msgstr "Udustamine / Teravustamine"
 
 #: ../app/tools/gimpconvolvetool.c:74
 msgid "Blur / Sharpen Tool: Selective blurring or unblurring using a brush"
-msgstr ""
+msgstr "Udu / teravusta tööriist: Valikuline udustamine või teravustamine pintsliga"
 
 #: ../app/tools/gimpconvolvetool.c:75
 msgid "Bl_ur / Sharpen"
@@ -9243,7 +9239,7 @@ msgstr "Kärbi"
 
 #: ../app/tools/gimpcroptool.c:102
 msgid "Crop Tool: Remove edge areas from image or layer"
-msgstr ""
+msgstr "Kärpimise tööriist: Eemalda pildi või kihi servad"
 
 #: ../app/tools/gimpcroptool.c:103
 msgid "_Crop"
@@ -9440,7 +9436,7 @@ msgstr "Peegelda"
 #: ../app/tools/gimpfliptool.c:78
 msgid ""
 "Flip Tool: Reverse the layer, selection or path horizontally or vertically"
-msgstr ""
+msgstr "Peegeldamise tööriist: Peegelda kihti, valikut või vektorjoont horisontaalselt või vertikaalselt"
 
 #: ../app/tools/gimpfliptool.c:80
 msgid "_Flip"
@@ -9566,7 +9562,7 @@ msgstr "_Võlukepike"
 
 #: ../app/tools/gimphealtool.c:54
 msgid "Healing Tool: Heal image irregularities"
-msgstr ""
+msgstr "Parandamise tööriist: Pildi ebaühtluste tervendamine"
 
 #: ../app/tools/gimphealtool.c:55
 msgid "_Heal"
@@ -9709,7 +9705,7 @@ msgstr "Kuju"
 
 #: ../app/tools/gimpinktool.c:56
 msgid "Ink Tool: Calligraphy-style painting"
-msgstr ""
+msgstr "Tindi tööriist: kalligraafilises stiilis sulega kirjutamine"
 
 #: ../app/tools/gimpinktool.c:57
 msgid "In_k"
@@ -9742,9 +9738,8 @@ msgid "Click to close the curve"
 msgstr "Klõpsa kurvi sulgemiseks"
 
 #: ../app/tools/gimpiscissorstool.c:944
-#, fuzzy
 msgid "Click to add a point on this segment"
-msgstr "Klõpsa kontrollpunkti lisamiseks"
+msgstr "Klõpsa lõigule punkti lisamiseks"
 
 #: ../app/tools/gimpiscissorstool.c:958
 msgid "Click or press Enter to convert to a selection"
@@ -9755,9 +9750,8 @@ msgid "Press Enter to convert to a selection"
 msgstr "Vajuta Enterit er teisendada valikuks"
 
 #: ../app/tools/gimpiscissorstool.c:983
-#, fuzzy
 msgid "Click or Click-Drag to add a point"
-msgstr "Klõpsa kontrollpunkti lisamiseks"
+msgstr "Klõpsa või klõpsa-tõmba punkti lisamiseks"
 
 #: ../app/tools/gimplevelstool.c:158
 msgid "Levels Tool: Adjust color levels"
@@ -9872,14 +9866,12 @@ msgid "Click to place a vertical guide"
 msgstr "Klõpsa vertikaalse abijoone asetamiseks"
 
 #: ../app/tools/gimpmeasuretool.c:591
-#, fuzzy
 msgid "Click-Drag to add a new point"
-msgstr "Klõpsa kontrollpunkti lisamiseks"
+msgstr "Klõps-lohista uue punkti lisamiseks"
 
 #: ../app/tools/gimpmeasuretool.c:621
-#, fuzzy
 msgid "Click-Drag to move all points"
-msgstr "Klõpsa-lohista valitud pikslite liigutamiseks"
+msgstr "Klõpsa-lohista kõikide punktide liigutamiseks"
 
 #. tool->display->shell
 #: ../app/tools/gimpmeasuretool.c:980
@@ -10238,11 +10230,11 @@ msgstr "Valiku kriteerium:"
 
 #: ../app/tools/gimpselectiontool.c:251
 msgid "Click-Drag to replace the current selection"
-msgstr ""
+msgstr "Klõpsa-lohista olemasoleva valiku asendamiseks"
 
 #: ../app/tools/gimpselectiontool.c:259
 msgid "Click-Drag to create a new selection"
-msgstr "Klõpsa-lohista uue vektorjoone loomiseks."
+msgstr "Klõpsa-lohista uue vektorjoone loomiseks"
 
 #: ../app/tools/gimpselectiontool.c:264
 msgid "Click-Drag to add to the current selection"
@@ -10250,11 +10242,11 @@ msgstr "Klõpsa-lohista olemasolevale valikule lisamiseks"
 
 #: ../app/tools/gimpselectiontool.c:273
 msgid "Click-Drag to subtract from the current selection"
-msgstr ""
+msgstr "Klõpsa-lohista olemasolevast valikust lahutamiseks"
 
 #: ../app/tools/gimpselectiontool.c:282
 msgid "Click-Drag to intersect with the current selection"
-msgstr ""
+msgstr "Klõpsa-lohista olemasoleva valiku lõikamiseks"
 
 #: ../app/tools/gimpselectiontool.c:292
 msgid "Click-Drag to move the selection mask"
@@ -10315,13 +10307,13 @@ msgstr "Joone määrimiseks klõpsa"
 #: ../app/tools/gimptextoptions.c:114
 msgid ""
 "Hinting alters the font outline to produce a crisp bitmap at small sizes"
-msgstr ""
+msgstr "Vihjamine muudab väikese kirja puhul fondi välisjoone bittrastri krapsakamaks"
 
 #: ../app/tools/gimptextoptions.c:121
 msgid ""
 "If available, hints from the font are used but you may prefer to always use "
 "the automatic hinter"
-msgstr ""
+msgstr "Kui saadaval, kasutatakse fondi poolt antavaid vihjeid, aga sa võid ka alati kasutada automaatvihjet"
 
 #: ../app/tools/gimptextoptions.c:146
 msgid "Indentation of the first line"
@@ -10329,7 +10321,7 @@ msgstr "Esimese rea taandega alustamine"
 
 #: ../app/tools/gimptextoptions.c:152
 msgid "Adjust line spacing"
-msgstr "Muuda joonte vahekaugust"
+msgstr "Muuda ridade vahekaugust"
 
 #: ../app/tools/gimptextoptions.c:158
 msgid "Adjust letter spacing"
@@ -10341,11 +10333,11 @@ msgstr "Font:"
 
 #: ../app/tools/gimptextoptions.c:440
 msgid "Hinting"
-msgstr ""
+msgstr "Vihjamine"
 
 #: ../app/tools/gimptextoptions.c:447
 msgid "Force auto-hinter"
-msgstr ""
+msgstr "Automaatvihje sundimine"
 
 #: ../app/tools/gimptextoptions.c:462
 msgid "Text Color"
@@ -10369,7 +10361,7 @@ msgstr "Tekst mööda vektorjoont"
 
 #: ../app/tools/gimptexttool.c:142
 msgid "Text Tool: Create or edit text layers"
-msgstr ""
+msgstr "Teksti tööriist: Loo või redigeeri tekstikihte"
 
 #: ../app/tools/gimptexttool.c:143
 msgid "Te_xt"
@@ -10460,7 +10452,7 @@ msgstr "Pole vektorjoont, mida teisendada."
 
 #: ../app/tools/gimpvectoroptions.c:77
 msgid "Restrict editing to polygons"
-msgstr ""
+msgstr "Keela redigeerimist hulknurkseks"
 
 #: ../app/tools/gimpvectoroptions.c:156
 msgid "Edit Mode"
@@ -10468,7 +10460,7 @@ msgstr "Redigeerimisrežiim"
 
 #: ../app/tools/gimpvectoroptions.c:174
 msgid "Polygonal"
-msgstr ""
+msgstr "Hulknurkne"
 
 #: ../app/tools/gimpvectoroptions.c:178
 #, c-format
@@ -10560,17 +10552,16 @@ msgid "Click to create a new component of the path"
 msgstr "Klõpsa vektorjoone uue komponendi loomiseks"
 
 #: ../app/tools/gimpvectortool.c:1154
-#, fuzzy
 msgid "Click or Click-Drag to create a new anchor"
-msgstr "Klõpsa uue ankru loomiseks."
+msgstr "Klõpsa või klõpsa-lohista uue ankru loomiseks."
 
 #: ../app/tools/gimpvectortool.c:1163 ../app/tools/gimpvectortool.c:1170
 msgid "Click-Drag to move the anchor around"
-msgstr ""
+msgstr "Klõpsa-lohista ankru liigutamiseks"
 
 #: ../app/tools/gimpvectortool.c:1173 ../app/tools/gimpvectortool.c:1184
 msgid "Click-Drag to move the anchors around"
-msgstr ""
+msgstr "Klõpsa-lohista ankrute liigutamiseks"
 
 #: ../app/tools/gimpvectortool.c:1176
 msgid "Click-Drag to move the handle around"
@@ -10578,20 +10569,20 @@ msgstr ""
 
 #: ../app/tools/gimpvectortool.c:1189
 msgid "Click-Drag to change the shape of the curve"
-msgstr ""
+msgstr "Klõpsa-lohista kurvi kuju muutmiseks"
 
 #: ../app/tools/gimpvectortool.c:1192
 #, c-format
 msgid "%s: symmetrical"
-msgstr ""
+msgstr "%s: sümmeetriline"
 
 #: ../app/tools/gimpvectortool.c:1196
 msgid "Click-Drag to move the component around"
-msgstr ""
+msgstr "Klõpsa-lohista komponendi liigutamiseks"
 
 #: ../app/tools/gimpvectortool.c:1203
 msgid "Click-Drag to move the path around"
-msgstr ""
+msgstr "Klõpsa-lohista vektorjoone liigutamiseks"
 
 #: ../app/tools/gimpvectortool.c:1206
 msgid "Click-Drag to insert an anchor on the path"
@@ -10603,7 +10594,7 @@ msgstr "Klõpsa selle ankru kustutamiseks"
 
 #: ../app/tools/gimpvectortool.c:1216
 msgid "Click to connect this anchor with the selected endpoint"
-msgstr ""
+msgstr "Klõpsa ankru ühendamiseks valitud lõpp-punktiga"
 
 #: ../app/tools/gimpvectortool.c:1220
 msgid "Click to open up the path"
@@ -10619,7 +10610,7 @@ msgstr "Kustuta ankrud"
 
 #: ../app/tools/gimpvectortool.c:1902
 msgid "There is no active layer or channel to stroke to"
-msgstr ""
+msgstr "Ei ole aktiivset kihti või kanalit, kuhu pintseldada"
 
 #: ../app/tools/tools-enums.c:58
 msgid "No guides"
@@ -12117,11 +12108,11 @@ msgstr "Ei suutnud käivitada '%s': %s"
 
 #, fuzzy
 #~ msgid "Description:"
-#~ msgstr "Kirjeldus"
+#~ msgstr "Kirjeldus:"
 
 #, fuzzy
 #~ msgid "Info:"
-#~ msgstr "I_nfo"
+#~ msgstr "Info:"
 
 #~ msgid "(This console window will close in ten seconds)\n"
 #~ msgstr "(See konsooliaken sulgub 10 sekundi jooksul)\n"
