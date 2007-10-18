@@ -1,3 +1,8 @@
+2007-10-18  Sven Neumann  <sven@gimp.org>
+
+	* modules/colorsel_cmyk_lcms.c: ellipsize the profile label. If
+	possible, use the profile description as we do in other places.
+
 2007-10-18  Michael Natterer  <mitch@gimp.org>
 
 	* libgimpmodule/gimpmoduledb.c (gimp_module_db_module_initialize):

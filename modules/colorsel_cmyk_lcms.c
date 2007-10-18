@@ -221,9 +221,9 @@ colorsel_cmyk_init (ColorselCmyk *module)
 
   module->name_label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (module->name_label), 0.0, 0.5);
+  gtk_label_set_ellipsize (GTK_LABEL (module->name_label), PANGO_ELLIPSIZE_END);
   gimp_label_set_attributes (GTK_LABEL (module->name_label),
                              PANGO_ATTR_SCALE, PANGO_SCALE_SMALL,
-                             PANGO_ATTR_STYLE, PANGO_STYLE_ITALIC,
                              -1);
   gtk_box_pack_start (GTK_BOX (module), module->name_label, FALSE, FALSE, 0);
   gtk_widget_show (module->name_label);
@@ -403,9 +403,16 @@ colorsel_cmyk_config_changed (ColorselCmyk *module)
       ! (cmyk_profile = cmsOpenProfileFromFile (config->cmyk_profile, "r")))
     goto out;
 
-  name = cmsTakeProductName (cmyk_profile);
-  if (! g_utf8_validate (name, -1, NULL))
+  name = cmsTakeProductDesc (cmyk_profile);
+  if (name && ! g_utf8_validate (name, -1, NULL))
     name = _("(invalid UTF-8 string)");
+
+  if (! name)
+    {
+      name = cmsTakeProductName (cmyk_profile);
+      if (name && ! g_utf8_validate (name, -1, NULL))
+        name = _("(invalid UTF-8 string)");
+    }
 
   text = g_strdup_printf (_("Profile: %s"), name);
   gtk_label_set_text (GTK_LABEL (module->name_label), text);
