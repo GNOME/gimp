@@ -1,3 +1,8 @@
+2007-10-18  Sven Neumann  <sven@gimp.org>
+
+	* app/display/gimpdisplayshell-render.c (box_filter): fixed
+	calculation of the alpha value.
+
 2007-10-17  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c (box_filter): sprinkled

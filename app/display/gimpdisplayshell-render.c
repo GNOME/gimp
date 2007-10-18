@@ -47,10 +47,10 @@
 #include "gimpdisplayshell-filter.h"
 #include "gimpdisplayshell-render.h"
 
-#define GIMP_DISPLAY_ZOOM_FAST      1 << 0  /* use the fastest possible code
+#define GIMP_DISPLAY_ZOOM_FAST     (1 << 0) /* use the fastest possible code
                                                path trading quality for speed
                                              */
-#define GIMP_DISPLAY_ZOOM_PIXEL_AA  1 << 1  /* provide AA edges when zooming in
+#define GIMP_DISPLAY_ZOOM_PIXEL_AA (1 << 1) /* provide AA edges when zooming in
                                                on the actual pixels (in current
                                                code only enables it between
                                                100% and 200% zoom)
@@ -90,7 +90,6 @@ struct _RenderInfo
 
   gint              footprint_x;
   gint              footprint_y;
-  gint              footarea;
   gint              footshift_x;
   gint              footshift_y;
 
@@ -181,12 +180,12 @@ gimp_display_shell_render_setup_notify (GObject    *config,
 
 /*  Render Image functions  */
 
-static void           render_image_rgb_a        (RenderInfo *info);
-static void           render_image_gray_a       (RenderInfo *info);
+static void           render_image_rgb_a         (RenderInfo       *info);
+static void           render_image_gray_a        (RenderInfo       *info);
 
-static const guint  * render_image_init_alpha   (gint        mult);
+static const guint  * render_image_init_alpha    (gint              mult);
 
-static const guchar * render_image_tile_fault   (RenderInfo *info);
+static const guchar * render_image_tile_fault    (RenderInfo       *info);
 
 
 static void  gimp_display_shell_render_highlight (GimpDisplayShell *shell,
@@ -656,8 +655,6 @@ gimp_display_shell_render_info_scale (RenderInfo       *info,
       info->footprint_y <<= 1;
       info->footshift_y ++;
     }
-
-  info->footarea = info->footprint_x * info->footprint_y;
 }
 
 static const guint *
@@ -688,15 +685,15 @@ box_filter (const guint    left_weight,
             const guint    top_weight,
             const guint    middle_weight,
             const guint    bottom_weight,
-            const guint    sum,
             const guchar **src,   /* the 9 surrounding source pixels */
             guchar        *dest,
             const gint     bpp)
 {
+  const guint sum = ((left_weight + center_weight + right_weight) *
+                     (top_weight + middle_weight + bottom_weight)) >> 8;
+
   switch (bpp)
     {
-      gint i;
-
       case 4:
 #define ALPHA 3
         {
@@ -717,11 +714,11 @@ box_filter (const guint    left_weight,
                      right_weight  * (factors[3] + factors[4] + factors[5]) +
                      left_weight   * (factors[6] + factors[7] + factors[8]));
 
-          dest[ALPHA] = a / sum;
-
-          for (i = 0; i <= ALPHA; i++)
+          if (a)
             {
-              if (a)
+              gint i;
+
+              for (i = 0; i < ALPHA; i++)
                 {
                   dest[i] = ((center_weight * (factors[0] * src[1][i] +
                                                factors[1] * src[4][i] +
@@ -734,8 +731,14 @@ box_filter (const guint    left_weight,
                               left_weight   * (factors[6] * src[0][i] +
                                                factors[7] * src[3][i] +
                                                factors[8] * src[6][i])
-                             ) / a) & 0xff;
+                              ) / a) & 0xff;
                 }
+
+              dest[ALPHA] = a / sum;
+            }
+          else
+            {
+              dest[ALPHA] = 0;
             }
         }
 #undef ALPHA
@@ -743,8 +746,9 @@ box_filter (const guint    left_weight,
       case 2:
 #define ALPHA 1
 
-        /* NOTE: this is a copy and paste of the code above, the ALPHA changes
-         * the behavior in all needed ways. */
+        /* NOTE: this is a copy and paste of the code above, ALPHA changes
+         *       the behavior in all needed ways.
+         */
         {
           guint factors[9] =
             {
@@ -763,11 +767,11 @@ box_filter (const guint    left_weight,
                      right_weight  * (factors[3] + factors[4] + factors[5]) +
                      left_weight   * (factors[6] + factors[7] + factors[8]));
 
-          dest[ALPHA] = a / sum;
-
-          for (i = 0; i <= ALPHA; i++)
+          if (a)
             {
-              if (a)
+              gint i;
+
+              for (i = 0; i < ALPHA; i++)
                 {
                   dest[i] = ((center_weight * (factors[0] * src[1][i] +
                                                factors[1] * src[4][i] +
@@ -782,6 +786,12 @@ box_filter (const guint    left_weight,
                                                factors[8] * src[6][i])
                               ) / a) & 0xff;
                 }
+
+              dest[ALPHA] = a / sum;
+            }
+          else
+            {
+              dest[ALPHA] = 0;
             }
         }
 #undef ALPHA
@@ -1021,20 +1031,20 @@ render_image_tile_fault (RenderInfo *info)
 
       if (src_x + 1 >= source_width)
         {
-           src[2]=src[1];
-           src[5]=src[4];
-           src[8]=src[7];
+           src[2] = src[1];
+           src[5] = src[4];
+           src[8] = src[7];
         }
 
       if (info->src_y + 1 >= source_height)
         {
-           src[6]=src[3];
-           src[7]=src[4];
-           src[8]=src[5];
+           src[6] = src[3];
+           src[7] = src[4];
+           src[8] = src[5];
         }
 
       box_filter (left_weight, center_weight, right_weight,
-                  top_weight, middle_weight, bottom_weight, info->footarea,
+                  top_weight, middle_weight, bottom_weight,
                   src, dest, bpp);
 
       dest += bpp;
@@ -1472,13 +1482,13 @@ render_image_tile_fault_one_row (RenderInfo *info)
 
       if (src_x + 1 >= source_width)
         {
-          src[2]=src[1];
-          src[5]=src[4];
-          src[8]=src[7];
+          src[2] = src[1];
+          src[5] = src[4];
+          src[8] = src[7];
         }
 
       box_filter (left_weight, center_weight, right_weight,
-                  top_weight, middle_weight, bottom_weight, info->footarea,
+                  top_weight, middle_weight, bottom_weight,
                   src, dest, bpp);
 
       dest += bpp;
