@@ -1,4 +1,4 @@
-# translation of gimp-script-fu.HEAD.po to Punjabi
+# translation of gimp-script-fu.HEAD.po to
 # Copyright (C) 2004 THE gimp-script-fu'S COPYRIGHT HOLDER
 #
 #
@@ -6,14 +6,15 @@
 # Amanpreet Singh Alam <aalam@redhat.com>, 2004.
 # Amanpreet Singh Alam[ਆਲਮ] <amanpreetalam@yahoo.com>, 2005.
 # ASB <aalam@users.sf.net>, 2007.
+# A S Alam <apbrar@gmail.com>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-12 04:18+0100\n"
-"PO-Revision-Date: 2007-09-27 10:01+0530\n"
-"Last-Translator: ASB <aalam@users.sf.net>\n"
-"Language-Team: Punjabi <punjabi-l10n@lists.sf.net>\n"
+"POT-Creation-Date: 2007-09-27 05:35+0100\n"
+"PO-Revision-Date: 2007-10-18 09:28+0530\n"
+"Last-Translator: A S Alam <apbrar@gmail.com>\n"
+"Language-Team:  <pa@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -266,8 +267,8 @@ msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
 msgstr ""
-"ਤੁਸੀਂ ਸਕ੍ਰਿਪਟ-ਫੂ ਡਾਈਲਾਗ ਬਾਕਸ ਖੁੱਲ੍ਹਾ ਹੋਣ ਦੇ ਦੌਰਾਨ \"ਸਕ੍ਰਿਪਟਾਂ ਤਾਜ਼ਾ\" ਦੀ ਵਰਤੋਂ ਨਹੀਂ ਕਰ ਸਕਦੇ ਹੋ।  "
-"ਸਭ ਸਕ੍ਰਿਪਟ-ਫੂ ਵਿੰਡੋਜ਼ ਬੰਦ ਕਰਕੇ ਮੁੜ ਟਰਾਈ ਮਾਰੋ ਜੀ।"
+"ਤੁਸੀਂ ਸਕ੍ਰਿਪਟ-ਫੂ ਡਾਈਲਾਗ ਬਾਕਸ ਖੁੱਲ੍ਹਾ ਹੋਣ ਦੇ ਦੌਰਾਨ \"ਸਕ੍ਰਿਪਟਾਂ ਤਾਜ਼ਾ\" ਦੀ ਵਰਤੋਂ ਨਹੀਂ ਕਰ ਸਕਦੇ "
+"ਹੋ।  ਸਭ ਸਕ੍ਰਿਪਟ-ਫੂ ਵਿੰਡੋਜ਼ ਬੰਦ ਕਰਕੇ ਮੁੜ ਟਰਾਈ ਮਾਰੋ ਜੀ।"
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -692,7 +693,7 @@ msgstr "ਚੁਣੇ ਖੇਤਰ (ਜਾਂ ਐਲਫਾ) ਦੁਆਲੇ ਇ�
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:2
 msgid "Alien _Glow..."
-msgstr ""
+msgstr "ਗਲੋ ਉਲਟ(_G)..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-logo.scm.h:3
 msgid "Create a logo with an alien glow around the text"
@@ -708,7 +709,7 @@ msgstr "ਚੁਣੇ ਖੇਤਰ (ਜਾਂ ਐਲਫਾ) ਦੁਆਲੇ ਇ�
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:2
 msgid "Alien _Neon..."
-msgstr ""
+msgstr "ਨੀਆਨ ਉਲਟ(_N)..."
 
 #: ../plug-ins/script-fu/scripts/alien-neon-logo.scm.h:4
 msgid "Create a logo with psychedelic outlines around the text"
@@ -734,17 +735,13 @@ msgstr "ਸੰਨ੍ਹ ਦੀ ਚੌੜਾਈ"
 msgid ""
 "Add a gradient effect, a drop shadow, and a background to the selected "
 "region (or alpha)"
-msgstr ""
-"ਚੁਣੇ ਖੇਤਰ (ਜਾਂ ਐਲਫਾ) ਲਈ ਇੱਕ ਗਰੇਂਡੀਐਂਟ ਪਰਭਾਵ, ਇੱਕ ਡਰਾਪ ਛਾਂ, ਅਤੇ ਬੈਕਗਰਾਊਂਡ ਸ਼ਾਮਲ "
-"ਕਰੋ"
+msgstr "ਚੁਣੇ ਖੇਤਰ (ਜਾਂ ਐਲਫਾ) ਲਈ ਇੱਕ ਗਰੇਂਡੀਐਂਟ ਪਰਭਾਵ, ਇੱਕ ਡਰਾਪ ਛਾਂ, ਅਤੇ ਬੈਕਗਰਾਊਂਡ ਸ਼ਾਮਲ ਕਰੋ"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
 msgid ""
 "Create a plain text logo with a gradient effect, a drop shadow, and a "
 "background"
-msgstr ""
-"ਇੱਕ ਗਰੇਡੀਐਂਟ ਪਰਭਾਵ, ਇੱਕ ਡਰਾਪ ਛਾਂ ਅਤੇ ਇੱਕ ਬੈਕਗਰਾਊਂਡ ਨਾਲ ਇੱਕ ਪਲੇਨ "
-"ਟੈਕਸਟ ਲੋਗੋ ਬਣਾਓ"
+msgstr "ਇੱਕ ਗਰੇਡੀਐਂਟ ਪਰਭਾਵ, ਇੱਕ ਡਰਾਪ ਛਾਂ ਅਤੇ ਇੱਕ ਬੈਕਗਰਾਊਂਡ ਨਾਲ ਇੱਕ ਪਲੇਨ ਟੈਕਸਟ ਲੋਗੋ ਬਣਾਓ"
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
 msgid "_Basic I..."
@@ -863,7 +860,7 @@ msgstr "ਵੱਧੋ-ਵੱਧ ਧੱਬਾ ਰੇਡੀਅਸ"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
 msgid "_Blend..."
-msgstr ""
+msgstr "ਬਲੈਂਡ(_B)..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:1
 msgid ""
@@ -873,7 +870,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:3
 msgid "Blen_ded..."
-msgstr ""
+msgstr "ਬਲੈਂਡ(_d)..."
 
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:4
 msgid "Blend mode"
@@ -933,7 +930,7 @@ msgstr "ਬੈਕਗਰਾਊਂਡ ਰੰਗ"
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
 msgid "Bo_vination..."
-msgstr ""
+msgstr "ਬਉਵਾਇਨੇਸ਼ਨ(_v)..."
 
 #: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Create a logo with text in the style of 'cow spots'"
@@ -990,8 +987,8 @@ msgid ""
 "The Burn-In script needs two layers in total. A foreground layer with "
 "transparency and a background layer."
 msgstr ""
-"ਬਰਨ-ਇਨ ਸਕ੍ਰਿਪਟ ਲਈ ਕੁੱਲ ਦੋ ਲੇਅਰਾਂ ਦੀ ਲੋੜ ਹੈ। ਇੱਕ ਫਾਰ-ਗਰਾਊਂਡ ਲੇਅਰ ਟਰਾਂਸਪਰੇਸੀ "
-"ਨਾਲ ਅਤੇ ਅਤੇ ਇੱਕ ਬੈਕਗਰਾਊਂਡ ਲੇਅਰ।"
+"ਬਰਨ-ਇਨ ਸਕ੍ਰਿਪਟ ਲਈ ਕੁੱਲ ਦੋ ਲੇਅਰਾਂ ਦੀ ਲੋੜ ਹੈ। ਇੱਕ ਫਾਰ-ਗਰਾਊਂਡ ਲੇਅਰ ਟਰਾਂਸਪਰੇਸੀ ਨਾਲ ਅਤੇ ਅਤੇ ਇੱਕ "
+"ਬੈਕਗਰਾਊਂਡ ਲੇਅਰ।"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:1
 msgid "Color 1"
@@ -1012,7 +1009,7 @@ msgstr "ਇੱਕ ਕੰਮੂਫਲੈਗ (camouflage) ਪੈਟਰਨ ਨਾ�
 #: ../plug-ins/script-fu/scripts/camo.scm.h:6
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:6
 msgid "Granularity"
-msgstr ""
+msgstr "ਗਰੇਨੁਲਿਰਟੀ"
 
 #: ../plug-ins/script-fu/scripts/camo.scm.h:7
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:7
@@ -1166,7 +1163,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 msgid "C_hrome..."
-msgstr ""
+msgstr "ਕਰੋਮ(_h)..."
 
 #: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
 msgid "Create a simplistic, but cool, chromed logo"
@@ -1261,8 +1258,8 @@ msgid ""
 "Add a comic-book effect to the selected region (or alpha) by outlining and "
 "filling with a gradient"
 msgstr ""
-"ਇੱਕ ਚੁਣੇ ਖੇਤਰ (ਜਾਂ ਐਲਫ਼ਾ) ਵਿੱਚ ਆਉਟ-ਲਾਈਨ ਅਤੇ ਗਰੇਡੀਐਂਟ ਨਾਲ ਭਰਨ ਨਾਲ ਇੱਕ "
-"ਕਾਮਿਕਸ-ਬੁੱਕ ਪਰਭਾਵ ਸ਼ਾਮਲ ਕਰੋ।"
+"ਇੱਕ ਚੁਣੇ ਖੇਤਰ (ਜਾਂ ਐਲਫ਼ਾ) ਵਿੱਚ ਆਉਟ-ਲਾਈਨ ਅਤੇ ਗਰੇਡੀਐਂਟ ਨਾਲ ਭਰਨ ਨਾਲ ਇੱਕ ਕਾਮਿਕਸ-ਬੁੱਕ ਪਰਭਾਵ "
+"ਸ਼ਾਮਲ ਕਰੋ।"
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:3
 msgid "Comic Boo_k..."
@@ -1325,9 +1322,8 @@ msgid "Distress the selection"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:2
-#, fuzzy
 msgid "Granularity (1 is low)"
-msgstr "ਖੁਰਦਰਾਪਣ (1 ਘੱਟ ਹੈ)"
+msgstr "ਗਰੈਨੂਲਰਿਟੀ (1 ਘੱਟ ਹੈ)"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:4
 msgid "Smooth horizontally"
@@ -1472,7 +1468,7 @@ msgstr "ਸਕੇਲ Y"
 
 #: ../plug-ins/script-fu/scripts/flatland.scm.h:8
 msgid "_Flatland..."
-msgstr ""
+msgstr "ਫਲੈਟ-ਲੈਂਡ(_F)..."
 
 #: ../plug-ins/script-fu/scripts/font-map.scm.h:1
 msgid "Active colors"
@@ -1550,7 +1546,6 @@ msgid "Border size"
 msgstr "ਬਾਰਡਰ ਆਕਾਰ"
 
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:7
-#, fuzzy
 msgid "Granularity (1 is Low)"
 msgstr "ਖੁਰਦਰਾਪਣ (1 ਘੱਟ ਹੈ)"
 
@@ -1631,17 +1626,13 @@ msgstr "gimp.org ਵੈੱਬ-ਪੇਜ਼ ਥੀਮ ਦੀ ਵਰਤੋਂ ਕ�
 msgid ""
 "Create an image of a second level Tube Button Label using the gimp.org "
 "webpage theme"
-msgstr ""
-"gimp.org ਵੈੱਬ-ਪੇਜ਼ ਥੀਮ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਇੱਕ ਦੂਜਾ ਲੈਵਲ ਟਿਊਬ ਬਟਨ ਲੇਬਲ ਨਾਲ ਇੱਕ "
-"ਚਿੱਤਰ ਬਣਾਓ"
+msgstr "gimp.org ਵੈੱਬ-ਪੇਜ਼ ਥੀਮ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਇੱਕ ਦੂਜਾ ਲੈਵਲ ਟਿਊਬ ਬਟਨ ਲੇਬਲ ਨਾਲ ਇੱਕ ਚਿੱਤਰ ਬਣਾਓ"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
 msgid ""
 "Create an image of a third level Tube Button Label using the gimp.org "
 "webpage theme"
-msgstr ""
-"gimp.org ਵੈੱਬ-ਪੇਜ਼ ਥੀਮ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਇੱਕ ਤੀਜਾ ਲੈਵਲ ਟਿਊਬ ਬਟਨ ਲੇਬਲ ਨਾਲ ਇੱਕ "
-"ਚਿੱਤਰ ਬਣਾਓ"
+msgstr "gimp.org ਵੈੱਬ-ਪੇਜ਼ ਥੀਮ ਦੀ ਵਰਤੋਂ ਕਰਕੇ ਇੱਕ ਤੀਜਾ ਲੈਵਲ ਟਿਊਬ ਬਟਨ ਲੇਬਲ ਨਾਲ ਇੱਕ ਚਿੱਤਰ ਬਣਾਓ"
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
@@ -1740,7 +1731,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:3
 msgid "Bevel height (sharpness)"
-msgstr ""
+msgstr "ਬੀਵੀਲ ਉਚਾਈ (ਸ਼ਾਰਪਨੈਂਸ)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/t-o-p-logo.scm.h:4
@@ -1754,7 +1745,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
 msgid "Gradient Beve_l..."
-msgstr ""
+msgstr "ਗਰੇਡੀਐਂਟ ਬੀਵੀਲ(_l)..."
 
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:1
 msgid "Create an image filled with an example of the current gradient"
@@ -1769,9 +1760,7 @@ msgstr "ਕਸਟਮ ਗਰੇਡੀਐਂਟ(_G)..."
 msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
-msgstr ""
-"ਮੌਜੂਦਾ ਬੁਰਸ਼ ਦੀ ਵਰਤੋਂ ਕਰਕੇ X ਅਤੇ Y ਟਿਕਾਣੇ ਦੀ ਲਿਸਟਿੰਗ ਰਾਹੀਂ ਦਿੱਤੇ ਮੁਤਾਬਕ ਇੱਕ ਗਰਿੱਡ "
-"ਬਣਾਓ"
+msgstr "ਮੌਜੂਦਾ ਬੁਰਸ਼ ਦੀ ਵਰਤੋਂ ਕਰਕੇ X ਅਤੇ Y ਟਿਕਾਣੇ ਦੀ ਲਿਸਟਿੰਗ ਰਾਹੀਂ ਦਿੱਤੇ ਮੁਤਾਬਕ ਇੱਕ ਗਰਿੱਡ ਬਣਾਓ"
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:2
 msgid "X divisions"
@@ -2535,9 +2524,7 @@ msgstr "ਪਰਭਾਵ ਆਕਾਰ (ਪਿਕਸਲ * 30)"
 msgid ""
 "Fill the selected region (or alpha) with a starburst gradient and add a "
 "shadow"
-msgstr ""
-"ਚੁਣਿਆ ਖੇਤਰ (ਜਾਂ ਐਲਫਾ) ਇੱਕ ਸਟਾਰ-ਬਰੱਸਟ ਗਰੇਡੀਐਂਟ ਨਾਲ ਭਰੋ ਅਤੇ ਇੱਕ ਛਾਂ "
-"ਸ਼ਾਮਲ ਕਰੋ"
+msgstr "ਚੁਣਿਆ ਖੇਤਰ (ਜਾਂ ਐਲਫਾ) ਇੱਕ ਸਟਾਰ-ਬਰੱਸਟ ਗਰੇਡੀਐਂਟ ਨਾਲ ਭਰੋ ਅਤੇ ਇੱਕ ਛਾਂ ਸ਼ਾਮਲ ਕਰੋ"
 
 #: ../plug-ins/script-fu/scripts/starburst-logo.scm.h:8
 msgid "Starb_urst..."
@@ -2555,9 +2542,7 @@ msgstr "ਪਰਭਾਵ ਅਕਾਰ (ਪਿਕਸਲ *4)"
 msgid ""
 "Fill the selected region (or alpha) with a rock-like texture, a nova glow, "
 "and shadow"
-msgstr ""
-"ਚੁਣਿਆ ਖੇਤਰ (ਜਾਂ ਐਲਫਾ) ਇੱਕ ਰਾਕ-ਵਰਗੇ ਟੈਕਸਟ, ਇੱਕ ਨੋਵਾ ਗਲੋ ਅਤੇ ਛਾਂ ਨਾਲ "
-"ਭਰੋ"
+msgstr "ਚੁਣਿਆ ਖੇਤਰ (ਜਾਂ ਐਲਫਾ) ਇੱਕ ਰਾਕ-ਵਰਗੇ ਟੈਕਸਟ, ਇੱਕ ਨੋਵਾ ਗਲੋ ਅਤੇ ਛਾਂ ਨਾਲ ਭਰੋ"
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
 msgid "Sta_rscape..."
@@ -2645,15 +2630,13 @@ msgstr "ਹਾਈ-ਲਾਈਟ, ਛਾਂ ਅਤੇ ਮੋਸਨਿਕ ਬੈਕ
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:4
 msgid "Ending blend"
-msgstr ""
+msgstr "ਆਖਰੀ ਬਲੈਂਡ"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:5
 msgid ""
 "Fill the selected region (or alpha) with a texture and add highlights, "
 "shadows, and a mosaic background"
-msgstr ""
-"ਚੁਣਿਆ ਖੇਤਰ (ਜਾਂ ਐਲਫ਼ਾ) ਇੱਕ ਟੈਕਸਟ ਭਰੋ ਅਤੇ ਹਾਈ-ਲਾਈਟ, ਛਾਂ ਅਤੇ ਇੱਕ ਮੋਸਿਕ "
-"ਬੈਕਗਰਾਊਂਡ ਸ਼ਾਮਲ ਕਰੋ"
+msgstr "ਚੁਣਿਆ ਖੇਤਰ (ਜਾਂ ਐਲਫ਼ਾ) ਇੱਕ ਟੈਕਸਟ ਭਰੋ ਅਤੇ ਹਾਈ-ਲਾਈਟ, ਛਾਂ ਅਤੇ ਇੱਕ ਮੋਸਿਕ ਬੈਕਗਰਾਊਂਡ ਸ਼ਾਮਲ ਕਰੋ"
 
 #: ../plug-ins/script-fu/scripts/textured-logo.scm.h:8
 msgid "Hexagons"
@@ -2688,9 +2671,8 @@ msgid "Blur horizontally"
 msgstr "ਧੱਬਾ ਹਾਰੀਜ਼ਟਲ"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:2
-#, fuzzy
 msgid "Blur the edges of an image so the result tiles seamlessly"
-msgstr "ਇੱਕ ਚਿੱਤਰ ਦੇ ਕੋਨੇ ਉੱਤੇ ਧੱਬੇ, ਤਾਂ ਕਿ ਨਤੀਜਾ ਟ"
+msgstr "ਟ"
 
 #: ../plug-ins/script-fu/scripts/tileblur.scm.h:3
 msgid "Blur type"
@@ -2767,8 +2749,8 @@ msgid ""
 "Create a new layer filled with a weave effect to be used as an overlay or "
 "bump map"
 msgstr ""
-"ਇੱਕ ਨਵੀਂ ਲੇਅਰ ਇੱਕ ਤਰੰਗ (ਵੇਵ) ਪਰਭਾਵ ਨਾਲ ਬਣਾਓ, ਜੋ ਕਿ ਇੱਕ ਓਵਰ-ਲੇਅ ਜਾਂ "
-"ਬੰਪ ਮੈਪ ਵਾਂਗ ਵਰਤਿਆ ਜਾ ਸਕੇ।"
+"ਇੱਕ ਨਵੀਂ ਲੇਅਰ ਇੱਕ ਤਰੰਗ (ਵੇਵ) ਪਰਭਾਵ ਨਾਲ ਬਣਾਓ, ਜੋ ਕਿ ਇੱਕ ਓਵਰ-ਲੇਅ ਜਾਂ ਬੰਪ ਮੈਪ ਵਾਂਗ ਵਰਤਿਆ ਜਾ "
+"ਸਕੇ।"
 
 #: ../plug-ins/script-fu/scripts/weave.scm.h:2
 msgid "Ribbon spacing"
