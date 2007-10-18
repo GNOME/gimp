@@ -1,5 +1,9 @@
 2007-10-18  Sven Neumann  <sven@gimp.org>
 
+	* app/config/gimpcoreconfig.c: lower the upper limit for
+	"undo-levels", mainly for getting a smaller entry in the
+	Preferences dialog.
+
 	* libgimpwidgets/gimpmemsizeentry.c (gimp_memsize_entry_new):
 	seven digits are enough for a memsize entry.
 	
