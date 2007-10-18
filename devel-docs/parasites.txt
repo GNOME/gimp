@@ -1,12 +1,12 @@
 
-PARASITE REGISTRY - 1999-05-31
+PARASITE REGISTRY - 2007-10-18
 =================
 
 This document is designed for the convenience of GIMP developers.
 It does not need to concern users.
 
 >>>> If your plugin or script writes parasites, please
->>>> amend this file in CVS or submit patches to
+>>>> amend this file in SVN or submit patches to
 >>>> gimp-developer@scam.xcf.berkeley.edu
 
 
@@ -27,10 +27,34 @@ Global data follows no strict rules.
 
 "tiff"    : The standard GIMP TIFF plugin
 "jpeg"    : The standard GIMP JPEG plugin
+"png"     : The standard GIMP PNG plugin
 "gimp"    : For common and standard parasites
 
 ------------------------------------------------------------------
-*** KNOWN PARASITES:
+*** KNOWN GLOBAL PARASITES:
+
+"jpeg-save-defaults" (GLOBAL, PERSISTENT)
+        Default save parameters used by the JPEG plug-in.
+
+"png-save-defaults" (GLOBAL, PERSISTENT)
+        Default save parameters used by the PNG plug-in.
+
+"<plug-in>/_fu_data" (GLOBAL, IMAGE, DRAWABLE, PERSISTENT)
+        The Gimp::Fu module (Perl) might store the arguments of the
+        last plug-in invocation. It is usually attached to images,
+        but might also be found globally. The data format is either
+        pure character data (Data::Dumper) or a serialized data
+        stream created by Storable::nfreeze.
+
+"exif-orientation-rotate" (GLOBAL, PERSISTENT)
+        Whether a load plug-in should automatically rotate the image
+        according to the orientation specified in the EXIF data. This
+        has values "yes" or "no". If the parasite is not set, the
+        plug-in should ask the user what to do. This parasite may be
+        removed in a future version (assuming always yes).
+
+------------------------------------------------------------------
+*** KNOWN IMAGE PARASITES:
 
 "gimp-comment" (IMAGE, PERSISTENT)
         Standard GIF-style image comments.  This parasite should be
@@ -95,20 +119,13 @@ Global data follows no strict rules.
         saving .pat files. A trailing \0 might be included and is not
         part of the name.
 
-"gimp-text-layer" (LAYER, PERSISTENT)
-        The associated GimpText object serialized to a string. For
-        convenience the string is terminated by a trailing '\0'.
-        The idea of using a parasite for text layers is to keep the XCF
-        files backward compatible. Although gimp-1.2 doesn't know how
-        to handle the text layer, it keeps the parasite intact.
-
 "tiff-save-options" (IMAGE)
         The TiffSaveVals structure from the TIFF plugin.
 
 "jpeg-save-options" (IMAGE)
         The JpegSaveVals structure from the JPEG plugin.
 
-"jpeg-exif-data" (IMAGE)
+"jpeg-exif-data" (IMAGE) (deprecated)
         The ExifData structure serialized into a uchar* blob from
         libexif. This is deprecated in favor of "exif-data".
 
@@ -117,12 +134,6 @@ Global data follows no strict rules.
 	color space, component subsampling and quantization tables.
 	These can be reused when saving the image in order to minimize
 	quantization losses and keep the same size/quality ratio.
-
-"jpeg-save-defaults" (GLOBAL, PERSISTENT)
-        Default save parameters used by the JPEG plug-in.
-
-"png-save-defaults" (GLOBAL, PERSISTENT)
-        Default save parameters used by the PNG plug-in.
 
 "gamma" (IMAGE, PERSISTENT)
 	The original gamma this image was created/saved. For JPEG; this is
@@ -150,13 +161,6 @@ Global data follows no strict rules.
         2 - saturation-preserving	(e.g. for business charts)
         3 - absolute colorimetric
 
-"<plug-in>/_fu_data" (GLOBAL, IMAGE, DRAWABLE, PERSISTENT)
-        The Gimp::Fu module might store the arguments of the last plug-in
-        invocation. It is usually attached to images, but might also
-        be found globally. The data format is either pure character
-        data (Data::Dumper) or a serialized data stream created by
-        Storable::nfreeze.
-
 "hot-spot" (IMAGE, PERSISTENT)
 	Use this parasite to store an image's "hot spot". Currently
 	used by the XBM plugin to store mouse cursor hot spots.
@@ -167,13 +171,6 @@ Global data follows no strict rules.
         The ExifData structure serialized into a character array by
         libexif (using exif_data_save_data). If a "gimp-metadata"
         parasite is present, it should take precedence over this one.
-
-"exif-orientation-rotate" (GLOBAL, PERSISTENT)
-        Whether a load plug-in should automatically rotate the image
-        according to the orientation specified in the EXIF data. This
-        has values "yes" or "no". If the parasite is not set, the
-        plug-in should ask the user what to do. This parasite may be
-        removed in a future version (assuming always yes).
 
 "gimp-metadata" (IMAGE, PERSISTENT)
 	The metadata associated with the image, serialized as one XMP
@@ -204,6 +201,16 @@ Global data follows no strict rules.
         "source=2 type=RGBA 4 5 6 7".  This means that layer 2 was
         decomposed in RGBA mode, giving rise to layers 4, 5, 6, and 7.
 
+------------------------------------------------------------------
+*** KNOWN LAYER/DRAWABLE PARASITES:
+
+"gimp-text-layer" (LAYER, PERSISTENT)
+        The associated GimpText object serialized to a string. For
+        convenience the string is terminated by a trailing '\0'.
+        The idea of using a parasite for text layers is to keep the XCF
+        files backward compatible. Although gimp-1.2 doesn't know how
+        to handle the text layer, it keeps the parasite intact.
+
 "gfig" (LAYER, PERSISTENT)
         As of GIMP 2.2, the gfig plug-in creates its own layers, and
         stores a representation of the figure as a layer parasite.
@@ -213,7 +220,6 @@ Global data follows no strict rules.
 
 
 ------------------------------------------------------------------
-
 *** PARASITE FORMAT:
 
 The parasite data format is not rigidly specified. For non-persistant
@@ -256,7 +262,7 @@ non-persistant data might be fine as well):
 
   NOTE: libgimp/gserialize.[ch] has been excluded from the build since
         gimp-1.2. This decision was made since noone seemed to use it so
-        far. The files can still be pulled out of CVS, so if you decide
+        far. The files can still be pulled out of SVN, so if you decide
         to use them, you will have to include a copy into your plugin
         source or resurrect the functionality in libgimp.
 

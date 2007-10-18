@@ -1,3 +1,8 @@
+2007-10-18  Raphaël Quinet  <raphael@gimp.org>
+
+	* parasites.txt: updated, re-ordered the list to have first the
+	global parasites, then image parasites, then layer parasites.
+
 2007-10-17  Sven Neumann  <sven@gimp.org>
 
 	* libgimpwidgets/tmpl/gimppropwidgets.sgml: regenerated.
