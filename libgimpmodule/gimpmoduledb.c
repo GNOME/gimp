@@ -312,33 +312,6 @@ gimp_module_db_refresh (GimpModuleDB *db,
                                    db);
 }
 
-/* name must be of the form lib*.so (Unix) or *.dll (Win32) */
-static gboolean
-valid_module_name (const gchar *filename)
-{
-  gchar *basename = g_path_get_basename (filename);
-
-#if !defined(G_OS_WIN32) && !defined(G_WITH_CYGWIN)
-  if (strncmp (basename, "lib", 3))
-    goto no_module;
-
-  if (! gimp_datafiles_check_extension (basename, ".so"))
-    goto no_module;
-#else
-  if (! gimp_datafiles_check_extension (basename, ".dll"))
-    goto no_module;
-#endif
-
-  g_free (basename);
-
-  return TRUE;
-
- no_module:
-  g_free (basename);
-
-  return FALSE;
-}
-
 static void
 gimp_module_db_module_initialize (const GimpDatafileData *file_data,
                                   gpointer                user_data)
@@ -347,7 +320,8 @@ gimp_module_db_module_initialize (const GimpDatafileData *file_data,
   GimpModule   *module;
   gboolean      load_inhibit;
 
-  if (! valid_module_name (file_data->filename))
+  if (! gimp_datafiles_check_extension (file_data->filename,
+                                        "." G_MODULE_SUFFIX))
     return;
 
   /* don't load if we already know about it */

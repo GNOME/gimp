@@ -1,3 +1,9 @@
+2007-10-18  Michael Natterer  <mitch@gimp.org>
+
+	* libgimpmodule/gimpmoduledb.c (gimp_module_db_module_initialize):
+	simply check for G_MODULE_SUFFIX and remove utility function
+	is_valid_module_name().
+
 2007-10-18  Sven Neumann  <sven@gimp.org>
 
 	* app/config/gimpcoreconfig.c: lower the upper limit for
