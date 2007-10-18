@@ -4,14 +4,14 @@
 # Copyright (C) 2001-2005 Free Software Foundation, Inc.
 # This file is distributed under the same license as the Gimp package.
 #
-# Olle Niit <olle@paalalinn.com>, 2005.
+# Olle Niit <olle@paalalinn.com>, 2005-2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-script-fu\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-10-12 03:39+0200\n"
-"PO-Revision-Date: 2006-10-12 13:10-0400\n"
-"Last-Translator: Olle Niit olle@paalalinn.com\n"
+"POT-Creation-Date: 2007-07-19 03:44+0100\n"
+"PO-Revision-Date: 2007-10-11 14:03+0300\n"
+"Last-Translator: Olle Niit <olle@paalalinn.com>\n"
 "Language-Team: Estonian <gnome-et@linux.ee>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -20,206 +20,253 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: ../plug-ins/script-fu/script-fu-console.c:144
+#: ../plug-ins/script-fu/script-fu-console.c:213
 msgid "Script-Fu Console"
 msgstr "Script-Fu konsool"
 
-#: ../plug-ins/script-fu/script-fu-console.c:237
+#: ../plug-ins/script-fu/script-fu-console.c:209
+msgid "Welcome to TinyScheme"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu-console.c:215
+msgid "Interactive Scheme Development"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu-console.c:251
 msgid "_Browse..."
 msgstr "_Sirvi..."
 
-#: ../plug-ins/script-fu/script-fu-console.c:275
+#: ../plug-ins/script-fu/script-fu-console.c:313
+msgid "Save Script-Fu Console Output"
+msgstr "Salvesta Script-Fu konsooli väljund"
+
+#: ../plug-ins/script-fu/script-fu-console.c:360
+#, c-format
+msgid "Could not open '%s' for writing: %s"
+msgstr "Ei suutnud '%s' kirjutamiseks avada: %s"
+
+#: ../plug-ins/script-fu/script-fu-console.c:389
 msgid "Script-Fu Procedure Browser"
 msgstr "Script-Fu protseduuride sirvija"
 
-#: ../plug-ins/script-fu/script-fu-console.c:591
+#: ../plug-ins/script-fu/script-fu-console.c:730
 msgid "Script-Fu evaluation mode only allows non-interactive invocation"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu-interface.c:177
+#: ../plug-ins/script-fu/script-fu-interface.c:191
 msgid "Script-Fu cannot process two scripts at the same time."
 msgstr "Script-Fu ei suuda töödelda kahte skripti samaaegselt."
 
-#: ../plug-ins/script-fu/script-fu-interface.c:179
+#: ../plug-ins/script-fu/script-fu-interface.c:193
 #, c-format
 msgid "You are already running the \"%s\" script."
 msgstr "Skript nimega \"%s\" sul juba töötab."
 
-#. strip the first part of the menupath if it contains _("/Script-Fu/")
-#: ../plug-ins/script-fu/script-fu-interface.c:202
-#: ../plug-ins/script-fu/script-fu-interface.c:204
-msgid "/Script-Fu/"
-msgstr "/Script-Fu/"
-
-#: ../plug-ins/script-fu/script-fu-interface.c:222
+#: ../plug-ins/script-fu/script-fu-interface.c:238
 #, c-format
 msgid "Script-Fu: %s"
 msgstr "Script-Fu: %s"
 
 #. we add a colon after the label;
 #. some languages want an extra space here
-#: ../plug-ins/script-fu/script-fu-interface.c:288
+#: ../plug-ins/script-fu/script-fu-interface.c:300
 #, c-format
 msgid "%s:"
 msgstr "%s:"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:331
+#: ../plug-ins/script-fu/script-fu-interface.c:348
 msgid "Script-Fu Color Selection"
 msgstr "Script-Fu värvi valik"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:438
+#: ../plug-ins/script-fu/script-fu-interface.c:460
 msgid "Script-Fu File Selection"
 msgstr "Script-Fu faili valik"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:441
+#: ../plug-ins/script-fu/script-fu-interface.c:463
 msgid "Script-Fu Folder Selection"
 msgstr "Script-Fu kausta valik"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:453
+#: ../plug-ins/script-fu/script-fu-interface.c:475
 msgid "Script-Fu Font Selection"
 msgstr "Script-Fu fondi valik"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:461
+#: ../plug-ins/script-fu/script-fu-interface.c:483
 msgid "Script-Fu Palette Selection"
 msgstr "Script-Fu värvipaleti valik"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:470
-msgid "Script-fu Pattern Selection"
+#: ../plug-ins/script-fu/script-fu-interface.c:492
+msgid "Script-Fu Pattern Selection"
 msgstr "Script-fu mustri valik"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:479
+#: ../plug-ins/script-fu/script-fu-interface.c:501
 msgid "Script-Fu Gradient Selection"
 msgstr "Script-Fu spektrikomplekti valik"
 
-#: ../plug-ins/script-fu/script-fu-interface.c:488
+#: ../plug-ins/script-fu/script-fu-interface.c:510
 msgid "Script-Fu Brush Selection"
 msgstr "Script-Fu pintsli valik"
 
-#: ../plug-ins/script-fu/script-fu-scripts.c:656
+#: ../plug-ins/script-fu/script-fu-scripts.c:664
 #, c-format
 msgid ""
 "Error while executing\n"
 "%s\n"
+"\n"
 "%s"
 msgstr ""
 "Viga\n"
-"%s täideviimisel\n"
+"%s\n"
+"täidesaatmisel\n"
 "%s"
 
-#: ../plug-ins/script-fu/script-fu-server.c:710
+#: ../plug-ins/script-fu/script-fu-server.c:711
 msgid "Script-Fu Server Options"
 msgstr "Script-Fu serveri võimalused"
 
-#: ../plug-ins/script-fu/script-fu-server.c:715
+#: ../plug-ins/script-fu/script-fu-server.c:716
 msgid "_Start Server"
 msgstr "_Käivita server"
 
-#: ../plug-ins/script-fu/script-fu-server.c:743
+#: ../plug-ins/script-fu/script-fu-server.c:744
 msgid "Server port:"
 msgstr "Serveri port:"
 
-#: ../plug-ins/script-fu/script-fu-server.c:749
+#: ../plug-ins/script-fu/script-fu-server.c:750
 msgid "Server logfile:"
 msgstr "Serveri logiraamatufail:"
 
-#: ../plug-ins/script-fu/script-fu.c:109
+#: ../plug-ins/script-fu/script-fu.c:110
 msgid "Interactive console for Script-Fu development"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:115
+#: ../plug-ins/script-fu/script-fu.c:116
 msgid "Script-Fu _Console"
 msgstr "Script-Fu _konsool"
 
-#: ../plug-ins/script-fu/script-fu.c:122 ../plug-ins/script-fu/script-fu.c:151
-#: ../plug-ins/script-fu/script-fu.c:314
-msgid "<Toolbox>/Xtns/Languages/Script-Fu"
-msgstr "<Toolbox>/Xtns/Languages/Script-Fu"
-
-#: ../plug-ins/script-fu/script-fu.c:139
+#: ../plug-ins/script-fu/script-fu.c:140
 msgid "Server for remote Script-Fu operation"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:144
+#: ../plug-ins/script-fu/script-fu.c:145
 msgid "_Start Server..."
 msgstr "_Käivita server..."
 
-#: ../plug-ins/script-fu/script-fu.c:267
+#: ../plug-ins/script-fu/script-fu.c:301
 msgid "_GIMP Online"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:268
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
+#: ../plug-ins/script-fu/script-fu.c:302
 msgid "_User Manual"
 msgstr "Kas_utamisjuhend"
 
-#: ../plug-ins/script-fu/script-fu.c:271
+#: ../plug-ins/script-fu/script-fu.c:305
 msgid "_Script-Fu"
 msgstr "_Script-Fu"
 
-#: ../plug-ins/script-fu/script-fu.c:273
+#: ../plug-ins/script-fu/script-fu.c:307
 msgid "_Buttons"
 msgstr "_Nupud"
 
-#: ../plug-ins/script-fu/script-fu.c:275
+#: ../plug-ins/script-fu/script-fu.c:309
 msgid "_Logos"
 msgstr "_Logod"
 
-#: ../plug-ins/script-fu/script-fu.c:277
+#: ../plug-ins/script-fu/script-fu.c:311
 msgid "_Misc"
 msgstr "_Mitmesugust"
 
-#: ../plug-ins/script-fu/script-fu.c:279
+#: ../plug-ins/script-fu/script-fu.c:313
 msgid "_Patterns"
 msgstr "_Mustrid"
 
-#: ../plug-ins/script-fu/script-fu.c:281
+#: ../plug-ins/script-fu/script-fu.c:315
 msgid "_Test"
 msgstr "_Test"
 
-#: ../plug-ins/script-fu/script-fu.c:283
-msgid "_Utils"
+#: ../plug-ins/script-fu/script-fu.c:317
+msgid "_Utilities"
 msgstr "Üldkas_utatavad"
 
-#: ../plug-ins/script-fu/script-fu.c:285
+#: ../plug-ins/script-fu/script-fu.c:319
 msgid "_Web Page Themes"
 msgstr "_Veebilehe teemad"
 
-#: ../plug-ins/script-fu/script-fu.c:287
+#: ../plug-ins/script-fu/script-fu.c:321
 msgid "_Alien Glow"
 msgstr ""
 
-#: ../plug-ins/script-fu/script-fu.c:289
+#: ../plug-ins/script-fu/script-fu.c:323
 msgid "_Beveled Pattern"
 msgstr "_Viltulõigatud muster"
 
-#: ../plug-ins/script-fu/script-fu.c:291
+#: ../plug-ins/script-fu/script-fu.c:325
 msgid "_Classic.Gimp.Org"
 msgstr "_Classic.Gimp.Org"
 
-#: ../plug-ins/script-fu/script-fu.c:294
+#: ../plug-ins/script-fu/script-fu.c:328
 msgid "Alpha to _Logo"
 msgstr "Alfa _logoks"
 
-#: ../plug-ins/script-fu/script-fu.c:296
+#: ../plug-ins/script-fu/script-fu.c:330
+msgid "An_imation"
+msgstr "An_imatsioon"
+
+#: ../plug-ins/script-fu/script-fu.c:332
+msgid "_Animators"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:334
+msgid "_Artistic"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:336
+msgid "_Blur"
+msgstr "_Udu"
+
+#: ../plug-ins/script-fu/script-fu.c:338
 msgid "_Decor"
 msgstr "_Dekoratsioon"
 
-#: ../plug-ins/script-fu/script-fu.c:298
+#: ../plug-ins/script-fu/script-fu.c:340
+msgid "_Effects"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:342
+msgid "En_hance"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:344
+msgid "_Light and Shadow"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:346
+#, fuzzy
+msgid "S_hadow"
+msgstr "Vari"
+
+#: ../plug-ins/script-fu/script-fu.c:348
 msgid "_Render"
 msgstr "_Tekita"
 
-#: ../plug-ins/script-fu/script-fu.c:301
+#: ../plug-ins/script-fu/script-fu.c:350
+msgid "_Alchemy"
+msgstr ""
+
+#: ../plug-ins/script-fu/script-fu.c:353
 msgid "Re-read all available Script-Fu scripts"
 msgstr "Kõikide kättesaadavate Script-Fu skriptide uuesti sisse lugemine"
 
-#: ../plug-ins/script-fu/script-fu.c:306
+#: ../plug-ins/script-fu/script-fu.c:358
 msgid "_Refresh Scripts"
 msgstr "_Värskenda skripte"
 
-#: ../plug-ins/script-fu/script-fu.c:329
+#: ../plug-ins/script-fu/script-fu.c:381
 msgid ""
 "You can not use \"Refresh Scripts\" while a Script-Fu dialog box is open.  "
 "Please close all Script-Fu windows and try again."
-msgstr "Sa ei saa kasutada \"Värskenda skripte\" kuni Script-Fu dialoogiaken on avatud. Palun sulge kõik Script-Fu aknad ja proovi uuesti."
+msgstr ""
+"Sa ei saa kasutada \"Värskenda skripte\" kuni Script-Fu dialoogiaken on "
+"avatud. Palun sulge kõik Script-Fu aknad ja proovi uuesti."
 
 #: ../plug-ins/script-fu/scripts/3d-outline.scm.h:1
 msgid "3D _Outline..."
@@ -248,17 +295,17 @@ msgstr "Vaikimisi kühmulisuse seaded"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:3
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:2
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:11
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:5
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:8
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:6
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:7
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:5
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:7
@@ -288,17 +335,17 @@ msgstr "Font"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:4
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:3
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:12
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:6
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:9
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:6
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:8
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:6
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:8
@@ -363,17 +410,17 @@ msgstr "Varju udustamise raadius"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:7
 #: ../plug-ins/script-fu/scripts/beveled-pattern-heading.scm.h:6
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:17
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:9
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:7
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:14
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:9
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:11
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:10
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:7
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:13
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
 #: ../plug-ins/script-fu/scripts/glossy.scm.h:18
 #: ../plug-ins/script-fu/scripts/glowing-logo.scm.h:8
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:10
@@ -406,9 +453,9 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/basic2-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:2
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/chalk.scm.h:1
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:3
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:2
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:2
@@ -462,29 +509,25 @@ msgid "Supersample"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/3dTruchet.scm.h:10
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
 #: ../plug-ins/script-fu/scripts/truchet.scm.h:8
 msgid "Thickness"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/add-bevel.scm.h:1
-msgid "<Image>/Filters/Decor"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
 msgid "Add B_evel..."
 msgstr "_Lisa viltulõige..."
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
-msgid "Add a bevel border to an image"
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:2
+msgid "Add a beveled border to an image"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:4
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:3
 #: ../plug-ins/script-fu/scripts/chip-away.scm.h:12
 msgid "Keep bump layer"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:6
+#: ../plug-ins/script-fu/scripts/add-bevel.scm.h:5
 #: ../plug-ins/script-fu/scripts/fuzzyborder.scm.h:10
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:6
 #: ../plug-ins/script-fu/scripts/round-corners.scm.h:8
@@ -518,7 +561,7 @@ msgid "Delta value on color"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:2
-msgid "Create an arrow graphic with an eerie glow theme for web pages"
+msgid "Create an arrow graphic with an eerie glow for web pages"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/alien-glow-arrow.scm.h:3
@@ -587,7 +630,7 @@ msgid "Bar length"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:4
-msgid "Create an Hrule graphic with an eerie glow theme for web pages"
+msgid "Create an Hrule graphic with an eerie glow for web pages"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bar.scm.h:7
@@ -596,7 +639,7 @@ msgid "_Hrule..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:2
-msgid "Create a bullet graphic with an eerie glow theme for web pages"
+msgid "Create a bullet graphic with an eerie glow for web pages"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/alien-glow-bullet.scm.h:5
@@ -616,7 +659,7 @@ msgid "B_utton..."
 msgstr "N_upp..."
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:3
-msgid "Create a button graphic with an eerie glow theme for web pages"
+msgid "Create a button graphic with an eerie glow for web pages"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/alien-glow-button.scm.h:8
@@ -635,7 +678,7 @@ msgstr "Polsterdus"
 #: ../plug-ins/script-fu/scripts/beveled-pattern-button.scm.h:8
 #: ../plug-ins/script-fu/scripts/blended-logo.scm.h:18
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:14
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:18
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:8
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:11
 #: ../plug-ins/script-fu/scripts/pupi-button.scm.h:14
@@ -694,7 +737,9 @@ msgid ""
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:3
-msgid "Create a plain text logo and add a drop shadow"
+msgid ""
+"Create a plain text logo with a gradient effect, a drop shadow, and a "
+"background"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/basic1-logo.scm.h:8
@@ -776,7 +821,7 @@ msgid "Create a beveled pattern hrule for webpages"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/beveled-pattern-hrule.scm.h:2
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:6
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
 #: ../plug-ins/script-fu/scripts/gradient-example.scm.h:4
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:7
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:7
@@ -791,24 +836,28 @@ msgid "Width"
 msgstr "Laius"
 
 #: ../plug-ins/script-fu/scripts/blend-anim.scm.h:1
+msgid "Blend Animation needs at least three source layers"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
 msgid ""
 "Create intermediate layers to blend two or more layers over a background as "
 "an animation"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:2
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
 msgid "Intermediate frames"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:3
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
 msgid "Looped"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:4
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
 msgid "Max. blur radius"
 msgstr "Maksim. udu raadius"
 
-#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:5
+#: ../plug-ins/script-fu/scripts/blend-anim.scm.h:6
 msgid "_Blend..."
 msgstr "_Sega kokku..."
 
@@ -873,19 +922,25 @@ msgstr "Nihe (pikslites)"
 msgid "Add 'cow spots' to the selected region (or alpha)"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:2
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:2
+#, fuzzy
+msgid "Background Color"
+msgstr "Tagapõhja värv"
+
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
 msgid "Bo_vination..."
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:5
 msgid "Create a logo with text in the style of 'cow spots'"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
 msgid "Spots density X"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:8
+#: ../plug-ins/script-fu/scripts/bovinated-logo.scm.h:9
 msgid "Spots density Y"
 msgstr ""
 
@@ -902,7 +957,9 @@ msgid "B_urn-In..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:4
-msgid "Burn-In: Need two layers in total!"
+msgid ""
+"Burn-In: Needs two layers in total!\\nA foreground text layer with "
+"transparency and a background layer."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/burn-in-anim.scm.h:5
@@ -971,22 +1028,16 @@ msgid "Carve white areas"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/carve-it.scm.h:2
-msgid ""
-"Create an image with a carved effect using the active (grayscale) drawable "
-"as a mask"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Image to carve"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/carve-it.scm.h:4
+#: ../plug-ins/script-fu/scripts/carve-it.scm.h:3
 msgid "Stencil C_arve..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:1
-#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
-msgid "Background image"
+#, fuzzy
+msgid "Background Image"
 msgstr "Taustapilt"
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:2
@@ -999,7 +1050,8 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:4
 msgid ""
-"Create a logo with carved text raised above the specified background image"
+"Create a logo with text raised above or carved in to the specified "
+"background image"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/carved-logo.scm.h:7
@@ -1108,15 +1160,15 @@ msgstr ""
 msgid "Add a simple chrome effect to the selected region (or alpha)"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:3
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
 msgid "C_hrome..."
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:4
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:5
 msgid "Create a simplistic, but cool, chromed logo"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:7
+#: ../plug-ins/script-fu/scripts/chrome-logo.scm.h:8
 msgid "Offsets (pixels * 2)"
 msgstr ""
 
@@ -1190,9 +1242,7 @@ msgid "Add realistic looking coffee stains to the image"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:2
-msgid ""
-"Darken only\n"
-"(Better, but only for images with a lot of white)"
+msgid "Darken only\\n(Better, but only for images with a lot of white)"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/coffee.scm.h:3
@@ -1214,7 +1264,7 @@ msgid "Comic Boo_k..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:4
-msgid "Create a comic-book style logo"
+msgid "Create a comic-book style logo by outlining and filling with a gradient"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/comic-logo.scm.h:9
@@ -1228,8 +1278,8 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:1
 msgid ""
-"Add a metallic logo effect to the selected region (or alpha) with "
-"reflections and perspective shadows"
+"Add a metallic effect to the selected region (or alpha) with reflections and "
+"perspective shadows"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/coolmetal-logo.scm.h:3
@@ -1245,9 +1295,9 @@ msgstr ""
 msgid "Effect size (pixels)"
 msgstr "Effekti suurus (piksleid)"
 
-#: ../plug-ins/script-fu/scripts/copy-visible.scm.h:1
-msgid "This procedure is deprecated! use 'gimp_edit_copy_visible' instead."
-msgstr ""
+#: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:1
+msgid "Background image"
+msgstr "Taustapilt"
 
 #: ../plug-ins/script-fu/scripts/crystal-logo.scm.h:3
 msgid "Create a logo with a crystal/gel effect displacing the image underneath"
@@ -1257,9 +1307,17 @@ msgstr ""
 msgid "Crystal..."
 msgstr ""
 
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:1
+msgid "Difference Clouds..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/difference-clouds.scm.h:2
+msgid "Solid noise applied with Difference layer mode"
+msgstr ""
+
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:1
 msgid "Distress the selection"
-msgstr ""
+msgstr "Valikujoone piinamine"
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:2
 msgid "Granularity (1 is low)"
@@ -1283,10 +1341,10 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/distress-selection.scm.h:8
 msgid "_Distort..."
-msgstr ""
+msgstr "_Moonuta..."
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:1
-msgid "Add a drop-shadow to the selected region (or alpha)"
+msgid "Add a drop shadow to the selected region (or alpha)"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:2
@@ -1310,12 +1368,12 @@ msgid "Color"
 msgstr "Värv"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:5
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
 msgid "Offset X"
 msgstr "Nihe X"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:6
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
 msgid "Offset Y"
 msgstr "Nihe Y"
 
@@ -1325,7 +1383,7 @@ msgid "Opacity"
 msgstr "Läbipaistmatus"
 
 #: ../plug-ins/script-fu/scripts/drop-shadow.scm.h:8
-msgid "_Drop-Shadow..."
+msgid "_Drop Shadow..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:1
@@ -1337,7 +1395,7 @@ msgid "Erase"
 msgstr "Kstuta"
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:3
-msgid "Erase every other row/column of pixels of the active drawable"
+msgid "Erase every other row or column"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/erase-rows.scm.h:4
@@ -1493,7 +1551,9 @@ msgid "_Text"
 msgstr "_Tekst"
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:1
-msgid "Add a frost effect to the selected region (or alpha)"
+msgid ""
+"Add a frost effect to the selected region (or alpha) with an added drop "
+"shadow"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/frosty-logo.scm.h:3
@@ -1534,11 +1594,11 @@ msgid "Autocrop"
 msgstr "Automaatkärbe"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:2
-msgid "Create an image of a large header using the Gimp.org webpage theme"
+msgid "Create an image of a large header using the gimp.org webpage theme"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:3
-msgid "Create an image of a small header using the Gimp.org webpage theme"
+msgid "Create an image of a small header using the gimp.org webpage theme"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:4
@@ -1551,27 +1611,27 @@ msgid "Highlight color"
 msgstr "Esiletõstetud värv"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:8
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:7
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:9
 msgid "Index image"
 msgstr "Indekspilt"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:9
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:8
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:10
 msgid "Number of colors"
 msgstr "Värvide arv"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:10
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:11
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
 msgid "Remove background"
 msgstr "Eemalda tagapõhi"
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:11
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:12
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
 msgid "Select-by-color threshold"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gimp-headers.scm.h:12
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:13
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:15
 msgid "Shadow color"
 msgstr "Varju värv"
 
@@ -1585,28 +1645,39 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:2
 msgid ""
-"Create an image of a Tube Button Label Header using the  gimp.org webpage "
+"Create an image of a Tube Button Label Header using the gimp.org webpage "
 "theme"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:3
-msgid ""
-"Create an image of a Tube Button Label using the  gimp.org webpage theme"
+msgid "Create an image of a Tube Button Label using the gimp.org webpage theme"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:14
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:4
+msgid ""
+"Create an image of a second level Tube Button Label using the gimp.org "
+"webpage theme"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:5
+msgid ""
+"Create an image of a third level Tube Button Label using the gimp.org "
+"webpage theme"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:16
 msgid "T_ube Sub-Button Label..."
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:17
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
 msgid "Tub_e Sub-Sub-Button Label..."
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:18
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:20
 msgid "_General Tube Labels..."
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:19
+#: ../plug-ins/script-fu/scripts/gimp-labels.scm.h:21
 msgid "_Tube Button Label..."
 msgstr ""
 
@@ -1700,7 +1771,7 @@ msgid "Border size (pixels)"
 msgstr "Raami suurus (pikslites)"
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:6
-msgid "Create a logo with a shiny look and bevelled edges"
+msgid "Create a logo with a shiny look and beveled edges"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/gradient-bevel-logo.scm.h:9
@@ -1716,6 +1787,7 @@ msgid "Custom _Gradient..."
 msgstr "Omatehtud _spektrikomplekt..."
 
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:1
+#: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
 msgid ""
 "Draw a grid as specified by the lists of X and Y locations using the current "
 "brush"
@@ -1732,10 +1804,6 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/grid-system.scm.h:4
 msgid "_Grid..."
 msgstr "_Abijoon..."
-
-#: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:1
-msgid "Create four guides around the bounding box of the current selection"
-msgstr ""
 
 #: ../plug-ins/script-fu/scripts/guides-from-selection.scm.h:2
 msgid "New Guides from _Selection"
@@ -1779,11 +1847,11 @@ msgstr "_Uus abijoon..."
 
 #: ../plug-ins/script-fu/scripts/guides-new.scm.h:5
 msgid "Position"
-msgstr ""
+msgstr "Positsioon"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:1
 msgid "Remove all horizontal and vertical guides"
-msgstr ""
+msgstr "Eemalda kõik horisontaalsed ja vertikaalsed abijooned"
 
 #: ../plug-ins/script-fu/scripts/guides-remove-all.scm.h:2
 msgid "_Remove all Guides"
@@ -1791,12 +1859,10 @@ msgstr "_Eemalda kõik abijooned"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:1
 msgid "BG opacity"
-msgstr ""
+msgstr "Tausta läbipaistmatus"
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:2
-msgid ""
-"Create a graph of the Hue, Saturation, and Value distributions of the "
-"current drawable"
+msgid "Create a graph of the Hue, Saturation, and Value distributions"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:3
@@ -1828,7 +1894,7 @@ msgid "Start Y"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/hsv-graph.scm.h:10
-msgid "Use selection bounds instead of belows"
+msgid "Use selection bounds instead of values below"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:1
@@ -1837,11 +1903,11 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:4
 msgid "Frame color"
-msgstr ""
+msgstr "Raami värv"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:5
 msgid "Frame size"
-msgstr ""
+msgstr "Raami suurus"
 
 #: ../plug-ins/script-fu/scripts/i26-gunya2.scm.h:6
 msgid "Imigre-_26..."
@@ -1849,7 +1915,7 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:1
 msgid "Create an image filled with a topographic map pattern"
-msgstr ""
+msgstr "Loo pilt mis on täidetud topograafilise kaardi mustriga"
 
 #: ../plug-ins/script-fu/scripts/land.scm.h:6
 msgid "Land height"
@@ -1865,12 +1931,12 @@ msgstr "_Maa..."
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:1
 msgid "Fill the current selection with lava"
-msgstr ""
+msgstr "Täida aktiivne valik laavaga"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:4
 #: ../plug-ins/script-fu/scripts/swirltile.scm.h:8
 msgid "Roughness"
-msgstr ""
+msgstr "Karedus"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:5
 msgid "Seed"
@@ -1878,11 +1944,11 @@ msgstr "Seeme"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:8
 msgid "Use current gradient"
-msgstr ""
+msgstr "Kasuta aktiivset spektrikomplekti"
 
 #: ../plug-ins/script-fu/scripts/lava.scm.h:9
 msgid "_Lava..."
-msgstr ""
+msgstr "_Laava..."
 
 #: ../plug-ins/script-fu/scripts/line-nova.scm.h:1
 msgid ""
@@ -1943,7 +2009,7 @@ msgstr "Ristkülik, _pehmendatud..."
 
 #: ../plug-ins/script-fu/scripts/mkbrush.scm.h:10
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:5
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:3
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:4
 msgid "Spacing"
 msgstr "Vahemaa"
 
@@ -1980,7 +2046,7 @@ msgid "Cell size (pixels)"
 msgstr "Kärje suurus (pikslites)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:4
-msgid "Create a logo in the style newpaper printing"
+msgid "Create a logo in the style of newspaper printing"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:6
@@ -1990,7 +2056,8 @@ msgid "Density (%)"
 msgstr "Sügavus (%)"
 
 #: ../plug-ins/script-fu/scripts/news-text.scm.h:9
-msgid "Newsprint Text..."
+#, fuzzy
+msgid "Newsprint Te_xt..."
 msgstr "Ajalehepaberi tekst..."
 
 #: ../plug-ins/script-fu/scripts/old-photo.scm.h:2
@@ -2020,8 +2087,8 @@ msgstr "Pintsli nimi"
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:2
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:1
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:3
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
 msgid "File name"
 msgstr "Faili nimi"
 
@@ -2031,7 +2098,12 @@ msgstr "Uus pi_ntsel..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:4
 msgid "Paste the clipboard contents into a new brush"
-msgstr ""
+msgstr "Tee lõikelaua sisu alusel uus pintsel"
+
+#: ../plug-ins/script-fu/scripts/paste-as-brush.scm.h:6
+#: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:5
+msgid "There is no image data in the clipboard to paste."
+msgstr "Lõikelaual pole asetamiseks pildiandmeid."
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:2
 msgid "New _Pattern..."
@@ -2039,10 +2111,10 @@ msgstr "Uus _muster..."
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:3
 msgid "Paste the clipboard contents into a new pattern"
-msgstr ""
+msgstr "Tee lõikelaua sisu alusel uus muster"
 
 #: ../plug-ins/script-fu/scripts/paste-as-pattern.scm.h:4
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:2
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
 msgid "Pattern name"
 msgstr "Mustri nimi"
 
@@ -2147,7 +2219,7 @@ msgid "Create an image filled with an Earth-like map pattern"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:3
-msgid "Detail in middle"
+msgid "Detail in Middle"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:8
@@ -2157,6 +2229,14 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/rendermap.scm.h:9
 msgid "Tile"
 msgstr "Klots"
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:1
+msgid "Reverse Layer Order"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/reverse-layers.scm.h:2
+msgid "Reverse the order of layers in the image"
+msgstr ""
 
 #: ../plug-ins/script-fu/scripts/ripply-anim.scm.h:1
 msgid "Black"
@@ -2213,15 +2293,40 @@ msgstr ""
 msgid "_Round Corners..."
 msgstr "Üma_rda nurgad..."
 
-#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:4
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:1
+msgid "Change the colormap of an image to the colors in a specified palette."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:2
+#, fuzzy
+msgid "Palette"
+msgstr "Muster"
+
+#: ../plug-ins/script-fu/scripts/script-fu-set-cmap.scm.h:3
+msgid "Se_t Colormap..."
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:2
+msgid "Convert a selection to a brush"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/select-to-brush.scm.h:5
 msgid "To _Brush..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/select-to-image.scm.h:1
+msgid "Convert a selection to an image"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/select-to-image.scm.h:2
 msgid "To _Image"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:3
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:1
+msgid "Convert a selection to a pattern"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/select-to-pattern.scm.h:4
 msgid "To _Pattern..."
 msgstr ""
 
@@ -2236,15 +2341,9 @@ msgstr "Raadius (%)"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:4
 msgid "Round the corners of the current selection"
-msgstr ""
+msgstr "Muuda valitud ala nurgad ümaramaks"
 
 #: ../plug-ins/script-fu/scripts/selection-round.scm.h:5
-msgid ""
-"Round the corners of the current selection (deprecated, use Rounded "
-"Rectangle)"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/selection-round.scm.h:6
 msgid "Rounded R_ectangle..."
 msgstr "Ümarnurkne ristkülik..."
 
@@ -2273,7 +2372,7 @@ msgid "SOTA Chrome..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:2
-msgid "Create a logo using a speedy text effect"
+msgid "Create a logo with a speedy text effect"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/speed-text.scm.h:7
@@ -2321,7 +2420,8 @@ msgid "_Spinning Globe..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:1
-msgid "Add Spirographs, Epitrochoids and Lissajous Curves to the current layer"
+msgid ""
+"Add Spirographs, Epitrochoids, and Lissajous Curves to the current layer"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:2
@@ -2349,11 +2449,11 @@ msgid "Frame"
 msgstr "Raam"
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:10
-msgid "Gradient: loop sawtooth"
+msgid "Gradient: Loop Sawtooth"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:11
-msgid "Gradient: loop triangle"
+msgid "Gradient: Loop Triangle"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:12
@@ -2405,39 +2505,43 @@ msgid "Polygon: 9 sides"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:24
+msgid "Rendering Spyro"
+msgstr ""
+
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
 msgid "Shape"
 msgstr "Kuju"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:25
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:26
 msgid "Solid Color"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:26
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
 msgid "Spyrograph"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:27
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
 msgid "Square"
 msgstr ""
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:28
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:29
 #: ../plug-ins/script-fu/scripts/text-circle.scm.h:7
 msgid "Start angle"
 msgstr "Algusnurk"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:29
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:30
 msgid "Tool"
 msgstr "Tööriist"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:30
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:31
 msgid "Triangle"
 msgstr "Kolmnurk"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:31
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:32
 msgid "Type"
 msgstr "Tüüp"
 
-#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:32
+#: ../plug-ins/script-fu/scripts/spyrogimp.scm.h:33
 msgid "_Spyrogimp..."
 msgstr ""
 
@@ -2464,7 +2568,7 @@ msgid "Starb_urst..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:1
-msgid "Create a logo using rock-like text backlit by a nova glow"
+msgid "Create a logo using a rock-like texture, a nova glow, and shadow"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:2
@@ -2473,8 +2577,8 @@ msgstr ""
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:3
 msgid ""
-"Fill the selected region (or alpha) with a 'rocky' texture and add a nova "
-"glow and shadow"
+"Fill the selected region (or alpha) with a rock-like texture, a nova glow, "
+"and shadow"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/starscape-logo.scm.h:7
@@ -2657,10 +2761,6 @@ msgstr "Maski läbipaistmatus"
 msgid "Mask size"
 msgstr "Maski suurus"
 
-#: ../plug-ins/script-fu/scripts/unsharp-mask.scm.h:3
-msgid "_Unsharp Mask..."
-msgstr ""
-
 #: ../plug-ins/script-fu/scripts/waves-anim.scm.h:1
 msgid "Amplitude"
 msgstr ""
@@ -2722,51 +2822,63 @@ msgid "_Weave..."
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:1
-msgid "Create and Use _Selections"
-msgstr ""
+msgid "Bookmark to the GIMP web site"
+msgstr "Järjehoidja GIMPi kodulehele"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:2
-msgid "Create, Open and Save _Files"
-msgstr ""
+msgid "Bookmark to the user manual"
+msgstr "Järjehoidja kasutamisjuhendisse"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:3
-msgid "Drawing _Simple Objects"
-msgstr ""
+msgid "Create and Use _Selections"
+msgstr "_Valikute loomine ja kasutamine"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:4
-msgid "How to Use _Dialogs"
-msgstr ""
+msgid "Create, Open and Save _Files"
+msgstr "_Failide loomine, avamine ja salvestamine"
 
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:5
+msgid "Drawing _Simple Objects"
+msgstr "Liht_sate objektide joonistamine"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
+msgid "How to Use _Dialogs"
+msgstr "Kuidas _dialooge kasutada"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
 msgid "Plug-in _Registry"
 msgstr "Pistikute _register"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:6
-msgid "Using _Paths"
-msgstr ""
-
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:7
-msgid "_Basic Concepts"
-msgstr ""
-
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:8
+msgid "Using _Paths"
+msgstr "Vektor_joonte kasutamine"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
+msgid "_Basic Concepts"
+msgstr "Üldised _mõisted"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
 msgid "_Developer Web Site"
 msgstr "_Arendajate lehekülg"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:9
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:11
 msgid "_Main Web Site"
 msgstr "_Pealehekülg"
 
-#: ../plug-ins/script-fu/scripts/web-browser.scm.h:10
-msgid "_Preparing your Images for the Web"
-msgstr ""
-
 #: ../plug-ins/script-fu/scripts/web-browser.scm.h:12
+msgid "_Preparing your Images for the Web"
+msgstr "_Piltide ettevalmistamine internetilehele panemiseks"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:13
+msgid "_User Manual Web Site"
+msgstr "Kas_utamisjuhendi kodulehekülg"
+
+#: ../plug-ins/script-fu/scripts/web-browser.scm.h:14
 msgid "_Working with Digital Camera Photos"
-msgstr ""
+msgstr "_Digitaalkaamera fotodega töötamine"
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:1
-msgid "Add a subtle translucent 3-d effect to the selected region (or alpha)"
+msgid "Add a subtle translucent 3D effect to the selected region (or alpha)"
 msgstr ""
 
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:2
@@ -2804,6 +2916,12 @@ msgstr ""
 #: ../plug-ins/script-fu/scripts/xach-effect.scm.h:12
 msgid "_Xach-Effect..."
 msgstr ""
+
+#~ msgid "/Script-Fu/"
+#~ msgstr "/Script-Fu/"
+
+#~ msgid "<Toolbox>/Xtns/Languages/Script-Fu"
+#~ msgstr "<Toolbox>/Xtns/Languages/Script-Fu"
 
 #~ msgid "About %s"
 #~ msgstr "%s teave"
