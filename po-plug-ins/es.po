@@ -3735,7 +3735,7 @@ msgstr "Simular un grabado antiguo"
 msgid "En_grave..."
 msgstr "_Grabado [Engrave]…"
 
-: ../plug-ins/common/engrave.c:180
+#: ../plug-ins/common/engrave.c:180
 msgid "Engraving"
 msgstr "Grabando"
 
