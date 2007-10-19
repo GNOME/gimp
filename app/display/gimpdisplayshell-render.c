@@ -498,8 +498,8 @@ render_image_gray_a (RenderInfo *info)
 
       for (x = info->x; x < xe; x++)
         {
-          guint a = alpha[src[ALPHA_G_PIX]];
-          guint val;
+          const guint a = alpha[src[ALPHA_G_PIX]];
+          guchar      val;
 
           if (dark_light & 0x1)
             val = gimp_render_blend_dark_check[(a | src[GRAY_PIX])];
@@ -555,26 +555,22 @@ render_image_rgb_a (RenderInfo *info)
 
       for (x = info->x; x < xe; x++)
         {
-          guint r, g, b, a = alpha[src[ALPHA_PIX]];
+          const guint a = alpha[src[ALPHA_PIX]];
 
           if (dark_light & 0x1)
             {
-              r = gimp_render_blend_dark_check[(a | src[RED_PIX])];
-              g = gimp_render_blend_dark_check[(a | src[GREEN_PIX])];
-              b = gimp_render_blend_dark_check[(a | src[BLUE_PIX])];
+              dest[0] = gimp_render_blend_dark_check[(a | src[RED_PIX])];
+              dest[1] = gimp_render_blend_dark_check[(a | src[GREEN_PIX])];
+              dest[2] = gimp_render_blend_dark_check[(a | src[BLUE_PIX])];
             }
           else
             {
-              r = gimp_render_blend_light_check[(a | src[RED_PIX])];
-              g = gimp_render_blend_light_check[(a | src[GREEN_PIX])];
-              b = gimp_render_blend_light_check[(a | src[BLUE_PIX])];
+              dest[0] = gimp_render_blend_light_check[(a | src[RED_PIX])];
+              dest[1] = gimp_render_blend_light_check[(a | src[GREEN_PIX])];
+              dest[2] = gimp_render_blend_light_check[(a | src[BLUE_PIX])];
             }
 
           src += 4;
-
-          dest[0] = r;
-          dest[1] = g;
-          dest[2] = b;
           dest += 3;
 
           if (((x + 1) & check_mod) == 0)
@@ -663,10 +659,10 @@ render_image_init_alpha (gint mult)
   static guint *alpha_mult = NULL;
   static gint   alpha_val  = -1;
 
-  gint i;
-
   if (alpha_val != mult)
     {
+      gint i;
+
       if (!alpha_mult)
         alpha_mult = g_new (guint, 256);
 
@@ -743,6 +739,7 @@ box_filter (const guint    left_weight,
         }
 #undef ALPHA
         break;
+
       case 2:
 #define ALPHA 1
 
@@ -796,8 +793,10 @@ box_filter (const guint    left_weight,
         }
 #undef ALPHA
         break;
+
       default:
         g_warning ("bpp=%i not implemented as box filter", bpp);
+        break;
     }
 }
 
@@ -1296,7 +1295,7 @@ render_image_tile_fault_nearest (RenderInfo *info)
 
   do
     {
-      const guchar *s     = src;
+      const guchar *s = src;
       gint          skipped;
 
       switch (bpp)
