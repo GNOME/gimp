@@ -18,8 +18,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: fr\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-30 22:37+0200\n"
-"PO-Revision-Date: 2007-09-30 22:39+0200\n"
+"POT-Creation-Date: 2007-10-19 09:50+0200\n"
+"PO-Revision-Date: 2007-10-19 09:52+0200\n"
 "Last-Translator: Laurent Monin <gimp@norz.org>\n"
 "Language-Team: GNOME French Team <gnomefr@traduc.org>\n"
 "MIME-Version: 1.0\n"
@@ -399,11 +399,11 @@ msgstr "Enregistrer les paramètres de la fractale"
 #: ../plug-ins/common/compressor.c:622 ../plug-ins/common/curve_bend.c:869
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gif-load.c:309 ../plug-ins/common/gih.c:649
-#: ../plug-ins/common/lcms.c:791 ../plug-ins/common/lcms.c:1096
+#: ../plug-ins/common/lcms.c:798 ../plug-ins/common/lcms.c:1103
 #: ../plug-ins/common/mng.c:1121 ../plug-ins/common/pat.c:317
 #: ../plug-ins/common/pcx.c:344 ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:703 ../plug-ins/common/pnm.c:482
-#: ../plug-ins/common/poppler.c:501 ../plug-ins/common/postscript.c:1021
+#: ../plug-ins/common/poppler.c:527 ../plug-ins/common/postscript.c:1021
 #: ../plug-ins/common/postscript.c:3029 ../plug-ins/common/psd-load.c:2156
 #: ../plug-ins/common/psp.c:1432 ../plug-ins/common/raw.c:243
 #: ../plug-ins/common/raw.c:645 ../plug-ins/common/spheredesigner.c:2010
@@ -414,7 +414,7 @@ msgstr "Enregistrer les paramètres de la fractale"
 #: ../plug-ins/fits/fits.c:345 ../plug-ins/flame/flame.c:411
 #: ../plug-ins/gfig/gfig.c:434 ../plug-ins/gfli/gfli.c:429
 #: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/gimphelplocale.c:193
-#: ../plug-ins/jpeg/jpeg-load.c:111 ../plug-ins/jpeg/jpeg-load.c:826
+#: ../plug-ins/jpeg/jpeg-load.c:111 ../plug-ins/jpeg/jpeg-load.c:821
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:271
 #: ../plug-ins/uri/uri-backend-libcurl.c:186 ../plug-ins/winicon/icoload.c:651
 #: ../plug-ins/winicon/icoload.c:728 ../plug-ins/xjt/xjt.c:2545
@@ -619,7 +619,7 @@ msgid "Position"
 msgstr "Position"
 
 #: ../plug-ins/Lighting/lighting_ui.c:474 ../plug-ins/common/flarefx.c:772
-#: ../plug-ins/common/mblur.c:1081 ../plug-ins/common/nova.c:463
+#: ../plug-ins/common/mblur.c:1094 ../plug-ins/common/nova.c:463
 #: ../plug-ins/common/papertile.c:282 ../plug-ins/flame/flame.c:1227
 #: ../plug-ins/gflare/gflare.c:2651
 msgid "_X:"
@@ -631,7 +631,7 @@ msgid "Light source X position in XYZ space"
 msgstr "Position X de la source en espace XYZ"
 
 #: ../plug-ins/Lighting/lighting_ui.c:487 ../plug-ins/common/flarefx.c:777
-#: ../plug-ins/common/mblur.c:1086 ../plug-ins/common/nova.c:468
+#: ../plug-ins/common/mblur.c:1099 ../plug-ins/common/nova.c:468
 #: ../plug-ins/common/papertile.c:291 ../plug-ins/flame/flame.c:1241
 #: ../plug-ins/gflare/gflare.c:2655
 msgid "_Y:"
@@ -1120,7 +1120,7 @@ msgstr "R_ayon :"
 msgid "Cylinder radius"
 msgstr "Rayon du cylindre :"
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1264 ../plug-ins/common/mblur.c:1112
+#: ../plug-ins/MapObject/mapobject_ui.c:1264 ../plug-ins/common/mblur.c:1125
 msgid "L_ength:"
 msgstr "L_ongueur :"
 
@@ -1166,7 +1166,7 @@ msgstr "Mauvaise palette de couleurs"
 #: ../plug-ins/common/gif-load.c:314 ../plug-ins/common/gih.c:654
 #: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:349
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:710
-#: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:546
+#: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:572
 #: ../plug-ins/common/postscript.c:1027 ../plug-ins/common/psd-load.c:2161
 #: ../plug-ins/common/raw.c:650 ../plug-ins/common/sunras.c:470
 #: ../plug-ins/common/tga.c:428 ../plug-ins/common/tiff-load.c:558
@@ -1228,8 +1228,8 @@ msgstr "La hauteur de l'image est non valide ou non prise en charge : %d"
 #: ../plug-ins/common/tile.c:267 ../plug-ins/common/xbm.c:880
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:511
 #: ../plug-ins/gfig/gfig-dialog.c:1284
-#: ../plug-ins/gimpressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:254
-#: ../plug-ins/jpeg/jpeg-load.c:757 ../plug-ins/sgi/sgi.c:369
+#: ../plug-ins/gimpressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:249
+#: ../plug-ins/jpeg/jpeg-load.c:752 ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1155
 msgid "Background"
 msgstr "Arrière-plan"
@@ -2543,41 +2543,41 @@ msgstr "Échange deux couleurs dans la palette"
 msgid "_Swap Colors"
 msgstr "É_changer des couleurs"
 
-#: ../plug-ins/common/colormap-remap.c:288
-#: ../plug-ins/common/colormap-remap.c:299
-#: ../plug-ins/common/colormap-remap.c:310
+#: ../plug-ins/common/colormap-remap.c:286
+#: ../plug-ins/common/colormap-remap.c:297
+#: ../plug-ins/common/colormap-remap.c:308
 msgid "Invalid remap array was passed to remap function"
 msgstr "Un tableau remap erroné a été passé à la fonction remap"
 
-#: ../plug-ins/common/colormap-remap.c:334
+#: ../plug-ins/common/colormap-remap.c:332
 msgid "Rearranging the colormap"
 msgstr "Réorganisation de la palette des couleurs"
 
-#: ../plug-ins/common/colormap-remap.c:483
+#: ../plug-ins/common/colormap-remap.c:481
 msgid "Sort on Hue"
 msgstr "Trier selon la teinte"
 
-#: ../plug-ins/common/colormap-remap.c:487
+#: ../plug-ins/common/colormap-remap.c:485
 msgid "Sort on Saturation"
 msgstr "Trier sur la saturation"
 
-#: ../plug-ins/common/colormap-remap.c:491
+#: ../plug-ins/common/colormap-remap.c:489
 msgid "Sort on Value"
 msgstr "Trier selon la valeur"
 
-#: ../plug-ins/common/colormap-remap.c:495
+#: ../plug-ins/common/colormap-remap.c:493
 msgid "Reverse Order"
 msgstr "Inverser l'ordre"
 
-#: ../plug-ins/common/colormap-remap.c:499
+#: ../plug-ins/common/colormap-remap.c:497
 msgid "Reset Order"
 msgstr "Réinitialiser l'ordre"
 
-#: ../plug-ins/common/colormap-remap.c:598
+#: ../plug-ins/common/colormap-remap.c:596
 msgid "Rearrange Colormap"
 msgstr "Réorganisation de la palette des couleurs"
 
-#: ../plug-ins/common/colormap-remap.c:701
+#: ../plug-ins/common/colormap-remap.c:699
 msgid ""
 "Drag and drop colors to rearrange the colormap.  The numbers shown are the "
 "original indices.  Right-click for a menu with sort options."
@@ -5053,114 +5053,114 @@ msgstr "Information du profil de couleurs de l'image"
 msgid "Color Profile Information"
 msgstr "Information du profil de couleurs"
 
-#: ../plug-ins/common/lcms.c:564
+#: ../plug-ins/common/lcms.c:571
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr "Le profil de couleurs « %s » n'est pas pour un espace de couleur RVB."
 
-#: ../plug-ins/common/lcms.c:671
+#: ../plug-ins/common/lcms.c:678
 msgid "Default RGB working space"
 msgstr "Espace de travail RVB par défaut"
 
-#: ../plug-ins/common/lcms.c:759
+#: ../plug-ins/common/lcms.c:766
 msgid ""
 "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr ""
 "Les données attachées comme « icc-profile » ne semblent pas être un profil "
 "de couleur ICC"
 
-#: ../plug-ins/common/lcms.c:810
+#: ../plug-ins/common/lcms.c:817
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "« %s » ne semble pas être un fichier de couleur ICC"
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:868
+#: ../plug-ins/common/lcms.c:875
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "Conversion de « %s » vers « %s »"
 
-#: ../plug-ins/common/lcms.c:1115
+#: ../plug-ins/common/lcms.c:1122
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr "Impossible de charger le profil ICC depuis « %s »"
 
-#: ../plug-ins/common/lcms.c:1137
+#: ../plug-ins/common/lcms.c:1144
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr "L'image « %s » a un profil de couleurs embarqué :"
 
-#: ../plug-ins/common/lcms.c:1181
+#: ../plug-ins/common/lcms.c:1188
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr "Convertir l'image vers l'espace de travail RVB (%s) ?"
 
-#: ../plug-ins/common/lcms.c:1212
+#: ../plug-ins/common/lcms.c:1219
 msgid "Convert to RGB working space?"
 msgstr "Convertir vers l'espace de travail RVB ?"
 
-#: ../plug-ins/common/lcms.c:1217
+#: ../plug-ins/common/lcms.c:1224
 msgid "_Keep"
 msgstr "_Conserver"
 
-#: ../plug-ins/common/lcms.c:1222
+#: ../plug-ins/common/lcms.c:1229
 msgid "_Convert"
 msgstr "_Convertir"
 
-#: ../plug-ins/common/lcms.c:1249 ../plug-ins/jpeg/jpeg-exif.c:372
+#: ../plug-ins/common/lcms.c:1256 ../plug-ins/jpeg/jpeg-exif.c:372
 msgid "_Don't ask me again"
 msgstr "_Ne plus me demander"
 
-#: ../plug-ins/common/lcms.c:1313
+#: ../plug-ins/common/lcms.c:1320
 msgid "Select destination profile"
 msgstr "Sélection du profil de destination"
 
-#: ../plug-ins/common/lcms.c:1340
+#: ../plug-ins/common/lcms.c:1347
 msgid "All files (*.*)"
 msgstr "Tous les fichiers (*.*)"
 
-#: ../plug-ins/common/lcms.c:1345
+#: ../plug-ins/common/lcms.c:1352
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "Profil de couleurs ICC (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1388
+#: ../plug-ins/common/lcms.c:1395
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "Espace de travail RVB (%s)"
 
-#: ../plug-ins/common/lcms.c:1438
+#: ../plug-ins/common/lcms.c:1445
 msgid "Convert to ICC Color Profile"
 msgstr "Convertir en profil de couleurs ICC"
 
-#: ../plug-ins/common/lcms.c:1439
+#: ../plug-ins/common/lcms.c:1446
 msgid "Assign ICC Color Profile"
 msgstr "Assigner un profil de couleurs ICC"
 
-#: ../plug-ins/common/lcms.c:1447
+#: ../plug-ins/common/lcms.c:1454
 msgid "_Assign"
 msgstr "_Assigner"
 
-#: ../plug-ins/common/lcms.c:1464
+#: ../plug-ins/common/lcms.c:1471
 msgid "Current Color Profile"
 msgstr "Profil de couleurs actuel"
 
-#: ../plug-ins/common/lcms.c:1479
+#: ../plug-ins/common/lcms.c:1486
 msgid "Convert to"
 msgstr "Convertir"
 
-#: ../plug-ins/common/lcms.c:1479
+#: ../plug-ins/common/lcms.c:1486
 msgid "Assign"
 msgstr "Assigner"
 
-#: ../plug-ins/common/lcms.c:1503
+#: ../plug-ins/common/lcms.c:1510
 msgid "_Rendering Intent:"
 msgstr "Destination du _rendu :"
 
-#: ../plug-ins/common/lcms.c:1519
+#: ../plug-ins/common/lcms.c:1526
 msgid "_Black Point Compensation"
 msgstr "_Compensation du point noir"
 
-#: ../plug-ins/common/lcms.c:1560
+#: ../plug-ins/common/lcms.c:1567
 msgid "Destination profile is not for RGB color space."
 msgstr "Le profil de destination n'est pas pour un espace de couleur RVB."
 
@@ -5426,51 +5426,51 @@ msgstr "Conserve les canaux ma_ximaux"
 msgid "Ho_ld the minimal channels"
 msgstr "Conserve les canaux _minimaux"
 
-#: ../plug-ins/common/mblur.c:155
+#: ../plug-ins/common/mblur.c:157 ../plug-ins/common/mblur.c:171
 msgid "Simulate movement using directional blur"
 msgstr "Simule un mouvement en utilisant un flou orienté dans une direction"
 
-#: ../plug-ins/common/mblur.c:162
+#: ../plug-ins/common/mblur.c:164 ../plug-ins/common/mblur.c:177
 msgid "_Motion Blur..."
 msgstr "Flou _cinétique..."
 
-#: ../plug-ins/common/mblur.c:897
+#: ../plug-ins/common/mblur.c:910
 msgid "Motion blurring"
 msgstr "Flou cinétique en cours"
 
-#: ../plug-ins/common/mblur.c:999
+#: ../plug-ins/common/mblur.c:1012
 msgid "Motion Blur"
 msgstr "Flou cinétique"
 
-#: ../plug-ins/common/mblur.c:1032
+#: ../plug-ins/common/mblur.c:1045
 msgid "Blur Type"
 msgstr "Type de flou"
 
-#: ../plug-ins/common/mblur.c:1036
+#: ../plug-ins/common/mblur.c:1049
 msgid "_Linear"
 msgstr "_Linéaire"
 
-#: ../plug-ins/common/mblur.c:1037
+#: ../plug-ins/common/mblur.c:1050
 msgid "_Radial"
 msgstr "_Radial"
 
-#: ../plug-ins/common/mblur.c:1038 ../plug-ins/imagemap/imap_menu.c:203
+#: ../plug-ins/common/mblur.c:1051 ../plug-ins/imagemap/imap_menu.c:203
 msgid "_Zoom"
 msgstr "_Zoom"
 
-#: ../plug-ins/common/mblur.c:1045
+#: ../plug-ins/common/mblur.c:1058
 msgid "Blur Center"
 msgstr "Centre du flou"
 
-#: ../plug-ins/common/mblur.c:1088
+#: ../plug-ins/common/mblur.c:1101
 msgid "Blur _outward"
 msgstr "Flou _extérieur"
 
-#: ../plug-ins/common/mblur.c:1101
+#: ../plug-ins/common/mblur.c:1114
 msgid "Blur Parameters"
 msgstr "Paramètres de flou"
 
-#: ../plug-ins/common/mblur.c:1125 ../plug-ins/common/newsprint.c:1001
+#: ../plug-ins/common/mblur.c:1138 ../plug-ins/common/newsprint.c:1001
 msgid "_Angle:"
 msgstr "_Angle :"
 
@@ -5663,6 +5663,7 @@ msgid "_FG/BG lighting"
 msgstr "É_clairage de l'AV/AR Plan"
 
 #: ../plug-ins/common/mosaic.c:2685
+#, c-format
 msgid "Unable to add additional point.\n"
 msgstr "Impossible d'ajouter d'autre points.\n"
 
@@ -5923,36 +5924,36 @@ msgstr "Peinture à l'_huile..."
 msgid "Oil painting"
 msgstr "Peinture à l'huile"
 
-#: ../plug-ins/common/oilify.c:774
+#: ../plug-ins/common/oilify.c:777
 msgid "Oilify"
 msgstr "Peinture à l'huile"
 
-#: ../plug-ins/common/oilify.c:812
+#: ../plug-ins/common/oilify.c:815
 msgid "_Mask size:"
 msgstr "_Taille du masque :"
 
 #.
 #. * Mask-size map check button
 #.
-#: ../plug-ins/common/oilify.c:827
+#: ../plug-ins/common/oilify.c:830
 msgid "Use m_ask-size map:"
 msgstr "Utiliser la carte de taille de masque :"
 
-#: ../plug-ins/common/oilify.c:864 ../plug-ins/common/sinus.c:922
+#: ../plug-ins/common/oilify.c:867 ../plug-ins/common/sinus.c:922
 msgid "_Exponent:"
 msgstr "_Exposant :"
 
 #.
 #. * Exponent map check button
 #.
-#: ../plug-ins/common/oilify.c:879
+#: ../plug-ins/common/oilify.c:882
 msgid "Use e_xponent map:"
 msgstr "Utiliser la carte d'_exposant :"
 
 #.
 #. * Intensity algorithm check button
 #.
-#: ../plug-ins/common/oilify.c:915
+#: ../plug-ins/common/oilify.c:918
 msgid "_Use intensity algorithm"
 msgstr "_Utiliser l'algorithme d'intensité"
 
@@ -6450,42 +6451,42 @@ msgstr ""
 "Si non coché, l'image sera circulairement transformée en un rectangle. Si "
 "cochée, l'image sera transformée en cercle."
 
-#: ../plug-ins/common/poppler.c:283
+#: ../plug-ins/common/poppler.c:285
 msgid "Portable Document Format"
 msgstr "PDF (Portable Document Format)"
 
-#: ../plug-ins/common/poppler.c:580
+#: ../plug-ins/common/poppler.c:606
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/poppler.c:582 ../plug-ins/common/postscript.c:1109
+#: ../plug-ins/common/poppler.c:608 ../plug-ins/common/postscript.c:1109
 #, c-format
 msgid "%s-pages"
 msgstr "%s-pages"
 
-#: ../plug-ins/common/poppler.c:760
+#: ../plug-ins/common/poppler.c:786
 msgid "Import from PDF"
 msgstr "Importation depuis un PDF"
 
-#: ../plug-ins/common/poppler.c:765 ../plug-ins/common/postscript.c:3081
+#: ../plug-ins/common/poppler.c:791 ../plug-ins/common/postscript.c:3081
 #: ../plug-ins/common/tiff-load.c:440
 msgid "_Import"
 msgstr "_Importer"
 
-#: ../plug-ins/common/poppler.c:831
+#: ../plug-ins/common/poppler.c:857
 msgid "_Width (pixels):"
 msgstr "_Largeur (pixels) :"
 
-#: ../plug-ins/common/poppler.c:832
+#: ../plug-ins/common/poppler.c:858
 msgid "_Height (pixels):"
 msgstr "_Hauteur (pixels) :"
 
-#: ../plug-ins/common/poppler.c:834
+#: ../plug-ins/common/poppler.c:860
 msgid "_Resolution:"
 msgstr "_Résolution :"
 
-#: ../plug-ins/common/poppler.c:1108
+#: ../plug-ins/common/poppler.c:1134
 #, c-format
 msgid "pixels/%s"
 msgstr "pixels/%s"
@@ -7171,13 +7172,9 @@ msgstr "Modifie aléatoirement et indépendamment teinte/saturation/valeur "
 msgid "HSV Noise..."
 msgstr "Brouillage TSV"
 
-#: ../plug-ins/common/scatter_hsv.c:215
+#: ../plug-ins/common/scatter_hsv.c:215 ../plug-ins/common/scatter_hsv.c:361
 msgid "HSV Noise"
 msgstr "Brouillage TSV"
-
-#: ../plug-ins/common/scatter_hsv.c:361
-msgid "Scatter HSV"
-msgstr "Dispersion TSV"
 
 #: ../plug-ins/common/scatter_hsv.c:397
 msgid "_Holdness:"
@@ -10599,35 +10596,35 @@ msgstr ""
 "Erreur d'analyse dans « %s » :\n"
 "%s"
 
-#: ../plug-ins/helpbrowser/dialog.c:216
+#: ../plug-ins/helpbrowser/dialog.c:217
 msgid "GIMP Help Browser"
 msgstr "Navigateur d'aide GIMP"
 
-#: ../plug-ins/helpbrowser/dialog.c:311
+#: ../plug-ins/helpbrowser/dialog.c:312
 msgid "Drag and drop this icon to a web browser"
 msgstr "Glissez et déposez cette icône dans un navigateur Web."
 
-#: ../plug-ins/helpbrowser/dialog.c:700
+#: ../plug-ins/helpbrowser/dialog.c:702
 msgid "Go back one page"
 msgstr "Allez en arrière d'une page"
 
-#: ../plug-ins/helpbrowser/dialog.c:705
+#: ../plug-ins/helpbrowser/dialog.c:707
 msgid "Go forward one page"
 msgstr "Allez en avant d'une page"
 
-#: ../plug-ins/helpbrowser/dialog.c:710
+#: ../plug-ins/helpbrowser/dialog.c:712
 msgid "Go to the index page"
 msgstr "Allez à la page d'index"
 
-#: ../plug-ins/helpbrowser/dialog.c:745
+#: ../plug-ins/helpbrowser/dialog.c:747
 msgid "Visit the GIMP documentation website"
 msgstr "Visiter le site Web de la documentation GIMP"
 
-#: ../plug-ins/helpbrowser/dialog.c:821
+#: ../plug-ins/helpbrowser/dialog.c:823
 msgid "Document not found"
 msgstr "Document non trouvé"
 
-#: ../plug-ins/helpbrowser/dialog.c:823
+#: ../plug-ins/helpbrowser/dialog.c:825
 msgid "The requested URL could not be loaded:"
 msgstr "L'URL demandée ne peut être chargée :"
 
@@ -11544,11 +11541,11 @@ msgstr "Suivant la donnée EXIF, cette image est tournée."
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr "Souhaitez-vous que GIMP la pivote vers son orientation normale ?"
 
-#: ../plug-ins/jpeg/jpeg-load.c:246
+#: ../plug-ins/jpeg/jpeg-load.c:241
 msgid "JPEG preview"
 msgstr "Aperçu JPEG"
 
-#: ../plug-ins/jpeg/jpeg-load.c:631 ../plug-ins/winicon/icoload.c:722
+#: ../plug-ins/jpeg/jpeg-load.c:626 ../plug-ins/winicon/icoload.c:722
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr "Ouverture de la vignette pour « %s »"
@@ -11748,6 +11745,7 @@ msgstr ""
 "fonctionnera pas optimalement."
 
 #: ../plug-ins/metadata/xmp-parse.c:240
+#, c-format
 msgid "Error: No XMP packet found"
 msgstr "Erreur : aucun paquet XMP trouvé"
 
@@ -12091,6 +12089,10 @@ msgstr ""
 "RLE aggressif\n"
 "(non pris en charge par SGI)"
 
+#: ../plug-ins/twain/twain.c:87
+msgid "Capture an image from a TWAIN datasource"
+msgstr "Capture une image depuis une source de données TWAIN"
+
 #: ../plug-ins/twain/twain.c:354
 msgid "_Scanner/Camera..."
 msgstr "_Scanneur/Appareil photo..."
@@ -12140,12 +12142,14 @@ msgid "Failed to write %s to '%s': %s"
 msgstr "Échec d'enregistrement %s vers « %s » : %s"
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:57
+#, c-format
 msgid "Could not initialize libcurl"
 msgstr "Ne peut initialiser libcurl"
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:160
+#, c-format
 msgid "Could not open output file for writing"
-msgstr "Impossible d'ouvrir le fichier « %s » en écriture"
+msgstr "Impossible d'ouvrir le fichier de sortie en écriture"
 
 #: ../plug-ins/uri/uri-backend-libcurl.c:198
 #, c-format
@@ -12351,3 +12355,6 @@ msgstr "Erreur : Impossible de lire le fichier de propriétés XJT « %s »."
 #, c-format
 msgid "Error: XJT property file '%s' is empty."
 msgstr "Erreur : le fichier de propriétés XJT « %s » est vide."
+
+#~ msgid "Scatter HSV"
+#~ msgstr "Dispersion TSV"
