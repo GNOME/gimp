@@ -1,4 +1,4 @@
-# translation of gimp-plug-ins.HEAD.pa.po to Punjabi
+# translation of gimp-plug-ins.HEAD.pa.po to Panjabi
 # Copyright (C) 2004 THE gimp-plug-ins'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the gimp-plug-ins package.
 #
@@ -6,19 +6,20 @@
 # Amanpreet Singh Alam <aalam@redhat.com>, 2004.
 # Amanpreet Singh Brar <amanpreetalam@yahoo.com>, 2005.
 # ASB <aalam@users.sf.net>, 2007.
+# A S Alam <aalam@users.sf.net>, 2007.
 msgid ""
 msgstr ""
 "Project-Id-Version: gimp-plug-ins.HEAD.pa\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-26 10:02+0100\n"
-"PO-Revision-Date: 2007-10-01 16:29+0530\n"
-"Last-Translator: ASB <aalam@users.sf.net>\n"
-"Language-Team: Punjabi <punjabi-l10n@users.sf.net>\n"
+"POT-Creation-Date: 2007-10-12 10:11+0100\n"
+"PO-Revision-Date: 2007-10-18 19:31+0530\n"
+"Last-Translator: A S Alam <aalam@users.sf.net>\n"
+"Language-Team: Panjabi <punjabi-l10n@users.sf.net>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"Plural-Forms: Plural-Forms: nplurals=2; plural=n != 1;\n"
 
 #: ../plug-ins/FractalExplorer/Dialogs.c:547
 #: ../plug-ins/gfig/gfig-dialog.c:274 ../plug-ins/gflare/gflare.c:883
@@ -385,11 +386,11 @@ msgstr "ਆਂਸ਼ਿਕ ਪੈਰਾਮੀਟਰਾਂ ਨੂੰ ਸੰਭਾ
 #: ../plug-ins/common/compressor.c:622 ../plug-ins/common/curve_bend.c:869
 #: ../plug-ins/common/dicom.c:296 ../plug-ins/common/gbr.c:348
 #: ../plug-ins/common/gif-load.c:309 ../plug-ins/common/gih.c:649
-#: ../plug-ins/common/lcms.c:789 ../plug-ins/common/lcms.c:1091
+#: ../plug-ins/common/lcms.c:798 ../plug-ins/common/lcms.c:1103
 #: ../plug-ins/common/mng.c:1121 ../plug-ins/common/pat.c:317
 #: ../plug-ins/common/pcx.c:344 ../plug-ins/common/pix.c:329
 #: ../plug-ins/common/png.c:703 ../plug-ins/common/pnm.c:482
-#: ../plug-ins/common/poppler.c:501 ../plug-ins/common/postscript.c:1021
+#: ../plug-ins/common/poppler.c:527 ../plug-ins/common/postscript.c:1021
 #: ../plug-ins/common/postscript.c:3029 ../plug-ins/common/psd-load.c:2156
 #: ../plug-ins/common/psp.c:1432 ../plug-ins/common/raw.c:243
 #: ../plug-ins/common/raw.c:645 ../plug-ins/common/spheredesigner.c:2010
@@ -400,7 +401,7 @@ msgstr "ਆਂਸ਼ਿਕ ਪੈਰਾਮੀਟਰਾਂ ਨੂੰ ਸੰਭਾ
 #: ../plug-ins/fits/fits.c:345 ../plug-ins/flame/flame.c:411
 #: ../plug-ins/gfig/gfig.c:434 ../plug-ins/gfli/gfli.c:429
 #: ../plug-ins/gfli/gfli.c:464 ../plug-ins/help/gimphelplocale.c:193
-#: ../plug-ins/jpeg/jpeg-load.c:93 ../plug-ins/jpeg/jpeg-load.c:876
+#: ../plug-ins/jpeg/jpeg-load.c:111 ../plug-ins/jpeg/jpeg-load.c:821
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:271
 #: ../plug-ins/uri/uri-backend-libcurl.c:186 ../plug-ins/winicon/icoload.c:651
 #: ../plug-ins/winicon/icoload.c:728 ../plug-ins/xjt/xjt.c:2545
@@ -605,7 +606,7 @@ msgid "Position"
 msgstr "ਸਥਿਤੀ"
 
 #: ../plug-ins/Lighting/lighting_ui.c:474 ../plug-ins/common/flarefx.c:772
-#: ../plug-ins/common/mblur.c:1081 ../plug-ins/common/nova.c:463
+#: ../plug-ins/common/mblur.c:1094 ../plug-ins/common/nova.c:463
 #: ../plug-ins/common/papertile.c:282 ../plug-ins/flame/flame.c:1227
 #: ../plug-ins/gflare/gflare.c:2651
 msgid "_X:"
@@ -617,7 +618,7 @@ msgid "Light source X position in XYZ space"
 msgstr "ਰੌਸ਼ਨੀ ਸਰੋਤ ਦੀ XYZ ਥਾਂ ਵਿੱਚ X ਸਥਿਤੀ"
 
 #: ../plug-ins/Lighting/lighting_ui.c:487 ../plug-ins/common/flarefx.c:777
-#: ../plug-ins/common/mblur.c:1086 ../plug-ins/common/nova.c:468
+#: ../plug-ins/common/mblur.c:1099 ../plug-ins/common/nova.c:468
 #: ../plug-ins/common/papertile.c:291 ../plug-ins/flame/flame.c:1241
 #: ../plug-ins/gflare/gflare.c:2655
 msgid "_Y:"
@@ -1098,7 +1099,7 @@ msgstr "ਅਰਧ-ਵਿਆਸ:"
 msgid "Cylinder radius"
 msgstr ""
 
-#: ../plug-ins/MapObject/mapobject_ui.c:1264 ../plug-ins/common/mblur.c:1112
+#: ../plug-ins/MapObject/mapobject_ui.c:1264 ../plug-ins/common/mblur.c:1125
 msgid "L_ength:"
 msgstr "ਲੰਬਾਈ:"
 
@@ -1144,14 +1145,14 @@ msgstr "ਗਲਤ ਕਲਰ-ਮੈਪ"
 #: ../plug-ins/common/gif-load.c:314 ../plug-ins/common/gih.c:654
 #: ../plug-ins/common/pat.c:322 ../plug-ins/common/pcx.c:349
 #: ../plug-ins/common/pix.c:334 ../plug-ins/common/png.c:710
-#: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:546
+#: ../plug-ins/common/pnm.c:487 ../plug-ins/common/poppler.c:572
 #: ../plug-ins/common/postscript.c:1027 ../plug-ins/common/psd-load.c:2161
 #: ../plug-ins/common/raw.c:650 ../plug-ins/common/sunras.c:470
 #: ../plug-ins/common/tga.c:428 ../plug-ins/common/tiff-load.c:558
 #: ../plug-ins/common/wmf.c:956 ../plug-ins/common/xbm.c:725
 #: ../plug-ins/common/xpm.c:343 ../plug-ins/common/xwd.c:506
 #: ../plug-ins/faxg3/faxg3.c:204 ../plug-ins/gfli/gfli.c:469
-#: ../plug-ins/jpeg/jpeg-load.c:99 ../plug-ins/sgi/sgi.c:318
+#: ../plug-ins/jpeg/jpeg-load.c:117 ../plug-ins/sgi/sgi.c:318
 #: ../plug-ins/winicon/icoload.c:645 ../plug-ins/xjt/xjt.c:3344
 #, c-format
 msgid "Opening '%s'"
@@ -1206,8 +1207,8 @@ msgstr ""
 #: ../plug-ins/common/tile.c:267 ../plug-ins/common/xbm.c:880
 #: ../plug-ins/faxg3/faxg3.c:464 ../plug-ins/fits/fits.c:511
 #: ../plug-ins/gfig/gfig-dialog.c:1284
-#: ../plug-ins/gimpressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:244
-#: ../plug-ins/jpeg/jpeg-load.c:789 ../plug-ins/sgi/sgi.c:369
+#: ../plug-ins/gimpressionist/general.c:122 ../plug-ins/jpeg/jpeg-load.c:249
+#: ../plug-ins/jpeg/jpeg-load.c:752 ../plug-ins/sgi/sgi.c:369
 #: ../plug-ins/twain/twain.c:571 ../plug-ins/winsnap/winsnap.c:1155
 msgid "Background"
 msgstr "ਬੈਕਗਰਾਊਂਡ"
@@ -1673,7 +1674,7 @@ msgstr "ਅੰਤਰਲੰਬ :"
 msgid "Seed of Random (only for \"From Seed\" Modes)"
 msgstr ""
 
-#: ../plug-ins/common/CML_explorer.c:1372 ../plug-ins/maze/maze_face.c:266
+#: ../plug-ins/common/CML_explorer.c:1372 ../plug-ins/maze/maze_face.c:267
 msgid "Seed:"
 msgstr "ਅਰੰਭ:"
 
@@ -4238,8 +4239,8 @@ msgstr ""
 msgid "Opening '%s' (frame %d)"
 msgstr ""
 
-#: ../plug-ins/common/gif-load.c:933 ../plug-ins/common/iwarp.c:796
-#: ../plug-ins/common/iwarp.c:831
+#: ../plug-ins/common/gif-load.c:933 ../plug-ins/common/iwarp.c:793
+#: ../plug-ins/common/iwarp.c:828
 #, c-format
 msgid "Frame %d"
 msgstr "ਫਰੇਮ %d"
@@ -4742,101 +4743,101 @@ msgstr ""
 msgid "_IWarp..."
 msgstr "_IWarp..."
 
-#: ../plug-ins/common/iwarp.c:702
+#: ../plug-ins/common/iwarp.c:699
 msgid "Warping"
 msgstr "ਸਮੇਟਣਾ"
 
-#: ../plug-ins/common/iwarp.c:807
+#: ../plug-ins/common/iwarp.c:804
 #, c-format
 msgid "Warping Frame %d"
 msgstr "ਸਮੇਟਣ ਫਰੇਮ %d"
 
-#: ../plug-ins/common/iwarp.c:819
+#: ../plug-ins/common/iwarp.c:816
 msgid "Ping pong"
 msgstr "ਪਿੰਗ-ਪੋਂਗ"
 
-#: ../plug-ins/common/iwarp.c:1025
+#: ../plug-ins/common/iwarp.c:1022
 msgid "A_nimate"
 msgstr "ਐਨੀਮੇਂਟ(_n)"
 
-#: ../plug-ins/common/iwarp.c:1044
+#: ../plug-ins/common/iwarp.c:1041
 msgid "Number of _frames:"
 msgstr "ਫਰੇਮਾਂ ਦੀ ਗਿਣਤੀ(_f):"
 
-#: ../plug-ins/common/iwarp.c:1053
+#: ../plug-ins/common/iwarp.c:1050
 msgid "R_everse"
 msgstr "ਉਲਟ(_e)"
 
-#: ../plug-ins/common/iwarp.c:1062
+#: ../plug-ins/common/iwarp.c:1059
 msgid "_Ping pong"
 msgstr "ਪਿੰਗ ਪਾਂਗ(_P)"
 
-#: ../plug-ins/common/iwarp.c:1075
+#: ../plug-ins/common/iwarp.c:1072
 msgid "_Animate"
 msgstr "ਸਜੀਵਤਾ(_A)"
 
-#: ../plug-ins/common/iwarp.c:1096
+#: ../plug-ins/common/iwarp.c:1093
 msgid "Deform Mode"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1109
+#: ../plug-ins/common/iwarp.c:1106
 msgid "_Move"
 msgstr "ਭੇਜੋ(_M)"
 
-#: ../plug-ins/common/iwarp.c:1110
+#: ../plug-ins/common/iwarp.c:1107
 msgid "_Grow"
 msgstr "ਉਘਾੜੋ(_G)"
 
-#: ../plug-ins/common/iwarp.c:1111
+#: ../plug-ins/common/iwarp.c:1108
 msgid "S_wirl CCW"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1112
+#: ../plug-ins/common/iwarp.c:1109
 msgid "Remo_ve"
 msgstr "ਹਟਾਓ(_v)"
 
-#: ../plug-ins/common/iwarp.c:1113
+#: ../plug-ins/common/iwarp.c:1110
 msgid "S_hrink"
 msgstr "ਸੁੰਘੜੋ(_h)"
 
-#: ../plug-ins/common/iwarp.c:1114
+#: ../plug-ins/common/iwarp.c:1111
 msgid "Sw_irl CW"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1143
+#: ../plug-ins/common/iwarp.c:1140
 msgid "_Deform radius:"
 msgstr "ਡੀਫਾਰਮ ਰੇਡੀਅਸ(_D):"
 
-#: ../plug-ins/common/iwarp.c:1153
+#: ../plug-ins/common/iwarp.c:1150
 msgid "D_eform amount:"
 msgstr "ਡੀਫਾਰਮ ਮਾਤਰਾ(_e):"
 
-#: ../plug-ins/common/iwarp.c:1162
+#: ../plug-ins/common/iwarp.c:1159
 msgid "_Bilinear"
 msgstr "ਬਾਈਲੀਨੀਅਰ(_B)"
 
-#: ../plug-ins/common/iwarp.c:1176
+#: ../plug-ins/common/iwarp.c:1173
 msgid "Adaptive s_upersample"
 msgstr ""
 
-#: ../plug-ins/common/iwarp.c:1196
+#: ../plug-ins/common/iwarp.c:1193
 msgid "Ma_x depth:"
 msgstr "ਵੱਧੋ-ਵੱਧ ਡੂੰਘਾਈ(_x):"
 
-#: ../plug-ins/common/iwarp.c:1206
+#: ../plug-ins/common/iwarp.c:1203
 msgid "Thresho_ld:"
 msgstr "ਥਰੱਸ਼ਹੋਲਡ(_l):"
 
-#: ../plug-ins/common/iwarp.c:1219 ../plug-ins/common/sinus.c:771
+#: ../plug-ins/common/iwarp.c:1216 ../plug-ins/common/sinus.c:771
 #: ../plug-ins/gflare/gflare.c:2793
 msgid "_Settings"
 msgstr "ਸਥਾਪਨ(_S)"
 
-#: ../plug-ins/common/iwarp.c:1268
+#: ../plug-ins/common/iwarp.c:1265
 msgid "IWarp"
 msgstr "IWarp"
 
-#: ../plug-ins/common/iwarp.c:1304
+#: ../plug-ins/common/iwarp.c:1301
 msgid ""
 "Click and drag in the preview to define the distortions to apply to the "
 "image."
@@ -4923,143 +4924,143 @@ msgstr "ਲੈਪਲੈਸ(_L)"
 msgid "Cleanup"
 msgstr "ਸਾਫ਼ ਕਰੋ"
 
-#: ../plug-ins/common/lcms.c:221
+#: ../plug-ins/common/lcms.c:222
 msgid "Set a color profile on the image"
 msgstr "ਚਿੱਤਰ ਉੱਤੇ ਕਲਰ ਪਰੋਫਾਇਲ ਸੈੱਟ ਕਰੋ"
 
-#: ../plug-ins/common/lcms.c:228
+#: ../plug-ins/common/lcms.c:229
 msgid "_Assign Color Profile..."
 msgstr "ਕਲਰ ਪਰੋਫਾਇਲ ਲਾਗੂ ਕਰੋ(_A)..."
 
-#: ../plug-ins/common/lcms.c:244
+#: ../plug-ins/common/lcms.c:245
 msgid "Assign default RGB Profile"
 msgstr "ਡਿਫਾਲਟ RGB ਪਰੋਫਾਇਲ ਲਾਗੂ ਕਰੋ"
 
-#: ../plug-ins/common/lcms.c:251
+#: ../plug-ins/common/lcms.c:252
 msgid "Apply a color profile on the image"
 msgstr "ਚਿੱਤਰ ਉੱਤੇ ਕਲਰ ਪਰੋਫਾਇਲ ਲਾਗੂ ਕਰੋ"
 
-#: ../plug-ins/common/lcms.c:261
+#: ../plug-ins/common/lcms.c:262
 msgid "_Convert to Color Profile..."
 msgstr "ਕਲਰ ਪਰੋਫਾਇਲ 'ਚ ਬਦਲੋ(_C)..."
 
-#: ../plug-ins/common/lcms.c:279
+#: ../plug-ins/common/lcms.c:280
 msgid "Convert to default RGB Profile"
 msgstr "ਡਿਫਾਲਟ RGB ਪਰੋਫਾਇਲ 'ਚ ਬਦਲੋ"
 
-#: ../plug-ins/common/lcms.c:293
+#: ../plug-ins/common/lcms.c:294
 msgid "Image Color Profile Information"
 msgstr "ਚਿੱਤਰ ਕਲਰ ਪਰੋਫਾਇਲ ਜਾਣਕਾਰੀ"
 
-#: ../plug-ins/common/lcms.c:307
+#: ../plug-ins/common/lcms.c:308
 msgid "Color Profile Information"
 msgstr "ਕਲਰ ਪਰੋਫਾਇਲ ਜਾਣਕਾਰੀ"
 
-#: ../plug-ins/common/lcms.c:563
+#: ../plug-ins/common/lcms.c:571
 #, c-format
 msgid "Color profile '%s' is not for RGB color space."
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:670
+#: ../plug-ins/common/lcms.c:678
 msgid "Default RGB working space"
 msgstr "ਡਿਫਾਲਟ RGB ਵਰਕਿੰਗ ਸਪੇਸ"
 
-#: ../plug-ins/common/lcms.c:758
+#: ../plug-ins/common/lcms.c:766
 msgid "Data attached as 'icc-profile' does not appear to be an ICC color profile"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:808
+#: ../plug-ins/common/lcms.c:817
 #, c-format
 msgid "'%s' does not appear to be an ICC color profile"
 msgstr "'%s' ਇੱਕ ICC ਕਲਰ ਪਰੋਫਾਇਲ ਨਹੀਂ ਜਾਪਦਾ ਹੈ"
 
 #. ICC color profile conversion
-#: ../plug-ins/common/lcms.c:863
+#: ../plug-ins/common/lcms.c:875
 #, c-format
 msgid "Converting from '%s' to '%s'"
 msgstr "'%s' ਤੋਂ '%s' ਬਦਲਿਆ ਜਾ ਰਿਹਾ ਹੈ"
 
-#: ../plug-ins/common/lcms.c:1110
+#: ../plug-ins/common/lcms.c:1122
 #, c-format
 msgid "Could not load ICC profile from '%s'"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1132
+#: ../plug-ins/common/lcms.c:1144
 #, c-format
 msgid "The image '%s' has an embedded color profile:"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1176
+#: ../plug-ins/common/lcms.c:1188
 #, c-format
 msgid "Convert the image to the RGB working space (%s)?"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1207
+#: ../plug-ins/common/lcms.c:1219
 msgid "Convert to RGB working space?"
 msgstr "ਕੀ RGB ਵਰਕਿੰਗ ਸਪੇਸ 'ਚ ਬਦਲਣਾ ਹੈ?"
 
-#: ../plug-ins/common/lcms.c:1212
+#: ../plug-ins/common/lcms.c:1224
 msgid "_Keep"
 msgstr "ਰੱਖੋ(_K)"
 
-#: ../plug-ins/common/lcms.c:1217
+#: ../plug-ins/common/lcms.c:1229
 msgid "_Convert"
 msgstr "ਕਨਵਰਟ(_I)"
 
-#: ../plug-ins/common/lcms.c:1244 ../plug-ins/jpeg/jpeg-exif.c:372
+#: ../plug-ins/common/lcms.c:1256 ../plug-ins/jpeg/jpeg-exif.c:372
 msgid "_Don't ask me again"
 msgstr "ਮੈਨੂੰ ਮੁੜ ਨਾ ਪੁੱਛੋ(_D)"
 
-#: ../plug-ins/common/lcms.c:1308
+#: ../plug-ins/common/lcms.c:1320
 msgid "Select destination profile"
 msgstr "ਟਿਕਾਣਾ ਪਰੋਫਾਇਲ ਚੁਣੋ"
 
-#: ../plug-ins/common/lcms.c:1335
+#: ../plug-ins/common/lcms.c:1347
 msgid "All files (*.*)"
 msgstr "ਸਭ ਫਾਇਲ (*.*)"
 
-#: ../plug-ins/common/lcms.c:1340
+#: ../plug-ins/common/lcms.c:1352
 msgid "ICC color profile (*.icc, *.icm)"
 msgstr "ICC ਰੰਗ ਪਰੋਫਾਇਲ (*.icc, *.icm)"
 
-#: ../plug-ins/common/lcms.c:1383
+#: ../plug-ins/common/lcms.c:1395
 #, c-format
 msgid "RGB workspace (%s)"
 msgstr "RGB ਵਰਕਸਪੇਸ (%s)"
 
-#: ../plug-ins/common/lcms.c:1433
+#: ../plug-ins/common/lcms.c:1445
 msgid "Convert to ICC Color Profile"
 msgstr "ICC ਕਲਰ ਪਰੋਫਾਇਲ 'ਚ ਬਦਲੋ"
 
-#: ../plug-ins/common/lcms.c:1434
+#: ../plug-ins/common/lcms.c:1446
 msgid "Assign ICC Color Profile"
 msgstr "ICC ਕਲਰ ਪਰੋਫਾਇਲ ਦਿਓ"
 
-#: ../plug-ins/common/lcms.c:1442
+#: ../plug-ins/common/lcms.c:1454
 msgid "_Assign"
 msgstr "ਜਾਰੀ ਕਰੋ(_A)"
 
-#: ../plug-ins/common/lcms.c:1459
+#: ../plug-ins/common/lcms.c:1471
 msgid "Current Color Profile"
 msgstr "ਮੌਜੂਦਾ ਕਲਰ ਪਰੋਫਾਇਲ"
 
-#: ../plug-ins/common/lcms.c:1474
+#: ../plug-ins/common/lcms.c:1486
 msgid "Convert to"
 msgstr "ਬਦਲੋ"
 
-#: ../plug-ins/common/lcms.c:1474
+#: ../plug-ins/common/lcms.c:1486
 msgid "Assign"
 msgstr "ਜਾਰੀ"
 
-#: ../plug-ins/common/lcms.c:1498
+#: ../plug-ins/common/lcms.c:1510
 msgid "_Rendering Intent:"
 msgstr ""
 
-#: ../plug-ins/common/lcms.c:1514
+#: ../plug-ins/common/lcms.c:1526
 msgid "_Black Point Compensation"
 msgstr "ਬਲੈਕ ਪੁਆਇੰਟ ਪੂਰਤੀ(_B)"
 
-#: ../plug-ins/common/lcms.c:1554
+#: ../plug-ins/common/lcms.c:1567
 msgid "Destination profile is not for RGB color space."
 msgstr ""
 
@@ -5320,51 +5321,51 @@ msgstr ""
 msgid "Ho_ld the minimal channels"
 msgstr ""
 
-#: ../plug-ins/common/mblur.c:155
+#: ../plug-ins/common/mblur.c:157 ../plug-ins/common/mblur.c:171
 msgid "Simulate movement using directional blur"
 msgstr ""
 
-#: ../plug-ins/common/mblur.c:162
+#: ../plug-ins/common/mblur.c:164 ../plug-ins/common/mblur.c:177
 msgid "_Motion Blur..."
 msgstr ""
 
-#: ../plug-ins/common/mblur.c:897
+#: ../plug-ins/common/mblur.c:910
 msgid "Motion blurring"
 msgstr ""
 
-#: ../plug-ins/common/mblur.c:999
+#: ../plug-ins/common/mblur.c:1012
 msgid "Motion Blur"
 msgstr "ਗਤੀ ਧੱਬਾ"
 
-#: ../plug-ins/common/mblur.c:1032
+#: ../plug-ins/common/mblur.c:1045
 msgid "Blur Type"
 msgstr ""
 
-#: ../plug-ins/common/mblur.c:1036
+#: ../plug-ins/common/mblur.c:1049
 msgid "_Linear"
 msgstr "ਲੀਨੀਅਰ(_L)"
 
-#: ../plug-ins/common/mblur.c:1037
+#: ../plug-ins/common/mblur.c:1050
 msgid "_Radial"
 msgstr "ਰੇਡੀਕਲ(_R)"
 
-#: ../plug-ins/common/mblur.c:1038 ../plug-ins/imagemap/imap_menu.c:203
+#: ../plug-ins/common/mblur.c:1051 ../plug-ins/imagemap/imap_menu.c:203
 msgid "_Zoom"
 msgstr "ਜ਼ੂਮ(_Z)"
 
-#: ../plug-ins/common/mblur.c:1045
+#: ../plug-ins/common/mblur.c:1058
 msgid "Blur Center"
 msgstr ""
 
-#: ../plug-ins/common/mblur.c:1088
+#: ../plug-ins/common/mblur.c:1101
 msgid "Blur _outward"
 msgstr ""
 
-#: ../plug-ins/common/mblur.c:1101
+#: ../plug-ins/common/mblur.c:1114
 msgid "Blur Parameters"
 msgstr ""
 
-#: ../plug-ins/common/mblur.c:1125 ../plug-ins/common/newsprint.c:1001
+#: ../plug-ins/common/mblur.c:1138 ../plug-ins/common/newsprint.c:1001
 msgid "_Angle:"
 msgstr "ਕੋਣ(_A):"
 
@@ -5812,36 +5813,36 @@ msgstr "ਓਅਲਫਾਈ(_f)..."
 msgid "Oil painting"
 msgstr "ਤੇਲ ਪੇਟਿੰਗ"
 
-#: ../plug-ins/common/oilify.c:774
+#: ../plug-ins/common/oilify.c:777
 msgid "Oilify"
 msgstr ""
 
-#: ../plug-ins/common/oilify.c:812
+#: ../plug-ins/common/oilify.c:815
 msgid "_Mask size:"
 msgstr "ਮਾਸਕ ਆਕਾਰ(_M):"
 
 #.
 #. * Mask-size map check button
 #.
-#: ../plug-ins/common/oilify.c:827
+#: ../plug-ins/common/oilify.c:830
 msgid "Use m_ask-size map:"
 msgstr ""
 
-#: ../plug-ins/common/oilify.c:864 ../plug-ins/common/sinus.c:922
+#: ../plug-ins/common/oilify.c:867 ../plug-ins/common/sinus.c:922
 msgid "_Exponent:"
 msgstr ""
 
 #.
 #. * Exponent map check button
 #.
-#: ../plug-ins/common/oilify.c:879
+#: ../plug-ins/common/oilify.c:882
 msgid "Use e_xponent map:"
 msgstr ""
 
 #.
 #. * Intensity algorithm check button
 #.
-#: ../plug-ins/common/oilify.c:915
+#: ../plug-ins/common/oilify.c:918
 msgid "_Use intensity algorithm"
 msgstr ""
 
@@ -6332,42 +6333,42 @@ msgid ""
 "checked the image will be mapped onto a circle."
 msgstr ""
 
-#: ../plug-ins/common/poppler.c:283
+#: ../plug-ins/common/poppler.c:285
 msgid "Portable Document Format"
 msgstr "ਪੋਰਟੇਬਲ ਡਾਕੂਮਿੰਟ ਫਾਰਮੈਟ(PDF)"
 
-#: ../plug-ins/common/poppler.c:580
+#: ../plug-ins/common/poppler.c:606
 #, c-format
 msgid "%s-%s"
 msgstr "%s-%s"
 
-#: ../plug-ins/common/poppler.c:582 ../plug-ins/common/postscript.c:1109
+#: ../plug-ins/common/poppler.c:608 ../plug-ins/common/postscript.c:1109
 #, c-format
 msgid "%s-pages"
 msgstr "%s-ਸਫ਼ੇ"
 
-#: ../plug-ins/common/poppler.c:760
+#: ../plug-ins/common/poppler.c:786
 msgid "Import from PDF"
 msgstr "PDF ਤੋਂ ਅਯਾਤ ਕਰੋ"
 
-#: ../plug-ins/common/poppler.c:765 ../plug-ins/common/postscript.c:3081
+#: ../plug-ins/common/poppler.c:791 ../plug-ins/common/postscript.c:3081
 #: ../plug-ins/common/tiff-load.c:440
 msgid "_Import"
 msgstr "ਇੰਪੋਰਟ ਕਰੋ(_I)"
 
-#: ../plug-ins/common/poppler.c:831
+#: ../plug-ins/common/poppler.c:857
 msgid "_Width (pixels):"
 msgstr "ਚੌੜਾਈ (ਪਿਕਸਲ) (_W):"
 
-#: ../plug-ins/common/poppler.c:832
+#: ../plug-ins/common/poppler.c:858
 msgid "_Height (pixels):"
 msgstr "ਉਚਾਈ (ਪਿਕਸਲ) (_H):"
 
-#: ../plug-ins/common/poppler.c:834
+#: ../plug-ins/common/poppler.c:860
 msgid "_Resolution:"
 msgstr "ਰੈਜ਼ੋਲੇਸ਼ਨ(_R):"
 
-#: ../plug-ins/common/poppler.c:1108
+#: ../plug-ins/common/poppler.c:1134
 #, c-format
 msgid "pixels/%s"
 msgstr "ਪਿਕਸਲ/%s"
@@ -6401,9 +6402,8 @@ msgid ""
 "location.\n"
 "(%s)"
 msgstr ""
-"ਗੋਸਟ-ਸਕ੍ਰਿਪਟ ਸ਼ੁਰੂ ਕਰਨ ਦੌਰਾਨ ਗਲਤੀ ਹੈ। ਚੈੱਕ ਕਰੋ ਕਿ ਗੋਸਟ-ਸਕ੍ਰਿਪਟ ਇੰਸਟਾਲ ਹੈ ਅਤੇ "
-"- ਜੇ ਲੋੜ ਹੋਵੇ ਤਾਂ GS_PROG ਇੰਵਾਇਰਨਮਿੰਟ ਵੇਰੀਬਲ ਰਾਹੀਂ ਜੈਮਪ ਨੂੰ ਇਸ ਦਾ ਟਿਕਾਣਾ "
-"ਵੀ ਦੱਸੋ।\n"
+"ਗੋਸਟ-ਸਕ੍ਰਿਪਟ ਸ਼ੁਰੂ ਕਰਨ ਦੌਰਾਨ ਗਲਤੀ ਹੈ। ਚੈੱਕ ਕਰੋ ਕਿ ਗੋਸਟ-ਸਕ੍ਰਿਪਟ ਇੰਸਟਾਲ ਹੈ ਅਤੇ - ਜੇ ਲੋੜ ਹੋਵੇ ਤਾਂ "
+"GS_PROG ਇੰਵਾਇਰਨਮਿੰਟ ਵੇਰੀਬਲ ਰਾਹੀਂ ਜੈਮਪ ਨੂੰ ਇਸ ਦਾ ਟਿਕਾਣਾ ਵੀ ਦੱਸੋ।\n"
 "(%s)"
 
 #: ../plug-ins/common/postscript.c:1911 ../plug-ins/common/tiff-load.c:944
@@ -7035,13 +7035,9 @@ msgstr ""
 msgid "HSV Noise..."
 msgstr "HSV ਨੋਵਾਈਸ..."
 
-#: ../plug-ins/common/scatter_hsv.c:215
+#: ../plug-ins/common/scatter_hsv.c:215 ../plug-ins/common/scatter_hsv.c:361
 msgid "HSV Noise"
 msgstr "HSV ਨੋਵਾਈਸ"
-
-#: ../plug-ins/common/scatter_hsv.c:361
-msgid "Scatter HSV"
-msgstr ""
 
 #: ../plug-ins/common/scatter_hsv.c:397
 msgid "_Holdness:"
@@ -8912,8 +8908,8 @@ msgid ""
 "XWD-file %s has format %d, depth %d and bits per pixel %d. Currently this is "
 "not supported."
 msgstr ""
-"XWD-ਫਾਇਲ %s ਦਾ ਫਾਰਮੈਟ %d, ਡੂੰਘਾਈ %d ਅਤੇ %d ਬਿੱਟ ਪ੍ਰਤੀ ਪਿਕਸਲ ਹਨ। ਇਸ ਸਮੇਂ ਇਹ "
-"ਸਹਿਯੋਗੀ ਨਹੀਂ ਹੈ।"
+"XWD-ਫਾਇਲ %s ਦਾ ਫਾਰਮੈਟ %d, ਡੂੰਘਾਈ %d ਅਤੇ %d ਬਿੱਟ ਪ੍ਰਤੀ ਪਿਕਸਲ ਹਨ। ਇਸ ਸਮੇਂ ਇਹ ਸਹਿਯੋਗੀ "
+"ਨਹੀਂ ਹੈ।"
 
 #: ../plug-ins/common/xwd.c:578
 msgid "Cannot save images with alpha channels."
@@ -9324,9 +9320,7 @@ msgstr "ਕਾਪੀ ਕਰੋ"
 msgid ""
 "Layer background type. Copy causes the previous layer to be copied before "
 "the draw is performed."
-msgstr ""
-"ਲੇਅਰ ਬੈਕਗਰਾਊਂਡ ਟਾਇਪ ਹੈ। ਕਾਪੀ ਨਾਲ ਪਿਛਲੀ ਲੇਅਰ ਨੂੰ ਡਰਾਅ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਕਾਪੀ ਕੀਤਾ "
-"ਜਾਵੇਗਾ।"
+msgstr "ਲੇਅਰ ਬੈਕਗਰਾਊਂਡ ਟਾਇਪ ਹੈ। ਕਾਪੀ ਨਾਲ ਪਿਛਲੀ ਲੇਅਰ ਨੂੰ ਡਰਾਅ ਕਰਨ ਤੋਂ ਪਹਿਲਾਂ ਕਾਪੀ ਕੀਤਾ ਜਾਵੇਗਾ।"
 
 #: ../plug-ins/gfig/gfig-dialog.c:1302
 msgid "Background:"
@@ -9848,7 +9842,7 @@ msgid "Selects if to place strokes all the way out to the edges of the image"
 msgstr ""
 
 #. Tileable checkbox
-#: ../plug-ins/gimpressionist/general.c:195 ../plug-ins/maze/maze_face.c:283
+#: ../plug-ins/gimpressionist/general.c:195 ../plug-ins/maze/maze_face.c:284
 msgid "Tileable"
 msgstr "ਟਾਇਲੇਬਲ"
 
@@ -10374,35 +10368,35 @@ msgid ""
 "%s"
 msgstr ""
 
-#: ../plug-ins/helpbrowser/dialog.c:216
+#: ../plug-ins/helpbrowser/dialog.c:217
 msgid "GIMP Help Browser"
 msgstr "ਜੈਮਪ ਮੱਦਦ ਬਰਾਊਜ਼ਰ"
 
-#: ../plug-ins/helpbrowser/dialog.c:311
+#: ../plug-ins/helpbrowser/dialog.c:312
 msgid "Drag and drop this icon to a web browser"
 msgstr ""
 
-#: ../plug-ins/helpbrowser/dialog.c:700
+#: ../plug-ins/helpbrowser/dialog.c:702
 msgid "Go back one page"
 msgstr ""
 
-#: ../plug-ins/helpbrowser/dialog.c:705
+#: ../plug-ins/helpbrowser/dialog.c:707
 msgid "Go forward one page"
 msgstr ""
 
-#: ../plug-ins/helpbrowser/dialog.c:710
+#: ../plug-ins/helpbrowser/dialog.c:712
 msgid "Go to the index page"
 msgstr ""
 
-#: ../plug-ins/helpbrowser/dialog.c:745
+#: ../plug-ins/helpbrowser/dialog.c:747
 msgid "Visit the GIMP documentation website"
 msgstr ""
 
-#: ../plug-ins/helpbrowser/dialog.c:821
+#: ../plug-ins/helpbrowser/dialog.c:823
 msgid "Document not found"
 msgstr ""
 
-#: ../plug-ins/helpbrowser/dialog.c:823
+#: ../plug-ins/helpbrowser/dialog.c:825
 msgid "The requested URL could not be loaded:"
 msgstr ""
 
@@ -11313,11 +11307,11 @@ msgstr ""
 msgid "Would you like GIMP to rotate it into the standard orientation?"
 msgstr ""
 
-#: ../plug-ins/jpeg/jpeg-load.c:236
+#: ../plug-ins/jpeg/jpeg-load.c:241
 msgid "JPEG preview"
 msgstr ""
 
-#: ../plug-ins/jpeg/jpeg-load.c:655 ../plug-ins/winicon/icoload.c:722
+#: ../plug-ins/jpeg/jpeg-load.c:626 ../plug-ins/winicon/icoload.c:722
 #, c-format
 msgid "Opening thumbnail for '%s'"
 msgstr ""
@@ -11345,7 +11339,7 @@ msgstr "ਗੁਣਵੱਤਾ(_Q):"
 
 #: ../plug-ins/jpeg/jpeg-save.c:859
 msgid "JPEG quality parameter"
-msgstr ""
+msgstr "JPEG ਕੁਆਲਟੀ ਪੈਰਾਮੀਟਰ"
 
 #: ../plug-ins/jpeg/jpeg-save.c:874
 msgid "Enable preview to obtain the file size."
@@ -11353,7 +11347,7 @@ msgstr ""
 
 #: ../plug-ins/jpeg/jpeg-save.c:885
 msgid "Show _preview in image window"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਵਿੰਡੋ ਵਿੱਚ ਝਲਕ ਵੇਖੋ(_p)"
 
 #: ../plug-ins/jpeg/jpeg-save.c:926
 msgid "_Smoothing:"
@@ -11361,7 +11355,7 @@ msgstr "ਮੁਲਾਇਮ(_S):"
 
 #: ../plug-ins/jpeg/jpeg-save.c:939
 msgid "Frequency (rows):"
-msgstr ""
+msgstr "ਫਰੀਕਿਊਂਸੀ (ਕਤਾਰ):"
 
 #: ../plug-ins/jpeg/jpeg-save.c:955
 msgid "Use restart markers"
@@ -11386,7 +11380,7 @@ msgstr "ਥੰਮਨੇਲ ਸੰਭਾਲੋ"
 #. XMP metadata
 #: ../plug-ins/jpeg/jpeg-save.c:1032
 msgid "Save XMP data"
-msgstr ""
+msgstr "XMP ਡਾਟਾ ਸੰਭਾਲੋ"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1047
 msgid "Use quality settings from original image"
@@ -11406,24 +11400,24 @@ msgstr ""
 
 #: ../plug-ins/jpeg/jpeg-save.c:1084
 msgid "1x1,1x1,1x1 (best quality)"
-msgstr ""
+msgstr "1x1,1x1,1x1 (ਸਭ ਤੋਂ ਵਧੀਆ ਕੁਆਲਟੀ)"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1085
 msgid "2x1,1x1,1x1 (4:2:2)"
-msgstr ""
+msgstr "2x1,1x1,1x1 (4:2:2)"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1086
 msgid "1x2,1x1,1x1"
-msgstr ""
+msgstr "1x2,1x1,1x1"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1087
 msgid "2x2,1x1,1x1 (smallest file)"
-msgstr ""
+msgstr "2x2,1x1,1x1 (ਸਭ ਤੋਂ ਛੋਟੀ ਫਾਇਲ)"
 
 #. DCT method
 #: ../plug-ins/jpeg/jpeg-save.c:1111
 msgid "DCT method:"
-msgstr ""
+msgstr "DCT ਢੰਗ:"
 
 #: ../plug-ins/jpeg/jpeg-save.c:1117
 msgid "Fast Integer"
@@ -11443,11 +11437,11 @@ msgstr "ਟਿੱਪਣੀ"
 
 #: ../plug-ins/jpeg/jpeg.c:137 ../plug-ins/jpeg/jpeg.c:175
 msgid "JPEG image"
-msgstr ""
+msgstr "JPEG ਚਿੱਤਰ"
 
 #: ../plug-ins/jpeg/jpeg.c:301
 msgid "Export Preview"
-msgstr ""
+msgstr "ਝਲਕ ਐਕਸਪੋਰਟ"
 
 #: ../plug-ins/maze/algorithms.c:289
 msgid "Constructing maze using Prim's Algorithm"
@@ -11463,48 +11457,48 @@ msgstr ""
 
 #: ../plug-ins/maze/maze.c:160
 msgid "_Maze..."
-msgstr ""
+msgstr "ਮੇਇਜ਼(_M)..."
 
 #: ../plug-ins/maze/maze.c:449
 msgid "Drawing maze"
-msgstr ""
+msgstr "ਡਰਾਇੰਗ ਮੇਇਜ਼"
 
 #: ../plug-ins/maze/maze.h:22
 msgid "Maze"
-msgstr "ਮਾਜ਼ੇ"
+msgstr "ਮੇਇਜ਼"
 
 #. The maze size frame
-#: ../plug-ins/maze/maze_face.c:199
+#: ../plug-ins/maze/maze_face.c:200
 msgid "Maze Size"
 msgstr "ਮਜ਼ੇ ਆਕਾਰ"
 
 #. entscale == Entry and Scale pair function found in pixelize.c
-#: ../plug-ins/maze/maze_face.c:213
+#: ../plug-ins/maze/maze_face.c:214
 msgid "Width (pixels):"
 msgstr "ਚੌੜਾਈ (ਪਿਕਸਲ):"
 
-#: ../plug-ins/maze/maze_face.c:225 ../plug-ins/maze/maze_face.c:241
+#: ../plug-ins/maze/maze_face.c:226 ../plug-ins/maze/maze_face.c:242
 msgid "Pieces:"
 msgstr ""
 
-#: ../plug-ins/maze/maze_face.c:230
+#: ../plug-ins/maze/maze_face.c:231
 msgid "Height (pixels):"
 msgstr "ਉਚਾਈ (ਪਿਕਸਲ):"
 
 #. The maze algorithm frame
-#: ../plug-ins/maze/maze_face.c:249
+#: ../plug-ins/maze/maze_face.c:250
 msgid "Algorithm"
 msgstr "ਐਲੋਗਰਥਿਮ"
 
-#: ../plug-ins/maze/maze_face.c:275
+#: ../plug-ins/maze/maze_face.c:276
 msgid "Depth first"
 msgstr ""
 
-#: ../plug-ins/maze/maze_face.c:276
+#: ../plug-ins/maze/maze_face.c:277
 msgid "Prim's algorithm"
 msgstr ""
 
-#: ../plug-ins/maze/maze_face.c:395
+#: ../plug-ins/maze/maze_face.c:396
 msgid ""
 "Selection size is not even.\n"
 "Tileable maze won't work perfectly."
@@ -11589,19 +11583,19 @@ msgstr ""
 
 #: ../plug-ins/pagecurl/pagecurl.c:481
 msgid "Lower right"
-msgstr "ਲੋਅਰ ਸੱਜੇ"
+msgstr "ਥੱਲੇ ਸੱਜੇ"
 
 #: ../plug-ins/pagecurl/pagecurl.c:482
 msgid "Lower left"
-msgstr ""
+msgstr "ਥੱਲੇ ਖੱਬੇ"
 
 #: ../plug-ins/pagecurl/pagecurl.c:483
 msgid "Upper left"
-msgstr ""
+msgstr "ਉੱਤੇ ਖੱਬੇ"
 
 #: ../plug-ins/pagecurl/pagecurl.c:484
 msgid "Upper right"
-msgstr ""
+msgstr "ਉੱਤੇ ਸੱਜੇ"
 
 #: ../plug-ins/pagecurl/pagecurl.c:524
 msgid "Curl Orientation"
@@ -11613,15 +11607,15 @@ msgstr ""
 
 #: ../plug-ins/pagecurl/pagecurl.c:581
 msgid "Current gradient (reversed)"
-msgstr ""
+msgstr "ਮੌਜੂਦਾ ਗਰੇਡੀਐਂਟ (ਉਲਟ)"
 
 #: ../plug-ins/pagecurl/pagecurl.c:586
 msgid "Current gradient"
-msgstr ""
+msgstr "ਮੌਜੂਦਾ ਗਰੇਡੀਐਂਟ"
 
 #: ../plug-ins/pagecurl/pagecurl.c:591
 msgid "Foreground / background colors"
-msgstr ""
+msgstr "ਫਾਰਗਰਾਊਂਡ / ਬੈਕਗਰਾਊਂਡ ਰੰਗ"
 
 #: ../plug-ins/pagecurl/pagecurl.c:611
 msgid "_Opacity:"
@@ -11629,7 +11623,7 @@ msgstr "ਧੁੰਦਲਾਪਨ(_O):"
 
 #: ../plug-ins/pagecurl/pagecurl.c:734
 msgid "Curl Layer"
-msgstr ""
+msgstr "ਕਰਲ ਲੇਅਰ"
 
 #: ../plug-ins/pagecurl/pagecurl.c:1022
 msgid "Page Curl"
@@ -11718,7 +11712,7 @@ msgstr "ਅਸਲੀ"
 
 #: ../plug-ins/rcm/rcm_dialog.c:137
 msgid "Rotated"
-msgstr ""
+msgstr "ਘੁੰਮਾਇਆ"
 
 #: ../plug-ins/rcm/rcm_dialog.c:155
 msgid "Continuous update"
@@ -11851,37 +11845,41 @@ msgid ""
 "(not supported by SGI)"
 msgstr ""
 
+#: ../plug-ins/twain/twain.c:87
+msgid "Capture an image from a TWAIN datasource"
+msgstr "ਇੱਕ ਟਵਿਨ (TWAIN) ਡਾਟਾਸਰੋਤ ਤੋਂ ਇੱਕ ਚਿੱਤਰ ਕੈਪਚਰ ਕਰੋ"
+
 #: ../plug-ins/twain/twain.c:354
 msgid "_Scanner/Camera..."
-msgstr ""
+msgstr "ਸਕੈਨਰ/ਕੈਮਰਾ(_S)..."
 
 #. Initialize our progress dialog
 #: ../plug-ins/twain/twain.c:489
 msgid "Transferring data from scanner/camera"
-msgstr ""
+msgstr "ਸਕੈਨਰ/ਕੈਮਰਾ ਤੋਂ ਡਾਟਾ ਟਰਾਂਸਫਰ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:162
 #: ../plug-ins/uri/uri-backend-libcurl.c:126
 #, c-format
 msgid "Downloading %s of image data..."
-msgstr ""
+msgstr "ਚਿੱਤਰ ਡਾਟੇ ਤੋਂ %s ਡਾਊਨਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:163
 #: ../plug-ins/uri/uri-backend-libcurl.c:133
 #: ../plug-ins/uri/uri-backend-wget.c:348
 #, c-format
 msgid "Downloaded %s of image data"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਡਾਟੇ ਤੋਂ %s ਡਾਊਨਲੋਡ ਕੀਤਾ"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:181
 #, c-format
 msgid "Uploading %s of image data..."
-msgstr ""
+msgstr "ਚਿੱਤਰ ਡਾਟੇ ਤੋਂ %s ਅੱਪਲੋਡ ਕੀਤਾ ਜਾ ਰਿਹਾ ਹੈ..."
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:182
 #, c-format
 msgid "Uploaded %s of image data"
-msgstr ""
+msgstr "ਚਿੱਤਰ ਡਾਟੇ ਤੋਂ %s ਅੱਪਲੋਡ ਕੀਤਾ"
 
 #: ../plug-ins/uri/uri-backend-gnomevfs.c:252
 #: ../plug-ins/uri/uri-backend-libcurl.c:155
