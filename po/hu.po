@@ -13,8 +13,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gimp.HEAD\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-10-14 09:55+0100\n"
-"PO-Revision-Date: 2007-10-14 22:58+0200\n"
+"POT-Creation-Date: 2007-10-17 03:46+0100\n"
+"PO-Revision-Date: 2007-10-19 11:22+0200\n"
 "Last-Translator: Arpad Biro <biro_arpad@yahoo.com>\n"
 "Language-Team: Hungarian\n"
 "MIME-Version: 1.0\n"
@@ -3978,7 +3978,7 @@ msgstr "Új útvonal beállításai"
 msgid "Path to Selection"
 msgstr "Útvonal kijelöléssé alakítása"
 
-#: ../app/actions/vectors-commands.c:369 ../app/tools/gimpvectoroptions.c:198
+#: ../app/actions/vectors-commands.c:369 ../app/tools/gimpvectoroptions.c:199
 #: ../app/tools/gimpvectortool.c:1908 ../app/vectors/gimpvectors.c:199
 msgid "Stroke Path"
 msgstr "Útvonal körberajzolása"
@@ -6155,7 +6155,7 @@ msgstr "Az első rácsvonal vízszintes eltolása; lehet negatív szám is."
 msgid "Vertical offset of the first grid line; this may be a negative number."
 msgstr "Az első rácsvonal függőleges eltolása; lehet negatív szám is."
 
-#: ../app/core/gimpimage-arrange.c:139
+#: ../app/core/gimpimage-arrange.c:143
 msgid "Arrange Objects"
 msgstr "Objektumok elrendezése"
 
@@ -7154,12 +7154,12 @@ msgstr "Réteg _neve:"
 
 #. The size labels
 #: ../app/dialogs/layer-options-dialog.c:134
-#: ../app/tools/gimpmeasuretool.c:1056 ../app/tools/gimprectangleoptions.c:951
+#: ../app/tools/gimpmeasuretool.c:1056
 msgid "Width:"
 msgstr "Szélesség:"
 
 #: ../app/dialogs/layer-options-dialog.c:140
-#: ../app/tools/gimpmeasuretool.c:1084 ../app/tools/gimprectangleoptions.c:964
+#: ../app/tools/gimpmeasuretool.c:1084
 msgid "Height:"
 msgstr "Magasság:"
 
@@ -8666,8 +8666,8 @@ msgid "Set a source image first."
 msgstr "Előbb állítson be egy forrásképet."
 
 #: ../app/paint/paint-enums.c:51
-msgid "Modify Perspective Plane"
-msgstr "Perspektíva-sík módosítása"
+msgid "Modify Perspective"
+msgstr "Perspektíva módosítása"
 
 #: ../app/paint/paint-enums.c:82
 msgid "Aligned"
@@ -9059,105 +9059,105 @@ msgstr "Sűrűség:"
 msgid "Pressure:"
 msgstr "Nyomás:"
 
-#: ../app/tools/gimpaligntool.c:132 ../app/tools/gimpaligntool.c:734
+#: ../app/tools/gimpaligntool.c:134 ../app/tools/gimpaligntool.c:752
 msgid "Align"
 msgstr "Igazítás"
 
-#: ../app/tools/gimpaligntool.c:133
+#: ../app/tools/gimpaligntool.c:135
 msgid "Alignment Tool: Align or arrange layers and other objects"
 msgstr "Igazítási eszköz: rétegek és egyéb objektumok igazítása vagy elrendezése"
 
-#: ../app/tools/gimpaligntool.c:134
+#: ../app/tools/gimpaligntool.c:136
 msgid "_Align"
 msgstr "_Igazítás"
 
-#: ../app/tools/gimpaligntool.c:583
+#: ../app/tools/gimpaligntool.c:585
 msgid "Click on a layer, path or guide, or Click-Drag to pick several layers"
 msgstr ""
-"Kattintson egy rétegre, útvonalra vagy segédvonalra. Több réteg "
-"kijelölése: kattintás+húzás."
+"Kattintson egy rétegre, útvonalra vagy segédvonalra. Több réteg kijelölése: "
+"kattintás+húzás."
 
-#: ../app/tools/gimpaligntool.c:592
+#: ../app/tools/gimpaligntool.c:594
 msgid "Click to pick this layer as first item"
 msgstr "A réteg első elemként való beállítása: kattintással"
 
-#: ../app/tools/gimpaligntool.c:600
+#: ../app/tools/gimpaligntool.c:602
 msgid "Click to add this layer to the list"
 msgstr "A réteg hozzáadása a listához: kattintással"
 
-#: ../app/tools/gimpaligntool.c:604
+#: ../app/tools/gimpaligntool.c:606
 msgid "Click to pick this guide as first item"
 msgstr "A segédvonal első elemként való beállítása: kattintással"
 
-#: ../app/tools/gimpaligntool.c:612
+#: ../app/tools/gimpaligntool.c:614
 msgid "Click to add this guide to the list"
 msgstr "A segédvonal hozzáadása a listához: kattintással"
 
-#: ../app/tools/gimpaligntool.c:616
+#: ../app/tools/gimpaligntool.c:618
 msgid "Click to pick this path as first item"
 msgstr "Az útvonal első elemként való beállítása: kattintással"
 
-#: ../app/tools/gimpaligntool.c:624
+#: ../app/tools/gimpaligntool.c:626
 msgid "Click to add this path to the list"
 msgstr "Az útvonal hozzáadása a listához: kattintással"
 
-#: ../app/tools/gimpaligntool.c:746
+#: ../app/tools/gimpaligntool.c:764
 msgid "Relative to:"
 msgstr "Ehhez viszonyítva:"
 
-#: ../app/tools/gimpaligntool.c:764
+#: ../app/tools/gimpaligntool.c:782
 msgid "Align left edge of target"
 msgstr "A cél bal szélének igazítása"
 
-#: ../app/tools/gimpaligntool.c:770
+#: ../app/tools/gimpaligntool.c:788
 msgid "Align center of target"
 msgstr "A cél közepének igazítása"
 
-#: ../app/tools/gimpaligntool.c:776
+#: ../app/tools/gimpaligntool.c:794
 msgid "Align right edge of target"
 msgstr "A cél jobb oldali szélének igazítása"
 
-#: ../app/tools/gimpaligntool.c:786
+#: ../app/tools/gimpaligntool.c:804
 msgid "Align top edge of target"
 msgstr "A cél felső szélének igazítása"
 
-#: ../app/tools/gimpaligntool.c:792
+#: ../app/tools/gimpaligntool.c:810
 msgid "Align middle of target"
 msgstr "A cél közepének igazítása"
 
-#: ../app/tools/gimpaligntool.c:798
+#: ../app/tools/gimpaligntool.c:816
 msgid "Align bottom of target"
 msgstr "A cél alsó szélének igazítása"
 
-#: ../app/tools/gimpaligntool.c:802
+#: ../app/tools/gimpaligntool.c:820
 msgid "Distribute"
 msgstr "Elrendezés"
 
-#: ../app/tools/gimpaligntool.c:816
+#: ../app/tools/gimpaligntool.c:834
 msgid "Distribute left edges of targets"
 msgstr "A célobjektumok bal széleinek elrendezése"
 
-#: ../app/tools/gimpaligntool.c:823
+#: ../app/tools/gimpaligntool.c:841
 msgid "Distribute horizontal centers of targets"
 msgstr "A célobjektumok vízszintes közepeinek elrendezése"
 
-#: ../app/tools/gimpaligntool.c:830
+#: ../app/tools/gimpaligntool.c:848
 msgid "Distribute right edges of targets"
 msgstr "A célobjektumok jobb oldali széleinek elrendezése"
 
-#: ../app/tools/gimpaligntool.c:840
+#: ../app/tools/gimpaligntool.c:858
 msgid "Distribute top edges of targets"
 msgstr "A célobjektumok felső széleinek elrendezése"
 
-#: ../app/tools/gimpaligntool.c:847
+#: ../app/tools/gimpaligntool.c:865
 msgid "Distribute vertical centers of targets"
 msgstr "A célobjektumok függőleges közepeinek elrendezése"
 
-#: ../app/tools/gimpaligntool.c:853
+#: ../app/tools/gimpaligntool.c:871
 msgid "Distribute bottoms of targets"
 msgstr "A célobjektumok alsó széleinek elrendezése"
 
-#: ../app/tools/gimpaligntool.c:861 ../app/tools/gimpblendoptions.c:212
+#: ../app/tools/gimpaligntool.c:879 ../app/tools/gimpblendoptions.c:212
 msgid "Offset:"
 msgstr "Eltolás:"
 
@@ -9991,7 +9991,7 @@ msgid "Adjustment"
 msgstr "Igazítás"
 
 #: ../app/tools/gimpinkoptions-gui.c:68 ../app/tools/gimpinkoptions-gui.c:93
-#: ../app/tools/gimptextoptions.c:435
+#: ../app/tools/gimprectangleoptions.c:1019 ../app/tools/gimptextoptions.c:436
 msgid "Size:"
 msgstr "Méret:"
 
@@ -10421,35 +10421,33 @@ msgstr "Poszter sz_intjei:"
 msgid "Use all visible layers when shrinking the selection"
 msgstr "Kijelölés szűkítésekor az összes látható réteg felhasználása"
 
-#: ../app/tools/gimprectangleoptions.c:731
+#. Current, as in what is currently in use.
+#: ../app/tools/gimprectangleoptions.c:775
 msgid "Current"
 msgstr "Jelenlegi"
 
-#: ../app/tools/gimprectangleoptions.c:754
+#: ../app/tools/gimprectangleoptions.c:853
 msgid "Expand from center"
 msgstr "Kiterjesztés a középpontból"
 
-#: ../app/tools/gimprectangleoptions.c:777
+#: ../app/tools/gimprectangleoptions.c:876
 msgid "Fixed:"
 msgstr "Rögzített:"
 
-#: ../app/tools/gimprectangleoptions.c:912
+#: ../app/tools/gimprectangleoptions.c:1009
+msgid "Position:"
+msgstr "Pozíció:"
+
+#: ../app/tools/gimprectangleoptions.c:1027
 msgid "Highlight"
 msgstr "Kiemelés"
 
-#: ../app/tools/gimprectangleoptions.c:930
-msgid "X:"
-msgstr "X:"
+#. Auto Shrink
+#: ../app/tools/gimprectangleoptions.c:1037
+msgid "Auto Shrink"
+msgstr "Automatikus szűkítés"
 
-#: ../app/tools/gimprectangleoptions.c:939
-msgid "Y:"
-msgstr "Y:"
-
-#: ../app/tools/gimprectangleoptions.c:975
-msgid "Auto Shrink Selection"
-msgstr "Kijelölés automatikus szűkítése"
-
-#: ../app/tools/gimprectangleoptions.c:982
+#: ../app/tools/gimprectangleoptions.c:1044
 msgid "Shrink merged"
 msgstr "Szűkítés összefésülve"
 
@@ -10529,7 +10527,7 @@ msgstr "A teljesen átlátszó területek kijelölésének engedélyezése"
 msgid "Base selection on all visible layers"
 msgstr "A kijelölés az összes látható réteg alapján történjen"
 
-#: ../app/tools/gimpselectionoptions.c:349 ../app/tools/gimptextoptions.c:456
+#: ../app/tools/gimpselectionoptions.c:349 ../app/tools/gimptextoptions.c:457
 msgid "Antialiasing"
 msgstr "Élsimítás"
 
@@ -10538,8 +10536,8 @@ msgid "Feather edges"
 msgstr "Lágy szélek"
 
 #: ../app/tools/gimpselectionoptions.c:384
-msgid "Show interactive boundary"
-msgstr "Interaktív határvonal megjelenítése"
+msgid "Interactive boundary"
+msgstr "Interaktív határvonal"
 
 #: ../app/tools/gimpselectionoptions.c:408
 msgid "Select transparent areas"
@@ -10652,35 +10650,36 @@ msgstr "Sortávolság beállítása"
 msgid "Adjust letter spacing"
 msgstr "Betűtávolság beállítása"
 
-#: ../app/tools/gimptextoptions.c:428
+#: ../app/tools/gimptextoptions.c:429
 msgid "Font:"
 msgstr "Betűkészlet:"
 
-#: ../app/tools/gimptextoptions.c:440
+#: ../app/tools/gimptextoptions.c:441
 msgid "Hinting"
 msgstr "Megjelenítési információk (hinting)"
 
-#: ../app/tools/gimptextoptions.c:447
+#: ../app/tools/gimptextoptions.c:448
 msgid "Force auto-hinter"
 msgstr "Automatikus megjelenítési információk"
 
-#: ../app/tools/gimptextoptions.c:462
+#: ../app/tools/gimptextoptions.c:465
 msgid "Text Color"
 msgstr "Szövegszín"
 
-#: ../app/tools/gimptextoptions.c:467
+#: ../app/tools/gimptextoptions.c:470
 msgid "Color:"
 msgstr "Szín:"
 
-#: ../app/tools/gimptextoptions.c:472
+#: ../app/tools/gimptextoptions.c:476
 msgid "Justify:"
 msgstr "Igazítás:"
 
-#: ../app/tools/gimptextoptions.c:491
-msgid "Create Path from Text"
-msgstr "Útvonal létrehozása szövegből"
-
+#. Create a path from the current text
 #: ../app/tools/gimptextoptions.c:498
+msgid "Path from Text"
+msgstr "Szövegből útvonal"
+
+#: ../app/tools/gimptextoptions.c:505
 msgid "Text along Path"
 msgstr "Szöveg illesztése útvonalra"
 
@@ -10802,9 +10801,10 @@ msgstr ""
 "%s  Kivonás\n"
 "%s  Metszet"
 
-#: ../app/tools/gimpvectoroptions.c:188
-msgid "Create Selection from Path"
-msgstr "Kijelölés létrehozása az útvonalból"
+#. Create a selection from the current path
+#: ../app/tools/gimpvectoroptions.c:189
+msgid "Selection from Path"
+msgstr "Útvonalat kijelöléssé"
 
 #: ../app/tools/gimpvectortool.c:161
 msgid "Paths Tool: Create and edit paths"
@@ -11264,6 +11264,10 @@ msgstr "Színindex:"
 #: ../app/widgets/gimpcolormapeditor.c:216
 msgid "HTML notation:"
 msgstr "HTML-jelölés:"
+
+#: ../app/widgets/gimpcolorselectorpalette.c:59
+msgid "Palette"
+msgstr "Paletta"
 
 #: ../app/widgets/gimpcontainerpopup.c:534
 msgid "Smaller Previews"
@@ -11971,31 +11975,31 @@ msgstr "%d ppi"
 msgid "Line width:"
 msgstr "Vonalszélesség:"
 
-#: ../app/widgets/gimpstrokeeditor.c:201
+#: ../app/widgets/gimpstrokeeditor.c:202
 msgid "_Line Style"
 msgstr "Vonalstíl_us"
 
-#: ../app/widgets/gimpstrokeeditor.c:220
+#: ../app/widgets/gimpstrokeeditor.c:221
 msgid "_Cap style:"
 msgstr "V_onalvég:"
 
-#: ../app/widgets/gimpstrokeeditor.c:226
+#: ../app/widgets/gimpstrokeeditor.c:227
 msgid "_Join style:"
 msgstr "S_arok:"
 
-#: ../app/widgets/gimpstrokeeditor.c:231
+#: ../app/widgets/gimpstrokeeditor.c:232
 msgid "_Miter limit:"
 msgstr "_Túlnyúlási korlát:"
 
-#: ../app/widgets/gimpstrokeeditor.c:238
+#: ../app/widgets/gimpstrokeeditor.c:239
 msgid "Dash pattern:"
 msgstr "Vonalminta:"
 
-#: ../app/widgets/gimpstrokeeditor.c:301
+#: ../app/widgets/gimpstrokeeditor.c:302
 msgid "Dash _preset:"
 msgstr "Előre_definiált vonalminta:"
 
-#: ../app/widgets/gimpstrokeeditor.c:322
+#: ../app/widgets/gimpstrokeeditor.c:323
 msgid "_Antialiasing"
 msgstr "É_lsimítás"
 
