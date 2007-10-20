@@ -6477,7 +6477,7 @@ msgstr "_Разрешение:"
 #: ../plug-ins/common/poppler.c:1108
 #, c-format
 msgid "pixels/%s"
-msgstr "точек растра/%a"
+msgstr "точек растра/%s"
 
 #: ../plug-ins/common/postscript.c:597 ../plug-ins/common/postscript.c:689
 msgid "PostScript document"
