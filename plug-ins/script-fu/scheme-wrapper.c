@@ -1428,6 +1428,10 @@ g_printerr ("      value %d is type %s (%d)\n",
                                                (sc, array[j] ? array[j] : ""),
                                            list);
 
+                    /* hook the current list into return_val, so that it
+                     * inherits the set_safe_foreign()-protection.
+                     * May be removed when tinyscheme fixes the GC issue
+                     * with foreign functions */
                     sc->vptr->set_car (return_val, list);
                   }
               }
