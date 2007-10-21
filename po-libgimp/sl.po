@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Gimp - libgimp\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2005-02-22 23:04+0100\n"
-"PO-Revision-Date: 2007-10-08 15:22+0100\n"
+"PO-Revision-Date: 2007-10-13 10:35+0100\n"
 "Last-Translator: Martin Srebotnjak <miles@filmsi.net>\n"
 "Language-Team: Martin Srebotnjak <miles@filmsi.net>\n"
 "MIME-Version: 1.0\n"
@@ -510,7 +510,7 @@ msgstr "vžgano"
 
 #: ../libgimpbase/gimpbaseenums.c:388
 msgid "gradient|Linear"
-msgstr "gradient|Linearen"
+msgstr "Linearen"
 
 #: ../libgimpbase/gimpbaseenums.c:389
 msgid "Bi-linear"
@@ -616,11 +616,11 @@ msgstr "indeksirana-alfa"
 
 #: ../libgimpbase/gimpbaseenums.c:562
 msgid "interpolation|None"
-msgstr "interpolation|Brez"
+msgstr "Brez"
 
 #: ../libgimpbase/gimpbaseenums.c:563
 msgid "interpolation|Linear"
-msgstr "interpolation|Linearna"
+msgstr "Linearna"
 
 #: ../libgimpbase/gimpbaseenums.c:564
 msgid "Cubic"
@@ -846,7 +846,7 @@ msgstr "relativne barvne vrednosti (kalorimetrično)"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:58
 msgid "intent|Saturation"
-msgstr "intent|Nasičenost"
+msgstr "Nasičenost"
 
 #: ../libgimpconfig/gimpcolorconfig-enums.c:59
 msgid "Absolute colorimetric"
@@ -1014,7 +1014,7 @@ msgstr "Izberite barvni profil z diska ..."
 
 #: ../libgimpwidgets/gimpcolorprofilestore.c:280
 msgid "profile|None"
-msgstr "intent|Brez"
+msgstr "Brez"
 
 #: ../libgimpwidgets/gimpcolorscales.c:98
 msgid "Scales"
