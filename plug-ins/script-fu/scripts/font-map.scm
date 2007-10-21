@@ -16,7 +16,7 @@
            (font     "")
            (extents  '()))
       (while (< count list-cnt)
-        (set! font (aref list count))
+        (set! font (car list))
 
         (if (= use-name TRUE)
             (set! text font))
@@ -27,6 +27,7 @@
         (if (> width maxwidth)
             (set! maxwidth width))
 
+        (set! list (cdr list))
         (set! count (+ count 1))
       )
 
@@ -41,7 +42,7 @@
            (font      "")
            (extents   '()))
       (while (< count list-cnt)
-        (set! font (aref list count))
+        (set! font (car list))
 
         (if (= use-name TRUE)
             (set! text font)
@@ -54,6 +55,7 @@
             (set! maxheight height)
         )
 
+        (set! list (cdr list))
         (set! count (+ count 1))
       )
 
@@ -104,7 +106,7 @@
           (gimp-edit-clear drawable)
 
     (while (< count num-fonts)
-      (set! font (aref font-list count))
+      (set! font (car font-list))
 
       (if (= use-name TRUE)
           (set! text font))
@@ -133,6 +135,7 @@
           )
       )
 
+      (set! font-list (cdr font-list))
       (set! count (+ count 1))
     )
 

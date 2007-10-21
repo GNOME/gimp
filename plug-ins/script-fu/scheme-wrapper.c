@@ -608,7 +608,13 @@ script_fu_marshal_procedure_call (scheme *sc, pointer a)
   gchar           *string;
   gint32           n_elements;
   pointer          vector;
+
 #if DEBUG_MARSHALL
+/* These three #defines are from Tinyscheme (tinyscheme/scheme.c) */
+#define T_MASKTYPE  31
+#define typeflag(p) ((p)->_flag)
+#define type(p)     (typeflag(p)&T_MASKTYPE)
+
 char *ret_types[] = {
   "GIMP_PDB_INT32",       "GIMP_PDB_INT16",     "GIMP_PDB_INT8",
   "GIMP_PDB_FLOAT",       "GIMP_PDB_STRING",    "GIMP_PDB_INT32ARRAY",
@@ -1006,20 +1012,20 @@ if (count > 0)
           break;
 
         case GIMP_PDB_STRINGARRAY:
-          vector = sc->vptr->pair_car (a);
-          if (!sc->vptr->is_vector (vector))
+          vector = sc->vptr->pair_car (a);  /* vector is pointing to a list */
+          if (!sc->vptr->is_list (sc, vector))
             success = FALSE;
           if (success)
             {
-              n_elements = args[i-1].data.d_int32;
+              n_elements = args[i - 1].data.d_int32;
               if (n_elements < 0 ||
-                  n_elements > sc->vptr->vector_length (vector))
+                  n_elements > sc->vptr->list_length (sc, vector))
                 {
                   g_snprintf (error_str, sizeof (error_str),
                               "STRING vector (argument %d) for function %s has "
-                              "length of %ld but expected length of %d",
+                              "length of %d but expected length of %d",
                               i+1, proc_name,
-                              sc->vptr->vector_length (vector), n_elements);
+                              sc->vptr->list_length (sc, vector), n_elements);
                   return foreign_error (sc, error_str, 0);
                 }
 
@@ -1027,7 +1033,7 @@ if (count > 0)
 
               for (j = 0; j < n_elements; j++)
                 {
-                  pointer v_element = sc->vptr->vector_elem (vector, j);
+                  pointer v_element = sc->vptr->pair_car (vector);
 
                   if (!sc->vptr->is_string (v_element))
                     {
@@ -1039,18 +1045,20 @@ if (count > 0)
 
                   args[i].data.d_stringarray[j] =
                       (gchar *) sc->vptr->string_value (v_element);
+
+                  vector = sc->vptr->pair_cdr (vector);
                 }
 
 #if DEBUG_MARSHALL
 {
-glong count = sc->vptr->vector_length (vector);
+glong count = sc->vptr->list_length ( sc, sc->vptr->pair_car (a) );
 g_printerr ("      string vector has %ld elements\n", count);
 if (count > 0)
   {
     g_printerr ("     ");
     for (j = 0; j < count; ++j)
       g_printerr (" \"%s\"",
-               sc->vptr->string_value ( sc->vptr->vector_elem (vector, j) ));
+                  args[i].data.d_stringarray[j]);
     g_printerr ("\n");
   }
 }
@@ -1408,16 +1416,19 @@ g_printerr ("      value %d is type %s (%d)\n",
               {
                 gint    num_strings = values[i].data.d_int32;
                 gchar **array  = (gchar **) values[i + 1].data.d_stringarray;
-                pointer vector = sc->vptr->mk_vector (sc, num_strings);
+                pointer list   = sc->NIL;
 
-                return_val = sc->vptr->cons (sc, vector, return_val);
+                return_val = sc->vptr->cons (sc, list, return_val);
                 set_safe_foreign (sc, return_val);
 
-                for (j = 0; j < num_strings; j++)
+                for (j = num_strings - 1; j >= 0; j--)
                   {
-                    sc->vptr->set_vector_elem (vector, j,
-                                               sc->vptr->mk_string (sc,
-                                                                    array[j]));
+                    list = sc->vptr->cons (sc,
+                                           sc->vptr->mk_string
+                                               (sc, array[j] ? array[j] : ""),
+                                           list);
+
+                    sc->vptr->set_car (return_val, list);
                   }
               }
               break;

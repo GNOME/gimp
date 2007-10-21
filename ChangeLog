@@ -1,3 +1,11 @@
+2007-10-21  Kevin Cozens  <kcozens@cvs.gnome.org>
+
+	* plug-ins/script-fu/scheme-wrapper.c: Reverted changes in handling
+	of string arrays to stay backwards compatible (see bug #317634).
+
+	* plug-ins/script-fu/scripts/font-map.scm: Updated based on change
+	in handling of string arrays listed above.
+
 2007-10-21  Michael Natterer  <mitch@gimp.org>
 
 	* app/dialogs/fade-dialog.c (fade_dialog_new): revert change below.
