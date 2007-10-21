@@ -103,7 +103,12 @@ fade_dialog_new (GimpImage *image,
   private->orig_opacity    = undo->opacity;
 
   g_object_set (private->context,
-                "paint-mode", undo->paint_mode,
+                /* Use Normal mode instead of Replace.
+                 * This is not quite correct but the dialog is somewhat
+                 * difficult to use otherwise.
+                 */
+                "paint-mode", (undo->paint_mode == GIMP_REPLACE_MODE ?
+                               GIMP_NORMAL_MODE : undo->paint_mode),
                 "opacity",    undo->opacity,
                 NULL);
 

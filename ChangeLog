@@ -1,3 +1,9 @@
+2007-10-21  Sven Neumann  <sven@gimp.org>
+
+	* app/dialogs/fade-dialog.c (fade_dialog_new): select "Normal"
+	when the mode of the operation is "Replace". This is incorrect but
+	it makes the dialog a lot easier to use.
+
 2007-10-19  Sven Neumann  <sven@gimp.org>
 
 	* app/display/gimpdisplayshell-render.c: tiny cosmetic cleanups.
