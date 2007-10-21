@@ -1397,7 +1397,7 @@ replace_inten_pixels (const guchar   *src1,
     }
   else
     {
-      const guchar mask_alpha = OPAQUE_OPACITY;
+      const guchar mask_alpha = opacity;
 
       while (length --)
         {

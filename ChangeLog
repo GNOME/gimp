@@ -1,3 +1,11 @@
+2007-10-21  Michael Natterer  <mitch@gimp.org>
+
+	* app/dialogs/fade-dialog.c (fade_dialog_new): revert change below.
+
+	* app/paint-funcs/paint-funcs.c (replace_inten_pixels): also honor
+	the passed opacity when there is no mask. Fixes blending in
+	replace mode then where is no selection.
+
 2007-10-21  Sven Neumann  <sven@gimp.org>
 
 	* app/dialogs/fade-dialog.c (fade_dialog_new): select "Normal"
